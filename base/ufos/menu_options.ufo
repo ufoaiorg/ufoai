@@ -1,0 +1,511 @@
+// ==================
+// OPTIONS MENU
+// ==================
+
+menu options
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/options_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/options_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/options_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/options_lr
+		pos		"512 512"
+	}
+
+	pic options_label
+	{
+		image	menu/options_buttons1
+		pos		"80 165"
+		texl	"0 475"
+		texh	"256 510"
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	pic button_video
+	{
+		image	menu/options_buttons1
+		pos		"80 220"
+		texl	"0 0"
+		texh	"256 64"
+		click	{ cmd "mn_pop;mn_push options_video;" }
+		out		{ *button_video texl "0 0"  *button_video texh "256 64" }
+		in		{ *button_video texl "0 64" *button_video texh "256 128" }
+	}
+
+	pic button_sound
+	{
+		image	menu/options_buttons1
+		pos		"80 290"
+		texl	"0 128"
+		texh	"256 192"
+		click	{ cmd "mn_pop;mn_push options_sound;" }
+		out		{ *button_sound texl "0 128" *button_sound texh "256 192" }
+		in		{ *button_sound texl "0 192" *button_sound texh "256 256" }
+	}
+
+	pic button_game
+	{
+		image	menu/options_buttons1
+		pos		"80 360"
+		texl	"0 256"
+		texh	"256 320"
+		click	{ cmd "mn_pop;mn_push options_game;" }
+		out		{ *button_game texl "0 256" *button_game texh "256 320" }
+		in		{ *button_game texl "0 320" *button_game texh "256 384" }
+	}
+
+	pic button_exit
+	{
+		image	menu/main_buttons2
+		pos		"80 450"
+		texl	"0 128"
+		texh	"256 192"
+		click	{ cmd "mn_pop;mn_pop;" }
+		out		{ *button_exit texl "0 128" *button_exit texh "256 192" }
+		in		{ *button_exit texl "0 192" *button_exit texh "256 256" }
+	}
+
+	func init
+	{
+		cmd "mn_escpop 2;"
+		cmd "mn_push options_video;"
+	}
+}
+
+
+// ==================
+// VIDEO OPTIONS MENU
+// ==================
+
+menu options_video
+{
+	pic video
+	{
+		image	menu/options_buttons1
+		pos		"580 80"
+		texl	"0 385"
+		texh	"256 414"
+	}
+
+	string res_str
+	{
+		string	"Resolution:"
+		pos		"500 140"
+	}
+	string res_value
+	{
+		string	"*cvar mn_glmodestr"
+		pos		"840 140"
+		align	ur
+	}
+	pic res_dec
+	{
+		image	menu/buy_buttons1
+		pos		"868 138"
+		texl	"0 0"		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify mn_glmode -1 0 10;" }
+	}
+	pic res_inc
+	{
+		image	menu/buy_buttons1
+		pos		"884 138"
+		texl	"16 0"		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify mn_glmode +1 0 10;" }
+	}
+
+	string full_str
+	{
+		string	"Fullscreen:"
+		pos		"500 170"
+	}
+	string full_value
+	{
+		string	"*cvar mn_fullscreen"
+		pos		"840 170"
+		align	ur
+	}
+	pic full_dec
+	{
+		image	menu/buy_buttons1
+		pos		"868 168"
+		texl	"0 0"		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "copy gl_mode mn_glmode;"
+			cmd "mn_modifywrap vid_fullscreen -1 0 1;"
+			cmd "mn_translate vid_fullscreen mn_fullscreen 0:No,1:Yes;"
+		}
+	}
+	pic full_inc
+	{
+		image	menu/buy_buttons1
+		pos		"884 168"
+		texl	"16 0"		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd "copy gl_mode mn_glmode;"
+			cmd "mn_modifywrap vid_fullscreen +1 0 1;"
+			cmd "mn_translate vid_fullscreen mn_fullscreen 0:No,1:Yes;"
+		}
+	}
+
+	string compression_str
+	{
+		string	"Texture compression:"
+		pos		"500 200"
+	}
+	string compression_value
+	{
+		string	"*cvar mn_compression"
+		pos		"840 200"
+		align	ur
+	}
+	pic compression_dec
+	{
+		image	menu/buy_buttons1
+		pos		"868 198"
+		texl	"0 0"		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "copy gl_mode mn_glmode;"
+			cmd "mn_modifywrap gl_ext_texture_compression -1 0 1;"
+			cmd "mn_translate gl_ext_texture_compression mn_compression 0:No,1:Yes;"
+		}
+	}
+	pic compression_inc
+	{
+		image	menu/buy_buttons1
+		pos		"884 198"
+		texl	"16 0"		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd "copy gl_mode mn_glmode;"
+			cmd "mn_modifywrap gl_ext_texture_compression +1 0 1;"
+			cmd "mn_translate gl_ext_texture_compression mn_compression 0:No,1:Yes;"
+		}
+	}
+
+	string texres_str
+	{
+		string	"Texture resolution cap:"
+		pos		"500 230"
+	}
+	string texres_value
+	{
+		string	"*cvar mn_texres"
+		pos		"840 230"
+		align	ur
+	}
+	pic texres_dec
+	{
+		image	menu/buy_buttons1
+		pos		"868 228"
+		texl	"0 0"		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modifystring gl_maxtexres -1 256:512:1024:2048;"
+			cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:High,2048:Excellent;"
+		}
+	}
+	pic texres_inc
+	{
+		image	menu/buy_buttons1
+		pos		"884 228"
+		texl	"16 0"		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modifystring gl_maxtexres +1 256:512:1024:2048;"
+			cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:High,2048:Excellent;"
+		}
+	}
+
+	func init
+	{
+		cmd "copy mn_glmode gl_mode;"
+		cmd "mn_translate vid_fullscreen mn_fullscreen 0:No,1:Yes;"
+		cmd "mn_translate gl_ext_texture_compression mn_compression 0:No,1:Yes;"
+		cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:High,2048:Excellent;"
+	}
+	func close
+	{
+		cmd "copy gl_mode mn_glmode;"
+	}
+}
+
+
+// ==================
+// SOUND OPTIONS MENU
+// ==================
+
+menu options_sound
+{
+	pic sound
+	{
+		image	menu/options_buttons1
+		pos		"580 80"
+		texl	"0 415"
+		texh	"256 444"
+	}
+
+	string volume_str
+	{
+		string	"Volume Control"
+		pos		"500 140"
+	}
+	string effects_str
+	{
+		string	"Effects:"
+		pos		"520 170"
+	}
+	pic effects_rahmen
+	{
+		image	menu/bar_rahmen
+		pos		"645 168"
+	}
+	bar effects_bar
+	{
+		pos		"654 173"
+		size	"245 6"
+		color	"0 .8 0 1"
+		current	"*cvar s_volume"
+		max		1.0
+		align	uc
+		mousefx	true
+		click	{ }
+	}
+	string music_str
+	{
+		string	"Music:"
+		pos		"520 195"
+	}
+	pic music_rahmen
+	{
+		image	menu/bar_rahmen
+		pos		"645 193"
+	}
+	bar music_bar
+	{
+		pos		"654 198"
+		size	"245 6"
+		color	"0 .8 0 1"
+		current	"*cvar ov_volume"
+		max		1.0
+		align	uc
+		mousefx true
+		click	{ }
+	}
+	string mix_str
+	{
+		string	"Mixing Rate:"
+		pos		"500 240"
+	}
+	string mix_valuestr
+	{
+		string	"kHz"
+		pos		"840 240"
+		align	ur
+	}
+	string mix_value
+	{
+		string	"*cvar s_khz"
+		pos		"790 240"
+		align	ur
+	}
+	pic mix_dec
+	{
+		image	menu/buy_buttons1
+		pos		"868 238"
+		texl	"0 0"		texh	"16 16"
+		mousefx	true
+		click	{ cmd "modifykhz -;" }
+	}
+	pic mix_inc
+	{
+		image	menu/buy_buttons1
+		pos		"884 238"
+		texl	"16 0"		texh	"32 16"
+		mousefx	true
+		click	{ cmd "modifykhz +;" }
+	}
+}
+
+
+// ==================
+// GAME OPTIONS MENU
+// ==================
+
+menu options_game
+{
+	pic game
+	{
+		image	menu/options_buttons1
+		pos		"580 80"
+		texl	"0 445"
+		texh	"256 474"
+	}
+
+	string dif_str
+	{
+		string	"Difficulty:"
+		pos		"500 130"
+	}
+	string dif_value
+	{
+		string	"*cvar mn_difficulty"
+		pos		"840 130"
+		align	ur
+	}
+	pic dif_dec
+	{
+		image	menu/buy_buttons1
+		pos		"868 128"
+		texl	"0 0"		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify difficulty -1 -3 3;" }
+	}
+	pic dif_inc
+	{
+		image	menu/buy_buttons1
+		pos		"884 128"
+		texl	"16 0"		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify difficulty +1 -3 3;" }
+	}
+
+	string hud_str
+	{
+		string	"HUD Design:"
+		pos		"500 180"
+	}
+	string hud_value
+	{
+		string	"*cvar mn_hud"
+		pos		"840 180"
+		align	ur
+	}
+	pic hud_dec
+	{
+		image	menu/buy_buttons1
+		pos		"868 178"
+		texl	"0 0"		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modifystring mn_hud -1 hud:althud;" }
+	}
+	pic hud_inc
+	{
+		image	menu/buy_buttons1
+		pos		"884 178"
+		texl	"16 0"		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modifystring mn_hud +1 hud:althud;" }
+	}
+
+	string camspeed_str
+	{
+		string	"Camera Scroll:"
+		pos		"500 210"
+	}
+	pic camspeed_rahmen
+	{
+		image	menu/bar_rahmen
+		pos		"645 208"
+	}
+	bar camspeed_bar
+	{
+		pos		"654 213"
+		size	"245 6"
+		color	"0 .8 0 1"
+		current	"*cvar cl_cammovespeed"
+		min		150
+		max		1500
+		align	uc
+		mousefx	true
+		click	{ }
+	}
+	string camrot_str
+	{
+		string	"Camera Rotation:"
+		pos		"500 230"
+	}
+	pic camrot_rahmen
+	{
+		image	menu/bar_rahmen
+		pos		"645 228"
+	}
+	bar camrot_bar
+	{
+		pos		"654 233"
+		size	"245 6"
+		color	"0 .8 0 1"
+		current	"*cvar cl_camrotspeed"
+		min		50
+		max		500
+		align	uc
+		mousefx	true
+		click	{ }
+	}
+
+        // ===================
+        // NAME
+        // ===================
+        string current_name
+        {
+                string  "Name:"
+                pos     "500 420"
+        }
+        pic slot_hostname
+        {
+                image   menu/save_slot
+                pos     "500 440"
+                mousefx true
+                click   { cmd "msgmenu ?name" *txt_name color "1 1 1 1" *txt_name mousefx true }
+        }
+        string txt_name
+        {
+                string "*cvar name"
+                pos "510 449"
+                color "0 .78 0 1"
+        }
+        confunc name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
+
+}

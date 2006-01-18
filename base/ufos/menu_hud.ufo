@@ -1,0 +1,876 @@
+// ==================
+// HUD MAIN
+// ==================
+	
+menu hud
+{
+	// ==================
+	// render rectangle
+	// ==================
+	zone render
+	{
+		pos		"32 16"
+		size	"992 640"
+	}
+	
+	// ==================
+	// floor bar
+	// ==================
+	
+	zone bar_floor_zone
+	{
+		pos		"0 104"
+		size	"40 512"
+		click
+	}
+	
+	pic bar_floor
+	{ 
+		image	hud/bar_floor
+		pos		"0 128" 
+	}
+	
+	confunc disfloor0 { *bt_floor1 image hud/buttons1g }
+	confunc disfloor1 { *bt_floor2 image hud/buttons1g }
+	confunc disfloor2 { *bt_floor3 image hud/buttons1g }
+	confunc disfloor3 { *bt_floor4 image hud/buttons1g }
+	confunc disfloor4 { *bt_floor5 image hud/buttons1g }
+	confunc disfloor5 { *bt_floor6 image hud/buttons1g }
+	confunc disfloor6 { *bt_floor7 image hud/buttons1g }
+	confunc disfloor7 { *bt_floor8 image hud/buttons1g }
+
+	confunc deselfloor0 { *bt_floor1 image hud/buttons1 }
+	confunc deselfloor1 { *bt_floor2 image hud/buttons1 }
+	confunc deselfloor2 { *bt_floor3 image hud/buttons1 }
+	confunc deselfloor3 { *bt_floor4 image hud/buttons1 }
+	confunc deselfloor4 { *bt_floor5 image hud/buttons1 }
+	confunc deselfloor5 { *bt_floor6 image hud/buttons1 }
+	confunc deselfloor6 { *bt_floor7 image hud/buttons1 }
+	confunc deselfloor7 { *bt_floor8 image hud/buttons1 }
+
+	confunc selfloor0 { *bt_floor1 image hud/buttons1a }
+	confunc selfloor1 { *bt_floor2 image hud/buttons1a }
+	confunc selfloor2 { *bt_floor3 image hud/buttons1a }
+	confunc selfloor3 { *bt_floor4 image hud/buttons1a }
+	confunc selfloor4 { *bt_floor5 image hud/buttons1a }
+	confunc selfloor5 { *bt_floor6 image hud/buttons1a }
+	confunc selfloor6 { *bt_floor7 image hud/buttons1a }
+	confunc selfloor7 { *bt_floor8 image hud/buttons1a }
+
+	pic bt_floor1
+	{
+		pos		"6 417"
+		texl	"0 0"
+		texh	"28 36"
+		mousefx true
+		click { cmd "cl_worldlevel 0" }
+	}
+	pic bt_floor2
+	{
+		pos		"6 377"
+		texl	"32 0"
+		texh	"60 36"
+		mousefx true
+		click { cmd "cl_worldlevel 1" }
+	}
+	pic bt_floor3
+	{
+		pos		"6 337"
+		texl	"64 0"
+		texh	"92 36"
+		mousefx true
+		click { cmd "cl_worldlevel 2" }
+	}
+	pic bt_floor4
+	{
+		pos		"6 297"
+		texl	"96 0"
+		texh	"124 36"
+		mousefx true
+		click { cmd "cl_worldlevel 3" }
+	}
+	pic bt_floor5
+	{
+		pos		"6 257"
+		texl	"0 38"
+		texh	"28 74"
+		mousefx true
+		click { cmd "cl_worldlevel 4" }
+	}
+	pic bt_floor6
+	{
+		pos		"6 217"
+		texl	"32 38"
+		texh	"60 74"
+		mousefx true
+		click { cmd "cl_worldlevel 5" }
+	}
+	pic bt_floor7
+	{
+		pos		"6 177"
+		texl	"64 38"
+		texh	"92 74"
+		mousefx true
+		click { cmd "cl_worldlevel 6" }
+	}
+	pic bt_floor8
+	{
+		pos		"6 137"
+		texl	"96 38"
+		texh	"124 74"
+		mousefx true
+		click { cmd "cl_worldlevel 7" }
+	}
+
+	// ==================
+	// actor and team bar
+	// ==================
+	
+	zone bar_head_zone
+	{
+		pos		"0 0"
+		size	"111 104"
+		click
+	}
+	
+	zone bar_name_zone
+	{
+		pos		"112 0"
+		size	"250 48"
+		click
+	}
+	
+	zone bar_team_zone
+	{
+		pos		"361 0"
+		size	"262 55"
+		click
+	}
+	
+	zone bar_nextround_zone1
+	{
+		pos		"623 0"
+		size	"100 16"
+		click
+	}
+	
+	zone bar_nextround_zone2
+	{
+		pos		"722 0"
+		size	"86 27"
+		click
+	}
+	
+	zone bar_nextround_zone3
+	{
+		pos		"808 0"
+		size	"216 55"
+		click
+	}
+	
+	pic bar_head
+	{
+		image	hud/bar_head
+		pos		"0 0"
+	}
+
+	pic bar_name
+	{
+		image	hud/bar_name
+		pos		"256 0"
+	}
+	
+
+	pic bar_team
+	{
+		image	hud/bar_teammember
+		pos		"512 0"
+	}
+
+	pic bar_nextround
+	{
+		image	hud/bar_nextround
+		pos		"768 0"
+	}
+
+	string actorname
+	{
+		string	"*cvar mn_name"
+		pos		"130 18"
+	}
+	
+	pic bt_nextround
+	{
+		image	hud/buttons2
+		mousefx true
+		pos		"950 10"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd nextround; }
+	}
+	
+	zone spotted
+	{	
+		pos		"816 12"
+		size	"48 34"
+		click	{ cmd nextalien; }
+	}
+	string numspotted
+	{
+		string	"*cvar mn_numaliensspotted"
+		pos		"840 30"
+		align	cc
+	}
+
+	confunc hudselects0 { *bt_actor0 image hud/buttons1a }
+	confunc hudselects1 { *bt_actor1 image hud/buttons1a }
+	confunc hudselects2 { *bt_actor2 image hud/buttons1a }
+	confunc hudselects3 { *bt_actor3 image hud/buttons1a }
+	confunc hudselects4 { *bt_actor4 image hud/buttons1a }
+	confunc hudselects5 { *bt_actor5 image hud/buttons1a }
+	confunc hudselects6 { *bt_actor6 image hud/buttons1a }
+	confunc hudselects7 { *bt_actor7 image hud/buttons1a }
+
+	confunc huddeselect0 { *bt_actor0 image hud/buttons1 }
+	confunc huddeselect1 { *bt_actor1 image hud/buttons1 }
+	confunc huddeselect2 { *bt_actor2 image hud/buttons1 }
+	confunc huddeselect3 { *bt_actor3 image hud/buttons1 }
+	confunc huddeselect4 { *bt_actor4 image hud/buttons1 }
+	confunc huddeselect5 { *bt_actor5 image hud/buttons1 }
+	confunc huddeselect6 { *bt_actor6 image hud/buttons1 }
+	confunc huddeselect7 { *bt_actor7 image hud/buttons1 }
+
+	confunc huddisable0 { *bt_actor0 image hud/buttons1g }
+	confunc huddisable1 { *bt_actor1 image hud/buttons1g }
+	confunc huddisable2 { *bt_actor2 image hud/buttons1g }
+	confunc huddisable3 { *bt_actor3 image hud/buttons1g }
+	confunc huddisable4 { *bt_actor4 image hud/buttons1g }
+	confunc huddisable5 { *bt_actor5 image hud/buttons1g }
+	confunc huddisable6 { *bt_actor6 image hud/buttons1g }
+	confunc huddisable7 { *bt_actor7 image hud/buttons1g }
+
+	pic bt_actor0
+	{
+		pos		"426 10"
+		texl	"0 0"
+		texh	"28 36"
+		mousefx true
+		click { cmd "hud_select 0" }
+	}
+	pic bt_actor1
+	{
+		pos		"457 10"
+		texl	"32 0"
+		texh	"60 36"
+		mousefx true
+		click { cmd "hud_select 1" }
+	}
+	pic bt_actor2
+	{
+		pos		"488 10"
+		texl	"64 0"
+		texh	"92 36"
+		mousefx true
+		click { cmd "hud_select 2" }
+	}
+	pic bt_actor3
+	{
+		pos		"519 10"
+		texl	"96 0"
+		texh	"124 36"
+		mousefx true
+		click { cmd "hud_select 3" }
+	}
+	pic bt_actor4
+	{
+		pos		"550 10"
+		texl	"0 38"
+		texh	"28 74"
+		mousefx true
+		click { cmd "hud_select 4" }
+	}
+	pic bt_actor5
+	{
+		pos		"581 10"
+		texl	"32 38"
+		texh	"60 74"
+		mousefx true
+		click { cmd "hud_select 5" }
+	}
+	pic bt_actor6
+	{
+		pos		"612 10"
+		texl	"64 38"
+		texh	"92 74"
+		mousefx true
+		click { cmd "hud_select 6" }
+	}
+	pic bt_actor7
+	{
+		pos		"643 10"
+		texl	"96 38"
+		texh	"124 74"
+		mousefx true
+		click { cmd "hud_select 7" }
+	}
+
+	// ==================
+	// round events
+	// ==================
+	
+	confunc startround
+	{
+		*bt_nextround image hud/buttons2a
+	}
+	
+	confunc endround
+	{
+		*bt_nextround image hud/buttons2
+	}
+	
+	// ==================
+	// weapon bars
+	// ==================
+	
+	zone bar_weapon_left_zone
+	{
+		pos		"0 616"
+		size	"176 152"
+		click
+	}
+	
+	zone bar_weapon_right_zone
+	{
+		pos		"848 616"
+		size	"176 152"
+		click
+	}
+	
+	pic bar_weapon_left
+	{
+		image	hud/bar_leftweapon
+		mousefx true
+		pos		"0 512"
+	}
+	
+	pic bar_weapon_right
+	{
+		image	hud/bar_rightweapon
+		mousefx true
+		pos		"768 512"
+	}
+	
+	func bt_weapon_clear
+	{
+		*bt_pfire_left   image hud/buttons1
+		*bt_pfire_right  image hud/buttons1
+		*bt_sfire_left   image hud/buttons1
+		*bt_sfire_right  image hud/buttons1
+	}
+	
+	confunc tomovs { bt_weapon_clear }		
+	confunc towpls { bt_weapon_clear *bt_pfire_left   image hud/buttons1a }
+	confunc towprs { bt_weapon_clear *bt_pfire_right  image hud/buttons1a }
+	confunc towsls { bt_weapon_clear *bt_sfire_left   image hud/buttons1a }
+	confunc towsrs { bt_weapon_clear *bt_sfire_right  image hud/buttons1a }
+
+	pic bt_pfire_right
+	{
+		mousefx true
+		pos		"174 650"
+		texl	"0 76"
+		texh	"75 128"
+		click	{ cmd firerp }
+	}
+
+	pic bt_pfire_left
+	{
+		mousefx true
+		pos		"776 650"
+		texl	"0 76"
+		texh	"75 128"
+		click	{ cmd firelp }
+	}
+
+	pic bt_sfire_right
+	{
+		mousefx true
+		pos		"174 708"
+		texl	"77 76"
+		texh	"152 128"
+		click	{ cmd firers }
+	}
+
+	pic bt_sfire_left
+	{
+		mousefx true
+		pos		"776 708"
+		texl	"77 76"
+		texh	"152 128"
+		click	{ cmd firels }
+	}
+
+	pic bt_reload_left
+	{
+		image	hud/buttons2
+		mousefx true
+		pos		"857 720"
+		texl	"0 38"
+		texh	"64 74"
+		click	{ cmd reloadleft }
+	}
+
+	pic bt_reload_right
+	{
+		image	hud/buttons2
+		mousefx true
+		pos		"103 720"
+		texl	"0 38"
+		texh	"64 74"
+		click	{ cmd reloadright }
+	}
+
+	string ammoleft
+	{
+		string	"*cvar mn_ammoleft"		
+		pos		"974 731"
+		align	uc
+	}
+
+	string ammoright
+	{
+		string	"*cvar mn_ammoright"		
+		pos		"52 731"
+		align	uc
+	}
+
+	// ==================
+	// info bar
+	// ==================
+	
+	zone bar_info_zone
+	{
+		pos		"176 640"
+		size	"672 128"
+		click
+	}
+	
+	pic bar_info
+	{
+		image	hud/bar_infoscreen
+		pos		"256 640"
+	}
+
+	confunc tostands { *bt_duck image hud/buttons2 }
+	confunc tocrouchs { *bt_duck image hud/buttons2a }
+
+	pic bt_duck
+	{
+		mousefx true
+		pos		"303 723"
+		texl	"0 75"
+		texh	"64 112"
+		click	{ cmd standcrouch }
+	}
+	
+	confunc startreactions { *bt_reaction image hud/button_guarda }
+	confunc stopreactions { *bt_reaction image hud/button_guard }
+
+	pic bt_reaction
+	{
+		mousefx true
+		pos		"303 686"
+		click	{ cmd togglereaction }
+	}		
+
+	// ==================
+	// right popup bar
+	// ==================
+
+	zone bar_popup_zone1
+	{
+		pos		"976 128"
+		size	"48 333"
+		click
+	}
+	
+	zone bar_popup_zone2
+	{
+		pos		"988 461"
+		size	"48 154"
+		click
+	}
+	
+	pic bar_popup
+	{
+		image	hud/bar_popup
+		pos		"960 256"
+	}
+
+	pic bar_game
+	{
+		image	hud/bar_game
+		pos		"960 128"
+	}
+
+	pic bt_game
+	{
+		image	hud/buttons1
+		mousefx true
+		pos		"983 139"
+		texl	"165 0"
+		texh	"201 75"
+		click	{ cmd mn_pop }
+	}
+
+	pic bt_physdata
+	{
+		image	hud/buttons1
+		mousefx true
+		pos		"983 266"
+		texl	"202 0"
+		texh	"238 75"
+		click	{ cmd "mn_push physdata" }
+	}
+
+	pic bt_inventory
+	{
+		image	hud/buttons1
+		mousefx true
+		pos		"983 376"
+		texl	"128 0"
+		texh	"164 75"
+		click	{ cmd "mn_push inventory" }
+	}
+
+	// ==================
+	// models
+	// ==================
+	model head
+	{
+		md2		"*cvar mn_head"
+		skin	"*cvar mn_skin"
+		origin	"50 78 0"
+		angles	"0 60 90"
+		scale	"8 8 8"
+		color	"0.5 0.5 0.5 1"
+	}
+	
+	container right 
+	{
+		pos "26 644"
+	}
+	
+	container left
+	{
+		pos "876 644"
+	}
+		
+		
+	// ==================
+	// string
+	// ==================
+	
+	string tus
+	{
+		string	"*cvar mn_tu"
+		pos		"397 673"
+		align	uc
+	}
+	
+	bar timeall
+	{
+		pos		"422 670"
+		size	"305 6"
+		color	".1 .1 .7 1"
+		current	"*cvar mn_tu"
+		max		"*cvar mn_tumax"
+		align	uc
+	}
+	bar timeremain
+	{
+		pos		"422 670"
+		size	"305 6"
+		color	".2 .2 1 1"
+		current	"*cvar mn_turemain"
+		max		"*cvar mn_tumax"
+		align	uc
+	}
+	
+	bar health
+	{
+		pos		"422 682"
+		size	"305 6"
+		color	"1 0 0 1"
+		current	"*cvar mn_hp"
+		max		"*cvar mn_hpmax"
+		align	uc
+	}
+	text infoscreen
+	{
+		pos		"425 702"
+		size	"260 50"
+		format	"20 0"
+	}
+	
+	// ==================
+	// init function
+	// ==================
+	
+	func init
+	{
+		cmd "set hud_refresh 1;"
+		cmd "ov_start;"
+	}	
+}
+
+// ==================
+// HUD INVENTORY
+// ==================
+	
+menu inventory
+{
+	// ==================
+	// background
+	// ==================
+	
+	pic bar_inventory
+	{
+		image	hud/bar_inventory
+		pos		"256 96"
+		click
+	}
+
+	string actorname
+	{
+		string	"*cvar mn_name"
+		pos		"290 123"
+	}
+	
+	zone bt_physdata
+	{
+		image	hud/buttons1
+		mousefx true
+		pos		"983 266"
+		size	"36 75"
+		click	{ cmd mn_pop }
+	}
+
+	zone bt_inventory
+	{
+		image	hud/buttons1
+		mousefx true
+		pos		"983 376"
+		size	"36 75"
+		click	{ cmd mn_pop }
+	}
+
+	// ==================
+	// containers
+	// ==================
+	
+	container right		{ pos "289 277" }
+	container left		{ pos "613 277" }
+	container floor		{ pos "284 458" }
+	container backpack	{ pos "613 155" }
+	container belt		{ pos "310 372" }
+	container holster	{ pos "639 369" }
+		
+	// ==================
+	// model
+	// ==================
+	
+	model actor
+	{
+		md2		"*cvar mn_body"
+		skin	"*cvar mn_skin"
+		anim	"stand_menu"
+		origin	"512 270 0"
+		angles	"0 70 90"
+		scale	"5 5 5"
+		color	"0.5 0.5 0.5 1"
+	}	
+	
+	model head
+	{
+		md2		"*cvar mn_head"
+		skin	"*cvar mn_skin"
+		tag		"actor tag_head"
+		color	"0.5 0.5 0.5 1"
+		scale	"1.0 1.0 1.0"
+	}	
+	
+	// ==================
+	// buttons
+	// ==================
+	
+	pic button_exit
+	{
+		image	hud/buttons2
+		mousefx true
+		pos		"684 554"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd mn_pop }
+	}
+}
+
+
+// ==================
+// HUD PHYSDATA
+// ==================
+	
+menu physdata
+{
+	// ==================
+	// background
+	// ==================
+	
+	pic bar_physdata
+	{
+		image	hud/bar_phys
+		pos		"256 96"
+		click
+	}
+
+	string actorname
+	{
+		string	"*cvar mn_name"
+		pos		"290 123"
+	}
+	
+	zone bt_physdata
+	{
+		image	hud/buttons1
+		mousefx true
+		pos		"983 266"
+		size	"36 75"
+		click	{ cmd mn_pop }
+	}
+
+	zone bt_inventory
+	{
+		image	hud/buttons1
+		mousefx true
+		pos		"983 376"
+		size	"36 75"
+		click	{ cmd mn_pop }
+	}
+
+	// ==================
+	// model
+	// ==================
+	
+	model actor
+	{
+		md2		"*cvar mn_body"
+		skin	"*cvar mn_skin"
+		anim	"stand2"
+		origin	"370 270 0"
+		angles	"0 70 90"
+		scale	"5 5 5"
+		color	"0.5 0.5 0.5 1"
+	}	
+	
+	model head
+	{
+		md2		"*cvar mn_head"
+		skin	"*cvar mn_skin"
+		tag		"actor tag_head"
+		color	"0.5 0.5 0.5 1"
+		scale	"1.0 1.0 1.0"
+	}	
+	
+	// ==================
+	// abilities
+	// ==================
+	
+	string pwr_lbl { pos "480 135"  string "Power:" }
+	string pwr_val { pos "745 135"  string "*cvar mn_tpwr" align ur }
+	pic pwr_rahmen { pos "477 148"  image menu/bar_rahmen }
+	bar pwr_bar    { pos "486 153" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string spd_lbl { pos "480 165" string "Speed:" }
+	string spd_val { pos "745 165" string "*cvar mn_tspd" align ur }
+	pic spd_rahmen { pos "477 178" image menu/bar_rahmen }
+	bar spd_bar    { pos "486 183" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string acc_lbl { pos "480 195" string "Accuracy:" }
+	string acc_val { pos "745 195" string "*cvar mn_tacc" align ur }
+	pic acc_rahmen { pos "477 208" image menu/bar_rahmen }
+	bar acc_bar    { pos "486 213" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 256 align uc }
+		
+	string mnd_lbl { pos "480 225" string "Mind:" }
+	string mnd_val { pos "745 225" string "*cvar mn_tmnd" align ur }
+	pic mnd_rahmen { pos "477 238" image menu/bar_rahmen }
+	bar mnd_bar    { pos "486 243" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string cls_lbl { pos "480 270" string "Close Combat:" }
+	string cls_val { pos "745 270" string "*cvar mn_tcls" align ur }
+	pic cls_rahmen { pos "477 283" image menu/bar_rahmen }
+	bar cls_bar    { pos "486 288" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string hvy_lbl { pos "480 300" string "Heavy Weapons:" }
+	string hvy_val { pos "745 300" string "*cvar mn_thvy" align ur }
+	pic hvy_rahmen { pos "477 313" image menu/bar_rahmen }
+	bar hvy_bar    { pos "486 318" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string ass_lbl { pos "480 330" string "Assault Guns:" }
+	string ass_val { pos "745 330" string "*cvar mn_tass" align ur }
+	pic ass_rahmen { pos "477 343" image menu/bar_rahmen }
+	bar ass_bar    { pos "486 348" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string prc_lbl { pos "480 360" string "Sniper Rifles:" }
+	string prc_val { pos "745 360" string "*cvar mn_tprc" align ur }
+	pic prc_rahmen { pos "477 373" image menu/bar_rahmen }
+	bar prc_bar    { pos "486 378" current "*cvar mn_vprc" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string exp_lbl { pos "480 390" string "High Explosives:" }
+	string exp_val { pos "745 390" string "*cvar mn_texp" align ur }
+	pic exp_rahmen { pos "477 403" image menu/bar_rahmen }
+	bar exp_bar    { pos "486 408" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	// ==================
+	// health and moral
+	// ==================
+	
+	string hp_val
+	{
+		string	"*cvar mn_hp"
+		pos		"696 472"
+		align	uc
+	}
+	pic ekg_hp
+	{
+		image	hud/phys_ekg_noclamp
+		pos		"334 465"
+		size	"324 32"
+	}
+	
+	string moral_val
+	{
+		string	"*cvar mn_moral"
+		pos		"696 512"
+		align	uc
+	}
+	pic ekg_moral
+	{
+		image	hud/phys_mor_noclamp
+		pos		"334 504"
+		size	"324 32"
+	}
+		
+	// ==================
+	// buttons
+	// ==================
+	
+	pic button_exit
+	{
+		image	hud/buttons2
+		mousefx true
+		pos		"684 554"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd mn_pop }
+	}
+}

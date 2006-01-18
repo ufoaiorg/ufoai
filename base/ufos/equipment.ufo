@@ -1,0 +1,98 @@
+equipment standard
+{
+	assault				2
+	assault_ammo		3
+	sniper				1
+	sniper_ammo			2
+	pistol				2
+	pistol_ammo			3
+	smg					2
+	smg_ammo			4
+	shotgun				1
+	shotgun_ammo		2
+	flamer				2
+	flamer_ammo			3
+	rpg					1
+	rpg_ammo			3
+	tachyonrifle		1
+	tachyonrifle_ammo	2
+	tachyonsniper		1
+	tachyonsniper_ammo	2
+	laserpistol			1
+	laserpistol_ammo	2
+	laserrifle			1
+	laserrifle_ammo		2
+	plaspistol			1
+	plaspistol_ammo		2
+	plasrifle			1
+	plasrifle_ammo		2
+	fraggrenade			6
+	knife				3
+
+	medikit				3
+	light				2
+	medium				1
+}
+
+equipment campaign_player
+{
+	assault			2
+	assault_ammo	5
+	sniper			1
+	sniper_ammo		3
+	pistol			3
+	pistol_ammo		6
+	smg				1
+	smg_ammo		3
+	shotgun			1
+	shotgun_ammo	3
+	flamer			1
+	flamer_ammo		2
+	rpg				1
+	rpg_ammo		4
+	fraggrenade		3
+	knife			2
+	
+	medikit			1
+	light			3
+}
+
+equipment campaign_market
+{
+	assault			2
+	assault_ammo	24
+	sniper			2
+	sniper_ammo		16
+	pistol			3
+	pistol_ammo		20
+	smg				2
+	smg_ammo		30
+	shotgun			3
+	shotgun_ammo	18
+	flamer			1
+	flamer_ammo		12
+	rpg				1
+	rpg_ammo		50
+	tachyonrifle		1
+	tachyonrifle_ammo	12
+	tachyonsniper		1
+	tachyonsniper_ammo	12
+	laserrifle			2
+	laserrifle_ammo		20
+	laserpistol			2
+	laserpistol_ammo	16
+	fraggrenade			14
+	knife				8
+
+	medikit				5
+	light				6
+	medium				4
+}
+
+equipment campaign_alien
+{
+	plasrifle		6
+	plasrifle_ammo	8
+	plaspistol		12
+	plaspistol_ammo	18
+}

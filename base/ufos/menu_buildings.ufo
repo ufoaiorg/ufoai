@@ -1,0 +1,135 @@
+// ==============
+// BUILDINGS
+// ==============
+menu buildings
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	basemap thebasemap
+	{
+		pos     "0 96"
+		size    "778 672"
+		click   { cmd "basemap_click" }
+		rclick
+		mclick
+	}
+
+	pic back_ul
+	{
+		image	menu/base_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/base_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/buildings_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/buildings_lr
+		pos		"512 256"
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	pic back
+	{
+		image	menu/button_mapmen_options2
+		pos	"950 10"
+		texl	"0 0"
+		texh	"64 64"
+		mousefx true
+		click
+		{
+			cmd mn_pop;
+		}
+	}
+
+	// ==================
+	// text and info
+	// ==================
+
+	string txt_credits
+	{
+		string	"*cvar mn_credits"
+		pos	"900 30"
+		font	f_big
+		align	ur
+	}
+
+	string title_building
+	{
+		string	"*cvar mn_building_title"
+		pos	"50 30"
+		font	f_big
+	}
+
+	string status_building
+	{
+		string	"*cvar mn_building_status"
+		pos	"30 720"
+		font	f_small
+	}
+
+
+	//pic building_pic2
+	//{
+	//	image   "*cvar mn_building_image2"
+	//	pos     "190 160"
+	//}
+
+	//pic building_pic
+	//{
+	//	image   "*cvar mn_building_image"
+	//	pos     "230 450"
+	//}
+
+	text buildings
+	{
+		pos	"770 120"
+		size	"210 620"
+		format	"20 700"
+		mousefx	true
+		num	3
+		click {  }
+		rclick { cmd "buildinginfo_click" }
+	}
+
+	text buildinginfo
+	{
+		pos	"30 600"
+		size	"220 220"
+		mousefx false
+		format	"20 140"
+		num	4
+	}
+
+
+	func init
+	{
+		cmd building_init;
+	}
+
+
+}

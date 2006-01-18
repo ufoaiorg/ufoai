@@ -1,0 +1,1144 @@
+// ==================
+// TEAM MENU
+// ==================
+	
+menu team
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}	
+	
+	// ==================
+	// background
+	// ==================
+	
+	pic back_ul
+	{
+		image	menu/team_ul
+		pos		"0 0"
+	}	
+		
+	pic back_ur
+	{
+		image	menu/team_ur
+		pos		"512 0"
+	}	
+		
+	pic back_ll
+	{
+		image	menu/team_ll
+		pos		"0 512"
+	}	
+		
+	pic back_lr
+	{
+		image	menu/team_lr
+		pos		"512 512"
+	}
+	
+	
+	// ==================
+	// names list
+	// ==================
+	
+	func team_clear
+	{
+		*bt_actor0 image hud/buttons1
+		*bt_actor1 image hud/buttons1
+		*bt_actor2 image hud/buttons1
+		*bt_actor3 image hud/buttons1
+		*bt_actor4 image hud/buttons1
+		*bt_actor5 image hud/buttons1
+		*bt_actor6 image hud/buttons1
+		*bt_actor7 image hud/buttons1
+		*bt_actor8 image hud/buttons1
+		*bt_actor9 image hud/buttons1
+		*bt_actor10 image hud/buttons1
+		*bt_actor11 image hud/buttons1
+		*bt_actor12 image hud/buttons1
+		*bt_actor13 image hud/buttons1
+		*bt_actor14 image hud/buttons1
+		*bt_actor15 image hud/buttons1
+		*bt_actor16 image hud/buttons1
+		*bt_actor17 image hud/buttons1
+		*bt_actor18 image hud/buttons1
+		
+		*txt_actor0 color "0 .78 0 1"
+		*txt_actor1 color "0 .78 0 1"
+		*txt_actor2 color "0 .78 0 1"
+		*txt_actor3 color "0 .78 0 1"
+		*txt_actor4 color "0 .78 0 1"
+		*txt_actor5 color "0 .78 0 1"
+		*txt_actor6 color "0 .78 0 1"
+		*txt_actor7 color "0 .78 0 1"
+		*txt_actor8 color "0 .78 0 1"
+		*txt_actor9 color "0 .78 0 1"
+		*txt_actor10 color "0 .78 0 1"
+		*txt_actor11 color "0 .78 0 1"
+		*txt_actor12 color "0 .78 0 1"
+		*txt_actor13 color "0 .78 0 1"
+		*txt_actor14 color "0 .78 0 1"
+		*txt_actor15 color "0 .78 0 1"
+		*txt_actor16 color "0 .78 0 1"
+		*txt_actor17 color "0 .78 0 1"
+		*txt_actor18 color "0 .78 0 1"
+	}
+	
+	confunc listdel0 { *bt_actor0 image hud/buttons1 }
+	confunc listdel1 { *bt_actor1 image hud/buttons1 }
+	confunc listdel2 { *bt_actor2 image hud/buttons1 }
+	confunc listdel3 { *bt_actor3 image hud/buttons1 }
+	confunc listdel4 { *bt_actor4 image hud/buttons1 }
+	confunc listdel5 { *bt_actor5 image hud/buttons1 }
+	confunc listdel6 { *bt_actor6 image hud/buttons1 }
+	confunc listdel7 { *bt_actor7 image hud/buttons1 }
+	confunc listdel8 { *bt_actor8 image hud/buttons1 }
+	confunc listdel9 { *bt_actor9 image hud/buttons1 }
+	confunc listdel10 { *bt_actor10 image hud/buttons1 }
+	confunc listdel11 { *bt_actor11 image hud/buttons1 }
+	confunc listdel12 { *bt_actor12 image hud/buttons1 }
+	confunc listdel13 { *bt_actor13 image hud/buttons1 }
+	confunc listdel14 { *bt_actor14 image hud/buttons1 }
+	confunc listdel15 { *bt_actor15 image hud/buttons1 }
+	confunc listdel16 { *bt_actor16 image hud/buttons1 }
+	confunc listdel17 { *bt_actor17 image hud/buttons1 }
+	confunc listdel18 { *bt_actor18 image hud/buttons1 }
+			
+	confunc listadd0 { *bt_actor0 image hud/buttons1a }
+	confunc listadd1 { *bt_actor1 image hud/buttons1a }
+	confunc listadd2 { *bt_actor2 image hud/buttons1a }
+	confunc listadd3 { *bt_actor3 image hud/buttons1a }
+	confunc listadd4 { *bt_actor4 image hud/buttons1a }
+	confunc listadd5 { *bt_actor5 image hud/buttons1a }
+	confunc listadd6 { *bt_actor6 image hud/buttons1a }
+	confunc listadd7 { *bt_actor7 image hud/buttons1a }
+	confunc listadd8 { *bt_actor8 image hud/buttons1a }
+	confunc listadd9 { *bt_actor9 image hud/buttons1a }
+	confunc listadd10 { *bt_actor10 image hud/buttons1a }
+	confunc listadd11 { *bt_actor11 image hud/buttons1a }
+	confunc listadd12 { *bt_actor12 image hud/buttons1a }
+	confunc listadd13 { *bt_actor13 image hud/buttons1a }
+	confunc listadd14 { *bt_actor14 image hud/buttons1a }
+	confunc listadd15 { *bt_actor15 image hud/buttons1a }
+	confunc listadd16 { *bt_actor16 image hud/buttons1a }
+	confunc listadd17 { *bt_actor17 image hud/buttons1a }
+	confunc listadd18 { *bt_actor18 image hud/buttons1a }
+	
+	confunc listdisable0 { *bt_actor0 image hud/buttons1g }
+	confunc listdisable1 { *bt_actor1 image hud/buttons1g }
+	confunc listdisable2 { *bt_actor2 image hud/buttons1g }
+	confunc listdisable3 { *bt_actor3 image hud/buttons1g }
+	confunc listdisable4 { *bt_actor4 image hud/buttons1g }
+	confunc listdisable5 { *bt_actor5 image hud/buttons1g }
+	confunc listdisable6 { *bt_actor6 image hud/buttons1g }
+	confunc listdisable7 { *bt_actor7 image hud/buttons1g }
+	confunc listdisable8 { *bt_actor8 image hud/buttons1g }
+	confunc listdisable9 { *bt_actor9 image hud/buttons1g }
+	confunc listdisable10 { *bt_actor10 image hud/buttons1g }
+	confunc listdisable11 { *bt_actor11 image hud/buttons1g }
+	confunc listdisable12 { *bt_actor12 image hud/buttons1g }
+	confunc listdisable13 { *bt_actor13 image hud/buttons1g }
+	confunc listdisable14 { *bt_actor14 image hud/buttons1g }
+	confunc listdisable15 { *bt_actor15 image hud/buttons1g }
+	confunc listdisable16 { *bt_actor16 image hud/buttons1g }
+	confunc listdisable17 { *bt_actor17 image hud/buttons1g }
+	confunc listdisable18 { *bt_actor18 image hud/buttons1g }
+	
+	confunc teamselect0 { *txt_actor0 color "1 1 1 1" }
+	confunc teamselect1 { *txt_actor1 color "1 1 1 1" }
+	confunc teamselect2 { *txt_actor2 color "1 1 1 1" }
+	confunc teamselect3 { *txt_actor3 color "1 1 1 1" }
+	confunc teamselect4 { *txt_actor4 color "1 1 1 1" }
+	confunc teamselect5 { *txt_actor5 color "1 1 1 1" }
+	confunc teamselect6 { *txt_actor6 color "1 1 1 1" }
+	confunc teamselect7 { *txt_actor7 color "1 1 1 1" }
+	confunc teamselect8 { *txt_actor8 color "1 1 1 1" }
+	confunc teamselect9 { *txt_actor9 color "1 1 1 1" }
+	confunc teamselect10 { *txt_actor10 color "1 1 1 1" }
+	confunc teamselect11 { *txt_actor11 color "1 1 1 1" }
+	confunc teamselect12 { *txt_actor12 color "1 1 1 1" }
+	confunc teamselect13 { *txt_actor13 color "1 1 1 1" }
+	confunc teamselect14 { *txt_actor14 color "1 1 1 1" }
+	confunc teamselect15 { *txt_actor15 color "1 1 1 1" }
+	confunc teamselect16 { *txt_actor16 color "1 1 1 1" }
+	confunc teamselect17 { *txt_actor17 color "1 1 1 1" }
+	confunc teamselect18 { *txt_actor18 color "1 1 1 1" }
+			
+	confunc teamdeselect0 { *txt_actor0 color "0 .78 0 1" }
+	confunc teamdeselect1 { *txt_actor1 color "0 .78 0 1" }
+	confunc teamdeselect2 { *txt_actor2 color "0 .78 0 1" }
+	confunc teamdeselect3 { *txt_actor3 color "0 .78 0 1" }
+	confunc teamdeselect4 { *txt_actor4 color "0 .78 0 1" }
+	confunc teamdeselect5 { *txt_actor5 color "0 .78 0 1" }
+	confunc teamdeselect6 { *txt_actor6 color "0 .78 0 1" }
+	confunc teamdeselect7 { *txt_actor7 color "0 .78 0 1" }
+	confunc teamdeselect8 { *txt_actor8 color "0 .78 0 1" }
+	confunc teamdeselect9 { *txt_actor9 color "0 .78 0 1" }
+	confunc teamdeselect10 { *txt_actor10 color "0 .78 0 1" }
+	confunc teamdeselect11 { *txt_actor11 color "0 .78 0 1" }
+	confunc teamdeselect12 { *txt_actor12 color "0 .78 0 1" }
+	confunc teamdeselect13 { *txt_actor13 color "0 .78 0 1" }
+	confunc teamdeselect14 { *txt_actor14 color "0 .78 0 1" }
+	confunc teamdeselect15 { *txt_actor15 color "0 .78 0 1" }
+	confunc teamdeselect16 { *txt_actor16 color "0 .78 0 1" }
+	confunc teamdeselect17 { *txt_actor17 color "0 .78 0 1" }
+	confunc teamdeselect18 { *txt_actor18 color "0 .78 0 1" }
+			
+	pic bt_actor0
+	{
+		pos		"365 22"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 0" }
+	}
+	pic bt_actor1
+	{
+		pos		"365 60"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 1" }
+	}
+	pic bt_actor2
+	{
+		pos		"365 98"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 2" }
+	}
+	pic bt_actor3
+	{
+		pos		"365 136"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 3" }
+	}
+	pic bt_actor4
+	{
+		pos		"365 174"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 4" }
+	}
+	pic bt_actor5
+	{
+		pos		"365 212"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 5" }
+	}
+	pic bt_actor6
+	{
+		pos		"365 250"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 6" }
+	}
+	pic bt_actor7
+	{
+		pos		"365 288"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 7" }
+	}
+	pic bt_actor8
+	{
+		pos		"365 326"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 8" }
+	}
+	pic bt_actor9
+	{
+		pos		"365 364"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 9" }
+	}
+	pic bt_actor10
+	{
+		pos		"365 402"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 10" }
+	}
+	pic bt_actor11
+	{
+		pos		"365 440"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 11" }
+	}
+	pic bt_actor12
+	{
+		pos		"365 478"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 12" }
+	}
+	pic bt_actor13
+	{
+		pos		"365 516"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 13" }
+	}
+	pic bt_actor14
+	{
+		pos		"365 554"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 14" }
+	}
+	pic bt_actor15
+	{
+		pos		"365 592"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 15" }
+	}
+	pic bt_actor16
+	{
+		pos		"365 630"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 16" }
+	}
+	pic bt_actor17
+	{
+		pos		"365 668"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 17" }
+	}
+	pic bt_actor18
+	{
+		pos		"365 706"
+		texl	"154 76"
+		texh	"207 113"
+		mousefx true
+		click { cmd "team_hire 18" }
+	}
+
+	string txt_actor0
+	{
+		string	"*cvar mn_name0"
+		pos		"30 32"
+		size	"290 16"
+		click { cmd "team_select 0" }
+	}
+	string txt_actor1
+	{
+		string	"*cvar mn_name1"
+		pos		"30 70"
+		size	"290 16"
+		click { cmd "team_select 1" }
+	}
+	string txt_actor2
+	{
+		string	"*cvar mn_name2"
+		pos		"30 108"
+		size	"290 16"
+		click { cmd "team_select 2" }
+	}
+	string txt_actor3
+	{
+		string	"*cvar mn_name3"
+		pos		"30 146"
+		size	"290 16"
+		click { cmd "team_select 3" }
+	}
+	string txt_actor4
+	{
+		string	"*cvar mn_name4"
+		pos		"30 184"
+		size	"290 16"
+		click { cmd "team_select 4" }
+	}
+	string txt_actor5
+	{
+		string	"*cvar mn_name5"
+		pos		"30 222"
+		size	"290 16"
+		click { cmd "team_select 5" }
+	}
+	string txt_actor6
+	{
+		string	"*cvar mn_name6"
+		pos		"30 260"
+		size	"290 16"
+		click { cmd "team_select 6" }
+	}
+	string txt_actor7
+	{
+		string	"*cvar mn_name7"
+		pos		"30 298"
+		size	"290 16"
+		click { cmd "team_select 7" }
+	}
+	string txt_actor8
+	{
+		string	"*cvar mn_name8"
+		pos		"30 336"
+		size	"290 16"
+		click { cmd "team_select 8" }
+	}
+	string txt_actor9
+	{
+		string	"*cvar mn_name9"
+		pos		"30 374"
+		size	"290 16"
+		click { cmd "team_select 9" }
+	}
+	string txt_actor10
+	{
+		string	"*cvar mn_name10"
+		pos		"30 412"
+		size	"290 16"
+		click { cmd "team_select 10" }
+	}
+	string txt_actor11
+	{
+		string	"*cvar mn_name11"
+		pos		"30 450"
+		size	"290 16"
+		click { cmd "team_select 11" }
+	}
+	string txt_actor12
+	{
+		string	"*cvar mn_name12"
+		pos		"30 488"
+		size	"290 16"
+		click { cmd "team_select 12" }
+	}
+	string txt_actor13
+	{
+		string	"*cvar mn_name13"
+		pos		"30 526"
+		size	"290 16"
+		click { cmd "team_select 13" }
+	}
+	string txt_actor14
+	{
+		string	"*cvar mn_name14"
+		pos		"30 564"
+		size	"290 16"
+		click { cmd "team_select 14" }
+	}
+	string txt_actor15
+	{
+		string	"*cvar mn_name15"
+		pos		"30 602"
+		size	"290 16"
+		click { cmd "team_select 15" }
+	}
+	string txt_actor16
+	{
+		string	"*cvar mn_name16"
+		pos		"30 640"
+		size	"290 16"
+		click { cmd "team_select 16" }
+	}
+	string txt_actor17
+	{
+		string	"*cvar mn_name17"
+		pos		"30 678"
+		size	"290 16"
+		click { cmd "team_select 17" }
+	}
+	string txt_actor18
+	{
+		string	"*cvar mn_name18"
+		pos		"30 716"
+		size	"290 16"
+		click { cmd "team_select 18" }
+	}
+	
+	
+	// ==================
+	// actor info
+	// ==================
+	
+	confunc mn_name_changed
+	{
+		*txt_name mousefx false
+		cmd team_changename
+	}
+	
+	string txt_name
+	{
+		string	"*cvar mn_name"
+		pos		"475 20"
+	}
+	
+	pic bt_editname
+	{
+		image	"menu/menu_buttons1"
+		pos		"920 10"
+		texl	"0 216"
+		texh	"71 253"
+		mousefx	true
+		click 
+		{ 
+			cmd "msgmenu ?mn_name" 
+			*txt_name mousefx true
+		}
+	}
+	
+	model body
+	{
+		md2		"*cvar mn_body"
+		skin	"*cvar mn_skin"
+		anim	"stand2"
+		origin	"580 215 0"
+		angles	"0 70 90"
+		scale	"6.7 6.7 6.7"
+		color	"0.5 0.5 0.5 1"
+	}	
+	
+	model head
+	{
+		md2		"*cvar mn_head"
+		skin	"*cvar mn_skin"
+		tag		"body tag_head"
+		color	"0.5 0.5 0.5 1"
+		scale	"1.0 1.0 1.0"
+	}	
+
+	string pwr_lbl { pos "700 85"  string "Power:" }
+	string pwr_val { pos "975 85"  string "*cvar mn_tpwr" align ur }
+	pic pwr_rahmen { pos "707 98"  image menu/bar_rahmen }
+	bar pwr_bar    { pos "716 103" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string spd_lbl { pos "700 120" string "Speed:" }
+	string spd_val { pos "975 120" string "*cvar mn_tspd" align ur }
+	pic spd_rahmen { pos "707 133" image menu/bar_rahmen }
+	bar spd_bar    { pos "716 138" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string acc_lbl { pos "700 155" string "Accuracy:" }
+	string acc_val { pos "975 155" string "*cvar mn_tacc" align ur }
+	pic acc_rahmen { pos "707 168" image menu/bar_rahmen }
+	bar acc_bar    { pos "716 173" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 256 align uc }
+		
+	string mnd_lbl { pos "700 190" string "Mind:" }
+	string mnd_val { pos "975 190" string "*cvar mn_tmnd" align ur }
+	pic mnd_rahmen { pos "707 203" image menu/bar_rahmen }
+	bar mnd_bar    { pos "716 208" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string cls_lbl { pos "700 240" string "Close Combat:" }
+	string cls_val { pos "975 240" string "*cvar mn_tcls" align ur }
+	pic cls_rahmen { pos "707 253" image menu/bar_rahmen }
+	bar cls_bar    { pos "716 258" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string hvy_lbl { pos "700 275" string "Heavy Weapons:" }
+	string hvy_val { pos "975 275" string "*cvar mn_thvy" align ur }
+	pic hvy_rahmen { pos "707 288" image menu/bar_rahmen }
+	bar hvy_bar    { pos "716 293" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string ass_lbl { pos "700 310" string "Assault Guns:" }
+	string ass_val { pos "975 310" string "*cvar mn_tass" align ur }
+	pic ass_rahmen { pos "707 323" image menu/bar_rahmen }
+	bar ass_bar    { pos "716 328" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string prc_lbl { pos "700 345" string "Sniper Rifles:" }
+	string prc_val { pos "975 345" string "*cvar mn_tprc" align ur }
+	pic prc_rahmen { pos "707 358" image menu/bar_rahmen }
+	bar prc_bar    { pos "716 363" current "*cvar mn_vprc" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string exp_lbl { pos "700 380" string "High Explosives:" }
+	string exp_val { pos "975 380" string "*cvar mn_texp" align ur }
+	pic exp_rahmen { pos "707 393" image menu/bar_rahmen }
+	bar exp_bar    { pos "716 398" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	// ==================
+	// dropship
+	// ==================
+	
+	model dropship
+	{
+		md2		"models/objects/dropship.md2"
+		origin	"690 640 0"
+		angles	"-20 -40 120"
+		scale	"1.1 1.1 1.1"
+		color	"0.5 0.5 0.5 1"
+	}	
+	
+	model dropship_top
+	{
+		md2		"models/objects/dropship_top.md2"
+		origin	"690 640 0"
+		angles	"-20 -40 120"
+		scale	"1.1 1.1 1.1"
+		color	"0.5 0.5 0.5 1"
+	}	
+	
+	model dropship_glass
+	{
+		md2		"models/objects/dropship_glass.md2"
+		origin	"690 640 0"
+		angles	"-20 -40 120"
+		scale	"1.1 1.1 1.1"
+		color	"0.5 0.5 0.5 1"
+	}
+	
+	string team_members
+	{
+		string	"Team Members:"
+		pos		"480 486"
+	}
+	
+	string team_hired
+	{
+		string	"*cvar mn_hired"
+		pos		"480 508"
+	}
+	
+	// ==================
+	// additional stuff
+	// ==================
+	
+	pic bt_go
+	{
+		image	hud/buttons2
+		mousefx	true
+		pos		"940 720"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd "mn_pop;mn_push equipment"  }
+	}
+	
+	func init
+	{
+		team_clear
+		cmd "team_mark;team_select 0"
+	}
+}
+	
+// ==================
+// EQUIPMENT MENU
+// ==================
+	
+menu equipment
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}	
+	
+	// ==================
+	// background
+	// ==================
+	
+	pic back_ul
+	{
+		image	menu/equipment_ul
+		pos		"0 0"
+	}	
+		
+	pic back_ur
+	{
+		image	menu/equipment_ur
+		pos		"512 0"
+	}	
+		
+	pic back_ll
+	{
+		image	menu/equipment_ll
+		pos		"0 512"
+	}	
+		
+	pic back_lr
+	{
+		image	menu/equipment_lr
+		pos		"512 512"
+	}
+	
+	// ==================
+	// names list
+	// ==================
+	
+	func names_clear
+	{
+		*bt_actor0 image hud/buttons1
+		*bt_actor1 image hud/buttons1
+		*bt_actor2 image hud/buttons1
+		*bt_actor3 image hud/buttons1
+		*bt_actor4 image hud/buttons1
+		*bt_actor5 image hud/buttons1
+		*bt_actor6 image hud/buttons1
+		*bt_actor7 image hud/buttons1
+		*txt_actor0 color "0 .78 0 1"
+		*txt_actor1 color "0 .78 0 1"
+		*txt_actor2 color "0 .78 0 1"
+		*txt_actor3 color "0 .78 0 1"
+		*txt_actor4 color "0 .78 0 1"
+		*txt_actor5 color "0 .78 0 1"
+		*txt_actor6 color "0 .78 0 1"
+		*txt_actor7 color "0 .78 0 1"
+	}
+			
+	confunc equipdeselect0 { *bt_actor0 image hud/buttons1 *txt_actor0 color "0 .78 0 1" }
+	confunc equipdeselect1 { *bt_actor1 image hud/buttons1 *txt_actor1 color "0 .78 0 1" }
+	confunc equipdeselect2 { *bt_actor2 image hud/buttons1 *txt_actor2 color "0 .78 0 1" }
+	confunc equipdeselect3 { *bt_actor3 image hud/buttons1 *txt_actor3 color "0 .78 0 1" }
+	confunc equipdeselect4 { *bt_actor4 image hud/buttons1 *txt_actor4 color "0 .78 0 1" }
+	confunc equipdeselect5 { *bt_actor5 image hud/buttons1 *txt_actor5 color "0 .78 0 1" }
+	confunc equipdeselect6 { *bt_actor6 image hud/buttons1 *txt_actor6 color "0 .78 0 1" }
+	confunc equipdeselect7 { *bt_actor7 image hud/buttons1 *txt_actor7 color "0 .78 0 1" }
+
+	confunc equipselect0 { *bt_actor0 image hud/buttons1a *txt_actor0 color "1 1 1 1" }
+	confunc equipselect1 { *bt_actor1 image hud/buttons1a *txt_actor1 color "1 1 1 1" }
+	confunc equipselect2 { *bt_actor2 image hud/buttons1a *txt_actor2 color "1 1 1 1" }
+	confunc equipselect3 { *bt_actor3 image hud/buttons1a *txt_actor3 color "1 1 1 1" }
+	confunc equipselect4 { *bt_actor4 image hud/buttons1a *txt_actor4 color "1 1 1 1" }
+	confunc equipselect5 { *bt_actor5 image hud/buttons1a *txt_actor5 color "1 1 1 1" }
+	confunc equipselect6 { *bt_actor6 image hud/buttons1a *txt_actor6 color "1 1 1 1" }
+	confunc equipselect7 { *bt_actor7 image hud/buttons1a *txt_actor7 color "1 1 1 1" }
+
+	confunc equipdisable0 { *bt_actor0 image hud/buttons1g }
+	confunc equipdisable1 { *bt_actor1 image hud/buttons1g }
+	confunc equipdisable2 { *bt_actor2 image hud/buttons1g }
+	confunc equipdisable3 { *bt_actor3 image hud/buttons1g }
+	confunc equipdisable4 { *bt_actor4 image hud/buttons1g }
+	confunc equipdisable5 { *bt_actor5 image hud/buttons1g }
+	confunc equipdisable6 { *bt_actor6 image hud/buttons1g }
+	confunc equipdisable7 { *bt_actor7 image hud/buttons1g }
+
+	pic bt_actor0
+	{
+		pos		"10 14"
+		texl	"0 0"
+		texh	"28 36"
+		mousefx true
+		click { cmd "equip_select 0" }
+	}
+	pic bt_actor1
+	{
+		pos		"10 55"
+		texl	"32 0"
+		texh	"60 36"
+		mousefx true
+		click { cmd "equip_select 1" }
+	}
+	pic bt_actor2
+	{
+		pos		"10 96"
+		texl	"64 0"
+		texh	"92 36"
+		mousefx true
+		click { cmd "equip_select 2" }
+	}
+	pic bt_actor3
+	{
+		pos		"10 137"
+		texl	"96 0"
+		texh	"124 36"
+		mousefx true
+		click { cmd "equip_select 3" }
+	}
+	pic bt_actor4
+	{
+		pos		"10 178"
+		texl	"0 38"
+		texh	"28 74"
+		mousefx true
+		click { cmd "equip_select 4" }
+	}
+	pic bt_actor5
+	{
+		pos		"10 219"
+		texl	"32 38"
+		texh	"60 74"
+		mousefx true
+		click { cmd "equip_select 5" }
+	}
+	pic bt_actor6
+	{
+		pos		"10 260"
+		texl	"64 38"
+		texh	"92 74"
+		mousefx true
+		click { cmd "equip_select 6" }
+	}
+	pic bt_actor7
+	{
+		pos		"10 301"
+		texl	"96 38"
+		texh	"124 74"
+		mousefx true
+		click { cmd "equip_select 7" }
+	}
+
+	string txt_actor0
+	{
+		string	"*cvar mn_name0"
+		pos		"60 23"
+		size	"270 16"
+		click { cmd "equip_select 0" }
+	}
+	string txt_actor1
+	{
+		string	"*cvar mn_name1"
+		pos		"60 64"
+		size	"270 16"
+		click { cmd "equip_select 1" }
+	}
+	string txt_actor2
+	{
+		string	"*cvar mn_name2"
+		pos		"60 105"
+		size	"270 16"
+		click { cmd "equip_select 2" }
+	}
+	string txt_actor3
+	{
+		string	"*cvar mn_name3"
+		pos		"60 146"
+		size	"270 16"
+		click { cmd "equip_select 3" }
+	}
+	string txt_actor4
+	{
+		string	"*cvar mn_name4"
+		pos		"60 187"
+		size	"270 16"
+		click { cmd "equip_select 4" }
+	}
+	string txt_actor5
+	{
+		string	"*cvar mn_name5"
+		pos		"60 228"
+		size	"270 16"
+		click { cmd "equip_select 5" }
+	}
+	string txt_actor6
+	{
+		string	"*cvar mn_name6"
+		pos		"60 269"
+		size	"270 16"
+		click { cmd "equip_select 6" }
+	}
+	string txt_actor7
+	{
+		string	"*cvar mn_name7"
+		pos		"60 310"
+		size	"270 16"
+		click { cmd "equip_select 7" }
+	}
+
+	// ==================
+	// category buttons
+	// ==================
+	
+	confunc equip_reset 
+	{
+		*bt_primary		image menu/menu_buttons1
+		*bt_secondary	image menu/menu_buttons1
+		*bt_misc		image menu/menu_buttons1
+		*bt_armor		image menu/menu_buttons1
+	}
+	confunc equip_primary	{ cmd "equip_type 0;" equip_reset *bt_primary	image menu/menu_buttons1a }
+	confunc equip_secondary	{ cmd "equip_type 1;" equip_reset *bt_secondary	image menu/menu_buttons1a }
+	confunc equip_misc		{ cmd "equip_type 2;" equip_reset *bt_misc		image menu/menu_buttons1a }
+	confunc equip_armor		{ cmd "equip_type 3;" equip_reset *bt_armor		image menu/menu_buttons1a }
+
+	pic bt_primary
+	{
+		image	menu/menu_buttons1
+		mousefx	true
+		pos		"374 125"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ equip_primary }
+	}
+	
+	pic bt_secondary
+	{
+		image	menu/menu_buttons1
+		mousefx	true
+		pos		"374 180"
+		texl	"0 162"
+		texh	"128 214"
+		click	{ equip_secondary }
+	}
+	
+	pic bt_misc
+	{
+		image	menu/menu_buttons1
+		mousefx	true
+		pos		"374 235"
+		texl	"0 108"
+		texh	"128 160"
+		click	{ equip_misc }
+	}
+	
+	pic bt_armor
+	{
+		image	menu/menu_buttons1
+		mousefx	true
+		pos		"374 290"
+		texl	"0 54"
+		texh	"128 106"
+		click	{ equip_armor }
+	}
+	
+	
+	// ==================
+	// item description
+	// ==================
+	
+	string itemname
+	{
+		string	"*cvar mn_itemname"
+		pos		"203 390"
+		align	uc
+	}
+	
+	item itemmodel
+	{
+		string	"*cvar mn_item"
+		pos		"203 472"
+		scale	"7 7 7"
+	}	
+	
+	item weaponmodel
+	{
+		string	"*cvar mn_weapon"
+		pos		"160 472"
+		scale	"7 7 7"
+	}	
+	
+	item ammomodel
+	{
+		string	"*cvar mn_ammo"
+		pos		"340 472"
+		scale	"7 7 7"
+	}	
+	
+	text description
+	{
+		pos		"40 550"
+		size	"326 200"
+		format	"20 0"
+	}
+	
+	// ==================
+	// actor stats
+	// ==================
+	
+	string pwr_lbl { pos "60 375"  string "Power:" }
+	string pwr_val { pos "335 375"  string "*cvar mn_tpwr" align ur }
+	pic pwr_rahmen { pos "67 388"  image menu/bar_rahmen }
+	bar pwr_bar    { pos "76 393" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string spd_lbl { pos "60 410" string "Speed:" }
+	string spd_val { pos "335 410" string "*cvar mn_tspd" align ur }
+	pic spd_rahmen { pos "67 423" image menu/bar_rahmen }
+	bar spd_bar    { pos "76 428" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string acc_lbl { pos "60 445" string "Accuracy:" }
+	string acc_val { pos "335 445" string "*cvar mn_tacc" align ur }
+	pic acc_rahmen { pos "67 458" image menu/bar_rahmen }
+	bar acc_bar    { pos "76 463" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 256 align uc }
+		
+	string mnd_lbl { pos "60 480" string "Mind:" }
+	string mnd_val { pos "335 480" string "*cvar mn_tmnd" align ur }
+	pic mnd_rahmen { pos "67 493" image menu/bar_rahmen }
+	bar mnd_bar    { pos "76 498" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string cls_lbl { pos "60 530" string "Close Combat:" }
+	string cls_val { pos "335 530" string "*cvar mn_tcls" align ur }
+	pic cls_rahmen { pos "67 543" image menu/bar_rahmen }
+	bar cls_bar    { pos "76 548" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string hvy_lbl { pos "60 565" string "Heavy Weapons:" }
+	string hvy_val { pos "335 565" string "*cvar mn_thvy" align ur }
+	pic hvy_rahmen { pos "67 578" image menu/bar_rahmen }
+	bar hvy_bar    { pos "76 583" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string ass_lbl { pos "60 600" string "Assault Guns:" }
+	string ass_val { pos "335 600" string "*cvar mn_tass" align ur }
+	pic ass_rahmen { pos "67 613" image menu/bar_rahmen }
+	bar ass_bar    { pos "76 618" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string prc_lbl { pos "60 635" string "Sniper Rifles:" }
+	string prc_val { pos "335 635" string "*cvar mn_tprc" align ur }
+	pic prc_rahmen { pos "67 648" image menu/bar_rahmen }
+	bar prc_bar    { pos "76 653" current "*cvar mn_vprc" size "245 6" color "0 .8 0 1" max 256 align uc }
+	
+	string exp_lbl { pos "60 670" string "High Explosives:" }
+	string exp_val { pos "335 670" string "*cvar mn_texp" align ur }
+	pic exp_rahmen { pos "67 683" image menu/bar_rahmen }
+	bar exp_bar    { pos "76 688" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
+
+	// ==================
+	// switch
+	// ==================
+	
+	func weapon_stats
+	{
+		*itemname invis false
+		*itemmodel invis false
+		*weaponmodel invis false
+		*ammomodel invis false
+		*description invis false
+		
+		*pwr_lbl invis true *pwr_val invis true *pwr_rahmen invis true *pwr_bar invis true
+		*spd_lbl invis true *spd_val invis true *spd_rahmen invis true *spd_bar invis true
+		*acc_lbl invis true *acc_val invis true *acc_rahmen invis true *acc_bar invis true
+		*mnd_lbl invis true *mnd_val invis true *mnd_rahmen invis true *mnd_bar invis true
+		*cls_lbl invis true *cls_val invis true *cls_rahmen invis true *cls_bar invis true
+		*hvy_lbl invis true *hvy_val invis true *hvy_rahmen invis true *hvy_bar invis true
+		*ass_lbl invis true *ass_val invis true *ass_rahmen invis true *ass_bar invis true
+		*prc_lbl invis true *prc_val invis true *prc_rahmen invis true *prc_bar invis true
+		*exp_lbl invis true *exp_val invis true *exp_rahmen invis true *exp_bar invis true
+		
+		*txt_weaponinfo color "1 1 1 1"
+		*txt_abilities color "0 .78 0 1"
+	}
+	
+	func actor_stats
+	{
+		*itemname invis true
+		*itemmodel invis true
+		*weaponmodel invis true
+		*ammomodel invis true
+		*description invis true
+
+		*pwr_lbl invis false *pwr_val invis false *pwr_rahmen invis false *pwr_bar invis false
+		*spd_lbl invis false *spd_val invis false *spd_rahmen invis false *spd_bar invis false
+		*acc_lbl invis false *acc_val invis false *acc_rahmen invis false *acc_bar invis false
+		*mnd_lbl invis false *mnd_val invis false *mnd_rahmen invis false *mnd_bar invis false
+		*cls_lbl invis false *cls_val invis false *cls_rahmen invis false *cls_bar invis false
+		*hvy_lbl invis false *hvy_val invis false *hvy_rahmen invis false *hvy_bar invis false
+		*ass_lbl invis false *ass_val invis false *ass_rahmen invis false *ass_bar invis false
+		*prc_lbl invis false *prc_val invis false *prc_rahmen invis false *prc_bar invis false
+		*exp_lbl invis false *exp_val invis false *exp_rahmen invis false *exp_bar invis false
+
+		*txt_weaponinfo color "0 .78 0 1"
+		*txt_abilities color "1 1 1 1"
+	}
+	
+	string txt_weaponinfo
+	{
+		string	"Object Info"
+		pos		"40 722"
+	}
+	zone zone_weaponinfo
+	{
+		pos		"20 710"
+		size	"180 40"
+		click	{ weapon_stats }
+	}
+
+	string txt_abilities
+	{
+		string	"Actor Abilities"
+		pos		"207 722"
+	}
+	zone zone_abilities
+	{
+		pos		"205 710"
+		size	"180 40"
+		click	{ actor_stats }
+	}
+
+	// ==================
+	// inventory
+	// ==================
+	
+	string txt_actorname
+	{
+		string	"*cvar mn_name"
+		pos		"544 25"
+	}
+	
+	model body
+	{
+		md2		"*cvar mn_body"
+		skin	"*cvar mn_skin"
+		anim	"stand_menu"
+		origin	"785 173 0"
+		angles	"0 70 90"
+		scale	"5 5 5"
+		color	"0.5 0.5 0.5 1"
+	}	
+	
+	model head
+	{
+		md2		"*cvar mn_head"
+		skin	"*cvar mn_skin"
+		tag		"body tag_head"
+		color	"0.5 0.5 0.5 1"
+		scale	"1.0 1.0 1.0"
+	}	
+	
+	string changeskin
+	{
+		string	"*cvar mn_skinname"
+		pos		"560 85"
+		size	"100 16"
+		in		{ *changeskin color "0.7 0.7 0.7 1" }
+		out		{ *changeskin color "1 1 1 1" }
+		click	{ cmd "team_changeskin;" }
+	}
+	
+	// ==================
+	// containers
+	// ==================
+	
+	container right		{ pos "546 178" }
+	container left		{ pos "872 178" }
+	container armor		{ pos "700 100" invis true }
+	container backpack	{ pos "872 56" }
+	container belt		{ pos "569 273" }
+	container holster	{ pos "898 270" }
+	container equip		{ pos "397 370" }
+
+	// ==================
+	// additional stuff
+	// ==================
+	
+	pic bt_go
+	{
+		image	hud/buttons2
+		mousefx	true
+		pos		"940 720"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd "mn_pop;saveteam current" }
+	}
+	
+	func init
+	{
+		names_clear
+		actor_stats
+		cmd "genequip;equip_primary;equip_select 0"
+	}
+}

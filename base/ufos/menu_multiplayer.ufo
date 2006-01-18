@@ -1,0 +1,944 @@
+// ==================
+// MULTIPLAYER MENU
+// ==================
+
+menu multiplayer
+{
+        // ==================
+        // don't render
+        // ==================
+
+        zone render
+        {
+                invis true
+        }
+
+        // ==================
+        // background
+        // ==================
+
+        pic back_ul
+        {
+                image   menu/options_ul
+                pos             "0 0"
+        }
+
+        pic back_ur
+        {
+                image   menu/options_ur
+                pos             "512 0"
+        }
+
+        pic back_ll
+        {
+                image   menu/options_ll
+                pos             "0 512"
+        }
+
+        pic back_lr
+        {
+                image   menu/options_lr
+                pos             "512 512"
+        }
+
+        pic multiplayer_label
+        {
+                image   menu/multi_buttons1
+                pos             "80 165"
+                texl    "0 475"
+                texh    "256 510"
+        }
+
+        // ==================
+        // buttons
+        // ==================
+
+        pic button_connect
+        {
+                image   menu/multi_buttons1
+                texl    "0 0"
+                click   { cmd "mn_pop;mn_push mp_join_lan;" }
+                texh    "256 64"
+                pos     "80 220"
+                out     { *button_connect texl "0 0"  *button_connect texh "256 64" }
+                in      { *button_connect texl "0 64" *button_connect texh "256 128" }
+        }
+
+        pic button_create
+        {
+                image   menu/multi_buttons1
+                texl    "0 128"
+                texh    "256 192"
+                click   { cmd "mn_pop;mn_push mp_create_server;" }
+                out     { *button_create texl "0 128" *button_create texh "256 192" }
+                in      { *button_create texl "0 192" *button_create texh "256 256" }
+                pos     "80 290"
+        }
+
+        pic button_team
+        {
+                image   menu/multi_buttons1
+                pos             "80 360"
+                texl    "0 256"
+                texh    "256 320"
+                click   { cmd "mn_pop;mn_push mp_team;" }
+                out             { *button_team texl "0 256" *button_team texh "256 320" }
+                in              { *button_team texl "0 320" *button_team texh "256 384" }
+        }
+
+        pic button_exit
+        {
+                image   menu/main_buttons2
+                pos             "80 450"
+                texl    "0 128"
+                texh    "256 192"
+                click   { cmd "mn_pop esc;" }
+                out             { *button_exit texl "0 128" *button_exit texh "256 192" }
+                in              { *button_exit texl "0 192" *button_exit texh "256 256" }
+        }
+
+        func init
+        {
+                cmd "mn_escpop 5;"
+                cmd "mn_push mp_join_lan;"
+        }
+}
+
+
+
+// ==================
+// MULTIPLAYER TEAM MENU
+// ==================
+
+menu mp_team
+{
+        pic team
+        {
+                image   menu/multi_buttons1
+                pos             "580 80"
+                texl    "0 445"
+                texh    "256 474"
+        }
+
+        // ==================
+        // slots
+        // ==================
+
+        func teamslotclear
+        {
+                *slot0 image menu/save_slot
+                *slot1 image menu/save_slot
+                *slot2 image menu/save_slot
+                *slot3 image menu/save_slot
+                *slot4 image menu/save_slot
+                *slot5 image menu/save_slot
+                *slot6 image menu/save_slot
+                *slot7 image menu/save_slot
+        }
+        func teamslot0 { teamslotclear *slot0 image menu/save_slota cmd "mn_slot 0" }
+        func teamslot1 { teamslotclear *slot1 image menu/save_slota cmd "mn_slot 1" }
+        func teamslot2 { teamslotclear *slot2 image menu/save_slota cmd "mn_slot 2" }
+        func teamslot3 { teamslotclear *slot3 image menu/save_slota cmd "mn_slot 3" }
+        func teamslot4 { teamslotclear *slot4 image menu/save_slota cmd "mn_slot 4" }
+        func teamslot5 { teamslotclear *slot5 image menu/save_slota cmd "mn_slot 5" }
+        func teamslot6 { teamslotclear *slot6 image menu/save_slota cmd "mn_slot 6" }
+        func teamslot7 { teamslotclear *slot7 image menu/save_slota cmd "mn_slot 7" }
+
+        pic slot0
+        {
+                image   menu/save_slot
+                pos             "500 130"
+                mousefx true
+                click   { teamslot0 }
+        }
+        pic slot1
+        {
+                image   menu/save_slot
+                pos             "500 165"
+                mousefx true
+                click   { teamslot1 }
+        }
+        pic slot2
+        {
+                image   menu/save_slot
+                pos             "500 200"
+                mousefx true
+                click   { teamslot2 }
+        }
+        pic slot3
+        {
+                image   menu/save_slot
+                pos             "500 235"
+                mousefx true
+                click   { teamslot3 }
+        }
+        pic slot4
+        {
+                image   menu/save_slot
+                pos             "500 270"
+                mousefx true
+                click   { teamslot4 }
+        }
+        pic slot5
+        {
+                image   menu/save_slot
+                pos             "500 305"
+                mousefx true
+                click   { teamslot5 }
+        }
+        pic slot6
+        {
+                image   menu/save_slot
+                pos             "500 340"
+                mousefx true
+                click   { teamslot6 }
+        }
+        pic slot7
+        {
+                image   menu/save_slot
+                pos             "500 375"
+                mousefx true
+                click   { teamslot7 }
+        }
+
+        string txt_slot0 { string "*cvar mn_slot0" pos "510 139" color "0 .78 0 1" }
+        string txt_slot1 { string "*cvar mn_slot1" pos "510 174" color "0 .78 0 1" }
+        string txt_slot2 { string "*cvar mn_slot2" pos "510 209" color "0 .78 0 1" }
+        string txt_slot3 { string "*cvar mn_slot3" pos "510 244" color "0 .78 0 1" }
+        string txt_slot4 { string "*cvar mn_slot4" pos "510 279" color "0 .78 0 1" }
+        string txt_slot5 { string "*cvar mn_slot5" pos "510 314" color "0 .78 0 1" }
+        string txt_slot6 { string "*cvar mn_slot6" pos "510 349" color "0 .78 0 1" }
+        string txt_slot7 { string "*cvar mn_slot7" pos "510 384" color "0 .78 0 1" }
+
+        pic button_load
+        {
+                image   menu/multi_buttons2
+                pos             "780 130"
+                texl    "0 0"
+                texh    "128 64"
+                out             { *button_load image menu/multi_buttons2 }
+                in              { *button_load image menu/multi_buttons2a }
+                click   { cmd "loadteamslot;" }
+        }
+
+        pic button_save
+        {
+                image   menu/multi_buttons2
+                pos             "780 200"
+                texl    "0 64"
+                texh    "128 128"
+                out             { *button_save image menu/multi_buttons2 }
+                in              { *button_save image menu/multi_buttons2a }
+                click   { cmd "saveteamslot;team_comments;" }
+        }
+
+        // ==================
+        // current team
+        // ==================
+
+        string current_team
+        {
+                string  "Current Team"
+                pos             "500 450"
+                font    f_big
+        }
+
+        pic button_edit
+        {
+                image   menu/multi_buttons2
+                pos             "500 490"
+                texl    "0 192"
+                texh    "128 256"
+                click
+                {
+                        cmd "mn_push team;"
+                }
+                out             { *button_edit image menu/multi_buttons2 }
+                in              { *button_edit image menu/multi_buttons2a }
+        }
+
+        pic button_new
+        {
+                image   menu/multi_buttons2
+                pos             "640 490"
+                texl    "0 128"
+                texh    "128 192"
+                click
+                {
+                        cmd "set mn_teamname NewTeam;gennames;mn_push team;"
+                }
+                out             { *button_new image menu/multi_buttons2 }
+                in              { *button_new image menu/multi_buttons2a }
+        }
+
+        string race_str
+        {
+                string  "Race:"
+                pos             "500 570"
+        }
+        string race_value
+        {
+                string  "*cvar team"
+                pos             "620 570"
+                align   ur
+        }
+        pic race_dec
+        {
+                image   menu/buy_buttons1
+                pos             "628 568"
+                texl    "0 0"           texh    "16 16"
+                mousefx true
+                click   { cmd "mn_modifystring team -1 human:alien;" }
+        }
+        pic race_inc
+        {
+                image   menu/buy_buttons1
+                pos             "638 568"
+                texl    "16 0"          texh    "32 16"
+                mousefx true
+                click   { cmd "mn_modifystring team +1 human:alien;" }
+        }
+
+        string current_name
+        {
+                string  "Name"
+                pos             "500 620"
+        }
+        pic slot_teamname
+        {
+                image   menu/save_slot
+                pos             "500 640"
+                mousefx true
+                click   { cmd "msgmenu ?mn_teamname" *txt_teamname color "1 1 1 1" *txt_teamname mousefx true }
+        }
+        string txt_teamname
+        {
+                string "*cvar mn_teamname"
+                pos "510 649"
+                color "0 .78 0 1"
+        }
+        confunc mn_teamname_changed { *txt_teamname color "0 .78 0 1" *txt_teamname mousefx false }
+
+        // ==================
+        // buttons
+        // ==================
+
+        func init
+        {
+                cmd "set mn_slot 0;team_comments;loadteamslot;"
+                teamslot0
+        }
+
+}
+
+// ==================
+// LAN MENU
+// ==================
+
+menu mp_join_lan
+{
+        pic lan
+        {
+                image   menu/multi_buttons1
+                pos             "580 80"
+                texl    "0 385"
+                texh    "256 414"
+        }
+
+        // ====================
+        // lan / inet buttons
+        // ====================
+        pic button_lan_lan
+        {
+                image   menu/multi_buttons4a
+                texh    "256 64"
+                texl    "0 32"
+                pos     "500 130"
+        }
+        pic button_lan_inet
+        {
+                image   menu/multi_buttons4
+                click
+                {
+                        cmd "mn_escpop 1;"
+                        cmd "mn_pop esc;"
+                        cmd "mn_push mp_join_internet;"
+                        cmd "mn_escpop 3;"
+                }
+                texh    "256 32"
+                texl    "0 0"
+                pos     "726 130"
+                out     { *button_lan_inet image menu/multi_buttons4 }
+                in      { *button_lan_inet image menu/multi_buttons4a }
+        }
+
+        text servers
+        {
+                pos             "500 200"
+                size    "420 550"
+                format  "20 700"
+                mousefx true
+                num             1
+                click { }
+        }
+
+        // ==================
+        // preferences
+        // ==================
+
+        string lan_teamnum_str
+        {
+                string  "Team preference:"
+                pos             "500 660"
+        }
+        string lan_teamnum_value
+        {
+                string  "*cvar teamnum"
+                pos             "650 660"
+                align   ur
+        }
+        pic lan_teamnum_dec
+        {
+                image   menu/buy_buttons1
+                pos             "668 658"
+                texl    "0 0"           texh    "16 16"
+                mousefx true
+                click   { cmd "mn_modify teamnum -1 1 4;" }
+        }
+        pic lan_teamnum_inc
+        {
+                image   menu/buy_buttons1
+                pos             "684 658"
+                texl    "16 0"          texh    "32 16"
+                mousefx true
+                click   { cmd "mn_modify teamnum +1 1 4;" }
+        }
+
+        func init
+        {
+                cmd "pingservers;"
+        }
+
+}
+
+// ==================
+// INTERNET MENU
+// ==================
+
+menu mp_join_internet
+{
+        pic internet
+        {
+                image   menu/multi_buttons1
+                pos             "580 80"
+                texl    "0 385"
+                texh    "256 414"
+        }
+
+        // ====================
+        // lan / inet buttons
+        // ====================
+        pic button_inet_lan
+        {
+                image   menu/multi_buttons4
+                texh    "256 64"
+                texl    "0 32"
+                pos     "500 130"
+                out     { *button_inet_lan image menu/multi_buttons4 }
+                in      { *button_inet_lan image menu/multi_buttons4a }
+                click   { cmd "mn_pop esc; mn_push multiplayer;" }
+        }
+        pic button_inet_inet
+        {
+                image   menu/multi_buttons4a
+                texh    "256 32"
+                texl    "0 0"
+                pos     "726 130"
+        }
+
+        // ====================
+        // connect to ip button
+        // ====================
+        pic button_inet_connect_to_ip
+        {
+                image   menu/multi_buttons3
+                click   { cmd "connect *mn_inet_ip" }
+                texh    "256 32"
+                texl    "0 0"
+                pos     "500 615"
+                out     { *button_inet_connect_to_ip image menu/multi_buttons3 }
+                in      { *button_inet_connect_to_ip image menu/multi_buttons3a }
+        }
+
+        // ==================
+        // preferences
+        // ==================
+
+        // ===================
+        // connect_to_ip
+        // ===================
+        string current_inet_connect_to_ip
+        {
+                string  "Connect to IP"
+                pos     "500 560"
+        }
+        pic slot_inet_connect_to_ip
+        {
+                image   menu/save_slot
+                pos     "500 580"
+                mousefx true
+                click   { cmd "msgmenu ?mn_inet_ip" *txt_inet_ip color "1 1 1 1" *txt_inet_ip mousefx true }
+        }
+        string txt_inet_ip
+        {
+                string "*cvar mn_inet_ip"
+                pos    "510 589"
+                color  "0 .78 0 1"
+        }
+        confunc mn_inet_ip_changed { *txt_inet_ip color "0 .78 0 1" *txt_inet_ip mousefx false }
+
+        string inet_teamnum_str
+        {
+                string  "Team preference:"
+                pos             "500 660"
+        }
+        string inet_teamnum_value
+        {
+                string  "*cvar teamnum"
+                pos             "650 660"
+                align   ur
+        }
+        pic inet_teamnum_dec
+        {
+                image   menu/buy_buttons1
+                pos             "668 658"
+                texl    "0 0"           texh    "16 16"
+                mousefx true
+                click   { cmd "mn_modify teamnum -1 1 4;" }
+        }
+        pic inet_teamnum_inc
+        {
+                image   menu/buy_buttons1
+                pos             "684 658"
+                texl    "16 0"          texh    "32 16"
+                mousefx true
+                click   { cmd "mn_modify teamnum +1 1 4;" }
+        }
+
+        func init
+        {
+
+        }
+
+}
+
+
+// ==================
+// SERVER MENU
+// ==================
+
+menu mp_create_server
+{
+        pic server
+        {
+                image   menu/multi_buttons1
+                pos     "580 80"
+                texl    "0 415"
+                texh    "256 444"
+        }
+
+        // ===================
+        // DEDICATED SERVER
+        // DEDICATED IS WRITE-PROTECTED BY NOW
+        // ===================
+        string dedicated_str
+        {
+                string  "Dedicated server:"
+                pos     "500 160"
+        }
+        string dedicated_value
+        {
+                string  "*cvar mn_dedicated"
+                pos     "840 160"
+                align   ur
+        }
+        pic dedicated_dec
+        {
+                image   menu/buy_buttons1
+                pos     "868 158"
+                texl    "0 0"
+                texh    "16 16"
+                mousefx true
+                click
+                {
+                        cmd "mn_modify dedicated -1 0 1;"
+                        cmd "mn_translate dedicated mn_dedicated 0:No,1:Yes;"
+                }
+        }
+        pic dedicated_inc
+        {
+                image   menu/buy_buttons1
+                pos     "884 158"
+                texl    "16 0"
+                texh    "32 16"
+                mousefx true
+                click
+                {
+                        cmd "mn_modify dedicated +1 0 1;"
+                        cmd "mn_translate dedicated mn_dedicated 0:No,1:Yes;"
+                }
+        }
+
+        // ===================
+        // TEAMPLAY
+        // ===================
+        string server_teamplay_str
+        {
+                string  "Teamplay:"
+                pos     "500 180"
+        }
+        string server_teamplay_value
+        {
+                string  "*cvar mn_teamplay"
+                pos     "840 180"
+                align   ur
+        }
+        pic server_teamplay_dec
+        {
+                image   menu/buy_buttons1
+                pos     "868 178"
+                texl    "0 0"
+                texh    "16 16"
+                mousefx true
+                click
+                {
+                        cmd "mn_modify sv_teamplay -1 0 1;"
+                        cmd "mn_translate sv_teamplay mn_teamplay 0:No,1:Yes;"
+                }
+        }
+        pic server_teamplay_inc
+        {
+                image   menu/buy_buttons1
+                pos     "884 178"
+                texl    "16 0"
+                texh    "32 16"
+                mousefx true
+                click
+                {
+                        cmd "mn_modify sv_teamplay +1 0 1;"
+                        cmd "mn_translate sv_teamplay mn_teamplay 0:No,1:Yes;"
+                }
+        }
+
+	// ===================
+        // MAXCLIENTS
+        // ===================
+        string maxclients_str
+        {
+                string  "Max. clients:"
+                pos     "500 200"
+        }
+        string maxclients_value
+        {
+                string  "*cvar maxclients"
+                pos     "840 200"
+                align   ur
+        }
+        pic maxclients_dec
+        {
+                image   menu/buy_buttons1
+                pos     "868 198"
+                texl    "0 0"
+                texh    "16 16"
+                mousefx true
+                click   { cmd "mn_modify maxclients -1 1 6;" }
+        }
+        pic maxclients_inc
+        {
+                image   menu/buy_buttons1
+                pos     "884 198"
+                texl    "16 0"
+                texh    "32 16"
+                mousefx true
+                click   { cmd "mn_modify maxclients +1 1 6;" }
+        }
+
+        // ===================
+        // G_MAXPERPLAYER
+        // ===================
+        string g_maxperplayer_str
+        {
+                string  "Max. soldiers per team:"
+                pos     "500 220"
+        }
+        string g_maxperplayer_value
+        {
+                string  "*cvar g_maxperplayer"
+                pos     "840 220"
+                align   ur
+        }
+        pic g_maxperplayer_dec
+        {
+                image   menu/buy_buttons1
+                pos     "868 218"
+                texl    "0 0"
+                texh    "16 16"
+                mousefx true
+                click   { cmd "mn_modify g_maxperplayer -1 1 8;" }
+        }
+        pic g_maxperplayer_inc
+        {
+                image   menu/buy_buttons1
+                pos     "884 218"
+                texl    "16 0"
+                texh    "32 16"
+                mousefx true
+                click   { cmd "mn_modify g_maxperplayer +1 1 8;" }
+        }
+
+        // ===================
+        // TEAM
+        // ===================
+        string server_teamnum_str
+        {
+                string  "Team preference:"
+                pos     "500 240"
+        }
+        string server_teamnum_value
+        {
+                string  "*cvar teamnum"
+                pos     "840 240"
+                align   ur
+        }
+        pic server_teamnum_dec
+        {
+                image   menu/buy_buttons1
+                pos     "868 238"
+                texl    "0 0"
+                texh    "16 16"
+                mousefx true
+                click   { cmd "mn_modify teamnum -1 1 4;" }
+        }
+        pic server_teamnum_inc
+        {
+                image   menu/buy_buttons1
+                pos     "884 238"
+                texl    "16 0"
+                texh    "32 16"
+                mousefx true
+                click   { cmd "mn_modify teamnum +1 1 4;" }
+        }
+
+        // ===================
+        // ALLOW_DOWNLOAD
+        // ===================
+        string download_str
+        {
+                string  "Allow Download:"
+                pos     "500 260"
+        }
+        string download_value
+        {
+                string  "*cvar mn_download"
+                pos     "840 260"
+                align   ur
+        }
+        pic download_dec
+        {
+                image   menu/buy_buttons1
+                pos     "868 258"
+                texl    "0 0"
+                texh    "16 16"
+                mousefx true
+                click
+                {
+                        cmd "mn_modify allow_download -1 0 1;"
+                        cmd "mn_translate allow_download mn_download 0:No,1:Yes;"
+                }
+        }
+        pic download_inc
+        {
+                image   menu/buy_buttons1
+                pos     "884 258"
+                texl    "16 0"
+                texh    "32 16"
+                mousefx true
+                click
+                {
+                        cmd "mn_modify allow_download +1 0 1;"
+                        cmd "mn_translate allow_download mn_download 0:No,1:Yes;"
+                }
+        }
+
+        // ===================
+        // SERVER_PASSWORD
+        // ===================
+        string current_server_pwd
+        {
+                string  "Server-Password:"
+                pos     "500 300"
+        }
+        pic slot_server_pwd
+        {
+                image   menu/save_slot
+                pos     "500 320"
+                mousefx true
+                click   { cmd "msgmenu ?password" *txt_server_pwd color "1 1 1 1" *txt_server_pwd mousefx true }
+        }
+        string txt_server_pwd
+        {
+                string "*cvar password"
+                pos "510 329"
+                color "0 .78 0 1"
+        }
+        confunc password_changed { *txt_server_pwd color "0 .78 0 1" *txt_server_pwd mousefx false }
+
+        // ===================
+        // RCON_PASSWORD
+        // ===================
+        string current_rcon_pwd
+        {
+                string  "RCON-Password:"
+                pos     "500 360"
+        }
+        pic slot_rcon_pwd
+        {
+                image   menu/save_slot
+                pos     "500 380"
+                mousefx true
+                click   { cmd "msgmenu ?rcon_password" *txt_rcon_pwd color "1 1 1 1" *txt_rcon_pwd mousefx true }
+        }
+        string txt_rcon_pwd
+        {
+                string "*cvar rcon_password"
+                pos "510 389"
+                color "0 .78 0 1"
+        }
+        confunc rcon_password_changed { *txt_rcon_pwd color "0 .78 0 1" *txt_rcon_pwd mousefx false }
+
+        // ===================
+        // HOSTNAME
+        // ===================
+        string current_hostname
+        {
+                string  "Hostname:"
+                pos     "500 420"
+        }
+        pic slot_hostname
+        {
+                image   menu/save_slot
+                pos     "500 440"
+                mousefx true
+                click   { cmd "msgmenu ?hostname" *txt_hostname color "1 1 1 1" *txt_hostname mousefx true }
+        }
+        string txt_hostname
+        {
+                string "*cvar hostname"
+                pos "510 449"
+                color "0 .78 0 1"
+        }
+        confunc hostname_changed { *txt_hostname color "0 .78 0 1" *txt_hostname mousefx false }
+
+        // ===================
+        // MAP
+        // ===================
+        string current_map
+        {
+                string  "Map"
+                pos     "500 480"
+        }
+        pic slot_map
+        {
+                image   menu/save_slot
+                pos     "500 500"
+                mousefx true
+                click   { cmd "msgmenu ?mapname" *txt_mapname color "1 1 1 1" *txt_mapname mousefx true }
+        }
+        string txt_mapname
+        {
+                string "*cvar mapname"
+                pos    "510 509"
+                color  "0 .78 0 1"
+        }
+        confunc mapname_changed { *txt_mapname color "0 .78 0 1" *txt_mapname mousefx false }
+
+	pic prev_map
+	{
+                image   menu/buy_buttons1
+                pos     "488 508"
+                texl    "0 0"           texh    "16 16"
+                mousefx true
+                click   { cmd "mn_prevmap" }
+        }
+
+        pic next_map
+        {
+                image   menu/buy_buttons1
+                pos     "750 508"
+                texl    "16 0"          texh    "32 16"
+                mousefx true
+                click   { cmd "mn_nextmap;" }
+        }
+
+	pic mappic
+        {
+                image   "*cvar mn_mappic"
+                pos     "800 300"
+                texl    "0 0"
+                texh    "128 96"
+                click   { cmd "mn_nextmap" }
+                rclick  { cmd "mn_prevmap" }
+        }
+
+	pic mappic2
+        {
+                image   "*cvar mn_mappic2"
+                pos     "800 400"
+                texl    "0 0"
+                texh    "128 96"
+                click   { cmd "mn_nextmap" }
+                rclick  { cmd "mn_prevmap" }
+        }
+
+	pic mappic3
+        {
+                image   "*cvar mn_mappic3"
+                pos     "800 500"
+                texl    "0 0"
+                texh    "128 96"
+                click   { cmd "mn_nextmap" }
+                rclick  { cmd "mn_prevmap" }
+        }
+
+        // ====================
+        // create_server button
+        // ====================
+        pic button_server
+        {
+                image   menu/multi_buttons1
+                pos             "570 630"
+                texl    "0 128"
+                texh    "256 192"
+                click   { cmd "map *mapname" }
+                out     { *button_server texl "0 128" *button_server texh "256 192" }
+                in      { *button_server texl "0 192" *button_server texh "256 256" }
+        }
+
+
+        // ===================
+        // INIT
+        // ===================
+        func init
+        {
+                cmd "killserver;"
+                cmd "maxclients 2;"
+                cmd "getmaps;"
+                cmd "mn_modify sv_teamplay -1 0 1;"
+                cmd "mn_translate dedicated mn_dedicated 0:No,1:Yes;"
+                cmd "mn_translate allow_download mn_download 0:No,1:Yes;"
+                cmd "mn_translate sv_teamplay mn_teamplay 0:No,1:Yes;"
+        }
+}
+
+
+

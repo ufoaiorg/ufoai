@@ -1,0 +1,1128 @@
+// =======================
+// ASSAULT RIFLE
+// =======================
+item assault
+{
+	name		"Assault Rifle"
+	model		weapons/assault/assault
+	weapon		true
+	type		rifle
+	category	1
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"3 0 2"
+	scale		1.3
+	ammo		30
+	reload		10
+	price		2100
+	buytype		0
+}
+
+item assault_ammo
+{
+	name		"Assault Rifle Clip"
+	model		weapons/assault/assault_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.5
+	price		60
+	buytype		0
+
+	primary
+	{
+		name	"Burst"
+		skill	assault
+		projtl	bullet
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/assault.wav
+		speed	0
+		spread	"3.1 5"
+		crouch	0.7
+		range	600
+		shots	3
+		ammo	3
+		rof		5
+		time	12
+		damage	"20 5"
+		dmgtype normal
+	}
+	secondary
+	{
+		name	"Auto"
+		skill	assault
+		projtl	bullet
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/assault.wav
+		speed	0
+		spread	"4.8 7.7"
+		crouch	0.6
+		range	600
+		shots	10
+		ammo	10
+		rof		10
+		time	20
+		damage	"20 5"
+		dmgtype normal
+	}
+}
+
+
+// =======================
+// SNIPER RIFLE
+// =======================
+item sniper
+{
+	name		"Sniper Rifle"
+	model		weapons/sniper/sniper
+	weapon		true
+	type		rifle
+	category	1
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"9 0 3"
+	scale		1.05
+	ammo		5
+	reload		10
+	price		1980
+	buytype		0
+}
+
+item sniper_ammo
+{
+	name		"Sniper Rifle Clip"
+	model		weapons/sniper/sniper_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.3
+	price		90
+	buytype		0
+
+	primary
+	{
+		name	"Snap Shot"
+		skill	precise
+		projtl	bullet
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/sniper.wav
+		speed	0
+		spread	"3.1 3.1"
+		crouch	0.8
+		range	1000
+		shots	1
+		ammo	1
+		time	13
+		damage	"60 10"
+		dmgtype normal
+	}
+	secondary
+	{
+		name	"Aimed Shot"
+		skill	precise
+		projtl	bullet
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/sniper.wav
+		speed	0
+		spread	"1 1"
+		crouch	0.7
+		range	1200
+		shots	1
+		ammo	1
+		time	18
+		damage	"70 10"
+		dmgtype normal
+	}
+}
+
+
+// =======================
+// PISTOL
+// =======================
+item pistol
+{
+	name		"9mm Pistol"
+	model		weapons/pistol/pistol
+	weapon		true
+	type		pistol
+	category	2
+	twohanded	false
+	shape		"0 0 3 2"
+	center		"2 0 1"
+	scale		1.8
+	ammo		12
+	reload		5
+	price		300
+	buytype		1
+}
+
+item pistol_ammo
+{
+	name		"Pistol Clip"
+	model		weapons/pistol/pistol_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		2.0
+	price		40
+	buytype		1
+
+	primary
+	{
+		name	"Rapid Fire"
+		skill	close
+		projtl	bullet
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/pistol.wav
+		speed	0
+		spread	"7 9"
+		crouch	0.9
+		range	250
+		shots	3
+		ammo	3
+		rof		10
+		time	12
+		damage	"20 5"
+		dmgtype normal
+	}
+	secondary
+	{
+		name	"Aimed Shot"
+		skill	close
+		projtl	bullet
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/pistol.wav
+		speed	0
+		spread	"2.8 4"
+		crouch	0.9
+		range	380
+		shots	1
+		ammo	1
+		time	8
+		damage	"20 5"
+		dmgtype normal
+	}
+}
+
+
+// =======================
+// SMG
+// =======================
+item smg
+{
+	name		"Submachine Gun"
+	model		weapons/smg/smg
+	weapon		true
+	type		rifle
+	category	1
+	twohanded	true
+	shape		"0 0 3 2"
+	center		"6.5 0 1"
+	scale		1.2
+	ammo		18
+	reload		8
+	price		1400
+	buytype		1
+}
+
+item smg_ammo
+{
+	name		"SMG Clip"
+	model		weapons/smg/smg_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.6
+	price		50
+	buytype		1
+
+	primary
+	{
+		name	"Burst"
+		skill	assault
+		projtl	bullet
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/smg.wav
+		speed	0
+		spread	"4 7"
+		crouch	0.7
+		range	550
+		shots	6
+		ammo	6
+		rof		10
+		time	12
+		damage	"11 2"
+		dmgtype normal
+	}
+	secondary
+	{
+		name	"Full Auto"
+		skill	assault
+		projtl	bullet
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/smg.wav
+		speed	0
+		spread	"6 9"
+		crouch	0.7
+		range	450
+		shots	18
+		ammo	18
+		rof		15
+		time	20
+		damage	"11 2"
+		dmgtype normal
+	}
+}
+
+
+// =======================
+// SHOTGUN
+// =======================
+item shotgun
+{
+	name		Shotgun
+	model		weapons/shotgun/shotgun
+	weapon		true
+	type		biggun
+	category	1
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"11 0 1"
+	scale		1.2
+	ammo		8
+	reload		10
+	price		880
+	buytype		0
+}
+
+item shotgun_ammo
+{
+	name		"Buckshots"
+	model		weapons/shotgun/shotgun_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.6
+	price		35
+	buytype		0
+
+	primary
+	{
+		name	"Single Shot"
+		skill	close
+		projtl	null
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/shotgun.wav
+		sndonce true
+		speed	0
+		spread	"4.5 4.5"
+		crouch	1.0
+		range	350
+		shots	8
+		ammo	1
+		rof		0
+		time	8
+		damage	"7 2"
+		dmgtype blast
+	}
+
+	secondary
+	{
+		name	"Double Shot"
+		skill	close
+		projtl	null
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/shotgun.wav
+		sndonce true
+		speed	0
+		spread	"8 8"
+		crouch	1.0
+		range	300
+		shots	16
+		ammo	2
+		rof		0
+		time	12
+		damage	"7 2"
+		dmgtype blast
+	}	
+}
+
+
+// =======================
+// FLAMETHROWER
+// =======================
+item flamer
+{
+	name		Flamethrower
+	model		weapons/flamer/flamer
+	weapon		true
+	type		biggun
+	category	1
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"8 0 2"
+	scale		1.2
+	ammo		6
+	reload		10
+	price		2050
+	buytype		0
+}
+
+item flamer_ammo
+{
+	name		"Napalm Tank"
+	model		weapons/flamer/flamer_ammo
+	type		ammo
+	category	0
+	shape		"0 0 2 1"
+	center		"0 0 0"
+	scale		1.2
+	price		200
+	buytype		0
+	
+	primary
+	{
+		name	"Candlelight"
+		skill	heavy
+		projtl	fireBall
+		impact	fireImpact
+		hitbody burning
+		firesnd	weapons/flamer_s.wav
+		sndonce true
+		speed	200
+		spread	"7 7"
+		crouch  1.0
+		range	120
+		shots	15
+		ammo	1
+		rof		15
+		time	9
+		damage	"6 2"
+		dmgtype fire
+	}
+	secondary
+	{
+		name	"Inferno"
+		skill	heavy
+		projtl	fireBall
+		impact	fireImpact
+		hitbody burning
+		firesnd	weapons/flamer_l.wav
+		sndonce true
+		speed	200
+		spread	"7 7"
+		crouch  1.0
+		range	140
+		shots	30
+		ammo	2
+		rof		20
+		time	18
+		damage	"9 3"
+		dmgtype fire
+	}
+}
+
+
+// =======================
+// RPG
+// =======================
+item rpg
+{
+	name		"Rocket Launcher"
+	model		weapons/rpg/rpg
+	weapon		true
+	type		rpg
+	category	3
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"-7 0 2"
+	scale		0.85
+	ammo		1
+	reload		6
+	price		2800
+	buytype		0
+}
+
+item rpg_ammo
+{
+	name		"High-Explosive Rocket"
+	model		weapons/rpg/rpg_ammo
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.1
+	price		190
+	buytype		0
+	
+	primary
+	{
+		name	"Snap Shot"
+		skill	explosive
+		projtl	rocket
+		impact	explosion
+		hitbody explosion
+		firesnd	weapons/rpg.wav
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		selfdet true
+		speed	250
+		spread	"5 5"
+		crouch	0.8
+		range	1200
+		shots	1
+		ammo	1
+		time	14
+		damage	"45 10"
+		spldmg	"100 30"
+		splrad	120
+		dmgtype blast
+	}
+	secondary
+	{
+		name	"Aimed Shot"
+		skill	explosive
+		projtl	rocket
+		impact	explosion
+		hitbody explosion
+		firesnd	weapons/rpg.wav
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		selfdet true
+		speed	250
+		spread	"2.6 2.6"
+		crouch	0.6
+		range	1200
+		shots	1
+		ammo	1
+		time	20
+		damage	"45 10"
+		spldmg	"100 30"
+		splrad	120
+		dmgtype blast
+	}
+}
+
+
+// =======================
+// TACHYON RIFLE
+// =======================
+item tachyonrifle
+{
+	name		"Tachyon Rifle"
+	model		weapons/tachyonrifle/tachyonrifle
+	weapon		true
+	type		rifle
+	category	1
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"11 0 0.5"
+	scale		1.1
+	ammo		24
+	reload		8
+	price		4400
+	buytype		0
+}
+
+item tachyonrifle_ammo
+{
+	name		"Tachyon Rifle Charge"
+	model		weapons/tachyonrifle/tachyonrifle_clip
+	type		ammo
+	category	0
+	shape		"0 0 2 1"
+	center		"0 0 0"
+	scale		1.1
+	price		300
+	buytype		0
+	
+	primary
+	{
+		name	"Rapid Shots"
+		skill	assault
+		projtl	tachyonBall
+		impact	tachyonImpact
+		hitbody tachyonImpact
+		firesnd	weapons/tachyon.wav
+		speed	800
+		spread	"4 4"
+		crouch	0.6
+		range	600
+		shots	4
+		ammo	4
+		rof		5
+		time	16
+		damage	"25 10"
+		dmgtype tachyon
+	}
+	secondary
+	{
+		name	"Charged Blast"
+		skill	explosive
+		projtl	tachyonBigBall
+		impact	tachyonBigImpact
+		hitbody tachyonBigImpact
+		firesnd	weapons/tachyon.wav
+		speed	400
+		spread	"4.7 4.7"
+		crouch	0.8
+		range	600
+		shots	1
+		ammo	8
+		rof		8
+		time	24
+		damage	"80 30"
+		spldmg	"60 20"
+		splrad	80
+		dmgtype tachyon
+	}
+}
+
+
+// =======================
+// TACHYON SNIPER
+// =======================
+item tachyonsniper
+{
+	name		"Tachyon Sniper Rifle"
+	model		weapons/tachyonsniper/tachyonsniper
+	weapon		true
+	type		rifle
+	category	1
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"9 0 1.8"
+	scale		1.1
+	ammo		12
+	reload		8
+	price		5000
+	buytype		0
+}
+
+item tachyonsniper_ammo
+{
+	name		"Tachyon Sniper Charge"
+	model		weapons/tachyonsniper/tachyonsniper_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.1
+	price		350
+	buytype		0
+	
+	primary
+	{
+		name	"Snap Shot"
+		skill	precise
+		projtl	tachyonBall
+		impact	tachyonImpact
+		hitbody tachyonImpact
+		firesnd	weapons/tachyonsniper.wav
+		speed	800
+		spread	"2.4 2.4"
+		crouch	0.6
+		range	900
+		shots	1
+		ammo	1
+		rof		5
+		time	14
+		damage	"65 10"
+		dmgtype tachyon
+	}
+	secondary
+	{
+		name	"Rapid Shots"
+		skill	precise
+		projtl	tachyonMiniBall
+		impact	tachyonImpact
+		hitbody tachyonImpact
+		firesnd	weapons/tachyonsniper.wav
+		speed	800
+		spread	"1.4 1.4"
+		crouch	0.8
+		range	900
+		shots	4
+		ammo	4
+		rof		5
+		time	25
+		damage	"26 4"
+		dmgtype tachyon
+	}
+}
+
+
+// =======================
+// PLASMA PISTOL
+// =======================
+item plaspistol
+{
+	name		"Plasma Pistol"
+	model		weapons/plaspistol/plaspistol
+	weapon		true
+	type		pistol
+	category	2
+	twohanded	false
+	shape		"0 0 3 2"
+	center		"1 0 0.3"
+	scale		1.5
+	ammo		6
+	reload		6
+	price		3400
+	buytype		1
+}
+
+item plaspistol_ammo
+{
+	name		"Plasma Pistol Charge"
+	model		weapons/plaspistol/plaspistol_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.2
+	price		170
+	buytype		1
+	
+	primary
+	{
+		name	"Charged Pulse"
+		skill 	assault
+		projtl	plasmaChargedPulse
+		impact	plasmaImpactCharged
+		hitbody	plasmaImpactCharged
+		firesnd	weapons/plasma_s.wav
+		speed	0
+		spread	"4 4"
+		crouch	0.8
+		range	500
+		shots	1
+		ammo	1
+		time	12
+		damage	"50 10"
+		dmgtype plasma
+	}
+	secondary
+	{
+		name	"Continuous Beam"
+		skill 	heavy
+		projtl	plasmaContinuous
+		impact	plasmaImpact
+		hitbody	plasmaImpact
+		firesnd	weapons/plasma_c.wav
+		sndonce true
+		speed	0
+		spread	"14 5"
+		crouch	1.0
+		range	350
+		shots	35
+		ammo	2
+		rof		25
+		time	22
+		damage	"7 2"
+		dmgtype plasma
+	}
+}
+
+
+// =======================
+// PLASMA RIFLE
+// =======================
+item plasrifle
+{
+	name		"Plasma Rifle"
+	model		weapons/plasrifle/plasrifle
+	weapon		true
+	type		biggun
+	category	1
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"9 0 1.5"
+	scale		1.3
+	ammo		8
+	reload		8
+	price		4000
+	buytype		0
+}
+
+item plasrifle_ammo
+{
+	name		"Plasma Rifle Charge"
+	model		weapons/plasrifle/plasrifle_clip
+	type		ammo
+	category	0
+	shape		"0 0 2 1"
+	center		"0 0 0"
+	scale		1.4
+	price		200
+	buytype		0
+	
+	primary
+	{
+		name	"Charged Pulse"
+		skill 	precise
+		projtl	plasmaChargedPulse
+		impact	plasmaImpactCharged
+		hitbody	plasmaImpactCharged
+		firesnd	weapons/plasma_s.wav
+		speed	0
+		spread	"2.7 2.7"
+		crouch	0.7
+		range	700
+		shots	1
+		ammo	1
+		time	13
+		damage	"60 15"
+		dmgtype plasma
+	}
+	secondary
+	{
+		name	"Continuous Beam"
+		skill 	heavy
+		projtl	plasmaContinuous
+		impact	plasmaImpact
+		hitbody	plasmaImpact
+		firesnd	weapons/plasma_c.wav
+		sndonce true
+		speed	0
+		spread	"9 5"
+		crouch	1.0
+		range	500
+		shots	35
+		ammo	3
+		rof		25
+		time	24
+		damage	"9 2"
+		dmgtype plasma
+	}
+}
+
+
+// =======================
+// LASER PISTOL
+// =======================
+item laserpistol
+{
+	name		"Laser Pistol"
+	model		weapons/laserpistol/laserpistol
+	weapon		true
+	type		pistol
+	category	2
+	twohanded	false
+	shape		"0 0 3 2"
+	center		"2.5 0 1.2"
+	scale		1.7
+	ammo		12
+	reload		6
+	price		2200
+	buytype		1
+}
+
+item laserpistol_ammo
+{
+	name		"Laser Pistol Charge"
+	model		weapons/laserpistol/laserpistol_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.5
+	price		100
+	buytype		1
+	
+	primary
+	{
+		name	"Single Pulse"
+		skill 	close
+		projtl	laserPulse
+		impact	laserImpact
+		hitbody	laserImpact
+		firesnd	weapons/laser.wav
+		speed	0
+		spread	"2.8 3.6"
+		crouch	0.8
+		range	600
+		shots	1
+		ammo	1
+		time	9
+		damage	"32 6"
+		dmgtype laser
+	}
+	secondary
+	{
+		name	"Multiple Pulses"
+		skill 	close
+		projtl	laserPulse
+		impact	laserImpact
+		hitbody	laserImpact
+		firesnd	weapons/laser.wav
+		speed	0
+		spread	"5 7"
+		crouch	1.0
+		range	600
+		shots	4
+		ammo	4
+		rof		6
+		time	17
+		damage	"26 4"
+		dmgtype laser
+	}
+}
+
+
+// =======================
+// LASER RIFLE
+// =======================
+item laserrifle
+{
+	name		"Laser Rifle"
+	model		weapons/laserrifle/laserrifle
+	weapon		true
+	type		rifle
+	category	1
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"5 0 1.5"
+	scale		1.2
+	ammo		16
+	reload		8
+	price		3200
+	buytype		0
+}
+
+item laserrifle_ammo
+{
+	name		"Laser Rifle Charge"
+	model		weapons/laserrifle/laserrifle_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.8
+	price		130
+	buytype		0
+	
+	primary
+	{
+		name	"Single Pulse"
+		skill 	precise
+		projtl	laserPulse
+		impact	laserImpact
+		hitbody	laserImpact
+		firesnd	weapons/laser.wav
+		speed	0
+		spread	"1.4 1.9"
+		crouch	0.7
+		range	900
+		shots	1
+		ammo	1
+		time	11
+		damage	"42 6"
+		dmgtype laser
+	}
+	secondary
+	{
+		name	"Multiple Pulses"
+		skill 	assault
+		projtl	laserPulse
+		impact	laserImpact
+		hitbody	laserImpact
+		firesnd	weapons/laser.wav
+		speed	0
+		spread	"2.4 3.5"
+		crouch	1.0
+		range	900
+		shots	4
+		ammo	4
+		rof		6
+		time	22
+		damage	"36 6"
+		dmgtype laser
+	}
+}
+
+
+// =======================
+// FRAGMENTATION GRENADE
+// =======================
+item fraggrenade
+{
+	name		"Frag Grenade"
+	model		weapons/fraggren/fraggren
+	weapon		true
+	type		grenade
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.5
+	price		170
+	buytype		2
+	ammo		1
+	thrown		true
+
+	primary
+	{
+		name	"Throw"
+		skill	explosive
+		projtl	fraggren
+		impact	frag_explosion
+		hitbody frag_explosion
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"7 7"
+		range	4.0
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"100 10"
+		splrad	120
+		dmgtype blast
+	}
+	secondary
+	{
+		name	"Throw"
+		skill	explosive
+		projtl	fraggren
+		impact	fire_explosion
+		hitbody fire_explosion
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"7 7"
+		range	4.0
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"100 10"
+		splrad	120
+		dmgtype blast
+	}
+}
+
+
+// =======================
+// KNIFE
+// =======================
+item knife
+{
+	name		"Knife"
+	model		weapons/knife/knife
+	weapon		true
+	type		melee
+	category	2
+	shape		"0 0 1 2"
+	center		"-1 0 3"
+	scale		1.0
+	price		210
+	buytype		2
+	ammo		1
+	thrown		true
+	
+	primary
+	{
+		name	"Stab"
+		skill	close
+		projtl	null
+		impact	null
+		hitbody blood
+		firesnd	misc/klonk03.wav
+		speed	0
+		range	55
+		shots	1
+		time	8
+		damage	"35 7"
+		dmgtype normal
+	}
+	secondary
+	{
+		name	"Throw"
+		skill	close
+		projtl	knife
+		impact	null
+		hitbody blood
+		impsnd	misc/klonk03.wav
+		bodysnd misc/klonk01.wav
+		speed	320
+		range	200
+		spread	"7 7"
+		shots	1
+		ammo	1
+		time	9
+		damage	"35 7"
+		dmgtype normal
+	}
+}
+
+
+// =======================
+// MEDIKIT
+// =======================
+item medikit
+{
+	name		"Medikit"
+	model		weapons/medikit/medikit
+	weapon		true
+	type		melee
+	category	2
+	shape		"0 0 2 2"
+	center		"1 0 2"
+	scale		1.1
+	ammo		2
+	price		1700
+	buytype		2
+	
+	primary
+	{
+		name	"Heal"
+		projtl	null
+		impact	null
+		hitbody null
+		firesnd	misc/klonk01.wav
+		speed	0
+		range	55
+		shots	1
+		ammo	1
+		time	20
+		damage	"-40 10"
+	}
+	secondary
+	{
+		name	"Heal"
+		projtl	null
+		impact	null
+		hitbody null
+		firesnd	misc/klonk01.wav
+		speed	0
+		range	55
+		shots	1
+		ammo	1
+		time	20
+		damage	"-40 10"
+	}
+}

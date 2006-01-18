@@ -1,0 +1,100 @@
+// ========================================================================
+// CIVILIANS
+// ========================================================================
+
+names european
+{
+	female { a }
+	male { b }
+	lastname { c }
+}
+
+names oriental
+{
+	female { a }
+	male { b }
+	lastname { c }
+}
+
+names scientist
+{
+	female { a }
+	male { b }
+	lastname { c }
+}
+
+actors european
+{
+	female
+	{
+		civilians/female body01 head01a 0
+		civilians/female body01 head01a 1
+		civilians/female body01 head01a 2
+		civilians/female body02 head01a 0
+		civilians/female body02 head01a 1
+		civilians/female body01 head01b 0
+		civilians/female body01 head01b 1
+		civilians/female body01 head01b 2
+		civilians/female body02 head01b 0
+		civilians/female body02 head01b 1
+		civilians/female body01 head02a 0
+		civilians/female body01 head02a 1
+		civilians/female body01 head02a 2
+		civilians/female body02 head02a 0
+		civilians/female body02 head02a 1
+		civilians/female body01 head02b 0
+		civilians/female body01 head02b 1
+		civilians/female body01 head02b 2
+		civilians/female body02 head02b 0
+		civilians/female body02 head02b 1
+	}
+	male
+	{
+		civilians/male body01 head01 0
+		civilians/male body01 head01 1
+		civilians/male body01 head01 2
+	}
+}
+
+
+actors oriental
+{
+	female
+	{
+		civilians/female body03 head04a 0
+		civilians/female body03 head04a 1
+		civilians/female body03 head04b 0
+		civilians/female body03 head04c 1
+	}
+	male
+	{
+		civilians/male body02 head02 0
+	}
+}
+
+
+actors scientist
+{
+	female
+	{
+	}
+	male
+	{
+		civilians/male scientist01 sci_head01 0
+		civilians/male scientist01 sci_head02a 0
+		civilians/male scientist01 sci_head02b 0
+		civilians/male scientist01 sci_head03a 0
+		civilians/male scientist01 sci_head03b 0
+	}
+}
+
+// ==================
+// TEAMS
+// ==================
+
+team civilian
+{
+	european
+	oriental
+	scientist
+}

@@ -1,0 +1,367 @@
+particle null
+{
+	init
+	{ 
+		kill
+	}
+}
+
+particle corona
+{
+	init
+	{
+		image sfx/corona
+		blend add
+		style facing
+		size  "30 30"
+	}
+}
+
+particle explosion
+{
+	init
+	{
+		spawn  explosion_1
+		spawn  explosion_2
+		push   int 10
+		nspawn smoketrail
+		kill
+	}
+}
+
+particle fire_explosion
+{
+	init
+	{
+		spawn  explosion_1
+		spawn  explosion_2
+		push   int 20
+		nspawn firetrail
+		kill
+	}
+}
+
+
+particle explosion_1
+{
+	init
+	{
+		frame 1
+		endframe 10
+		image +sfx/uexp_
+		blend blend
+		style facing
+		ffade in
+		size  "200 200"
+		fps   8
+		tps   0.8
+		push  *v
+		mul   float 30
+		add   *s
+		pop   *s
+		v     "0 0 0"
+	}
+	think { kill }
+}
+
+particle explosion_2
+{
+	init
+	{
+		frame 0
+		endframe 10
+		image +sfx/uexp_
+		blend blend
+		style facing
+		ffade out
+		size  "200 200"
+		fps   8
+		tps   0.8
+		push  *v
+		mul   float 30
+		add   *s
+		pop   *s
+		v     "0 0 0"
+	}
+	think { kill }
+}
+
+particle smoketrail
+{
+	init
+	{
+		image sfx/fireball
+		blend add
+		style facing
+		size  "3 3"
+		crand vector "20 20 20"
+		add   *s
+		pop   *s
+		push  *v
+		mul   float 80
+		add   vector "0 0 90"
+		crand vector "110 110 110"
+		add   #
+		pop   *v
+		a     "0 0 -250"
+		tps   20
+		life  1
+	}
+	think
+	{
+		spawn  smoke
+	}
+}
+
+particle firetrail
+{
+	init
+	{
+		image sfx/fireball
+		blend add
+		style facing
+		size  "10 10"
+		crand vector "20 20 20"
+		add   *s
+		pop   *s
+		push  *v
+		rand  float 80
+		add   float 10
+		mul   #
+		add   vector "0 0 90"
+		crand vector "110 110 110"
+		add   #
+		pop   *v
+		a     "0 0 -300"
+		tps   10
+		life  1
+	}
+	think
+	{
+		spawn burnFlame3
+	}
+}
+
+particle smoke
+{
+	init
+	{
+		image  sfx/smoke
+		blend  invfilter
+		style  facing
+		tfade  out
+		tps    0.5
+		v      "0 0 0"
+		a      "0 0 0"
+	}
+	run
+	{
+		push pos "16 16"
+		mul  *t
+		add  pos "8 8"
+		pop  *size
+	}
+	think { kill }
+}
+
+
+particle burnFlame
+{
+	init
+	{
+		image  sfx/fireball
+		blend  add
+		style  facing
+		tfade  out
+		rand   float 0.5
+		add    float 0.6
+		pop    *tps
+		crand  vector "8 8 8"
+		add    *s
+		pop    *s
+		v      "0 0 50"
+	}
+	run
+	{
+		push   pos "20 20"
+		mul    *t
+		add    pos "10 10"
+		pop    *size
+	}
+	think { kill }
+}
+
+particle burnFlame2				// fuer falcon_crash
+{
+	init
+	{
+		image  sfx/fireball
+		blend  add
+		style  facing
+		tfade  out
+		rand   float 0.3		// 1/Lebensdauer
+		add    float 0.3
+		pop    *tps
+		crand  vector "50 20 15"	// streueung
+		add    *s
+		pop    *s
+		v      "5 -20 50"		// geschw xyz
+	}
+	run
+	{
+		push   pos "20 20"		// groessenaenderung
+		mul    *t
+		add    pos "20 20"		// groesse start
+		pop    *size
+	}
+	think { kill }
+}
+
+
+particle burnFlame3				// Feuerschweif-Partikel
+{
+	init
+	{
+		image  sfx/fireball
+		blend  add
+		style  facing
+		tfade  out
+		tps    1.8
+		crand  vector "2 2 2"
+		add    *s
+		pop    *s
+		v      "0 0 0"
+		a      "0 0 0"
+	}
+	run
+	{
+		push pos "1 1"
+		mul  *t
+		add  pos "20 20"
+		pop  *size
+	}
+	think { kill }
+}
+
+
+particle burning
+{
+	init
+	{
+		push   *v
+		mul    float -15
+		add    *s
+		add    vector "0 0 -24"
+		pop    *s
+		v      "0 0 0"
+		life   4.0
+		tps    2.0
+		spawn  burnFlame
+	}
+	think
+	{
+		spawn  burnFlame
+	}
+}
+
+
+particle fire
+{
+	init
+	{
+		v      "0 0 0"
+		tps    25.0
+		spawn  burnFlame
+	}
+	think
+	{
+		spawn  burnFlame
+	}
+}
+
+
+
+particle crashsite_fire
+{
+	init
+	{
+		v      "0 0 0"
+		tps    25.0
+		spawn  burnFlame2
+	}
+	think
+	{
+		spawn  burnFlame2
+	}
+}
+
+
+particle blood
+{
+	init
+	{
+		image  sfx/blood
+		blend  blend
+		style  facing
+		tfade  out
+		tps    2.3
+		v      "0 0 0"
+		a      "0 0 0"
+	}
+	run
+	{
+		push pos "32 32"
+		mul  *t
+		add  pos "16 16"
+		pop  *size
+	}
+	think { kill }
+}
+
+particle tracer
+{
+	init
+	{
+		blend  blend
+		style  line
+		color  "1 0 0 1"
+		life   0.0001
+	}
+}
+
+particle fadeTracer
+{
+	init
+	{
+		blend  blend
+		style  line
+		color  "1 0 0 1"
+		life   3
+		tps    0.33
+		tfade  out
+	}
+}
+
+particle cross
+{
+	init
+	{
+		image  sfx/cross
+		blend  blend
+		style  facing
+		size   "24 24"
+		life   0.0001
+	}
+}
+
+particle cross_no
+{
+	init
+	{
+		image  sfx/cross_no
+		blend  blend
+		style  facing
+		size   "16 16"
+		life   0.0001
+	}
+}

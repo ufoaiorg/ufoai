@@ -1,0 +1,65 @@
+inventory right
+{
+	shape	"0 0 5 2"
+	single	true
+	in		1
+	out		0
+}
+
+inventory left
+{
+	shape	"0 0 5 2"
+	single	true
+	in		1
+	out		0
+}
+
+inventory backpack
+{
+	shape	"1 0 3 1"
+	shape	"0 1 5 2"
+	in		5
+	out		5
+}
+
+inventory belt
+{
+	shape	"0 0 3 1"
+	shape	"0 1 1 1"
+	in		2
+	out		1
+}
+
+inventory holster
+{
+	shape	"0 0 3 2"
+	in		2
+	out		1
+}
+
+inventory armor
+{
+	shape	"0 0 6 6"
+	single	true
+	armor	true
+	in		200
+	out		200
+}
+
+inventory floor
+{
+	shape	"3 0 12 1"
+	shape	"0 1 15 4"
+	shape	"15 0 3 3"
+	temp	true
+	in		1
+	out		2
+}
+
+inventory equip
+{
+	shape	"0 0 24 13"
+	shape	"0 13 20 2"
+	temp	true
+	all		true
+}

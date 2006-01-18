@@ -1,0 +1,33 @@
+sequence view
+{
+	cmd "seq_animspeed 200;"
+
+	precache models
+	{
+	}
+		
+	camera cam1
+	{
+		zoom	1.0
+		angles	"20 0 0"
+		omega   "0 40 0"
+		dist	100
+		origin  "0 0 0"
+	}
+
+	model model_body
+	{
+		model	models/civilians/female/body03.md2
+		skin	1
+		anim	walk0
+		origin	"0 0 0"
+	}
+	model model_head
+	{
+		model	models/civilians/female/head04c.md2
+		parent	model_body
+		tag		tag_head
+	}
+	
+	wait 1000.0
+}

@@ -1,0 +1,250 @@
+up_chapters main
+{
+	crafts    "Aircraft"
+	weapons   "Weapons"
+	buildings "Buildings"
+	aliens    "Alien Species"
+	ufos      "UFOs"
+}
+
+up_entry transporter
+{
+	title      "H-92 Troop Transport"
+	mdl_top    models/objects/dropship.md2
+	chapter    crafts
+	{
+The H-92 dropship is the main troop transport for the GDF rapid intervention forces. Powered by\four General Electrics HM-5600 turbo jet engines, this dropship achieves a top speed of mach 1.0.\The four engine exhausts can be pivoted so the H-92 has the ability to take off and land\vertically. This technical feature is essential for rapidly deploying troops to any location\worldwide. On the downside the H-92 has hardly no combat value because of only minor armament.\Therefore GDF commanders always have some interceptors stading by for air cover if a H-92\ encounters a enemy UFO.
+	}
+}
+
+up_entry transporter
+{
+	title      "F-48 Interceptor"
+	mdl_top    models/aircrafts/fighter1_main.md2
+	chapter    crafts
+	{
+The F-48 is the backbone of the GDF air superiority force. Powered by two Volkot VO-36 jet\engines, this aircraft reaches a maximum speed of mach 1.4. This is significantly slower than \many of the alien UFOs, but regarding the maneuverability the F-48 can easily compete with\almost all of its adversaries. Like the H-92 Troop transport, the F-48 has the ability to take\off and land vertically. Therefore many GDF bases have vertical shafts leading form the surface\to the subterranean flight hangars. This has been proven to be safest way to make a airfield\almost completely undetectable.
+	}
+}
+
+up_entry assault
+{
+	title      "AR-80 Assault Rifle"
+	mdl_top    models/weapons/assault/assault.md2
+	mdl_bottom models/weapons/assault/assault_clip.md2
+	chapter    weapons
+	item       true
+	{
+The AR-80 is the standard weapon of the GDF forces. Using improved ammo and a revolutionary\design, this rifle can do more damage as any comparable assault rifle. The AR-80s rear loaded\clip allows the weapon to fire with greater accuracy as the bullet has to move down an extended\muzzle before exiting the weapon. The Assault Rifle can also be repaired much easier due to the\fact that it is built in modules. For example, the firing mechanism can be field repaired simply\by removing the out of commission back end and inserting a new one. The entire process takes\only minuets.
+	}
+}
+
+up_entry sniper
+{
+	title      "WE-78 Sniper Rifle"
+	mdl_top    models/weapons/sniper/sniper.md2
+	mdl_bottom models/weapons/sniper/sniper_clip.md2
+	chapter    weapons
+	item       true
+	{
+Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of the most deadly weapons\employed by GDF forces. Powered by a advanced version of the 0.5 cartridge, it is capable to\easily penetrate the engine block of a vehicle at 150 meters. However, the weapon is very bulky\and requires many precious seconds to aim, therefore the WE-78 is definitly not suitable for\close combat.
+	}
+}
+
+up_entry smg
+{
+	title      "SMG-68 Erazor"
+	mdl_top    models/weapons/smg/smg.md2
+	mdl_bottom models/weapons/smg/smg_clip.md2
+	chapter    weapons
+	item       true
+	{
+Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at the cost of less\accuracy and penetrating power. These characteristics make the SMG-68 a ideal choice for close\combat. Therefore GDF soldiers use the SMG-68 mainly in urban areas. To optimize the rate of\fire, this weapon has two barrels through which the bullets are fired off alternating. To damp\the considerable recoil, a advanced counter-balance system is used powered by the explosion\gases originating from the cartridges.
+	}
+}
+
+up_entry shotgun
+{
+	title      "SG-260 Shotgun"
+	mdl_top    models/weapons/shotgun/shotgun.md2
+	mdl_bottom models/weapons/shotgun/shotgun_clip.md2
+	chapter    weapons
+	item       true
+	{
+The GDF forces are using the SG-260 with great success for quite some time now. Compared with\the shotguns traditionally used by mainy SWAT teams, the SG-260 is capable to better channel the\bullets fired off from the buckshots. Therefore the effective range of this weapon is increased\so it can be used not only at close but also at medium range. The SG-260 is a good choice for\urban combat, especially for clearing a building.
+	}
+}
+
+up_entry flamer
+{
+	title      "FT-207 Flamethrower"
+	mdl_top    models/weapons/flamer/flamer.md2
+	mdl_bottom models/weapons/flamer/flamer_ammo.md2
+	chapter    weapons
+	item       true
+	{
+The FT-207 is one of the most recent additions to tactical combat. Prior versions of this weapon\were not employed do to the risk of accidentally igniting surrounding objects. This version,\however, greatly reduces this risk by employing FHAS, or, Focused Heat Attack System, which\restricts the "hot zone" created by the flamethrower to a very defined region. The area\centimeters outside the "hot zone" show no noticeable temperature increase.
+	}
+}
+
+up_entry pistol
+{
+	title      "P-95 Pistol"
+	mdl_top    models/weapons/pistol/pistol.md2
+	mdl_bottom models/weapons/pistol/pistol_clip.md2
+	chapter    weapons
+	item       true
+	{
+The P-95 is the standard GDF sidearm. The simple design of this handgun makes it a very reliable\addition to every soldier's equipment. Because of the weapon's low weight a experienced gunner\can also use two pistols at the same time with the considerable drawback of a massivly reduced\accuracy. The P-95 is especially appreciated by snipers for having a valuable sidearm when it\comes to close combat.
+	}
+}
+
+up_entry rpg
+{
+	title      "RL-1056 Rocket Launcher"
+	mdl_top    models/weapons/rpg/rpg.md2
+	mdl_bottom models/weapons/rpg/rocket.md2
+	chapter    weapons
+	item       true
+	{
+The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. GDF weapon scientists and\engineers developed a new tracking system not only capable to fight airborne but also ground\targets. The RL-1056's rockets use a combination of laser guidance and high speed cameras to\identify the target. Despite a good accuracy when the tracking system had enough time to\correctly lock on the target, this rocket launcher is of limited value if it has to be used in\snapshot mode.
+	}
+}
+
+up_entry laserrifle
+{
+	title      "LAS-24 Laser Rifle"
+	mdl_top    models/weapons/laserrifle/laserrifle.md2
+	mdl_bottom models/weapons/laserrifle/laserrifle_clip.md2
+	chapter    weapons
+	item       true
+	{
+Thanks to the recent advances in the laser technology GDF scientist were able to implement a\really powerful "laser reactor" into a hand held weapon. The laser beam is generated with a\newly developed type of the common YAG laser technology. A advanced opical lense system is used\to focus the beam very densely so it has the power to easily penetrate most known armors.
+	}
+}
+
+up_entry laserpistol
+{
+	title      "LAS-10 Laser Pistol"
+	mdl_top    models/weapons/laserpistol/laserpistol.md2
+	mdl_bottom models/weapons/laserpistol/laserpistol_clip.md2
+	chapter    weapons
+	item       true
+	{
+Using a smaller and less powerful version of the "YAG laser reactor", the LAS-10 is like its big\brother, the LAS-24 Laser Rifle, a offspring of the recent advances made in the field of laser\technology. Due to the smaller "YAG reactor", the photons have a lower cinetic energy and\therefore a lessend penetrating power.
+	}
+}
+
+up_entry fraggren
+{
+	title      "Fragmentation Grenade"
+	mdl_top    models/weapons/fraggren/fraggren.md2
+	mdl_bottom models/weapons/fraggren/fraggren.md2
+	chapter    weapons
+	item       true
+	{
+The fragmentation grenade is little more than an explosive core surrounded by metal. When the\core is detonates, the surrounding metal is broken into sharp, deadly fragments which fly from\the weapon at great speeds. The detonation is controlled by a built in timer.
+	}
+}
+
+up_entry knife
+{
+	title      "Combat Knife"
+	mdl_top    models/weapons/knife/knife.md2
+	chapter    weapons
+	item       true
+	{
+Almost every GDF soldier has his own Combat Knife as a last choice when it comes to hand to hand\combat. But a simple Combat Knife should not be underestimated in the hands of a stealth\warefare specialist as it can kill absolutely noiseless. Its blade is made of a special titanium\alloy which makes it very resistant.
+	}
+}
+
+up_entry plasrifle
+{
+	title      "Plasma Rifle"
+	mdl_top    models/weapons/plasrifle/plasrifle.md2
+	mdl_bottom models/weapons/plasrifle/plasrifle_clip.md2
+	chapter    weapons
+	item       true
+	{
+The Plasma Rifle is the weapon most often used by ... warriors. The plasma fired by this weapon\easly cuts through almost every known material. Therefore the standard GDF kevlar vest only\provides minor protection. Soldiers wounded by a Plasma Rifle's beam suffer of extensive burns\which are in many cases instantly lethal. The overheated highly energetic xenon gas plasma is\stored inside a intense magnetic field integrated in the weapon's clip. If the trigger is used,\the magnetic field is reconfigured so that a continuous plasma beam is formed. This beam is\focused by a second magnetic field and finally propelled to the front end of the Plasma Rifle.
+	}
+}
+
+up_entry plaspistol
+{
+	title      "Plasma Pistol"
+	mdl_top    models/weapons/plaspistol/plaspistol.md2
+	mdl_bottom models/weapons/plaspistol/plaspistol_clip.md2
+	chapter    weapons
+	item       true
+	{
+Using the same technology as the Plasma Rifle, the Plasma Pistol can also do considerable damage\to its target. The overheated xenon plasma is also contained inside a strong magnetic field\implemented in the pistol's clip. Because of the smaller dimensions of this one-handed weapon,\the magnetic field generators are not that capable as the ones used in the Plasma Rifle.\Therefore the cinetic energy given to the plasma beam is lessened.
+	}
+}
+
+up_entry plasblade
+{
+	title      "Plasma Blade"
+	mdl_top    models/weapons/plasblade/plasblade.md2
+	chapter    weapons
+	item       true
+	{
+This melee weapon has proven to be of great value in hand to hand combat because of the\devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\to fight onward just after one strike. On the downside the range of this weapon is utterly\limited.
+	}
+}
+
+up_entry tachyonrifle
+{
+	title      "Tachyon Rifle"
+	mdl_top    models/weapons/tachyonrifle/tachyonrifle.md2
+	mdl_bottom models/weapons/tachyonrifle/tachyonrifle_clip.md2
+	chapter    weapons
+	item       true
+	{
+Although our engineers not fully understand the principles of altering the tachyons on a\subatomic level, they were able to reproduce the tachyon accelerator technology. Apparently the\tachyons are given a defined spin inside the accelerator so they are able to interact with any\material. They still tend to infiltrate easily through any known armor and lose their particle\energy not before a penetrating distance of about 10 cm. Therefore a soldier hit by a tachyon\charge suffers only minor superficial injury but is heavily wounded in his viscera.
+	}
+}
+
+up_entry tachyonsniper
+{
+	title      "Tachyon Sniper Rifle"
+	mdl_top    models/weapons/tachyonsniper/tachyonsniper.md2
+	mdl_bottom models/weapons/tachyonsniper/tachyonsniper_clip.md2
+	chapter    weapons
+	item       true
+	{
+The Tachyon Sniper Rifle uses also the newly discovered tachyon accelerator technology, first\found in a Ortnok scout spaceship. Unlike the Tachyon Rifle, this weapon has a low rate of fire\because the tachyon particles are intensely charged before they are fired. This means that the\shots fired by the Tachyon Sniper Rifle are more focused and hence have a greater accuracy as\well as a bigger penetrating power.
+	}
+}
+
+up_entry tachyonpistol
+{
+	title      "Tachyon Pistol"
+	mdl_top    models/weapons/tachyonpistol/tachyonpistol.md2
+	mdl_bottom models/weapons/tachyonpistol/tachyonpistol_clip.md2
+	chapter    weapons
+	item       true
+	{
+This weapon is powered by a miniaturized version of the tachyon accelerator. Therefore the\Tachyon Pistol has a lower rate of fire as well as a diminished accuracy compared to the other\two tachyon weapons. The major advantage of the Tachyon Pistol is its low weight and its small\dimensions which makes it a valuable sidearm.
+	}
+}
+
+up_entry ortnok
+{
+	title      "Ortnok"
+	mdl_top    models/aliens/ortnok/body01.md2
+	chapter    aliens
+	{
+Genetically the green skinned Ortnoks seem to be related very closely to the human race. About\80% of their DNA is identical compared to the human's. The parts that are different are most\likely genetically engineered because they do not show any individual variability. The fact that\they are genetically altered and that they do not seem to have any functional reproduction\organs suggests that they are clones made by some as yet unknown alien species. Additionally the\Ortnoks have several cybernetic implants which involve mainly the cardiovascular system, the\muscles, the eyes and the brain. They enhance the physical strenght and stamnia as well as the\senses to a level superior to any human. The purpose of the brain implants is mostly unclear but\it is believed that they serve as receivers for commands. But currently this is only a\assumption because there is no evidence proving the existence of such a master-species.
+	}
+}
+
+up_entry ortnok_medium
+{
+	title      "Ortnok Warrior"
+	mdl_top    models/aliens/ortnok_medium/body01.md2
+	chapter    aliens
+	{
+Having the same genetical features as the regular Ortnoks, the Ortnok Warriors have been\extensively modified with cybernetic implants. All these additional implants obviously aim to\achieve a better performance in combat. Therefore the legs and arms have been almost completely\replaced by cybernetic prostheses which allow a physical strength far beyond the potential of a\human beeing. The claw shaped hands are designed to handle extreme weights. The chest area is\covered with a thick steel plating which is almost impenetrable for regular rifle ammunition.\The face mask serves as a protection against hazardous gases as well as a augmentation of the\upper airways to allow a better lung function. The disadvantage of this massive cybernetic\augmentation is the increased vulnerability to electromagnetic pulses (EMP).
+	}
+}

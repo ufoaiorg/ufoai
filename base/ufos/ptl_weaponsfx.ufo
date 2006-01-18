@@ -1,0 +1,667 @@
+// ==================
+// BULLET EFFECTS
+// ==================
+
+particle bullet
+{
+	init
+	{
+		image  sfx/bullet
+		blend  add
+		style  beam
+		tfade  out
+		push   float 2
+		pop    *size.2
+		tps    4
+	}
+	think { kill }
+}
+
+particle bulletImpact
+{
+	init
+	{
+		image  sfx/smoke
+		blend  add
+		style  facing
+		tfade  sin
+		size   "20 20"
+		
+		push   *v
+		mul    float 5
+		kpop   *v
+		add    *s
+		pop    *s
+		tps    1		
+
+		push   int 20
+		nspawn bulletFragment
+	}
+	run
+	{
+		push *color
+		mul  float 0.5
+		pop  *color
+	}
+	think { kill }
+}
+
+particle bulletFragment
+{
+	init
+	{
+		image  sfx/spark
+		blend  add
+		style  facing
+		tfade  out
+		size   "2 2"
+		
+		push   *v
+		rand   float 28
+		add    float 3
+		mul    #
+		crand  vector "15 15 15"
+		add    #
+		pop    *v
+		
+		crand  vector "5 5 5"
+		add    *s
+		pop    *s
+		
+		rand   float 1.3
+		add    float 1.2
+		pop    *tps
+	}
+	think { kill }
+}
+
+
+// ==================
+// FLAMETHROWER EFFECTS
+// ==================
+
+particle fireBall
+{
+	init
+	{
+		image  sfx/fireball
+		blend  add
+		style  facing
+		tps    2.5
+	}
+	run
+	{
+		push   vector "80 80"
+		mul    *t
+		add    vector "10 10"
+		pop    *size
+	}
+	think { tfade  out }
+}
+
+particle fireImpact
+{
+	init
+	{
+		image  sfx/fireball
+		blend  add
+		style  rotated
+		size   "80 80"
+		tfade  out
+		tps    1.25
+	}
+	run
+	{
+		push   pos "140 140"
+		mul    *t
+		add    pos "40 40"
+		pop    *size	
+	}
+	think { kill }
+}
+
+
+// ==================
+// ROCKET LAUNCHER EFFECTS
+// ==================
+
+particle rocket
+{
+	init
+	{
+		model  weapons/rpg/rocket
+		color  ".5 .5 .5 1"
+		tps    40
+	}
+	think
+	{
+		spawn rocketSmoke
+		spawn rocketFire
+	}
+}
+
+particle rocketSmoke
+{
+	init
+	{
+		image  sfx/smoke
+		blend  add
+		style  facing
+		tfade  out
+		tps    0.8
+		color  ".5 .5 .5 1"
+		v      "0 0 20"		
+	}
+	run
+	{
+		push   pos "15 15"
+		mul    *t
+		add    pos "10 10"
+		pop    *size
+		push   *color
+		mul    float .5
+		pop    *color
+
+		crand  vector "1 1 1"
+		add    *s
+		pop    *s
+	}
+	think { kill }
+}
+
+particle rocketFire
+{
+	init
+	{
+		image  sfx/fireball
+		blend  add
+		style  facing
+		tfade  out
+		tps    1.8
+		color  ".5 .5 .5 1"
+
+		push   *v
+		mul    float 0.8
+		kpop   *v
+		
+	}
+	run
+	{
+		push   pos "10 10"
+		mul    *t
+		add    pos "5 5"
+		pop    *size
+		push   *color
+		mul    float .5
+		pop    *color
+
+		crand  vector "0.5 0.5 0.5"
+		add    *s
+		pop    *s
+	}
+	think { kill }
+}
+
+
+// ==================
+// LASER EFFECTS
+// ==================
+
+particle laserPulse
+{
+	init
+	{
+		image  sfx/laserbeam
+		blend  add
+		style  beam
+		tfade  sin
+		tps    6
+		push   float 2.2
+		pop    *size.2
+	}
+	think { kill }
+}
+
+particle laserImpact
+{
+	init
+	{
+		image  sfx/smoke
+		blend  add
+		style  facing
+		tfade  sin
+		size   "20 20"
+		
+		push   *v
+		mul    float 5
+		kpop   *v
+		add    *s
+		pop    *s
+		tps    1		
+
+		push   int 10
+		nspawn laserSpark
+	}
+	run
+	{
+		push *color
+		mul  float 0.5
+		pop  *color
+	}
+	think { kill }
+}
+
+
+particle laserSpark
+{
+	init
+	{
+		image  sfx/laserimpact
+		blend  add
+		style  facing
+		tfade  out
+		size   "20 20"
+		
+		push   *v
+		rand   float 8
+		add    float 3
+		mul    #
+		crand  vector "15 15 15"
+		add    #
+		pop    *v
+		
+		crand  vector "5 5 5"
+		add    *s
+		pop    *s
+		
+		rand   float 1.3
+		add    float 1.2
+		pop    *tps
+	}
+	think { kill }
+}
+
+
+// ==================
+// PLASMA EFFECTS
+// ==================
+
+particle plasmaChargedPulse
+{
+	init
+	{
+		image  sfx/plasmabeam
+		blend  add
+		style  beam
+		tfade  sin
+		tps    2
+	}
+	run
+	{
+		push *t
+		mul  float 3
+		sin  #
+		mul  float 2
+		add  float 5
+		pop  *size.2
+	}
+	think { kill }
+}
+
+particle plasmaImpactCharged
+{
+	init
+	{
+		push   int 10
+		nspawn plasmaParticleCharged
+		image  sfx/plasmaball
+		blend  add
+		style  rotated
+		tfade  out
+		tps    2
+	}
+	run
+	{
+		push pos "10 10"
+		push *t
+		mul  float 10
+		sin  #
+		mul  #
+		add  pos "30 30"
+		pop  *size
+	}
+	think { kill }
+}
+
+particle plasmaParticleCharged
+{
+	init
+	{
+		image  sfx/plasmadust
+		blend  add
+		style  facing
+		tps    2
+		size   "12 12"
+		tfade  out
+		
+		a      "0 0 -50"
+		push   *v
+		mul    float 25
+		crand  vector "25 25 25"
+		add    #
+		add    vector "0 0 25"
+		pop    *v		
+
+		crand  vector "2 2 2"
+		add    *s
+		pop    *s
+	}
+	think { kill }
+}
+
+particle plasmaContinuous
+{
+	init
+	{
+		image  sfx/plasmabeam
+		blend  add
+		style  beam
+		tps    25
+	}
+	run
+	{
+		rand float 2
+		add  float 1
+		pop  *size.2
+	}
+	think { kill }
+}
+
+particle plasmaImpact
+{
+	init
+	{
+		push   int 6
+		nspawn plasmaParticle
+		image  sfx/plasmaball
+		blend  add
+		style  rotated
+		tfade  out
+		tps    2
+	}
+	run
+	{
+		push pos "5 5"
+		push *t
+		mul  float 10
+		sin  #
+		mul  #
+		add  pos "15 15"
+		pop  *size
+	}
+	think { kill }
+}
+
+particle plasmaParticle
+{
+	init
+	{
+		image  sfx/plasmadust
+		blend  add
+		style  facing
+		tps    2.2
+		size   "7 7"
+		tfade  out
+		
+		a      "0 0 -50"
+		push   *v
+		mul    float 20
+		crand  vector "20 20 20"
+		add    #
+		add    vector "0 0 20"
+		pop    *v		
+
+		crand  vector "2 2 2"
+		add    *s
+		pop    *s
+	}
+	think { kill }
+}
+
+
+// ==================
+// TACHYON EFFECTS
+// ==================
+
+particle tachyonBall
+{
+	init
+	{
+		image  sfx/tachyonball
+		blend  add
+		style  facing
+	}
+	run
+	{
+		push pos "3 3"
+		push *t
+		mul  float 4
+		sin  #
+		mul  #
+		add  pos "8 8"
+		pop  *size
+	}
+}
+
+particle tachyonImpact
+{
+	init
+	{
+		push   int 22
+		nspawn tachyonSplash
+	}
+}
+
+particle tachyonSplash
+{
+	init
+	{
+		image  sfx/tachyonball
+		blend  add
+		style  facing
+		tfade  out
+		size   "4 4"
+		
+		push   *v
+		mul    float 40
+		crand  vector "30 30 30"
+		add    #
+		pop    *v
+		
+		crand  vector "0 0 0"
+		add    *s
+		pop    *s
+		
+		rand   float 3
+		add    float 1.5
+		pop    *tps
+	}
+	think { kill }
+}
+
+particle tachyonBigBall
+{
+	init
+	{
+		image  sfx/tachyonball
+		blend  add
+		style  facing
+		tps    50
+	}
+	think
+	{
+		spawn tachyonSpark
+	}
+}
+
+particle tachyonSpark
+{
+	init
+	{
+		image  sfx/tachyonball
+		blend  add
+		style  facing
+		tfade  out
+		tps    3
+		color  ".5 .5 .5 1"
+		
+		push   *v
+		crand  vector "8 8 8"
+		add    vector "-4 -4 -4"
+		pop    *v		
+
+		crand  vector "2 2 2"
+		add    *s
+		pop    *s
+	}
+	run
+	{
+		push   pos "1 1"
+		mul    *t
+		add    pos "4 4"
+		pop    *size
+		push   *color
+		mul    float .01
+		pop    *color
+	}
+	think { kill }
+}
+
+particle tachyonBigImpact
+{
+	init
+	{
+		push   int 60
+		nspawn tachyonBigSplash
+	}
+}
+
+
+
+particle tachyonBigSplash
+{
+	init
+	{
+		image  sfx/tachyonball
+		blend  add
+		style  facing
+		tfade  out
+		size   "4 4"
+		
+		push   *v
+		rand   float 200
+		add    float 20
+		mul    #
+		crand  vector "50 50 50"
+		add    #
+		pop    *v
+		
+		crand  vector "5 5 5"
+		add    *s
+		pop    *s
+		
+		rand   float 1.0
+		add    float 1.6
+		pop    *tps
+	}
+	think { kill }
+}
+
+particle tachyonMiniBall
+{
+	init
+	{
+		image  sfx/tachyonball
+		blend  add
+		style  facing
+	}
+	run
+	{
+		push pos "1 1"
+		push *t
+		mul  float 16
+		sin  #
+		mul  #
+		add  pos "4 4"
+		pop  *size
+	}
+}
+
+
+// ==================
+// GRENADE EFFECTS
+// ==================
+
+particle fraggren
+{
+	init
+	{
+		model  weapons/fraggren/fraggren
+		color  ".5 .5 .5 1"
+	}
+}
+
+
+particle frag_explosion
+{
+	init
+	{
+		spawn  explosion_1
+		spawn  explosion_2
+		push   int 50
+		nspawn grenadeFragment
+		kill
+	}
+}
+
+particle grenadeFragment
+{
+	init
+	{
+		image  sfx/spark
+		blend  add
+		style  facing
+		tfade  out
+		size   "5 5"
+		
+		push   *v
+		crand  vector "160 160 160"
+		pop    *v
+		
+		crand  vector "15 15 15"
+		add    *s
+		pop    *s
+		
+		rand   float 1.2
+		add    float 1.2
+		pop    *tps
+	}
+	think { kill }
+}
+
+// ==================
+// KNIFE EFFECTS
+// ==================
+
+particle knife
+{
+	init
+	{
+		model  weapons/knife/knife
+		color  ".5 .5 .5 1"
+		omega  "-800 0 0"
+		angles "90 0 0"
+	}
+}
+
+

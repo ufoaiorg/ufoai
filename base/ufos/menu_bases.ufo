@@ -1,0 +1,178 @@
+// ==============
+// BASEMANAGEMENT
+// ==============
+menu bases
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	basemap thebasemap
+	{
+                pos     "0 96"
+                size    "778 672"
+                click rclick mclick
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/base_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/base_ur
+		pos		"512 0"
+	}
+
+	pic back_lr
+	{
+		image	menu/base_lr
+		pos		"512 256"
+	}
+
+	pic back_geo
+	{
+		image	menu/button_mapmen_options2
+		pos	"950 10"
+		texl	"0 64"
+		texh	"64 128"
+		mousefx true
+		click
+		{
+			cmd mn_pop;
+		}
+	}
+
+	// ===============
+	// buttons
+	// ===============
+
+	pic buildings
+	{
+		image	menu/button_basemen
+		pos	"765 130"
+		texl	"15 15"
+		texh	"226 64"
+		mousefx true
+		click
+		{
+			cmd "mn_push buildings"
+		}
+		out		{ *buildings texl "15 15" *buildings texh "226 64" }
+		in		{ *buildings texl "239 15" *buildings texh "447 64" }
+	}
+
+	pic aircrafts
+	{
+		image	menu/button_basemen
+		pos	"765 200"
+		texl	"15 79"
+		texh	"226 127"
+		mousefx true
+		click
+		{
+			cmd "mn_push team"
+		}
+		out		{ *aircrafts texl "15 79" *aircrafts texh "226 127" }
+		in		{ *aircrafts texl "239 79" *aircrafts texh "447 127" }
+	}
+
+	pic buysell
+	{
+		image	menu/button_basemen
+		pos	"765 270"
+		texl	"15 144"
+		texh	"226 192"
+		mousefx true
+		click
+		{
+			cmd "mn_push buy"
+		}
+		out		{ *buysell texl "15 144" *buysell texh "226 192" }
+		in		{ *buysell texl "240 144" *buysell texh "449 192" }
+	}
+
+	pic transfer
+	{
+		image	menu/button_basemen
+		pos	"765 340"
+		texl	"15 207"
+		texh	"226 256"
+		mousefx true
+		click
+		{
+			cmd "mn_push transfer"
+		}
+		out		{ *transfer texl "15 207" *transfer texh "226 256" }
+		in		{ *transfer texl "239 207" *transfer texh "447 256" }
+	}
+
+	pic equip
+	{
+		image	menu/button_basemen
+		pos	"765 410"
+		texl	"15 271"
+		texh	"226 320"
+		mousefx true
+		click
+		{
+			cmd "mn_push equip"
+		}
+		out		{ *equip texl "15 271" *equip texh "226 320" }
+		in		{ *equip texl "239 271" *equip texh "447 320" }
+	}
+
+	pic research
+	{
+		image	menu/button_basemen
+		pos	"765 480"
+		texl	"15 336"
+		texh	"226 383"
+		mousefx true
+		click
+		{
+			cmd "mn_push research"
+		}
+		out		{ *research texl "15 336" *research texh "226 383" }
+		in		{ *research texl "239 336" *research texh "447 383" }
+	}
+
+
+
+	// ==================
+	// text and info
+	// ==================
+
+	string txt_credits
+	{
+		string	"*cvar mn_credits"
+		pos	"900 30"
+		font	f_big
+		align	ur
+	}
+
+	string title
+	{
+		string	"*cvar mn_base_title"
+		pos	"50 30"
+		font	f_big
+	}
+
+	func init
+	{
+		cmd base_init;
+	}
+
+
+}

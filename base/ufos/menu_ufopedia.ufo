@@ -1,0 +1,157 @@
+// ==================
+// UFOPEDIA MENU
+// ==================
+
+menu ufopedia
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/ufopedia_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/ufopedia_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/ufopedia_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/ufopedia_lr
+		pos		"512 512"
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	pic bt_prev
+	{
+		image	menu/ufopedia_buttons1
+		pos		"10 10"
+		texl	"0 37"
+		texh	"64 73"
+		mousefx true
+		click	{ cmd mn_upprev; }
+	}
+
+	pic bt_next
+	{
+		image	menu/ufopedia_buttons1
+		pos		"950 10"
+		texl	"0 0"
+		texh	"64 36"
+		mousefx true
+		click	{ cmd mn_upnext; }
+	}
+
+	pic button_content
+	{
+		image	menu/ufopedia_buttons1
+		mousefx true
+		pos		"10 720"
+		texl	"0 74"
+		texh	"64 111"
+		click	{ cmd mn_upcontent; }
+	}
+
+	pic button_exit
+	{
+		image	hud/buttons2
+		mousefx true
+		pos		"950 720"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd mn_pop; }
+	}
+
+	// ==================
+	// text and info
+	// ==================
+
+	text ufopedia
+	{
+		pos		"40 86"
+		size	"400 550"
+		num		2
+		click { }
+	}
+
+	confunc mn_upfbig
+	{
+		*ufopedia format  "24 0"
+		*ufopedia font    f_big
+		*ufopedia mousefx true
+	}
+
+	confunc mn_upfsmall
+	{
+		*ufopedia format  "18 0"
+		*ufopedia font    f_small
+		*ufopedia mousefx false
+	}
+
+	text description
+	{
+		pos		"40 500"
+		size	"326 200"
+		format	"20 0"
+	}
+
+	string title
+	{
+		string	"*cvar mn_uptitle"
+		pos		"512 25"
+		align	uc
+		font	f_big
+	}
+
+	model mdl_top
+	{
+		md2	"*cvar mn_upmodel_top"
+		origin	"770 250 0"
+		angles	"0 0 90"
+		color	"0.5 0.5 0.5 1"
+		pos	"570 220"
+		size	"240 240"
+		mousefx true
+		click { }
+	}
+
+	model mdl_bottom
+	{
+		md2	"*cvar mn_upmodel_bottom"
+		origin	"770 570 0"
+		angles	"0 0 90"
+		color	"0.5 0.5 0.5 1"
+		pos	"570 500"
+		size	"120 120"
+		mousefx true
+		click { }
+	}
+
+	func init
+	{
+		cmd mn_upcontent;
+	}
+}

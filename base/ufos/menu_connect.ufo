@@ -1,0 +1,296 @@
+// ==================
+// MULTIPLAYER MENU
+// ==================
+
+menu connect
+{
+        // ==================
+        // don't render
+        // ==================
+
+        zone render
+        {
+                invis true
+        }
+
+        // ==================
+        // background
+        // ==================
+
+        pic back_ul
+        {
+                image   menu/options_ul
+                pos             "0 0"
+        }
+
+        pic back_ur
+        {
+                image   menu/options_ur
+                pos             "512 0"
+        }
+
+        pic back_ll
+        {
+                image   menu/options_ll
+                pos             "0 512"
+        }
+
+        pic back_lr
+        {
+                image   menu/options_lr
+                pos             "512 512"
+        }
+
+        pic multiplayer_label
+        {
+                image   menu/multi_buttons1
+                pos             "80 165"
+                texl    "0 475"
+                texh    "256 510"
+        }
+
+        // ==================
+        // buttons
+        // ==================
+
+        pic button_lan
+        {
+                image   menu/multi_buttons1
+                pos             "80 220"
+                texl    "0 0"
+                texh    "256 64"
+                click   { cmd "mn_pop;mn_push mp_lan;" }
+                out             { *button_lan texl "0 0"  *button_lan texh "256 64" }
+                in              { *button_lan texl "0 64" *button_lan texh "256 128" }
+        }
+
+        pic button_internet
+        {
+                image   menu/multi_buttons1
+                pos             "80 290"
+                texl    "0 128"
+                texh    "256 192"
+                click   { cmd "mn_pop;mn_push mp_internet;" }
+                out             { *button_internet texl "0 128" *button_internet texh "256 192" }
+                in              { *button_internet texl "0 192" *button_internet texh "256 256" }
+        }
+
+        pic button_team
+        {
+                image   menu/multi_buttons1
+                pos             "80 360"
+                texl    "0 256"
+                texh    "256 320"
+                click   { cmd "mn_pop;mn_push mp_team;" }
+                out             { *button_team texl "0 256" *button_team texh "256 320" }
+                in              { *button_team texl "0 320" *button_team texh "256 384" }
+        }
+
+        pic button_exit
+        {
+                image   menu/main_buttons2
+                pos             "80 450"
+                texl    "0 128"
+                texh    "256 192"
+                click   { cmd "mn_pop esc;" }
+                out             { *button_exit texl "0 128" *button_exit texh "256 192" }
+                in              { *button_exit texl "0 192" *button_exit texh "256 256" }
+        }
+
+        func init
+        {
+                cmd "mn_push mp_lan;"
+        }
+}
+
+
+// ==================
+// LAN MENU
+// ==================
+
+menu mp_lan
+{
+        pic lan
+        {
+                image   menu/multi_buttons1
+                pos             "580 80"
+                texl    "0 385"
+                texh    "256 414"
+        }
+
+        text servers
+        {
+                pos             "500 150"
+                size    "420 550"
+                format  "20 700"
+                mousefx true
+                num             1
+                click { }
+        }
+        // ====================
+        // connect to ip button
+        // ====================
+        pic button_connect_to_ip
+        {
+                image   menu/button_connect_to_ip
+                pos             "570 550"
+                texl    "0 0"
+                texh    "256 64"
+                click   { cmd "connect *mn_connect_to_ip" }
+                out             { *button_connect_to_ip texl "0 0" *button_connect_to_ip texh "256 64" }
+                in              { *button_connect_to_ip texl "0 64" *button_connect_to_ip texh "256 128" }
+        }
+
+        // ==================
+        // preferences
+        // ==================
+
+        string teamnum_str
+        {
+                string  "Team preference:"
+                pos             "500 660"
+        }
+        string teamnum_value
+        {
+                string  "*cvar teamnum"
+                pos             "650 660"
+                align   ur
+        }
+        pic teamnum_dec
+        {
+                image   menu/buy_buttons1
+                pos             "668 658"
+                texl    "0 0"           texh    "16 16"
+                mousefx true
+                click   { cmd "mn_modify teamnum -1 1 4;" }
+        }
+        pic teamnum_inc
+        {
+                image   menu/buy_buttons1
+                pos             "684 658"
+                texl    "16 0"          texh    "32 16"
+                mousefx true
+                click   { cmd "mn_modify teamnum +1 1 4;" }
+        }
+
+        // ===================
+        // connect_to_ip
+        // ===================
+        string current_connect_to_ip
+        {
+                string  "Connect to IP"
+                pos     "500 480"
+        }
+        pic slot_connect_to_ip
+        {
+                image   menu/save_slot
+                pos     "500 500"
+                mousefx true
+                click   { cmd "msgmenu ?mn_connect_to_ip" *txt_connect_to_ip color "1 1 1 1" *txt_connect_to_ip mousefx true }
+        }
+        string txt_connect_to_ip
+        {
+                string "*cvar mn_connect_to_ip"
+                pos    "510 509"
+                color  "0 .78 0 1"
+        }
+        confunc mn_connect_to_ip_changed { *txt_connect_to_ip color "0 .78 0 1" *txt_connect_to_ip mousefx false }
+
+
+        func init
+        {
+                cmd "mn_escpop 2;"
+                cmd "pingservers;"
+        }
+}
+
+// ==================
+// INTERNET MENU
+// ==================
+
+menu mp_internet
+{
+        pic internet
+        {
+                image   menu/multi_buttons1
+                pos             "580 80"
+                texl    "0 415"
+                texh    "256 444"
+        }
+
+        // ====================
+        // connect to ip button
+        // ====================
+        pic button_connect_to_ip
+        {
+                image   menu/button_connect_to_ip
+                pos             "570 550"
+                texl    "0 0"
+                texh    "256 64"
+                click   { cmd "connect *mn_connect_to_ip" }
+                out             { *button_connect_to_ip texl "0 0" *button_connect_to_ip texh "256 64" }
+                in              { *button_connect_to_ip texl "0 64" *button_connect_to_ip texh "256 128" }
+        }
+
+        // ==================
+        // preferences
+        // ==================
+
+        // ===================
+        // connect_to_ip
+        // ===================
+        string current_connect_to_ip
+        {
+                string  "Connect to IP"
+                pos     "500 480"
+        }
+        pic slot_connect_to_ip
+        {
+                image   menu/save_slot
+                pos     "500 500"
+                mousefx true
+                click   { cmd "msgmenu ?connect_to_ip" *txt_connect_to_ip color "1 1 1 1" *txt_connect_to_ip mousefx true }
+        }
+        string txt_connect_to_ip
+        {
+                string "*cvar mn_connect_to_ip"
+                pos    "510 509"
+                color  "0 .78 0 1"
+        }
+        confunc connect_to_ip_changed { *txt_connect_to_ip color "0 .78 0 1" *txt_connect_to_ip mousefx false }
+
+
+        string teamnum_str
+        {
+                string  "Team preference:"
+                pos             "500 660"
+        }
+        string teamnum_value
+        {
+                string  "*cvar teamnum"
+                pos             "650 660"
+                align   ur
+        }
+        pic teamnum_dec
+        {
+                image   menu/buy_buttons1
+                pos             "668 658"
+                texl    "0 0"           texh    "16 16"
+                mousefx true
+                click   { cmd "mn_modify teamnum -1 1 4;" }
+        }
+        pic teamnum_inc
+        {
+                image   menu/buy_buttons1
+                pos             "684 658"
+                texl    "16 0"          texh    "32 16"
+                mousefx true
+                click   { cmd "mn_modify teamnum +1 1 4;" }
+        }
+
+        func init
+        {
+                cmd "mn_escpop 2;"
+        }
+}
+

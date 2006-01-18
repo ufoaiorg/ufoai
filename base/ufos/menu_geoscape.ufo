@@ -1,0 +1,340 @@
+// ==================
+// MAP MENU
+// ==================
+	
+menu map
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}	
+	
+	// ==================
+	// background
+	// ==================
+	
+	map themap
+	{
+		pos		"0 96"
+		size	"1024 512"
+		click rclick mclick
+	}
+	
+	pic back_ul
+	{
+		image	menu/map_ul
+		pos		"0 0"
+	}	
+		
+	pic back_ur
+	{
+		image	menu/map_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/map_ll
+		pos		"0 512"
+	}	
+		
+	pic back_lr
+	{
+		image	menu/map_lr
+		pos		"512 512"
+	}
+	
+	// ==================
+	// time
+	// ==================
+	
+	string date
+	{
+		string  "*cvar mn_mapdate"
+		pos		"40 30"
+		color   "0 .78 0 1"
+		font    f_big
+	}
+
+	string min
+	{
+		string  "*cvar mn_mapmin"
+		pos		"520 30"
+		align   ur
+		color   "0 .78 0 1"
+		font    f_big
+	}
+
+	string hour
+	{
+		string  "*cvar mn_maphour"
+		pos		"450 30"
+		align   ur
+		color   "0 .78 0 1"
+		font    f_big
+	}
+
+	string txt_credits
+	{
+		string	"*cvar mn_credits"
+		pos	"900 30"
+		font	f_big
+		align	ur
+	}
+
+	pic bt_timestop
+	{
+		image   menu/button_mapmen_bases
+		pos     "565 28"
+		texl    "0 222"
+		texh    "20 242"
+		out		{ *bt_timestop texl "0 222" *bt_timestop texh "20 242" }
+		in		{ *bt_timestop texl "21 222" *bt_timestop texh "41 242" }
+		click   { cmd "game_timestop;" }
+	}
+
+	pic bt_timeslow
+	{
+		image   menu/button_mapmen_bases
+		pos     "596 28"
+		texl    "42 222"
+		texh    "52 242"
+		out		{ *bt_timeslow texl "42 222" *bt_timeslow texh "52 242" }
+		in		{ *bt_timeslow texl "64 222" *bt_timeslow texh "74 242" }
+		click   { cmd "game_timeslow;" }
+	}
+
+	pic bt_timefast
+	{
+		image   menu/button_mapmen_bases
+		pos     "616 28"
+		texl    "53 222"
+		texh    "63 242"
+		out		{ *bt_timefast texl "53 222" *bt_timefast texh "63 242" }
+		in		{ *bt_timefast texl "75 222" *bt_timefast texh "85 242" }
+		click   { cmd "game_timefast;" }
+	}
+
+	string timelapse
+	{
+		string  "*cvar mn_timelapse"
+		pos		"565 53"
+		color   "0 .78 0 1"
+	}
+
+	// ==================
+	// texts
+	// ==================
+
+	text description
+	{
+		pos		"34 658"
+		size	"400 100"
+		format	"20 0"
+	}
+	
+	string daytime
+	{
+		string	"*cvar mn_mapdaytime"
+		pos		"34 718"
+	}	
+	
+	// ==================
+	// buttons
+	// ==================
+
+
+	pic bt_base1
+	{
+		image   menu/button_mapmen_bases
+		pos     "410 700"
+		texl    "0 0"
+		texh    "127 31"
+		out		{ *bt_base1 texl "0 0" *bt_base1 texh "127 31" }
+		in		{ *bt_base1 texl "128 0" *bt_base1 texh "255 31" }
+		click   { cmd "mn_select_base 0;" }
+	}
+
+	pic bt_base2
+	{
+		image   menu/button_mapmen_bases
+		pos     "565 700"
+		texl    "0 37"
+		texh    "127 68"
+		out		{ *bt_base2 texl "0 37" *bt_base2 texh "127 68" }
+		in		{ *bt_base2 texl "128 37" *bt_base2 texh "255 68" }
+		click   { cmd "mn_select_base 1;" }
+	}
+
+	pic bt_intercept
+	{
+		image   menu/button_mapmen_options
+		pos     "760 644"
+		texl    "0 0"
+		texh    "105 40"
+		out		{ *bt_intercept texl "0 0" *bt_intercept texh "105 40" }
+		in		{ *bt_intercept texl "0 44" *bt_intercept texh "105 84" }
+		click   { cmd "game_go;" }
+	}
+
+	pic bt_stats
+	{
+		image   menu/button_mapmen_options
+		pos     "880 644"
+		texl    "0 87"
+		texh    "105 127"
+		out		{ *bt_stats texl "0 87" *bt_stats texh "105 127" }
+		in		{ *bt_stats texl "0 131" *bt_stats texh "105 171" }
+		click { cmd "mn_push stats;" }
+	}
+
+	pic bt_dropships
+	{
+		image   menu/button_mapmen_options
+		pos     "760 694"
+		texl    "0 176"
+		texh    "105 216"
+		out		{ *bt_dropships texl "0 176" *bt_dropships texh "105 216" }
+		in		{ *bt_dropships texl "0 220" *bt_dropships texh "105 260" }
+		click   { cmd "mn_push team;" }
+	}
+	
+	pic bt_ufopedia
+	{
+		image   menu/button_mapmen_options
+		pos     "880 694"
+		texl    "0 264"
+		texh    "105 304"
+		out		{ *bt_ufopedia texl "0 264" *bt_ufopedia texh "105 304" }
+		in		{ *bt_ufopedia texl "0 308" *bt_ufopedia texh "105 348" }
+		click { cmd "mn_push ufopedia;" }
+	}
+
+	pic bt_menu
+	{
+		image   menu/button_mapmen_options2
+		pos     "950 15"
+		texl    "0 0"
+		texh    "64 64"
+		mousefx true
+		click   { cmd mn_pop; }
+	}
+
+	func init
+	{
+		cmd "music geoscape;ov_start;"
+	}
+}
+
+
+// ==================
+// POPUP LIST
+// ==================
+	
+menu popup_list
+{
+	zone popup
+	{
+		invis true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos		"256 256"
+	}
+}
+
+
+// ==================
+// POPUP NEW BASE
+// ==================
+	
+menu popup_newbase
+{
+	zone popup
+	{
+		invis true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos		"256 256"
+	}
+	
+	string title
+	{
+		string "New base"
+		pos    "290 276"
+		font   f_big
+	}
+
+	string name_label
+	{
+		string "Name:"
+		pos    "290 320"
+	}
+	string name
+	{
+		string "*cvar mn_basename"
+		pos    "290 330"
+		size   "440 32"
+		font   f_big
+	}
+
+	string cost_label
+	{
+		string "Cost:"
+		pos    "290 380"
+	}
+	string cost
+	{
+		string "100000$"
+		pos    "290 390"
+		font   f_big
+	}
+
+	pic bt_cancel
+	{
+		image   menu/button_mapmen_bases
+		pos     "290 450"
+		texl    "0 72"
+		texh    "127 104"
+		out		{ *bt_cancel texl "0 72" *bt_cancel texh "127 104" }
+		in		{ *bt_cancel texl "128 72" *bt_cancel texh "255 104" }
+		click   { cmd "mn_pop;mn_mapaction_reset;" }
+	}
+
+	pic bt_build
+	{
+		image   menu/button_mapmen_bases
+		pos     "600 450"
+		texl    "0 36"
+		texh    "127 68"
+		out		{ *bt_build texl "0 36" *bt_build texh "127 68" }
+		in		{ *bt_build texl "128 36" *bt_build texh "255 68" }
+		click   { cmd "mn_pop;mn_build_base;" }
+	}
+
+	confunc mn_basename_changed
+	{
+		*name mousefx false
+	}
+	pic bt_edit
+	{
+		image   menu/button_mapmen_bases
+		pos     "445 450"
+		texl    "0 108"
+		texh    "127 140"
+		out		{ *bt_edit texl "0 108" *bt_edit texh "127 140" }
+		in		{ *bt_edit texl "128 108" *bt_edit texh "255 140" }
+		click 
+		{ 
+			cmd "msgmenu ?mn_basename" 
+			*name mousefx true
+		}
+	}
+}

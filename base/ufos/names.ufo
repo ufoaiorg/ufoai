@@ -1,0 +1,1064 @@
+// ========================================================================
+// HUMANS
+// ========================================================================
+
+
+// ==================
+// german
+// ==================
+
+names german
+{
+	female
+	{
+	Anna
+	Sabine
+	Barbara
+	Katrin
+	Yvonne
+	Magdalena
+	Susi
+	Nicole
+	Andrea
+	Denise
+	Gaby
+	Anna
+	Heike
+	Meike
+	Mareike
+	Ute
+	Claudia
+	}
+	
+	male
+	{
+	Rolf
+	Michael
+	Felix
+	David
+	Lukas
+	Horst
+	Soenke
+	Martin
+	Bernhard
+	Kai-Uwe
+	Hans
+	Peter
+	Hans-Peter
+	Philipp
+	Samuel
+	Karl
+	Adrian
+	Silvio
+	Markus
+	Otto
+	}
+	
+	lastname
+	{
+	Meier
+	Hofer
+	Luescher
+	Schlatter
+	Sommer
+	Beyeler
+	Niederer
+	Nipp
+	Allensbach
+	Tschannen
+	Kohler
+	Zemp
+	Aschwanden
+	Loher
+	Schmitt
+	Seidl
+	Zeder
+	Ruegger
+	}
+}
+
+actors german
+{
+	female
+	{
+		soldiers/female light head01a 0
+		soldiers/female light head01b 0
+		soldiers/female light head03a 0
+		soldiers/female light head03b 0
+	}
+	
+	male
+	{
+		soldiers/male light head01 0
+		soldiers/male light head02 0
+		soldiers/male light head03 0
+		soldiers/male light head04 0
+	}
+}
+
+
+// ==================
+// spanish_italian
+// ==================
+
+names spanish_italian
+{
+	female
+	{
+	Maria
+	Anna
+	Fabienne
+	Felicia
+	Madonna
+	Larissa
+	Laura
+	Lavina
+	Lelia
+	Leola
+	Leonora
+	Odessa
+	Olivia
+	Salma
+	Julia
+	}
+	
+	male
+	{
+	Gulliano
+	Luca
+	Mauro
+	Felice
+	Leo
+	Gustavo
+	Peso
+	Ovidio
+	Getulio
+	Luigi
+	Adolfo
+	Giorgo
+	Giovanni
+	Fabian
+	Carlos
+	Antonio
+	}
+	
+	lastname
+	{
+	"De Francesco"
+	Esteban
+	"Al Capone"
+	Rodriguez
+	Vasquez
+	Russo
+	"De Cesare"
+	Guadalupe
+	Martinez
+	Banderas
+	Checa
+	}
+}
+
+actors spanish_italian
+{
+	female
+	{
+		soldiers/female light head01a 0
+		soldiers/female light head01b 0
+	}
+	
+	male
+	{
+		soldiers/male light head03 0
+		soldiers/male light head04 0
+		soldiers/male light head05 0
+	}
+}
+
+
+// ==================
+// french
+// ==================
+
+names french
+{
+	female
+	{
+	Claire
+	Therese
+	Elaine
+	Eloise
+	Emanuelle
+	Amelie
+	Evette
+	Evonne
+	Laramie
+	Leona
+	Linette	
+	Lorraine
+	Lucie
+	Michelle
+	Alice
+	}
+	
+	male
+	{
+	Louis
+	Vincent
+	Pierre
+	Jean
+	Talon
+	Thiery
+	Emeralde
+	Laurence
+	Lucien
+	Jean-Pierre
+	}
+	
+	lastname
+	{
+	Basset
+	Beauvais
+	Beaumont
+	Neville
+	Montague
+	Abney
+	Bodine
+	Chardonais
+	Bussey
+	"de Lorme"
+	D'Aubigne
+	Colville
+	Devereux
+	Garnier
+	Bezier
+	Aiton
+	}
+}
+
+actors french
+{
+	female
+	{
+		soldiers/female light head01a 0
+		soldiers/female light head01b 0
+	}
+	
+	male
+	{
+		soldiers/male light head01 0
+		soldiers/male light head02 0
+		soldiers/male light head03 0
+		soldiers/male light head04 0
+		soldiers/male light head05 0
+	}
+}
+
+
+// ==================
+// english_american
+// ==================
+
+names english_american
+{
+	female
+	{
+	Lynn
+	Laine
+	Cindy
+	Angela
+	Jodi-Ann
+	Lisa
+	Elisha
+	Kelly
+	Jamie
+	Kimberley
+	Jenniver
+	Suzi
+	Crystal
+	Buffy
+	Amy
+	Sarah
+	Tina
+	Fancy
+	Britney
+	}
+	
+	male
+	{
+	Aaron
+	Jack
+	Bradley
+	Tom
+	Garfield
+	Geoffrey
+	Gilbert
+	Jim
+	Bill
+	George
+	Flint
+	Robert
+	Thomas
+	Steven
+	Gary
+	Larry
+	Andrew
+	Raymond
+	Joe
+	Norman
+	Trevor
+	}
+	
+	lastname
+	{
+	Gibson
+	Gore
+	Cage
+	Cruise
+	Bush
+	Kennedy
+	Clinton
+	Lincoln
+	Little
+	Taylor
+	Crawford
+	Wood
+	Pressly
+	Tyler
+	Spears
+	}
+}
+
+
+actors english_american
+{
+	female
+	{
+		soldiers/female light head01a 0
+		soldiers/female light head01b 0
+		soldiers/female light head03a 0
+		soldiers/female light head03b 0
+	}
+	
+	male
+	{
+		soldiers/male light head01 0
+		soldiers/male light head02 0
+		soldiers/male light head03 0
+		soldiers/male light head04 0
+		soldiers/male light head05 0
+		soldiers/male light head06 0
+	}
+}
+
+
+// ==================
+// arabic
+// ==================
+
+names arabic
+{
+	female
+	{
+	Fareeda
+	Fathia
+	Fatima
+	Aaliya
+	Abia
+	Meira
+	Rasha
+	Naiya
+	Natara
+	Hanna
+	Essa
+	Isa
+	Amal
+	Emel
+	Ayar
+	Badieh
+	Dabab
+	Damaa
+	Ebra
+	}
+	
+	male
+	{
+	Mustaffa
+	Abdel
+	Abdul-Matin
+	Abdul-Majid
+	Abdul-Jalil
+	Adham
+	Dabrir
+	Fakhir
+	Farran
+	Abdullah
+	Abdalrahman
+	Abraham
+	Adish
+	Ahmad
+	Jassir
+	Maimun
+	Manuosh
+	Rafi
+	Namir
+	Hasan
+	Ahmed
+	}
+	
+
+	lastname
+	{
+	Mubarak
+	Assar
+	Hussein
+	Arafat
+	Nasser
+	Jabir
+	Aziz
+	Rashid
+	Sharif
+	Sulaiman
+	}
+}
+
+actors arabic
+{
+	female
+	{
+	}
+	
+	male
+	{
+		soldiers/male light head05 0
+	}
+}
+
+// ==================
+// scandinavian
+// ==================
+
+names scandinavian
+{
+	female
+	{
+	Dana
+	Helga
+	Nada
+	Edda
+	Aina
+	Kirsten
+	Katrina
+	Inge
+	Nyssa
+	Betje
+	Lina
+	Neve
+	Sofie
+	Hendrika
+	}
+	
+	male
+	{
+	Berg
+	Devoss
+	Godewyn
+	Groot
+	Jan
+	Nicolaas
+	Jilt
+	Nils
+	Lars
+	Knut
+	Royd
+	Jens
+	Janson
+	Hans
+	}
+	
+	lastname
+	{
+	Zeeman
+	"Van Aken"
+	"Van Eych"
+	Sorenson
+	Nelson
+	Anderson
+	Vanderveer
+	}
+}
+
+actors scandinavian
+{
+	female
+	{
+		soldiers/female light head01a 0
+		soldiers/female light head01b 0
+		soldiers/female light head03a 0
+		soldiers/female light head03b 0
+	}
+	
+	male
+	{
+		soldiers/male light head01 0
+		soldiers/male light head06 0
+	}
+}
+
+
+// ==================
+// russian
+// ==================
+
+names russian
+{
+	female
+	{
+	Natasha
+	Anka
+	Olga
+	Tanja
+	Nikita
+	Veronica
+	Andrea
+	Anita
+	Dasha
+	Dominika
+	Maria
+	Martina
+	Masha
+	Monika
+	Nadya
+	Nastia
+	Natalia
+	Nina
+	Petra
+	Sveta
+	Svetlana
+	Tereza
+	Zdenka
+	Doris
+	Eva
+	}
+	
+	male
+	{
+	Sergej
+	Dimitri
+	Boris
+	Sasha
+	Nicholai
+	Casimir
+	Czeslaw
+	Lukasz
+	Rufin
+	Zarek
+	Andrzej
+	Bazyli
+	}
+	
+	female_lastname
+	{
+	Sokolova
+	Ivanova
+	Smirnova
+	Kolmogorova
+	Pavlova
+	Kovaleva
+	Titova
+	Lukinova
+	Illinova
+	Nikitinova
+	Kozlova
+	Lebedeva
+	Vasileva
+	Federova
+	Zaitseva
+	Zakharova
+	Tichimozova
+	Lalakova
+	Adamkova
+	}
+
+	male_lastname
+	{
+	Sokolov
+	Ivanov
+	Smirnov
+	Kolmogorov
+	Pavlov
+	Kovalev
+	Titov
+	Lukin
+	Illin
+	Nikitin
+	Kozlov
+	Lebedev
+	Vasilev
+	Federov
+	Zaitsev
+	Zakharov
+	Tichimozov
+	Lalakov
+	Adamkov
+	Benowsky
+	}
+}
+
+actors russian
+{
+	female
+	{
+		soldiers/female light head03a 0
+		soldiers/female light head03b 0
+	}
+	
+	male
+	{
+		soldiers/male light head01 0
+		soldiers/male light head06 0
+	}
+}
+
+// ==================
+// chinese
+// ==================
+
+names chinese
+{
+	female
+	{
+	Bo
+	Chang
+	An
+	Feng
+	"Jia Li"
+	Jin
+	Lei
+	"Li Mei"
+	"Li Qin"
+	Ling
+	Ping
+	Wan
+	Wei
+	Xia
+	Xue
+	"Yi Min"
+	"Yue Yan"
+	Zi
+	}
+	
+	male
+	{
+	Sun
+	Mao
+	Fai
+	Lei
+	Ho
+	Long
+	Shing
+	Li
+	Kuan-Yin
+	Chen
+	Sying
+	}
+	
+	lastname
+	{
+	Yu
+	Huong
+	Lee
+	Zhang
+	Wang
+	Li
+	Lu
+	Xu
+	Wu
+	Liang
+	Luo
+	Su
+	Song
+	Zheng
+	Dong
+	Jiang
+	Peng
+	Tao
+	Wan
+	Qian
+	Lai
+	Chan
+	}
+}
+
+actors chinese
+{
+	female
+	{
+		soldiers/female light head02a 0
+		soldiers/female light head02b 0
+	}
+	
+	male
+	{
+		soldiers/male light head07 0
+		soldiers/male light head08 0
+		soldiers/male light head09 0
+	}
+}
+
+
+// ==================
+// japanese
+// ==================
+
+names japanese
+{
+	female
+	{
+	Aiko
+	Cho
+	Gin
+	Eriko
+	Hisa
+	Keiko
+	Kimi
+	Kyoko
+	Maemi
+	Matsuko
+	Mutsu
+	Rei
+	Suki
+	Sumi
+	Yumiko
+	Yoshiko
+	}
+	
+	male
+	{
+	Hiroshi
+	Akeno
+	Jiro
+	Kado
+	Kaori
+	Keiji
+	Kin
+	Makoto
+	Naoko
+	Shiro
+	Tadao
+	Yoshi
+	Yasuo
+	Yukio	
+	}
+	
+	lastname
+	{
+	Satou
+	Suzuki
+	Tanaka
+	Saitou
+	Yamada
+	Simizu
+	Hashimoto
+	Ogawa
+	Sakamoto
+	Nakagawa
+	Miyamoto
+	Masuda
+	Kikuchi
+	Yamamoto
+	Hujita
+	Fuijwara
+	Aoki
+	}
+}
+
+actors japanese
+{
+	female
+	{
+		soldiers/female light head02a 0
+		soldiers/female light head02b 0
+	}
+	
+	male
+	{
+		soldiers/male light head07 0
+		soldiers/male light head08 0
+		soldiers/male light head09 0
+	}
+}
+
+
+// ==================
+// african
+// ==================
+
+names african
+{
+	female
+	{
+	Abeba
+	Adina
+	Afra
+	Afua
+	Aja
+	Asabi
+	Aza
+	Binta
+	Chicha
+	Dalila
+	Eshe
+	Fola
+	Leza
+	Makeda
+	Nini
+	Tatu
+	Zalika
+	Zola
+	}
+	
+	male
+	{
+	Abasi
+	Adofo
+	Amazu
+	Azibo
+	Bobo
+	Camara
+	Dobi
+	Din
+	Habib
+	Jaja
+	Jiri
+	Jahi
+	Manute
+	Negus
+	Oko
+	Tutu
+	Yao
+	Zuberi
+	}
+	
+	lastname
+	{
+	Akinkuotu
+	Olakuotu
+	Ifasen
+	Ogunfiditimi
+	Otunla
+	Idowu
+	Ola
+	Etaoku
+	Ewegbemi
+	Eweji
+	Awogbemi
+	Adedayo
+	}
+}
+
+actors african
+{
+	female
+	{
+		soldiers/female light head04a 0
+		soldiers/female light head04b 0
+	}
+	
+	male
+	{
+		soldiers/male light head10 0
+		soldiers/male light head11 0
+		soldiers/male light head12 0
+	}
+}
+
+
+// ========================================================================
+// ALIENS
+// ========================================================================
+
+
+// ==================
+// ortnok
+// ==================
+
+names ortnok
+{
+	neutral
+	{
+	Akrokk
+	Mkeek
+	Rniuk
+	Tranok
+	Kronuk
+	Trenakk
+	Zrokk
+	Kraerak
+	Mnookk
+	Zmolukk
+	Abtrenek
+	Uonak
+	Ktrukk
+	Onukark
+	Ebnuzuk
+	Krrnaak
+	Zmuknesk
+	}
+
+	
+	lastname
+	{
+	"Uk Kronok"
+	"Np Zlrok"
+	"T Zruujk"
+	"Kr Zrrosk"
+	"Mt Trekluk"
+	"H Hrkakk"
+	"Pt Mrlkuk"
+	"Tsk Hrekk"
+	"Kkr Kraukk"
+	"Tkr Hruk"
+	"Ts Srulok"
+	"K Krokk"
+	"Zt Hrmokuk"
+	"H Nhrokekk"
+	"Tt Treknk"
+	"Ok Orokk"
+	"Sk Trevuk"
+	"Zr Znaztrk"
+	}
+}
+
+actors ortnok
+{
+	neutral
+	{
+		aliens/ortnok body01 head01 0
+		aliens/ortnok body01 head02 0
+		aliens/ortnok body01 head03 0
+		aliens/ortnok body01 head01 1
+		aliens/ortnok body01 head02 1
+		aliens/ortnok body01 head03 1
+		aliens/ortnok body01 head01 2
+		aliens/ortnok body01 head02 2
+		aliens/ortnok body01 head03 2
+	}
+}
+
+// ==================
+// blue
+// ==================
+
+names blue
+{
+	neutral
+	{
+	Akrokk
+	Mkeek
+	Rniuk
+	Tranok
+	Kronuk
+	Trenakk
+	Zrokk
+	Kraerak
+	Mnookk
+	Zmolukk
+	Abtrenek
+	Uonak
+	Ktrukk
+	Onukark
+	Ebnuzuk
+	Krrnaak
+	Zmuknesk
+	}
+
+	
+	lastname
+	{
+	"Uk Kronok"
+	"Np Zlrok"
+	"T Zruujk"
+	"Kr Zrrosk"
+	"Mt Trekluk"
+	"H Hrkakk"
+	"Pt Mrlkuk"
+	"Tsk Hrekk"
+	"Kkr Kraukk"
+	"Tkr Hruk"
+	"Ts Srulok"
+	"K Krokk"
+	"Zt Hrmokuk"
+	"H Nhrokekk"
+	"Tt Treknk"
+	"Ok Orokk"
+	"Sk Trevuk"
+	"Zr Znaztrk"
+	}
+}
+
+actors blue
+{
+	neutral
+	{
+		aliens/blue body01 head01 0
+		aliens/blue body01 head01 1
+	}
+}
+
+// ========================================================================
+// CIVILIANS
+// ========================================================================
+
+
+// ==================
+// civilian
+// ==================
+
+names civilian
+{
+	female
+	{
+		a
+	}
+	male
+	{
+		b
+	}
+	lastname
+	{
+		c
+	}
+}
+
+actors civilian
+{
+	female
+	{
+		civilians/female body01 head01a 0
+		civilians/female body01 head01a 1
+		civilians/female body01 head01a 2
+		civilians/female body02 head01a 0
+		civilians/female body02 head01a 1
+		civilians/female body01 head01b 0
+		civilians/female body01 head01b 1
+		civilians/female body01 head01b 2
+		civilians/female body02 head01b 0
+		civilians/female body02 head01b 1
+		civilians/female body01 head02a 0
+		civilians/female body01 head02a 1
+		civilians/female body01 head02a 2
+		civilians/female body02 head02a 0
+		civilians/female body02 head02a 1
+		civilians/female body01 head02b 0
+		civilians/female body01 head02b 1
+		civilians/female body01 head02b 2
+		civilians/female body02 head02b 0
+		civilians/female body02 head02b 1
+	}
+	male
+	{
+		civilians/male body01 head01 0
+		civilians/male body01 head01 1
+		civilians/male body01 head01 2
+	}
+}

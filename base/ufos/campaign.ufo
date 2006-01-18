@@ -1,0 +1,337 @@
+// ==================
+// CAMPAIGN: STANDARD
+// ==================
+
+mission oriental
+{
+	text		"Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
+	map			oriental06
+	music		mission
+	pos			"-62 25"
+	aliens		5
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		oriental
+	recruits	3
+	$win		1200
+	$alien		100
+	$civilian	500
+}
+
+mission japan
+{
+	text		"Location: Morioka\Type: Alien Hideout\Objective: Eliminate intruders"
+	map			japan06
+	music		mission3
+	pos			"-141 40"
+	aliens		10
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	4
+	$win		2500
+	$alien		100
+	$civilian	500
+}
+
+
+mission transport
+{
+	text		"Location: Fargo\Type: Terror Attack\Objective: Protect inhabitants"
+	map			transport06
+	music		mission
+	pos			"97 47"
+	aliens		4
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	3
+	$win		1000
+	$alien		100
+	$civilian	500
+}
+
+
+mission italy
+{
+	text		"Location: Marina Serra\Type: Terror Attack\Objective: Protect inhabitants"
+	map			italy05
+	music		mission2
+	pos			"-18 40"
+	aliens		8
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	3
+	$win		1900
+	$alien		100
+	$civilian	500
+}
+
+mission lake
+{
+	text		"Location: Tazovskij\Type: Terror Attack\Objective: Protect inhabitants"
+	map			lake03
+	music		mission2
+	pos			"-77 67"
+	aliens		6
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	5
+	civteam		european
+	recruits	2
+	$win		1600
+	$alien		100
+	$civilian	500
+}
+
+
+mission mine
+{
+	text		"Location: Gobabis\Type: Crash Site\Objective: Secure Area"
+	map			mine05
+	music		mission
+	pos			"-20 -23"
+	aliens		3
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	2
+	$win		1200
+	$alien		100
+	$civilian	500
+}
+
+
+mission construction
+{
+	text		"Location: Uppsala\Type: Terror Attack\Objective: Protect inhabitants"
+	map			const05
+	music		mission
+	pos			"-17 60"
+	aliens		6
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	3
+	$win		2000
+	$alien		100
+	$civilian	500
+}
+
+mission farm
+{
+	text		"Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
+	map			farm08
+	music		mission
+	pos			"116 52"
+	aliens		7
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	3
+	civteam		european
+	recruits	3
+	$win		6000
+	$alien		100
+	$civilian	500
+}
+
+
+mission office
+{
+	text		"Location: Mackay\Type: Terror Attack\Objective: Protect inhabitants"
+	map			office04
+	music		mission3
+	pos			"-149 -21"
+	aliens		8
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	2
+	civteam		scientist
+	recruits	3
+	$win		3000
+	$alien		100
+	$civilian	300
+}
+
+
+mission vil_grenchen
+{
+	text		"Location: Grenchen\Type: Terror Attack\Objective: Protect inhabitants"
+	map			"+village"
+	param		residential
+	music		mission2
+	pos			"-7 47"
+	aliens		4
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	7
+	civteam		european
+	recruits	2
+	$win		1000
+	$alien		100
+	$civilian	500
+}
+
+
+mission vil_lille
+{
+	text		"Location: Lille\Type: Terror Attack\Objective: Protect inhabitants"
+	map			"+village"
+	param		recreational
+	music		mission2
+	pos			"-3 50"
+	aliens		7
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	4
+	$win		2000
+	$alien		100
+	$civilian	500
+}
+
+
+mission vil_albany
+{
+	text		"Location: Albany\Type: Terror Attack\Objective: Protect inhabitants"
+	map			"+village"
+	param		commercial
+	music		mission
+	pos			"84 32"
+	aliens		8
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	7
+	civteam		european
+	recruits	3
+	$win		2000
+	$alien		100
+	$civilian	500
+}
+
+
+mission vil_shannon
+{
+	text		"Location: Shannon\Type: Major Alien Intrusion\Objective: Stop them"
+	map			"+village"
+	param		big
+	music		mission3
+	pos			"9 52"
+	aliens		18
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	4
+	civteam		european
+	recruits	3
+	$win		4000
+	$alien		100
+	$civilian	1200
+}
+
+
+mission or_asyut
+{
+	text		"Location: Asyut\Type: Terror Attack\Objective: Protect inhabitants"
+	map			"+orientald"
+	music		mission2
+	pos			"-31 27"
+	aliens		7
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		oriental
+	recruits	3
+	$win		4000
+	$alien		100
+	$civilian	1200
+}
+
+
+mission or_tabelbala
+{
+	text		"Location: Tabelbala\Type: Terror Attack\Objective: Protect inhabitants"
+	map			"+orientald"
+	music		mission
+	pos			"3 28"
+	aliens		7
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		oriental
+	recruits	3
+	$win		4000
+	$alien		100
+	$civilian	1200
+}
+
+
+stage intro
+{
+	set first
+	{
+		delay		"0 1 0"
+		frame		"0 3 0"
+		missions	"vil_grenchen"
+		number		1
+		quota		0
+	}
+	set terror_only
+	{
+		needed		first
+		delay		"0 0 1"
+		frame		"0 10 0"
+		expire		"0 3 0"
+		missions	"or_tabelbala italy japan oriental vil_lille vil_albany"
+		quota		4
+		nextstage	ufos_are_coming
+	}
+	set stop
+	{
+		needed		terror_only
+		delay		"0 20 0"
+		endstage	intro
+	}
+}
+
+
+stage ufos_are_coming
+{
+	set crashed_and_landed
+	{
+		delay		"0 0 1"
+		frame		"0 10 0"
+		expire		"0 3 0"
+		missions	"transport mine construction farm office or_asyut"
+		quota		4
+		nextstage	invasion
+	}
+	set stop
+	{
+		needed		crashed_and_landed
+		delay		"0 110 0"
+		commands	"mn_push enddemo;"
+	}
+}
+
+
+campaign main
+{
+	team		human
+	soldiers	12
+	equipment	campaign_player
+	market		campaign_market
+	credits		10600
+
+	date		"2000 0 7"
+	firststage	intro
+}
+
+

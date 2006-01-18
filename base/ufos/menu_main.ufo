@@ -1,0 +1,152 @@
+// ==================
+// MAIN MENU
+// ==================
+	
+menu main
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}	
+	
+	// ==================
+	// background
+	// ==================
+	
+	pic back_ul
+	{
+		image	menu/main_ul
+		pos		"0 0"
+	}	
+		
+	pic back_ur
+	{
+		image	menu/main_ur
+		pos		"512 0"
+	}	
+		
+	pic back_ll
+	{
+		image	menu/main_ll
+		pos		"0 512"
+	}	
+		
+	pic back_lr
+	{
+		image	menu/main_lr
+		pos		"512 512"
+	}
+	
+	string version
+	{
+		string	"*cvar ver"
+		pos		"10 744"
+	}	
+		
+	// ==================
+	// buttons
+	// ==================
+	
+	pic button_singleplayer
+	{
+		image	menu/main_buttons1
+		pos		"640 170"
+		texl	"0 0"
+		texh	"256 64"
+		click	{ cmd "mn_push singleplayer" }
+		out		{ *button_singleplayer texl "0 0"  *button_singleplayer texh "256 64" }
+		in		{ *button_singleplayer texl "0 64" *button_singleplayer texh "256 128" }
+	}
+	
+	pic button_multiplayer
+	{
+		image	menu/main_buttons1
+		pos		"640 240"
+		texl	"0 128"
+		texh	"256 192"
+		click	{ cmd "mn_push multiplayer;" }
+		out		{ *button_multiplayer texl "0 128" *button_multiplayer texh "256 192" }
+		in		{ *button_multiplayer texl "0 192" *button_multiplayer texh "256 256" }
+	}
+	
+	pic button_options
+	{
+		image	menu/main_buttons1
+		pos		"640 310"
+		texl	"0 256"
+		texh	"256 320"
+		click	{ cmd "mn_push options;" }
+		out		{ *button_options texl "0 256" *button_options texh "256 320" }
+		in		{ *button_options texl "0 320" *button_options texh "256 384" }
+	}
+	
+	pic button_ufopedia
+	{
+		image	menu/main_buttons1
+		pos		"640 380"
+		texl	"0 384"
+		texh	"256 448"
+		click	{ cmd "mn_push ufopedia;" }
+		out		{ *button_ufopedia texl "0 384" *button_ufopedia texh "256 448" }
+		in		{ *button_ufopedia texl "0 448" *button_ufopedia texh "256 512" }
+	}
+	
+	pic button_credits
+	{
+		image	menu/main_buttons2
+		pos		"640 450"
+		texl	"0 0"
+		texh	"256 64"
+		click	{ cmd "seq_start view;" }
+		out		{ *button_credits texl "0 0"  *button_credits texh "256 64" }
+		in		{ *button_credits texl "0 64" *button_credits texh "256 128" }
+	}
+	
+	pic button_exit
+	{
+		image	menu/main_buttons2
+		pos		"640 520"
+		texl	"0 128"
+		texh	"256 192"
+		click	{ cmd quit }
+		out		{ *button_exit texl "0 128" *button_exit texh "256 192" }
+		in		{ *button_exit texl "0 192" *button_exit texh "256 256" }
+	}
+	
+	func init
+	{
+		cmd "music theme;ov_start;"
+	}
+}
+
+// ==================
+// SEQUENCE MENU
+// ==================
+	
+menu sequence
+{
+	// ==================
+	// render credits
+	// ==================
+
+	zone render
+	{
+		pos		"0 0"
+		size	"1024 768"
+	}
+	
+	zone click
+	{
+		size	"1024 768"
+		click	{ cmd mn_pop; }
+	}
+	
+	func close
+	{
+		cmd		seq_end;
+	}
+}

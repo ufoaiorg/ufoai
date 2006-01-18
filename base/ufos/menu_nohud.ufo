@@ -1,0 +1,40 @@
+// ==================
+// EMPTY HUD
+// ==================
+// with console command forwarding
+	
+menu nohud
+{
+	// ==================
+	// render rectangle
+	// ==================
+	zone render
+	{
+		pos		"0 0"
+		size	"1024 768"
+	}
+	
+	// ==================
+	// cmd forwarding
+	// ==================
+
+	confunc	hudselect0 { cmd hudselects0;hudselecta0; }
+	confunc	hudselect1 { cmd hudselects1;hudselecta1; }
+	confunc	hudselect2 { cmd hudselects2;hudselecta2; }
+	confunc	hudselect3 { cmd hudselects3;hudselecta3; }
+	confunc	hudselect4 { cmd hudselects4;hudselecta4; }
+	confunc	hudselect5 { cmd hudselects5;hudselecta5; }
+	confunc	hudselect6 { cmd hudselects6;hudselecta6; }
+	confunc	hudselect7 { cmd hudselects7;hudselecta7; }
+	
+	confunc tomov { cmd tomovs;tomova; }
+	confunc towpl { cmd towpls;towpla; }
+	confunc towpr { cmd towprs;towpra; }
+	confunc towsl { cmd towsls;towsla; }
+	confunc towsr { cmd towsrs;towsra; }
+	
+	confunc tostand { cmd tostands;tostanda; }
+	confunc tocrouch { cmd tocrouchs;tocroucha; }
+	confunc startreaction { cmd startreactions;startreactiona; }
+	confunc stopreaction { cmd stopreactions;stopreactiona; }
+}
