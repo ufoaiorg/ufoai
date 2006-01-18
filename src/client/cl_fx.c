@@ -96,7 +96,7 @@ void CL_SetLightstyle (int i)
 
 	j = strlen (s);
 	if (j >= MAX_QPATH)
-		Com_Error (ERR_DROP, "svc_lightstyle length=%i", j);
+		Com_Error (ERR_DROP, _("svc_lightstyle length=%i"), j);
 
 	cl_lightstyle[i].length = j;
 
@@ -149,7 +149,7 @@ cdlight_t *CL_AllocDlight (int key)
 	int		i;
 	cdlight_t	*dl;
 
-// first look for an exact key match
+	// first look for an exact key match
 	if (key)
 	{
 		dl = cl_dlights;
@@ -164,7 +164,7 @@ cdlight_t *CL_AllocDlight (int key)
 		}
 	}
 
-// then look for anything else
+	// then look for anything else
 	dl = cl_dlights;
 	for (i=0 ; i<MAX_DLIGHTS ; i++, dl++)
 	{
@@ -242,8 +242,8 @@ void CL_AddDLights (void)
 
 	dl = cl_dlights;
 
-//=====
-//PGM
+	//=====
+	//PGM
 	if(vidref_val == VIDREF_GL)
 	{
 		for (i=0 ; i<MAX_DLIGHTS ; i++, dl++)
@@ -273,8 +273,8 @@ void CL_AddDLights (void)
 				dl->color[0], dl->color[1], dl->color[2]);
 		}
 	}
-//PGM
-//=====
+	//PGM
+	//=====
 }
 
 
@@ -455,7 +455,6 @@ void CL_ParticleEffect3 (vec3_t org, vec3_t dir, int color, int count)
 /*
 ===============
 CL_LogoutEffect
-
 ===============
 */
 void CL_LogoutEffect (vec3_t org, int type)
@@ -500,7 +499,6 @@ void CL_LogoutEffect (vec3_t org, int type)
 /*
 ===============
 CL_ItemRespawnParticles
-
 ===============
 */
 void CL_ItemRespawnParticles (vec3_t org)
@@ -622,7 +620,6 @@ void CL_BigTeleportParticles (vec3_t org)
 /*
 ===============
 CL_BlasterParticles
-
 Wall impact puffs
 ===============
 */
@@ -716,7 +713,6 @@ void CL_BlasterTrail (vec3_t start, vec3_t end)
 /*
 ===============
 CL_QuadTrail
-
 ===============
 */
 void CL_QuadTrail (vec3_t start, vec3_t end)
@@ -766,7 +762,6 @@ void CL_QuadTrail (vec3_t start, vec3_t end)
 /*
 ===============
 CL_FlagTrail
-
 ===============
 */
 void CL_FlagTrail (vec3_t start, vec3_t end, float color)
@@ -816,7 +811,6 @@ void CL_FlagTrail (vec3_t start, vec3_t end, float color)
 /*
 ===============
 CL_DiminishingTrail
-
 ===============
 */
 void CL_DiminishingTrail (vec3_t start, vec3_t end, centity_t *old, int flags)
@@ -909,7 +903,6 @@ void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
 /*
 ===============
 CL_RocketTrail
-
 ===============
 */
 void CL_RocketTrail (vec3_t start, vec3_t end, centity_t *old)
@@ -966,7 +959,6 @@ void CL_RocketTrail (vec3_t start, vec3_t end, centity_t *old)
 /*
 ===============
 CL_RailTrail
-
 ===============
 */
 void CL_RailTrail (vec3_t start, vec3_t end)
@@ -1040,8 +1032,8 @@ void CL_RailTrail (vec3_t start, vec3_t end)
 		VectorClear (p->accel);
 
 		p->alpha = 1.0;
-		p->alphavel = -0.5 / (0.6+frand()*0.2);
-		p->color = 0x0 + rand()&15;
+		p->alphavel = -0.5 / (0.6 + frand() * 0.2);
+		p->color = 0x0 + ( rand() & 15 );
 
 		for (j=0 ; j<3 ; j++)
 		{
@@ -1121,7 +1113,6 @@ void CL_IonripperTrail (vec3_t start, vec3_t ent)
 /*
 ===============
 CL_BubbleTrail
-
 ===============
 */
 void CL_BubbleTrail (vec3_t start, vec3_t end)
@@ -1173,7 +1164,6 @@ void CL_BubbleTrail (vec3_t start, vec3_t end)
 CL_FlyParticles
 ===============
 */
-
 #define	BEAMLENGTH			16
 void CL_FlyParticles (vec3_t origin, int count)
 {
@@ -1275,7 +1265,6 @@ void CL_FlyEffect (centity_t *ent, vec3_t origin)
 CL_BfgParticles
 ===============
 */
-
 #define	BEAMLENGTH			16
 void CL_BfgParticles (entity_t *ent)
 {
@@ -1437,7 +1426,7 @@ void CL_TrapParticles (entity_t *ent)
 				dir[2] = k * 8;
 	
 				VectorNormalize (dir);						
-				vel = 50 + rand()&63;
+				vel = 50 + ( rand() & 63 );
 				VectorScale (dir, vel, p->vel);
 
 				p->accel[0] = p->accel[1] = 0;
@@ -1488,7 +1477,6 @@ void CL_BFGExplosionParticles (vec3_t org)
 /*
 ===============
 CL_TeleportParticles
-
 ===============
 */
 void CL_TeleportParticles (vec3_t org)
@@ -1550,6 +1538,8 @@ void CL_AddParticles (void)
 	active = NULL;
 	tail = NULL;
 
+	// might be uninitialized
+	time = 0.0;
 	for (p=active_particles ; p ; p=next)
 	{
 		next = p->next;
@@ -1606,7 +1596,6 @@ void CL_AddParticles (void)
 /*
 ==============
 CL_ClearEffects
-
 ==============
 */
 void CL_ClearEffects (void)

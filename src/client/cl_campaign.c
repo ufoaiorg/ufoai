@@ -3,90 +3,712 @@
 #include "client.h"
 
 // public vars
-
 mission_t	missions[MAX_MISSIONS];
-int			numMissions = 0;
-int			selMission;
+int		numMissions;
+actMis_t	*selMis;
 
 campaign_t	campaigns[MAX_CAMPAIGNS];
-int			numCampaigns = 0;
+int		numCampaigns = 0;
 
-byte		actMis[MAX_ACTMISSIONS];
-int			numActMis;
-
-int			doneMis[MAX_MISFIELDS];
+stageSet_t	stageSets[MAX_STAGESETS];
+stage_t		stages[MAX_STAGES];
+int		numStageSets = 0;
+int		numStages = 0;
 
 campaign_t	*curCampaign;
-equipDef_t	cEquip;
-equipDef_t	mEquip;
+ccs_t		ccs;
+base_t		*baseCurrent;
 
-equipDef_t	cMarket;
-int			credits;
+int		mapAction;
+int		gameTimeScale;
 
-int			cReward;
+byte		*maskPic;
+int		maskWidth, maskHeight;
+
+
+/*
+============================================================================
+
+Boolean expression parser
+
+============================================================================
+*/
+
+enum {
+	BEPERR_NONE,
+	BEPERR_KLAMMER,
+	BEPERR_NOEND,
+	BEPERR_NOTFOUND
+} BEPerror;
+
+char varName[MAX_VAR];
+
+qboolean (*varFunc)( char *var );
+
+qboolean CheckOR( char **s );
+qboolean CheckAND( char **s );
+
+static void SkipWhiteSpaces( char **s ) {
+	while ( **s == ' ' ) (*s)++;
+}
+
+static void NextChar( char **s ) {
+	(*s)++;
+	// skip white-spaces too
+	SkipWhiteSpaces( s );
+}
+
+static char *GetSwitchName( char **s ) {
+	int	pos = 0;
+
+	while ( **s > 32 && **s != '^' && **s != '|' && **s != '&' && **s != '!' && **s != '(' && **s != ')' ) {
+		varName[ pos++ ] = **s;
+		(*s)++;
+	}
+	varName[ pos ] = 0;
+
+	return varName;
+}
+
+qboolean CheckOR( char **s ) {
+	qboolean result = false;
+	int		goon = 0;
+
+	SkipWhiteSpaces( s );
+	do {
+		if ( goon == 2 ) result ^= CheckAND( s );
+		else result |= CheckAND( s );
+
+		if ( **s == '|' ) {
+			goon = 1;
+			NextChar( s );
+		} else if ( **s == '^' ) {
+			goon = 2;
+			NextChar( s );
+		} else {
+			goon = 0;
+		}
+	} while ( goon && !BEPerror );
+
+	return result;
+}
+
+qboolean CheckAND( char **s ) {
+	qboolean result = true;
+	qboolean negate = false;
+	qboolean goon = false;
+	int value;
+
+	do {
+		while ( **s == '!' ) {
+			negate ^= true;
+			NextChar( s );
+		}
+		if ( **s == '(' ) {
+			NextChar( s );
+			result &= CheckOR( s ) ^ negate;
+			if ( **s != ')' ) BEPerror = BEPERR_KLAMMER;
+			NextChar( s );
+		} else {
+			// get the variable state
+			value = varFunc( GetSwitchName( s ) );
+			if ( value == -1 ) BEPerror = BEPERR_NOTFOUND;
+			else result &= value ^ negate;
+			SkipWhiteSpaces( s );
+		}
+
+		if ( **s == '&' ) {
+			goon = true;
+			NextChar( s );
+		} else {
+			goon = false;
+		}
+		negate = false;
+	} while ( goon && !BEPerror );
+
+	return result;
+}
+
+qboolean CheckBEP( char *expr, qboolean (*varFuncParam)( char *var ) ) {
+	qboolean result;
+	char	*str;
+
+	BEPerror = BEPERR_NONE;
+	varFunc = varFuncParam;
+	str = expr;
+	result = CheckOR( &str );
+
+	// check for no end error
+	if ( *str && !BEPerror ) BEPerror = BEPERR_NOEND;
+
+	switch ( BEPerror ) {
+	case BEPERR_NONE:
+		// do nothing
+		return result;
+	case BEPERR_KLAMMER:
+		Com_Printf( _("')' expected in BEP (%s).\n"), expr );
+		return true;
+	case BEPERR_NOEND:
+		Com_Printf( _("Unexpected end of condition in BEP (%s).\n"), expr );
+		return result;
+	case BEPERR_NOTFOUND:
+		Com_Printf( _("Variable '%s' not found in BEP (%s).\n"), varName, expr );
+		return false;
+	default:
+		// shouldn't happen
+		Com_Printf( _("Unknown CheckBEP error in BEP (%s).\n"), expr );
+		return true;
+	}
+}
+
 
 // ===========================================================
 
-/*
-======================
-CL_MapClick
-======================
-*/
-void CL_MapClick( int x, int y )
-{
-	mission_t	*ms;
-	int		i;
 
-	for ( i = 0; i < numActMis; i++ )
-	{
-		ms = &missions[actMis[i]];
-		if ( x >= ms->pos[0]-16 && x <= ms->pos[0]+16 && y >= ms->pos[1]-16 && y <= ms->pos[1]+16 )
-		{
-			selMission = actMis[i];
-			break;
-		}
-	}
+/*
+=================
+CL_MapIsNight
+=================
+*/
+qboolean CL_MapIsNight( vec2_t pos )
+{
+	float p, q, a, root, x;
+
+	p = (float)ccs.date.sec/(3600*24);
+	q = (ccs.date.day + p) * 2*M_PI/365.25 - M_PI;
+	p = (0.5 + pos[0]/360 - p)*2*M_PI - q;
+	a = sin(pos[1]*M_PI/180);
+	root = sqrt(1-a*a);
+	x = sin(p)*root*sin(q) - (a*SIN_ALPHA + cos(p)*root*COS_ALPHA)*cos(q);
+	return (x > 0);
 }
 
 
 /*
 ======================
-CL_GetActiveMissions
+Date_LatherThan
 ======================
 */
-void CL_GetActiveMissions( void )
+qboolean Date_LaterThan( date_t now, date_t compare )
 {
-	qboolean	ok;
-	int		i, j, mis;
+	if ( now.day > compare.day ) return true;
+	if ( now.day < compare.day ) return false;
+	if ( now.sec > compare.sec ) return true;
+	return false;
+}
 
 
-	if ( !curCampaign )
+/*
+======================
+Date_Add
+======================
+*/
+date_t Date_Add( date_t a, date_t b )
+{
+	a.sec += b.sec;
+	a.day += (a.sec/(3600*24)) + b.day;
+	a.sec %= 3600*24;
+	return a;
+}
+
+
+/*
+======================
+Date_Random
+======================
+*/
+date_t Date_Random( date_t frame )
+{
+	frame.sec = (frame.day*3600*24 + frame.sec) * frand();
+	frame.day = frame.sec / (3600*24);
+	frame.sec = frame.sec % (3600*24);
+	return frame;
+}
+
+
+// ===========================================================
+
+
+/*
+======================
+CL_MapMaskFind
+======================
+*/
+qboolean CL_MapMaskFind( byte *color, vec2_t polar )
+{
+	byte *c;
+	int res, i, num;
+
+	// check color
+	if ( !color[0] && !color[1] && !color[2] )
+		return false;
+
+	// find possible positions
+	res = maskWidth*maskHeight;
+	num = 0;
+	for ( i = 0, c = maskPic; i < res; i++, c += 4 )
+		if ( c[0] == color[0] && c[1] == color[1] && c[2] == color[2] )
+			num++;
+
+	// nothing found?
+	if ( !num ) return false;
+
+	// get position
+	num *= frand();
+	for ( i = 0, c = maskPic; i < num; c += 4 )
+		if ( c[0] == color[0] && c[1] == color[1] && c[2] == color[2] )
+			i++;
+
+	// transform to polar coords
+	res = (c - maskPic) / 4;
+	polar[0] = 180 - 360 * ((float)(res % maskWidth) + 0.5) / maskWidth;
+	polar[1] = 90 - 180 * ((float)(res / maskWidth) + 0.5) / maskHeight;
+	return true;
+}
+
+
+// ===========================================================
+
+
+/*
+======================
+CL_NewBase
+======================
+*/
+void CL_NewBase( vec2_t pos )
+{
+	int x, y;
+	byte *color;
+
+	// get coordinates
+	x = (180 - pos[0]) / 360 * maskWidth;
+	y = (90 - pos[1]) / 180 * maskHeight;
+	if ( x < 0 ) x = 0;
+	if ( y < 0 ) y = 0;
+
+	color = maskPic + 4 * (x + y * maskWidth);
+
+	// check for water
+	if ( color[0] == 0 && color[1] == 0 && color[2] == 255 )
 		return;
 
-	selMission = -1;
-	numActMis = 0;
-	for ( i = 0; i < curCampaign->num; i++ )
-	{
-		mis = curCampaign->mission[i];
-		if ( doneMis[mis>>5] & 1<<(mis%32) ) continue;
+	// build base
+	baseCurrent->pos[0] = pos[0];
+	baseCurrent->pos[1] = pos[1];
+	MN_PushMenu( "popup_newbase" );
+}
 
-		ok = true;
-		for ( j = 0; j < 4 && curCampaign->required[i][j] != NONE; j++ )
-			if ( ~doneMis[ curCampaign->required[i][j]>>5 ] & 1<<(curCampaign->required[i][j]%32) )
+
+// ===========================================================
+
+
+/*
+======================
+CL_StageSetDone
+======================
+*/
+stage_t *testStage;
+
+qboolean CL_StageSetDone( char *name )
+{
+	setState_t *set;
+	int i;
+
+	for ( i = 0, set = &ccs.set[testStage->first]; i < testStage->num; i++, set++ )
+		if ( !strcmp( name, set->def->name ) )
+		{
+			if ( set->done >= set->def->quota ) return true;
+			else return false;
+		}
+
+	// didn't find set
+	return false;
+}
+
+
+/*
+======================
+CL_CampaignActivateStageSets
+======================
+*/
+void CL_CampaignActivateStageSets( stage_t *stage )
+{
+	setState_t *set;
+	int i;
+
+	testStage = stage;
+	for ( i = 0, set = &ccs.set[stage->first]; i < stage->num; i++, set++ )
+		if ( !set->active && !set->done && !set->num )
+		{
+			// check needed sets
+			if ( set->def->needed[0] && !CheckBEP( set->def->needed, CL_StageSetDone ) )
+				continue;
+
+			// activate it
+			set->active = true;
+			set->start = Date_Add( ccs.date, set->def->delay );
+			set->event = Date_Add( set->start, Date_Random( set->def->frame ) );
+		}
+}
+
+
+/*
+======================
+CL_CampaignActivateStage
+======================
+*/
+stageState_t *CL_CampaignActivateStage( char *name )
+{
+	stage_t	*stage;
+	stageState_t *state;
+	int i, j;
+
+	for ( i = 0, stage = stages; i < numStages; i++, stage++ )
+	{
+		if ( !strcmp( stage->name, name ) )
+		{
+			// add it to the list
+			state = &ccs.stage[i];
+			state->active = true;
+			state->def = stage;
+			state->start = ccs.date;
+
+			// add stage sets
+			for ( j = stage->first; j < stage->first + stage->num; j++ )
 			{
-				ok = false;
-				break;
+				memset( &ccs.set[j], 0, sizeof(setState_t) );
+				ccs.set[j].stage = &stage[j];
+				ccs.set[j].def = &stageSets[j];
 			}
-		if ( ok ) actMis[numActMis++] = mis;
+
+			// activate stage sets
+			CL_CampaignActivateStageSets( stage );
+			return state;
+		}
 	}
 
-	if ( !numActMis && !curCampaign->finished )
+	Com_Printf( _("CL_CampaignActivateStage: stage '%s' not found.\n"), name );
+	return NULL;
+}
+
+
+/*
+======================
+CL_CampaignEndStage
+======================
+*/
+void CL_CampaignEndStage( char *name )
+{
+	stageState_t *state;
+	int i;
+
+	for ( i = 0, state = ccs.stage; i < numStages; i++, state++ )
+		if ( !strcmp( state->def->name, name ) )
+		{
+			state->active = false;
+			return;
+		}
+
+	Com_Printf( _("CL_CampaignActivateStage: stage '%s' not found.\n"), name );
+}
+
+
+/*
+======================
+CL_CampaignAddMission
+======================
+*/
+void CL_CampaignAddMission( setState_t *set )
+{
+	actMis_t *mis;
+
+	// add mission
+	if ( ccs.numMissions >= MAX_ACTMISSIONS )
 	{
-		// campaign finished
-		curCampaign->finished = true;
-		Cbuf_AddText( "mn_push enddemo\n" );
+		Com_Printf( _("Too many active missions!\n") );
+		return;
+	}
+	mis = &ccs.mission[ccs.numMissions++];
+	memset( mis, 0, sizeof(actMis_t) );
+
+	// set relevant info
+	mis->def = &missions[ set->def->missions[(int)(set->def->numMissions*frand())] ];
+	mis->cause = set;
+	if ( set->def->expire.day )
+		mis->expire = Date_Add( ccs.date, set->def->expire );
+
+	// get default position first, then try to find a corresponding mask color
+	mis->realPos[0] = mis->def->pos[0];
+	mis->realPos[1] = mis->def->pos[1];
+	CL_MapMaskFind( mis->def->mask, mis->realPos );
+
+	// prepare next event (if any)
+	set->num++;
+	if ( set->def->number && set->num >= set->def->number ) set->active = false;
+	else set->event = Date_Add( ccs.date, Date_Random( set->def->frame ) );
+
+	// stop time
+	CL_GameTimeStop();
+}
+
+
+/*
+======================
+CL_CampaignRemoveMission
+======================
+*/
+void CL_CampaignRemoveMission( actMis_t *mis )
+{
+	int i, num;
+
+	num = mis - ccs.mission;
+	if ( num >= ccs.numMissions )
+	{
+		Com_Printf( _("CL_CampaignRemoveMission: Can't remove mission.\n") );
+		return;
+	}
+
+	ccs.numMissions--;
+	for ( i = num; i < ccs.numMissions; i++ )
+		ccs.mission[i] = ccs.mission[i+1];
+
+	if ( selMis == mis ) selMis = NULL;
+	else if ( selMis > mis ) selMis--;
+}
+
+
+/*
+======================
+CL_CampaignExecute
+======================
+*/
+void CL_CampaignExecute( setState_t *set )
+{
+	// handle stages, execute commands
+	if ( *set->def->nextstage )
+		CL_CampaignActivateStage( set->def->nextstage );
+
+	if ( *set->def->endstage )
+		CL_CampaignEndStage( set->def->endstage );
+
+	if ( *set->def->cmds )
+		Cbuf_AddText( set->def->cmds );
+
+	// activate new sets in old stage
+	CL_CampaignActivateStageSets( set->stage );
+}
+
+
+/*
+======================
+CL_CampaignCheckEvents
+======================
+*/
+void CL_CampaignCheckEvents( void )
+{
+	stageState_t *stage;
+	setState_t   *set;
+	actMis_t     *mis;
+	int i, j;
+
+	// check campaign events
+	for ( i = 0, stage = ccs.stage; i < numStages; i++, stage++ )
+		if ( stage->active )
+			for ( j = 0, set = &ccs.set[stage->def->first]; j < stage->def->num; j++, set++ )
+				if ( set->active && set->event.day && Date_LaterThan( ccs.date, set->event ) )
+				{
+					if ( set->def->numMissions )
+						CL_CampaignAddMission( set );
+					else
+						CL_CampaignExecute( set );
+				}
+
+	// let missions expire
+	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ )
+		if ( mis->expire.day && Date_LaterThan( ccs.date, mis->expire ) )
+			CL_CampaignRemoveMission( mis );
+}
+
+
+/*
+======================
+CL_CampaignRunAircraft
+======================
+*/
+void CL_CampaignRunAircraft( int dt )
+{
+	aircraft_t *air;
+	float dist, speed, frac;
+	int i, p;
+
+	speed = 80;
+	for ( i = 0, air = ccs.air; i < ccs.numAir; i++, air++ )
+		if ( air->status >= AIR_TRANSIT )
+		{
+			// calc distance
+			air->time += dt;
+			dist = speed * air->time / 3600;
+
+			// check for end point
+			if ( dist >= air->route.dist * (air->route.n-1) )
+			{
+				float *end;
+				end = air->route.p[air->route.n-1];
+				air->pos[0] = end[0];
+				air->pos[1] = end[1];
+
+				// add events here
+				air->status = AIR_IDLE;
+				continue;
+			}
+
+			// calc new position
+			frac = dist / air->route.dist;
+			p = (int)frac;
+			frac -= p;
+			air->point = p;
+
+			air->pos[0] = (1-frac) * air->route.p[p][0] + frac * air->route.p[p+1][0];
+			air->pos[1] = (1-frac) * air->route.p[p][1] + frac * air->route.p[p+1][1];
+		}
+}
+
+
+/*
+=================
+CL_DateConvert
+=================
+*/
+char *monthNames[12] =
+{
+	"Jan",
+	"Feb",
+	"Mar",
+	"Apr",
+	"May",
+	"Jun",
+	"Jul",
+	"Aug",
+	"Sep",
+	"Oct",
+	"Nov",
+	"Dec"
+};
+
+int monthLength[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+void CL_DateConvert( date_t *date, int *day, int *month )
+{
+	int i, d;
+
+	// get day
+	d = date->day % 365;
+	for ( i = 0; d >= monthLength[i]; i++ )
+		d -= monthLength[i];
+
+	// prepare return values
+	*day = d+1;
+	*month = i;
+}
+
+
+/*
+======================
+CL_CampaignRun
+======================
+*/
+void CL_CampaignRun( void )
+{
+	// advance time
+	ccs.timer += cls.frametime * gameTimeScale;
+	if ( ccs.timer >= 1.0 )
+	{
+		// calculate new date
+		int dt, day, month;
+		dt = floor( ccs.timer );
+		ccs.date.sec += dt;
+		ccs.timer -= dt;
+		while ( ccs.date.sec > 3600*24 )
+		{
+			ccs.date.sec -= 3600*24;
+			ccs.date.day++;
+		}
+
+		// check for campaign events
+		CL_CampaignRunAircraft( dt );
+		CL_CampaignCheckEvents();
+
+		// set time cvars
+		CL_DateConvert( &ccs.date, &day, &month );
+		Cvar_Set( "mn_mapdate", va( "%i %s %i", ccs.date.day/365, _(monthNames[month]), day ) );
+		Cvar_Set( "mn_mapmin", va( "%i%i", (ccs.date.sec%3600)/60/10, (ccs.date.sec%3600)/60%10 ) );
+		Cvar_Set( "mn_maphour", va( "%i:", ccs.date.sec/3600 ) );
 	}
 }
+
+
+// ===========================================================
+
+typedef struct gameLapse_s
+{
+	char name[16];
+	int scale;
+} gameLapse_t;
+
+#define NUM_TIMELAPSE 6
+
+gameLapse_t lapse[NUM_TIMELAPSE] =
+{
+	{ "5 sec",  5 },
+	{ "5 mins", 5*60 },
+	{ "1 hour", 60*60 },
+	{ "12 hour",  12*3600 },
+	{ "1 day",  24*3600 },
+	{ "5 days", 5*24*3600 }
+};
+
+int gameLapse;
+
+/*
+======================
+CL_GameTimeStop
+======================
+*/
+void CL_GameTimeStop( void )
+{
+	gameLapse = 0;
+	Cvar_Set( "mn_timelapse", _(lapse[gameLapse].name) );
+	gameTimeScale = lapse[gameLapse].scale;
+}
+
+
+/*
+======================
+CL_GameTimeSlow
+======================
+*/
+void CL_GameTimeSlow( void )
+{
+	if ( gameLapse > 0 ) gameLapse--;
+	Cvar_Set( "mn_timelapse", _(lapse[gameLapse].name) );
+	gameTimeScale = lapse[gameLapse].scale;
+}
+
+
+/*
+======================
+CL_GameTimeFast
+======================
+*/
+void CL_GameTimeFast( void )
+{
+	if ( gameLapse < NUM_TIMELAPSE-1 ) gameLapse++;
+	Cvar_Set( "mn_timelapse", _(lapse[gameLapse].name) );
+	gameTimeScale = lapse[gameLapse].scale;
+}
+
+
+// ===========================================================
 
 
 /*
@@ -97,6 +719,7 @@ CL_GameNew
 void CL_GameNew( void )
 {
 	equipDef_t	*ed;
+	aircraft_t	*air;
 	char	*name;
 	int		i;
 
@@ -112,42 +735,56 @@ void CL_GameNew( void )
 
 	if ( i == numCampaigns )
 	{
-		Com_Printf( "CL_GameNew: Campaign \"%s\" doesn't exist.\n", name );
+		Com_Printf( _("CL_GameNew: Campaign \"%s\" doesn't exist.\n"), name );
 		return;
 	}
+
+	// reset, set time
+	selMis = NULL;
+	memset( &ccs, 0, sizeof( ccs_t ) );
+	ccs.date = curCampaign->date;
+
+	// set map view
+	ccs.center[0] = 0.5;
+	ccs.center[1] = 0.5;
+	ccs.zoom = 1.0;
 
 	// setup team
 	for ( i = 0; i < curCampaign->soldiers; i++ )
 		CL_GenerateCharacter( curCampaign->team );
 
 	// credits
-	credits = curCampaign->credits;
+	ccs.credits = curCampaign->credits;
 
 	// equipment
 	for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
 		if ( !strcmp( curCampaign->equipment, ed->name ) )
 			break;
-	if ( i != csi.numEDs ) 
-		cEquip = *ed;
-	else
-		memset( &cEquip, 0, sizeof( equipDef_t ) );
-	
+	if ( i != csi.numEDs )
+		ccs.eCampaign = *ed;
+
 	// market
 	for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
 		if ( !strcmp( curCampaign->market, ed->name ) )
 			break;
-	if ( i != csi.numEDs ) 
-		cMarket = *ed;
-	else
-		memset( &cEquip, 0, sizeof( equipDef_t ) );
+	if ( i != csi.numEDs )
+		ccs.eMarket = *ed;
 
-	// reset missions
-	for ( i = 0; i < MAX_MISFIELDS; i++ ) 
-		doneMis[i] = 0;
-	CL_GetActiveMissions();
+	// stage setup
+	CL_CampaignActivateStage( curCampaign->firststage );
+
+	// base setup
+	MN_NewBases();
+
+	// test aircraft
+	ccs.numAir = 1;
+	air = &ccs.air[0];
+	memset( air, 0, sizeof(aircraft_t) );
+	air->status = AIR_IDLE;
 
 	MN_PopMenu( true );
 	MN_PushMenu( "map" );
+	CL_GameTimeStop();
 }
 
 
@@ -161,22 +798,24 @@ CL_GameSave
 
 void CL_GameSave( char *filename, char *comment )
 {
-	sizebuf_t	sb;
+	stageState_t	*state;
+	actMis_t		*mis;
+	sizebuf_t		sb;
 	byte	buf[MAX_GAMESAVESIZE];
 	FILE	*f;
 	int		res;
-	int		i;
+	int		i, j;
 
 	if ( !curCampaign )
 	{
-		Com_Printf( "No campaign active.\n" );
+		Com_Printf( _("No campaign active.\n") );
 		return;
 	}
 
 	f = fopen( va( "%s/save/%s.sav", FS_Gamedir(), filename ), "wb" );
-	if ( !f ) 
+	if ( !f )
 	{
-		Com_Printf( "Couldn't write file.\n" );
+		Com_Printf( _("Couldn't write file.\n") );
 		return;
 	}
 
@@ -189,36 +828,83 @@ void CL_GameSave( char *filename, char *comment )
 	// store campaign name
 	MSG_WriteString( &sb, curCampaign->name );
 
-	// store done missions
-	for ( i = 0; i < MAX_MISFIELDS; i++ )
-		MSG_WriteLong( &sb, doneMis[i] );
+	// store date
+	MSG_WriteLong( &sb, ccs.date.day );
+	MSG_WriteLong( &sb, ccs.date.sec );
+
+	// store map view
+	MSG_WriteFloat( &sb, ccs.center[0] );
+	MSG_WriteFloat( &sb, ccs.center[1] );
+	MSG_WriteFloat( &sb, ccs.zoom );
+
+	// store bases
+	MN_SaveBases( &sb );
 
 	// store credits
-	MSG_WriteShort( &sb, credits );
+	MSG_WriteShort( &sb, ccs.credits );
 
 	// store equipment
-	for ( i = 0; i < csi.numODs; i++ )
-		MSG_WriteByte( &sb, cEquip.num[i] );
+	for ( i = 0; i < MAX_OBJDEFS; i++ )
+		MSG_WriteByte( &sb, ccs.eCampaign.num[i] );
 
 	// store market
-	for ( i = 0; i < csi.numODs; i++ )
-		MSG_WriteByte( &sb, cMarket.num[i] );
+	for ( i = 0; i < MAX_OBJDEFS; i++ )
+		MSG_WriteByte( &sb, ccs.eMarket.num[i] );
 
 	// store team
 	CL_SendTeamInfo( &sb, wholeTeam, numWholeTeam );
 
 	// store assignement
-	MSG_WriteShort( &sb, teamMask );
-	MSG_WriteShort( &sb, numOnTeam );
+	MSG_WriteLong( &sb, teamMask );
+	MSG_WriteByte( &sb, numOnTeam );
+
+	// store campaign data
+	for ( i = 0, state = ccs.stage; i < numStages; i++, state++ )
+		if ( state->active )
+		{
+			// write head
+			setState_t *set;
+			MSG_WriteString( &sb, state->def->name );
+			MSG_WriteLong( &sb, state->start.day );
+			MSG_WriteLong( &sb, state->start.sec );
+			MSG_WriteByte( &sb, state->def->num );
+
+			// write all sets
+			for ( j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++ )
+			{
+				MSG_WriteString( &sb, set->def->name );
+				MSG_WriteByte( &sb, set->active );
+				MSG_WriteShort( &sb, set->num );
+				MSG_WriteShort( &sb, set->done );
+				MSG_WriteLong( &sb, set->start.day );
+				MSG_WriteLong( &sb, set->start.sec );
+				MSG_WriteLong( &sb, set->event.day );
+				MSG_WriteLong( &sb, set->event.sec );
+			}
+		}
+	// terminate list
+	MSG_WriteByte( &sb, 0 );
+
+	// store active missions
+	MSG_WriteByte( &sb, ccs.numMissions );
+	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ )
+	{
+		MSG_WriteString( &sb, mis->def->name );
+		MSG_WriteString( &sb, mis->cause->def->name );
+		MSG_WriteFloat( &sb, mis->realPos[0] );
+		MSG_WriteFloat( &sb, mis->realPos[1] );
+		MSG_WriteLong( &sb, mis->expire.day );
+		MSG_WriteLong( &sb, mis->expire.sec );
+	}
 
 	// write data
 	res = fwrite( buf, 1, sb.cursize, f );
 	fclose( f );
-	
+
 	if ( res == sb.cursize )
 	{
 		Cvar_Set( "mn_lastsave", filename );
-		Com_Printf( "Campaign '%s' saved.\n", filename );
+		Com_Printf( _("Campaign '%s' saved.\n"), filename );
 	}
 }
 
@@ -241,7 +927,7 @@ void CL_GameSaveCmd( void )
 	}
 
 	// get comment
-	if ( Cmd_Argc() > 2 ) 
+	if ( Cmd_Argc() > 2 )
 	{
 		arg = Cmd_Argv( 2 );
 		if ( arg[0] == '*' ) strncpy( comment, Cvar_VariableString( arg+1 ), MAX_COMMENTLENGTH );
@@ -261,18 +947,21 @@ CL_GameLoad
 */
 void CL_GameLoad( char *filename )
 {
-	character_t	*chr;
+	actMis_t     *mis;
+	stageState_t *state;
+	setState_t   *set;
+	setState_t   dummy;
 	sizebuf_t	sb;
 	byte	buf[MAX_GAMESAVESIZE];
 	char	*name;
 	FILE	*f;
-	int		i, p;
+	int		i, j, num;
 
 	// open file
 	f = fopen( va( "%s/save/%s.sav", FS_Gamedir(), filename ), "rb" );
-	if ( !f ) 
+	if ( !f )
 	{
-		Com_Printf( "Couldn't open file '%s'.\n", filename );
+		Com_Printf( _("Couldn't open file '%s'.\n"), filename );
 		return;
 	}
 
@@ -280,9 +969,6 @@ void CL_GameLoad( char *filename )
 	SZ_Init( &sb, buf, MAX_GAMESAVESIZE );
 	sb.cursize = fread( buf, 1, MAX_GAMESAVESIZE, f );
 	fclose( f );
-
-	// reset data
-	CL_ResetCharacters();
 
 	// read comment
 	MSG_ReadString( &sb );
@@ -296,46 +982,127 @@ void CL_GameLoad( char *filename )
 
 	if ( i == numCampaigns )
 	{
-		Com_Printf( "CL_GameLoad: Campaign \"%s\" doesn't exist.\n", name );
+		Com_Printf( _("CL_GameLoad: Campaign \"%s\" doesn't exist.\n"), name );
 		return;
 	}
 
-	// read done missions
-	for ( i = 0; i < MAX_MISFIELDS; i++ )
-		doneMis[i] = MSG_ReadLong( &sb );
+	// reset
+	selMis = NULL;
+	memset( &ccs, 0, sizeof( ccs_t ) );
+
+	// read date
+	ccs.date.day = MSG_ReadLong( &sb );
+	ccs.date.sec = MSG_ReadLong( &sb );
+
+	// read map view
+	ccs.center[0] = MSG_ReadFloat( &sb );
+	ccs.center[1] = MSG_ReadFloat( &sb );
+	ccs.zoom = MSG_ReadFloat( &sb );
+
+	// load bases
+	MN_LoadBases( &sb );
 
 	// read credits
-	credits = MSG_ReadShort( &sb );
+	ccs.credits = MSG_ReadShort( &sb );
 
 	// read equipment
-	for ( i = 0; i < csi.numODs; i++ )
-		cEquip.num[i] = MSG_ReadByte( &sb );
+	for ( i = 0; i < MAX_OBJDEFS; i++ )
+		ccs.eCampaign.num[i] = MSG_ReadByte( &sb );
 
 	// read market
-	for ( i = 0; i < csi.numODs; i++ )
-		cMarket.num[i] = MSG_ReadByte( &sb );
+	for ( i = 0; i < MAX_OBJDEFS; i++ )
+		ccs.eMarket.num[i] = MSG_ReadByte( &sb );
+
+	// reset data
+	CL_ResetCharacters();
 
 	// read whole team list
-	MSG_ReadByte( &sb );
-	numWholeTeam = MSG_ReadByte( &sb );
-	for ( i = 0, chr = wholeTeam; i < numWholeTeam; chr++, i++ )
-		CL_LoadTeamMember( &sb, chr );
+	CL_LoadTeam( &sb );
 
-	// get assignement
-	teamMask = MSG_ReadShort( &sb );
-	numOnTeam = MSG_ReadShort( &sb );
-
-	for ( i = 0, p = 0; i < numWholeTeam; i++ )
-		if ( teamMask & (1 << i) )
-			curTeam[p++] = wholeTeam[i];
-
-	for ( ; p < MAX_ACTIVETEAM; p++ )
+	// read campaign data
+	name = MSG_ReadString( &sb );
+	while ( *name )
 	{
-		Cvar_ForceSet( va( "mn_name%i", p ), "" );
-		Cbuf_AddText( va( "equipdisable%i\n", p ) );
+		state = CL_CampaignActivateStage( name );
+		if ( !state )
+		{
+			Com_Printf( _("Unable to load campaign '%s', unknown stage '%'\n"), filename, name );
+			curCampaign = NULL;
+			Cbuf_AddText( "mn_pop\n" );
+			return;
+		}
+
+		state->start.day = MSG_ReadLong( &sb );
+		state->start.sec = MSG_ReadLong( &sb );
+		num = MSG_ReadByte( &sb );
+		for ( i = 0; i < num; i++ )
+		{
+			name = MSG_ReadString( &sb );
+			for ( j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++ )
+				if ( !strcmp( name, set->def->name ) )
+					break;
+			// write on dummy set, if it's unknown
+			if ( j >= state->def->num )
+			{
+				Com_Printf( _("Warning: Set '%s' not found\n"), name );
+				set = &dummy;
+			}
+
+			set->active = MSG_ReadByte( &sb );
+			set->num = MSG_ReadShort( &sb );
+			set->done = MSG_ReadShort( &sb );
+			set->start.day = MSG_ReadLong( &sb );
+			set->start.sec = MSG_ReadLong( &sb );
+			set->event.day = MSG_ReadLong( &sb );
+			set->event.sec = MSG_ReadLong( &sb );
+		}
+
+		// read next stage name
+		name = MSG_ReadString( &sb );
 	}
 
-	Com_Printf( "Campaign '%s' loaded.\n", filename );
+	// store active missions
+	ccs.numMissions = MSG_ReadByte( &sb );
+	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ )
+	{
+		// get mission definition
+		name = MSG_ReadString( &sb );
+		for ( j = 0; j < numMissions; j++ )
+			if ( !strcmp( name, missions[j].name ) )
+			{
+				mis->def = &missions[j];
+				break;
+			}
+		if ( j >= numMissions )
+			Com_Printf( _("Warning: Mission '%s' not found\n"), name );
+
+		// get mission definition
+		name = MSG_ReadString( &sb );
+		for ( j = 0; j < numStageSets; j++ )
+			if ( !strcmp( name, stageSets[j].name ) )
+			{
+				mis->cause = &ccs.set[j];
+				break;
+			}
+		if ( j >= numStageSets )
+			Com_Printf( _("Warning: Stage set '%s' not found\n"), name );
+
+		// read position and time
+		mis->realPos[0] = MSG_ReadFloat( &sb );
+		mis->realPos[1] = MSG_ReadFloat( &sb );
+		mis->expire.day = MSG_ReadLong( &sb );
+		mis->expire.sec = MSG_ReadLong( &sb );
+
+		// ignore incomplete info
+		if ( !mis->def || !mis->cause )
+		{
+			memset( mis, 0, sizeof(actMis_t) );
+			mis--; i--; ccs.numMissions--;
+		}
+	}
+
+	Com_Printf( _("Campaign '%s' loaded.\n"), filename );
+	CL_GameTimeStop();
 }
 
 
@@ -360,7 +1127,6 @@ void CL_GameLoadCmd( void )
 	Cvar_Set( "mn_active", "map" );
 	Cbuf_AddText( "disconnect\n" );
 
-	CL_GetActiveMissions();
 	MN_PopMenu( true );
 	MN_PushMenu( "map" );
 }
@@ -373,7 +1139,7 @@ CL_GameCommentsCmd
 */
 void CL_GameCommentsCmd( void )
 {
-	char	comment[MAX_COMMENTLENGTH];
+	char	comment[MAX_VAR];
 	FILE	*f;
 	int		i;
 
@@ -381,14 +1147,14 @@ void CL_GameCommentsCmd( void )
 	{
 		// open file
 		f = fopen( va( "%s/save/slot%i.sav", FS_Gamedir(), i ), "rb" );
-		if ( !f ) 
+		if ( !f )
 		{
 			Cvar_Set( va( "mn_slot%i", i ), "" );
 			continue;
 		}
 
 		// read data
-		fread( comment, 1, MAX_COMMENTLENGTH, f );
+		fread( comment, 1, MAX_VAR, f );
 		Cvar_Set( va( "mn_slot%i", i ), comment );
 		fclose( f );
 	}
@@ -433,7 +1199,6 @@ void CL_GameContinue( void )
 	Cvar_Set( "mn_active", "map" );
 	Cbuf_AddText( "disconnect\n" );
 
-	CL_GetActiveMissions();
 	MN_PopMenu( true );
 	MN_PushMenu( "map" );
 }
@@ -447,30 +1212,45 @@ CL_GameGo
 void CL_GameGo( void )
 {
 	mission_t	*mis;
+	char	expanded[MAX_QPATH];
+	char	timeChar;
 
-	if ( !curCampaign || selMission == -1 )
+	if ( !curCampaign || !selMis )
 		return;
 
 	if ( numOnTeam == 0 )
 		return;
 
 	// start the map
-	mis = &missions[selMission];
+	mis = selMis->def;
 	Cvar_SetValue( "ai_numaliens", mis->aliens );
 	Cvar_SetValue( "ai_numcivilians", mis->civilians );
+	Cvar_Set( "ai_alien", mis->alienTeam );
+	Cvar_Set( "ai_civilian", mis->civTeam );
 	Cvar_Set( "ai_equipment", mis->alienEquipment );
 	Cvar_Set( "music", mis->music );
 
 	// check inventory
-	mEquip = cEquip;
-	CL_CheckCampaignInventory( &mEquip );
-	mEquip = cEquip;
+	ccs.eMission = ccs.eCampaign;
+	CL_CheckInventory( &ccs.eMission );
+	ccs.eMission = ccs.eCampaign;
 
 	// prepare
 	deathMask = 0;
 	MN_PopMenu( true );
 	Cvar_Set( "mn_main", "singleplayermission" );
-	Cbuf_AddText( va( "map %s\n", mis->map ) );
+
+	// get appropriate map
+	if ( CL_MapIsNight( mis->pos ) ) timeChar = 'n';
+	else timeChar = 'd';
+
+	if ( mis->map[0] == '+' ) Com_sprintf (expanded, sizeof(expanded), "maps/%s%c.ump", mis->map+1, timeChar );
+	else Com_sprintf (expanded, sizeof(expanded), "maps/%s%c.bsp", mis->map, timeChar );
+
+	if (FS_LoadFile (expanded, NULL) != -1)
+		Cbuf_AddText( va( "map %s%c %s\n", mis->map, timeChar, mis->param ) );
+	else
+		Cbuf_AddText( va( "map %s %s\n", mis->map, mis->param ) );
 }
 
 
@@ -535,15 +1315,15 @@ void CL_BuyType( void )
 	}
 	num = atoi( Cmd_Argv( 1 ) );
 
-	Cvar_Set( "mn_credits", va( "%i $", credits ) );
+	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
 
 	// get item list
 	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
-		if ( od->buytype == num && (cEquip.num[i] || cMarket.num[i]) )
+		if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) )
 		{
 			sprintf( str, "mn_item%i", j );		Cvar_Set( str, od->name );
-			sprintf( str, "mn_storage%i", j );	Cvar_SetValue( str, cEquip.num[i] );
-			sprintf( str, "mn_supply%i", j );	Cvar_SetValue( str, cMarket.num[i] );
+			sprintf( str, "mn_storage%i", j );	Cvar_SetValue( str, ccs.eCampaign.num[i] );
+			sprintf( str, "mn_supply%i", j );	Cvar_SetValue( str, ccs.eMarket.num[i] );
 			sprintf( str, "mn_price%i", j );	Cvar_Set( str, va( "%i $", od->price ) );
 			buyList[j] = i;
 			j++;
@@ -570,7 +1350,7 @@ void CL_BuyType( void )
 		Cvar_Set( "mn_item", "" );
 		Cvar_Set( "mn_weapon", "" );
 		Cvar_Set( "mn_ammo", "" );
-		menuText = NULL;
+		menuText[TEXT_STANDARD] = NULL;
 	}
 }
 
@@ -598,12 +1378,12 @@ void CL_Buy( void )
 	Cbuf_AddText( va( "buyselect%i\n", num ) );
 	CL_ItemDescription( item );
 
-	if ( credits >= csi.ods[item].price && cMarket.num[item] )
+	if ( ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item] )
 	{
-		Cvar_SetValue( va( "mn_storage%i", num ), ++cEquip.num[item] );
-		Cvar_SetValue( va( "mn_supply%i", num ),  --cMarket.num[item] );
-		credits -= csi.ods[item].price;
-		Cvar_Set( "mn_credits", va( "%i $", credits ) );
+		Cvar_SetValue( va( "mn_storage%i", num ), ++ccs.eCampaign.num[item] );
+		Cvar_SetValue( va( "mn_supply%i", num ),  --ccs.eMarket.num[item] );
+		ccs.credits -= csi.ods[item].price;
+		Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
 	}
 }
 
@@ -631,12 +1411,12 @@ void CL_Sell( void )
 	Cbuf_AddText( va( "buyselect%i\n", num ) );
 	CL_ItemDescription( item );
 
-	if ( cEquip.num[item] )
+	if ( ccs.eCampaign.num[item] )
 	{
-		Cvar_SetValue( va( "mn_storage%i", num ), --cEquip.num[item] );
-		Cvar_SetValue( va( "mn_supply%i", num ),  ++cMarket.num[item] );
-		credits += csi.ods[item].price;
-		Cvar_Set( "mn_credits", va( "%i $", credits ) );
+		Cvar_SetValue( va( "mn_storage%i", num ), --ccs.eCampaign.num[item] );
+		Cvar_SetValue( va( "mn_supply%i", num ),  ++ccs.eMarket.num[item] );
+		ccs.credits += csi.ods[item].price;
+		Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
 	}
 }
 
@@ -654,6 +1434,10 @@ void CL_GameResultsCmd( void )
 	int i, j;
 	int tempMask;
 
+	// multiplayer?
+	if ( !curCampaign )
+		return;
+
 	// check for replay
 	if ( (int)Cvar_VariableValue( "game_tryagain" ) )
 	{
@@ -670,8 +1454,8 @@ void CL_GameResultsCmd( void )
 	won = atoi( Cmd_Argv( 1 ) );
 
 	// give reward, change equipment
-	credits += cReward;
-	cEquip = mEquip;
+	ccs.credits += ccs.reward;
+	ccs.eCampaign = ccs.eMission;
 
 	// remove the dead (and their item preference)
 	for ( i = 0; i < numWholeTeam; )
@@ -690,21 +1474,34 @@ void CL_GameResultsCmd( void )
 				wholeTeam[j] = wholeTeam[j+1];
 				wholeTeam[j].inv = &teamInv[j];
 			}
-			teamInv[j].inv = NULL;
+			memset( &teamInv[j], 0, sizeof(inventory_t) );
 		}
 		else i++;
 	}
 
 	// add recruits
-	if ( won && missions[selMission].recruits )
-		for ( i = 0; i < missions[selMission].recruits; i++ )
+	if ( won && selMis->def->recruits )
+		for ( i = 0; i < selMis->def->recruits; i++ )
 			CL_GenerateCharacter( curCampaign->team );
 
-	// activate new missions
-	if ( won ) doneMis[selMission>>5] |= 1<<(selMission%32);
+	// campaign effects
+	selMis->cause->done++;
+	if ( selMis->cause->done >= selMis->cause->def->quota )
+		CL_CampaignExecute( selMis->cause );
 
-	selMission = -1;
-	CL_GetActiveMissions();
+	// remove mission from list
+	CL_CampaignRemoveMission( selMis );
+}
+
+
+/*
+======================
+CL_MapActionReset
+======================
+*/
+void CL_MapActionReset( void )
+{
+	mapAction = MA_NONE;
 }
 
 
@@ -724,10 +1521,18 @@ void CL_ResetCampaign( void )
 	Cmd_AddCommand( "game_go", CL_GameGo );
 	Cmd_AddCommand( "game_abort", CL_GameAbort );
 	Cmd_AddCommand( "game_results", CL_GameResultsCmd );
+	Cmd_AddCommand( "game_timestop", CL_GameTimeStop );
+	Cmd_AddCommand( "game_timeslow", CL_GameTimeSlow );
+	Cmd_AddCommand( "game_timefast", CL_GameTimeFast );
 	Cmd_AddCommand( "buy_type", CL_BuyType );
 	Cmd_AddCommand( "buy_select", CL_BuySelectCmd );
 	Cmd_AddCommand( "mn_buy", CL_Buy );
 	Cmd_AddCommand( "mn_sell", CL_Sell );
+	Cmd_AddCommand( "mn_mapaction_reset", CL_MapActionReset );
+
+	re.LoadTGA( "pics/menu/map_mask.tga", &maskPic, &maskWidth, &maskHeight );
+	if ( maskPic ) Com_Printf( _("Map mask loaded.\n") );
+	else Com_Printf( _("Couldn't load map mask (pics/menu/map_mask.tga)\n") );
 }
 
 
@@ -739,11 +1544,15 @@ value_t mission_vals[] =
 {
 	{ "text",		V_STRING,		0 },
 	{ "map",		V_STRING,		MISSIONOFS( map ) },
+	{ "param",		V_STRING,		MISSIONOFS( param ) },
 	{ "music",		V_STRING,		MISSIONOFS( music ) },
 	{ "pos",		V_POS,			MISSIONOFS( pos ) },
+	{ "mask",		V_RGBA,			MISSIONOFS( mask ) },
 	{ "aliens",		V_INT,			MISSIONOFS( aliens ) },
-	{ "civilians",	V_INT,			MISSIONOFS( civilians ) },
+	{ "alienteam",	V_STRING,		MISSIONOFS( alienTeam ) },
 	{ "alienequip",	V_STRING,		MISSIONOFS( alienEquipment ) },
+	{ "civilians",	V_INT,			MISSIONOFS( civilians ) },
+	{ "civteam",	V_STRING,		MISSIONOFS( civTeam ) },
 	{ "recruits",	V_INT,			MISSIONOFS( recruits ) },
 	{ "$win",		V_INT,			MISSIONOFS( cr_win ) },
 	{ "$alien",		V_INT,			MISSIONOFS( cr_alien ) },
@@ -762,7 +1571,7 @@ CL_ParseMission
 */
 void CL_ParseMission( char *name, char **text )
 {
-	char		*errhead = "CL_ParseMission: unexptected end of file (mission ";
+	char		*errhead = _("CL_ParseMission: unexptected end of file (mission ");
 	mission_t	*ms;
 	value_t		*vp;
 	char		*token;
@@ -775,7 +1584,7 @@ void CL_ParseMission( char *name, char **text )
 
 	if ( i < numMissions )
 	{
-		Com_Printf( "Com_ParseMission: mission def \"%s\" with same name found, second ignored\n", name );
+		Com_Printf( _("Com_ParseMission: mission def \"%s\" with same name found, second ignored\n"), name );
 		return;
 	}
 
@@ -790,7 +1599,7 @@ void CL_ParseMission( char *name, char **text )
 
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( "Com_ParseMission: mission def \"%s\" without body ignored\n", name );
+		Com_Printf( _("Com_ParseMission: mission def \"%s\" without body ignored\n"), name );
 		numMissions--;
 		return;
 	}
@@ -813,8 +1622,8 @@ void CL_ParseMission( char *name, char **text )
 				{
 					strcpy( mtp, token );
 					ms->text = mtp;
-					do { 
-						mtp = strchr( mtp, ';' );
+					do {
+						mtp = strchr( mtp, '\\' );
 						if ( mtp ) *mtp = '\n';
 					} while ( mtp );
 					mtp = ms->text + strlen( token ) + 1;
@@ -823,9 +1632,165 @@ void CL_ParseMission( char *name, char **text )
 			}
 
 		if ( !vp->string )
-			Com_Printf( "Com_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, name );
+			Com_Printf( _("Com_ParseMission: unknown token \"%s\" ignored (mission %s)\n"), token, name );
 
 	} while ( *text );
+}
+
+
+// ===========================================================
+
+
+#define	STAGESETOFS(x)	(int)&(((stageSet_t *)0)->x)
+
+value_t stageset_vals[] =
+{
+	{ "needed",		V_STRING,	STAGESETOFS( needed ) },
+	{ "delay",		V_DATE,		STAGESETOFS( delay ) },
+	{ "frame",		V_DATE,		STAGESETOFS( frame ) },
+	{ "expire",		V_DATE,		STAGESETOFS( expire ) },
+	{ "number",		V_INT,		STAGESETOFS( number ) },
+	{ "quota",		V_INT,		STAGESETOFS( quota ) },
+	{ "nextstage",	V_STRING,	STAGESETOFS( nextstage ) },
+	{ "endstage",	V_STRING,	STAGESETOFS( endstage ) },
+	{ "commands",	V_STRING,	STAGESETOFS( cmds ) },
+	{ NULL, 0, 0 },
+};
+
+/*
+======================
+CL_ParseStageSet
+======================
+*/
+void CL_ParseStageSet( char *name, char **text )
+{
+	char		*errhead = _("CL_ParseStageSet: unexptected end of file (stageset ");
+	stageSet_t	*sp;
+	value_t		*vp;
+	char		missionstr[256];
+	char		*token, *misp;
+	int			j;
+
+	// initialize the stage
+	sp = &stageSets[numStageSets++];
+	memset( sp, 0, sizeof(stageSet_t) );
+	strncpy( sp->name, name, MAX_VAR );
+
+	// get it's body
+	token = COM_Parse( text );
+	if ( !*text || strcmp( token, "{" ) )
+	{
+		Com_Printf( _("Com_ParseStageSets: stageset def \"%s\" without body ignored\n"), name );
+		numStageSets--;
+		return;
+	}
+
+	do {
+		token = COM_EParse( text, errhead, name );
+		if ( !*text ) break;
+		if ( *token == '}' ) break;
+
+		// check for some standard values
+		for ( vp = stageset_vals; vp->string; vp++ )
+			if ( !strcmp( token, vp->string ) )
+			{
+				// found a definition
+				token = COM_EParse( text, errhead, name );
+				if ( !*text ) return;
+
+				Com_ParseValue( sp, token, vp->type, vp->ofs );
+				break;
+			}
+		if ( vp->string )
+			continue;
+
+		// get mission set
+		if ( !strcmp( token, "missions" ) )
+		{
+			token = COM_EParse( text, errhead, name );
+			if ( !*text ) return;
+			strncpy( missionstr, token, 255 );
+			missionstr[strlen(missionstr)] = 0;
+			misp = missionstr;
+
+			// add mission options
+			sp->numMissions = 0;
+			do {
+				token = COM_Parse( &misp );
+				if ( !misp ) break;
+
+				for ( j = 0; j < numMissions; j++ )
+					if ( !strcmp( token, missions[j].name ) )
+					{
+						sp->missions[sp->numMissions++] = j;
+						break;
+					}
+
+				if ( j == numMissions )
+					Com_Printf( _("Com_ParseStageSet: unknown mission \"%s\" ignored (stageset %s)\n"), token, name );
+			}
+			while ( misp && sp->numMissions < MAX_SETMISSIONS );
+			continue;
+		}
+
+		Com_Printf( _("Com_ParseStageSet: unknown token \"%s\" ignored (stageset %s)\n"), token, name );
+	} while ( *text );
+}
+
+
+/*
+======================
+CL_ParseStage
+======================
+*/
+void CL_ParseStage( char *name, char **text )
+{
+	char		*errhead = _("CL_ParseStage: unexptected end of file (stage ");
+	stage_t		*sp;
+	char		*token;
+	int			i;
+
+	// search for campaigns with same name
+	for ( i = 0; i < numStages; i++ )
+		if ( !strcmp( name, stages[i].name ) )
+			break;
+
+	if ( i < numStages )
+	{
+		Com_Printf( _("Com_ParseStage: stage def \"%s\" with same name found, second ignored\n"), name );
+		return;
+	}
+
+	// get it's body
+	token = COM_Parse( text );
+	if ( !*text || strcmp( token, "{" ) )
+	{
+		Com_Printf( _("Com_ParseStages: stage def \"%s\" without body ignored\n"), name );
+		return;
+	}
+
+	// initialize the stage
+	sp = &stages[numStages++];
+	memset( sp, 0, sizeof(stage_t) );
+	strncpy( sp->name, name, MAX_VAR );
+	sp->first = numStageSets;
+
+	Com_Printf( _("stage: %s\n"), name );
+
+	do {
+		token = COM_EParse( text, errhead, name );
+		if ( !*text ) break;
+		if ( *token == '}' ) break;
+
+		if ( !strcmp( token, "set" ) )
+		{
+			token = COM_EParse( text, errhead, name );
+			CL_ParseStageSet( token, text );
+		}
+		else Com_Printf( _("Com_ParseStage: unknown token \"%s\" ignored (stage %s)\n"), token, name );
+	} while ( *text );
+
+	sp->num = numStageSets - sp->first;
 }
 
 
@@ -839,7 +1804,9 @@ value_t campaign_vals[] =
 	{ "soldiers",	V_INT,		CAMPAIGNOFS( soldiers ) },
 	{ "equipment",	V_STRING,	CAMPAIGNOFS( equipment ) },
 	{ "market",		V_STRING,	CAMPAIGNOFS( market ) },
+	{ "firststage",	V_STRING,	CAMPAIGNOFS( firststage ) },
 	{ "credits",	V_INT,		CAMPAIGNOFS( credits ) },
+	{ "date",		V_DATE,		CAMPAIGNOFS( date ) },
 	{ NULL, 0, 0 },
 };
 
@@ -850,13 +1817,11 @@ CL_ParseCampaign
 */
 void CL_ParseCampaign( char *name, char **text )
 {
-	char		*errhead = "CL_ParseCampaign: unexptected end of file (campaign ";
+	char		*errhead = _("CL_ParseCampaign: unexptected end of file (campaign ");
 	campaign_t	*cp;
-	mission_t	*ms;
 	value_t		*vp;
-	char		*token, *reqp;
-	char		req[256];
-	int			i, j, num;
+	char		*token;
+	int			i;
 
 	// search for campaigns with same name
 	for ( i = 0; i < numCampaigns; i++ )
@@ -865,7 +1830,7 @@ void CL_ParseCampaign( char *name, char **text )
 
 	if ( i < numCampaigns )
 	{
-		Com_Printf( "Com_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", name );
+		Com_Printf( _("Com_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n"), name );
 		return;
 	}
 
@@ -880,7 +1845,7 @@ void CL_ParseCampaign( char *name, char **text )
 
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( "Com_ParseCampaign: campaign def \"%s\" without body ignored\n", name );
+		Com_Printf( _("Com_ParseCampaign: campaign def \"%s\" without body ignored\n"), name );
 		numCampaigns--;
 		return;
 	}
@@ -901,49 +1866,10 @@ void CL_ParseCampaign( char *name, char **text )
 				Com_ParseValue( cp, token, vp->type, vp->ofs );
 				break;
 			}
-		if ( vp->string )
-			continue;
 
-		// check for mission names
-		for ( i = 0, ms = missions; i < numMissions; i++, ms++ )
-			if ( !strcmp( token, ms->name ) )
-			{
-				// add mission
-				cp->mission[cp->num] = i;
-
-				token = COM_EParse( text, errhead, name );
-				if ( !*text ) return;
-				strncpy( req, token, 255 );
-				req[strlen(req)] = 0;
-				reqp = req;
-
-				// add required missions
-				num = 0;
-				do {
-					token = COM_Parse( &reqp );
-					if ( !reqp ) break;
-
-					for ( j = 0; j < numMissions; j++ )
-						if ( !strcmp( token, missions[j].name ) )
-						{
-							cp->required[cp->num][num++] = j;
-							break;
-						}
-
-					if ( j == numMissions )
-						Com_Printf( "Com_ParseCampaign: unknown required mission \"%s\" ignored (campaign %s)\n", token, name );
-
-				} while ( reqp && num < MAX_REQMISSIONS );
-
-				if ( num < MAX_REQMISSIONS ) 
-					cp->required[cp->num][num] = NONE;
-				cp->num++;
-				break;
-			}
-
-		if ( i == numMissions )
+		if ( !vp->string )
 		{
-			Com_Printf( "Com_ParseCampaign: unknown mission \"%s\" ignored (campaign %s)\n", token, name );
+			Com_Printf( _("Com_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n"), token, name );
 			COM_EParse( text, errhead, name );
 		}
 	} while ( *text );

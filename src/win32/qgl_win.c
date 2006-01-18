@@ -3177,8 +3177,8 @@ qboolean QGL_Init( const char *dllname )
 	qglGetTexGenfv               = 	dllGetTexGenfv               = GPA( "glGetTexGenfv" );
 	qglGetTexGeniv               = 	dllGetTexGeniv               = GPA( "glGetTexGeniv" );
 	qglGetTexImage               = 	dllGetTexImage               = GPA( "glGetTexImage" );
-	qglGetTexLevelParameterfv    = 	dllGetTexLevelParameterfv    = GPA( "glGetLevelParameterfv" );
-	qglGetTexLevelParameteriv    = 	dllGetTexLevelParameteriv    = GPA( "glGetLevelParameteriv" );
+	qglGetTexLevelParameterfv    = 	dllGetTexLevelParameterfv    = GPA( "glGetTexLevelParameterfv" );
+	qglGetTexLevelParameteriv    = 	dllGetTexLevelParameteriv    = GPA( "glGetTexLevelParameteriv" );
 	qglGetTexParameterfv         = 	dllGetTexParameterfv         = GPA( "glGetTexParameterfv" );
 	qglGetTexParameteriv         = 	dllGetTexParameteriv         = GPA( "glGetTexParameteriv" );
 	qglHint                      = 	dllHint                      = GPA( "glHint" );

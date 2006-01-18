@@ -1,0 +1,63 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: qrad3 - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSP9062.TMP" with contents
+[
+/nologo /MT /W3 /GX /Zd /O2 /I "..\..\common" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /Fp".\Release/qrad3.pch" /YX /Fo".\Release/" /Fd".\Release/" /FD /c 
+"D:\ufo\utils3\common\bspfile.c"
+"D:\ufo\utils3\bsp\qrad3\lightmap.c"
+"D:\ufo\utils3\bsp\qrad3\patches.c"
+"D:\ufo\utils3\bsp\qrad3\qrad3.c"
+"D:\ufo\utils3\common\trace.c"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP9062.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP9063.TMP" with contents
+[
+wsock32.lib opengl32.lib glaux.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:".\Release/qrad3.pdb" /debug /machine:I386 /out:".\Release/qrad3.exe" 
+.\Release\bspfile.obj
+.\Release\cmdlib.obj
+.\Release\lbmlib.obj
+.\Release\lightmap.obj
+.\Release\mathlib.obj
+.\Release\patches.obj
+.\Release\polylib.obj
+.\Release\qrad3.obj
+.\Release\scriplib.obj
+.\Release\threads.obj
+.\Release\trace.obj
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP9063.TMP"
+<h3>Output Window</h3>
+Compiling...
+bspfile.c
+lightmap.c
+D:\ufo\utils3\bsp\qrad3\lightmap.c(1099) : warning C4101: 'p' : unreferenced local variable
+D:\ufo\utils3\bsp\qrad3\lightmap.c(1099) : warning C4101: 'q' : unreferenced local variable
+D:\ufo\utils3\bsp\qrad3\lightmap.c(1095) : warning C4101: 'a' : unreferenced local variable
+D:\ufo\utils3\bsp\qrad3\lightmap.c(1095) : warning C4101: 'b' : unreferenced local variable
+D:\ufo\utils3\bsp\qrad3\lightmap.c(1100) : warning C4101: 'idet' : unreferenced local variable
+D:\ufo\utils3\bsp\qrad3\lightmap.c(1098) : warning C4101: 'tn' : unreferenced local variable
+D:\ufo\utils3\bsp\qrad3\lightmap.c(1095) : warning C4101: 'v' : unreferenced local variable
+D:\ufo\utils3\bsp\qrad3\lightmap.c(1099) : warning C4101: 'inv' : unreferenced local variable
+D:\ufo\utils3\bsp\qrad3\lightmap.c(1094) : warning C4101: 'se' : unreferenced local variable
+D:\ufo\utils3\bsp\qrad3\lightmap.c(1096) : warning C4101: 'delta' : unreferenced local variable
+D:\ufo\utils3\bsp\qrad3\lightmap.c(1088) : warning C4101: 'k' : unreferenced local variable
+D:\ufo\utils3\bsp\qrad3\lightmap.c(1098) : warning C4101: 'tv' : unreferenced local variable
+D:\ufo\utils3\bsp\qrad3\lightmap.c(1097) : warning C4101: 'normal' : unreferenced local variable
+patches.c
+qrad3.c
+trace.c
+Linking...
+
+
+
+<h3>Results</h3>
+qrad3.exe - 0 error(s), 13 warning(s)
+</pre>
+</body>
+</html>

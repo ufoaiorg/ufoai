@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -17,6 +17,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
+
+/* FIXME:
+** there is a bug for ic->next - these loops (while and for loops) are sometimes endless-loops
+**/
+
 #include "q_shared.h"
 
 #define DEG2RAD( a ) (( a * M_PI ) / 180.0F)
@@ -50,7 +55,7 @@ int AngleToDV( int angle )
 	{
 		div = angle - dangle[i];
 		div = (div < 0) ? -div : div;
-		if ( div < minDiv ) 
+		if ( div < minDiv )
 		{
 			mini = i;
 			minDiv = div;
@@ -125,8 +130,6 @@ void RotatePointAroundVector( vec3_t dst, const vec3_t dir, const vec3_t point, 
 #pragma optimize( "", on )
 #endif
 
-
-
 void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 {
 	float		angle;
@@ -163,7 +166,6 @@ void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 	}
 }
 
-
 void ProjectPointOnPlane( vec3_t dst, const vec3_t p, const vec3_t normal )
 {
 	float d;
@@ -193,9 +195,7 @@ void PerpendicularVector( vec3_t dst, const vec3_t src )
 	float minelem = 1.0F;
 	vec3_t tempvec;
 
-	/*
-	** find the smallest magnitude axially aligned vector
-	*/
+	// find the smallest magnitude axially aligned vector
 	for ( pos = 0, i = 0; i < 3; i++ )
 	{
 		if ( fabs( src[i] ) < minelem )
@@ -207,14 +207,10 @@ void PerpendicularVector( vec3_t dst, const vec3_t src )
 	tempvec[0] = tempvec[1] = tempvec[2] = 0.0F;
 	tempvec[pos] = 1.0F;
 
-	/*
-	** project the point onto the plane defined by src
-	*/
+	// project the point onto the plane defined by src
 	ProjectPointOnPlane( dst, tempvec, src );
 
-	/*
-	** normalize the result
-	*/
+	// normalize the result
 	VectorNormalize( dst );
 }
 
@@ -286,7 +282,7 @@ void VecToAngles (vec3_t value1, vec3_t angles)
 {
 	float	forward;
 	float	yaw, pitch;
-	
+
 	if (value1[1] == 0 && value1[0] == 0)
 	{
 		yaw = 0;
@@ -375,9 +371,8 @@ float	anglemod(float a)
 	return a;
 }
 
-	int		i;
-	vec3_t	corners[2];
-
+int	i;
+vec3_t	corners[2];
 
 // this is the slow, general version
 int BoxOnPlaneSide2 (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
@@ -418,13 +413,13 @@ BoxOnPlaneSide
 Returns 1, 2, or 1 + 2
 ==================
 */
-#if !id386 || defined __linux__ 
+#if !id386 || defined __linux__
 int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 {
 	float	dist1, dist2;
 	int		sides;
 
-// fast axial cases
+	// fast axial cases
 	if (p->type < 3)
 	{
 		if (p->dist <= emins[p->type])
@@ -433,41 +428,41 @@ int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 			return 2;
 		return 3;
 	}
-	
-// general case
+
+	// general case
 	switch (p->signbits)
 	{
 	case 0:
-dist1 = p->normal[0]*emaxs[0] + p->normal[1]*emaxs[1] + p->normal[2]*emaxs[2];
-dist2 = p->normal[0]*emins[0] + p->normal[1]*emins[1] + p->normal[2]*emins[2];
+		dist1 = p->normal[0]*emaxs[0] + p->normal[1]*emaxs[1] + p->normal[2]*emaxs[2];
+		dist2 = p->normal[0]*emins[0] + p->normal[1]*emins[1] + p->normal[2]*emins[2];
 		break;
 	case 1:
-dist1 = p->normal[0]*emins[0] + p->normal[1]*emaxs[1] + p->normal[2]*emaxs[2];
-dist2 = p->normal[0]*emaxs[0] + p->normal[1]*emins[1] + p->normal[2]*emins[2];
+		dist1 = p->normal[0]*emins[0] + p->normal[1]*emaxs[1] + p->normal[2]*emaxs[2];
+		dist2 = p->normal[0]*emaxs[0] + p->normal[1]*emins[1] + p->normal[2]*emins[2];
 		break;
 	case 2:
-dist1 = p->normal[0]*emaxs[0] + p->normal[1]*emins[1] + p->normal[2]*emaxs[2];
-dist2 = p->normal[0]*emins[0] + p->normal[1]*emaxs[1] + p->normal[2]*emins[2];
+		dist1 = p->normal[0]*emaxs[0] + p->normal[1]*emins[1] + p->normal[2]*emaxs[2];
+		dist2 = p->normal[0]*emins[0] + p->normal[1]*emaxs[1] + p->normal[2]*emins[2];
 		break;
 	case 3:
-dist1 = p->normal[0]*emins[0] + p->normal[1]*emins[1] + p->normal[2]*emaxs[2];
-dist2 = p->normal[0]*emaxs[0] + p->normal[1]*emaxs[1] + p->normal[2]*emins[2];
+		dist1 = p->normal[0]*emins[0] + p->normal[1]*emins[1] + p->normal[2]*emaxs[2];
+		dist2 = p->normal[0]*emaxs[0] + p->normal[1]*emaxs[1] + p->normal[2]*emins[2];
 		break;
 	case 4:
-dist1 = p->normal[0]*emaxs[0] + p->normal[1]*emaxs[1] + p->normal[2]*emins[2];
-dist2 = p->normal[0]*emins[0] + p->normal[1]*emins[1] + p->normal[2]*emaxs[2];
+		dist1 = p->normal[0]*emaxs[0] + p->normal[1]*emaxs[1] + p->normal[2]*emins[2];
+		dist2 = p->normal[0]*emins[0] + p->normal[1]*emins[1] + p->normal[2]*emaxs[2];
 		break;
 	case 5:
-dist1 = p->normal[0]*emins[0] + p->normal[1]*emaxs[1] + p->normal[2]*emins[2];
-dist2 = p->normal[0]*emaxs[0] + p->normal[1]*emins[1] + p->normal[2]*emaxs[2];
+		dist1 = p->normal[0]*emins[0] + p->normal[1]*emaxs[1] + p->normal[2]*emins[2];
+		dist2 = p->normal[0]*emaxs[0] + p->normal[1]*emins[1] + p->normal[2]*emaxs[2];
 		break;
 	case 6:
-dist1 = p->normal[0]*emaxs[0] + p->normal[1]*emins[1] + p->normal[2]*emins[2];
-dist2 = p->normal[0]*emins[0] + p->normal[1]*emaxs[1] + p->normal[2]*emaxs[2];
+		dist1 = p->normal[0]*emaxs[0] + p->normal[1]*emins[1] + p->normal[2]*emins[2];
+		dist2 = p->normal[0]*emins[0] + p->normal[1]*emaxs[1] + p->normal[2]*emaxs[2];
 		break;
 	case 7:
-dist1 = p->normal[0]*emins[0] + p->normal[1]*emins[1] + p->normal[2]*emins[2];
-dist2 = p->normal[0]*emaxs[0] + p->normal[1]*emaxs[1] + p->normal[2]*emaxs[2];
+		dist1 = p->normal[0]*emins[0] + p->normal[1]*emins[1] + p->normal[2]*emins[2];
+		dist2 = p->normal[0]*emaxs[0] + p->normal[1]*emaxs[1] + p->normal[2]*emaxs[2];
 		break;
 	default:
 		dist1 = dist2 = 0;		// shut up compiler
@@ -496,11 +491,11 @@ __declspec( naked ) int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cplan
 	__asm {
 
 		push ebx
-			
+
 		cmp bops_initialized, 1
 		je  initialized
 		mov bops_initialized, 1
-		
+
 		mov Ljmptab[0*4], offset Lcase0
 		mov Ljmptab[1*4], offset Lcase1
 		mov Ljmptab[2*4], offset Lcase2
@@ -509,7 +504,7 @@ __declspec( naked ) int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cplan
 		mov Ljmptab[5*4], offset Lcase5
 		mov Ljmptab[6*4], offset Lcase6
 		mov Ljmptab[7*4], offset Lcase7
-			
+
 initialized:
 
 		mov edx,ds:dword ptr[4+12+esp]
@@ -742,23 +737,14 @@ void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs)
 }
 
 
-/*int VectorCompare (vec3_t v1, vec3_t v2)
-{
-	if (v1[0] != v2[0] || v1[1] != v2[1] || v1[2] != v2[2])
-			return 0;
-			
-	return 1;
-}*/
-
-
 qboolean VectorNearer (vec3_t v1, vec3_t v2, vec3_t comp)
 {
 	int		i;
-	
+
 	for (i=0 ; i<3 ; i++)
 		if ( fabs(v1[i]-comp[i]) < fabs(v2[i]-comp[i]) )
 			return true;
-			
+
 	return false;
 }
 
@@ -777,7 +763,7 @@ vec_t VectorNormalize (vec3_t v)
 		v[1] *= ilength;
 		v[2] *= ilength;
 	}
-		
+
 	return length;
 
 }
@@ -796,7 +782,7 @@ vec_t VectorNormalize2 (vec3_t v, vec3_t out)
 		out[1] = v[1]*ilength;
 		out[2] = v[2]*ilength;
 	}
-		
+
 	return length;
 
 }
@@ -806,6 +792,38 @@ void VectorMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
 	vecc[0] = veca[0] + scale*vecb[0];
 	vecc[1] = veca[1] + scale*vecb[1];
 	vecc[2] = veca[2] + scale*vecb[2];
+}
+
+void VectorClampMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
+{
+	float test, newScale;
+	int i;
+	newScale = scale;
+
+	// clamp veca to bounds
+	for ( i = 0; i < 3; i++ )
+		if ( veca[i] > 4094.0 ) veca[i] = 4094.0;
+		else if ( veca[i] < -4094.0 ) veca[i] = -4094.0;
+
+	// rescale to fit
+	for ( i = 0; i < 3; i++ )
+	{
+		test = veca[i] + scale*vecb[i];
+		if ( test < -4095.0f )
+		{
+			newScale = (-4094.0 - veca[i]) / vecb[i];
+			if ( fabs(newScale) < fabs(scale) ) scale = newScale;
+		}
+		else if ( test > 4095.0f )
+		{
+			newScale = (4094.0 - veca[i]) / vecb[i];
+			if ( fabs(newScale) < fabs(scale) ) scale = newScale;
+		}
+	}
+
+	// use rescaled scale
+	for ( i = 0; i < 3; i++ )
+		vecc[i] = veca[i] + scale*vecb[i];
 }
 
 
@@ -894,7 +912,7 @@ vec_t VectorLength(vec3_t v)
 {
 	int		i;
 	float	length;
-	
+
 	length = 0;
 	for (i=0 ; i< 3 ; i++)
 		length += v[i]*v[i];
@@ -943,13 +961,25 @@ float	crand(void)
 
 /*
 ============
+stradd
+============
+*/
+void stradd( char **str, const char *addStr )
+{
+	const char *ch;
+	for ( ch = addStr; *ch; ch++, (*str)++ ) **str = *ch;
+	**str = 0;
+}
+
+/*
+============
 COM_SkipPath
 ============
 */
 char *COM_SkipPath (char *pathname)
 {
 	char	*last;
-	
+
 	last = pathname;
 	while (*pathname)
 	{
@@ -1001,15 +1031,15 @@ COM_FileBase
 void COM_FileBase (char *in, char *out)
 {
 	char *s, *s2;
-	
+
 	s = in + strlen(in) - 1;
-	
+
 	while (s != in && *s != '.')
 		s--;
-	
+
 	for (s2 = s ; s2 != in && *s2 != '/' ; s2--)
 	;
-	
+
 	if (s-s2 < 2)
 		out[0] = 0;
 	else
@@ -1030,9 +1060,9 @@ Returns the path up to, but not including the last /
 void COM_FilePath (char *in, char *out)
 {
 	char *s;
-	
+
 	s = in + strlen(in) - 1;
-	
+
 	while (s != in && *s != '/')
 		s--;
 
@@ -1049,10 +1079,10 @@ COM_DefaultExtension
 void COM_DefaultExtension (char *path, char *extension)
 {
 	char    *src;
-//
-// if path doesn't have a .EXT, append extension
-// (extension should include the .)
-//
+	//
+	// if path doesn't have a .EXT, append extension
+	// (extension should include the .)
+	//
 	src = path + strlen(path) - 1;
 
 	while (*src != '/' && src != path)
@@ -1067,9 +1097,7 @@ void COM_DefaultExtension (char *path, char *extension)
 
 /*
 ============================================================================
-
-					BYTE ORDER FUNCTIONS
-
+BYTE ORDER FUNCTIONS
 ============================================================================
 */
 
@@ -1079,15 +1107,15 @@ qboolean	bigendien;
 // mess up when qcommon is included in multiple places
 short	(*_BigShort) (short l);
 short	(*_LittleShort) (short l);
-int		(*_BigLong) (int l);
-int		(*_LittleLong) (int l);
+int	(*_BigLong) (int l);
+int	(*_LittleLong) (int l);
 float	(*_BigFloat) (float l);
 float	(*_LittleFloat) (float l);
 
 short	BigShort(short l){return _BigShort(l);}
 short	LittleShort(short l) {return _LittleShort(l);}
-int		BigLong (int l) {return _BigLong(l);}
-int		LittleLong (int l) {return _LittleLong(l);}
+int	BigLong (int l) {return _BigLong(l);}
+int	LittleLong (int l) {return _LittleLong(l);}
 float	BigFloat (float l) {return _BigFloat(l);}
 float	LittleFloat (float l) {return _LittleFloat(l);}
 
@@ -1130,8 +1158,8 @@ float FloatSwap (float f)
 		float	f;
 		byte	b[4];
 	} dat1, dat2;
-	
-	
+
+
 	dat1.f = f;
 	dat2.b[0] = dat1.b[3];
 	dat2.b[1] = dat1.b[2];
@@ -1154,7 +1182,7 @@ void Swap_Init (void)
 {
 	byte	swaptest[2] = {1,0};
 
-// set the byte swapping variables in a portable manner	
+	// set the byte swapping variables in a portable manner
 	if ( *(short *)swaptest == 1)
 	{
 		bigendien = false;
@@ -1178,8 +1206,6 @@ void Swap_Init (void)
 
 }
 
-
-
 /*
 ============
 va
@@ -1192,13 +1218,13 @@ FIXME: make this buffer size safe someday
 char	*va(char *format, ...)
 {
 	va_list		argptr;
-	static char		string[1024];
-	
+	static char	string[1024];
+
 	va_start (argptr, format);
 	vsprintf (string, format,argptr);
 	va_end (argptr);
 
-	return string;	
+	return string;
 }
 
 
@@ -1220,14 +1246,14 @@ char *COM_Parse (char **data_p)
 	data = *data_p;
 	len = 0;
 	com_token[0] = 0;
-	
+
 	if (!data)
 	{
 		*data_p = NULL;
 		return "";
 	}
-		
-// skip whitespace
+
+	// skip whitespace
 skipwhite:
 	while ( (c = *data) <= ' ')
 	{
@@ -1238,8 +1264,8 @@ skipwhite:
 		}
 		data++;
 	}
-	
-// skip // comments
+
+	// skip // comments
 	if (c=='/' && data[1] == '/')
 	{
 		while (*data && *data != '\n')
@@ -1247,7 +1273,7 @@ skipwhite:
 		goto skipwhite;
 	}
 
-// handle quoted strings specially
+	// handle quoted strings specially
 	if (c == '\"')
 	{
 		data++;
@@ -1268,7 +1294,7 @@ skipwhite:
 		}
 	}
 
-// parse a regular word
+	// parse a regular word
 	do
 	{
 		if (len < MAX_TOKEN_CHARS)
@@ -1301,7 +1327,7 @@ char *COM_EParse( char **text, char *errhead, char *errinfo )
 {
 	char *token;
 
-	token = COM_Parse( text );	
+	token = COM_Parse( text );
 	if ( !*text )
 	{
 		if ( errinfo )
@@ -1336,9 +1362,7 @@ void Com_PageInMemory (byte *buffer, int size)
 
 /*
 ============================================================================
-
-					LIBRARY REPLACEMENT FUNCTIONS
-
+LIBRARY REPLACEMENT FUNCTIONS
 ============================================================================
 */
 
@@ -1356,7 +1380,7 @@ int Q_stricmp (char *s1, char *s2)
 int Q_strncasecmp (char *s1, char *s2, int n)
 {
 	int		c1, c2;
-	
+
 	do
 	{
 		c1 = *s1++;
@@ -1364,7 +1388,7 @@ int Q_strncasecmp (char *s1, char *s2, int n)
 
 		if (!n--)
 			return 0;		// strings are equal until end point
-		
+
 		if (c1 != c2)
 		{
 			if (c1 >= 'a' && c1 <= 'z')
@@ -1375,7 +1399,7 @@ int Q_strncasecmp (char *s1, char *s2, int n)
 				return -1;		// strings not equal
 		}
 	} while (c1);
-	
+
 	return 0;		// strings are equal
 }
 
@@ -1402,9 +1426,7 @@ void Com_sprintf (char *dest, int size, char *fmt, ...)
 
 /*
 =====================================================================
-
-  INFO STRINGS
-
+INFO STRINGS
 =====================================================================
 */
 
@@ -1423,7 +1445,7 @@ char *Info_ValueForKey (char *s, char *key)
 								// work without stomping on each other
 	static	int	valueindex;
 	char	*o;
-	
+
 	valueindex ^= 1;
 	if (*s == '\\')
 		s++;
@@ -1582,16 +1604,14 @@ void Info_SetValueForKey (char *s, char *key, char *value)
 
 /*
 ==============================================================
-
 INVENTORY MANAGEMENT
-
 ==============================================================
 */
 
 csi_t		*CSI;
-invChain_t	*invUnused;
+invList_t	*invUnused;
 item_t		cacheItem;
-invChain_t	cacheChain;
+invList_t	cacheList;
 
 /*
 =================
@@ -1608,14 +1628,15 @@ void Com_InitCSI( csi_t *import )
 Com_InitInventory
 =================
 */
-void Com_InitInventory( invChain_t *invChain )
+void Com_InitInventory( invList_t *invList )
 {
-	invChain_t	*last;
+	assert( invList );
+	invList_t	*last;
 	int	i;
 
-	invUnused = invChain;
+	invUnused = invList;
 	invUnused->next = NULL;
-	for ( i = 0; i < MAX_INVCHAIN-1; i++ )
+	for ( i = 0; i < MAX_INVLIST-1; i++ )
 	{
 		last = invUnused++;
 		invUnused->next = last;
@@ -1629,21 +1650,39 @@ Com_CheckToInventory
 */
 qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, int y )
 {
-	invChain_t	*ic;
+	assert( i );
+	invList_t	*ic, *right, *left;
 	int		mask[16];
 	int		j;
 
-	// hand checks
-	if ( container == CSI->idRight ) 
+	// armor vs item
+	if ( !strcmp( CSI->ods[item].type, "armor" ) )
 	{
-		if ( i->right.t == NONE && ( !CSI->ods[item].twohanded || i->left.t == NONE ) ) return true;
+		if ( !CSI->ids[container].armor && !CSI->ids[container].all ) return false;
+	}
+	else if ( CSI->ids[container].armor ) return false;
+
+	// special hand checks
+	right = i->c[CSI->idRight];
+	left  = i->c[CSI->idLeft];
+
+	if ( container == CSI->idRight )
+	{
+		if ( !right && ( !CSI->ods[item].twohanded || !left ) ) return true;
 		else return false;
 	}
 	else if ( container == CSI->idLeft )
 	{
-		if ( i->left.t == NONE && ( (i->right.t != NONE && !CSI->ods[item].twohanded && !CSI->ods[i->right.t].twohanded) 
-			|| i->right.t == NONE ) ) return true;
+		if ( !left && ((right && !CSI->ods[right->item.t].twohanded
+			&& !CSI->ods[item].twohanded) || !right) ) return true;
 		else return false;
+	}
+
+	// single item containers
+	if ( CSI->ids[container].single )
+	{
+		if ( i->c[container] ) return false;
+		else return true;
 	}
 
 	// check bounds
@@ -1653,19 +1692,11 @@ qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, i
 	// extract shape info
 	for ( j = 0; j < 16; j++ )
 		mask[j] = ~CSI->ids[container].shape[j];
-	
+
 	// add other items to mask
-	if ( container == CSI->idFloor || container == CSI->idEquip ) 
-	{
-		i = i->floor; 
-		if ( !i ) return false;
-	}
-
-	for ( ic = i->inv; ic; ic = ic->next )
-		if ( ic->container == container )
-			for ( j = 0; j < 4 && ic->y+j < 16; j++ )
-
-				mask[ic->y+j] |= ((CSI->ods[ic->item.t].shape >> j*8) & 0xFF) << ic->x;
+	for ( ic = i->c[container]; ic; ic = ic->next )
+		for ( j = 0; j < 4 && ic->y+j < 16; j++ )
+			mask[ic->y+j] |= ((CSI->ods[ic->item.t].shape >> j*8) & 0xFF) << ic->x;
 
 	// test for collisions with newly generated mask
 	for ( j = 0; j < 4; j++ )
@@ -1682,45 +1713,15 @@ qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, i
 Com_SearchInInventory
 =================
 */
-invChain_t *Com_SearchInInventory( inventory_t *i, int container, int x, int y )
+invList_t *Com_SearchInInventory( inventory_t *i, int container, int x, int y )
 {
-	invChain_t	*ic;
+	invList_t	*ic;
 
-	if ( container == CSI->idFloor || container == CSI->idEquip ) 
-	{
-		i = i->floor; 
-		if ( !i ) return NULL;
-	} 
-	else if ( container == CSI->idRight )
-	{
-		if ( i->right.t == NONE ) return NULL;
-		cacheChain.item = i->right;
-		cacheChain.container = CSI->idRight;
-		cacheChain.x = 0; cacheChain.y = 0;
-		cacheChain.next = NULL;
-		return &cacheChain;
-	}
-	else if ( container == CSI->idLeft )
-	{
-		if ( i->left.t == NONE )
-		{
-			if ( i->right.t != NONE && CSI->ods[i->right.t].twohanded ) 
-			{
-				cacheChain.item = i->right;
-				cacheChain.container = CSI->idRight;
-			}
-			else return NULL;
-		} else {
-			cacheChain.item = i->left;
-			cacheChain.container = CSI->idLeft;
-		}
-		cacheChain.x = 0; cacheChain.y = 0;
-		cacheChain.next = NULL;
-		return &cacheChain;
-	}
+	if ( CSI->ids[container].single )
+		return i->c[container];
 
-	for ( ic = i->inv; ic; ic = ic->next )
-		if ( ic->container == container && x >= ic->x && y >= ic->y && x < ic->x+8 && y < ic->y+4 &&
+	for ( ic = i->c[container]; ic; ic = ic->next )
+		if ( x >= ic->x && y >= ic->y && x < ic->x+8 && y < ic->y+4 &&
 			((CSI->ods[ic->item.t].shape >> (x-ic->x) >> (y-ic->y)*8)) & 1 )
 			return ic;
 
@@ -1734,40 +1735,26 @@ invChain_t *Com_SearchInInventory( inventory_t *i, int container, int x, int y )
 Com_AddToInventory
 =================
 */
-void Com_AddToInventory( inventory_t *i, int item, int ammo, int container, int x, int y )
+invList_t *Com_AddToInventory( inventory_t *i, item_t item, int container, int x, int y )
 {
-	if ( container == CSI->idRight ) { i->right.t = item; i->right.a = ammo; }
-	else if ( container == CSI->idLeft ) 
-	{
-		if ( !CSI->ods[item].twohanded ) { i->left.t = item; i->left.a = ammo; } 
-		else { i->right.t = item; i->right.a = ammo; }
-	}
-	else
-	{
-		invChain_t	*ic;
+	assert( i );
+	invList_t	*ic;
 
-		if ( !invUnused ) Sys_Error( "No free inventory space!\n" );	
+	if ( !invUnused ) Sys_Error( "No free inventory space!\n" );
+	if ( item.t == NONE ) return NULL;
 
-		if ( container == CSI->idFloor || container == CSI->idEquip ) 
-		{
-			i = i->floor; 
-			if ( !i ) return;
-		}
+	// allocate space
+	ic = i->c[container];
+	i->c[container] = invUnused;
+	invUnused = invUnused->next;
+	i->c[container]->next = ic;
+	ic = i->c[container];
 
-		// allocate space
-		ic = i->inv;
-		i->inv = invUnused;
-		invUnused = invUnused->next;
-		i->inv->next = ic;
-		ic = i->inv;
-
-		// set the data
-		ic->item.t = item;
-		ic->item.a = ammo;
-		ic->container = container;
-		ic->x = x;
-		ic->y = y;
-	}
+	// set the data
+	ic->item = item;
+	ic->x = x;
+	ic->y = y;
+	return ic;
 }
 
 /*
@@ -1777,55 +1764,33 @@ Com_RemoveFromInventory
 */
 qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 {
-	if ( container == CSI->idRight ) 
-	{ 
-		if ( i->right.t == NONE ) return false;
-		cacheItem = i->right;
-		i->right.t = NONE; i->right.a = 0;
-		return true;
-	}
-	else if ( container == CSI->idLeft ) 
-	{		
-		if ( i->left.t == NONE ) return false;
-		cacheItem = i->left;
-		i->left.t = NONE; i->left.a = 0;
-		return true;
-	}
-	else
+	assert( i );
+	invList_t	*ic, *old;
+
+	ic = i->c[container];
+	if ( !ic ) return false;
+
+	if ( CSI->ids[container].single || ( ic->x == x && ic->y == y ) )
 	{
-		invChain_t	*ic, *old;
+		old = invUnused;
+		invUnused = ic;
+		cacheItem = ic->item;
+		i->c[container] = ic->next;
+		invUnused->next = old;
+		return true;
+	}
 
-		if ( container == CSI->idFloor || container == CSI->idEquip ) 
-		{
-			i = i->floor; 
-			if ( !i ) return false;
-		}
-
-
-		ic = i->inv;
-		if ( !ic ) return false;
-
-		if ( ic->container == container && ic->x == x && ic->y == y )
+	for ( ; ic->next; ic = ic->next )
+		if ( ic->next->x == x && ic->next->y == y )
 		{
 			old = invUnused;
-			invUnused = ic;
-			cacheItem = ic->item;
-			i->inv = i->inv->next;
+			invUnused = ic->next;
+			cacheItem = ic->next->item;
+			ic->next = ic->next->next;
 			invUnused->next = old;
 			return true;
 		}
 
-		for ( ; ic->next; ic = ic->next )
-			if ( ic->next->container == container && ic->next->x == x && ic->next->y == y )
-			{
-				old = invUnused;
-				invUnused = ic->next;
-				cacheItem = ic->next->item;
-				ic->next = ic->next->next;
-				invUnused->next = old;
-				return true;
-			}
-	}
 	return false;
 }
 
@@ -1834,13 +1799,15 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 Com_MoveInInventory
 =================
 */
-int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int tx, int ty, byte *TU, invChain_t **icp )
+int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t **icp )
 {
+	assert( i );
+	invList_t	*ic;
 	int		time;
 
 	if ( icp ) *icp = NULL;
 
-	if ( from == to && fx == tx && fy == ty ) 
+	if ( from == to && fx == tx && fy == ty )
 		return 0;
 
 	time = CSI->ids[from].out + CSI->ids[to].in;
@@ -1849,17 +1816,16 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 		return IA_NOTIME;
 
 	if ( !Com_RemoveFromInventory( i, from, fx, fy ) ) return IA_NONE;
-	if ( !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) ) 
+	if ( !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) )
 	{
-		invChain_t	*ic;
 		ic = Com_SearchInInventory( i, to, tx, ty );
 
-		if ( ic && CSI->ods[ic->item.t].link == cacheItem.t ) 
+		if ( ic && CSI->ods[cacheItem.t].link == ic->item.t )
 		{
 			if ( ic->item.a >= CSI->ods[ic->item.t].ammo )
 			{
 				// weapon already loaded
-				Com_AddToInventory( i,cacheItem.t, cacheItem.a, from, fx, fy );
+				Com_AddToInventory( i, cacheItem, from, fx, fy );
 				return IA_NORELOAD;
 			}
 
@@ -1867,32 +1833,60 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 			if ( !TU || *TU >= time )
 			{
 				if ( TU ) *TU -= time;
-				if ( ic->container == CSI->idRight ) i->right.a = CSI->ods[ic->item.t].ammo;
-				else if ( ic->container == CSI->idLeft ) i->left.a = CSI->ods[ic->item.t].ammo;
-				else ic->item.a = CSI->ods[ic->item.t].ammo;
+				ic->item.a = CSI->ods[ic->item.t].ammo;
+				ic->item.m = cacheItem.t;
 				if ( icp ) *icp = ic;
 				return IA_RELOAD;
 			}
 			// not enough time
-			Com_AddToInventory( i,cacheItem.t, cacheItem.a, from, fx, fy );
+			Com_AddToInventory( i, cacheItem, from, fx, fy );
 			return IA_NOTIME;
 		}
 
 		// impossible move
-		Com_AddToInventory( i,cacheItem.t, cacheItem.a, from, fx, fy );
+		Com_AddToInventory( i, cacheItem, from, fx, fy );
 		return IA_NONE;
 	}
 
+	// twohanded exception
+	if ( CSI->ods[cacheItem.t].twohanded && to == CSI->idLeft )
+		to = CSI->idRight;
+
 	// successful
 	if ( TU ) *TU -= time;
-	Com_AddToInventory( i, cacheItem.t, cacheItem.a, to, tx, ty );
+	ic = Com_AddToInventory( i, cacheItem, to, tx, ty );
 
-	cacheChain.item = cacheItem;
-	cacheChain.container = to;
-	cacheChain.x = tx; cacheChain.y = ty;
-	cacheChain.next = NULL;
-	if ( icp ) *icp = &cacheChain;
-	return IA_MOVE;
+	// return data
+	if ( icp ) *icp = ic;
+	if ( to == CSI->idArmor ) return IA_ARMOR;
+	else return IA_MOVE;
+}
+
+/*
+=================
+Com_EmptyContainer
+=================
+*/
+void Com_EmptyContainer( inventory_t *i, int container )
+{
+	assert( i );
+	invList_t	*ic, *old;
+	int cnt = 0;
+	ic = i->c[container];
+	while ( ic )
+	{
+		old = ic;
+		ic = ic->next;
+		old->next = invUnused;
+		invUnused = old;
+		if ( cnt >= MAX_INVLIST )
+		{
+			Com_Printf("Error: There are more than the allowed entries (Com_EmptyContainer)\n");
+			break;
+		}
+		cnt++;
+	}
+	i->c[container] = NULL;
 }
 
 /*
@@ -1902,19 +1896,12 @@ Com_DestroyInventory
 */
 void Com_DestroyInventory( inventory_t *i )
 {
-	invChain_t	*ic, *old;
+	int k;
 
-	ic = i->inv;
-	while ( ic )
-	{
-		old = ic;
-		ic = ic->next;
-		old->next = invUnused;
-		invUnused = old;
-	}
-	i->inv = NULL;
-	i->right.t = NONE; i->right.a = 0;
-	i->left.t = NONE; i->left.a = 0;
+	if ( !i ) return;
+
+	for ( k = 0; k < CSI->numIDs; k++ )
+		Com_EmptyContainer( i, k );
 }
 
 /*
@@ -1925,10 +1912,11 @@ Com_FindSpace
 void Com_FindSpace( inventory_t *inv, int item, int container, int *px, int *py )
 {
 	int	x, y;
+	assert( inv );
 
 	for ( y = 0; y < 16; y++ )
 		for ( x = 0; x < 32; x++ )
-			if ( Com_CheckToInventory( inv, item, container, x, y ) ) 
+			if ( Com_CheckToInventory( inv, item, container, x, y ) )
 			{
 				*px = x; *py = y;
 				return;
@@ -1939,13 +1927,126 @@ void Com_FindSpace( inventory_t *inv, int item, int container, int *px, int *py 
 
 /*
 ==============================================================================
-
-						SCRIPT VALUE PARSING
-
+CHARACTER GENERATION AND HANDLING
 ==============================================================================
 */
 
-char *vt_names[V_NUM_TYPES] = 
+/*
+======================
+Com_CharGenAbilitySkills
+======================
+*/
+#define MAX_GENCHARRETRIES	20
+
+void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility, int minSkill, int maxSkill )
+{
+	assert( chr );
+	float randomArray[SKILL_NUM_TYPES];
+	int total;
+	int i, retry;
+	float max, min, rand_avg;
+
+	retry = MAX_GENCHARRETRIES;
+	do {
+		// Abilities
+		total = ABILITY_NUM_TYPES*(maxAbility-minAbility)/2;
+		max = 0;
+		min = 1;
+		rand_avg = 0;
+		for (i = 0; i < ABILITY_NUM_TYPES; i++)
+		{
+			randomArray[i] = frand();
+			rand_avg += randomArray[i];
+			if (randomArray[i] > max)
+				max = randomArray[i]; // get max
+			if (randomArray[i] < min)
+				min = randomArray[i]; // and min
+		}
+
+		rand_avg /= ABILITY_NUM_TYPES;
+		if (max-rand_avg < rand_avg-min) min = rand_avg-min;
+		else min = max-rand_avg;
+		for (i = 0; i < ABILITY_NUM_TYPES; i++)
+			chr->skills[i] = ((randomArray[i]-rand_avg)/min*(maxAbility-minAbility) +
+				minAbility+maxAbility)/2 + frand()*3;
+
+		// Skills
+		total = (SKILL_NUM_TYPES-ABILITY_NUM_TYPES)*(maxSkill-minSkill)/2;
+		max = 0;
+		min = 1;
+		rand_avg = 0;
+		for (i = 0; i < SKILL_NUM_TYPES-ABILITY_NUM_TYPES; i++)
+		{
+			randomArray[i] = frand();
+			rand_avg += randomArray[i];
+			if (randomArray[i] > max)
+				max = randomArray[i]; // get max
+			if (randomArray[i] < min)
+				min = randomArray[i]; // or min
+		}
+		rand_avg /= SKILL_NUM_TYPES-ABILITY_NUM_TYPES;
+		if (max-rand_avg < rand_avg-min) min= rand_avg-min;
+		else min = max-rand_avg;
+		for (i = 0; i < SKILL_NUM_TYPES-ABILITY_NUM_TYPES; i++)
+			chr->skills[ABILITY_NUM_TYPES+i] = ((randomArray[i]-rand_avg)/min*(maxSkill-minSkill) +
+				minSkill+maxSkill)/2 + frand()*3;
+
+		// Check if it makes sense
+		max = ((max-rand_avg)/min*(maxSkill-minSkill) + minSkill+maxSkill)/2;
+		min = (maxAbility+minAbility)/2.2;
+		if (
+		    (max-10 < chr->skills[SKILL_CLOSE]     && (chr->skills[ABILITY_SPEED]   < min || chr->skills[ABILITY_POWER] < min))
+		 || (max-10 < chr->skills[SKILL_HEAVY]     && chr->skills[ABILITY_POWER]    < min)
+		 || (max-10 < chr->skills[SKILL_PRECISE]   && chr->skills[ABILITY_ACCURACY] < min)
+		 || (max-10 < chr->skills[SKILL_EXPLOSIVE] && chr->skills[ABILITY_MIND]     < min)
+		) retry--; // try again.
+		else retry = 0;
+	}
+	while ( retry > 0 );
+}
+
+
+char returnModel[MAX_VAR];
+
+/*
+======================
+Com_CharGetBody
+======================
+*/
+char *Com_CharGetBody( character_t *chr )
+{
+	assert( chr );
+	if ( chr->inv->c[CSI->idArmor] )
+		sprintf( returnModel, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->body );
+	else
+		sprintf( returnModel, "%s/%s", chr->path, chr->body );
+	return returnModel;
+}
+
+
+/*
+======================
+Com_CharGetHead
+======================
+*/
+char *Com_CharGetHead( character_t *chr )
+{
+	assert( chr );
+	if ( chr->inv->c[CSI->idArmor] )
+		sprintf( returnModel, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->head );
+	else
+		sprintf( returnModel, "%s/%s", chr->path, chr->head );
+	return returnModel;
+}
+
+
+/*
+==============================================================================
+SCRIPT VALUE PARSING
+==============================================================================
+*/
+
+char *vt_names[V_NUM_TYPES] =
 {
 	"",
 	"bool",
@@ -1955,31 +2056,36 @@ char *vt_names[V_NUM_TYPES] =
 	"pos",
 	"vector",
 	"color",
+	"rgba",
 	"string",
+	"longstring",
 	"pointer",
 	"align",
 	"blend",
 	"style",
 	"fade",
-	"shape"
+	"shapes",
+	"shapeb",
+	"dmgtype",
+	"date"
 };
-	
-char *align_names[ALIGN_LAST] = 
+
+char *align_names[ALIGN_LAST] =
 {
 	"ul", "uc", "ur", "cl", "cc", "cr", "ll", "lc", "lr"
 };
 
-char *blend_names[BLEND_LAST] = 
+char *blend_names[BLEND_LAST] =
 {
 	"replace", "blend", "add", "filter", "invfilter"
 };
 
-char *style_names[STYLE_LAST] = 
+char *style_names[STYLE_LAST] =
 {
 	"facing", "rotated", "beam", "line"
 };
 
-char *fade_names[FADE_LAST] = 
+char *fade_names[FADE_LAST] =
 {
 	"none", "in", "out", "sin", "saw", "blend"
 };
@@ -2021,25 +2127,36 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		return sizeof(float);
 
 	case V_POS:
-		sscanf( token, "%f %f", 
+		sscanf( token, "%f %f",
 			&((float *)b)[0], &((float *)b)[1] );
 		return 2*sizeof(float);
 
 	case V_VECTOR:
-		sscanf( token, "%f %f %f", 
+		sscanf( token, "%f %f %f",
 			&((float *)b)[0], &((float *)b)[1], &((float *)b)[2] );
 		return 3*sizeof(float);
 
 	case V_COLOR:
-		sscanf( token, "%f %f %f %f", 
+		sscanf( token, "%f %f %f %f",
 			&((float *)b)[0], &((float *)b)[1],
 			&((float *)b)[2], &((float *)b)[3] );
 		return 4*sizeof(float);
+
+	case V_RGBA:
+		sscanf( token, "%i %i %i %i",
+			&((int *)b)[0], &((int *)b)[1],
+			&((int *)b)[2], &((int *)b)[3] );
+		return 4;
 
 	case V_STRING:
 		strncpy( (char *)b, token, MAX_VAR );
 		w = strlen(token)+1;
 		if ( w > MAX_VAR ) w = MAX_VAR;
+		return w;
+
+	case V_LONGSTRING:
+		strcpy( (char *)b, token );
+		w = strlen(token)+1;
 		return w;
 
 	case V_POINTER:
@@ -2090,6 +2207,20 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		for ( h += y; y < h ; y++ )
 			((int *)b)[y] |= w;
 		return 64;
+
+	case V_DMGTYPE:
+		for ( w = 0; w < CSI->numDTs; w++ )
+			if ( !strcmp( token, CSI->dts[w] ) )
+				break;
+		if ( w == CSI->numDTs ) *b = 0;
+		else *b = w;
+		return 1;
+
+	case V_DATE:
+		sscanf( token, "%i %i %i", &x, &y, &w );
+		((date_t*)b)->day = 365*x + y;
+		((date_t*)b)->sec = 3600*w;
+		return sizeof(date_t);
 
 	default:
 		Sys_Error( "Com_ParseValue: unknown value type\n" );
@@ -2153,10 +2284,22 @@ int Com_SetValue( void *base, void *set, int type, int ofs )
 		((float *)b)[3] = ((float *)set)[3];
 		return 4*sizeof(float);
 
+	case V_RGBA:
+		((byte *)b)[0] = ((byte *)set)[0];
+		((byte *)b)[1] = ((byte *)set)[1];
+		((byte *)b)[2] = ((byte *)set)[2];
+		((byte *)b)[3] = ((byte *)set)[3];
+		return 4;
+
 	case V_STRING:
 		strncpy( (char *)b, (char *)set, MAX_VAR );
 		len = strlen((char *)set)+1;
 		if ( len > MAX_VAR ) len = MAX_VAR;
+		return len;
+
+	case V_LONGSTRING:
+		strcpy( (char *)b, (char *)set );
+		len = strlen((char *)set)+1;
 		return len;
 
 	case V_ALIGN:
@@ -2173,6 +2316,14 @@ int Com_SetValue( void *base, void *set, int type, int ofs )
 	case V_SHAPE_BIG:
 		memcpy( b, set, 64 );
 		return 64;
+
+	case V_DMGTYPE:
+		*b = *(byte *)set;
+		return 1;
+
+	case V_DATE:
+		memcpy( b, set, sizeof(date_t) );
+		return sizeof(date_t);
 
 	default:
 		Sys_Error( "Com_ParseValue: unknown value type\n" );
@@ -2215,22 +2366,29 @@ char *Com_ValueToStr( void *base, int type, int ofs )
 		return valuestr;
 
 	case V_POS:
-		sprintf( valuestr, "%.2f %.2f", 
+		sprintf( valuestr, "%.2f %.2f",
 			((float *)b)[0], ((float *)b)[1] );
 		return valuestr;
 
 	case V_VECTOR:
-		sprintf( valuestr, "%.2f %.2f %.2f", 
+		sprintf( valuestr, "%.2f %.2f %.2f",
 			((float *)b)[0], ((float *)b)[1], ((float *)b)[2] );
 		return valuestr;
 
 	case V_COLOR:
-		sprintf( valuestr, "%.2f %.2f %.2f %.2f", 
+		sprintf( valuestr, "%.2f %.2f %.2f %.2f",
 			((float *)b)[0], ((float *)b)[1],
 			((float *)b)[2], ((float *)b)[3] );
 		return valuestr;
 
+	case V_RGBA:
+		sprintf( valuestr, "%3i %3i %3i %3i",
+			((byte *)b)[0], ((byte *)b)[1],
+			((byte *)b)[2], ((byte *)b)[3] );
+		return valuestr;
+
 	case V_STRING:
+	case V_LONGSTRING:
 		return (char *)b;
 
 	case V_ALIGN:
@@ -2248,6 +2406,14 @@ char *Com_ValueToStr( void *base, int type, int ofs )
 	case V_SHAPE_SMALL:
 	case V_SHAPE_BIG:
 		return "";
+
+	case V_DMGTYPE:
+		return CSI->dts[*b];
+
+	case V_DATE:
+		sprintf( valuestr, "%i %i %i",
+			((date_t*)b)->day / 365, ((date_t*)b)->day % 365, ((date_t*)b)->sec );
+		return valuestr;
 
 	default:
 		Sys_Error( "Com_ParseValue: unknown value type\n" );

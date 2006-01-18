@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/ioctl.h>
 #include <sys/uio.h>
 #include <errno.h>
+#include <arpa/inet.h>
 
 #ifdef NeXT
 #include <libc.h>
@@ -125,6 +126,7 @@ qboolean	NET_CompareBaseAdr (netadr_t a, netadr_t b)
 			return true;
 		return false;
 	}
+	return false;
 }
 
 char	*NET_AdrToString (netadr_t a)
@@ -278,7 +280,7 @@ qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 {
 	int 	ret;
 	struct sockaddr_in	from;
-	int		fromlen;
+	socklen_t	fromlen;
 	int		net_socket;
 	int		protocol;
 	int		err;
@@ -364,8 +366,11 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 		if (!net_socket)
 			return;
 	}
-	else
+	else 
+	{
 		Com_Error (ERR_FATAL, "NET_SendPacket: bad address type");
+		return;
+	}	
 
 	NetadrToSockadr (&to, &addr);
 

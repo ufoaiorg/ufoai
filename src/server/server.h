@@ -53,7 +53,7 @@ typedef struct
 	char		name[MAX_QPATH];			// map name, or cinematic name
 	struct cmodel_s		*models[MAX_MODELS];
 
-	char		configstrings[MAX_CONFIGSTRINGS][MAX_QPATH];
+	char		configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
 	// the multicast buffer is used to send a message to a set of clients
 	// it is only used to marshall data until SV_Multicast is called
@@ -82,6 +82,8 @@ typedef enum
 
 #define	LATENCY_COUNTS	16
 #define	RATE_MESSAGES	10
+
+#define RELIABLEBUFFERS	16
 
 typedef struct client_s
 {
@@ -118,6 +120,11 @@ typedef struct client_s
 	int				lastconnect;
 
 	int				challenge;			// challenge of this user, randomly generated
+
+	int				curMsg;
+	int				addMsg;
+	sizebuf_t		reliable[RELIABLEBUFFERS];
+	byte			reliable_buf[RELIABLEBUFFERS*MAX_MSGLEN];
 
 	netchan_t		netchan;
 } client_t;
@@ -206,6 +213,7 @@ void SV_InitOperatorCommands (void);
 void SV_SendServerinfo (client_t *client);
 void SV_UserinfoChanged (client_t *cl);
 
+void SV_SpawnServer (char *server, char *param, server_state_t serverstate, qboolean attractloop, qboolean loadgame);
 
 void Master_Heartbeat (void);
 void Master_Packet (void);

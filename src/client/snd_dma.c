@@ -98,17 +98,17 @@ void S_SoundInfo_f(void)
 {
 	if (!sound_started)
 	{
-		Com_Printf ("sound system not started\n");
+		Com_Printf (_("sound system not started\n"));
 		return;
 	}
 	
-    Com_Printf("%5d stereo\n", dma.channels - 1);
-    Com_Printf("%5d samples\n", dma.samples);
-    Com_Printf("%5d samplepos\n", dma.samplepos);
-    Com_Printf("%5d samplebits\n", dma.samplebits);
-    Com_Printf("%5d submission_chunk\n", dma.submission_chunk);
-    Com_Printf("%5d speed\n", dma.speed);
-    Com_Printf("0x%x dma buffer\n", dma.buffer);
+    Com_Printf(_("%5d stereo\n"), dma.channels - 1);
+    Com_Printf(_("%5d samples\n"), dma.samples);
+    Com_Printf(_("%5d samplepos\n"), dma.samplepos);
+    Com_Printf(_("%5d samplebits\n"), dma.samplebits);
+    Com_Printf(_("%5d submission_chunk\n"), dma.submission_chunk);
+    Com_Printf(_("%5d speed\n"), dma.speed);
+    Com_Printf(_("0x%x dma buffer\n"), dma.buffer);
 
 }
 
@@ -185,7 +185,7 @@ void S_Init (void)
 		soundtime = 0;
 		paintedtime = 0;
 
-		Com_Printf ("sound sampling rate: %i\n", dma.speed);
+		Com_Printf (_("sound sampling rate: %i\n"), dma.speed);
 
 		S_StopAllSounds ();
 
@@ -249,12 +249,12 @@ sfx_t *S_FindName (char *name, qboolean create)
 	sfx_t	*sfx;
 
 	if (!name)
-		Com_Error (ERR_FATAL, "S_FindName: NULL\n");
+		Com_Error (ERR_FATAL, _("S_FindName: NULL\n"));
 	if (!name[0])
-		Com_Error (ERR_FATAL, "S_FindName: empty name\n");
+		Com_Error (ERR_FATAL, _("S_FindName: empty name\n"));
 
 	if (strlen(name) >= MAX_QPATH)
-		Com_Error (ERR_FATAL, "Sound name too long: %s", name);
+		Com_Error (ERR_FATAL, _("Sound name too long: %s"), name);
 
 	// see if already loaded
 	for (i=0 ; i < num_sfx ; i++)
@@ -275,7 +275,7 @@ sfx_t *S_FindName (char *name, qboolean create)
 	if (i == num_sfx)
 	{
 		if (num_sfx == MAX_SFX)
-			Com_Error (ERR_FATAL, "S_FindName: out of sfx_t");
+			Com_Error (ERR_FATAL, _("S_FindName: out of sfx_t"));
 		num_sfx++;
 	}
 	
@@ -312,7 +312,7 @@ sfx_t *S_AliasName (char *aliasname, char *truename)
 	if (i == num_sfx)
 	{
 		if (num_sfx == MAX_SFX)
-			Com_Error (ERR_FATAL, "S_FindName: out of sfx_t");
+			Com_Error (ERR_FATAL, _("S_FindName: out of sfx_t"));
 		num_sfx++;
 	}
 	
@@ -591,7 +591,7 @@ void S_IssuePlaysound (playsound_t *ps)
 	sfxcache_t	*sc;
 
 	if (s_show->value)
-		Com_Printf ("Issue %i\n", ps->begin);
+		Com_Printf (_("Issue %i\n"), ps->begin);
 	// pick a channel to play on
 	ch = S_PickChannel(ps->entnum, ps->entchannel);
 	if (!ch)
@@ -616,7 +616,7 @@ void S_IssuePlaysound (playsound_t *ps)
 
 	ch->pos = 0;
 	sc = S_LoadSound (ch->sfx);
-    ch->end = paintedtime + sc->length;
+	ch->end = paintedtime + sc->length;
 
 	// free the playsound
 	S_FreePlaysound (ps);
@@ -728,7 +728,7 @@ void S_StartLocalSound (char *sound)
 	sfx = S_RegisterSound (sound);
 	if (!sfx)
 	{
-		Com_Printf ("S_StartLocalSound: can't cache %s\n", sound);
+		Com_Printf (_("S_StartLocalSound: can't cache %s\n"), sound);
 		return;
 	}
 	S_StartSound (NULL, cl.pnum, 0, sfx, 1, 1, 0);
@@ -790,6 +790,9 @@ void S_StopAllSounds(void)
 	ovPlaying[0] = 0;
 
 	S_ClearBuffer ();
+
+	// restart music
+	S_StartOGG();
 }
 
 /*
@@ -801,7 +804,8 @@ that are automatically started, stopped, and merged together
 as the entities are sent to the client
 ==================
 */
-/*void S_AddLoopSounds (void)
+#if 0
+void S_AddLoopSounds (void)
 {
 	int			i, j;
 	int			sounds[MAX_EDICTS];
@@ -880,7 +884,8 @@ as the entities are sent to the client
 		ch->pos = paintedtime % sc->length;
 		ch->end = paintedtime + sc->length - ch->pos;
 	}
-}*/
+}
+#endif /* 0 */
 
 //=============================================================================
 
@@ -905,7 +910,7 @@ void S_RawSamples (int samples, int rate, int width, int channels, byte *data, f
 
 	scale = (float)rate / dma.speed;
 
-//Com_Printf ("%i < %i < %i\n", soundtime, paintedtime, s_rawend);
+//	Com_Printf ("%i < %i < %i\n", soundtime, paintedtime, s_rawend);
 	if (channels == 2 && width == 2)
 	{
 		if (scale == 1.0)
@@ -1061,7 +1066,7 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 		Com_Printf ("----(%i)---- painted: %i\n", total, paintedtime);
 	}
 
-// mix some sound
+	// mix some sound
 	S_Update_();
 
 	// stream music
@@ -1078,8 +1083,8 @@ void GetSoundtime(void)
 	
 	fullsamples = dma.samples / dma.channels;
 
-// it is possible to miscount buffers if it has wrapped twice between
-// calls to S_Update.  Oh well.
+	// it is possible to miscount buffers if it has wrapped twice between
+	// calls to S_Update.  Oh well.
 	samplepos = SNDDMA_GetDMAPos();
 
 	if (samplepos < oldsamplepos)
@@ -1113,19 +1118,19 @@ void S_Update_(void)
 	if (!dma.buffer)
 		return;
 
-// Updates DMA time
+	// Updates DMA time
 	GetSoundtime();
 
-// check to make sure that we haven't overshot
+	// check to make sure that we haven't overshot
 	if (paintedtime < soundtime)
 	{
 		Com_DPrintf ("S_Update_ : overflow\n");
 		paintedtime = soundtime;
 	}
 
-// mix ahead of current position
+	// mix ahead of current position
 	endtime = soundtime + s_mixahead->value * dma.speed;
-//endtime = (soundtime + 4096) & ~4095;
+	//endtime = (soundtime + 4096) & ~4095;
 
 	// mix to an even submission block size
 	endtime = (endtime + dma.submission_chunk-1)
@@ -1161,8 +1166,8 @@ OGG_Open
 qboolean OGG_Open( char *filename )
 {
 	FILE	*f;
-	int		res;
-
+	int	res, length;
+	
 	if ( ov_volume->value <= 0 )
 		return false;
 
@@ -1174,18 +1179,18 @@ qboolean OGG_Open( char *filename )
 	}
 
 	// find file
-	f = fopen( va( "%s/music/%s.ogg", FS_Gamedir(), filename ), "rb" );
+	length = FS_FOpenFile( va( "music/%s.ogg", filename ), &f);
 	if ( !f )
 	{
-		Com_Printf( "Couldn't open 'music/%s.ogg'\n", filename );
+		Com_Printf( _("Couldn't open 'music/%s.ogg'\n"), filename );
 		return false;
 	}
-
+	
 	// open ogg vorbis file
 	res = ov_open( f, &ovFile, NULL, 0 );
 	if ( res < 0 )
 	{
-		Com_Printf( "'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n", filename, res );
+		Com_Printf( _("'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n"), filename, res );
 		fclose( f );
 		return false;
 	}
@@ -1194,8 +1199,6 @@ qboolean OGG_Open( char *filename )
 	strcpy( ovPlaying, filename );
 	ovSection = 0;
 	return true;  
-
-  return false;
 }
 
 /*
@@ -1241,7 +1244,7 @@ void S_PlayOGG( void )
 {
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: ov_play <filename>\n" );
+		Com_Printf( _("Usage: ov_play <filename>\n") );
 		return;
 	}
 	OGG_Open( Cmd_Argv(1) );
@@ -1249,7 +1252,9 @@ void S_PlayOGG( void )
 
 void S_StartOGG( void )
 {
-	OGG_Open( Cvar_VariableString( "music" ) );
+	char *str;
+	str = Cvar_VariableString( "music" );
+	if ( str[0] ) OGG_Open( str );
 }
 
 /*
@@ -1308,10 +1313,10 @@ void S_SoundList(void)
 		else
 		{
 			if (sfx->name[0] == '*')
-				Com_Printf("  placeholder : %s\n", sfx->name);
+				Com_Printf(_("  placeholder : %s\n"), sfx->name);
 			else
-				Com_Printf("  not loaded  : %s\n", sfx->name);
+				Com_Printf(_("  not loaded  : %s\n"), sfx->name);
 		}
 	}
-	Com_Printf ("Total resident: %i\n", total);
+	Com_Printf (_("Total resident: %i\n"), total);
 }

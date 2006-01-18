@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-	
+
 // q_shared.h -- included first by ALL program modules
 
 #ifdef _WIN32
@@ -38,6 +38,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+
+// i18n support via gettext
+#include <libintl.h>
+#include <locale.h>
+#define _(String) gettext(String)
+#define gettext_noop(String) String
+#define N_(String) gettext_noop (String)
 
 #if (defined _M_IX86 || defined __i386__) && !defined C_ONLY && !defined __sun__
 #define id386	1
@@ -85,6 +92,7 @@ typedef enum {false, true}	qboolean;
 //
 // per-level limits
 //
+#define MAX_TILESTRINGS		8
 #define MAX_TEAMS			8
 #define	MAX_CLIENTS			256		// absolute limit
 #define	MAX_EDICTS			1024	// must change protocol to increase more
@@ -111,12 +119,25 @@ typedef enum {false, true}	qboolean;
 
 #define	PRINT_ALL			0
 #define PRINT_DEVELOPER		1		// only print when "developer 1"
-#define PRINT_ALERT			2		
+#define PRINT_ALERT			2
 
+// important units
 #define UNIT_SIZE			32
 #define UNIT_HEIGHT			64
 #define US					UNIT_SIZE
 #define UH					UNIT_HEIGHT
+
+// earth map data
+#define SIN_ALPHA	0.39875
+#define COS_ALPHA	0.91706
+//#define HIGH_LAT		+0.953
+//#define LOW_LAT		-0.805
+//#define CENTER_LAT	(HIGH_LAT+(LOW_LAT))
+//#define SIZE_LAT		(HIGH_LAT-(LOW_LAT))
+#define HIGH_LAT	+1.0
+#define LOW_LAT		-1.0
+#define CENTER_LAT	0.0
+#define SIZE_LAT	2.0
 
 extern const int dvecs[8][2];
 extern const float dvecsn[8][2];
@@ -188,7 +209,7 @@ extern long Q_ftol( float f );
 int AngleToDV( int angle );
 
 void VectorMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc);
-
+void VectorClampMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc);
 
 void MatrixMultiply (vec3_t a[3], vec3_t b[3], vec3_t c[3]);
 void GLMatrixMultiply (float a[16], float b[16], float c[16]);
@@ -203,7 +224,7 @@ void _VectorCopy (vec3_t in, vec3_t out);
 
 void ClearBounds (vec3_t mins, vec3_t maxs);
 void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs);
-//int VectorCompare (vec3_t v1, vec3_t v2);
+int VectorCompareEps (vec3_t v1, vec3_t v2);
 qboolean VectorNearer (vec3_t v1, vec3_t v2, vec3_t comp);
 vec_t VectorLength (vec3_t v);
 void CrossProduct (vec3_t v1, vec3_t v2, vec3_t cross);
@@ -247,6 +268,8 @@ float	frand(void);	// 0 to 1
 float	crand(void);	// -1 to 1
 
 //=============================================
+
+void stradd( char **str, const char *addStr );
 
 char *COM_SkipPath (char *pathname);
 void COM_StripExtension (char *in, char *out);
@@ -467,11 +490,12 @@ typedef struct cmodel_s
 {
 	vec3_t		mins, maxs;
 	vec3_t		origin;		// for sounds or lights
+	int			tile;
 	int			headnode;
 } cmodel_t;
 
-extern int			numcmodels;
-extern cmodel_t	map_cmodels[1024];
+//extern int			numcmodels;
+//extern cmodel_t	map_cmodels[1024];
 
 typedef struct csurface_s
 {
@@ -522,6 +546,8 @@ typedef struct
 #define RF_MEMBER			0x00010000
 #define RF_ALLIED			0x00020000
 
+#define RF_LIGHTFIXED		0x00040000
+#define RF_NOSMOOTH			0x00080000
 
 // player_state_t->refdef flags
 #define	RDF_UNDERWATER		1		// warp the screen as apropriate
@@ -574,7 +600,9 @@ typedef enum
 	V_POS,
 	V_VECTOR,
 	V_COLOR,
+	V_RGBA,
 	V_STRING,
+	V_LONGSTRING,
 	V_POINTER,
 	V_ALIGN,
 	V_BLEND,
@@ -582,6 +610,8 @@ typedef enum
 	V_FADE,
 	V_SHAPE_SMALL,
 	V_SHAPE_BIG,
+	V_DMGTYPE,
+	V_DATE,
 
 	V_NUM_TYPES
 } value_types;
@@ -601,7 +631,6 @@ typedef enum
 	ALIGN_LL,
 	ALIGN_LC,
 	ALIGN_LR,
-
 
 	ALIGN_LAST
 } align_t;
@@ -638,6 +667,11 @@ typedef enum
 
 	FADE_LAST
 } fade_t;
+
+typedef struct date_s
+{
+	int		day, sec;
+} date_t;
 
 extern char *align_names[ALIGN_LAST];
 extern char *blend_names[BLEND_LAST];
@@ -687,6 +721,7 @@ typedef enum {
 	EV_ACTOR_START_SHOOT,
 	EV_ACTOR_SHOOT,
 	EV_ACTOR_SHOOT_HIDDEN,
+	EV_ACTOR_THROW,
 	EV_ACTOR_DIE,
 	EV_ACTOR_STATS,
 	EV_ACTOR_STATECHANGE,
@@ -695,16 +730,19 @@ typedef enum {
 	EV_INV_DEL,
 	EV_INV_AMMO,
 
+	EV_MODEL_PERISH,
+	EV_MODEL_EXPLODE,
+
 	EV_NUM_EVENTS
 } event_t;
 
 
 typedef enum {
 	ET_NULL,
-	ET_MODEL,
 	ET_ACTORSPAWN,
 	ET_ACTOR,
-	ET_ITEM
+	ET_ITEM,
+	ET_BREAKABLE
 } entity_type_t;
 
 
@@ -723,7 +761,8 @@ typedef enum {
 	IA_MOVE,
 	IA_RELOAD,
 	IA_NOTIME,
-	IA_NORELOAD
+	IA_NORELOAD,
+	IA_ARMOR
 } inventory_action_t;
 
 
@@ -731,6 +770,7 @@ typedef enum {
 
 // this is the absolute max for now
 #define MAX_OBJDEFS		128
+#define MAX_DAMAGETYPES	32
 
 #define GET_FIREDEF(type)	(&csi.ods[type & 0x7F].fd[!!(type & 0x80)])
 
@@ -739,11 +779,21 @@ typedef struct fireDef_s
 	char	name[MAX_VAR];
 	char	projectile[MAX_VAR];
 	char	impact[MAX_VAR];
+	char	hitBody[MAX_VAR];
 	char	fireSound[MAX_VAR];
 	char	impactSound[MAX_VAR];
+	char	hitBodySound[MAX_VAR];
+	char	bounceSound[MAX_VAR];
 	byte	soundOnce;
+	byte	gravity;
+	byte	selfDetonate;
+	byte	dmgtype;
 	float	speed;
+	vec2_t	shotOrg;
 	vec2_t	spread;
+	int		delay;
+	int		bounce;
+	float	bounceFac;
 	float	crouch;
 	float	range;
 	int		shots;
@@ -752,6 +802,7 @@ typedef struct fireDef_s
 	int		time;
 	vec2_t	damage, spldmg;
 	float	splrad;
+	int		weaponSkill;
 } fireDef_t;
 
 typedef struct objDef_s
@@ -760,13 +811,16 @@ typedef struct objDef_s
 	char	name[MAX_VAR];
 	char	kurz[MAX_VAR];
 	char	model[MAX_VAR];
+	char	image[MAX_VAR];
 	char	type[MAX_VAR];
 	int		shape;
 	byte	sx, sy;
 	float	scale;
 	vec3_t	center;
 	char	category;
+	byte	weapon;
 	byte	twohanded;
+	byte	thrown;
 	int		price;
 	int		buytype;
 	int		link;
@@ -775,6 +829,10 @@ typedef struct objDef_s
 	int		ammo;
 	int		reload;
 	fireDef_t	fd[2];
+
+	// armor specific
+	short	protection[MAX_DAMAGETYPES];
+	short	hardness[MAX_DAMAGETYPES];
 } objDef_t;
 
 #define MAX_INVDEFS		16
@@ -782,32 +840,29 @@ typedef struct objDef_s
 typedef struct invDef_s
 {
 	char	name[MAX_VAR];
-	byte	single;
+	byte	single, armor, all, temp;
 	int		shape[16];
 	int		in, out;
 } invDef_t;
 
-#define MAX_INVCHAIN	1024
+#define MAX_CONTAINERS	32
+#define MAX_INVLIST		1024
 
 typedef struct item_s
 {
-	int	t;
-	int	a;
+	int	t, a, m;
 } item_t;
 
-typedef struct invChain_s
+typedef struct invList_s
 {
 	item_t	item;
-	int 	container;
 	int		x, y;
-	struct	invChain_s *next;
-} invChain_t;
+	struct	invList_s *next;
+} invList_t;
 
 typedef struct inventory_s
 {
-	invChain_t	*inv;
-	item_t		left, right;
-	struct inventory_s	*floor;
+	invList_t	*c[MAX_CONTAINERS];
 } inventory_t;
 
 #define MAX_EQUIPDEFS	64
@@ -818,7 +873,6 @@ typedef struct equipDef_s
 	byte	num[MAX_OBJDEFS];
 } equipDef_t;
 
-
 // the csi structure is the client-server-information structure
 // which contains all the UFO info needed by the server and the client
 typedef struct csi_s
@@ -828,43 +882,105 @@ typedef struct csi_s
 
 	invDef_t	ids[MAX_INVDEFS];
 	int		numIDs;
-	int		idRight, idLeft, idBelt, idFloor, idEquip;
+	int		idRight, idLeft, idBelt, idArmor, idFloor, idEquip;
 
 	equipDef_t	eds[MAX_EQUIPDEFS];
 	int		numEDs;
+
+	char	dts[MAX_DAMAGETYPES][MAX_VAR];
+	int		numDTs;
 } csi_t;
 
 // ===========================================================
 
+// **--------------------*
+// **--------------------*
+// TODO: Medals. Still subject to (major) changes.
+#define MAX_MEDALTEXT		256
+#define MAX_MEDALTITLE		32
+typedef struct medals_s
+{
+	char	title[MAX_MEDALTITLE];
+	int	type; //cross, coin, etc
+	int	band; //color, length and type of the band
+	//date	date;
+	char	text[MAX_MEDALTEXT];
+	struct	medals_s	*next_medal;
+} medals_t;
+
 #define MAX_SKILL			256
-#define MAX_STARTSKILL		190
+
+#define GET_HP( ab )		(80 + (ab) * 90/MAX_SKILL)
+#define GET_ACC( ab, sk )	((1.5 - (float)(ab)/MAX_SKILL) * pow(0.8, (sk)/50) )
+#define GET_TU( ab )		(27 + (ab) * 20/MAX_SKILL)
+#define GET_MORAL( ab )		(100 + (ab) * 150/MAX_SKILL)
+
+typedef enum
+{
+	ABILITY_POWER,
+	ABILITY_SPEED,
+	ABILITY_ACCURACY,
+	ABILITY_MIND,
+
+	SKILL_CLOSE,
+	SKILL_HEAVY,
+	SKILL_ASSAULT,
+	SKILL_PRECISE,
+	SKILL_EXPLOSIVE,
+	SKILL_NUM_TYPES
+} abilityskills_t;
+#define ABILITY_NUM_TYPES SKILL_CLOSE
 
 typedef struct character_s
 {
 	int		ucn;
 	char	name[MAX_VAR];
+	char	path[MAX_VAR];
 	char	body[MAX_VAR];
 	char	head[MAX_VAR];
 	int		skin;
 
-	int		strength;
-	int		dexterity;
-	int		swiftness;
-	int		intelligence;
-	int		courage;
+	// new abilities and skills:
+	int		skills[SKILL_NUM_TYPES];
+
+	// score
+	int		kills_enemies;
+	int		kills_civilians;
+	int		kills_team;
+	int		kills_animals;
+	int		kills_neutral;
+	int		kills_male;
+	int		kills_female;
+	int		destroyed_objects;
+	int		hit_ratio;
+	int		inflicted_damage;
+	int		damage_taken;
+	int		assigned_missions;
+	int		crossed_distance;
+	// date		joined_edc;
+	// date		died;
+	medals_t *medals;
+	// TODO:
+	// *------------------**
+	// *------------------**
 
 	inventory_t *inv;
 } character_t;
 
+void Com_CharGenAbilitySkills (character_t *chr, int minAbility, int maxAbility, int minSkill, int maxSkill);
+char *Com_CharGetBody( character_t *chr );
+char *Com_CharGetHead( character_t *chr );
+
 // ===========================================================
 
 void Com_InitCSI( csi_t *import );
-void Com_InitInventory( invChain_t *invChain );
+void Com_InitInventory( invList_t *invChain );
 qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, int y );
-invChain_t *Com_SearchInInventory( inventory_t *i, int container, int x, int y );
-void Com_AddToInventory( inventory_t *i, int item, int ammo, int container, int x, int y );
+invList_t *Com_SearchInInventory( inventory_t *i, int container, int x, int y );
+invList_t *Com_AddToInventory( inventory_t *i, item_t item, int container, int x, int y );
 qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y );
-int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int tx, int ty, byte *TU, invChain_t **icp );
+int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t **icp );
+void Com_EmptyContainer( inventory_t *i, int container );
 void Com_DestroyInventory( inventory_t *i );
 void Com_FindSpace( inventory_t *inv, int item, int container, int *px, int *py );
 
@@ -882,11 +998,20 @@ typedef enum {
 // shoot flags
 #define SF_IMPACT			1
 #define SF_BODY				2
+#define SF_BOUNCING			4
+#define SF_BOUNCED			8
 
 // state flags
-#define STATE_DEAD			3		// 0 alive, 1-3 different deaths
-#define STATE_CROUCHED		4
-#define STATE_PANIC			8
+// public
+#define STATE_PUBLIC		0x00FF
+#define STATE_DEAD			0x0003		// 0 alive, 1-3 different deaths
+#define STATE_CROUCHED		0x0004
+#define STATE_PANIC			0x0008
+#define STATE_RAGE			0x0010		// pretty self-explaining
+#define STATE_INSANE		0x0030
+// private
+#define STATE_REACTION		0x0100
+#define STATE_SHAKEN		0x0300		// forced reaction fire
 
 
 #define	ANGLE2SHORT(x)	((int)((x)*65536/360) & 65535)
@@ -904,6 +1029,8 @@ typedef enum {
 
 //
 
+#define GRAVITY			500.0
+
 //
 // config strings are a general means of communication from
 // the server to all connected clients.
@@ -915,12 +1042,12 @@ typedef enum {
 #define	CS_SKYAXIS			3		// %f %f %f format
 #define	CS_SKYROTATE		4
 #define	CS_STATUSBAR		5		// display program string
+#define	CS_MAXCLIENTS		6
+#define	CS_MAPCHECKSUM		7		// for catching cheater maps
 
-#define CS_AIRACCEL			29		// air acceleration control
-#define	CS_MAXCLIENTS		30
-#define	CS_MAPCHECKSUM		31		// for catching cheater maps
-
-#define	CS_MODELS			32
+#define CS_TILES			16
+#define CS_POSITIONS		(CS_TILES+MAX_TILESTRINGS)
+#define	CS_MODELS			(CS_POSITIONS+MAX_TILESTRINGS)
 #define	CS_SOUNDS			(CS_MODELS+MAX_MODELS)
 #define	CS_IMAGES			(CS_SOUNDS+MAX_SOUNDS)
 #define	CS_LIGHTS			(CS_IMAGES+MAX_IMAGES)
@@ -934,7 +1061,7 @@ typedef enum {
 
 
 // ==================
-// PGM 
+// PGM
 #define VIDREF_GL		1
 #define VIDREF_SOFT		2
 #define VIDREF_OTHER	3

@@ -550,19 +550,19 @@ void SCR_DrawConsole (void)
 		return;
 	}
 
-	if (cls.state == ca_disconnected || cls.state == ca_connecting)
+	if (cls.state == ca_connecting || cls.state == ca_connected)
 	{	// forced full screen console
 		Con_DrawConsole (1.0);
 		return;
 	}
 
-	if ((cls.state != ca_active && cls.state != ca_sequence) || !cl.refresh_prepped)
+/*	if ((cls.state != ca_active && cls.state != ca_sequence) || !cl.refresh_prepped)
 	{	// connected, but can't render
 		Con_DrawConsole (0.5);
 		re.DrawFill (0, viddef.height/2, viddef.width, viddef.height/2, 0, vec4_origin);
 		return;
 	}
-
+*/
 	if (scr_con_current)
 	{
 		Con_DrawConsole (scr_con_current);
@@ -679,7 +679,7 @@ void SCR_TimeRefresh_f (void)
 
 	stop = Sys_Milliseconds ();
 	time = (stop-start)/1000.0;
-	Com_Printf ("%f seconds (%f fps)\n", time, 128/time);
+	Com_Printf (_("%f seconds (%f fps)\n"), time, 128/time);
 }
 
 /*
@@ -925,18 +925,7 @@ void SCR_UpdateScreen (void)
 		// and console specially
 		else if (cl.cinematictime > 0)
 		{
-			if (cls.key_dest == key_menu)
-			{
-				if (cl.cinematicpalette_active)
-				{
-					re.CinematicSetPalette(NULL);
-					cl.cinematicpalette_active = false;
-				}
-//				M_Draw ();
-				re.EndFrame();
-				return;
-			}
-			else if (cls.key_dest == key_console)
+			if (cls.key_dest == key_console)
 			{
 				if (cl.cinematicpalette_active)
 				{

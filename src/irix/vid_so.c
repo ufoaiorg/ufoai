@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // is used for both the software and OpenGL rendering versions of the
 // Quake refresh engine.
 
-#define SO_FILE "/etc/quake2.conf"
+#define SO_FILE "/etc/ufo.conf"
 
 #include <errno.h>
 #include <assert.h>

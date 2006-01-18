@@ -80,7 +80,9 @@ typedef struct entity_s
 	*/
 	int		skinnum;				// also used as RF_BEAM's palette index
 
-	float	sunfrac;				// fraction lit by the sun
+	float	*lightcolor;			// color for fixed light
+	float	*lightambient;			// ambient color for fixed light
+	float	*lightparam;			// fraction lit by the sun
 
 	int		lightstyle;				// for flashing entities
 	float	alpha;					// ignore if RF_TRANSLUCENT isn't set
@@ -105,6 +107,20 @@ typedef struct
 	float		rgb[3];			// 0.0 - 2.0
 	float		white;			// highest of rgb
 } lightstyle_t;
+
+typedef struct
+{
+	vec3_t		dir;
+	vec4_t		color;
+	vec4_t		ambient;
+} sun_t;
+
+typedef struct
+{
+	vec3_t	origin;
+	vec3_t	color;
+	float	intensity;
+} dlight_t;
 
 typedef struct
 {
@@ -136,6 +152,7 @@ typedef struct ptl_s
 	vec4_t		color;
 	vec3_t		s;
 	vec3_t		angles;
+	int			levelFlags;
 
 	// private
 	struct ptlDef_s	*ctrl;
@@ -145,7 +162,7 @@ typedef struct ptl_s
 	float		tps, lastThink;
 	byte		thinkFade, frameFade;
 	float		t, dt, life;
-	vec3_t		a, v;
+	vec3_t		a, v, omega;
 } ptl_t;
 
 typedef struct ptlArt_s
@@ -163,7 +180,7 @@ typedef struct
 	float		vieworg[3];
 	float		viewangles[3];
 	float		blend[4];			// rgba 0-1 full screen blend
-	float		time;				// time is uesed to auto animate
+	float		time;				// time is used to auto animate
 	int			rdflags;			// RDF_UNDERWATER, etc
 	int			worldlevel;
 
@@ -185,9 +202,11 @@ typedef struct
 	ptlArt_t	*ptl_art;
 
 	sun_t		*sun;
-
 	int			num_lights;
 	dlight_t	*ll;
+
+	float		fog;
+	float		*fogColor;
 } refdef_t;
 
 
@@ -221,7 +240,7 @@ typedef struct
 	// are flood filled to eliminate mip map edge errors, and pics have
 	// an implicit "pics/" prepended to the name. (a pic name that starts with a
 	// slash will not use the "pics/" prefix or the ".pcx" postfix)
-	void	(*BeginRegistration) (char *map);
+	void	(*BeginRegistration) (char *tiles, char *pos);
 	struct model_s *(*RegisterModel) (char *name);
 	struct image_s *(*RegisterSkin) (char *name);
 
@@ -245,11 +264,15 @@ typedef struct
 	void	(*DrawFill) (int x, int y, int w, int h, int style, vec4_t color);
 	void	(*DrawColor) (float *rgba);
 	void	(*DrawFadeScreen) (void);
+	void	(*DrawDayAndNight) (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz );
+	void	(*DrawLineStrip) (int points, int *verts);
 
 	void	(*AnimAppend)( animState_t *as, struct model_s *mod, char *name );
 	void	(*AnimChange)( animState_t *as, struct model_s *mod, char *name );
 	void	(*AnimRun)( animState_t *as, struct model_s *mod, int msec );
+	char	*(*AnimGetName)( animState_t *as, struct model_s *mod );
 
+	void	(*LoadTGA)( char *name, byte **pic, int *width, int *height );
 
 	// Draw images for cinematic rendering (which can have a different palette). Note that calls
 	void	(*DrawStretchRaw) (int x, int y, int w, int h, int cols, int rows, byte *data);

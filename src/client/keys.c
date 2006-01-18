@@ -394,20 +394,27 @@ void Key_Message (int key)
 {
 	if ( key == K_ENTER || key == K_KP_ENTER )
 	{
+		qboolean send;
+		send = true;
 		switch ( msg_mode )
 		{
 		case MSG_SAY:
-			Cbuf_AddText ("say \"");
+			if ( msg_buffer[0] ) Cbuf_AddText ("say \"");
+			else send = false;
 			break;
 		case MSG_SAY_TEAM:
-			Cbuf_AddText ("say_team \"");
+			if ( msg_buffer[0] ) Cbuf_AddText ("say_team \"");
+			else send = false;
 			break;
 		case MSG_MENU:
 			Cbuf_AddText ("msgmenu \":");
 			break;
 		}
-		Cbuf_AddText(msg_buffer);
-		Cbuf_AddText("\"\n");
+		if ( send )
+		{
+			Cbuf_AddText(msg_buffer);
+			Cbuf_AddText("\"\n");
+		}
 
 		cls.key_dest = key_game;
 		msg_bufferlen = 0;
@@ -549,14 +556,14 @@ void Key_Unbind_f (void)
 
 	if (Cmd_Argc() != 2)
 	{
-		Com_Printf ("unbind <key> : remove commands from a key\n");
+		Com_Printf (_("Usage: unbind <key> : remove commands from a key\n"));
 		return;
 	}
 	
 	b = Key_StringToKeynum (Cmd_Argv(1));
 	if (b==-1)
 	{
-		Com_Printf ("\"%s\" isn't a valid key\n", Cmd_Argv(1));
+		Com_Printf (_("\"%s\" isn't a valid key\n"), Cmd_Argv(1));
 		return;
 	}
 
@@ -587,13 +594,13 @@ void Key_Bind_f (void)
 
 	if (c < 2)
 	{
-		Com_Printf ("bind <key> [command] : attach a command to a key\n");
+		Com_Printf (_("Usage: bind <key> [command] : attach a command to a key\n"));
 		return;
 	}
 	b = Key_StringToKeynum (Cmd_Argv(1));
 	if (b==-1)
 	{
-		Com_Printf ("\"%s\" isn't a valid key\n", Cmd_Argv(1));
+		Com_Printf (_("\"%s\" isn't a valid key\n"), Cmd_Argv(1));
 		return;
 	}
 
@@ -602,7 +609,7 @@ void Key_Bind_f (void)
 		if (keybindings[b])
 			Com_Printf ("\"%s\" = \"%s\"\n", Cmd_Argv(1), keybindings[b] );
 		else
-			Com_Printf ("\"%s\" is not bound\n", Cmd_Argv(1) );
+			Com_Printf (_("\"%s\" is not bound\n"), Cmd_Argv(1) );
 		return;
 	}
 	
@@ -778,7 +785,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 			return;	// ignore most autorepeats
 			
 		if (key >= 200 && !keybindings[key])
-			Com_Printf ("%s is unbound, hit F4 to set.\n", Key_KeynumToString (key) );
+			Com_Printf (_("%s is unbound, hit F4 to set.\n"), Key_KeynumToString (key) );
 	}
 	else
 	{
@@ -798,8 +805,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 	}
 
 	// any key during the attract mode will bring up the menu
-	if (cl.attractloop && cls.key_dest != key_menu &&
-		!(key >= K_F1 && key <= K_F12))
+	if (cl.attractloop && !(key >= K_F1 && key <= K_F12))
 		key = K_ESCAPE;
 
 	// menu key is hardcoded, so the user can never unbind it
@@ -813,13 +819,9 @@ void Key_Event (int key, qboolean down, unsigned time)
 		case key_message:
 			Key_Message (key);
 			break;
-		case key_menu:
-//			M_Keydown (key);
-			break;
 		case key_game:
 		case key_console:
 			Cbuf_AddText( "mn_pop esc" );
-//			M_Menu_Main_f ();
 			break;
 		default:
 			Com_Error (ERR_FATAL, "Bad cls.key_dest");
@@ -871,9 +873,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 //
 // if not a consolekey, send to the interpreter no matter what mode is
 //
-	if ( (cls.key_dest == key_menu && menubound[key])
-	|| (cls.key_dest == key_console && !consolekeys[key])
-	|| (cls.key_dest == key_game && ( cls.state == ca_active || !consolekeys[key] ) ) )
+	if ( cls.key_dest == key_game ) //&& !consolekeys[key] )
 	{
 		kb = keybindings[key];
 		if (kb)
@@ -903,10 +903,6 @@ void Key_Event (int key, qboolean down, unsigned time)
 	case key_message:
 		Key_Message (key);
 		break;
-	case key_menu:
-//		M_Keydown (key);
-		break;
-
 	case key_game:
 	case key_console:
 		Key_Console (key);

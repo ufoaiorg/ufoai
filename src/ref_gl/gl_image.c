@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -23,10 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 char		glerrortex[MAX_GLERRORTEX];
 char		*glerrortexend;
 image_t		gltextures[MAX_GLTEXTURES];
-int			numgltextures;
-int			base_textureid;		// gltextures[i] = base_textureid+i
+int		numgltextures;
+int		base_textureid;		// gltextures[i] = base_textureid+i
 
-static byte			 intensitytable[256];
+static byte	 intensitytable[256];
 static unsigned char gammatable[256];
 
 cvar_t		*intensity;
@@ -34,14 +34,14 @@ cvar_t		*intensity;
 unsigned	d_8to24table[256];
 
 qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboolean is_sky );
-qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap);
+qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap, qboolean clamp );
 
 
-int		gl_solid_format = 3;
-int		gl_alpha_format = 4;
+int		gl_solid_format = GL_RGB;
+int		gl_alpha_format = GL_RGBA;
 
-int		gl_tex_solid_format = 3;
-int		gl_tex_alpha_format = 4;
+int		gl_compressed_solid_format = 0;
+int		gl_compressed_alpha_format = 0;
 
 int		gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
 int		gl_filter_max = GL_LINEAR;
@@ -246,7 +246,7 @@ void GL_TextureAlphaMode( char *string )
 		return;
 	}
 
-	gl_tex_alpha_format = gl_alpha_modes[i].mode;
+	gl_alpha_format = gl_alpha_modes[i].mode;
 }
 
 /*
@@ -270,7 +270,7 @@ void GL_TextureSolidMode( char *string )
 		return;
 	}
 
-	gl_tex_solid_format = gl_solid_modes[i].mode;
+	gl_solid_format = gl_solid_modes[i].mode;
 }
 
 /*
@@ -555,7 +555,7 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 	targa_header.id_length = *buf_p++;
 	targa_header.colormap_type = *buf_p++;
 	targa_header.image_type = *buf_p++;
-	
+
 	tmp[0] = buf_p[0];
 	tmp[1] = buf_p[1];
 	targa_header.colormap_index = LittleShort ( *((short *)tmp) );
@@ -576,11 +576,11 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 	targa_header.pixel_size = *buf_p++;
 	targa_header.attributes = *buf_p++;
 
-	if (targa_header.image_type!=2 
-		&& targa_header.image_type!=10) 
+	if (targa_header.image_type!=2
+		&& targa_header.image_type!=10)
 		ri.Sys_Error (ERR_DROP, "LoadTGA: Only type 2 and 10 targa RGB images supported\n");
 
-	if (targa_header.colormap_type !=0 
+	if (targa_header.colormap_type !=0
 		|| (targa_header.pixel_size!=32 && targa_header.pixel_size!=24))
 		ri.Sys_Error (ERR_DROP, "LoadTGA: Only 32 or 24 bit images supported (no colormaps)\n");
 
@@ -598,15 +598,16 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 
 	if (targa_header.id_length != 0)
 		buf_p += targa_header.id_length;  // skip TARGA image comment
-	
+
 	if (targa_header.image_type==2) {  // Uncompressed, RGB images
 		for(row=rows-1; row>=0; row--) {
 			pixbuf = targa_rgba + row*columns*4;
 			for(column=0; column<columns; column++) {
 				unsigned char red,green,blue,alphabyte;
+				red=green=blue=alphabyte="";
 				switch (targa_header.pixel_size) {
 					case 24:
-							
+
 							blue = *buf_p++;
 							green = *buf_p++;
 							red = *buf_p++;
@@ -631,6 +632,7 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 	}
 	else if (targa_header.image_type==10) {   // Runlength encoded RGB images
 		unsigned char red,green,blue,alphabyte,packetHeader,packetSize,j;
+		red=green=blue=alphabyte="";
 		for(row=rows-1; row>=0; row--) {
 			pixbuf = targa_rgba + row*columns*4;
 			for(column=0; column<columns; ) {
@@ -651,7 +653,7 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 								alphabyte = *buf_p++;
 								break;
 					}
-	
+
 					for(j=0;j<packetSize;j++) {
 						*pixbuf++=red;
 						*pixbuf++=green;
@@ -699,7 +701,7 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 							else
 								goto breakOut;
 							pixbuf = targa_rgba + row*columns*4;
-						}						
+						}
 					}
 				}
 			}
@@ -733,11 +735,11 @@ unsigned char jpg_fill_input_buffer(j_decompress_ptr cinfo)
 
 void jpg_skip_input_data(j_decompress_ptr cinfo, long num_bytes)
 {
-        
+
     cinfo->src->next_input_byte += (size_t) num_bytes;
     cinfo->src->bytes_in_buffer -= (size_t) num_bytes;
 
-    if (cinfo->src->bytes_in_buffer < 0) 
+    if (cinfo->src->bytes_in_buffer < 0)
 		ri.Con_Printf(PRINT_ALL, "Premature end of JPEG data\n");
 }
 
@@ -771,18 +773,18 @@ void LoadJPG (char *filename, byte **pic, int *width, int *height)
 	rawsize = ri.FS_LoadFile( filename, (void **)&rawdata);
 
 	if(!rawdata)
-		return;	
+		return;
 
-// Knightmare- check for bad data 
-	if (	rawdata[6] != 'J' 
-		||	rawdata[7] != 'F' 
-		||	rawdata[8] != 'I' 
-		||	rawdata[9] != 'F') 
-	{ 
-		ri.Con_Printf (PRINT_ALL, "Bad jpg file %s\n", filename); 
-		ri.FS_FreeFile(rawdata); 
-		return; 
-	} 
+// Knightmare- check for bad data
+	if (	rawdata[6] != 'J'
+		||	rawdata[7] != 'F'
+		||	rawdata[8] != 'I'
+		||	rawdata[9] != 'F')
+	{
+		ri.Con_Printf (PRINT_ALL, "Bad jpg file %s\n", filename);
+		ri.FS_FreeFile(rawdata);
+		return;
+	}
 
 	// Initialise libJpeg Object
 	cinfo.err = jpeg_std_error(&jerr);
@@ -1070,41 +1072,17 @@ GL_Upload32
 Returns has_alpha
 ===============
 */
-void GL_BuildPalettedTexture( unsigned char *paletted_texture, unsigned char *scaled, int scaled_width, int scaled_height )
-{
-	int i;
-
-	for ( i = 0; i < scaled_width * scaled_height; i++ )
-	{
-		unsigned int r, g, b, c;
-
-		r = ( scaled[0] >> 3 ) & 31;
-		g = ( scaled[1] >> 2 ) & 63;
-		b = ( scaled[2] >> 3 ) & 31;
-
-		c = r | ( g << 5 ) | ( b << 11 );
-
-		paletted_texture[i] = gl_state.d_16to8table[c];
-
-		scaled += 4;
-	}
-}
-
 int		upload_width, upload_height;
-qboolean uploaded_paletted;
+unsigned scaled_buffer[1024*1024];
 
-unsigned	scaled[512*512*4];
-unsigned char paletted_texture[512*512*4];
-
-qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
+qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qboolean clamp)
 {
+	unsigned	*scaled;
 	int			samples;
 	int			scaled_width, scaled_height;
 	int			i, c;
+	int			size;
 	byte		*scan;
-	int comp;
-
-	uploaded_paletted = false;
 
 	for (scaled_width = 1 ; scaled_width < width ; scaled_width<<=1)
 		;
@@ -1122,11 +1100,15 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 		scaled_height >>= (int)gl_picmip->value;
 	}
 
-	// don't ever bother with >512 textures
-	if (scaled_width > 512)
-		scaled_width = 512;
-	if (scaled_height > 512)
-		scaled_height = 512;
+	// don't ever bother with > 2048*2048 textures
+	if ( scaled_width > 2048 ) scaled_width = 2048;
+	if ( scaled_height > 2048 ) scaled_height = 2048;
+
+	while ( scaled_width > gl_maxtexres->value || scaled_height > gl_maxtexres->value )
+	{
+		scaled_width >>= 1;
+		scaled_height >>= 1;
+	}
 
 	if (scaled_width < 1)
 		scaled_width = 1;
@@ -1136,61 +1118,43 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 	upload_width = scaled_width;
 	upload_height = scaled_height;
 
-	if (scaled_width * scaled_height > sizeof(scaled)/4)
-		ri.Sys_Error (ERR_DROP, "GL_Upload32: too big");
-
 	// scan the texture for any non-255 alpha
 	c = width*height;
 	scan = ((byte *)data) + 3;
-	samples = gl_solid_format;
+	samples = gl_compressed_solid_format ? gl_compressed_solid_format : gl_solid_format;
 	for (i=0 ; i<c ; i++, scan += 4)
 	{
 		if ( *scan != 255 )
 		{
-			samples = gl_alpha_format;
+			samples = gl_compressed_alpha_format ? gl_compressed_alpha_format : gl_alpha_format;
 			break;
 		}
 	}
-
-	if (samples == gl_solid_format)
-	    comp = gl_tex_solid_format;
-	else if (samples == gl_alpha_format)
-	    comp = gl_tex_alpha_format;
-	else {
-	    ri.Con_Printf (PRINT_ALL,
-			   "Unknown number of texture components %i\n",
-			   samples);
-	    comp = samples;
-	}
-
-#if 0
-	if (mipmap)
-		gluBuild2DMipmaps (GL_TEXTURE_2D, samples, width, height, GL_RGBA, GL_UNSIGNED_BYTE, trans);
-	else if (scaled_width == width && scaled_height == height)
-		qglTexImage2D (GL_TEXTURE_2D, 0, comp, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, trans);
-	else
-	{
-		gluScaleImage (GL_RGBA, width, height, GL_UNSIGNED_BYTE, trans,
-			scaled_width, scaled_height, GL_UNSIGNED_BYTE, scaled);
-		qglTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
-	}
-#else
 
 	if (scaled_width == width && scaled_height == height)
 	{
 		if (!mipmap)
 		{
-			qglTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			qglTexImage2D (GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 			goto done;
 		}
-		memcpy (scaled, data, width*height*4);
+		// directly use the incoming data
+		scaled = data;
+		size = 0;
 	}
 	else
+	{
+		// allocate memory for scaled texture
+		scaled = scaled_buffer;
+		while ( scaled_width > 1024 ) scaled_width >>= 1;
+		while ( scaled_height > 1024 ) scaled_height >>= 1;
+
 		GL_ResampleTexture (data, width, height, scaled, scaled_width, scaled_height);
+	}
 
 	GL_LightScaleTexture (scaled, scaled_width, scaled_height, !mipmap );
 
-	qglTexImage2D( GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled );
+	qglTexImage2D( GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled );
 
 	if (mipmap)
 	{
@@ -1207,12 +1171,10 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 			if (scaled_height < 1)
 				scaled_height = 1;
 			miplevel++;
-			qglTexImage2D (GL_TEXTURE_2D, miplevel, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+			qglTexImage2D (GL_TEXTURE_2D, miplevel, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 		}
 	}
 done: ;
-#endif
-
 
 	if (mipmap)
 	{
@@ -1225,7 +1187,13 @@ done: ;
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 	}
 
-	return (samples == gl_alpha_format);
+	if (clamp)
+	{
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	}
+
+	return (samples == gl_alpha_format || samples == gl_compressed_alpha_format);
 }
 
 /*
@@ -1289,7 +1257,81 @@ qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboole
 		}
 	}
 
-	return GL_Upload32 (trans, width, height, mipmap);
+	return GL_Upload32 (trans, width, height, mipmap, true);
+}
+
+
+/*
+================
+GL_CalcDayAndNight
+================
+*/
+#define DAN_WIDTH	512
+#define DAN_HEIGHT	256
+
+#define DAEMMERUNG	0.03
+
+byte	DaNalpha[DAN_WIDTH*DAN_HEIGHT];
+image_t	*DaN;
+
+void GL_CalcDayAndNight ( float q )
+{
+// 	int start;
+	int x, y;
+	float phi, dphi, a, da;
+	float sin_q, cos_q, root;
+	float pos;
+	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
+	byte *px;
+
+	// get image
+	if ( !DaN )
+	{
+		if (numgltextures >= MAX_GLTEXTURES)
+			ri.Sys_Error (ERR_DROP, "MAX_GLTEXTURES");
+		DaN = &gltextures[numgltextures++];
+		DaN->width = DAN_WIDTH;
+		DaN->height = DAN_HEIGHT;
+		DaN->type = it_pic;
+		DaN->texnum = TEXNUM_IMAGES + (DaN - gltextures);
+	}
+	GL_Bind(DaN->texnum);
+
+	// init geometric data
+	dphi = (float)2*M_PI/DAN_WIDTH;
+	da = M_PI/2*(HIGH_LAT-LOW_LAT)/DAN_HEIGHT;
+
+	// precalculate trigonometric functions
+	sin_q = sin(q);
+	cos_q = cos(q);
+	for ( x = 0; x < DAN_WIDTH; x++ )
+	{
+		phi = x*dphi - q;
+		sin_phi[x] = sin(phi);
+		cos_phi[x] = cos(phi);
+	}
+
+	// calculate
+	px = DaNalpha;
+	for ( y = 0; y < DAN_HEIGHT; y++ )
+	{
+		a = sin(M_PI/2*HIGH_LAT - y*da);
+		root = sqrt(1-a*a);
+		for ( x = 0; x < DAN_WIDTH; x++ )
+		{
+			pos = sin_phi[x]*root*sin_q - (a*SIN_ALPHA + cos_phi[x]*root*COS_ALPHA)*cos_q;
+
+			if ( pos >= DAEMMERUNG ) *px++ = 255;
+			else if ( pos <= -DAEMMERUNG ) *px++ = 0;
+			else *px++ = (byte)(128.0 * (pos/DAEMMERUNG + 1));
+		}
+	}
+
+	// upload alpha map
+	qglTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, DaNalpha );
+	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
+	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 }
 
 
@@ -1319,17 +1361,28 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 	}
 	image = &gltextures[i];
 
+	if ( type == it_font )
+	{
+		font_t *font;
+		font = Draw_AnalyzeFont( name, pic, width, height );
+		font->image = image;
+		image->type = it_pic;
+	}
+	else image->type = type;
+
 	len = strlen(name);
 	if (len >= sizeof(image->name))
 		ri.Sys_Error (ERR_DROP, "Draw_LoadPic: \"%s\" is too long", name);
 	strcpy (image->name, name);
 	image->registration_sequence = registration_sequence;
 	// drop extension
-	if ( (*image).name[len-4] = '.' ) (*image).name[len-4] = '\0';
+	if ( (*image).name[len-4] == '.' ) (*image).name[len-4] = '\0';
 
 	image->width = width;
 	image->height = height;
-	image->type = type;
+
+	if ( image->type == it_pic && strstr( image->name, "_noclamp" ) )
+		image->type = it_wrappic;
 
 	if (type == it_skin && bits == 8)
 		R_FloodFillSkin(pic, width, height);
@@ -1369,10 +1422,11 @@ nonscrap:
 		if (bits == 8)
 			image->has_alpha = GL_Upload8 (pic, width, height, (image->type != it_pic && image->type != it_sky), image->type == it_sky );
 		else
-			image->has_alpha = GL_Upload32 ((unsigned *)pic, width, height, (image->type != it_pic && image->type != it_sky) );
+			image->has_alpha = GL_Upload32 ((unsigned *)pic, width, height,
+				(image->type != it_pic && image->type != it_wrappic && image->type != it_sky), image->type == it_pic );
 		image->upload_width = upload_width;		// after power of 2 and scales
 		image->upload_height = upload_height;
-		image->paletted = uploaded_paletted;
+		image->paletted = false;
 		image->sl = 0;
 		image->sh = 1;
 		image->tl = 0;
@@ -1428,7 +1482,6 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 	int		i, l, len;
 	byte	*pic, *palette;
 	int		width, height;
-	font_t	*font;
 
 	if (!pname)
 		ri.Sys_Error (ERR_DROP, "GL_FindImage: NULL name");
@@ -1438,7 +1491,7 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 
 	// drop extension
 	strcpy( lname, pname );
-	if ( lname[len-4] == '.' )  len -= 4;
+	if ( lname[len-4] == '.' ) len -= 4;
 	ename = &(lname[len]);
 	*ename = 0;
 
@@ -1454,7 +1507,7 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 
 	// look for it in the error list
 	etex = glerrortex;
-	while ( l = strlen( etex ) )
+	while ( ( l = strlen( etex ) ) )
 	{
 		if ( !strcmp( lname, etex ) )
 			// it's in the error list
@@ -1469,42 +1522,43 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 	image = NULL;
 	pic = NULL;
 	palette = NULL;
-	font = NULL;
 
 	strcpy( ename, ".tga" );
 	if ( ri.FS_CheckFile ( lname ) != -1 )
 	{
 		LoadTGA ( lname, &pic, &width, &height);
-		if (!pic) return r_notexture; // ri.Sys_Error (ERR_DROP, "GL_FindImage: can't load %s", name);
-		if ( type == it_font ) { font = Draw_AnalyzeFont( lname, pic, width, height ); type = it_pic; }
-		image = GL_LoadPic ( lname, pic, width, height, type, 32);
-		goto end;
+		if (pic)
+		{
+			image = GL_LoadPic ( lname, pic, width, height, type, 32);
+			goto end;
+		}
 	}
 
 	strcpy( ename, ".jpg" );
 	if ( ri.FS_CheckFile ( lname ) != -1 )
 	{
 		LoadJPG ( lname, &pic, &width, &height);
-		if (!pic) return r_notexture; // ri.Sys_Error (ERR_DROP, "GL_FindImage: can't load %s", name);
-		if ( type == it_font ) { font = Draw_AnalyzeFont( lname, pic, width, height ); type = it_pic; }
-		image = GL_LoadPic ( lname, pic, width, height, type, 32);
-		goto end;
+		if (pic)
+		{
+			image = GL_LoadPic ( lname, pic, width, height, type, 32);
+			goto end;
+		}
 	}
-	
+
 	strcpy( ename, ".pcx" );
 	if ( ri.FS_CheckFile ( lname ) != -1 )
 	{
 		LoadPCX ( lname, &pic, &palette, &width, &height);
-		if (!pic) return r_notexture; // ri.Sys_Error (ERR_DROP, "GL_FindImage: can't load %s", name);
-		if ( type == it_font ) type = it_pic;
-		image = GL_LoadPic ( lname, pic, width, height, type, 8);
-		goto end;
+		if (pic)
+		{
+			image = GL_LoadPic ( lname, pic, width, height, type, 8);
+			goto end;
+		}
 	}
 
 	strcpy( ename, ".wal" );
 	if ( ri.FS_CheckFile ( lname ) != -1 )
 	{
-		if ( type == it_font ) type = it_pic;
 		image = GL_LoadWal( lname );
 		goto end;
 	}
@@ -1529,9 +1583,6 @@ end:
 		free(pic);
 	if (palette)
 		free(palette);
-
-	if ( font ) 
-		font->image = image;
 
 	return image;
 }
@@ -1583,8 +1634,8 @@ void GL_FreeUnusedImages (void)
 			continue;		// used this sequence
 		if (!image->registration_sequence)
 			continue;		// free image_t slot
-		if (image->type == it_pic)
-			continue;		// don't free pics
+		if (image->type == it_pic || image->type == it_wrappic)
+			continue;		// fix this! don't free pics
 		// free it
 		qglDeleteTextures (1, &image->texnum);
 		memset (image, 0, sizeof(*image));
@@ -1616,7 +1667,7 @@ int Draw_GetPalette (void)
 		r = pal[i*3+0];
 		g = pal[i*3+1];
 		b = pal[i*3+2];
-		
+
 		v = (255<<24) + (r<<0) + (g<<8) + (b<<16);
 		d_8to24table[i] = LittleLong(v);
 	}
@@ -1644,6 +1695,7 @@ void	GL_InitImages (void)
 	numgltextures = 0;
 	glerrortex[0] = 0;
 	glerrortexend = glerrortex;
+	DaN = NULL;
 
 	// init intensity conversions
 	intensity = ri.Cvar_Get( "intensity", "2", CVAR_ARCHIVE );

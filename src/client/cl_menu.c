@@ -29,26 +29,26 @@ typedef struct menuNode_s
 	void		*data[5];			// needs to be first
 	char		name[MAX_VAR];
 	int			type;
-	vec3_t		pos, size, angles;
-	vec2_t		texh, texl;
+	vec3_t		origin, scale, angles, center;
+	vec2_t		pos, size, texh, texl;
 	byte		state;
 	byte		align;
-	byte		invis, mousefx;
+	byte		invis, mousefx, blend;
+	int			num, height;
 	vec4_t		color;
-	menuAction_t		*click, *mouseIn, *mouseOut;
+	menuAction_t		*click, *rclick, *mclick, *mouseIn, *mouseOut;
 	struct menuNode_s	*next;
 } menuNode_t;
 
 typedef struct menu_s
 {
-	char	name[MAX_VAR];
-	menuNode_t		*firstNode, *initNode, *closeNode, *renderNode;
+	char		name[MAX_VAR];
+	menuNode_t	*firstNode, *initNode, *closeNode, *renderNode, *popupNode;
 } menu_t;
-
 
 // ===========================================================
 
-typedef enum
+typedef enum ea_s
 {
 	EA_NULL,
 	EA_CMD,
@@ -58,7 +58,7 @@ typedef enum
 	EA_VAR,
 
 	EA_NUM_EVENTACTION
-};
+} ea_t;
 
 char *ea_strings[EA_NUM_EVENTACTION] =
 {
@@ -73,7 +73,7 @@ char *ea_strings[EA_NUM_EVENTACTION] =
 int ea_values[EA_NUM_EVENTACTION] =
 {
 	V_NULL,
-	V_STRING,
+	V_LONGSTRING,
 
 	V_NULL,
 	V_NULL,
@@ -82,20 +82,24 @@ int ea_values[EA_NUM_EVENTACTION] =
 
 // ===========================================================
 
-typedef enum
+typedef enum ne_s
 {
 	NE_NULL,
 	NE_CLICK,
+	NE_RCLICK,
+	NE_MCLICK,
 	NE_MOUSEIN,
 	NE_MOUSEOUT,
 
 	NE_NUM_NODEEVENT
-};
+} ne_t;
 
 char *ne_strings[NE_NUM_NODEEVENT] =
 {
 	"",
 	"click",
+	"rclick",
+	"mclick",
 	"in",
 	"out"
 };
@@ -104,6 +108,8 @@ int	ne_values[NE_NUM_NODEEVENT] =
 {
 	0,
 	NOFS( click ),
+	NOFS( rclick ),
+	NOFS( mclick ),
 	NOFS( mouseIn ),
 	NOFS( mouseOut )
 };
@@ -114,30 +120,37 @@ value_t nps[] =
 {
 	{ "invis",		V_BOOL,		NOFS( invis ) },
 	{ "mousefx",	V_BOOL,		NOFS( mousefx ) },
+	{ "blend",		V_BOOL,		NOFS( blend ) },
 	{ "pos",		V_POS,		NOFS( pos ) },
 	{ "size",		V_POS,		NOFS( size ) },
 	{ "texh",		V_POS,		NOFS( texh ) },
 	{ "texl",		V_POS,		NOFS( texl ) },
-	{ "origin",		V_VECTOR,	NOFS( pos ) },
-	{ "scale",		V_VECTOR,	NOFS( size ) },
+	{ "format",		V_POS,		NOFS( texh ) },
+	{ "origin",		V_VECTOR,	NOFS( origin ) },
+	{ "center",		V_VECTOR,	NOFS( center ) },
+	{ "scale",		V_VECTOR,	NOFS( scale ) },
 	{ "angles",		V_VECTOR,	NOFS( angles ) },
+	{ "num",		V_INT,		NOFS( num ) },
 	{ "image",		V_STRING,	0 },
 	{ "md2",		V_STRING,	0 },
 	{ "anim",		V_STRING,	-1 },
 	{ "tag",		V_STRING,	-2 },
 	{ "skin",		V_STRING,	-3 },
 	{ "string",		V_STRING,	0 },
+	{ "font",		V_STRING,	-1 },
 	{ "max",		V_FLOAT,	0 },
-	{ "current",	V_FLOAT,	-1 },
+	{ "min",		V_FLOAT,	-1 },
+	{ "current",	V_FLOAT,	-2 },
 	{ "weapon",		V_STRING,	0 },
 	{ "color",		V_COLOR,	NOFS( color ) },
 	{ "align",		V_ALIGN,	NOFS( align ) },
 	{ NULL,			V_NULL,		0 },
 };
 
+
 // ===========================================================
 
-typedef enum
+typedef enum mn_s
 {
 	MN_NULL,
 	MN_CONFUNC,
@@ -152,9 +165,10 @@ typedef enum
 	MN_CONTAINER,
 	MN_ITEM,
 	MN_MAP,
+	MN_BASEMAP,
 
 	MN_NUM_NODETYPE
-};
+} mn_t;
 
 char *nt_strings[MN_NUM_NODETYPE] =
 {
@@ -170,7 +184,8 @@ char *nt_strings[MN_NUM_NODETYPE] =
 	"model",
 	"container",
 	"item",
-	"map"
+	"map",
+	"basemap"
 };
 
 
@@ -192,7 +207,7 @@ menu_t		*menuStack[MAX_MENUSTACK];
 int			menuStackPos;
 
 inventory_t	*menuInventory = NULL;
-char		*menuText = NULL;
+char		*menuText[MAX_MENUTEXTS];
 
 cvar_t		*mn_escpop;
 
@@ -228,6 +243,7 @@ MN_GetReferenceString
 */
 char *MN_GetReferenceString( menu_t *menu, char *ref )
 {
+	if ( !ref ) return NULL;
 	if ( *ref == '*' )
 	{
 		char	ident[MAX_VAR];
@@ -287,6 +303,7 @@ MN_GetReferenceFloat
 */
 float MN_GetReferenceFloat( menu_t *menu, void *ref )
 {
+	if ( !ref ) return 0.0;
 	if ( *(char *)ref == '*' )
 	{
 		char	ident[MAX_VAR];
@@ -296,10 +313,10 @@ float MN_GetReferenceFloat( menu_t *menu, void *ref )
 		// get the reference and the name
 		text = (char *)ref+1;
 		token = COM_Parse( &text );
-		if ( !text ) return 0;
+		if ( !text ) return 0.0;
 		strncpy( ident, token, MAX_VAR );
 		token = COM_Parse( &text );
-		if ( !text ) return 0;
+		if ( !text ) return 0.0;
 
 		if ( !strcmp( ident, "cvar" ) )
 		{
@@ -314,7 +331,7 @@ float MN_GetReferenceFloat( menu_t *menu, void *ref )
 			// draw a reference to a node property
 			refNode = MN_GetNode( menu, ident );
 			if ( !refNode ) 
-				return 0;
+				return 0.0;
 
 			// get the property
 			for ( val = nps; val->type; val++ )
@@ -322,10 +339,10 @@ float MN_GetReferenceFloat( menu_t *menu, void *ref )
 					break;
 
 			if ( val->type != V_FLOAT ) 
-				return 0;
+				return 0.0;
 
 			// get the string
-			if ( val->ofs > 0 )
+			if ( val->ofs > 0.0 )
 				return *(float *)((byte *)refNode + val->ofs);
 			else
 				return *(float *)refNode->data[-val->ofs];
@@ -382,7 +399,7 @@ void MN_ExecuteActions( menu_t *menu, menuAction_t *first )
 				{
 					// didn't find node -> "kill" action and print error
 					action->type = EA_NULL;
-					Com_Printf( "MN_ExecuteActions: node \"%s\" doesn't exist\n", (char *)action->data );
+					Com_Printf( _("MN_ExecuteActions: node \"%s\" doesn't exist\n"), (char *)action->data );
 					break;
 				}
 
@@ -394,7 +411,7 @@ void MN_ExecuteActions( menu_t *menu, menuAction_t *first )
 			}
 			break;
 		default:
-			Sys_Error( "unknown action type\n" );
+			Sys_Error( _("unknown action type\n") );
 			break;
 		}
 }
@@ -433,6 +450,190 @@ MENU ZONE DETECTION
 
 /*
 =================
+MN_MapToScreen
+=================
+*/
+qboolean MN_MapToScreen( menuNode_t *node, vec2_t pos, int *x, int *y )
+{
+	float sx;
+
+	// get "raw" position
+	sx = pos[0]/360 + ccs.center[0]-0.5;
+
+	// shift it on screen
+	if ( sx < -0.5 ) sx += 1.0;
+	else if ( sx > +0.5 ) sx -= 1.0;
+
+	*x = node->pos[0] + 0.5*node->size[0] - sx * node->size[0] * ccs.zoom;
+	*y = node->pos[1] + 0.5*node->size[1] - (pos[1]/180 + ccs.center[1]-0.5) * node->size[1] * ccs.zoom;
+
+	if ( *x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0]+node->size[0] && *y > node->pos[1]+node->size[1] ) return false;
+	return true;
+}
+
+
+/*
+=================
+MN_ScreenToMap
+=================
+*/
+void MN_ScreenToMap( menuNode_t *node, int x, int y, vec2_t pos )
+{
+	pos[0] = (((node->pos[0] - x) / node->size[0] + 0.5) / ccs.zoom - (ccs.center[0]-0.5)) * 360.0;
+	pos[1] = (((node->pos[1] - y) / node->size[1] + 0.5) / ccs.zoom - (ccs.center[1]-0.5)) * 180.0;
+
+	while ( pos[0] > 180.0 ) pos[0] -= 360.0;
+	while ( pos[0] <-180.0 ) pos[0] += 360.0;
+}
+
+
+/*
+=================
+PolarToVec
+=================
+*/
+void PolarToVec( vec2_t a, vec3_t v )
+{
+	float p, t;
+	p = a[0]*M_PI/180;
+	t = a[1]*M_PI/180;
+	VectorSet( v, cos(p)*cos(t), sin(p)*cos(t), sin(t) );
+}
+
+
+/*
+=================
+VecToPolar
+=================
+*/
+void VecToPolar( vec3_t v, vec2_t a )
+{
+	a[0] = 180/M_PI * atan2( v[1], v[0] );
+	a[1] = 90 - 180/M_PI * acos(v[2]);
+}
+
+
+/*
+=================
+MN_MapCalcLine
+=================
+*/
+void MN_MapCalcLine( vec2_t start, vec2_t end, mapline_t *line )
+{
+	vec3_t s, e, v;
+	vec3_t normal;
+	vec2_t trafo, sa, ea;
+	float cosTrafo, sinTrafo;
+	float phiStart, phiEnd, dPhi, phi;
+	float *p, *last;
+	int   i, n;
+
+	// get plane normal
+	PolarToVec( start, s );
+	PolarToVec( end, e );
+	CrossProduct( s, e, normal );
+	VectorNormalize( normal );
+
+	// get transformation
+	VecToPolar( normal, trafo );
+	cosTrafo = cos(trafo[1]*M_PI/180);
+	sinTrafo = sin(trafo[1]*M_PI/180);
+
+	sa[0] = start[0]-trafo[0];
+	sa[1] = start[1];
+	PolarToVec( sa, s );
+	ea[0] = end[0]-trafo[0];
+	ea[1] = end[1];
+	PolarToVec( ea, e );
+
+	phiStart = atan2( s[1], cosTrafo*s[2] - sinTrafo*s[0] );
+	phiEnd   = atan2( e[1], cosTrafo*e[2] - sinTrafo*e[0] );
+
+	// get waypoints
+	if ( phiEnd < phiStart - M_PI ) phiEnd += 2*M_PI;
+	if ( phiEnd > phiStart + M_PI ) phiEnd -= 2*M_PI;
+
+	n = (phiEnd - phiStart)/M_PI * LINE_MAXSEG;
+	if ( n > 0 ) n = n+1; 
+	else n = -n+1;
+
+//	Com_Printf( "#(%3.1f %3.1f) -> (%3.1f %3.1f)\n", start[0], start[1], end[0], end[1] );
+
+	line->dist = fabs(phiEnd - phiStart) / n * 180/M_PI;
+	line->n = n+1;
+	dPhi = (phiEnd - phiStart) / n;
+	p = NULL;
+	for ( phi = phiStart, i = 0; i <= n; phi += dPhi, i++ )
+	{
+		last = p;
+		p = line->p[i];
+		VectorSet( v, -sinTrafo*cos(phi), sin(phi), cosTrafo*cos(phi) );
+		VecToPolar( v, p );
+		p[0] += trafo[0];
+
+		if ( !last )
+		{
+			while ( p[0] < -180.0 ) p[0] += 360.0;
+			while ( p[0] > +180.0 ) p[0] -= 360.0;
+		} else {
+			while ( p[0] - last[0] > +180.0 ) p[0] -= 360.0;
+			while ( p[0] - last[0] < -180.0 ) p[0] += 360.0;
+		}
+	}
+}
+
+
+/*
+=================
+MN_MapDrawLine
+=================
+*/
+void MN_MapDrawLine( menuNode_t *node, mapline_t *line )
+{
+	vec4_t color;
+	int pts[LINE_MAXPTS*2];
+	int *p;
+	int i, start, old;
+
+	// set color
+	VectorSet( color, 1.0f, 0.5f, 0.5f );
+	color[3] = 1.0f;
+	re.DrawColor( color );
+
+	// draw
+	start = 0;
+	old = 512;
+	for ( i = 0, p = pts; i < line->n; i++, p += 2 )
+	{
+		MN_MapToScreen( node, line->p[i], p, p+1 );
+
+		if ( i > start && abs(p[0] - old) > 512 ) 
+		{
+			// shift last point
+			int diff;
+			if ( p[0] - old > 512 ) diff = -node->size[0] * ccs.zoom;
+			else diff = node->size[0] * ccs.zoom;
+			p[0] += diff;
+
+			// wrap around screen border
+			re.DrawLineStrip( i-start+1, pts );
+
+			// shift first point, continue drawing
+			start = --i;
+			pts[0] = p[-2] - diff;
+			pts[1] = p[-1];
+			p = pts;
+		}
+		old = p[0];
+	}
+
+	re.DrawLineStrip( i-start, pts );
+	re.DrawColor( NULL );
+}
+
+
+/*
+=================
 MN_FindContainer
 =================
 */
@@ -468,7 +669,7 @@ void MN_FindContainer( menuNode_t *node )
 MN_CheckNodeZone
 =================
 */
-int MN_CheckNodeZone( menuNode_t *node, int x, int y )
+qboolean MN_CheckNodeZone( menuNode_t *node, int x, int y )
 {
 	int		sx, sy, tx, ty;
 
@@ -487,7 +688,8 @@ int MN_CheckNodeZone( menuNode_t *node, int x, int y )
 	}
 
 	// check for click action
-	if ( !node->click && !node->mouseIn && !node->mouseOut )
+	if ( node->invis || ( !node->click && !node->rclick && !node->mclick && 
+		!node->mouseIn && !node->mouseOut ) )
 		return false;
 
 	// get the rectangle size out of the pic if necessary
@@ -517,7 +719,8 @@ int MN_CheckNodeZone( menuNode_t *node, int x, int y )
 		return false;
 
 	// on the node
-	return true;
+	if ( node->type == MN_TEXT ) return (int)(ty / node->texh[0]) + 1;
+	else return true;
 }
 
 
@@ -526,7 +729,7 @@ int MN_CheckNodeZone( menuNode_t *node, int x, int y )
 MN_CursorOnMenu
 =================
 */
-int MN_CursorOnMenu( int x, int y )
+qboolean MN_CursorOnMenu( int x, int y )
 {
 	menuNode_t	*node;
 	menu_t		*menu;
@@ -568,19 +771,19 @@ void MN_Drag( menuNode_t *node, int x, int y )
 
 	if ( mouseSpace == MS_MENU ) 
 	{
-		invChain_t *ic;
+		invList_t *ic;
 
 		px = (int)(x - node->pos[0]) / C_UNIT;
 		py = (int)(y - node->pos[1]) / C_UNIT;
 
-		// start drag
+		// start drag (mousefx represents container number)
 		ic = Com_SearchInInventory( menuInventory, node->mousefx, px, py );
 		if ( ic )
 		{
 			// found item to drag
 			mouseSpace = MS_DRAG;
 			dragItem = ic->item; 
-			dragFrom = ic->container;
+			dragFrom = node->mousefx;
 			dragFromX = ic->x;
 			dragFromY = ic->y;
 			CL_ItemDescription( ic->item.t );
@@ -595,7 +798,46 @@ void MN_Drag( menuNode_t *node, int x, int y )
 			MSG_WriteFormat( &cls.netchan.message, "bbsbbbbbb",
 				clc_action, PA_INVMOVE, selActor->entnum, dragFrom, dragFromX, dragFromY, node->mousefx, px, py );
 		else
+		{
+			invList_t *i;
+			int et, sel;
+
+			// sort equipment (tiny hack)
+			i = NULL; 
+			et = -1;
+			if ( node->mousefx == csi.idEquip )
+			{
+				// special item sorting for equipment
+				i = Com_SearchInInventory( menuInventory, dragFrom, dragFromX, dragFromY );
+				et = csi.ods[i->item.t].buytype;
+				if ( i && et != equipType )
+				{
+					menuInventory->c[csi.idEquip] = equipment.c[et];
+					Com_FindSpace( menuInventory, i->item.t, csi.idEquip, &px, &py );
+					if ( px >= 32 && py >= 16 ) 
+					{
+						menuInventory->c[csi.idEquip] = equipment.c[equipType];
+						return;
+					}
+				}
+			}
+
+			// move the item
 			Com_MoveInInventory( menuInventory, dragFrom, dragFromX, dragFromY, node->mousefx, px, py, NULL, NULL );
+
+			// end of hack
+			if ( i && et != equipType )
+			{
+				equipment.c[et] = menuInventory->c[csi.idEquip];
+				menuInventory->c[csi.idEquip] = equipment.c[equipType];
+			}
+			else equipment.c[equipType] = menuInventory->c[csi.idEquip];
+
+			// update character info (for armor changes)
+			sel = cl_selected->value;
+			if ( sel >= 0 && sel < numWholeTeam )
+				CL_CharacterCvars( &curTeam[sel] );
+		}
 	}
 
 }
@@ -609,17 +851,116 @@ MN_BarClick
 void MN_BarClick( menu_t *menu, menuNode_t *node, int x )
 {
 	char	var[MAX_VAR];
-	float	frac;
+	float	frac, min;
 
 	if ( !node->mousefx )
 		return;
 
-	strncpy( var, node->data[1], MAX_VAR );
+	strncpy( var, node->data[2], MAX_VAR );
 	if ( !strcmp( var, "*cvar" ) )
 		return;
 
 	frac = (float)(x - node->pos[0]) / node->size[0];
-	Cvar_SetValue( &var[6], frac * MN_GetReferenceFloat( menu, node->data[0] ) );
+	min = MN_GetReferenceFloat( menu, node->data[1] );
+	Cvar_SetValue( &var[6], min + frac * ( MN_GetReferenceFloat( menu, node->data[0] ) - min ) );
+}
+
+
+/*
+======================
+MN_MapClick
+======================
+*/
+void MN_MapClick( menuNode_t *node, int x, int y )
+{
+
+	actMis_t *ms;
+	int i, msx, msy;
+	vec2_t	pos;
+
+	// get map position
+	MN_ScreenToMap( node, x, y, pos );
+
+	// new base construction
+	if ( mapAction == MA_NEWBASE )
+	{
+		CL_NewBase( pos );
+		return;
+	}
+
+	// mission selection
+	for ( i = 0, ms = ccs.mission; i < ccs.numMissions; i++, ms++ )
+	{
+		if ( !MN_MapToScreen( node, ms->realPos, &msx, &msy ) )
+			continue;
+		if ( x >= msx-8 && x <= msx+8 && y >= msy-8 && y <= msy+8 )
+		{
+			selMis = ms;
+			return;
+		}
+	}
+
+	// aircraft testing
+	{
+		aircraft_t *air;
+
+		air = &ccs.air[0];
+		MN_MapCalcLine( air->pos, pos, &air->route );
+		air->status = AIR_TRANSIT;
+		air->time = 0;
+		air->point = 0;
+	}
+}
+
+
+/*
+======================
+MN_BaseMapClick
+======================
+*/
+void MN_BaseMapClick( menuNode_t *node, int x, int y )
+{
+	int	a, b;
+	a = b = 0;
+	if ( ! baseCurrent )
+	{
+		Com_Printf(_("Error - bases are not initialized\n"));
+		return;
+	}
+	
+	if ( baseCurrent->buildingCurrent && baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] == B_NOT_SET )
+		for ( b = BASE_SIZE-1; b >= 0; b-- )
+			for ( a = 0; a < BASE_SIZE; a++ )
+				if ( x >= baseCurrent->posX[b][a][baseCurrent->baseLevel] && x < baseCurrent->posX[b][a][baseCurrent->baseLevel] + picWidth*ccs.basezoom )
+					if ( y >= baseCurrent->posY[b][a][baseCurrent->baseLevel] && y < baseCurrent->posY[b][a][baseCurrent->baseLevel] + picHeight*ccs.basezoom  )
+					{
+						MN_SetBuildingByClick( a, b );
+						return;
+					}
+		
+}
+
+
+/*
+=================
+MN_ModelClick
+=================
+*/
+void MN_ModelClick( menuNode_t *node )
+{
+	mouseSpace = MS_ROTATE;
+	rotateAngles = node->angles;
+}
+
+
+/*
+=================
+MN_TextClick
+=================
+*/
+void MN_TextClick( menuNode_t *node, int mouseOver )
+{
+	Cbuf_AddText( va( "%s_click %i\n", node->name, mouseOver-1 ) );
 }
 
 
@@ -632,7 +973,7 @@ void MN_Click( int x, int y )
 {
 	menuNode_t		*node;
 	menu_t			*menu;
-	int		sp;
+	int		sp, mouseOver;
 
 	sp = menuStackPos;
 
@@ -641,17 +982,91 @@ void MN_Click( int x, int y )
 		menu = menuStack[--sp];
 		for ( node = menu->firstNode; node; node = node->next )
 		{
-			if ( !MN_CheckNodeZone( node, x, y ) )
-				continue;
+			if ( node->type != MN_CONTAINER && !node->click ) continue;
+			mouseOver = MN_CheckNodeZone( node, x, y );
+			if ( !mouseOver ) continue;
 
 			// found a node -> do actions
 			if ( node->type == MN_CONTAINER ) MN_Drag( node, x, y );
 			else if ( node->type == MN_BAR ) MN_BarClick( menu, node, x );
-			else if ( node->type == MN_MAP ) CL_MapClick( x, y );
-			else if ( mouseSpace == MS_MENU ) MN_ExecuteActions( menu, node->click );
+			else if ( node->type == MN_BASEMAP ) MN_BaseMapClick( node, x, y );
+			else if ( node->type == MN_MAP ) MN_MapClick( node, x, y );
+			else if ( node->type == MN_MODEL ) MN_ModelClick( node );
+			else if ( node->type == MN_TEXT ) MN_TextClick( node, mouseOver );
+			else MN_ExecuteActions( menu, node->click );
 		}
 
-		if ( menu->renderNode )
+		if ( menu->renderNode || menu->popupNode )
+			// don't care about non-rendered windows
+			return;
+	}
+}
+
+
+/*
+=================
+MN_RightClick
+=================
+*/
+void MN_RightClick( int x, int y )
+{
+	menuNode_t		*node;
+	menu_t			*menu;
+	int		sp, mouseOver;
+
+	sp = menuStackPos;
+
+	while ( sp > 0 )
+	{
+		menu = menuStack[--sp];
+		for ( node = menu->firstNode; node; node = node->next )
+		{
+			if ( !node->rclick ) continue;
+			mouseOver = MN_CheckNodeZone( node, x, y );
+			if ( !mouseOver ) continue;
+
+			// found a node -> do actions
+			if ( node->type == MN_BASEMAP ) mouseSpace = MS_SHIFTBASEMAP;
+			else if ( node->type == MN_MAP ) mouseSpace = MS_SHIFTMAP;
+			else MN_ExecuteActions( menu, node->rclick );
+		}
+
+		if ( menu->renderNode || menu->popupNode )
+			// don't care about non-rendered windows
+			return;
+	}
+}
+
+
+/*
+=================
+MN_MiddleClick
+=================
+*/
+void MN_MiddleClick( int x, int y )
+{
+	menuNode_t		*node;
+	menu_t			*menu;
+	int		sp, mouseOver;
+
+	sp = menuStackPos;
+
+	while ( sp > 0 )
+	{
+		menu = menuStack[--sp];
+		for ( node = menu->firstNode; node; node = node->next )
+		{
+			if ( !node->mclick ) continue;
+			mouseOver = MN_CheckNodeZone( node, x, y );
+			if ( !mouseOver ) continue;
+
+			// found a node -> do actions
+			if ( node->type == MN_BASEMAP ) mouseSpace = MS_ZOOMBASEMAP;
+			else if ( node->type == MN_MAP ) mouseSpace = MS_ZOOMMAP;
+			else MN_ExecuteActions( menu, node->mclick );
+		}
+
+		if ( menu->renderNode || menu->popupNode )
 			// don't care about non-rendered windows
 			return;
 	}
@@ -727,38 +1142,107 @@ void MN_DrawItem( vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 
 	od = &csi.ods[item.t];
 
-	mi.name = od->model;
-	mi.origin = origin;
-	mi.angles = angles;
-	mi.center = od->center;
-	mi.scale = size;
-
-	if ( od->scale ) VectorScale( scale, od->scale, size );
-	else VectorCopy( scale, size );
-
-	VectorCopy( org, origin );
-	if ( x || y || sx || sy )
+	if ( od->image[0] )
 	{
-		origin[0] += C_UNIT / 2.0 * sx;
-		origin[1] += C_UNIT / 2.0 * sy;
-		origin[0] += C_UNIT * x;
-
-		origin[1] += C_UNIT * y;
+		// draw the image
+		// fix fixed size
+		re.DrawNormPic( org[0] + C_UNIT/2.0*sx + C_UNIT*x, org[1] + C_UNIT/2.0*sy + C_UNIT*y, 
+			80, 80, 0, 0, 0, 0, ALIGN_CC, true, od->image );
 	}
+	else if ( od->model[0] )
+	{
+		// draw model, if there is no image
+		mi.name = od->model;
+		mi.origin = origin;
+		mi.angles = angles;
+		mi.center = od->center;
+		mi.scale = size;
 
-	mi.frame = 0;
-	mi.oldframe = 0;
-	mi.backlerp = 0;
+		if ( od->scale ) VectorScale( scale, od->scale, size );
+		else VectorCopy( scale, size );
 
-	Vector4Copy( color, col );
-	if ( strcmp( "ammo", od->type ) && !item.a ) { col[1] *= 0.5; col[2] *= 0.5; }
-	mi.color = col;
+		VectorCopy( org, origin );
+		if ( x || y || sx || sy )
+		{
+			origin[0] += C_UNIT / 2.0 * sx;
+			origin[1] += C_UNIT / 2.0 * sy;
+			origin[0] += C_UNIT * x;
 
-	// draw the model
-	re.DrawModelDirect( &mi, NULL, NULL );
+			origin[1] += C_UNIT * y;
+		}
+
+		mi.frame = 0;
+		mi.oldframe = 0;
+		mi.backlerp = 0;
+
+		Vector4Copy( color, col );
+		if ( od->weapon && od->ammo && !item.a ) { col[1] *= 0.5; col[2] *= 0.5; }
+		mi.color = col;
+
+		// draw the model
+		re.DrawModelDirect( &mi, NULL, NULL );
+	}
 }
 
 
+/*
+=================
+MN_DrawMapMarkers
+=================
+*/
+void MN_DrawMapMarkers( menuNode_t *node )
+{
+	aircraft_t *air;
+	actMis_t *ms;
+	int i, x, y;
+
+	// draw mission pics
+	menuText[TEXT_STANDARD] = NULL;
+	for ( i = 0; i < ccs.numMissions; i++ )
+	{
+		ms = &ccs.mission[i];
+		if ( !MN_MapToScreen( node, ms->realPos, &x, &y ) )
+			continue;
+		re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, "cross" );
+		if ( ms == selMis )
+		{
+			menuText[TEXT_STANDARD] = ms->def->text;
+			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "circle" );
+
+			if ( CL_MapIsNight( ms->realPos ) ) Cvar_Set( "mn_mapdaytime", "Night" );
+			else Cvar_Set( "mn_mapdaytime", "Day" );
+		}
+	}
+
+	// draw base pics
+	for ( i = 0; i < numBases; i++ )
+		if ( bmBases[i].founded )
+		{
+			if ( !MN_MapToScreen( node, bmBases[i].pos, &x, &y ) )
+				continue;
+			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, "base" );
+		}
+
+	// draw aircraft
+	for ( i = 0, air = ccs.air; i < ccs.numAir; i++, air++ )
+		if ( air->status )
+		{
+			if ( !MN_MapToScreen( node, air->pos, &x, &y ) )
+				continue;
+			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, "aircraft" );
+
+			if ( air->status >= AIR_TRANSIT )
+			{
+				mapline_t path;
+				path.n = air->route.n - air->point;
+				memcpy( path.p+1, air->route.p + air->point+1, (path.n-1) * sizeof(vec2_t) );
+				memcpy( path.p, air->pos, sizeof(vec2_t) );
+				MN_MapDrawLine( node, &path );
+			}
+		}
+}
+
+							
 /*
 =================
 MN_DrawMenus
@@ -770,49 +1254,51 @@ void MN_DrawMenus( void )
 	menuNode_t	*node;
 	menu_t		*menu;
 	animState_t	*as;
-	char		*ref;
+	char		*ref, *font;
 	char		source[MAX_VAR];
-	int			sp;
+	int			sp, pp;
 	item_t		item;
 	vec4_t		color;
-	float		width;
-	qboolean	mouseOver;
+	int		mouseOver = 0;
 
 	// render every menu on top of a menu with a render node
+	pp = 0;
 	sp = menuStackPos;
 	while ( sp > 0 )
+	{
 		if ( menuStack[--sp]->renderNode ) break;
+		if ( menuStack[sp]->popupNode ) pp = sp;
+	}
+	if ( pp < sp ) pp = sp;
 
 	while ( sp < menuStackPos )
 	{
 		menu = menuStack[sp++];
 		for ( node = menu->firstNode; node; node = node->next )
 			if ( !node->invis && (node->data[0] || 
-				node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_MAP) )
+				node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP) )
 			{
 				// mouse effects
-				mouseOver = MN_CheckNodeZone( node, mx, my );
-				if ( mouseOver != node->state )
+				if ( sp > pp )
 				{
-					if ( mouseOver ) MN_ExecuteActions( menu, node->mouseIn );
-					else MN_ExecuteActions( menu, node->mouseOut );
-					node->state = mouseOver;
+					// in and out events
+					mouseOver = MN_CheckNodeZone( node, mx, my );
+					if ( mouseOver != node->state )
+					{
+						if ( mouseOver ) MN_ExecuteActions( menu, node->mouseIn );
+						else MN_ExecuteActions( menu, node->mouseOut );
+						node->state = mouseOver;
+					}
 				}
 
 				// mouse darken effect
-				if ( node->mousefx && mouseOver )
-				{
-					VectorScale( node->color, 0.8, color );
-					color[3] = node->color[3];
-					re.DrawColor( color );		
-				} else {
-					VectorCopy( node->color, color );
-					color[3] = node->color[3];
-					re.DrawColor( node->color );
-				}
+				VectorScale( node->color, 0.8, color );
+				color[3] = node->color[3];
+				if ( node->mousefx && node->type == MN_PIC && mouseOver && sp > pp ) re.DrawColor( color );		
+				else re.DrawColor( node->color );
 
 				// get the reference
-				if ( node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_TEXT && node->type != MN_MAP )
+				if ( node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_TEXT && node->type != MN_MAP )
 				{
 					ref = MN_GetReferenceString( menu, node->data[0] );
 					if ( !ref ) 
@@ -841,63 +1327,88 @@ void MN_DrawMenus( void )
 						node->texh[0] = node->texl[0] + node->size[0];
 					}
 					re.DrawNormPic( node->pos[0], node->pos[1], node->size[0], node->size[1], 
-						node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, false, ref );
+						node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref );
 					break;
 
 				case MN_STRING:
+					if ( node->data[1] ) font = MN_GetReferenceString( menu, node->data[1] );
+					else font = "f_small";
 					if ( !node->mousefx || cl.time % 1000 < 500 )
-						re.DrawPropString( "f_small", node->align, node->pos[0], node->pos[1], ref );
+						re.DrawPropString( font, node->align, node->pos[0], node->pos[1], ref );
 					else
-						re.DrawPropString( "f_small", node->align, node->pos[0], node->pos[1], va( "%sI\n", ref ) );
+						re.DrawPropString( font, node->align, node->pos[0], node->pos[1], va( "%s*\n", ref ) );
 					break;
 
 				case MN_TEXT:
-					if ( menuText )
+					if ( menuText[node->num] )
 					{
-            char textCopy[256];
-						char *pos, *tab, *end, *font;
-						int  y;
+						char textCopy[1024];
+						char *pos, *tab1, *tab2, *end;
+						int  y, line;
 
-            strncpy( textCopy, menuText, 256 );
+						strncpy( textCopy, menuText[node->num], 1023 );
+						if ( textCopy[strlen(textCopy)] != '\n' ) strcat( textCopy, "\n" );
+
+						if ( node->data[1] ) font = MN_GetReferenceString( menu, node->data[1] );
+						else font = "f_small";
+
 						pos = textCopy;
 						y = node->pos[1];
+						line = 0;
 						do {
-							if ( *pos == '\\' ) { pos++; font = "f_big"; } 
-							else font = "f_small";
-
+							line++;
 							end = strchr( pos, '\n' );
 							if ( !end ) break;
-							tab = strchr( pos, '\t' );
-
-							if ( tab && tab < end ) *tab = 0;
 							*end = 0;
+
+							tab1 = strchr( pos, '\t' );
+							if ( tab1 ) *tab1 = 0;
+
+							if ( node->mousefx && line == mouseOver ) re.DrawColor( color );		
+
 							re.DrawPropString( font, ALIGN_UL, node->pos[0], y, pos );
-							if ( tab && tab < end ) 
+							if ( tab1 ) 
 							{
-								*tab = '\t';
-								re.DrawPropString( font, ALIGN_UR, node->pos[0] + node->size[0], y, tab+1 );
+								*tab1 = '\t';
+								tab2 = strchr( tab1+1,'\t' );
+								if ( tab2 )
+								{
+									*tab2 = 0;
+									re.DrawPropString( font, node->align, node->texh[1], y, tab1+1 );
+									*tab2 = '\t';
+									re.DrawPropString( font, ALIGN_UR, node->pos[0] + node->size[0], y, tab2+1 );
+								}
+								else
+								{
+									if ( !node->texh[1] ) re.DrawPropString( font, ALIGN_UR, node->pos[0] + node->size[0], y, tab1+1 );
+									else re.DrawPropString( font, node->align, node->texh[1], y, tab1+1 );
+								}
 							}
 							*end = '\n';
 
-							pos = end+1;
+							if ( node->mousefx && line == mouseOver ) re.DrawColor( node->color );		
 
-							if ( !strcmp( font, "f_big" ) ) y += 68;
-							else y += 20;
+							pos = end+1;
+							y += node->texh[0];
 						} 
 						while ( end );
 					}
 					break;
 
 				case MN_BAR:
-					width = node->size[0] * MN_GetReferenceFloat( menu, node->data[1] ) / MN_GetReferenceFloat( menu, node->data[0] );
-					re.DrawFill( node->pos[0], node->pos[1], width, node->size[1], node->align, color );
+					{
+						float fac, width;
+						fac = node->size[0] / ( MN_GetReferenceFloat( menu, node->data[0] ) - MN_GetReferenceFloat( menu, node->data[1] ) );
+						width = ( MN_GetReferenceFloat( menu, node->data[2] ) - MN_GetReferenceFloat( menu, node->data[1] ) ) * fac; 
+						re.DrawFill( node->pos[0], node->pos[1], width, node->size[1], node->align, mouseOver ? color : node->color);
+					}
 					break;
 
 				case MN_CONTAINER:
 					if ( menuInventory )
 					{
 						vec3_t		scale;
-						invChain_t	*ic;
+						invList_t	*ic;
 
 						VectorSet( scale, 3.5, 3.5, 3.5 );
 						color[0] = color[1] = color[2] = 0.5;
@@ -906,35 +1417,23 @@ void MN_DrawMenus( void )
 						if ( node->mousefx == C_UNDEFINED ) MN_FindContainer( node );
 						if ( node->mousefx == NONE ) break;
 
-						if ( node->mousefx == csi.idRight ) 
+						if ( csi.ids[node->mousefx].single ) 
 						{ 
-							// right hand
-							MN_DrawItem( node->pos, menuInventory->right, node->size[0]/C_UNIT, node->size[1]/C_UNIT, 0, 0, scale, color );
-						}
-						else if ( node->mousefx == csi.idLeft ) 
-						{
-							// left hand
-							if ( menuInventory->left.t == NONE )
+							// single item container (special case for left hand)
+							if ( node->mousefx == csi.idLeft && !menuInventory->c[csi.idLeft] )
 							{
 								color[3] = 0.5;
-								if ( menuInventory->right.t != NONE && csi.ods[menuInventory->right.t].twohanded )
-									MN_DrawItem( node->pos, menuInventory->right, node->size[0]/C_UNIT, node->size[1]/C_UNIT, 0, 0, scale, color );
+								if ( menuInventory->c[csi.idRight] && csi.ods[menuInventory->c[csi.idRight]->item.t].twohanded )
+									MN_DrawItem( node->pos, menuInventory->c[csi.idRight]->item, node->size[0]/C_UNIT, node->size[1]/C_UNIT, 0, 0, scale, color );
 							}
-							else MN_DrawItem( node->pos, menuInventory->left, node->size[0]/C_UNIT, node->size[1]/C_UNIT, 0, 0, scale, color );
-						}
-						else if ( node->mousefx == csi.idFloor || node->mousefx == csi.idEquip )
-						{
-							// floor container
-							if ( menuInventory->floor )
-								for ( ic = menuInventory->floor->inv; ic; ic = ic->next )
-									MN_DrawItem( node->pos, ic->item, csi.ods[ic->item.t].sx, csi.ods[ic->item.t].sy, ic->x, ic->y, scale, color );
+							else if ( menuInventory->c[node->mousefx] )
+								MN_DrawItem( node->pos, menuInventory->c[node->mousefx]->item, node->size[0]/C_UNIT, node->size[1]/C_UNIT, 0, 0, scale, color );
 						}
 						else
 						{
 							// standard container
-							for ( ic = menuInventory->inv; ic; ic = ic->next )
-								if ( ic->container == node->mousefx )
-									MN_DrawItem( node->pos, ic->item, csi.ods[ic->item.t].sx, csi.ods[ic->item.t].sy, ic->x, ic->y, scale, color );
+							for ( ic = menuInventory->c[node->mousefx]; ic; ic = ic->next )
+								MN_DrawItem( node->pos, ic->item, csi.ods[ic->item.t].sx, csi.ods[ic->item.t].sy, ic->x, ic->y, scale, color );
 						}
 					}
 					break;
@@ -944,7 +1443,10 @@ void MN_DrawMenus( void )
 					color[3] = 1;
 
 					if ( node->mousefx == C_UNDEFINED ) MN_FindContainer( node );
-					if ( node->mousefx == NONE ) break;
+					if ( node->mousefx == NONE ) {
+						Com_Printf( _("no container...\n") );
+						break;
+					}
 
 					for ( item.t = 0; item.t < csi.numODs; item.t++ )
 						if ( !strcmp( ref, csi.ods[item.t].kurz ) )
@@ -953,20 +1455,27 @@ void MN_DrawMenus( void )
 						break;
 
 					item.a = 1;
-					MN_DrawItem( node->pos, item, 0, 0, 0, 0, node->size, color );
+					MN_DrawItem( node->pos, item, 0, 0, 0, 0, node->scale, color );
 					break;
 
 				case MN_MODEL:
 					// set model properties
-					mi.model = re.RegisterModel(source);
+					mi.model = re.RegisterModel( source );
 					if ( !mi.model ) break;
 
 					mi.name = source;
-					mi.origin = node->pos;
+					mi.origin = node->origin;
 					mi.angles = node->angles;
-					mi.scale = node->size;
-					mi.center = 0;
-					mi.color = color;
+					mi.scale = node->scale;
+					mi.center = node->center;
+					mi.color = node->color;
+
+					// autoscale?
+					if ( !node->scale[0] )
+					{
+						mi.scale = NULL;
+						mi.center = node->size;
+					}
 
 					// get skin
 					if ( node->data[3] && *(char *)node->data[3] )
@@ -975,7 +1484,7 @@ void MN_DrawMenus( void )
 						mi.skin = 0;
 
 					// do animations
-					if ( node->data[1] )
+					if ( node->data[1] && *(char *)node->data[1] )
 					{
 						ref = MN_GetReferenceString( menu, node->data[1] );
 						if ( !node->data[4] )
@@ -984,10 +1493,18 @@ void MN_DrawMenus( void )
 							as = (animState_t *)curadata;
 							curadata += sizeof( animState_t );
 							memset( as, 0, sizeof( animState_t ) );
-							re.AnimAppend( as, mi.model, (char *)node->data[1] );
+							re.AnimChange( as, mi.model, ref );
 							node->data[4] = as;
 						} 
-						else as = node->data[4];
+						else 
+						{
+							// change anim if needed
+							char *anim;
+							as = node->data[4];
+							anim = re.AnimGetName( as, mi.model );
+							if ( anim && strcmp( anim, ref ) )
+								re.AnimChange( as, mi.model, ref );
+						}
 						re.AnimRun( as, mi.model, cls.frametime*1000 );
 
 						mi.frame = as->frame;
@@ -1014,14 +1531,27 @@ void MN_DrawMenus( void )
 						while ( *tag && *tag != ' ' ) tag++;
 						*tag++ = 0;
 
-						for ( search = menu->firstNode; search != node; search = search->next )
+						for ( search = menu->firstNode; search != node && search; search = search->next )
 							if ( search->type == MN_MODEL && !strcmp( search->name, parent ) )
 							{
-								pmi.name = MN_GetReferenceString( menu, search->data[0] );
-								pmi.origin = search->pos;
+								char model[MAX_VAR];
+								strncpy( model, MN_GetReferenceString( menu, search->data[0] ), MAX_VAR );
+
+								pmi.model = re.RegisterModel( model );
+								if ( !pmi.model ) break;
+
+								pmi.name = model;
+								pmi.origin = search->origin;
 								pmi.angles = search->angles;
-								pmi.scale = search->size;
-								pmi.center = 0;
+								pmi.scale = search->scale;
+								pmi.center = search->center;
+
+								// autoscale?
+								if ( !node->scale[0] )
+								{
+									mi.scale = NULL;
+									mi.center = node->size;
+								}
 
 								as = search->data[4];
 								pmi.frame = as->frame;
@@ -1036,23 +1566,32 @@ void MN_DrawMenus( void )
 
 				case MN_MAP:
 					{
-						mission_t	*ms;
-						int	i;
+						float q;
 
-						menuText = NULL;
-						for ( i = 0; i < numActMis; i++ )
+						// advance time
+						if ( !curCampaign ) break;
+						CL_CampaignRun();
+
+						// draw the map
+						q = (ccs.date.day % 365 + (float)(ccs.date.sec/(3600*6))/4) * 2*M_PI/365 - M_PI;
+						re.DrawDayAndNight( node->pos[0], node->pos[1], node->size[0], node->size[1], (float)ccs.date.sec/(3600*24), q, 
+							ccs.center[0], ccs.center[1], 0.5/ccs.zoom );
+
+						// draw markers
+						MN_DrawMapMarkers( node );
+
+						// display text
+						switch ( mapAction )
 						{
-							ms = &missions[actMis[i]];
-							re.DrawNormPic( ms->pos[0], ms->pos[1], 32, 32, 0, 0, 0, 0, ALIGN_CC, false, "cross" );
-							if ( actMis[i] == selMission )
-							{
-								menuText = ms->text;
-								re.DrawNormPic( ms->pos[0], ms->pos[1], 32, 32, 0, 0, 0, 0, ALIGN_CC, true, "circle" );
-							}
+						case MA_NEWBASE:
+							menuText[TEXT_STANDARD] = _("Select the desired location of the\nnew base on the map.\n");
+							break;
 						}
-						if ( !numOnTeam || selMission == -1 )
-							menuText = "Assemble a team and select\na mission on the map above.\n";
 					}
+					break;
+
+				case MN_BASEMAP:
+					MN_DrawBase();
 					break;
 				}
 		}
@@ -1097,8 +1636,6 @@ void MN_PushMenu( char *name )
 {
 	int		i;
 
-
-
 	for ( i = 0; i < numMenus; i++ )
 		if ( !strcmp( menus[i].name, name ) )
 		{
@@ -1107,7 +1644,7 @@ void MN_PushMenu( char *name )
 			if ( menuStackPos < MAX_MENUSTACK )
 				menuStack[menuStackPos++] = &menus[i];
 			else
-				Com_Printf( "Menu stack overflow\n" );
+				Com_Printf( _("Menu stack overflow\n") );
 
 			// initialize it
 			if ( menus[i].initNode )
@@ -1117,7 +1654,7 @@ void MN_PushMenu( char *name )
 			return;
 		}
 
-	Com_Printf( "Didn't find menu \"%s\"\n", name );
+	Com_Printf( _("Didn't find menu \"%s\"\n"), name );
 }
 
 void MN_PushMenu_f( void )
@@ -1151,17 +1688,23 @@ void MN_PopMenu( qboolean all )
 			MN_ExecuteActions( menuStack[menuStackPos], menuStack[menuStackPos]->closeNode->click );
 	}
 
-	if ( !all && menuStackPos == 0 ) 
+	if ( !all && menuStackPos == 0 )
+	{ 
 		if ( !strcmp( menuStack[0]->name, mn_main->string ) )
 		{
-			if ( *mn_active->string ) MN_PushMenu( mn_active->string );
-			if ( !menuStackPos ) MN_PushMenu( mn_main->string );
+			if ( *mn_active->string ) 
+				MN_PushMenu( mn_active->string );
+			if ( !menuStackPos ) 
+				MN_PushMenu( mn_main->string );
 		} else {
-			if ( *mn_main->string ) MN_PushMenu( mn_main->string );
-			if ( !menuStackPos ) MN_PushMenu( mn_active->string );
+			if ( *mn_main->string ) 
+				MN_PushMenu( mn_main->string );
+			if ( !menuStackPos ) 
+				MN_PushMenu( mn_active->string );
 		}
+	}
 
-//	cls.key_dest = key_game;
+	cls.key_dest = key_game;
 }
 
 void MN_PopMenu_f( void )
@@ -1177,6 +1720,12 @@ void MN_PopMenu_f( void )
 	}
 }
 
+
+/*
+=================
+MN_Modify_f
+=================
+*/
 void MN_Modify_f( void )
 {
 	float	value;
@@ -1195,11 +1744,135 @@ void MN_Modify_f( void )
 
 /*
 =================
+MN_ModifyWrap_f
+=================
+*/
+void MN_ModifyWrap_f( void )
+{
+	float	value;
+
+	if ( Cmd_Argc() < 5 )
+		Com_Printf( "usage: mn_modifywrap <name> <amount> <min> <max>\n" );
+
+	value = Cvar_VariableValue( Cmd_Argv(1) );
+	value += atof( Cmd_Argv(2) );
+	if ( value < atof( Cmd_Argv(3) ) ) value = atof( Cmd_Argv(4) );
+	else if ( value > atof( Cmd_Argv(4) ) ) value = atof( Cmd_Argv(3) );
+
+	Cvar_SetValue( Cmd_Argv(1), value );
+}
+
+
+/*
+=================
+MN_ModifyString_f
+=================
+*/
+void MN_ModifyString_f( void )
+{
+	qboolean next;
+	char	*current, *list, *tp;
+	char	token[MAX_VAR], last[MAX_VAR], first[MAX_VAR];
+	int		add;
+
+	if ( Cmd_Argc() < 4 )
+		Com_Printf( "usage: mn_modifystring <name> <amount> <list>\n" );
+
+	current = Cvar_VariableString( Cmd_Argv(1) );
+	add = atoi( Cmd_Argv(2) );
+	list = Cmd_Argv(3);
+	last[0] = 0;
+	first[0] = 0;
+	next = false;
+
+	while ( add )
+	{
+		tp = token;
+		while ( *list && *list != ':' ) *tp++ = *list++;
+		if ( *list ) list++;
+		*tp = 0;
+
+		if ( *token && !first[0] ) strncpy( first, token, MAX_VAR );
+
+		if ( !*token ) 
+		{
+			if ( add < 0 || next ) Cvar_Set( Cmd_Argv(1), last );
+			else Cvar_Set( Cmd_Argv(1), first );
+			return;
+		}
+
+		if ( next ) 
+		{
+			Cvar_Set( Cmd_Argv(1), token );
+			return;
+		}
+
+		if ( !strcmp( token, current ) )
+		{
+			if ( add < 0 ) 
+			{
+				if ( last[0] ) Cvar_Set( Cmd_Argv(1), last );
+				else Cvar_Set( Cmd_Argv(1), first );
+				return;
+			} 
+			else next = true;
+		}
+		strncpy( last, token, MAX_VAR );
+	}
+}
+
+
+/*
+=================
+MN_Translate_f
+=================
+*/
+void MN_Translate_f( void )
+{
+	qboolean next;
+	char	*current, *list, *orig, *trans;
+	char	original[MAX_VAR], translation[MAX_VAR];
+
+	if ( Cmd_Argc() < 4 )
+		Com_Printf( "usage: mn_translate <source> <dest> <list>\n" );
+
+	current = Cvar_VariableString( Cmd_Argv(1) );
+	list = Cmd_Argv(3);
+	next = false;
+
+	while ( *list )
+	{
+		orig = original;
+		while ( *list && *list != ':' ) *orig++ = *list++;
+		*orig = 0;
+		list++;
+
+		trans = translation;
+		while ( *list && *list != ',' ) *trans++ = *list++;
+		*trans = 0;
+		list++;
+
+		if ( !strcmp( current, original ) )
+		{
+			Cvar_Set( Cmd_Argv(2), translation );
+			return;
+		}
+	}
+
+	// nothing found, copy value
+	Cvar_Set( Cmd_Argv(2), current );
+}
+
+
+/*
+=================
 MN_ResetMenus
 =================
 */
 void MN_ResetMenus( void )
 {
+	int i;
+
 	// reset menu structures
 	numActions = 0;
 	numNodes = 0;
@@ -1208,10 +1881,19 @@ void MN_ResetMenus( void )
 
 	// add commands
 	mn_escpop = Cvar_Get( "mn_escpop", "1", 0 );
+	Cvar_Set( "mn_main", "main" );
+	Cvar_Set( "mn_sequence", "sequence" );
 
+	Cmd_AddCommand( "maplist", CL_ListMaps_f );
+	Cmd_AddCommand( "getmaps", MN_GetMaps_f );
+	Cmd_AddCommand( "mn_nextmap", MN_NextMap );
+	Cmd_AddCommand( "mn_prevmap", MN_PrevMap );
 	Cmd_AddCommand( "mn_push", MN_PushMenu_f );
 	Cmd_AddCommand( "mn_pop", MN_PopMenu_f );
 	Cmd_AddCommand( "mn_modify", MN_Modify_f );
+	Cmd_AddCommand( "mn_modifywrap", MN_ModifyWrap_f );
+	Cmd_AddCommand( "mn_modifystring", MN_ModifyString_f );
+	Cmd_AddCommand( "mn_translate", MN_Translate_f );
 
 	// get action data memory
 	if ( adataize )
@@ -1223,6 +1905,14 @@ void MN_ResetMenus( void )
 		adataize = Hunk_End();
 	}
 	curadata = adata;
+
+	// reset menu texts
+	for ( i = 0; i < MAX_MENUTEXTS; i++ )
+		menuText[i] = NULL;
+
+	// reset ufopedia & basemanagement
+	MN_ResetUfopedia();
+	MN_ResetBaseManagement();
 }
 
 /*
@@ -1249,9 +1939,9 @@ MENU PARSING
 MN_ParseAction
 =================
 */
-int MN_ParseAction( menuAction_t *action, char **text, char **token )
+qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 {
-	char			*errhead = "MN_ParseAction: unexptected end of file (in event)";
+	char			*errhead = _("MN_ParseAction: unexptected end of file (in event)");
 	menuAction_t	*lastAction;
 	menuNode_t		*node;
 	qboolean		found;
@@ -1344,7 +2034,7 @@ int MN_ParseAction( menuAction_t *action, char **text, char **token )
 
 				if ( !val->type )
 				{
-					Com_Printf( "MN_ParseAction: token \"%s\" isn't a node property (in event)\n", *token );
+					Com_Printf( _("MN_ParseAction: token \"%s\" isn't a node property (in event)\n"), *token );
 					curadata = action->data;
 					lastAction->next = NULL;
 					numActions--;
@@ -1406,7 +2096,7 @@ int MN_ParseAction( menuAction_t *action, char **text, char **token )
 			return true;
 		} else {
 			// unknown token, print message and continue
-			Com_Printf( "MN_ParseAction: unknown token \"%s\" ignored (in event)\n", *token );
+			Com_Printf( _("MN_ParseAction: unknown token \"%s\" ignored (in event)\n"), *token );
 		}
 	} while ( *text );
 
@@ -1418,9 +2108,9 @@ int MN_ParseAction( menuAction_t *action, char **text, char **token )
 MN_ParseNodeBody
 =================
 */
-int MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
+qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 {
-	char		*errhead = "MN_ParseNodeBody: unexptected end of file (node";
+	char		*errhead = _("MN_ParseNodeBody: unexptected end of file (node");
 	qboolean	found;
 	value_t	*val;
 	int		i;
@@ -1530,7 +2220,7 @@ int MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 			return true;
 		} else {
 			// unknown token, print message and continue
-			Com_Printf( "MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\")\n", *token, node->name );
+			Com_Printf( _("MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\")\n"), *token, node->name );
 		}
 	} while ( *text );
 
@@ -1543,9 +2233,9 @@ int MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 MN_ParseMenuBody
 =================
 */
-int MN_ParseMenuBody( menu_t *menu, char **text )
+qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 {
-	char		*errhead = "MN_ParseMenuBody: unexptected end of file (menu";
+	char		*errhead = _("MN_ParseMenuBody: unexptected end of file (menu");
 	char		*token;
 	qboolean	found;
 	menuNode_t	*node, *lastNode;
@@ -1577,7 +2267,7 @@ int MN_ParseMenuBody( menu_t *menu, char **text )
 						if ( !strcmp( token, node->name ) )
 						{
 							if ( node->type != i )
-								Com_Printf( "MN_ParseMenuBody: node prototype type change (menu \"%s\")\n", menu->name );
+								Com_Printf( _("MN_ParseMenuBody: node prototype type change (menu \"%s\")\n"), menu->name );
 							break;
 						}
 
@@ -1605,21 +2295,28 @@ int MN_ParseMenuBody( menu_t *menu, char **text )
 						if ( !menu->initNode )
 							menu->initNode = node;
 						else
-							Com_Printf( "MN_ParseMenuBody: second init function ignored (menu \"%s\")\n", menu->name );
+							Com_Printf( _("MN_ParseMenuBody: second init function ignored (menu \"%s\")\n"), menu->name );
 					}
 					if ( node->type == MN_FUNC && !strcmp( node->name, "close" ) )
 					{
 						if ( !menu->closeNode )
 							menu->closeNode = node;
 						else
-							Com_Printf( "MN_ParseMenuBody: second close function ignored (menu \"%s\")\n", menu->name );
+							Com_Printf( _("MN_ParseMenuBody: second close function ignored (menu \"%s\")\n"), menu->name );
 					}
 					if ( node->type == MN_ZONE && !strcmp( node->name, "render" ) )
 					{
-						if ( !menu->renderNode )
+						if ( !menu->renderNode ) 
 							menu->renderNode = node;
 						else
-							Com_Printf( "MN_ParseMenuBody: second render node ignored (menu \"%s\")\n", menu->name );
+							Com_Printf( _("MN_ParseMenuBody: second render node ignored (menu \"%s\")\n"), menu->name );
+					}
+					if ( node->type == MN_ZONE && !strcmp( node->name, "popup" ) )
+					{
+						if ( !menu->popupNode ) 
+							menu->popupNode = node;
+						else
+							Com_Printf( _("MN_ParseMenuBody: second popup node ignored (menu \"%s\")\n"), menu->name );
 					}
 					if ( node->type == MN_CONTAINER )
 						node->mousefx = C_UNDEFINED;
@@ -1636,7 +2333,7 @@ int MN_ParseMenuBody( menu_t *menu, char **text )
 					{
 						if ( !MN_ParseNodeBody( node, text, &token ) )
 						{
-							Com_Printf( "MN_ParseMenuBody: node with bad body ignored (menu \"%s\")\n", menu->name );
+							Com_Printf( _("MN_ParseMenuBody: node with bad body ignored (menu \"%s\")\n"), menu->name );
 							numNodes--;
 							continue;
 						}
@@ -1661,7 +2358,7 @@ int MN_ParseMenuBody( menu_t *menu, char **text )
 			return true;
 		} else {
 			// unknown token, print message and continue
-			Com_Printf( "MN_ParseMenuBody: unknown token \"%s\" ignored (menu \"%s\")\n", *token, menu->name );
+			Com_Printf( _("MN_ParseMenuBody: unknown token \"%s\" ignored (menu \"%s\")\n"), *token, menu->name );
 		}
 
 	} while ( *text );
@@ -1688,7 +2385,7 @@ void MN_ParseMenu( char *name, char **text )
 
 	if ( i < numMenus )
 	{
-		Com_Printf( "MN_ParseMenus: menu \"%s\" with same name found, second ignored\n", name );
+		Com_Printf( _("MN_ParseMenus: menu \"%s\" with same name found, second ignored\n"), name );
 		return;
 	}
 
@@ -1703,7 +2400,7 @@ void MN_ParseMenu( char *name, char **text )
 
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( "MN_ParseMenus: menu \"%s\" without body ignored\n", menu->name );
+		Com_Printf( _("MN_ParseMenus: menu \"%s\" without body ignored\n"), menu->name );
 		numMenus--;
 		return;
 	}
@@ -1711,7 +2408,7 @@ void MN_ParseMenu( char *name, char **text )
 	// parse it's body
 	if ( !MN_ParseMenuBody( menu, text ) )
 	{
-		Com_Printf( "MN_ParseMenus: menu \"%s\" with bad body ignored\n", menu->name );
+		Com_Printf( _("MN_ParseMenus: menu \"%s\" with bad body ignored\n"), menu->name );
 		numMenus--;
 		return;
 	}
@@ -1719,4 +2416,155 @@ void MN_ParseMenu( char *name, char **text )
 //	Com_Printf( "Nodes: %4i Menu data: %i\n", numNodes, curadata - adata );
 }
 
+// FIXME: does not belong here
+// should be somewhere where othere could use this vars, too
+// maplisting
+#define MAX_MAPS 400
+char* maps[MAX_MAPS];
+int anzInstalledMaps = 0;
+int mapsInstalledInit = 0;
+int mapInstalledIndex = 0;
 
+/*
+================
+FS_GetMap
+FIXME: does not belong here
+================
+*/
+void FS_GetMaps ( void )
+{
+	char	name[MAX_OSPATH];
+	int	len;
+// 	char	*entry;
+	char	*found;
+	char	*path = NULL;
+	char	*baseMapName = NULL;
+	
+	if ( mapsInstalledInit )
+		return;
+		
+	Com_sprintf (name, sizeof(name), "maps/*.bsp", FS_Gamedir());
+	len = strlen(name);
+	mapInstalledIndex = 0;
+	while ( ( path = FS_NextPath( path ) ) )
+	{
+		found = Sys_FindFirst( va("%s/%s", path, name) , 0, 0 );
+		while (found && anzInstalledMaps < MAX_MAPS )
+		{
+			baseMapName = COM_SkipPath ( found );
+			COM_StripExtension ( baseMapName, found );
+			//searched a specific map?
+			maps[anzInstalledMaps] = (char *) malloc ( 256 );
+			if ( maps[anzInstalledMaps] == NULL )
+			{
+				Com_Printf(_("Could not allocate memory in MN_GetMaps\n"));
+				return;
+			}
+			strcpy( maps[anzInstalledMaps], found );
+			anzInstalledMaps++;
+			found = Sys_FindNext( 0, 0 );
+		}
+	}
+	
+	mapsInstalledInit = 1;
+
+	Sys_FindClose ();
+}
+
+/*
+================
+CL_ListMaps_f
+================
+*/
+void CL_ListMaps_f ( void )
+{
+	int i;
+	if ( ! mapsInstalledInit )
+		FS_GetMaps();	
+	
+	for ( i = 0; i < anzInstalledMaps-1; i++ )
+	{
+		Com_Printf("%s\n", maps[i]);
+	}
+}
+
+/*
+================
+MN_MapInfo
+================
+*/
+void MN_MapInfo ( void )
+{
+	// maybe mn_next/prev_map are called before getmaps???
+	if ( !mapsInstalledInit )
+		FS_GetMaps();
+
+	Cvar_Set("mapname", maps[mapInstalledIndex] );
+	if ( FS_CheckFile ( va ( "pics/maps/shots/%s.jpg", maps[mapInstalledIndex] ) ) != -1 )
+	{
+		Cvar_Set("mn_mappic", va ( "maps/shots/%s.jpg", maps[mapInstalledIndex] ) );
+	}
+	else
+	{
+		Cvar_Set("mn_mappic", va ( "maps/shots/na.jpg", maps[mapInstalledIndex] ) );
+	}
+	
+	if ( FS_CheckFile ( va ( "pics/maps/shots/%s_2.jpg", maps[mapInstalledIndex] ) ) != -1 )
+	{
+		Cvar_Set("mn_mappic2", va ( "maps/shots/%s_2.jpg", maps[mapInstalledIndex] ) );
+	}
+	else
+	{
+		Cvar_Set("mn_mappic2", va ( "maps/shots/na.jpg", maps[mapInstalledIndex] ) );
+	}
+	
+	if ( FS_CheckFile ( va ( "pics/maps/shots/%s_3.jpg", maps[mapInstalledIndex] ) ) != -1 )
+	{
+		Cvar_Set("mn_mappic3", va ( "maps/shots/%s_3.jpg", maps[mapInstalledIndex] ) );
+	}
+	else
+	{
+		Cvar_Set("mn_mappic3", va ( "maps/shots/na.jpg", maps[mapInstalledIndex] ) );
+	}
+}
+
+/*
+================
+MN_GetMaps_f
+================
+*/
+void MN_GetMaps_f ( void )
+{
+	if ( ! mapsInstalledInit )
+		FS_GetMaps();
+		
+	MN_MapInfo();
+}
+
+/*
+================
+MN_NextMap
+================
+*/
+void MN_NextMap ( void )
+{
+	if ( mapInstalledIndex < anzInstalledMaps-1 )
+		mapInstalledIndex++;
+	else
+		mapInstalledIndex = 0;
+	MN_MapInfo();
+}
+
+/*
+================
+MN_PrevMap
+================
+*/
+void MN_PrevMap ( void )
+{
+	if ( mapInstalledIndex > 0 )
+		mapInstalledIndex--;
+	else
+		mapInstalledIndex = anzInstalledMaps-1;
+	MN_MapInfo();
+}

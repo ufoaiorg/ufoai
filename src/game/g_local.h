@@ -40,13 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 //==================================================================
 
-#define STR_HP(x)			(75 + x * 60/MAX_SKILL)
-#define DEX_ACC(x)			(1.6 - (float)x * 1.2/MAX_SKILL)
-#define SWF_TU(x)			(26 + x * 14/MAX_SKILL)
-#define CRG_MORAL(x)		(90 + x * 160/MAX_SKILL)
-
-//==================================================================
-
 #define MAX_SPOT_DIST	768
 
 #define P_MASK(p)		(p->num < game.maxplayers ? 1<<(p->num) : 0)
@@ -99,10 +92,6 @@ typedef struct
 
 	player_t	*players;		// [maxplayers]
 
-	// can't store spawnpoint in level, because
-	// it would get overwritten by the savegame restore
-	char		spawnpoint[512];	// needed for coop respawns
-
 	// store latched cvars here that we want to get at often
 	int			maxplayers;
 	int			maxentities;
@@ -128,6 +117,7 @@ typedef struct
 	char		level_name[MAX_QPATH];	// the descriptive name (Outer Base, etc)
 	char		mapname[MAX_QPATH];		// the server name (base1, etc)
 	char		nextmap[MAX_QPATH];		// go here when fraglimit is hit
+	qboolean	routed;
 
 	// intermission state
 	char		*changemap;
@@ -219,6 +209,8 @@ extern	cvar_t	*ai_civilian;
 extern	cvar_t	*ai_equipment;
 extern	cvar_t	*ai_numaliens;
 extern	cvar_t	*ai_numcivilians;
+extern	cvar_t	*ai_numactors;
+extern	cvar_t	*ai_autojoin;
 
 extern	cvar_t	*difficulty;
 
@@ -300,6 +292,9 @@ char	*vtos (vec3_t v);
 
 float vectoyaw (vec3_t vec);
 
+void	G_CompleteRecalcRouting( void );
+void	G_RecalcRouting( edict_t *ent );
+
 
 //
 // g_client.c
@@ -310,6 +305,7 @@ float vectoyaw (vec3_t vec);
 
 #define VT_PERISH		1
 #define VT_NOFRUSTOM	2
+#define VT_FULL			4
 
 void G_ClientAction( player_t *player );
 void G_ClientEndRound( player_t *player );
@@ -323,14 +319,21 @@ void G_ClientDisconnect( player_t *player );
 
 int  G_TestVis( int team, edict_t *check, int flags );
 void G_ClientShoot( player_t *player, int num, pos3_t at, int type );
-void G_ClientMove( player_t *player, int num, pos3_t to, qboolean stop );
+void G_ClientMove( player_t *player, int team, int num, pos3_t to, qboolean stop );
 void G_MoveCalc( int team, pos3_t from, int distance );
+qboolean G_ReactionFire( edict_t *target );
+
+float G_ActorVis( vec3_t from, edict_t *check, qboolean full );
+void G_ClearVisFlags( int team );
+int  G_CheckVis( edict_t *check, qboolean perish );
+void G_GiveTimeUnits( int team );
 
 
 //
 // g_ai.c
 //
 void AI_Run( void );
+void AI_ActorThink( player_t *player, edict_t *ent );
 player_t *AI_CreatePlayer( int team );
 
 //
@@ -385,6 +388,7 @@ struct player_s
 
 	// private to game
 	qboolean	spawned;
+	qboolean	ready;
 	client_persistant_t	pers;
 };
 
@@ -414,9 +418,11 @@ struct edict_s
 
 	edict_t		*owner;
 	int			clipmask;
+	int			modelindex;
 
 	//================================
 
+	int			mapNum;
 	char		*model;
 	float		freetime;			// sv.time when the object was freed
 	
@@ -430,10 +436,12 @@ struct edict_s
 	pos3_t		pos;
 	byte		dir;
 
-	byte		TU;
-	byte		HP;
-	byte		moral;
-	byte		state;
+	int			TU;
+	int			HP;
+	int			AP;
+	int			moral;
+
+	int			state;
 
 	int			team;
 	int			pnum;

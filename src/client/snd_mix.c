@@ -115,7 +115,7 @@ void S_TransferStereo16 (unsigned long *pbuf, int endtime)
 
 	while (lpaintedtime < endtime)
 	{
-	// handle recirculating buffer issues
+		// handle recirculating buffer issues
 		lpos = lpaintedtime & ((dma.samples>>1)-1);
 
 		snd_out = (short *) pbuf + (lpos<<1);
@@ -126,7 +126,7 @@ void S_TransferStereo16 (unsigned long *pbuf, int endtime)
 
 		snd_linear_count <<= 1;
 
-	// write a linear blast of samples
+		// write a linear blast of samples
 		S_WriteLinearBlastStereo16 ();
 
 		snd_p += snd_linear_count;
@@ -232,10 +232,10 @@ void S_PaintChannels(int endtime)
 
 	snd_vol = s_volume->value*256;
 
-//Com_Printf ("%i to %i\n", paintedtime, endtime);
+//	Com_Printf ("%i to %i\n", paintedtime, endtime);
 	while (paintedtime < endtime)
 	{
-	// if paintbuffer is smaller than DMA buffer
+		// if paintbuffer is smaller than DMA buffer
 		end = endtime;
 		if (endtime - paintedtime > PAINTBUFFER_SIZE)
 			end = paintedtime + PAINTBUFFER_SIZE;
@@ -274,10 +274,10 @@ void S_PaintChannels(int endtime)
 				s = i&(MAX_RAW_SAMPLES-1);
 				paintbuffer[i-paintedtime] = s_rawsamples[s];
 			}
-//		if (i != end)
-//			Com_Printf ("partial stream\n");
-//		else
-//			Com_Printf ("full stream\n");
+//			if (i != end)
+//				Com_Printf ("partial stream\n");
+//			else
+//				Com_Printf ("full stream\n");
 			for ( ; i<end ; i++)
 			{
 				paintbuffer[i-paintedtime].left =
@@ -286,7 +286,7 @@ void S_PaintChannels(int endtime)
 		}
 
 
-	// paint in the channels.
+		// paint in the channels.
 		ch = channels;
 		for (i=0; i<MAX_CHANNELS ; i++, ch++)
 		{
@@ -303,7 +303,7 @@ void S_PaintChannels(int endtime)
 				// might be stopped by running out of data
 				if (ch->end - ltime < count)
 					count = ch->end - ltime;
-		
+
 				sc = S_LoadSound (ch->sfx);
 				if (!sc)
 					break;
@@ -314,11 +314,11 @@ void S_PaintChannels(int endtime)
 						S_PaintChannelFrom8(ch, sc, count,  ltime - paintedtime);
 					else
 						S_PaintChannelFrom16(ch, sc, count, ltime - paintedtime);
-	
+
 					ltime += count;
 				}
 
-			// if at end of loop, restart
+				// if at end of loop, restart
 				if (ltime >= ch->end)
 				{
 					if (ch->autosound)
@@ -337,7 +337,7 @@ void S_PaintChannels(int endtime)
 					}
 				}
 			}
-															  
+
 		}
 
 	// transfer out according to DMA format

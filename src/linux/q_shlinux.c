@@ -25,10 +25,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <unistd.h>
 #include <sys/mman.h>
 #include <sys/time.h>
+#include <ctype.h>
 
 #include "../linux/glob.h"
 
 #include "../qcommon/qcommon.h"
+#if defined(__FreeBSD__)
+#include <machine/param.h>
+#endif
 
 //===============================================================================
 
@@ -41,8 +45,13 @@ void *Hunk_Begin (int maxsize)
 	// reserve a huge chunk of memory, but don't commit any yet
 	maxhunksize = maxsize + sizeof(int);
 	curhunksize = 0;
+#if (defined __FreeBSD__)
+	membase = mmap(0, maxhunksize, PROT_READ|PROT_WRITE, 
+		MAP_PRIVATE|MAP_ANON, -1, 0);
+#else
 	membase = mmap(0, maxhunksize, PROT_READ|PROT_WRITE, 
 		MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
+#endif
 	if (membase == NULL || membase == (byte *)-1)
 		Sys_Error("unable to virtual allocate %d bytes", maxsize);
 
@@ -67,8 +76,26 @@ void *Hunk_Alloc (int size)
 int Hunk_End (void)
 {
 	byte *n;
-
+#if defined(__FreeBSD__)
+	size_t old_size = maxhunksize;
+	size_t new_size = curhunksize + sizeof(int);
+	void * unmap_base;
+	size_t unmap_len;
+	
+	new_size = round_page(new_size);
+	old_size = round_page(old_size);
+	if (new_size > old_size)
+		n = 0; /* error */
+	else if (new_size < old_size)
+	{
+		unmap_base = (caddr_t)(membase + new_size);
+		unmap_len = old_size - new_size;
+		n = munmap(unmap_base, unmap_len) + membase;
+	}
+#endif
+#if defined(__linux__)
 	n = mremap(membase, maxhunksize, curhunksize + sizeof(int), 0);
+#endif
 	if (n != membase)
 		Sys_Error("Hunk_End:  Could not remap virtual block (%d)", errno);
 	*((int *)membase) = curhunksize + sizeof(int);
@@ -122,10 +149,12 @@ void Sys_Mkdir (char *path)
 
 char *strlwr (char *s)
 {
+	char* origs = s;
 	while (*s) {
 		*s = tolower(*s);
 		s++;
 	}
+	return origs;
 }
 
 //============================================
@@ -170,10 +199,12 @@ char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)
 //	COM_FilePath (path, findbase);
 	strcpy(findbase, path);
 
-	if ((p = strrchr(findbase, '/')) != NULL) {
+	if ((p = strrchr(findbase, '/')) != NULL) 
+	{
 		*p = 0;
 		strcpy(findpattern, p + 1);
-	} else
+	} 
+	else
 		strcpy(findpattern, "*");
 
 	if (strcmp(findpattern, "*.*") == 0)
@@ -181,11 +212,15 @@ char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)
 	
 	if ((fdir = opendir(findbase)) == NULL)
 		return NULL;
-	while ((d = readdir(fdir)) != NULL) {
-		if (!*findpattern || glob_match(findpattern, d->d_name)) {
+	
+	while ((d = readdir(fdir)) != NULL) 
+	{
+		if (!*findpattern || glob_match(findpattern, d->d_name)) 
+		{
 //			if (*findpattern)
 //				printf("%s matched %s\n", findpattern, d->d_name);
-			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
+			if ( CompareAttributes(findbase, d->d_name, musthave, canhave) ) 
+			{
 				sprintf (findpath, "%s/%s", findbase, d->d_name);
 				return findpath;
 			}
@@ -200,11 +235,14 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 
 	if (fdir == NULL)
 		return NULL;
-	while ((d = readdir(fdir)) != NULL) {
-		if (!*findpattern || glob_match(findpattern, d->d_name)) {
+	while ((d = readdir(fdir)) != NULL) 
+	{
+		if (!*findpattern || glob_match(findpattern, d->d_name)) 
+		{
 //			if (*findpattern)
 //				printf("%s matched %s\n", findpattern, d->d_name);
-			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
+			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) 
+			{
 				sprintf (findpath, "%s/%s", findbase, d->d_name);
 				return findpath;
 			}

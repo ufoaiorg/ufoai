@@ -105,6 +105,7 @@ typedef struct msurface_s
 
 	int			light_s, light_t;	// gl lightmap coordinates
 	int			dlight_s, dlight_t; // gl lightmap coordinates for dynamic lightmaps
+	int			lquant;
 
 	glpoly_t	*polys;				// multiple if warped
 	struct	msurface_s	*texturechain;
@@ -237,6 +238,7 @@ typedef struct model_s
 	int			nummarksurfaces;
 	msurface_t	**marksurfaces;
 
+	int			lightquant;
 	byte		*lightdata;
 
 	// for alias models and skins
@@ -247,12 +249,10 @@ typedef struct model_s
 
 	// tag data
 	char		tagname[MAX_QPATH];
-	int			tagdatasize;
 	void		*tagdata;
 
 	// animation data
 	char		animname[MAX_QPATH];
-	int			animdatasize;
 	int			numanims;
 	manim_t		*animdata;
 } model_t;

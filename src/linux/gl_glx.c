@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -38,6 +38,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdarg.h>
 #include <stdio.h>
 #include <signal.h>
+#include <unistd.h>
+#include <dlfcn.h>
+#ifdef Joystick
+#include <fcntl.h>
+#endif
+
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+#include <X11/keysym.h>
+#include <X11/cursorfont.h>
+
+#include <X11/extensions/xf86dga.h>
+#include <X11/extensions/xf86vmode.h>
 
 #include "../ref_gl/gl_local.h"
 
@@ -46,13 +59,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../linux/rw_linux.h"
 #include "../linux/glw_linux.h"
 
+#ifdef Joystick
+# if defined (__linux__)
+#include <linux/joystick.h>
+# elif defined (__FreeBSD__)
+#include <sys/joystick.h>
+# endif
+#include <glob.h>
+#endif
 #include <GL/glx.h>
-
-#include <X11/keysym.h>
-#include <X11/cursorfont.h>
-
-#include <X11/extensions/xf86dga.h>
-#include <X11/extensions/xf86vmode.h>
 
 glwstate_t glw_state;
 
@@ -60,6 +75,7 @@ static Display *dpy = NULL;
 static int scrnum;
 static Window win;
 static GLXContext ctx = NULL;
+static Atom wmDeleteWindow;
 
 #define KEY_MASK (KeyPressMask | KeyReleaseMask)
 #define MOUSE_MASK (ButtonPressMask | ButtonReleaseMask | \
@@ -74,7 +90,7 @@ static GLXContext ctx = NULL;
 
 static qboolean        mouse_avail;
 static float   mx, my;
-static int	old_mouse_x, old_mouse_y;
+//static int	old_mouse_x, old_mouse_y;
 
 static int win_x, win_y;
 
@@ -85,11 +101,11 @@ static cvar_t	*in_dgamouse;
 static cvar_t	*r_fakeFullscreen;
 
 static XF86VidModeModeInfo **vidmodes;
-static int default_dotclock_vidmode;
+// static int default_dotclock_vidmode;
 static int num_vidmodes;
 static qboolean vidmode_active = false;
 
-static qboolean	mlooking;
+// static qboolean	mlooking;
 
 static qboolean mouse_active = false;
 static qboolean dgamouse = false;
@@ -108,30 +124,29 @@ static cvar_t *freelook;
 
 static Cursor CreateNullCursor(Display *display, Window root)
 {
-    Pixmap cursormask; 
-    XGCValues xgc;
-    GC gc;
-    XColor dummycolour;
-    Cursor cursor;
+	Pixmap cursormask;
+	XGCValues xgc;
+	GC gc;
+	XColor dummycolour;
+	Cursor cursor;
 
-    cursormask = XCreatePixmap(display, root, 1, 1, 1/*depth*/);
-    xgc.function = GXclear;
-    gc =  XCreateGC(display, cursormask, GCFunction, &xgc);
-    XFillRectangle(display, cursormask, gc, 0, 0, 1, 1);
-    dummycolour.pixel = 0;
-    dummycolour.red = 0;
-    dummycolour.flags = 04;
-    cursor = XCreatePixmapCursor(display, cursormask, cursormask,
-          &dummycolour,&dummycolour, 0,0);
-    XFreePixmap(display,cursormask);
-    XFreeGC(display,gc);
-    return cursor;
+	cursormask = XCreatePixmap(display, root, 1, 1, 1/*depth*/);
+	xgc.function = GXclear;
+	gc =  XCreateGC(display, cursormask, GCFunction, &xgc);
+	XFillRectangle(display, cursormask, gc, 0, 0, 1, 1);
+	dummycolour.pixel = 0;
+	dummycolour.red = 0;
+	dummycolour.flags = 04;
+	cursor = XCreatePixmapCursor(display, cursormask, cursormask,
+		&dummycolour,&dummycolour, 0,0);
+	XFreePixmap(display,cursormask);
+	XFreeGC(display,gc);
+	return cursor;
 }
 
 static void install_grabs(void)
 {
-
-// inviso cursor
+	// inviso cursor
 	XDefineCursor(dpy, win, CreateNullCursor(dpy, win));
 
 	XGrabPointer(dpy, win,
@@ -145,7 +160,7 @@ static void install_grabs(void)
 	if (in_dgamouse->value) {
 		int MajorVersion, MinorVersion;
 
-		if (!XF86DGAQueryVersion(dpy, &MajorVersion, &MinorVersion)) { 
+		if (!XF86DGAQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
 			// unable to query, probalby not supported
 			ri.Con_Printf( PRINT_ALL, "Failed to detect XF86DGA Mouse\n" );
 			ri.Cvar_Set( "in_dgamouse", "0" );
@@ -183,7 +198,7 @@ static void uninstall_grabs(void)
 	XUngrabPointer(dpy, CurrentTime);
 	XUngrabKeyboard(dpy, CurrentTime);
 
-// inviso cursor
+	// inviso cursor
 	XUndefineCursor(dpy, win);
 
 	mouse_active = false;
@@ -191,16 +206,15 @@ static void uninstall_grabs(void)
 
 void RW_IN_Init(in_state_t *in_state_p)
 {
-	int mtype;
-	int i;
+//	int mtype;
+//	int i;
 
 	in_state = in_state_p;
 
 	// mouse variables
 	m_filter = ri.Cvar_Get ("m_filter", "0", 0);
-    in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
-
-    in_dgamouse = ri.Cvar_Get ("in_dgamouse", "1", CVAR_ARCHIVE);
+	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
+	in_dgamouse = ri.Cvar_Get ("in_dgamouse", "1", CVAR_ARCHIVE);
 	freelook = ri.Cvar_Get( "freelook", "0", 0 );
 	lookstrafe = ri.Cvar_Get ("lookstrafe", "0", 0);
 	sensitivity = ri.Cvar_Get ("sensitivity", "2", 0);
@@ -216,10 +230,12 @@ void RW_IN_Init(in_state_t *in_state_p)
 
 void RW_IN_Shutdown(void)
 {
-	mouse_avail = false;
+	RW_IN_Activate (false);
 
-
-
+	if (mouse_avail)
+	{
+		mouse_avail = false;
+	}
 }
 
 /*
@@ -242,7 +258,7 @@ void RW_IN_GetMousePos (int *x, int *y)
   *y = my;
 }
 
-static void IN_DeactivateMouse( void ) 
+static void IN_DeactivateMouse( void )
 {
 	if (!mouse_avail || !dpy || !win)
 		return;
@@ -359,13 +375,13 @@ static int XLateKey(XKeyEvent *ev)
 		case XK_Shift_L:
 		case XK_Shift_R:	key = K_SHIFT;		break;
 
-		case XK_Execute: 
-		case XK_Control_L: 
+		case XK_Execute:
+		case XK_Control_L:
 		case XK_Control_R:	key = K_CTRL;		 break;
 
-		case XK_Alt_L:	
-		case XK_Meta_L: 
-		case XK_Alt_R:	
+		case XK_Alt_L:
+		case XK_Meta_L:
+		case XK_Alt_R:
 		case XK_Meta_R: key = K_ALT;			break;
 
 		case XK_KP_Begin: key = K_KP_5;	break;
@@ -406,7 +422,7 @@ static int XLateKey(XKeyEvent *ev)
 			if (key >= 'A' && key <= 'Z')
 				key = key - 'A' + 'a';
 			break;
-	} 
+	}
 
 	return key;
 }
@@ -419,11 +435,13 @@ static void HandleEvents(void)
 	qboolean dowarp = false;
 	int mwx = vid.width/2;
 	int mwy = vid.height/2;
-   
+
 	if (!dpy)
 		return;
 
 	while (XPending(dpy)) {
+
+// 		mx = my = 0;
 
 		XNextEvent(dpy, &event);
 
@@ -439,8 +457,8 @@ static void HandleEvents(void)
 				if (dgamouse) {
 					mx += (event.xmotion.x + win_x) * sensitivity->value;
 					my += (event.xmotion.y + win_y) * sensitivity->value;
-				} 
-				else 
+				}
+				else
 				{
 					mx += ((int)event.xmotion.x - mwx) * sensitivity->value;
 					my += ((int)event.xmotion.y - mwy) * sensitivity->value;
@@ -491,9 +509,13 @@ static void HandleEvents(void)
 			win_x = event.xconfigure.x;
 			win_y = event.xconfigure.y;
 			break;
+	        case ClientMessage:
+			if (event.xclient.data.l[0] == wmDeleteWindow)
+				ri.Cmd_ExecuteText(EXEC_NOW, "quit");
+			break;
 		}
 	}
-	   
+
 	if (dowarp) {
 		/* move the mouse to the window center again */
 		XWarpPointer(dpy,None,win,0,0,0,0, vid.width/2,vid.height/2);
@@ -520,7 +542,8 @@ void KBD_Close(void)
 
 /*****************************************************************************/
 
-static qboolean GLimp_SwitchFullscreen( int width, int height );
+// static qboolean GLimp_SwitchFullscreen( int width, int height );
+
 qboolean GLimp_InitGL (void);
 
 static void signal_handler(int sig)
@@ -546,7 +569,7 @@ static void InitSig(void)
 /*
 ** GLimp_SetMode
 */
-int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
+int GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen )
 {
 	int width, height;
 	int attrib[] = {
@@ -604,7 +627,7 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 
 	// Get video mode list
 	MajorVersion = MinorVersion = 0;
-	if (!XF86VidModeQueryVersion(dpy, &MajorVersion, &MinorVersion)) { 
+	if (!XF86VidModeQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
 		vidmode_ext = false;
 	} else {
 		ri.Con_Printf(PRINT_ALL, "Using XFree86-VidModeExtension Version %d.%d\n",
@@ -620,7 +643,7 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 
 	if (vidmode_ext) {
 		int best_fit, best_dist, dist, x, y;
-		
+
 		XF86VidModeGetAllModeLines(dpy, scrnum, &num_vidmodes, &vidmodes);
 
 		// Are we going fullscreen?  If so, let's change video mode
@@ -663,7 +686,7 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 	attr.colormap = XCreateColormap(dpy, root, visinfo->visual, AllocNone);
 	attr.event_mask = X_MASK;
 	if (vidmode_active) {
-		mask = CWBackPixel | CWColormap | CWSaveUnder | CWBackingStore | 
+		mask = CWBackPixel | CWColormap | CWSaveUnder | CWBackingStore |
 			CWEventMask | CWOverrideRedirect;
 		attr.override_redirect = True;
 		attr.backing_store = NotUseful;
@@ -674,6 +697,11 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 	win = XCreateWindow(dpy, root, 0, 0, width, height,
 						0, visinfo->depth, InputOutput,
 						visinfo->visual, mask, &attr);
+	XStoreName(dpy, win, "UFO:AI");
+
+	wmDeleteWindow = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
+	XSetWMProtocols(dpy, win, &wmDeleteWindow, 1);
+
 	XMapWindow(dpy, win);
 
 	if (vidmode_active) {
@@ -736,7 +764,7 @@ void GLimp_Shutdown( void )
 ** GLimp_Init
 **
 ** This routine is responsible for initializing the OS specific portions
-** of OpenGL.  
+** of OpenGL.
 */
 int GLimp_Init( void *hinstance, void *wndproc )
 {
@@ -754,7 +782,7 @@ void GLimp_BeginFrame( float camera_seperation )
 
 /*
 ** GLimp_EndFrame
-** 
+**
 ** Responsible for doing a swapbuffers and possibly for other stuff
 ** as yet to be determined.  Probably better not to make this a GLimp
 ** function and instead do a call to GLimp_SwapBuffers.
@@ -789,8 +817,75 @@ void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
 	qgl3DfxSetPaletteEXT((GLuint *)temptable);
 }
 
+/*
+** X11 Input Stuff
+*/
 
-/*------------------------------------------------*/
-/* X11 Input Stuff
-/*------------------------------------------------*/
+#ifdef Joystick
+qboolean OpenJoystick(cvar_t *joy_dev) {
+	int i, err;
+	glob_t pglob;
+	struct js_event e;
+
+	err = glob(joy_dev->string, 0, NULL, &pglob);
+
+	if (err) {
+		switch (err) {
+			case GLOB_NOSPACE:
+				ri.Con_Printf(PRINT_ALL, "Error, out of memory while looking for joysticks\n");
+				break;
+			case GLOB_NOMATCH:
+				ri.Con_Printf(PRINT_ALL, "No joysticks found\n");
+				break;
+			default:
+				ri.Con_Printf(PRINT_ALL, "Error #%d while looking for joysticks\n",err);
+		}
+		return false;
+	}
+
+	for (i=0;i<pglob.gl_pathc;i++) {
+		ri.Con_Printf(PRINT_ALL, "Trying joystick dev %s\n", pglob.gl_pathv[i]);
+		joy_fd = open (pglob.gl_pathv[i], O_RDONLY | O_NONBLOCK);
+		if (joy_fd == -1) {
+			ri.Con_Printf(PRINT_ALL, "Error opening joystick dev %s\n",
+					pglob.gl_pathv[i]);
+			return false;
+		} else {
+			while (read(joy_fd, &e, sizeof(struct js_event))!=-1 &&	(e.type & JS_EVENT_INIT))
+				ri.Con_Printf(PRINT_ALL, "Read init event\n");
+			ri.Con_Printf(PRINT_ALL, "Using joystick dev %s\n", pglob.gl_pathv[i]);
+			return true;
+		}
+	}
+	globfree(&pglob);
+	return false;
+}
+
+void PlatformJoyCommands(int *axis_vals, int *axis_map) {
+	struct js_event e;
+	int key_index;
+	in_state_t *in_state = getState();
+
+	while (read(joy_fd, &e, sizeof(struct js_event))!=-1) {
+		if (JS_EVENT_BUTTON & e.type) {
+			key_index = (e.number < 4) ? K_JOY1 : K_AUX1;
+			if (e.value) {
+				in_state->Key_Event_fp (key_index + e.number, true);
+			} else {
+				in_state->Key_Event_fp (key_index + e.number, false);
+			}
+		} else if (JS_EVENT_AXIS & e.type) {
+			axis_vals[axis_map[e.number]] = e.value;
+		}
+	}
+}
+
+qboolean CloseJoystick(void) {
+	if (close(joy_fd))
+		ri.Con_Printf(PRINT_ALL, "Error, Problem closing joystick.");
+	return true;
+}
+#endif
+
+
 

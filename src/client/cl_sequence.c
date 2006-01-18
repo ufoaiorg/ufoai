@@ -199,6 +199,7 @@ void CL_SequenceRender( void )
 	entity_t	ent;
 	seqCmd_t	*sc;
 	seqEnt_t	*se;
+	float		sunfrac;
 	int		i;
 
 	// run script
@@ -236,7 +237,9 @@ void CL_SequenceRender( void )
 			ent.skinnum = se->skin;
 			ent.as = se->as;
 			ent.alpha = se->alpha;
-			ent.sunfrac = 1.0;
+
+			sunfrac = 1.0;
+			ent.lightparam = &sunfrac;
 			
 			VectorCopy( se->origin, ent.origin );
 			VectorCopy( se->origin, ent.oldorigin );
@@ -320,7 +323,7 @@ void CL_SequenceStart_f( void )
 			break;
 	if ( i >= numSequences )
 	{
-		Com_Printf( "Couldn't find sequence '%s'\n", name );
+		Com_Printf( _("Couldn't find sequence '%s'\n"), name );
 		return;
 	}
 
@@ -468,7 +471,7 @@ void SEQ_Precache( char *name, char *data )
 			data += strlen( data ) + 1;
 		}
 	}
-	else Com_Printf( "SEQ_Precache: unknown format '%s'\n", name );
+	else Com_Printf( _("SEQ_Precache: unknown format '%s'\n"), name );
 }
 
 /*
@@ -519,7 +522,7 @@ void SEQ_Model( char *name, char *data )
 		if ( i >= numSeqEnts )
 		{
 			if ( numSeqEnts >= MAX_SEQENTS )
-				Sys_Error( ERR_FATAL, "Too many sequence entities\n" );
+				Sys_Error( ERR_FATAL, _("Too many sequence entities\n") );
 			se = &seqEnts[numSeqEnts++];
 		}
 		// allocate
@@ -549,7 +552,7 @@ void SEQ_Model( char *name, char *data )
 				data += strlen( data ) + 1;
 				re.AnimChange( &se->as, se->model, data );
 			}
-			else Com_Printf( "SEQ_Model: unknown token '%s'\n", data );
+			else Com_Printf( _("SEQ_Model: unknown token '%s'\n"), data );
 		}
 
 		data += strlen( data ) + 1;
@@ -578,7 +581,7 @@ void SEQ_2Dobj( char *name, char *data )
 		if ( i >= numSeq2Ds )
 		{
 			if ( numSeq2Ds >= MAX_SEQ2DS )
-				Sys_Error( ERR_FATAL, "Too many sequence 2d objects\n" );
+				Sys_Error( ERR_FATAL, _("Too many sequence 2d objects\n") );
 			s2d = &seq2Ds[numSeq2Ds++];
 		}
 		// allocate
@@ -599,7 +602,7 @@ void SEQ_2Dobj( char *name, char *data )
 				break;
 			}
 		if ( !vp->string )
-			Com_Printf( "SEQ_Text: unknown token '%s'\n", data );
+			Com_Printf( _("SEQ_Text: unknown token '%s'\n"), data );
 
 		data += strlen( data ) + 1;
 	}
@@ -622,7 +625,7 @@ void SEQ_Remove( char *name, char *data )
 	if ( s2d ) s2d->inuse = false;
 
 	if ( !se && !s2d ) 
-		Com_Printf( "SEQ_Remove: couldn't find '%s'\n", name );
+		Com_Printf( _("SEQ_Remove: couldn't find '%s'\n"), name );
 }
 
 /*
@@ -646,7 +649,7 @@ CL_ParseSequence
 */
 void CL_ParseSequence( char *name, char **text )
 {
-	char		*errhead = "CL_ParseSequence: unexptected end of file (sequence ";
+	char		*errhead = _("CL_ParseSequence: unexptected end of file (sequence ");
 	sequence_t	*sp;
 	seqCmd_t	*sc;
 	char		*token;
@@ -659,13 +662,13 @@ void CL_ParseSequence( char *name, char **text )
 
 	if ( i < numSequences )
 	{
-		Com_Printf( "CL_ParseSequence: sequence def \"%s\" with same name found, second ignored\n", name );
+		Com_Printf( _("CL_ParseSequence: sequence def \"%s\" with same name found, second ignored\n"), name );
 		return;
 	}
 
 	// initialize the sequence
 	if ( numSequences >= MAX_SEQUENCES ) 
-		Sys_Error( ERR_FATAL, "Too many sequences\n" );
+		Sys_Error( ERR_FATAL, _("Too many sequences\n") );
 
 	sp = &sequences[numSequences++];
 	memset( sp, 0, sizeof(sequence_t) );
@@ -677,7 +680,7 @@ void CL_ParseSequence( char *name, char **text )
 
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( "CL_ParseSequence: sequence def \"%s\" without body ignored\n", name );
+		Com_Printf( _("CL_ParseSequence: sequence def \"%s\" without body ignored\n"), name );
 		numSequences--;
 		return;
 	}
@@ -697,7 +700,7 @@ next_cmd:
 				if ( !*text ) return;
 
 				if ( numSeqCmds >= MAX_SEQCMDS ) 
-					Sys_Error( ERR_FATAL, "Too many sequence commands\n" );
+					Sys_Error( ERR_FATAL, _("Too many sequence commands\n") );
 
 				// init seqCmd
 				sc = &seqCmds[numSeqCmds++];
@@ -740,7 +743,7 @@ next_cmd:
 
 		if ( i == SEQ_NUMCMDS )
 		{
-			Com_Printf( "CL_ParseSequence: unknown command \"%s\" ignored (sequence %s)\n", token, name );
+			Com_Printf( _("CL_ParseSequence: unknown command \"%s\" ignored (sequence %s)\n"), token, name );
 			COM_EParse( text, errhead, name );
 		}
 	} while ( *text );

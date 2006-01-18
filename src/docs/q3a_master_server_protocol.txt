@@ -1,0 +1,106 @@
+The master server protocol consists of 2 parts:
+- registration of the game servers at the master server (heartbeat)
+- querying all game servers form game clients
+
+Additionally, Q3Master is able to register servers at another Q3Master server.
+
+The protocols use only UDP packets. All packets are so-called 'connectionless'
+packets, which means they start with  4 bytes 0xff (or -1 as Java byte) (all
+other packets send / received by Q3A have a increasing number stored in these
+4 bytes)
+
+Registration at the master server - heartbeat
+==============================================
+- is sent from game server to master server
+- no direct response is sent by the master
+- is sent by the game server server at:
+  - server startup
+  - server shutdown
+  - map change
+  - if the last player leaves the server
+- is not sent
+  - if a player is added to the server
+  - if a player leaves and the server is not empty afterwards
+
+- format:
+  - 4 bytes 0xff
+  - the string 'heartbeat HEARTBEATTYPE-1'
+  - 0x0a
+- the HEARTBEATTYPE string describes the server sending the heartbeat. Known
+  types are:
+  - QuakeArena
+  - Wolfenstein
+  - EnemyTerritory
+  The last 2 games send a different HEARTBEATTYPE when the server is shut down:
+  - WolfFlatline
+  - ETFlatline
+  For Q3A the master server detects a shutdown only because the game server
+  does not respond to 'getinfo' requests aftwer the heartbeat anymore
+- NOTE: I'm note sure what the trailing "-1" after the HEARTBEATTYPE string
+  means. It does not specify the game type which runs on the server.
+  Maybe it is used to distinguish future versions of Q3A...
+- The master server sends a 'getinfo' request after it has received the
+  heartbeat packet. This way it finds out about the protocol version used by
+  the server and its current state. Newer versions (esp. the Wolfenstein series)
+  of the master server also send a challenge string with the 'getinfo' request,
+  and an additional 'getchallenge' request to the game server, to make sure
+  it is really a live server.
+  For the format of the 'getinfo' / 'getchallenge' requests, see the 'Q3A
+  server commands howto' from ID software, or the file 'q3_server'
+
+
+Querying for all known servers
+==============================================
+- is send from game clients to the master server
+- is sent if the client wants to get a list of all servers
+- format:
+  - 4 bytes 0xff
+  - the string 'getservers '
+  - the query string:
+    - protocol (required)
+    - query options (optional)
+    - a full query string looks like '48 empty full'
+    - a short query string looks like '43'
+
+- this request is the same for all currently know protocol versions
+- the response format is different for the protocols 43/45 and 48 (and later)
+
+- response format:
+  - 4 bytes 0xff
+  - the string  'getserversResponse'
+  - then for every server in the response
+    - 0x5c (this is '\')
+    - 4 bytes address (e.g. 0x7f 0x00 0x0 0x01 for 127.0.0.1)
+    - 2 bytes port (order is high-low)
+  - 0x5c
+  - for version 48 or higher:
+      - the string 'EOT'
+      - 3 bytes 0x00
+  - for version 43/45:
+      - 1 byte 0x00
+  - NOTE: Q3A ignores packets which only contains local servers (server with a
+    loopback address [127.*.*.*]). Such server need to send a non-local IP
+    address (e.g. 192.168.0.x)
+- the master server can send multiple packets with servers to the client, each
+  in the same format. The client considers all packets received in a certain
+  time window as valid response, there is no sequence number or 'end' marker.
+  A response packet should not be larger than 1536 bytes, to avoid
+  fragmentation.
+
+
+Registration at another Q3Master server
+==============================================
+- specific for Q3Master
+- does NOT work with the ID software master servers
+- allows registration at master servers not reacheable by the game server
+  itself
+- from master to master
+- send to register clients from one master at another one
+- can carry only one server address
+- format:
+  - 4 bytes 0xff
+  - the string 'register'
+  - 4 bytes address
+  - 2 bytes port
+  - byte order like 'getserversResponse'
+- no response is send by the receiving server

@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <math.h>
+#include <ctype.h>
 
 #ifndef __linux__
 #ifndef GL_COLOR_INDEX8_EXT
@@ -34,14 +35,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 #include "../win32/jpeglib.h"
 #else
-#include "/usr/include/jpeglib.h"
+#include <jpeglib.h>
 #endif
 
 #include "../client/ref.h"
 
 #include "qgl.h"
 
-#define	REF_VERSION	"GL 0.10"
+#define	REF_VERSION	"GL 0.12"
 
 // up / down
 #define	PITCH	0
@@ -82,12 +83,13 @@ extern	viddef_t	vid;
 
 */
 
-typedef enum 
+typedef enum
 {
 	it_skin,
 	it_sprite,
 	it_wall,
 	it_pic,
+	it_wrappic,
 	it_font,
 	it_sky
 } imagetype_t;
@@ -109,8 +111,8 @@ typedef struct image_s
 } image_t;
 
 #define	TEXNUM_LIGHTMAPS	1024
-#define	TEXNUM_SCRAPS		1152
-#define	TEXNUM_IMAGES		1153
+#define	TEXNUM_SCRAPS		1280
+#define	TEXNUM_IMAGES		1281
 
 #define		MAX_GLERRORTEX	4096
 #define		MAX_GLTEXTURES	1024
@@ -153,7 +155,7 @@ typedef struct
 
 #define	MAX_MOD_KNOWN	512
 extern model_t	mod_inline[MAX_MOD_KNOWN];
-
+extern int		numInline;
 
 // entity transform
 typedef struct
@@ -174,9 +176,9 @@ typedef struct font_s
 {
 	image_t	*image;
 	char	name[MAX_FONTNAME];
-	byte	wc[64];
+	byte	wc[128];
 	byte	w, h;
-	float	hr;
+	float	rw, rh, rhl;
 } font_t;
 
 //====================================================
@@ -197,8 +199,9 @@ extern	int			r_framecount;
 extern	cplane_t	frustum[4];
 extern	int			c_brush_polys, c_alias_polys;
 
-
 extern	int			gl_filter_min, gl_filter_max;
+
+extern	image_t		*DaN;
 
 //
 // view origin
@@ -221,6 +224,7 @@ extern	cvar_t	*r_speeds;
 extern	cvar_t	*r_fullbright;
 extern	cvar_t	*r_novis;
 extern	cvar_t	*r_nocull;
+extern	cvar_t	*r_isometric;
 extern	cvar_t	*r_lerpmodels;
 
 extern	cvar_t	*r_lightlevel;	// FIXME: This is a HACK to get the client's light level
@@ -232,6 +236,8 @@ extern cvar_t	*gl_ext_multitexture;
 extern cvar_t	*gl_ext_combine;
 extern cvar_t	*gl_ext_pointparameters;
 extern cvar_t	*gl_ext_compiled_vertex_array;
+extern cvar_t	*gl_ext_texture_compression;
+extern cvar_t	*gl_ext_s3tc_compression;
 
 extern cvar_t	*gl_particle_min_size;
 extern cvar_t	*gl_particle_max_size;
@@ -252,6 +258,7 @@ extern  cvar_t  *gl_monolightmap;
 extern	cvar_t	*gl_nobind;
 extern	cvar_t	*gl_round_down;
 extern	cvar_t	*gl_picmip;
+extern	cvar_t	*gl_maxtexres;
 extern	cvar_t	*gl_skymip;
 extern	cvar_t	*gl_showtris;
 extern	cvar_t	*gl_finish;
@@ -275,6 +282,7 @@ extern	cvar_t	*gl_texturesolidmode;
 extern  cvar_t  *gl_saturatelighting;
 extern  cvar_t  *gl_lockpvs;
 extern	cvar_t  *gl_wire;
+extern	cvar_t	*gl_fog;
 
 extern	cvar_t	*vid_fullscreen;
 extern	cvar_t	*vid_gamma;
@@ -284,8 +292,8 @@ extern	cvar_t		*intensity;
 extern	int		gl_lightmap_format;
 extern	int		gl_solid_format;
 extern	int		gl_alpha_format;
-extern	int		gl_tex_solid_format;
-extern	int		gl_tex_alpha_format;
+extern	int		gl_compressed_solid_format;
+extern	int		gl_compressed_alpha_format;
 
 extern	int		c_visible_lightmaps;
 extern	int		c_visible_textures;
@@ -304,7 +312,8 @@ void R_PushDlights (mnode_t *node);
 
 //====================================================================
 
-extern	model_t	*r_worldmodel;
+extern	model_t	*rTiles[MAX_MAPTILES];
+extern	int		rNumTiles;
 
 extern	unsigned	d_8to24table[256];
 
@@ -312,8 +321,10 @@ extern	int		registration_sequence;
 
 void V_AddBlend (float r, float g, float b, float a, float *v_blend);
 
-int 	R_Init( void *hinstance, void *hWnd );
+qboolean 	R_Init( void *hinstance, void *hWnd );
 void	R_Shutdown( void );
+
+struct model_s *R_RegisterModelShort( char *name );
 
 void R_RenderView (refdef_t *fd);
 void GL_ScreenShot_f (void);
@@ -338,6 +349,8 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs);
 void R_RotateForEntity (entity_t *e);
 void R_MarkLeaves (void);
 
+//model_s *R_RegisterModelShort( char *name );
+
 glpoly_t *WaterWarpPolyVerts (glpoly_t *p);
 void EmitWaterPolys (msurface_t *fa);
 void R_AddSkySurface (msurface_t *fa);
@@ -346,6 +359,7 @@ void R_ClearSkyBox (void);
 void R_DrawSkyBox (void);
 void R_MarkLights (dlight_t *light, int bit, mnode_t *node);
 
+void R_AddMapTile( char *name, int sX, int sY, int sZ );
 
 #if 0
 short LittleShort (short l);
@@ -372,6 +386,8 @@ void	Draw_TileClear (int x, int y, int w, int h, char *name);
 void	Draw_Fill (int x, int y, int w, int h, int style, vec4_t color);
 void	Draw_Color (float *rgba);
 void	Draw_FadeScreen (void);
+void	Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz );
+void	Draw_LineStrip( int points, int *verts );
 
 void	Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data);
 //void	Draw_Model (int x, int y, );
@@ -385,6 +401,7 @@ int		Draw_GetPalette (void);
 void	Anim_Append( animState_t *as, model_t *mod, char *name );
 void	Anim_Change( animState_t *as, model_t *mod, char *name );
 void	Anim_Run( animState_t *as, model_t *mod, int msec );
+char	*Anim_GetName( animState_t *as, model_t *mod );
 
 
 void GL_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned *out,  int outwidth, int outheight);
@@ -396,6 +413,7 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 image_t	*GL_FindImage (char *pname, imagetype_t type);
 void	GL_TextureMode( char *string );
 void	GL_ImageList_f (void);
+void	GL_CalcDayAndNight ( float q );
 
 void	GL_SetTexturePalette( unsigned palette[256] );
 
@@ -516,7 +534,7 @@ void		GLimp_BeginFrame( float camera_separation );
 void		GLimp_EndFrame( void );
 int 		GLimp_Init( void *hinstance, void *hWnd );
 void		GLimp_Shutdown( void );
-int     	GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen );
+int     	GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen );
 void		GLimp_AppActivate( qboolean active );
 void		GLimp_EnableLogging( qboolean enable );
 void		GLimp_LogNewFrame( void );

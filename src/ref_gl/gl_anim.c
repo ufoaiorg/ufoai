@@ -141,10 +141,9 @@ void Anim_Run( animState_t *as, model_t *mod, int msec )
 
 			anim = mod->animdata + as->list[as->lcur];
 
-			// "crunch" time
-			if ( as->time > anim->time ) as->dt *= (float)anim->time/2 / as->time;
+			// prepare next frame
+			as->dt = 0;
 			as->time = anim->time;
-
 			as->oldframe = as->frame;
 			as->frame = anim->from;
 			as->change = false;
@@ -161,3 +160,21 @@ void Anim_Run( animState_t *as, model_t *mod, int msec )
 	as->backlerp = 1.0 - (float)as->dt / as->time;
 }
 
+
+/*
+===============
+Anim_GetName
+===============
+*/
+char *Anim_GetName( animState_t *as, model_t *mod )
+{
+	manim_t	*anim;
+
+	if ( !mod || mod->type != mod_alias ) return NULL;
+
+	if ( as->lcur == as->ladd )
+		return NULL;
+
+	anim = mod->animdata + as->list[as->lcur];
+	return anim->name;
+}

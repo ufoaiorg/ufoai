@@ -83,17 +83,14 @@ void Con_ToggleConsole_f (void)
 
 	if (cls.key_dest == key_console)
 	{
-//		M_ForceMenuOff ();
 		cls.key_dest = key_game;
 		Cvar_Set ("paused", "0");
 	}
 	else
 	{
-//		M_ForceMenuOff ();
 		cls.key_dest = key_console;	
 
-		if (Cvar_VariableValue ("maxclients") == 1 
-			&& Com_ServerState ())
+		if (Cvar_VariableValue ("maxclients") == 1 && Com_ServerState ())
 			Cvar_Set ("paused", "1");
 	}
 }
@@ -155,12 +152,12 @@ void Con_Dump_f (void)
 
 	Com_sprintf (name, sizeof(name), "%s/%s.txt", FS_Gamedir(), Cmd_Argv(1));
 
-	Com_Printf ("Dumped console text to %s.\n", name);
+	Com_Printf (_("Dumped console text to %s.\n"), name);
 	FS_CreatePath (name);
 	f = fopen (name, "w");
 	if (!f)
 	{
-		Com_Printf ("ERROR: couldn't open.\n");
+		Com_Printf (_("ERROR: couldn't open.\n"));
 		return;
 	}
 
@@ -317,7 +314,7 @@ void Con_Init (void)
 
 	Con_CheckResize ();
 	
-	Com_Printf ("Console initialized.\n");
+	Com_Printf (_("Console initialized.\n"));
 
 //
 // register our commands
@@ -472,8 +469,6 @@ void Con_DrawInput (void)
 	int		i;
 	char	*text;
 
-	if (cls.key_dest == key_menu)
-		return;
 	if (cls.key_dest != key_console && cls.state == ca_active)
 		return;		// don't draw anything (always draw if not active)
 
@@ -542,12 +537,12 @@ void Con_DrawNotify (void)
 	{
 		if (msg_mode == MSG_SAY)
 		{
-			DrawString (l, v, "say:");
+			DrawString (l, v, _("say:"));
 			skip = 4;
 		}
 		else
 		{
-			DrawString (l, v, "say_team:");
+			DrawString (l, v, _("say_team:"));
 			skip = 10;
 		}
 
@@ -595,7 +590,7 @@ void Con_DrawConsole (float frac)
 	if (lines > viddef.height)
 		lines = viddef.height;
 
-// draw the background
+	// draw the background
 	re.DrawStretchPic (0, -viddef.height+lines, viddef.width, viddef.height, "conback");
 	SCR_AddDirtyPoint (0,0);
 	SCR_AddDirtyPoint (viddef.width-1,lines-1);
@@ -604,7 +599,7 @@ void Con_DrawConsole (float frac)
 	for (x=0 ; x<5 ; x++)
 		re.DrawChar (viddef.width-44+x*8, lines-12, 128 + version[x] );
 
-// draw the text
+	// draw the text
 	con.vislines = lines;
 	
 #if 0
@@ -617,10 +612,10 @@ void Con_DrawConsole (float frac)
 	y = lines - 30;
 #endif
 
-// draw from the bottom up
+	// draw from the bottom up
 	if (con.display != con.current)
 	{
-	// draw arrows to show the buffer is backscrolled
+		// draw arrows to show the buffer is backscrolled
 		for (x=0 ; x<con.linewidth ; x+=4)
 			re.DrawChar ( (x+1)<<3, y, '^');
 	
@@ -642,7 +637,6 @@ void Con_DrawConsole (float frac)
 			re.DrawChar ( (x+1)<<3, y, text[x]);
 	}
 
-//ZOID
 	// draw the download bar
 	// figure out width
 	if (cls.download) {
@@ -685,9 +679,8 @@ void Con_DrawConsole (float frac)
 		for (i = 0; i < strlen(dlbar); i++)
 			re.DrawChar ( (i+1)<<3, y, dlbar[i]);
 	}
-//ZOID
 
-// draw the input prompt, user text, and cursor if desired
+	// draw the input prompt, user text, and cursor if desired
 	Con_DrawInput ();
 }
 

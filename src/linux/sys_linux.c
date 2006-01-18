@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -50,6 +50,17 @@ unsigned	sys_frame_time;
 uid_t saved_euid;
 qboolean stdin_active = true;
 
+/*
+=================
+Sys_GetHomeDirectory
+=================
+*/
+char *Sys_GetHomeDirectory (void)
+{
+	return getenv ( "HOME" );
+}
+
+
 // =======================================================================
 // General routines
 // =======================================================================
@@ -69,14 +80,14 @@ void Sys_Printf (char *fmt, ...)
 	unsigned char		*p;
 
 	va_start (argptr,fmt);
-	vsprintf (text,fmt,argptr);
+	vsnprintf (text,1024,fmt,argptr);
 	va_end (argptr);
 
 	if (strlen(text) > sizeof(text))
-		Sys_Error("memory overwrite in Sys_Printf");
+		Sys_Error(_("memory overwrite in Sys_Printf"));
 
-    if (nostdout && nostdout->value)
-        return;
+	if (nostdout && nostdout->value)
+		return;
 
 	for (p = (unsigned char *)text; *p; p++) {
 		*p &= 0x7f;
@@ -91,7 +102,7 @@ void Sys_Quit (void)
 {
 	CL_Shutdown ();
 	Qcommon_Shutdown ();
-    fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 	_exit(0);
 }
 
@@ -103,35 +114,35 @@ void Sys_Init(void)
 }
 
 void Sys_Error (char *error, ...)
-{ 
-    va_list     argptr;
-    char        string[1024];
+{
+	va_list     argptr;
+	char        string[1024];
 
-// change stdin to non blocking
-    fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+	// change stdin to non blocking
+	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
 	CL_Shutdown ();
 	Qcommon_Shutdown ();
-    
-    va_start (argptr,error);
-    vsprintf (string,error,argptr);
-    va_end (argptr);
-	fprintf(stderr, "Error: %s\n", string);
+
+	va_start (argptr,error);
+	vsnprintf (string,1024,error,argptr);
+	va_end (argptr);
+	fprintf(stderr, _("Error: %s\n"), string);
 
 	_exit (1);
 
-} 
+}
 
 void Sys_Warn (char *warning, ...)
-{ 
-    va_list     argptr;
-    char        string[1024];
-    
-    va_start (argptr,warning);
-    vsprintf (string,warning,argptr);
-    va_end (argptr);
-	fprintf(stderr, "Warning: %s", string);
-} 
+{
+	va_list     argptr;
+	char        string[1024];
+
+	va_start (argptr,warning);
+	vsnprintf (string,1024,warning,argptr);
+	va_end (argptr);
+	fprintf(stderr, _("Warning: %s"), string);
+}
 
 /*
 ============
@@ -143,10 +154,10 @@ returns -1 if not present
 int	Sys_FileTime (char *path)
 {
 	struct	stat	buf;
-	
+
 	if (stat (path,&buf) == -1)
 		return -1;
-	
+
 	return buf.st_mtime;
 }
 
@@ -158,10 +169,10 @@ void floating_point_exception_handler(int whatever)
 
 char *Sys_ConsoleInput(void)
 {
-    static char text[256];
-    int     len;
+	static char text[256];
+	int     len;
 	fd_set	fdset;
-    struct timeval timeout;
+	struct timeval timeout;
 
 	if (!dedicated || !dedicated->value)
 		return NULL;
@@ -200,7 +211,7 @@ Sys_UnloadGame
 */
 void Sys_UnloadGame (void)
 {
-	if (game_library) 
+	if (game_library)
 		dlclose (game_library);
 	game_library = NULL;
 }
@@ -221,8 +232,14 @@ void *Sys_GetGameAPI (void *parms)
 	char	*path;
 #ifdef __i386__
 	const char *gamename = "gamei386.so";
+#elif defined __x86_64__
+	const char *gamename = "gamex86_64.so";
 #elif defined __alpha__
 	const char *gamename = "gameaxp.so";
+#elif defined __powerpc__
+	const char *gamename = "gameppc.so";
+#elif defined __sparc__
+	const char *gamename = "gamesparc.so";
 #else
 #error Unknown arch
 #endif
@@ -231,7 +248,7 @@ void *Sys_GetGameAPI (void *parms)
 	setegid(getgid());
 
 	if (game_library)
-		Com_Error (ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
+		Com_Error (ERR_FATAL, _("Sys_GetGameAPI without Sys_UnloadingGame"));
 
 	getcwd(curpath, sizeof(curpath));
 
@@ -248,7 +265,7 @@ void *Sys_GetGameAPI (void *parms)
 		game_library = dlopen (name, RTLD_LAZY );
 		if (game_library)
 		{
-			Com_Printf ("LoadLibrary (%s)\n",name);
+			Com_Printf (_("LoadLibrary (%s)\n"), name);
 			break;
 		}
 	}
@@ -256,7 +273,7 @@ void *Sys_GetGameAPI (void *parms)
 	GetGameAPI = (void *)dlsym (game_library, "GetGameAPI");
 	if (!GetGameAPI)
 	{
-		Sys_UnloadGame ();		
+		Sys_UnloadGame ();
 		return NULL;
 	}
 
@@ -276,7 +293,7 @@ void Sys_SendKeyEvents (void)
 		KBD_Update_fp();
 #endif
 
-	// grab frame time 
+	// grab frame time
 	sys_frame_time = Sys_Milliseconds();
 }
 
@@ -305,94 +322,20 @@ int main (int argc, char **argv)
 //		printf ("Linux Quake -- Version %0.3f\n", LINUX_VERSION);
 	}
 
-    oldtime = Sys_Milliseconds ();
-    while (1)
-    {
-// find time spent rendering last frame
+	oldtime = Sys_Milliseconds ();
+	while (1)
+	{
+		// find time spent rendering last frame
 		do {
 			newtime = Sys_Milliseconds ();
 			time = newtime - oldtime;
 		} while (time < 1);
-        Qcommon_Frame (time);
+		Qcommon_Frame (time);
 		oldtime = newtime;
-    }
-
+	}
 }
 
 void Sys_CopyProtect(void)
 {
-	FILE *mnt;
-	struct mntent *ent;
-	char path[MAX_OSPATH];
-	struct stat st;
-	qboolean found_cd = false;
-
-	static qboolean checked = false;
-
-	if (checked)
-		return;
-
-	if ((mnt = setmntent("/etc/mtab", "r")) == NULL)
-		Com_Error(ERR_FATAL, "Can't read mount table to determine mounted cd location.");
-
-	while ((ent = getmntent(mnt)) != NULL) {
-		if (strcmp(ent->mnt_type, "iso9660") == 0) {
-			// found a cd file system
-			found_cd = true;
-			sprintf(path, "%s/%s", ent->mnt_dir, "install/data/quake2.exe");
-			if (stat(path, &st) == 0) {
-				// found it
-				checked = true;
-				endmntent(mnt);
-				return;
-			}
-			sprintf(path, "%s/%s", ent->mnt_dir, "Install/Data/quake2.exe");
-			if (stat(path, &st) == 0) {
-				// found it
-				checked = true;
-				endmntent(mnt);
-				return;
-			}
-			sprintf(path, "%s/%s", ent->mnt_dir, "quake2.exe");
-			if (stat(path, &st) == 0) {
-				// found it
-				checked = true;
-				endmntent(mnt);
-				return;
-			}
-		}
-	}
-	endmntent(mnt);
-
-	if (found_cd)
-		Com_Error (ERR_FATAL, "Could not find a Quake2 CD in your CD drive.");
-	Com_Error (ERR_FATAL, "Unable to find a mounted iso9660 file system.\n"
-		"You must mount the Quake2 CD in a cdrom drive in order to play.");
 }
 
-#if 0
-/*
-================
-Sys_MakeCodeWriteable
-================
-*/
-void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length)
-{
-
-	int r;
-	unsigned long addr;
-	int psize = getpagesize();
-
-	addr = (startaddr & ~(psize-1)) - psize;
-
-//	fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr,
-//			addr, startaddr+length, length);
-
-	r = mprotect((char*)addr, length + startaddr - addr + psize, 7);
-
-	if (r < 0)
-    		Sys_Error("Protection change failed\n");
-
-}
-
-#endif

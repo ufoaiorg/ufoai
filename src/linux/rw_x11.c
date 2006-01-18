@@ -166,7 +166,7 @@ PIXEL24 xlib_rgb24(int r,int g,int b)
 
 void st2_fixup( XImage *framebuf, int x, int y, int width, int height)
 {
-	int xi,yi;
+	int yi;
 	unsigned char *src;
 	PIXEL16 *dest;
 	register int count, n;
@@ -174,7 +174,7 @@ void st2_fixup( XImage *framebuf, int x, int y, int width, int height)
 	if( (x<0)||(y<0) )return;
 
 	for (yi = y; yi < (y+height); yi++) {
-		src = &framebuf->data [yi * framebuf->bytes_per_line];
+		src = (byte *)&framebuf->data [yi * framebuf->bytes_per_line];
 
 		// Duff's Device
 		count = width;
@@ -193,30 +193,28 @@ void st2_fixup( XImage *framebuf, int x, int y, int width, int height)
 		case 1:			*dest-- = st2d_8to16table[*src--];
 				} while (--n > 0);
 		}
-
-//		for(xi = (x+width-1); xi >= x; xi--) {
-//			dest[xi] = st2d_8to16table[src[xi]];
-//		}
 	}
 }
 
 void st3_fixup( XImage *framebuf, int x, int y, int width, int height)
 {
-	int xi,yi;
+	int yi;
 	unsigned char *src;
 	PIXEL24 *dest;
 	register int count, n;
 
-	if( (x<0)||(y<0) )return;
+	if( (x < 0) || (y < 0) )
+		return;
 
-	for (yi = y; yi < (y+height); yi++) {
-		src = &framebuf->data [yi * framebuf->bytes_per_line];
+	for (yi = y; yi < (y+height); yi++) 
+	{
+		src = (byte *)&framebuf->data [yi * framebuf->bytes_per_line];
 
 		// Duff's Device
 		count = width;
 		n = (count + 7) / 8;
-		dest = ((PIXEL24 *)src) + x+width - 1;
-		src += x+width - 1;
+		dest = ((PIXEL24 *)src) + x + width - 1;
+		src += x + width - 1;
 
 		switch (count % 8) {
 		case 0:	do {	*dest-- = st2d_8to24table[*src--];
@@ -229,10 +227,6 @@ void st3_fixup( XImage *framebuf, int x, int y, int width, int height)
 		case 1:			*dest-- = st2d_8to24table[*src--];
 				} while (--n > 0);
 		}
-
-//		for(xi = (x+width-1); xi >= x; xi--) {
-//			dest[xi] = st2d_8to16table[src[xi]];
-//		}
 	}
 }
 
@@ -300,8 +294,8 @@ void RW_IN_Init(in_state_t *in_state_p)
 
 	// mouse variables
 	m_filter = ri.Cvar_Get ("m_filter", "0", 0);
-    in_mouse = ri.Cvar_Get ("in_mouse", "0", CVAR_ARCHIVE);
-    in_dgamouse = ri.Cvar_Get ("in_dgamouse", "1", CVAR_ARCHIVE);
+	in_mouse = ri.Cvar_Get ("in_mouse", "0", CVAR_ARCHIVE);
+	in_dgamouse = ri.Cvar_Get ("in_dgamouse", "1", CVAR_ARCHIVE);
 	freelook = ri.Cvar_Get( "freelook", "0", 0 );
 	lookstrafe = ri.Cvar_Get ("lookstrafe", "0", 0);
 	sensitivity = ri.Cvar_Get ("sensitivity", "2", 0);
@@ -320,7 +314,16 @@ void RW_IN_Init(in_state_t *in_state_p)
 
 void RW_IN_Shutdown(void)
 {
-	mouse_avail = false;
+	RW_IN_Activate (false);
+	
+	if (mouse_avail) 
+	{
+		mouse_avail = false;
+	
+		ri.Cmd_RemoveCommand ("+mlook");
+		ri.Cmd_RemoveCommand ("-mlook");
+		ri.Cmd_RemoveCommand ("force_centerview");
+	}
 }
 
 /*
@@ -502,10 +505,9 @@ void RW_IN_Frame (void)
 void RW_IN_Activate(qboolean active)
 {
 	if (active)
-
 		IN_ActivateMouse();
 	else
-		IN_DeactivateMouse ();
+		IN_DeactivateMouse();
 }
 
 /*****************************************************************************/
@@ -769,13 +771,13 @@ void HandleEvents(void)
 
 			if (mouse_active) {
 				if (dgamouse) {
-					mx += (event.xmotion.x + win_x) * 2;
-					my += (event.xmotion.y + win_y) * 2;
+					mx = (event.xmotion.x + win_x) * 2;
+					my = (event.xmotion.y + win_y) * 2;
 				} 
 				else 
 				{
-					mx += ((int)event.xmotion.x - mwx) * 2;
-					my += ((int)event.xmotion.y - mwy) * 2;
+					mx += ((int)event.xmotion.x - mwx);
+					my += ((int)event.xmotion.y - mwy);
 					mwx = event.xmotion.x;
 					mwy = event.xmotion.y;
 
@@ -1105,7 +1107,7 @@ void SWimp_EndFrame (void)
 		while (!oktodraw) 
 			HandleEvents();
 		current_framebuffer = !current_framebuffer;
-		vid.buffer = x_framebuffer[current_framebuffer]->data;
+		vid.buffer = (byte *)x_framebuffer[current_framebuffer]->data;
 		XSync(dpy, False);
 	}
 	else
@@ -1212,6 +1214,8 @@ void SWimp_Shutdown( void )
 	}
 
 	XDestroyWindow(	dpy, win );
+	
+	win = 0;
 
 //	XAutoRepeatOn(dpy);
 //	XCloseDisplay(dpy);

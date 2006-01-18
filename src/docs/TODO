@@ -1,0 +1,12 @@
+TODO for UFO:AI
+o  Patch GTK-Radiant: Level- and StepOnFlags
+o  Granades: No throwline and no explosion - but sound
+   grenade falls through the ceiling
+   cl_actor.c: void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
+o  After a mission the equipment fills completly with rifle-ammo
+o  clicking at end-round-button will sometimes end in an endless loop 
+   (there seams to be something wrong with inventory functions - see the notes in the files)
+o  DPMS error, screen shuts down - though mouse is moving
+o  gamma settings to optionsmenu
+o  mission disappears from geoscape if aborted
+o  reconnect for multiplayer leads to double the soldiers (CL_AddActorToTeamList)

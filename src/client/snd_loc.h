@@ -19,6 +19,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 // snd_loc.h -- private sound functions
 
+#ifndef SND_LOC_LOADED
+#define SND_LOC_LOADED
+
 #ifdef __linux__
 #include "/usr/include/vorbis/vorbisfile.h"
 #else
@@ -173,3 +176,5 @@ channel_t *S_PickChannel(int entnum, int entchannel);
 
 // spatializes a channel
 void S_Spatialize(channel_t *ch);
+
+#endif

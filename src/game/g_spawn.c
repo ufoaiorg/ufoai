@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -28,6 +28,7 @@ void SP_player_start (edict_t *ent);
 void SP_human_start (edict_t *ent);
 void SP_alien_start (edict_t *ent);
 void SP_civilian_start (edict_t *ent);
+void SP_func_breakable (edict_t *ent);
 void SP_worldspawn (edict_t *ent);
 
 typedef struct
@@ -45,6 +46,7 @@ spawn_t	spawns[] = {
 	{"info_human_start", SP_human_start},
 	{"info_alien_start", SP_alien_start},
 	{"info_civilian_start", SP_civilian_start},
+	{"func_breakable", SP_func_breakable},
 
 	{NULL, NULL}
 };
@@ -64,7 +66,7 @@ field_t fields[] = {
 	{"random", FOFS(random), F_FLOAT},
 	{"style", FOFS(style), F_INT},
 	{"count", FOFS(count), F_INT},
-//	{"health", FOFS(health), F_INT},
+	{"health", FOFS(HP), F_INT},
 	{"sounds", FOFS(sounds), F_INT},
 	{"light", 0, F_IGNORE},
 	{"dmg", FOFS(dmg), F_INT},
@@ -127,7 +129,7 @@ char *ED_NewString (char *string)
 {
 	char	*newb, *new_p;
 	int		i,l;
-	
+
 	l = strlen(string) + 1;
 
 	newb = gi.TagMalloc (l, TAG_LEVEL);
@@ -147,7 +149,7 @@ char *ED_NewString (char *string)
 		else
 			*new_p++ = string[i];
 	}
-	
+
 	return newb;
 }
 
@@ -203,6 +205,14 @@ void ED_ParseField (char *key, char *value, edict_t *ent)
 				break;
 			case F_IGNORE:
 				break;
+			case F_GSTRING:
+				break;
+			case F_EDICT:
+				break;
+			case F_CLIENT:
+				break;
+			case F_FUNCTION:
+				break;
 			}
 			return;
 		}
@@ -227,10 +237,10 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 	init = false;
 	memset (&st, 0, sizeof(st));
 
-// go through all the dictionary pairs
+	// go through all the dictionary pairs
 	while (1)
-	{	
-	// parse key
+	{
+		// parse key
 		com_token = COM_Parse (&data);
 		if (com_token[0] == '}')
 			break;
@@ -238,8 +248,8 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 			gi.error ("ED_ParseEntity: EOF without closing brace");
 
 		strncpy (keyname, com_token, sizeof(keyname)-1);
-		
-	// parse value	
+
+		// parse value
 		com_token = COM_Parse (&data);
 		if (!data)
 			gi.error ("ED_ParseEntity: EOF without closing brace");
@@ -247,10 +257,10 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 		if (com_token[0] == '}')
 			gi.error ("ED_ParseEntity: closing brace without data");
 
-		init = true;	
+		init = true;
 
-	// keynames with a leading underscore are used for utility comments,
-	// and are immediately discarded by quake
+		// keynames with a leading underscore are used for utility comments,
+		// and are immediately discarded by quake
 		if (keyname[0] == '_')
 			continue;
 
@@ -265,139 +275,6 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 
 
 /*
-=================
-G_SpawnAIPlayer
-=================
-*/
-#define MAX_SPAWNPOINTS		64
-int spawnPoints[MAX_SPAWNPOINTS];
-
-void G_SpawnAIPlayer( player_t *player, int numSpawn )
-{
-	edict_t	*ent;
-	byte	equip[MAX_OBJDEFS];
-	int i, j, numPoints, team;
-	int ammo, num;
-
-	// search spawn points
-	team = player->pers.team;
-	numPoints = 0;
-	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
-		if ( ent->inuse && ent->type == ET_ACTORSPAWN && ent->team == team )
-			spawnPoints[numPoints++] = i;
-
-	// check spawn point number
-	if ( numPoints < numSpawn )
-	{
-		Com_Printf( "Not enough spawn points for team %i\n", team );
-		numSpawn = numPoints;
-	}
-
-	// prepare equipment
-	if ( team != TEAM_CIVILIAN )
-	{
-		equipDef_t	*ed;
-		char name[MAX_VAR];
-
-		strcpy( name, gi.cvar_string( "ai_equipment" ) );
-		for ( i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++ )
-			if ( !strcmp( name, ed->name ) )
-				break;
-		if ( i == gi.csi->numEDs ) ed = &gi.csi->eds[0];
-		else ed = &gi.csi->eds[i];
-
-		for ( i = 0; i < gi.csi->numODs; i++ )
-			equip[i] = ed->num[i];
-	}
-
-	// spawn players
-	for ( j = 0; j < numSpawn; j++ )
-	{
-		// select spawnpoint
-		while ( ent->type != ET_ACTORSPAWN )
-			ent = &g_edicts[ spawnPoints[(int)(frand()*numPoints)] ];
-
-		if ( team != TEAM_CIVILIAN )
-		{
-			// spawn
-			level.num_spawned[team]++;
-			level.num_alive[team]++;
-			ent->chr.skin = gi.GetModelInTeam( gi.cvar_string( "ai_alien" ), ent->chr.body, ent->chr.head );
-			strcpy( ent->chr.name, "Alien" );
-			ent->body = gi.modelindex( ent->chr.body );
-			ent->head = gi.modelindex( ent->chr.head );
-			ent->skin = ent->chr.skin;
-			ent->type = ET_ACTOR;
-			ent->pnum = player->num;
-			gi.linkentity( ent );
-
-			// skills
-			ent->chr.strength = frand()*MAX_SKILL;
-			ent->chr.dexterity = frand()*MAX_SKILL;
-			ent->chr.swiftness = frand()*MAX_SKILL;
-			ent->chr.intelligence = frand()*MAX_SKILL;
-			ent->chr.courage = MAX_SKILL*(1+frand())/2;
-			ent->HP = STR_HP( ent->chr.strength );
-			ent->moral = CRG_MORAL( ent->chr.courage );
-
-			// search for weapons
-			num = 0;
-			for ( i = 0; i < gi.csi->numODs; i++ )
-				if ( equip[i] && gi.csi->ods[i].link != NONE )
-					num++;
-
-			if ( num )
-			{
-				// add weapon
-				num = (int)(frand()*num);
-				for ( i = 0; i < gi.csi->numODs; i++ )
-					if ( equip[i] && gi.csi->ods[i].link != NONE )
-					{
-						if ( num ) num--;
-						else break;
-					}
-				ent->i.right.t = i;
-				equip[i]--;
-				ammo = gi.csi->ods[i].link;
-				if ( equip[ammo] )
-				{
-					ent->i.right.a = gi.csi->ods[i].ammo;
-					equip[ammo]--;
-					if ( equip[ammo] > equip[i] )
-					{
-						Com_AddToInventory( &ent->i, ammo, 0, gi.csi->idBelt, 0, 0 );
-						equip[ammo]--;
-					}
-				}
-				else ent->i.right.a = 0;
-			}
-			else
-			{
-				// nothing left
-				Com_Printf( "Not enough weapons in equipment '%s'\n", gi.cvar_string( "ai_equipment" ) );
-				ent->i.right.t = NONE;	
-				ent->i.right.a = 0;
-			}
-			ent->i.left.t = NONE;	
-			ent->i.left.a = 0;
-		} else {
-			// spawn
-			level.num_spawned[TEAM_CIVILIAN]++;
-			level.num_alive[TEAM_CIVILIAN]++;
-			ent->HP = 80 + 20*crand();
-			ent->chr.skin = gi.GetModelInTeam( gi.cvar_string( "ai_civilian" ), ent->chr.body, ent->chr.head );
-			ent->body = gi.modelindex( ent->chr.body );
-			ent->head = gi.modelindex( ent->chr.head );
-			ent->skin = ent->chr.skin;
-			ent->type = ET_ACTOR;
-			ent->pnum = player->num;
-			gi.linkentity( ent );
-		}
-	}
-}
-
-
-/*
 ==============
 SpawnEntities
 
@@ -405,10 +282,10 @@ Creates a server's entity / program execution context by
 parsing textual entity definitions out of an ent file.
 ==============
 */
-void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
+void SpawnEntities (char *mapname, char *entities)
 {
 	edict_t		*ent;
-	int			inhibit;
+	int		inhibit, entnum;
 	char		*com_token;
 
 //	SaveClientData ();
@@ -419,16 +296,16 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 	memset (g_edicts, 0, game.maxentities * sizeof (g_edicts[0]));
 
 	strncpy (level.mapname, mapname, sizeof(level.mapname)-1);
-	strncpy (game.spawnpoint, spawnpoint, sizeof(game.spawnpoint)-1);
 
 	ent = NULL;
 	level.activeTeam = -1;
 	inhibit = 0;
 
-// parse ents
+	// parse ents
+	entnum = 0;
 	while (1)
 	{
-		// parse the opening brace	
+		// parse the opening brace
 		com_token = COM_Parse (&entities);
 		if (!entities)
 			break;
@@ -442,10 +319,11 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 		entities = ED_ParseEdict (entities, ent);
 
 		VecToPos( ent->origin, ent->pos );
-		gi.GridPosToVec( ent->pos, ent->origin );
+		gi.GridPosToVec( gi.map, ent->pos, ent->origin );
 
+		ent->mapNum = entnum++;
 		ED_CallSpawn (ent);
-	}	
+	}
 
 	gi.dprintf ("%i entities inhibited\n", inhibit);
 
@@ -460,9 +338,9 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 #endif
 
 	// spawn ai players, if needed
-	if ( level.num_spawnpoints[TEAM_CIVILIAN] ) 
+	if ( level.num_spawnpoints[TEAM_CIVILIAN] )
 		AI_CreatePlayer( TEAM_CIVILIAN );
-	if ( (int)sv_maxclients->value == 1 && level.num_spawnpoints[TEAM_ALIEN] ) 
+	if ( (int)sv_maxclients->value == 1 && level.num_spawnpoints[TEAM_ALIEN] )
 		AI_CreatePlayer( TEAM_ALIEN );
 }
 
@@ -476,17 +354,20 @@ void SP_light (edict_t *self)
 	G_FreeEdict( self );
 }
 
-
 void G_ActorSpawn( edict_t *ent )
 {
+	// set properties
 	level.num_spawnpoints[ent->team]++;
 	ent->classname = "actor";
 	ent->type = ET_ACTORSPAWN;
 
+	// fall to ground
+	ent->pos[2] = gi.GridFall( gi.map, ent->pos );
+	gi.GridPosToVec( gi.map, ent->pos, ent->origin );
+
 	// set stats
 	ent->HP = 100;
-	ent->i.right.t = NONE;
-	ent->i.left.t = NONE;
+	ent->AP = 100;
 
 	// link it for collision detection
 	ent->dir = AngleToDV( ent->angle );
@@ -565,6 +446,22 @@ void SP_misc_dummy (edict_t *self)
 }
 
 
+/*QUAKED func_breakable (0.3 0.3 0.3) ?
+Used for breakable objects.
+*/
+void SP_func_breakable (edict_t *self)
+{
+	self->type = ET_BREAKABLE;
+
+	VectorSet( self->origin, 0, 0, 0 );
+	gi.setmodel( self, self->model );
+
+//	Com_Printf( "model (%s) num: %i mins: %i %i %i maxs: %i %i %i\n",
+//		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
+//		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2] );
+}
+
+
 /*QUAKED worldspawn (0 0 0) ?
 
 Only used for the world.
@@ -622,46 +519,46 @@ void SP_worldspawn (edict_t *ent)
 	else
 		gi.cvar_set("sv_gravity", st.gravity);
 
-//
-// Setup light animation tables. 'a' is total darkness, 'z' is doublebright.
-//
+	//
+	// Setup light animation tables. 'a' is total darkness, 'z' is doublebright.
+	//
 
 	// 0 normal
 	gi.configstring(CS_LIGHTS+0, "m");
-	
+
 	// 1 FLICKER (first variety)
 	gi.configstring(CS_LIGHTS+1, "mmnmmommommnonmmonqnmmo");
-	
+
 	// 2 SLOW STRONG PULSE
 	gi.configstring(CS_LIGHTS+2, "abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba");
-	
+
 	// 3 CANDLE (first variety)
 	gi.configstring(CS_LIGHTS+3, "mmmmmaaaaammmmmaaaaaabcdefgabcdefg");
-	
+
 	// 4 FAST STROBE
 	gi.configstring(CS_LIGHTS+4, "mamamamamama");
-	
+
 	// 5 GENTLE PULSE 1
 	gi.configstring(CS_LIGHTS+5,"jklmnopqrstuvwxyzyxwvutsrqponmlkj");
-	
+
 	// 6 FLICKER (second variety)
 	gi.configstring(CS_LIGHTS+6, "nmonqnmomnmomomno");
-	
+
 	// 7 CANDLE (second variety)
 	gi.configstring(CS_LIGHTS+7, "mmmaaaabcdefgmmmmaaaammmaamm");
-	
+
 	// 8 CANDLE (third variety)
 	gi.configstring(CS_LIGHTS+8, "mmmaaammmaaammmabcdefaaaammmmabcdefmmmaaaa");
-	
+
 	// 9 SLOW STROBE (fourth variety)
 	gi.configstring(CS_LIGHTS+9, "aaaaaaaazzzzzzzz");
-	
+
 	// 10 FLUORESCENT FLICKER
 	gi.configstring(CS_LIGHTS+10, "mmamammmmammamamaaamammma");
 
 	// 11 SLOW PULSE NOT FADE TO BLACK
 	gi.configstring(CS_LIGHTS+11, "abcdefghijklmnopqrrqponmlkjihgfedcba");
-	
+
 	// styles 32-62 are assigned by the light program for switchable lights
 
 	// 63 testing

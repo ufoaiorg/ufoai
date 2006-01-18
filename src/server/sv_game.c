@@ -152,6 +152,35 @@ void PF_error (char *fmt, ...)
 
 
 /*
+=================
+PF_setmodel
+
+Also sets mins and maxs for inline bmodels
+=================
+*/
+void PF_SetModel (edict_t *ent, char *name)
+{
+	cmodel_t	*mod;
+
+	if (!name)
+		Com_Error (ERR_DROP, "PF_setmodel: NULL");
+
+	ent->modelindex = SV_ModelIndex (name);
+
+// if it is an inline model, get the size information for it
+	if (name[0] == '*')
+	{
+		mod = CM_InlineModel (name);
+		VectorCopy (mod->mins, ent->mins);
+		VectorCopy (mod->maxs, ent->maxs);
+		ent->solid = SOLID_BSP;
+		SV_LinkEdict (ent);
+	}
+
+}
+
+
+/*
 ===============
 PF_Configstring
 
@@ -196,10 +225,10 @@ byte *pf_save;
 void PF_WriteNewSave( int c ) {pf_save = sv.multicast.data+sv.multicast.cursize; MSG_WriteByte( &sv.multicast, c );}
 void PF_WriteToSave( int c ) {*pf_save = c;}
 
-int		PF_ReadChar ( void ) {return MSG_ReadChar( &net_message );}
-int		PF_ReadByte ( void ) {return MSG_ReadByte( &net_message );}
-int		PF_ReadShort ( void ) {return MSG_ReadShort( &net_message );}
-int		PF_ReadLong ( void ) {return MSG_ReadLong( &net_message );}
+int	PF_ReadChar ( void ) {return MSG_ReadChar( &net_message );}
+int	PF_ReadByte ( void ) {return MSG_ReadByte( &net_message );}
+int	PF_ReadShort ( void ) {return MSG_ReadShort( &net_message );}
+int	PF_ReadLong ( void ) {return MSG_ReadLong( &net_message );}
 float	PF_ReadFloat ( void ) {return MSG_ReadFloat( &net_message );}
 char	*PF_ReadString ( void ) {return MSG_ReadString( &net_message );}
 void	PF_ReadPos ( vec3_t pos) {MSG_ReadPos( &net_message, pos );}
@@ -213,7 +242,7 @@ void	PF_ReadData ( void *buffer, int size) {MSG_ReadData( &net_message, buffer, 
 //==============================================
 
 qboolean	pfe_pending = false;
-int			pfe_mask;
+int		pfe_mask;
 
 void PF_EndEvents( void ) 
 {
@@ -222,6 +251,7 @@ void PF_EndEvents( void )
 
 	PF_WriteByte( EV_NULL ); 
 	SV_Multicast( pfe_mask ); 
+//	SV_SendClientMessages();
 	pfe_pending = false;
 }
 
@@ -231,10 +261,8 @@ void PF_AddEvent( int mask, int eType )
 	{
 		// the target clients have changed or nothing is pending
 		if ( pfe_pending )
-		{
 			// finish the last event chain
 			PF_EndEvents();
-		}
 
 		// start the new event
 		pfe_pending = true;
@@ -298,17 +326,22 @@ void SV_InitGameProgs (void)
 	import.unlinkentity = SV_UnlinkEdict;
 
 	import.TestLine = CM_TestLine;
+	import.GrenadeTarget = Com_GrenadeTarget;
 
 	import.MoveCalc = Grid_MoveCalc;
 	import.MoveStore = Grid_MoveStore;
 	import.MoveLength = Grid_MoveLength;
 	import.MoveNext = Grid_MoveNext;
 	import.GridHeight = Grid_Height;
+	import.GridFall = Grid_Fall;
 	import.GridPosToVec = Grid_PosToVec;
+	import.GridRecalcRouting = Grid_RecalcRouting;
 
 	import.modelindex = SV_ModelIndex;
 	import.soundindex = SV_SoundIndex;
 	import.imageindex = SV_ImageIndex;
+
+	import.setmodel = PF_SetModel;
 
 	import.configstring = PF_Configstring;
 
@@ -342,7 +375,7 @@ void SV_InitGameProgs (void)
 	import.ReadAngle = PF_ReadAngle;
 	import.ReadData = PF_ReadData;
 
-	import.GetModelInTeam = CL_GetModelInTeam;
+	import.GetModelAndName = Com_GetModelAndName;
 
 	import.TagMalloc = Z_TagMalloc;
 	import.TagFree = Z_Free;
@@ -364,6 +397,7 @@ void SV_InitGameProgs (void)
 
 	import.seed = Sys_Milliseconds();
 	import.csi = &csi;
+	import.map = (void*)&svMap;
 
 	ge = (game_export_t *)Sys_GetGameAPI (&import);
 

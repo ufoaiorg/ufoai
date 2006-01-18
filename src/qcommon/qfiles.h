@@ -48,6 +48,37 @@ typedef struct
 
 #define	MAX_FILES_IN_PACK	4096
 
+/*
+==============================================================
+Pak3 support
+The .pk3 files are just uncompressed zip files
+==============================================================
+*/
+
+#define PAK3HEADER (0x504B0304)
+#define PAK3DIRHEADER (0x504B0102)
+
+#pragma pack(push, 2)
+typedef struct dpak3header_s
+{
+	unsigned long ident;
+	unsigned short version;
+	unsigned short flags;
+	unsigned short compression;
+	unsigned short modtime;
+	unsigned short moddate;
+	unsigned long crc32;
+	unsigned long compressedSize;
+	unsigned long uncompressedSize;
+	unsigned short filenameLength;
+	unsigned short extraFieldLength;
+} dpak3header_t;
+#pragma pack(pop)
+
+// Make sure we have this available
+char **FS_ListFiles( char *findname, int *numfiles, unsigned musthave, unsigned canthave );
+
+// End .pk3 support 
 
 /*
 ========================================================================
@@ -240,7 +271,7 @@ typedef struct miptex_s
 #define IDBSPHEADER	(('P'<<24)+('S'<<16)+('B'<<8)+'I')
 		// little-endian "IBSP"
 
-#define BSPVERSION	38
+#define BSPVERSION	71
 
 
 // upper design bounds
@@ -265,10 +296,10 @@ typedef struct miptex_s
 #define	MAX_MAP_PORTALS		65536
 #define	MAX_MAP_EDGES		128000
 #define	MAX_MAP_SURFEDGES	256000
-#define	MAX_MAP_LIGHTING	0x400000
+#define	MAX_MAP_LIGHTING	0x1000000
 #define	MAX_MAP_ROUTING		0x40000
 
-#define MAX_MAP_LIGHTS	256
+#define MAX_MAP_LIGHTS	1024
 
 // key / value pair sizes
 
@@ -381,7 +412,7 @@ typedef struct
 
 #define	CONTENTS_ORIGIN			0x1000000	// removed before bsping an entity
 
-#define	CONTENTS_MONSTER		0x2000000	// should never be on a brush, only in game
+#define	CONTENTS_WEAPONCLIP		0x2000000
 #define	CONTENTS_DEADMONSTER	0x4000000
 #define	CONTENTS_DETAIL			0x8000000	// brushes to be added after vis leafs
 #define	CONTENTS_TRANSLUCENT	0x10000000	// auto set if any surface has trans
@@ -505,3 +536,5 @@ typedef struct
 	int		numareaportals;
 	int		firstareaportal;
 } darea_t;
+
+

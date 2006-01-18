@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -118,7 +118,7 @@ qboolean strwildcomp (const char *string, const char *pattern)
 			c = *pattern;
 			while (c == '*')
 				c = *++pattern;
-			
+
 			if (!c)
 				return true;
 
@@ -144,9 +144,9 @@ void normPath( char *path )
 
 	while ( *tmp )
 	{
-		if ( *tmp == '\\' ) 
+		if ( *tmp == '\\' )
 			*tmp = '/';
-		else 
+		else
 			*tmp = tolower(*tmp);
 		tmp++;
 	}
@@ -181,7 +181,7 @@ Creates any directories needed to store the given filename
 void	FS_CreatePath (char *path)
 {
 	char	*ofs;
-	
+
 	for (ofs = path+1 ; *ofs ; ofs++)
 	{
 		if (*ofs == '/')
@@ -214,12 +214,12 @@ void FS_FCloseFile (FILE *f)
 */
 int	Developer_searchpath (int who)
 {
-	
+
 	int		ch;
 	// PMM - warning removal
 //	char	*start;
 	searchpath_t	*search;
-	
+
 	if (who == 1) // xatrix
 		ch = 'x';
 	else if (who == 2)
@@ -276,7 +276,7 @@ int FS_FOpenFileSingle (char *filename, FILE **file)
 			Com_sprintf (netpath, sizeof(netpath), "%s%s",link->to, filename+link->fromlength);
 			*file = fopen (netpath, "rb");
 			if (*file)
-			{		
+			{
 				Com_DPrintf ("link file: %s\n",netpath);
 				return FS_filelength (*file);
 			}
@@ -284,15 +284,15 @@ int FS_FOpenFileSingle (char *filename, FILE **file)
 		}
 	}
 
-//
-// search through the path, one element at a time
-//
+	//
+	// search through the path, one element at a time
+	//
 	for (search = fs_searchpaths ; search ; search = search->next)
 	{
-	// is the element a pak file?
+		// is the element a pak file?
 		if (search->pack)
 		{
-		// look through all the pak file elements
+			// look through all the pak file elements
 			pak = search->pack;
 			for (i=0 ; i<pak->numfiles ; i++)
 				if (!Q_strcasecmp (pak->files[i].name, filename))
@@ -302,28 +302,28 @@ int FS_FOpenFileSingle (char *filename, FILE **file)
 				// open a new file on the pakfile
 					*file = fopen (pak->filename, "rb");
 					if (!*file)
-						Com_Error (ERR_FATAL, "Couldn't reopen %s", pak->filename);	
+						Com_Error (ERR_FATAL, "Couldn't reopen %s", pak->filename);
 					fseek (*file, pak->files[i].filepos, SEEK_SET);
 					return pak->files[i].filelen;
 				}
 		}
 		else
-		{		
-	// check a file in the directory tree
-			
+		{
+			// check a file in the directory tree
+
 			Com_sprintf (netpath, sizeof(netpath), "%s/%s",search->filename, filename);
-			
+
 			*file = fopen (netpath, "rb");
 			if (!*file)
 				continue;
-			
+
 			Com_DPrintf ("FindFile: %s\n",netpath);
 
 			return FS_filelength (*file);
 		}
-		
+
 	}
-	
+
 	*file = NULL;
 	return -1;
 }
@@ -341,7 +341,7 @@ int FS_FOpenFile (char *filename, FILE **file)
 	result =  FS_FOpenFileSingle( filename, file );
 
 	// nothing corresponding found
-	if ( result == -1 ) 
+	if ( result == -1 )
 		Com_DPrintf ("FindFile: can't find %s\n", filename);
 
 	return result;
@@ -429,7 +429,7 @@ int FS_LoadFile (char *path, void **buffer)
 {
 	FILE	*h;
 	byte	*buf;
-	int		len;
+	int	len;
 
 	buf = NULL;	// quiet compiler warning
 
@@ -441,7 +441,7 @@ int FS_LoadFile (char *path, void **buffer)
 			*buffer = NULL;
 		return -1;
 	}
-	
+
 	if (!buffer)
 	{
 		fclose (h);
@@ -470,6 +470,10 @@ void FS_FreeFile (void *buffer)
 	Z_Free (buffer);
 }
 
+
+
+
+
 /*
 =================
 FS_LoadPackFile
@@ -480,6 +484,139 @@ Loads the header and directory, adding the files at the beginning
 of the list so they override previous pack files.
 =================
 */
+pack_t *FS_LoadPackFile (char *packfile)
+{
+	dpackheader_t header;
+	dpak3header_t temp;
+	int i, numpackfiles, len;
+	packfile_t *newfiles;
+	pack_t *pack;
+	FILE *packhandle;
+	dpackfile_t info[MAX_FILES_IN_PACK];
+	unsigned checksum;
+
+	packhandle = fopen(packfile, "rb");
+	if (!packhandle)
+		return NULL;
+	len = strlen(packfile);
+
+	if (!strcmp(packfile+len-4, ".pak"))
+	{
+		// NeVo - we have a regular QII .pak file
+		fread (&header, 1, sizeof(header), packhandle);
+		if (LittleLong(header.ident) != IDPAKHEADER)
+			Com_Error (ERR_FATAL, "%s is not a packfile", packfile);
+		header.dirofs = LittleLong (header.dirofs);
+		header.dirlen = LittleLong (header.dirlen);
+
+		numpackfiles = header.dirlen / sizeof(dpackfile_t);
+
+		if (numpackfiles > MAX_FILES_IN_PACK)
+			Com_Error (ERR_FATAL, "%s has %i files", packfile, numpackfiles);
+
+		newfiles = Z_Malloc (numpackfiles * sizeof(packfile_t));
+
+		fseek (packhandle, header.dirofs, SEEK_SET);
+		fread (info, 1, header.dirlen, packhandle);
+
+		// crc the directory to check for modifications
+		checksum = Com_BlockChecksum ((void *)info, header.dirlen);
+
+#ifdef NO_ADDONS
+		if (checksum != PAK0_CHECKSUM)
+			return NULL;
+#endif
+		// parse the directory
+		for (i=0 ; i<numpackfiles ; i++)
+		{
+			strcpy (newfiles[i].name, info[i].name);
+			newfiles[i].filepos = LittleLong(info[i].filepos);
+			newfiles[i].filelen = LittleLong(info[i].filelen);
+		}
+	}
+	else if (!strcmp(packfile+len-4, ".pk3") || !strcmp(packfile+len-4, ".zip"))
+	{
+		// NeVo - We have a Quake III .pk3 or uncompressed .zip file
+		/*
+		NeVo - crcing the zip file is pointless
+		// crc the directory to check for modifications
+		checksum = Com_BlockChecksum ((void *)info, header.dirlen);
+
+		#ifdef NO_ADDONS
+		if (checksum != PAK0_CHECKSUM)
+		return NULL;
+		#endif
+		*/
+		for( i = 0; i < MAX_FILES_IN_PACK; ++i)
+		{
+			//-- Get the local header of the file.
+			fread(&temp, sizeof(dpak3header_t), 1, packhandle);
+
+			//-- Check if finished with pak file item collection.
+			if (BigLong(temp.ident) == PAK3DIRHEADER)
+				break;
+
+			//-- Check if header signature is correct for the first item.
+			if ((BigLong(temp.ident) != PAK3HEADER) && (i == 0))
+				Com_Error (ERR_FATAL, "%s is not a packfile", packfile);
+
+			//-- Check if compression is used or any flags are set.
+			if ((temp.compression != 0) || (temp.flags != 0))
+				Com_Error (ERR_FATAL, "%s contains errors or is compressed", packfile);
+
+			//-- Get length of data area
+			info[i].filelen = temp.uncompressedSize;
+
+			//-- Get the data areas filename and add \0 to the end
+			fread( &info[i].name, temp.filenameLength, 1, packhandle);
+			info[i].name[temp.filenameLength] = '\0';
+
+			//-- Get the offset of the data area
+			info[i].filepos = (ftell(packhandle) + temp.extraFieldLength);
+
+			//-- Goto the next header
+			fseek( packhandle, (info[i].filelen + info[i].filepos), SEEK_SET);
+		}
+		//-- Allocate space for array of packfile structures (filename, offset, length)
+		newfiles = Z_Malloc (i * sizeof(packfile_t));
+
+		//-- The save the number of items collected from the zip file.
+		numpackfiles = i;
+
+		for (i=0 ; i < numpackfiles; i++)
+		{
+			strcpy (newfiles[i].name, info[i].name);
+			newfiles[i].filepos = info[i].filepos;
+			newfiles[i].filelen = info[i].filelen;
+		}
+	}
+	else
+	{
+		// Unrecognized file type!
+		Com_Printf ("Pack file type %s unrecognized\n", packfile+len-4);
+		return NULL;
+	}
+	pack = Z_Malloc (sizeof (pack_t));
+	strcpy (pack->filename, packfile);
+	pack->handle = packhandle;
+	pack->numfiles = numpackfiles;
+	pack->files = newfiles;
+
+	Com_Printf ("Added packfile %s (%i files)\n", packfile, numpackfiles);
+	return pack;
+}
+
+/*
+=================
+FS_LoadPackFile
+
+Takes an explicit (not game tree related) path to a pak file.
+
+Loads the header and directory, adding the files at the beginning
+of the list so they override previous pack files.
+=================
+*/
+#if 0
 pack_t *FS_LoadPackFile (char *packfile)
 {
 	dpackheader_t	header;
@@ -531,9 +668,137 @@ pack_t *FS_LoadPackFile (char *packfile)
 	pack->handle = packhandle;
 	pack->numfiles = numpackfiles;
 	pack->files = newfiles;
-	
+
 	Com_Printf ("Added packfile %s (%i files)\n", packfile, numpackfiles);
 	return pack;
+}
+#endif /* 0 */
+
+
+/*
+================
+FS_AddGameDirectory
+
+Sets fs_gamedir, adds the directory to the head of the path,
+then loads and adds pak1.pak pak2.pak ...
+------------------------------------
+NeVo - heavily updated this function
+- Now loads up to 100 enumerated .pak files. (Pooy)
+- Now loads any and all .pak files. (Void)
+- Extended all functionality to include Quake III .pk3 and
+uncompressed .zip files (NeVo/Nanook).
+Note: Just as higher enumerated files overwrite
+prior ones if they are the same, loose directory
+files overwrite .zip's which overwrite .pk3's
+which overwrite .pak's.
+------------------------------------
+================
+*/
+void FS_AddGameDirectory (char *dir)
+{
+	int i;
+	searchpath_t *search;
+	pack_t *pak;
+	char pakfile[MAX_OSPATH];
+	//VoiD -S- *.pak support
+	//char *path = NULL;
+	char findname[1024];
+	char **dirnames;
+	int ndirs;
+	char *tmp;
+	//VoiD -E- *.pack support
+
+	strcpy (fs_gamedir, dir);
+
+	//
+	// add the directory to the search path
+	//
+	search = Z_Malloc (sizeof(searchpath_t));
+	strncpy (search->filename, dir, sizeof(search->filename)-1);
+	search->filename[sizeof(search->filename)-1] = 0;
+	search->next = fs_searchpaths;
+	fs_searchpaths = search;
+
+	//
+	// add any pak files in the format pak0.pak pak1.pak, ...
+	//
+	for (i=0; i<100; i++) // Pooy - paks can now go up to 100
+	{
+		Com_sprintf (pakfile, sizeof(pakfile), "%s/pak%i.pak", dir, i);
+		pak = FS_LoadPackFile (pakfile);
+		if (!pak)
+			continue;
+		search = Z_Malloc (sizeof(searchpath_t));
+		search->pack = pak;
+		search->next = fs_searchpaths;
+		fs_searchpaths = search;
+	}
+	//
+	// NeVo - pak3's!
+	// add any pk3 files in the format pak0.pk3 pak1.pk3, ...
+	//
+	for ( i=0; i<100; i++ ) // Pooy - paks can now go up to 100
+	{
+		Com_sprintf (pakfile, sizeof(pakfile), "%s/pak%i.pk3", dir, i);
+		pak = FS_LoadPackFile (pakfile);
+		if (!pak)
+			continue;
+		search = Z_Malloc (sizeof(searchpath_t));
+		search->pack = pak;
+		search->next = fs_searchpaths;
+		fs_searchpaths = search;
+	}
+	//VoiD -S- *.pack support
+	for (i=0; i<3; i++)
+	{
+		// NeVo - Set filetype
+		switch (i) {
+			case 0:
+				// Standard Quake II pack file '.pak'
+				Com_sprintf( findname, sizeof(findname), "%s/%s", dir, ".pak" );
+				break;
+			case 1:
+				// Quake III pack file '.pk3'
+				Com_sprintf( findname, sizeof(findname), "%s/%s", dir, ".pk3" );
+				break;
+			case 2:
+				// Uncompressed zip file '.zip'
+				Com_sprintf( findname, sizeof(findname), "%s/%s", dir, ".zip" );
+				break;
+			default:
+				// Standard Quake II pack file '.pak'
+				Com_sprintf( findname, sizeof(findname), "%s/%s", dir, ".pak" );
+				break;
+		}
+
+		tmp = findname;
+		while ( *tmp != 0 )
+		{
+			if ( *tmp == '\\' )
+				*tmp = '/';
+			tmp++;
+		}
+		if ( ( dirnames = FS_ListFiles( findname, &ndirs, 0, 0 ) ) != 0 )
+		{
+			int i;
+			for ( i = 0; i < ndirs-1; i++ )
+			{
+				if ( strrchr( dirnames[i], '/' ) )
+				{
+					pak = FS_LoadPackFile (dirnames[i]);
+					if (!pak)
+					continue;
+					search = Z_Malloc (sizeof(searchpath_t));
+					search->pack = pak;
+					search->next = fs_searchpaths;
+					fs_searchpaths = search;
+				}
+				free( dirnames[i] );
+			}
+			free( dirnames );
+		}
+		//VoiD -E- *.pack support
+	}
 }
 
 
@@ -542,9 +807,10 @@ pack_t *FS_LoadPackFile (char *packfile)
 FS_AddGameDirectory
 
 Sets fs_gamedir, adds the directory to the head of the path,
-then loads and adds pak1.pak pak2.pak ... 
+then loads and adds pak1.pak pak2.pak ...
 ================
 */
+#if 0
 void FS_AddGameDirectory (char *dir)
 {
 	int				i;
@@ -574,11 +840,12 @@ void FS_AddGameDirectory (char *dir)
 		search = Z_Malloc (sizeof(searchpath_t));
 		search->pack = pak;
 		search->next = fs_searchpaths;
-		fs_searchpaths = search;		
+		fs_searchpaths = search;
 	}
 
 
 }
+#endif /* 0 */
 
 /*
 ============
@@ -595,6 +862,37 @@ char *FS_Gamedir (void)
 		return BASEDIRNAME;
 }
 
+/*================
+FS_AddHomeAsGameDirectory
+
+Use ~/.ufoai/dir as fs_gamedir
+================
+*/
+void FS_AddHomeAsGameDirectory (char *dir)
+{
+#ifndef _WIN32
+	char gdir[MAX_OSPATH];
+	char *homedir=getenv("HOME");
+	if(homedir)
+	{
+		int len = snprintf(gdir,sizeof(gdir),"%s/.ufoai/%s/", homedir, dir);
+		Com_Printf("using %s for writing\n",gdir);
+ 		FS_CreatePath (gdir);
+ 		FS_CreatePath (va("%s/save", gdir) );
+
+ 		if ((len > 0) && (len < sizeof(gdir)) && (gdir[len-1] == '/'))
+ 			gdir[len-1] = 0;
+
+		strncpy(fs_gamedir,gdir,sizeof(fs_gamedir)-1);
+ 		fs_gamedir[sizeof(fs_gamedir)-1] = 0;
+
+ 		FS_AddGameDirectory (gdir);
+ 	}
+#endif
+}
+
+
+
 /*
 =============
 FS_ExecAutoexec
@@ -607,9 +905,9 @@ void FS_ExecAutoexec (void)
 
 	dir = Cvar_VariableString("gamedir");
 	if (*dir)
-		Com_sprintf(name, sizeof(name), "%s/%s/autoexec.cfg", fs_basedir->string, dir); 
+		Com_sprintf(name, sizeof(name), "%s/%s/autoexec.cfg", fs_basedir->string, dir);
 	else
-		Com_sprintf(name, sizeof(name), "%s/%s/autoexec.cfg", fs_basedir->string, BASEDIRNAME); 
+		Com_sprintf(name, sizeof(name), "%s/%s/autoexec.cfg", fs_basedir->string, BASEDIRNAME);
 	if (Sys_FindFirst(name, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM))
 		Cbuf_AddText ("exec autoexec.cfg\n");
 	Sys_FindClose();
@@ -669,6 +967,7 @@ void FS_SetGamedir (char *dir)
 		if (fs_cddir->string[0])
 			FS_AddGameDirectory (va("%s/%s", fs_cddir->string, dir) );
 		FS_AddGameDirectory (va("%s/%s", fs_basedir->string, dir) );
+ 		FS_AddHomeAsGameDirectory(dir);
 	}
 }
 
@@ -786,7 +1085,7 @@ void FS_Dir_f( void )
 	{
 		Com_sprintf( findname, sizeof(findname), "%s/%s", path, wildcard );
 		normPath( findname );
-		
+
 		Com_Printf( "Directory of %s\n", findname );
 		Com_Printf( "----\n" );
 
@@ -884,7 +1183,7 @@ void FS_InitFilesystem (void)
 
 	//
 	// cddir <path>
-	// Logically concatenates the cddir after the basedir for 
+	// Logically concatenates the cddir after the basedir for
 	// allows the game to run from outside the data tree
 	//
 	fs_cddir = Cvar_Get ("cddir", "", CVAR_NOSET);
@@ -895,6 +1194,11 @@ void FS_InitFilesystem (void)
 	// start up with baseq2 by default
 	//
 	FS_AddGameDirectory (va("%s/"BASEDIRNAME, fs_basedir->string) );
+
+ 	//
+ 	// then add a '.quake2/baseq2' directory in home directory by default
+ 	//
+ 	FS_AddHomeAsGameDirectory(BASEDIRNAME);
 
 	// any set gamedirs will be freed up to here
 	fs_base_searchpaths = fs_searchpaths;
@@ -925,7 +1229,7 @@ void FS_BuildFileList( char *fileList )
 {
 	listBlock_t	*block, *tblock;
 	char	*path;
-  char  files[MAX_QPATH];
+	char  files[MAX_QPATH];
 	char	findname[1024];
 	char	**filenames;
 	char	*f, *fl, *tl;
@@ -933,7 +1237,7 @@ void FS_BuildFileList( char *fileList )
 	int		len;
 
 	// bring it into normal form
-  strncpy( files, fileList, MAX_QPATH );
+	strncpy( files, fileList, MAX_QPATH );
 	normPath( files );
 
 	// check the blocklist for older searches
@@ -977,7 +1281,7 @@ void FS_BuildFileList( char *fileList )
 	{
 		Com_sprintf( findname, sizeof(findname), "%s/%s", path, files );
 		normPath( findname );
-		
+
 		if ( ( filenames = FS_ListFiles( findname, &nfiles, 0, 0 ) ) != 0 )
 		{
 			int i;
@@ -1113,14 +1417,14 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 			if ( *text )
 			{
 				token = COM_Parse( text );
-				if ( *token == '{' ) 
+				if ( *token == '{' )
 				{
 					FS_SkipBlock( text );
 					token = COM_Parse( text );
 				}
 
 				strncpy( headerType, token, 32 );
-				if ( *text ) 
+				if ( *text )
 				{
 					token = COM_Parse( text );
 					strncpy( headerName, token, 32 );
@@ -1147,7 +1451,7 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 			char	filename[MAX_QPATH];
 
 			// free the old file
-			if ( lBuffer ) 
+			if ( lBuffer )
 			{
 				FS_FreeFile( lBuffer );
 				lBuffer = NULL;
@@ -1157,13 +1461,13 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 			strcpy( filename, lBlock->path );
 			strcpy( strrchr( filename, '/' ) + 1, lFile );
 
-			FS_LoadFile( filename, &lBuffer );	
+			FS_LoadFile( filename, &lBuffer );
 			*text = lBuffer;
 		}
 	}
 
 	// free the old file
-	if ( lBuffer ) 
+	if ( lBuffer )
 	{
 		FS_FreeFile( lBuffer );
 		lBuffer = NULL;

@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -30,7 +30,7 @@ void	Svcmd_Test_f (void)
 ==============================================================================
 
 PACKET FILTERING
- 
+
 
 You can add or remove addresses from the filter list with:
 
@@ -76,16 +76,16 @@ StringToFilter
 static qboolean StringToFilter (char *s, ipfilter_t *f)
 {
 	char	num[128];
-	int		i, j;
+	int	i, j;
 	byte	b[4];
 	byte	m[4];
-	
+
 	for (i=0 ; i<4 ; i++)
 	{
 		b[i] = 0;
 		m[i] = 0;
 	}
-	
+
 	for (i=0 ; i<4 ; i++)
 	{
 		if (*s < '0' || *s > '9')
@@ -93,7 +93,7 @@ static qboolean StringToFilter (char *s, ipfilter_t *f)
 			gi.cprintf(NULL, PRINT_HIGH, "Bad filter address: %s\n", s);
 			return false;
 		}
-		
+
 		j = 0;
 		while (*s >= '0' && *s <= '9')
 		{
@@ -108,10 +108,10 @@ static qboolean StringToFilter (char *s, ipfilter_t *f)
 			break;
 		s++;
 	}
-	
+
 	f->mask = *(unsigned *)m;
 	f->compare = *(unsigned *)b;
-	
+
 	return true;
 }
 
@@ -139,7 +139,7 @@ qboolean SV_FilterPacket (char *from)
 			break;
 		i++, p++;
 	}
-	
+
 	in = *(unsigned *)m;
 
 	for (i=0 ; i<numipfilters ; i++)
@@ -157,10 +157,10 @@ SV_AddIP_f
 */
 void SVCmd_AddIP_f (void)
 {
-	int		i;
-	
+	int i;
+
 	if (gi.argc() < 3) {
-		gi.cprintf(NULL, PRINT_HIGH, "Usage:  addip <ip-mask>\n");
+		gi.cprintf(NULL, PRINT_HIGH, "Usage: addip <ip-mask>\n");
 		return;
 	}
 
@@ -171,12 +171,12 @@ void SVCmd_AddIP_f (void)
 	{
 		if (numipfilters == MAX_IPFILTERS)
 		{
-			gi.cprintf (NULL, PRINT_HIGH, "IP filter list is full\n");
+			gi.cprintf (NULL, PRINT_HIGH, _("IP filter list is full\n") );
 			return;
 		}
 		numipfilters++;
 	}
-	
+
 	if (!StringToFilter (gi.argv(2), &ipfilters[i]))
 		ipfilters[i].compare = 0xffffffff;
 }
@@ -189,7 +189,7 @@ SV_RemoveIP_f
 void SVCmd_RemoveIP_f (void)
 {
 	ipfilter_t	f;
-	int			i, j;
+	int		i, j;
 
 	if (gi.argc() < 3) {
 		gi.cprintf(NULL, PRINT_HIGH, "Usage:  sv removeip <ip-mask>\n");
@@ -206,7 +206,7 @@ void SVCmd_RemoveIP_f (void)
 			for (j=i+1 ; j<numipfilters ; j++)
 				ipfilters[j-1] = ipfilters[j];
 			numipfilters--;
-			gi.cprintf (NULL, PRINT_HIGH, "Removed.\n");
+			gi.cprintf (NULL, PRINT_HIGH, _("Removed.\n") );
 			return;
 		}
 	gi.cprintf (NULL, PRINT_HIGH, "Didn't find %s.\n", gi.argv(2));
@@ -222,7 +222,7 @@ void SVCmd_ListIP_f (void)
 	int		i;
 	byte	b[4];
 
-	gi.cprintf (NULL, PRINT_HIGH, "Filter list:\n");
+	gi.cprintf (NULL, PRINT_HIGH, _("Filter list:\n") );
 	for (i=0 ; i<numipfilters ; i++)
 	{
 		*(unsigned *)b = ipfilters[i].compare;
@@ -258,7 +258,7 @@ void SVCmd_WriteIP_f (void)
 		gi.cprintf (NULL, PRINT_HIGH, "Couldn't open %s\n", name);
 		return;
 	}
-	
+
 	fprintf(f, "set filterban %d\n", (int)filterban->value);
 
 	for (i=0 ; i<numipfilters ; i++)
@@ -266,17 +266,17 @@ void SVCmd_WriteIP_f (void)
 		*(unsigned *)b = ipfilters[i].compare;
 		fprintf (f, "sv addip %i.%i.%i.%i\n", b[0], b[1], b[2], b[3]);
 	}
-	
+
 	fclose (f);
 }
 
 
 /*
 =================
-SVCmd_AI_CreatePlayer_f
+SVCmd_AI_Add_f
 =================
 */
-void SVCmd_AI_CreatePlayer_f( void )
+void SVCmd_AI_Add_f( void )
 {
 	int team;
 
@@ -290,7 +290,7 @@ void SVCmd_AI_CreatePlayer_f( void )
 	{
 		if ( !AI_CreatePlayer( team ) )
 			Com_Printf( "Couldn't create AI player.\n" );
-	} 
+	}
 	else Com_Printf( "Bad team number.\n" );
 }
 
@@ -338,8 +338,8 @@ void	ServerCommand (void)
 		SVCmd_ListIP_f ();
 	else if (Q_stricmp (cmd, "writeip") == 0)
 		SVCmd_WriteIP_f ();
-	else if (Q_stricmp (cmd, "ai_createplayer") == 0)
-		SVCmd_AI_CreatePlayer_f ();
+	else if (Q_stricmp (cmd, "ai_add") == 0)
+		SVCmd_AI_Add_f ();
 	else if (Q_stricmp (cmd, "win") == 0)
 		SVCmd_Win_f ();
 	else

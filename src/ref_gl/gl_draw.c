@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -69,7 +69,7 @@ void Draw_Char (int x, int y, int num)
 	float			frow, fcol, size;
 
 	num &= 255;
-	
+
 	if ( (num&127) == 32 )
 		return;		// space
 
@@ -107,6 +107,7 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 	font_t	*f;
 	int		i, l, t;
 	int		tx, ty, sx, sy;
+	int		chars;
 	byte	*tp;
 
 	// get the font name
@@ -138,26 +139,37 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 		return NULL;
 	}
 
+	// get character count
+	if ( h == w << 1 ) { f->rh = 0.0625; chars = 128; }
+	else if ( h == w ) { f->rh = 0.125; chars = 64; }
+	else
+	{
+		ri.Con_Printf( PRINT_ALL, "Font '%s' doesn't have a valid format (1/2 or 1/1)\n", f->name );
+		return NULL;
+	}
+
 	// get size for single chars
 	f->w = sx >>= 3;
-	f->h = sy >>= 3;
+	f->rw = 0.125;
+	if ( f->rh == 0.125 ) f->h = sy >>= 3;
+	else f->h = sy >>= 4;
 
 	tx = 0;
 	ty = 0;
 
 	// analyze the width of the chars
-	for ( i = 0; i < 64; i++ )
+	for ( i = 0; i < chars; i++ )
 	{
-		if ( i % 8 ) 
+		if ( i % 8 )
 		{
 			// same line
 			tx += sx;
 		}
-		else  
-		{ 
+		else
+		{
 			// new line
-			tx = sx-1; 
-			ty = (i>>3)*sy; 
+			tx = sx-1;
+			ty = (i>>3)*sy;
 		}
 
 		// test pixels (+3 for alpha)
@@ -165,7 +177,7 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 
 		for ( l = sx; l > 0; l-- )
 		{
-			// test a vertical line 
+			// test a vertical line
 			for ( t = 0; t < sy; t++, tp += w<<2 )
 				if ( *tp ) break;
 
@@ -180,7 +192,7 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 
 	// fix lerp problems
 	f->h--;
-	f->hr = 0.125 * (float)f->h / (f->h+1);
+	f->rhl = f->rh * (float)f->h / (f->h+1);
 
 	// return the font
 	numFonts++;
@@ -219,28 +231,28 @@ int Draw_PropCharFont (font_t *f, int x, int y, char c)
 	float		frow, fcol, sx, sy;
 
 	// get the char
-	n = ((int)c & 127) - 32;
-	if ( n >= 64 ) n -= 32;
+	n = (int)(c<32 ? 0 : c-32) & 127;
+	if ( f->rh == 0.125 )
+		while ( n >= 64 ) n -= 32;
 
 	if ( n < 0 || !f->wc[n] ) return (float)f->w * CHAR_EMPTYWIDTH;
-	
+
 	// transform from 1024x768 coordinates for drawing
 	nx = (float)x * vid.rx;
 	ny = (float)y * vid.ry;
 	cx = (float)f->wc[n] * vid.rx;
 	cy = (float)f->h * vid.ry;
 
-	// get texture coordinates 
+	// get texture coordinates
 	row = n>>3;
 	col = n&7;
 
-	frow = row*0.125;
-	fcol = col*0.125;
-	sy = f->hr;
-	sx = 0.125 * f->wc[n] / f->w;
+	frow = row*f->rh;
+	fcol = col*f->rw;
+	sy = f->rhl;
+	sx = f->rw * f->wc[n] / f->w;
 
 	// draw it
-	qglDisable (GL_ALPHA_TEST);
 	qglEnable (GL_BLEND);
 
 	qglBegin (GL_QUADS);
@@ -256,7 +268,6 @@ int Draw_PropCharFont (font_t *f, int x, int y, char c)
 	qglEnd ();
 
 	qglDisable (GL_BLEND);
-	qglEnable (GL_ALPHA_TEST);
 
 	return f->wc[n]+1;
 }
@@ -297,8 +308,10 @@ int Draw_PropLength (char *font, char *c)
 	// parse the string
 	for ( l = 0; *c; c++ )
 	{
-		n = ((int)*c & 127) - 32;
-		if ( n >= 64 ) n -= 32;
+		n = (int)(*c<32 ? 0 : *c-32) & 127;
+		if ( f->rh == 0.125 )
+			while ( n >= 64 ) n -= 32;
+
 		if ( n < 0 || !f->wc[n] ) l += (float)f->w * CHAR_EMPTYWIDTH;
 		else l += f->wc[n]+1;
 	}
@@ -320,7 +333,7 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 	f = Draw_GetFont( font );
 	if ( !f ) return 0;
 
-	// get alignement 
+	// get alignement
 	// (do nothing if left aligned or unknown)
 	if ( align > 0 && align < ALIGN_LAST )
 	{
@@ -371,9 +384,9 @@ image_t	*Draw_FindPic (char *name)
 	if (name[0] != '/' && name[0] != '\\')
 		Com_sprintf (fullname, sizeof(fullname), "pics/%s", name);
 	else
-    strncpy( fullname, name+1, MAX_QPATH );
+		strncpy( fullname, name+1, MAX_QPATH );
 
-  gl = GL_FindImage (fullname, it_pic);
+	gl = GL_FindImage (fullname, it_pic);
 	return gl;
 }
 
@@ -410,9 +423,6 @@ void Draw_StretchPic (int x, int y, int w, int h, char *pic)
 	if (scrap_dirty)
 		Scrap_Upload ();
 
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) && !gl->has_alpha)
-		qglDisable (GL_ALPHA_TEST);
-
 	GL_Bind (gl->texnum);
 	qglBegin (GL_QUADS);
 	qglTexCoord2f (gl->sl, gl->tl);
@@ -424,9 +434,6 @@ void Draw_StretchPic (int x, int y, int w, int h, char *pic)
 	qglTexCoord2f (gl->sl, gl->th);
 	qglVertex2f (x, y+h);
 	qglEnd ();
-
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) && !gl->has_alpha)
-		qglEnable (GL_ALPHA_TEST);
 }
 
 
@@ -437,17 +444,13 @@ Draw_NormPic
 */
 void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name)
 {
-	float	nx, ny, nw, nh;
+	float	nx, ny, nw = 0.0, nh = 0.0;
 	image_t *gl;
 
-  
 	gl = Draw_FindPic( name );
 
 	if (scrap_dirty)
 		Scrap_Upload ();
-
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) && !gl->has_alpha)
-		qglDisable (GL_ALPHA_TEST);
 
 	// normalize
 	nx = x * vid.rx;
@@ -474,7 +477,7 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 		sh = 1; th = 1;
 	}
 
-	// get alignement 
+	// get alignement
 	// (do nothing if left aligned or unknown)
 	if ( align > 0 && align < ALIGN_LAST )
 	{
@@ -506,9 +509,6 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 	qglEnd ();
 
 	if ( blend ) qglDisable( GL_BLEND );
-
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) )  && !gl->has_alpha)
-		qglEnable (GL_ALPHA_TEST);
 }
 
 
@@ -526,12 +526,6 @@ void Draw_Pic (int x, int y, char *pic)
 	if (scrap_dirty)
 		Scrap_Upload ();
 
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) && !gl->has_alpha)
-		qglDisable (GL_ALPHA_TEST);
-
-//	qglDisable (GL_ALPHA_TEST);
-//	qglEnable (GL_BLEND);
-
 	GL_Bind (gl->texnum);
 	qglBegin (GL_QUADS);
 	qglTexCoord2f (gl->sl, gl->tl);
@@ -543,12 +537,6 @@ void Draw_Pic (int x, int y, char *pic)
 	qglTexCoord2f (gl->sl, gl->th);
 	qglVertex2f (x, y+gl->height);
 	qglEnd ();
-
-//	qglDisable (GL_BLEND);
-//	qglEnable (GL_ALPHA_TEST);
-
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) )  && !gl->has_alpha)
-		qglEnable (GL_ALPHA_TEST);
 }
 
 /*
@@ -565,9 +553,6 @@ void Draw_TileClear (int x, int y, int w, int h, char *name)
 
 	image = Draw_FindPic (name);
 
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) )  && !image->has_alpha)
-		qglDisable (GL_ALPHA_TEST);
-
 	GL_Bind (image->texnum);
 	qglBegin (GL_QUADS);
 	qglTexCoord2f (x/64.0, y/64.0);
@@ -579,9 +564,6 @@ void Draw_TileClear (int x, int y, int w, int h, char *name)
 	qglTexCoord2f ( x/64.0, (y+h)/64.0 );
 	qglVertex2f (x, y+h);
 	qglEnd ();
-
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) )  && !image->has_alpha)
-		qglEnable (GL_ALPHA_TEST);
 }
 
 
@@ -608,7 +590,19 @@ void Draw_Fill (int x, int y, int w, int h, int style, vec4_t color)
 
 	switch ( style )
 	{
-	case 1:
+	case ALIGN_CL:
+		qglVertex2f (nx, ny);
+		qglVertex2f (nx+nh, ny);
+		qglVertex2f (nx+nh, ny-nw);
+		qglVertex2f (nx, ny-nw);
+		break;
+	case ALIGN_CC:
+		qglVertex2f (nx, ny);
+		qglVertex2f (nx+nh, ny-nh);
+		qglVertex2f (nx+nh, ny-nw-nh);
+		qglVertex2f (nx, ny-nw);
+		break;
+	case ALIGN_UC:
 		qglVertex2f (nx, ny);
 		qglVertex2f (nx+nw, ny);
 		qglVertex2f (nx+nw-nh, ny+nh);
@@ -667,7 +661,6 @@ extern unsigned	r_rawpalette[256];
 void Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data)
 {
 	unsigned	image32[256*256];
-	unsigned char image8[256*256];
 	int			i, j, trows;
 	byte		*source;
 	int			frac, fracstep;
@@ -706,12 +699,12 @@ void Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data
 		}
 	}
 
-	qglTexImage2D (GL_TEXTURE_2D, 0, gl_tex_solid_format, 256, 256, 0, GL_RGBA, GL_UNSIGNED_BYTE, image32);
+	qglTexImage2D (GL_TEXTURE_2D, 0, gl_solid_format, 256, 256, 0, GL_RGBA, GL_UNSIGNED_BYTE, image32);
 
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	if ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) 
+	if ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) )
 		qglDisable (GL_ALPHA_TEST);
 
 	qglBegin (GL_QUADS);
@@ -725,7 +718,119 @@ void Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data
 	qglVertex2f (x, y+h);
 	qglEnd ();
 
-	if ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) 
+	if ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) )
 		qglEnable (GL_ALPHA_TEST);
 }
 
+
+/*
+================
+Draw_DayAndNight
+================
+*/
+float	lastQ;
+
+void Draw_DayAndNight( int x, int y, int w, int h, float p, float q, float cx, float cy, float iz )
+{
+	image_t *gl;
+	float nx, ny, nw, nh;
+
+	// normalize
+	nx = x * vid.rx;
+	ny = y * vid.ry;
+	nw = w * vid.rx;
+	nh = h * vid.ry;
+
+	// load day image
+	gl = GL_FindImage( "pics/menu/map_earth_day", it_wrappic );
+
+	// draw day image
+	GL_Bind (gl->texnum);
+	qglBegin (GL_QUADS);
+	qglTexCoord2f( cx-iz, cy-iz );
+	qglVertex2f (nx, ny);
+	qglTexCoord2f( cx+iz, cy-iz );
+	qglVertex2f (nx+nw, ny);
+	qglTexCoord2f( cx+iz, cy+iz );
+	qglVertex2f (nx+nw, ny+nh);
+	qglTexCoord2f( cx-iz, cy+iz );
+	qglVertex2f (nx, ny+nh);
+	qglEnd ();
+
+	// test for multitexture and env_combine support
+	if ( !qglSelectTextureSGIS && !qglActiveTextureARB )
+		return;
+
+	// init combiner
+	qglEnable( GL_BLEND );
+
+	GL_SelectTexture( gl_texture0 );
+	gl = GL_FindImage( "pics/menu/map_earth_night", it_wrappic );
+	GL_Bind( gl->texnum );
+
+	GL_SelectTexture( gl_texture1 );
+	if ( !DaN || lastQ != q )
+	{
+		GL_CalcDayAndNight( q );
+		lastQ = q;
+	}
+
+	GL_Bind( DaN->texnum );
+	qglEnable( GL_TEXTURE_2D );
+
+	// draw night image
+	qglBegin (GL_QUADS);
+	qglMTexCoord2fSGIS( gl_texture0, cx-iz, cy-iz );
+	qglMTexCoord2fSGIS( gl_texture1, p+cx-iz, cy-iz );
+	qglVertex2f (nx, ny);
+	qglMTexCoord2fSGIS( gl_texture0, cx+iz, cy-iz );
+	qglMTexCoord2fSGIS( gl_texture1, p+cx+iz, cy-iz );
+	qglVertex2f (nx+nw, ny);
+	qglMTexCoord2fSGIS( gl_texture0, cx+iz, cy+iz );
+	qglMTexCoord2fSGIS( gl_texture1, p+cx+iz, cy+iz );
+	qglVertex2f (nx+nw, ny+nh);
+	qglMTexCoord2fSGIS( gl_texture0, cx-iz, cy+iz );
+	qglMTexCoord2fSGIS( gl_texture1, p+cx-iz, cy+iz );
+	qglVertex2f (nx, ny+nh);
+	qglEnd ();
+
+	// reset mode
+	qglDisable( GL_TEXTURE_2D );
+	GL_SelectTexture( gl_texture0 );
+
+	qglDisable( GL_BLEND );
+}
+
+/*
+================
+Draw_LineStrip
+================
+*/
+#define MAX_LINEVERTS 256
+void Draw_LineStrip( int points, int *verts )
+{
+	static int vs[MAX_LINEVERTS*2];
+	int i;
+//	int *v;
+
+	// fit it on screen
+	if ( points > MAX_LINEVERTS*2 ) points = MAX_LINEVERTS*2;
+
+	for ( i = 0; i < points*2; i += 2 )
+	{
+		vs[i] = verts[i] * vid.rx;
+		vs[i+1] = verts[i+1] * vid.ry;
+	}
+
+	// init vertex array
+	qglDisable( GL_TEXTURE_2D );
+	qglEnableClientState( GL_VERTEX_ARRAY );
+	qglVertexPointer( 2, GL_INT, 0, vs );
+
+	// draw
+	qglDrawArrays( GL_LINE_STRIP, 0, points );
+
+	// reset state
+	qglDisableClientState( GL_VERTEX_ARRAY );
+	qglEnable( GL_TEXTURE_2D );
+}

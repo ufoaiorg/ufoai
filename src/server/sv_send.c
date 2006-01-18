@@ -160,23 +160,35 @@ MULTICAST_PHS	send to clients potentially hearable from org
 */
 void SV_Multicast (int mask)
 {
-	client_t	*client;
+	client_t	*c;
 	int			j;
 
-//	Com_Printf( "size: %i\n", sv.multicast.cursize );
-
 	// send the data to all relevant clients
-	for (j = 0, client = svs.clients; j < sv_maxclients->value; j++, client++)
+	for (j = 0, c = svs.clients; j < sv_maxclients->value; j++, c++)
 	{
-		if (client->state == cs_free || client->state == cs_zombie)
+		if (c->state == cs_free || c->state == cs_zombie)
 			continue;
 		if ( !(mask & (1<<j)) ) 
 			continue;
 
-		SZ_Write (&client->netchan.message, sv.multicast.data, sv.multicast.cursize);
+		// get next reliable buffer, if needed
+		if ( c->addMsg == c->curMsg || c->reliable[c->addMsg].cursize + sv.multicast.cursize > MAX_MSGLEN - 100 )
+		{
+			c->addMsg = (c->addMsg + 1) % RELIABLEBUFFERS;
+			if ( c->addMsg == c->curMsg )
+			{
+				// client overflowed
+				c->netchan.message.overflowed = true; 
+				continue;
+			}
+			SZ_Clear( &c->reliable[c->addMsg] );
+		}
+
+		// write the message
+		SZ_Write( &c->reliable[c->addMsg], sv.multicast.data, sv.multicast.cursize );
 	}
 
-	SZ_Clear (&sv.multicast);
+	SZ_Clear( &sv.multicast );
 }
 
 
@@ -249,9 +261,16 @@ void SV_SendClientMessages (void)
 		}
 
 		// just update reliable	if needed
-		if (c->netchan.message.cursize	|| curtime - c->netchan.last_sent > 1000 )
+		if ( c->netchan.message.cursize || (c->curMsg != c->addMsg && !c->netchan.message.cursize)
+			|| curtime - c->netchan.last_sent > 1000 )
 		{
-//			if ( c->netchan.message.cursize ) Com_Printf( "size: %i\n", c->netchan.message.cursize );
+//			Com_Printf( "send %i %i\n", c->netchan.message.cursize, c->netchan.reliable_length );
+			if ( c->curMsg != c->addMsg && !c->netchan.message.cursize ) 
+			{
+				// copy the next reliable message
+				c->curMsg = (c->curMsg + 1) % RELIABLEBUFFERS;
+				SZ_Write( &c->netchan.message, c->reliable[c->curMsg].data, c->reliable[c->curMsg].cursize ); 
+			}
 			Netchan_Transmit (&c->netchan, 0, NULL);
 		}
 	}

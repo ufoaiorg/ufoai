@@ -16,10 +16,29 @@ vec3_t player_maxs = { PLAYER_WIDTH,  PLAYER_WIDTH,  PLAYER_STAND };
 
 //===========================================================================
 //
-// LM drawing (that's all local models do)
+// LM handling
 //
 //===========================================================================
 
+char *lmList[MAX_LOCALMODELS+1];
+
+
+/*
+==================
+LM_GenerateList
+==================
+*/
+void LM_GenerateList( void )
+{
+	lm_t *lm;
+	int i, l;
+
+	l = 0;
+	for ( i = 0, lm = LMs; i < numLMs; i++, lm++ )
+		if ( *lm->name == '*' )
+			lmList[l++] = lm->name;
+	lmList[l] = NULL;
+}
 
 
 /*
@@ -33,8 +52,6 @@ void LM_AddToScene( void )
 	entity_t	ent;
 	int		i;
 
-	memset( &ent, 0, sizeof(entity_t) );	
-
 	for ( i = 0, lm = LMs; i < numLMs; i++, lm++ ) 
 	{
 		// check for visibility
@@ -42,15 +59,164 @@ void LM_AddToScene( void )
 			continue;
 
 		// set entity values
+		memset( &ent, 0, sizeof(entity_t) );	
 		VectorCopy( lm->origin, ent.origin );
 		VectorCopy( lm->origin, ent.oldorigin );
 		VectorCopy( lm->angles, ent.angles );
 		ent.model = lm->model;
-		ent.sunfrac = lm->sunfrac;
+		ent.skinnum = lm->skin;
+
+		if ( lm->flags & LMF_NOSMOOTH ) ent.flags |= RF_NOSMOOTH;
+		if ( lm->flags & LMF_LIGHTFIXED ) 
+		{
+			ent.flags |= RF_LIGHTFIXED;
+			ent.lightparam = lm->lightorigin;
+			ent.lightcolor = lm->lightcolor;
+			ent.lightambient = lm->lightambient;
+		}
+		else ent.lightparam = &lm->sunfrac;
 
 		// add it to the scene
 		V_AddEntity( &ent );
 	}
+}
+
+
+/*
+==============
+LM_Find
+==============
+*/
+lm_t *LM_Find( int num )
+{
+	int i;
+	for ( i = 0; i < numLMs; i++ )
+		if ( LMs[i].num == num ) return &LMs[i];
+
+	Com_Printf( _("LM_Perish: Can't find model %i\n"), num );
+	return NULL;
+}
+
+
+/*
+==============
+LM_Delete
+==============
+*/
+void LM_Delete( lm_t *lm )
+{
+	lm_t backup;
+
+	backup = *lm;
+	numLMs--;
+	memcpy( lm, lm+1, (numLMs - (lm - LMs)) * sizeof( lm_t ) );
+
+	LM_GenerateList();
+	Grid_RecalcRouting( &clMap, backup.name, lmList );
+	if ( selActor ) 
+		Grid_MoveCalc( &clMap, selActor->pos, MAX_ROUTE, fb_list, fb_length );
+}
+
+
+/*
+==============
+LM_Perish
+==============
+*/
+void LM_Perish( sizebuf_t *sb )
+{
+	lm_t *lm;
+
+	lm = LM_Find( MSG_ReadShort( sb ) );
+	if ( !lm ) return;
+
+	LM_Delete( lm );
+}
+
+
+/*
+==============
+LM_Explode
+==============
+*/
+void LM_Explode( sizebuf_t *sb )
+{
+	lm_t *lm;
+
+	lm = LM_Find( MSG_ReadShort( sb ) );
+	if ( !lm ) return;
+
+	if ( lm->particle[0] ) 
+	{
+		cmodel_t *mod;
+		vec3_t center;
+
+		// create particles
+		mod = CM_InlineModel (lm->name);
+		VectorAdd( mod->mins, mod->maxs, center );
+		VectorScale( center, 0.5, center );
+		CL_ParticleSpawn( lm->particle, 0, center, NULL, NULL );
+	}
+
+	LM_Delete( lm );
+}
+
+
+/*
+==================
+CL_RegisterLocalModels
+==================
+*/
+void CL_RegisterLocalModels ( void )
+{
+	lm_t		*lm;
+	vec3_t		sunDir, sunOrigin;
+	int		i;
+
+	VectorCopy( map_sun.dir, sunDir );
+
+	for ( i = 0, lm = LMs; i < numLMs; i++, lm++ ) 
+	{
+		// register the model and recalculate routing info
+		lm->model = re.RegisterModel( lm->name );
+
+		// calculate sun lighting and register model if not yet done
+		VectorMA( lm->origin, 512, sunDir, sunOrigin );
+		if ( !CM_TestLine( lm->origin, sunOrigin ) )
+			lm->sunfrac = 1.0f;
+		else
+			lm->sunfrac = 0.0f;
+	}
+}
+
+
+/*
+==================
+CL_AddLocalModel
+==================
+*/
+lm_t *CL_AddLocalModel (char *model, char *particle, vec3_t origin, vec3_t angles, int num, int levelflags)
+{
+	lm_t	*lm;
+
+	lm = &LMs[numLMs++];
+
+	if ( numLMs >= MAX_LOCALMODELS )
+		Sys_Error( _("Too many local models\n") );
+
+	memset( lm, 0, sizeof(lm_t) );
+	strncpy( lm->name, model, MAX_VAR );
+	strncpy( lm->particle, particle, MAX_VAR );
+	VectorCopy( origin, lm->origin );
+	VectorCopy( angles, lm->angles );
+	lm->num = num;
+	lm->levelflags = levelflags;
+
+	LM_GenerateList();
+	Grid_RecalcRouting( &clMap, lm->name, lmList );
+	//	Com_Printf( "adding model %s %i\n", lm->name, numLMs );
+
+	return lm;
 }
 
 
@@ -84,18 +250,20 @@ void LE_Think( void )
 //
 //===========================================================================
 
-char retAnim[64];
+char retAnim[MAX_VAR];
 
 /*
 ==============
 LE_GetAnim
 ==============
 */
-char *LE_GetAnim( char *anim, inventory_t *i, int state )
+char *LE_GetAnim( char *anim, int right, int left, int state )
 {
 	char		*mod;
 	qboolean	akimbo;
 	char		category, *type;
+
+	if ( !anim ) return "";
 
 	mod = retAnim;
 
@@ -104,15 +272,16 @@ char *LE_GetAnim( char *anim, inventory_t *i, int state )
 
 	// determine relevant data
 	akimbo = false;
-	if ( i->right.t == NONE ) 
+	if ( right == NONE ) 
 	{
 		category = '0';
-		if ( i->left.t == NONE ) type = "item";
-		else { akimbo = true; type = csi.ods[i->left.t].type; }
+		if ( left == NONE ) type = "item";
+		else { akimbo = true; type = csi.ods[left].type; }
 	} else {
-		category = csi.ods[i->right.t].category;
-		type = csi.ods[i->right.t].type;
-		if ( i->left.t != NONE ) akimbo = true;
+		category = csi.ods[right].category;
+		type = csi.ods[right].type;
+		if ( left != NONE && !strcmp( csi.ods[right].type, "pistol" ) && !strcmp( csi.ods[left].type, "pistol" ) ) 
+			akimbo = true;
 	}
 
 	if ( !strcmp( anim, "stand" ) || !strcmp( anim, "walk" ) )
@@ -146,7 +315,7 @@ void LET_StartIdle( le_t *le )
 	else if ( le->state & STATE_PANIC )
 		re.AnimChange( &le->as, le->model1, "panic0" );
 	else
-		re.AnimChange( &le->as, le->model1, LE_GetAnim( "stand", &le->i, le->state ) );
+		re.AnimChange( &le->as, le->model1, LE_GetAnim( "stand", le->right, le->left, le->state ) );
 
 	le->think = NULL;
 }
@@ -240,15 +409,15 @@ void LET_PathMove( le_t *le )
 		{
 			// end of move
 			le_t *floor;
-			Grid_PosToVec( le->pos, le->origin );
+			Grid_PosToVec( &clMap, le->pos, le->origin );
 
 			// calculate next possible moves
 			CL_BuildForbiddenList();
 			if ( selActor == le ) 
-				Grid_MoveCalc( le->pos, MAX_ROUTE, fb_list, fb_length );
+				Grid_MoveCalc( &clMap, le->pos, MAX_ROUTE, fb_list, fb_length );
 
 			floor = LE_Find( ET_ITEM, le->pos );
-			if ( floor ) le->i.floor = &floor->i;
+			if ( floor ) le->i.c[csi.idFloor] = floor->i.c[csi.idFloor];
 
 			blockEvents = false;
 			le->think = LET_StartIdle;
@@ -258,8 +427,8 @@ void LET_PathMove( le_t *le )
 	}
 
 	// interpolate the position
-	Grid_PosToVec( le->oldPos, start );
-	Grid_PosToVec( le->pos, dest );
+	Grid_PosToVec( &clMap, le->oldPos, start );
+	Grid_PosToVec( &clMap, le->pos, dest );
 	VectorSubtract( dest, start, delta );
 
 	frac = (float)(cl.time - le->startTime) / (float)(le->endTime - le->startTime);
@@ -274,39 +443,12 @@ LET_StartPathMove
 */
 void LET_StartPathMove( le_t *le )
 {
-	re.AnimChange( &le->as, le->model1, LE_GetAnim( "walk", &le->i, le->state ) );
+	re.AnimChange( &le->as, le->model1, LE_GetAnim( "walk", le->right, le->left, le->state ) );
 
 	le->think = LET_PathMove;
 	le->think( le );
 }
 
-
-/*
-==============
-LET_Shoot
-==============
-*/
-void LET_Shoot( le_t *le )
-{
-	if ( cl.time < le->endTime )
-		return;
-
-	le->think = NULL;
-	re.AnimChange( &le->as, le->model1, LE_GetAnim( "stand", &le->i, le->state ) );
-}
-
-/*
-==============
-LET_StartShoot
-==============
-*/
-void LET_StartShoot( le_t *le )
-{
-	re.AnimAppend( &le->as, le->model1, LE_GetAnim( "shoot", &le->i, le->state ) );
-
-	le->endTime = cl.time + 400;
-	le->think = LET_Shoot;
-}
 
 /*
 ==============
@@ -317,22 +459,18 @@ void LET_Projectile( le_t *le )
 {
 	if ( cl.time >= le->endTime )
 	{
-		// impact
 		le->ptl->inuse = false;
-		if ( le->ref1 )
+		le->inuse = false;
+		if ( le->ref1 && le->ref1[0] )
 		{
-			if ( le->ref2[0] ) S_StartLocalSound( le->ref2 );
+			vec3_t impact;
 
-			le->ptl = CL_ParticleSpawn( le->ref1, le->maxs, bytedirs[le->state], NULL );
+			VectorCopy( le->ptl->s, impact );
+			le->ptl = CL_ParticleSpawn( le->ref1, 0, impact, bytedirs[le->state], NULL );
 			VecToAngles( bytedirs[le->state], le->ptl->angles );
 		}
-		le->inuse = false;
-		return;
+		if ( le->ref2 && le->ref2[0] ) S_StartLocalSound( le->ref2 );
 	}
-
-	// kinematics
-	VectorMA( le->origin, cls.frametime, le->mins, le->origin );
-	VectorCopy( le->origin, le->ptl->s );
 }
 
 //===========================================================================
@@ -341,7 +479,7 @@ void LET_Projectile( le_t *le )
 //
 //===========================================================================
 
-void LE_AddProjectile( fireDef_t *fd, byte flags, vec3_t muzzle, vec3_t impact, byte normal )
+void LE_AddProjectile( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, int normal )
 {
 	le_t	*le;
 	vec3_t	delta;
@@ -352,7 +490,7 @@ void LE_AddProjectile( fireDef_t *fd, byte flags, vec3_t muzzle, vec3_t impact, 
 	le->invis = true;
 
 	// bind particle
-	le->ptl = CL_ParticleSpawn( fd->projectile, muzzle, NULL, NULL );
+	le->ptl = CL_ParticleSpawn( fd->projectile, 0, muzzle, NULL, NULL );
 	if ( !le->ptl )
 	{
 		le->inuse = false;
@@ -373,30 +511,91 @@ void LE_AddProjectile( fireDef_t *fd, byte flags, vec3_t muzzle, vec3_t impact, 
 		le->inuse = false;
 		le->ptl->size[0] = dist;
 		VectorMA( muzzle, 0.5, delta, le->ptl->s );
-		if ( flags & SF_IMPACT )
+		if ( flags & (SF_IMPACT|SF_BODY) || fd->selfDetonate )
 		{
-			if ( fd->impactSound[0] ) S_StartLocalSound( fd->impactSound );
-			ptl = CL_ParticleSpawn( fd->impact, impact, bytedirs[normal], NULL );
-			VecToAngles( bytedirs[normal], ptl->angles );
+			ptl = NULL;
+			if ( flags & SF_BODY ) 
+			{
+				if ( fd->hitBodySound[0] ) S_StartLocalSound( fd->hitBodySound );
+				if ( fd->hitBody[0] ) ptl = CL_ParticleSpawn( fd->hitBody, 0, impact, bytedirs[normal], NULL );
+			} else {
+				if ( fd->impactSound[0] ) S_StartLocalSound( fd->impactSound );
+				if ( fd->impact[0] ) ptl = CL_ParticleSpawn( fd->impact, 0, impact, bytedirs[normal], NULL );
+			}
+			if ( ptl ) VecToAngles( bytedirs[normal], ptl->angles );
 		}
 		return;
 	}
-	
-	VectorCopy( impact, le->maxs );
-	VectorScale( delta, (fd->speed / dist), le->mins );
-
-	VectorMA( muzzle, le->ptl->size[0] / (2*dist), delta, le->origin );
-	le->endTime = cl.time + (1000.0 * (dist - le->ptl->size[0]) / fd->speed);
+	// particle properties
+	VectorScale( delta, fd->speed / dist, le->ptl->v );
+	le->endTime = cl.time + 1000 * dist / fd->speed;
 
 	// think function
-	if ( flags & SF_IMPACT ) 
+	if ( flags & SF_BODY ) 
+	{
+		le->ref1 = fd->hitBody;
+		le->ref2 = fd->hitBodySound;
+	} 
+	else if ( flags & SF_IMPACT || fd->selfDetonate ) 
 	{
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
+	} 
+	else 
+	{
+		le->ref1 = NULL;
+		if ( flags & SF_BOUNCING ) le->ref2 = fd->bounceSound;
 	}
+
 	le->think = LET_Projectile;
 	le->think( le );
 }
+
+
+void LE_AddGrenade( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t v0, int dt )
+{
+	le_t	*le;
+	vec3_t	accel;
+
+	// add le
+	le = LE_Add( 0 );
+	le->invis = true;
+
+	// bind particle
+	VectorSet( accel, 0, 0, -GRAVITY );
+	le->ptl = CL_ParticleSpawn( fd->projectile, 0, muzzle, v0, accel );
+	if ( !le->ptl )
+	{
+		le->inuse = false;
+		return;
+	}
+	// particle properties
+	VectorSet( le->ptl->angles, 360*crand(), 360*crand(), 360*crand() );
+	VectorSet( le->ptl->omega, 500*crand(), 500*crand(), 500*crand() );
+
+	// think function
+	if ( flags & SF_BODY ) 
+	{
+		le->ref1 = fd->hitBody;
+		le->ref2 = fd->hitBodySound;
+	} 
+	else if ( flags & SF_IMPACT || fd->selfDetonate ) 
+	{
+		le->ref1 = fd->impact;
+		le->ref2 = fd->impactSound;
+	} 
+	else 
+	{
+		le->ref1 = NULL;
+		if ( flags & SF_BOUNCING ) le->ref2 = fd->bounceSound;
+	}
+
+	le->endTime = cl.time + dt;
+	le->state = 5; // direction (0,0,1)
+	le->think = LET_Projectile;
+	le->think( le );
+}
+
 
 //===========================================================================
 //
@@ -427,7 +626,7 @@ le_t *LE_Add( int entnum )
 		if ( numLEs >= MAX_EDICTS - numLMs )
 		{
 			// no free LEs
-			Com_Error( ERR_DROP, "Too many LEs\n" );
+			Com_Error( ERR_DROP, _("Too many LEs\n") );
 			return NULL;
 		}
 
@@ -510,7 +709,7 @@ void LE_AddToScene( void )
 				else
 					le->sunfrac = 0.0f;
 			}
-			ent.sunfrac = le->sunfrac;
+			ent.lightparam = &le->sunfrac;
 			ent.alpha = le->alpha;
 
 			// set entity values
@@ -580,10 +779,10 @@ void CL_ClipMoveToLEs ( moveclip_t *clip )
 			continue;
 
 		// might intersect, so do an exact clip
-		headnode = CM_HeadnodeForBox (le->mins, le->maxs);
+		headnode = CM_HeadnodeForBox( 0, le->mins, le->maxs );
 
 		trace = CM_TransformedBoxTrace (clip->start, clip->end,
-			clip->mins, clip->maxs, headnode,  clip->contentmask,
+			clip->mins, clip->maxs, 0, headnode,  clip->contentmask,
 			le->origin, vec3_origin );
 
 		if (trace.allsolid || trace.startsolid ||

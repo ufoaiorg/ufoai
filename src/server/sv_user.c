@@ -59,7 +59,7 @@ void SV_New_f (void)
 {
 	char		*gamedir;
 	int			playernum;
-	edict_t		*ent;
+//	edict_t		*ent;
 
 	Com_DPrintf ("New() from %s\n", sv_client->name);
 
@@ -259,13 +259,13 @@ void SV_BeginDownload_f(void)
 		// leading slash bad as well, must be in subdir
 		|| *name == '/'
 		// next up, skin check
-		|| (strncmp(name, "players/", 6) == 0 && !allow_download_players->value)
+		|| (strncmp(name, "players/", 8) == 0 && !allow_download_players->value)
 		// now models
-		|| (strncmp(name, "models/", 6) == 0 && !allow_download_models->value)
+		|| (strncmp(name, "models/", 7) == 0 && !allow_download_models->value)
 		// now sounds
 		|| (strncmp(name, "sound/", 6) == 0 && !allow_download_sounds->value)
 		// now maps (note special case for maps, must not be in pak)
-		|| (strncmp(name, "maps/", 6) == 0 && !allow_download_maps->value)
+		|| (strncmp(name, "maps/", 5) == 0 && !allow_download_maps->value)
 		// MUST be in a subdirectory	
 		|| !strstr (name, "/") )	
 	{	// don't allow anything with .. path
@@ -446,11 +446,11 @@ void SV_ExecuteClientMessage (client_t *cl)
 	int		c;
 	char	*s;
 
-	int		net_drop;
+//	int		net_drop;
 	int		stringCmdCount;
-	int		checksum, calculatedChecksum;
-	int		checksumIndex;
-	int		lastframe;
+//	int		checksum, calculatedChecksum;
+//	int		checksumIndex;
+//	int		lastframe;
 
 	sv_client = cl;
 	sv_player = sv_client->player;

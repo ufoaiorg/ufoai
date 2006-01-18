@@ -1,0 +1,203 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: UFO Alien Invasion\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2005-12-22 18:35+0100\n"
+"Last-Translator: Martin Gerhardy <tlh2000@gmx.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+##ufopedia
+msgid "Ufopedia Content"
+msgstr "Ufopedia Verzeichnis"
+
+msgid "Aircraft"
+msgstr "Gleiter"
+
+msgid "Weapons"
+msgstr "Waffen"
+
+msgid "Buildings"
+msgstr "Gebaeude"
+
+msgid "Alien Species"
+msgstr "Alien Spezies"
+
+msgid "Stab"
+msgstr "Stich"
+
+msgid "Throw"
+msgstr "Wurf"
+
+msgid "Primary"
+msgstr "Primaer"
+
+msgid "Secondary"
+msgstr "Sekundaer"
+
+msgid "Damage"
+msgstr "Schaden"
+
+msgid "Range"
+msgstr "Weite"
+
+msgid "Time Units"
+msgstr "Zeiteinheiten"
+
+msgid "Spreads"
+msgstr "Streuung"
+
+msgid "Ammo"
+msgstr "Munition"
+
+msgid "H-92 Troop Transport"
+msgstr "H-92 Truppentransporter"
+
+## cl_campaign.c
+msgid "Jan"
+msgstr "Jan"
+
+msgid "Feb"
+msgstr "Feb"
+
+msgid "Mar"
+msgstr "Mär"
+
+msgid "Apr"
+msgstr "Apr"
+
+msgid "May"
+msgstr "Mai"
+
+msgid "Jun"
+msgstr "Jun"
+
+msgid "Jul"
+msgstr "Jul"
+
+msgid "Aug"
+msgstr "Aug"
+
+msgid "Sep"
+msgstr "Sep"
+
+msgid "Oct"
+msgstr "Oct"
+
+msgid "Nov"
+msgstr "Nov"
+
+msgid "Dec"
+msgstr "Dez"
+
+msgid "5 sec"
+msgstr "5 Sek"
+
+msgid "5 mins"
+msgstr "5 Min"
+
+msgid "1 hour"
+msgstr "1 Std"
+
+msgid "12 hour"
+msgstr "12 Std"
+
+msgid "1 day"
+msgstr "1 Tag"
+
+msgid "5 days"
+msgstr "5 Tage"
+
+## in-game (hud)
+msgid "Your round started!\n"
+msgstr "Du bist an der Reihe!\n"
+
+msgid "This isn't your round"
+msgstr "Du bist nicht dran"
+
+msgid "Nobody selected"
+msgstr "Es ist niemand selektiert"
+
+msgid "Health\t%i\nMove\t%i\n"
+msgstr "Gesundheit\t%i\nBewegung\t%i\n"
+
+msgid "Health\t%i\n"
+msgstr "Gesundheit\t%i\n"
+
+msgid "Shoot"
+msgstr "Schuss"
+
+msgid "Alien spotted"
+msgstr "Alien gesichtet"
+
+msgid "Civilian sptted"
+msgstr "Zivilist gesichtet"
+
+## in game
+msgid "Currently panics!\n"
+msgstr "Getade panisch!\n"
+
+msgid "%s panics!\n"
+msgstr "%s ist panisch!\n"
+
+msgid "%s is on a rampage.\n"
+msgstr "%s randaliert.\n"
+
+msgid "%s is in mad rage!\n"
+msgstr "%s dreht durch!\n"
+
+msgid "Can't perform action - this isn't your round!\n"
+msgstr "Nicht deine Runde\n"
+
+msgid "Can't perform action - object not present!\n"
+msgstr "Objekt nicht vorhanden\n"
+
+msgid "Can't perform action - not an actor!\n"
+msgstr "Kein Spieler\n"
+
+msgid "Can't perform action - actor is dead!\n"
+msgstr "Spieler ist tod\n"
+
+msgid "Can't perform action - not on same team!\n"
+msgstr "Nicht im gleichen Team\n"
+
+msgid "Can't perform action - no control over allied actors!\n"
+msgstr "Keine Kontrolle ueber verbuendete Spieler\n"
+
+msgid "Can't perform action - not enough TUs!\n"
+msgstr "Nicht genug Zeiteinheiten\n"
+
+msgid "Can't perform action - weapon already loaded!\n"
+msgstr "Waffe ist bereits geladen\n"
+
+msgid "%s is currently shaken.\n"
+msgstr "%s ist verwirrt\n"
+
+msgid "Can't perform action - impossible throw!\n"
+msgstr "Ummoeglicher Wurf\n"
+
+msgid "Can't perform action - no ammo!\n"
+msgstr "Keine Munition\n"
+
+msgid "Can't perform action - not enough ammo!\n"
+msgstr "Nicht genug Munition\n"
+
+msgid "Get a team for teamplay\n"
+msgstr "Waehle ein Team fuer Teamplay\n"
+
+msgid "Get a team for multiplayer\n"
+msgstr "Waehle ein Team fuer Multiplayer\n"
+
+msgid "Removing ai player..."
+msgstr "Entferne KI Mitspieler"
+
+msgid "%s has taken control over team %i.\n"
+msgstr "%s kontrolliert nun Team %i\n"
+
+msgid "Item '%s' not allowed and removed from inventory.\n"
+msgstr "Objekt '%s' ist nicht erlaubt - entferne es daher\n"

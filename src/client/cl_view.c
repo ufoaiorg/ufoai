@@ -48,6 +48,14 @@ lightstyle_t	r_lightstyles[MAX_LIGHTSTYLES];
 char cl_weaponmodels[MAX_CLIENTWEAPONMODELS][MAX_QPATH];
 int num_cl_weaponmodels;
 
+int			map_maxlevel;
+sun_t		map_sun;
+dlight_t	map_lights[MAX_MAP_LIGHTS];
+int			map_numlights;
+
+float		map_fog;
+vec4_t		map_fogColor;
+
 /*
 ====================
 V_ClearScene
@@ -140,7 +148,7 @@ void V_AddLightStyle (int style, float r, float g, float b)
 	lightstyle_t	*ls;
 
 	if (style < 0 || style > MAX_LIGHTSTYLES)
-		Com_Error (ERR_DROP, "Bad light style %i", style);
+		Com_Error (ERR_DROP, _("Bad light style %i"), style);
 	ls = &r_lightstyles[style];
 
 	ls->white = r+g+b;
@@ -248,6 +256,223 @@ void V_TestLights (void)
 
 /*
 =================
+CL_ParseEntitystring
+=================
+*/
+void CL_ParseEntitystring( char *es )
+{
+	char		*strstart;
+	char		*com_token;
+	char		keyname[256];
+
+	char	classname[64];
+	char	model[MAX_VAR];
+	char	particle[MAX_VAR];
+	float	light;
+	vec3_t	color, ambient, origin, angles, lightangles;
+	vec2_t	wait;
+	int		spawnflags;
+	int		maxlevel;
+	int		entnum;
+	int		nosmooth;
+	int		skin;
+
+	VectorSet( map_fogColor, 0.5f, 0.5f, 0.5f );
+	map_fogColor[3] = 1.0f;
+	map_maxlevel = 8;
+	map_numlights = 0;
+	map_fog = 0.0;
+	entnum = 0;
+	numLMs = 0;
+	numMPs = 0;
+
+	// parse ents
+	while (1)
+	{
+		// initialize
+		VectorCopy( vec3_origin, ambient );
+		VectorCopy( vec3_origin, color );
+		VectorCopy( vec3_origin, origin );
+		VectorCopy( vec3_origin, angles );
+		wait[0] = wait[1] = 0;
+		spawnflags = 0;
+		light = 0;
+		model[0] = 0;
+		particle[0] = 0;
+		nosmooth = 0;
+		skin = 0;
+		maxlevel = 8;
+
+		// parse the opening brace	
+		com_token = COM_Parse (&es);
+		if (!es)
+			break;
+		if (com_token[0] != '{')
+			Com_Error (ERR_DROP, _("CL_ParseEntitystring: found %s when expecting {"), com_token);
+
+		// memorize the start
+		strstart = es;
+
+		// go through all the dictionary pairs
+		while (1)
+		{	
+			// parse key
+			com_token = COM_Parse (&es);
+			if (com_token[0] == '}')
+				break;
+			if (!es)
+				Com_Error (ERR_DROP, _("CL_ParseEntitystring: EOF without closing brace"));
+
+			strncpy (keyname, com_token, sizeof(keyname)-1);
+			
+			// parse value	
+			com_token = COM_Parse (&es);
+			if (!es)
+				Com_Error (ERR_DROP, _("CL_ParseEntitystring: EOF without closing brace"));
+
+			if (com_token[0] == '}')
+				Com_Error (ERR_DROP, _("CL_ParseEntitystring: closing brace without data"));
+
+			// filter interesting keys
+			if ( !strcmp( keyname, "classname" ) )
+				strncpy( classname, com_token, 64 );
+
+			if ( !strcmp( keyname, "model" ) )
+				strncpy( model, com_token, MAX_VAR );
+
+			if ( !strcmp( keyname, "particle" ) )
+				strncpy( particle, com_token, MAX_VAR );
+
+			if ( !strcmp( keyname, "_color" ) || !strcmp( keyname, "lightcolor" ) )
+				sscanf( com_token, "%f %f %f", &(color[0]), &(color[1]), &(color[2]) );
+
+			if ( !strcmp( keyname, "origin" ) )
+				sscanf( com_token, "%f %f %f", &(origin[0]), &(origin[1]), &(origin[2]) );
+
+			if ( !strcmp( keyname, "ambient" ) || !strcmp( keyname, "lightambient" ) )
+				sscanf( com_token, "%f %f %f", &(ambient[0]), &(ambient[1]), &(ambient[2]) );
+
+			if ( !strcmp( keyname, "angles" ) )
+				sscanf( com_token, "%f %f %f", &(angles[0]), &(angles[1]), &(angles[2]) );
+
+			if ( !strcmp( keyname, "wait" ) )
+				sscanf( com_token, "%f %f", &(wait[0]), &(wait[1]) );
+
+			if ( !strcmp( keyname, "light" ) )
+				light = atof( com_token );
+
+			if ( !strcmp( keyname, "lightangles" ) )
+				sscanf( com_token, "%f %f %f", &(lightangles[0]), &(lightangles[1]), &(lightangles[2]) );
+
+			if ( !strcmp( keyname, "spawnflags" ) )
+				spawnflags = atoi( com_token );
+
+			if ( !strcmp( keyname, "maxlevel" ) )
+				maxlevel = atoi( com_token );
+
+			if ( !strcmp( keyname, "fog" ) )
+				map_fog = atof( com_token );
+
+			if ( !strcmp( keyname, "fogcolor" ) )
+				sscanf( com_token, "%f %f %f", &(map_fogColor[0]), &(map_fogColor[1]), &(map_fogColor[2]) );
+
+			if ( !strcmp( keyname, "nosmooth" ) )
+				nosmooth = atoi( com_token );
+
+			if ( !strcmp( keyname, "skin" ) )
+				skin = atoi( com_token );
+		}
+
+		// analyze values
+		if ( !strcmp( classname, "worldspawn" ) )
+		{
+			// init sun
+			angles[YAW] *= 3.14159/180;
+			angles[PITCH] *= 3.14159/180;
+			map_sun.dir[0] = cos( angles[YAW] ) * sin( angles[PITCH] );
+			map_sun.dir[1] = sin( angles[YAW] ) * sin( angles[PITCH] );
+			map_sun.dir[2] = cos( angles[PITCH] );
+
+			VectorNormalize( color );
+			VectorScale( color, light/100, map_sun.color );
+			map_sun.color[3] = 1.0;
+
+			// init ambient
+			VectorScale( ambient, 1.4, map_sun.ambient );
+			map_sun.ambient[3] = 1.0;
+
+			// maximum level
+			map_maxlevel = maxlevel;
+		}
+
+		if ( !strcmp( classname, "light" ) && light )
+		{
+			dlight_t	*newlight;
+			// add light to list
+
+			if ( map_numlights >= MAX_MAP_LIGHTS )
+				Com_Error( ERR_DROP, _("Too many lights...\n") );
+
+			newlight = &(map_lights[map_numlights++]);
+			VectorCopy( origin, newlight->origin );
+			VectorNormalize2( color, newlight->color );
+			newlight->intensity = light;
+		}
+
+		if ( !strcmp( classname, "misc_model" ) )
+		{
+			lm_t *lm;
+
+			if ( !model[0] )
+			{
+				Com_Printf( _("misc_model without \"model\" specified\n") );
+				continue;
+			}
+
+			// add it
+			lm = CL_AddLocalModel( model, particle, origin, angles, entnum, (spawnflags & 0xFF) );
+
+			// get light parameters
+			if ( lm )
+			{
+				if ( light != 0.0 ) 
+				{
+					lm->flags |= LMF_LIGHTFIXED;
+					VectorCopy( color, lm->lightcolor );
+					VectorCopy( ambient, lm->lightambient );
+					lm->lightcolor[3] = light;
+					lm->lightambient[3] = 1.0;
+
+					lightangles[YAW] *= 3.14159/180;
+					lightangles[PITCH] *= 3.14159/180;
+					lm->lightorigin[0] = cos( lightangles[YAW] ) * sin( lightangles[PITCH] );
+					lm->lightorigin[1] = sin( lightangles[YAW] ) * sin( lightangles[PITCH] );
+					lm->lightorigin[2] = cos( lightangles[PITCH] );
+					lm->lightorigin[3] = 0.0;
+				}
+				if ( nosmooth ) lm->flags |= LMF_NOSMOOTH;
+				lm->skin = skin;
+			}
+		}
+
+		if ( !strcmp( classname, "misc_particle" ) )
+		{
+			CL_AddMapParticle( particle, origin, wait, strstart );
+		}
+
+		if ( !strcmp( classname, "func_breakable" ) )
+		{
+			angles[0] = angles[1] = angles[2] = 0.0;
+			CL_AddLocalModel( model, particle, origin, angles, entnum, (spawnflags & 0xFF) );
+		}
+
+		entnum++;
+	}
+}
+
+
+/*
+=================
 CL_PrepRefresh
 
 Call before entering a new level, or after changing dlls
@@ -256,28 +481,24 @@ Call before entering a new level, or after changing dlls
 void CL_PrepRefresh (void)
 {
 	le_t		*le;
-	char		mapname[32];
 	int			i;
 	char		name[MAX_QPATH];
 
-	if (!cl.configstrings[CS_MODELS+1][0])
+	if (!cl.configstrings[CS_TILES][0])
 		return;		// no map loaded
 
 	SCR_AddDirtyPoint (0, 0);
 	SCR_AddDirtyPoint (viddef.width-1, viddef.height-1);
 
-	// let the render dll load the map
-	strcpy (mapname, cl.configstrings[CS_MODELS+1] + 5);	// skip "maps/"
-	mapname[strlen(mapname)-4] = 0;		// cut off ".bsp"
-
 	// register models, pics, and skins
-	Com_Printf ("Map: %s\r", mapname); 
+	Com_Printf ( _("Map: %s\r"), cl.configstrings[CS_NAME]); 
 	SCR_UpdateScreen ();
-	re.BeginRegistration (mapname);
+	re.BeginRegistration( cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS] );
+	CL_ParseEntitystring( map_entitystring );
 	Com_Printf ("                                     \r");
 
 	// precache status bar pics
-	Com_Printf ("pics\r"); 
+	Com_Printf (_("pics\r") ); 
 	SCR_UpdateScreen ();
 	SCR_TouchPics ();
 	Com_Printf ("                                     \r");
@@ -332,7 +553,7 @@ void CL_PrepRefresh (void)
 		cl.model_weapons[i] = re.RegisterModel( csi.ods[i].model );
 
 	// images
-	Com_Printf ("images\r", i); 
+	Com_Printf (_("images\r"), i); 
 	SCR_UpdateScreen ();
 	for (i=1 ; i<MAX_IMAGES && cl.configstrings[CS_IMAGES+i][0] ; i++)
 	{
@@ -345,7 +566,7 @@ void CL_PrepRefresh (void)
 	{
 		if (!cl.configstrings[CS_PLAYERSKINS+i][0])
 			continue;
-		Com_Printf ("client %i\r", i); 
+		Com_Printf (_("client %i\r"), i); 
 		SCR_UpdateScreen ();
 		Sys_SendKeyEvents ();	// pump message loop
 //		CL_ParseClientinfo (i);
@@ -387,7 +608,7 @@ float CalcFov (float fov_x, float width, float height)
 	float	x;
 
 	if (fov_x < 1 || fov_x > 179)
-		Com_Error (ERR_DROP, "Bad fov: %f", fov_x);
+		Com_Error (ERR_DROP, _("Bad fov: %f"), fov_x);
 
 	x = width/tan(fov_x/360*M_PI);
 
@@ -495,6 +716,8 @@ void V_RenderView( float stereo_separation )
 	cl.refdef.num_dlights = r_numdlights;
 	cl.refdef.dlights = r_dlights;
 	cl.refdef.lightstyles = r_lightstyles;
+	cl.refdef.fog = map_fog;
+	cl.refdef.fogColor = map_fogColor;
 
 	cl.refdef.num_ptls = numPtls;
 	cl.refdef.ptls = ptl;
@@ -504,12 +727,15 @@ void V_RenderView( float stereo_separation )
 	if ( cls.state == ca_sequence )
 		cl.refdef.num_lights = 0;
 	else
-		cl.refdef.num_lights = CM_GetLightList( &cl.refdef.ll );
+	{
+		cl.refdef.ll = map_lights;
+		cl.refdef.num_lights = map_numlights;
+	}
 
 	// render the frame
 	re.RenderFrame (&cl.refdef);
 	if (cl_stats->value)
-		Com_Printf ("ent:%i  lt:%i  part:%i\n", r_numentities, r_numdlights, r_numparticles);
+		Com_Printf (_("ent:%i  lt:%i  part:%i\n"), r_numentities, r_numdlights, r_numparticles);
 	if ( log_stats->value && ( log_stats_file != 0 ) )
 		fprintf( log_stats_file, "%i,%i,%i,",r_numentities, r_numdlights, r_numparticles);
 
@@ -520,11 +746,24 @@ void V_RenderView( float stereo_separation )
 
 	if ( cls.state == ca_sequence )
 		CL_Sequence2D();
-
-//	SCR_DrawCrosshair ();
 }
 
 
+/*
+=============
+V_CenterView
+=============
+*/
+void V_CenterView( pos3_t pos )
+{
+	vec3_t	vec;
+
+	PosToVec( pos, vec );
+	VectorCopy( vec, cl.cam.reforg );
+	Cvar_SetValue( "cl_worldlevel", pos[2] );
+}
+
+	
 /*
 =============
 V_Viewpos_f

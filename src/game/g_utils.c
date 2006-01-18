@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -181,7 +181,7 @@ for making temporary vectors for function calls
 */
 float	*tv (float x, float y, float z)
 {
-	static	int		index;
+	static	int	index;
 	static	vec3_t	vecs[8];
 	float	*v;
 
@@ -249,15 +249,15 @@ void G_SetMovedir (vec3_t angles, vec3_t movedir)
 float vectoyaw (vec3_t vec)
 {
 	float	yaw;
-	
-	if (/*vec[YAW] == 0 &&*/ vec[PITCH] == 0) 
+
+	if (/*vec[YAW] == 0 &&*/ vec[PITCH] == 0)
 	{
 		yaw = 0;
 		if (vec[YAW] > 0)
 			yaw = 90;
 		else if (vec[YAW] < 0)
 			yaw = -90;
-	} 
+	}
 	else
 	{
 		yaw = (int) (atan2(vec[YAW], vec[PITCH]) * 180 / M_PI);
@@ -272,7 +272,7 @@ float vectoyaw (vec3_t vec)
 char *G_CopyString (char *in)
 {
 	char	*out;
-	
+
 	out = gi.TagMalloc (strlen(in)+1, TAG_LEVEL);
 	strcpy (out, in);
 	return out;
@@ -299,24 +299,20 @@ angles and bad trails.
 */
 edict_t *G_Spawn (void)
 {
-	int			i;
+	int		i;
 	edict_t		*e;
 
 	e = &g_edicts[1];
 	for ( i=1 ; i<globals.num_edicts ; i++, e++)
-	{
-		// the first couple seconds of server time can involve a lot of
-		// freeing and allocating, so relax the replacement policy
-		if (!e->inuse && ( e->freetime < 2 || level.time - e->freetime > 0.5 ) )
+		if (!e->inuse )
 		{
 			G_InitEdict (e);
 			return e;
 		}
-	}
-	
+
 	if (i == game.maxentities)
 		gi.error ("ED_Alloc: no free edicts");
-		
+
 	globals.num_edicts++;
 	G_InitEdict (e);
 	return e;
@@ -328,7 +324,8 @@ G_TouchTriggers
 
 ============
 */
-/*void	G_TouchTriggers (edict_t *ent)
+#if 0
+void	G_TouchTriggers (edict_t *ent)
 {
 	int			i, num;
 	edict_t		*touch[MAX_EDICTS], *hit;
@@ -352,6 +349,7 @@ G_TouchTriggers
 		hit->touch (hit, ent, NULL, NULL);
 	}
 }
+#endif /* 0 */
 
 /*
 ============
@@ -361,7 +359,8 @@ Call after linking a new trigger in during gameplay
 to force all entities it covers to immediately touch it
 ============
 */
-/*void	G_TouchSolids (edict_t *ent)
+#if 0
+void	G_TouchSolids (edict_t *ent)
 {
 	int			i, num;
 	edict_t		*touch[MAX_EDICTS], *hit;
@@ -381,6 +380,45 @@ to force all entities it covers to immediately touch it
 		if (!ent->inuse)
 			break;
 	}
-}*/
+}
+#endif /* 0 */
 
 
+/*
+============
+G_RecalcRouting
+============
+*/
+#define ENTLIST_LENGTH 256
+char *entList[ENTLIST_LENGTH];
+
+void G_RecalcRouting( edict_t *self )
+{
+	int i;
+	edict_t *ent;
+
+	// generate entity list
+	for ( i = 0, ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
+		if ( ent->inuse && ent->model && *ent->model == '*' )
+			entList[i++] = ent->model;
+	entList[i] = NULL;
+
+	// recalculate routing
+	gi.GridRecalcRouting( gi.map, self->model, entList );
+}
+
+/*
+============
+G_CompleteRecalcRouting
+============
+*/
+void G_CompleteRecalcRouting( void )
+{
+	int i;
+	edict_t *ent;
+
+	// generate entity list
+	for ( i = 0, ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
+		if ( ent->inuse && ent->model && *ent->model == '*' )
+			G_RecalcRouting( ent );
+}

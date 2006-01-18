@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -60,13 +60,15 @@ cvar_t	*ai_civilian;
 cvar_t	*ai_equipment;
 cvar_t	*ai_numaliens;
 cvar_t	*ai_numcivilians;
+cvar_t	*ai_numactors;
+cvar_t	*ai_autojoin;
 
 cvar_t	*difficulty;
 
-extern void SpawnEntities (char *mapname, char *entities, char *spawnpoint);
+extern void SpawnEntities (char *mapname, char *entities);
 extern void G_RunFrame (void);
 
-invChain_t	invChain[MAX_INVCHAIN];
+invList_t	invChain[MAX_INVLIST];
 
 
 //===================================================================
@@ -111,6 +113,8 @@ void InitGame (void)
 	ai_equipment = gi.cvar ("ai_equipment", "standard", 0);
 	ai_numaliens = gi.cvar ("ai_numaliens", "8", 0 );
 	ai_numcivilians = gi.cvar ("ai_numcivilians", "8", 0 );
+	ai_numactors = gi.cvar ("ai_numactors", "8", 0 );
+	ai_autojoin = gi.cvar ("ai_autojoin", "0", 0 );
 
 	difficulty = gi.cvar ("difficulty", "-1", CVAR_ARCHIVE | CVAR_LATCH);
 
@@ -227,7 +231,6 @@ void Com_Printf (char *msg, ...)
 
 	gi.dprintf ("%s", text);
 }
-
 #endif
 
 //======================================================================
@@ -244,7 +247,7 @@ void CheckNeedPass (void)
 
 	// if password or spectator_password has changed, update needpass
 	// as needed
-	if (password->modified || spectator_password->modified) 
+	if (password->modified || spectator_password->modified)
 	{
 		password->modified = spectator_password->modified = false;
 
@@ -286,7 +289,7 @@ void G_EndGame( int team )
 	gi.AddEvent( PM_ALL, EV_RESULTS | INSTANTLY );
 	gi.WriteByte( MAX_TEAMS );
 	gi.WriteByte( team );
-	
+
 	for ( i = 0; i < MAX_TEAMS; i++ )
 	{
 		gi.WriteByte( level.num_spawned[i] );
@@ -336,7 +339,7 @@ void G_RunFrame (void)
 {
 	level.framenum++;
 	level.time = level.framenum*FRAMETIME;
-//	Com_Printf( "frame: %i   time: %f   intermission: %f\n", level.framenum, level.time, level.intermissionTime );
+//	Com_Printf( "frame: %i   time: %f\n", level.framenum, level.time );
 
 	// check for intermission
 	if ( level.intermissionTime && level.time > level.intermissionTime )

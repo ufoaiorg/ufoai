@@ -372,17 +372,16 @@ void IN_Frame (void)
 		return;
 	}
 
-	if ( !cl.refresh_prepped
-		|| cls.key_dest == key_console
-		|| cls.key_dest == key_menu)
+/*	if ( !cl.refresh_prepped
+		|| cls.key_dest == key_console)
 	{
 		// temporarily deactivate if in fullscreen
-/*		if (Cvar_VariableValue ("vid_fullscreen") == 0)
+		if (Cvar_VariableValue ("vid_fullscreen") == 0)
 		{
 			IN_DeactivateMouse ();
 			return;
-		}*/
-	}
+		}
+	}*/
 
 	IN_ActivateMouse ();
 }

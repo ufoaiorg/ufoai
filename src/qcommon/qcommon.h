@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -20,10 +20,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 // qcommon.h -- definitions common between client and server, but not game.dll
 
+#ifndef QCOMMON_DEFINED
+#define QCOMMON_DEFINED
+
 #include "../game/q_shared.h"
 
+#include <string.h>
+#include <ctype.h>
 
-#define	VERSION		0.10
+#define	VERSION		0.12
+
+// i18n support via gettext
+#include <libintl.h>
+#include <locale.h>
+#define _(String) gettext(String)
+#define gettext_noop(String) String
+#define N_(String) gettext_noop (String)
 
 #define	BASEDIRNAME	"base"
 
@@ -69,6 +81,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	CPUSTRING	"NON-WIN32"
 
 #endif
+
+#ifndef DEFAULT_BASEDIR
+# define DEFAULT_BASEDIR BASEDIRNAME
+#endif
+#ifndef DEFAULT_LIBDIR
+# define DEFAULT_LIBDIR DEFAULT_BASEDIR
+#endif
+
+int dstrcmp( char *source, char *s1, char *s2 );
 
 //============================================================================
 
@@ -179,7 +200,7 @@ PROTOCOL
 
 // protocol.h -- communications protocols
 
-#define	PROTOCOL_VERSION	34
+#define	PROTOCOL_VERSION	3
 
 //=========================================
 
@@ -219,7 +240,7 @@ enum svc_ops_e
 	svc_stufftext,				// [string] stuffed into client's console buffer, should be \n terminated
 	svc_serverdata,				// [long] protocol ...
 	svc_configstring,			// [short] [string]
-	svc_spawnbaseline,		
+	svc_spawnbaseline,
 	svc_centerprint,			// [string] to put in center of the screen
 	svc_download,				// [short] size [size bytes]
 	svc_playerinfo,				// variable
@@ -234,7 +255,7 @@ enum svc_ops_e
 enum clc_ops_e
 {
 	clc_bad,
-	clc_nop, 	
+	clc_nop,
 	clc_endround,
 	clc_teaminfo,
 	clc_action,
@@ -242,40 +263,6 @@ enum clc_ops_e
 	clc_stringcmd			// [string] message
 };
 
-//==============================================
-
-// plyer_state_t communication
-
-#define	PS_M_TYPE			(1<<0)
-#define	PS_M_ORIGIN			(1<<1)
-#define	PS_M_VELOCITY		(1<<2)
-#define	PS_M_TIME			(1<<3)
-#define	PS_M_FLAGS			(1<<4)
-#define	PS_M_GRAVITY		(1<<5)
-#define	PS_M_DELTA_ANGLES	(1<<6)
-
-#define	PS_VIEWOFFSET		(1<<7)
-#define	PS_VIEWANGLES		(1<<8)
-#define	PS_KICKANGLES		(1<<9)
-#define	PS_BLEND			(1<<10)
-#define	PS_FOV				(1<<11)
-#define	PS_WEAPONINDEX		(1<<12)
-#define	PS_WEAPONFRAME		(1<<13)
-#define	PS_RDFLAGS			(1<<14)
-
-//==============================================
-
-// user_cmd_t communication
-
-// ms and light always sent, the others are optional
-#define	CM_ANGLE1 	(1<<0)
-#define	CM_ANGLE2 	(1<<1)
-#define	CM_ANGLE3 	(1<<2)
-#define	CM_FORWARD	(1<<3)
-#define	CM_SIDE		(1<<4)
-#define	CM_UP		(1<<5)
-#define	CM_BUTTONS	(1<<6)
-#define	CM_IMPULSE	(1<<7)
 
 //==============================================
 
@@ -290,43 +277,6 @@ enum clc_ops_e
 #define DEFAULT_SOUND_PACKET_ATTENUATION 1.0
 
 //==============================================
-
-// entity_state_t communication
-
-// try to pack the common update flags into the first byte
-#define	U_ORIGIN1	(1<<0)
-#define	U_ORIGIN2	(1<<1)
-#define	U_ANGLE2	(1<<2)
-#define	U_ANGLE3	(1<<3)
-#define	U_FRAME8	(1<<4)		// frame is a byte
-#define	U_EVENT		(1<<5)
-#define	U_REMOVE	(1<<6)		// REMOVE this entity, don't add it
-#define	U_MOREBITS1	(1<<7)		// read one additional byte
-
-// second byte
-#define	U_NUMBER16	(1<<8)		// NUMBER8 is implicit if not set
-#define	U_ORIGIN3	(1<<9)
-#define	U_ANGLE1	(1<<10)
-#define	U_MODEL		(1<<11)
-#define U_RENDERFX8	(1<<12)		// fullbright, etc
-#define	U_EFFECTS8	(1<<14)		// autorotate, trails, etc
-#define	U_MOREBITS2	(1<<15)		// read one additional byte
-
-// third byte
-#define	U_SKIN8		(1<<16)
-#define	U_FRAME16	(1<<17)		// frame is a short
-#define	U_RENDERFX16 (1<<18)	// 8 + 16 = 32
-#define	U_EFFECTS16	(1<<19)		// 8 + 16 = 32
-#define	U_MODEL2	(1<<20)		// weapons, flags, etc
-#define	U_MODEL3	(1<<21)
-#define	U_MODEL4	(1<<22)
-#define	U_MOREBITS3	(1<<23)		// read one additional byte
-
-// fourth byte
-#define	U_OLDORIGIN	(1<<24)		// FIXME: get rid of this
-#define	U_SKIN16	(1<<25)
-#define	U_SOUND		(1<<26)
-#define	U_SOLID		(1<<27)
 
 
 /*
@@ -523,7 +473,7 @@ NET
 
 #define	PORT_ANY	-1
 
-#define	MAX_MSGLEN		3000		// max length of a message
+#define	MAX_MSGLEN		1400		// max length of a message
 #define	PACKET_HEADER	10			// two ints and a short
 
 typedef enum {NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX} netadrtype_t;
@@ -619,61 +569,56 @@ CMODEL
 
 ==============================================================
 */
-
-
 #include "../qcommon/qfiles.h"
 
-typedef struct
-{
-	vec3_t		dir;
-	vec4_t		color;
-	vec4_t		ambient;
-} sun_t;
+#define MAX_MAPTILES	512
 
-extern int		map_maxlevel;
-extern sun_t	map_sun;
 extern vec3_t	map_min, map_max;
 
-typedef struct
-{
-	vec3_t	origin;
-	vec3_t	color;
-	float	intensity;
-} dlight_t;
-
-cmodel_t	*CM_LoadMap (char *name, qboolean clientload, unsigned *checksum);
-cmodel_t	*CM_InlineModel (char *name);	// *1, *2, etc
-
-int			CM_GetLightList( dlight_t **list );
+void CM_LoadMap (char *tiles, char *pos);
+cmodel_t *CM_InlineModel (char *name);	// *0, *1, *2, etc
 
 int			CM_NumClusters (void);
 int			CM_NumInlineModels (void);
 char		*CM_EntityString (void);
 
+/*
+==============================================================
+
+CMODEL BOX TRACING
+
+==============================================================
+*/
+
+// WARNING: The functions, that are commented out,
+// possibly don't give the expected results, because of
+// the new map tiles, all the others should work
+
 // creates a clipping hull for an arbitrary box
-int			CM_HeadnodeForBox (vec3_t mins, vec3_t maxs);
+int			CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs);
 
 
 // returns an ORed contents mask
-int			CM_PointContents (vec3_t p, int headnode);
-int			CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, vec3_t angles);
+//int			CM_PointContents (vec3_t p, int headnode);
+//int			CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, vec3_t angles);
 
 trace_t		CM_BoxTrace (vec3_t start, vec3_t end,
 						  vec3_t mins, vec3_t maxs,
-						  int headnode, int brushmask);
+						  int tile, int headnode, int brushmask);
 trace_t		CM_TransformedBoxTrace (vec3_t start, vec3_t end,
 						  vec3_t mins, vec3_t maxs,
-						  int headnode, int brushmask,
+						  int tile, int headnode, int brushmask,
 						  vec3_t origin, vec3_t angles);
 trace_t		CM_CompleteBoxTrace (vec3_t start, vec3_t end,
 						  vec3_t mins, vec3_t maxs,
 						  int levelmask, int brushmask);
 
-void CM_MakeTnodes ( void );
+int CM_EntTestLine (vec3_t start, vec3_t stop);
+int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end);
 int CM_TestLine (vec3_t start, vec3_t stop);
 int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end);
 
-byte		*CM_ClusterPVS (int cluster);
+/*byte		*CM_ClusterPVS (int cluster);
 byte		*CM_ClusterPHS (int cluster);
 
 int			CM_PointLeafnum (vec3_t p);
@@ -694,24 +639,38 @@ int			CM_WriteAreaBits (byte *buffer, int area);
 qboolean	CM_HeadnodeVisible (int headnode, byte *visbits);
 
 void		CM_WritePortalState (FILE *f);
-void		CM_ReadPortalState (FILE *f);
+void		CM_ReadPortalState (FILE *f);*/
 
 
 /*
 ==========================================================
 
   GRID ORIENTED MOVEMENT AND SCANNING
-  
+
 ==========================================================
 */
 
-void	Grid_MoveCalc( pos3_t from, int distance, byte **fb_list, int fb_length );
-void	Grid_MoveStore( void );
-int		Grid_MoveLength( pos3_t to, qboolean stored );
-int		Grid_MoveNext( pos3_t from );
-int		Grid_Height( pos3_t pos );
-void	Grid_PosToVec( pos3_t pos, vec3_t vec );
+extern struct routing_s svMap, clMap;
 
+void	Grid_RecalcRouting( struct routing_s *map, char *name, char **list );
+void	Grid_MoveCalc( struct routing_s *map, pos3_t from, int distance, byte **fb_list, int fb_length );
+void	Grid_MoveStore( struct routing_s *map );
+int		Grid_MoveLength( struct routing_s *map, pos3_t to, qboolean stored );
+int		Grid_MoveNext( struct routing_s *map, pos3_t from );
+int		Grid_Height( struct routing_s *map, pos3_t pos );
+int		Grid_Fall( struct routing_s *map, pos3_t pos );
+void	Grid_PosToVec( struct routing_s *map, pos3_t pos, vec3_t vec );
+
+
+/*
+==========================================================
+
+  MISC WORLD RELATED
+
+==========================================================
+*/
+
+float	Com_GrenadeTarget( vec3_t from, vec3_t at, vec3_t v0 );
 
 /*
 ==============================================================
@@ -727,7 +686,9 @@ char	*FS_Gamedir (void);
 char	*FS_NextPath (char *prevpath);
 void	FS_ExecAutoexec (void);
 
-int		FS_FOpenFile (char *filename, FILE **file);
+void	FS_GetMaps ( void );
+
+int	FS_FOpenFile (char *filename, FILE **file);
 void	FS_FCloseFile (FILE *f);
 // note: this can't be called from another DLL, due to MS libc issues
 
@@ -746,6 +707,36 @@ void	FS_BuildFileList (char *files);
 char	*FS_NextScriptHeader( char *files, char **name, char **text );
 void	FS_CreatePath (char *path);
 
+
+/*
+==============================================================
+
+SCRIPT PARSING
+
+==============================================================
+*/
+
+
+#define LASTNAME	3
+typedef enum
+{
+	NAME_NEUTRAL,
+	NAME_FEMALE,
+	NAME_MALE,
+
+	NAME_LAST,
+	NAME_FEMALE_LAST,
+	NAME_MALE_LAST,
+
+	NAME_NUM_TYPES
+} nametypes_t;
+extern	char *name_strings[NAME_NUM_TYPES];
+
+char *Com_GiveName( int gender, char *category );
+char *Com_GiveModel( int type, int gender, char *category );
+int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *name );
+
+void Com_ParseScripts( void );
 
 /*
 ==============================================================
@@ -798,8 +789,7 @@ extern	int		time_after_ref;
 // weapon definitions
 extern csi_t	csi;
 
-extern int		numLMs;
-extern int		numMPs;
+extern char map_entitystring[MAX_MAP_ENTSTRING];
 
 
 void Z_Free (void *ptr);
@@ -855,8 +845,6 @@ void CL_Shutdown (void);
 void CL_Frame (int msec);
 void CL_ParseScriptFirst (char *type, char *name, char **text);
 void CL_ParseScriptSecond (char *type, char *name, char **text);
-void CL_AddLocalModel (char *model, vec3_t origin, vec3_t angles, int levelflags);
-void CL_AddMapParticle (char *particle, vec3_t origin, vec2_t wait, char *info);
 int  CL_GetModelInTeam ( char *team, char *body, char *head );
 void Con_Print (char *text);
 void SCR_BeginLoadingPlaque (void);
@@ -866,4 +854,6 @@ void SV_Shutdown (char *finalmsg, qboolean reconnect);
 void SV_Frame (int msec);
 
 
+char *strlwr (char *s);
 
+#endif

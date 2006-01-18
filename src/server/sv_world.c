@@ -57,7 +57,7 @@ edict_t	**area_list;
 int		area_count, area_maxcount;
 int		area_type;
 
-int SV_HullForEntity (edict_t *ent);
+int SV_HullForEntity (edict_t *ent, int *tile);
 
 
 // ClearLink is used for new headnodes
@@ -136,7 +136,7 @@ void SV_ClearWorld (void)
 {
 	memset (sv_areanodes, 0, sizeof(sv_areanodes));
 	sv_numareanodes = 0;
-	SV_CreateAreaNode (0, sv.models[1]->mins, sv.models[1]->maxs);
+	SV_CreateAreaNode (0, map_min, map_max);
 }
 
 
@@ -165,10 +165,6 @@ SV_LinkEdict
 void SV_LinkEdict (edict_t *ent)
 {
 	areanode_t	*node;
-	int			leafs[MAX_TOTAL_ENT_LEAFS];
-	int			num_leafs;
-	int			area;
-	int			topnode;
 
 	if (ent->area.prev)
 		SV_UnlinkEdict (ent);	// unlink from old position
@@ -303,7 +299,7 @@ SV_PointContents
 */
 int SV_PointContents (vec3_t p)
 {
-	edict_t		*touch[MAX_EDICTS], *hit;
+/*	edict_t		*touch[MAX_EDICTS], *hit;
 	int			i, num;
 	int			contents, c2;
 	int			headnode;
@@ -326,7 +322,8 @@ int SV_PointContents (vec3_t p)
 		contents |= c2;
 	}
 
-	return contents;
+	return contents;*/
+	return 0;
 }
 
 
@@ -354,24 +351,25 @@ Offset is filled in to contain the adjustment that must be added to the
 testing object's origin to get a point to use with the returned hull.
 ================
 */
-int SV_HullForEntity (edict_t *ent)
+int SV_HullForEntity( edict_t *ent, int *tile )
 {
-//	cmodel_t	*model;
+	cmodel_t *model;
 
 	// decide which clipping hull to use, based on the size
-	/*if (ent->solid == SOLID_BSP)
+	if (ent->solid == SOLID_BSP)
 	{	// explicit hulls in the BSP model
 		model = sv.models[ ent->modelindex ];
 
 		if (!model)
 			Com_Error (ERR_FATAL, "MOVETYPE_PUSH with a non bsp model");
 
+		*tile = model->tile;
 		return model->headnode;
-	}*/
+	}
 
 	// create a temp hull from bounding box sizes
-
-	return CM_HeadnodeForBox (ent->mins, ent->maxs);
+	*tile = 0;
+	return CM_HeadnodeForBox( 0, ent->mins, ent->maxs );
 }
 
 
@@ -388,8 +386,8 @@ void SV_ClipMoveToEntities ( moveclip_t *clip )
 	int			i, num;
 	edict_t		*touchlist[MAX_EDICTS], *touch;
 	trace_t		trace;
-	int			headnode;
-
+	int			tile, headnode;
+	
 	num = SV_AreaEdicts (clip->boxmins, clip->boxmaxs, touchlist
 		, MAX_EDICTS, AREA_SOLID);
 
@@ -410,15 +408,21 @@ void SV_ClipMoveToEntities ( moveclip_t *clip )
 				continue;	// don't clip against own missiles
 			if (clip->passedict->owner == touch)
 				continue;	// don't clip against owner
-		}*/
-
+		}
+*/
 		// might intersect, so do an exact clip
-		headnode = SV_HullForEntity (touch);
-
+		headnode = SV_HullForEntity( touch, &tile );
+		
+		
 		trace = CM_TransformedBoxTrace (clip->start, clip->end,
-			clip->mins, clip->maxs, headnode,  clip->contentmask,
+			clip->mins, clip->maxs, tile, headnode,  clip->contentmask,
 			touch->origin, vec3_origin);
 
+/*		Com_Printf( "%i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex, 
+			(int)touch->mins[0], (int)touch->mins[1], (int)touch->mins[2],
+			(int)touch->maxs[0], (int)touch->maxs[1], (int)touch->maxs[2], 
+			(int)touch->origin[0], (int)touch->origin[1], (int)touch->origin[2] );
+*/
 		if (trace.allsolid || trace.startsolid ||
 		trace.fraction < clip->trace.fraction)
 		{
@@ -489,7 +493,7 @@ trace_t SV_Trace (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t *p
 	memset ( &clip, 0, sizeof ( moveclip_t ) );
 
 	// clip to world
-	clip.trace = CM_CompleteBoxTrace (start, end, mins, maxs, 0xFF, contentmask);
+	clip.trace = CM_CompleteBoxTrace (start, end, mins, maxs, 0x1FF, contentmask);
 	clip.trace.ent = ge->edicts;
 	if (clip.trace.fraction == 0)
 		return clip.trace;		// blocked by the world

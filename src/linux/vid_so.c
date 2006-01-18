@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/stat.h>
 #include <unistd.h>
 #include <errno.h>
+#include <string.h>
 
 #include "../client/client.h"
 
@@ -48,7 +49,7 @@ qboolean	reflib_active = 0;
 
 #define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[0] ) )
 
-const char so_file[] = "/etc/quake2.conf";
+const char so_file[] = "/etc/ufo.conf";
 
 /** KEYBOARD **************************************************************/
 
@@ -87,7 +88,7 @@ void VID_Printf (int print_level, char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
-	static qboolean	inupdate;
+//	static qboolean	inupdate;
 	
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
@@ -103,7 +104,7 @@ void VID_Error (int err_level, char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
-	static qboolean	inupdate;
+//	static qboolean	inupdate;
 	
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
@@ -145,7 +146,16 @@ vidmode_t vid_modes[] =
 	{ "Mode 7: 1152x864",  1152, 864,  7 },
 	{ "Mode 8: 1280x1024",  1280, 1024, 8 },
 	{ "Mode 9: 1600x1200", 1600, 1200, 9 },
-	{ "Mode 10: 2048x1536", 2048, 1536, 10 }
+	{ "Mode 10: 2048x1536", 2048, 1536, 10 },
+	{ "Mode 11: 1024x480",  1024,  480, 11 }, /* Sony VAIO Pocketbook */
+	{ "Mode 12: 1152x768",  1152,  768, 12 }, /* Apple TiBook */
+	{ "Mode 13: 1280x854",  1280,  854, 13 }, /* Apple TiBook */
+	{ "Mode 14: 640x400",    640,  400, 14 }, /* generic 16:10 widescreen*/
+	{ "Mode 15: 800x500",    800,  500, 15 }, /* as found modern */
+	{ "Mode 16: 1024x640",  1024,  640, 16 }, /* notebooks    */
+ 	{ "Mode 17: 1280x800",  1280,  800, 17 },
+ 	{ "Mode 18: 1680x1050", 1680, 1050, 18 },
+ 	{ "Mode 19: 1920x1200", 1920, 1200, 19 },
 };
 
 qboolean VID_GetModeInfo( int *width, int *height, int mode )
@@ -364,7 +374,7 @@ update the rendering DLL and/or video mode to match.
 void VID_CheckChanges (void)
 {
 	char name[100];
-	cvar_t *sw_mode;
+//	cvar_t *sw_mode;
 
 	if ( vid_ref->modified )
 	{
@@ -484,7 +494,7 @@ void IN_Frame (void)
 {
 	if (RW_IN_Activate_fp) 
 	{
-		if ( cls.key_dest == key_console || cls.key_dest == key_menu)
+		if ( cls.key_dest == key_console)
 			RW_IN_Activate_fp(false);
 		else
 			RW_IN_Activate_fp(true);

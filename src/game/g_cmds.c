@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -121,7 +121,8 @@ void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 	}
 }
 
-/*void Cmd_PlayerList_f(edict_t *ent)
+#if 0
+void Cmd_PlayerList_f(edict_t *ent)
 {
 	int i;
 	char st[80];
@@ -149,7 +150,8 @@ void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 		strcat(text, st);
 	}
 	gi.cprintf(ent, PRINT_HIGH, "%s", text);
-}*/
+}
+#endif
 
 
 /*

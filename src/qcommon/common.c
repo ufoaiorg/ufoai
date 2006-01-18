@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -20,7 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // common.c -- misc functions used in client and server
 #include "qcommon.h"
 #include <setjmp.h>
-
+#include <ctype.h>
 #define	MAXPRINTMSG	4096
 
 #define MAX_NUM_ARGVS	50
@@ -56,6 +56,16 @@ int		time_before_game;
 int		time_after_game;
 int		time_before_ref;
 int		time_after_ref;
+
+
+int dstrcmp( char *source, char *s1, char *s2 )
+{
+	if ( !s1 && !s2 ) Sys_Error( "strcmp %s * *\n", source, s2 );
+	else if ( !s1 ) Sys_Error( "strcmp %s * %s\n", source, s2 );
+	else if ( !s2 ) Sys_Error( "strcmp %s %s *\n", source, s1 );
+	return strcmp( s1, s2 );
+}
+
 
 /*
 ============================================================================
@@ -121,7 +131,7 @@ void Com_Printf (char *fmt, ...)
 	}
 
 	Con_Print (msg);
-		
+
 	// also echo to debugging console
 	Sys_ConsoleOutput (msg);
 
@@ -129,7 +139,7 @@ void Com_Printf (char *fmt, ...)
 	if (logfile_active && logfile_active->value)
 	{
 		char	name[MAX_QPATH];
-		
+
 		if (!logfile)
 		{
 			Com_sprintf (name, sizeof(name), "%s/qconsole.log", FS_Gamedir ());
@@ -157,14 +167,14 @@ void Com_DPrintf (char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
-		
+
 	if (!developer || !developer->value)
 		return;			// don't confuse non-developers with techie stuff...
 
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
 	va_end (argptr);
-	
+
 	Com_Printf ("%s", msg);
 }
 
@@ -190,7 +200,7 @@ void Com_Error (int code, char *fmt, ...)
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
 	va_end (argptr);
-	
+
 	if (code == ERR_DISCONNECT)
 	{
 		CL_Drop ();
@@ -284,388 +294,6 @@ void Com_SetServerState (int state)
 /*
 ==============================================================================
 
-			WEAPON DEFINITION INTERPRETER
-
-This is here because the info is needed by the server and client
-==============================================================================
-*/
-
-// ===========================================================
-
-#define	ODOFS(x)	(int)&(((objDef_t *)0)->x)
-#define	FDOFS(x)	(int)&(((fireDef_t *)0)->x)
-
-typedef enum
-{
-	OD_NULL,
-	OD_PRIMARY,
-	OD_SECONDARY,
-
-	OD_NAME,
-	OD_MODEL,
-	OD_TYPE,
-	OD_CATEGORY,
-	OD_SHAPE,
-	OD_SCALE,
-	OD_CENTER,
-	OD_TWOHANDED,
-	OD_AMMO,
-	OD_RELOAD,
-	OD_PRICE,
-	OD_BUYTYPE,
-
-	OD_NUM_OBJECTDEFS
-};
-
-value_t od_vals[OD_NUM_OBJECTDEFS] =
-{
-	{ "",			V_NULL,			0 },
-	{ "primary",	V_NULL,			0 },
-	{ "secondary",	V_NULL,			0 },
-
-	{ "name",		V_STRING,		ODOFS( name ) },
-	{ "model",		V_STRING,		ODOFS( model ) },
-	{ "type",		V_STRING,		ODOFS( type ) },
-	{ "category",	V_CHAR,			ODOFS( category ) },
-	{ "shape",		V_SHAPE_SMALL,	ODOFS( shape ) },
-	{ "scale",		V_FLOAT,		ODOFS( scale ) },
-	{ "center",		V_VECTOR,		ODOFS( center ) },
-	{ "twohanded",	V_BOOL,			ODOFS( twohanded ) },
-	{ "ammo",		V_INT,			ODOFS( ammo ) },
-	{ "reload",		V_INT,			ODOFS( reload ) },
-	{ "price",		V_INT,			ODOFS( price ) },
-	{ "buytype",	V_INT,			ODOFS( buytype ) }
-};
-
-// ===========================================================
-
-#define FD_PRIMARY		0
-#define FD_SECONDARY	1
-
-value_t fdps[] =
-{
-	{ "name",		V_STRING,	FDOFS( name ) },
-	{ "projtl",		V_STRING,	FDOFS( projectile ) },
-	{ "impact",		V_STRING,	FDOFS( impact ) },
-	{ "firesnd",	V_STRING,	FDOFS( fireSound ) },
-	{ "impsnd",		V_STRING,	FDOFS( impactSound ) },
-	{ "sndonce",	V_BOOL,		FDOFS( soundOnce ) },
-	{ "speed",		V_FLOAT,	FDOFS( speed ) },
-	{ "spread",		V_POS,		FDOFS( spread ) },
-	{ "crouch",		V_FLOAT,	FDOFS( crouch ) },
-	{ "range",		V_FLOAT,	FDOFS( range ) },
-	{ "shots",		V_INT,		FDOFS( shots ) },
-	{ "ammo",		V_INT,		FDOFS( ammo ) },
-	{ "rof",		V_FLOAT,	FDOFS( rof ) },
-	{ "time",		V_INT,		FDOFS( time ) },
-	{ "damage",		V_POS,		FDOFS( damage ) },
-	{ "spldmg",		V_POS,		FDOFS( spldmg ) },
-	{ "splrad",		V_FLOAT,	FDOFS( splrad ) },
-
-	{ NULL,	0, 0 }
-};
-
-// ===========================================================
-
-
-/*
-======================
-Com_ParseFire
-======================
-*/
-void Com_ParseFire( char *name, char **text, fireDef_t *fd )
-{
-	value_t	*fdp;
-	char	*errhead = "Com_ParseFire: unexptected end of file";
-	char	*token;	
-
-	// get it's body
-	token = COM_Parse( text );
-
-	if ( !*text || strcmp( token, "{" ) )
-	{
-		Com_Printf( "Com_ParseFire: fire definition \"%s\" without body ignored\n", name );
-		return;
-	}
-
-	do {
-		token = COM_EParse( text, errhead, name );
-		if ( !*text ) return;
-		if ( *token == '}' ) return;
-
-		for ( fdp = fdps; fdp->string; fdp++ )
-			if ( !strcmp( token, fdp->string ) )
-			{
-				// found a definition
-				token = COM_EParse( text, errhead, name );
-				if ( !*text ) return;
-
-				Com_ParseValue( fd, token, fdp->type, fdp->ofs );
-				break;
-			}
-
-		if ( !fdp->string )
-			Com_Printf( "Com_ParseFire: unknown token \"%s\" ignored (weapon %s)\n", token, name );
-
-	} while ( *text );
-}
-
-
-/*
-======================
-Com_ParseItem
-======================
-*/
-void Com_ParseItem( char *name, char **text )
-{
-	char		*errhead = "Com_ParseItem: unexptected end of file (weapon ";
-	objDef_t	*od;
-	char		*token;
-	int			i;
-
-	// search for menus with same name
-	for ( i = 0; i < csi.numODs; i++ )
-		if ( !strcmp( name, csi.ods[i].name ) )
-			break;
-
-	if ( i < csi.numODs )
-	{
-		Com_Printf( "Com_ParseItem: weapon def \"%s\" with same name found, second ignored\n", name );
-		return;
-	}
-
-	// initialize the menu
-	od = &csi.ods[csi.numODs++];
-	memset( od, 0, sizeof(objDef_t) );
-
-	strncpy( od->kurz, name, MAX_VAR );
-
-	// get it's body
-	token = COM_Parse( text );
-
-	if ( !*text || strcmp( token, "{" ) )
-	{
-		Com_Printf( "Com_ParseItem: weapon def \"%s\" without body ignored\n", name );
-		csi.numODs--;
-		return;
-	}
-
-	do {
-		token = COM_EParse( text, errhead, name );
-		if ( !*text ) break;
-		if ( *token == '}' ) break;
-
-		for ( i = 0; i < OD_NUM_OBJECTDEFS; i++ )
-			if ( !strcmp( token, od_vals[i].string ) )
-			{
-				// found a definition
-				if ( od_vals[i].type != V_NULL )
-				{
-
-					// parse a value
-					token = COM_EParse( text, errhead, name );
-					if ( !*text ) break;
-
-					Com_ParseValue( od, token, od_vals[i].type, od_vals[i].ofs );
-				}
-				else
-				{
-					// parse fire definitions
-					if ( i == OD_PRIMARY ) Com_ParseFire( name, text, &od->fd[FD_PRIMARY] );
-					else if ( i == OD_SECONDARY ) Com_ParseFire( name, text, &od->fd[FD_SECONDARY] );
-				}
-				break;
-			}
-
-		if ( i == OD_NUM_OBJECTDEFS )
-			Com_Printf( "Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n", token, name );
-
-	} while ( *text );
-
-	// get size
-	for ( i = 7; i >= 0; i-- )
-		if ( od->shape & (0x01010101 << i ) )
-			break;
-	od->sx = i+1;
-
-	for ( i = 3; i >= 0; i-- )
-		if ( od->shape & (0xFF << (i*8)) )
-			break;
-	od->sy = i+1;
-}
-
-
-/*
-==============================================================================
-
-			INVENTORY DEFINITION INTERPRETER
-
-This is here because the info is needed by the server and client
-==============================================================================
-*/
-
-// ===========================================================
-
-#define	IDOFS(x)	(int)&(((invDef_t *)0)->x)
-
-value_t idps[] =
-{
-	{ "shape",	V_SHAPE_BIG,	IDOFS( shape ) },
-	{ "single",	V_BOOL,			IDOFS( single ) },
-	{ "in",		V_INT,			IDOFS( in ) },
-	{ "out",	V_INT,			IDOFS( out ) },
-
-	{ NULL,	0, 0 }
-};
-
-/*
-======================
-Com_ParseInventory
-======================
-*/
-void Com_ParseInventory( char *name, char **text )
-{
-	char		*errhead = "Com_ParseInventory: unexptected end of file (inventory ";
-	invDef_t	*id;
-	value_t		*idp;
-	char		*token;
-	int			i;
-
-	// search for containers with same name
-	for ( i = 0; i < csi.numIDs; i++ )
-		if ( !strcmp( name, csi.ids[i].name ) )
-			break;
-
-	if ( i < csi.numIDs )
-	{
-		Com_Printf( "Com_ParseInventory: inventory def \"%s\" with same name found, second ignored\n", name );
-		return;
-	}
-
-	// initialize the menu
-	id = &csi.ids[csi.numIDs++];
-	memset( id, 0, sizeof(invDef_t) );
-
-	strncpy( id->name, name, MAX_VAR );
-
-	// get it's body
-	token = COM_Parse( text );
-
-	if ( !*text || strcmp( token, "{" ) )
-	{
-		Com_Printf( "Com_ParseInventory: inventory def \"%s\" without body ignored\n", name );
-		csi.numIDs--;
-		return;
-	}
-
-	// special IDs
-	if ( !strcmp( name, "right" ) ) csi.idRight = id - csi.ids;
-	else if ( !strcmp( name, "left" ) ) csi.idLeft = id - csi.ids;
-	else if ( !strcmp( name, "floor" ) ) csi.idFloor = id - csi.ids;
-	else if ( !strcmp( name, "equip" ) ) csi.idEquip = id - csi.ids;
-	else if ( !strcmp( name, "belt" ) ) csi.idBelt = id - csi.ids;
-
-	do {
-		token = COM_EParse( text, errhead, name );
-		if ( !*text ) return;
-		if ( *token == '}' ) return;
-
-		for ( idp = idps; idp->string; idp++ )
-			if ( !strcmp( token, idp->string ) )
-			{
-				// found a definition
-				token = COM_EParse( text, errhead, name );
-				if ( !*text ) return;
-
-				Com_ParseValue( id, token, idp->type, idp->ofs );
-				break;
-			}
-
-		if ( !idp->string )
-			Com_Printf( "Com_ParseInventory: unknown token \"%s\" ignored (inventory %s)\n", token, name );
-
-	} while ( *text );
-}
-
-
-/*
-==============================================================================
-
-			EQUIPMENT DEFINITION INTERPRETER
-
-This is here because the info is needed by the server and client
-==============================================================================
-*/
-
-/*
-======================
-Com_ParseEquipment
-======================
-*/
-void Com_ParseEquipment( char *name, char **text )
-{
-	char		*errhead = "Com_ParseEquipment: unexptected end of file (equipment ";
-	equipDef_t	*ed;
-	char		*token;
-	int			i, n;
-
-	// search for containers with same name
-	for ( i = 0; i < csi.numEDs; i++ )
-		if ( !strcmp( name, csi.eds[i].name ) )
-			break;
-
-	if ( i < csi.numEDs )
-	{
-		Com_Printf( "Com_ParseEquipment: equipment def \"%s\" with same name found, second ignored\n", name );
-		return;
-	}
-
-	// initialize the menu
-	ed = &csi.eds[csi.numEDs++];
-	memset( ed, 0, sizeof(equipDef_t) );
-
-	strncpy( ed->name, name, MAX_VAR );
-
-	// get it's body
-	token = COM_Parse( text );
-
-	if ( !*text || strcmp( token, "{" ) )
-	{
-		Com_Printf( "Com_ParseEquipment: equipment def \"%s\" without body ignored\n", name );
-		csi.numEDs--;
-		return;
-	}
-
-	do {
-		token = COM_EParse( text, errhead, name );
-		if ( !*text || *token == '}' ) return;
-
-		for ( i = 0; i < csi.numODs; i++ )
-			if ( !strcmp( token, csi.ods[i].kurz ) )
-			{
-				token = COM_EParse( text, errhead, name );
-				if ( !*text || *token == '}' )
-				{
-					Com_Printf( "Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name );
-					return;
-				}
-				n = atoi( token );
-				if ( n ) ed->num[i] = n;
-				break;
-			}
-
-		if ( i == csi.numODs )
-			Com_Printf( "Com_ParseEquipment: unknown token \"%s\" ignored (equipment %s)\n", token, name );
-
-	} while ( *text );
-}
-
-
-
-
-/*
-==============================================================================
-
 			MESSAGE IO FUNCTIONS
 
 Handles byte ordering and avoids alignment errors
@@ -684,7 +312,7 @@ vec3_t	bytedirs[NUMVERTEXNORMALS] =
 void MSG_WriteChar (sizebuf_t *sb, int c)
 {
 	byte	*buf;
-	
+
 #ifdef PARANOID
 	if (c < -128 || c > 127)
 		Com_Error (ERR_FATAL, "MSG_WriteChar: range error");
@@ -697,7 +325,7 @@ void MSG_WriteChar (sizebuf_t *sb, int c)
 void MSG_WriteByte (sizebuf_t *sb, int c)
 {
 	byte	*buf;
-	
+
 #ifdef PARANOID
 	if (c < 0 || c > 255)
 		Com_Error (ERR_FATAL, "MSG_WriteByte: range error");
@@ -710,7 +338,7 @@ void MSG_WriteByte (sizebuf_t *sb, int c)
 void MSG_WriteShort (sizebuf_t *sb, int c)
 {
 	byte	*buf;
-	
+
 #ifdef PARANOID
 	if (c < ((short)0x8000) || c > (short)0x7fff)
 		Com_Error (ERR_FATAL, "MSG_WriteShort: range error");
@@ -724,7 +352,7 @@ void MSG_WriteShort (sizebuf_t *sb, int c)
 void MSG_WriteLong (sizebuf_t *sb, int c)
 {
 	byte	*buf;
-	
+
 	buf = SZ_GetSpace (sb, 4);
 	buf[0] = c&0xff;
 	buf[1] = (c>>8)&0xff;
@@ -739,11 +367,11 @@ void MSG_WriteFloat (sizebuf_t *sb, float f)
 		float	f;
 		int	l;
 	} dat;
-	
-	
+
+
 	dat.f = f;
 	dat.l = LittleLong (dat.l);
-	
+
 	SZ_Write (sb, &dat.l, 4);
 }
 
@@ -789,7 +417,7 @@ void MSG_WriteDir (sizebuf_t *sb, vec3_t dir)
 {
 	int		i, best;
 	float	d, bestd;
-	
+
 	if (!dir)
 	{
 		MSG_WriteByte (sb, 0);
@@ -838,19 +466,23 @@ void MSG_WriteFormat( sizebuf_t *sb, char *format, ... )
 			MSG_WriteLong( sb, va_arg( ap, int ) );
 			break;
 		case 'f':
-			MSG_WriteFloat( sb, va_arg( ap, float ) );
+// 			MSG_WriteFloat( sb, va_arg( ap, float ) );
+			MSG_WriteFloat( sb, va_arg( ap, double ) );
 			break;
 		case 'p':
-			MSG_WritePos( sb, va_arg( ap, float* ) );
+// 			MSG_WritePos( sb, va_arg( ap, float* ) );
+			MSG_WritePos( sb, va_arg( ap, double* ) );
 			break;
 		case 'g':
 			MSG_WriteGPos( sb, va_arg( ap, byte* ) );
 			break;
 		case 'd':
-			MSG_WriteDir( sb, va_arg( ap, float* ) );
+// 			MSG_WriteDir( sb, va_arg( ap, float* ) );
+			MSG_WriteDir( sb, va_arg( ap, double* ) );
 			break;
 		case 'a':
-			MSG_WriteAngle( sb, va_arg( ap, float ) );
+// 			MSG_WriteAngle( sb, va_arg( ap, float ) );
+			MSG_WriteAngle( sb, va_arg( ap, double ) );
 			break;
 		case '!':
 			break;
@@ -890,48 +522,48 @@ void MSG_BeginReading (sizebuf_t *msg)
 int MSG_ReadChar (sizebuf_t *msg_read)
 {
 	int	c;
-	
+
 	if (msg_read->readcount+1 > msg_read->cursize)
 		c = -1;
 	else
 		c = (signed char)msg_read->data[msg_read->readcount];
 	msg_read->readcount++;
-	
+
 	return c;
 }
 
 int MSG_ReadByte (sizebuf_t *msg_read)
 {
 	int	c;
-	
+
 	if (msg_read->readcount+1 > msg_read->cursize)
 		c = -1;
 	else
 		c = (unsigned char)msg_read->data[msg_read->readcount];
 	msg_read->readcount++;
-	
+
 	return c;
 }
 
 int MSG_ReadShort (sizebuf_t *msg_read)
 {
 	int	c;
-	
+
 	if (msg_read->readcount+2 > msg_read->cursize)
 		c = -1;
-	else		
+	else
 		c = (short)(msg_read->data[msg_read->readcount]
 		+ (msg_read->data[msg_read->readcount+1]<<8));
-	
+
 	msg_read->readcount += 2;
-	
+
 	return c;
 }
 
 int MSG_ReadLong (sizebuf_t *msg_read)
 {
 	int	c;
-	
+
 	if (msg_read->readcount+4 > msg_read->cursize)
 		c = -1;
 	else
@@ -939,9 +571,9 @@ int MSG_ReadLong (sizebuf_t *msg_read)
 		+ (msg_read->data[msg_read->readcount+1]<<8)
 		+ (msg_read->data[msg_read->readcount+2]<<16)
 		+ (msg_read->data[msg_read->readcount+3]<<24);
-	
+
 	msg_read->readcount += 4;
-	
+
 	return c;
 }
 
@@ -953,7 +585,7 @@ float MSG_ReadFloat (sizebuf_t *msg_read)
 		float	f;
 		int	l;
 	} dat;
-	
+
 	if (msg_read->readcount+4 > msg_read->cursize)
 		dat.f = -1;
 	else
@@ -964,17 +596,17 @@ float MSG_ReadFloat (sizebuf_t *msg_read)
 		dat.b[3] =	msg_read->data[msg_read->readcount+3];
 	}
 	msg_read->readcount += 4;
-	
+
 	dat.l = LittleLong (dat.l);
 
-	return dat.f;	
+	return dat.f;
 }
 
 char *MSG_ReadString (sizebuf_t *msg_read)
 {
 	static char	string[2048];
 	int		l,c;
-	
+
 	l = 0;
 	do
 	{
@@ -984,9 +616,9 @@ char *MSG_ReadString (sizebuf_t *msg_read)
 		string[l] = c;
 		l++;
 	} while (l < sizeof(string)-1);
-	
+
 	string[l] = 0;
-	
+
 	return string;
 }
 
@@ -994,7 +626,7 @@ char *MSG_ReadStringLine (sizebuf_t *msg_read)
 {
 	static char	string[2048];
 	int		l,c;
-	
+
 	l = 0;
 	do
 	{
@@ -1004,15 +636,15 @@ char *MSG_ReadStringLine (sizebuf_t *msg_read)
 		string[l] = c;
 		l++;
 	} while (l < sizeof(string)-1);
-	
+
 	string[l] = 0;
-	
+
 	return string;
 }
 
 float MSG_ReadCoord (sizebuf_t *msg_read)
 {
-	return MSG_ReadLong(msg_read) * (1.0/32);
+	return (float)MSG_ReadLong(msg_read) * (1.0/32);
 }
 
 void MSG_ReadPos (sizebuf_t *msg_read, vec3_t pos)
@@ -1031,17 +663,17 @@ void MSG_ReadGPos (sizebuf_t *msg_read, pos3_t pos)
 
 float MSG_ReadAngle (sizebuf_t *msg_read)
 {
-	return MSG_ReadChar(msg_read) * (360.0/256);
+	return (float)MSG_ReadChar(msg_read) * (360.0/256);
 }
 
 float MSG_ReadAngle16 (sizebuf_t *msg_read)
 {
-	return SHORT2ANGLE(MSG_ReadShort(msg_read));
+	return (float)SHORT2ANGLE(MSG_ReadShort(msg_read));
 }
 
 void MSG_ReadData (sizebuf_t *msg_read, void *data, int len)
 {
-	int		i;
+	int	i;
 
 	for (i=0 ; i<len ; i++)
 		((byte *)data)[i] = MSG_ReadByte (msg_read);
@@ -1049,7 +681,7 @@ void MSG_ReadData (sizebuf_t *msg_read, void *data, int len)
 
 void MSG_ReadDir (sizebuf_t *sb, vec3_t dir)
 {
-	int		b;
+	int	b;
 
 	b = MSG_ReadByte (sb);
 	if (b >= NUMVERTEXNORMALS)
@@ -1104,7 +736,7 @@ void MSG_ReadFormat( sizebuf_t *msg_read, char *format, ... )
 			break;
 		case '*':
 			{
-				int		i, n;
+				int	i, n;
 				byte	*p;
 
 				n = MSG_ReadByte( msg_read );
@@ -1126,8 +758,8 @@ void MSG_ReadFormat( sizebuf_t *msg_read, char *format, ... )
 int MSG_LengthFormat( sizebuf_t *sb, char *format )
 {
 	char	typeID;
-	int		length, delta;
-	int		oldCount;
+	int	length, delta;
+	int	oldCount;
 
 	length = 0;
 	delta = 0;
@@ -1138,23 +770,21 @@ int MSG_LengthFormat( sizebuf_t *sb, char *format )
 		typeID = *format++;
 
 		switch ( typeID )
-
 		{
-		case 'c': delta = 1; break;
-		case 'b': delta = 1; break;
-		case 's': delta = 2; break;
-		case 'l': delta = 4; break;
-		case 'f': delta = 4; break;
-		case 'p': delta = 6; break;
-		case 'g': delta = 3; break;
-		case 'd': delta = 1; break;
-		case 'a': delta = 1; break;
-		case '!': break;
-		case '*': delta = MSG_ReadByte( sb ); length++; break;
-		case '&': delta = 1; while ( MSG_ReadByte( sb ) != NONE ) length++; break;
-		default:
-			Com_Error( ERR_DROP, "LengthFormat: Unknown type!\n" );
-
+			case 'c': delta = 1; break;
+			case 'b': delta = 1; break;
+			case 's': delta = 2; break;
+			case 'l': delta = 4; break;
+			case 'f': delta = 4; break;
+			case 'p': delta = 6; break;
+			case 'g': delta = 3; break;
+			case 'd': delta = 1; break;
+			case 'a': delta = 1; break;
+			case '!': break;
+			case '*': delta = MSG_ReadByte( sb ); length++; break;
+			case '&': delta = 1; while ( MSG_ReadByte( sb ) != NONE ) length++; break;
+			default:
+				Com_Error( ERR_DROP, "LengthFormat: Unknown type!\n" );
 		}
 
 		// advance in buffer
@@ -1185,35 +815,35 @@ void SZ_Clear (sizebuf_t *buf)
 void *SZ_GetSpace (sizebuf_t *buf, int length)
 {
 	void	*data;
-	
+
 	if (buf->cursize + length > buf->maxsize)
 	{
 		if (!buf->allowoverflow)
 			Com_Error (ERR_FATAL, "SZ_GetSpace: overflow without allowoverflow set" );
-		
+
 		if (length > buf->maxsize)
 			Com_Error (ERR_FATAL, "SZ_GetSpace: %i is > full buffer size", length);
-			
+
 		Com_Printf ("SZ_GetSpace: overflow\n");
-		SZ_Clear (buf); 
+		SZ_Clear (buf);
 		buf->overflowed = true;
 	}
 
 	data = buf->data + buf->cursize;
 	buf->cursize += length;
-	
+
 	return data;
 }
 
 void SZ_Write (sizebuf_t *buf, void *data, int length)
 {
-	memcpy (SZ_GetSpace(buf,length),data,length);		
+	memcpy (SZ_GetSpace(buf,length),data,length);
 }
 
 void SZ_Print (sizebuf_t *buf, char *data)
 {
 	int		len;
-	
+
 	len = strlen(data)+1;
 
 	if (buf->cursize)
@@ -1242,13 +872,13 @@ where the given parameter apears, or 0 if not present
 int COM_CheckParm (char *parm)
 {
 	int		i;
-	
+
 	for (i=1 ; i<com_argc ; i++)
 	{
 		if (!strcmp (parm,com_argv[i]))
 			return i;
 	}
-		
+
 	return 0;
 }
 
@@ -1314,7 +944,7 @@ void COM_AddParm (char *parm)
 int	memsearch (byte *start, int count, int search)
 {
 	int		i;
-	
+
 	for (i=0 ; i<count ; i++)
 		if (start[i] == search)
 			return i;
@@ -1325,7 +955,7 @@ int	memsearch (byte *start, int count, int search)
 char *CopyString (char *in)
 {
 	char	*out;
-	
+
 	out = Z_Malloc (strlen(in)+1);
 	strcpy (out, in);
 	return out;
@@ -1460,7 +1090,7 @@ Z_TagMalloc
 void *Z_TagMalloc (int size, int tag)
 {
 	zhead_t	*z;
-	
+
 	size = size + sizeof(zhead_t);
 	z = malloc(size);
 	if (!z)
@@ -1493,61 +1123,6 @@ void *Z_Malloc (int size)
 
 //============================================================================
 
-
-/*
-====================
-COM_BlockSequenceCheckByte
-
-For proxy protecting
-
-// THIS IS MASSIVELY BROKEN!  CHALLENGE MAY BE NEGATIVE
-// DON'T USE THIS FUNCTION!!!!!
-
-====================
-*/
-byte	COM_BlockSequenceCheckByte (byte *base, int length, int sequence, int challenge)
-{
-	Sys_Error("COM_BlockSequenceCheckByte called\n");
-
-#if 0
-	int		checksum;
-	byte	buf[68];
-	byte	*p;
-	float temp;
-	byte c;
-
-	temp = bytedirs[(sequence/3) % NUMVERTEXNORMALS][sequence % 3];
-	temp = LittleFloat(temp);
-	p = ((byte *)&temp);
-
-	if (length > 60)
-		length = 60;
-	memcpy (buf, base, length);
-
-	buf[length] = (sequence & 0xff) ^ p[0];
-	buf[length+1] = p[1];
-	buf[length+2] = ((sequence>>8) & 0xff) ^ p[2];
-	buf[length+3] = p[3];
-
-	temp = bytedirs[((sequence+challenge)/3) % NUMVERTEXNORMALS][(sequence+challenge) % 3];
-	temp = LittleFloat(temp);
-	p = ((byte *)&temp);
-
-	buf[length+4] = (sequence & 0xff) ^ p[3];
-	buf[length+5] = (challenge & 0xff) ^ p[2];
-	buf[length+6] = ((sequence>>8) & 0xff) ^ p[1];
-	buf[length+7] = ((challenge >> 7) & 0xff) ^ p[0];
-
-	length += 8;
-
-	checksum = LittleLong(Com_BlockChecksum (buf, length));
-
-	checksum &= 0xff;
-
-	return checksum;
-#endif
-	return 0;
-}
 
 static byte chktbl[1024] = {
 0x84, 0x47, 0x51, 0xc1, 0x93, 0x22, 0x21, 0x24, 0x2f, 0x66, 0x60, 0x4d, 0xb0, 0x7c, 0xda,
@@ -1655,7 +1230,7 @@ byte	COM_BlockSequenceCRCByte (byte *base, int length, int sequence)
 
 	crc = (crc ^ x) & 0xff;
 
-	return crc;
+	return (byte)crc;
 }
 
 //========================================================
@@ -1676,83 +1251,36 @@ void Com_Error_f (void)
 	Com_Error (ERR_FATAL, "%s", Cmd_Argv(1));
 }
 
-/*
-=================
-Com_AddObjectLinks
-=================
-*/
-void Com_AddObjectLinks( void )
+void Qcommon_LocaleInit ( void )
 {
-	objDef_t	*od;
-	char	kurz[MAX_VAR];
-	char	*underline;
-	int		i, j;
-
-	// reset links
-	for ( i = 0, od = csi.ods; i < csi.numODs; i++, od++ )
-		od->link = NONE;
-
-	// add ammo link
-	for ( i = 0, od = csi.ods; i < csi.numODs; i++, od++ )
-		if ( !strcmp( od->type, "ammo" ) )
-		{
-			// check for the underline
-			strcpy( kurz, od->kurz );
-			underline = strchr( kurz, '_' );
-			if ( !underline ) continue;
-			*underline = 0;
-
-			// search corresponding weapon
-			for ( j = 0; j < csi.numODs; j++ )
-				if ( !strcmp( csi.ods[j].kurz, kurz ) )
-					csi.ods[j].link = i;
-		}
-}
-
-
-/*
-=================
-Com_ParseScripts
-=================
-*/
-void Com_ParseScripts( void )
-{
-	char		*type, *name, *text;
-
-	// reset csi basic info
-	Com_InitCSI( &csi );
-	csi.idLeft = csi.idRight = csi.idFloor = csi.idEquip = NONE;
-
-	// stage one parsing
-	FS_BuildFileList( "ufos/*.ufo" );
-	text = NULL;
-
-	while ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) )
+	char *locale;
+	char *localeDir;
+	// set to system default
+	// TODO: Make me variable through a cvar
+	locale = setlocale ( LC_MESSAGES, "" );
+	if ( locale == NULL )
 	{
-		// server/client scripts
-		if ( !strcmp( type, "item" ) ) Com_ParseItem( name, &text );
-		else if ( !strcmp( type, "inventory" ) ) Com_ParseInventory( name, &text );
-		else CL_ParseScriptFirst( type, name, &text );
+		Com_Printf("Could not set to system language %s\n");
+		return;
 	}
 
-	// add object links
-	Com_AddObjectLinks();
-
-	// stage two parsing (weapon/inventory dependant stuff)
-	FS_NextScriptHeader( NULL, NULL, NULL );
-	text = NULL;
-
-	while ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) )
+	// use system locale dir if we can't find in gamedir
+	localeDir = bindtextdomain ( "ufoai", "./base/i18n/" );
+// 	localeDir = bindtextdomain ( "ufoai", va("%s/i18n/", FS_Gamedir() ) );
+	if ( ! localeDir )
 	{
-		// server/client scripts
-		if ( !strcmp( type, "equipment" ) ) Com_ParseEquipment( name, &text );
-
-		else CL_ParseScriptSecond( type, name, &text );
+		Com_Printf("Using system dir for locale settings\n");
+		bindtextdomain( "ufoai", NULL );
 	}
+	else
+		Com_Printf("Using data dir (%s) for locate settings\n", localeDir );
 
-	Com_Printf( "Shared Client/Server Info loaded\n" );
+	// set coding to utf8
+	bind_textdomain_codeset ( "ufoai", "UTF-8" );
+	// load language file
+	textdomain( "ufoai" );
+	Com_Printf( "Setting language to %s\n", locale );
 }
-
 
 /*
 =================
@@ -1762,7 +1290,6 @@ Qcommon_Init
 void Qcommon_Init (int argc, char **argv)
 {
 	char	*s;
-
 
 	if (setjmp (abortframe) )
 		Sys_Error ("Error during initialization");
@@ -1790,6 +1317,9 @@ void Qcommon_Init (int argc, char **argv)
 
 	FS_InitFilesystem ();
 
+	// i18n through gettext
+	Qcommon_LocaleInit();
+
 	Cbuf_AddText ("exec default.cfg\n");
 	Cbuf_AddText ("exec config.cfg\n");
 	Cbuf_AddText ("exec keys.cfg\n");
@@ -1800,8 +1330,8 @@ void Qcommon_Init (int argc, char **argv)
 	//
 	// init commands and vars
 	//
-    Cmd_AddCommand ("z_stats", Z_Stats_f);
-    Cmd_AddCommand ("error", Com_Error_f);
+	Cmd_AddCommand ("z_stats", Z_Stats_f);
+	Cmd_AddCommand ("error", Com_Error_f);
 
 	host_speeds = Cvar_Get ("host_speeds", "0", 0);
 	log_stats = Cvar_Get ("log_stats", "0", 0);
@@ -1833,7 +1363,6 @@ void Qcommon_Init (int argc, char **argv)
 	CL_Init ();
 
 	Com_ParseScripts ();
-	Cbuf_AddText( "loadteam current\n" );
 
 	// add + commands from command line
 	if (!Cbuf_AddLateCommands ())
@@ -1850,7 +1379,7 @@ void Qcommon_Init (int argc, char **argv)
 		SCR_EndLoadingPlaque ();
 	}
 
-	Com_Printf ("====== UFO Initialized ======\n\n");	
+	Com_Printf ("====== UFO Initialized ======\n\n");
 }
 
 /*
@@ -1861,7 +1390,7 @@ Qcommon_Frame
 float Qcommon_Frame (int msec)
 {
 	char	*s;
-	int		time_before, time_between, time_after;
+	int		time_before = 0, time_between = 0, time_after = 0;
 
 	if (setjmp (abortframe) )
 		return 1.0;			// an ERR_DROP was thrown
@@ -1923,12 +1452,12 @@ float Qcommon_Frame (int msec)
 	SV_Frame (msec);
 
 	if (host_speeds->value)
-		time_between = Sys_Milliseconds ();		
+		time_between = Sys_Milliseconds ();
 
 	CL_Frame (msec);
 
 	if (host_speeds->value)
-		time_after = Sys_Milliseconds ();		
+		time_after = Sys_Milliseconds ();
 
 
 	if (host_speeds->value)

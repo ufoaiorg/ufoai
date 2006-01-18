@@ -66,7 +66,7 @@ float Cvar_VariableValue (char *var_name)
 	
 	var = Cvar_FindVar (var_name);
 	if (!var)
-		return 0;
+		return 0.0;
 	return atof (var->string);
 }
 
@@ -428,7 +428,7 @@ Allows copying variables
 void Cvar_Copy_f (void)
 {
 	int		c;
-	int		flags;
+//	int		flags;
 
 	c = Cmd_Argc();
 	if (c < 3)

@@ -247,8 +247,10 @@ void SV_CopySaveGame (char *src, char *dst)
 
 	Com_sprintf (name, sizeof(name), "%s/save/%s/", FS_Gamedir(), src);
 	len = strlen(name);
-	Com_sprintf (name, sizeof(name), "%s/save/%s/*.sav", FS_Gamedir(), src);
-	found = Sys_FindFirst(name, 0, 0 );
+	*/
+	//to avoid compiler_warnings '/*.sav'
+	//Com_sprintf (name, sizeof(name), "%s/save/%s/*.sav", FS_Gamedir(), src);
+	/*found = Sys_FindFirst(name, 0, 0 );
 	while (found)
 	{
 		strcpy (name+len, found+len);
@@ -488,9 +490,9 @@ goes to map jail.bsp.
 void SV_GameMap_f (void)
 {
 	char		*map;
-	int			i;
-	client_t	*cl;
-	qboolean	*savedInuse;
+//	int			i;
+//	client_t	*cl;
+//	qboolean	*savedInuse;
 
 	if (Cmd_Argc() != 2)
 	{
@@ -556,10 +558,10 @@ For development work
 */
 void SV_Map_f (void)
 {
-	char	*map;
+/*	char	*map;
 	char	expanded[MAX_QPATH];
 
-	// if not a pcx, demo, or cinematic, check to make sure the level exists
+	// if not a pcx, demo, or cinematic, check to make sure the tiles exist
 	map = Cmd_Argv(1);
 	if (!strstr (map, "."))
 	{
@@ -573,7 +575,21 @@ void SV_Map_f (void)
 
 	sv.state = ss_dead;		// don't save current level when changing
 	//SV_WipeSavegame("current");
-	SV_GameMap_f ();
+	SV_GameMap_f ();*/
+
+	// change
+	sv.state = ss_dead;
+	sv.loadgame = false;
+	sv.attractloop = false;
+	svs.initialized = false;
+	SV_InitGame ();
+
+	SV_BroadcastCommand ("changing\n");
+	SV_SendClientMessages ();
+	SV_SpawnServer( Cmd_Argv(1), Cmd_Argv(2), ss_game, false, false );
+	Cbuf_CopyToDefer ();
+
+	SV_BroadcastCommand ("reconnect\n");
 }
 
 /*

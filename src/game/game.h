@@ -90,6 +90,7 @@ struct edict_s
 
 	edict_t		*owner;
 	int			clipmask;
+	int			modelindex;
 };
 
 
@@ -97,11 +98,17 @@ struct edict_s
 
 //===============================================================
 
+typedef struct routing_s routing_t;
 //
 // functions provided by the main engine
 //
 typedef struct
 {
+	// client/server information
+	int		seed;
+	csi_t	*csi;
+	struct routing_s *map;
+
 	// special messages
 	void	(*bprintf) (int printlevel, char *fmt, ...);
 	void	(*dprintf) (char *fmt, ...);
@@ -121,6 +128,8 @@ typedef struct
 	int		(*soundindex) (char *name);
 	int		(*imageindex) (char *name);
 
+	int		(*setmodel) (edict_t *ent, char *name);
+
 	// collision detection
 	trace_t	(*trace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t *passent, int contentmask);
 	int		(*pointcontents) (vec3_t point);
@@ -128,13 +137,16 @@ typedef struct
 	void	(*unlinkentity) (edict_t *ent);		// call before removing an interactive edict
 
 	int		(*TestLine) (vec3_t start, vec3_t stop);
-	
-	void	(*MoveCalc)( pos3_t from, int distance, byte **fb_list, int fb_length );
-	void	(*MoveStore)( void );
-	int		(*MoveLength)( pos3_t to, qboolean stored );
-	int		(*MoveNext)( pos3_t from );
-	void	(*GridHeight)( pos3_t pos );
-	void	(*GridPosToVec)( pos3_t pos, vec3_t vec );
+	float	(*GrenadeTarget) (vec3_t from, vec3_t at, vec3_t v0);
+
+	void	(*MoveCalc)( struct routing_s *map, pos3_t from, int distance, byte **fb_list, int fb_length );
+	void	(*MoveStore)( struct routing_s *map );
+	int		(*MoveLength)( struct routing_s *map, pos3_t to, qboolean stored );
+	int		(*MoveNext)( struct routing_s *map, pos3_t from );
+	void	(*GridHeight)( struct routing_s *map, pos3_t pos );
+	int		(*GridFall)( struct routing_s *map, pos3_t pos );
+	void	(*GridPosToVec)( struct routing_s *map, pos3_t pos, vec3_t vec );
+	void	(*GridRecalcRouting)( struct routing_s *map, char *name, char **list );
 
 	// network messaging (writing)
 	void	(*multicast) (int mask);
@@ -175,7 +187,7 @@ typedef struct
 	void	(*ReadData) ( void *buffer, int size );
 
 	// misc functions
-	int		(*GetModelInTeam) ( char *team, char *body, char *head );
+	int		(*GetModelAndName) ( char *team, char *path, char *body, char *head, char *name );
 
 	// managed memory allocation
 	void	*(*TagMalloc) (int size, int tag);
@@ -197,10 +209,6 @@ typedef struct
 	// for map changing, etc
 	void	(*AddCommandString) (char *text);
 	void	(*DebugGraph) (float value, int color);
-
-	// client/server information
-	int		seed;
-	csi_t	*csi;
 } game_import_t;
 
 //
@@ -217,7 +225,7 @@ typedef struct
 	void		(*Shutdown) (void);
 
 	// each new level entered will cause a call to SpawnEntities
-	void		(*SpawnEntities) (char *mapname, char *entstring, char *spawnpoint);
+	void		(*SpawnEntities) (char *mapname, char *entstring);
 
 	// Read/Write Game is for storing persistant cross level information
 	// about the world state and the clients.

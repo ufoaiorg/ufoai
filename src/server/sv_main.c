@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -120,20 +120,20 @@ char	*SV_StatusString (void)
 	strcat (status, "\n");
 	statusLength = strlen(status);
 
-/*	for (i=0 ; i<sv_maxclients->value ; i++)
+	for (i=0 ; i<sv_maxclients->value ; i++)
 	{
 		cl = &svs.clients[i];
 		if (cl->state == cs_connected || cl->state == cs_spawned )
 		{
-			Com_sprintf (player, sizeof(player), "%i %i \"%s\"\n", 
-				cl->edict->client->ps.stats[STAT_FRAGS], cl->ping, cl->name);
+			Com_sprintf (player, sizeof(player), "%i %i \"%s\"\n",
+				0, cl->ping, cl->name);
 			playerLength = strlen(player);
 			if (statusLength + playerLength >= sizeof(status) )
 				break;		// can't hold any more
 			strcpy (status + statusLength, player);
 			statusLength += playerLength;
 		}
-	}*/
+	}
 
 	return status;
 }
@@ -194,7 +194,7 @@ void SVC_Info (void)
 			if (svs.clients[i].state >= cs_connected)
 				count++;
 
-		Com_sprintf (string, sizeof(string), "%16s %8s %2i/%2i\n", hostname->string, sv.name, count, (int)sv_maxclients->value);
+		Com_sprintf (string, sizeof(string), "%s\t%s\t%2i/%2i\n", hostname->string, sv.name, count, (int)sv_maxclients->value);
 	}
 
 	Netchan_OutOfBandPrint (NS_SERVER, net_from, "info\n%s", string);
@@ -340,7 +340,7 @@ void SVC_DirectConnect (void)
 		if (cl->state == cs_free)
 			continue;
 		if (NET_CompareBaseAdr (adr, cl->netchan.remote_address)
-			&& ( cl->netchan.qport == qport 
+			&& ( cl->netchan.qport == qport
 			|| adr.port == cl->netchan.remote_address.port ) )
 		{
 			if (!NET_IsLocalAddress (adr) && (svs.realtime - cl->lastconnect) < ((int)sv_reconnect_limit->value * 1000))
@@ -348,6 +348,7 @@ void SVC_DirectConnect (void)
 				Com_DPrintf ("%s:reconnect rejected : too soon\n", NET_AdrToString (adr));
 				return;
 			}
+			// FIXME: Dont let the fighters respawn - reuse the already spawned fighters
 			Com_Printf ("%s:reconnect\n", NET_AdrToString (adr));
 			newcl = cl;
 			goto gotnewcl;
@@ -371,7 +372,7 @@ void SVC_DirectConnect (void)
 		return;
 	}
 
-gotnewcl:	
+gotnewcl:
 	// build a new connection
 	// accept the new client
 	// this is the only place a client_t is ever initialized
@@ -387,8 +388,8 @@ gotnewcl:
 	// get the game a chance to reject this connection or modify the userinfo
 	if (!(ge->ClientConnect (player, userinfo)))
 	{
-		if (*Info_ValueForKey (userinfo, "rejmsg")) 
-			Netchan_OutOfBandPrint (NS_SERVER, adr, "print\n%s\nConnection refused.\n",  
+		if (*Info_ValueForKey (userinfo, "rejmsg"))
+			Netchan_OutOfBandPrint (NS_SERVER, adr, "print\n%s\nConnection refused.\n",
 				Info_ValueForKey (userinfo, "rejmsg"));
 		else
 			Netchan_OutOfBandPrint (NS_SERVER, adr, "print\nConnection refused.\n" );
@@ -405,8 +406,11 @@ gotnewcl:
 
 	Netchan_Setup (NS_SERVER, &newcl->netchan , adr, qport);
 
+	for ( i = 0; i < RELIABLEBUFFERS; i++ )
+		SZ_Init( &newcl->reliable[i], newcl->reliable_buf + i * MAX_MSGLEN, MAX_MSGLEN );
+
 	newcl->state = cs_connected;
-	
+
 	SZ_Init (&newcl->datagram, newcl->datagram_buf, sizeof(newcl->datagram_buf) );
 	newcl->datagram.allowoverflow = true;
 	newcl->lastmessage = svs.realtime;	// don't timeout
@@ -586,7 +590,7 @@ void SV_GiveMsec (void)
 		cl = &svs.clients[i];
 		if (cl->state == cs_free )
 			continue;
-		
+
 		cl->commandMsec = 1800;		// 1600 + some slop
 	}
 }
@@ -644,7 +648,7 @@ void SV_ReadPackets (void)
 			}
 			break;
 		}
-		
+
 		if (i != sv_maxclients->value)
 			continue;
 	}
@@ -685,11 +689,11 @@ void SV_CheckTimeouts (void)
 			cl->state = cs_free;	// can now be reused
 			continue;
 		}
-		if ( (cl->state == cs_connected || cl->state == cs_spawned) 
+		if ( (cl->state == cs_connected || cl->state == cs_spawned)
 			&& cl->lastmessage < droppoint)
 		{
 			SV_BroadcastPrintf (PRINT_HIGH, "%s timed out\n", cl->name);
-			SV_DropClient (cl); 
+			SV_DropClient (cl);
 			cl->state = cs_free;	// don't bother with zombie state
 		}
 	}
@@ -733,7 +737,7 @@ void SV_Frame (int msec)
 	if (!svs.initialized)
 		return;
 
-    svs.realtime += msec;
+	svs.realtime += msec;
 
 	// keep the random time dependent
 	rand ();
@@ -773,7 +777,7 @@ void SV_Frame (int msec)
 	// save the entire world state if recording a serverdemo
 	// SV_RecordDemoMessage ();
 
-	// send a heartbeat to the master if needed
+	// TODO: send a heartbeat to the master if needed
 	Master_Heartbeat ();
 
 	// clear teleport flags, etc for next frame
@@ -795,7 +799,7 @@ let it know we are alive, and log information
 void Master_Heartbeat (void)
 {
 	char		*string;
-	int			i;
+	int		i;
 
 	// pgm post3.19 change, cvar pointer not validated before dereferencing
 	if (!dedicated || !dedicated->value)
@@ -835,7 +839,7 @@ Informs all masters that this server is going down
 */
 void Master_Shutdown (void)
 {
-	int			i;
+	int		i;
 
 	// pgm post3.19 change, cvar pointer not validated before dereferencing
 	if (!dedicated || !dedicated->value)
@@ -873,7 +877,7 @@ void SV_UserinfoChanged (client_t *cl)
 
 	// call prog code to allow overrides
 	ge->ClientUserinfoChanged (cl->player, cl->userinfo);
-	
+
 	// name for C code
 	strncpy (cl->name, Info_ValueForKey (cl->userinfo, "name"), sizeof(cl->name)-1);
 	// mask off high bit
@@ -933,20 +937,18 @@ void SV_Init (void)
 	sv_paused = Cvar_Get ("paused", "0", 0);
 	sv_timedemo = Cvar_Get ("timedemo", "0", 0);
 	sv_enforcetime = Cvar_Get ("sv_enforcetime", "0", 0);
-	allow_download = Cvar_Get ("allow_download", "1", CVAR_ARCHIVE);
-	allow_download_players  = Cvar_Get ("allow_download_players", "0", CVAR_ARCHIVE);
+	allow_download = Cvar_Get ("allow_download", "0", CVAR_ARCHIVE);
+	allow_download_players = Cvar_Get ("allow_download_players", "0", CVAR_ARCHIVE);
 	allow_download_models = Cvar_Get ("allow_download_models", "1", CVAR_ARCHIVE);
 	allow_download_sounds = Cvar_Get ("allow_download_sounds", "1", CVAR_ARCHIVE);
-	allow_download_maps	  = Cvar_Get ("allow_download_maps", "1", CVAR_ARCHIVE);
-
+	allow_download_maps = Cvar_Get ("allow_download_maps", "1", CVAR_ARCHIVE);
 
 	sv_noreload = Cvar_Get ("sv_noreload", "0", 0);
-
 	sv_airaccelerate = Cvar_Get("sv_airaccelerate", "0", CVAR_LATCH);
-
 	public_server = Cvar_Get ("public", "0", 0);
-
 	sv_reconnect_limit = Cvar_Get ("sv_reconnect_limit", "3", CVAR_ARCHIVE);
+
+	if ( dedicated->value ) Cvar_Set( "maxclients", "8" );
 
 	SZ_Init (&net_message, net_message_buffer, sizeof(net_message_buffer));
 }
@@ -965,7 +967,7 @@ void SV_FinalMessage (char *message, qboolean reconnect)
 {
 	int			i;
 	client_t	*cl;
-	
+
 	SZ_Clear (&net_message);
 	MSG_WriteByte (&net_message, svc_print);
 	MSG_WriteByte (&net_message, PRINT_HIGH);

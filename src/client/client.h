@@ -21,11 +21,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 //define	PARANOID			// speed sapping error checking
 
+
+#ifndef CLIENT_DEFINED
+#define CLIENT_DEFINED 1
 #include <math.h>
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "ref.h"
 
@@ -36,8 +40,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "keys.h"
 #include "console.h"
 #include "cdaudio.h"
+#include "cl_basemanagement.h"
+#include "cl_ufopedia.h"
 
 //=============================================================================
+
+#define MAX_TEAMLIST	8
 
 typedef struct
 {
@@ -73,14 +81,14 @@ extern int num_cl_weaponmodels;
 
 typedef struct
 {
-	vec3_t		reforg;
-	vec3_t		camorg;
-	vec3_t		speed;
-	vec3_t		angles;
-	float		omega;
-	float		lerplevel;
-	vec3_t		axis[3];	// set when refdef.angles is set
+	vec3_t	reforg;
+	vec3_t	camorg;
+	vec3_t	speed;
+	vec3_t	angles;
+	vec3_t	omega;
+	vec3_t	axis[3];	// set when refdef.angles is set
 
+	float	lerplevel;
 	float	zoom;
 } camera_t;
 
@@ -129,6 +137,10 @@ typedef struct
 	int			msgTime;
 	char		msgText[256];
 
+	struct le_s	*teamList[MAX_TEAMLIST];
+	int			numTeamList;
+	int			numAliensSpotted;
+
 	//
 	// transient data from server
 	//
@@ -152,7 +164,7 @@ typedef struct
 	int			pnum;
 	int			actTeam;
 
-	char		configstrings[MAX_CONFIGSTRINGS][MAX_QPATH];
+	char		configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
 	//
 	// locally derived information from server state
@@ -196,7 +208,7 @@ typedef enum {
 	dl_single
 } dltype_t;		// download type
 
-typedef enum {key_game, key_console, key_message, key_menu} keydest_t;
+typedef enum {key_game, key_console, key_message} keydest_t;
 
 typedef struct
 {
@@ -293,6 +305,8 @@ extern	cvar_t	*m_side;
 
 extern	cvar_t	*freelook;
 
+extern	cvar_t	*cl_logevents;
+
 extern	cvar_t	*cl_lightlevel;	// FIXME HACK
 
 extern	cvar_t	*cl_paused;
@@ -307,10 +321,17 @@ extern	cvar_t	*cl_selected;
 
 extern	cvar_t	*cl_numnames;
 
+extern	cvar_t	*difficulty;
+
 extern	cvar_t	*mn_active;
 extern	cvar_t	*mn_main;
 extern	cvar_t	*mn_sequence;
+extern	cvar_t	*mn_hud;
 extern	cvar_t	*mn_lastsave;
+//the new soundsystem cvar 0-3 by now
+#ifndef _WIN32
+extern	cvar_t	*snd_system;
+#endif
 
 typedef struct
 {
@@ -412,7 +433,6 @@ void SmokeAndFlash(vec3_t origin);
 
 void CL_SetLightstyle (int i);
 
-void CL_RunParticles (void);
 void CL_RunDLights (void);
 void CL_RunLightStyles (void);
 
@@ -466,6 +486,11 @@ typedef enum
 	MS_NULL,
 	MS_MENU,
 	MS_DRAG,
+	MS_ROTATE,
+	MS_SHIFTMAP,
+	MS_ZOOMMAP,
+	MS_SHIFTBASEMAP,
+	MS_ZOOMBASEMAP,
 	MS_WORLD
 } mouseSpace_t;
 
@@ -473,14 +498,16 @@ extern	int			mouseSpace;
 extern	int			mx, my;
 extern	int			dragFrom, dragFromX, dragFromY;
 extern	item_t		dragItem;
+extern	float		*rotateAngles;
+
 extern	kbutton_t	in_mlook, in_klook;
 extern 	kbutton_t 	in_strafe;
 extern 	kbutton_t 	in_speed;
 
 void CL_InitInput (void);
 void CL_CameraMove (void);
+void CL_CameraRoute( pos3_t from, pos3_t target );
 void CL_ParseInput (void);
-trace_t	CL_MouseTrace (void);
 
 void CL_ClearState (void);
 
@@ -507,8 +534,8 @@ typedef struct le_s {
 	int 		dir;
 
 	int 		TU, maxTU;
-	int 		moral;
-	int 		HP;
+	int 		moral, maxMoral;
+	int 		HP, maxHP;
 	int 		state;
 
 	float		angles[3];
@@ -540,20 +567,31 @@ typedef struct le_s {
 	ptl_t		*ptl;
 	char		*ref1, *ref2;
 	inventory_t	i;
+	int			left, right;
 
 	// is called before adding a le to scene
 	qboolean	(*addFunc)(struct le_s *le, entity_t *ent);
 } le_t;
 
-#define MAX_LOCALMODELS		128
-#define MAX_MAPPARTICLES	256
+#define MAX_LOCALMODELS		512
+#define MAX_MAPPARTICLES	1024
+
+#define LMF_LIGHTFIXED		1
+#define LMF_NOSMOOTH		2
 
 typedef struct lm_s {
-	char		name[MAX_QPATH];
+	char		name[MAX_VAR];
+	char		particle[MAX_VAR];
 
 	vec3_t		origin;
 	vec3_t		angles;
+	vec4_t		lightorigin;
+	vec4_t		lightcolor;
+	vec4_t		lightambient;
 
+	int			num;
+	int			skin;
+	int			flags;
 	int			levelflags;
 	float		sunfrac;
 
@@ -572,6 +610,9 @@ typedef struct mp_s {
 extern lm_t LMs[MAX_LOCALMODELS];
 extern mp_t MPs[MAX_MAPPARTICLES];
 
+extern int	numLMs;
+extern int	numMPs;
+
 extern le_t LEs[MAX_EDICTS];
 extern int	numLEs;
 
@@ -580,15 +621,18 @@ extern vec3_t player_maxs;
 
 
 void LE_Think( void );
-char *LE_GetAnim( char *anim, inventory_t *i, int state );
+char *LE_GetAnim( char *anim, int right, int left, int state );
 
-void LE_AddProjectile( fireDef_t *fd, byte flags, vec3_t muzzle, vec3_t impact, byte normal );
+void LE_AddProjectile( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, int normal );
+void LE_AddGrenade( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t v0, int dt );
 
 void LET_StartIdle( le_t *le );
 void LET_Appear( le_t *le );
 void LET_Perish( le_t *le );
 void LET_StartPathMove( le_t *le );
-void LET_StartShoot( le_t *le );
+
+void LM_Perish( sizebuf_t *sb );
+void LM_Explode( sizebuf_t *sb );
 
 void LM_AddToScene( void );
 void LE_AddToScene( void );
@@ -597,19 +641,16 @@ le_t *LE_Get( int entnum );
 le_t *LE_Find( int type, pos3_t pos );
 trace_t CL_Trace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t *passle, int contentmask);
 
+lm_t *CL_AddLocalModel (char *model, char *particle, vec3_t origin, vec3_t angles, int num, int levelflags);
+void CL_AddMapParticle (char *particle, vec3_t origin, vec2_t wait, char *info);
 
 //
 // cl_actor.c
 //
 
-#define MAX_TEAMLIST	8
-
 extern	le_t		*selActor;
 extern	int			actorMoveLength;
-extern	invChain_t	invChain[MAX_INVCHAIN];
-
-extern	le_t	*teamList[MAX_TEAMLIST];
-extern	int		numTeamList;
+extern	invList_t	invList[MAX_INVLIST];
 
 extern	byte	*fb_list[MAX_FB_LIST];
 extern	int		fb_length;
@@ -620,15 +661,18 @@ void CL_ActorUpdateCVars( void );
 qboolean CL_ActorSelect( le_t *le );
 qboolean CL_ActorSelectList( int num );
 void CL_AddActorToTeamList( le_t *le );
+void CL_RemoveActorFromTeamList( le_t *le );
 void CL_ActorSelectMouse( void );
 void CL_ActorReload( int hand );
 void CL_ActorTurnMouse( void );
 void CL_ActorDoTurn( sizebuf_t *sb );
 void CL_ActorStandCrouch( void );
+void CL_ActorToggleReaction( void );
 void CL_BuildForbiddenList( void );
 //void CL_ActorStartMove( le_t *le, pos3_t to );
 void CL_ActorDoMove( sizebuf_t *sb );
 void CL_ActorDoShoot( sizebuf_t *sb );
+void CL_ActorDoThrow( sizebuf_t *sb );
 void CL_ActorStartShoot( sizebuf_t *sb );
 void CL_ActorDie( sizebuf_t *sb );
 
@@ -648,26 +692,31 @@ void CL_AddTargeting( void );
 //
 #define MAX_ACTIVETEAM	8
 #define MAX_WHOLETEAM	32
+#define NUM_BUYTYPES	4
+#define NUM_TEAMSKINS	4
 
 extern inventory_t teamInv[MAX_WHOLETEAM];
+extern inventory_t equipment;
 extern character_t wholeTeam[MAX_WHOLETEAM];
 extern character_t curTeam[MAX_ACTIVETEAM];
 extern int numWholeTeam;
 extern int numOnTeam;
 extern int teamMask;
 extern int deathMask;
+extern int equipType;
+
+extern char *teamSkinNames[NUM_TEAMSKINS];
 
 void CL_ResetTeams( void );
 void CL_ParseResults( sizebuf_t *buf );
-void CL_ParseNames( char *title, char **text );
-void CL_ParseActors( char *title, char **text );
-void CL_ParseTeam( char *title, char **text );
 void CL_SendTeamInfo( sizebuf_t *buf, character_t *team, int num );
-void CL_CheckCampaignInventory( equipDef_t *equip );
+void CL_CheckInventory( equipDef_t *equip );
 void CL_GenerateCharacter( char *team );
 void CL_ResetCharacters( void );
-void CL_LoadTeamMember( sizebuf_t *sb, character_t *chr );
+void CL_LoadTeam( sizebuf_t *sb );
 void CL_ItemDescription( int item );
+
+
 //
 // cl_campaign.c
 //
@@ -675,20 +724,81 @@ void CL_ItemDescription( int item );
 #define MAX_MISFIELDS	8
 #define MAX_REQMISSIONS	4
 #define MAX_ACTMISSIONS	16
+#define MAX_SETMISSIONS	16
 #define MAX_CAMPAIGNS	16
+#define MAX_AIRCRAFT	256
+
+#define MAX_STAGESETS	256
+#define MAX_STAGES		64
+
+#define LINE_MAXSEG 64
+#define LINE_MAXPTS (LINE_MAXSEG+2)
+#define LINE_DPHI	(M_PI/LINE_MAXSEG)
 
 typedef struct mission_s
 {
 	char	*text;
 	char	name[MAX_VAR];
 	char	map[MAX_VAR];
+	char	param[MAX_VAR];
 	char	music[MAX_VAR];
+	char	alienTeam[MAX_VAR];
 	char	alienEquipment[MAX_VAR];
+	char	civTeam[MAX_VAR];
 	vec2_t	pos;
+	byte	mask[4];
 	int		aliens, civilians;
 	int		recruits;
 	int		cr_win, cr_alien, cr_civilian;
 } mission_t;
+
+typedef struct stageSet_s
+{
+	char	name[MAX_VAR];
+	char	needed[MAX_VAR];
+	char	nextstage[MAX_VAR];
+	char	endstage[MAX_VAR];
+	char	cmds[MAX_VAR];
+	date_t	delay;
+	date_t	frame;
+	date_t	expire;
+	int		number;
+	int		quota;
+	byte	numMissions;
+	int		missions[MAX_SETMISSIONS];
+} stageSet_t;
+
+typedef struct stage_s
+{
+	char	name[MAX_VAR];
+	int		first, num;
+} stage_t;
+
+typedef struct setState_s
+{
+	stageSet_t *def;
+	stage_t *stage;
+	byte	active;
+	date_t	start;
+	date_t	event;
+	int		num;
+	int		done;
+} setState_t;
+
+typedef struct stageState_s
+{
+	stage_t *def;
+	byte	active;
+	date_t	start;
+} stageState_t;
+
+typedef struct actMis_s
+{
+	mission_t  *def;
+	setState_t *cause;
+	date_t	expire;
+	vec2_t	realPos;
+} actMis_t;
 
 typedef struct campaign_s
 {
@@ -696,40 +806,262 @@ typedef struct campaign_s
 	char	team[MAX_VAR];
 	char	equipment[MAX_VAR];
 	char	market[MAX_VAR];
+	char	firststage[MAX_VAR];
 	int		soldiers;
 	int		credits;
 	int		num;
-	byte	mission[MAX_MISSIONS];
-	byte	required[MAX_MISSIONS][MAX_REQMISSIONS];
+	date_t	date;
 	qboolean	finished;
 } campaign_t;
 
+typedef struct mapline_s
+{
+	int    n;
+	float  dist;
+	vec2_t p[LINE_MAXPTS];
+} mapline_t;
+
+typedef struct aircraft_s
+{
+	char	name[MAX_VAR];
+	int		type;
+	int		home;
+	int		status;
+	vec2_t	pos;
+	int		point;
+	int		time;
+	mapline_t route;
+} aircraft_t;
+
+typedef struct ccs_s
+{
+	equipDef_t		eCampaign, eMission, eMarket;
+
+	stageState_t	stage[MAX_STAGES];
+	setState_t		set[MAX_STAGESETS];
+	actMis_t		mission[MAX_ACTMISSIONS];
+	int		numMissions;
+
+	aircraft_t		air[MAX_AIRCRAFT];
+	int		numAir;
+
+	int		credits;
+	int		reward;
+	date_t	date;
+	float	timer;
+
+	vec2_t	center;
+	float	zoom;
+
+	//basemanagement
+	vec2_t	basecenter;
+	float	basezoom;
+	vec2_t	baseField;
+} ccs_t;
+
+typedef enum mapAction_s
+{
+	MA_NONE,
+	MA_NEWBASE
+} mapAction_t;
+
+typedef enum aircraftStatus_s
+{
+	AIR_NONE,
+	AIR_HOME,
+	AIR_IDLE,
+	AIR_TRANSIT,
+	AIR_DROP,
+	AIR_INTERCEPT
+} aircraftStatus_t;
+
 extern	mission_t	missions[MAX_MISSIONS];
 extern	int			numMissions;
-extern	int			selMission;
+extern	actMis_t	*selMis;
 
 extern	campaign_t	campaigns[MAX_CAMPAIGNS];
 extern	int			numCampaigns;
 
-extern	byte		actMis[MAX_ACTMISSIONS];
-extern	int			numActMis;
+extern	stageSet_t	stageSets[MAX_STAGESETS];
+extern	stage_t		stages[MAX_STAGES];
+extern	int			numStageSets;
+extern	int			numStages;
 
 extern	campaign_t	*curCampaign;
-extern	equipDef_t	cEquip;
-extern	equipDef_t	mEquip;
+extern	ccs_t		ccs;
 
-extern	int			cReward;
+extern	int			mapAction;
 
-void CL_MapClick( int x, int y );
+qboolean CL_MapIsNight( vec2_t pos );
 void CL_ResetCampaign( void );
+void CL_DateConvert( date_t *date, int *day, int *month );
+void CL_CampaignRun( void );
+void CL_GameTimeStop( void );
+void CL_NewBase( vec2_t pos );
 void CL_ParseMission( char *name, char **text );
+void CL_ParseStage( char *name, char **text );
 void CL_ParseCampaign( char *name, char **text );
+
+//
+// cl_basemanagment.c
+//
+#define MAX_LIST_CHAR		1024
+#define MAX_BUILDINGS		256
+#define MAX_PRODUCTIONS		256
+#define MAX_BASES		6
+#define MAX_DESC		256
+
+#define BUILDINGCONDITION	100
+
+#define SCROLLSPEED		1000
+
+// this is not best - but better than hardcoded every time i used it
+#define RELEVANT_X		154
+#define RELEVANT_Y		88
+
+#define BASE_SIZE		5
+#define MAX_BASE_LEVELS		1
+
+//FIXME: Take the values from scriptfile
+#define BASEMAP_SIZE_X		778
+#define BASEMAP_SIZE_Y		672
+
+// allocate memory for menuText[TEXT_STANDARD] contained the information about a building
+char	buildingText[MAX_LIST_CHAR];
+
+typedef enum
+{
+	BASE_NOT_USED,
+	BASE_UNDER_ATTACK,
+	BASE_WORKING,
+} baseStatus_t;
+
+typedef enum
+{
+	B_NOT_SET,
+	B_UNDER_CONSTRUCTION,
+	B_CONSTRUCTION_FINISHED,
+	B_UPGRADE,
+	B_WORKING_120,
+	B_WORKING_100,
+	B_WORKING_50,
+	B_MAINTENANCE,
+	B_REPAIRING,
+	B_DOWN
+} buildingStatus_t;
+
+typedef struct building_s
+{
+	char    name[MAX_VAR];
+	char    base[MAX_VAR];
+	char	title[MAX_VAR];
+	char    *text, *image, *needs, *depends, *mapPart, *produceType, *pedia;
+	float   energy, workerCosts, produceTime, fixCosts, varCosts;
+	int     production, level, id, timeStart, buildTime, techLevel, notUpOn, maxWorkers, minWorkers, addWorkers;
+	
+	//if we can build more than one building of the same type:
+	buildingStatus_t	buildingStatus[BASE_SIZE*BASE_SIZE];
+	int	condition[BASE_SIZE*BASE_SIZE]; 
+	
+	vec2_t  size;
+	int	visible;
+	int	used;
+	
+	//more than one building of the same type allowed?
+	int	moreThanOne;
+	
+	//how many buildings are there of the same type?
+	//depends one the set of moreThanOne ^^
+	int	howManyOfThisType;
+	
+	struct  building_s *dependsBuilding;
+	struct  building_s *prev;
+	struct  building_s *next;
+} building_t;
+
+typedef struct base_s
+{
+	char    title[MAX_VAR];
+	int	map[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
+
+	qboolean founded;
+	vec2_t pos;
+
+	//this is here to allocate the needed memory for the buildinglist
+	char	allBuildingsList[MAX_LIST_CHAR];
+	
+	int	buildingListArray[MAX_BUILDINGS];
+	int	numList;
+	
+	int	posX[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
+	int	posY[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
+	
+	//FIXME: change building condition to base condition 
+	float	condition;
+	
+	baseStatus_t	baseStatus;
+	
+	// which level to display?
+	int	baseLevel;
+	
+	// needed if there is another buildingpart to build
+	struct  building_s *buildingToBuild;
+	
+	struct  building_s *buildingCurrent;
+} base_t;
+
+typedef struct production_s
+{
+	char    name[MAX_VAR];
+	char    title[MAX_VAR];
+	char    *text;
+	int	amount;
+
+	struct  production_s *prev;
+	struct  production_s *next;
+} production_t;
+
+extern	int		numBases;
+extern	base_t	bmBases[MAX_BASES];
+extern	base_t	*baseCurrent;
+
+// needed to calculate the chosen building in cl_menu.c
+int picWidth, picHeight;
+
+void MN_BuildNewBase( vec2_t pos );
+void MN_NewBases( void );
+void MN_SaveBases( sizebuf_t *sb );
+void MN_LoadBases( sizebuf_t *sb );
+void MN_ResetBasemanagement( void );
+void MN_ParseBuildings( char *title, char **text );
+void MN_ParseBases( char *title, char **text );
+void MN_ParseProductions( char *title, char **text );
+void MN_BuildingInit( void );
+void B_AssembleMap( void );
+void B_BaseAttack ( void );
+void MN_GetMaps_f ( void );
+void CL_ListMaps_f ( void );
+void MN_NextMap ( void );
+void MN_PrevMap ( void );
 
 //
 // cl_menu.c
 //
-int  MN_CursorOnMenu( int x, int y );
+#define MAX_MENUTEXTS		8
+
+typedef enum 
+{
+	TEXT_STANDARD,
+	TEXT_LIST,
+	TEXT_UFOPEDIA,
+	TEXT_BUILDINGS,
+	TEXT_BUILDING_INFO
+} texts_t;
+
+qboolean MN_CursorOnMenu( int x, int y );
 void MN_Click( int x, int y );
+void MN_RightClick( int x, int y );
+void MN_MiddleClick( int x, int y );
 void MN_SetViewRect( void );
 void MN_Command( void );
 void MN_DrawMenus( void );
@@ -743,7 +1075,7 @@ void MN_PopMenu( qboolean all );
 
 extern int numMenus;
 extern inventory_t *menuInventory;
-extern char *menuText;
+extern char *menuText[MAX_MENUTEXTS];
 
 //
 // cl_particle.c
@@ -753,7 +1085,7 @@ void CL_ResetParticles( void );
 void CL_ParticleRun( void );
 void CL_RunMapParticles( void );
 void CL_ParseParticle( char *name, char **text );
-ptl_t *CL_ParticleSpawn( char *name, vec3_t s, vec3_t v, vec3_t a );
+ptl_t *CL_ParticleSpawn( char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a );
 
 extern ptlArt_t		ptlArt[MAX_PTL_ART];
 extern ptl_t		ptl[MAX_PTLS];
@@ -781,6 +1113,9 @@ void CL_Events (void);
 //
 // cl_view.c
 //
+extern sun_t	map_sun;
+extern int		map_maxlevel;
+
 void V_Init (void);
 void V_RenderView( float stereo_separation );
 void V_AddEntity (entity_t *ent);
@@ -788,6 +1123,7 @@ void V_AddParticle (vec3_t org, int color, float alpha);
 void V_AddLight (vec3_t org, float intensity, float r, float g, float b);
 void V_AddLightStyle (int style, float r, float g, float b);
 entity_t *V_GetEntity( void );
+void V_CenterView( pos3_t pos );
 
 //
 // cl_sequence.c
@@ -845,3 +1181,6 @@ void x86_TimerStop( void );
 void x86_TimerInit( unsigned long smallest, unsigned longest );
 unsigned long *x86_TimerGetHistogram( void );
 #endif
+
+#endif
+
