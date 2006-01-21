@@ -287,7 +287,7 @@ void Q_getwd (char *out)
    _getcwd (out, 256);
    strcat (out, "\\");
 #else
-   getcwd (out);
+   getcwd( out, 256 );
    strcat (out, "/");
 #endif
 }
