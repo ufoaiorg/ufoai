@@ -27,7 +27,7 @@ void CalcTextureReflectivity (void)
 	byte			*palette;
 	char			path[1024];
 
-	sprintf (path, "%spics/colormap.pcx", gamedir);
+	sprintf (path, "%sbase/pics/colormap.pcx", gamedir);
 
 	// get the game palette
 	Load256Image (path, NULL, &palette, NULL, NULL);

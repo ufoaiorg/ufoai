@@ -105,7 +105,7 @@ void Error (char *error, ...)
 	va_end (argptr);
 
 	sprintf (text2, "%s\nGetLastError() = %i", text, err);
-    MessageBox(NULL, text2, "Error", 0 /* MB_OK */ );
+        MessageBox(NULL, text2, "Error", 0 /* MB_OK */ );
 
 	exit (1);
 }
@@ -287,7 +287,7 @@ void Q_getwd (char *out)
    _getcwd (out, 256);
    strcat (out, "\\");
 #else
-   getwd (out);
+   getcwd (out);
    strcat (out, "/");
 #endif
 }
