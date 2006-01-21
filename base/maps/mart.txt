@@ -1,0 +1,19 @@
+"Supermarket" Version 1.0 (Released 2/20/05) - a map for UFO:AI by Drew Babkirk (Druterium)
+
+1. Make sure to back up your campaign.ufo and campaign.hard files before unzipping!
+
+2. Unzip to your main UFO:AI directory.
+
+3. After this, simply go into the game and start a new game. My map will be the first one in the campaign now! 
+
+Please send all feedback to druterium@yahoo.com or post it on the forums!
+
+File List:
+
+/base/maps/mart01n.bsp
+/base/textures/exterior/ext_*.jpg
+/base/textures/interior/int_*.jpg
+/base/ufos/campaign.hard
+/base/ufos/campaign.ufo
+
+FINAL NOTE: Please keep in mind that the .ufo campaign files included in this .ZIP will only work for the Christmas Special Edition.
