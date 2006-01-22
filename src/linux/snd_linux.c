@@ -33,7 +33,7 @@ cvar_t *sound_system;
 
 qboolean SNDDMA_Init(void)
 {
-	sound_system = Cvar_Get("sndsystem", "0", 0);
+	sound_system = Cvar_Get("sndsystem", "2", 0);
 	switch ( (int)sound_system->value )
 	{
 		case 0:
@@ -54,8 +54,8 @@ qboolean SNDDMA_Init(void)
 #endif
 		default:
 			Com_Printf("Unknown soundsystem '%i'\n", (int)sound_system->value );
-			Com_Printf("CVar sndsystem: 0=>OSS, 1=>SDL, 2=>ALSA\n");
-			sound_system->value = 0;
+			Com_Printf("CVar sndsystem: 0=>OSS, 1=>SDL, 2=>ALSA (default)\n");
+			sound_system->value = 2;
 			return OSS_SNDDMA_Init();
 	}
 }
