@@ -1,0 +1,11 @@
+// ==================
+// TRANSFER MENU
+// ==================
+
+menu transfer
+{
+
+	func init
+	{
+	}
+}
