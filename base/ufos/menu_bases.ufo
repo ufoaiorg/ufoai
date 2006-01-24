@@ -127,7 +127,7 @@ menu bases
 		mousefx true
 		click
 		{
-			cmd "mn_push equip"
+			cmd "mn_push equipment"
 		}
 		out		{ *equip texl "15 271" *equip texh "226 320" }
 		in		{ *equip texl "239 271" *equip texh "447 320" }
