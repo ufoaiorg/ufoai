@@ -42,6 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cdaudio.h"
 #include "cl_basemanagement.h"
 #include "cl_ufopedia.h"
+#include "cl_research.h"
 
 //=============================================================================
 

@@ -28,10 +28,12 @@ OSTYPE := $(shell uname -s)
 
 ifneq ($(OSTYPE),Linux)
 	ifneq ($(OSTYPE),FreeBSD)
-		ifeq ($(OSTYPE),SunOS)
-			$(error OS $(OSTYPE) detected, use "Makefile.Solaris" instead.)
-		else
-			$(error OS $(OSTYPE) is currently not supported)
+		ifneq ($(OSTYPE),Darwin)
+			ifeq ($(OSTYPE),SunOS)
+				$(error OS $(OSTYPE) detected, use "Makefile.Solaris" instead.)
+			else
+				$(error OS $(OSTYPE) is currently not supported)
+			endif
 		endif
 	endif
 endif
@@ -43,9 +45,11 @@ ARCH := $(shell uname -m | sed -e s/i.86/i386/ -e s/sun4u/sparc/ -e s/sparc64/sp
 ifneq ($(ARCH),x86_64)
 	ifneq ($(ARCH),i386)
 		ifneq ($(ARCH),axp)
-			ifneq ($(ARCH),ppc)
-				ifneq ($(ARCH),sparc)
-					$(error arch $(ARCH) is currently not supported)
+			ifneq ($(OSTYPE),ppc)
+				ifneq ($(OSTYPE),Darwin)
+					ifneq ($(ARCH),sparc)
+						$(error arch $(ARCH) is currently not supported)
+					endif
 				endif
 			endif
 		endif
@@ -94,6 +98,10 @@ endif
 
 ifeq ($(OSTYPE),Linux)
 	LDFLAGS=-ldl -lm -lvorbisfile -lvorbis -lasound -ljpeg
+endif
+
+ifeq ($(OSTYPE),Darwin)
+	LDFLAGS=-ldl -lm -lvorbisfile -lvorbis -lasound -ljpeg -llibintl
 endif
 
 ifeq ($(strip $(BUILD_SDLUFO)),YES)
@@ -226,6 +234,7 @@ targets: $(TARGETS)
 QUAKE2_OBJS = \
 	$(BUILDDIR)/client/cl_actor.o \
 	$(BUILDDIR)/client/cl_basemanagement.o \
+	$(BUILDDIR)/client/cl_research.o \
 	$(BUILDDIR)/client/cl_campaign.o \
 	$(BUILDDIR)/client/cl_cin.o \
 	$(BUILDDIR)/client/cl_fx.o \
@@ -303,6 +312,9 @@ $(BUILDDIR)/client/cl_campaign.o : $(CLIENT_DIR)/cl_campaign.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_basemanagement.o : $(CLIENT_DIR)/cl_basemanagement.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cl_research.o : $(CLIENT_DIR)/cl_research.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_cin.o :     $(CLIENT_DIR)/cl_cin.c
