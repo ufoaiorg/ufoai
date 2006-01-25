@@ -1913,6 +1913,7 @@ void MN_ResetMenus( void )
 	// reset ufopedia & basemanagement
 	MN_ResetUfopedia();
 	MN_ResetBaseManagement();
+	MN_ResetResearch();
 }
 
 /*
