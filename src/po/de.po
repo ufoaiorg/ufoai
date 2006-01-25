@@ -201,3 +201,6 @@ msgstr "%s kontrolliert nun Team %i\n"
 
 msgid "Item '%s' not allowed and removed from inventory.\n"
 msgstr "Objekt '%s' ist nicht erlaubt - entferne es daher\n"
+
+msgid "Unknown - need to research this"
+msgstr "Unbekannt - muss noch erforscht werden"
