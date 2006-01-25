@@ -4,5 +4,711 @@
 
 menu research
 {
+	// ==================
+	// don't render
+	// ==================
 
+	zone render
+	{
+		invis true
+	}	
+	
+	// ==================
+	// background
+	// ==================
+	
+	pic back_ul
+	{
+		image	menu/research_ul
+		pos		"0 0"
+	}	
+		
+	pic back_ur
+	{
+		image	menu/research_ur
+		pos		"512 0"
+	}	
+		
+	pic back_ll
+	{
+		image	menu/research_ll
+		pos		"0 512"
+	}	
+		
+	pic back_lr
+	{
+		image	menu/research_lr
+		pos		"512 512"
+	}
+
+	// ==================
+	// list
+	// ==================
+	
+	func research_clear
+	{
+		*txt_item0 color "0 .78 0 1"
+		*txt_item1 color "0 .78 0 1"
+		*txt_item2 color "0 .78 0 1"
+		*txt_item3 color "0 .78 0 1"
+		*txt_item4 color "0 .78 0 1"
+		*txt_item5 color "0 .78 0 1"
+		*txt_item6 color "0 .78 0 1"
+		*txt_item7 color "0 .78 0 1"
+		*txt_item8 color "0 .78 0 1"
+		*txt_item9 color "0 .78 0 1"
+		*txt_item10 color "0 .78 0 1"
+		*txt_item11 color "0 .78 0 1"
+		*txt_item12 color "0 .78 0 1"
+		*txt_item13 color "0 .78 0 1"
+		*txt_item14 color "0 .78 0 1"
+		*txt_item15 color "0 .78 0 1"
+		*txt_item16 color "0 .78 0 1"
+		*txt_item17 color "0 .78 0 1"
+		*txt_item18 color "0 .78 0 1"
+		*txt_item19 color "0 .78 0 1"
+		*txt_item20 color "0 .78 0 1"
+		*txt_item21 color "0 .78 0 1"
+		*txt_item22 color "0 .78 0 1"
+		*txt_item23 color "0 .78 0 1"
+		*txt_item24 color "0 .78 0 1"
+		*txt_item25 color "0 .78 0 1"
+		*txt_item26 color "0 .78 0 1"
+		*txt_item27 color "0 .78 0 1"
+	}
+	
+	confunc researchselect0  { research_clear *txt_item0  color "1 1 1 1" }
+	confunc researchselect1  { research_clear *txt_item1  color "1 1 1 1" }
+	confunc researchselect2  { research_clear *txt_item2  color "1 1 1 1" }
+	confunc researchselect3  { research_clear *txt_item3  color "1 1 1 1" }
+	confunc researchselect4  { research_clear *txt_item4  color "1 1 1 1" }
+	confunc researchselect5  { research_clear *txt_item5  color "1 1 1 1" }
+	confunc researchselect6  { research_clear *txt_item6  color "1 1 1 1" }
+	confunc researchselect7  { research_clear *txt_item7  color "1 1 1 1" }
+	confunc researchselect8  { research_clear *txt_item8  color "1 1 1 1" }
+	confunc researchselect9  { research_clear *txt_item9  color "1 1 1 1" }
+	confunc researchselect10 { research_clear *txt_item10 color "1 1 1 1" }
+	confunc researchselect11 { research_clear *txt_item11 color "1 1 1 1" }
+	confunc researchselect12 { research_clear *txt_item12 color "1 1 1 1" }
+	confunc researchselect13 { research_clear *txt_item13 color "1 1 1 1" }
+	confunc researchselect14 { research_clear *txt_item14 color "1 1 1 1" }
+	confunc researchselect15 { research_clear *txt_item15 color "1 1 1 1" }
+	confunc researchselect16 { research_clear *txt_item16 color "1 1 1 1" }
+	confunc researchselect17 { research_clear *txt_item17 color "1 1 1 1" }
+	confunc researchselect18 { research_clear *txt_item18 color "1 1 1 1" }
+	confunc researchselect19 { research_clear *txt_item19 color "1 1 1 1" }
+	confunc researchselect20 { research_clear *txt_item20 color "1 1 1 1" }
+	confunc researchselect21 { research_clear *txt_item21 color "1 1 1 1" }
+	confunc researchselect22 { research_clear *txt_item22 color "1 1 1 1" }
+	confunc researchselect23 { research_clear *txt_item23 color "1 1 1 1" }
+	confunc researchselect24 { research_clear *txt_item24 color "1 1 1 1" }
+	confunc researchselect25 { research_clear *txt_item25 color "1 1 1 1" }
+	confunc researchselect26 { research_clear *txt_item26 color "1 1 1 1" }
+	confunc researchselect27 { research_clear *txt_item27 color "1 1 1 1" }
+	
+	string txt_item0	{ string "*cvar mn_item0"		pos "50 40"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 0" } }
+	string txt_storge0	{ string "*cvar mn_storage0"	pos "345 40"	color "0 .78 0 1" }
+	string txt_supply0	{ string "*cvar mn_supply0"		pos "440 40"	color "0 .78 0 1"	align ur }
+	string txt_price0	{ string "*cvar mn_price0"		pos "540 40"	color "0 .78 0 1"	align ur }
+	
+	string txt_item1	{ string "*cvar mn_item1"		pos "50 65"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 1" } }
+	string txt_storge1	{ string "*cvar mn_storage1"	pos "345 65"	color "0 .78 0 1" }
+	string txt_supply1	{ string "*cvar mn_supply1"		pos "440 65"	color "0 .78 0 1"	align ur }
+	string txt_price1	{ string "*cvar mn_price1"		pos "540 65"	color "0 .78 0 1"	align ur }
+	
+	string txt_item2	{ string "*cvar mn_item2"		pos "50 90"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 2" } }
+	string txt_storge2	{ string "*cvar mn_storage2"	pos "345 90"	color "0 .78 0 1" }
+	string txt_supply2	{ string "*cvar mn_supply2"		pos "440 90"	color "0 .78 0 1"	align ur }
+	string txt_price2	{ string "*cvar mn_price2"		pos "540 90"	color "0 .78 0 1"	align ur }
+	
+	string txt_item3	{ string "*cvar mn_item3"		pos "50 115"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 3" } }
+	string txt_storge3	{ string "*cvar mn_storage3"	pos "345 115"	color "0 .78 0 1" }
+	string txt_supply3	{ string "*cvar mn_supply3"		pos "440 115"	color "0 .78 0 1"	align ur }
+	string txt_price3	{ string "*cvar mn_price3"		pos "540 115"	color "0 .78 0 1"	align ur }
+	
+	string txt_item4	{ string "*cvar mn_item4"		pos "50 140"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 4" } }
+	string txt_storge4	{ string "*cvar mn_storage4"	pos "345 140"	color "0 .78 0 1" }
+	string txt_supply4	{ string "*cvar mn_supply4"		pos "440 140"	color "0 .78 0 1"	align ur }
+	string txt_price4	{ string "*cvar mn_price4"		pos "540 140"	color "0 .78 0 1"	align ur }
+	
+	string txt_item5	{ string "*cvar mn_item5"		pos "50 165"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 5" } }
+	string txt_storge5	{ string "*cvar mn_storage5"	pos "345 165"	color "0 .78 0 1" }
+	string txt_supply5	{ string "*cvar mn_supply5"		pos "440 165"	color "0 .78 0 1"	align ur }
+	string txt_price5	{ string "*cvar mn_price5"		pos "540 165"	color "0 .78 0 1"	align ur }
+	
+	string txt_item6	{ string "*cvar mn_item6"		pos "50 190"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 6" } }
+	string txt_storge6	{ string "*cvar mn_storage6"	pos "345 190"	color "0 .78 0 1" }
+	string txt_supply6	{ string "*cvar mn_supply6"		pos "440 190"	color "0 .78 0 1"	align ur }
+	string txt_price6	{ string "*cvar mn_price6"		pos "540 190"	color "0 .78 0 1"	align ur }
+	
+	string txt_item7	{ string "*cvar mn_item7"		pos "50 215"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 7" } }
+	string txt_storge7	{ string "*cvar mn_storage7"	pos "345 215"	color "0 .78 0 1" }
+	string txt_supply7	{ string "*cvar mn_supply7"		pos "440 215"	color "0 .78 0 1"	align ur }
+	string txt_price7	{ string "*cvar mn_price7"		pos "540 215"	color "0 .78 0 1"	align ur }
+	
+	string txt_item8	{ string "*cvar mn_item8"		pos "50 240"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 8" } }
+	string txt_storge8	{ string "*cvar mn_storage8"	pos "345 240"	color "0 .78 0 1" }
+	string txt_supply8	{ string "*cvar mn_supply8"		pos "440 240"	color "0 .78 0 1"	align ur }
+	string txt_price8	{ string "*cvar mn_price8"		pos "540 240"	color "0 .78 0 1"	align ur }
+	
+	string txt_item9	{ string "*cvar mn_item9"		pos "50 265"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 9" } }
+	string txt_storge9	{ string "*cvar mn_storage9"	pos "345 265"	color "0 .78 0 1" }
+	string txt_supply9	{ string "*cvar mn_supply9"		pos "440 265"	color "0 .78 0 1"	align ur }
+	string txt_price9	{ string "*cvar mn_price9"		pos "540 265"	color "0 .78 0 1"	align ur }
+	
+	string txt_item10	{ string "*cvar mn_item10"		pos "50 290"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 10" } }
+	string txt_storge10	{ string "*cvar mn_storage10"	pos "345 290"	color "0 .78 0 1" }
+	string txt_supply10	{ string "*cvar mn_supply10"	pos "440 290"	color "0 .78 0 1"	align ur }
+	string txt_price10	{ string "*cvar mn_price10"		pos "540 290"	color "0 .78 0 1"	align ur }
+	
+	string txt_item11	{ string "*cvar mn_item11"		pos "50 315"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 11" } }
+	string txt_storge11	{ string "*cvar mn_storage11"	pos "345 315"	color "0 .78 0 1" }
+	string txt_supply11	{ string "*cvar mn_supply11"	pos "440 315"	color "0 .78 0 1"	align ur }
+	string txt_price11	{ string "*cvar mn_price11"		pos "540 315"	color "0 .78 0 1"	align ur }
+	
+	string txt_item12	{ string "*cvar mn_item12"		pos "50 340"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 12" } }
+	string txt_storge12	{ string "*cvar mn_storage12"	pos "345 340"	color "0 .78 0 1" }
+	string txt_supply12	{ string "*cvar mn_supply12"	pos "440 340"	color "0 .78 0 1"	align ur }
+	string txt_price12	{ string "*cvar mn_price12"		pos "540 340"	color "0 .78 0 1"	align ur }
+	
+	string txt_item13	{ string "*cvar mn_item13"		pos "50 365"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 13" } }
+	string txt_storge13	{ string "*cvar mn_storage13"	pos "345 365"	color "0 .78 0 1" }
+	string txt_supply13	{ string "*cvar mn_supply13"	pos "440 365"	color "0 .78 0 1"	align ur }
+	string txt_price13	{ string "*cvar mn_price13"		pos "540 365"	color "0 .78 0 1"	align ur }
+	
+	string txt_item14	{ string "*cvar mn_item14"		pos "50 390"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 14" } }
+	string txt_storge14	{ string "*cvar mn_storage14"	pos "345 390"	color "0 .78 0 1" }
+	string txt_supply14	{ string "*cvar mn_supply14"	pos "440 390"	color "0 .78 0 1"	align ur }
+	string txt_price14	{ string "*cvar mn_price14"		pos "540 390"	color "0 .78 0 1"	align ur }
+	
+	string txt_item15	{ string "*cvar mn_item15"		pos "50 415"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 15" } }
+	string txt_storge15	{ string "*cvar mn_storage15"	pos "345 415"	color "0 .78 0 1" }
+	string txt_supply15	{ string "*cvar mn_supply15"	pos "440 415"	color "0 .78 0 1"	align ur }
+	string txt_price15	{ string "*cvar mn_price15"		pos "540 415"	color "0 .78 0 1"	align ur }
+	
+	string txt_item16	{ string "*cvar mn_item16"		pos "50 440"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 16" } }
+	string txt_storge16	{ string "*cvar mn_storage16"	pos "345 440"	color "0 .78 0 1" }
+	string txt_supply16	{ string "*cvar mn_supply16"	pos "440 440"	color "0 .78 0 1"	align ur }
+	string txt_price16	{ string "*cvar mn_price16"		pos "540 440"	color "0 .78 0 1"	align ur }
+	
+	string txt_item17	{ string "*cvar mn_item17"		pos "50 465"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 17" } }
+	string txt_storge17	{ string "*cvar mn_storage17"	pos "345 465"	color "0 .78 0 1" }
+	string txt_supply17	{ string "*cvar mn_supply17"	pos "440 465"	color "0 .78 0 1"	align ur }
+	string txt_price17	{ string "*cvar mn_price17"		pos "540 465"	color "0 .78 0 1"	align ur }
+	
+	string txt_item18	{ string "*cvar mn_item18"		pos "50 490"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 18" } }
+	string txt_storge18	{ string "*cvar mn_storage18"	pos "345 490"	color "0 .78 0 1" }
+	string txt_supply18	{ string "*cvar mn_supply18"	pos "440 490"	color "0 .78 0 1"	align ur }
+	string txt_price18	{ string "*cvar mn_price18"		pos "540 490"	color "0 .78 0 1"	align ur }
+	
+	string txt_item19	{ string "*cvar mn_item19"		pos "50 515"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 19" } }
+	string txt_storge19	{ string "*cvar mn_storage19"	pos "345 515"	color "0 .78 0 1" }
+	string txt_supply19	{ string "*cvar mn_supply19"	pos "440 515"	color "0 .78 0 1"	align ur }
+	string txt_price19	{ string "*cvar mn_price19"		pos "540 515"	color "0 .78 0 1"	align ur }
+	
+	string txt_item20	{ string "*cvar mn_item20"		pos "50 540"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 20" } }
+	string txt_storge20	{ string "*cvar mn_storage20"	pos "345 540"	color "0 .78 0 1" }
+	string txt_supply20	{ string "*cvar mn_supply20"	pos "440 540"	color "0 .78 0 1"	align ur }
+	string txt_price20	{ string "*cvar mn_price20"		pos "540 540"	color "0 .78 0 1"	align ur }
+	
+	string txt_item21	{ string "*cvar mn_item21"		pos "50 565"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 21" } }
+	string txt_storge21	{ string "*cvar mn_storage21"	pos "345 565"	color "0 .78 0 1" }
+	string txt_supply21	{ string "*cvar mn_supply21"	pos "440 565"	color "0 .78 0 1"	align ur }
+	string txt_price21	{ string "*cvar mn_price21"		pos "540 565"	color "0 .78 0 1"	align ur }
+	
+	string txt_item22	{ string "*cvar mn_item22"		pos "50 590"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 22" } }
+	string txt_storge22	{ string "*cvar mn_storage22"	pos "345 590"	color "0 .78 0 1" }
+	string txt_supply22	{ string "*cvar mn_supply22"	pos "440 590"	color "0 .78 0 1"	align ur }
+	string txt_price22	{ string "*cvar mn_price22"		pos "540 590"	color "0 .78 0 1"	align ur }
+	
+	string txt_item23	{ string "*cvar mn_item23"		pos "50 615"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 23" } }
+	string txt_storge23	{ string "*cvar mn_storage23"	pos "345 615"	color "0 .78 0 1" }
+	string txt_supply23	{ string "*cvar mn_supply23"	pos "440 615"	color "0 .78 0 1"	align ur }
+	string txt_price23	{ string "*cvar mn_price23"		pos "540 615"	color "0 .78 0 1"	align ur }
+	
+	string txt_item24	{ string "*cvar mn_item24"		pos "50 640"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 24" } }
+	string txt_storge24	{ string "*cvar mn_storage24"	pos "345 640"	color "0 .78 0 1" }
+	string txt_supply24	{ string "*cvar mn_supply24"	pos "440 640"	color "0 .78 0 1"	align ur }
+	string txt_price24	{ string "*cvar mn_price24"		pos "540 640"	color "0 .78 0 1"	align ur }
+	
+	string txt_item25	{ string "*cvar mn_item25"		pos "50 665"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 25" } }
+	string txt_storge25	{ string "*cvar mn_storage25"	pos "345 665"	color "0 .78 0 1" }
+	string txt_supply25	{ string "*cvar mn_supply25"	pos "440 665"	color "0 .78 0 1"	align ur }
+	string txt_price25	{ string "*cvar mn_price25"		pos "540 665"	color "0 .78 0 1"	align ur }
+	
+	string txt_item26	{ string "*cvar mn_item26"		pos "50 690"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 26" } }
+	string txt_storge26	{ string "*cvar mn_storage26"	pos "345 690"	color "0 .78 0 1" }
+	string txt_supply26	{ string "*cvar mn_supply26"	pos "440 690"	color "0 .78 0 1"	align ur }
+	string txt_price26	{ string "*cvar mn_price26"		pos "540 690"	color "0 .78 0 1"	align ur }
+	
+	string txt_item27	{ string "*cvar mn_item27"		pos "50 715"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 27" } }
+	string txt_storge27	{ string "*cvar mn_storage27"	pos "345 715"	color "0 .78 0 1" }
+	string txt_supply27	{ string "*cvar mn_supply27"	pos "440 715"	color "0 .78 0 1"	align ur }
+	string txt_price27	{ string "*cvar mn_price27"		pos "540 715"	color "0 .78 0 1"	align ur }
+	
+	// ==================
+	// research/sell buttons
+	// ==================
+	
+	pic bt_research0
+	{
+		image	menu/research_buttons1	
+		pos		"376 40"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 0" }
+	}
+	pic bt_sell0
+	{
+		image	menu/research_buttons1
+		pos		"392 40"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 0" }
+	}
+	pic bt_research1
+	{
+		image	menu/research_buttons1	
+		pos		"376 65"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 1" }
+	}
+	pic bt_sell1
+	{
+		image	menu/research_buttons1
+		pos		"392 65"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 1" }
+	}
+	pic bt_research2
+	{
+		image	menu/research_buttons1	
+		pos		"376 90"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 2" }
+	}
+	pic bt_sell2
+	{
+		image	menu/research_buttons1
+		pos		"392 90"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 2" }
+	}
+	pic bt_research3
+	{
+		image	menu/research_buttons1	
+		pos		"376 115"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 3" }
+	}
+	pic bt_sell3
+	{
+		image	menu/research_buttons1
+		pos		"392 115"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 3" }
+	}
+	pic bt_research4
+	{
+		image	menu/research_buttons1	
+		pos		"376 140"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 4" }
+	}
+	pic bt_sell4
+	{
+		image	menu/research_buttons1
+		pos		"392 140"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 4" }
+	}
+	pic bt_research5
+	{
+		image	menu/research_buttons1	
+		pos		"376 165"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 5" }
+	}
+	pic bt_sell5
+	{
+		image	menu/research_buttons1
+		pos		"392 165"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 5" }
+	}
+	pic bt_research6
+	{
+		image	menu/research_buttons1	
+		pos		"376 190"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 6" }
+	}
+	pic bt_sell6
+	{
+		image	menu/research_buttons1
+		pos		"392 190"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 6" }
+	}
+	pic bt_research7
+	{
+		image	menu/research_buttons1	
+		pos		"376 215"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 7" }
+	}
+	pic bt_sell7
+	{
+		image	menu/research_buttons1
+		pos		"392 215"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 7" }
+	}
+	pic bt_research8
+	{
+		image	menu/research_buttons1	
+		pos		"376 240"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 8" }
+	}
+	pic bt_sell8
+	{
+		image	menu/research_buttons1
+		pos		"392 240"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 8" }
+	}
+	pic bt_research9
+	{
+		image	menu/research_buttons1	
+		pos		"376 265"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 9" }
+	}
+	pic bt_sell9
+	{
+		image	menu/research_buttons1
+		pos		"392 265"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 9" }
+	}
+	pic bt_research10
+	{
+		image	menu/research_buttons1	
+		pos		"376 290"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 10" }
+	}
+	pic bt_sell10
+	{
+		image	menu/research_buttons1
+		pos		"392 290"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 10" }
+	}
+	pic bt_research11
+	{
+		image	menu/research_buttons1	
+		pos		"376 315"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 11" }
+	}
+	pic bt_sell11
+	{
+		image	menu/research_buttons1
+		pos		"392 315"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 11" }
+	}
+	pic bt_research12
+	{
+		image	menu/research_buttons1	
+		pos		"376 340"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 12" }
+	}
+	pic bt_sell12
+	{
+		image	menu/research_buttons1
+		pos		"392 340"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 12" }
+	}
+	pic bt_research13
+	{
+		image	menu/research_buttons1	
+		pos		"376 365"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 13" }
+	}
+	pic bt_sell13
+	{
+		image	menu/research_buttons1
+		pos		"392 365"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 13" }
+	}
+	pic bt_research14
+	{
+		image	menu/research_buttons1	
+		pos		"376 390"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 14" }
+	}
+	pic bt_sell14
+	{
+		image	menu/research_buttons1
+		pos		"392 390"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 14" }
+	}
+	pic bt_research15
+	{
+		image	menu/research_buttons1	
+		pos		"376 415"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 15" }
+	}
+	pic bt_sell15
+	{
+		image	menu/research_buttons1
+		pos		"392 415"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 15" }
+	}
+	pic bt_research16
+	{
+		image	menu/research_buttons1	
+		pos		"376 440"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 16" }
+	}
+	pic bt_sell16
+	{
+		image	menu/research_buttons1
+		pos		"392 440"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 16" }
+	}
+	pic bt_research17
+	{
+		image	menu/research_buttons1	
+		pos		"376 465"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 17" }
+	}
+	pic bt_sell17
+	{
+		image	menu/research_buttons1
+		pos		"392 465"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 17" }
+	}
+	pic bt_research18
+	{
+		image	menu/research_buttons1	
+		pos		"376 490"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 18" }
+	}
+	pic bt_sell18
+	{
+		image	menu/research_buttons1
+		pos		"392 490"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 18" }
+	}
+	pic bt_research19
+	{
+		image	menu/research_buttons1	
+		pos		"376 515"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 19" }
+	}
+	pic bt_sell19
+	{
+		image	menu/research_buttons1
+		pos		"392 515"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 19" }
+	}
+	pic bt_research20
+	{
+		image	menu/research_buttons1	
+		pos		"376 540"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 20" }
+	}
+	pic bt_sell20
+	{
+		image	menu/research_buttons1
+		pos		"392 540"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 20" }
+	}
+	pic bt_research21
+	{
+		image	menu/research_buttons1	
+		pos		"376 565"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 21" }
+	}
+	pic bt_sell21
+	{
+		image	menu/research_buttons1
+		pos		"392 565"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 21" }
+	}
+	pic bt_research22
+	{
+		image	menu/research_buttons1	
+		pos		"376 590"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 22" }
+	}
+	pic bt_sell22
+	{
+		image	menu/research_buttons1
+		pos		"392 590"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 22" }
+	}
+	pic bt_research23
+	{
+		image	menu/research_buttons1	
+		pos		"376 615"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 23" }
+	}
+	pic bt_sell23
+	{
+		image	menu/research_buttons1
+		pos		"392 615"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 23" }
+	}
+	pic bt_research24
+	{
+		image	menu/research_buttons1	
+		pos		"376 640"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 24" }
+	}
+	pic bt_sell24
+	{
+		image	menu/research_buttons1
+		pos		"392 640"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 24" }
+	}
+	pic bt_research25
+	{
+		image	menu/research_buttons1	
+		pos		"376 665"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 25" }
+	}
+	pic bt_sell25
+	{
+		image	menu/research_buttons1
+		pos		"392 665"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 25" }
+	}
+	pic bt_research26
+	{
+		image	menu/research_buttons1	
+		pos		"376 690"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 26" }
+	}
+	pic bt_sell26
+	{
+		image	menu/research_buttons1
+		pos		"392 690"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 26" }
+	}
+	pic bt_research27
+	{
+		image	menu/research_buttons1	
+		pos		"376 715"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_research 27" }
+	}
+	pic bt_sell27
+	{
+		image	menu/research_buttons1
+		pos		"392 715"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 27" }
+	}
+	
+	// ==================
+	// credits
+	// ==================
+	string txt_credits
+	{
+		string	"*cvar mn_credits"
+		pos		"944 80"
+		align	ur
+	}
+
+	// ==================
+	// buttons
+	// ==================
+	pic bt_continue
+	{
+		image	hud/buttons2
+		mousefx	true
+		pos		"940 686"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd mn_pop }
+	}	
+	
+	// ==================
+	// item description
+	// ==================
+	string itemname
+	{
+		string	"*cvar mn_itemname"
+		pos		"793 205"
+		align	uc
+	}
+	
+	item itemmodel
+	{
+		string	"*cvar mn_item"
+		pos		"793 288"
+		scale	"7 7 7"
+	}	
+	
+	item weaponmodel
+	{
+		string	"*cvar mn_weapon"
+		pos		"750 288"
+		scale	"7 7 7"
+	}	
+	
+	item ammomodel
+	{
+		string	"*cvar mn_ammo"
+		pos		"930 288"
+		scale	"7 7 7"
+	}	
+	
+	text description
+	{
+		pos		"630 357"
+		size	"326 200"
+		format	"20 0"
+	}
+	
+	// ==================
+	// init
+	// ==================
+	func init
+	{
+		cmd research_init;
+	}
 }
