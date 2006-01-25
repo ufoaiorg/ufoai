@@ -201,7 +201,7 @@ void CL_ChangeSkinCmd( void )
 			}
 
 		Cvar_SetValue( "mn_skin", newSkin );
-		Cvar_Set( "mn_skinname", teamSkinNames[newSkin] );
+		Cvar_Set( "mn_skinname", _(teamSkinNames[newSkin]) );
 	}
 }
 
@@ -265,13 +265,18 @@ void CL_ItemDescription( int item )
 	}*/
 
 	// set description text
-//	if ( od->link != NONE )
+	if ( ! od->researchNeeded || od->researchDone )
 	{
 		sprintf( itemText, va( _("Primary:\t%s\nSecondary:\t%s\nDamage:\t%i / %i\nTime units:\t%i / %i\nRange:\t%1.1f / %1.1f\nSpreads:\t%1.1f / %1.1f\nAmmo:\t%i\n"),
 			od->fd[0].name, od->fd[1].name, (int)(od->fd[0].damage[0] * od->fd[0].shots + od->fd[0].spldmg[0]), (int)(od->fd[1].damage[0] * od->fd[1].shots + od->fd[0].spldmg[0]),
 			(od->fd[0].time), (od->fd[1].time), (od->fd[0].range / 32.0), (od->fd[1].range / 32.0),
 			(od->fd[0].spread[0] + od->fd[0].spread[1])/2, (od->fd[1].spread[0] + od->fd[1].spread[1])/2, (int)(od->ammo)
 		) );
+		menuText[TEXT_STANDARD] = itemText;
+	}
+	else if ( od->researchNeeded )
+	{
+		sprintf( itemText, _("Unknown - need to research this") );
 		menuText[TEXT_STANDARD] = itemText;
 	}
 //	else menuText[TEXT_STANDARD] = NULL;
