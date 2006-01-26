@@ -841,7 +841,7 @@ menu physdata
 	bar exp_bar    { pos "486 408" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
 	
 	// ==================
-	// health and moral
+	// health and morale
 	// ==================
 	
 	string hp_val
@@ -857,13 +857,13 @@ menu physdata
 		size	"324 32"
 	}
 	
-	string moral_val
+	string morale_val
 	{
-		string	"*cvar mn_moral"
+		string	"*cvar mn_morale"
 		pos		"696 512"
 		align	uc
 	}
-	pic ekg_moral
+	pic ekg_morale
 	{
 		image	hud/phys_mor_noclamp
 		pos		"334 504"

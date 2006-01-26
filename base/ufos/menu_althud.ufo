@@ -603,7 +603,7 @@ menu althud
 	}
 	string str_crg
 	{
-		string	"*cvar mn_moral"
+		string	"*cvar mn_morale"
 		pos		"959 369"
 		align	uc
 	}
@@ -648,13 +648,13 @@ menu althud
 		align	uc
 	}
 	
-	bar moral
+	bar morale
 	{
 		pos		"886 340"
 		size	"120 4"
 		color	".7 .7 0 1"
-		current	"*cvar mn_moral"
-		max		"*cvar mn_moralmax"
+		current	"*cvar mn_morale"
+		max		"*cvar mn_moralemax"
 		align	uc
 	}	
 
