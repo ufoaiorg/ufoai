@@ -44,7 +44,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <time.h>
 
 // i18n support via gettext
+#ifdef MACOS_X
+#include <intl/libintl.h>
+#else
 #include <libintl.h>
+#endif
+
 #include <locale.h>
 #define _(String) gettext(String)
 #define gettext_noop(String) String
@@ -837,7 +842,7 @@ typedef struct objDef_s
 	// armor specific
 	short	protection[MAX_DAMAGETYPES];
 	short	hardness[MAX_DAMAGETYPES];
-	
+
 	// research
 	int researchNeeded; // all alien weapons need this
 	int researchDone; // set to one if researched
