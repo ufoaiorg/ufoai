@@ -374,6 +374,16 @@ menu hud
 	confunc towsls { bt_weapon_clear *bt_sfire_left   image hud/buttons1a }
 	confunc towsrs { bt_weapon_clear *bt_sfire_right  image hud/buttons1a }
 
+	confunc deselpl { *bt_pfire_left   image hud/buttons1 }
+	confunc deselpr { *bt_pfire_right  image hud/buttons1 }
+	confunc deselsl { *bt_sfire_left   image hud/buttons1 }
+	confunc deselsr { *bt_sfire_right  image hud/buttons1 }
+
+	confunc displ { *bt_pfire_left   image hud/buttons1g }
+	confunc dispr { *bt_pfire_right  image hud/buttons1g }
+	confunc dissl { *bt_sfire_left   image hud/buttons1g }
+	confunc dissr { *bt_sfire_right  image hud/buttons1g }
+
 	pic bt_pfire_right
 	{
 		mousefx true

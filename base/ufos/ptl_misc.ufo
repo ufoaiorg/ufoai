@@ -318,7 +318,18 @@ particle blood
 	think { kill }
 }
 
-particle tracer
+particle inRangeTracer
+{
+	init
+	{
+		blend  blend
+		style  line
+		color  "0 1 0 1"
+		life   0.0001
+	}
+}
+
+particle longRangeTracer
 {
 	init
 	{

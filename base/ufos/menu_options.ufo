@@ -485,27 +485,27 @@ menu options_game
 		click	{ }
 	}
 
-        // ===================
-        // NAME
-        // ===================
-        string current_name
-        {
-                string  "Name:"
-                pos     "500 420"
-        }
-        pic slot_hostname
-        {
-                image   menu/save_slot
-                pos     "500 440"
-                mousefx true
-                click   { cmd "msgmenu ?name" *txt_name color "1 1 1 1" *txt_name mousefx true }
-        }
-        string txt_name
-        {
-                string "*cvar name"
-                pos "510 449"
-                color "0 .78 0 1"
-        }
-        confunc name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
+	// ===================
+	// NAME
+	// ===================
+	string current_name
+	{
+			string  "Name:"
+			pos     "500 420"
+	}
+	pic slot_hostname
+	{
+			image   menu/save_slot
+			pos     "500 440"
+			mousefx true
+			click   { cmd "msgmenu ?name" *txt_name color "1 1 1 1" *txt_name mousefx true }
+	}
+	string txt_name
+	{
+			string "*cvar name"
+			pos "510 449"
+			color "0 .78 0 1"
+	}
+	confunc name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
 
 }
