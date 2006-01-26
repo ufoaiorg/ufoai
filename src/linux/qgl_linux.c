@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 
 See the GNU General Public License for more details.
 
@@ -208,7 +208,7 @@ void ( APIENTRY * qglLightModelf )(GLenum pname, GLfloat param);
 void ( APIENTRY * qglLightModelfv )(GLenum pname, const GLfloat *params);
 void ( APIENTRY * qglLightModeli )(GLenum pname, GLint param);
 void ( APIENTRY * qglLightModeliv )(GLenum pname, const GLint *params);
-void ( APIENTRY * qglLightf )(GLenum light, GLenum pname, GLfloat param);
+void ( APIENTRY * qglLightf )(GLenum light, GLenum pname, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 void ( APIENTRY * qglLightfv )(GLenum light, GLenum pname, const GLfloat *params);
 void ( APIENTRY * qglLighti )(GLenum light, GLenum pname, GLint param);
 void ( APIENTRY * qglLightiv )(GLenum light, GLenum pname, const GLint *params);
@@ -3013,12 +3013,12 @@ void *qwglGetProcAddress(char *symbol)
 /*
 ** QGL_Init
 **
-** This is responsible for binding our qgl function pointers to
-** the appropriate GL stuff.  In Windows this means doing a
+** This is responsible for binding our qgl function pointers to 
+** the appropriate GL stuff.  In Windows this means doing a 
 ** LoadLibrary and a bunch of calls to GetProcAddress.  On other
 ** operating systems we need to do the right thing, whatever that
 ** might be.
-**
+** 
 */
 
 qboolean QGL_Init( const char *dllname )
@@ -3040,7 +3040,7 @@ qboolean QGL_Init( const char *dllname )
 		char	fn[MAX_OSPATH];
 		FILE *fp;
 
-//		ri.Con_Printf(PRINT_ALL, "QGL_Init: Can't load %s from /etc/ld.so.conf: %s\n",
+//		ri.Con_Printf(PRINT_ALL, "QGL_Init: Can't load %s from /etc/ld.so.conf: %s\n", 
 //				dllname, dlerror());
 
 		// try path in /etc/ufo.conf
@@ -3055,7 +3055,7 @@ qboolean QGL_Init( const char *dllname )
 			while (*fn && isspace(fn[strlen(fn) - 1]))
 			fn[strlen(fn) - 1] = 0;
 		}
-
+	
 		strcat(fn, "/");
 		strcat(fn, dllname);
 
@@ -3444,7 +3444,7 @@ void GLimp_EnableLogging( qboolean enable )
 
 			asctime( newtime );
 
-			Com_sprintf( buffer, sizeof(buffer), "%s/gl.log", ri.FS_Gamedir() );
+			Com_sprintf( buffer, sizeof(buffer), "%s/gl.log", ri.FS_Gamedir() ); 
 			glw_state.log_fp = fopen( buffer, "wt" );
 
 			fprintf( glw_state.log_fp, "%s\n", asctime( newtime ) );

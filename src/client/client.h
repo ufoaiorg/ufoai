@@ -546,7 +546,7 @@ typedef struct le_s {
 	int 		dir;
 
 	int 		TU, maxTU;
-	int 		moral, maxMoral;
+	int 		morale, maxMorale;
 	int 		HP, maxHP;
 	int 		state;
 

@@ -439,7 +439,7 @@ struct edict_s
 	int			TU;
 	int			HP;
 	int			AP;
-	int			moral;
+	int			morale;
 
 	int			state;
 

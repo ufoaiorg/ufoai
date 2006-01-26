@@ -66,7 +66,7 @@ void G_SendStats( edict_t *ent )
 	gi.WriteShort( ent->number );
 	gi.WriteByte( ent->TU );
 	gi.WriteByte( ent->HP );
-	gi.WriteByte( ent->moral );
+	gi.WriteByte( ent->morale );
 }
 
 
@@ -1184,16 +1184,16 @@ void G_ClientStateChange( player_t *player, int num, int newState )
 
 /*
 =================
-G_Moral
+G_Morale
 =================
 */
 typedef enum
 {
 	ML_WOUND,
 	ML_DEATH
-} moral_modifiers;
+} morale_modifiers;
 
-#define MORAL_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
+#define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
 
 #define MOB_DEATH		10
 #define MOB_WOUND		0.1
@@ -1213,10 +1213,10 @@ typedef enum
 //how much the morale depends on the size of the damaged team
 #define MON_TEAMFACTOR		0.6
 
-void G_Moral( int type, edict_t *victim, edict_t *attacker, int param )
+void G_Morale( int type, edict_t *victim, edict_t *attacker, int param )
 {
 	edict_t	*ent;
-	int		i, newMoral;
+	int		i, newMorale;
 	float	mod;
 
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
@@ -1251,15 +1251,15 @@ void G_Moral( int type, edict_t *victim, edict_t *attacker, int param )
 				if ( ent == victim ) mod *= MOR_PAIN;
 				break;
 			default:
-				Com_Printf( _("Undefined moral modifier type %i\n"), type );
+				Com_Printf( _("Undefined morale modifier type %i\n"), type );
 				mod = 0;
 			}
-			// clamp new moral
+			// clamp new morale
 			//+0.9 to allow weapons like flamethrowers to inflict panic (typecast rounding)
-			newMoral = ent->moral + (int)( MORAL_RANDOM( mod ) + 0.9 );
-			if ( newMoral > GET_MORAL( ent->chr.skills[ABILITY_MIND] ) ) ent->moral = GET_MORAL( ent->chr.skills[ABILITY_MIND] );
-			else if ( newMoral < 0 ) ent->moral = 0;
-			else ent->moral = newMoral;
+			newMorale = ent->morale + (int)( MORALE_RANDOM( mod ) + 0.9 );
+			if ( newMorale > GET_MORALE( ent->chr.skills[ABILITY_MIND] ) ) ent->morale = GET_MORALE( ent->chr.skills[ABILITY_MIND] );
+			else if ( newMorale < 0 ) ent->morale = 0;
+			else ent->morale = newMorale;
 
 			// send phys data
 			G_SendStats( ent );
@@ -1269,18 +1269,18 @@ void G_Moral( int type, edict_t *victim, edict_t *attacker, int param )
 
 /*
 =================
-G_MoralBehaviour
+G_MoraleBehaviour
 =================
 */
-#define MORAL_REGENERATION	15
-#define MORAL_SHAKEN		50
-#define MORAL_PANIC			30
+#define MORALE_REGENERATION	15
+#define MORALE_SHAKEN		50
+#define MORALE_PANIC		30
 #define M_SANITY			1.0
 #define M_RAGE				0.6
 #define M_RAGE_STOP			2.0
 #define M_PANIC_STOP		1.0
 
-void G_MoralPanic( edict_t *ent, qboolean sanity)
+void G_MoralePanic( edict_t *ent, qboolean sanity)
 {
 	gi.cprintf( game.players + ent->pnum, PRINT_HIGH, _("%s panics!\n"), ent->chr.name );
 
@@ -1312,14 +1312,14 @@ void G_MoralPanic( edict_t *ent, qboolean sanity)
 	ent->TU = 0;
 }
 
-void G_MoralStopPanic ( edict_t *ent )
+void G_MoraleStopPanic ( edict_t *ent )
 {
-	if (((ent->moral)/MORAL_PANIC) > (M_PANIC_STOP*frand()))
+	if (((ent->morale)/MORALE_PANIC) > (M_PANIC_STOP*frand()))
 		ent->state &= ~STATE_PANIC;
-	else G_MoralPanic (ent, true);
+	else G_MoralePanic (ent, true);
 }
 
-void G_MoralRage ( edict_t *ent, qboolean sanity)
+void G_MoraleRage ( edict_t *ent, qboolean sanity)
 {
 	if ( sanity ) ent->state |= STATE_RAGE;
 	else ent->state |= STATE_INSANE;
@@ -1330,20 +1330,20 @@ void G_MoralRage ( edict_t *ent, qboolean sanity)
 	AI_ActorThink( game.players + ent->pnum, ent );
 }
 
-void G_MoralStopRage ( edict_t *ent )
+void G_MoraleStopRage ( edict_t *ent )
 {
-	if (((ent->moral)/MORAL_PANIC) > (M_RAGE_STOP*frand()))
+	if (((ent->morale)/MORALE_PANIC) > (M_RAGE_STOP*frand()))
 	{
 		ent->state &= ~STATE_INSANE;
 		G_SendState( G_VisToPM( ent->visflags ), ent );
 	}
-	else G_MoralPanic (ent, true); //regains sanity
+	else G_MoralePanic (ent, true); //regains sanity
 }
 
-void G_MoralBehaviour( int team )
+void G_MoraleBehaviour( int team )
 {
 	edict_t	*ent;
-	int		i, newMoral;
+	int		i, newMorale;
 	qboolean sanity;
 
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
@@ -1351,18 +1351,18 @@ void G_MoralBehaviour( int team )
 		{
 			// civilians have a 1:1 chance to randomly run away, will be changed:
 			if ( level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
-				G_MoralPanic ( ent, false );
+				G_MoralePanic ( ent, false );
 			// if panic, determine what kind of panic happens:
-			if ( ent->moral <= MORAL_PANIC && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE))
+			if ( ent->morale <= MORALE_PANIC && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE))
 			{
-				if ( (float)ent->moral / MORAL_PANIC > (M_SANITY*frand())) sanity = true;
+				if ( (float)ent->morale / MORALE_PANIC > (M_SANITY*frand())) sanity = true;
 				else sanity = false;
-				if ( (float)ent->moral / MORAL_PANIC > (M_RAGE*frand()))
-					G_MoralPanic ( ent, sanity );
-				else G_MoralRage( ent, sanity );
+				if ( (float)ent->morale / MORALE_PANIC > (M_RAGE*frand()))
+					G_MoralePanic ( ent, sanity );
+				else G_MoraleRage( ent, sanity );
 			}
 			// if shaken, well .. be shaken;
-			else if  (ent->moral <= MORAL_SHAKEN && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE))
+			else if  (ent->morale <= MORALE_SHAKEN && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE))
 			{
 				ent->TU -= TU_REACTION;
 				// shaken is later reset along with reaction fire
@@ -1372,18 +1372,18 @@ void G_MoralBehaviour( int team )
 			}
 			else
 			{
-				if (ent->state & STATE_PANIC) G_MoralStopPanic ( ent );
-				else if (ent->state & STATE_RAGE) G_MoralStopRage ( ent );
+				if (ent->state & STATE_PANIC) G_MoraleStopPanic ( ent );
+				else if (ent->state & STATE_RAGE) G_MoraleStopRage ( ent );
 			}
 			// set correct bounding box
 			if ( ent->state & (STATE_CROUCHED|STATE_PANIC) ) VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH );
 			else VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND );
 
 			// moraleregeneration, capped at max:
-			newMoral = ent->moral + MORAL_RANDOM( MORAL_REGENERATION );
-			if (newMoral > GET_MORAL( ent->chr.skills[ABILITY_MIND]))
-				ent->moral = GET_MORAL( ent->chr.skills[ABILITY_MIND] );
-		else ent->moral = newMoral;
+			newMorale = ent->morale + MORALE_RANDOM( MORALE_REGENERATION );
+			if (newMorale > GET_MORALE( ent->chr.skills[ABILITY_MIND]))
+				ent->morale = GET_MORALE( ent->chr.skills[ABILITY_MIND] );
+		else ent->morale = newMorale;
 
 			// send phys data and state:
 			G_SendStats( ent );
@@ -1471,8 +1471,8 @@ void G_Damage( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 		gi.WriteShort( ent->number );
 		gi.WriteByte( ent->state );
 
-		// apply moral changes
-		G_Moral( ML_DEATH, ent, attacker, damage );
+		// apply morale changes
+		G_Morale( ML_DEATH, ent, attacker, damage );
 
 		// handle inventory
 		G_InventoryToFloor( ent );
@@ -1488,7 +1488,7 @@ void G_Damage( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 	} else {
 		// hit
 		ent->HP -= damage;
-		if ( damage > 0 ) G_Moral( ML_WOUND, ent, attacker, damage );
+		if ( damage > 0 ) G_Morale( ML_WOUND, ent, attacker, damage );
 		else
 		{
 			if ( ent->HP > GET_HP( ent->chr.skills[ABILITY_POWER] ) )
@@ -1952,7 +1952,7 @@ qboolean G_ReactionFire( edict_t *target )
 			&& G_ActorVis( ent->origin, target, true ) > 0.4 && G_FrustomVis( ent, target->origin ) )
 		{
 			if ( target->team == TEAM_CIVILIAN || target->team == ent->team )
-				if ( !(ent->state & (STATE_SHAKEN & ~STATE_REACTION)) || (float)ent->moral / MORAL_SHAKEN > frand()) continue;
+				if ( !(ent->state & (STATE_SHAKEN & ~STATE_REACTION)) || (float)ent->morale / MORALE_SHAKEN > frand()) continue;
 				//if reaction fire is triggered by a friendly unit and the shooter is still sane, don't shoot
 				//well, if the shooter isn't sane anymore...
 
@@ -2181,7 +2181,7 @@ void G_ClientTeamInfo( player_t *player )
 
 			ent->HP = GET_HP( ent->chr.skills[ABILITY_POWER] );
 			ent->AP = 100;
-			ent->moral = GET_MORAL( ent->chr.skills[ABILITY_MIND] );
+			ent->morale = GET_MORALE( ent->chr.skills[ABILITY_MIND] );
 
 			// inventory
 			item.t = gi.ReadByte();
@@ -2310,10 +2310,10 @@ void G_ClientEndRound( player_t *player )
 	gi.AddEvent( PM_ALL, EV_ENDROUND );
 	gi.WriteByte( level.activeTeam );
 
-	// apply moral behaviour, reset reaction fire
+	// apply morale behaviour, reset reaction fire
 	// ***---
 	G_ResetReactionFire( level.activeTeam );
-	G_MoralBehaviour( level.activeTeam );
+	G_MoraleBehaviour( level.activeTeam );
 	// ---***
 
 	// start ai

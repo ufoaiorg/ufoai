@@ -192,7 +192,9 @@ extern  void ( APIENTRY * qglLightModelf )(GLenum pname, GLfloat param);
 extern  void ( APIENTRY * qglLightModelfv )(GLenum pname, const GLfloat *params);
 extern  void ( APIENTRY * qglLightModeli )(GLenum pname, GLint param);
 extern  void ( APIENTRY * qglLightModeliv )(GLenum pname, const GLint *params);
+#ifndef __linux__
 extern  void ( APIENTRY * qglLightf )(GLenum light, GLenum pname, GLfloat param);
+#endif // defined in qgl_linux.c
 extern  void ( APIENTRY * qglLightfv )(GLenum light, GLenum pname, const GLfloat *params);
 extern  void ( APIENTRY * qglLighti )(GLenum light, GLenum pname, GLint param);
 extern  void ( APIENTRY * qglLightiv )(GLenum light, GLenum pname, const GLint *params);

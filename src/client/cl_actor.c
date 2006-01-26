@@ -228,8 +228,8 @@ void CL_ActorUpdateCVars( void )
 		// set generic cvars
 		Cvar_Set( "mn_tu", va( "%i", selActor->TU ) );
 		Cvar_Set( "mn_tumax", va( "%i", selActor->maxTU ) );
-		Cvar_Set( "mn_moral", va( "%i", selActor->moral ) );
-		Cvar_Set( "mn_moralmax", va( "%i", selActor->maxMoral ) );
+		Cvar_Set( "mn_morale", va( "%i", selActor->morale ) );
+		Cvar_Set( "mn_moralemax", va( "%i", selActor->maxMorale ) );
 		Cvar_Set( "mn_hp", va( "%i", selActor->HP ) );
 		Cvar_Set( "mn_hpmax", va( "%i", selActor->maxHP ) );
 
@@ -335,8 +335,8 @@ void CL_ActorUpdateCVars( void )
 		Cvar_Set( "mn_tu", "0" );
 		Cvar_Set( "mn_turemain", "0" );
 		Cvar_Set( "mn_tumax", "30" );
-		Cvar_Set( "mn_moral", "0" );
-		Cvar_Set( "mn_moralmax", "1" );
+		Cvar_Set( "mn_morale", "0" );
+		Cvar_Set( "mn_moralemax", "1" );
 		Cvar_Set( "mn_hp", "0" );
 		Cvar_Set( "mn_hpmax", "1" );
 		Cvar_Set( "mn_ammoright", "" );

@@ -1319,7 +1319,7 @@ void MN_DrawMenus( void )
 					if ( !strncmp( node->name, "ekg_", 4 ) )
 					{
 						int pt;
-						if ( node->name[4] == 'm' ) pt = Cvar_VariableValue( "mn_moral" ) / 2;
+						if ( node->name[4] == 'm' ) pt = Cvar_VariableValue( "mn_morale" ) / 2;
 						else pt = Cvar_VariableValue( "mn_hp" );
 						node->texl[1] = (3 - (int)(pt<60 ? pt : 60) / 20) * 32;
 						node->texh[1] = node->texl[1] + 32;

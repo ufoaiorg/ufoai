@@ -461,8 +461,8 @@ void G_SpawnAIPlayer( player_t *player, int numSpawn )
 
 			ent->HP = GET_HP( ent->chr.skills[ABILITY_POWER] );
 			ent->AP = 100;
-			ent->moral = GET_MORAL( ent->chr.skills[ABILITY_MIND] );
-			if ( ent->moral >= MAX_SKILL ) ent->moral = MAX_SKILL;
+			ent->morale = GET_MORALE( ent->chr.skills[ABILITY_MIND] );
+			if ( ent->morale >= MAX_SKILL ) ent->morale = MAX_SKILL;
 
 			// search for weapons
 			num = 0;
@@ -529,7 +529,7 @@ void G_SpawnAIPlayer( player_t *player, int numSpawn )
 			Com_CharGenAbilitySkills( &ent->chr, 0, 20, 0, 20 );
 			ent->HP = GET_HP( ent->chr.skills[ABILITY_POWER] ) / 2;
 			ent->AP = 100;
-			ent->moral = GET_MORAL( ent->chr.skills[ABILITY_MIND] );
+			ent->morale = GET_MORALE( ent->chr.skills[ABILITY_MIND] );
 
 			ent->chr.skin = gi.GetModelAndName( gi.cvar_string( "ai_civilian" ), ent->chr.path, ent->chr.body, ent->chr.head, ent->chr.name );
 			ent->chr.inv = &ent->i;

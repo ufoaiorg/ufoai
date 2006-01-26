@@ -896,10 +896,10 @@ void CL_ActorStats( sizebuf_t *sb )
 
 	le->TU = MSG_ReadByte( sb );
 	le->HP = MSG_ReadByte( sb );
-	le->moral = MSG_ReadByte( sb );
+	le->morale = MSG_ReadByte( sb );
 	if ( le->TU > le->maxTU ) le->maxTU = le->TU;
 	if ( le->HP > le->maxHP ) le->maxHP = le->HP;
-	if ( le->moral > le->maxMoral ) le->maxMoral = le->moral;
+	if ( le->morale > le->maxMorale ) le->maxMorale = le->morale;
 }
 
 

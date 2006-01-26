@@ -933,7 +933,7 @@ typedef struct medals_s
 #define GET_HP( ab )		(80 + (ab) * 90/MAX_SKILL)
 #define GET_ACC( ab, sk )	((1.5 - (float)(ab)/MAX_SKILL) * pow(0.8, (sk)/50) )
 #define GET_TU( ab )		(27 + (ab) * 20/MAX_SKILL)
-#define GET_MORAL( ab )		(100 + (ab) * 150/MAX_SKILL)
+#define GET_MORALE( ab )		(100 + (ab) * 150/MAX_SKILL)
 
 typedef enum
 {
