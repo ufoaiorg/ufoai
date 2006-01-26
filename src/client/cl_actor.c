@@ -108,6 +108,87 @@ void CL_ActorGlobalCVars( void )
 	}
 }
 
+static void CL_RefreshWeaponButtons( int time )
+{
+	static int primary_right = -1;
+	static int secondary_right = -1;
+	static int primary_left = -1;
+	static int secondary_left = -1;
+	invList_t	*weapon;
+
+	if (cl.cmode != M_MOVE)
+	{
+		// If we're not in move mode, leave the rendering of the fire buttons alone
+		primary_right = secondary_right = primary_left = secondary_left = -2;
+		return;
+	}
+	else if (primary_right == -2)
+	{
+		// skip one cycle to let things settle down
+		primary_right = -1;
+		return;
+	}
+
+	weapon = RIGHT(selActor);
+
+	if (!weapon || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time)
+	{
+		if ( primary_right != 0 )
+		{
+			Cbuf_AddText( "dispr\n" );
+			primary_right = 0;
+		}
+	}
+	else if ( primary_right != 1 )
+	{
+		Cbuf_AddText( "deselpr\n" );
+		primary_right = 1;
+	}
+	if (!weapon || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time)
+	{
+		if ( secondary_right != 0 )
+		{
+			Cbuf_AddText( "dissr\n" );
+			secondary_right = 0;
+		}
+	}
+	else if ( secondary_right != 1 )
+	{
+		Cbuf_AddText( "deselsr\n" );
+		secondary_right = 1;
+	}
+
+	// check for two-handed weapon - if not, switch to left hand
+	if ( !weapon || !csi.ods[weapon->item.t].twohanded ) 
+		weapon = LEFT(selActor);
+
+	if (!weapon || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time)
+	{
+		if ( primary_left != 0 )
+		{
+			Cbuf_AddText( "displ\n" );
+			primary_left = 0;
+		}
+	}
+	else if ( primary_left != 1 )
+	{
+		Cbuf_AddText( "deselpl\n" );
+		primary_left = 1;
+	}
+	if (!weapon || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time)
+	{
+		if ( secondary_left != 0 )
+		{
+			Cbuf_AddText( "dissl\n" );
+			secondary_left = 0;
+		}
+	}
+	else if ( secondary_left != 1 )
+	{
+		Cbuf_AddText( "deselsl\n" );
+		secondary_left = 1;
+	}
+}
 
 /*
 =================
@@ -180,6 +261,7 @@ void CL_ActorUpdateCVars( void )
 			// move or shoot
 			if ( cl.cmode != M_MOVE )
 			{
+				CL_RefreshWeaponButtons( 0 );
 				if ( selWeapon )
 				{
 					snprintf( infoText, MAX_MENUTEXTLEN, "%s\n%s (%i) [%i%%] %i\n",  _(csi.ods[selWeapon->item.t].name), 
@@ -190,11 +272,20 @@ void CL_ActorUpdateCVars( void )
 			}
 			if ( cl.cmode == M_MOVE )
 			{
-				time = actorMoveLength;
+				// If the mouse is outside the world, blank move
+				if ( mouseSpace != MS_WORLD )
+					actorMoveLength = 0xFF;
 				if ( actorMoveLength < 0xFF )
+				{
 					snprintf( infoText, MAX_MENUTEXTLEN, _("Health\t%i\nMove\t%i\n"), selActor->HP, actorMoveLength );
+					CL_RefreshWeaponButtons( selActor->TU - actorMoveLength );
+				}
 				else
+				{
 					snprintf( infoText, MAX_MENUTEXTLEN, _("Health\t%i\n"), selActor->HP );
+					CL_RefreshWeaponButtons( selActor->TU );
+				}
+				time = actorMoveLength;
 			} 
 		}
 
