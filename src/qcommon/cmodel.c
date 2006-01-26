@@ -2493,6 +2493,8 @@ void Grid_MoveCalc( struct routing_s *map, pos3_t from, int distance, byte **fb_
 		stf = tf;
 		tf ^= 3;
 	}
+	// reset the mouse position, for the purposes of CL_ActorMouseTrace
+	CL_ResetMouseLastPos();
 }
 
 

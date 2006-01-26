@@ -116,7 +116,7 @@ static void CL_RefreshWeaponButtons( int time )
 	static int secondary_left = -1;
 	invList_t	*weapon;
 
-	if (cl.cmode != M_MOVE)
+	if (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE)
 	{
 		// If we're not in move mode, leave the rendering of the fire buttons alone
 		primary_right = secondary_right = primary_left = secondary_left = -2;
@@ -240,11 +240,21 @@ void CL_ActorUpdateCVars( void )
 		if ( LEFT(selActor) ) Cvar_Set( "mn_lweapon", csi.ods[LEFT(selActor)->item.t].model );
 
 		// get weapon
-		selWeapon = (cl.cmode-1)/2 ? LEFT(selActor) : RIGHT(selActor);
+		if ( cl.cmode > M_PEND_MOVE )
+			selWeapon = (cl.cmode-M_PEND_FIRE_PR)/2 ? LEFT(selActor) : RIGHT(selActor);
+		else
+			selWeapon = (cl.cmode-M_FIRE_PR)/2 ? LEFT(selActor) : RIGHT(selActor);
 		if ( !selWeapon && RIGHT(selActor) && csi.ods[RIGHT(selActor)->item.t].twohanded ) 
 			selWeapon = RIGHT(selActor);
-		if ( selWeapon ) selFD = &csi.ods[selWeapon->item.m].fd[(cl.cmode-1)%2];
-		else selFD = NULL;
+		if ( selWeapon )
+		{
+			if ( cl.cmode > M_PEND_MOVE )
+				selFD = &csi.ods[selWeapon->item.m].fd[(cl.cmode-M_PEND_FIRE_PR)%2];
+			else
+				selFD = &csi.ods[selWeapon->item.m].fd[(cl.cmode-M_FIRE_PR)%2];
+		}
+		else
+			selFD = NULL;
 
 		// write info		
 		time = 0;
@@ -259,22 +269,26 @@ void CL_ActorUpdateCVars( void )
 			sprintf( infoText, _("Currently panics!\n") );
 		} else {
 			// move or shoot
-			if ( cl.cmode != M_MOVE )
+ 			if ( cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE )
 			{
 				CL_RefreshWeaponButtons( 0 );
 				if ( selWeapon )
 				{
-					snprintf( infoText, MAX_MENUTEXTLEN, "%s\n%s (%i) [%i%%] %i\n",  _(csi.ods[selWeapon->item.t].name), 
-						_(selFD->name), selFD->ammo, selToHit, selFD->time );
+					snprintf( infoText, MAX_MENUTEXTLEN,
+							"%s\n%s (%i) [%i%%] %i\n",
+							_(csi.ods[selWeapon->item.t].name), 
+							_(selFD->name), selFD->ammo, selToHit,
+							selFD->time );
 					time = selFD->time;
 				} 
-				else cl.cmode = M_MOVE;
+				else
+					cl.cmode = M_MOVE;
 			}
-			if ( cl.cmode == M_MOVE )
+ 			if ( cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE )
 			{
 				// If the mouse is outside the world, blank move
-				if ( mouseSpace != MS_WORLD )
-					actorMoveLength = 0xFF;
+ 				if ( mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE )
+ 					actorMoveLength = 0xFF;
 				if ( actorMoveLength < 0xFF )
 				{
 					snprintf( infoText, MAX_MENUTEXTLEN, _("Health\t%i\nMove\t%i\n"), selActor->HP, actorMoveLength );
@@ -334,15 +348,19 @@ void CL_ActorUpdateCVars( void )
 	// mode
 	if ( cl.oldcmode != cl.cmode || refresh )
 	{
-		cl.oldcmode = cl.cmode;
 		switch ( cl.cmode )
 		{
-		case M_FIRE_PL: Cbuf_AddText( "towpl\n" ); break;
-		case M_FIRE_SL: Cbuf_AddText( "towsl\n" ); break;
-		case M_FIRE_PR: Cbuf_AddText( "towpr\n" ); break;
-		case M_FIRE_SR: Cbuf_AddText( "towsr\n" ); break;
-		default: Cbuf_AddText( "tomov\n" ); break;
+		case M_FIRE_PL: case M_PEND_FIRE_PL: Cbuf_AddText( "towpl\n" ); break;
+		case M_FIRE_SL: case M_PEND_FIRE_SL: Cbuf_AddText( "towsl\n" ); break;
+		case M_FIRE_PR: case M_PEND_FIRE_PR: Cbuf_AddText( "towpr\n" ); break;
+		case M_FIRE_SR: case M_PEND_FIRE_SR: Cbuf_AddText( "towsr\n" ); break;
+		default:
+			// If we've just changing between move modes, don't reset
+			if (cl.oldcmode != M_MOVE && cl.oldcmode != M_PEND_MOVE)
+				Cbuf_AddText( "tomov\n" ); break;
+			break;
 		}
+		cl.oldcmode = cl.cmode;
 	}
 
 	// player bar
@@ -577,6 +595,37 @@ int CL_CheckAction( void )
 }
 
 
+int CL_TraceMove( pos3_t to )
+{
+	int		length;
+	vec3_t	vec, oldVec;
+	pos3_t	pos;
+	int		dv;
+
+	length = Grid_MoveLength( &clMap, to, false );
+
+	if ( !selActor || !length || length >= 0x3F )
+		return 0;
+
+	Grid_PosToVec( &clMap, to, oldVec );
+	VectorCopy( to, pos );
+
+	while ( (dv = Grid_MoveNext( &clMap, pos )) < 0xFF )
+	{
+		length = Grid_MoveLength( &clMap, pos, false );
+		PosAddDV( pos, dv );
+		Grid_PosToVec( &clMap, pos, vec );
+		if ( length > selActor->TU )
+			CL_ParticleSpawn( "longRangeTracer", 0, vec, oldVec, NULL );
+		else if (selActor->state & STATE_CROUCHED)
+			CL_ParticleSpawn( "crawlTracer", 0, vec, oldVec, NULL );
+		else
+			CL_ParticleSpawn( "moveTracer", 0, vec, oldVec, NULL );
+		VectorCopy( vec, oldVec );
+	}
+	return 1;
+}
+
 /*
 =================
 CL_ActorStartMove
@@ -617,8 +666,12 @@ void CL_ActorShoot( le_t *le, pos3_t at )
 		return;
 
 	// send request to server
-	mode = cl.cmode - 1;
-	if ( mode >= ST_LEFT_PRIMARY && !LEFT(le) ) mode -= 2;
+	if ( cl.cmode > M_PEND_MOVE )
+		mode = cl.cmode - M_PEND_FIRE_PR;
+	else
+		mode = cl.cmode - M_FIRE_PR;
+	if ( mode >= ST_LEFT_PRIMARY && !LEFT(le) )
+		mode -= 2;
 
 	MSG_WriteFormat( &cls.netchan.message, "bbsgb",
 		clc_action, PA_SHOOT, le->entnum, at, mode );
@@ -751,7 +804,7 @@ void CL_ActorDoTurn( sizebuf_t *sb )
 	le->dir = MSG_ReadByte( sb );
 	le->angles[YAW] = dangle[le->dir];
 
-	cl.cmode = M_MOVE;
+	//cl.cmode = M_MOVE;
 
 	// calculate possible moves
 	CL_BuildForbiddenList();
@@ -957,8 +1010,15 @@ void CL_ActorSelectMouse( void )
 	if ( mouseSpace != MS_WORLD )
 		return;
 
-	if ( cl.cmode == M_MOVE )
+	if ( cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE )
+	{
+		cl.cmode = M_MOVE;
 		CL_ActorSelect( mouseActor );
+	}
+	else if ( cl.cmode > M_PEND_MOVE )
+		cl.cmode -= M_PEND_FIRE_PR - M_FIRE_PR;
+	else if (confirm_actions->value)
+		cl.cmode += M_PEND_FIRE_PR - M_FIRE_PR;
 	else
 		CL_ActorShoot( selActor, mousePos );
 }
@@ -975,7 +1035,12 @@ void CL_ActorActionMouse( void )
 		return;
 
 	if ( cl.cmode == M_MOVE )
-		CL_ActorStartMove( selActor, mousePos );
+	{
+		if (confirm_actions->value)
+			cl.cmode = M_PEND_MOVE;
+		else
+			CL_ActorStartMove( selActor, mousePos );
+	}
 	else
 		cl.cmode = M_MOVE;
 }
@@ -1042,6 +1107,16 @@ MOUSE SCANNING
 
 ==============================================================
 */
+
+/*
+=================
+CL_ResetMouseLastPos
+=================
+*/
+void CL_ResetMouseLastPos( void )
+{
+	mouseLastPos[0] = mouseLastPos[1] = mouseLastPos[2] = 0.0;
+}
 
 /*
 =================
@@ -1391,10 +1466,10 @@ CL_AddTargeting
 */
 void CL_AddTargeting( void )
 {
-	if ( mouseSpace != MS_WORLD )
+	if ( mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE )
 		return;
 
-	if ( cl.cmode == M_MOVE )
+	if ( cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE )
 	{
 		entity_t	ent;
 
@@ -1422,11 +1497,19 @@ void CL_AddTargeting( void )
 
 		// add it
 		V_AddEntity( &ent );
-	} else {
-		if ( !selActor ) return;
+		if (cl.cmode == M_PEND_MOVE)
+			if (!CL_TraceMove( mousePos ))
+				cl.cmode = M_MOVE;
+	}
+	else
+	{
+		if ( !selActor )
+			return;
 
-		if ( !selFD->gravity ) CL_TargetingStraight( selActor->pos, mousePos );
-		else CL_TargetingGrenade( selActor->pos, mousePos );
+		if ( !selFD->gravity )
+			CL_TargetingStraight( selActor->pos, mousePos );
+		else
+			CL_TargetingGrenade( selActor->pos, mousePos );
 	}
 }
 

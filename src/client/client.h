@@ -105,7 +105,12 @@ typedef enum
 	M_FIRE_PR,
 	M_FIRE_SR,
 	M_FIRE_PL,
-	M_FIRE_SL
+	M_FIRE_SL,
+	M_PEND_MOVE,
+	M_PEND_FIRE_PR,
+	M_PEND_FIRE_SR,
+	M_PEND_FIRE_PL,
+	M_PEND_FIRE_SL
 } cmodes_t;
 	
 //
@@ -688,6 +693,7 @@ void CL_ActorActionMouse( void );
 void CL_NextRound( void );
 void CL_DoEndRound( sizebuf_t *sb );
 
+void CL_ResetMouseLastPos( void );
 void CL_ActorMouseTrace( void );
 
 qboolean CL_AddActor( le_t *le, entity_t *ent );

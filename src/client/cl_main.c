@@ -89,6 +89,7 @@ cvar_t	*mn_hud;
 cvar_t	*mn_lastsave;
 
 cvar_t	*difficulty;
+cvar_t	*confirm_actions;
 
 //
 // userinfo
@@ -1368,6 +1369,9 @@ void CL_InitLocal (void)
 
 	difficulty = Cvar_Get ("difficulty", "-1", CVAR_ARCHIVE | CVAR_LATCH);
 	difficulty->modified = true;
+
+	confirm_actions = Cvar_Get ("confirm_actions", "0", CVAR_ARCHIVE );
+
 	Cvar_Set( "music", "" );
 
 	mn_main = Cvar_Get ("mn_main", "main", 0);
@@ -1651,7 +1655,7 @@ void CL_CvarCheck( void )
 		cl_worldlevel->modified = false;
 	}
 
-	// difficulty
+	// difficulty and confirm_actions
 	if ( difficulty->modified )
 	{
 		v = (int)difficulty->value + 3;
@@ -1660,6 +1664,8 @@ void CL_CvarCheck( void )
 		else if ( v > 6 ) v = 6;
 		Cvar_Set( "mn_difficulty", _(difficulty_names[v]) );
 	}
+	v = Cvar_VariableValue( "confirm_actions" );
+	Cvar_Set( "mn_confirm_actions", (v ? "Yes" : "No") );
 
 	// gl_mode and fullscreen
 	v = Cvar_VariableValue( "mn_glmode" );

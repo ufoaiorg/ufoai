@@ -363,6 +363,25 @@ void CL_FireLeftSecondary( void )
 	else cl.cmode = M_FIRE_SL;
 }
 
+/*
+============
+CL_ConfirmAction
+============
+*/
+void CL_ConfirmAction( void )
+{
+	extern pos3_t	mousePos;
+
+	if ( !selActor ) return;
+	if ( cl.cmode == M_PEND_MOVE )
+		CL_ActorStartMove( selActor, mousePos );
+	else if ( cl.cmode > M_PEND_MOVE )
+	{
+		CL_ActorShoot( selActor, mousePos );
+		cl.cmode = M_MOVE;
+	}
+}
+
 
 /* FIXME: Reload a two-handed weapon if we hit the right reload button */
 /*
@@ -541,6 +560,7 @@ void CL_InitInput (void)
 	Cmd_AddCommand( "leveldown", CL_LevelDown );
 	Cmd_AddCommand( "zoominquant", CL_ZoomInQuant );
 	Cmd_AddCommand( "zoomoutquant", CL_ZoomOutQuant );
+	Cmd_AddCommand( "confirmaction", CL_ConfirmAction );
 
 	cl_nodelta = Cvar_Get ("cl_nodelta", "0", 0);
 }
@@ -840,7 +860,10 @@ void CL_ParseInput (void)
 		if ( !scr_vrect.width || !scr_vrect.height )
 			return;
 
-		CL_ActorMouseTrace();
+		if ( cl.cmode < M_PEND_MOVE )
+			CL_ActorMouseTrace();
+		else
+			mouseSpace = MS_WORLD;
 		return;
 	}
 }
