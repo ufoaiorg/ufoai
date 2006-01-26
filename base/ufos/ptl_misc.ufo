@@ -353,6 +353,28 @@ particle fadeTracer
 	}
 }
 
+particle moveTracer
+{
+	init
+	{
+		blend  blend
+		style  line
+		color  "0 1 1 1"
+		life   0.0001
+	}
+}
+
+particle crawlTracer
+{
+	init
+	{
+		blend  blend
+		style  line
+		color  "1 1 0 1"
+		life   0.0001
+	}
+}
+
 particle cross
 {
 	init

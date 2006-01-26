@@ -412,6 +412,40 @@ menu options_game
 		click	{ cmd "mn_modify difficulty +1 -3 3;" }
 	}
 
+	// ===================
+	// CONFIRM ACTIONS
+	// ===================
+	string confirm_str
+	{
+		string	"Confirm Actions:"
+		pos		"500 155"
+	}
+	string confirm_value
+	{
+		string	"*cvar mn_confirm_actions"
+		pos		"840 155"
+		align	ur
+	}
+	pic confirm_dec
+	{
+		image	menu/buy_buttons1
+		pos		"868 155"
+		texl	"0 0"		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify confirm_actions -1 0 1;" }
+	}
+	pic confirm_inc
+	{
+		image	menu/buy_buttons1
+		pos		"884 155"
+		texl	"16 0"		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify confirm_actions +1 0 1;" }
+	}
+
+	// ===================
+	// HUD
+	// ===================
 	string hud_str
 	{
 		string	"HUD Design:"
