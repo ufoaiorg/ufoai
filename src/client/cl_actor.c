@@ -1299,6 +1299,7 @@ CL_TargetingStraight
 void CL_TargetingStraight( pos3_t fromPos, pos3_t toPos )
 {
 	vec3_t	start, end;
+	vec3_t	dir, mid;
 
 	if ( !selActor || !selFD ) 
 		return;
@@ -1307,9 +1308,20 @@ void CL_TargetingStraight( pos3_t fromPos, pos3_t toPos )
 	Grid_PosToVec( &clMap, toPos, end );
 
 	// show cross and trace
-	if ( VectorDist( start, end ) > selFD->range ) CL_ParticleSpawn( "cross_no", 0, end, NULL, NULL );
-	else CL_ParticleSpawn( "cross", 0, end, NULL, NULL );
-	CL_ParticleSpawn( "tracer", 0, start, end, NULL );
+	if ( VectorDistSqr( start, end ) > selFD->range * selFD->range )
+	{
+		VectorSubtract(end, start, dir);
+		VectorNormalize(dir);
+		VectorMA(start, selFD->range, dir, mid);
+		CL_ParticleSpawn( "inRangeTracer", 0, start, mid, NULL );
+		CL_ParticleSpawn( "longRangeTracer", 0, mid, end, NULL );
+		CL_ParticleSpawn( "cross_no", 0, end, NULL, NULL );
+	}
+	else
+	{
+		CL_ParticleSpawn( "inRangeTracer", 0, start, end, NULL );
+		CL_ParticleSpawn( "cross", 0, end, NULL, NULL );
+	}
 
 	selToHit = 100 * CL_TargetingToHit( toPos );
 }
