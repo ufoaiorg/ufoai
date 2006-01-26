@@ -312,10 +312,13 @@ item_t CL_AddWeaponAmmo( equipDef_t *ed, int type )
 	{
 		if ( csi.ods[i].link == type )
 		{
-			ed->num[i]--;
-			item.a = csi.ods[type].ammo;
 			item.m = i;
-			return item;
+			if ( ed->num[i] > 0 )
+			{
+				ed->num[i]--;
+				item.a = csi.ods[type].ammo;
+				return item;
+			}
 		}
 	}
 	return item;
@@ -331,17 +334,27 @@ void CL_CheckInventory( equipDef_t *equip )
 {
 	character_t	*cp;
 	invList_t	*ic, *next;
-	int p, i;
+	int p, container;
 
-	for ( p = 0, cp = curTeam; p < numOnTeam; p++, cp++ )
+	// Iterate through in container order (right hand, left hand, belt,
+	// armor, backpack) at the top level, i.e. each squad member fills
+	// their right hand, then each fills their left hand, etc.  The effect
+	// of this is that when things are tight, everyone has the opportunity
+	// to get their preferred weapon(s) loaded and in their hands before
+	// anyone fills their backpack with spares.  We don't want the first
+	// person in the squad filling their backpack with spare ammo leaving
+	// others with unloaded guns in their hands.
+	for ( container = 0; container < csi.numIDs; container++ )
 	{
-		for ( i = 0; i < csi.numIDs; i++ )
+		for ( p = 0, cp = curTeam; p < numOnTeam; p++, cp++ )
 		{
-			for ( ic = cp->inv->c[i]; ic; ic = next )
+			for ( ic = cp->inv->c[container]; ic; ic = next )
 			{
 				next = ic->next;
-				if ( equip->num[ic->item.t] ) ic->item = CL_AddWeaponAmmo( equip, ic->item.t );
-				else Com_RemoveFromInventory( cp->inv, i, ic->x, ic->y );
+				if ( equip->num[ic->item.t] )
+					ic->item = CL_AddWeaponAmmo( equip, ic->item.t );
+				else
+					Com_RemoveFromInventory( cp->inv, container, ic->x, ic->y );
 			}
 		}
 	}
