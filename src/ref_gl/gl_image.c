@@ -604,7 +604,7 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 			pixbuf = targa_rgba + row*columns*4;
 			for(column=0; column<columns; column++) {
 				unsigned char red,green,blue,alphabyte;
-				red=green=blue=alphabyte="";
+				red=green=blue=alphabyte=0;
 				switch (targa_header.pixel_size) {
 					case 24:
 
@@ -632,7 +632,7 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 	}
 	else if (targa_header.image_type==10) {   // Runlength encoded RGB images
 		unsigned char red,green,blue,alphabyte,packetHeader,packetSize,j;
-		red=green=blue=alphabyte="";
+		red=green=blue=alphabyte=0;
 		for(row=rows-1; row>=0; row--) {
 			pixbuf = targa_rgba + row*columns*4;
 			for(column=0; column<columns; ) {
@@ -727,7 +727,7 @@ void jpg_null(j_decompress_ptr cinfo)
 {
 }
 
-unsigned char jpg_fill_input_buffer(j_decompress_ptr cinfo)
+boolean jpg_fill_input_buffer(j_decompress_ptr cinfo)
 {
     ri.Con_Printf(PRINT_ALL, "Premature end of JPEG data\n");
     return 1;

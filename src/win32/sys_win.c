@@ -23,9 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "winquake.h"
 #include "resource.h"
 #include <errno.h>
-#include <float.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <float.h>
 #include <direct.h>
 #include <io.h>
 #include <conio.h>
@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 qboolean s_win95;
 
 int			starttime;
-int			ActiveApp;
+qboolean	ActiveApp;
 qboolean	Minimized;
 
 static HANDLE		hinput, houtput;
@@ -600,9 +600,9 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	float		timescale;
 	char		*cddir;
 
-    /* previous instances do not exist in Win32 */
-    if (hPrevInstance)
-        return 0;
+	/* previous instances do not exist in Win32 */
+	if (hPrevInstance)
+		return 0;
 
 	global_hInstance = hInstance;
 
@@ -633,7 +633,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 // 	srand( getpid() );
 	srand( oldtime );
 
-   /* main window message loop */
+	/* main window message loop */
 	while (1)
 	{
 		// if at a full screen console, don't update unless needed
@@ -666,5 +666,5 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	}
 
 	// never gets here
-    return TRUE;
+	return TRUE;
 }

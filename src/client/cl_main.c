@@ -1804,7 +1804,7 @@ void CL_Init (void)
 	// all archived variables will now be loaded
 
 	Con_Init ();
-#if defined __linux__ || defined __sgi
+#if defined __linux__ || defined __sgi || defined __MINGW__
 	S_Init ();
 	VID_Init ();
 #else

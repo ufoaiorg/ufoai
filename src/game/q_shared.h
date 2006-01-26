@@ -20,6 +20,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 // q_shared.h -- included first by ALL program modules
 
+// stop it from getting included twice
+#ifndef _Q_SHARED_H
+#define _Q_SHARED_H 1
+
 #ifdef _WIN32
 // unknown pragmas are SUPPOSED to be ignored, but....
 #pragma warning(disable : 4244)     // MIPS
@@ -183,7 +187,7 @@ extern vec4_t vec4_origin;
 // microsoft's fabs seems to be ungodly slow...
 //float Q_fabs (float f);
 //#define	fabs(f) Q_fabs(f)
-#if !defined C_ONLY && !defined __linux__ && !defined __sgi
+#if !defined C_ONLY && !defined __linux__ && !defined __sgi && !defined __MINGW32__
 extern long Q_ftol( float f );
 #else
 #define Q_ftol( f ) ( long ) (f)
@@ -1073,3 +1077,5 @@ typedef enum {
 extern int vidref_val;
 // PGM
 // ==================
+
+#endif  // _Q_SHARED_H
