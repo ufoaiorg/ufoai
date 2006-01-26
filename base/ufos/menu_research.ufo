@@ -203,11 +203,35 @@ menu research
 	// ==================
 	// buttons
 	// ==================
+
+	pic bt_stop
+	{
+		image	menu/button_research
+		mousefx	true
+		pos		"720 700"
+		texl    "0 0"
+		texh    "64 64"
+		click	{ mn_stop_research }
+	}
+
+	pic bt_start
+	{
+		image	menu/button_research
+		mousefx	true
+		pos		"650 696"
+		texl	"0 64"
+		texh	"64 128"
+		click	{ mn_start_research }
+	}
+
+	// ==================
+	// buttons
+	// ==================
 	pic bt_continue
 	{
 		image	hud/buttons2
 		mousefx	true
-		pos		"920 720"
+		pos		"920 630"
 		texl	"0 0"
 		texh	"64 37"
 		click	{ cmd mn_pop }
