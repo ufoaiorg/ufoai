@@ -2460,6 +2460,7 @@ Grid_MoveCalc
 */
 void Grid_MoveCalc( struct routing_s *map, pos3_t from, int distance, byte **fb_list, int fb_length )
 {
+#ifndef DEDICATED_ONLY
 	int xl, xh, yl, yh;
 	int i;
 
@@ -2495,6 +2496,7 @@ void Grid_MoveCalc( struct routing_s *map, pos3_t from, int distance, byte **fb_
 	}
 	// reset the mouse position, for the purposes of CL_ActorMouseTrace
 	CL_ResetMouseLastPos();
+#endif
 }
 
 

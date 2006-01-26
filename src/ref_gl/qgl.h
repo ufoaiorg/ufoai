@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -192,7 +192,9 @@ extern  void ( APIENTRY * qglLightModelf )(GLenum pname, GLfloat param);
 extern  void ( APIENTRY * qglLightModelfv )(GLenum pname, const GLfloat *params);
 extern  void ( APIENTRY * qglLightModeli )(GLenum pname, GLint param);
 extern  void ( APIENTRY * qglLightModeliv )(GLenum pname, const GLint *params);
+#ifndef __linux__
 extern  void ( APIENTRY * qglLightf )(GLenum light, GLenum pname, GLfloat param);
+#endif // defined in qgl_linux.c
 extern  void ( APIENTRY * qglLightfv )(GLenum light, GLenum pname, const GLfloat *params);
 extern  void ( APIENTRY * qglLighti )(GLenum light, GLenum pname, GLint param);
 extern  void ( APIENTRY * qglLightiv )(GLenum light, GLenum pname, const GLint *params);
