@@ -870,8 +870,13 @@ void G_InventoryToFloor( edict_t *ent )
 			Com_FindSpace( &floor->i, ic->item.t, gi.csi->idFloor, &ic->x, &ic->y );
 			if ( ic->x >= 32 || ic->y >= 16 )
 			{
+				// Run out of space on the floor - destroy remaining inventory.
+				// TODO should really just spill into adjacent locations...
 				ent->i.c[k] = ic;
 				Com_DestroyInventory( &ent->i );
+				Com_Printf( "\n" );
+				// send item info to the clients
+				G_CheckVis( floor, true );
 				return;
 			}
 			ic->next = FLOOR(floor);

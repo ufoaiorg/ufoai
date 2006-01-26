@@ -90,7 +90,10 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 	
 	move = gi.MoveLength( gi.map, to, true );
 	tu = ent->TU - move;
-	od = ent->i.c[gi.csi->idRight] ? &gi.csi->ods[ent->i.c[gi.csi->idRight]->item.m] : NULL;
+	if ( ent->i.c[gi.csi->idRight] && ent->i.c[gi.csi->idRight]->item.m != NONE )
+		od = &gi.csi->ods[ent->i.c[gi.csi->idRight]->item.m];
+	else
+		od = NULL;
 
 	// test for time
 	if ( tu < 0 ) return 0.0;

@@ -131,7 +131,7 @@ static void CL_RefreshWeaponButtons( int time )
 
 	weapon = RIGHT(selActor);
 
-	if (!weapon || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time)
+	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time)
 	{
 		if ( primary_right != 0 )
 		{
@@ -144,7 +144,7 @@ static void CL_RefreshWeaponButtons( int time )
 		Cbuf_AddText( "deselpr\n" );
 		primary_right = 1;
 	}
-	if (!weapon || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time)
+	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time)
 	{
 		if ( secondary_right != 0 )
 		{
@@ -162,7 +162,7 @@ static void CL_RefreshWeaponButtons( int time )
 	if ( !weapon || !csi.ods[weapon->item.t].twohanded ) 
 		weapon = LEFT(selActor);
 
-	if (!weapon || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time)
+	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time)
 	{
 		if ( primary_left != 0 )
 		{
@@ -175,7 +175,7 @@ static void CL_RefreshWeaponButtons( int time )
 		Cbuf_AddText( "deselpl\n" );
 		primary_left = 1;
 	}
-	if (!weapon || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time)
+	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time)
 	{
 		if ( secondary_left != 0 )
 		{
@@ -248,7 +248,9 @@ void CL_ActorUpdateCVars( void )
 			selWeapon = RIGHT(selActor);
 		if ( selWeapon )
 		{
-			if ( cl.cmode > M_PEND_MOVE )
+			if ( selWeapon->item.m == NONE )
+				selFD = NULL;
+			else if ( cl.cmode > M_PEND_MOVE )
 				selFD = &csi.ods[selWeapon->item.m].fd[(cl.cmode-M_PEND_FIRE_PR)%2];
 			else
 				selFD = &csi.ods[selWeapon->item.m].fd[(cl.cmode-M_FIRE_PR)%2];
@@ -272,7 +274,7 @@ void CL_ActorUpdateCVars( void )
  			if ( cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE )
 			{
 				CL_RefreshWeaponButtons( 0 );
-				if ( selWeapon )
+				if ( selWeapon && selFD )
 				{
 					snprintf( infoText, MAX_MENUTEXTLEN,
 							"%s\n%s (%i) [%i%%] %i\n",
@@ -281,6 +283,12 @@ void CL_ActorUpdateCVars( void )
 							selFD->time );
 					time = selFD->time;
 				} 
+				else if ( selWeapon )
+				{
+					snprintf( infoText, MAX_MENUTEXTLEN,
+							"%s\n(empty)\n",
+							_(csi.ods[selWeapon->item.t].name) );
+				}
 				else
 					cl.cmode = M_MOVE;
 			}

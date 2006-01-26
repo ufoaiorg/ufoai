@@ -308,6 +308,7 @@ item_t CL_AddWeaponAmmo( equipDef_t *ed, int type )
 
 	item.a = 0;
 	item.m = NONE;
+	// Search for any complete clips
 	for ( i = 0; i < csi.numODs; i++ )
 	{
 		if ( csi.ods[i].link == type )
