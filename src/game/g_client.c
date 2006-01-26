@@ -1094,6 +1094,10 @@ void G_ClientTurn( player_t *player, int num, int dv )
 	if ( !G_ActionCheck( player, ent, 1 ) )
 		return;
 
+	// check if we're already facing that direction
+	if ( ent->dir == dv )
+		return;
+
 	// start move
 	gi.AddEvent( G_TeamToPM( ent->team ), EV_ACTOR_START_MOVE );
 	gi.WriteShort( ent->number );
