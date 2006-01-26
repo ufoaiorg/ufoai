@@ -95,8 +95,12 @@ typedef struct
 
 	float	lerplevel;
 	float	zoom;
+	float fpzoom;
 } camera_t;
 
+typedef enum { CAMERA_MODE_REMOTE, CAMERA_MODE_FIRSTPERSON } camera_mode_t;
+
+camera_mode_t camera_mode;
 
 // don't mess with the order!!!
 typedef enum
@@ -515,6 +519,7 @@ extern	float		*rotateAngles;
 extern	kbutton_t	in_mlook, in_klook;
 extern 	kbutton_t 	in_strafe;
 extern 	kbutton_t 	in_speed;
+extern  float    MIN_ZOOM, MAX_ZOOM;
 
 void CL_InitInput (void);
 void CL_CameraMove (void);
@@ -530,6 +535,12 @@ int  CL_ReadFromServer (void);
 float CL_KeyState (kbutton_t *key);
 char *Key_KeynumToString (int keynum);
 
+void CL_CameraMode(void);
+void CL_CameraModeChange(camera_mode_t newcameramode);
+
+void CL_Sniper(void);
+void CL_SniperModeSet(void);
+void CL_SniperModeUnset(void);
 
 //
 // cl_le.c

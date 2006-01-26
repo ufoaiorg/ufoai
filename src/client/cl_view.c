@@ -636,8 +636,8 @@ void CL_CalcRefdef ()
 	VectorSet( cl.refdef.blend, 0.0, 0.0, 0.0 );
 
 	// set field of view
-	if ( cl.cam.zoom < 1.0 ) zoom = 1.0;
-	else if ( cl.cam.zoom > 5.0 ) zoom = 5.0;
+	if ( cl.cam.zoom < MIN_ZOOM ) zoom = MIN_ZOOM;
+	else if ( cl.cam.zoom > MAX_ZOOM ) zoom = MAX_ZOOM;
 	else zoom = cl.cam.zoom;
 	cl.refdef.fov_x = FOV / zoom;
 

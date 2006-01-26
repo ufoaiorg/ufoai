@@ -509,6 +509,13 @@ qboolean CL_ActorSelect( le_t *le )
 			// calculate possible moves
 			CL_BuildForbiddenList();
 			Grid_MoveCalc( &clMap, le->pos, MAX_ROUTE, fb_list, fb_length );
+
+			// move first person camera to new actor
+			if ( camera_mode == CAMERA_MODE_FIRSTPERSON )
+				CL_CameraModeChange( CAMERA_MODE_FIRSTPERSON );
+
+			cl.cmode = M_MOVE;
+
 			return true;
 		}
 
@@ -537,6 +544,7 @@ qboolean CL_ActorSelectList( int num )
 	// center view
 	VectorCopy( le->origin, cl.cam.reforg );
 	Cvar_SetValue( "cl_worldlevel", le->pos[2] );
+	
 	return true;
 }
 
@@ -1156,6 +1164,7 @@ void CL_ActorMouseTrace( void )
 	vec3_t	end;
 	le_t	*le;
 	int		i;
+	vec3_t	from;
 
 	// get camera parameters
 	d = (scr_vrect.width / 2) / tan( (FOV / cl.cam.zoom)*M_PI/360 );		
@@ -1164,9 +1173,23 @@ void CL_ActorMouseTrace( void )
 	angles[ROLL]  = 0;
 
 	// get trace vectors
-	AngleVectors( angles, fw, NULL, NULL );
-	VectorRotate( cl.cam.axis, fw, forward );
-	VectorMA( cl.cam.camorg, 2048, forward, stop );
+	if ( camera_mode == CAMERA_MODE_FIRSTPERSON )
+	{
+		VectorCopy( selActor->origin, from );
+		if (!(selActor->state & STATE_CROUCHED))
+			from[2] += 10; /* raise from waist to head */		
+		angles[PITCH] += cl.cam.angles[PITCH];
+		angles[YAW] = cl.cam.angles[YAW] - angles[YAW];
+		angles[ROLL] += cl.cam.angles[ROLL];
+		AngleVectors( angles, forward, NULL, NULL );		
+	}	
+	else
+	{
+		VectorCopy( cl.cam.camorg, from );
+		AngleVectors( angles, fw, NULL, NULL );
+		VectorRotate( cl.cam.axis, fw, forward );
+	}
+	VectorMA( from, 2048, forward, stop );
 
 	// do the trace
 	CM_EntTestLineDM( cl.cam.camorg, stop, end );

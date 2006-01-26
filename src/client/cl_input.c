@@ -62,7 +62,6 @@ Key_Event (int key, qboolean down, unsigned time);
 kbutton_t	in_turnleft, in_turnright, in_shiftleft, in_shiftright;
 kbutton_t	in_shiftup, in_shiftdown;
 kbutton_t	in_zoomin, in_zoomout;
-kbutton_t	in_lookup, in_lookdown;
 kbutton_t	in_select, in_action, in_turn;
 kbutton_t	in_turnup, in_turndown;
 
@@ -178,6 +177,74 @@ void IN_Impulse (void) {in_impulse=atoi(Cmd_Argv(1));}
 
 /*
 ===============
+CL_Camera_Mode
+
+Switches camera mode between remote and firstperson
+===============
+*/
+
+void CL_CameraMode (void)
+{
+	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
+		CL_CameraModeChange (CAMERA_MODE_REMOTE);
+	else
+		CL_CameraModeChange (CAMERA_MODE_FIRSTPERSON);
+}
+
+void CL_CameraModeChange (camera_mode_t new_camera_mode)
+{
+	static vec3_t save_camorg, save_camangles;
+	static float  save_camzoom;
+	static int save_level;
+
+	// save remote camera position, angles, zoom
+	
+	if (camera_mode == CAMERA_MODE_REMOTE)
+	{
+		VectorCopy(cl.cam.camorg, save_camorg);
+		VectorCopy(cl.cam.angles, save_camangles);
+		save_camzoom = cl.cam.zoom;
+		save_level = cl_worldlevel->value;
+	}	
+
+	if (new_camera_mode == CAMERA_MODE_REMOTE) /* toggle camera mode */
+	{
+		Com_Printf ( _("Changed camera mode to remote.\n") );
+		camera_mode = CAMERA_MODE_REMOTE;
+		VectorCopy(save_camorg, cl.cam.camorg);
+		VectorCopy(save_camangles, cl.cam.angles);
+		cl.cam.zoom = save_camzoom;
+		Cvar_SetValue( "cl_worldlevel", save_level );
+	}
+	else
+	{
+		Com_Printf ( _("Changed camera mode to first-person.\n") );
+		camera_mode = CAMERA_MODE_FIRSTPERSON;
+		VectorCopy(selActor->origin, cl.cam.camorg);
+		Cvar_SetValue( "cl_worldlevel", selActor->pos[2] );
+		if (!(selActor->state & STATE_CROUCHED))
+			cl.cam.camorg[2] += 10; /* raise from waist to head */
+		VectorCopy(selActor->angles, cl.cam.angles);
+		cl.cam.zoom = 1.0;
+		Cvar_SetValue( "cl_worldlevel", 7 );
+	}
+}
+
+/*
+===============
+CL_Time_f
+
+print the time long integer value
+===============
+*/
+
+void CL_Time_f (void)
+{
+	Com_Printf ("time: %d\n", cl.time);
+}
+
+/*
+===============
 CL_KeyState
 
 Returns the fraction of the frame that the key was down
@@ -218,6 +285,9 @@ float CL_KeyState (kbutton_t *key)
 
 //==========================================================================
 
+float MIN_ZOOM = 0.5;
+float MAX_ZOOM = 3.0;
+
 cvar_t	*cl_camrotspeed;
 cvar_t	*cl_camrotaccel;
 cvar_t	*cl_cammovespeed;
@@ -239,7 +309,8 @@ cvar_t	*cl_anglespeedkey;
 #define MAX_CAMMOVE_SPEED	3000
 #define MAX_CAMMOVE_ACCEL	3000
 #define ZOOM_SPEED			1.4
-#define MAX_ZOOM			3.0
+//#define MIN_ZOOM            0.5
+//#define MAX_ZOOM			3.0
 #define MIN_CAMZOOM_QUANT	0.2
 #define MAX_CAMZOOM_QUANT	1.0
 #define LEVEL_SPEED			3.0
@@ -259,7 +330,8 @@ CL_LevelUp
 */
 void CL_LevelUp( void )
 {
-	Cvar_SetValue( "cl_worldlevel", (cl_worldlevel->value < 7) ? cl_worldlevel->value + 1 : 7 );
+	if (camera_mode != CAMERA_MODE_FIRSTPERSON)
+		Cvar_SetValue( "cl_worldlevel", (cl_worldlevel->value < 7) ? cl_worldlevel->value + 1 : 7 );
 }
 
 /*
@@ -269,7 +341,8 @@ CL_LevelDown
 */
 void CL_LevelDown( void )
 {
-	Cvar_SetValue( "cl_worldlevel", (cl_worldlevel->value > 0) ? cl_worldlevel->value - 1 : 0 );
+	if (camera_mode != CAMERA_MODE_FIRSTPERSON)
+		Cvar_SetValue( "cl_worldlevel", (cl_worldlevel->value > 0) ? cl_worldlevel->value - 1 : 0 );
 }
 
 
@@ -311,8 +384,8 @@ void CL_ZoomOutQuant( void )
 	// change zoom
 	cl.cam.zoom /= quant;
 
-	// test boundaris
-	if ( cl.cam.zoom < 1.0 ) cl.cam.zoom = 1.0;
+	// test boundaries
+	if ( cl.cam.zoom < MIN_ZOOM ) cl.cam.zoom = MIN_ZOOM;
 }
 
 /*
@@ -489,6 +562,8 @@ void CL_NextAlien( void )
 	le_t *le;
 	int i;
 	
+	if ( camera_mode == CAMERA_MODE_FIRSTPERSON )
+		CL_CameraModeChange( CAMERA_MODE_REMOTE );
 	if ( lastAlien >= numLEs ) lastAlien = 0;
 	i = lastAlien;
 	do {
@@ -561,6 +636,8 @@ void CL_InitInput (void)
 	Cmd_AddCommand( "zoomoutquant", CL_ZoomOutQuant );
 	Cmd_AddCommand( "confirmaction", CL_ConfirmAction );
 
+	Cmd_AddCommand( "cameramode", CL_CameraMode );
+
 	cl_nodelta = Cvar_Get ("cl_nodelta", "0", 0);
 }
 
@@ -609,11 +686,48 @@ float		routeDist;
 int			routeLevelStart, routeLevelEnd;
 
 /*
-=================
-CL_CameraMove
-=================
+================
+CL_CameraMoveFirstPerson
+================
 */
-void CL_CameraMove (void)
+void CL_CameraMoveFirstPerson (void)
+{
+	float frac;
+	float rotation_speed;
+
+	rotation_speed = (cl_camrotspeed->value > MIN_CAMROT_SPEED) ? ( (cl_camrotspeed->value < MAX_CAMROT_SPEED) ? cl_camrotspeed->value : MAX_CAMROT_SPEED ) : MIN_CAMROT_SPEED;
+  /* look left */	
+	if ( (in_turnleft.state & 1) && ((cl.cam.angles[YAW]-selActor->angles[YAW])<90) )
+		cl.cam.angles[YAW]+=cls.frametime*rotation_speed;
+
+	/* look right */
+	if ( (in_turnright.state & 1) && ((selActor->angles[YAW]-cl.cam.angles[YAW])<90) )
+		cl.cam.angles[YAW]-=cls.frametime*rotation_speed;
+	
+	/* look down */
+	if ( (in_turndown.state & 1) && (cl.cam.angles[PITCH] < 45) )
+		cl.cam.angles[PITCH]+=cls.frametime*rotation_speed;
+	
+	/* look up */
+	if ( (in_turnup.state & 1) && (cl.cam.angles[PITCH] > -45) )
+		cl.cam.angles[PITCH]-=cls.frametime*rotation_speed;
+
+	/* zoom */	
+	frac = CL_GetKeyMouseState(STATE_ZOOM);
+	if ( frac > 0.1 ) cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
+	if ( frac <-0.1 ) cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
+
+	if (cl.cam.zoom > MAX_ZOOM) cl.cam.zoom = MAX_ZOOM;
+	if (cl.cam.zoom < MIN_ZOOM) cl.cam.zoom = MIN_ZOOM;
+}
+
+
+/*
+================
+CL_CameraMoveRemote
+================
+*/
+void CL_CameraMoveRemote (void)
 {
 	float			angle, frac;
 	static float	sy, cy;
@@ -622,12 +736,6 @@ void CL_CameraMove (void)
 	float			rotspeed, rotaccel;
 	float			movespeed, moveaccel;
 	int				i;
-
-	if ( cls.state != ca_active )
-		return;
-
-	if ( !scr_vrect.width || !scr_vrect.height )
-		return;
 
 	// get relevant variables
 	rotspeed = (cl_camrotspeed->value > MIN_CAMROT_SPEED) ? ( (cl_camrotspeed->value < MAX_CAMROT_SPEED) ? cl_camrotspeed->value : MAX_CAMROT_SPEED ) : MIN_CAMROT_SPEED;
@@ -744,10 +852,28 @@ void CL_CameraMove (void)
 	frac = CL_GetKeyMouseState(STATE_ZOOM);
 	if ( frac > 0.1 ) cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
 	if ( frac <-0.1 ) cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
-	if ( cl.cam.zoom < 1.0 ) cl.cam.zoom = 1.0;
+	if ( cl.cam.zoom < MIN_ZOOM ) cl.cam.zoom = MIN_ZOOM;
 	else if ( cl.cam.zoom > MAX_ZOOM ) cl.cam.zoom = MAX_ZOOM;
 }
 
+/*
+=================
+CL_CameraMove
+=================
+*/
+void CL_CameraMove (void)
+{
+	if ( cls.state != ca_active )
+		return;
+
+	if ( !scr_vrect.width || !scr_vrect.height )
+		return;
+
+	if ( camera_mode == CAMERA_MODE_FIRSTPERSON )
+		CL_CameraMoveFirstPerson();
+	else
+		CL_CameraMoveRemote();
+}
 
 /*
 =================

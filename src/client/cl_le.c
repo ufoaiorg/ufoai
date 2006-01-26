@@ -430,6 +430,12 @@ void LET_PathMove( le_t *le )
 			blockEvents = false;
 			le->think = LET_StartIdle;
 			le->think( le );
+			if (camera_mode == CAMERA_MODE_FIRSTPERSON) 
+			{
+				PosToVec( le->pos, dest);
+				VectorCopy(dest, cl.cam.camorg);
+				VectorCopy(selActor->angles, cl.cam.angles);
+			}	
 			return;
 		}
 	}
