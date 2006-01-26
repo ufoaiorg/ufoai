@@ -1478,7 +1478,7 @@ void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
 		VectorAdd( from, ds, next );
 		next[2] += dt * (vz - 0.5*GRAVITY*dt);
 		vz -= GRAVITY*dt;
-		CL_ParticleSpawn( "tracer", 0, from, next, NULL );
+		CL_ParticleSpawn( "inRangeTracer", 0, from, next, NULL );
 		VectorCopy( next, from );
 	}
 }
