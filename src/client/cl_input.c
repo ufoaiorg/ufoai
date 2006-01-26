@@ -383,7 +383,6 @@ void CL_ConfirmAction( void )
 }
 
 
-/* FIXME: Reload a two-handed weapon if we hit the right reload button */
 /*
 ============
 CL_ReloadLeft

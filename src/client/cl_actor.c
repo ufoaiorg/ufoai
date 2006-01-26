@@ -687,8 +687,8 @@ void CL_ActorReload( int hand )
 {
 	inventory_t	*inv;
 	invList_t	*ic;
-	int		num, x, y, tu;
-	int		c;
+	int		weapon, x, y, tu;
+	int		container, bestContainer;
 
 	if ( !CL_CheckAction() ) 
 		return;
@@ -699,26 +699,43 @@ void CL_ActorReload( int hand )
 	// search for clips and select the one that is available easely
 	x = 0; y = 0;
 	tu = 100;
+	bestContainer = NONE;
 
-	if ( inv->c[hand] ) num = inv->c[hand]->item.t;
-	else return;
-
-	for ( c = 0; c < csi.numIDs; c++ )
+	if ( inv->c[hand] )
+		weapon = inv->c[hand]->item.t;
+	else
 	{
-		for ( ic = inv->c[c]; ic; ic = ic->next )
-			if ( csi.ods[ic->item.t].link == num && csi.ids[c].out < tu )
-			{
-				x = ic->x; y = ic->y;
-				tu = csi.ids[c].out;
-				break;
-			}
-		if ( ic ) break;
+		// Check for two-handed weapon
+		hand = 1 - hand;
+		if ( !inv->c[hand] || !csi.ods[inv->c[hand]->item.t].twohanded )
+			return;
+		weapon = inv->c[hand]->item.t;
+	}
+
+	for ( container = 0; container < csi.numIDs; container++ )
+	{
+		if ( csi.ids[container].out < tu )
+		{
+			// Once we've found at least one clip, there's no point
+			// searching other containers if it would take longer to
+			// retrieve the ammo from them than the one we've already
+			// found.
+			for ( ic = inv->c[container]; ic; ic = ic->next )
+				if ( csi.ods[ic->item.t].link == weapon )
+				{
+					x = ic->x; y = ic->y;
+					tu = csi.ids[container].out;
+					bestContainer = container;
+					break;
+				}
+		}
 	}
 
 	// send request
-	if ( c < csi.numIDs )
+	if ( bestContainer != NONE )
 		MSG_WriteFormat( &cls.netchan.message, "bbsbbbbbb",
-			clc_action, PA_INVMOVE, selActor->entnum, c, x, y, hand, 0, 0 );
+			clc_action, PA_INVMOVE, selActor->entnum, bestContainer, x, y,
+			hand, 0, 0 );
 	else
 		Com_Printf( _("No clip left.\n") );
 }
