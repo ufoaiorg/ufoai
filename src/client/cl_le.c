@@ -404,6 +404,14 @@ void LET_PathMove( le_t *le )
 			le->angles[YAW] = dangle[le->dir];
 			le->startTime = le->endTime;
 			le->endTime += ((dv&7) > 3 ? US*1.41 : US) * 1000 / le->speed;
+			if ( le->team == cls.team && le == selActor &&
+				(int)cl_worldlevel->value == le->oldPos[2] &&
+				le->pos[2] != le->oldPos[2])
+			{
+				//PosToVec( le->pos, dest );
+				//VectorCopy( dest, cl.cam.reforg );
+				Cvar_SetValue( "cl_worldlevel", le->pos[2] );
+			}
 		}
 		else
 		{
