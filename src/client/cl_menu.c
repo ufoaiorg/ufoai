@@ -1342,15 +1342,20 @@ void MN_DrawMenus( void )
 				case MN_TEXT:
 					if ( menuText[node->num] )
 					{
-						char textCopy[1024];
+						char textCopy[MAX_MENUTEXTLEN];
+						int len;
 						char *pos, *tab1, *tab2, *end;
 						int  y, line;
 
-						strncpy( textCopy, menuText[node->num], 1023 );
-						if ( textCopy[strlen(textCopy)] != '\n' ) strcat( textCopy, "\n" );
+						strncpy( textCopy, menuText[node->num], MAX_MENUTEXTLEN );
+						len = strlen(textCopy);
+						if ( len < MAX_MENUTEXTLEN - 1 && textCopy[len] != '\n' )
+							strcat( textCopy, "\n" );
 
-						if ( node->data[1] ) font = MN_GetReferenceString( menu, node->data[1] );
-						else font = "f_small";
+						if ( node->data[1] )
+							font = MN_GetReferenceString( menu, node->data[1] );
+						else
+							font = "f_small";
 
 						pos = textCopy;
 						y = node->pos[1];

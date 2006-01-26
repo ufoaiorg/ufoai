@@ -240,8 +240,7 @@ void CL_TeamCommentsCmd( void )
 CL_ItemDescription
 ======================
 */
-#define MAX_ITEMTEXT	256
-char	itemText[MAX_ITEMTEXT];
+char	itemText[MAX_MENUTEXTLEN];
 
 void CL_ItemDescription( int item )
 {
@@ -267,7 +266,7 @@ void CL_ItemDescription( int item )
 	// set description text
 	if ( ! od->researchNeeded || od->researchDone )
 	{
-		sprintf( itemText, va( _("Primary:\t%s\nSecondary:\t%s\nDamage:\t%i / %i\nTime units:\t%i / %i\nRange:\t%1.1f / %1.1f\nSpreads:\t%1.1f / %1.1f\nAmmo:\t%i\n"),
+		snprintf( itemText, MAX_MENUTEXTLEN, va( _("Primary:\t%s\nSecondary:\t%s\nDamage:\t%i / %i\nTime units:\t%i / %i\nRange:\t%1.1f / %1.1f\nSpreads:\t%1.1f / %1.1f\nAmmo:\t%i\n"),
 			od->fd[0].name, od->fd[1].name, (int)(od->fd[0].damage[0] * od->fd[0].shots + od->fd[0].spldmg[0]), (int)(od->fd[1].damage[0] * od->fd[1].shots + od->fd[0].spldmg[0]),
 			(od->fd[0].time), (od->fd[1].time), (od->fd[0].range / 32.0), (od->fd[1].range / 32.0),
 			(od->fd[0].spread[0] + od->fd[0].spread[1])/2, (od->fd[1].spread[0] + od->fd[1].spread[1])/2, (int)(od->ammo)
@@ -984,8 +983,7 @@ void CL_SendTeamInfo( sizebuf_t *buf, character_t *team, int num )
 CL_ParseResults
 ======================
 */
-#define	MAX_RESULTTEXT	512
-char	resultText[MAX_RESULTTEXT];
+char	resultText[MAX_MENUTEXTLEN];
 
 void CL_ParseResults( sizebuf_t *buf )
 {

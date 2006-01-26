@@ -48,6 +48,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_TEAMLIST	8
 
+#define RIGHT(e) ((e)->i.c[csi.idRight])
+#define LEFT(e)  ((e)->i.c[csi.idLeft])
+#define FLOOR(e) ((e)->i.c[csi.idFloor])
+
 typedef struct
 {
 	int			serverframe;		// if not current, this ent isn't in the frame
@@ -333,6 +337,8 @@ extern	cvar_t	*mn_lastsave;
 #ifndef _WIN32
 extern	cvar_t	*snd_system;
 #endif
+
+extern	cvar_t	*confirm_actions;
 
 typedef struct
 {
@@ -1049,6 +1055,7 @@ void MN_PrevMap ( void );
 // cl_menu.c
 //
 #define MAX_MENUTEXTS		8
+#define MAX_MENUTEXTLEN		512
 
 typedef enum 
 {

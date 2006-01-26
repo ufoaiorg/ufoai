@@ -1333,15 +1333,15 @@ void CL_Events( void )
 			Com_Error( ERR_DROP, _("CL_Events: invalid event %i\n"), eType );
 #endif
 
-		// call function
-		CL_LogEvent( eType );
-		ev_func[eType]( &evStorage );
-
 		// free timetable entry
 		last = etCurrent;
 		etCurrent = etCurrent->next;
 		last->next = etUnused;
 		etUnused = last;
+
+		// call function
+		CL_LogEvent( eType );
+		ev_func[eType]( &evStorage );
 	}
 }
 

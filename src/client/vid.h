@@ -22,10 +22,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
 
+/*    vrect_s
+
+The menu system may define a quake rendering view port on the screen. The vrect_s
+struct defines the properties of this view port - i.e. the height and width of the port,
+and the (x,y) offset from the bottom (?) left (?) corner.
+
+*/
+
+
 typedef struct vrect_s
 {
 	int				x,y,width,height;
 } vrect_t;
+
+/*    viddef_t
+
+Another structure used to rationalize the menu system rendering box with the actual screen.
+The width and height are the dimensions of the actual screen, not just the rendering box.
+The rx, ry positions are the width and height divided by VID_NORM_WIDTH and VID_NORM_HEIGHT
+respectively. This allows the menu system to use a "normalized" coordinate system of 
+1024x768 texels.
+
+*/
 
 typedef struct
 {

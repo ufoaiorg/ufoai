@@ -15,9 +15,6 @@ invList_t	invList[MAX_INVLIST];
 le_t	*mouseActor;
 pos3_t	mousePos, mouseLastPos;
 
-#define RIGHT(e) e->i.c[csi.idRight]
-#define LEFT(e)  e->i.c[csi.idLeft]
-
 /*
 ==============================================================
 
@@ -117,7 +114,7 @@ void CL_ActorGlobalCVars( void )
 CL_ActorUpdateCVars
 =================
 */
-char infoText[256];
+char infoText[MAX_MENUTEXTLEN];
 
 void CL_ActorUpdateCVars( void )
 {
@@ -173,7 +170,7 @@ void CL_ActorUpdateCVars( void )
 		if ( cl.time < cl.msgTime )
 		{
 			// special message
-			strcpy( infoText, cl.msgText );
+			strncpy( infoText, cl.msgText, MAX_MENUTEXTLEN );
 		}
 		else if ( selActor->state & STATE_PANIC )
 		{
@@ -185,7 +182,7 @@ void CL_ActorUpdateCVars( void )
 			{
 				if ( selWeapon )
 				{
-					sprintf( infoText, "%s\n%s (%i) [%i%%] %i\n",  _(csi.ods[selWeapon->item.t].name), 
+					snprintf( infoText, MAX_MENUTEXTLEN, "%s\n%s (%i) [%i%%] %i\n",  _(csi.ods[selWeapon->item.t].name), 
 						_(selFD->name), selFD->ammo, selToHit, selFD->time );
 					time = selFD->time;
 				} 
@@ -195,9 +192,9 @@ void CL_ActorUpdateCVars( void )
 			{
 				time = actorMoveLength;
 				if ( actorMoveLength < 0xFF )
-					sprintf( infoText, _("Health\t%i\nMove\t%i\n"), selActor->HP, actorMoveLength );
+					snprintf( infoText, MAX_MENUTEXTLEN, _("Health\t%i\nMove\t%i\n"), selActor->HP, actorMoveLength );
 				else
-					sprintf( infoText, _("Health\t%i\n"), selActor->HP );
+					snprintf( infoText, MAX_MENUTEXTLEN, _("Health\t%i\n"), selActor->HP );
 			} 
 		}
 
@@ -468,7 +465,7 @@ int CL_CheckAction( void )
 	if ( !selActor )
 	{
 		Com_Printf( _("Nobody selected.\n") );
-		sprintf( infoText, _("Nobody selected\n") );
+		snprintf( infoText, MAX_MENUTEXTLEN, _("Nobody selected\n") );
 		return false;
 	}
 
@@ -481,7 +478,7 @@ int CL_CheckAction( void )
 	if ( cls.team != cl.actTeam )
 	{
 		Com_Printf( _("This isn't your round.\n") );
-		sprintf( infoText, _("This isn't your round\n") );
+		snprintf( infoText, MAX_MENUTEXTLEN, _("This isn't your round\n") );
 		return false;
 	}
 
@@ -1248,10 +1245,10 @@ void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
 	// get vectors, paint cross
 	Grid_PosToVec( &clMap, fromPos, from );
 	Grid_PosToVec( &clMap, toPos, at );
-	
-	//brain with value 30 it does not work for me under linux - value 10 works great
-	//with value 10 the vector is painted as it should be - but the throw animation does not work
-	//propererly
+
+	//brain with value 30 it does not work for me under linux - value 10
+	//works great with value 10 the vector is painted as it should be - but
+	//the throw animation does not work propererly
 	at[2] -= 30;
 
 	// calculate parabola
@@ -1261,8 +1258,10 @@ void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
 		CL_ParticleSpawn( "cross_no", 0, at, NULL, NULL );
 		return;
 	}
-	if ( VectorLength( v0 ) > GRENADE_THROWSPEED ) CL_ParticleSpawn( "cross_no", 0, at, NULL, NULL );
-	else CL_ParticleSpawn( "cross", 0, at, NULL, NULL );
+	if ( VectorLength( v0 ) > GRENADE_THROWSPEED )
+		CL_ParticleSpawn( "cross_no", 0, at, NULL, NULL );
+	else
+		CL_ParticleSpawn( "cross", 0, at, NULL, NULL );
 
 	dt /= GRENADE_PARTITIONS;
 	VectorSubtract( at, from, ds );

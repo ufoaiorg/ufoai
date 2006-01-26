@@ -789,6 +789,9 @@ extern	int		time_before_ref;
 extern	int		time_after_ref;
 
 // weapon definitions
+#define FD_PRIMARY		0
+#define FD_SECONDARY		1
+
 extern csi_t	csi;
 
 extern char map_entitystring[MAX_MAP_ENTSTRING];

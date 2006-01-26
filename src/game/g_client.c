@@ -1136,7 +1136,7 @@ void G_ClientStateChange( player_t *player, int num, int newState )
 		return;
 
 	if ( changeState & STATE_CROUCHED )
-		// check if any action is possible
+		// check if player has enough TUs (1 TU for crouch/uncrouch)
 		if ( G_ActionCheck( player, ent, 1 ) )
 		{
 			ent->state ^= STATE_CROUCHED;

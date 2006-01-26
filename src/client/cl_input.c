@@ -59,9 +59,12 @@ Key_Event (int key, qboolean down, unsigned time);
 ===============================================================================
 */
 
-kbutton_t	in_turnleft, in_turnright, in_shiftleft, in_shiftright, in_shiftup, in_shiftdown;
+kbutton_t	in_turnleft, in_turnright, in_shiftleft, in_shiftright;
+kbutton_t	in_shiftup, in_shiftdown;
 kbutton_t	in_zoomin, in_zoomout;
-
+kbutton_t	in_lookup, in_lookdown;
+kbutton_t	in_select, in_action, in_turn;
+kbutton_t	in_turnup, in_turndown;
 
 int			in_impulse;
 
@@ -142,10 +145,6 @@ void KeyUp (kbutton_t *b)
 	b->state |= 4; 		// impulse up
 }
 
-kbutton_t	in_select, in_action, in_turn;
-kbutton_t	in_turnleft, in_turnright, in_turnup, in_turndown;
-kbutton_t	in_shiftleft, in_shiftright, in_shiftup, in_shiftdown;
-kbutton_t	in_zoomin, in_zoomout;
 
 void IN_SelectDown(void) {KeyDown(&in_select);}
 void IN_SelectUp(void) {KeyUp(&in_select);}
@@ -756,7 +755,6 @@ void CL_CameraRoute( pos3_t from, pos3_t target )
 	blockEvents = true;
 }
 
-		
 /*
 =================
 CL_ParseInput
