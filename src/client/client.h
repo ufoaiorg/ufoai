@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -112,7 +112,7 @@ typedef enum
 	M_PEND_FIRE_PL,
 	M_PEND_FIRE_SL
 } cmodes_t;
-	
+
 //
 // the client_state_t structure is wiped completely at every
 // server map change
@@ -232,14 +232,14 @@ typedef struct
 	int			framedelta;
 	float		framerate;
 
-// screen rendering information
+	// screen rendering information
 	float		disable_screen;		// showing loading plaque between levels
 									// or changing rendering dlls
 									// if time gets > 30 seconds ahead, break it
 	int			disable_servercount;	// when we receive a frame and cl.servercount
 									// > cls.disable_servercount, clear disable_screen
 
-// connection information
+	// connection information
 	char		servername[MAX_OSPATH];	// name of server from original connect
 	float		connect_time;		// for connection retransmits
 
@@ -257,12 +257,12 @@ typedef struct
 	dltype_t	downloadtype;
 	int			downloadpercent;
 
-// demo recording info must be here, so it isn't cleared on level change
+	// demo recording info must be here, so it isn't cleared on level change
 	qboolean	demorecording;
 	qboolean	demowaiting;	// don't record until a non-delta message is received
 	FILE		*demofile;
 
-// needs to be here, because server can be shutdown, before we see the ending screen
+	// needs to be here, because server can be shutdown, before we see the ending screen
 	int			team;
 } client_static_t;
 
@@ -971,22 +971,22 @@ typedef struct building_s
 	char    *text, *image, *needs, *depends, *mapPart, *produceType, *pedia;
 	float   energy, workerCosts, produceTime, fixCosts, varCosts;
 	int     production, level, id, timeStart, buildTime, techLevel, notUpOn, maxWorkers, minWorkers, addWorkers;
-	
+
 	//if we can build more than one building of the same type:
 	buildingStatus_t	buildingStatus[BASE_SIZE*BASE_SIZE];
-	int	condition[BASE_SIZE*BASE_SIZE]; 
-	
+	int	condition[BASE_SIZE*BASE_SIZE];
+
 	vec2_t  size;
 	int	visible;
 	int	used;
-	
+
 	//more than one building of the same type allowed?
 	int	moreThanOne;
-	
+
 	//how many buildings are there of the same type?
 	//depends one the set of moreThanOne ^^
 	int	howManyOfThisType;
-	
+
 	struct  building_s *dependsBuilding;
 	struct  building_s *prev;
 	struct  building_s *next;
@@ -1002,24 +1002,24 @@ typedef struct base_s
 
 	//this is here to allocate the needed memory for the buildinglist
 	char	allBuildingsList[MAX_LIST_CHAR];
-	
+
 	int	buildingListArray[MAX_BUILDINGS];
 	int	numList;
-	
+
 	int	posX[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
 	int	posY[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
-	
-	//FIXME: change building condition to base condition 
+
+	//FIXME: change building condition to base condition
 	float	condition;
-	
+
 	baseStatus_t	baseStatus;
-	
+
 	// which level to display?
 	int	baseLevel;
-	
+
 	// needed if there is another buildingpart to build
 	struct  building_s *buildingToBuild;
-	
+
 	struct  building_s *buildingCurrent;
 } base_t;
 
@@ -1063,7 +1063,7 @@ void MN_PrevMap ( void );
 #define MAX_MENUTEXTS		8
 #define MAX_MENUTEXTLEN		512
 
-typedef enum 
+typedef enum
 {
 	TEXT_STANDARD,
 	TEXT_LIST,

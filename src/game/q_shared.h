@@ -814,6 +814,13 @@ typedef struct fireDef_s
 	int		weaponSkill;
 } fireDef_t;
 
+typedef enum researchStatus_s
+{
+	RS_NONE,
+	RS_RUNNING,
+	RS_FINISH
+} researchStatus_t;
+
 typedef struct objDef_s
 {
 	// common
@@ -845,7 +852,7 @@ typedef struct objDef_s
 
 	// research
 	int researchNeeded; // all alien weapons need this
-	int researchDone; // set to one if researched
+	researchStatus_t researchStatus; // status of researching
 } objDef_t;
 
 #define MAX_INVDEFS		16

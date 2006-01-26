@@ -264,7 +264,7 @@ void CL_ItemDescription( int item )
 	}*/
 
 	// set description text
-	if ( ! od->researchNeeded || od->researchDone )
+	if ( ! od->researchNeeded || od->researchStatus == RS_FINISH )
 	{
 		snprintf( itemText, MAX_MENUTEXTLEN, va( _("Primary:\t%s\nSecondary:\t%s\nDamage:\t%i / %i\nTime units:\t%i / %i\nRange:\t%1.1f / %1.1f\nSpreads:\t%1.1f / %1.1f\nAmmo:\t%i\n"),
 			od->fd[0].name, od->fd[1].name, (int)(od->fd[0].damage[0] * od->fd[0].shots + od->fd[0].spldmg[0]), (int)(od->fd[1].damage[0] * od->fd[1].shots + od->fd[0].spldmg[0]),

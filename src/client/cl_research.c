@@ -5,7 +5,7 @@
 
 byte researchList[MAX_RESEARCHLIST];
 int researchListLength;
-
+int globalResearchNum;
 
 /*
 Note:
@@ -27,25 +27,49 @@ void CL_ResearchSelectCmd( void )
 	}
 
 	num = atoi( Cmd_Argv( 1 ) );
-	if ( num > researchListLength )
+	if ( num >= researchListLength )
+	{
+		menuText[TEXT_STANDARD] = NULL;
 		return;
+	}
 
 	Cbuf_AddText( va( "researchselect%i\n", num ) );
 	CL_ItemDescription( researchList[num] );
+	globalResearchNum = num;
 }
 
 /*======================
 CL_ResearchStart
+
+TODO: Check if laboratory is available
 ======================*/
 void CL_ResearchStart ( void )
 {
+	objDef_t *od;
+
+	// we are not in base view
+	if ( ! baseCurrent )
+		return;
+
+	od = &csi.ods[globalResearchNum];
+	od->researchStatus = RS_RUNNING;
 }
 
 /*======================
 CL_ResearchStop
+
+TODO: Check if laboratory is available
 ======================*/
 void CL_ResearchStop ( void )
 {
+	objDef_t *od;
+
+	// we are not in base view
+	if ( ! baseCurrent )
+		return;
+
+	od = &csi.ods[globalResearchNum];
+	od->researchStatus = RS_NONE;
 }
 
 /*======================
@@ -55,18 +79,15 @@ void CL_ResearchType ( void )
 {
 	objDef_t *od;
 	int i, j;
-	char str[MAX_VAR];
 
 	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
 
 	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
-		if ( od->researchNeeded && ! od->researchDone )
+		if ( od->researchNeeded && od->researchStatus != RS_FINISH )
 		{
-			sprintf( str, "mn_item%i", j );		Cvar_Set( str, od->name );
-			sprintf( str, "mn_storage%i", j );	Cvar_SetValue( str, ccs.eCampaign.num[i] );
-			sprintf( str, "mn_supply%i", j );	Cvar_SetValue( str, ccs.eMarket.num[i] );
+			Cvar_Set( va("mn_item%i", j), od->name );
 			// TODO: the price must differ from buying the weapon
-			sprintf( str, "mn_price%i", j );	Cvar_Set( str, va( "%i $", od->price ) );
+			Cvar_Set( va("mn_price%i", j), va( "%i $", od->price ) );
 			researchList[j] = i;
 			j++;
 		}
@@ -76,8 +97,6 @@ void CL_ResearchType ( void )
 	for ( ; j < 28; j++ )
 	{
 		Cvar_Set( va( "mn_item%i", j ), "" );
-		Cvar_Set( va( "mn_storage%i", j ), "" );
-		Cvar_Set( va( "mn_supply%i", j ), "" );
 		Cvar_Set( va( "mn_price%i", j ), "" );
 	}
 
@@ -97,6 +116,31 @@ void CL_ResearchType ( void )
 }
 
 /*======================
+CL_CheckResearchStatus
+
+TODO: This needs to be called once a day/hour??
+======================*/
+void CL_CheckResearchStatus ( void )
+{
+	int i;
+	objDef_t *od;
+
+	if ( ! researchListLength )
+		return;
+
+	for ( i = 0; i < researchListLength; i++ )
+	{
+		od = &csi.ods[i];
+		// FIXME: Make this depending on how many scientists are hired
+		if ( od->researchStatus == RS_RUNNING && 1 )
+		{
+			// leave all other flags - maybe useful for statistic?
+			od->researchStatus = RS_FINISH;
+		}
+	}
+}
+
+/*======================
 MN_ResearchInit
 ======================*/
 void MN_ResearchInit( void )
@@ -109,7 +153,7 @@ MN_ResetResearch
 ======================*/
 void MN_ResetResearch( void )
 {
-	researchListLength = -1;
+	researchListLength = 0;
 	// add commands and cvars
 	Cmd_AddCommand( "research_init", MN_ResearchInit );
 	Cmd_AddCommand( "research_select", CL_ResearchSelectCmd );
