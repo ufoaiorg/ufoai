@@ -1,7 +1,7 @@
 // ==================
 // MAP MENU
 // ==================
-	
+
 menu map
 {
 	// ==================
@@ -11,25 +11,25 @@ menu map
 	zone render
 	{
 		invis true
-	}	
-	
+	}
+
 	// ==================
 	// background
 	// ==================
-	
+
 	map themap
 	{
 		pos		"0 96"
 		size	"1024 512"
 		click rclick mclick
 	}
-	
+
 	pic back_ul
 	{
 		image	menu/map_ul
 		pos		"0 0"
-	}	
-		
+	}
+
 	pic back_ur
 	{
 		image	menu/map_ur
@@ -40,18 +40,18 @@ menu map
 	{
 		image	menu/map_ll
 		pos		"0 512"
-	}	
-		
+	}
+
 	pic back_lr
 	{
 		image	menu/map_lr
 		pos		"512 512"
 	}
-	
+
 	// ==================
 	// time
 	// ==================
-	
+
 	string date
 	{
 		string  "*cvar mn_mapdate"
@@ -136,29 +136,18 @@ menu map
 		size	"400 100"
 		format	"20 0"
 	}
-	
+
 	string daytime
 	{
 		string	"*cvar mn_mapdaytime"
 		pos		"34 718"
-	}	
-	
+	}
+
 	// ==================
 	// buttons
 	// ==================
 
-
-	pic bt_base1
-	{
-		image   menu/button_mapmen_bases
-		pos     "410 700"
-		texl    "0 0"
-		texh    "127 31"
-		out		{ *bt_base1 texl "0 0" *bt_base1 texh "127 31" }
-		in		{ *bt_base1 texl "128 0" *bt_base1 texh "255 31" }
-		click   { cmd "mn_select_base 0;" }
-	}
-
+	// create a new base
 	pic bt_base2
 	{
 		image   menu/button_mapmen_bases
@@ -167,7 +156,7 @@ menu map
 		texh    "127 68"
 		out		{ *bt_base2 texl "0 37" *bt_base2 texh "127 68" }
 		in		{ *bt_base2 texl "128 37" *bt_base2 texh "255 68" }
-		click   { cmd "mn_select_base 1;" }
+		click   { cmd "mn_select_base -1;" }
 	}
 
 	pic bt_intercept
@@ -202,7 +191,7 @@ menu map
 		in		{ *bt_dropships texl "0 220" *bt_dropships texh "105 260" }
 		click   { cmd "mn_push team;" }
 	}
-	
+
 	pic bt_ufopedia
 	{
 		image   menu/button_mapmen_options
@@ -234,7 +223,7 @@ menu map
 // ==================
 // POPUP LIST
 // ==================
-	
+
 menu popup_list
 {
 	zone popup
@@ -252,7 +241,7 @@ menu popup_list
 // ==================
 // POPUP NEW BASE
 // ==================
-	
+
 menu popup_newbase
 {
 	zone popup
@@ -264,7 +253,7 @@ menu popup_newbase
 		image	menu/popup
 		pos		"256 256"
 	}
-	
+
 	string title
 	{
 		string "New base"
@@ -331,9 +320,9 @@ menu popup_newbase
 		texh    "127 140"
 		out		{ *bt_edit texl "0 108" *bt_edit texh "127 140" }
 		in		{ *bt_edit texl "128 108" *bt_edit texh "255 140" }
-		click 
-		{ 
-			cmd "msgmenu ?mn_basename" 
+		click
+		{
+			cmd "msgmenu ?mn_basename"
 			*name mousefx true
 		}
 	}

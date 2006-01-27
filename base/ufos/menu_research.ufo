@@ -211,7 +211,7 @@ menu research
 		pos		"720 700"
 		texl    "0 0"
 		texh    "64 64"
-		click	{ mn_stop_research }
+		click	{ cmd mn_stop_research }
 	}
 
 	pic bt_start
@@ -221,7 +221,7 @@ menu research
 		pos		"650 696"
 		texl	"0 64"
 		texh	"64 128"
-		click	{ mn_start_research }
+		click	{ cmd mn_start_research }
 	}
 
 	// ==================
