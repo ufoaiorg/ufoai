@@ -50,7 +50,7 @@ void CL_CharacterCvars( character_t *chr )
 	Cvar_ForceSet( "mn_body", Com_CharGetBody( chr ) );
 	Cvar_ForceSet( "mn_head", Com_CharGetHead( chr ) );
 	Cvar_ForceSet( "mn_skin", va( "%i", chr->skin ) );
-	Cvar_ForceSet( "mn_skinname", teamSkinNames[chr->skin] );
+	Cvar_ForceSet( "mn_skinname", _(teamSkinNames[chr->skin]) );
 
 	Cvar_Set( "mn_vpwr", va( "%i", chr->skills[ABILITY_POWER] ) );
 	Cvar_Set( "mn_vspd", va( "%i", chr->skills[ABILITY_SPEED] ) );
@@ -61,7 +61,7 @@ void CL_CharacterCvars( character_t *chr )
 	Cvar_Set( "mn_vass", va( "%i", chr->skills[SKILL_ASSAULT] ) );
 	Cvar_Set( "mn_vprc", va( "%i", chr->skills[SKILL_PRECISE] ) );
 	Cvar_Set( "mn_vexp", va( "%i", chr->skills[SKILL_EXPLOSIVE] ) );
-	
+
 	Cvar_Set( "mn_tpwr", va( "%s (%i)", SKILL_TO_STRING( chr->skills[ABILITY_POWER] ), chr->skills[ABILITY_POWER] ) );
 	Cvar_Set( "mn_tspd", va( "%s (%i)", SKILL_TO_STRING( chr->skills[ABILITY_SPEED] ), chr->skills[ABILITY_SPEED] ) );
 	Cvar_Set( "mn_tacc", va( "%s (%i)", SKILL_TO_STRING( chr->skills[ABILITY_ACCURACY] ), chr->skills[ABILITY_ACCURACY] ) );
@@ -159,7 +159,7 @@ static void CL_RefreshWeaponButtons( int time )
 	}
 
 	// check for two-handed weapon - if not, switch to left hand
-	if ( !weapon || !csi.ods[weapon->item.t].twohanded ) 
+	if ( !weapon || !csi.ods[weapon->item.t].twohanded )
 		weapon = LEFT(selActor);
 
 	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time)
@@ -207,7 +207,7 @@ void CL_ActorUpdateCVars( void )
 		return;
 
 	refresh = (int)Cvar_VariableValue( "hud_refresh" );
-	if ( refresh ) 
+	if ( refresh )
 	{
 		Cvar_Set( "hud_refresh", "0" );
 		Cvar_Set( "cl_worldlevel", cl_worldlevel->string );
@@ -244,7 +244,7 @@ void CL_ActorUpdateCVars( void )
 			selWeapon = (cl.cmode-M_PEND_FIRE_PR)/2 ? LEFT(selActor) : RIGHT(selActor);
 		else
 			selWeapon = (cl.cmode-M_FIRE_PR)/2 ? LEFT(selActor) : RIGHT(selActor);
-		if ( !selWeapon && RIGHT(selActor) && csi.ods[RIGHT(selActor)->item.t].twohanded ) 
+		if ( !selWeapon && RIGHT(selActor) && csi.ods[RIGHT(selActor)->item.t].twohanded )
 			selWeapon = RIGHT(selActor);
 		if ( selWeapon )
 		{
@@ -258,7 +258,7 @@ void CL_ActorUpdateCVars( void )
 		else
 			selFD = NULL;
 
-		// write info		
+		// write info
 		time = 0;
 		if ( cl.time < cl.msgTime )
 		{
@@ -278,11 +278,11 @@ void CL_ActorUpdateCVars( void )
 				{
 					snprintf( infoText, MAX_MENUTEXTLEN,
 							"%s\n%s (%i) [%i%%] %i\n",
-							_(csi.ods[selWeapon->item.t].name), 
+							_(csi.ods[selWeapon->item.t].name),
 							_(selFD->name), selFD->ammo, selToHit,
 							selFD->time );
 					time = selFD->time;
-				} 
+				}
 				else if ( selWeapon )
 				{
 					snprintf( infoText, MAX_MENUTEXTLEN,
@@ -308,7 +308,7 @@ void CL_ActorUpdateCVars( void )
 					CL_RefreshWeaponButtons( selActor->TU );
 				}
 				time = actorMoveLength;
-			} 
+			}
 		}
 
 		// calc remaining TUs
@@ -336,7 +336,7 @@ void CL_ActorUpdateCVars( void )
 
 		// set info text
 		menuText[TEXT_STANDARD] = infoText;
-	} 
+	}
 	else
 	{
 		// no actor selected, reset cvars
@@ -435,14 +435,14 @@ void CL_AddActorToTeamList( le_t *le )
 CL_RemoveActorFromTeamList
 =================
 */
-void CL_RemoveActorFromTeamList( le_t *le ) 
+void CL_RemoveActorFromTeamList( le_t *le )
 {
 	int i, j;
 
 	if ( !le ) return;
 
 	// check selection
-	if ( selActor == le ) 
+	if ( selActor == le )
 	{
 		for ( i = 0; i < cl.numTeamList; i++ )
 			if ( CL_ActorSelect( cl.teamList[i] ) )
@@ -544,7 +544,7 @@ qboolean CL_ActorSelectList( int num )
 	// center view
 	VectorCopy( le->origin, cl.cam.reforg );
 	Cvar_SetValue( "cl_worldlevel", le->pos[2] );
-	
+
 	return true;
 }
 
@@ -706,7 +706,7 @@ void CL_ActorReload( int hand )
 	int		weapon, x, y, tu;
 	int		container, bestContainer;
 
-	if ( !CL_CheckAction() ) 
+	if ( !CL_CheckAction() )
 		return;
 
 	// check weapon
@@ -774,7 +774,7 @@ void CL_ActorDoMove( sizebuf_t *sb )
 		Com_Printf( _("Can't move, LE doesn't exist\n") );
 		return;
 	}
-	
+
 	// get length
 	MSG_ReadFormat( sb, ev_format[EV_ACTOR_MOVE],
 		&le->pathLength, le->path );
@@ -796,7 +796,7 @@ void CL_ActorDoMove( sizebuf_t *sb )
 CL_ActorTurnMouse
 =================
 */
-void CL_ActorTurnMouse( void ) 
+void CL_ActorTurnMouse( void )
 {
 	vec3_t	div;
 	byte	dv;
@@ -822,7 +822,7 @@ void CL_ActorTurnMouse( void )
 CL_ActorDoTurn
 =================
 */
-void CL_ActorDoTurn( sizebuf_t *sb ) 
+void CL_ActorDoTurn( sizebuf_t *sb )
 {
 	le_t	*le;
 
@@ -850,7 +850,7 @@ void CL_ActorDoTurn( sizebuf_t *sb )
 CL_ActorStandCrouch
 =================
 */
-void CL_ActorStandCrouch( void ) 
+void CL_ActorStandCrouch( void )
 {
 	if ( !CL_CheckAction() )
 		return;
@@ -866,7 +866,7 @@ void CL_ActorStandCrouch( void )
 CL_ActorToggleReaction
 =================
 */
-void CL_ActorToggleReaction( void ) 
+void CL_ActorToggleReaction( void )
 {
 	if ( !CL_CheckAction() )
 		return;
@@ -884,7 +884,7 @@ CL_ActorDoShoot
 */
 qboolean firstShot;
 
-void CL_ActorDoShoot( sizebuf_t *sb ) 
+void CL_ActorDoShoot( sizebuf_t *sb )
 {
 	fireDef_t	*fd;
 	le_t	*le;
@@ -896,9 +896,9 @@ void CL_ActorDoShoot( sizebuf_t *sb )
 	le = LE_Get( MSG_ReadShort( sb ) );
 
 	// read data
-	MSG_ReadFormat( sb, ev_format[EV_ACTOR_SHOOT], 
-		&type, &flags, &muzzle, &impact, &normal );	
-	
+	MSG_ReadFormat( sb, ev_format[EV_ACTOR_SHOOT],
+		&type, &flags, &muzzle, &impact, &normal );
+
 	// get the fire def
 	fd = GET_FIREDEF( type );
 
@@ -906,7 +906,7 @@ void CL_ActorDoShoot( sizebuf_t *sb )
 	LE_AddProjectile( fd, flags, muzzle, impact, normal );
 
 	// start the sound
-	if ( (!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED) ) 
+	if ( (!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED) )
 		S_StartLocalSound( fd->fireSound );
 	firstShot = false;
 
@@ -925,7 +925,7 @@ void CL_ActorDoShoot( sizebuf_t *sb )
 CL_ActorDoThrow
 =================
 */
-void CL_ActorDoThrow( sizebuf_t *sb ) 
+void CL_ActorDoThrow( sizebuf_t *sb )
 {
 	fireDef_t	*fd;
 	int		type;
@@ -934,9 +934,9 @@ void CL_ActorDoThrow( sizebuf_t *sb )
 	int		dtime;
 
 	// read data
-	MSG_ReadFormat( sb, ev_format[EV_ACTOR_THROW], 
-		&dtime, &type, &flags, &muzzle, &v0 );	
-	
+	MSG_ReadFormat( sb, ev_format[EV_ACTOR_THROW],
+		&dtime, &type, &flags, &muzzle, &v0 );
+
 	// get the fire def
 	fd = GET_FIREDEF( type );
 
@@ -944,7 +944,7 @@ void CL_ActorDoThrow( sizebuf_t *sb )
 	LE_AddGrenade( fd, flags, muzzle, v0, dtime );
 
 	// start the sound
-	if ( (!fd->soundOnce || firstShot) && fd->fireSound[0] ) 
+	if ( (!fd->soundOnce || firstShot) && fd->fireSound[0] )
 		S_StartLocalSound( fd->fireSound );
 	firstShot = false;
 }
@@ -975,7 +975,7 @@ void CL_ActorStartShoot( sizebuf_t *sb )
 
 	// first shot
 	firstShot = true;
-	
+
 	// actor dependant stuff following
 	if ( !le ) return;
 
@@ -996,7 +996,7 @@ void CL_ActorStartShoot( sizebuf_t *sb )
 CL_ActorDie
 =================
 */
-void CL_ActorDie( sizebuf_t *sb ) 
+void CL_ActorDie( sizebuf_t *sb )
 {
 	le_t	*le;
 
@@ -1005,7 +1005,7 @@ void CL_ActorDie( sizebuf_t *sb )
 	if ( !le ) return;
 
 	// count spotted aliens
-	if ( le->team != cls.team && le->team != TEAM_CIVILIAN ) 
+	if ( le->team != cls.team && le->team != TEAM_CIVILIAN )
 		cl.numAliensSpotted--;
 
 	// set relevant vars
@@ -1064,7 +1064,7 @@ CL_ActorActionMouse
 */
 void CL_ActorActionMouse( void )
 {
-	if ( !selActor || mouseSpace != MS_WORLD ) 
+	if ( !selActor || mouseSpace != MS_WORLD )
 		return;
 
 	if ( cl.cmode == M_MOVE )
@@ -1119,12 +1119,12 @@ void CL_DoEndRound( sizebuf_t *sb )
 	Com_Printf( _(", team %i's round started!\n"), cl.actTeam );
 
 	// hud changes
-	if ( cls.team == cl.actTeam ) 
+	if ( cls.team == cl.actTeam )
 	{
 		Cbuf_AddText( "startround\n" );
 		cl.msgTime = cl.time + 2000;
 		strcpy( cl.msgText, _("Your round started!\n") );
-		if ( selActor ) 
+		if ( selActor )
 		{
 			CL_BuildForbiddenList();
 			Grid_MoveCalc( &clMap, selActor->pos, MAX_ROUTE, fb_list, fb_length );
@@ -1167,7 +1167,7 @@ void CL_ActorMouseTrace( void )
 	vec3_t	from;
 
 	// get camera parameters
-	d = (scr_vrect.width / 2) / tan( (FOV / cl.cam.zoom)*M_PI/360 );		
+	d = (scr_vrect.width / 2) / tan( (FOV / cl.cam.zoom)*M_PI/360 );
 	angles[YAW]   = atan( (mx*viddef.rx - scr_vrect.width /2 - scr_vrect.x) / d ) * 180/M_PI;
 	angles[PITCH] = atan( (my*viddef.ry - scr_vrect.height/2 - scr_vrect.y) / d ) * 180/M_PI;
 	angles[ROLL]  = 0;
@@ -1177,12 +1177,12 @@ void CL_ActorMouseTrace( void )
 	{
 		VectorCopy( selActor->origin, from );
 		if (!(selActor->state & STATE_CROUCHED))
-			from[2] += 10; /* raise from waist to head */		
+			from[2] += 10; /* raise from waist to head */
 		angles[PITCH] += cl.cam.angles[PITCH];
 		angles[YAW] = cl.cam.angles[YAW] - angles[YAW];
 		angles[ROLL] += cl.cam.angles[ROLL];
-		AngleVectors( angles, forward, NULL, NULL );		
-	}	
+		AngleVectors( angles, forward, NULL, NULL );
+	}
 	else
 	{
 		VectorCopy( cl.cam.camorg, from );
@@ -1200,7 +1200,7 @@ void CL_ActorMouseTrace( void )
 
 	// get position
 	mousePos[2] = end[2] / UH;
-	if ( mousePos[2] > cl_worldlevel->value ) 
+	if ( mousePos[2] > cl_worldlevel->value )
 		mousePos[2] = cl_worldlevel->value;
 
 	stop[2] = (mousePos[2] + 0.5) * UH;
@@ -1254,7 +1254,7 @@ qboolean CL_AddActor( le_t *le, entity_t *ent )
 		if ( le->left != NONE )
 		{
 			memset( &add, 0, sizeof( entity_t ) );
-			
+
 			add.lightparam = &le->sunfrac;
 			add.model = cl.model_weapons[le->left];
 
@@ -1268,7 +1268,7 @@ qboolean CL_AddActor( le_t *le, entity_t *ent )
 		if ( le->right != NONE )
 		{
 			memset( &add, 0, sizeof( entity_t ) );
-			
+
 			add.lightparam = &le->sunfrac;
 			add.alpha = le->alpha;
 			add.model = cl.model_weapons[le->right];
@@ -1282,7 +1282,7 @@ qboolean CL_AddActor( le_t *le, entity_t *ent )
 
 	// add head
 	memset( &add, 0, sizeof( entity_t ) );
-	
+
 	add.lightparam = &le->sunfrac;
 	add.alpha = le->alpha;
 	add.model = le->model2;
@@ -1333,14 +1333,14 @@ float CL_TargetingToHit( pos3_t toPos )
 	int distx, disty, i, n;
 	le_t *le;
 
-	if ( !selActor || !selFD ) 
+	if ( !selActor || !selFD )
 		return 0.0;
 
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 		if ( le->inuse && VectorCompare( le->pos, toPos ) )
 			break;
 
-	if ( i >= numLEs ) 
+	if ( i >= numLEs )
 		// no target there
 		return 0.0;
 
@@ -1356,16 +1356,16 @@ float CL_TargetingToHit( pos3_t toPos )
 	width = 2*PLAYER_WIDTH * pseudosin;
 	height = ( (le->state & STATE_CROUCHED) ? PLAYER_CROUCH : PLAYER_STAND ) - PLAYER_MIN;
 
-	acc = M_PI / 180 * GET_ACC( selChr->skills[ABILITY_ACCURACY], 
+	acc = M_PI / 180 * GET_ACC( selChr->skills[ABILITY_ACCURACY],
 		selFD->weaponSkill ? selChr->skills[selFD->weaponSkill] : 0 );
 
 	if ( (selActor->state & STATE_CROUCHED) && selFD->crouch ) acc *= selFD->crouch;
 
 	hitchance = width / (2 * distance * tan(acc * selFD->spread[0]));
 	if ( hitchance > 1 ) hitchance = 1;
-	if ( height / (2 * distance * tan(acc * selFD->spread[1])) < 1) 
+	if ( height / (2 * distance * tan(acc * selFD->spread[1])) < 1)
 		hitchance *= height / (2 * distance * tan(acc * selFD->spread[1]));
- 
+
 	//Calculate cover:
 	n = 0;
 	height = height / 18;
@@ -1424,7 +1424,7 @@ void CL_TargetingStraight( pos3_t fromPos, pos3_t toPos )
 	vec3_t	start, end;
 	vec3_t	dir, mid;
 
-	if ( !selActor || !selFD ) 
+	if ( !selActor || !selFD )
 		return;
 
 	Grid_PosToVec( &clMap, fromPos, start );
@@ -1479,7 +1479,7 @@ void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
 
 	// calculate parabola
 	dt = Com_GrenadeTarget( from, at, v0 );
-	if ( !dt ) 
+	if ( !dt )
 	{
 		CL_ParticleSpawn( "cross_no", 0, at, NULL, NULL );
 		return;
@@ -1538,7 +1538,7 @@ void CL_AddTargeting( void )
 		if ( mouseActor )
 		{
 			ent.alpha = 0.4 + 0.2*sin((float)cl.time/80);
-			if ( mouseActor->team != cls.team && mouseActor->team != TEAM_CIVILIAN ) 
+			if ( mouseActor->team != cls.team && mouseActor->team != TEAM_CIVILIAN )
 				VectorSet( ent.angles, 1, 0, 0 );
 		}
 		else ent.alpha = 0.3;

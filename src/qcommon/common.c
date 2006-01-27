@@ -269,9 +269,6 @@ void Com_Quit (void)
 
 /*
 ==================
-
-
-
 Com_ServerState
 ==================
 */
@@ -1265,8 +1262,12 @@ void Qcommon_LocaleInit ( void )
 	}
 
 	// use system locale dir if we can't find in gamedir
+#ifndef _WIN32
 	localeDir = bindtextdomain ( "ufoai", "./base/i18n/" );
-// 	localeDir = bindtextdomain ( "ufoai", va("%s/i18n/", FS_Gamedir() ) );
+#else 
+	// TODO: Check this - dont own windows
+ 	localeDir = bindtextdomain ( "ufoai", va("%s/i18n/", FS_Gamedir() ) );
+#endif
 	if ( ! localeDir )
 	{
 		Com_Printf("Using system dir for locale settings\n");

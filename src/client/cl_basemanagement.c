@@ -22,9 +22,6 @@ int baseID;
 
 int bmDataSize = 0;
 
-
-int B_GetIDFromList ( int id );
-
 //DrawBase
 float bvCenterX, bvCenterY;
 float bvScale;
@@ -170,10 +167,9 @@ void MN_BuildingStatus( void )
 	//maybe someone call this command before the buildings are parsed??
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 	{
-		Com_Printf( _("MN_BuildingStatus: No Base or no Building set\n") );
+		Com_DPrintf( _("MN_BuildingStatus: No Base or no Building set\n") );
 		return;
 	}
-
 
 	daysLeft = baseCurrent->buildingCurrent->timeStart + baseCurrent->buildingCurrent->buildTime - ccs.date.day;
 
@@ -311,14 +307,6 @@ void MN_NewBuilding( void )
 	if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] < B_UNDER_CONSTRUCTION )
 		MN_ConstructBuilding();
 
-	else if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] == B_UNDER_CONSTRUCTION )
-	{
-		if ( ( baseCurrent->buildingCurrent->timeStart + baseCurrent->buildingCurrent->buildTime ) <= ccs.date.day )
-		{
-			Com_Printf( _("Construction finished\n") );
-			baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] = B_CONSTRUCTION_FINISHED;
-		}
-	}
 
 	MN_BuildingStatus();
 
@@ -410,7 +398,7 @@ void MN_SetBuilding( void )
 
 	if ( Cmd_Argc() < 3 )
 	{
-		Com_Printf( "Usage: set_building <x> <y>\n" );
+		Com_Printf( _("Usage: set_building <x> <y>\n") );
 		return;
 	}
 
@@ -454,7 +442,7 @@ void MN_DamageBuilding( void )
 	int damage;
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: damage_building <amount>\n" );
+		Com_Printf( _("Usage: damage_building <amount>\n") );
 		return;
 	}
 
@@ -781,7 +769,7 @@ void MN_BuildingInit( void )
 	int i = 1;
 	building_t *building;
 
-	//maybe someone call this command before the bases are parsed??
+	// maybe someone call this command before the bases are parsed??
 	if ( ! baseCurrent )
 		return;
 
@@ -801,11 +789,11 @@ void MN_BuildingInit( void )
 				building = B_GetBuilding ( bmBuildings[baseID][i-1].depends );
 				bmBuildings[baseID][i-1].dependsBuilding = building;
 				if ( bmBuildings[baseID][i-1].dependsBuilding->buildingStatus[0] > B_CONSTRUCTION_FINISHED )
-					MN_BuildingAddToList( bmBuildings[baseID][i-1].title, i-1 );
+					MN_BuildingAddToList( _(bmBuildings[baseID][i-1].title), i-1 );
 			}
 			else
 			{
-				MN_BuildingAddToList( bmBuildings[baseID][i-1].title, i-1 );
+				MN_BuildingAddToList( _(bmBuildings[baseID][i-1].title), i-1 );
 			}
 		}
 	}
@@ -818,11 +806,11 @@ void MN_BuildingInit( void )
 			building = B_GetBuilding ( bmBuildings[baseID][i-1].depends );
 			bmBuildings[baseID][i-1].dependsBuilding = building;
 			if ( bmBuildings[baseID][i-1].dependsBuilding->buildingStatus[0] > B_CONSTRUCTION_FINISHED )
-				MN_BuildingAddToList( bmBuildings[baseID][i-1].title, i-1 );
+				MN_BuildingAddToList( _(bmBuildings[baseID][i-1].title), i-1 );
 		}
 		else
 		{
-			MN_BuildingAddToList( bmBuildings[baseID][i-1].title, i-1 );
+			MN_BuildingAddToList( _(bmBuildings[baseID][i-1].title), i-1 );
 		}
 	}
 
@@ -1040,19 +1028,20 @@ void MN_ParseBases( char *title, char **text )
 		Com_Printf( _("MN_ParseBases: base \"%s\" without body ignored\n"), title );
 		return;
 	}
-
+	numBases = 0;
 	do {
+		// add base
+		if ( numBases > MAX_BASES )
+		{
+			Com_Printf( _("MN_ParseBases: too many bases\n"), title );
+			return;
+		}
+
 		// get the name
 		token = COM_EParse( text, errhead, title );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
-		// add base
-		if ( numBases >= MAX_BASES )
-		{
-			Com_Printf( _("MN_ParseBases: too many bases\n"), title );
-			return;
-		}
 		base = &bmBases[numBases];
 		memset( base, 0, sizeof( base_t ) );
 //		strncpy( base->name, token, MAX_VAR );
@@ -1220,7 +1209,7 @@ void MN_DrawBase( void )
 
 						if ( entry->moreThanOne )
 							entry->howManyOfThisType++;
-
+						// refresh the building list
 						MN_BuildingInit();
 					}
 				}
@@ -1367,7 +1356,7 @@ void MN_RenameBase( void )
 {
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: rename_base <name>\n" );
+		Com_Printf( _("Usage: rename_base <name>\n") );
 		return;
 	}
 
@@ -1421,7 +1410,7 @@ void MN_NextBase( void )
 			baseCurrent = b;
 			return;
 		}
-		if ( ++b >= bmBases + numBases ) b = bmBases;
+		if ( ++b >= bmBases + numBases ) b = NULL;
 	}
 	if ( !b->founded ) baseCurrent = NULL;
 }
@@ -1444,7 +1433,7 @@ void MN_PrevBase( void )
 			baseCurrent = b;
 			return;
 		}
-		if ( ++b >= bmBases + numBases ) b = bmBases;
+		if ( ++b >= bmBases + numBases ) b = NULL;
 	}
 	if ( !b->founded ) baseCurrent = NULL;
 }
@@ -1460,22 +1449,37 @@ void MN_SelectBase( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: select_base <baseID>\n" );
+		Com_Printf( _("Usage: select_base <baseID>\n") );
 		return;
 	}
 	whichBaseID = atoi( Cmd_Argv( 1 ) );
 
-	baseCurrent = &bmBases[ whichBaseID ];
-	Cvar_SetValue( "mn_base_id", whichBaseID );
-
-	if ( baseCurrent->founded )
+	if ( whichBaseID < 0 )
 	{
-		mapAction = MA_NONE;
-		MN_PushMenu( "bases" );
-	} else {
 		mapAction = MA_NEWBASE;
-		Cvar_Set( "mn_basename", va( "base %i", whichBaseID ) );
+		whichBaseID++;
+		while ( bmBases[whichBaseID].founded && whichBaseID < MAX_BASES )
+			whichBaseID++;
+		if ( whichBaseID < MAX_BASES )
+		{
+			Cvar_Set( "mn_basename", va( "base %i", whichBaseID ) );
+			baseCurrent = &bmBases[ whichBaseID ];
+		}
+		else
+			Com_Printf(_("MaxBases reached\n"));
 	}
+	else
+	{
+		baseCurrent = &bmBases[ whichBaseID ];
+		if ( baseCurrent->founded ) {
+			mapAction = MA_NONE;
+			MN_PushMenu( "bases" );
+		} else {
+			mapAction = MA_NEWBASE;
+			Cvar_Set( "mn_basename", va( "base %i", whichBaseID ) );
+		}
+	}
+	Cvar_SetValue( "mn_base_id", whichBaseID );
 }
 
 
@@ -1504,7 +1508,7 @@ void B_BaseAttack ( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: base_attack <baseID>\n" );
+		Com_Printf( _("sage: base_attack <baseID>\n") );
 		return;
 	}
 
@@ -1532,7 +1536,7 @@ void B_AssembleMap ( void )
 
 	if ( Cmd_Argc() < 2 && ! baseCurrent )
 	{
-		Com_Printf( "Usage: base_assemble <baseID>\n" );
+		Com_Printf( _("Usage: base_assemble <baseID>\n") );
 		return;
 	}
 
@@ -1677,7 +1681,6 @@ void MN_ResetBaseManagement( void )
 	}
 	bmData = bmDataStart;
 
-
 	// add commands and cvars
 	Cmd_AddCommand( "mn_prev_building", MN_PrevBuilding );
 	Cmd_AddCommand( "mn_next_building", MN_NextBuilding );
@@ -1704,4 +1707,26 @@ void MN_ResetBaseManagement( void )
 	Cmd_AddCommand( "buildings_click", MN_BuildingClick_f );
 	Cmd_AddCommand( "basemap_click", MN_BaseMapClick_f );
 	Cvar_SetValue( "mn_base_id", baseID );
+}
+
+/*==========================
+CL_UpdateBaseData
+==========================*/
+void CL_UpdateBaseData( void )
+{
+	building_t *b;
+	int i, j;
+	for ( i = 1; i < numBases; i++ )
+	{
+		if ( ! bmBases[i].founded ) continue;
+
+		for ( j = 0; j < numBuildings; j++ )
+		{
+			b = &bmBuildings[i][j];
+			if ( ! b ) break;
+			if ( b->buildingStatus[b->howManyOfThisType] == B_UNDER_CONSTRUCTION && b->timeStart + b->buildTime < ccs.date.day )
+				b->buildingStatus[b->howManyOfThisType] == B_CONSTRUCTION_FINISHED;
+		}
+	}
+	CL_CheckResearchStatus();
 }

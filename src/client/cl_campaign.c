@@ -632,6 +632,7 @@ void CL_CampaignRun( void )
 		{
 			ccs.date.sec -= 3600*24;
 			ccs.date.day++;
+			CL_UpdateBaseData();
 		}
 
 		// check for campaign events

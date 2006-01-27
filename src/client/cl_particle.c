@@ -59,7 +59,7 @@ typedef enum pc_s
 {
 	PC_END,
 
-	PC_PUSH, PC_POP, PC_KPOP, 
+	PC_PUSH, PC_POP, PC_KPOP,
 	PC_ADD, PC_SUB,
 	PC_MUL, PC_DIV,
 	PC_SIN, PC_COS, PC_TAN,
@@ -87,7 +87,7 @@ char *pc_strings[PC_NUM_PTLCMDS] =
 	"spawn", "nspawn"
 };
 
-#define F(x)		(1<<x) 
+#define F(x)		(1<<x)
 #define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
 #define ONLY		(1<<31)
 
@@ -190,12 +190,12 @@ void CL_ParticleRegisterArt( void )
 		// register the art
 		switch ( a->type )
 		{
-		case ART_PIC: 
-			if ( *a->name != '+' ) a->art = (char *)re.RegisterPic( a->name ); 
+		case ART_PIC:
+			if ( *a->name != '+' ) a->art = (char *)re.RegisterPic( a->name );
 			else a->art = (char *)re.RegisterPic( va( "%s%c%c", a->name+1, a->frame/10+'0', a->frame%10+'0' ) );
 			break;
-		case ART_MODEL: 
-			a->art = (char *)re.RegisterModel( a->name ); 
+		case ART_MODEL:
+			a->art = (char *)re.RegisterModel( a->name );
 			break;
 		default: Sys_Error( _("CL_ParticleGetArt: Unknown art type\n") );
 		}
@@ -224,17 +224,17 @@ int CL_ParticleGetArt( char *name, int frame, char type )
 	// register new art
 	switch ( type )
 	{
-	case ART_PIC: 
-		if ( *name != '+' ) a->art = (char *)re.RegisterPic( name ); 
+	case ART_PIC:
+		if ( *name != '+' ) a->art = (char *)re.RegisterPic( name );
 		else a->art = (char *)re.RegisterPic( va( "%s%c%c", name+1, frame/10+'0', frame%10+'0' ) );
 		break;
-	case ART_MODEL: a->art = (char *)re.RegisterModel( name ); 
+	case ART_MODEL: a->art = (char *)re.RegisterModel( name );
 		break;
 	default: Sys_Error( _("CL_ParticleGetArt: Unknown art type\n") );
 	}
 
 	// check for an error
-	if ( !a->art ) 
+	if ( !a->art )
 		return -1;
 
 	a->type = type;
@@ -261,7 +261,7 @@ void CL_ResetParticles( void )
 	pcmdPos = 0;
 }
 
-	
+
 /*
 ======================
 CL_ParticleFunction
@@ -276,7 +276,7 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 	float	arg;
 
 	// test for null cmd
-	if ( !cmd ) 
+	if ( !cmd )
 		return;
 
 	// run until finding PC_END
@@ -309,12 +309,12 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 				}
 				else
 				{
-					Com_Error( ERR_FATAL, _("CL_ParticleFunction: can't get components of a non-vector type (particle %s)\n"), p->ctrl->name ); 
+					Com_Error( ERR_FATAL, _("CL_ParticleFunction: can't get components of a non-vector type (particle %s)\n"), p->ctrl->name );
 					radr = NULL;
 				}
 			}
 		}
-			
+
 		switch ( cmd->cmd )
 		{
 		case PC_PUSH:
@@ -331,13 +331,13 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 		case PC_POP:
 		case PC_KPOP:
 			// check for stack underflow
-			if ( s == 0 ) 
+			if ( s == 0 )
 				Com_Error( ERR_FATAL, _("CL_ParticleFunction: stack underflow\n") );
 
 			// get pics and models
 			if ( PPOFS( pic ) == -cmd->ref )
 			{
-				if ( stackType[--s] != V_STRING ) 
+				if ( stackType[--s] != V_STRING )
 					Sys_Error( _("Bad type '%s' for pic (particle %s)\n"), vt_names[stackType[s-1]], p->ctrl->name );
 				p->pic = CL_ParticleGetArt( (char*)stackPtr[s], p->frame, ART_PIC );
 				e = (byte*)stackPtr[s] - cmdStack;
@@ -345,7 +345,7 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 			}
 			if ( PPOFS( model ) == -cmd->ref )
 			{
-				if ( stackType[--s] != V_STRING ) 
+				if ( stackType[--s] != V_STRING )
 					Sys_Error( _("Bad type '%s' for model (particle %s)\n"), vt_names[stackType[s-1]], p->ctrl->name );
 				p->model = CL_ParticleGetArt( (char*)stackPtr[s], 0, ART_MODEL );
 				e = (byte*)stackPtr[s] - cmdStack;
@@ -355,14 +355,14 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 			// get different data
 			if ( cmd->cmd == PC_POP )
 				e -= Com_SetValue( radr, stackPtr[--s], cmd->type, 0 );
-			else 
+			else
 				Com_SetValue( radr, stackPtr[s-1], cmd->type, 0 );
 			break;
 
 		case PC_ADD:
 		case PC_SUB:
 			// check for stack underflow
-			if ( s == 0 ) 
+			if ( s == 0 )
 				Com_Error( ERR_FATAL, _("CL_ParticleFunction: stack underflow\n") );
 
 			type = stackType[s-1];
@@ -386,7 +386,7 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 		case PC_MUL:
 		case PC_DIV:
 			// check for stack underflow
-			if ( s == 0 ) 
+			if ( s == 0 )
 				Com_Error( ERR_FATAL, _("CL_ParticleFunction: stack underflow\n") );
 
 			type = stackType[s-1];
@@ -395,7 +395,7 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 
 			n = type - V_FLOAT + 1;
 
-			if ( type > V_FLOAT && cmd->type > V_FLOAT ) 
+			if ( type > V_FLOAT && cmd->type > V_FLOAT )
 			{
 				// component wise multiplication
 				if ( type != cmd->type )
@@ -498,7 +498,7 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 
 		case PC_NSPAWN:
 			// check for stack underflow
-			if ( s == 0 ) 
+			if ( s == 0 )
 				Com_Error( ERR_FATAL, _("CL_ParticleFunction: stack underflow\n") );
 
 			type = stackType[--s];
@@ -638,7 +638,7 @@ void CL_ParticleRun( void )
 			p->t = (cl.time - p->startTime) * 0.001f;
 			p->lastThink += p->dt;
 			p->lastFrame += p->dt;
-			
+
 			// test for end of life
 			if ( p->life && p->t >= p->life )
 			{
@@ -678,7 +678,7 @@ void CL_ParticleRun( void )
 			}
 
 			// fading
-			if ( p->thinkFade || p->frameFade ) 
+			if ( p->thinkFade || p->frameFade )
 			{
 				onlyAlpha = (p->blend == BLEND_BLEND);
 				if ( !onlyAlpha ) { p->color[0] = p->color[1] = p->color[2] = p->color[3] = 1.0; }
@@ -714,8 +714,8 @@ void CL_ParseMapParticle( ptl_t *ptl, char *es, qboolean afterwards )
 			Com_Error (ERR_DROP, _("ED_ParseEntity: EOF without closing brace"));
 
 		strncpy (keyname, token, sizeof(keyname)-1);
-		
-		// parse value	
+
+		// parse value
 		token = COM_Parse (&es);
 		if (!es)
 			Com_Error (ERR_DROP, _("ED_ParseEntity: EOF without closing brace"));
@@ -724,7 +724,7 @@ void CL_ParseMapParticle( ptl_t *ptl, char *es, qboolean afterwards )
 			Com_Error (ERR_DROP, _("ED_ParseEntity: closing brace without data"));
 
 		if ( !afterwards && keyname[0] != '-' ) continue;
-		if (  afterwards && keyname[0] != '+' ) continue; 
+		if (  afterwards && keyname[0] != '+' ) continue;
 
 //		Com_Printf( "key : %s\n", keyname );
 
@@ -741,7 +741,7 @@ void CL_ParseMapParticle( ptl_t *ptl, char *es, qboolean afterwards )
 				{
 					ptl->model = CL_ParticleGetArt( token, 0, ART_MODEL );
 					break;
-				}							
+				}
 
 				// found a normal particle value
 				Com_ParseValue( ptl, token, pp->type, pp->ofs );
@@ -767,7 +767,7 @@ void CL_RunMapParticles( void )
 		{
 			// spawn a new particle
 			ptl = CL_ParticleSpawn( mp->ptl, 0, mp->origin, NULL, NULL );
-			if ( !ptl ) 
+			if ( !ptl )
 			{
 				mp->nextTime = 0;
 				continue;
@@ -797,10 +797,10 @@ CL_ParsePtlCmds
 */
 void CL_ParsePtlCmds( char *name, char **text )
 {
-	ptlCmd_t	*pc;	
+	ptlCmd_t	*pc;
 	value_t		*pp;
 	char	*errhead = _("CL_ParsePtlCmds: unexptected end of file");
-	char	*token;	
+	char	*token;
 	int		i, j;
 
 	// get it's body
@@ -920,7 +920,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 				pc->type = j;
 				pc->ref = pcmdPos;
 				pcmdPos += Com_ParseValue( &pcmdData[pc->ref], token, pc->type, 0 );
-				
+
 //				Com_Printf( "%s %s %i\n", vt_names[pc->type], token, pcmdPos - pc->ref, (char *)pc->ref );
 				break;
 			}

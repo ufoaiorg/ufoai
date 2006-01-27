@@ -995,7 +995,7 @@ typedef struct building_s
 	int	moreThanOne;
 
 	//how many buildings are there of the same type?
-	//depends one the set of moreThanOne ^^
+	//depends on the value of moreThanOne ^^
 	int	howManyOfThisType;
 
 	struct  building_s *dependsBuilding;
@@ -1048,6 +1048,7 @@ typedef struct production_s
 extern	int		numBases;
 extern	base_t	bmBases[MAX_BASES];
 extern	base_t	*baseCurrent;
+void CL_UpdateBaseData( void );
 
 // needed to calculate the chosen building in cl_menu.c
 int picWidth, picHeight;
