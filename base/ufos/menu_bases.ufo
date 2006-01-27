@@ -16,7 +16,9 @@ menu bases
 	{
                 pos     "0 96"
                 size    "778 672"
-                click rclick mclick
+                click   { cmd "basemap_click" }
+                rclick
+                mclick
 	}
 
 	// ==================
@@ -165,8 +167,28 @@ menu bases
 	string title
 	{
 		string	"*cvar mn_base_title"
-		pos	"50 30"
+		pos	"60 30"
 		font	f_big
+	}
+
+	pic prev_base
+	{
+		image	menu/buy_buttons1
+		pos	"30 40"
+		mousefx true
+		texl	"0 0"
+		texh	"16 16"
+		click	{ cmd "mn_prev_base" }
+	}
+
+	pic next_base
+	{
+		image	menu/buy_buttons1
+		pos	"600 40"
+		mousefx	true
+		texl	"16 0"
+		texh	"32 16"
+		click	{ cmd "mn_next_base" }
 	}
 
 	func init
