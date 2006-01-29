@@ -1842,11 +1842,11 @@ void MN_ModifyString_f( void )
 
 
 /*
-=================
-MN_Translate_f
-=================
-*/
-#if 0 // gettext
+ * MN_Translate_f
+ *
+ * Shows the corresponding strings in menu
+ * Example: Optionsmenu - fullscreen: yes
+**/
 void MN_Translate_f( void )
 {
 	qboolean next;
@@ -1882,7 +1882,6 @@ void MN_Translate_f( void )
 	// nothing found, copy value
 	Cvar_Set( Cmd_Argv(2), current );
 }
-#endif
 
 /*
 =================
@@ -1913,7 +1912,7 @@ void MN_ResetMenus( void )
 	Cmd_AddCommand( "mn_modify", MN_Modify_f );
 	Cmd_AddCommand( "mn_modifywrap", MN_ModifyWrap_f );
 	Cmd_AddCommand( "mn_modifystring", MN_ModifyString_f );
-//	Cmd_AddCommand( "mn_translate", MN_Translate_f );
+	Cmd_AddCommand( "mn_translate", MN_Translate_f );
 
 	// get action data memory
 	if ( adataize )
