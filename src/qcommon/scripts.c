@@ -51,6 +51,7 @@ value_t od_vals[] =
 	{ "reload",		V_INT,			ODOFS( reload ) },
 	{ "price",		V_INT,			ODOFS( price ) },
 	{ "buytype",	V_INT,			ODOFS( buytype ) },
+	{ "researchNeeded",	V_INT,		ODOFS( researchNeeded ) },
 
 	{ NULL,			V_NULL,			0}
 };

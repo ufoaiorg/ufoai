@@ -270,12 +270,19 @@ void CL_ActorUpdateCVars( void )
 			// panic
 			sprintf( infoText, _("Currently panics!\n") );
 		} else {
+ 			if ( cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE &&
+					selWeapon && csi.ods[ selWeapon->item.t ].researchNeeded )
+			{
+				Com_Printf( _( "You cannot use this unknown alien weapon.\n") );
+				cl.cmode = M_MOVE;
+			}
 			// move or shoot
  			if ( cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE )
 			{
 				CL_RefreshWeaponButtons( 0 );
 				if ( selWeapon && selFD )
 				{
+
 					snprintf( infoText, MAX_MENUTEXTLEN,
 							"%s\n%s (%i) [%i%%] %i\n",
 							_(csi.ods[selWeapon->item.t].name),
@@ -726,6 +733,15 @@ void CL_ActorReload( int hand )
 		if ( !inv->c[hand] || !csi.ods[inv->c[hand]->item.t].twohanded )
 			return;
 		weapon = inv->c[hand]->item.t;
+	}
+
+	if ( weapon == NONE )
+		return;
+		
+	if ( csi.ods[weapon].researchNeeded )
+	{
+		Com_Printf( _("You cannot load this unknown alien weapon.\n") );
+		return;
 	}
 
 	for ( container = 0; container < csi.numIDs; container++ )
