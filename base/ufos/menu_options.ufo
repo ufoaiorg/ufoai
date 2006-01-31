@@ -166,7 +166,7 @@ menu options_video
 		mousefx	true
 		click
 		{
-			cmd "copy gl_mode mn_glmode;"
+//			cmd "copy gl_mode mn_glmode;"
 			cmd "mn_modifywrap vid_fullscreen -1 0 1;"
 			cmd "mn_translate vid_fullscreen mn_fullscreen 0:No,1:Yes;"
 		}
@@ -179,7 +179,7 @@ menu options_video
 		mousefx	true
 		click
 		{
-			cmd "copy gl_mode mn_glmode;"
+//			cmd "copy gl_mode mn_glmode;"
 			cmd "mn_modifywrap vid_fullscreen +1 0 1;"
 			cmd "mn_translate vid_fullscreen mn_fullscreen 0:No,1:Yes;"
 		}
@@ -256,6 +256,44 @@ menu options_video
 		{
 			cmd "mn_modifystring gl_maxtexres +1 256:512:1024:2048;"
 			cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:High,2048:Excellent;"
+		}
+	}
+
+	string fps_str
+	{
+		string	"Show FPS:"
+		pos		"500 260"
+	}
+	string fps_value
+	{
+		string	"*cvar mn_fps"
+		pos		"840 260"
+		align	ur
+	}
+	pic fps_dec
+	{
+		image	menu/buy_buttons1
+		pos		"868 258"
+		texl	"0 0"		texh	"16 16"
+		mousefx	true
+		click
+		{
+//			cmd "copy cl_fps mn_fps;"
+			cmd "mn_modifywrap cl_fps -1 0 1;"
+			cmd "mn_translate cl_fps mn_fps 0:No,1:Yes;"
+		}
+	}
+	pic fps_inc
+	{
+		image	menu/buy_buttons1
+		pos		"884 258"
+		texl	"16 0"		texh	"32 16"
+		mousefx	true
+		click
+		{
+//			cmd "copy cl_fps mn_fps;"
+			cmd "mn_modifywrap cl_fps +1 0 1;"
+			cmd "mn_translate cl_fps mn_fps 0:No,1:Yes;"
 		}
 	}
 
