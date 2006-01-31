@@ -293,7 +293,7 @@ item_t CL_AddWeaponAmmo( equipDef_t *ed, int type )
 	int i;
 
 	item.t = NONE;
-	if ( !ed->num[type] )
+	if ( ed->num[type] <= 0 )
 		return item;
 
 	ed->num[type]--;
@@ -319,6 +319,29 @@ item_t CL_AddWeaponAmmo( equipDef_t *ed, int type )
 				ed->num[i]--;
 				item.a = csi.ods[type].ammo;
 				return item;
+			}
+		}
+	}
+	// Failed to find a complete clip - see if there's any loose ammo
+	for ( i = 0; i < csi.numODs; i++ )
+	{
+		if ( csi.ods[i].link == type && ed->num_loose[i] > 0)
+		{
+			if ( item.m != NONE && ed->num_loose[i] > item.a )
+			{
+				// We previously found some ammo, but we've now found other
+				// loose ammo of a different (but appropriate) type with
+				// more bullets.  Put the previously found ammo back, so
+				// we'll take the new type.
+				ed->num_loose[item.m] = item.a;
+				item.m = NONE;
+			}
+			if ( item.m == NONE )
+			{
+				// Found some loose ammo to load the weapon with
+				item.a = ed->num_loose[i];
+				ed->num_loose[i] = 0;
+				item.m = i;
 			}
 		}
 	}
@@ -352,7 +375,7 @@ void CL_CheckInventory( equipDef_t *equip )
 			for ( ic = cp->inv->c[container]; ic; ic = next )
 			{
 				next = ic->next;
-				if ( equip->num[ic->item.t] )
+				if ( equip->num[ic->item.t] > 0 )
 					ic->item = CL_AddWeaponAmmo( equip, ic->item.t );
 				else
 					Com_RemoveFromInventory( cp->inv, container, ic->x, ic->y );
@@ -1102,11 +1125,17 @@ void CL_ParseResults( sizebuf_t *buf )
 		// recruits
 		if ( winner == we && ms->recruits )
 			strcat( resultText, va( _("New Recruits\t%i\n"), ms->recruits ) );
+
+		// loot the battlefield
+		CL_CollectItems( winner == we );
+		ccs.eCampaign = ccs.eMission;
 	}
 
 	// disconnect and show win screen
-	if ( winner == we ) MN_PushMenu( "won" );
-	else MN_PushMenu( "lost" );
+	if ( winner == we )
+	    MN_PushMenu( "won" );
+	else
+	    MN_PushMenu( "lost" );
 	Cbuf_AddText( "disconnect\n" );
 	Cbuf_Execute();
 }

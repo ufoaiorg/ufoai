@@ -307,7 +307,9 @@ void MN_NewBuilding( void )
 	if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] < B_UNDER_CONSTRUCTION )
 		MN_ConstructBuilding();
 
+
 	MN_BuildingStatus();
+
 }
 
 /*
@@ -375,7 +377,7 @@ void MN_SetBuildingByClick ( int x, int y )
 				MN_NewBuilding();
 
  			baseCurrent->map[x][y][baseCurrent->baseLevel] = baseCurrent->buildingCurrent->id;
-			baseCurrent->buildingCurrent = NULL;
+
 		} else
 			Com_Printf( _("There is already a building\n"), x, y);
 	}
@@ -845,22 +847,9 @@ MN_BaseMapClick_f
 */
 void MN_BaseMapClick_f( void )
 {
-	int x, y;
-
-	if ( Cmd_Argc() < 3 )
-	{
-		Com_Printf( _("Usage: basemap_click <x> <y>\n") );
-		return;
-	}
-
-	//maybe someone call this command before the buildings are parsed??
+	//maybe called before the buildinglist is initialized
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 		return;
-
-	x = atoi( Cmd_Argv( 1 ) );
-	y = atoi( Cmd_Argv( 2 ) );
-
-
 }
 
 /*
@@ -1410,19 +1399,20 @@ MN_NextBase
 */
 void MN_NextBase( void )
 {
-	int baseID;
+	base_t *b;
+	if ( !baseCurrent ) baseCurrent = bmBases;
+	b = baseCurrent+1;
 
-	baseID = (int)Cvar_VariableValue( "mn_base_id" );
-	if ( baseID < MAX_BASES )
-		baseID++;
-
-	if ( ! bmBases[baseID].founded )
-		return;
-	else
+	while ( b != baseCurrent )
 	{
-		Cbuf_AddText( va( "mn_select_base %i\n", baseID ) );
-		Cbuf_Execute();
+		if ( b->founded )
+		{
+			baseCurrent = b;
+			return;
+		}
+		if ( ++b >= bmBases + numBases ) b = NULL;
 	}
+	if ( !b->founded ) baseCurrent = NULL;
 }
 
 /*
@@ -1432,20 +1422,20 @@ MN_PrevBase
 */
 void MN_PrevBase( void )
 {
-	int baseID;
+	base_t *b;
+	if ( !baseCurrent ) baseCurrent = bmBases;
+	b = baseCurrent+1;
 
-	baseID = (int)Cvar_VariableValue( "mn_base_id" );
-	if ( baseID > 0 )
-		baseID--;
-
-	// this must be false - but i'm paranoid'
-	if ( ! bmBases[baseID].founded )
-		return;
-	else
+	while ( b != baseCurrent )
 	{
-		Cbuf_AddText( va( "mn_select_base %i\n", baseID ) );
-		Cbuf_Execute();
+		if ( b->founded )
+		{
+			baseCurrent = b;
+			return;
+		}
+		if ( ++b >= bmBases + numBases ) b = NULL;
 	}
+	if ( !b->founded ) baseCurrent = NULL;
 }
 
 /*
@@ -1570,9 +1560,9 @@ void B_AssembleMap ( void )
 		{
 			baseMapPart = "\0";
 
-			if ( baseCurrent->map[a][b][0] != -1 )
+			if ( baseCurrent->map[a][b][baseCurrent->baseLevel] != -1 )
 			{
-				entry = &bmBuildings[baseID][ B_GetIDFromList( baseCurrent->map[a][b][0] ) ];
+				entry = &bmBuildings[baseID][ B_GetIDFromList( baseCurrent->map[a][b][baseCurrent->baseLevel] ) ];
 
 				if ( !entry->used && entry->needs && entry->visible )
 					entry->used = 1;
@@ -1666,6 +1656,7 @@ void MN_LoadBases( sizebuf_t *sb )
 	}
 }
 
+
 /*
 ======================
 MN_ResetBaseManagement
@@ -1734,7 +1725,7 @@ void CL_UpdateBaseData( void )
 			b = &bmBuildings[i][j];
 			if ( ! b ) break;
 			if ( b->buildingStatus[b->howManyOfThisType] == B_UNDER_CONSTRUCTION && b->timeStart + b->buildTime < ccs.date.day )
-				b->buildingStatus[b->howManyOfThisType] = B_CONSTRUCTION_FINISHED;
+				b->buildingStatus[b->howManyOfThisType] == B_CONSTRUCTION_FINISHED;
 		}
 	}
 	CL_CheckResearchStatus();

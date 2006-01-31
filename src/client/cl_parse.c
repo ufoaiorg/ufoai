@@ -1099,7 +1099,6 @@ void CL_InvAmmo( sizebuf_t *sb )
 	le_t	*le;
 	int		number;
 	int		ammo, container, x, y;
-	int		*pAmmo;
 
 	MSG_ReadFormat( sb, ev_format[EV_INV_AMMO], 
 		&number, &ammo, &container, &x, &y );			
@@ -1117,17 +1116,22 @@ void CL_InvAmmo( sizebuf_t *sb )
 	ic = Com_SearchInInventory( &le->i, container, x, y );
 	if ( !ic ) return;
 
-	pAmmo = &ic->item.a;
-
-	if ( curCampaign && le->team == cls.team && *pAmmo == csi.ods[ic->item.t].ammo )
+	// if we're reloading and the displaced clip had any remaining
+	// bullets, store them as loose
+	if ( curCampaign && le->team == cls.team &&
+			ammo == csi.ods[ic->item.t].ammo && ic->item.a > 0 )
 	{
-		// started to use up a magazine
-		if ( ic->item.m != NONE && ccs.eMission.num[ic->item.m] )
-			ccs.eMission.num[ic->item.m]--;
+		ccs.eMission.num_loose[ic->item.m] += ic->item.a;
+		// Accumulate loose ammo into clips (only accessable post-mission)
+		if (ccs.eMission.num_loose[ic->item.m] >= csi.ods[ic->item.t].ammo)
+		{
+			ccs.eMission.num_loose[ic->item.m] -= csi.ods[ic->item.t].ammo;
+			ccs.eMission.num[ic->item.m]++;
+		}
 	}
 
 	// set new ammo
-	*pAmmo = ammo;
+	ic->item.a = ammo;
 
 	if ( ic && csi.ods[ic->item.t].ammo == ammo && le->team != TEAM_ALIEN )
 		S_StartLocalSound( "weapons/verschluss.wav" );

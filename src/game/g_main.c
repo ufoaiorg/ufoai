@@ -283,10 +283,20 @@ G_EndGame
 */
 void G_EndGame( int team )
 {
+	edict_t *ent;
 	int i, j;
 
+	// Make everything visible to anyone who can't already see it
+	for ( i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
+		if ( ent->inuse )
+		{
+			G_AppearPerishEvent( G_VisToPM( ~ent->visflags ), 1, ent );
+			if ( ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) )
+				G_SendInventory( PM_ALL ^ G_TeamToPM( ent->team ), ent );
+		}
+
 	// send results
-	gi.AddEvent( PM_ALL, EV_RESULTS | INSTANTLY );
+	gi.AddEvent( PM_ALL, EV_RESULTS );
 	gi.WriteByte( MAX_TEAMS );
 	gi.WriteByte( team );
 

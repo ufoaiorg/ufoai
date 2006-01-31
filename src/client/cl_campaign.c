@@ -823,6 +823,10 @@ void CL_GameSave( char *filename, char *comment )
 	// create data
 	SZ_Init( &sb, buf, MAX_GAMESAVESIZE );
 
+	// write prefix and version
+	MSG_WriteByte( &sb, 0 );
+	MSG_WriteLong( &sb, 1 );
+
 	// store comment
 	MSG_WriteString( &sb, comment );
 
@@ -846,11 +850,14 @@ void CL_GameSave( char *filename, char *comment )
 
 	// store equipment
 	for ( i = 0; i < MAX_OBJDEFS; i++ )
-		MSG_WriteByte( &sb, ccs.eCampaign.num[i] );
+	{
+		MSG_WriteLong( &sb, ccs.eCampaign.num[i] );
+		MSG_WriteByte( &sb, ccs.eCampaign.num_loose[i] );
+	}
 
 	// store market
 	for ( i = 0; i < MAX_OBJDEFS; i++ )
-		MSG_WriteByte( &sb, ccs.eMarket.num[i] );
+		MSG_WriteLong( &sb, ccs.eMarket.num[i] );
 
 	// store team
 	CL_SendTeamInfo( &sb, wholeTeam, numWholeTeam );
@@ -956,6 +963,7 @@ void CL_GameLoad( char *filename )
 	byte	buf[MAX_GAMESAVESIZE];
 	char	*name;
 	FILE	*f;
+	int		version;
 	int		i, j, num;
 
 	// open file
@@ -970,6 +978,23 @@ void CL_GameLoad( char *filename )
 	SZ_Init( &sb, buf, MAX_GAMESAVESIZE );
 	sb.cursize = fread( buf, 1, MAX_GAMESAVESIZE, f );
 	fclose( f );
+
+	// Check if save file is versioned
+	if (MSG_ReadByte( &sb ) == 0) 
+		version = MSG_ReadLong( &sb );
+	else
+	{
+		// no - reset position and take version as 0
+		MSG_BeginReading ( &sb );
+		version = 0;
+	}
+
+	// check current version
+	if ( version > 1 )
+	{
+		Com_Printf( "File '%s' is a more recent version (%d) than is supported.\n", filename, version );
+		return;
+	}
 
 	// read comment
 	MSG_ReadString( &sb );
@@ -1008,11 +1033,27 @@ void CL_GameLoad( char *filename )
 
 	// read equipment
 	for ( i = 0; i < MAX_OBJDEFS; i++ )
-		ccs.eCampaign.num[i] = MSG_ReadByte( &sb );
+	{
+		if (version == 0)
+		{
+			ccs.eCampaign.num[i] = MSG_ReadByte( &sb );
+			ccs.eCampaign.num_loose[i] = 0;
+		}
+		else if (version == 1)
+		{
+			ccs.eCampaign.num[i] = MSG_ReadLong( &sb );
+			ccs.eCampaign.num_loose[i] = MSG_ReadByte( &sb );
+		}
+	}
 
 	// read market
 	for ( i = 0; i < MAX_OBJDEFS; i++ )
-		ccs.eMarket.num[i] = MSG_ReadByte( &sb );
+	{
+		if (version == 0)
+			ccs.eMarket.num[i] = MSG_ReadByte( &sb );
+		else if (version == 1)
+			ccs.eMarket.num[i] = MSG_ReadLong( &sb );
+	}
 
 	// reset data
 	CL_ResetCharacters();
@@ -1143,6 +1184,7 @@ void CL_GameCommentsCmd( void )
 	char	comment[MAX_VAR];
 	FILE	*f;
 	int		i;
+	int		first_char;
 
 	for ( i = 0; i < 8; i++ )
 	{
@@ -1154,8 +1196,21 @@ void CL_GameCommentsCmd( void )
 			continue;
 		}
 
-		// read data
-		fread( comment, 1, MAX_VAR, f );
+		// check if it's versioned
+		first_char = fgetc( f );
+		if ( first_char == 0 )
+		{
+			// skip the version number
+			fread( comment, sizeof(int), 1, f );
+			// read the comment
+			fread( comment, 1, MAX_VAR, f );
+		}
+		else
+		{
+			// not versioned - first_char is the first character of the comment
+			comment[0] = first_char;
+			fread( comment + 1, 1, MAX_VAR - 1, f );
+		}
 		Cvar_Set( va( "mn_slot%i", i ), comment );
 		fclose( f );
 	}
@@ -1234,7 +1289,6 @@ void CL_GameGo( void )
 	// check inventory
 	ccs.eMission = ccs.eCampaign;
 	CL_CheckInventory( &ccs.eMission );
-	ccs.eMission = ccs.eCampaign;
 
 	// prepare
 	deathMask = 0;
@@ -1424,6 +1478,51 @@ void CL_Sell( void )
 
 // ===========================================================
 
+void CL_CollectItemAmmo( invList_t *weapon , int left_hand )
+{
+	if (weapon->item.t == NONE ||
+			(left_hand && csi.ods[weapon->item.t].twohanded))
+		return;
+	ccs.eMission.num[weapon->item.t]++;
+	if ( !csi.ods[weapon->item.t].reload || weapon->item.m == NONE )
+		return;
+	ccs.eMission.num_loose[weapon->item.m] += weapon->item.a;
+	if (ccs.eMission.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo)
+	{
+		ccs.eMission.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
+		ccs.eMission.num[weapon->item.m]++;
+	}
+
+}
+
+void CL_CollectItems( int won )
+{
+	int i;
+	le_t *le;
+	invList_t *item;
+	int container;
+
+	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
+	{
+		// Winner collects everything on the floor, and everything carried
+		// by surviving actors.  Loser only gets what their living team
+		// members carry.
+		if ( !le->inuse )
+			;
+		else if ( le->type == ET_ITEM && won )
+		{
+			for ( item = FLOOR(le); item; item = item->next )
+				CL_CollectItemAmmo( item, 0 );
+		}
+		else if ( le->type == ET_ACTOR && !(le->state & STATE_DEAD) &&
+				( won || le->team == cls.team ))
+		{
+			for ( container = 0; container < csi.numIDs; container++ )
+				for ( item = le->i.c[container]; item; item = item->next )
+					CL_CollectItemAmmo( item, (container == csi.idLeft) ); }
+	}
+}
+
 /*
 ======================
 CL_GameResultsCmd
@@ -1456,7 +1555,6 @@ void CL_GameResultsCmd( void )
 
 	// give reward, change equipment
 	ccs.credits += ccs.reward;
-	ccs.eCampaign = ccs.eMission;
 
 	// remove the dead (and their item preference)
 	for ( i = 0; i < numWholeTeam; )

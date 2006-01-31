@@ -890,7 +890,8 @@ typedef struct inventory_s
 typedef struct equipDef_s
 {
 	char	name[MAX_VAR];
-	byte	num[MAX_OBJDEFS];
+	int		num[MAX_OBJDEFS];
+	byte	num_loose[MAX_OBJDEFS];
 } equipDef_t;
 
 // the csi structure is the client-server-information structure
