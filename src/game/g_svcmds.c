@@ -316,6 +316,26 @@ void SVCmd_Win_f( void )
 
 /*
 =================
+SVCmd_ShowAll_f
+=================
+*/
+void SVCmd_ShowAll_f( void )
+{
+	edict_t *ent;
+	int i, j;
+
+	// Make everything visible to anyone who can't already see it
+	for ( i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
+		if ( ent->inuse )
+		{
+			G_AppearPerishEvent( G_VisToPM( ~ent->visflags ), 1, ent );
+			ent->visflags |= ~ent->visflags;
+		}
+	Com_Printf("All items and creatures revealed to all sides");
+}
+
+/*
+=================
 ServerCommand
 
 ServerCommand will be called when an "sv" command is issued.
@@ -342,6 +362,8 @@ void	ServerCommand (void)
 		SVCmd_AI_Add_f ();
 	else if (Q_stricmp (cmd, "win") == 0)
 		SVCmd_Win_f ();
+	else if (Q_stricmp (cmd, "showall") == 0)
+		SVCmd_ShowAll_f ();
 	else
 		gi.cprintf (NULL, PRINT_HIGH, "Unknown server command \"%s\"\n", cmd);
 }
