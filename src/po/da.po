@@ -1,0 +1,208 @@
+# Martin Gerhardy <tlh2000@gmx.net>, 2006.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: UFO Alien Invasion CVS\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2006-02-01 02:27+0100\n"
+"Last-Translator: Anders K. Madsen <madsen@lillesvin.net>\n"
+"Language-Team: Danish <dansk@klid.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit"
+
+##ufopedia
+msgid "Ufopedia Content"
+msgstr "Ufopædi Indhold"
+
+msgid "Aircraft"
+msgstr "Luftfartøj"
+
+msgid "Weapons"
+msgstr "Våben"
+
+msgid "Buildings"
+msgstr "Bygninger"
+
+msgid "Alien Species"
+msgstr "Rumvæsen-arter"
+
+msgid "Stab"
+msgstr "Stik"
+
+msgid "Throw"
+msgstr "Kast"
+
+msgid "Primary"
+msgstr "Primær"
+
+msgid "Secondary"
+msgstr "Sekundær"
+
+msgid "Damage"
+msgstr "Skade"
+
+msgid "Range"
+msgstr "Afstand"
+
+msgid "Time Units"
+msgstr "Tidsenheder"
+
+msgid "Spreads"
+msgstr "Spreder"
+
+msgid "Ammo"
+msgstr "Amunition"
+
+msgid "H-92 Troop Transport"
+msgstr "H-92 Troppetransport"
+
+## cl_campaign.c
+msgid "Jan"
+msgstr "Jan"
+
+msgid "Feb"
+msgstr "Feb"
+
+msgid "Mar"
+msgstr "Mar"
+
+msgid "Apr"
+msgstr "Apr"
+
+msgid "May"
+msgstr "Maj"
+
+msgid "Jun"
+msgstr "Jun"
+
+msgid "Jul"
+msgstr "Jul"
+
+msgid "Aug"
+msgstr "Aug"
+
+msgid "Sep"
+msgstr "Sep"
+
+msgid "Oct"
+msgstr "Okt"
+
+msgid "Nov"
+msgstr "Nov"
+
+msgid "Dec"
+msgstr "Dec"
+
+msgid "5 sec"
+msgstr "5 sek"
+
+msgid "5 mins"
+msgstr "5 min"
+
+msgid "1 hour"
+msgstr "1 time"
+
+msgid "12 hour"
+msgstr "12 timer"
+
+msgid "1 day"
+msgstr "1 dag"
+
+msgid "5 days"
+msgstr "5 dage"
+
+## in-game (hud)
+msgid "Your round started!\n"
+msgstr "Din tur er begyndt!\n"
+
+msgid "This isn't your round"
+msgstr "Det er ikke din tur"
+
+msgid "Nobody selected"
+msgstr "Ingen er valgt"
+
+msgid "Health\t%i\nMove\t%i\n"
+msgstr "Helbred\t%i\nBevægelse\t%i\n"
+
+msgid "Health\t%i\n"
+msgstr "Helbred\t%i\n"
+
+msgid "Shoot"
+msgstr "Skyd"
+
+msgid "Alien spotted"
+msgstr "Rumvæsen set"
+
+msgid "Civilian sptted"
+msgstr "Civil set"
+
+## in game
+msgid "Currently panics!\n"
+msgstr "Er i panik!\n"
+
+msgid "%s panics!\n"
+msgstr "%s går i panik!\n"
+
+msgid "%s is on a rampage.\n"
+msgstr "%s er gået amok.\n"
+
+msgid "%s is in mad rage!\n"
+msgstr "%s er gået berserk!\n"
+
+msgid "Can't perform action - this isn't your round!\n"
+msgstr "Det er ikke din tur!\n"
+
+msgid "Can't perform action - object not present!\n"
+msgstr "Genstanden er ikke til stede!\n"
+
+msgid "Can't perform action - not an actor!\n"
+msgstr "Ikke en spiller.\n"
+
+msgid "Can't perform action - actor is dead!\n"
+msgstr "Spilleren er død!\n"
+
+msgid "Can't perform action - not on same team!\n"
+msgstr "Er ikke på samme hold!\n"
+
+msgid "Can't perform action - no control over allied actors!\n"
+msgstr "Ingen kontrol over allierede spillere!\n"
+
+msgid "Can't perform action - not enough TUs!\n"
+msgstr "Ikke nok tidsenheder!\n"
+
+msgid "Can't perform action - weapon already loaded!\n"
+msgstr "Våbnet er allerede ladt!\n"
+
+msgid "%s is currently shaken.\n"
+msgstr "%s er rystet.\n"
+
+msgid "Can't perform action - impossible throw!\n"
+msgstr "Umuligt kast!\n"
+
+msgid "Can't perform action - no ammo!\n"
+msgstr "Ingen amunition!\n"
+
+msgid "Can't perform action - not enough ammo!\n"
+msgstr "Ikke nok amunition!\n"
+
+msgid "Get a team for teamplay\n"
+msgstr "Vælg et hold til holdspil\n"
+
+msgid "Get a team for multiplayer\n"
+msgstr "Vælg et hold til multiplayer\n"
+
+msgid "Removing ai player..."
+msgstr "Fjerner AI-spiller..."
+
+msgid "%s has taken control over team %i.\n"
+msgstr "%s har taget kommandoen over hold %i.\n"
+
+msgid "Item '%s' not allowed and removed from inventory.\n"
+msgstr "Genstanden '%s' er ikke tilladt og er fjernet fra dit lager."
+
+msgid "Unknown - need to research this"
+msgstr "Ukendt - du må researche dette"
+
