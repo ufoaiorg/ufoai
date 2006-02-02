@@ -716,6 +716,10 @@ distclean:
 		\( -name '*~' \) -type f -print`
 
 lang:
+	@mkdir -p ../../base/i18n/de/LC_MESSAGES
 	msgfmt -v -o ../../base/i18n/de/LC_MESSAGES/ufoai.mo ../po/de.po
+	@mkdir -p ../../base/i18n/en_GB/LC_MESSAGES
 	msgfmt -v -o ../../base/i18n/en_GB/LC_MESSAGES/ufoai.mo ../po/en_GB.po
+	@mkdir -p ../../base/i18n/da/LC_MESSAGES
+	msgfmt -v -o ../../base/i18n/da/LC_MESSAGES/ufoai.mo ../po/da.po
 
