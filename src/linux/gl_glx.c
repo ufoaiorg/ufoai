@@ -254,8 +254,8 @@ IN_GetMousePos
 */
 void RW_IN_GetMousePos (int *x, int *y)
 {
-  *x = mx;
-  *y = my;
+	*x = mx;
+	*y = my;
 }
 
 static void IN_DeactivateMouse( void )
@@ -531,12 +531,11 @@ void KBD_Init(Key_Event_fp_t fp)
 
 void KBD_Update(void)
 {
-// get events from x server
+	// get events from x server
 	HandleEvents();
 }
 
 void KBD_Close(void)
-
 {
 }
 
@@ -569,7 +568,7 @@ static void InitSig(void)
 /*
 ** GLimp_SetMode
 */
-int GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen )
+rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen )
 {
 	int width, height;
 	int attrib[] = {
@@ -590,8 +589,6 @@ int GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean fulls
 	int i;
 
 	r_fakeFullscreen = ri.Cvar_Get( "r_fakeFullscreen", "0", CVAR_ARCHIVE);
-
-
 
 	ri.Con_Printf( PRINT_ALL, "Initializing OpenGL display\n");
 
@@ -766,7 +763,7 @@ void GLimp_Shutdown( void )
 ** This routine is responsible for initializing the OS specific portions
 ** of OpenGL.
 */
-int GLimp_Init( void *hinstance, void *wndproc )
+qboolean GLimp_Init( void *hinstance, void *wndproc )
 {
 	InitSig();
 
