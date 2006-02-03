@@ -1308,7 +1308,7 @@ skipwhite:
 
 	if (len == MAX_TOKEN_CHARS)
 	{
-//		Com_Printf ("Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS);
+// 		Com_Printf ("Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS);
 		len = 0;
 	}
 	com_token[len] = 0;
@@ -1464,11 +1464,7 @@ char *Info_ValueForKey (char *s, char *key)
 		o = value[valueindex];
 
 		while (*s != '\\' && *s)
-		{
-			if (!*s)
-				return "";
 			*o++ = *s++;
-		}
 		*o = 0;
 
 		if (!strcmp (key, pkey) )

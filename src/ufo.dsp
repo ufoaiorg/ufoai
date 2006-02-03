@@ -529,6 +529,21 @@ SOURCE=.\client\cl_particle.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\client\cl_research.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\client\cl_scrn.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
@@ -1670,6 +1685,14 @@ SOURCE=.\client\cdaudio.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\client\cl_basemanagement.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\client\cl_research.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\client\client.h
 # End Source File
 # Begin Source File
@@ -1691,6 +1714,10 @@ SOURCE=.\client\input.h
 # Begin Source File
 
 SOURCE=.\client\keys.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\win32\libintl.h
 # End Source File
 # Begin Source File
 
@@ -1763,6 +1790,10 @@ SOURCE=.\win32\ogg.lib
 # Begin Source File
 
 SOURCE=.\win32\vorbisfile.lib
+# End Source File
+# Begin Source File
+
+SOURCE=.\win32\libintl.lib
 # End Source File
 # End Group
 # End Target
