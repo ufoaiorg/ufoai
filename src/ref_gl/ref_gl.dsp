@@ -760,6 +760,10 @@ SOURCE=..\win32\jpeglib.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\win32\libintl.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\game\q_shared.h
 # End Source File
 # Begin Source File
@@ -801,6 +805,10 @@ SOURCE=.\ref_gl.def
 # Begin Source File
 
 SOURCE=..\win32\libjpeg.lib
+# End Source File
+# Begin Source File
+
+SOURCE=..\win32\intl.lib
 # End Source File
 # End Group
 # End Target

@@ -3,7 +3,7 @@ FileName=ref_gl.dev
 Name=ref_gl
 Ver=1
 IsCpp=1
-Type=3
+Type=2
 Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DNDEBUG -DWIN32 -D_WINDOWS_@@_
 CppCompiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DNDEBUG -DWIN32 -D_WINDOWS_@@_
 Includes=
@@ -27,7 +27,7 @@ CustomMakefile=
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
-CompilerSettings=0000000000000100000000
+CompilerSettings=0000000000000000000000
 
 [Unit1]
 FileName=gl_anim.c

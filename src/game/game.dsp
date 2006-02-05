@@ -349,6 +349,10 @@ SOURCE=.\q_shared.h
 
 SOURCE=.\game.def
 # End Source File
+# Begin Source File
+
+SOURCE=..\win32\intl.lib
+# End Source File
 # End Group
 # End Target
 # End Project

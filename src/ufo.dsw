@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "game"=.\game\game.dsp - Package Owner=<4>
+Project: "game"=".\game\game.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ufo"=.\ufo.dsp - Package Owner=<4>
+Project: "ref_gl"=".\ref_gl\ref_gl.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -23,27 +23,24 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name ctf
-    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ufo"=".\ufo.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
     Begin Project Dependency
     Project_Dep_Name game
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ref_gl
     End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "ref_gl"=.\ref_gl\ref_gl.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
 }}}
 
 ###############################################################################

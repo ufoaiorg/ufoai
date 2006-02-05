@@ -1717,14 +1717,6 @@ SOURCE=.\client\keys.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\libintl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\client\os_types.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\game\q_shared.h
 # End Source File
 # Begin Source File
@@ -1761,10 +1753,6 @@ SOURCE=.\client\vid.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\vorbisfile.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\win32\winquake.h
 # End Source File
 # End Group
@@ -1793,8 +1781,16 @@ SOURCE=.\win32\vorbisfile.lib
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\libintl.lib
+SOURCE=.\win32\intl.lib
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=.\win32\libintl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\win32\vorbisfile.h
+# End Source File
 # End Target
 # End Project
