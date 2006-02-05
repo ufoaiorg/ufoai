@@ -678,7 +678,8 @@ qboolean IN_ReadJoystick (void)
 IN_JoyMove
 ===========
 */
-/*void IN_JoyMove (usercmd_t *cmd)
+#if 0
+void IN_JoyMove (usercmd_t *cmd)
 {
 	float	speed, aspeed;
 	float	fAxisValue;
@@ -814,5 +815,6 @@ IN_JoyMove
 			break;
 		}
 	}
-}*/
+}
+#endif
 

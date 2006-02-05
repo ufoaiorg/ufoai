@@ -1,5 +1,5 @@
 /* Message catalogs for internationalization.
-   Copyright (C) 1995-1997, 2000-2004 Free Software Foundation, Inc.
+   Copyright (C) 1995-1997, 2000-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU Library General Public License as published
@@ -19,15 +19,11 @@
 #ifndef _LIBINTL_H
 #define _LIBINTL_H	1
 
-#ifdef LIBINTL_STATIC
-#define LIBINTL_DLL_EXPORTED
-#else /* LIBINTL_STATIC */
 #ifdef BUILDING_LIBINTL
 #define LIBINTL_DLL_EXPORTED __declspec(dllexport)
 #else
 #define LIBINTL_DLL_EXPORTED __declspec(dllimport)
 #endif
-#endif /* LIBINTL_STATIC */ 
 
 #include <locale.h>
 
@@ -49,7 +45,7 @@
 /* Provide information about the supported file formats.  Returns the
    maximum minor revision number supported for a given major revision.  */
 #define __GNU_GETTEXT_SUPPORTED_REVISION(major) \
-  ((major) == 0 || (major) == 1 ? 1 : -1)
+  ((major) == 0 ? 1 : -1)
 
 /* Resolve a platform specific conflict on DJGPP.  GNU gettext takes
    precedence over _conio_gettext.  */
