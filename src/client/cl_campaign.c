@@ -1285,6 +1285,9 @@ void CL_GameGo( void )
 	Cvar_Set( "ai_civilian", mis->civTeam );
 	Cvar_Set( "ai_equipment", mis->alienEquipment );
 	Cvar_Set( "music", mis->music );
+	// TODO is this correct for a multiplayer game too?  CL_GameGo returns
+	// if curCampaign is null...
+	Cvar_Set( "equip", "campaign_player" );
 
 	// check inventory
 	ccs.eMission = ccs.eCampaign;
