@@ -1578,7 +1578,7 @@ void G_ShootGrenade( player_t *player, edict_t *ent, fireDef_t *fd, int type, ve
 	// get positional data
 	VectorCopy( from, last );
 	gi.GridPosToVec( gi.map, at, target );
-	target[2] -= 30;
+	target[2] -= 9;
 
 	// calculate parabola
 	dt = gi.GrenadeTarget( last, target, startV );

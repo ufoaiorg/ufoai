@@ -1488,10 +1488,7 @@ void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
 	Grid_PosToVec( &clMap, fromPos, from );
 	Grid_PosToVec( &clMap, toPos, at );
 
-	//brain with value 30 it does not work for me under linux - value 10
-	//works great with value 10 the vector is painted as it should be - but
-	//the throw animation does not work propererly
-	at[2] -= 30;
+	at[2] -= 9;
 
 	// calculate parabola
 	dt = Com_GrenadeTarget( from, at, v0 );
