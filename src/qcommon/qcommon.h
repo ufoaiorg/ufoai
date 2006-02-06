@@ -691,7 +691,13 @@ FILESYSTEM
 
 ==============================================================
 */
+#define MAX_MAPS 400
+extern char* maps[MAX_MAPS];
+extern int anzInstalledMaps;
+extern int mapsInstalledInit;
+extern int mapInstalledIndex;
 
+void 	FS_GetMaps ( void );
 void	FS_InitFilesystem (void);
 void	FS_SetGamedir (char *dir);
 char	*FS_Gamedir (void);

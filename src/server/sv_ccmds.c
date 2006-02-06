@@ -1027,6 +1027,23 @@ void SV_ServerCommand_f (void)
 //===========================================================
 
 /*
+================
+SV_ListMaps_f
+================
+*/
+void SV_ListMaps_f ( void )
+{
+	int i;
+	if ( ! mapsInstalledInit )
+		FS_GetMaps();
+
+	for ( i = 0; i < anzInstalledMaps-1; i++ )
+	{
+		Com_Printf("%s\n", maps[i]);
+	}
+}
+
+/*
 ==================
 SV_InitOperatorCommands
 ==================
@@ -1041,6 +1058,8 @@ void SV_InitOperatorCommands (void)
 
 	Cmd_AddCommand ("map", SV_Map_f);
 /*	Cmd_AddCommand ("demomap", SV_DemoMap_f);*/
+	Cmd_AddCommand( "maplist", SV_ListMaps_f );
+
 	Cmd_AddCommand ("gamemap", SV_GameMap_f);
 	Cmd_AddCommand ("setmaster", SV_SetMaster_f);
 

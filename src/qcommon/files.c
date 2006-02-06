@@ -1477,3 +1477,53 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 	return NULL;
 }
 
+// maplisting
+char* maps[MAX_MAPS];
+int anzInstalledMaps = 0;
+int mapsInstalledInit = 0;
+int mapInstalledIndex = 0;
+
+/*
+================
+FS_GetMaps
+================
+*/
+void FS_GetMaps ( void )
+{
+	char	name[MAX_OSPATH];
+	int	len;
+// 	char	*entry;
+	char	*found;
+	char	*path = NULL;
+	char	*baseMapName = NULL;
+
+	if ( mapsInstalledInit )
+		return;
+
+	Com_sprintf (name, sizeof(name), "maps/*.bsp", FS_Gamedir());
+	len = strlen(name);
+	mapInstalledIndex = 0;
+	while ( ( path = FS_NextPath( path ) ) )
+	{
+		found = Sys_FindFirst( va("%s/%s", path, name) , 0, 0 );
+		while (found && anzInstalledMaps < MAX_MAPS )
+		{
+			baseMapName = COM_SkipPath ( found );
+			COM_StripExtension ( baseMapName, found );
+			//searched a specific map?
+			maps[anzInstalledMaps] = (char *) malloc ( 256 );
+			if ( maps[anzInstalledMaps] == NULL )
+			{
+				Com_Printf(_("Could not allocate memory in MN_GetMaps\n"));
+				return;
+			}
+			strcpy( maps[anzInstalledMaps], found );
+			anzInstalledMaps++;
+			found = Sys_FindNext( 0, 0 );
+		}
+	}
+
+	mapsInstalledInit = 1;
+
+	Sys_FindClose ();
+}
