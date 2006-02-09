@@ -30,7 +30,7 @@ typedef enum
 	SEQ_NUMCMDS
 } seqCmdEnum_t;
 
-char *seqCmdName[SEQ_NUMCMDS] = 
+char *seqCmdName[SEQ_NUMCMDS] =
 {
 	"end",
 	"wait",
@@ -86,7 +86,7 @@ void SEQ_2Dobj( char *name, char *data );
 void SEQ_Remove( char *name, char *data );
 void SEQ_Command( char *name, char *data );
 
-void (*seqCmdFunc[SEQ_NUMCMDS])( char *name, char *data ) = 
+void (*seqCmdFunc[SEQ_NUMCMDS])( char *name, char *data ) =
 {
 	NULL,
 	SEQ_Wait,
@@ -240,7 +240,7 @@ void CL_SequenceRender( void )
 
 			sunfrac = 1.0;
 			ent.lightparam = &sunfrac;
-			
+
 			VectorCopy( se->origin, ent.origin );
 			VectorCopy( se->origin, ent.oldorigin );
 			VectorCopy( se->angles, ent.angles );
@@ -293,7 +293,7 @@ void CL_Sequence2D( void )
 			if ( s2d->text )
 				re.DrawPropString( "f_big", s2d->align, s2d->pos[0], s2d->pos[1], s2d->text );
 			if ( s2d->image )
-				re.DrawNormPic( s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], 
+				re.DrawNormPic( s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1],
 					0, 0, 0, 0, s2d->align, true, s2d->image);
 		}
 	re.DrawColor( NULL );
@@ -312,7 +312,7 @@ void CL_SequenceStart_f( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: seq_start <name>\n" );
+		Com_Printf( _("Usage: seq_start <name>\n") );
 		return;
 	}
 	name = Cmd_Argv( 1 );
@@ -462,7 +462,7 @@ void SEQ_Precache( char *name, char *data )
 			re.RegisterModel( data );
 			data += strlen( data ) + 1;
 		}
-	} 
+	}
 	else if ( !strcmp( name, "pics" ) )
 	{
 		while ( *data )
@@ -530,7 +530,7 @@ void SEQ_Model( char *name, char *data )
 		se->inuse = true;
 		se->name = name;
 	}
-	
+
 	// get values
 	while ( *data )
 	{
@@ -590,7 +590,7 @@ void SEQ_2Dobj( char *name, char *data )
 		s2d->inuse = true;
 		s2d->name = name;
 	}
-	
+
 	// get values
 	while ( *data )
 	{
@@ -624,7 +624,7 @@ void SEQ_Remove( char *name, char *data )
 	s2d = CL_SequenceFind2D( name );
 	if ( s2d ) s2d->inuse = false;
 
-	if ( !se && !s2d ) 
+	if ( !se && !s2d )
 		Com_Printf( _("SEQ_Remove: couldn't find '%s'\n"), name );
 }
 
@@ -667,7 +667,7 @@ void CL_ParseSequence( char *name, char **text )
 	}
 
 	// initialize the sequence
-	if ( numSequences >= MAX_SEQUENCES ) 
+	if ( numSequences >= MAX_SEQUENCES )
 		Sys_Error( ERR_FATAL, _("Too many sequences\n") );
 
 	sp = &sequences[numSequences++];
@@ -699,7 +699,7 @@ next_cmd:
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
 
-				if ( numSeqCmds >= MAX_SEQCMDS ) 
+				if ( numSeqCmds >= MAX_SEQCMDS )
 					Sys_Error( ERR_FATAL, _("Too many sequence commands\n") );
 
 				// init seqCmd
@@ -731,7 +731,7 @@ next_cmd:
 
 					if ( *token == '{' ) depth++;
 					else if ( *token == '}' ) depth--;
-					if ( depth ) 
+					if ( depth )
 					{
 						strcpy( cmdDataCur, token );
 						cmdDataCur += strlen( token ) + 1;

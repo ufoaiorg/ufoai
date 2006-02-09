@@ -1308,9 +1308,9 @@ void CL_InitLocal (void)
 	adr7 = Cvar_Get( "adr7", "", CVAR_ARCHIVE );
 	adr8 = Cvar_Get( "adr8", "", CVAR_ARCHIVE );
 
-//
-// register our variables
-//
+	//
+	// register our variables
+	//
 	cl_stereo_separation = Cvar_Get( "cl_stereo_separation", "0.4", CVAR_ARCHIVE );
 	cl_stereo = Cvar_Get( "cl_stereo", "0", 0 );
 
@@ -1347,8 +1347,8 @@ void CL_InitLocal (void)
 	m_forward = Cvar_Get ("m_forward", "1", 0);
 	m_side = Cvar_Get ("m_side", "1", 0);
 
-	cl_fps = Cvar_Get ("cl_fps", "0", 0);
-	cl_shownet = Cvar_Get ("cl_shownet", "0", 0);
+	cl_fps = Cvar_Get ("cl_fps", "0", CVAR_ARCHIVE);
+	cl_shownet = Cvar_Get ("cl_shownet", "0", CVAR_ARCHIVE);
 	cl_showmiss = Cvar_Get ("cl_showmiss", "0", 0);
 	cl_showclamp = Cvar_Get ("showclamp", "0", 0);
 	cl_timeout = Cvar_Get ("cl_timeout", "120", 0);
@@ -1398,7 +1398,6 @@ void CL_InitLocal (void)
 	msg = Cvar_Get ("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE);
 
 	cl_vwep = Cvar_Get ("cl_vwep", "1", CVAR_ARCHIVE);
-
 
 	//
 	// register our commands
