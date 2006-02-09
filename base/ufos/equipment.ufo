@@ -96,3 +96,42 @@ equipment campaign_alien
 	plaspistol		12
 	plaspistol_ammo	18
 }
+
+equipment alien_mine
+{
+	plaspistol			2
+	plaspistol_ammo		4
+	laserrifle			1
+	laserrifle_ammo		2
+}
+
+equipment alien_excavation
+{
+	plaspistol			2
+	plaspistol_ammo		4
+	laserrifle			3
+	laserrifle_ammo		6
+	rpg			1
+	rpg_ammo		3
+}
+
+equipment alien_spedition
+{
+	plaspistol			2
+	plaspistol_ammo		4
+	laserrifle			2
+	laserrifle_ammo		8
+	tachyonrifle		2
+	tachyonrifle_ammo		8
+}
+
+equipment alien_crash
+{
+	plasrifle			4
+	plasrifle_ammo			8
+	laserrifle			2
+	laserrifle_ammo			8
+	tachyonrifle			2
+	tachyonrifle_ammo		8
+}
+
