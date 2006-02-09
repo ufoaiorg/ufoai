@@ -4,7 +4,7 @@ Name=game
 Ver=1
 IsCpp=1
 Type=3
-Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DNDEBUG -D_WINDOWS_@@_
+Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DNDEBUG -D_WINDOWS -DDEVCPP -DC_ONLY_@@_
 CppCompiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DNDEBUG -D_WINDOWS_@@_
 Includes=
 Linker=-lkernel32 -luser32 -lwinmm_@@_../win32/intl.lib_@@_
@@ -27,7 +27,7 @@ CustomMakefile=
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=1
-CompilerSettings=0000000000000100000000
+CompilerSettings=0000000000000000000000
 
 [Unit1]
 FileName=g_ai.c

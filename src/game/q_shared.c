@@ -1626,9 +1626,9 @@ Com_InitInventory
 */
 void Com_InitInventory( invList_t *invList )
 {
-	assert( invList );
 	invList_t	*last;
 	int	i;
+	assert( invList );
 
 	invUnused = invList;
 	invUnused->next = NULL;
@@ -1646,11 +1646,11 @@ Com_CheckToInventory
 */
 qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, int y )
 {
-	assert( i );
 	invList_t	*ic, *right, *left;
 	int		mask[16];
 	int		j;
 
+	assert( i );
 	// armor vs item
 	if ( !strcmp( CSI->ods[item].type, "armor" ) )
 	{
@@ -1733,12 +1733,12 @@ Com_AddToInventory
 */
 invList_t *Com_AddToInventory( inventory_t *i, item_t item, int container, int x, int y )
 {
-	assert( i );
 	invList_t	*ic;
 
 	if ( !invUnused ) Sys_Error( "No free inventory space!\n" );
 	if ( item.t == NONE ) return NULL;
 
+	assert( i );
 	// allocate space
 	ic = i->c[container];
 	i->c[container] = invUnused;
@@ -1760,9 +1760,9 @@ Com_RemoveFromInventory
 */
 qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 {
-	assert( i );
 	invList_t	*ic, *old;
 
+	assert( i );
 	ic = i->c[container];
 	if ( !ic ) return false;
 
@@ -1797,7 +1797,6 @@ Com_MoveInInventory
 */
 int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t **icp )
 {
-	assert( i );
 	invList_t	*ic;
 	int		time;
  	item_t cacheItem2;
@@ -1811,6 +1810,8 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 	if ( from == to ) time /= 2;
 	if ( TU && *TU < time )
 		return IA_NOTIME;
+
+	assert( i );
 
 	if ( !Com_RemoveFromInventory( i, from, fx, fy ) ) return IA_NONE; // break if source item is not removeable
 
@@ -1873,9 +1874,10 @@ Com_EmptyContainer
 */
 void Com_EmptyContainer( inventory_t *i, int container )
 {
-	assert( i );
 	invList_t	*ic, *old;
 	int cnt = 0;
+
+	assert( i );
 	ic = i->c[container];
 	while ( ic )
 	{
@@ -1944,12 +1946,12 @@ Com_CharGenAbilitySkills
 
 void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility, int minSkill, int maxSkill )
 {
-	assert( chr );
 	float randomArray[SKILL_NUM_TYPES];
 	int total;
 	int i, retry;
 	float max, min, rand_avg;
 
+	assert( chr );
 	retry = MAX_GENCHARRETRIES;
 	do {
 		// Abilities

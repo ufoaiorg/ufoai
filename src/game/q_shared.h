@@ -46,6 +46,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // i18n support via gettext
 #ifdef MACOS_X
 #include <intl/libintl.h>
+#elif defined(_WIN32)
+#include "../win32/libintl.h"
 #else
 #include <libintl.h>
 #endif

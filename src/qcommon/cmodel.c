@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -253,7 +253,7 @@ void CMod_LoadNodes (lump_t *l)
 	int			child;
 	cnode_t		*out;
 	int			i, j, count;
-	
+
 	in = (void *)(cmod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error (ERR_DROP, "MOD_LoadBmodel: funny lump size");
@@ -266,7 +266,7 @@ void CMod_LoadNodes (lump_t *l)
 
 	for (i=0 ; i<count ; i++, out++, in++)
 	{
-		if ( in->planenum == -1 ) 
+		if ( in->planenum == -1 )
 			out->plane = NULL;
 		else
 			out->plane = curTile->planes + LittleLong(in->planenum);
@@ -294,7 +294,7 @@ void CMod_LoadBrushes (lump_t *l)
 	dbrush_t	*in;
 	cbrush_t	*out;
 	int			i, count;
-	
+
 	in = (void *)(cmod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error (ERR_DROP, "MOD_LoadBmodel: funny lump size");
@@ -328,7 +328,7 @@ void CMod_LoadLeafs (lump_t *l)
 	cleaf_t		*out;
 	dleaf_t 	*in;
 	int			count;
-	
+
 	in = (void *)(cmod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error (ERR_DROP, "MOD_LoadBmodel: funny lump size");
@@ -337,7 +337,7 @@ void CMod_LoadLeafs (lump_t *l)
 	out = Hunk_Alloc( (count + 1)*sizeof(*out) );
 
 	curTile->numleafs = count;
-	curTile->leafs = out;	
+	curTile->leafs = out;
 
 	for ( i=0 ; i<count ; i++, in++, out++)
 	{
@@ -374,7 +374,7 @@ void CMod_LoadPlanes (lump_t *l)
 	dplane_t 	*in;
 	int			count;
 	int			bits;
-	
+
 	in = (void *)(cmod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error (ERR_DROP, "MOD_LoadBmodel: funny lump size");
@@ -383,7 +383,7 @@ void CMod_LoadPlanes (lump_t *l)
 	out = Hunk_Alloc( (count + 12)*sizeof(*out) );
 
 	curTile->numplanes = count;
-	curTile->planes = out;	
+	curTile->planes = out;
 
 	for ( i=0 ; i<count ; i++, in++, out++)
 	{
@@ -416,7 +416,7 @@ void CMod_LoadLeafBrushes (lump_t *l)
 	unsigned short	*out;
 	unsigned short 	*in;
 	int			count;
-	
+
 	in = (void *)(cmod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error (ERR_DROP, "MOD_LoadBmodel: funny lump size");
@@ -520,7 +520,7 @@ int CM_EntTestLine( vec3_t start, vec3_t stop )
 	trace_t trace;
 	cmodel_t *model;
 	char **name;
-	
+
 	// trace against world first
 	if ( CM_TestLine( start, stop ) ) return 1;
 	if ( !inlineList ) return 0;
@@ -595,10 +595,10 @@ qboolean CM_TestConnection( routing_t *map, int x, int y, int z, int dir, qboole
 {
 	vec3_t start, end;
 	pos3_t pos;
-	int h, sh, ax, ay, az; 
+	int h, sh, ax, ay, az;
 
 	// totally blocked unit
-	if ( ( fill && (filled[y][x] & (1<<z)) ) || ( map->fall[y][x] == 0xFF ) ) 
+	if ( ( fill && (filled[y][x] & (1<<z)) ) || ( map->fall[y][x] == 0xFF ) )
 		return false;
 
 	// get step height and trace vectors
@@ -616,7 +616,7 @@ qboolean CM_TestConnection( routing_t *map, int x, int y, int z, int dir, qboole
 
 	// assume blocked
 	map->route[z][y][x] &= ~(0x10 << dir);
-	
+
 	// test filled
 	if ( fill && (filled[ay][ax] & (1<<az)) ) return false;
 
@@ -720,12 +720,12 @@ void CM_CheckUnit( routing_t *map, int x, int y, int z )
 			// tend[0] & [1] are correct (testvec[4])
 			height += tend[2];
 			tend[2] = height / 6.0;
-			
+
 			if ( VectorCompare( start, tend ) )
 			{
 				filled[y][x] |= 1<<z; // don't enter
 			}
-			else 
+			else
 			{
 				// found a possibly valid elevated ground
 				end[2] = start[2] + PH - (start[2]-tend[2]);
@@ -740,7 +740,7 @@ void CM_CheckUnit( routing_t *map, int x, int y, int z )
 			}
 		}
 	}
-	else 
+	else
 	{
 		// fall down
 		map->route[z][y][x] = 0;
@@ -852,7 +852,7 @@ void CMod_LoadRouting (lump_t *l, int sX, int sY, int sZ)
 	// calculate new border
 	CMod_GetMapSize( &clMap );
 
-//	Com_Printf( "route: (%i %i) fall: %i step: %i\n", 
+//	Com_Printf( "route: (%i %i) fall: %i step: %i\n",
 //		(int)map->route[0][0][0], (int)map->route[1][0][0], (int)map->fall[0][0], (int)map->step[0][0] );
 }
 
@@ -877,7 +877,7 @@ void CMod_LoadEntityString (lump_t *l)
 	es = (char *)(cmod_base + l->fileofs);
 	while (1)
 	{
-		// parse the opening brace	
+		// parse the opening brace
 		com_token = COM_Parse (&es);
 		if (!es)
 			break;
@@ -889,7 +889,7 @@ void CMod_LoadEntityString (lump_t *l)
 
 		// go through all the dictionary pairs
 		while (1)
-		{	
+		{
 			// parse key
 			com_token = COM_Parse (&es);
 			if (com_token[0] == '}')
@@ -898,8 +898,8 @@ void CMod_LoadEntityString (lump_t *l)
 				Com_Error (ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
 
 			strncpy (keyname, com_token, sizeof(keyname)-1);
-			
-			// parse value	
+
+			// parse value
 			com_token = COM_Parse (&es);
 			if (!es)
 				Com_Error (ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
@@ -914,7 +914,7 @@ void CMod_LoadEntityString (lump_t *l)
 				sscanf( com_token, "%f %f %f", &(v[0]), &(v[1]), &(v[2]) );
 				VectorAdd( v, shift, v );
 				stradd( &map_entitystringpos, va( "%s \"%i %i %i\" ", keyname, (int)v[0], (int)v[1], (int)v[2] ) );
-			} 
+			}
 			else if ( !strcmp( keyname, "model" ) && com_token[0] == '*' )
 			{
 				// adapt inline model number
@@ -951,7 +951,7 @@ Frees a map tile
 */
 void CM_FreeTile( mapTile_t *tile )
 {
-	if ( tile->extraData ) 
+	if ( tile->extraData )
 	{
 		Hunk_Free( tile->extraData );
 		tile->extraData = NULL;
@@ -1071,7 +1071,7 @@ void CM_LoadMap( char *tiles, char *pos )
 		if ( !tiles ) return;
 
 		// get base path
-		if ( token[0] == '-' ) 
+		if ( token[0] == '-' )
 		{
 			strncpy( base, token+1, MAX_QPATH );
 			continue;
@@ -1215,7 +1215,7 @@ void CM_InitBoxHull (void)
 		p->signbits = 0;
 		VectorClear (p->normal);
 		p->normal[i>>1] = -1;
-	}	
+	}
 }
 
 
@@ -1264,7 +1264,7 @@ int CM_PointLeafnum_r (vec3_t p, int num)
 	{
 		node = curTile->nodes + num;
 		plane = node->plane;
-		
+
 		if (plane->type < 3)
 			d = p[plane->type] - plane->dist;
 		else
@@ -1319,7 +1319,7 @@ void CM_BoxLeafnums_r (int nodenum)
 			leaf_list[leaf_count++] = -1 - nodenum;
 			return;
 		}
-	
+
 		node = &curTile->nodes[nodenum];
 		plane = node->plane;
 //		s = BoxOnPlaneSide (leaf_mins, leaf_maxs, plane);
@@ -1402,7 +1402,7 @@ int	CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, vec3_t a
 	VectorSubtract (p, origin, p_l);
 
 	// rotate start and end into the models frame of reference
-	if (headnode != curTile->box_headnode && 
+	if (headnode != curTile->box_headnode &&
 	(angles[0] || angles[1] || angles[2]) )
 	{
 		AngleVectors (angles, forward, right, up);
@@ -1769,7 +1769,7 @@ return;
 		frac = 0;
 	if (frac > 1)
 		frac = 1;
-		
+
 	midf = p1f + (p2f - p1f)*frac;
 	for (i=0 ; i<3 ; i++)
 		mid[i] = p1[i] + frac*(p2[i] - p1[i]);
@@ -1782,7 +1782,7 @@ return;
 		frac2 = 0;
 	if (frac2 > 1)
 		frac2 = 1;
-		
+
 	midf = p1f + (p2f - p1f)*frac2;
 	for (i=0 ; i<3 ; i++)
 		mid[i] = p1[i] + frac2*(p2[i] - p1[i]);
@@ -1807,7 +1807,7 @@ trace_t		CM_BoxTrace (vec3_t start, vec3_t end,
 
 	checkcount++;		// for multi-check avoidance
 	c_traces++;			// for statistics, may be zeroed
-	
+
 	// init
 	curTile = &mapTiles[tile];
 
@@ -1913,7 +1913,7 @@ trace_t		CM_TransformedBoxTrace (vec3_t start, vec3_t end,
 	vec3_t		forward, right, up;
 	vec3_t		temp;
 	qboolean	rotated;
-	
+
 	if ( tile >= MAX_MAPTILES )
 	{
 		Com_Printf( "CM_TransformedBoxTrace: too many tiles loaded\n" );
@@ -1922,13 +1922,13 @@ trace_t		CM_TransformedBoxTrace (vec3_t start, vec3_t end,
 
 	// init
 	curTile = &mapTiles[tile];
-	
+
 	// subtract origin offset
 	VectorSubtract (start, origin, start_l);
 	VectorSubtract (end, origin, end_l);
 
 	// rotate start and end into the models frame of reference
-	if (headnode != curTile->box_headnode && 
+	if (headnode != curTile->box_headnode &&
 	(angles[0] || angles[1] || angles[2]) )
 		rotated = true;
 	else
@@ -1985,7 +1985,7 @@ Handles all 255 level specific submodels too
 ==================
 */
 trace_t		CM_CompleteBoxTrace (vec3_t start, vec3_t end,
-						  vec3_t mins, vec3_t maxs, 
+						  vec3_t mins, vec3_t maxs,
 						  int levelmask, int brushmask)
 {
 	trace_t	newtr, tr;
@@ -1999,15 +1999,15 @@ trace_t		CM_CompleteBoxTrace (vec3_t start, vec3_t end,
 		curTile = &mapTiles[tile];
 		for ( i = 0, h = curTile->cheads; i < curTile->numcheads; i++, h++ )
 		{
-			if ( h->level && levelmask && !(h->level & levelmask) ) 
+			if ( h->level && levelmask && !(h->level & levelmask) )
 				continue;
 
 			newtr = CM_BoxTrace( start, end, mins, maxs, tile, h->cnode, brushmask );
 
 			// memorize the trace with the minimal fraction
-			if ( newtr.fraction == 0.0 ) 
+			if ( newtr.fraction == 0.0 )
 				return newtr;
-			if ( newtr.fraction < tr.fraction ) 
+			if ( newtr.fraction < tr.fraction )
 				tr = newtr;
 		}
 	}
@@ -2033,7 +2033,7 @@ void MakeTnode (int nodenum)
 	cplane_t		*plane;
 	int				i;
 	cnode_t 		*node;
-	
+
 	t = tnode_p++;
 
 	node = curTile->nodes + nodenum;
@@ -2042,13 +2042,13 @@ void MakeTnode (int nodenum)
 	t->type = plane->type;
 	VectorCopy (plane->normal, t->normal);
 	t->dist = plane->dist;
-	
+
 	for (i=0 ; i<2 ; i++)
 	{
 		if (node->children[i] < 0)
 			if ( curTile->leafs[-node->children[i] - 1].contents & CONTENTS_SOLID )
 				t->children[i] = 1 | (1<<31);
-			else 
+			else
 				t->children[i] = (1<<31);
 		else
 		{
@@ -2056,7 +2056,7 @@ void MakeTnode (int nodenum)
 			MakeTnode (node->children[i]);
 		}
 	}
-			
+
 }
 
 
@@ -2085,7 +2085,7 @@ void BuildTnode_r( int node )
 		VectorCopy( curTile->nodes[n->children[0]].maxs, c0maxs );
 		VectorCopy( curTile->nodes[n->children[1]].mins, c1mins );
 
-	//	printf( "(%i %i : %i %i) (%i %i : %i %i)\n", 
+	//	printf( "(%i %i : %i %i) (%i %i : %i %i)\n",
 	//		(int)dnodes[n->children[0]].mins[0], (int)dnodes[n->children[0]].mins[1], (int)dnodes[n->children[0]].maxs[0], (int)dnodes[n->children[0]].maxs[1],
 	//		(int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1] );
 
@@ -2102,14 +2102,14 @@ void BuildTnode_r( int node )
 				t->children[1] = tnode_p - curTile->tnodes;
 				BuildTnode_r( n->children[0] );
 				t->children[0] = tnode_p - curTile->tnodes;
-				BuildTnode_r( n->children[1] );			
+				BuildTnode_r( n->children[1] );
 				return;
 			}
-
+return;
 		// can't construct such a separation plane
 		t->type = PLANE_NONE;
 
-		for ( i = 0; i < 2; i++ ) 
+		for ( i = 0; i < 2; i++ )
 		{
 			t->children[i] = tnode_p - curTile->tnodes;
 			BuildTnode_r( n->children[i] );
@@ -2143,7 +2143,11 @@ void CM_MakeTnodes( void )
 
 	// 32 byte align the structs
 	curTile->tnodes = Hunk_Alloc( (curTile->numnodes+1) * sizeof(tnode_t) );
+#ifndef __x86_64__
 	curTile->tnodes = (tnode_t *)(((int)curTile->tnodes + 31)&~31);
+#else
+#warning Strange fix for AMD64 at cmodel.c CM_MakeTnodes
+#endif
 	tnode_p = curTile->tnodes;
 
 	curTile->numtheads = 0;
@@ -2178,7 +2182,7 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 	int		r;
 
 	// leaf node
-	if (node & (1<<31)) 
+	if (node & (1<<31))
 		return node & ~(1<<31);
 
 	tnode = &curTile->tnodes[node];
@@ -2210,12 +2214,12 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
 		return TestLine_r (tnode->children[0], start, stop);
-	
+
 	if (front < ON_EPSILON && back < ON_EPSILON)
 		return TestLine_r (tnode->children[1], start, stop);
 
 	side = front < 0;
-	
+
 	frac = front / (front-back);
 
 	mid[0] = start[0] + (stop[0] - start[0])*frac;
@@ -2271,7 +2275,7 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 				VectorCopy( mid, tr_end );
 				return r;
 			}
-			else 
+			else
 			{
 				return side;
 			}
@@ -2284,7 +2288,7 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 		}
 
 		return side;
-				
+
 		break;
 	default:
 		front = (start[0]*tnode->normal[0] + start[1]*tnode->normal[1] + start[2]*tnode->normal[2]) - tnode->dist;
@@ -2294,12 +2298,12 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
 		return TestLineDist_r (tnode->children[0], start, stop);
-	
+
 	if (front < ON_EPSILON && back < ON_EPSILON)
 		return TestLineDist_r (tnode->children[1], start, stop);
 
 	side = front < 0;
-	
+
 	frac = front / (front-back);
 
 	mid[0] = start[0] + (stop[0] - start[0])*frac;
@@ -2353,7 +2357,7 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 ==========================================================
 
   GRID ORIENTED MOVEMENT AND SCANNING
-  
+
 ==========================================================
 */
 
@@ -2402,7 +2406,7 @@ void Grid_MoveMark( struct routing_s *map, int x, int y, int z, int dv, int h, i
 	if ( dx < 0 && !(map->route[z][y][x] & 0x20) ) return;
 	if ( dy > 0 && !(map->route[z][y][x] & 0x40) ) return;
 	if ( dy < 0 && !(map->route[z][y][x] & 0x80) ) return;
-	if ( dv > 3 && !( (map->route[z][y+dy][x] & (dx>0 ? 0x10:0x20)) && (map->route[z][y][x+dx] & (dy>0 ? 0x40:0x80)) 
+	if ( dv > 3 && !( (map->route[z][y+dy][x] & (dx>0 ? 0x10:0x20)) && (map->route[z][y][x+dx] & (dy>0 ? 0x40:0x80))
 		&& !Grid_CheckForbidden( map, x, y+dy, z ) && !Grid_CheckForbidden( map, x+dx, y, z ) ) ) return;
 
 	// height checks
@@ -2411,7 +2415,7 @@ void Grid_MoveMark( struct routing_s *map, int x, int y, int z, int dv, int h, i
 	while ( map->fall[ny][nx] & (1<<z) ) z--;
 
 	// can it be better than ever?
-	if ( map->area[z][ny][nx] < l ) 
+	if ( map->area[z][ny][nx] < l )
 		return;
 
 	// test for forbidden areas
@@ -2472,7 +2476,7 @@ void Grid_MoveCalc( struct routing_s *map, pos3_t from, int distance, byte **fb_
 
 	xl = xh = from[0];
 	yl = yh = from[1];
-	
+
 	if ( distance > MAX_ROUTE ) distance = MAX_ROUTE;
 
 	// first step
@@ -2598,7 +2602,7 @@ int Grid_MoveNext( struct routing_s *map, pos3_t from )
 	x = from[0]; y = from[1];
 
 	// do tests
-	for ( z=0; z<HEIGHT; z++) 
+	for ( z=0; z<HEIGHT; z++)
 	{
 		// suppose it's possible at that height
 		dv = Grid_MoveCheck( map, from, z, l );
@@ -2673,10 +2677,10 @@ void Grid_RecalcRouting( struct routing_s *map, char *name, char **list )
 	max[0] = max[0] < 253 ? max[0]+2 : 255;
 	max[1] = max[1] < 253 ? max[1]+2 : 255;
 	max[2] = max[2] < 5 ? max[2]+2 : 7;
-	for ( i = 0; i < 3; i++ ) 
+	for ( i = 0; i < 3; i++ )
 		min[i] = min[i] > 2 ? min[i]-2 : 0;
 
-//	Com_Printf( "routing: (%i %i %i) (%i %i %i)\n", 
+//	Com_Printf( "routing: (%i %i %i) (%i %i %i)\n",
 //		(int)min[0], (int)min[1], (int)min[2],
 //		(int)max[0], (int)max[1], (int)max[2] );
 
@@ -2728,7 +2732,7 @@ float Com_GrenadeTarget( vec3_t from, vec3_t at, vec3_t v0 )
 	// calc starting speed
 	if ( d*tan(alpha)*0.8 < h ) return 0.0;
 	vx = d * sqrt(GRAVITY/(2*(d*tan(alpha)-h)));
-	
+
 	VectorNormalize( delta );
 	VectorScale( delta, vx, v0 );
 	v0[2] = vx * tan(alpha);

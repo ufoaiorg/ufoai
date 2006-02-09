@@ -322,7 +322,7 @@ SVCmd_ShowAll_f
 void SVCmd_ShowAll_f( void )
 {
 	edict_t *ent;
-	int i, j;
+	int i;
 
 	// Make everything visible to anyone who can't already see it
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)

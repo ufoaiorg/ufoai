@@ -980,7 +980,7 @@ void CL_GameLoad( char *filename )
 	fclose( f );
 
 	// Check if save file is versioned
-	if (MSG_ReadByte( &sb ) == 0) 
+	if (MSG_ReadByte( &sb ) == 0)
 		version = MSG_ReadLong( &sb );
 	else
 	{
@@ -1522,7 +1522,8 @@ void CL_CollectItems( int won )
 		{
 			for ( container = 0; container < csi.numIDs; container++ )
 				for ( item = le->i.c[container]; item; item = item->next )
-					CL_CollectItemAmmo( item, (container == csi.idLeft) ); }
+					CL_CollectItemAmmo( item, (container == csi.idLeft) );
+		}
 	}
 }
 

@@ -1133,9 +1133,9 @@ void CL_ParseResults( sizebuf_t *buf )
 
 	// disconnect and show win screen
 	if ( winner == we )
-	    MN_PushMenu( "won" );
+		MN_PushMenu( "won" );
 	else
-	    MN_PushMenu( "lost" );
+		MN_PushMenu( "lost" );
 	Cbuf_AddText( "disconnect\n" );
 	Cbuf_Execute();
 }
