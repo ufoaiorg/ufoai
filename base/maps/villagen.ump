@@ -11,6 +11,8 @@
 // b  \w 11
 // c  \f 12
 // }
+//
+// assembly default size is x=8 y=8
 
 base villagen/vil_
 
