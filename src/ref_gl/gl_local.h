@@ -182,7 +182,7 @@ typedef struct font_s
 {
 	image_t	*image;
 	char	name[MAX_FONTNAME];
-	byte	wc[128];
+	byte	wc[256];
 	byte	w, h;
 	float	rw, rh, rhl;
 } font_t;
