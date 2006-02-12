@@ -23,7 +23,7 @@ msgid "Weapons"
 msgstr "Waffen"
 
 msgid "Buildings"
-msgstr "Gebaeude"
+msgstr "Gebäude"
 
 msgid "Alien Species"
 msgstr "Alien Spezies"
@@ -35,10 +35,10 @@ msgid "Throw"
 msgstr "Wurf"
 
 msgid "Primary"
-msgstr "Primaer"
+msgstr "Primär"
 
 msgid "Secondary"
-msgstr "Sekundaer"
+msgstr "Sekundär"
 
 msgid "Damage"
 msgstr "Schaden"
@@ -54,6 +54,144 @@ msgstr "Streuung"
 
 msgid "Ammo"
 msgstr "Munition"
+
+msgid "Assault Rifle"
+msgstr "Sturmgewehr"
+
+msgid "Assault Rifle Clip"
+msgstr "Sturmgewehrmunition"
+
+msgid "Burst"
+msgstr ""
+
+msgid "Auto"
+msgstr "Automatisch"
+
+msgid "Sniper Rifle"
+msgstr "Scharfschützengewehr"
+
+msgid "Sniper Rifle Clip"
+msgstr ""
+
+msgid "Snap Shot"
+msgstr "Hueftschuss"
+
+msgid "Aimed Shot"
+msgstr "Gezielter Schuss"
+
+msgid "9mm Pistol"
+msgstr "9mm Pistole"
+
+msgid "Pistol Clip"
+msgstr "9mm Munition"
+
+msgid "Rapid Fire"
+msgstr "Schnellfeuer"
+
+msgid "Submachine Gun"
+msgstr "SMG"
+
+msgid "SMG Clip"
+msgstr "SMG Munition"
+
+msgid "Full Auto"
+msgstr "Vollautomatisch"
+
+msgid "Shotgun"
+msgstr "Schrotflinte"
+
+msgid "Buckshots"
+msgstr "Schrotmunition"
+
+msgid "Single Shot"
+msgstr "Einfachschuss"
+
+msgid "Double Shot"
+msgstr "Doppelschuss"
+
+msgid "Flamethrower"
+msgstr "Flammenwerfer"
+
+msgid "Napalm Tank"
+msgstr "Napalmtank"
+
+msgid "Candlelight"
+msgstr "Kerzenschein"
+
+msgid "Inferno"
+msgstr "Inferno"
+
+msgid "Rocket Launcher"
+msgstr "Raktenwerfer"
+
+msgid "High-Explosive Rocket"
+msgstr "Rakete"
+
+msgid "Tachyon Rifle"
+msgstr "Tachyongewehr"
+
+msgid "Tachyon Rifle Charge"
+msgstr "Tachyonmunition"
+
+msgid "Rapid Shots"
+msgstr "Schnellpuls"
+
+msgid "Charged Blast"
+msgstr "Belastende Strahlen"
+
+msgid "Tachyon Sniper Rifle"
+msgstr "Tachyonscharfschützengewehr"
+
+msgid "Tachyon Sniper Charge"
+msgstr "Tachyonscharfschützenmunition"
+
+msgid "Plasma Pistol"
+msgstr "Plasmapistole"
+
+msgid "Plasma Pistol Charge"
+msgstr "Plasmapistolenmunition"
+
+msgid "Charged Pulse"
+msgstr "Geladener Impuls"
+
+msgid "Continuous Beam"
+msgstr "Dauerimpuls"
+
+msgid "Plasma Rifle"
+msgstr "Plasmagewehr"
+
+msgid "Plasma Rifle Charge"
+msgstr "Plasmagewehrmunition"
+
+msgid "Laser Pistol"
+msgstr "Laserpistole"
+
+msgid "Laser Pistol Charge"
+msgstr "Laserpistolenmunition"
+
+msgid "Single Pulse"
+msgstr "Einfachimpuls"
+
+msgid "Multiple Pulses"
+msgstr ""
+
+msgid "Laser Rifle"
+msgstr "Lasergewehr"
+
+msgid "Laser Rifle Charge"
+msgstr "Lasergewehrmunition"
+
+msgid "Frag Grenade"
+msgstr "Splittergranate"
+
+msgid "Knife"
+msgstr "Messer"
+
+msgid "Medikit"
+msgstr "Erste-Hilfe-Kasten"
+
+msgid "Heal"
+msgstr "Heilen"
 
 msgid "H-92 Troop Transport"
 msgstr "H-92 Truppentransporter"
@@ -140,7 +278,7 @@ msgstr "Zivilist gesichtet"
 
 ## in game
 msgid "Currently panics!\n"
-msgstr "Getade panisch!\n"
+msgstr "Gerade panisch!\n"
 
 msgid "%s panics!\n"
 msgstr "%s ist panisch!\n"
@@ -167,7 +305,7 @@ msgid "Can't perform action - not on same team!\n"
 msgstr "Nicht im gleichen Team\n"
 
 msgid "Can't perform action - no control over allied actors!\n"
-msgstr "Keine Kontrolle ueber verbuendete Spieler\n"
+msgstr "Keine Kontrolle über verbündete Spieler\n"
 
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Nicht genug Zeiteinheiten\n"
@@ -179,7 +317,7 @@ msgid "%s is currently shaken.\n"
 msgstr "%s ist verwirrt\n"
 
 msgid "Can't perform action - impossible throw!\n"
-msgstr "Ummoeglicher Wurf\n"
+msgstr "Ummöglicher Wurf\n"
 
 msgid "Can't perform action - no ammo!\n"
 msgstr "Keine Munition\n"
@@ -188,10 +326,10 @@ msgid "Can't perform action - not enough ammo!\n"
 msgstr "Nicht genug Munition\n"
 
 msgid "Get a team for teamplay\n"
-msgstr "Waehle ein Team fuer Teamplay\n"
+msgstr "Waehle ein Team für Teamplay\n"
 
 msgid "Get a team for multiplayer\n"
-msgstr "Waehle ein Team fuer Multiplayer\n"
+msgstr "Waehle ein Team für Multiplayer\n"
 
 msgid "Removing ai player..."
 msgstr "Entferne KI Mitspieler"
