@@ -1,0 +1,127 @@
+{
+"classname" "worldspawn"
+"angles" "40 20 0"
+"light" "130"
+"ambient" "0.4 0.4 0.4"
+"_color" "1 1 0.9"
+// brush 0
+{
+( 360 352 -16 ) ( 320 352 -16 ) ( 320 328 -16 ) tex_nature/jungle001 -192 224 0 0.500000 0.500000 0 128 0
+( 320 328 -8 ) ( 320 352 -8 ) ( 360 352 -8 ) tex_nature/jungle001 -192 224 0 0.500000 0.500000 0 128 0
+( 320 328 0 ) ( 360 328 0 ) ( 360 328 -8 ) tex_nature/jungle001 -192 0 0 0.500000 0.500000 0 128 0
+( 360 328 0 ) ( 360 352 0 ) ( 360 352 -8 ) tex_nature/jungle001 -224 0 0 0.500000 0.500000 0 128 0
+( 360 352 0 ) ( 320 352 0 ) ( 320 352 -8 ) tex_nature/jungle001 -192 0 0 0.500000 0.500000 0 128 0
+( 320 352 0 ) ( 320 328 0 ) ( 320 328 -8 ) tex_nature/jungle001 -224 0 0 0.500000 0.500000 0 128 0
+}
+// brush 1
+{
+( -120 -16 -16 ) ( -160 -16 -16 ) ( -160 -40 -16 ) tex_nature/jungle001 0 0 0 0.500000 0.500000 0 128 0
+( -160 -40 -8 ) ( -160 -16 -8 ) ( -120 -16 -8 ) tex_nature/jungle001 0 0 0 0.500000 0.500000 0 128 0
+( -160 -40 0 ) ( -120 -40 0 ) ( -120 -40 -8 ) tex_nature/jungle001 0 0 0 0.500000 0.500000 0 128 0
+( -120 -40 0 ) ( -120 -16 0 ) ( -120 -16 -8 ) tex_nature/jungle001 0 0 0 0.500000 0.500000 0 128 0
+( -120 -16 0 ) ( -160 -16 0 ) ( -160 -16 -8 ) tex_nature/jungle001 0 0 0 0.500000 0.500000 0 128 0
+( -160 -16 0 ) ( -160 -40 0 ) ( -160 -40 -8 ) tex_nature/jungle001 0 0 0 0.500000 0.500000 0 128 0
+}
+// brush 2
+{
+( 152 128 0 ) ( 0 128 0 ) ( 0 0 0 ) tex_nature/jungle002 0 0 0 0.500000 0.500000 0 0 0
+( 0 0 4 ) ( 0 128 4 ) ( 152 128 4 ) tex_nature/jungle002 0 0 0 0.500000 0.500000 0 0 0
+( 0 0 8 ) ( 152 0 8 ) ( 152 0 0 ) tex_nature/jungle002 0 0 0 0.500000 0.500000 0 0 0
+( 256 8 8 ) ( 256 136 8 ) ( 256 136 0 ) tex_nature/jungle002 0 0 0 0.500000 0.500000 0 0 0
+( 176 256 8 ) ( 24 256 8 ) ( 24 256 0 ) tex_nature/jungle002 0 0 0 0.500000 0.500000 0 0 0
+( 0 128 8 ) ( 0 0 8 ) ( 0 0 0 ) tex_nature/jungle002 0 0 0 0.500000 0.500000 0 0 0
+}
+}
+// entity 1
+{
+"spawnflags" "255"
+"classname" "misc_model"
+"model" "models/objects/vegi/tropic03.md2"
+"origin" "112 116 10"
+"angles" "0 60 0"
+}
+// entity 2
+{
+"origin" "180 208 12"
+"model" "models/objects/vegi/tropic01.md2"
+"classname" "misc_model"
+"spawnflags" "255"
+}
+// entity 3
+{
+"spawnflags" "255"
+"classname" "misc_model"
+"model" "models/objects/vegi/tropic01.md2"
+"origin" "160 40 12"
+}
+// entity 4
+{
+"spawnflags" "255"
+"classname" "misc_model"
+"model" "models/objects/vegi/tropic01.md2"
+"origin" "184 88 12"
+}
+// entity 5
+{
+"spawnflags" "255"
+"classname" "misc_model"
+"model" "models/objects/vegi/tropic01.md2"
+"origin" "44 208 12"
+"angles" "0 70 0"
+}
+// entity 6
+{
+"angles" "0 70 0"
+"origin" "136 212 12"
+"model" "models/objects/vegi/tropic01.md2"
+"classname" "misc_model"
+"spawnflags" "255"
+}
+// entity 7
+{
+"angles" "0 70 0"
+"origin" "92 172 12"
+"model" "models/objects/vegi/tropic01.md2"
+"classname" "misc_model"
+"spawnflags" "255"
+}
+// entity 8
+{
+"angles" "0 70 0"
+"origin" "224 172 12"
+"model" "models/objects/vegi/tropic01.md2"
+"classname" "misc_model"
+"spawnflags" "255"
+}
+// entity 9
+{
+"angles" "0 70 0"
+"origin" "224 48 12"
+"model" "models/objects/vegi/tropic01.md2"
+"classname" "misc_model"
+"spawnflags" "255"
+}
+// entity 10
+{
+"spawnflags" "255"
+"classname" "misc_model"
+"model" "models/objects/vegi/tropic01.md2"
+"origin" "48 156 12"
+"angles" "0 170 0"
+}
+// entity 11
+{
+"spawnflags" "255"
+"classname" "misc_model"
+"model" "models/objects/vegi/tropic01.md2"
+"origin" "80 40 12"
+"angles" "0 170 0"
+}
+// entity 12
+{
+"angles" "0 50 0"
+"origin" "72 46 12"
+"model" "models/objects/vegi/tropic01.md2"
+"classname" "misc_model"
+"spawnflags" "255"
+}

@@ -1,9 +1,9 @@
 {
-"_color" "0.8 0.8 1"
-"angles" "15 60"
-"ambient" "0.3 0.3 0.32"
-"light" "50"
 "classname" "worldspawn"
+"light" "120"
+"ambient" "0.3 0.3 0.32"
+"angles" "15 60"
+"_color" "1 0.8 0.8"
 // brush 0
 {
 ( 80 120 4 ) ( 20 120 4 ) ( 20 36 4 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
@@ -394,20 +394,20 @@
 }
 // entity 1
 {
-"classname" "info_civilian_start"
-"angle" "45"
 "origin" "80 176 28"
+"angle" "45"
+"classname" "info_civilian_start"
 }
 // entity 2
 {
-"classname" "light"
-"light" "100"
-"_color" "1 0.7 0.1"
 "origin" "58 98 41"
+"_color" "1 0.7 0.1"
+"light" "100"
+"classname" "light"
 }
 // entity 3
 {
-"origin" "176 80 28"
-"angle" "270"
 "classname" "info_civilian_start"
+"angle" "270"
+"origin" "176 80 28"
 }
