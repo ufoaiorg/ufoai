@@ -267,6 +267,9 @@ void *Sys_GetGameAPI (void *parms)
 		{
 			Com_Printf (_("LoadLibrary (%s)\n"), name);
 			break;
+		} else {
+			Com_Printf (_("LoadLibrary failed (%s)\n"), name);
+			Com_Printf("%s\n", dlerror());
 		}
 	}
 
