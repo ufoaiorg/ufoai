@@ -1,0 +1,112 @@
+{
+"angles" "20 45 0"
+"ambient" "0.65 0.65 0.65"
+"_color" "0.9 0.95 1"
+"light" "80"
+"classname" "worldspawn"
+// brush 0
+{
+( 160 160 0 ) ( 128 160 0 ) ( 128 128 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 128 136 104 ) ( 128 168 104 ) ( 160 168 104 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 128 128 64 ) ( 160 128 64 ) ( 160 128 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 160 128 64 ) ( 160 160 64 ) ( 160 160 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 160 160 64 ) ( 128 160 64 ) ( 128 160 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 128 160 84 ) ( 128 128 84 ) ( 128 128 20 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+}
+// brush 1
+{
+( 192 480 0 ) ( 160 480 0 ) ( 160 448 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 160 456 104 ) ( 160 488 104 ) ( 192 488 104 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 160 448 64 ) ( 192 448 64 ) ( 192 448 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 192 448 64 ) ( 192 480 64 ) ( 192 480 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 192 480 64 ) ( 160 480 64 ) ( 160 480 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 160 480 84 ) ( 160 448 84 ) ( 160 448 20 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+}
+// brush 2
+{
+( 96 416 0 ) ( 64 416 0 ) ( 64 384 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 64 392 104 ) ( 64 424 104 ) ( 96 424 104 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 64 384 64 ) ( 96 384 64 ) ( 96 384 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 96 384 64 ) ( 96 416 64 ) ( 96 416 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 96 416 64 ) ( 64 416 64 ) ( 64 416 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 64 416 84 ) ( 64 384 84 ) ( 64 384 20 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+}
+// brush 3
+{
+( 160 352 0 ) ( 128 352 0 ) ( 128 320 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 128 328 104 ) ( 128 360 104 ) ( 160 360 104 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 128 320 64 ) ( 160 320 64 ) ( 160 320 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 160 320 64 ) ( 160 352 64 ) ( 160 352 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 160 352 64 ) ( 128 352 64 ) ( 128 352 0 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+( 128 352 84 ) ( 128 320 84 ) ( 128 320 20 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0
+}
+// brush 4
+{
+( 136 352 0 ) ( 0 352 0 ) ( 0 256 0 ) tex_nature/snow002 0 0 0 0.500000 0.500000 0 128 0
+( 0 256 4 ) ( 0 352 4 ) ( 136 352 4 ) tex_nature/snow002 0 0 0 0.500000 0.500000 0 0 0
+( -24 0 8 ) ( 112 0 8 ) ( 112 0 0 ) tex_nature/snow002 0 0 0 0.500000 0.500000 0 128 0
+( 256 240 8 ) ( 256 336 8 ) ( 256 336 0 ) tex_nature/snow002 0 0 0 0.500000 0.500000 0 128 0
+( 144 512 8 ) ( 8 512 8 ) ( 8 512 0 ) tex_nature/snow002 0 0 0 0.500000 0.500000 0 128 0
+( 0 352 8 ) ( 0 256 8 ) ( 0 256 0 ) tex_nature/snow002 0 0 0 0.500000 0.500000 0 128 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/tree2_b.md2"
+"origin" "144 336 8"
+"spawnflags" "255"
+}
+// entity 2
+{
+"angles" "5 15 0"
+"classname" "misc_model"
+"model" "models/objects/tree2_a.md2"
+"origin" "144 336 8"
+"spawnflags" "255"
+}
+// entity 3
+{
+"spawnflags" "255"
+"origin" "80 400 8"
+"model" "models/objects/tree2_b.md2"
+"classname" "misc_model"
+}
+// entity 4
+{
+"spawnflags" "255"
+"origin" "80 400 8"
+"model" "models/objects/tree2_a.md2"
+"classname" "misc_model"
+"angles" "0 70 0"
+}
+// entity 5
+{
+"spawnflags" "255"
+"origin" "176 464 8"
+"model" "models/objects/tree2_b.md2"
+"classname" "misc_model"
+}
+// entity 6
+{
+"spawnflags" "255"
+"origin" "176 464 8"
+"model" "models/objects/tree2_a.md2"
+"classname" "misc_model"
+"angles" "0 330 0"
+}
+// entity 7
+{
+"classname" "misc_model"
+"model" "models/objects/tree2_b.md2"
+"origin" "144 144 8"
+"spawnflags" "255"
+}
+// entity 8
+{
+"angles" "0 220 0"
+"classname" "misc_model"
+"model" "models/objects/tree2_a.md2"
+"origin" "144 144 8"
+"spawnflags" "255"
+}
