@@ -457,8 +457,10 @@ void CL_GenerateEquipmentCmd( void )
 		// search equipment definition
 		name = Cvar_VariableString( "equip" );
 		for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
+		{
 			if ( !strcmp( name, ed->name ) )
 				break;
+		}
 		if ( i == csi.numEDs )
 		{
 			Com_Printf( _("Equipment '%s' not found!\n"), name );

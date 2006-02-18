@@ -42,7 +42,7 @@ qboolean ALSA_SNDDMA_Init(void);
 *  Returns the current sample position, if sound is running.
 */
 int ALSA_SNDDMA_GetDMAPos(void);
-	
+
 /*
 *  Closes the ALSA pcm device and frees the dma buffer.
 */

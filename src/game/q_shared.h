@@ -814,6 +814,7 @@ typedef struct fireDef_s
 	vec2_t	damage, spldmg;
 	float	splrad;
 	int		weaponSkill;
+	int		irGoogles;
 } fireDef_t;
 
 typedef enum researchStatus_s
@@ -1067,6 +1068,7 @@ typedef enum {
 #define	CS_STATUSBAR		5		// display program string
 #define	CS_MAXCLIENTS		6
 #define	CS_MAPCHECKSUM		7		// for catching cheater maps
+#define	CS_MAXSOLDIERS		8
 
 #define CS_TILES			16
 #define CS_POSITIONS		(CS_TILES+MAX_TILESTRINGS)

@@ -74,7 +74,7 @@ field_t fields[] = {
 	{"angles", FOFS(angles), F_VECTOR},
 	{"angle", FOFS(angle), F_FLOAT},
 
-//need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves
+	//need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves
 	{"gravity", STOFS(gravity), F_LSTRING, FFL_SPAWNTEMP},
 	{"sky", STOFS(sky), F_LSTRING, FFL_SPAWNTEMP},
 	{"skyrotate", STOFS(skyrotate), F_FLOAT, FFL_SPAWNTEMP},
@@ -389,7 +389,11 @@ void SP_player_start (edict_t *ent)
 		G_FreeEdict( ent );
 		return;
 	}
-	G_ActorSpawn( ent );
+	// maybe there are already the max soldiers allowed per team connected
+	if ( (int)(maxsoldiers->value) >= level.num_spawnpoints[ent->team] )
+		G_ActorSpawn( ent );
+	else
+		G_FreeEdict( ent );
 }
 
 
@@ -512,6 +516,11 @@ void SP_worldspawn (edict_t *ent)
 
 	gi.configstring (CS_MAXCLIENTS, va("%i", (int)(maxplayers->value) ) );
 
+	// only used in multi player
+	if ( sv_maxclients->value == 1 )
+	{
+		gi.configstring (CS_MAXSOLDIERS, va("%i", (int)(maxsoldiers->value) ) );
+	}
 	//---------------
 
 	if (!st.gravity)

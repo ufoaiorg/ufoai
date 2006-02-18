@@ -737,7 +737,7 @@ void CL_ActorReload( int hand )
 
 	if ( weapon == NONE )
 		return;
-		
+
 	if ( csi.ods[weapon].researchNeeded )
 	{
 		Com_Printf( _("You cannot load this unknown alien weapon.\n") );
@@ -917,6 +917,15 @@ void CL_ActorDoShoot( sizebuf_t *sb )
 
 	// get the fire def
 	fd = GET_FIREDEF( type );
+
+	// TODO: activate RDF_IRGOGGLES in r_newrefdef.rdflags
+	//       see gl_mesh.c R_DrawAliasModel()
+	//       make player-models visible even through walls in
+	//       a little radius (but keep the view-direction)
+/*	if ( fd->irGoogles )
+	{
+		return;
+	}*/
 
 	// add effect le
 	LE_AddProjectile( fd, flags, muzzle, impact, normal );

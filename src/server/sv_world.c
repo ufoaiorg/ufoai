@@ -192,7 +192,7 @@ void SV_LinkEdict (edict_t *ent)
 	if (ent->solid == SOLID_NOT)
 		return;
 
-// find the first node that the ent's box crosses
+	// find the first node that the ent's box crosses
 	node = sv_areanodes;
 	while (1)
 	{

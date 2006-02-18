@@ -692,7 +692,8 @@ void CL_ActorDoTurn( sizebuf_t *sb );
 void CL_ActorStandCrouch( void );
 void CL_ActorToggleReaction( void );
 void CL_BuildForbiddenList( void );
-//void CL_ActorStartMove( le_t *le, pos3_t to );
+void CL_ActorStartMove( le_t *le, pos3_t to );
+void CL_ActorShoot( le_t *le, pos3_t at );
 void CL_ActorDoMove( sizebuf_t *sb );
 void CL_ActorDoShoot( sizebuf_t *sb );
 void CL_ActorDoThrow( sizebuf_t *sb );
@@ -925,6 +926,7 @@ void CL_NewBase( vec2_t pos );
 void CL_ParseMission( char *name, char **text );
 void CL_ParseStage( char *name, char **text );
 void CL_ParseCampaign( char *name, char **text );
+void CL_CollectItems( int won );
 
 //
 // cl_basemanagment.c

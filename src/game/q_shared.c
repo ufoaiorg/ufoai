@@ -1735,7 +1735,11 @@ invList_t *Com_AddToInventory( inventory_t *i, item_t item, int container, int x
 {
 	invList_t	*ic;
 
-	if ( !invUnused ) Sys_Error( "No free inventory space!\n" );
+	if ( !invUnused )
+	{
+		Com_Printf( _("No free inventory space!\n") );
+		return NULL;
+	}
 	if ( item.t == NONE ) return NULL;
 
 	assert( i );
@@ -1816,7 +1820,7 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 	if ( !Com_RemoveFromInventory( i, from, fx, fy ) ) return IA_NONE; // break if source item is not removeable
 
 	//check if the target is a blocked inv-armor and source!=dest
- 	if ( CSI->ids[to].armor && !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) && from!=to ) { 
+ 	if ( CSI->ids[to].armor && !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) && from!=to ) {
  		cacheItem2 = cacheItem; // save chached (source) item
  		Com_MoveInInventory( i, to, tx, ty, from, fx, fy, TU, icp ); // move the destination item to the source
  		cacheItem = cacheItem2; //reset the cached item (source)

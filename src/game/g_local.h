@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -126,7 +126,7 @@ typedef struct
 
 	// round statistics
 	int			numplayers;
-	int			activeTeam;	
+	int			activeTeam;
 	int			nextEndRound;
 
 	byte		num_alive[MAX_TEAMS];
@@ -193,6 +193,7 @@ extern	cvar_t	*sv_maxvelocity;
 extern	cvar_t	*sv_cheats;
 extern	cvar_t	*sv_maxclients;
 extern	cvar_t	*maxplayers;
+extern	cvar_t	*maxsoldiers;
 extern	cvar_t	*maxspectators;
 
 extern	cvar_t	*flood_msgs;
@@ -233,7 +234,7 @@ extern	cvar_t	*difficulty;
 #define FFL_NOSPAWN			2
 
 typedef enum {
-	F_INT, 
+	F_INT,
 	F_FLOAT,
 	F_LSTRING,			// string on disk, pointer in memory, TAG_LEVEL
 	F_GSTRING,			// string on disk, pointer in memory, TAG_GAME
@@ -328,6 +329,10 @@ void G_ClearVisFlags( int team );
 int  G_CheckVis( edict_t *check, qboolean perish );
 void G_GiveTimeUnits( int team );
 
+void G_AppearPerishEvent( int player_mask, int appear, edict_t *check );
+int G_VisToPM( int vis_mask );
+void G_SendInventory( int player_mask, edict_t *ent );
+int G_TeamToPM( int team );
 
 //
 // g_ai.c
@@ -405,7 +410,7 @@ struct edict_s
 
 	// FIXME: move these fields to a server private sv_entity_t
 	link_t		area;				// linked to a division node or leaf
-	
+
 	int			headnode;			// unused if num_clusters != -1
 
 	// tracing info
@@ -425,7 +430,7 @@ struct edict_s
 	int			mapNum;
 	char		*model;
 	float		freetime;			// sv.time when the object was freed
-	
+
 	//
 	// only used locally in game, not by server
 	//
@@ -434,23 +439,26 @@ struct edict_s
 	int			visflags;
 
 	pos3_t		pos;
-	byte		dir;
+	byte		dir; // direction the player looks at
 
-	int			TU;
-	int			HP;
+	int			TU; // remaining timeunits
+	int			HP; // remaining healthpoints
 	int			AP;
-	int			morale;
+	int			morale; // the current morale value
 
-	int			state;
+	int			state; // the player state - dead, shaken....
 
-	int			team;
+	int			team; // player of which team?
 	int			pnum;
-
+	// the models (hud)
 	int			body;
 	int			head;
 	int			skin;
 
+	// here are the character values
 	character_t chr;
+
+	// this is the inventory
 	inventory_t i;
 
 	int			spawnflags;

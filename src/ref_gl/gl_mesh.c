@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -40,7 +40,6 @@ float	normalArray[MAX_VERTS*3];
 //static	vec3_t	lerped[MAX_VERTS];
 
 vec3_t	shadevector;
-float	shadelight[3];
 
 // precalculated dot products for quantized angles
 #define SHADEDOT_QUANT 16
@@ -87,11 +86,11 @@ void GL_DrawAliasFrameLerp (dmdl_t *paliashdr, float backlerp, int framenum, int
 //	float	*matrix;
 	float	*oldNormal, *newNormal;
 
-	frame = (daliasframe_t *)((byte *)paliashdr + paliashdr->ofs_frames 
+	frame = (daliasframe_t *)((byte *)paliashdr + paliashdr->ofs_frames
 		+ framenum * paliashdr->framesize);
 	verts = v = frame->verts;
 
-	oldframe = (daliasframe_t *)((byte *)paliashdr + paliashdr->ofs_frames 
+	oldframe = (daliasframe_t *)((byte *)paliashdr + paliashdr->ofs_frames
 		+ oldframenum * paliashdr->framesize);
 	ov = oldframe->verts;
 
@@ -102,14 +101,16 @@ void GL_DrawAliasFrameLerp (dmdl_t *paliashdr, float backlerp, int framenum, int
 
 	frontlerp = 1.0 - backlerp;
 
+#if 0
 	// move should be the delta back to the previous frame * backlerp
-/*	matrix = trafo[currententity - r_newrefdef.entities].matrix;
+	matrix = trafo[currententity - r_newrefdef.entities].matrix;
 	VectorSubtract (currententity->oldorigin, currententity->origin, delta);
 
 	for (i=0 ; i<3 ; i++)
 	{
 		move[i] = backlerp*(DotProduct(delta, (matrix+i*4)) + oldframe->translate[i]) + frontlerp*frame->translate[i];
-	}*/
+	}
+#endif
 
 	for (i=0 ; i<3 ; i++)
 	{
@@ -166,7 +167,7 @@ void GL_DrawAliasFrameLerp (dmdl_t *paliashdr, float backlerp, int framenum, int
 		// get the vertex count and primitive type
 		count = *order++;
 		if (!count)
-			break;		// done
+			break; // done
 		if (count < 0)
 		{
 			count = -count;
@@ -213,7 +214,7 @@ void GL_DrawAliasShadow (dmdl_t *paliashdr, int posenum)
 
 	lheight = currententity->origin[2];// - lightspot[2];
 
-	frame = (daliasframe_t *)((byte *)paliashdr + paliashdr->ofs_frames 
+	frame = (daliasframe_t *)((byte *)paliashdr + paliashdr->ofs_frames
 		+ currententity->as.frame * paliashdr->framesize);
 	verts = frame->verts;
 
@@ -228,7 +229,7 @@ void GL_DrawAliasShadow (dmdl_t *paliashdr, int posenum)
 		// get the vertex count and primitive type
 		count = *order++;
 		if (!count)
-			break;		// done
+			break; // done
 		if (count < 0)
 		{
 			count = -count;
@@ -261,7 +262,7 @@ void GL_DrawAliasShadow (dmdl_t *paliashdr, int posenum)
 		} while (--count);
 
 		qglEnd ();
-	}	
+	}
 }
 
 #endif
@@ -284,11 +285,11 @@ static qboolean R_CullAliasModel( entity_t *e )
 
 	paliashdr = (dmdl_t *)currentmodel->extradata;
 
-	pframe = ( daliasframe_t * ) ( ( byte * ) paliashdr + 
+	pframe = ( daliasframe_t * ) ( ( byte * ) paliashdr +
 		                              paliashdr->ofs_frames +
 									  e->as.frame * paliashdr->framesize);
 
-	poldframe = ( daliasframe_t * ) ( ( byte * ) paliashdr + 
+	poldframe = ( daliasframe_t * ) ( ( byte * ) paliashdr +
 		                              paliashdr->ofs_frames +
 									  e->as.oldframe * paliashdr->framesize);
 
@@ -456,7 +457,7 @@ void R_EnableLights( qboolean fixed, float *matrix, float *lightparam, float *li
 			VectorMA( sumColor, bright, light->color, sumColor );
 			VectorScale( delta, 1.0 / sqrt(lsqr), delta );
 			VectorMA( sumDelta, bright, delta, sumDelta );
-	//		ri.Con_Printf( PRINT_ALL, "%f %f\n", bright, VectorLength( delta ) );
+//			ri.Con_Printf( PRINT_ALL, "%f %f\n", bright, VectorLength( delta ) );
 		}
 	}
 
@@ -501,13 +502,13 @@ void R_DrawAliasModel (entity_t *e)
 	// check animations
 	if ( ( e->as.frame >= paliashdr->num_frames ) || ( e->as.frame < 0 ) )
 	{
-		ri.Con_Printf (PRINT_ALL, "R_DrawAliasModel %s: no such frame %d\n", 
+		ri.Con_Printf (PRINT_ALL, "R_DrawAliasModel %s: no such frame %d\n",
 			currentmodel->name, e->as.frame);
 		e->as.frame = 0;
 	}
 	if ( ( e->as.oldframe >= paliashdr->num_frames ) || ( e->as.oldframe < 0 ) )
 	{
-		ri.Con_Printf (PRINT_ALL, "R_DrawAliasModel %s: no such oldframe %d\n", 
+		ri.Con_Printf (PRINT_ALL, "R_DrawAliasModel %s: no such oldframe %d\n",
 			currentmodel->name, e->as.oldframe);
 		e->as.oldframe = 0;
 	}
@@ -536,7 +537,7 @@ void R_DrawAliasModel (entity_t *e)
 	if (!skin)
 		skin = r_notexture;	// fallback...
 
-	if ( skin->has_alpha && !(e->flags & RF_TRANSLUCENT) ) 
+	if ( skin->has_alpha && !(e->flags & RF_TRANSLUCENT) )
 	{
 		// it will be drawn in the next entity render pass
 		// for the translucent entities
@@ -545,11 +546,9 @@ void R_DrawAliasModel (entity_t *e)
 		return;
 	}
 
-
 	//
 	// locate the proper data
 	//
-
 	c_alias_polys += paliashdr->num_tris;
 
 	//
@@ -559,7 +558,9 @@ void R_DrawAliasModel (entity_t *e)
 	if ( lightfixed )  R_EnableLights( lightfixed, e->lightcolor, e->lightparam, e->lightambient );
 	else R_EnableLights( lightfixed, trafo[e - r_newrefdef.entities].matrix, e->lightparam, NULL );
 
-	qglColor4f( 1.0, 1.0, 1.0, e->alpha );
+	// IR goggles override color
+	if ( r_newrefdef.rdflags & RDF_IRGOGGLES ) qglColor4f( 1.0, 0.0, 0.0, e->alpha );
+	else qglColor4f( 1.0, 1.0, 1.0, e->alpha );
 
 	//
 	// draw all the triangles
@@ -567,24 +568,23 @@ void R_DrawAliasModel (entity_t *e)
 	if (e->flags & RF_DEPTHHACK) // hack the depth range to prevent view model from poking into walls
 		qglDepthRange (gldepthmin, gldepthmin + 0.3*(gldepthmax-gldepthmin));
 
-    qglPushMatrix ();
+	qglPushMatrix ();
 
 	qglMultMatrixf( trafo[e - r_newrefdef.entities].matrix );
 
 	// draw it
-
 	GL_Bind(skin->texnum);
 
 	if ( !(e->flags & RF_NOSMOOTH ) ) qglShadeModel( GL_SMOOTH );
 
 	if ( gl_combine )
 	{
-		GL_TexEnv( gl_combine ); 
+		GL_TexEnv( gl_combine );
 		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, intensity->value);
 	}
 	else
 	{
-		GL_TexEnv( GL_MODULATE ); 
+		GL_TexEnv( GL_MODULATE );
 	}
 
 	if ( (e->flags & RF_TRANSLUCENT) )
@@ -634,6 +634,7 @@ void R_DrawAliasModel (entity_t *e)
 
 	if ( gl_fog->value && r_newrefdef.fog ) qglDisable( GL_FOG );
 
+	// draw the circles for team-members and allied troops
 	if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER))
 	{
 		qglDisable( GL_TEXTURE_2D );
@@ -652,11 +653,11 @@ void R_DrawAliasModel (entity_t *e)
 				qglColor4f( 0, 0.5, 1, 1 );
 			else
 				qglColor4f( 0, 0.5, 1, 0.3 );
-		} else 
+		} else
 			qglColor4f( 0, 1, 0, 1 );
 
 		qglBegin( GL_LINE_STRIP );
-		
+
 		// circle points
 		qglVertex3f( 10.0,  0.0, -27.0 );
 		qglVertex3f(  7.0, -7.0, -27.0 );
@@ -680,7 +681,8 @@ void R_DrawAliasModel (entity_t *e)
 	if (e->flags & RF_DEPTHHACK)
 		qglDepthRange (gldepthmin, gldepthmax);
 
-/*	if (gl_shadows->value && !(e->flags & (RF_TRANSLUCENT | RF_WEAPONMODEL)))
+#if 0
+	if (gl_shadows->value && !(e->flags & (RF_TRANSLUCENT | RF_WEAPONMODEL)))
 	{
 		qglPushMatrix ();
 		R_RotateForEntity (e);
@@ -691,7 +693,8 @@ void R_DrawAliasModel (entity_t *e)
 		qglEnable (GL_TEXTURE_2D);
 		qglDisable (GL_BLEND);
 		qglPopMatrix ();
-	}*/
+	}
+#endif
 
 	if ( gl_fog->value && r_newrefdef.fog ) qglEnable( GL_FOG );
 
@@ -712,13 +715,13 @@ void R_TransformModelDirect( modelInfo_t *mi )
 	qglRotatef (mi->angles[1], 0, 1, 0);
 	qglRotatef (mi->angles[2], 1, 0, 0);
 
-	if ( mi->scale ) 
+	if ( mi->scale )
 	{
 		// scale by parameters
 		qglScalef (mi->scale[0], mi->scale[1], mi->scale[2] );
 		if ( mi->center ) qglTranslatef( -mi->center[0], -mi->center[1], -mi->center[2] );
-	} 
-	else if ( mi->center ) 
+	}
+	else if ( mi->center )
 	{
 		// autoscale
 		dmdl_t		*paliashdr;
@@ -772,13 +775,13 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 	// check animations
 	if ( ( mi->frame >= paliashdr->num_frames ) || ( mi->frame < 0 ) )
 	{
-		ri.Con_Printf (PRINT_ALL, "R_DrawAliasModel %s: no such frame %d\n", 
+		ri.Con_Printf (PRINT_ALL, "R_DrawModelDirect %s: no such frame %d\n",
 			mi->model->name, mi->frame);
 		mi->frame = 0;
 	}
 	if ( ( mi->oldframe >= paliashdr->num_frames ) || ( mi->oldframe < 0 ) )
 	{
-		ri.Con_Printf (PRINT_ALL, "R_DrawAliasModel %s: no such oldframe %d\n", 
+		ri.Con_Printf (PRINT_ALL, "R_DrawModelDirect %s: no such oldframe %d\n",
 			mi->model->name, mi->oldframe);
 		mi->oldframe = 0;
 	}
@@ -798,11 +801,11 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 	//
 	// locate the proper data
 	//
-
 	c_alias_polys += paliashdr->num_tris;
 
+#if 0
 	// add a light
-/*	VectorSet( pos, 100, 100, -500 );
+	VectorSet( pos, 100, 100, -500 );
 	pos[3] = 0.0;
 	color[3] = 1.0;
 	qglLightfv( GL_LIGHT0, GL_POSITION, pos );
@@ -814,17 +817,16 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 	// enable lighting
 	qglEnable( GL_LIGHTING );
 	qglEnable( GL_LIGHT0 );
-*/
+#endif
 	//
 	// draw all the triangles
 	//
-    qglPushMatrix ();
+	qglPushMatrix ();
 //	qglLoadIdentity ();
 	qglScalef( vid.rx, vid.ry, (vid.rx + vid.ry)/2 );
 
 	if ( mi->color[3] ) qglColor4fv( mi->color );
 	else qglColor4f( 1,1,1,1 );
-
 
 	if ( pmi )
 	{
@@ -864,7 +866,7 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 					qglMultMatrixf( interpolated );
 					break;
 				}
-		}	
+		}
 	}
 
 	// transform
@@ -879,12 +881,12 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 
 	if ( gl_combine )
 	{
-		GL_TexEnv( gl_combine ); 
+		GL_TexEnv( gl_combine );
 		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, intensity->value);
 	}
 	else
 	{
-		GL_TexEnv( GL_MODULATE ); 
+		GL_TexEnv( GL_MODULATE );
 	}
 
 	if ( (mi->color[3] && mi->color[3] < 1.0f) || ( skin && skin->has_alpha ) )
@@ -932,13 +934,13 @@ void R_DrawModelParticle( modelInfo_t *mi )
 	// check animations
 	if ( ( mi->frame >= paliashdr->num_frames ) || ( mi->frame < 0 ) )
 	{
-		ri.Con_Printf (PRINT_ALL, "R_DrawAliasModel %s: no such frame %d\n", 
+		ri.Con_Printf (PRINT_ALL, "R_DrawModelParticle %s: no such frame %d\n",
 			mi->model->name, mi->frame);
 		mi->frame = 0;
 	}
 	if ( ( mi->oldframe >= paliashdr->num_frames ) || ( mi->oldframe < 0 ) )
 	{
-		ri.Con_Printf (PRINT_ALL, "R_DrawAliasModel %s: no such oldframe %d\n", 
+		ri.Con_Printf (PRINT_ALL, "R_DrawModelParticle %s: no such oldframe %d\n",
 			mi->model->name, mi->oldframe);
 		mi->oldframe = 0;
 	}
@@ -968,12 +970,12 @@ void R_DrawModelParticle( modelInfo_t *mi )
 	//
 	// draw all the triangles
 	//
-    qglPushMatrix ();
+	qglPushMatrix ();
 
-    qglTranslatef( mi->origin[0], mi->origin[1], mi->origin[2] );
-    qglRotatef (mi->angles[1],  0, 0, 1);
-    qglRotatef (-mi->angles[0], 0, 1, 0);
-    qglRotatef (-mi->angles[2], 1, 0, 0);
+	qglTranslatef( mi->origin[0], mi->origin[1], mi->origin[2] );
+	qglRotatef (mi->angles[1],  0, 0, 1);
+	qglRotatef (-mi->angles[0], 0, 1, 0);
+	qglRotatef (-mi->angles[2], 1, 0, 0);
 
 	// draw it
 	GL_Bind(skin->texnum);
@@ -984,12 +986,12 @@ void R_DrawModelParticle( modelInfo_t *mi )
 
 	if ( gl_combine )
 	{
-		GL_TexEnv( gl_combine ); 
+		GL_TexEnv( gl_combine );
 		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, intensity->value);
 	}
 	else
 	{
-		GL_TexEnv( GL_MODULATE ); 
+		GL_TexEnv( GL_MODULATE );
 	}
 
 	if ( (mi->color[3] && mi->color[3] < 1.0f) || ( skin && skin->has_alpha ) )

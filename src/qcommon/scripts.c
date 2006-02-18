@@ -90,6 +90,7 @@ value_t fdps[] =
 	{ "spldmg",		V_POS,		FDOFS( spldmg ) },
 	{ "splrad",		V_FLOAT,	FDOFS( splrad ) },
 	{ "dmgtype",	V_DMGTYPE,	FDOFS( dmgtype ) },
+	{ "irgoogles",	V_BOOL,		FDOFS( irGoogles ) },
 
 	{ NULL,	0, 0 }
 };
@@ -248,7 +249,6 @@ void Com_ParseItem( char *name, char **text )
 				// found a definition
 				if ( val->type != V_NULL )
 				{
-
 					// parse a value
 					token = COM_EParse( text, errhead, name );
 					if ( !*text ) break;

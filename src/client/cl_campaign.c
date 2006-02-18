@@ -1302,6 +1302,15 @@ void CL_GameGo( void )
 	if ( CL_MapIsNight( mis->pos ) ) timeChar = 'n';
 	else timeChar = 'd';
 
+	// TODO: Check if there are bases???
+	//       Draw the base attack on worldmap
+	//       use mis->pos for this, too
+	if ( mis->map[0] == "." )
+	{
+		Cbuf_AddText( va("base_assemble_rand") );
+		return;
+	}
+
 	if ( mis->map[0] == '+' ) Com_sprintf (expanded, sizeof(expanded), "maps/%s%c.ump", mis->map+1, timeChar );
 	else Com_sprintf (expanded, sizeof(expanded), "maps/%s%c.bsp", mis->map, timeChar );
 
@@ -1503,7 +1512,7 @@ void CL_CollectItems( int won )
 	int i;
 	le_t *le;
 	invList_t *item;
-	int container;
+//	int container;
 
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 	{
@@ -1517,13 +1526,14 @@ void CL_CollectItems( int won )
 			for ( item = FLOOR(le); item; item = item->next )
 				CL_CollectItemAmmo( item, 0 );
 		}
-		else if ( le->type == ET_ACTOR && !(le->state & STATE_DEAD) &&
-				( won || le->team == cls.team ))
+#if 0
+		else if ( le->type == ET_ACTOR && !(le->state & STATE_DEAD) && won )
 		{
 			for ( container = 0; container < csi.numIDs; container++ )
 				for ( item = le->i.c[container]; item; item = item->next )
 					CL_CollectItemAmmo( item, (container == csi.idLeft) );
 		}
+#endif
 	}
 }
 

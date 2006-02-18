@@ -2105,7 +2105,7 @@ void BuildTnode_r( int node )
 				BuildTnode_r( n->children[1] );
 				return;
 			}
-return;
+
 		// can't construct such a separation plane
 		t->type = PLANE_NONE;
 
@@ -2171,7 +2171,6 @@ void CM_MakeTnodes( void )
 
 //==========================================================
 
-
 int TestLine_r (int node, vec3_t start, vec3_t stop)
 {
 	tnode_t	*tnode;
@@ -2186,6 +2185,11 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 		return node & ~(1<<31);
 
 	tnode = &curTile->tnodes[node];
+	assert(tnode);
+
+	if ( ! tnode->dist )
+		return 1;
+
 	switch (tnode->type)
 	{
 	case PLANE_X:
@@ -2232,7 +2236,6 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 	return TestLine_r (tnode->children[!side], mid, stop);
 }
 
-
 int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 {
 	tnode_t	*tnode;
@@ -2250,6 +2253,11 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 	}
 
 	tnode = &curTile->tnodes[node];
+	assert( tnode );
+
+	if ( ! tnode->dist )
+		return 1;
+
 	switch (tnode->type)
 	{
 	case PLANE_X:

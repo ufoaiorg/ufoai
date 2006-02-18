@@ -91,6 +91,10 @@ void CL_ResearchType ( void )
 			j++;
 		}
 
+	// nothing to research here
+	if ( ! j )
+		Cbuf_AddText("pop");
+
 	researchListLength = j;
 
 	for ( ; j < 28; j++ )

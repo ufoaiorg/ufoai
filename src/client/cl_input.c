@@ -696,7 +696,7 @@ void CL_CameraMoveFirstPerson (void)
 	float rotation_speed;
 
 	rotation_speed = (cl_camrotspeed->value > MIN_CAMROT_SPEED) ? ( (cl_camrotspeed->value < MAX_CAMROT_SPEED) ? cl_camrotspeed->value : MAX_CAMROT_SPEED ) : MIN_CAMROT_SPEED;
-  /* look left */	
+	/* look left */	
 	if ( (in_turnleft.state & 1) && ((cl.cam.angles[YAW]-selActor->angles[YAW])<90) )
 		cl.cam.angles[YAW]+=cls.frametime*rotation_speed;
 

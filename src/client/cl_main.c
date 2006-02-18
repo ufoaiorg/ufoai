@@ -1503,6 +1503,7 @@ cheatvar_t	cheatvars[] = {
 	{"fixedtime", "0"},
 	{"sw_draworder", "0"},
 	{"gl_lightmap", "0"},
+	{"gl_wire", "0"},
 	{"gl_saturatelighting", "0"},
 	{NULL, NULL}
 };

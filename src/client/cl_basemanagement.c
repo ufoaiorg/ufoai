@@ -1640,6 +1640,18 @@ void MN_SaveBases( sizebuf_t *sb )
 		}
 }
 
+void B_AssembleRandomBase( void )
+{
+	int i = 0;
+	int cnt = 0;
+	for ( i = 1; i < numBases; i++ )
+	{
+		if ( ! bmBases[i].founded ) break;
+		cnt++;
+	}
+
+	Cbuf_AddText( va("base_assemble %i", rand() % cnt ) );
+}
 
 /*
 ======================
@@ -1710,6 +1722,7 @@ void MN_ResetBaseManagement( void )
 	Cmd_AddCommand( "base_attack", B_BaseAttack );
 	Cmd_AddCommand( "base_init", MN_BaseInit );
 	Cmd_AddCommand( "base_assemble", B_AssembleMap );
+	Cmd_AddCommand( "base_assemble_rand", B_AssembleRandomBase );
 	Cmd_AddCommand( "building_init", MN_BuildingInit );
 	Cmd_AddCommand( "building_status", MN_BuildingStatus );
 	Cmd_AddCommand( "buildinginfo_click", MN_BuildingInfoClick_f );
@@ -1739,3 +1752,4 @@ void CL_UpdateBaseData( void )
 	}
 	CL_CheckResearchStatus();
 }
+

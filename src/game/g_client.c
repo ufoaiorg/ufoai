@@ -2104,10 +2104,15 @@ void G_GetTeam( player_t *player )
 			if ( level.num_spawnpoints[i] )
 			{
 				// check if team is in use
+				// FIXME: If someone left the game and rejoins he should get his "old" team back
+				//        maybe we could identify such a situation
 				for ( j = 0, p = game.players; j < game.maxplayers; j++, p++ )
 					if ( p->inuse && p->pers.team == i )
+					{
+						Com_Printf(_("Team %i is already in use\n" ), i );
 						// team already in use
 						break;
+					}
 				if ( j >= game.maxplayers ) break;
 			}
 
