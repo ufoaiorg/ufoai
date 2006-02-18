@@ -359,7 +359,7 @@ item shotgun_ammo
 		time	12
 		damage	"7 2"
 		dmgtype blast
-	}	
+	}
 }
 
 
@@ -394,7 +394,7 @@ item flamer_ammo
 	scale		1.2
 	price		200
 	buytype		0
-	
+
 	primary
 	{
 		name	"Candlelight"
@@ -469,7 +469,7 @@ item rpg_ammo
 	scale		1.1
 	price		190
 	buytype		0
-	
+
 	primary
 	{
 		name	"Snap Shot"
@@ -552,7 +552,7 @@ item tachyonrifle_ammo
 	price		300
 	buytype		0
 	researchNeeded	1
-	
+
 	primary
 	{
 		name	"Rapid Shots"
@@ -629,7 +629,7 @@ item tachyonsniper_ammo
 	price		350
 	buytype		0
 	researchNeeded	1
-	
+
 	primary
 	{
 		name	"Snap Shot"
@@ -704,7 +704,7 @@ item plaspistol_ammo
 	price		170
 	buytype		1
 	researchNeeded	1
-	
+
 	primary
 	{
 		name	"Charged Pulse"
@@ -779,7 +779,7 @@ item plasrifle_ammo
 	price		200
 	buytype		0
 	researchNeeded	1
-	
+
 	primary
 	{
 		name	"Charged Pulse"
@@ -852,7 +852,7 @@ item laserpistol_ammo
 	scale		1.5
 	price		100
 	buytype		1
-	
+
 	primary
 	{
 		name	"Single Pulse"
@@ -924,7 +924,7 @@ item laserrifle_ammo
 	scale		1.8
 	price		130
 	buytype		0
-	
+
 	primary
 	{
 		name	"Single Pulse"
@@ -1051,7 +1051,7 @@ item knife
 	buytype		2
 	ammo		1
 	thrown		true
-	
+
 	primary
 	{
 		name	"Stab"
@@ -1104,7 +1104,7 @@ item medikit
 	ammo		2
 	price		1700
 	buytype		2
-	
+
 	primary
 	{
 		name	"Heal"
@@ -1132,5 +1132,54 @@ item medikit
 		ammo	1
 		time	20
 		damage	"-40 10"
+	}
+}
+
+// =======================
+// IR-GOOGLES
+// =======================
+item irgoogles
+{
+	name		"IR Googles"
+	model		weapons/irgoogles/irgoogles
+	weapon		false
+	type		melee
+	category	2
+	shape		"0 0 2 2"
+	center		"1 0 2"
+	scale		1.1
+	ammo		2
+	price		8700
+	buytype		2
+
+	primary
+	{
+		name	"Activate"
+		projtl	null
+		impact	null
+		hitbody null
+		firesnd	misc/irgoogles01.wav
+		speed	0
+		range	55
+		shots	1
+		ammo	1
+		time	20
+		damage	"0 0"
+		irgoogles	true
+	}
+	secondary
+	{
+		name	"Activate"
+		projtl	null
+		impact	null
+		hitbody null
+		firesnd	misc/irgoogles01.wav
+		speed	0
+		range	55
+		shots	1
+		ammo	1
+		time	20
+		damage	"0 0"
+		irgoogles	true
 	}
 }

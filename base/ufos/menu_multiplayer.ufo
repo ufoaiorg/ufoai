@@ -666,34 +666,34 @@ menu mp_create_server
         // ===================
         // G_MAXPERPLAYER
         // ===================
-        string g_maxperplayer_str
+        string maxperplayer_str
         {
                 string  "Max. soldiers per team:"
                 pos     "500 220"
         }
-        string g_maxperplayer_value
+        string maxperplayer_value
         {
-                string  "*cvar g_maxperplayer"
+                string  "*cvar maxsoldiers"
                 pos     "840 220"
                 align   ur
         }
-        pic g_maxperplayer_dec
+        pic maxperplayer_dec
         {
                 image   menu/buy_buttons1
                 pos     "868 218"
                 texl    "0 0"
                 texh    "16 16"
                 mousefx true
-                click   { cmd "mn_modify g_maxperplayer -1 1 8;" }
+                click   { cmd "mn_modify maxsoldiers -1 1 8;" }
         }
-        pic g_maxperplayer_inc
+        pic maxperplayer_inc
         {
                 image   menu/buy_buttons1
                 pos     "884 218"
                 texl    "16 0"
                 texh    "32 16"
                 mousefx true
-                click   { cmd "mn_modify g_maxperplayer +1 1 8;" }
+                click   { cmd "mn_modify maxsoldiers +1 1 8;" }
         }
 
         // ===================

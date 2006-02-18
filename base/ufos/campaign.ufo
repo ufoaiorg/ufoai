@@ -334,6 +334,21 @@ mission crash
 	$civilian	200
 }
 
+mission baseattack
+{
+	text		"Aliens attack one of our home bases"
+// 	. means that they attack a random base (only the first char counts)
+	map		".base"
+	music		base
+	aliens		7
+	civilians	5
+	alienequip	campaign_alien
+	recruits	0
+	$win		400
+	$alien		250
+	$civilian	200
+}
+
 stage intro
 {
 	set first
