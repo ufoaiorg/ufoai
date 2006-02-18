@@ -166,7 +166,6 @@ menu options_video
 		mousefx	true
 		click
 		{
-//			cmd "copy gl_mode mn_glmode;"
 			cmd "mn_modifywrap vid_fullscreen -1 0 1;"
 			cmd "mn_translate vid_fullscreen mn_fullscreen 0:No,1:Yes;"
 		}
@@ -179,7 +178,6 @@ menu options_video
 		mousefx	true
 		click
 		{
-//			cmd "copy gl_mode mn_glmode;"
 			cmd "mn_modifywrap vid_fullscreen +1 0 1;"
 			cmd "mn_translate vid_fullscreen mn_fullscreen 0:No,1:Yes;"
 		}
@@ -278,7 +276,6 @@ menu options_video
 		mousefx	true
 		click
 		{
-//			cmd "copy cl_fps mn_fps;"
 			cmd "mn_modifywrap cl_fps -1 0 1;"
 			cmd "mn_translate cl_fps mn_fps 0:No,1:Yes;"
 		}
@@ -291,7 +288,6 @@ menu options_video
 		mousefx	true
 		click
 		{
-//			cmd "copy cl_fps mn_fps;"
 			cmd "mn_modifywrap cl_fps +1 0 1;"
 			cmd "mn_translate cl_fps mn_fps 0:No,1:Yes;"
 		}
@@ -301,6 +297,7 @@ menu options_video
 	{
 		cmd "copy mn_glmode gl_mode;"
 		cmd "mn_translate vid_fullscreen mn_fullscreen 0:No,1:Yes;"
+		cmd "mn_translate cl_fps mn_fps 0:No,1:Yes;"
 		cmd "mn_translate gl_ext_texture_compression mn_compression 0:No,1:Yes;"
 		cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:High,2048:Excellent;"
 	}
