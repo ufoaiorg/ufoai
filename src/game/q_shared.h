@@ -79,7 +79,7 @@ typedef enum {false, true}	qboolean;
 #endif
 
 
-#define NONE				0xFF
+#define NONE				((signed char)(-1))
 #define FULL				0xFFFFFF00
 
 #define WIDTH		256		// absolute max
