@@ -550,6 +550,7 @@ qboolean CL_ActorSelectList( int num )
 
 	// center view
 	VectorCopy( le->origin, cl.cam.reforg );
+	// change to worldlevel were actor is right now
 	Cvar_SetValue( "cl_worldlevel", le->pos[2] );
 
 	return true;
@@ -569,6 +570,10 @@ int		fb_length;
 /*
 =================
 CL_BuildForbiddenList
+
+...for pathfinding - this is were
+the selected unit can not walk
+because others are standing there already
 =================
 */
 void CL_BuildForbiddenList( void )
@@ -617,7 +622,11 @@ int CL_CheckAction( void )
 	return true;
 }
 
-
+/*
+=================
+CL_TraceMove
+=================
+*/
 int CL_TraceMove( pos3_t to )
 {
 	int		length;
@@ -1391,6 +1400,8 @@ float CL_TargetingToHit( pos3_t toPos )
 	if ( height / (2 * distance * tan(acc * selFD->spread[1])) < 1)
 		hitchance *= height / (2 * distance * tan(acc * selFD->spread[1]));
 
+	Cvar_Set( "mn_hitchance", va( "%i%", (int)(100.0f * hitchance) ) );
+
 	//Calculate cover:
 	n = 0;
 	height = height / 18;
@@ -1436,8 +1447,6 @@ float CL_TargetingToHit( pos3_t toPos )
 
 	return ( hitchance*(0.125)*n );
 }
-
-
 
 /*
 =================
