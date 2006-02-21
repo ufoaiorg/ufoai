@@ -161,7 +161,7 @@ SOURCE=.\textures.c
 # End Source File
 # Begin Source File
 
-SOURCE=\ufo\utils3\common\threads.c
+SOURCE=..\..\common\threads.c
 # End Source File
 # Begin Source File
 
