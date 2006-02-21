@@ -89,7 +89,7 @@ SOURCE=..\..\common\bspfile.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\bspinfo3\bspinfo3.c
+SOURCE=.\bspinfo3.c
 # End Source File
 # Begin Source File
 
