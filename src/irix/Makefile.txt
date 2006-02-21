@@ -62,11 +62,11 @@ DO_SHLIB_AS=$(CC) $(CFLAGS) $(SHLIBCFLAGS) -DELF -x assembler-with-cpp -o $@ -c 
 # SETUP AND BUILD
 #############################################################################
 
-TARGETS=$(BUILDDIR)/quake2 $(BUILDDIR)/game$(ARCH).$(SHLIBEXT) \
+TARGETS=$(BUILDDIR)/quake2 $(BUILDDIR)/game.$(SHLIBEXT) \
 	$(BUILDDIR)/ref_soft.$(SHLIBEXT) \
 	$(BUILDDIR)/ref_gl.$(SHLIBEXT) \
-	$(BUILDDIR)/ctf/game$(ARCH).$(SHLIBEXT) \
-	$(BUILDDIR)/xatrix/game$(ARCH).$(SHLIBEXT)
+	$(BUILDDIR)/ctf/game.$(SHLIBEXT) \
+	$(BUILDDIR)/xatrix/game.$(SHLIBEXT)
 
 STATIC_TARGETS= \
 	$(BUILDDIR)/quake2.gl \
@@ -365,7 +365,7 @@ GAME_OBJS = \
 	$(BUILDDIR)/game/q_shared.o \
 	$(BUILDDIR)/game/m_flash.o
 
-$(BUILDDIR)/game$(ARCH).$(SHLIBEXT) : $(GAME_OBJS)
+$(BUILDDIR)/game.$(SHLIBEXT) : $(GAME_OBJS)
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(GAME_OBJS)
 
 $(BUILDDIR)/game/g_ai.o :        $(GAME_DIR)/g_ai.c
@@ -544,7 +544,7 @@ CTF_OBJS = \
 	$(BUILDDIR)/ctf/p_weapon.o \
 	$(BUILDDIR)/ctf/q_shared.o
 
-$(BUILDDIR)/ctf/game$(ARCH).$(SHLIBEXT) : $(CTF_OBJS)
+$(BUILDDIR)/ctf/game.$(SHLIBEXT) : $(CTF_OBJS)
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(CTF_OBJS)
 
 $(BUILDDIR)/ctf/g_ai.o :       $(CTF_DIR)/g_ai.c
@@ -683,7 +683,7 @@ XATRIX_OBJS = \
 	$(BUILDDIR)/xatrix/p_weapon.o \
 	$(BUILDDIR)/xatrix/q_shared.o
 
-$(BUILDDIR)/xatrix/game$(ARCH).$(SHLIBEXT) : $(XATRIX_OBJS)
+$(BUILDDIR)/xatrix/game.$(SHLIBEXT) : $(XATRIX_OBJS)
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(XATRIX_OBJS)
 
 $(BUILDDIR)/xatrix/g_ai.o :        $(XATRIX_DIR)/g_ai.c

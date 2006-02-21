@@ -11,7 +11,7 @@
 # Here are your build options:
 # (Note: not all options are available for all platforms).
 # ufo (uses OSS for sound, cdrom ioctls for cd audio) is automatically built.
-# game$(ARCH).so is automatically built.
+# game.so is automatically built.
 BUILD_SDLUFO=YES	# sdlufo executable (uses SDL for cdrom and sound)
 BUILD_GLX=YES		# X11 GLX driver. Works somewhat ok.
 BUILD_SDLGL=YES		# SDL OpenGL driver. Works fine for some people.
@@ -167,7 +167,7 @@ DO_SHLIB_AS=$(CC) $(CFLAGS) $(SHLIBCFLAGS) -DELF -x assembler-with-cpp -o $@ -c 
 
 .PHONY : targets build_debug build_release clean clean-debug clean-release clean2
 
-TARGETS=$(BUILDDIR)/ufo $(BUILDDIR)/game$(ARCH).$(SHLIBEXT)
+TARGETS=$(BUILDDIR)/ufo $(BUILDDIR)/game.$(SHLIBEXT)
 
 ifeq ($(strip $(BUILD_DEDICATED)),YES)
 	TARGETS += $(BUILDDIR)/ufoded
@@ -588,7 +588,7 @@ GAME_OBJS = \
 	$(BUILDDIR)/game/g_svcmds.o \
 	$(BUILDDIR)/game/g_utils.o
 
-$(BUILDDIR)/game$(ARCH).$(SHLIBEXT) : $(GAME_OBJS)
+$(BUILDDIR)/game.$(SHLIBEXT) : $(GAME_OBJS)
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(GAME_OBJS)
 
 $(BUILDDIR)/game/q_shared.o :    $(GAME_DIR)/q_shared.c

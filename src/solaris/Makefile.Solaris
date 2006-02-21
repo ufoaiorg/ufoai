@@ -49,10 +49,10 @@ DO_SHLIB_CC=$(CC) $(CFLAGS) $(SHLIBCFLAGS) -o $@ -c $<
 #############################################################################
 
 TARGETS=$(BUILDDIR)/q2ded \
-	$(BUILDDIR)/game$(ARCH).$(SHLIBEXT) \
-	$(BUILDDIR)/ctf/game$(ARCH).$(SHLIBEXT) \
-	$(BUILDDIR)/xatrix/game$(ARCH).$(SHLIBEXT) \
-	$(BUILDDIR)/rogue/game$(ARCH).$(SHLIBEXT)
+	$(BUILDDIR)/game.$(SHLIBEXT) \
+	$(BUILDDIR)/ctf/game.$(SHLIBEXT) \
+	$(BUILDDIR)/xatrix/game.$(SHLIBEXT) \
+	$(BUILDDIR)/rogue/game.$(SHLIBEXT)
 
 build_debug:
 	@-mkdir $(BUILD_DEBUG_DIR) \
@@ -240,7 +240,7 @@ GAME_OBJS = \
 	$(BUILDDIR)/game/q_shared.o \
 	$(BUILDDIR)/game/m_flash.o
 
-$(BUILDDIR)/game$(ARCH).$(SHLIBEXT) : $(GAME_OBJS)
+$(BUILDDIR)/game.$(SHLIBEXT) : $(GAME_OBJS)
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(GAME_OBJS)
 
 $(BUILDDIR)/game/g_ai.o :        $(GAME_DIR)/g_ai.c
@@ -419,7 +419,7 @@ CTF_OBJS = \
 	$(BUILDDIR)/ctf/p_weapon.o \
 	$(BUILDDIR)/ctf/q_shared.o
 
-$(BUILDDIR)/ctf/game$(ARCH).$(SHLIBEXT) : $(CTF_OBJS)
+$(BUILDDIR)/ctf/game.$(SHLIBEXT) : $(CTF_OBJS)
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(CTF_OBJS)
 
 $(BUILDDIR)/ctf/g_ai.o :       $(CTF_DIR)/g_ai.c
@@ -558,7 +558,7 @@ XATRIX_OBJS = \
 	$(BUILDDIR)/xatrix/p_weapon.o \
 	$(BUILDDIR)/xatrix/q_shared.o
 
-$(BUILDDIR)/xatrix/game$(ARCH).$(SHLIBEXT) : $(XATRIX_OBJS)
+$(BUILDDIR)/xatrix/game.$(SHLIBEXT) : $(XATRIX_OBJS)
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(XATRIX_OBJS)
 
 $(BUILDDIR)/xatrix/g_ai.o :        $(XATRIX_DIR)/g_ai.c
@@ -785,7 +785,7 @@ ROGUE_OBJS = \
 	$(BUILDDIR)/rogue/p_weapon.o \
 	$(BUILDDIR)/rogue/q_shared.o
 
-$(BUILDDIR)/rogue/game$(ARCH).$(SHLIBEXT) : $(ROGUE_OBJS)
+$(BUILDDIR)/rogue/game.$(SHLIBEXT) : $(ROGUE_OBJS)
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(ROGUE_OBJS)
 
 $(BUILDDIR)/rogue/dm_ball.o :      $(ROGUE_DIR)/dm_ball.c
@@ -996,20 +996,20 @@ copyfiles:
 	chmod 755 $(COPYDIR)/q2ded
 	-mkdir $(COPYDIR)/baseq2
 	chmod 755 $(COPYDIR)/baseq2
-	cp $(BUILD_RELEASE_DIR)/game$(ARCH).$(SHLIBEXT) $(COPYDIR)/baseq2
-	chmod 755 $(COPYDIR)/baseq2/game$(ARCH).$(SHLIBEXT)
+	cp $(BUILD_RELEASE_DIR)/game.$(SHLIBEXT) $(COPYDIR)/baseq2
+	chmod 755 $(COPYDIR)/baseq2/game.$(SHLIBEXT)
 #	-mkdir $(COPYDIR)/ctf
 #	chmod 755 $(COPYDIR)/ctf
-#	cp $(BUILD_RELEASE_DIR)/ctf/game$(ARCH).$(SHLIBEXT) $(COPYDIR)/ctf
-#	chmod 755 $(COPYDIR)/ctf/game$(ARCH).$(SHLIBEXT)
+#	cp $(BUILD_RELEASE_DIR)/ctf/game.$(SHLIBEXT) $(COPYDIR)/ctf
+#	chmod 755 $(COPYDIR)/ctf/game.$(SHLIBEXT)
 	-mkdir $(COPYDIR)/xatrix
 	chmod 755 $(COPYDIR)/xatrix
-	cp $(BUILD_RELEASE_DIR)/xatrix/game$(ARCH).$(SHLIBEXT) $(COPYDIR)/xatrix
-	chmod 755 $(COPYDIR)/xatrix/game$(ARCH).$(SHLIBEXT)
+	cp $(BUILD_RELEASE_DIR)/xatrix/game.$(SHLIBEXT) $(COPYDIR)/xatrix
+	chmod 755 $(COPYDIR)/xatrix/game.$(SHLIBEXT)
 	-mkdir $(COPYDIR)/rogue
 	chmod 755 $(COPYDIR)/rogue
-	cp $(BUILD_RELEASE_DIR)/rogue/game$(ARCH).$(SHLIBEXT) $(COPYDIR)/rogue
-	chmod 755 $(COPYDIR)/rogue/game$(ARCH).$(SHLIBEXT)
+	cp $(BUILD_RELEASE_DIR)/rogue/game.$(SHLIBEXT) $(COPYDIR)/rogue
+	chmod 755 $(COPYDIR)/rogue/game.$(SHLIBEXT)
 	cp $(MOUNT_DIR)/solaris/readme.solaris $(COPYDIR)/README
 	cp $(MOUNT_DIR)/readme.txt $(COPYDIR)
 	cp $(MOUNT_DIR)/3.19_Changes.txt $(COPYDIR)

@@ -230,19 +230,6 @@ void *Sys_GetGameAPI (void *parms)
 	char	name[MAX_OSPATH];
 	char	curpath[MAX_OSPATH];
 	char	*path;
-#ifdef __i386__
-	const char *gamename = "gamei386.so";
-#elif defined __x86_64__
-	const char *gamename = "gamex86_64.so";
-#elif defined __alpha__
-	const char *gamename = "gameaxp.so";
-#elif defined __powerpc__
-	const char *gamename = "gameppc.so";
-#elif defined __sparc__
-	const char *gamename = "gamesparc.so";
-#else
-#error Unknown arch
-#endif
 
 	setreuid(getuid(), getuid());
 	setegid(getgid());
@@ -252,16 +239,16 @@ void *Sys_GetGameAPI (void *parms)
 
 	getcwd(curpath, sizeof(curpath));
 
-	Com_Printf("------- Loading %s -------\n", gamename);
+	Com_Printf("------- Loading game.so -------\n");
 
-	// now run through the search paths
+	/* now run through the search paths */
 	path = NULL;
 	while (1)
 	{
 		path = FS_NextPath (path);
 		if (!path)
 			return NULL;		// couldn't find one anywhere
-		sprintf (name, "%s/%s/%s", curpath, path, gamename);
+		snprintf (name, MAX_OSPATH, "%s/%s/game.so", curpath, path);
 		game_library = dlopen (name, RTLD_LAZY );
 		if (game_library)
 		{
