@@ -128,7 +128,7 @@ typedef struct
 	int		(*soundindex) (char *name);
 	int		(*imageindex) (char *name);
 
-	int		(*setmodel) (edict_t *ent, char *name);
+	void		(*setmodel) (edict_t *ent, char *name);
 
 	// collision detection
 	trace_t	(*trace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t *passent, int contentmask);
