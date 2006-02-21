@@ -93,7 +93,7 @@ SOURCE=..\..\common\bspfile.c
 # End Source File
 # Begin Source File
 
-SOURCE=\ufo\utils3\common\cmdlib.c
+SOURCE=..\..\common\cmdlib.c
 # End Source File
 # Begin Source File
 
@@ -113,7 +113,7 @@ SOURCE=.\glfile.c
 # End Source File
 # Begin Source File
 
-SOURCE=\ufo\utils3\common\lbmlib.c
+SOURCE=..\..\common\lbmlib.c
 # End Source File
 # Begin Source File
 
@@ -129,11 +129,11 @@ SOURCE=.\map.c
 # End Source File
 # Begin Source File
 
-SOURCE=\ufo\utils3\common\mathlib.c
+SOURCE=..\..\common\mathlib.c
 # End Source File
 # Begin Source File
 
-SOURCE=\ufo\utils3\common\polylib.c
+SOURCE=..\..\common\polylib.c
 # End Source File
 # Begin Source File
 
@@ -153,7 +153,7 @@ SOURCE=.\routing.c
 # End Source File
 # Begin Source File
 
-SOURCE=\ufo\utils3\common\scriplib.c
+SOURCE=..\..\common\scriplib.c
 # End Source File
 # Begin Source File
 
@@ -181,23 +181,23 @@ SOURCE=.\writebsp.c
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=\quake2\utils3\common\bspfile.h
+SOURCE=..\..\common\bspfile.h
 # End Source File
 # Begin Source File
 
-SOURCE=\quake2\utils3\common\cmdlib.h
+SOURCE=..\..\common\cmdlib.h
 # End Source File
 # Begin Source File
 
-SOURCE=\quake2\utils3\common\lbmlib.h
+SOURCE=..\..\common\lbmlib.h
 # End Source File
 # Begin Source File
 
-SOURCE=\quake2\utils3\common\mathlib.h
+SOURCE=..\..\common\mathlib.h
 # End Source File
 # Begin Source File
 
-SOURCE=\quake2\utils3\common\polylib.h
+SOURCE=..\..\common\polylib.h
 # End Source File
 # Begin Source File
 
@@ -205,15 +205,15 @@ SOURCE=.\qbsp.h
 # End Source File
 # Begin Source File
 
-SOURCE=\quake2\utils3\common\qfiles.h
+SOURCE=..\..\common\qfiles.h
 # End Source File
 # Begin Source File
 
-SOURCE=\quake2\utils3\common\scriplib.h
+SOURCE=..\..\common\scriplib.h
 # End Source File
 # Begin Source File
 
-SOURCE=\quake2\utils3\common\threads.h
+SOURCE=..\..\common\threads.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
