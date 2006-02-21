@@ -167,11 +167,11 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 
 void R_RotateForEntity (entity_t *e)
 {
-    qglTranslatef (e->origin[0],  e->origin[1],  e->origin[2]);
+        qglTranslatef (e->origin[0],  e->origin[1],  e->origin[2]);
 
-    qglRotatef (e->angles[1],  0, 0, 1);
-    qglRotatef (-e->angles[0],  0, 1, 0);
-    qglRotatef (-e->angles[2],  1, 0, 0);
+        qglRotatef (e->angles[1],  0, 0, 1);
+        qglRotatef (-e->angles[0],  0, 1, 0);
+        qglRotatef (-e->angles[2],  1, 0, 0);
 }
 
 
@@ -238,7 +238,7 @@ void R_DrawSpriteModel (entity_t *e)
 
 	qglColor4f( 1, 1, 1, alpha );
 
-    GL_Bind(currentmodel->skins[e->as.frame]->texnum);
+        GL_Bind(currentmodel->skins[e->as.frame]->texnum);
 
 	GL_TexEnv( GL_MODULATE );
 
@@ -298,7 +298,7 @@ void R_DrawNullModel (void)
 //	else
 //		R_LightPoint (currententity->origin, shadelight);
 
-    qglPushMatrix ();
+	qglPushMatrix ();
 
 	qglMultMatrixf( trafo[currententity - r_newrefdef.entities].matrix );
 
@@ -504,7 +504,6 @@ void R_DrawEntitiesOnList (void)
 	if (!r_drawentities->value)
 		return;
 
-
 	// draw non-transparent first
 
 	for (i=0 ; i<r_newrefdef.num_entities ; i++)
@@ -600,7 +599,7 @@ void GL_DrawParticles( int num_particles, const particle_t particles[], const un
 	float			scale;
 	byte			color[4];
 
-    GL_Bind(r_particletexture->texnum);
+	GL_Bind(r_particletexture->texnum);
 	qglDepthMask( GL_FALSE );		// no z buffering
 	qglEnable( GL_BLEND );
 	GL_TexEnv( GL_MODULATE );
@@ -708,11 +707,11 @@ void R_PolyBlend (void)
 	qglDisable (GL_DEPTH_TEST);
 	qglDisable (GL_TEXTURE_2D);
 
-    qglLoadIdentity ();
+        qglLoadIdentity ();
 
 	// FIXME: get rid of these
-    qglRotatef (-90,  1, 0, 0);	    // put Z going up
-    qglRotatef (90,  0, 0, 1);	    // put Z going up
+        qglRotatef (-90,  1, 0, 0);	    // put Z going up
+        qglRotatef (90,  0, 0, 1);	    // put Z going up
 
 	qglColor4fv (v_blend);
 
@@ -807,7 +806,7 @@ void R_SetupFrame (void)
 
 	AngleVectors (r_newrefdef.viewangles, vpn, vright, vup);
 
-// current viewcluster
+	// current viewcluster
 /*	if ( !( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) )
 	{
 		r_oldviewcluster = r_viewcluster;
@@ -860,19 +859,19 @@ void R_SetupFrame (void)
 void MYgluPerspective( GLdouble fovy, GLdouble aspect,
 		     GLdouble zNear, GLdouble zFar )
 {
-   GLdouble xmin, xmax, ymin, ymax;
+       GLdouble xmin, xmax, ymin, ymax;
 
-   ymax = zNear * tan( fovy * M_PI / 360.0 );
-   ymin = -ymax;
+       ymax = zNear * tan( fovy * M_PI / 360.0 );
+       ymin = -ymax;
 
-   xmin = ymin * aspect;
-   xmax = ymax * aspect;
+       xmin = ymin * aspect;
+       xmax = ymax * aspect;
 
-   xmin += -( 2 * gl_state.camera_separation ) / zNear;
-   xmax += -( 2 * gl_state.camera_separation ) / zNear;
+       xmin += -( 2 * gl_state.camera_separation ) / zNear;
+       xmax += -( 2 * gl_state.camera_separation ) / zNear;
 
-   if ( !r_isometric->value ) qglFrustum( xmin, xmax, ymin, ymax, zNear, zFar );
-   else qglOrtho( -10*fovy*aspect, 10*fovy*aspect, -10*fovy, 10*fovy, zNear, zFar );
+       if ( !r_isometric->value ) qglFrustum( xmin, xmax, ymin, ymax, zNear, zFar );
+       else qglOrtho( -10*fovy*aspect, 10*fovy*aspect, -10*fovy, 10*fovy, zNear, zFar );
 }
 
 
@@ -905,23 +904,23 @@ void R_SetupGL (void)
 	//
 	// set up projection matrix
 	//
-    screenaspect = (float)r_newrefdef.width/r_newrefdef.height;
+        screenaspect = (float)r_newrefdef.width/r_newrefdef.height;
 //	yfov = 2*atan((float)r_newrefdef.height/r_newrefdef.width)*180/M_PI;
 	qglMatrixMode(GL_PROJECTION);
-    qglLoadIdentity ();
-    MYgluPerspective (r_newrefdef.fov_y,  screenaspect,  4,  2048);
+        qglLoadIdentity ();
+        MYgluPerspective (r_newrefdef.fov_y,  screenaspect,  4,  2048);
 
 	qglCullFace(GL_FRONT);
 
 	qglMatrixMode(GL_MODELVIEW);
-    qglLoadIdentity ();
+        qglLoadIdentity ();
 
-    qglRotatef (-90,  1, 0, 0);	    // put Z going up
-    qglRotatef (90,  0, 0, 1);	    // put Z going up
-    qglRotatef (-r_newrefdef.viewangles[2],  1, 0, 0);
-    qglRotatef (-r_newrefdef.viewangles[0],  0, 1, 0);
-    qglRotatef (-r_newrefdef.viewangles[1],  0, 0, 1);
-    qglTranslatef (-r_newrefdef.vieworg[0],  -r_newrefdef.vieworg[1],  -r_newrefdef.vieworg[2]);
+        qglRotatef (-90,  1, 0, 0);	    // put Z going up
+        qglRotatef (90,  0, 0, 1);	    // put Z going up
+        qglRotatef (-r_newrefdef.viewangles[2],  1, 0, 0);
+        qglRotatef (-r_newrefdef.viewangles[0],  0, 1, 0);
+        qglRotatef (-r_newrefdef.viewangles[1],  0, 0, 1);
+        qglTranslatef (-r_newrefdef.vieworg[0],  -r_newrefdef.vieworg[1],  -r_newrefdef.vieworg[2]);
 
 //	if ( gl_state.camera_separation != 0 && gl_state.stereo_enabled )
 //		qglTranslatef ( gl_state.camera_separation, 0, 0 );
@@ -1074,10 +1073,10 @@ void	R_SetGL2D (void)
 	// set 2D virtual screen size
 	qglViewport (0,0, vid.width, vid.height);
 	qglMatrixMode(GL_PROJECTION);
-    qglLoadIdentity ();
+	qglLoadIdentity ();
 	qglOrtho  (0, vid.width, vid.height, 0, 9999, -9999);
 	qglMatrixMode(GL_MODELVIEW);
-    qglLoadIdentity ();
+	qglLoadIdentity ();
 	qglDisable (GL_DEPTH_TEST);
 	qglDisable (GL_CULL_FACE);
 	qglDisable (GL_BLEND);
@@ -1140,7 +1139,9 @@ R_SetLightLevel
 */
 void R_SetLightLevel (void)
 {
-	vec3_t		shadelight;
+/*	vec3_t		shadelight;
+
+	shadelight[0] = shadelight[1] = shadelight[2] = 1.0F;*/
 
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
@@ -1151,7 +1152,7 @@ void R_SetLightLevel (void)
 
 	// pick the greatest component, which should be the same
 	// as the mono value returned by software
-	if (shadelight[0] > shadelight[1])
+/*	if (shadelight[0] > shadelight[1])
 	{
 		if (shadelight[0] > shadelight[2])
 			r_lightlevel->value = 150*shadelight[0];
@@ -1164,15 +1165,16 @@ void R_SetLightLevel (void)
 			r_lightlevel->value = 150*shadelight[1];
 		else
 			r_lightlevel->value = 150*shadelight[2];
-	}
+	}*/
+	r_lightlevel->value = 0;
 
 }
 
 /*
-@@@@@@@@@@@@@@@@@@@@@
+====================
 R_RenderFrame
 
-@@@@@@@@@@@@@@@@@@@@@
+====================
 */
 void R_RenderFrame (refdef_t *fd)
 {
@@ -1370,7 +1372,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	if ( !R_SetMode () )
 	{
 		QGL_Shutdown();
-        ri.Con_Printf (PRINT_ALL, "ref_gl::R_Init() - could not R_SetMode()\n" );
+	        ri.Con_Printf (PRINT_ALL, "ref_gl::R_Init() - could not R_SetMode()\n" );
 		return false;
 	}
 
@@ -1386,7 +1388,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	gl_config.version_string = qglGetString (GL_VERSION);
 	ri.Con_Printf (PRINT_ALL, "GL_VERSION: %s\n", gl_config.version_string );
 	gl_config.extensions_string = qglGetString (GL_EXTENSIONS);
-//	ri.Con_Printf (PRINT_ALL, "GL_EXTENSIONS: %s\n", gl_config.extensions_string );
+	ri.Con_Printf (PRINT_ALL, "GL_EXTENSIONS: %s\n", gl_config.extensions_string );
 
 	strcpy( renderer_buffer, gl_config.renderer_string );
 	strlwr( renderer_buffer );
@@ -1670,9 +1672,9 @@ void R_Shutdown (void)
 
 
 /*
-@@@@@@@@@@@@@@@@@@@@@
+====================
 R_BeginFrame
-@@@@@@@@@@@@@@@@@@@@@
+====================
 */
 void R_BeginFrame( float camera_separation )
 {
@@ -1840,10 +1842,10 @@ void	Draw_FadeScreen (void);
 void	LoadTGA( char *name, byte **pic, int *width, int *height );
 
 /*
-@@@@@@@@@@@@@@@@@@@@@
+====================
 GetRefAPI
 
-@@@@@@@@@@@@@@@@@@@@@
+====================
 */
 refexport_t GetRefAPI (refimport_t rimp )
 {
