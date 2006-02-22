@@ -1219,7 +1219,7 @@ void R_Register( void )
 	gl_nobind = ri.Cvar_Get ("gl_nobind", "0", 0);
 	gl_round_down = ri.Cvar_Get ("gl_round_down", "1", 0);
 	gl_picmip = ri.Cvar_Get ("gl_picmip", "0", 0);
-	gl_maxtexres = ri.Cvar_Get ("gl_maxtexres", "1024", CVAR_ARCHIVE);
+	gl_maxtexres = ri.Cvar_Get ("gl_maxtexres", "2048", CVAR_ARCHIVE);
 	gl_skymip = ri.Cvar_Get ("gl_skymip", "0", 0);
 	gl_showtris = ri.Cvar_Get ("gl_showtris", "0", 0);
 	gl_ztrick = ri.Cvar_Get ("gl_ztrick", "0", 0);
@@ -1619,6 +1619,26 @@ qboolean R_Init( void *hinstance, void *hWnd )
 		ri.Con_Printf( PRINT_ALL, "...GL_ARB_texture_compression not found\n" );
 		gl_compressed_solid_format = 0;
 		gl_compressed_alpha_format = 0;
+	}
+
+	{
+		int size;
+		GLenum err;
+	
+		ri.Con_Printf( PRINT_ALL, "Max texture size supported\n" );
+		qglGetIntegerv(GL_MAX_TEXTURE_SIZE, &size);
+		if (( err = qglGetError() )) {
+			ri.Con_Printf( PRINT_ALL, "...cannot detect !\n");
+		} else {
+			ri.Con_Printf( PRINT_ALL, "...detected %d\n", size);
+			if (gl_maxtexres->value > size) {
+				ri.Con_Printf( PRINT_ALL, "...downgrading from %.0f\n", gl_maxtexres->value);
+				ri.Cvar_SetValue("gl_maxtexres", size);
+			} else if (gl_maxtexres->value < size) {
+				ri.Con_Printf( PRINT_ALL, "...but using %.0f as requested\n",
+					       gl_maxtexres->value);
+			}
+		}
 	}
 
 	GL_SetDefaultState();
