@@ -1827,9 +1827,9 @@ void R_SetPalette ( const unsigned char *palette)
 	{
 		for ( i = 0; i < 256; i++ )
 		{
-			rp[i*4+0] = d_8to24table[i] & 0xff;
-			rp[i*4+1] = ( d_8to24table[i] >> 8 ) & 0xff;
-			rp[i*4+2] = ( d_8to24table[i] >> 16 ) & 0xff;
+			rp[i*4+0] = LittleLong(d_8to24table[i]) & 0xff;
+			rp[i*4+1] = LittleLong(( d_8to24table[i]) >> 8 ) & 0xff;
+			rp[i*4+2] = LittleLong(( d_8to24table[i]) >> 16 ) & 0xff;
 			rp[i*4+3] = 0xff;
 		}
 	}
