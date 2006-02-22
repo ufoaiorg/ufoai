@@ -1,0 +1,20 @@
+Source: ufoai
+Section: contrib/games
+Priority: optional
+Maintainer: Yann Dirson <dirson@debian.org>
+Build-Depends: debhelper (>= 4.0.0), dh-buildinfo, libx11-dev, libxext-dev, libjpeg-dev, libvorbis-dev, xlibmesa-glu-dev, xlibmesa-gl-dev, xlibs-static-dev
+Standards-Version: 3.6.1
+
+Package: ufoai
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (>= 0.0.cvs)
+Suggests: ufoai-music
+Description: UFO: Alien Invasion - build your team and stop the aliens
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ As manager of an international military force dedicated to stop the
+ Alien Invasion, you prepare your soldiers and attack the aliens on
+ various sites on the Earth.
+ .
+ The tactical part of the game uses OpenGL, and is based on the Quake2
+ engine.  A multiplayer mode is also available.

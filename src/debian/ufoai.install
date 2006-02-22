@@ -1,0 +1,4 @@
+linux/debug*/ref_*.so /usr/lib/games/ufoai/
+linux/debug*/game*.so /usr/lib/games/ufoai/base/
+linux/debug*/ufo /usr/lib/games/ufoai/
+debian/ufo /usr/games/

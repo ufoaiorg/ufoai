@@ -1,0 +1,92 @@
+ufoai (0.0.cvs) unstable; urgency=low
+
+  * CVS snapshot
+  * Depend on newer data package.
+
+ -- Yann Dirson <dirson@debian.org>  Thu, 23 Feb 2006 00:23:51 +0100
+
+ufoai (0.0.040218-0.8) unstable; urgency=low
+
+  * Have DEB_BUILD_OPTIONS exported, so that the binaries really do not
+    get stripped.
+
+ -- Yann Dirson <dirson@debian.org>  Tue, 20 Apr 2004 11:32:05 +0200
+
+ufoai (0.0.040218-0.7) unstable; urgency=low
+
+  * Made Sys_GetGameAPI() to look for game.so instead of a lib with an
+    arch-dependant name, thus allowing building on more archs than just
+    i386 and alpha.  Updated all Makefiles with this name while I was at
+    it.
+  * Make so that update-ufoai-campaign properly removes the generated
+    campaign when no snippets are found, instead of failing when removing
+    the last data package.
+
+ -- Yann Dirson <dirson@debian.org>  Mon, 19 Apr 2004 20:35:32 +0200
+
+ufoai (0.0.040218-0.6) unstable; urgency=low
+
+  * Added update-ufoai-campaign script, in new ufoai-common package.
+
+ -- Yann Dirson <dirson@debian.org>  Mon, 19 Apr 2004 00:27:34 +0200
+
+ufoai (0.0.040218-0.5) unstable; urgency=low
+
+  * Set DEB_BUILD_OPTIONS=nostrip so that people can give useful info on
+    coredumps.
+  * Ensure gl_ref/gl_rmain.c::R_Init() returns 0 when reaching end of
+    function, fixing the problem where people reported the OpenGL renderer
+    did not init where there was no error reported - fix from upstream
+    found at http://ufo.myexp.de/phpBB2/viewtopic.php?t=327
+  * Use libGL.so.1 as default driver, not libGL.so, so that people do not
+    need a libgl-dev package installed.
+
+ -- Yann Dirson <dirson@debian.org>  Sun, 18 Apr 2004 20:34:25 +0200
+
+ufoai (0.0.040218-0.4) unstable; urgency=low
+
+  * Added a MIN_ZOOM parameter in client/cl_input.c, and set it to 0.5
+    instead of the 1.0 default, so that we can have a better view of the
+    terrain even at small screen resolutions.  Also changed
+    client/cl_view.c for the limit (for some reason the limits in the 2
+    files are out of sync).
+  * Improved wrapper script to allow users to replace symlinks with
+    modified copies of system files and dirs (eg. to change keybindings).
+  * Make wrapper script pass command-line arguments to ufo binary.
+  * Do not force drivers to use on each ufo invocation, just if the config
+    file has not been written yet, and no special args are given on
+    command-line.
+
+ -- Yann Dirson <dirson@debian.org>  Sat, 17 Apr 2004 23:28:22 +0200
+
+ufoai (0.0.040218-0.3) UNRELEASED; urgency=low
+
+  * Fixed typo in wrapper script.
+
+ -- Yann Dirson <dirson@debian.org>  Sat, 17 Apr 2004 00:20:16 +0200
+
+ufoai (0.0.040218-0.2) UNRELEASED; urgency=low
+
+  * Enhanced the wrapper script to setup a ~/.ufoai/ suitable for running
+    the game, so that config and games can be saved.
+  * Depend on new version of ufoai-data, which does not ship the system
+    save/ directory any more.
+  * Enhanced the package description.
+  * Create in the docdir a "docs" symlink to the ufoai-data docdir, where
+    the docs are located.
+
+ -- Yann Dirson <dirson@debian.org>  Fri, 16 Apr 2004 22:14:43 +0200
+
+ufoai (0.0.040218-0.1) UNRELEASED; urgency=low
+
+  * Remove the dependency on quake2, since the game appears to work
+    without it.
+
+ -- Yann Dirson <dirson@debian.org>  Thu, 15 Apr 2004 08:57:24 +0200
+
+ufoai (0.0.040218-0) UNRELEASED; urgency=low
+
+  * Initial Release.
+
+ -- Yann Dirson <dirson@debian.org>  Thu, 15 Apr 2004 00:23:30 +0200
+
