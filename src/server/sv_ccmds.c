@@ -892,7 +892,7 @@ recorded, but no playerinfo will be stored.  Primarily for demo merging.
 void SV_ServerRecord_f (void)
 {
 	char	name[MAX_OSPATH];
-	char	buf_data[32768];
+	byte	buf_data[32768];
 	sizebuf_t	buf;
 	int		len;
 	int		i;

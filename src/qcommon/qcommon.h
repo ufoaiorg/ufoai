@@ -495,15 +495,24 @@ NET
 #define	MAX_MSGLEN		1400		// max length of a message
 #define	PACKET_HEADER	10			// two ints and a short
 
+#ifdef HAVE_IPV6
+typedef enum {NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX, NA_IPV6, NA_MULTICAST6} netadrtype_t;
+#else
 typedef enum {NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX} netadrtype_t;
+#endif
 
 typedef enum {NS_CLIENT, NS_SERVER} netsrc_t;
 
 typedef struct
 {
 	netadrtype_t	type;
-
+#ifdef HAVE_IPV6
+	/* TODO: Use sockaddr_storage instead */
+	byte	ip[16];
+	unsigned int scope_id;
+#else
 	byte	ip[4];
+#endif
 	byte	ipx[10];
 
 	unsigned short	port;

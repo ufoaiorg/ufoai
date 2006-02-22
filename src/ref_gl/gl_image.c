@@ -626,6 +626,8 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 							*pixbuf++ = blue;
 							*pixbuf++ = alphabyte;
 							break;
+					default:
+							break;
 				}
 			}
 		}
@@ -651,6 +653,8 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 								green = *buf_p++;
 								red = *buf_p++;
 								alphabyte = *buf_p++;
+								break;
+						default:
 								break;
 					}
 
@@ -691,6 +695,8 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 									*pixbuf++ = green;
 									*pixbuf++ = blue;
 									*pixbuf++ = alphabyte;
+									break;
+							default:
 									break;
 						}
 						column++;
@@ -913,7 +919,10 @@ void R_FloodFillSkin( byte *skin, int skinwidth, int skinheight )
 		filledcolor = 0;
 		// attempt to find opaque black
 		for (i = 0; i < 256; ++i)
-			if (d_8to24table[i] == (255 << 0)) // alpha 1.0
+#if 0			if (d_8to24table[i] == (255 << 0)) // alpha 1.0
+			// Endian fix
+#endif
+			if (LittleLong(d_8to24table[i]) == (255<<0))
 			{
 				filledcolor = i;
 				break;
@@ -1637,7 +1646,7 @@ void GL_FreeUnusedImages (void)
 		if (image->type == it_pic || image->type == it_wrappic)
 			continue;		// fix this! don't free pics
 		// free it
-		qglDeleteTextures (1, &image->texnum);
+		qglDeleteTextures (1, (GLuint*)&image->texnum);
 		memset (image, 0, sizeof(*image));
 	}
 }
@@ -1757,7 +1766,7 @@ void	GL_ShutdownImages (void)
 		if (!image->registration_sequence)
 			continue;		// free image_t slot
 		// free it
-		qglDeleteTextures (1, &image->texnum);
+		qglDeleteTextures (1, (GLuint*)&image->texnum);
 		memset (image, 0, sizeof(*image));
 	}
 }

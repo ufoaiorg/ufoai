@@ -824,7 +824,7 @@ void R_AddMapTile( char *name, int sX, int sY, int sZ )
 	sprintf( loadmodel->name, "maps/%s.bsp", name );
 
 	// load the file
-	modfilelen = ri.FS_LoadFile (loadmodel->name, &buffer);
+	modfilelen = ri.FS_LoadFile (loadmodel->name, (void**)&buffer);
 	if (!buffer)
 		ri.Sys_Error (ERR_DROP, "Mod_LoadBrushModel: %s not found", loadmodel->name);
 
