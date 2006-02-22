@@ -292,6 +292,7 @@ extern	cvar_t	*gl_fog;
 
 extern	cvar_t	*vid_fullscreen;
 extern	cvar_t	*vid_gamma;
+extern	cvar_t	*vid_grabmouse;
 
 extern	cvar_t		*intensity;
 

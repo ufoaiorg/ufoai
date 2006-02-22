@@ -143,6 +143,7 @@ cvar_t	*gl_3dlabs_broken;
 cvar_t	*vid_fullscreen;
 cvar_t	*vid_gamma;
 cvar_t	*vid_ref;
+cvar_t  *vid_grabmouse;
 
 /*
 =================
@@ -1265,6 +1266,7 @@ void R_Register( void )
 	vid_gamma = ri.Cvar_Get( "vid_gamma", "1.0", CVAR_ARCHIVE );
 	vid_ref = ri.Cvar_Get( "vid_ref", "glx", CVAR_ARCHIVE );
 // 	vid_ref = ri.Cvar_Get( "vid_ref", "soft", CVAR_ARCHIVE );
+	vid_grabmouse = ri.Cvar_Get( "vid_grabmouse", "1", CVAR_ARCHIVE );
 
 	ri.Cmd_AddCommand( "imagelist", GL_ImageList_f );
 	ri.Cmd_AddCommand( "screenshot", GL_ScreenShot_f );

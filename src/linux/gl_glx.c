@@ -90,7 +90,7 @@ static Atom wmDeleteWindow;
 
 static qboolean        mouse_avail;
 static float   mx, my;
-//static int	old_mouse_x, old_mouse_y;
+static int	old_mouse_x, old_mouse_y;
 
 static int win_x, win_y;
 
@@ -149,15 +149,22 @@ static void install_grabs(void)
 	// inviso cursor
 	XDefineCursor(dpy, win, CreateNullCursor(dpy, win));
 
-	XGrabPointer(dpy, win,
+	if (vid_grabmouse->value) {
+		XGrabPointer(dpy, win,
 				 True,
 				 0,
 				 GrabModeAsync, GrabModeAsync,
 				 win,
 				 None,
 				 CurrentTime);
+	}
 
-	if (in_dgamouse->value) {
+	if (!vid_grabmouse->value) {
+		XWarpPointer(dpy, None, win,
+			     0, 0, 0, 0,
+			     0, 0);
+		sensitivity->value = 1;
+	} else if (in_dgamouse->value) {
 		int MajorVersion, MinorVersion;
 
 		if (!XF86DGAQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
@@ -175,7 +182,8 @@ static void install_grabs(void)
 					 vid.width / 2, vid.height / 2);
 	}
 
-	XGrabKeyboard(dpy, win,
+	if (vid_grabmouse->value)
+		XGrabKeyboard(dpy, win,
 				  False,
 				  GrabModeAsync, GrabModeAsync,
 				  CurrentTime);
@@ -433,8 +441,8 @@ static void HandleEvents(void)
 	XEvent event;
 	int b;
 	qboolean dowarp = false;
-	int mwx = vid.width/2;
-	int mwy = vid.height/2;
+	int mwx = vid_grabmouse->value ? vid.width/2  : old_mouse_x;
+	int mwy = vid_grabmouse->value ? vid.height/2 : old_mouse_y;
 
 	if (!dpy)
 		return;
@@ -462,8 +470,8 @@ static void HandleEvents(void)
 				{
 					mx += ((int)event.xmotion.x - mwx) * sensitivity->value;
 					my += ((int)event.xmotion.y - mwy) * sensitivity->value;
-					mwx = event.xmotion.x;
-					mwy = event.xmotion.y;
+					old_mouse_x = mwx = event.xmotion.x;
+					old_mouse_y = mwy = event.xmotion.y;
 
 					if (mx || my)
 						dowarp = true;
@@ -516,7 +524,7 @@ static void HandleEvents(void)
 		}
 	}
 
-	if (dowarp) {
+	if (dowarp && vid_grabmouse->value) {
 		/* move the mouse to the window center again */
 		XWarpPointer(dpy,None,win,0,0,0,0, vid.width/2,vid.height/2);
 	}
