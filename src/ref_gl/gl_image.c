@@ -919,7 +919,8 @@ void R_FloodFillSkin( byte *skin, int skinwidth, int skinheight )
 		filledcolor = 0;
 		// attempt to find opaque black
 		for (i = 0; i < 256; ++i)
-#if 0			if (d_8to24table[i] == (255 << 0)) // alpha 1.0
+#if 0
+			if (d_8to24table[i] == (255 << 0)) // alpha 1.0
 			// Endian fix
 #endif
 			if (LittleLong(d_8to24table[i]) == (255<<0))
