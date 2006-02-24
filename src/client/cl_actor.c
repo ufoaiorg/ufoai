@@ -1400,8 +1400,6 @@ float CL_TargetingToHit( pos3_t toPos )
 	if ( height / (2 * distance * tan(acc * selFD->spread[1])) < 1)
 		hitchance *= height / (2 * distance * tan(acc * selFD->spread[1]));
 
-	Cvar_Set( "mn_hitchance", va( "%i%", (int)(100.0f * hitchance) ) );
-
 	//Calculate cover:
 	n = 0;
 	height = height / 18;
