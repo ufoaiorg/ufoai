@@ -2174,6 +2174,8 @@ void G_ClientTeamInfo( player_t *player )
 		if ( j < globals.num_edicts )
 		{
 			// here the actors actually spawn
+			// TODO: Is this only singleplayer?
+			//       or do need to check maxsoldiers here, too?
 
 			level.num_alive[ent->team]++;
 			level.num_spawned[ent->team]++;
@@ -2191,7 +2193,7 @@ void G_ClientTeamInfo( player_t *player )
 
 			// new attributes
 			for (k = 0; k<SKILL_NUM_TYPES; k++)
-			  ent->chr.skills[k] = gi.ReadByte();
+				ent->chr.skills[k] = gi.ReadByte();
 
 			ent->HP = GET_HP( ent->chr.skills[ABILITY_POWER] );
 			ent->AP = 100;

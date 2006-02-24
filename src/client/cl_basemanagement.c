@@ -28,6 +28,7 @@ float bvScale;
 
 char *bmData, *bmDataStart, *bmDataProductions;
 
+char infoBuildingText[MAX_MENUTEXTLEN];
 
 value_t valid_vars[] =
 {
@@ -113,6 +114,7 @@ value_t production_valid_vars[] =
 	{ "title",	V_STRING,	PRODFS( title ) },
 	{ "desc",	V_NULL  ,	PRODFS( text ) },
 	{ "amount",	V_INT  ,	PRODFS( amount ) },
+	{ "menu",	V_STRING  ,	PRODFS( menu ) },
 	{ NULL,	0, 0 }
 };
 
@@ -605,8 +607,9 @@ void MN_DrawBuilding( void )
 
 	if ( entry->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] > B_CONSTRUCTION_FINISHED )
 	{
-		if ( entry->techLevel   ) strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Level:\t%i\n"), entry->techLevel ) );
-		if ( entry->condition[baseCurrent->buildingCurrent->howManyOfThisType]   ) strcat ( menuText[TEXT_BUILDING_INFO], va ( "%s:\t%i\n", _("Condition"), entry->condition[baseCurrent->buildingCurrent->howManyOfThisType] ) );
+		if ( entry->techLevel ) strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Level:\t%i\n"), entry->techLevel ) );
+		if ( entry->condition[baseCurrent->buildingCurrent->howManyOfThisType]   )
+			strcat ( menuText[TEXT_BUILDING_INFO], va ( "%s:\t%i\n", _("Condition"), entry->condition[baseCurrent->buildingCurrent->howManyOfThisType] ) );
 	}
 
 	//draw a second picture if building has two units
@@ -1175,7 +1178,7 @@ void MN_DrawBase( void )
 	float x, y;
 	int mx, my;
 	int cursorSet = 0;
-	char *image;
+	char *image, *statusImage = NULL;
 	int width, height;
 	building_t *entry;
 	building_t *secondEntry;
@@ -1196,7 +1199,6 @@ void MN_DrawBase( void )
 	for ( b = BASE_SIZE-1; b >= 0; b-- )
 		for ( a = 0; a < BASE_SIZE; a++ )
 		{
-
 			//adjust trafo values for correct assembly
 			x = ( RELEVANT_X * b +  RELEVANT_Y * a - bvCenterX + a * 4) * bvScale;
 			y = ( ( RELEVANT_X - 1 ) * a + ( RELEVANT_Y - 4 ) * ( ( b - ( BASE_SIZE - 1 ) ) * (- 1) ) - bvCenterY) * bvScale;
@@ -1225,36 +1227,28 @@ void MN_DrawBase( void )
 					}
 				}
 
+				if ( entry->buildingStatus[entry->howManyOfThisType] == B_UPGRADE )
+					statusImage = "base/upgrade";
+				else if ( entry->buildingStatus[entry->howManyOfThisType] == B_DOWN )
+					statusImage = "base/down";
+				else if ( entry->buildingStatus[entry->howManyOfThisType] == B_REPAIRING
+					|| entry->buildingStatus[entry->howManyOfThisType] == B_MAINTENANCE )
+					statusImage = "base/repair";
+				else if ( entry->buildingStatus[entry->howManyOfThisType] == B_UNDER_CONSTRUCTION )
+					statusImage = "base/construct";
 
-				if ( entry->buildingStatus[entry->howManyOfThisType] >= B_CONSTRUCTION_FINISHED )
+				if ( !entry->used && entry->needs && entry->visible )
 				{
-					if ( entry->buildingStatus[entry->howManyOfThisType] == B_UPGRADE )
-						image = "base/upgrade";
-					else if ( entry->buildingStatus[entry->howManyOfThisType] == B_DOWN )
-						image = "base/down";
-					else if ( entry->buildingStatus[entry->howManyOfThisType] == B_REPAIRING
-					       || entry->buildingStatus[entry->howManyOfThisType] == B_MAINTENANCE )
-						image = "base/repair";
-					else
-					{
-						if ( !entry->used && entry->needs && entry->visible )
-						{
-							secondEntry = B_GetBuilding ( entry->needs );
-							if ( ! secondEntry )
-								Com_Printf( _("Error in ufo-scriptfile - could not find the needed building\n") );
-							entry->used = 1;
-							image = secondEntry->image;
-						}
-						else
-						{
-							image = entry->image;
-							entry->used = 0;
-						}
-					}
+					secondEntry = B_GetBuilding ( entry->needs );
+					if ( ! secondEntry )
+						Com_Printf( _("Error in ufo-scriptfile - could not find the needed building\n") );
+					entry->used = 1;
+					image = secondEntry->image;
 				}
 				else
 				{
-					image = "base/construct";
+					image = entry->image;
+					entry->used = 0;
 				}
 			}
 			else
@@ -1278,8 +1272,21 @@ void MN_DrawBase( void )
 
 			if ( image != NULL )
 				re.DrawNormPic( x, y, width*bvScale, height*bvScale, 0, 0, 0, 0, ALIGN_UL, true, image );
+			if ( statusImage != NULL )
+			{
+				x += 20 * bvScale;
+				y += 60 * bvScale;
+				re.DrawGetPicSize ( &width, &height, statusImage );
+				if ( width == -1 || height == -1 )
+					Com_Printf( _("Invalid picture dimension of %s\n"), statusImage );
+				else
+					re.DrawNormPic( x, y, width*bvScale, height*bvScale, 0, 0, 0, 0, ALIGN_UL, true, statusImage );
+
+				statusImage = NULL;
+			}
 		}
 
+	// FIXME: Better mousehandling over tiles - make cursorSet obsolete
 	for ( b = BASE_SIZE-1; b >= 0; b-- )
 		for ( a = 0; a < BASE_SIZE; a++ )
 			if ( !cursorSet && baseCurrent->buildingCurrent && baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] < B_UNDER_CONSTRUCTION )
@@ -1295,16 +1302,9 @@ void MN_DrawBase( void )
 					if ( baseCurrent->baseLevel >= 1)
 					{
 						if ( baseCurrent->map[b][a][baseCurrent->baseLevel-1] == -1 )
-						{
 							continue;
-						}
-						else
-						{
-							if ( bmBuildings[baseID][ B_GetIDFromList( baseCurrent->map[b][a][baseCurrent->baseLevel-1] ) ].notUpOn )
-							{
-								continue;
-							}
-						}
+						else if ( bmBuildings[baseID][ B_GetIDFromList( baseCurrent->map[b][a][baseCurrent->baseLevel-1] ) ].notUpOn )
+							continue;
 					}
 					image = "base/highlight";
 
@@ -1731,23 +1731,72 @@ void MN_ResetBaseManagement( void )
 	Cvar_SetValue( "mn_base_id", baseID );
 }
 
+/*
+B_GetCount
+
+returns the number of founded bases
+*/
+int B_GetCount ( void )
+{
+	int i, cnt = 0;
+
+	for ( i = 0; i < numBases; i++ )
+	{
+		if ( ! bmBases[i].founded ) continue;
+		cnt++;
+	}
+
+	return cnt;
+}
+
 /*==========================
 CL_UpdateBaseData
 ==========================*/
 void CL_UpdateBaseData( void )
 {
 	building_t *b;
-	int i, j;
-	for ( i = 1; i < numBases; i++ )
+	int i, j, k;
+	int newBuilding = 0;
+	for ( i = 0; i < numBases; i++ )
 	{
 		if ( ! bmBases[i].founded ) continue;
-
 		for ( j = 0; j < numBuildings; j++ )
 		{
 			b = &bmBuildings[i][j];
-			if ( ! b ) break;
+			if ( ! b ) continue;
+			for ( k = 0; k < b->howManyOfThisType + 1; k++ )
+			{
+				if ( b->buildingStatus[k] != B_UNDER_CONSTRUCTION )
+					continue;
+				if ( b->timeStart && ( b->timeStart + b->buildTime ) <= ccs.date.day )
+				{
+					b->buildingStatus[k] = B_WORKING_100;
+					if ( b->minWorkers )
+					{
+						Cbuf_AddText( va( "add_workers %i\n", b->minWorkers ) );
+						Cbuf_Execute();
+					}
+					if ( b->moreThanOne )
+						b->howManyOfThisType++;
+					if ( ! newBuilding )
+						Com_sprintf( infoBuildingText, MAX_MENUTEXTLEN, _("Building %s at base %s\n"), b->title, bmBases[i].title );
+					else
+						Com_sprintf( infoBuildingText, MAX_MENUTEXTLEN, _("Constructions finished at base %s\n"), bmBases[i].title );
+
+					newBuilding++;
+				}
+			}
+#if 0
 			if ( b->buildingStatus[b->howManyOfThisType] == B_UNDER_CONSTRUCTION && b->timeStart + b->buildTime < ccs.date.day )
 				b->buildingStatus[b->howManyOfThisType] = B_CONSTRUCTION_FINISHED;
+#endif
+		}
+		// refresh the building list
+		// and show a popup
+		if ( newBuilding )
+		{
+			MN_BuildingInit();
+			MN_Popup( _("Construction finished"), infoBuildingText );
 		}
 	}
 	CL_CheckResearchStatus();

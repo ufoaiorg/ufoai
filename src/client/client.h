@@ -1060,6 +1060,7 @@ typedef struct production_s
 	char    title[MAX_VAR];
 	char    *text;
 	int	amount;
+	char	menu[MAX_VAR];
 
 	struct  production_s *prev;
 	struct  production_s *next;
@@ -1092,7 +1093,7 @@ void MN_PrevMap ( void );
 //
 // cl_menu.c
 //
-#define MAX_MENUTEXTS		8
+//#define MAX_MENUTEXTS		16
 #define MAX_MENUTEXTLEN		512
 
 typedef enum
@@ -1101,7 +1102,13 @@ typedef enum
 	TEXT_LIST,
 	TEXT_UFOPEDIA,
 	TEXT_BUILDINGS,
-	TEXT_BUILDING_INFO
+	TEXT_BUILDING_INFO,
+	TEXT_RESEARCH,
+	TEXT_RESEARCH_INFO,
+	TEXT_POPUP,
+	TEXT_POPUP_INFO,
+
+ MAX_MENUTEXTS
 } texts_t;
 
 qboolean MN_CursorOnMenu( int x, int y );
@@ -1118,6 +1125,7 @@ void MN_Shutdown( void );
 void MN_ParseMenu( char *name, char **text );
 void MN_PushMenu( char *name );
 void MN_PopMenu( qboolean all );
+void MN_Popup (char* title, char* text);
 
 extern int numMenus;
 extern inventory_t *menuInventory;

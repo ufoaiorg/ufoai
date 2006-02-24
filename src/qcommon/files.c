@@ -95,7 +95,6 @@ The "game directory" is the first tree on the search path and directory that all
 
 */
 
-
 /*
 ** wildcard string comparing
 */
@@ -170,7 +169,6 @@ int FS_filelength (FILE *f)
 	return end;
 }
 
-
 /*
 ============
 FS_CreatePath
@@ -193,7 +191,6 @@ void	FS_CreatePath (char *path)
 	}
 }
 
-
 /*
 ==============
 FS_FCloseFile
@@ -207,45 +204,15 @@ void FS_FCloseFile (FILE *f)
 	fclose (f);
 }
 
-
-// RAFAEL
 /*
-	Developer_searchpath
+==============
+Developer_searchpath
+==============
 */
-int	Developer_searchpath (int who)
+int Developer_searchpath (int who)
 {
-
-	int		ch;
-	// PMM - warning removal
-//	char	*start;
-	searchpath_t	*search;
-
-	if (who == 1) // xatrix
-		ch = 'x';
-	else if (who == 2)
-		ch = 'r';
-
-	for (search = fs_searchpaths ; search ; search = search->next)
-	{
-		if (strstr (search->filename, "xatrix"))
-			return 1;
-
-		if (strstr (search->filename, "rogue"))
-			return 2;
-/*
-		start = strchr (search->filename, ch);
-
-		if (start == NULL)
-			continue;
-
-		if (strcmp (start ,"xatrix") == 0)
-			return (1);
-*/
-	}
 	return (0);
-
 }
-
 
 /*
 ===========
@@ -328,7 +295,6 @@ int FS_FOpenFileSingle (char *filename, FILE **file)
 	return -1;
 }
 
-
 int FS_FOpenFile (char *filename, FILE **file)
 {
 	int		result, len;
@@ -346,7 +312,6 @@ int FS_FOpenFile (char *filename, FILE **file)
 
 	return result;
 }
-
 
 /*
 =================
@@ -366,7 +331,6 @@ int FS_CheckFile (char *filename)
 
 	return result;
 }
-
 
 /*
 =================
@@ -433,7 +397,7 @@ int FS_LoadFile (char *path, void **buffer)
 
 	buf = NULL;	// quiet compiler warning
 
-// look for it in the filesystem or pack files
+	// look for it in the filesystem or pack files
 	len = FS_FOpenFile (path, &h);
 	if (!h)
 	{
@@ -459,7 +423,6 @@ int FS_LoadFile (char *path, void **buffer)
 	return len;
 }
 
-
 /*
 =============
 FS_FreeFile
@@ -469,10 +432,6 @@ void FS_FreeFile (void *buffer)
 {
 	Z_Free (buffer);
 }
-
-
-
-
 
 /*
 =================
@@ -562,7 +521,7 @@ pack_t *FS_LoadPackFile (char *packfile)
 
 			//-- Check if compression is used or any flags are set.
 			if ((temp.compression != 0) || (temp.flags != 0))
-				Com_Error (ERR_FATAL, "%s contains errors or is compressed", packfile);
+				Com_Error (ERR_FATAL, "%s contains errors or is compressed" );
 
 			//-- Get length of data area
 			info[i].filelen = temp.uncompressedSize;
@@ -710,6 +669,8 @@ void FS_AddGameDirectory (char *dir)
 
 	strcpy (fs_gamedir, dir);
 
+	Com_Printf("Adding game dir: %s\n", fs_gamedir );
+
 	//
 	// add the directory to the search path
 	//
@@ -740,6 +701,21 @@ void FS_AddGameDirectory (char *dir)
 	for ( i=0; i<100; i++ ) // Pooy - paks can now go up to 100
 	{
 		Com_sprintf (pakfile, sizeof(pakfile), "%s/pak%i.pk3", dir, i);
+		pak = FS_LoadPackFile (pakfile);
+		if (!pak)
+			continue;
+		search = Z_Malloc (sizeof(searchpath_t));
+		search->pack = pak;
+		search->next = fs_searchpaths;
+		fs_searchpaths = search;
+	}
+	//
+	// NeVo - pak3's!
+	// add any pk3 files in the format pak0.pk3 pak1.pk3, ...
+	//
+	for ( i=0; i<100; i++ ) // Pooy - paks can now go up to 100
+	{
+		Com_sprintf (pakfile, sizeof(pakfile), "%s/pak%i.zip", dir, i);
 		pak = FS_LoadPackFile (pakfile);
 		if (!pak)
 			continue;
@@ -787,7 +763,7 @@ void FS_AddGameDirectory (char *dir)
 				{
 					pak = FS_LoadPackFile (dirnames[i]);
 					if (!pak)
-					continue;
+						continue;
 					search = Z_Malloc (sizeof(searchpath_t));
 					search->pack = pak;
 					search->next = fs_searchpaths;
@@ -800,52 +776,6 @@ void FS_AddGameDirectory (char *dir)
 		//VoiD -E- *.pack support
 	}
 }
-
-
-/*
-================
-FS_AddGameDirectory
-
-Sets fs_gamedir, adds the directory to the head of the path,
-then loads and adds pak1.pak pak2.pak ...
-================
-*/
-#if 0
-void FS_AddGameDirectory (char *dir)
-{
-	int				i;
-	searchpath_t	*search;
-	pack_t			*pak;
-	char			pakfile[MAX_OSPATH];
-
-	strcpy (fs_gamedir, dir);
-
-	//
-	// add the directory to the search path
-	//
-	search = Z_Malloc (sizeof(searchpath_t));
-	strcpy (search->filename, dir);
-	search->next = fs_searchpaths;
-	fs_searchpaths = search;
-
-	//
-	// add any pak files in the format pak0.pak pak1.pak, ...
-	//
-	for (i=0; i<10; i++)
-	{
-		Com_sprintf (pakfile, sizeof(pakfile), "%s/pak%i.pak", dir, i);
-		pak = FS_LoadPackFile (pakfile);
-		if (!pak)
-			continue;
-		search = Z_Malloc (sizeof(searchpath_t));
-		search->pack = pak;
-		search->next = fs_searchpaths;
-		fs_searchpaths = search;
-	}
-
-
-}
-#endif /* 0 */
 
 /*
 ============
@@ -876,18 +806,18 @@ void FS_AddHomeAsGameDirectory (char *dir)
 	if(homedir)
 	{
 		int len = snprintf(gdir,sizeof(gdir),"%s/.ufoai/%s/", homedir, dir);
-		Com_Printf("using %s for writing\n",gdir);
- 		FS_CreatePath (gdir);
- 		FS_CreatePath (va("%s/save", gdir) );
+		Com_Printf(_("using %s for writing\n"),gdir);
+		FS_CreatePath (gdir);
+		FS_CreatePath (va("%s/save", gdir) );
 
- 		if ((len > 0) && (len < sizeof(gdir)) && (gdir[len-1] == '/'))
- 			gdir[len-1] = 0;
+		if ((len > 0) && (len < sizeof(gdir)) && (gdir[len-1] == '/'))
+			gdir[len-1] = 0;
 
 		strncpy(fs_gamedir,gdir,sizeof(fs_gamedir)-1);
- 		fs_gamedir[sizeof(fs_gamedir)-1] = 0;
+		fs_gamedir[sizeof(fs_gamedir)-1] = 0;
 
- 		FS_AddGameDirectory (gdir);
- 	}
+		FS_AddGameDirectory (gdir);
+	}
 #endif
 }
 
@@ -1196,7 +1126,7 @@ void FS_InitFilesystem (void)
 	FS_AddGameDirectory (va("%s/"BASEDIRNAME, fs_basedir->string) );
 
  	//
- 	// then add a '.quake2/baseq2' directory in home directory by default
+ 	// then add a '.ufoai/base' directory in home directory by default
  	//
  	FS_AddHomeAsGameDirectory(BASEDIRNAME);
 
@@ -1492,7 +1422,6 @@ void FS_GetMaps ( void )
 {
 	char	name[MAX_OSPATH];
 	int	len;
-// 	char	*entry;
 	char	*found;
 	char	*path = NULL;
 	char	*baseMapName = NULL;

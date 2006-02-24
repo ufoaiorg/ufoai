@@ -205,7 +205,6 @@ void CL_ChangeSkinCmd( void )
 	}
 }
 
-
 /*
 ======================
 CL_TeamCommentsCmd
@@ -266,11 +265,22 @@ void CL_ItemDescription( int item )
 	// set description text
 	if ( ! od->researchNeeded || od->researchStatus == RS_FINISH )
 	{
-		snprintf( itemText, MAX_MENUTEXTLEN, va( _("Primary:\t%s\nSecondary:\t%s\nDamage:\t%i / %i\nTime units:\t%i / %i\nRange:\t%1.1f / %1.1f\nSpreads:\t%1.1f / %1.1f\nAmmo:\t%i\n"),
-			od->fd[0].name, od->fd[1].name, (int)(od->fd[0].damage[0] * od->fd[0].shots + od->fd[0].spldmg[0]), (int)(od->fd[1].damage[0] * od->fd[1].shots + od->fd[0].spldmg[0]),
-			(od->fd[0].time), (od->fd[1].time), (od->fd[0].range / 32.0), (od->fd[1].range / 32.0),
-			(od->fd[0].spread[0] + od->fd[0].spread[1])/2, (od->fd[1].spread[0] + od->fd[1].spread[1])/2, (int)(od->ammo)
-		) );
+		if ( od->weapon )
+		{
+			Com_sprintf( itemText, MAX_MENUTEXTLEN, va( _("Primary:\t%s\nSecondary:\t%s\nDamage:\t%i / %i\nTime units:\t%i / %i\nRange:\t%1.1f / %1.1f\nSpreads:\t%1.1f / %1.1f\nAmmo:\t%i\n"),
+				od->fd[0].name, od->fd[1].name, (int)(od->fd[0].damage[0] * od->fd[0].shots + od->fd[0].spldmg[0]), (int)(od->fd[1].damage[0] * od->fd[1].shots + od->fd[0].spldmg[0]),
+				(od->fd[0].time), (od->fd[1].time), (od->fd[0].range / 32.0), (od->fd[1].range / 32.0),
+				(od->fd[0].spread[0] + od->fd[0].spread[1])/2, (od->fd[1].spread[0] + od->fd[1].spread[1])/2, (int)(od->ammo)
+			) );
+		}
+		// just an item
+		// only primary definition
+		else
+		{
+			Com_sprintf( itemText, MAX_MENUTEXTLEN, va( _("Action:\t%s\nTime units:\t%i\nRange:\t%1.1f\n"),
+				od->fd[0].name, od->fd[0].time, (od->fd[0].range / 32.0)
+			) );
+		}
 		menuText[TEXT_STANDARD] = itemText;
 	}
 	else if ( od->researchNeeded )
@@ -278,7 +288,7 @@ void CL_ItemDescription( int item )
 		sprintf( itemText, _("Unknown - need to research this") );
 		menuText[TEXT_STANDARD] = itemText;
 	}
-//	else menuText[TEXT_STANDARD] = NULL;
+	else menuText[TEXT_STANDARD] = NULL;
 }
 
 
@@ -348,7 +358,6 @@ item_t CL_AddWeaponAmmo( equipDef_t *ed, int type )
 	return item;
 }
 
-
 /*
 ======================
 CL_CheckInventory
@@ -384,7 +393,6 @@ void CL_CheckInventory( equipDef_t *equip )
 	}
 }
 
-
 /*
 ======================
 CL_CleanTempInventory
@@ -400,7 +408,6 @@ void CL_CleanTempInventory( void )
 			if ( k == csi.idEquip ) teamInv[i].c[k] = NULL;
 			else if ( csi.ids[k].temp ) Com_EmptyContainer( &teamInv[i], k );
 }
-
 
 /*
 ======================
@@ -514,7 +521,6 @@ void CL_EquipTypeCmd( void )
 	equipType = num;
 	if ( menuInventory ) menuInventory->c[csi.idEquip] = equipment.c[num];
 }
-
 
 /*
 ======================
@@ -702,6 +708,8 @@ void CL_SaveTeam( char *filename )
 	FILE	*f;
 	int		res;
 
+	// create the save dir - if needed
+	FS_CreatePath( filename );
 	// open file
 	f = fopen( filename, "wb" );
 	if ( !f )
@@ -767,7 +775,6 @@ void CL_SaveTeamSlotCmd( void )
 	CL_SaveTeam( filename );
 }
 
-
 /*
 ======================
 CL_LoadTeamMember
@@ -792,7 +799,7 @@ void CL_LoadTeamMember( sizebuf_t *sb, character_t *chr )
 
 	// new attributes
 	for (i = 0; i < SKILL_NUM_TYPES; i++)
-	  chr->skills[i] = MSG_ReadByte( sb );
+		chr->skills[i] = MSG_ReadByte( sb );
 
 	// inventory
 	Com_DestroyInventory( chr->inv );
@@ -1004,7 +1011,7 @@ void CL_SendTeamInfo( sizebuf_t *buf, character_t *team, int num )
 
 		// even new attributes
 		for ( j = 0; j < SKILL_NUM_TYPES; j++ )
-		  MSG_WriteByte( buf, chr->skills[j] );
+			MSG_WriteByte( buf, chr->skills[j] );
 
 		// equipment
 		for ( j = 0; j < csi.numIDs; j++ )

@@ -283,7 +283,7 @@ void CL_ActorUpdateCVars( void )
 				if ( selWeapon && selFD )
 				{
 
-					snprintf( infoText, MAX_MENUTEXTLEN,
+					Com_sprintf( infoText, MAX_MENUTEXTLEN,
 							"%s\n%s (%i) [%i%%] %i\n",
 							_(csi.ods[selWeapon->item.t].name),
 							_(selFD->name), selFD->ammo, selToHit,
@@ -292,7 +292,7 @@ void CL_ActorUpdateCVars( void )
 				}
 				else if ( selWeapon )
 				{
-					snprintf( infoText, MAX_MENUTEXTLEN,
+					Com_sprintf( infoText, MAX_MENUTEXTLEN,
 							"%s\n(empty)\n",
 							_(csi.ods[selWeapon->item.t].name) );
 				}
@@ -306,12 +306,12 @@ void CL_ActorUpdateCVars( void )
  					actorMoveLength = 0xFF;
 				if ( actorMoveLength < 0xFF )
 				{
-					snprintf( infoText, MAX_MENUTEXTLEN, _("Health\t%i\nMove\t%i\n"), selActor->HP, actorMoveLength );
+					Com_sprintf( infoText, MAX_MENUTEXTLEN, _("Health\t%i\nMove\t%i\n"), selActor->HP, actorMoveLength );
 					CL_RefreshWeaponButtons( selActor->TU - actorMoveLength );
 				}
 				else
 				{
-					snprintf( infoText, MAX_MENUTEXTLEN, _("Health\t%i\n"), selActor->HP );
+					Com_sprintf( infoText, MAX_MENUTEXTLEN, _("Health\t%i\n"), selActor->HP );
 					CL_RefreshWeaponButtons( selActor->TU );
 				}
 				time = actorMoveLength;
@@ -602,7 +602,7 @@ int CL_CheckAction( void )
 	if ( !selActor )
 	{
 		Com_Printf( _("Nobody selected.\n") );
-		snprintf( infoText, MAX_MENUTEXTLEN, _("Nobody selected\n") );
+		Com_sprintf( infoText, MAX_MENUTEXTLEN, _("Nobody selected\n") );
 		return false;
 	}
 
@@ -615,7 +615,7 @@ int CL_CheckAction( void )
 	if ( cls.team != cl.actTeam )
 	{
 		Com_Printf( _("This isn't your round.\n") );
-		snprintf( infoText, MAX_MENUTEXTLEN, _("This isn't your round\n") );
+		Com_sprintf( infoText, MAX_MENUTEXTLEN, _("This isn't your round\n") );
 		return false;
 	}
 

@@ -6,6 +6,7 @@
 byte researchList[MAX_RESEARCHLIST];
 int researchListLength;
 int globalResearchNum;
+char infoResearchText[MAX_MENUTEXTLEN];
 
 /*
 Note:
@@ -77,30 +78,39 @@ MN_ResearchType
 void CL_ResearchType ( void )
 {
 	objDef_t *od;
-	int i, j;
-
+	int i, j = 0;
+	Com_Printf("CL_ResearchType()\n");
 	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
 
 	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
 		if ( od->researchNeeded && od->researchStatus != RS_FINISH )
 		{
-			Cvar_Set( va("mn_item%i", j), od->name );
+			Cvar_Set( va("mn_researchitem%i", j), od->name );
 			// TODO: the price must differ from buying the weapon
-			Cvar_Set( va("mn_price%i", j), va( "%i $", od->price ) );
+			Cvar_Set( va("mn_researchprice%i", j), va( "%i $", od->price ) );
+			researchList[j] = i;
+			j++;
+		}
+	for ( i = 0, j = 0, od = csi.eds; i < csi.numEDs; i++, od++ )
+		if ( od->researchNeeded && od->researchStatus != RS_FINISH )
+		{
+			Cvar_Set( va("mn_researchitem%i", j), od->name );
+			// TODO: the price must differ from buying the weapon
+			Cvar_Set( va("mn_researchprice%i", j), va( "%i $", od->price ) );
 			researchList[j] = i;
 			j++;
 		}
 
 	// nothing to research here
 	if ( ! j )
-		Cbuf_AddText("pop");
+		Cbuf_AddText("mn_pop");
 
 	researchListLength = j;
 
 	for ( ; j < 28; j++ )
 	{
-		Cvar_Set( va( "mn_item%i", j ), "" );
-		Cvar_Set( va( "mn_price%i", j ), "" );
+		Cvar_Set( va( "mn_researchitem%i", j ), "" );
+		Cvar_Set( va( "mn_researchprice%i", j ), "" );
 	}
 
 	// select first item that needs to be researched
@@ -110,22 +120,20 @@ void CL_ResearchType ( void )
 		CL_ItemDescription( researchList[0] );
 	} else {
 		// reset description
-		Cvar_Set( "mn_itemname", "" );
-		Cvar_Set( "mn_item", "" );
-		Cvar_Set( "mn_weapon", "" );
-		Cvar_Set( "mn_ammo", "" );
+		Cvar_Set( "mn_researchitemname", "" );
+		Cvar_Set( "mn_researchitem", "" );
+		Cvar_Set( "mn_researchweapon", "" );
+		Cvar_Set( "mn_researchammo", "" );
 		menuText[TEXT_STANDARD] = NULL;
 	}
 }
 
 /*======================
 CL_CheckResearchStatus
-
-TODO: This needs to be called once a day/hour??
 ======================*/
 void CL_CheckResearchStatus ( void )
 {
-	int i;
+	int i, newResearch = 0;
 	objDef_t *od;
 
 	if ( ! researchListLength )
@@ -135,12 +143,20 @@ void CL_CheckResearchStatus ( void )
 	{
 		od = &csi.ods[i];
 		// FIXME: Make this depending on how many scientists are hired
-		if ( od->researchStatus == RS_RUNNING && 1 )
+		if ( od->researchStatus == RS_RUNNING )
 		{
+			if ( ! newResearch )
+				Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("Research of %s finished\n"), od->name );
+			else
+				Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("%i researches finished\n"), newResearch+1 );
 			// leave all other flags - maybe useful for statistic?
 			od->researchStatus = RS_FINISH;
+			newResearch++;
 		}
 	}
+
+	if ( newResearch )
+		MN_Popup( _("Research finished"), infoResearchText );
 }
 
 /*======================

@@ -153,9 +153,6 @@ char *ED_NewString (char *string)
 	return newb;
 }
 
-
-
-
 /*
 ===============
 ED_ParseField
@@ -272,7 +269,6 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 
 	return data;
 }
-
 
 /*
 ==============

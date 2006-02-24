@@ -355,6 +355,18 @@ float MN_GetReferenceFloat( menu_t *menu, void *ref )
 	}
 }
 
+/*
+MN_Popup
+
+Popup in geoscape
+*/
+void MN_Popup (char* title, char* text)
+{
+	menuText[TEXT_POPUP] = title;
+	menuText[TEXT_POPUP_INFO] = text;
+	Cbuf_AddText("game_timestop; mn_push popup\n");
+	Cbuf_Execute();
+}
 
 /*
 =================
@@ -2395,6 +2407,7 @@ MN_ParseMenu
 void MN_ParseMenu( char *name, char **text )
 {
 	menu_t	*menu;
+	menuNode_t	*node;
 	char	*token;
 	int		i;
 
@@ -2432,6 +2445,11 @@ void MN_ParseMenu( char *name, char **text )
 		numMenus--;
 		return;
 	}
+
+	for ( i = 0; i < numMenus; i++ )
+		for ( node = menus[i].firstNode; node; node = node->next )
+			if ( node->num >= MAX_MENUTEXTS )
+				Sys_Error( _("Error in menu %s - max menu num exeeded (%i)"), menus[i].name, MAX_MENUTEXTS );
 
 //	Com_Printf( "Nodes: %4i Menu data: %i\n", numNodes, curadata - adata );
 }

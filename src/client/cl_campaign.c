@@ -1302,10 +1302,9 @@ void CL_GameGo( void )
 	if ( CL_MapIsNight( mis->pos ) ) timeChar = 'n';
 	else timeChar = 'd';
 
-	// TODO: Check if there are bases???
-	//       Draw the base attack on worldmap
+	// TODO: Draw the base attack on worldmap
 	//       use mis->pos for this, too
-	if ( mis->map[0] == "." )
+	if ( mis->map[0] == "." && B_GetCount() > 0 )
 	{
 		Cbuf_AddText( va("base_assemble_rand") );
 		return;

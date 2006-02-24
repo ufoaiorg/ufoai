@@ -248,7 +248,7 @@ void *Sys_GetGameAPI (void *parms)
 		path = FS_NextPath (path);
 		if (!path)
 			return NULL;		// couldn't find one anywhere
-		snprintf (name, MAX_OSPATH, "%s/%s/game.so", curpath, path);
+		Com_sprintf (name, MAX_OSPATH, "%s/%s/game.so", curpath, path);
 		game_library = dlopen (name, RTLD_LAZY );
 		if (game_library)
 		{

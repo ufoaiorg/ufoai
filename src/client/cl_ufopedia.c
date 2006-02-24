@@ -89,7 +89,7 @@ void UP_OpenWith ( char *name )
 MN_FindEntry_f
 =================
 */
-void MN_FindEntry_f ()
+void MN_FindEntry_f ( void )
 {
 	char *name;
 	pediaEntry_t *entry;
