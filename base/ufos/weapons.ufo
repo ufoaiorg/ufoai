@@ -1151,23 +1151,9 @@ item irgoogles
 	ammo		2
 	price		8700
 	buytype		2
+	researchNeeded	1
 
 	primary
-	{
-		name	"Activate"
-		projtl	null
-		impact	null
-		hitbody null
-		firesnd	misc/irgoogles01.wav
-		speed	0
-		range	55
-		shots	1
-		ammo	1
-		time	20
-		damage	"0 0"
-		irgoogles	true
-	}
-	secondary
 	{
 		name	"Activate"
 		projtl	null

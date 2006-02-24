@@ -327,3 +327,39 @@ menu popup_newbase
 		}
 	}
 }
+
+menu popup
+{
+	zone popup
+	{
+		invis true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos	"256 256"
+	}
+
+	pic bt_edit
+	{
+		image   hud/close
+		pos     "722 284"
+		click
+		{
+			cmd "mn_pop"
+		}
+	}
+
+	text title
+	{
+		pos    "440 286"
+		align	cc
+		num	7
+	}
+
+	text popup_text
+	{
+		pos	"300 340"
+		num	8
+	}
+}

@@ -295,6 +295,7 @@ base main
 production tech_p
 {
 	title		"Technologie"
+	menu		research
 	amount		100
 }
 

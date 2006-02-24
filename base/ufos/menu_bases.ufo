@@ -195,6 +195,4 @@ menu bases
 	{
 		cmd base_init;
 	}
-
-
 }

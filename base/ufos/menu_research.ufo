@@ -106,89 +106,89 @@ menu research
 	confunc researchselect26 { research_clear *txt_item26 color "1 1 1 1" }
 	confunc researchselect27 { research_clear *txt_item27 color "1 1 1 1" }
 
-	string txt_item0	{ string "*cvar mn_item0"		pos "50 40"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 0" } }
-	string txt_price0	{ string "*cvar mn_price0"		pos "540 40"	color "0 .78 0 1"	align ur }
+	string txt_item0	{ string "*cvar mn_researchitem0"		pos "50 40"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 0" } }
+	string txt_price0	{ string "*cvar mn_researchprice0"		pos "540 40"	color "0 .78 0 1"	align ur }
 
-	string txt_item1	{ string "*cvar mn_item1"		pos "50 65"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 1" } }
-	string txt_price1	{ string "*cvar mn_price1"		pos "540 65"	color "0 .78 0 1"	align ur }
+	string txt_item1	{ string "*cvar mn_researchitem1"		pos "50 65"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 1" } }
+	string txt_price1	{ string "*cvar mn_researchprice1"		pos "540 65"	color "0 .78 0 1"	align ur }
 
-	string txt_item2	{ string "*cvar mn_item2"		pos "50 90"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 2" } }
-	string txt_price2	{ string "*cvar mn_price2"		pos "540 90"	color "0 .78 0 1"	align ur }
+	string txt_item2	{ string "*cvar mn_researchitem2"		pos "50 90"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 2" } }
+	string txt_price2	{ string "*cvar mn_researchprice2"		pos "540 90"	color "0 .78 0 1"	align ur }
 
-	string txt_item3	{ string "*cvar mn_item3"		pos "50 115"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 3" } }
-	string txt_price3	{ string "*cvar mn_price3"		pos "540 115"	color "0 .78 0 1"	align ur }
+	string txt_item3	{ string "*cvar mn_researchitem3"		pos "50 115"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 3" } }
+	string txt_price3	{ string "*cvar mn_researchprice3"		pos "540 115"	color "0 .78 0 1"	align ur }
 
-	string txt_item4	{ string "*cvar mn_item4"		pos "50 140"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 4" } }
-	string txt_price4	{ string "*cvar mn_price4"		pos "540 140"	color "0 .78 0 1"	align ur }
+	string txt_item4	{ string "*cvar mn_researchitem4"		pos "50 140"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 4" } }
+	string txt_price4	{ string "*cvar mn_researchprice4"		pos "540 140"	color "0 .78 0 1"	align ur }
 
-	string txt_item5	{ string "*cvar mn_item5"		pos "50 165"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 5" } }
-	string txt_price5	{ string "*cvar mn_price5"		pos "540 165"	color "0 .78 0 1"	align ur }
+	string txt_item5	{ string "*cvar mn_researchitem5"		pos "50 165"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 5" } }
+	string txt_price5	{ string "*cvar mn_researchprice5"		pos "540 165"	color "0 .78 0 1"	align ur }
 
-	string txt_item6	{ string "*cvar mn_item6"		pos "50 190"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 6" } }
-	string txt_price6	{ string "*cvar mn_price6"		pos "540 190"	color "0 .78 0 1"	align ur }
+	string txt_item6	{ string "*cvar mn_researchitem6"		pos "50 190"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 6" } }
+	string txt_price6	{ string "*cvar mn_researchprice6"		pos "540 190"	color "0 .78 0 1"	align ur }
 
-	string txt_item7	{ string "*cvar mn_item7"		pos "50 215"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 7" } }
-	string txt_price7	{ string "*cvar mn_price7"		pos "540 215"	color "0 .78 0 1"	align ur }
+	string txt_item7	{ string "*cvar mn_researchitem7"		pos "50 215"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 7" } }
+	string txt_price7	{ string "*cvar mn_researchprice7"		pos "540 215"	color "0 .78 0 1"	align ur }
 
-	string txt_item8	{ string "*cvar mn_item8"		pos "50 240"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 8" } }
-	string txt_price8	{ string "*cvar mn_price8"		pos "540 240"	color "0 .78 0 1"	align ur }
+	string txt_item8	{ string "*cvar mn_researchitem8"		pos "50 240"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 8" } }
+	string txt_price8	{ string "*cvar mn_researchprice8"		pos "540 240"	color "0 .78 0 1"	align ur }
 
-	string txt_item9	{ string "*cvar mn_item9"		pos "50 265"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 9" } }
-	string txt_price9	{ string "*cvar mn_price9"		pos "540 265"	color "0 .78 0 1"	align ur }
+	string txt_item9	{ string "*cvar mn_researchitem9"		pos "50 265"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 9" } }
+	string txt_price9	{ string "*cvar mn_researchprice9"		pos "540 265"	color "0 .78 0 1"	align ur }
 
-	string txt_item10	{ string "*cvar mn_item10"		pos "50 290"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 10" } }
-	string txt_price10	{ string "*cvar mn_price10"		pos "540 290"	color "0 .78 0 1"	align ur }
+	string txt_item10	{ string "*cvar mn_researchitem10"		pos "50 290"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 10" } }
+	string txt_price10	{ string "*cvar mn_researchprice10"		pos "540 290"	color "0 .78 0 1"	align ur }
 
-	string txt_item11	{ string "*cvar mn_item11"		pos "50 315"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 11" } }
-	string txt_price11	{ string "*cvar mn_price11"		pos "540 315"	color "0 .78 0 1"	align ur }
+	string txt_item11	{ string "*cvar mn_researchitem11"		pos "50 315"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 11" } }
+	string txt_price11	{ string "*cvar mn_researchprice11"		pos "540 315"	color "0 .78 0 1"	align ur }
 
-	string txt_item12	{ string "*cvar mn_item12"		pos "50 340"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 12" } }
-	string txt_price12	{ string "*cvar mn_price12"		pos "540 340"	color "0 .78 0 1"	align ur }
+	string txt_item12	{ string "*cvar mn_researchitem12"		pos "50 340"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 12" } }
+	string txt_price12	{ string "*cvar mn_researchprice12"		pos "540 340"	color "0 .78 0 1"	align ur }
 
-	string txt_item13	{ string "*cvar mn_item13"		pos "50 365"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 13" } }
-	string txt_price13	{ string "*cvar mn_price13"		pos "540 365"	color "0 .78 0 1"	align ur }
+	string txt_item13	{ string "*cvar mn_researchitem13"		pos "50 365"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 13" } }
+	string txt_price13	{ string "*cvar mn_researchprice13"		pos "540 365"	color "0 .78 0 1"	align ur }
 
-	string txt_item14	{ string "*cvar mn_item14"		pos "50 390"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 14" } }
-	string txt_price14	{ string "*cvar mn_price14"		pos "540 390"	color "0 .78 0 1"	align ur }
+	string txt_item14	{ string "*cvar mn_researchitem14"		pos "50 390"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 14" } }
+	string txt_price14	{ string "*cvar mn_researchprice14"		pos "540 390"	color "0 .78 0 1"	align ur }
 
-	string txt_item15	{ string "*cvar mn_item15"		pos "50 415"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 15" } }
-	string txt_price15	{ string "*cvar mn_price15"		pos "540 415"	color "0 .78 0 1"	align ur }
+	string txt_item15	{ string "*cvar mn_researchitem15"		pos "50 415"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 15" } }
+	string txt_price15	{ string "*cvar mn_researchprice15"		pos "540 415"	color "0 .78 0 1"	align ur }
 
-	string txt_item16	{ string "*cvar mn_item16"		pos "50 440"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 16" } }
-	string txt_price16	{ string "*cvar mn_price16"		pos "540 440"	color "0 .78 0 1"	align ur }
+	string txt_item16	{ string "*cvar mn_researchitem16"		pos "50 440"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 16" } }
+	string txt_price16	{ string "*cvar mn_researchprice16"		pos "540 440"	color "0 .78 0 1"	align ur }
 
-	string txt_item17	{ string "*cvar mn_item17"		pos "50 465"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 17" } }
-	string txt_price17	{ string "*cvar mn_price17"		pos "540 465"	color "0 .78 0 1"	align ur }
+	string txt_item17	{ string "*cvar mn_researchitem17"		pos "50 465"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 17" } }
+	string txt_price17	{ string "*cvar mn_researchprice17"		pos "540 465"	color "0 .78 0 1"	align ur }
 
-	string txt_item18	{ string "*cvar mn_item18"		pos "50 490"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 18" } }
-	string txt_price18	{ string "*cvar mn_price18"		pos "540 490"	color "0 .78 0 1"	align ur }
+	string txt_item18	{ string "*cvar mn_researchitem18"		pos "50 490"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 18" } }
+	string txt_price18	{ string "*cvar mn_researchprice18"		pos "540 490"	color "0 .78 0 1"	align ur }
 
-	string txt_item19	{ string "*cvar mn_item19"		pos "50 515"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 19" } }
-	string txt_price19	{ string "*cvar mn_price19"		pos "540 515"	color "0 .78 0 1"	align ur }
+	string txt_item19	{ string "*cvar mn_researchitem19"		pos "50 515"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 19" } }
+	string txt_price19	{ string "*cvar mn_researchprice19"		pos "540 515"	color "0 .78 0 1"	align ur }
 
-	string txt_item20	{ string "*cvar mn_item20"		pos "50 540"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 20" } }
-	string txt_price20	{ string "*cvar mn_price20"		pos "540 540"	color "0 .78 0 1"	align ur }
+	string txt_item20	{ string "*cvar mn_researchitem20"		pos "50 540"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 20" } }
+	string txt_price20	{ string "*cvar mn_researchprice20"		pos "540 540"	color "0 .78 0 1"	align ur }
 
-	string txt_item21	{ string "*cvar mn_item21"		pos "50 565"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 21" } }
-	string txt_price21	{ string "*cvar mn_price21"		pos "540 565"	color "0 .78 0 1"	align ur }
+	string txt_item21	{ string "*cvar mn_researchitem21"		pos "50 565"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 21" } }
+	string txt_price21	{ string "*cvar mn_researchprice21"		pos "540 565"	color "0 .78 0 1"	align ur }
 
-	string txt_item22	{ string "*cvar mn_item22"		pos "50 590"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 22" } }
-	string txt_price22	{ string "*cvar mn_price22"		pos "540 590"	color "0 .78 0 1"	align ur }
+	string txt_item22	{ string "*cvar mn_researchitem22"		pos "50 590"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 22" } }
+	string txt_price22	{ string "*cvar mn_researchprice22"		pos "540 590"	color "0 .78 0 1"	align ur }
 
-	string txt_item23	{ string "*cvar mn_item23"		pos "50 615"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 23" } }
-	string txt_price23	{ string "*cvar mn_price23"		pos "540 615"	color "0 .78 0 1"	align ur }
+	string txt_item23	{ string "*cvar mn_researchitem23"		pos "50 615"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 23" } }
+	string txt_price23	{ string "*cvar mn_researchprice23"		pos "540 615"	color "0 .78 0 1"	align ur }
 
-	string txt_item24	{ string "*cvar mn_item24"		pos "50 640"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 24" } }
-	string txt_price24	{ string "*cvar mn_price24"		pos "540 640"	color "0 .78 0 1"	align ur }
+	string txt_item24	{ string "*cvar mn_researchitem24"		pos "50 640"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 24" } }
+	string txt_price24	{ string "*cvar mn_researchprice24"		pos "540 640"	color "0 .78 0 1"	align ur }
 
-	string txt_item25	{ string "*cvar mn_item25"		pos "50 665"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 25" } }
-	string txt_price25	{ string "*cvar mn_price25"		pos "540 665"	color "0 .78 0 1"	align ur }
+	string txt_item25	{ string "*cvar mn_researchitem25"		pos "50 665"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 25" } }
+	string txt_price25	{ string "*cvar mn_researchprice25"		pos "540 665"	color "0 .78 0 1"	align ur }
 
-	string txt_item26	{ string "*cvar mn_item26"		pos "50 690"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 26" } }
-	string txt_price26	{ string "*cvar mn_price26"		pos "540 690"	color "0 .78 0 1"	align ur }
+	string txt_item26	{ string "*cvar mn_researchitem26"		pos "50 690"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 26" } }
+	string txt_price26	{ string "*cvar mn_researchprice26"		pos "540 690"	color "0 .78 0 1"	align ur }
 
-	string txt_item27	{ string "*cvar mn_item27"		pos "50 715"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 27" } }
-	string txt_price27	{ string "*cvar mn_price27"		pos "540 715"	color "0 .78 0 1"	align ur }
+	string txt_item27	{ string "*cvar mn_researchitem27"		pos "50 715"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 27" } }
+	string txt_price27	{ string "*cvar mn_researchprice27"		pos "540 715"	color "0 .78 0 1"	align ur }
 
 	// ==================
 	// credits
@@ -242,28 +242,28 @@ menu research
 	// ==================
 	string itemname
 	{
-		string	"*cvar mn_itemname"
+		string	"*cvar mn_researchitemname"
 		pos		"793 205"
 		align	uc
 	}
 
 	item itemmodel
 	{
-		string	"*cvar mn_item"
+		string	"*cvar mn_researchitem"
 		pos		"793 288"
 		scale	"7 7 7"
 	}
 
 	item weaponmodel
 	{
-		string	"*cvar mn_weapon"
+		string	"*cvar mn_researchweapon"
 		pos		"750 288"
 		scale	"7 7 7"
 	}
 
 	item ammomodel
 	{
-		string	"*cvar mn_ammo"
+		string	"*cvar mn_researchammo"
 		pos		"930 288"
 		scale	"7 7 7"
 	}
@@ -273,6 +273,7 @@ menu research
 		pos		"630 357"
 		size	"326 200"
 		format	"20 0"
+		num	6
 	}
 
 	// ==================
