@@ -462,7 +462,8 @@ void SV_ExecuteClientMessage (client_t *cl)
 	{
 		if (net_message.readcount > net_message.cursize)
 		{
-			Com_Printf ("SV_ReadClientMessage: badread\n");
+			Com_Printf ("SV_ExecuteClientMessage: badread, %d > %d\n",
+				    net_message.readcount, net_message.cursize);
 			SV_DropClient (cl);
 			return;
 		}	
@@ -474,7 +475,7 @@ void SV_ExecuteClientMessage (client_t *cl)
 		switch (c)
 		{
 		default:
-			Com_Printf ("SV_ReadClientMessage: unknown command char\n");
+			Com_Printf ("SV_ExecuteClientMessage: unknown command char '%d'\n", c);
 			SV_DropClient (cl);
 			return;
 						
