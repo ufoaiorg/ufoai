@@ -103,6 +103,13 @@ value_t valid_vars[] =
 	//how much days will it take to construct the building?
 	{ "build_time",	V_INT,		BSFS( buildTime ) },
 
+	//event handler functions
+	{ "onconstruct",	V_STRING,	BSFS( onConstruct ) },
+	{ "onattack",	V_STRING,	BSFS( onAttack ) },
+	{ "ondestroy",	V_STRING,	BSFS( onDestroy ) },
+	{ "onupgrade",	V_STRING,	BSFS( onUpgrade ) },
+	{ "onrepair",	V_STRING,	BSFS( onRepair ) },
+
 	//how many workers should there for max and for min
 	{ "max_workers",V_INT,	BSFS( maxWorkers ) },
 	{ "min_workers",V_INT,	BSFS( minWorkers ) },
@@ -261,6 +268,7 @@ void MN_RemoveBuilding( void )
 	{
 		ccs.credits += baseCurrent->buildingCurrent->fixCosts;
 		baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] = B_NOT_SET;
+// 		baseCurrent->map[x][y][baseCurrent->baseLevel] = -1;
 		MN_BuildingStatus();
 	}
 }
@@ -332,6 +340,7 @@ void MN_SetBuildingByClick ( int x, int y )
 
 			if ( baseCurrent->baseLevel >= 1 )
 			{
+				// a building on the upper level needs a building on the lower level
 				if ( baseCurrent->map[x][y][baseCurrent->baseLevel-1] == -1 )
 				{
 					Com_Printf( _("No ground where i can place building upon\n"), x, y);
@@ -1347,6 +1356,12 @@ void MN_BaseInit( void )
 	if ( ! baseCurrent->baseLevel )
 		baseCurrent->baseLevel = 0;
 
+	if ( baseID == 0 )
+	{
+
+	}
+
+
 	// set base view
 	ccs.basecenter[0] = 0.2;
 	ccs.basecenter[1] = 0.2;
@@ -1496,12 +1511,16 @@ void MN_SelectBase( void )
 /*
 =================
 MN_BuildBase
+
+TODO: First base needs to be constructed automatically
 =================
 */
 void MN_BuildBase( void )
 {
+	assert(baseCurrent);
 	baseCurrent->founded = true;
 	mapAction = MA_NONE;
+
 	strncpy( baseCurrent->title, Cvar_VariableString( "mn_basename" ), MAX_VAR );
 	Cbuf_AddText( "mn_push bases\n" );
 }
@@ -1526,6 +1545,12 @@ void B_BaseAttack ( void )
 
 	if ( whichBaseID < MAX_BASES )
 		bmBases[whichBaseID].baseStatus = BASE_UNDER_ATTACK;
+
+#if 0	//TODO: run eventhandler for each building in base
+	if ( b->onAttack )
+		Cbuf_AddText( b->onAttack );
+#endif
+
 }
 
 /*
@@ -1771,6 +1796,10 @@ void CL_UpdateBaseData( void )
 				if ( b->timeStart && ( b->timeStart + b->buildTime ) <= ccs.date.day )
 				{
 					b->buildingStatus[k] = B_WORKING_100;
+
+					if ( b->onConstruct )
+						Cbuf_AddText( b->onConstruct );
+
 					if ( b->minWorkers )
 					{
 						Cbuf_AddText( va( "add_workers %i\n", b->minWorkers ) );

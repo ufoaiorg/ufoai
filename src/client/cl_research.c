@@ -33,17 +33,16 @@ void CL_ResearchSelectCmd( void )
 		return;
 	}
 
+	// call researchselect function from menu_research.ufo
 	Cbuf_AddText( va( "researchselect%i\n", num ) );
-	CL_ItemDescription( researchList[num] );
-	globalResearchNum = num;
-}
+	globalResearchNum = researchList[num];
 
 /*======================
-CL_ResearchStart
+R_ResearchStart
 
 TODO: Check if laboratory is available
 ======================*/
-void CL_ResearchStart ( void )
+void R_ResearchStart ( void )
 {
 	objDef_t *od;
 
@@ -53,14 +52,15 @@ void CL_ResearchStart ( void )
 
 	od = &csi.ods[globalResearchNum];
 	od->researchStatus = RS_RUNNING;
+	R_UpdateData();
 }
 
 /*======================
-CL_ResearchStop
+R_ResearchStop
 
 TODO: Check if laboratory is available
 ======================*/
-void CL_ResearchStop ( void )
+void R_ResearchStop ( void )
 {
 	objDef_t *od;
 
@@ -70,48 +70,28 @@ void CL_ResearchStop ( void )
 
 	od = &csi.ods[globalResearchNum];
 	od->researchStatus = RS_NONE;
+	R_UpdateData();
 }
 
 /*======================
-MN_ResearchType
+R_UpdateData
 ======================*/
-void CL_ResearchType ( void )
+void R_UpdateData ( void )
 {
 	objDef_t *od;
-	int i, j = 0;
-	Com_Printf("CL_ResearchType()\n");
-	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
+	int i, j;
 
 	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
-		if ( od->researchNeeded && od->researchStatus != RS_FINISH )
+		if ( od->researchNeeded && od->researchStatus == RS_NONE )
 		{
 			Cvar_Set( va("mn_researchitem%i", j), od->name );
-			// TODO: the price must differ from buying the weapon
-			Cvar_Set( va("mn_researchprice%i", j), va( "%i $", od->price ) );
 			researchList[j] = i;
 			j++;
 		}
-	for ( i = 0, j = 0, od = csi.eds; i < csi.numEDs; i++, od++ )
-		if ( od->researchNeeded && od->researchStatus != RS_FINISH )
-		{
-			Cvar_Set( va("mn_researchitem%i", j), od->name );
-			// TODO: the price must differ from buying the weapon
-			Cvar_Set( va("mn_researchprice%i", j), va( "%i $", od->price ) );
-			researchList[j] = i;
-			j++;
-		}
-
-	// nothing to research here
-	if ( ! j )
-		Cbuf_AddText("mn_pop");
-
 	researchListLength = j;
 
 	for ( ; j < 28; j++ )
-	{
 		Cvar_Set( va( "mn_researchitem%i", j ), "" );
-		Cvar_Set( va( "mn_researchprice%i", j ), "" );
-	}
 
 	// select first item that needs to be researched
 	if ( researchListLength )
@@ -129,6 +109,21 @@ void CL_ResearchType ( void )
 }
 
 /*======================
+MN_ResearchType
+======================*/
+void CL_ResearchType ( void )
+{
+	int i;
+
+	// get the list
+	R_UpdateData();
+
+	// nothing to research here
+	if ( ! researchListLength )
+		Cbuf_AddText("mn_pop");
+}
+
+/*======================
 CL_CheckResearchStatus
 ======================*/
 void CL_CheckResearchStatus ( void )
@@ -141,22 +136,32 @@ void CL_CheckResearchStatus ( void )
 
 	for ( i = 0; i < researchListLength; i++ )
 	{
-		od = &csi.ods[i];
-		// FIXME: Make this depending on how many scientists are hired
+		od = &csi.ods[researchList[i]];
 		if ( od->researchStatus == RS_RUNNING )
 		{
-			if ( ! newResearch )
-				Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("Research of %s finished\n"), od->name );
+			if ( od->researchTime <= 0 )
+			{
+				if ( ! newResearch )
+					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("Research of %s finished\n"), od->name );
+				else
+					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("%i researches finished\n"), newResearch+1 );
+				// leave all other flags - maybe useful for statistic?
+				od->researchStatus = RS_FINISH;
+				newResearch++;
+			}
 			else
-				Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("%i researches finished\n"), newResearch+1 );
-			// leave all other flags - maybe useful for statistic?
-			od->researchStatus = RS_FINISH;
-			newResearch++;
+			{
+				// FIXME: Make this depending on how many scientists are hired
+				od->researchTime--;
+			}
 		}
 	}
 
 	if ( newResearch )
+	{
 		MN_Popup( _("Research finished"), infoResearchText );
+		CL_ResearchType();
+	}
 }
 
 /*======================
@@ -164,7 +169,7 @@ MN_ResearchInit
 ======================*/
 void MN_ResearchInit( void )
 {
-
+	CL_ResearchType();
 }
 
 /*======================
@@ -177,6 +182,6 @@ void MN_ResetResearch( void )
 	Cmd_AddCommand( "research_init", MN_ResearchInit );
 	Cmd_AddCommand( "research_select", CL_ResearchSelectCmd );
 	Cmd_AddCommand( "research_type", CL_ResearchType );
-	Cmd_AddCommand( "mn_start_research", CL_ResearchStart );
-	Cmd_AddCommand( "mn_stop_research", CL_ResearchStop );
-}
+	Cmd_AddCommand( "mn_start_research", R_ResearchStart );
+	Cmd_AddCommand( "mn_stop_research", R_ResearchStop );
+	Cmd_AddCommand( "research_update", R_UpdateData );}

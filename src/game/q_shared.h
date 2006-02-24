@@ -821,6 +821,7 @@ typedef enum researchStatus_s
 {
 	RS_NONE,
 	RS_RUNNING,
+	RS_PAUSED,
 	RS_FINISH
 } researchStatus_t;
 
@@ -855,6 +856,7 @@ typedef struct objDef_s
 
 	// research
 	int researchNeeded; // all alien weapons need this
+	int researchTime; // count down
 	researchStatus_t researchStatus; // status of researching
 } objDef_t;
 

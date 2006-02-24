@@ -33,8 +33,9 @@ typedef struct menuNode_s
 	vec2_t		pos, size, texh, texl;
 	byte		state;
 	byte		align;
-	byte		invis, mousefx, blend;
-	int			num, height;
+	byte		invis, blend;
+	int		mousefx;
+	int		num, height;
 	vec4_t		color;
 	menuAction_t		*click, *rclick, *mclick, *mouseIn, *mouseOut;
 	struct menuNode_s	*next;

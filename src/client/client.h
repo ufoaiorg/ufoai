@@ -1010,6 +1010,12 @@ typedef struct building_s
 	vec2_t  size;
 	int	visible;
 	int	used;
+	// event handler functions
+	char	onConstruct[MAX_VAR];
+	char	onAttack[MAX_VAR];
+	char	onDestroy[MAX_VAR];
+	char	onUpgrade[MAX_VAR];
+	char	onRepair[MAX_VAR];
 
 	//more than one building of the same type allowed?
 	int	moreThanOne;
@@ -1030,6 +1036,10 @@ typedef struct base_s
 
 	qboolean founded;
 	vec2_t pos;
+
+	// to decide which actions are available in the basemenu
+	byte	hasHangar;
+	byte	hasLab;
 
 	//this is here to allocate the needed memory for the buildinglist
 	char	allBuildingsList[MAX_LIST_CHAR];

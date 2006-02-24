@@ -1304,7 +1304,7 @@ void CL_GameGo( void )
 
 	// TODO: Draw the base attack on worldmap
 	//       use mis->pos for this, too
-	if ( mis->map[0] == "." && B_GetCount() > 0 )
+	if ( mis->map[0] == '.' && B_GetCount() > 0 )
 	{
 		Cbuf_AddText( va("base_assemble_rand") );
 		return;
