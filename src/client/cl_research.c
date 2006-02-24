@@ -36,6 +36,7 @@ void CL_ResearchSelectCmd( void )
 	// call researchselect function from menu_research.ufo
 	Cbuf_AddText( va( "researchselect%i\n", num ) );
 	globalResearchNum = researchList[num];
+}
 
 /*======================
 R_ResearchStart
@@ -184,4 +185,5 @@ void MN_ResetResearch( void )
 	Cmd_AddCommand( "research_type", CL_ResearchType );
 	Cmd_AddCommand( "mn_start_research", R_ResearchStart );
 	Cmd_AddCommand( "mn_stop_research", R_ResearchStop );
-	Cmd_AddCommand( "research_update", R_UpdateData );}
+	Cmd_AddCommand( "research_update", R_UpdateData );
+}
