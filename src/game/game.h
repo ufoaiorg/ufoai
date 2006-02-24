@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -77,7 +77,7 @@ struct edict_s
 	vec3_t		angles;
 
 	// FIXME: move these fields to a server private sv_entity_t
-	link_t		area;				// linked to a division node or leaf	
+	link_t		area;				// linked to a division node or leaf
 	int			headnode;			// unused if num_clusters != -1
 
 	// tracing info
@@ -143,7 +143,7 @@ typedef struct
 	void	(*MoveStore)( struct routing_s *map );
 	int		(*MoveLength)( struct routing_s *map, pos3_t to, qboolean stored );
 	int		(*MoveNext)( struct routing_s *map, pos3_t from );
-	void	(*GridHeight)( struct routing_s *map, pos3_t pos );
+	int 	(*GridHeight)( struct routing_s *map, pos3_t pos );
 	int		(*GridFall)( struct routing_s *map, pos3_t pos );
 	void	(*GridPosToVec)( struct routing_s *map, pos3_t pos, vec3_t vec );
 	void	(*GridRecalcRouting)( struct routing_s *map, char *name, char **list );
@@ -263,7 +263,7 @@ typedef struct
 
 	// The edict array is allocated in the game dll so it
 	// can vary in size from one game to another.
-	// 
+	//
 	// The size will be fixed when ge->Init() is called
 	struct edict_s	*edicts;
 	int			edict_size;
