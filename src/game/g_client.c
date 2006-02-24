@@ -2201,7 +2201,7 @@ void G_ClientTeamInfo( player_t *player )
 
 			// inventory
 			item.t = gi.ReadByte();
-			while ( item.t != NONE )
+			while ( item.t != NONE && item.t != -1 )
 			{
 				// read info
 				item.a = gi.ReadByte();
