@@ -2170,6 +2170,7 @@ void CM_MakeTnodes( void )
 
 //FIXME : See other FIXME in TestLine_r and TestLineDist_r
 vec3_t tmpVec;
+int errorCount;
 /*
 =============
 TestLine_r
@@ -2195,7 +2196,15 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 	//       this is also responsible for tracer(-quad) problems
 	if ( ! tnode->dist && tnode->type <= PLANE_Z
 		&& VectorCompare(start, tmpVec) )
-		return 0;
+	{
+	 	if ( errorCount > 10 )
+	 	{
+			errorCount = 0;
+			return 0;
+		}
+		else
+			errorCount++;
+	}
 	VectorCopy( start, tmpVec );
 	// END OF FIXME
 
@@ -2273,7 +2282,15 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 	//       this is also responsible for tracer(-quad) problems
 	if ( ! tnode->dist && tnode->type <= PLANE_Z
 		&& VectorCompare(start, tmpVec) )
-		return 0;
+	{
+	 	if ( errorCount > 10 )
+	 	{
+			errorCount = 0;
+			return 0;
+		}
+		else
+			errorCount++;
+	}
 	VectorCopy( start, tmpVec );
 	// END OF FIXME
 

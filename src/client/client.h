@@ -761,6 +761,170 @@ void CL_ItemDescription( int item );
 
 
 //
+// cl_basemanagment.c
+//
+#define MAX_LIST_CHAR		1024
+#define MAX_BUILDINGS		256
+#define MAX_PRODUCTIONS		256
+#define MAX_BASES		6
+#define MAX_DESC		256
+
+#define BUILDINGCONDITION	100
+
+#define SCROLLSPEED		1000
+
+// this is not best - but better than hardcoded every time i used it
+#define RELEVANT_X		154
+#define RELEVANT_Y		88
+
+#define BASE_SIZE		5
+#define MAX_BASE_LEVELS		1
+
+//FIXME: Take the values from scriptfile
+#define BASEMAP_SIZE_X		778
+#define BASEMAP_SIZE_Y		672
+
+// allocate memory for menuText[TEXT_STANDARD] contained the information about a building
+char	buildingText[MAX_LIST_CHAR];
+
+typedef enum
+{
+	BASE_NOT_USED,
+	BASE_UNDER_ATTACK,
+	BASE_WORKING,
+} baseStatus_t;
+
+typedef enum
+{
+	B_NOT_SET,
+	B_UNDER_CONSTRUCTION,
+	B_CONSTRUCTION_FINISHED,
+	B_UPGRADE,
+	B_WORKING_120,
+	B_WORKING_100,
+	B_WORKING_50,
+	B_MAINTENANCE,
+	B_REPAIRING,
+	B_DOWN
+} buildingStatus_t;
+
+typedef struct building_s
+{
+	char    name[MAX_VAR];
+	char    base[MAX_VAR];
+	char	title[MAX_VAR];
+	char    *text, *image, *needs, *depends, *mapPart, *produceType, *pedia;
+	float   energy, workerCosts, produceTime, fixCosts, varCosts;
+	int     production, level, id, timeStart, buildTime, techLevel, notUpOn, maxWorkers, minWorkers, addWorkers;
+
+	//if we can build more than one building of the same type:
+	buildingStatus_t	buildingStatus[BASE_SIZE*BASE_SIZE];
+	int	condition[BASE_SIZE*BASE_SIZE];
+
+	vec2_t  size;
+	int	visible;
+	int	used;
+	// event handler functions
+	char	onConstruct[MAX_VAR];
+	char	onAttack[MAX_VAR];
+	char	onDestroy[MAX_VAR];
+	char	onUpgrade[MAX_VAR];
+	char	onRepair[MAX_VAR];
+
+	//more than one building of the same type allowed?
+	int	moreThanOne;
+
+	//how many buildings are there of the same type?
+	//depends on the value of moreThanOne ^^
+	int	howManyOfThisType;
+
+	//position of autobuild
+	vec2_t	pos;
+
+	//autobuild when base is set up
+	qboolean autobuild;
+
+	struct  building_s *dependsBuilding;
+	struct  building_s *prev;
+	struct  building_s *next;
+} building_t;
+
+typedef struct base_s
+{
+	char    title[MAX_VAR];
+	int	map[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
+
+	qboolean founded;
+	vec2_t pos;
+
+	// to decide which actions are available in the basemenu
+	byte	hasHangar;
+	byte	hasLab;
+
+	//this is here to allocate the needed memory for the buildinglist
+	char	allBuildingsList[MAX_LIST_CHAR];
+
+	//mapChar indicated which map to load (gras, desert, arctic,...)
+	//d=desert, a=arctic, g=gras
+	char	mapChar;
+
+	int	buildingListArray[MAX_BUILDINGS];
+	int	numList;
+
+	int	posX[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
+	int	posY[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
+
+	//FIXME: change building condition to base condition
+	float	condition;
+
+	baseStatus_t	baseStatus;
+
+	// which level to display?
+	int	baseLevel;
+
+	// needed if there is another buildingpart to build
+	struct  building_s *buildingToBuild;
+
+	struct  building_s *buildingCurrent;
+} base_t;
+
+typedef struct production_s
+{
+	char    name[MAX_VAR];
+	char    title[MAX_VAR];
+	char    *text;
+	int	amount;
+	char	menu[MAX_VAR];
+
+	struct  production_s *prev;
+	struct  production_s *next;
+} production_t;
+
+extern	int		numBases;
+extern	base_t	bmBases[MAX_BASES];
+extern	base_t	*baseCurrent;
+void CL_UpdateBaseData( void );
+
+// needed to calculate the chosen building in cl_menu.c
+int picWidth, picHeight;
+
+void MN_BuildNewBase( vec2_t pos );
+void MN_NewBases( void );
+void MN_SaveBases( sizebuf_t *sb );
+void MN_LoadBases( sizebuf_t *sb );
+void MN_ResetBasemanagement( void );
+void MN_ParseBuildings( char *title, char **text );
+void MN_ParseBases( char *title, char **text );
+void MN_ParseProductions( char *title, char **text );
+void MN_BuildingInit( void );
+void B_AssembleMap( void );
+void B_BaseAttack ( void );
+void MN_GetMaps_f ( void );
+void CL_ListMaps_f ( void );
+void MN_NextMap ( void );
+void MN_PrevMap ( void );
+
+//
 // cl_campaign.c
 //
 #define MAX_MISSIONS	255
@@ -867,13 +1031,14 @@ typedef struct mapline_s
 typedef struct aircraft_s
 {
 	char	name[MAX_VAR];
-	int		type;
-	int		home;
+// 	int		type;
+// 	int		home;
 	int		status;
 	vec2_t	pos;
 	int		point;
 	int		time;
 	mapline_t route;
+	base_t*	homebase;
 } aircraft_t;
 
 typedef struct ccs_s
@@ -887,6 +1052,7 @@ typedef struct ccs_s
 
 	aircraft_t		air[MAX_AIRCRAFT];
 	int		numAir;
+	int		numBases;
 
 	int		credits;
 	int		reward;
@@ -935,6 +1101,7 @@ extern	ccs_t		ccs;
 
 extern	int			mapAction;
 
+void CL_NewAircraft ( base_t* base );
 qboolean CL_MapIsNight( vec2_t pos );
 void CL_ResetCampaign( void );
 void CL_DateConvert( date_t *date, int *day, int *month );
@@ -945,166 +1112,6 @@ void CL_ParseMission( char *name, char **text );
 void CL_ParseStage( char *name, char **text );
 void CL_ParseCampaign( char *name, char **text );
 void CL_CollectItems( int won );
-
-//
-// cl_basemanagment.c
-//
-#define MAX_LIST_CHAR		1024
-#define MAX_BUILDINGS		256
-#define MAX_PRODUCTIONS		256
-#define MAX_BASES		6
-#define MAX_DESC		256
-
-#define BUILDINGCONDITION	100
-
-#define SCROLLSPEED		1000
-
-// this is not best - but better than hardcoded every time i used it
-#define RELEVANT_X		154
-#define RELEVANT_Y		88
-
-#define BASE_SIZE		5
-#define MAX_BASE_LEVELS		1
-
-//FIXME: Take the values from scriptfile
-#define BASEMAP_SIZE_X		778
-#define BASEMAP_SIZE_Y		672
-
-// allocate memory for menuText[TEXT_STANDARD] contained the information about a building
-char	buildingText[MAX_LIST_CHAR];
-
-typedef enum
-{
-	BASE_NOT_USED,
-	BASE_UNDER_ATTACK,
-	BASE_WORKING,
-} baseStatus_t;
-
-typedef enum
-{
-	B_NOT_SET,
-	B_UNDER_CONSTRUCTION,
-	B_CONSTRUCTION_FINISHED,
-	B_UPGRADE,
-	B_WORKING_120,
-	B_WORKING_100,
-	B_WORKING_50,
-	B_MAINTENANCE,
-	B_REPAIRING,
-	B_DOWN
-} buildingStatus_t;
-
-typedef struct building_s
-{
-	char    name[MAX_VAR];
-	char    base[MAX_VAR];
-	char	title[MAX_VAR];
-	char    *text, *image, *needs, *depends, *mapPart, *produceType, *pedia;
-	float   energy, workerCosts, produceTime, fixCosts, varCosts;
-	int     production, level, id, timeStart, buildTime, techLevel, notUpOn, maxWorkers, minWorkers, addWorkers;
-
-	//if we can build more than one building of the same type:
-	buildingStatus_t	buildingStatus[BASE_SIZE*BASE_SIZE];
-	int	condition[BASE_SIZE*BASE_SIZE];
-
-	vec2_t  size;
-	int	visible;
-	int	used;
-	// event handler functions
-	char	onConstruct[MAX_VAR];
-	char	onAttack[MAX_VAR];
-	char	onDestroy[MAX_VAR];
-	char	onUpgrade[MAX_VAR];
-	char	onRepair[MAX_VAR];
-
-	//more than one building of the same type allowed?
-	int	moreThanOne;
-
-	//how many buildings are there of the same type?
-	//depends on the value of moreThanOne ^^
-	int	howManyOfThisType;
-
-	//position of autobuild
-	vec2_t	pos;
-
-	//autobuild when base is set up
-	qboolean autobuild;
-
-	struct  building_s *dependsBuilding;
-	struct  building_s *prev;
-	struct  building_s *next;
-} building_t;
-
-typedef struct base_s
-{
-	char    title[MAX_VAR];
-	int	map[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
-
-	qboolean founded;
-	vec2_t pos;
-
-	// to decide which actions are available in the basemenu
-	byte	hasHangar;
-	byte	hasLab;
-
-	//this is here to allocate the needed memory for the buildinglist
-	char	allBuildingsList[MAX_LIST_CHAR];
-
-	int	buildingListArray[MAX_BUILDINGS];
-	int	numList;
-
-	int	posX[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
-	int	posY[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
-
-	//FIXME: change building condition to base condition
-	float	condition;
-
-	baseStatus_t	baseStatus;
-
-	// which level to display?
-	int	baseLevel;
-
-	// needed if there is another buildingpart to build
-	struct  building_s *buildingToBuild;
-
-	struct  building_s *buildingCurrent;
-} base_t;
-
-typedef struct production_s
-{
-	char    name[MAX_VAR];
-	char    title[MAX_VAR];
-	char    *text;
-	int	amount;
-	char	menu[MAX_VAR];
-
-	struct  production_s *prev;
-	struct  production_s *next;
-} production_t;
-
-extern	int		numBases;
-extern	base_t	bmBases[MAX_BASES];
-extern	base_t	*baseCurrent;
-void CL_UpdateBaseData( void );
-
-// needed to calculate the chosen building in cl_menu.c
-int picWidth, picHeight;
-
-void MN_BuildNewBase( vec2_t pos );
-void MN_NewBases( void );
-void MN_SaveBases( sizebuf_t *sb );
-void MN_LoadBases( sizebuf_t *sb );
-void MN_ResetBasemanagement( void );
-void MN_ParseBuildings( char *title, char **text );
-void MN_ParseBases( char *title, char **text );
-void MN_ParseProductions( char *title, char **text );
-void MN_BuildingInit( void );
-void B_AssembleMap( void );
-void B_BaseAttack ( void );
-void MN_GetMaps_f ( void );
-void CL_ListMaps_f ( void );
-void MN_NextMap ( void );
-void MN_PrevMap ( void );
 
 //
 // cl_menu.c

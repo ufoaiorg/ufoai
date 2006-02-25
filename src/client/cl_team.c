@@ -584,6 +584,14 @@ void CL_MarkTeamCmd( void )
 {
 	int i;
 
+	// check if we are allowed to be here?
+	// we are only allowed to be here if we already set up base
+	if ( ! ccs.numBases )
+	{
+		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
+		return;
+	}
+
 	hiredMask = teamMask;
 	numHired = numOnTeam;
 	Cvar_Set( "mn_hired", va( "%i of %i\n", numHired, MAX_ACTIVETEAM ) );

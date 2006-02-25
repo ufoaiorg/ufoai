@@ -269,6 +269,23 @@ qboolean CL_MapMaskFind( byte *color, vec2_t polar )
 
 // ===========================================================
 
+/*
+======================
+CL_NewAircraft
+======================
+*/
+void CL_NewAircraft ( base_t* base )
+{
+	aircraft_t	*air;
+
+	assert(base);
+	air = &ccs.air[ccs.numAir];
+	ccs.numAir++;
+	memset( air, 0, sizeof(aircraft_t) );
+	air->status = AIR_HOME;
+	air->homebase = base;
+}
+
 // check for water
 // blue value is 64
 #define MapIsWater(color) (color[0] == 0 && color[1] == 0 && color[2] == 64)
@@ -304,14 +321,24 @@ void CL_NewBase( vec2_t pos )
 	{
 		MN_Popup( _("Notice"), _("Could not set up your base at this location") );
 		return;
+	} else if ( MapIsDesert(color) ){
+		baseCurrent->mapChar='d';
+	} else if ( MapIsArctic(color) ){
+		baseCurrent->mapChar='a';
+	} else {
+		baseCurrent->mapChar='g';
 	}
 
 	// build base
 	baseCurrent->pos[0] = pos[0];
 	baseCurrent->pos[1] = pos[1];
 
+	ccs.numBases++;
+
 	// set up the base with buildings that have the autobuild flag set
 	B_SetUpBase();
+	// set up the aircraft
+	CL_NewAircraft( baseCurrent );
 
 	MN_PushMenu( "popup_newbase" );
 }
@@ -708,9 +735,15 @@ CL_GameTimeSlow
 */
 void CL_GameTimeSlow( void )
 {
-	if ( gameLapse > 0 ) gameLapse--;
-	Cvar_Set( "mn_timelapse", _(lapse[gameLapse].name) );
-	gameTimeScale = lapse[gameLapse].scale;
+	//first we have to set up a home base
+	if ( ! ccs.numBases )
+		CL_GameTimeStop();
+	else
+	{
+		if ( gameLapse > 0 ) gameLapse--;
+		Cvar_Set( "mn_timelapse", _(lapse[gameLapse].name) );
+		gameTimeScale = lapse[gameLapse].scale;
+	}
 }
 
 
@@ -721,14 +754,18 @@ CL_GameTimeFast
 */
 void CL_GameTimeFast( void )
 {
-	if ( gameLapse < NUM_TIMELAPSE-1 ) gameLapse++;
-	Cvar_Set( "mn_timelapse", _(lapse[gameLapse].name) );
-	gameTimeScale = lapse[gameLapse].scale;
+	//first we have to set up a home base
+	if ( ! ccs.numBases )
+		CL_GameTimeStop();
+	else
+	{
+		if ( gameLapse < NUM_TIMELAPSE-1 ) gameLapse++;
+		Cvar_Set( "mn_timelapse", _(lapse[gameLapse].name) );
+		gameTimeScale = lapse[gameLapse].scale;
+	}
 }
 
-
 // ===========================================================
-
 
 /*
 ======================
@@ -738,7 +775,6 @@ CL_GameNew
 void CL_GameNew( void )
 {
 	equipDef_t	*ed;
-	aircraft_t	*air;
 	char	*name;
 	int		i;
 
@@ -774,6 +810,7 @@ void CL_GameNew( void )
 
 	// credits
 	ccs.credits = curCampaign->credits;
+	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
 
 	// equipment
 	for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
@@ -793,13 +830,11 @@ void CL_GameNew( void )
 	CL_CampaignActivateStage( curCampaign->firststage );
 
 	// base setup
+	ccs.numBases = 0;
 	MN_NewBases();
 
-	// test aircraft
-	ccs.numAir = 1;
-	air = &ccs.air[0];
-	memset( air, 0, sizeof(aircraft_t) );
-	air->status = AIR_IDLE;
+	// aircraft setup
+	ccs.numAir = 0;
 
 	MN_PopMenu( true );
 	MN_PushMenu( "map" );

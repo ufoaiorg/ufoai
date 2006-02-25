@@ -1252,7 +1252,7 @@ void MN_DrawMapMarkers( menuNode_t *node )
 
 	// draw aircraft
 	for ( i = 0, air = ccs.air; i < ccs.numAir; i++, air++ )
-		if ( air->status )
+		if ( air->status && air->status != AIR_HOME )
 		{
 			if ( !MN_MapToScreen( node, air->pos, &x, &y ) )
 				continue;

@@ -1,5 +1,5 @@
 CC=gcc
-ODIR=baddir
+ODIR=.
 
 QBSP3BASE=qbsp3
 QBSP3=$(ODIR)/qbsp3

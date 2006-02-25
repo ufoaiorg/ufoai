@@ -242,6 +242,8 @@ void B_SetUpBase ( void )
 		{
 			baseCurrent->buildingCurrent = &bmBuildings[baseID][i];
 			MN_SetBuildingByClick ( bmBuildings[baseID][i].pos[0], bmBuildings[baseID][i].pos[1] );
+			baseCurrent->buildingCurrent = &bmBuildings[baseID][i];
+			baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] = B_WORKING_100;
 			baseCurrent->buildingCurrent = NULL;
 		}
 }
@@ -1574,6 +1576,8 @@ void B_BaseAttack ( void )
 /*
 =================
 B_AssembleMap
+
+NOTE: Do we need day and night maps here, too?
 =================
 */
 void B_AssembleMap ( void )
@@ -1622,12 +1626,12 @@ void B_AssembleMap ( void )
 				else
 				{
 					if ( entry->mapPart )
-						baseMapPart = entry->mapPart;
+						baseMapPart = va("b/%c/%s", baseCurrent->mapChar, entry->mapPart );
 					entry->used = 0;
 				}
 			}
 			else
-				baseMapPart = "b/empty";
+				baseMapPart = va("b/%c/empty", baseCurrent->mapChar );
 
 			if ( strcmp (baseMapPart, "") )
 			{
@@ -1683,16 +1687,20 @@ void MN_SaveBases( sizebuf_t *sb )
 		}
 }
 
+/*
+======================
+B_AssembleRandomBase
+======================
+*/
 void B_AssembleRandomBase( void )
 {
-	int i = 0;
+	int i;
 	int cnt = 0;
-	for ( i = 1; i < numBases; i++ )
+	for ( i = 0; i < numBases; i++ )
 	{
 		if ( ! bmBases[i].founded ) break;
 		cnt++;
 	}
-
 	Cbuf_AddText( va("base_assemble %i", rand() % cnt ) );
 }
 

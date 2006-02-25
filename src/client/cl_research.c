@@ -114,14 +114,12 @@ MN_ResearchType
 ======================*/
 void CL_ResearchType ( void )
 {
-	int i;
-
 	// get the list
 	R_UpdateData();
 
 	// nothing to research here
 	if ( ! researchListLength )
-		Cbuf_AddText("mn_pop");
+		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
 }
 
 /*======================
