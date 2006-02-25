@@ -266,7 +266,7 @@ int FS_FOpenFileSingle (char *filename, FILE **file)
 				{	// found it!
 					file_from_pak = 1;
 					Com_DPrintf ("PackFile: %s : %s\n",pak->filename, filename);
-				// open a new file on the pakfile
+					// open a new file on the pakfile
 					*file = fopen (pak->filename, "rb");
 					if (!*file)
 						Com_Error (ERR_FATAL, "Couldn't reopen %s", pak->filename);
@@ -521,7 +521,7 @@ pack_t *FS_LoadPackFile (char *packfile)
 
 			//-- Check if compression is used or any flags are set.
 			if ((temp.compression != 0) || (temp.flags != 0))
-				Com_Error (ERR_FATAL, "%s contains errors or is compressed" );
+				Com_Error (ERR_FATAL, "%s contains errors or is compressed" , packfile );
 
 			//-- Get length of data area
 			info[i].filelen = temp.uncompressedSize;
