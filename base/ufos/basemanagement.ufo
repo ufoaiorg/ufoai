@@ -9,9 +9,12 @@ building entrance
 {
 	title		"Entrance"
 	image		base/entrance
-	fixcosts	200
+	fixcosts	0
 	build_time	1
-	map_name	"b/entrance"
+	autobuild	1
+	pos		"2 2"
+	visible		0
+	map_name	"entrance"
 	pedia		entrance
 }
 
@@ -21,13 +24,14 @@ building commando
 	image		base/commando
 	fixcosts	1000
 	desc		"This is the commando central"
+	depends		powerplant
 	max_workers	6
 	min_workers	2
 	worker_costs	10
 	energy		300
-	build_time	1
+	build_time	4
 	varcosts	50
-	map_name	"b/commando"
+	map_name	"commando"
 	pedia		commando
 }
 
@@ -37,15 +41,16 @@ building powerplant
 	image		base/commando
 	fixcosts	300
 	desc		"Produces Energy"
+	depends		entrance
 	max_workers	10
 	min_workers	3
 	worker_costs	10
 	produce_type	energy_p
 	produce_time	30
 	produce		1150
-	build_time	1
+	build_time	2
 	varcosts	150
-	map_name	"b/powerplant"
+	map_name	"powerplant"
 	pedia		powerplant
 }
 
@@ -62,9 +67,9 @@ building lab
 	produce_type	tech_p
 	produce		5
 	produce_time	30
-	build_time	1
+	build_time	12
 	varcosts	300
-	map_name	"b/lab"
+	map_name	"lab"
 	pedia		lab
 }
 
@@ -78,10 +83,26 @@ building storage
 	min_workers	1
 	worker_costs	10
 	energy		50
-	build_time	1
+	build_time	5
 	varcosts	10
-	map_name	"b/storage"
+	map_name	"storage"
 	pedia		storage
+}
+
+building intercept
+{
+	title		"Intercepters"
+	image		base/intercepters
+	fixcosts	5000
+	depends		commando
+	max_workers	4
+	min_workers	1
+	worker_costs	10
+	energy		50
+	build_time	5
+	varcosts	10
+	map_name	"intercept"
+	pedia		intercept
 }
 
 building quarters
@@ -93,9 +114,9 @@ building quarters
 	max_workers	20
 	worker_costs	10
 	energy		50
-	build_time	1
+	build_time	4
 	varcosts	10
-	map_name	"b/quarters"
+	map_name	"quarters"
 	pedia		quarters
 }
 
@@ -110,9 +131,9 @@ building drop1
 	min_workers	2
 	worker_costs	10
 	energy		400
-	build_time	1
+	build_time	6
 	varcosts	50
-	map_name	"b/drop"
+	map_name	"drop"
 	pedia		hangar
 }
 
@@ -127,108 +148,9 @@ building drop2
 	min_workers	2
 	worker_costs	10
 	energy		400
-	build_time	1
+	build_time	6
 	varcosts	50
 	pedia		hangar
-}
-
-building factory
-{
-	title		"Factory"
-	image		base/commando
-	fixcosts	800
-	depends		commando
-	max_workers	5
-	min_workers	5
-	worker_costs	10
-	produce_type	factory_p
-	produce		5
-	produce_time	30
-	energy		400
-	build_time	1
-	varcosts	50
-	map_name	"b/factory"
-	pedia		factory
-}
-
-building workshop
-{
-	title		"Workshop"
-	image		base/commando
-	fixcosts	700
-	depends		commando
-	max_workers	5
-	min_workers	5
-	worker_costs	10
-	produce_type	workshop_p
-	produce		5
-	produce_time	30
-	energy		400
-	build_time	1
-	varcosts	50
-	map_name	"b/workshop"
-	pedia		workshop
-}
-
-building radar
-{
-	title		"Radar"
-	image		base/commando
-	fixcosts	1000
-	depends		commando
-	max_workers	5
-	min_workers	2
-	worker_costs	10
-	energy		300
-	build_time	1
-	varcosts	50
-	map_name	"b/radar"
-	pedia		radar
-}
-
-building rocketturret
-{
-	title		"Rocketturret"
-	image		base/commando
-	fixcosts	300
-	depends		radar
-	worker_costs	10
-	energy		50
-	build_time	1
-	varcosts	5
-	map_name	"b/rocketturret"
-	pedia		rocketturret
-}
-
-building laserturret
-{
-	title		"Laserturret"
-	image		base/commando
-	fixcosts	300
-	depends		radar
-	energy		50
-	build_time	1
-	varcosts	5
-	map_name	"b/laserturret"
-	pedia		laserturret
-}
-
-building trainingyard
-{
-	title		"Trainingyard"
-	image		base/commando
-	fixcosts	300
-	depends		quarters
-	produce_type	experience_p
-	produce		5
-	produce_time	30
-	max_workers	3
-	min_workers	1
-	worker_costs	10
-	energy		10
-	build_time	1
-	map_name	"b/trainingyard"
-	pedia		trainingyard
 }
 
 building teamroom
@@ -244,42 +166,9 @@ building teamroom
 	min_workers	1
 	worker_costs	10
 	energy		10
-	build_time	1
-	map_name	"b/teamroom"
+	build_time	3
+	map_name	"teamroom"
 	pedia		teamroom
-}
-
-building energyshield
-{
-	title		"Energieshield"
-	image		base/commando
-	fixcosts	300
-	depends		commando
-	energy		250
-	build_time	1
-	varcosts	5
-	map_name	"b/energyshield"
-	pedia		energyshield
-}
-
-building accesslift
-{
-	title		"Access Lift"
-	image		base/commando
-	fixcosts	300
-	energy		50
-	build_time	1
-	varcosts	5
-	map_name	"b/accesslift"
-}
-
-building stairs
-{
-	title		"Stairs"
-	image		base/commando
-	fixcosts	50
-	build_time	1
-	map_name	"b/stairs"
 }
 
 base main
@@ -294,7 +183,7 @@ base main
 
 production tech_p
 {
-	title		"Technologie"
+	title		"Technology"
 	menu		research
 	amount		100
 }
@@ -305,27 +194,9 @@ production energy_p
 	amount		100
 }
 
-production experience_p
-{
-	title		"Experience"
-	amount		100
-}
-
 production mind_p
 {
 	title		"Mind"
-	amount		100
-}
-
-production factory
-{
-	title		"Things - Factory"
-	amount		100
-}
-
-production workshop
-{
-	title		"Things - Workshop"
 	amount		100
 }
 

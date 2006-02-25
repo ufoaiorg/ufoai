@@ -2,12 +2,13 @@
 // CAMPAIGN: STANDARD
 // ==================
 
-mission oriental
+//no day and night
+mission africa
 {
 	text		"Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
-	map			oriental06
+	map			africa04
 	music		mission
-	pos			"-62 25"
+	pos			"-82 125"
 	aliens		5
 	alienteam	alien
 	alienequip	campaign_alien
@@ -19,94 +20,92 @@ mission oriental
 	$civilian	500
 }
 
-mission japan
+mission baseattack
 {
-	text		"Location: Morioka\Type: Alien Hideout\Objective: Eliminate intruders"
-	map			japan06
-	music		mission3
-	pos			"-141 40"
-	aliens		10
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	4
-	$win		2500
-	$alien		100
-	$civilian	500
-}
-
-
-mission transport
-{
-	text		"Location: Fargo\Type: Terror Attack\Objective: Protect inhabitants"
-	map			transport06
-	music		mission
-	pos			"97 47"
-	aliens		4
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	3
-	$win		1000
-	$alien		100
-	$civilian	500
-}
-
-
-mission italy
-{
-	text		"Location: Marina Serra\Type: Terror Attack\Objective: Protect inhabitants"
-	map			italy05
-	music		mission2
-	pos			"-18 40"
-	aliens		8
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	3
-	$win		1900
-	$alien		100
-	$civilian	500
-}
-
-mission lake
-{
-	text		"Location: Tazovskij\Type: Terror Attack\Objective: Protect inhabitants"
-	map			lake03
-	music		mission2
-	pos			"-77 67"
-	aliens		6
-	alienteam	alien
-	alienequip	campaign_alien
+	text		"Aliens attack one of our home bases"
+// 	. means that they attack a random base (only the first char counts)
+	map		".base"
+	music		base
+	aliens		7
 	civilians	5
-	civteam		european
-	recruits	2
-	$win		1600
-	$alien		100
-	$civilian	500
+	alienequip	campaign_alien
+	recruits	0
+	$win		400
+	$alien		250
+	$civilian	200
 }
 
-
-mission mine
+//no day and night
+mission bunker
 {
-	text		"Location: Gobabis\Type: Crash Site\Objective: Secure Area"
-	map			mine05
+	text		"Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
+	map			bunknew1p
 	music		mission
-	pos			"-20 -23"
-	aliens		3
+	pos			"-82 125"
+	aliens		5
 	alienteam	alien
 	alienequip	campaign_alien
 	civilians	6
-	civteam		european
-	recruits	2
+	civteam		scientist
+	recruits	6
 	$win		1200
 	$alien		100
 	$civilian	500
 }
 
+//no day and night
+mission city
+{
+	text		"Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
+	map			city04
+	music		mission
+	pos			"-82 125"
+	aliens		5
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		scientist
+	recruits	6
+	$win		1200
+	$alien		100
+	$civilian	500
+}
+
+//no day and night
+mission colon
+{
+	text		"Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
+	map			colon04
+	music		mission
+	pos			"-82 125"
+	aliens		5
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		scientist
+	recruits	6
+	$win		1200
+	$alien		100
+	$civilian	500
+}
+
+//no day and night
+mission condor
+{
+	text		"Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
+	map			condor04
+	music		mission
+	pos			"-82 125"
+	aliens		5
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		scientist
+	recruits	6
+	$win		1200
+	$alien		100
+	$civilian	500
+}
 
 mission construction
 {
@@ -121,6 +120,72 @@ mission construction
 	civteam		european
 	recruits	3
 	$win		2000
+	$alien		100
+	$civilian	500
+}
+
+mission crash
+{
+	text		"We are going put you in charge of a ;mission of utmost importance. We've ;shot down one of their crafts. Get ;there before the E.T.'s do. (difficult);"
+	map		crashsite05
+	music		mission4
+	pos		"195 205"
+	aliens		7
+	civilians	0
+	alienequip	alien_crash
+	recruits	0
+	$win		400
+	$alien		250
+	$civilian	200
+}
+
+mission excavation
+{
+	text		"Some aliens have escaped from the ;mine, and their tracks lead south, ;towards a nearby excavation site. ;Protect that site at all cost.;"
+	map		excavation06
+	music		mission4
+	pos		"310 400"
+	aliens		4
+	civilians	6
+	alienequip	alien_excavation
+	recruits	4
+	$win		750
+	$alien		200
+	$civilian		100
+}
+
+//no day and night
+mission falcon
+{
+	text		"Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
+	map			falcon05
+	music		mission
+	pos			"116 52"
+	aliens		7
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	3
+	civteam		european
+	recruits	3
+	$win		6000
+	$alien		100
+	$civilian	500
+}
+
+//no day and night
+mission falconcrash
+{
+	text		"Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
+	map			falcon_crash04
+	music		mission
+	pos			"116 52"
+	aliens		7
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	3
+	civteam		european
+	recruits	3
+	$win		6000
 	$alien		100
 	$civilian	500
 }
@@ -142,11 +207,167 @@ mission farm
 	$civilian	500
 }
 
+mission frozen_ump
+{
+	text		"Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
+	map			"+frozen"
+	music		mission
+	pos			"116 52"
+	aliens		7
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	3
+	civteam		european
+	recruits	3
+	$win		6000
+	$alien		100
+	$civilian	500
+}
+
+//no day and night
+mission gasstation
+{
+	text		"Location: Marina Serra\Type: Terror Attack\Objective: Protect inhabitants"
+	map			gasstation05
+	music		mission2
+	pos			"-18 40"
+	aliens		8
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	3
+	$win		1900
+	$alien		100
+	$civilian	500
+}
+
+//no day and night
+//do not use - no water implemented
+mission harbour
+{
+	text		"Location: Marina Serra\Type: Terror Attack\Objective: Protect inhabitants"
+	map			harbour07
+	music		mission2
+	pos			"-18 40"
+	aliens		8
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	3
+	$win		1900
+	$alien		100
+	$civilian	500
+}
+
+mission italy
+{
+	text		"Location: Marina Serra\Type: Terror Attack\Objective: Protect inhabitants"
+	map			italy05
+	music		mission2
+	pos			"-18 40"
+	aliens		8
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	3
+	$win		1900
+	$alien		100
+	$civilian	500
+}
+
+mission japan
+{
+	text		"Location: Morioka\Type: Alien Hideout\Objective: Eliminate intruders"
+	map			japan06
+	music		mission3
+	pos			"-141 40"
+	aliens		10
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	4
+	$win		2500
+	$alien		100
+	$civilian	500
+}
+
+mission lake
+{
+	text		"Location: Tazovskij\Type: Terror Attack\Objective: Protect inhabitants"
+	map			lake03
+	music		mission2
+	pos			"-77 67"
+	aliens		6
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	5
+	civteam		european
+	recruits	2
+	$win		1600
+	$alien		100
+	$civilian	500
+}
+
+//no day and night
+mission mart
+{
+	text		"Location: Gobabis\Type: Crash Site\Objective: Secure Area"
+	map			mart5
+	music		mission
+	pos			"-20 -23"
+	aliens		3
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	2
+	$win		1200
+	$alien		100
+	$civilian	500
+}
+
+//no day and night
+mission mine
+{
+	text		"Location: Gobabis\Type: Crash Site\Objective: Secure Area"
+	map			mine05
+	music		mission
+	pos			"-20 -23"
+	aliens		3
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	2
+	$win		1200
+	$alien		100
+	$civilian	500
+}
+
+//no day and night
+mission mine2
+{
+	text		"There are rumors of a mine being;overrun by aliens. Altough this ;source of information is doubtful,;you'll need to investigate.;"
+	map		mine
+	music		mission4
+	pos		"315 398"
+	aliens		5
+	civilians	3
+	alienequip	alien_mine
+	recruits	6
+	$win		800
+	$alien		200
+	$civilian	100
+}
 
 mission office
 {
 	text		"Location: Mackay\Type: Terror Attack\Objective: Protect inhabitants"
-	map			office04
+	map			office06
 	music		mission3
 	pos			"-149 -21"
 	aliens		8
@@ -160,6 +381,204 @@ mission office
 	$civilian	300
 }
 
+mission oriental
+{
+	text		"Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
+	map			oriental06
+	music		mission
+	pos			"-62 25"
+	aliens		5
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		oriental
+	recruits	3
+	$win		1200
+	$alien		100
+	$civilian	500
+}
+
+//no day and night
+mission or_asyut
+{
+	text		"Location: Asyut\Type: Terror Attack\Objective: Protect inhabitants"
+	map			"+orientald"
+	music		mission2
+	pos			"-31 27"
+	aliens		7
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		oriental
+	recruits	3
+	$win		4000
+	$alien		100
+	$civilian	1200
+}
+
+//no day and night
+mission or_tabelbala
+{
+	text		"Location: Tabelbala\Type: Terror Attack\Objective: Protect inhabitants"
+	map			"+orientald"
+	music		mission
+	pos			"3 28"
+	aliens		7
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		oriental
+	recruits	3
+	$win		4000
+	$alien		100
+	$civilian	1200
+}
+
+//no day and night
+mission pdi
+{
+	text		"Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	map		pdi08
+	music		mission3
+	pos		"308 412"
+	aliens		4
+	civilians	2
+	alienequip	alien_spedition
+	recruits	4
+	$win		400
+	$alien		250
+	$civilian	200
+}
+
+//no day and night
+mission spedition
+{
+	text		"Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	map		spedition
+	music		mission3
+	pos		"308 412"
+	aliens		4
+	civilians	2
+	alienequip	alien_spedition
+	recruits	4
+	$win		400
+	$alien		250
+	$civilian	200
+}
+
+//no day and night
+mission stadium
+{
+	text		"Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	map		stadium06
+	music		mission3
+	pos		"308 412"
+	aliens		4
+	civilians	2
+	alienequip	alienequip
+	recruits	4
+	$win		400
+	$alien		250
+	$civilian	200
+}
+
+//no day and night
+mission subway
+{
+	text		"Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	map		subway07
+	music		mission3
+	pos		"308 412"
+	aliens		4
+	civilians	2
+	alienequip	alienequip
+	recruits	4
+	$win		400
+	$alien		250
+	$civilian	200
+}
+
+//no day and night
+mission terrain
+{
+	text		"Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	map		terrain08
+	music		mission3
+	pos		"308 412"
+	aliens		4
+	civilians	2
+	alienequip	alienequip
+	recruits	4
+	$win		400
+	$alien		250
+	$civilian	200
+}
+
+//no day and night
+mission tower
+{
+	text		"Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	map		tower06
+	music		mission3
+	pos		"308 412"
+	aliens		4
+	civilians	2
+	alienequip	alienequip
+	recruits	4
+	$win		400
+	$alien		250
+	$civilian	200
+}
+
+mission transport
+{
+	text		"Location: Fargo\Type: Terror Attack\Objective: Protect inhabitants"
+	map			transport06
+	music		mission
+	pos			"97 47"
+	aliens		4
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	3
+	$win		1000
+	$alien		100
+	$civilian	500
+}
+
+//no day and night
+mission tropic_ump
+{
+	text		"Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	map		"+tropicd"
+	music		mission3
+	pos		"308 412"
+	aliens		4
+	civilians	2
+	alienequip	alienequip
+	recruits	4
+	$win		400
+	$alien		250
+	$civilian	200
+}
+
+mission village
+{
+	text		"Location: Fargo\Type: Terror Attack\Objective: Protect inhabitants"
+	map			village07
+	music		mission
+	pos			"97 47"
+	aliens		4
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	3
+	$win		1000
+	$alien		100
+	$civilian	500
+}
 
 mission vil_grenchen
 {
@@ -179,7 +598,6 @@ mission vil_grenchen
 	$civilian	500
 }
 
-
 mission vil_lille
 {
 	text		"Location: Lille\Type: Terror Attack\Objective: Protect inhabitants"
@@ -197,7 +615,6 @@ mission vil_lille
 	$alien		100
 	$civilian	500
 }
-
 
 mission vil_albany
 {
@@ -217,7 +634,6 @@ mission vil_albany
 	$civilian	500
 }
 
-
 mission vil_shannon
 {
 	text		"Location: Shannon\Type: Major Alien Intrusion\Objective: Stop them"
@@ -234,119 +650,6 @@ mission vil_shannon
 	$win		4000
 	$alien		100
 	$civilian	1200
-}
-
-
-mission or_asyut
-{
-	text		"Location: Asyut\Type: Terror Attack\Objective: Protect inhabitants"
-	map			"+orientald"
-	music		mission2
-	pos			"-31 27"
-	aliens		7
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		oriental
-	recruits	3
-	$win		4000
-	$alien		100
-	$civilian	1200
-}
-
-
-mission or_tabelbala
-{
-	text		"Location: Tabelbala\Type: Terror Attack\Objective: Protect inhabitants"
-	map			"+orientald"
-	music		mission
-	pos			"3 28"
-	aliens		7
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		oriental
-	recruits	3
-	$win		4000
-	$alien		100
-	$civilian	1200
-}
-
-
-mission mine2
-{
-	text		"There are rumors of a mine being;overrun by aliens. Altough this ;source of information is doubtful,;you'll need to investigate.;"
-	map		mine04
-	music		mission4
-	pos		"315 398"
-	aliens		5
-	civilians	3
-	alienequip	alien_mine
-	recruits	6
-	$win		800
-	$alien		200
-	$civilian	100
-}
-
-mission excavation
-{
-	text		"Some aliens have escaped from the ;mine, and their tracks lead south, ;towards a nearby excavation site. ;Protect that site at all cost.;"
-	map		excavation06
-	music		mission4
-	pos		"310 400"
-	aliens		4
-	civilians	6
-	alienequip	alien_excavation
-	recruits	4
-	$win		750
-	$alien		200
-	$civilian		100
-}
-
-
-mission spedition
-{
-	text		"Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
-	map		spedition04
-	music		mission3
-	pos		"308 412"
-	aliens		4
-	civilians	2
-	alienequip	alien_spedition
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
-}
-
-mission crash
-{
-	text		"We are going put you in charge of a ;mission of utmost importance. We've ;shot down one of their crafts. Get ;there before the E.T.'s do. (difficult);"
-	map		crashsite05
-	music		mission4
-	pos		"195 205"
-	aliens		7
-	civilians	0
-	alienequip	alien_crash
-	recruits	0
-	$win		400
-	$alien		250
-	$civilian	200
-}
-
-mission baseattack
-{
-	text		"Aliens attack one of our home bases"
-// 	. means that they attack a random base (only the first char counts)
-	map		".base"
-	music		base
-	aliens		7
-	civilians	5
-	alienequip	campaign_alien
-	recruits	0
-	$win		400
-	$alien		250
-	$civilian	200
 }
 
 stage intro
@@ -376,7 +679,6 @@ stage intro
 		endstage	intro
 	}
 }
-
 
 stage ufos_are_coming
 {

@@ -148,16 +148,16 @@ menu map
 	// ==================
 
 	// create a new base
-	pic bt_base2
-	{
-		image   menu/button_mapmen_bases
-		pos     "565 700"
-		texl    "0 37"
-		texh    "127 68"
-		out		{ *bt_base2 texl "0 37" *bt_base2 texh "127 68" }
-		in		{ *bt_base2 texl "128 37" *bt_base2 texh "255 68" }
-		click   { cmd "mn_select_base -1;" }
-	}
+//	pic bt_base2
+//	{
+//		image   menu/button_mapmen_bases
+//		pos     "565 700"
+//		texl    "0 37"
+//		texh    "127 68"
+//		out		{ *bt_base2 texl "0 37" *bt_base2 texh "127 68" }
+//		in		{ *bt_base2 texl "128 37" *bt_base2 texh "255 68" }
+//		click   { cmd "mn_select_base -1;" }
+//	}
 
 	pic bt_intercept
 	{
