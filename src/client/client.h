@@ -1024,6 +1024,12 @@ typedef struct building_s
 	//depends on the value of moreThanOne ^^
 	int	howManyOfThisType;
 
+	//position of autobuild
+	vec2_t	pos;
+
+	//autobuild when base is set up
+	qboolean autobuild;
+
 	struct  building_s *dependsBuilding;
 	struct  building_s *prev;
 	struct  building_s *next;

@@ -113,6 +113,15 @@ value_t valid_vars[] =
 	//how many workers should there for max and for min
 	{ "max_workers",V_INT,	BSFS( maxWorkers ) },
 	{ "min_workers",V_INT,	BSFS( minWorkers ) },
+
+	//place of a building
+	//needed for flag autobuild
+	{ "pos",		V_POS,			BSFS( pos ) },
+
+	//automatically construct this building when a base it set up
+	//set also the pos-flag
+	{ "autobuild",		V_BOOL,			BSFS( autobuild ) },
+
 	{ NULL,	0, 0 }
 };
 
@@ -222,6 +231,19 @@ void MN_BuildingInfoClick_f ( void )
 {
 	if ( baseCurrent && baseCurrent->buildingCurrent )
 		UP_OpenWith ( baseCurrent->buildingCurrent->name );
+}
+
+void B_SetUpBase ( void )
+{
+	int i;
+
+	for (i = 0 ; i < numBuildings; i++ )
+		if ( bmBuildings[baseID][i].autobuild && bmBuildings[baseID][i].pos[0] )
+		{
+			baseCurrent->buildingCurrent = &bmBuildings[baseID][i];
+			MN_SetBuildingByClick ( bmBuildings[baseID][i].pos[0], bmBuildings[baseID][i].pos[1] );
+			baseCurrent->buildingCurrent = NULL;
+		}
 }
 
 /*
@@ -654,10 +676,6 @@ void MN_BuildingRemoveWorkers( void )
 		Com_Printf( "Usage: remove_workers <amount>\n" );
 		return;
 	}
-
-	//maybe someone call this command before the buildings are parsed??
-	if ( ! baseCurrent->buildingCurrent )
-		return;
 
 	//how many workers?
 	workers = atoi( Cmd_Argv( 1 ) );
@@ -1356,11 +1374,11 @@ void MN_BaseInit( void )
 	if ( ! baseCurrent->baseLevel )
 		baseCurrent->baseLevel = 0;
 
+	// stuff for homebase
 	if ( baseID == 0 )
 	{
 
 	}
-
 
 	// set base view
 	ccs.basecenter[0] = 0.2;
@@ -1482,7 +1500,7 @@ void MN_SelectBase( void )
 	if ( whichBaseID < 0 )
 	{
 		mapAction = MA_NEWBASE;
-		whichBaseID++;
+		whichBaseID = 0;
 		while ( bmBases[whichBaseID].founded && whichBaseID < MAX_BASES )
 			whichBaseID++;
 		if ( whichBaseID < MAX_BASES )

@@ -1148,7 +1148,7 @@ void CL_DoEndRound( sizebuf_t *sb )
 	if ( cls.team == cl.actTeam ) Cbuf_AddText( "endround\n" );
 
 	// change active player
-	Com_Printf( _("team %i ended round"), cl.actTeam );
+	Com_Printf( _("Team %i ended round"), cl.actTeam );
 	cl.actTeam = MSG_ReadByte( sb );
 	Com_Printf( _(", team %i's round started!\n"), cl.actTeam );
 
@@ -1228,8 +1228,8 @@ void CL_ActorMouseTrace( void )
 	// do the trace
 	CM_EntTestLineDM( cl.cam.camorg, stop, end );
 
+	// the mouse is out of the world
 	if ( end[2] < 0.0 )
-		// the mouse is out of the world
 		return;
 
 	// get position
@@ -1240,6 +1240,7 @@ void CL_ActorMouseTrace( void )
 	stop[2] = (mousePos[2] + 0.5) * UH;
 	stop[0] = end[0] + forward[0] * (end[2] - stop[2]);
 	stop[1] = end[1] + forward[1] * (end[2] - stop[2]);
+
 	VecToPos( stop, mousePos );
 	mousePos[2] = Grid_Fall( &clMap, mousePos );
 

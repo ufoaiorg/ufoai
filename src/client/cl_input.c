@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -72,7 +72,7 @@ void KeyDown (kbutton_t *b)
 {
 	int		k;
 	char	*c;
-	
+
 	c = Cmd_Argv(1);
 	if (c[0])
 		k = atoi(c);
@@ -81,7 +81,7 @@ void KeyDown (kbutton_t *b)
 
 	if (k == b->down[0] || k == b->down[1])
 		return;		// repeating key
-	
+
 	if (!b->down[0])
 		b->down[0] = k;
 	else if (!b->down[1])
@@ -91,7 +91,7 @@ void KeyDown (kbutton_t *b)
 		Com_Printf (_("Three keys down for a button!\n") );
 		return;
 	}
-	
+
 	if (b->state & 1)
 		return;		// still down
 
@@ -198,14 +198,14 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 	static int save_level;
 
 	// save remote camera position, angles, zoom
-	
+
 	if (camera_mode == CAMERA_MODE_REMOTE)
 	{
 		VectorCopy(cl.cam.camorg, save_camorg);
 		VectorCopy(cl.cam.angles, save_camangles);
 		save_camzoom = cl.cam.zoom;
 		save_level = cl_worldlevel->value;
-	}	
+	}
 
 	if (new_camera_mode == CAMERA_MODE_REMOTE) /* toggle camera mode */
 	{
@@ -497,7 +497,7 @@ CL_SelectUp
 */
 void CL_SelectUp( void )
 {
-	if ( mouseSpace == MS_DRAG ) 
+	if ( mouseSpace == MS_DRAG )
 		MN_Click( mx, my );
 	mouseSpace = MS_NULL;
 }
@@ -561,7 +561,7 @@ void CL_NextAlien( void )
 {
 	le_t *le;
 	int i;
-	
+
 	if ( camera_mode == CAMERA_MODE_FIRSTPERSON )
 		CL_CameraModeChange( CAMERA_MODE_REMOTE );
 	if ( lastAlien >= numLEs ) lastAlien = 0;
@@ -569,7 +569,7 @@ void CL_NextAlien( void )
 	do {
 		if ( ++i >= numLEs ) i = 0;
 		le = &LEs[i];
-		if ( le->inuse && le->type == ET_ACTOR && !(le->state & STATE_DEAD) && 
+		if ( le->inuse && le->type == ET_ACTOR && !(le->state & STATE_DEAD) &&
 			le->team != cls.team && le->team != TEAM_CIVILIAN )
 		{
 			lastAlien = i;
@@ -656,7 +656,7 @@ float CL_GetKeyMouseState ( int dir )
 {
 	float	value;
 
-	if ( dir == STATE_FORWARD ) 
+	if ( dir == STATE_FORWARD )
 		value = (in_shiftup.state & 1) + (my <= 0) - (in_shiftdown.state & 1) - (my >= VID_NORM_HEIGHT-4);
 
 	else if ( dir == STATE_RIGHT )
@@ -696,23 +696,23 @@ void CL_CameraMoveFirstPerson (void)
 	float rotation_speed;
 
 	rotation_speed = (cl_camrotspeed->value > MIN_CAMROT_SPEED) ? ( (cl_camrotspeed->value < MAX_CAMROT_SPEED) ? cl_camrotspeed->value : MAX_CAMROT_SPEED ) : MIN_CAMROT_SPEED;
-	/* look left */	
+	/* look left */
 	if ( (in_turnleft.state & 1) && ((cl.cam.angles[YAW]-selActor->angles[YAW])<90) )
 		cl.cam.angles[YAW]+=cls.frametime*rotation_speed;
 
 	/* look right */
 	if ( (in_turnright.state & 1) && ((selActor->angles[YAW]-cl.cam.angles[YAW])<90) )
 		cl.cam.angles[YAW]-=cls.frametime*rotation_speed;
-	
+
 	/* look down */
 	if ( (in_turndown.state & 1) && (cl.cam.angles[PITCH] < 45) )
 		cl.cam.angles[PITCH]+=cls.frametime*rotation_speed;
-	
+
 	/* look up */
 	if ( (in_turnup.state & 1) && (cl.cam.angles[PITCH] > -45) )
 		cl.cam.angles[PITCH]-=cls.frametime*rotation_speed;
 
-	/* zoom */	
+	/* zoom */
 	frac = CL_GetKeyMouseState(STATE_ZOOM);
 	if ( frac > 0.1 ) cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
 	if ( frac <-0.1 ) cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
@@ -753,7 +753,7 @@ void CL_CameraMoveRemote (void)
 		{
 			if ( cl.cam.omega[i] > 0 ) cl.cam.omega[i] -= frac;
 			else cl.cam.omega[i] += frac;
-		} 
+		}
 		else cl.cam.omega[i] = 0;
 
 		// rotational acceleration
@@ -780,7 +780,7 @@ void CL_CameraMoveRemote (void)
 		{
 			VectorMA( cl.cam.speed, -frac, routeDelta, cl.cam.speed );
 			VectorNormalize2( cl.cam.speed, delta );
-			if ( DotProduct( delta, routeDelta ) < 0.05 ) 
+			if ( DotProduct( delta, routeDelta ) < 0.05 )
 			{
 				blockEvents = false;
 				cameraRoute = false;
@@ -807,7 +807,7 @@ void CL_CameraMoveRemote (void)
 		{
 			VectorNormalize2( cl.cam.speed, delta );
 			VectorMA( cl.cam.speed, -frac, delta, cl.cam.speed );
-		} 
+		}
 		else VectorClear( cl.cam.speed );
 
 		// acceleration
@@ -819,11 +819,11 @@ void CL_CameraMoveRemote (void)
 		VectorMA( cl.cam.speed, frac, delta, cl.cam.speed );
 
 		// lerp the level
-		if ( cl.cam.lerplevel < cl_worldlevel->value ) 
+		if ( cl.cam.lerplevel < cl_worldlevel->value )
 		{
 			cl.cam.lerplevel += LEVEL_SPEED * (cl_worldlevel->value - cl.cam.lerplevel + LEVEL_MIN) * cls.frametime;
 			if ( cl.cam.lerplevel > cl_worldlevel->value ) cl.cam.lerplevel = cl_worldlevel->value;
-		} 
+		}
 		else if ( cl.cam.lerplevel > cl_worldlevel->value )
 		{
 			cl.cam.lerplevel -= LEVEL_SPEED * (cl.cam.lerplevel - cl_worldlevel->value + LEVEL_MIN) * cls.frametime;
@@ -957,7 +957,7 @@ void CL_ParseInput (void)
 		if ( ccs.basezoom < 0.5 ) ccs.basezoom = 0.5;
 		if ( ccs.basezoom > 3.0 ) ccs.basezoom = 3.0;
 		return;
-		
+
 
 	case MS_SHIFTBASEMAP:
 		// shift the basemap

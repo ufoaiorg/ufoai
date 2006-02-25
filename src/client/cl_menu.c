@@ -356,17 +356,17 @@ float MN_GetReferenceFloat( menu_t *menu, void *ref )
 	}
 }
 
-/*
+/*=================
 MN_Popup
 
 Popup in geoscape
-*/
+=================*/
 void MN_Popup (char* title, char* text)
 {
 	menuText[TEXT_POPUP] = title;
 	menuText[TEXT_POPUP_INFO] = text;
-	Cbuf_AddText("game_timestop; mn_push popup\n");
-	Cbuf_Execute();
+	Cbuf_ExecuteText( EXEC_NOW, "game_timestop" );
+	MN_PushMenu( "popup" );
 }
 
 /*

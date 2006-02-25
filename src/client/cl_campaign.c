@@ -289,12 +289,20 @@ void CL_NewBase( vec2_t pos )
 	color = maskPic + 4 * (x + y * maskWidth);
 
 	// check for water
-	if ( color[0] == 0 && color[1] == 0 && color[2] == 255 )
+	// blue value is 64
+	if ( color[0] == 0 && color[1] == 0 && color[2] == 64 )
+	{
+		MN_Popup( _("Notice"), _("Could not set up your base at this location") );
 		return;
+	}
 
 	// build base
 	baseCurrent->pos[0] = pos[0];
 	baseCurrent->pos[1] = pos[1];
+
+	// set up the base with buildings that have the autobuild flag set
+	B_SetUpBase();
+
 	MN_PushMenu( "popup_newbase" );
 }
 
@@ -785,6 +793,11 @@ void CL_GameNew( void )
 
 	MN_PopMenu( true );
 	MN_PushMenu( "map" );
+
+	// create a base as first step
+	Cbuf_AddText( "mn_select_base -1" );
+	Cbuf_Execute();
+
 	CL_GameTimeStop();
 }
 
@@ -1350,7 +1363,7 @@ void CL_BuySelectCmd( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: buy_select <num>\n" );
+		Com_Printf( _("Usage: buy_select <num>\n") );
 		return;
 	}
 
@@ -1376,7 +1389,7 @@ void CL_BuyType( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: buy_type <category>\n" );
+		Com_Printf( _("Usage: buy_type <category>\n") );
 		return;
 	}
 	num = atoi( Cmd_Argv( 1 ) );
@@ -1432,7 +1445,7 @@ void CL_Buy( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: buy <num>\n" );
+		Com_Printf( _("Usage: buy <num>\n") );
 		return;
 	}
 
@@ -1465,7 +1478,7 @@ void CL_Sell( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: buy <num>\n" );
+		Com_Printf( _("Usage: sell <num>\n") );
 		return;
 	}
 
@@ -1503,7 +1516,6 @@ void CL_CollectItemAmmo( invList_t *weapon , int left_hand )
 		ccs.eMission.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
 		ccs.eMission.num[weapon->item.m]++;
 	}
-
 }
 
 void CL_CollectItems( int won )

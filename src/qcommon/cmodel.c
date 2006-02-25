@@ -188,7 +188,7 @@ void CMod_LoadSubmodels (lump_t *l)
 
 	in = (void *)(cmod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error (ERR_DROP, "MOD_LoadBmodel: funny lump size");
+		Com_Error (ERR_DROP, "CMod_LoadSubmodels: funny lump size");
 	count = l->filelen / sizeof(*in);
 	out = Hunk_Alloc( count*sizeof(*out) );
 
@@ -224,7 +224,7 @@ void CMod_LoadSurfaces (lump_t *l)
 
 	in = (void *)(cmod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error (ERR_DROP, "MOD_LoadBmodel: funny lump size");
+		Com_Error (ERR_DROP, "CMod_LoadSurfaces: funny lump size");
 	count = l->filelen / sizeof(*in);
 	out = Hunk_Alloc( count*sizeof(*out) );
 
@@ -256,7 +256,7 @@ void CMod_LoadNodes (lump_t *l)
 
 	in = (void *)(cmod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error (ERR_DROP, "MOD_LoadBmodel: funny lump size");
+		Com_Error (ERR_DROP, "CMod_LoadNodes: funny lump size");
 	count = l->filelen / sizeof(*in);
 	// add some for the box
 	out = Hunk_Alloc( (count + 6)*sizeof(*out) );
@@ -297,7 +297,7 @@ void CMod_LoadBrushes (lump_t *l)
 
 	in = (void *)(cmod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error (ERR_DROP, "MOD_LoadBmodel: funny lump size");
+		Com_Error (ERR_DROP, "CMod_LoadBrushes: funny lump size");
 	count = l->filelen / sizeof(*in);
 	// add some for the box
 	out = Hunk_Alloc( (count + 1)*sizeof(*out) );
@@ -314,7 +314,6 @@ void CMod_LoadBrushes (lump_t *l)
 		out->numsides = LittleLong(in->numsides);
 		out->contents = LittleLong(in->contents);
 	}
-
 }
 
 /*
@@ -331,7 +330,7 @@ void CMod_LoadLeafs (lump_t *l)
 
 	in = (void *)(cmod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error (ERR_DROP, "MOD_LoadBmodel: funny lump size");
+		Com_Error (ERR_DROP, "CMod_LoadLeafs: funny lump size");
 	count = l->filelen / sizeof(*in);
 	// add some for the box
 	out = Hunk_Alloc( (count + 1)*sizeof(*out) );
@@ -377,7 +376,7 @@ void CMod_LoadPlanes (lump_t *l)
 
 	in = (void *)(cmod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error (ERR_DROP, "MOD_LoadBmodel: funny lump size");
+		Com_Error (ERR_DROP, "CMod_LoadPlanes: funny lump size");
 	count = l->filelen / sizeof(*in);
 	// add some for the box
 	out = Hunk_Alloc( (count + 12)*sizeof(*out) );
@@ -419,7 +418,7 @@ void CMod_LoadLeafBrushes (lump_t *l)
 
 	in = (void *)(cmod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error (ERR_DROP, "MOD_LoadBmodel: funny lump size");
+		Com_Error (ERR_DROP, "CMod_LoadLeafBrushes: funny lump size");
 	count = l->filelen / sizeof(*in);
 	// add some for the box
 	out = Hunk_Alloc( (count + 1)*sizeof(*out) );
@@ -452,7 +451,7 @@ void CMod_LoadBrushSides (lump_t *l)
 
 	in = (void *)(cmod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error (ERR_DROP, "MOD_LoadBmodel: funny lump size");
+		Com_Error (ERR_DROP, "CMod_LoadBrushSides: funny lump size");
 	count = l->filelen / sizeof(*in);
 	// add some for the box
 	out = Hunk_Alloc( (count + 6)*sizeof(*out) );
@@ -882,7 +881,7 @@ void CMod_LoadEntityString (lump_t *l)
 		if (!es)
 			break;
 		if (com_token[0] != '{')
-			Com_Error (ERR_DROP, "CL_ParseEntitystring: found %s when expecting {",com_token);
+			Com_Error (ERR_DROP, "CMod_LoadEntityString: found %s when expecting {",com_token);
 
 		// new entity
 		stradd( &map_entitystringpos, "{ " );
@@ -895,17 +894,17 @@ void CMod_LoadEntityString (lump_t *l)
 			if (com_token[0] == '}')
 				break;
 			if (!es)
-				Com_Error (ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
+				Com_Error (ERR_DROP, "CMod_LoadEntityString: EOF without closing brace");
 
 			strncpy (keyname, com_token, sizeof(keyname)-1);
 
 			// parse value
 			com_token = COM_Parse (&es);
 			if (!es)
-				Com_Error (ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
+				Com_Error (ERR_DROP, "CMod_LoadEntityString: EOF without closing brace");
 
 			if (com_token[0] == '}')
-				Com_Error (ERR_DROP, "CL_ParseEntitystring: closing brace without data");
+				Com_Error (ERR_DROP, "CMod_LoadEntityString: closing brace without data");
 
 			// alter value, if needed
 			if ( !strcmp( keyname, "origin" ) )
@@ -1128,17 +1127,17 @@ cmodel_t *CM_InlineModel (char *name)
 	return NULL;
 }
 
-int		CM_NumInlineModels (void)
+int CM_NumInlineModels (void)
 {
 	return numInline;
 }
 
-char	*CM_EntityString (void)
+char *CM_EntityString (void)
 {
 	return map_entitystring;
 }
 
-int		CM_LeafContents (int leafnum)
+int CM_LeafContents (int leafnum)
 {
 	if (leafnum < 0 || leafnum >= curTile->numleafs)
 		Com_Error (ERR_DROP, "CM_LeafContents: bad number");
@@ -2046,17 +2045,18 @@ void MakeTnode (int nodenum)
 	for (i=0 ; i<2 ; i++)
 	{
 		if (node->children[i] < 0)
-			if ( curTile->leafs[-node->children[i] - 1].contents & CONTENTS_SOLID )
+		{
+			if ( curTile->leafs[-(node->children[i]) - 1].contents & CONTENTS_SOLID )
 				t->children[i] = 1 | (1<<31);
 			else
 				t->children[i] = (1<<31);
+		}
 		else
 		{
 			t->children[i] = tnode_p - curTile->tnodes;
 			MakeTnode (node->children[i]);
 		}
 	}
-
 }
 
 
@@ -2143,11 +2143,8 @@ void CM_MakeTnodes( void )
 
 	// 32 byte align the structs
 	curTile->tnodes = Hunk_Alloc( (curTile->numnodes+1) * sizeof(tnode_t) );
-#ifndef __x86_64__
 	curTile->tnodes = (tnode_t *)(((int)curTile->tnodes + 31)&~31);
-#else
-#warning Strange fix for AMD64 at cmodel.c CM_MakeTnodes
-#endif
+
 	tnode_p = curTile->tnodes;
 
 	curTile->numtheads = 0;
@@ -2171,6 +2168,13 @@ void CM_MakeTnodes( void )
 
 //==========================================================
 
+//FIXME : See other FIXME in TestLine_r and TestLineDist_r
+vec3_t tmpVec;
+/*
+=============
+TestLine_r
+=============
+*/
 int TestLine_r (int node, vec3_t start, vec3_t stop)
 {
 	tnode_t	*tnode;
@@ -2187,8 +2191,13 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 	tnode = &curTile->tnodes[node];
 	assert(tnode);
 
-	if ( ! tnode->dist )
-		return 1;
+	// FIXME: This causes trouble in pathfinding
+	//       this is also responsible for tracer(-quad) problems
+	if ( ! tnode->dist && tnode->type <= PLANE_Z
+		&& VectorCompare(start, tmpVec) )
+		return 0;
+	VectorCopy( start, tmpVec );
+	// END OF FIXME
 
 	switch (tnode->type)
 	{
@@ -2236,6 +2245,11 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 	return TestLine_r (tnode->children[!side], mid, stop);
 }
 
+/*
+=============
+TestLineDist_r
+=============
+*/
 int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 {
 	tnode_t	*tnode;
@@ -2255,8 +2269,13 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 	tnode = &curTile->tnodes[node];
 	assert( tnode );
 
-	if ( ! tnode->dist )
-		return 1;
+	// FIXME: This causes trouble in pathfinding
+	//       this is also responsible for tracer(-quad) problems
+	if ( ! tnode->dist && tnode->type <= PLANE_Z
+		&& VectorCompare(start, tmpVec) )
+		return 0;
+	VectorCopy( start, tmpVec );
+	// END OF FIXME
 
 	switch (tnode->type)
 	{
@@ -2324,7 +2343,11 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 	return TestLineDist_r (tnode->children[!side], mid, stop);
 }
 
-
+/*
+=============
+CM_TestLine
+=============
+*/
 int CM_TestLine (vec3_t start, vec3_t stop)
 {
 	int tile, i;
@@ -2333,12 +2356,19 @@ int CM_TestLine (vec3_t start, vec3_t stop)
 	{
 		curTile = &mapTiles[tile];
 		for ( i = 0; i < curTile->numtheads; i++ )
+		{
 			if ( TestLine_r( curTile->thead[i], start, stop ) )
 				return 1;
+		}
 	}
 	return 0;
 }
 
+/*
+=============
+CM_TestLineDM
+=============
+*/
 int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 {
 	int tile, i;
@@ -2349,9 +2379,11 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 	{
 		curTile = &mapTiles[tile];
 		for ( i = 0; i < curTile->numtheads; i++ )
+		{
 			if ( TestLineDist_r( curTile->thead[i], start, end ) )
 				if ( VectorNearer( tr_end, end, start ) )
 					VectorCopy( tr_end, end );
+		}
 	}
 
 	if ( VectorCompare( end, stop ) ) return 0;
