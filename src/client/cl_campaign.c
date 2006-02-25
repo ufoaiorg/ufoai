@@ -269,6 +269,18 @@ qboolean CL_MapMaskFind( byte *color, vec2_t polar )
 
 // ===========================================================
 
+// check for water
+// blue value is 64
+#define MapIsWater(color) (color[0] == 0 && color[1] == 0 && color[2] == 64)
+#define MapIsArctic(color) (color[0] == 128 && color[1] == 255 && color[2] == 255)
+#define MapIsDesert(color) (color[0] == 255 && color[1] == 128 && color[2] == 0)
+// others:
+// red 255, 0, 0
+// yellow 255, 255, 0
+// green 128, 255, 0
+// violet 128, 0, 128
+// blue (not water) 128, 128, 255
+// blue (not water, too) 0, 0, 255
 
 /*
 ======================
@@ -288,9 +300,7 @@ void CL_NewBase( vec2_t pos )
 
 	color = maskPic + 4 * (x + y * maskWidth);
 
-	// check for water
-	// blue value is 64
-	if ( color[0] == 0 && color[1] == 0 && color[2] == 64 )
+	if ( MapIsWater(color) )
 	{
 		MN_Popup( _("Notice"), _("Could not set up your base at this location") );
 		return;
