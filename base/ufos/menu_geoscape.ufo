@@ -20,7 +20,7 @@ menu map
 	map themap
 	{
 		pos		"0 96"
-		size	"1024 512"
+		size	"1024 768"
 		click rclick mclick
 	}
 
@@ -42,11 +42,11 @@ menu map
 		pos		"0 512"
 	}
 
-	pic back_lr
-	{
-		image	menu/map_lr
-		pos		"512 512"
-	}
+//	pic back_lr
+//	{
+//		image	menu/map_lr
+//		pos		"512 512"
+//	}
 
 	// ==================
 	// time
@@ -147,60 +147,72 @@ menu map
 	// buttons
 	// ==================
 
-	// create a new base
-//	pic bt_base2
-//	{
-//		image   menu/button_mapmen_bases
-//		pos     "565 700"
-//		texl    "0 37"
-//		texh    "127 68"
-//		out		{ *bt_base2 texl "0 37" *bt_base2 texh "127 68" }
-//		in		{ *bt_base2 texl "128 37" *bt_base2 texh "255 68" }
-//		click   { cmd "mn_select_base -1;" }
-//	}
-
 	pic bt_intercept
 	{
-		image   menu/button_mapmen_options
-		pos     "760 644"
-		texl    "0 0"
-		texh    "105 40"
-		out		{ *bt_intercept texl "0 0" *bt_intercept texh "105 40" }
-		in		{ *bt_intercept texl "0 44" *bt_intercept texh "105 84" }
+		image   menu/b_geobuttons
+		pos     "32 544"
+		texl    "0 64"
+		texh    "63 127"
+		out	{
+				*bt_intercept texl "0 64"
+				*bt_intercept texh "63 127"
+			}
+		in	{
+				*bt_intercept texl "0 0"
+				*bt_intercept texh "63 63"
+			}
 		click   { cmd "game_go;" }
 	}
 
 	pic bt_stats
 	{
-		image   menu/button_mapmen_options
-		pos     "880 644"
-		texl    "0 87"
-		texh    "105 127"
-		out		{ *bt_stats texl "0 87" *bt_stats texh "105 127" }
-		in		{ *bt_stats texl "0 131" *bt_stats texh "105 171" }
+		image   menu/b_geobuttons
+		pos     "102 544"
+		texl    "64 64"
+		texh    "127 127"
+		out	{
+				*bt_stats texl "64 64"
+				*bt_stats texh "127 127"
+			}
+		in	{
+				*bt_stats texl "64 0"
+				*bt_stats texh "127 63"
+			}
 		click { cmd "mn_push stats;" }
-	}
-
-	pic bt_dropships
-	{
-		image   menu/button_mapmen_options
-		pos     "760 694"
-		texl    "0 176"
-		texh    "105 216"
-		out		{ *bt_dropships texl "0 176" *bt_dropships texh "105 216" }
-		in		{ *bt_dropships texl "0 220" *bt_dropships texh "105 260" }
-		click   { cmd "mn_push team;" }
 	}
 
 	pic bt_ufopedia
 	{
-		image   menu/button_mapmen_options
-		pos     "880 694"
-		texl    "0 264"
-		texh    "105 304"
-		out		{ *bt_ufopedia texl "0 264" *bt_ufopedia texh "105 304" }
-		in		{ *bt_ufopedia texl "0 308" *bt_ufopedia texh "105 348" }
+		image   menu/b_geobuttons
+		pos     "172 544"
+		texl    "128 64"
+		texh    "191 127"
+		out	{
+				*bt_ufopedia texl "128 64"
+				*bt_ufopedia texh "191 127"
+			}
+		in	{
+				*bt_ufopedia texl "128 0"
+				*bt_ufopedia texh "191 63"
+			}
 		click { cmd "mn_push ufopedia;" }
+	}
+
+	pic bt_base
+	{
+		image   menu/b_geobuttons
+		pos     "242 544"
+		texl    "192 64"
+		texh    "255 127"
+		out	{
+				*bt_base texl "192 64"
+				*bt_base texh "255 127"
+			}
+		in	{
+				*bt_base texl "192 0"
+				*bt_base texh "255 63"
+			}
+		click   { cmd "mn_select_base -1;" }
 	}
 
 	pic bt_menu
