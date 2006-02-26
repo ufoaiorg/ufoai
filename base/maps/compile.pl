@@ -27,7 +27,7 @@ sub compile
 	foreach ( readDir( $dir ) )
 	{
 		next if $_ =~ /^\.|(CVS)/;
-		if ( -d $_ )
+		if ( -d "$dir/$_" )
 		{
 			print "...found dir $_\n";
 			$found += compile("$dir/$_");
@@ -37,7 +37,7 @@ sub compile
 		next unless $_ =~ /\.map$/;
 		next if $_ =~ /^(tutorial)|(prefab)/i;
 		$_ =~ s/\.map$//;
-		unless ( -e "$_.bsp" )
+		unless ( -e "$dir/$_.bsp" )
 		{
 			print "..found $dir/$_\n";
 			system("qbsp3 $dir/$_.map");
