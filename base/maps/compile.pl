@@ -40,8 +40,14 @@ sub compile
 		unless ( -e "$dir/$_.bsp" )
 		{
 			print "..found $dir/$_\n";
-			system("qbsp3 $dir/$_.map");
-			system("qrad3 $extra $dir/$_.bsp");
+			if (system("qbsp3 $dir/$_.map") != 0)
+			{
+				die "qbsp3 failed: $@";
+			}
+			if (system("qrad3 $extra $dir/$_.bsp") != 0)
+			{
+				die "qrad3 failed: $@";
+			}
 			$found++;
 		}
 		else
