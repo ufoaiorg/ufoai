@@ -42,11 +42,11 @@ sub compile
 			print "..found $dir/$_\n";
 			if (system("qbsp3 $dir/$_.map") != 0)
 			{
-				die "qbsp3 failed: $@";
+				die "qbsp3 failed";
 			}
 			if (system("qrad3 $extra $dir/$_.bsp") != 0)
 			{
-				die "qrad3 failed: $@";
+				die "qrad3 failed";
 			}
 			$found++;
 		}
