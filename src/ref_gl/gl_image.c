@@ -20,6 +20,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
+//#define EMBOSS
+
 char		glerrortex[MAX_GLERRORTEX];
 char		*glerrortexend;
 image_t		gltextures[MAX_GLTEXTURES];
@@ -33,8 +35,8 @@ cvar_t		*intensity;
 
 unsigned	d_8to24table[256];
 
-qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboolean is_sky );
-qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap, qboolean clamp );
+qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboolean is_sky, imagetype_t type );
+qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap, qboolean clamp, imagetype_t type );
 
 
 int		gl_solid_format = GL_RGB;
@@ -390,7 +392,7 @@ void Scrap_Upload (void)
 {
 	scrap_uploads++;
 	GL_Bind(TEXNUM_SCRAPS);
-	GL_Upload8 (scrap_texels[0], BLOCK_WIDTH, BLOCK_HEIGHT, false, false );
+	GL_Upload8 (scrap_texels[0], BLOCK_WIDTH, BLOCK_HEIGHT, false, false, it_pic );
 	scrap_dirty = false;
 }
 
@@ -1075,6 +1077,178 @@ void GL_MipMap (byte *in, int width, int height)
 	}
 }
 
+#define FILTER_SIZE 5
+#define BLUR_FILTER 0
+#define LIGHT_BLUR   1
+#define EDGE_FILTER 2
+#define EMBOSS_FILTER 3
+
+float FilterMatrix[][FILTER_SIZE][FILTER_SIZE] =
+{
+   // regular blur
+   {
+      {0, 0, 0, 0, 0},
+      {0, 1, 1, 1, 0},
+      {0, 1, 1, 1, 0},
+      {0, 1, 1, 1, 0},
+      {0, 0, 0, 0, 0},
+   },
+   // light blur
+   {
+      {0, 0, 0, 0, 0},
+      {0, 1, 1, 1, 0},
+      {0, 1, 4, 1, 0},
+      {0, 1, 1, 1, 0},
+      {0, 0, 0, 0, 0},
+   },
+   // find edges
+   {
+      {0,  0,  0,  0, 0},
+      {0, -1, -1, -1, 0},
+      {0, -1,  8, -1, 0},
+      {0, -1, -1, -1, 0},
+      {0,  0,  0,  0, 0},
+   },
+   // emboss
+   {
+      {-1, -1, -1, -1, 0},
+      {-1, -1, -1,  0, 1},
+      {-1, -1,  0,  1, 1},
+      {-1,  0,  1,  1, 1},
+      { 0,  1,  1,  1, 1},
+   }
+};
+
+/*
+==================
+R_FilterTexture
+
+Applies a 5 x 5 filtering matrix to the texture, then runs it through a simulated OpenGL texture environment
+blend with the original data to derive a new texture.  Freaky, funky, and *f--king* *fantastic*.  You can do
+reasonable enough "fake bumpmapping" with this baby...
+
+Filtering algorithm from http://www.student.kuleuven.ac.be/~m0216922/CG/filtering.html
+All credit due
+==================
+*/
+void R_FilterTexture (int filterindex, unsigned int *data, int width, int height, float factor, float bias, qboolean greyscale, GLenum GLBlendOperator)
+{
+   int i;
+   int x;
+   int y;
+   int filterX;
+   int filterY;
+   unsigned int *temp;
+
+   // allocate a temp buffer
+   temp = malloc (width * height * 4);
+
+   for (x = 0; x < width; x++)
+   {
+      for (y = 0; y < height; y++)
+      {
+         float rgbFloat[3] = {0, 0, 0};
+
+         for (filterX = 0; filterX < FILTER_SIZE; filterX++)
+         {
+            for (filterY = 0; filterY < FILTER_SIZE; filterY++)
+            {
+               int imageX = (x - (FILTER_SIZE / 2) + filterX + width) % width;
+               int imageY = (y - (FILTER_SIZE / 2) + filterY + height) % height;
+
+               // casting's a unary operation anyway, so the othermost set of brackets in the left part
+               // of the rvalue should not be necessary... but i'm paranoid when it comes to C...
+               rgbFloat[0] += ((float) ((byte *) &data[imageY * width + imageX])[0]) * FilterMatrix[filterindex][filterX][filterY];
+               rgbFloat[1] += ((float) ((byte *) &data[imageY * width + imageX])[1]) * FilterMatrix[filterindex][filterX][filterY];
+               rgbFloat[2] += ((float) ((byte *) &data[imageY * width + imageX])[2]) * FilterMatrix[filterindex][filterX][filterY];
+            }
+         }
+
+         // multiply by factor, add bias, and clamp
+         for (i = 0; i < 3; i++)
+         {
+            rgbFloat[i] *= factor;
+            rgbFloat[i] += bias;
+
+            if (rgbFloat[i] < 0) rgbFloat[i] = 0;
+            if (rgbFloat[i] > 255) rgbFloat[i] = 255;
+         }
+
+         if (greyscale)
+         {
+            // NTSC greyscale conversion standard
+            float avg = (rgbFloat[0] * 30 + rgbFloat[1] * 59 + rgbFloat[2] * 11) / 100;
+
+            // divide by 255 so GL operations work as expected
+            rgbFloat[0] = avg / 255.0;
+            rgbFloat[1] = avg / 255.0;
+            rgbFloat[2] = avg / 255.0;
+         }
+
+         // write to temp - first, write data in (to get the alpha channel quickly and
+         // easily, which will be left well alone by this particular operation...!)
+         temp[y * width + x] = data[y * width + x];
+
+         // now write in each element, applying the blend operator.  blend
+         // operators are based on standard OpenGL TexEnv modes, and the
+         // formulae are derived from the OpenGL specs (http://www.opengl.org).
+         for (i = 0; i < 3; i++)
+         {
+            // divide by 255 so GL operations work as expected
+            float TempTarget;
+            float SrcData = ((float) ((byte *) &data[y * width + x])[i]) / 255.0;
+
+            switch (GLBlendOperator)
+            {
+            case GL_ADD:
+               TempTarget = rgbFloat[i] + SrcData;
+               break;
+
+            case GL_BLEND:
+               // default is FUNC_ADD here
+               // CsS + CdD works out as Src * Dst * 2
+               TempTarget = rgbFloat[i] * SrcData * 2.0;
+               break;
+
+            case GL_DECAL:
+               // same as GL_REPLACE unless there's alpha, which we ignore for this
+            case GL_REPLACE:
+               TempTarget = rgbFloat[i];
+               break;
+
+            case GL_ADD_SIGNED:
+               TempTarget = (rgbFloat[i] + SrcData) - 0.5;
+               break;
+
+            case GL_MODULATE:
+               // same as default
+            default:
+               TempTarget = rgbFloat[i] * SrcData;
+               break;
+            }
+
+            // multiply back by 255 to get the proper byte scale
+            TempTarget *= 255.0;
+
+            // bound the temp target again now, cos the operation may have thrown it out
+            if (TempTarget < 0) TempTarget = 0;
+            if (TempTarget > 255) TempTarget = 255;
+
+            // and copy it in
+            ((byte *) &temp[y * width + x])[i] = (byte) TempTarget;
+         }
+      }
+   }
+
+   // copy temp back to data
+   for (i = 0; i < (width * height); i++)
+   {
+      data[i] = temp[i];
+   }
+
+   // release the temp buffer
+   free (temp);
+}
 /*
 ===============
 GL_Upload32
@@ -1085,7 +1259,7 @@ Returns has_alpha
 int		upload_width, upload_height;
 unsigned scaled_buffer[1024*1024];
 
-qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qboolean clamp)
+qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type)
 {
 	unsigned	*scaled;
 	int			samples;
@@ -1140,7 +1314,9 @@ qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qb
 			break;
 		}
 	}
-
+#ifdef EMBOSS
+	if (mipmap && type != it_skin) R_FilterTexture (EMBOSS_FILTER, data, width, height, 1, 128, true, GL_MODULATE);
+#endif
 	if (scaled_width == width && scaled_height == height)
 	{
 		if (!mipmap)
@@ -1213,24 +1389,7 @@ GL_Upload8
 Returns has_alpha
 ===============
 */
-/*
-static qboolean IsPowerOf2( int value )
-{
-	int i = 1;
-
-
-	while ( 1 )
-	{
-		if ( value == i )
-			return true;
-		if ( i > value )
-			return false;
-		i <<= 1;
-	}
-}
-*/
-
-qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboolean is_sky )
+qboolean GL_Upload8 (byte *data, int width, int height, qboolean mipmap, qboolean is_sky, imagetype_t type )
 {
 	unsigned	trans[512*256];
 	int			i, s;
@@ -1267,7 +1426,7 @@ qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboole
 		}
 	}
 
-	return GL_Upload32 (trans, width, height, mipmap, true);
+	return GL_Upload32 (trans, width, height, mipmap, true, type);
 }
 
 
@@ -1430,10 +1589,10 @@ nonscrap:
 		image->texnum = TEXNUM_IMAGES + (image - gltextures);
 		GL_Bind(image->texnum);
 		if (bits == 8)
-			image->has_alpha = GL_Upload8 (pic, width, height, (image->type != it_pic && image->type != it_sky), image->type == it_sky );
+			image->has_alpha = GL_Upload8 (pic, width, height, (image->type != it_pic && image->type != it_sky), image->type == it_sky, image->type );
 		else
 			image->has_alpha = GL_Upload32 ((unsigned *)pic, width, height,
-				(image->type != it_pic && image->type != it_wrappic && image->type != it_sky), image->type == it_pic );
+				(image->type != it_pic && image->type != it_wrappic && image->type != it_sky), image->type == it_pic, image->type );
 		image->upload_width = upload_width;		// after power of 2 and scales
 		image->upload_height = upload_height;
 		image->paletted = false;
