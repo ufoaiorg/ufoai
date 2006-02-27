@@ -20,8 +20,9 @@ menu map
 	map themap
 	{
 		pos		"0 96"
-		size	"1024 768"
-		click rclick mclick
+		size	"1024 672"
+		click mclick
+		rclick { cmd "mn_mapaction_reset;" }
 	}
 
 	pic back_ul
