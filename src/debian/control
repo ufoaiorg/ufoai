@@ -18,3 +18,12 @@ Description: UFO: Alien Invasion - build your team and stop the aliens
  .
  The tactical part of the game uses OpenGL, and is based on the Quake2
  engine.  A multiplayer mode is also available.
+
+Package: ufoai-tools
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: UFO: Alien Invasion - data-building tool
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ Tis package includes modified versions of the quake2 map- and
+ model-building tools: qbsp3, qrad3, qbspinfo3.

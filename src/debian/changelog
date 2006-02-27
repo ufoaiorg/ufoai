@@ -1,9 +1,14 @@
 ufoai (0.0.cvs) unstable; urgency=low
 
-  * CVS snapshot
+  * CVS snapshot.
   * Depend on newer data package.
+  * Drop update-ufoai-campaign script (and thus ufoai-common package), no
+    longer applying to current code.
+  * Build map- and model-building tool, in new ufoai-tools package.
+  * Automatically update package version to use cvsps patchset number when
+    run from a CVS working directory.
 
- -- Yann Dirson <dirson@debian.org>  Thu, 23 Feb 2006 00:23:51 +0100
+ -- Yann Dirson <dirson@debian.org>  Mon, 27 Feb 2006 23:47:33 +0100
 
 ufoai (0.0.040218-0.8) unstable; urgency=low
 
