@@ -1484,11 +1484,7 @@ char *Info_ValueForKey (char *s, char *key)
 		o = value[valueindex];
 
 		while (*s != '\\' && *s)
-		{
-			if (!*s)
-				return "";
 			*o++ = *s++;
-		}
 		*o = 0;
 
 		if (!strcmp (key, pkey) )
