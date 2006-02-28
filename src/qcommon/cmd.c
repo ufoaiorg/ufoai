@@ -216,6 +216,9 @@ void Cbuf_Execute (void)
 				break;
 		}
 
+		// sku - removed potentional buffer overflow vulnerability
+		if( i > sizeof( line ) - 1 )
+			i = sizeof( line ) - 1;
 
 		memcpy (line, text, i);
 		line[i] = 0;
@@ -233,7 +236,7 @@ void Cbuf_Execute (void)
 			memmove (text, text+i, cmd_text.cursize);
 		}
 
-// execute the command line
+		// execute the command line
 		Cmd_ExecuteString (line);
 
 		if (cmd_wait)
@@ -301,7 +304,7 @@ qboolean Cbuf_AddLateCommands (void)
 	int		argc;
 	qboolean	ret;
 
-// build the combined string to parse from
+	// build the combined string to parse from
 	s = 0;
 	argc = COM_Argc();
 	for (i=1 ; i<argc ; i++)
@@ -320,7 +323,7 @@ qboolean Cbuf_AddLateCommands (void)
 			strcat (text, " ");
 	}
 
-// pull out the commands
+	// pull out the commands
 	build = Z_Malloc (s+1);
 	build[0] = 0;
 
@@ -655,7 +658,8 @@ void Cmd_TokenizeString (char *text, qboolean macroExpand)
 		{
 			int		l;
 
-			strcpy (cmd_args, text);
+			// sku - removed potentional buffer overflow vulnerability
+			strncpy( cmd_args, text, sizeof( cmd_args ) );
 
 			// strip off any trailing whitespace
 			l = strlen(cmd_args) - 1;

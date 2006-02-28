@@ -194,8 +194,6 @@ void GL_DrawAliasFrameLerp (dmdl_t *paliashdr, float backlerp, int framenum, int
 		qglUnlockArraysEXT();
 }
 
-
-#if 1
 /*
 =============
 GL_DrawAliasShadow
@@ -223,6 +221,13 @@ void GL_DrawAliasShadow (dmdl_t *paliashdr, int posenum)
 	order = (int *)((byte *)paliashdr + paliashdr->ofs_glcmds);
 
 	height = -lheight + 1.0;
+
+	/* stencilbuffer shadows */
+	if (have_stencil && gl_stencilshadow->value) {
+		qglEnable(GL_STENCIL_TEST);
+		qglStencilFunc(GL_EQUAL, 1, 2);
+		qglStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+	}
 
 	while (1)
 	{
@@ -263,9 +268,10 @@ void GL_DrawAliasShadow (dmdl_t *paliashdr, int posenum)
 
 		qglEnd ();
 	}
+	/* stencilbuffer shadows */
+	if (have_stencil && gl_stencilshadow->value)
+		qglDisable(GL_STENCIL_TEST);
 }
-
-#endif
 
 /*
 ** R_CullAliasModel

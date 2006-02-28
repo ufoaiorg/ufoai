@@ -915,7 +915,7 @@ void FS_Link_f (void)
 
 	if (Cmd_Argc() != 3)
 	{
-		Com_Printf ("USAGE: link <from> <to>\n");
+		Com_Printf (_("USAGE: link <from> <to>\n"));
 		return;
 	}
 
@@ -1121,7 +1121,7 @@ void FS_InitFilesystem (void)
 		FS_AddGameDirectory (va("%s/"BASEDIRNAME, fs_cddir->string) );
 
 	//
-	// start up with baseq2 by default
+	// start up with base by default
 	//
 	FS_AddGameDirectory (va("%s/"BASEDIRNAME, fs_basedir->string) );
 

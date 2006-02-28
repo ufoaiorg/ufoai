@@ -104,6 +104,7 @@ static XF86VidModeModeInfo **vidmodes;
 // static int default_dotclock_vidmode;
 static int num_vidmodes;
 static qboolean vidmode_active = false;
+static XF86VidModeGamma oldgamma;
 
 // static qboolean	mlooking;
 
@@ -121,6 +122,9 @@ static cvar_t *m_yaw;
 static cvar_t *m_pitch;
 static cvar_t *m_forward;
 static cvar_t *freelook;
+
+/* stencilbuffer shadows */
+qboolean have_stencil = false;
 
 static Cursor CreateNullCursor(Display *display, Window root)
 {
@@ -586,6 +590,16 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		GLX_BLUE_SIZE, 1,
 		GLX_DOUBLEBUFFER,
 		GLX_DEPTH_SIZE, 1,
+		GLX_STENCIL_SIZE, 1,
+		None
+	};
+	int attrib_nostencil[] = {
+		GLX_RGBA,
+		GLX_RED_SIZE, 1,
+		GLX_GREEN_SIZE, 1,
+		GLX_BLUE_SIZE, 1,
+		GLX_DOUBLEBUFFER,
+		GLX_DEPTH_SIZE, 1,
 		None
 	};
 	Window root;
@@ -641,9 +655,50 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	}
 
 	visinfo = qglXChooseVisual(dpy, scrnum, attrib);
-	if (!visinfo) {
+	if (!visinfo)
+	{
+		fprintf(stderr, "Error couldn't get an RGB, Double-buffered, Stencil, Depth visual\n");
+		visinfo = qglXChooseVisual(dpy, scrnum, attrib_nostencil);
+	}
+
+	if (!visinfo){
 		fprintf(stderr, "Error couldn't get an RGB, Double-buffered, Depth visual\n");
 		return rserr_invalid_mode;
+	}
+
+	gl_state.hwgamma = false;
+
+	/* do some pantsness */
+	if ( qglXGetConfig )
+	{
+		int red_bits, blue_bits, green_bits, depth_bits, alpha_bits;
+
+		qglXGetConfig(dpy, visinfo, GLX_RED_SIZE, &red_bits);
+		qglXGetConfig(dpy, visinfo, GLX_BLUE_SIZE, &blue_bits);
+		qglXGetConfig(dpy, visinfo, GLX_GREEN_SIZE, &green_bits);
+		qglXGetConfig(dpy, visinfo, GLX_DEPTH_SIZE, &depth_bits);
+		qglXGetConfig(dpy, visinfo, GLX_ALPHA_SIZE, &alpha_bits);
+
+		ri.Con_Printf(PRINT_ALL, "I: got %d bits of red\n", red_bits);
+		ri.Con_Printf(PRINT_ALL, "I: got %d bits of blue\n", blue_bits);
+		ri.Con_Printf(PRINT_ALL, "I: got %d bits of green\n", green_bits);
+		ri.Con_Printf(PRINT_ALL, "I: got %d bits of depth\n", depth_bits);
+		ri.Con_Printf(PRINT_ALL, "I: got %d bits of alpha\n", alpha_bits);
+	}
+
+	/* stencilbuffer shadows */
+	if ( qglXGetConfig )
+	{
+		int stencil_bits;
+
+		if (!qglXGetConfig(dpy, visinfo, GLX_STENCIL_SIZE, &stencil_bits)) {
+			ri.Con_Printf(PRINT_ALL, "I: got %d bits of stencil\n", stencil_bits);
+			if (stencil_bits >= 1) {
+				have_stencil = true;
+			}
+		}
+	} else {
+		have_stencil = true;
 	}
 
 	if (vidmode_ext) {
@@ -677,6 +732,15 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 				// change to the mode
 				XF86VidModeSwitchToMode(dpy, scrnum, vidmodes[best_fit]);
 				vidmode_active = true;
+
+				if (XF86VidModeGetGamma(dpy, scrnum, &oldgamma)) {
+					gl_state.hwgamma = true;
+					/* We can not reliably detect hardware gamma
+					   changes across software gamma calls, which
+					   can reset the flag, so change it anyway */
+					vid_gamma->modified = true;
+					ri.Con_Printf( PRINT_ALL, "Using hardware gamma\n");
+				}
 
 				// Move the viewport to top left
 				XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
@@ -750,6 +814,10 @@ void GLimp_Shutdown( void )
 	mouse_active = false;
 	dgamouse = false;
 
+	//revert to original gamma-settings
+	if ( gl_state.hwgamma )
+		XF86VidModeSetGamma(dpy, scrnum, &oldgamma);
+
 	if (dpy) {
 		if (ctx)
 			qglXDestroyContext(dpy, ctx);
@@ -796,6 +864,20 @@ void GLimp_EndFrame (void)
 {
 	qglFlush();
 	qglXSwapBuffers(dpy, win);
+}
+
+/*
+** UpdateHardwareGamma
+*/
+void UpdateHardwareGamma( void )
+{
+	float g = vid_gamma->value;
+	XF86VidModeGamma gamma;
+
+	gamma.red = g;
+	gamma.green = g;
+	gamma.blue = g;
+	XF86VidModeSetGamma(dpy, scrnum, &gamma);
 }
 
 /*

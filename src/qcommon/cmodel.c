@@ -190,8 +190,13 @@ void CMod_LoadSubmodels (lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error (ERR_DROP, "CMod_LoadSubmodels: funny lump size");
 	count = l->filelen / sizeof(*in);
-	out = Hunk_Alloc( count*sizeof(*out) );
 
+	if (count < 1)
+		Com_Error (ERR_DROP, "Map with no models");
+	if (count > MAX_MAP_MODELS)
+		Com_Error (ERR_DROP, "Map has too many models");
+
+	out = Hunk_Alloc( count*sizeof(*out) );
 	curTile->cmodels = out;
 	curTile->numcmodels = count;
 
@@ -226,6 +231,12 @@ void CMod_LoadSurfaces (lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error (ERR_DROP, "CMod_LoadSurfaces: funny lump size");
 	count = l->filelen / sizeof(*in);
+
+	if (count < 1)
+		Com_Error (ERR_DROP, "Map with no surfaces");
+	if (count > MAX_MAP_TEXINFO)
+		Com_Error (ERR_DROP, "Map has too many surfaces");
+
 	out = Hunk_Alloc( count*sizeof(*out) );
 
 	curTile->surfaces = out;
@@ -258,6 +269,12 @@ void CMod_LoadNodes (lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error (ERR_DROP, "CMod_LoadNodes: funny lump size");
 	count = l->filelen / sizeof(*in);
+
+	if (count < 1)
+		Com_Error (ERR_DROP, "Map has no nodes");
+	if (count > MAX_MAP_NODES)
+		Com_Error (ERR_DROP, "Map has too many nodes");
+
 	// add some for the box
 	out = Hunk_Alloc( (count + 6)*sizeof(*out) );
 
@@ -299,11 +316,12 @@ void CMod_LoadBrushes (lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error (ERR_DROP, "CMod_LoadBrushes: funny lump size");
 	count = l->filelen / sizeof(*in);
-	// add some for the box
-	out = Hunk_Alloc( (count + 1)*sizeof(*out) );
 
 	if (count > MAX_MAP_BRUSHES)
 		Com_Error (ERR_DROP, "Map has too many brushes");
+
+	// add some for the box
+	out = Hunk_Alloc( (count + 1)*sizeof(*out) );
 
 	curTile->numbrushes = count;
 	curTile->brushes = out;
@@ -332,6 +350,13 @@ void CMod_LoadLeafs (lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error (ERR_DROP, "CMod_LoadLeafs: funny lump size");
 	count = l->filelen / sizeof(*in);
+
+	if (count < 1)
+		Com_Error (ERR_DROP, "Map with no leafs");
+	// need to save space for box planes
+	if (count > MAX_MAP_PLANES)
+		Com_Error (ERR_DROP, "Map has too many planes");
+
 	// add some for the box
 	out = Hunk_Alloc( (count + 1)*sizeof(*out) );
 
@@ -378,6 +403,13 @@ void CMod_LoadPlanes (lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error (ERR_DROP, "CMod_LoadPlanes: funny lump size");
 	count = l->filelen / sizeof(*in);
+
+	if (count < 1)
+		Com_Error (ERR_DROP, "Map with no planes");
+	// need to save space for box planes
+	if (count > MAX_MAP_PLANES)
+		Com_Error (ERR_DROP, "Map has too many planes");
+
 	// add some for the box
 	out = Hunk_Alloc( (count + 12)*sizeof(*out) );
 
@@ -420,6 +452,7 @@ void CMod_LoadLeafBrushes (lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error (ERR_DROP, "CMod_LoadLeafBrushes: funny lump size");
 	count = l->filelen / sizeof(*in);
+
 	// add some for the box
 	out = Hunk_Alloc( (count + 1)*sizeof(*out) );
 
@@ -453,6 +486,11 @@ void CMod_LoadBrushSides (lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error (ERR_DROP, "CMod_LoadBrushSides: funny lump size");
 	count = l->filelen / sizeof(*in);
+
+	// need to save space for box planes
+	if (count > MAX_MAP_BRUSHSIDES)
+		Com_Error (ERR_DROP, "Map has too many planes");
+
 	// add some for the box
 	out = Hunk_Alloc( (count + 6)*sizeof(*out) );
 
@@ -2143,8 +2181,11 @@ void CM_MakeTnodes( void )
 
 	// 32 byte align the structs
 	curTile->tnodes = Hunk_Alloc( (curTile->numnodes+1) * sizeof(tnode_t) );
+#ifndef __x86_64__
 	curTile->tnodes = (tnode_t *)(((int)curTile->tnodes + 31)&~31);
-
+#else
+#warning Strange fix for AMD64 at cmodel.c CM_MakeTnodes
+#endif
 	tnode_p = curTile->tnodes;
 
 	curTile->numtheads = 0;

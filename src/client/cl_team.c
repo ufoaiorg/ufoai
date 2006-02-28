@@ -302,6 +302,8 @@ item_t CL_AddWeaponAmmo( equipDef_t *ed, int type )
 	item_t item;
 	int i;
 
+	item.a = 0;
+	item.m = NONE;
 	item.t = NONE;
 	if ( ed->num[type] <= 0 )
 		return item;

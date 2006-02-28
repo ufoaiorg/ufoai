@@ -258,6 +258,9 @@ extern	cvar_t	*gl_mode;
 extern	cvar_t	*gl_log;
 extern	cvar_t	*gl_lightmap;
 extern	cvar_t	*gl_shadows;
+extern	cvar_t	*gl_stencilshadow;
+/* stencilbuffer shadows */
+extern qboolean have_stencil;
 
 extern	cvar_t	*gl_dynamic;
 extern  cvar_t  *gl_monolightmap;
@@ -506,6 +509,8 @@ typedef struct
 
 	int	currenttextures[2];
 	int currenttmu;
+
+	qboolean hwgamma;
 
 	float camera_separation;
 	qboolean stereo_enabled;

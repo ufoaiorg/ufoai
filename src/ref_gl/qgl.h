@@ -453,6 +453,7 @@ extern void (*qglXDestroyContext)( Display *dpy, GLXContext ctx );
 extern Bool (*qglXMakeCurrent)( Display *dpy, GLXDrawable drawable, GLXContext ctx);
 extern void (*qglXCopyContext)( Display *dpy, GLXContext src, GLXContext dst, GLuint mask );
 extern void (*qglXSwapBuffers)( Display *dpy, GLXDrawable drawable );
+extern int (*qglXGetConfig) (Display *dpy, XVisualInfo *vis, int attrib, int *value);
 
 // 3dfxSetPaletteEXT shunt
 void Fake_glColorTableEXT( GLenum target, GLenum internalformat,

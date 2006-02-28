@@ -116,7 +116,7 @@ void Com_Printf (char *fmt, ...)
 	char		msg[MAXPRINTMSG];
 
 	va_start (argptr,fmt);
-	vsprintf (msg,fmt,argptr);
+	vsnprintf (msg,MAXPRINTMSG,fmt,argptr);
 	va_end (argptr);
 
 	if (rd_target)
@@ -172,7 +172,7 @@ void Com_DPrintf (char *fmt, ...)
 		return;			// don't confuse non-developers with techie stuff...
 
 	va_start (argptr,fmt);
-	vsprintf (msg,fmt,argptr);
+	vsnprintf (msg,MAXPRINTMSG,fmt,argptr);
 	va_end (argptr);
 
 	Com_Printf ("%s", msg);
@@ -198,7 +198,7 @@ void Com_Error (int code, char *fmt, ...)
 	recursive = true;
 
 	va_start (argptr,fmt);
-	vsprintf (msg,fmt,argptr);
+	vsnprintf (msg,MAXPRINTMSG,fmt,argptr);
 	va_end (argptr);
 
 	if (code == ERR_DISCONNECT)
@@ -1264,7 +1264,7 @@ void Qcommon_LocaleInit ( void )
 	// use system locale dir if we can't find in gamedir
 #ifndef _WIN32
 	localeDir = bindtextdomain ( "ufoai", "./base/i18n/" );
-#else 
+#else
 	// TODO: Check this - dont own windows
  	localeDir = bindtextdomain ( "ufoai", va("%s/i18n/", FS_Gamedir() ) );
 #endif

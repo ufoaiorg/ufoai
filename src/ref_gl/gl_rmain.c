@@ -112,6 +112,7 @@ cvar_t	*gl_drawbuffer;
 cvar_t  *gl_driver;
 cvar_t	*gl_lightmap;
 cvar_t	*gl_shadows;
+cvar_t	*gl_stencilshadow;
 cvar_t	*gl_mode;
 cvar_t	*gl_dynamic;
 cvar_t  *gl_monolightmap;
@@ -144,6 +145,8 @@ cvar_t	*vid_fullscreen;
 cvar_t	*vid_gamma;
 cvar_t	*vid_ref;
 cvar_t  *vid_grabmouse;
+
+extern void UpdateHardwareGamma (void);
 
 /*
 =================
@@ -991,6 +994,11 @@ void R_Clear (void)
 
 	qglDepthRange (gldepthmin, gldepthmax);
 
+	/* stencilbuffer shadows */
+	if (gl_shadows->value && have_stencil && gl_stencilshadow->value) {
+		qglClearStencil(1);
+		qglClear(GL_STENCIL_BUFFER_BIT);
+	}
 }
 
 void R_Flash( void )
@@ -1216,6 +1224,7 @@ void R_Register( void )
 	gl_mode = ri.Cvar_Get( "gl_mode", "3", CVAR_ARCHIVE );
 	gl_lightmap = ri.Cvar_Get ("gl_lightmap", "0", 0);
 	gl_shadows = ri.Cvar_Get ("gl_shadows", "1", CVAR_ARCHIVE );
+	gl_stencilshadow = ri.Cvar_Get("gl_stencilshadow", "0", CVAR_ARCHIVE);
 	gl_dynamic = ri.Cvar_Get ("gl_dynamic", "1", 0);
 	gl_nobind = ri.Cvar_Get ("gl_nobind", "0", 0);
 	gl_round_down = ri.Cvar_Get ("gl_round_down", "1", 0);
@@ -1383,19 +1392,21 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	/*
 	** get our various GL strings
 	*/
-	gl_config.vendor_string = qglGetString (GL_VENDOR);
+	gl_config.vendor_string = (char *)qglGetString (GL_VENDOR);
 	ri.Con_Printf (PRINT_ALL, "GL_VENDOR: %s\n", gl_config.vendor_string );
-	gl_config.renderer_string = qglGetString (GL_RENDERER);
+	gl_config.renderer_string = (char *)qglGetString (GL_RENDERER);
 	ri.Con_Printf (PRINT_ALL, "GL_RENDERER: %s\n", gl_config.renderer_string );
-	gl_config.version_string = qglGetString (GL_VERSION);
+	gl_config.version_string = (char *)qglGetString (GL_VERSION);
 	ri.Con_Printf (PRINT_ALL, "GL_VERSION: %s\n", gl_config.version_string );
-	gl_config.extensions_string = qglGetString (GL_EXTENSIONS);
+	gl_config.extensions_string = (char *)qglGetString (GL_EXTENSIONS);
 	ri.Con_Printf (PRINT_ALL, "GL_EXTENSIONS: %s\n", gl_config.extensions_string );
 
-	strcpy( renderer_buffer, gl_config.renderer_string );
+	strncpy( renderer_buffer, gl_config.renderer_string, sizeof(renderer_buffer) );
+	renderer_buffer[sizeof(renderer_buffer)-1] = 0;
 	strlwr( renderer_buffer );
 
-	strcpy( vendor_buffer, gl_config.vendor_string );
+	strncpy( vendor_buffer, gl_config.vendor_string, sizeof(vendor_buffer) );
+	vendor_buffer[sizeof(vendor_buffer)-1] = 0;
 	strlwr( vendor_buffer );
 
 	if ( strstr( renderer_buffer, "voodoo" ) )
@@ -1626,7 +1637,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	{
 		int size;
 		GLenum err;
-	
+
 		ri.Con_Printf( PRINT_ALL, "Max texture size supported\n" );
 		qglGetIntegerv(GL_MAX_TEXTURE_SIZE, &size);
 		if (( err = qglGetError() )) {
@@ -1733,7 +1744,9 @@ void R_BeginFrame( float camera_separation )
 	{
 		vid_gamma->modified = false;
 
-		if ( gl_config.renderer & ( GL_RENDERER_VOODOO ) )
+		if ( gl_state.hwgamma )
+			UpdateHardwareGamma();
+		else if ( gl_config.renderer & ( GL_RENDERER_VOODOO ) )
 		{
 			char envbuffer[1024];
 			float g;

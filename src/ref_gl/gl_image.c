@@ -1651,6 +1651,7 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 	int		i, l, len;
 	byte	*pic, *palette;
 	int		width, height;
+	char *ptr;
 
 	if (!pname)
 		ri.Sys_Error (ERR_DROP, "GL_FindImage: NULL name");
@@ -1658,6 +1659,12 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 	if (len<5)
 		return NULL;	//	ri.Sys_Error (ERR_DROP, "GL_FindImage: bad name: %s", name);
 
+#ifndef _WIN32
+	// fix backslashes
+	while ((ptr=strchr(pname,'\\'))) {
+		*ptr = '/';
+	}
+#endif
 	// drop extension
 	strcpy( lname, pname );
 	if ( lname[len-4] == '.' ) len -= 4;
@@ -1883,7 +1890,7 @@ void	GL_InitImages (void)
 
 	for ( i = 0; i < 256; i++ )
 	{
-		if ( g == 1 )
+		if ( g == 1 || gl_state.hwgamma )
 		{
 			gammatable[i] = i;
 		}

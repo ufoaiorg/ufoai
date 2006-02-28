@@ -420,6 +420,11 @@ void Draw_StretchPic (int x, int y, int w, int h, char *pic)
 	image_t *gl;
 
 	gl = Draw_FindPic (pic);
+	if (!gl)
+	{
+		ri.Con_Printf (PRINT_ALL, "Can't find pic: %s\n", pic);
+		return;
+	}
 
 	if (scrap_dirty)
 		Scrap_Upload ();
@@ -449,6 +454,11 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 	image_t *gl;
 
 	gl = Draw_FindPic( name );
+	if (!gl)
+	{
+		ri.Con_Printf (PRINT_ALL, "Can't find pic: %s\n", name);
+		return;
+	}
 
 	if (scrap_dirty)
 		Scrap_Upload ();
@@ -523,6 +533,11 @@ void Draw_Pic (int x, int y, char *pic)
 	image_t *gl;
 
 	gl = Draw_FindPic (pic);
+	if (!gl)
+	{
+		ri.Con_Printf (PRINT_ALL, "Can't find pic: %s\n", pic);
+		return;
+	}
 
 	if (scrap_dirty)
 		Scrap_Upload ();
@@ -553,6 +568,11 @@ void Draw_TileClear (int x, int y, int w, int h, char *name)
 	image_t	*image;
 
 	image = Draw_FindPic (name);
+	if (!image)
+	{
+		ri.Con_Printf (PRINT_ALL, "Can't find pic: %s\n", name);
+		return;
+	}
 
 	GL_Bind (image->texnum);
 	qglBegin (GL_QUADS);
