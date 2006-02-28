@@ -20,8 +20,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-//#define EMBOSS
-
 char		glerrortex[MAX_GLERRORTEX];
 char		*glerrortexend;
 image_t		gltextures[MAX_GLTEXTURES];
@@ -32,6 +30,7 @@ static byte	 intensitytable[256];
 static unsigned char gammatable[256];
 
 cvar_t		*intensity;
+extern cvar_t		*gl_embossfilter;
 
 unsigned	d_8to24table[256];
 
@@ -1314,9 +1313,8 @@ qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qb
 			break;
 		}
 	}
-#ifdef EMBOSS
-	if (mipmap && type != it_skin) R_FilterTexture (EMBOSS_FILTER, data, width, height, 1, 128, true, GL_MODULATE);
-#endif
+	if (gl_embossfilter->value && mipmap && type != it_skin) R_FilterTexture (EMBOSS_FILTER, data, width, height, 1, 128, true, GL_MODULATE);
+
 	if (scaled_width == width && scaled_height == height)
 	{
 		if (!mipmap)

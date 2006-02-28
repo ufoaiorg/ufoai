@@ -113,6 +113,7 @@ cvar_t  *gl_driver;
 cvar_t	*gl_lightmap;
 cvar_t	*gl_shadows;
 cvar_t	*gl_stencilshadow;
+cvar_t	*gl_embossfilter;
 cvar_t	*gl_mode;
 cvar_t	*gl_dynamic;
 cvar_t  *gl_monolightmap;
@@ -1225,6 +1226,7 @@ void R_Register( void )
 	gl_lightmap = ri.Cvar_Get ("gl_lightmap", "0", 0);
 	gl_shadows = ri.Cvar_Get ("gl_shadows", "1", CVAR_ARCHIVE );
 	gl_stencilshadow = ri.Cvar_Get("gl_stencilshadow", "0", CVAR_ARCHIVE);
+	gl_embossfilter = ri.Cvar_Get("gl_embossfilter", "0", CVAR_ARCHIVE);
 	gl_dynamic = ri.Cvar_Get ("gl_dynamic", "1", 0);
 	gl_nobind = ri.Cvar_Get ("gl_nobind", "0", 0);
 	gl_round_down = ri.Cvar_Get ("gl_round_down", "1", 0);

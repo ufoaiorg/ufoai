@@ -116,7 +116,11 @@ void Com_Printf (char *fmt, ...)
 	char		msg[MAXPRINTMSG];
 
 	va_start (argptr,fmt);
+#ifndef _WIN32
 	vsnprintf (msg,MAXPRINTMSG,fmt,argptr);
+#else
+	vsprintf (msg,fmt,argptr);
+#endif
 	va_end (argptr);
 
 	if (rd_target)
