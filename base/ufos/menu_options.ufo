@@ -293,6 +293,28 @@ menu options_video
 		}
 	}
 
+	string gamma_str
+	{
+		string	"Gamma:"
+		pos		"500 290"
+	}
+	pic gamma_rahmen
+	{
+		image	menu/bar_rahmen
+		pos		"645 288"
+	}
+	bar gamma_bar
+	{
+		pos		"654 293"
+		size	"245 6"
+		color	"0 .8 0 1"
+		current	"*cvar vid_gamma"
+		max		1.0
+		align	uc
+		mousefx	true
+		click	{ }
+	}
+
 	func init
 	{
 		cmd "copy mn_glmode gl_mode;"
