@@ -176,7 +176,11 @@ void Com_DPrintf (char *fmt, ...)
 		return;			// don't confuse non-developers with techie stuff...
 
 	va_start (argptr,fmt);
+#ifndef _WIN32
 	vsnprintf (msg,MAXPRINTMSG,fmt,argptr);
+#else
+	vsprintf (msg,fmt,argptr);
+#endif
 	va_end (argptr);
 
 	Com_Printf ("%s", msg);
@@ -202,7 +206,11 @@ void Com_Error (int code, char *fmt, ...)
 	recursive = true;
 
 	va_start (argptr,fmt);
+#ifndef _WIN32
 	vsnprintf (msg,MAXPRINTMSG,fmt,argptr);
+#else
+	vsprintf (msg,fmt,argptr);
+#endif
 	va_end (argptr);
 
 	if (code == ERR_DISCONNECT)
