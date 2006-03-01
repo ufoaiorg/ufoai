@@ -171,7 +171,7 @@ model_t *Mod_ForName (char *name, qboolean crash)
 	//
 	// load the file
 	//
-	modfilelen = ri.FS_LoadFile (mod->name, &buf);
+	modfilelen = ri.FS_LoadFile (mod->name, (void**)&buf);
 	if (!buf)
 	{
 		if (crash)
@@ -1064,9 +1064,9 @@ void Mod_LoadAliasModel (model_t *mod, void *buffer)
 	if (pheader->num_frames <= 0)
 		ri.Sys_Error (ERR_DROP, "model %s has no frames", mod->name);
 
-//
-// load base s and t vertices (not used in gl version)
-//
+	//
+	// load base s and t vertices (not used in gl version)
+	//
 	pinst = (dstvert_t *) ((byte *)pinmodel + pheader->ofs_st);
 	poutst = (dstvert_t *) ((byte *)pheader + pheader->ofs_st);
 
@@ -1076,9 +1076,9 @@ void Mod_LoadAliasModel (model_t *mod, void *buffer)
 		poutst[i].t = LittleShort (pinst[i].t);
 	}
 
-//
-// load triangle lists
-//
+	//
+	// load triangle lists
+	//
 	pintri = (dtriangle_t *) ((byte *)pinmodel + pheader->ofs_tris);
 	pouttri = (dtriangle_t *) ((byte *)pheader + pheader->ofs_tris);
 
@@ -1091,9 +1091,9 @@ void Mod_LoadAliasModel (model_t *mod, void *buffer)
 		}
 	}
 
-//
-// load the frames
-//
+	//
+	// load the frames
+	//
 	for (i=0 ; i<pheader->num_frames ; i++)
 	{
 		pinframe = (daliasframe_t *) ((byte *)pinmodel
@@ -1145,7 +1145,7 @@ void Mod_LoadAliasModel (model_t *mod, void *buffer)
 	if ( ri.FS_CheckFile(mod->tagname) != -1 )
 	{
 		// load the tags
-		ri.FS_LoadFile (mod->tagname, &tagbuf);
+		ri.FS_LoadFile (mod->tagname, (void**)&tagbuf);
 		Mod_LoadTags( mod, tagbuf );
 		ri.FS_FreeFile( tagbuf );
 	}
@@ -1161,7 +1161,7 @@ void Mod_LoadAliasModel (model_t *mod, void *buffer)
 	if ( ri.FS_CheckFile(mod->animname) != -1 )
 	{
 		// load the tags
-		ri.FS_LoadFile (mod->animname, &animbuf);
+		ri.FS_LoadFile (mod->animname, (void**)&animbuf);
 		Mod_LoadAnims( mod, animbuf );
 		ri.FS_FreeFile( animbuf );
 	}

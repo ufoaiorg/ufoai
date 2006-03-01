@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t *sound_system;
 
-qboolean SNDDMA_Init(void)
+qboolean SNDDMA_Init(struct sndinfo *s)
 {
 	sound_system = Cvar_Get("sndsystem", "2", 0);
 	switch ( (int)sound_system->value )
@@ -49,7 +49,7 @@ qboolean SNDDMA_Init(void)
 #ifdef USE_ALSA
 		case 2:
 			Com_Printf("Using Alsa\n");
-			return ALSA_SNDDMA_Init();
+			return ALSA_SNDDMA_Init(s);
 			break;
 #endif
 		default:

@@ -23,20 +23,10 @@
 #include "../client/client.h"
 #include "../client/snd_loc.h"
 
-#define BUFFER_SAMPLES 4096
-#define SUBMISSION_CHUNK BUFFER_SAMPLES / 2
-
-/*
-*  The sample rates which will be attempted.
-*/
-static int RATES[] = {
-	44100, 22050, 11025, 8000
-};
-
 /*
 *  Initialize ALSA pcm device, and bind it to sndinfo.
 */
-qboolean ALSA_SNDDMA_Init(void);
+qboolean ALSA_SNDDMA_Init(struct sndinfo *si);
 
 /*
 *  Returns the current sample position, if sound is running.

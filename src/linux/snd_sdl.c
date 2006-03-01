@@ -2,7 +2,7 @@
 	snd_sdl.c
 
 	Sound code taken from SDLQuake and modified to work with Quake2
-	Robert Bäuml 2001-12-25
+	Robert Bï¿½ml 2001-12-25
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
@@ -47,29 +47,29 @@ qboolean SDL_SNDDMA_Init (void)
 {
 	SDL_AudioSpec desired, obtained;
 	int desired_bits, freq;
-	
+
 	if (snd_inited)
 		return true;
-	
+
 	Com_Printf("Soundsystem: SDL.\n");
-	
-	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) 
+
+	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0)
 	{
-		if (SDL_Init(SDL_INIT_AUDIO) < 0) 
-		{
-			Com_Printf ("Couldn't init SDL audio: %s\n", SDL_GetError ());
-			return false;
-		}
-	} 
-	else if (SDL_WasInit(SDL_INIT_AUDIO) == 0) 
-	{
-		if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0) 
+		if (SDL_Init(SDL_INIT_AUDIO) < 0)
 		{
 			Com_Printf ("Couldn't init SDL audio: %s\n", SDL_GetError ());
 			return false;
 		}
 	}
-	
+	else if (SDL_WasInit(SDL_INIT_AUDIO) == 0)
+	{
+		if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
+		{
+			Com_Printf ("Couldn't init SDL audio: %s\n", SDL_GetError ());
+			return false;
+		}
+	}
+
 	snd_inited = 0;
 	desired_bits = (Cvar_Get("sndbits", "16", CVAR_ARCHIVE))->value;
 
@@ -81,8 +81,8 @@ qboolean SDL_SNDDMA_Init (void)
 		desired.freq = 22050;
 	else
 		desired.freq = 11025;
-	
-	switch (desired_bits) 
+
+	switch (desired_bits)
 	{
 		case 8:
 			desired.format = AUDIO_U8;
@@ -98,25 +98,25 @@ qboolean SDL_SNDDMA_Init (void)
 			return false;
 	}
 	desired.channels = (Cvar_Get("sndchannels", "2", CVAR_ARCHIVE))->value;
-	
+
 	if (desired.freq == 44100)
 		desired.samples = 2048;
 	else if (desired.freq == 22050)
 		desired.samples = 1024;
 	else
 		desired.samples = 512;
-	
+
 	desired.callback = paint_audio;
-	
+
 	/* Open the audio device */
-	if (SDL_OpenAudio (&desired, &obtained) < 0) 
+	if (SDL_OpenAudio (&desired, &obtained) < 0)
 	{
 		Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
 		return false;
 	}
 
 	/* Make sure we can support the audio format */
-	switch (obtained.format) 
+	switch (obtained.format)
 	{
 		case AUDIO_U8:
 			/* Supported */
@@ -126,7 +126,7 @@ qboolean SDL_SNDDMA_Init (void)
 			if (((obtained.format == AUDIO_S16LSB) &&
 				 (SDL_BYTEORDER == SDL_LIL_ENDIAN)) ||
 				((obtained.format == AUDIO_S16MSB) &&
-				 (SDL_BYTEORDER == SDL_BIG_ENDIAN))) 
+				 (SDL_BYTEORDER == SDL_BIG_ENDIAN)))
 			{
 				/* Supported */
 				break;
@@ -135,7 +135,7 @@ qboolean SDL_SNDDMA_Init (void)
 		default:
 			/* Not supported -- force SDL to do our bidding */
 			SDL_CloseAudio ();
-			if (SDL_OpenAudio (&desired, NULL) < 0) 
+			if (SDL_OpenAudio (&desired, NULL) < 0)
 			{
 				Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
 				return false;
@@ -187,5 +187,5 @@ void SDL_SNDDMA_Submit (void)
 
 
 void SDL_SNDDMA_BeginPainting(void)
-{    
+{
 }

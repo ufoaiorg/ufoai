@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -163,7 +163,7 @@ SCR_DrawDebugGraph
 		v = values[i].value;
 		color = values[i].color;
 		v = v*scr_graphscale->value + scr_graphshift->value;
-		
+
 		if (v < 0)
 			v += scr_graphheight->value * (1+(int)(-v/scr_graphheight->value));
 		h = (int)v % (int)scr_graphheight->value;
@@ -217,7 +217,7 @@ void SCR_CenterPrint (char *str)
 	Com_Printf("\n\n\35\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\37\n\n");
 
 	s = str;
-	do	
+	do
 	{
 	// scan the width of the line
 		for (l=0 ; l<40 ; l++)
@@ -267,7 +267,7 @@ void SCR_DrawCenterString (void)
 	else
 		y = 48;
 
-	do	
+	do
 	{
 	// scan the width of the line
 		for (l=0 ; l<40 ; l++)
@@ -277,12 +277,12 @@ void SCR_DrawCenterString (void)
 		SCR_AddDirtyPoint (x, y);
 		for (j=0 ; j<l ; j++, x+=8)
 		{
-			re.DrawChar (x, y, start[j]);	
+			re.DrawChar (x, y, start[j]);
 			if (!remaining--)
 				return;
 		}
 		SCR_AddDirtyPoint (x, y+8);
-			
+
 		y += 8;
 
 		while (*start && *start != '\n')
@@ -297,7 +297,7 @@ void SCR_DrawCenterString (void)
 void SCR_CheckDrawCenterString (void)
 {
 	scr_centertime_off -= cls.frametime;
-	
+
 	if (scr_centertime_off <= 0)
 		return;
 
@@ -414,7 +414,7 @@ SCR_DrawNet
 */
 void SCR_DrawNet (void)
 {
-	if (cls.netchan.outgoing_sequence - cls.netchan.incoming_acknowledged 
+	if (cls.netchan.outgoing_sequence - cls.netchan.incoming_acknowledged
 		< CMD_BACKUP-1)
 		return;
 
@@ -448,7 +448,7 @@ SCR_DrawLoading
 void SCR_DrawLoading (void)
 {
 	int		w, h;
-		
+
 	if (!scr_draw_loading)
 		return;
 
@@ -477,16 +477,16 @@ void SCR_DrawCursor (void)
 	if (!cursor_pic[0])
 		return;
 
-	if ( mouseSpace != MS_DRAG ) 
+	if ( mouseSpace != MS_DRAG )
 	{
 		re.DrawNormPic (mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, cursor_pic);
 
-		if ( cls.state == ca_active && mouseSpace == MS_WORLD ) 
+		if ( cls.state == ca_active && mouseSpace == MS_WORLD )
 		{
 			if ( cls.team != cl.actTeam )
-				re.DrawNormPic (mx+16, my+16, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "sanduhr" );		
+				re.DrawNormPic (mx+16, my+16, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "sanduhr" );
 			else if ( selActor && selActor->state & STATE_CROUCHED )
-				re.DrawNormPic (mx+16, my+16, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "ducked" );		
+				re.DrawNormPic (mx+16, my+16, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "ducked" );
 		}
 	} else {
 		vec3_t scale  = {3.5, 3.5, 3.5};
@@ -516,7 +516,7 @@ void SCR_RunConsole (void)
 		scr_conlines = scr_consize->value;	// half screen
 	else
 		scr_conlines = 0;					// none visible
-	
+
 	if (scr_conlines < scr_con_current)
 	{
 		scr_con_current -= scr_conspeed->value*cls.frametime;
@@ -541,7 +541,7 @@ SCR_DrawConsole
 void SCR_DrawConsole (void)
 {
 	Con_CheckResize ();
-	
+
 	if (!scr_vrect.width || !scr_vrect.height)
 	{
 		// active full screen menu
@@ -898,7 +898,7 @@ void SCR_UpdateScreen (void)
 		numframes = 2;
 		separation[0] = -cl_stereo_separation->value / 2;
 		separation[1] =  cl_stereo_separation->value / 2;
-	}		
+	}
 	else
 	{
 		separation[0] = 0;
@@ -920,7 +920,7 @@ void SCR_UpdateScreen (void)
 			re.DrawPic ((viddef.width-w)/2, (viddef.height-h)/2, "loading");
 			re.EndFrame();
 			return;
-		} 
+		}
 		// if a cinematic is supposed to be running, handle menus
 		// and console specially
 		else if (cl.cinematictime > 0)
@@ -943,7 +943,7 @@ void SCR_UpdateScreen (void)
 				return;
 			}
 		}
-		else 
+		else
 		{
 			// make sure the game palette is active
 			if (cl.cinematicpalette_active)

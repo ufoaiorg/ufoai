@@ -1215,10 +1215,11 @@ void R_FilterTexture (int filterindex, unsigned int *data, int width, int height
                TempTarget = rgbFloat[i];
                break;
 
+#ifndef _WIN32
             case GL_ADD_SIGNED:
                TempTarget = (rgbFloat[i] + SrcData) - 0.5;
                break;
-
+#endif
             case GL_MODULATE:
                // same as default
             default:

@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -108,6 +108,18 @@ typedef struct
 	int			dataofs;		// chunk starts this many bytes from file start
 } wavinfo_t;
 
+/* struct for passing info to the sound driver dlls */
+struct sndinfo {
+	dma_t * dma;
+	cvar_t * bits;
+	cvar_t * speed;
+	cvar_t * channels;
+	cvar_t * device;
+	cvar_t * s_khz;
+
+	void(*Com_Printf)(char * fmt, ...);
+	void(*S_PaintChannels)(int);
+};
 
 /*
 ====================================================================
@@ -118,7 +130,7 @@ typedef struct
 */
 
 // initializes cycling through a DMA buffer and returns information on it
-qboolean SNDDMA_Init(void);
+qboolean SNDDMA_Init(struct sndinfo *s);
 
 // gets the current DMA position
 int		SNDDMA_GetDMAPos(void);

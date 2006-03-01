@@ -5,7 +5,7 @@
 
 // ====================================================================
 
-typedef struct 
+typedef struct
 {
 	pos3_t	to, stop;
 	byte	mode, shots;
@@ -38,7 +38,7 @@ qboolean AI_CheckFF( edict_t *ent, vec3_t target, float spread )
 		{
 			// found ally
 			VectorSubtract( check->origin, ent->origin, dcheck );
-			if ( DotProduct( dtarget, dcheck ) > 0.0 ) 
+			if ( DotProduct( dtarget, dcheck ) > 0.0 )
 			{
 				// ally in front of player
 				VectorAdd( dcheck, back, dcheck );
@@ -64,7 +64,7 @@ AI_FighterCalcGuete
 #define GUETE_KILL			30
 #define GUETE_RANDOM		10
 #define GUETE_CIV_FACTOR	0.25
-		
+
 #define CLOSE_IN_DIST		1200.0
 #define SPREAD_FACTOR		8.0
 #define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*M_PI/180) : 0)
@@ -87,7 +87,7 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 	VectorCopy( to, aia->to );
 	VectorCopy( to, aia->stop );
 	gi.GridPosToVec( gi.map, to, ent->origin );
-	
+
 	move = gi.MoveLength( gi.map, to, true );
 	tu = ent->TU - move;
 	if ( ent->i.c[gi.csi->idRight] && ent->i.c[gi.csi->idRight]->item.m != NONE )
@@ -109,12 +109,12 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 
 			nspread = SPREAD_NORM( (fd->spread[0]+fd->spread[1])*GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill)/2 );
 			shots = tu / fd->time;
-			if ( shots ) 
+			if ( shots )
 			{
 				// search best target
 				for ( i = 0, check = g_edicts; i < globals.num_edicts; i++, check++ )
 					if ( check->inuse && check->type == ET_ACTOR && ent != check
-						&& (check->team != ent->team || ent->state & STATE_INSANE) 
+						&& (check->team != ent->team || ent->state & STATE_INSANE)
 						&& !(check->state & STATE_DEAD) )
 					{
 						// don't shoot civilians in mp
@@ -126,7 +126,7 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 						if ( dist > fd->range ) continue;
 
 						// check FF
-						if ( AI_CheckFF( ent, check->origin, fd->spread[0] ) && !(ent->state & STATE_INSANE) ) 
+						if ( AI_CheckFF( ent, check->origin, fd->spread[0] ) && !(ent->state & STATE_INSANE) )
 							continue;
 
 						// calculate expected damage
@@ -141,7 +141,7 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 						if ( dmg > check->HP ) dmg += GUETE_KILL;
 
 						// civilian malus
-						if ( check->team == TEAM_CIVILIAN && !(ent->state & STATE_INSANE) ) 
+						if ( check->team == TEAM_CIVILIAN && !(ent->state & STATE_INSANE) )
 							dmg *= GUETE_CIV_FACTOR;
 
 						// check if most damage can be done here
@@ -180,11 +180,11 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 	if ( ent->state & STATE_RAGE ) return guete;
 
 	// hide
-	if ( !(G_TestVis( -ent->team, ent, VT_PERISH|VT_NOFRUSTOM ) & VIS_YES) ) 
+	if ( !(G_TestVis( -ent->team, ent, VT_PERISH|VT_NOFRUSTOM ) & VIS_YES) )
 	{
 		// is a hiding spot
 		guete += GUETE_HIDE;
-	} 
+	}
 	else if ( aia->target && tu >= 2 )
 	{
 		// search hiding spot after shooting
@@ -247,7 +247,7 @@ float AI_CivilianCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 	VectorCopy( to, aia->to );
 	VectorCopy( to, aia->stop );
 	gi.GridPosToVec( gi.map, to, ent->origin );
-	
+
 	move = gi.MoveLength( gi.map, to, true );
 	tu = ent->TU - move;
 
@@ -331,7 +331,7 @@ void AI_ActorThink( player_t *player, edict_t *ent )
 		// nothing found to do
 		return;
 
-	// do the first move	
+	// do the first move
 	G_ClientMove( player, 0, ent->number, bestAia.to, false );
 
 //	Com_Printf( "(%i %i %i) (%i %i %i)\n",
@@ -373,7 +373,7 @@ void AI_Run( void )
 			else ent = player->pers.last + 1;
 
 			for ( j = ent - g_edicts; j < globals.num_edicts; j++, ent++ )
-				if ( ent->inuse && ent->team == player->pers.team && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && ent->TU ) 
+				if ( ent->inuse && ent->team == player->pers.team && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && ent->TU )
 				{
 					AI_ActorThink( player, ent );
 					player->pers.last = ent;
@@ -381,7 +381,7 @@ void AI_Run( void )
 				}
 
 			// nothing left to do, request endround
-			if ( j >= globals.num_edicts ) 
+			if ( j >= globals.num_edicts )
 			{
 				G_ClientEndRound( player );
 				player->pers.last = g_edicts + globals.num_edicts;
@@ -477,6 +477,7 @@ void G_SpawnAIPlayer( player_t *player, int numSpawn )
 			{
 				// add weapon
 				item_t item;
+				item.m = NONE;
 
 				num = (int)(frand()*num);
 				for ( i = 0; i < gi.csi->numODs; i++ )

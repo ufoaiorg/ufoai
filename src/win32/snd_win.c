@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -47,10 +47,12 @@ static int	snd_buffer_count = 0;
 static int	sample16;
 static int	snd_sent, snd_completed;
 
-/* 
- * Global variables. Must be visible to window-procedure function 
- *  so it can unlock and free the data block after it has been played. 
- */ 
+static struct sndinfo *si;
+
+/*
+ * Global variables. Must be visible to window-procedure function
+ *  so it can unlock and free the data block after it has been played.
+ */
 
 
 HANDLE		hData;
@@ -59,7 +61,7 @@ HPSTR		lpData, lpData2;
 HGLOBAL		hWaveHdr;
 LPWAVEHDR	lpWaveHdr;
 
-HWAVEOUT    hWaveOut; 
+HWAVEOUT    hWaveOut;
 
 WAVEOUTCAPS	wavecaps;
 
@@ -106,12 +108,12 @@ static qboolean DS_CreateBuffers( void )
 
 	memset (&format, 0, sizeof(format));
 	format.wFormatTag = WAVE_FORMAT_PCM;
-    format.nChannels = dma.channels;
-    format.wBitsPerSample = dma.samplebits;
-    format.nSamplesPerSec = dma.speed;
-    format.nBlockAlign = format.nChannels * format.wBitsPerSample / 8;
-    format.cbSize = 0;
-    format.nAvgBytesPerSec = format.nSamplesPerSec*format.nBlockAlign; 
+	format.nChannels = dma.channels;
+	format.wBitsPerSample = dma.samplebits;
+	format.nSamplesPerSec = dma.speed;
+	format.nBlockAlign = format.nChannels * format.wBitsPerSample / 8;
+	format.cbSize = 0;
+	format.nAvgBytesPerSec = format.nSamplesPerSec*format.nBlockAlign;
 
 	Com_Printf( "Creating DS buffers\n" );
 
@@ -124,8 +126,8 @@ static qboolean DS_CreateBuffers( void )
 	}
 	Com_DPrintf("ok\n" );
 
-// get access to the primary buffer, if possible, so we can set the
-// sound hardware format
+	// get access to the primary buffer, if possible, so we can set the
+	// sound hardware format
 	memset (&dsbuf, 0, sizeof(dsbuf));
 	dsbuf.dwSize = sizeof(DSBUFFERDESC);
 	dsbuf.dwFlags = DSBCAPS_PRIMARYBUFFER;
@@ -222,11 +224,11 @@ static qboolean DS_CreateBuffers( void )
 		               "   %d bits/sample\n"
 					   "   %d bytes/sec\n",
 					   dma.channels, dma.samplebits, dma.speed);
-	
+
 	gSndBufSize = dsbcaps.dwBufferBytes;
 
 	/* we don't want anyone to access the buffer directly w/o locking it first. */
-	lpData = NULL; 
+	lpData = NULL;
 
 	pDSBuf->lpVtbl->Stop(pDSBuf);
 	pDSBuf->lpVtbl->GetCurrentPosition(pDSBuf, &mmstarttime.u.sample, &dwWrite);
@@ -371,7 +373,7 @@ sndinitstat SNDDMA_InitDirect (void)
 		Com_DPrintf( "...loading dsound.dll: " );
 
 		hInstDS = LoadLibrary("dsound.dll");
-		
+
 		if (hInstDS == NULL)
 		{
 			Com_Printf ("failed\n");
@@ -443,12 +445,12 @@ Crappy windows multimedia base
 */
 qboolean SNDDMA_InitWav (void)
 {
-	WAVEFORMATEX  format; 
+	WAVEFORMATEX  format;
 	int				i;
 	HRESULT			hr;
 
 	Com_Printf( "Initializing wave sound\n" );
-	
+
 	snd_sent = 0;
 	snd_completed = 0;
 
@@ -471,12 +473,12 @@ qboolean SNDDMA_InitWav (void)
 		*format.wBitsPerSample / 8;
 	format.cbSize = 0;
 	format.nAvgBytesPerSec = format.nSamplesPerSec
-		*format.nBlockAlign; 
-	
-	/* Open a waveform device for output using window callback. */ 
+		*format.nBlockAlign;
+
+	/* Open a waveform device for output using window callback. */
 	Com_DPrintf ("...opening waveform device: ");
-	while ((hr = waveOutOpen((LPHWAVEOUT)&hWaveOut, WAVE_MAPPER, 
-					&format, 
+	while ((hr = waveOutOpen((LPHWAVEOUT)&hWaveOut, WAVE_MAPPER,
+					&format,
 					0, 0L, CALLBACK_NULL)) != MMSYSERR_NOERROR)
 	{
 		if (hr != MMSYSERR_ALLOCATED)
@@ -494,71 +496,71 @@ qboolean SNDDMA_InitWav (void)
 			Com_Printf ("hw in use\n" );
 			return false;
 		}
-	} 
+	}
 	Com_DPrintf( "ok\n" );
 
-	/* 
-	 * Allocate and lock memory for the waveform data. The memory 
-	 * for waveform data must be globally allocated with 
-	 * GMEM_MOVEABLE and GMEM_SHARE flags. 
+	/*
+	 * Allocate and lock memory for the waveform data. The memory
+	 * for waveform data must be globally allocated with
+	 * GMEM_MOVEABLE and GMEM_SHARE flags.
 
-	*/ 
+	*/
 	Com_DPrintf ("...allocating waveform buffer: ");
 	gSndBufSize = WAV_BUFFERS*WAV_BUFFER_SIZE;
-	hData = GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE, gSndBufSize); 
-	if (!hData) 
-	{ 
+	hData = GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE, gSndBufSize);
+	if (!hData)
+	{
 		Com_Printf( " failed\n" );
 		FreeSound ();
-		return false; 
+		return false;
 	}
 	Com_DPrintf( "ok\n" );
 
 	Com_DPrintf ("...locking waveform buffer: ");
 	lpData = GlobalLock(hData);
 	if (!lpData)
-	{ 
+	{
 		Com_Printf( " failed\n" );
 		FreeSound ();
-		return false; 
-	} 
+		return false;
+	}
 	memset (lpData, 0, gSndBufSize);
 	Com_DPrintf( "ok\n" );
 
-	/* 
-	 * Allocate and lock memory for the header. This memory must 
-	 * also be globally allocated with GMEM_MOVEABLE and 
-	 * GMEM_SHARE flags. 
-	 */ 
+	/*
+	 * Allocate and lock memory for the header. This memory must
+	 * also be globally allocated with GMEM_MOVEABLE and
+	 * GMEM_SHARE flags.
+	 */
 	Com_DPrintf ("...allocating waveform header: ");
-	hWaveHdr = GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE, 
-		(DWORD) sizeof(WAVEHDR) * WAV_BUFFERS); 
+	hWaveHdr = GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE,
+		(DWORD) sizeof(WAVEHDR) * WAV_BUFFERS);
 
 	if (hWaveHdr == NULL)
-	{ 
+	{
 		Com_Printf( "failed\n" );
 		FreeSound ();
-		return false; 
-	} 
+		return false;
+	}
 	Com_DPrintf( "ok\n" );
 
 	Com_DPrintf ("...locking waveform header: ");
-	lpWaveHdr = (LPWAVEHDR) GlobalLock(hWaveHdr); 
+	lpWaveHdr = (LPWAVEHDR) GlobalLock(hWaveHdr);
 
 	if (lpWaveHdr == NULL)
-	{ 
+	{
 		Com_Printf( "failed\n" );
 		FreeSound ();
-		return false; 
+		return false;
 	}
 	memset (lpWaveHdr, 0, sizeof(WAVEHDR) * WAV_BUFFERS);
 	Com_DPrintf( "ok\n" );
 
-	/* After allocation, set up and prepare headers. */ 
+	/* After allocation, set up and prepare headers. */
 	Com_DPrintf ("...preparing headers: ");
 	for (i=0 ; i<WAV_BUFFERS ; i++)
 	{
-		lpWaveHdr[i].dwBufferLength = WAV_BUFFER_SIZE; 
+		lpWaveHdr[i].dwBufferLength = WAV_BUFFER_SIZE;
 		lpWaveHdr[i].lpData = lpData + i*WAV_BUFFER_SIZE;
 
 		if (waveOutPrepareHeader(hWaveOut, lpWaveHdr+i, sizeof(WAVEHDR)) !=
@@ -590,7 +592,7 @@ Try to find a sound device to mix for.
 Returns false if nothing is found.
 ==================
 */
-qboolean SNDDMA_Init(void)
+qboolean SNDDMA_Init(struct sndinfo *s)
 {
 	sndinitstat	stat;
 
@@ -677,7 +679,7 @@ int SNDDMA_GetDMAPos(void)
 	int		s;
 	DWORD	dwWrite;
 
-	if (dsound_init) 
+	if (dsound_init)
 	{
 		mmtime.wType = TIME_SAMPLES;
 		pDSBuf->lpVtbl->GetCurrentPosition(pDSBuf, &mmtime.u.sample, &dwWrite);
@@ -718,10 +720,10 @@ void SNDDMA_BeginPainting (void)
 	// if the buffer was lost or stopped, restore it and/or restart it
 	if (pDSBuf->lpVtbl->GetStatus (pDSBuf, &dwStatus) != DS_OK)
 		Com_Printf ("Couldn't get sound buffer status\n");
-	
+
 	if (dwStatus & DSBSTATUS_BUFFERLOST)
 		pDSBuf->lpVtbl->Restore (pDSBuf);
-	
+
 	if (!(dwStatus & DSBSTATUS_PLAYING))
 		pDSBuf->lpVtbl->Play(pDSBuf, 0, 0, DSBPLAY_LOOPING);
 
@@ -730,7 +732,7 @@ void SNDDMA_BeginPainting (void)
 	reps = 0;
 	dma.buffer = NULL;
 
-	while ((hresult = pDSBuf->lpVtbl->Lock(pDSBuf, 0, gSndBufSize, &pbuf, &locksize, 
+	while ((hresult = pDSBuf->lpVtbl->Lock(pDSBuf, 0, gSndBufSize, &pbuf, &locksize,
 								   &pbuf2, &dwSize2, 0)) != DS_OK)
 	{
 		if (hresult != DSERR_BUFFERLOST)
@@ -803,19 +805,19 @@ void SNDDMA_Submit(void)
 		break;	//	Com_Printf ("submit overrun\n");
 //Com_Printf ("send %i\n", snd_sent);
 		snd_sent++;
-		/* 
-		 * Now the data block can be sent to the output device. The 
-		 * waveOutWrite function returns immediately and waveform 
-		 * data is sent to the output device in the background. 
-		 */ 
-		wResult = waveOutWrite(hWaveOut, h, sizeof(WAVEHDR)); 
+		/*
+		 * Now the data block can be sent to the output device. The
+		 * waveOutWrite function returns immediately and waveform
+		 * data is sent to the output device in the background.
+		 */
+		wResult = waveOutWrite(hWaveOut, h, sizeof(WAVEHDR));
 
 		if (wResult != MMSYSERR_NOERROR)
-		{ 
+		{
 			Com_Printf ("Failed to write block to device\n");
 			FreeSound ();
-			return; 
-		} 
+			return;
+		}
 	}
 }
 

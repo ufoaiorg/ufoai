@@ -19,162 +19,163 @@
 static snd_pcm_t *pcm_handle;
 static snd_pcm_hw_params_t *hw_params;
 
-//static struct sndinfo * si;
+static struct sndinfo *si;
+
+/*
+* These are reasonable default values for good latency.  If ALSA
+* playback stutters or plain does not work, try adjusting these.
+* Period must always be a multiple of 2.  Buffer must always be
+* a multiple of period.  See http://alsa-project.org.
+*/
+static snd_pcm_uframes_t period_size = 1024;
+static snd_pcm_uframes_t buffer_size = 4096;
 
 static int sample_bytes;
 static int buffer_bytes;
 
-cvar_t *sndbits;
-cvar_t *sndspeed;
-cvar_t *sndchannels;
-cvar_t *snddevice;
+/*
+*  The sample rates which will be attempted.
+*/
+static int RATES[] = { 44100, 22050, 11025 };
 
 /*
 *  Initialize ALSA pcm device, and bind it to sndinfo.
 */
-qboolean ALSA_SNDDMA_Init(void){
-	int i, err, dir;
-	unsigned int r;
-	snd_pcm_uframes_t p;
+qboolean ALSA_SNDDMA_Init(struct sndinfo *s){
+	int i, r, err, dir;
 
-	
-	if (!snddevice)
-	  {
-	    sndbits = Cvar_Get("sndbits", "16", CVAR_ARCHIVE);
-	    sndspeed = Cvar_Get("sndspeed", "0", CVAR_ARCHIVE);
-	    sndchannels = Cvar_Get("sndchannels", "2", CVAR_ARCHIVE);
-	    snddevice = Cvar_Get("snddevice", "/dev/dsp", CVAR_ARCHIVE);
-	  }
-	
-	if(!strcmp(snddevice->string, "/dev/dsp"))  //silly oss default
-	  snddevice->string = "default";
-	
-	if((err = snd_pcm_open(&pcm_handle, snddevice->string,
-			       SND_PCM_STREAM_PLAYBACK, SND_PCM_NONBLOCK)) < 0)
-	  {
-	    Com_Printf("ALSA: cannot open device %s(%s)\n",
-		       snddevice->string, snd_strerror(err));
-	    return false;
-	  }
-	
+	si = s;
+
+	if(!strcmp(si->device->string, "/dev/dsp"))  //silly oss default
+		si->device->string = "default";
+
+	if((err = snd_pcm_open(&pcm_handle, si->device->string,
+				SND_PCM_STREAM_PLAYBACK, SND_PCM_NONBLOCK)) < 0){
+		si->Com_Printf("ALSA: cannot open device %s(%s)\n",
+					   si->device->string, snd_strerror(err));
+		return false;
+	}
+
 	if((err = snd_pcm_hw_params_malloc(&hw_params)) < 0){
-	  Com_Printf("ALSA: cannot allocate hw params(%s)\n",
-		     snd_strerror(err));
-	  return false;
+		si->Com_Printf("ALSA: cannot allocate hw params(%s)\n",
+					   snd_strerror(err));
+		return false;
 	}
-	
+
 	if((err = snd_pcm_hw_params_any(pcm_handle, hw_params)) < 0){
-	  Com_Printf("ALSA: cannot init hw params(%s)\n", snd_strerror(err));
-	  snd_pcm_hw_params_free(hw_params);
-	  return false;
+		si->Com_Printf("ALSA: cannot init hw params(%s)\n", snd_strerror(err));
+		snd_pcm_hw_params_free(hw_params);
+		return false;
 	}
-	
-	if((err = snd_pcm_hw_params_set_access
-	    (pcm_handle, hw_params, SND_PCM_ACCESS_RW_INTERLEAVED)) < 0)
-	  {
-	    Com_Printf("ALSA: cannot set access(%s)\n", snd_strerror(err));
-	    snd_pcm_hw_params_free(hw_params);
-	    return false;
-	  }
-	
-	dma.samplebits = (int)sndbits->value;
-	if(dma.samplebits != 8){  //try 16 by default
-	  dma.samplebits = 16;  //ensure this is set for other calculations
-	  
-	  if((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params,
-						 SND_PCM_FORMAT_S16)) < 0){
-	    Com_Printf("ALSA: 16 bit not supported, trying 8\n");
-	    dma.samplebits = 8;
-	  }
+
+	if((err = snd_pcm_hw_params_set_access(pcm_handle, hw_params,
+				SND_PCM_ACCESS_RW_INTERLEAVED)) < 0){
+		si->Com_Printf("ALSA: cannot set access(%s)\n", snd_strerror(err));
+		snd_pcm_hw_params_free(hw_params);
+		return false;
 	}
-	if(dma.samplebits == 8){  //or 8 if specifically asked to
-	  if((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params,
-						 SND_PCM_FORMAT_U8)) < 0){
-	    Com_Printf("ALSA: cannot set format(%s)\n", snd_strerror(err));
-	    snd_pcm_hw_params_free(hw_params);
-	    return false;
-	  }
+
+	si->dma->samplebits = si->bits->value;
+	if(si->dma->samplebits != 8){  //try 16 by default
+
+		si->dma->samplebits = 16;  //ensure this is set for other calculations
+
+		if((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params,
+				SND_PCM_FORMAT_S16)) < 0){
+			si->Com_Printf("ALSA: 16 bit not supported, trying 8\n");
+			si->dma->samplebits = 8;
+		}
 	}
-	
-	dma.speed = (int)sndspeed->value;
-	if(dma.speed){  //try specified rate
-	  r = dma.speed;
-		
-	  if((err = snd_pcm_hw_params_set_rate_near(pcm_handle, hw_params, &r, &dir)) < 0)
-	    Com_Printf("ALSA: cannot set rate %d(%s)\n", r, snd_strerror(err));
-	  else {  //rate succeeded, but is perhaps slightly different
-	    if(dir != 0) 
-	      Com_Printf("ALSA: rate %d not supported, using %d\n", sndspeed->value, r);
-	    dma.speed = r;
-	  }
+	if(si->dma->samplebits == 8){  //or 8 if specifically asked to
+		if((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params,
+				SND_PCM_FORMAT_U8)) < 0){
+			si->Com_Printf("ALSA: cannot set format(%s)\n", snd_strerror(err));
+			snd_pcm_hw_params_free(hw_params);
+			return false;
+		}
 	}
-	if(!dma.speed){  //or all available ones
-	  for(i = 0; i < sizeof(RATES); i++){
-	    r = RATES[i];
-	    dir = 0;
-	    
-	    if((err = snd_pcm_hw_params_set_rate_near(pcm_handle, hw_params, &r, &dir)) < 0)
-	      Com_Printf("ALSA: cannot set rate %d(%s)\n", r, snd_strerror(err));
-	    else {  //rate succeeded, but is perhaps slightly different
-	      dma.speed = r;
-	      if(dir != 0) 
-		Com_Printf("ALSA: rate %d not supported, using %d\n", RATES[i], r);
-	      break;
-	    }
-	  }
+
+	si->dma->speed =(int)si->speed->value;
+	if(si->dma->speed){  //try specified rate
+
+		r = si->dma->speed;
+
+		if((err = snd_pcm_hw_params_set_rate_near(pcm_handle, hw_params, &r, &dir)) < 0)
+			si->Com_Printf("ALSA: cannot set rate %d(%s)\n", r, snd_strerror(err));
+		else {  //rate succeeded, but is perhaps slightly different
+			if(dir != 0)
+				si->Com_Printf("ALSA: rate %d not supported, using %d\n", si->dma->speed, r);
+			si->dma->speed = r;
+		}
 	}
-	if(!dma.speed){  //failed
-	  Com_Printf("ALSA: cannot set rate\n");
-	  snd_pcm_hw_params_free(hw_params);
-	  return false;
+	if(!si->dma->speed){  //or all available ones
+
+		for(i = 0; i < sizeof(RATES); i++){
+
+			r = RATES[i];
+			dir = 0;
+
+			if((err = snd_pcm_hw_params_set_rate_near(pcm_handle, hw_params, &r, &dir)) < 0)
+				si->Com_Printf("ALSA: cannot set rate %d(%s)\n", r, snd_strerror(err));
+			else {  //rate succeeded, but is perhaps slightly different
+				si->dma->speed = r;
+				if(dir != 0)
+					si->Com_Printf("ALSA: rate %d not supported, using %d\n", RATES[i], r);
+				break;
+			}
+		}
 	}
-	
-	dma.channels = sndchannels->value;
-	if(dma.channels < 1 || dma.channels > 2)
-	  dma.channels = 2;  //ensure either stereo or mono
-	
-	
-	
-	if((err = snd_pcm_hw_params_set_channels(pcm_handle, hw_params, 
-						 dma.channels)) < 0)
-	  {
-	    Com_Printf("ALSA: cannot set channels %d(%s)\n",
-		       sndchannels->value, snd_strerror(err));
-	    snd_pcm_hw_params_free(hw_params);
-	    return false;
-	  }
-	
-	p = BUFFER_SAMPLES / dma.channels;
-	if((err = snd_pcm_hw_params_set_period_size_near(pcm_handle, hw_params,
-							 &p, &dir)) < 0){
-	  Com_Printf("ALSA: cannot set period size (%s)\n", snd_strerror(err));
-	  snd_pcm_hw_params_free(hw_params);
-	  return false;
+	if(!si->dma->speed){  //failed
+		si->Com_Printf("ALSA: cannot set rate\n");
+		snd_pcm_hw_params_free(hw_params);
+		return false;
 	}
-	else {  //rate succeeded, but is perhaps slightly different
-	  if(dir != 0) 
-	    Com_Printf("ALSA: period %d not supported, using %d\n", (BUFFER_SAMPLES/dma.channels), p);
+
+	si->dma->channels = (int)si->channels->value;
+
+	if(si->dma->channels < 1 || si->dma->channels > 2)
+		si->dma->channels = 2;  //ensure either stereo or mono
+
+	if((err = snd_pcm_hw_params_set_channels(pcm_handle, hw_params,
+			   si->dma->channels)) < 0){
+		si->Com_Printf("ALSA: cannot set channels %d(%s)\n",
+					   si->dma->channels, snd_strerror(err));
+		snd_pcm_hw_params_free(hw_params);
+		return false;
 	}
-	
+
+	if((err = snd_pcm_hw_params_set_period_size_near(pcm_handle,
+			hw_params, &period_size, 0)) < 0){
+		si->Com_Printf("ALSA: cannot set period size near(%s)\n", snd_strerror(err));
+		snd_pcm_hw_params_free(hw_params);
+		return false;
+	}
+
+	if((err = snd_pcm_hw_params_set_buffer_size_near(pcm_handle,
+			hw_params, &buffer_size)) < 0){
+		si->Com_Printf("ALSA: cannot set buffer size near(%s)\n", snd_strerror(err));
+		snd_pcm_hw_params_free(hw_params);
+		return false;
+	}
+
 	if((err = snd_pcm_hw_params(pcm_handle, hw_params)) < 0){  //set params
-	  Com_Printf("ALSA: cannot set params(%s)\n", snd_strerror(err));
-	  snd_pcm_hw_params_free(hw_params);
-	  return false;
+		si->Com_Printf("ALSA: cannot set params(%s)\n", snd_strerror(err));
+		snd_pcm_hw_params_free(hw_params);
+		return false;
 	}
-	
-	sample_bytes = dma.samplebits / 8;
-	buffer_bytes = BUFFER_SAMPLES * sample_bytes;
-	
-	dma.buffer = malloc(buffer_bytes);  //allocate pcm frame buffer
-	memset(dma.buffer, 0, buffer_bytes);
-	
-	dma.samplepos = 0;
-	
-	dma.samples = BUFFER_SAMPLES;
-	dma.submission_chunk = SUBMISSION_CHUNK;
-	
+
+	sample_bytes = si->dma->samplebits / 8;
+	buffer_bytes = buffer_size * si->dma->channels * sample_bytes;
+
+	si->dma->buffer = malloc(buffer_bytes);  //allocate pcm frame buffer
+	memset(si->dma->buffer, 0, buffer_bytes);
+
+	si->dma->samples = buffer_size * si->dma->channels;
+	si->dma->submission_chunk = period_size * si->dma->channels;
+
+	si->dma->samplepos = 0;
+
 	snd_pcm_prepare(pcm_handle);
-	
 	return true;
 }
 
@@ -182,11 +183,11 @@ qboolean ALSA_SNDDMA_Init(void){
 *  Returns the current sample position, if sound is running.
 */
 int ALSA_SNDDMA_GetDMAPos(void){
-	
-	if(dma.buffer)
-	  return dma.samplepos;
-	
-	Com_Printf("Sound not inizialized\n");
+
+	if(si->dma->buffer)
+		return si->dma->samplepos;
+
+	si->Com_Printf("Sound not inizialized\n");
 	return 0;
 }
 
@@ -194,14 +195,15 @@ int ALSA_SNDDMA_GetDMAPos(void){
 *  Closes the ALSA pcm device and frees the dma buffer.
 */
 void ALSA_SNDDMA_Shutdown(void){
-	
-	if(dma.buffer){
-	  snd_pcm_drop(pcm_handle);
-	  snd_pcm_close(pcm_handle);
-	}
-	
-	free(dma.buffer);
-	dma.buffer = 0;
+
+	if(!si->dma->buffer)
+		return;
+
+	snd_pcm_drop(pcm_handle);
+	snd_pcm_close(pcm_handle);
+
+	free(si->dma->buffer);
+	si->dma->buffer = NULL;
 }
 
 /*
@@ -210,24 +212,24 @@ void ALSA_SNDDMA_Shutdown(void){
 void ALSA_SNDDMA_Submit(void){
 	int s, w, frames;
 	void *start;
-	
-	if(!dma.buffer)
-	  return;
-	
-	s = dma.samplepos * sample_bytes;
-	start = (void *)&dma.buffer[s];
-	
-	frames = dma.submission_chunk / dma.channels;
-	
+
+	if(!si->dma->buffer)
+		return;
+
+	s = si->dma->samplepos * sample_bytes;
+	start = (void *) &si->dma->buffer[s];
+
+	frames = si->dma->submission_chunk / si->dma->channels;
+
 	if((w = snd_pcm_writei(pcm_handle, start, frames)) < 0){  //write to card
 		snd_pcm_prepare(pcm_handle);  //xrun occured
 		return;
 	}
-	
-	dma.samplepos += w * dma.channels;  //mark progress
-	
-	if(dma.samplepos >= dma.samples)
-	  dma.samplepos = 0;  //wrap buffer
+
+	si->dma->samplepos += w * si->dma->channels;  //mark progress
+
+	if(si->dma->samplepos >= si->dma->samples)
+		si->dma->samplepos = 0;  //wrap buffer
 }
 
 /*

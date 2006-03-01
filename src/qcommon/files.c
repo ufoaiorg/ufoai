@@ -20,25 +20,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qcommon.h"
 
-// define this to dissalow any data but the demo pak file
-//#define	NO_ADDONS
-
-// if a packfile directory differs from this, it is assumed to be hacked
-// Full version
-#define	PAK0_CHECKSUM	0x40e614e0
-// Demo
-//#define	PAK0_CHECKSUM	0xb2c6d7ea
-// OEM
-//#define	PAK0_CHECKSUM	0x78e135c
-
-/*
-=============================================================================
-
-QUAKE FILESYSTEM
-
-=============================================================================
-*/
-
 
 //
 // in memory
@@ -481,10 +462,6 @@ pack_t *FS_LoadPackFile (char *packfile)
 		// crc the directory to check for modifications
 		checksum = Com_BlockChecksum ((void *)info, header.dirlen);
 
-#ifdef NO_ADDONS
-		if (checksum != PAK0_CHECKSUM)
-			return NULL;
-#endif
 		// parse the directory
 		for (i=0 ; i<numpackfiles ; i++)
 		{
@@ -501,10 +478,6 @@ pack_t *FS_LoadPackFile (char *packfile)
 		// crc the directory to check for modifications
 		checksum = Com_BlockChecksum ((void *)info, header.dirlen);
 
-		#ifdef NO_ADDONS
-		if (checksum != PAK0_CHECKSUM)
-		return NULL;
-		#endif
 		*/
 		for( i = 0; i < MAX_FILES_IN_PACK; ++i)
 		{
@@ -607,14 +580,10 @@ pack_t *FS_LoadPackFile (char *packfile)
 	fseek (packhandle, header.dirofs, SEEK_SET);
 	fread (info, 1, header.dirlen, packhandle);
 
-// crc the directory to check for modifications
+	// crc the directory to check for modifications
 	checksum = Com_BlockChecksum ((void *)info, header.dirlen);
 
-#ifdef NO_ADDONS
-	if (checksum != PAK0_CHECKSUM)
-		return NULL;
-#endif
-// parse the directory
+	// parse the directory
 	for (i=0 ; i<numpackfiles ; i++)
 	{
 		strcpy (newfiles[i].name, info[i].name);
@@ -1391,7 +1360,7 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 			strcpy( filename, lBlock->path );
 			strcpy( strrchr( filename, '/' ) + 1, lFile );
 
-			FS_LoadFile( filename, &lBuffer );
+			FS_LoadFile( filename, (void**)&lBuffer );
 			*text = lBuffer;
 		}
 	}
