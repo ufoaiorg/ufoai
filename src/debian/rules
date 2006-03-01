@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
-# Sample debian/rules that uses debhelper.
-# GNU copyright 1997 to 1999 by Joey Hess.
+# Copyright 2004, 2006 Yann Dirson.
+# Based on debhelper sample by Joey Hess.
 
 export LC_ALL=C
 vercmd=dpkg-parsechangelog | grep ^Version: | cut -c 10- | sed s/\\./\\./g
@@ -39,8 +39,7 @@ configure-stamp:
 
 
 build: build-stamp
-
-build-stamp: configure-stamp 
+build-stamp: configure-stamp
 	dh_testdir
 
 	$(MAKE) -C linux
