@@ -1,0 +1,13 @@
+Source: ufoai-data
+Section: non-free/games
+Priority: optional
+Maintainer: Yann Dirson <dirson@debian.org>
+Build-Depends: debhelper (>= 4.0.0), ufoai-tools
+Standards-Version: 3.6.1
+
+Package: ufoai-data
+Architecture: all
+Depends: ${misc:Depends}
+Recommends: ufoai
+Description: Data for UFO: Alien Invasion
+ Maps, units, sound effects, etc.

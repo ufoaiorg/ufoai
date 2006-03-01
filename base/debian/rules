@@ -1,0 +1,76 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Copyright 2004, 2006 Yann Dirson.
+# Based on debhelper sample by Joey Hess.
+
+export LC_ALL=C
+vercmd=dpkg-parsechangelog | grep ^Version: | cut -c 10- | sed s/\\./\\./g
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+
+	set -e; if [ -d CVS ]; then \
+	  SRCVER=$(shell $(vercmd)) ;\
+	  CURVER=`cvsps -t -s 0 -u| grep '^Num patchsets:'| cut -c16-` ;\
+	  if [ -n "$$CURVER" ] ; then \
+	    sed 1s/$$SRCVER/0.0.cvsps$$CURVER/ < debian/changelog > debian/cl2;\
+	    mv debian/cl2 debian/changelog ;\
+	  fi ;\
+	fi
+
+	touch configure-stamp
+
+build: build-stamp
+build-stamp: configure-stamp
+	dh_testdir
+  # ensure the current dirname allows qrad3 to know where we are
+	expr $(shell basename `dirname $$PWD`) : ufo
+
+	./maps/compile.pl maps
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp
+
+	find maps -name '*.bsp' | xargs --no-run-if-empty rm
+
+	set -e; if [ -d CVS ]; then \
+	  SRCVER=$(shell $(vercmd)) ;\
+	  sed 1s/$$SRCVER/0.0.cvs/ < debian/changelog > debian/cl2;\
+	  mv debian/cl2 debian/changelog ;\
+	fi
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k 
+	dh_installdirs
+
+	dh_install
+  # remove unwanted stuff: cvs metadata and source files
+	find debian/ufoai-data -name CVS | xargs rm -rf
+	find debian/ufoai-data -name '*.map' | xargs --no-run-if-empty rm
+
+binary-arch: build install
+# We have nothing to do
+
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs 
+	dh_installdocs
+#	dh_installdebconf	
+#	dh_installman
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install configure
