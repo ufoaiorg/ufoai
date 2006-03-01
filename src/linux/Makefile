@@ -294,7 +294,7 @@ ifeq ($(strip $(BUILD_ALSA)),YES)
 endif
 
 ifeq ($(ARCH),i386)
-	QUAKE2_AS_OBJS=$(BUILDDIR)/client/snd_mixa.o
+	QUAKE2_AS_OBJS=#$(BUILDDIR)/client/snd_mixa.o
 else
 	QUAKE2_AS_OBJS=#blank
 endif
