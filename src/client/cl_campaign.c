@@ -1568,7 +1568,7 @@ void CL_CollectItems( int won )
 	int i;
 	le_t *le;
 	invList_t *item;
-//	int container;
+	int container;
 
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 	{
@@ -1582,14 +1582,12 @@ void CL_CollectItems( int won )
 			for ( item = FLOOR(le); item; item = item->next )
 				CL_CollectItemAmmo( item, 0 );
 		}
-#if 0
 		else if ( le->type == ET_ACTOR && !(le->state & STATE_DEAD) && won )
 		{
 			for ( container = 0; container < csi.numIDs; container++ )
 				for ( item = le->i.c[container]; item; item = item->next )
 					CL_CollectItemAmmo( item, (container == csi.idLeft) );
 		}
-#endif
 	}
 }
 
