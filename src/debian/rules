@@ -26,11 +26,11 @@ configure: configure-stamp
 configure-stamp:
 	dh_testdir
 
-	set -e; if [ -d CVS ]; then \
+	set -e; if [ -d .svn ]; then \
 	  SRCVER=$(shell $(vercmd)) ;\
-	  CURVER=`cvsps -t -s 0 -u| grep '^Num patchsets:'| cut -c16-` ;\
+	  CURVER=`svn info|grep ^Revision:| cut -c11-` ;\
 	  if [ -n "$$CURVER" ] ; then \
-	    sed 1s/$$SRCVER/0.0.cvsps$$CURVER/ < debian/changelog > debian/cl2;\
+	    sed 1s/$$SRCVER/0.0.svn$$CURVER/ < debian/changelog > debian/cl2;\
 	    mv debian/cl2 debian/changelog ;\
 	  fi ;\
 	fi
@@ -56,9 +56,9 @@ clean:
 	-$(MAKE) -C tools clean
 	rm -rf linux/debug*-glibc
 
-	set -e; if [ -d CVS ]; then \
+	set -e; if [ -d .svn ]; then \
 	  SRCVER=$(shell $(vercmd)) ;\
-	  sed 1s/$$SRCVER/0.0.cvs/ < debian/changelog > debian/cl2;\
+	  sed 1s/$$SRCVER/0.0.svn/ < debian/changelog > debian/cl2;\
 	  mv debian/cl2 debian/changelog ;\
 	fi
 
