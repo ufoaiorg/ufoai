@@ -31,9 +31,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	VERSION		0.12
 
 // i18n support via gettext
+// needs to be activated via -DHAVE_GETTEXT
+#ifdef HAVE_GETTEXT
 #ifdef MACOS_X
 #include <intl/libintl.h>
 #elif defined(_WIN32)
+#define snprintf _snprintf
 #include "../win32/libintl.h"
 #else
 #include <libintl.h>
@@ -43,6 +46,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define _(String) gettext(String)
 #define gettext_noop(String) String
 #define N_(String) gettext_noop (String)
+#else //HAVE_GETTEXT
+// no gettext support
+#define _(String) String
+#endif
 
 #define	BASEDIRNAME	"base"
 
