@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE CodeBlocks_workspace_file>
+<CodeBlocks_workspace_file>
+	<Workspace title="ufo workspace">
+		<Project filename="game\game.cbp"/>
+		<Project filename="ref_gl\ref_gl.cbp"/>
+		<Project filename="ufo.cbp" active="1"/>
+	</Workspace>
+</CodeBlocks_workspace_file>
