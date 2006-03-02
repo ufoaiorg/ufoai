@@ -31,26 +31,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdlib.h>
 #include <ctype.h>
 
-#if defined(_WIN32)
-#define snprintf _snprintf
-#endif
-
 // i18n support via gettext
+// needs to be activated via -DHAVE_GETTEXT
+#ifdef HAVE_GETTEXT
 #ifdef MACOS_X
-#include <intl/libintl.h>
+	#include <intl/libintl.h>
 #elif defined(_WIN32)
-#include "../win32/libintl.h"
+	#define snprintf _snprintf
+	#include "../win32/libintl.h"
 #else
-#include <libintl.h>
+	#include <libintl.h>
 #endif
 
 #include <locale.h>
 #define _(String) gettext(String)
 #define gettext_noop(String) String
-#define N_(String) gettext_noop (String)
+	#define N_(String) gettext_noop (String)
+#else //HAVE_GETTEXT
+// no gettext support
+#define _(String) String
+#endif
 
 #include "ref.h"
-
 #include "vid.h"
 #include "screen.h"
 #include "sound.h"

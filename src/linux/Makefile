@@ -12,14 +12,12 @@
 # (Note: not all options are available for all platforms).
 # ufo (uses OSS for sound, cdrom ioctls for cd audio) is automatically built.
 # game.so is automatically built.
-BUILD_SDLUFO=YES	# sdlufo executable (uses SDL for cdrom and sound)
+BUILD_SDLUFO=YES	# use SDL for cdrom and sound
 BUILD_GLX=YES		# X11 GLX driver. Works somewhat ok.
-BUILD_SDLGL=YES		# SDL OpenGL driver. Works fine for some people.
 BUILD_DEDICATED=YES	# build a dedicated ufo server
-BUILD_ALSA=YES		# build with alsa-support?
-STATICSDL=NO
-SDLDIR=/usr/local/lib
-HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
+BUILD_ALSA=YES		# build with alsa-support
+HAVE_IPV6=YES		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
+HAVE_GETTEXT=YES	# Compile with multilanguage-support?
 
 # (hopefully) end of configurable options
 
@@ -74,20 +72,6 @@ NULL_DIR=$(MOUNT_DIR)/null
 
 BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp
 
-ifeq ($(HAVE_IPV6),YES)
-	BASE_CFLAGS+=-DHAVE_IPV6
-	ifeq ($(OSTYPE),FreeBSD)
-		BASE_CFLAGS+=-DHAVE_SIN6_LEN
-	endif
-	NET_UDP=net_udp6
-else
-	NET_UDP=net_udp
-endif
-
-ifeq ($(strip $(BUILD_RETEXTURE)),YES)
-	BASE_CFLAGS+=-DRETEX
-endif
-
 ifneq ($(ARCH),i386)
 	BASE_CFLAGS+=-DC_ONLY
 endif
@@ -105,19 +89,26 @@ ifeq ($(OSTYPE),Darwin)
 endif
 
 ifeq ($(strip $(BUILD_SDLUFO)),YES)
-	ifeq ($(strip $(STATICSDL)),YES)
-		LDFLAGS+=-L/usr/X11R6/lib$(_LIB) -Wl,-Bstatic $(SDLDIR)/libSDL.a
-		LDFLAGS+=$(SDLDIR)/libesd.a $(SDLDIR)/libartsc.a -Wl,-Bdynamic
-		LDFLAGS+=-lpthread -lX11 -lXext -lXxf86dga -lXxf86vm -lXv -lXinerama
-	else
-		LDFLAGS+=$(shell sdl-config --libs)
-	endif
-	BASE_CFLAGS+=$(SDLCFLAGS) -DUSE_SDL
-	SDLCFLAGS=$(shell sdl-config --cflags)
+	LDFLAGS+=$(shell sdl-config --libs)
+	BASE_CFLAGS+=$(shell sdl-config --cflags) -DUSE_SDL
 endif
 
 ifeq ($(strip $(BUILD_ALSA)),YES)
 	BASE_CFLAGS+=-DUSE_ALSA
+endif
+
+ifeq ($(strip $(HAVE_GETTEXT)),YES)
+	BASE_CFLAGS+=-DHAVE_GETTEXT
+endif
+
+ifeq ($(strip $(HAVE_IPV6)),YES)
+	BASE_CFLAGS+=-DHAVE_IPV6
+	ifeq ($(OSTYPE),FreeBSD)
+		BASE_CFLAGS+=-DHAVE_SIN6_LEN
+	endif
+	NET_UDP=net_udp6
+else
+	NET_UDP=net_udp
 endif
 
 ifeq ($(ARCH),axp)
@@ -177,9 +168,6 @@ ifeq ($(ARCH),axp)
 	ifeq ($(strip $(BUILD_GLX)),YES)
 		$(warning Warning: support not supported for $(ARCH))
 	endif
-	ifeq ($(strip $(BUILD_SDL)),YES)
-		$(warning Warning: SDL support not supported for $(ARCH))
-	endif
 endif # ARCH axp
 
 ifeq ($(ARCH),ppc)
@@ -206,16 +194,15 @@ ifeq ($(ARCH),i386)
 	endif
 endif # ARCH i386
 
-all: build_debug build_release
+all: build_debug build_release lang
 
 build_debug:
 	@-mkdir -p $(BUILD_DEBUG_DIR) \
 		$(BUILD_DEBUG_DIR)/client \
 		$(BUILD_DEBUG_DIR)/ded \
-		$(BUILD_DEBUG_DIR)/ref_soft \
 		$(BUILD_DEBUG_DIR)/ref_gl \
 		$(BUILD_DEBUG_DIR)/game
-	$(MAKE) targets lang BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS) -DLINUX_VERSION='\"$(VERSION) Debug\"'"
+	$(MAKE) targets BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS) -DLINUX_VERSION='\"$(VERSION) Debug\"'"
 
 build_release:
 	@-mkdir -p $(BUILD_RELEASE_DIR) \
@@ -223,7 +210,7 @@ build_release:
 		$(BUILD_RELEASE_DIR)/ded \
 		$(BUILD_RELEASE_DIR)/ref_gl \
 		$(BUILD_RELEASE_DIR)/game
-	$(MAKE) targets lang BUILDDIR=$(BUILD_RELEASE_DIR) CFLAGS="$(RELEASE_CFLAGS) -DLINUX_VERSION='\"$(VERSION)\"'"
+	$(MAKE) targets BUILDDIR=$(BUILD_RELEASE_DIR) CFLAGS="$(RELEASE_CFLAGS) -DLINUX_VERSION='\"$(VERSION)\"'"
 
 targets: $(TARGETS)
 
@@ -284,26 +271,17 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/q_shared.o
 
 ifeq ($(strip $(BUILD_SDLUFO)),YES)
-	QUAKE2_SDL_OBJS=$(BUILDDIR)/client/snd_sdl.o $(BUILDDIR)/client/cd_sdl.o
+	QUAKE2_OBJS+=$(BUILDDIR)/client/snd_sdl.o $(BUILDDIR)/client/cd_sdl.o
 else
-	QUAKE2_LNX_OBJS=$(BUILDDIR)/client/cd_linux.o
+	QUAKE2_OBJS+=$(BUILDDIR)/client/cd_linux.o
 endif
 
 ifeq ($(strip $(BUILD_ALSA)),YES)
 	QUAKE2_OBJS+=$(BUILDDIR)/client/snd_alsa.o
 endif
 
-ifeq ($(ARCH),i386)
-	QUAKE2_AS_OBJS=#$(BUILDDIR)/client/snd_mixa.o
-else
-	QUAKE2_AS_OBJS=#blank
-endif
-
-$(BUILDDIR)/ufo : $(QUAKE2_OBJS) $(QUAKE2_SDL_OBJS) $(QUAKE2_LNX_OBJS) $(QUAKE2_AS_OBJS)
-	$(CC) $(CFLAGS) -o $@ $(QUAKE2_OBJS) $(QUAKE2_SDL_OBJS) $(QUAKE2_LNX_OBJS) $(QUAKE2_AS_OBJS) $(LDFLAGS)
-
-#$(BUILDDIR)/sdlufo : $(QUAKE2_OBJS) $(QUAKE2_SDL_OBJS) $(QUAKE2_AS_OBJS)
-#	$(CC) $(CFLAGS) -o $@ $(QUAKE2_OBJS) $(QUAKE2_AS_OBJS) $(LDFLAGS)
+$(BUILDDIR)/ufo : $(QUAKE2_OBJS) $(QUAKE2_LNX_OBJS)
+	$(CC) $(CFLAGS) -o $@ $(QUAKE2_OBJS) $(QUAKE2_LNX_OBJS) $(LDFLAGS)
 
 $(BUILDDIR)/client/cl_actor.o :    $(CLIENT_DIR)/cl_actor.c
 	$(DO_CC)
@@ -437,8 +415,8 @@ $(BUILDDIR)/client/snd_linux.o :   $(LINUX_DIR)/snd_linux.c
 $(BUILDDIR)/client/snd_oss.o :   $(LINUX_DIR)/snd_oss.c
 	$(DO_CC)
 
-$(BUILDDIR)/client/snd_mixa.o :    $(LINUX_DIR)/snd_mixa.s
-	$(DO_AS)
+#$(BUILDDIR)/client/snd_mixa.o :    $(LINUX_DIR)/snd_mixa.s
+#	$(DO_AS)
 
 $(BUILDDIR)/client/sys_linux.o :   $(LINUX_DIR)/sys_linux.c
 	$(DO_CC)

@@ -1260,6 +1260,7 @@ void Com_Error_f (void)
 	Com_Error (ERR_FATAL, "%s", Cmd_Argv(1));
 }
 
+#ifdef HAVE_GETTEXT
 void Qcommon_LocaleInit ( void )
 {
 	char *locale;
@@ -1294,6 +1295,7 @@ void Qcommon_LocaleInit ( void )
 	textdomain( "ufoai" );
 	Com_Printf( "Setting language to %s\n", locale );
 }
+#endif
 
 /*
 =================
@@ -1330,8 +1332,10 @@ void Qcommon_Init (int argc, char **argv)
 
 	FS_InitFilesystem ();
 
+#ifdef HAVE_GETTEXT
 	// i18n through gettext
 	Qcommon_LocaleInit();
+#endif
 
 	Cbuf_AddText ("exec default.cfg\n");
 	Cbuf_AddText ("exec config.cfg\n");
