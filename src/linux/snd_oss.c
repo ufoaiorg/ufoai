@@ -35,22 +35,17 @@ static int tryrates[] = { 11025, 22051, 44100, 48000, 8000 };
 
 qboolean OSS_SNDDMA_Init(void)
 {
-
-	int rc;
-	int fmt;
-	int tmp;
-	int i;
+	int rc, fmt, tmp, i, caps;
 	struct audio_buf_info info;
-	int caps;
 	extern uid_t saved_euid;
 
 	if (snd_inited)
 		return true;
 
 	snd_inited = 0;
-	
+
 	Com_Printf("Soundsystem: OSS.\n");
-			
+
 	if (!snddevice)
 	{
 		sndbits = Cvar_Get("sndbits", "16", CVAR_ARCHIVE);
@@ -58,7 +53,7 @@ qboolean OSS_SNDDMA_Init(void)
 		sndchannels = Cvar_Get("sndchannels", "2", CVAR_ARCHIVE);
 		snddevice = Cvar_Get("snddevice", "/dev/dsp", CVAR_ARCHIVE);
 	}
-	
+
 	//alsa => oss
 	if ( ! strcmp (snddevice->string, "default") )
 	{
@@ -77,7 +72,7 @@ qboolean OSS_SNDDMA_Init(void)
 			perror( snddevice->string );
 			seteuid( getuid() );
 			Com_Printf("SNDDMA_Init: Could not open %s.\n", snddevice->string);
-			return 0;
+			return false;
 		}
 		seteuid( getuid() );
 	}
@@ -255,7 +250,7 @@ int OSS_SNDDMA_GetDMAPos(void)
 {
 	struct count_info count;
 
-	if (!snd_inited) 
+	if (!snd_inited)
 		return 0;
 
 	if (ioctl(audio_fd, SNDCTL_DSP_GETOPTR, &count)==-1)

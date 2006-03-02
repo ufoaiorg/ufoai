@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -44,7 +44,7 @@ cvar_t		*vid_fullscreen;
 
 // Global variables used internally by this module
 viddef_t	viddef;				// global video state; used by other modules
-void		*reflib_library;		// Handle to refresh DLL 
+void		*reflib_library;		// Handle to refresh DLL
 qboolean	reflib_active = 0;
 
 #define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[0] ) )
@@ -89,7 +89,7 @@ void VID_Printf (int print_level, char *fmt, ...)
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 //	static qboolean	inupdate;
-	
+
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
 	va_end (argptr);
@@ -105,7 +105,7 @@ void VID_Error (int err_level, char *fmt, ...)
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 //	static qboolean	inupdate;
-	
+
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
 	va_end (argptr);
@@ -220,7 +220,7 @@ qboolean VID_LoadRefresh( char *name )
 	struct stat st;
 	extern uid_t saved_euid;
 	FILE *fp;
-	
+
 	if ( reflib_active )
 	{
 		if (KBD_Close_fp)
@@ -242,13 +242,13 @@ qboolean VID_LoadRefresh( char *name )
 		Com_Printf( "LoadLibrary(\"%s\"): can't open %s\n", name, so_file);
 		strcpy(fn, ".");
 	}
-  else
-  {
-	  fgets(fn, sizeof(fn), fp);
-	  fclose(fp);
-	  while (*fn && isspace(fn[strlen(fn) - 1]))
-		  fn[strlen(fn) - 1] = 0;
-  }
+	else
+	{
+		fgets(fn, sizeof(fn), fp);
+		fclose(fp);
+		while (*fn && isspace(fn[strlen(fn) - 1]))
+			fn[strlen(fn) - 1] = 0;
+	}
 
 	strcat(fn, "/");
 	strcat(fn, name);
@@ -281,7 +281,7 @@ qboolean VID_LoadRefresh( char *name )
 		return false;
 	}
 
-  Com_Printf( "LoadLibrary(\"%s\")\n", fn );
+	Com_Printf( "LoadLibrary(\"%s\")\n", fn );
 
 	ri.Cmd_AddCommand = Cmd_AddCommand;
 	ri.Cmd_RemoveCommand = Cmd_RemoveCommand;
@@ -367,7 +367,7 @@ qboolean VID_LoadRefresh( char *name )
 VID_CheckChanges
 
 This function gets called once just before drawing each frame, and it's sole purpose in life
-is to check to see if any of the video mode parameters have changed, and if they have to 
+is to check to see if any of the video mode parameters have changed, and if they have to
 update the rendering DLL and/or video mode to match.
 ============
 */
@@ -426,7 +426,7 @@ void VID_Init (void)
 
 	/* Disable the 3Dfx splash screen */
 	putenv("FX_GLIDE_NO_SPLASH=0");
-		
+
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();
 }
@@ -492,7 +492,7 @@ void IN_GetMousePos (int *mx, int *my)
 
 void IN_Frame (void)
 {
-	if (RW_IN_Activate_fp) 
+	if (RW_IN_Activate_fp)
 	{
 		if ( cls.key_dest == key_console)
 			RW_IN_Activate_fp(false);

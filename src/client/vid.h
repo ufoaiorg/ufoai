@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -41,7 +41,7 @@ typedef struct vrect_s
 Another structure used to rationalize the menu system rendering box with the actual screen.
 The width and height are the dimensions of the actual screen, not just the rendering box.
 The rx, ry positions are the width and height divided by VID_NORM_WIDTH and VID_NORM_HEIGHT
-respectively. This allows the menu system to use a "normalized" coordinate system of 
+respectively. This allows the menu system to use a "normalized" coordinate system of
 1024x768 texels.
 
 */

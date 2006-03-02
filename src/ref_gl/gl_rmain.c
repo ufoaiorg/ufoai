@@ -147,8 +147,6 @@ cvar_t	*vid_gamma;
 cvar_t	*vid_ref;
 cvar_t  *vid_grabmouse;
 
-extern void UpdateHardwareGamma (void);
-
 /*
 =================
 R_CullBox
@@ -1738,17 +1736,20 @@ void R_BeginFrame( float camera_separation )
 		GLimp_LogNewFrame();
 	}
 
-	/*
-	** update 3Dfx gamma -- it is expected that a user will do a vid_restart
-	** after tweaking this value
-	*/
 	if ( vid_gamma->modified )
 	{
 		vid_gamma->modified = false;
 
+#ifdef __linux__
 		if ( gl_state.hwgamma )
 			UpdateHardwareGamma();
-		else if ( gl_config.renderer & ( GL_RENDERER_VOODOO ) )
+		/*
+		** update 3Dfx gamma -- it is expected that a user will do a vid_restart
+		** after tweaking this value
+		*/
+		else
+#endif
+		if ( gl_config.renderer & ( GL_RENDERER_VOODOO ) )
 		{
 			char envbuffer[1024];
 			float g;

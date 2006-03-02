@@ -172,9 +172,6 @@ void S_Init (void)
 		si.Com_Printf = Com_Printf;
 		si.S_PaintChannels = S_PaintChannels;
 
-		if(!SNDDMA_Init(&si))
-			return;
-
 		Cmd_AddCommand("play", S_Play);
 		Cmd_AddCommand("stopsound", S_StopAllSounds);
 		Cmd_AddCommand("soundlist", S_SoundList);

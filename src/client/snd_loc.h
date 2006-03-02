@@ -77,7 +77,9 @@ typedef struct
 	int			samplepos;				// in mono samples
 	int			samplebits;
 	int			speed;
-	byte		*buffer;
+	byte			*buffer;
+	int 			dmapos;
+	int 			dmasize;
 } dma_t;
 
 // !!! if this is changed, the asm code must change !!!

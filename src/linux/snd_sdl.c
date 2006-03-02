@@ -32,55 +32,95 @@
 
 static int  snd_inited;
 static dma_t *shm;
+cvar_t* sdlMixSamples;
 
 static void paint_audio (void *unused, Uint8 * stream, int len)
 {
 	if (shm) {
+		int pos = (shm->dmapos * (shm->samplebits/8));
+		if (pos >= shm->dmasize)
+			shm->dmapos = pos = 0;
+
+#if 0
 		shm->buffer = stream;
 		shm->samplepos += len / (shm->samplebits / 4);
+
 		// Check for samplepos overflow?
 		S_PaintChannels (shm->samplepos);
+#else
+		int tobufend = shm->dmasize - pos;  /* bytes to buffer's end. */
+		int len1 = len;
+		int len2 = 0;
+
+		if (len1 > tobufend)
+		{
+			len1 = tobufend;
+			len2 = len - len1;
+		}
+		memcpy(stream, shm->buffer + pos, len1);
+		if (len2 <= 0)
+			shm->dmapos += (len1 / (shm->samplebits/8));
+		else  /* wraparound? */
+		{
+			memcpy(stream+len1, shm->buffer, len2);
+			shm->dmapos = (len2 / (shm->samplebits/8));
+		}
+#endif
+		if (shm->dmapos >= shm->dmasize)
+			shm->dmapos = 0;
 	}
 }
 
 qboolean SDL_SNDDMA_Init (void)
 {
 	SDL_AudioSpec desired, obtained;
-	int desired_bits, freq;
+	int desired_bits, freq, tmp;
+	char drivername[128];
 
 	if (snd_inited)
 		return true;
 
+	snd_inited = 0;
+
 	Com_Printf("Soundsystem: SDL.\n");
 
-	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0)
+	if (!SDL_WasInit(SDL_INIT_AUDIO))
 	{
-		if (SDL_Init(SDL_INIT_AUDIO) < 0)
+		if (SDL_Init(SDL_INIT_AUDIO) == -1)
 		{
-			Com_Printf ("Couldn't init SDL audio: %s\n", SDL_GetError ());
-			return false;
-		}
-	}
-	else if (SDL_WasInit(SDL_INIT_AUDIO) == 0)
-	{
-		if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
-		{
-			Com_Printf ("Couldn't init SDL audio: %s\n", SDL_GetError ());
+			Com_Printf("Couldn't init SDL audio: %s\n", SDL_GetError () );
 			return false;
 		}
 	}
 
-	snd_inited = 0;
+	if (SDL_AudioDriverName(drivername, sizeof (drivername)) == NULL)
+		strcpy(drivername, "(UNKNOWN)");
+	Com_Printf("SDL audio driver is \"%s\".\n", drivername);
+
+	memset(&desired, '\0', sizeof (desired));
+	memset(&obtained, '\0', sizeof (obtained));
+
+	sdlMixSamples = Cvar_Get("s_sdlMixSamps", "0", CVAR_ARCHIVE);
+
 	desired_bits = (Cvar_Get("sndbits", "16", CVAR_ARCHIVE))->value;
 
 	/* Set up the desired format */
 	freq = (Cvar_Get("s_khz", "0", CVAR_ARCHIVE))->value;
 	if (freq == 44)
+	{
 		desired.freq = 44100;
+		desired.samples = 1024;
+	}
 	else if (freq == 22)
+	{
 		desired.freq = 22050;
+		desired.samples = 512;
+	}
 	else
+	{
 		desired.freq = 11025;
+		desired.samples = 256;
+	}
 
 	switch (desired_bits)
 	{
@@ -98,20 +138,18 @@ qboolean SDL_SNDDMA_Init (void)
 			return false;
 	}
 	desired.channels = (Cvar_Get("sndchannels", "2", CVAR_ARCHIVE))->value;
-
-	if (desired.freq == 44100)
-		desired.samples = 2048;
-	else if (desired.freq == 22050)
-		desired.samples = 1024;
-	else
-		desired.samples = 512;
-
 	desired.callback = paint_audio;
+
+	Com_Printf ("Bits: %i\n", desired_bits );
+	Com_Printf ("Frequency: %i\n", desired.freq );
+	Com_Printf ("Samples: %i\n", desired.samples );
+	Com_Printf ("Channels: %i\n", desired.channels );
 
 	/* Open the audio device */
 	if (SDL_OpenAudio (&desired, &obtained) < 0)
 	{
-		Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
+		Com_Printf ("Couldn't open SDL audio - quitting soundsystem: %s\n", SDL_GetError ());
+		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 		return false;
 	}
 
@@ -143,18 +181,39 @@ qboolean SDL_SNDDMA_Init (void)
 			memcpy (&obtained, &desired, sizeof (desired));
 			break;
 	}
-	SDL_PauseAudio (0);
+
+	// dma.samples needs to be big, or id's mixer will just refuse to
+	//  work at all; we need to keep it significantly bigger than the
+	//  amount of SDL callback samples, and just copy a little each time
+	//  the callback runs.
+	// 32768 is what the OSS driver filled in here on my system. I don't
+	//  know if it's a good value overall, but at least we know it's
+	//  reasonable...this is why I let the user override.
+	tmp = sdlMixSamples->value;
+	if (!tmp)
+		tmp = (obtained.samples * obtained.channels) * 10;
+
+	if (tmp & (tmp - 1))  // not a power of two? Seems to confuse something.
+	{
+		int val = 1;
+		while (val < tmp)
+			val <<= 1;
+
+		tmp = val;
+	}
 
 	/* Fill the audio DMA information block */
 	shm = &dma;
 	shm->samplebits = (obtained.format & 0xFF);
 	shm->speed = obtained.freq;
 	shm->channels = obtained.channels;
-	shm->samples = obtained.samples * shm->channels;
+	shm->samples = tmp;
 	shm->samplepos = 0;
 	shm->submission_chunk = 1;
-	shm->buffer = NULL;
+	shm->dmasize = (shm->samples * (shm->samplebits/8));
+	shm->buffer = calloc(1, shm->dmasize);;
 
+	SDL_PauseAudio (0);
 	snd_inited = 1;
 	return true;
 }
