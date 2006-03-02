@@ -1,15 +1,15 @@
-ufoai-data (0.0.cvs) unstable; urgency=low
+ufoai-data (0.0.svn169) unstable; urgency=low
 
-  * CVS snapshot.
+  * SVN snapshot.
   * Do not provides ufoai-music any more.
-  * Adapted packaging to cvs layout.
+  * Adapted packaging to svn layout.
   * Build data from source using ufoai-tools.
   * Removed integration of 3rd-party scenarios in the campaign, removed
     dep on ufoai-common.
-  * Automatically update package version to use cvsps patchset number when
-    run from a CVS working directory.
+  * Automatically update package version to use SVN revision number when
+    run from a SVN working copy.
 
- -- Yann Dirson <dirson@debian.org>  Tue, 28 Feb 2006 23:10:30 +0100
+ -- Yann Dirson <dirson@debian.org>  Thu,  2 Mar 2006 02:01:57 +0100
 
 ufoai-data (0.0.040218-0.3.1) unstable; urgency=low
 
