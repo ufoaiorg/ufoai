@@ -590,6 +590,7 @@ void CL_MarkTeamCmd( void )
 	// we are only allowed to be here if we already set up base
 	if ( ! ccs.numBases )
 	{
+		Com_Printf("No base set up\n");
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
 		return;
 	}

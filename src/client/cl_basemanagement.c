@@ -19,6 +19,7 @@ int numBases;
 int numBuildings;
 int numProductions;
 int baseID;
+vec2_t newBasePos;
 
 int bmDataSize = 0;
 
@@ -324,7 +325,7 @@ void MN_ConstructBuilding( void )
 	baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] = B_UNDER_CONSTRUCTION;
 	baseCurrent->buildingCurrent->timeStart = ccs.date.day;
 
-	ccs.credits -= baseCurrent->buildingCurrent->fixCosts;
+	CL_UpdateCredits( ccs.credits - baseCurrent->buildingCurrent->fixCosts );
 }
 
 /*
@@ -1538,11 +1539,21 @@ TODO: First base needs to be constructed automatically
 void MN_BuildBase( void )
 {
 	assert(baseCurrent);
-	baseCurrent->founded = true;
-	mapAction = MA_NONE;
 
-	strncpy( baseCurrent->title, Cvar_VariableString( "mn_basename" ), MAX_VAR );
-	Cbuf_AddText( "mn_push bases\n" );
+	CL_NewBase( newBasePos );
+
+	if ( ccs.numBases >= 1 )
+	{
+		baseCurrent->founded = true;
+		mapAction = MA_NONE;
+		// FIXME: This value is in menu_geoscape, too
+		//       make this variable??
+		CL_UpdateCredits( ccs.credits - 100000 );
+		strncpy( baseCurrent->title, Cvar_VariableString( "mn_basename" ), MAX_VAR );
+		Cbuf_AddText( "mn_push bases\n" );
+	}
+	else
+		MN_PopMenu( false );
 }
 
 
@@ -1834,9 +1845,9 @@ void CL_UpdateBaseData( void )
 					if ( b->moreThanOne )
 						b->howManyOfThisType++;
 					if ( ! newBuilding )
-						Com_sprintf( infoBuildingText, MAX_MENUTEXTLEN, _("Building %s at base %s\n"), b->title, bmBases[i].title );
+						Com_sprintf( infoBuildingText, MAX_MENUTEXTLEN, _("Construction of building %s finished\\at base %s\n"), b->title, bmBases[i].title );
 					else
-						Com_sprintf( infoBuildingText, MAX_MENUTEXTLEN, _("Constructions finished at base %s\n"), bmBases[i].title );
+						Com_sprintf( infoBuildingText, MAX_MENUTEXTLEN, _("There is at least one finished construction\\at base %s\n"), bmBases[i].title );
 
 					newBuilding++;
 				}

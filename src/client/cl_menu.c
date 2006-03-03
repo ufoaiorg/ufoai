@@ -897,7 +897,9 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	// new base construction
 	if ( mapAction == MA_NEWBASE )
 	{
-		CL_NewBase( pos );
+		newBasePos[0] = pos[0];
+		newBasePos[1] = pos[1];
+		MN_PushMenu( "popup_newbase" );
 		return;
 	}
 
@@ -927,15 +929,18 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 		}
 	}
 
-	// aircraft testing
+	// draw aircraft
+	aircraft_t *air;
+	for ( i = 0, air = ccs.air; i < ccs.numAir; i++, air++ )
 	{
-		aircraft_t *air;
-
-		air = &ccs.air[0];
-		MN_MapCalcLine( air->pos, pos, &air->route );
-		air->status = AIR_TRANSIT;
-		air->time = 0;
-		air->point = 0;
+		air = &ccs.air[i];
+		if ( air->status > AIR_HOME )
+		{
+			MN_MapCalcLine( air->pos, pos, &air->route );
+			air->status = AIR_TRANSIT;
+			air->time = 0;
+			air->point = 0;
+		}
 	}
 }
 
@@ -1252,7 +1257,7 @@ void MN_DrawMapMarkers( menuNode_t *node )
 
 	// draw aircraft
 	for ( i = 0, air = ccs.air; i < ccs.numAir; i++, air++ )
-		if ( air->status && air->status != AIR_HOME )
+		if ( air->status != AIR_HOME )
 		{
 			if ( !MN_MapToScreen( node, air->pos, &x, &y ) )
 				continue;

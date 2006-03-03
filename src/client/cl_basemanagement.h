@@ -11,6 +11,8 @@
 #define UPGRADECOSTS 100
 #define UPGRADETIME  2
 
+extern vec2_t newBasePos;
+
 void MN_BuildingInit( void );
 int B_GetIDFromList ( int id );
 int B_GetCount ( void );

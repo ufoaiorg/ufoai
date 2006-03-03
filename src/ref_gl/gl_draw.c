@@ -354,7 +354,15 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 	// parse the string
 	GL_Bind (f->image->texnum);
 	for ( l = 0; *c; c++ )
-		l += Draw_PropCharFont( f, x + l, y, *c );
+	{
+		if ( *c == '\n' || *c == '\\' )
+		{
+			y+=f->h;
+			l=0;
+		}
+		else
+		    	l += Draw_PropCharFont( f, x + l, y, *c );
+	}
 
 	return l;
 }

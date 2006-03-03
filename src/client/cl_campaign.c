@@ -284,6 +284,7 @@ void CL_NewAircraft ( base_t* base )
 	memset( air, 0, sizeof(aircraft_t) );
 	air->status = AIR_HOME;
 	air->homebase = base;
+	air->speed = 80.0f;
 }
 
 // check for water
@@ -339,8 +340,6 @@ void CL_NewBase( vec2_t pos )
 	B_SetUpBase();
 	// set up the aircraft
 	CL_NewAircraft( baseCurrent );
-
-	MN_PushMenu( "popup_newbase" );
 }
 
 
@@ -544,6 +543,7 @@ void CL_CampaignExecute( setState_t *set )
 }
 
 
+char text[MAX_MENUTEXTLEN];
 /*
 ======================
 CL_CampaignCheckEvents
@@ -575,7 +575,8 @@ void CL_CampaignCheckEvents( void )
 			// ok, waiting and not doing a mission will costs money
 			int lose = mis->def->civilians * mis->def->cr_civilian;
 			CL_UpdateCredits( ccs.credits - lose );
-			MN_Popup( _("Notice"), va(_("The mission expired all %i civilians died\nYou lost %i $"), mis->def->civilians, lose ) );
+			Com_sprintf (text, sizeof(text), _("The mission expired and %i civilians died\\You've lost %i $"), mis->def->civilians, lose );
+			MN_Popup( _("Notice"), text );
 			CL_CampaignRemoveMission( mis );
 		}
 }
@@ -589,16 +590,15 @@ CL_CampaignRunAircraft
 void CL_CampaignRunAircraft( int dt )
 {
 	aircraft_t *air;
-	float dist, speed, frac;
+	float dist, frac;
 	int i, p;
 
-	speed = 80;
 	for ( i = 0, air = ccs.air; i < ccs.numAir; i++, air++ )
-		if ( air->status >= AIR_TRANSIT )
+		if ( air->status > AIR_IDLE )
 		{
 			// calc distance
 			air->time += dt;
-			dist = speed * air->time / 3600;
+			dist = air->speed * air->time / 3600;
 
 			// check for end point
 			if ( dist >= air->route.dist * (air->route.n-1) )
@@ -608,7 +608,10 @@ void CL_CampaignRunAircraft( int dt )
 				air->pos[0] = end[0];
 				air->pos[1] = end[1];
 
-				// add events here
+				// TODO: add events here
+				// near a base => AIR_HOME
+				// near a mission => AIR_INTERCEPT
+				// ...
 				air->status = AIR_IDLE;
 				continue;
 			}
@@ -1348,7 +1351,10 @@ void CL_GameGo( void )
 		return;
 
 	if ( numOnTeam == 0 )
+	{
+		MN_Popup( _("Note"), _("Enter your base and assemble a team") );
 		return;
+	}
 
 	// start the map
 	mis = selMis->def;
@@ -1714,7 +1720,9 @@ CL_MapActionReset
 */
 void CL_MapActionReset( void )
 {
-	mapAction = MA_NONE;
+	// don't allow a reset when no base is set up
+	if ( ccs.numBases )
+		mapAction = MA_NONE;
 }
 
 

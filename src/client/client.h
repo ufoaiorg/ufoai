@@ -1036,6 +1036,7 @@ typedef struct aircraft_s
 // 	int		type;
 // 	int		home;
 	int		status;
+	float		speed;
 	vec2_t	pos;
 	int		point;
 	int		time;

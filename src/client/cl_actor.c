@@ -1535,6 +1535,7 @@ void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
 		CL_ParticleSpawn( "inRangeTracer", 0, from, next, NULL );
 		VectorCopy( next, from );
 	}
+	selToHit = 100 * CL_TargetingToHit( toPos );
 }
 
 
