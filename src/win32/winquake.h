@@ -25,16 +25,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <windows.h>
 
+#ifndef USE_SDL
 #include <dsound.h>
+#else
+#include <SDL/SDL.h>
+#endif
 
 #define	WINDOW_STYLE	(WS_OVERLAPPED|WS_BORDER|WS_CAPTION|WS_VISIBLE)
 
 extern	HINSTANCE	global_hInstance;
 
+#ifndef USE_SDL
 extern LPDIRECTSOUND pDS;
 extern LPDIRECTSOUNDBUFFER pDSBuf;
 
 extern DWORD gSndBufSize;
+#endif
 
 extern HWND			cl_hwnd;
 extern qboolean		ActiveApp, Minimized;

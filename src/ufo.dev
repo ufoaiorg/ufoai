@@ -4,10 +4,10 @@ Name=ufo
 Ver=1
 IsCpp=1
 Type=0
-Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DNDEBUG -D_WINDOWS -DDEVCPP -DC_ONLY_@@_
+Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DNDEBUG -D_WINDOWS -DDEVCPP -DC_ONLY -DUSE_SDL_@@_
 CppCompiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DNDEBUG -D_WINDOWS_@@_
 Includes=
-Linker=-lvorbisfile -lvorbis -logg -llibjpeg -lwinmm -lwsock32 -lkernel32 -luser32 -lgdi32 -lgmon_@@_win32/intl.lib_@@_
+Linker=-lvorbisfile -lvorbis -logg -llibjpeg -lwinmm -lwsock32 -lkernel32 -luser32 -lgdi32 -lgmon_@@_win32/intl.lib -lSDL_@@_
 Libs=
 UnitCount=74
 Folders="Header Files","Resource Files","Source Files"

@@ -9,7 +9,7 @@ CppCompiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DNDEBUG -D_WINDOWS_@@_
 Includes=
 Linker=-lkernel32 -luser32 -lwinmm_@@_../win32/intl.lib_@@_
 Libs=
-UnitCount=13
+UnitCount=12
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=
@@ -26,7 +26,7 @@ UseCustomMakefile=0
 CustomMakefile=
 IncludeVersionInfo=0
 SupportXPThemes=0
-CompilerSet=1
+CompilerSet=0
 CompilerSettings=0000000000000000000000
 
 [Unit1]

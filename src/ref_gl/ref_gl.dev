@@ -3,9 +3,9 @@ FileName=ref_gl.dev
 Name=ref_gl
 Ver=1
 IsCpp=1
-Type=2
-Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DNDEBUG -DWIN32 -D_WINDOWS -DDEVCPP -DC_ONLY_@@_
-CppCompiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DNDEBUG -DWIN32 -D_WINDOWS_@@_
+Type=3
+Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DNDEBUG -DWIN32 -D_WINDOWS -DDEVCPP -DC_ONLY -DUSE_SDL_@@__@@_
+CppCompiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DNDEBUG -DWIN32 -D_WINDOWS -DUSE_SDL_@@_
 Includes=
 Linker=-lkernel32 -luser32 -lgdi32 -lwinmm -llibjpeg_@@_../win32/intl.lib_@@_
 Libs=
@@ -285,16 +285,6 @@ Folder="Resource Files"
 Compile=0
 CompileCpp=1
 Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit29]
-FileName=..\win32\winquake.h
-Folder="Header Files"
-Compile=1
-CompileCpp=1
-Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
