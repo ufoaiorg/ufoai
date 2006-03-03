@@ -1147,6 +1147,10 @@ void CL_ParseResults( sizebuf_t *buf )
 
 		// loot the battlefield
 		CL_CollectItems( winner == we );
+
+		// update stats
+		CL_UpdateCharacterStats( winner == we );
+
 		ccs.eCampaign = ccs.eMission;
 	}
 

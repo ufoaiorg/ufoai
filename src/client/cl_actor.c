@@ -86,6 +86,7 @@ void CL_ActorGlobalCVars( void )
 	int i;
 
 	Cvar_SetValue( "mn_numaliensspotted", cl.numAliensSpotted );
+	// TODO: Should this be cl.numTeamList instead of 8?
 	for ( i = 0; i < 8; i++ )
 	{
 		le = cl.teamList[i];

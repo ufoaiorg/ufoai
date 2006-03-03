@@ -571,7 +571,13 @@ void CL_CampaignCheckEvents( void )
 	// let missions expire
 	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ )
 		if ( mis->expire.day && Date_LaterThan( ccs.date, mis->expire ) )
+		{
+			// ok, waiting and not doing a mission will costs money
+			int lose = mis->def->civilians * mis->def->cr_civilian;
+			CL_UpdateCredits( ccs.credits - lose );
+			MN_Popup( _("Notice"), va(_("The mission expired all %i civilians died\nYou lost %i $"), mis->def->civilians, lose ) );
 			CL_CampaignRemoveMission( mis );
+		}
 }
 
 
@@ -746,6 +752,17 @@ void CL_GameTimeSlow( void )
 	}
 }
 
+/*
+======================
+CL_UpdateCredits
+======================
+*/
+void CL_UpdateCredits ( int credits )
+{
+	// credits
+	ccs.credits = credits;
+	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
+}
 
 /*
 ======================
@@ -808,9 +825,7 @@ void CL_GameNew( void )
 	for ( i = 0; i < curCampaign->soldiers; i++ )
 		CL_GenerateCharacter( curCampaign->team );
 
-	// credits
-	ccs.credits = curCampaign->credits;
-	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
+	CL_UpdateCredits( curCampaign->credits );
 
 	// equipment
 	for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
@@ -1439,7 +1454,7 @@ void CL_BuyType( void )
 	}
 	num = atoi( Cmd_Argv( 1 ) );
 
-	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
+	CL_UpdateCredits( ccs.credits );
 
 	// get item list
 	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
@@ -1506,8 +1521,7 @@ void CL_Buy( void )
 	{
 		Cvar_SetValue( va( "mn_storage%i", num ), ++ccs.eCampaign.num[item] );
 		Cvar_SetValue( va( "mn_supply%i", num ),  --ccs.eMarket.num[item] );
-		ccs.credits -= csi.ods[item].price;
-		Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
+		CL_UpdateCredits( ccs.credits-csi.ods[item].price );
 	}
 }
 
@@ -1539,8 +1553,7 @@ void CL_Sell( void )
 	{
 		Cvar_SetValue( va( "mn_storage%i", num ), --ccs.eCampaign.num[item] );
 		Cvar_SetValue( va( "mn_supply%i", num ),  ++ccs.eMarket.num[item] );
-		ccs.credits += csi.ods[item].price;
-		Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
+		CL_UpdateCredits( ccs.credits+csi.ods[item].price );
 	}
 }
 
@@ -1593,6 +1606,39 @@ void CL_CollectItems( int won )
 
 /*
 ======================
+CL_UpdateCharacterStats
+
+FIXME: See TODO and FIXME included
+======================
+*/
+void CL_UpdateCharacterStats ( int won )
+{
+	le_t *le;
+	character_t* chr;
+	int i, j;
+
+	for ( i = 0; i < numWholeTeam; i++ )
+	{
+		le = cl.teamList[i];
+
+		// check if the soldier still lives
+		// and give him skills
+		if ( le && !(le->state & STATE_DEAD) )
+		{
+			// TODO: Is the array of character_t the same
+			//      as the array of le_t??
+			chr = &wholeTeam[i];
+			assert( chr );
+
+			// FIXME:
+			for ( j = 0; i < SKILL_NUM_TYPES; j++ )
+				chr->skills[j]++;
+		}
+	}
+}
+
+/*
+======================
 CL_GameResultsCmd
 ======================
 */
@@ -1622,7 +1668,7 @@ void CL_GameResultsCmd( void )
 	won = atoi( Cmd_Argv( 1 ) );
 
 	// give reward, change equipment
-	ccs.credits += ccs.reward;
+	CL_UpdateCredits( ccs.credits+ccs.reward );
 
 	// remove the dead (and their item preference)
 	for ( i = 0; i < numWholeTeam; )

@@ -1114,7 +1114,8 @@ void CL_ParseMission( char *name, char **text );
 void CL_ParseStage( char *name, char **text );
 void CL_ParseCampaign( char *name, char **text );
 void CL_CollectItems( int won );
-
+void CL_UpdateCharacterStats ( int won );
+void CL_UpdateCredits ( int credits );
 //
 // cl_menu.c
 //
