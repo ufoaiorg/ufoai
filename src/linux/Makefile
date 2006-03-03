@@ -18,6 +18,7 @@ BUILD_DEDICATED=YES	# build a dedicated ufo server
 BUILD_ALSA=YES		# build with alsa-support
 HAVE_IPV6=YES		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
+BUILD_JPEG=NO           # jpeg-6 compile in or link in?
 
 # (hopefully) end of configurable options
 
@@ -140,6 +141,12 @@ SHLIBEXT=so
 
 SHLIBCFLAGS=-fPIC
 SHLIBLDFLAGS=-shared
+
+ifeq ($(strip $(BUILD_JPEG)),YES)
+	BASE_CFLAGS+=-DBUILD_JPEG
+else
+	GLXLDFLAGS+=-ljpeg
+endif
 
 DEBUG_CFLAGS=$(BASE_CFLAGS) -g
 
@@ -611,6 +618,13 @@ REF_GL_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_warp.o \
 	$(BUILDDIR)/ref_gl/gl_particle.o \
 	\
+	$(BUILDDIR)/ref_gl/qgl_linux.o \
+	$(BUILDDIR)/ref_gl/q_shared.o \
+	$(BUILDDIR)/ref_gl/q_shlinux.o \
+	$(BUILDDIR)/ref_gl/glob.o
+
+ifeq ($(strip $(BUILD_JPEG)),YES)
+REF_GL_OBJS += \
 	$(BUILDDIR)/ref_gl/jcapimin.o \
 	$(BUILDDIR)/ref_gl/jchuff.o   \
 	$(BUILDDIR)/ref_gl/jcinit.o \
@@ -644,12 +658,8 @@ REF_GL_OBJS = \
 	$(BUILDDIR)/ref_gl/jidctflt.o \
 	$(BUILDDIR)/ref_gl/jmemmgr.o \
 	$(BUILDDIR)/ref_gl/jmemnobs.o \
-	$(BUILDDIR)/ref_gl/jutils.o \
-	\
-	$(BUILDDIR)/ref_gl/qgl_linux.o \
-	$(BUILDDIR)/ref_gl/q_shared.o \
-	$(BUILDDIR)/ref_gl/q_shlinux.o \
-	$(BUILDDIR)/ref_gl/glob.o
+	$(BUILDDIR)/ref_gl/jutils.o
+endif
 
 REF_GLX_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_glx.o
@@ -684,10 +694,10 @@ $(BUILDDIR)/ref_gl/jdmaster.o : $(JPDIR)/jdmaster.c; $(DO_GL_SHLIB_CC)
 $(BUILDDIR)/ref_gl/jdpostct.o : $(JPDIR)/jdpostct.c; $(DO_GL_SHLIB_CC)
 $(BUILDDIR)/ref_gl/jdsample.o : $(JPDIR)/jdsample.c; $(DO_GL_SHLIB_CC)
 $(BUILDDIR)/ref_gl/jdtrans.o : $(JPDIR)/jdtrans.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jerror.o : $(JPDIR)/jerror.c; $(DO_GL_SHLIB_CC) $(GL_CFLAGS) $(MINGW_CFLAGS)
+$(BUILDDIR)/ref_gl/jerror.o : $(JPDIR)/jerror.c; $(DO_GL_SHLIB_CC)
 $(BUILDDIR)/ref_gl/jidctflt.o : $(JPDIR)/jidctflt.c; $(DO_GL_SHLIB_CC)
 $(BUILDDIR)/ref_gl/jmemmgr.o : $(JPDIR)/jmemmgr.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jmemnobs.o : $(JPDIR)/jmemnobs.c; $(DO_GL_SHLIB_CC)  $(GL_CFLAGS) $(MINGW_CFLAGS)
+$(BUILDDIR)/ref_gl/jmemnobs.o : $(JPDIR)/jmemnobs.c; $(DO_GL_SHLIB_CC)
 $(BUILDDIR)/ref_gl/jutils.o : $(JPDIR)/jutils.c; $(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_glx.$(SHLIBEXT) : $(REF_GL_OBJS) $(REF_GLX_OBJS)

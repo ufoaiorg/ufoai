@@ -67,7 +67,7 @@ int AngleToDV( int angle )
 
 //============================================================================
 
-#ifdef _WIN32
+#ifdef _MSC_VER
 #pragma optimize( "", off )
 #endif
 

@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _Q_SHARED_H
 #define _Q_SHARED_H 1
 
-#ifdef _WIN32
+#ifdef _MSC_VER
 // unknown pragmas are SUPPOSED to be ignored, but....
 #pragma warning(disable : 4244)     // MIPS
 #pragma warning(disable : 4136)     // X86
@@ -1092,16 +1092,5 @@ typedef enum {
 
 
 //==============================================
-
-
-// ==================
-// PGM
-#define VIDREF_GL		1
-#define VIDREF_SOFT		2
-#define VIDREF_OTHER	3
-
-extern int vidref_val;
-// PGM
-// ==================
 
 #endif  // _Q_SHARED_H

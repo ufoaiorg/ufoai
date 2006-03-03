@@ -756,7 +756,7 @@ SOURCE=..\win32\glw_win.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\win32\jpeglib.h
+SOURCE=..\jpeg-6\jpeglib.h
 # End Source File
 # Begin Source File
 

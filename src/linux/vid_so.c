@@ -299,6 +299,8 @@ qboolean VID_LoadRefresh( char *name )
 	ri.Cvar_SetValue = Cvar_SetValue;
 	ri.Vid_GetModeInfo = VID_GetModeInfo;
 	ri.Vid_NewWindow = VID_NewWindow;
+//	ri.Malloc = Z_Malloc;
+//	ri.Free = Z_Free;
 
 	if ( ( GetRefAPI = (void *) dlsym( reflib_library, "GetRefAPI" ) ) == 0 )
 		Com_Error( ERR_FATAL, "dlsym failed on %s", name );

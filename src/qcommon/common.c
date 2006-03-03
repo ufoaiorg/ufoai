@@ -1048,11 +1048,14 @@ Z_Free
 void Z_Free (void *ptr)
 {
 	zhead_t	*z;
+	
+	if ( ! ptr )
+		return;
 
 	z = ((zhead_t *)ptr) - 1;
 
 	if (z->magic != Z_MAGIC)
-		Com_Error (ERR_FATAL, "Z_Free: bad magic");
+		Com_Error (ERR_FATAL, "Z_Free: bad magic (%i)", z->magic );
 
 
 	z->prev->next = z->next;

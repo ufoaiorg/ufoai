@@ -312,6 +312,10 @@ typedef struct
 	void	(*FS_FreeFile) (void *buf);
 	int		(*FS_CheckFile) (char *name);
 
+	// dynamic memory allocator for things that need to be freed
+//	void	*(*Malloc)( int bytes );
+//	void	(*Free)( void *buf );
+
 	// gamedir will be the current directory that generated
 	// files should be stored to, ie: "f:\quake\id1"
 	char	*(*FS_Gamedir) (void);

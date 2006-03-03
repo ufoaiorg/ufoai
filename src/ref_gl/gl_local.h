@@ -33,17 +33,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GL_COLOR_INDEX8_EXT
 #define GL_COLOR_INDEX8_EXT GL_COLOR_INDEX
 #endif
-#ifdef __MINGW32__
-#define XMD_H
+#endif
+
+#ifdef BUILD_JPEG
+#include "../jpeg-6/jpeglib.h"
+#else
+#ifndef __WIN32
 #include <jpeglib.h>
-#undef XMD_H
 #else
 #include "../win32/jpeglib.h"
 #endif
-#else
-#include <jpeglib.h>
 #endif
-
 #include "../client/ref.h"
 
 #include "qgl.h"

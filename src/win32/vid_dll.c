@@ -596,6 +596,8 @@ qboolean VID_LoadRefresh( char *name )
 	ri.Vid_GetModeInfo = VID_GetModeInfo;
 //	ri.Vid_MenuInit = VID_MenuInit;
 	ri.Vid_NewWindow = VID_NewWindow;
+//	ri.Malloc = Z_Malloc;
+//	ri.Free = Z_Free;
 
 	if ( ( GetRefAPI = (void *) GetProcAddress( reflib_library, "GetRefAPI" ) ) == 0 )
 		Com_Error( ERR_FATAL, "GetProcAddress failed on %s", name );
@@ -617,19 +619,6 @@ qboolean VID_LoadRefresh( char *name )
 
 	Com_Printf( "------------------------------------\n");
 	reflib_active = true;
-
-//======
-//PGM
-	vidref_val = VIDREF_OTHER;
-	if(vid_ref)
-	{
-		if(!strcmp (vid_ref->string, "gl"))
-			vidref_val = VIDREF_GL;
-		else if(!strcmp(vid_ref->string, "soft"))
-			vidref_val = VIDREF_SOFT;
-	}
-//PGM
-//======
 
 	return true;
 }

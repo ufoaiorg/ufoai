@@ -276,6 +276,8 @@ qboolean VID_LoadRefresh( char *name )
 	ri.Vid_GetModeInfo = VID_GetModeInfo;
 	ri.Vid_MenuInit = VID_MenuInit;
 	ri.Vid_NewWindow = VID_NewWindow;
+//	ri.Malloc = Z_Malloc;
+//	ri.Free = Z_Free;
 
 #ifndef REF_HARD_LINKED
 	if ( ( GetRefAPI = (void *) dlsym( reflib_library, "GetRefAPI" ) ) == 0 )

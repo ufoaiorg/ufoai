@@ -21,10 +21,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-
-int	vidref_val;
-
-
 cvar_t		*cursor;
 cvar_t		*cl_testparticles;
 cvar_t		*cl_testentities;

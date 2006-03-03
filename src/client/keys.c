@@ -537,7 +537,7 @@ void Key_SetBinding (int keynum, char *binding)
 		keybindings[keynum] = NULL;
 	}
 			
-// allocate memory for new binding
+	// allocate memory for new binding
 	l = strlen (binding);	
 	new = Z_Malloc (l+1);
 	strcpy (new, binding);
