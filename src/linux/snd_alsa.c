@@ -30,7 +30,7 @@ static int buffer_bytes;
 /*
 *  The sample rates which will be attempted.
 */
-static int RATES[] = { 44100, 22050, 11025 };
+static int RATES[] = { 48000, 44100, 22051, 11025, 8000 };
 
 cvar_t *sndbits;
 cvar_t *sndspeed;

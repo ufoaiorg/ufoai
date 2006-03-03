@@ -69,6 +69,7 @@ COMMON_DIR=$(MOUNT_DIR)/qcommon
 LINUX_DIR=$(MOUNT_DIR)/linux
 GAME_DIR=$(MOUNT_DIR)/game
 NULL_DIR=$(MOUNT_DIR)/null
+JPDIR=$(MOUNT_DIR)/jpeg-6
 
 BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp
 
@@ -77,15 +78,15 @@ ifneq ($(ARCH),i386)
 endif
 
 ifeq ($(OSTYPE),FreeBSD)
-	LDFLAGS=-lm -lvorbisfile -lvorbis -lasound -ljpeg
+	LDFLAGS=-lm -lvorbisfile -lvorbis -lasound
 endif
 
 ifeq ($(OSTYPE),Linux)
-	LDFLAGS=-ldl -lm -lvorbisfile -lvorbis -lasound -ljpeg
+	LDFLAGS=-ldl -lm -lvorbisfile -lvorbis -lasound
 endif
 
 ifeq ($(OSTYPE),Darwin)
-	LDFLAGS=-ldl -lm -lvorbisfile -lvorbis -lasound -ljpeg -llibintl
+	LDFLAGS=-ldl -lm -lvorbisfile -lvorbis -lasound -llibintl
 endif
 
 ifeq ($(strip $(BUILD_SDLUFO)),YES)
@@ -610,6 +611,41 @@ REF_GL_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_warp.o \
 	$(BUILDDIR)/ref_gl/gl_particle.o \
 	\
+	$(BUILDDIR)/ref_gl/jcapimin.o \
+	$(BUILDDIR)/ref_gl/jchuff.o   \
+	$(BUILDDIR)/ref_gl/jcinit.o \
+	$(BUILDDIR)/ref_gl/jccoefct.o  \
+	$(BUILDDIR)/ref_gl/jccolor.o \
+	$(BUILDDIR)/ref_gl/jfdctflt.o \
+	$(BUILDDIR)/ref_gl/jcdctmgr.o \
+	$(BUILDDIR)/ref_gl/jcphuff.o \
+	$(BUILDDIR)/ref_gl/jcmainct.o \
+	$(BUILDDIR)/ref_gl/jcmarker.o \
+	$(BUILDDIR)/ref_gl/jcmaster.o \
+	$(BUILDDIR)/ref_gl/jcomapi.o \
+	$(BUILDDIR)/ref_gl/jcparam.o \
+	$(BUILDDIR)/ref_gl/jcprepct.o \
+	$(BUILDDIR)/ref_gl/jcsample.o \
+	$(BUILDDIR)/ref_gl/jdapimin.o \
+	$(BUILDDIR)/ref_gl/jdapistd.o \
+	$(BUILDDIR)/ref_gl/jdatasrc.o \
+	$(BUILDDIR)/ref_gl/jdcoefct.o \
+	$(BUILDDIR)/ref_gl/jdcolor.o \
+	$(BUILDDIR)/ref_gl/jddctmgr.o \
+	$(BUILDDIR)/ref_gl/jdhuff.o \
+	$(BUILDDIR)/ref_gl/jdinput.o \
+	$(BUILDDIR)/ref_gl/jdmainct.o \
+	$(BUILDDIR)/ref_gl/jdmarker.o \
+	$(BUILDDIR)/ref_gl/jdmaster.o \
+	$(BUILDDIR)/ref_gl/jdpostct.o \
+	$(BUILDDIR)/ref_gl/jdsample.o \
+	$(BUILDDIR)/ref_gl/jdtrans.o \
+	$(BUILDDIR)/ref_gl/jerror.o \
+	$(BUILDDIR)/ref_gl/jidctflt.o \
+	$(BUILDDIR)/ref_gl/jmemmgr.o \
+	$(BUILDDIR)/ref_gl/jmemnobs.o \
+	$(BUILDDIR)/ref_gl/jutils.o \
+	\
 	$(BUILDDIR)/ref_gl/qgl_linux.o \
 	$(BUILDDIR)/ref_gl/q_shared.o \
 	$(BUILDDIR)/ref_gl/q_shlinux.o \
@@ -617,6 +653,42 @@ REF_GL_OBJS = \
 
 REF_GLX_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_glx.o
+
+$(BUILDDIR)/ref_gl/jcapimin.o : $(JPDIR)/jcapimin.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jchuff.o : $(JPDIR)/jchuff.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jcinit.o : $(JPDIR)/jcinit.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jccoefct.o : $(JPDIR)/jccoefct.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jccolor.o : $(JPDIR)/jccolor.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jfdctflt.o : $(JPDIR)/jfdctflt.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jcdctmgr.o : $(JPDIR)/jcdctmgr.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jcmainct.o : $(JPDIR)/jcmainct.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jcmarker.o : $(JPDIR)/jcmarker.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jcmaster.o : $(JPDIR)/jcmaster.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jcomapi.o : $(JPDIR)/jcomapi.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jcparam.o : $(JPDIR)/jcparam.c;  $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jcprepct.o : $(JPDIR)/jcprepct.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jcsample.o : $(JPDIR)/jcsample.c; $(DO_GL_SHLIB_CC)
+
+$(BUILDDIR)/ref_gl/jdapimin.o : $(JPDIR)/jdapimin.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jdapistd.o : $(JPDIR)/jdapistd.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jdatasrc.o : $(JPDIR)/jdatasrc.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jdcoefct.o : $(JPDIR)/jdcoefct.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jdcolor.o : $(JPDIR)/jdcolor.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jcphuff.o : $(JPDIR)/jcphuff.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jddctmgr.o : $(JPDIR)/jddctmgr.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jdhuff.o : $(JPDIR)/jdhuff.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jdinput.o : $(JPDIR)/jdinput.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jdmainct.o : $(JPDIR)/jdmainct.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jdmarker.o : $(JPDIR)/jdmarker.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jdmaster.o : $(JPDIR)/jdmaster.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jdpostct.o : $(JPDIR)/jdpostct.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jdsample.o : $(JPDIR)/jdsample.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jdtrans.o : $(JPDIR)/jdtrans.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jerror.o : $(JPDIR)/jerror.c; $(DO_GL_SHLIB_CC) $(GL_CFLAGS) $(MINGW_CFLAGS)
+$(BUILDDIR)/ref_gl/jidctflt.o : $(JPDIR)/jidctflt.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jmemmgr.o : $(JPDIR)/jmemmgr.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jmemnobs.o : $(JPDIR)/jmemnobs.c; $(DO_GL_SHLIB_CC)  $(GL_CFLAGS) $(MINGW_CFLAGS)
+$(BUILDDIR)/ref_gl/jutils.o : $(JPDIR)/jutils.c; $(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_glx.$(SHLIBEXT) : $(REF_GL_OBJS) $(REF_GLX_OBJS)
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(REF_GL_OBJS) $(REF_GLX_OBJS) $(GLXLDFLAGS)
