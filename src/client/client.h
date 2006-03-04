@@ -832,6 +832,7 @@ typedef struct building_s
 	char	onDestroy[MAX_VAR];
 	char	onUpgrade[MAX_VAR];
 	char	onRepair[MAX_VAR];
+	char	onClick[MAX_VAR];
 
 	//more than one building of the same type allowed?
 	int	moreThanOne;

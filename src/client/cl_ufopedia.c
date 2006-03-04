@@ -16,9 +16,16 @@ typedef struct pediaEntry_s
 	pediaChapter_t *chapter;
 	char	name[MAX_VAR];
 	char	title[MAX_VAR];
-	char	*modelTop, *modelBottom, *modelBig;
-	char	*text;
+	char	modelTop[MAX_VAR];
+	char    modelBottom[MAX_VAR];
+	char    modelBig[MAX_VAR];
+	char    sound[MAX_VAR];
+	char    imageTop[MAX_VAR];
+	char    imageBottom[MAX_VAR];
+	// just a short text-id to get this via gettext
+	char	text[MAX_VAR];
 	byte	item;
+	byte	building;
 	struct	pediaEntry_s *prev;
 	struct	pediaEntry_s *next;
 } pediaEntry_t;
@@ -45,13 +52,21 @@ MN_UpDrawEntry
 */
 void MN_UpDrawEntry( pediaEntry_t *entry )
 {
-	menuText[TEXT_UFOPEDIA] = entry->text;
+	menuText[TEXT_UFOPEDIA] = _(entry->text);
 	Cvar_Set( "mn_upmodel_top", "" );
 	Cvar_Set( "mn_upmodel_bottom", "" );
 	Cvar_Set( "mn_upmodel_big", "" );
+	Cvar_Set( "mn_upimage_top", "base/empty" );
+	Cvar_Set( "mn_upimage_bottom", "base/empty" );
 	if ( entry->modelTop ) Cvar_Set( "mn_upmodel_top", entry->modelTop );
 	if ( entry->modelBottom ) Cvar_Set( "mn_upmodel_bottom", entry->modelBottom );
 	if ( entry->modelBig ) Cvar_Set( "mn_upmodel_big", entry->modelBig );
+	if ( !entry->modelTop && entry->imageTop ) Cvar_Set( "mn_upimage_top", entry->imageTop );
+	if ( !entry->modelBottom && entry->imageBottom ) Cvar_Set( "mn_upimage_bottom", entry->imageBottom );
+	if ( entry->sound )
+	{
+		// TODO: play the specified sound
+	}
 	Cvar_Set( "mn_uptitle", _(entry->title) );
 	Cbuf_AddText( "mn_upfsmall\n" );
 
@@ -64,6 +79,10 @@ void MN_UpDrawEntry( pediaEntry_t *entry )
 				CL_ItemDescription( i );
 				break;
 			}
+	}
+	else if ( upCurrent && upCurrent->building )
+	{
+
 	}
 	else menuText[TEXT_STANDARD] = NULL;
 }
@@ -98,7 +117,7 @@ void MN_FindEntry_f ( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf("Usage: ufopedia <name>\n");
+		Com_Printf(_("Usage: ufopedia <name>\n"));
 		return;
 	}
 
@@ -167,6 +186,8 @@ void MN_UpContent_f( void )
 	Cvar_Set( "mn_upmodel_top", "" );
 	Cvar_Set( "mn_upmodel_bottom", "" );
 	Cvar_Set( "mn_upmodel_big", "" );
+	Cvar_Set( "mn_upimage_top", "base/empty" );
+	Cvar_Set( "mn_upimage_bottom", "base/empty" );
 	Cvar_Set( "mn_uptitle", _("Ufopedia Content") );
 	Cbuf_AddText( "mn_upfbig\n" );
 }
@@ -299,10 +320,15 @@ value_t edps[] =
 {
 	{ "chapter",	V_STRING,	0 },
 	{ "title",		V_STRING,	EDOFS( title ) },
-	{ "mdl_top",	V_NULL,		EDOFS( modelTop ) },
-	{ "mdl_bottom",	V_NULL,		EDOFS( modelBottom ) },
-	{ "mdl_big",	V_NULL,		EDOFS( modelBig ) },
+	{ "sound",	V_STRING,		EDOFS( sound ) },
+	{ "image_top",	V_STRING,		EDOFS( imageTop ) },
+	{ "image_bottom",	V_STRING,		EDOFS( imageBottom ) },
+	{ "mdl_top",	V_STRING,		EDOFS( modelTop ) },
+	{ "mdl_bottom",	V_STRING,		EDOFS( modelBottom ) },
+	{ "mdl_big",	V_STRING,		EDOFS( modelBig ) },
+	{ "text",	V_STRING,		EDOFS( text ) },
 	{ "item",		V_BOOL,		EDOFS( item ) },
+	{ "building",		V_BOOL,		EDOFS( building ) },
 	{ NULL,	0, 0 }
 };
 
@@ -342,6 +368,7 @@ void MN_ParseUpEntry( char *title, char **text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
+#if 0 // old method without gettext
 		if ( *token == '{' )
 		{
 			// parse text
@@ -369,7 +396,7 @@ void MN_ParseUpEntry( char *title, char **text )
 			*text = token+1;
 			continue;
 		}
-
+#endif
 		// get values
 		for ( edp = edps; edp->string; edp++ )
 			if ( !strcmp( token, edp->string ) )

@@ -144,9 +144,24 @@ menu ufopedia
 		origin	"770 570 0"
 		angles	"0 0 90"
 		color	"0.5 0.5 0.5 1"
+		pos	"570 220"
+		size	"240 240"
+		click { }
+	}
+
+	pic image_top
+	{
+                image   "*cvar mn_upimage_top"
+		pos	"570 220"
+		size	"240 240"
+		click { }
+	}
+
+	pic image_bottom
+	{
+                image   "*cvar mn_upimage_bottom"
 		pos	"570 500"
 		size	"120 120"
-		mousefx true
 		click { }
 	}
 

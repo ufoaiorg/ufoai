@@ -110,6 +110,7 @@ value_t valid_vars[] =
 	{ "ondestroy",	V_STRING,	BSFS( onDestroy ) },
 	{ "onupgrade",	V_STRING,	BSFS( onUpgrade ) },
 	{ "onrepair",	V_STRING,	BSFS( onRepair ) },
+	{ "onclick",	V_STRING,	BSFS( onClick ) },
 
 	//how many workers should there for max and for min
 	{ "max_workers",V_INT,	BSFS( maxWorkers ) },
@@ -879,7 +880,7 @@ MN_BaseMapClick_f
 void MN_BaseMapClick_f( void )
 {
 	int x, y;
-
+	building_t* entry;
 	if ( Cmd_Argc() < 3 )
 	{
 		Com_Printf( _("Usage: basemap_click <x> <y>\n") );
@@ -892,8 +893,12 @@ void MN_BaseMapClick_f( void )
 
 	x = atoi( Cmd_Argv( 1 ) );
 	y = atoi( Cmd_Argv( 2 ) );
-
-
+	if ( baseCurrent->map[x][y][baseCurrent->baseLevel] != -1 )
+	{
+		entry = &bmBuildings[baseID][ B_GetIDFromList( baseCurrent->map[x][y][baseCurrent->baseLevel] ) ];
+		if ( entry->onClick[0] != '\0' )
+			Cbuf_ExecuteText( EXEC_NOW, entry->onClick );
+	}
 }
 
 /*
