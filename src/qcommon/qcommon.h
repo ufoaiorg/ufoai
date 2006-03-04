@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 #include <ctype.h>
 
-#define	VERSION		0.12
+#define UFO_VERSION 0.12
 
 // i18n support via gettext
 // needs to be activated via -DHAVE_GETTEXT

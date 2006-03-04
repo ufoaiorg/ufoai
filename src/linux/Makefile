@@ -57,7 +57,7 @@ endif
 
 CC=gcc
 
-VERSION=3.21+r0.16
+VERSION=$(shell grep UFO_VERSION $(MOUNT_DIR)/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/')
 
 MOUNT_DIR=..
 
