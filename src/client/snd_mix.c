@@ -171,7 +171,7 @@ void S_PaintChannelFrom16 (channel_t *ch, sfxcache_t *sc, int endtime, int offse
 
 void S_PaintChannels(int endtime)
 {
-	int 	i;
+	int 	i = 0;
 	int 	end;
 	channel_t *ch;
 	sfxcache_t	*sc;
@@ -290,7 +290,7 @@ void S_PaintChannels(int endtime)
 
 		}
 
-	// transfer out according to DMA format
+		// transfer out according to DMA format
 		S_TransferPaintBuffer(end);
 		paintedtime = end;
 	}

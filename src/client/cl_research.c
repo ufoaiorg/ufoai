@@ -118,8 +118,10 @@ void CL_ResearchType ( void )
 	R_UpdateData();
 
 	// nothing to research here
-	if ( ! researchListLength )
+	if ( ! researchListLength || !ccs.numBases )
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
+	else if ( baseCurrent && ! baseCurrent->hasLab )
+		MN_Popup( _("Notice"), _("Build a labratory first") );
 }
 
 /*======================

@@ -124,6 +124,13 @@ value_t valid_vars[] =
 	//set also the pos-flag
 	{ "autobuild",		V_BOOL,			BSFS( autobuild ) },
 
+	//automatically construct this building for the first base you build
+	//set also the pos-flag
+	{ "firstbase",		V_BOOL,			BSFS( firstbase ) },
+
+	{ "islab",		V_BOOL,			BSFS( isLab ) },
+	{ "ishangar",		V_BOOL,			BSFS( isHangar ) },
+
 	{ NULL,	0, 0 }
 };
 
@@ -219,9 +226,7 @@ void MN_BuildingStatus( void )
 	else
 		Cvar_Set("mn_building_status", "BUG");
 
-
 	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
-
 }
 
 /*
@@ -232,22 +237,44 @@ MN_BuildingInfoClick_f
 void MN_BuildingInfoClick_f ( void )
 {
 	if ( baseCurrent && baseCurrent->buildingCurrent )
-		UP_OpenWith ( baseCurrent->buildingCurrent->name );
+		UP_OpenWith ( baseCurrent->buildingCurrent->pedia );
 }
 
+/*
+=================
+B_SetUpBase
+
+NOTE: I'm not sure whether a change of order in basemanagement.ufo
+      will leads to errors (due to buildingListArray and numList)
+=================
+*/
 void B_SetUpBase ( void )
 {
 	int i;
 
+	assert( baseCurrent );
+	MN_BuildingInit();
 	for (i = 0 ; i < numBuildings; i++ )
-		if ( bmBuildings[baseID][i].autobuild && bmBuildings[baseID][i].pos[0] )
+	{
+		if ( ccs.numBases == 1 && bmBuildings[baseID][i].firstbase )
 		{
 			baseCurrent->buildingCurrent = &bmBuildings[baseID][i];
+			Com_DPrintf("firstbase: %s (%i)\n", baseCurrent->buildingCurrent->name, i );
 			MN_SetBuildingByClick ( bmBuildings[baseID][i].pos[0], bmBuildings[baseID][i].pos[1] );
-			baseCurrent->buildingCurrent = &bmBuildings[baseID][i];
-			baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] = B_WORKING_100;
-			baseCurrent->buildingCurrent = NULL;
+			bmBuildings[baseID][i].buildingStatus[bmBuildings[baseID][i].howManyOfThisType] = B_WORKING_100;
+			//update the array
+			MN_BuildingInit();
 		}
+		else if ( bmBuildings[baseID][i].autobuild )
+		{
+			baseCurrent->buildingCurrent = &bmBuildings[baseID][i];
+			Com_DPrintf("autobuild: %s (%i)\n", baseCurrent->buildingCurrent->name, i );
+			MN_SetBuildingByClick ( bmBuildings[baseID][i].pos[0], bmBuildings[baseID][i].pos[1] );
+			bmBuildings[baseID][i].buildingStatus[bmBuildings[baseID][i].howManyOfThisType] = B_WORKING_100;
+			//update the array
+			MN_BuildingInit();
+		}
+	}
 }
 
 /*
@@ -294,7 +321,8 @@ void MN_RemoveBuilding( void )
 	{
 		ccs.credits += baseCurrent->buildingCurrent->fixCosts;
 		baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] = B_NOT_SET;
-// 		baseCurrent->map[x][y][baseCurrent->baseLevel] = -1;
+		// TODO: Second building part??
+// 		baseCurrent->map[baseCurrent->buildingCurrent->pos[0]][baseCurrent->buildingCurrent->pos[1]][baseCurrent->baseLevel] = -1;
 		MN_BuildingStatus();
 	}
 }
@@ -330,6 +358,20 @@ void MN_ConstructBuilding( void )
 }
 
 /*
+====================
+MN_ResetBuildingCurrent
+
+is called e.g. when leaving the build-menu
+but also several times from cl_basemanagement.c
+====================
+*/
+void MN_ResetBuildingCurrent ( void )
+{
+	if ( baseCurrent )
+		baseCurrent->buildingCurrent = NULL;
+}
+
+/*
 ==============
 MN_NewBuilding
 ==============
@@ -343,6 +385,7 @@ void MN_NewBuilding( void )
 	if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] < B_UNDER_CONSTRUCTION )
 		MN_ConstructBuilding();
 
+	// update the buildingListArray
 	MN_BuildingStatus();
 }
 
@@ -381,6 +424,7 @@ void MN_SetBuildingByClick ( int x, int y )
 					}
 				}
 				else
+				{
 					if ( bmBuildings[baseID][ B_GetIDFromList( baseCurrent->map[x][y][baseCurrent->baseLevel-1] ) ].notUpOn )
 					{
 						Com_Printf( _("Can't place any building upon this ground\n"), x, y);
@@ -392,6 +436,7 @@ void MN_SetBuildingByClick ( int x, int y )
 							Com_Printf( _("Can't place any building upon this ground\n"), x, y);
 							return;
 						}
+				}
 			}
 
 			if ( secondBuildingPart )
@@ -412,7 +457,12 @@ void MN_SetBuildingByClick ( int x, int y )
 				MN_NewBuilding();
 
  			baseCurrent->map[x][y][baseCurrent->baseLevel] = baseCurrent->buildingCurrent->id;
-			baseCurrent->buildingCurrent = NULL;
+
+ 			if ( baseCurrent->buildingCurrent->isLab )
+ 				baseCurrent->hasLab = 1;
+ 			if ( baseCurrent->buildingCurrent->isHangar )
+ 				baseCurrent->hasHangar = 1;
+			MN_ResetBuildingCurrent();
 		} else
 			Com_Printf( _("There is already a building\n"), x, y);
 	}
@@ -465,7 +515,6 @@ void MN_NewBuildingFromList( void )
 		MN_RemoveBuilding();
 
 }
-
 
 /*
 ==================
@@ -548,7 +597,6 @@ void MN_UpgradeBuilding( void )
 				ccs.credits -= UPGRADECOSTS;
 		}
 }
-
 
 /*
 ==================
@@ -744,7 +792,6 @@ void MN_PrevBuilding( void )
 	MN_DrawBuilding ();
 }
 
-
 /*
 =================
 MN_NextBuilding
@@ -778,7 +825,6 @@ void MN_BuildingAddToList( char *title, int id )
 	//is the title already in list?
 	if (!strstr( menuText[TEXT_BUILDINGS], tmpTitle ) )
 	{
-
 		//buildings are seperated by a newline
 		strcat ( tmpTitle, "\n" );
 
@@ -849,7 +895,6 @@ void MN_BuildingInit( void )
 	if ( ! baseCurrent->buildingCurrent )
 		baseCurrent->buildingCurrent = &bmBuildings[baseID][ baseCurrent->buildingListArray[ 0 ] ];
 
-
 	if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] > B_NOT_SET )
 		MN_NewBuilding();
 
@@ -872,6 +917,7 @@ int B_GetIDFromList ( int id )
 	return 0;
 }
 
+#if 0
 /*
 =================
 MN_BaseMapClick_f
@@ -900,6 +946,7 @@ void MN_BaseMapClick_f( void )
 			Cbuf_ExecuteText( EXEC_NOW, entry->onClick );
 	}
 }
+#endif
 
 /*
 ==================
@@ -962,7 +1009,7 @@ void MN_ParseBuildings( char *title, char **text )
 	entry->techLevel = 1;
 	entry->notUpOn = 0;
 	entry->used = 0;
-	entry->visible = 1;
+	entry->visible = true;
 	entry->energy = 0;
 	entry->varCosts = 0;
 	entry->workerCosts = 0;
@@ -1101,7 +1148,7 @@ void MN_ParseBases( char *title, char **text )
 		if ( *token == '}' ) break;
 		strncpy( base->title, token, MAX_VAR );
 		base->numList = 0;
-		base->buildingCurrent = NULL;
+		MN_ResetBuildingCurrent();
 /*		if (numBases > 0)
 		{
 			base->prev = &bmBases[numBases-1];
@@ -1246,6 +1293,7 @@ void MN_DrawBase( void )
 			if ( baseCurrent->map[a][b][baseCurrent->baseLevel] != -1 )
 			{
 				entry = &bmBuildings[baseID][ B_GetIDFromList( baseCurrent->map[a][b][baseCurrent->baseLevel] ) ];
+// 				Com_Printf("%s\tl:%i - b:%i (%i:%i)\n", entry->name, B_GetIDFromList( baseCurrent->map[a][b][baseCurrent->baseLevel] ), baseCurrent->map[a][b][baseCurrent->baseLevel], a, b );
 
 				if ( entry->buildingStatus[entry->howManyOfThisType] == B_UNDER_CONSTRUCTION )
 				{
@@ -1522,6 +1570,7 @@ void MN_SelectBase( void )
 	else
 	{
 		baseCurrent = &bmBases[ whichBaseID ];
+		menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
 		if ( baseCurrent->founded ) {
 			mapAction = MA_NONE;
 			MN_PushMenu( "bases" );
@@ -1549,6 +1598,7 @@ void MN_BuildBase( void )
 
 	if ( ccs.numBases >= 1 )
 	{
+		baseCurrent->id = ccs.numBases-1;
 		baseCurrent->founded = true;
 		mapAction = MA_NONE;
 		// FIXME: This value is in menu_geoscape, too
@@ -1794,7 +1844,8 @@ void MN_ResetBaseManagement( void )
 	Cmd_AddCommand( "building_status", MN_BuildingStatus );
 	Cmd_AddCommand( "buildinginfo_click", MN_BuildingInfoClick_f );
 	Cmd_AddCommand( "buildings_click", MN_BuildingClick_f );
-	Cmd_AddCommand( "basemap_click", MN_BaseMapClick_f );
+	Cmd_AddCommand( "reset_building_current", MN_ResetBuildingCurrent );
+// 	Cmd_AddCommand( "basemap_click", MN_BaseMapClick_f );
 	Cvar_SetValue( "mn_base_id", baseID );
 }
 

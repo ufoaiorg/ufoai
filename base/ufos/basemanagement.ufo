@@ -11,9 +11,10 @@ building entrance
 	image		base/entrance
 	fixcosts	0
 	build_time	1
-	autobuild	1
-	pos		"2 2"
-	visible		0
+	autobuild	true
+	firstbase	true
+	pos		"2 4"
+	visible		false
 	map_name	"entrance"
 	pedia		b_entrance
 }
@@ -32,6 +33,8 @@ building commando
 	build_time	4
 	varcosts	50
 	map_name	"commando"
+	pos		"2 3"
+	firstbase	true
 	pedia		b_commando
 }
 
@@ -50,6 +53,8 @@ building powerplant
 	produce		1150
 	build_time	2
 	varcosts	150
+	firstbase	true
+	pos		"2 2"
 	map_name	"powerplant"
 	pedia		b_powerplant
 }
@@ -70,6 +75,9 @@ building lab
 	build_time	12
 	varcosts	300
 	map_name	"lab"
+	pos		"2 1"
+	firstbase	true
+	islab		true
 	pedia		b_lab
 }
 
@@ -86,6 +94,8 @@ building storage
 	build_time	5
 	varcosts	10
 	map_name	"storage"
+	pos		"1 3"
+	firstbase	true
 	pedia		b_storage
 }
 
@@ -117,6 +127,8 @@ building quarters
 	build_time	4
 	varcosts	10
 	map_name	"quarters"
+	pos		"1 2"
+	firstbase	true
 	pedia		b_quarters
 }
 
@@ -135,6 +147,9 @@ building drop1
 	varcosts	50
 	map_name	"drop"
 	pedia		b_hangar
+	firstbase	true
+	ishangar	true
+	pos		"1 0"
 }
 
 building drop2
@@ -143,7 +158,7 @@ building drop2
 	image		base/drop1
 	fixcosts	1000
 	depends		quarters
-	visible		0
+	visible		false
 	max_workers	5
 	min_workers	2
 	worker_costs	10

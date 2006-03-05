@@ -724,7 +724,7 @@ campaign main
 	soldiers	12
 	equipment	campaign_player
 	market		campaign_market
-	credits		10600
+	credits		150000
 
 	date		"2000 0 7"
 	firststage	intro

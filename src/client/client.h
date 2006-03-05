@@ -824,8 +824,9 @@ typedef struct building_s
 	int	condition[BASE_SIZE*BASE_SIZE];
 
 	vec2_t  size;
-	int	visible;
+	byte	visible;
 	int	used;
+
 	// event handler functions
 	char	onConstruct[MAX_VAR];
 	char	onAttack[MAX_VAR];
@@ -845,7 +846,14 @@ typedef struct building_s
 	vec2_t	pos;
 
 	//autobuild when base is set up
-	qboolean autobuild;
+	byte autobuild;
+
+	//autobuild when base is set up
+	byte firstbase;
+
+	//this way we can rename the buildings without loosing the control
+	byte isLab;
+	byte isHangar;
 
 	struct  building_s *dependsBuilding;
 	struct  building_s *prev;
@@ -854,6 +862,8 @@ typedef struct building_s
 
 typedef struct base_s
 {
+	//the internal base-id
+	int	id;
 	char    title[MAX_VAR];
 	int	map[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
 
@@ -872,6 +882,7 @@ typedef struct base_s
 	char	mapChar;
 
 	int	buildingListArray[MAX_BUILDINGS];
+	//how many buildings are in the list?
 	int	numList;
 
 	int	posX[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
@@ -906,6 +917,8 @@ typedef struct production_s
 extern	int		numBases;
 extern	base_t	bmBases[MAX_BASES];
 extern	base_t	*baseCurrent;
+extern	building_t    bmBuildings[MAX_BASES][MAX_BUILDINGS];
+extern	production_t  bmProductions[MAX_PRODUCTIONS];
 void CL_UpdateBaseData( void );
 
 // needed to calculate the chosen building in cl_menu.c

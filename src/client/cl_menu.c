@@ -953,23 +953,35 @@ MN_BaseMapClick
 void MN_BaseMapClick( menuNode_t *node, int x, int y )
 {
 	int	a, b;
-	a = b = 0;
-	if ( ! baseCurrent )
-	{
-		Com_Printf(_("Error - bases are not initialized\n"));
-		return;
-	}
+	assert(baseCurrent);
 
 	if ( baseCurrent->buildingCurrent && baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] == B_NOT_SET )
+	{
 		for ( b = BASE_SIZE-1; b >= 0; b-- )
 			for ( a = 0; a < BASE_SIZE; a++ )
-				if ( x >= baseCurrent->posX[b][a][baseCurrent->baseLevel] && x < baseCurrent->posX[b][a][baseCurrent->baseLevel] + picWidth*ccs.basezoom )
-					if ( y >= baseCurrent->posY[b][a][baseCurrent->baseLevel] && y < baseCurrent->posY[b][a][baseCurrent->baseLevel] + picHeight*ccs.basezoom  )
-					{
-						MN_SetBuildingByClick( a, b );
-						return;
-					}
+				if ( baseCurrent->map[b][a][baseCurrent->baseLevel] == -1
+				  && x >= baseCurrent->posX[b][a][baseCurrent->baseLevel] && x < baseCurrent->posX[b][a][baseCurrent->baseLevel] + picWidth*ccs.basezoom
+				  && y >= baseCurrent->posY[b][a][baseCurrent->baseLevel] && y < baseCurrent->posY[b][a][baseCurrent->baseLevel] + picHeight*ccs.basezoom )
+				{
+					MN_SetBuildingByClick( a, b );
+					return;
+				}
+	}
 
+	for ( b = BASE_SIZE-1; b >= 0; b-- )
+		for ( a = 0; a < BASE_SIZE; a++ )
+			if ( baseCurrent->map[b][a][baseCurrent->baseLevel] != -1
+			  && x >= baseCurrent->posX[b][a][baseCurrent->baseLevel] && x < baseCurrent->posX[b][a][baseCurrent->baseLevel] + picWidth*ccs.basezoom
+			  && y >= baseCurrent->posY[b][a][baseCurrent->baseLevel] && y < baseCurrent->posY[b][a][baseCurrent->baseLevel] + picHeight*ccs.basezoom )
+			{
+				building_t* entry = &bmBuildings[baseCurrent->id][ B_GetIDFromList( baseCurrent->map[b][a][baseCurrent->baseLevel] ) ];
+				if ( entry->onClick[0] != '\0' )
+					Cbuf_ExecuteText( EXEC_NOW, entry->onClick );
+				else
+					UP_OpenWith( entry->pedia );
+
+				return;
+			}
 }
 
 

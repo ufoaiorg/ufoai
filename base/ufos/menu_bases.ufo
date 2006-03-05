@@ -14,11 +14,11 @@ menu bases
 
 	basemap thebasemap
 	{
-                pos     "0 96"
-                size    "778 672"
-                click   { cmd "basemap_click" }
-                rclick
-                mclick
+		pos     "0 96"
+		size    "778 672"
+		click   { cmd "basemap_click" }
+		rclick
+		mclick
 	}
 
 	// ==================

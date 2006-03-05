@@ -202,7 +202,9 @@ ifeq ($(ARCH),i386)
 	endif
 endif # ARCH i386
 
+debug: build_debug
 all: build_debug build_release lang
+release: build_release
 
 build_debug:
 	@-mkdir -p $(BUILD_DEBUG_DIR) \
