@@ -386,7 +386,7 @@ void SP_player_start (edict_t *ent)
 		return;
 	}
 	// maybe there are already the max soldiers allowed per team connected
-	if ( (int)(maxsoldiers->value) >= level.num_spawnpoints[ent->team] )
+	if ( (int)(maxsoldiers->value) > level.num_spawnpoints[ent->team] )
 		G_ActorSpawn( ent );
 	else
 		G_FreeEdict( ent );

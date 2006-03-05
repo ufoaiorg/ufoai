@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -788,7 +788,7 @@ void SV_Status_f (void)
 		l = 22 - strlen(s);
 		for (j=0 ; j<l ; j++)
 			Com_Printf (" ");
-		
+
 		Com_Printf ("%5i", cl->netchan.qport);
 
 		Com_Printf ("\n");

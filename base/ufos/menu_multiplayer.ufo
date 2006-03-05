@@ -549,7 +549,6 @@ menu mp_create_server
 
         // ===================
         // DEDICATED SERVER
-        // DEDICATED IS WRITE-PROTECTED BY NOW
         // ===================
         string dedicated_str
         {
@@ -919,7 +918,7 @@ menu mp_create_server
                 pos             "570 630"
                 texl    "0 128"
                 texh    "256 192"
-                click   { cmd "map *mapname" }
+                click   { cmd "mn_startserver *mapname" }
                 out     { *button_server texl "0 128" *button_server texh "256 192" }
                 in      { *button_server texl "0 192" *button_server texh "256 256" }
         }

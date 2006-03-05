@@ -588,7 +588,8 @@ void CL_MarkTeamCmd( void )
 
 	// check if we are allowed to be here?
 	// we are only allowed to be here if we already set up base
-	if ( ! ccs.numBases )
+	// or are in multiplayer
+	if ( ! ccs.numBases && Cvar_VariableValue ("maxclients") > 1 )
 	{
 		Com_Printf("No base set up\n");
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
@@ -855,6 +856,8 @@ void CL_LoadTeam( sizebuf_t *sb )
 	// get assignement
 	teamMask = MSG_ReadLong( sb );
 	numOnTeam = MSG_ReadByte( sb );
+
+	Com_DPrintf("Load team with %i members and %i slots\n", numOnTeam, numWholeTeam );
 
 	for ( i = 0, p = 0; i < numWholeTeam; i++ )
 		if ( teamMask & (1 << i) )

@@ -341,6 +341,7 @@ void CL_CheckForResend (void)
 ================
 CL_Connect_f
 
+FIXME: Spectator needs no team
 ================
 */
 void CL_Connect_f (void)
@@ -350,6 +351,12 @@ void CL_Connect_f (void)
 	if (Cmd_Argc() != 2)
 	{
 		Com_Printf ("usage: connect <server>\n");
+		return;
+	}
+
+	if ( ! numOnTeam )
+	{
+		MN_Popup( _("Error"), _("Assemble a team first") );
 		return;
 	}
 
@@ -660,6 +667,8 @@ void CL_ParseStatusMessage (void)
 /*
 =================
 CL_ConnectList_f
+
+FIXME: Spectator needs no team
 =================
 */
 void CL_ConnectList_f (void)
@@ -672,6 +681,12 @@ void CL_ConnectList_f (void)
 		return;
 	}
 	num = atoi( Cmd_Argv( 1 ) );
+
+	if ( ! numOnTeam )
+	{
+		MN_Popup( _("Error"), _("Assemble a team first") );
+		return;
+	}
 
 	if ( num >= 0 && num < serverListLength )
 		Cbuf_AddText( va( "connect %s\n", NET_AdrToString( serverList[num] ) ) );

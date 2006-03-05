@@ -357,6 +357,36 @@ float MN_GetReferenceFloat( menu_t *menu, void *ref )
 }
 
 /*=================
+MN_StartServer
+
+starts a server and checks if the server
+loads a team unless he is a dedicated
+server admin
+=================*/
+void MN_StartServer ( void )
+{
+	if ( Cmd_Argc() <= 1 )
+	{
+		Com_Printf( _("Usage: mn_startserver <name>\n") );
+		return;
+	}
+	else
+		Com_Printf("MN_StartServer\n");
+
+	if ( Cvar_VariableValue ("dedicated") > 0 )
+		Com_Printf("Dedicated server needs no team\n");
+	else if ( !numOnTeam )
+	{
+		MN_Popup( _("Error"), _("Assemble a team first") );
+		return;
+	}
+	else
+		Com_Printf("There are %i members on team\n", numOnTeam );
+
+	Cbuf_ExecuteText( EXEC_NOW, va("map %s\n", Cmd_Argv(1) ) );
+}
+
+/*=================
 MN_Popup
 
 Popup in geoscape
@@ -1935,6 +1965,7 @@ void MN_ResetMenus( void )
 
 //	Cmd_AddCommand( "maplist", CL_ListMaps_f );
 	Cmd_AddCommand( "getmaps", MN_GetMaps_f );
+	Cmd_AddCommand( "mn_startserver", MN_StartServer );
 	Cmd_AddCommand( "mn_nextmap", MN_NextMap );
 	Cmd_AddCommand( "mn_prevmap", MN_PrevMap );
 	Cmd_AddCommand( "mn_push", MN_PushMenu_f );
@@ -2500,7 +2531,7 @@ void MN_MapInfo ( void )
 	if ( !mapsInstalledInit )
 		FS_GetMaps();
 
-	Cvar_Set("mapname", maps[mapInstalledIndex] );
+	Cvar_ForceSet("mapname", maps[mapInstalledIndex] );
 	if ( FS_CheckFile ( va ( "pics/maps/shots/%s.jpg", maps[mapInstalledIndex] ) ) != -1 )
 	{
 		Cvar_Set("mn_mappic", va ( "maps/shots/%s.jpg", maps[mapInstalledIndex] ) );
