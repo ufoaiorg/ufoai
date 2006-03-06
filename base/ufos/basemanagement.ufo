@@ -61,7 +61,7 @@ building powerplant
 
 building lab
 {
-	title		"Labratory"
+	title		"Laboratory"
 	image		base/lab
 	depends		commando
 	fixcosts	1500
