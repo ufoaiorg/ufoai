@@ -873,6 +873,10 @@ CL_GameSave
 #define MAX_GAMESAVESIZE	8192
 #define MAX_COMMENTLENGTH	32
 
+#ifndef SAVE_FILE_VERSION
+#define SAVE_FILE_VERSION 2
+#endif
+
 void CL_GameSave( char *filename, char *comment )
 {
 	stageState_t	*state;
@@ -901,7 +905,7 @@ void CL_GameSave( char *filename, char *comment )
 
 	// write prefix and version
 	MSG_WriteByte( &sb, 0 );
-	MSG_WriteLong( &sb, 1 );
+	MSG_WriteLong( &sb, SAVE_FILE_VERSION );
 
 	// store comment
 	MSG_WriteString( &sb, comment );
@@ -1057,7 +1061,10 @@ void CL_GameLoad( char *filename )
 
 	// Check if save file is versioned
 	if (MSG_ReadByte( &sb ) == 0)
+	{
 		version = MSG_ReadLong( &sb );
+		Com_Printf("Savefile version %d detected\n", version );
+	}
 	else
 	{
 		// no - reset position and take version as 0
@@ -1066,10 +1073,14 @@ void CL_GameLoad( char *filename )
 	}
 
 	// check current version
-	if ( version > 1 )
+	if ( version > SAVE_FILE_VERSION )
 	{
 		Com_Printf( "File '%s' is a more recent version (%d) than is supported.\n", filename, version );
 		return;
+	}
+	else if ( version < SAVE_FILE_VERSION )
+	{
+		Com_Printf( "Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, version );
 	}
 
 	// read comment
@@ -1102,7 +1113,7 @@ void CL_GameLoad( char *filename )
 	ccs.zoom = MSG_ReadFloat( &sb );
 
 	// load bases
-	MN_LoadBases( &sb );
+	MN_LoadBases( &sb, version );
 
 	// read credits
 	ccs.credits = MSG_ReadShort( &sb );

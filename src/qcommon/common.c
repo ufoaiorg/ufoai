@@ -475,22 +475,20 @@ void MSG_WriteFormat( sizebuf_t *sb, char *format, ... )
 			MSG_WriteLong( sb, va_arg( ap, int ) );
 			break;
 		case 'f':
-// 			MSG_WriteFloat( sb, va_arg( ap, float ) );
+			// NOTE: float is promoted to double through ...
 			MSG_WriteFloat( sb, va_arg( ap, double ) );
 			break;
 		case 'p':
-// 			MSG_WritePos( sb, va_arg( ap, float* ) );
-			MSG_WritePos( sb, va_arg( ap, double* ) );
+ 			MSG_WritePos( sb, va_arg( ap, float* ) );
 			break;
 		case 'g':
 			MSG_WriteGPos( sb, va_arg( ap, byte* ) );
 			break;
 		case 'd':
-// 			MSG_WriteDir( sb, va_arg( ap, float* ) );
-			MSG_WriteDir( sb, va_arg( ap, double* ) );
+			MSG_WriteDir( sb, va_arg( ap, float* ) );
 			break;
 		case 'a':
-// 			MSG_WriteAngle( sb, va_arg( ap, float ) );
+			// NOTE: float is promoted to double through ...
 			MSG_WriteAngle( sb, va_arg( ap, double ) );
 			break;
 		case '!':

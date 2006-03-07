@@ -174,7 +174,7 @@ int B_HowManyPeopleInBase( base_t *base )
 					entry->used = 1;
 				else
 				{
-					amount += entry->addWorkers;
+					amount += entry->assignedWorkers;
 					entry->used = 0;
 				}
 			}
@@ -677,7 +677,7 @@ void MN_DrawBuilding( void )
 
 	if ( entry->varCosts    ) strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Running Costs:\t%1.2f\n"), entry->varCosts ) );
 	if ( entry->workerCosts ) strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Workercosts:\t%1.2f\n"), entry->workerCosts ) );
-	if ( entry->addWorkers  ) strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Workers:\t%i\n"), entry->addWorkers ) );
+	if ( entry->assignedWorkers  ) strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Workers:\t%i\n"), entry->assignedWorkers ) );
 	if ( entry->energy      ) strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Energy:\t%1.0f\n"), entry->energy ) );
 	if ( entry->produceType )
 		for (i = 0 ; i < numProductions; i++ )
@@ -732,10 +732,10 @@ void MN_BuildingRemoveWorkers( void )
 	//how many workers?
 	workers = atoi( Cmd_Argv( 1 ) );
 
-	if (baseCurrent->buildingCurrent->addWorkers - workers
+	if (baseCurrent->buildingCurrent->assignedWorkers - workers
 	 >= baseCurrent->buildingCurrent->minWorkers
 	    * ( baseCurrent->buildingCurrent->howManyOfThisType + 1 ) )
-		baseCurrent->buildingCurrent->addWorkers -= workers;
+		baseCurrent->buildingCurrent->assignedWorkers -= workers;
 	else
 		Com_Printf( _("Minimum amount of workers reached for this building\n") );
 
@@ -763,10 +763,10 @@ void MN_BuildingAddWorkers( void )
 	//how many workers?
 	workers = atoi( Cmd_Argv( 1 ) );
 
-	if ( baseCurrent->buildingCurrent->addWorkers + workers
+	if ( baseCurrent->buildingCurrent->assignedWorkers + workers
 	  <= baseCurrent->buildingCurrent->maxWorkers
 	     * ( baseCurrent->buildingCurrent->howManyOfThisType + 1 ) )
-		baseCurrent->buildingCurrent->addWorkers += workers;
+		baseCurrent->buildingCurrent->assignedWorkers += workers;
 	else
 		Com_Printf( _("Maximum amount of workers reached for this building\n") );
 
@@ -1016,7 +1016,7 @@ void MN_ParseBuildings( char *title, char **text )
 	entry->minWorkers = 0;
 	entry->maxWorkers = 0;
 	entry->moreThanOne = 0;
-	entry->addWorkers = 0;
+	entry->assignedWorkers = 0;
 	entry->howManyOfThisType = 0;
 	entry->condition[0] = BUILDINGCONDITION;
 
@@ -1736,7 +1736,8 @@ void MN_SaveBases( sizebuf_t *sb )
 {
 	// save bases
 	base_t *base;
-	int i, n;
+	building_t* building;
+	int i, n, j;
 
 	n = 0;
 	for ( i = 0, base = bmBases; i < numBases; i++, base++ )
@@ -1746,10 +1747,40 @@ void MN_SaveBases( sizebuf_t *sb )
 	for ( i = 0, base = bmBases; i < numBases; i++, base++ )
 		if (base->founded )
 		{
+			MSG_WriteLong( sb, base->id );
 			MSG_WriteString( sb, base->title );
 			MSG_WriteFloat( sb, base->pos[0] );
 			MSG_WriteFloat( sb, base->pos[1] );
+			MSG_WriteByte( sb, base->hasHangar );
+			MSG_WriteByte( sb, base->hasLab );
+			MSG_WriteChar( sb, base->mapChar );
+			MSG_WriteLong( sb, base->baseStatus );
+			MSG_WriteLong( sb, base->baseLevel );
+			MSG_WriteFloat( sb, base->condition );
 			SZ_Write( sb, &base->map[0][0][0], sizeof(base->map) );
+
+			// maybe count of buildings change due to an update
+			MSG_WriteLong( sb, numBuildings );
+			for ( j = 0, building = bmBuildings[i]; j < numBuildings; j++ )
+			{
+				SZ_Write( sb, &building->buildingStatus[0], sizeof(building->buildingStatus) );
+				SZ_Write( sb, &building->condition[0], sizeof(building->condition) );
+				MSG_WriteLong( sb, building->howManyOfThisType );
+				MSG_WriteFloat( sb, building->pos[0] );
+				MSG_WriteFloat( sb, building->pos[1] );
+				//the production amount needs to be saved because
+				//an update can increase the production size
+				MSG_WriteLong( sb, building->production );
+				MSG_WriteLong( sb, building->level );
+				//maybe still constructing
+				MSG_WriteLong( sb, building->timeStart );
+				MSG_WriteLong( sb, building->buildTime );
+				//which lebel?
+				MSG_WriteLong( sb, building->techLevel );
+				// how many workers?
+				MSG_WriteLong( sb, building->assignedWorkers );
+				building++;
+			}
 		}
 }
 
@@ -1773,25 +1804,159 @@ void B_AssembleRandomBase( void )
 /*
 ======================
 MN_LoadBases
+
+This function is called by CL_GameLoad from cl_campaign.c
+It loads back the bases and the buildings
+You can use the buildinglist and baselist commands to verify
+the loading process
 ======================
 */
-void MN_LoadBases( sizebuf_t *sb )
+void MN_LoadBases( sizebuf_t *sb, int version )
 {
 	// load bases
 	base_t *base;
-	int i, num;
+	building_t* building;
+	int i, j, num, tmp;
 
 	MN_NewBases();
 	num = MSG_ReadByte( sb );
-
+	//FIXME: This will align the bases
+	//     If a base was attacked and destroyed - a save followed
+	//     by a load will lead to the slot (where the base->found is
+	//     not true) being lost. Do you understand what I mean??
 	for ( i = 0, base = bmBases; i < num; i++, base++ )
 	{
+		baseID = i;
+		baseCurrent = base;
+		baseCurrent->allBuildingsList[0] = '\0';
+		baseCurrent->numList = 0;
 		base->founded = true;
-		strcpy( base->title, MSG_ReadString( sb ) );
-		base->pos[0] = MSG_ReadFloat( sb );
-		base->pos[1] = MSG_ReadFloat( sb );
+		if ( version == 2 )
+		{
+			base->id = MSG_ReadLong( sb );
+			strcpy( base->title, MSG_ReadString( sb ) );
+			base->pos[0] = MSG_ReadFloat( sb );
+			base->pos[1] = MSG_ReadFloat( sb );
+			base->hasHangar = MSG_ReadByte( sb );
+			base->hasLab = MSG_ReadByte( sb );
+			base->mapChar = MSG_ReadChar( sb );
+			base->baseStatus = MSG_ReadLong( sb );
+			base->baseLevel = MSG_ReadLong( sb );
+			base->condition = MSG_ReadFloat( sb );
+		}
+		else
+		{
+			strcpy( base->title, MSG_ReadString( sb ) );
+			base->pos[0] = MSG_ReadFloat( sb );
+			base->pos[1] = MSG_ReadFloat( sb );
+		}
 		memcpy( &base->map[0][0][0], sb->data + sb->readcount, sizeof(base->map) );
 		sb->readcount += sizeof(base->map);
+		if ( version == 2 )
+		{
+			// maybe count of buildings change due to an update
+			tmp = MSG_ReadLong( sb );
+			if ( tmp != numBuildings )
+				Com_Printf("There was an update and their are new buildings available which aren't in your savegame. You may encounter problems.");
+
+			// it seams to me that there are buildings deleted since last save game
+			if ( tmp > numBuildings )
+				tmp = numBuildings;
+
+			for ( j = 0, building = bmBuildings[i]; j < tmp; j++, building++ )
+			{
+				memcpy( &building->buildingStatus[0], sb->data + sb->readcount, sizeof(building->buildingStatus) );
+				sb->readcount += sizeof(building->buildingStatus);
+
+				memcpy( &building->condition[0], sb->data + sb->readcount, sizeof(building->condition) );
+				sb->readcount += sizeof(building->condition);
+
+				building->howManyOfThisType = MSG_ReadLong( sb );
+				building->pos[0] = MSG_ReadFloat( sb );
+				building->pos[1] = MSG_ReadFloat( sb );
+				//the production amount needs to be saved because
+				//an update can increase the production size
+				building->production = MSG_ReadLong( sb );
+				building->level = MSG_ReadLong( sb );
+				//maybe still constructing
+				building->timeStart = MSG_ReadLong( sb );
+				building->buildTime = MSG_ReadLong( sb );
+				//which lebel?
+				building->techLevel = MSG_ReadLong( sb );
+				// how many workers?
+				building->assignedWorkers = MSG_ReadLong( sb );
+			}
+			MN_BuildingInit();
+		}
+	}
+	ccs.numBases = num;
+}
+
+/*
+======================
+CL_BuildingList
+
+TODO: To be extended for load/save purposes
+======================
+*/
+void CL_BuildingList ( void )
+{
+	int i, j, k;
+
+	//maybe someone call this command before the buildings are parsed??
+	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
+		return;
+
+	base_t* base;
+	building_t* building;
+	for ( i = 0, base = bmBases; i < numBases; i++, base++ )
+	{
+		if ( base->founded == false )
+			continue;
+
+		building = bmBuildings[i];
+		Com_Printf("\nBase id %i %s\n", i, base->title );
+		for ( j = 0; j < numBuildings; j++ )
+		{
+			Com_Printf("...Building: %s #%i\n", building->name, building->howManyOfThisType );
+			Com_Printf(".....Status:\n");
+			for ( k = 0; k < BASE_SIZE*BASE_SIZE; k++ )
+			{
+				if ( k > 1 && k % BASE_SIZE == 0 )
+					Com_Printf("\n");
+				Com_Printf("%i ", building->buildingStatus[k] );
+			}
+			Com_Printf("\n");
+			building++;
+		}
+	}
+}
+
+/*
+======================
+CL_BaseList
+
+TODO: To be extended for load/save purposes
+======================
+*/
+void CL_BaseList ( void )
+{
+	int i, j;
+	base_t* base;
+	for ( i = 0, base = bmBases; i < numBases; i++, base++ )
+	{
+		Com_Printf("Base id %i\n", base->id );
+		Com_Printf("Base title %s\n", base->title );
+		Com_Printf("Base pos %f:%f\n", base->pos[0], base->pos[1] );
+		Com_Printf("Base map:\n");
+		for ( j = 0; j < BASE_SIZE*BASE_SIZE; j++ )
+		{
+			if ( j > 1 && j % BASE_SIZE == 0 )
+				Com_Printf("\n");
+			// just show the first level - all others are not used yet
+			Com_Printf("%i ", base->map[j%BASE_SIZE][j/BASE_SIZE][0] );
+		}
+		Com_Printf("\n");
 	}
 }
 
@@ -1845,7 +2010,8 @@ void MN_ResetBaseManagement( void )
 	Cmd_AddCommand( "buildinginfo_click", MN_BuildingInfoClick_f );
 	Cmd_AddCommand( "buildings_click", MN_BuildingClick_f );
 	Cmd_AddCommand( "reset_building_current", MN_ResetBuildingCurrent );
-// 	Cmd_AddCommand( "basemap_click", MN_BaseMapClick_f );
+	Cmd_AddCommand( "baselist", CL_BaseList );
+	Cmd_AddCommand( "buildinglist", CL_BuildingList );
 	Cvar_SetValue( "mn_base_id", baseID );
 }
 

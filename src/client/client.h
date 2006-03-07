@@ -817,7 +817,8 @@ typedef struct building_s
 	char	title[MAX_VAR];
 	char    *text, *image, *needs, *depends, *mapPart, *produceType, *pedia;
 	float   energy, workerCosts, produceTime, fixCosts, varCosts;
-	int     production, level, id, timeStart, buildTime, techLevel, notUpOn, maxWorkers, minWorkers, addWorkers;
+	int     production, level, id, timeStart, buildTime, techLevel,
+	        notUpOn, maxWorkers, minWorkers, assignedWorkers;
 
 	//if we can build more than one building of the same type:
 	buildingStatus_t	buildingStatus[BASE_SIZE*BASE_SIZE];
@@ -927,7 +928,7 @@ int picWidth, picHeight;
 void MN_BuildNewBase( vec2_t pos );
 void MN_NewBases( void );
 void MN_SaveBases( sizebuf_t *sb );
-void MN_LoadBases( sizebuf_t *sb );
+void MN_LoadBases( sizebuf_t *sb, int version );
 void MN_ResetBasemanagement( void );
 void MN_ParseBuildings( char *title, char **text );
 void MN_ParseBases( char *title, char **text );
