@@ -926,7 +926,7 @@ void CL_GameSave( char *filename, char *comment )
 	MN_SaveBases( &sb );
 
 	// store credits
-	MSG_WriteShort( &sb, ccs.credits );
+	MSG_WriteLong( &sb, ccs.credits );
 
 	// store equipment
 	for ( i = 0; i < MAX_OBJDEFS; i++ )
@@ -984,6 +984,9 @@ void CL_GameSave( char *filename, char *comment )
 		MSG_WriteLong( &sb, mis->expire.day );
 		MSG_WriteLong( &sb, mis->expire.sec );
 	}
+
+	//write the actual mapaction to savefile
+	MSG_WriteLong( &sb, mapAction );
 
 	// write data
 	res = fwrite( buf, 1, sb.cursize, f );
@@ -1116,7 +1119,7 @@ void CL_GameLoad( char *filename )
 	MN_LoadBases( &sb, version );
 
 	// read credits
-	ccs.credits = MSG_ReadShort( &sb );
+	CL_UpdateCredits( MSG_ReadLong( &sb ) );
 
 	// read equipment
 	for ( i = 0; i < MAX_OBJDEFS; i++ )
@@ -1126,7 +1129,7 @@ void CL_GameLoad( char *filename )
 			ccs.eCampaign.num[i] = MSG_ReadByte( &sb );
 			ccs.eCampaign.num_loose[i] = 0;
 		}
-		else if (version == 1)
+		else if (version >= 1)
 		{
 			ccs.eCampaign.num[i] = MSG_ReadLong( &sb );
 			ccs.eCampaign.num_loose[i] = MSG_ReadByte( &sb );
@@ -1138,7 +1141,7 @@ void CL_GameLoad( char *filename )
 	{
 		if (version == 0)
 			ccs.eMarket.num[i] = MSG_ReadByte( &sb );
-		else if (version == 1)
+		else if (version >= 1)
 			ccs.eMarket.num[i] = MSG_ReadLong( &sb );
 	}
 
@@ -1229,6 +1232,9 @@ void CL_GameLoad( char *filename )
 			mis--; i--; ccs.numMissions--;
 		}
 	}
+
+	if ( version >= 2 )
+		mapAction = MSG_ReadLong( &sb );
 
 	Com_Printf( _("Campaign '%s' loaded.\n"), filename );
 	CL_GameTimeStop();
@@ -1648,7 +1654,7 @@ void CL_UpdateCharacterStats ( int won )
 			assert( chr );
 
 			// FIXME:
-			for ( j = 0; i < SKILL_NUM_TYPES; j++ )
+			for ( j = 0; j < SKILL_NUM_TYPES; j++ )
 				chr->skills[j]++;
 		}
 	}
