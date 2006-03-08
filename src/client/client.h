@@ -594,7 +594,7 @@ typedef struct le_s {
 	int			modelnum1, modelnum2, skinnum;
 	struct model_s	*model1, *model2;
 
-//	character_t	*chr;
+// 	character_t	*chr;
 
 	// is called every frame
 	void		(*think)(struct le_s *le);

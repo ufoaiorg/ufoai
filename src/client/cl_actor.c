@@ -932,7 +932,7 @@ void CL_ActorDoShoot( sizebuf_t *sb )
 	//       see gl_mesh.c R_DrawAliasModel()
 	//       make player-models visible even through walls in
 	//       a little radius (but keep the view-direction)
-/*	if ( fd->irGoogles )
+/*	if ( fd->irgoggles )
 	{
 		return;
 	}*/

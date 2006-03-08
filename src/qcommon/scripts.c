@@ -91,7 +91,7 @@ value_t fdps[] =
 	{ "spldmg",		V_POS,		FDOFS( spldmg ) },
 	{ "splrad",		V_FLOAT,	FDOFS( splrad ) },
 	{ "dmgtype",	V_DMGTYPE,	FDOFS( dmgtype ) },
-	{ "irgoogles",	V_BOOL,		FDOFS( irGoogles ) },
+	{ "irgoggles",	V_BOOL,		FDOFS( irgoggles ) },
 
 	{ NULL,	0, 0 }
 };

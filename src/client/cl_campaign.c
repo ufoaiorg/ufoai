@@ -1640,7 +1640,7 @@ void CL_UpdateCharacterStats ( int won )
 	character_t* chr;
 	int i, j;
 
-	for ( i = 0; i < numWholeTeam; i++ )
+	for ( i = 0; i < cl.numTeamList; i++ )
 	{
 		le = cl.teamList[i];
 

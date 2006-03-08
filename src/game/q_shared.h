@@ -821,7 +821,7 @@ typedef struct fireDef_s
 	vec2_t	damage, spldmg;
 	float	splrad;
 	int		weaponSkill;
-	int		irGoogles;
+	int		irgoggles;
 } fireDef_t;
 
 typedef enum researchStatus_s

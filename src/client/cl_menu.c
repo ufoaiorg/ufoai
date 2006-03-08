@@ -1530,17 +1530,19 @@ void MN_DrawMenus( void )
 					for ( item.t = 0; item.t < csi.numODs; item.t++ )
 						if ( !strcmp( ref, csi.ods[item.t].kurz ) )
 							break;
-					if ( item.t == csi.numODs )
+					if ( item.t == csi.numODs || item.t == NONE )
 						break;
 
 					item.a = 1;
+
 					MN_DrawItem( node->pos, item, 0, 0, 0, 0, node->scale, color );
 					break;
 
 				case MN_MODEL:
 					// set model properties
 					mi.model = re.RegisterModel( source );
-					if ( !mi.model ) break;
+					if ( !mi.model )
+						break;
 
 					mi.name = source;
 					mi.origin = node->origin;

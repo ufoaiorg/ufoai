@@ -822,6 +822,9 @@ void MN_BuildingAddToList( char *title, int id )
 	char tmpTitle[MAX_VAR];
 	strncpy ( tmpTitle, title , MAX_VAR);
 
+	assert(baseCurrent);
+	menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
+
 	//is the title already in list?
 	if (!strstr( menuText[TEXT_BUILDINGS], tmpTitle ) )
 	{
@@ -851,7 +854,7 @@ void MN_BuildingInit( void )
 	if ( ! baseCurrent )
 		return;
 
-	menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
+// 	menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
 
 	for ( i = 1; i < numBuildings; i++)
 	{
@@ -1726,6 +1729,22 @@ void MN_NewBases( void )
 		MN_ClearBase( &bmBases[i] );
 }
 
+/*
+======================
+B_AssembleRandomBase
+======================
+*/
+void B_AssembleRandomBase( void )
+{
+	int i;
+	int cnt = 0;
+	for ( i = 0; i < numBases; i++ )
+	{
+		if ( ! bmBases[i].founded ) break;
+		cnt++;
+	}
+	Cbuf_AddText( va("base_assemble %i", rand() % cnt ) );
+}
 
 /*
 ======================
@@ -1745,7 +1764,7 @@ void MN_SaveBases( sizebuf_t *sb )
 	MSG_WriteByte( sb, n );
 
 	for ( i = 0, base = bmBases; i < numBases; i++, base++ )
-		if (base->founded )
+		if ( base->founded )
 		{
 			MSG_WriteLong( sb, base->id );
 			MSG_WriteString( sb, base->title );
@@ -1782,23 +1801,6 @@ void MN_SaveBases( sizebuf_t *sb )
 				building++;
 			}
 		}
-}
-
-/*
-======================
-B_AssembleRandomBase
-======================
-*/
-void B_AssembleRandomBase( void )
-{
-	int i;
-	int cnt = 0;
-	for ( i = 0; i < numBases; i++ )
-	{
-		if ( ! bmBases[i].founded ) break;
-		cnt++;
-	}
-	Cbuf_AddText( va("base_assemble %i", rand() % cnt ) );
 }
 
 /*
