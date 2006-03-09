@@ -1,4 +1,4 @@
-ufoai (0.0.svn209) unstable; urgency=low
+ufoai (0.0.svn) unstable; urgency=low
 
   * SVN snapshot.
   * Depend on newer data package.
