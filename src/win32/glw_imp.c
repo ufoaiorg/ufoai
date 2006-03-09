@@ -44,7 +44,7 @@ glwstate_t glw_state;
 
 extern cvar_t *vid_fullscreen;
 extern cvar_t *vid_ref;
-extern cvar_t *vid_grabmouse
+extern cvar_t *vid_grabmouse;
 
 static qboolean VerifyDriver( void )
 {
