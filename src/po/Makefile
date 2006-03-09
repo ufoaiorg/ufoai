@@ -338,8 +338,7 @@ update-po: Makefile
 
 .nop.po-create:
 	@lang=`echo $@ | sed -e 's/\.po-create$$//'`; \
-	echo "File $$lang.po does not exist. If you are a translator, you can create it through 'msginit'." 1>&2; \
-	exit 1
+	msginit -l fr --no-translator
 
 # General rule for updating PO files.
 
