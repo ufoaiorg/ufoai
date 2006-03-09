@@ -35,7 +35,7 @@ SetCompressor bzip2
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
-!define MUI_FINISHPAGE_RUN "$INSTDIR\ufo.exe"
+;!define MUI_FINISHPAGE_RUN "$INSTDIR\ufo.exe"
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -51,7 +51,7 @@ SetCompressor bzip2
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "Setup.exe"
+OutFile "ufoai_${PRODUCT_VERSION}_installer.exe"
 InstallDir "$PROGRAMFILES\UFOAI"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
@@ -236,6 +236,7 @@ Section "Game" SEC01
 ; music
   SetOutPath "$INSTDIR\base\music"
   File "..\..\base\music\*.ogg"
+  File "..\..\base\music\*.txt"
 ; pics
   SetOutPath "$INSTDIR\base\pics"
   File "..\..\base\pics\*.jpg"
@@ -312,9 +313,9 @@ Section "Game" SEC01
 ; to let the game start up
   SetOutPath "$INSTDIR"
 
-  CreateDirectory "$SMPROGRAMS\UFO:Alien Invasion\"
-  CreateShortCut "$SMPROGRAMS\UFO:Alien Invasion\UFO:Alien Invasion.lnk" "$INSTDIR\ufo.exe" "" "$INSTDIR\ufo.exe" 0
-  CreateShortCut "$DESKTOP\UFO:Alien Invasion.lnk" "$INSTDIR\ufo.exe"
+  CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe" "" "$INSTDIR\ufo.exe" 0
+  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe"
 SectionEnd
 
 Section "MappingTools" SEC02
@@ -326,7 +327,7 @@ Section "MappingTools" SEC02
   File "..\tools\*.exe"
   File "..\tools\*.qe4"
   File "..\tools\*.doc"
-  CreateShortCut "$SMPROGRAMS\UFO:Alien Invasion\MAP-Editor.lnk" "$INSTDIR\tools\q3radiant.exe" "" "$INSTDIR\tools\q3radiant.exe" 0
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MAP-Editor.lnk" "$INSTDIR\tools\q3radiant.exe" "" "$INSTDIR\tools\q3radiant.exe" 0
 SectionEnd
 
 Section "SourceCode" SEC03
@@ -441,8 +442,8 @@ SectionEnd
 
 Section -AdditionalIcons
   WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
-  CreateShortCut "$SMPROGRAMS\UFO:Alien Invasion\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
-  CreateShortCut "$SMPROGRAMS\UFO:Alien Invasion\Uninstall.lnk" "$INSTDIR\uninst.exe"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
 
 Section -Post
@@ -481,15 +482,13 @@ Section Uninstall
   Delete "$INSTDIR\*.exe"
   Delete "$INSTDIR\*.dll"
 
-  Delete "$SMPROGRAMS\UFO:Alien Invasion\Uninstall.lnk"
-  Delete "$SMPROGRAMS\UFO:Alien Invasion\Website.lnk"
-  Delete "$DESKTOP\UFO:Alien Invasion.lnk"
-  Delete "$SMPROGRAMS\UFO:Alien Invasion\UFO:Alien Invasion.lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\Website.lnk"
+  Delete "$DESKTOP\${PRODUCT_NAME}.lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\UFO:Alien Invasion.lnk"
 
-  RMDir "$SMPROGRAMS\UFO:Alien Invasion\UFO:"
-  RMDir "$SMPROGRAMS\UFO:Alien Invasion"
+  RMDir "$SMPROGRAMS\${PRODUCT_NAME}"
   RMDir "$INSTDIR"
-  RMDir "$DESKTOP\UFO:"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
