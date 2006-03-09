@@ -44,6 +44,7 @@ cvar_t		*vid_ref;			// Name of Refresh DLL loaded
 cvar_t		*vid_xpos;			// X coordinate of window position
 cvar_t		*vid_ypos;			// Y coordinate of window position
 cvar_t		*vid_fullscreen;
+cvar_t		*vid_grabmouse;
 
 // Global variables used internally by this module
 viddef_t	viddef;				// global video state; used by other modules

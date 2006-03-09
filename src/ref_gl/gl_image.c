@@ -436,14 +436,14 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 	//
 	pcx = (pcx_t *)raw;
 
-    pcx->xmin = LittleShort(pcx->xmin);
-    pcx->ymin = LittleShort(pcx->ymin);
-    pcx->xmax = LittleShort(pcx->xmax);
-    pcx->ymax = LittleShort(pcx->ymax);
-    pcx->hres = LittleShort(pcx->hres);
-    pcx->vres = LittleShort(pcx->vres);
-    pcx->bytes_per_line = LittleShort(pcx->bytes_per_line);
-    pcx->palette_type = LittleShort(pcx->palette_type);
+	pcx->xmin = LittleShort(pcx->xmin);
+	pcx->ymin = LittleShort(pcx->ymin);
+	pcx->xmax = LittleShort(pcx->xmax);
+	pcx->ymax = LittleShort(pcx->ymax);
+	pcx->hres = LittleShort(pcx->hres);
+	pcx->vres = LittleShort(pcx->vres);
+	pcx->bytes_per_line = LittleShort(pcx->bytes_per_line);
+	pcx->palette_type = LittleShort(pcx->palette_type);
 
 	raw = &pcx->data;
 
@@ -1663,6 +1663,11 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 	while ((ptr=strchr(pname,'\\'))) {
 		*ptr = '/';
 	}
+#else
+	// fix slashes
+	while ((ptr=strchr(pname,'/'))) {
+		*ptr = '\\';
+	}
 #endif
 	// drop extension
 	strcpy( lname, pname );
@@ -1832,7 +1837,6 @@ int Draw_GetPalette (void)
 	int		width, height;
 
 	// get the palette
-
 	LoadPCX ("pics/colormap.pcx", &pic, &pal, &width, &height);
 	if (!pal)
 		ri.Sys_Error (ERR_FATAL, "Couldn't load pics/colormap.pcx");
