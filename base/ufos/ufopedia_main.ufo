@@ -46,7 +46,7 @@ up_entry b_quarters
 
 up_entry b_lab
 {
-	title      "Labratory"
+	title      "Laboratory"
 	image_top  base/lab
 	chapter    buildings
 	text       b_lab_txt

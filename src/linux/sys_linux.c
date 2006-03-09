@@ -309,7 +309,6 @@ int main (int argc, char **argv)
 	nostdout = Cvar_Get("nostdout", "0", 0);
 	if (!nostdout->value) {
 		fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
-		printf ("UFO:Alien Inversion for Linux -- Version %s\n", LINUX_VERSION);
 	}
 
 	oldtime = Sys_Milliseconds ();

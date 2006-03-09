@@ -28,8 +28,7 @@ equipment standard
 	plasrifle_ammo		2
 	fraggrenade			6
 	knife				3
-	irgoogles		1
-
+	irgoggles		1
 	medikit				3
 	light				2
 	medium				1
@@ -53,9 +52,9 @@ equipment campaign_player
 	rpg_ammo		4
 	fraggrenade		3
 	knife			2
-
 	medikit			1
 	light			3
+	irgoggles		1
 }
 
 equipment campaign_market
@@ -84,8 +83,7 @@ equipment campaign_market
 	laserpistol_ammo	16
 	fraggrenade			14
 	knife				8
-	irgoogles		2
-
+	irgoggles		2
 	medikit				5
 	light				6
 	medium				4

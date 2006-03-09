@@ -101,8 +101,8 @@ building storage
 
 building intercept
 {
-	title		"Intercepters"
-	image		base/intercepters
+	title		"Interceptors"
+	image		base/interceptors
 	fixcosts	5000
 	depends		commando
 	max_workers	4
