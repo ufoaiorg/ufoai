@@ -309,14 +309,12 @@ Section "Game" SEC01
 ; ufos
   SetOutPath "$INSTDIR\base\ufos"
   File "..\..\base\ufos\*.ufo"
-
 ; to let the game start up
   SetOutPath "$INSTDIR"
-  CreateDirectory "$SMPROGRAMS\UFO:Alien Invasion\UFO:"
-  CreateShortCut "$SMPROGRAMS\UFO:Alien Invasion\UFO:Alien Invasion.lnk" "$INSTDIR\ufo.exe"
-  CreateDirectory "$DESKTOP\UFO:"
+
+  CreateDirectory "$SMPROGRAMS\UFO:Alien Invasion\"
+  CreateShortCut "$SMPROGRAMS\UFO:Alien Invasion\UFO:Alien Invasion.lnk" "$INSTDIR\ufo.exe" "" "$INSTDIR\ufo.exe" 0
   CreateShortCut "$DESKTOP\UFO:Alien Invasion.lnk" "$INSTDIR\ufo.exe"
-  File "..\..\ref_gl.dll"
 SectionEnd
 
 Section "MappingTools" SEC02
@@ -328,6 +326,7 @@ Section "MappingTools" SEC02
   File "..\tools\*.exe"
   File "..\tools\*.qe4"
   File "..\tools\*.doc"
+  CreateShortCut "$SMPROGRAMS\UFO:Alien Invasion\MAP-Editor.lnk" "$INSTDIR\tools\q3radiant.exe" "" "$INSTDIR\tools\q3radiant.exe" 0
 SectionEnd
 
 Section "SourceCode" SEC03
@@ -477,6 +476,7 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
+; TODO: Delete all files from $INSTDIR, too
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\*.exe"
   Delete "$INSTDIR\*.dll"
