@@ -170,7 +170,9 @@ void IN_ActivateMouse (void)
 	old_x = window_center_x;
 	old_y = window_center_y;
 
+#if 0
 	if (vid_grabmouse->value)
+#endif
 		SetCapture ( cl_hwnd );
 	ClipCursor (&window_rect);
 	while (ShowCursor (FALSE) >= 0)
@@ -198,7 +200,9 @@ void IN_DeactivateMouse (void)
 	mouseactive = false;
 
 	ClipCursor (NULL);
+#if 0
 	if (vid_grabmouse->value)
+#endif
 		ReleaseCapture ();
 	while (ShowCursor (TRUE) < 0)
 		;

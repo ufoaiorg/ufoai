@@ -1904,13 +1904,13 @@ TODO: To be extended for load/save purposes
 void CL_BuildingList ( void )
 {
 	int i, j, k;
+	base_t* base;
+	building_t* building;
 
 	//maybe someone call this command before the buildings are parsed??
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 		return;
 
-	base_t* base;
-	building_t* building;
 	for ( i = 0, base = bmBases; i < numBases; i++, base++ )
 	{
 		if ( base->founded == false )

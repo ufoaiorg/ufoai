@@ -916,7 +916,7 @@ MN_MapClick
 */
 void MN_MapClick( menuNode_t *node, int x, int y )
 {
-
+	aircraft_t *air;
 	actMis_t *ms;
 	int i, msx, msy;
 	vec2_t	pos;
@@ -960,7 +960,6 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	}
 
 	// draw aircraft
-	aircraft_t *air;
 	for ( i = 0, air = ccs.air; i < ccs.numAir; i++, air++ )
 	{
 		air = &ccs.air[i];
