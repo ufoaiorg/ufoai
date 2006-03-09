@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
-"POT-Creation-Date: \n"
+"Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
+"POT-Creation-Date: 2006-03-09 22:19+0100\n"
 "PO-Revision-Date: 2005-12-22 18:35+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@gmx.net>\n"
 "Language-Team: \n"
@@ -12,411 +13,2427 @@ msgstr ""
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-##ufopedia
-msgid "Ufopedia Content"
-msgstr "Ufopedia Verzeichnis"
-
-msgid "Aircraft"
-msgstr "Gleiter"
-
-msgid "Weapons"
-msgstr "Waffen"
-
-msgid "Buildings"
-msgstr "Gebäude"
-
-msgid "Alien Species"
-msgstr "Alien Spezies"
-
-msgid "b_command_txt"
-msgstr "Die Kommandozentrale braucht ein Kraftwerk um gebaut werden zu können."
-
-msgid "b_quarters_txt"
-msgstr "TEXT"
-
-msgid "b_powerplant_txt"
-msgstr "TEXT"
-
-msgid "b_hangar_txt"
-msgstr "TEXT"
-
-msgid "b_lab_txt"
-msgstr "TEXT"
-
-msgid "transporter_txt"
-msgstr "Das H-92 Transporter ist der Haupttruppentransporter der GDF-Eingreiftruppe"
-
-msgid "interceptor_txt"
-msgstr "The F-48 is the backbone of the GDF air superiority force. Powered by two Volkot VO-36 jet\nengines, this aircraft reaches a maximum speed of mach 1.4. This is significantly slower than \nmany of the alien UFOs, but regarding the maneuverability the F-48 can easily compete with\nalmost all of its adversaries. Like the H-92 Troop transport, the F-48 has the ability to take\noff and land vertically. Therefore many GDF bases have vertical shafts leading form the surface\nto the subterranean flight hangars. This has been proven to be safest way to make a airfield\nalmost completely undetectable."
-
-msgid "assault_txt"
-msgstr "The AR-80 is the standard weapon of the GDF forces. Using improved ammo and a revolutionary\ndesign, this rifle can do more damage as any comparable assault rifle. The AR-80s rear loaded\nclip allows the weapon to fire with greater accuracy as the bullet has to move down an extended\nmuzzle before exiting the weapon. The Assault Rifle can also be repaired much easier due to the\nfact that it is built in modules. For example, the firing mechanism can be field repaired simply\nby removing the out of commission back end and inserting a new one. The entire process takes\nonly minutes."
-
-msgid "sniper_txt"
-msgstr "Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of the most deadly weapons\nemployed by GDF forces. Powered by a advanced version of the 0.5 cartridge, it is capable to\neasily penetrate the engine block of a vehicle at 150 meters. However, the weapon is very bulky\nand requires many precious seconds to aim, therefore the WE-78 is definitly not suitable for\nclose combat."
-
-msgid "smg_txt"
-msgstr "Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at the cost of less\naccuracy and penetrating power. These characteristics make the SMG-68 a ideal choice for close\ncombat. Therefore GDF soldiers use the SMG-68 mainly in urban areas. To optimize the rate of\nfire, this weapon has two barrels through which the bullets are fired off alternating. To damp\nthe considerable recoil, a advanced counter-balance system is used powered by the explosion\ngases originating from the cartridges."
-
-msgid "shotgun_txt"
-msgstr "The GDF forces are using the SG-260 with great success for quite some time now. Compared with\nthe shotguns traditionally used by mainy SWAT teams, the SG-260 is capable to better channel the\nbullets fired off from the buckshots. Therefore the effective range of this weapon is increased\nso it can be used not only at close but also at medium range. The SG-260 is a good choice for\nurban combat, especially for clearing a building."
-
-msgid "flamer_txt"
-msgstr "The FT-207 is one of the most recent additions to tactical combat. Prior versions of this weapon\nwere not employed do to the risk of accidentally igniting surrounding objects. This version,\nhowever, greatly reduces this risk by employing FHAS, or, Focused Heat Attack System, which\nrestricts the 'hot zone' created by the flamethrower to a very defined region. The area\ncentimeters outside the 'hot zone' show no noticeable temperature increase."
-
-msgid "pistol_txt"
-msgstr "The P-95 is the standard GDF sidearm. The simple design of this handgun makes it a very reliable\naddition to every soldier's equipment. Because of the weapon's low weight a experienced gunner\ncan also use two pistols at the same time with the considerable drawback of a massivly reduced\naccuracy. The P-95 is especially appreciated by snipers for having a valuable sidearm when it\ncomes to close combat."
-
-msgid "rpg_txt"
-msgstr "The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. GDF weapon scientists and\nengineers developed a new tracking system not only capable to fight airborne but also ground\ntargets. The RL-1056's rockets use a combination of laser guidance and high speed cameras to\nidentify the target. Despite a good accuracy when the tracking system had enough time to\ncorrectly lock on the target, this rocket launcher is of limited value if it has to be used in\nsnapshot mode."
-
-msgid "laserrifle_txt"
-msgstr "Thanks to the recent advances in the laser technology GDF scientist were able to implement a\nreally powerful 'laser reactor' into a hand held weapon. The laser beam is generated with a\nnewly developed type of the common YAG laser technology. A advanced opical lense system is used\nto focus the beam very densely so it has the power to easily penetrate most known armors."
-
-msgid "laserpistol_txt"
-msgstr "Using a smaller and less powerful version of the 'YAG laser reactor', the LAS-10 is like its big\nbrother, the LAS-24 Laser Rifle, a offspring of the recent advances made in the field of laser\ntechnology. Due to the smaller 'YAG reactor', the photons have a lower cinetic energy and\ntherefore a lessend penetrating power."
-
-msgid "fraggen_txt"
-msgstr "The fragmentation grenade is little more than an explosive core surrounded by metal. When the\ncore is detonates, the surrounding metal is broken into sharp, deadly fragments which fly from\nthe weapon at great speeds. The detonation is controlled by a built in timer."
-
-msgid "knife_txt"
-msgstr "Almost every GDF soldier has his own Combat Knife as a last choice when it comes to hand to hand\ncombat. But a simple Combat Knife should not be underestimated in the hands of a stealth\nwarefare specialist as it can kill absolutely noiseless. Its blade is made of a special titanium\nalloy which makes it very resistant."
-
-msgid "plasrifle_txt"
-msgstr "The Plasma Rifle is the weapon most often used by ... warriors. The plasma fired by this weapon\neasly cuts through almost every known material. Therefore the standard GDF kevlar vest only\nprovides minor protection. Soldiers wounded by a Plasma Rifle's beam suffer of extensive burns\nwhich are in many cases instantly lethal. The overheated highly energetic xenon gas plasma is\nstored inside a intense magnetic field integrated in the weapon's clip. If the trigger is used,\nthe magnetic field is reconfigured so that a continuous plasma beam is formed. This beam is\nfocused by a second magnetic field and finally propelled to the front end of the Plasma Rifle."
-
-msgid "plaspistol_txt"
-msgstr "Using the same technology as the Plasma Rifle, the Plasma Pistol can also do considerable damage\nto its target. The overheated xenon plasma is also contained inside a strong magnetic field\nimplemented in the pistol's clip. Because of the smaller dimensions of this one-handed weapon,\nthe magnetic field generators are not that capable as the ones used in the Plasma Rifle.\nTherefore the cinetic energy given to the plasma beam is lessened."
-
-msgid "plasblade_txt"
-msgstr "This melee weapon has proven to be of great value in hand to hand combat because of the\ndevestating burns it can inflict when someone touches its blade. Generally the enemy is unable\nto fight onward just after one strike. On the downside the range of this weapon is utterly\nlimited."
-
-msgid "tachyonrifle_txt"
-msgstr "Although our engineers not fully understand the principles of altering the tachyons on a\nsubatomic level, they were able to reproduce the tachyon accelerator technology. Apparently the\ntachyons are given a defined spin inside the accelerator so they are able to interact with any\nmaterial. They still tend to infiltrate easily through any known armor and lose their particle\nenergy not before a penetrating distance of about 10 cm. Therefore a soldier hit by a tachyon\ncharge suffers only minor superficial injury but is heavily wounded in his viscera."
-
-msgid "tachyonsniper_txt"
-msgstr "The Tachyon Sniper Rifle uses also the newly discovered tachyon accelerator technology, first\nfound in a Ortnok scout spaceship. Unlike the Tachyon Rifle, this weapon has a low rate of fire\nbecause the tachyon particles are intensely charged before they are fired. This means that the\nshots fired by the Tachyon Sniper Rifle are more focused and hence have a greater accuracy as\nwell as a bigger penetrating power."
-
-msgid "tachyonpistol_txt"
-msgstr "This weapon is powered by a miniaturized version of the tachyon accelerator. Therefore the\nTachyon Pistol has a lower rate of fire as well as a diminished accuracy compared to the other\ntwo tachyon weapons. The major advantage of the Tachyon Pistol is its low weight and its small\ndimensions which makes it a valuable sidearm."
-
-msgid "ortnok_txt"
-msgstr "Genetically the green skinned Ortnoks seem to be related very closely to the human race. About\n80% of their DNA is identical compared to the human's. The parts that are different are most\nlikely genetically engineered because they do not show any individual variability. The fact that\nthey are genetically altered and that they do not seem to have any functional reproduction\norgans suggests that they are clones made by some as yet unknown alien species. Additionally the\nOrtnoks have several cybernetic implants which involve mainly the cardiovascular system, the\nmuscles, the eyes and the brain. They enhance the physical strenght and stamnia as well as the\nsenses to a level superior to any human. The purpose of the brain implants is mostly unclear but\nit is believed that they serve as receivers for commands. But currently this is only a\nassumption because there is no evidence proving the existence of such a master-species."
-
-msgid "ortnok_medium_txt"
-msgstr "Having the same genetical features as the regular Ortnoks, the Ortnok Warriors have been\nextensively modified with cybernetic implants. All these additional implants obviously aim to\nachieve a better performance in combat. Therefore the legs and arms have been almost completely\nreplaced by cybernetic prostheses which allow a physical strength far beyond the potential of a\nhuman beeing. The claw shaped hands are designed to handle extreme weights. The chest area is\ncovered with a thick steel plating which is almost impenetrable for regular rifle ammunition.\nThe face mask serves as a protection against hazardous gases as well as a augmentation of the\nupper airways to allow a better lung function. The disadvantage of this massive cybernetic\naugmentation is the increased vulnerability to electromagnetic pulses (EMP)."
-
-msgid "Stab"
-msgstr "Stich"
-
-msgid "Throw"
-msgstr "Wurf"
-
-msgid "Primary"
-msgstr "Primär"
-
-msgid "Secondary"
-msgstr "Sekundär"
-
-msgid "Damage"
-msgstr "Schaden"
-
-msgid "Range"
-msgstr "Weite"
-
-msgid "Time Units"
-msgstr "Zeiteinheiten"
-
-msgid "Spreads"
-msgstr "Streuung"
-
-msgid "Ammo"
-msgstr "Munition"
-
-msgid "Assault Rifle"
-msgstr "Sturmgewehr"
-
-msgid "Assault Rifle Clip"
-msgstr "Sturmgewehrmunition"
-
-msgid "Burst"
+#: linux/snd_alsa.c:59
+msgid ""
+"Using sounddevice \"default\" - if you have problems with this try to set "
+"the cvar snddevice to a appropriate alsa-device"
 msgstr ""
 
-msgid "Auto"
-msgstr "Automatisch"
-
-msgid "Sniper Rifle"
-msgstr "Scharfschützengewehr"
-
-msgid "Sniper Rifle Clip"
+#: linux/snd_alsa.c:63
+#, c-format
+msgid "ALSA: cannot open device %s(%s)\n"
 msgstr ""
 
-msgid "Snap Shot"
-msgstr "Hueftschuss"
-
-msgid "Aimed Shot"
-msgstr "Gezielter Schuss"
-
-msgid "9mm Pistol"
-msgstr "9mm Pistole"
-
-msgid "Pistol Clip"
-msgstr "9mm Munition"
-
-msgid "Rapid Fire"
-msgstr "Schnellfeuer"
-
-msgid "Submachine Gun"
-msgstr "SMG"
-
-msgid "SMG Clip"
-msgstr "SMG Munition"
-
-msgid "Full Auto"
-msgstr "Vollautomatisch"
-
-msgid "Shotgun"
-msgstr "Schrotflinte"
-
-msgid "Buckshots"
-msgstr "Schrotmunition"
-
-msgid "Single Shot"
-msgstr "Einfachschuss"
-
-msgid "Double Shot"
-msgstr "Doppelschuss"
-
-msgid "Flamethrower"
-msgstr "Flammenwerfer"
-
-msgid "Napalm Tank"
-msgstr "Napalmtank"
-
-msgid "Candlelight"
-msgstr "Kerzenschein"
-
-msgid "Inferno"
-msgstr "Inferno"
-
-msgid "Rocket Launcher"
-msgstr "Raktenwerfer"
-
-msgid "High-Explosive Rocket"
-msgstr "Rakete"
-
-msgid "Tachyon Rifle"
-msgstr "Tachyongewehr"
-
-msgid "Tachyon Rifle Charge"
-msgstr "Tachyonmunition"
-
-msgid "Rapid Shots"
-msgstr "Schnellpuls"
-
-msgid "Charged Blast"
-msgstr "Belastende Strahlen"
-
-msgid "Tachyon Sniper Rifle"
-msgstr "Tachyonscharfschützengewehr"
-
-msgid "Tachyon Sniper Charge"
-msgstr "Tachyonscharfschützenmunition"
-
-msgid "Plasma Pistol"
-msgstr "Plasmapistole"
-
-msgid "Plasma Pistol Charge"
-msgstr "Plasmapistolenmunition"
-
-msgid "Charged Pulse"
-msgstr "Geladener Impuls"
-
-msgid "Continuous Beam"
-msgstr "Dauerimpuls"
-
-msgid "Plasma Rifle"
-msgstr "Plasmagewehr"
-
-msgid "Plasma Rifle Charge"
-msgstr "Plasmagewehrmunition"
-
-msgid "Laser Pistol"
-msgstr "Laserpistole"
-
-msgid "Laser Pistol Charge"
-msgstr "Laserpistolenmunition"
-
-msgid "Single Pulse"
-msgstr "Einfachimpuls"
-
-msgid "Multiple Pulses"
+#: linux/snd_alsa.c:68
+#, c-format
+msgid "ALSA: cannot allocate hw params(%s)\n"
 msgstr ""
 
-msgid "Laser Rifle"
-msgstr "Lasergewehr"
+#: linux/snd_alsa.c:73
+#, c-format
+msgid "ALSA: cannot init hw params(%s)\n"
+msgstr ""
 
-msgid "Laser Rifle Charge"
-msgstr "Lasergewehrmunition"
+#: linux/snd_alsa.c:79
+#, c-format
+msgid "ALSA: cannot set access(%s)\n"
+msgstr ""
 
-msgid "Frag Grenade"
-msgstr "Splittergranate"
+#: linux/snd_alsa.c:89
+msgid "ALSA: 16 bit not supported, trying 8\n"
+msgstr ""
 
-msgid "Knife"
-msgstr "Messer"
+#: linux/snd_alsa.c:95
+#, c-format
+msgid "ALSA: cannot set format(%s)\n"
+msgstr ""
 
-msgid "Medikit"
-msgstr "Erste-Hilfe-Kasten"
+#: linux/snd_alsa.c:106
+#, c-format
+msgid "ALSA: cannot set rate %d (%s)\n"
+msgstr ""
 
-msgid "Heal"
-msgstr "Heilen"
+#: linux/snd_alsa.c:109 linux/snd_alsa.c:123
+#, c-format
+msgid "ALSA: rate %d not supported, using %d\n"
+msgstr ""
 
-msgid "H-92 Troop Transport"
-msgstr "H-92 Truppentransporter"
+#: linux/snd_alsa.c:119
+#, c-format
+msgid "ALSA: cannot set rate %d(%s)\n"
+msgstr ""
 
-## cl_campaign.c
-msgid "Jan"
-msgstr "Jan"
+#: linux/snd_alsa.c:129
+msgid "ALSA: cannot set rate\n"
+msgstr ""
 
-msgid "Feb"
-msgstr "Feb"
+#: linux/snd_alsa.c:139
+#, c-format
+msgid "ALSA: cannot set channels %d(%s)\n"
+msgstr ""
 
-msgid "Mar"
-msgstr "Mär"
+#: linux/snd_alsa.c:147
+#, c-format
+msgid "ALSA: cannot set period size (%s)\n"
+msgstr ""
 
-msgid "Apr"
-msgstr "Apr"
+#: linux/snd_alsa.c:153
+#, c-format
+msgid "ALSA: period %d not supported, using %d\n"
+msgstr ""
 
-msgid "May"
-msgstr "Mai"
+#: linux/snd_alsa.c:157
+#, c-format
+msgid "ALSA: cannot set params(%s)\n"
+msgstr ""
 
-msgid "Jun"
-msgstr "Jun"
+#: linux/snd_alsa.c:186
+msgid "Sound not inizialized\n"
+msgstr ""
 
-msgid "Jul"
-msgstr "Jul"
+#: linux/sys_linux.c:87
+msgid "memory overwrite in Sys_Printf"
+msgstr ""
 
-msgid "Aug"
-msgstr "Aug"
+#: linux/sys_linux.c:130
+#, c-format
+msgid "Error: %s\n"
+msgstr ""
 
-msgid "Sep"
-msgstr "Sep"
+#: linux/sys_linux.c:144
+#, c-format
+msgid "Warning: %s"
+msgstr ""
 
-msgid "Oct"
-msgstr "Oct"
+#: linux/sys_linux.c:238
+msgid "Sys_GetGameAPI without Sys_UnloadingGame"
+msgstr ""
 
-msgid "Nov"
-msgstr "Nov"
+#: linux/sys_linux.c:255
+#, c-format
+msgid "LoadLibrary (%s)\n"
+msgstr ""
 
-msgid "Dec"
-msgstr "Dez"
+#: linux/sys_linux.c:258
+#, c-format
+msgid "LoadLibrary failed (%s)\n"
+msgstr ""
 
-msgid "5 sec"
-msgstr "5 Sek"
+#: qcommon/files.c:778
+#, c-format
+msgid "using %s for writing\n"
+msgstr ""
 
-msgid "5 mins"
-msgstr "5 Min"
+#: qcommon/files.c:887
+msgid "USAGE: link <from> <to>\n"
+msgstr ""
 
-msgid "1 hour"
-msgstr "1 Std"
+#: qcommon/files.c:1415
+msgid "Could not allocate memory in MN_GetMaps\n"
+msgstr ""
 
-msgid "12 hour"
-msgstr "12 Std"
+#: game/g_ai.c:421
+#, c-format
+msgid "Not enough spawn points for team %i\n"
+msgstr ""
 
-msgid "1 day"
-msgstr "1 Tag"
+#: game/g_ai.c:455 client/cl_team.c:1077
+msgid "Alien"
+msgstr ""
 
-msgid "5 days"
-msgstr "5 Tage"
+#: game/g_ai.c:526
+#, c-format
+msgid "Not enough weapons in equipment '%s'\n"
+msgstr ""
 
-## in-game (hud)
-msgid "Your round started!\n"
-msgstr "Du bist an der Reihe!\n"
+#: game/g_ai.c:583
+#, c-format
+msgid "Created AI player (team %i)\n"
+msgstr ""
 
-msgid "This isn't your round"
-msgstr "Du bist nicht dran"
+#: game/g_svcmds.c:174
+msgid "IP filter list is full\n"
+msgstr ""
 
-msgid "Nobody selected"
-msgstr "Es ist niemand selektiert"
+#: game/g_svcmds.c:209
+msgid "Removed.\n"
+msgstr ""
 
-msgid "Health\t%i\nMove\t%i\n"
-msgstr "Gesundheit\t%i\nBewegung\t%i\n"
+#: game/g_svcmds.c:225
+msgid "Filter list:\n"
+msgstr ""
 
-msgid "Health\t%i\n"
-msgstr "Gesundheit\t%i\n"
-
-msgid "Shoot"
-msgstr "Schuss"
-
-msgid "Alien spotted"
-msgstr "Alien gesichtet"
-
-msgid "Civilian sptted"
-msgstr "Zivilist gesichtet"
-
-## in game
-msgid "Currently panics!\n"
-msgstr "Gerade panisch!\n"
-
-msgid "%s panics!\n"
-msgstr "%s ist panisch!\n"
-
-msgid "%s is on a rampage.\n"
-msgstr "%s randaliert.\n"
-
-msgid "%s is in mad rage!\n"
-msgstr "%s dreht durch!\n"
-
+#: game/g_client.c:589
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Nicht deine Runde\n"
 
+#: game/g_client.c:595
 msgid "Can't perform action - object not present!\n"
 msgstr "Objekt nicht vorhanden\n"
 
+#: game/g_client.c:601
 msgid "Can't perform action - not an actor!\n"
 msgstr "Kein Spieler\n"
 
+#: game/g_client.c:607
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Spieler ist tod\n"
 
+#: game/g_client.c:613
 msgid "Can't perform action - not on same team!\n"
 msgstr "Nicht im gleichen Team\n"
 
+#: game/g_client.c:619
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Keine Kontrolle über verbündete Spieler\n"
 
+#: game/g_client.c:625 game/g_client.c:721
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Nicht genug Zeiteinheiten\n"
 
+#: game/g_client.c:726
 msgid "Can't perform action - weapon already loaded!\n"
 msgstr "Waffe ist bereits geladen\n"
 
+#: game/g_client.c:1163
+msgid "Currently shaken, won't let it's guard down.\n"
+msgstr ""
+
+#: game/g_client.c:1263
+#, c-format
+msgid "Undefined morale modifier type %i\n"
+msgstr ""
+
+#: game/g_client.c:1294
+#, c-format
+msgid "%s panics!\n"
+msgstr "%s ist panisch!\n"
+
+#: game/g_client.c:1337
+#, c-format
+msgid "%s is on a rampage.\n"
+msgstr "%s randaliert.\n"
+
+#: game/g_client.c:1338
+#, c-format
+msgid "%s is in mad rage!\n"
+msgstr "%s dreht durch!\n"
+
+#: game/g_client.c:1380
+#, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s ist verwirrt\n"
 
+#: game/g_client.c:1587
 msgid "Can't perform action - impossible throw!\n"
 msgstr "Ummöglicher Wurf\n"
 
+#: game/g_client.c:1832
 msgid "Can't perform action - no ammo!\n"
 msgstr "Keine Munition\n"
 
+#: game/g_client.c:1851
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Nicht genug Munition\n"
 
+#: game/g_client.c:2094
 msgid "Get a team for teamplay\n"
 msgstr "Waehle ein Team für Teamplay\n"
 
+#: game/g_client.c:2102
 msgid "Get a team for multiplayer\n"
 msgstr "Waehle ein Team für Multiplayer\n"
 
+#: game/g_client.c:2112
+#, c-format
+msgid "Team %i is already in use\n"
+msgstr ""
+
+#: game/g_client.c:2126
 msgid "Removing ai player..."
 msgstr "Entferne KI Mitspieler"
 
-msgid "%s has taken control over team %i.\n"
-msgstr "%s kontrolliert nun Team %i\n"
-
+#: game/g_client.c:2219
+#, c-format
 msgid "Item '%s' not allowed and removed from inventory.\n"
 msgstr "Objekt '%s' ist nicht erlaubt - entferne es daher\n"
 
+#: game/g_client.c:2392
+#, c-format
+msgid "%s has taken control over team %i.\n"
+msgstr "%s kontrolliert nun Team %i\n"
+
+#: game/g_client.c:2443
+msgid "Banned."
+msgstr ""
+
+#: game/g_client.c:2451
+#, c-format
+msgid "%s is connecting...\n"
+msgstr ""
+
+#: game/g_client.c:2468
+#, c-format
+msgid "%s disconnected.\n"
+msgstr ""
+
+#: game/q_shared.c:1760
+msgid "No free inventory space!\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:120
+msgid "Usage: ufopedia <name>\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:161
+#, c-format
+msgid "No PediaEntry found for %s\n"
+msgstr ""
+
+# #ufopedia
+#: client/cl_ufopedia.c:191
+msgid "Ufopedia Content"
+msgstr "Ufopedia Verzeichnis"
+
+#: client/cl_ufopedia.c:344
+msgid "MN_ParseUpEntry: unexptected end of file (names "
+msgstr ""
+
+#: client/cl_ufopedia.c:351
+#, c-format
+msgid "MN_ParseUpEntry: entry def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:356
+msgid "MN_ParseUpEntry: too many ufopedia entries\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:441
+#, c-format
+msgid "MN_ParseUpEntry: chapter \"%s\" not found (entry %s)\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:447
+#, c-format
+msgid "MN_ParseUpEntry: unknown token \"%s\" ignored (entry %s)\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:460
+msgid "MN_ParseUupChapters: unexptected end of file (names "
+msgstr ""
+
+#: client/cl_ufopedia.c:468
+#, c-format
+msgid "MN_ParseUupChapters: chapter def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:481
+msgid "MN_ParseUupChapters: too many chapter defs\n"
+msgstr ""
+
+#: client/console.c:155
+#, c-format
+msgid "Dumped console text to %s.\n"
+msgstr ""
+
+#: client/console.c:160
+msgid "ERROR: couldn't open.\n"
+msgstr ""
+
+#: client/console.c:317
+msgid "Console initialized.\n"
+msgstr ""
+
+#: client/console.c:540
+msgid "say:"
+msgstr ""
+
+#: client/console.c:545
+msgid "say_team:"
+msgstr ""
+
+#: client/cl_team.c:56
+#, c-format
+msgid "'%s' isn't a gender! (male and female are)\n"
+msgstr ""
+
+#: client/cl_team.c:73
+#, c-format
+msgid "No first name in category '%s'\n"
+msgstr ""
+
+#: client/cl_team.c:82
+#, c-format
+msgid ""
+"\n"
+"No last name in category '%s'\n"
+msgstr ""
+
+#: client/cl_team.c:272
+#, c-format
+msgid ""
+"Primary:\t%s\n"
+"Secondary:\t%s\n"
+"Damage:\t%i / %i\n"
+"Time units:\t%i / %i\n"
+"Range:\t%1.1f / %1.1f\n"
+"Spreads:\t%1.1f / %1.1f\n"
+"Ammo:\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:281
+#, c-format
+msgid ""
+"Damage:\t%i / %i\n"
+"Time units:\t%i / %i\n"
+"Range:\t%1.1f / %1.1f\n"
+"Spreads:\t%1.1f / %1.1f\n"
+"Ammo:\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:292
+#, c-format
+msgid ""
+"Action:\t%s\n"
+"Time units:\t%i\n"
+"Range:\t%1.1f\n"
+msgstr ""
+
+#: client/cl_team.c:300
+#, c-format
 msgid "Unknown - need to research this"
 msgstr "Unbekannt - muss noch erforscht werden"
+
+#: client/cl_team.c:487
+#, c-format
+msgid "Equipment '%s' not found!\n"
+msgstr ""
+
+#: client/cl_team.c:741
+#, c-format
+msgid "Couldn't write file (%s).\n"
+msgstr ""
+
+#: client/cl_team.c:763
+#, c-format
+msgid "Team '%s' saved.\n"
+msgstr ""
+
+#: client/cl_team.c:895 client/cl_campaign.c:1056
+#, c-format
+msgid "Couldn't open file '%s'.\n"
+msgstr ""
+
+#: client/cl_team.c:931
+#, c-format
+msgid "Team '%s' loaded.\n"
+msgstr ""
+
+#: client/cl_team.c:948
+#, c-format
+msgid "Team 'team%s' loaded.\n"
+msgstr ""
+
+#: client/cl_team.c:1072
+msgid "Too many teams in result message\n"
+msgstr ""
+
+#: client/cl_team.c:1077
+msgid "Enemy"
+msgstr ""
+
+#: client/cl_team.c:1078
+#, fuzzy
+msgid "Aliens"
+msgstr "Alien gesichtet"
+
+#: client/cl_team.c:1078
+msgid "Enemies"
+msgstr ""
+
+#: client/cl_team.c:1094
+msgid "WARNING: bad result message\n"
+msgstr ""
+
+#: client/cl_team.c:1101
+#, c-format
+msgid "%s killed\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:1103
+#, c-format
+msgid ""
+"%s survivors\t%i\n"
+"\n"
+msgstr ""
+
+#: client/cl_team.c:1106
+#, c-format
+msgid "Team losses\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:1107
+#, c-format
+msgid "Friendly fire losses\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:1108
+#, c-format
+msgid ""
+"Team survivors\t%i\n"
+"\n"
+msgstr ""
+
+#: client/cl_team.c:1119
+#, c-format
+msgid "Civilians killed by the %s\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:1120
+#, c-format
+msgid "Civilians killed by your Team\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:1121
+#, fuzzy, c-format
+msgid ""
+"Civilians saved\t%i\n"
+"\n"
+"\n"
+msgstr "Zivilist gesichtet"
+
+#: client/cl_team.c:1145
+#, c-format
+msgid "Collected alien technology\t%i $\n"
+msgstr ""
+
+#: client/cl_team.c:1150
+#, c-format
+msgid "Aliens killed\t%i $\n"
+msgstr ""
+
+#: client/cl_team.c:1155
+#, fuzzy, c-format
+msgid "Civilians saved\t%i $\n"
+msgstr "Zivilist gesichtet"
+
+#: client/cl_team.c:1158
+#, c-format
+msgid ""
+"Total reward\t%i $\n"
+"\n"
+"\n"
+msgstr ""
+
+#: client/cl_team.c:1162
+#, c-format
+msgid "New Recruits\t%i\n"
+msgstr ""
+
+#: client/keys.c:559
+msgid "Usage: unbind <key> : remove commands from a key\n"
+msgstr ""
+
+#: client/keys.c:566 client/keys.c:603
+#, c-format
+msgid "\"%s\" isn't a valid key\n"
+msgstr ""
+
+#: client/keys.c:597
+msgid "Usage: bind <key> [command] : attach a command to a key\n"
+msgstr ""
+
+#: client/keys.c:612
+#, c-format
+msgid "\"%s\" is not bound\n"
+msgstr ""
+
+#: client/keys.c:788
+#, c-format
+msgid "%s is unbound, hit F4 to set.\n"
+msgstr ""
+
+#: client/cl_input.c:91
+msgid "Three keys down for a button!\n"
+msgstr ""
+
+#: client/cl_input.c:212
+msgid "Changed camera mode to remote.\n"
+msgstr ""
+
+#: client/cl_input.c:221
+msgid "Changed camera mode to first-person.\n"
+msgstr ""
+
+#: client/cl_le.c:96
+#, c-format
+msgid "LM_Perish: Can't find model %i\n"
+msgstr ""
+
+#: client/cl_le.c:205
+msgid "Too many local models\n"
+msgstr ""
+
+#: client/cl_le.c:643
+msgid "Too many LEs\n"
+msgstr ""
+
+#: client/cl_sequence.c:315
+msgid "Usage: seq_start <name>\n"
+msgstr ""
+
+#: client/cl_sequence.c:326
+#, c-format
+msgid "Couldn't find sequence '%s'\n"
+msgstr ""
+
+#: client/cl_sequence.c:474
+#, c-format
+msgid "SEQ_Precache: unknown format '%s'\n"
+msgstr ""
+
+#: client/cl_sequence.c:525
+msgid "Too many sequence entities\n"
+msgstr ""
+
+#: client/cl_sequence.c:555
+#, c-format
+msgid "SEQ_Model: unknown token '%s'\n"
+msgstr ""
+
+#: client/cl_sequence.c:584
+msgid "Too many sequence 2d objects\n"
+msgstr ""
+
+#: client/cl_sequence.c:605
+#, c-format
+msgid "SEQ_Text: unknown token '%s'\n"
+msgstr ""
+
+#: client/cl_sequence.c:628
+#, c-format
+msgid "SEQ_Remove: couldn't find '%s'\n"
+msgstr ""
+
+#: client/cl_sequence.c:652
+msgid "CL_ParseSequence: unexptected end of file (sequence "
+msgstr ""
+
+#: client/cl_sequence.c:665
+#, c-format
+msgid ""
+"CL_ParseSequence: sequence def \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_sequence.c:671
+msgid "Too many sequences\n"
+msgstr ""
+
+#: client/cl_sequence.c:683
+#, c-format
+msgid "CL_ParseSequence: sequence def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_sequence.c:703
+msgid "Too many sequence commands\n"
+msgstr ""
+
+#: client/cl_sequence.c:746
+#, c-format
+msgid "CL_ParseSequence: unknown command \"%s\" ignored (sequence %s)\n"
+msgstr ""
+
+#: client/cl_menu.c:370
+msgid "Usage: mn_startserver <name>\n"
+msgstr ""
+
+#: client/cl_menu.c:380 client/cl_main.c:359 client/cl_main.c:687
+msgid "Error"
+msgstr ""
+
+#: client/cl_menu.c:380 client/cl_main.c:359 client/cl_main.c:687
+msgid "Assemble a team first"
+msgstr ""
+
+#: client/cl_menu.c:445
+#, c-format
+msgid "MN_ExecuteActions: node \"%s\" doesn't exist\n"
+msgstr ""
+
+#: client/cl_menu.c:457
+msgid "unknown action type\n"
+msgstr ""
+
+#: client/cl_menu.c:1525
+msgid "no container...\n"
+msgstr ""
+
+#: client/cl_menu.c:1667
+msgid ""
+"Select the desired location of the\n"
+"new base on the map.\n"
+msgstr ""
+
+#: client/cl_menu.c:1727
+msgid "Menu stack overflow\n"
+msgstr ""
+
+#: client/cl_menu.c:1737
+#, c-format
+msgid "Didn't find menu \"%s\"\n"
+msgstr ""
+
+#: client/cl_menu.c:2026
+msgid "MN_ParseAction: unexptected end of file (in event)"
+msgstr ""
+
+#: client/cl_menu.c:2119
+#, c-format
+msgid "MN_ParseAction: token \"%s\" isn't a node property (in event)\n"
+msgstr ""
+
+#: client/cl_menu.c:2181
+#, c-format
+msgid "MN_ParseAction: unknown token \"%s\" ignored (in event)\n"
+msgstr ""
+
+#: client/cl_menu.c:2195
+msgid "MN_ParseNodeBody: unexptected end of file (node"
+msgstr ""
+
+#: client/cl_menu.c:2305
+#, c-format
+msgid "MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2320
+msgid "MN_ParseMenuBody: unexptected end of file (menu"
+msgstr ""
+
+#: client/cl_menu.c:2352
+#, c-format
+msgid "MN_ParseMenuBody: node prototype type change (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2380
+#, c-format
+msgid "MN_ParseMenuBody: second init function ignored (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2387
+#, c-format
+msgid "MN_ParseMenuBody: second close function ignored (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2394
+#, c-format
+msgid "MN_ParseMenuBody: second render node ignored (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2401
+#, c-format
+msgid "MN_ParseMenuBody: second popup node ignored (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2418
+#, c-format
+msgid "MN_ParseMenuBody: node with bad body ignored (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2443
+#, c-format
+msgid "MN_ParseMenuBody: unknown token \"%s\" ignored (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2471
+#, c-format
+msgid "MN_ParseMenus: menu \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_menu.c:2486
+#, c-format
+msgid "MN_ParseMenus: menu \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_menu.c:2494
+#, c-format
+msgid "MN_ParseMenus: menu \"%s\" with bad body ignored\n"
+msgstr ""
+
+#: client/cl_menu.c:2502
+#, c-format
+msgid "Error in menu %s - max menu num exeeded (%i)"
+msgstr ""
+
+#: client/cl_scrn.c:682
+#, c-format
+msgid "%f seconds (%f fps)\n"
+msgstr ""
+
+#: client/cl_research.c:124 client/cl_campaign.c:323 client/cl_campaign.c:579
+msgid "Notice"
+msgstr ""
+
+#: client/cl_research.c:124
+msgid "Build a laboratory first"
+msgstr ""
+
+#: client/cl_research.c:146
+#, c-format
+msgid "Research of %s finished\n"
+msgstr ""
+
+#: client/cl_research.c:148
+#, c-format
+msgid "%i researches finished\n"
+msgstr ""
+
+#: client/cl_research.c:163
+msgid "Research finished"
+msgstr ""
+
+# # in game
+#: client/cl_actor.c:272
+#, c-format
+msgid "Currently panics!\n"
+msgstr "Gerade panisch!\n"
+
+#: client/cl_actor.c:277
+msgid "You cannot use this unknown alien weapon.\n"
+msgstr ""
+
+#: client/cl_actor.c:310
+#, c-format
+msgid ""
+"Health\t%i\n"
+"Move\t%i\n"
+msgstr ""
+"Gesundheit\t%i\n"
+"Bewegung\t%i\n"
+
+#: client/cl_actor.c:315
+#, c-format
+msgid "Health\t%i\n"
+msgstr "Gesundheit\t%i\n"
+
+#: client/cl_actor.c:592
+msgid "CL_BuildForbiddenList: list too long"
+msgstr ""
+
+#: client/cl_actor.c:605
+#, fuzzy
+msgid "Nobody selected.\n"
+msgstr "Es ist niemand selektiert"
+
+#: client/cl_actor.c:606
+#, fuzzy
+msgid "Nobody selected\n"
+msgstr "Es ist niemand selektiert"
+
+#: client/cl_actor.c:618
+#, fuzzy
+msgid "This isn't your round.\n"
+msgstr "Du bist nicht dran"
+
+#: client/cl_actor.c:619
+#, fuzzy
+msgid "This isn't your round\n"
+msgstr "Du bist nicht dran"
+
+#: client/cl_actor.c:753
+msgid "You cannot load this unknown alien weapon.\n"
+msgstr ""
+
+#: client/cl_actor.c:782
+msgid "No clip left.\n"
+msgstr ""
+
+#: client/cl_actor.c:800
+msgid "Can't move, LE doesn't exist\n"
+msgstr ""
+
+#: client/cl_actor.c:859
+msgid "Can't turn, LE doesn't exist\n"
+msgstr ""
+
+#: client/cl_actor.c:1152
+#, c-format
+msgid "Team %i ended round"
+msgstr ""
+
+# # in-game (hud)
+#: client/cl_actor.c:1154
+#, fuzzy, c-format
+msgid ", team %i's round started!\n"
+msgstr "Du bist an der Reihe!\n"
+
+# # in-game (hud)
+#: client/cl_actor.c:1161
+msgid "Your round started!\n"
+msgstr "Du bist an der Reihe!\n"
+
+#: client/cl_cin.c:138
+#, c-format
+msgid "PCX file %s was malformed"
+msgstr ""
+
+#: client/cl_cin.c:415
+#, c-format
+msgid "Decompression overread by %i"
+msgstr ""
+
+#: client/cl_cin.c:459
+msgid "Bad compressed frame size"
+msgstr ""
+
+#: client/cl_cin.c:514
+#, c-format
+msgid "Dropped frame: %i > %i\n"
+msgstr ""
+
+#: client/cl_cin.c:591
+#, c-format
+msgid "%s not found.\n"
+msgstr ""
+
+#: client/cl_view.c:147
+#, c-format
+msgid "Bad light style %i"
+msgstr ""
+
+#: client/cl_view.c:307
+#, c-format
+msgid "CL_ParseEntitystring: found %s when expecting {"
+msgstr ""
+
+#: client/cl_view.c:320 client/cl_view.c:327
+msgid "CL_ParseEntitystring: EOF without closing brace"
+msgstr ""
+
+#: client/cl_view.c:330
+msgid "CL_ParseEntitystring: closing brace without data"
+msgstr ""
+
+#: client/cl_view.c:410
+msgid "Too many lights...\n"
+msgstr ""
+
+#: client/cl_view.c:424
+msgid "misc_model without \"model\" specified\n"
+msgstr ""
+
+#: client/cl_view.c:490
+#, c-format
+msgid "Map: %s\n"
+msgstr ""
+
+#: client/cl_view.c:497
+#, fuzzy
+msgid "pics\n"
+msgstr "%s ist panisch!\n"
+
+#: client/cl_view.c:552
+#, fuzzy
+msgid "images\n"
+msgstr "Schaden"
+
+#: client/cl_view.c:565
+#, c-format
+msgid "client %i\n"
+msgstr ""
+
+#: client/cl_view.c:607
+#, c-format
+msgid "Bad fov: %f"
+msgstr ""
+
+#: client/cl_view.c:734
+#, c-format
+msgid "ent:%i  lt:%i  part:%i\n"
+msgstr ""
+
+#: client/cl_parse.c:207 client/cl_parse.c:280
+msgid "Refusing to download a path with ..\n"
+msgstr ""
+
+#: client/cl_parse.c:286
+msgid "File already exists.\n"
+msgstr ""
+
+#: client/cl_parse.c:291
+#, c-format
+msgid "Downloading %s\n"
+msgstr ""
+
+#: client/cl_parse.c:356
+msgid "Server does not have this file.\n"
+msgstr ""
+
+#: client/cl_parse.c:378
+#, c-format
+msgid "Failed to open %s\n"
+msgstr ""
+
+#: client/cl_parse.c:418
+msgid "failed to rename.\n"
+msgstr ""
+
+#: client/cl_parse.c:449
+msgid "Serverdata packet received.\n"
+msgstr ""
+
+#: client/cl_parse.c:462
+#, c-format
+msgid "Server returned version %i, not %i"
+msgstr ""
+
+#: client/cl_parse.c:662
+#, c-format
+msgid "(player %i) It's team %i's round\n"
+msgstr ""
+
+#: client/cl_parse.c:731
+msgid "Entity appearing already visible... overwriting the old one\n"
+msgstr ""
+
+#: client/cl_parse.c:752
+msgid "Delete request ignored... LE not found\n"
+msgstr ""
+
+#: client/cl_parse.c:864
+#, fuzzy
+msgid "Alien spotted!\n"
+msgstr "Alien gesichtet"
+
+#: client/cl_parse.c:865
+#, fuzzy
+msgid "Enemy spotted!\n"
+msgstr "Alien gesichtet"
+
+#: client/cl_parse.c:867
+#, fuzzy
+msgid "Civilian spotted!\n"
+msgstr "Zivilist gesichtet"
+
+#: client/cl_parse.c:894
+msgid "Stats message ignored... LE not found\n"
+msgstr ""
+
+#: client/cl_parse.c:922
+msgid "StateChange message ignored... LE not found\n"
+msgstr ""
+
+#: client/cl_parse.c:1024
+msgid "InvAdd message ignored... LE not found\n"
+msgstr ""
+
+#: client/cl_parse.c:1070
+msgid "InvDel message ignored... LE not found\n"
+msgstr ""
+
+#: client/cl_parse.c:1109
+msgid "InvAmmo message ignored... LE not found\n"
+msgstr ""
+
+#: client/cl_parse.c:1176
+msgid "CL_ParseEvent: Bad event message"
+msgstr ""
+
+#: client/cl_parse.c:1190
+#, c-format
+msgid "CL_ParseEvent: invalid event %i\n"
+msgstr ""
+
+#: client/cl_parse.c:1193
+#, c-format
+msgid "CL_ParseEvent: no handling function for event %i\n"
+msgstr ""
+
+#: client/cl_parse.c:1199 client/cl_parse.c:1338
+#, c-format
+msgid "CL_Events: invalid event %i\n"
+msgstr ""
+
+#: client/cl_parse.c:1295
+msgid "CL_ParseEvent: timetable overflow\n"
+msgstr ""
+
+#: client/cl_parse.c:1400
+msgid "CL_ParseServerMessage: Bad server message"
+msgstr ""
+
+#: client/cl_parse.c:1424
+#, c-format
+msgid "CL_ParseServerMessage: Illegible server message %d\n"
+msgstr ""
+
+#: client/cl_parse.c:1432
+msgid "Server disconnected\n"
+msgstr ""
+
+#: client/cl_parse.c:1436
+msgid "Server disconnected, reconnecting\n"
+msgstr ""
+
+#: client/cl_fx.c:99
+#, c-format
+msgid "svc_lightstyle length=%i"
+msgstr ""
+
+#: client/cl_main.c:185
+#, c-format
+msgid "%s undefined\n"
+msgstr ""
+
+#: client/cl_main.c:200
+#, c-format
+msgid "Can't \"%s\", not connected\n"
+msgstr ""
+
+#: client/cl_main.c:279 client/cl_main.c:325
+msgid "Bad server address\n"
+msgstr ""
+
+#: client/cl_main.c:334
+#, c-format
+msgid "Connecting to %s...\n"
+msgstr ""
+
+#: client/cl_main.c:365
+msgid "Server quit\n"
+msgstr ""
+
+#: client/cl_main.c:400
+msgid "You must set 'rcon_password' before issuing an rcon command.\n"
+msgstr ""
+
+#: client/cl_main.c:429
+msgid ""
+"You must either be connected, or set the 'rcon_address' cvar\n"
+"to issue rcon commands\n"
+msgstr ""
+
+#: client/cl_main.c:488
+#, c-format
+msgid "%i frames, %3.1f seconds: %3.1f fps\n"
+msgstr ""
+
+#: client/cl_main.c:555
+msgid "Bad address\n"
+msgstr ""
+
+#: client/cl_main.c:598
+msgid ""
+"\n"
+"Changing map...\n"
+msgstr ""
+
+#: client/cl_main.c:618 client/cl_main.c:633
+msgid "reconnecting...\n"
+msgstr ""
+
+#: client/cl_main.c:713
+msgid "pinging broadcast...\n"
+msgstr ""
+
+#: client/cl_main.c:741
+#, c-format
+msgid "pinging %s...\n"
+msgstr ""
+
+#: client/cl_main.c:744
+#, c-format
+msgid "Bad address: %s\n"
+msgstr ""
+
+#: client/cl_main.c:782
+msgid "Dup connect received. Ignored.\n"
+msgstr ""
+
+#: client/cl_main.c:804
+msgid "Command packet from remote host. Ignored.\n"
+msgstr ""
+
+#: client/cl_main.c:843
+msgid "Unknown command.\n"
+msgstr ""
+
+#: client/cl_main.c:859
+msgid "dumnping a packet\n"
+msgstr ""
+
+#: client/cl_main.c:887
+#, c-format
+msgid "%s: Runt packet\n"
+msgstr ""
+
+#: client/cl_main.c:896
+#, c-format
+msgid "%s:sequenced packet without connection\n"
+msgstr ""
+
+#: client/cl_main.c:913
+msgid ""
+"\n"
+"Server connection timed out.\n"
+msgstr ""
+
+#: client/cl_main.c:933
+msgid "User info settings:\n"
+msgstr ""
+
+#: client/cl_main.c:1625
+msgid "Too many map particles\n"
+msgstr ""
+
+#: client/cl_main.c:1870
+#, c-format
+msgid "recursive shutdown\n"
+msgstr ""
+
+#: client/snd_dma.c:102
+msgid "sound system not started\n"
+msgstr ""
+
+#: client/snd_dma.c:106
+#, c-format
+msgid "%5d stereo\n"
+msgstr ""
+
+#: client/snd_dma.c:107
+#, c-format
+msgid "%5d samples\n"
+msgstr ""
+
+#: client/snd_dma.c:108
+#, c-format
+msgid "%5d samplepos\n"
+msgstr ""
+
+#: client/snd_dma.c:109
+#, c-format
+msgid "%5d samplebits\n"
+msgstr ""
+
+#: client/snd_dma.c:110
+#, c-format
+msgid "%5d submission_chunk\n"
+msgstr ""
+
+#: client/snd_dma.c:111
+#, c-format
+msgid "%5d speed\n"
+msgstr ""
+
+#: client/snd_dma.c:112
+#, c-format
+msgid "0x%x dma buffer\n"
+msgstr ""
+
+#: client/snd_dma.c:198
+#, c-format
+msgid "sound sampling rate: %i\n"
+msgstr ""
+
+#: client/snd_dma.c:262
+msgid "S_FindName: NULL\n"
+msgstr ""
+
+#: client/snd_dma.c:264
+msgid "S_FindName: empty name\n"
+msgstr ""
+
+#: client/snd_dma.c:267
+#, c-format
+msgid "Sound name too long: %s"
+msgstr ""
+
+#: client/snd_dma.c:288 client/snd_dma.c:325
+msgid "S_FindName: out of sfx_t"
+msgstr ""
+
+#: client/snd_dma.c:604
+#, c-format
+msgid "Issue %i\n"
+msgstr ""
+
+#: client/snd_dma.c:741
+#, c-format
+msgid "S_StartLocalSound: can't cache %s\n"
+msgstr ""
+
+#: client/snd_dma.c:1202
+#, c-format
+msgid "Couldn't open 'music/%s.ogg'\n"
+msgstr ""
+
+#: client/snd_dma.c:1210
+#, c-format
+msgid "'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n"
+msgstr ""
+
+#: client/snd_dma.c:1264
+msgid "Usage: ov_play <filename>\n"
+msgstr ""
+
+#: client/snd_dma.c:1333
+#, c-format
+msgid "  placeholder : %s\n"
+msgstr ""
+
+#: client/snd_dma.c:1335
+#, c-format
+msgid "  not loaded  : %s\n"
+msgstr ""
+
+#: client/snd_dma.c:1338
+#, c-format
+msgid "Total resident: %i\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:197
+msgid "MN_BuildingStatus: No Base or no Building set\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:205
+msgid "Not set"
+msgstr ""
+
+#: client/cl_basemanagement.c:207
+#, c-format
+msgid "Already %i in base"
+msgstr ""
+
+#: client/cl_basemanagement.c:209
+#, c-format
+msgid "Constructing: %i day(s)"
+msgstr ""
+
+#: client/cl_basemanagement.c:211 client/cl_basemanagement.c:2089
+msgid "Construction finished"
+msgstr ""
+
+#: client/cl_basemanagement.c:213
+#, c-format
+msgid "Upgrade: %i day(s)"
+msgstr ""
+
+#: client/cl_basemanagement.c:215
+msgid "Working 100%"
+msgstr ""
+
+#: client/cl_basemanagement.c:217
+msgid "Working 120%"
+msgstr ""
+
+#: client/cl_basemanagement.c:219
+msgid "Working 50%"
+msgstr ""
+
+#: client/cl_basemanagement.c:221
+msgid "Maintenance"
+msgstr ""
+
+#: client/cl_basemanagement.c:223
+msgid "Repairing"
+msgstr ""
+
+#: client/cl_basemanagement.c:225
+msgid "Down"
+msgstr ""
+
+#: client/cl_basemanagement.c:344
+msgid "Not enough credits to build this\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:415 client/cl_basemanagement.c:422
+msgid "No ground where i can place building upon\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:430 client/cl_basemanagement.c:436
+msgid "Can't place any building upon this ground\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:446
+msgid ""
+"Can't place this building here - the second part overlapped with another "
+"building\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:467
+msgid "There is already a building\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:470
+msgid "Invalid coordinates\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:486
+msgid "Usage: set_building <x> <y>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:529
+msgid "Usage: damage_building <amount>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:655
+msgid "Called MN_DrawBuilding with no buildingCurrent set\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:676
+#, c-format
+msgid "Costs:\t%1.2f (%i Day[s] to build)\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:678
+#, c-format
+msgid "Running Costs:\t%1.2f\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:679
+#, c-format
+msgid "Workercosts:\t%1.2f\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:680
+#, c-format
+msgid "Workers:\t%i\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:681
+#, c-format
+msgid "Energy:\t%1.0f\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:687
+#, c-format
+msgid "Production:\t%s (%i/day)\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:693
+#, fuzzy, c-format
+msgid "Level:\t%i\n"
+msgstr "Gesundheit\t%i\n"
+
+#: client/cl_basemanagement.c:695
+msgid "Condition"
+msgstr ""
+
+#: client/cl_basemanagement.c:705
+#, c-format
+msgid "Error in scriptfile: Could not find the building \"%s\"\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:740
+msgid "Minimum amount of workers reached for this building\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:771
+msgid "Maximum amount of workers reached for this building\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:917
+msgid "Bases not initialized\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:935
+msgid "Usage: basemap_click <x> <y>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:986
+msgid "MN_ParseBuildings: unexptected end of file (names "
+msgstr ""
+
+#: client/cl_basemanagement.c:995
+#, c-format
+msgid "MN_ParseBuildings: building \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1000
+msgid "MN_ParseBuildings: too many buildings\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1080
+#, c-format
+msgid "MN_ParseBuildings: unknown token \"%s\" ignored (entry %s)\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1118
+msgid "MN_ParseBases: unexptected end of file (names "
+msgstr ""
+
+#: client/cl_basemanagement.c:1127
+#, c-format
+msgid "MN_ParseBases: base \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1135
+msgid "MN_ParseBases: too many bases\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1175
+msgid "MN_ParseProductions: unexptected end of file (names "
+msgstr ""
+
+#: client/cl_basemanagement.c:1182
+#, c-format
+msgid "MN_ParseProductions: production type \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1187
+msgid "MN_ParseProductions: to many production types\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1250
+#, c-format
+msgid "MN_ParseProductions: unknown token \"%s\" ignored (entry %s)\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1330
+msgid "Error in ufo-scriptfile - could not find the needed building\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1349 client/cl_basemanagement.c:1367
+#, c-format
+msgid "Invalid picture dimension of %s\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1462
+msgid "Usage: rename_base <name>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1554
+msgid "Usage: select_base <baseID>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1571
+msgid "MaxBases reached\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1629
+msgid "sage: base_attack <baseID>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1665
+msgid "Usage: base_assemble <baseID>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2072
+#, c-format
+msgid "Construction of building %s finished\\at base %s\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2074
+#, c-format
+msgid "There is at least one finished construction\\at base %s\n"
+msgstr ""
+
+#: client/cl_particle.c:200 client/cl_particle.c:233
+msgid "CL_ParticleGetArt: Unknown art type\n"
+msgstr ""
+
+#: client/cl_particle.c:290 client/cl_particle.c:335 client/cl_particle.c:366
+#: client/cl_particle.c:390 client/cl_particle.c:476 client/cl_particle.c:502
+msgid "CL_ParticleFunction: stack underflow\n"
+msgstr ""
+
+#: client/cl_particle.c:312
+#, c-format
+msgid ""
+"CL_ParticleFunction: can't get components of a non-vector type (particle %"
+"s)\n"
+msgstr ""
+
+#: client/cl_particle.c:323
+msgid "CL_ParticleFunction: stack overflow\n"
+msgstr ""
+
+#: client/cl_particle.c:341
+#, c-format
+msgid "Bad type '%s' for pic (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:349
+#, c-format
+msgid "Bad type '%s' for model (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:370 client/cl_particle.c:394
+#, c-format
+msgid "CL_ParticleFunction: bad type '%s' for add (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:374
+#, c-format
+msgid "CL_ParticleFunction: bad vector dimensions for add/sub (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:402 client/cl_particle.c:414
+#, c-format
+msgid "CL_ParticleFunction: bad vector dimensions for mul/div (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:426
+#, c-format
+msgid "CL_ParticleFunction: bad type '%s' for sin (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:435
+#, c-format
+msgid "CL_ParticleFunction: bad type '%s' for cos (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:444
+#, c-format
+msgid "CL_ParticleFunction: bad type '%s' for tan (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:481
+#, c-format
+msgid "CL_ParticleFunction: bad type '%s' for vector creation (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:486
+#, c-format
+msgid "CL_ParticleFunction: created vector with dim > 4 (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:506
+#, c-format
+msgid ""
+"CL_ParticleFunction: bad type '%s' int required for nspawn (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:516
+#, c-format
+msgid "CL_ParticleFunction: unknown cmd type %i\n"
+msgstr ""
+
+#: client/cl_particle.c:541
+#, c-format
+msgid "Particle definiton \"%s\" not found\n"
+msgstr ""
+
+#: client/cl_particle.c:558
+msgid "Too many particles...\n"
+msgstr ""
+
+#: client/cl_particle.c:714 client/cl_particle.c:721
+msgid "ED_ParseEntity: EOF without closing brace"
+msgstr ""
+
+#: client/cl_particle.c:724
+msgid "ED_ParseEntity: closing brace without data"
+msgstr ""
+
+#: client/cl_particle.c:802
+msgid "CL_ParsePtlCmds: unexptected end of file"
+msgstr ""
+
+#: client/cl_particle.c:811
+#, c-format
+msgid "CL_ParsePtlCmds: particle cmds \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_particle.c:866
+#, c-format
+msgid "CL_ParsePtlCmds: bad reference \"%s\" specified (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:874
+#, c-format
+msgid "CL_ParsePtlCmds: bad type in var \"%s\" specified (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:889
+#, c-format
+msgid ""
+"CL_ParsePtlCmds: can't get components of a non-vector type (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:909
+#, c-format
+msgid "CL_ParsePtlCmds: bad type \"%s\" specified (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:953
+#, c-format
+msgid "CL_ParsePtlCmds: unknown token \"%s\" ignored (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:970
+msgid "CL_ParseParticle: unexptected end of file (particle "
+msgstr ""
+
+#: client/cl_particle.c:982
+#, c-format
+msgid ""
+"CL_ParseParticle: particle def \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_particle.c:997
+#, c-format
+msgid "CL_ParseParticle: particle def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_particle.c:1021
+#, c-format
+msgid "CL_ParseParticle: unknown token \"%s\" ignored (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:1028
+#, c-format
+msgid ""
+"CL_ParseParticle: particle definition %s without init function ignored\n"
+msgstr ""
+
+#: client/snd_mem.c:135
+#, c-format
+msgid "Couldn't load %s\n"
+msgstr ""
+
+#: client/snd_mem.c:142
+#, fuzzy, c-format
+msgid "%s is a stereo sample\n"
+msgstr "%s randaliert.\n"
+
+#: client/snd_mem.c:285
+msgid "Missing RIFF/WAVE chunks\n"
+msgstr ""
+
+#: client/snd_mem.c:296
+msgid "Missing fmt chunk\n"
+msgstr ""
+
+#: client/snd_mem.c:303
+msgid "Microsoft PCM format only\n"
+msgstr ""
+
+#: client/snd_mem.c:340
+msgid "Missing data chunk\n"
+msgstr ""
+
+#: client/snd_mem.c:350
+#, c-format
+msgid "Sound %s has a bad loop length"
+msgstr ""
+
+#: client/cl_campaign.c:149
+#, c-format
+msgid "')' expected in BEP (%s).\n"
+msgstr ""
+
+#: client/cl_campaign.c:152
+#, c-format
+msgid "Unexpected end of condition in BEP (%s).\n"
+msgstr ""
+
+#: client/cl_campaign.c:155
+#, c-format
+msgid "Variable '%s' not found in BEP (%s).\n"
+msgstr ""
+
+#: client/cl_campaign.c:159
+#, c-format
+msgid "Unknown CheckBEP error in BEP (%s).\n"
+msgstr ""
+
+#: client/cl_campaign.c:323
+msgid "Could not set up your base at this location"
+msgstr ""
+
+#: client/cl_campaign.c:434 client/cl_campaign.c:456
+#, c-format
+msgid "CL_CampaignActivateStage: stage '%s' not found.\n"
+msgstr ""
+
+#: client/cl_campaign.c:472
+msgid "Too many active missions!\n"
+msgstr ""
+
+#: client/cl_campaign.c:511
+msgid "CL_CampaignRemoveMission: Can't remove mission.\n"
+msgstr ""
+
+#: client/cl_campaign.c:578
+#, c-format
+msgid "The mission expired and %i civilians died\\You've lost %i $"
+msgstr ""
+
+#: client/cl_campaign.c:813
+#, c-format
+msgid "CL_GameNew: Campaign \"%s\" doesn't exist.\n"
+msgstr ""
+
+#: client/cl_campaign.c:892
+msgid "No campaign active.\n"
+msgstr ""
+
+#: client/cl_campaign.c:899
+msgid "Couldn't write file.\n"
+msgstr ""
+
+#: client/cl_campaign.c:998
+#, c-format
+msgid "Campaign '%s' saved.\n"
+msgstr ""
+
+#: client/cl_campaign.c:1101
+#, c-format
+msgid "CL_GameLoad: Campaign \"%s\" doesn't exist.\n"
+msgstr ""
+
+#: client/cl_campaign.c:1161
+msgid "Unable to load campaign '%s', unknown stage '%'\n"
+msgstr ""
+
+#: client/cl_campaign.c:1179
+#, c-format
+msgid "Warning: Set '%s' not found\n"
+msgstr ""
+
+#: client/cl_campaign.c:1209
+#, c-format
+msgid "Warning: Mission '%s' not found\n"
+msgstr ""
+
+#: client/cl_campaign.c:1220
+#, c-format
+msgid "Warning: Stage set '%s' not found\n"
+msgstr ""
+
+#: client/cl_campaign.c:1239
+#, c-format
+msgid "Campaign '%s' loaded.\n"
+msgstr ""
+
+#: client/cl_campaign.c:1372
+msgid "Note"
+msgstr ""
+
+#: client/cl_campaign.c:1372
+msgid "Enter your base and assemble a team"
+msgstr ""
+
+#: client/cl_campaign.c:1449
+msgid "Usage: buy_select <num>\n"
+msgstr ""
+
+#: client/cl_campaign.c:1475
+msgid "Usage: buy_type <category>\n"
+msgstr ""
+
+#: client/cl_campaign.c:1531
+msgid "Usage: buy <num>\n"
+msgstr ""
+
+#: client/cl_campaign.c:1563
+msgid "Usage: sell <num>\n"
+msgstr ""
+
+#: client/cl_campaign.c:1772
+msgid "Map mask loaded.\n"
+msgstr ""
+
+#: client/cl_campaign.c:1773
+msgid "Couldn't load map mask (pics/menu/map_mask.tga)\n"
+msgstr ""
+
+#: client/cl_campaign.c:1812
+msgid "CL_ParseMission: unexptected end of file (mission "
+msgstr ""
+
+#: client/cl_campaign.c:1825
+#, c-format
+msgid ""
+"Com_ParseMission: mission def \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:1840
+#, c-format
+msgid "Com_ParseMission: mission def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:1873
+#, c-format
+msgid "Com_ParseMission: unknown token \"%s\" ignored (mission %s)\n"
+msgstr ""
+
+#: client/cl_campaign.c:1905
+msgid "CL_ParseStageSet: unexptected end of file (stageset "
+msgstr ""
+
+#: client/cl_campaign.c:1921
+#, c-format
+msgid "Com_ParseStageSets: stageset def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:1968
+#, c-format
+msgid "Com_ParseStageSet: unknown mission \"%s\" ignored (stageset %s)\n"
+msgstr ""
+
+#: client/cl_campaign.c:1974
+#, c-format
+msgid "Com_ParseStageSet: unknown token \"%s\" ignored (stageset %s)\n"
+msgstr ""
+
+#: client/cl_campaign.c:1986
+msgid "CL_ParseStage: unexptected end of file (stage "
+msgstr ""
+
+#: client/cl_campaign.c:1998
+#, c-format
+msgid "Com_ParseStage: stage def \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:2006
+#, c-format
+msgid "Com_ParseStages: stage def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:2016
+#, c-format
+msgid "stage: %s\n"
+msgstr ""
+
+#: client/cl_campaign.c:2028
+#, c-format
+msgid "Com_ParseStage: unknown token \"%s\" ignored (stage %s)\n"
+msgstr ""
+
+#: client/cl_campaign.c:2058
+msgid "CL_ParseCampaign: unexptected end of file (campaign "
+msgstr ""
+
+#: client/cl_campaign.c:2071
+#, c-format
+msgid ""
+"Com_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:2086
+#, c-format
+msgid "Com_ParseCampaign: campaign def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:2110
+#, c-format
+msgid "Com_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n"
+msgstr ""
+
+#~ msgid "Aircraft"
+#~ msgstr "Gleiter"
+
+#~ msgid "Weapons"
+#~ msgstr "Waffen"
+
+#~ msgid "Buildings"
+#~ msgstr "Gebäude"
+
+#~ msgid "Alien Species"
+#~ msgstr "Alien Spezies"
+
+#~ msgid "b_command_txt"
+#~ msgstr ""
+#~ "Die Kommandozentrale braucht ein Kraftwerk um gebaut werden zu können."
+
+#~ msgid "b_quarters_txt"
+#~ msgstr "TEXT"
+
+#~ msgid "b_powerplant_txt"
+#~ msgstr "TEXT"
+
+#~ msgid "b_hangar_txt"
+#~ msgstr "TEXT"
+
+#~ msgid "b_lab_txt"
+#~ msgstr "TEXT"
+
+#~ msgid "transporter_txt"
+#~ msgstr ""
+#~ "Das H-92 Transporter ist der Haupttruppentransporter der GDF-"
+#~ "Eingreiftruppe"
+
+#~ msgid "interceptor_txt"
+#~ msgstr ""
+#~ "The F-48 is the backbone of the GDF air superiority force. Powered by two "
+#~ "Volkot VO-36 jet\n"
+#~ "engines, this aircraft reaches a maximum speed of mach 1.4. This is "
+#~ "significantly slower than \n"
+#~ "many of the alien UFOs, but regarding the maneuverability the F-48 can "
+#~ "easily compete with\n"
+#~ "almost all of its adversaries. Like the H-92 Troop transport, the F-48 "
+#~ "has the ability to take\n"
+#~ "off and land vertically. Therefore many GDF bases have vertical shafts "
+#~ "leading form the surface\n"
+#~ "to the subterranean flight hangars. This has been proven to be safest way "
+#~ "to make a airfield\n"
+#~ "almost completely undetectable."
+
+#~ msgid "assault_txt"
+#~ msgstr ""
+#~ "The AR-80 is the standard weapon of the GDF forces. Using improved ammo "
+#~ "and a revolutionary\n"
+#~ "design, this rifle can do more damage as any comparable assault rifle. "
+#~ "The AR-80s rear loaded\n"
+#~ "clip allows the weapon to fire with greater accuracy as the bullet has to "
+#~ "move down an extended\n"
+#~ "muzzle before exiting the weapon. The Assault Rifle can also be repaired "
+#~ "much easier due to the\n"
+#~ "fact that it is built in modules. For example, the firing mechanism can "
+#~ "be field repaired simply\n"
+#~ "by removing the out of commission back end and inserting a new one. The "
+#~ "entire process takes\n"
+#~ "only minutes."
+
+#~ msgid "sniper_txt"
+#~ msgstr ""
+#~ "Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of "
+#~ "the most deadly weapons\n"
+#~ "employed by GDF forces. Powered by a advanced version of the 0.5 "
+#~ "cartridge, it is capable to\n"
+#~ "easily penetrate the engine block of a vehicle at 150 meters. However, "
+#~ "the weapon is very bulky\n"
+#~ "and requires many precious seconds to aim, therefore the WE-78 is "
+#~ "definitly not suitable for\n"
+#~ "close combat."
+
+#~ msgid "smg_txt"
+#~ msgstr ""
+#~ "Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire "
+#~ "at the cost of less\n"
+#~ "accuracy and penetrating power. These characteristics make the SMG-68 a "
+#~ "ideal choice for close\n"
+#~ "combat. Therefore GDF soldiers use the SMG-68 mainly in urban areas. To "
+#~ "optimize the rate of\n"
+#~ "fire, this weapon has two barrels through which the bullets are fired off "
+#~ "alternating. To damp\n"
+#~ "the considerable recoil, a advanced counter-balance system is used "
+#~ "powered by the explosion\n"
+#~ "gases originating from the cartridges."
+
+#~ msgid "shotgun_txt"
+#~ msgstr ""
+#~ "The GDF forces are using the SG-260 with great success for quite some "
+#~ "time now. Compared with\n"
+#~ "the shotguns traditionally used by mainy SWAT teams, the SG-260 is "
+#~ "capable to better channel the\n"
+#~ "bullets fired off from the buckshots. Therefore the effective range of "
+#~ "this weapon is increased\n"
+#~ "so it can be used not only at close but also at medium range. The SG-260 "
+#~ "is a good choice for\n"
+#~ "urban combat, especially for clearing a building."
+
+#~ msgid "flamer_txt"
+#~ msgstr ""
+#~ "The FT-207 is one of the most recent additions to tactical combat. Prior "
+#~ "versions of this weapon\n"
+#~ "were not employed do to the risk of accidentally igniting surrounding "
+#~ "objects. This version,\n"
+#~ "however, greatly reduces this risk by employing FHAS, or, Focused Heat "
+#~ "Attack System, which\n"
+#~ "restricts the 'hot zone' created by the flamethrower to a very defined "
+#~ "region. The area\n"
+#~ "centimeters outside the 'hot zone' show no noticeable temperature "
+#~ "increase."
+
+#~ msgid "pistol_txt"
+#~ msgstr ""
+#~ "The P-95 is the standard GDF sidearm. The simple design of this handgun "
+#~ "makes it a very reliable\n"
+#~ "addition to every soldier's equipment. Because of the weapon's low weight "
+#~ "a experienced gunner\n"
+#~ "can also use two pistols at the same time with the considerable drawback "
+#~ "of a massivly reduced\n"
+#~ "accuracy. The P-95 is especially appreciated by snipers for having a "
+#~ "valuable sidearm when it\n"
+#~ "comes to close combat."
+
+#~ msgid "rpg_txt"
+#~ msgstr ""
+#~ "The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. GDF "
+#~ "weapon scientists and\n"
+#~ "engineers developed a new tracking system not only capable to fight "
+#~ "airborne but also ground\n"
+#~ "targets. The RL-1056's rockets use a combination of laser guidance and "
+#~ "high speed cameras to\n"
+#~ "identify the target. Despite a good accuracy when the tracking system had "
+#~ "enough time to\n"
+#~ "correctly lock on the target, this rocket launcher is of limited value if "
+#~ "it has to be used in\n"
+#~ "snapshot mode."
+
+#~ msgid "laserrifle_txt"
+#~ msgstr ""
+#~ "Thanks to the recent advances in the laser technology GDF scientist were "
+#~ "able to implement a\n"
+#~ "really powerful 'laser reactor' into a hand held weapon. The laser beam "
+#~ "is generated with a\n"
+#~ "newly developed type of the common YAG laser technology. A advanced "
+#~ "opical lense system is used\n"
+#~ "to focus the beam very densely so it has the power to easily penetrate "
+#~ "most known armors."
+
+#~ msgid "laserpistol_txt"
+#~ msgstr ""
+#~ "Using a smaller and less powerful version of the 'YAG laser reactor', the "
+#~ "LAS-10 is like its big\n"
+#~ "brother, the LAS-24 Laser Rifle, a offspring of the recent advances made "
+#~ "in the field of laser\n"
+#~ "technology. Due to the smaller 'YAG reactor', the photons have a lower "
+#~ "cinetic energy and\n"
+#~ "therefore a lessend penetrating power."
+
+#~ msgid "fraggen_txt"
+#~ msgstr ""
+#~ "The fragmentation grenade is little more than an explosive core "
+#~ "surrounded by metal. When the\n"
+#~ "core is detonates, the surrounding metal is broken into sharp, deadly "
+#~ "fragments which fly from\n"
+#~ "the weapon at great speeds. The detonation is controlled by a built in "
+#~ "timer."
+
+#~ msgid "knife_txt"
+#~ msgstr ""
+#~ "Almost every GDF soldier has his own Combat Knife as a last choice when "
+#~ "it comes to hand to hand\n"
+#~ "combat. But a simple Combat Knife should not be underestimated in the "
+#~ "hands of a stealth\n"
+#~ "warefare specialist as it can kill absolutely noiseless. Its blade is "
+#~ "made of a special titanium\n"
+#~ "alloy which makes it very resistant."
+
+#~ msgid "plasrifle_txt"
+#~ msgstr ""
+#~ "The Plasma Rifle is the weapon most often used by ... warriors. The "
+#~ "plasma fired by this weapon\n"
+#~ "easly cuts through almost every known material. Therefore the standard "
+#~ "GDF kevlar vest only\n"
+#~ "provides minor protection. Soldiers wounded by a Plasma Rifle's beam "
+#~ "suffer of extensive burns\n"
+#~ "which are in many cases instantly lethal. The overheated highly energetic "
+#~ "xenon gas plasma is\n"
+#~ "stored inside a intense magnetic field integrated in the weapon's clip. "
+#~ "If the trigger is used,\n"
+#~ "the magnetic field is reconfigured so that a continuous plasma beam is "
+#~ "formed. This beam is\n"
+#~ "focused by a second magnetic field and finally propelled to the front end "
+#~ "of the Plasma Rifle."
+
+#~ msgid "plaspistol_txt"
+#~ msgstr ""
+#~ "Using the same technology as the Plasma Rifle, the Plasma Pistol can also "
+#~ "do considerable damage\n"
+#~ "to its target. The overheated xenon plasma is also contained inside a "
+#~ "strong magnetic field\n"
+#~ "implemented in the pistol's clip. Because of the smaller dimensions of "
+#~ "this one-handed weapon,\n"
+#~ "the magnetic field generators are not that capable as the ones used in "
+#~ "the Plasma Rifle.\n"
+#~ "Therefore the cinetic energy given to the plasma beam is lessened."
+
+#~ msgid "plasblade_txt"
+#~ msgstr ""
+#~ "This melee weapon has proven to be of great value in hand to hand combat "
+#~ "because of the\n"
+#~ "devestating burns it can inflict when someone touches its blade. "
+#~ "Generally the enemy is unable\n"
+#~ "to fight onward just after one strike. On the downside the range of this "
+#~ "weapon is utterly\n"
+#~ "limited."
+
+#~ msgid "tachyonrifle_txt"
+#~ msgstr ""
+#~ "Although our engineers not fully understand the principles of altering "
+#~ "the tachyons on a\n"
+#~ "subatomic level, they were able to reproduce the tachyon accelerator "
+#~ "technology. Apparently the\n"
+#~ "tachyons are given a defined spin inside the accelerator so they are able "
+#~ "to interact with any\n"
+#~ "material. They still tend to infiltrate easily through any known armor "
+#~ "and lose their particle\n"
+#~ "energy not before a penetrating distance of about 10 cm. Therefore a "
+#~ "soldier hit by a tachyon\n"
+#~ "charge suffers only minor superficial injury but is heavily wounded in "
+#~ "his viscera."
+
+#~ msgid "tachyonsniper_txt"
+#~ msgstr ""
+#~ "The Tachyon Sniper Rifle uses also the newly discovered tachyon "
+#~ "accelerator technology, first\n"
+#~ "found in a Ortnok scout spaceship. Unlike the Tachyon Rifle, this weapon "
+#~ "has a low rate of fire\n"
+#~ "because the tachyon particles are intensely charged before they are "
+#~ "fired. This means that the\n"
+#~ "shots fired by the Tachyon Sniper Rifle are more focused and hence have a "
+#~ "greater accuracy as\n"
+#~ "well as a bigger penetrating power."
+
+#~ msgid "tachyonpistol_txt"
+#~ msgstr ""
+#~ "This weapon is powered by a miniaturized version of the tachyon "
+#~ "accelerator. Therefore the\n"
+#~ "Tachyon Pistol has a lower rate of fire as well as a diminished accuracy "
+#~ "compared to the other\n"
+#~ "two tachyon weapons. The major advantage of the Tachyon Pistol is its low "
+#~ "weight and its small\n"
+#~ "dimensions which makes it a valuable sidearm."
+
+#~ msgid "ortnok_txt"
+#~ msgstr ""
+#~ "Genetically the green skinned Ortnoks seem to be related very closely to "
+#~ "the human race. About\n"
+#~ "80% of their DNA is identical compared to the human's. The parts that are "
+#~ "different are most\n"
+#~ "likely genetically engineered because they do not show any individual "
+#~ "variability. The fact that\n"
+#~ "they are genetically altered and that they do not seem to have any "
+#~ "functional reproduction\n"
+#~ "organs suggests that they are clones made by some as yet unknown alien "
+#~ "species. Additionally the\n"
+#~ "Ortnoks have several cybernetic implants which involve mainly the "
+#~ "cardiovascular system, the\n"
+#~ "muscles, the eyes and the brain. They enhance the physical strenght and "
+#~ "stamnia as well as the\n"
+#~ "senses to a level superior to any human. The purpose of the brain "
+#~ "implants is mostly unclear but\n"
+#~ "it is believed that they serve as receivers for commands. But currently "
+#~ "this is only a\n"
+#~ "assumption because there is no evidence proving the existence of such a "
+#~ "master-species."
+
+#~ msgid "ortnok_medium_txt"
+#~ msgstr ""
+#~ "Having the same genetical features as the regular Ortnoks, the Ortnok "
+#~ "Warriors have been\n"
+#~ "extensively modified with cybernetic implants. All these additional "
+#~ "implants obviously aim to\n"
+#~ "achieve a better performance in combat. Therefore the legs and arms have "
+#~ "been almost completely\n"
+#~ "replaced by cybernetic prostheses which allow a physical strength far "
+#~ "beyond the potential of a\n"
+#~ "human beeing. The claw shaped hands are designed to handle extreme "
+#~ "weights. The chest area is\n"
+#~ "covered with a thick steel plating which is almost impenetrable for "
+#~ "regular rifle ammunition.\n"
+#~ "The face mask serves as a protection against hazardous gases as well as a "
+#~ "augmentation of the\n"
+#~ "upper airways to allow a better lung function. The disadvantage of this "
+#~ "massive cybernetic\n"
+#~ "augmentation is the increased vulnerability to electromagnetic pulses "
+#~ "(EMP)."
+
+#~ msgid "Stab"
+#~ msgstr "Stich"
+
+#~ msgid "Throw"
+#~ msgstr "Wurf"
+
+#~ msgid "Primary"
+#~ msgstr "Primär"
+
+#~ msgid "Secondary"
+#~ msgstr "Sekundär"
+
+#~ msgid "Range"
+#~ msgstr "Weite"
+
+#~ msgid "Time Units"
+#~ msgstr "Zeiteinheiten"
+
+#~ msgid "Spreads"
+#~ msgstr "Streuung"
+
+#~ msgid "Ammo"
+#~ msgstr "Munition"
+
+#~ msgid "Assault Rifle"
+#~ msgstr "Sturmgewehr"
+
+#~ msgid "Assault Rifle Clip"
+#~ msgstr "Sturmgewehrmunition"
+
+#~ msgid "Auto"
+#~ msgstr "Automatisch"
+
+#~ msgid "Sniper Rifle"
+#~ msgstr "Scharfschützengewehr"
+
+#~ msgid "Snap Shot"
+#~ msgstr "Hueftschuss"
+
+#~ msgid "Aimed Shot"
+#~ msgstr "Gezielter Schuss"
+
+#~ msgid "9mm Pistol"
+#~ msgstr "9mm Pistole"
+
+#~ msgid "Pistol Clip"
+#~ msgstr "9mm Munition"
+
+#~ msgid "Rapid Fire"
+#~ msgstr "Schnellfeuer"
+
+#~ msgid "Submachine Gun"
+#~ msgstr "SMG"
+
+#~ msgid "SMG Clip"
+#~ msgstr "SMG Munition"
+
+#~ msgid "Full Auto"
+#~ msgstr "Vollautomatisch"
+
+#~ msgid "Shotgun"
+#~ msgstr "Schrotflinte"
+
+#~ msgid "Buckshots"
+#~ msgstr "Schrotmunition"
+
+#~ msgid "Single Shot"
+#~ msgstr "Einfachschuss"
+
+#~ msgid "Double Shot"
+#~ msgstr "Doppelschuss"
+
+#~ msgid "Flamethrower"
+#~ msgstr "Flammenwerfer"
+
+#~ msgid "Napalm Tank"
+#~ msgstr "Napalmtank"
+
+#~ msgid "Candlelight"
+#~ msgstr "Kerzenschein"
+
+#~ msgid "Inferno"
+#~ msgstr "Inferno"
+
+#~ msgid "Rocket Launcher"
+#~ msgstr "Raktenwerfer"
+
+#~ msgid "High-Explosive Rocket"
+#~ msgstr "Rakete"
+
+#~ msgid "Tachyon Rifle"
+#~ msgstr "Tachyongewehr"
+
+#~ msgid "Tachyon Rifle Charge"
+#~ msgstr "Tachyonmunition"
+
+#~ msgid "Rapid Shots"
+#~ msgstr "Schnellpuls"
+
+#~ msgid "Charged Blast"
+#~ msgstr "Belastende Strahlen"
+
+#~ msgid "Tachyon Sniper Rifle"
+#~ msgstr "Tachyonscharfschützengewehr"
+
+#~ msgid "Tachyon Sniper Charge"
+#~ msgstr "Tachyonscharfschützenmunition"
+
+#~ msgid "Plasma Pistol"
+#~ msgstr "Plasmapistole"
+
+#~ msgid "Plasma Pistol Charge"
+#~ msgstr "Plasmapistolenmunition"
+
+#~ msgid "Charged Pulse"
+#~ msgstr "Geladener Impuls"
+
+#~ msgid "Continuous Beam"
+#~ msgstr "Dauerimpuls"
+
+#~ msgid "Plasma Rifle"
+#~ msgstr "Plasmagewehr"
+
+#~ msgid "Plasma Rifle Charge"
+#~ msgstr "Plasmagewehrmunition"
+
+#~ msgid "Laser Pistol"
+#~ msgstr "Laserpistole"
+
+#~ msgid "Laser Pistol Charge"
+#~ msgstr "Laserpistolenmunition"
+
+#~ msgid "Single Pulse"
+#~ msgstr "Einfachimpuls"
+
+#~ msgid "Laser Rifle"
+#~ msgstr "Lasergewehr"
+
+#~ msgid "Laser Rifle Charge"
+#~ msgstr "Lasergewehrmunition"
+
+#~ msgid "Frag Grenade"
+#~ msgstr "Splittergranate"
+
+#~ msgid "Knife"
+#~ msgstr "Messer"
+
+#~ msgid "Medikit"
+#~ msgstr "Erste-Hilfe-Kasten"
+
+#~ msgid "Heal"
+#~ msgstr "Heilen"
+
+#~ msgid "H-92 Troop Transport"
+#~ msgstr "H-92 Truppentransporter"
+
+# # cl_campaign.c
+#~ msgid "Jan"
+#~ msgstr "Jan"
+
+#~ msgid "Feb"
+#~ msgstr "Feb"
+
+#~ msgid "Mar"
+#~ msgstr "Mär"
+
+#~ msgid "Apr"
+#~ msgstr "Apr"
+
+#~ msgid "May"
+#~ msgstr "Mai"
+
+#~ msgid "Jun"
+#~ msgstr "Jun"
+
+#~ msgid "Jul"
+#~ msgstr "Jul"
+
+#~ msgid "Aug"
+#~ msgstr "Aug"
+
+#~ msgid "Sep"
+#~ msgstr "Sep"
+
+#~ msgid "Oct"
+#~ msgstr "Oct"
+
+#~ msgid "Nov"
+#~ msgstr "Nov"
+
+#~ msgid "Dec"
+#~ msgstr "Dez"
+
+#~ msgid "5 sec"
+#~ msgstr "5 Sek"
+
+#~ msgid "5 mins"
+#~ msgstr "5 Min"
+
+#~ msgid "1 hour"
+#~ msgstr "1 Std"
+
+#~ msgid "12 hour"
+#~ msgstr "12 Std"
+
+#~ msgid "1 day"
+#~ msgstr "1 Tag"
+
+#~ msgid "5 days"
+#~ msgstr "5 Tage"
+
+#~ msgid "Shoot"
+#~ msgstr "Schuss"
