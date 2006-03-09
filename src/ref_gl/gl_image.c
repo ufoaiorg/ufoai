@@ -1663,11 +1663,6 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 	while ((ptr=strchr(pname,'\\'))) {
 		*ptr = '/';
 	}
-#else
-	// fix slashes
-	while ((ptr=strchr(pname,'/'))) {
-		*ptr = '\\';
-	}
 #endif
 	// drop extension
 	strcpy( lname, pname );
