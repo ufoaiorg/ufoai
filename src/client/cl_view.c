@@ -487,14 +487,14 @@ void CL_PrepRefresh (void)
 	SCR_AddDirtyPoint (viddef.width-1, viddef.height-1);
 
 	// register models, pics, and skins
-	Com_Printf ( _("Map: %s\r"), cl.configstrings[CS_NAME]); 
+	Com_Printf ( _("Map: %s\n"), cl.configstrings[CS_NAME]); 
 	SCR_UpdateScreen ();
 	re.BeginRegistration( cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS] );
 	CL_ParseEntitystring( map_entitystring );
 	Com_Printf ("                                     \r");
 
 	// precache status bar pics
-	Com_Printf (_("pics\r") ); 
+	Com_Printf (_("pics\n") ); 
 	SCR_UpdateScreen ();
 	SCR_TouchPics ();
 	Com_Printf ("                                     \r");
@@ -549,7 +549,7 @@ void CL_PrepRefresh (void)
 		cl.model_weapons[i] = re.RegisterModel( csi.ods[i].model );
 
 	// images
-	Com_Printf (_("images\r"), i); 
+	Com_Printf (_("images\n"), i); 
 	SCR_UpdateScreen ();
 	for (i=1 ; i<MAX_IMAGES && cl.configstrings[CS_IMAGES+i][0] ; i++)
 	{
@@ -562,7 +562,7 @@ void CL_PrepRefresh (void)
 	{
 		if (!cl.configstrings[CS_PLAYERSKINS+i][0])
 			continue;
-		Com_Printf (_("client %i\r"), i); 
+		Com_Printf (_("client %i\n"), i); 
 		SCR_UpdateScreen ();
 		Sys_SendKeyEvents ();	// pump message loop
 //		CL_ParseClientinfo (i);
