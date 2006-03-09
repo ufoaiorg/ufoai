@@ -446,7 +446,7 @@ qboolean GLimp_Init( void *hinstance, void *wndproc )
 	glw_state.hInstance = ( HINSTANCE ) hinstance;
 	glw_state.wndproc = wndproc;
 
-	CheckHardwareGamma();
+	WG_CheckHardwareGamma();
 
 	return true;
 }
