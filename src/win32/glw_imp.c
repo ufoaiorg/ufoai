@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ** GLimp_Init
 ** GLimp_Shutdown
 ** GLimp_SwitchFullscreen
-**
+** GLimp_SetGamma
 */
 #include <assert.h>
 #include <windows.h>
@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static qboolean GLimp_SwitchFullscreen( int width, int height );
 qboolean GLimp_InitGL (void);
+void WG_RestoreGamma( void );
 
 glwstate_t glw_state;
 
@@ -59,6 +60,56 @@ static qboolean VerifyDriver( void )
 /* stencilbuffer shadows */
 qboolean have_stencil = false;
 
+static unsigned short s_oldHardwareGamma[3][256];
+
+/*
+** WG_CheckHardwareGamma
+**
+** Determines if the underlying hardware supports the Win32 gamma correction API.
+*/
+void WG_CheckHardwareGamma( void )
+{
+	HDC hDC;
+
+	gl_state.hwgamma = false;
+
+	hDC = GetDC( GetDesktopWindow() );
+	gl_state.hwgamma = GetDeviceGammaRamp( hDC, s_oldHardwareGamma );
+	ReleaseDC( GetDesktopWindow(), hDC );
+
+	if ( gl_state.hwgamma )
+	{
+		//
+		// do a sanity check on the gamma values
+		//
+		if ( ( HIBYTE( s_oldHardwareGamma[0][255] ) <= HIBYTE( s_oldHardwareGamma[0][0] ) ) ||
+				( HIBYTE( s_oldHardwareGamma[1][255] ) <= HIBYTE( s_oldHardwareGamma[1][0] ) ) ||
+				( HIBYTE( s_oldHardwareGamma[2][255] ) <= HIBYTE( s_oldHardwareGamma[2][0] ) ) )
+		{
+			gl_state.hwgamma = false;
+			ri.Con_Printf( PRINT_WARNING, "WARNING: device has broken gamma support, generated gamma.dat\n" );
+		}
+
+		//
+		// make sure that we didn't have a prior crash in the game, and if so we need to
+		// restore the gamma values to at least a linear value
+		//
+		if ( ( HIBYTE( s_oldHardwareGamma[0][181] ) == 255 ) )
+		{
+			int g;
+
+			ri.Con_Printf( PRINT_WARNING, "WARNING: suspicious gamma tables, using linear ramp for restoration\n" );
+
+			for ( g = 0; g < 255; g++ )
+			{
+				s_oldHardwareGamma[0][g] = g << 8;
+				s_oldHardwareGamma[1][g] = g << 8;
+				s_oldHardwareGamma[2][g] = g << 8;
+			}
+		}
+	}
+}
+
 /*
 ** VID_CreateWindow
 */
@@ -74,18 +125,18 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 	int				exstyle;
 
 	/* Register the frame class */
-    wc.style         = 0;
-    wc.lpfnWndProc   = (WNDPROC)glw_state.wndproc;
-    wc.cbClsExtra    = 0;
-    wc.cbWndExtra    = 0;
-    wc.hInstance     = glw_state.hInstance;
-    wc.hIcon         = 0;
-    wc.hCursor       = LoadCursor (NULL,IDC_ARROW);
+	wc.style         = 0;
+	wc.lpfnWndProc   = (WNDPROC)glw_state.wndproc;
+	wc.cbClsExtra    = 0;
+	wc.cbWndExtra    = 0;
+	wc.hInstance     = glw_state.hInstance;
+	wc.hIcon         = 0;
+	wc.hCursor       = LoadCursor (NULL,IDC_ARROW);
 	wc.hbrBackground = (void *)COLOR_GRAYTEXT;
-    wc.lpszMenuName  = 0;
-    wc.lpszClassName = WINDOW_CLASS_NAME;
+	wc.lpszMenuName  = 0;
+	wc.lpszClassName = WINDOW_CLASS_NAME;
 
-    if (!RegisterClass (&wc) )
+	if (!RegisterClass (&wc) )
 		ri.Sys_Error (ERR_FATAL, "Couldn't register window class");
 
 	if (fullscreen)
@@ -304,6 +355,14 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 */
 void GLimp_Shutdown( void )
 {
+	if ( ! qwglMakeCurrent )
+		return;
+
+	if ( gl_state.hwgamma )
+	{
+		WG_RestoreGamma();
+	}
+
 	if ( qwglMakeCurrent && !qwglMakeCurrent( NULL, NULL ) )
 		ri.Con_Printf( PRINT_ALL, "ref_gl::R_Shutdown() - wglMakeCurrent failed\n");
 	if ( glw_state.hGLRC )
@@ -387,12 +446,14 @@ qboolean GLimp_Init( void *hinstance, void *wndproc )
 	glw_state.hInstance = ( HINSTANCE ) hinstance;
 	glw_state.wndproc = wndproc;
 
+	CheckHardwareGamma();
+
 	return true;
 }
 
 qboolean GLimp_InitGL (void)
 {
-    PIXELFORMATDESCRIPTOR pfd =
+	PIXELFORMATDESCRIPTOR pfd =
 	{
 		sizeof(PIXELFORMATDESCRIPTOR),	// size of this pfd
 		1,								// version number
@@ -412,8 +473,8 @@ qboolean GLimp_InitGL (void)
 		PFD_MAIN_PLANE,					// main layer
 		0,								// reserved
 		0, 0, 0							// layer masks ignored
-    };
-    int  pixelformat;
+	};
+	int  pixelformat;
 	cvar_t *stereo;
 
 	stereo = ri.Cvar_Get( "cl_stereo", "0", 0 );
@@ -446,7 +507,7 @@ qboolean GLimp_InitGL (void)
 	if ( glw_state.hDC != NULL )
 		ri.Con_Printf( PRINT_ALL, "GLimp_Init() - non-NULL DC exists\n" );
 
-    if ( ( glw_state.hDC = GetDC( glw_state.hWnd ) ) == NULL )
+	if ( ( glw_state.hDC = GetDC( glw_state.hWnd ) ) == NULL )
 	{
 		ri.Con_Printf( PRINT_ALL, "GLimp_Init() - GetDC failed\n" );
 		return false;
@@ -516,7 +577,7 @@ qboolean GLimp_InitGL (void)
 		goto fail;
 	}
 
-    if ( !qwglMakeCurrent( glw_state.hDC, glw_state.hGLRC ) )
+	if ( !qwglMakeCurrent( glw_state.hDC, glw_state.hGLRC ) )
 	{
 		ri.Con_Printf (PRINT_ALL, "GLimp_Init() - qwglMakeCurrent failed\n");
 
@@ -617,3 +678,69 @@ void GLimp_AppActivate( qboolean active )
 			ShowWindow( glw_state.hWnd, SW_MINIMIZE );
 	}
 }
+
+/*
+** GLimp_SetGamma
+**
+** This routine should only be called if glConfig.deviceSupportsGamma is TRUE
+*/
+void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] ) {
+	unsigned short table[3][256];
+	int		i, j;
+	int		ret;
+	OSVERSIONINFO	vinfo;
+
+	if ( !gl_state.hwgamma || !glw_state.hDC )
+		return;
+
+	for ( i = 0; i < 256; i++ ) {
+		table[0][i] = ( ( ( unsigned short ) red[i] ) << 8 ) | red[i];
+		table[1][i] = ( ( ( unsigned short ) green[i] ) << 8 ) | green[i];
+		table[2][i] = ( ( ( unsigned short ) blue[i] ) << 8 ) | blue[i];
+	}
+
+	// Win2K puts this odd restriction on gamma ramps...
+	vinfo.dwOSVersionInfoSize = sizeof(vinfo);
+	GetVersionEx( &vinfo );
+	if ( vinfo.dwMajorVersion == 5 && vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT ) {
+		for ( j = 0 ; j < 3 ; j++ ) {
+			for ( i = 0 ; i < 128 ; i++ ) {
+				if ( table[j][i] > ( (128+i) << 8 ) ) {
+					table[j][i] = (128+i) << 8;
+				}
+			}
+			if ( table[j][127] > 254<<8 ) {
+				table[j][127] = 254<<8;
+			}
+		}
+	}
+
+	// enforce constantly increasing
+	for ( j = 0 ; j < 3 ; j++ ) {
+		for ( i = 1 ; i < 256 ; i++ ) {
+			if ( table[j][i] < table[j][i-1] ) {
+				table[j][i] = table[j][i-1];
+			}
+		}
+	}
+
+
+	ret = SetDeviceGammaRamp( glw_state.hDC, table );
+	if ( !ret )
+		ri.Con_Printf( PRINT_ALL, "SetDeviceGammaRamp failed.\n" );
+}
+
+/*
+** WG_RestoreGamma
+*/
+void WG_RestoreGamma( void )
+{
+	HDC hDC;
+	if ( glConfig.deviceSupportsGamma )
+	{
+		hDC = GetDC( GetDesktopWindow() );
+		SetDeviceGammaRamp( hDC, s_oldHardwareGamma );
+		ReleaseDC( GetDesktopWindow(), hDC );
+	}
+}
+

@@ -1739,16 +1739,15 @@ void R_BeginFrame( float camera_separation )
 	if ( vid_gamma->modified )
 	{
 		vid_gamma->modified = false;
-
-#ifdef __linux__
+#ifndef _WIN32
 		if ( gl_state.hwgamma )
-			UpdateHardwareGamma();
+			GLimp_SetGamma( 1, 1, 1 );
 		/*
 		** update 3Dfx gamma -- it is expected that a user will do a vid_restart
 		** after tweaking this value
 		*/
 		else
-#endif
+#endif /* _WIN32 */
 		if ( gl_config.renderer & ( GL_RENDERER_VOODOO ) )
 		{
 			char envbuffer[1024];

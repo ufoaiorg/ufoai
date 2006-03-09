@@ -551,3 +551,7 @@ void		GLimp_AppActivate( qboolean active );
 void		GLimp_EnableLogging( qboolean enable );
 void		GLimp_LogNewFrame( void );
 
+// NOTE TTimo linux works with float gamma value, not the gamma table
+//   the params won't be used, getting the r_gamma cvar directly
+void		GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] );
+

@@ -19,6 +19,8 @@ BUILD_ALSA=YES		# build with alsa-support
 HAVE_IPV6=YES		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
 BUILD_JPEG=NO           # jpeg-6 compile in or link in?
+BUILD_WITH_DGA=YES	# dga support compiled in
+BUILD_WITH_VIDMODE=YES  # vidmode support
 
 # (hopefully) end of configurable options
 
@@ -97,6 +99,14 @@ endif
 
 ifeq ($(strip $(BUILD_ALSA)),YES)
 	BASE_CFLAGS+=-DUSE_ALSA
+endif
+
+ifeq ($(strip $(BUILD_WITH_DGA)),YES)
+	BASE_CFLAGS+=-DHAVE_DGA
+endif
+
+ifeq ($(strip $(BUILD_WITH_VIDMODE)),YES)
+	BASE_CFLAGS+=-DHAVE_VIDMODE
 endif
 
 ifeq ($(strip $(HAVE_GETTEXT)),YES)

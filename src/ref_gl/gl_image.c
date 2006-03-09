@@ -1915,6 +1915,11 @@ void	GL_InitImages (void)
 
 		intensitytable[i] = j;
 	}
+
+	if ( gl_state.hwgamma )
+	{
+		GLimp_SetGamma( gammatable, gammatable, gammatable );
+	}
 }
 
 /*

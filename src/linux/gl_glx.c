@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ** GLimp_Init
 ** GLimp_Shutdown
 ** GLimp_SwitchFullscreen
+** GLimp_SetGamma
 **
 */
 
@@ -49,8 +50,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <X11/keysym.h>
 #include <X11/cursorfont.h>
 
+#ifdef HAVE_DGA /* makefile */
 #include <X11/extensions/xf86dga.h>
+#ifdef _XF86DGA_H_
+#define HAVE_XF86_DGA
+#endif
+#endif /* HAVE_DGA */
+
+#ifdef HAVE_VIDMODE /* makefile */
 #include <X11/extensions/xf86vmode.h>
+#ifdef _XF86VIDMODE_H_
+#define HAVE_XF86_VIDMODE
+#endif
+#endif /* HAVE_VIDMODE */
 
 #include "../ref_gl/gl_local.h"
 
@@ -100,17 +112,20 @@ static cvar_t	*in_dgamouse;
 
 static cvar_t	*r_fakeFullscreen;
 
+#ifdef HAVE_XF86_VIDMODE
 static XF86VidModeModeInfo **vidmodes;
-// static int default_dotclock_vidmode;
 static int num_vidmodes;
-static qboolean vidmode_active = false;
 static XF86VidModeGamma oldgamma;
+static qboolean vidmode_ext = false;
+#endif /* HAVE_XF86_VIDMODE */
+
+// static int default_dotclock_vidmode;
+static qboolean vidmode_active = false;
 
 // static qboolean	mlooking;
 
 static qboolean mouse_active = false;
 static qboolean dgamouse = false;
-static qboolean vidmode_ext = false;
 
 // state struct passed in Init
 static in_state_t	*in_state;
@@ -168,6 +183,7 @@ static void install_grabs(void)
 			     0, 0, 0, 0,
 			     0, 0);
 		sensitivity->value = 1;
+#ifdef HAVE_XF86_DGA
 	} else if (in_dgamouse->value) {
 		int MajorVersion, MinorVersion;
 
@@ -179,22 +195,18 @@ static void install_grabs(void)
 			dgamouse = true;
 			XF86DGADirectVideo(dpy, DefaultScreen(dpy), XF86DGADirectMouse);
 			XWarpPointer(dpy, None, win, 0, 0, 0, 0, 0, 0);
+			ri.Con_Printf( PRINT_ALL, "Using XF86DGA Mouse\n" );
 		}
-	} else {
-		XWarpPointer(dpy, None, win,
-					 0, 0, 0, 0,
-					 vid.width / 2, vid.height / 2);
-	}
+#endif /* HAVE_XF86_DGA */
+	} else
+		XWarpPointer(dpy, None, win, 0, 0, 0, 0, vid.width / 2, vid.height / 2);
 
 	if (vid_grabmouse->value)
-		XGrabKeyboard(dpy, win,
-				  False,
-				  GrabModeAsync, GrabModeAsync,
-				  CurrentTime);
+		XGrabKeyboard(dpy, win, False, GrabModeAsync, GrabModeAsync, CurrentTime);
 
 	mouse_active = true;
 
-//	XSync(dpy, True);
+	XSync(dpy, True);
 }
 
 static void uninstall_grabs(void)
@@ -202,10 +214,12 @@ static void uninstall_grabs(void)
 	if (!dpy || !win)
 		return;
 
+#ifdef HAVE_XF86_DGA
 	if (dgamouse) {
 		dgamouse = false;
 		XF86DGADirectVideo(dpy, DefaultScreen(dpy), 0);
 	}
+#endif /* HAVE_XF86_DGA */
 
 	XUngrabPointer(dpy, CurrentTime);
 	XUngrabKeyboard(dpy, CurrentTime);
@@ -311,7 +325,6 @@ void RW_IN_Activate(qboolean active)
 
 static int XLateKey(XKeyEvent *ev)
 {
-
 	int key;
 	char buf[64];
 	KeySym keysym;
@@ -480,8 +493,8 @@ static void HandleEvents(void)
 					if (mx || my)
 						dowarp = true;
 				}
-				if ( mx > 1024 ) mx = 1024;
-				if ( my > 768 ) my = 768;
+				if ( mx > vid.width ) mx = vid.width;
+				if ( my > vid.height ) my = vid.height;
 				if ( mx < 0 ) mx = 0;
 				if ( my < 0 ) my = 0;
 			}
@@ -525,13 +538,23 @@ static void HandleEvents(void)
 			if (event.xclient.data.l[0] == wmDeleteWindow)
 				ri.Cmd_ExecuteText(EXEC_NOW, "quit");
 			break;
+		case MapNotify:
+			if( vid_grabmouse->value ){
+				XGrabPointer( dpy, win, True, 0, GrabModeAsync,
+					GrabModeAsync, win, None, CurrentTime);
+			}
+			break;
+
+		case UnmapNotify:
+			if( vid_grabmouse->value )
+				XUngrabPointer( dpy, CurrentTime);
+			break;
 		}
 	}
 
-	if (dowarp && vid_grabmouse->value) {
+	if (dowarp && vid_grabmouse->value)
 		/* move the mouse to the window center again */
 		XWarpPointer(dpy,None,win,0,0,0,0, vid.width/2,vid.height/2);
-	}
 }
 
 Key_Event_fp_t Key_Event_fp;
@@ -606,9 +629,6 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	XVisualInfo *visinfo;
 	XSetWindowAttributes attr;
 	unsigned long mask;
-	int MajorVersion, MinorVersion;
-	int actualWidth, actualHeight;
-	int i;
 
 	r_fakeFullscreen = ri.Cvar_Get( "r_fakeFullscreen", "0", CVAR_ARCHIVE);
 
@@ -644,7 +664,9 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	scrnum = DefaultScreen(dpy);
 	root = RootWindow(dpy, scrnum);
 
+#ifdef HAVE_XF86_VIDMODE
 	// Get video mode list
+	int MajorVersion, MinorVersion;
 	MajorVersion = MinorVersion = 0;
 	if (!XF86VidModeQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
 		vidmode_ext = false;
@@ -653,6 +675,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 			MajorVersion, MinorVersion);
 		vidmode_ext = true;
 	}
+#endif /* HAVE_XF86_VIDMODE */
 
 	visinfo = qglXChooseVisual(dpy, scrnum, attrib);
 	if (!visinfo)
@@ -701,8 +724,12 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		have_stencil = true;
 	}
 
-	if (vidmode_ext) {
-		int best_fit, best_dist, dist, x, y;
+#ifdef HAVE_XF86_VIDMODE
+	if (vidmode_ext) {	// Get video mode list
+		MajorVersion = MinorVersion = 0;
+
+		int i, best_fit, best_dist, dist, x, y;
+		int actualWidth, actualHeight;
 
 		XF86VidModeGetAllModeLines(dpy, scrnum, &num_vidmodes, &vidmodes);
 
@@ -748,6 +775,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 				fullscreen = 0;
 		}
 	}
+#endif /* HAVE_XF86_VIDMODE */
 
 	/* window attributes */
 	attr.background_pixel = 0;
@@ -773,6 +801,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 
 	XMapWindow(dpy, win);
 
+#ifdef HAVE_XF86_VIDMODE
 	if (vidmode_active) {
 		XMoveWindow(dpy, win, 0, 0);
 		XRaiseWindow(dpy, win);
@@ -781,6 +810,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		// Move the viewport to top left
 		XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
 	}
+#endif /* HAVE_XF86_VIDMODE */
 
 	XFlush(dpy);
 
@@ -814,17 +844,19 @@ void GLimp_Shutdown( void )
 	mouse_active = false;
 	dgamouse = false;
 
-	//revert to original gamma-settings
-	if ( gl_state.hwgamma )
-		XF86VidModeSetGamma(dpy, scrnum, &oldgamma);
 
 	if (dpy) {
 		if (ctx)
 			qglXDestroyContext(dpy, ctx);
 		if (win)
 			XDestroyWindow(dpy, win);
+#ifdef HAVE_XF86_VIDMODE
+		//revert to original gamma-settings
+		if ( gl_state.hwgamma )
+			XF86VidModeSetGamma(dpy, scrnum, &oldgamma);
 		if (vidmode_active)
 			XF86VidModeSwitchToMode(dpy, scrnum, vidmodes[0]);
+#endif /* HAVE_XF86_VIDMODE */
 		XCloseDisplay(dpy);
 	}
 	ctx = NULL;
@@ -867,17 +899,21 @@ void GLimp_EndFrame (void)
 }
 
 /*
-** UpdateHardwareGamma
+** GLimp_SetGamma
 */
-void UpdateHardwareGamma( void )
+void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] )
 {
+#ifdef HAVE_XF86_VIDMODE
 	float g = vid_gamma->value;
 	XF86VidModeGamma gamma;
+
+	assert(gl_state.hwgamma);
 
 	gamma.red = g;
 	gamma.green = g;
 	gamma.blue = g;
 	XF86VidModeSetGamma(dpy, scrnum, &gamma);
+#endif /* HAVE_XF86_VIDMODE */
 }
 
 /*
