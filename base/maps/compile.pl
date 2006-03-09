@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 
-my $extra = "";
+my $extra = "-bounce 0 -chop 32 -extra";
 
 sub readDir
 {
