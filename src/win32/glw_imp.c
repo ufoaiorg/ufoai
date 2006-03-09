@@ -87,7 +87,7 @@ void WG_CheckHardwareGamma( void )
 				( HIBYTE( s_oldHardwareGamma[2][255] ) <= HIBYTE( s_oldHardwareGamma[2][0] ) ) )
 		{
 			gl_state.hwgamma = false;
-			ri.Con_Printf( PRINT_WARNING, "WARNING: device has broken gamma support, generated gamma.dat\n" );
+			ri.Con_Printf( PRINT_ALL, "WARNING: device has broken gamma support, generated gamma.dat\n" );
 		}
 
 		//
@@ -98,7 +98,7 @@ void WG_CheckHardwareGamma( void )
 		{
 			int g;
 
-			ri.Con_Printf( PRINT_WARNING, "WARNING: suspicious gamma tables, using linear ramp for restoration\n" );
+			ri.Con_Printf( PRINT_ALL, "WARNING: suspicious gamma tables, using linear ramp for restoration\n" );
 
 			for ( g = 0; g < 255; g++ )
 			{
@@ -682,7 +682,7 @@ void GLimp_AppActivate( qboolean active )
 /*
 ** GLimp_SetGamma
 **
-** This routine should only be called if glConfig.deviceSupportsGamma is TRUE
+** This routine should only be called if gl_state.hwgamma is TRUE
 */
 void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] ) {
 	unsigned short table[3][256];
@@ -736,7 +736,7 @@ void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned 
 void WG_RestoreGamma( void )
 {
 	HDC hDC;
-	if ( glConfig.deviceSupportsGamma )
+	if ( gl_state.hwgamma )
 	{
 		hDC = GetDC( GetDesktopWindow() );
 		SetDeviceGammaRamp( hDC, s_oldHardwareGamma );
