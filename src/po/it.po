@@ -1,0 +1,344 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: UFO Alien Invasion\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2006-03-04 20:06+0100\n"
+"Last-Translator: Francesco Cepparo <linux4ever2@katamail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+##ufopedia
+msgid "Ufopedia Content"
+msgstr "Contenuto dell'Ufopedia"
+
+msgid "Aircraft"
+msgstr "Aereo"
+
+msgid "Weapons"
+msgstr "Armi"
+
+msgid "Buildings"
+msgstr "Edifici"
+
+msgid "Alien Species"
+msgstr "Specie aliene"
+
+msgid "Stab"
+msgstr "Pugnala"
+
+msgid "Throw"
+msgstr "Lancia"
+
+msgid "Primary"
+msgstr "Armi primarie"
+
+msgid "Secondary"
+msgstr "Armi secondarie"
+
+msgid "Damage"
+msgstr "Danno inferto"
+
+msgid "Range"
+msgstr "Gittata"
+
+msgid "Time Units"
+msgstr "Unità di tempo"
+
+msgid "Spreads"
+msgstr "Imprecisione"
+
+msgid "Ammo"
+msgstr "Munizioni"
+
+msgid "Assault Rifle"
+msgstr "Fucile d'assalto"
+
+msgid "Assault Rifle Clip"
+msgstr "Caricatore per fucile d'assalto"
+
+msgid "Burst"
+msgstr "Raffica"
+
+msgid "Auto"
+msgstr "Automatico"
+
+msgid "Sniper Rifle"
+msgstr "Fucile da cecchino"
+
+msgid "Sniper Rifle Clip"
+msgstr "Caricatore per fucile da cecchino"
+
+msgid "Snap Shot"
+msgstr "Colpo improvviso"
+
+msgid "Aimed Shot"
+msgstr "Colpo mirato"
+
+msgid "9mm Pistol"
+msgstr "Pistola da 9mm"
+
+msgid "Pistol Clip"
+msgstr "Caricatore per pistola da 9mm"
+
+msgid "Rapid Fire"
+msgstr "Fuoco rapido"
+
+msgid "Submachine Gun"
+msgstr "Mitra"
+
+msgid "SMG Clip"
+msgstr "Caricatore per mitra"
+
+msgid "Full Auto"
+msgstr "Automatico"
+
+msgid "Shotgun"
+msgstr "Fucile"
+
+msgid "Buckshots"
+msgstr "Pallettoni"
+
+msgid "Single Shot"
+msgstr "Colpo singolo"
+
+msgid "Double Shot"
+msgstr "Colpo doppio"
+
+msgid "Flamethrower"
+msgstr "Lanciafiamme"
+
+msgid "Napalm Tank"
+msgstr "Ricarica di Napalm"
+
+msgid "Candlelight"
+msgstr "Fuoco di candela"
+
+msgid "Inferno"
+msgstr "Fuoco d'inferno"
+
+msgid "Rocket Launcher"
+msgstr "Lanciamissili"
+
+msgid "High-Explosive Rocket"
+msgstr "Missile ad alto potenziale"
+
+msgid "Tachyon Rifle"
+msgstr "Fucile a tachioni"
+
+msgid "Tachyon Rifle Charge"
+msgstr "Ricarica per fucile a tachioni"
+
+msgid "Rapid Shots"
+msgstr "Fuoco rapido"
+
+msgid "Charged Blast"
+msgstr "Raffica ad alta energia"
+
+msgid "Tachyon Sniper Rifle"
+msgstr "Fucile da cecchino a tachioni"
+
+msgid "Tachyon Sniper Charge"
+msgstr "Ricarica per fucile da cecchino a tachioni"
+
+msgid "Plasma Pistol"
+msgstr "Pistola al plasma"
+
+msgid "Plasma Pistol Charge"
+msgstr "Ricarica per pistola al plasma"
+
+msgid "Charged Pulse"
+msgstr "Impulso ad alta energia"
+
+msgid "Continuous Beam"
+msgstr "Raggio continuo di energia"
+
+msgid "Plasma Rifle"
+msgstr "Fucile al plasma"
+
+msgid "Plasma Rifle Charge"
+msgstr "Ricarica per fucile al plasma"
+
+msgid "Laser Pistol"
+msgstr "Pistola laser"
+
+msgid "Laser Pistol Charge"
+msgstr "Ricarica per pistola laser"
+
+msgid "Single Pulse"
+msgstr "Impulso singolo"
+
+msgid "Multiple Pulses"
+msgstr "Impulsi multipli"
+
+msgid "Laser Rifle"
+msgstr "Fucile laser"
+
+msgid "Laser Rifle Charge"
+msgstr "Ricarica per fucile laser"
+
+msgid "Frag Grenade"
+msgstr "Granata a frammentazione"
+
+msgid "Knife"
+msgstr "Coltello"
+
+msgid "Medikit"
+msgstr "Kit medico"
+
+msgid "Heal"
+msgstr "Guarisci"
+
+msgid "H-92 Troop Transport"
+msgstr "Trasporto truppe H-92"
+
+## cl_campaign.c
+msgid "Jan"
+msgstr "Gen"
+
+msgid "Feb"
+msgstr "Feb"
+
+msgid "Mar"
+msgstr "Mar"
+
+msgid "Apr"
+msgstr "Apr"
+
+msgid "May"
+msgstr "Mag"
+
+msgid "Jun"
+msgstr "Giu"
+
+msgid "Jul"
+msgstr "Lug"
+
+msgid "Aug"
+msgstr "Ago"
+
+msgid "Sep"
+msgstr "Set"
+
+msgid "Oct"
+msgstr "Ott"
+
+msgid "Nov"
+msgstr "Nov"
+
+msgid "Dec"
+msgstr "Dic"
+
+msgid "5 sec"
+msgstr "5 secondi"
+
+msgid "5 mins"
+msgstr "5 minuti"
+
+msgid "1 hour"
+msgstr "1 ora"
+
+msgid "12 hour"
+msgstr "12 ore"
+
+msgid "1 day"
+msgstr "1 giorno"
+
+msgid "5 days"
+msgstr "5 giorni"
+
+## in-game (hud)
+msgid "Your round started!\n"
+msgstr "Il tuo turno è iniziato!\n"
+
+msgid "This isn't your round"
+msgstr "Questo non è il tuo turno!"
+
+msgid "Nobody selected"
+msgstr "Non hai selezionato nessuno!"
+
+msgid "Health\t%i\nMove\t%i\n"
+msgstr "Salute\t%i\nMovimento\t%i\n"
+
+msgid "Health\t%i\n"
+msgstr "Salute\t%i\n"
+
+msgid "Shoot"
+msgstr "Spara"
+
+msgid "Alien spotted"
+msgstr "Alieno individuato!"
+
+msgid "Civilian sptted"
+msgstr "Civile individuato!"
+
+## in game
+msgid "Currently panics!\n"
+msgstr "In preda al panico!\n"
+
+msgid "%s panics!\n"
+msgstr "%s è in preda al panico!\n"
+
+msgid "%s is on a rampage.\n"
+msgstr "%s è scatenato!\n"
+
+msgid "%s is in mad rage!\n"
+msgstr "%s è infuriato!\n"
+
+msgid "Can't perform action - this isn't your round!\n"
+msgstr "Impossibile eseguire - questo non è il tuo turno!\n"
+
+msgid "Can't perform action - object not present!\n"
+msgstr "Impossibile eseguire - oggetto non presente!\n"
+
+msgid "Can't perform action - not an actor!\n"
+msgstr "Impossibile eseguire - non è un unità!\n"
+
+msgid "Can't perform action - actor is dead!\n"
+msgstr "Impossibile eseguire - l'unità è morta!\n"
+
+msgid "Can't perform action - not on same team!\n"
+msgstr "Impossibile eseguire - non nella stessa squadra!\n"
+
+msgid "Can't perform action - no control over allied actors!\n"
+msgstr "Impossibile eseguire - non si ha il controllo delle unità alleate!\n"
+
+msgid "Can't perform action - not enough TUs!\n"
+msgstr "Impossibile eseguire - non ci sono abbastanza unità di tempo!\n"
+
+msgid "Can't perform action - weapon already loaded!\n"
+msgstr "Impossibile eseguire - arma già caricata!\n"
+
+msgid "%s is currently shaken.\n"
+msgstr "%s è attualmente scioccato.\n"
+
+msgid "Can't perform action - impossible throw!\n"
+msgstr "Impossibile eseguire - lancio impossibile!\n"
+
+msgid "Can't perform action - no ammo!\n"
+msgstr "Impossibile eseguire - munizioni esaurite!\n"
+
+msgid "Can't perform action - not enough ammo!\n"
+msgstr "Impossibile eseguire - non ci sono abbastanza munizioni!\n"
+
+msgid "Get a team for teamplay\n"
+msgstr "Scegli una squadra per il gioco a squadre\n"
+
+msgid "Get a team for multiplayer\n"
+msgstr "Scegli una squadra per il multiplayer\n"
+
+msgid "Removing ai player..."
+msgstr "Rimozione del giocatore controllato dal computer..."
+
+msgid "%s has taken control over team %i.\n"
+msgstr "%s ha preso il controllo della squadra %i.\n"
+
+msgid "Item '%s' not allowed and removed from inventory.\n"
+msgstr "L'oggetto '%s' non è permesso ed è stato rimosso dall'inventario.\n"
+
+msgid "Unknown - need to research this"
+msgstr "Sconosciuto - dev'essere studiato"
