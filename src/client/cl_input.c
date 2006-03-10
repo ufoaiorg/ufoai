@@ -226,7 +226,7 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 			cl.cam.camorg[2] += 10; /* raise from waist to head */
 		VectorCopy(selActor->angles, cl.cam.angles);
 		cl.cam.zoom = 1.0;
-		Cvar_SetValue( "cl_worldlevel", 7 );
+		Cvar_SetValue( "cl_worldlevel", selActor->pos[2] );
 	}
 }
 
