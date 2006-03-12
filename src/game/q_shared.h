@@ -882,7 +882,9 @@ typedef struct invDef_s
 
 typedef struct item_s
 {
-	int	t, a, m;
+	int	t; // twohanded
+	int	a; // ammo
+	int	m; // model
 } item_t;
 
 typedef struct invList_s
@@ -1077,7 +1079,9 @@ typedef enum {
 #define	CS_STATUSBAR		5		// display program string
 #define	CS_MAXCLIENTS		6
 #define	CS_MAPCHECKSUM		7		// for catching cheater maps
-#define	CS_MAXSOLDIERS		8
+#define	CS_MAXSOLDIERS		8               // max soldiers per team
+#define	CS_MAXSOLDIERSPERPLAYER	9               // max soldiers per player when in teamplay mode
+#define	CS_ENABLEMORALE		10              // enable the morale states in multiplayer
 
 #define CS_TILES			16
 #define CS_POSITIONS		(CS_TILES+MAX_TILESTRINGS)

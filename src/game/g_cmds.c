@@ -20,13 +20,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 
-
+#if 0
 /*
 =================
 Cmd_Players_f
 =================
 */
-/*void Cmd_Players_f (edict_t *ent)
+void Cmd_Players_f (edict_t *ent)
 {
 	int		i;
 	int		count;
@@ -62,8 +62,8 @@ Cmd_Players_f
 	}
 
 	gi.cprintf (ent, PRINT_HIGH, "%s\n%i players\n", large, count);
-}*/
-
+}
+#endif
 
 /*
 ==================
@@ -153,7 +153,6 @@ void Cmd_PlayerList_f(edict_t *ent)
 }
 #endif
 
-
 /*
 =================
 G_ClientCommand
@@ -168,16 +167,18 @@ void G_ClientCommand (player_t *player)
 
 	cmd = gi.argv(0);
 
-//	if (Q_stricmp (cmd, "players") == 0)
-//	{
-//		Cmd_Players_f (ent);
-//		return;
-//	}
-//	if (Q_stricmp(cmd, "playerlist") == 0)
-//	{
-//		Cmd_PlayerList_f(ent);
-//		return;
-//	}
+#if 0
+	if (Q_stricmp (cmd, "players") == 0)
+	{
+		Cmd_Players_f (ent);
+		return;
+	}
+	if (Q_stricmp(cmd, "playerlist") == 0)
+	{
+		Cmd_PlayerList_f(ent);
+		return;
+	}
+#endif
 	if (Q_stricmp (cmd, "say") == 0)
 	{
 		Cmd_Say_f (player, false, false);

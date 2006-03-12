@@ -1268,20 +1268,17 @@ void Qcommon_LocaleInit ( void )
 	char *localeDir;
 	// set to system default
 	// TODO: Make me variable through a cvar
+#ifndef _WIN32 // i18n seams to work nevertheless
 	locale = setlocale ( LC_MESSAGES, "" );
 	if ( locale == NULL )
 	{
-		Com_Printf("Could not set to system language %s\n");
+		Com_Printf("Could not set to system language\n");
 		return;
 	}
+#endif
 
 	// use system locale dir if we can't find in gamedir
-#ifndef _WIN32
 	localeDir = bindtextdomain ( "ufoai", "./base/i18n/" );
-#else
-	// TODO: Check this - dont own windows
- 	localeDir = bindtextdomain ( "ufoai", va("%s/i18n/", FS_Gamedir() ) );
-#endif
 	if ( ! localeDir )
 	{
 		Com_Printf("Using system dir for locale settings\n");
@@ -1294,7 +1291,9 @@ void Qcommon_LocaleInit ( void )
 	bind_textdomain_codeset ( "ufoai", "UTF-8" );
 	// load language file
 	textdomain( "ufoai" );
+#ifndef _WIN32
 	Com_Printf( "Setting language to %s\n", locale );
+#endif
 }
 #endif
 

@@ -455,6 +455,8 @@ void Cvar_WriteVariables (char *path)
 	char	buffer[1024];
 	FILE	*f;
 
+	memset(buffer, 0, sizeof(buffer));
+
 	f = fopen (path, "w");
 	if ( !f ) return;
 

@@ -270,7 +270,6 @@ void SVCmd_WriteIP_f (void)
 	fclose (f);
 }
 
-
 /*
 =================
 SVCmd_AI_Add_f

@@ -662,7 +662,7 @@ extern int	numLEs;
 extern vec3_t player_mins;
 extern vec3_t player_maxs;
 
-
+void LE_Status ( void );
 void LE_Think( void );
 char *LE_GetAnim( char *anim, int right, int left, int state );
 
@@ -812,6 +812,7 @@ typedef enum
 
 typedef struct building_s
 {
+	// FIXME: This can be a char* name and char* base.... don't it? See bmData in basemanagement.c
 	char    name[MAX_VAR];
 	char    base[MAX_VAR];
 	char	title[MAX_VAR];

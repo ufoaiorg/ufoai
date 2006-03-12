@@ -46,6 +46,7 @@ static char *skill_strings[10] =
 
 void CL_CharacterCvars( character_t *chr )
 {
+	assert( chr );
 	Cvar_ForceSet( "mn_name", chr->name );
 	Cvar_ForceSet( "mn_body", Com_CharGetBody( chr ) );
 	Cvar_ForceSet( "mn_head", Com_CharGetHead( chr ) );
@@ -86,8 +87,7 @@ void CL_ActorGlobalCVars( void )
 	int i;
 
 	Cvar_SetValue( "mn_numaliensspotted", cl.numAliensSpotted );
-	// TODO: Should this be cl.numTeamList instead of 8?
-	for ( i = 0; i < 8; i++ )
+	for ( i = 0; i < MAX_TEAMLIST; i++ )
 	{
 		le = cl.teamList[i];
 		if ( le && !(le->state & STATE_DEAD) )
@@ -109,6 +109,11 @@ void CL_ActorGlobalCVars( void )
 	}
 }
 
+/*
+=======================
+CL_RefreshWeaponButtons
+=======================
+*/
 static void CL_RefreshWeaponButtons( int time )
 {
 	static int primary_right = -1;
@@ -383,7 +388,7 @@ void CL_ActorUpdateCVars( void )
 	if ( cl_selected->modified || refresh )
 	{
 		int i;
-		for ( i = 0; i < 8; i++ )
+		for ( i = 0; i < MAX_TEAMLIST; i++ )
 		{
 			if ( !cl.teamList[i] || cl.teamList[i]->state & STATE_DEAD )
 				Cbuf_AddText( va( "huddisable%i\n", i ) );

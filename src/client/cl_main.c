@@ -1750,6 +1750,8 @@ void CL_Frame (int msec)
 	CL_CvarCheck();
 	CL_Events();
 	LE_Think();
+	// end the rounds when no soldier is alive
+//	LE_Status();
 	CL_RunMapParticles ();
 	CL_ParticleRun();
 

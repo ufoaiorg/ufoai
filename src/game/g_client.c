@@ -1361,29 +1361,36 @@ void G_MoraleBehaviour( int team )
 			// civilians have a 1:1 chance to randomly run away, will be changed:
 			if ( level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
 				G_MoralePanic ( ent, false );
-			// if panic, determine what kind of panic happens:
-			if ( ent->morale <= MORALE_PANIC && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE))
+			// multiplayer needs enabled sv_enablemorale
+			// singleplayer has this in every case
+			if ( ( (int)sv_maxclients->value >= 2 && (int)sv_enablemorale->value == 1 )
+			    || (int)sv_maxclients->value == 1 )
 			{
-				if ( (float)ent->morale / MORALE_PANIC > (M_SANITY*frand())) sanity = true;
-				else sanity = false;
-				if ( (float)ent->morale / MORALE_PANIC > (M_RAGE*frand()))
-					G_MoralePanic ( ent, sanity );
-				else G_MoraleRage( ent, sanity );
+				// if panic, determine what kind of panic happens:
+				if ( ent->morale <= MORALE_PANIC && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE))
+				{
+					if ( (float)ent->morale / MORALE_PANIC > (M_SANITY*frand())) sanity = true;
+					else sanity = false;
+					if ( (float)ent->morale / MORALE_PANIC > (M_RAGE*frand()))
+						G_MoralePanic ( ent, sanity );
+					else G_MoraleRage( ent, sanity );
+				}
+				// if shaken, well .. be shaken;
+				else if  (ent->morale <= MORALE_SHAKEN && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE))
+				{
+					ent->TU -= TU_REACTION;
+					// shaken is later reset along with reaction fire
+					ent->state |= STATE_SHAKEN;
+					G_SendState( G_VisToPM( ent->visflags ), ent );
+					gi.cprintf( game.players + ent->pnum, PRINT_HIGH, _("%s is currently shaken.\n"), ent->chr.name );
+				}
+				else
+				{
+					if (ent->state & STATE_PANIC) G_MoraleStopPanic ( ent );
+					else if (ent->state & STATE_RAGE) G_MoraleStopRage ( ent );
+				}
 			}
-			// if shaken, well .. be shaken;
-			else if  (ent->morale <= MORALE_SHAKEN && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE))
-			{
-				ent->TU -= TU_REACTION;
-				// shaken is later reset along with reaction fire
-				ent->state |= STATE_SHAKEN;
-				G_SendState( G_VisToPM( ent->visflags ), ent );
-				gi.cprintf( game.players + ent->pnum, PRINT_HIGH, _("%s is currently shaken.\n"), ent->chr.name );
-			}
-			else
-			{
-				if (ent->state & STATE_PANIC) G_MoraleStopPanic ( ent );
-				else if (ent->state & STATE_RAGE) G_MoraleStopRage ( ent );
-			}
+
 			// set correct bounding box
 			if ( ent->state & (STATE_CROUCHED|STATE_PANIC) ) VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH );
 			else VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND );
@@ -2443,6 +2450,10 @@ qboolean G_ClientConnect(player_t *player, char *userinfo)
 		Info_SetValueForKey(userinfo, "rejmsg", _("Banned.") );
 		return false;
 	}
+
+	// fix for fast reconnects after a disconnect
+	if ( player->inuse )
+		G_ClientDisconnect( player );
 
 	// reset persistant data
 	memset( &player->pers, 0, sizeof( client_persistant_t ) );

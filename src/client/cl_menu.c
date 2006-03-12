@@ -19,16 +19,16 @@
 
 typedef struct menuAction_s
 {
-	int		type;
+	int	type;
 	void	*data;
 	struct	menuAction_s *next;
 } menuAction_t;
 
 typedef struct menuNode_s
 {
-	void		*data[5];			// needs to be first
+	void		*data[6]; // needs to be first
 	char		name[MAX_VAR];
-	int			type;
+	int		type;
 	vec3_t		origin, scale, angles, center;
 	vec2_t		pos, size, texh, texl;
 	byte		state;
@@ -74,7 +74,7 @@ char *ea_strings[EA_NUM_EVENTACTION] =
 int ea_values[EA_NUM_EVENTACTION] =
 {
 	V_NULL,
-	V_LONGSTRING,
+	V_STRING,
 
 	V_NULL,
 	V_NULL,
@@ -132,11 +132,14 @@ value_t nps[] =
 	{ "scale",		V_VECTOR,	NOFS( scale ) },
 	{ "angles",		V_VECTOR,	NOFS( angles ) },
 	{ "num",		V_INT,		NOFS( num ) },
+	// 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t
+	{ "tooltip",		V_STRING,	-5 },
 	{ "image",		V_STRING,	0 },
 	{ "md2",		V_STRING,	0 },
 	{ "anim",		V_STRING,	-1 },
 	{ "tag",		V_STRING,	-2 },
 	{ "skin",		V_STRING,	-3 },
+	// -4 is animation state
 	{ "string",		V_STRING,	0 },
 	{ "font",		V_STRING,	-1 },
 	{ "max",		V_FLOAT,	0 },
@@ -373,15 +376,22 @@ void MN_StartServer ( void )
 	else
 		Com_Printf("MN_StartServer\n");
 
-	if ( Cvar_VariableValue ("dedicated") > 0 )
-		Com_Printf("Dedicated server needs no team\n");
+	if ( Cvar_VariableValue("dedicated") > 0 )
+		Com_DPrintf("Dedicated server needs no team\n");
 	else if ( !numOnTeam )
 	{
 		MN_Popup( _("Error"), _("Assemble a team first") );
 		return;
 	}
 	else
-		Com_Printf("There are %i members on team\n", numOnTeam );
+		Com_DPrintf("There are %i members on team\n", numOnTeam );
+
+	if ( Cvar_VariableValue("sv_teamplay")
+	  && Cvar_VariableValue("maxsoldiersperplayer") > Cvar_VariableValue("maxsoldiers") )
+	{
+		MN_Popup( _("Settings doesn't make sense"), _("Set playersoldiers lower than teamsoldiers") );
+		return;
+	}
 
 	Cbuf_ExecuteText( EXEC_NOW, va("map %s\n", Cmd_Argv(1) ) );
 }
@@ -716,6 +726,7 @@ qboolean MN_CheckNodeZone( menuNode_t *node, int x, int y )
 {
 	int		sx, sy, tx, ty;
 
+
 	// containers
 	if ( node->type == MN_CONTAINER )
 	{
@@ -852,15 +863,18 @@ void MN_Drag( menuNode_t *node, int x, int y )
 			{
 				// special item sorting for equipment
 				i = Com_SearchInInventory( menuInventory, dragFrom, dragFromX, dragFromY );
-				et = csi.ods[i->item.t].buytype;
-				if ( i && et != equipType )
+				if ( i )
 				{
-					menuInventory->c[csi.idEquip] = equipment.c[et];
-					Com_FindSpace( menuInventory, i->item.t, csi.idEquip, &px, &py );
-					if ( px >= 32 && py >= 16 )
+					et = csi.ods[i->item.t].buytype;
+					if ( et != equipType )
 					{
-						menuInventory->c[csi.idEquip] = equipment.c[equipType];
-						return;
+						menuInventory->c[csi.idEquip] = equipment.c[et];
+						Com_FindSpace( menuInventory, i->item.t, csi.idEquip, &px, &py );
+						if ( px >= 32 && py >= 16 )
+						{
+							menuInventory->c[csi.idEquip] = equipment.c[equipType];
+							return;
+						}
 					}
 				}
 			}
@@ -1282,8 +1296,8 @@ void MN_DrawMapMarkers( menuNode_t *node )
 			menuText[TEXT_STANDARD] = ms->def->text;
 			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "circle" );
 
-			if ( CL_MapIsNight( ms->realPos ) ) Cvar_Set( "mn_mapdaytime", "Night" );
-			else Cvar_Set( "mn_mapdaytime", "Day" );
+			if ( CL_MapIsNight( ms->realPos ) ) Cvar_Set( "mn_mapdaytime", _("Night") );
+			else Cvar_Set( "mn_mapdaytime", _("Day") );
 		}
 	}
 
@@ -1315,6 +1329,28 @@ void MN_DrawMapMarkers( menuNode_t *node )
 		}
 }
 
+/*
+=================
+MN_Tooltip
+=================
+*/
+void MN_Tooltip ( menuNode_t* node, int x, int y )
+{
+	int l;
+	// tooltips
+	if ( x > node->pos[0] && y > node->pos[1] && x < node->pos[0] + node->size[0] && y < node->pos[1] + node->size[1] )
+	{
+		if ( node->data[5] )
+		{
+			x += 5;
+			y += 5;
+			l = re.DrawPropLength( "f_small", _((char *)node->data[5]) );
+			if ( x + l > viddef.width )
+				x -= l;
+			re.DrawPropString("f_small", 0, x, y, _((char *)node->data[5]) );
+		}
+	}
+}
 
 /*
 =================
@@ -1674,6 +1710,9 @@ void MN_DrawMenus( void )
 					MN_DrawBase();
 					break;
 				}
+
+				// draw the tooltips on top of everything
+				MN_Tooltip( node, mx, my );
 		}
 	}
 	re.DrawColor( NULL );
@@ -1742,7 +1781,7 @@ void MN_PushMenu_f( void )
 	if ( Cmd_Argc() > 1 )
 		MN_PushMenu( Cmd_Argv(1) );
 	else
-		Com_Printf( "usage: mn_push <name>\n" );
+		Com_Printf( _("usage: mn_push <name>\n") );
 }
 
 
@@ -1811,7 +1850,7 @@ void MN_Modify_f( void )
 	float	value;
 
 	if ( Cmd_Argc() < 5 )
-		Com_Printf( "usage: mn_modify <name> <amount> <min> <max>\n" );
+		Com_Printf( _("usage: mn_modify <name> <amount> <min> <max>\n") );
 
 	value = Cvar_VariableValue( Cmd_Argv(1) );
 	value += atof( Cmd_Argv(2) );
@@ -1832,7 +1871,7 @@ void MN_ModifyWrap_f( void )
 	float	value;
 
 	if ( Cmd_Argc() < 5 )
-		Com_Printf( "usage: mn_modifywrap <name> <amount> <min> <max>\n" );
+		Com_Printf( _("usage: mn_modifywrap <name> <amount> <min> <max>\n") );
 
 	value = Cvar_VariableValue( Cmd_Argv(1) );
 	value += atof( Cmd_Argv(2) );
@@ -2118,8 +2157,11 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 				{
 					Com_Printf( _("MN_ParseAction: token \"%s\" isn't a node property (in event)\n"), *token );
 					curadata = action->data;
-					lastAction->next = NULL;
-					numActions--;
+					if ( lastAction )
+					{
+						lastAction->next = NULL;
+						numActions--;
+					}
 					break;
 				}
 
@@ -2245,7 +2287,7 @@ qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 						else
 						{
 							// a reference to data is handled like this
-							node->data[-val->ofs] = curadata;
+							node->data[-(val->ofs)] = curadata;
 							if ( **token == '*' )
 								curadata += Com_ParseValue( curadata, *token, V_STRING, 0 );
 							else
@@ -2501,7 +2543,7 @@ void MN_ParseMenu( char *name, char **text )
 			if ( node->num >= MAX_MENUTEXTS )
 				Sys_Error( _("Error in menu %s - max menu num exeeded (%i)"), menus[i].name, MAX_MENUTEXTS );
 
-//	Com_Printf( "Nodes: %4i Menu data: %i\n", numNodes, curadata - adata );
+	Com_DPrintf( "Nodes: %4i Menu data: %i\n", numNodes, curadata - adata );
 }
 
 /*

@@ -372,6 +372,9 @@ void SVC_DirectConnect (void)
 		return;
 	}
 
+	// TODO: Check if the teamnum preference has already reached maxsoldiers
+	//       and reject connection if so
+
 gotnewcl:
 	// build a new connection
 	// accept the new client

@@ -161,8 +161,6 @@ typedef struct
 	float		maxpitch;
 } spawn_temp_t;
 
-
-
 extern	game_locals_t	game;
 extern	level_locals_t	level;
 extern	game_import_t	gi;
@@ -194,6 +192,8 @@ extern	cvar_t	*sv_cheats;
 extern	cvar_t	*sv_maxclients;
 extern	cvar_t	*maxplayers;
 extern	cvar_t	*maxsoldiers;
+extern	cvar_t	*maxsoldiersperplayer;
+extern	cvar_t	*sv_enablemorale;
 extern	cvar_t	*maxspectators;
 
 extern	cvar_t	*flood_msgs;
@@ -449,7 +449,7 @@ struct edict_s
 	int			state; // the player state - dead, shaken....
 
 	int			team; // player of which team?
-	int			pnum;
+	int			pnum; // the actual player slot
 	// the models (hud)
 	int			body;
 	int			head;

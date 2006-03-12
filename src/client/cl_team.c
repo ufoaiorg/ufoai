@@ -599,9 +599,9 @@ void CL_MarkTeamCmd( void )
 	int i;
 
 	// check if we are allowed to be here?
-	// we are only allowed to be here if we already set up base
-	// or are in multiplayer
-	if ( ! ccs.numBases && Cvar_VariableValue ("maxclients") > 1 )
+	// we are only allowed to be here if we already set up a base
+	// or are in multiplayer mode
+	if ( ! ccs.numBases && (int)Cvar_VariableValue("maxclients") == 1 )
 	{
 		Com_Printf("No base set up\n");
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );

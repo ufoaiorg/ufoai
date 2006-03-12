@@ -1655,7 +1655,7 @@ void CL_UpdateCharacterStats ( int won )
 
 			// FIXME:
 			for ( j = 0; j < SKILL_NUM_TYPES; j++ )
-				chr->skills[j]++;
+				if ( chr->skills[j] < MAX_SKILL ) chr->skills[j]++;
 		}
 	}
 }

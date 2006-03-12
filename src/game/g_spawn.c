@@ -379,15 +379,40 @@ Starting point for a player.
 */
 void SP_player_start (edict_t *ent)
 {
+	static int soldierCount = 0;
 	// only used in multi player
 	if ( sv_maxclients->value == 1 )
 	{
 		G_FreeEdict( ent );
 		return;
 	}
+
+	// mapchange?
+	if ( ! level.num_spawnpoints[ent->team] )
+		soldierCount = 0;
+
+	// in teamplay mode check whether the player has reached
+	// the max allowed soldiers per player
+	if ( (int)maxsoldiersperplayer->value
+	  && soldierCount >= (int)maxsoldiersperplayer->value
+	  && (int)sv_teamplay->value )
+	{
+		gi.dprintf (_("Only %i/%i soldiers per player allowed\n"), (int)maxsoldiersperplayer->value, soldierCount );
+		G_FreeEdict( ent );
+		return;
+	}
+
 	// maybe there are already the max soldiers allowed per team connected
 	if ( (int)(maxsoldiers->value) > level.num_spawnpoints[ent->team] )
+	{
 		G_ActorSpawn( ent );
+		soldierCount++;
+	}
+	else if ( soldierCount <= 0 )
+	{
+		gi.dprintf (_("No free soldier slots available - please choose another team\n"));
+		G_FreeEdict( ent );
+	}
 	else
 		G_FreeEdict( ent );
 }
@@ -513,9 +538,11 @@ void SP_worldspawn (edict_t *ent)
 	gi.configstring (CS_MAXCLIENTS, va("%i", (int)(maxplayers->value) ) );
 
 	// only used in multi player
-	if ( sv_maxclients->value == 1 )
+	if ( sv_maxclients->value >= 2 )
 	{
 		gi.configstring (CS_MAXSOLDIERS, va("%i", (int)(maxsoldiers->value) ) );
+		gi.configstring (CS_MAXSOLDIERSPERPLAYER, va("%i", (int)(maxsoldiersperplayer->value) ) );
+		gi.configstring (CS_ENABLEMORALE, va("%i", (int)(sv_enablemorale->value) ) );
 	}
 	//---------------
 

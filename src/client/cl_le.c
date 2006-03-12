@@ -52,14 +52,14 @@ void LM_AddToScene( void )
 	entity_t	ent;
 	int		i;
 
-	for ( i = 0, lm = LMs; i < numLMs; i++, lm++ ) 
+	for ( i = 0, lm = LMs; i < numLMs; i++, lm++ )
 	{
 		// check for visibility
 		if ( !((1 << (int)cl_worldlevel->value) & lm->levelflags) )
 			continue;
 
 		// set entity values
-		memset( &ent, 0, sizeof(entity_t) );	
+		memset( &ent, 0, sizeof(entity_t) );
 		VectorCopy( lm->origin, ent.origin );
 		VectorCopy( lm->origin, ent.oldorigin );
 		VectorCopy( lm->angles, ent.angles );
@@ -67,7 +67,7 @@ void LM_AddToScene( void )
 		ent.skinnum = lm->skin;
 
 		if ( lm->flags & LMF_NOSMOOTH ) ent.flags |= RF_NOSMOOTH;
-		if ( lm->flags & LMF_LIGHTFIXED ) 
+		if ( lm->flags & LMF_LIGHTFIXED )
 		{
 			ent.flags |= RF_LIGHTFIXED;
 			ent.lightparam = lm->lightorigin;
@@ -113,7 +113,7 @@ void LM_Delete( lm_t *lm )
 
 	LM_GenerateList();
 	Grid_RecalcRouting( &clMap, backup.name, lmList );
-	if ( selActor ) 
+	if ( selActor )
 		Grid_MoveCalc( &clMap, selActor->pos, MAX_ROUTE, fb_list, fb_length );
 }
 
@@ -146,7 +146,7 @@ void LM_Explode( sizebuf_t *sb )
 	lm = LM_Find( MSG_ReadShort( sb ) );
 	if ( !lm ) return;
 
-	if ( lm->particle[0] ) 
+	if ( lm->particle[0] )
 	{
 		cmodel_t *mod;
 		vec3_t center;
@@ -175,7 +175,7 @@ void CL_RegisterLocalModels ( void )
 
 	VectorCopy( map_sun.dir, sunDir );
 
-	for ( i = 0, lm = LMs; i < numLMs; i++, lm++ ) 
+	for ( i = 0, lm = LMs; i < numLMs; i++, lm++ )
 	{
 		// register the model and recalculate routing info
 		lm->model = re.RegisterModel( lm->name );
@@ -226,6 +226,38 @@ lm_t *CL_AddLocalModel (char *model, char *particle, vec3_t origin, vec3_t angle
 //
 //===========================================================================
 
+/*
+==============
+LE_Status
+
+Checks whether there are soldiers alive
+if not - end round automatically
+==============
+*/
+void LE_Status ( void )
+{
+	le_t *le;
+	int i;
+	qboolean endRound = true;
+
+	if ( ! numLEs ) return;
+
+	// only multiplayer - not our round?
+	if ( (int)Cvar_VariableValue("maxclients") > 1 && cls.team != cl.actTeam )
+		return;
+
+	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
+		if ( le->inuse && le->team == cls.team && !(le->state & STATE_DEAD)  )
+			// call think function
+			endRound = false;
+
+	// ok, no players alive in multiplayer - end this round automatically
+	if ( endRound )
+	{
+		CL_NextRound();
+		Com_Printf("End round automatically - no soldiers left\n");
+	}
+}
 
 /*
 ==============
@@ -272,7 +304,7 @@ char *LE_GetAnim( char *anim, int right, int left, int state )
 
 	// determine relevant data
 	akimbo = false;
-	if ( right == NONE ) 
+	if ( right == NONE )
 	{
 		category = '0';
 		if ( left == NONE ) type = "item";
@@ -280,7 +312,7 @@ char *LE_GetAnim( char *anim, int right, int left, int state )
 	} else {
 		category = csi.ods[right].category;
 		type = csi.ods[right].type;
-		if ( left != NONE && !strcmp( csi.ods[right].type, "pistol" ) && !strcmp( csi.ods[left].type, "pistol" ) ) 
+		if ( left != NONE && !strcmp( csi.ods[right].type, "pistol" ) && !strcmp( csi.ods[left].type, "pistol" ) )
 			akimbo = true;
 	}
 
@@ -421,7 +453,7 @@ void LET_PathMove( le_t *le )
 
 			// calculate next possible moves
 			CL_BuildForbiddenList();
-			if ( selActor == le ) 
+			if ( selActor == le )
 				Grid_MoveCalc( &clMap, le->pos, MAX_ROUTE, fb_list, fb_length );
 
 			floor = LE_Find( ET_ITEM, le->pos );
@@ -430,12 +462,12 @@ void LET_PathMove( le_t *le )
 			blockEvents = false;
 			le->think = LET_StartIdle;
 			le->think( le );
-			if (camera_mode == CAMERA_MODE_FIRSTPERSON) 
+			if (camera_mode == CAMERA_MODE_FIRSTPERSON)
 			{
 				PosToVec( le->pos, dest);
 				VectorCopy(dest, cl.cam.camorg);
 				VectorCopy(selActor->angles, cl.cam.angles);
-			}	
+			}
 			return;
 		}
 	}
@@ -528,7 +560,7 @@ void LE_AddProjectile( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, i
 		if ( flags & (SF_IMPACT|SF_BODY) || fd->selfDetonate )
 		{
 			ptl = NULL;
-			if ( flags & SF_BODY ) 
+			if ( flags & SF_BODY )
 			{
 				if ( fd->hitBodySound[0] ) S_StartLocalSound( fd->hitBodySound );
 				if ( fd->hitBody[0] ) ptl = CL_ParticleSpawn( fd->hitBody, 0, impact, bytedirs[normal], NULL );
@@ -545,17 +577,17 @@ void LE_AddProjectile( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, i
 	le->endTime = cl.time + 1000 * dist / fd->speed;
 
 	// think function
-	if ( flags & SF_BODY ) 
+	if ( flags & SF_BODY )
 	{
 		le->ref1 = fd->hitBody;
 		le->ref2 = fd->hitBodySound;
-	} 
-	else if ( flags & SF_IMPACT || fd->selfDetonate ) 
+	}
+	else if ( flags & SF_IMPACT || fd->selfDetonate )
 	{
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
-	} 
-	else 
+	}
+	else
 	{
 		le->ref1 = NULL;
 		if ( flags & SF_BOUNCING ) le->ref2 = fd->bounceSound;
@@ -588,17 +620,17 @@ void LE_AddGrenade( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t v0, int dt )
 	VectorSet( le->ptl->omega, 500*crand(), 500*crand(), 500*crand() );
 
 	// think function
-	if ( flags & SF_BODY ) 
+	if ( flags & SF_BODY )
 	{
 		le->ref1 = fd->hitBody;
 		le->ref2 = fd->hitBodySound;
-	} 
-	else if ( flags & SF_IMPACT || fd->selfDetonate ) 
+	}
+	else if ( flags & SF_IMPACT || fd->selfDetonate )
 	{
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
-	} 
-	else 
+	}
+	else
 	{
 		le->ref1 = NULL;
 		if ( flags & SF_BOUNCING ) le->ref2 = fd->bounceSound;
@@ -635,7 +667,7 @@ le_t *LE_Add( int entnum )
 			break;
 
 	// list full, try to make list longer
-	if ( i == numLEs ) 
+	if ( i == numLEs )
 	{
 		if ( numLEs >= MAX_EDICTS - numLMs )
 		{
@@ -707,11 +739,11 @@ void LE_AddToScene( void )
 	vec3_t		sunOrigin;
 	int		i;
 
-	for ( i = 0, le = LEs; i < numLEs; i++, le++ ) 
+	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 	{
-		if ( le->inuse && !le->invis && le->pos[2] <= cl_worldlevel->value ) 
+		if ( le->inuse && !le->invis && le->pos[2] <= cl_worldlevel->value )
 		{
-			memset( &ent, 0, sizeof(entity_t) );	
+			memset( &ent, 0, sizeof(entity_t) );
 
 			// calculate sun lighting
 			if ( !VectorCompare( le->origin, le->oldOrigin ) )
@@ -736,7 +768,7 @@ void LE_AddToScene( void )
 			// do animation
 			re.AnimRun( &le->as, ent.model, cls.frametime*1000 );
 			ent.as = le->as;
-			
+
 			// call add function
 			// if it returns false, don't draw
 			if ( le->addFunc )
@@ -785,7 +817,7 @@ void CL_ClipMoveToLEs ( moveclip_t *clip )
 	if ( clip->trace.allsolid )
 		return;
 
-	for ( i = 0, le = LEs; i < numLEs; i++, le++ ) 
+	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 	{
 		if ( !le->inuse || !(le->contents & clip->contentmask) )
 			continue;
@@ -820,7 +852,7 @@ CL_TraceBounds
 void CL_TraceBounds (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
 {
 	int		i;
-	
+
 	for (i=0 ; i<3 ; i++)
 	{
 		if (end[i] > start[i])
@@ -849,7 +881,7 @@ Passedict and edicts owned by passedict are explicitly not checked.
 trace_t CL_Trace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t *passle, int contentmask)
 {
 	moveclip_t		clip;
-	
+
 	// clip to world
 	clip.trace = CM_CompleteBoxTrace (start, end, mins, maxs, (1<<((int)cl_worldlevel->value+1))-1, contentmask);
 	clip.trace.le = NULL;

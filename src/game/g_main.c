@@ -35,6 +35,8 @@ cvar_t	*spectator_password;
 cvar_t	*needpass;
 cvar_t	*maxplayers;
 cvar_t	*maxsoldiers;
+cvar_t	*maxsoldiersperplayer;
+cvar_t	*sv_enablemorale;
 cvar_t	*maxspectators;
 cvar_t	*maxentities;
 cvar_t	*g_select_empty;
@@ -98,6 +100,8 @@ void InitGame (void)
 
 	maxplayers = gi.cvar ("maxplayers", "8", CVAR_SERVERINFO | CVAR_LATCH);
 	maxsoldiers = gi.cvar ("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
+	maxsoldiersperplayer = gi.cvar ("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
+	sv_enablemorale = gi.cvar ("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
 	maxspectators = gi.cvar ("maxspectators", "8", CVAR_SERVERINFO);
 	maxentities = gi.cvar ("maxentities", "1024", CVAR_LATCH);
 
