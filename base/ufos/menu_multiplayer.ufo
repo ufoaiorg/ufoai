@@ -100,7 +100,7 @@ menu multiplayer
         func init
         {
                 cmd "mn_escpop 5;"
-                cmd "mn_push mp_join_lan;"
+                cmd "mn_push mp_join_lan;maxclients 2"
         }
 }
 
@@ -548,6 +548,47 @@ menu mp_create_server
         }
 
         // ===================
+        // MORALE
+        // ===================
+        string morale_str
+        {
+                string  "Enable morale states:"
+                pos     "500 140"
+        }
+        string morale_value
+        {
+                string  "*cvar mn_enablemorale"
+                pos     "840 140"
+                align   ur
+        }
+        pic morale_dec
+        {
+                image   menu/buy_buttons1
+                pos     "868 138"
+                texl    "0 0"
+                texh    "16 16"
+                mousefx true
+                click
+                {
+                        cmd "mn_modify sv_enablemorale -1 0 1;"
+                        cmd "mn_translate sv_enablemorale mn_enablemorale 0:No,1:Yes;"
+                }
+        }
+        pic morale_inc
+        {
+                image   menu/buy_buttons1
+                pos     "884 138"
+                texl    "16 0"
+                texh    "32 16"
+                mousefx true
+                click
+                {
+                        cmd "mn_modify sv_enablemorale +1 0 1;"
+                        cmd "mn_translate sv_enablemorale mn_enablemorale 0:No,1:Yes;"
+                }
+        }
+
+        // ===================
         // DEDICATED SERVER
         // ===================
         string dedicated_str
@@ -636,6 +677,7 @@ menu mp_create_server
         {
                 string  "Max. clients:"
                 pos     "500 200"
+		tooltip "Sets the max allowed clients to connect"
         }
         string maxclients_value
         {
@@ -650,7 +692,7 @@ menu mp_create_server
                 texl    "0 0"
                 texh    "16 16"
                 mousefx true
-                click   { cmd "mn_modify maxclients -1 1 6;" }
+                click   { cmd "mn_modify maxclients -1 1 16;" }
         }
         pic maxclients_inc
         {
@@ -659,7 +701,7 @@ menu mp_create_server
                 texl    "16 0"
                 texh    "32 16"
                 mousefx true
-                click   { cmd "mn_modify maxclients +1 1 6;" }
+                click   { cmd "mn_modify maxclients +1 1 16;" }
         }
 
         // ===================
@@ -669,6 +711,7 @@ menu mp_create_server
         {
                 string  "Max. soldiers per team:"
                 pos     "500 220"
+		tooltip "Sets the max allowed soldiers per team"
         }
         string maxperplayer_value
         {
@@ -695,24 +738,59 @@ menu mp_create_server
                 click   { cmd "mn_modify maxsoldiers +1 1 8;" }
         }
 
+        // =====================
+        // MAXSOLDIER PER PLAYER
+        // =====================
+        string maxsoldierperplayer_str
+        {
+                string  "Max soldiers per player:"
+                pos     "500 240"
+		tooltip "Sets the max allowed soldiers per player when in teamplay"
+        }
+        string maxsoldierperplayer_value
+        {
+                string  "*cvar maxsoldiersperplayer"
+                pos     "840 240"
+                align   ur
+        }
+        pic maxsoldierperplayer_dec
+        {
+                image   menu/buy_buttons1
+                pos     "868 238"
+                texl    "0 0"
+                texh    "16 16"
+                mousefx true
+                click   { cmd "mn_modify maxsoldiersperplayer -1 1 8;" }
+        }
+        pic maxsoldierperplayer_inc
+        {
+                image   menu/buy_buttons1
+                pos     "884 238"
+                texl    "16 0"
+                texh    "32 16"
+                mousefx true
+                click   { cmd "mn_modify maxsoldiersperplayer +1 1 8;" }
+        }
+
         // ===================
         // TEAM
         // ===================
         string server_teamnum_str
         {
                 string  "Team preference:"
-                pos     "500 240"
+                pos     "500 260"
+		tooltip "Sets the prefered team"
         }
         string server_teamnum_value
         {
                 string  "*cvar teamnum"
-                pos     "840 240"
+                pos     "840 260"
                 align   ur
         }
         pic server_teamnum_dec
         {
                 image   menu/buy_buttons1
-                pos     "868 238"
+                pos     "868 258"
                 texl    "0 0"
                 texh    "16 16"
                 mousefx true
@@ -721,7 +799,7 @@ menu mp_create_server
         pic server_teamnum_inc
         {
                 image   menu/buy_buttons1
-                pos     "884 238"
+                pos     "884 258"
                 texl    "16 0"
                 texh    "32 16"
                 mousefx true
@@ -734,18 +812,18 @@ menu mp_create_server
         string download_str
         {
                 string  "Allow Download:"
-                pos     "500 260"
+                pos     "500 280"
         }
         string download_value
         {
                 string  "*cvar mn_download"
-                pos     "840 260"
+                pos     "840 280"
                 align   ur
         }
         pic download_dec
         {
                 image   menu/buy_buttons1
-                pos     "868 258"
+                pos     "868 278"
                 texl    "0 0"
                 texh    "16 16"
                 mousefx true
@@ -758,7 +836,7 @@ menu mp_create_server
         pic download_inc
         {
                 image   menu/buy_buttons1
-                pos     "884 258"
+                pos     "884 278"
                 texl    "16 0"
                 texh    "32 16"
                 mousefx true
@@ -775,19 +853,19 @@ menu mp_create_server
         string current_server_pwd
         {
                 string  "Server-Password:"
-                pos     "500 300"
+                pos     "500 330"
         }
         pic slot_server_pwd
         {
                 image   menu/save_slot
-                pos     "500 320"
+                pos     "500 350"
                 mousefx true
                 click   { cmd "msgmenu ?password" *txt_server_pwd color "1 1 1 1" *txt_server_pwd mousefx true }
         }
         string txt_server_pwd
         {
                 string "*cvar password"
-                pos "510 329"
+                pos "510 359"
                 color "0 .78 0 1"
         }
         confunc password_changed { *txt_server_pwd color "0 .78 0 1" *txt_server_pwd mousefx false }
@@ -798,19 +876,19 @@ menu mp_create_server
         string current_rcon_pwd
         {
                 string  "RCON-Password:"
-                pos     "500 360"
+                pos     "500 390"
         }
         pic slot_rcon_pwd
         {
                 image   menu/save_slot
-                pos     "500 380"
+                pos     "500 410"
                 mousefx true
                 click   { cmd "msgmenu ?rcon_password" *txt_rcon_pwd color "1 1 1 1" *txt_rcon_pwd mousefx true }
         }
         string txt_rcon_pwd
         {
                 string "*cvar rcon_password"
-                pos "510 389"
+                pos "510 419"
                 color "0 .78 0 1"
         }
         confunc rcon_password_changed { *txt_rcon_pwd color "0 .78 0 1" *txt_rcon_pwd mousefx false }
@@ -821,19 +899,19 @@ menu mp_create_server
         string current_hostname
         {
                 string  "Hostname:"
-                pos     "500 420"
+                pos     "500 450"
         }
         pic slot_hostname
         {
                 image   menu/save_slot
-                pos     "500 440"
+                pos     "500 470"
                 mousefx true
                 click   { cmd "msgmenu ?hostname" *txt_hostname color "1 1 1 1" *txt_hostname mousefx true }
         }
         string txt_hostname
         {
                 string "*cvar hostname"
-                pos "510 449"
+                pos "510 479"
                 color "0 .78 0 1"
         }
         confunc hostname_changed { *txt_hostname color "0 .78 0 1" *txt_hostname mousefx false }
@@ -844,19 +922,19 @@ menu mp_create_server
         string current_map
         {
                 string  "Map"
-                pos     "500 480"
+                pos     "500 510"
         }
         pic slot_map
         {
                 image   menu/save_slot
-                pos     "500 500"
+                pos     "500 530"
                 mousefx true
                 click   { cmd "msgmenu ?mapname" *txt_mapname color "1 1 1 1" *txt_mapname mousefx true }
         }
         string txt_mapname
         {
                 string "*cvar mapname"
-                pos    "510 509"
+                pos    "510 539"
                 color  "0 .78 0 1"
         }
         confunc mapname_changed { *txt_mapname color "0 .78 0 1" *txt_mapname mousefx false }
@@ -864,7 +942,7 @@ menu mp_create_server
 	pic prev_map
 	{
                 image   menu/buy_buttons1
-                pos     "488 508"
+                pos     "488 538"
                 texl    "0 0"           texh    "16 16"
                 mousefx true
                 click   { cmd "mn_prevmap" }
@@ -873,7 +951,7 @@ menu mp_create_server
         pic next_map
         {
                 image   menu/buy_buttons1
-                pos     "750 508"
+                pos     "750 538"
                 texl    "16 0"          texh    "32 16"
                 mousefx true
                 click   { cmd "mn_nextmap;" }
@@ -882,7 +960,7 @@ menu mp_create_server
 	pic mappic
         {
                 image   "*cvar mn_mappic"
-                pos     "800 300"
+                pos     "800 330"
                 texl    "0 0"
                 texh    "128 96"
                 click   { cmd "mn_nextmap" }
@@ -892,7 +970,7 @@ menu mp_create_server
 	pic mappic2
         {
                 image   "*cvar mn_mappic2"
-                pos     "800 400"
+                pos     "800 430"
                 texl    "0 0"
                 texh    "128 96"
                 click   { cmd "mn_nextmap" }
@@ -902,7 +980,7 @@ menu mp_create_server
 	pic mappic3
         {
                 image   "*cvar mn_mappic3"
-                pos     "800 500"
+                pos     "800 530"
                 texl    "0 0"
                 texh    "128 96"
                 click   { cmd "mn_nextmap" }
@@ -936,6 +1014,7 @@ menu mp_create_server
                 cmd "mn_translate dedicated mn_dedicated 0:No,1:Yes;"
                 cmd "mn_translate allow_download mn_download 0:No,1:Yes;"
                 cmd "mn_translate sv_teamplay mn_teamplay 0:No,1:Yes;"
+                cmd "mn_translate sv_enablemorale mn_enablemorale 0:No,1:Yes;"
         }
 }
 

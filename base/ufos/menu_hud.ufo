@@ -207,6 +207,7 @@ menu hud
 		texl	"0 0"
 		texh	"64 37"
 		click	{ cmd nextround; }
+		tooltip "Click to end your round"
 	}
 	
 	zone spotted
@@ -220,6 +221,7 @@ menu hud
 		string	"*cvar mn_numaliensspotted"
 		pos		"840 30"
 		align	cc
+		tooltip "Click to cycle through the spotted enemies"
 	}
 
 	confunc hudselects0 { *bt_actor0 image hud/buttons1a }
@@ -481,6 +483,7 @@ menu hud
 		texl	"0 75"
 		texh	"64 112"
 		click	{ cmd standcrouch }
+		tooltip "Stand/crounch"
 	}
 	
 	confunc startreactions { *bt_reaction image hud/button_guarda }
