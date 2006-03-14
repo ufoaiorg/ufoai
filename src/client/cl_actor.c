@@ -276,8 +276,10 @@ void CL_ActorUpdateCVars( void )
 			// panic
 			sprintf( infoText, _("Currently panics!\n") );
 		} else {
- 			if ( cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE &&
-					selWeapon && csi.ods[ selWeapon->item.t ].researchNeeded )
+			// FIXME: How do you determine whether we are server or client
+ 			if ( Cvar_VariableValue("maxclients") > 1
+			  && cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE
+			  && selWeapon && csi.ods[ selWeapon->item.t ].researchNeeded )
 			{
 				Com_Printf( _( "You cannot use this unknown alien weapon.\n") );
 				cl.cmode = M_MOVE;

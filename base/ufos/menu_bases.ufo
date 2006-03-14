@@ -14,9 +14,9 @@ menu bases
 
 	basemap thebasemap
 	{
-		pos     "0 96"
-		size    "778 672"
-		click   { cmd "basemap_click" }
+		pos	"0 96"
+		size	"778 672"
+		click	{ cmd "basemap_click" }
 		rclick
 		mclick
 	}
@@ -28,7 +28,7 @@ menu bases
 	pic back_ul
 	{
 		image	menu/base_ul
-		pos		"0 0"
+		pos	"0 0"
 	}
 
 	pic back_ur
@@ -62,6 +62,7 @@ menu bases
 
 	pic buildings
 	{
+		tooltip	"Build base-facilities"
 		image	menu/button_basemen
 		pos	"765 130"
 		texl	"15 15"
@@ -77,6 +78,7 @@ menu bases
 
 	pic aircrafts
 	{
+		tooltip	"Manage your aircrafts"
 		image	menu/button_basemen
 		pos	"765 200"
 		texl	"15 79"
@@ -92,6 +94,7 @@ menu bases
 
 	pic buysell
 	{
+		tooltip	"Buy/Sell equipment"
 		image	menu/button_basemen
 		pos	"765 270"
 		texl	"15 144"
@@ -107,6 +110,7 @@ menu bases
 
 	pic transfer
 	{
+		tooltip	"Transfer equipment or personnel"
 		image	menu/button_basemen
 		pos	"765 340"
 		texl	"15 207"
@@ -122,6 +126,7 @@ menu bases
 
 	pic equip
 	{
+		tooltip	"Equip your personnel"
 		image	menu/button_basemen
 		pos	"765 410"
 		texl	"15 271"
@@ -137,6 +142,7 @@ menu bases
 
 	pic research
 	{
+		tooltip	"Research new technology"
 		image	menu/button_basemen
 		pos	"765 480"
 		texl	"15 336"
@@ -158,6 +164,7 @@ menu bases
 
 	string txt_credits
 	{
+		tooltip	"Organisation capital"
 		string	"*cvar mn_credits"
 		pos	"900 30"
 		font	f_big
@@ -166,6 +173,7 @@ menu bases
 
 	string title
 	{
+		tooltip	"Name of this base"
 		string	"*cvar mn_base_title"
 		pos	"60 30"
 		font	f_big
@@ -173,6 +181,7 @@ menu bases
 
 	pic prev_base
 	{
+		tooltip	"Switch to the previous base"
 		image	menu/buy_buttons1
 		pos	"30 40"
 		mousefx true
@@ -183,6 +192,7 @@ menu bases
 
 	pic next_base
 	{
+		tooltip	"Switch to the next base"
 		image	menu/buy_buttons1
 		pos	"600 40"
 		mousefx	true

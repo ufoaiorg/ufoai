@@ -3,7 +3,7 @@
 // TODO:
 // new game does not reset basemangagement
 // for saving: bmBuildings[], bmBases[], bmProductions[] (in cl_basemanagement.c)
-//     in client.h: buildingText[] *baseCurrent, numBases, bmBases[]
+//     in client.h: buildingText[] *baseCurrent, bmBases[]
 //                  and the part out of ccs_t (not really needed i think)
 
 #include "client.h"
@@ -15,7 +15,6 @@ base_t        bmBases[MAX_BASES];
 
 production_t  bmProductions[MAX_PRODUCTIONS];
 
-int numBases;
 int numBuildings;
 int numProductions;
 int baseID;
@@ -1118,6 +1117,7 @@ void MN_ParseBases( char *title, char **text )
 	char	*errhead = _("MN_ParseBases: unexptected end of file (names ");
 	char	*token;
 	base_t *base;
+	int numBases = 0;
 
 	// get token
 	token = COM_Parse( text );
@@ -1127,7 +1127,6 @@ void MN_ParseBases( char *title, char **text )
 		Com_Printf( _("MN_ParseBases: base \"%s\" without body ignored\n"), title );
 		return;
 	}
-	numBases = 0;
 	do {
 		// add base
 		if ( numBases > MAX_BASES )
@@ -1505,8 +1504,10 @@ void MN_NextBase( void )
 	int baseID;
 
 	baseID = (int)Cvar_VariableValue( "mn_base_id" );
-	if ( baseID < MAX_BASES )
+	if ( baseID < ccs.numBases )
 		baseID++;
+	else
+		baseID = 0;
 
 	if ( ! bmBases[baseID].founded )
 		return;
@@ -1529,6 +1530,8 @@ void MN_PrevBase( void )
 	baseID = (int)Cvar_VariableValue( "mn_base_id" );
 	if ( baseID > 0 )
 		baseID--;
+	else
+		baseID = ccs.numBases-1;
 
 	// this must be false - but i'm paranoid'
 	if ( ! bmBases[baseID].founded )
@@ -1725,7 +1728,7 @@ void MN_NewBases( void )
 	// reset bases
 	int i;
 	baseID = 0;
-	for ( i = 0; i < numBases; i++ )
+	for ( i = 0; i < MAX_BASES; i++ )
 		MN_ClearBase( &bmBases[i] );
 }
 
@@ -1738,7 +1741,7 @@ void B_AssembleRandomBase( void )
 {
 	int i;
 	int cnt = 0;
-	for ( i = 0; i < numBases; i++ )
+	for ( i = 0; i < MAX_BASES; i++ )
 	{
 		if ( ! bmBases[i].founded ) break;
 		cnt++;
@@ -1759,11 +1762,11 @@ void MN_SaveBases( sizebuf_t *sb )
 	int i, n, j;
 
 	n = 0;
-	for ( i = 0, base = bmBases; i < numBases; i++, base++ )
+	for ( i = 0, base = bmBases; i < MAX_BASES; i++, base++ )
 		if ( base->founded ) n++;
 	MSG_WriteByte( sb, n );
 
-	for ( i = 0, base = bmBases; i < numBases; i++, base++ )
+	for ( i = 0, base = bmBases; i < MAX_BASES; i++, base++ )
 		if ( base->founded )
 		{
 			MSG_WriteLong( sb, base->id );
@@ -1911,7 +1914,7 @@ void CL_BuildingList ( void )
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 		return;
 
-	for ( i = 0, base = bmBases; i < numBases; i++, base++ )
+	for ( i = 0, base = bmBases; i < MAX_BASES; i++, base++ )
 	{
 		if ( base->founded == false )
 			continue;
@@ -1945,7 +1948,7 @@ void CL_BaseList ( void )
 {
 	int i, j;
 	base_t* base;
-	for ( i = 0, base = bmBases; i < numBases; i++, base++ )
+	for ( i = 0, base = bmBases; i < MAX_BASES; i++, base++ )
 	{
 		Com_Printf("Base id %i\n", base->id );
 		Com_Printf("Base title %s\n", base->title );
@@ -1972,7 +1975,6 @@ void MN_ResetBaseManagement( void )
 	// reset menu structures
 	numBuildings = 0;
 	numProductions = 0;
-	numBases = MAX_BASES;
 	baseID = 0;
 
 	// get data memory
@@ -2026,7 +2028,7 @@ int B_GetCount ( void )
 {
 	int i, cnt = 0;
 
-	for ( i = 0; i < numBases; i++ )
+	for ( i = 0; i < MAX_BASES; i++ )
 	{
 		if ( ! bmBases[i].founded ) continue;
 		cnt++;
@@ -2043,7 +2045,7 @@ void CL_UpdateBaseData( void )
 	building_t *b;
 	int i, j, k;
 	int newBuilding = 0;
-	for ( i = 0; i < numBases; i++ )
+	for ( i = 0; i < MAX_BASES; i++ )
 	{
 		if ( ! bmBases[i].founded ) continue;
 		for ( j = 0; j < numBuildings; j++ )

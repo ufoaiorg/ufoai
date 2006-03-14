@@ -916,7 +916,6 @@ typedef struct production_s
 	struct  production_s *next;
 } production_t;
 
-extern	int		numBases;
 extern	base_t	bmBases[MAX_BASES];
 extern	base_t	*baseCurrent;
 extern	building_t    bmBuildings[MAX_BASES][MAX_BUILDINGS];

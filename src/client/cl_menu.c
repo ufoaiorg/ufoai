@@ -1302,7 +1302,7 @@ void MN_DrawMapMarkers( menuNode_t *node )
 	}
 
 	// draw base pics
-	for ( i = 0; i < numBases; i++ )
+	for ( i = 0; i < MAX_BASES; i++ )
 		if ( bmBases[i].founded )
 		{
 			if ( !MN_MapToScreen( node, bmBases[i].pos, &x, &y ) )
