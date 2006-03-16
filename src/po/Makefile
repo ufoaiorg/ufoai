@@ -40,7 +40,7 @@ MSGINIT = msginit
 MSGCONV = msgconv
 MSGFILTER = msgfilter
 
-POFILES = da.po de.po en_GB.po
+POFILES = da.po de.po en_GB.po it.po pl.po
 GMOFILES = $(POFILES:.po=.gmo)
 UPDATEPOFILES = $(POFILES:.po=.po-update)
 DUMMYPOFILES = $(POFILES:.po=.nop)
@@ -338,7 +338,7 @@ update-po: Makefile
 
 .nop.po-create:
 	@lang=`echo $@ | sed -e 's/\.po-create$$//'`; \
-	msginit -l fr --no-translator
+	msginit -l $$lang --no-translator
 
 # General rule for updating PO files.
 
