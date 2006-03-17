@@ -521,9 +521,12 @@ typedef struct _TargaHeader {
 	unsigned char	pixel_size, attributes;
 } TargaHeader;
 
+#ifdef BUILD_FREETYPE
 /*
 =============
 WriteTGA
+
+Only needed by freetype
 =============
 */
 void WriteTGA (char *filename, byte *data, int width, int height)
@@ -554,6 +557,7 @@ void WriteTGA (char *filename, byte *data, int width, int height)
 
 	Z_Free (buffer);
 }
+#endif
 
 /*
 =============
