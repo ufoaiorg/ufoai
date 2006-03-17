@@ -335,7 +335,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
@@ -343,7 +343,7 @@
 				AssemblerListingLocation=".\release/"
 				ObjectFile=".\release/"
 				ProgramDataBaseFileName=".\release/"
-				WarningLevel="4"
+				WarningLevel="0"
 				SuppressStartupBanner="true"
 			/>
 			<Tool
@@ -440,6 +440,10 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\gl_arb_shader.c"
+				>
 			</File>
 			<File
 				RelativePath="gl_draw.c"
@@ -764,6 +768,10 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\gl_shadows.c"
+				>
 			</File>
 			<File
 				RelativePath="gl_warp.c"
