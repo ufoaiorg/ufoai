@@ -453,16 +453,17 @@ void MN_DrawFree (int posx, int posy, int sizex, int sizey)
 */
 void MN_InvDrawFree(inventory_t *inv, menuNode_t *node)
 {
+	int item = dragItem.t; // get the 'type' of the draged item
+	int container = node->mousefx;
+	int itemshape;
+	int free[16];	//The shapoe of the free positions.
+	int j;
+	int x, y;
+
 	if (mouseSpace == MS_DRAG) {// && !(inv->c[csi.idEquip])) { // Draw only in dragging-mode (and not for the equip-'floor'?)
 		assert(inv);
-		int item = dragItem.t; // get the 'type' of the draged item
-		int container = node->mousefx;
-		int itemshape;
-		int free[16];	//The shapoe of the free positions.
-		int j;
 		for ( j=0; j<16; j++ ) free[j] = 0;
 
-		int x, y;
 		/* TODO: add armor support
 		if (csi.ids[container].armor) {
 			if (	Com_CheckToInventory( inv, item, container, 0, 0 )		//if container free OR..
