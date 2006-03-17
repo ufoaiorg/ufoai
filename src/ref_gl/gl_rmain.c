@@ -1910,8 +1910,6 @@ void R_BeginFrame( float camera_separation )
 		if ( gl_state.hwgamma )
 			GLimp_SetGamma( NULL, NULL, NULL );
 		else
-#else
-#warning Win32 - Gammasupport not fully implemented
 #endif /* _WIN32 */
 		/*
 		** update 3Dfx gamma -- it is expected that a user will do a vid_restart

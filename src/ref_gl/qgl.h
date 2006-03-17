@@ -496,6 +496,13 @@ void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
 /*
 ** extension constants
 */
+
+extern int gl_texture0, gl_texture1, gl_texture2, gl_texture3;
+extern int gl_combine;
+
+// we use glext.h
+#ifndef _WIN32
+
 #define GL_POINT_SIZE_MIN_EXT				0x8126
 #define GL_POINT_SIZE_MAX_EXT				0x8127
 #define GL_POINT_FADE_THRESHOLD_SIZE_EXT	0x8128
@@ -516,7 +523,6 @@ void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
 #define GL_TEXTURE2_ARB						0x84C2
 #define GL_TEXTURE3_ARB						0x84C3
 
-extern int gl_texture0, gl_texture1, gl_texture2, gl_texture3;
 
 
 #define GL_COMBINE_EXT						0x8570
@@ -542,7 +548,6 @@ extern int gl_texture0, gl_texture1, gl_texture2, gl_texture3;
 #define GL_OPERAND1_ALPHA_EXT				0x8599
 #define GL_OPERAND2_ALPHA_EXT				0x859A
 
-extern int gl_combine;
 
 #define GL_COMPRESSED_ALPHA_ARB					0x84E9
 #define GL_COMPRESSED_LUMINANCE_ARB				0x84EA
@@ -561,5 +566,6 @@ extern int gl_combine;
 #define GL_COMPRESSED_RGBA_S3TC_DXT1_EXT		0x83F1
 #define GL_COMPRESSED_RGBA_S3TC_DXT3_EXT		0x83F2
 #define GL_COMPRESSED_RGBA_S3TC_DXT5_EXT		0x83F3
+#endif /* _WIN32 */
 
-#endif
+#endif /* __QGL_H__ */
