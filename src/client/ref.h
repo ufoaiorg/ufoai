@@ -355,7 +355,6 @@ typedef struct
 	void	 (*Cvar_SetValue)( char *name, float value );
 
 	qboolean	(*Vid_GetModeInfo)( int *width, int *height, int mode );
-//	void		(*Vid_MenuInit)( void );
 	void		(*Vid_NewWindow)( int width, int height );
 } refimport_t;
 

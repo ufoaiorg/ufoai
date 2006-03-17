@@ -5,7 +5,6 @@
 // for saving: bmBuildings[], bmBases[], bmProductions[] (in cl_basemanagement.c)
 //     in client.h: buildingText[] *baseCurrent, bmBases[]
 //                  and the part out of ccs_t (not really needed i think)
-
 #include "client.h"
 #include "cl_basemanagement.h"
 
@@ -17,7 +16,6 @@ production_t  bmProductions[MAX_PRODUCTIONS];
 
 int numBuildings;
 int numProductions;
-int baseID;
 vec2_t newBasePos;
 
 int bmDataSize = 0;
@@ -167,7 +165,7 @@ int B_HowManyPeopleInBase( base_t *base )
 		for ( a = 0; a < BASE_SIZE; a++ )
 			if ( base->map[a][b][base->baseLevel] != -1 )
 			{
-				entry = &bmBuildings[baseID][ B_GetIDFromList( base->map[a][b][base->baseLevel] ) ];
+				entry = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( base->map[a][b][base->baseLevel] ) ];
 
 				if ( !entry->used && entry->needs && entry->visible )
 					entry->used = 1;
@@ -255,21 +253,21 @@ void B_SetUpBase ( void )
 	MN_BuildingInit();
 	for (i = 0 ; i < numBuildings; i++ )
 	{
-		if ( ccs.numBases == 1 && bmBuildings[baseID][i].firstbase )
+		if ( ccs.numBases == 1 && bmBuildings[ccs.actualBaseID][i].firstbase )
 		{
-			baseCurrent->buildingCurrent = &bmBuildings[baseID][i];
+			baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][i];
 			Com_DPrintf("firstbase: %s (%i)\n", baseCurrent->buildingCurrent->name, i );
-			MN_SetBuildingByClick ( bmBuildings[baseID][i].pos[0], bmBuildings[baseID][i].pos[1] );
-			bmBuildings[baseID][i].buildingStatus[bmBuildings[baseID][i].howManyOfThisType] = B_WORKING_100;
+			MN_SetBuildingByClick ( bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
+			bmBuildings[ccs.actualBaseID][i].buildingStatus[bmBuildings[ccs.actualBaseID][i].howManyOfThisType] = B_WORKING_100;
 			//update the array
 			MN_BuildingInit();
 		}
-		else if ( bmBuildings[baseID][i].autobuild )
+		else if ( bmBuildings[ccs.actualBaseID][i].autobuild )
 		{
-			baseCurrent->buildingCurrent = &bmBuildings[baseID][i];
+			baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][i];
 			Com_DPrintf("autobuild: %s (%i)\n", baseCurrent->buildingCurrent->name, i );
-			MN_SetBuildingByClick ( bmBuildings[baseID][i].pos[0], bmBuildings[baseID][i].pos[1] );
-			bmBuildings[baseID][i].buildingStatus[bmBuildings[baseID][i].howManyOfThisType] = B_WORKING_100;
+			MN_SetBuildingByClick ( bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
+			bmBuildings[ccs.actualBaseID][i].buildingStatus[bmBuildings[ccs.actualBaseID][i].howManyOfThisType] = B_WORKING_100;
 			//update the array
 			MN_BuildingInit();
 		}
@@ -298,8 +296,8 @@ building_t* B_GetBuilding ( char *buildingName )
 
 	}
 	for (i = 0 ; i < numBuildings; i++ )
-		if ( !strcmp( bmBuildings[baseID][i].name, buildingName ) )
-			return &bmBuildings[baseID][i];
+		if ( !strcmp( bmBuildings[ccs.actualBaseID][i].name, buildingName ) )
+			return &bmBuildings[ccs.actualBaseID][i];
 
 	return NULL;
 }
@@ -424,13 +422,13 @@ void MN_SetBuildingByClick ( int x, int y )
 				}
 				else
 				{
-					if ( bmBuildings[baseID][ B_GetIDFromList( baseCurrent->map[x][y][baseCurrent->baseLevel-1] ) ].notUpOn )
+					if ( bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[x][y][baseCurrent->baseLevel-1] ) ].notUpOn )
 					{
 						Com_Printf( _("Can't place any building upon this ground\n"), x, y);
 						return;
 					}
 					else if ( secondBuildingPart )
-						if ( bmBuildings[baseID][ B_GetIDFromList( baseCurrent->map[x][y+1][baseCurrent->baseLevel-1] ) ].notUpOn )
+						if ( bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[x][y+1][baseCurrent->baseLevel-1] ) ].notUpOn )
 						{
 							Com_Printf( _("Can't place any building upon this ground\n"), x, y);
 							return;
@@ -784,9 +782,9 @@ void MN_PrevBuilding( void )
 
 	// get previous entry
 	if ( baseCurrent->buildingCurrent->id > 0)
-		baseCurrent->buildingCurrent = &bmBuildings[baseID][ baseCurrent->buildingListArray[ baseCurrent->buildingCurrent->id - 1 ] ];
+		baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][ baseCurrent->buildingListArray[ baseCurrent->buildingCurrent->id - 1 ] ];
 	else
-		baseCurrent->buildingCurrent = &bmBuildings[baseID][ baseCurrent->buildingListArray[ baseCurrent->numList - 1 ] ];
+		baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][ baseCurrent->buildingListArray[ baseCurrent->numList - 1 ] ];
 
 	MN_DrawBuilding ();
 }
@@ -804,9 +802,9 @@ void MN_NextBuilding( void )
 
 	// get next entry
 	if ( baseCurrent->buildingCurrent->id < baseCurrent->numList-1)
-		baseCurrent->buildingCurrent = &bmBuildings[baseID][ baseCurrent->buildingListArray[ baseCurrent->buildingCurrent->id + 1 ] ];
+		baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][ baseCurrent->buildingListArray[ baseCurrent->buildingCurrent->id + 1 ] ];
 	else
-		baseCurrent->buildingCurrent = &bmBuildings[baseID][ baseCurrent->buildingListArray[ 0 ] ];
+		baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][ baseCurrent->buildingListArray[ 0 ] ];
 
 	MN_DrawBuilding ();
 }
@@ -834,7 +832,7 @@ void MN_BuildingAddToList( char *title, int id )
 		strcat ( menuText[TEXT_BUILDINGS], tmpTitle );
 
 		baseCurrent->buildingListArray[ baseCurrent->numList ] = id;
-		bmBuildings[baseID][id].id = baseCurrent->numList;
+		bmBuildings[ccs.actualBaseID][id].id = baseCurrent->numList;
 		baseCurrent->numList++;
 	}
 }
@@ -858,44 +856,44 @@ void MN_BuildingInit( void )
 	for ( i = 1; i < numBuildings; i++)
 	{
 		//set the prev and next pointer
-		bmBuildings[baseID][i].prev = &bmBuildings[baseID][i-1];
-		bmBuildings[baseID][i-1].next = &bmBuildings[baseID][i];
+		bmBuildings[ccs.actualBaseID][i].prev = &bmBuildings[ccs.actualBaseID][i-1];
+		bmBuildings[ccs.actualBaseID][i-1].next = &bmBuildings[ccs.actualBaseID][i];
 
 		//make an entry in list for this building
-		if ( bmBuildings[baseID][i-1].visible )
+		if ( bmBuildings[ccs.actualBaseID][i-1].visible )
 		{
-			if ( bmBuildings[baseID][i-1].depends )
+			if ( bmBuildings[ccs.actualBaseID][i-1].depends )
 			{
-				building = B_GetBuilding ( bmBuildings[baseID][i-1].depends );
-				bmBuildings[baseID][i-1].dependsBuilding = building;
-				if ( bmBuildings[baseID][i-1].dependsBuilding->buildingStatus[0] > B_CONSTRUCTION_FINISHED )
-					MN_BuildingAddToList( _(bmBuildings[baseID][i-1].title), i-1 );
+				building = B_GetBuilding ( bmBuildings[ccs.actualBaseID][i-1].depends );
+				bmBuildings[ccs.actualBaseID][i-1].dependsBuilding = building;
+				if ( bmBuildings[ccs.actualBaseID][i-1].dependsBuilding->buildingStatus[0] > B_CONSTRUCTION_FINISHED )
+					MN_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i-1].title), i-1 );
 			}
 			else
 			{
-				MN_BuildingAddToList( _(bmBuildings[baseID][i-1].title), i-1 );
+				MN_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i-1].title), i-1 );
 			}
 		}
 	}
 
 	//puts also the last building to the list
-	if ( bmBuildings[baseID][i-1].visible )
+	if ( bmBuildings[ccs.actualBaseID][i-1].visible )
 	{
-		if ( bmBuildings[baseID][i-1].depends )
+		if ( bmBuildings[ccs.actualBaseID][i-1].depends )
 		{
-			building = B_GetBuilding ( bmBuildings[baseID][i-1].depends );
-			bmBuildings[baseID][i-1].dependsBuilding = building;
-			if ( bmBuildings[baseID][i-1].dependsBuilding->buildingStatus[0] > B_CONSTRUCTION_FINISHED )
-				MN_BuildingAddToList( _(bmBuildings[baseID][i-1].title), i-1 );
+			building = B_GetBuilding ( bmBuildings[ccs.actualBaseID][i-1].depends );
+			bmBuildings[ccs.actualBaseID][i-1].dependsBuilding = building;
+			if ( bmBuildings[ccs.actualBaseID][i-1].dependsBuilding->buildingStatus[0] > B_CONSTRUCTION_FINISHED )
+				MN_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i-1].title), i-1 );
 		}
 		else
 		{
-			MN_BuildingAddToList( _(bmBuildings[baseID][i-1].title), i-1 );
+			MN_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i-1].title), i-1 );
 		}
 	}
 
 	if ( ! baseCurrent->buildingCurrent )
-		baseCurrent->buildingCurrent = &bmBuildings[baseID][ baseCurrent->buildingListArray[ 0 ] ];
+		baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][ baseCurrent->buildingListArray[ 0 ] ];
 
 	if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] > B_NOT_SET )
 		MN_NewBuilding();
@@ -943,7 +941,7 @@ void MN_BaseMapClick_f( void )
 	y = atoi( Cmd_Argv( 2 ) );
 	if ( baseCurrent->map[x][y][baseCurrent->baseLevel] != -1 )
 	{
-		entry = &bmBuildings[baseID][ B_GetIDFromList( baseCurrent->map[x][y][baseCurrent->baseLevel] ) ];
+		entry = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[x][y][baseCurrent->baseLevel] ) ];
 		if ( entry->onClick[0] != '\0' )
 			Cbuf_ExecuteText( EXEC_NOW, entry->onClick );
 	}
@@ -968,7 +966,7 @@ void MN_BuildingClick_f( void )
 	if ( num >= baseCurrent->numList )
 		num = baseCurrent->buildingCurrent->id;
 
-	baseCurrent->buildingCurrent = &bmBuildings[baseID][ B_GetIDFromList( num ) ];
+	baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( num ) ];
 
 	MN_DrawBuilding();
 }
@@ -1269,7 +1267,7 @@ void MN_DrawBase( void )
 	if ( ! baseCurrent )
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
 
-	if (! bmBuildings[baseID] )
+	if (! bmBuildings[ccs.actualBaseID] )
 		MN_BuildingInit();
 
 	bvScale = ccs.basezoom;
@@ -1294,7 +1292,7 @@ void MN_DrawBase( void )
 
 			if ( baseCurrent->map[a][b][baseCurrent->baseLevel] != -1 )
 			{
-				entry = &bmBuildings[baseID][ B_GetIDFromList( baseCurrent->map[a][b][baseCurrent->baseLevel] ) ];
+				entry = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[a][b][baseCurrent->baseLevel] ) ];
 // 				Com_Printf("%s\tl:%i - b:%i (%i:%i)\n", entry->name, B_GetIDFromList( baseCurrent->map[a][b][baseCurrent->baseLevel] ), baseCurrent->map[a][b][baseCurrent->baseLevel], a, b );
 
 				if ( entry->buildingStatus[entry->howManyOfThisType] == B_UNDER_CONSTRUCTION )
@@ -1388,7 +1386,7 @@ void MN_DrawBase( void )
 					{
 						if ( baseCurrent->map[b][a][baseCurrent->baseLevel-1] == -1 )
 							continue;
-						else if ( bmBuildings[baseID][ B_GetIDFromList( baseCurrent->map[b][a][baseCurrent->baseLevel-1] ) ].notUpOn )
+						else if ( bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[b][a][baseCurrent->baseLevel-1] ) ].notUpOn )
 							continue;
 					}
 					image = "base/highlight";
@@ -1425,15 +1423,15 @@ MN_BaseInit
 */
 void MN_BaseInit( void )
 {
-	baseID = (int) Cvar_VariableValue("mn_base_id");
+	ccs.actualBaseID = (int) Cvar_VariableValue("mn_base_id");
 
-	baseCurrent = &bmBases[ baseID ];
+	baseCurrent = &bmBases[ ccs.actualBaseID ];
 
 	if ( ! baseCurrent->baseLevel )
 		baseCurrent->baseLevel = 0;
 
 	// stuff for homebase
-	if ( baseID == 0 )
+	if ( ccs.actualBaseID == 0 )
 	{
 
 	}
@@ -1501,19 +1499,17 @@ MN_NextBase
 */
 void MN_NextBase( void )
 {
-	int baseID;
-
-	baseID = (int)Cvar_VariableValue( "mn_base_id" );
-	if ( baseID < ccs.numBases )
-		baseID++;
+	ccs.actualBaseID = (int)Cvar_VariableValue( "mn_base_id" );
+	if ( ccs.actualBaseID < ccs.numBases )
+		ccs.actualBaseID++;
 	else
-		baseID = 0;
+		ccs.actualBaseID = 0;
 
-	if ( ! bmBases[baseID].founded )
+	if ( ! bmBases[ccs.actualBaseID].founded )
 		return;
 	else
 	{
-		Cbuf_AddText( va( "mn_select_base %i\n", baseID ) );
+		Cbuf_AddText( va( "mn_select_base %i\n", ccs.actualBaseID ) );
 		Cbuf_Execute();
 	}
 }
@@ -1525,20 +1521,18 @@ MN_PrevBase
 */
 void MN_PrevBase( void )
 {
-	int baseID;
-
-	baseID = (int)Cvar_VariableValue( "mn_base_id" );
-	if ( baseID > 0 )
-		baseID--;
+	ccs.actualBaseID = (int)Cvar_VariableValue( "mn_base_id" );
+	if ( ccs.actualBaseID > 0 )
+		ccs.actualBaseID--;
 	else
-		baseID = ccs.numBases-1;
+		ccs.actualBaseID = ccs.numBases-1;
 
 	// this must be false - but i'm paranoid'
-	if ( ! bmBases[baseID].founded )
+	if ( ! bmBases[ccs.actualBaseID].founded )
 		return;
 	else
 	{
-		Cbuf_AddText( va( "mn_select_base %i\n", baseID ) );
+		Cbuf_AddText( va( "mn_select_base %i\n", ccs.actualBaseID ) );
 		Cbuf_Execute();
 	}
 }
@@ -1550,42 +1544,45 @@ MN_SelectBase
 */
 void MN_SelectBase( void )
 {
-	int whichBaseID;
-
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: select_base <baseID>\n") );
+		Com_Printf( _("Usage: select_base <ccs.actualBaseID>\n") );
 		return;
 	}
-	whichBaseID = atoi( Cmd_Argv( 1 ) );
+	ccs.actualBaseID = atoi( Cmd_Argv( 1 ) );
 
-	if ( whichBaseID < 0 )
+	if ( ccs.actualBaseID < 0 )
 	{
 		mapAction = MA_NEWBASE;
-		whichBaseID = 0;
-		while ( bmBases[whichBaseID].founded && whichBaseID < MAX_BASES )
-			whichBaseID++;
-		if ( whichBaseID < MAX_BASES )
+		ccs.actualBaseID = 0;
+		while ( bmBases[ccs.actualBaseID].founded && ccs.actualBaseID < MAX_BASES )
+			ccs.actualBaseID++;
+		if ( ccs.actualBaseID < MAX_BASES )
 		{
-			Cvar_Set( "mn_basename", va( "base %i", whichBaseID ) );
-			baseCurrent = &bmBases[ whichBaseID ];
+			Cvar_Set( "mn_basename", va( "base %i", ccs.actualBaseID ) );
+			baseCurrent = &bmBases[ ccs.actualBaseID ];
 		}
 		else
+		{
 			Com_Printf(_("MaxBases reached\n"));
+			// select the first base in list
+			ccs.actualBaseID = 0;
+			baseCurrent = &bmBases[ ccs.actualBaseID ];
+		}
 	}
 	else
 	{
-		baseCurrent = &bmBases[ whichBaseID ];
+		baseCurrent = &bmBases[ ccs.actualBaseID ];
 		menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
 		if ( baseCurrent->founded ) {
 			mapAction = MA_NONE;
 			MN_PushMenu( "bases" );
 		} else {
 			mapAction = MA_NEWBASE;
-			Cvar_Set( "mn_basename", va( "base %i", whichBaseID ) );
+			Cvar_Set( "mn_basename", va( "base %i", ccs.actualBaseID ) );
 		}
 	}
-	Cvar_SetValue( "mn_base_id", whichBaseID );
+	Cvar_SetValue( "mn_base_id", ccs.actualBaseID );
 }
 
 
@@ -1629,14 +1626,20 @@ void B_BaseAttack ( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("sage: base_attack <baseID>\n") );
+		Com_Printf( _("sage: base_attack <ccs.actualBaseID>\n") );
 		return;
 	}
 
 	whichBaseID = atoi( Cmd_Argv( 1 ) );
 
-	if ( whichBaseID < MAX_BASES )
+	if ( whichBaseID < MAX_BASES && bmBases[whichBaseID].founded )
+	{
 		bmBases[whichBaseID].baseStatus = BASE_UNDER_ATTACK;
+		// TODO: New menu for:
+		//      defend -> call AssembleBase for this base
+		//      continue -> return to geoscape
+		MN_Popup( _("Base attack"), va(_("Base %s is under attack"), bmBases[whichBaseID].title ) );
+	}
 
 #if 0	//TODO: run eventhandler for each building in base
 	if ( b->onAttack )
@@ -1691,7 +1694,7 @@ void B_AssembleMap ( void )
 
 			if ( baseCurrent->map[a][b][0] != -1 )
 			{
-				entry = &bmBuildings[baseID][ B_GetIDFromList( baseCurrent->map[a][b][0] ) ];
+				entry = &bmBuildings[whichBaseID][ B_GetIDFromList( baseCurrent->map[a][b][0] ) ];
 
 				if ( !entry->used && entry->needs && entry->visible )
 					entry->used = 1;
@@ -1727,7 +1730,7 @@ void MN_NewBases( void )
 {
 	// reset bases
 	int i;
-	baseID = 0;
+	ccs.actualBaseID = 0;
 	for ( i = 0; i < MAX_BASES; i++ )
 		MN_ClearBase( &bmBases[i] );
 }
@@ -1831,7 +1834,7 @@ void MN_LoadBases( sizebuf_t *sb, int version )
 	//     not true) being lost. Do you understand what I mean??
 	for ( i = 0, base = bmBases; i < num; i++, base++ )
 	{
-		baseID = i;
+		ccs.actualBaseID = i;
 		baseCurrent = base;
 		baseCurrent->allBuildingsList[0] = '\0';
 		baseCurrent->numList = 0;
@@ -1975,7 +1978,7 @@ void MN_ResetBaseManagement( void )
 	// reset menu structures
 	numBuildings = 0;
 	numProductions = 0;
-	baseID = 0;
+	ccs.actualBaseID = 0;
 
 	// get data memory
 	if ( bmDataSize )
@@ -2016,7 +2019,7 @@ void MN_ResetBaseManagement( void )
 	Cmd_AddCommand( "reset_building_current", MN_ResetBuildingCurrent );
 	Cmd_AddCommand( "baselist", CL_BaseList );
 	Cmd_AddCommand( "buildinglist", CL_BuildingList );
-	Cvar_SetValue( "mn_base_id", baseID );
+	Cvar_SetValue( "mn_base_id", ccs.actualBaseID );
 }
 
 /*

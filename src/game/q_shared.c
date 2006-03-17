@@ -2182,13 +2182,11 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		strncpy( (char *)b, token, MAX_VAR );
 		w = strlen(token)+1;
 		if ( w > MAX_VAR ) w = MAX_VAR;
-		b[w] = '\0';
 		return w;
 
 	case V_LONGSTRING:
 		strcpy( (char *)b, token );
 		w = strlen(token)+1;
-		b[w] = '\0';
 		return w;
 
 	case V_POINTER:
@@ -2332,7 +2330,6 @@ int Com_SetValue( void *base, void *set, int type, int ofs )
 	case V_LONGSTRING:
 		strcpy( (char *)b, (char *)set );
 		len = strlen((char *)set)+1;
-		b[len] = '\0';
 		return len;
 
 	case V_ALIGN:

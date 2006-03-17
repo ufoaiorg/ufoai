@@ -2147,9 +2147,9 @@ G_ClientTeamInfo
 */
 void G_ClientTeamInfo( player_t *player )
 {
-	equipDef_t *ed;
+// 	equipDef_t *ed;
 	edict_t *ent;
-	char	*name;
+// 	char	*name;
 	int		i, j, k, length;
 	int		container, x, y;
 	item_t	item;
@@ -2165,6 +2165,7 @@ void G_ClientTeamInfo( player_t *player )
 			break;
 
 	// search equipment definition
+#if 0
 	name = gi.cvar_string( "equip" );
 	for ( i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++ )
 		if ( !strcmp( name, ed->name ) )
@@ -2174,7 +2175,7 @@ void G_ClientTeamInfo( player_t *player )
 		ed = NULL;
 		Com_Printf( "Equipment '%s' not found, accepting any equipment!\n", name );
 	}
-
+#endif
 	memset( count, 0, sizeof( count ) );
 	for ( i = 0; i < length; i++ )
 	{
@@ -2218,15 +2219,18 @@ void G_ClientTeamInfo( player_t *player )
 				y = gi.ReadByte();
 
 				// check info and add item if ok
-				if ( !ed ) Com_AddToInventory( &ent->i, item, container, x, y );
-				else
+				// NOTE: Commented out because a player should be able
+				//       to buy and collect new items and weapons
+// 				if ( !ed )
+					Com_AddToInventory( &ent->i, item, container, x, y );
+/*				else
 				{
 					count[item.t]++;
 					if ( count[item.t] > ed->num[item.t] )
 						gi.cprintf( player, PRINT_HIGH, _("Item '%s' not allowed and removed from inventory.\n"), gi.csi->ods[item.t].name );
 					else
 						Com_AddToInventory( &ent->i, item, container, x, y );
-				}
+				}*/
 
 				// get next item
 				item.t = gi.ReadByte();

@@ -464,9 +464,16 @@ Draw_Color
 void Draw_Color (float *rgba)
 {
 	if ( rgba )
+	{
+		if ( rgba[3] < 1.0f )
+			qglEnable (GL_BLEND);
 		qglColor4fv( rgba );
+	}
 	else
+	{
+		qglDisable (GL_BLEND);
 		qglColor4f( 1, 1, 1, 1 );
+	}
 }
 
 /*
@@ -701,7 +708,7 @@ void Draw_Fill (int x, int y, int w, int h, int style, vec4_t color)
 	nw = w * vid.rx;
 	nh = h * vid.ry;
 
-	qglColor4fv( color );
+	Draw_Color( color );
 
 	qglDisable (GL_TEXTURE_2D);
 	qglBegin (GL_QUADS);
@@ -735,7 +742,7 @@ void Draw_Fill (int x, int y, int w, int h, int style, vec4_t color)
 	}
 
 	qglEnd ();
-	qglColor4f (1,1,1,1);
+	Draw_Color( NULL );
 	qglEnable (GL_TEXTURE_2D);
 }
 

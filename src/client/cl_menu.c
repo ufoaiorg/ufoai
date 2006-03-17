@@ -425,14 +425,14 @@ qboolean Com_CheckShape( int shape[16], int x, int y )
 
 /*
 * MN_DrawFree
-* Draws the a rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel).
+* Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel).
 */
 void MN_DrawFree (int posx, int posy, int sizex, int sizey)
 {
 	vec4_t color;
 	int line[10];
-	VectorSet( color, 0.0f, 0.0f, 1.0f );
-	color[3] = 1.0f; //TODO:DEBUG alpha doesn't work ... why?
+	VectorSet( color, 0.0f, 1.0f, 0.0f );
+	color[3] = 0.7f;
 	re.DrawColor( color );
 	line[0]=line[6]=line[8]=posx;
 	line[1]=line[3]=line[9]=posy,
@@ -557,7 +557,7 @@ void MN_ExecuteActions( menu_t *menu, menuAction_t *first )
 				if ( nps[np].ofs > 0 )
 					Com_SetValue( node, (char *)data, nps[np].type, nps[np].ofs );
 				else
-					node->data[-nps[np].ofs] = data;
+					node->data[-(nps[np].ofs)] = data;
 
 			}
 			break;
@@ -824,7 +824,6 @@ qboolean MN_CheckNodeZone( menuNode_t *node, int x, int y )
 {
 	int		sx, sy, tx, ty;
 
-
 	// containers
 	if ( node->type == MN_CONTAINER )
 	{
@@ -894,8 +893,10 @@ qboolean MN_CursorOnMenu( int x, int y )
 		menu = menuStack[--sp];
 		for ( node = menu->firstNode; node; node = node->next )
 			if ( MN_CheckNodeZone( node, x, y ) )
+			{
 				// found an element
 				return true;
+			}
 
 		if ( menu->renderNode )
 		{
@@ -1147,7 +1148,6 @@ void MN_TextClick( menuNode_t *node, int mouseOver )
 {
 	Cbuf_AddText( va( "%s_click %i\n", node->name, mouseOver-1 ) );
 }
-
 
 /*
 =================
@@ -1435,18 +1435,25 @@ MN_Tooltip
 void MN_Tooltip ( menuNode_t* node, int x, int y )
 {
 	int l;
+	char* tooltip;
+	vec4_t color;
 	// tooltips
-	if ( x > node->pos[0] && y > node->pos[1] && x < node->pos[0] + node->size[0] && y < node->pos[1] + node->size[1] )
+	if ( node->data[5] )
 	{
-		if ( node->data[5] )
-		{
-			x += 5;
-			y += 5;
-			l = re.DrawPropLength( "f_small", _((char *)node->data[5]) );
-			if ( x + l > viddef.width )
-				x -= l;
-			re.DrawPropString("f_small", 0, x, y, _((char *)node->data[5]) );
-		}
+		VectorSet( color, 0.0f, 0.0f, 0.0f );
+		color[3] = 0.7f;
+		x += 5;
+		y += 5;
+		tooltip = (char *)node->data[5];
+		l = re.DrawPropLength( "f_small", _(tooltip) );
+		if ( x + l > viddef.width )
+			x -= l;
+		re.DrawFill(x - 3, y - 3, l + 6, 20, 0, color );
+		VectorSet( color, 0.0f, 0.8f, 0.0f );
+		color[3] = 1.0f;
+		re.DrawColor( color );
+		re.DrawPropString("f_small", 0, x, y, _(tooltip) );
+		re.DrawColor( NULL );
 	}
 }
 
@@ -1458,7 +1465,7 @@ MN_DrawMenus
 void MN_DrawMenus( void )
 {
 	modelInfo_t	mi, pmi;
-	menuNode_t	*node;
+	menuNode_t	*node, *hover = NULL;
 	menu_t		*menu;
 	animState_t	*as;
 	char		*ref, *font;
@@ -1482,6 +1489,7 @@ void MN_DrawMenus( void )
 	{
 		menu = menuStack[sp++];
 		for ( node = menu->firstNode; node; node = node->next )
+		{
 			if ( !node->invis && (node->data[0] ||
 				node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP) )
 			{
@@ -1492,8 +1500,12 @@ void MN_DrawMenus( void )
 					mouseOver = MN_CheckNodeZone( node, mx, my );
 					if ( mouseOver != node->state )
 					{
-						if ( mouseOver ) MN_ExecuteActions( menu, node->mouseIn );
-						else MN_ExecuteActions( menu, node->mouseOut );
+						// maybe we are leaving to another menu
+						hover = NULL;
+						if ( mouseOver )
+							MN_ExecuteActions( menu, node->mouseIn );
+						else
+							MN_ExecuteActions( menu, node->mouseOut );
 						node->state = mouseOver;
 					}
 				}
@@ -1511,8 +1523,8 @@ void MN_DrawMenus( void )
 					if ( !ref )
 					{
 						// bad reference
-		//				node->invis = true;
-		//				Com_Printf( "MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data );
+						node->invis = true;
+						Com_Printf( "MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data );
 						continue;
 					}
 					strncpy( source, ref, MAX_VAR );
@@ -1808,11 +1820,15 @@ void MN_DrawMenus( void )
 				case MN_BASEMAP:
 					MN_DrawBase();
 					break;
-				}
+				} // switch
 
-				// draw the tooltips on top of everything
-				MN_Tooltip( node, mx, my );
-		}
+				// mouseover?
+				if ( node->state == true )
+					hover = node;
+			} // if
+		} // for
+		if ( hover )
+			MN_Tooltip(hover, mx, my);
 	}
 	re.DrawColor( NULL );
 }
@@ -2308,8 +2324,6 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 					found = true;
 					break;
 				}
-
-
 		} while ( found );
 
 		// test for end or unknown token
@@ -2386,6 +2400,7 @@ qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 						else
 						{
 							// a reference to data is handled like this
+// 							Com_Printf( "%i %s\n", val->ofs, *token );
 							node->data[-(val->ofs)] = curadata;
 							if ( **token == '*' )
 								curadata += Com_ParseValue( curadata, *token, V_STRING, 0 );
