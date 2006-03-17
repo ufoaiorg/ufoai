@@ -200,7 +200,7 @@ GL_DrawAliasShadow
 =============
 */
 //extern	vec3_t			lightspot;
-
+#if 0
 void GL_DrawAliasShadow (dmdl_t *paliashdr, int posenum)
 {
 	dtrivertx_t	*verts;
@@ -221,13 +221,6 @@ void GL_DrawAliasShadow (dmdl_t *paliashdr, int posenum)
 	order = (int *)((byte *)paliashdr + paliashdr->ofs_glcmds);
 
 	height = -lheight + 1.0;
-
-	/* stencilbuffer shadows */
-	if (have_stencil && gl_stencilshadow->value) {
-		qglEnable(GL_STENCIL_TEST);
-		qglStencilFunc(GL_EQUAL, 1, 2);
-		qglStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
-	}
 
 	while (1)
 	{
@@ -268,11 +261,8 @@ void GL_DrawAliasShadow (dmdl_t *paliashdr, int posenum)
 
 		qglEnd ();
 	}
-	/* stencilbuffer shadows */
-	if (have_stencil && gl_stencilshadow->value)
-		qglDisable(GL_STENCIL_TEST);
 }
-
+#endif
 /*
 ** R_CullAliasModel
 */
@@ -618,7 +608,7 @@ void R_DrawAliasModel (entity_t *e)
 		qglDisable (GL_BLEND);
 	}
 
-	if ( gl_shadows->value && (e->flags & RF_SHADOW) )
+	if ( gl_shadows->value == 1 && (e->flags & RF_SHADOW) )
 	{
 		if ( !(e->flags & RF_TRANSLUCENT) ) qglDepthMask (0);
 		qglEnable (GL_BLEND);
@@ -636,6 +626,10 @@ void R_DrawAliasModel (entity_t *e)
 
 		qglDisable (GL_BLEND);
 		if ( !(e->flags & RF_TRANSLUCENT) ) qglDepthMask (1);
+	}
+	else if ( gl_shadows->value == 2 && (e->flags & RF_SHADOW) )
+	{
+		R_DrawShadowVolume( e );
 	}
 
 	if ( gl_fog->value && r_newrefdef.fog ) qglDisable( GL_FOG );

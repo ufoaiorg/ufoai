@@ -107,7 +107,7 @@ Com_ParseFire
 void Com_ParseFire( char *name, char **text, fireDef_t *fd )
 {
 	value_t	*fdp;
-	char	*errhead = "Com_ParseFire: unexptected end of file";
+	char	*errhead = _("Com_ParseFire: unexptected end of file");
 	char	*token;
 
 	// get its body
@@ -115,7 +115,7 @@ void Com_ParseFire( char *name, char **text, fireDef_t *fd )
 
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( "Com_ParseFire: fire definition \"%s\" without body ignored\n", name );
+		Com_Printf( _("Com_ParseFire: fire definition \"%s\" without body ignored\n"), name );
 		return;
 	}
 
@@ -150,9 +150,9 @@ void Com_ParseFire( char *name, char **text, fireDef_t *fd )
 						break;
 					}
 				if ( skill >= SKILL_NUM_TYPES )
-					Com_Printf( "Com_ParseFire: unknown weapon skill \"%s\" ignored (weapon %s)\n", token, name );
+					Com_Printf( _("Com_ParseFire: unknown weapon skill \"%s\" ignored (weapon %s)\n"), token, name );
 			}
-			else Com_Printf( "Com_ParseFire: unknown token \"%s\" ignored (weapon %s)\n", token, name );
+			else Com_Printf( _("Com_ParseFire: unknown token \"%s\" ignored (weapon %s)\n"), token, name );
 		}
 	} while ( *text );
 }
@@ -165,7 +165,7 @@ Com_ParseArmor
 */
 void Com_ParseArmor( char *name, char **text, short *ad )
 {
-	char	*errhead = "Com_ParseFire: unexptected end of file";
+	char	*errhead = _("Com_ParseFire: unexptected end of file");
 	char	*token;
 	int		i;
 
@@ -174,7 +174,7 @@ void Com_ParseArmor( char *name, char **text, short *ad )
 
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( "Com_ParseArmor: armor definition \"%s\" without body ignored\n", name );
+		Com_Printf( _("Com_ParseArmor: armor definition \"%s\" without body ignored\n"), name );
 		return;
 	}
 
@@ -194,7 +194,7 @@ void Com_ParseArmor( char *name, char **text, short *ad )
 			}
 
 		if ( i >= csi.numDTs )
-			Com_Printf( "Com_ParseArmor: unknown damage type \"%s\" ignored (in %s)\n", token, name );
+			Com_Printf( _("Com_ParseArmor: unknown damage type \"%s\" ignored (in %s)\n"), token, name );
 	} while ( *text );
 }
 
@@ -206,7 +206,7 @@ Com_ParseItem
 */
 void Com_ParseItem( char *name, char **text )
 {
-	char		*errhead = "Com_ParseItem: unexptected end of file (weapon ";
+	char		*errhead = _("Com_ParseItem: unexptected end of file (weapon ");
 	value_t		*val;
 	objDef_t	*od;
 	char		*token;
@@ -219,7 +219,7 @@ void Com_ParseItem( char *name, char **text )
 
 	if ( i < csi.numODs )
 	{
-		Com_Printf( "Com_ParseItem: weapon def \"%s\" with same name found, second ignored\n", name );
+		Com_Printf( _("Com_ParseItem: weapon def \"%s\" with same name found, second ignored\n"), name );
 		return;
 	}
 
@@ -234,7 +234,7 @@ void Com_ParseItem( char *name, char **text )
 
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( "Com_ParseItem: weapon def \"%s\" without body ignored\n", name );
+		Com_Printf( _("Com_ParseItem: weapon def \"%s\" without body ignored\n"), name );
 		csi.numODs--;
 		return;
 	}
@@ -268,7 +268,7 @@ void Com_ParseItem( char *name, char **text )
 			}
 
 		if ( !val->string )
-			Com_Printf( "Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n", token, name );
+			Com_Printf( _("Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n"), token, name );
 
 	} while ( *text );
 
@@ -319,7 +319,7 @@ Com_ParseInventory
 */
 void Com_ParseInventory( char *name, char **text )
 {
-	char		*errhead = "Com_ParseInventory: unexptected end of file (inventory ";
+	char		*errhead = _("Com_ParseInventory: unexptected end of file (inventory ");
 	invDef_t	*id;
 	value_t		*idp;
 	char		*token;
@@ -332,7 +332,7 @@ void Com_ParseInventory( char *name, char **text )
 
 	if ( i < csi.numIDs )
 	{
-		Com_Printf( "Com_ParseInventory: inventory def \"%s\" with same name found, second ignored\n", name );
+		Com_Printf( _("Com_ParseInventory: inventory def \"%s\" with same name found, second ignored\n"), name );
 		return;
 	}
 
@@ -347,7 +347,7 @@ void Com_ParseInventory( char *name, char **text )
 
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( "Com_ParseInventory: inventory def \"%s\" without body ignored\n", name );
+		Com_Printf( _("Com_ParseInventory: inventory def \"%s\" without body ignored\n"), name );
 		csi.numIDs--;
 		return;
 	}
@@ -377,7 +377,7 @@ void Com_ParseInventory( char *name, char **text )
 			}
 
 		if ( !idp->string )
-			Com_Printf( "Com_ParseInventory: unknown token \"%s\" ignored (inventory %s)\n", token, name );
+			Com_Printf( _("Com_ParseInventory: unknown token \"%s\" ignored (inventory %s)\n"), token, name );
 
 	} while ( *text );
 }
@@ -446,7 +446,7 @@ Com_ParseEquipment
 */
 void Com_ParseEquipment( char *name, char **text )
 {
-	char		*errhead = "Com_ParseEquipment: unexptected end of file (equipment ";
+	char		*errhead = _("Com_ParseEquipment: unexptected end of file (equipment ");
 	equipDef_t	*ed;
 	char		*token;
 	int			i, n;
@@ -458,7 +458,7 @@ void Com_ParseEquipment( char *name, char **text )
 
 	if ( i < csi.numEDs )
 	{
-		Com_Printf( "Com_ParseEquipment: equipment def \"%s\" with same name found, second ignored\n", name );
+		Com_Printf( _("Com_ParseEquipment: equipment def \"%s\" with same name found, second ignored\n"), name );
 		return;
 	}
 
@@ -473,7 +473,7 @@ void Com_ParseEquipment( char *name, char **text )
 
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( "Com_ParseEquipment: equipment def \"%s\" without body ignored\n", name );
+		Com_Printf( _("Com_ParseEquipment: equipment def \"%s\" without body ignored\n"), name );
 		csi.numEDs--;
 		return;
 	}
@@ -488,7 +488,7 @@ void Com_ParseEquipment( char *name, char **text )
 				token = COM_EParse( text, errhead, name );
 				if ( !*text || *token == '}' )
 				{
-					Com_Printf( "Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name );
+					Com_Printf( _("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n"), name );
 					return;
 				}
 				n = atoi( token );
@@ -497,7 +497,7 @@ void Com_ParseEquipment( char *name, char **text )
 			}
 
 		if ( i == csi.numODs )
-			Com_Printf( "Com_ParseEquipment: unknown token \"%s\" ignored (equipment %s)\n", token, name );
+			Com_Printf( _("Com_ParseEquipment: unknown token \"%s\" ignored (equipment %s)\n"), token, name );
 
 	} while ( *text );
 }
@@ -667,7 +667,7 @@ Com_ParseNames
 void Com_ParseNames( char *title, char **text )
 {
 	nameCategory_t	*nc;
-	char	*errhead = "Com_ParseNames: unexptected end of file (names ";
+	char	*errhead = _("Com_ParseNames: unexptected end of file (names ");
 	char	*token;
 	int		i;
 
@@ -689,7 +689,7 @@ void Com_ParseNames( char *title, char **text )
 
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( "Com_ParseNames: name def \"%s\" without body ignored\n", title );
+		Com_Printf( _("Com_ParseNames: name def \"%s\" without body ignored\n"), title );
 		if ( numNameCats - 1 == nc - nameCat ) numNameCats--;
 		return;
 	}
@@ -734,7 +734,7 @@ void Com_ParseNames( char *title, char **text )
 			}
 
 		if ( i == NAME_NUM_TYPES )
-			Com_Printf( "Com_ParseNames: unknown token \"%s\" ignored (names %s)\n", token, title );
+			Com_Printf( _("Com_ParseNames: unknown token \"%s\" ignored (names %s)\n"), token, title );
 
 	} while ( *text );
 }
@@ -748,7 +748,7 @@ Com_ParseActors
 void Com_ParseActors( char *title, char **text )
 {
 	nameCategory_t	*nc;
-	char	*errhead = "Com_ParseActors: unexptected end of file (actors ";
+	char	*errhead = _("Com_ParseActors: unexptected end of file (actors ");
 	char	*token;
 	int		i, j;
 
@@ -765,7 +765,7 @@ void Com_ParseActors( char *title, char **text )
 			memset( nc, 0, sizeof( nameCategory_t ) );
 			numNameCats++;
 		} else {
-			Com_Printf( "Too many name categories, '%s' ignored.\n", title );
+			Com_Printf( _("Too many name categories, '%s' ignored.\n"), title );
 			return;
 		}
 	}
@@ -776,7 +776,7 @@ void Com_ParseActors( char *title, char **text )
 
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( "Com_ParseActors: actor def \"%s\" without body ignored\n", title );
+		Com_Printf( _("Com_ParseActors: actor def \"%s\" without body ignored\n"), title );
 		if ( numNameCats - 1 == nc - nameCat ) numNameCats--;
 		return;
 	}
@@ -824,7 +824,7 @@ void Com_ParseActors( char *title, char **text )
 			}
 
 		if ( i == NAME_NUM_TYPES )
-			Com_Printf( "Com_ParseNames: unknown token \"%s\" ignored (actors %s)\n", token, title );
+			Com_Printf( _("Com_ParseNames: unknown token \"%s\" ignored (actors %s)\n"), token, title );
 
 	} while ( *text );
 }
@@ -839,7 +839,7 @@ void Com_ParseTeam( char *title, char **text )
 {
 	nameCategory_t	*nc;
 	teamDef_t		*td;
-	char	*errhead = "Com_ParseTeam: unexptected end of file (team ";
+	char	*errhead = _("Com_ParseTeam: unexptected end of file (team ");
 	char	*token;
 	int		i;
 
@@ -856,7 +856,7 @@ void Com_ParseTeam( char *title, char **text )
 			memset( td, 0, sizeof( teamDef_t ) );
 			numTeamDefs++;
 		} else {
-			Com_Printf( "Too many team definitions, '%s' ignored.\n", title );
+			Com_Printf( _("Too many team definitions, '%s' ignored.\n"), title );
 			return;
 		}
 	}
@@ -867,7 +867,7 @@ void Com_ParseTeam( char *title, char **text )
 
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( "Com_ParseTeam: team def \"%s\" without body ignored\n", title );
+		Com_Printf( _("Com_ParseTeam: team def \"%s\" without body ignored\n"), title );
 		if ( numTeamDefs - 1 == td - teamDef ) numTeamDefs--;
 		return;
 	}
@@ -891,7 +891,7 @@ void Com_ParseTeam( char *title, char **text )
 			}
 
 		if ( i == numNameCats )
-			Com_Printf( "Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, title );
+			Com_Printf( _("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n"), token, title );
 
 	} while ( *text );
 }
@@ -907,7 +907,7 @@ void Com_ParseTeam( char *title, char **text )
 
 void Com_ParseDamageTypes( char *name, char **text )
 {
-	char		*errhead = "Com_ParseItem: unexptected end of file (weapon ";
+	char		*errhead = _("Com_ParseTypes: unexptected end of file (weapon ");
 	char		*token;
 	int			i;
 
@@ -916,7 +916,7 @@ void Com_ParseDamageTypes( char *name, char **text )
 
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( "Com_ParseItem: damage type list \"%s\" without body ignored\n", name );
+		Com_Printf( _("Com_ParseTypes: damage type list \"%s\" without body ignored\n"), name );
 		csi.numODs--;
 		return;
 	}
@@ -934,7 +934,7 @@ void Com_ParseDamageTypes( char *name, char **text )
 		if ( i >= csi.numDTs )
 		{
 			if ( csi.numDTs >= MAX_DAMAGETYPES )
-				Sys_Error( "Too many damage types.\n" );
+				Sys_Error( _("Com_ParseTypes: Too many damage types.\n") );
 
 			strncpy( csi.dts[csi.numDTs], token, MAX_VAR );
 			csi.numDTs++;
@@ -1044,6 +1044,6 @@ void Com_ParseScripts( void )
 		else if ( !dedicated->value ) CL_ParseScriptSecond( type, name, &text );
 	}
 
-	Com_Printf( "Shared Client/Server Info loaded\n" );
+	Com_Printf( _("Shared Client/Server Info loaded\n") );
 }
 

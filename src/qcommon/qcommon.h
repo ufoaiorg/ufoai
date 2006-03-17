@@ -720,6 +720,7 @@ extern int anzInstalledMaps;
 extern int mapsInstalledInit;
 extern int mapInstalledIndex;
 
+int	FS_WriteFile( const void *buffer, int len, const char* filename );
 void 	FS_GetMaps ( void );
 void	FS_InitFilesystem (void);
 void	FS_SetGamedir (char *dir);

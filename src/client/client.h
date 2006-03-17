@@ -394,31 +394,10 @@ qboolean	CL_CheckOrDownloadFile (char *filename);
 
 void CL_AddNetgraph (void);
 
-//ROGUE
-typedef struct cl_sustain
-{
-	int			id;
-	int			type;
-	int			endtime;
-	int			nextthink;
-	int			thinkinterval;
-	vec3_t		org;
-	vec3_t		dir;
-	int			color;
-	int			count;
-	int			magnitude;
-	void		(*think)(struct cl_sustain *self);
-} cl_sustain_t;
-
-#define MAX_SUSTAINS		32
-void CL_ParticleSteamEffect2(cl_sustain_t *self);
-
 void CL_ParticleEffect (vec3_t org, vec3_t dir, int color, int count);
 void CL_ParticleEffect2 (vec3_t org, vec3_t dir, int color, int count);
-
 // RAFAEL
 void CL_ParticleEffect3 (vec3_t org, vec3_t dir, int color, int count);
-
 
 //=================================================
 
@@ -639,7 +618,7 @@ typedef struct lm_s {
 	float		sunfrac;
 
 	struct model_s	*model;
-} lm_t;
+} lm_t; /* local models */
 
 typedef struct mp_s {
 	char		ptl[MAX_QPATH];
@@ -648,7 +627,7 @@ typedef struct mp_s {
 	vec2_t		wait;
 	int			nextTime;
 	int			levelflags;
-} mp_t;
+} mp_t; /* mapparticles */
 
 extern lm_t LMs[MAX_LOCALMODELS];
 extern mp_t MPs[MAX_MAPPARTICLES];

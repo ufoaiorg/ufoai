@@ -139,6 +139,9 @@ typedef enum
 
 #include "gl_model.h"
 
+#define MAX_MODEL_DLIGHTS 3
+int RecursiveLightPoint (mnode_t *node, vec3_t start, vec3_t end);
+
 void GL_BeginRendering (int *x, int *y, int *width, int *height);
 void GL_EndRendering (void);
 
@@ -186,6 +189,13 @@ typedef struct font_s
 	byte	w, h;
 	float	rw, rh, rhl;
 } font_t;
+
+#ifdef BUILD_FREETYPE
+//new font stuff
+void            R_InitFreeType();
+void            R_DoneFreeType();
+void            RE_RegisterFTFont(const char *fontName, int pointSize, fontInfo_t * font);
+#endif /* BUILD_FREETYPE */
 
 //====================================================
 
@@ -235,6 +245,15 @@ extern	cvar_t	*r_lerpmodels;
 
 extern	cvar_t	*r_lightlevel;	// FIXME: This is a HACK to get the client's light level
 
+extern  cvar_t  *r_anisotropic;
+extern  cvar_t  *r_ext_max_anisotropy;
+extern  cvar_t  *r_texture_lod; // lod_bias
+extern  cvar_t  *r_displayrefresh;
+
+#ifdef BUILD_FREETYPE
+extern	cvar_t	*r_saveFontData;
+#endif
+
 extern cvar_t	*gl_vertex_arrays;
 
 extern cvar_t	*gl_ext_swapinterval;
@@ -257,13 +276,19 @@ extern	cvar_t	*gl_bitdepth;
 extern	cvar_t	*gl_mode;
 extern	cvar_t	*gl_log;
 extern	cvar_t	*gl_lightmap;
+/* shadow stuff */
+void R_ShadowBlend( void );
+void R_DrawShadowVolume (entity_t *e);
+void GL_DrawAliasShadowVolume (dmdl_t *paliashdr, int posenumm);
+void R_DrawShadow (entity_t *e);
 extern	cvar_t	*gl_shadows;
-extern	cvar_t	*gl_stencilshadow;
-/* stencilbuffer shadows */
-extern qboolean have_stencil;
+extern	cvar_t	*gl_shadow_debug_shade;
+extern	cvar_t	*gl_shadow_debug_volume;
+extern  cvar_t	*r_ati_separate_stencil;
+extern  cvar_t	*r_stencil_two_side;
 
 extern	cvar_t	*gl_dynamic;
-extern  cvar_t  *gl_monolightmap;
+extern  cvar_t	*gl_monolightmap;
 extern	cvar_t	*gl_nobind;
 extern	cvar_t	*gl_round_down;
 extern	cvar_t	*gl_picmip;
@@ -283,21 +308,21 @@ extern	cvar_t	*gl_modulate;
 extern	cvar_t	*gl_playermip;
 extern	cvar_t	*gl_drawbuffer;
 extern	cvar_t	*gl_3dlabs_broken;
-extern  cvar_t  *gl_driver;
+extern  cvar_t	*gl_driver;
 extern	cvar_t	*gl_swapinterval;
 extern	cvar_t	*gl_texturemode;
 extern	cvar_t	*gl_texturealphamode;
 extern	cvar_t	*gl_texturesolidmode;
-extern  cvar_t  *gl_saturatelighting;
-extern  cvar_t  *gl_lockpvs;
-extern	cvar_t  *gl_wire;
+extern  cvar_t	*gl_saturatelighting;
+extern  cvar_t	*gl_lockpvs;
+extern	cvar_t	*gl_wire;
 extern	cvar_t	*gl_fog;
 
 extern	cvar_t	*vid_fullscreen;
 extern	cvar_t	*vid_gamma;
 extern	cvar_t	*vid_grabmouse;
 
-extern	cvar_t		*intensity;
+extern	cvar_t	*intensity;
 
 extern	int		gl_lightmap_format;
 extern	int		gl_solid_format;
@@ -381,17 +406,17 @@ char	*va(char *format, ...);
 // does a varargs printf into a temp buffer
 #endif
 
-void COM_StripExtension (char *in, char *out);
+void	COM_StripExtension (char *in, char *out);
 
 void	Draw_GetPicSize (int *w, int *h, char *name);
 void	Draw_Pic (int x, int y, char *name);
 void	Draw_NormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
 void	Draw_StretchPic (int x, int y, int w, int h, char *name);
 void	Draw_Char (int x, int y, int c);
-int		Draw_PropChar (char *font, int x, int y, char c);
-int		Draw_PropString (char *font, int align, int x, int y, char *c);
-int		Draw_PropLength (char *font, char *c);
+int	Draw_PropChar (char *font, int x, int y, char c);
+int	Draw_PropLength (char *font, char *c);
 font_t	*Draw_AnalyzeFont (char *name, byte *pic, int w, int h);
+int	Draw_PropString (char *font, int align, int x, int y, char *c);
 void	Draw_TileClear (int x, int y, int w, int h, char *name);
 void	Draw_Fill (int x, int y, int w, int h, int style, vec4_t color);
 void	Draw_Color (float *rgba);
@@ -406,20 +431,21 @@ void	R_BeginFrame( float camera_separation );
 void	R_SwapBuffers( int );
 void	R_SetPalette ( const unsigned char *palette);
 
-int		Draw_GetPalette (void);
+int	Draw_GetPalette (void);
 
 void	Anim_Append( animState_t *as, model_t *mod, char *name );
 void	Anim_Change( animState_t *as, model_t *mod, char *name );
 void	Anim_Run( animState_t *as, model_t *mod, int msec );
 char	*Anim_GetName( animState_t *as, model_t *mod );
 
-
-void GL_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned *out,  int outwidth, int outheight);
+void	GL_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned *out,  int outwidth, int outheight);
 
 struct image_s *R_RegisterSkin (char *name);
 
-void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *height);
-image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t type, int bits);
+void	WriteTGA (char *filename, byte *data, int width, int height);
+
+void	LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *height);
+image_t	*GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t type, int bits);
 image_t	*GL_FindImage (char *pname, imagetype_t type);
 void	GL_TextureMode( char *string );
 void	GL_ImageList_f (void);
@@ -432,15 +458,15 @@ void	GL_ShutdownImages (void);
 
 void	GL_FreeUnusedImages (void);
 
-void GL_TextureAlphaMode( char *string );
-void GL_TextureSolidMode( char *string );
+void	GL_TextureAlphaMode( char *string );
+void	GL_TextureSolidMode( char *string );
 
-void R_DrawPtls( void );
+void	R_DrawPtls( void );
 
 /*
 ** GL extension emulation functions
 */
-void GL_DrawParticles( int n, const particle_t particles[], const unsigned colortable[768] );
+void	GL_DrawParticles( int n, const particle_t particles[], const unsigned colortable[768] );
 
 /*
 ** GL config stuff
@@ -499,6 +525,7 @@ typedef struct
 typedef struct
 {
 	float inverse_intensity;
+	int displayrefresh;
 	qboolean fullscreen;
 
 	int     prev_mode;
@@ -515,6 +542,19 @@ typedef struct
 	float camera_separation;
 	qboolean stereo_enabled;
 
+	qboolean stencil_two_side;
+	qboolean ati_separate_stencil;
+
+	int max_lod;
+
+	qboolean blend;
+	qboolean alpha_test;
+
+	qboolean stencil_warp;
+	qboolean anisotropic;
+	qboolean lod_bias;
+	qboolean arb_fragment_program;
+
 	unsigned char originalRedGammaTable[256];
 	unsigned char originalGreenGammaTable[256];
 	unsigned char originalBlueGammaTable[256];
@@ -522,6 +562,12 @@ typedef struct
 
 extern glconfig_t  gl_config;
 extern glstate_t   gl_state;
+
+#define GLSTATE_DISABLE_ALPHATEST	if (gl_state.alpha_test) { qglDisable(GL_ALPHA_TEST); gl_state.alpha_test=false; }
+#define GLSTATE_ENABLE_ALPHATEST	if (!gl_state.alpha_test) { qglEnable(GL_ALPHA_TEST); gl_state.alpha_test=true; }
+
+#define GLSTATE_DISABLE_BLEND		if (gl_state.blend) { qglDisable(GL_BLEND); gl_state.blend=false; }
+#define GLSTATE_ENABLE_BLEND		if (!gl_state.blend) { qglEnable(GL_BLEND); gl_state.blend=true; }
 
 /*
 ====================================================================

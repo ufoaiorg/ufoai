@@ -152,7 +152,16 @@ vidmode_t vid_modes[] =
 	{ "Mode 7: 1152x864",  1152, 864,  7 },
 	{ "Mode 8: 1280x1024",  1280, 1024, 8 },
 	{ "Mode 9: 1600x1200", 1600, 1200, 9 },
-	{ "Mode 10: 2048x1536", 2048, 1536, 10 }
+	{ "Mode 10: 2048x1536", 2048, 1536, 10 },
+	{ "Mode 11: 1024x480",  1024,  480, 11 }, /* Sony VAIO Pocketbook */
+	{ "Mode 12: 1152x768",  1152,  768, 12 }, /* Apple TiBook */
+	{ "Mode 13: 1280x854",  1280,  854, 13 }, /* Apple TiBook */
+	{ "Mode 14: 640x400",    640,  400, 14 }, /* generic 16:10 widescreen*/
+	{ "Mode 15: 800x500",    800,  500, 15 }, /* as found modern */
+	{ "Mode 16: 1024x640",  1024,  640, 16 }, /* notebooks    */
+ 	{ "Mode 17: 1280x800",  1280,  800, 17 },
+ 	{ "Mode 18: 1680x1050", 1680, 1050, 18 },
+ 	{ "Mode 19: 1920x1200", 1920, 1200, 19 }
 };
 
 qboolean VID_GetModeInfo( int *width, int *height, int mode )
@@ -268,6 +277,7 @@ qboolean VID_LoadRefresh( char *name )
 	ri.Con_Printf = VID_Printf;
 	ri.Sys_Error = VID_Error;
 	ri.FS_LoadFile = FS_LoadFile;
+	ri.FS_WriteFile = FS_WriteFile;
 	ri.FS_FreeFile = FS_FreeFile;
 	ri.FS_CheckFile = FS_CheckFile;
 	ri.FS_Gamedir = FS_Gamedir;

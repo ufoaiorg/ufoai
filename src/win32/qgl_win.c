@@ -411,6 +411,34 @@ void ( APIENTRY * qglMTexCoord2fSGIS)( GLenum, GLfloat, GLfloat );
 void ( APIENTRY * qglActiveTextureARB) ( GLenum );
 void ( APIENTRY * qglClientActiveTextureARB) ( GLenum );
 
+void ( APIENTRY * qglActiveStencilFaceEXT )(GLenum face);
+void ( APIENTRY * qglStencilOpSeparateATI )(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
+void ( APIENTRY * qglStencilFuncSeparateATI )(GLenum frontfunc, GLenum backfunc, GLint red, GLuint mask);
+
+void ( APIENTRY * qglProgramStringARB )(GLenum, GLenum, GLsizei, const GLvoid *);
+void ( APIENTRY * qglBindProgramARB )(GLenum, GLuint);
+void ( APIENTRY * qglDeleteProgramsARB )(GLsizei, const GLuint *);
+void ( APIENTRY * qglGenProgramsARB )(GLsizei, GLuint *);
+void ( APIENTRY * qglProgramEnvParameter4dARB )(GLenum, GLuint, GLdouble, GLdouble, GLdouble, GLdouble);
+void ( APIENTRY * qglProgramEnvParameter4dvARB )(GLenum, GLuint, const GLdouble *);
+void ( APIENTRY * qglProgramEnvParameter4fARB )(GLenum, GLuint, GLfloat, GLfloat, GLfloat, GLfloat);
+void ( APIENTRY * qglProgramEnvParameter4fvARB )(GLenum, GLuint, const GLfloat *);
+void ( APIENTRY * qglProgramLocalParameter4dARB )(GLenum, GLuint, GLdouble, GLdouble, GLdouble, GLdouble);
+void ( APIENTRY * qglProgramLocalParameter4dvARB )(GLenum, GLuint, const GLdouble *);
+void ( APIENTRY * qglProgramLocalParameter4fARB )(GLenum, GLuint, GLfloat, GLfloat, GLfloat, GLfloat);
+void ( APIENTRY * qglProgramLocalParameter4fvARB )(GLenum, GLuint, const GLfloat *);
+void ( APIENTRY * qglGetProgramEnvParameterdvARB )(GLenum, GLuint, GLdouble *);
+void ( APIENTRY * qglGetProgramEnvParameterfvARB )(GLenum, GLuint, GLfloat *);
+void ( APIENTRY * qglGetProgramLocalParameterdvARB )(GLenum, GLuint, GLdouble *);
+void ( APIENTRY * qglGetProgramLocalParameterfvARB )(GLenum, GLuint, GLfloat *);
+void ( APIENTRY * qglGetProgramivARB )(GLenum, GLenum, GLint *);
+void ( APIENTRY * qglGetProgramStringARB )(GLenum, GLenum, GLvoid *);
+void ( APIENTRY * qglGetVertexAttribdvARB )(GLuint, GLenum, GLdouble *);
+void ( APIENTRY * qglGetVertexAttribfvARB )(GLuint, GLenum, GLfloat *);
+void ( APIENTRY * qglGetVertexAttribivARB )(GLuint, GLenum, GLint *);
+void ( APIENTRY * qglGetVertexAttribPointervARB )(GLuint, GLenum, GLvoid* *);
+GLboolean ( APIENTRY * qglIsProgramARB )(GLuint);
+
 static void ( APIENTRY * dllAccum )(GLenum op, GLfloat value);
 static void ( APIENTRY * dllAlphaFunc )(GLenum func, GLclampf ref);
 GLboolean ( APIENTRY * dllAreTexturesResident )(GLsizei n, const GLuint *textures, GLboolean *residences);

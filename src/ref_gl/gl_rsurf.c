@@ -594,7 +594,7 @@ void R_DrawAlphaSurfaces (void)
 	//
 	// go back to the world matrix
 	//
-    qglLoadMatrixf (r_world_matrix);
+	qglLoadMatrixf (r_world_matrix);
 
 	qglEnable (GL_BLEND);
 	GL_TexEnv( GL_MODULATE );
@@ -910,12 +910,12 @@ void R_DrawInlineBModel (void)
 	//
 	for (i=0 ; i<currentmodel->nummodelsurfaces ; i++, psurf++)
 	{
-	// find which side of the node we are on
+		// find which side of the node we are on
 		pplane = psurf->plane;
 
 		dot = DotProduct (modelorg, pplane->normal) - pplane->dist;
 
-	// draw the polygon
+		// draw the polygon
 		if (((psurf->flags & SURF_PLANEBACK) && (dot < -BACKFACE_EPSILON)) ||
 			(!(psurf->flags & SURF_PLANEBACK) && (dot > BACKFACE_EPSILON)))
 		{
@@ -1004,12 +1004,12 @@ void R_DrawBrushModel (entity_t *e)
 		modelorg[2] = DotProduct (temp, up);
 	}
 
-    qglPushMatrix ();
-e->angles[0] = -e->angles[0];	// stupid quake bug
-e->angles[2] = -e->angles[2];	// stupid quake bug
+	qglPushMatrix ();
+	e->angles[0] = -e->angles[0];	// stupid quake bug
+	e->angles[2] = -e->angles[2];	// stupid quake bug
 	R_RotateForEntity (e);
-e->angles[0] = -e->angles[0];	// stupid quake bug
-e->angles[2] = -e->angles[2];	// stupid quake bug
+	e->angles[0] = -e->angles[0];	// stupid quake bug
+	e->angles[2] = -e->angles[2];	// stupid quake bug
 
 	GL_EnableMultitexture( true );
 	GL_SelectTexture( gl_texture0 );
@@ -1053,13 +1053,12 @@ void R_RecursiveWorldNode (mnode_t *node)
 	if (R_CullBox (node->minmaxs, node->minmaxs+3))
 		return;
 
-// if a leaf node, draw stuff
+	// if a leaf node, draw stuff
 	if (node->contents != -1)
 		return;
 
-// node is just a decision point, so go down the apropriate sides
-
-// find which side of the node we are on
+	// node is just a decision point, so go down the apropriate sides
+	// find which side of the node we are on
 	plane = node->plane;
 
 	switch (plane->type)

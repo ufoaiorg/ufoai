@@ -521,6 +521,39 @@ typedef struct _TargaHeader {
 	unsigned char	pixel_size, attributes;
 } TargaHeader;
 
+/*
+=============
+WriteTGA
+=============
+*/
+void WriteTGA (char *filename, byte *data, int width, int height)
+{
+	byte	*buffer;
+	int		i, c;
+
+	buffer = Z_Malloc(width*height*4 + 18);
+	memset (buffer, 0, 18);
+	buffer[2] = 2;		// uncompressed type
+	buffer[12] = width&255;
+	buffer[13] = width>>8;
+	buffer[14] = height&255;
+	buffer[15] = height>>8;
+	buffer[16] = 32;	// pixel size
+
+	// swap rgb to bgr
+	c = 18 + width * height * 4;
+	for (i=18 ; i<c ; i+=4)
+	{
+		buffer[i] = data[i-18+2];		// blue
+		buffer[i+1] = data[i-18+1];		// green
+		buffer[i+2] = data[i-18+0];		// red
+		buffer[i+3] = data[i-18+3];		// alpha
+	}
+
+	ri.FS_WriteFile(filename, c, buffer);
+
+	Z_Free (buffer);
+}
 
 /*
 =============
@@ -1005,6 +1038,11 @@ void GL_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned *out,
 			((byte *)(out+j))[3] = (pix1[3] + pix2[3] + pix3[3] + pix4[3])>>2;
 		}
 	}
+
+	if(gl_state.anisotropic)
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value );
+	if (gl_state.lod_bias)
+		qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT,GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 }
 
 /*
@@ -1314,7 +1352,9 @@ qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qb
 			break;
 		}
 	}
-	if (gl_embossfilter->value && mipmap && type != it_skin) R_FilterTexture (EMBOSS_FILTER, data, width, height, 1, 128, true, GL_MODULATE);
+	//emboss filter
+	if (gl_embossfilter->value && mipmap && type != it_skin)
+		R_FilterTexture (EMBOSS_FILTER, data, width, height, 1, 128, true, GL_MODULATE);
 
 	if (scaled_width == width && scaled_height == height)
 	{
@@ -1361,22 +1401,19 @@ qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qb
 	}
 done: ;
 
-	if (mipmap)
-	{
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
-	}
-	else
-	{
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
-	}
+	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (mipmap) ? gl_filter_min : gl_filter_max);
+	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 
 	if (clamp)
 	{
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	}
+
+	if ( r_anisotropic->value )
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT,   r_anisotropic->value );
+	if ( r_texture_lod->value )
+		qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT,GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 
 	return (samples == gl_alpha_format || samples == gl_compressed_alpha_format);
 }

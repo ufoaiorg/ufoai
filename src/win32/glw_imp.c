@@ -249,6 +249,22 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		dm.dmPelsHeight = height;
 		dm.dmFields     = DM_PELSWIDTH | DM_PELSHEIGHT;
 
+		if (r_displayrefresh->value !=0 )
+		{
+	    		gl_state.displayrefresh = r_displayrefresh->value;
+			dm.dmDisplayFrequency	= r_displayrefresh->value;
+			dm.dmFields		|= DM_DISPLAYFREQUENCY;
+			ri.Con_Printf(PRINT_ALL, "...display frequency is %d hz\n", gl_state.displayrefresh);
+		}
+		else 
+		{
+			HDC hdc = GetDC (NULL);
+			int displayref = GetDeviceCaps (hdc, VREFRESH);
+	                dm.dmDisplayFrequency	= displayref;
+			dm.dmFields				|= DM_DISPLAYFREQUENCY;
+			ri.Con_Printf(PRINT_ALL, "...using desktop frequency: %d hz\n", displayref);
+		}
+
 		if ( gl_bitdepth->value != 0 )
 		{
 			dm.dmBitsPerPel = gl_bitdepth->value;

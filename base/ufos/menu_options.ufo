@@ -136,7 +136,7 @@ menu options_video
 		pos		"868 138"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
-		click	{ cmd "mn_modify mn_glmode -1 0 10;" }
+		click	{ cmd "mn_modify mn_glmode -1 0 19;" }
 	}
 	pic res_inc
 	{
@@ -144,7 +144,7 @@ menu options_video
 		pos		"884 138"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
-		click	{ cmd "mn_modify mn_glmode +1 0 10;" }
+		click	{ cmd "mn_modify mn_glmode +1 0 19;" }
 	}
 
 	string full_str
@@ -293,19 +293,47 @@ menu options_video
 		}
 	}
 
+	string aniso_str
+	{
+		string	"Texture anisotropy level:"
+		pos		"500 290"
+	}
+	string aniso_value
+	{
+		string	"*cvar r_anisotropic"
+		pos		"840 290"
+		align	ur
+	}
+	pic aniso_dec
+	{
+		image	menu/buy_buttons1
+		pos		"868 288"
+		texl	"0 0"		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify r_anisotropic -1 0 16;" }
+	}
+	pic aniso_inc
+	{
+		image	menu/buy_buttons1
+		pos		"884 288"
+		texl	"16 0"		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify r_anisotropic +1 0 16;" }
+	}
+
 	string gamma_str
 	{
 		string	"Gamma:"
-		pos		"500 290"
+		pos		"500 490"
 	}
 	pic gamma_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"645 288"
+		pos		"645 488"
 	}
 	bar gamma_bar
 	{
-		pos		"654 293"
+		pos		"654 493"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar vid_gamma"

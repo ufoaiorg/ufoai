@@ -16,11 +16,12 @@ BUILD_SDLUFO=YES	# use SDL for cdrom and sound
 BUILD_GLX=YES		# X11 GLX driver. Works somewhat ok.
 BUILD_DEDICATED=YES	# build a dedicated ufo server
 BUILD_ALSA=YES		# build with alsa-support
-HAVE_IPV6=YES		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
+HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
-BUILD_JPEG=NO           # jpeg-6 compile in or link in?
+BUILD_JPEG=NO		# jpeg-6 compile in or link in?
+BUILD_FREETYPE=NO	# build with freetype support?
 BUILD_WITH_DGA=YES	# dga support compiled in
-BUILD_WITH_VIDMODE=YES  # vidmode support
+BUILD_WITH_VIDMODE=YES	# vidmode support
 
 # (hopefully) end of configurable options
 
@@ -156,6 +157,11 @@ ifeq ($(strip $(BUILD_JPEG)),YES)
 	BASE_CFLAGS+=-DBUILD_JPEG
 else
 	GLXLDFLAGS+=-ljpeg
+endif
+
+ifeq ($(strip $(BUILD_FREETYPE)),YES)
+	LDFLAGS+=$(shell freetype-config --libs)
+	BASE_CFLAGS+=$(shell freetype-config --cflags) -DBUILD_FREETYPE
 endif
 
 DEBUG_CFLAGS=$(BASE_CFLAGS) -g
@@ -629,6 +635,8 @@ REF_GL_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_rsurf.o \
 	$(BUILDDIR)/ref_gl/gl_warp.o \
 	$(BUILDDIR)/ref_gl/gl_particle.o \
+	$(BUILDDIR)/ref_gl/gl_arb_shader.o \
+	$(BUILDDIR)/ref_gl/gl_shadows.o \
 	\
 	$(BUILDDIR)/ref_gl/qgl_linux.o \
 	$(BUILDDIR)/ref_gl/q_shared.o \
@@ -725,6 +733,12 @@ $(BUILDDIR)/ref_gl/gl_image.o :       $(REF_GL_DIR)/gl_image.c
 	$(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_gl/gl_particle.o :    $(REF_GL_DIR)/gl_particle.c
+	$(DO_GL_SHLIB_CC)
+
+$(BUILDDIR)/ref_gl/gl_arb_shader.o :    $(REF_GL_DIR)/gl_arb_shader.c
+	$(DO_GL_SHLIB_CC)
+
+$(BUILDDIR)/ref_gl/gl_shadows.o :    $(REF_GL_DIR)/gl_shadows.c
 	$(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_gl/gl_light.o :       $(REF_GL_DIR)/gl_light.c

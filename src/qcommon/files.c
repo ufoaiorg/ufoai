@@ -1425,3 +1425,56 @@ void FS_GetMaps ( void )
 
 	Sys_FindClose ();
 }
+
+/*
+=================
+FS_WriteFile
+
+Properly handles partial writes
+=================
+*/
+int FS_WriteFile( const void *buffer, int len, const char* filename ) 
+{
+	int		block, remaining;
+	int		written;
+	byte	*buf;
+	int		tries;
+	FILE	*f;
+
+	if ( !fs_searchpaths ) {
+		Com_Error( ERR_FATAL, "Filesystem call made without initialization\n" );
+	}
+
+	// FIXME: Do we need more for security reasons?
+	if ( ( filename[0] == '.' && filename[1] == '.' ) || filename[0] == '/' )
+		return 0;
+
+	f = fopen( filename, "wb" );
+	buf = (byte *)buffer;
+
+	remaining = len;
+	tries = 0;
+	while (remaining) {
+		block = remaining;
+		written = fwrite (buf, 1, block, f);
+		if (written == 0) {
+			if (!tries) {
+				tries = 1;
+			} else {
+				Com_Printf( "FS_WriteFile: 0 bytes written\n" );
+				return 0;
+			}
+		}
+
+		if (written == -1) {
+			Com_Printf( "FS_WriteFile: -1 bytes written\n" );
+			return 0;
+		}
+
+		remaining -= written;
+		buf += written;
+	}
+	fclose( f );
+	return len;
+}
+

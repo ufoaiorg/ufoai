@@ -292,6 +292,7 @@ qboolean VID_LoadRefresh( char *name )
 	ri.Con_Printf = VID_Printf;
 	ri.Sys_Error = VID_Error;
 	ri.FS_LoadFile = FS_LoadFile;
+	ri.FS_WriteFile = FS_WriteFile;
 	ri.FS_FreeFile = FS_FreeFile;
 	ri.FS_CheckFile = FS_CheckFile;
 	ri.FS_Gamedir = FS_Gamedir;

@@ -396,6 +396,104 @@ void MN_StartServer ( void )
 	Cbuf_ExecuteText( EXEC_NOW, va("map %s\n", Cmd_Argv(1) ) );
 }
 
+/*
+* Com_MergeShapes
+* Will merge the second shape (=itemshape) into the first one on the position x/y
+*/
+void Com_MergeShapes(int *shape, int itemshape, int x, int y)
+{
+	//TODO-security: needs some checks for max-values!
+	int i;
+	for ( i=0; (i<4)&&(y+i<16); i++ ) {
+		shape[y+i] |= ((itemshape >> i*8) & 0xFF) << x;
+	}
+}
+
+/*
+* Com_CheckShape
+* Checks the shape if there is a 1-bit on the position x/y.
+*/
+qboolean Com_CheckShape( int shape[16], int x, int y )
+{
+	int row = shape[y];
+	int position=pow(2, x);
+	if ((row & position) == 0)
+		return false;
+	else
+		return true;
+}
+
+/*
+* MN_DrawFree
+* Draws the a rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel).
+*/
+void MN_DrawFree (int posx, int posy, int sizex, int sizey)
+{
+	vec4_t color;
+	int line[10];
+	VectorSet( color, 0.0f, 0.0f, 1.0f );
+	color[3] = 1.0f; //TODO:DEBUG alpha doesn't work ... why?
+	re.DrawColor( color );
+	line[0]=line[6]=line[8]=posx;
+	line[1]=line[3]=line[9]=posy,
+	line[2]=line[4]=line[0]+sizex;
+	line[5]=line[7]=line[1]+sizey;
+	re.DrawLineStrip(5,line);
+	line[0]=line[6]=line[8]=posx+1;
+	line[1]=line[3]=line[9]=posy+1,
+	line[2]=line[4]=line[0]+sizex-2;
+	line[5]=line[7]=line[1]+sizey-2;
+	re.DrawLineStrip(5,line);
+	re.DrawColor( NULL );
+}
+
+/*
+* MN_InvDrawFree
+* Draws the free and useable inventory positions when dragging an item.
+*/
+void MN_InvDrawFree(inventory_t *inv, menuNode_t *node)
+{
+	if (mouseSpace == MS_DRAG) {// && !(inv->c[csi.idEquip])) { // Draw only in dragging-mode (and not for the equip-'floor'?)
+		assert(inv);
+		int item = dragItem.t; // get the 'type' of the draged item
+		int container = node->mousefx;
+		int itemshape;
+		int free[16];	//The shapoe of the free positions.
+		int j;
+		for ( j=0; j<16; j++ ) free[j] = 0;
+
+		int x, y;
+		/* TODO: add armor support
+		if (csi.ids[container].armor) {
+			if (	Com_CheckToInventory( inv, item, container, 0, 0 )		//if container free OR..
+			||	(node->mousefx==dragFrom) ) {	// ..OR the dragged-item is in it
+				MN_DrawFree( node->pos[0], node->pos[1],  node->size[0], node->size[1] );
+			}
+		} else*/
+		if (csi.ids[container].single) { // if  single container (hands)
+			if (	Com_CheckToInventory( inv, item, container, 0, 0 )	//if container free OR..
+			||	(node->mousefx==dragFrom) ) {	// ..OR the dragged-item is in it
+				MN_DrawFree( node->pos[0], node->pos[1],  node->size[0], node->size[1] );
+			}
+		} else {
+			for ( y = 0; y < 16; y++ ) {
+				for ( x = 0; x < 32; x++ ) {
+					if ( Com_CheckToInventory( inv, item, container, x, y ))  { //Check if the curretn position is useable (topleft of the item)
+						itemshape = csi.ods[dragItem.t].shape;
+						Com_MergeShapes(free, itemshape, x, y); //add '1's to each position the item is 'blocking'
+					}
+					if (Com_CheckShape(csi.ids[container].shape, x, y)) { //Only draw on existing positions
+						if (Com_CheckShape(free, x, y)) {
+							MN_DrawFree( node->pos[0]+x*C_UNIT, node->pos[1]+y*C_UNIT, C_UNIT, C_UNIT );
+						}
+					}
+				} // for x
+			} //for y
+		}
+	}
+}
+
+
 /*=================
 MN_Popup
 
@@ -1549,6 +1647,7 @@ void MN_DrawMenus( void )
 							for ( ic = menuInventory->c[node->mousefx]; ic; ic = ic->next )
 								MN_DrawItem( node->pos, ic->item, csi.ods[ic->item.t].sx, csi.ods[ic->item.t].sy, ic->x, ic->y, scale, color );
 						}
+						MN_InvDrawFree(menuInventory, node); //draw free space if dragging
 					}
 					break;
 

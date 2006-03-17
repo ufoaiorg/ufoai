@@ -82,8 +82,16 @@ cvar_t	*r_nocull;
 cvar_t	*r_isometric;
 cvar_t	*r_lerpmodels;
 cvar_t	*r_lefthand;
+cvar_t  *r_displayrefresh;
+cvar_t  *r_anisotropic;
+cvar_t  *r_ext_max_anisotropy;
+cvar_t  *r_texture_lod; // lod_bias
 
 cvar_t	*r_lightlevel;	// FIXME: This is a HACK to get the client's light level
+
+#ifdef BUILD_FREETYPE
+cvar_t	*r_saveFontData;
+#endif
 
 cvar_t	*gl_nosubimage;
 cvar_t	*gl_allow_software;
@@ -112,7 +120,11 @@ cvar_t	*gl_drawbuffer;
 cvar_t  *gl_driver;
 cvar_t	*gl_lightmap;
 cvar_t	*gl_shadows;
-cvar_t	*gl_stencilshadow;
+cvar_t	*gl_shadow_debug_volume;
+cvar_t	*gl_shadow_debug_shade;
+cvar_t	*r_ati_separate_stencil;
+cvar_t	*r_stencil_two_side;
+
 cvar_t	*gl_embossfilter;
 cvar_t	*gl_mode;
 cvar_t	*gl_dynamic;
@@ -146,6 +158,29 @@ cvar_t	*vid_fullscreen;
 cvar_t	*vid_gamma;
 cvar_t	*vid_ref;
 cvar_t  *vid_grabmouse;
+
+void R_CastShadow (void)
+{
+	int i;
+
+	// no shadows at all
+	if(!gl_shadows->value)
+		return;
+
+	for (i=0;i<r_newrefdef.num_entities; i++)
+	{
+		currententity = &r_newrefdef.entities[i];
+		currentmodel = currententity->model;
+		if (!currentmodel)
+			continue;
+		if (currentmodel->type!=mod_alias)
+			continue;
+		if(gl_shadows->value ==2)
+			R_DrawShadowVolume (currententity);
+		else if(gl_shadows->value ==1)
+			R_DrawShadow (currententity);
+	}
+}
 
 /*
 =================
@@ -992,16 +1027,11 @@ void R_Clear (void)
 	}
 
 	qglDepthRange (gldepthmin, gldepthmax);
-
-	/* stencilbuffer shadows */
-	if (gl_shadows->value && have_stencil && gl_stencilshadow->value) {
-		qglClearStencil(1);
-		qglClear(GL_STENCIL_BUFFER_BIT);
-	}
 }
 
 void R_Flash( void )
 {
+//         R_ShadowBlend();
 	R_PolyBlend ();
 }
 
@@ -1054,14 +1084,18 @@ void R_RenderView (refdef_t *fd)
 	R_TransformEntitiesOnList();
 	R_DrawEntitiesOnList();
 
+// 	if (gl_shadows->value == 2) R_CastShadow();
+
 	if (gl_wire->value) qglPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
-	R_RenderDlights ();
+	R_DrawAlphaSurfaces ();
+
+// 	if (gl_shadows->value == 1) R_CastShadow();
 
 	R_DrawParticles ();
 	R_DrawPtls ();
 
-	R_DrawAlphaSurfaces ();
+	R_RenderDlights ();
 
 	R_Flash();
 
@@ -1094,7 +1128,6 @@ void	R_SetGL2D (void)
 	qglColor4f (1,1,1,1);
 }
 
-/*
 static void GL_DrawColoredStereoLinePair( float r, float g, float b, float y )
 {
 	qglColor3f( r, g, b );
@@ -1104,9 +1137,7 @@ static void GL_DrawColoredStereoLinePair( float r, float g, float b, float y )
 	qglVertex2f( 0, y + 1 );
 	qglVertex2f( vid.width, y + 1 );
 }
-*/
 
-/*
 static void GL_DrawStereoPattern( void )
 {
 	int i;
@@ -1137,7 +1168,6 @@ static void GL_DrawStereoPattern( void )
 		GLimp_EndFrame();
 	}
 }
-*/
 
 /*
 ====================
@@ -1204,8 +1234,17 @@ void R_Register( void )
 	r_isometric = ri.Cvar_Get ("r_isometric", "0", 0);
 	r_lerpmodels = ri.Cvar_Get ("r_lerpmodels", "1", 0);
 	r_speeds = ri.Cvar_Get ("r_speeds", "0", 0);
+	r_displayrefresh = ri.Cvar_Get( "r_displayrefresh", "0", CVAR_ARCHIVE );
+	r_anisotropic = ri.Cvar_Get( "r_anisotropic", "1", CVAR_ARCHIVE );
+	r_ext_max_anisotropy = ri.Cvar_Get( "r_ext_max_anisotropy", "0", 0 );
+	r_texture_lod = ri.Cvar_Get( "r_texture_lod", "0", CVAR_ARCHIVE );
+// 	r_arb_samples = ri.Cvar_Get ("r_arb_samples", "1", CVAR_ARCHIVE );
 
 	r_lightlevel = ri.Cvar_Get ("r_lightlevel", "0", 0);
+
+#ifdef BUILD_FREETYPE
+	r_saveFontData = ri.Cvar_Get ("r_save_font_data", "0", 0);
+#endif
 
 	gl_nosubimage = ri.Cvar_Get( "gl_nosubimage", "0", 0 );
 	gl_allow_software = ri.Cvar_Get( "gl_allow_software", "0", 0 );
@@ -1223,7 +1262,10 @@ void R_Register( void )
 	gl_mode = ri.Cvar_Get( "gl_mode", "3", CVAR_ARCHIVE );
 	gl_lightmap = ri.Cvar_Get ("gl_lightmap", "0", 0);
 	gl_shadows = ri.Cvar_Get ("gl_shadows", "1", CVAR_ARCHIVE );
-	gl_stencilshadow = ri.Cvar_Get("gl_stencilshadow", "0", CVAR_ARCHIVE);
+	gl_shadow_debug_volume = ri.Cvar_Get( "r_shadow_debug_volume", "0", CVAR_ARCHIVE );
+	gl_shadow_debug_shade = ri.Cvar_Get( "r_shadow_debug_shade", "0", CVAR_ARCHIVE );
+	r_ati_separate_stencil = ri.Cvar_Get( "r_ati_separate_stencil", "1", CVAR_ARCHIVE );
+	r_stencil_two_side = ri.Cvar_Get( "r_stencil_two_side", "1", CVAR_ARCHIVE );
 	gl_embossfilter = ri.Cvar_Get("gl_embossfilter", "0", CVAR_ARCHIVE);
 	gl_dynamic = ri.Cvar_Get ("gl_dynamic", "1", 0);
 	gl_nobind = ri.Cvar_Get ("gl_nobind", "0", 0);
@@ -1349,6 +1391,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	int		err;
 	int		j;
 	extern float r_turbsin[256];
+	int aniso_level, max_aniso;
 
 	for ( j = 0; j < 256; j++ )
 	{
@@ -1365,7 +1408,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	if ( !QGL_Init( gl_driver->string ) )
 	{
 		QGL_Shutdown();
-        ri.Con_Printf (PRINT_ALL, "ref_gl::R_Init() - could not load \"%s\"\n", gl_driver->string );
+		ri.Con_Printf (PRINT_ALL, "ref_gl::R_Init() - could not load \"%s\"\n", gl_driver->string );
 		return false;
 	}
 
@@ -1383,11 +1426,9 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	if ( !R_SetMode () )
 	{
 		QGL_Shutdown();
-	        ri.Con_Printf (PRINT_ALL, "ref_gl::R_Init() - could not R_SetMode()\n" );
+		ri.Con_Printf (PRINT_ALL, "ref_gl::R_Init() - could not R_SetMode()\n" );
 		return false;
 	}
-
-//	ri.Vid_MenuInit();
 
 	/*
 	** get our various GL strings
@@ -1634,6 +1675,124 @@ qboolean R_Init( void *hinstance, void *hWnd )
 		gl_compressed_alpha_format = 0;
 	}
 
+	// anisotropy
+	gl_state.anisotropic = false;
+
+	qglGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT,&max_aniso);
+	ri.Cvar_SetValue("r_ext_max_anisotropy", max_aniso);
+	if (r_anisotropic->value > r_ext_max_anisotropy->value)
+	{
+		ri.Con_Printf(PRINT_ALL, "...max GL_EXT_texture_filter_anisotropic value is %i\n", max_aniso );
+		ri.Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->value);
+	}
+
+	aniso_level = r_anisotropic->value;
+	if ( strstr( gl_config.extensions_string, "GL_EXT_texture_filter_anisotropic" ) )
+	{
+		if(r_anisotropic->value == 0)
+		{
+			ri.Con_Printf(PRINT_ALL, "...ignoring GL_EXT_texture_filter_anisotropic\n");
+		}
+		else
+		{
+			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_texture_filter_anisotropic [%2i max] [%2i selected]\n",max_aniso, aniso_level );
+			gl_state.anisotropic = true;
+		}
+	}
+	else
+	{
+		ri.Con_Printf(PRINT_ALL, "...GL_EXT_texture_filter_anisotropic not found\n");
+		ri.Cvar_Set("r_anisotropic", "1");
+		ri.Cvar_Set("r_ext_max_anisotropy", "0");
+	}
+
+	gl_state.lod_bias=false;
+
+	if ( strstr( gl_config.extensions_string, "GL_EXT_texture_lod_bias" ) )
+	{
+		ri.Con_Printf(PRINT_ALL, "...using GL_EXT_texture_lod_bias\n");
+		gl_state.lod_bias=true;
+	}
+	else
+	{
+		ri.Con_Printf(PRINT_ALL, "...GL_EXT_texture_lod_bias not support\n");
+		gl_state.lod_bias=false;
+	}
+
+#if 0
+	if ( strstr( gl_config.extensions_string, "GL_SGIS_generate_mipmap" ) )
+	{
+		ri.Con_Printf(PRINT_ALL, "...using GL_SGIS_generate_mipmap\n");
+		gl_state.sgis_mipmap=true;
+	}
+	else
+	{
+		ri.Con_Printf(PRINT_ALL, "...GL_SGIS_generate_mipmap not found\n");
+		ri.Sys_Error (ERR_FATAL, "GL_SGIS_generate_mipmap not found!");
+		gl_state.sgis_mipmap=false;
+	}
+#endif
+	gl_state.stencil_warp=false;
+	if ( strstr( gl_config.extensions_string, "GL_EXT_stencil_wrap" ) )
+	{
+		ri.Con_Printf(PRINT_ALL, "...using GL_EXT_stencil_wrap\n");
+		gl_state.stencil_warp=true;
+	} else {
+		ri.Con_Printf(PRINT_ALL, "...GL_EXT_stencil_wrap not found\n");
+		gl_state.stencil_warp=false;
+	}
+
+	gl_state.arb_fragment_program = false;
+	if ( strstr( gl_config.extensions_string, "GL_ARB_fragment_program" ) ) {
+		ri.Con_Printf(PRINT_ALL, "...using GL_ARB_fragment_program\n");
+		gl_state.arb_fragment_program = true;
+
+		qglProgramStringARB = (void*)qwglGetProcAddress("glProgramStringARB");
+		qglBindProgramARB = (void*)qwglGetProcAddress("glBindProgramARB");
+		qglDeleteProgramsARB = (void*)qwglGetProcAddress("glDeleteProgramsARB");
+		qglGenProgramsARB = (void*)qwglGetProcAddress("glGenProgramsARB");
+		qglProgramEnvParameter4dARB = (void*)qwglGetProcAddress("glProgramEnvParameter4dARB");
+		qglProgramEnvParameter4dvARB = (void*)qwglGetProcAddress("glProgramEnvParameter4dvARB");
+		qglProgramEnvParameter4fARB = (void*)qwglGetProcAddress("glProgramEnvParameter4fARB");
+		qglProgramEnvParameter4fvARB = (void*)qwglGetProcAddress("glProgramEnvParameter4fvARB");
+		qglProgramLocalParameter4dARB = (void*)qwglGetProcAddress("glProgramLocalParameter4dARB");
+		qglProgramLocalParameter4dvARB = (void*)qwglGetProcAddress("glProgramLocalParameter4dvARB");
+		qglProgramLocalParameter4fARB = (void*)qwglGetProcAddress("glProgramLocalParameter4fARB");
+		qglProgramLocalParameter4fvARB = (void*)qwglGetProcAddress("glProgramLocalParameter4fvARB");
+		qglGetProgramEnvParameterdvARB = (void*)qwglGetProcAddress("glGetProgramEnvParameterdvARB");
+		qglGetProgramEnvParameterfvARB = (void*)qwglGetProcAddress("glGetProgramEnvParameterfvARB");
+		qglGetProgramLocalParameterdvARB = (void*)qwglGetProcAddress("glGetProgramLocalParameterdvARB");
+		qglGetProgramLocalParameterfvARB = (void*)qwglGetProcAddress("glGetProgramLocalParameterfvARB");
+		qglGetProgramivARB = (void*)qwglGetProcAddress("glGetProgramivARB");
+		qglGetProgramStringARB = (void*)qwglGetProcAddress("glGetProgramStringARB");
+		qglIsProgramARB = (void*)qwglGetProcAddress("glIsProgramARB");
+
+//		water_shader = LoadProgram_ARB_FP("arb_water");
+//		water_shader = CompileWaterShader();
+	} else {
+	        ri.Con_Printf(PRINT_ALL, "...GL_ARB_fragment_program not found\n");
+		gl_state.arb_fragment_program = false;
+        }
+
+	gl_state.ati_separate_stencil=false;
+	if ( strstr( gl_config.extensions_string, "GL_ATI_separate_stencil" ) )
+	{
+		if (!r_ati_separate_stencil->value)
+		{
+			ri.Con_Printf(PRINT_ALL, "...ignoring GL_ATI_separate_stencil\n");
+			gl_state.ati_separate_stencil=false;
+		} else {
+			ri.Con_Printf(PRINT_ALL, "...using GL_ATI_separate_stencil\n");
+			gl_state.ati_separate_stencil=true;
+			qglStencilOpSeparateATI = ( void * ) qwglGetProcAddress("glStencilOpSeparateATI");
+			qglStencilFuncSeparateATI = ( void * ) qwglGetProcAddress("glStencilFuncSeparateATI");
+		}
+	} else {
+		ri.Con_Printf(PRINT_ALL, "...GL_ATI_separate_stencil not found\n");
+		gl_state.ati_separate_stencil=false;
+		ri.Cvar_Set("r_ati_separate_stencil", "0");
+	}
+
 	{
 		int size;
 		GLenum err;
@@ -1659,9 +1818,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	/*
 	** draw our stereo patterns
 	*/
-#if 0 // commented out until H3D pays us the money they owe us
-	GL_DrawStereoPattern();
-#endif
+// 	GL_DrawStereoPattern();
 
 	GL_InitImages ();
 	Mod_Init ();
@@ -1731,6 +1888,16 @@ void R_BeginFrame( float camera_separation )
 		gl_log->modified = false;
 	}
 
+	if ( r_anisotropic->modified )
+	{
+		if (r_anisotropic->value > r_ext_max_anisotropy->value)
+		{
+			ri.Con_Printf(PRINT_ALL, "...max GL_EXT_texture_filter_anisotropic value is %i\n", r_ext_max_anisotropy->value );
+			ri.Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->value);
+		}
+		r_anisotropic->modified = false;
+	}
+
 	if ( gl_log->value )
 	{
 		GLimp_LogNewFrame();
@@ -1789,6 +1956,7 @@ void R_BeginFrame( float camera_separation )
 	/*
 	** texturemode stuff
 	*/
+	// Realtime set level of anisotropy filtering and change texture lod bias
 	if ( gl_texturemode->modified )
 	{
 		GL_TextureMode( gl_texturemode->string );
@@ -1897,7 +2065,6 @@ refexport_t GetRefAPI (refimport_t rimp )
 	re.BeginRegistration = R_BeginRegistration;
 	re.RegisterModel = R_RegisterModelShort;
 	re.RegisterSkin = R_RegisterSkin;
-	re.RegisterFont = R_RegisterFont;
 	re.RegisterPic = Draw_FindPic;
 	re.SetSky = R_SetSky;
 	re.EndRegistration = R_EndRegistration;
@@ -1909,10 +2076,11 @@ refexport_t GetRefAPI (refimport_t rimp )
 	re.DrawPic = Draw_Pic;
 	re.DrawNormPic = Draw_NormPic;
 	re.DrawStretchPic = Draw_StretchPic;
+	re.DrawPropString = Draw_PropString;
 	re.DrawChar = Draw_Char;
 	re.DrawPropChar = Draw_PropChar;
-	re.DrawPropString = Draw_PropString;
 	re.DrawPropLength = Draw_PropLength;
+	re.RegisterFont = R_RegisterFont;
 	re.DrawTileClear = Draw_TileClear;
 	re.DrawFill = Draw_Fill;
 	re.DrawColor = Draw_Color;
@@ -1937,7 +2105,9 @@ refexport_t GetRefAPI (refimport_t rimp )
 	re.EndFrame = GLimp_EndFrame;
 
 	re.AppActivate = GLimp_AppActivate;
-
+#ifdef BUILD_FREETYPE
+	re.RegisterFTFont = RE_RegisterFTFont;
+#endif
 	Swap_Init ();
 
 	return re;

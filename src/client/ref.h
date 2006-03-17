@@ -22,6 +22,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../qcommon/qcommon.h"
 
+#ifdef BUILD_FREETYPE
+//this is here to let the RegisterFTFont stuff work
+#define GLYPH_START 0
+#define GLYPH_END 255
+#define GLYPHS_PER_FONT GLYPH_END - GLYPH_START + 1
+typedef struct {
+	int height;       // number of scan lines
+	int top;          // top of glyph in buffer
+	int bottom;       // bottom of glyph in buffer
+	int pitch;        // width for copying
+	int xSkip;        // x adjustment
+	int imageWidth;   // width of actual image
+	int imageHeight;  // height of actual image
+	float s;          // x offset in image where glyph starts
+	float t;          // y offset in image where glyph starts
+	float s2;
+	float t2;
+	int glyph;  // handle to the shader with the glyph
+} glyphInfo_t;
+
+typedef struct {
+	glyphInfo_t glyphs [GLYPHS_PER_FONT];
+	float glyphScale;
+        char name[MAX_QPATH];
+} fontInfo_t;
+#endif
+
 #define	MAX_DLIGHTS		32
 #define	MAX_ENTITIES	512
 #define	MAX_PARTICLES	8192
@@ -244,6 +271,9 @@ typedef struct
 	struct model_s *(*RegisterModel) (char *name);
 	struct image_s *(*RegisterSkin) (char *name);
 
+#ifdef BUILD_FREETYPE
+	void    (*RegisterFTFont) (const char *fontName, int pointSize, fontInfo_t * font);
+#endif
 	struct image_s *(*RegisterFont) (char *name);
 	struct image_s *(*RegisterPic) (char *name);
 	void	(*SetSky) (char *name, float rotate, vec3_t axis);
@@ -257,9 +287,9 @@ typedef struct
 	void	(*DrawNormPic) (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
 	void	(*DrawStretchPic) (int x, int y, int w, int h, char *name);
 	void	(*DrawChar) (int x, int y, int c);
-	int		(*DrawPropChar) (char *font, int x, int y, char c);
-	int		(*DrawPropString) (char *font, int align, int x, int y, char *c);
-	int		(*DrawPropLength) (char *font, char *c);
+	int	(*DrawPropChar) (char *font, int x, int y, char c);
+	int	(*DrawPropLength) (char *font, char *c);
+	int	(*DrawPropString) (char *font, int align, int x, int y, char *c);
 	void	(*DrawTileClear) (int x, int y, int w, int h, char *name);
 	void	(*DrawFill) (int x, int y, int w, int h, int style, vec4_t color);
 	void	(*DrawColor) (float *rgba);
@@ -283,7 +313,6 @@ typedef struct
 	void	(*CinematicSetPalette)( const unsigned char *palette);	// NULL = game palette
 	void	(*BeginFrame)( float camera_separation );
 	void	(*EndFrame) (void);
-
 	void	(*AppActivate)( qboolean activate );
 
 } refexport_t;
@@ -308,6 +337,7 @@ typedef struct
 	// or a discrete file from anywhere in the quake search path
 	// a -1 return means the file does not exist
 	// NULL can be passed for buf to just determine existance
+	int 	(*FS_WriteFile) ( const void *buffer, int len, const char* filename );
 	int		(*FS_LoadFile) (char *name, void **buf);
 	void	(*FS_FreeFile) (void *buf);
 	int		(*FS_CheckFile) (char *name);

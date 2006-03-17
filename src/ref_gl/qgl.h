@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 #include <GL/gl.h>
+#include <GL/glext.h>
 
 #ifdef __linux__
 //#include <GL/fxmesa.h>
@@ -390,6 +391,36 @@ extern	void ( APIENTRY * qglSelectTextureSGIS)( GLenum );
 
 extern	void ( APIENTRY * qglActiveTextureARB)( GLenum );
 extern	void ( APIENTRY * qglClientActiveTextureARB)( GLenum );
+
+// arb shader stuff
+extern void ( APIENTRY * qglProgramStringARB )(GLenum, GLenum, GLsizei, const GLvoid *);
+extern void ( APIENTRY * qglBindProgramARB )(GLenum, GLuint);
+extern void ( APIENTRY * qglDeleteProgramsARB )(GLsizei, const GLuint *);
+extern void ( APIENTRY * qglGenProgramsARB )(GLsizei, GLuint *);
+extern void ( APIENTRY * qglProgramEnvParameter4dARB )(GLenum, GLuint, GLdouble, GLdouble, GLdouble, GLdouble);
+extern void ( APIENTRY * qglProgramEnvParameter4dvARB )(GLenum, GLuint, const GLdouble *);
+extern void ( APIENTRY * qglProgramEnvParameter4fARB )(GLenum, GLuint, GLfloat, GLfloat, GLfloat, GLfloat);
+extern void ( APIENTRY * qglProgramEnvParameter4fvARB )(GLenum, GLuint, const GLfloat *);
+extern void ( APIENTRY * qglProgramLocalParameter4dARB )(GLenum, GLuint, GLdouble, GLdouble, GLdouble, GLdouble);
+extern void ( APIENTRY * qglProgramLocalParameter4dvARB )(GLenum, GLuint, const GLdouble *);
+extern void ( APIENTRY * qglProgramLocalParameter4fARB )(GLenum, GLuint, GLfloat, GLfloat, GLfloat, GLfloat);
+extern void ( APIENTRY * qglProgramLocalParameter4fvARB )(GLenum, GLuint, const GLfloat *);
+extern void ( APIENTRY * qglGetProgramEnvParameterdvARB )(GLenum, GLuint, GLdouble *);
+extern void ( APIENTRY * qglGetProgramEnvParameterfvARB )(GLenum, GLuint, GLfloat *);
+extern void ( APIENTRY * qglGetProgramLocalParameterdvARB )(GLenum, GLuint, GLdouble *);
+extern void ( APIENTRY * qglGetProgramLocalParameterfvARB )(GLenum, GLuint, GLfloat *);
+extern void ( APIENTRY * qglGetProgramivARB )(GLenum, GLenum, GLint *);
+extern void ( APIENTRY * qglGetProgramStringARB )(GLenum, GLenum, GLvoid *);
+extern void ( APIENTRY * qglGetVertexAttribdvARB )(GLuint, GLenum, GLdouble *);
+extern void ( APIENTRY * qglGetVertexAttribfvARB )(GLuint, GLenum, GLfloat *);
+extern void ( APIENTRY * qglGetVertexAttribivARB )(GLuint, GLenum, GLint *);
+extern void ( APIENTRY * qglGetVertexAttribPointervARB )(GLuint, GLenum, GLvoid* *);
+extern GLboolean ( APIENTRY * qglIsProgramARB )(GLuint);
+
+extern void ( APIENTRY * qglActiveStencilFaceEXT )(GLenum face);
+extern void ( APIENTRY * qglStencilOpSeparateATI )(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
+extern void ( APIENTRY * qglStencilFuncSeparateATI )(GLenum frontfunc, GLenum backfunc, GLint red, GLuint mask);
+
 
 #ifdef _WIN32
 

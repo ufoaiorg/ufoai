@@ -407,6 +407,34 @@ void ( APIENTRY * qglMTexCoord2fSGIS)( GLenum, GLfloat, GLfloat );
 void ( APIENTRY * qglActiveTextureARB) ( GLenum );
 void ( APIENTRY * qglClientActiveTextureARB) ( GLenum );
 
+void ( APIENTRY * qglProgramStringARB )(GLenum, GLenum, GLsizei, const GLvoid *);
+void ( APIENTRY * qglBindProgramARB )(GLenum, GLuint);
+void ( APIENTRY * qglDeleteProgramsARB )(GLsizei, const GLuint *);
+void ( APIENTRY * qglGenProgramsARB )(GLsizei, GLuint *);
+void ( APIENTRY * qglProgramEnvParameter4dARB )(GLenum, GLuint, GLdouble, GLdouble, GLdouble, GLdouble);
+void ( APIENTRY * qglProgramEnvParameter4dvARB )(GLenum, GLuint, const GLdouble *);
+void ( APIENTRY * qglProgramEnvParameter4fARB )(GLenum, GLuint, GLfloat, GLfloat, GLfloat, GLfloat);
+void ( APIENTRY * qglProgramEnvParameter4fvARB )(GLenum, GLuint, const GLfloat *);
+void ( APIENTRY * qglProgramLocalParameter4dARB )(GLenum, GLuint, GLdouble, GLdouble, GLdouble, GLdouble);
+void ( APIENTRY * qglProgramLocalParameter4dvARB )(GLenum, GLuint, const GLdouble *);
+void ( APIENTRY * qglProgramLocalParameter4fARB )(GLenum, GLuint, GLfloat, GLfloat, GLfloat, GLfloat);
+void ( APIENTRY * qglProgramLocalParameter4fvARB )(GLenum, GLuint, const GLfloat *);
+void ( APIENTRY * qglGetProgramEnvParameterdvARB )(GLenum, GLuint, GLdouble *);
+void ( APIENTRY * qglGetProgramEnvParameterfvARB )(GLenum, GLuint, GLfloat *);
+void ( APIENTRY * qglGetProgramLocalParameterdvARB )(GLenum, GLuint, GLdouble *);
+void ( APIENTRY * qglGetProgramLocalParameterfvARB )(GLenum, GLuint, GLfloat *);
+void ( APIENTRY * qglGetProgramivARB )(GLenum, GLenum, GLint *);
+void ( APIENTRY * qglGetProgramStringARB )(GLenum, GLenum, GLvoid *);
+void ( APIENTRY * qglGetVertexAttribdvARB )(GLuint, GLenum, GLdouble *);
+void ( APIENTRY * qglGetVertexAttribfvARB )(GLuint, GLenum, GLfloat *);
+void ( APIENTRY * qglGetVertexAttribivARB )(GLuint, GLenum, GLint *);
+void ( APIENTRY * qglGetVertexAttribPointervARB )(GLuint, GLenum, GLvoid* *);
+GLboolean ( APIENTRY * qglIsProgramARB )(GLuint);
+
+void ( APIENTRY * qglActiveStencilFaceEXT )(GLenum face);
+void ( APIENTRY * qglStencilOpSeparateATI )(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
+void ( APIENTRY * qglStencilFuncSeparateATI )(GLenum frontfunc, GLenum backfunc, GLint red, GLuint mask);
+
 static void ( APIENTRY * dllAccum )(GLenum op, GLfloat value);
 static void ( APIENTRY * dllAlphaFunc )(GLenum func, GLclampf ref);
 GLboolean ( APIENTRY * dllAreTexturesResident )(GLsizei n, const GLuint *textures, GLboolean *residences);
@@ -3000,6 +3028,40 @@ void QGL_Shutdown( void )
 	qglXMakeCurrent              = NULL;
 	qglXCopyContext              = NULL;
 	qglXSwapBuffers              = NULL;
+
+	qglLockArraysEXT             = NULL;
+	qglUnlockArraysEXT           = NULL;
+	qglPointParameterfEXT        = NULL;
+	qglPointParameterfvEXT       = NULL;
+	qgl3DfxSetPaletteEXT         = NULL;
+	qglSelectTextureSGIS         = NULL;
+	qglMTexCoord2fSGIS           = NULL;
+	qglActiveTextureARB          = NULL;
+	qglClientActiveTextureARB    = NULL;
+
+	qglProgramStringARB          = NULL;
+	qglBindProgramARB            = NULL;
+	qglDeleteProgramsARB         = NULL;
+	qglGenProgramsARB            = NULL;
+	qglProgramEnvParameter4dARB  = NULL;
+	qglProgramEnvParameter4dvARB = NULL;
+	qglProgramEnvParameter4fARB  = NULL;
+	qglProgramEnvParameter4fvARB = NULL;
+	qglProgramLocalParameter4dARB    = NULL;
+	qglProgramLocalParameter4dvARB   = NULL;
+	qglProgramLocalParameter4fARB    = NULL;
+	qglProgramLocalParameter4fvARB   = NULL;
+        qglGetProgramEnvParameterdvARB   = NULL;
+	qglGetProgramEnvParameterfvARB   = NULL;
+	qglGetProgramLocalParameterdvARB = NULL;
+	qglGetProgramLocalParameterfvARB = NULL;
+	qglGetProgramivARB               = NULL;
+	qglGetProgramStringARB           = NULL;
+	qglGetVertexAttribdvARB          = NULL;
+	qglGetVertexAttribfvARB          = NULL;
+	qglGetVertexAttribivARB          = NULL;
+	qglGetVertexAttribPointervARB    = NULL;
+	qglIsProgramARB                  = NULL;
 }
 
 #define GPA( a ) dlsym( glw_state.OpenGLLib, a )
@@ -3426,6 +3488,30 @@ qboolean QGL_Init( const char *dllname )
 	qglMTexCoord2fSGIS = 0;
 	qglActiveTextureARB = 0;
 	qglClientActiveTextureARB = 0;
+
+	qglProgramStringARB = 0;
+	qglBindProgramARB = 0;
+	qglDeleteProgramsARB = 0;
+	qglGenProgramsARB = 0;
+	qglProgramEnvParameter4dARB = 0;
+	qglProgramEnvParameter4dvARB = 0;
+	qglProgramEnvParameter4fARB = 0;
+	qglProgramEnvParameter4fvARB = 0;
+	qglProgramLocalParameter4dARB = 0;
+	qglProgramLocalParameter4dvARB = 0;
+	qglProgramLocalParameter4fARB = 0;
+	qglProgramLocalParameter4fvARB = 0;
+        qglGetProgramEnvParameterdvARB = 0;
+	qglGetProgramEnvParameterfvARB = 0;
+	qglGetProgramLocalParameterdvARB = 0;
+	qglGetProgramLocalParameterfvARB = 0;
+	qglGetProgramivARB = 0;
+	qglGetProgramStringARB = 0;
+	qglGetVertexAttribdvARB = 0;
+	qglGetVertexAttribfvARB = 0;
+	qglGetVertexAttribivARB = 0;
+	qglGetVertexAttribPointervARB = 0;
+	qglIsProgramARB = 0;
 
 	return true;
 }

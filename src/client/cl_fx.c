@@ -261,27 +261,6 @@ PARTICLE MANAGEMENT
 ==============================================================
 */
 
-/*
-// THIS HAS BEEN RELOCATED TO CLIENT.H
-typedef struct particle_s
-{
-	struct particle_s	*next;
-
-	float		time;
-
-	vec3_t		org;
-	vec3_t		vel;
-	vec3_t		accel;
-	float		color;
-	float		colorvel;
-	float		alpha;
-	float		alphavel;
-} cparticle_t;
-
-
-#define	PARTICLE_GRAVITY	40
-*/
-
 cparticle_t	*active_particles, *free_particles;
 
 cparticle_t	particles[MAX_PARTICLES];

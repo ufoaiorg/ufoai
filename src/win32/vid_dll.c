@@ -496,7 +496,7 @@ vidmode_t vid_modes[] =
 	{ "Mode 16: 1024x640",  1024,  640, 16 }, /* notebooks    */
  	{ "Mode 17: 1280x800",  1280,  800, 17 },
  	{ "Mode 18: 1680x1050", 1680, 1050, 18 },
- 	{ "Mode 19: 1920x1200", 1920, 1200, 19 },
+ 	{ "Mode 19: 1920x1200", 1920, 1200, 19 }
 };
 
 qboolean VID_GetModeInfo( int *width, int *height, int mode )
@@ -588,6 +588,7 @@ qboolean VID_LoadRefresh( char *name )
 	ri.Con_Printf = VID_Printf;
 	ri.Sys_Error = VID_Error;
 	ri.FS_LoadFile = FS_LoadFile;
+	ri.FS_WriteFile = FS_WriteFile;
 	ri.FS_FreeFile = FS_FreeFile;
 	ri.FS_CheckFile = FS_CheckFile;
 	ri.FS_Gamedir = FS_Gamedir;

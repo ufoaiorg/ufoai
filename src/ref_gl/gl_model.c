@@ -1302,6 +1302,51 @@ void R_BeginRegistration ( char *tiles, char *pos )
 
 }
 
+signed int Mod_GetTris(short p1, short p2, dtriangle_t *side1, dmdl_t *hdr)
+{
+	dtriangle_t *tris = (dtriangle_t *)((unsigned char*)hdr + hdr->ofs_tris);
+	int i;
+
+	for (i=0; i<hdr->num_tris; i++, tris++) 
+	{
+		if (tris == side1)
+			continue;
+
+		if (tris->index_xyz[0] == p2 && tris->index_xyz[1] == p1)
+			return i;
+		if (tris->index_xyz[1] == p2 && tris->index_xyz[2] == p1)
+			return i;
+		if (tris->index_xyz[2] == p2 && tris->index_xyz[0] == p1)
+			return i;
+
+	}
+	tris--;
+	return -1;
+}
+
+
+void Mod_FindSharedEdges(model_t *mod)
+{
+	dmdl_t		*hdr = (dmdl_t *)mod->extradata;
+	dtriangle_t *tris = (dtriangle_t *)((unsigned char*)hdr + hdr->ofs_tris);
+	int i,o;
+
+	mod->noshadow = false;
+
+	for (i=0; i<hdr->num_tris; i++) 
+	{
+		mod->edge_tri[i][0] = Mod_GetTris(tris->index_xyz[0], tris->index_xyz[1], tris, hdr);
+		mod->edge_tri[i][1] = Mod_GetTris(tris->index_xyz[1], tris->index_xyz[2], tris, hdr);
+		mod->edge_tri[i][2] = Mod_GetTris(tris->index_xyz[2], tris->index_xyz[0], tris, hdr);
+
+		for (o=0; o<3; o++)
+			if (mod->edge_tri[i][o] == -1)
+				mod->noshadow = true;
+
+		tris++;
+	}
+}
+
 
 /*
 @@@@@@@@@@@@@@@@@@@@@
@@ -1349,6 +1394,7 @@ struct model_s *R_RegisterModel (char *name)
 //PGM
 			mod->numframes = pheader->num_frames;
 //PGM
+			Mod_FindSharedEdges( mod );
 		}
 		else if (mod->type == mod_brush)
 		{
