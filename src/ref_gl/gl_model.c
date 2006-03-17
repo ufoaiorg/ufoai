@@ -1307,7 +1307,7 @@ signed int Mod_GetTris(short p1, short p2, dtriangle_t *side1, dmdl_t *hdr)
 	dtriangle_t *tris = (dtriangle_t *)((unsigned char*)hdr + hdr->ofs_tris);
 	int i;
 
-	for (i=0; i<hdr->num_tris; i++, tris++) 
+	for (i=0; i<hdr->num_tris; i++, tris++)
 	{
 		if (tris == side1)
 			continue;
@@ -1333,7 +1333,7 @@ void Mod_FindSharedEdges(model_t *mod)
 
 	mod->noshadow = false;
 
-	for (i=0; i<hdr->num_tris; i++) 
+	for (i=0; i<hdr->num_tris; i++)
 	{
 		mod->edge_tri[i][0] = Mod_GetTris(tris->index_xyz[0], tris->index_xyz[1], tris, hdr);
 		mod->edge_tri[i][1] = Mod_GetTris(tris->index_xyz[1], tris->index_xyz[2], tris, hdr);
@@ -1394,7 +1394,8 @@ struct model_s *R_RegisterModel (char *name)
 //PGM
 			mod->numframes = pheader->num_frames;
 //PGM
-			Mod_FindSharedEdges( mod );
+			if ( gl_shadows->value == 2 )
+				 Mod_FindSharedEdges( mod );
 		}
 		else if (mod->type == mod_brush)
 		{
