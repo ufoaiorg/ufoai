@@ -1827,7 +1827,7 @@ void MN_DrawMenus( void )
 					hover = node;
 			} // if
 		} // for
-		if ( hover )
+		if ( hover && cl_show_tooltips->value )
 			MN_Tooltip(hover, mx, my);
 	}
 	re.DrawColor( NULL );

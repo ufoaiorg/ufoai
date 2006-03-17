@@ -1,7 +1,7 @@
 // ==================
 // HUD MAIN
 // ==================
-	
+
 menu hud
 {
 	// ==================
@@ -12,24 +12,24 @@ menu hud
 		pos		"32 16"
 		size	"992 640"
 	}
-	
+
 	// ==================
 	// floor bar
 	// ==================
-	
+
 	zone bar_floor_zone
 	{
 		pos		"0 104"
 		size	"40 512"
 		click
 	}
-	
+
 	pic bar_floor
-	{ 
+	{
 		image	hud/bar_floor
-		pos		"0 128" 
+		pos		"0 128"
 	}
-	
+
 	confunc disfloor0 { *bt_floor1 image hud/buttons1g }
 	confunc disfloor1 { *bt_floor2 image hud/buttons1g }
 	confunc disfloor2 { *bt_floor3 image hud/buttons1g }
@@ -125,49 +125,49 @@ menu hud
 	// ==================
 	// actor and team bar
 	// ==================
-	
+
 	zone bar_head_zone
 	{
 		pos		"0 0"
 		size	"111 104"
 		click
 	}
-	
+
 	zone bar_name_zone
 	{
 		pos		"112 0"
 		size	"250 48"
 		click
 	}
-	
+
 	zone bar_team_zone
 	{
 		pos		"361 0"
 		size	"262 55"
 		click
 	}
-	
+
 	zone bar_nextround_zone1
 	{
 		pos		"623 0"
 		size	"100 16"
 		click
 	}
-	
+
 	zone bar_nextround_zone2
 	{
 		pos		"722 0"
 		size	"86 27"
 		click
 	}
-	
+
 	zone bar_nextround_zone3
 	{
 		pos		"808 0"
 		size	"216 55"
 		click
 	}
-	
+
 	pic bar_head
 	{
 		image	hud/bar_head
@@ -179,7 +179,7 @@ menu hud
 		image	hud/bar_name
 		pos		"256 0"
 	}
-	
+
 
 	pic bar_team
 	{
@@ -198,7 +198,7 @@ menu hud
 		string	"*cvar mn_name"
 		pos		"130 18"
 	}
-	
+
 	pic bt_nextround
 	{
 		image	hud/buttons2
@@ -209,9 +209,9 @@ menu hud
 		click	{ cmd nextround; }
 		tooltip "Click to end your round"
 	}
-	
+
 	zone spotted
-	{	
+	{
 		pos		"816 12"
 		size	"48 34"
 		click	{ cmd nextalien; }
@@ -319,49 +319,49 @@ menu hud
 	// ==================
 	// round events
 	// ==================
-	
+
 	confunc startround
 	{
 		*bt_nextround image hud/buttons2a
 	}
-	
+
 	confunc endround
 	{
 		*bt_nextround image hud/buttons2
 	}
-	
+
 	// ==================
 	// weapon bars
 	// ==================
-	
+
 	zone bar_weapon_left_zone
 	{
 		pos		"0 616"
 		size	"176 152"
 		click
 	}
-	
+
 	zone bar_weapon_right_zone
 	{
 		pos		"848 616"
 		size	"176 152"
 		click
 	}
-	
+
 	pic bar_weapon_left
 	{
 		image	hud/bar_leftweapon
 		mousefx true
 		pos		"0 512"
 	}
-	
+
 	pic bar_weapon_right
 	{
 		image	hud/bar_rightweapon
 		mousefx true
 		pos		"768 512"
 	}
-	
+
 	func bt_weapon_clear
 	{
 		*bt_pfire_left   image hud/buttons1
@@ -369,8 +369,8 @@ menu hud
 		*bt_sfire_left   image hud/buttons1
 		*bt_sfire_right  image hud/buttons1
 	}
-	
-	confunc tomovs { bt_weapon_clear }		
+
+	confunc tomovs { bt_weapon_clear }
 	confunc towpls { bt_weapon_clear *bt_pfire_left   image hud/buttons1a }
 	confunc towprs { bt_weapon_clear *bt_pfire_right  image hud/buttons1a }
 	confunc towsls { bt_weapon_clear *bt_sfire_left   image hud/buttons1a }
@@ -444,14 +444,14 @@ menu hud
 
 	string ammoleft
 	{
-		string	"*cvar mn_ammoleft"		
+		string	"*cvar mn_ammoleft"
 		pos		"974 731"
 		align	uc
 	}
 
 	string ammoright
 	{
-		string	"*cvar mn_ammoright"		
+		string	"*cvar mn_ammoright"
 		pos		"52 731"
 		align	uc
 	}
@@ -459,14 +459,14 @@ menu hud
 	// ==================
 	// info bar
 	// ==================
-	
+
 	zone bar_info_zone
 	{
 		pos		"176 640"
 		size	"672 128"
 		click
 	}
-	
+
 	pic bar_info
 	{
 		image	hud/bar_infoscreen
@@ -485,7 +485,7 @@ menu hud
 		click	{ cmd standcrouch }
 		tooltip "Stand/crounch"
 	}
-	
+
 	confunc startreactions { *bt_reaction image hud/button_guarda }
 	confunc stopreactions { *bt_reaction image hud/button_guard }
 
@@ -494,7 +494,7 @@ menu hud
 		mousefx true
 		pos		"303 686"
 		click	{ cmd togglereaction }
-	}		
+	}
 
 	// ==================
 	// right popup bar
@@ -506,14 +506,14 @@ menu hud
 		size	"48 333"
 		click
 	}
-	
+
 	zone bar_popup_zone2
 	{
 		pos		"988 461"
 		size	"48 154"
 		click
 	}
-	
+
 	pic bar_popup
 	{
 		image	hud/bar_popup
@@ -568,29 +568,29 @@ menu hud
 		scale	"8 8 8"
 		color	"0.5 0.5 0.5 1"
 	}
-	
-	container right 
+
+	container right
 	{
 		pos "26 644"
 	}
-	
+
 	container left
 	{
 		pos "876 644"
 	}
-		
-		
+
+
 	// ==================
 	// string
 	// ==================
-	
+
 	string tus
 	{
 		string	"*cvar mn_tu"
 		pos		"397 673"
 		align	uc
 	}
-	
+
 	bar timeall
 	{
 		pos		"422 670"
@@ -609,7 +609,7 @@ menu hud
 		max		"*cvar mn_tumax"
 		align	uc
 	}
-	
+
 	bar health
 	{
 		pos		"422 682"
@@ -625,28 +625,28 @@ menu hud
 		size	"260 50"
 		format	"20 0"
 	}
-	
+
 	// ==================
 	// init function
 	// ==================
-	
+
 	func init
 	{
 		cmd "set hud_refresh 1;"
 		cmd "ov_start;"
-	}	
+	}
 }
 
 // ==================
 // HUD INVENTORY
 // ==================
-	
+
 menu inventory
 {
 	// ==================
 	// background
 	// ==================
-	
+
 	pic bar_inventory
 	{
 		image	hud/bar_inventory
@@ -659,7 +659,7 @@ menu inventory
 		string	"*cvar mn_name"
 		pos		"290 123"
 	}
-	
+
 	zone bt_physdata
 	{
 		image	hud/buttons1
@@ -681,18 +681,18 @@ menu inventory
 	// ==================
 	// containers
 	// ==================
-	
+
 	container right		{ pos "289 277" }
 	container left		{ pos "613 277" }
 	container floor		{ pos "284 458" }
 	container backpack	{ pos "613 155" }
 	container belt		{ pos "310 372" }
 	container holster	{ pos "639 369" }
-		
+
 	// ==================
 	// model
 	// ==================
-	
+
 	model actor
 	{
 		md2		"*cvar mn_body"
@@ -702,8 +702,8 @@ menu inventory
 		angles	"0 70 90"
 		scale	"5 5 5"
 		color	"0.5 0.5 0.5 1"
-	}	
-	
+	}
+
 	model head
 	{
 		md2		"*cvar mn_head"
@@ -711,12 +711,12 @@ menu inventory
 		tag		"actor tag_head"
 		color	"0.5 0.5 0.5 1"
 		scale	"1.0 1.0 1.0"
-	}	
-	
+	}
+
 	// ==================
 	// buttons
 	// ==================
-	
+
 	pic button_exit
 	{
 		image	hud/buttons2
@@ -732,13 +732,13 @@ menu inventory
 // ==================
 // HUD PHYSDATA
 // ==================
-	
+
 menu physdata
 {
 	// ==================
 	// background
 	// ==================
-	
+
 	pic bar_physdata
 	{
 		image	hud/bar_phys
@@ -751,7 +751,7 @@ menu physdata
 		string	"*cvar mn_name"
 		pos		"290 123"
 	}
-	
+
 	zone bt_physdata
 	{
 		image	hud/buttons1
@@ -773,7 +773,7 @@ menu physdata
 	// ==================
 	// model
 	// ==================
-	
+
 	model actor
 	{
 		md2		"*cvar mn_body"
@@ -783,8 +783,8 @@ menu physdata
 		angles	"0 70 90"
 		scale	"5 5 5"
 		color	"0.5 0.5 0.5 1"
-	}	
-	
+	}
+
 	model head
 	{
 		md2		"*cvar mn_head"
@@ -792,61 +792,61 @@ menu physdata
 		tag		"actor tag_head"
 		color	"0.5 0.5 0.5 1"
 		scale	"1.0 1.0 1.0"
-	}	
-	
+	}
+
 	// ==================
 	// abilities
 	// ==================
-	
+
 	string pwr_lbl { pos "480 135"  string "Power:" }
 	string pwr_val { pos "745 135"  string "*cvar mn_tpwr" align ur }
 	pic pwr_rahmen { pos "477 148"  image menu/bar_rahmen }
 	bar pwr_bar    { pos "486 153" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string spd_lbl { pos "480 165" string "Speed:" }
 	string spd_val { pos "745 165" string "*cvar mn_tspd" align ur }
 	pic spd_rahmen { pos "477 178" image menu/bar_rahmen }
 	bar spd_bar    { pos "486 183" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string acc_lbl { pos "480 195" string "Accuracy:" }
 	string acc_val { pos "745 195" string "*cvar mn_tacc" align ur }
 	pic acc_rahmen { pos "477 208" image menu/bar_rahmen }
 	bar acc_bar    { pos "486 213" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 256 align uc }
-		
+
 	string mnd_lbl { pos "480 225" string "Mind:" }
 	string mnd_val { pos "745 225" string "*cvar mn_tmnd" align ur }
 	pic mnd_rahmen { pos "477 238" image menu/bar_rahmen }
 	bar mnd_bar    { pos "486 243" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string cls_lbl { pos "480 270" string "Close Combat:" }
 	string cls_val { pos "745 270" string "*cvar mn_tcls" align ur }
 	pic cls_rahmen { pos "477 283" image menu/bar_rahmen }
 	bar cls_bar    { pos "486 288" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string hvy_lbl { pos "480 300" string "Heavy Weapons:" }
 	string hvy_val { pos "745 300" string "*cvar mn_thvy" align ur }
 	pic hvy_rahmen { pos "477 313" image menu/bar_rahmen }
 	bar hvy_bar    { pos "486 318" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string ass_lbl { pos "480 330" string "Assault Guns:" }
 	string ass_val { pos "745 330" string "*cvar mn_tass" align ur }
 	pic ass_rahmen { pos "477 343" image menu/bar_rahmen }
 	bar ass_bar    { pos "486 348" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string prc_lbl { pos "480 360" string "Sniper Rifles:" }
 	string prc_val { pos "745 360" string "*cvar mn_tprc" align ur }
 	pic prc_rahmen { pos "477 373" image menu/bar_rahmen }
 	bar prc_bar    { pos "486 378" current "*cvar mn_vprc" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string exp_lbl { pos "480 390" string "High Explosives:" }
 	string exp_val { pos "745 390" string "*cvar mn_texp" align ur }
 	pic exp_rahmen { pos "477 403" image menu/bar_rahmen }
 	bar exp_bar    { pos "486 408" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	// ==================
 	// health and morale
 	// ==================
-	
+
 	string hp_val
 	{
 		string	"*cvar mn_hp"
@@ -859,7 +859,7 @@ menu physdata
 		pos		"334 465"
 		size	"324 32"
 	}
-	
+
 	string morale_val
 	{
 		string	"*cvar mn_morale"
@@ -872,11 +872,11 @@ menu physdata
 		pos		"334 504"
 		size	"324 32"
 	}
-		
+
 	// ==================
 	// buttons
 	// ==================
-	
+
 	pic button_exit
 	{
 		image	hud/buttons2

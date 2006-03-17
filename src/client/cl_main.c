@@ -58,6 +58,7 @@ cvar_t	*cl_fps;
 cvar_t	*cl_shownet;
 cvar_t	*cl_showmiss;
 cvar_t	*cl_showclamp;
+cvar_t	*cl_show_tooltips;
 
 cvar_t	*cl_paused;
 cvar_t	*cl_timedemo;
@@ -1339,6 +1340,7 @@ void CL_InitLocal (void)
 	cl_predict = Cvar_Get ("cl_predict", "1", 0);
 //	cl_minfps = Cvar_Get ("cl_minfps", "5", 0);
 	cl_maxfps = Cvar_Get ("cl_maxfps", "90", 0);
+	cl_show_tooltips = Cvar_Get ("cl_show_tooltips", "1", CVAR_ARCHIVE);
 
 	cl_camrotspeed = Cvar_Get ("cl_camrotspeed", "250", 0);
 	cl_camrotaccel = Cvar_Get ("cl_camrotaccel", "400", 0);
@@ -1678,8 +1680,6 @@ void CL_CvarCheck( void )
 		else if ( v > 6 ) v = 6;
 		Cvar_Set( "mn_difficulty", _(difficulty_names[v]) );
 	}
-	v = Cvar_VariableValue( "confirm_actions" );
-	Cvar_Set( "mn_confirm_actions", (v ? "Yes" : "No") );
 
 	// gl_mode and fullscreen
 	v = Cvar_VariableValue( "mn_glmode" );

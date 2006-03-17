@@ -1039,9 +1039,9 @@ void GL_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned *out,
 		}
 	}
 
-	if(gl_state.anisotropic)
+	if ( r_anisotropic->value && gl_state.anisotropic )
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value );
-	if (gl_state.lod_bias)
+	if ( r_texture_lod->value && gl_state.lod_bias )
 		qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT,GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 }
 
@@ -1410,9 +1410,9 @@ done: ;
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	}
 
-	if ( r_anisotropic->value )
+	if ( r_anisotropic->value && gl_state.anisotropic )
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT,   r_anisotropic->value );
-	if ( r_texture_lod->value )
+	if ( r_texture_lod->value && gl_state.lod_bias )
 		qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT,GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 
 	return (samples == gl_alpha_format || samples == gl_compressed_alpha_format);
