@@ -405,6 +405,8 @@ typedef struct cvar_s
 	struct cvar_s *next;
 } cvar_t;
 
+cvar_t *Cvar_Get (char *var_name, char *value, int flags);
+
 #endif		// CVAR
 
 /*
@@ -630,6 +632,7 @@ typedef enum
 	V_SHAPE_BIG,
 	V_DMGTYPE,
 	V_DATE,
+	V_IF,
 
 	V_NUM_TYPES
 } value_types;
@@ -928,20 +931,7 @@ typedef struct csi_s
 
 // ===========================================================
 
-// **--------------------*
-// **--------------------*
 // TODO: Medals. Still subject to (major) changes.
-#define MAX_MEDALTEXT		256
-#define MAX_MEDALTITLE		32
-typedef struct medals_s
-{
-	char	title[MAX_MEDALTITLE];
-	int	type; //cross, coin, etc
-	int	band; //color, length and type of the band
-	//date	date;
-	char	text[MAX_MEDALTEXT];
-	struct	medals_s	*next_medal;
-} medals_t;
 
 #define MAX_SKILL			256
 
@@ -965,6 +955,27 @@ typedef enum
 	SKILL_NUM_TYPES
 } abilityskills_t;
 #define ABILITY_NUM_TYPES SKILL_CLOSE
+
+
+typedef enum
+{
+	MEDAL_CROSS,
+	MEDAL_COIN
+} medalType_t;
+
+#define MAX_MEDALTEXT		256
+#define MAX_MEDALTITLE		32
+typedef struct medals_s
+{
+	char	title[MAX_MEDALTITLE];
+	medalType_t	type;
+	int	band;
+	abilityskills_t	affectedSkill;
+	int	skillIncrease;
+	//date	date;
+	char	text[MAX_MEDALTEXT];
+	struct	medals_s	*next_medal;
+} medals_t;
 
 typedef struct character_s
 {

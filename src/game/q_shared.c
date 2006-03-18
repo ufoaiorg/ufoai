@@ -2120,6 +2120,13 @@ char *fade_names[FADE_LAST] =
 	"none", "in", "out", "sin", "saw", "blend"
 };
 
+// this is here to let Com_ParseValue determine the right size
+typedef struct menuDepends_s
+{
+	cvar_t* cvar;
+	char string[MAX_VAR];
+} menuDepends_t;
+
 /*
 =================
 Com_ParseValue
@@ -2128,6 +2135,8 @@ Com_ParseValue
 int Com_ParseValue( void *base, char *token, int type, int ofs )
 {
 	byte	*b;
+	char	string[MAX_VAR];
+	char	string2[MAX_VAR];
 	int		x, y, w, h;
 
 	b = (byte *)base + ofs;
@@ -2251,6 +2260,13 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		((date_t*)b)->day = 365*x + y;
 		((date_t*)b)->sec = 3600*w;
 		return sizeof(date_t);
+
+	case V_IF:
+		sscanf( token, "%s %s", string, string2 );
+		((menuDepends_t*)b)->cvar = Cvar_Get( string, string2, 0);
+		strncpy ( ((menuDepends_t*)b)->string, string2, MAX_VAR );
+		Com_Printf("If found:\n...if '%s' '%s' (%i)\n", ((menuDepends_t*)b)->cvar->name, string2, sizeof(menuDepends_t) );
+		return sizeof(menuDepends_t);
 
 	default:
 		Sys_Error( "Com_ParseValue: unknown value type\n" );

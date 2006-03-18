@@ -24,6 +24,12 @@ typedef struct menuAction_s
 	struct	menuAction_s *next;
 } menuAction_t;
 
+typedef struct menuDepends_s
+{
+	cvar_t* cvar;
+	char string[MAX_VAR];
+} menuDepends_t;
+
 typedef struct menuNode_s
 {
 	void		*data[6]; // needs to be first
@@ -38,6 +44,7 @@ typedef struct menuNode_s
 	int		num, height;
 	vec4_t		color;
 	menuAction_t		*click, *rclick, *mclick, *mouseIn, *mouseOut;
+	menuDepends_t	depends;
 	struct menuNode_s	*next;
 } menuNode_t;
 
@@ -148,6 +155,7 @@ value_t nps[] =
 	{ "weapon",		V_STRING,	0 },
 	{ "color",		V_COLOR,	NOFS( color ) },
 	{ "align",		V_ALIGN,	NOFS( align ) },
+	{ "if",			V_IF,		NOFS( depends ) },
 	{ NULL,			V_NULL,		0 },
 };
 
@@ -1494,6 +1502,11 @@ void MN_DrawMenus( void )
 			if ( !node->invis && (node->data[0] ||
 				node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP) )
 			{
+				// if construct
+
+				if ( node->depends.cvar && strcmp( node->depends.cvar->string, node->depends.string ) )
+					continue;
+
 				// mouse effects
 				if ( sp > pp )
 				{
