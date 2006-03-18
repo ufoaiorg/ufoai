@@ -2166,22 +2166,30 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		return sizeof(float);
 
 	case V_POS:
+		if ( strstr(token, " ") == NULL )
+			Sys_Error( _("Com_ParseValue: Illegal pos statement\n") );
 		sscanf( token, "%f %f",
 			&((float *)b)[0], &((float *)b)[1] );
 		return 2*sizeof(float);
 
 	case V_VECTOR:
+		if ( strstr( strstr(token, " "), " ") == NULL )
+			Sys_Error( _("Com_ParseValue: Illegal vector statement\n") );
 		sscanf( token, "%f %f %f",
 			&((float *)b)[0], &((float *)b)[1], &((float *)b)[2] );
 		return 3*sizeof(float);
 
 	case V_COLOR:
+		if ( strstr( strstr( strstr(token, " "), " "), " " ) == NULL )
+			Sys_Error( _("Com_ParseValue: Illegal color statement\n") );
 		sscanf( token, "%f %f %f %f",
 			&((float *)b)[0], &((float *)b)[1],
 			&((float *)b)[2], &((float *)b)[3] );
 		return 4*sizeof(float);
 
 	case V_RGBA:
+		if ( strstr( strstr( strstr(token, " "), " "), " " ) == NULL )
+			Sys_Error( _("Com_ParseValue: Illegal rgba statement\n") );
 		sscanf( token, "%i %i %i %i",
 			&((int *)b)[0], &((int *)b)[1],
 			&((int *)b)[2], &((int *)b)[3] );
@@ -2235,12 +2243,16 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		return 1;
 
 	case V_SHAPE_SMALL:
+		if ( strstr( strstr( strstr(token, " "), " "), " " ) == NULL )
+			Sys_Error( _("Com_ParseValue: Illegal shape small statement\n") );
 		sscanf( token, "%i %i %i %i", &x, &y, &w, &h );
 		for ( h += y; y < h ; y++ )
 			*(int *)b |= ((1<<w)-1) << x << (y*8);
 		return 4;
 
 	case V_SHAPE_BIG:
+		if ( strstr( strstr( strstr(token, " "), " "), " " ) == NULL )
+			Sys_Error( _("Com_ParseValue: Illegal shape big statement\n") );
 		sscanf( token, "%i %i %i %i", &x, &y, &w, &h );
 		w = ((1<<w)-1) << x;
 		for ( h += y; y < h ; y++ )
@@ -2256,20 +2268,23 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		return 1;
 
 	case V_DATE:
+		if ( strstr( strstr(token, " "), " ") == NULL )
+			Sys_Error( _("Com_ParseValue: Illegal if statement\n") );
 		sscanf( token, "%i %i %i", &x, &y, &w );
 		((date_t*)b)->day = 365*x + y;
 		((date_t*)b)->sec = 3600*w;
 		return sizeof(date_t);
 
 	case V_IF:
+		if ( strstr(token, " ") == NULL )
+			Sys_Error( _("Com_ParseValue: Illegal if statement\n") );
 		sscanf( token, "%s %s", string, string2 );
 		((menuDepends_t*)b)->cvar = Cvar_Get( string, string2, 0);
 		strncpy ( ((menuDepends_t*)b)->string, string2, MAX_VAR );
-		Com_Printf("If found:\n...if '%s' '%s' (%i)\n", ((menuDepends_t*)b)->cvar->name, string2, sizeof(menuDepends_t) );
 		return sizeof(menuDepends_t);
 
 	default:
-		Sys_Error( "Com_ParseValue: unknown value type\n" );
+		Sys_Error( _("Com_ParseValue: unknown value type\n") );
 		return -1;
 	}
 }
