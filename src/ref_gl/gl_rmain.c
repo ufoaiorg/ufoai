@@ -1138,6 +1138,7 @@ static void GL_DrawColoredStereoLinePair( float r, float g, float b, float y )
 	qglVertex2f( vid.width, y + 1 );
 }
 
+#if 0
 static void GL_DrawStereoPattern( void )
 {
 	int i;
@@ -1168,6 +1169,7 @@ static void GL_DrawStereoPattern( void )
 		GLimp_EndFrame();
 	}
 }
+#endif
 
 /*
 ====================

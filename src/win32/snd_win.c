@@ -163,7 +163,7 @@ static qboolean DS_CreateBuffers( void )
 
 	if ( !primary_format_set || !s_primary->value)
 	{
-	// create the secondary buffer we'll actually work with
+		// create the secondary buffer we'll actually work with
 		memset (&dsbuf, 0, sizeof(dsbuf));
 		dsbuf.dwSize = sizeof(DSBUFFERDESC);
 		dsbuf.dwFlags = DSBCAPS_CTRLFREQUENCY | DSBCAPS_LOCSOFTWARE;

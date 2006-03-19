@@ -489,6 +489,53 @@ menu options_sound
 		mousefx	true
 		click	{ cmd "modifykhz +;" }
 	}
+
+	string sndystem_str
+	{
+		if "sys_os linux"
+		string	"Soundsystem:"
+		pos		"500 320"
+	}
+	string sndystem_value
+	{
+		if "sys_os linux"
+		string	"*cvar mn_sndsystem"
+		pos		"840 320"
+		align	ur
+	}
+	pic sndystem_dec
+	{
+		if "sys_os linux"
+		image	menu/buy_buttons1
+		pos		"868 318"
+		texl	"0 0"		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modify sndystem -1 0 2;"
+			cmd "mn_translate s_system mn_sndsystem 0:OSS,1:SDL,2:ALSA;"
+			cmd "snd_restart"
+		}
+	}
+	pic sndystem_inc
+	{
+		if "sys_os linux"
+		image	menu/buy_buttons1
+		pos		"884 318"
+		texl	"16 0"		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modify sndystem +1 0 2;"
+			cmd "mn_translate s_system mn_sndsystem 0:OSS,1:SDL,2:ALSA;"
+			cmd "snd_restart"
+		}
+	}
+
+	func init
+	{
+		cmd "mn_translate s_system mn_sndsystem 0:OSS,1:ALSA,2:SDL;"
+	}
 }
 
 

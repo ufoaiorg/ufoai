@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -26,8 +26,8 @@ cvar_t	*in_joystick;
 
 void IN_Init (void)
 {
-    in_mouse = Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
-    in_joystick = Cvar_Get ("in_joystick", "0", CVAR_ARCHIVE);
+	in_mouse = Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
+	in_joystick = Cvar_Get ("in_joystick", "0", CVAR_ARCHIVE);
 }
 
 void IN_Shutdown (void)

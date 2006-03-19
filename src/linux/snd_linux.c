@@ -29,12 +29,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../linux/snd_oss.h"
 
-cvar_t *sound_system;
+int sound_system_id;
+cvar_t *s_system;
 
 qboolean SNDDMA_Init(struct sndinfo *s)
 {
-	sound_system = Cvar_Get("sndsystem", "2", 0);
-	switch ( (int)sound_system->value )
+	// alsa is default for linux
+	s_system = Cvar_Get("s_system", "2", CVAR_ARCHIVE);
+	s_system->modified = false;
+
+	// when we select another soundsystem - we have to
+	// stop the current running - but we need to know
+	// which one runs...
+	sound_system_id = (int)s_system->value;
+
+	switch ( sound_system_id )
 	{
 		case 0:
 			Com_Printf("Using OSS\n");
@@ -53,16 +62,17 @@ qboolean SNDDMA_Init(struct sndinfo *s)
 			break;
 #endif
 		default:
-			Com_Printf("Unknown soundsystem '%i'\n", (int)sound_system->value );
-			Com_Printf("CVar sndsystem: 0=>OSS, 1=>SDL, 2=>ALSA (default)\n");
-			sound_system->value = 2;
-			return OSS_SNDDMA_Init();
+			Com_Printf("Unknown soundsystem '%i' (now using ALSA)\n", (int)s_system->value );
+			Cvar_Set("s_system", "2");
+			// we've nothing started
+			s_system->modified = false;
+			return SNDDMA_Init(s);
 	}
 }
 
 int SNDDMA_GetDMAPos(void)
 {
-	switch ( (int)sound_system->value )
+	switch ( sound_system_id )
 	{
 		case 0:
 			return OSS_SNDDMA_GetDMAPos();
@@ -81,7 +91,7 @@ int SNDDMA_GetDMAPos(void)
 
 void SNDDMA_Shutdown(void)
 {
-	switch ( (int)sound_system->value )
+	switch ( sound_system_id )
 	{
 		case 0:
 			OSS_SNDDMA_Shutdown();
@@ -110,7 +120,7 @@ Send sound to device if buffer isn't really the dma buffer
 */
 void SNDDMA_Submit(void)
 {
-	switch ( (int)sound_system->value )
+	switch ( sound_system_id )
 	{
 		case 0:
 			OSS_SNDDMA_Submit();
@@ -132,7 +142,7 @@ void SNDDMA_Submit(void)
 
 void SNDDMA_BeginPainting (void)
 {
-	switch ( (int)sound_system->value )
+	switch ( sound_system_id )
 	{
 		case 0:
 			OSS_SNDDMA_BeginPainting();

@@ -12,7 +12,7 @@
 # (Note: not all options are available for all platforms).
 # ufo (uses OSS for sound, cdrom ioctls for cd audio) is automatically built.
 # game.so is automatically built.
-BUILD_SDLUFO=YES	# use SDL for cdrom and sound
+BUILD_SDLUFO=YES	# use SDL for cdrom, sound and maybe renderer (selectable)
 BUILD_GLX=YES		# X11 GLX driver. Works somewhat ok.
 BUILD_DEDICATED=YES	# build a dedicated ufo server
 BUILD_ALSA=YES		# build with alsa-support
@@ -22,6 +22,7 @@ BUILD_JPEG=NO		# jpeg-6 compile in or link in?
 BUILD_FREETYPE=NO	# build with freetype support?
 BUILD_WITH_DGA=YES	# dga support compiled in
 BUILD_WITH_VIDMODE=YES	# vidmode support
+BUILD_WITH_JOYSTICK=YES	# joystick support
 
 # (hopefully) end of configurable options
 
@@ -100,6 +101,11 @@ endif
 
 ifeq ($(strip $(BUILD_ALSA)),YES)
 	BASE_CFLAGS+=-DUSE_ALSA
+	LDFLAGS+=-lasound
+endif
+
+ifeq ($(strip $(BUILD_WITH_JOYSTICK)),YES)
+	BASE_CFLAGS+=-DJoystick
 endif
 
 ifeq ($(strip $(BUILD_WITH_DGA)),YES)
@@ -145,8 +151,9 @@ ifeq ($(ARCH),x86_64)
 	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing
 endif
 
-GLXCFLAGS=-I/usr/X11R6/include -DOPENGL
+GLXCFLAGS=-I/usr/X11R6/include
 GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext -lXxf86dga -lXxf86vm
+SDLLDFLAGS=$(shell sdl-config --libs)
 
 SHLIBEXT=so
 
@@ -157,6 +164,7 @@ ifeq ($(strip $(BUILD_JPEG)),YES)
 	BASE_CFLAGS+=-DBUILD_JPEG
 else
 	GLXLDFLAGS+=-ljpeg
+	SDLLDFLAGS+=-ljpeg
 endif
 
 ifeq ($(strip $(BUILD_FREETYPE)),YES)
@@ -210,11 +218,17 @@ ifeq ($(ARCH),x86_64)
 	ifeq ($(strip $(BUILD_GLX)),YES)
 		TARGETS += $(BUILDDIR)/ref_glx.$(SHLIBEXT)
 	endif
+	ifeq ($(strip $(BUILD_SDLUFO)),YES)
+		TARGETS += $(BUILDDIR)/ref_sdl.$(SHLIBEXT)
+	endif
 endif # ARCH x86_64
 
 ifeq ($(ARCH),i386)
 	ifeq ($(strip $(BUILD_GLX)),YES)
 		TARGETS += $(BUILDDIR)/ref_glx.$(SHLIBEXT)
+	endif
+	ifeq ($(strip $(BUILD_SDLUFO)),YES)
+		TARGETS += $(BUILDDIR)/ref_sdl.$(SHLIBEXT)
 	endif
 endif # ARCH i386
 
@@ -684,6 +698,9 @@ endif
 REF_GLX_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_glx.o
 
+REF_SDL_OBJS = \
+	$(BUILDDIR)/ref_gl/gl_sdl.o
+
 $(BUILDDIR)/ref_gl/jcapimin.o : $(JPDIR)/jcapimin.c; $(DO_GL_SHLIB_CC)
 $(BUILDDIR)/ref_gl/jchuff.o : $(JPDIR)/jchuff.c; $(DO_GL_SHLIB_CC)
 $(BUILDDIR)/ref_gl/jcinit.o : $(JPDIR)/jcinit.c; $(DO_GL_SHLIB_CC)
@@ -722,6 +739,9 @@ $(BUILDDIR)/ref_gl/jutils.o : $(JPDIR)/jutils.c; $(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_glx.$(SHLIBEXT) : $(REF_GL_OBJS) $(REF_GLX_OBJS)
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(REF_GL_OBJS) $(REF_GLX_OBJS) $(GLXLDFLAGS)
+
+$(BUILDDIR)/ref_sdl.$(SHLIBEXT) : $(REF_GL_OBJS) $(REF_SDL_OBJS)
+	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(REF_GL_OBJS) $(REF_SDL_OBJS) $(SDLLDFLAGS)
 
 $(BUILDDIR)/ref_gl/gl_anim.o :        $(REF_GL_DIR)/gl_anim.c
 	$(DO_GL_SHLIB_CC)
@@ -776,6 +796,10 @@ $(BUILDDIR)/ref_gl/glob.o :           $(LINUX_DIR)/glob.c
 
 $(BUILDDIR)/ref_gl/gl_glx.o :         $(LINUX_DIR)/gl_glx.c
 	$(DO_GL_SHLIB_CC) $(GLXCFLAGS)
+
+$(BUILDDIR)/ref_gl/gl_sdl.o :         $(LINUX_DIR)/gl_sdl.c
+	$(DO_GL_SHLIB_CC) $(SDLCFLAGS)
+
 
 #############################################################################
 # MISC

@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -47,7 +47,7 @@ Cvar_FindVar
 static cvar_t *Cvar_FindVar (char *var_name)
 {
 	cvar_t	*var;
-	
+
 	for (var=cvar_vars ; var ; var=var->next)
 		if (!strcmp (var_name, var->name))
 			return var;
@@ -63,7 +63,7 @@ Cvar_VariableValue
 float Cvar_VariableValue (char *var_name)
 {
 	cvar_t	*var;
-	
+
 	var = Cvar_FindVar (var_name);
 	if (!var)
 		return 0.0;
@@ -79,7 +79,7 @@ Cvar_VariableString
 char *Cvar_VariableString (char *var_name)
 {
 	cvar_t *var;
-	
+
 	var = Cvar_FindVar (var_name);
 	if (!var)
 		return "";
@@ -96,12 +96,12 @@ char *Cvar_CompleteVariable (char *partial)
 {
 	cvar_t		*cvar;
 	int			len;
-	
+
 	len = strlen(partial);
-	
+
 	if (!len)
 		return NULL;
-		
+
 	// check exact match
 	for (cvar=cvar_vars ; cvar ; cvar=cvar->next)
 		if (!strcmp (partial,cvar->name))
@@ -127,7 +127,7 @@ The flags will be or'ed in if the variable exists.
 cvar_t *Cvar_Get (char *var_name, char *var_value, int flags)
 {
 	cvar_t	*var;
-	
+
 	if (flags & (CVAR_USERINFO | CVAR_SERVERINFO))
 	{
 		if (!Cvar_InfoValidate (var_name))
@@ -251,9 +251,9 @@ cvar_t *Cvar_Set2 (char *var_name, char *value, qboolean force)
 
 	if (var->flags & CVAR_USERINFO)
 		userinfo_modified = true;	// transmit at next oportunity
-	
+
 	Z_Free (var->string);	// free the old value string
-	
+
 	var->string = CopyString(value);
 	var->value = atof (var->string);
 
@@ -288,7 +288,7 @@ Cvar_FullSet
 cvar_t *Cvar_FullSet (char *var_name, char *value, int flags)
 {
 	cvar_t	*var;
-	
+
 	var = Cvar_FindVar (var_name);
 	if (!var)
 	{	// create it
@@ -299,9 +299,9 @@ cvar_t *Cvar_FullSet (char *var_name, char *value, int flags)
 
 	if (var->flags & CVAR_USERINFO)
 		userinfo_modified = true;	// transmit at next oportunity
-	
+
 	Z_Free (var->string);	// free the old value string
-	
+
 	var->string = CopyString(value);
 	var->value = atof (var->string);
 	var->flags = flags;
@@ -364,12 +364,12 @@ qboolean Cvar_Command (void)
 {
 	cvar_t			*v;
 
-// check variables
+	// check variables
 	v = Cvar_FindVar (Cmd_Argv(0));
 	if (!v)
 		return false;
-		
-// perform a variable print or set
+
+	// perform a variable print or set
 	if (Cmd_Argc() == 1)
 	{
 		Com_Printf ("\"%s\" is \"%s\"\n", v->name, v->string);
@@ -482,11 +482,24 @@ Cvar_List_f
 void Cvar_List_f (void)
 {
 	cvar_t	*var;
-	int		i;
+	int	i, c, l;
+	char	*token;
+	c = Cmd_Argc();
+
+	if ( c == 2 )
+	{
+		token = Cmd_Argv(1);
+		l = strlen(token);
+	}
 
 	i = 0;
 	for (var = cvar_vars ; var ; var = var->next, i++)
 	{
+		if ( c == 2 && strncmp(var->name, token, l ) )
+		{
+			i--;
+			continue;
+		}
 		if (var->flags & CVAR_ARCHIVE)
 			Com_Printf ("*");
 		else
@@ -497,6 +510,10 @@ void Cvar_List_f (void)
 			Com_Printf (" ");
 		if (var->flags & CVAR_SERVERINFO)
 			Com_Printf ("S");
+		else
+			Com_Printf (" ");
+		if (var->modified)
+			Com_Printf ("M");
 		else
 			Com_Printf (" ");
 		if (var->flags & CVAR_NOSET)

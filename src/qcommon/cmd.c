@@ -873,11 +873,26 @@ Cmd_List_f
 void Cmd_List_f (void)
 {
 	cmd_function_t	*cmd;
-	int				i;
+	int	i, c, l;
+	char	*token;
+	c = Cmd_Argc();
+
+	if ( c == 2 )
+	{
+		token = Cmd_Argv(1);
+		l = strlen(token);
+	}
 
 	i = 0;
 	for (cmd=cmd_functions ; cmd ; cmd=cmd->next, i++)
+	{
+		if ( c == 2 && strncmp(cmd->name, token, l ) )
+		{
+			i--;
+			continue;
+		}
 		Com_Printf ("%s\n", cmd->name);
+	}
 	Com_Printf ("%i commands\n", i);
 }
 

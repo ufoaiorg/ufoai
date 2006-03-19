@@ -146,9 +146,9 @@ qboolean SDL_SNDDMA_Init (void)
 	Com_Printf ("Channels: %i\n", desired.channels );
 
 	/* Open the audio device */
-	if (SDL_OpenAudio (&desired, &obtained) < 0)
+	if (SDL_OpenAudio (&desired, &obtained) == -1)
 	{
-		Com_Printf ("Couldn't open SDL audio - quitting soundsystem: %s\n", SDL_GetError ());
+		Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 		return false;
 	}
@@ -173,9 +173,9 @@ qboolean SDL_SNDDMA_Init (void)
 		default:
 			/* Not supported -- force SDL to do our bidding */
 			SDL_CloseAudio ();
-			if (SDL_OpenAudio (&desired, NULL) < 0)
+			if (SDL_OpenAudio (&desired, NULL) == -1)
 			{
-				Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
+				Com_Printf ("Couldn't open SDL audio (format): %s\n", SDL_GetError ());
 				return false;
 			}
 			memcpy (&obtained, &desired, sizeof (desired));
@@ -225,26 +225,37 @@ int SDL_SNDDMA_GetDMAPos (void)
 
 void SDL_SNDDMA_Shutdown (void)
 {
-	if (snd_inited) {
+	if (snd_inited)
+	{
+		SDL_PauseAudio(1);
 		SDL_CloseAudio ();
 		snd_inited = 0;
+		free(shm->buffer);
+		shm->buffer = NULL;
+		shm->samplepos = 0;
 	}
 
-	if (SDL_WasInit(SDL_INIT_EVERYTHING) == SDL_INIT_AUDIO)
-		SDL_Quit();
-	else
-		SDL_QuitSubSystem(SDL_INIT_AUDIO);
+	SDL_QuitSubSystem(SDL_INIT_AUDIO);
+	Com_Printf("SDL audio device shut down.\n");
 }
 
 /*
+===============
 SNDDMA_Submit
 Send sound to device if buffer isn't really the dma buffer
+===============
 */
 void SDL_SNDDMA_Submit (void)
 {
+	SDL_UnlockAudio();
 }
 
-
+/*
+===============
+SNDDMA_BeginPainting
+===============
+*/
 void SDL_SNDDMA_BeginPainting(void)
 {
+	SDL_LockAudio();
 }

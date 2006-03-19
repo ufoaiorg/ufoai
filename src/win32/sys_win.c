@@ -81,7 +81,7 @@ void Sys_Error (char *error, ...)
 	if (qwclsemaphore)
 		CloseHandle (qwclsemaphore);
 
-// shut down QHOST hooks if necessary
+	// shut down QHOST hooks if necessary
 	DeinitConProc ();
 
 	exit (1);
@@ -97,7 +97,7 @@ void Sys_Quit (void)
 	if (dedicated && dedicated->value)
 		FreeConsole ();
 
-// shut down QHOST hooks if necessary
+	// shut down QHOST hooks if necessary
 	DeinitConProc ();
 
 	exit (0);
@@ -197,6 +197,35 @@ void	Sys_CopyProtect (void)
 
 //================================================================
 
+char *Sys_GetCurrentUser( void )
+{
+	static char s_userName[1024];
+	unsigned long size = sizeof( s_userName );
+
+	if ( !GetUserName( s_userName, &size ) )
+		strcpy( s_userName, "player" );
+
+	if ( !s_userName[0] )
+	{
+		strcpy( s_userName, "player" );
+	}
+
+	return s_userName;
+}
+
+/*
+==============
+Sys_Cwd
+==============
+*/
+char *Sys_Cwd( void ) {
+	static char cwd[MAX_OSPATH];
+
+	_getcwd( cwd, sizeof( cwd ) - 1 );
+	cwd[MAX_OSPATH-1] = 0;
+
+	return cwd;
+}
 
 /*
 ================
@@ -234,12 +263,14 @@ void Sys_Init (void)
 	if (!GetVersionEx (&vinfo))
 		Sys_Error ("Couldn't get OS info");
 
-	if (vinfo.dwMajorVersion < 4)
+	if (vinfo.dwMajorVersion < 4) // at least win nt 4
 		Sys_Error ("UFO: AI requires windows version 4 or greater");
-	if (vinfo.dwPlatformId == VER_PLATFORM_WIN32s)
+	if (vinfo.dwPlatformId == VER_PLATFORM_WIN32s) // win3.x with win32 extensions
 		Sys_Error ("UFO: AI doesn't run on Win32s");
-	else if ( vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS )
+	else if ( vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS ) // win95, 98, me
 		s_win95 = true;
+
+	Cvar_Get("sys_os", "win", 0);
 
 	if (dedicated->value)
 	{
@@ -375,15 +406,15 @@ Send Key_Event calls
 */
 void Sys_SendKeyEvents (void)
 {
-    MSG        msg;
+	MSG        msg;
 
 	while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE))
 	{
 		if (!GetMessage (&msg, NULL, 0, 0))
 			Sys_Quit ();
 		sys_msg_time = msg.time;
-      	TranslateMessage (&msg);
-      	DispatchMessage (&msg);
+		TranslateMessage (&msg);
+		DispatchMessage (&msg);
 	}
 
 	// grab frame time
@@ -595,7 +626,7 @@ HINSTANCE	global_hInstance;
 
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-    MSG			msg;
+	MSG			msg;
 	int			time, oldtime, newtime;
 	float		timescale;
 	char		*cddir;

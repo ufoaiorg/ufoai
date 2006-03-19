@@ -511,6 +511,8 @@ static void HandleEvents(void)
 				b = 1;
 			if (b>=0 && in_state && in_state->Key_Event_fp)
 				in_state->Key_Event_fp (K_MOUSE1 + b, true);
+// 			else
+// 				ri.Con_Printf(PRINT_ALL, "unknown ButtonPress-event: %i\n", event.xbutton.button );
 			break;
 
 		case ButtonRelease:
@@ -987,7 +989,6 @@ qboolean OpenJoystick(cvar_t *joy_dev) {
 void PlatformJoyCommands(int *axis_vals, int *axis_map) {
 	struct js_event e;
 	int key_index;
-	in_state_t *in_state = getState();
 
 	while (read(joy_fd, &e, sizeof(struct js_event))!=-1) {
 		if (JS_EVENT_BUTTON & e.type) {

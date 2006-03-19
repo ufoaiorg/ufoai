@@ -41,7 +41,7 @@ void S_StartOGG(void);
 
 int			s_registration_sequence;
 
-channel_t   channels[MAX_CHANNELS];
+channel_t	channels[MAX_CHANNELS];
 
 qboolean	snd_initialized = false;
 int			sound_started=0;
@@ -79,7 +79,9 @@ cvar_t		*s_loadas8bit;
 cvar_t		*s_khz;
 cvar_t		*s_show;
 cvar_t		*s_mixahead;
+#ifdef _WIN32
 cvar_t		*s_primary;
+#endif
 
 cvar_t		*ov_volume;
 cvar_t		*ov_loop;
@@ -93,8 +95,6 @@ struct sndinfo si;
 // ====================================================================
 // User-setable variables
 // ====================================================================
-
-
 void S_SoundInfo_f(void)
 {
 	if (!sound_started)
@@ -158,8 +158,9 @@ void S_Init (void)
 		s_mixahead = Cvar_Get ("s_mixahead", "0.2", CVAR_ARCHIVE);
 		s_show = Cvar_Get ("s_show", "0", 0);
 		s_testsound = Cvar_Get ("s_testsound", "0", 0);
+#ifdef _WIN32
 		s_primary = Cvar_Get ("s_primary", "0", CVAR_ARCHIVE);	// win32 specific
-
+#endif
 		ov_volume = Cvar_Get ("ov_volume", "0.5", CVAR_ARCHIVE);
 		ov_loop = Cvar_Get ("ov_loop", "1", 0);
 
@@ -172,6 +173,9 @@ void S_Init (void)
 		si.Com_Printf = Com_Printf;
 		si.S_PaintChannels = S_PaintChannels;
 
+		if (!SNDDMA_Init(&si))
+			return;
+
 		Cmd_AddCommand("play", S_Play);
 		Cmd_AddCommand("stopsound", S_StopAllSounds);
 		Cmd_AddCommand("soundlist", S_SoundList);
@@ -182,9 +186,6 @@ void S_Init (void)
 		Cmd_AddCommand("ov_stop", OGG_Stop);
 
 		Cmd_AddCommand( "modifykhz", S_ModifyKhz_f );
-
-		if (!SNDDMA_Init(&si))
-			return;
 
 		S_InitScaletable ();
 
@@ -228,6 +229,10 @@ void S_Shutdown(void)
 	Cmd_RemoveCommand("stopsound");
 	Cmd_RemoveCommand("soundlist");
 	Cmd_RemoveCommand("soundinfo");
+	Cmd_RemoveCommand("ov_play");
+	Cmd_RemoveCommand("ov_start");
+	Cmd_RemoveCommand("ov_stop");
+	Cmd_RemoveCommand("modifykhz");
 
 	// free all sounds
 	for (i=0, sfx=known_sfx ; i < num_sfx ; i++,sfx++)
@@ -1037,6 +1042,13 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	if (s_volume->modified)
 		S_InitScaletable ();
 
+#ifdef __linux__
+	if (s_system->modified)
+	{
+		s_system->modified = false;
+		CL_Snd_Restart_f();
+	}
+#endif
 	VectorCopy(origin, listener_origin);
 	VectorCopy(forward, listener_forward);
 	VectorCopy(right, listener_right);
@@ -1106,7 +1118,6 @@ void GetSoundtime(void)
 
 	if (samplepos < oldsamplepos)
 	{
-
 		buffers++;					// buffer wrapped
 
 		if (paintedtime > 0x40000000)

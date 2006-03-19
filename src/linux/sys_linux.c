@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/mman.h>
 #include <errno.h>
 #include <mntent.h>
+#include <pwd.h>
+#include <dirent.h>
 
 #include <dlfcn.h>
 
@@ -49,6 +51,71 @@ unsigned	sys_frame_time;
 
 uid_t saved_euid;
 qboolean stdin_active = true;
+
+char *Sys_GetCurrentUser( void )
+{
+	struct passwd *p;
+
+	if ( (p = getpwuid( getuid() )) == NULL ) {
+		return "player";
+	}
+	return p->pw_name;
+}
+
+char *Sys_Cwd( void )
+{
+	static char cwd[MAX_OSPATH];
+
+	getcwd( cwd, sizeof( cwd ) - 1 );
+	cwd[MAX_OSPATH-1] = 0;
+
+	return cwd;
+}
+/*
+=================
+Sys_BinName
+
+This resolves any symlinks to the binary. It's disabled for debug
+builds because there are situations where you are likely to want
+to symlink to binaries and /not/ have the links resolved.
+This way you can make a link in /usr/bin and the data-files are still
+found in e.g. /usr/local/games/ufoai
+=================
+*/
+char *Sys_BinName( const char *arg0 )
+{
+#ifdef NDEBUG
+	int	n;
+	char	src[MAX_OSPATH];
+	char	dir[MAX_OSPATH];
+	qboolean	links = false;
+#endif
+
+	static char	dst[MAX_OSPATH];
+	Com_sprintf(dst, MAX_OSPATH, (char*)arg0);
+
+#ifdef NDEBUG
+	while( ( n = readlink(dst, src, MAX_OSPATH) ) >= 0 )
+	{
+		src[n] = '\0';
+		Com_sprintf( dir, MAX_OSPATH, dirname( dst ));
+		Com_sprintf( dst, MAX_OSPATH, dir);
+		strncat( dst, MAX_OSPATH, "/" );
+		strncat( dst, MAX_OSPATH, src );
+		links = true;
+	}
+
+	if ( links )
+	{
+		Com_sprintf( dst, MAX_OSPATH, Sys_Cwd());
+		strncat( dst, MAX_OSPATH, "/" );
+		strncat( dst, MAX_OSPATH, dir );
+		strncat( dst, MAX_OSPATH, "/" );
+		strncat( dst, MAX_OSPATH, src );
+	}
+#endif
+	return dst;
+}
 
 /*
 =================
@@ -108,6 +175,7 @@ void Sys_Quit (void)
 
 void Sys_Init(void)
 {
+	Cvar_Get("sys_os", "linux", 0);
 #if id386
 //	Sys_SetFPCW();
 #endif

@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -46,10 +46,10 @@ void *Hunk_Begin (int maxsize)
 	maxhunksize = maxsize + sizeof(int);
 	curhunksize = 0;
 #if (defined __FreeBSD__)
-	membase = mmap(0, maxhunksize, PROT_READ|PROT_WRITE, 
+	membase = mmap(0, maxhunksize, PROT_READ|PROT_WRITE,
 		MAP_PRIVATE|MAP_ANON, -1, 0);
 #else
-	membase = mmap(0, maxhunksize, PROT_READ|PROT_WRITE, 
+	membase = mmap(0, maxhunksize, PROT_READ|PROT_WRITE,
 		MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
 #endif
 	if (membase == NULL || membase == (byte *)-1)
@@ -81,7 +81,7 @@ int Hunk_End (void)
 	size_t new_size = curhunksize + sizeof(int);
 	void * unmap_base;
 	size_t unmap_len;
-	
+
 	new_size = round_page(new_size);
 	old_size = round_page(old_size);
 	if (new_size > old_size)
@@ -99,7 +99,7 @@ int Hunk_End (void)
 	if (n != membase)
 		Sys_Error("Hunk_End:  Could not remap virtual block (%d)", errno);
 	*((int *)membase) = curhunksize + sizeof(int);
-	
+
 	return curhunksize;
 }
 
@@ -130,7 +130,7 @@ int Sys_Milliseconds (void)
 	static int		secbase;
 
 	gettimeofday(&tp, &tzp);
-	
+
 	if (!secbase)
 	{
 		secbase = tp.tv_sec;
@@ -138,13 +138,13 @@ int Sys_Milliseconds (void)
 	}
 
 	curtime = (tp.tv_sec - secbase)*1000 + tp.tv_usec/1000;
-	
+
 	return curtime;
 }
 
 void Sys_Mkdir (char *path)
 {
-    mkdir (path, 0777);
+	mkdir (path, 0777);
 }
 
 char *strlwr (char *s)
@@ -170,7 +170,7 @@ static qboolean CompareAttributes(char *path, char *name,
 	struct stat st;
 	char fn[MAX_OSPATH];
 
-// . and .. never match
+	// . and .. never match
 	if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0)
 		return false;
 
@@ -199,27 +199,27 @@ char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)
 //	COM_FilePath (path, findbase);
 	strcpy(findbase, path);
 
-	if ((p = strrchr(findbase, '/')) != NULL) 
+	if ((p = strrchr(findbase, '/')) != NULL)
 	{
 		*p = 0;
 		strcpy(findpattern, p + 1);
-	} 
+	}
 	else
 		strcpy(findpattern, "*");
 
 	if (strcmp(findpattern, "*.*") == 0)
 		strcpy(findpattern, "*");
-	
+
 	if ((fdir = opendir(findbase)) == NULL)
 		return NULL;
-	
-	while ((d = readdir(fdir)) != NULL) 
+
+	while ((d = readdir(fdir)) != NULL)
 	{
-		if (!*findpattern || glob_match(findpattern, d->d_name)) 
+		if (!*findpattern || glob_match(findpattern, d->d_name))
 		{
 //			if (*findpattern)
 //				printf("%s matched %s\n", findpattern, d->d_name);
-			if ( CompareAttributes(findbase, d->d_name, musthave, canhave) ) 
+			if ( CompareAttributes(findbase, d->d_name, musthave, canhave) )
 			{
 				sprintf (findpath, "%s/%s", findbase, d->d_name);
 				return findpath;
@@ -235,13 +235,13 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 
 	if (fdir == NULL)
 		return NULL;
-	while ((d = readdir(fdir)) != NULL) 
+	while ((d = readdir(fdir)) != NULL)
 	{
-		if (!*findpattern || glob_match(findpattern, d->d_name)) 
+		if (!*findpattern || glob_match(findpattern, d->d_name))
 		{
 //			if (*findpattern)
 //				printf("%s matched %s\n", findpattern, d->d_name);
-			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) 
+			if (CompareAttributes(findbase, d->d_name, musthave, canhave))
 			{
 				sprintf (findpath, "%s/%s", findbase, d->d_name);
 				return findpath;

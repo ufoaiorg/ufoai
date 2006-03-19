@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -34,12 +34,12 @@ void RW_IN_Activate();
 void getMouse(int *x, int *y, int *state);
 
 typedef struct in_state {
-  // Pointers to functions back in client, set by vid_so
-  void (*IN_CenterView_fp)(void);
-  Key_Event_fp_t Key_Event_fp;
-  vec_t *viewangles;
-  int *in_strafe_state;
-  int *in_speed_state;
+	// Pointers to functions back in client, set by vid_so
+	void (*IN_CenterView_fp)(void);
+	Key_Event_fp_t Key_Event_fp;
+	vec_t *viewangles;
+	int *in_strafe_state;
+	int *in_speed_state;
 } in_state_t;
 
 in_state_t *getState();

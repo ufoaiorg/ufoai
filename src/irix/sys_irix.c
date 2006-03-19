@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -75,8 +75,8 @@ void Sys_Printf (char *fmt, ...)
 	if (strlen(text) > sizeof(text))
 		Sys_Error("memory overwrite in Sys_Printf");
 
-    if (nostdout && nostdout->value)
-        return;
+	if (nostdout && nostdout->value)
+		return;
 
 	for (p = (unsigned char *)text; *p; p++) {
 		*p &= 0x7f;
@@ -91,46 +91,47 @@ void Sys_Quit (void)
 {
 	CL_Shutdown ();
 	Qcommon_Shutdown ();
-    fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 	_exit(0);
 }
 
 void Sys_Init(void)
 {
+	Cvar_Get("sys_os", "irix", 0);
 #if id386
 //	Sys_SetFPCW();
 #endif
 }
 
 void Sys_Error (char *error, ...)
-{ 
-    va_list     argptr;
-    char        string[1024];
+{
+	va_list     argptr;
+	char        string[1024];
 
-// change stdin to non blocking
-    fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
-    
-    va_start (argptr,error);
-    vsprintf (string,error,argptr);
-    va_end (argptr);
+	// change stdin to non blocking
+	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+
+	va_start (argptr,error);
+	vsprintf (string,error,argptr);
+	va_end (argptr);
 	fprintf(stderr, "Error: %s\n", string);
 
 	CL_Shutdown ();
 	Qcommon_Shutdown ();
 	_exit (1);
 
-} 
+}
 
 void Sys_Warn (char *warning, ...)
-{ 
-    va_list     argptr;
-    char        string[1024];
-    
-    va_start (argptr,warning);
-    vsprintf (string,warning,argptr);
-    va_end (argptr);
+{
+	va_list     argptr;
+	char        string[1024];
+
+	va_start (argptr,warning);
+	vsprintf (string,warning,argptr);
+	va_end (argptr);
 	fprintf(stderr, "Warning: %s", string);
-} 
+}
 
 /*
 ============
@@ -142,10 +143,10 @@ returns -1 if not present
 int	Sys_FileTime (char *path)
 {
 	struct	stat	buf;
-	
+
 	if (stat (path,&buf) == -1)
 		return -1;
-	
+
 	return buf.st_mtime;
 }
 
@@ -157,10 +158,10 @@ void floating_point_exception_handler(int whatever)
 
 char *Sys_ConsoleInput(void)
 {
-    static char text[256];
-    int     len;
+	static char text[256];
+	int     len;
 	fd_set	fdset;
-    struct timeval timeout;
+	struct timeval timeout;
 
 	if (!dedicated || !dedicated->value)
 		return NULL;
@@ -199,7 +200,7 @@ Sys_UnloadGame
 */
 void Sys_UnloadGame (void)
 {
-	if (game_library) 
+	if (game_library)
 		dlclose (game_library);
 	game_library = NULL;
 }
@@ -251,7 +252,7 @@ void *Sys_GetGameAPI (void *parms)
 	GetGameAPI = (void *)dlsym (game_library, "GetGameAPI");
 	if (!GetGameAPI)
 	{
-		Sys_UnloadGame ();		
+		Sys_UnloadGame ();
 		return NULL;
 	}
 
@@ -272,7 +273,7 @@ void Sys_SendKeyEvents (void)
 	if (KBD_Update_fp)
 		KBD_Update_fp();
 
-	// grab frame time 
+	// grab frame time
 	sys_frame_time = Sys_Milliseconds();
 }
 
@@ -301,17 +302,17 @@ int main (int argc, char **argv)
 //		printf ("Linux Quake -- Version %0.3f\n", LINUX_VERSION);
 	}
 
-    oldtime = Sys_Milliseconds ();
-    while (1)
-    {
-// find time spent rendering last frame
+	oldtime = Sys_Milliseconds ();
+	while (1)
+	{
+		// find time spent rendering last frame
 		do {
 			newtime = Sys_Milliseconds ();
 			time = newtime - oldtime;
 		} while (time < 1);
 		Qcommon_Frame (time);
 		oldtime = newtime;
-    }
+	}
 
 }
 
