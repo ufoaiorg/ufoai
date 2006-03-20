@@ -43,6 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <dlfcn.h>
 #ifdef Joystick
 #include <fcntl.h>
+static int joy_fd;
 #endif
 
 #include <X11/Xlib.h>
