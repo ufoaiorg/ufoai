@@ -99,36 +99,6 @@ qboolean SDL_SNDDMA_Init (void)
 
 	memset(&desired, '\0', sizeof (desired));
 	memset(&obtained, '\0', sizeof (obtained));
-
-#if 0
-	tmp = ((int) s_sdlBits->value);
-	if ((tmp != 16) && (tmp != 8))
-		tmp = 16;
-
-	desired.freq = (int) s_sdlSpeed->value;
-	if(!desired.freq) desired.freq = 22050;
-	desired.format = ((tmp == 16) ? AUDIO_S16SYS : AUDIO_U8);
-
-	// I dunno if this is the best idea, but I'll give it a try...
-	//  should probably check a cvar for this...
-	if (s_sdlDevSamps->value)
-		desired.samples = s_sdlDevSamps->value;
-	else
-	{
-		// just pick a sane default.
-		if (desired.freq <= 11025)
-			desired.samples = 256;
-		else if (desired.freq <= 22050)
-			desired.samples = 512;
-		else if (desired.freq <= 44100)
-			desired.samples = 1024;
-		else
-			desired.samples = 2048;  // (*shrug*)
-	}
-
-	desired.channels = (int) s_sdlChannels->value;
-	desired.callback = sdl_audio_callback;
-#endif
 	sdlMixSamples = Cvar_Get("s_sdlMixSamps", "0", CVAR_ARCHIVE);
 
 	desired_bits = (Cvar_Get("sndbits", "16", CVAR_ARCHIVE))->value;
