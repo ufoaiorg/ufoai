@@ -1,0 +1,23 @@
+UFO:Alien Invasion Readme
+=============================================================================================
+
+
+FAQ:
+=============================================================================================
+Q: The ufo binary can't find all the needed files
+A: Make sure that you do not execute the binary in src/linux/debugARCH resp.
+   src/linux/releaseARCH dir.
+   You need to copy or link the files to svn-root dir:
+   ln -s src/linux/debugi386/ref_glx.so
+   ln -s src/linux/debugi386/ufo
+   ln -s src/linux/debugi386/ufoded
+   ln -s src/linux/debugi386/game.so base/
+--------
+Q: I have problems with building and/or running the game
+A: Have a look at http://ufoai.sourceforge.net/tutorials.html
+   there you can find a few tutorials which may help you.
+   You can also ask your question at channel #ufo:ai at irc.freenode.org
+   or at the mailinglist http://sourceforge.net/mail/?group_id=157793
+   Last but not least you can join the forums at http://www.ufoai.net to get
+   help
+--------
