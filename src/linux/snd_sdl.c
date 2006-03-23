@@ -100,6 +100,35 @@ qboolean SDL_SNDDMA_Init (void)
 	memset(&desired, '\0', sizeof (desired));
 	memset(&obtained, '\0', sizeof (obtained));
 
+#if 0
+	tmp = ((int) s_sdlBits->value);
+	if ((tmp != 16) && (tmp != 8))
+		tmp = 16;
+
+	desired.freq = (int) s_sdlSpeed->value;
+	if(!desired.freq) desired.freq = 22050;
+	desired.format = ((tmp == 16) ? AUDIO_S16SYS : AUDIO_U8);
+
+	// I dunno if this is the best idea, but I'll give it a try...
+	//  should probably check a cvar for this...
+	if (s_sdlDevSamps->value)
+		desired.samples = s_sdlDevSamps->value;
+	else
+	{
+		// just pick a sane default.
+		if (desired.freq <= 11025)
+			desired.samples = 256;
+		else if (desired.freq <= 22050)
+			desired.samples = 512;
+		else if (desired.freq <= 44100)
+			desired.samples = 1024;
+		else
+			desired.samples = 2048;  // (*shrug*)
+	}
+
+	desired.channels = (int) s_sdlChannels->value;
+	desired.callback = sdl_audio_callback;
+#endif
 	sdlMixSamples = Cvar_Get("s_sdlMixSamps", "0", CVAR_ARCHIVE);
 
 	desired_bits = (Cvar_Get("sndbits", "16", CVAR_ARCHIVE))->value;
@@ -134,21 +163,21 @@ qboolean SDL_SNDDMA_Init (void)
 				desired.format = AUDIO_S16LSB;
 			break;
 		default:
-			Com_Printf ("Unknown number of audio bits: %d\n", desired_bits);
+			Com_Printf(_("Unknown number of audio bits: %d\n"), desired_bits);
 			return false;
 	}
 	desired.channels = (Cvar_Get("sndchannels", "2", CVAR_ARCHIVE))->value;
 	desired.callback = paint_audio;
 
-	Com_Printf ("Bits: %i\n", desired_bits );
-	Com_Printf ("Frequency: %i\n", desired.freq );
-	Com_Printf ("Samples: %i\n", desired.samples );
-	Com_Printf ("Channels: %i\n", desired.channels );
+	Com_Printf (_("Bits: %i\n"), desired_bits );
+	Com_Printf (_("Frequency: %i\n"), desired.freq );
+	Com_Printf (_("Samples: %i\n"), desired.samples );
+	Com_Printf (_("Channels: %i\n"), desired.channels );
 
 	/* Open the audio device */
 	if (SDL_OpenAudio (&desired, &obtained) == -1)
 	{
-		Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
+		Com_Printf (_("Couldn't open SDL audio: %s\n"), SDL_GetError ());
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 		return false;
 	}
@@ -175,7 +204,7 @@ qboolean SDL_SNDDMA_Init (void)
 			SDL_CloseAudio ();
 			if (SDL_OpenAudio (&desired, NULL) == -1)
 			{
-				Com_Printf ("Couldn't open SDL audio (format): %s\n", SDL_GetError ());
+				Com_Printf (_("Couldn't open SDL audio (format): %s\n"), SDL_GetError ());
 				return false;
 			}
 			memcpy (&obtained, &desired, sizeof (desired));
@@ -220,7 +249,7 @@ qboolean SDL_SNDDMA_Init (void)
 
 int SDL_SNDDMA_GetDMAPos (void)
 {
-	return shm->samplepos;
+	return shm->dmapos;
 }
 
 void SDL_SNDDMA_Shutdown (void)
@@ -236,7 +265,7 @@ void SDL_SNDDMA_Shutdown (void)
 	}
 
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
-	Com_Printf("SDL audio device shut down.\n");
+	Com_Printf(_("SDL audio device shut down.\n"));
 }
 
 /*
