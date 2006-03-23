@@ -141,6 +141,7 @@ menu research
 
 	pic bt_stop
 	{
+		tooltip	"Stop research"
 		image	menu/button_research
 		mousefx	true
 		pos		"720 700"
@@ -151,6 +152,7 @@ menu research
 
 	pic bt_start
 	{
+		tooltip	"Start research"
 		image	menu/button_research
 		mousefx	true
 		pos		"650 696"
@@ -164,6 +166,7 @@ menu research
 	// ==================
 	pic bt_continue
 	{
+		tooltip	"Back to baseview"
 		image	hud/buttons2
 		mousefx	true
 		pos		"920 630"

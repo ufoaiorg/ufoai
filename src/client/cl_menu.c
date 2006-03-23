@@ -438,20 +438,9 @@ qboolean Com_CheckShape( int shape[16], int x, int y )
 void MN_DrawFree (int posx, int posy, int sizex, int sizey)
 {
 	vec4_t color;
-	int line[10];
 	VectorSet( color, 0.0f, 1.0f, 0.0f );
 	color[3] = 0.7f;
-	re.DrawColor( color );
-	line[0]=line[6]=line[8]=posx;
-	line[1]=line[3]=line[9]=posy,
-	line[2]=line[4]=line[0]+sizex;
-	line[5]=line[7]=line[1]+sizey;
-	re.DrawLineStrip(5,line);
-	line[0]=line[6]=line[8]=posx+1;
-	line[1]=line[3]=line[9]=posy+1,
-	line[2]=line[4]=line[0]+sizex-2;
-	line[5]=line[7]=line[1]+sizey-2;
-	re.DrawLineStrip(5,line);
+	re.DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);
 	re.DrawColor( NULL );
 }
 

@@ -55,6 +55,7 @@ menu buildings
 
 	pic back
 	{
+		tooltip	"Back to baseview"
 		image	menu/button_mapmen_options2
 		pos	"950 10"
 		texl	"0 0"

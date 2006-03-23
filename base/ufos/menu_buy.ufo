@@ -259,6 +259,8 @@ menu buy
 	}
 	pic bt_sell0
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 40"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -273,6 +275,8 @@ menu buy
 	}
 	pic bt_sell1
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 65"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -287,6 +291,8 @@ menu buy
 	}
 	pic bt_sell2
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 90"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -301,6 +307,8 @@ menu buy
 	}
 	pic bt_sell3
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 115"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -315,6 +323,8 @@ menu buy
 	}
 	pic bt_sell4
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 140"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -329,6 +339,8 @@ menu buy
 	}
 	pic bt_sell5
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 165"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -343,6 +355,8 @@ menu buy
 	}
 	pic bt_sell6
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 190"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -357,6 +371,8 @@ menu buy
 	}
 	pic bt_sell7
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 215"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -371,6 +387,8 @@ menu buy
 	}
 	pic bt_sell8
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 240"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -385,6 +403,8 @@ menu buy
 	}
 	pic bt_sell9
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 265"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -399,6 +419,8 @@ menu buy
 	}
 	pic bt_sell10
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 290"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -413,6 +435,8 @@ menu buy
 	}
 	pic bt_sell11
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 315"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -427,6 +451,8 @@ menu buy
 	}
 	pic bt_sell12
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 340"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -441,6 +467,8 @@ menu buy
 	}
 	pic bt_sell13
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 365"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -455,6 +483,8 @@ menu buy
 	}
 	pic bt_sell14
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 390"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -469,6 +499,8 @@ menu buy
 	}
 	pic bt_sell15
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 415"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -483,6 +515,8 @@ menu buy
 	}
 	pic bt_sell16
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 440"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -497,6 +531,8 @@ menu buy
 	}
 	pic bt_sell17
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 465"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -511,6 +547,8 @@ menu buy
 	}
 	pic bt_sell18
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 490"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -525,6 +563,8 @@ menu buy
 	}
 	pic bt_sell19
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 515"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -539,6 +579,8 @@ menu buy
 	}
 	pic bt_sell20
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 540"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -553,6 +595,8 @@ menu buy
 	}
 	pic bt_sell21
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 565"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -567,6 +611,8 @@ menu buy
 	}
 	pic bt_sell22
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 590"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -581,6 +627,8 @@ menu buy
 	}
 	pic bt_sell23
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 615"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -595,6 +643,8 @@ menu buy
 	}
 	pic bt_sell24
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 640"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -609,6 +659,8 @@ menu buy
 	}
 	pic bt_sell25
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 665"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -623,6 +675,8 @@ menu buy
 	}
 	pic bt_sell26
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 690"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -637,6 +691,8 @@ menu buy
 	}
 	pic bt_sell27
 	{
+		tooltip	"Buy item"
+		tooltip	"Sell item"
 		image	menu/buy_buttons1
 		pos		"392 715"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -672,6 +728,7 @@ menu buy
 
 	pic bt_primary
 	{
+		tooltip	"Show only primary weapons"
 		image	menu/menu_buttons1
 		mousefx	true
 		pos		"615 585"
@@ -682,6 +739,7 @@ menu buy
 	
 	pic bt_secondary
 	{
+		tooltip	"Show only secondary weapons"
 		image	menu/menu_buttons1
 		mousefx	true
 		pos		"615 655"
@@ -692,6 +750,7 @@ menu buy
 	
 	pic bt_misc
 	{
+		tooltip	"Show other equipment"
 		image	menu/menu_buttons1
 		mousefx	true
 		pos		"765 585"
@@ -702,6 +761,7 @@ menu buy
 	
 	pic bt_armor
 	{
+		tooltip	"Show only armor"
 		image	menu/menu_buttons1
 		mousefx	true
 		pos		"765 655"
@@ -712,6 +772,7 @@ menu buy
 	
 	pic bt_continue
 	{
+		tooltip	"Back to baseview"
 		image	hud/buttons2
 		mousefx	true
 		pos		"940 686"
