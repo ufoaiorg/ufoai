@@ -134,6 +134,27 @@ menu research
 	string txt_item25	{ string "*cvar mn_researchitem25"		pos "50 665"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 25" } }
 	string txt_item26	{ string "*cvar mn_researchitem26"		pos "50 690"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 26" } }
 	string txt_item27	{ string "*cvar mn_researchitem27"		pos "50 715"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 27" } }
+	
+	string txt_selected_name
+	{
+		string "*cvar mn_research_selname"
+		pos "615 200"
+//		size "275 16"
+	}
+	string txt_selected_time
+	{
+		string "*cvar mn_research_seltime"
+		pos "645 230"
+		color "0 .78 0 1"
+	}
+
+	string txt_credits
+	{
+		string	"*cvar mn_credits"
+		pos	"950 70"
+		font	f_big
+		align	ur
+	}
 
 	// ==================
 	// buttons
