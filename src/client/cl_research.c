@@ -82,7 +82,7 @@ void R_UpdateData ( void )
 {
 	objDef_t *od;
 	int i, j;
-	char name [MAX_VAR+2];
+	char name [MAX_VAR];
 	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ ) { //TODO: Debug what happens if there are more than 28 items (j>28) ! 
 		if ( od->researchNeeded) { // only handle items if the need researching
 			strcpy(name, od->name);
