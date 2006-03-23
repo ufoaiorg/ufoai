@@ -15,6 +15,28 @@ ObjDef_t in q_shared.h holds the researchNeeded and researchStatus flags
 */
 
 /*======================
+R_ResearchPossible
+
+checks if there is at least one base with a lab and scientists available and tells the player the status.
+======================*/
+bool R_ResearchPossible ( void )
+{
+	if ( baseCurrent )
+		if ( baseCurrent->hasLab ) {
+			if ( baseCurrent->NumScientists > 0)  {
+				return true;
+			} else {
+				Com_Printf( _("You need to hire some scientists before research.\n") );
+				MN_Popup( _("Notice"), _("You need to hire some scientists before research.") );
+			}
+		} else {
+			Com_Printf( _("Build a laboratory first and hire/transfer some scientists.\n") );
+			MN_Popup( _("Notice"), _("Build a laboratory first and hire/transfer some scientists.") );
+		}
+	return false;
+}
+
+/*======================
 CL_ResearchSelectCmd
 ======================*/
 void CL_ResearchSelectCmd( void )
@@ -53,7 +75,10 @@ void R_ResearchStart ( void )
 		return;
 
 	od = &csi.ods[globalResearchNum];
-	od->researchStatus = RS_RUNNING;
+	if (od->researchStatus == RS_RUNNING)
+		MN_Popup( _("Notice"), _("This item is already researched by your scientists.") );
+	else
+		od->researchStatus = RS_RUNNING;
 	R_UpdateData();
 }
 
@@ -96,6 +121,7 @@ void R_UpdateData ( void )
 	}
 	researchListLength = j;
 
+	// Set rest of the list-entries to have no text at all. TODO: 28 should not be defined here.
 	for ( ; j < 28; j++ )
 		Cvar_Set( va( "mn_researchitem%i", j ), "" );
 
@@ -160,6 +186,8 @@ void CL_CheckResearchStatus ( void )
 			{
 				// FIXME: Make this depending on how many scientists are hired
 				od->researchTime--;
+				// TODO: What time is stored here exactly? the formular below may be way of.
+				od->researchTime = od->researchTime - B_HowManyPeopleInBase2 ( baseCurrent, 1 );
 			}
 		}
 	}

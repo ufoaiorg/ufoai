@@ -144,12 +144,17 @@ value_t production_valid_vars[] =
 
 /*
 =====================
-B_HowManyPeopleInBase
+B_HowManyPeopleInBase2
 
-returns the hole amount of soldiers/workers in base
+returns the hole amount of soldiers/workers in base or inside a specific building/location.
+0 = all in base
+1 = all in labs
+2 = all in quaters
+4 = all in workshops
+TODO: This list should probably be made into constants or something like that.
 =====================
 */
-int B_HowManyPeopleInBase( base_t *base )
+int B_HowManyPeopleInBase2 ( base_t *base, char Location )
 {
 	int a, b;
 	building_t *entry;
@@ -171,12 +176,28 @@ int B_HowManyPeopleInBase( base_t *base )
 					entry->used = 1;
 				else
 				{
-					amount += entry->assignedWorkers;
+					if	( ( Location == 0 ) ||
+						( ( Location == 1 ) && (entry->isLab ) )
+						// Location == 2 TODO
+						// Location == 4 TODO
+						)
+						amount += entry->assignedWorkers;
 					entry->used = 0;
 				}
 			}
 
 	return amount;
+}
+/*
+=====================
+B_HowManyPeopleInBase
+
+returns the hole amount of soldiers/workers in base
+=====================
+*/
+int B_HowManyPeopleInBase( base_t *base )
+{
+	return B_HowManyPeopleInBase2 ( base , 0 );
 }
 
 /*
