@@ -3,6 +3,7 @@
 #include "client.h"
 #include "cl_research.h"
 
+
 byte researchList[MAX_RESEARCHLIST];
 int researchListLength;
 int globalResearchNum;
@@ -81,14 +82,18 @@ void R_UpdateData ( void )
 {
 	objDef_t *od;
 	int i, j;
-
-	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
-		if ( od->researchNeeded && od->researchStatus == RS_NONE )
-		{
-			Cvar_Set( va("mn_researchitem%i", j), od->name );
+	char name [MAX_VAR+2];
+	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ ) { //TODO: Debug what happens if there are more than 28 items (j>28) ! 
+		if ( od->researchNeeded) { // only handle items if the need researching
+			strcpy(name, od->name);
+			if (od->researchStatus != RS_NONE ) // Set the text of the research items and mark them if they are currently researched.
+				strcat(name, " [under research]");	//TODO: colorcode "string txt_item%i" ?
+			Cvar_Set( va("mn_researchitem%i", j),  name ); //TODO: colorcode maybe?
 			researchList[j] = i;
 			j++;
+
 		}
+	}
 	researchListLength = j;
 
 	for ( ; j < 28; j++ )
@@ -99,6 +104,7 @@ void R_UpdateData ( void )
 	{
 		Cbuf_AddText( "researchselect0\n" );
 		CL_ItemDescription( researchList[0] );
+		globalResearchNum = researchList[0];
 	} else {
 		// reset description
 		Cvar_Set( "mn_researchitemname", "" );
