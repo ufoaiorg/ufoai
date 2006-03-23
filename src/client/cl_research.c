@@ -19,11 +19,11 @@ R_ResearchPossible
 
 checks if there is at least one base with a lab and scientists available and tells the player the status.
 ======================*/
-bool R_ResearchPossible ( void )
+char R_ResearchPossible ( void )
 {
-	if ( baseCurrent )
+	if ( baseCurrent ) {
 		if ( baseCurrent->hasLab ) {
-			if ( baseCurrent->NumScientists > 0)  {
+			if ( B_HowManyPeopleInBase2 ( baseCurrent, 1 ) > 0)  {
 				return true;
 			} else {
 				Com_Printf( _("You need to hire some scientists before research.\n") );
@@ -33,7 +33,22 @@ bool R_ResearchPossible ( void )
 			Com_Printf( _("Build a laboratory first and hire/transfer some scientists.\n") );
 			MN_Popup( _("Notice"), _("Build a laboratory first and hire/transfer some scientists.") );
 		}
+	}
 	return false;
+}
+
+/*======================
+R_ResearchDisplayInfo
+======================*/
+void R_ResearchDisplayInfo ( int num  )
+{
+	// we are not in base view
+	if ( ! baseCurrent )
+		return;
+	objDef_t *od;
+	od = &csi.ods[globalResearchNum];
+	Cvar_Set( "mn_research_selname",  od->name ); 
+	Cvar_Set( "mn_research_seltime", "Time: x\n" );
 }
 
 /*======================
@@ -59,6 +74,7 @@ void CL_ResearchSelectCmd( void )
 	// call researchselect function from menu_research.ufo
 	Cbuf_AddText( va( "researchselect%i\n", num ) );
 	globalResearchNum = researchList[num];
+	R_ResearchDisplayInfo( num );
 }
 
 /*======================
@@ -131,6 +147,7 @@ void R_UpdateData ( void )
 		Cbuf_AddText( "researchselect0\n" );
 		CL_ItemDescription( researchList[0] );
 		globalResearchNum = researchList[0];
+		R_ResearchDisplayInfo( 0 );
 	} else {
 		// reset description
 		Cvar_Set( "mn_researchitemname", "" );

@@ -33,17 +33,17 @@ typedef struct menuDepends_s
 typedef struct menuNode_s
 {
 	void		*data[6]; // needs to be first
-	char		name[MAX_VAR];
+	char	name[MAX_VAR];
 	int		type;
-	vec3_t		origin, scale, angles, center;
-	vec2_t		pos, size, texh, texl;
+	vec3_t	origin, scale, angles, center;
+	vec2_t	pos, size, texh, texl;
 	byte		state;
 	byte		align;
 	byte		invis, blend;
 	int		mousefx;
 	int		num, height;
-	vec4_t		color;
-	menuAction_t		*click, *rclick, *mclick, *mouseIn, *mouseOut;
+	vec4_t	color;
+	menuAction_t	*click, *rclick, *mclick, *mouseIn, *mouseOut;
 	menuDepends_t	depends;
 	struct menuNode_s	*next;
 } menuNode_t;
