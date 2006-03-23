@@ -48,7 +48,24 @@ void R_ResearchDisplayInfo ( int num  )
 	objDef_t *od;
 	od = &csi.ods[globalResearchNum];
 	Cvar_Set( "mn_research_selname",  od->name ); 
-	Cvar_Set( "mn_research_seltime", "Time: x\n" );
+	Cvar_Set( "mn_research_seltime", va( "Time: %i\n", od->researchTime ) );
+	
+	switch ( od->researchStatus )
+	{
+	case RS_RUNNING:
+		Cvar_Set( "mn_research_selstatus", "Status: Under research\n" );
+		break;
+	case RS_FINISH:
+		Cvar_Set( "mn_research_selstatus", "Status: Research finished\n" );
+		break;
+	case RS_NONE:
+		Cvar_Set( "mn_research_selstatus", "Status: Unknown\n" );
+		break;
+	default:
+		break;
+	}
+	
+	
 }
 
 /*======================
@@ -222,9 +239,9 @@ void CL_CheckResearchStatus ( void )
 				// FIXME: Make this depending on how many scientists are hired
 				// TODO: What time is stored here exactly? the formular below may be way of.
 				//od->researchTime -= B_HowManyPeopleInBase2 ( baseCurrent, 1 );
-				od->researchTime--;
-				Com_Printf( _("%i\n"),od->researchTime );
-				Com_Printf( _("time reduced\n") );
+				od->researchTime--;					// DEBUG
+				Com_Printf( _("%i\n"),od->researchTime );	// DEBUG
+				Com_Printf( _("time reduced\n") );			// DEBUG
 			}
 		}
 	}
