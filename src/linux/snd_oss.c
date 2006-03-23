@@ -44,7 +44,7 @@ qboolean OSS_SNDDMA_Init(void)
 
 	snd_inited = 0;
 
-	Com_Printf("Soundsystem: OSS.\n");
+	Com_Printf(_("Soundsystem: OSS.\n"));
 
 	if (!snddevice)
 	{
@@ -71,7 +71,7 @@ qboolean OSS_SNDDMA_Init(void)
 		{
 			perror( snddevice->string );
 			seteuid( getuid() );
-			Com_Printf("SNDDMA_Init: Could not open %s.\n", snddevice->string);
+			Com_Printf(_("SNDDMA_Init: Could not open %s.\n"), snddevice->string);
 			return false;
 		}
 		seteuid( getuid() );
@@ -81,7 +81,7 @@ qboolean OSS_SNDDMA_Init(void)
 	if ( rc == -1 )
 	{
 		perror(snddevice->string);
-		Com_Printf("SNDDMA_Init: Could not reset %s.\n", snddevice->string);
+		Com_Printf(_("SNDDMA_Init: Could not reset %s.\n"), snddevice->string);
 		close(audio_fd);
 		audio_fd = -1;
 		return false;
@@ -90,7 +90,7 @@ qboolean OSS_SNDDMA_Init(void)
 	if ( ioctl ( audio_fd, SNDCTL_DSP_GETCAPS, &caps ) == -1 )
 	{
 		perror(snddevice->string);
-		Com_Printf("SNDDMA_Init: Sound driver too old.\n");
+		Com_Printf(_("SNDDMA_Init: Sound driver too old.\n"));
 		close(audio_fd);
 		audio_fd = -1;
 		return false;
@@ -98,7 +98,7 @@ qboolean OSS_SNDDMA_Init(void)
 
 	if ( ! ( caps & DSP_CAP_TRIGGER ) || ! ( caps & DSP_CAP_MMAP ) )
 	{
-		Com_Printf("SNDDMA_Init: Sorry, but your soundcard doesn't support trigger or mmap. (%08x)\n", caps);
+		Com_Printf(_("SNDDMA_Init: Sorry, but your soundcard doesn't support trigger or mmap. (%08x)\n"), caps);
 		close(audio_fd);
 		audio_fd = -1;
 		return false;
@@ -107,7 +107,7 @@ qboolean OSS_SNDDMA_Init(void)
 	if ( ioctl(audio_fd, SNDCTL_DSP_GETOSPACE, &info) == -1 )
 	{
 		perror("GETOSPACE");
-		Com_Printf("SNDDMA_Init: GETOSPACE ioctl failed.\n");
+		Com_Printf(_("SNDDMA_Init: GETOSPACE ioctl failed.\n"));
 		close(audio_fd);
 		audio_fd = -1;
 		return false;
@@ -130,7 +130,7 @@ qboolean OSS_SNDDMA_Init(void)
 		if (rc < 0)
 		{
 			perror(snddevice->string);
-			Com_Printf("SNDDMA_Init: Could not support 16-bit data.  Try 8-bit.\n");
+			Com_Printf(_("SNDDMA_Init: Could not support 16-bit data.  Try 8-bit.\n"));
 			close(audio_fd);
 			audio_fd = -1;
 			return false;
@@ -143,7 +143,7 @@ qboolean OSS_SNDDMA_Init(void)
 		if (rc < 0)
 		{
 			perror(snddevice->string);
-			Com_Printf("SNDDMA_Init: Could not support 8-bit data.\n");
+			Com_Printf(_("SNDDMA_Init: Could not support 8-bit data.\n"));
 			close(audio_fd);
 			audio_fd = -1;
 			return false;
@@ -152,7 +152,7 @@ qboolean OSS_SNDDMA_Init(void)
 	else
 	{
 		perror(snddevice->string);
-		Com_Printf("SNDDMA_Init: %d-bit sound not supported.", dma.samplebits);
+		Com_Printf(_("SNDDMA_Init: %d-bit sound not supported."), dma.samplebits);
 		close(audio_fd);
 		audio_fd = -1;
 		return false;
@@ -178,7 +178,7 @@ qboolean OSS_SNDDMA_Init(void)
 	if (rc < 0)
 	{
 		perror(snddevice->string);
-		Com_Printf("SNDDMA_Init: Could not set %s to stereo=%d.", snddevice->string, dma.channels);
+		Com_Printf(_("SNDDMA_Init: Could not set %s to stereo=%d."), snddevice->string, dma.channels);
 		close(audio_fd);
 		audio_fd = -1;
 		return false;
@@ -194,7 +194,7 @@ qboolean OSS_SNDDMA_Init(void)
 	if (rc < 0)
 	{
 		perror(snddevice->string);
-		Com_Printf("SNDDMA_Init: Could not set %s speed to %d.", snddevice->string, dma.speed);
+		Com_Printf(_("SNDDMA_Init: Could not set %s speed to %d."), snddevice->string, dma.speed);
 		close(audio_fd);
 		audio_fd = -1;
 		return false;
@@ -211,7 +211,7 @@ qboolean OSS_SNDDMA_Init(void)
 	if (!dma.buffer || dma.buffer == MAP_FAILED)
 	{
 		perror(snddevice->string);
-		Com_Printf("SNDDMA_Init: Could not mmap %s.\n", snddevice->string);
+		Com_Printf(_("SNDDMA_Init: Could not mmap %s.\n"), snddevice->string);
 		close(audio_fd);
 		audio_fd = -1;
 		return false;
@@ -224,7 +224,7 @@ qboolean OSS_SNDDMA_Init(void)
 	if (rc < 0)
 	{
 		perror(snddevice->string);
-		Com_Printf("SNDDMA_Init: Could not toggle. (1)\n");
+		Com_Printf(_("SNDDMA_Init: Could not toggle. (1)\n"));
 		close(audio_fd);
 		audio_fd = -1;
 		return false;
@@ -234,7 +234,7 @@ qboolean OSS_SNDDMA_Init(void)
 	if (rc < 0)
 	{
 		perror(snddevice->string);
-		Com_Printf("SNDDMA_Init: Could not toggle. (2)\n");
+		Com_Printf(_("SNDDMA_Init: Could not toggle. (2)\n"));
 		close(audio_fd);
 		audio_fd = -1;
 		return false;
@@ -256,7 +256,7 @@ int OSS_SNDDMA_GetDMAPos(void)
 	if (ioctl(audio_fd, SNDCTL_DSP_GETOPTR, &count)==-1)
 	{
 // 		perror(snddevice->string);
-		Com_Printf("SNDDMA_GetDMAPos: GETOPTR failed.\n");
+		Com_Printf(_("SNDDMA_GetDMAPos: GETOPTR failed.\n"));
 		close(audio_fd);
 		audio_fd = -1;
 		snd_inited = 0;

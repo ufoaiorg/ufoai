@@ -337,8 +337,8 @@ void GetEvent(SDL_Event *event)
 	case SDL_MOUSEMOTION:
 		if (mouse_active)
 		{
-			mx = event->button.x * sensitivity->value;
-			my = event->button.y * sensitivity->value;
+			mx = event->button.x; // * sensitivity->value
+			my = event->button.y; // * sensitivity->value
 			if ( mx > vid.width ) mx = vid.width;
 			if ( my > vid.height ) my = vid.height;
 			if ( mx < 0 ) mx = 0;

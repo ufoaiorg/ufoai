@@ -172,7 +172,7 @@ ifeq ($(strip $(BUILD_FREETYPE)),YES)
 	BASE_CFLAGS+=$(shell freetype-config --cflags) -DBUILD_FREETYPE
 endif
 
-DEBUG_CFLAGS=$(BASE_CFLAGS) -g
+DEBUG_CFLAGS=$(BASE_CFLAGS) -g -D_FORTIFY_SOURCE=2
 
 DO_CC=$(CC) $(CFLAGS) -o $@ -c $<
 DO_DEBUG_CC=$(CC) $(DEBUG_CFLAGS) -o $@ -c $<
@@ -818,7 +818,15 @@ clean2:
 	$(QUAKE2_OBJS) \
 	$(QUAKE2_AS_OBJS) \
 	$(GAME_OBJS) \
-	$(REF_GL_OBJS)
+	$(REF_GL_OBJS) \
+	$(REF_GLX_OBJS) \
+	$(REF_SDL_OBJS) \
+	$(Q2DED_OBJS) \
+	$(BUILDDIR)/ufo \
+	$(BUILDDIR)/game.$(SHLIBEXT) \
+	$(BUILDDIR)/ref_sdl.$(SHLIBEXT) \
+	$(BUILDDIR)/ref_glx.$(SHLIBEXT) \
+	$(BUILDDIR)/ufoded
 
 distclean:
 	@-rm -rf $(BUILD_DEBUG_DIR) $(BUILD_RELEASE_DIR)
