@@ -76,7 +76,7 @@ void R_ResearchStart ( void )
 
 	od = &csi.ods[globalResearchNum];
 	if (od->researchStatus == RS_RUNNING)
-		MN_Popup( _("Notice"), _("This item is already researched by your scientists.") );
+		MN_Popup( _("Notice"), _("This item is already under research by your scientists.") );
 	else
 		od->researchStatus = RS_RUNNING;
 	R_UpdateData();
@@ -185,9 +185,8 @@ void CL_CheckResearchStatus ( void )
 			else
 			{
 				// FIXME: Make this depending on how many scientists are hired
-				od->researchTime--;
 				// TODO: What time is stored here exactly? the formular below may be way of.
-				od->researchTime = od->researchTime - B_HowManyPeopleInBase2 ( baseCurrent, 1 );
+				od->researchTime -= B_HowManyPeopleInBase2 ( baseCurrent, 1 );
 			}
 		}
 	}
