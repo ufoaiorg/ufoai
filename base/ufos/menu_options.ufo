@@ -512,7 +512,7 @@ menu options_sound
 		mousefx	true
 		click
 		{
-			cmd "mn_modify sndystem -1 0 2;"
+			cmd "mn_modify s_system -1 0 2;"
 			cmd "mn_translate s_system mn_sndsystem 0:OSS,1:SDL,2:ALSA;"
 			cmd "snd_restart"
 		}
@@ -526,7 +526,7 @@ menu options_sound
 		mousefx	true
 		click
 		{
-			cmd "mn_modify sndystem +1 0 2;"
+			cmd "mn_modify s_system +1 0 2;"
 			cmd "mn_translate s_system mn_sndsystem 0:OSS,1:SDL,2:ALSA;"
 			cmd "snd_restart"
 		}
