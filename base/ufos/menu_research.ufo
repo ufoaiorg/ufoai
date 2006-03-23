@@ -141,10 +141,16 @@ menu research
 		pos "615 200"
 //		size "275 16"
 	}
+	string txt_selected_status
+	{
+		string "*cvar mn_research_selstatus"
+		pos "645 230"
+		color "0 .78 0 1"
+	}
 	string txt_selected_time
 	{
 		string "*cvar mn_research_seltime"
-		pos "645 230"
+		pos "645 260"
 		color "0 .78 0 1"
 	}
 
