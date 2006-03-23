@@ -91,10 +91,14 @@ void R_ResearchStart ( void )
 		return;
 
 	od = &csi.ods[globalResearchNum];
-	if (od->researchStatus == RS_RUNNING)
-		MN_Popup( _("Notice"), _("This item is already under research by your scientists.") );
-	else
+	if (od->researchStatus != RS_NONE) {
+		if  (od->researchStatus == RS_FINISH)
+			MN_Popup( _("Notice"), _("The research on this item is complete.") );
+		else
+			MN_Popup( _("Notice"), _("This item is already under research by your scientists.") );
+	} else {
 		od->researchStatus = RS_RUNNING;
+	}
 	R_UpdateData();
 }
 
@@ -112,7 +116,10 @@ void R_ResearchStop ( void )
 		return;
 
 	od = &csi.ods[globalResearchNum];
-	od->researchStatus = RS_NONE;
+	if (od->researchStatus != RS_FINISH)
+		od->researchStatus = RS_NONE;
+	else
+		MN_Popup( _("Notice"), _("The research on this item is complete.") );
 	R_UpdateData();
 }
 
@@ -127,8 +134,19 @@ void R_UpdateData ( void )
 	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ ) { //TODO: Debug what happens if there are more than 28 items (j>28) ! 
 		if ( od->researchNeeded) { // only handle items if the need researching
 			strcpy(name, od->name);
-			if (od->researchStatus != RS_NONE ) // Set the text of the research items and mark them if they are currently researched.
+			//if (od->researchStatus =!= RS_NONE ) // Set the text of the research items and mark them if they are currently researched.
+			//	strcat(name, " [under research]");	//TODO: colorcode "string txt_item%i" ?
+			switch ( od->researchStatus )
+			{
+			case RS_RUNNING:
 				strcat(name, " [under research]");	//TODO: colorcode "string txt_item%i" ?
+				break;
+			case RS_FINISH:
+				strcat(name, " [finished]");
+				break;
+			default:
+				break;
+			}
 			Cvar_Set( va("mn_researchitem%i", j),  name ); //TODO: colorcode maybe?
 			researchList[j] = i;
 			j++;
@@ -203,7 +221,10 @@ void CL_CheckResearchStatus ( void )
 			{
 				// FIXME: Make this depending on how many scientists are hired
 				// TODO: What time is stored here exactly? the formular below may be way of.
-				od->researchTime -= B_HowManyPeopleInBase2 ( baseCurrent, 1 );
+				//od->researchTime -= B_HowManyPeopleInBase2 ( baseCurrent, 1 );
+				od->researchTime--;
+				Com_Printf( _("%i\n"),od->researchTime );
+				Com_Printf( _("time reduced\n") );
 			}
 		}
 	}
