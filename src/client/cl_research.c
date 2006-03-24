@@ -495,3 +495,89 @@ void R_GetRequired( char *id, char *required[MAX_TECHLINKS])
 	}
 	Com_Printf( _("R_GetRequired: technology \"%s\" not found.\n"), id );
 }
+
+/*
+======================
+R_DependsOn
+
+Checks if the research item id1 depends (requires) on id2
+======================
+*/
+byte R_DependsOn(char *id1, char *id2)
+{
+	int i, j;
+	technology_t *t;
+	for ( i=0; i < numTechnologies; i++ ) {
+		t = &technologies[i];
+		if ( strcmp( id1, t->id ) ) {
+			for ( j=0; j < MAX_TECHLINKS; j++ ) {
+				if ( strcmp(t->requires[j], id2 ) )
+					return true;
+			}
+			return false;
+		}
+	}
+	Com_Printf( _("R_DependsOn: research item \"%s\" not found.\n"), id1 );
+	return false;	
+}
+
+/*
+======================
+R_GetProvided
+
+Returns a list of .ufo items that are produceable when this item has been researched (=provided)
+This list also incldues other items that "require" this one (id) and have a reseach_time of 0.
+
+// TODO: MAX_RESLINK can exceed it's limit, since the added entries to provided can get longer.
+======================
+*/
+void R_GetProvided( char *id, char *provided[MAX_TECHLINKS])
+{
+	int i, j;
+	technology_t *t;
+	for ( i=0; i < numTechnologies; i++ ) {
+		t = &technologies[i];
+		if ( strcmp( id, t->id ) ) {
+			for ( j=0; j < MAX_TECHLINKS; j++ )
+				strcpy(provided[j], t->provides[j]);
+			//TODO: search for dependent items.
+			for ( j=0; j < numTechnologies; j++ ) {
+				if (R_DependsOn( t->id, id ) ) {
+					// TODO: append researchtree[j]->provided to *provided 
+				}
+			}
+			return;
+		}
+	}
+	Com_Printf( _("R_GetProvided: research item \"%s\" not found.\n"), id );
+}
+
+/*
+======================
+R_GetFirstRequired
+
+unresearched==true - return with the very first requirement(s)
+unresearched==false - return with the first requirement(s) that are still unresearched
+======================
+*/
+void R_GetFirstRequired( char *id, byte unresearched, char *required[MAX_TECHLINKS])
+{
+	// TODO: return the first required research-item that is needed by this one.
+	// this requires a recursive loop to the very first unresearched	
+}
+
+/*
+======================
+R_GetFromProvided
+
+Returns a list of .ufo items that are produceable when this item has been researched (=provided)
+This list also incldues other items that "require" this one (id) and have a reseach_time of 0.
+
+// TODO: MAX_RESLINK can exceed it's limit, since the added entries to provided can get longer.
+======================
+*/
+// TODO: Return a the research-item that provides this item (from .ufo).
+void R_GetFromProvided( char *provided, char *id )
+{
+	
+}
