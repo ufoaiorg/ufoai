@@ -154,7 +154,7 @@ returns the hole amount of soldiers/workers in base or inside a specific buildin
 TODO: This list should probably be made into constants or something like that.
 =====================
 */
-int B_HowManyPeopleInBase2 ( base_t *base, char Location )
+int B_HowManyPeopleInBase2 ( base_t *base, int location )
 {
 	int a, b;
 	building_t *entry;
@@ -176,10 +176,10 @@ int B_HowManyPeopleInBase2 ( base_t *base, char Location )
 					entry->used = 1;
 				else
 				{
-					if	( ( Location == 0 ) ||
-						( ( Location == 1 ) && (entry->isLab ) )
-						// Location == 2 TODO
-						// Location == 4 TODO
+					if	( ( location == 0 ) ||
+						( ( location == 1 ) && (entry->isLab ) )
+						// location == 2 TODO
+						// location == 4 TODO
 						)
 						amount += entry->assignedWorkers;
 					entry->used = 0;

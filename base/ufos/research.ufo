@@ -1,0 +1,141 @@
+//--------------
+// research tree
+//--------------
+
+//tech
+//  The _unique_ name of the research item in the tree.
+
+//type
+//  Just says where to look for more information.
+//  "research" items have all the information in here, everything else in the correct ufo file.
+
+//name
+//  self-explaining i hope :) Only needed when type=research
+
+//requires
+//  if you get an alien-item everything that it requires is made available for research (tree top/down)
+//  e.g. collect a plasrifle -> get the plasma technology but not the plasmpistol.
+//       The plasrifle itself will not be researchable until the plasmpistol has been researched.
+//  "initial" - You can research this tech from the beginning.
+//  "nothing" - You need to collect at least one item (that requires it directly or indirectly) to be able to research this.
+//  everything else - a research "item"
+
+//provides
+//  The item name in the correct ufo file. This can be produced once the research item has been finished.
+
+//time
+//  Time the research needs.
+//  If time is 0 the item can be produced at the same time the "required" item can be.
+//  TODO: good values that are in sync with the game-time.
+//  TODO: A good algorithm for splitting up this time over several scientists.
+
+
+//-----------------------------------------------------
+tech tachyon
+{
+   type   research
+   name      "Tachyon control"
+   requires   initial
+   description   "tachyon_txt"
+   time   100
+}
+
+tech tachyonrifle
+{
+   type   weapon
+   requires   tachyon
+   provides   tachyonrifle
+   time   200
+}
+
+tech tachyonrifle_ammo
+{
+   type   weapon
+   requires   tachyonrifle
+   provides   tachyonrifle_ammo
+   time   0
+}
+
+tech tachyonsniper
+{
+   type   weapon
+   requires   tachyonrifle
+   provides   tachyonsniper
+   time   300
+}
+
+tech tachyonsniper_ammo
+{
+   type   weapon
+   requires   tachyonsniper
+   provides   tachyonsniper_ammo
+   time   0
+}
+
+//-----------------------------------------------------
+tech plasma
+{
+   type   research
+   name      "Advanced plasma technology"
+   requires   initial
+   description   "plasma_txt"
+   time   100
+}
+
+tech plaspistol
+{
+   type   weapon
+   requires   plasma
+   provides   plaspistol
+   time   300
+}
+
+tech plaspistol_ammo
+{
+   type   weapon
+   requires   plaspistol
+   provides   plaspistol_ammo
+   time   100
+}
+
+tech plasrifle
+{
+   type   weapon
+   requires   plaspistol
+   provides   plasrifle
+   time   500
+}
+
+tech plasrifle_ammo
+{
+   type   weapon
+   requires   plasrifle
+   provides   plasrifle_ammo
+   time   0
+}
+
+//-----------------------------------------------------
+tech irgoggles
+{
+   type   weapon
+   requires   initial
+   provides   irgoggles
+   time   200
+}
+
+tech nano
+{
+   type   research
+   name      "Nano technology"
+   requires   initial
+   description   "nano_txt"
+   time   200
+}
+
+tech nano_armor
+{
+   type   armor
+   requires   nano
+   provides   medium
+   time   400
+}

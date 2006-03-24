@@ -901,6 +901,7 @@ extern	base_t	*baseCurrent;
 extern	building_t    bmBuildings[MAX_BASES][MAX_BUILDINGS];
 extern	production_t  bmProductions[MAX_PRODUCTIONS];
 void CL_UpdateBaseData( void );
+int B_HowManyPeopleInBase2 ( base_t *base, int location );
 
 // needed to calculate the chosen building in cl_menu.c
 int picWidth, picHeight;

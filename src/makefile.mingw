@@ -1,5 +1,5 @@
 
-UFOINSTALLED = /cygdrive/c/Program\ Files/UFOAIXSpecial
+UFOINSTALLED = ../
 
 JPEGLIB = -DDONT_TYPEDEF_INT32
 VORBISLIB = -lvorbisfile -lvorbis -logg
@@ -33,21 +33,21 @@ REF_GL_DLL_SRC = $(REF_GL_SRC) $(REF_GL_WIN32_SRC) $(SHARED_SRC1) $(SHARED_SRC2)
 
 UFO_EXE_SRC = $(SHARED_SRC1) $(SHARED_SRC2) $(CLIENT_SRC) $(QCOMMON_SRC) $(SERVER_SRC) $(WIN32_SRC)
 
-all: base/gamex86.dll ref_gl.dll ufo.exe
+all: ../base/gamex86.dll ../ref_gl.dll ../ufo.exe
 
-base/gamex86.dll: $(GAMEX86_DLL_SRC:.c=.shob)
-	$(CC) -o $@ -mno-cygwin -shared $(LDFLAGSINTL) $+ 
+../base/gamex86.dll: $(GAMEX86_DLL_SRC:.c=.shob)
+	$(CC) -o $@ -mno-cygwin -shared $(LDFLAGSINTL) $+
 	#cp $@ $(UFOINSTALLED)/base/
 
-ref_gl.dll: $(REF_GL_DLL_SRC:.c=.shob)
-	$(CC) -o $@ -mno-cygwin -shared $(JPEGLIB) $(LDFLAGS) $+ 
+../ref_gl.dll: $(REF_GL_DLL_SRC:.c=.shob)
+	$(CC) -o $@ -mno-cygwin -shared $(JPEGLIB) $(LDFLAGS) $+
 	#cp $@ $(UFOINSTALLED)
 
 %.shob: %.c
 	$(CC) -o $@ -c $< -shared $(CFLAGS)
 
-ufo.exe: $(UFO_EXE_SRC:.c=.o) win32/resources.coff
-	$(CC) -o $@ $(LDFLAGS) $(VORBISLIB) $+ 
+../ufo.exe: $(UFO_EXE_SRC:.c=.o) win32/resources.coff
+	$(CC) -o $@ $(LDFLAGS) $(VORBISLIB) $+
 	#cp $@ $(UFOINSTALLED)
 
 win32/resources.coff: win32/q2.rc
@@ -60,6 +60,6 @@ clean:
 	echo -n "$@ " > $@
 	$(CC) -MM $(CFLAGS) $< | grep -v "^#" >> $@
 
-ifneq ($(MAKECMDGOALS),clean)
-include $(SRC:.c=.dep)
-endif
+#ifneq ($(MAKECMDGOALS),clean)
+#include $(SRC:.c=.dep)
+#endif

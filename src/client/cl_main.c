@@ -1290,6 +1290,7 @@ void CL_ParseScriptSecond( char *type, char *name, char **text )
 	else if ( !strcmp( type, "up_entry" ) ) MN_ParseUpEntry( name, text );
 	//TODO: Parse Base
 	else if ( !strcmp( type, "base" ) ) MN_ParseBases( name, text );
+	else if ( !strcmp( type, "tech" ) ) MN_ParseTechnologies( name, text );
 }
 
 

@@ -21,5 +21,6 @@ void B_SetUpBase ( void );
 void MN_SetBuildingByClick ( int x, int y );
 void MN_DrawBase( void );
 void MN_ResetBaseManagement( void );
+
 #endif /* BASEMANGEMENT_DEFINED */
 

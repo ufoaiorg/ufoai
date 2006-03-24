@@ -8,6 +8,9 @@ byte researchList[MAX_RESEARCHLIST];
 int researchListLength;
 int globalResearchNum;
 char infoResearchText[MAX_MENUTEXTLEN];
+int numTechnologies;
+
+technology_t technologies[MAX_TECHNOLOGIES];
 
 /*
 Note:
@@ -47,9 +50,9 @@ void R_ResearchDisplayInfo ( int num  )
 		return;
 	objDef_t *od;
 	od = &csi.ods[globalResearchNum];
-	Cvar_Set( "mn_research_selname",  od->name ); 
+	Cvar_Set( "mn_research_selname",  od->name );
 	Cvar_Set( "mn_research_seltime", va( "Time: %i\n", od->researchTime ) );
-	
+
 	switch ( od->researchStatus )
 	{
 	case RS_RUNNING:
@@ -64,8 +67,8 @@ void R_ResearchDisplayInfo ( int num  )
 	default:
 		break;
 	}
-	
-	
+
+
 }
 
 /*======================
@@ -148,7 +151,7 @@ void R_UpdateData ( void )
 	objDef_t *od;
 	int i, j;
 	char name [MAX_VAR];
-	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ ) { //TODO: Debug what happens if there are more than 28 items (j>28) ! 
+	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ ) { //TODO: Debug what happens if there are more than 28 items (j>28) !
 		if ( od->researchNeeded) { // only handle items if the need researching
 			strcpy(name, od->name);
 			//if (od->researchStatus =!= RS_NONE ) // Set the text of the research items and mark them if they are currently researched.
@@ -254,6 +257,27 @@ void CL_CheckResearchStatus ( void )
 }
 
 /*======================
+R_TechnologyList_f
+
+list all parsed technologies
+======================*/
+void R_TechnologyList_f ( void )
+{
+	int i = 0;
+	technology_t* t;
+	for ( i = 0; i < numTechnologies; i++ )
+	{
+		t = &technologies[i];
+		Com_Printf(_("Tech: %s\n"), t->title );
+		Com_Printf(_("... time %.2f\n"), t->time );
+		Com_Printf(_("... name %s\n"), t->name );
+		Com_Printf(_("... provides %s\n"), t->provides );
+		Com_Printf(_("... requires %s\n"), t->requires );
+		Com_Printf(_("... type %s\n"), t->type );
+	}
+}
+
+/*======================
 MN_ResearchInit
 ======================*/
 void MN_ResearchInit( void )
@@ -274,4 +298,82 @@ void MN_ResetResearch( void )
 	Cmd_AddCommand( "mn_start_research", R_ResearchStart );
 	Cmd_AddCommand( "mn_stop_research", R_ResearchStop );
 	Cmd_AddCommand( "research_update", R_UpdateData );
+	Cmd_AddCommand( "technologylist", R_TechnologyList_f );
+}
+
+// NOTE: the BSFS define is the same like for bases and so on...
+value_t valid_tech_vars[] =
+{
+	//name of technology
+	{ "name",	V_STRING,	TECHFS( name ) },
+
+	//which type is it? weapon, craft, ...
+	{ "type",	V_STRING,	TECHFS( type ) },
+
+	//what does it require
+	{ "requires",	V_STRING,	TECHFS( requires ) },
+
+	//what does this research provide
+	{ "provides",	V_STRING,	TECHFS( provides ) },
+
+	//how long will this research last
+	{ "time",	V_FLOAT,	TECHFS( time ) },
+	{ "description",	V_STRING,	TECHFS( description ) },
+
+	{ NULL,	0, 0 }
+};
+
+/*======================
+MN_ResetResearch
+======================*/
+void MN_ParseTechnologies ( char* title, char** text )
+{
+	value_t *var;
+	technology_t *t;
+	char	*errhead = _("MN_ParseTechnologies: unexptected end of file (names ");
+	char	*token;
+
+	// get body
+	token = COM_Parse( text );
+	if ( !*text || strcmp( token, "{" ) )
+	{
+		Com_Printf( _("MN_ParseTechnologies: technology def \"%s\" without body ignored\n"), title );
+		return;
+	}
+	if ( numTechnologies >= MAX_TECHNOLOGIES )
+	{
+		Com_Printf( _("MN_ParseTechnologies: too many technology entries\n"), title );
+		return;
+	}
+
+	// new technology
+	t = &technologies[numTechnologies++];
+	memset( t, 0, sizeof( technology_t ) );
+	strcpy( t->title, title );
+	do {
+		// get the name type
+		token = COM_EParse( text, errhead, title );
+		if ( !*text ) break;
+		if ( *token == '}' ) break;
+		// get values
+		for ( var = valid_tech_vars; var->string; var++ )
+			if ( !strcmp( token, var->string ) )
+			{
+				// found a definition
+				token = COM_EParse( text, errhead, title );
+				if ( !*text ) return;
+
+				if ( var->ofs && var->type != V_NULL )
+					Com_ParseValue( t, token, var->type, var->ofs );
+				else
+					// NOTE: do we need a buffer here? for saving or something like that?
+					Com_Printf(_("Error - no buffer for technologies - V_NULL not allowed\n"));
+				break;
+			}
+
+		if ( !var->string )
+			Com_Printf( _("MN_ParseUpEntry: unknown token \"%s\" ignored (entry %s)\n"), token, title );
+
+	} while ( *text );
+
 }

@@ -1,6 +1,22 @@
 UFO:Alien Invasion Readme
 =============================================================================================
 
+Linux:
+To install the game use the liflg.org-installer. This will bring you the data-files
+which aren't in svn-repository, yet. After this do a
+  mkdir ufoai
+  cd ufoai/
+  svn co https://svn.sourceforge.net/svnroot/ufoai/trunk .
+  cd src/linux
+  make
+Now you have the binaries in src/linux/debugARCH or src/linux/releaseARCH - copy them over
+the binaries that comes with the liflg.org-installer or symlink them.
+
+Windows:
+To install the game use the Windows-Installer at
+http://sourceforge.net/project/showfiles.php?group_id=157793
+This includes the data-files which aren't in svn-repository, yet.
+[...]
 
 FAQ:
 =============================================================================================
