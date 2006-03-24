@@ -129,7 +129,7 @@ tech nano
 tech nano_armor
 {
 	type	armor
-	requires	nano
-	provides	medium
+	requires	"nano test1 test2"
+	provides	"medium yadda"
 	time	400
 }
