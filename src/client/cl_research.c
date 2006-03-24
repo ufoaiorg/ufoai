@@ -447,3 +447,29 @@ void MN_ParseTechnologies ( char* id, char** text )
 	} while ( *text );
 
 }
+
+/*
+======================
+R_GetName
+
+// TODO
+Return "name" if present, otherwise enter the correct .ufo file and read it from there.
+======================
+*/
+void R_GetName( char *id[MAX_VAR], char *name[MAX_VAR] )
+{
+	int i;
+	technology_t *t;
+	for ( i=0; i < MAX_TECHNOLOGIES; i++ ) {
+		t = &technologies[i];
+		if ( strcmp( id, t->id ) ) {
+			if ( !t->name ) {
+				strcpy( name, t->name );
+			} else {
+				//TODO: search in correct ufo.
+			}
+			return;
+		}
+	}
+	Com_Printf( _("R_GetName: research item \"%s\" not found.\n"), id );
+}
