@@ -456,11 +456,11 @@ R_GetName
 Return "name" if present, otherwise enter the correct .ufo file and read it from there.
 ======================
 */
-void R_GetName( char *id[MAX_VAR], char *name[MAX_VAR] )
+void R_GetName( char *id, char *name )
 {
 	int i;
 	technology_t *t;
-	for ( i=0; i < MAX_TECHNOLOGIES; i++ ) {
+	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( strcmp( id, t->id ) ) {
 			if ( !t->name ) {
@@ -471,5 +471,27 @@ void R_GetName( char *id[MAX_VAR], char *name[MAX_VAR] )
 			return;
 		}
 	}
-	Com_Printf( _("R_GetName: research item \"%s\" not found.\n"), id );
+	Com_Printf( _("R_GetName: technology \"%s\" not found.\n"), id );
+}
+
+/*
+======================
+R_GetRequired
+
+returns the list of required items.
+======================
+*/
+void R_GetRequired( char *id, char *required[MAX_TECHLINKS])
+{
+	int i, j;
+	technology_t *t;
+	for ( i=0; i < numTechnologies; i++ ) {
+		t = &technologies[i];
+		if ( strcmp( id, t->id ) ) {
+			for ( j=0; j < MAX_TECHLINKS; j++ )
+				strcpy(required[j], t->requires[j]);
+			return;
+		}
+	}
+	Com_Printf( _("R_GetRequired: technology \"%s\" not found.\n"), id );
 }
