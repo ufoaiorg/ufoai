@@ -4,16 +4,17 @@
 
 #define MAX_RESEARCHLIST 32
 #define MAX_TECHNOLOGIES 256
+#define MAX_TECHLINKS 32
 
 typedef struct technology_s
 {
 	char	id[MAX_VAR];
 	char	name[MAX_VAR];
 	float	time;
-	char	provides[MAX_VAR];	// TODO:  will become a list of strings
-	char	requires[MAX_VAR];	// TODO:  will become a list of strings
+	char	provides[MAX_TECHLINKS][MAX_VAR];
+	char	requires[MAX_TECHLINKS][MAX_VAR];
 	char	description[MAX_VAR];
-	char	type[MAX_VAR]; // TODO:DELETE will be replaced by the bools below ... handled in the parser
+	//char	type[MAX_VAR]; // TODO:DELETE will be replaced by the bools below ... handled in the parser
 	byte	isTech;
 	byte	isWeapon;
 	byte	isCraft;

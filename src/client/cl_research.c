@@ -263,7 +263,7 @@ list all parsed technologies
 ======================*/
 void R_TechnologyList_f ( void )
 {
-	int i = 0;
+	int i, j;
 	technology_t* t;
 	for ( i = 0; i < numTechnologies; i++ )
 	{
@@ -271,9 +271,19 @@ void R_TechnologyList_f ( void )
 		Com_Printf(_("Tech: %s\n"), t->id );
 		Com_Printf(_("... time %.2f\n"), t->time );
 		Com_Printf(_("... name %s\n"), t->name );
-		Com_Printf(_("... provides %s\n"), t->provides );
-		Com_Printf(_("... requires %s\n"), t->requires );
-		Com_Printf(_("... type %s\n"), t->type );
+		Com_Printf(_("... provides: ->"));
+		for ( j = 0; j < MAX_TECHLINKS; j++ )	//TODO how to get the number of _used_ array-entries?
+			if(t->provides[j][0]) Com_Printf(_(" %s"), t->provides[j] );
+		Com_Printf(_("\n... requires: ->"));
+		for ( j = 0; j < MAX_TECHLINKS; j++ )
+			if(t->provides[j][0]) Com_Printf(_(" %s"), t->requires[j] );
+		Com_Printf(_("\n... Tech %i\n"), t->isTech );
+		Com_Printf(_("... Weapon %i\n"), t->isWeapon );
+		Com_Printf(_("... Craft %i\n"), t->isCraft );
+		Com_Printf(_("... Armor %i\n"), t->isArmor );
+		Com_Printf(_("... Building %i\n"), t->isBuilding );
+		Com_Printf(_("... Researched %i\n"), t->item_researched );
+		Com_Printf(_("... Collected %i\n"), t->item_collected );
 	}
 }
 
@@ -331,7 +341,11 @@ void MN_ParseTechnologies ( char* id, char** text )
 	value_t *var;
 	technology_t *t;
 	char	*errhead = _("MN_ParseTechnologies: unexptected end of file (names ");
-	char	*token;
+	char	*token, *misp;
+	char	single_requirement[MAX_VAR]; //256 ?
+	char	single_provides[MAX_VAR]; //256 ?
+	char	numRequired;
+	char	numProvided;
 
 	// get body
 	token = COM_Parse( text );
@@ -377,6 +391,53 @@ void MN_ParseTechnologies ( char* id, char** text )
 					// NOTE: do we need a buffer here? for saving or something like that?
 					Com_Printf(_("Error - no buffer for technologies - V_NULL not allowed\n"));
 				break;
+			}else
+			if ( !strcmp( token, "type" ) ) {
+			//TODO get the parameter to type into a string.
+			/*
+				if ( !strcmp( token, "research" ) )		entry->isResearch = true;
+				else if ( !strcmp( token, "weapon" ) )	entry->isWeapon = true;
+				else if ( !strcmp( token, "armor" ) )	entry->isArmor = true;
+				else if ( !strcmp( token, "craft" ) )		entry->isCraft = true;
+				else if ( !strcmp( token, "building" ) )	entry->isBuilding = true;
+			*/
+			}else if ( !strcmp( token, "requires" ) )
+			{
+				token = COM_EParse( text, errhead, id );
+				if ( !*text ) return;
+				strncpy( single_requirement, token, MAX_VAR );
+				single_requirement[strlen(single_requirement)] = 0;
+				misp = single_requirement;
+
+				numRequired = 0;
+				do {
+					token = COM_Parse( &misp );
+					if ( !misp ) break;
+					strncpy( t->requires[numRequired++], token, MAX_VAR);
+					if ( numRequired == MAX_TECHLINKS )
+						Com_Printf( _("RS_ParseResearchTree: Too many \"required\" defined. Limit is %i - igonored\n"), MAX_TECHLINKS );
+				}
+				while ( misp && numRequired < MAX_TECHLINKS );
+				continue;
+			}
+			else if ( !strcmp( token, "provides" ) )
+			{
+				token = COM_EParse( text, errhead, id );
+				if ( !*text ) return;
+				strncpy( single_provides, token, MAX_VAR );
+				single_provides[strlen(single_provides)] = 0;
+				misp = single_provides;
+
+				numProvided = 0;
+				do {
+					token = COM_Parse( &misp );
+					if ( !misp ) break;
+					strncpy( t->provides[numProvided++], token, MAX_VAR);
+					if ( numProvided == MAX_TECHLINKS )
+						Com_Printf( _("RS_ParseResearchTree: Too many \"provides\" defined. Limit is %i - igonored\n"), MAX_TECHLINKS );
+				}
+				while ( misp && numProvided < MAX_TECHLINKS );
+				continue;
 			}
 
 		if ( !var->string )
