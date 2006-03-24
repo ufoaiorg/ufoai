@@ -268,7 +268,7 @@ void R_TechnologyList_f ( void )
 	for ( i = 0; i < numTechnologies; i++ )
 	{
 		t = &technologies[i];
-		Com_Printf(_("Tech: %s\n"), t->title );
+		Com_Printf(_("Tech: %s\n"), t->id );
 		Com_Printf(_("... time %.2f\n"), t->time );
 		Com_Printf(_("... name %s\n"), t->name );
 		Com_Printf(_("... provides %s\n"), t->provides );
@@ -308,7 +308,7 @@ value_t valid_tech_vars[] =
 	{ "name",	V_STRING,	TECHFS( name ) },
 
 	//which type is it? weapon, craft, ...
-	{ "type",	V_STRING,	TECHFS( type ) },
+	//{ "type",	V_STRING,	TECHFS( type ) },
 
 	//what does it require
 	{ "requires",	V_STRING,	TECHFS( requires ) },
@@ -326,7 +326,7 @@ value_t valid_tech_vars[] =
 /*======================
 MN_ResetResearch
 ======================*/
-void MN_ParseTechnologies ( char* title, char** text )
+void MN_ParseTechnologies ( char* id, char** text )
 {
 	value_t *var;
 	technology_t *t;
@@ -337,22 +337,30 @@ void MN_ParseTechnologies ( char* title, char** text )
 	token = COM_Parse( text );
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( _("MN_ParseTechnologies: technology def \"%s\" without body ignored\n"), title );
+		Com_Printf( _("MN_ParseTechnologies: technology def \"%s\" without body ignored\n"), id );
 		return;
 	}
 	if ( numTechnologies >= MAX_TECHNOLOGIES )
 	{
-		Com_Printf( _("MN_ParseTechnologies: too many technology entries\n"), title );
+		Com_Printf( _("MN_ParseTechnologies: too many technology entries\n"), id );
 		return;
 	}
-
+	
 	// new technology
 	t = &technologies[numTechnologies++];
 	memset( t, 0, sizeof( technology_t ) );
-	strcpy( t->title, title );
+	
+	//set standard values
+	strcpy( t->id, id );
+	t->isTech = false;
+	t->isWeapon = false;
+	t->isArmor = false;
+	t->isCraft = false;
+	t->isBuilding = false;
+		
 	do {
 		// get the name type
-		token = COM_EParse( text, errhead, title );
+		token = COM_EParse( text, errhead, id );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 		// get values
@@ -360,7 +368,7 @@ void MN_ParseTechnologies ( char* title, char** text )
 			if ( !strcmp( token, var->string ) )
 			{
 				// found a definition
-				token = COM_EParse( text, errhead, title );
+				token = COM_EParse( text, errhead, id );
 				if ( !*text ) return;
 
 				if ( var->ofs && var->type != V_NULL )
@@ -372,7 +380,7 @@ void MN_ParseTechnologies ( char* title, char** text )
 			}
 
 		if ( !var->string )
-			Com_Printf( _("MN_ParseUpEntry: unknown token \"%s\" ignored (entry %s)\n"), token, title );
+			Com_Printf( _("MN_ParseUpEntry: unknown token \"%s\" ignored (entry %s)\n"), token, id );
 
 	} while ( *text );
 

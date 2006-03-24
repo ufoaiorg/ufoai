@@ -7,19 +7,27 @@
 
 typedef struct technology_s
 {
-	char	title[MAX_VAR]; // internal id
+	char	id[MAX_VAR];
 	char	name[MAX_VAR];
 	float	time;
-	char	provides[MAX_VAR];
-	char	requires[MAX_VAR];
+	char	provides[MAX_VAR];	// TODO:  will become a list of strings
+	char	requires[MAX_VAR];	// TODO:  will become a list of strings
 	char	description[MAX_VAR];
-	char	type[MAX_VAR];
+	char	type[MAX_VAR]; // TODO:DELETE will be replaced by the bools below ... handled in the parser
+	byte	isTech;
+	byte	isWeapon;
+	byte	isCraft;
+	byte	isArmor;
+	byte	isBuilding;
+	byte	item_researched;	// Did we research this item? 
+	byte	item_collected;	// Did we loot this item?
 } technology_t;
 
 #define	TECHFS(x)	(int)&(((technology_t *)0)->x)
 
 // use this for saving and allocating
-extern technology_t technologies[MAX_TECHNOLOGIES];
+extern	technology_t	technologies[MAX_TECHNOLOGIES];
+extern	int	numTechnologies;
 
 void MN_ResetResearch( void );
 void CL_CheckResearchStatus( void );
