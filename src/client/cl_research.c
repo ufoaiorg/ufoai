@@ -309,6 +309,7 @@ void MN_ResetResearch( void )
 	Cmd_AddCommand( "mn_stop_research", R_ResearchStop );
 	Cmd_AddCommand( "research_update", R_UpdateData );
 	Cmd_AddCommand( "technologylist", R_TechnologyList_f );
+	Cmd_AddCommand( "techlist", R_TechnologyList_f );
 }
 
 // NOTE: the BSFS define is the same like for bases and so on...
@@ -389,18 +390,18 @@ void MN_ParseTechnologies ( char* id, char** text )
 					Com_ParseValue( t, token, var->type, var->ofs );
 				else
 					// NOTE: do we need a buffer here? for saving or something like that?
-					Com_Printf(_("Error - no buffer for technologies - V_NULL not allowed\n"));
+					Com_Printf(_("MN_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed\n"));
 				break;
 			}else
 			if ( !strcmp( token, "type" ) ) {
-			//TODO get the parameter to type into a string.
-			/*
-				if ( !strcmp( token, "research" ) )		entry->isResearch = true;
-				else if ( !strcmp( token, "weapon" ) )	entry->isWeapon = true;
-				else if ( !strcmp( token, "armor" ) )	entry->isArmor = true;
-				else if ( !strcmp( token, "craft" ) )		entry->isCraft = true;
-				else if ( !strcmp( token, "building" ) )	entry->isBuilding = true;
-			*/
+				token = COM_EParse( text, errhead, id );
+				if ( !*text ) return;
+				if ( !strcmp( token, "tech" ) )	t->isTech = true;
+				else if ( !strcmp( token, "weapon" ) )	t->isWeapon = true;
+				else if ( !strcmp( token, "armor" ) )	t->isArmor = true;
+				else if ( !strcmp( token, "craft" ) )	t->isCraft = true;
+				else if ( !strcmp( token, "building" ) )	t->isBuilding = true;
+				else Com_Printf(_("MN_ParseTechnologies - Unknown techtype: \"%s\" - ignored.\n"), token);
 			}else if ( !strcmp( token, "requires" ) )
 			{
 				token = COM_EParse( text, errhead, id );
@@ -415,7 +416,7 @@ void MN_ParseTechnologies ( char* id, char** text )
 					if ( !misp ) break;
 					strncpy( t->requires[numRequired++], token, MAX_VAR);
 					if ( numRequired == MAX_TECHLINKS )
-						Com_Printf( _("RS_ParseResearchTree: Too many \"required\" defined. Limit is %i - igonored\n"), MAX_TECHLINKS );
+						Com_Printf( _("MN_ParseTechnologies: Too many \"required\" defined. Limit is %i - ignored\n"), MAX_TECHLINKS );
 				}
 				while ( misp && numRequired < MAX_TECHLINKS );
 				continue;
@@ -434,7 +435,7 @@ void MN_ParseTechnologies ( char* id, char** text )
 					if ( !misp ) break;
 					strncpy( t->provides[numProvided++], token, MAX_VAR);
 					if ( numProvided == MAX_TECHLINKS )
-						Com_Printf( _("RS_ParseResearchTree: Too many \"provides\" defined. Limit is %i - igonored\n"), MAX_TECHLINKS );
+						Com_Printf( _("MN_ParseTechnologies: Too many \"provides\" defined. Limit is %i - ignored\n"), MAX_TECHLINKS );
 				}
 				while ( misp && numProvided < MAX_TECHLINKS );
 				continue;
