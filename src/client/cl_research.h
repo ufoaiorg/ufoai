@@ -11,8 +11,8 @@ typedef struct technology_s
 	char	id[MAX_VAR];
 	char	name[MAX_VAR];
 	float	time;
-	char	provides[MAX_TECHLINKS][MAX_VAR];
 	char	requires[MAX_TECHLINKS][MAX_VAR];
+	char	provides[MAX_VAR];
 	char	description[MAX_VAR];
 	researchType_t	type;
 	researchStatus_t	statusResearch;

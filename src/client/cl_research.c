@@ -348,12 +348,10 @@ void R_TechnologyList_f ( void )
 		Com_Printf(_("Tech: %s\n"), t->id );
 		Com_Printf(_("... time %.2f\n"), t->time );
 		Com_Printf(_("... name %s\n"), t->name );
-		Com_Printf(_("... provides: ->"));
-		for ( j = 0; j < MAX_TECHLINKS; j++ )	//TODO how to get the number of _used_ array-entries?
-			if ( t->provides[j][0] ) Com_Printf(_(" %s"), t->provides[j] ); else break;
-		Com_Printf(_("\n... requires: ->"));
+		Com_Printf(_("... requires: ->"));
 		for ( j = 0; j < MAX_TECHLINKS; j++ )
-			if ( t->requires[j][0] ) Com_Printf(_(" %s"), t->requires[j] ); else break;
+			if ( t->requires[j][0] ) Com_Printf( _(" %s"), t->requires[j] ); else break;
+		Com_Printf( _("\n... provides: -> %s"), t->provides );
 		switch ( t->type )
 		{
 		case RS_TECH:	Com_Printf(_("\n... Is a tech.\n") ); break;
@@ -400,12 +398,6 @@ value_t valid_tech_vars[] =
 	//name of technology
 	{ "name",	V_STRING,	TECHFS( name ) },
 
-	//which type is it? weapon, craft, ...
-	//{ "type",	V_STRING,	TECHFS( type ) },
-
-	//what does it require
-	{ "requires",	V_STRING,	TECHFS( requires ) },
-
 	//what does this research provide
 	{ "provides",	V_STRING,	TECHFS( provides ) },
 
@@ -426,9 +418,7 @@ void MN_ParseTechnologies ( char* id, char** text )
 	char	*errhead = _("MN_ParseTechnologies: unexptected end of file (names ");
 	char	*token, *misp;
 	char	single_requirement[MAX_VAR]; //256 ?
-	char	single_provides[MAX_VAR]; //256 ?
 	char	numRequired;
-	char	numProvided;
 
 	// get body
 	token = COM_Parse( text );
@@ -450,15 +440,15 @@ void MN_ParseTechnologies ( char* id, char** text )
 	//set standard values
 	strcpy( t->id, id );
 	strcpy( t->name, "" );
+	strcpy( t->provides, "" );
 	t->type = RS_TECH;
 	t->statusResearch = RS_NONE;
 	t->statusCollected  = false;
 	int i;							//DEBUG .. needed?
 	for (i=0; i < MAX_TECHLINKS; i++) {	//DEBUG .. needed?
 		t->requires[i][0] = 0;			//DEBUG .. needed?
-		t->provides[i][0] = 0;			//DEBUG .. needed?
 	}								//DEBUG .. needed?
-		
+	
 	do {
 		// get the name type
 		token = COM_EParse( text, errhead, id );
@@ -507,26 +497,6 @@ void MN_ParseTechnologies ( char* id, char** text )
 				while ( misp && numRequired < MAX_TECHLINKS );
 				continue;
 			}
-			else if ( !strcmp( token, "provides" ) )
-			{
-				token = COM_EParse( text, errhead, id );
-				if ( !*text ) return;
-				strncpy( single_provides, token, MAX_VAR );
-				single_provides[strlen(single_provides)] = 0;
-				misp = single_provides;
-
-				numProvided = 0;
-				do {
-					token = COM_Parse( &misp );
-					if ( !misp ) break;
-					strncpy( t->provides[numProvided++], token, MAX_VAR);
-					if ( numProvided == MAX_TECHLINKS )
-						Com_Printf( _("MN_ParseTechnologies: Too many \"provides\" defined. Limit is %i - ignored\n"), MAX_TECHLINKS );
-				}
-				while ( misp && numProvided < MAX_TECHLINKS );
-				continue;
-			}
-
 		if ( !var->string ) //TODO: escape "type weapon/tech/etc.." here
 			Com_Printf( _("MN_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n"), token, id );
 
@@ -629,7 +599,7 @@ void R_GetProvided( char *id, char *provided[MAX_TECHLINKS])
 		t = &technologies[i];
 		if ( strcmp( id, t->id ) ) {
 			for ( j=0; j < MAX_TECHLINKS; j++ )
-				strcpy(provided[j], t->provides[j]);
+				strcpy(provided[j], t->provides);
 			//TODO: search for dependent items.
 			for ( j=0; j < numTechnologies; j++ ) {
 				if (R_DependsOn( t->id, id ) ) {
