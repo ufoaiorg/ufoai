@@ -445,7 +445,7 @@ void MN_ParseTechnologies ( char* id, char** text )
 	t->type = RS_TECH;
 	t->statusResearch = RS_NONE;
 	t->statusCollected  = false;
-	memset (t->requires, 0, MAX_TECHLINKS*MAXVAR );
+	memset (t->requires, 0, MAX_TECHLINKS*MAX_VAR );
 
 	do {
 		// get the name type
