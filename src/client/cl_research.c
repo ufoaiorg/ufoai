@@ -40,6 +40,47 @@ char R_ResearchPossible ( void )
 	return false;
 }
 
+/*
+======================
+R_GetName
+
+// TODO
+Return "name" if present, otherwise enter the correct .ufo file and read it from there.
+======================
+*/
+void R_GetName( char *id, char *name )
+{
+	int i, j;
+	technology_t *t;
+	objDef_t *od;
+	for ( i=0; i < numTechnologies; i++ ) {
+		t = &technologies[i];
+		if ( !strcmp( id, t->id ) ) {
+			switch ( t->type ) //Search in correct data/name.
+			{
+			case RS_TECH:
+				strcpy( name, t->name ); return;
+				break;
+			case RS_WEAPON:
+				for ( j = 0, od = csi.ods; j < csi.numODs; j++ ) { 				
+					od = &csi.ods[j];
+					if ( !strcmp( id, od->kurz) ) {
+						strcpy(name, od->name);
+						return;
+					}
+				}
+				break;
+			case RS_ARMOR:	break;
+			case RS_CRAFT:	break;
+			case RS_BUILDING:	break;
+			default:			break;
+			}
+			return;
+		}
+	}
+	Com_Printf( _("R_GetName: technology \"%s\" not found.\n"), id );
+}	
+
 /*======================
 R_ResearchDisplayInfo
 ======================*/
@@ -51,7 +92,9 @@ void R_ResearchDisplayInfo ( void  )
 
 	technology_t *t;
 	t = &technologies[globalResearchNum];
-	Cvar_Set( "mn_research_selname",  t->id );
+	char tempname[MAX_VAR];
+	R_GetName( t->id, tempname);
+	Cvar_Set( "mn_research_selname",  tempname );
 	Cvar_Set( "mn_research_seltime", va( "Time: %f\n", t->time ) );
 
 	switch ( t->statusResearch )
@@ -175,12 +218,11 @@ R_UpdateData
 void R_UpdateData ( void )
 {
 	char name [MAX_VAR];
-	
 	int i, j;
 	technology_t *t;
 	for ( i=0, j=0; i < numTechnologies; i++ ) { //TODO: Debug what happens if there are more than 28 items (j>28) !
 		t = &technologies[i];
-		strcpy( name, t->id ); //TODO using id for now until R_GetName is fully working.
+		R_GetName( t->id, name );
 		switch ( t->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 		{
 		case RS_RUNNING:
@@ -407,6 +449,7 @@ void MN_ParseTechnologies ( char* id, char** text )
 	
 	//set standard values
 	strcpy( t->id, id );
+	strcpy( t->name, "" );
 	t->type = RS_TECH;
 	t->statusResearch = RS_NONE;
 	t->statusCollected  = false;
@@ -491,31 +534,6 @@ void MN_ParseTechnologies ( char* id, char** text )
 
 }
 
-/*
-======================
-R_GetName
-
-// TODO
-Return "name" if present, otherwise enter the correct .ufo file and read it from there.
-======================
-*/
-void R_GetName( char *id, char *name )
-{
-	int i;
-	technology_t *t;
-	for ( i=0; i < numTechnologies; i++ ) {
-		t = &technologies[i];
-		if ( strcmp( id, t->id ) ) {
-			if ( !t->name ) {
-				strcpy( name, t->name );
-			} else {
-				//TODO: search in correct ufo.
-			}
-			return;
-		}
-	}
-	Com_Printf( _("R_GetName: technology \"%s\" not found.\n"), id );
-}
 
 /*
 ======================
