@@ -56,13 +56,16 @@ void R_ResearchDisplayInfo ( int num  )
 	switch ( od->researchStatus )
 	{
 	case RS_RUNNING:
-		Cvar_Set( "mn_research_selstatus", "Status: Under research\n" );
+		Cvar_Set( "mn_research_selstatus", "Status: Under research ... \n" );
+		break;
+	case RS_PAUSED:
+		Cvar_Set( "mn_research_selstatus", "Status: Research paused.\n" );
 		break;
 	case RS_FINISH:
-		Cvar_Set( "mn_research_selstatus", "Status: Research finished\n" );
+		Cvar_Set( "mn_research_selstatus", "Status: Research finished.\n" );
 		break;
 	case RS_NONE:
-		Cvar_Set( "mn_research_selstatus", "Status: Unknown\n" );
+		Cvar_Set( "mn_research_selstatus", "Status: Unknown technology.\n" );
 		break;
 	default:
 		break;
@@ -111,13 +114,23 @@ void R_ResearchStart ( void )
 		return;
 
 	od = &csi.ods[globalResearchNum];
-	if (od->researchStatus != RS_NONE) {
-		if  (od->researchStatus == RS_FINISH)
-			MN_Popup( _("Notice"), _("The research on this item is complete.") );
-		else
-			MN_Popup( _("Notice"), _("This item is already under research by your scientists.") );
-	} else {
+	switch ( od->researchStatus )
+	{
+	case RS_RUNNING:
+		MN_Popup( _("Notice"), _("This item is already under research by your scientists.") );
+		break;
+	case RS_PAUSED:
+		MN_Popup( _("Notice"), _("The research on this item continues.") );
 		od->researchStatus = RS_RUNNING;
+		break;
+	case RS_FINISH:
+		MN_Popup( _("Notice"), _("The research on this item is complete.") );
+		break;
+	case RS_NONE:
+		od->researchStatus = RS_RUNNING;
+		break;
+	default:
+		break;
 	}
 	R_UpdateData();
 }
@@ -136,10 +149,27 @@ void R_ResearchStop ( void )
 		return;
 
 	od = &csi.ods[globalResearchNum];
-	if (od->researchStatus != RS_FINISH)
-		od->researchStatus = RS_NONE;
-	else
+	switch ( od->researchStatus )
+	{
+	case RS_RUNNING:
+		od->researchStatus = RS_PAUSED;
+		break;
+	case RS_PAUSED:
+		MN_Popup( _("Notice"), _("The research on this item continues.") );
+		od->researchStatus = RS_RUNNING;
+		break;
+	case RS_FINISH:
 		MN_Popup( _("Notice"), _("The research on this item is complete.") );
+		break;
+	case RS_NONE:
+		Com_Printf( "Can't pause research. Research not started.\n" );
+		break;
+	default:
+		break;
+	}
+	if (od->researchStatus != RS_FINISH)
+		od->researchStatus = RS_PAUSED;
+
 	R_UpdateData();
 }
 
@@ -163,6 +193,9 @@ void R_UpdateData ( void )
 				break;
 			case RS_FINISH:
 				strcat(name, " [finished]");
+				break;
+			case RS_PAUSED:
+				strcat(name, " [paused]");
 				break;
 			default:
 				break;
@@ -273,17 +306,17 @@ void R_TechnologyList_f ( void )
 		Com_Printf(_("... name %s\n"), t->name );
 		Com_Printf(_("... provides: ->"));
 		for ( j = 0; j < MAX_TECHLINKS; j++ )	//TODO how to get the number of _used_ array-entries?
-			if(t->provides[j][0]) Com_Printf(_(" %s"), t->provides[j] );
+			if ( t->provides[j][0] ) Com_Printf(_(" %s"), t->provides[j] ); else break;
 		Com_Printf(_("\n... requires: ->"));
 		for ( j = 0; j < MAX_TECHLINKS; j++ )
-			if(t->provides[j][0]) Com_Printf(_(" %s"), t->requires[j] );
+			if ( t->requires[j][0] ) Com_Printf(_(" %s"), t->requires[j] ); else break;
 		Com_Printf(_("\n... Tech %i\n"), t->isTech );
 		Com_Printf(_("... Weapon %i\n"), t->isWeapon );
 		Com_Printf(_("... Craft %i\n"), t->isCraft );
 		Com_Printf(_("... Armor %i\n"), t->isArmor );
 		Com_Printf(_("... Building %i\n"), t->isBuilding );
-		Com_Printf(_("... Researched %i\n"), t->item_researched );
-		Com_Printf(_("... Collected %i\n"), t->item_collected );
+		//Com_Printf(_("... Researched %i\n"), t->statusResearch );
+		Com_Printf(_("... Collected %i\n"), t->statusCollected );
 	}
 }
 
@@ -309,7 +342,7 @@ void MN_ResetResearch( void )
 	Cmd_AddCommand( "mn_stop_research", R_ResearchStop );
 	Cmd_AddCommand( "research_update", R_UpdateData );
 	Cmd_AddCommand( "technologylist", R_TechnologyList_f );
-	Cmd_AddCommand( "techlist", R_TechnologyList_f );
+	Cmd_AddCommand( "techlist", R_TechnologyList_f );	// DEBUGGING ONLY
 }
 
 // NOTE: the BSFS define is the same like for bases and so on...
@@ -372,6 +405,13 @@ void MN_ParseTechnologies ( char* id, char** text )
 	t->isArmor = false;
 	t->isCraft = false;
 	t->isBuilding = false;
+	t->statusResearch = RS_NONE;
+	t->statusCollected  = false;
+	int i;							//DEBUG .. needed?
+	for (i=0; i < MAX_TECHLINKS; i++) {	//DEBUG .. needed?
+		t->requires[i][0] = 0;			//DEBUG .. needed?
+		t->provides[i][0] = 0;			//DEBUG .. needed?
+	}								//DEBUG .. needed?
 		
 	do {
 		// get the name type
@@ -441,8 +481,8 @@ void MN_ParseTechnologies ( char* id, char** text )
 				continue;
 			}
 
-		if ( !var->string )
-			Com_Printf( _("MN_ParseUpEntry: unknown token \"%s\" ignored (entry %s)\n"), token, id );
+		if ( !var->string ) //TODO: escape "type weapon/tech/etc.." here
+			Com_Printf( _("MN_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n"), token, id );
 
 	} while ( *text );
 
@@ -498,9 +538,38 @@ void R_GetRequired( char *id, char *required[MAX_TECHLINKS])
 
 /*
 ======================
+R_GetFirstRequired
+
+// TODO
+Returns the first required technologies that are needed by "id".
+That means you need to research the result to be able to research (and maybe use) "id".
+======================
+*/
+
+void R_GetFirstRequired( char *id, char *required[MAX_TECHLINKS])
+{
+	//TODO: This requires a recursive loop to get the very first unresearched technologies.
+	int i, j;
+	technology_t *t;
+	char temp_requiredlist[MAX_TECHLINKS][MAX_VAR];
+	for ( i=0; i < numTechnologies; i++ ) {
+		t = &technologies[i];
+		R_GetRequired ( t->id, temp_requiredlist );
+//		if (length of temp_requiredlist == 0)	TODO
+//			_append_ it to required			TODO
+//		else
+			for ( j=0; j < MAX_TECHLINKS; j++ ) {
+				R_GetFirstRequired( temp_requiredlist[j], temp_requiredlist );
+			}
+	}
+	Com_Printf( _("R_GetFirstRequired: technology \"%s\" not found.\n"), id );
+}
+
+/*
+======================
 R_DependsOn
 
-Checks if the research item id1 depends (requires) on id2
+Checks if the research item id1 depends on (requires) id2
 ======================
 */
 byte R_DependsOn(char *id1, char *id2)
@@ -554,16 +623,26 @@ void R_GetProvided( char *id, char *provided[MAX_TECHLINKS])
 
 /*
 ======================
-R_GetFirstRequired
+R_MarkResearched
 
-unresearched==true - return with the very first requirement(s)
-unresearched==false - return with the first requirement(s) that are still unresearched
+Mark technologies as researched. This includes techs that deoends in "id" and have time=0
 ======================
 */
-void R_GetFirstRequired( char *id, byte unresearched, char *required[MAX_TECHLINKS])
+void R_MarkResearched( char *id )
 {
-	// TODO: return the first required research-item that is needed by this one.
-	// this requires a recursive loop to the very first unresearched	
+	int i;
+	technology_t *t;
+	// set depending technologies that have time=0 as researeched as well
+	for ( i=0; i < numTechnologies; i++ ) {
+		t = &technologies[i];
+		if ( strcmp( id, t->id ) )
+			t->statusResearch = RS_FINISH;
+		else
+		if ( R_DependsOn( id, t->id ) && (t->time <= 0) ) {
+			t->statusResearch = RS_FINISH;
+			Com_Printf( _("Research of \"%s\" finished.\n"), id );
+		}
+	}
 }
 
 /*
@@ -571,7 +650,7 @@ void R_GetFirstRequired( char *id, byte unresearched, char *required[MAX_TECHLIN
 R_GetFromProvided
 
 Returns a list of .ufo items that are produceable when this item has been researched (=provided)
-This list also incldues other items that "require" this one (id) and have a reseach_time of 0.
+This list also includes other items that "require" this one (id) and have a reseach_time of 0.
 
 // TODO: MAX_RESLINK can exceed it's limit, since the added entries to provided can get longer.
 ======================
