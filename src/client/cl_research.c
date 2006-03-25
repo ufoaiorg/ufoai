@@ -96,7 +96,7 @@ void R_ResearchDisplayInfo ( void  )
 	char tempname[MAX_VAR];
 	R_GetName( t->id, tempname);
 	Cvar_Set( "mn_research_selname",  tempname );
-	Cvar_Set( "mn_research_seltime", va( "Time: %f\n", t->time ) );
+	Cvar_Set( "mn_research_seltime", va( "Time: %.1f\n", t->time ) );
 
 	switch ( t->statusResearch )
 	{
@@ -343,15 +343,17 @@ void R_TechnologyList_f ( void )
 {
 	int i, j;
 	technology_t* t;
+	research_requirements_t* req;
 	for ( i = 0; i < numTechnologies; i++ )
 	{
 		t = &technologies[i];
+		req = &t->requires;
 		Com_Printf(_("Tech: %s\n"), t->id );
 		Com_Printf(_("... time %.2f\n"), t->time );
 		Com_Printf(_("... name %s\n"), t->name );
 		Com_Printf(_("... requires: ->"));
-		for ( j = 0; j < MAX_TECHLINKS; j++ )
-			if ( t->requires[j][0] ) Com_Printf( _(" %s"), t->requires[j] ); else break;
+		for ( j = 0; j < req->numEntries; j++ )
+			Com_Printf( _(" %s"),req->list[j] );
 		Com_Printf( _("\n... provides: -> %s"), t->provides );
 		switch ( t->type )
 		{
@@ -419,7 +421,8 @@ void MN_ParseTechnologies ( char* id, char** text )
 	char	*errhead = _("MN_ParseTechnologies: unexptected end of file (names ");
 	char	*token, *misp;
 	char	single_requirement[MAX_VAR]; //256 ?
-	char	numRequired;
+	//char	numRequired;
+	research_requirements_t required;
 
 	// get body
 	token = COM_Parse( text );
@@ -436,8 +439,9 @@ void MN_ParseTechnologies ( char* id, char** text )
 	
 	// new technology
 	t = &technologies[numTechnologies++];
+	required = t->requires;
 	memset( t, 0, sizeof( technology_t ) );
-	
+
 	//set standard values
 	strcpy( t->id, id );
 	strcpy( t->name, "" );
@@ -445,7 +449,7 @@ void MN_ParseTechnologies ( char* id, char** text )
 	t->type = RS_TECH;
 	t->statusResearch = RS_NONE;
 	t->statusCollected  = false;
-	memset (t->requires, 0, MAX_TECHLINKS*MAX_VAR );
+	
 
 	do {
 		// get the name type
@@ -484,15 +488,15 @@ void MN_ParseTechnologies ( char* id, char** text )
 				single_requirement[strlen(single_requirement)] = 0;
 				misp = single_requirement;
 
-				numRequired = 0;
+				required.numEntries = 0;
 				do {
 					token = COM_Parse( &misp );
 					if ( !misp ) break;
-					strncpy( t->requires[numRequired++], token, MAX_VAR);
-					if ( numRequired == MAX_TECHLINKS )
+					strncpy( required.list[required.numEntries++], token, MAX_VAR);
+					if ( required.numEntries == MAX_TECHLINKS )
 						Com_Printf( _("MN_ParseTechnologies: Too many \"required\" defined. Limit is %i - ignored\n"), MAX_TECHLINKS );
 				}
-				while ( misp && numRequired < MAX_TECHLINKS );
+				while ( misp && required.numEntries < MAX_TECHLINKS );
 				continue;
 			}
 		if ( !var->string ) //TODO: escape "type weapon/tech/etc.." here
@@ -510,15 +514,15 @@ R_GetRequired
 returns the list of required items.
 ======================
 */
-void R_GetRequired( char *id, char *required[MAX_TECHLINKS])
+void R_GetRequired( char *id, research_requirements_t *required)
 {
-	int i, j;
+	int i;
 	technology_t *t;
+	
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( strcmp( id, t->id ) ) {
-			for ( j=0; j < MAX_TECHLINKS; j++ )
-				strcpy(required[j], t->requires[j]);
+			required = &t->requires;	// is linking a good idea?
 			return;
 		}
 	}
@@ -535,21 +539,22 @@ That means you need to research the result to be able to research (and maybe use
 ======================
 */
 
-void R_GetFirstRequired( char *id, char *required[MAX_TECHLINKS])
+void R_GetFirstRequired( char *id,  research_requirements_t *required)
 {
 	//TODO: This requires a recursive loop to get the very first unresearched technologies.
 	int i, j;
 	technology_t *t;
-	char temp_requiredlist[MAX_TECHLINKS][MAX_VAR];
+	research_requirements_t	required_temp;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		R_GetRequired ( t->id, temp_requiredlist );
-//		if (length of temp_requiredlist == 0)	TODO
+		R_GetRequired ( t->id, &required_temp );
+		if ( required_temp.numEntries <= 0 ) {
 //			_append_ it to required			TODO
-//		else
-			for ( j=0; j < MAX_TECHLINKS; j++ ) {
-				R_GetFirstRequired( temp_requiredlist[j], temp_requiredlist );
+		} else {
+			for ( j=0; j < required_temp.numEntries; j++ ) {
+				R_GetFirstRequired( required_temp.list[j], required );
 			}
+		}
 	}
 	Com_Printf( _("R_GetFirstRequired: technology \"%s\" not found.\n"), id );
 }
@@ -565,11 +570,13 @@ byte R_DependsOn(char *id1, char *id2)
 {
 	int i, j;
 	technology_t *t;
+	research_requirements_t	required;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( strcmp( id1, t->id ) ) {
-			for ( j=0; j < MAX_TECHLINKS; j++ ) {
-				if ( strcmp(t->requires[j], id2 ) )
+			required = t->requires;
+			for ( j=0; j < required.numEntries; j++ ) {
+				if ( strcmp(required.list[j], id2 ) )
 					return true;
 			}
 			return false;

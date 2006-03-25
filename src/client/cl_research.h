@@ -6,12 +6,18 @@
 #define MAX_TECHNOLOGIES 256
 #define MAX_TECHLINKS 32
 
+typedef struct research_requirements_s
+{
+	char	list[MAX_TECHLINKS][MAX_VAR];
+	int		numEntries;
+} research_requirements_t;
+
 typedef struct technology_s
 {
 	char	id[MAX_VAR];
 	char	name[MAX_VAR];
 	float	time;
-	char	requires[MAX_TECHLINKS][MAX_VAR];
+	research_requirements_t	requires;
 	char	provides[MAX_VAR];
 	char	description[MAX_VAR];
 	researchType_t	type;
