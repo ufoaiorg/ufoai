@@ -18,12 +18,12 @@
 //		* "initial" - You can research this tech from the beginning.
 //		* "nothing" - You need to collect at least one item (that requires it directly or indirectly) to be able to research this.
 //		* everything else - a "tech" item.
-//	provides
-//		The item name in the correct ufo file or data-structure (e.g inventory). The given names are _not_ "tech" items.
+//	provides yyy
+//		The item (only one allowed) name (yyy) in the correct ufo file or data-structure (e.g inventory). The given names are _not_ "tech" items.
 //		This items can be produced once the "tech" item has been finished.
 //	time
 //		time the research needs.
-//		If time is 0 the item can be produced at the same time all the "required" items are finished.//--------------
+//		If time is 0 the item can be produced at the same time all the "required" items are finished.
 
 
 //-----------------------------------------------------
@@ -131,7 +131,16 @@ tech nano
 tech nano_armor
 {
 	type	armor
-	requires	"nano test1 test2"
+	requires	"nano"
 	provides	medium
 	time	400
+}
+
+tech advanced_armor
+{
+	type	tech
+	name	"Advanced Armor Fabrics"
+	requires	"nano plasma"
+	provides	medium
+	time	700
 }
