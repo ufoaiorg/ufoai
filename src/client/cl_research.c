@@ -3,6 +3,7 @@
 #include "client.h"
 #include "cl_research.h"
 
+void R_GetFirstRequired( char *id,  research_requirements_t *required);
 
 byte researchList[MAX_RESEARCHLIST];
 int researchListLength;
@@ -344,29 +345,41 @@ void R_TechnologyList_f ( void )
 	int i, j;
 	technology_t* t;
 	research_requirements_t* req;
+	research_requirements_t* req_temp;
 	for ( i = 0; i < numTechnologies; i++ )
 	{
 		t = &technologies[i];
 		req = &t->requires;
 		Com_Printf(_("Tech: %s\n"), t->id );
-		Com_Printf(_("... time %.2f\n"), t->time );
-		Com_Printf(_("... name %s\n"), t->name );
-		Com_Printf(_("... requires: ->"));
+		Com_Printf(_("... time      -> %.2f\n"), t->time );
+		Com_Printf(_("... name      -> %s\n"), t->name );
+		Com_Printf(_("... requires  ->"));
 		for ( j = 0; j < req->numEntries; j++ )
 			Com_Printf( _(" %s"),req->list[j] );
-		Com_Printf( _("\n... provides: -> %s"), t->provides );
+		Com_Printf("\n");
+		Com_Printf( _("... provides  -> %s"), t->provides );
+		Com_Printf("\n");
+		
+		Com_Printf( _("... type      -> "));
 		switch ( t->type )
 		{
-		case RS_TECH:	Com_Printf(_("\n... Is a tech.\n") ); break;
-		case RS_WEAPON:	Com_Printf(_("... Is a weapon.\n") ); break;
-		case RS_CRAFT:	Com_Printf(_("... Is a craft.\n") ); break;
-		case RS_ARMOR:	Com_Printf(_("... Is armor.i\n") ); break;
-		case RS_BUILDING:	Com_Printf(_("... Is a building.\n") ); break;
+		case RS_TECH:	Com_Printf(_("tech\n") ); break;
+		case RS_WEAPON:	Com_Printf(_("weapon\n") ); break;
+		case RS_CRAFT:	Com_Printf(_("craft\n") ); break;
+		case RS_ARMOR:	Com_Printf(_("armor\n") ); break;
+		case RS_BUILDING:	Com_Printf(_("building\n") ); break;
 		default:	break;
 		}
-		
 		//Com_Printf(_("... Researched %i\n"), t->statusResearch );
-		Com_Printf(_("... Collected %i\n"), t->statusCollected );
+		Com_Printf(_("... Collected -> %i\n"), t->statusCollected );
+		
+		req_temp->numEntries = 0;
+		R_GetFirstRequired( t->id, req_temp );
+		Com_Printf(_("... req_first ->"));
+		for ( j = 0; j < req_temp->numEntries; j++ )
+			Com_Printf( _(" %s"),req_temp->list[j] );
+		
+		Com_Printf("\n");
 	}
 }
 
@@ -421,8 +434,7 @@ void MN_ParseTechnologies ( char* id, char** text )
 	char	*errhead = _("MN_ParseTechnologies: unexptected end of file (names ");
 	char	*token, *misp;
 	char	single_requirement[MAX_VAR]; //256 ?
-	//char	numRequired;
-	research_requirements_t required;
+	research_requirements_t* required;
 
 	// get body
 	token = COM_Parse( text );
@@ -439,7 +451,7 @@ void MN_ParseTechnologies ( char* id, char** text )
 	
 	// new technology
 	t = &technologies[numTechnologies++];
-	required = t->requires;
+	required = &t->requires;
 	memset( t, 0, sizeof( technology_t ) );
 
 	//set standard values
@@ -471,10 +483,10 @@ void MN_ParseTechnologies ( char* id, char** text )
 					Com_Printf(_("MN_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed\n"));
 				break;
 			}else
-			if ( !strcmp( token, "type" ) ) {
+			if (  !strcmp( token, "type" ) ) {
 				token = COM_EParse( text, errhead, id );
 				if ( !*text ) return;
-				if ( !strcmp( token, "tech" ) )	t->type = RS_TECH; // redundant, but oh well.
+				if (  !strcmp( token, "tech" ) )	t->type = RS_TECH; // redundant, but oh well.
 				else if ( !strcmp( token, "weapon" ) )	t->type = RS_WEAPON;
 				else if ( !strcmp( token, "armor" ) )	t->type = RS_ARMOR;
 				else if ( !strcmp( token, "craft" ) )		t->type = RS_CRAFT;
@@ -488,15 +500,15 @@ void MN_ParseTechnologies ( char* id, char** text )
 				single_requirement[strlen(single_requirement)] = 0;
 				misp = single_requirement;
 
-				required.numEntries = 0;
+				required->numEntries = 0;
 				do {
 					token = COM_Parse( &misp );
 					if ( !misp ) break;
-					strncpy( required.list[required.numEntries++], token, MAX_VAR);
-					if ( required.numEntries == MAX_TECHLINKS )
+					strncpy( required->list[required->numEntries++], token, MAX_VAR);
+					if ( required->numEntries == MAX_TECHLINKS )
 						Com_Printf( _("MN_ParseTechnologies: Too many \"required\" defined. Limit is %i - ignored\n"), MAX_TECHLINKS );
 				}
-				while ( misp && required.numEntries < MAX_TECHLINKS );
+				while ( misp && required->numEntries < MAX_TECHLINKS );
 				continue;
 			}
 		if ( !var->string ) //TODO: escape "type weapon/tech/etc.." here
@@ -512,8 +524,9 @@ void MN_ParseTechnologies ( char* id, char** text )
 R_GetRequired
 
 returns the list of required items.
+TODO: out of order ... seems to produce garbage
 ======================
-*/
+
 void R_GetRequired( char *id, research_requirements_t *required)
 {
 	int i;
@@ -521,13 +534,14 @@ void R_GetRequired( char *id, research_requirements_t *required)
 	
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( strcmp( id, t->id ) ) {
+		if ( !strcmp( id, t->id ) ) {
 			required = &t->requires;	// is linking a good idea?
 			return;
 		}
 	}
 	Com_Printf( _("R_GetRequired: technology \"%s\" not found.\n"), id );
 }
+*/
 
 /*
 ======================
@@ -544,16 +558,23 @@ void R_GetFirstRequired( char *id,  research_requirements_t *required)
 	//TODO: This requires a recursive loop to get the very first unresearched technologies.
 	int i, j;
 	technology_t *t;
-	research_requirements_t	required_temp;
+	research_requirements_t	*required_temp;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		R_GetRequired ( t->id, &required_temp );
-		if ( required_temp.numEntries <= 0 ) {
-//			_append_ it to required			TODO
-		} else {
-			for ( j=0; j < required_temp.numEntries; j++ ) {
-				R_GetFirstRequired( required_temp.list[j], required );
+		if ( !strcmp( id, t->id ) ) {
+			required_temp = &t->requires;
+			for ( j=0; j < required_temp->numEntries; j++ ) {
+				if (	( 0 == j ) && ( ( !strcmp( required_temp->list[0], "initial" ) ) || ( !strcmp( required_temp->list[0] , "nothing" ) ) ) ) {
+					if ( required->numEntries < MAX_TECHLINKS ) {
+						strcpy( required->list[required->numEntries], id ); // copy _this_ tech to the list
+						required->numEntries++;
+						//Com_Printf( _("debug: 'initial' or 'nothing' found - \"%s\"\n"), t->id ); //DEBUG
+					}
+					return;
+				}
+				R_GetFirstRequired( required_temp->list[j], required );
 			}
+			return;
 		}
 	}
 	Com_Printf( _("R_GetFirstRequired: technology \"%s\" not found.\n"), id );
@@ -573,10 +594,10 @@ byte R_DependsOn(char *id1, char *id2)
 	research_requirements_t	required;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( strcmp( id1, t->id ) ) {
+		if ( !strcmp( id1, t->id ) ) {
 			required = t->requires;
 			for ( j=0; j < required.numEntries; j++ ) {
-				if ( strcmp(required.list[j], id2 ) )
+				if ( !strcmp(required.list[j], id2 ) )
 					return true;
 			}
 			return false;
@@ -602,7 +623,7 @@ void R_GetProvided( char *id, char *provided[MAX_TECHLINKS])
 	technology_t *t;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( strcmp( id, t->id ) ) {
+		if ( !strcmp( id, t->id ) ) {
 			for ( j=0; j < MAX_TECHLINKS; j++ )
 				strcpy(provided[j], t->provides);
 			//TODO: search for dependent items.
@@ -631,7 +652,7 @@ void R_MarkResearched( char *id )
 	// set depending technologies that have time=0 as researeched as well
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( strcmp( id, t->id ) )
+		if ( !strcmp( id, t->id ) )
 			t->statusResearch = RS_FINISH;
 		else
 		if ( R_DependsOn( id, t->id ) && (t->time <= 0) ) {
