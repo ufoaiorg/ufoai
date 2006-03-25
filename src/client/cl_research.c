@@ -373,11 +373,14 @@ void R_TechnologyList_f ( void )
 		//Com_Printf(_("... Researched %i\n"), t->statusResearch );
 		Com_Printf(_("... Collected -> %i\n"), t->statusCollected );
 		
+#if 0
+		// FIXME: This is not initialized and produces a segfault
 		req_temp->numEntries = 0;
 		R_GetFirstRequired( t->id, req_temp );
 		Com_Printf(_("... req_first ->"));
 		for ( j = 0; j < req_temp->numEntries; j++ )
 			Com_Printf( _(" %s"),req_temp->list[j] );
+#endif
 		
 		Com_Printf("\n");
 	}
