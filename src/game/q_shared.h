@@ -835,6 +835,15 @@ typedef enum researchStatus_s
 	RS_FINISH
 } researchStatus_t;
 
+typedef enum researchType_s
+{
+	RS_TECH,
+	RS_WEAPON,
+	RS_ARMOR,
+	RS_CRAFT,
+	RS_BUILDING
+} researchType_t;
+
 typedef struct objDef_s
 {
 	// common
