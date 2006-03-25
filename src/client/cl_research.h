@@ -14,11 +14,7 @@ typedef struct technology_s
 	char	provides[MAX_TECHLINKS][MAX_VAR];
 	char	requires[MAX_TECHLINKS][MAX_VAR];
 	char	description[MAX_VAR];
-	byte	isTech;	// TODO: maybe use an enum-list instead of bools here?
-	byte	isWeapon;
-	byte	isCraft;
-	byte	isArmor;
-	byte	isBuilding;
+	researchType_t	type;
 	researchStatus_t	statusResearch;
 	byte	statusCollected;	// Did we loot this item?
 	

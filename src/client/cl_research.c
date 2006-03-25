@@ -43,29 +43,30 @@ char R_ResearchPossible ( void )
 /*======================
 R_ResearchDisplayInfo
 ======================*/
-void R_ResearchDisplayInfo ( int num  )
+void R_ResearchDisplayInfo ( void  )
 {
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
-	objDef_t *od;
-	od = &csi.ods[globalResearchNum];
-	Cvar_Set( "mn_research_selname",  od->name );
-	Cvar_Set( "mn_research_seltime", va( "Time: %i\n", od->researchTime ) );
 
-	switch ( od->researchStatus )
+	technology_t *t;
+	t = &technologies[globalResearchNum];
+	Cvar_Set( "mn_research_selname",  t->id );
+	Cvar_Set( "mn_research_seltime", va( "Time: %f\n", t->time ) );
+
+	switch ( t->statusResearch )
 	{
 	case RS_RUNNING:
-		Cvar_Set( "mn_research_selstatus", "Status: Under research ... \n" );
+		Cvar_Set( "mn_research_selstatus", "Status: Under research\n" );
 		break;
 	case RS_PAUSED:
-		Cvar_Set( "mn_research_selstatus", "Status: Research paused.\n" );
+		Cvar_Set( "mn_research_selstatus", "Status: Research paused\n" );
 		break;
 	case RS_FINISH:
-		Cvar_Set( "mn_research_selstatus", "Status: Research finished.\n" );
+		Cvar_Set( "mn_research_selstatus", "Status: Research finished\n" );
 		break;
 	case RS_NONE:
-		Cvar_Set( "mn_research_selstatus", "Status: Unknown technology.\n" );
+		Cvar_Set( "mn_research_selstatus", "Status: Unknown technology\n" );
 		break;
 	default:
 		break;
@@ -97,7 +98,7 @@ void CL_ResearchSelectCmd( void )
 	// call researchselect function from menu_research.ufo
 	Cbuf_AddText( va( "researchselect%i\n", num ) );
 	globalResearchNum = researchList[num];
-	R_ResearchDisplayInfo( num );
+	R_ResearchDisplayInfo();
 }
 
 /*======================
@@ -107,27 +108,26 @@ TODO: Check if laboratory is available
 ======================*/
 void R_ResearchStart ( void )
 {
-	objDef_t *od;
-
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
 
-	od = &csi.ods[globalResearchNum];
-	switch ( od->researchStatus )
+	technology_t *t;
+	t = &technologies[globalResearchNum];
+	switch ( t->statusResearch )
 	{
 	case RS_RUNNING:
 		MN_Popup( _("Notice"), _("This item is already under research by your scientists.") );
 		break;
 	case RS_PAUSED:
 		MN_Popup( _("Notice"), _("The research on this item continues.") );
-		od->researchStatus = RS_RUNNING;
+		t->statusResearch = RS_RUNNING;
 		break;
 	case RS_FINISH:
 		MN_Popup( _("Notice"), _("The research on this item is complete.") );
 		break;
 	case RS_NONE:
-		od->researchStatus = RS_RUNNING;
+		t->statusResearch = RS_RUNNING;
 		break;
 	default:
 		break;
@@ -142,21 +142,20 @@ TODO: Check if laboratory is available
 ======================*/
 void R_ResearchStop ( void )
 {
-	objDef_t *od;
-
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
 
-	od = &csi.ods[globalResearchNum];
-	switch ( od->researchStatus )
+	technology_t *t;
+	t = &technologies[globalResearchNum];
+	switch ( t->statusResearch )
 	{
 	case RS_RUNNING:
-		od->researchStatus = RS_PAUSED;
+		t->statusResearch = RS_PAUSED;
 		break;
 	case RS_PAUSED:
 		MN_Popup( _("Notice"), _("The research on this item continues.") );
-		od->researchStatus = RS_RUNNING;
+		t->statusResearch = RS_RUNNING;
 		break;
 	case RS_FINISH:
 		MN_Popup( _("Notice"), _("The research on this item is complete.") );
@@ -167,9 +166,6 @@ void R_ResearchStop ( void )
 	default:
 		break;
 	}
-	if (od->researchStatus != RS_FINISH)
-		od->researchStatus = RS_PAUSED;
-
 	R_UpdateData();
 }
 
@@ -178,34 +174,34 @@ R_UpdateData
 ======================*/
 void R_UpdateData ( void )
 {
-	objDef_t *od;
-	int i, j;
 	char name [MAX_VAR];
-	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ ) { //TODO: Debug what happens if there are more than 28 items (j>28) !
-		if ( od->researchNeeded) { // only handle items if the need researching
-			strcpy(name, od->name);
-			//if (od->researchStatus =!= RS_NONE ) // Set the text of the research items and mark them if they are currently researched.
-			//	strcat(name, " [under research]");	//TODO: colorcode "string txt_item%i" ?
-			switch ( od->researchStatus )
-			{
-			case RS_RUNNING:
-				strcat(name, " [under research]");	//TODO: colorcode "string txt_item%i" ?
-				break;
-			case RS_FINISH:
-				strcat(name, " [finished]");
-				break;
-			case RS_PAUSED:
-				strcat(name, " [paused]");
-				break;
-			default:
-				break;
-			}
-			Cvar_Set( va("mn_researchitem%i", j),  name ); //TODO: colorcode maybe?
-			researchList[j] = i;
-			j++;
-
+	
+	int i, j;
+	technology_t *t;
+	for ( i=0, j=0; i < numTechnologies; i++ ) { //TODO: Debug what happens if there are more than 28 items (j>28) !
+		t = &technologies[i];
+		strcpy( name, t->id ); //TODO using id for now until R_GetName is fully working.
+		switch ( t->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
+		{
+		case RS_RUNNING:
+			strcat(name, " [under research]");	//TODO: colorcode "string txt_item%i" ?
+			break;
+		case RS_FINISH:
+			strcat(name, " [finished]");
+			break;
+		case RS_PAUSED:
+			strcat(name, " [paused]");
+			break;
+		case RS_NONE:
+			break;
+		default:
+			break;
 		}
+		Cvar_Set( va("mn_researchitem%i", j),  name ); //TODO: colorcode maybe?
+		researchList[j] = i;
+		j++;
 	}
+	
 	researchListLength = j;
 
 	// Set rest of the list-entries to have no text at all. TODO: 28 should not be defined here.
@@ -215,10 +211,15 @@ void R_UpdateData ( void )
 	// select first item that needs to be researched
 	if ( researchListLength )
 	{
-		Cbuf_AddText( "researchselect0\n" );
-		CL_ItemDescription( researchList[0] );
-		globalResearchNum = researchList[0];
-		R_ResearchDisplayInfo( 0 );
+		if (globalResearchNum) {
+			Cbuf_AddText( va("researchselect%i\n",globalResearchNum) );
+			CL_ItemDescription( researchList[globalResearchNum] );
+			globalResearchNum = researchList[globalResearchNum];
+		}else {
+			Cbuf_AddText( "researchselect0\n" );
+			CL_ItemDescription( researchList[0] );
+			globalResearchNum = researchList[0];
+		}
 	} else {
 		// reset description
 		Cvar_Set( "mn_researchitemname", "" );
@@ -227,6 +228,7 @@ void R_UpdateData ( void )
 		Cvar_Set( "mn_researchammo", "" );
 		menuText[TEXT_STANDARD] = NULL;
 	}
+	R_ResearchDisplayInfo();
 }
 
 /*======================
@@ -250,24 +252,24 @@ CL_CheckResearchStatus
 void CL_CheckResearchStatus ( void )
 {
 	int i, newResearch = 0;
-	objDef_t *od;
 
 	if ( ! researchListLength )
 		return;
 
-	for ( i = 0; i < researchListLength; i++ )
-	{
-		od = &csi.ods[researchList[i]];
-		if ( od->researchStatus == RS_RUNNING )
+	technology_t *t;
+	for ( i=0; i < numTechnologies; i++ ) {
+		t = &technologies[i];
+		if ( t->statusResearch == RS_RUNNING )
 		{
-			if ( od->researchTime <= 0 )
+			if ( t->time <= 0 )
 			{
 				if ( ! newResearch )
-					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("Research of %s finished\n"), od->name );
+					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("Research of %s finished\n"), t->id ); //TODO using id for now until R_GetName is fully working.
 				else
 					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("%i researches finished\n"), newResearch+1 );
 				// leave all other flags - maybe useful for statistic?
-				od->researchStatus = RS_FINISH;
+				t->statusResearch = RS_FINISH;
+				globalResearchNum = 0;
 				newResearch++;
 			}
 			else
@@ -275,9 +277,9 @@ void CL_CheckResearchStatus ( void )
 				// FIXME: Make this depending on how many scientists are hired
 				// TODO: What time is stored here exactly? the formular below may be way of.
 				//od->researchTime -= B_HowManyPeopleInBase2 ( baseCurrent, 1 );
-				od->researchTime--;					// DEBUG
-				Com_Printf( _("%i\n"),od->researchTime );	// DEBUG
-				Com_Printf( _("time reduced\n") );			// DEBUG
+				t->time--;					// DEBUG
+				Com_Printf( _("%i\n"), t->time );	// DEBUG
+				Com_Printf( _("time reduced\n") );	// DEBUG
 			}
 		}
 	}
@@ -310,11 +312,16 @@ void R_TechnologyList_f ( void )
 		Com_Printf(_("\n... requires: ->"));
 		for ( j = 0; j < MAX_TECHLINKS; j++ )
 			if ( t->requires[j][0] ) Com_Printf(_(" %s"), t->requires[j] ); else break;
-		Com_Printf(_("\n... Tech %i\n"), t->isTech );
-		Com_Printf(_("... Weapon %i\n"), t->isWeapon );
-		Com_Printf(_("... Craft %i\n"), t->isCraft );
-		Com_Printf(_("... Armor %i\n"), t->isArmor );
-		Com_Printf(_("... Building %i\n"), t->isBuilding );
+		switch ( t->type )
+		{
+		case RS_TECH:	Com_Printf(_("\n... Is a tech.\n") ); break;
+		case RS_WEAPON:	Com_Printf(_("... Is a weapon.\n") ); break;
+		case RS_CRAFT:	Com_Printf(_("... Is a craft.\n") ); break;
+		case RS_ARMOR:	Com_Printf(_("... Is armor.i\n") ); break;
+		case RS_BUILDING:	Com_Printf(_("... Is a building.\n") ); break;
+		default:	break;
+		}
+		
 		//Com_Printf(_("... Researched %i\n"), t->statusResearch );
 		Com_Printf(_("... Collected %i\n"), t->statusCollected );
 	}
@@ -400,11 +407,7 @@ void MN_ParseTechnologies ( char* id, char** text )
 	
 	//set standard values
 	strcpy( t->id, id );
-	t->isTech = false;
-	t->isWeapon = false;
-	t->isArmor = false;
-	t->isCraft = false;
-	t->isBuilding = false;
+	t->type = RS_TECH;
 	t->statusResearch = RS_NONE;
 	t->statusCollected  = false;
 	int i;							//DEBUG .. needed?
@@ -436,11 +439,11 @@ void MN_ParseTechnologies ( char* id, char** text )
 			if ( !strcmp( token, "type" ) ) {
 				token = COM_EParse( text, errhead, id );
 				if ( !*text ) return;
-				if ( !strcmp( token, "tech" ) )	t->isTech = true;
-				else if ( !strcmp( token, "weapon" ) )	t->isWeapon = true;
-				else if ( !strcmp( token, "armor" ) )	t->isArmor = true;
-				else if ( !strcmp( token, "craft" ) )	t->isCraft = true;
-				else if ( !strcmp( token, "building" ) )	t->isBuilding = true;
+				if ( !strcmp( token, "tech" ) )	t->type = RS_TECH; // redundant, but oh well.
+				else if ( !strcmp( token, "weapon" ) )	t->type = RS_WEAPON;
+				else if ( !strcmp( token, "armor" ) )	t->type = RS_ARMOR;
+				else if ( !strcmp( token, "craft" ) )		t->type = RS_CRAFT;
+				else if ( !strcmp( token, "building" ) )	t->type = RS_BUILDING;
 				else Com_Printf(_("MN_ParseTechnologies - Unknown techtype: \"%s\" - ignored.\n"), token);
 			}else if ( !strcmp( token, "requires" ) )
 			{
