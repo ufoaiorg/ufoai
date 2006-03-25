@@ -53,6 +53,7 @@ void R_GetName( char *id, char *name )
 	int i, j;
 	technology_t *t;
 	objDef_t *od;
+	strcpy( name, id );
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {
