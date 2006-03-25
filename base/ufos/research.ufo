@@ -3,8 +3,8 @@
 //===============
 
 
-//	tech
-//		The _unique_ name of the research item in the tree.
+//	tech xxx
+//		The _unique_ name of the research item in the tree is xxx
 //	type
 //		Just says where to look for more information.
 //		"type tech" items have all the information in here, everything else in the correct .ufo file.
@@ -19,7 +19,8 @@
 //		* "nothing" - You need to collect at least one item (that requires it directly or indirectly) to be able to research this.
 //		* everything else - a "tech" item.
 //	provides
-//		The item name in the correct ufo file. This can be produced once the "tech" item has been finished.
+//		The item name in the correct ufo file or data-structure (e.g inventory). The given names are _not_ "tech" items.
+//		This items can be produced once the "tech" item has been finished.
 //	time
 //		time the research needs.
 //		If time is 0 the item can be produced at the same time all the "required" items are finished.//--------------
@@ -29,7 +30,7 @@
 tech tachyon
 {
 	type	tech
-	name	"Tachyon control"
+	name	"Tachyon Control"
 	requires	initial
 	description	"tachyon_txt"
 	time	100
@@ -70,10 +71,11 @@ tech tachyonsniper_ammo
 //-----------------------------------------------------
 tech plasma
 {
-	type	weapon
-	requires	tachyonsniper
-	provides	tachyonsniper_ammo
-	time	0
+	type	tech
+	name	"Advanced Plasma Control"
+	requires	nothing
+	description	"plasma_txt"
+	time	100
 }
 
 tech plaspistol
@@ -120,7 +122,7 @@ tech irgoggles
 tech nano
 {
 	type	tech
-	name	"Nano technology"
+	name	"Nano Technology"
 	requires	initial
 	description	"nano_txt"
 	time	200
@@ -130,6 +132,6 @@ tech nano_armor
 {
 	type	armor
 	requires	"nano test1 test2"
-	provides	"medium yadda"
+	provides	medium
 	time	400
 }
