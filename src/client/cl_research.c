@@ -445,11 +445,8 @@ void MN_ParseTechnologies ( char* id, char** text )
 	t->type = RS_TECH;
 	t->statusResearch = RS_NONE;
 	t->statusCollected  = false;
-	int i;							//DEBUG .. needed?
-	for (i=0; i < MAX_TECHLINKS; i++) {	//DEBUG .. needed?
-		t->requires[i][0] = 0;			//DEBUG .. needed?
-	}								//DEBUG .. needed?
-	
+	memset (t->requires, 0, MAX_TECHLINKS*MAXVAR );
+
 	do {
 		// get the name type
 		token = COM_EParse( text, errhead, id );
