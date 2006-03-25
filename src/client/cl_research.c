@@ -548,17 +548,40 @@ void R_GetRequired( char *id, research_requirements_t *required)
 
 /*
 ======================
+R_IsResearched
+
+Checks if the research item has been researchd
+======================
+*/
+byte R_IsResearched(char *id )
+{
+	int i;
+	technology_t *t;
+	for ( i=0; i < numTechnologies; i++ ) {
+		t = &technologies[i];
+		if ( !strcmp( id, t->id ) ) {
+			if (t->statusResearch == RS_FINISH)
+				return true;
+			return false;
+		}
+	}
+	Com_Printf( _("R_IsResearched: research item \"%s\" not found.\n"), id );
+	return false;	
+}
+
+/*
+======================
 R_GetFirstRequired
 
-// TODO
-Returns the first required technologies that are needed by "id".
+Returns the first required (yet unresearched) technologies that are needed by "id".
 That means you need to research the result to be able to research (and maybe use) "id".
+
+TODO: check if the tech is already researched and add the previous instead.
 ======================
 */
 
 void R_GetFirstRequired( char *id,  research_requirements_t *required)
 {
-	//TODO: This requires a recursive loop to get the very first unresearched technologies.
 	int i, j;
 	technology_t *t;
 	research_requirements_t	*required_temp;
@@ -567,7 +590,7 @@ void R_GetFirstRequired( char *id,  research_requirements_t *required)
 		if ( !strcmp( id, t->id ) ) {
 			required_temp = &t->requires;
 			for ( j=0; j < required_temp->numEntries; j++ ) {
-				if (	( 0 == j ) && ( ( !strcmp( required_temp->list[0], "initial" ) ) || ( !strcmp( required_temp->list[0] , "nothing" ) ) ) ) {
+				if ( ( 0 == j ) && ( ( !strcmp( required_temp->list[0], "initial" ) ) || ( !strcmp( required_temp->list[0] , "nothing" ) ) ) ) {
 					if ( required->numEntries < MAX_TECHLINKS ) {
 						strcpy( required->list[required->numEntries], id ); // copy _this_ tech to the list
 						required->numEntries++;
@@ -575,7 +598,13 @@ void R_GetFirstRequired( char *id,  research_requirements_t *required)
 					}
 					return;
 				}
-				R_GetFirstRequired( required_temp->list[j], required );
+				if ( R_IsResearched(required_temp->list[j]) ) {
+					strcpy( required->list[required->numEntries], id ); // copy _this_ tech to the list
+					required->numEntries++;
+					//Com_Printf( _("debug: next item \"%s\" already researched . \"%s\"."), required_temp->list[j], t->id ); //DEBUG
+				} else {
+					R_GetFirstRequired( required_temp->list[j], required );
+				}
 			}
 			return;
 		}
@@ -669,13 +698,11 @@ void R_MarkResearched( char *id )
 ======================
 R_GetFromProvided
 
-Returns a list of .ufo items that are produceable when this item has been researched (=provided)
-This list also includes other items that "require" this one (id) and have a reseach_time of 0.
-
-// TODO: MAX_RESLINK can exceed it's limit, since the added entries to provided can get longer.
+Return a the research-item that provides this item (from .ufo).
+// TODO
 ======================
 */
-// TODO: Return a the research-item that provides this item (from .ufo).
+
 void R_GetFromProvided( char *provided, char *id )
 {
 	
