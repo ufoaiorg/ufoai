@@ -51,9 +51,6 @@ value_t od_vals[] =
 	{ "reload",		V_INT,			ODOFS( reload ) },
 	{ "price",		V_INT,			ODOFS( price ) },
 	{ "buytype",	V_INT,			ODOFS( buytype ) },
-	{ "researchNeeded",	V_INT,		ODOFS( researchNeeded ) },
-	{ "researchTime",	V_INT,		ODOFS( researchTime ) },
-
 	{ NULL,			V_NULL,			0}
 };
 
@@ -282,10 +279,6 @@ void Com_ParseItem( char *name, char **text )
 		if ( od->shape & (0xFF << (i*8)) )
 			break;
 	od->sy = i+1;
-	od->researchStatus = RS_NONE;
-	if ( ! od->researchTime && od->researchNeeded ){
-		od->researchTime = 10; // FIXME: random
-	}
 }
 
 
