@@ -54,14 +54,12 @@ char R_ResearchPossible ( void )
 	return false;
 }
 
-/*
-======================
+/*======================
 R_GetName
 
 // TODO
 Return "name" if present, otherwise enter the correct .ufo file and read it from there.
-======================
-*/
+======================*/
 void R_GetName( char *id, char *name )
 {
 	int i, j;
@@ -320,6 +318,53 @@ void CL_ResearchType ( void )
 }
 
 /*======================
+R_DependsOn
+
+Checks if the research item id1 depends on (requires) id2
+======================*/
+byte R_DependsOn(char *id1, char *id2)
+{
+	int i, j;
+	technology_t *t;
+	research_requirements_t	required;
+	for ( i=0; i < numTechnologies; i++ ) {
+		t = &technologies[i];
+		if ( !strcmp( id1, t->id ) ) {
+			required = t->requires;
+			for ( j=0; j < required.numEntries; j++ ) {
+				if ( !strcmp(required.list[j], id2 ) )
+					return true;
+			}
+			return false;
+		}
+	}
+	Com_Printf( _("R_DependsOn: research item \"%s\" not found.\n"), id1 );
+	return false;	
+}
+
+/*======================
+R_MarkResearched
+
+Mark technologies as researched. This includes techs that depends in "id" and have time=0
+======================*/
+void R_MarkResearched( char *id )
+{
+	int i;
+	technology_t *t;
+	for ( i=0; i < numTechnologies; i++ ) {
+		t = &technologies[i];
+		if ( !strcmp( id, t->id ) ) {
+			t->statusResearch = RS_FINISH;
+			Com_Printf( _("Research of \"%s\" finished.\n"), id );
+		}
+		else if ( R_DependsOn( t->id, id ) && (t->time <= 0) ) {
+			t->statusResearch = RS_FINISH;
+			Com_Printf( _("Depending tech \"%s\" has been researched as well.\n"), t->id );
+		}
+	}
+}
+
+/*======================
 CL_CheckResearchStatus
 ======================*/
 void CL_CheckResearchStatus ( void )
@@ -340,8 +385,7 @@ void CL_CheckResearchStatus ( void )
 					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("Research of %s finished\n"), t->id ); //TODO using id for now until R_GetName is fully working.
 				else
 					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("%i researches finished\n"), newResearch+1 );
-				// leave all other flags - maybe useful for statistic?
-				t->statusResearch = RS_FINISH;
+				R_MarkResearched( t->id );	//t->statusResearch = RS_FINISH;
 				globalResearchNum = 0;
 				newResearch++;
 			}
@@ -350,9 +394,7 @@ void CL_CheckResearchStatus ( void )
 				// FIXME: Make this depending on how many scientists are hired
 				// TODO: What time is stored here exactly? the formular below may be way of.
 				//od->researchTime -= B_HowManyPeopleInBase2 ( baseCurrent, 1 );
-				t->time--;					// DEBUG
-				Com_Printf( _("%i\n"), t->time );	// DEBUG
-				Com_Printf( _("time reduced\n") );	// DEBUG
+				t->time--;					// reduce one day DEBUG
 			}
 		}
 	}
@@ -453,16 +495,10 @@ void MN_ResetResearch( void )
 // NOTE: the BSFS define is the same like for bases and so on...
 value_t valid_tech_vars[] =
 {
-	//name of technology
-	{ "name",	V_STRING,	TECHFS( name ) },
-
-	//what does this research provide
-	{ "provides",	V_STRING,	TECHFS( provides ) },
-
-	//how long will this research last
-	{ "time",	V_FLOAT,	TECHFS( time ) },
+	{ "name",	V_STRING,	TECHFS( name ) },		//name of technology
+	{ "provides",	V_STRING,	TECHFS( provides ) },	//what does this research provide
+	{ "time",	V_FLOAT,	TECHFS( time ) },				//how long will this research last
 	{ "description",	V_STRING,	TECHFS( description ) },
-
 	{ NULL,	0, 0 }
 };
 
@@ -561,13 +597,12 @@ void MN_ParseTechnologies ( char* id, char** text )
 }
 
 
-/*
-======================
+/*======================
 R_GetRequired
 
 returns the list of required items.
 TODO: out of order ... seems to produce garbage
-======================
+======================*/
 
 void R_GetRequired( char *id, research_requirements_t *required)
 {
@@ -583,15 +618,12 @@ void R_GetRequired( char *id, research_requirements_t *required)
 	}
 	Com_Printf( _("R_GetRequired: technology \"%s\" not found.\n"), id );
 }
-*/
 
-/*
-======================
+/*======================
 R_TechIsResearched
 
 Checks if the research item has been researched
-======================
-*/
+======================*/
 byte R_TechIsResearched(char *id )
 {
 	int i;
@@ -608,13 +640,11 @@ byte R_TechIsResearched(char *id )
 	return false;	
 }
 
-/*
-======================
+/*======================
 R_ItemIsResearched
 
 Checks if the research item has been researched
-======================
-*/
+======================*/
 byte R_ItemIsResearched(char *id_provided )
 {
 	int i;
@@ -630,17 +660,14 @@ byte R_ItemIsResearched(char *id_provided )
 	return true;	// no research needed
 }
 
-/*
-======================
+/*======================
 R_GetFirstRequired
 
 Returns the first required (yet unresearched) technologies that are needed by "id".
 That means you need to research the result to be able to research (and maybe use) "id".
 
 TODO: check if the tech is already researched and add the previous instead.
-======================
-*/
-
+======================*/
 void R_GetFirstRequired2 ( char *id, char *first_id,  research_requirements_t *required)
 {
 	int i, j;
@@ -657,7 +684,7 @@ void R_GetFirstRequired2 ( char *id, char *first_id,  research_requirements_t *r
 						return;
 					if ( 0 == j ) {
 						if ( required->numEntries < MAX_TECHLINKS ) {
-							strcpy( required->list[required->numEntries], id ); // copy _this_ tech to the list
+							strcpy( required->list[required->numEntries], id );
 							required->numEntries++;
 							//Com_Printf( _("debug: 'initial' or 'nothing' found - \"%s\"\n"), t->id ); //DEBUG
 						}
@@ -665,7 +692,7 @@ void R_GetFirstRequired2 ( char *id, char *first_id,  research_requirements_t *r
 					}
 				}
 				if ( R_TechIsResearched(required_temp->list[j]) ) {
-					strcpy( required->list[required->numEntries], id ); // copy _this_ tech to the list
+					strcpy( required->list[required->numEntries], id );
 					required->numEntries++;
 					//Com_Printf( _("debug: next item \"%s\" already researched . \"%s\"."), required_temp->list[j], t->id ); //DEBUG
 				} else {
@@ -684,43 +711,14 @@ void R_GetFirstRequired( char *id,  research_requirements_t *required )
 	 R_GetFirstRequired2( id, id, required);
 }
 
-/*
-======================
-R_DependsOn
-
-Checks if the research item id1 depends on (requires) id2
-======================
-*/
-byte R_DependsOn(char *id1, char *id2)
-{
-	int i, j;
-	technology_t *t;
-	research_requirements_t	required;
-	for ( i=0; i < numTechnologies; i++ ) {
-		t = &technologies[i];
-		if ( !strcmp( id1, t->id ) ) {
-			required = t->requires;
-			for ( j=0; j < required.numEntries; j++ ) {
-				if ( !strcmp(required.list[j], id2 ) )
-					return true;
-			}
-			return false;
-		}
-	}
-	Com_Printf( _("R_DependsOn: research item \"%s\" not found.\n"), id1 );
-	return false;	
-}
-
-/*
-======================
+/*======================
 R_GetProvided
 
 Returns a list of .ufo items that are produceable when this item has been researched (=provided)
 This list also incldues other items that "require" this one (id) and have a reseach_time of 0.
 
 // TODO: MAX_RESLINK can exceed it's limit, since the added entries to provided can get longer.
-======================
-*/
+======================*/
 void R_GetProvided( char *id, char *provided[MAX_TECHLINKS])
 {
 	int i, j;
@@ -740,28 +738,4 @@ void R_GetProvided( char *id, char *provided[MAX_TECHLINKS])
 		}
 	}
 	Com_Printf( _("R_GetProvided: research item \"%s\" not found.\n"), id );
-}
-
-/*
-======================
-R_MarkResearched
-
-Mark technologies as researched. This includes techs that deoends in "id" and have time=0
-======================
-*/
-void R_MarkResearched( char *id )
-{
-	int i;
-	technology_t *t;
-	// set depending technologies that have time=0 as researeched as well
-	for ( i=0; i < numTechnologies; i++ ) {
-		t = &technologies[i];
-		if ( !strcmp( id, t->id ) )
-			t->statusResearch = RS_FINISH;
-		else
-		if ( R_DependsOn( id, t->id ) && (t->time <= 0) ) {
-			t->statusResearch = RS_FINISH;
-			Com_Printf( _("Research of \"%s\" finished.\n"), id );
-		}
-	}
 }

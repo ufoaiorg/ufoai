@@ -25,6 +25,8 @@
 //		time the research needs.
 //		If time is 0 the item can be produced at the same time all the "required" items are finished.
 
+// TODO: the current values are test-values for faster debugging. The code currently substracts "1" each day, so a research with "time 1" is finished in one day (though the message will pop up the next day, because it isn't checked directly after subtracting)
+
 
 //-----------------------------------------------------
 tech tachyon
@@ -33,7 +35,7 @@ tech tachyon
 	name	"Tachyon Control"
 	requires	initial
 	description	"tachyon_txt"
-	time	100
+	time	1
 }
 
 tech tachyonrifle
@@ -41,7 +43,7 @@ tech tachyonrifle
 	type	weapon
 	requires	tachyon
 	provides	tachyonrifle
-	time	200
+	time	1
 }
 
 tech tachyonrifle_ammo
@@ -57,7 +59,7 @@ tech tachyonsniper
 	type	weapon
 	requires	tachyonrifle
 	provides	tachyonsniper
-	time	300
+	time	1
 }
 
 tech tachyonsniper_ammo
@@ -75,7 +77,7 @@ tech plasma
 	name	"Advanced Plasma Control"
 	requires	nothing
 	description	"plasma_txt"
-	time	100
+	time	1
 }
 
 tech plaspistol
@@ -83,7 +85,7 @@ tech plaspistol
 	type	weapon
 	requires	plasma
 	provides	plaspistol
-	time	300
+	time	1
 }
 
 tech plaspistol_ammo
@@ -91,7 +93,7 @@ tech plaspistol_ammo
 	type	weapon
 	requires	plaspistol
 	provides	plaspistol_ammo
-	time	100
+	time	0
 }
 
 tech plasrifle
@@ -99,7 +101,7 @@ tech plasrifle
 	type	weapon
 	requires	plaspistol
 	provides	plasrifle
-	time	500
+	time	1
 }
 
 tech plasrifle_ammo
@@ -116,7 +118,7 @@ tech irgoggles
 	type	weapon
 	requires	initial
 	provides	irgoggles
-	time	200
+	time	1
 }
 
 tech nano
@@ -125,7 +127,7 @@ tech nano
 	name	"Nano Technology"
 	requires	initial
 	description	"nano_txt"
-	time	200
+	time	1
 }
 
 tech nano_armor
@@ -133,7 +135,7 @@ tech nano_armor
 	type	armor
 	requires	"nano"
 	provides	medium
-	time	400
+	time	1
 }
 
 tech advanced_armor
@@ -142,5 +144,5 @@ tech advanced_armor
 	name	"Advanced Armor Fabrics"
 	requires	"nano plasma"
 	provides	medium
-	time	700
+	time	1
 }
