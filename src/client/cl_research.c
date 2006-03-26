@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_research.h"
 
-void R_GetFirstRequired( char *id,  research_requirements_t *required);
+void RS_GetFirstRequired( char *id,  research_requirements_t *required);
 
 byte researchList[MAX_RESEARCHLIST];
 int researchListLength;
@@ -32,11 +32,11 @@ int numTechnologies;
 technology_t technologies[MAX_TECHNOLOGIES];
 
 /*======================
-R_ResearchPossible
+RS_ResearchPossible
 
 checks if there is at least one base with a lab and scientists available and tells the player the status.
 ======================*/
-char R_ResearchPossible ( void )
+char RS_ResearchPossible ( void )
 {
 	if ( baseCurrent ) {
 		if ( baseCurrent->hasLab ) {
@@ -55,12 +55,12 @@ char R_ResearchPossible ( void )
 }
 
 /*======================
-R_GetName
+RS_GetName
 
 // TODO
 Return "name" if present, otherwise enter the correct .ufo file and read it from there.
 ======================*/
-void R_GetName( char *id, char *name )
+void RS_GetName( char *id, char *name )
 {
 	int i, j;
 	technology_t *t;
@@ -91,13 +91,13 @@ void R_GetName( char *id, char *name )
 			return;
 		}
 	}
-	Com_Printf( _("R_GetName: technology \"%s\" not found.\n"), id );
+	Com_Printf( _("RS_GetName: technology \"%s\" not found.\n"), id );
 }	
 
 /*======================
-R_ResearchDisplayInfo
+RS_ResearchDisplayInfo
 ======================*/
-void R_ResearchDisplayInfo ( void  )
+void RS_ResearchDisplayInfo ( void  )
 {
 	// we are not in base view
 	if ( ! baseCurrent )
@@ -106,7 +106,7 @@ void R_ResearchDisplayInfo ( void  )
 	technology_t *t;
 	t = &technologies[globalResearchNum];
 	char tempname[MAX_VAR];
-	R_GetName( t->id, tempname);
+	RS_GetName( t->id, tempname);
 	Cvar_Set( "mn_research_selname",  tempname );
 	Cvar_Set( "mn_research_seltime", va( "Time: %.1f\n", t->time ) );
 
@@ -131,7 +131,7 @@ void R_ResearchDisplayInfo ( void  )
 	int i;
 	research_requirements_t req_temp;
 	req_temp.numEntries = 0;
-	R_GetFirstRequired( t->id, &req_temp );
+	RS_GetFirstRequired( t->id, &req_temp );
 	strcpy( tempname, "Dependencies: ");
 	if ( req_temp.numEntries > 0 ) {
 		for ( i = 0; i < req_temp.numEntries; i++ ) {
@@ -170,15 +170,15 @@ void CL_ResearchSelectCmd( void )
 	// call researchselect function from menu_research.ufo
 	Cbuf_AddText( va( "researchselect%i\n", num ) );
 	globalResearchNum = researchList[num];
-	R_ResearchDisplayInfo();
+	RS_ResearchDisplayInfo();
 }
 
 /*======================
-R_ResearchStart
+RS_ResearchStart
 
 TODO: Check if laboratory is available
 ======================*/
-void R_ResearchStart ( void )
+void RS_ResearchStart ( void )
 {
 	// we are not in base view
 	if ( ! baseCurrent )
@@ -204,15 +204,15 @@ void R_ResearchStart ( void )
 	default:
 		break;
 	}
-	R_UpdateData();
+	RS_UpdateData();
 }
 
 /*======================
-R_ResearchStop
+RS_ResearchStop
 
 TODO: Check if laboratory is available
 ======================*/
-void R_ResearchStop ( void )
+void RS_ResearchStop ( void )
 {
 	// we are not in base view
 	if ( ! baseCurrent )
@@ -238,20 +238,20 @@ void R_ResearchStop ( void )
 	default:
 		break;
 	}
-	R_UpdateData();
+	RS_UpdateData();
 }
 
 /*======================
-R_UpdateData
+RS_UpdateData
 ======================*/
-void R_UpdateData ( void )
+void RS_UpdateData ( void )
 {
 	char name [MAX_VAR];
 	int i, j;
 	technology_t *t;
 	for ( i=0, j=0; i < numTechnologies; i++ ) { //TODO: Debug what happens if there are more than 28 items (j>28) !
 		t = &technologies[i];
-		R_GetName( t->id, name );
+		RS_GetName( t->id, name );
 		switch ( t->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 		{
 		case RS_RUNNING:
@@ -299,7 +299,7 @@ void R_UpdateData ( void )
 		Cvar_Set( "mn_researchammo", "" );
 		menuText[TEXT_STANDARD] = NULL;
 	}
-	R_ResearchDisplayInfo();
+	RS_ResearchDisplayInfo();
 }
 
 /*======================
@@ -308,7 +308,7 @@ MN_ResearchType
 void CL_ResearchType ( void )
 {
 	// get the list
-	R_UpdateData();
+	RS_UpdateData();
 
 	// nothing to research here
 	if ( ! researchListLength || !ccs.numBases )
@@ -318,11 +318,11 @@ void CL_ResearchType ( void )
 }
 
 /*======================
-R_DependsOn
+RS_DependsOn
 
 Checks if the research item id1 depends on (requires) id2
 ======================*/
-byte R_DependsOn(char *id1, char *id2)
+byte RS_DependsOn(char *id1, char *id2)
 {
 	int i, j;
 	technology_t *t;
@@ -338,16 +338,16 @@ byte R_DependsOn(char *id1, char *id2)
 			return false;
 		}
 	}
-	Com_Printf( _("R_DependsOn: research item \"%s\" not found.\n"), id1 );
+	Com_Printf( _("RS_DependsOn: research item \"%s\" not found.\n"), id1 );
 	return false;	
 }
 
 /*======================
-R_MarkResearched
+RS_MarkResearched
 
 Mark technologies as researched. This includes techs that depends in "id" and have time=0
 ======================*/
-void R_MarkResearched( char *id )
+void RS_MarkResearched( char *id )
 {
 	int i;
 	technology_t *t;
@@ -357,7 +357,7 @@ void R_MarkResearched( char *id )
 			t->statusResearch = RS_FINISH;
 			Com_Printf( _("Research of \"%s\" finished.\n"), id );
 		}
-		else if ( R_DependsOn( t->id, id ) && (t->time <= 0) ) {
+		else if ( RS_DependsOn( t->id, id ) && (t->time <= 0) ) {
 			t->statusResearch = RS_FINISH;
 			Com_Printf( _("Depending tech \"%s\" has been researched as well.\n"), t->id );
 		}
@@ -382,10 +382,10 @@ void CL_CheckResearchStatus ( void )
 			if ( t->time <= 0 )
 			{
 				if ( ! newResearch )
-					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("Research of %s finished\n"), t->id ); //TODO using id for now until R_GetName is fully working.
+					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("Research of %s finished\n"), t->id ); //TODO using id for now until RS_GetName is fully working.
 				else
 					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("%i researches finished\n"), newResearch+1 );
-				R_MarkResearched( t->id );	//t->statusResearch = RS_FINISH;
+				RS_MarkResearched( t->id );	//t->statusResearch = RS_FINISH;
 				globalResearchNum = 0;
 				newResearch++;
 			}
@@ -407,11 +407,11 @@ void CL_CheckResearchStatus ( void )
 }
 
 /*======================
-R_TechnologyList_f
+RS_TechnologyList_f
 
 list all parsed technologies
 ======================*/
-void R_TechnologyList_f ( void )
+void RS_TechnologyList_f ( void )
 {
 	int i, j;
 	technology_t* t;
@@ -459,7 +459,7 @@ void R_TechnologyList_f ( void )
 		
 		Com_Printf(_("... req_first ->"));
 		req_temp.numEntries = 0;
-		R_GetFirstRequired( t->id, &req_temp );
+		RS_GetFirstRequired( t->id, &req_temp );
 		for ( j = 0; j < req_temp.numEntries; j++ )
 			Com_Printf( _(" %s"), req_temp.list[j] );
 		
@@ -485,11 +485,11 @@ void MN_ResetResearch( void )
 	Cmd_AddCommand( "research_init", MN_ResearchInit );
 	Cmd_AddCommand( "research_select", CL_ResearchSelectCmd );
 	Cmd_AddCommand( "research_type", CL_ResearchType );
-	Cmd_AddCommand( "mn_start_research", R_ResearchStart );
-	Cmd_AddCommand( "mn_stop_research", R_ResearchStop );
-	Cmd_AddCommand( "research_update", R_UpdateData );
-	Cmd_AddCommand( "technologylist", R_TechnologyList_f );
-	Cmd_AddCommand( "techlist", R_TechnologyList_f );	// DEBUGGING ONLY
+	Cmd_AddCommand( "mn_start_research", RS_ResearchStart );
+	Cmd_AddCommand( "mn_stop_research", RS_ResearchStop );
+	Cmd_AddCommand( "research_update", RS_UpdateData );
+	Cmd_AddCommand( "technologylist", RS_TechnologyList_f );
+	Cmd_AddCommand( "techlist", RS_TechnologyList_f );	// DEBUGGING ONLY
 }
 
 // NOTE: the BSFS define is the same like for bases and so on...
@@ -598,13 +598,13 @@ void MN_ParseTechnologies ( char* id, char** text )
 
 
 /*======================
-R_GetRequired
+RS_GetRequired
 
 returns the list of required items.
 TODO: out of order ... seems to produce garbage
 ======================*/
 
-void R_GetRequired( char *id, research_requirements_t *required)
+void RS_GetRequired( char *id, research_requirements_t *required)
 {
 	int i;
 	technology_t *t;
@@ -616,15 +616,15 @@ void R_GetRequired( char *id, research_requirements_t *required)
 			return;
 		}
 	}
-	Com_Printf( _("R_GetRequired: technology \"%s\" not found.\n"), id );
+	Com_Printf( _("RS_GetRequired: technology \"%s\" not found.\n"), id );
 }
 
 /*======================
-R_TechIsResearched
+RS_TechIsResearched
 
 Checks if the research item has been researched
 ======================*/
-byte R_TechIsResearched(char *id )
+byte RS_TechIsResearched(char *id )
 {
 	int i;
 	technology_t *t;
@@ -636,16 +636,16 @@ byte R_TechIsResearched(char *id )
 			return false;
 		}
 	}
-	Com_Printf( _("R_TechIsResearched: research item \"%s\" not found.\n"), id );
+	Com_Printf( _("RS_TechIsResearched: research item \"%s\" not found.\n"), id );
 	return false;	
 }
 
 /*======================
-R_ItemIsResearched
+RS_ItemIsResearched
 
 Checks if the research item has been researched
 ======================*/
-byte R_ItemIsResearched(char *id_provided )
+byte RS_ItemIsResearched(char *id_provided )
 {
 	int i;
 	technology_t *t;
@@ -661,14 +661,14 @@ byte R_ItemIsResearched(char *id_provided )
 }
 
 /*======================
-R_GetFirstRequired
+RS_GetFirstRequired
 
 Returns the first required (yet unresearched) technologies that are needed by "id".
 That means you need to research the result to be able to research (and maybe use) "id".
 
 TODO: check if the tech is already researched and add the previous instead.
 ======================*/
-void R_GetFirstRequired2 ( char *id, char *first_id,  research_requirements_t *required)
+void RS_GetFirstRequired2 ( char *id, char *first_id,  research_requirements_t *required)
 {
 	int i, j;
 	technology_t *t;
@@ -691,35 +691,35 @@ void R_GetFirstRequired2 ( char *id, char *first_id,  research_requirements_t *r
 						return;
 					}
 				}
-				if ( R_TechIsResearched(required_temp->list[j]) ) {
+				if ( RS_TechIsResearched(required_temp->list[j]) ) {
 					strcpy( required->list[required->numEntries], id );
 					required->numEntries++;
 					//Com_Printf( _("debug: next item \"%s\" already researched . \"%s\"."), required_temp->list[j], t->id ); //DEBUG
 				} else {
-					R_GetFirstRequired2( required_temp->list[j], first_id, required );
+					RS_GetFirstRequired2( required_temp->list[j], first_id, required );
 				}
 			}
 			return;
 		}
 	}
 	if ( !strcmp( id, first_id ) )
-		Com_Printf( _("R_GetFirstRequired: technology \"%s\" not found.\n"), id );
+		Com_Printf( _("RS_GetFirstRequired: technology \"%s\" not found.\n"), id );
 }
 
-void R_GetFirstRequired( char *id,  research_requirements_t *required )
+void RS_GetFirstRequired( char *id,  research_requirements_t *required )
 {
-	 R_GetFirstRequired2( id, id, required);
+	 RS_GetFirstRequired2( id, id, required);
 }
 
 /*======================
-R_GetProvided
+RS_GetProvided
 
 Returns a list of .ufo items that are produceable when this item has been researched (=provided)
 This list also incldues other items that "require" this one (id) and have a reseach_time of 0.
 
 // TODO: MAX_RESLINK can exceed it's limit, since the added entries to provided can get longer.
 ======================*/
-void R_GetProvided( char *id, char *provided[MAX_TECHLINKS])
+void RS_GetProvided( char *id, char *provided[MAX_TECHLINKS])
 {
 	int i, j;
 	technology_t *t;
@@ -730,12 +730,12 @@ void R_GetProvided( char *id, char *provided[MAX_TECHLINKS])
 				strcpy(provided[j], t->provides);
 			//TODO: search for dependent items.
 			for ( j=0; j < numTechnologies; j++ ) {
-				if (R_DependsOn( t->id, id ) ) {
+				if (RS_DependsOn( t->id, id ) ) {
 					// TODO: append researchtree[j]->provided to *provided 
 				}
 			}
 			return;
 		}
 	}
-	Com_Printf( _("R_GetProvided: research item \"%s\" not found.\n"), id );
+	Com_Printf( _("RS_GetProvided: research item \"%s\" not found.\n"), id );
 }

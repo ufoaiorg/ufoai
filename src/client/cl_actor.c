@@ -279,7 +279,7 @@ void CL_ActorUpdateCVars( void )
 			// FIXME: How do you determine whether we are server or client
  			if ( Cvar_VariableValue("maxclients") > 1
 			  && cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE
-			  && selWeapon && R_ItemIsResearched(csi.ods[ selWeapon->item.t ].kurz) ) //csi.ods[ selWeapon->item.t ].researchNeeded )
+			  && selWeapon && RS_ItemIsResearched(csi.ods[ selWeapon->item.t ].kurz) ) //csi.ods[ selWeapon->item.t ].researchNeeded )
 			{
 				Com_Printf( _( "You cannot use this unknown alien weapon.\n") );
 				cl.cmode = M_MOVE;
@@ -755,7 +755,7 @@ void CL_ActorReload( int hand )
 	if ( weapon == NONE )
 		return;
 
-	if ( R_ItemIsResearched(csi.ods[weapon].kurz) ) //csi.ods[weapon].researchNeeded )
+	if ( RS_ItemIsResearched(csi.ods[weapon].kurz) ) //csi.ods[weapon].researchNeeded )
 	{
 		Com_Printf( _("You cannot load this unknown alien weapon.\n") );
 		return;

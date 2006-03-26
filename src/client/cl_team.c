@@ -263,7 +263,7 @@ void CL_ItemDescription( int item )
 	}*/
 
 	// set description text
-	if ( R_ItemIsResearched(od->kurz)  )
+	if ( RS_ItemIsResearched(od->kurz)  )
 	{
 		if ( od->weapon )
 		{

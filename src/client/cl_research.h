@@ -70,8 +70,8 @@ extern	technology_t	technologies[MAX_TECHNOLOGIES];
 
 void MN_ResetResearch( void );
 void CL_CheckResearchStatus( void );
-void R_UpdateData ( void );
+void RS_UpdateData ( void );
 void MN_ParseTechnologies ( char* title, char** text );
-byte R_ItemIsResearched(char *id_provided );
+byte RS_ItemIsResearched(char *id_provided );
 
 #endif /*TECHNOLOGY_DEFINED*/
