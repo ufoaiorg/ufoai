@@ -1,10 +1,47 @@
+/*
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 // cl_research.h
+
 #ifndef TECHNOLOGY_DEFINED
 #define TECHNOLOGY_DEFINED 1
 
 #define MAX_RESEARCHLIST 32
 #define MAX_TECHNOLOGIES 256
 #define MAX_TECHLINKS 32
+
+typedef enum researchStatus_s
+{
+	RS_NONE,
+	RS_RUNNING,
+	RS_PAUSED,
+	RS_FINISH
+} researchStatus_t;
+
+typedef enum researchType_s
+{
+	RS_TECH,
+	RS_WEAPON,
+	RS_ARMOR,
+	RS_CRAFT,
+	RS_BUILDING
+} researchType_t;
 
 typedef struct research_requirements_s
 {
