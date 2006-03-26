@@ -1128,6 +1128,7 @@ void	R_SetGL2D (void)
 	qglColor4f (1,1,1,1);
 }
 
+#if 0
 static void GL_DrawColoredStereoLinePair( float r, float g, float b, float y )
 {
 	qglColor3f( r, g, b );
@@ -1138,7 +1139,6 @@ static void GL_DrawColoredStereoLinePair( float r, float g, float b, float y )
 	qglVertex2f( vid.width, y + 1 );
 }
 
-#if 0
 static void GL_DrawStereoPattern( void )
 {
 	int i;
@@ -1769,6 +1769,8 @@ qboolean R_Init( void *hinstance, void *hWnd )
 		qglGetProgramStringARB = (void*)qwglGetProcAddress("glGetProgramStringARB");
 		qglIsProgramARB = (void*)qwglGetProcAddress("glIsProgramARB");
 
+		
+
 //		water_shader = LoadProgram_ARB_FP("arb_water");
 //		water_shader = CompileWaterShader();
 	} else {
@@ -1849,6 +1851,7 @@ void R_Shutdown (void)
 	Mod_FreeAll ();
 
 	GL_ShutdownImages ();
+	GL_ShutdownShaders ();
 
 	/*
 	** shut down OS specific OpenGL stuff like contexts, etc.

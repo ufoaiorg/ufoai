@@ -341,6 +341,7 @@ typedef struct
 	int		(*FS_LoadFile) (char *name, void **buf);
 	void	(*FS_FreeFile) (void *buf);
 	int		(*FS_CheckFile) (char *name);
+	char 	**(*FS_ListFiles)( char *findname, int *numfiles, unsigned musthave, unsigned canthave );
 
 	// dynamic memory allocator for things that need to be freed
 //	void	*(*Malloc)( int bytes );

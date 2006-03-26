@@ -20,6 +20,43 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
+shaderlist_t* shaderList;
+
+/*
+============
+ShaderInit
+
+
+============
+*/
+void ShaderInit( void )
+{
+	// only create the list if supported
+	if ( gl_state.arb_fragment_program == true )
+		shaderList = CreateShaderList();
+}
+
+/*
+============
+ShaderQuit
+
+Todo: Call me
+============
+*/
+void GL_ShutdownShaders( void )
+{
+    	//otherwise the list is not initialized
+	if ( gl_state.arb_fragment_program == true )
+		free ( shaderList );
+}
+
+/*
+============
+LoadProgram_ARB_FP
+
+Load and link files containing shaders
+============
+*/
 unsigned int LoadProgram_ARB_FP(char *filename)
 {
 	char			*fbuf, *buf, path[128];
@@ -29,7 +66,7 @@ unsigned int LoadProgram_ARB_FP(char *filename)
 	int error_pos;
 	unsigned int	fpid;
 
-	sprintf(path,"glprogs//%s.fp",filename);
+	sprintf(path,"arb/%s.fp",filename);
 	size = ri.FS_LoadFile (path, (void **)&fbuf);
 
 	if (!fbuf)
@@ -69,13 +106,9 @@ unsigned int LoadProgram_ARB_FP(char *filename)
 unsigned int LoadProgram_ARB_VP(char *vp)
 {
 	char			*fbuf, *buf, path[128];
-	unsigned int	size;
+	unsigned int	size, vpid;
 
-	unsigned int	vpid;
-
-	return -1;
-
-	sprintf(path,"glprogs//%s",vp);
+	sprintf(path,"arb/%s",vp);
 	size = ri.FS_LoadFile (path, (void **)&fbuf);
 
 	if (!fbuf)
@@ -119,16 +152,134 @@ unsigned int LoadProgram_ARB_VP(char *vp)
 	free(buf);
 	return vpid;
 }
+
 /*
-//================================
+============
+UseProgram_ARB_FP
+
+Activate Shaders
+============
+*/
+void UseProgram_ARB_FP(unsigned int fpid)
+{
+	if (fpid>0)
+	{
+		qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, fpid);
+		glEnable(GL_FRAGMENT_PROGRAM_ARB);
+	} else
+	{
+		glDisable(GL_FRAGMENT_PROGRAM_ARB);
+	}
+}
+
+void UseProgram_ARB_VP(unsigned int vpid)
+{
+	if (vpid>0)
+	{
+		qglBindProgramARB(GL_VERTEX_PROGRAM_ARB, vpid);
+		glEnable(GL_VERTEX_PROGRAM_ARB);
+	} else
+	{
+		glDisable(GL_VERTEX_PROGRAM_ARB);
+	}
+}
+
+/*
+============
+CreateShader
+============
+*/
+shader_t* CreateShader(char* name)
+{
+	// no shaders supported
+	if ( gl_state.arb_fragment_program == false )
+		return NULL;
+	shader_t* toReturn = (shader_t*) malloc (sizeof(shader_t));
+	strcpy(toReturn->sname, name);
+	toReturn->fpid=LoadProgram_ARB_FP(name);
+	toReturn->vpid=LoadProgram_ARB_VP(name);
+	return toReturn;
+}
+
+void UseShader(shader_t* shader)
+{
+	// no shaders supported
+	if ( gl_state.arb_fragment_program == false )
+		return;
+	UseProgram_ARB_FP(shader->fpid);
+	UseProgram_ARB_VP(shader->vpid);
+}
+
+/*
+===========
+CreateShaderlist
+
+Loads all shaders from base/arb into shaderlist
+===========
+*/
+shaderlist_t* CreateShaderList( void )
+{
+	char path[MAX_VAR];
+	char **shaderName = NULL;
+	int num = 0, i = 0;
+	shaderlist_t* toReturn = (shaderlist_t*) malloc (sizeof(shaderlist_t*));
+	
+	Com_sprintf( path, MAX_VAR, "%s/arb/*.vp", ri.FS_Gamedir() );
+	
+	shaderName = ri.FS_ListFiles( path, &num, 0, 0 );
+
+	for ( i = 0; i < num; i++ )
+	{
+		if ( strrchr( shaderName[i], '/' ) )
+		{
+			ri.Con_Printf(PRINT_ALL, "...found %s\n", shaderName[i] );
+		}
+		free (shaderName[i]);
+	}
+
+	//TODO: Load all (needed) shaders in the 'arb' folder into the list.
+	return toReturn;
+}
+
+/*
+===========
+UseShaderFromList
+
+The interesting part. You can ask this function, if a particular
+shader exists, if so it will be activated, else an errorstring will
+be returned to console (all hopefully ;) ).
+===========
+*/
+void UseShaderFromList(char* name, shaderlist_t* shaderlist)
+{
+	int i=0;
+	for (i=0; i<MAX_SHADERS ; i++)
+	{
+		if (shaderlist->shader[i]==0)
+		{
+			ri.Con_Printf(PRINT_ALL,"Shader %s not found\n", name);
+			break;
+		}
+
+		if (strcmp(name, shaderlist->shader[i]->sname)==0)
+		{
+			UseShader(shaderlist->shader[i]);
+			break;
+		}
+	}
+}
+
+/*
+================================
 Shaders
-//================================
+================================
 */
 
-//=================
-// ABR Water Shader
-//=================
-
+/*
+=================
+ABR Water Shader
+=================
+*/
 const char *arb_water =
 "!!ARBfp1.0\n"
 "OPTION ARB_precision_hint_fastest;\n"
@@ -143,7 +294,7 @@ const char *arb_water =
 "END\n";
 
 
-unsigned int  CompileWaterShader(int arb_water_id)
+unsigned int  CompileWaterShader(unsigned int arb_water_id)
 {
 	qglGenProgramsARB(1, &arb_water_id);
 	qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, arb_water_id);
