@@ -872,11 +872,6 @@ typedef struct objDef_s
 	// armor specific
 	short	protection[MAX_DAMAGETYPES];
 	short	hardness[MAX_DAMAGETYPES];
-
-	// research
-	int researchNeeded; // all alien weapons need this
-	int researchTime; // count down
-	researchStatus_t researchStatus; // status of researching
 } objDef_t;
 
 #define MAX_INVDEFS		16
