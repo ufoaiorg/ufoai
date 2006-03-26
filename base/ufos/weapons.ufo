@@ -537,7 +537,6 @@ item tachyonrifle
 	reload		8
 	price		4400
 	buytype		0
-	researchNeeded	1
 }
 
 item tachyonrifle_ammo
@@ -551,7 +550,6 @@ item tachyonrifle_ammo
 	scale		1.1
 	price		300
 	buytype		0
-	researchNeeded	1
 
 	primary
 	{
@@ -614,7 +612,6 @@ item tachyonsniper
 	reload		8
 	price		5000
 	buytype		0
-	researchNeeded	1
 }
 
 item tachyonsniper_ammo
@@ -628,7 +625,6 @@ item tachyonsniper_ammo
 	scale		1.1
 	price		350
 	buytype		0
-	researchNeeded	1
 
 	primary
 	{
@@ -689,7 +685,6 @@ item plaspistol
 	reload		6
 	price		3400
 	buytype		1
-	researchNeeded	1
 }
 
 item plaspistol_ammo
@@ -703,7 +698,6 @@ item plaspistol_ammo
 	scale		1.2
 	price		170
 	buytype		1
-	researchNeeded	1
 
 	primary
 	{
@@ -764,7 +758,6 @@ item plasrifle
 	reload		8
 	price		4000
 	buytype		0
-	researchNeeded	1
 }
 
 item plasrifle_ammo
@@ -778,7 +771,6 @@ item plasrifle_ammo
 	scale		1.4
 	price		200
 	buytype		0
-	researchNeeded	1
 
 	primary
 	{
