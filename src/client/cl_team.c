@@ -263,7 +263,7 @@ void CL_ItemDescription( int item )
 	}*/
 
 	// set description text
-	if ( ! od->researchNeeded || od->researchStatus == RS_FINISH )
+	if ( R_ItemIsResearched(od->kurz)  )
 	{
 		if ( od->weapon )
 		{
@@ -294,13 +294,11 @@ void CL_ItemDescription( int item )
 			) );
 		}
 		menuText[TEXT_STANDARD] = itemText;
-	}
-	else if ( od->researchNeeded )
-	{
+	} else {
 		sprintf( itemText, _("Unknown - need to research this") );
 		menuText[TEXT_STANDARD] = itemText;
 	}
-	else menuText[TEXT_STANDARD] = NULL;
+	// else menuText[TEXT_STANDARD] = NULL; // TODO: should not be needed anymore.
 }
 
 

@@ -35,5 +35,6 @@ void MN_ResetResearch( void );
 void CL_CheckResearchStatus( void );
 void R_UpdateData ( void );
 void MN_ParseTechnologies ( char* title, char** text );
+byte R_ItemIsResearched(char *id_provided );
 
 #endif /*TECHNOLOGY_DEFINED*/

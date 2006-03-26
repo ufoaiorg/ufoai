@@ -13,11 +13,6 @@ int numTechnologies;
 
 technology_t technologies[MAX_TECHNOLOGIES];
 
-/*
-Note:
-ObjDef_t in q_shared.h holds the researchNeeded and researchStatus flags
-*/
-
 /*======================
 R_ResearchPossible
 
@@ -548,25 +543,47 @@ void R_GetRequired( char *id, research_requirements_t *required)
 
 /*
 ======================
-R_IsResearched
+R_TechIsResearched
 
-Checks if the research item has been researchd
+Checks if the research item has been researched
 ======================
 */
-byte R_IsResearched(char *id )
+byte R_TechIsResearched(char *id )
 {
 	int i;
 	technology_t *t;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {
-			if (t->statusResearch == RS_FINISH)
+			if ( t->statusResearch == RS_FINISH )
 				return true;
 			return false;
 		}
 	}
-	Com_Printf( _("R_IsResearched: research item \"%s\" not found.\n"), id );
+	Com_Printf( _("R_TechIsResearched: research item \"%s\" not found.\n"), id );
 	return false;	
+}
+
+/*
+======================
+R_ItemIsResearched
+
+Checks if the research item has been researched
+======================
+*/
+byte R_ItemIsResearched(char *id_provided )
+{
+	int i;
+	technology_t *t;
+	for ( i=0; i < numTechnologies; i++ ) {
+		t = &technologies[i];
+		if ( !strcmp( id_provided, t->provides ) ) {
+			if ( t->statusResearch == RS_FINISH )
+				return true;
+			return false;
+		}
+	}
+	return true;	// no research needed
 }
 
 /*
@@ -598,7 +615,7 @@ void R_GetFirstRequired( char *id,  research_requirements_t *required)
 					}
 					return;
 				}
-				if ( R_IsResearched(required_temp->list[j]) ) {
+				if ( R_TechIsResearched(required_temp->list[j]) ) {
 					strcpy( required->list[required->numEntries], id ); // copy _this_ tech to the list
 					required->numEntries++;
 					//Com_Printf( _("debug: next item \"%s\" already researched . \"%s\"."), required_temp->list[j], t->id ); //DEBUG
@@ -692,18 +709,4 @@ void R_MarkResearched( char *id )
 			Com_Printf( _("Research of \"%s\" finished.\n"), id );
 		}
 	}
-}
-
-/*
-======================
-R_GetFromProvided
-
-Return a the research-item that provides this item (from .ufo).
-// TODO
-======================
-*/
-
-void R_GetFromProvided( char *provided, char *id )
-{
-	
 }
