@@ -104,7 +104,7 @@ void R_ResearchDisplayInfo ( void  )
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
-
+	
 	technology_t *t;
 	t = &technologies[globalResearchNum];
 	char tempname[MAX_VAR];
@@ -129,6 +129,22 @@ void R_ResearchDisplayInfo ( void  )
 	default:
 		break;
 	}
+	
+	int i;
+	research_requirements_t req_temp;
+	req_temp.numEntries = 0;
+	R_GetFirstRequired( t->id, &req_temp );
+	strcpy( tempname, "Dependencies: ");
+	if ( req_temp.numEntries > 0 ) {
+		for ( i = 0; i < req_temp.numEntries; i++ ) {
+			strcat( tempname, req_temp.list[i] );
+			if ( i < req_temp.numEntries-1 ) 
+				strcat( tempname, ", ");
+		}
+	} else {
+		strcpy( tempname, "" );
+	}
+	Cvar_Set( "mn_research_seldep", tempname );
 
 
 }
@@ -358,7 +374,9 @@ void R_TechnologyList_f ( void )
 	int i, j;
 	technology_t* t;
 	research_requirements_t* req;
-	research_requirements_t* req_temp;
+	research_requirements_t req_temp;
+	
+	
 	for ( i = 0; i < numTechnologies; i++ )
 	{
 		t = &technologies[i];
@@ -383,17 +401,25 @@ void R_TechnologyList_f ( void )
 		case RS_BUILDING:	Com_Printf(_("building\n") ); break;
 		default:	break;
 		}
-		//Com_Printf(_("... Researched %i\n"), t->statusResearch );
+		
+		Com_Printf( _("... research  -> "));
+		switch ( t->type )
+		{
+		case RS_NONE:	Com_Printf(_("unknown tech\n") ); break;
+		case RS_RUNNING:	Com_Printf(_("running\n") ); break;
+		case RS_PAUSED:	Com_Printf(_("paused\n") ); break;
+		case RS_FINISH:	Com_Printf(_("done\n") ); break;
+		default:	break;
+		}
+
 		Com_Printf(_("... Collected -> %i\n"), t->statusCollected );
 		
-#if 0
-		// FIXME: This is not initialized and produces a segfault
-		req_temp->numEntries = 0;
-		R_GetFirstRequired( t->id, req_temp );
+		
 		Com_Printf(_("... req_first ->"));
-		for ( j = 0; j < req_temp->numEntries; j++ )
-			Com_Printf( _(" %s"),req_temp->list[j] );
-#endif
+		req_temp.numEntries = 0;
+		R_GetFirstRequired( t->id, &req_temp );
+		for ( j = 0; j < req_temp.numEntries; j++ )
+			Com_Printf( _(" %s"), req_temp.list[j] );
 		
 		Com_Printf("\n");
 	}
@@ -615,36 +641,47 @@ TODO: check if the tech is already researched and add the previous instead.
 ======================
 */
 
-void R_GetFirstRequired( char *id,  research_requirements_t *required)
+void R_GetFirstRequired2 ( char *id, char *first_id,  research_requirements_t *required)
 {
 	int i, j;
 	technology_t *t;
 	research_requirements_t	*required_temp;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
+		
 		if ( !strcmp( id, t->id ) ) {
 			required_temp = &t->requires;
 			for ( j=0; j < required_temp->numEntries; j++ ) {
-				if ( ( 0 == j ) && ( ( !strcmp( required_temp->list[0], "initial" ) ) || ( !strcmp( required_temp->list[0] , "nothing" ) ) ) ) {
-					if ( required->numEntries < MAX_TECHLINKS ) {
-						strcpy( required->list[required->numEntries], id ); // copy _this_ tech to the list
-						required->numEntries++;
-						//Com_Printf( _("debug: 'initial' or 'nothing' found - \"%s\"\n"), t->id ); //DEBUG
+				if ( ( !strcmp( required_temp->list[0], "initial" ) ) || ( !strcmp( required_temp->list[0] , "nothing" ) ) ) {
+					if ( !strcmp( id, first_id ) )
+						return;
+					if ( 0 == j ) {
+						if ( required->numEntries < MAX_TECHLINKS ) {
+							strcpy( required->list[required->numEntries], id ); // copy _this_ tech to the list
+							required->numEntries++;
+							//Com_Printf( _("debug: 'initial' or 'nothing' found - \"%s\"\n"), t->id ); //DEBUG
+						}
+						return;
 					}
-					return;
 				}
 				if ( R_TechIsResearched(required_temp->list[j]) ) {
 					strcpy( required->list[required->numEntries], id ); // copy _this_ tech to the list
 					required->numEntries++;
 					//Com_Printf( _("debug: next item \"%s\" already researched . \"%s\"."), required_temp->list[j], t->id ); //DEBUG
 				} else {
-					R_GetFirstRequired( required_temp->list[j], required );
+					R_GetFirstRequired2( required_temp->list[j], first_id, required );
 				}
 			}
 			return;
 		}
 	}
-	Com_Printf( _("R_GetFirstRequired: technology \"%s\" not found.\n"), id );
+	if ( !strcmp( id, first_id ) )
+		Com_Printf( _("R_GetFirstRequired: technology \"%s\" not found.\n"), id );
+}
+
+void R_GetFirstRequired( char *id,  research_requirements_t *required )
+{
+	 R_GetFirstRequired2( id, id, required);
 }
 
 /*

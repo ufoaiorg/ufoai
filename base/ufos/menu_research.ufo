@@ -154,6 +154,12 @@ menu research
 		color "0 .78 0 1"
 	}
 
+	string txt_selected_dependencies
+	{
+		string "*cvar mn_research_seldep"
+		pos "645 290"
+		color "0 .78 0 1"
+	}
 	string txt_credits
 	{
 		string	"*cvar mn_credits"
