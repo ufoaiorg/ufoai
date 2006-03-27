@@ -2189,8 +2189,8 @@ char *fade_names[FADE_LAST] =
 // this is here to let Com_ParseValue determine the right size
 typedef struct menuDepends_s
 {
-	cvar_t* cvar;
-	char string[MAX_VAR];
+	char var[MAX_VAR];
+	char value[MAX_VAR];
 } menuDepends_t;
 
 /*
@@ -2345,8 +2345,8 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		if ( strstr(token, " ") == NULL )
 			Sys_Error( _("Com_ParseValue: Illegal if statement\n") );
 		sscanf( token, "%s %s", string, string2 );
-		((menuDepends_t*)b)->cvar = Cvar_Get( string, string2, 0);
-		strncpy ( ((menuDepends_t*)b)->string, string2, MAX_VAR );
+		strncpy ( ((menuDepends_t*)b)->var, string, MAX_VAR );
+		strncpy ( ((menuDepends_t*)b)->value, string2, MAX_VAR );
 		return sizeof(menuDepends_t);
 
 	default:

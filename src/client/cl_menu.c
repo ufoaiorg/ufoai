@@ -26,8 +26,8 @@ typedef struct menuAction_s
 
 typedef struct menuDepends_s
 {
-	cvar_t* cvar;
-	char string[MAX_VAR];
+	char var[MAX_VAR];
+	char value[MAX_VAR];
 } menuDepends_t;
 
 typedef struct menuNode_s
@@ -1493,7 +1493,9 @@ void MN_DrawMenus( void )
 			{
 				// if construct
 
-				if ( node->depends.cvar && strcmp( node->depends.cvar->string, node->depends.string ) )
+				if ( node->depends.var && 
+				strcmp( node->depends.value, (Cvar_Get( node->depends.var, node->depends.value, 0 ))->string 
+				) )
 					continue;
 
 				// mouse effects
