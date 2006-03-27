@@ -165,10 +165,9 @@ void UseProgram_ARB_FP(unsigned int fpid)
 	if (fpid>0)
 	{
 		qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, fpid);
-		glEnable(GL_FRAGMENT_PROGRAM_ARB);
-	} else
-	{
-		glDisable(GL_FRAGMENT_PROGRAM_ARB);
+		qglEnable(GL_FRAGMENT_PROGRAM_ARB);
+	} else {
+		qglDisable(GL_FRAGMENT_PROGRAM_ARB);
 	}
 }
 
@@ -177,10 +176,9 @@ void UseProgram_ARB_VP(unsigned int vpid)
 	if (vpid>0)
 	{
 		qglBindProgramARB(GL_VERTEX_PROGRAM_ARB, vpid);
-		glEnable(GL_VERTEX_PROGRAM_ARB);
-	} else
-	{
-		glDisable(GL_VERTEX_PROGRAM_ARB);
+		qglEnable(GL_VERTEX_PROGRAM_ARB);
+	} else {
+		qglDisable(GL_VERTEX_PROGRAM_ARB);
 	}
 }
 
