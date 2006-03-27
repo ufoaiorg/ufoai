@@ -490,6 +490,7 @@ void MN_ResetResearch( void )
 	Cmd_AddCommand( "research_update", RS_UpdateData );
 	Cmd_AddCommand( "technologylist", RS_TechnologyList_f );
 	Cmd_AddCommand( "techlist", RS_TechnologyList_f );	// DEBUGGING ONLY
+	Cmd_AddCommand( "invlist", Com_InventoryList_f );
 }
 
 // NOTE: the BSFS define is the same like for bases and so on...

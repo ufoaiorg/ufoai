@@ -2548,3 +2548,18 @@ char *Com_ValueToStr( void *base, int type, int ofs )
 	}
 }
 
+void Com_InventoryList_f ( void )
+{
+	int i;
+	objDef_t* ods_temp;
+	for (i=0; i < CSI->numODs; i++) {
+		ods_temp = &CSI->ods[i];
+		Com_Printf( _("Item: %s\n"), ods_temp->kurz );
+		Com_Printf( _("... name      -> %s\n"), ods_temp->name );
+		Com_Printf( _("... type      -> %s\n"), ods_temp->type );
+		Com_Printf( _("... category  -> %i\n"), ods_temp->category );
+		Com_Printf( _("... weapon    -> %i\n"), ods_temp->weapon );
+		Com_Printf( _("... twohanded -> %i\n"), ods_temp->twohanded );
+		Com_Printf( _("... thrown    -> %i\n"), ods_temp->thrown );
+	}
+}

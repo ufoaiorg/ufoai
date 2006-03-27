@@ -1092,7 +1092,7 @@ typedef enum {
 #define CS_GENERAL			(CS_PLAYERSKINS+MAX_CLIENTS)
 #define	MAX_CONFIGSTRINGS	(CS_GENERAL+MAX_GENERAL)
 
-
+void Com_InventoryList_f ( void );
 //==============================================
 
 #endif  // _Q_SHARED_H
