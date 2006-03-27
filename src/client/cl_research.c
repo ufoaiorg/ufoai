@@ -57,42 +57,58 @@ char RS_ResearchPossible ( void )
 /*======================
 RS_GetName
 
-// TODO
-Return "name" if present, otherwise enter the correct .ufo file and read it from there.
+Return "name" if present, otherwise enter the correct .ufo file and get it from the definition there.
 ======================*/
 void RS_GetName( char *id, char *name )
 {
 	int i, j;
 	technology_t *t;
 	objDef_t *od;
-	strcpy( name, id );
+	strcpy( name, id );	// pre-set the name to the id.
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {
-			switch ( t->type ) //Search in correct data/name.
+			// If something is defined as name use it.
+			if ( strcmp( t->name, "" ) ) {	
+				strcpy( name, t->name );
+				return;
+			}
+			
+			// Search in correct data/.ufo if name is not defined.
+			switch ( t->type ) 
 			{
 			case RS_TECH:
-				strcpy( name, t->name ); return;
-				break;
+				if ( !strcmp( t->name, "" ) ) // TODO: Is this faster if i use "if ( !t->name[0] )" ???
+					Com_Printf( _("RS_GetName: A 'type tech' item needs to have a 'name xxx' defined \"%s\"."), id );
+				return;	// break;
 			case RS_WEAPON:
-				for ( j = 0, od = csi.ods; j < csi.numODs; j++ ) { 				
+			case RS_ARMOR:
+				for ( j = 0; j < csi.numODs; j++ ) {
 					od = &csi.ods[j];
 					if ( !strcmp( id, od->kurz) ) {
-						strcpy(name, od->name);
+						//t->name = &od->name;	// TODO: is it possible to link the technology-name to the one in ods?
+						strcpy( t->name, od->name );
+						strcpy( name, od->name );
 						return;
 					}
 				}
+				//no id found in csi.ods
+				Com_Printf( _("RS_GetName: Linked weapon or armor (provided=\"%s\") not found.\n"), id );
+				Com_Printf( _("RS_GetName: This is most probably an error in the research.ufo file.\n") );
+				Com_Printf( _("RS_GetName: You need to define 'provided' with one existing id in the inventory list.\n") );
+				return;	// break;
+			case RS_CRAFT:
+				// unused right now.
 				break;
-			case RS_ARMOR:	break;
-			case RS_CRAFT:	break;
-			case RS_BUILDING:	break;
-			default:			break;
+			case RS_BUILDING:
+				// unused right now.
+				break;
 			}
 			return;
 		}
 	}
 	Com_Printf( _("RS_GetName: technology \"%s\" not found.\n"), id );
-}	
+}
 
 /*======================
 RS_ResearchDisplayInfo
@@ -131,11 +147,14 @@ void RS_ResearchDisplayInfo ( void  )
 	int i;
 	research_requirements_t req_temp;
 	req_temp.numEntries = 0;
+	char name_temp[MAX_VAR];
 	RS_GetFirstRequired( t->id, &req_temp );
 	strcpy( tempname, "Dependencies: ");
 	if ( req_temp.numEntries > 0 ) {
 		for ( i = 0; i < req_temp.numEntries; i++ ) {
-			strcat( tempname, req_temp.list[i] );
+			RS_GetName( req_temp.list[i], name_temp ); //name_temp gets initialised in getname
+			strcat( tempname, name_temp);
+			
 			if ( i < req_temp.numEntries-1 ) 
 				strcat( tempname, ", ");
 		}
@@ -303,7 +322,7 @@ void RS_UpdateData ( void )
 }
 
 /*======================
-MN_ResearchType
+CL_ResearchType
 ======================*/
 void CL_ResearchType ( void )
 {
@@ -504,7 +523,7 @@ value_t valid_tech_vars[] =
 };
 
 /*======================
-MN_ResetResearch
+MN_ParseTechnologies
 ======================*/
 void MN_ParseTechnologies ( char* id, char** text )
 {
@@ -623,7 +642,7 @@ void RS_GetRequired( char *id, research_requirements_t *required)
 /*======================
 RS_TechIsResearched
 
-Checks if the research item has been researched
+Checks if the technology (tech-id) has been researched
 ======================*/
 byte RS_TechIsResearched(char *id )
 {
@@ -644,7 +663,7 @@ byte RS_TechIsResearched(char *id )
 /*======================
 RS_ItemIsResearched
 
-Checks if the research item has been researched
+Checks if the item (as listed in "provides") has been researched
 ======================*/
 byte RS_ItemIsResearched(char *id_provided )
 {
@@ -662,12 +681,10 @@ byte RS_ItemIsResearched(char *id_provided )
 }
 
 /*======================
-RS_GetFirstRequired
+RS_GetFirstRequired + 2
 
 Returns the first required (yet unresearched) technologies that are needed by "id".
 That means you need to research the result to be able to research (and maybe use) "id".
-
-TODO: check if the tech is already researched and add the previous instead.
 ======================*/
 void RS_GetFirstRequired2 ( char *id, char *first_id,  research_requirements_t *required)
 {
@@ -717,8 +734,6 @@ RS_GetProvided
 
 Returns a list of .ufo items that are produceable when this item has been researched (=provided)
 This list also incldues other items that "require" this one (id) and have a reseach_time of 0.
-
-// TODO: MAX_RESLINK can exceed it's limit, since the added entries to provided can get longer.
 ======================*/
 void RS_GetProvided( char *id, char *provided[MAX_TECHLINKS])
 {
