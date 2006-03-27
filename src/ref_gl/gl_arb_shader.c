@@ -191,10 +191,13 @@ CreateShader
 */
 shader_t* CreateShader(char* name)
 {
+	shader_t* toReturn = NULL;
+
 	// no shaders supported
 	if ( gl_state.arb_fragment_program == false )
 		return NULL;
-	shader_t* toReturn = (shader_t*) malloc (sizeof(shader_t));
+
+	toReturn = (shader_t*) malloc (sizeof(shader_t));
 	strcpy(toReturn->sname, name);
 	toReturn->fpid=LoadProgram_ARB_FP(name);
 	toReturn->vpid=LoadProgram_ARB_VP(name);
