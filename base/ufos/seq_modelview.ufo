@@ -1,3 +1,45 @@
+// sequence definition:
+// ========================================
+//
+// with this type of ufo-file you can make your own sequences
+// have a look at the seq_credits.ufo for more indepth information
+//
+// precache [models|pics]
+// .. for models as parameter:	pathnames relative from base-folder
+// .. for pics as parameter:	pathnames relative from base/pics-folder
+// .. (string)	filenames for models/pics
+//
+// camera NAME
+// .. omega:	(vec3_t)	moving
+// .. zoom:	(float)		value for zooming
+// .. dist:	(int)
+// .. origin:	(vec3_t)	where does it start?
+// .. angles:	(vec3_t)	rotation
+
+// 2dobj NAME
+// .. text	(string)
+// .. pos	(vec2_t)	x, y
+// .. align	(align_t)	ur, ul, uc, ...
+// .. color	(vec4_t)	RGBA
+// .. fade	(vec4_t)	RGBA
+// .. speed	(vec2_t)	speed in two directions (x,y)
+
+// model NAME
+// .. tag:	(string)
+// .. anim:	(string)	see anm-file for model
+// .. skin:	(int)		skinnumber
+// .. parent:	(string)	parent model (e.g. head and body) (at head: name of the body-model)
+// .. speed	(vec3_t)	speed in all three directions (x,y,z)
+// .. omega:	(vec3_t)	moving
+// .. origin:	(vec3_t)	where does it start?
+// .. angles:	(vec3_t)	rotation
+
+// General
+// .. wait:	(float)		value of seconds to wait
+// .. cmd:	(string)	command to execute
+// .. rem:	(string)	remove a ressource - string is the NAME of the ressource to remove
+//				only precached?
+
 sequence view
 {
 	cmd "seq_animspeed 200;"
@@ -5,29 +47,45 @@ sequence view
 	precache models
 	{
 	}
-		
+
 	camera cam1
 	{
 		zoom	1.0
 		angles	"20 0 0"
-		omega   "0 40 0"
+		omega   "0 0 0"
 		dist	100
 		origin  "0 0 0"
 	}
 
-	model model_body
+	model cow
 	{
-		model	models/civilians/female/body03.md2
-		skin	1
+		model	models/animals/cow.md2
 		anim	walk0
 		origin	"0 0 0"
+// 		tag	tag_floor
 	}
-	model model_head
-	{
-		model	models/civilians/female/head04c.md2
-		parent	model_body
-		tag		tag_head
-	}
-	
-	wait 1000.0
+
+// 	model penguin
+// 	{
+// 		model	models/animals/penguin.md2
+// 		anim	walk0
+// 		origin	"0 -90 0"
+// 		tag	tag_floor
+// 	}
+
+// 	model model_body
+// 	{
+// 		model	models/civilians/female/body03.md2
+// 		skin	1
+// 		anim	walk0
+// 		origin	"0 0 0"
+// 	}
+// 	model model_head
+// 	{
+// 		model	models/civilians/female/head04c.md2
+// 		parent	model_body
+// 		tag		tag_head
+// 	}
+
+	wait 10.0
 }
