@@ -611,13 +611,13 @@ tech heavy_nano_armor
 //========================
 tech building_commando
 {
-	type	tech
-	name	"Commando central"
+	type	building
+	//name	"Commando central"
 	description	b_commando_txt
 	up_chapter	buildings
 	
 	requires	initial
-	//provides	b_commando
+	provides	commando
 	time	0
 	researched	true
 	
@@ -626,13 +626,13 @@ tech building_commando
 
 tech building_powerplant
 {
-	type	tech
-	name	"Powerplant"
+	type	building
+	//name	"Powerplant"
 	description	b_powerplant_txt
 	up_chapter	buildings
 	
 	requires	initial
-	provides	b_powerplant
+	provides	powerplant
 	time	0
 	researched	true
 	
@@ -641,13 +641,13 @@ tech building_powerplant
 
 tech building_hangar
 {
-	type	tech
-	name	"Hangar"
+	type	building
+	//name	"Hangar"
 	description	b_hangar_txt
 	up_chapter	buildings
 	
 	requires	initial
-	provides	b_hangar
+	provides	hangar
 	time	0
 	researched	true
 	
@@ -656,13 +656,13 @@ tech building_hangar
 
 tech building_quarters
 {
-	type	tech
-	name	"Quarters"
+	type	building
+	//name	"Quarters"
 	description	b_quarters_txt
 	up_chapter	buildings
 	
 	requires	initial
-	provides	b_quarters
+	provides	quarters
 	time	0
 	researched	true
 	
@@ -671,13 +671,13 @@ tech building_quarters
 
 tech building_lab
 {
-	type	tech
-	name	"Laboratory"
+	type	building
+	//name	"Laboratory"
 	description	b_lab_txt
 	up_chapter	buildings
 	
 	requires	initial
-	provides	b_lab
+	provides	lab
 	time	0
 	researched	true
 	

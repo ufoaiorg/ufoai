@@ -12,6 +12,7 @@
 #define UPGRADETIME  2
 
 extern vec2_t newBasePos;
+extern	int numBuildings;
 
 void MN_BuildingInit( void );
 int B_GetIDFromList ( int id );

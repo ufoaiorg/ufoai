@@ -16,7 +16,7 @@ building entrance
 	pos		"2 4"
 	visible		false
 	map_name	"entrance"
-	pedia		b_entrance
+	pedia		building_entrance
 }
 
 building commando
@@ -35,7 +35,7 @@ building commando
 	map_name	"commando"
 	pos		"2 3"
 	firstbase	true
-	pedia		b_commando
+	pedia		building_commando
 }
 
 building powerplant
@@ -56,7 +56,7 @@ building powerplant
 	firstbase	true
 	pos		"2 2"
 	map_name	"powerplant"
-	pedia		b_powerplant
+	pedia		building_powerplant
 }
 
 building lab
@@ -77,8 +77,8 @@ building lab
 	map_name	"lab"
 	pos		"2 1"
 	firstbase	true
-	islab		true
-	pedia		b_lab
+	type	lab
+	pedia		building_lab
 }
 
 building storage
@@ -96,7 +96,7 @@ building storage
 	map_name	"storage"
 	pos		"1 3"
 	firstbase	true
-	pedia		b_storage
+	pedia		building_storage
 }
 
 building intercept
@@ -112,7 +112,7 @@ building intercept
 	build_time	5
 	varcosts	10
 	map_name	"intercept"
-	pedia		b_intercept
+	pedia		building_intercept
 }
 
 building quarters
@@ -129,7 +129,8 @@ building quarters
 	map_name	"quarters"
 	pos		"1 2"
 	firstbase	true
-	pedia		b_quarters
+	type	quaters
+	pedia		building_quarters
 }
 
 building drop1
@@ -146,9 +147,9 @@ building drop1
 	build_time	6
 	varcosts	50
 	map_name	"drop"
-	pedia		b_hangar
+	pedia		buiding_hangar
 	firstbase	true
-	ishangar	true
+	type	hangar
 	pos		"1 0"
 }
 
@@ -165,7 +166,7 @@ building drop2
 	energy		400
 	build_time	6
 	varcosts	50
-	pedia		b_hangar
+	pedia		buiding_hangar
 }
 
 building teamroom
@@ -183,7 +184,7 @@ building teamroom
 	energy		10
 	build_time	3
 	map_name	"teamroom"
-	pedia		b_teamroom
+	pedia		buiding_teamroom
 }
 
 base main

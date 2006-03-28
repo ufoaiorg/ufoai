@@ -790,22 +790,31 @@ typedef enum
 	B_DOWN
 } buildingStatus_t;
 
+typedef enum
+{
+	B_MISC,
+	B_LAB,
+	B_QUATERS,
+	B_WORKSHOP,
+	B_HANGAR
+} buildingType_t;
+
 typedef struct building_s
 {
 	// FIXME: This can be a char* name and char* base.... don't it? See bmData in basemanagement.c
-	char    name[MAX_VAR];
-	char    base[MAX_VAR];
+	char	name[MAX_VAR];
+	char	base[MAX_VAR];
 	char	title[MAX_VAR];
-	char    *text, *image, *needs, *depends, *mapPart, *produceType, *pedia;
-	float   energy, workerCosts, produceTime, fixCosts, varCosts;
-	int     production, level, id, timeStart, buildTime, techLevel,
-	        notUpOn, maxWorkers, minWorkers, assignedWorkers;
+	char	*text, *image, *needs, *depends, *mapPart, *produceType, *pedia;
+	float	energy, workerCosts, produceTime, fixCosts, varCosts;
+	int	production, level, id, timeStart, buildTime, techLevel,
+		notUpOn, maxWorkers, minWorkers, assignedWorkers;
 
 	//if we can build more than one building of the same type:
 	buildingStatus_t	buildingStatus[BASE_SIZE*BASE_SIZE];
 	int	condition[BASE_SIZE*BASE_SIZE];
 
-	vec2_t  size;
+	vec2_t	size;
 	byte	visible;
 	int	used;
 
@@ -828,14 +837,13 @@ typedef struct building_s
 	vec2_t	pos;
 
 	//autobuild when base is set up
-	byte autobuild;
+	byte	autobuild;
 
 	//autobuild when base is set up
-	byte firstbase;
+	byte	firstbase;
 
 	//this way we can rename the buildings without loosing the control
-	byte isLab;
-	byte isHangar;
+	buildingType_t	buildingType;
 
 	struct  building_s *dependsBuilding;
 	struct  building_s *prev;
@@ -899,6 +907,7 @@ typedef struct production_s
 extern	base_t	bmBases[MAX_BASES];
 extern	base_t	*baseCurrent;
 extern	building_t    bmBuildings[MAX_BASES][MAX_BUILDINGS];
+
 extern	production_t  bmProductions[MAX_PRODUCTIONS];
 void CL_UpdateBaseData( void );
 int B_HowManyPeopleInBase2 ( base_t *base, int location );

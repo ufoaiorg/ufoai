@@ -125,8 +125,8 @@ value_t valid_vars[] =
 	//set also the pos-flag
 	{ "firstbase",		V_BOOL,			BSFS( firstbase ) },
 
-	{ "islab",		V_BOOL,			BSFS( isLab ) },
-	{ "ishangar",		V_BOOL,			BSFS( isHangar ) },
+	//{ "islab",		V_BOOL,			BSFS( isLab ) },
+	//{ "ishangar",		V_BOOL,			BSFS( isHangar ) },
 
 	{ NULL,	0, 0 }
 };
@@ -177,7 +177,7 @@ int B_HowManyPeopleInBase2 ( base_t *base, int location )
 				else
 				{
 					if	( ( location == 0 ) ||
-						( ( location == 1 ) && (entry->isLab ) )
+						( ( location == 1 ) && (entry->buildingType == B_LAB ) )
 						// location == 2 TODO
 						// location == 4 TODO
 						)
@@ -476,9 +476,9 @@ void MN_SetBuildingByClick ( int x, int y )
 
  			baseCurrent->map[x][y][baseCurrent->baseLevel] = baseCurrent->buildingCurrent->id;
 
- 			if ( baseCurrent->buildingCurrent->isLab )
+ 			if ( baseCurrent->buildingCurrent->buildingType == B_LAB )
  				baseCurrent->hasLab = 1;
- 			if ( baseCurrent->buildingCurrent->isHangar )
+ 			if ( baseCurrent->buildingCurrent->buildingType == B_HANGAR )
  				baseCurrent->hasHangar = 1;
 			MN_ResetBuildingCurrent();
 		} else
@@ -1040,6 +1040,7 @@ void MN_ParseBuildings( char *title, char **text )
 	entry->assignedWorkers = 0;
 	entry->howManyOfThisType = 0;
 	entry->condition[0] = BUILDINGCONDITION;
+	entry->buildingType = B_MISC;
 
 	numBuildings++;
 	do {
@@ -1077,6 +1078,21 @@ void MN_ParseBuildings( char *title, char **text )
 		}
 
 		// get values
+		if ( !strcmp( token, "type" ) ) {
+			token = COM_EParse( text, errhead, title );
+			if ( !*text ) return;
+			
+			if ( !strcmp( token, "lab" ) ) {
+				entry->buildingType = B_LAB;
+			} else if ( !strcmp( token, "hangar" ) ){
+				entry->buildingType = B_HANGAR;
+			} else if ( !strcmp( token, "quaters" ) ){
+				entry->buildingType = B_QUATERS;
+			} else if ( !strcmp( token, "workshop" ) ){
+				entry->buildingType = B_WORKSHOP;
+			}
+		}
+		else
 		for ( edp = valid_vars; edp->string; edp++ )
 			if ( !strcmp( token, edp->string ) )
 			{

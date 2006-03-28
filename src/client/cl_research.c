@@ -39,7 +39,7 @@ RS_ResearchPossible
 
 checks if there is at least one base with a lab and scientists available and tells the player the status.
 ======================*/
-char RS_ResearchPossible ( void )
+char RS_ResearchPossible( void )
 {
 	if ( baseCurrent ) {
 		if ( baseCurrent->hasLab ) {
@@ -66,8 +66,8 @@ void RS_GetName( char *id, char *name )
 {
 	int i, j;
 	technology_t *t;
-	objDef_t *od;
-	strcpy( name, id );	// pre-set the name to the id.
+	objDef_t *item;
+	building_t	*building;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {
@@ -87,11 +87,10 @@ void RS_GetName( char *id, char *name )
 			case RS_WEAPON:
 			case RS_ARMOR:
 				for ( j = 0; j < csi.numODs; j++ ) {
-					od = &csi.ods[j];
-					if ( !strcmp( t->provides, od->kurz ) ) {
-						//t->name = &od->name;	// TODO: is it possible to link the technology-name to the one in ods?
-						strcpy( t->name, od->name );
-						strcpy( name, od->name );
+					item = &csi.ods[j];
+					if ( !strcmp( t->provides, item->kurz ) ) {
+						strcpy( t->name, item->name );
+						strcpy( name, item->name );
 						return;
 					}
 				}
@@ -100,17 +99,28 @@ void RS_GetName( char *id, char *name )
 				Com_Printf( _("RS_GetName: This is most probably an error in the research.ufo file.\n") );
 				Com_Printf( _("RS_GetName: You need to define 'provided' with one existing id in the inventory list.\n") );
 				return;	// break;
+			case RS_BUILDING:
+				for ( j = 0; j < numBuildings; j++ ) {
+					building = &bmBuildings[0][j];
+					//Com_Printf( _("RS_GetName: buildingname \"%s\" buildingtitle \"%s\".\n"), building->name,building->title );
+					if ( !strcmp( t->provides, building->name ) ) {
+						strcpy( t->name, building->title );
+						strcpy( name, building->title );
+						return;
+					}
+				}
+				Com_Printf( _("RS_GetName: Linked building (\"%s\": provided=\"%s\") not found.\n"), id, t->provides );
+				Com_Printf( _("RS_GetName: This is most probably an error in the research.ufo file.\n") );
+				Com_Printf( _("RS_GetName: You need to define 'provided' with one existing id in the inventory list.\n") );
+				return;	// break;
 			case RS_CRAFT:
 				// unused right now.
 				break;
-			case RS_BUILDING:
-				// unused right now.
-				break;
 			}
-			return;
 		}
 	}
-	Com_Printf( _("RS_GetName: technology \"%s\" not found.\n"), id );
+	strcpy( name, id );	// set the name to the id.
+	Com_Printf( _("RS_GetName: technology \"%s\" not found. NAme set to id\n"), id );
 }
 
 /*======================
@@ -118,15 +128,20 @@ RS_ResearchDisplayInfo
 ======================*/
 void RS_ResearchDisplayInfo ( void  )
 {
+	technology_t *t;
+	t = &technologies[globalResearchNum];
+	char dependencies[MAX_VAR];
+	char tempstring[MAX_VAR];
+	int i;
+	stringlist_t req_temp;
+	req_temp.numEntries = 0;
+	
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
 	
-	technology_t *t;
-	t = &technologies[globalResearchNum];
-	char tempname[MAX_VAR];
-	RS_GetName( t->id, tempname);
-	Cvar_Set( "mn_research_selname",  tempname );
+	RS_GetName( t->id, t->name );
+	Cvar_Set( "mn_research_selname",  t->name );
 	Cvar_Set( "mn_research_seltime", va( "Time: %.1f\n", t->time ) );
 
 	switch ( t->statusResearch )
@@ -147,24 +162,22 @@ void RS_ResearchDisplayInfo ( void  )
 		break;
 	}
 	
-	int i;
-	stringlist_t req_temp;
-	req_temp.numEntries = 0;
-	char name_temp[MAX_VAR];
+	
+	
 	RS_GetFirstRequired( t->id, &req_temp );
-	strcpy( tempname, "Dependencies: ");
+	strcpy( dependencies, "Dependencies: ");
 	if ( req_temp.numEntries > 0 ) {
 		for ( i = 0; i < req_temp.numEntries; i++ ) {
-			RS_GetName( req_temp.list[i], name_temp ); //name_temp gets initialised in getname
-			strcat( tempname, name_temp);
+			RS_GetName( req_temp.list[i], tempstring ); //name_temp gets initialised in getname
+			strcat( dependencies, tempstring );
 			
 			if ( i < req_temp.numEntries-1 ) 
-				strcat( tempname, ", ");
+				strcat( dependencies, ", ");
 		}
 	} else {
-		strcpy( tempname, "" );
+		strcpy( dependencies, "" );
 	}
-	Cvar_Set( "mn_research_seldep", tempname );
+	Cvar_Set( "mn_research_seldep", dependencies );
 
 
 }
@@ -202,11 +215,12 @@ TODO: Check if laboratory is available
 ======================*/
 void RS_ResearchStart ( void )
 {
+	technology_t *t;
+	
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
 
-	technology_t *t;
 	t = &technologies[globalResearchNum];
 	switch ( t->statusResearch )
 	{
@@ -236,11 +250,12 @@ TODO: Check if laboratory is available
 ======================*/
 void RS_ResearchStop ( void )
 {
+	technology_t *t;
+	
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
 
-	technology_t *t;
 	t = &technologies[globalResearchNum];
 	switch ( t->statusResearch )
 	{
@@ -271,6 +286,7 @@ void RS_UpdateData ( void )
 	char name [MAX_VAR];
 	int i, j;
 	technology_t *t;
+	
 	for ( i=0, j=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( ( t->statusResearch != RS_FINISH ) && ( RS_TechIsResearchable( t->id ) ) ){
@@ -352,6 +368,7 @@ byte RS_DependsOn(char *id1, char *id2)
 	int i, j;
 	technology_t *t;
 	stringlist_t	required;
+	
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( id1, t->id ) ) {
@@ -376,6 +393,7 @@ void RS_MarkResearched( char *id )
 {
 	int i;
 	technology_t *t;
+	
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {
@@ -395,11 +413,11 @@ CL_CheckResearchStatus
 void CL_CheckResearchStatus ( void )
 {
 	int i, newResearch = 0;
-
+	technology_t *t;
+	
 	if ( ! researchListLength )
 		return;
 
-	technology_t *t;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( t->statusResearch == RS_RUNNING )
@@ -517,15 +535,15 @@ void MN_ResetResearch( void )
 // NOTE: the BSFS define is the same like for bases and so on...
 value_t valid_tech_vars[] =
 {
-	{ "name",	V_STRING,	TECHFS( name ) },		//name of technology
+	{ "name",		V_STRING,	TECHFS( name ) },		//name of technology
 	//{ "up_chapter",	V_STRING,	TECHFS( name ) },
 	{ "description",	V_STRING,	TECHFS( description ) },
-	{ "provides",	V_STRING,	TECHFS( provides ) },	//what does this research provide
-	{ "time",	V_FLOAT,	TECHFS( time ) },				//how long will this research last
+	{ "provides",		V_STRING,	TECHFS( provides ) },	//what does this research provide
+	{ "time",			V_FLOAT,		TECHFS( time ) },				//how long will this research last
 	{ "image_top"	,	V_STRING,	TECHFS( image_top ) },
-	{ "image_bottom"	,	V_STRING,	TECHFS( image_bottom ) },
-	{ "mdl_top"	,	V_STRING,	TECHFS( mdl_top ) },
-	{ "mdl_bottom"	,	V_STRING,	TECHFS( mdl_bottom ) },
+	{ "image_bottom",	V_STRING,	TECHFS( image_bottom ) },
+	{ "mdl_top",		V_STRING,	TECHFS( mdl_top ) },
+	{ "mdl_bottom",	V_STRING,	TECHFS( mdl_bottom ) },
 	{ NULL,	0, 0 }
 };
 

@@ -29,17 +29,18 @@ void MN_UpDrawEntry( char *id )
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {
 			//Com_Printf(_("Displaying %s\n"), t->id); //DEBUG
+			RS_GetName( t->id, t->name );
 			Cvar_Set( "mn_uptitle", _(t->name) );
 			menuText[TEXT_UFOPEDIA] = _(t->description);
 			Cvar_Set( "mn_upmodel_top", "" );
 			Cvar_Set( "mn_upmodel_bottom", "" );
-			Cvar_Set( "mn_upmodel_big", "" );
+			//Cvar_Set( "mn_upmodel_big", "" );
 			Cvar_Set( "mn_upimage_top", "base/empty" );
 			Cvar_Set( "mn_upimage_bottom", "base/empty" );
 			if ( t->mdl_top ) Cvar_Set( "mn_upmodel_top", t->mdl_top );
 			if ( t->mdl_bottom ) Cvar_Set( "mn_upmodel_bottom", t->mdl_bottom );
 			//if ( t->mdl_big ) Cvar_Set( "mn_upmodel_big", t->mdl_big );
-			if ( !t->mdl_top && t->image_top ) Cvar_Set( "mn_upimage_top", t->image_top );
+			if ( !t->mdl_top && t->image_top ) { Cvar_Set( "mn_upimage_top", t->image_top ); Com_Printf(_("MN_UpDrawEntry: image set %s\n"), t->image_top);	}
 			if ( !t->mdl_bottom &&  t->image_bottom ) Cvar_Set( "mn_upimage_bottom", t->image_bottom );
 			//if ( entry->sound )
 			//{
