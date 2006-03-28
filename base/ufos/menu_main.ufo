@@ -101,7 +101,7 @@ menu main
 		pos		"640 450"
 		texl	"0 0"
 		texh	"256 64"
-		click	{ cmd "seq_start view;" }
+		click	{ cmd "seq_start credits;" }
 		out		{ *button_credits texl "0 0"  *button_credits texh "256 64" }
 		in		{ *button_credits texl "0 64" *button_credits texh "256 128" }
 	}
