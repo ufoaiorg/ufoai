@@ -1138,8 +1138,8 @@ item irgoggles
 	type		melee
 	category	2
 	shape		"0 0 2 2"
-	center		"1 0 2"
-	scale		1.1
+	center		"0 -4 -4"
+	scale		0.9
 	ammo		2
 	price		18700
 	buytype		2
@@ -1154,7 +1154,6 @@ item irgoggles
 		speed	0
 		range	55
 		shots	1
-		ammo	1
 		time	20
 		damage	"0 0"
 		irgoggles	true
@@ -1169,7 +1168,6 @@ item irgoggles
 		speed	0
 		range	55
 		shots	1
-		ammo	1
 		time	20
 		damage	"0 0"
 		irgoggles	true
