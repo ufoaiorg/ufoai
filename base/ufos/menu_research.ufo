@@ -166,7 +166,7 @@ menu research
 	//string txt_available11	{ string "*cvar mn_researchavailable11"	pos "440 315"	color "0 .78 0 1"	align ur }
 	//string txt_lab11	{ string "*cvar mn_lab11"		pos "540 315"	color "0 .78 0 1"	align ur }
 	
-	string txt_item12	{ string "*cvar mn_researchitem12"		pos "50 340"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 12" } }	//string txt_assigned12	{ string "*cvar mn_researchassigned12"	pos "345 340"	color "0 .78 0 1" }
+	string txt_item12	{ string "*cvar mn_researchitem12"		pos "50 340"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 12" } }
 	//string txt_assigned12	{ string "*cvar mn_researchassigned12"	pos "345 340"	color "0 .78 0 1" }
 	//string txt_available12	{ string "*cvar mn_researchavailable12"	pos "440 340"	color "0 .78 0 1"	align ur }
 	//string txt_lab12	{ string "*cvar mn_lab12"		pos "540 340"	color "0 .78 0 1"	align ur }
@@ -201,7 +201,8 @@ menu research
 	//string txt_available18	{ string "*cvar mn_researchavailable18"	pos "440 490"	color "0 .78 0 1"	align ur }
 	//string txt_lab18	{ string "*cvar mn_lab18"		pos "540 490"	color "0 .78 0 1"	align ur }
 
-	string txt_item19	{ string "*cvar mn_researchitem19"		pos "50 515"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 19" } }	//string txt_assigned19	{ string "*cvar mn_researchassigned19"	pos "345 515"	color "0 .78 0 1" }
+	string txt_item19	{ string "*cvar mn_researchitem19"		pos "50 515"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 19" } }
+	//string txt_assigned19	{ string "*cvar mn_researchassigned19"	pos "345 515"	color "0 .78 0 1" }
 	//string txt_available19	{ string "*cvar mn_researchavailable19"	pos "440 515"	color "0 .78 0 1"	align ur }
 	//string txt_lab19	{ string "*cvar mn_lab19"		pos "540 515"	color "0 .78 0 1"	align ur }
 
