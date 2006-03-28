@@ -107,34 +107,593 @@ menu research
 	confunc researchselect27 { research_clear *txt_item27 color "1 1 1 1" }
 
 	string txt_item0	{ string "*cvar mn_researchitem0"		pos "50 40"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 0" } }
-	string txt_item1	{ string "*cvar mn_researchitem1"		pos "50 65"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 1" } }
-	string txt_item2	{ string "*cvar mn_researchitem2"		pos "50 90"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 2" } }
-	string txt_item3	{ string "*cvar mn_researchitem3"		pos "50 115"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 3" } }
-	string txt_item4	{ string "*cvar mn_researchitem4"		pos "50 140"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 4" } }
-	string txt_item5	{ string "*cvar mn_researchitem5"		pos "50 165"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 5" } }
-	string txt_item6	{ string "*cvar mn_researchitem6"		pos "50 190"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 6" } }
-	string txt_item7	{ string "*cvar mn_researchitem7"		pos "50 215"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 7" } }
-	string txt_item8	{ string "*cvar mn_researchitem8"		pos "50 240"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 8" } }
-	string txt_item9	{ string "*cvar mn_researchitem9"		pos "50 265"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 9" } }
-	string txt_item10	{ string "*cvar mn_researchitem10"		pos "50 290"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 10" } }
-	string txt_item11	{ string "*cvar mn_researchitem11"		pos "50 315"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 11" } }
-	string txt_item12	{ string "*cvar mn_researchitem12"		pos "50 340"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 12" } }
-	string txt_item13	{ string "*cvar mn_researchitem13"		pos "50 365"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 13" } }
-	string txt_item14	{ string "*cvar mn_researchitem14"		pos "50 390"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 14" } }
-	string txt_item15	{ string "*cvar mn_researchitem15"		pos "50 415"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 15" } }
-	string txt_item16	{ string "*cvar mn_researchitem16"		pos "50 440"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 16" } }
-	string txt_item17	{ string "*cvar mn_researchitem17"		pos "50 465"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 17" } }
-	string txt_item18	{ string "*cvar mn_researchitem18"		pos "50 490"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 18" } }
-	string txt_item19	{ string "*cvar mn_researchitem19"		pos "50 515"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 19" } }
-	string txt_item20	{ string "*cvar mn_researchitem20"		pos "50 540"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 20" } }
-	string txt_item21	{ string "*cvar mn_researchitem21"		pos "50 565"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 21" } }
-	string txt_item22	{ string "*cvar mn_researchitem22"		pos "50 590"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 22" } }
-	string txt_item23	{ string "*cvar mn_researchitem23"		pos "50 615"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 23" } }
-	string txt_item24	{ string "*cvar mn_researchitem24"		pos "50 640"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 24" } }
-	string txt_item25	{ string "*cvar mn_researchitem25"		pos "50 665"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 25" } }
-	string txt_item26	{ string "*cvar mn_researchitem26"		pos "50 690"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 26" } }
-	string txt_item27	{ string "*cvar mn_researchitem27"		pos "50 715"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 27" } }
+	string txt_assigned0	{ string "assigned"	pos "345 40"	color "0 .78 0 1" }
+	string txt_available0	{ string "free"		pos "440 40"	color "0 .78 0 1"	align ur }
+	string txt_lab0	{ string "price"		pos "540 40"	color "0 .78 0 1"	align ur }
 	
+	string txt_item1	{ string "*cvar mn_researchitem1"		pos "50 65"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 1" } }
+	//string txt_assigned1	{ string "*cvar mn_researchassigned1"	pos "345 65"	color "0 .78 0 1" }
+	//string txt_available1	{ string "*cvar mn_researchavailable1"		pos "440 65"	color "0 .78 0 1"	align ur }
+	//string txt_lab1	{ string "*cvar mn_lab1"		pos "540 65"	color "0 .78 0 1"	align ur }
+	
+	string txt_item2	{ string "*cvar mn_researchitem2"		pos "50 90"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 2" } }
+	//string txt_assigned2	{ string "*cvar mn_researchassigned2"	pos "345 90"	color "0 .78 0 1" }
+	//string txt_available2	{ string "*cvar mn_researchavailable2"		pos "440 90"	color "0 .78 0 1"	align ur }
+	//string txt_lab2	{ string "*cvar mn_lab2"		pos "540 90"	color "0 .78 0 1"	align ur }
+	
+	string txt_item3	{ string "*cvar mn_researchitem3"		pos "50 115"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 3" } }
+	//string txt_assigned3	{ string "*cvar mn_researchassigned3"	pos "345 115"	color "0 .78 0 1" }
+	//string txt_available3	{ string "*cvar mn_researchavailable3"		pos "440 115"	color "0 .78 0 1"	align ur }
+	//string txt_lab3	{ string "*cvar mn_lab3"		pos "540 115"	color "0 .78 0 1"	align ur }
+	
+	string txt_item4	{ string "*cvar mn_researchitem4"		pos "50 140"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 4" } }
+	//string txt_assigned4	{ string "*cvar mn_researchassigned4"	pos "345 140"	color "0 .78 0 1" }
+	//string txt_available4	{ string "*cvar mn_researchavailable4"		pos "440 140"	color "0 .78 0 1"	align ur }
+	//string txt_lab4	{ string "*cvar mn_lab4"		pos "540 140"	color "0 .78 0 1"	align ur }
+	
+	string txt_item5	{ string "*cvar mn_researchitem5"		pos "50 165"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 5" } }
+	//string txt_assigned5	{ string "*cvar mn_researchassigned5"	pos "345 165"	color "0 .78 0 1" }
+	//string txt_available5	{ string "*cvar mn_researchavailable5"		pos "440 165"	color "0 .78 0 1"	align ur }
+	//string txt_lab5	{ string "*cvar mn_lab5"		pos "540 165"	color "0 .78 0 1"	align ur }
+	
+	string txt_item6	{ string "*cvar mn_researchitem6"		pos "50 190"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 6" } }
+	//string txt_assigned6	{ string "*cvar mn_researchassigned6"	pos "345 190"	color "0 .78 0 1" }
+	//string txt_available6	{ string "*cvar mn_researchavailable6"		pos "440 190"	color "0 .78 0 1"	align ur }
+	//string txt_lab6	{ string "*cvar mn_lab6"		pos "540 190"	color "0 .78 0 1"	align ur }
+	
+	string txt_item7	{ string "*cvar mn_researchitem7"		pos "50 215"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 7" } }
+	//string txt_assigned7	{ string "*cvar mn_researchassigned7"	pos "345 215"	color "0 .78 0 1" }
+	//string txt_available7	{ string "*cvar mn_researchavailable7"		pos "440 215"	color "0 .78 0 1"	align ur }
+	//string txt_lab7	{ string "*cvar mn_lab7"		pos "540 215"	color "0 .78 0 1"	align ur }
+	
+	string txt_item8	{ string "*cvar mn_researchitem8"		pos "50 240"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 8" } }
+	//string txt_assigned8	{ string "*cvar mn_researchassigned8"	pos "345 240"	color "0 .78 0 1" }
+	//string txt_available8	{ string "*cvar mn_researchavailable8"		pos "440 240"	color "0 .78 0 1"	align ur }
+	//string txt_lab8	{ string "*cvar mn_lab8"		pos "540 240"	color "0 .78 0 1"	align ur }
+	
+	string txt_item9	{ string "*cvar mn_researchitem9"		pos "50 265"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 9" } }
+	//string txt_assigned9	{ string "*cvar mn_researchassigned9"	pos "345 265"	color "0 .78 0 1" }
+	//string txt_available9	{ string "*cvar mn_researchavailable9"		pos "440 265"	color "0 .78 0 1"	align ur }
+	//string txt_lab9	{ string "*cvar mn_lab9"		pos "540 265"	color "0 .78 0 1"	align ur }
+	
+	string txt_item10	{ string "*cvar mn_researchitem10"		pos "50 290"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 10" } }
+	//string txt_assigned10	{ string "*cvar mn_researchassigned10"	pos "345 290"	color "0 .78 0 1" }
+	//string txt_available10	{ string "*cvar mn_researchavailable10"	pos "440 290"	color "0 .78 0 1"	align ur }
+	//string txt_lab10	{ string "*cvar mn_lab10"		pos "540 290"	color "0 .78 0 1"	align ur }
+
+	string txt_item11	{ string "*cvar mn_researchitem11"		pos "50 315"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 11" } }
+	//string txt_assigned11	{ string "*cvar mn_researchassigned11"	pos "345 315"	color "0 .78 0 1" }
+	//string txt_available11	{ string "*cvar mn_researchavailable11"	pos "440 315"	color "0 .78 0 1"	align ur }
+	//string txt_lab11	{ string "*cvar mn_lab11"		pos "540 315"	color "0 .78 0 1"	align ur }
+	
+	string txt_item12	{ string "*cvar mn_researchitem12"		pos "50 340"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 12" } }	//string txt_assigned12	{ string "*cvar mn_researchassigned12"	pos "345 340"	color "0 .78 0 1" }
+	//string txt_assigned12	{ string "*cvar mn_researchassigned12"	pos "345 340"	color "0 .78 0 1" }
+	//string txt_available12	{ string "*cvar mn_researchavailable12"	pos "440 340"	color "0 .78 0 1"	align ur }
+	//string txt_lab12	{ string "*cvar mn_lab12"		pos "540 340"	color "0 .78 0 1"	align ur }
+
+	string txt_item13	{ string "*cvar mn_researchitem13"		pos "50 365"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 13" } }
+	//string txt_assigned13	{ string "*cvar mn_researchassigned13"	pos "345 365"	color "0 .78 0 1" }
+	//string txt_available13	{ string "*cvar mn_researchavailable13"	pos "440 365"	color "0 .78 0 1"	align ur }
+	//string txt_lab13	{ string "*cvar mn_lab13"		pos "540 365"	color "0 .78 0 1"	align ur }
+	
+	string txt_item14	{ string "*cvar mn_researchitem14"		pos "50 390"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 14" } }
+	//string txt_assigned14	{ string "*cvar mn_researchassigned14"	pos "345 390"	color "0 .78 0 1" }
+	//string txt_available14	{ string "*cvar mn_researchavailable14"	pos "440 390"	color "0 .78 0 1"	align ur }
+	//string txt_lab14	{ string "*cvar mn_lab14"		pos "540 390"	color "0 .78 0 1"	align ur }
+	
+	string txt_item15	{ string "*cvar mn_researchitem15"		pos "50 415"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 15" } }
+	//string txt_assigned15	{ string "*cvar mn_researchassigned15"	pos "345 415"	color "0 .78 0 1" }
+	//string txt_available15	{ string "*cvar mn_researchavailable15"	pos "440 415"	color "0 .78 0 1"	align ur }
+	//string txt_lab15	{ string "*cvar mn_lab15"		pos "540 415"	color "0 .78 0 1"	align ur }
+	
+	string txt_item16	{ string "*cvar mn_researchitem16"		pos "50 440"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 16" } }
+	//string txt_assigned16	{ string "*cvar mn_researchassigned16"	pos "345 440"	color "0 .78 0 1" }
+	//string txt_available16	{ string "*cvar mn_researchavailable16"	pos "440 440"	color "0 .78 0 1"	align ur }
+	//string txt_lab16	{ string "*cvar mn_lab16"		pos "540 440"	color "0 .78 0 1"	align ur }
+	
+	string txt_item17	{ string "*cvar mn_researchitem17"		pos "50 465"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 17" } }
+	//string txt_assigned17	{ string "*cvar mn_researchassigned17"	pos "345 465"	color "0 .78 0 1" }
+	//string txt_available17	{ string "*cvar mn_researchavailable17"	pos "440 465"	color "0 .78 0 1"	align ur }
+	//string txt_lab17	{ string "*cvar mn_lab17"		pos "540 465"	color "0 .78 0 1"	align ur }
+
+	string txt_item18	{ string "*cvar mn_researchitem18"		pos "50 490"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 18" } }
+	//string txt_assigned18	{ string "*cvar mn_researchassigned18"	pos "345 490"	color "0 .78 0 1" }
+	//string txt_available18	{ string "*cvar mn_researchavailable18"	pos "440 490"	color "0 .78 0 1"	align ur }
+	//string txt_lab18	{ string "*cvar mn_lab18"		pos "540 490"	color "0 .78 0 1"	align ur }
+
+	string txt_item19	{ string "*cvar mn_researchitem19"		pos "50 515"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 19" } }	//string txt_assigned19	{ string "*cvar mn_researchassigned19"	pos "345 515"	color "0 .78 0 1" }
+	//string txt_available19	{ string "*cvar mn_researchavailable19"	pos "440 515"	color "0 .78 0 1"	align ur }
+	//string txt_lab19	{ string "*cvar mn_lab19"		pos "540 515"	color "0 .78 0 1"	align ur }
+
+	string txt_item20	{ string "*cvar mn_researchitem20"		pos "50 540"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 20" } }
+	//string txt_assigned20	{ string "*cvar mn_researchassigned20"	pos "345 540"	color "0 .78 0 1" }
+	//string txt_available20	{ string "*cvar mn_researchavailable20"	pos "440 540"	color "0 .78 0 1"	align ur }
+	//string txt_lab20	{ string "*cvar mn_lab20"		pos "540 540"	color "0 .78 0 1"	align ur }
+
+	string txt_item21	{ string "*cvar mn_researchitem21"		pos "50 565"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 21" } }
+	//string txt_assigned21	{ string "*cvar mn_researchassigned21"	pos "345 565"	color "0 .78 0 1" }
+	//string txt_available21	{ string "*cvar mn_researchavailable21"	pos "440 565"	color "0 .78 0 1"	align ur }
+	//string txt_lab21	{ string "*cvar mn_lab21"		pos "540 565"	color "0 .78 0 1"	align ur }
+
+	string txt_item22	{ string "*cvar mn_researchitem22"		pos "50 590"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 22" } }
+	//string txt_assigned22	{ string "*cvar mn_researchassigned22"	pos "345 590"	color "0 .78 0 1" }
+	//string txt_available22	{ string "*cvar mn_researchavailable22"	pos "440 590"	color "0 .78 0 1"	align ur }
+	//string txt_lab22	{ string "*cvar mn_lab22"		pos "540 590"	color "0 .78 0 1"	align ur }
+
+	string txt_item23	{ string "*cvar mn_researchitem23"		pos "50 615"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 23" } }
+	//string txt_assigned23	{ string "*cvar mn_researchassigned23"	pos "345 615"	color "0 .78 0 1" }
+	//string txt_available23	{ string "*cvar mn_researchavailable23"	pos "440 615"	color "0 .78 0 1"	align ur }
+	//string txt_lab23	{ string "*cvar mn_lab23"		pos "540 615"	color "0 .78 0 1"	align ur }
+
+	string txt_item24	{ string "*cvar mn_researchitem24"		pos "50 640"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 24" } }
+	//string txt_assigned24	{ string "*cvar mn_researchassigned24"	pos "345 640"	color "0 .78 0 1" }
+	//string txt_available24	{ string "*cvar mn_researchavailable24"	pos "440 640"	color "0 .78 0 1"	align ur }
+	//string txt_lab24	{ string "*cvar mn_lab24"		pos "540 640"	color "0 .78 0 1"	align ur }
+
+	string txt_item25	{ string "*cvar mn_researchitem25"		pos "50 665"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 25" } }
+	//string txt_assigned25	{ string "*cvar mn_researchassigned25"	pos "345 665"	color "0 .78 0 1" }
+	//string txt_available25	{ string "*cvar mn_researchavailable25"	pos "440 665"	color "0 .78 0 1"	align ur }
+	//string txt_lab25	{ string "*cvar mn_lab25"		pos "540 665"	color "0 .78 0 1"	align ur }
+
+	string txt_item26	{ string "*cvar mn_researchitem26"		pos "50 690"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 26" } }
+	//string txt_assigned26	{ string "*cvar mn_researchassigned26"	pos "345 690"	color "0 .78 0 1" }
+	//string txt_available26	{ string "*cvar mn_researchavailable26"	pos "440 690"	color "0 .78 0 1"	align ur }
+	//string txt_lab26	{ string "*cvar mn_lab26"		pos "540 690"	color "0 .78 0 1"	align ur }
+
+	string txt_item27	{ string "*cvar mn_researchitem27"		pos "50 715"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 27" } }
+	//string txt_assigned27	{ string "*cvar mn_researchassigned27"	pos "345 715"	color "0 .78 0 1" }
+	//string txt_available27	{ string "*cvar mn_researchavailable27"	pos "440 715"	color "0 .78 0 1"	align ur }
+	//string txt_lab27	{ string "*cvar mn_lab27"		pos "540 715"	color "0 .78 0 1"	align ur }
+
+	pic bt_rs_add0
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 40"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 0" }
+	}
+	pic bt_rs_sell0
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 40"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 0" }
+	}
+	pic bt_rs_add1
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 65"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 1" }
+	}
+	pic bt_rs_sell1
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 65"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 1" }
+	}
+	pic bt_rs_add2
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 90"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 2" }
+	}
+	pic bt_rs_sell2
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 90"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 2" }
+	}
+	pic bt_rs_add3
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 115"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 3" }
+	}
+	pic bt_rs_sell3
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 115"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 3" }
+	}
+	pic bt_rs_add4
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 140"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 4" }
+	}
+	pic bt_rs_sell4
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 140"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 4" }
+	}
+	pic bt_rs_add5
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 165"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 5" }
+	}
+	pic bt_rs_sell5
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 165"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 5" }
+	}
+	pic bt_rs_add6
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 190"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 6" }
+	}
+	pic bt_rs_sell6
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 190"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 6" }
+	}
+	pic bt_rs_add7
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 215"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 7" }
+	}
+	pic bt_rs_sell7
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 215"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 7" }
+	}
+	pic bt_rs_add8
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 240"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 8" }
+	}
+	pic bt_rs_sell8
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 240"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 8" }
+	}
+	pic bt_rs_add9
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 265"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 9" }
+	}
+	pic bt_rs_sell9
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 265"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 9" }
+	}
+	pic bt_rs_add10
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 290"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 10" }
+	}
+	pic bt_rs_sell10
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 290"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 10" }
+	}
+	pic bt_rs_add11
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 315"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 11" }
+	}
+	pic bt_rs_sell11
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 315"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 11" }
+	}
+	pic bt_rs_add12
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 340"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 12" }
+	}
+	pic bt_rs_sell12
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 340"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 12" }
+	}
+	pic bt_rs_add13
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 365"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 13" }
+	}
+	pic bt_rs_sell13
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 365"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 13" }
+	}
+	pic bt_rs_add14
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 390"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 14" }
+	}
+	pic bt_rs_sell14
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 390"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 14" }
+	}
+	pic bt_rs_add15
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 415"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 15" }
+	}
+	pic bt_rs_sell15
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 415"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 15" }
+	}
+	pic bt_rs_add16
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 440"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 16" }
+	}
+	pic bt_rs_sell16
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 440"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 16" }
+	}
+	pic bt_rs_add17
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 465"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 17" }
+	}
+	pic bt_rs_sell17
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 465"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 17" }
+	}
+	pic bt_rs_add18
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 490"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 18" }
+	}
+	pic bt_rs_sell18
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 490"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 18" }
+	}
+	pic bt_rs_add19
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 515"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 19" }
+	}
+	pic bt_rs_sell19
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 515"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 19" }
+	}
+	pic bt_rs_add20
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 540"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 20" }
+	}
+	pic bt_rs_sell20
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 540"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 20" }
+	}
+	pic bt_rs_add21
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 565"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 21" }
+	}
+	pic bt_rs_sell21
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 565"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 21" }
+	}
+	pic bt_rs_add22
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 590"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 22" }
+	}
+	pic bt_rs_sell22
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 590"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 22" }
+	}
+	pic bt_rs_add23
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 615"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 23" }
+	}
+	pic bt_rs_sell23
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 615"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 23" }
+	}
+	pic bt_rs_add24
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 640"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 24" }
+	}
+	pic bt_rs_sell24
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 640"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 24" }
+	}
+	pic bt_rs_add25
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 665"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 25" }
+	}
+	pic bt_rs_sell25
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 665"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 25" }
+	}
+	pic bt_rs_add26
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 690"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 26" }
+	}
+	pic bt_rs_sell26
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 690"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 26" }
+	}
+	pic bt_rs_add27
+	{
+		tooltip	"Add scientist"
+		image	menu/buy_buttons1	
+		pos		"376 715"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_rs_add 27" }
+	}
+	pic bt_rs_sell27
+	{
+		tooltip	"Remove scientist"
+		image	menu/buy_buttons1
+		pos		"392 715"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_rs_remove 27" }
+	}
+
 	string txt_selected_name
 	{
 		string "*cvar mn_research_selname"
@@ -160,11 +719,25 @@ menu research
 		pos "645 290"
 		color "0 .78 0 1"
 	}
+//	string txt_credits
+//	{
+//		string	"*cvar mn_credits"
+//		pos	"950 70"
+//		font	f_big
+//		align	ur
+//	}
+	string txt_credits_caption
+	{
+		string	"CREDIT"
+		pos	"650 70"
+		font	f_big
+		align	ul
+	}
+
 	string txt_credits
 	{
 		string	"*cvar mn_credits"
-		pos	"950 70"
-		font	f_big
+		pos		"944 80"
 		align	ur
 	}
 
@@ -206,6 +779,25 @@ menu research
 		texl	"0 0"
 		texh	"64 37"
 		click	{ cmd mn_pop }
+	}
+
+	// ==================
+	// Base overview
+	// ==================
+
+	//number of labs
+	string txt_base_labs
+	{
+		string "*cvar mn_base_labs"
+		pos "900 290"
+	}
+
+	//number of available scientists (sum places in labs / used / summary)
+	string txt_base_scientists
+	{
+		string "*cvar mn_base_scientists"
+		pos "645 290"
+		color "0 .78 0 1"
 	}
 
 	// ==================

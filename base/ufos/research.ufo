@@ -2,12 +2,16 @@
 // research tree
 //===============
 
-
+//	=== Description ==============================
+//
 //	tech xxx
 //		The _unique_ name of the research item in the tree is xxx
 //	type
 //		Just says where to look for more information.
-//		"type tech" items have all the information in here, everything else in the correct .ufo file.
+//		tech
+//			-> items have all the information in here
+//		everything else
+//			-> see the correct .ufo file. Mind you that "building" and "craft" are currently unused -> "tech"
 //	name
 //		self-explaining i hope :) Only needed when type=tech
 //	requires
@@ -15,110 +19,554 @@
 //		e.g.
 //			collect a plasrifle -> get the plasma technology but not the plasmpistol.
 //			The plasrifle itself will not be researchable until the plasmpistol has been researched.
-//		* "initial" - You can research this tech from the beginning.
-//		* "nothing" - You need to collect at least one item (that requires it directly or indirectly) to be able to research this.
+//		* "initial" - You can research (not produce) this tech from the beginning.
+//		* "nothing" - Similar to "initial", but you need to collect at least one item (that requires it directly or indirectly) to be able to research this.
 //		* everything else - a "tech" item.
 //	provides yyy
-//		The item (only one allowed) name (yyy) in the correct ufo file or data-structure (e.g inventory). The given names are _not_ "tech" items.
+//		The item (only one allowed) name (yyy) in the correct ufo file or data-structure (e.g inventory). 
+//		The given names are _not_ "tech" items.
 //		This items can be produced once the "tech" item has been finished.
+//	researched
+//		false or 0 - If you need to research this tech.
+//		true or 1 - If you can _produce_ it from the beginning.
 //	time
 //		time the research needs.
 //		If time is 0 the item can be produced at the same time all the "required" items are finished.
+//	==========================================
 
 // TODO: the current values are test-values for faster debugging. The code currently substracts "1" each day, so a research with "time 1" is finished in one day (though the message will pop up the next day, because it isn't checked directly after subtracting)
 
+//========================
+// Ufopedia categories
+//========================
 
-//-----------------------------------------------------
+up_chapters main
+{
+	crafts	"Aircraft"
+	tech		"Technologies & Discoveries"
+	weapons	"Weapons"
+	buildings	"Buildings"
+	aliens	"Alien Species"
+	ufos		"UFOs"
+}
+
+//====================
+// Weapons researched
+//====================
+
+// text flag is id for gettext
+
+tech weapon_assault
+{
+	type	weapon
+	up_chapter	weapons
+	description	assault_txt
+	
+	requires	initial
+	provides	assault
+	time	0
+	researched	true
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/assault/assault.md2
+	//mdl_bottom	models/weapons/assault/assault_clip.md2
+}
+
+tech weapon_assault_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	assault_ammo_txt
+	
+	requires	weapon_assault
+	provides	assault_ammo
+	time	0
+	researched	true
+	mdl_top	models/weapons/assault/assault_clip.md2
+	//mdl_bottom	models/weapons/assault/assault_clip.md2
+}
+
+tech weapon_sniper
+{
+	type	weapon
+	up_chapter	weapons
+	description	sniper_txt
+	
+	requires	initial
+	provides	sniper
+	time	0
+	researched	true
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/sniper/sniper.md2
+	//mdl_bottom	models/weapons/sniper/sniper_clip.md2
+}
+
+tech weapon_sniper_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	sniper_ammo_txt
+	
+	requires	weapon_sniper
+	provides	sniper_ammo
+	time	0
+	researched	true
+	
+	mdl_top	models/weapons/sniper/sniper_clip.md2
+}
+
+tech weapon_smg
+{
+	type	weapon
+	up_chapter	weapons
+	description	smg_txt
+	
+	requires	initial
+	provides	smg
+	time	0
+	researched	true
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/smg/smg.md2
+	//mdl_bottom	models/weapons/smg/smg_clip.md2
+}
+
+tech weapon_smg_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	smg_ammo_txt
+	
+	requires	weapon_smg
+	provides	smg_ammo
+	time	0
+	researched	true
+	
+	mdl_top	models/weapons/smg/smg_clip.md2
+}
+
+tech weapon_shotgun
+{
+	type	weapon
+	up_chapter	weapons
+	description	shotgun_txt
+	
+	requires	initial
+	provides	shotgun
+	time	0
+	researched	true
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/shotgun/shotgun.md2
+	//mdl_bottom	models/weapons/shotgun/shotgun_clip.md2
+}
+
+tech weapon_shotgun_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	shotgun_ammo_txt
+	
+	requires	weapon_shotgun
+	provides	shotgun_ammo
+	time	0
+	researched	true
+	
+	mdl_top	models/weapons/shotgun/shotgun_clip.md2
+}
+
+tech weapon_flamer
+{
+	type	weapon
+	up_chapter	weapons
+	description	flamer_txt
+	
+	requires	initial
+	provides	flamer
+	time	0
+	researched	true
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/flamer/flamer.md2
+	//mdl_bottom	models/weapons/flamer/flamer_ammo.md2
+}
+
+tech weapon_flamer_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	flamer_ammo_txt
+	
+	requires	weapon_flamer
+	provides	flamer_ammo
+	time	0
+	researched	true
+	
+	mdl_top	models/weapons/flamer/flamer_ammo.md2
+}
+
+tech weapon_pistol
+{
+	type	weapon
+	up_chapter	weapons
+	description	pistol_txt
+	
+	requires	initial
+	provides	pistol
+	time	0
+	researched	true
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/pistol/pistol.md2
+	//mdl_bottom	models/weapons/pistol/pistol_clip.md2
+}
+
+tech weapon_pistol_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	pistol_ammo_txt
+	
+	requires	weapon_pistol
+	provides	pistol_ammo
+	time	0
+	researched	true
+	
+	mdl_top	models/weapons/pistol/pistol_clip.md2
+}
+
+tech weapon_rpg
+{
+	type	weapon
+	up_chapter	weapons
+	description	rpg_txt
+	
+	requires	initial
+	provides	rpg
+	time	0
+	researched	true
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/rpg/rpg.md2
+	//mdl_bottom	models/weapons/rpg/rocket.md2
+}
+
+tech weapon_rpg_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	rpg_ammo_txt
+	
+	requires	weapon_rpg
+	provides	rpg_ammo
+	time	0
+	researched	true
+	
+	mdl_top	models/weapons/rpg/rocket.md2
+}
+
+
+tech weapon_laserpistol
+{
+	type	weapon
+	up_chapter	weapons
+	description	laserpistol_txt
+	
+	requires	initial
+	provides	laserpistol
+	time	0
+	researched	true
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/laserpistol/laserpistol.md2
+	//mdl_bottom	models/weapons/laserpistol/laserpistol_clip.md2
+}
+
+tech weapon_laserpistol_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	laserpistol_ammo_txt
+	
+	requires	weapon_laserpistol
+	provides	laserpistol_ammo
+	time	0
+	researched	true
+	
+	mdl_top	models/weapons/laserpistol/laserpistol_clip.md2
+}
+
+tech weapon_laserrifle
+{
+	type	weapon
+	up_chapter	weapons
+	description	laserrifle_txt
+	
+	requires	weapon_laserpistol
+	provides	laserrifle
+	time	0
+	researched	true
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/laserrifle/laserrifle.md2
+	//mdl_bottom	models/weapons/laserrifle/laserrifle_clip.md2
+}
+
+tech weapon_laserrifle_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	laserrifle_txt
+	
+	requires	weapon_laserrifle
+	provides	laserrifle_ammo
+	time	0
+	researched	true
+	
+	mdl_top	models/weapons/laserrifle/laserrifle_clip.md2
+}
+
+tech weapon_fraggren
+{
+	type	weapon
+	up_chapter	weapons
+	description	fraggen_txt
+	
+	requires	initial
+	provides	fraggrenade
+	time	0
+	researched	true
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/fraggren/fraggren.md2
+}
+
+tech weapon_knife
+{
+	type	weapon
+	up_chapter	weapons
+	description	knife_txt
+	
+	requires	initial
+	provides	knife
+	time	0
+	researched	true
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/knife/knife.md2
+}
+
+//========================
+// Weapons unresearched
+//========================
+
 tech tachyon
 {
 	type	tech
 	name	"Tachyon Control"
+	up_chapter	tech
+	
 	requires	initial
-	description	"tachyon_txt"
+	description	tachyon_txt
 	time	1
+	researched	false
+	
+	//image_top  xxxxx
 }
 
-tech tachyonrifle
+//===============================
+// Looks like this pistol was planned but never implemented?
+//
+//tech weapon_tachyonpistol
+//{
+//	type	weapon
+//	up_chapter	weapons
+//	description	tachyonpistol_txt
+//	
+//	requires	tachyon
+//	provides	tachyonpistol
+//	time	1
+//	researched	false
+//	
+//	// can this be taken from the weapons.ufo?
+//	mdl_top	models/weapons/tachyonpistol/tachyonpistol.md2
+//	//mdl_bottom	models/weapons/tachyonpistol/tachyonpistol_clip.md2
+//}
+
+//tech weapon_tachyonpistol_ammo
+//{
+//	type	weapon
+//	up_chapter	weapons
+//	description	tachyonpistol_ammo_txt
+//	
+//	requires	weapon_tachyonpistol
+//	provides	tachyonpistol_ammo
+//	time	0
+//	researched	false
+//}
+//===============================
+
+tech weapon_tachyonrifle
 {
 	type	weapon
+	up_chapter	weapons
+	description	tachyonrifle_txt
+	
 	requires	tachyon
 	provides	tachyonrifle
 	time	1
+	researched	false
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/tachyonrifle/tachyonrifle.md2
+	//mdl_bottom	models/weapons/tachyonrifle/tachyonrifle_clip.md2
 }
 
-tech tachyonrifle_ammo
+tech weapon_tachyonrifle_ammo
 {
 	type	weapon
-	requires	tachyonrifle
+	up_chapter	weapons
+	description	tachyonrifle_ammo_txt
+	
+	requires	weapon_tachyonrifle
 	provides	tachyonrifle_ammo
 	time	0
+	researched	false
+	
+	mdl_top	models/weapons/tachyonrifle/tachyonrifle_clip.md2
 }
 
-tech tachyonsniper
+tech weapon_tachyonsniper
 {
 	type	weapon
-	requires	tachyonrifle
+	up_chapter	weapons
+	description	tachyonsniper_txt
+
+	requires	weapon_tachyonrifle
 	provides	tachyonsniper
 	time	1
+	researched	false
+
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/tachyonsniper/tachyonsniper.md2
+	//mdl_bottom	models/weapons/tachyonsniper/tachyonsniper_clip.md2
 }
 
-tech tachyonsniper_ammo
+tech weapon_tachyonsniper_ammo
 {
 	type	weapon
-	requires	tachyonsniper
+	up_chapter	weapons
+	description	tachyonsniper_ammo_txt
+	
+	requires	weapon_tachyonsniper
 	provides	tachyonsniper_ammo
 	time	0
+	researched	false
+	
+	mdl_top	models/weapons/tachyonsniper/tachyonsniper_clip.md2
 }
 
-//-----------------------------------------------------
 tech plasma
 {
 	type	tech
 	name	"Advanced Plasma Control"
+	up_chapter	tech
+	description	plasma_txt
+	
 	requires	nothing
-	description	"plasma_txt"
+	description	plasma_txt
 	time	1
+	researched	false
+	
+	//image_top  xxxxx
 }
 
-tech plaspistol
+tech weapon_plasblade
 {
 	type	weapon
+	up_chapter	weapons
+	description	plasblade_txt
+
+	requires	plasma
+	provides	plasblade
+	time	1
+	researched	false
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/plasblade/plasblade.md2
+}
+
+tech weapon_plaspistol
+{
+	type	weapon
+	up_chapter	weapons
+	description	plaspistol_txt
+
 	requires	plasma
 	provides	plaspistol
 	time	1
+	researched	false
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/plaspistol/plaspistol.md2
+	//mdl_bottom	models/weapons/plaspistol/plaspistol_clip.md2
 }
 
-tech plaspistol_ammo
+tech weapon_plaspistol_ammo
 {
 	type	weapon
-	requires	plaspistol
+	up_chapter	weapons
+	description	plaspistol_ammo_txt
+	
+	requires	weapon_plaspistol
 	provides	plaspistol_ammo
 	time	0
+	researched	false
+	
+	mdl_top	models/weapons/plaspistol/plaspistol_clip.md2
 }
 
-tech plasrifle
+tech weapon_plasrifle
 {
 	type	weapon
-	requires	plaspistol
+	up_chapter	weapons
+	description	plasrifle_txt
+
+	requires	weapon_plaspistol
 	provides	plasrifle
 	time	1
+	researched	false
+	
+	// can this be taken from the weapons.ufo?
+	mdl_top	models/weapons/plasrifle/plasrifle.md2
+	//mdl_bottom	models/weapons/plasrifle/plasrifle_clip.md2
 }
 
-tech plasrifle_ammo
+tech weapon_plasrifle_ammo
 {
 	type	weapon
-	requires	plasrifle
+	up_chapter	weapons
+	description	plasrifle_ammo_txt
+	
+	requires	weapon_plasrifle
 	provides	plasrifle_ammo
 	time	0
+	researched	false
+	
+	mdl_top	models/weapons/plasrifle/plasrifle_clip.md2
 }
 
-//-----------------------------------------------------
+//========================
+// Armor & Misc Equipment
+//========================
 tech irgoggles
 {
 	type	weapon
 	requires	initial
 	provides	irgoggles
 	time	1
+	researched	false
 }
 
 tech nano
@@ -128,6 +576,7 @@ tech nano
 	requires	initial
 	description	"nano_txt"
 	time	1
+	researched	false
 }
 
 tech nano_armor
@@ -136,6 +585,7 @@ tech nano_armor
 	requires	"nano"
 	provides	medium
 	time	1
+	researched	false
 }
 
 tech advanced_armor
@@ -143,6 +593,161 @@ tech advanced_armor
 	type	tech
 	name	"Advanced Armor Fabrics"
 	requires	"nano plasma"
-	provides	medium
 	time	1
+	researched	false
+}
+
+tech heavy_nano_armor
+{
+	type	armor
+	requires	advanced_armor
+	provides	heavy
+	time	0
+	researched	false
+}
+
+//========================
+// Buildings
+//========================
+tech building_commando
+{
+	type	tech
+	name	"Commando central"
+	description	b_commando_txt
+	up_chapter	buildings
+	
+	requires	initial
+	//provides	b_commando
+	time	0
+	researched	true
+	
+	image_top	base/commando
+}
+
+tech building_powerplant
+{
+	type	tech
+	name	"Powerplant"
+	description	b_powerplant_txt
+	up_chapter	buildings
+	
+	requires	initial
+	provides	b_powerplant
+	time	0
+	researched	true
+	
+	image_top	base/powerplant
+}
+
+tech building_hangar
+{
+	type	tech
+	name	"Hangar"
+	description	b_hangar_txt
+	up_chapter	buildings
+	
+	requires	initial
+	provides	b_hangar
+	time	0
+	researched	true
+	
+	image_top	base/hangar
+}
+
+tech building_quarters
+{
+	type	tech
+	name	"Quarters"
+	description	b_quarters_txt
+	up_chapter	buildings
+	
+	requires	initial
+	provides	b_quarters
+	time	0
+	researched	true
+	
+	image_top	base/quarters
+}
+
+tech building_lab
+{
+	type	tech
+	name	"Laboratory"
+	description	b_lab_txt
+	up_chapter	buildings
+	
+	requires	initial
+	provides	b_lab
+	time	0
+	researched	true
+	
+	image_top	base/lab
+}
+
+//========================
+// Crafts
+//========================
+tech craft_transporter
+{
+	type	tech
+	name	"H-92 Troop Transport"
+	description	transporter_txt
+	up_chapter	crafts
+	
+	requires	initial
+	provides	transporter
+	time	0
+	researched	true
+	
+	mdl_top	models/objects/dropship.md2
+}
+
+tech craft_interceptor
+{
+	type	tech
+	name	"F-48 Interceptor"
+	description	interceptor_txt
+	up_chapter	crafts
+	
+	requires	initial
+	provides	interceptor
+	time	0
+	researched	true
+	
+	mdl_top	models/aircrafts/fighter1_main.md2
+}
+
+
+//========================
+// Aliens
+//========================
+
+tech alien_ortnok
+{
+	type	tech
+	name	 "Ortnok"
+	description	ortnok_txt
+	up_chapter	aliens
+	
+	requires	initial
+	provides	""
+	time	0
+	researched	true
+	
+	mdl_top	models/aliens/ortnok/body01.md2
+}
+
+tech alien_ortnok_medium
+{
+	type	tech
+	name	 "Ortnok Warrior"
+	description	ortnok_medium_txt
+	up_chapter	aliens
+	
+	requires	initial
+	provides	""
+	time	0
+	researched	true
+	
+	mdl_top	models/aliens/ortnok_medium/body01.md2
 }

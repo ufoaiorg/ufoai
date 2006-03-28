@@ -2,38 +2,11 @@
 //we need a cl_ufopedia.h to include in client.h (to avoid warnings from needed functions)
 
 #include "cl_ufopedia.h"
-
-typedef struct pediaChapter_s
-{
-	char	name[MAX_VAR];
-	char	title[MAX_VAR];
-	struct	pediaEntry_s *first;
-	struct	pediaEntry_s *last;
-} pediaChapter_t;
-
-typedef struct pediaEntry_s
-{
-	pediaChapter_t *chapter;
-	char	name[MAX_VAR];
-	char	title[MAX_VAR];
-	char	modelTop[MAX_VAR];
-	char    modelBottom[MAX_VAR];
-	char    modelBig[MAX_VAR];
-	char    sound[MAX_VAR];
-	char    imageTop[MAX_VAR];
-	char    imageBottom[MAX_VAR];
-	// just a short text-id to get this via gettext
-	char	text[MAX_VAR];
-	byte	item;
-	byte	building;
-	struct	pediaEntry_s *prev;
-	struct	pediaEntry_s *next;
-} pediaEntry_t;
+#include "cl_research.h"
 
 pediaChapter_t	upChapters[MAX_PEDIACHAPTERS];
-pediaEntry_t	upEntries[MAX_PEDIAENTRIES];
 
-pediaEntry_t	*upCurrent;
+technology_t	*upCurrent;
 
 int numChapters;
 int numEntries;
@@ -45,56 +18,75 @@ char upText[1024];
 
 // ===========================================================
 
-/*
-=================
+/*=================
 MN_UpDrawEntry
-=================
-*/
-void MN_UpDrawEntry( pediaEntry_t *entry )
+=================*/
+void MN_UpDrawEntry( char *id )
 {
-	menuText[TEXT_UFOPEDIA] = _(entry->text);
-	Cvar_Set( "mn_upmodel_top", "" );
-	Cvar_Set( "mn_upmodel_bottom", "" );
-	Cvar_Set( "mn_upmodel_big", "" );
-	Cvar_Set( "mn_upimage_top", "base/empty" );
-	Cvar_Set( "mn_upimage_bottom", "base/empty" );
-	if ( entry->modelTop ) Cvar_Set( "mn_upmodel_top", entry->modelTop );
-	if ( entry->modelBottom ) Cvar_Set( "mn_upmodel_bottom", entry->modelBottom );
-	if ( entry->modelBig ) Cvar_Set( "mn_upmodel_big", entry->modelBig );
-	if ( !entry->modelTop && entry->imageTop ) Cvar_Set( "mn_upimage_top", entry->imageTop );
-	if ( !entry->modelBottom && entry->imageBottom ) Cvar_Set( "mn_upimage_bottom", entry->imageBottom );
-	if ( entry->sound )
-	{
-		// TODO: play the specified sound
-	}
-	Cvar_Set( "mn_uptitle", _(entry->title) );
-	Cbuf_AddText( "mn_upfsmall\n" );
+	int i, j;
+	technology_t* t;
+	for ( i = 0; i < numTechnologies; i++ ) {
+		t = &technologies[i];
+		if ( !strcmp( id, t->id ) ) {
+			//Com_Printf(_("Displaying %s\n"), t->id); //DEBUG
+			Cvar_Set( "mn_uptitle", _(t->name) );
+			menuText[TEXT_UFOPEDIA] = _(t->description);
+			Cvar_Set( "mn_upmodel_top", "" );
+			Cvar_Set( "mn_upmodel_bottom", "" );
+			Cvar_Set( "mn_upmodel_big", "" );
+			Cvar_Set( "mn_upimage_top", "base/empty" );
+			Cvar_Set( "mn_upimage_bottom", "base/empty" );
+			if ( t->mdl_top ) Cvar_Set( "mn_upmodel_top", t->mdl_top );
+			if ( t->mdl_bottom ) Cvar_Set( "mn_upmodel_bottom", t->mdl_bottom );
+			//if ( t->mdl_big ) Cvar_Set( "mn_upmodel_big", t->mdl_big );
+			if ( !t->mdl_top && t->image_top ) Cvar_Set( "mn_upimage_top", t->image_top );
+			if ( !t->mdl_bottom &&  t->image_bottom ) Cvar_Set( "mn_upimage_bottom", t->image_bottom );
+			//if ( entry->sound )
+			//{
+				// TODO: play the specified sound
+			//}
+			Cbuf_AddText( "mn_upfsmall\n" );
 
-	if ( upCurrent && upCurrent->item )
-	{
-		int i;
-		for ( i = 0; i < csi.numODs; i++ )
-			if ( !strcmp( entry->name, csi.ods[i].kurz ) )
-			{
-				CL_ItemDescription( i );
-				break;
+			if ( upCurrent) {
+				switch ( t->type ) 
+				{
+				case RS_ARMOR:
+				case RS_WEAPON:
+					for ( j = 0; j < csi.numODs; j++ ) {
+						//Com_Printf(_("MN_UpDrawEntry: id=%s\n"),  t->id);				//DEBUG
+						//Com_Printf(_("MN_UpDrawEntry: kurz=%s\n"),   csi.ods[j].kurz );	//DEBUG
+						if ( !strcmp( t->provides, csi.ods[j].kurz ) ) {
+							CL_ItemDescription( j );
+							//Com_Printf(_("MN_UpDrawEntry: drawing item-desc for %s\n"),  t->id); //DEBUG
+							break;
+						}
+					}
+					break;
+				case RS_TECH:
+					// TODO
+				case RS_CRAFT:
+					// TODO
+					break;
+				case RS_BUILDING:
+					// TODO
+					break;
+				default:
+					menuText[TEXT_STANDARD] = NULL;
+					break;
+				}
 			}
+			else
+				menuText[TEXT_STANDARD] = NULL;
+		}
 	}
-	else if ( upCurrent && upCurrent->building )
-	{
-
-	}
-	else menuText[TEXT_STANDARD] = NULL;
 }
 
-/*
-=================
+/*=================
 UP_OpenWith
 
 open the ufopedia from everywhere
 with the entry given through name
-=================
-*/
+=================*/
 void UP_OpenWith ( char *name )
 {
 	Cbuf_AddText( "mn_push ufopedia\n" );
@@ -102,70 +94,62 @@ void UP_OpenWith ( char *name )
 	Cbuf_AddText( va( "ufopedia %s\n", name ) );
 }
 
-
-/*
-=================
+/*=================
 MN_FindEntry_f
-=================
-*/
+=================*/
 void MN_FindEntry_f ( void )
 {
-	char *name;
-	pediaEntry_t *entry;
+	char *id;
+	technology_t *t;
 	pediaChapter_t *upc;
 	int i;
-
+	
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf(_("Usage: ufopedia <name>\n"));
+		Com_Printf(_("Usage: ufopedia <id>\n"));
 		return;
 	}
 
 	//what are we searching for?
-	name = Cmd_Argv( 1 );
-
-	if ( ! strcmp( name, "" ) )
+	id = Cmd_Argv( 1 );
+	
+	if ( ! strcmp( id, "" ) ) {
+		Com_Printf(_("MN_FindEntry_f: No PediaEntry given as parameter\n"));
 		return;
+	}
+	
+	Com_Printf(_("MN_FindEntry_f: id=\"%s\"\n"), id); //DEBUG
 
 	//search in all chapters
-	for ( i = 0; i < numChapters; i++ )
-	{
+	for ( i = 0; i < numChapters; i++ ) {
 		upc = &upChapters[i];
 
 		//search from beginning
-		entry = upc->first;
+		t = upc->first;
 
 		//empty chapter
-		if ( ! entry )
+		if ( ! t )
 			continue;
-
 		do
 		{
-			if ( !strcmp ( entry->name, name ) )
-			{
-				upCurrent = entry;
-				MN_UpDrawEntry( upCurrent );
+			if ( !strcmp ( t->id, id ) ) {
+				upCurrent = t;
+				MN_UpDrawEntry( upCurrent->id );
 				return;
 			}
-
-			if (entry->next)
-				entry = entry->next;
+			if (t->next)
+				t = t->next;
 			else
-				entry = NULL;
-
-		} while ( entry );
-
+				t = NULL;
+		} while ( t );
 	}
-
 	//if we can not find it
-	Com_Printf(_("No PediaEntry found for %s\n"), name );
+	Com_Printf(_("MN_FindEntry_f: No PediaEntry found for %s\n"), id );
 }
 
-/*
-=================
+/*=================
 MN_UpContent_f
-=================
-*/
+=================*/
 void MN_UpContent_f( void )
 {
 	char *cp;
@@ -174,7 +158,7 @@ void MN_UpContent_f( void )
 	cp = upText;
 	for ( i = 0; i < numChapters; i++ )
 	{
-		strcpy( cp, upChapters[i].title );
+		strcpy( cp, upChapters[i].name );
 		cp += strlen( cp );
 		*cp++ = '\n';
 	}
@@ -193,30 +177,31 @@ void MN_UpContent_f( void )
 }
 
 
-/*
-=================
+/*=================
 MN_UpPrev_f
-=================
-*/
+=================*/
 void MN_UpPrev_f( void )
 {
 	pediaChapter_t *upc;
 
 	// get previous entry
 	if ( !upCurrent ) return;
+
 	if ( upCurrent->prev )
 	{
+		
 		upCurrent = upCurrent->prev;
-		MN_UpDrawEntry( upCurrent );
+		MN_UpDrawEntry( upCurrent->id );
 		return;
 	}
 
 	// change chapter
-	for ( upc = upCurrent->chapter - 1; upc - upChapters >= 0; upc-- )
+	
+	for ( upc = upCurrent->up_chapter - 1; upc - upChapters >= 0; upc-- )
 		if ( upc->last )
 		{
 			upCurrent = upc->last;
-			MN_UpDrawEntry( upCurrent );
+			MN_UpDrawEntry( upCurrent->id );
 			return;
 		}
 
@@ -224,11 +209,9 @@ void MN_UpPrev_f( void )
 	MN_UpContent_f();
 }
 
-/*
-=================
+/*=================
 MN_UpNext_f
-=================
-*/
+=================*/
 void MN_UpNext_f( void )
 {
 	pediaChapter_t *upc;
@@ -237,19 +220,19 @@ void MN_UpNext_f( void )
 	if ( upCurrent && upCurrent->next )
 	{
 		upCurrent = upCurrent->next;
-		MN_UpDrawEntry( upCurrent );
+		MN_UpDrawEntry( upCurrent->id );
 		return;
 	}
 
 	// change chapter
 	if ( !upCurrent ) upc = upChapters;
-	else upc = upCurrent->chapter + 1;
+	else upc = upCurrent->up_chapter + 1;
 
 	for ( ; upc - upChapters < numChapters; upc++ )
 		if ( upc->first )
 		{
 			upCurrent = upc->first;
-			MN_UpDrawEntry( upCurrent );
+			MN_UpDrawEntry( upCurrent->id );
 			return;
 		}
 
@@ -257,11 +240,9 @@ void MN_UpNext_f( void )
 }
 
 
-/*
-=================
+/*=================
 MN_UpClick_f
-=================
-*/
+=================*/
 void MN_UpClick_f( void )
 {
 	int num;
@@ -273,7 +254,7 @@ void MN_UpClick_f( void )
 	if ( num < numChapters && upChapters[num].first )
 	{
 		upCurrent = upChapters[num].first;
-		MN_UpDrawEntry( upCurrent );
+		MN_UpDrawEntry( upCurrent->id );
 	}
 }
 
@@ -281,11 +262,9 @@ void MN_UpClick_f( void )
 // ===========================================================
 
 
-/*
-=================
+/*=================
 MN_ResetUfopedia
-=================
-*/
+=================*/
 void MN_ResetUfopedia( void )
 {
 	// reset menu structures
@@ -314,148 +293,10 @@ void MN_ResetUfopedia( void )
 
 // ===========================================================
 
-#define	EDOFS(x)	(int)&(((pediaEntry_t *)0)->x)
-
-value_t edps[] =
-{
-	{ "chapter",	V_STRING,	0 },
-	{ "title",		V_STRING,	EDOFS( title ) },
-	{ "sound",	V_STRING,		EDOFS( sound ) },
-	{ "image_top",	V_STRING,		EDOFS( imageTop ) },
-	{ "image_bottom",	V_STRING,		EDOFS( imageBottom ) },
-	{ "mdl_top",	V_STRING,		EDOFS( modelTop ) },
-	{ "mdl_bottom",	V_STRING,		EDOFS( modelBottom ) },
-	{ "mdl_big",	V_STRING,		EDOFS( modelBig ) },
-	{ "text",	V_STRING,		EDOFS( text ) },
-	{ "item",		V_BOOL,		EDOFS( item ) },
-	{ "building",		V_BOOL,		EDOFS( building ) },
-	{ NULL,	0, 0 }
-};
-
-/*
-======================
-MN_ParseUpEntry
-======================
-*/
-void MN_ParseUpEntry( char *title, char **text )
-{
-	pediaEntry_t *entry;
-	value_t *edp;
-	char	*errhead = _("MN_ParseUpEntry: unexptected end of file (names ");
-	char	*token;
-
-	// get name list body body
-	token = COM_Parse( text );
-	if ( !*text || strcmp( token, "{" ) )
-	{
-		Com_Printf( _("MN_ParseUpEntry: entry def \"%s\" without body ignored\n"), title );
-		return;
-	}
-	if ( numEntries >= MAX_PEDIAENTRIES )
-	{
-		Com_Printf( _("MN_ParseUpEntry: too many ufopedia entries\n"), title );
-		return;
-	}
-
-	// new entry
-	entry = &upEntries[numEntries++];
-	memset( entry, 0, sizeof( pediaEntry_t ) );
-	strcpy( entry->name, title );
-
-	do {
-		// get the name type
-		token = COM_EParse( text, errhead, title );
-		if ( !*text ) break;
-		if ( *token == '}' ) break;
-
-#if 0 // old method without gettext
-		if ( *token == '{' )
-		{
-			// parse text
-			qboolean skip;
-
-			entry->text = upData;
-			token = *text;
-			skip = true;
-			while ( *token != '}' )
-			{
-				if ( *token > 32 )
-				{
-					skip = false;
-					if ( *token == '\\' ) *upData++ = '\n';
-					else *upData++ = *token;
-				}
-				else if ( *token == 32 )
-				{
-					if ( !skip ) *upData++ = 32;
-				}
-				else skip = true;
-				token++;
-			}
-			*upData++ = 0;
-			*text = token+1;
-			continue;
-		}
-#endif
-		// get values
-		for ( edp = edps; edp->string; edp++ )
-			if ( !strcmp( token, edp->string ) )
-			{
-				// found a definition
-				token = COM_EParse( text, errhead, title );
-				if ( !*text ) return;
-
-				if ( edp->ofs && edp->type != V_NULL ) Com_ParseValue( entry, token, edp->type, edp->ofs );
-				else if ( edp->type == V_NULL )
-				{
-					strcpy( upData, token );
-					*(char **)((byte *)entry + edp->ofs) = upData;
-					upData += strlen( token ) + 1;
-				}
-				else
-				{
-					// find chapter
-					int i;
-					for ( i = 0; i < numChapters; i++ )
-						if ( !strcmp( upChapters[i].name, token ) )
-						{
-							// add entry to chapter
-							entry->chapter = &upChapters[i];
-							if ( !upChapters[i].first )
-							{
-								upChapters[i].first = entry;
-								upChapters[i].last = entry;
-							}
-							else
-							{
-								pediaEntry_t *old;
-								upChapters[i].last = entry;
-								old = upChapters[i].first;
-								while ( old->next ) old = old->next;
-								old->next = entry;
-								entry->prev = old;
-							}
-							break;
-						}
-					if ( i == numChapters )
-						Com_Printf( _("MN_ParseUpEntry: chapter \"%s\" not found (entry %s)\n"), token, title );
-				}
-				break;
-			}
-
-		if ( !edp->string )
-			Com_Printf( _("MN_ParseUpEntry: unknown token \"%s\" ignored (entry %s)\n"), token, title );
-
-	} while ( *text );
-}
-
-
-/*
-======================
+/*======================
 MN_ParseUpChapters
-======================
-*/
-void MN_ParseUpChapters( char *title, char **text )
+======================*/
+void MN_ParseUpChapters( char *id, char **text )
 {
 	char	*errhead = _("MN_ParseUupChapters: unexptected end of file (names ");
 	char	*token;
@@ -463,32 +304,31 @@ void MN_ParseUpChapters( char *title, char **text )
 	// get name list body body
 	token = COM_Parse( text );
 
-	if ( !*text || strcmp( token, "{" ) )
-	{
-		Com_Printf( _("MN_ParseUupChapters: chapter def \"%s\" without body ignored\n"), title );
+	if ( !*text || strcmp( token, "{" ) ) {
+		Com_Printf( _("MN_ParseUupChapters: chapter def \"%s\" without body ignored\n"), id );
 		return;
 	}
 
 	do {
-		// get the name
-		token = COM_EParse( text, errhead, title );
+		// get the id
+		token = COM_EParse( text, errhead, id );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
 		// add chapter
-		if ( numChapters >= MAX_PEDIACHAPTERS )
-		{
-			Com_Printf( _("MN_ParseUupChapters: too many chapter defs\n"), title );
+		if ( numChapters >= MAX_PEDIACHAPTERS ) {
+			Com_Printf( _("MN_ParseUupChapters: too many chapter defs\n"), id );
 			return;
 		}
 		memset( &upChapters[numChapters], 0, sizeof( pediaChapter_t ) );
-		strncpy( upChapters[numChapters].name, token, MAX_VAR );
+		strncpy( upChapters[numChapters].id, token, MAX_VAR );
 
-		// get the title
-		token = COM_EParse( text, errhead, title );
+		// get the name
+		token = COM_EParse( text, errhead, id );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
-		strncpy( upChapters[numChapters].title, _(token), MAX_VAR );
+		strncpy( upChapters[numChapters].name, _(token), MAX_VAR );
+		//Com_Printf( _("MN_ParseUupChapters: parsed chapter %s \n"), upChapters[numChapters].id ); //DEBUG
 
 		numChapters++;
 	} while ( *text );

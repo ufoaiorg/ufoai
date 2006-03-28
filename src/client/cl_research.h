@@ -22,9 +22,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef TECHNOLOGY_DEFINED
 #define TECHNOLOGY_DEFINED 1
 
+#include "cl_ufopedia.h"
+
+#define MAX_RESEARCHDISPLAY 28	// number of the available string (in the list) in the research menu
 #define MAX_RESEARCHLIST 32
 #define MAX_TECHNOLOGIES 256
 #define MAX_TECHLINKS 32
+
+
 
 typedef enum researchStatus_s
 {
@@ -43,35 +48,51 @@ typedef enum researchType_s
 	RS_BUILDING
 } researchType_t;
 
-typedef struct research_requirements_s
+typedef struct stringlist_s
 {
-	char	list[MAX_TECHLINKS][MAX_VAR];
-	int		numEntries;
-} research_requirements_t;
+	char	list[MAX_TECHLINKS][MAX_VAR];	// A list of strings.
+	int		numEntries;					// The number of used strings.
+} stringlist_t;
 
 typedef struct technology_s
 {
-	char	id[MAX_VAR];
-	char	name[MAX_VAR];
-	float	time;
-	research_requirements_t	requires;
-	char	provides[MAX_VAR];
-	char	description[MAX_VAR];
-	researchType_t	type;
-	researchStatus_t	statusResearch;
-	byte	statusCollected;	// Did we loot this item?
+	char	id[MAX_VAR];				// Short (unique) id/name.
 	
+	researchType_t	type;
+	char	name[MAX_VAR];			// Full name of this technology.
+	struct	pediaChapter_s	*up_chapter;	// pedia chapter as stored in research.ufo.
+	
+	char	description[MAX_VAR];		// Just a short text-id to get this via gettext.
+	
+	stringlist_t	requires;
+	char	provides[MAX_VAR];			// The item that this technology enables.
+	float	time;					// The time that is needed to research this tech. (in days)
+	researchStatus_t	statusResearch;	
+	struct	building_s	*lab;		// Where this techology is currently researched.
+	struct	building_s	*workshop;	// Where the 'provided' item is currently produced.
+	
+	
+	char	image_top[MAX_VAR];
+	char	image_bottom[MAX_VAR];
+	char	mdl_top[MAX_VAR];
+	char	mdl_bottom[MAX_VAR];
+	
+	byte	statusCollected;				// Did we loot this item?
+	
+	struct	technology_s *prev;			// Previous tech in pedia.
+	struct	technology_s *next;			// Next tech in pedia.
 } technology_t;
 
 #define	TECHFS(x)	(int)&(((technology_t *)0)->x)
 
 // use this for saving and allocating
 extern	technology_t	technologies[MAX_TECHNOLOGIES];
+extern	int	numTechnologies;
 
 void MN_ResetResearch( void );
 void CL_CheckResearchStatus( void );
 void RS_UpdateData ( void );
-void MN_ParseTechnologies ( char* title, char** text );
+void RS_ParseTechnologies ( char* title, char** text );
 byte RS_ItemIsResearched(char *id_provided );
 
 #endif /*TECHNOLOGY_DEFINED*/

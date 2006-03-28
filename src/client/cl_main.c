@@ -1260,11 +1260,9 @@ void CL_Precache_f (void)
 }
 
 
-/*
-=================
+/*=================
 CL_ParseScriptFirst
-=================
-*/
+=================*/
 void CL_ParseScriptFirst( char *type, char *name, char **text )
 {
 	// check for client interpretable scripts
@@ -1277,20 +1275,17 @@ void CL_ParseScriptFirst( char *type, char *name, char **text )
 	else if ( !strcmp( type, "production" ) ) MN_ParseProductions( name, text );
 }
 
-/*
-=================
+/*=================
 CL_ParseScriptSecond
-=================
-*/
+=================*/
 void CL_ParseScriptSecond( char *type, char *name, char **text )
 {
 	// check for client interpretable scripts
 	if ( !strcmp( type, "campaign" ) ) CL_ParseCampaign( name, text );
 	else if ( !strcmp( type, "stage" ) ) CL_ParseStage( name, text );
-	else if ( !strcmp( type, "up_entry" ) ) MN_ParseUpEntry( name, text );
 	//TODO: Parse Base
 	else if ( !strcmp( type, "base" ) ) MN_ParseBases( name, text );
-	else if ( !strcmp( type, "tech" ) ) MN_ParseTechnologies( name, text );
+	else if ( !strcmp( type, "tech" ) ) RS_ParseTechnologies( name, text );
 }
 
 
