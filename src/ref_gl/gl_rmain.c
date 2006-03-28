@@ -1769,7 +1769,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 		qglGetProgramStringARB = (void*)qwglGetProcAddress("glGetProgramStringARB");
 		qglIsProgramARB = (void*)qwglGetProcAddress("glIsProgramARB");
 
-		
+		GL_ShaderInit();
 
 //		water_shader = LoadProgram_ARB_FP("arb_water");
 //		water_shader = CompileWaterShader();

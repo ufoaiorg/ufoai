@@ -81,7 +81,7 @@ char *ea_strings[EA_NUM_EVENTACTION] =
 int ea_values[EA_NUM_EVENTACTION] =
 {
 	V_NULL,
-	V_STRING,
+	V_LONGSTRING,
 
 	V_NULL,
 	V_NULL,
@@ -1492,10 +1492,7 @@ void MN_DrawMenus( void )
 				node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP) )
 			{
 				// if construct
-
-				if ( node->depends.var && 
-				strcmp( node->depends.value, (Cvar_Get( node->depends.var, node->depends.value, 0 ))->string 
-				) )
+				if ( node->depends.var && strcmp( node->depends.value, (Cvar_Get( node->depends.var, node->depends.value, 0 ))->string ) )
 					continue;
 
 				// mouse effects

@@ -46,6 +46,9 @@ cvar_t	*sv_noreload;			// don't reload level state when reentering
 
 cvar_t	*sv_maxclients;
 cvar_t	*sv_showclamp;
+cvar_t	*sv_enablemorale;
+cvar_t	*maxsoldiers;
+cvar_t	*maxsoldiersperplayer;
 
 cvar_t	*hostname;
 cvar_t	*public_server;			// should heartbeats be sent
@@ -940,6 +943,9 @@ void SV_Init (void)
 	sv_paused = Cvar_Get ("paused", "0", 0);
 	sv_timedemo = Cvar_Get ("timedemo", "0", 0);
 	sv_enforcetime = Cvar_Get ("sv_enforcetime", "0", 0);
+	sv_enablemorale = Cvar_Get ("sv_enablemorale", "1", CVAR_ARCHIVE|CVAR_SERVERINFO);
+	maxsoldiers = Cvar_Get ("maxsoldiers", "4", CVAR_ARCHIVE|CVAR_SERVERINFO);
+	maxsoldiersperplayer = Cvar_Get ("maxsoldiersperplayer", "8", CVAR_ARCHIVE|CVAR_SERVERINFO);
 	allow_download = Cvar_Get ("allow_download", "0", CVAR_ARCHIVE);
 	allow_download_players = Cvar_Get ("allow_download_players", "0", CVAR_ARCHIVE);
 	allow_download_models = Cvar_Get ("allow_download_models", "1", CVAR_ARCHIVE);

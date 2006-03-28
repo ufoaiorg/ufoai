@@ -276,10 +276,10 @@ void CL_ActorUpdateCVars( void )
 			// panic
 			sprintf( infoText, _("Currently panics!\n") );
 		} else {
-			// FIXME: How do you determine whether we are server or client
- 			if ( Cvar_VariableValue("maxclients") > 1
+			// in multiplayer we should be able to use the aliens weapons
+ 			if ( Cvar_VariableValue("maxclients") == 1
 			  && cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE
-			  && selWeapon && RS_ItemIsResearched(csi.ods[ selWeapon->item.t ].kurz) ) //csi.ods[ selWeapon->item.t ].researchNeeded )
+			  && selWeapon && RS_ItemIsResearched(csi.ods[ selWeapon->item.t ].kurz) )
 			{
 				Com_Printf( _( "You cannot use this unknown alien weapon.\n") );
 				cl.cmode = M_MOVE;
@@ -290,7 +290,6 @@ void CL_ActorUpdateCVars( void )
 				CL_RefreshWeaponButtons( 0 );
 				if ( selWeapon && selFD )
 				{
-
 					Com_sprintf( infoText, MAX_MENUTEXTLEN,
 							"%s\n%s (%i) [%i%%] %i\n",
 							_(csi.ods[selWeapon->item.t].name),

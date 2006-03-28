@@ -24,12 +24,10 @@ shaderlist_t* shaderList;
 
 /*
 ============
-ShaderInit
-
-
+GL_ShaderInit
 ============
 */
-void ShaderInit( void )
+void GL_ShaderInit( void )
 {
 	// only create the list if supported
 	if ( gl_state.arb_fragment_program == true )
@@ -38,9 +36,7 @@ void ShaderInit( void )
 
 /*
 ============
-ShaderQuit
-
-Todo: Call me
+GL_ShutdownShaders
 ============
 */
 void GL_ShutdownShaders( void )

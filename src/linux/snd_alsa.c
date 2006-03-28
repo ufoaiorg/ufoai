@@ -22,7 +22,7 @@
 static snd_pcm_t *pcm_handle;
 static snd_pcm_hw_params_t *hw_params;
 
-static struct sndinfo * si;
+//static struct sndinfo * si;
 
 static int sample_bytes;
 static int buffer_bytes;

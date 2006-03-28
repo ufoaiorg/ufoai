@@ -2554,7 +2554,8 @@ void Grid_MoveMarkRoute( struct routing_s *map, int xl, int yl, int xh, int yh )
 				}
 }
 
-
+// just to fix warnings
+void CL_ResetMouseLastPos( void );
 /*
 ============
 Grid_MoveCalc

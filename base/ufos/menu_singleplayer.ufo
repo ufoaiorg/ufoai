@@ -90,7 +90,7 @@ menu singleplayer
 		pos		"640 380"
 		texl	"0 192"
 		texh	"256 256"
-		click	{ cmd game_new }
+		click	{ cmd "maxclients 1; game_new" }
 		out		{ *button_new image menu/single_buttons1 }
 		in		{ *button_new image menu/single_buttons1a }
 	}

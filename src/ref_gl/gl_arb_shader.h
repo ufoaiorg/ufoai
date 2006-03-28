@@ -35,6 +35,9 @@ typedef struct shaderlist_s
 shader_t* CreateShader(char* name);
 void UseShader(shader_t* shader);
 
+void GL_ShutdownShaders( void );
+void GL_ShaderInit( void );
+
 shaderlist_t* CreateShaderList(void);
 void UseShaderFromList(char* name, shaderlist_t* shaderlist);
 #endif

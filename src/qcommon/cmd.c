@@ -625,7 +625,7 @@ void Cmd_TokenizeString (char *text, qboolean macroExpand)
 
 	// clear the args from the last string
 	for (i=0 ; i<cmd_argc ; i++)
-		Z_Free (cmd_argv[i]);
+		Z_Free(cmd_argv[i]);
 
 	cmd_argc = 0;
 	cmd_args[0] = 0;

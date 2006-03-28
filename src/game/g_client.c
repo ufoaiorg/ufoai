@@ -2182,9 +2182,6 @@ void G_ClientTeamInfo( player_t *player )
 		if ( j < globals.num_edicts )
 		{
 			// here the actors actually spawn
-			// TODO: Is this only singleplayer?
-			//       or do need to check maxsoldiers here, too?
-
 			level.num_alive[ent->team]++;
 			level.num_spawned[ent->team]++;
 			ent->type = ET_ACTOR;

@@ -242,7 +242,7 @@ void LE_Status ( void )
 
 	if ( ! numLEs ) return;
 
-	// only multiplayer - not our round?
+	// only multiplayer - but maybe not our round?
 	if ( (int)Cvar_VariableValue("maxclients") > 1 && cls.team != cl.actTeam )
 		return;
 
