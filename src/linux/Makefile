@@ -14,7 +14,7 @@
 # game.so is automatically built.
 BUILD_SDLUFO=YES	# use SDL for cdrom, sound and maybe renderer (selectable)
 BUILD_GLX=YES		# X11 GLX driver. Works somewhat ok.
-BUILD_DEDICATED=YES	# build a dedicated ufo server
+BUILD_DEDICATED=NO	# build a dedicated ufo server
 BUILD_ALSA=YES		# build with alsa-support
 HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
@@ -22,7 +22,7 @@ BUILD_JPEG=NO		# jpeg-6 compile in or link in?
 BUILD_FREETYPE=NO	# build with freetype support?
 BUILD_WITH_DGA=YES	# dga support compiled in
 BUILD_WITH_VIDMODE=YES	# vidmode support
-BUILD_WITH_JOYSTICK=YES	# joystick support
+BUILD_WITH_JOYSTICK=NO	# joystick support
 
 # (hopefully) end of configurable options
 

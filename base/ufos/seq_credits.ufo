@@ -1,22 +1,20 @@
 sequence credits
 {
-	cmd "ov_stop;music merry;ov_start;"
+	cmd "ov_stop;music mission2;ov_start;"
 	cmd "seq_animspeed 730;"
-	
+
 	precache models
 	{
 		models/civilians/male/body01.md2
 		models/civilians/male/head01.md2
-		models/soldiers/male/light.md2
-		models/soldiers/male/head04.md2
-		models/soldiers/male/head05.md2
-		models/soldiers/male/head06.md2
-		models/soldiers/male/head08.md2
+		models/soldiers/m/body.md2
+		models/soldiers/mlight/body.md2
+		models/soldiers/mmedium/body.md2
+		models/soldiers/m/head04.md2
+		models/soldiers/m/head05.md2
+		models/soldiers/mmedium/head01.md2
 		models/aliens/ortnok/body01.md2
 		models/aliens/ortnok/head02.md2
-		models/animals/penguin.md2
-		models/aliens/blue/body01.md2
-		models/aliens/blue/head01.md2
 		models/objects/alienship1_hull.md2
 		models/objects/alienship1_engines_1.md2
 		models/objects/alienship1_engines_2.md2
@@ -32,12 +30,11 @@ sequence credits
 		angles	"30 225 0"
 		dist	100
 	}
-	
-
 
 	model herby_body
 	{
 		model	models/civilians/male/body01.md2
+		skin	2
 		anim	walk0
 		origin	"-277.5 0 0"
 		speed	"60 0 0"
@@ -49,7 +46,7 @@ sequence credits
 		tag		tag_head
 	}
 	wait 3.625
-	
+
 	model herby_head { omega "-25 40 0" }
 	wait 1.0
 
@@ -57,25 +54,25 @@ sequence credits
 	{
 		text	"Code, Visual Effects"
 		pos		"974 50"		align	ur
-		color	"1 0 0 0"		fade	"0 0 0 1"
+		color	"0 1 0 0"		fade	"0 0 0 1"
 	}
 	2dobj herby_name
 	{
 		text	"Herby"
 		pos		"974 75"		align	ur
 		color	"1 1 1 0"		fade	"0 0 0 1"
-		
+
 	}
 	model herby_body { anim stand_still speed "0 0 0" }
 	model herby_head { omega "0 0 0" }
 	wait 0.2
-	
+
 	model herby_body { anim stand0 speed "0 0 0" }
 	wait 1.8
-	
+
 	model sparx_body
 	{
-		model	models/soldiers/male/light.md2
+		model	models/soldiers/m/body.md2
 		anim	walk0
 		origin	"0 -270 0"
 		speed	"0 60 0"
@@ -83,90 +80,92 @@ sequence credits
 	}
 	model sparx_head
 	{
-		model	models/soldiers/male/head05.md2
+		model	models/soldiers/m/head03a.md2
 		parent	sparx_body
 		tag		tag_head
 	}
 	wait 2.0
-	
+
 	2dobj herby_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj herby_name { fade "0 0 0 -1" speed "0 100" }
-	
+
 	model herby_body { anim walk0 speed "50 0 0" }
 	model herby_head { omega "25 -40 0" }
 	wait 1.5
-	
+
 	model sparx_head { omega "-20 -30 0" }
 	model herby_head { omega "0 0 0" }
 	wait 1.0
-	
+
 	rem herby_body
 	rem herby_head
 	rem herby_text
 	rem herby_name
-	
+
 	2dobj sparx_text
 	{
 		text	"Maps, Textures, Art"
 		pos		"50 50"		align	ul
-		color	"1 0 0 0"	fade	"0 0 0 1"
+		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj sparx_name
 	{
 		text	"SparX"
 		pos		"50 75"		align	ul
 		color	"1 1 1 0"	fade	"0 0 0 1"
-		
+
 	}
 	model sparx_body { anim stand_still speed "0 0 0" }
 	model sparx_head { omega "0 0 0" }
 	wait 0.2
-	
+
 	model sparx_body { anim stand0 speed "0 0 0" }
 	wait 1.8
 
 	model rasta_body
 	{
-		model	models/soldiers/male/light.md2
+		model	models/soldiers/mmedium/body.md2
+		skin	3
 		anim	walk2
 		origin	"-270 0 0"
 		speed	"60 0 0"
 	}
 	model rasta_head
 	{
-		model	models/soldiers/male/head04.md2
+		model	models/soldiers/mmedium/head01a.md2
+		skin	3
 		parent	rasta_body
 		tag		tag_head
 	}
 	wait 2.0
-	
+
 	2dobj sparx_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj sparx_name { fade "0 0 0 -1" speed "0 100" }
-	
+
 	model sparx_body { anim walk2 speed "0 50 0" }
 	model sparx_head { omega "20 30 0" }
 	wait 1.5
-	
+
 	model rasta_head { omega "-20 30 0" }
 	model sparx_head { omega "0 0 0" }
 	wait 1.0
-		
+
 	rem sparx_body
 	rem sparx_head
 	rem sparx_text
 	rem sparx_name
-	
+
 	2dobj rasta_text
 	{
 		text	"Models, Animations"
 		pos		"974 50"	align	ur
-		color	"1 0 0 0"	fade	"0 0 0 1"
+		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj rasta_name
 	{
 		text	"Rastaman"
 		pos		"974 75"	align	ur
-		color	"1 1 1 0"	fade	"0 0 0 1"	
+		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
 	model rasta_body { anim stand_still speed "0 0 0" }
 	model rasta_head { omega "0 0 0" }
@@ -191,14 +190,14 @@ sequence credits
 		tag		tag_head
 	}
 	wait 2.0
-	
+
 	2dobj rasta_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj rasta_name { fade "0 0 0 -1" speed "0 100" }
-	
+
 	model rasta_body { anim walk2 speed "50 0 0" }
 	model rasta_head { omega "20 -30 0" }
 	wait 1.5
-		
+
 	model vanethian_head { omega "0 -30 0" }
 	model rasta_head { omega "0 0 0" }
 	wait 1.0
@@ -207,19 +206,19 @@ sequence credits
 	rem rasta_head
 	rem rasta_text
 	rem rasta_name
-	
+
 	2dobj vanethian_text
 	{
 		text	"Music"
 		pos		"50 50"		align	ul
-		color	"1 0 0 0"	fade	"0 0 0 1"
+		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj vanethian_name
 	{
 		text	"Vanethian"
 		pos		"50 75"		align	ul
 		color	"1 1 1 0"	fade	"0 0 0 1"
-		
+
 	}
 	model vanethian_body { anim stand_still speed "0 0 0" }
 	model vanethian_head { omega "0 0 0" }
@@ -230,26 +229,27 @@ sequence credits
 
 	model ww3_body
 	{
-		model	models/soldiers/male/light.md2
+		model	models/soldiers/mlight/body.md2
+		skin	2
 		anim	walk2
 		origin	"-270 0 0"
 		speed	"60 0 0"
 	}
 	model ww3_head
 	{
-		model	models/soldiers/male/head06.md2
+		model	models/soldiers/m/head02a.md2
 		parent	ww3_body
 		tag		tag_head
 	}
 	wait 2.0
-	
+
 	2dobj vanethian_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj vanethian_name { fade "0 0 0 -1" speed "0 100" }
-	
+
 	model vanethian_body { anim walk2 speed "0 50 0" }
 	model vanethian_head { omega "0 30 0" }
 	wait 1.5
-	
+
 	model ww3_head { omega "-20 30 0" }
 	wait 1.0
 
@@ -257,187 +257,50 @@ sequence credits
 	rem vanethian_head
 	rem vanethian_text
 	rem vanethian_name
-	
+
 	2dobj ww3_text
 	{
 		text	"Webdesign"
 		pos		"974 50"	align	ur
-		color	"1 0 0 0"	fade	"0 0 0 1"
+		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj ww3_name
 	{
 		text	"Ww 3"
 		pos		"974 75"	align	ur
-		color	"1 1 1 0"	fade	"0 0 0 1"	
+		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
 	model ww3_body { anim stand_still speed "0 0 0" }
 	model ww3_head { omega "0 0 0" }
 	wait 0.2
 
 	model ww3_body { anim stand0 speed "0 0 0" }
-	wait 1.8	
+	wait 3.8
 
-	model brain_body
-	{
-		model	models/animals/penguin.md2
-		anim	walk0
-		origin	"0 -270 0"
-		angles	"0 90 0"
-		speed	"0 33 0"
-	}
-	wait 2.0
-	
 	2dobj ww3_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj ww3_name { fade "0 0 0 -1" speed "0 100" }
-	
+
 	model ww3_body { anim walk2 speed "50 0 0" }
 	model ww3_head { omega "20 -30 0" }
 	wait 1.0
-	
+
 	model ww3_head { omega "0 0 0" }
 	wait 2.5
-	
+
 	rem ww3_body
 	rem ww3_head
 	rem ww3_text
 	rem ww3_name
-	
-	2dobj brain_text
-	{
-		text	"Code, Maps"
-		pos		"50 50"		align	ul
-		color	"1 0 0 0"	fade	"0 0 0 1"
-	}
-	2dobj brain_name
-	{
-		text	"Mattn"
-		pos		"50 75"		align	ul
-		color	"1 1 1 0"	fade	"0 0 0 1"
-	}
-	wait 2.0
-	
-	model sacrusha_body
-	{
-		model	models/aliens/blue/body01.md2
-		anim	walk2
-		origin	"-270 0 0"
-		speed	"60 0 0"
-	}
-	model sacrusha_head
-	{
-		model	models/aliens/blue/head01.md2
-		parent	sacrusha_body
-		tag		tag_head
-	}
-	wait 2.0
-	
-	2dobj brain_text { fade "0 0 0 -1" speed "0 60" }
-	2dobj brain_name { fade "0 0 0 -1" speed "0 100" }	
-	wait 1.5
-	
-	model sacrusha_head { omega "-20 30 0" }
-	wait 1.0
-		
-	rem brain_body
-	rem brain_head
-	rem brain_text
-	rem brain_name
-	
-	2dobj sacrusha_text
-	{
-		text	"Public Relations, Code"
-		pos		"974 50"	align	ur
-		color	"1 0 0 0"	fade	"0 0 0 1"
-	}
-	2dobj sacrusha_name
-	{
-		text	"Sacrusha"
-		pos		"974 75"	align	ur
-		color	"1 1 1 0"	fade	"0 0 0 1"	
-	}
-	model sacrusha_body { anim stand_still speed "0 0 0" }
-	model sacrusha_head { omega "0 0 0" }
-	wait 0.2
 
-	model sacrusha_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	model hullbreach_body
-	{
-		model	models/soldiers/male/light.md2
-		skin	1
-		anim	walk2
-		origin	"0 -270 0"
-		angles	"0 90 0"
-		speed	"0 60 0"
-	}
-	model hullbreach_head
-	{
-		model	models/soldiers/male/head08.md2
-		parent	hullbreach_body
-		tag		tag_head
-	}
-	wait 2.0
-	
-	2dobj sacrusha_text { fade "0 0 0 -1" speed "0 60" }
-	2dobj sacrusha_name { fade "0 0 0 -1" speed "0 100" }
-	
-	model sacrusha_body { anim walk2 speed "50 0 0" }
-	model sacrusha_head { omega "20 -30 0" }
-	wait 1.5
-		
-	model hullbreach_head { omega "-20 -30 0" }
-	model sacrusha_head { omega "0 0 0" }
-	wait 1.0
-
-	rem sacrusha_body
-	rem sacrusha_head
-	rem sacrusha_text
-	rem sacrusha_name
-	
-	2dobj hullbreach_text
-	{
-		text	"Additional Models"
-		pos		"50 50"		align	ul
-		color	"1 0 0 0"	fade	"0 0 0 1"
-	}
-	2dobj hullbreach_name
-	{
-		text	"Hullbreach"
-		pos		"50 75"		align	ul
-		color	"1 1 1 0"	fade	"0 0 0 1"
-		
-	}
-	model hullbreach_body { anim stand_still speed "0 0 0" }
-	model hullbreach_head { omega "0 0 0" }
-	wait 0.2
-
-	model hullbreach_body { anim stand0 speed "0 0 0" }
-	wait 3.8
-	
-	2dobj hullbreach_text { fade "0 0 0 -1" speed "0 60" }
-	2dobj hullbreach_name { fade "0 0 0 -1" speed "0 100" }
-	
-	model hullbreach_body { anim walk2 speed "0 50 0" }
-	model hullbreach_head { omega "20 30 0" }
-	wait 2.5
-	
-	rem hullbreach_body
-	rem hullbreach_head
-	rem hullbreach_text
-	rem hullbreach_name
-	
-	wait 2.0
-	
 	// ============================
 	// Special Thanks
 	// ============================
-	
+
 	2dobj special_thx
 	{
 		text	"Special Thanks To"
 		pos		"512 768"		align	uc
-		color	"1 0 0 1"
+		color	"0 1 0 1"
 		speed	"0 -80"
 	}
 	2dobj id
@@ -446,25 +309,11 @@ sequence credits
 		pos		"512 810"		align	uc
 		color	"1 1 1 1"
 		speed	"0 -80"
-	}	
+	}
 	2dobj engine
 	{
 		text	"Quake 2 Engine"
 		pos		"512 835"		align	uc
-		color	".7 .7 .7 1"
-		speed	"0 -80"
-	}	
-	2dobj xiph
-	{
-		text	"Xiph.Org Foundation"
-		pos		"512 885"		align	uc
-		color	"1 1 1 1"
-		speed	"0 -80"
-	}	
-	2dobj vorbis
-	{
-		text	"OGG Vorbis"
-		pos		"512 910"		align	uc
 		color	".7 .7 .7 1"
 		speed	"0 -80"
 	}
@@ -474,7 +323,7 @@ sequence credits
 		pos		"512 960"		align	uc
 		color	"1 1 1 1"
 		speed	"0 -80"
-	}	
+	}
 	2dobj host
 	{
 		text	"Our Host"
@@ -482,43 +331,57 @@ sequence credits
 		color	".7 .7 .7 1"
 		speed	"0 -80"
 	}
-	
+
 	2dobj additional_thx
 	{
 		text	"Additional Thanks To"
 		pos		"512 1300"		align	uc
-		color	"1 0 0 1"
+		color	"0 1 0 1"
 		speed	"0 -80"
 	}
-	
-	2dobj community
+	2dobj sacrusha
 	{
-		text	"The Community"
+		text	"Sacrusha"
 		pos		"512 1340"		align	uc
 		color	"1 1 1 1"
 		speed	"0 -80"
-	}	
-	2dobj everyone
+	}
+	2dobj mattn
 	{
-		text	"Everyone who supported us"
+		text	"Mattn"
 		pos		"512 1370"		align	uc
 		color	"1 1 1 1"
 		speed	"0 -80"
-	}	
+	}
+	2dobj community
+	{
+		text	"The Community"
+		pos		"512 1400"		align	uc
+		color	"1 1 1 1"
+		speed	"0 -80"
+	}
+	2dobj everyone
+	{
+		text	"Everyone who supported us"
+		pos		"512 1430"		align	uc
+		color	"1 1 1 1"
+		speed	"0 -80"
+	}
 	wait 20.0
-	
+
 	rem special_thx
 	rem id		rem engine
-	rem xiph	rem vorbis
 	rem exp		rem host
 	rem additional_thx
+	rem sacrusha
+	rem mattn
 	rem community
 	rem everyone
-	
+
 	// ============================
 	// Finish
 	// ============================
-	
+
 	2dobj ufoai
 	{
 		image	ufoai
@@ -527,55 +390,39 @@ sequence credits
 		speed	"0 -128"
 	}
 	wait 3.5
-	
+
 	2dobj ufoai { speed "0 0" }
 	2dobj demo
 	{
 		text	"Version 0.12"
 		pos		"512 416"		align	uc
-		color	"1 1 1 0"	fade	"0 0 0 1"	
-	}
-	2dobj newversion
-	{
-		text	"OpenSource Version hosted on sourceforge.net"
-		pos		"512 446"		align	uc
-		color	"1 1 1 0"	fade	"0 0 0 1"	
+		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
 	2dobj www
 	{
-		text	"sf.net/projects/ufoai"
+		text	"http://www.ufoai.net"
 		pos		"512 710"	align	uc
-		color	"1 0 0 0"	fade	"0 0 0 1"
+		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj copyright
 	{
 		text	"Copyright 2004 by UFO: AI Team"
 		pos		"512 736"	align	uc
-		color	"1 1 1 0"	fade	"0 0 0 1"	
-	}
-	2dobj otherauthors
-	{
-		text	"This version was modified by R. Rendell and M. Gerhardy"
-		pos		"512 736"	align	uc
-		color	"1 1 1 0"	fade	"0 0 0 1"	
+		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
 	wait 8.0
-	
+
 	2dobj ufoai { fade "0 0 0 -1" }
 	2dobj demo { fade "0 0 0 -1" }
-	2dobj newversion { fade "0 0 0 -1" }
 	2dobj www { fade "0 0 0 -1" }
 	2dobj copyright { fade "0 0 0 -1" }
-	2dobj otherauthors { fade "0 0 0 -1" }
 	wait 1.0
-	
+
 	rem ufoai
 	rem demo
-	rem christmas
 	rem www
 	rem copyright
-	rem otherauthors
-	
+
 	camera cam1
 	{
 		zoom	1.0
@@ -607,7 +454,7 @@ sequence credits
 		speed	"0 3000 0"
 	}
 	wait 2.0
-	
+
 	rem ship_hull
 	rem ship_wings
 	rem ship_engine1
