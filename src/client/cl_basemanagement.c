@@ -1846,7 +1846,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 		baseCurrent->allBuildingsList[0] = '\0';
 		baseCurrent->numList = 0;
 		base->founded = true;
-		if ( version == 2 )
+		if ( version >= 2 )
 		{
 			base->id = MSG_ReadLong( sb );
 			strcpy( base->title, MSG_ReadString( sb ) );
@@ -1867,12 +1867,12 @@ void B_LoadBases( sizebuf_t *sb, int version )
 		}
 		memcpy( &base->map[0][0][0], sb->data + sb->readcount, sizeof(base->map) );
 		sb->readcount += sizeof(base->map);
-		if ( version == 2 )
+		if ( version >= 2 )
 		{
 			// maybe count of buildings change due to an update
 			tmp = MSG_ReadLong( sb );
 			if ( tmp != numBuildings )
-				Com_Printf("There was an update and their are new buildings available which aren't in your savegame. You may encounter problems.");
+				Com_Printf(_("There was an update and there are new buildings available which aren't in your savegame. You may encounter problems. (%i:%i)\n"), tmp, numBuildings );
 
 			// it seams to me that there are buildings deleted since last save game
 			if ( tmp > numBuildings )

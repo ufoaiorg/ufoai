@@ -861,7 +861,15 @@ RS_SaveTech
 ======================*/
 void RS_SaveTech( sizebuf_t *sb )
 {
-	SZ_Write( sb, &technologies, sizeof(technology_t)*MAX_TECHNOLOGIES );
+	int i;
+
+	MSG_WriteLong( sb, numTechnologies );
+	Com_DPrintf(_("Saving %i technologies\n"), numTechnologies );
+	for ( i = 0; i < numTechnologies; i++ )
+	{
+		MSG_WriteByte( sb, technologies[i].statusResearch );
+		MSG_WriteByte( sb, technologies[i].statusCollected );
+	}
 }
 
 /*======================
@@ -869,9 +877,16 @@ RS_LoadTech
 ======================*/
 void RS_LoadTech( sizebuf_t *sb, int version )
 {
+	int tmp, i;
 	if ( version >= 3 )
 	{
-		memcpy( &technologies, sb->data + sb->readcount, sizeof(technology_t)*MAX_TECHNOLOGIES );
-		sb->readcount += sizeof(technology_t)*MAX_TECHNOLOGIES;
+		tmp = MSG_ReadLong( sb );
+		if ( tmp != numTechnologies )
+			Com_Printf(_("There was an update and there are new technologies available which aren't in your savegame. You may encounter problems. (%i:%i)\n"), tmp, numTechnologies );
+		for ( i = 0; i < tmp; i++ )
+		{
+			technologies[i].statusResearch = MSG_ReadByte( sb );
+			technologies[i].statusCollected = MSG_ReadByte( sb );
+		}
 	}
 }
