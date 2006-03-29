@@ -279,9 +279,9 @@ void CL_ActorUpdateCVars( void )
 			// in multiplayer we should be able to use the aliens weapons
  			if ( Cvar_VariableValue("maxclients") == 1
 			  && cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE
-			  && selWeapon && RS_ItemIsResearched(csi.ods[ selWeapon->item.t ].kurz) )
+			  && selWeapon && !RS_ItemIsResearched( csi.ods[ selWeapon->item.t].kurz ) )
 			{
-				Com_Printf( _( "You cannot use this unknown alien weapon.\n") );
+				Com_Printf( _( "You cannot use this unknown item. You need to research it first.\n") );
 				cl.cmode = M_MOVE;
 			}
 			// move or shoot
@@ -754,9 +754,9 @@ void CL_ActorReload( int hand )
 	if ( weapon == NONE )
 		return;
 
-	if ( RS_ItemIsResearched(csi.ods[weapon].kurz) ) //csi.ods[weapon].researchNeeded )
+	if ( !RS_ItemIsResearched( csi.ods[weapon].kurz ) )
 	{
-		Com_Printf( _("You cannot load this unknown alien weapon.\n") );
+		Com_Printf( _("You cannot load this unknown item. You need to research it first.\n") );
 		return;
 	}
 
