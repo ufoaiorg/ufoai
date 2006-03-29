@@ -612,7 +612,6 @@ tech heavy_nano_armor
 tech building_commando
 {
 	type	building
-	//name	"Commando central"
 	description	b_commando_txt
 	up_chapter	buildings
 	
@@ -627,7 +626,6 @@ tech building_commando
 tech building_powerplant
 {
 	type	building
-	//name	"Powerplant"
 	description	b_powerplant_txt
 	up_chapter	buildings
 	
@@ -642,22 +640,35 @@ tech building_powerplant
 tech building_hangar
 {
 	type	building
-	//name	"Hangar"
 	description	b_hangar_txt
 	up_chapter	buildings
 	
 	requires	initial
-	provides	hangar
+	provides	drop1
 	time	0
 	researched	true
 	
 	image_top	base/hangar
 }
 
+//tech building_hangar2
+//{
+//	type	building
+//	description	b_hangar_txt
+//	up_chapter	buildings
+//	
+//	requires	initial
+//	provides	drop2
+//	time	0
+//	researched	true
+//	
+//	image_top	base/hangar
+//}
+
+
 tech building_quarters
 {
 	type	building
-	//name	"Quarters"
 	description	b_quarters_txt
 	up_chapter	buildings
 	
@@ -672,7 +683,6 @@ tech building_quarters
 tech building_lab
 {
 	type	building
-	//name	"Laboratory"
 	description	b_lab_txt
 	up_chapter	buildings
 	

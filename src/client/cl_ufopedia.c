@@ -29,7 +29,6 @@ void MN_UpDrawEntry( char *id )
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {
 			//Com_Printf(_("Displaying %s\n"), t->id); //DEBUG
-			RS_GetName( t->id, t->name );
 			Cvar_Set( "mn_uptitle", _(t->name) );
 			menuText[TEXT_UFOPEDIA] = _(t->description);
 			Cvar_Set( "mn_upmodel_top", "" );
