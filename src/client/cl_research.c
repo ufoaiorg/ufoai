@@ -307,7 +307,6 @@ void RS_ResearchDisplayInfo ( void  )
 	int i;
 	stringlist_t req_temp;
 
-	req_temp.numEntries = 0;
 	t = &technologies[globalResearchNum];
 
 	// we are not in base view
@@ -339,8 +338,7 @@ void RS_ResearchDisplayInfo ( void  )
 		break;
 	}
 
-
-
+	req_temp.numEntries = 0;
 	RS_GetFirstRequired( t->id, &req_temp );
 	strcpy( dependencies, "Dependencies: ");
 	if ( req_temp.numEntries > 0 ) {
@@ -643,46 +641,48 @@ void RS_TechnologyList_f ( void )
 	{
 		t = &technologies[i];
 		req = &t->requires;
-		Com_Printf(_("Tech: %s\n"), t->id );
-		Com_Printf(_("... time      -> %.2f\n"), t->time );
-		Com_Printf(_("... name      -> %s\n"), t->name );
-		Com_Printf(_("... requires  ->"));
+		Com_Printf("Tech: %s\n", t->id );
+		Com_Printf("... time      -> %.2f\n", t->time );
+		Com_Printf("... name      -> %s\n", t->name );
+		Com_Printf("... requires  ->");
 		for ( j = 0; j < req->numEntries; j++ )
-			Com_Printf( _(" %s"),req->list[j] );
+			Com_Printf( " %s",req->list[j] );
 		Com_Printf("\n");
-		Com_Printf( _("... provides  -> %s"), t->provides );
+		Com_Printf( "... provides  -> %s", t->provides );
 		Com_Printf("\n");
 
-		Com_Printf( _("... type      -> "));
+		Com_Printf( "... type      -> ");
 		switch ( t->type )
 		{
-		case RS_TECH:	Com_Printf(_("tech\n") ); break;
-		case RS_WEAPON:	Com_Printf(_("weapon\n") ); break;
-		case RS_CRAFT:	Com_Printf(_("craft\n") ); break;
-		case RS_ARMOR:	Com_Printf(_("armor\n") ); break;
-		case RS_BUILDING:	Com_Printf(_("building\n") ); break;
+		case RS_TECH:	Com_Printf("tech"); break;
+		case RS_WEAPON:	Com_Printf("weapon"); break;
+		case RS_CRAFT:	Com_Printf("craft"); break;
+		case RS_ARMOR:	Com_Printf("armor"); break;
+		case RS_BUILDING:	Com_Printf("building"); break;
 		default:	break;
 		}
+		Com_Printf("\n");
 
-		Com_Printf( _("... research  -> "));
+		Com_Printf( "... research  -> ");
 		switch ( t->type )
 		{
-		case RS_NONE:	Com_Printf(_("unknown tech\n") ); break;
-		case RS_RUNNING:	Com_Printf(_("running\n") ); break;
-		case RS_PAUSED:	Com_Printf(_("paused\n") ); break;
-		case RS_FINISH:	Com_Printf(_("done\n") ); break;
+		case RS_NONE:	Com_Printf("unknown tech"); break;
+		case RS_RUNNING:	Com_Printf("running"); break;
+		case RS_PAUSED:	Com_Printf("paused"); break;
+		case RS_FINISH:	Com_Printf("done"); break;
 		default:	break;
 		}
+		Com_Printf("\n");
 
-		Com_Printf(_("... Res.able  -> %i\n"), t->statusResearchable );
-		Com_Printf(_("... Collected -> %i\n"), t->statusCollected );
+		Com_Printf("... Res.able  -> %i\n", t->statusResearchable );
+		Com_Printf("... Collected -> %i\n", t->statusCollected );
+		
 
-
-		Com_Printf(_("... req_first ->"));
+		Com_Printf("... req_first ->");
 		req_temp.numEntries = 0;
 		RS_GetFirstRequired( t->id, &req_temp );
 		for ( j = 0; j < req_temp.numEntries; j++ )
-			Com_Printf( _(" %s"), req_temp.list[j] );
+			Com_Printf( " %s", req_temp.list[j] );
 
 		Com_Printf("\n");
 	}
@@ -982,23 +982,25 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 
 		if ( !strcmp( id, t->id ) ) {
 			required_temp = &t->requires;
+			//Com_Printf( "RS_GetFirstRequired2: %s - %s \n", id, first_id ); //DEBUG
+			//Com_Printf( "RS_GetFirstRequired2: %s\n",  required_temp->list[0] ); //DEBUG
 			for ( j=0; j < required_temp->numEntries; j++ ) {
-				if ( ( !strcmp( required_temp->list[0], "initial" ) ) || ( !strcmp( required_temp->list[0] , "nothing" ) ) ) {
+				if ( ( !strcmp( required_temp->list[0] , "initial" ) ) || ( !strcmp( required_temp->list[0] , "nothing" ) ) ) {
 					if ( !strcmp( id, first_id ) )
 						return;
 					if ( 0 == j ) {
 						if ( required->numEntries < MAX_TECHLINKS ) {
 							strcpy( required->list[required->numEntries], id );
 							required->numEntries++;
-							//Com_Printf( _("debug: 'initial' or 'nothing' found - \"%s\"\n"), t->id ); //DEBUG
+							//Com_Printf("RS_GetFirstRequired2: 'initial' or 'nothing' found - \"%s\"\n", t->id ); //DEBUG
 						}
 						return;
 					}
 				}
 				if ( RS_TechIsResearched(required_temp->list[j]) ) {
-					strcpy( required->list[required->numEntries], id );
+					strcpy( required->list[required->numEntries], required_temp->list[j] );
 					required->numEntries++;
-					//Com_Printf( _("debug: next item \"%s\" already researched . \"%s\"."), required_temp->list[j], t->id ); //DEBUG
+					//Com_Printf( "RS_GetFirstRequired2: next item \"%s\" already researched  \"%s\"\n", required_temp->list[j], t->id ); //DEBUG
 				} else {
 					RS_GetFirstRequired2( required_temp->list[j], first_id, required );
 				}
