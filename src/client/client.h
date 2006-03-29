@@ -741,6 +741,12 @@ void CL_ResetCharacters( void );
 void CL_LoadTeam( sizebuf_t *sb );
 void CL_ItemDescription( int item );
 
+//
+// cl_research.c
+//
+void RS_InitTree( void );
+void RS_MarkCollected ( void );
+void RS_MarkResearchable ( void );
 
 //
 // cl_basemanagment.c
