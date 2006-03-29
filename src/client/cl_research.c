@@ -1054,6 +1054,7 @@ void RS_SaveTech( sizebuf_t *sb )
 	{
 		MSG_WriteByte( sb, technologies[i].statusResearch );
 		MSG_WriteByte( sb, technologies[i].statusCollected );
+		MSG_WriteByte( sb, technologies[i].time);
 	}
 }
 
@@ -1072,6 +1073,7 @@ void RS_LoadTech( sizebuf_t *sb, int version )
 		{
 			technologies[i].statusResearch = MSG_ReadByte( sb );
 			technologies[i].statusCollected = MSG_ReadByte( sb );
+			technologies[i].time = MSG_ReadByte( sb );
 		}
 	}
 }
