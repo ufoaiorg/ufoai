@@ -107,9 +107,9 @@ menu research
 	confunc researchselect27 { research_clear *txt_item27 color "1 1 1 1" }
 
 	string txt_item0	{ string "*cvar mn_researchitem0"		pos "50 40"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 0" } }
-	string txt_assigned0	{ string "assigned"	pos "345 40"	color "0 .78 0 1" }
-	string txt_available0	{ string "free"		pos "440 40"	color "0 .78 0 1"	align ur }
-	string txt_lab0	{ string "price"		pos "540 40"	color "0 .78 0 1"	align ur }
+	string txt_assigned0	{ string "DBGas"	pos "345 40"	color "0 .78 0 1" }
+	string txt_available0	{ string "DBGfr"		pos "440 40"	color "0 .78 0 1"	align ur }
+	string txt_lab0	{ string "DBGx"		pos "540 40"	color "0 .78 0 1"	align ur }
 	
 	string txt_item1	{ string "*cvar mn_researchitem1"		pos "50 65"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 1" } }
 	//string txt_assigned1	{ string "*cvar mn_researchassigned1"	pos "345 65"	color "0 .78 0 1" }

@@ -1631,6 +1631,7 @@ void CL_CollectItems( int won )
 					CL_CollectItemAmmo( item, (container == csi.idLeft) );
 		}
 	}
+	RS_MarkCollected ();
 }
 
 /*

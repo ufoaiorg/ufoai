@@ -1379,6 +1379,7 @@ void Qcommon_Init (int argc, char **argv)
 	CL_Init ();
 
 	Com_ParseScripts ();
+	RS_InitTree ();
 
 	// add + commands from command line
 	if (!Cbuf_AddLateCommands ())
