@@ -1076,5 +1076,7 @@ void RS_LoadTech( sizebuf_t *sb, int version )
 			technologies[i].statusCollected = MSG_ReadByte( sb );
 			technologies[i].time = MSG_ReadFloat( sb );
 		}
+		
 	}
+	RS_MarkResearchable ();
 }
