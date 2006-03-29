@@ -36,8 +36,8 @@ void MN_UpDrawEntry( char *id )
 			//Cvar_Set( "mn_upmodel_big", "" );
 			Cvar_Set( "mn_upimage_top", "base/empty" );
 			Cvar_Set( "mn_upimage_bottom", "base/empty" );
-			if ( t->mdl_top ) Cvar_Set( "mn_upmodel_top", t->mdl_top );
-			if ( t->mdl_bottom ) Cvar_Set( "mn_upmodel_bottom", t->mdl_bottom );
+			if ( strcmp( t->mdl_top, "" ) ) Cvar_Set( "mn_upmodel_top", t->mdl_top );
+			if ( strcmp( t->mdl_bottom, "" ) ) Cvar_Set( "mn_upmodel_bottom", t->mdl_bottom );
 			//if (strcmp(  t->mdl_big, "" ) ) Cvar_Set( "mn_upmodel_big", t->mdl_big );
 			if ( !strcmp( t->mdl_top, "" ) && strcmp( t->image_top, "" ) ) { Cvar_Set( "mn_upimage_top", t->image_top ); Com_Printf(_("MN_UpDrawEntry: image set %s\n"), t->image_top);	}
 			if ( !strcmp( t->mdl_bottom, "" ) &&  strcmp( t->image_bottom, "") ) Cvar_Set( "mn_upimage_bottom", t->image_bottom );

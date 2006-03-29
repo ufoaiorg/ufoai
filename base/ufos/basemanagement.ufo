@@ -147,7 +147,7 @@ building drop1
 	build_time	6
 	varcosts	50
 	map_name	"drop"
-	pedia		buiding_hangar
+	pedia		building_hangar
 	firstbase	true
 	type	hangar
 	pos		"1 0"
@@ -166,7 +166,7 @@ building drop2
 	energy		400
 	build_time	6
 	varcosts	50
-	pedia		buiding_hangar
+	pedia		building_hangar
 }
 
 building teamroom
@@ -184,7 +184,7 @@ building teamroom
 	energy		10
 	build_time	3
 	map_name	"teamroom"
-	pedia		buiding_teamroom
+	pedia		building_teamroom
 }
 
 base main
