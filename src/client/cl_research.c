@@ -302,12 +302,13 @@ RS_ResearchDisplayInfo
 void RS_ResearchDisplayInfo ( void  )
 {
 	technology_t *t = NULL;
-	t = &technologies[globalResearchNum];
 	char dependencies[MAX_VAR];
 	char tempstring[MAX_VAR];
 	int i;
 	stringlist_t req_temp;
+
 	req_temp.numEntries = 0;
+	t = &technologies[globalResearchNum];
 
 	// we are not in base view
 	if ( ! baseCurrent )
