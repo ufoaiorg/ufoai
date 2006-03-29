@@ -756,15 +756,14 @@ void CL_ItemDescription( int item );
 #define SCROLLSPEED		1000
 
 // this is not best - but better than hardcoded every time i used it
-#define RELEVANT_X		154
-#define RELEVANT_Y		88
+#define RELEVANT_X		187.0
+#define RELEVANT_Y		280.0
+// take the values from scriptfile
+#define BASEMAP_SIZE_X		778.0
+#define BASEMAP_SIZE_Y		672.0
 
 #define BASE_SIZE		5
 #define MAX_BASE_LEVELS		1
-
-//FIXME: Take the values from scriptfile
-#define BASEMAP_SIZE_X		778
-#define BASEMAP_SIZE_Y		672
 
 // allocate memory for menuText[TEXT_STANDARD] contained the information about a building
 char	buildingText[MAX_LIST_CHAR];
@@ -816,6 +815,8 @@ typedef struct building_s
 
 	vec2_t	size;
 	byte	visible;
+	// needed for baseassemble
+	// when there are two tiles (like hangar) - we only load the first tile
 	int	used;
 
 	// event handler functions
@@ -917,8 +918,8 @@ int picWidth, picHeight;
 
 void MN_BuildNewBase( vec2_t pos );
 void MN_NewBases( void );
-void MN_SaveBases( sizebuf_t *sb );
-void MN_LoadBases( sizebuf_t *sb, int version );
+void B_SaveBases( sizebuf_t *sb );
+void B_LoadBases( sizebuf_t *sb, int version );
 void MN_ResetBasemanagement( void );
 void MN_ParseBuildings( char *title, char **text );
 void MN_ParseBases( char *title, char **text );

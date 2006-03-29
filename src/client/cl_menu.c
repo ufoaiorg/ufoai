@@ -1092,30 +1092,30 @@ MN_BaseMapClick
 */
 void MN_BaseMapClick( menuNode_t *node, int x, int y )
 {
-	int	a, b;
+	int	row, col;
 	assert(baseCurrent);
 
 	if ( baseCurrent->buildingCurrent && baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] == B_NOT_SET )
 	{
-		for ( b = BASE_SIZE-1; b >= 0; b-- )
-			for ( a = 0; a < BASE_SIZE; a++ )
-				if ( baseCurrent->map[b][a][baseCurrent->baseLevel] == -1
-				  && x >= baseCurrent->posX[b][a][baseCurrent->baseLevel] && x < baseCurrent->posX[b][a][baseCurrent->baseLevel] + picWidth*ccs.basezoom
-				  && y >= baseCurrent->posY[b][a][baseCurrent->baseLevel] && y < baseCurrent->posY[b][a][baseCurrent->baseLevel] + picHeight*ccs.basezoom )
+		for ( row = 0; row < BASE_SIZE; row++ )
+			for ( col = 0; col < BASE_SIZE; col++ )
+				if ( baseCurrent->map[row][col][baseCurrent->baseLevel] == -1
+				  && x >= baseCurrent->posX[row][col][baseCurrent->baseLevel] && x < baseCurrent->posX[row][col][baseCurrent->baseLevel] + picWidth*ccs.basezoom
+				  && y >= baseCurrent->posY[row][col][baseCurrent->baseLevel] && y < baseCurrent->posY[row][col][baseCurrent->baseLevel] + picHeight*ccs.basezoom )
 				{
-					MN_SetBuildingByClick( a, b );
+					MN_SetBuildingByClick( row, col );
 					return;
 				}
 	}
 
-	for ( b = BASE_SIZE-1; b >= 0; b-- )
-		for ( a = 0; a < BASE_SIZE; a++ )
-			if ( baseCurrent->map[b][a][baseCurrent->baseLevel] != -1
-			  && x >= baseCurrent->posX[b][a][baseCurrent->baseLevel] && x < baseCurrent->posX[b][a][baseCurrent->baseLevel] + picWidth*ccs.basezoom
-			  && y >= baseCurrent->posY[b][a][baseCurrent->baseLevel] && y < baseCurrent->posY[b][a][baseCurrent->baseLevel] + picHeight*ccs.basezoom )
+	for ( row = 0; row < BASE_SIZE; row++ )
+		for ( col = 0; col < BASE_SIZE; col++ )
+			if ( baseCurrent->map[row][col][baseCurrent->baseLevel] != -1
+			  && x >= baseCurrent->posX[row][col][baseCurrent->baseLevel] && x < baseCurrent->posX[row][col][baseCurrent->baseLevel] + picWidth*ccs.basezoom
+			  && y >= baseCurrent->posY[row][col][baseCurrent->baseLevel] && y < baseCurrent->posY[row][col][baseCurrent->baseLevel] + picHeight*ccs.basezoom )
 			{
-				building_t* entry = &bmBuildings[baseCurrent->id][ B_GetIDFromList( baseCurrent->map[b][a][baseCurrent->baseLevel] ) ];
-				if ( entry->onClick[0] != '\0' )
+				building_t* entry = &bmBuildings[baseCurrent->id][ B_GetIDFromList( baseCurrent->map[row][col][baseCurrent->baseLevel] ) ];
+				if ( entry->onClick[0] )
 					Cbuf_ExecuteText( EXEC_NOW, entry->onClick );
 				else
 					UP_OpenWith( entry->pedia );

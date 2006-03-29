@@ -954,8 +954,8 @@ void CL_ParseInput (void)
 	case MS_ZOOMBASEMAP:
 		// zoom the basemap
 		ccs.basezoom *= pow( 0.995, my - oldy );
-		if ( ccs.basezoom < 0.5 ) ccs.basezoom = 0.5;
-		if ( ccs.basezoom > 3.0 ) ccs.basezoom = 3.0;
+		if ( ccs.basezoom < 0.2 ) ccs.basezoom = 0.2;
+		if ( ccs.basezoom > 2.0 ) ccs.basezoom = 2.0;
 		return;
 
 

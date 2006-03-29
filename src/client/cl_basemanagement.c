@@ -156,7 +156,7 @@ TODO: This list should probably be made into constants or something like that.
 */
 int B_HowManyPeopleInBase2 ( base_t *base, int location )
 {
-	int a, b;
+	int row, col;
 	building_t *entry;
 	int amount = 0;
 
@@ -166,11 +166,11 @@ int B_HowManyPeopleInBase2 ( base_t *base, int location )
 	if ( ! base )
 		base = baseCurrent;
 
-	for ( b = BASE_SIZE-1; b >= 0; b-- ) // dont mess with the order
-		for ( a = 0; a < BASE_SIZE; a++ )
-			if ( base->map[a][b][base->baseLevel] != -1 )
+	for ( row = 0; row < BASE_SIZE; row++ )
+		for ( col = 0; col < BASE_SIZE; col++ )
+			if ( base->map[row][col][base->baseLevel] != -1 )
 			{
-				entry = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( base->map[a][b][base->baseLevel] ) ];
+				entry = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( base->map[row][col][base->baseLevel] ) ];
 
 				if ( !entry->used && entry->needs && entry->visible )
 					entry->used = 1;
@@ -277,7 +277,7 @@ void B_SetUpBase ( void )
 		if ( ccs.numBases == 1 && bmBuildings[ccs.actualBaseID][i].firstbase )
 		{
 			baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][i];
-			Com_DPrintf("firstbase: %s (%i)\n", baseCurrent->buildingCurrent->name, i );
+			Com_DPrintf("firstbase: %s (%i) at (%i:%i)\n", baseCurrent->buildingCurrent->name, i, bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
 			MN_SetBuildingByClick ( bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
 			bmBuildings[ccs.actualBaseID][i].buildingStatus[bmBuildings[ccs.actualBaseID][i].howManyOfThisType] = B_WORKING_100;
 			//update the array
@@ -286,7 +286,7 @@ void B_SetUpBase ( void )
 		else if ( bmBuildings[ccs.actualBaseID][i].autobuild )
 		{
 			baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][i];
-			Com_DPrintf("autobuild: %s (%i)\n", baseCurrent->buildingCurrent->name, i );
+			Com_DPrintf("autobuild: %s (%i) at (%i:%i)\n", baseCurrent->buildingCurrent->name, i, bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
 			MN_SetBuildingByClick ( bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
 			bmBuildings[ccs.actualBaseID][i].buildingStatus[bmBuildings[ccs.actualBaseID][i].howManyOfThisType] = B_WORKING_100;
 			//update the array
@@ -305,17 +305,8 @@ building_t* B_GetBuilding ( char *buildingName )
 	int i = 0;
 
 	if ( ! buildingName )
-	{
-		if ( baseCurrent->buildingCurrent )
-		{
-			return baseCurrent->buildingCurrent;
-		}
-		else
-		{
-			return NULL;
-		}
+		return baseCurrent->buildingCurrent;
 
-	}
 	for (i = 0 ; i < numBuildings; i++ )
 		if ( !strcmp( bmBuildings[ccs.actualBaseID][i].name, buildingName ) )
 			return &bmBuildings[ccs.actualBaseID][i];
@@ -413,14 +404,14 @@ MN_SetBuildingByClick
 =====================
 */
 //level 0 - underground
-void MN_SetBuildingByClick ( int x, int y )
+void MN_SetBuildingByClick ( int row, int col )
 {
 //	building_t *building = NULL;
 	building_t *secondBuildingPart = NULL;
 
-	if ( x < BASE_SIZE && y < BASE_SIZE )
+	if ( row < BASE_SIZE && col < BASE_SIZE )
 	{
-		if ( baseCurrent->map[x][y][baseCurrent->baseLevel] == -1 )
+		if ( baseCurrent->map[row][col][baseCurrent->baseLevel] == -1 )
 		{
 			if ( baseCurrent->buildingCurrent->needs && baseCurrent->buildingCurrent->visible )
 				secondBuildingPart = B_GetBuilding ( baseCurrent->buildingCurrent->needs );
@@ -428,44 +419,46 @@ void MN_SetBuildingByClick ( int x, int y )
 			if ( baseCurrent->baseLevel >= 1 )
 			{
 				// a building on the upper level needs a building on the lower level
-				if ( baseCurrent->map[x][y][baseCurrent->baseLevel-1] == -1 )
+				if ( baseCurrent->map[row][col][baseCurrent->baseLevel-1] == -1 )
 				{
-					Com_Printf( _("No ground where i can place building upon\n"), x, y);
+					Com_Printf( _("No ground where i can place building upon\n") );
 					return;
 				}
-				else if ( secondBuildingPart && baseCurrent->map[x+1][y][baseCurrent->baseLevel-1] == -1 )
+				else if ( secondBuildingPart && baseCurrent->map[row+1][col][baseCurrent->baseLevel-1] == -1 )
 				{
-					if ( baseCurrent->map[x][y+1][baseCurrent->baseLevel-1] == -1 )
+					if ( baseCurrent->map[row][col+1][baseCurrent->baseLevel-1] == -1 )
 					{
-						Com_Printf( _("No ground where i can place building upon\n"), x, y);
+						Com_Printf( _("No ground where i can place building upon\n") );
 						return;
 					}
 				}
 				else
 				{
-					if ( bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[x][y][baseCurrent->baseLevel-1] ) ].notUpOn )
+					if ( bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[row][col][baseCurrent->baseLevel-1] ) ].notUpOn )
 					{
-						Com_Printf( _("Can't place any building upon this ground\n"), x, y);
+						Com_Printf( _("Can't place any building upon this ground\n") );
 						return;
 					}
 					else if ( secondBuildingPart )
-						if ( bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[x][y+1][baseCurrent->baseLevel-1] ) ].notUpOn )
+					{
+						if ( bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[row][col+1][baseCurrent->baseLevel-1] ) ].notUpOn )
 						{
-							Com_Printf( _("Can't place any building upon this ground\n"), x, y);
+							Com_Printf( _("Can't place any building upon this ground\n") );
 							return;
 						}
+					}
 				}
 			}
 
 			if ( secondBuildingPart )
 			{
-				if ( baseCurrent->map[x][y+1][baseCurrent->baseLevel] != -1 )
+				if ( baseCurrent->map[row][col+1][baseCurrent->baseLevel] != -1 )
 				{
-					Com_Printf( _("Can't place this building here - the second part overlapped with another building\n"), x, y);
+					Com_Printf( _("Can't place this building here - the second part overlapped with another building\n") );
 					return;
 				}
 
- 				baseCurrent->map[x][y+1][baseCurrent->baseLevel] = baseCurrent->buildingCurrent->id;
+ 				baseCurrent->map[row][col+1][baseCurrent->baseLevel] = baseCurrent->buildingCurrent->id;
 				baseCurrent->buildingToBuild = secondBuildingPart;
 			}
 			else
@@ -474,7 +467,7 @@ void MN_SetBuildingByClick ( int x, int y )
 			if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] <= B_UNDER_CONSTRUCTION )
 				MN_NewBuilding();
 
- 			baseCurrent->map[x][y][baseCurrent->baseLevel] = baseCurrent->buildingCurrent->id;
+ 			baseCurrent->map[row][col][baseCurrent->baseLevel] = baseCurrent->buildingCurrent->id;
 
  			if ( baseCurrent->buildingCurrent->buildingType == B_LAB )
  				baseCurrent->hasLab = 1;
@@ -482,7 +475,10 @@ void MN_SetBuildingByClick ( int x, int y )
  				baseCurrent->hasHangar = 1;
 			MN_ResetBuildingCurrent();
 		} else
-			Com_Printf( _("There is already a building\n"), x, y);
+		{
+			Com_Printf( _("There is already a building\n") );
+			Com_DPrintf(_("Building: %i at (row:%i, col:%i)\n"), baseCurrent->map[row][col][baseCurrent->baseLevel], row, col );
+		}
 	}
 	else
 		Com_Printf( _("Invalid coordinates\n") );
@@ -497,7 +493,7 @@ MN_SetBuilding
 */
 void MN_SetBuilding( void )
 {
-	int x, y;
+	int row, col;
 
 	if ( Cmd_Argc() < 3 )
 	{
@@ -509,11 +505,11 @@ void MN_SetBuilding( void )
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 		return;
 
-	x = atoi( Cmd_Argv( 1 ) );
-	y = atoi( Cmd_Argv( 2 ) );
+	row = atoi( Cmd_Argv( 1 ) );
+	col = atoi( Cmd_Argv( 2 ) );
 
 	//emulate the mouseclick with the given coordinates
-	MN_SetBuildingByClick ( x, y );
+	MN_SetBuildingByClick ( row, col );
 }
 
 /*
@@ -743,7 +739,7 @@ void MN_BuildingRemoveWorkers( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: remove_workers <amount>\n" );
+		Com_Printf( _("Usage: remove_workers <amount>\n") );
 		return;
 	}
 
@@ -774,7 +770,7 @@ void MN_BuildingAddWorkers( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: add_workers <amount>\n" );
+		Com_Printf( _("Usage: add_workers <amount>\n") );
 		return;
 	}
 
@@ -1081,7 +1077,7 @@ void MN_ParseBuildings( char *title, char **text )
 		if ( !strcmp( token, "type" ) ) {
 			token = COM_EParse( text, errhead, title );
 			if ( !*text ) return;
-			
+
 			if ( !strcmp( token, "lab" ) ) {
 				entry->buildingType = B_LAB;
 			} else if ( !strcmp( token, "hangar" ) ){
@@ -1131,14 +1127,14 @@ MN_ClearBase
 */
 void MN_ClearBase( base_t *base )
 {
-	int	a,b,c;
+	int	row, col, levels;
 
 	memset( base, 0, sizeof(base_t) );
 
-	for ( b = BASE_SIZE-1; b >= 0; b-- )
-		for ( a = BASE_SIZE-1; a >= 0; a-- )
-			for ( c = MAX_BASE_LEVELS-1; c >= 0; c-- )
-				base->map[a][b][c] = -1;
+	for ( row = BASE_SIZE-1; row >= 0; row-- )
+		for ( col = BASE_SIZE-1; col >= 0; col-- )
+			for ( levels = MAX_BASE_LEVELS-1; levels >= 0; levels-- )
+				base->map[row][col][levels] = -1;
 }
 
 
@@ -1286,6 +1282,8 @@ void MN_ParseProductions( char *title, char **text )
 	} while ( *text );
 }
 
+#define MOUSEOVER mx > baseCurrent->posX[row][col][baseCurrent->baseLevel] && mx < baseCurrent->posX[row][col][baseCurrent->baseLevel] + ( picWidth * bvScale ) && my > baseCurrent->posY[row][col][baseCurrent->baseLevel] && my < baseCurrent->posY[row][col][baseCurrent->baseLevel] + ( picHeight * bvScale )
+
 /*
 =================
 MN_DrawBase
@@ -1293,10 +1291,10 @@ MN_DrawBase
 */
 void MN_DrawBase( void )
 {
-	int a, b;
+	int row, col, rowCnt = 0;
 	float x, y;
 	int mx, my;
-	int cursorSet = 0;
+	vec2_t mouseover = {-1, -1};
 	char *image, *statusImage = NULL;
 	int width, height;
 	building_t *entry;
@@ -1314,143 +1312,123 @@ void MN_DrawBase( void )
 	if ( baseCurrent->title )
 		Cvar_Set( "mn_base_title", baseCurrent->title );
 
-	// begin ur
-	for ( b = BASE_SIZE-1; b >= 0; b-- )
-		for ( a = 0; a < BASE_SIZE; a++ )
+	IN_GetMousePos( &mx, &my );
+
+	for ( row = 0; row < BASE_SIZE; row++ )
+	{
+		x = ( BASE_SIZE * 326 + ( rowCnt * 186 ) - bvCenterX ) * bvScale;
+		y = ( ( rowCnt * 280 ) - bvCenterY ) * bvScale; // 512 - 71 => 71 pixel overlap
+		for ( col = BASE_SIZE - 1; col >= 0; col-- )
 		{
-			//adjust trafo values for correct assembly
-			x = ( RELEVANT_X * b +  RELEVANT_Y * a - bvCenterX + a * 4) * bvScale;
-			y = ( ( RELEVANT_X - 1 ) * a + ( RELEVANT_Y - 4 ) * ( ( b - ( BASE_SIZE - 1 ) ) * (- 1) ) - bvCenterY) * bvScale;
-
-			// draw it (relative to view center)
-			// FIXME  better if i can handle the values out of the scriptfile here
-			x += 0;
-			y += 96;
-
-			if ( baseCurrent->map[a][b][baseCurrent->baseLevel] != -1 )
+			if ( row >= 0 && row < BASE_SIZE && col >= 0 && col < BASE_SIZE )
 			{
-				entry = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[a][b][baseCurrent->baseLevel] ) ];
-// 				Com_Printf("%s\tl:%i - b:%i (%i:%i)\n", entry->name, B_GetIDFromList( baseCurrent->map[a][b][baseCurrent->baseLevel] ), baseCurrent->map[a][b][baseCurrent->baseLevel], a, b );
-
-				if ( entry->buildingStatus[entry->howManyOfThisType] == B_UNDER_CONSTRUCTION )
+				if ( baseCurrent->map[row][col][baseCurrent->baseLevel] != -1 )
 				{
-					if ( entry->timeStart && ( entry->timeStart + entry->buildTime ) <= ccs.date.day )
+					entry = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[row][col][baseCurrent->baseLevel] ) ];
+
+					if ( entry->buildingStatus[entry->howManyOfThisType] == B_UNDER_CONSTRUCTION )
 					{
-						entry->buildingStatus[entry->howManyOfThisType] = B_WORKING_100;
-						Cbuf_AddText( va( "add_workers %i\n", entry->minWorkers ) );
-						Cbuf_Execute();
+						if ( entry->timeStart && ( entry->timeStart + entry->buildTime ) <= ccs.date.day )
+						{
+							entry->buildingStatus[entry->howManyOfThisType] = B_WORKING_100;
+							Cbuf_AddText( va( "add_workers %i\n", entry->minWorkers ) );
+							Cbuf_Execute();
 
-						if ( entry->moreThanOne )
-							entry->howManyOfThisType++;
-						// refresh the building list
-						MN_BuildingInit();
+							if ( entry->moreThanOne )
+								entry->howManyOfThisType++;
+							// refresh the building list
+							MN_BuildingInit();
+						}
 					}
-				}
 
-				if ( entry->buildingStatus[entry->howManyOfThisType] == B_UPGRADE )
-					statusImage = "base/upgrade";
-				else if ( entry->buildingStatus[entry->howManyOfThisType] == B_DOWN )
-					statusImage = "base/down";
-				else if ( entry->buildingStatus[entry->howManyOfThisType] == B_REPAIRING
-					|| entry->buildingStatus[entry->howManyOfThisType] == B_MAINTENANCE )
-					statusImage = "base/repair";
-				else if ( entry->buildingStatus[entry->howManyOfThisType] == B_UNDER_CONSTRUCTION )
-					statusImage = "base/construct";
+					if ( entry->buildingStatus[entry->howManyOfThisType] == B_UPGRADE )
+						statusImage = "base/upgrade";
+					else if ( entry->buildingStatus[entry->howManyOfThisType] == B_DOWN )
+						statusImage = "base/down";
+					else if ( entry->buildingStatus[entry->howManyOfThisType] == B_REPAIRING
+						|| entry->buildingStatus[entry->howManyOfThisType] == B_MAINTENANCE )
+						statusImage = "base/repair";
+					else if ( entry->buildingStatus[entry->howManyOfThisType] == B_UNDER_CONSTRUCTION )
+						statusImage = "base/construct";
 
-				if ( !entry->used && entry->needs && entry->visible )
-				{
-					secondEntry = B_GetBuilding ( entry->needs );
-					if ( ! secondEntry )
-						Com_Printf( _("Error in ufo-scriptfile - could not find the needed building\n") );
-					entry->used = 1;
-					image = secondEntry->image;
+					if ( !entry->used && entry->needs && entry->visible )
+					{
+						secondEntry = B_GetBuilding ( entry->needs );
+						if ( ! secondEntry )
+							Com_Printf( _("Error in ufo-scriptfile - could not find the needed building\n") );
+						entry->used = 1;
+						image = secondEntry->image;
+					}
+					else
+					{
+						image = entry->image;
+						entry->used = 0;
+					}
 				}
 				else
 				{
-					image = entry->image;
-					entry->used = 0;
+					image = "base/grid";
 				}
+
+				re.DrawGetPicSize ( &width, &height, image );
+
+				if ( width == -1 || height == -1 )
+				{
+					Com_Printf( _("Invalid picture dimension of %s\n"), image );
+					return;
+				}
+
+				picWidth = width;
+				picHeight = height;
+
+				if ( mouseover[0] == -1 && MOUSEOVER )
+				{
+					mouseover[0] = row;
+					mouseover[1] = col;
+				}
+
+				baseCurrent->posX[row][col][baseCurrent->baseLevel] = x;
+				baseCurrent->posY[row][col][baseCurrent->baseLevel] = y;
 			}
 			else
 			{
 				image = "base/grid";
+				statusImage = NULL;
 			}
-
-			re.DrawGetPicSize ( &width, &height, image );
-
-			if ( width == -1 || height == -1 )
-			{
-				Com_Printf( _("Invalid picture dimension of %s\n"), image );
-				return;
-			}
-
-			picWidth = width;
-			picHeight = height;
-
-			baseCurrent->posX[b][a][baseCurrent->baseLevel] = x;
-			baseCurrent->posY[b][a][baseCurrent->baseLevel] = y;
 
 			if ( image != NULL )
 				re.DrawNormPic( x, y, width*bvScale, height*bvScale, 0, 0, 0, 0, ALIGN_UL, true, image );
 			if ( statusImage != NULL )
 			{
-				x += 20 * bvScale;
-				y += 60 * bvScale;
 				re.DrawGetPicSize ( &width, &height, statusImage );
 				if ( width == -1 || height == -1 )
 					Com_Printf( _("Invalid picture dimension of %s\n"), statusImage );
 				else
-					re.DrawNormPic( x, y, width*bvScale, height*bvScale, 0, 0, 0, 0, ALIGN_UL, true, statusImage );
+					re.DrawNormPic( x + (20 * bvScale) , y + (60 * bvScale), width*bvScale, height*bvScale, 0, 0, 0, 0, ALIGN_UL, true, statusImage );
 
 				statusImage = NULL;
 			}
+
+// 			re.DrawColor(NULL);
+
+			//adjust trafo values for correct assembly
+			x -= 325.0 * bvScale;
+			y += 162.0 * bvScale;
 		}
+		rowCnt++;
+	}
 
-	// FIXME: Better mousehandling over tiles - make cursorSet obsolete
-	for ( b = BASE_SIZE-1; b >= 0; b-- )
-		for ( a = 0; a < BASE_SIZE; a++ )
-			if ( !cursorSet && baseCurrent->buildingCurrent && baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] < B_UNDER_CONSTRUCTION )
-			{
-				IN_GetMousePos( &mx, &my );
+	if ( mouseover[0] == -1 )
+		return;
 
-				if ( baseCurrent->map[a][b][baseCurrent->baseLevel] == -1
-				  && mx > baseCurrent->posX[b][a][baseCurrent->baseLevel]
-				  && mx < baseCurrent->posX[b][a][baseCurrent->baseLevel] + ( picWidth * bvScale )
-				  && my > baseCurrent->posY[b][a][baseCurrent->baseLevel]
-				  && my < baseCurrent->posY[b][a][baseCurrent->baseLevel] + ( picHeight * bvScale ) )
-				{
-					if ( baseCurrent->baseLevel >= 1)
-					{
-						if ( baseCurrent->map[b][a][baseCurrent->baseLevel-1] == -1 )
-							continue;
-						else if ( bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[b][a][baseCurrent->baseLevel-1] ) ].notUpOn )
-							continue;
-					}
-					image = "base/highlight";
-
-					if ( baseCurrent->buildingCurrent->needs )
-					{
-// 						Com_Printf("The Building needs %s\n", baseCurrent->buildingCurrent->needs );
-						if ( b + 1 < BASE_SIZE )
-						{
-							if ( baseCurrent->map[a][b+1][baseCurrent->baseLevel] != -1 )
-								continue;
-
-							re.DrawNormPic( baseCurrent->posX[b+1][a][baseCurrent->baseLevel], baseCurrent->posY[b+1][a][baseCurrent->baseLevel], width*bvScale, height*bvScale, 0, 0, 0, 0, ALIGN_UL, true, image );
-							re.DrawNormPic( baseCurrent->posX[b][a][baseCurrent->baseLevel], baseCurrent->posY[b][a][baseCurrent->baseLevel], width*bvScale, height*bvScale, 0, 0, 0, 0, ALIGN_UL, true, image );
-						}
-					}
-					else
-					{
-						re.DrawNormPic( baseCurrent->posX[b][a][baseCurrent->baseLevel], baseCurrent->posY[b][a][baseCurrent->baseLevel], width*bvScale, height*bvScale, 0, 0, 0, 0, ALIGN_UL, true, image );
-					}
-
-					cursorSet = 1;
-
-					//building cursor
-// 					cursor->value = 3;
-				}
-			}
+	// FIXME: Better mousehandling over tiles
+	if ( baseCurrent->buildingCurrent && baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] < B_UNDER_CONSTRUCTION )
+	{
+		image = "base/highlight";
+		re.DrawNormPic( baseCurrent->posX[(int)mouseover[0]][(int)mouseover[1]][baseCurrent->baseLevel],
+				baseCurrent->posY[(int)mouseover[0]][(int)mouseover[1]][baseCurrent->baseLevel],
+				width*bvScale, height*bvScale, 0, 0, 0, 0, ALIGN_UL, true, image );
+	}
 }
 
 /*
@@ -1476,7 +1454,7 @@ void MN_BaseInit( void )
 	// set base view
 	ccs.basecenter[0] = 0.2;
 	ccs.basecenter[1] = 0.2;
-	ccs.basezoom = 0.7;
+	ccs.basezoom = 0.4;
 
 	//these are the workers you can set on buildings
 	Cvar_Set( "mn_available_workers", 0 );
@@ -1583,7 +1561,7 @@ void MN_SelectBase( void )
 {
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: select_base <ccs.actualBaseID>\n") );
+		Com_Printf( _("Usage: select_base <baseID>\n") );
 		return;
 	}
 	ccs.actualBaseID = atoi( Cmd_Argv( 1 ) );
@@ -1663,7 +1641,7 @@ void B_BaseAttack ( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("sage: base_attack <ccs.actualBaseID>\n") );
+		Com_Printf( _("Usage: base_attack <baseID>\n") );
 		return;
 	}
 
@@ -1694,53 +1672,41 @@ NOTE: Do we need day and night maps here, too?
 */
 void B_AssembleMap ( void )
 {
-	int a, b, whichBaseID;
+	int row, col;
 	char *baseMapPart;
 	building_t *entry;
-	char maps[1024];
-	char coords[1024];
+	char maps[2024];
+	char coords[2048];
 
 	*maps = '\0';
 	*coords = '\0';
 
-	if ( Cmd_Argc() < 2 && ! baseCurrent )
-	{
-		Com_Printf( _("Usage: base_assemble <baseID>\n") );
-		return;
-	}
-
-	if ( ! baseCurrent )
-	{
-		whichBaseID = atoi( Cmd_Argv( 1 ) );
-
-		if ( whichBaseID >= MAX_BASES )
-			return;
-
-		baseCurrent = &bmBases[whichBaseID];
-
-		if (! bmBuildings[whichBaseID] )
-			MN_BuildingInit();
-	}
+	assert(baseCurrent);
 
 	//TODO: If a building is still under construction, it will be assembled as a finished part
 	//otherwise we need mapparts for all the maps under construction
-	for ( b = BASE_SIZE-1; b >= 0; b-- )
-		for ( a = 0; a < BASE_SIZE; a++ )
+	for ( row = 0; row < BASE_SIZE; row++ )
+		for ( col = 0; col < BASE_SIZE; col++ )
 		{
 			baseMapPart = "\0";
 
-			if ( baseCurrent->map[a][b][0] != -1 )
+			if ( baseCurrent->map[row][col][0] != -1 )
 			{
-				entry = &bmBuildings[whichBaseID][ B_GetIDFromList( baseCurrent->map[a][b][0] ) ];
+				entry = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[row][col][0] ) ];
 
-				if ( !entry->used && entry->needs && entry->visible )
-					entry->used = 1;
-				else
+				if ( ! entry->visible )
 				{
-					if ( entry->mapPart )
-						baseMapPart = va("b/%c/%s", baseCurrent->mapChar, entry->mapPart );
-					entry->used = 0;
+					Com_DPrintf(_("Building %s will not be taken for baseassemble - it invisible\n"), entry->name );
+					continue;
 				}
+
+				if ( !entry->used && entry->needs )
+					entry->used = 1;
+				else if ( entry->needs )
+					continue;
+
+				if ( entry->mapPart )
+					baseMapPart = va("b/%c/%s", baseCurrent->mapChar, entry->mapPart );
 			}
 			else
 				baseMapPart = va("b/%c/empty", baseCurrent->mapChar );
@@ -1749,11 +1715,15 @@ void B_AssembleMap ( void )
 			{
 				strcat( maps, baseMapPart );
 				strcat( maps, " " );
-				strcat( coords, va ("%i %i ", b*16, a*16 ) );
+				// basetiles are 16 units in each direction
+				strcat( coords, va ("%i %i ", col*16, row*16 ) );
 			}
-
 		}
 
+	Com_DPrintf(_("AssembleBase: tiles: %s\n"), maps );
+	Com_DPrintf(_("AssembleBase: coords: %s\n"), coords );
+	Com_DPrintf(_("AssembleBase: length(tiles): %i\n"), strlen(maps) );
+	Com_DPrintf(_("AssembleBase: length(coords): %i\n"), strlen(coords) );
 	Cbuf_AddText( va( "map \"%s\" \"%s\"\n", maps, coords ) );
 }
 
@@ -1791,10 +1761,10 @@ void B_AssembleRandomBase( void )
 
 /*
 ======================
-MN_SaveBases
+B_SaveBases
 ======================
 */
-void MN_SaveBases( sizebuf_t *sb )
+void B_SaveBases( sizebuf_t *sb )
 {
 	// save bases
 	base_t *base;
@@ -1848,7 +1818,7 @@ void MN_SaveBases( sizebuf_t *sb )
 
 /*
 ======================
-MN_LoadBases
+B_LoadBases
 
 This function is called by CL_GameLoad from cl_campaign.c
 It loads back the bases and the buildings
@@ -1856,7 +1826,7 @@ You can use the buildinglist and baselist commands to verify
 the loading process
 ======================
 */
-void MN_LoadBases( sizebuf_t *sb, int version )
+void B_LoadBases( sizebuf_t *sb, int version )
 {
 	// load bases
 	base_t *base;
@@ -1952,7 +1922,10 @@ void CL_BuildingList ( void )
 
 	//maybe someone call this command before the buildings are parsed??
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
+	{
+		Com_Printf(_("No base selected\n"));
 		return;
+	}
 
 	for ( i = 0, base = bmBases; i < MAX_BASES; i++, base++ )
 	{
@@ -1970,6 +1943,8 @@ void CL_BuildingList ( void )
 				if ( k > 1 && k % BASE_SIZE == 0 )
 					Com_Printf("\n");
 				Com_Printf("%i ", building->buildingStatus[k] );
+				if ( ! building->buildingStatus[k] )
+					break;
 			}
 			Com_Printf("\n");
 			building++;
@@ -1986,7 +1961,7 @@ TODO: To be extended for load/save purposes
 */
 void CL_BaseList ( void )
 {
-	int i, j;
+	int i, row, col;
 	base_t* base;
 	for ( i = 0, base = bmBases; i < MAX_BASES; i++, base++ )
 	{
@@ -1994,12 +1969,15 @@ void CL_BaseList ( void )
 		Com_Printf("Base title %s\n", base->title );
 		Com_Printf("Base pos %f:%f\n", base->pos[0], base->pos[1] );
 		Com_Printf("Base map:\n");
-		for ( j = 0; j < BASE_SIZE*BASE_SIZE; j++ )
+		for ( row = 0; row < BASE_SIZE; row++ )
 		{
-			if ( j > 1 && j % BASE_SIZE == 0 )
+			if ( row )
 				Com_Printf("\n");
-			// just show the first level - all others are not used yet
-			Com_Printf("%i ", base->map[j%BASE_SIZE][j/BASE_SIZE][0] );
+			for ( col = 0; col < BASE_SIZE; col++ )
+			{
+				// just show the first level - all others are not used yet
+				Com_Printf("%i ", base->map[row][col][0] );
+			}
 		}
 		Com_Printf("\n");
 	}

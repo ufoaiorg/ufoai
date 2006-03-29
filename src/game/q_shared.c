@@ -1284,11 +1284,11 @@ FIXME: make this buffer size safe someday
 char	*va(char *format, ...)
 {
 	va_list		argptr;
-	static char	string[1024];
+	static char	string[2048];
 
 	va_start (argptr, format);
 #ifndef _WIN32
-	vsnprintf (string, 1024, format,argptr);
+	vsnprintf (string, 2048, format,argptr);
 #else
 	vsprintf (string, format,argptr);
 #endif

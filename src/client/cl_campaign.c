@@ -874,7 +874,7 @@ CL_GameSave
 #define MAX_COMMENTLENGTH	32
 
 #ifndef SAVE_FILE_VERSION
-#define SAVE_FILE_VERSION 2
+#define SAVE_FILE_VERSION 3
 #endif
 
 void CL_GameSave( char *filename, char *comment )
@@ -923,7 +923,10 @@ void CL_GameSave( char *filename, char *comment )
 	MSG_WriteFloat( &sb, ccs.zoom );
 
 	// store bases
-	MN_SaveBases( &sb );
+	B_SaveBases( &sb );
+
+	// store techs
+	RS_SaveTech( &sb );
 
 	// store credits
 	MSG_WriteLong( &sb, ccs.credits );
@@ -1116,7 +1119,10 @@ void CL_GameLoad( char *filename )
 	ccs.zoom = MSG_ReadFloat( &sb );
 
 	// load bases
-	MN_LoadBases( &sb, version );
+	B_LoadBases( &sb, version );
+
+	// load techs
+	RS_LoadTech( &sb, version );
 
 	// read credits
 	CL_UpdateCredits( MSG_ReadLong( &sb ) );

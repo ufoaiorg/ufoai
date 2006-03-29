@@ -72,13 +72,13 @@ void RS_GetName( char *id, char *name )
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {
 			// If something is defined as name use it.
-			if ( strcmp( t->name, "" ) ) {	
+			if ( strcmp( t->name, "" ) ) {
 				strcpy( name, t->name );
 				return;
 			}
-			
+
 			// Search in correct data/.ufo if name is not defined.
-			switch ( t->type ) 
+			switch ( t->type )
 			{
 			case RS_TECH:
 				if ( !strcmp( t->name, "" ) ) // TODO: Is this faster if i use "if ( !t->name[0] )" ???
@@ -135,11 +135,11 @@ void RS_ResearchDisplayInfo ( void  )
 	int i;
 	stringlist_t req_temp;
 	req_temp.numEntries = 0;
-	
+
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
-	
+
 	RS_GetName( t->id, t->name );
 	Cvar_Set( "mn_research_selname",  t->name );
 	Cvar_Set( "mn_research_seltime", va( "Time: %.1f\n", t->time ) );
@@ -161,17 +161,17 @@ void RS_ResearchDisplayInfo ( void  )
 	default:
 		break;
 	}
-	
-	
-	
+
+
+
 	RS_GetFirstRequired( t->id, &req_temp );
 	strcpy( dependencies, "Dependencies: ");
 	if ( req_temp.numEntries > 0 ) {
 		for ( i = 0; i < req_temp.numEntries; i++ ) {
 			RS_GetName( req_temp.list[i], tempstring ); //name_temp gets initialised in getname
 			strcat( dependencies, tempstring );
-			
-			if ( i < req_temp.numEntries-1 ) 
+
+			if ( i < req_temp.numEntries-1 )
 				strcat( dependencies, ", ");
 		}
 	} else {
@@ -216,7 +216,7 @@ TODO: Check if laboratory is available
 void RS_ResearchStart ( void )
 {
 	technology_t *t;
-	
+
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
@@ -251,7 +251,7 @@ TODO: Check if laboratory is available
 void RS_ResearchStop ( void )
 {
 	technology_t *t;
-	
+
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
@@ -286,7 +286,7 @@ void RS_UpdateData ( void )
 	char name [MAX_VAR];
 	int i, j;
 	technology_t *t;
-	
+
 	for ( i=0, j=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( ( t->statusResearch != RS_FINISH ) && ( RS_TechIsResearchable( t->id ) ) ){
@@ -307,13 +307,13 @@ void RS_UpdateData ( void )
 			default:
 				break;
 			}
-		
+
 			Cvar_Set( va("mn_researchitem%i", j),  name ); //TODO: colorcode maybe?
 			researchList[j] = i;
 			j++;
 		}
 	}
-	
+
 	researchListLength = j;
 
 	// Set rest of the list-entries to have no text at all.
@@ -368,7 +368,7 @@ byte RS_DependsOn(char *id1, char *id2)
 	int i, j;
 	technology_t *t;
 	stringlist_t	required;
-	
+
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( id1, t->id ) ) {
@@ -381,7 +381,7 @@ byte RS_DependsOn(char *id1, char *id2)
 		}
 	}
 	Com_Printf( _("RS_DependsOn: research item \"%s\" not found.\n"), id1 );
-	return false;	
+	return false;
 }
 
 /*======================
@@ -393,7 +393,7 @@ void RS_MarkResearched( char *id )
 {
 	int i;
 	technology_t *t;
-	
+
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {
@@ -414,7 +414,7 @@ void CL_CheckResearchStatus ( void )
 {
 	int i, newResearch = 0;
 	technology_t *t;
-	
+
 	if ( ! researchListLength )
 		return;
 
@@ -456,8 +456,8 @@ void RS_TechnologyList_f ( void )
 	technology_t* t;
 	stringlist_t* req;
 	stringlist_t req_temp;
-	
-	
+
+
 	for ( i = 0; i < numTechnologies; i++ )
 	{
 		t = &technologies[i];
@@ -471,7 +471,7 @@ void RS_TechnologyList_f ( void )
 		Com_Printf("\n");
 		Com_Printf( _("... provides  -> %s"), t->provides );
 		Com_Printf("\n");
-		
+
 		Com_Printf( _("... type      -> "));
 		switch ( t->type )
 		{
@@ -482,7 +482,7 @@ void RS_TechnologyList_f ( void )
 		case RS_BUILDING:	Com_Printf(_("building\n") ); break;
 		default:	break;
 		}
-		
+
 		Com_Printf( _("... research  -> "));
 		switch ( t->type )
 		{
@@ -494,14 +494,14 @@ void RS_TechnologyList_f ( void )
 		}
 
 		Com_Printf(_("... Collected -> %i\n"), t->statusCollected );
-		
-		
+
+
 		Com_Printf(_("... req_first ->"));
 		req_temp.numEntries = 0;
 		RS_GetFirstRequired( t->id, &req_temp );
 		for ( j = 0; j < req_temp.numEntries; j++ )
 			Com_Printf( _(" %s"), req_temp.list[j] );
-		
+
 		Com_Printf("\n");
 	}
 }
@@ -571,7 +571,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 		Com_Printf( _("RS_ParseTechnologies: too many technology entries\n"), id );
 		return;
 	}
-	
+
 	// new technology
 	t = &technologies[numTechnologies++];
 	required = &t->requires;
@@ -589,7 +589,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 	t->type = RS_TECH;
 	t->statusResearch = RS_NONE;
 	t->statusCollected  = false;
-	
+
 	do {
 		// get the name type
 		token = COM_EParse( text, errhead, id );
@@ -637,7 +637,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 		if ( !strcmp( token, "up_chapter" ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
-				
+
 			if ( strcmp( token, "" ) ) {
 				// find chapter
 				int i;
@@ -659,7 +659,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 						break;
 					}
 				if ( i == numChapters )
-					Com_Printf( _("RS_ParseTechnologies: chapter \"%s\" not found (entry %s)\n"), token, id );				
+					Com_Printf( _("RS_ParseTechnologies: chapter \"%s\" not found (entry %s)\n"), token, id );
 			}
 		}
 		else
@@ -695,7 +695,7 @@ void RS_GetRequired( char *id, stringlist_t *required)
 {
 	int i;
 	technology_t *t;
-	
+
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {
@@ -745,9 +745,9 @@ byte RS_TechIsResearched(char *id )
 			return false;
 		}
 	}
-	
+
 	Com_Printf( _("RS_TechIsResearched: research item \"%s\" not found.\n"), id );
-	return false;	
+	return false;
 }
 
 /*======================
@@ -760,7 +760,7 @@ byte RS_TechIsResearchable(char *id )
 	int i, j;
 	technology_t *t;
 	stringlist_t* required;
-	
+
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {
@@ -777,7 +777,7 @@ byte RS_TechIsResearchable(char *id )
 		}
 	}
 	Com_Printf( _("RS_TechIsResearchable: research item \"%s\" not found.\n"), id );
-	return false;	
+	return false;
 }
 
 /*======================
@@ -793,7 +793,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required)
 	stringlist_t	*required_temp;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		
+
 		if ( !strcmp( id, t->id ) ) {
 			required_temp = &t->requires;
 			for ( j=0; j < required_temp->numEntries; j++ ) {
@@ -847,11 +847,31 @@ void RS_GetProvided( char *id, char *provided[MAX_TECHLINKS])
 			//TODO: search for dependent items.
 			for ( j=0; j < numTechnologies; j++ ) {
 				if (RS_DependsOn( t->id, id ) ) {
-					// TODO: append researchtree[j]->provided to *provided 
+					// TODO: append researchtree[j]->provided to *provided
 				}
 			}
 			return;
 		}
 	}
 	Com_Printf( _("RS_GetProvided: research item \"%s\" not found.\n"), id );
+}
+
+/*======================
+RS_SaveTech
+======================*/
+void RS_SaveTech( sizebuf_t *sb )
+{
+	SZ_Write( sb, &technologies, sizeof(technology_t)*MAX_TECHNOLOGIES );
+}
+
+/*======================
+RS_LoadTech
+======================*/
+void RS_LoadTech( sizebuf_t *sb, int version )
+{
+	if ( version >= 3 )
+	{
+		memcpy( &technologies, sb->data + sb->readcount, sizeof(technology_t)*MAX_TECHNOLOGIES );
+		sb->readcount += sizeof(technology_t)*MAX_TECHNOLOGIES;
+	}
 }

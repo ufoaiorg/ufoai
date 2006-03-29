@@ -693,9 +693,9 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 		strncat( asmPos, va( " %i %i", (pl->x - mAsm->w/2)*8, (pl->y - mAsm->h/2)*8 ), MAX_TOKEN_CHARS*MAX_TILESTRINGS );
 	}
 
-//	Com_Printf( "tiles: %s\n", *map );
-//	Com_Printf( "pos: %s\n", *pos );
-	Com_Printf( "tiles: %i tries: %i\n", numPlaced, tries+1 );
+//	Com_DPrintf( "tiles: %s\n", *map );
+//	Com_DPrintf( "pos: %s\n", *pos );
+	Com_DPrintf( "tiles: %i tries: %i\n", numPlaced, tries+1 );
 }
 
 

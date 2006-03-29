@@ -19,7 +19,7 @@ int B_GetIDFromList ( int id );
 int B_GetCount ( void );
 void B_SetUpBase ( void );
 
-void MN_SetBuildingByClick ( int x, int y );
+void MN_SetBuildingByClick ( int row, int col );
 void MN_DrawBase( void );
 void MN_ResetBaseManagement( void );
 
