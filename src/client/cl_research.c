@@ -69,7 +69,7 @@ void RS_MarkOneCollected ( char *id )
 	int i;
 	technology_t *t = NULL;
 
-	
+
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( t->provides, id ) ) {
@@ -88,7 +88,7 @@ Should be run after items have been collected/looted from the battlefield (cl_ca
 ======================*/
 void RS_MarkCollected ( void )
 {
-	int i;	
+	int i;
 
 	for ( i=0; i < MAX_OBJDEFS; i++ ) {
 		if ( ccs.eCampaign.num[i] ) {
@@ -106,7 +106,7 @@ void RS_MarkOneResearchable ( char *id )
 {
 	int i;
 	technology_t *t = NULL;
-	
+
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( t->id, id ) ) {
@@ -130,14 +130,14 @@ void RS_MarkResearchable( void )
 	technology_t *t = NULL;
 	stringlist_t required;
 	byte required_are_researched;
-	
-	
+
+
 	// set all entries to initial value
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		t->statusResearchable = false;
 	}
-	
+
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !t->statusResearchable ) {	// Redundant, since we set them all to false, but you never know.
@@ -145,7 +145,7 @@ void RS_MarkResearchable( void )
 				Com_Printf( _("RS_MarkResearchable: handling %s \n"), t->id );
 				required.numEntries = 0;
 				RS_GetFirstRequired( t->id,  &required );
-				
+
 				// If the tech has an collected item, mark the first-required techs as researchable //TODO doesn't work yet?
 				if ( t->statusCollected ) {
 					for ( j=0; j < required.numEntries; j++ ) {
@@ -162,7 +162,7 @@ void RS_MarkResearchable( void )
 					if ( !RS_TechIsResearched(required.list[j] ) ) {
 						required_are_researched = false;
 						break;
-						
+
 					}
 				}
 				if ( required_are_researched ) {
@@ -170,12 +170,12 @@ void RS_MarkResearchable( void )
 					t->statusResearchable = true;
 					//RS_MarkOneResearchable( t->id  );
 				}
-				
-				
+
+
 				// If the tech is an initial one,  mark it as as researchable.
-				
+
 				for ( j=0; j < required.numEntries; j++ ) {
-					
+
 					if ( !strcmp( required.list[j], "initial" ) ) {
 						Com_Printf( _("RS_MarkResearchable: marked %s \n"), t->id );
 						t->statusResearchable = true;
@@ -203,14 +203,14 @@ void RS_InitTree( void )
 	byte	found;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		
+
 		t->overalltime = t->time;	// set the overall reseach time (now fixed) to the one given in the ufo-file.
-		
+
 		// Search in correct data/.ufo
-		switch ( t->type ) 
+		switch ( t->type )
 		{
 		case RS_TECH:
-			if ( !strcmp( t->name, "" ) ) 
+			if ( !strcmp( t->name, "" ) )
 				Com_Printf( _("RS_InitTree: A 'type tech' item needs to have a 'name\txxx' defined \"%s\"."), t->id );
 			break;
 		case RS_WEAPON:
@@ -226,12 +226,12 @@ void RS_InitTree( void )
 					}
 					if ( !strcmp( t->mdl_top, "" ) )
 						strcpy( t->mdl_top, item->model );
-					if ( !strcmp( t->image_top, "" ) ) 
+					if ( !strcmp( t->image_top, "" ) )
 						strcpy( t->image_top, item->image );
-					
+
 					break;	// Should return to CASE RS_xxx.
 				}
-				
+
 			}
 			//no id found in csi.ods
 			if ( !found ) {
@@ -245,11 +245,11 @@ void RS_InitTree( void )
 				building = &bmBuildings[0][j];
 				if ( !strcmp( t->provides, building->name ) ) { // This building has been 'provided',
 					found = true;
-					if ( !strcmp( t->name, "") ) 
+					if ( !strcmp( t->name, "") )
 						strcpy( t->name, building->title );
-					if ( !strcmp( t->image_top, "") ) 
+					if ( !strcmp( t->image_top, "") )
 						strcpy( t->image_top, building->image );
-					
+
 					break;	// Should return to CASE RS_xxx.
 				}
 			}
@@ -264,7 +264,7 @@ void RS_InitTree( void )
 		} // switch
 	}
 	RS_MarkCollected();
-	RS_MarkResearchable();	
+	RS_MarkResearchable();
 	Com_Printf( _("RS_InitTree: Technology tree initialised. %i entries found.\n"), i );
 }
 
@@ -277,7 +277,7 @@ void RS_GetName( char *id, char *name )
 {
 	int i;
 	technology_t *t = NULL;
-	
+
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {
@@ -611,7 +611,7 @@ void CL_CheckResearchStatus ( void )
 				newResearch++;
 			} else {
 				// TODO/FIXME: Make this depending on how many scientists are hired
-				// t->time -= pow( 1.2, t->lab->assignedWorkers );	// The 1.2 may need some finetuning (do not use values lower that 1). A DEFINE for it might also be a good idea. 
+				// t->time -= pow( 1.2, t->lab->assignedWorkers );	// The 1.2 may need some finetuning (do not use values lower that 1). A DEFINE for it might also be a good idea.
 				// or
 				// t->time -= pow( t->lab->assignedWorkers, 1,1 ) - (  t->lab->assignedWorkers / 4 );
 				t->time--;		// reduce one time-unit
@@ -1054,7 +1054,7 @@ void RS_SaveTech( sizebuf_t *sb )
 	{
 		MSG_WriteByte( sb, technologies[i].statusResearch );
 		MSG_WriteByte( sb, technologies[i].statusCollected );
-		MSG_WriteByte( sb, technologies[i].time);
+		MSG_WriteFloat( sb, technologies[i].time);
 	}
 }
 
@@ -1073,7 +1073,7 @@ void RS_LoadTech( sizebuf_t *sb, int version )
 		{
 			technologies[i].statusResearch = MSG_ReadByte( sb );
 			technologies[i].statusCollected = MSG_ReadByte( sb );
-			technologies[i].time = MSG_ReadByte( sb );
+			technologies[i].time = MSG_ReadFloat( sb );
 		}
 	}
 }
