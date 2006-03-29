@@ -619,8 +619,6 @@ tech building_commando
 	provides	commando
 	time	0
 	researched	true
-	
-	image_top	base/commando
 }
 
 tech building_powerplant
@@ -633,8 +631,18 @@ tech building_powerplant
 	provides	powerplant
 	time	0
 	researched	true
+}
+
+tech building_storage
+{
+	type	building
+	description	b_storage_txt
+	up_chapter	buildings
 	
-	image_top	base/powerplant
+	requires	initial
+	provides	storage
+	time	0
+	researched	true
 }
 
 tech building_hangar
@@ -644,27 +652,10 @@ tech building_hangar
 	up_chapter	buildings
 	
 	requires	initial
-	provides	drop1
+	provides	drop2
 	time	0
 	researched	true
-	
-	image_top	base/hangar
 }
-
-//tech building_hangar2
-//{
-//	type	building
-//	description	b_hangar_txt
-//	up_chapter	buildings
-//	
-//	requires	initial
-//	provides	drop2
-//	time	0
-//	researched	true
-//	
-//	image_top	base/hangar
-//}
-
 
 tech building_quarters
 {
@@ -676,8 +667,6 @@ tech building_quarters
 	provides	quarters
 	time	0
 	researched	true
-	
-	image_top	base/quarters
 }
 
 tech building_lab
@@ -690,8 +679,6 @@ tech building_lab
 	provides	lab
 	time	0
 	researched	true
-	
-	image_top	base/lab
 }
 
 //========================
