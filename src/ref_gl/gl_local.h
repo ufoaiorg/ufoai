@@ -18,6 +18,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifndef GL_LOCAL_H
+#define GL_LOCAL_H
+
 #ifdef _WIN32
 #  include <windows.h>
 #endif
@@ -602,4 +605,7 @@ void		GLimp_LogNewFrame( void );
 // NOTE TTimo linux works with float gamma value, not the gamma table
 //   the params won't be used, getting the r_gamma cvar directly
 void		GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] );
+
+
+#endif /* GL_LOCAL_H */
 
