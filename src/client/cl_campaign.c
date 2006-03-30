@@ -862,6 +862,9 @@ void CL_GameNew( void )
 	Cbuf_Execute();
 
 	CL_GameTimeStop();
+	
+	// init research tree 
+	RS_InitTree ( );
 }
 
 
@@ -1244,6 +1247,9 @@ void CL_GameLoad( char *filename )
 
 	Com_Printf( _("Campaign '%s' loaded.\n"), filename );
 	CL_GameTimeStop();
+	
+	// init research tree 
+	RS_InitTree ( );
 }
 
 
@@ -1552,6 +1558,8 @@ void CL_Buy( void )
 		Cvar_SetValue( va( "mn_supply%i", num ),  --ccs.eMarket.num[item] );
 		CL_UpdateCredits( ccs.credits-csi.ods[item].price );
 	}
+	RS_MarkCollected();
+	RS_MarkResearchable();
 }
 
 
@@ -1631,7 +1639,8 @@ void CL_CollectItems( int won )
 					CL_CollectItemAmmo( item, (container == csi.idLeft) );
 		}
 	}
-	RS_MarkCollected ();
+	RS_MarkCollected();
+	RS_MarkResearchable();
 }
 
 /*

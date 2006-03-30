@@ -35,30 +35,6 @@ char infoResearchText[MAX_MENUTEXTLEN];
 technology_t technologies[MAX_TECHNOLOGIES];
 int numTechnologies;
 
-/*====================== NOT USED RIGHT NOW
-RS_ResearchPossible
-
-checks if there is at least one base with a lab and scientists available and tells the player the status.
-======================
-char RS_ResearchPossible( void )
-{
-	if ( baseCurrent ) {
-		if ( baseCurrent->hasLab ) {
-			if ( B_HowManyPeopleInBase2 ( baseCurrent, 1 ) > 0)  {
-				return true;
-			} else {
-				Com_Printf( _("You need to hire some scientists before research.\n") );
-				MN_Popup( _("Notice"), _("You need to hire some scientists before research.") );
-			}
-		} else {
-			Com_Printf( _("Build a laboratory first and hire/transfer some scientists.\n") );
-			MN_Popup( _("Notice"), _("Build a laboratory first and hire/transfer some scientists.") );
-		}
-	}
-	return false;
-}
-*/
-
 /*======================
 RS_MarkOneCollected
 
@@ -92,6 +68,7 @@ void RS_MarkCollected ( void )
 
 	for ( i=0; i < MAX_OBJDEFS; i++ ) {
 		if ( ccs.eCampaign.num[i] ) {
+			Com_DPrintf("RS_MarkCollected: %s marked as collected.\n", csi.ods[i].kurz );
 			RS_MarkOneCollected( csi.ods[i].kurz );
 		}
 	}
@@ -159,7 +136,7 @@ void RS_MarkResearchable( void )
 				required = t->requires;
 				required_are_researched = true;
 				for ( j=0; j < required.numEntries; j++ ) {
-					if ( !RS_TechIsResearched(required.list[j] ) ) {
+					if ( ( !RS_TechIsResearched(required.list[j] ) ) || ( !strcmp(required.list[j], "nothing" ) ) ) {
 						required_are_researched = false;
 						break;
 
@@ -314,6 +291,10 @@ void RS_ResearchDisplayInfo ( void  )
 
 	Cvar_Set( "mn_research_selname",  t->name );
 	if ( t->overalltime ) {
+		if ( t->time > t->overalltime ) {
+			Com_Printf("RS_ResearchDisplayInfo: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", t->id, t->time, t->overalltime );
+			t->time = t->overalltime;	// just in case the values got messed up
+		}
 		Cvar_Set( "mn_research_seltime", va( "Progress: %.1f\%\n", 100-(t->time*100/t->overalltime) ) );
 	} else {
 		Cvar_Set( "mn_research_seltime", "" );
@@ -460,24 +441,35 @@ void RS_UpdateData ( void )
 	char name [MAX_VAR];
 	int i, j;
 	technology_t *t = NULL;
-
+	strcpy( name, "" ); // init temp-name
 	for ( i=0, j=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
+		strcpy( name, t->name );
+		if ( t->statusCollected && !t->statusResearchable && (t->statusResearch != RS_FINISH ) ) { // an unresearched collected item that cannot yet be researched
+			strcat(name, " [not yet researchable]");
+			// TODO make it grey
+			Cvar_Set( va("mn_researchitem%i", j),  name );
+			researchList[j] = i;
+			j++;
+		}
+		else
 		if ( ( t->statusResearch != RS_FINISH ) && ( t->statusResearchable ) ) { //(  ( t->statusResearch != RS_FINISH ) && ( RS_TechIsResearchable( t->id ) ) ) {
-			strcpy( name, t->name );
 			switch ( t->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 			{
 			case RS_RUNNING:
-				strcat(name, " [under research]");	//TODO: colorcode "string txt_item%i" ?
+				strcat(name, " [under research]");
+				//TODO: colorcode "string txt_item%i" ? // TODO make it green
 				break;
 			case RS_FINISH:
 				strcat(name, " [finished]");	// DEBUG: normaly these will not be shown at all. see "if" above
 				break;
 			case RS_PAUSED:
 				strcat(name, " [paused]");
+				// TODO make it yellow
 				break;
 			case RS_NONE:
-				strcat(name, " [unknown]");	// DEBUG
+				strcat(name, " [unknown]");
+				// TODO make it red?
 				break;
 			default:
 				break;
@@ -497,6 +489,7 @@ void RS_UpdateData ( void )
 
 	// select first item that needs to be researched
 	if ( researchListLength ) {
+		Com_DPrintf("RS_UpdateData: gRN%i rLL%i\n", globalResearchNum, researchListLength );
 		/* TODO: Fix this mess. globalResearchNum and really selected entry are not the same.
 		if (globalResearchNum && ( researchListLength < MAX_RESEARCHDISPLAY ) ) {
 			Cbuf_AddText( va("researchselect%i\n",globalResearchNum) );
@@ -613,6 +606,8 @@ void CL_CheckResearchStatus ( void )
 				// or
 				// t->time -= pow( t->lab->assignedWorkers, 1,1 ) - (  t->lab->assignedWorkers / 4 );
 				t->time--;		// reduce one time-unit
+				if ( t->time < 0 )
+					t->time = 0; // Will be a good thing (think of percentage-calculation) once non-integer values are used.
 			}
 		}
 	}
@@ -634,7 +629,6 @@ void RS_TechnologyList_f ( void )
 	technology_t *t = NULL;
 	stringlist_t *req = NULL;
 	stringlist_t req_temp;
-
 
 	for ( i = 0; i < numTechnologies; i++ )
 	{
@@ -981,8 +975,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 
 		if ( !strcmp( id, t->id ) ) {
 			required_temp = &t->requires;
-			Com_DPrintf( "RS_GetFirstRequired2: %s - %s \n", id, first_id );
-			Com_DPrintf( "RS_GetFirstRequired2: %s\n",  required_temp->list[0] );
+			//Com_DPrintf( "RS_GetFirstRequired2: %s - %s - %s\n", id, first_id, required_temp->list[0]  );
 			for ( j=0; j < required_temp->numEntries; j++ ) {
 				if ( ( !strcmp( required_temp->list[0] , "initial" ) ) || ( !strcmp( required_temp->list[0] , "nothing" ) ) ) {
 					if ( !strcmp( id, first_id ) )
@@ -997,9 +990,11 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 					}
 				}
 				if ( RS_TechIsResearched(required_temp->list[j]) ) {
-					strcpy( required->list[required->numEntries], required_temp->list[j] );
-					required->numEntries++;
-					Com_DPrintf( "RS_GetFirstRequired2: next item \"%s\" already researched  \"%s\"\n", required_temp->list[j], t->id );
+					if ( required->numEntries < MAX_TECHLINKS ) {
+						strcpy( required->list[required->numEntries], required_temp->list[j] );
+						required->numEntries++;
+						Com_DPrintf( "RS_GetFirstRequired2: next item \"%s\" already researched  \"%s\"\n", required_temp->list[j], t->id );
+					}
 				} else {
 					RS_GetFirstRequired2( required_temp->list[j], first_id, required );
 				}
