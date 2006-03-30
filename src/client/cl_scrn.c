@@ -511,7 +511,7 @@ Scroll it up or down
 */
 void SCR_RunConsole (void)
 {
-// decide on the height of the console
+	// decide on the height of the console
 	if (cls.key_dest == key_console)
 		scr_conlines = scr_consize->value;	// half screen
 	else
