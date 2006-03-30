@@ -276,6 +276,9 @@
 				RelativePath="gl_anim.c">
 			</File>
 			<File
+				RelativePath=".\gl_arb_shader.c">
+			</File>
+			<File
 				RelativePath="gl_draw.c">
 			</File>
 			<File
@@ -303,6 +306,9 @@
 				RelativePath="gl_rsurf.c">
 			</File>
 			<File
+				RelativePath=".\gl_shadows.c">
+			</File>
+			<File
 				RelativePath="gl_warp.c">
 			</File>
 			<File
@@ -326,6 +332,9 @@
 			</File>
 			<File
 				RelativePath="anormtab.h">
+			</File>
+			<File
+				RelativePath=".\gl_arb_shader.h">
 			</File>
 			<File
 				RelativePath="gl_local.h">
