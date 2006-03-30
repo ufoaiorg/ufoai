@@ -777,34 +777,52 @@ qboolean	Cmd_Exists (char *cmd_name)
 Cmd_CompleteCommand
 ============
 */
-char *Cmd_CompleteCommand (char *partial)
+char *Cmd_CompleteCommand(char *partial)
 {
-	cmd_function_t	*cmd;
-	int				len;
-	cmdalias_t		*a;
-
+	cmd_function_t *cmd;
+	cmdalias_t *a;
+	
+	char *match = NULL;
+	int len, matches = 0;
+	
 	len = strlen(partial);
-
-	if (!len)
+	
+	if(!len)
 		return NULL;
-
-	// check for exact match
-	for (cmd=cmd_functions ; cmd ; cmd=cmd->next)
-		if (!strcmp (partial,cmd->name))
+		
+	// check for exact match in commands
+	for(cmd = cmd_functions; cmd; cmd = cmd->next)
+		if(!strcmp(partial, cmd->name))
 			return cmd->name;
-	for (a=cmd_alias ; a ; a=a->next)
-		if (!strcmp (partial, a->name))
+	
+	// and then aliases
+	for(a = cmd_alias; a; a = a->next)
+		if(!strcmp(partial, a->name))
 			return a->name;
-
-	// check for partial match
-	for (cmd=cmd_functions ; cmd ; cmd=cmd->next)
-		if (!strncmp (partial,cmd->name, len))
-			return cmd->name;
-	for (a=cmd_alias ; a ; a=a->next)
-		if (!strncmp (partial, a->name, len))
-			return a->name;
-
-	return NULL;
+	
+	// check for partial matches in commands
+	for(cmd = cmd_functions; cmd; cmd = cmd->next)
+	{
+		if(!strncmp(partial, cmd->name, len))
+		{
+			Com_Printf("%s\n", cmd->name);
+			match = cmd->name;
+			matches++;
+		}
+	}
+	
+	// and then aliases
+	for(a = cmd_alias; a; a = a->next)
+	{
+		if(!strncmp(partial, a->name, len))
+		{
+			Com_Printf("%s\n", a->name);
+			match = a->name;
+			matches++;
+		}
+	}
+	
+	return matches == 1 ? match : NULL;
 }
 
 

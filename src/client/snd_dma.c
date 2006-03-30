@@ -1195,6 +1195,7 @@ qboolean OGG_Open( char *filename )
 {
 	FILE	*f;
 	int	res, length;
+	vorbis_info *vi;
 
 	if ( ov_volume->value <= 0 )
 		return false;
@@ -1220,6 +1221,13 @@ qboolean OGG_Open( char *filename )
 	{
 		Com_Printf( _("'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n"), filename, res );
 		fclose( f );
+		return false;
+	}
+
+	vi = ov_info( &ovFile, -1 );
+	if( (vi->channels != 1) && (vi->channels != 2) ) {
+		Com_Printf( "%s has an unsupported number of channels: %i\n", filename, vi->channels );
+		fclose ( f );
 		return false;
 	}
 
