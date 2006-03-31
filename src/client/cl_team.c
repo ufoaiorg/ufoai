@@ -145,6 +145,7 @@ void CL_ResetCharacters( void )
 	Cvar_ForceSet( "cl_selected", "0" );
 	numWholeTeam = 0;
 	numOnTeam = 0;
+	numHired = 0;
 	teamMask = 0;
 }
 
@@ -866,6 +867,7 @@ void CL_LoadTeam( sizebuf_t *sb )
 	// get assignement
 	teamMask = MSG_ReadLong( sb );
 	numOnTeam = MSG_ReadByte( sb );
+	numHired = numOnTeam;
 
 	Com_DPrintf(_("Load team with %i members and %i slots\n"), numOnTeam, numWholeTeam );
 
