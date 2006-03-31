@@ -861,6 +861,7 @@ typedef struct building_s
 	float	energy, workerCosts, produceTime, fixCosts, varCosts;
 	int	production, level, id, timeStart, buildTime, techLevel, notUpOn;
 
+	int maxWorkers, minWorkers, assignedWorkers; // TODO: remove these and replace them with the employee_s struct
 	// A list of employees assigned to this building.
 	struct employee_s assigned_employees;
 
