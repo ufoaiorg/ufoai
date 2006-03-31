@@ -27,9 +27,9 @@ void RS_GetFirstRequired( char *id,  stringlist_t *required);
 byte RS_TechIsResearchable(char *id );
 byte RS_TechIsResearched(char *id );
 
-byte researchList[MAX_RESEARCHLIST];
+technology_t *researchList[MAX_RESEARCHLIST];
 int researchListLength;
-int globalResearchNum;
+int researchListPos;
 char infoResearchText[MAX_MENUTEXTLEN];
 
 technology_t technologies[MAX_TECHNOLOGIES];
@@ -283,7 +283,7 @@ void RS_ResearchDisplayInfo ( void  )
 	int i;
 	stringlist_t req_temp;
 
-	t = &technologies[globalResearchNum];
+	t = researchList[researchListPos];
 
 	// we are not in base view
 	if ( ! baseCurrent )
@@ -358,8 +358,60 @@ void CL_ResearchSelectCmd( void )
 	}
 
 	// call researchselect function from menu_research.ufo
-	Cbuf_AddText( va( "researchselect%i\n", num ) );
-	globalResearchNum = researchList[num];
+	researchListPos = num ;
+	Cbuf_AddText( va( "researchselect%i\n", researchListPos ) );
+	RS_ResearchDisplayInfo();
+}
+
+/*======================
+RS_AssignScientist
+
+Assigns scientist to the selected research-project.
+======================*/
+void RS_AssignScientist( void )
+{
+	int num;
+
+	if ( Cmd_Argc() < 2 )
+	{
+		Com_Printf( "Usage: mn_rs_add <num_in_list>\n" );
+		return;
+	}
+	num = atoi( Cmd_Argv( 1 ) );
+	if ( num >= researchListLength )
+	{
+		menuText[TEXT_STANDARD] = NULL;
+		return;
+	}
+
+	// TODO: add scientists to research-item
+	
+	RS_ResearchDisplayInfo();
+}
+
+/*======================
+RS_RemoveScientist
+
+Remove scientist from the selected research-project.
+======================*/
+void RS_RemoveScientist( void )
+{
+	int num;
+
+	if ( Cmd_Argc() < 2 )
+	{
+		Com_Printf( "Usage: mn_rs_remove <num_in_list>\n" );
+		return;
+	}
+	num = atoi( Cmd_Argv( 1 ) );
+	if ( num >= researchListLength )
+	{
+		menuText[TEXT_STANDARD] = NULL;
+		return;
+	}
+
+	// TODO: remove scientists from research-item
+
 	RS_ResearchDisplayInfo();
 }
 
@@ -376,24 +428,29 @@ void RS_ResearchStart ( void )
 	if ( ! baseCurrent )
 		return;
 
-	t = &technologies[globalResearchNum];
-	switch ( t->statusResearch )
-	{
-	case RS_RUNNING:
-		MN_Popup( _("Notice"), _("This item is already under research by your scientists.") );
-		break;
-	case RS_PAUSED:
-		MN_Popup( _("Notice"), _("The research on this item continues.") );
-		t->statusResearch = RS_RUNNING;
-		break;
-	case RS_FINISH:
-		MN_Popup( _("Notice"), _("The research on this item is complete.") );
-		break;
-	case RS_NONE:
-		t->statusResearch = RS_RUNNING;
-		break;
-	default:
-		break;
+	t = researchList[researchListPos];
+	
+	if ( t->statusResearchable ) {
+		switch ( t->statusResearch )
+		{
+		case RS_RUNNING:
+			MN_Popup( _("Notice"), _("This item is already under research by your scientists.") );
+			break;
+		case RS_PAUSED:
+			MN_Popup( _("Notice"), _("The research on this item continues.") );
+			t->statusResearch = RS_RUNNING;
+			break;
+		case RS_FINISH:
+			MN_Popup( _("Notice"), _("The research on this item is complete.") );
+			break;
+		case RS_NONE:
+			t->statusResearch = RS_RUNNING;
+			break;
+		default:
+			break;
+		}
+	} else {
+		MN_Popup( _("Notice"), _("The research on this item is not yet possible. You need to research the technologies it's based on first.") );
 	}
 	RS_UpdateData();
 }
@@ -411,7 +468,7 @@ void RS_ResearchStop ( void )
 	if ( ! baseCurrent )
 		return;
 
-	t = &technologies[globalResearchNum];
+	t = researchList[researchListPos];
 	switch ( t->statusResearch )
 	{
 	case RS_RUNNING:
@@ -447,9 +504,9 @@ void RS_UpdateData ( void )
 		strcpy( name, t->name );
 		if ( t->statusCollected && !t->statusResearchable && (t->statusResearch != RS_FINISH ) ) { // an unresearched collected item that cannot yet be researched
 			strcat(name, " [not yet researchable]");
-			// TODO make it grey
 			Cvar_Set( va("mn_researchitem%i", j),  name );
-			researchList[j] = i;
+			Cbuf_AddText( va( "researchunresearchable%i\n", j ) );
+			researchList[j] = &technologies[i];
 			j++;
 		}
 		else
@@ -458,14 +515,14 @@ void RS_UpdateData ( void )
 			{
 			case RS_RUNNING:
 				strcat(name, " [under research]");
-				//TODO: colorcode "string txt_item%i" ? // TODO make it green
+				Cbuf_AddText( va( "researchrunning%i\n", j ) );
 				break;
 			case RS_FINISH:
 				strcat(name, " [finished]");	// DEBUG: normaly these will not be shown at all. see "if" above
 				break;
 			case RS_PAUSED:
 				strcat(name, " [paused]");
-				// TODO make it yellow
+				Cbuf_AddText( va( "researchrunning%i\n", j ) );
 				break;
 			case RS_NONE:
 				strcat(name, " [unknown]");
@@ -476,7 +533,7 @@ void RS_UpdateData ( void )
 			}
 
 			Cvar_Set( va("mn_researchitem%i", j),  name ); //TODO: colorcode maybe?
-			researchList[j] = i;
+			researchList[j] = &technologies[i];
 			j++;
 		}
 	}
@@ -489,17 +546,12 @@ void RS_UpdateData ( void )
 
 	// select first item that needs to be researched
 	if ( researchListLength ) {
-		Com_DPrintf("RS_UpdateData: gRN%i rLL%i\n", globalResearchNum, researchListLength );
-		/* TODO: Fix this mess. globalResearchNum and really selected entry are not the same.
-		if (globalResearchNum && ( researchListLength < MAX_RESEARCHDISPLAY ) ) {
-			Cbuf_AddText( va("researchselect%i\n",globalResearchNum) );
-			CL_ItemDescription( researchList[globalResearchNum] );
-			globalResearchNum = researchList[globalResearchNum];
-		}else {*/
+		Com_DPrintf("RS_UpdateData: Pos%i Len%i\n", researchListPos, researchListLength );
+		if ( (researchListPos < researchListLength) &&  ( researchListLength < MAX_RESEARCHDISPLAY ) ) {
+			Cbuf_AddText( va("researchselect%i\n",researchListPos ) );
+		}else {
 			Cbuf_AddText( "researchselect0\n" );
-			CL_ItemDescription( researchList[0] );
-			globalResearchNum = researchList[0];
-		//}
+		}
 	} else {
 		// reset description
 		Cvar_Set( "mn_researchitemname", "" );
@@ -598,13 +650,13 @@ void CL_CheckResearchStatus ( void )
 				else
 					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("%i researches finished\n"), newResearch+1 );
 				RS_MarkResearched( t->id );
-				globalResearchNum = 0;
+				researchListPos = 0;
 				newResearch++;
 			} else {
 				// TODO/FIXME: Make this depending on how many scientists are hired
-				// t->time -= pow( 1.2, t->lab->assignedWorkers );	// The 1.2 may need some finetuning (do not use values lower that 1). A DEFINE for it might also be a good idea.
+				// t->time -= pow( 1.2, numAssignedScientists );	// The 1.2 may need some finetuning (do not use values lower that 1). A DEFINE for it might also be a good idea.
 				// or
-				// t->time -= pow( t->lab->assignedWorkers, 1,1 ) - (  t->lab->assignedWorkers / 4 );
+				// t->time -= pow( numAssignedScientists, 1,1 ) - (  numAssignedScientists / 4 );
 				t->time--;		// reduce one time-unit
 				if ( t->time < 0 )
 					t->time = 0; // Will be a good thing (think of percentage-calculation) once non-integer values are used.
@@ -701,6 +753,8 @@ void MN_ResetResearch( void )
 	Cmd_AddCommand( "research_type", CL_ResearchType );
 	Cmd_AddCommand( "mn_start_research", RS_ResearchStart );
 	Cmd_AddCommand( "mn_stop_research", RS_ResearchStop );
+	Cmd_AddCommand( "mn_rs_add", RS_AssignScientist );
+	Cmd_AddCommand( "mn_rs_remove", RS_RemoveScientist );
 	Cmd_AddCommand( "research_update", RS_UpdateData );
 	Cmd_AddCommand( "technologylist", RS_TechnologyList_f );
 	Cmd_AddCommand( "techlist", RS_TechnologyList_f );	// DEBUGGING ONLY
