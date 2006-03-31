@@ -66,10 +66,6 @@ tech weapon_assault
 	provides	assault
 	time	0
 	researched	true
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/assault/assault.md2
-	//mdl_bottom	models/weapons/assault/assault_clip.md2
 }
 
 tech weapon_assault_ammo
@@ -82,8 +78,6 @@ tech weapon_assault_ammo
 	provides	assault_ammo
 	time	0
 	researched	true
-	mdl_top	models/weapons/assault/assault_clip.md2
-	//mdl_bottom	models/weapons/assault/assault_clip.md2
 }
 
 tech weapon_sniper
@@ -96,10 +90,6 @@ tech weapon_sniper
 	provides	sniper
 	time	0
 	researched	true
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/sniper/sniper.md2
-	//mdl_bottom	models/weapons/sniper/sniper_clip.md2
 }
 
 tech weapon_sniper_ammo
@@ -112,8 +102,6 @@ tech weapon_sniper_ammo
 	provides	sniper_ammo
 	time	0
 	researched	true
-	
-	mdl_top	models/weapons/sniper/sniper_clip.md2
 }
 
 tech weapon_smg
@@ -126,10 +114,6 @@ tech weapon_smg
 	provides	smg
 	time	0
 	researched	true
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/smg/smg.md2
-	//mdl_bottom	models/weapons/smg/smg_clip.md2
 }
 
 tech weapon_smg_ammo
@@ -142,8 +126,6 @@ tech weapon_smg_ammo
 	provides	smg_ammo
 	time	0
 	researched	true
-	
-	mdl_top	models/weapons/smg/smg_clip.md2
 }
 
 tech weapon_shotgun
@@ -156,10 +138,6 @@ tech weapon_shotgun
 	provides	shotgun
 	time	0
 	researched	true
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/shotgun/shotgun.md2
-	//mdl_bottom	models/weapons/shotgun/shotgun_clip.md2
 }
 
 tech weapon_shotgun_ammo
@@ -172,8 +150,6 @@ tech weapon_shotgun_ammo
 	provides	shotgun_ammo
 	time	0
 	researched	true
-	
-	mdl_top	models/weapons/shotgun/shotgun_clip.md2
 }
 
 tech weapon_flamer
@@ -186,10 +162,6 @@ tech weapon_flamer
 	provides	flamer
 	time	0
 	researched	true
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/flamer/flamer.md2
-	//mdl_bottom	models/weapons/flamer/flamer_ammo.md2
 }
 
 tech weapon_flamer_ammo
@@ -202,8 +174,6 @@ tech weapon_flamer_ammo
 	provides	flamer_ammo
 	time	0
 	researched	true
-	
-	mdl_top	models/weapons/flamer/flamer_ammo.md2
 }
 
 tech weapon_pistol
@@ -216,10 +186,6 @@ tech weapon_pistol
 	provides	pistol
 	time	0
 	researched	true
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/pistol/pistol.md2
-	//mdl_bottom	models/weapons/pistol/pistol_clip.md2
 }
 
 tech weapon_pistol_ammo
@@ -232,8 +198,6 @@ tech weapon_pistol_ammo
 	provides	pistol_ammo
 	time	0
 	researched	true
-	
-	mdl_top	models/weapons/pistol/pistol_clip.md2
 }
 
 tech weapon_rpg
@@ -246,10 +210,6 @@ tech weapon_rpg
 	provides	rpg
 	time	0
 	researched	true
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/rpg/rpg.md2
-	//mdl_bottom	models/weapons/rpg/rocket.md2
 }
 
 tech weapon_rpg_ammo
@@ -262,8 +222,6 @@ tech weapon_rpg_ammo
 	provides	rpg_ammo
 	time	0
 	researched	true
-	
-	mdl_top	models/weapons/rpg/rocket.md2
 }
 
 
@@ -277,10 +235,6 @@ tech weapon_laserpistol
 	provides	laserpistol
 	time	0
 	researched	true
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/laserpistol/laserpistol.md2
-	//mdl_bottom	models/weapons/laserpistol/laserpistol_clip.md2
 }
 
 tech weapon_laserpistol_ammo
@@ -293,8 +247,6 @@ tech weapon_laserpistol_ammo
 	provides	laserpistol_ammo
 	time	0
 	researched	true
-	
-	mdl_top	models/weapons/laserpistol/laserpistol_clip.md2
 }
 
 tech weapon_laserrifle
@@ -307,10 +259,6 @@ tech weapon_laserrifle
 	provides	laserrifle
 	time	0
 	researched	true
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/laserrifle/laserrifle.md2
-	//mdl_bottom	models/weapons/laserrifle/laserrifle_clip.md2
 }
 
 tech weapon_laserrifle_ammo
@@ -323,8 +271,6 @@ tech weapon_laserrifle_ammo
 	provides	laserrifle_ammo
 	time	0
 	researched	true
-	
-	mdl_top	models/weapons/laserrifle/laserrifle_clip.md2
 }
 
 tech weapon_fraggren
@@ -337,9 +283,6 @@ tech weapon_fraggren
 	provides	fraggrenade
 	time	0
 	researched	true
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/fraggren/fraggren.md2
 }
 
 tech weapon_knife
@@ -352,9 +295,6 @@ tech weapon_knife
 	provides	knife
 	time	0
 	researched	true
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/knife/knife.md2
 }
 
 //========================
@@ -388,10 +328,6 @@ tech tachyon
 //	provides	tachyonpistol
 //	time	1
 //	researched	false
-//	
-//	// can this be taken from the weapons.ufo?
-//	mdl_top	models/weapons/tachyonpistol/tachyonpistol.md2
-//	//mdl_bottom	models/weapons/tachyonpistol/tachyonpistol_clip.md2
 //}
 
 //tech weapon_tachyonpistol_ammo
@@ -417,10 +353,6 @@ tech weapon_tachyonrifle
 	provides	tachyonrifle
 	time	1
 	researched	false
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/tachyonrifle/tachyonrifle.md2
-	//mdl_bottom	models/weapons/tachyonrifle/tachyonrifle_clip.md2
 }
 
 tech weapon_tachyonrifle_ammo
@@ -433,8 +365,6 @@ tech weapon_tachyonrifle_ammo
 	provides	tachyonrifle_ammo
 	time	0
 	researched	false
-	
-	mdl_top	models/weapons/tachyonrifle/tachyonrifle_clip.md2
 }
 
 tech weapon_tachyonsniper
@@ -447,10 +377,6 @@ tech weapon_tachyonsniper
 	provides	tachyonsniper
 	time	1
 	researched	false
-
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/tachyonsniper/tachyonsniper.md2
-	//mdl_bottom	models/weapons/tachyonsniper/tachyonsniper_clip.md2
 }
 
 tech weapon_tachyonsniper_ammo
@@ -463,8 +389,6 @@ tech weapon_tachyonsniper_ammo
 	provides	tachyonsniper_ammo
 	time	0
 	researched	false
-	
-	mdl_top	models/weapons/tachyonsniper/tachyonsniper_clip.md2
 }
 
 tech plasma
@@ -478,8 +402,6 @@ tech plasma
 	description	plasma_txt
 	time	1
 	researched	false
-	
-	//image_top  xxxxx
 }
 
 tech weapon_plasblade
@@ -492,9 +414,6 @@ tech weapon_plasblade
 	provides	plasblade
 	time	1
 	researched	false
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/plasblade/plasblade.md2
 }
 
 tech weapon_plaspistol
@@ -507,10 +426,6 @@ tech weapon_plaspistol
 	provides	plaspistol
 	time	1
 	researched	false
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/plaspistol/plaspistol.md2
-	//mdl_bottom	models/weapons/plaspistol/plaspistol_clip.md2
 }
 
 tech weapon_plaspistol_ammo
@@ -523,8 +438,6 @@ tech weapon_plaspistol_ammo
 	provides	plaspistol_ammo
 	time	0
 	researched	false
-	
-	mdl_top	models/weapons/plaspistol/plaspistol_clip.md2
 }
 
 tech weapon_plasrifle
@@ -537,10 +450,6 @@ tech weapon_plasrifle
 	provides	plasrifle
 	time	1
 	researched	false
-	
-	// can this be taken from the weapons.ufo?
-	mdl_top	models/weapons/plasrifle/plasrifle.md2
-	//mdl_bottom	models/weapons/plasrifle/plasrifle_clip.md2
 }
 
 tech weapon_plasrifle_ammo
@@ -553,8 +462,6 @@ tech weapon_plasrifle_ammo
 	provides	plasrifle_ammo
 	time	0
 	researched	false
-	
-	mdl_top	models/weapons/plasrifle/plasrifle_clip.md2
 }
 
 //========================
