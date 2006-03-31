@@ -1286,6 +1286,7 @@ void CL_ParseScriptSecond( char *type, char *name, char **text )
 	//TODO: Parse Base
 	else if ( !strcmp( type, "base" ) ) MN_ParseBases( name, text );
 	else if ( !strcmp( type, "tech" ) ) RS_ParseTechnologies( name, text );
+	else if ( !strcmp( type, "shader" ) ) CL_ParseShaders( name, text );
 }
 
 

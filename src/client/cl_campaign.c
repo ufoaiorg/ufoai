@@ -862,8 +862,8 @@ void CL_GameNew( void )
 	Cbuf_Execute();
 
 	CL_GameTimeStop();
-	
-	// init research tree 
+
+	// init research tree
 	RS_InitTree ( );
 }
 
@@ -1019,7 +1019,7 @@ void CL_GameSaveCmd( void )
 	// get argument
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: game_save <filename> <comment>\n" );
+		Com_Printf( _("Usage: game_save <filename> <comment>\n") );
 		return;
 	}
 
@@ -1072,7 +1072,7 @@ void CL_GameLoad( char *filename )
 	if (MSG_ReadByte( &sb ) == 0)
 	{
 		version = MSG_ReadLong( &sb );
-		Com_Printf("Savefile version %d detected\n", version );
+		Com_Printf(_("Savefile version %d detected\n"), version );
 	}
 	else
 	{
@@ -1084,12 +1084,12 @@ void CL_GameLoad( char *filename )
 	// check current version
 	if ( version > SAVE_FILE_VERSION )
 	{
-		Com_Printf( "File '%s' is a more recent version (%d) than is supported.\n", filename, version );
+		Com_Printf( _("File '%s' is a more recent version (%d) than is supported.\n"), filename, version );
 		return;
 	}
 	else if ( version < SAVE_FILE_VERSION )
 	{
-		Com_Printf( "Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, version );
+		Com_Printf( _("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n"), filename, version );
 	}
 
 	// read comment
@@ -1247,8 +1247,8 @@ void CL_GameLoad( char *filename )
 
 	Com_Printf( _("Campaign '%s' loaded.\n"), filename );
 	CL_GameTimeStop();
-	
-	// init research tree 
+
+	// init research tree
 	RS_InitTree ( );
 }
 
@@ -1263,7 +1263,7 @@ void CL_GameLoadCmd( void )
 	// get argument
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: game_load <filename>\n" );
+		Com_Printf( _("Usage: game_load <filename>\n") );
 		return;
 	}
 

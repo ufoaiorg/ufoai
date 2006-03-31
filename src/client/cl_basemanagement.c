@@ -1011,7 +1011,7 @@ void MN_ParseBuildings( char *title, char **text )
 	}
 	if ( numBuildings >= MAX_BUILDINGS )
 	{
-		Com_Printf( _("MN_ParseBuildings: too many buildings\n"), title );
+		Com_Printf( _("MN_ParseBuildings: too many buildings\n") );
 		return;
 	}
 
@@ -1162,7 +1162,7 @@ void MN_ParseBases( char *title, char **text )
 		// add base
 		if ( numBases > MAX_BASES )
 		{
-			Com_Printf( _("MN_ParseBases: too many bases\n"), title );
+			Com_Printf( _("MN_ParseBases: too many bases\n") );
 			return;
 		}
 
@@ -1214,7 +1214,7 @@ void MN_ParseProductions( char *title, char **text )
 	}
 	if ( numProductions >= MAX_PRODUCTIONS )
 	{
-		Com_Printf( _("MN_ParseProductions: to many production types\n"), title );
+		Com_Printf( _("MN_ParseProductions: to many production types\n") );
 		return;
 	}
 

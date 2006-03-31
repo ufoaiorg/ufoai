@@ -20,19 +20,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-shaderlist_t* shaderList;
-int numShaders;
-
+unsigned int SH_LoadProgram_ARB_FP(char *path);
+unsigned int SH_LoadProgram_ARB_VP(char *path);
 /*
 ============
 GL_ShaderInit
+
+Cycle through all parsed shaders and compile them
+TODO:
 ============
 */
 void GL_ShaderInit( void )
 {
-	// only create the list if supported
-	if ( gl_state.arb_fragment_program == true )
-		shaderList = CreateShaderList();
+	int i = 0;
+	shader_t* s;
+	for ( i = 0; i < r_newrefdef.num_shaders; i++ )
+	{
+		s = &r_newrefdef.shaders[i];
+		if ( s->frag )
+			s->fpid = SH_LoadProgram_ARB_FP(s->filename);
+		else if ( s->vertex )
+			s->vpid = SH_LoadProgram_ARB_VP(s->filename);
+	}
 }
 
 /*
@@ -42,9 +51,6 @@ GL_ShutdownShaders
 */
 void GL_ShutdownShaders( void )
 {
-    	//otherwise the list is not initialized
-	if ( gl_state.arb_fragment_program == true )
-		free ( shaderList );
 }
 
 /*
@@ -54,7 +60,7 @@ LoadProgram_ARB_FP
 Load and link files containing shaders
 ============
 */
-unsigned int LoadProgram_ARB_FP(char *path)
+unsigned int SH_LoadProgram_ARB_FP(char *path)
 {
 	char			*fbuf, *buf;
 	unsigned int	size;
@@ -67,13 +73,13 @@ unsigned int LoadProgram_ARB_FP(char *path)
 
 	if (!fbuf)
 	{
-		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
+		ri.Con_Printf (PRINT_ALL, _("Could not load shader %s\n"), path);
 		return -1;
 	}
 
 	if (size < 16)
 	{
-		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
+		ri.Con_Printf (PRINT_ALL, _("Could not load shader %s\n"), path);
 		ri.FS_FreeFile (fbuf);
 		return -1;
 	}
@@ -87,7 +93,7 @@ unsigned int LoadProgram_ARB_FP(char *path)
 	qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, fpid);
 	qglProgramStringARB(GL_FRAGMENT_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, buf);
 
-	errors=qglGetString(GL_PROGRAM_ERROR_STRING_ARB);
+	errors = qglGetString(GL_PROGRAM_ERROR_STRING_ARB);
 
 	qglGetIntegerv(GL_PROGRAM_ERROR_POSITION_ARB, &error_pos);
 	if(error_pos != -1) {
@@ -99,7 +105,7 @@ unsigned int LoadProgram_ARB_FP(char *path)
 	return fpid;
 }
 
-unsigned int LoadProgram_ARB_VP(char *path)
+unsigned int SH_LoadProgram_ARB_VP(char *path)
 {
 	char			*fbuf, *buf;
 	unsigned int	size, vpid;
@@ -108,13 +114,13 @@ unsigned int LoadProgram_ARB_VP(char *path)
 
 	if (!fbuf)
 	{
-		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
+		ri.Con_Printf (PRINT_ALL, _("Could not load shader %s\n"), path);
 		return -1;
 	}
 
 	if (size < 16)
 	{
-		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
+		ri.Con_Printf (PRINT_ALL, _("Could not load shader %s\n"), path);
 		ri.FS_FreeFile (fbuf);
 		return -1;
 	}
@@ -133,8 +139,8 @@ unsigned int LoadProgram_ARB_VP(char *path)
 		int error_pos;
 
 		qglGetIntegerv(GL_PROGRAM_ERROR_POSITION_ARB, &error_pos);
-		if(error_pos != -1) {
-
+		if(error_pos != -1)
+		{
 			ri.Con_Printf(PRINT_DEVELOPER,"!! VP error at position %d in %s\n", error_pos, path);
 			ri.Con_Printf(PRINT_DEVELOPER,"!! Error: %s\n", (char *)errors);
 
@@ -155,7 +161,7 @@ UseProgram_ARB_FP
 Activate Shaders
 ============
 */
-void UseProgram_ARB_FP(unsigned int fpid)
+void SH_UseProgram_ARB_FP(unsigned int fpid)
 {
 	if (fpid>0)
 	{
@@ -166,7 +172,7 @@ void UseProgram_ARB_FP(unsigned int fpid)
 	}
 }
 
-void UseProgram_ARB_VP(unsigned int vpid)
+void SH_UseProgram_ARB_VP(unsigned int vpid)
 {
 	if (vpid>0)
 	{
@@ -177,113 +183,16 @@ void UseProgram_ARB_VP(unsigned int vpid)
 	}
 }
 
-/*
-============
-CreateShader
-============
-*/
-shader_t* CreateShader(char* name)
-{
-	shader_t* toReturn = NULL;
-
-	// no shaders supported
-	if ( gl_state.arb_fragment_program == false )
-		return NULL;
-
-	toReturn = (shader_t*) malloc (sizeof(shader_t));
-	strcpy(toReturn->sname, name);
-	toReturn->fpid=LoadProgram_ARB_FP(va("arb/%s", name));
-	toReturn->vpid=LoadProgram_ARB_VP(va("arb/%s", name));
-	return toReturn;
-}
-
-void UseShader(shader_t* shader)
+void SH_UseShader(shader_t* shader)
 {
 	assert(shader);
 	// no shaders supported
 	if ( gl_state.arb_fragment_program == false )
 		return;
 	if ( shader->fpid > 0 )
-		UseProgram_ARB_FP(shader->fpid);
+		SH_UseProgram_ARB_FP(shader->fpid);
 	if ( shader->vpid > 0 )
-		UseProgram_ARB_VP(shader->vpid);
-}
-
-/*
-===========
-CreateShaderlist
-
-Loads all shaders from base/arb into shaderlist
-===========
-*/
-shaderlist_t* CreateShaderList( void )
-{
-	char files[MAX_VAR];
-	char **shaderName = NULL;
-	char *name = NULL;
-	char *path = NULL;
-	int num = 0, i = 0;
-
-	// global shader count
-	numShaders = 0;
-
-	shaderlist_t* toReturn = (shaderlist_t*) malloc (sizeof(shaderlist_t*));
-
-	while ( ( path = ri.FS_NextPath( path ) ) )
-	{
-		ri.Con_Printf(PRINT_DEVELOPER, "...searching %s/arb for shaders\n", path );
-		Com_sprintf( files, MAX_VAR, "%s/arb/*.vp", path );
-
-		shaderName = ri.FS_ListFiles( files, &num, 0, 0 );
-
-		ri.Con_Printf(PRINT_DEVELOPER, "....found %i shader(s)\n", num-1 );
-		for ( i = 0; i < num-1; i++ )
-		{
-			if ( (name=strrchr( shaderName[i], '/' )) != NULL )
-			{
-				name++; // no /
-				ri.Con_Printf(PRINT_DEVELOPER, "....found %s\n", name );
-				toReturn->shader[numShaders] = CreateShader(name);
-				numShaders++;
-				if ( numShaders >= MAX_SHADERS )
-				{
-					ri.Con_Printf(PRINT_ALL, "Max shaders reached...\n");
-					break;
-				}
-			}
-			free (shaderName[i]);
-		}
-	}
-
-	return toReturn;
-}
-
-/*
-===========
-UseShaderFromList
-
-The interesting part. You can ask this function, if a particular
-shader exists, if so it will be activated, else an errorstring will
-be returned to console (all hopefully ;) ).
-===========
-*/
-void UseShaderFromList(char* name, shaderlist_t* shaderlist)
-{
-	int i=0;
-	for (i=0; i<numShaders ; i++)
-	{
-		if (shaderlist->shader[i]==0)
-		{
-			ri.Con_Printf(PRINT_ALL,"Shader %s not found\n", name);
-			break;
-		}
-
-		if (strcmp(name, shaderlist->shader[i]->sname)==0)
-		{
-			UseShader(shaderlist->shader[i]);
-			break;
-		}
-	}
+		SH_UseProgram_ARB_VP(shader->vpid);
 }
 
 /*
@@ -311,7 +220,7 @@ const char *arb_water =
 "END\n";
 
 
-unsigned int  CompileWaterShader(unsigned int arb_water_id)
+unsigned int SH_CompileWaterShader(unsigned int arb_water_id)
 {
 	qglGenProgramsARB(1, &arb_water_id);
 	qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, arb_water_id);
@@ -319,4 +228,3 @@ unsigned int  CompileWaterShader(unsigned int arb_water_id)
 	return arb_water_id;
 //	qglDeleteProgramsARB(1, &arb_water_id);
 }
-

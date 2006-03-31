@@ -722,7 +722,7 @@ void RS_TechnologyList_f ( void )
 
 		Com_Printf("... Res.able  -> %i\n", t->statusResearchable );
 		Com_Printf("... Collected -> %i\n", t->statusCollected );
-		
+
 
 		Com_Printf("... req_first ->");
 		req_temp.numEntries = 0;
@@ -799,7 +799,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 	}
 	if ( numTechnologies >= MAX_TECHNOLOGIES )
 	{
-		Com_Printf( _("RS_ParseTechnologies: too many technology entries\n"), id );
+		Com_Printf( _("RS_ParseTechnologies: too many technology entries\n") );
 		return;
 	}
 
@@ -1101,7 +1101,7 @@ void RS_SaveTech( sizebuf_t *sb )
 	int i;
 
 	MSG_WriteLong( sb, numTechnologies );
-	Com_DPrintf("Saving %i technologies\n", numTechnologies );
+	Com_DPrintf(_("Saving %i technologies\n"), numTechnologies );
 	for ( i = 0; i < numTechnologies; i++ )
 	{
 		MSG_WriteByte( sb, technologies[i].statusResearch );
@@ -1127,7 +1127,7 @@ void RS_LoadTech( sizebuf_t *sb, int version )
 			technologies[i].statusCollected = MSG_ReadByte( sb );
 			technologies[i].time = MSG_ReadFloat( sb );
 		}
-		
+
 	}
 	RS_MarkResearchable ();
 }

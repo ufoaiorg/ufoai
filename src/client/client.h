@@ -401,6 +401,15 @@ void CL_ParticleEffect2 (vec3_t org, vec3_t dir, int color, int count);
 void CL_ParticleEffect3 (vec3_t org, vec3_t dir, int color, int count);
 
 //=================================================
+// shader stuff
+// =================================================
+
+void CL_ShaderList_f ( void );
+void CL_ParseShaders( char *title, char **text );
+extern int	r_numshaders;
+extern shader_t	r_shaders[MAX_SHADERS];
+
+// =================================================
 
 // ========
 // PGM

@@ -20,24 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GL_ARB_SHADER_H__
 #define __GL_ARB_SHADER_H__
 
-#define MAX_SHADERS 255
-typedef struct shader_s
-{
-	char	sname[255];
-	unsigned int vpid, fpid;
-} shader_t;
-
-typedef struct shaderlist_s
-{
-	shader_t* shader[MAX_SHADERS];
-} shaderlist_t;
-
-shader_t* CreateShader(char* name);
-void UseShader(shader_t* shader);
-
 void GL_ShutdownShaders( void );
 void GL_ShaderInit( void );
-
-shaderlist_t* CreateShaderList(void);
-void UseShaderFromList(char* name, shaderlist_t* shaderlist);
+void SH_UseShader(shader_t* shader);
 #endif

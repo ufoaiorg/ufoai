@@ -867,7 +867,7 @@ void CL_LoadTeam( sizebuf_t *sb )
 	teamMask = MSG_ReadLong( sb );
 	numOnTeam = MSG_ReadByte( sb );
 
-	Com_DPrintf("Load team with %i members and %i slots\n", numOnTeam, numWholeTeam );
+	Com_DPrintf(_("Load team with %i members and %i slots\n"), numOnTeam, numWholeTeam );
 
 	for ( i = 0, p = 0; i < numWholeTeam; i++ )
 		if ( teamMask & (1 << i) )

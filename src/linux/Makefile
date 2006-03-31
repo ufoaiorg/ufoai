@@ -271,6 +271,7 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/cl_menu.o \
 	$(BUILDDIR)/client/cl_parse.o \
 	$(BUILDDIR)/client/cl_particle.o \
+	$(BUILDDIR)/client/cl_shader.o \
 	$(BUILDDIR)/client/cl_scrn.o \
 	$(BUILDDIR)/client/cl_sequence.o \
 	$(BUILDDIR)/client/cl_team.o \
@@ -357,6 +358,9 @@ $(BUILDDIR)/client/cl_parse.o :   $(CLIENT_DIR)/cl_parse.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_particle.o : $(CLIENT_DIR)/cl_particle.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cl_shader.o : $(CLIENT_DIR)/cl_shader.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_scrn.o :     $(CLIENT_DIR)/cl_scrn.c

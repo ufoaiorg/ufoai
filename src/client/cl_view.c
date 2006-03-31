@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -299,7 +299,7 @@ void CL_ParseEntitystring( char *es )
 		skin = 0;
 		maxlevel = 8;
 
-		// parse the opening brace	
+		// parse the opening brace
 		com_token = COM_Parse (&es);
 		if (!es)
 			break;
@@ -311,7 +311,7 @@ void CL_ParseEntitystring( char *es )
 
 		// go through all the dictionary pairs
 		while (1)
-		{	
+		{
 			// parse key
 			com_token = COM_Parse (&es);
 			if (com_token[0] == '}')
@@ -320,8 +320,8 @@ void CL_ParseEntitystring( char *es )
 				Com_Error (ERR_DROP, _("CL_ParseEntitystring: EOF without closing brace"));
 
 			strncpy (keyname, com_token, sizeof(keyname)-1);
-			
-			// parse value	
+
+			// parse value
 			com_token = COM_Parse (&es);
 			if (!es)
 				Com_Error (ERR_DROP, _("CL_ParseEntitystring: EOF without closing brace"));
@@ -431,7 +431,7 @@ void CL_ParseEntitystring( char *es )
 			// get light parameters
 			if ( lm )
 			{
-				if ( light != 0.0 ) 
+				if ( light != 0.0 )
 				{
 					lm->flags |= LMF_LIGHTFIXED;
 					VectorCopy( color, lm->lightcolor );
@@ -487,14 +487,14 @@ void CL_PrepRefresh (void)
 	SCR_AddDirtyPoint (viddef.width-1, viddef.height-1);
 
 	// register models, pics, and skins
-	Com_Printf ( _("Map: %s\n"), cl.configstrings[CS_NAME]); 
+	Com_Printf ( _("Map: %s\n"), cl.configstrings[CS_NAME]);
 	SCR_UpdateScreen ();
 	re.BeginRegistration( cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS] );
 	CL_ParseEntitystring( map_entitystring );
 	Com_Printf ("                                     \r");
 
 	// precache status bar pics
-	Com_Printf (_("pics\n") ); 
+	Com_Printf (_("pics\n") );
 	SCR_UpdateScreen ();
 	SCR_TouchPics ();
 	Com_Printf ("                                     \r");
@@ -511,7 +511,7 @@ void CL_PrepRefresh (void)
 		name[37] = 0;	// never go beyond one line
 		Com_Printf( name );
 		if (name[0] != '*')
-			Com_Printf ("%s\r", name); 
+			Com_Printf ("%s\r", name);
 		SCR_UpdateScreen ();
 		Sys_SendKeyEvents ();	// pump message loop
 		if (name[0] == '#')
@@ -523,7 +523,7 @@ void CL_PrepRefresh (void)
 					sizeof(cl_weaponmodels[num_cl_weaponmodels]) - 1);
 				num_cl_weaponmodels++;
 			}
-		} 
+		}
 		else
 		{
 			cl.model_draw[i] = re.RegisterModel (cl.configstrings[CS_MODELS+i]);
@@ -549,20 +549,20 @@ void CL_PrepRefresh (void)
 		cl.model_weapons[i] = re.RegisterModel( csi.ods[i].model );
 
 	// images
-	Com_Printf (_("images\n"), i); 
+	Com_Printf (_("images\n"), i);
 	SCR_UpdateScreen ();
 	for (i=1 ; i<MAX_IMAGES && cl.configstrings[CS_IMAGES+i][0] ; i++)
 	{
 		cl.image_precache[i] = re.RegisterPic (cl.configstrings[CS_IMAGES+i]);
 		Sys_SendKeyEvents ();	// pump message loop
 	}
-	
+
 	Com_Printf ("                                     \r");
 	for (i=0 ; i<MAX_CLIENTS ; i++)
 	{
 		if (!cl.configstrings[CS_PLAYERSKINS+i][0])
 			continue;
-		Com_Printf (_("client %i\n"), i); 
+		Com_Printf (_("client %i\n"), i);
 		SCR_UpdateScreen ();
 		Sys_SendKeyEvents ();	// pump message loop
 //		CL_ParseClientinfo (i);
@@ -570,10 +570,10 @@ void CL_PrepRefresh (void)
 	}
 
 	// set sky textures and speed
-/*	Com_Printf ("sky\r", i); 
+/*	Com_Printf ("sky\r", i);
 	SCR_UpdateScreen ();
 	rotate = atof (cl.configstrings[CS_SKYROTATE]);
-	sscanf (cl.configstrings[CS_SKYAXIS], "%f %f %f", 
+	sscanf (cl.configstrings[CS_SKYAXIS], "%f %f %f",
 		&axis[0], &axis[1], &axis[2]);
 	re.SetSky (cl.configstrings[CS_SKY], rotate, axis);
 	Com_Printf ("                                     \r");*/
@@ -583,7 +583,7 @@ void CL_PrepRefresh (void)
 
 	// clear any lines of console text
 	Con_ClearNotify ();
-	SCR_EndLoadingPlaque ();	
+	SCR_EndLoadingPlaque ();
 
 	SCR_UpdateScreen ();
 	cl.refresh_prepped = true;
@@ -622,7 +622,7 @@ float CalcFov (float fov_x, float width, float height)
 CL_CalcRefdef
 ===================
 */
-void CL_CalcRefdef ()
+void CL_CalcRefdef ( void )
 {
 	float	zoom;
 
@@ -658,7 +658,7 @@ void V_RenderView( float stereo_separation )
 {
 	extern int entitycmpfnc( const entity_t *, const entity_t * );
 
-	if (cls.state != ca_active && cls.state != ca_sequence) 
+	if (cls.state != ca_active && cls.state != ca_sequence)
 		return;
 
 	if (!scr_vrect.width || !scr_vrect.height)
@@ -682,8 +682,8 @@ void V_RenderView( float stereo_separation )
 	{
 		CL_SequenceRender();
 		cl.refdef.rdflags |= RDF_NOWORLDMODEL;
-	} 
-	else 
+	}
+	else
 	{
 		LM_AddToScene ();
 		LE_AddToScene ();
@@ -709,6 +709,8 @@ void V_RenderView( float stereo_separation )
 	cl.refdef.entities = r_entities;
 	cl.refdef.num_particles = r_numparticles;
 	cl.refdef.particles = r_particles;
+	cl.refdef.num_shaders = r_numshaders;
+	cl.refdef.shaders = r_shaders;
 	cl.refdef.num_dlights = r_numdlights;
 	cl.refdef.dlights = r_dlights;
 	cl.refdef.lightstyles = r_lightstyles;
@@ -759,7 +761,7 @@ void V_CenterView( pos3_t pos )
 	Cvar_SetValue( "cl_worldlevel", pos[2] );
 }
 
-	
+
 /*
 =============
 V_Viewpos_f
@@ -768,7 +770,7 @@ V_Viewpos_f
 void V_Viewpos_f (void)
 {
 	Com_Printf ("(%i %i %i) : %i\n", (int)cl.refdef.vieworg[0],
-		(int)cl.refdef.vieworg[1], (int)cl.refdef.vieworg[2], 
+		(int)cl.refdef.vieworg[1], (int)cl.refdef.vieworg[2],
 		(int)cl.refdef.viewangles[YAW]);
 }
 
@@ -780,6 +782,7 @@ V_Init
 void V_Init (void)
 {
 	Cmd_AddCommand ("viewpos", V_Viewpos_f);
+	Cmd_AddCommand ("shaderlist", CL_ShaderList_f );
 
 	cursor = Cvar_Get ("cursor", "1", CVAR_ARCHIVE);
 

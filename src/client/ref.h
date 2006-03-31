@@ -122,6 +122,28 @@ typedef struct entity_s
 
 #define ENTITY_FLAGS  68
 
+//=============================================================================
+
+#define MAX_SHADERS 255
+typedef struct shader_s
+{
+	// title is internal for finding the shader
+
+	// TODO: when title is a valid imagename
+	// we should use this shader when loading the image
+	char	title[MAX_VAR];
+
+	// filename is for an external filename to load the shader from
+	char	filename[MAX_VAR];
+
+	qboolean	frag; // fragment-shader
+	qboolean	vertex; // vertex-shader
+	// TODO:
+
+	// vpid and fpid are vertexpid and fragmentpid for binding
+	unsigned int vpid, fpid;
+} shader_t;
+
 typedef struct
 {
 	vec3_t	origin;
@@ -223,6 +245,9 @@ typedef struct
 
 	int			num_particles;
 	particle_t	*particles;
+
+	int			num_shaders;
+	shader_t	*shaders;
 
 	int			num_ptls;
 	ptl_t		*ptls;
