@@ -360,7 +360,8 @@ void CL_ResearchSelectCmd( void )
 	// call researchselect function from menu_research.ufo
 	researchListPos = num ;
 	Cbuf_AddText( va( "researchselect%i\n", researchListPos ) );
-	RS_ResearchDisplayInfo();
+	//RS_ResearchDisplayInfo();
+	RS_UpdateData();
 }
 
 /*======================
@@ -411,7 +412,6 @@ void RS_RemoveScientist( void )
 	}
 
 	// TODO: remove scientists from research-item
-
 	RS_ResearchDisplayInfo();
 }
 
@@ -450,7 +450,7 @@ void RS_ResearchStart ( void )
 			break;
 		}
 	} else {
-		MN_Popup( _("Notice"), _("The research on this item is not yet possible. You need to research the technologies it's based on first.") );
+		MN_Popup( _("Notice"), _("The research on this item is not yet possible.\nYou need to research the technologies it's based on first.") );
 	}
 	RS_UpdateData();
 }
@@ -499,6 +499,7 @@ void RS_UpdateData ( void )
 	int i, j;
 	technology_t *t = NULL;
 	strcpy( name, "" ); // init temp-name
+	Cbuf_AddText("research_clear\n");
 	for ( i=0, j=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		strcpy( name, t->name );
@@ -522,7 +523,7 @@ void RS_UpdateData ( void )
 				break;
 			case RS_PAUSED:
 				strcat(name, " [paused]");
-				Cbuf_AddText( va( "researchrunning%i\n", j ) );
+				Cbuf_AddText( va( "researchpaused%i\n", j ) );
 				break;
 			case RS_NONE:
 				strcat(name, " [unknown]");

@@ -45,7 +45,7 @@ menu research
 	// list
 	// ==================
 
-	func research_clear
+	confunc research_clear
 	{
 		*txt_item0 color "0 .78 0 1"
 		*txt_item1 color "0 .78 0 1"
@@ -77,34 +77,34 @@ menu research
 		*txt_item27 color "0 .78 0 1"
 	}
 
-	confunc researchselect0  { research_clear *txt_item0  color "1 1 1 1" }
-	confunc researchselect1  { research_clear *txt_item1  color "1 1 1 1" }
-	confunc researchselect2  { research_clear *txt_item2  color "1 1 1 1" }
-	confunc researchselect3  { research_clear *txt_item3  color "1 1 1 1" }
-	confunc researchselect4  { research_clear *txt_item4  color "1 1 1 1" }
-	confunc researchselect5  { research_clear *txt_item5  color "1 1 1 1" }
-	confunc researchselect6  { research_clear *txt_item6  color "1 1 1 1" }
-	confunc researchselect7  { research_clear *txt_item7  color "1 1 1 1" }
-	confunc researchselect8  { research_clear *txt_item8  color "1 1 1 1" }
-	confunc researchselect9  { research_clear *txt_item9  color "1 1 1 1" }
-	confunc researchselect10 { research_clear *txt_item10 color "1 1 1 1" }
-	confunc researchselect11 { research_clear *txt_item11 color "1 1 1 1" }
-	confunc researchselect12 { research_clear *txt_item12 color "1 1 1 1" }
-	confunc researchselect13 { research_clear *txt_item13 color "1 1 1 1" }
-	confunc researchselect14 { research_clear *txt_item14 color "1 1 1 1" }
-	confunc researchselect15 { research_clear *txt_item15 color "1 1 1 1" }
-	confunc researchselect16 { research_clear *txt_item16 color "1 1 1 1" }
-	confunc researchselect17 { research_clear *txt_item17 color "1 1 1 1" }
-	confunc researchselect18 { research_clear *txt_item18 color "1 1 1 1" }
-	confunc researchselect19 { research_clear *txt_item19 color "1 1 1 1" }
-	confunc researchselect20 { research_clear *txt_item20 color "1 1 1 1" }
-	confunc researchselect21 { research_clear *txt_item21 color "1 1 1 1" }
-	confunc researchselect22 { research_clear *txt_item22 color "1 1 1 1" }
-	confunc researchselect23 { research_clear *txt_item23 color "1 1 1 1" }
-	confunc researchselect24 { research_clear *txt_item24 color "1 1 1 1" }
-	confunc researchselect25 { research_clear *txt_item25 color "1 1 1 1" }
-	confunc researchselect26 { research_clear *txt_item26 color "1 1 1 1" }
-	confunc researchselect27 { research_clear *txt_item27 color "1 1 1 1" }
+	confunc researchselect0  { *txt_item0  color "1 1 1 1" }
+	confunc researchselect1  { *txt_item1  color "1 1 1 1" }
+	confunc researchselect2  { *txt_item2  color "1 1 1 1" }
+	confunc researchselect3  { *txt_item3  color "1 1 1 1" }
+	confunc researchselect4  { *txt_item4  color "1 1 1 1" }
+	confunc researchselect5  { *txt_item5  color "1 1 1 1" }
+	confunc researchselect6  { *txt_item6  color "1 1 1 1" }
+	confunc researchselect7  { *txt_item7  color "1 1 1 1" }
+	confunc researchselect8  { *txt_item8  color "1 1 1 1" }
+	confunc researchselect9  { *txt_item9  color "1 1 1 1" }
+	confunc researchselect10 { *txt_item10 color "1 1 1 1" }
+	confunc researchselect11 { *txt_item11 color "1 1 1 1" }
+	confunc researchselect12 { *txt_item12 color "1 1 1 1" }
+	confunc researchselect13 { *txt_item13 color "1 1 1 1" }
+	confunc researchselect14 { *txt_item14 color "1 1 1 1" }
+	confunc researchselect15 { *txt_item15 color "1 1 1 1" }
+	confunc researchselect16 { *txt_item16 color "1 1 1 1" }
+	confunc researchselect17 { *txt_item17 color "1 1 1 1" }
+	confunc researchselect18 { *txt_item18 color "1 1 1 1" }
+	confunc researchselect19 { *txt_item19 color "1 1 1 1" }
+	confunc researchselect20 { *txt_item20 color "1 1 1 1" }
+	confunc researchselect21 { *txt_item21 color "1 1 1 1" }
+	confunc researchselect22 { *txt_item22 color "1 1 1 1" }
+	confunc researchselect23 { *txt_item23 color "1 1 1 1" }
+	confunc researchselect24 { *txt_item24 color "1 1 1 1" }
+	confunc researchselect25 { *txt_item25 color "1 1 1 1" }
+	confunc researchselect26 { *txt_item26 color "1 1 1 1" }
+	confunc researchselect27 { *txt_item27 color "1 1 1 1" }
 
 	confunc researchrunning0  { *txt_item0  color "0 1 0 1" }
 	confunc researchrunning1  { *txt_item1  color "0 1 0 1" }
@@ -136,33 +136,33 @@ menu research
 	confunc researchrunning27 { *txt_item27 color "0 1 0 1" }
 
 	confunc researchpaused0  { *txt_item0  color ".78 .78 0 1" }
-	confunc researchpaused1  { *txt_item1  color "78 .78 0 1" }
-	confunc researchpaused2  { *txt_item2  color "78 .78 0 1" }
-	confunc researchpaused3  { *txt_item3  color "78 .78 0 1" }
-	confunc researchpaused4  { *txt_item4  color "78 .78 0 1" }
-	confunc researchpaused5  { *txt_item5  color "78 .78 0 1" }
-	confunc researchpaused6  { *txt_item6  color "78 .78 0 1" }
-	confunc researchpaused7  { *txt_item7  color "78 .78 0 1" }
-	confunc researchpaused8  { *txt_item8  color "78 .78 0 1" }
-	confunc researchpaused9  { *txt_item9  color "78 .78 0 1" }
-	confunc researchpaused10 { *txt_item10 color "78 .78 0 1" }
-	confunc researchpaused11 { *txt_item11 color "78 .78 0 1" }
-	confunc researchpaused12 { *txt_item12 color "78 .78 0 1" }
-	confunc researchpaused13 { *txt_item13 color "78 .78 0 1" }
-	confunc researchpaused14 { *txt_item14 color "78 .78 0 1" }
-	confunc researchpaused15 { *txt_item15 color "78 .78 0 1" }
-	confunc researchpaused16 { *txt_item16 color "78 .78 0 1" }
-	confunc researchpaused17 { *txt_item17 color "78 .78 0 1" }
-	confunc researchpaused18 { *txt_item18 color "78 .78 0 1" }
-	confunc researchpaused19 { *txt_item19 color "78 .78 0 1" }
-	confunc researchpaused20 { *txt_item20 color "78 .78 0 1" }
-	confunc researchpaused21 { *txt_item21 color "78 .78 0 1" }
-	confunc researchpaused22 { *txt_item22 color "78 .78 0 1" }
-	confunc researchpaused23 { *txt_item23 color "78 .78 0 1" }
-	confunc researchpaused24 { *txt_item24 color "78 .78 0 1" }
-	confunc researchpaused25 { *txt_item25 color "78 .78 0 1" }
-	confunc researchpaused26 { *txt_item26 color "78 .78 0 1" }
-	confunc researchpaused27 { *txt_item27 color "78 .78 0 1" }
+	confunc researchpaused1  { *txt_item1  color ".78 .78 0 1" }
+	confunc researchpaused2  { *txt_item2  color ".78 .78 0 1" }
+	confunc researchpaused3  { *txt_item3  color ".78 .78 0 1" }
+	confunc researchpaused4  { *txt_item4  color ".78 .78 0 1" }
+	confunc researchpaused5  { *txt_item5  color ".78 .78 0 1" }
+	confunc researchpaused6  { *txt_item6  color ".78 .78 0 1" }
+	confunc researchpaused7  { *txt_item7  color ".78 .78 0 1" }
+	confunc researchpaused8  { *txt_item8  color ".78 .78 0 1" }
+	confunc researchpaused9  { *txt_item9  color ".78 .78 0 1" }
+	confunc researchpaused10 { *txt_item10 color ".78 .78 0 1" }
+	confunc researchpaused11 { *txt_item11 color ".78 .78 0 1" }
+	confunc researchpaused12 { *txt_item12 color ".78 .78 0 1" }
+	confunc researchpaused13 { *txt_item13 color ".78 .78 0 1" }
+	confunc researchpaused14 { *txt_item14 color ".78 .78 0 1" }
+	confunc researchpaused15 { *txt_item15 color ".78 .78 0 1" }
+	confunc researchpaused16 { *txt_item16 color ".78 .78 0 1" }
+	confunc researchpaused17 { *txt_item17 color ".78 .78 0 1" }
+	confunc researchpaused18 { *txt_item18 color ".78 .78 0 1" }
+	confunc researchpaused19 { *txt_item19 color ".78 .78 0 1" }
+	confunc researchpaused20 { *txt_item20 color ".78 .78 0 1" }
+	confunc researchpaused21 { *txt_item21 color ".78 .78 0 1" }
+	confunc researchpaused22 { *txt_item22 color ".78 .78 0 1" }
+	confunc researchpaused23 { *txt_item23 color ".78 .78 0 1" }
+	confunc researchpaused24 { *txt_item24 color ".78 .78 0 1" }
+	confunc researchpaused25 { *txt_item25 color ".78 .78 0 1" }
+	confunc researchpaused26 { *txt_item26 color ".78 .78 0 1" }
+	confunc researchpaused27 { *txt_item27 color ".78 .78 0 1" }
 	
 	confunc researchunresearchable0  { *txt_item0  color ".27 .27 .27 1" }
 	confunc researchunresearchable1  { *txt_item1  color ".27 .27 .27 1" }
