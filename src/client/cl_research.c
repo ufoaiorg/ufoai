@@ -172,9 +172,10 @@ Should be executed after the parsing of _all_ the ufo files and e.g. the researc
 ======================*/
 void RS_InitTree( void )
 {
-	int i, j;
+	int i, j, k;
 	technology_t *t = NULL;
 	objDef_t *item = NULL;
+	objDef_t *item_ammo = NULL;
 	building_t	*building = NULL;
 	byte	found;
 	for ( i=0; i < numTechnologies; i++ ) {
@@ -196,15 +197,21 @@ void RS_InitTree( void )
 				item = &csi.ods[j];
 				if ( !strcmp( t->provides, item->kurz ) ) { // This item has been 'provided',
 					found = true;
-					if ( !strcmp(t->name, "" ) ) {
-						Com_DPrintf("RS_InitTree: found name '%s' and '%s' for %s.\n",  t->name, item->name,  t->id);
-						strcpy( t->name, item->name );
+					if ( !strcmp(t->name, "" ) )		strcpy( t->name, item->name );
+					if ( !strcmp( t->mdl_top, "" ) )		strcpy( t->mdl_top, item->model );
+					if ( !strcmp( t->image_top, "" ) )	strcpy( t->image_top, item->image );
+					if ( !strcmp( t->mdl_bottom, "" ) ) {
+						if  ( t->type == RS_WEAPON) {
+							// find ammo
+							for ( k = 0; k < csi.numODs; k++ ) {
+								item_ammo = &csi.ods[k];
+								if ( j == item_ammo->link ) {
+									Com_DPrintf("RS_InitTree: Ammo \"%s\" for \"%s\" found.\n", item_ammo->name,  item->name);
+									strcpy( t->mdl_bottom, item_ammo->model );
+								}
+							}
+						}
 					}
-					if ( !strcmp( t->mdl_top, "" ) )
-						strcpy( t->mdl_top, item->model );
-					if ( !strcmp( t->image_top, "" ) )
-						strcpy( t->image_top, item->image );
-
 					break;	// Should return to CASE RS_xxx.
 				}
 
