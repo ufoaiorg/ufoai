@@ -241,7 +241,7 @@
 				AssemblerListingLocation=".\release/"
 				ObjectFile=".\release/"
 				ProgramDataBaseFileName=".\release/"
-				WarningLevel="4"
+				WarningLevel="0"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="1"
 			/>
@@ -935,6 +935,10 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\client\cl_shader.c"
+				>
 			</File>
 			<File
 				RelativePath="client\cl_team.c"
