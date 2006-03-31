@@ -1904,12 +1904,17 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 	assert( i );
 
 	if ( !Com_RemoveFromInventory( i, from, fx, fy ) ) return IA_NONE; // break if source item is not removeable
+		
+	// if weapon is twohanded and is moved from hand to hand do nothing.
+	if ( CSI->ods[cacheItem.t].twohanded
+	&& ( ( to == CSI->idLeft && from == CSI->idRight ) || ( to == CSI->idRight && from == CSI->idLeft ) ) )
+		return IA_NONE;
 
 	//check if the target is a blocked inv-armor and source!=dest
  	if ( CSI->ids[to].armor && !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) && from!=to ) {
- 		cacheItem2 = cacheItem; // save chached (source) item
- 		Com_MoveInInventory( i, to, tx, ty, from, fx, fy, TU, icp ); // move the destination item to the source
- 		cacheItem = cacheItem2; //reset the cached item (source)
+ 		cacheItem2 = cacheItem;						// save/chache (source) item
+ 		Com_MoveInInventory( i, to, tx, ty, from, fx, fy, TU, icp );	// move the destination item to the source
+ 		cacheItem = cacheItem2;						// reset the cached item (source)
  	}
 	if ( !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) )
 	{
@@ -1942,7 +1947,7 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 		Com_AddToInventory( i, cacheItem, from, fx, fy );
 		return IA_NONE;
 	}
-
+	
 	// twohanded exception
 	if ( CSI->ods[cacheItem.t].twohanded && to == CSI->idLeft )
 		to = CSI->idRight;
