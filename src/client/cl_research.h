@@ -99,4 +99,6 @@ byte RS_ItemIsResearched(char *id_provided );
 void RS_SaveTech( sizebuf_t *sb );
 void RS_LoadTech( sizebuf_t *sb, int version );
 
+void RS_InitTree ( void );
+
 #endif /*TECHNOLOGY_DEFINED*/

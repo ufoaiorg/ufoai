@@ -1398,7 +1398,7 @@ void FS_GetMaps ( void )
 	if ( mapsInstalledInit )
 		return;
 
-	Com_sprintf (name, sizeof(name), "maps/*.bsp", FS_Gamedir());
+	Com_sprintf (name, sizeof(name), "maps/*.bsp");//, FS_Gamedir());
 	len = strlen(name);
 	mapInstalledIndex = 0;
 	while ( ( path = FS_NextPath( path ) ) )
@@ -1409,7 +1409,7 @@ void FS_GetMaps ( void )
 			baseMapName = COM_SkipPath ( found );
 			COM_StripExtension ( baseMapName, found );
 			//searched a specific map?
-			maps[anzInstalledMaps] = (char *) malloc ( 256 );
+			maps[anzInstalledMaps] = (char *) malloc ( 256 * sizeof(char) );
 			if ( maps[anzInstalledMaps] == NULL )
 			{
 				Com_Printf(_("Could not allocate memory in MN_GetMaps\n"));

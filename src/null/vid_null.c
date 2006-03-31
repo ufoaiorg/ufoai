@@ -143,6 +143,7 @@ void	VID_Init (void)
 	ri.FS_CheckFile = FS_CheckFile;
 	ri.FS_ListFiles = FS_ListFiles;
         ri.FS_Gamedir = FS_Gamedir;
+	ri.FS_NextPath = FS_NextPath;
 	ri.Vid_NewWindow = VID_NewWindow;
 	ri.Cvar_Get = Cvar_Get;
         ri.Cvar_Set = Cvar_Set;
