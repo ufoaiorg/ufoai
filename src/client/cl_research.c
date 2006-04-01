@@ -393,7 +393,7 @@ void RS_AssignScientist( void )
 	}
 
 	// TODO: add scientists to research-item
-	
+
 	RS_ResearchDisplayInfo();
 }
 
@@ -436,7 +436,7 @@ void RS_ResearchStart ( void )
 		return;
 
 	t = researchList[researchListPos];
-	
+
 	if ( t->statusResearchable ) {
 		switch ( t->statusResearch )
 		{
@@ -840,7 +840,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 		if (  !strcmp( token, "type" ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
-			if (  !strcmp( token, "tech" ) )	t->type = RS_TECH; // redundant, but oh well.
+			if ( !strcmp( token, "tech" ) )	t->type = RS_TECH; // redundant, but oh well.
 			else if ( !strcmp( token, "weapon" ) )	t->type = RS_WEAPON;
 			else if ( !strcmp( token, "armor" ) )	t->type = RS_ARMOR;
 			else if ( !strcmp( token, "craft" ) )		t->type = RS_CRAFT;

@@ -916,6 +916,8 @@ typedef struct building_s
 	struct building_s *next;
 } building_t;
 
+#define MAX_AIRCRAFT	256
+
 typedef struct base_s
 {
 	//the internal base-id
@@ -940,6 +942,11 @@ typedef struct base_s
 	int	buildingListArray[MAX_BUILDINGS];
 	//how many buildings are in the list?
 	int	numList;
+
+	// all aircraft in this base
+	void*	aircraft[MAX_AIRCRAFT];
+	int 	numAircraftsInBase;
+	void*	aircraftCurrent;
 
 	int	posX[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
 	int	posY[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
@@ -1009,7 +1016,6 @@ void MN_PrevMap ( void );
 #define MAX_ACTMISSIONS	16
 #define MAX_SETMISSIONS	16
 #define MAX_CAMPAIGNS	16
-#define MAX_AIRCRAFT	256
 
 #define MAX_STAGESETS	256
 #define MAX_STAGES		64
@@ -1105,19 +1111,33 @@ typedef struct mapline_s
 	vec2_t p[LINE_MAXPTS];
 } mapline_t;
 
+typedef enum
+{
+	AIRCRAFT_TRANSPORTER,
+	AIRCRAFT_INTERCEPTOR
+} aircraftType_t;
+
 typedef struct aircraft_s
 {
 	char	name[MAX_VAR];
-// 	int		type;
-// 	int		home;
+	char	title[MAX_VAR];
+	aircraftType_t	type;
 	int		status;
 	float		speed;
+	int	size;
 	vec2_t	pos;
 	int		point;
 	int		time;
+	int	teamSize;
+	char	model[MAX_VAR];
+	char	model_top[MAX_VAR];
+	char	model_glass[MAX_VAR];
 	mapline_t route;
 	base_t*	homebase;
 } aircraft_t;
+
+extern aircraft_t	aircraft[MAX_AIRCRAFT];
+extern int		numAircraft;
 
 typedef struct ccs_s
 {
@@ -1128,8 +1148,6 @@ typedef struct ccs_s
 	actMis_t		mission[MAX_ACTMISSIONS];
 	int		numMissions;
 
-	aircraft_t		air[MAX_AIRCRAFT];
-	int		numAir;
 	int		numBases;
 
 	int		credits;
@@ -1180,7 +1198,7 @@ extern	ccs_t		ccs;
 
 extern	int			mapAction;
 
-void CL_NewAircraft ( base_t* base );
+char* CL_AircraftStatusToName ( aircraft_t* air );
 qboolean CL_MapIsNight( vec2_t pos );
 void CL_ResetCampaign( void );
 void CL_DateConvert( date_t *date, int *day, int *month );
@@ -1190,6 +1208,11 @@ void CL_NewBase( vec2_t pos );
 void CL_ParseMission( char *name, char **text );
 void CL_ParseStage( char *name, char **text );
 void CL_ParseCampaign( char *name, char **text );
+void CL_ParseAircraft( char *name, char **text );
+void CL_AircraftSelect( void );
+void CL_NewAircraft_f ( void );
+void CL_NewAircraft ( base_t* base, char* name );
+void CL_AircraftInit( void );
 void CL_CollectItems( int won );
 void CL_UpdateCharacterStats ( int won );
 void CL_UpdateCredits ( int credits );

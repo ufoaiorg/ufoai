@@ -1262,6 +1262,8 @@ void CL_Precache_f (void)
 
 /*=================
 CL_ParseScriptFirst
+
+parsed if we no dedicated server
 =================*/
 void CL_ParseScriptFirst( char *type, char *name, char **text )
 {
@@ -1271,18 +1273,21 @@ void CL_ParseScriptFirst( char *type, char *name, char **text )
 	else if ( !strcmp( type, "mission" ) ) CL_ParseMission( name, text );
 	else if ( !strcmp( type, "sequence" ) ) CL_ParseSequence( name, text );
 	else if ( !strcmp( type, "up_chapters" ) ) MN_ParseUpChapters( name, text );
-	else if ( !strcmp( type, "building" ) ) MN_ParseBuildings( name, text );
-	else if ( !strcmp( type, "production" ) ) MN_ParseProductions( name, text );
 }
 
 /*=================
 CL_ParseScriptSecond
+
+parsed if we no dedicated server
 =================*/
 void CL_ParseScriptSecond( char *type, char *name, char **text )
 {
 	// check for client interpretable scripts
 	if ( !strcmp( type, "campaign" ) ) CL_ParseCampaign( name, text );
 	else if ( !strcmp( type, "stage" ) ) CL_ParseStage( name, text );
+	else if ( !strcmp( type, "building" ) ) MN_ParseBuildings( name, text );
+	else if ( !strcmp( type, "production" ) ) MN_ParseProductions( name, text );
+	else if ( !strcmp( type, "aircraft" ) ) CL_ParseAircraft( name, text );
 	//TODO: Parse Base
 	else if ( !strcmp( type, "base" ) ) MN_ParseBases( name, text );
 	else if ( !strcmp( type, "tech" ) ) RS_ParseTechnologies( name, text );

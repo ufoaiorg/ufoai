@@ -247,20 +247,6 @@ menu aircraft
 		pos		"512 512"
 	}
 
-	pic back_base
-	{
-		tooltip	"Back to baseview"
-		image	menu/button_mapmen_options2
-		pos	"950 0"
-		texl	"0 64"
-		texh	"64 128"
-		mousefx true
-		click
-		{
-			cmd mn_pop;
-		}
-	}
-
 	pic button_squad
 	{
 		tooltip	"Assign your squad"
@@ -303,7 +289,7 @@ menu aircraft
 		mousefx true
 		click
 		{
-			cmd "startaircraft;mn_pop;mn_pop;"
+			cmd "aircraft_start;mn_pop;mn_pop;"
 		}
 		out		{ *button_start texl "15 464" *button_start texh "226 511" }
 		in		{ *button_start texl "240 464" *button_start texh "449 511" }
@@ -325,5 +311,90 @@ menu aircraft
 		in		{ *button_transfer texl "239 207" *button_transfer texh "447 256" }
 	}
 
+	// ==================
+	// dropship
+	// ==================
 
+	model dropship
+	{
+		md2		"*cvar mn_aircraft_model"
+		origin	"690 240 0"
+		angles	"-20 -40 120"
+		scale	"1.1 1.1 1.1"
+		color	"0.5 0.5 0.5 1"
+	}
+
+	model dropship_top
+	{
+		md2		"*cvar mn_aircraft_model_top"
+		origin	"690 240 0"
+		angles	"-20 -40 120"
+		scale	"1.1 1.1 1.1"
+		color	"0.5 0.5 0.5 1"
+	}
+
+	model dropship_glass
+	{
+		md2		"*cvar mn_aircraft_model_glass"
+		origin	"690 240 0"
+		angles	"-20 -40 120"
+		scale	"1.1 1.1 1.1"
+		color	"0.5 0.5 0.5 1"
+	}
+
+	string aircraft_name
+	{
+		string	"*cvar mn_aircraftname"
+		pos		"720 400"
+		align	uc
+	}
+
+	string aircraft_status
+	{
+		string	"*cvar mn_aircraftstatus"
+		pos		"720 420"
+		align	uc
+	}
+
+	// ==================
+	// additional stuff
+	// ==================
+
+	pic button_leave
+	{
+		tooltip	"Done"
+		image	hud/buttons2
+		mousefx	true
+		pos		"940 720"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd "mn_pop"  }
+	}
+
+	pic prev_aircraft
+	{
+		tooltip	"Switch to the previous aircraft"
+		image	menu/buy_buttons1
+		pos	"500 410"
+		mousefx true
+		texl	"0 0"
+		texh	"16 16"
+		click	{ cmd "mn_prev_aircraft" }
+	}
+
+	pic next_aircraft
+	{
+		tooltip	"Switch to the next aircraft"
+		image	menu/buy_buttons1
+		pos	"970 410"
+		mousefx	true
+		texl	"16 0"
+		texh	"32 16"
+		click	{ cmd "mn_next_aircraft" }
+	}
+
+	func init
+	{
+		cmd "aircraft_init;aircraft_select"
+	}
 }

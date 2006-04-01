@@ -26,7 +26,7 @@
 //		* "nothing" - Similar to "initial", but you need to collect at least one item (that requires it directly or indirectly) to be able to research this.
 //		* everything else - a "tech" item.
 //	provides yyy
-//		The item (only one allowed) name (yyy) in the correct ufo file or data-structure (e.g inventory). 
+//		The item (only one allowed) name (yyy) in the correct ufo file or data-structure (e.g inventory).
 //		The given names are _not_ "tech" items.
 //		This items can be produced once the "tech" item has been finished.
 //	researched
@@ -64,7 +64,7 @@ tech weapon_assault
 	type	weapon
 	up_chapter	weapons
 	description	assault_txt
-	
+
 	requires	initial
 	provides	assault
 	time	0
@@ -76,7 +76,7 @@ tech weapon_assault_ammo
 	type	weapon
 	up_chapter	weapons
 	description	assault_ammo_txt
-	
+
 	requires	weapon_assault
 	provides	assault_ammo
 	time	0
@@ -88,7 +88,7 @@ tech weapon_sniper
 	type	weapon
 	up_chapter	weapons
 	description	sniper_txt
-	
+
 	requires	initial
 	provides	sniper
 	time	0
@@ -100,7 +100,7 @@ tech weapon_sniper_ammo
 	type	weapon
 	up_chapter	weapons
 	description	sniper_ammo_txt
-	
+
 	requires	weapon_sniper
 	provides	sniper_ammo
 	time	0
@@ -112,7 +112,7 @@ tech weapon_smg
 	type	weapon
 	up_chapter	weapons
 	description	smg_txt
-	
+
 	requires	initial
 	provides	smg
 	time	0
@@ -124,7 +124,7 @@ tech weapon_smg_ammo
 	type	weapon
 	up_chapter	weapons
 	description	smg_ammo_txt
-	
+
 	requires	weapon_smg
 	provides	smg_ammo
 	time	0
@@ -136,7 +136,7 @@ tech weapon_shotgun
 	type	weapon
 	up_chapter	weapons
 	description	shotgun_txt
-	
+
 	requires	initial
 	provides	shotgun
 	time	0
@@ -148,7 +148,7 @@ tech weapon_shotgun_ammo
 	type	weapon
 	up_chapter	weapons
 	description	shotgun_ammo_txt
-	
+
 	requires	weapon_shotgun
 	provides	shotgun_ammo
 	time	0
@@ -160,7 +160,7 @@ tech weapon_flamer
 	type	weapon
 	up_chapter	weapons
 	description	flamer_txt
-	
+
 	requires	initial
 	provides	flamer
 	time	0
@@ -172,7 +172,7 @@ tech weapon_flamer_ammo
 	type	weapon
 	up_chapter	weapons
 	description	flamer_ammo_txt
-	
+
 	requires	weapon_flamer
 	provides	flamer_ammo
 	time	0
@@ -184,7 +184,7 @@ tech weapon_pistol
 	type	weapon
 	up_chapter	weapons
 	description	pistol_txt
-	
+
 	requires	initial
 	provides	pistol
 	time	0
@@ -196,7 +196,7 @@ tech weapon_pistol_ammo
 	type	weapon
 	up_chapter	weapons
 	description	pistol_ammo_txt
-	
+
 	requires	weapon_pistol
 	provides	pistol_ammo
 	time	0
@@ -208,7 +208,7 @@ tech weapon_rpg
 	type	weapon
 	up_chapter	weapons
 	description	rpg_txt
-	
+
 	requires	initial
 	provides	rpg
 	time	0
@@ -220,7 +220,7 @@ tech weapon_rpg_ammo
 	type	weapon
 	up_chapter	weapons
 	description	rpg_ammo_txt
-	
+
 	requires	weapon_rpg
 	provides	rpg_ammo
 	time	0
@@ -233,7 +233,7 @@ tech weapon_laserpistol
 	type	weapon
 	up_chapter	weapons
 	description	laserpistol_txt
-	
+
 	requires	initial
 	provides	laserpistol
 	time	0
@@ -245,7 +245,7 @@ tech weapon_laserpistol_ammo
 	type	weapon
 	up_chapter	weapons
 	description	laserpistol_ammo_txt
-	
+
 	requires	weapon_laserpistol
 	provides	laserpistol_ammo
 	time	0
@@ -257,7 +257,7 @@ tech weapon_laserrifle
 	type	weapon
 	up_chapter	weapons
 	description	laserrifle_txt
-	
+
 	requires	weapon_laserpistol
 	provides	laserrifle
 	time	0
@@ -269,7 +269,7 @@ tech weapon_laserrifle_ammo
 	type	weapon
 	up_chapter	weapons
 	description	laserrifle_txt
-	
+
 	requires	weapon_laserrifle
 	provides	laserrifle_ammo
 	time	0
@@ -281,7 +281,7 @@ tech weapon_fraggren
 	type	weapon
 	up_chapter	weapons
 	description	fraggen_txt
-	
+
 	requires	initial
 	provides	fraggrenade
 	time	0
@@ -293,7 +293,7 @@ tech weapon_knife
 	type	weapon
 	up_chapter	weapons
 	description	knife_txt
-	
+
 	requires	initial
 	provides	knife
 	time	0
@@ -309,12 +309,12 @@ tech tachyon
 	type	tech
 	name	"Tachyon Control"
 	up_chapter	tech
-	
+
 	requires	initial
 	description	tachyon_txt
 	time	1
 	researched	false
-	
+
 	//image_top  xxxxx
 }
 
@@ -326,7 +326,7 @@ tech tachyon
 //	type	weapon
 //	up_chapter	weapons
 //	description	tachyonpistol_txt
-//	
+//
 //	requires	tachyon
 //	provides	tachyonpistol
 //	time	1
@@ -338,7 +338,7 @@ tech tachyon
 //	type	weapon
 //	up_chapter	weapons
 //	description	tachyonpistol_ammo_txt
-//	
+//
 //	requires	weapon_tachyonpistol
 //	provides	tachyonpistol_ammo
 //	time	0
@@ -351,7 +351,7 @@ tech weapon_tachyonrifle
 	type	weapon
 	up_chapter	weapons
 	description	tachyonrifle_txt
-	
+
 	requires	tachyon
 	provides	tachyonrifle
 	time	1
@@ -363,7 +363,7 @@ tech weapon_tachyonrifle_ammo
 	type	weapon
 	up_chapter	weapons
 	description	tachyonrifle_ammo_txt
-	
+
 	requires	weapon_tachyonrifle
 	provides	tachyonrifle_ammo
 	time	0
@@ -387,7 +387,7 @@ tech weapon_tachyonsniper_ammo
 	type	weapon
 	up_chapter	weapons
 	description	tachyonsniper_ammo_txt
-	
+
 	requires	weapon_tachyonsniper
 	provides	tachyonsniper_ammo
 	time	0
@@ -400,7 +400,7 @@ tech plasma
 	name	"Advanced Plasma Control"
 	up_chapter	tech
 	description	plasma_txt
-	
+
 	requires	nothing
 	description	plasma_txt
 	time	1
@@ -436,7 +436,7 @@ tech weapon_plaspistol_ammo
 	type	weapon
 	up_chapter	weapons
 	description	plaspistol_ammo_txt
-	
+
 	requires	weapon_plaspistol
 	provides	plaspistol_ammo
 	time	0
@@ -460,7 +460,7 @@ tech weapon_plasrifle_ammo
 	type	weapon
 	up_chapter	weapons
 	description	plasrifle_ammo_txt
-	
+
 	requires	weapon_plasrifle
 	provides	plasrifle_ammo
 	time	0
@@ -555,7 +555,7 @@ tech building_commando
 	type	building
 	description	b_commando_txt
 	up_chapter	buildings
-	
+
 	requires	initial
 	provides	commando
 	time	0
@@ -567,7 +567,7 @@ tech building_powerplant
 	type	building
 	description	b_powerplant_txt
 	up_chapter	buildings
-	
+
 	requires	initial
 	provides	powerplant
 	time	0
@@ -579,7 +579,7 @@ tech building_storage
 	type	building
 	description	b_storage_txt
 	up_chapter	buildings
-	
+
 	requires	initial
 	provides	storage
 	time	0
@@ -591,7 +591,7 @@ tech building_hangar
 	type	building
 	description	b_hangar_txt
 	up_chapter	buildings
-	
+
 	requires	initial
 	provides	drop2
 	time	0
@@ -603,7 +603,7 @@ tech building_intercept
 	type	building
 	description	b_intercept_txt
 	up_chapter	buildings
-	
+
 	requires	initial
 	provides	intercept
 	time	0
@@ -615,7 +615,7 @@ tech building_quarters
 	type	building
 	description	b_quarters_txt
 	up_chapter	buildings
-	
+
 	requires	initial
 	provides	quarters
 	time	0
@@ -627,7 +627,7 @@ tech building_lab
 	type	building
 	description	b_lab_txt
 	up_chapter	buildings
-	
+
 	requires	initial
 	provides	lab
 	time	0
@@ -643,12 +643,12 @@ tech craft_transporter
 	name	"H-92 Troop Transport"
 	description	transporter_txt
 	up_chapter	crafts
-	
+
 	requires	initial
 	provides	transporter
 	time	0
 	researched	true
-	
+
 	mdl_top	models/objects/dropship.md2
 }
 
@@ -658,12 +658,12 @@ tech craft_interceptor
 	name	"F-48 Interceptor"
 	description	interceptor_txt
 	up_chapter	crafts
-	
+
 	requires	initial
 	provides	interceptor
 	time	0
 	researched	true
-	
+
 	mdl_top	models/aircrafts/fighter1_main.md2
 }
 
@@ -678,12 +678,12 @@ tech alien_ortnok
 	name	 "Ortnok"
 	description	ortnok_txt
 	up_chapter	aliens
-	
+
 	requires	initial
 	provides	""
 	time	0
 	researched	true
-	
+
 	mdl_top	models/aliens/ortnok/body01.md2
 }
 
@@ -693,11 +693,11 @@ tech alien_ortnok_medium
 	name	 "Ortnok Warrior"
 	description	ortnok_medium_txt
 	up_chapter	aliens
-	
+
 	requires	initial
 	provides	""
 	time	0
 	researched	true
-	
+
 	mdl_top	models/aliens/ortnok_medium/body01.md2
 }

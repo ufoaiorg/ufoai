@@ -1592,6 +1592,7 @@ void MN_SelectBase( void )
 		if ( baseCurrent->founded ) {
 			mapAction = MA_NONE;
 			MN_PushMenu( "bases" );
+			CL_AircraftSelect();
 		} else {
 			mapAction = MA_NEWBASE;
 			Cvar_Set( "mn_basename", va( "base %i", ccs.actualBaseID ) );
@@ -1845,6 +1846,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 		baseCurrent = base;
 		baseCurrent->allBuildingsList[0] = '\0';
 		baseCurrent->numList = 0;
+		baseCurrent->aircraftCurrent = NULL; // FIXME: Load the first one
 		base->founded = true;
 		if ( version >= 2 )
 		{

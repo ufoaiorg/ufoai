@@ -1071,9 +1071,8 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	}
 
 	// draw aircraft
-	for ( i = 0, air = ccs.air; i < ccs.numAir; i++, air++ )
+	for ( i = 0, air = aircraft; i < numAircraft; i++, air++ )
 	{
-		air = &ccs.air[i];
 		if ( air->status > AIR_HOME )
 		{
 			MN_MapCalcLine( air->pos, pos, &air->route );
@@ -1391,7 +1390,10 @@ void MN_DrawMapMarkers( menuNode_t *node )
 		if ( ms == selMis )
 		{
 			menuText[TEXT_STANDARD] = ms->def->text;
-			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "circle" );
+			if ( selMis->def->active )
+				re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "circleactive" );
+			else
+				re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "circle" );
 
 			if ( CL_MapIsNight( ms->realPos ) ) Cvar_Set( "mn_mapdaytime", _("Night") );
 			else Cvar_Set( "mn_mapdaytime", _("Day") );
@@ -1408,7 +1410,7 @@ void MN_DrawMapMarkers( menuNode_t *node )
 		}
 
 	// draw aircraft
-	for ( i = 0, air = ccs.air; i < ccs.numAir; i++, air++ )
+	for ( i = 0, air = aircraft; i < numAircraft; i++, air++ )
 		if ( air->status != AIR_HOME )
 		{
 			if ( !MN_MapToScreen( node, air->pos, &x, &y ) )

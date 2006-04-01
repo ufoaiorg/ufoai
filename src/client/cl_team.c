@@ -602,7 +602,7 @@ void CL_MarkTeamCmd( void )
 	// or are in multiplayer mode
 	if ( ! ccs.numBases && (int)Cvar_VariableValue("maxclients") == 1 )
 	{
-		Com_Printf("No base set up\n");
+		Com_Printf(_("No base set up\n"));
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
 		return;
 	}
@@ -634,14 +634,18 @@ CL_HireActorCmd
 void CL_HireActorCmd( void )
 {
 	int num;
+	aircraft_t* air = NULL;
 
 	// check syntax
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: hire <num>\n" );
+		Com_Printf( _("Usage: hire <num>\n") );
 		return;
 	}
 	num = atoi( Cmd_Argv(1) );
+
+	if ( baseCurrent && baseCurrent->aircraftCurrent )
+		air = (aircraft_t*)baseCurrent->aircraftCurrent;
 
 	if ( num >= numWholeTeam )
 		return;
@@ -652,13 +656,17 @@ void CL_HireActorCmd( void )
 		Cbuf_AddText( va( "listdel%i\n", num ) );
 		hiredMask &= ~(1 << num);
 		numHired--;
+		if ( air )
+			air->teamSize--;
 	}
-	else if ( numHired < MAX_ACTIVETEAM )
+	else if ( numHired < MAX_ACTIVETEAM && ( ( air && air->size >= air->teamSize ) || ! air ) )
 	{
 		// hire
 		Cbuf_AddText( va( "listadd%i\n", num ) );
 		hiredMask |= (1 << num);
 		numHired++;
+		if ( air && air->size >= air->teamSize )
+			air->teamSize++;
 	}
 
 	// select the desired one anyways

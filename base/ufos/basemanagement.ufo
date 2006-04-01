@@ -108,6 +108,7 @@ building intercept
 	max_workers	4
 	min_workers	1
 	worker_costs	10
+	onconstruct	"newaircraft interceptor;"
 	energy		50
 	build_time	5
 	varcosts	10
@@ -216,4 +217,24 @@ production mind_p
 	amount		100
 }
 
+aircraft dropship
+{
+	speed	60.0
+	name	"Dropship"
+	type	transporter
+	model	"models/objects/dropship.md2"
+	model_top	"models/objects/dropship_top.md2"
+	model_glass	"models/objects/dropship_glass.md2"
+	size	8
+}
 
+aircraft interceptor
+{
+	speed	80.0
+	name	"Interceptor"
+	type	interceptor
+	model	"models/aircrafts/fighter1_main.md2"
+	model_top	"models/aircrafts/fighter1_engines.md2"
+	model_glass	"models/aircrafts/fighter1_glass.md2"
+	size	1
+}
