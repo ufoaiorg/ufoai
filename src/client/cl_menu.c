@@ -1381,6 +1381,7 @@ void MN_DrawMapMarkers( menuNode_t *node )
 
 	// draw mission pics
 	menuText[TEXT_STANDARD] = NULL;
+	Cvar_Set( "mn_mapdaytime", "" );
 	for ( i = 0; i < ccs.numMissions; i++ )
 	{
 		ms = &ccs.mission[i];
