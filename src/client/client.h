@@ -802,7 +802,7 @@ typedef enum
 	EMPL_MEDIC,		// unused right now
 	EMPL_ROBOT,		// unused right now
 	MAX_EMPL			// for counting over all available enums
-} employeeType_t; 
+} employeeType_t;
 
 // The definition of an employee
 typedef struct employee_s
@@ -976,7 +976,7 @@ extern	building_t	bmBuildings[MAX_BASES][MAX_BUILDINGS];
 
 extern	production_t	bmProductions[MAX_PRODUCTIONS];
 extern	employee_t	employees[MAX_EMPLOYEES];	// This it the global list of employees.
-extern	int   numEmployees; 
+extern	int   numEmployees;
 
 void CL_UpdateBaseData( void );
 int B_HowManyPeopleInBase2 ( base_t *base, int location );
@@ -1028,6 +1028,7 @@ typedef struct mission_s
 	char	alienTeam[MAX_VAR];
 	char	alienEquipment[MAX_VAR];
 	char	civTeam[MAX_VAR];
+	qboolean	active; // aircraft at place?
 	vec2_t	pos;
 	byte	mask[4];
 	int		aliens, civilians;

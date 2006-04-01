@@ -269,6 +269,18 @@ qboolean CL_MapMaskFind( byte *color, vec2_t polar )
 
 
 // ===========================================================
+#define DISTANCE 3
+
+void CL_StartAircraft ( void )
+{
+	aircraft_t	*air;
+
+	assert(baseCurrent);
+	air = &ccs.air[ccs.numAir-1];
+	air->status = AIR_IDLE;
+	air->pos[0] = baseCurrent->pos[0]+DISTANCE;
+	air->pos[1] = baseCurrent->pos[1]+DISTANCE;
+}
 
 /*
 ======================
@@ -495,7 +507,6 @@ void CL_CampaignAddMission( setState_t *set )
 	CL_GameTimeStop();
 }
 
-
 /*
 ======================
 CL_CampaignRemoveMission
@@ -581,6 +592,46 @@ void CL_CampaignCheckEvents( void )
 		}
 }
 
+/*
+======================
+CL_CheckAircraft
+======================
+*/
+void CL_CheckAircraft ( aircraft_t* air )
+{
+	int	i, airStatus;
+	actMis_t	*mis;
+
+	airStatus = AIR_NONE;
+
+	// let missions expire
+	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ )
+		if ( abs( mis->def->pos[0] - air->pos[0] ) < DISTANCE
+		  && abs( mis->def->pos[1] - air->pos[1] ) < DISTANCE )
+		{
+			mis->def->active = true;
+			airStatus = AIR_DROP;
+		}
+		else
+		{
+			mis->def->active = false;
+		}
+
+	switch ( airStatus )
+	{
+		case AIR_DROP:
+			air->status = airStatus;
+			break;
+		case AIR_NONE:
+		case AIR_TRANSIT:
+		case AIR_INTERCEPT:
+		case AIR_IDLE:
+		case AIR_HOME:
+			break;
+		default:
+			Com_Printf(_("Unknown status for aircraft\n"));
+	}
+}
 
 /*
 ======================
@@ -607,13 +658,7 @@ void CL_CampaignRunAircraft( int dt )
 				end = air->route.p[air->route.n-1];
 				air->pos[0] = end[0];
 				air->pos[1] = end[1];
-
-				// TODO: add events here
-				// near a base => AIR_HOME
-				// near a mission => AIR_INTERCEPT
-				// ...
-				air->status = AIR_IDLE;
-
+				CL_CheckAircraft( air );
 				continue;
 			}
 
@@ -625,6 +670,8 @@ void CL_CampaignRunAircraft( int dt )
 
 			air->pos[0] = (1-frac) * air->route.p[p][0] + frac * air->route.p[p+1][0];
 			air->pos[1] = (1-frac) * air->route.p[p][1] + frac * air->route.p[p+1][1];
+
+			CL_CheckAircraft( air );
 		}
 }
 
@@ -1388,6 +1435,11 @@ void CL_GameGo( void )
 
 	// start the map
 	mis = selMis->def;
+	if ( ! mis->active )
+	{
+		MN_Popup( _("Note"), _("Your dropship is not near the landingzone") );
+		return;
+	}
 	Cvar_SetValue( "ai_numaliens", mis->aliens );
 	Cvar_SetValue( "ai_numcivilians", mis->civilians );
 	Cvar_Set( "ai_alien", mis->alienTeam );
@@ -1784,6 +1836,7 @@ void CL_ResetCampaign( void )
 	Cmd_AddCommand( "mn_buy", CL_Buy );
 	Cmd_AddCommand( "mn_sell", CL_Sell );
 	Cmd_AddCommand( "mn_mapaction_reset", CL_MapActionReset );
+	Cmd_AddCommand( "startaircraft", CL_StartAircraft );
 
 	re.LoadTGA( "pics/menu/map_mask.tga", &maskPic, &maskWidth, &maskHeight );
 	if ( maskPic ) Com_Printf( _("Map mask loaded.\n") );
