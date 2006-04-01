@@ -6,7 +6,7 @@ To install the game use the liflg.org-installer. This will bring you the data-fi
 which aren't in svn-repository, yet. After this do a
   mkdir ufoai
   cd ufoai/
-  svn co https://svn.sourceforge.net/svnroot/ufoai/trunk .
+  svn co https://svn.sourceforge.net/svnroot/ufoai/ufoai/trunk .
   cd src/linux
   make
 Now you have the binaries in src/linux/debugARCH or src/linux/releaseARCH - copy them over
