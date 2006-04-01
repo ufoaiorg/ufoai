@@ -77,7 +77,7 @@ menu bases
 		in		{ *buildings texl "239 15" *buildings texh "447 64" }
 	}
 
-	pic aircrafts
+	pic aircraft
 	{
 		tooltip	"Manage your aircraft"
 		image	menu/button_basemen
@@ -87,10 +87,10 @@ menu bases
 		mousefx true
 		click
 		{
-			cmd "mn_push team"
+			cmd "mn_push aircraft"
 		}
-		out		{ *aircrafts texl "15 79" *aircrafts texh "226 127" }
-		in		{ *aircrafts texl "239 79" *aircrafts texh "447 127" }
+		out		{ *aircraft texl "15 79" *aircraft texh "226 127" }
+		in		{ *aircraft texl "239 79" *aircraft texh "447 127" }
 	}
 
 	pic buysell
@@ -206,4 +206,124 @@ menu bases
 	{
 		cmd base_init;
 	}
+}
+
+menu aircraft
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/air_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/air_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/air_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/air_lr
+		pos		"512 512"
+	}
+
+	pic back_base
+	{
+		tooltip	"Back to baseview"
+		image	menu/button_mapmen_options2
+		pos	"950 0"
+		texl	"0 64"
+		texh	"64 128"
+		mousefx true
+		click
+		{
+			cmd mn_pop;
+		}
+	}
+
+	pic button_squad
+	{
+		tooltip	"Assign your squad"
+		image   menu/button_basemen
+		pos	"55 100"
+		texl	"15 400"
+		texh	"226 448"
+		mousefx true
+		click
+		{
+			cmd "mn_push team"
+		}
+		out		{ *button_squad texl "15 400" *button_squad texh "226 448" }
+		in		{ *button_squad texl "239 400" *button_squad texh "447 448" }
+	}
+
+	pic button_buysell
+	{
+		tooltip	"Buy/Sell aircraft"
+		image	menu/button_basemen
+		pos	"55 170"
+		texl	"15 144"
+		texh	"226 192"
+		mousefx true
+		click
+		{
+			cmd "mn_push buy"
+		}
+		out		{ *button_buysell texl "15 144" *button_buysell texh "226 192" }
+		in		{ *button_buysell texl "240 144" *button_buysell texh "449 192" }
+	}
+
+	pic button_start
+	{
+		tooltip	"Start your aircraft"
+		image	menu/button_basemen
+		pos	"55 240"
+		texl	"15 464"
+		texh	"226 511"
+		mousefx true
+		click
+		{
+			cmd "startaircraft;mn_pop;mn_pop;"
+		}
+		out		{ *button_start texl "15 464" *button_start texh "226 511" }
+		in		{ *button_start texl "240 464" *button_start texh "449 511" }
+	}
+
+	pic button_transfer
+	{
+		tooltip	"Transfer equipment or personnel"
+		image	menu/button_basemen
+		pos	"55 310"
+		texl	"15 207"
+		texh	"226 256"
+		mousefx true
+		click
+		{
+			cmd "mn_push transfer"
+		}
+		out		{ *button_transfer texl "15 207" *button_transfer texh "226 256" }
+		in		{ *button_transfer texl "239 207" *button_transfer texh "447 256" }
+	}
+
+
 }
