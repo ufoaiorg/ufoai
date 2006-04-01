@@ -79,7 +79,7 @@ menu bases
 
 	pic aircrafts
 	{
-		tooltip	"Manage your aircrafts"
+		tooltip	"Manage your aircraft"
 		image	menu/button_basemen
 		pos	"765 200"
 		texl	"15 79"
