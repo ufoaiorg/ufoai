@@ -1445,7 +1445,7 @@ void MN_Tooltip ( menuNode_t* node, int x, int y )
 		tooltip = (char *)node->data[5];
 		l = re.DrawPropLength( "f_small", _(tooltip) );
 		if ( x + l > viddef.width )
-			x -= l;
+			x -= (l+10);
 		re.DrawFill(x - 3, y - 3, l + 6, 20, 0, color );
 		VectorSet( color, 0.0f, 0.8f, 0.0f );
 		color[3] = 1.0f;

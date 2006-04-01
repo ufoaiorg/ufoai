@@ -263,6 +263,7 @@ qboolean CL_MapMaskFind( byte *color, vec2_t polar )
 	res = (c - maskPic) / 4;
 	polar[0] = 180 - 360 * ((float)(res % maskWidth) + 0.5) / maskWidth;
 	polar[1] = 90 - 180 * ((float)(res / maskWidth) + 0.5) / maskHeight;
+	Com_DPrintf(_("Set new coords for mission to %.0f:%.0f\n"), polar[0], polar[1] );
 	return true;
 }
 
@@ -279,8 +280,7 @@ void CL_NewAircraft ( base_t* base )
 	aircraft_t	*air;
 
 	assert(base);
-	air = &ccs.air[ccs.numAir];
-	ccs.numAir++;
+	air = &ccs.air[ccs.numAir++];
 	memset( air, 0, sizeof(aircraft_t) );
 	air->status = AIR_HOME;
 	air->homebase = base;
@@ -613,6 +613,7 @@ void CL_CampaignRunAircraft( int dt )
 				// near a mission => AIR_INTERCEPT
 				// ...
 				air->status = AIR_IDLE;
+
 				continue;
 			}
 
