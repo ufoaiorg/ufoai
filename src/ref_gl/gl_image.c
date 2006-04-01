@@ -317,8 +317,8 @@ void	GL_ImageList_f (void)
 			break;
 		}
 
-		ri.Con_Printf (PRINT_ALL,  " %3i %3i %s: %s\n",
-			image->upload_width, image->upload_height, palstrings[image->paletted], image->name);
+		ri.Con_Printf (PRINT_ALL,  " %3i %3i %s: %s - shader: %s\n",
+			image->upload_width, image->upload_height, palstrings[image->paletted], image->name, (image->shader ? image->shader->title : "NONE") );
 	}
 	ri.Con_Printf (PRINT_ALL, "Total texel count (not counting mipmaps): %i\n", texels);
 }
