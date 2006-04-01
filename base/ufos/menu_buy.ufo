@@ -703,6 +703,14 @@ menu buy
 	// credits
 	// ==================
 	
+	string txt_credits_caption
+	{
+		string	"CREDIT"
+		pos	"650 70"
+		font	f_big
+		align	ul
+	}
+
 	string txt_credits
 	{
 		string	"*cvar mn_credits"
