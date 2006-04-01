@@ -14,6 +14,9 @@
 //			-> see the correct .ufo file. Mind you that "building" and "craft" are currently unused -> "tech"
 //	name
 //		self-explaining i hope :) Only needed when type=tech
+//	description
+//		A short string that is used by gettext to be translateable (e.g "itemname_txt").
+//		This needs to be a unique string in all desciptions. See the po files in the source directory (src/po/*.po)
 //	requires
 //		If you get an alien-item everything that it requires is made available for research (tree top/down)
 //		e.g.
@@ -470,8 +473,23 @@ tech weapon_plasrifle_ammo
 tech irgoggles
 {
 	type	weapon
+	up_chapter	weapons
+	description	irgoggles_txt
+	
 	requires	initial
 	provides	irgoggles
+	time	1
+	researched	false
+}
+
+tech medikit
+{
+	type	weapon
+	up_chapter	weapons
+	description	medikit_txt
+	
+	requires	initial
+	provides	medikit
 	time	1
 	researched	false
 }
@@ -481,14 +499,30 @@ tech nano
 	type	tech
 	name	"Nano Technology"
 	requires	initial
-	description	"nano_txt"
+	description	nano_txt
 	time	1
 	researched	false
+}
+
+tech kevlar_armor
+{
+	type	armor
+	up_chapter	weapons
+	description	kevlar_armor_txt
+	
+	
+	requires	initial
+	provides	light
+	time	0
+	researched	true
 }
 
 tech nano_armor
 {
 	type	armor
+	description	"nano_armor_txt"
+	up_chapter	weapons
+	
 	requires	"nano"
 	provides	medium
 	time	1
