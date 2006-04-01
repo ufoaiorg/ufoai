@@ -1,7 +1,7 @@
 // ==================
 // TEAM MENU
 // ==================
-	
+
 menu team
 {
 	// ==================
@@ -11,41 +11,41 @@ menu team
 	zone render
 	{
 		invis true
-	}	
-	
+	}
+
 	// ==================
 	// background
 	// ==================
-	
+
 	pic back_ul
 	{
 		image	menu/team_ul
 		pos		"0 0"
-	}	
-		
+	}
+
 	pic back_ur
 	{
 		image	menu/team_ur
 		pos		"512 0"
-	}	
-		
+	}
+
 	pic back_ll
 	{
 		image	menu/team_ll
 		pos		"0 512"
-	}	
-		
+	}
+
 	pic back_lr
 	{
 		image	menu/team_lr
 		pos		"512 512"
 	}
-	
-	
+
+
 	// ==================
 	// names list
 	// ==================
-	
+
 	func team_clear
 	{
 		*bt_actor0 image hud/buttons1
@@ -67,7 +67,7 @@ menu team
 		*bt_actor16 image hud/buttons1
 		*bt_actor17 image hud/buttons1
 		*bt_actor18 image hud/buttons1
-		
+
 		*txt_actor0 color "0 .78 0 1"
 		*txt_actor1 color "0 .78 0 1"
 		*txt_actor2 color "0 .78 0 1"
@@ -88,7 +88,7 @@ menu team
 		*txt_actor17 color "0 .78 0 1"
 		*txt_actor18 color "0 .78 0 1"
 	}
-	
+
 	confunc listdel0 { *bt_actor0 image hud/buttons1 }
 	confunc listdel1 { *bt_actor1 image hud/buttons1 }
 	confunc listdel2 { *bt_actor2 image hud/buttons1 }
@@ -108,7 +108,7 @@ menu team
 	confunc listdel16 { *bt_actor16 image hud/buttons1 }
 	confunc listdel17 { *bt_actor17 image hud/buttons1 }
 	confunc listdel18 { *bt_actor18 image hud/buttons1 }
-			
+
 	confunc listadd0 { *bt_actor0 image hud/buttons1a }
 	confunc listadd1 { *bt_actor1 image hud/buttons1a }
 	confunc listadd2 { *bt_actor2 image hud/buttons1a }
@@ -128,7 +128,7 @@ menu team
 	confunc listadd16 { *bt_actor16 image hud/buttons1a }
 	confunc listadd17 { *bt_actor17 image hud/buttons1a }
 	confunc listadd18 { *bt_actor18 image hud/buttons1a }
-	
+
 	confunc listdisable0 { *bt_actor0 image hud/buttons1g }
 	confunc listdisable1 { *bt_actor1 image hud/buttons1g }
 	confunc listdisable2 { *bt_actor2 image hud/buttons1g }
@@ -148,7 +148,7 @@ menu team
 	confunc listdisable16 { *bt_actor16 image hud/buttons1g }
 	confunc listdisable17 { *bt_actor17 image hud/buttons1g }
 	confunc listdisable18 { *bt_actor18 image hud/buttons1g }
-	
+
 	confunc teamselect0 { *txt_actor0 color "1 1 1 1" }
 	confunc teamselect1 { *txt_actor1 color "1 1 1 1" }
 	confunc teamselect2 { *txt_actor2 color "1 1 1 1" }
@@ -168,7 +168,7 @@ menu team
 	confunc teamselect16 { *txt_actor16 color "1 1 1 1" }
 	confunc teamselect17 { *txt_actor17 color "1 1 1 1" }
 	confunc teamselect18 { *txt_actor18 color "1 1 1 1" }
-			
+
 	confunc teamdeselect0 { *txt_actor0 color "0 .78 0 1" }
 	confunc teamdeselect1 { *txt_actor1 color "0 .78 0 1" }
 	confunc teamdeselect2 { *txt_actor2 color "0 .78 0 1" }
@@ -188,7 +188,7 @@ menu team
 	confunc teamdeselect16 { *txt_actor16 color "0 .78 0 1" }
 	confunc teamdeselect17 { *txt_actor17 color "0 .78 0 1" }
 	confunc teamdeselect18 { *txt_actor18 color "0 .78 0 1" }
-			
+
 	pic bt_actor0
 	{
 		tooltip	"Add/remove this soldier"
@@ -494,24 +494,24 @@ menu team
 		size	"290 16"
 		click { cmd "team_select 18" }
 	}
-	
-	
+
+
 	// ==================
 	// actor info
 	// ==================
-	
+
 	confunc mn_name_changed
 	{
 		*txt_name mousefx false
 		cmd team_changename
 	}
-	
+
 	string txt_name
 	{
 		string	"*cvar mn_name"
 		pos		"475 20"
 	}
-	
+
 	pic bt_editname
 	{
 		tooltip	"Edit name of the soldier"
@@ -520,13 +520,13 @@ menu team
 		texl	"0 216"
 		texh	"71 253"
 		mousefx	true
-		click 
-		{ 
-			cmd "msgmenu ?mn_name" 
+		click
+		{
+			cmd "msgmenu ?mn_name"
 			*txt_name mousefx true
 		}
 	}
-	
+
 	model body
 	{
 		md2		"*cvar mn_body"
@@ -536,8 +536,8 @@ menu team
 		angles	"0 70 90"
 		scale	"6.7 6.7 6.7"
 		color	"0.5 0.5 0.5 1"
-	}	
-	
+	}
+
 	model head
 	{
 		md2		"*cvar mn_head"
@@ -545,100 +545,100 @@ menu team
 		tag		"body tag_head"
 		color	"0.5 0.5 0.5 1"
 		scale	"1.0 1.0 1.0"
-	}	
+	}
 
 	string pwr_lbl { pos "700 85"  string "Power:" }
 	string pwr_val { pos "975 85"  string "*cvar mn_tpwr" align ur }
 	pic pwr_rahmen { pos "707 98"  image menu/bar_rahmen }
 	bar pwr_bar    { pos "716 103" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string spd_lbl { pos "700 120" string "Speed:" }
 	string spd_val { pos "975 120" string "*cvar mn_tspd" align ur }
 	pic spd_rahmen { pos "707 133" image menu/bar_rahmen }
 	bar spd_bar    { pos "716 138" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string acc_lbl { pos "700 155" string "Accuracy:" }
 	string acc_val { pos "975 155" string "*cvar mn_tacc" align ur }
 	pic acc_rahmen { pos "707 168" image menu/bar_rahmen }
 	bar acc_bar    { pos "716 173" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 256 align uc }
-		
+
 	string mnd_lbl { pos "700 190" string "Mind:" }
 	string mnd_val { pos "975 190" string "*cvar mn_tmnd" align ur }
 	pic mnd_rahmen { pos "707 203" image menu/bar_rahmen }
 	bar mnd_bar    { pos "716 208" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string cls_lbl { pos "700 240" string "Close Combat:" }
 	string cls_val { pos "975 240" string "*cvar mn_tcls" align ur }
 	pic cls_rahmen { pos "707 253" image menu/bar_rahmen }
 	bar cls_bar    { pos "716 258" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string hvy_lbl { pos "700 275" string "Heavy Weapons:" }
 	string hvy_val { pos "975 275" string "*cvar mn_thvy" align ur }
 	pic hvy_rahmen { pos "707 288" image menu/bar_rahmen }
 	bar hvy_bar    { pos "716 293" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string ass_lbl { pos "700 310" string "Assault Guns:" }
 	string ass_val { pos "975 310" string "*cvar mn_tass" align ur }
 	pic ass_rahmen { pos "707 323" image menu/bar_rahmen }
 	bar ass_bar    { pos "716 328" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string prc_lbl { pos "700 345" string "Sniper Rifles:" }
 	string prc_val { pos "975 345" string "*cvar mn_tprc" align ur }
 	pic prc_rahmen { pos "707 358" image menu/bar_rahmen }
 	bar prc_bar    { pos "716 363" current "*cvar mn_vprc" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string exp_lbl { pos "700 380" string "High Explosives:" }
 	string exp_val { pos "975 380" string "*cvar mn_texp" align ur }
 	pic exp_rahmen { pos "707 393" image menu/bar_rahmen }
 	bar exp_bar    { pos "716 398" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	// ==================
 	// dropship
 	// ==================
-	
+
 	model dropship
 	{
-		md2		"models/objects/dropship.md2"
-		origin	"690 640 0"
-		angles	"-20 -40 120"
-		scale	"1.1 1.1 1.1"
-		color	"0.5 0.5 0.5 1"
-	}	
-	
-	model dropship_top
-	{
-		md2		"models/objects/dropship_top.md2"
-		origin	"690 640 0"
-		angles	"-20 -40 120"
-		scale	"1.1 1.1 1.1"
-		color	"0.5 0.5 0.5 1"
-	}	
-	
-	model dropship_glass
-	{
-		md2		"models/objects/dropship_glass.md2"
+		md2		"*cvar mn_aircraft_model"
 		origin	"690 640 0"
 		angles	"-20 -40 120"
 		scale	"1.1 1.1 1.1"
 		color	"0.5 0.5 0.5 1"
 	}
-	
+
+	model dropship_top
+	{
+		md2		"*cvar mn_aircraft_model_top"
+		origin	"690 640 0"
+		angles	"-20 -40 120"
+		scale	"1.1 1.1 1.1"
+		color	"0.5 0.5 0.5 1"
+	}
+
+	model dropship_glass
+	{
+		md2		"*cvar mn_aircraft_model_glass"
+		origin	"690 640 0"
+		angles	"-20 -40 120"
+		scale	"1.1 1.1 1.1"
+		color	"0.5 0.5 0.5 1"
+	}
+
 	string team_members
 	{
 		string	"Team Members:"
 		pos		"480 486"
 	}
-	
+
 	string team_hired
 	{
 		string	"*cvar mn_hired"
 		pos		"480 508"
 	}
-	
+
 	// ==================
 	// additional stuff
 	// ==================
-	
+
 	pic bt_go
 	{
 		tooltip	"Done"
@@ -649,18 +649,18 @@ menu team
 		texh	"64 37"
 		click	{ cmd "mn_pop;mn_push equipment"  }
 	}
-	
+
 	func init
 	{
 		team_clear
 		cmd "team_mark;team_select 0"
 	}
 }
-	
+
 // ==================
 // EQUIPMENT MENU
 // ==================
-	
+
 menu equipment
 {
 	// ==================
@@ -670,40 +670,40 @@ menu equipment
 	zone render
 	{
 		invis true
-	}	
-	
+	}
+
 	// ==================
 	// background
 	// ==================
-	
+
 	pic back_ul
 	{
 		image	menu/equipment_ul
 		pos		"0 0"
-	}	
-		
+	}
+
 	pic back_ur
 	{
 		image	menu/equipment_ur
 		pos		"512 0"
-	}	
-		
+	}
+
 	pic back_ll
 	{
 		image	menu/equipment_ll
 		pos		"0 512"
-	}	
-		
+	}
+
 	pic back_lr
 	{
 		image	menu/equipment_lr
 		pos		"512 512"
 	}
-	
+
 	// ==================
 	// names list
 	// ==================
-	
+
 	func names_clear
 	{
 		*bt_actor0 image hud/buttons1
@@ -723,7 +723,7 @@ menu equipment
 		*txt_actor6 color "0 .78 0 1"
 		*txt_actor7 color "0 .78 0 1"
 	}
-			
+
 	confunc equipdeselect0 { *bt_actor0 image hud/buttons1 *txt_actor0 color "0 .78 0 1" }
 	confunc equipdeselect1 { *bt_actor1 image hud/buttons1 *txt_actor1 color "0 .78 0 1" }
 	confunc equipdeselect2 { *bt_actor2 image hud/buttons1 *txt_actor2 color "0 .78 0 1" }
@@ -884,8 +884,8 @@ menu equipment
 	// ==================
 	// category buttons
 	// ==================
-	
-	confunc equip_reset 
+
+	confunc equip_reset
 	{
 		*bt_primary		image menu/menu_buttons1
 		*bt_secondary	image menu/menu_buttons1
@@ -907,7 +907,7 @@ menu equipment
 		texh	"128 52"
 		click	{ equip_primary }
 	}
-	
+
 	pic bt_secondary
 	{
 		tooltip	"Show only secondary weapons in store"
@@ -918,7 +918,7 @@ menu equipment
 		texh	"128 214"
 		click	{ equip_secondary }
 	}
-	
+
 	pic bt_misc
 	{
 		tooltip	"Show other equipment in store"
@@ -929,7 +929,7 @@ menu equipment
 		texh	"128 160"
 		click	{ equip_misc }
 	}
-	
+
 	pic bt_armor
 	{
 		tooltip	"Show only armor in store"
@@ -940,91 +940,91 @@ menu equipment
 		texh	"128 106"
 		click	{ equip_armor }
 	}
-	
-	
+
+
 	// ==================
 	// item description
 	// ==================
-	
+
 	string itemname
 	{
 		string	"*cvar mn_itemname"
 		pos		"203 390"
 		align	uc
 	}
-	
+
 	item itemmodel
 	{
 		string	"*cvar mn_item"
 		pos		"203 472"
 		scale	"7 7 7"
-	}	
-	
+	}
+
 	item weaponmodel
 	{
 		string	"*cvar mn_weapon"
 		pos		"160 472"
 		scale	"7 7 7"
-	}	
-	
+	}
+
 	item ammomodel
 	{
 		string	"*cvar mn_ammo"
 		pos		"340 472"
 		scale	"7 7 7"
-	}	
-	
+	}
+
 	text description
 	{
 		pos		"40 550"
 		size	"326 200"
 		format	"20 0"
 	}
-	
+
 	// ==================
 	// actor stats
 	// ==================
-	
+
 	string pwr_lbl { pos "60 375"  string "Power:" }
 	string pwr_val { pos "335 375"  string "*cvar mn_tpwr" align ur }
 	pic pwr_rahmen { pos "67 388"  image menu/bar_rahmen }
 	bar pwr_bar    { pos "76 393" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string spd_lbl { pos "60 410" string "Speed:" }
 	string spd_val { pos "335 410" string "*cvar mn_tspd" align ur }
 	pic spd_rahmen { pos "67 423" image menu/bar_rahmen }
 	bar spd_bar    { pos "76 428" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string acc_lbl { pos "60 445" string "Accuracy:" }
 	string acc_val { pos "335 445" string "*cvar mn_tacc" align ur }
 	pic acc_rahmen { pos "67 458" image menu/bar_rahmen }
 	bar acc_bar    { pos "76 463" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 256 align uc }
-		
+
 	string mnd_lbl { pos "60 480" string "Mind:" }
 	string mnd_val { pos "335 480" string "*cvar mn_tmnd" align ur }
 	pic mnd_rahmen { pos "67 493" image menu/bar_rahmen }
 	bar mnd_bar    { pos "76 498" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string cls_lbl { pos "60 530" string "Close Combat:" }
 	string cls_val { pos "335 530" string "*cvar mn_tcls" align ur }
 	pic cls_rahmen { pos "67 543" image menu/bar_rahmen }
 	bar cls_bar    { pos "76 548" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string hvy_lbl { pos "60 565" string "Heavy Weapons:" }
 	string hvy_val { pos "335 565" string "*cvar mn_thvy" align ur }
 	pic hvy_rahmen { pos "67 578" image menu/bar_rahmen }
 	bar hvy_bar    { pos "76 583" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string ass_lbl { pos "60 600" string "Assault Guns:" }
 	string ass_val { pos "335 600" string "*cvar mn_tass" align ur }
 	pic ass_rahmen { pos "67 613" image menu/bar_rahmen }
 	bar ass_bar    { pos "76 618" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string prc_lbl { pos "60 635" string "Sniper Rifles:" }
 	string prc_val { pos "335 635" string "*cvar mn_tprc" align ur }
 	pic prc_rahmen { pos "67 648" image menu/bar_rahmen }
 	bar prc_bar    { pos "76 653" current "*cvar mn_vprc" size "245 6" color "0 .8 0 1" max 256 align uc }
-	
+
 	string exp_lbl { pos "60 670" string "High Explosives:" }
 	string exp_val { pos "335 670" string "*cvar mn_texp" align ur }
 	pic exp_rahmen { pos "67 683" image menu/bar_rahmen }
@@ -1033,7 +1033,7 @@ menu equipment
 	// ==================
 	// switch
 	// ==================
-	
+
 	func weapon_stats
 	{
 		*itemname invis false
@@ -1041,7 +1041,7 @@ menu equipment
 		*weaponmodel invis false
 		*ammomodel invis false
 		*description invis false
-		
+
 		*pwr_lbl invis true *pwr_val invis true *pwr_rahmen invis true *pwr_bar invis true
 		*spd_lbl invis true *spd_val invis true *spd_rahmen invis true *spd_bar invis true
 		*acc_lbl invis true *acc_val invis true *acc_rahmen invis true *acc_bar invis true
@@ -1051,11 +1051,11 @@ menu equipment
 		*ass_lbl invis true *ass_val invis true *ass_rahmen invis true *ass_bar invis true
 		*prc_lbl invis true *prc_val invis true *prc_rahmen invis true *prc_bar invis true
 		*exp_lbl invis true *exp_val invis true *exp_rahmen invis true *exp_bar invis true
-		
+
 		*txt_weaponinfo color "1 1 1 1"
 		*txt_abilities color "0 .78 0 1"
 	}
-	
+
 	func actor_stats
 	{
 		*itemname invis true
@@ -1077,7 +1077,7 @@ menu equipment
 		*txt_weaponinfo color "0 .78 0 1"
 		*txt_abilities color "1 1 1 1"
 	}
-	
+
 	string txt_weaponinfo
 	{
 		string	"Object Info"
@@ -1105,13 +1105,13 @@ menu equipment
 	// ==================
 	// inventory
 	// ==================
-	
+
 	string txt_actorname
 	{
 		string	"*cvar mn_name"
 		pos		"544 25"
 	}
-	
+
 	model body
 	{
 		md2		"*cvar mn_body"
@@ -1121,8 +1121,8 @@ menu equipment
 		angles	"0 70 90"
 		scale	"5 5 5"
 		color	"0.5 0.5 0.5 1"
-	}	
-	
+	}
+
 	model head
 	{
 		md2		"*cvar mn_head"
@@ -1130,8 +1130,8 @@ menu equipment
 		tag		"body tag_head"
 		color	"0.5 0.5 0.5 1"
 		scale	"1.0 1.0 1.0"
-	}	
-	
+	}
+
 	string changeskin
 	{
 		string	"*cvar mn_skinname"
@@ -1141,11 +1141,11 @@ menu equipment
 		out		{ *changeskin color "1 1 1 1" }
 		click	{ cmd "team_changeskin;" }
 	}
-	
+
 	// ==================
 	// containers
 	// ==================
-	
+
 	container right		{ pos "546 178" }
 	container left		{ pos "872 178" }
 	container armor		{ pos "700 100" invis true }
@@ -1157,7 +1157,7 @@ menu equipment
 	// ==================
 	// additional stuff
 	// ==================
-	
+
 	pic bt_go
 	{
 		tooltip	"Done"
@@ -1168,7 +1168,7 @@ menu equipment
 		texh	"64 37"
 		click	{ cmd "mn_pop;saveteam current" }
 	}
-	
+
 	func init
 	{
 		names_clear

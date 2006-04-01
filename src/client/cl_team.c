@@ -587,6 +587,25 @@ void CL_SelectCmd( void )
 	else CL_CharacterCvars( &curTeam[num] );
 }
 
+/*
+======================
+CL_UpdateHireVar
+======================
+*/
+void CL_UpdateHireVar ( void )
+{
+	aircraft_t* air = NULL;
+
+	// maybe we are in multiplayer - and there is no baseCurrent
+	if ( baseCurrent->aircraftCurrent )
+	{
+		air = (aircraft_t*)baseCurrent->aircraftCurrent;
+		Cvar_Set( "mn_hired", va( "%i of %i\n", air->teamSize, air->size ) );
+	}
+	else
+		Cvar_Set( "mn_hired", va( "%i of %i\n", numHired, MAX_ACTIVETEAM ) );
+
+}
 
 /*
 ======================
@@ -609,7 +628,8 @@ void CL_MarkTeamCmd( void )
 
 	hiredMask = teamMask;
 	numHired = numOnTeam;
-	Cvar_Set( "mn_hired", va( "%i of %i\n", numHired, MAX_ACTIVETEAM ) );
+
+	CL_UpdateHireVar();
 
 	for ( i = 0; i < numWholeTeam; i++ )
 	{
@@ -659,7 +679,7 @@ void CL_HireActorCmd( void )
 		if ( air )
 			air->teamSize--;
 	}
-	else if ( numHired < MAX_ACTIVETEAM && ( ( air && air->size >= air->teamSize ) || ! air ) )
+	else if ( numHired < MAX_ACTIVETEAM && ( ( air && air->size > air->teamSize ) || ! air ) )
 	{
 		// hire
 		Cbuf_AddText( va( "listadd%i\n", num ) );
@@ -670,7 +690,7 @@ void CL_HireActorCmd( void )
 	}
 
 	// select the desired one anyways
-	Cvar_Set( "mn_hired", va( "%i of %i\n", numHired, MAX_ACTIVETEAM ) );
+	CL_UpdateHireVar();
 	Cbuf_AddText( va( "team_select %i\n", num ) );
 }
 
