@@ -30,10 +30,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <GL/gl.h>
 
+#ifdef SHADERS
 #ifdef _WIN32
 #include "glext.h"
 #else // use standard glext
 #include <GL/glext.h>
+#endif
 #endif
 
 #ifdef __linux__
@@ -397,6 +399,7 @@ extern	void ( APIENTRY * qglSelectTextureSGIS)( GLenum );
 extern	void ( APIENTRY * qglActiveTextureARB)( GLenum );
 extern	void ( APIENTRY * qglClientActiveTextureARB)( GLenum );
 
+#ifdef SHADERS
 // arb shader stuff
 extern void ( APIENTRY * qglProgramStringARB )(GLenum, GLenum, GLsizei, const GLvoid *);
 extern void ( APIENTRY * qglBindProgramARB )(GLenum, GLuint);
@@ -421,6 +424,7 @@ extern void ( APIENTRY * qglGetVertexAttribfvARB )(GLuint, GLenum, GLfloat *);
 extern void ( APIENTRY * qglGetVertexAttribivARB )(GLuint, GLenum, GLint *);
 extern void ( APIENTRY * qglGetVertexAttribPointervARB )(GLuint, GLenum, GLvoid* *);
 extern GLboolean ( APIENTRY * qglIsProgramARB )(GLuint);
+#endif /* SHADERS */
 
 extern void ( APIENTRY * qglActiveStencilFaceEXT )(GLenum face);
 extern void ( APIENTRY * qglStencilOpSeparateATI )(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);

@@ -16,6 +16,7 @@ BUILD_SDLUFO=YES	# use SDL for cdrom, sound and maybe renderer (selectable)
 BUILD_GLX=YES		# X11 GLX driver. Works somewhat ok.
 BUILD_DEDICATED=NO	# build a dedicated ufo server
 BUILD_ALSA=YES		# build with alsa-support
+BUILD_WITH_SHADER=NO	# build with shader support
 HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
 BUILD_JPEG=NO		# jpeg-6 compile in or link in?
@@ -118,6 +119,10 @@ endif
 
 ifeq ($(strip $(HAVE_GETTEXT)),YES)
 	BASE_CFLAGS+=-DHAVE_GETTEXT
+endif
+
+ifeq ($(strip $(BUILD_WITH_SHADER)),YES)
+	BASE_CFLAGS+=-DSHADERS
 endif
 
 ifeq ($(strip $(HAVE_IPV6)),YES)

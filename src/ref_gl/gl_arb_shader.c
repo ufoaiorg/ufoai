@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifdef SHADERS
 #include "gl_local.h"
 
 unsigned int SH_LoadProgram_ARB_FP(char *path);
@@ -228,3 +229,5 @@ unsigned int SH_CompileWaterShader(unsigned int arb_water_id)
 	return arb_water_id;
 //	qglDeleteProgramsARB(1, &arb_water_id);
 }
+
+#endif /* SHADERS */

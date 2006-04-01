@@ -1745,6 +1745,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	}
 
 	gl_state.arb_fragment_program = false;
+#ifdef SHADERS
 	if ( strstr( gl_config.extensions_string, "GL_ARB_fragment_program" ) ) {
 		ri.Con_Printf(PRINT_ALL, "...using GL_ARB_fragment_program\n");
 		gl_state.arb_fragment_program = true;
@@ -1777,6 +1778,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	        ri.Con_Printf(PRINT_ALL, "...GL_ARB_fragment_program not found\n");
 		gl_state.arb_fragment_program = false;
         }
+#endif /* SHADERS */
 
 	gl_state.ati_separate_stencil=false;
 	if ( strstr( gl_config.extensions_string, "GL_ATI_separate_stencil" ) )
@@ -1851,8 +1853,9 @@ void R_Shutdown (void)
 	Mod_FreeAll ();
 
 	GL_ShutdownImages ();
+#ifdef SHADERS
 	GL_ShutdownShaders ();
-
+#endif
 	/*
 	** shut down OS specific OpenGL stuff like contexts, etc.
 	*/
