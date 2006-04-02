@@ -269,12 +269,12 @@ void CL_ActorUpdateCVars( void )
 		if ( cl.time < cl.msgTime )
 		{
 			// special message
-			strncpy( infoText, cl.msgText, MAX_MENUTEXTLEN );
+			Com_sprintf( infoText, MAX_MENUTEXTLEN, cl.msgText );
 		}
 		else if ( selActor->state & STATE_PANIC )
 		{
 			// panic
-			sprintf( infoText, _("Currently panics!\n") );
+			Com_sprintf( infoText, MAX_MENUTEXTLEN, _("Currently panics!\n") );
 		} else {
 			// in multiplayer we should be able to use the aliens weapons
  			if ( Cvar_VariableValue("maxclients") == 1
@@ -310,7 +310,7 @@ void CL_ActorUpdateCVars( void )
 			{
 				// If the mouse is outside the world, blank move
  				if ( mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE )
- 					actorMoveLength = 0xFF;
+					actorMoveLength = 0xFF;
 				if ( actorMoveLength < 0xFF )
 				{
 					Com_sprintf( infoText, MAX_MENUTEXTLEN, _("Health\t%i\nMove\t%i\n"), selActor->HP, actorMoveLength );
@@ -869,7 +869,7 @@ void CL_ActorDoTurn( sizebuf_t *sb )
 	le->dir = MSG_ReadByte( sb );
 	le->angles[YAW] = dangle[le->dir];
 
-	//cl.cmode = M_MOVE;
+// 	cl.cmode = M_MOVE;
 
 	// calculate possible moves
 	CL_BuildForbiddenList();
@@ -1360,6 +1360,7 @@ TARGETING GRAPHICS
 ==============================================================
 */
 
+// field marker box
 const vec3_t	box_delta = {11, 11, 27};
 
 
@@ -1567,8 +1568,11 @@ void CL_AddTargeting( void )
 		VectorAdd( ent.origin, box_delta, ent.oldorigin );
 		VectorSubtract( ent.origin, box_delta, ent.origin );
 
+		// ok, paint the green box if move is possible
 		if ( selActor && actorMoveLength < 0xFF && actorMoveLength <= selActor->TU )
 			VectorSet( ent.angles, 0, 1, 0 );
+		// and paint the blue one if move is impossible or the soldier
+		// does not have enough TimeUnits left
 		else
 			VectorSet( ent.angles, 0, 0, 1 );
 
@@ -1576,6 +1580,8 @@ void CL_AddTargeting( void )
 		if ( mouseActor )
 		{
 			ent.alpha = 0.4 + 0.2*sin((float)cl.time/80);
+			// paint the box red if the soldiers under the cursor is
+			// not in our team and no civilian, too
 			if ( mouseActor->team != cls.team && mouseActor->team != TEAM_CIVILIAN )
 				VectorSet( ent.angles, 1, 0, 0 );
 		}

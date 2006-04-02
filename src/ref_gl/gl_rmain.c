@@ -2033,6 +2033,38 @@ void R_SetPalette ( const unsigned char *palette)
 //	qglClearColor (1,0, 0.5 , 0.5);
 }
 
+/*
+==================
+RB_TakeVideoFrameCmd
+==================
+*/
+void R_TakeVideoFrame( int h, int w, byte* captureBuffer, byte *encodeBuffer, qboolean motionJpeg  )
+{
+	int	frameSize;
+	int	i;
+
+	qglReadPixels( 0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, captureBuffer );
+
+	if( motionJpeg )
+	{
+		ri.Con_Printf( PRINT_ALL, "test\n");
+		frameSize = SaveJPGToBuffer( encodeBuffer, 95, w, h, captureBuffer );
+		ri.Con_Printf( PRINT_ALL, "test2\n");
+	}
+	else
+	{
+		frameSize = w * h * 4;
+
+		// Vertically flip the image
+		for( i = 0; i < h; i++ )
+		{
+			memcpy( &encodeBuffer[ i * ( w * 4 ) ], &captureBuffer[ ( h - i - 1 ) * ( w * 4 ) ], w * 4 );
+		}
+	}
+
+	ri.CL_WriteAVIVideoFrame( encodeBuffer, frameSize );
+}
+
 
 //===================================================================
 
@@ -2111,6 +2143,7 @@ refexport_t GetRefAPI (refimport_t rimp )
 	re.EndFrame = GLimp_EndFrame;
 
 	re.AppActivate = GLimp_AppActivate;
+	re.TakeVideoFrame = R_TakeVideoFrame;
 #ifdef BUILD_FREETYPE
 	re.RegisterFTFont = RE_RegisterFTFont;
 #endif

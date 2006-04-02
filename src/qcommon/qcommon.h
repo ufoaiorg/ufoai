@@ -720,8 +720,24 @@ extern int anzInstalledMaps;
 extern int mapsInstalledInit;
 extern int mapInstalledIndex;
 
+typedef enum {
+	FS_READ,
+	FS_WRITE,
+	FS_APPEND,
+	FS_APPEND_SYNC
+} fsMode_t;
+
+typedef enum {
+	FS_SEEK_CUR,
+	FS_SEEK_END,
+	FS_SEEK_SET
+} fsOrigin_t;
+
+int	FS_FOpenFileWrite( const char *filename, FILE** f );
+int	FS_Seek( FILE* f, long offset, int origin );
 int	FS_WriteFile( const void *buffer, int len, const char* filename );
-void 	FS_GetMaps ( void );
+int	FS_Write( const void *buffer, int len, FILE* f );
+void	FS_GetMaps ( void );
 void	FS_InitFilesystem (void);
 void	FS_SetGamedir (char *dir);
 char	*FS_Gamedir (void);
@@ -730,7 +746,7 @@ void	FS_ExecAutoexec (void);
 
 void	FS_GetMaps ( void );
 
-int	FS_FOpenFile (char *filename, FILE **file);
+int	FS_FOpenFile (const char *filename, FILE **file);
 void	FS_FCloseFile (FILE *f);
 // note: this can't be called from another DLL, due to MS libc issues
 
@@ -743,7 +759,7 @@ void	FS_Read (void *buffer, int len, FILE *f);
 
 void	FS_FreeFile (void *buffer);
 
-int		FS_CheckFile (char *path);
+int		FS_CheckFile (const char *path);
 
 void	FS_BuildFileList (char *files);
 char	*FS_NextScriptHeader( char *files, char **name, char **text );

@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <limits.h>
 
 // i18n support via gettext
 // needs to be activated via -DHAVE_GETTEXT
@@ -300,6 +301,9 @@ extern client_static_t	cls;
 extern	cvar_t	*cl_stereo_separation;
 extern	cvar_t	*cl_stereo;
 
+extern	cvar_t	*cl_aviFrameRate;
+extern	cvar_t	*cl_aviMotionJpeg;
+
 extern	cvar_t	*cl_gun;
 extern	cvar_t	*cl_add_blend;
 extern	cvar_t	*cl_add_lights;
@@ -478,6 +482,17 @@ void IN_Accumulate (void);
 
 void CL_ParseLayout (void);
 
+//
+// cl_sequence.c (avi stuff)
+//
+qboolean CL_OpenAVIForWriting( char *filename );
+void CL_TakeVideoFrame( void );
+void CL_WriteAVIVideoFrame( const byte *imageBuffer, int size );
+void CL_WriteAVIAudioFrame( const byte *pcmBuffer, int size );
+qboolean CL_CloseAVI( void );
+qboolean CL_VideoRecording( void );
+void CL_StopVideo_f( void );
+void CL_Video_f( void );
 
 //
 // cl_main

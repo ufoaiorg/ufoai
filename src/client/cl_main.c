@@ -63,6 +63,9 @@ cvar_t	*cl_show_tooltips;
 cvar_t	*cl_paused;
 cvar_t	*cl_timedemo;
 
+cvar_t	*cl_aviFrameRate;
+cvar_t	*cl_aviMotionJpeg;
+
 cvar_t	*lookspring;
 cvar_t	*lookstrafe;
 cvar_t	*sensitivity;
@@ -516,6 +519,10 @@ void CL_Disconnect (void)
 		fclose(cls.download);
 		cls.download = NULL;
 	}
+
+	// Stop recording any video
+	if( CL_VideoRecording( ) )
+		CL_CloseAVI( );
 
 	cls.state = ca_disconnected;
 }
@@ -1365,6 +1372,9 @@ void CL_InitLocal (void)
 	m_forward = Cvar_Get ("m_forward", "1", 0);
 	m_side = Cvar_Get ("m_side", "1", 0);
 
+	cl_aviFrameRate = Cvar_Get ("cl_aviFrameRate", "25", CVAR_ARCHIVE);
+	cl_aviMotionJpeg = Cvar_Get ("cl_aviMotionJpeg", "1", CVAR_ARCHIVE);
+
 	cl_fps = Cvar_Get ("cl_fps", "0", CVAR_ARCHIVE);
 	cl_shownet = Cvar_Get ("cl_shownet", "0", CVAR_ARCHIVE);
 	cl_showmiss = Cvar_Get ("cl_showmiss", "0", 0);
@@ -1446,6 +1456,9 @@ void CL_InitLocal (void)
 
 	Cmd_AddCommand ("seq_start", CL_SequenceStart_f );
 	Cmd_AddCommand ("seq_end", CL_SequenceEnd_f );
+
+	Cmd_AddCommand ("video", CL_Video_f );
+	Cmd_AddCommand ("stopvideo", CL_StopVideo_f );
 
 	//
 	// forward to server commands
@@ -1641,11 +1654,6 @@ void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info)
 }
 
 
-/*
-==================
-CL_Frame
-==================
-*/
 char *difficulty_names[] =
 {
 	"Chickenhearted",
@@ -1657,6 +1665,11 @@ char *difficulty_names[] =
 	"Insane"
 };
 
+/*
+==================
+CL_CvarCheck
+==================
+*/
 void CL_CvarCheck( void )
 {
 	int v;
@@ -1692,7 +1705,6 @@ void CL_CvarCheck( void )
 /*
 ==================
 CL_Frame
-
 ==================
 */
 #define NUM_DELTA_FRAMES	20
@@ -1723,6 +1735,20 @@ void CL_Frame (int msec)
 
 	// let the mouse activate or deactivate
 	IN_Frame ();
+
+	// if recording an avi, lock to a fixed fps
+	if ( CL_VideoRecording() && cl_aviFrameRate->value && msec) {
+		// save the current screen
+		if ( cls.state == ca_active )
+		{
+			CL_TakeVideoFrame();
+
+			// fixed time for next frame'
+			msec = (int)ceil( (1000.0f / cl_aviFrameRate->value) );
+			if (msec == 0)
+				msec = 1;
+		}
+	}
 
 	// frame rate calculation
 	if ( !(cls.framecount % NUM_DELTA_FRAMES) )

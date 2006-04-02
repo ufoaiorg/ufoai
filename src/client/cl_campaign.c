@@ -2414,7 +2414,7 @@ void CL_ParseAircraft( char *name, char **text )
 	ac = &aircraft[numAircraft++];
 	memset( ac, 0, sizeof(aircraft_t) );
 
-	Com_Printf("...found aircraft %s\n", name);
+	Com_DPrintf("...found aircraft %s\n", name);
 	strncpy( ac->title, name, MAX_VAR );
 	ac->status = AIR_HOME;
 

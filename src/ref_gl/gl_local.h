@@ -131,6 +131,19 @@ typedef struct image_s
 
 //===================================================================
 
+typedef struct {
+	int	width;
+	int	height;
+	byte	*captureBuffer;
+	byte	*encodeBuffer;
+	qboolean	motionJpeg;
+} videoFrameCommand_t;
+
+int SaveJPGToBuffer( byte *buffer, int quality, int image_width, int image_height, byte *image_buffer );
+void RE_TakeVideoFrame( int width, int height, byte *captureBuffer, byte *encodeBuffer, qboolean motionJpeg );
+const void *RB_TakeVideoFrameCmd( const void *data );
+
+//===================================================================
 
 typedef enum
 {

@@ -122,6 +122,7 @@ typedef struct routing_s
 	byte area[HEIGHT][WIDTH][WIDTH];
 	byte areaStored[HEIGHT][WIDTH][WIDTH];
 
+	// forbidden list
 	byte **fblist;
 	int  fblength;
 } routing_t;
@@ -2232,7 +2233,7 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 
 	tnode = &curTile->tnodes[node];
 	assert(tnode);
-
+#if 0
 	// FIXME: This causes trouble in pathfinding
 	//       this is also responsible for tracer(-quad) problems
 	if ( ! tnode->dist && tnode->type <= PLANE_Z
@@ -2248,7 +2249,7 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 	}
 	VectorCopy( start, tmpVec );
 	// END OF FIXME
-
+#endif
 	switch (tnode->type)
 	{
 	case PLANE_X:
@@ -2318,7 +2319,7 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 
 	tnode = &curTile->tnodes[node];
 	assert( tnode );
-
+#if 0
 	// FIXME: This causes trouble in pathfinding
 	//       this is also responsible for tracer(-quad) problems
 	if ( ! tnode->dist && tnode->type <= PLANE_Z
@@ -2334,7 +2335,7 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 	}
 	VectorCopy( start, tmpVec );
 	// END OF FIXME
-
+#endif
 	switch (tnode->type)
 	{
 	case PLANE_X:

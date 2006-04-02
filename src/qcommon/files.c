@@ -206,7 +206,7 @@ a seperate file.
 ===========
 */
 int file_from_pak = 0;
-int FS_FOpenFileSingle (char *filename, FILE **file)
+int FS_FOpenFileSingle (const char *filename, FILE **file)
 {
 	searchpath_t	*search;
 	char			netpath[MAX_OSPATH];
@@ -243,7 +243,7 @@ int FS_FOpenFileSingle (char *filename, FILE **file)
 			// look through all the pak file elements
 			pak = search->pack;
 			for (i=0 ; i<pak->numfiles ; i++)
-				if (!Q_strcasecmp (pak->files[i].name, filename))
+				if (!Q_strcasecmp (pak->files[i].name, (char*)filename))
 				{	// found it!
 					file_from_pak = 1;
 					Com_DPrintf ("PackFile: %s : %s\n",pak->filename, filename);
@@ -276,13 +276,39 @@ int FS_FOpenFileSingle (char *filename, FILE **file)
 	return -1;
 }
 
-int FS_FOpenFile (char *filename, FILE **file)
+/*
+=================
+FS_Seek
+
+=================
+*/
+int FS_Seek( FILE* f, long offset, int origin )
+{
+	int _origin;
+
+	switch( origin )
+	{
+		case FS_SEEK_CUR:
+			_origin = SEEK_CUR;
+			break;
+		case FS_SEEK_END:
+			_origin = SEEK_END;
+			break;
+		case FS_SEEK_SET:
+			_origin = SEEK_SET;
+			break;
+		default:
+			_origin = SEEK_CUR;
+			Sys_Error( _("Bad origin in FS_Seek\n") );
+			break;
+	}
+	return fseek( f, offset, _origin );
+}
+
+int FS_FOpenFile (const char *filename, FILE **file)
 {
 	int		result, len;
-	char	*name;
-
-	name = filename;
-	len = strlen( name );
+	len = strlen( filename );
 
 	// open file
 	result =  FS_FOpenFileSingle( filename, file );
@@ -295,6 +321,47 @@ int FS_FOpenFile (char *filename, FILE **file)
 }
 
 /*
+===========
+FS_SV_FOpenFileRead
+===========
+*/
+int FS_FOpenFileRead( const char *filename, FILE **f )
+{
+	char *ospath;
+	int l;
+
+	if ( ( l = FS_CheckFile( filename) ) > 0 )
+	{
+		// don't let sound stutter
+// 		S_ClearBuffer();
+
+		*f = fopen( ospath, "rb" );
+	}
+	else
+		*f = NULL;
+
+	return l;
+}
+
+
+/*
+===========
+FS_FOpenFileWrite
+===========
+*/
+int FS_FOpenFileWrite( const char *filename, FILE** f )
+{
+	int len;
+
+	len = FS_CheckFile( filename );
+	if ( len <= 0 )
+		*f = fopen( filename, "wb" );
+
+	return len;
+}
+
+
+/*
 =================
 FS_CheckFile
 
@@ -302,7 +369,7 @@ Just returns the filelength and -1 if the file wasn't found
 Won't print any errors
 =================
 */
-int FS_CheckFile (char *filename)
+int FS_CheckFile (const char *filename)
 {
 	int		result;
 	FILE	*file;
@@ -1428,12 +1495,59 @@ void FS_GetMaps ( void )
 
 /*
 =================
+FS_Write
+
+Properly handles partial writes
+=================
+*/
+int FS_Write( const void *buffer, int len, FILE* f )
+{
+	int		block, remaining;
+	int		written;
+	byte	*buf;
+	int		tries;
+
+	if ( !f )
+		return 0;
+
+	buf = (byte *)buffer;
+
+	remaining = len;
+	tries = 0;
+	while (remaining)
+	{
+		block = remaining;
+		written = fwrite (buf, 1, block, f);
+		if (written == 0) {
+			if (!tries) {
+				tries = 1;
+			} else {
+				Com_Printf( _("FS_Write: 0 bytes written\n") );
+				return 0;
+			}
+		}
+
+		if (written == -1) {
+			Com_Printf( _("FS_Write: -1 bytes written\n") );
+			return 0;
+		}
+
+		remaining -= written;
+		buf += written;
+	}
+// 	fflush( f );
+	return len;
+}
+
+
+/*
+=================
 FS_WriteFile
 
 Properly handles partial writes
 =================
 */
-int FS_WriteFile( const void *buffer, int len, const char* filename ) 
+int FS_WriteFile( const void *buffer, int len, const char* filename )
 {
 	int		block, remaining;
 	int		written;

@@ -191,4 +191,6 @@ channel_t *S_PickChannel(int entnum, int entchannel);
 // spatializes a channel
 void S_Spatialize(channel_t *ch);
 
+void S_ClearBuffer (void);
+
 #endif

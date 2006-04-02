@@ -339,7 +339,7 @@ typedef struct
 	void	(*BeginFrame)( float camera_separation );
 	void	(*EndFrame) (void);
 	void	(*AppActivate)( qboolean activate );
-
+	void	(*TakeVideoFrame)( int h, int w, byte* captureBuffer, byte *encodeBuffer, qboolean motionJpeg );
 } refexport_t;
 
 //
@@ -383,6 +383,7 @@ typedef struct
 
 	qboolean	(*Vid_GetModeInfo)( int *width, int *height, int mode );
 	void		(*Vid_NewWindow)( int width, int height );
+	void	(*CL_WriteAVIVideoFrame)( const byte *buffer, int size );
 } refimport_t;
 
 

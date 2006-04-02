@@ -149,6 +149,7 @@ void	VID_Init (void)
         ri.Cvar_Set = Cvar_Set;
 	ri.Cvar_SetValue = Cvar_SetValue;
         ri.Vid_GetModeInfo = VID_GetModeInfo;
+	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 //	ri.Malloc = Z_Malloc;
 //	ri.Free = Z_Free;
 

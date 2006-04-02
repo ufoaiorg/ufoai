@@ -1397,14 +1397,14 @@ void MN_DrawBase( void )
 			}
 
 			if ( image != NULL )
-				re.DrawNormPic( x, y, width*bvScale, height*bvScale, 0, 0, 0, 0, ALIGN_UL, true, image );
+				re.DrawNormPic( x, y, width*bvScale, height*bvScale, 0, 0, 0, 0, 0, false, image );
 			if ( statusImage != NULL )
 			{
 				re.DrawGetPicSize ( &width, &height, statusImage );
 				if ( width == -1 || height == -1 )
 					Com_Printf( _("Invalid picture dimension of %s\n"), statusImage );
 				else
-					re.DrawNormPic( x + (20 * bvScale) , y + (60 * bvScale), width*bvScale, height*bvScale, 0, 0, 0, 0, ALIGN_UL, true, statusImage );
+					re.DrawNormPic( x + (20 * bvScale) , y + (60 * bvScale), width*bvScale, height*bvScale, 0, 0, 0, 0, 0, false, statusImage );
 
 				statusImage = NULL;
 			}
@@ -1427,7 +1427,7 @@ void MN_DrawBase( void )
 		image = "base/highlight";
 		re.DrawNormPic( baseCurrent->posX[(int)mouseover[0]][(int)mouseover[1]][baseCurrent->baseLevel],
 				baseCurrent->posY[(int)mouseover[0]][(int)mouseover[1]][baseCurrent->baseLevel],
-				width*bvScale, height*bvScale, 0, 0, 0, 0, ALIGN_UL, true, image );
+				width*bvScale, height*bvScale, 0, 0, 0, 0, 0, false, image );
 	}
 }
 
