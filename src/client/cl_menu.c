@@ -1916,7 +1916,10 @@ void MN_DrawMenus( void )
 			} // if
 		} // for
 		if ( hover && cl_show_tooltips->value )
+		{
 			MN_Tooltip(hover, mx, my);
+			hover = NULL;
+		}
 	}
 	re.DrawColor( NULL );
 }

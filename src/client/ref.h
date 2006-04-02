@@ -365,7 +365,7 @@ typedef struct
 	int 	(*FS_WriteFile) ( const void *buffer, int len, const char* filename );
 	int		(*FS_LoadFile) (char *name, void **buf);
 	void	(*FS_FreeFile) (void *buf);
-	int		(*FS_CheckFile) (char *name);
+	int		(*FS_CheckFile) (const char *name);
 	char 	**(*FS_ListFiles)( char *findname, int *numfiles, unsigned musthave, unsigned canthave );
 
 	// dynamic memory allocator for things that need to be freed
