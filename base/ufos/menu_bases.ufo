@@ -342,6 +342,15 @@ menu aircraft
 		color	"0.5 0.5 0.5 1"
 	}
 
+	model dropship_wings
+	{
+		md2		"*cvar mn_aircraft_model_wings"
+		origin	"690 240 0"
+		angles	"-20 -40 120"
+		scale	"1.1 1.1 1.1"
+		color	"0.5 0.5 0.5 1"
+	}
+
 	string aircraft_name
 	{
 		string	"*cvar mn_aircraftname"

@@ -108,7 +108,7 @@ building intercept
 	max_workers	4
 	min_workers	1
 	worker_costs	10
-	onconstruct	"newaircraft interceptor;"
+	onconstruct	"newaircraft interceptor;aircraft_list;"
 	energy		50
 	build_time	5
 	varcosts	10
@@ -226,7 +226,7 @@ aircraft dropship
 	model_top	"models/objects/dropship_top.md2"
 	model_glass	"models/objects/dropship_glass.md2"
 	size	8
-	image	dropship
+	image	air_dropship
 }
 
 aircraft interceptor
@@ -238,5 +238,19 @@ aircraft interceptor
 	model_top	"models/aircrafts/fighter1_engines.md2"
 	model_glass	"models/aircrafts/fighter1_glass.md2"
 	size	1
-	image	interceptor
+	image	air_interceptor
 }
+
+aircraft ufo
+{
+	speed	18.0
+	name	"UFO"
+	type	ufo
+	model	"models/objects/alienship1_engines.md2"
+	model_top	"models/objects/alienship1_upper.md2"
+	model_glass	"models/objects/alienship1_hull.md2"
+	model_wings	"models/objects/alienship1_wings.md2"
+	size	8
+	image	air_ufo
+}
+
