@@ -1156,6 +1156,8 @@ typedef struct aircraft_s
 extern aircraft_t	aircraft[MAX_AIRCRAFT];
 extern int		numAircraft;
 
+void MN_MapCalcLine( vec2_t start, vec2_t end, mapline_t *line );
+
 typedef struct ccs_s
 {
 	equipDef_t		eCampaign, eMission, eMarket;
@@ -1185,17 +1187,20 @@ typedef struct ccs_s
 typedef enum mapAction_s
 {
 	MA_NONE,
-	MA_NEWBASE
+	MA_NEWBASE,	// build a new base
+	MA_INTERCEPT	// intercept TODO:
 } mapAction_t;
 
 typedef enum aircraftStatus_s
 {
 	AIR_NONE,
-	AIR_HOME,
-	AIR_IDLE,
-	AIR_TRANSIT,
-	AIR_DROP,
-	AIR_INTERCEPT
+	AIR_HOME,	// in homebase
+	AIR_IDLE,	// just sit there on geoscape
+	AIR_TRANSIT,	// moving
+	AIR_DROP,	// ready to drop down
+	AIR_INTERCEPT,	// ready to intercept
+	AIR_TRANSPORT,	// transporting from one base to another
+	AIR_RETURNING	// returning to homebase
 } aircraftStatus_t;
 
 extern	mission_t	missions[MAX_MISSIONS];

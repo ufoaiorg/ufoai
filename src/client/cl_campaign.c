@@ -318,8 +318,8 @@ void CL_StartAircraft ( void )
 	air = baseCurrent->aircraftCurrent;
 	if ( air->status < AIR_IDLE )
 	{
-		air->pos[0] = baseCurrent->pos[0]+DISTANCE;
-		air->pos[1] = baseCurrent->pos[1]+DISTANCE;
+		air->pos[0] = baseCurrent->pos[0]+2;
+		air->pos[1] = baseCurrent->pos[1]+2;
 	}
 	air->status = AIR_IDLE;
 	// TODO: Set pos = endpos
@@ -361,6 +361,12 @@ char* CL_AircraftStatusToName ( aircraft_t* air )
 			break;
 		case AIR_INTERCEPT:
 			return _("On inteception");
+			break;
+		case AIR_TRANSPORT:
+			return _("Transportmission");
+			break;
+		case AIR_RETURNING:
+			return _("Returning to homebase");
 			break;
 		default:
 			Com_Printf(_("Error: Unknown aircraft status for %s\n"), air->title );
@@ -416,6 +422,31 @@ void MN_PrevAircraft_f ( void )
 	{
 		Cvar_SetValue("mn_aircraft_id", (int)Cvar_VariableValue("mn_aircraft_id") - 1 );
 		CL_AircraftSelect();
+	}
+}
+
+/*
+======================
+CL_AircraftReturnToBase
+
+let the current aircraft return to base
+call this from baseview via "aircraft_return"
+======================
+*/
+void CL_AircraftReturnToBase ( void )
+{
+	aircraft_t* air;
+	if ( baseCurrent && baseCurrent->aircraftCurrent )
+	{
+		air = baseCurrent->aircraftCurrent;
+		if ( air->status != AIR_HOME )
+		{
+			MN_MapCalcLine( air->pos, air->homebase->pos, &air->route );
+			air->status = AIR_RETURNING;
+			air->time = 0;
+			air->point = 0;
+			CL_AircraftSelect();
+		}
 	}
 }
 
@@ -847,6 +878,10 @@ void CL_CampaignRunAircraft( int dt )
 				end = air->route.p[air->route.n-1];
 				air->pos[0] = end[0];
 				air->pos[1] = end[1];
+				if ( air->status == AIR_RETURNING )
+					air->status = AIR_HOME;
+				else
+					air->status = AIR_IDLE;
 				CL_CheckAircraft( air );
 				continue;
 			}
@@ -2022,6 +2057,7 @@ void CL_ResetCampaign( void )
 	Cmd_AddCommand( "mn_buy", CL_Buy );
 	Cmd_AddCommand( "mn_sell", CL_Sell );
 	Cmd_AddCommand( "mn_mapaction_reset", CL_MapActionReset );
+
 	Cmd_AddCommand( "aircraft_start", CL_StartAircraft );
 	Cmd_AddCommand( "aircraftlist", CL_ListAircraft_f );
 	Cmd_AddCommand( "aircraft_select", CL_AircraftSelect );
@@ -2029,6 +2065,7 @@ void CL_ResetCampaign( void )
 	Cmd_AddCommand( "mn_next_aircraft", MN_NextAircraft_f );
 	Cmd_AddCommand( "mn_prev_aircraft", MN_PrevAircraft_f );
 	Cmd_AddCommand( "newaircraft", CL_NewAircraft_f );
+	Cmd_AddCommand( "aircraft_return", CL_AircraftReturnToBase );
 
 	re.LoadTGA( "pics/menu/map_mask.tga", &maskPic, &maskWidth, &maskHeight );
 	if ( maskPic ) Com_Printf( _("Map mask loaded.\n") );

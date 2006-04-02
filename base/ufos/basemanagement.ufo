@@ -219,7 +219,7 @@ production mind_p
 
 aircraft dropship
 {
-	speed	60.0
+	speed	10.0
 	name	"Dropship"
 	type	transporter
 	model	"models/objects/dropship.md2"
@@ -230,7 +230,7 @@ aircraft dropship
 
 aircraft interceptor
 {
-	speed	80.0
+	speed	20.0
 	name	"Interceptor"
 	type	interceptor
 	model	"models/aircrafts/fighter1_main.md2"

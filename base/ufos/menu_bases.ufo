@@ -393,6 +393,17 @@ menu aircraft
 		click	{ cmd "mn_next_aircraft" }
 	}
 
+	pic aircraft_return
+	{
+		tooltip	"Call back"
+		image	menu/buy_buttons1
+		pos	"600 410"
+		mousefx true
+		texl	"0 0"
+		texh	"16 16"
+		click	{ cmd "aircraft_return" }
+	}
+
 	func init
 	{
 		cmd "aircraft_init;aircraft_select"
