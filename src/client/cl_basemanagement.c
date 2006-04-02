@@ -1602,6 +1602,10 @@ void MN_SelectBase( void )
 }
 
 
+// FIXME: This value is in menu_geoscape, too
+//       make this variable??
+#define BASE_COSTS 100000
+
 /*
 =================
 MN_BuildBase
@@ -1613,21 +1617,20 @@ void MN_BuildBase( void )
 {
 	assert(baseCurrent);
 
-	CL_NewBase( newBasePos );
-
-	if ( ccs.numBases >= 1 )
+	if ( ccs.credits - BASE_COSTS > 0 )
 	{
-		baseCurrent->id = ccs.numBases-1;
-		baseCurrent->founded = true;
-		mapAction = MA_NONE;
-		// FIXME: This value is in menu_geoscape, too
-		//       make this variable??
-		CL_UpdateCredits( ccs.credits - 100000 );
-		strncpy( baseCurrent->title, Cvar_VariableString( "mn_basename" ), MAX_VAR );
-		Cbuf_AddText( "mn_push bases\n" );
+		if ( CL_NewBase( newBasePos ) )
+		{
+			baseCurrent->id = ccs.numBases-1;
+			baseCurrent->founded = true;
+			mapAction = MA_NONE;
+			CL_UpdateCredits( ccs.credits - BASE_COSTS );
+			strncpy( baseCurrent->title, Cvar_VariableString( "mn_basename" ), MAX_VAR );
+			Cbuf_AddText( "mn_push bases\n" );
+			return;
+		}
 	}
-	else
-		MN_PopMenu( false );
+	MN_PopMenu( false );
 }
 
 

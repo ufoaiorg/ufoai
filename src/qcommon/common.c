@@ -1379,8 +1379,9 @@ void Qcommon_Init (int argc, char **argv)
 	CL_Init ();
 
 	Com_ParseScripts ();
+#ifndef DEDICATED_ONLY
 	RS_InitTree ();
-
+#endif
 	// add + commands from command line
 	if (!Cbuf_AddLateCommands ())
 	{	// if the user didn't give any commands, run default action
@@ -1396,8 +1397,10 @@ void Qcommon_Init (int argc, char **argv)
 		SCR_EndLoadingPlaque ();
 	}
 
+#ifndef DEDICATED_ONLY
 	if ( (int)Cvar_VariableValue("cl_precachemenus") )
 		MN_PrecacheMenus();
+#endif
 
 	Com_Printf ("====== UFO Initialized ======\n\n");
 }

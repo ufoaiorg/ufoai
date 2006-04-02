@@ -22,6 +22,7 @@ base_t		*baseCurrent;
 // TODO: Save me
 aircraft_t	aircraft[MAX_AIRCRAFT];
 int		numAircraft;
+aircraft_t	*interceptAircraft;
 
 int		mapAction;
 int		gameTimeScale;
@@ -499,6 +500,8 @@ void CL_NewAircraft ( base_t* base, char* name )
 		if ( ! strcmp(air->title, name) )
 		{
 			air->homebase = base;
+			air->pos[0] = base->pos[0];
+			air->pos[1] = base->pos[1];
 			base->aircraft[base->numAircraftsInBase++] = air;
 			// first aircraft is default aircraft
 			if ( ! base->aircraftCurrent )
@@ -528,7 +531,7 @@ void CL_NewAircraft ( base_t* base, char* name )
 CL_NewBase
 ======================
 */
-void CL_NewBase( vec2_t pos )
+qboolean CL_NewBase( vec2_t pos )
 {
 	int x, y;
 	byte *color;
@@ -544,7 +547,7 @@ void CL_NewBase( vec2_t pos )
 	if ( MapIsWater(color) )
 	{
 		MN_Popup( _("Notice"), _("Could not set up your base at this location") );
-		return;
+		return false;
 	} else if ( MapIsDesert(color) ){
 		baseCurrent->mapChar='d';
 	} else if ( MapIsArctic(color) ){
@@ -564,6 +567,8 @@ void CL_NewBase( vec2_t pos )
 
 	// set up the aircraft
 	CL_NewAircraft( baseCurrent, "dropship" );
+
+	return true;
 }
 
 
@@ -765,6 +770,67 @@ void CL_CampaignExecute( setState_t *set )
 	CL_CampaignActivateStageSets( set->stage );
 }
 
+char	aircraftListText[1024];
+
+void CL_SelectAircraft_f ( void )
+{
+	int num;
+
+	if ( Cmd_Argc() < 2 )
+	{
+		Com_Printf( _("Usage: ships_click <num>\n") );
+		return;
+	}
+
+	if ( ! selMis )
+	{
+		Com_DPrintf( _("No mission selected - can't start aircraft with no mission selected'\n") );
+		return;
+	}
+
+	num = atoi( Cmd_Argv( 1 ) );
+	if ( num >= 0 && num < numAircraft )
+	{
+		interceptAircraft = &aircraft[num];
+		Com_DPrintf(_("Selected aircraft: %s\n"), interceptAircraft->name );
+
+		MN_MapCalcLine( interceptAircraft->pos, selMis->def->pos, &interceptAircraft->route );
+		interceptAircraft->status = AIR_TRANSIT;
+		interceptAircraft->time = 0;
+		interceptAircraft->point = 0;
+		baseCurrent = interceptAircraft->homebase;
+		baseCurrent->aircraftCurrent = interceptAircraft;
+		CL_AircraftSelect();
+		MN_PopMenu(false);
+	}
+}
+
+/*
+======================
+CL_BuildingAircraftList_f
+
+Builds the aircraft list for textfield with id
+TEXT_INTERCEPT_LIST
+======================
+*/
+void CL_BuildingAircraftList_f ( void )
+{
+	char	*s;
+	int	i;
+	aircraft_t*	air;
+	memset( aircraftListText, 0, sizeof(aircraftListText) );
+	for ( i = 0; i < numAircraft; i++ )
+	{
+		air = &aircraft[i];
+		if ( !air->homebase )
+			continue;
+
+		s = va("%s\t%s\t%s\n", air->name, CL_AircraftStatusToName( air ), air->homebase->title );
+		strcat( aircraftListText, s );
+	}
+
+	menuText[TEXT_INTERCEPT_LIST] = aircraftListText;
+}
 
 char text[MAX_MENUTEXTLEN];
 /*
@@ -786,7 +852,14 @@ void CL_CampaignCheckEvents( void )
 				if ( set->active && set->event.day && Date_LaterThan( ccs.date, set->event ) )
 				{
 					if ( set->def->numMissions )
+					{
 						CL_CampaignAddMission( set );
+						if ( mapAction == MA_NONE )
+						{
+							mapAction = MA_INTERCEPT;
+							CL_BuildingAircraftList_f();
+						}
+					}
 					else
 						CL_CampaignExecute( set );
 				}
@@ -1379,6 +1452,7 @@ void CL_GameLoad( char *filename )
 
 	// reset
 	selMis = NULL;
+	interceptAircraft = NULL;
 	memset( &ccs, 0, sizeof( ccs_t ) );
 
 	// read date
@@ -2066,6 +2140,7 @@ void CL_ResetCampaign( void )
 	Cmd_AddCommand( "mn_prev_aircraft", MN_PrevAircraft_f );
 	Cmd_AddCommand( "newaircraft", CL_NewAircraft_f );
 	Cmd_AddCommand( "aircraft_return", CL_AircraftReturnToBase );
+	Cmd_AddCommand( "aircraft_list", CL_BuildingAircraftList_f );
 
 	re.LoadTGA( "pics/menu/map_mask.tga", &maskPic, &maskWidth, &maskHeight );
 	if ( maskPic ) Com_Printf( _("Map mask loaded.\n") );

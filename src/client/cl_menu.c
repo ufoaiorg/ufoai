@@ -1043,6 +1043,10 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 		MN_PushMenu( "popup_newbase" );
 		return;
 	}
+	else if ( mapAction == MA_INTERCEPT && ! interceptAircraft && selMis )
+	{
+		MN_PushMenu( "popup_intercept" );
+	}
 
 	// mission selection
 	for ( i = 0, ms = ccs.mission; i < ccs.numMissions; i++, ms++ )
@@ -1209,7 +1213,12 @@ void MN_RightClick( int x, int y )
 
 			// found a node -> do actions
 			if ( node->type == MN_BASEMAP ) mouseSpace = MS_SHIFTBASEMAP;
-			else if ( node->type == MN_MAP ) mouseSpace = MS_SHIFTMAP;
+			else if ( node->type == MN_MAP )
+			{
+				selMis = NULL;
+				interceptAircraft = NULL;
+				mouseSpace = MS_SHIFTMAP;
+			}
 			else MN_ExecuteActions( menu, node->rclick );
 		}
 
@@ -1615,7 +1624,7 @@ void MN_DrawMenus( void )
 						char textCopy[MAX_MENUTEXTLEN];
 						int len;
 						char *pos, *tab1, *tab2, *end;
-						int  y, line;
+						int  y, line, x;
 
 						strncpy( textCopy, menuText[node->num], MAX_MENUTEXTLEN );
 						len = strlen(textCopy);
@@ -1632,6 +1641,7 @@ void MN_DrawMenus( void )
 						line = 0;
 						do {
 							line++;
+							x = node->pos[0];
 							end = strchr( pos, '\n' );
 							if ( !end ) break;
 							*end = 0;
@@ -1641,23 +1651,33 @@ void MN_DrawMenus( void )
 
 							if ( node->mousefx && line == mouseOver ) re.DrawColor( color );
 
-							re.DrawPropString( font, ALIGN_UL, node->pos[0], y, pos );
-							if ( tab1 )
+							re.DrawPropString( font, ALIGN_UL, x, y, pos );
+							while ( tab1 )
 							{
 								*tab1 = '\t';
 								tab2 = strchr( tab1+1,'\t' );
 								if ( tab2 )
 								{
+									x += node->texh[1];
 									*tab2 = 0;
-									re.DrawPropString( font, node->align, node->texh[1], y, tab1+1 );
+									re.DrawPropString( font, node->align, x, y, tab1+1 );
+									x += node->texh[1];
 									*tab2 = '\t';
-									re.DrawPropString( font, ALIGN_UR, node->pos[0] + node->size[0], y, tab2+1 );
+									re.DrawPropString( font, node->align, x, y, tab2+1 );
 								}
 								else
 								{
 									if ( !node->texh[1] ) re.DrawPropString( font, ALIGN_UR, node->pos[0] + node->size[0], y, tab1+1 );
-									else re.DrawPropString( font, node->align, node->texh[1], y, tab1+1 );
+									else
+									{
+										x += node->texh[1];
+										re.DrawPropString( font, node->align, x, y, tab1+1 );
+									}
 								}
+								if ( tab2 )
+									tab1 = strchr( tab2+1,'\t' );
+								else
+									tab1 = NULL;
 							}
 							*end = '\n';
 
@@ -1863,6 +1883,9 @@ void MN_DrawMenus( void )
 						{
 						case MA_NEWBASE:
 							menuText[TEXT_STANDARD] = _("Select the desired location of the\nnew base on the map.\n");
+							break;
+						case MA_INTERCEPT:
+							menuText[TEXT_STANDARD] = _("Select ufo or mission on map\n");
 							break;
 						}
 					}

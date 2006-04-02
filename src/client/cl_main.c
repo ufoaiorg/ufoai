@@ -1437,7 +1437,12 @@ void CL_InitLocal (void)
 	Cmd_AddCommand ("cmd", CL_ForwardToServer_f);
 	Cmd_AddCommand ("pause", CL_Pause_f);
 	Cmd_AddCommand ("pingservers", CL_PingServers_f);
+
+	// text id is servers in menu_multiplayer.ufo
 	Cmd_AddCommand ("servers_click", CL_ConnectList_f);
+
+	// text id is ships in menu_geoscape.ufo
+	Cmd_AddCommand ("ships_click", CL_SelectAircraft_f);
 
 	Cmd_AddCommand ("userinfo", CL_Userinfo_f);
 	Cmd_AddCommand ("snd_restart", CL_Snd_Restart_f);

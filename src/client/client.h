@@ -1155,8 +1155,11 @@ typedef struct aircraft_s
 
 extern aircraft_t	aircraft[MAX_AIRCRAFT];
 extern int		numAircraft;
+extern aircraft_t	*interceptAircraft;
 
 void MN_MapCalcLine( vec2_t start, vec2_t end, mapline_t *line );
+void CL_SelectAircraft_f ( void );
+void CL_BuildingAircraftList_f ( void );
 
 typedef struct ccs_s
 {
@@ -1226,7 +1229,7 @@ void CL_ResetCampaign( void );
 void CL_DateConvert( date_t *date, int *day, int *month );
 void CL_CampaignRun( void );
 void CL_GameTimeStop( void );
-void CL_NewBase( vec2_t pos );
+qboolean CL_NewBase( vec2_t pos );
 void CL_ParseMission( char *name, char **text );
 void CL_ParseStage( char *name, char **text );
 void CL_ParseCampaign( char *name, char **text );
@@ -1255,8 +1258,9 @@ typedef enum
 	TEXT_RESEARCH_INFO,
 	TEXT_POPUP,
 	TEXT_POPUP_INFO,
+	TEXT_INTERCEPT_LIST,
 
- MAX_MENUTEXTS
+	MAX_MENUTEXTS
 } texts_t;
 
 qboolean MN_CursorOnMenu( int x, int y );
