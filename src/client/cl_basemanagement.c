@@ -2117,3 +2117,17 @@ void CL_UpdateBaseData( void )
 	CL_CheckResearchStatus();
 }
 
+/*==========================
+B_GetBase
+==========================*/
+base_t* B_GetBase ( int id )
+{
+	int i;
+
+	for ( i = 0; i < MAX_BASES; i++ )
+	{
+		if ( bmBases[i].id == id )
+			return &bmBases[i];
+	}
+	return NULL;
+}

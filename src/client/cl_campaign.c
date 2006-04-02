@@ -954,11 +954,14 @@ void CL_CheckAircraft ( aircraft_t* air )
 		case AIR_INTERCEPT:
 			air->status = AIR_INTERCEPT;
 			break;
+		case AIR_TRANSPORT:
 		case AIR_TRANSIT:
 		case AIR_IDLE:
 			air->status = AIR_IDLE;
 			break;
 		case AIR_NONE:
+			break;
+		case AIR_RETURNING:
 		case AIR_HOME:
 			break;
 		default:
@@ -969,6 +972,8 @@ void CL_CheckAircraft ( aircraft_t* air )
 /*
 ======================
 CL_CampaignRunAircraft
+
+TODO: Fuel
 ======================
 */
 void CL_CampaignRunAircraft( int dt )
@@ -1250,6 +1255,96 @@ void CL_GameNew( void )
 	RS_InitTree ();
 }
 
+/*
+======================
+CL_SaveAircraft
+======================
+*/
+void AIR_SaveAircraft( sizebuf_t *sb )
+{
+	int i;
+	aircraft_t* air;
+	MSG_WriteByte( sb, numAircraft );
+	for ( i = 0, air = aircraft; i < numAircraft; i++, air++ )
+	{
+		MSG_WriteString( sb, air->title );
+		MSG_WriteFloat( sb, air->pos[0] );
+		MSG_WriteFloat( sb, air->pos[1] );
+		MSG_WriteByte( sb, air->status );
+		MSG_WriteLong( sb, air->fuel );
+		MSG_WriteLong( sb, air->size );
+		MSG_WriteLong( sb, air->speed );
+		MSG_WriteLong( sb, air->homebase->id );
+		MSG_WriteLong( sb, air->point );
+		MSG_WriteLong( sb, air->time );
+		SZ_Write( sb, &air->route, sizeof(mapline_t) );
+	}
+}
+
+/*
+======================
+AIR_FindAircraft
+======================
+*/
+aircraft_t* AIR_FindAircraft ( char* aircraftName )
+{
+	int i;
+	for ( i = 0; i < numAircraft; i++ )
+	{
+		if ( !strcmp(aircraft[i].title, aircraftName) )
+			return &aircraft[i];
+	}
+	return NULL;
+}
+
+/*
+======================
+CL_SaveAircraft
+======================
+*/
+void AIR_LoadAircraft ( sizebuf_t *sb, int version )
+{
+	int i, n;
+	aircraft_t* air;
+	if ( version >= 4 )
+	{
+		n = MSG_ReadByte( sb );
+		for ( i = 0; i < n; i++ )
+		{
+			air = AIR_FindAircraft( MSG_ReadString(sb) );
+			if ( air )
+			{
+				air->pos[0] = MSG_ReadFloat( sb );
+				air->pos[1] = MSG_ReadFloat( sb );
+				air->status = MSG_ReadByte( sb );
+				air->fuel = MSG_ReadLong( sb );
+				air->size = MSG_ReadLong( sb );
+				air->speed = MSG_ReadLong( sb );
+				air->homebase = B_GetBase( MSG_ReadLong( sb ) );
+				air->point = MSG_ReadLong( sb );
+				air->time = MSG_ReadLong( sb );
+				memcpy( &air->route, sb->data + sb->readcount, sizeof(mapline_t) );
+				sb->readcount += sizeof(mapline_t);
+			}
+			else
+			{
+				Com_Printf(_("Savefile is corrupted or aircraft does not exists any longer\n"));
+				// try to read the values and continue with
+				// loader the other aircraft
+				MSG_ReadFloat( sb );	//pos[0]
+				MSG_ReadFloat( sb );	//pos[1]
+				MSG_ReadByte( sb );	//status
+				MSG_ReadLong( sb );	//fuel
+				MSG_ReadLong( sb );	//size
+				MSG_ReadLong( sb );	//speed
+				MSG_ReadLong( sb );	//homebase
+				MSG_ReadLong( sb );	//point
+				MSG_ReadLong( sb );	//time
+				sb->readcount += sizeof(mapline_t);	//route
+			}
+		}
+	}
+}
 
 /*
 ======================
@@ -1260,7 +1355,7 @@ CL_GameSave
 #define MAX_COMMENTLENGTH	32
 
 #ifndef SAVE_FILE_VERSION
-#define SAVE_FILE_VERSION 3
+#define SAVE_FILE_VERSION 4
 #endif
 
 void CL_GameSave( char *filename, char *comment )
@@ -1310,6 +1405,8 @@ void CL_GameSave( char *filename, char *comment )
 
 	// store bases
 	B_SaveBases( &sb );
+
+	AIR_SaveAircraft( &sb );
 
 	// store techs
 	RS_SaveTech( &sb );
@@ -1507,6 +1604,8 @@ void CL_GameLoad( char *filename )
 
 	// load bases
 	B_LoadBases( &sb, version );
+
+	AIR_LoadAircraft( &sb, version );
 
 	// load techs
 	RS_LoadTech( &sb, version );
@@ -2580,6 +2679,8 @@ value_t aircraft_vals[] =
 	{ "speed",	V_FLOAT,	AIRFS( speed ) },
 	{ "name",	V_STRING,	AIRFS( name ) },
 	{ "size",	V_INT,	AIRFS( size ) },
+	{ "fuel",	V_INT,	AIRFS( fuel ) },
+	{ "fuelsize",	V_INT,	AIRFS( fuelSize ) },
 	{ "image",	V_STRING,	AIRFS( image ) },
 	{ "model",	V_STRING,	AIRFS( model ) },
 	{ "model_top",	V_STRING,	AIRFS( model_top ) },

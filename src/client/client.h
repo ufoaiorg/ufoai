@@ -1004,6 +1004,7 @@ extern	int   numEmployees;
 
 void CL_UpdateBaseData( void );
 int B_HowManyPeopleInBase2 ( base_t *base, int location );
+base_t* B_GetBase ( int id );
 
 // needed to calculate the chosen building in cl_menu.c
 int picWidth, picHeight;
@@ -1137,23 +1138,25 @@ typedef enum
 
 typedef struct aircraft_s
 {
-	char	name[MAX_VAR];
-	char	title[MAX_VAR];
-	char	image[MAX_VAR];
+	char	name[MAX_VAR];	// translateable name
+	char	title[MAX_VAR];	// internal id
+	char	image[MAX_VAR];	// image on geoscape
 	aircraftType_t	type;
-	int		status;
+	int		status;	// see aircraftStatus_t
 	float		speed;
-	int	size;
-	vec2_t	pos;
+	int	fuel;	// actual fuel
+	int	fuelSize;	// max fuel
+	int	size;	// how many soldiers max
+	vec2_t	pos;	// actual pos on geoscape
 	int		point;
 	int		time;
-	int	teamSize;
+	int	teamSize;	// how many soldiers on board
 	char	model[MAX_VAR];
 	char	model_top[MAX_VAR];
 	char	model_glass[MAX_VAR];
 	char	model_wings[MAX_VAR];
 	mapline_t route;
-	base_t*	homebase;
+	base_t*	homebase;	// pointer to homebase
 } aircraft_t;
 
 extern aircraft_t	aircraft[MAX_AIRCRAFT];
