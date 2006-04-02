@@ -948,6 +948,8 @@ void CL_CheckAircraft ( aircraft_t* air )
 			if (air->status != AIR_DROP )
 			{
 				air->status = AIR_DROP;
+				if ( ! interceptAircraft )
+					interceptAircraft = air;
 				MN_PushMenu( "popup_intercept_ready" );
 			}
 			break;
@@ -1928,9 +1930,13 @@ TODO: Implement me
 void CL_GameAutoGo( void )
 {
 	mission_t	*mis;
+	int	won, i;
 
-	if ( !curCampaign || !selMis )
+	if ( !curCampaign || !selMis || !interceptAircraft )
+	{
+		Com_Printf(_("No update after automission\n"));
 		return;
+	}
 
 	// start the map
 	mis = selMis->def;
@@ -1942,14 +1948,22 @@ void CL_GameAutoGo( void )
 
 	MN_PopMenu(false);
 
-	CL_CampaignRemoveMission( selMis );
+	won = mis->aliens > interceptAircraft->size ? 0 : 1;
 
-/*	Cvar_SetValue( "ai_numaliens", mis->aliens );
-	Cvar_SetValue( "ai_numcivilians", mis->civilians );
-	Cvar_Set( "ai_alien", mis->alienTeam );
-	Cvar_Set( "ai_civilian", mis->civTeam );
-	Cvar_Set( "ai_equipment", mis->alienEquipment );*/
-	// TODO:
+	// give reward
+	CL_UpdateCredits( ccs.credits+ccs.reward );
+
+	// add recruits
+	if ( won && mis->recruits )
+		for ( i = 0; i < mis->recruits; i++ )
+			CL_GenerateCharacter( curCampaign->team );
+
+	// campaign effects
+	selMis->cause->done++;
+	if ( selMis->cause->done >= selMis->cause->def->quota )
+		CL_CampaignExecute( selMis->cause );
+
+	CL_CampaignRemoveMission( selMis );
 
 	CL_MapActionReset();
 }
@@ -2227,7 +2241,7 @@ void CL_GameResultsCmd( void )
 	// check for win
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( "Usage: game_results <won>\n" );
+		Com_Printf( _("Usage: game_results <won>\n") );
 		return;
 	}
 	won = atoi( Cmd_Argv( 1 ) );
@@ -2283,8 +2297,16 @@ void CL_MapActionReset( void )
 	if ( ccs.numBases )
 		mapAction = MA_NONE;
 
+	if ( interceptAircraft )
+	{
+		if ( ! selMis )
+		{
+			baseCurrent->aircraftCurrent = interceptAircraft;
+			CL_AircraftReturnToBase();
+		}
+		interceptAircraft = NULL; // reset selected aircraft
+	}
 	selMis = NULL; // reset selected mission
-	interceptAircraft = NULL; // reset selected aircraft
 }
 
 

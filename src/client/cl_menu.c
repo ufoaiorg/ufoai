@@ -1899,7 +1899,8 @@ void MN_DrawMenus( void )
 							menuText[TEXT_STANDARD] = _("Select the desired location of the\nnew base on the map.\n");
 							break;
 						case MA_INTERCEPT:
-							menuText[TEXT_STANDARD] = _("Select ufo or mission on map\n");
+							if ( ! selMis )
+								menuText[TEXT_STANDARD] = _("Select ufo or mission on map\n");
 							break;
 						}
 					}

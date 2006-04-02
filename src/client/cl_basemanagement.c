@@ -1630,7 +1630,6 @@ void MN_BuildBase( void )
 			return;
 		}
 	}
-	MN_PopMenu( false );
 }
 
 
