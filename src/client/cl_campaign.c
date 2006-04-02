@@ -1875,7 +1875,7 @@ void CL_GameGo( void )
 	else
 	if ( ! mis->active && (int)Cvar_VariableValue("maxclients") == 1 )
 	{
-		MN_Popup( _("Note"), _("Your dropship is not near the landingzone") );
+		//MN_Popup( _("Note"), _("Your dropship is not near the landingzone") );
 		return;
 	}
 
@@ -1942,7 +1942,7 @@ void CL_GameAutoGo( void )
 	mis = selMis->def;
 	if ( ! mis->active )
 	{
-		MN_Popup( _("Note"), _("Your dropship is not near the landingzone") );
+		//MN_Popup( _("Note"), _("Your dropship is not near the landingzone") );
 		return;
 	}
 
