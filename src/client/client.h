@@ -374,6 +374,8 @@ extern	cvar_t	*s_system;
 
 extern	cvar_t	*confirm_actions;
 
+extern cvar_t	*cl_precachemenus;
+
 typedef struct
 {
 	int		key;				// so entities can reuse same entry

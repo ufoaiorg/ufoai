@@ -95,6 +95,8 @@ cvar_t	*mn_lastsave;
 cvar_t	*difficulty;
 cvar_t	*confirm_actions;
 
+cvar_t	*cl_precachemenus;
+
 //
 // userinfo
 //
@@ -1366,6 +1368,8 @@ void CL_InitLocal (void)
 	lookstrafe = Cvar_Get ("lookstrafe", "0", CVAR_ARCHIVE);
 	sensitivity = Cvar_Get ("sensitivity", "2", CVAR_ARCHIVE);
 	cl_markactors = Cvar_Get ("cl_markactors", "1", CVAR_ARCHIVE);
+
+	cl_precachemenus = Cvar_Get ("cl_precachemenus", "0", CVAR_ARCHIVE);
 
 	m_pitch = Cvar_Get ("m_pitch", "0.022", CVAR_ARCHIVE);
 	m_yaw = Cvar_Get ("m_yaw", "0.022", 0);

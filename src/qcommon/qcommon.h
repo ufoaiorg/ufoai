@@ -909,6 +909,7 @@ void CL_ParseScriptSecond (char *type, char *name, char **text);
 int  CL_GetModelInTeam ( char *team, char *body, char *head );
 void Con_Print (char *text);
 void SCR_BeginLoadingPlaque (void);
+void MN_PrecacheMenus( void );
 
 void SV_Init (void);
 void SV_Shutdown (char *finalmsg, qboolean reconnect);

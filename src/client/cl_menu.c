@@ -354,7 +354,7 @@ float MN_GetReferenceFloat( menu_t *menu, void *ref )
 				return 0.0;
 
 			// get the string
-			if ( val->ofs > 0.0 )
+			if ( val->ofs > 0 )
 				return *(float *)((byte *)refNode + val->ofs);
 			else
 				return *(float *)refNode->data[-val->ofs];
@@ -1456,6 +1456,52 @@ void MN_Tooltip ( menuNode_t* node, int x, int y )
 		re.DrawPropString("f_small", 0, x, y, _(tooltip) );
 		re.DrawColor( NULL );
 	}
+}
+
+/*
+=================
+MN_PrecacheMenus
+=================
+*/
+void MN_PrecacheMenus( void )
+{
+	int i;
+	menu_t* menu;
+	menuNode_t* node;
+	char	*ref;
+	char	source[MAX_VAR];
+
+	Com_Printf(_("...precaching %i menus\n"), numMenus);
+
+	for ( i = 0; i < numMenus; i++ )
+	{
+		menu = &menus[i];
+		for ( node = menu->firstNode; node; node = node->next )
+		{
+			if ( !node->invis && node->data[0] )
+			{
+				ref = MN_GetReferenceString( menu, node->data[0] );
+				if ( !ref )
+				{
+					// bad reference
+					node->invis = true;
+					Com_Printf( "MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data );
+					continue;
+				}
+				strncpy( source, ref, MAX_VAR );
+				switch ( node->type )
+				{
+					case MN_PIC:
+						re.RegisterPic( ref );
+						break;
+					case MN_MODEL:
+						re.RegisterModel( source );
+						break;
+				}
+			}
+		}
+	}
+// int			numNodes;
 }
 
 /*
