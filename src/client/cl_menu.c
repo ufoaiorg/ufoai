@@ -1056,6 +1056,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 		if ( x >= msx-8 && x <= msx+8 && y >= msy-8 && y <= msy+8 )
 		{
 			selMis = ms;
+			mapAction = MA_INTERCEPT;
 			return;
 		}
 	}
@@ -1152,6 +1153,16 @@ void MN_TextClick( menuNode_t *node, int mouseOver )
 
 /*
 =================
+MN_TextRightClick
+=================
+*/
+void MN_TextRightClick( menuNode_t *node, int mouseOver )
+{
+	Cbuf_AddText( va( "%s_rclick %i\n", node->name, mouseOver-1 ) );
+}
+
+/*
+=================
 MN_Click
 =================
 */
@@ -1219,6 +1230,7 @@ void MN_RightClick( int x, int y )
 				interceptAircraft = NULL;
 				mouseSpace = MS_SHIFTMAP;
 			}
+			else if ( node->type == MN_TEXT ) MN_TextRightClick( node, mouseOver );
 			else MN_ExecuteActions( menu, node->rclick );
 		}
 
@@ -1400,7 +1412,9 @@ void MN_DrawMapMarkers( menuNode_t *node )
 		{
 			menuText[TEXT_STANDARD] = ms->def->text;
 			if ( selMis->def->active )
+			{
 				re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "circleactive" );
+			}
 			else
 				re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "circle" );
 
@@ -1424,7 +1438,7 @@ void MN_DrawMapMarkers( menuNode_t *node )
 		{
 			if ( !MN_MapToScreen( node, air->pos, &x, &y ) )
 				continue;
-			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, "aircraft" );
+			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, air->image );
 
 			if ( air->status >= AIR_TRANSIT )
 			{

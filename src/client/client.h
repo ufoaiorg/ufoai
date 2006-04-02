@@ -1131,13 +1131,15 @@ typedef struct mapline_s
 typedef enum
 {
 	AIRCRAFT_TRANSPORTER,
-	AIRCRAFT_INTERCEPTOR
+	AIRCRAFT_INTERCEPTOR,
+	AIRCRAFT_UFO
 } aircraftType_t;
 
 typedef struct aircraft_s
 {
 	char	name[MAX_VAR];
 	char	title[MAX_VAR];
+	char	image[MAX_VAR];
 	aircraftType_t	type;
 	int		status;
 	float		speed;
@@ -1149,6 +1151,7 @@ typedef struct aircraft_s
 	char	model[MAX_VAR];
 	char	model_top[MAX_VAR];
 	char	model_glass[MAX_VAR];
+	char	model_wings[MAX_VAR];
 	mapline_t route;
 	base_t*	homebase;
 } aircraft_t;
@@ -1159,7 +1162,9 @@ extern aircraft_t	*interceptAircraft;
 
 void MN_MapCalcLine( vec2_t start, vec2_t end, mapline_t *line );
 void CL_SelectAircraft_f ( void );
+void CL_OpenAircraft_f ( void );
 void CL_BuildingAircraftList_f ( void );
+void CL_MapActionReset( void );
 
 typedef struct ccs_s
 {

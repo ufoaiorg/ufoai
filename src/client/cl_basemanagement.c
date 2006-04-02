@@ -1561,7 +1561,7 @@ void MN_SelectBase( void )
 {
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: select_base <baseID>\n") );
+		Com_Printf( _("Usage: mn_select_base <baseID>\n") );
 		return;
 	}
 	ccs.actualBaseID = atoi( Cmd_Argv( 1 ) );

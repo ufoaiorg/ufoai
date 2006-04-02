@@ -480,6 +480,7 @@ void CL_AircraftSelect ( void )
 	Cvar_Set( "mn_aircraft_model", air->model );
 	Cvar_Set( "mn_aircraft_model_top", air->model_top );
 	Cvar_Set( "mn_aircraft_model_glass", air->model_glass );
+	Cvar_Set( "mn_aircraft_model_wings", air->model_wings );
 }
 
 /*
@@ -772,6 +773,34 @@ void CL_CampaignExecute( setState_t *set )
 
 char	aircraftListText[1024];
 
+
+void CL_OpenAircraft_f ( void )
+{
+	int num;
+	aircraft_t* air;
+
+	if ( Cmd_Argc() < 2 )
+	{
+		Com_Printf( _("Usage: ships_rclick <num>\n") );
+		return;
+	}
+
+	num = atoi( Cmd_Argv( 1 ) );
+	if ( num >= 0 && num < numAircraft )
+	{
+		air = &aircraft[num];
+		Com_DPrintf(_("Selected aircraft: %s\n"), air->name );
+
+		baseCurrent = air->homebase;
+		baseCurrent->aircraftCurrent = air;
+		CL_AircraftSelect();
+		MN_PopMenu(false);
+		CL_MapActionReset();
+		Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i\n", baseCurrent->id) );
+		MN_PushMenu("aircraft");
+	}
+}
+
 void CL_SelectAircraft_f ( void )
 {
 	int num;
@@ -794,6 +823,11 @@ void CL_SelectAircraft_f ( void )
 		interceptAircraft = &aircraft[num];
 		Com_DPrintf(_("Selected aircraft: %s\n"), interceptAircraft->name );
 
+		if ( ! interceptAircraft->teamSize )
+		{
+			MN_Popup(_("Notice"), _("Assign a team to aircraft"));
+			return;
+		}
 		MN_MapCalcLine( interceptAircraft->pos, selMis->def->pos, &interceptAircraft->route );
 		interceptAircraft->status = AIR_TRANSIT;
 		interceptAircraft->time = 0;
@@ -825,7 +859,7 @@ void CL_BuildingAircraftList_f ( void )
 		if ( !air->homebase )
 			continue;
 
-		s = va("%s\t%s\t%s\n", air->name, CL_AircraftStatusToName( air ), air->homebase->title );
+		s = va("%s (%i/%i)\t%s\t%s\n", air->name, air->teamSize, air->size, CL_AircraftStatusToName( air ), air->homebase->title );
 		strcat( aircraftListText, s );
 	}
 
@@ -909,7 +943,13 @@ void CL_CheckAircraft ( aircraft_t* air )
 	switch ( airStatus )
 	{
 		case AIR_DROP:
-			air->status = AIR_DROP;
+			// only the first time
+			// otherwise hit the intercept button
+			if (air->status != AIR_DROP )
+			{
+				air->status = AIR_DROP;
+				MN_PushMenu( "popup_intercept_ready" );
+			}
 			break;
 		case AIR_INTERCEPT:
 			air->status = AIR_INTERCEPT;
@@ -1146,6 +1186,7 @@ void CL_GameNew( void )
 	CL_ResetCharacters();
 	Cvar_Set( "mn_main", "singleplayer" );
 	Cvar_Set( "mn_active", "map" );
+	Cvar_SetValue("maxclients", 1 );
 
 	// get campaign
 	name = Cvar_VariableString( "campaign" );
@@ -1722,19 +1763,22 @@ void CL_GameGo( void )
 	if ( !curCampaign || !selMis )
 		return;
 
-	if ( numOnTeam == 0 )
+	mis = selMis->def;
+
+	// multiplayer
+	if ( numOnTeam == 0 && (int)Cvar_VariableValue("maxclients") > 1 )
 	{
 		MN_Popup( _("Note"), _("Enter your base and assemble a team") );
 		return;
 	}
-
-	// start the map
-	mis = selMis->def;
-	if ( ! mis->active )
+	else
+	if ( ! mis->active && (int)Cvar_VariableValue("maxclients") == 1 )
 	{
 		MN_Popup( _("Note"), _("Your dropship is not near the landingzone") );
 		return;
 	}
+
+	// start the map
 	Cvar_SetValue( "ai_numaliens", mis->aliens );
 	Cvar_SetValue( "ai_numcivilians", mis->civilians );
 	Cvar_Set( "ai_alien", mis->alienTeam );
@@ -1775,6 +1819,41 @@ void CL_GameGo( void )
 		Cbuf_AddText( va( "map %s %s\n", mis->map, mis->param ) );
 }
 
+/*
+======================
+CL_GameAutoGo
+
+TODO: Implement me
+======================
+*/
+void CL_GameAutoGo( void )
+{
+	mission_t	*mis;
+
+	if ( !curCampaign || !selMis )
+		return;
+
+	// start the map
+	mis = selMis->def;
+	if ( ! mis->active )
+	{
+		MN_Popup( _("Note"), _("Your dropship is not near the landingzone") );
+		return;
+	}
+
+	MN_PopMenu(false);
+
+	CL_CampaignRemoveMission( selMis );
+
+/*	Cvar_SetValue( "ai_numaliens", mis->aliens );
+	Cvar_SetValue( "ai_numcivilians", mis->civilians );
+	Cvar_Set( "ai_alien", mis->alienTeam );
+	Cvar_Set( "ai_civilian", mis->civTeam );
+	Cvar_Set( "ai_equipment", mis->alienEquipment );*/
+	// TODO:
+
+	CL_MapActionReset();
+}
 
 /*
 ======================
@@ -2104,6 +2183,9 @@ void CL_MapActionReset( void )
 	// don't allow a reset when no base is set up
 	if ( ccs.numBases )
 		mapAction = MA_NONE;
+
+	selMis = NULL; // reset selected mission
+	interceptAircraft = NULL; // reset selected aircraft
 }
 
 
@@ -2121,6 +2203,7 @@ void CL_ResetCampaign( void )
 	Cmd_AddCommand( "game_load", CL_GameLoadCmd );
 	Cmd_AddCommand( "game_comments", CL_GameCommentsCmd );
 	Cmd_AddCommand( "game_go", CL_GameGo );
+	Cmd_AddCommand( "game_auto_go", CL_GameAutoGo );
 	Cmd_AddCommand( "game_abort", CL_GameAbort );
 	Cmd_AddCommand( "game_results", CL_GameResultsCmd );
 	Cmd_AddCommand( "game_timestop", CL_GameTimeStop );
@@ -2497,9 +2580,11 @@ value_t aircraft_vals[] =
 	{ "speed",	V_FLOAT,	AIRFS( speed ) },
 	{ "name",	V_STRING,	AIRFS( name ) },
 	{ "size",	V_INT,	AIRFS( size ) },
+	{ "image",	V_STRING,	AIRFS( image ) },
 	{ "model",	V_STRING,	AIRFS( model ) },
 	{ "model_top",	V_STRING,	AIRFS( model_top ) },
 	{ "model_glass",	V_STRING,	AIRFS( model_glass ) },
+	{ "model_wings",	V_STRING,	AIRFS( model_wings ) },
 
 	{ NULL, 0, 0 },
 };
@@ -2574,6 +2659,8 @@ void CL_ParseAircraft( char *name, char **text )
 				ac->type = AIRCRAFT_TRANSPORTER;
 			else if ( !strcmp( token, "interceptor") )
 				ac->type = AIRCRAFT_INTERCEPTOR;
+			else if ( !strcmp( token, "ufo") )
+				ac->type = AIRCRAFT_UFO;
 		}
 		else if ( !vp->string )
 		{
