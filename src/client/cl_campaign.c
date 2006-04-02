@@ -921,56 +921,28 @@ CL_CheckAircraft
 */
 void CL_CheckAircraft ( aircraft_t* air )
 {
-	int	i, airStatus;
 	actMis_t	*mis;
 
 	// no base assigned
-	if ( ! air->homebase )
+	if ( ! air->homebase || !selMis )
 		return;
 
-	airStatus = AIR_NONE;
-
-	// let missions expire
-	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ )
-		if ( abs( mis->def->pos[0] - air->pos[0] ) < DISTANCE
-		  && abs( mis->def->pos[1] - air->pos[1] ) < DISTANCE )
-		{
-			mis->def->active = true;
-			airStatus = AIR_DROP;
-		}
-		else
-		{
-			mis->def->active = false;
-		}
-
-	switch ( airStatus )
+	mis = selMis;
+	if ( abs( mis->def->pos[0] - air->pos[0] ) < DISTANCE
+	  && abs( mis->def->pos[1] - air->pos[1] ) < DISTANCE )
 	{
-		case AIR_DROP:
-			// only the first time
-			// otherwise hit the intercept button
-			if (air->status != AIR_DROP )
-			{
-				air->status = AIR_DROP;
-				if ( ! interceptAircraft )
-					interceptAircraft = air;
-				MN_PushMenu( "popup_intercept_ready" );
-			}
-			break;
-		case AIR_INTERCEPT:
-			air->status = AIR_INTERCEPT;
-			break;
-		case AIR_TRANSPORT:
-		case AIR_TRANSIT:
-		case AIR_IDLE:
-			air->status = AIR_IDLE;
-			break;
-		case AIR_NONE:
-			break;
-		case AIR_RETURNING:
-		case AIR_HOME:
-			break;
-		default:
-			Com_Printf(_("Unknown status for aircraft\n"));
+		mis->def->active = true;
+		if (air->status != AIR_DROP )
+		{
+			air->status = AIR_DROP;
+			if ( ! interceptAircraft )
+				interceptAircraft = air;
+			MN_PushMenu( "popup_intercept_ready" );
+		}
+	}
+	else
+	{
+		mis->def->active = false;
 	}
 }
 
@@ -1357,6 +1329,7 @@ void AIR_LoadAircraft ( sizebuf_t *sb, int version )
 		}
 	}
 	CL_AircraftSelect();
+	CL_MapActionReset();
 }
 
 /*
@@ -1886,7 +1859,7 @@ void CL_GameGo( void )
 	else
 	if ( ! mis->active && (int)Cvar_VariableValue("maxclients") == 1 )
 	{
-		//MN_Popup( _("Note"), _("Your dropship is not near the landingzone") );
+// 		MN_Popup( _("Note"), _("Your dropship is not near the landingzone") );
 		return;
 	}
 
@@ -1934,8 +1907,6 @@ void CL_GameGo( void )
 /*
 ======================
 CL_GameAutoGo
-
-TODO: Implement me
 ======================
 */
 void CL_GameAutoGo( void )
@@ -1943,9 +1914,9 @@ void CL_GameAutoGo( void )
 	mission_t	*mis;
 	int	won, i;
 
-	if ( !curCampaign || !selMis || !interceptAircraft )
+	if ( !curCampaign || !selMis || !interceptAircraft)
 	{
-		Com_Printf(_("No update after automission\n"));
+		Com_DPrintf(_("No update after automission\n"));
 		return;
 	}
 
@@ -1959,10 +1930,14 @@ void CL_GameAutoGo( void )
 
 	MN_PopMenu(false);
 
+	// FIXME: This needs work
 	won = mis->aliens > interceptAircraft->size ? 0 : 1;
 
 	// give reward
-	CL_UpdateCredits( ccs.credits+ccs.reward );
+	if ( won )
+		CL_UpdateCredits( ccs.credits+mis->cr_win+(mis->cr_alien*mis->aliens) );
+	else
+		CL_UpdateCredits( ccs.credits+mis->cr_win-(mis->cr_civilian*mis->civilians) );
 
 	// add recruits
 	if ( won && mis->recruits )
