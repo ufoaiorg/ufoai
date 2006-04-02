@@ -351,6 +351,9 @@ char* CL_AircraftStatusToName ( aircraft_t* air )
 		case AIR_HOME:
 			return _("At homebase");
 			break;
+		case AIR_REFUEL:
+			return _("Refuel");
+			break;
 		case AIR_IDLE:
 			return _("Idle");
 			break;
@@ -458,8 +461,8 @@ CL_AircraftSelect
 */
 void CL_AircraftSelect ( void )
 {
-	int aircraftID = (int)Cvar_VariableValue("mn_aircraft_id");
 	aircraft_t* air;
+	int aircraftID = (int)Cvar_VariableValue("mn_aircraft_id");
 
 	if ( ! baseCurrent )
 		return;
@@ -1276,7 +1279,7 @@ void AIR_SaveAircraft( sizebuf_t *sb )
 		MSG_WriteLong( sb, air->fuel );
 		MSG_WriteLong( sb, air->size );
 		MSG_WriteLong( sb, air->speed );
-		MSG_WriteLong( sb, air->homebase->id );
+		MSG_WriteLong( sb, air->homebase ? air->homebase->id : -1 );
 		MSG_WriteLong( sb, air->point );
 		MSG_WriteLong( sb, air->time );
 		SZ_Write( sb, &air->route, sizeof(mapline_t) );
@@ -1306,7 +1309,7 @@ CL_SaveAircraft
 */
 void AIR_LoadAircraft ( sizebuf_t *sb, int version )
 {
-	int i, n;
+	int i, n, base;
 	aircraft_t* air;
 	if ( version >= 4 )
 	{
@@ -1322,7 +1325,14 @@ void AIR_LoadAircraft ( sizebuf_t *sb, int version )
 				air->fuel = MSG_ReadLong( sb );
 				air->size = MSG_ReadLong( sb );
 				air->speed = MSG_ReadLong( sb );
-				air->homebase = B_GetBase( MSG_ReadLong( sb ) );
+				base = MSG_ReadLong( sb );
+				air->homebase = base != -1 ? B_GetBase( base ) : NULL;
+				if ( air->homebase )
+				{
+					air->homebase->aircraft[air->homebase->numAircraftsInBase++] = air;
+					if ( ! air->homebase->aircraftCurrent )
+						air->homebase->aircraftCurrent = air;
+				}
 				air->point = MSG_ReadLong( sb );
 				air->time = MSG_ReadLong( sb );
 				memcpy( &air->route, sb->data + sb->readcount, sizeof(mapline_t) );
@@ -1346,6 +1356,7 @@ void AIR_LoadAircraft ( sizebuf_t *sb, int version )
 			}
 		}
 	}
+	CL_AircraftSelect();
 }
 
 /*

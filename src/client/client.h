@@ -1205,6 +1205,7 @@ typedef enum mapAction_s
 typedef enum aircraftStatus_s
 {
 	AIR_NONE,
+	AIR_REFUEL,	// refill fuel
 	AIR_HOME,	// in homebase
 	AIR_IDLE,	// just sit there on geoscape
 	AIR_TRANSIT,	// moving
