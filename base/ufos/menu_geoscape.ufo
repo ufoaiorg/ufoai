@@ -350,6 +350,74 @@ menu popup_newbase
 	}
 }
 
+// ==================
+// POPUP INTERCEPT
+// ==================
+
+menu popup_intercept
+{
+	zone popup
+	{
+		invis true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos		"256 256"
+	}
+
+	string title
+	{
+		string	"Select aircraft"
+		pos	"290 276"
+		font	f_big
+	}
+
+	string name_label
+	{
+		string	"Name:"
+		pos	"290 320"
+	}
+
+	string status_label
+	{
+		string	"Status:"
+		pos	"440 320"
+	}
+
+	string base_label
+	{
+		string	"Base:"
+		pos	"590 320"
+	}
+
+	text ships
+	{
+		pos             "290 340"
+		size    "420 350"
+		format  "20 150"
+		mousefx true
+		num	9
+		click { }
+	}
+
+	pic bt_cancel
+	{
+		image	menu/button_mapmen_bases
+		pos	"290 450"
+		texl	"0 72"
+		texh	"127 104"
+		out	{ *bt_cancel texl "0 72" *bt_cancel texh "127 104" }
+		in	{ *bt_cancel texl "128 72" *bt_cancel texh "255 104" }
+		click	{ cmd "mn_pop;mn_mapaction_reset;" }
+	}
+
+	func init
+	{
+		cmd "aircraft_list"
+	}
+}
+
 menu popup
 {
 	zone popup

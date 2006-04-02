@@ -226,6 +226,7 @@ aircraft dropship
 	model_top	"models/objects/dropship_top.md2"
 	model_glass	"models/objects/dropship_glass.md2"
 	size	8
+	image	dropship
 }
 
 aircraft interceptor
@@ -237,4 +238,5 @@ aircraft interceptor
 	model_top	"models/aircrafts/fighter1_engines.md2"
 	model_glass	"models/aircrafts/fighter1_glass.md2"
 	size	1
+	image	interceptor
 }
