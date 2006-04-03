@@ -487,6 +487,61 @@ menu popup_intercept
 	}
 }
 
+// ==================
+// POPUP INTERCEPT
+// ==================
+
+menu popup_baseattack
+{
+	zone popup
+	{
+		invis true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos		"256 256"
+	}
+
+	pic bt_cancel
+	{
+		image	menu/button_mapmen_bases
+		pos	"290 450"
+		texl	"0 72"
+		texh	"127 104"
+		out	{ *bt_cancel texl "0 72" *bt_cancel texh "127 104" }
+		in	{ *bt_cancel texl "128 72" *bt_cancel texh "255 104" }
+		click	{ cmd "mn_pop;mn_mapaction_reset;" }
+	}
+
+	pic bt_go
+	{
+		image	menu/button_mapmen_bases
+		pos	"445 450"
+		texl	"0 144"
+		texh	"127 176"
+		out	{ *bt_go texl "0 144" *bt_go texh "127 176" }
+		in	{ *bt_go texl "128 144" *bt_go texh "255 176" }
+		click	{ cmd "game_go;" }
+	}
+
+	pic bt_auto_go
+	{
+		image	menu/button_mapmen_bases
+		pos	"600 450"
+		texl	"0 180"
+		texh	"127 212"
+		out	{ *bt_auto_go texl "0 180" *bt_auto_go texh "127 212" }
+		in	{ *bt_auto_go texl "128 180" *bt_auto_go texh "255 212" }
+		click	{ cmd "game_auto_go;" }
+	}
+
+	func init
+	{
+		cmd "aircraft_list"
+	}
+}
+
 menu popup
 {
 	zone popup

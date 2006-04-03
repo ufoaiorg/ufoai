@@ -22,12 +22,13 @@ mission africa
 
 mission baseattack
 {
-	text		"Aliens attack one of our home bases"
+	text		"Aliens attacked one of our home bases"
 // 	. means that they attack a random base (only the first char counts)
 	map		".base"
 	music		base
 	aliens		7
 	civilians	5
+	civteam		scientist
 	alienequip	campaign_alien
 	recruits	0
 	$win		400
@@ -656,6 +657,7 @@ stage intro
 {
 	set first
 	{
+		seq	intro
 		delay		"0 1 0"
 		frame		"0 3 0"
 		missions	"vil_grenchen"
@@ -682,6 +684,10 @@ stage intro
 
 stage ufos_are_coming
 {
+	set first
+	{
+		seq	ufos_are_coming
+	}
 	set crashed_and_landed
 	{
 		delay		"0 0 1"
@@ -724,10 +730,21 @@ campaign main
 	soldiers	12
 	equipment	campaign_player
 	market		campaign_market
-	credits		150000
+	credits		500000
 
 	date		"2000 0 7"
 	firststage	intro
+}
+
+campaign multiplayer
+{
+	team		human
+	soldiers	8
+	equipment	campaign_player
+	market		campaign_market
+	credits		150000
+
+	date		"2000 0 7"
 }
 
 
