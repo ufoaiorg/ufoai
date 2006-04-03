@@ -2,9 +2,6 @@
 
 // TODO:
 // new game does not reset basemangagement
-// for saving: bmBuildings[], bmBases[], bmProductions[] (in cl_basemanagement.c)
-//     in client.h: buildingText[] *baseCurrent, bmBases[]
-//                  and the part out of ccs_t (not really needed i think)
 #include "client.h"
 #include "cl_basemanagement.h"
 
