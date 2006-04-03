@@ -684,7 +684,7 @@ stageState_t *CL_CampaignActivateStage( char *name )
 				ccs.set[j].stage = &stage[j];
 				ccs.set[j].def = &stageSets[j];
 				if ( *stageSets[j].sequence )
-					Cbuf_ExecuteText( EXEC_NOW, va("seq_start %s", stageSets[j].sequence) );
+					Cbuf_ExecuteText( EXEC_APPEND, va("seq_start %s;\n", stageSets[j].sequence) );
 			}
 
 			// activate stage sets

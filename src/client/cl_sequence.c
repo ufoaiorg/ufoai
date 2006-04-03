@@ -210,6 +210,7 @@ void CL_SequenceRender( void )
 		if ( seqCmd >= seqEndCmd )
 		{
 			CL_SequenceEnd_f();
+			MN_PopMenu(false);
 			return;
 		}
 
@@ -357,7 +358,6 @@ CL_SequenceEnd_f
 */
 void CL_SequenceEnd_f( void )
 {
-	MN_PopMenu( false );
 	cls.state = ca_disconnected;
 }
 
