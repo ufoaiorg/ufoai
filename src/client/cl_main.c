@@ -224,7 +224,7 @@ CL_Pause_f
 void CL_Pause_f (void)
 {
 	// never pause in multiplayer
-	if (Cvar_VariableValue ("maxclients") > 1 || !Com_ServerState ())
+	if ( !ccs.singleplayer || !Com_ServerState () )
 	{
 		Cvar_SetValue ("paused", 0);
 		return;
@@ -360,7 +360,7 @@ void CL_Connect_f (void)
 		return;
 	}
 
-	if ( ! numOnTeam )
+	if ( ! B_GetNumOnTeam() )
 	{
 		MN_Popup( _("Error"), _("Assemble a team first") );
 		return;
@@ -692,7 +692,7 @@ void CL_ConnectList_f (void)
 	}
 	num = atoi( Cmd_Argv( 1 ) );
 
-	if ( ! numOnTeam )
+	if ( ! B_GetNumOnTeam() )
 	{
 		MN_Popup( _("Error"), _("Assemble a team first") );
 		return;
@@ -1228,7 +1228,7 @@ void CL_RequestNextDownload (void)
 	CL_PrepRefresh ();
 
 	// send team info
-	CL_SendTeamInfo (&cls.netchan.message, curTeam, numOnTeam);
+	CL_SendTeamInfo (&cls.netchan.message, baseCurrent->curTeam, B_GetNumOnTeam() );
 
 	// send begin
 	MSG_WriteByte (&cls.netchan.message, clc_stringcmd);
@@ -1320,9 +1320,9 @@ void CL_InitLocal (void)
 
 	MN_ResetMenus();
 	CL_ResetParticles();
-	CL_ResetTeams();
 	CL_ResetCampaign();
 	CL_ResetSequences();
+	CL_ResetTeams();
 
 	adr0 = Cvar_Get( "adr0", "", CVAR_ARCHIVE );
 	adr1 = Cvar_Get( "adr1", "", CVAR_ARCHIVE );
@@ -1430,6 +1430,8 @@ void CL_InitLocal (void)
 	msg = Cvar_Get ("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE);
 
 	cl_vwep = Cvar_Get ("cl_vwep", "1", CVAR_ARCHIVE);
+
+	sv_maxclients = Cvar_Get ("maxclients", "1", CVAR_SERVERINFO );
 
 	//
 	// register our commands
@@ -1726,6 +1728,21 @@ void CL_Frame (int msec)
 
 	if (dedicated->value)
 		return;
+
+	if ( sv_maxclients->modified )
+	{
+		if ( (int)sv_maxclients->value > 1 )
+		{
+			ccs.singleplayer = false;
+			Com_Printf("Changing to Multiplayer\n");
+		}
+		else
+		{
+			ccs.singleplayer = true;
+			Com_Printf("Changing to Singleplayer\n");
+		}
+		sv_maxclients->modified = false;
+	}
 
 	extratime += msec;
 

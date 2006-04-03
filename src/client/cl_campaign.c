@@ -283,17 +283,27 @@ CL_ListAircraft_f
 */
 void CL_ListAircraft_f ( void )
 {
-	int i;
-	Com_Printf("Aircrafts %i\n", numAircraft );
-	for ( i = 0; i < numAircraft; i++ )
+	int	i, j;
+	base_t*	base;
+	aircraft_t*	air;
+
+	for ( j = 0, base = bmBases; j < ccs.numBases; j++, base++ )
 	{
-		Com_Printf("Aircraft %s\n", aircraft[i].title );
-		Com_Printf("...name %s\n", aircraft[i].name );
-		Com_Printf("...speed %0.2f\n", aircraft[i].speed );
-		Com_Printf("...type %i\n", aircraft[i].type );
-		Com_Printf("...size %i\n", aircraft[i].size );
-		Com_Printf("...status %s\n", CL_AircraftStatusToName( &aircraft[i] ) );
-		Com_Printf("...pos %.0f:%.0f\n", aircraft[i].pos[0], aircraft[i].pos[1] );
+		if ( ! base->founded )
+			continue;
+
+		Com_Printf("Aircrafts in base %s: %i\n", base->title, base->numAircraftInBase );
+		for ( i = 0; i < base->numAircraftInBase; i++ )
+		{
+			air = &base->aircraft[i];
+			Com_Printf("Aircraft %s\n", air->title );
+			Com_Printf("...name %s\n", air->name );
+			Com_Printf("...speed %0.2f\n", air->speed );
+			Com_Printf("...type %i\n", air->type );
+			Com_Printf("...size %i\n", air->size );
+			Com_Printf("...status %s\n", CL_AircraftStatusToName( air ) );
+			Com_Printf("...pos %.0f:%.0f\n", air->pos[0], air->pos[1] );
+		}
 	}
 }
 
@@ -312,7 +322,7 @@ void CL_StartAircraft ( void )
 
 	if ( !baseCurrent->aircraftCurrent )
 	{
-		Com_DPrintf(("Error - there are no aircraftCurrent in this base\n"));
+		Com_DPrintf(("Error - there is no aircraftCurrent in this base\n"));
 		return;
 	}
 
@@ -323,6 +333,7 @@ void CL_StartAircraft ( void )
 		air->pos[1] = baseCurrent->pos[1]+2;
 	}
 	air->status = AIR_IDLE;
+	Com_DPrintf(("...aircraft now idles around\n"));
 	// TODO: Set pos = endpos
 }
 
@@ -408,7 +419,7 @@ void MN_NextAircraft_f ( void )
 	if ( ! baseCurrent )
 		return;
 
-	if ( (int)Cvar_VariableValue("mn_aircraft_id") < baseCurrent->numAircraftsInBase )
+	if ( (int)Cvar_VariableValue("mn_aircraft_id") < baseCurrent->numAircraftInBase )
 	{
 		Cvar_SetValue("mn_aircraft_id", (int)Cvar_VariableValue("mn_aircraft_id") + 1 );
 		CL_AircraftSelect();
@@ -439,13 +450,15 @@ call this from baseview via "aircraft_return"
 */
 void CL_AircraftReturnToBase ( void )
 {
-	aircraft_t* air;
+	aircraft_t*	air;
+	base_t*	base;
 	if ( baseCurrent && baseCurrent->aircraftCurrent )
 	{
 		air = baseCurrent->aircraftCurrent;
 		if ( air->status != AIR_HOME )
 		{
-			MN_MapCalcLine( air->pos, air->homebase->pos, &air->route );
+			base = (base_t*)air->homebase;
+			MN_MapCalcLine( air->pos, base->pos, &air->route );
 			air->status = AIR_RETURNING;
 			air->time = 0;
 			air->point = 0;
@@ -467,16 +480,17 @@ void CL_AircraftSelect ( void )
 	if ( ! baseCurrent )
 		return;
 
-	if ( aircraftID >= baseCurrent->numAircraftsInBase )
+	if ( aircraftID >= baseCurrent->numAircraftInBase )
 		aircraftID = 0;
 
-	if ( aircraftID >= baseCurrent->numAircraftsInBase )
+	if ( aircraftID >= baseCurrent->numAircraftInBase )
 	{
 		Com_Printf(_("Warning: No aircraft in base %s\n"), baseCurrent->title );
 		return;
 	}
 
-	air = (aircraft_t*)baseCurrent->aircraft[aircraftID];
+	air = &baseCurrent->aircraft[aircraftID];
+
 	baseCurrent->aircraftCurrent = (void*)air;
 	Cvar_Set( "mn_aircraftstatus", CL_AircraftStatusToName( air ) );
 	Cvar_Set( "mn_aircraftname", air->name );
@@ -503,13 +517,17 @@ void CL_NewAircraft ( base_t* base, char* name )
 		air = &aircraft[i];
 		if ( ! strcmp(air->title, name) )
 		{
+			memcpy( &base->aircraft[base->numAircraftInBase], air, sizeof(aircraft_t) );
+			air = &base->aircraft[base->numAircraftInBase];
 			air->homebase = base;
+			Com_DPrintf(_("Setting aircraft to pos: %.0f:%.0f\n"), base->pos[0], base->pos[1]);
 			air->pos[0] = base->pos[0];
 			air->pos[1] = base->pos[1];
-			base->aircraft[base->numAircraftsInBase++] = air;
 			// first aircraft is default aircraft
 			if ( ! base->aircraftCurrent )
 				base->aircraftCurrent = air;
+
+			base->numAircraftInBase++;
 			Com_DPrintf(_("Aircraft for base %s: %s\n"), base->title, air->name );
 			return;
 		}
@@ -553,12 +571,17 @@ qboolean CL_NewBase( vec2_t pos )
 		MN_Popup( _("Notice"), _("Could not set up your base at this location") );
 		return false;
 	} else if ( MapIsDesert(color) ){
+		Com_DPrintf(_("Desertbase\n"));
 		baseCurrent->mapChar='d';
 	} else if ( MapIsArctic(color) ){
+		Com_DPrintf(_("Articbase\n"));
 		baseCurrent->mapChar='a';
 	} else {
+		Com_DPrintf(_("Graslandbase\n"));
 		baseCurrent->mapChar='g';
 	}
+
+	Com_DPrintf(_("Colorvalues for base: R:%i G:%i B:%i\n"), color[0], color[1], color[2] );
 
 	// build base
 	baseCurrent->pos[0] = pos[0];
@@ -779,8 +802,8 @@ char	aircraftListText[1024];
 
 void CL_OpenAircraft_f ( void )
 {
-	int num;
-	aircraft_t* air;
+	int	num, j;
+	aircraft_t*	air;
 
 	if ( Cmd_Argc() < 2 )
 	{
@@ -789,24 +812,36 @@ void CL_OpenAircraft_f ( void )
 	}
 
 	num = atoi( Cmd_Argv( 1 ) );
-	if ( num >= 0 && num < numAircraft )
+	for ( j = 0; j < ccs.numBases; j++ )
 	{
-		air = &aircraft[num];
-		Com_DPrintf(_("Selected aircraft: %s\n"), air->name );
+		if ( !bmBases[j].founded )
+			continue;
 
-		baseCurrent = air->homebase;
-		baseCurrent->aircraftCurrent = air;
-		CL_AircraftSelect();
-		MN_PopMenu(false);
-		CL_MapActionReset();
-		Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i\n", baseCurrent->id) );
-		MN_PushMenu("aircraft");
+		if ( num - bmBases[j].numAircraftInBase >= 0 )
+		{
+			num -= bmBases[j].numAircraftInBase;
+			continue;
+		}
+		else if ( num >= 0 && num < bmBases[j].numAircraftInBase )
+		{
+			air = &bmBases[j].aircraft[num];
+			Com_DPrintf(_("Selected aircraft: %s\n"), air->name );
+
+			baseCurrent = &bmBases[j];
+			baseCurrent->aircraftCurrent = air;
+			CL_AircraftSelect();
+			MN_PopMenu(false);
+			CL_MapActionReset();
+			Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i\n", baseCurrent->id) );
+			MN_PushMenu("aircraft");
+			return;
+		}
 	}
 }
 
 void CL_SelectAircraft_f ( void )
 {
-	int num;
+	int	num, j;
 
 	if ( Cmd_Argc() < 2 )
 	{
@@ -821,24 +856,36 @@ void CL_SelectAircraft_f ( void )
 	}
 
 	num = atoi( Cmd_Argv( 1 ) );
-	if ( num >= 0 && num < numAircraft )
+	for ( j = 0; j < ccs.numBases; j++ )
 	{
-		interceptAircraft = &aircraft[num];
-		Com_DPrintf(_("Selected aircraft: %s\n"), interceptAircraft->name );
+		if ( !bmBases[j].founded )
+			continue;
 
-		if ( ! interceptAircraft->teamSize )
+		if ( num - bmBases[j].numAircraftInBase >= 0 )
 		{
-			MN_Popup(_("Notice"), _("Assign a team to aircraft"));
+			num -= bmBases[j].numAircraftInBase;
+			continue;
+		}
+		else if ( num >= 0 && num < bmBases[j].numAircraftInBase )
+		{
+			interceptAircraft = &bmBases[j].aircraft[num];
+			Com_DPrintf(_("Selected aircraft: %s\n"), interceptAircraft->name );
+
+			if ( ! interceptAircraft->teamSize )
+			{
+				MN_Popup(_("Notice"), _("Assign a team to aircraft"));
+				return;
+			}
+			MN_MapCalcLine( interceptAircraft->pos, selMis->def->pos, &interceptAircraft->route );
+			interceptAircraft->status = AIR_TRANSIT;
+			interceptAircraft->time = 0;
+			interceptAircraft->point = 0;
+			baseCurrent = interceptAircraft->homebase;
+			baseCurrent->aircraftCurrent = interceptAircraft;
+			CL_AircraftSelect();
+			MN_PopMenu(false);
 			return;
 		}
-		MN_MapCalcLine( interceptAircraft->pos, selMis->def->pos, &interceptAircraft->route );
-		interceptAircraft->status = AIR_TRANSIT;
-		interceptAircraft->time = 0;
-		interceptAircraft->point = 0;
-		baseCurrent = interceptAircraft->homebase;
-		baseCurrent->aircraftCurrent = interceptAircraft;
-		CL_AircraftSelect();
-		MN_PopMenu(false);
 	}
 }
 
@@ -853,17 +900,20 @@ TEXT_INTERCEPT_LIST
 void CL_BuildingAircraftList_f ( void )
 {
 	char	*s;
-	int	i;
+	int	i, j;
 	aircraft_t*	air;
 	memset( aircraftListText, 0, sizeof(aircraftListText) );
-	for ( i = 0; i < numAircraft; i++ )
+	for ( j = 0; j < ccs.numBases; j++ )
 	{
-		air = &aircraft[i];
-		if ( !air->homebase )
+		if (! bmBases[j].founded )
 			continue;
 
-		s = va("%s (%i/%i)\t%s\t%s\n", air->name, air->teamSize, air->size, CL_AircraftStatusToName( air ), air->homebase->title );
-		strcat( aircraftListText, s );
+		for ( i = 0; i < bmBases[j].numAircraftInBase; i++ )
+		{
+			air = &bmBases[j].aircraft[i];
+			s = va("%s (%i/%i)\t%s\t%s\n", air->name, air->teamSize, air->size, CL_AircraftStatusToName( air ), bmBases[j].title );
+			strcat( aircraftListText, s );
+		}
 	}
 
 	menuText[TEXT_INTERCEPT_LIST] = aircraftListText;
@@ -955,43 +1005,50 @@ TODO: Fuel
 */
 void CL_CampaignRunAircraft( int dt )
 {
-	aircraft_t *air;
-	float dist, frac;
-	int i, p;
+	aircraft_t	*air;
+	float	dist, frac;
+	base_t*	base;
+	int	i, p, j;
 
-	for ( i = 0, air = aircraft; i < numAircraft; i++, air++ )
-		if ( air->homebase && air->status > AIR_IDLE )
-		{
-			// calc distance
-			air->time += dt;
-			dist = air->speed * air->time / 3600;
+	for ( j = 0, base = bmBases; j < ccs.numBases; j++, base++ )
+	{
+		if ( ! base->founded )
+			continue;
 
-			// check for end point
-			if ( dist >= air->route.dist * (air->route.n-1) )
+		for ( i = 0, air = (aircraft_t*)base->aircraft; i < base->numAircraftInBase; i++, air++ )
+			if ( air->homebase && air->status > AIR_IDLE )
 			{
-				float *end;
-				end = air->route.p[air->route.n-1];
-				air->pos[0] = end[0];
-				air->pos[1] = end[1];
-				if ( air->status == AIR_RETURNING )
-					air->status = AIR_HOME;
-				else
-					air->status = AIR_IDLE;
+				// calc distance
+				air->time += dt;
+				dist = air->speed * air->time / 3600;
+
+				// check for end point
+				if ( dist >= air->route.dist * (air->route.n-1) )
+				{
+					float *end;
+					end = air->route.p[air->route.n-1];
+					air->pos[0] = end[0];
+					air->pos[1] = end[1];
+					if ( air->status == AIR_RETURNING )
+						air->status = AIR_HOME;
+					else
+						air->status = AIR_IDLE;
+					CL_CheckAircraft( air );
+					continue;
+				}
+
+				// calc new position
+				frac = dist / air->route.dist;
+				p = (int)frac;
+				frac -= p;
+				air->point = p;
+
+				air->pos[0] = (1-frac) * air->route.p[p][0] + frac * air->route.p[p+1][0];
+				air->pos[1] = (1-frac) * air->route.p[p][1] + frac * air->route.p[p+1][1];
+
 				CL_CheckAircraft( air );
-				continue;
 			}
-
-			// calc new position
-			frac = dist / air->route.dist;
-			p = (int)frac;
-			frac -= p;
-			air->point = p;
-
-			air->pos[0] = (1-frac) * air->route.p[p][0] + frac * air->route.p[p+1][0];
-			air->pos[1] = (1-frac) * air->route.p[p][1] + frac * air->route.p[p+1][1];
-
-			CL_CheckAircraft( air );
-		}
+	}
 }
 
 
@@ -1165,10 +1222,10 @@ void CL_GameNew( void )
 	char	*name;
 	int		i;
 
-	CL_ResetCharacters();
 	Cvar_Set( "mn_main", "singleplayer" );
 	Cvar_Set( "mn_active", "map" );
 	Cvar_SetValue("maxclients", 1 );
+// 	ccs.singleplayer = true;
 
 	// get campaign
 	name = Cvar_VariableString( "campaign" );
@@ -1182,6 +1239,10 @@ void CL_GameNew( void )
 		return;
 	}
 
+	// base setup
+	ccs.numBases = 0;
+	MN_NewBases();
+
 	// reset, set time
 	selMis = NULL;
 	memset( &ccs, 0, sizeof( ccs_t ) );
@@ -1191,10 +1252,6 @@ void CL_GameNew( void )
 	ccs.center[0] = 0.5;
 	ccs.center[1] = 0.5;
 	ccs.zoom = 1.0;
-
-	// setup team
-	for ( i = 0; i < curCampaign->soldiers; i++ )
-		CL_GenerateCharacter( curCampaign->team );
 
 	CL_UpdateCredits( curCampaign->credits );
 
@@ -1214,10 +1271,6 @@ void CL_GameNew( void )
 
 	// stage setup
 	CL_CampaignActivateStage( curCampaign->firststage );
-
-	// base setup
-	ccs.numBases = 0;
-	MN_NewBases();
 
 	MN_PopMenu( true );
 	MN_PushMenu( "map" );
@@ -1239,8 +1292,9 @@ CL_SaveAircraft
 */
 void AIR_SaveAircraft( sizebuf_t *sb )
 {
-	int i;
-	aircraft_t* air;
+	int	i;
+	aircraft_t*	air;
+	base_t*	base;
 	MSG_WriteByte( sb, numAircraft );
 	for ( i = 0, air = aircraft; i < numAircraft; i++, air++ )
 	{
@@ -1251,7 +1305,8 @@ void AIR_SaveAircraft( sizebuf_t *sb )
 		MSG_WriteLong( sb, air->fuel );
 		MSG_WriteLong( sb, air->size );
 		MSG_WriteLong( sb, air->speed );
-		MSG_WriteLong( sb, air->homebase ? air->homebase->id : -1 );
+		base = (base_t*)air->homebase;
+		MSG_WriteLong( sb, base ? base->id : -1 );
 		MSG_WriteLong( sb, air->point );
 		MSG_WriteLong( sb, air->time );
 		SZ_Write( sb, &air->route, sizeof(mapline_t) );
@@ -1281,8 +1336,9 @@ CL_SaveAircraft
 */
 void AIR_LoadAircraft ( sizebuf_t *sb, int version )
 {
-	int i, n, base;
+	int i, n, baseID;
 	aircraft_t* air;
+	base_t*	base;
 	if ( version >= 4 )
 	{
 		n = MSG_ReadByte( sb );
@@ -1297,18 +1353,19 @@ void AIR_LoadAircraft ( sizebuf_t *sb, int version )
 				air->fuel = MSG_ReadLong( sb );
 				air->size = MSG_ReadLong( sb );
 				air->speed = MSG_ReadLong( sb );
-				base = MSG_ReadLong( sb );
-				air->homebase = base != -1 ? B_GetBase( base ) : NULL;
-				if ( air->homebase )
-				{
-					air->homebase->aircraft[air->homebase->numAircraftsInBase++] = air;
-					if ( ! air->homebase->aircraftCurrent )
-						air->homebase->aircraftCurrent = air;
-				}
+				baseID = MSG_ReadLong( sb );
+				air->homebase = baseID != -1 ? B_GetBase( baseID ) : NULL;
 				air->point = MSG_ReadLong( sb );
 				air->time = MSG_ReadLong( sb );
 				memcpy( &air->route, sb->data + sb->readcount, sizeof(mapline_t) );
 				sb->readcount += sizeof(mapline_t);
+				if ( air->homebase )
+				{
+					base = (base_t*)air->homebase;
+					memcpy( &base->aircraft[base->numAircraftInBase++], air, sizeof(aircraft_t) );
+					if ( ! base->aircraftCurrent )
+						base->aircraftCurrent = air;
+				}
 			}
 			else
 			{
@@ -1412,11 +1469,11 @@ void CL_GameSave( char *filename, char *comment )
 		MSG_WriteLong( &sb, ccs.eMarket.num[i] );
 
 	// store team
-	CL_SendTeamInfo( &sb, wholeTeam, numWholeTeam );
+	CL_SendTeamInfo( &sb, baseCurrent->wholeTeam, baseCurrent->numWholeTeam );
 
 	// store assignement
-	MSG_WriteLong( &sb, teamMask );
-	MSG_WriteByte( &sb, numOnTeam );
+	MSG_WriteLong( &sb, baseCurrent->teamMask );
+	MSG_WriteByte( &sb, baseCurrent->numOnTeam );
 
 	// store campaign data
 	for ( i = 0, state = ccs.stage; i < numStages; i++, state++ )
@@ -1624,7 +1681,7 @@ void CL_GameLoad( char *filename )
 	}
 
 	// reset data
-	CL_ResetCharacters();
+// 	CL_ResetCharacters();
 
 	// read whole team list
 	CL_LoadTeam( &sb );
@@ -1742,6 +1799,7 @@ void CL_GameLoadCmd( void )
 	Cvar_Set( "mn_main", "singleplayer" );
 	Cvar_Set( "mn_active", "map" );
 	Cbuf_AddText( "disconnect\n" );
+	ccs.singleplayer = true;
 
 	MN_PopMenu( true );
 	MN_PushMenu( "map" );
@@ -1802,6 +1860,7 @@ void CL_GameExit( void )
 	curCampaign = NULL;
 	Cvar_Set( "mn_main", "main" );
 	Cvar_Set( "mn_active", "" );
+	ccs.singleplayer = false;
 }
 
 
@@ -1828,6 +1887,7 @@ void CL_GameContinue( void )
 	Cvar_Set( "mn_main", "singleplayer" );
 	Cvar_Set( "mn_active", "map" );
 	Cbuf_AddText( "disconnect\n" );
+	ccs.singleplayer = true;
 
 	MN_PopMenu( true );
 	MN_PushMenu( "map" );
@@ -1845,23 +1905,20 @@ void CL_GameGo( void )
 	char	expanded[MAX_QPATH];
 	char	timeChar;
 
-	if ( !curCampaign || !selMis )
+	if ( !curCampaign || !selMis || !baseCurrent )
 		return;
 
 	mis = selMis->def;
 
 	// multiplayer
-	if ( numOnTeam == 0 && (int)Cvar_VariableValue("maxclients") > 1 )
+	if ( B_GetNumOnTeam() == 0 && ! ccs.singleplayer )
 	{
 		MN_Popup( _("Note"), _("Enter your base and assemble a team") );
 		return;
 	}
-	else
-	if ( ! mis->active && (int)Cvar_VariableValue("maxclients") == 1 )
-	{
-// 		MN_Popup( _("Note"), _("Your dropship is not near the landingzone") );
+	else if ( ! mis->active && ccs.singleplayer )
+		// dropship not near landingzone
 		return;
-	}
 
 	// start the map
 	Cvar_SetValue( "ai_numaliens", mis->aliens );
@@ -1872,14 +1929,14 @@ void CL_GameGo( void )
 	Cvar_Set( "music", mis->music );
 	// TODO is this correct for a multiplayer game too?  CL_GameGo returns
 	// if curCampaign is null...
-	Cvar_Set( "equip", "campaign_player" );
+	Cvar_Set( "equip", curCampaign->equipment );
 
 	// check inventory
 	ccs.eMission = ccs.eCampaign;
 	CL_CheckInventory( &ccs.eMission );
 
 	// prepare
-	deathMask = 0;
+	baseCurrent->deathMask = 0;
 	MN_PopMenu( true );
 	Cvar_Set( "mn_main", "singleplayermission" );
 
@@ -1942,7 +1999,7 @@ void CL_GameAutoGo( void )
 	// add recruits
 	if ( won && mis->recruits )
 		for ( i = 0; i < mis->recruits; i++ )
-			CL_GenerateCharacter( curCampaign->team );
+			CL_GenerateCharacter( curCampaign->team, baseCurrent );
 
 	// campaign effects
 	selMis->cause->done++;
@@ -2192,7 +2249,7 @@ void CL_UpdateCharacterStats ( int won )
 		{
 			// TODO: Is the array of character_t the same
 			//      as the array of le_t??
-			chr = &wholeTeam[i];
+			chr = &baseCurrent->wholeTeam[i];
 			assert( chr );
 
 			// FIXME:
@@ -2236,23 +2293,23 @@ void CL_GameResultsCmd( void )
 	CL_UpdateCredits( ccs.credits+ccs.reward );
 
 	// remove the dead (and their item preference)
-	for ( i = 0; i < numWholeTeam; )
+	for ( i = 0; i < baseCurrent->numWholeTeam; )
 	{
-		if ( deathMask & (1<<i) )
+		if ( baseCurrent->deathMask & (1<<i) )
 		{
-			deathMask >>= 1;
-			tempMask = teamMask >> 1;
-			teamMask = (teamMask & ((1<<i)-1)) | (tempMask & ~((1<<i)-1));
-			numWholeTeam--;
-			numOnTeam--;
-			Com_DestroyInventory( &teamInv[i] );
-			for ( j = i; j < numWholeTeam; j++ )
+			baseCurrent->deathMask >>= 1;
+			tempMask = baseCurrent->teamMask >> 1;
+			baseCurrent->teamMask = (baseCurrent->teamMask & ((1<<i)-1)) | (tempMask & ~((1<<i)-1));
+			baseCurrent->numWholeTeam--;
+			baseCurrent->numOnTeam--;
+			Com_DestroyInventory( &baseCurrent->teamInv[i] );
+			for ( j = i; j < baseCurrent->numWholeTeam; j++ )
 			{
-				teamInv[j] = teamInv[j+1];
-				wholeTeam[j] = wholeTeam[j+1];
-				wholeTeam[j].inv = &teamInv[j];
+				baseCurrent->teamInv[j] = baseCurrent->teamInv[j+1];
+				baseCurrent->wholeTeam[j] = baseCurrent->wholeTeam[j+1];
+				baseCurrent->wholeTeam[j].inv = &baseCurrent->teamInv[j];
 			}
-			memset( &teamInv[j], 0, sizeof(inventory_t) );
+			memset( &baseCurrent->teamInv[j], 0, sizeof(inventory_t) );
 		}
 		else i++;
 	}
@@ -2260,7 +2317,7 @@ void CL_GameResultsCmd( void )
 	// add recruits
 	if ( won && selMis->def->recruits )
 		for ( i = 0; i < selMis->def->recruits; i++ )
-			CL_GenerateCharacter( curCampaign->team );
+			CL_GenerateCharacter( curCampaign->team, baseCurrent );
 
 	// campaign effects
 	selMis->cause->done++;

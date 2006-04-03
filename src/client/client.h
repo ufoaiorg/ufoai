@@ -755,6 +755,8 @@ extern int numOnTeam;
 extern int teamMask;
 extern int deathMask;
 extern int equipType;
+extern int numHired;
+extern int hiredMask;
 
 extern char *teamSkinNames[NUM_TEAMSKINS];
 
@@ -762,8 +764,6 @@ void CL_ResetTeams( void );
 void CL_ParseResults( sizebuf_t *buf );
 void CL_SendTeamInfo( sizebuf_t *buf, character_t *team, int num );
 void CL_CheckInventory( equipDef_t *equip );
-void CL_GenerateCharacter( char *team );
-void CL_ResetCharacters( void );
 void CL_LoadTeam( sizebuf_t *sb );
 void CL_ItemDescription( int item );
 
@@ -934,6 +934,46 @@ typedef struct building_s
 } building_t;
 
 #define MAX_AIRCRAFT	256
+#define LINE_MAXSEG 64
+#define LINE_MAXPTS (LINE_MAXSEG+2)
+#define LINE_DPHI	(M_PI/LINE_MAXSEG)
+
+typedef struct mapline_s
+{
+	int    n;
+	float  dist;
+	vec2_t p[LINE_MAXPTS];
+} mapline_t;
+
+typedef enum
+{
+	AIRCRAFT_TRANSPORTER,
+	AIRCRAFT_INTERCEPTOR,
+	AIRCRAFT_UFO
+} aircraftType_t;
+
+typedef struct aircraft_s
+{
+	char	name[MAX_VAR];	// translateable name
+	char	title[MAX_VAR];	// internal id
+	char	image[MAX_VAR];	// image on geoscape
+	aircraftType_t	type;
+	int		status;	// see aircraftStatus_t
+	float		speed;
+	int	fuel;	// actual fuel
+	int	fuelSize;	// max fuel
+	int	size;	// how many soldiers max
+	vec2_t	pos;	// actual pos on geoscape
+	int		point;
+	int		time;
+	int	teamSize;	// how many soldiers on board
+	char	model[MAX_VAR];
+	char	model_top[MAX_VAR];
+	char	model_glass[MAX_VAR];
+	char	model_wings[MAX_VAR];
+	mapline_t route;
+	void*	homebase;	// pointer to homebase
+} aircraft_t;
 
 typedef struct base_s
 {
@@ -961,8 +1001,8 @@ typedef struct base_s
 	int	numList;
 
 	// all aircraft in this base
-	void*	aircraft[MAX_AIRCRAFT];
-	int 	numAircraftsInBase;
+	aircraft_t	aircraft[MAX_AIRCRAFT];
+	int 	numAircraftInBase;
 	void*	aircraftCurrent;
 
 	int	posX[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
@@ -975,6 +1015,24 @@ typedef struct base_s
 
 	// which level to display?
 	int	baseLevel;
+
+	int		hiredMask;
+	int		teamMask;
+	int		deathMask;
+
+	int		numHired;
+	int		numOnTeam;
+	int		numWholeTeam;
+
+	inventory_t	teamInv[MAX_WHOLETEAM];
+	inventory_t	equipment;
+
+	character_t	wholeTeam[MAX_WHOLETEAM];
+	character_t	curTeam[MAX_ACTIVETEAM];
+	character_t	*curChr;
+
+	int		equipType;
+	int		nextUCN;
 
 	// needed if there is another buildingpart to build
 	struct building_s *buildingToBuild;
@@ -1005,6 +1063,10 @@ extern	int   numEmployees;
 void CL_UpdateBaseData( void );
 int B_HowManyPeopleInBase2 ( base_t *base, int location );
 base_t* B_GetBase ( int id );
+int B_GetNumOnTeam ( void );
+
+void CL_ResetCharacters( base_t* base );
+void CL_GenerateCharacter( char *team, base_t* base );
 
 // needed to calculate the chosen building in cl_menu.c
 int picWidth, picHeight;
@@ -1037,10 +1099,6 @@ void MN_PrevMap ( void );
 
 #define MAX_STAGESETS	256
 #define MAX_STAGES		64
-
-#define LINE_MAXSEG 64
-#define LINE_MAXPTS (LINE_MAXSEG+2)
-#define LINE_DPHI	(M_PI/LINE_MAXSEG)
 
 typedef struct mission_s
 {
@@ -1122,43 +1180,6 @@ typedef struct campaign_s
 	qboolean	finished;
 } campaign_t;
 
-typedef struct mapline_s
-{
-	int    n;
-	float  dist;
-	vec2_t p[LINE_MAXPTS];
-} mapline_t;
-
-typedef enum
-{
-	AIRCRAFT_TRANSPORTER,
-	AIRCRAFT_INTERCEPTOR,
-	AIRCRAFT_UFO
-} aircraftType_t;
-
-typedef struct aircraft_s
-{
-	char	name[MAX_VAR];	// translateable name
-	char	title[MAX_VAR];	// internal id
-	char	image[MAX_VAR];	// image on geoscape
-	aircraftType_t	type;
-	int		status;	// see aircraftStatus_t
-	float		speed;
-	int	fuel;	// actual fuel
-	int	fuelSize;	// max fuel
-	int	size;	// how many soldiers max
-	vec2_t	pos;	// actual pos on geoscape
-	int		point;
-	int		time;
-	int	teamSize;	// how many soldiers on board
-	char	model[MAX_VAR];
-	char	model_top[MAX_VAR];
-	char	model_glass[MAX_VAR];
-	char	model_wings[MAX_VAR];
-	mapline_t route;
-	base_t*	homebase;	// pointer to homebase
-} aircraft_t;
-
 extern aircraft_t	aircraft[MAX_AIRCRAFT];
 extern int		numAircraft;
 extern aircraft_t	*interceptAircraft;
@@ -1179,6 +1200,7 @@ typedef struct ccs_s
 	int		numMissions;
 
 	int		numBases;
+	qboolean	singleplayer;
 
 	int		credits;
 	int		reward;

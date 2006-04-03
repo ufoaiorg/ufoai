@@ -51,7 +51,7 @@ typedef struct menuNode_s
 typedef struct menu_s
 {
 	char		name[MAX_VAR];
-	menuNode_t	*firstNode, *initNode, *closeNode, *renderNode, *popupNode;
+	menuNode_t	*firstNode, *initNode, *closeNode, *renderNode, *popupNode, *hoverNode;
 } menu_t;
 
 // ===========================================================
@@ -386,13 +386,13 @@ void MN_StartServer ( void )
 
 	if ( Cvar_VariableValue("dedicated") > 0 )
 		Com_DPrintf("Dedicated server needs no team\n");
-	else if ( !numOnTeam )
+	else if ( !B_GetNumOnTeam() )
 	{
 		MN_Popup( _("Error"), _("Assemble a team first") );
 		return;
 	}
 	else
-		Com_DPrintf("There are %i members on team\n", numOnTeam );
+		Com_DPrintf("There are %i members on team\n", B_GetNumOnTeam() );
 
 	if ( Cvar_VariableValue("sv_teamplay")
 	  && Cvar_VariableValue("maxsoldiersperplayer") > Cvar_VariableValue("maxsoldiers") )
@@ -963,13 +963,13 @@ void MN_Drag( menuNode_t *node, int x, int y )
 				if ( i )
 				{
 					et = csi.ods[i->item.t].buytype;
-					if ( et != equipType )
+					if ( et != baseCurrent->equipType )
 					{
-						menuInventory->c[csi.idEquip] = equipment.c[et];
+						menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[et];
 						Com_FindSpace( menuInventory, i->item.t, csi.idEquip, &px, &py );
 						if ( px >= 32 && py >= 16 )
 						{
-							menuInventory->c[csi.idEquip] = equipment.c[equipType];
+							menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[baseCurrent->equipType];
 							return;
 						}
 					}
@@ -980,17 +980,17 @@ void MN_Drag( menuNode_t *node, int x, int y )
 			Com_MoveInInventory( menuInventory, dragFrom, dragFromX, dragFromY, node->mousefx, px, py, NULL, NULL );
 
 			// end of hack
-			if ( i && et != equipType )
+			if ( i && et != baseCurrent->equipType )
 			{
-				equipment.c[et] = menuInventory->c[csi.idEquip];
-				menuInventory->c[csi.idEquip] = equipment.c[equipType];
+				baseCurrent->equipment.c[et] = menuInventory->c[csi.idEquip];
+				menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[baseCurrent->equipType];
 			}
-			else equipment.c[equipType] = menuInventory->c[csi.idEquip];
+			else baseCurrent->equipment.c[baseCurrent->equipType] = menuInventory->c[csi.idEquip];
 
 			// update character info (for armor changes)
 			sel = cl_selected->value;
-			if ( sel >= 0 && sel < numWholeTeam )
-				CL_CharacterCvars( &curTeam[sel] );
+			if ( sel >= 0 && sel < baseCurrent->numWholeTeam )
+				CL_CharacterCvars( &baseCurrent->curTeam[sel] );
 		}
 	}
 
@@ -1027,9 +1027,9 @@ MN_MapClick
 */
 void MN_MapClick( menuNode_t *node, int x, int y )
 {
-	aircraft_t *air;
-	actMis_t *ms;
-	int i, msx, msy;
+	aircraft_t	*air;
+	actMis_t	*ms;
+	int	i, j, msx, msy;
 	vec2_t	pos;
 
 	// get map position
@@ -1062,7 +1062,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	}
 
 	// base selection
-	for ( i = 0; i < MAX_BASES; i++ )
+	for ( i = 0; i < ccs.numBases; i++ )
 	{
 		if ( !MN_MapToScreen( node, bmBases[i].pos, &msx, &msy ) )
 			continue;
@@ -1076,14 +1076,17 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	}
 
 	// draw aircraft
-	for ( i = 0, air = aircraft; i < numAircraft; i++, air++ )
+	for ( i = 0; i < ccs.numBases; i++ )
 	{
-		if ( air->status > AIR_HOME )
+		for ( j = 0, air = bmBases[i].aircraft; j < bmBases[i].numAircraftInBase; j++, air++ )
 		{
-			MN_MapCalcLine( air->pos, pos, &air->route );
-			air->status = AIR_TRANSIT;
-			air->time = 0;
-			air->point = 0;
+			if ( air->status > AIR_HOME )
+			{
+				MN_MapCalcLine( air->pos, pos, &air->route );
+				air->status = AIR_TRANSIT;
+				air->time = 0;
+				air->point = 0;
+			}
 		}
 	}
 }
@@ -1395,9 +1398,9 @@ MN_DrawMapMarkers
 */
 void MN_DrawMapMarkers( menuNode_t *node )
 {
-	aircraft_t *air;
-	actMis_t *ms;
-	int i, x, y;
+	aircraft_t	*air;
+	actMis_t	*ms;
+	int	i, j, x, y;
 
 	// draw mission pics
 	menuText[TEXT_STANDARD] = NULL;
@@ -1424,31 +1427,36 @@ void MN_DrawMapMarkers( menuNode_t *node )
 	}
 
 	// draw base pics
-	for ( i = 0; i < MAX_BASES; i++ )
-		if ( bmBases[i].founded )
+	for ( j = 0; j < ccs.numBases; j++ )
+		if ( bmBases[j].founded )
 		{
-			if ( !MN_MapToScreen( node, bmBases[i].pos, &x, &y ) )
+			if ( !MN_MapToScreen( node, bmBases[j].pos, &x, &y ) )
 				continue;
 			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, "base" );
 		}
 
 	// draw aircraft
-	for ( i = 0, air = aircraft; i < numAircraft; i++, air++ )
-		if ( air->status != AIR_HOME )
+	for ( j = 0; j < ccs.numBases; j++ )
+		if ( bmBases[j].founded )
 		{
-			if ( !MN_MapToScreen( node, air->pos, &x, &y ) )
-				continue;
-			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, air->image );
+			for ( i = 0, air = (aircraft_t*)bmBases[j].aircraft; i < bmBases[j].numAircraftInBase; i++, air++ )
+				if ( air->status != AIR_HOME )
+				{
+					if ( !MN_MapToScreen( node, air->pos, &x, &y ) )
+						continue;
+					re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, air->image );
 
-			if ( air->status >= AIR_TRANSIT )
-			{
-				mapline_t path;
-				path.n = air->route.n - air->point;
-				memcpy( path.p+1, air->route.p + air->point+1, (path.n-1) * sizeof(vec2_t) );
-				memcpy( path.p, air->pos, sizeof(vec2_t) );
-				MN_MapDrawLine( node, &path );
-			}
+					if ( air->status >= AIR_TRANSIT )
+					{
+						mapline_t path;
+						path.n = air->route.n - air->point;
+						memcpy( path.p+1, air->route.p + air->point+1, (path.n-1) * sizeof(vec2_t) );
+						memcpy( path.p, air->pos, sizeof(vec2_t) );
+						MN_MapDrawLine( node, &path );
+					}
+				}
 		}
+
 }
 
 /*
@@ -1535,7 +1543,7 @@ MN_DrawMenus
 void MN_DrawMenus( void )
 {
 	modelInfo_t	mi, pmi;
-	menuNode_t	*node, *hover = NULL;
+	menuNode_t	*node;
 	menu_t		*menu;
 	animState_t	*as;
 	char		*ref, *font;
@@ -1575,7 +1583,7 @@ void MN_DrawMenus( void )
 					if ( mouseOver != node->state )
 					{
 						// maybe we are leaving to another menu
-						hover = NULL;
+						menu->hoverNode = NULL;
 						if ( mouseOver )
 							MN_ExecuteActions( menu, node->mouseIn );
 						else
@@ -1913,13 +1921,13 @@ void MN_DrawMenus( void )
 
 				// mouseover?
 				if ( node->state == true )
-					hover = node;
+					menu->hoverNode = node;
 			} // if
 		} // for
-		if ( hover && cl_show_tooltips->value )
+		if ( sp == menuStackPos && menu->hoverNode && cl_show_tooltips->value )
 		{
-			MN_Tooltip(hover, mx, my);
-			hover = NULL;
+			MN_Tooltip(menu->hoverNode, mx, my);
+			menu->hoverNode = NULL;
 		}
 	}
 	re.DrawColor( NULL );
@@ -1967,12 +1975,14 @@ void MN_PushMenu( char *name )
 		{
 			// found the correct add it to stack or bring it on top
 			MN_DeleteMenu( &menus[i] );
+
 			if ( menuStackPos < MAX_MENUSTACK )
 				menuStack[menuStackPos++] = &menus[i];
 			else
 				Com_Printf( _("Menu stack overflow\n") );
 
 			// initialize it
+
 			if ( menus[i].initNode )
 				MN_ExecuteActions( &menus[i], menus[i].initNode->click );
 

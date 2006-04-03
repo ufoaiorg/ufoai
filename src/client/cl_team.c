@@ -3,6 +3,7 @@
 
 #include "client.h"
 
+#if 0 // gone to base_t
 int		hiredMask;
 int		teamMask;
 int		deathMask;
@@ -11,15 +12,16 @@ int		numHired;
 int		numOnTeam;
 int		numWholeTeam;
 
-inventory_t teamInv[MAX_WHOLETEAM];
+inventory_t	teamInv[MAX_WHOLETEAM];
 inventory_t	equipment;
 
-character_t wholeTeam[MAX_WHOLETEAM];
-character_t curTeam[MAX_ACTIVETEAM];
-character_t *curChr;
+character_t	wholeTeam[MAX_WHOLETEAM];
+character_t	curTeam[MAX_ACTIVETEAM];
+character_t	*curChr;
 
 int		equipType;
 int		nextUCN;
+#endif
 
 char *teamSkinNames[NUM_TEAMSKINS] =
 {
@@ -94,33 +96,33 @@ void CL_GiveNameCmd( void )
 CL_GenerateCharacter
 ======================
 */
-void CL_GenerateCharacter( char *team )
+void CL_GenerateCharacter( char *team, base_t* base )
 {
 	character_t *chr;
 
 	// check for too many characters
-	if ( numWholeTeam >= (int)cl_numnames->value )
+	if ( base->numWholeTeam >= (int)cl_numnames->value )
 		return;
 
 	// reset character
-	chr = &wholeTeam[numWholeTeam];
+	chr = &base->wholeTeam[base->numWholeTeam];
 	memset( chr, 0, sizeof( character_t ) );
 
 	// link inventory
-	chr->inv = &teamInv[numWholeTeam];
+	chr->inv = &base->teamInv[base->numWholeTeam];
 	Com_DestroyInventory( chr->inv );
 
 	// get ucn
-	chr->ucn = nextUCN++;
+	chr->ucn = base->nextUCN++;
 
 	// new attributes
 	Com_CharGenAbilitySkills (chr, 0, 75, 0, 75);
 
 	// get model and name
 	chr->skin = Com_GetModelAndName( team, chr->path, chr->body, chr->head, chr->name );
-	Cvar_ForceSet( va( "mn_name%i", numWholeTeam ), chr->name );
+	Cvar_ForceSet( va( "mn_name%i", base->numWholeTeam ), chr->name );
 
-	numWholeTeam++;
+	base->numWholeTeam++;
 }
 
 
@@ -129,24 +131,24 @@ void CL_GenerateCharacter( char *team )
 CL_ResetCharacters
 ======================
 */
-void CL_ResetCharacters( void )
+void CL_ResetCharacters( base_t* base )
 {
-	int		i;
+	int	i;
 
 	// reset inventory data
 	for ( i = 0; i < MAX_WHOLETEAM; i++ )
 	{
-		Com_DestroyInventory( &teamInv[i] );
-//		teamInv[i].c[csi.idFloor] = equipment;
-		wholeTeam[i].inv = &teamInv[i];
+		Com_DestroyInventory( &base->teamInv[i] );
+//		baseCurrent->teamInv[i].c[csi.idFloor] = baseCurrent->equipment;
+		base->wholeTeam[i].inv = &base->teamInv[i];
 	}
 
 	// reset hire info
 	Cvar_ForceSet( "cl_selected", "0" );
-	numWholeTeam = 0;
-	numOnTeam = 0;
-	numHired = 0;
-	teamMask = 0;
+	base->numWholeTeam = 0;
+	base->numOnTeam = 0;
+	base->numHired = 0;
+	base->teamMask = 0;
 }
 
 
@@ -157,11 +159,7 @@ CL_GenerateNamesCmd
 */
 void CL_GenerateNamesCmd( void )
 {
-	CL_ResetCharacters();
 	Cbuf_AddText( "disconnect\ngame_exit\n" );
-
-	while ( numWholeTeam < cl_numnames->value )
-		CL_GenerateCharacter( Cvar_VariableString( "team" ) );
 }
 
 
@@ -174,8 +172,11 @@ void CL_ChangeNameCmd( void )
 {
 	int sel;
 	sel = cl_selected->value;
-	if ( sel >= 0 && sel < numWholeTeam )
-		strcpy( wholeTeam[sel].name, Cvar_VariableString( "mn_name" ) );
+
+	assert(baseCurrent);
+
+	if ( sel >= 0 && sel < baseCurrent->numWholeTeam )
+		strcpy( baseCurrent->wholeTeam[sel].name, Cvar_VariableString( "mn_name" ) );
 }
 
 
@@ -188,16 +189,16 @@ void CL_ChangeSkinCmd( void )
 {
 	int sel, newSkin, i;
 	sel = cl_selected->value;
-	if ( sel >= 0 && sel < numWholeTeam )
+	if ( sel >= 0 && sel < baseCurrent->numWholeTeam )
 	{
 		newSkin = (int)Cvar_VariableValue( "mn_skin" ) + 1;
 		if ( newSkin >= NUM_TEAMSKINS || newSkin < 0 ) newSkin = 0;
 
-		curTeam[sel].skin = newSkin;
-		for ( i = 0; i < numWholeTeam; i++ )
-			if ( wholeTeam[i].ucn == curTeam[sel].ucn )
+		baseCurrent->curTeam[sel].skin = newSkin;
+		for ( i = 0; i < baseCurrent->numWholeTeam; i++ )
+			if ( baseCurrent->wholeTeam[i].ucn == baseCurrent->curTeam[sel].ucn )
 			{
-				wholeTeam[i].skin = newSkin;
+				baseCurrent->wholeTeam[i].skin = newSkin;
 				break;
 			}
 
@@ -392,7 +393,7 @@ void CL_CheckInventory( equipDef_t *equip )
 	// others with unloaded guns in their hands.
 	for ( container = 0; container < csi.numIDs; container++ )
 	{
-		for ( p = 0, cp = curTeam; p < numOnTeam; p++, cp++ )
+		for ( p = 0, cp = baseCurrent->curTeam; p < baseCurrent->numOnTeam; p++, cp++ )
 		{
 			for ( ic = cp->inv->c[container]; ic; ic = next )
 			{
@@ -415,11 +416,11 @@ void CL_CleanTempInventory( void )
 {
 	int i, k;
 
-	Com_DestroyInventory( &equipment );
+	Com_DestroyInventory( &baseCurrent->equipment );
 	for ( i = 0; i < MAX_WHOLETEAM; i++ )
 		for ( k = 0; k < csi.numIDs; k++ )
-			if ( k == csi.idEquip ) teamInv[i].c[k] = NULL;
-			else if ( csi.ids[k].temp ) Com_EmptyContainer( &teamInv[i], k );
+			if ( k == csi.idEquip ) baseCurrent->teamInv[i].c[k] = NULL;
+			else if ( csi.ids[k].temp ) Com_EmptyContainer( &baseCurrent->teamInv[i], k );
 }
 
 /*
@@ -435,7 +436,9 @@ void CL_GenerateEquipmentCmd( void )
 	int		i, p;
 	int		x, y;
 
-	if ( !numHired )
+	assert(baseCurrent);
+
+	if ( !baseCurrent->numHired )
 	{
 		MN_PopMenu( false );
 		return;
@@ -446,13 +449,13 @@ void CL_GenerateEquipmentCmd( void )
 
 	// store hired names
 	Cvar_ForceSet( "cl_selected", "0" );
-	numOnTeam = numHired;
-	teamMask = hiredMask;
-	for ( i = 0, p = 0; i < numWholeTeam; i++ )
-		if ( hiredMask & (1 << i) )
+	baseCurrent->numOnTeam = baseCurrent->numHired;
+	baseCurrent->teamMask = baseCurrent->hiredMask;
+	for ( i = 0, p = 0; i < baseCurrent->numWholeTeam; i++ )
+		if ( baseCurrent->hiredMask & (1 << i) )
 		{
-			curTeam[p] = wholeTeam[i];
-			Cvar_ForceSet( va( "mn_name%i", p ), curTeam[p].name );
+			baseCurrent->curTeam[p] = baseCurrent->wholeTeam[i];
+			Cvar_ForceSet( va( "mn_name%i", p ), baseCurrent->curTeam[p].name );
 			p++;
 		}
 
@@ -462,7 +465,7 @@ void CL_GenerateEquipmentCmd( void )
 		Cbuf_AddText( va( "equipdisable%i\n", p ) );
 	}
 
-	menuInventory = &teamInv[0];
+	menuInventory = &baseCurrent->teamInv[0];
 	selActor = NULL;
 
 	// reset description
@@ -497,16 +500,16 @@ void CL_GenerateEquipmentCmd( void )
 		while ( unused.num[i] )
 		{
 			// 'tiny hack' to add the equipment correctly into buy categories
-			equipment.c[csi.idEquip] = equipment.c[csi.ods[i].buytype];
+			baseCurrent->equipment.c[csi.idEquip] = baseCurrent->equipment.c[csi.ods[i].buytype];
 
-			Com_FindSpace( &equipment, i, csi.idEquip, &x, &y );
+			Com_FindSpace( &baseCurrent->equipment, i, csi.idEquip, &x, &y );
 			if ( x >= 32 && y >= 16 ) break;
-			Com_AddToInventory( &equipment, CL_AddWeaponAmmo( &unused, i ), csi.idEquip, x, y );
+			Com_AddToInventory( &baseCurrent->equipment, CL_AddWeaponAmmo( &unused, i ), csi.idEquip, x, y );
 
-			equipment.c[csi.ods[i].buytype] = equipment.c[csi.idEquip];
+			baseCurrent->equipment.c[csi.ods[i].buytype] = baseCurrent->equipment.c[csi.idEquip];
 		}
 
-	equipment.c[csi.idEquip] = NULL;
+	baseCurrent->equipment.c[csi.idEquip] = NULL;
 }
 
 
@@ -531,8 +534,8 @@ void CL_EquipTypeCmd( void )
 		return;
 
 	// display new items
-	equipType = num;
-	if ( menuInventory ) menuInventory->c[csi.idEquip] = equipment.c[num];
+	baseCurrent->equipType = num;
+	if ( menuInventory ) menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[num];
 }
 
 /*
@@ -559,17 +562,17 @@ void CL_SelectCmd( void )
 
 	if ( !strcmp( command, "equip" ) )
 	{
-		if ( num >= numOnTeam ) return;
-		if ( menuInventory && menuInventory != curTeam[num].inv )
+		if ( !baseCurrent || num >= baseCurrent->numOnTeam ) return;
+		if ( menuInventory && menuInventory != baseCurrent->curTeam[num].inv )
 		{
-			curTeam[num].inv->c[csi.idEquip] = menuInventory->c[csi.idEquip];
+			baseCurrent->curTeam[num].inv->c[csi.idEquip] = menuInventory->c[csi.idEquip];
 			menuInventory->c[csi.idEquip] = NULL;
 		}
-		menuInventory = curTeam[num].inv;
+		menuInventory = baseCurrent->curTeam[num].inv;
 	}
 	else if ( !strcmp( command, "team" ) )
 	{
-		if ( num >= numWholeTeam ) return;
+		if ( !baseCurrent || num >= baseCurrent->numWholeTeam ) return;
 	}
 	else if ( !strcmp( command, "hud" ) )
 	{
@@ -583,8 +586,8 @@ void CL_SelectCmd( void )
 	Cvar_ForceSet( "cl_selected", va( "%i", num ) );
 
 	// set info cvars
-	if ( !strcmp( command, "team" ) ) CL_CharacterCvars( &wholeTeam[num] );
-	else CL_CharacterCvars( &curTeam[num] );
+	if ( !strcmp( command, "team" ) ) CL_CharacterCvars( &baseCurrent->wholeTeam[num] );
+	else CL_CharacterCvars( &baseCurrent->curTeam[num] );
 }
 
 /*
@@ -603,7 +606,7 @@ void CL_UpdateHireVar ( void )
 		Cvar_Set( "mn_hired", va( "%i of %i\n", air->teamSize, air->size ) );
 	}
 	else
-		Cvar_Set( "mn_hired", va( "%i of %i\n", numHired, MAX_ACTIVETEAM ) );
+		Cvar_Set( "mn_hired", va( "%i of %i\n", baseCurrent->numHired, MAX_ACTIVETEAM ) );
 
 }
 
@@ -619,26 +622,26 @@ void CL_MarkTeamCmd( void )
 	// check if we are allowed to be here?
 	// we are only allowed to be here if we already set up a base
 	// or are in multiplayer mode
-	if ( ! ccs.numBases && (int)Cvar_VariableValue("maxclients") == 1 )
+	if ( ! ccs.numBases )
 	{
 		Com_Printf(_("No base set up\n"));
-		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
+		MN_PopMenu(false);
 		return;
 	}
 
-	hiredMask = teamMask;
-	numHired = numOnTeam;
+// 	baseCurrent->hiredMask = baseCurrent->teamMask;
+// 	baseCurrent->numHired = baseCurrent->numOnTeam;
 
 	CL_UpdateHireVar();
 
-	for ( i = 0; i < numWholeTeam; i++ )
+	for ( i = 0; i < baseCurrent->numWholeTeam; i++ )
 	{
-		Cvar_ForceSet( va( "mn_name%i", i ), wholeTeam[i].name );
-		if ( hiredMask & (1 << i) )
+		Cvar_ForceSet( va( "mn_name%i", i ), baseCurrent->wholeTeam[i].name );
+		if ( baseCurrent->hiredMask & (1 << i) )
 			Cbuf_AddText( va( "listadd%i\n", i ) );
 	}
 
-	for ( i = numWholeTeam; i < (int)cl_numnames->value; i++ )
+	for ( i = baseCurrent->numWholeTeam; i < (int)cl_numnames->value; i++ )
 	{
 		Cbuf_AddText( va( "listdisable%i\n", i ) );
 		Cvar_ForceSet( va( "mn_name%i", i ), "" );
@@ -667,24 +670,24 @@ void CL_HireActorCmd( void )
 	if ( baseCurrent && baseCurrent->aircraftCurrent )
 		air = (aircraft_t*)baseCurrent->aircraftCurrent;
 
-	if ( num >= numWholeTeam )
+	if ( num >= baseCurrent->numWholeTeam )
 		return;
 
-	if ( hiredMask & (1 << num) )
+	if ( baseCurrent->hiredMask & (1 << num) )
 	{
 		// unhire
 		Cbuf_AddText( va( "listdel%i\n", num ) );
-		hiredMask &= ~(1 << num);
-		numHired--;
+		baseCurrent->hiredMask &= ~(1 << num);
+		baseCurrent->numHired--;
 		if ( air )
 			air->teamSize--;
 	}
-	else if ( numHired < MAX_ACTIVETEAM && ( ( air && air->size > air->teamSize ) || ! air ) )
+	else if ( baseCurrent->numHired < MAX_ACTIVETEAM && ( ( air && air->size > air->teamSize ) || ! air ) )
 	{
 		// hire
 		Cbuf_AddText( va( "listadd%i\n", num ) );
-		hiredMask |= (1 << num);
-		numHired++;
+		baseCurrent->hiredMask |= (1 << num);
+		baseCurrent->numHired++;
 		if ( air && air->size >= air->teamSize )
 			air->teamSize++;
 	}
@@ -759,6 +762,8 @@ void CL_SaveTeam( char *filename )
 	FILE	*f;
 	int		res;
 
+	assert(baseCurrent);
+
 	// create the save dir - if needed
 	FS_CreatePath( filename );
 	// open file
@@ -776,11 +781,11 @@ void CL_SaveTeam( char *filename )
 	MSG_WriteString( &sb, Cvar_VariableString( "mn_teamname" ) );
 
 	// store team
-	CL_SendTeamInfo( &sb, wholeTeam, numWholeTeam );
+	CL_SendTeamInfo( &sb, baseCurrent->wholeTeam, baseCurrent->numWholeTeam );
 
 	// store assignement
-	MSG_WriteLong( &sb, teamMask );
-	MSG_WriteByte( &sb, numOnTeam );
+	MSG_WriteLong( &sb, baseCurrent->teamMask );
+	MSG_WriteByte( &sb, baseCurrent->numOnTeam );
 
 	// write data
 	res = fwrite( buf, 1, sb.cursize, f );
@@ -839,7 +844,7 @@ void CL_LoadTeamMember( sizebuf_t *sb, character_t *chr )
 
 	// unique character number
 	chr->ucn = MSG_ReadShort( sb );
-	if ( chr->ucn >= nextUCN ) nextUCN = chr->ucn + 1;
+	if ( chr->ucn >= baseCurrent->nextUCN ) baseCurrent->nextUCN = chr->ucn + 1;
 
 	// name and model
 	strcpy( chr->name, MSG_ReadString( sb ) );
@@ -883,25 +888,28 @@ void CL_LoadTeam( sizebuf_t *sb )
 	character_t	*chr;
 	int i, p;
 
+	if (!baseCurrent)
+		return;
+
 	// reset data
-	CL_ResetCharacters();
+	CL_ResetCharacters( baseCurrent );
 
 	// read whole team list
 	MSG_ReadByte( sb );
-	numWholeTeam = MSG_ReadByte( sb );
-	for ( i = 0, chr = wholeTeam; i < numWholeTeam; chr++, i++ )
+	baseCurrent->numWholeTeam = MSG_ReadByte( sb );
+	for ( i = 0, chr = baseCurrent->wholeTeam; i < baseCurrent->numWholeTeam; chr++, i++ )
 		CL_LoadTeamMember( sb, chr );
 
 	// get assignement
-	teamMask = MSG_ReadLong( sb );
-	numOnTeam = MSG_ReadByte( sb );
-	numHired = numOnTeam;
+	baseCurrent->teamMask = MSG_ReadLong( sb );
+	baseCurrent->numOnTeam = MSG_ReadByte( sb );
+	baseCurrent->numHired = baseCurrent->numOnTeam;
 
-	Com_DPrintf(_("Load team with %i members and %i slots\n"), numOnTeam, numWholeTeam );
+	Com_DPrintf(_("Load team with %i members and %i slots\n"), baseCurrent->numOnTeam, baseCurrent->numWholeTeam );
 
-	for ( i = 0, p = 0; i < numWholeTeam; i++ )
-		if ( teamMask & (1 << i) )
-			curTeam[p++] = wholeTeam[i];
+	for ( i = 0, p = 0; i < baseCurrent->numWholeTeam; i++ )
+		if ( baseCurrent->teamMask & (1 << i) )
+			baseCurrent->curTeam[p++] = baseCurrent->wholeTeam[i];
 }
 
 
@@ -1011,8 +1019,6 @@ void CL_ResetTeams( void )
 	for ( i = 0; i < MAX_WHOLETEAM; i++ )
 		Cvar_Get( va( "mn_name%i", i ), "", CVAR_NOSET );
 */
-	memset( &equipment, 0, sizeof(inventory_t) );
-	nextUCN = 0;
 }
 
 /*

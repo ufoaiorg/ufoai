@@ -272,13 +272,14 @@ void B_SetUpBase ( void )
 
 	assert( baseCurrent );
 	MN_BuildingInit();
+	Com_DPrintf("Set up for %i\n", baseCurrent->id );
 	for (i = 0 ; i < numBuildings; i++ )
 	{
 		if ( ccs.numBases == 1 && bmBuildings[ccs.actualBaseID][i].firstbase )
 		{
 			baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][i];
-			Com_DPrintf("firstbase: %s (%i) at (%i:%i)\n", baseCurrent->buildingCurrent->name, i, bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
-			MN_SetBuildingByClick ( bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
+			Com_DPrintf("firstbase: %s (%i) at (%.0f:%.0f)\n", baseCurrent->buildingCurrent->name, i, bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
+			MN_SetBuildingByClick ( (int)bmBuildings[ccs.actualBaseID][i].pos[0], (int)bmBuildings[ccs.actualBaseID][i].pos[1] );
 			bmBuildings[ccs.actualBaseID][i].buildingStatus[bmBuildings[ccs.actualBaseID][i].howManyOfThisType] = B_WORKING_100;
 			//update the array
 			MN_BuildingInit();
@@ -286,8 +287,8 @@ void B_SetUpBase ( void )
 		else if ( bmBuildings[ccs.actualBaseID][i].autobuild )
 		{
 			baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][i];
-			Com_DPrintf("autobuild: %s (%i) at (%i:%i)\n", baseCurrent->buildingCurrent->name, i, bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
-			MN_SetBuildingByClick ( bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
+			Com_DPrintf("autobuild: %s (%i) at (%.0f:%.0f)\n", baseCurrent->buildingCurrent->name, i, bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
+			MN_SetBuildingByClick ( (int)bmBuildings[ccs.actualBaseID][i].pos[0], (int)bmBuildings[ccs.actualBaseID][i].pos[1] );
 			bmBuildings[ccs.actualBaseID][i].buildingStatus[bmBuildings[ccs.actualBaseID][i].howManyOfThisType] = B_WORKING_100;
 			//update the array
 			MN_BuildingInit();
@@ -899,6 +900,8 @@ void MN_BuildingInit( void )
 		if ( bmBuildings[ccs.actualBaseID][i-1].depends )
 		{
 			building = B_GetBuilding ( bmBuildings[ccs.actualBaseID][i-1].depends );
+			if ( ! building )
+				Sys_Error(_("Wrong depedency in basemangagement.ufo for building %s"), bmBuildings[ccs.actualBaseID][i-1].title );
 			bmBuildings[ccs.actualBaseID][i-1].dependsBuilding = building;
 			if ( bmBuildings[ccs.actualBaseID][i-1].dependsBuilding->buildingStatus[0] > B_CONSTRUCTION_FINISHED )
 				MN_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i-1].title), i-1 );
@@ -1127,9 +1130,26 @@ MN_ClearBase
 */
 void MN_ClearBase( base_t *base )
 {
-	int	row, col, levels;
+	int	row, col, levels, i;
 
 	memset( base, 0, sizeof(base_t) );
+
+	memset( &base->equipment, 0, sizeof(inventory_t) );
+	base->nextUCN = 0;
+
+	CL_ResetCharacters( base );
+
+	// setup team
+	if (!curCampaign) // should be multiplayer
+	{
+		while ( base->numWholeTeam < cl_numnames->value )
+			CL_GenerateCharacter( Cvar_VariableString( "team" ), base );
+	}
+	else // should be multiplayer (campaignmode TODO) or singleplayer
+	{
+		for ( i = 0; i < curCampaign->soldiers; i++ )
+			CL_GenerateCharacter( curCampaign->team, base );
+	}
 
 	for ( row = BASE_SIZE-1; row >= 0; row-- )
 		for ( col = BASE_SIZE-1; col >= 0; col-- )
@@ -1187,7 +1207,7 @@ void MN_ParseBases( char *title, char **text )
 			base->prev = &bmBases[numBases-1];
 			bmBases[numBases-1].next = base;
 		}
-*/		MN_ClearBase( &bmBases[numBases] );
+*/
 		numBases++;
 	} while ( *text );
 }
@@ -1302,8 +1322,8 @@ void MN_DrawBase( void )
 	if ( ! baseCurrent )
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
 
-	if (! bmBuildings[ccs.actualBaseID] )
-		MN_BuildingInit();
+// 	if (! bmBuildings[ccs.actualBaseID] )
+// 		MN_BuildingInit();
 
 	bvScale = ccs.basezoom;
 	bvCenterX = ccs.basecenter[0] * SCROLLSPEED;
@@ -1457,7 +1477,7 @@ void MN_BaseInit( void )
 	ccs.basezoom = 0.4;
 
 	//these are the workers you can set on buildings
-	Cvar_Set( "mn_available_workers", 0 );
+	Cvar_SetValue( "mn_available_workers", 0 );
 
 	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
 }
@@ -1630,6 +1650,8 @@ void MN_BuildBase( void )
 			return;
 		}
 	}
+	else
+		Com_Printf(_("Not enough credits to set up a new base\n") );
 }
 
 
@@ -1742,7 +1764,9 @@ void MN_NewBases( void )
 	int i;
 	ccs.actualBaseID = 0;
 	for ( i = 0; i < MAX_BASES; i++ )
+	{
 		MN_ClearBase( &bmBases[i] );
+	}
 }
 
 /*
@@ -2039,6 +2063,7 @@ void MN_ResetBaseManagement( void )
 	Cmd_AddCommand( "baselist", CL_BaseList );
 	Cmd_AddCommand( "buildinglist", CL_BuildingList );
 	Cvar_SetValue( "mn_base_id", ccs.actualBaseID );
+
 }
 
 /*
@@ -2129,4 +2154,23 @@ base_t* B_GetBase ( int id )
 			return &bmBases[i];
 	}
 	return NULL;
+}
+
+int B_GetNumOnTeam ( void )
+{
+	// multiplayer
+	if ( ! ccs.singleplayer && ! baseCurrent )
+	{
+		MN_ClearBase( &bmBases[0] );
+		baseCurrent = &bmBases[0];
+		Com_DPrintf(_("no baseCurrent for mp\n"));
+	}
+
+	if ( ! baseCurrent )
+	{
+		Com_DPrintf(_("Probably an error in B_GetNumOnTeam - no baseCurrent\n"));
+		return 0;
+	}
+
+	return baseCurrent->numOnTeam;
 }

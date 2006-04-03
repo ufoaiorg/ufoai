@@ -831,6 +831,9 @@ void SV_InitGame (void)
 		SCR_BeginLoadingPlaque ();
 	}
 
+	// allow next change after map change or restart
+	sv_maxclients->flags |= CVAR_LATCH;
+
 	// get any latched variable changes (maxclients, etc)
 	Cvar_GetLatchedVars ();
 

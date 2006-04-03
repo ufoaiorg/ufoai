@@ -277,7 +277,7 @@ void CL_ActorUpdateCVars( void )
 			Com_sprintf( infoText, MAX_MENUTEXTLEN, _("Currently panics!\n") );
 		} else {
 			// in multiplayer we should be able to use the aliens weapons
- 			if ( Cvar_VariableValue("maxclients") == 1
+ 			if ( ccs.singleplayer
 			  && cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE
 			  && selWeapon && !RS_ItemIsResearched( csi.ods[ selWeapon->item.t].kurz ) )
 			{
@@ -482,10 +482,10 @@ void CL_RemoveActorFromTeamList( le_t *le )
 			if ( !curCampaign )
 				return;
 
-			for ( j = 0; j < numWholeTeam; j++ )
-				if ( curTeam[i].ucn == wholeTeam[j].ucn )
+			for ( j = 0; j < baseCurrent->numWholeTeam; j++ )
+				if ( baseCurrent->curTeam[i].ucn == baseCurrent->wholeTeam[j].ucn )
 				{
-					deathMask |= 1 << j;
+					baseCurrent->deathMask |= 1 << j;
 					break;
 				}
 			return;
@@ -517,7 +517,7 @@ qboolean CL_ActorSelect( le_t *le )
 		{
 			// console commands, update cvars
 			Cvar_ForceSet( "cl_selected", va( "%i", i ) );
-			selChr = &curTeam[i];
+			selChr = &baseCurrent->curTeam[i];
 			CL_CharacterCvars( selChr );
 
 			// calculate possible moves

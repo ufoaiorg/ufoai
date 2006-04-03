@@ -935,7 +935,7 @@ void SV_Init (void)
 	Cvar_Get ("timelimit", "0", CVAR_SERVERINFO);
 	Cvar_Get ("cheats", "0", CVAR_SERVERINFO|CVAR_LATCH);
 	Cvar_Get ("protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO|CVAR_NOSET);;
-	sv_maxclients = Cvar_Get ("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH);
+	sv_maxclients = Cvar_Get ("maxclients", "1", CVAR_SERVERINFO );
 	hostname = Cvar_Get ("hostname", "noname", CVAR_SERVERINFO | CVAR_ARCHIVE);
 	timeout = Cvar_Get ("timeout", "125", 0);
 	zombietime = Cvar_Get ("zombietime", "2", 0);
@@ -1031,5 +1031,7 @@ void SV_Shutdown (char *finalmsg, qboolean reconnect)
 	if (svs.demofile)
 		fclose (svs.demofile);
 	memset (&svs, 0, sizeof(svs));
+
+	sv_maxclients->flags &= ~CVAR_LATCH;
 }
 
