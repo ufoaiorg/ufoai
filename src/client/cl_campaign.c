@@ -1290,13 +1290,12 @@ void CL_GameNew( void )
 CL_SaveAircraft
 ======================
 */
-void AIR_SaveAircraft( sizebuf_t *sb )
+void AIR_SaveAircraft( sizebuf_t *sb, base_t* base )
 {
 	int	i;
 	aircraft_t*	air;
-	base_t*	base;
-	MSG_WriteByte( sb, numAircraft );
-	for ( i = 0, air = aircraft; i < numAircraft; i++, air++ )
+	MSG_WriteByte( sb, base->numAircraftInBase );
+	for ( i = 0, air = base->aircraft; i < base->numAircraftInBase; i++, air++ )
 	{
 		MSG_WriteString( sb, air->title );
 		MSG_WriteFloat( sb, air->pos[0] );
@@ -1305,8 +1304,6 @@ void AIR_SaveAircraft( sizebuf_t *sb )
 		MSG_WriteLong( sb, air->fuel );
 		MSG_WriteLong( sb, air->size );
 		MSG_WriteLong( sb, air->speed );
-		base = (base_t*)air->homebase;
-		MSG_WriteLong( sb, base ? base->id : -1 );
 		MSG_WriteLong( sb, air->point );
 		MSG_WriteLong( sb, air->time );
 		SZ_Write( sb, &air->route, sizeof(mapline_t) );
@@ -1334,11 +1331,10 @@ aircraft_t* AIR_FindAircraft ( char* aircraftName )
 CL_SaveAircraft
 ======================
 */
-void AIR_LoadAircraft ( sizebuf_t *sb, int version )
+void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
 {
-	int i, n, baseID;
+	int i, n;
 	aircraft_t* air;
-	base_t*	base;
 	if ( version >= 4 )
 	{
 		n = MSG_ReadByte( sb );
@@ -1353,19 +1349,14 @@ void AIR_LoadAircraft ( sizebuf_t *sb, int version )
 				air->fuel = MSG_ReadLong( sb );
 				air->size = MSG_ReadLong( sb );
 				air->speed = MSG_ReadLong( sb );
-				baseID = MSG_ReadLong( sb );
-				air->homebase = baseID != -1 ? B_GetBase( baseID ) : NULL;
+				air->homebase = base;
 				air->point = MSG_ReadLong( sb );
 				air->time = MSG_ReadLong( sb );
 				memcpy( &air->route, sb->data + sb->readcount, sizeof(mapline_t) );
 				sb->readcount += sizeof(mapline_t);
-				if ( air->homebase )
-				{
-					base = (base_t*)air->homebase;
-					memcpy( &base->aircraft[base->numAircraftInBase++], air, sizeof(aircraft_t) );
-					if ( ! base->aircraftCurrent )
-						base->aircraftCurrent = air;
-				}
+				memcpy( &base->aircraft[base->numAircraftInBase++], air, sizeof(aircraft_t) );
+				if ( ! base->aircraftCurrent )
+					base->aircraftCurrent = air;
 			}
 			else
 			{
@@ -1378,7 +1369,6 @@ void AIR_LoadAircraft ( sizebuf_t *sb, int version )
 				MSG_ReadLong( sb );	//fuel
 				MSG_ReadLong( sb );	//size
 				MSG_ReadLong( sb );	//speed
-				MSG_ReadLong( sb );	//homebase
 				MSG_ReadLong( sb );	//point
 				MSG_ReadLong( sb );	//time
 				sb->readcount += sizeof(mapline_t);	//route
@@ -1394,12 +1384,8 @@ void AIR_LoadAircraft ( sizebuf_t *sb, int version )
 CL_GameSave
 ======================
 */
-#define MAX_GAMESAVESIZE	8192
+#define MAX_GAMESAVESIZE	16384
 #define MAX_COMMENTLENGTH	32
-
-#ifndef SAVE_FILE_VERSION
-#define SAVE_FILE_VERSION 4
-#endif
 
 void CL_GameSave( char *filename, char *comment )
 {
@@ -1449,8 +1435,6 @@ void CL_GameSave( char *filename, char *comment )
 	// store bases
 	B_SaveBases( &sb );
 
-	AIR_SaveAircraft( &sb );
-
 	// store techs
 	RS_SaveTech( &sb );
 
@@ -1467,13 +1451,6 @@ void CL_GameSave( char *filename, char *comment )
 	// store market
 	for ( i = 0; i < MAX_OBJDEFS; i++ )
 		MSG_WriteLong( &sb, ccs.eMarket.num[i] );
-
-	// store team
-	CL_SendTeamInfo( &sb, baseCurrent->wholeTeam, baseCurrent->numWholeTeam );
-
-	// store assignement
-	MSG_WriteLong( &sb, baseCurrent->teamMask );
-	MSG_WriteByte( &sb, baseCurrent->numOnTeam );
 
 	// store campaign data
 	for ( i = 0, state = ccs.stage; i < numStages; i++, state++ )
@@ -1648,8 +1625,6 @@ void CL_GameLoad( char *filename )
 	// load bases
 	B_LoadBases( &sb, version );
 
-	AIR_LoadAircraft( &sb, version );
-
 	// load techs
 	RS_LoadTech( &sb, version );
 
@@ -1679,12 +1654,6 @@ void CL_GameLoad( char *filename )
 		else if (version >= 1)
 			ccs.eMarket.num[i] = MSG_ReadLong( &sb );
 	}
-
-	// reset data
-// 	CL_ResetCharacters();
-
-	// read whole team list
-	CL_LoadTeam( &sb );
 
 	// read campaign data
 	name = MSG_ReadString( &sb );

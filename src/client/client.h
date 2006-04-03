@@ -764,7 +764,6 @@ void CL_ResetTeams( void );
 void CL_ParseResults( sizebuf_t *buf );
 void CL_SendTeamInfo( sizebuf_t *buf, character_t *team, int num );
 void CL_CheckInventory( equipDef_t *equip );
-void CL_LoadTeam( sizebuf_t *sb );
 void CL_ItemDescription( int item );
 
 //
@@ -883,6 +882,7 @@ typedef struct building_s
 	char	name[MAX_VAR];
 	char	base[MAX_VAR];
 	char	title[MAX_VAR];
+	// needs determines the second building part
 	char	*text, *image, *needs, *depends, *mapPart, *produceType, *pedia;
 	float	energy, workerCosts, produceTime, fixCosts, varCosts;
 	int	production, level, id, timeStart, buildTime, techLevel, notUpOn;
@@ -1060,10 +1060,15 @@ extern	production_t	bmProductions[MAX_PRODUCTIONS];
 extern	employee_t	employees[MAX_EMPLOYEES];	// This it the global list of employees.
 extern	int   numEmployees;
 
+#ifndef SAVE_FILE_VERSION
+#define SAVE_FILE_VERSION 4
+#endif
+
 void CL_UpdateBaseData( void );
 int B_HowManyPeopleInBase2 ( base_t *base, int location );
 base_t* B_GetBase ( int id );
 int B_GetNumOnTeam ( void );
+void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version );
 
 void CL_ResetCharacters( base_t* base );
 void CL_GenerateCharacter( char *team, base_t* base );
@@ -1253,6 +1258,10 @@ extern	campaign_t	*curCampaign;
 extern	ccs_t		ccs;
 
 extern	int			mapAction;
+
+void AIR_SaveAircraft( sizebuf_t *sb, base_t* base );
+void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version );
+aircraft_t* AIR_FindAircraft ( char* aircraftName );
 
 char* CL_AircraftStatusToName ( aircraft_t* air );
 qboolean CL_MapIsNight( vec2_t pos );

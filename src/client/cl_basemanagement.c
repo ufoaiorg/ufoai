@@ -1307,6 +1307,9 @@ void MN_ParseProductions( char *title, char **text )
 /*
 =================
 MN_DrawBase
+
+FIXME: faster rendering - this is all 512x512
+without texture compression my notebook stutters around
 =================
 */
 void MN_DrawBase( void )
@@ -1321,9 +1324,6 @@ void MN_DrawBase( void )
 	building_t *secondEntry;
 	if ( ! baseCurrent )
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
-
-// 	if (! bmBuildings[ccs.actualBaseID] )
-// 		MN_BuildingInit();
 
 	bvScale = ccs.basezoom;
 	bvCenterX = ccs.basecenter[0] * SCROLLSPEED;
@@ -1840,6 +1840,14 @@ void B_SaveBases( sizebuf_t *sb )
 				MSG_WriteLong( sb, building->assignedWorkers );
 				building++;
 			}
+			AIR_SaveAircraft( sb, base );
+			// store team
+			CL_SendTeamInfo( sb, base->wholeTeam, base->numWholeTeam );
+
+			// store assignement
+			MSG_WriteLong( sb, base->teamMask );
+			MSG_WriteByte( sb, base->numOnTeam );
+			MSG_WriteByte( sb, base->numHired );
 		}
 }
 
@@ -1930,6 +1938,9 @@ void B_LoadBases( sizebuf_t *sb, int version )
 				building->assignedWorkers = MSG_ReadLong( sb );
 			}
 			MN_BuildingInit();
+			AIR_LoadAircraft( sb, base, version );
+			// read whole team list
+			CL_LoadTeam( sb, base, version );
 		}
 	}
 	ccs.numBases = num;

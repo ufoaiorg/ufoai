@@ -883,33 +883,30 @@ void CL_LoadTeamMember( sizebuf_t *sb, character_t *chr )
 CL_LoadTeam
 ======================
 */
-void CL_LoadTeam( sizebuf_t *sb )
+void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version )
 {
 	character_t	*chr;
 	int i, p;
 
-	if (!baseCurrent)
-		return;
-
 	// reset data
-	CL_ResetCharacters( baseCurrent );
+	CL_ResetCharacters( base );
 
 	// read whole team list
 	MSG_ReadByte( sb );
-	baseCurrent->numWholeTeam = MSG_ReadByte( sb );
-	for ( i = 0, chr = baseCurrent->wholeTeam; i < baseCurrent->numWholeTeam; chr++, i++ )
+	base->numWholeTeam = MSG_ReadByte( sb );
+	for ( i = 0, chr = base->wholeTeam; i < base->numWholeTeam; chr++, i++ )
 		CL_LoadTeamMember( sb, chr );
 
 	// get assignement
-	baseCurrent->teamMask = MSG_ReadLong( sb );
-	baseCurrent->numOnTeam = MSG_ReadByte( sb );
-	baseCurrent->numHired = baseCurrent->numOnTeam;
+	base->teamMask = MSG_ReadLong( sb );
+	base->numOnTeam = MSG_ReadByte( sb );
+	base->numHired = MSG_ReadByte( sb );
 
-	Com_DPrintf(_("Load team with %i members and %i slots\n"), baseCurrent->numOnTeam, baseCurrent->numWholeTeam );
+	Com_DPrintf(_("Load team with %i members and %i slots\n"), base->numOnTeam, base->numWholeTeam );
 
-	for ( i = 0, p = 0; i < baseCurrent->numWholeTeam; i++ )
-		if ( baseCurrent->teamMask & (1 << i) )
-			baseCurrent->curTeam[p++] = baseCurrent->wholeTeam[i];
+	for ( i = 0, p = 0; i < base->numWholeTeam; i++ )
+		if ( base->teamMask & (1 << i) )
+			base->curTeam[p++] = base->wholeTeam[i];
 }
 
 
@@ -940,8 +937,14 @@ void CL_LoadTeamMultiplayer( char *filename )
 	// load the teamname
 	Cvar_Set( "mn_teamname", MSG_ReadString( &sb ) );
 
+	MN_ClearBase( &bmBases[0] );
+
+	// set base for multiplayer
+	baseCurrent = &bmBases[0];
+	ccs.numBases = 1;
+
 	// load the team
-	CL_LoadTeam( &sb );
+	CL_LoadTeam( &sb, &bmBases[0], SAVE_FILE_VERSION );
 }
 
 
