@@ -634,13 +634,24 @@ tech building_lab
 	researched	true
 }
 
+tech building_teamroom
+{
+	type	building
+	description	b_teamroom_txt
+	up_chapter	buildings
+
+	requires	initial
+	provides	teamroom
+	time	0
+	researched	true
+}
+
 //========================
 // Crafts
 //========================
 tech craft_transporter
 {
-	type	tech
-	name	"H-92 Troop Transport"
+	type	craft
 	description	transporter_txt
 	up_chapter	crafts
 
@@ -654,8 +665,7 @@ tech craft_transporter
 
 tech craft_interceptor
 {
-	type	tech
-	name	"F-48 Interceptor"
+	type	craft
 	description	interceptor_txt
 	up_chapter	crafts
 
@@ -667,6 +677,18 @@ tech craft_interceptor
 	mdl_top	models/aircrafts/fighter1_main.md2
 }
 
+tech craftupgrade_transporter
+{
+	type	tech
+	name	"Plasmadrive for H-92 Transport"
+	description	transporter_txt
+	up_chapter	crafts
+
+	requires	"craft_transporter plasma"
+	provides	transporter_plasmadrive
+	time	0
+	researched	true
+}
 
 //========================
 // Aliens
