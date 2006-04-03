@@ -550,6 +550,18 @@ tech heavy_nano_armor
 //========================
 // Buildings
 //========================
+tech building_entrance
+{
+	type	building
+	description	b_entrance_txt
+	up_chapter	buildings
+
+	requires	initial
+	provides	entrance
+	time	0
+	researched	true
+}
+
 tech building_commando
 {
 	type	building
