@@ -1841,6 +1841,7 @@ void B_SaveBases( sizebuf_t *sb )
 				building++;
 			}
 			AIR_SaveAircraft( sb, base );
+
 			// store team
 			CL_SendTeamInfo( sb, base->wholeTeam, base->numWholeTeam );
 
@@ -1848,6 +1849,7 @@ void B_SaveBases( sizebuf_t *sb )
 			MSG_WriteLong( sb, base->teamMask );
 			MSG_WriteByte( sb, base->numOnTeam );
 			MSG_WriteByte( sb, base->numHired );
+			MSG_WriteLong( sb, base->hiredMask );
 		}
 }
 
@@ -1939,6 +1941,8 @@ void B_LoadBases( sizebuf_t *sb, int version )
 			}
 			MN_BuildingInit();
 			AIR_LoadAircraft( sb, base, version );
+			base->aircraftCurrent = &base->aircraft[0];
+
 			// read whole team list
 			CL_LoadTeam( sb, base, version );
 		}

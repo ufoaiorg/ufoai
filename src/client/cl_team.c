@@ -139,7 +139,7 @@ void CL_ResetCharacters( base_t* base )
 	for ( i = 0; i < MAX_WHOLETEAM; i++ )
 	{
 		Com_DestroyInventory( &base->teamInv[i] );
-//		baseCurrent->teamInv[i].c[csi.idFloor] = baseCurrent->equipment;
+//		base->teamInv[i].c[csi.idFloor] = base->equipment;
 		base->wholeTeam[i].inv = &base->teamInv[i];
 	}
 
@@ -630,7 +630,7 @@ void CL_MarkTeamCmd( void )
 	}
 
 // 	baseCurrent->hiredMask = baseCurrent->teamMask;
-// 	baseCurrent->numHired = baseCurrent->numOnTeam;
+	baseCurrent->numHired = baseCurrent->numOnTeam;
 
 	CL_UpdateHireVar();
 
@@ -753,8 +753,6 @@ void CL_MessageMenuCmd( void )
 CL_SaveTeam
 ======================
 */
-#define MAX_TEAMDATASIZE	32768
-
 void CL_SaveTeam( char *filename )
 {
 	sizebuf_t	sb;
@@ -786,6 +784,8 @@ void CL_SaveTeam( char *filename )
 	// store assignement
 	MSG_WriteLong( &sb, baseCurrent->teamMask );
 	MSG_WriteByte( &sb, baseCurrent->numOnTeam );
+	MSG_WriteByte( &sb, baseCurrent->numHired );
+	MSG_WriteLong( &sb, baseCurrent->hiredMask );
 
 	// write data
 	res = fwrite( buf, 1, sb.cursize, f );
@@ -901,6 +901,7 @@ void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version )
 	base->teamMask = MSG_ReadLong( sb );
 	base->numOnTeam = MSG_ReadByte( sb );
 	base->numHired = MSG_ReadByte( sb );
+	base->hiredMask = MSG_ReadLong( sb );
 
 	Com_DPrintf(_("Load team with %i members and %i slots\n"), base->numOnTeam, base->numWholeTeam );
 

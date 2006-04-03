@@ -474,8 +474,9 @@ CL_AircraftSelect
 */
 void CL_AircraftSelect ( void )
 {
-	aircraft_t* air;
-	int aircraftID = (int)Cvar_VariableValue("mn_aircraft_id");
+	aircraft_t*	air;
+	int	aircraftID = (int)Cvar_VariableValue("mn_aircraft_id");
+	static char	aircraftInfo[256];
 
 	if ( ! baseCurrent )
 		return;
@@ -492,12 +493,18 @@ void CL_AircraftSelect ( void )
 	air = &baseCurrent->aircraft[aircraftID];
 
 	baseCurrent->aircraftCurrent = (void*)air;
+
+	CL_UpdateHireVar();
+
 	Cvar_Set( "mn_aircraftstatus", CL_AircraftStatusToName( air ) );
 	Cvar_Set( "mn_aircraftname", air->name );
 	Cvar_Set( "mn_aircraft_model", air->model );
 	Cvar_Set( "mn_aircraft_model_top", air->model_top );
 	Cvar_Set( "mn_aircraft_model_glass", air->model_glass );
 	Cvar_Set( "mn_aircraft_model_wings", air->model_wings );
+
+	Com_sprintf(aircraftInfo, 256, _("Speed:\t%.0f\nFuel:\t%i/%i\n"), air->speed, air->fuel, air->fuelSize );
+	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 
 /*
@@ -798,7 +805,6 @@ void CL_CampaignExecute( setState_t *set )
 }
 
 char	aircraftListText[1024];
-
 
 void CL_OpenAircraft_f ( void )
 {
@@ -1306,6 +1312,7 @@ void AIR_SaveAircraft( sizebuf_t *sb, base_t* base )
 		MSG_WriteLong( sb, air->speed );
 		MSG_WriteLong( sb, air->point );
 		MSG_WriteLong( sb, air->time );
+		MSG_WriteLong( sb, air->teamSize );
 		SZ_Write( sb, &air->route, sizeof(mapline_t) );
 	}
 }
@@ -1352,6 +1359,7 @@ void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
 				air->homebase = base;
 				air->point = MSG_ReadLong( sb );
 				air->time = MSG_ReadLong( sb );
+				air->teamSize = MSG_ReadLong( sb );
 				memcpy( &air->route, sb->data + sb->readcount, sizeof(mapline_t) );
 				sb->readcount += sizeof(mapline_t);
 				memcpy( &base->aircraft[base->numAircraftInBase++], air, sizeof(aircraft_t) );
@@ -1371,6 +1379,7 @@ void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
 				MSG_ReadLong( sb );	//speed
 				MSG_ReadLong( sb );	//point
 				MSG_ReadLong( sb );	//time
+				MSG_ReadLong( sb );	//teamSize
 				sb->readcount += sizeof(mapline_t);	//route
 			}
 		}
@@ -1384,9 +1393,6 @@ void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
 CL_GameSave
 ======================
 */
-#define MAX_GAMESAVESIZE	16384
-#define MAX_COMMENTLENGTH	32
-
 void CL_GameSave( char *filename, char *comment )
 {
 	stageState_t	*state;

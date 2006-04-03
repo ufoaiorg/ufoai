@@ -1064,11 +1064,16 @@ extern	int   numEmployees;
 #define SAVE_FILE_VERSION 4
 #endif
 
+#define MAX_TEAMDATASIZE	32768
+#define MAX_GAMESAVESIZE	MAX_TEAMDATASIZE + 16384
+#define MAX_COMMENTLENGTH	32
+
 void CL_UpdateBaseData( void );
 int B_HowManyPeopleInBase2 ( base_t *base, int location );
 base_t* B_GetBase ( int id );
 int B_GetNumOnTeam ( void );
 void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version );
+void CL_UpdateHireVar ( void );
 
 void CL_ResetCharacters( base_t* base );
 void CL_GenerateCharacter( char *team, base_t* base );
@@ -1076,6 +1081,7 @@ void CL_GenerateCharacter( char *team, base_t* base );
 // needed to calculate the chosen building in cl_menu.c
 int picWidth, picHeight;
 
+void MN_ClearBase( base_t *base );
 void MN_BuildNewBase( vec2_t pos );
 void MN_NewBases( void );
 void B_SaveBases( sizebuf_t *sb );
@@ -1294,11 +1300,13 @@ typedef enum
 	TEXT_UFOPEDIA,
 	TEXT_BUILDINGS,
 	TEXT_BUILDING_INFO,
-	TEXT_RESEARCH,
+	TEXT_RESEARCH = 5,
 	TEXT_RESEARCH_INFO,
 	TEXT_POPUP,
 	TEXT_POPUP_INFO,
 	TEXT_INTERCEPT_LIST,
+	TEXT_AIRCRAFT = 10,
+	TEXT_AIRCRAFT_INFO,
 
 	MAX_MENUTEXTS
 } texts_t;
