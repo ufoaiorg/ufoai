@@ -1,7 +1,7 @@
 particle null
 {
 	init
-	{ 
+	{
 		kill
 	}
 }
@@ -164,7 +164,6 @@ particle smoke
 	think { kill }
 }
 
-
 particle burnFlame
 {
 	init
@@ -217,7 +216,6 @@ particle burnFlame2				// fuer falcon_crash
 	think { kill }
 }
 
-
 particle burnFlame3				// Feuerschweif-Partikel
 {
 	init
@@ -243,7 +241,6 @@ particle burnFlame3				// Feuerschweif-Partikel
 	think { kill }
 }
 
-
 particle burning
 {
 	init
@@ -264,7 +261,6 @@ particle burning
 	}
 }
 
-
 particle fire
 {
 	init
@@ -279,7 +275,19 @@ particle fire
 	}
 }
 
-
+particle camping_fire
+{
+	init
+	{
+		v      "0 0 0"
+		tps    25.0
+		spawn  burnFlame
+	}
+	think
+	{
+		spawn  burnFlame
+	}
+}
 
 particle crashsite_fire
 {
@@ -294,7 +302,6 @@ particle crashsite_fire
 		spawn  burnFlame2
 	}
 }
-
 
 particle blood
 {
