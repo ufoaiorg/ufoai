@@ -17,7 +17,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-// cl_research.c
+/*======================
+cl_research.c
+
+* Handles everything related to the research-tree.
+* Provides information if items/buildings/etc.. can be researched/used/displayed etc...
+* Implements the research-system (research new items/etc...)
+
+See
+	base/ufos/research.ufo
+and
+	base/ufos/menu_research.ufo
+for the underlying content.
+
+TODO: comment on used globasl variables.
+======================*/
 
 #include "client.h"
 #include "cl_research.h"
@@ -27,18 +41,22 @@ void RS_GetFirstRequired( char *id,  stringlist_t *required);
 byte RS_TechIsResearchable(char *id );
 byte RS_TechIsResearched(char *id );
 
-technology_t *researchList[MAX_RESEARCHLIST];
-int researchListLength;
-int researchListPos;
+technology_t technologies[MAX_TECHNOLOGIES];	// A global list (see cl_research.h) of _all_ technologies.
+int numTechnologies;						// The number of entries in the above list.
+
+technology_t *researchList[MAX_RESEARCHLIST];	// A (local) list of displayed technology-entries (the research list in the base)
+int researchListLength;						// The number of entries in the above list.
+int researchListPos;						// The currently selected entry in the above list.
 char infoResearchText[MAX_MENUTEXTLEN];
 
-technology_t technologies[MAX_TECHNOLOGIES];
-int numTechnologies;
 
 /*======================
 RS_MarkOneCollected
 
-Marks one tech if an item it 'provides' (= id) has been collected.
+Marks one tech as 'collected'  if an item it 'provides' (= id) has been collected.
+
+IN
+	id:	unique id of a provided item (can be item/building/craft/etc..)
 ======================*/
 void RS_MarkOneCollected ( char *id )
 {
@@ -48,7 +66,7 @@ void RS_MarkOneCollected ( char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( t->provides, id ) ) {
+		if ( !strcmp( t->provides, id ) ) {	// provided item found
 			t->statusCollected = true;
 			return;
 		}
@@ -78,6 +96,9 @@ void RS_MarkCollected ( void )
 RS_MarkOneResearchable
 
 Marks one tech as researchedable.
+
+IN
+	id:	unique id of a technology_t
 ======================*/
 void RS_MarkOneResearchable ( char *id )
 {
@@ -86,7 +107,7 @@ void RS_MarkOneResearchable ( char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( t->id, id ) ) {
+		if ( !strcmp( t->id, id ) ) {	// research item found
 			Com_Printf( _("RS_MarkOneResearchable: \"%s\" marked as researchable.\n"), id );
 			t->statusResearchable = true;
 			return;
@@ -271,6 +292,13 @@ void RS_InitTree( void )
 RS_GetName
 
 Return "name" if present, otherwise enter the correct .ufo file and get it from the definition there.
+
+IN
+	id:	unique id of a technology_t
+
+OUT
+	name:	Full name of this technology_t (technology_t->name).
+			Defaults to id if nothing is found.
 ======================*/
 void RS_GetName( char *id, char *name )
 {
@@ -279,7 +307,7 @@ void RS_GetName( char *id, char *name )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id, t->id ) ) {
+		if ( !strcmp( id, t->id ) ) {	// research item found
 			// If something is defined as name use it.
 			if ( strcmp( t->name, "" ) ) {
 				strcpy( name, t->name );
@@ -297,6 +325,9 @@ void RS_GetName( char *id, char *name )
 
 /*======================
 RS_ResearchDisplayInfo
+
+Displays the informations of the current selected technology in the description-area.
+See menu_research.ufo for the layout/called functions.
 ======================*/
 void RS_ResearchDisplayInfo ( void  )
 {
@@ -362,6 +393,9 @@ void RS_ResearchDisplayInfo ( void  )
 
 /*======================
 CL_ResearchSelectCmd
+
+Changes the active research-list entry to the currently selected.
+See menu_research.ufo for the layout/called functions.
 ======================*/
 void CL_ResearchSelectCmd( void )
 {
@@ -391,6 +425,8 @@ void CL_ResearchSelectCmd( void )
 RS_AssignScientist
 
 Assigns scientist to the selected research-project.
+
+TODO
 ======================*/
 void RS_AssignScientist( void )
 {
@@ -417,6 +453,8 @@ void RS_AssignScientist( void )
 RS_RemoveScientist
 
 Remove scientist from the selected research-project.
+
+TODO
 ======================*/
 void RS_RemoveScientist( void )
 {
@@ -441,6 +479,8 @@ void RS_RemoveScientist( void )
 /*======================
 RS_ResearchStart
 
+Starts the research of the selected research-list entry.
+
 TODO: Check if laboratory is available
 ======================*/
 void RS_ResearchStart ( void )
@@ -451,6 +491,7 @@ void RS_ResearchStart ( void )
 	if ( ! baseCurrent )
 		return;
 
+	// get the currently selected research-item
 	t = researchList[researchListPos];
 
 	if ( t->statusResearchable ) {
@@ -481,6 +522,8 @@ void RS_ResearchStart ( void )
 /*======================
 RS_ResearchStop
 
+Pauses the research of the selected research-list entry.
+
 TODO: Check if laboratory is available
 ======================*/
 void RS_ResearchStop ( void )
@@ -491,7 +534,9 @@ void RS_ResearchStop ( void )
 	if ( ! baseCurrent )
 		return;
 
+	// get the currently selected research-item
 	t = researchList[researchListPos];
+	
 	switch ( t->statusResearch )
 	{
 	case RS_RUNNING:
@@ -515,6 +560,9 @@ void RS_ResearchStop ( void )
 
 /*======================
 RS_UpdateData
+
+Loops trough the research-list and updates the displayed text+color of each research-item according to it's status.
+See menu_research.ufo for the layout/called functions.
 ======================*/
 void RS_UpdateData ( void )
 {
@@ -522,16 +570,19 @@ void RS_UpdateData ( void )
 	int i, j;
 	technology_t *t = NULL;
 	strcpy( name, "" ); // init temp-name
+
+	// make everything the same-color.
 	Cbuf_AddText("research_clear\n");
+	
 	for ( i=0, j=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		strcpy( name, t->name );
 		if ( t->statusCollected && !t->statusResearchable && (t->statusResearch != RS_FINISH ) ) { // an unresearched collected item that cannot yet be researched
 			strcat(name, " [not yet researchable]");
-			Cvar_Set( va("mn_researchitem%i", j),  name );
-			Cbuf_AddText( va( "researchunresearchable%i\n", j ) );
-			researchList[j] = &technologies[i];
-			j++;
+			Cbuf_AddText( va( "researchunresearchable%i\n", j ) );	// Color the item 'unresearchable'
+			Cvar_Set( va("mn_researchitem%i", j),  name );		// Display the concated text in the correct list-entry.
+			researchList[j] = &technologies[i];					// Assign the current tech in the global list to the correct entry in the displayed list.
+			j++;											// counting the numbers of display-list entries.
 		}
 		else
 		if ( ( t->statusResearch != RS_FINISH ) && ( t->statusResearchable ) ) { //(  ( t->statusResearch != RS_FINISH ) && ( RS_TechIsResearchable( t->id ) ) ) {
@@ -539,7 +590,7 @@ void RS_UpdateData ( void )
 			{
 			case RS_RUNNING:
 				strcat(name, " [under research]");
-				Cbuf_AddText( va( "researchrunning%i\n", j ) );
+				Cbuf_AddText( va( "researchrunning%i\n", j ) );	// color the item 'research running'
 				break;
 			case RS_FINISH:
 				// DEBUG: normaly these will not be shown at all. see "if" above
@@ -547,19 +598,19 @@ void RS_UpdateData ( void )
 				break;
 			case RS_PAUSED:
 				strcat(name, " [paused]");
-				Cbuf_AddText( va( "researchpaused%i\n", j ) );
+				Cbuf_AddText( va( "researchpaused%i\n", j ) );	// color the item 'research paused'
 				break;
 			case RS_NONE:
 				strcat(name, " [unknown]");
-				// The color is defined in menu research.ufo by  "confunc research_clear".
+				// The color is defined in menu research.ufo by  "confunc research_clear". See also above.
 				break;
 			default:
 				break;
 			}
 
-			Cvar_Set( va("mn_researchitem%i", j),  name );
-			researchList[j] = &technologies[i];
-			j++;
+			Cvar_Set( va("mn_researchitem%i", j),  name );	// Display the concated text in the correct list-entry.
+			researchList[j] = &technologies[i];				// Assign the current tech in the global list to the correct entry in the displayed list.
+			j++;										// counting the numbers of display-list entries.
 		}
 	}
 
@@ -569,7 +620,7 @@ void RS_UpdateData ( void )
 	for ( ; j < MAX_RESEARCHDISPLAY; j++ )
 		Cvar_Set( va( "mn_researchitem%i", j ), "" );
 
-	// select first item that needs to be researched
+	// Select last selected item if possible or the very first one if not.
 	if ( researchListLength ) {
 		Com_DPrintf("RS_UpdateData: Pos%i Len%i\n", researchListPos, researchListLength );
 		if ( (researchListPos < researchListLength) &&  ( researchListLength < MAX_RESEARCHDISPLAY ) ) {
@@ -578,18 +629,20 @@ void RS_UpdateData ( void )
 			Cbuf_AddText( "researchselect0\n" );
 		}
 	} else {
-		// reset description
+		// No display list abailable (zero items) - > Reset description.
 		Cvar_Set( "mn_researchitemname", "" );
 		Cvar_Set( "mn_researchitem", "" );
 		Cvar_Set( "mn_researchweapon", "" );
 		Cvar_Set( "mn_researchammo", "" );
 		menuText[TEXT_STANDARD] = NULL;
 	}
-	RS_ResearchDisplayInfo();
+	RS_ResearchDisplayInfo();	// Update the description field/area.
 }
 
 /*======================
 CL_ResearchType
+
+TODO: document this
 ======================*/
 void CL_ResearchType ( void )
 {
@@ -607,6 +660,13 @@ void CL_ResearchType ( void )
 RS_DependsOn
 
 Checks if the research item id1 depends on (requires) id2
+
+IN
+	id1:	Unique id of a technology_t that may or may not depend on id2.
+	id2:	Unique id of a technology_t
+
+OUT
+	boolean	RS_DependsOn
 ======================*/
 byte RS_DependsOn(char *id1, char *id2)
 {
@@ -616,10 +676,10 @@ byte RS_DependsOn(char *id1, char *id2)
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id1, t->id ) ) {
+		if ( !strcmp( id1, t->id ) ) {	// research item found
 			required = t->requires;
 			for ( j=0; j < required.numEntries; j++ ) {
-				if ( !strcmp(required.list[j], id2 ) )
+				if ( !strcmp(required.list[j], id2 ) )	// current item (=id1) depends on id2
 					return true;
 			}
 			return false;
@@ -633,6 +693,9 @@ byte RS_DependsOn(char *id1, char *id2)
 RS_MarkResearched
 
 Mark technologies as researched. This includes techs that depends in "id" and have time=0
+
+IN
+	id:	Unique id of a technology_t.
 ======================*/
 void RS_MarkResearched( char *id )
 {
@@ -656,6 +719,8 @@ void RS_MarkResearched( char *id )
 
 /*======================
 CL_CheckResearchStatus
+
+TODO: document this
 ======================*/
 void CL_CheckResearchStatus ( void )
 {
@@ -698,7 +763,7 @@ void CL_CheckResearchStatus ( void )
 /*======================
 RS_TechnologyList_f
 
-list all parsed technologies
+List all parsed technologies and their attributes in commandline/console.
 ======================*/
 void RS_TechnologyList_f ( void )
 {
@@ -768,6 +833,9 @@ void MN_ResearchInit( void )
 
 /*======================
 MN_ResetResearch
+
+This is more or less the initial 
+Bind some of the functions in htis file to console-commands that you can call ingame.
 ======================*/
 void MN_ResetResearch( void )
 {
@@ -786,22 +854,32 @@ void MN_ResetResearch( void )
 	Cmd_AddCommand( "invlist", Com_InventoryList_f );
 }
 
-// NOTE: the BSFS define is the same like for bases and so on...
+/*======================
+The valid definition names in the research.ufo file.
+NOTE: the BSFS define is the same like for bases and so on...
+See cl_research.h for the macro.
+======================*/
 value_t valid_tech_vars[] =
 {
-	{ "name",			V_STRING,	TECHFS( name ) },		//name of technology
+	{ "name",		V_STRING,	TECHFS( name ) },		//name of technology
 	{ "description",	V_STRING,	TECHFS( description ) },
 	{ "provides",		V_STRING,	TECHFS( provides ) },	//what does this research provide
-	{ "time",			V_FLOAT,	TECHFS( time ) },		//how long will this research last
+	{ "time",			V_FLOAT,		TECHFS( time ) },		//how long will this research last
 	{ "image_top",		V_STRING,	TECHFS( image_top ) },
 	{ "image_bottom",	V_STRING,	TECHFS( image_bottom ) },
 	{ "mdl_top",		V_STRING,	TECHFS( mdl_top ) },
-	{ "mdl_bottom",		V_STRING,	TECHFS( mdl_bottom ) },
+	{ "mdl_bottom",	V_STRING,	TECHFS( mdl_bottom ) },
 	{ NULL,	0, 0 }
 };
 
 /*======================
 RS_ParseTechnologies
+
+Parses one "tech" entry in the research.ufo file and writes it into the next free entry in technologies (technology_t).
+
+IN
+	id:	Unique id of a technology_t. This is parsed from "tech xxx" -> id=xxx
+	text:	TODO document this ... it appears to be the whole following text that is part of the "tech" item definition in research.ufo.
 ======================*/
 void RS_ParseTechnologies ( char* id, char** text )
 {
@@ -810,7 +888,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 	char	*errhead = _("RS_ParseTechnologies: unexptected end of file.");
 	char	*token = NULL;
 	char	*misp = NULL;
-	char	temp_text[MAX_VAR]; //256 ?
+	char	temp_text[MAX_VAR];
 	stringlist_t *required = NULL;
 
 	// get body
@@ -826,7 +904,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 		return;
 	}
 
-	// new technology
+	// New technology (next free entry in global tech-list)
 	t = &technologies[numTechnologies++];
 	required = &t->requires;
 	memset( t, 0, sizeof( technology_t ) );
@@ -947,7 +1025,14 @@ void RS_ParseTechnologies ( char* id, char** text )
 /*======================
 RS_GetRequired
 
-returns the list of required items.
+Returns the list of required (by id) items.
+
+IN
+	id:	Unique id of a technology_t.
+
+OUT
+	required: a list of strings with the unique ids of items/buildings/etc..
+
 TODO: out of order ... seems to produce garbage
 ======================*/
 
@@ -958,7 +1043,7 @@ void RS_GetRequired( char *id, stringlist_t *required)
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id, t->id ) ) {
+		if ( !strcmp( id, t->id ) ) {		// research item found
 			required = &t->requires;	// is linking a good idea?
 			return;
 		}
@@ -970,6 +1055,12 @@ void RS_GetRequired( char *id, stringlist_t *required)
 RS_ItemIsResearched
 
 Checks if the item (as listed in "provides") has been researched
+
+IN
+	id_provided:	Unique id of an item/building/etc.. that is provided by a technology_t
+
+OUT
+	boolean	RS_ItemIsResearched
 ======================*/
 byte RS_ItemIsResearched(char *id_provided )
 {
@@ -977,7 +1068,7 @@ byte RS_ItemIsResearched(char *id_provided )
 	technology_t *t = NULL;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id_provided, t->provides ) ) {
+		if ( !strcmp( id_provided, t->provides ) ) {	// provided item found
 			if ( t->statusResearch == RS_FINISH )
 				return true;
 			return false;
@@ -989,7 +1080,13 @@ byte RS_ItemIsResearched(char *id_provided )
 /*======================
 RS_TechIsResearched
 
-Checks if the technology (tech-id) has been researched
+Checks if the technology (tech-id) has been researched.
+
+IN
+	id:	Unique id of a technology_t.
+
+OUT
+	boolean	RS_TechIsResearched
 ======================*/
 byte RS_TechIsResearched(char *id )
 {
@@ -999,7 +1096,7 @@ byte RS_TechIsResearched(char *id )
 		return true;	// initial and nothing are always researchs. as they are just a starting "technology" that is never used.
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id, t->id ) ) {
+		if ( !strcmp( id, t->id ) ) {	// research item found
 			if ( t->statusResearch == RS_FINISH )
 				return true;
 			return false;
@@ -1014,6 +1111,12 @@ byte RS_TechIsResearched(char *id )
 RS_TechIsResearchable
 
 Checks if the technology (tech-id) is researchable.
+
+IN
+	id:	Unique id of a technology_t.
+
+OUT
+	boolean	RS_TechIsResearchable
 ======================*/
 byte RS_TechIsResearchable(char *id )
 {
@@ -1023,7 +1126,7 @@ byte RS_TechIsResearchable(char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id, t->id ) ) {
+		if ( !strcmp( id, t->id ) ) {	// research item found
 			if ( t->statusResearch == RS_FINISH )
 				return false;
 			if ( ( !strcmp(  t->id, "initial" ) ) || ( !strcmp(  t->id, "nothing" ) ) )
@@ -1054,7 +1157,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 
-		if ( !strcmp( id, t->id ) ) {
+		if ( !strcmp( id, t->id ) ) {	// research item found
 			required_temp = &t->requires;
 			//Com_DPrintf( "RS_GetFirstRequired2: %s - %s - %s\n", id, first_id, required_temp->list[0]  );
 			for ( j=0; j < required_temp->numEntries; j++ ) {
