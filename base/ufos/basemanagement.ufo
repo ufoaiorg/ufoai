@@ -41,7 +41,7 @@ building commando
 building powerplant
 {
 	title		"Powerplant"
-	image		base/commando
+	image		base/powerplant
 	fixcosts	300
 	desc		"Produces Energy"
 	depends		entrance
@@ -173,7 +173,7 @@ building drop2
 building teamroom
 {
 	title		"Team Room"
-	image		base/commando
+	image		base/teamroom
 	fixcosts	300
 	depends		quarters
 	produce_type	mind_p
@@ -226,6 +226,8 @@ aircraft dropship
 	model_top	"models/objects/dropship_top.md2"
 	model_glass	"models/objects/dropship_glass.md2"
 	size	8
+	fuel	100
+	fuelsize	100
 	image	air_dropship
 }
 
@@ -237,6 +239,8 @@ aircraft interceptor
 	model	"models/aircrafts/fighter1_main.md2"
 	model_top	"models/aircrafts/fighter1_engines.md2"
 	model_glass	"models/aircrafts/fighter1_glass.md2"
+	fuel	60
+	fuelsize	60
 	size	1
 	image	air_interceptor
 }
@@ -251,6 +255,8 @@ aircraft ufo
 	model_glass	"models/objects/alienship1_hull.md2"
 	model_wings	"models/objects/alienship1_wings.md2"
 	size	8
+	fuel	100
+	fuelsize	100
 	image	air_ufo
 }
 
