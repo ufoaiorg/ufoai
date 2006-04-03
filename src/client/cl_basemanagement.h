@@ -15,7 +15,6 @@ extern vec2_t newBasePos;
 extern	int numBuildings;
 
 void MN_BuildingInit( void );
-int B_GetIDFromList ( int id );
 int B_GetCount ( void );
 void B_SetUpBase ( void );
 

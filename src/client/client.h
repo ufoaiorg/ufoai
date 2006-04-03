@@ -929,8 +929,6 @@ typedef struct building_s
 	buildingType_t	buildingType;
 
 	struct building_s *dependsBuilding;
-	struct building_s *prev;
-	struct building_s *next;
 } building_t;
 
 #define MAX_AIRCRAFT	256
@@ -996,10 +994,6 @@ typedef struct base_s
 	//d=desert, a=arctic, g=gras
 	char	mapChar;
 
-	int	buildingListArray[MAX_BUILDINGS];
-	//how many buildings are in the list?
-	int	numList;
-
 	// all aircraft in this base
 	aircraft_t	aircraft[MAX_AIRCRAFT];
 	int 	numAircraftInBase;
@@ -1047,9 +1041,6 @@ typedef struct production_s
 	char    *text;
 	int	amount;
 	char	menu[MAX_VAR];
-
-	struct  production_s *prev;
-	struct  production_s *next;
 } production_t;
 
 extern	base_t	bmBases[MAX_BASES];
@@ -1097,6 +1088,8 @@ void MN_GetMaps_f ( void );
 void CL_ListMaps_f ( void );
 void MN_NextMap ( void );
 void MN_PrevMap ( void );
+building_t* B_GetBuildingByID ( int id );
+building_t* B_GetBuilding ( char *buildingName );
 
 //
 // cl_campaign.c

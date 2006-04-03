@@ -1121,7 +1121,7 @@ void MN_BaseMapClick( menuNode_t *node, int x, int y )
 			  && x >= baseCurrent->posX[row][col][baseCurrent->baseLevel] && x < baseCurrent->posX[row][col][baseCurrent->baseLevel] + picWidth*ccs.basezoom
 			  && y >= baseCurrent->posY[row][col][baseCurrent->baseLevel] && y < baseCurrent->posY[row][col][baseCurrent->baseLevel] + picHeight*ccs.basezoom )
 			{
-				building_t* entry = &bmBuildings[baseCurrent->id][ B_GetIDFromList( baseCurrent->map[row][col][baseCurrent->baseLevel] ) ];
+				building_t* entry = B_GetBuildingByID( baseCurrent->map[row][col][baseCurrent->baseLevel] );
 				if ( entry->onClick[0] )
 					Cbuf_ExecuteText( EXEC_NOW, entry->onClick );
 				else

@@ -170,7 +170,7 @@ int B_HowManyPeopleInBase2 ( base_t *base, int location )
 		for ( col = 0; col < BASE_SIZE; col++ )
 			if ( base->map[row][col][base->baseLevel] != -1 )
 			{
-				entry = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( base->map[row][col][base->baseLevel] ) ];
+				entry = B_GetBuildingByID(base->map[row][col][base->baseLevel]);
 
 				if ( !entry->used && entry->needs && entry->visible )
 					entry->used = 1;
@@ -261,9 +261,6 @@ void MN_BuildingInfoClick_f ( void )
 /*
 =================
 B_SetUpBase
-
-NOTE: I'm not sure whether a change of order in basemanagement.ufo
-      will leads to errors (due to buildingListArray and numList)
 =================
 */
 void B_SetUpBase ( void )
@@ -395,7 +392,6 @@ void MN_NewBuilding( void )
 	if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] < B_UNDER_CONSTRUCTION )
 		MN_ConstructBuilding();
 
-	// update the buildingListArray
 	MN_BuildingStatus();
 }
 
@@ -407,7 +403,7 @@ MN_SetBuildingByClick
 //level 0 - underground
 void MN_SetBuildingByClick ( int row, int col )
 {
-//	building_t *building = NULL;
+	building_t *building = NULL;
 	building_t *secondBuildingPart = NULL;
 
 	if ( row < BASE_SIZE && col < BASE_SIZE )
@@ -415,7 +411,7 @@ void MN_SetBuildingByClick ( int row, int col )
 		if ( baseCurrent->map[row][col][baseCurrent->baseLevel] == -1 )
 		{
 			if ( baseCurrent->buildingCurrent->needs && baseCurrent->buildingCurrent->visible )
-				secondBuildingPart = B_GetBuilding ( baseCurrent->buildingCurrent->needs );
+				secondBuildingPart = B_GetBuilding( baseCurrent->buildingCurrent->needs );
 
 			if ( baseCurrent->baseLevel >= 1 )
 			{
@@ -435,14 +431,16 @@ void MN_SetBuildingByClick ( int row, int col )
 				}
 				else
 				{
-					if ( bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[row][col][baseCurrent->baseLevel-1] ) ].notUpOn )
+					building = B_GetBuildingByID( baseCurrent->map[row][col][baseCurrent->baseLevel-1] );
+					if ( building->notUpOn )
 					{
 						Com_Printf( _("Can't place any building upon this ground\n") );
 						return;
 					}
 					else if ( secondBuildingPart )
 					{
-						if ( bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[row][col+1][baseCurrent->baseLevel-1] ) ].notUpOn )
+						building = B_GetBuildingByID( baseCurrent->map[row][col+1][baseCurrent->baseLevel-1] );
+						if ( building->notUpOn )
 						{
 							Com_Printf( _("Can't place any building upon this ground\n") );
 							return;
@@ -788,46 +786,6 @@ void MN_BuildingAddWorkers( void )
 }
 
 /*
-=================
-MN_PrevBuilding
-=================
-*/
-void MN_PrevBuilding( void )
-{
-	//maybe someone call this command before the buildings are parsed??
-	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
-		return;
-
-	// get previous entry
-	if ( baseCurrent->buildingCurrent->id > 0)
-		baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][ baseCurrent->buildingListArray[ baseCurrent->buildingCurrent->id - 1 ] ];
-	else
-		baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][ baseCurrent->buildingListArray[ baseCurrent->numList - 1 ] ];
-
-	MN_DrawBuilding ();
-}
-
-/*
-=================
-MN_NextBuilding
-=================
-*/
-void MN_NextBuilding( void )
-{
-	//maybe someone call this command before the buildings are parsed??
-	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
-		return;
-
-	// get next entry
-	if ( baseCurrent->buildingCurrent->id < baseCurrent->numList-1)
-		baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][ baseCurrent->buildingListArray[ baseCurrent->buildingCurrent->id + 1 ] ];
-	else
-		baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][ baseCurrent->buildingListArray[ 0 ] ];
-
-	MN_DrawBuilding ();
-}
-
-/*
 ====================
 MN_BuildingAddToList
 ====================
@@ -838,7 +796,6 @@ void MN_BuildingAddToList( char *title, int id )
 	strncpy ( tmpTitle, title , MAX_VAR);
 
 	assert(baseCurrent);
-	menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
 
 	//is the title already in list?
 	if (!strstr( menuText[TEXT_BUILDINGS], tmpTitle ) )
@@ -848,10 +805,6 @@ void MN_BuildingAddToList( char *title, int id )
 
 		//now add the buildingtitle to the list
 		strcat ( menuText[TEXT_BUILDINGS], tmpTitle );
-
-		baseCurrent->buildingListArray[ baseCurrent->numList ] = id;
-		bmBuildings[ccs.actualBaseID][id].id = baseCurrent->numList;
-		baseCurrent->numList++;
 	}
 }
 
@@ -869,104 +822,48 @@ void MN_BuildingInit( void )
 	if ( ! baseCurrent )
 		return;
 
-// 	menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
+	memset( baseCurrent->allBuildingsList, 0, sizeof(baseCurrent->allBuildingsList) );
+	menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
 
-	for ( i = 1; i < numBuildings; i++)
+	for ( i = 0; i < numBuildings; i++)
 	{
-		//set the prev and next pointer
-		bmBuildings[ccs.actualBaseID][i].prev = &bmBuildings[ccs.actualBaseID][i-1];
-		bmBuildings[ccs.actualBaseID][i-1].next = &bmBuildings[ccs.actualBaseID][i];
-
 		//make an entry in list for this building
-		if ( bmBuildings[ccs.actualBaseID][i-1].visible )
+		if ( bmBuildings[ccs.actualBaseID][i].visible )
 		{
-			if ( bmBuildings[ccs.actualBaseID][i-1].depends )
+			if ( bmBuildings[ccs.actualBaseID][i].depends )
 			{
-				building = B_GetBuilding ( bmBuildings[ccs.actualBaseID][i-1].depends );
-				bmBuildings[ccs.actualBaseID][i-1].dependsBuilding = building;
-				if ( bmBuildings[ccs.actualBaseID][i-1].dependsBuilding->buildingStatus[0] > B_CONSTRUCTION_FINISHED )
-					MN_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i-1].title), i-1 );
+				building = B_GetBuilding ( bmBuildings[ccs.actualBaseID][i].depends );
+				if ( ! building )
+					Sys_Error(_("Wrong dependency in basemangagement.ufo for building %s"), bmBuildings[ccs.actualBaseID][i-1].title );
+				bmBuildings[ccs.actualBaseID][i].dependsBuilding = building;
+				if ( bmBuildings[ccs.actualBaseID][i].dependsBuilding->buildingStatus[0] > B_CONSTRUCTION_FINISHED )
+					MN_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i].title), i );
 			}
 			else
 			{
-				MN_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i-1].title), i-1 );
+				MN_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i].title), i );
 			}
 		}
 	}
-
-	//puts also the last building to the list
-	if ( bmBuildings[ccs.actualBaseID][i-1].visible )
-	{
-		if ( bmBuildings[ccs.actualBaseID][i-1].depends )
-		{
-			building = B_GetBuilding ( bmBuildings[ccs.actualBaseID][i-1].depends );
-			if ( ! building )
-				Sys_Error(_("Wrong depedency in basemangagement.ufo for building %s"), bmBuildings[ccs.actualBaseID][i-1].title );
-			bmBuildings[ccs.actualBaseID][i-1].dependsBuilding = building;
-			if ( bmBuildings[ccs.actualBaseID][i-1].dependsBuilding->buildingStatus[0] > B_CONSTRUCTION_FINISHED )
-				MN_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i-1].title), i-1 );
-		}
-		else
-		{
-			MN_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i-1].title), i-1 );
-		}
-	}
-
-	if ( ! baseCurrent->buildingCurrent )
-		baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][ baseCurrent->buildingListArray[ 0 ] ];
-
-	if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] > B_NOT_SET )
-		MN_NewBuilding();
 
 	MN_DrawBuilding();
 }
 
 /*
 =================
-B_GetIDFromList
+B_GetBuilding
 =================
 */
-int B_GetIDFromList ( int id )
+building_t* B_GetBuildingByID ( int id )
 {
 	if ( baseCurrent )
-		return baseCurrent->buildingListArray[id];
+		return &bmBuildings[baseCurrent->id][id];
 	else
 		Sys_Error( _("Bases not initialized\n") );
 
 	//just that there are no warnings
-	return 0;
+	return NULL;
 }
-
-#if 0
-/*
-=================
-MN_BaseMapClick_f
-=================
-*/
-void MN_BaseMapClick_f( void )
-{
-	int x, y;
-	building_t* entry;
-	if ( Cmd_Argc() < 3 )
-	{
-		Com_Printf( _("Usage: basemap_click <x> <y>\n") );
-		return;
-	}
-
-	//maybe someone call this command before the buildings are parsed??
-	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
-		return;
-
-	x = atoi( Cmd_Argv( 1 ) );
-	y = atoi( Cmd_Argv( 2 ) );
-	if ( baseCurrent->map[x][y][baseCurrent->baseLevel] != -1 )
-	{
-		entry = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[x][y][baseCurrent->baseLevel] ) ];
-		if ( entry->onClick[0] != '\0' )
-			Cbuf_ExecuteText( EXEC_NOW, entry->onClick );
-	}
-}
-#endif
 
 /*
 ==================
@@ -975,7 +872,7 @@ MN_BuildingClick_f
 */
 void MN_BuildingClick_f( void )
 {
-	int num;
+	int	num, i;
 
 	if ( Cmd_Argc() < 2 )
 		return;
@@ -983,10 +880,23 @@ void MN_BuildingClick_f( void )
 	//which building?
 	num = atoi( Cmd_Argv( 1 ) );
 
-	if ( num >= baseCurrent->numList )
-		num = baseCurrent->buildingCurrent->id;
+	for ( i = 0; i < numBuildings; i++)
+	{
+		//make an entry in list for this building
+		if ( !bmBuildings[ccs.actualBaseID][i].visible )
+			continue;
 
-	baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( num ) ];
+		if ( bmBuildings[ccs.actualBaseID][i].dependsBuilding
+		  && bmBuildings[ccs.actualBaseID][i].dependsBuilding->buildingStatus[0] > B_CONSTRUCTION_FINISHED )
+			num--;
+		else
+			num--;
+
+		if ( num < 0 )
+			break;
+	}
+
+	baseCurrent->buildingCurrent = B_GetBuildingByID(i);
 
 	MN_DrawBuilding();
 }
@@ -1024,7 +934,6 @@ void MN_ParseBuildings( char *title, char **text )
 	strncpy( entry->name, title, MAX_VAR );
 
 	//set standard values
-	entry->next = entry->prev = NULL;
 	entry->buildingStatus[0] = B_NOT_SET;
 	entry->techLevel = 1;
 	entry->notUpOn = 0;
@@ -1040,6 +949,7 @@ void MN_ParseBuildings( char *title, char **text )
 	entry->howManyOfThisType = 0;
 	entry->condition[0] = BUILDINGCONDITION;
 	entry->buildingType = B_MISC;
+	entry->id = numBuildings;
 
 	numBuildings++;
 	do {
@@ -1193,21 +1103,13 @@ void MN_ParseBases( char *title, char **text )
 
 		base = &bmBases[numBases];
 		memset( base, 0, sizeof( base_t ) );
-//		strncpy( base->name, token, MAX_VAR );
 
 		// get the title
 		token = COM_EParse( text, errhead, title );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 		strncpy( base->title, token, MAX_VAR );
-		base->numList = 0;
 		MN_ResetBuildingCurrent();
-/*		if (numBases > 0)
-		{
-			base->prev = &bmBases[numBases-1];
-			bmBases[numBases-1].next = base;
-		}
-*/
 		numBases++;
 	} while ( *text );
 }
@@ -1243,7 +1145,6 @@ void MN_ParseProductions( char *title, char **text )
 	numProductions++;
 	memset( entry, 0, sizeof( production_t ) );
 	strncpy( entry->name, title, MAX_VAR );
-	entry->next = entry->prev = NULL;
 	do {
 		// get the name type
 		token = COM_EParse( text, errhead, title );
@@ -1344,7 +1245,8 @@ void MN_DrawBase( void )
 			{
 				if ( baseCurrent->map[row][col][baseCurrent->baseLevel] != -1 )
 				{
-					entry = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[row][col][baseCurrent->baseLevel] ) ];
+					entry = B_GetBuildingByID(baseCurrent->map[row][col][baseCurrent->baseLevel]);
+// 					&bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[row][col][baseCurrent->baseLevel] ) ];
 
 					if ( entry->buildingStatus[entry->howManyOfThisType] == B_UNDER_CONSTRUCTION )
 					{
@@ -1717,7 +1619,8 @@ void B_AssembleMap ( void )
 
 			if ( baseCurrent->map[row][col][0] != -1 )
 			{
-				entry = &bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[row][col][0] ) ];
+				entry = B_GetBuildingByID(baseCurrent->map[row][col][0]);
+// 				&bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[row][col][0] ) ];
 
 				if ( ! entry->visible )
 				{
@@ -1881,7 +1784,6 @@ void B_LoadBases( sizebuf_t *sb, int version )
 		ccs.actualBaseID = i;
 		baseCurrent = base;
 		baseCurrent->allBuildingsList[0] = '\0';
-		baseCurrent->numList = 0;
 		baseCurrent->aircraftCurrent = NULL; // FIXME: Load the first one
 		base->founded = true;
 		if ( version >= 2 )
@@ -1976,10 +1878,10 @@ void CL_BuildingList ( void )
 			continue;
 
 		building = bmBuildings[i];
-		Com_Printf("\nBase id %i %s\n", i, base->title );
+		Com_Printf("\nBase id %i: %s\n", i, base->title );
 		for ( j = 0; j < numBuildings; j++ )
 		{
-			Com_Printf("...Building: %s #%i\n", building->name, building->howManyOfThisType );
+			Com_Printf("...Building: %s #%i - id: %i\n", building->name, building->howManyOfThisType, building->id );
 			Com_Printf(".....Status:\n");
 			for ( k = 0; k < BASE_SIZE*BASE_SIZE; k++ )
 			{
@@ -2050,8 +1952,6 @@ void MN_ResetBaseManagement( void )
 	bmData = bmDataStart;
 
 	// add commands and cvars
-	Cmd_AddCommand( "mn_prev_building", MN_PrevBuilding );
-	Cmd_AddCommand( "mn_next_building", MN_NextBuilding );
 	Cmd_AddCommand( "mn_base_level_down", MN_BaseLevelDown );
 	Cmd_AddCommand( "mn_base_level_up", MN_BaseLevelUp );
 	Cmd_AddCommand( "mn_prev_base", MN_PrevBase );
