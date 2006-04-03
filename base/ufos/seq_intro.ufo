@@ -1,0 +1,49 @@
+sequence intro
+{
+	cmd "ov_stop;music mission;ov_start;"
+	cmd "seq_animspeed 720;"
+
+	2dobj sentence1
+	{
+		text	"UFO:Alien Invasion"
+		pos		"512 468"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -20"
+	}
+	2dobj sentence2
+	{
+		text	"Set up your base and assemble a team"
+		pos		"512 510"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -20"
+	}
+	2dobj sentence3
+	{
+		text	"to be prepared."
+		pos		"512 535"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -20"
+	}
+	2dobj sentence4
+	{
+		text	"More to come here"
+		pos		"512 560"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -20"
+	}
+	2dobj sentence5
+	{
+		text	"TODO"
+		pos		"512 595"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -20"
+	}
+	wait 12.0
+
+
+	rem sentence1
+	rem sentence2
+	rem sentence3
+	rem sentence4
+	rem sentence5
+}
