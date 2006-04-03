@@ -1195,6 +1195,9 @@ void CL_ResetMouseLastPos( void )
 /*
 =================
 CL_ActorMouseTrace
+
+Select the actor on battlescape
+Sets global var mouseActor to current selected le
 =================
 */
 void CL_ActorMouseTrace( void )
