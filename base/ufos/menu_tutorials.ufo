@@ -1,0 +1,61 @@
+// ==================
+// TUTORIALS MENU
+// ==================
+
+menu tutorials
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image   menu/main_ul
+		pos             "0 0"
+	}
+
+	pic back_ur
+	{
+		image   menu/main_ur
+		pos             "512 0"
+	}
+
+	pic back_ll
+	{
+		image   menu/main_ll
+		pos             "0 512"
+	}
+
+	pic back_lr
+	{
+		image   menu/main_lr
+		pos             "512 512"
+	}
+
+	string headline
+	{
+		string  "Tutorials"
+		pos             "630 170"
+		font f_big
+	}
+
+	pic button_exit
+	{
+		image	menu/main_buttons2
+		pos		"640 520"
+		texl	"0 128"
+		texh	"256 192"
+		click	{ cmd "mn_pop" }
+		out		{ *button_exit texl "0 128" *button_exit texh "256 192" }
+		in		{ *button_exit texl "0 192" *button_exit texh "256 256" }
+	}
+}

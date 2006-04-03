@@ -95,6 +95,17 @@ menu singleplayer
 		in		{ *button_new image menu/single_buttons1a }
 	}
 
+	pic button_tut
+	{
+		image	menu/main_tut
+		pos		"640 450"
+		texl	"0 0"
+		texh	"256 64"
+		click	{ cmd "mn_push tutorials;" }
+		out		{ *button_tut image menu/main_tut }
+		in		{ *button_tut image menu/main_tuta }
+	}
+
 	pic button_exit
 	{
 		image	menu/main_buttons2
