@@ -53,7 +53,7 @@ void RS_MarkOneCollected ( char *id )
 			return;
 		}
 	}
-	Com_Printf( _("RS_MarkOneCollected: Linked item \"%s\" not found.\n"), id );
+	Com_Printf( _("RS_MarkOneCollected: \"%s\" not found. No tech provides this.\n"), id );
 }
 
 /*======================
@@ -87,12 +87,12 @@ void RS_MarkOneResearchable ( char *id )
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strcmp( t->id, id ) ) {
-			Com_Printf( _("RS_MarkOneResearchable: marked  \"%s\" as researchable.\n"), id );
+			Com_Printf( _("RS_MarkOneResearchable: \"%s\" marked as researchable.\n"), id );
 			t->statusResearchable = true;
 			return;
 		}
 	}
-	Com_Printf( _("RS_MarkOneResearchable: technology \"%s\" not found.\n"), id );
+	Com_Printf( _("RS_MarkOneResearchable: \"%s\" technology not found.\n"), id );
 }
 
 /*======================
@@ -119,14 +119,14 @@ void RS_MarkResearchable( void )
 		t = &technologies[i];
 		if ( !t->statusResearchable ) {	// Redundant, since we set them all to false, but you never know.
 			if ( t->statusResearch != RS_FINISH) {
-				Com_DPrintf("RS_MarkResearchable: handling %s \n", t->id );
+				Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", t->id );
 				required.numEntries = 0;
 				RS_GetFirstRequired( t->id,  &required );
 
 				// If the tech has an collected item, mark the first-required techs as researchable //TODO doesn't work yet?
 				if ( t->statusCollected ) {
 					for ( j=0; j < required.numEntries; j++ ) {
-						Com_DPrintf("RS_MarkResearchable: MARKED firstreq %s \n", required.list[j] );
+						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:firstreqired.\n", required.list[j] );
 						RS_MarkOneResearchable( required.list[j] );
 					}
 				}
@@ -143,7 +143,7 @@ void RS_MarkResearchable( void )
 					}
 				}
 				if ( required_are_researched ) {
-					Com_DPrintf("RS_MarkResearchable: MARKED required %s \n", t->id  );
+					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:required.\n", t->id );
 					t->statusResearchable = true;
 					//RS_MarkOneResearchable( t->id  );
 				}
@@ -153,7 +153,7 @@ void RS_MarkResearchable( void )
 				for ( j=0; j < required.numEntries; j++ ) {
 
 					if ( !strcmp( required.list[j], "initial" ) ) {
-						Com_DPrintf("RS_MarkResearchable: marked initial %s \n", t->id );
+						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable - reason:isinitial.\n", t->id );
 						t->statusResearchable = true;
 						break;
 					}
@@ -177,6 +177,7 @@ void RS_InitTree( void )
 	objDef_t *item = NULL;
 	objDef_t *item_ammo = NULL;
 	building_t	*building = NULL;
+	aircraft_t	*ac = NULL;
 	byte	found;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
@@ -188,7 +189,7 @@ void RS_InitTree( void )
 		{
 		case RS_TECH:
 			if ( !strcmp( t->name, "" ) )
-				Com_Printf( _("RS_InitTree: A 'type tech' item needs to have a 'name\txxx' defined \"%s\"."), t->id );
+				Com_Printf( _("RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined."), t->id );
 			break;
 		case RS_WEAPON:
 		case RS_ARMOR:
@@ -217,10 +218,8 @@ void RS_InitTree( void )
 
 			}
 			//no id found in csi.ods
-			if ( !found ) {
-				Com_Printf("RS_InitTree: Linked weapon or armor (\"%s\": provided=\"%s\") not found.\n", t->id, t->provides );
-				Com_Printf("RS_InitTree: This is most probably an error in the \"provided\" definition in the research.ufo file.\n");
-			}
+			if ( !found )
+				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found.\n", t->id, t->provides );
 			break;
 		case RS_BUILDING:
 			found = false;
@@ -236,13 +235,30 @@ void RS_InitTree( void )
 					break;	// Should return to CASE RS_xxx.
 				}
 			}
-			if ( !found ) {
-				Com_Printf( _("RS_InitTree: Linked building (\"%s\": provided=\"%s\") not found.\n"), t->id, t->provides );
-				Com_Printf( _("RS_InitTree: This is most probably an error in the \"provided\" definition in the research.ufo file.\n") );
-			}
+			if ( !found )
+				Com_Printf( _("RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found.\n"), t->id, t->provides );
 			break;
 		case RS_CRAFT:
-			// unused right now.
+			found = false;
+			for ( j = 0; j < numAircraft; j++ ) {
+				ac = &aircraft[j];
+				if ( !strcmp( t->provides, ac->title ) ) { // This aircraft has been 'provided',
+					found = true;
+					if ( !strcmp( t->name, "") )
+						strcpy( t->name, ac->name );
+					// TODO: which model(s) are needed?
+					if ( !strcmp( t->mdl_top, "") )	{			// DEBUG testing
+						strcpy( t->mdl_top, ac->model_top );
+						Com_Printf( _("RS_InitTree: aircraft model \"%s\" \n"),ac->model_top );
+					}
+					//if ( !strcmp( t->mdl_bottom, "") )			// DEBUG testing
+					//	strcpy( t->mdl_bottom, ac->model );
+
+					break;	// Should return to CASE RS_xxx.
+				}
+			}
+			if ( !found )
+				Com_Printf( _("RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n"), t->id, t->provides );
 			break;
 		} // switch
 	}
@@ -269,14 +285,14 @@ void RS_GetName( char *id, char *name )
 				strcpy( name, t->name );
 				return;
 			} else {
-				Com_Printf( _("RS_GetName: No name defined for \"%s\" not found. Name set to id.\n"), id );
+				Com_Printf( _("RS_GetName: \"%s\" - No name defined. Name defaults to id.\n"), id );
 				strcpy( name, id );	// set the name to the id.
 				return;
 			}
 		}
 	}
 	strcpy( name, id );	// set the name to the id.
-	Com_Printf( _("RS_GetName: technology \"%s\" not found. Name set to id\n"), id );
+	Com_Printf( _("RS_GetName: \"%s\" -  Technology not found. Name defaults to id\n"), id );
 }
 
 /*======================
@@ -526,7 +542,8 @@ void RS_UpdateData ( void )
 				Cbuf_AddText( va( "researchrunning%i\n", j ) );
 				break;
 			case RS_FINISH:
-				strcat(name, " [finished]");	// DEBUG: normaly these will not be shown at all. see "if" above
+				// DEBUG: normaly these will not be shown at all. see "if" above
+				strcat(name, " [finished]");
 				break;
 			case RS_PAUSED:
 				strcat(name, " [paused]");
@@ -534,13 +551,13 @@ void RS_UpdateData ( void )
 				break;
 			case RS_NONE:
 				strcat(name, " [unknown]");
-				// TODO make it red?
+				// The color is defined in menu research.ufo by  "confunc research_clear".
 				break;
 			default:
 				break;
 			}
 
-			Cvar_Set( va("mn_researchitem%i", j),  name ); //TODO: colorcode maybe?
+			Cvar_Set( va("mn_researchitem%i", j),  name );
 			researchList[j] = &technologies[i];
 			j++;
 		}
@@ -608,7 +625,7 @@ byte RS_DependsOn(char *id1, char *id2)
 			return false;
 		}
 	}
-	Com_Printf( _("RS_DependsOn: research item \"%s\" not found.\n"), id1 );
+	Com_Printf( _("RS_DependsOn: \"%s\" <- research item not found.\n"), id1 );
 	return false;
 }
 
@@ -772,15 +789,14 @@ void MN_ResetResearch( void )
 // NOTE: the BSFS define is the same like for bases and so on...
 value_t valid_tech_vars[] =
 {
-	{ "name",		V_STRING,	TECHFS( name ) },		//name of technology
-	//{ "up_chapter",	V_STRING,	TECHFS( name ) },
+	{ "name",			V_STRING,	TECHFS( name ) },		//name of technology
 	{ "description",	V_STRING,	TECHFS( description ) },
 	{ "provides",		V_STRING,	TECHFS( provides ) },	//what does this research provide
-	{ "time",			V_FLOAT,		TECHFS( time ) },				//how long will this research last
-	{ "image_top"	,	V_STRING,	TECHFS( image_top ) },
+	{ "time",			V_FLOAT,	TECHFS( time ) },		//how long will this research last
+	{ "image_top",		V_STRING,	TECHFS( image_top ) },
 	{ "image_bottom",	V_STRING,	TECHFS( image_bottom ) },
 	{ "mdl_top",		V_STRING,	TECHFS( mdl_top ) },
-	{ "mdl_bottom",	V_STRING,	TECHFS( mdl_bottom ) },
+	{ "mdl_bottom",		V_STRING,	TECHFS( mdl_bottom ) },
 	{ NULL,	0, 0 }
 };
 
@@ -791,9 +807,9 @@ void RS_ParseTechnologies ( char* id, char** text )
 {
 	value_t *var = NULL;
 	technology_t *t = NULL;
-	char	*errhead = _("RS_ParseTechnologies: unexptected end of file (names ");
+	char	*errhead = _("RS_ParseTechnologies: unexptected end of file.");
 	char	*token = NULL;
-	char *misp = NULL;
+	char	*misp = NULL;
 	char	temp_text[MAX_VAR]; //256 ?
 	stringlist_t *required = NULL;
 
@@ -801,12 +817,12 @@ void RS_ParseTechnologies ( char* id, char** text )
 	token = COM_Parse( text );
 	if ( !*text || strcmp( token, "{" ) )
 	{
-		Com_Printf( _("RS_ParseTechnologies: technology def \"%s\" without body ignored\n"), id );
+		Com_Printf( _("RS_ParseTechnologies: \"%s\" technology def without body ignored.\n"), id );
 		return;
 	}
 	if ( numTechnologies >= MAX_TECHNOLOGIES )
 	{
-		Com_Printf( _("RS_ParseTechnologies: too many technology entries\n") );
+		Com_Printf( _("RS_ParseTechnologies: too many technology entries. limit is %i.\n"), MAX_TECHNOLOGIES );
 		return;
 	}
 
@@ -817,8 +833,8 @@ void RS_ParseTechnologies ( char* id, char** text )
 
 	//set standard values
 	strcpy( t->id, id );
-	strcpy( t->name, "" );
-	//strcpy( t->up_chapter, "tech" ); //default chapter
+	strcpy( t->name, id );	// Using id as name-placeholder. Just in case no name is found at all.
+	strcpy( t->description, "No description available." );
 	strcpy( t->provides, "" );
 	strcpy( t->image_top, "" );
 	strcpy( t->image_bottom, "" );
@@ -845,7 +861,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 			else if ( !strcmp( token, "armor" ) )	t->type = RS_ARMOR;
 			else if ( !strcmp( token, "craft" ) )		t->type = RS_CRAFT;
 			else if ( !strcmp( token, "building" ) )	t->type = RS_BUILDING;
-			else Com_Printf(_("RS_ParseTechnologies - Unknown techtype: \"%s\" - ignored.\n"), token);
+			else Com_Printf(_("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n"), id, token );
 		}
 		else
 		if ( !strcmp( token, "requires" ) )
@@ -860,9 +876,11 @@ void RS_ParseTechnologies ( char* id, char** text )
 			do {
 				token = COM_Parse( &misp );
 				if ( !misp ) break;
-				strncpy( required->list[required->numEntries++], token, MAX_VAR);
-				if ( required->numEntries == MAX_TECHLINKS )
-					Com_Printf( _("RS_ParseTechnologies: Too many \"required\" defined. Limit is %i - ignored\n"), MAX_TECHLINKS );
+				if ( required->numEntries < MAX_TECHLINKS )
+					strncpy( required->list[required->numEntries++], token, MAX_VAR);
+				else
+					Com_Printf( _("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n"), id, MAX_TECHLINKS );
+				
 			}
 			while ( misp && required->numEntries < MAX_TECHLINKS );
 			continue;
@@ -882,7 +900,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 			if ( strcmp( token, "" ) ) {
 				// find chapter
 				int i;
-				for ( i = 0; i < numChapters; i++ )
+				for ( i = 0; i < numChapters; i++ ) {
 					if ( !strcmp( upChapters[i].id, token ) ) {
 						// add entry to chapter
 						t->up_chapter = &upChapters[i];
@@ -899,8 +917,9 @@ void RS_ParseTechnologies ( char* id, char** text )
 						}
 						break;
 					}
-				if ( i == numChapters )
-					Com_Printf( _("RS_ParseTechnologies: chapter \"%s\" not found (entry %s)\n"), token, id );
+					if ( i == numChapters )
+						Com_Printf( _("RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n"), id, token );
+				}
 			}
 		}
 		else
@@ -915,7 +934,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 					Com_ParseValue( t, token, var->type, var->ofs );
 				else
 					// NOTE: do we need a buffer here? for saving or something like that?
-					Com_Printf(_("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed\n"));
+					Com_Printf(_("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed\n") );
 				break;
 			}
 		//TODO: debug this thing, it crashes the game at startup.
@@ -944,7 +963,7 @@ void RS_GetRequired( char *id, stringlist_t *required)
 			return;
 		}
 	}
-	Com_Printf( _("RS_GetRequired: technology \"%s\" not found.\n"), id );
+	Com_Printf( _("RS_GetRequired: \"%s\" - technology not found.\n"), id );
 }
 
 /*======================
@@ -987,7 +1006,7 @@ byte RS_TechIsResearched(char *id )
 		}
 	}
 
-	Com_Printf( _("RS_TechIsResearched: research item \"%s\" not found.\n"), id );
+	Com_Printf( _("RS_TechIsResearched: \"%s\" research item not found.\n"), id );
 	return false;
 }
 
@@ -1017,7 +1036,7 @@ byte RS_TechIsResearchable(char *id )
 			return true;
 		}
 	}
-	Com_Printf( _("RS_TechIsResearchable: research item \"%s\" not found.\n"), id );
+	Com_Printf( _("RS_TechIsResearchable: \"%s\" research item not found.\n"), id );
 	return false;
 }
 
@@ -1046,7 +1065,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 						if ( required->numEntries < MAX_TECHLINKS ) {
 							strcpy( required->list[required->numEntries], id );
 							required->numEntries++;
-							Com_DPrintf("RS_GetFirstRequired2: 'initial' or 'nothing' found - \"%s\"\n", t->id );
+							Com_DPrintf("RS_GetFirstRequired2: \"%s\" - 'initial' or 'nothing' found.\n", id );
 						}
 						return;
 					}
@@ -1055,7 +1074,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 					if ( required->numEntries < MAX_TECHLINKS ) {
 						strcpy( required->list[required->numEntries], required_temp->list[j] );
 						required->numEntries++;
-						Com_DPrintf( "RS_GetFirstRequired2: next item \"%s\" already researched  \"%s\"\n", required_temp->list[j], t->id );
+						Com_DPrintf( "RS_GetFirstRequired2: \"%s\" - next item \"%s\" already researched.\n", id, required_temp->list[j] );
 					}
 				} else {
 					RS_GetFirstRequired2( required_temp->list[j], first_id, required );
@@ -1065,7 +1084,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 		}
 	}
 	if ( !strcmp( id, first_id ) )
-		Com_Printf( _("RS_GetFirstRequired: technology \"%s\" not found.\n"), id );
+		Com_Printf( _("RS_GetFirstRequired2: \"%s\" - technology not found.\n"), id );
 }
 
 void RS_GetFirstRequired( char *id,  stringlist_t *required )

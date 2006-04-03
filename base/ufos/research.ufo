@@ -656,7 +656,7 @@ tech craft_transporter
 	up_chapter	crafts
 
 	requires	initial
-	provides	transporter
+	provides	dropship
 	time	0
 	researched	true
 
@@ -677,18 +677,18 @@ tech craft_interceptor
 	mdl_top	models/aircrafts/fighter1_main.md2
 }
 
-tech craftupgrade_transporter
-{
-	type	tech
-	name	"Plasmadrive for H-92 Transport"
-	description	transporter_txt
-	up_chapter	crafts
+//tech craftupgrade_transporter
+//{
+//	type	tech
+//	name	"Plasmadrive for H-92 Transport"
+//	description	transporter_txt
+//	up_chapter	crafts
 
-	requires	"craft_transporter plasma"
-	provides	transporter_plasmadrive
-	time	0
-	researched	true
-}
+//	requires	"craft_transporter plasma"
+//	provides	transporter_plasmadrive
+//	time	0
+//	researched	true
+//}
 
 //========================
 // Aliens
