@@ -413,6 +413,26 @@ menu aircraft
 		click	{ cmd "aircraft_return" }
 	}
 
+	string team_members
+	{
+		string	"Team Members:"
+		pos		"480 486"
+	}
+
+	string team_hired
+	{
+		string	"*cvar mn_hired"
+		pos		"480 508"
+	}
+
+	text aircraftinfo
+	{
+		pos		"480 540"
+		size	"300 200"
+		format	"20 120"
+		num	11
+	}
+
 	func init
 	{
 		cmd "aircraft_init;aircraft_select"
