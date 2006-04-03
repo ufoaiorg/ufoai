@@ -1047,6 +1047,10 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	{
 		MN_PushMenu( "popup_intercept" );
 	}
+	else if ( mapAction == MA_BASEATTACK && selMis )
+	{
+		MN_PushMenu( "popup_baseattack" );
+	}
 
 	// mission selection
 	for ( i = 0, ms = ccs.mission; i < ccs.numMissions; i++, ms++ )
@@ -1056,7 +1060,17 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 		if ( x >= msx-8 && x <= msx+8 && y >= msy-8 && y <= msy+8 )
 		{
 			selMis = ms;
-			mapAction = MA_INTERCEPT;
+			if ( !strcmp( selMis->def->name, "baseattack" ) )
+			{
+				mapAction = MA_BASEATTACK;
+				// we need no dropship in our base
+				selMis->def->active = true;
+			}
+			else
+			{
+				Com_DPrintf(_("Select mission: %s at %.0f:%.0f\n"), selMis->def->name, selMis->realPos[0], selMis->realPos[1] );
+				mapAction = MA_INTERCEPT;
+			}
 			return;
 		}
 	}
@@ -1905,6 +1919,10 @@ void MN_DrawMenus( void )
 						{
 						case MA_NEWBASE:
 							menuText[TEXT_STANDARD] = _("Select the desired location of the\nnew base on the map.\n");
+							break;
+						case MA_BASEATTACK:
+							if ( ! selMis )
+								menuText[TEXT_STANDARD] = _("Aliens are attacking our base\nat this very moment.\n");
 							break;
 						case MA_INTERCEPT:
 							if ( ! selMis )

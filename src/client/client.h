@@ -1129,6 +1129,8 @@ typedef struct stageSet_s
 	char	nextstage[MAX_VAR];
 	char	endstage[MAX_VAR];
 	char	cmds[MAX_VAR];
+	// play a sequence when entering a new stage?
+	char	sequence[MAX_VAR];
 	date_t	delay;
 	date_t	frame;
 	date_t	expire;
@@ -1225,7 +1227,8 @@ typedef enum mapAction_s
 {
 	MA_NONE,
 	MA_NEWBASE,	// build a new base
-	MA_INTERCEPT	// intercept TODO:
+	MA_INTERCEPT,	// intercept TODO:
+	MA_BASEATTACK	// base attacking
 } mapAction_t;
 
 typedef enum aircraftStatus_s

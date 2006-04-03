@@ -333,8 +333,6 @@ void CL_StartAircraft ( void )
 		air->pos[1] = baseCurrent->pos[1]+2;
 	}
 	air->status = AIR_IDLE;
-	Com_DPrintf(("...aircraft now idles around\n"));
-	// TODO: Set pos = endpos
 }
 
 /*
@@ -518,7 +516,6 @@ void CL_NewAircraft ( base_t* base, char* name )
 	int	i;
 
 	assert(base);
-	Com_DPrintf(_("numAircraft: %i\n"), numAircraft );
 	for ( i = 0; i < numAircraft; i++ )
 	{
 		air = &aircraft[i];
@@ -686,10 +683,15 @@ stageState_t *CL_CampaignActivateStage( char *name )
 				memset( &ccs.set[j], 0, sizeof(setState_t) );
 				ccs.set[j].stage = &stage[j];
 				ccs.set[j].def = &stageSets[j];
+				if ( *stageSets[j].sequence )
+					Cbuf_ExecuteText( EXEC_NOW, va("seq_start %s", stageSets[j].sequence) );
 			}
 
 			// activate stage sets
 			CL_CampaignActivateStageSets( stage );
+
+			Com_DPrintf(_("Activate stage %s\n"), stage->name );
+
 			return state;
 		}
 	}
@@ -716,7 +718,7 @@ void CL_CampaignEndStage( char *name )
 			return;
 		}
 
-	Com_Printf( _("CL_CampaignActivateStage: stage '%s' not found.\n"), name );
+	Com_Printf( _("CL_CampaignEndStage: stage '%s' not found.\n"), name );
 }
 
 
@@ -744,10 +746,20 @@ void CL_CampaignAddMission( setState_t *set )
 	if ( set->def->expire.day )
 		mis->expire = Date_Add( ccs.date, set->def->expire );
 
-	// get default position first, then try to find a corresponding mask color
-	mis->realPos[0] = mis->def->pos[0];
-	mis->realPos[1] = mis->def->pos[1];
-	CL_MapMaskFind( mis->def->mask, mis->realPos );
+	if ( !strcmp( mis->def->name, "baseattack" ) )
+	{
+		baseCurrent = &bmBases[rand() % ccs.numBases];
+		mis->realPos[0] = baseCurrent->pos[0];
+		mis->realPos[1] = baseCurrent->pos[1];
+		Cbuf_ExecuteText(EXEC_NOW, va("base_attack %i", baseCurrent->id) );
+	}
+	else
+	{
+		// get default position first, then try to find a corresponding mask color
+		mis->realPos[0] = mis->def->pos[0];
+		mis->realPos[1] = mis->def->pos[1];
+		CL_MapMaskFind( mis->def->mask, mis->realPos );
+	}
 
 	// prepare next event (if any)
 	set->num++;
@@ -775,6 +787,9 @@ void CL_CampaignRemoveMission( actMis_t *mis )
 	}
 
 	ccs.numMissions--;
+
+	Com_DPrintf(_("%i missions left\n"), ccs.numMissions );
+
 	for ( i = num; i < ccs.numMissions; i++ )
 		ccs.mission[i] = ccs.mission[i+1];
 
@@ -1888,10 +1903,11 @@ void CL_GameGo( void )
 	// multiplayer
 	if ( B_GetNumOnTeam() == 0 && ! ccs.singleplayer )
 	{
-		MN_Popup( _("Note"), _("Enter your base and assemble a team") );
+		MN_Popup( _("Note"), _("Assemble or load a team") );
 		return;
 	}
-	else if ( ! mis->active && ccs.singleplayer )
+	else if ( ( ! mis->active || ( interceptAircraft && ! interceptAircraft->teamSize ) )
+		&& ccs.singleplayer )
 		// dropship not near landingzone
 		return;
 
@@ -1902,8 +1918,6 @@ void CL_GameGo( void )
 	Cvar_Set( "ai_civilian", mis->civTeam );
 	Cvar_Set( "ai_equipment", mis->alienEquipment );
 	Cvar_Set( "music", mis->music );
-	// TODO is this correct for a multiplayer game too?  CL_GameGo returns
-	// if curCampaign is null...
 	Cvar_Set( "equip", curCampaign->equipment );
 
 	// check inventory
@@ -1919,12 +1933,17 @@ void CL_GameGo( void )
 	if ( CL_MapIsNight( mis->pos ) ) timeChar = 'n';
 	else timeChar = 'd';
 
-	// TODO: Draw the base attack on worldmap
-	//       use mis->pos for this, too
-	if ( mis->map[0] == '.' && B_GetCount() > 0 )
+	// base attack
+	// maps starts with a dot
+	if ( mis->map[0] == '.' )
 	{
-		Cbuf_AddText( va("base_assemble_rand") );
-		return;
+		if ( B_GetCount() > 0 && baseCurrent && baseCurrent->baseStatus == BASE_UNDER_ATTACK )
+		{
+			Cbuf_AddText( va("base_assemble %i", baseCurrent->id ) );
+			return;
+		}
+		else
+			return;
 	}
 
 	if ( mis->map[0] == '+' ) Com_sprintf (expanded, sizeof(expanded), "maps/%s%c.ump", mis->map+1, timeChar );
@@ -2485,6 +2504,7 @@ value_t stageset_vals[] =
 	{ "expire",		V_DATE,		STAGESETOFS( expire ) },
 	{ "number",		V_INT,		STAGESETOFS( number ) },
 	{ "quota",		V_INT,		STAGESETOFS( quota ) },
+	{ "seq",	V_STRING,	STAGESETOFS( sequence ) },
 	{ "nextstage",	V_STRING,	STAGESETOFS( nextstage ) },
 	{ "endstage",	V_STRING,	STAGESETOFS( endstage ) },
 	{ "commands",	V_STRING,	STAGESETOFS( cmds ) },

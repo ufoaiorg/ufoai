@@ -1539,6 +1539,9 @@ void MN_BuildBase( void )
 {
 	assert(baseCurrent);
 
+	// FIXME: This should not be here - but we only build bases in singleplayer
+	ccs.singleplayer = true;
+
 	if ( ccs.credits - BASE_COSTS > 0 )
 	{
 		if ( CL_NewBase( newBasePos ) )
@@ -1565,6 +1568,7 @@ B_BaseAttack
 void B_BaseAttack ( void )
 {
 	int whichBaseID;
+	char baseAttackText[128];
 
 	if ( Cmd_Argc() < 2 )
 	{
@@ -1574,13 +1578,15 @@ void B_BaseAttack ( void )
 
 	whichBaseID = atoi( Cmd_Argv( 1 ) );
 
-	if ( whichBaseID < MAX_BASES && bmBases[whichBaseID].founded )
+	if ( whichBaseID >= 0 && whichBaseID < ccs.numBases )
 	{
+		Com_sprintf( baseAttackText, sizeof(baseAttackText), va(_("Base %s is under attack"), bmBases[whichBaseID].title ) );
 		bmBases[whichBaseID].baseStatus = BASE_UNDER_ATTACK;
 		// TODO: New menu for:
 		//      defend -> call AssembleBase for this base
 		//      continue -> return to geoscape
-		MN_Popup( _("Base attack"), va(_("Base %s is under attack"), bmBases[whichBaseID].title ) );
+		MN_Popup( _("Base attack"), baseAttackText );
+		mapAction = MA_BASEATTACK;
 	}
 
 #if 0	//TODO: run eventhandler for each building in base
@@ -1595,6 +1601,8 @@ void B_BaseAttack ( void )
 B_AssembleMap
 
 NOTE: Do we need day and night maps here, too?
+TODO: Search a empty fild and add a alien craft there
+FIXME: We need to get rid of the tunnels to nivana
 =================
 */
 void B_AssembleMap ( void )
@@ -1679,14 +1687,7 @@ B_AssembleRandomBase
 */
 void B_AssembleRandomBase( void )
 {
-	int i;
-	int cnt = 0;
-	for ( i = 0; i < MAX_BASES; i++ )
-	{
-		if ( ! bmBases[i].founded ) break;
-		cnt++;
-	}
-	Cbuf_AddText( va("base_assemble %i", rand() % cnt ) );
+	Cbuf_AddText( va("base_assemble %i", rand() % ccs.numBases ) );
 }
 
 /*
