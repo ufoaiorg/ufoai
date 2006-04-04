@@ -23,9 +23,6 @@ typedef struct production_s
 } production_t;
 
 extern vec2_t newBasePos;
-extern	int numBuildings;	// The global number of entries in the bmBuildings list (see client.h)
-
-extern	production_t	bmProductions[MAX_PRODUCTIONS];	// A global of _all_ productions (TODO: what exactly is this meant for?).
 
 void MN_BuildingInit( void );
 int B_GetCount ( void );

@@ -36,24 +36,24 @@ TODO: new game does not reset basemangagement
 #include "client.h"
 #include "cl_basemanagement.h"
 
-building_t    bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global of _all_ buildings (even unbuilt) in all bases. (see client.h)
 base_t        bmBases[MAX_BASES];				// A global of _all_ bases. (see client.h)
-
-production_t  bmProductions[MAX_PRODUCTIONS];		// A global of _all_ productions (see cl_basemanagement.h) TODO: what exactly is this meant for?
-
-int numBuildings;								// The global number of entries in the bmBuildings list (see cl_basemanagement.h and client.h)
-int numProductions;
 vec2_t newBasePos;
 
-int bmDataSize = 0;
+building_t    bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global of _all_ buildings (even unbuilt) in all bases. (see client.h)
+int numBuildings;								// The global number of entries in the bmBuildings list (see client.h)
+
+production_t  bmProductions[MAX_PRODUCTIONS];		// A global of _all_ productions (see cl_basemanagement.h) TODO: what exactly is this meant for?
+int numProductions;							// Number of entries in the bmProductions list.
+
 
 //DrawBase
 float bvCenterX, bvCenterY;
 float bvScale;
 
+int bmDataSize = 0;
 char *bmData, *bmDataStart, *bmDataProductions;
 
-char infoBuildingText[MAX_MENUTEXTLEN];
+char infoBuildingText[MAX_MENUTEXTLEN];			// Building information/description.
 
 /*======================
 The valid definition names for buildings in the basemagagement.ufo file.
@@ -188,23 +188,23 @@ int B_HowManyPeopleInBase2 ( base_t *base, int location )
 	return amount;
 }
 
-/*=====================
+/*======================
 B_HowManyPeopleInBase
 
 Returns the whole amount of soldiers/workers in base
 
 usage -> see B_HowManyPeopleInBase2
-=====================*/
+======================*/
 int B_HowManyPeopleInBase( base_t *base )
 {
 	return B_HowManyPeopleInBase2 ( base , 0 );
 }
 
-/*=====================
+/*======================
 MN_BuildingStatus
 
 TODO: document this
-=====================*/
+======================*/
 void MN_BuildingStatus( void )
 {
 	int daysLeft;
@@ -247,17 +247,16 @@ void MN_BuildingStatus( void )
 	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
 }
 
-/*=====================
+/*======================
 MN_BuildingInfoClick_f
-=====================*/
+======================*/
 void MN_BuildingInfoClick_f ( void )
 {
 	if ( baseCurrent && baseCurrent->buildingCurrent )
 		UP_OpenWith ( baseCurrent->buildingCurrent->pedia );
 }
 
-/*
-=================
+/*======================
 B_SetUpBase
 =================
 */
@@ -291,11 +290,17 @@ void B_SetUpBase ( void )
 	}
 }
 
-/*
-=================
+/*======================
 B_GetBuilding
-=================
-*/
+
+Returns the building in the current base that has the unique name buildingName.
+
+IN
+	buildingName:	The unique name oif the building (building_t->name).
+
+OUT
+	building_t	B_GetBuilding	if building was found / else->NULL
+======================*/
 building_t* B_GetBuilding ( char *buildingName )
 {
 	int i = 0;
@@ -310,11 +315,9 @@ building_t* B_GetBuilding ( char *buildingName )
 	return NULL;
 }
 
-/*
-=================
+/*======================
 MN_RemoveBuilding
-=================
-*/
+======================*/
 void MN_RemoveBuilding( void )
 {
 	//maybe someone call this command before the buildings are parsed??
@@ -332,11 +335,9 @@ void MN_RemoveBuilding( void )
 	}
 }
 
-/*
-====================
+/*======================
 MN_ConstructBuilding
-====================
-*/
+======================*/
 void MN_ConstructBuilding( void )
 {
 	//maybe someone call this command before the buildings are parsed??
@@ -362,25 +363,21 @@ void MN_ConstructBuilding( void )
 	CL_UpdateCredits( ccs.credits - baseCurrent->buildingCurrent->fixCosts );
 }
 
-/*
-====================
+/*======================
 MN_ResetBuildingCurrent
 
 is called e.g. when leaving the build-menu
 but also several times from cl_basemanagement.c
-====================
-*/
+======================*/
 void MN_ResetBuildingCurrent ( void )
 {
 	if ( baseCurrent )
 		baseCurrent->buildingCurrent = NULL;
 }
 
-/*
-==============
+/*======================
 MN_NewBuilding
-==============
-*/
+======================*/
 void MN_NewBuilding( void )
 {
 	//maybe someone call this command before the buildings are parsed??
@@ -393,12 +390,11 @@ void MN_NewBuilding( void )
 	MN_BuildingStatus();
 }
 
-/*
-=====================
+/*======================
 MN_SetBuildingByClick
-=====================
-*/
+
 //level 0 - underground
+======================*/
 void MN_SetBuildingByClick ( int row, int col )
 {
 	building_t *building = NULL;
@@ -483,11 +479,9 @@ void MN_SetBuildingByClick ( int row, int col )
 
 }
 
-/*
-====================
+/*======================
 MN_SetBuilding
-====================
-*/
+======================*/
 void MN_SetBuilding( void )
 {
 	int row, col;
@@ -509,11 +503,9 @@ void MN_SetBuilding( void )
 	MN_SetBuildingByClick ( row, col );
 }
 
-/*
-==============
+/*======================
 MN_NewBuildingFromList
-==============
-*/
+======================*/
 void MN_NewBuildingFromList( void )
 {
 	//maybe someone call this command before the buildings are parsed??
@@ -527,11 +519,9 @@ void MN_NewBuildingFromList( void )
 
 }
 
-/*
-==================
+/*======================
 MN_DamageBuilding
-==================
-*/
+======================*/
 void MN_DamageBuilding( void )
 {
 	int damage;
@@ -571,11 +561,9 @@ void MN_DamageBuilding( void )
 
 }
 
-/*
-==================
+/*======================
 MN_UpgradeBuilding
-==================
-*/
+======================*/
 void MN_UpgradeBuilding( void )
 {
 //	int day, month;
@@ -609,11 +597,9 @@ void MN_UpgradeBuilding( void )
 		}
 }
 
-/*
-==================
+/*======================
 MN_RepairBuilding
-==================
-*/
+======================*/
 void MN_RepairBuilding( void )
 {
 //	int day, month;
@@ -648,11 +634,9 @@ void MN_RepairBuilding( void )
 
 }
 
-/*
-=================
+/*======================
 MN_DrawBuilding
-=================
-*/
+======================*/
 void MN_DrawBuilding( void )
 {
 	int i = 0;
@@ -721,11 +705,9 @@ void MN_DrawBuilding( void )
 	if ( entry->image ) Cvar_Set( "mn_building_image", entry->image );
 }
 
-/*
-========================
+/*======================
 MN_BuildingRemoveWorkers
-========================
-*/
+======================*/
 void MN_BuildingRemoveWorkers( void )
 {
 	int workers;
@@ -752,11 +734,9 @@ void MN_BuildingRemoveWorkers( void )
 
 }
 
-/*
-=====================
+/*======================
 MN_BuildingAddWorkers
-=====================
-*/
+======================*/
 void MN_BuildingAddWorkers( void )
 {
 	int workers;
@@ -783,11 +763,9 @@ void MN_BuildingAddWorkers( void )
 
 }
 
-/*
-====================
+/*======================
 MN_BuildingAddToList
-====================
-*/
+======================*/
 void MN_BuildingAddToList( char *title, int id )
 {
 	char tmpTitle[MAX_VAR];
@@ -806,11 +784,9 @@ void MN_BuildingAddToList( char *title, int id )
 	}
 }
 
-/*
-=================
+/*======================
 MN_BuildingInit
-=================
-*/
+======================*/
 void MN_BuildingInit( void )
 {
 	int i = 1;
@@ -847,11 +823,9 @@ void MN_BuildingInit( void )
 	MN_DrawBuilding();
 }
 
-/*
-=================
+/*======================
 B_GetBuilding
-=================
-*/
+======================*/
 building_t* B_GetBuildingByID ( int id )
 {
 	if ( baseCurrent )
@@ -863,11 +837,9 @@ building_t* B_GetBuildingByID ( int id )
 	return NULL;
 }
 
-/*
-==================
+/*======================
 MN_BuildingClick_f
-==================
-*/
+======================*/
 void MN_BuildingClick_f( void )
 {
 	int	num, i;
@@ -899,11 +871,9 @@ void MN_BuildingClick_f( void )
 	MN_DrawBuilding();
 }
 
-/*
-======================
+/*======================
 MN_ParseBuildings
-======================
-*/
+======================*/
 void MN_ParseBuildings( char *title, char **text )
 {
 	building_t *entry;
@@ -1031,11 +1001,9 @@ void MN_ParseBuildings( char *title, char **text )
 
 }
 
-/*
-======================
+/*======================
 MN_ClearBase
-======================
-*/
+======================*/
 void MN_ClearBase( base_t *base )
 {
 	int	row, col, levels, i;
@@ -1066,11 +1034,9 @@ void MN_ClearBase( base_t *base )
 }
 
 
-/*
-======================
+/*======================
 MN_ParseBases
-======================
-*/
+======================*/
 void MN_ParseBases( char *title, char **text )
 {
 	char	*errhead = _("MN_ParseBases: unexptected end of file (names ");
@@ -1113,11 +1079,9 @@ void MN_ParseBases( char *title, char **text )
 }
 
 
-/*
-======================
+/*======================
 MN_ParseProductions
-======================
-*/
+======================*/
 void MN_ParseProductions( char *title, char **text )
 {
 	production_t *entry;
@@ -1203,14 +1167,12 @@ void MN_ParseProductions( char *title, char **text )
 
 #define MOUSEOVER mx > baseCurrent->posX[row][col][baseCurrent->baseLevel] && mx < baseCurrent->posX[row][col][baseCurrent->baseLevel] + ( picWidth * bvScale ) && my > baseCurrent->posY[row][col][baseCurrent->baseLevel] && my < baseCurrent->posY[row][col][baseCurrent->baseLevel] + ( picHeight * bvScale )
 
-/*
-=================
+/*======================
 MN_DrawBase
 
 FIXME: faster rendering - this is all 512x512
 without texture compression my notebook stutters around
-=================
-*/
+======================*/
 void MN_DrawBase( void )
 {
 	int row, col, rowCnt = 0;
@@ -1351,11 +1313,9 @@ void MN_DrawBase( void )
 	}
 }
 
-/*
-=================
+/*======================
 MN_BaseInit
-=================
-*/
+======================*/
 void MN_BaseInit( void )
 {
 	ccs.actualBaseID = (int) Cvar_VariableValue("mn_base_id");
@@ -1382,11 +1342,9 @@ void MN_BaseInit( void )
 	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
 }
 
-/*
-=================
+/*======================
 MN_RenameBase
-=================
-*/
+======================*/
 void MN_RenameBase( void )
 {
 	if ( Cmd_Argc() < 2 )
@@ -1399,11 +1357,9 @@ void MN_RenameBase( void )
 		strncpy( baseCurrent->title, Cmd_Argv( 1 ) , MAX_VAR );
 }
 
-/*
-=================
+/*======================
 MN_BaseLevelDown
-=================
-*/
+======================*/
 void MN_BaseLevelDown( void )
 {
 	if ( baseCurrent && baseCurrent->baseLevel > 0 )
@@ -1413,11 +1369,9 @@ void MN_BaseLevelDown( void )
 	}
 }
 
-/*
-=================
+/*======================
 MN_BaseLevelUp
-=================
-*/
+======================*/
 void MN_BaseLevelUp( void )
 {
 	if ( baseCurrent && baseCurrent->baseLevel < MAX_BASE_LEVELS-1 )
@@ -1427,11 +1381,9 @@ void MN_BaseLevelUp( void )
 	}
 }
 
-/*
-=================
+/*======================
 MN_NextBase
-=================
-*/
+======================*/
 void MN_NextBase( void )
 {
 	ccs.actualBaseID = (int)Cvar_VariableValue( "mn_base_id" );
@@ -1449,11 +1401,9 @@ void MN_NextBase( void )
 	}
 }
 
-/*
-=================
+/*======================
 MN_PrevBase
-=================
-*/
+======================*/
 void MN_PrevBase( void )
 {
 	ccs.actualBaseID = (int)Cvar_VariableValue( "mn_base_id" );
@@ -1472,11 +1422,9 @@ void MN_PrevBase( void )
 	}
 }
 
-/*
-=================
+/*======================
 MN_SelectBase
-=================
-*/
+======================*/
 void MN_SelectBase( void )
 {
 	if ( Cmd_Argc() < 2 )
@@ -1526,13 +1474,11 @@ void MN_SelectBase( void )
 //       make this variable??
 #define BASE_COSTS 100000
 
-/*
-=================
+/*======================
 MN_BuildBase
 
 TODO: First base needs to be constructed automatically
-=================
-*/
+======================*/
 void MN_BuildBase( void )
 {
 	assert(baseCurrent);
@@ -1558,11 +1504,9 @@ void MN_BuildBase( void )
 }
 
 
-/*
-=================
+/*======================
 B_BaseAttack
-=================
-*/
+======================*/
 void B_BaseAttack ( void )
 {
 	int whichBaseID;
@@ -1594,15 +1538,13 @@ void B_BaseAttack ( void )
 
 }
 
-/*
-=================
+/*======================
 B_AssembleMap
 
 NOTE: Do we need day and night maps here, too?
 TODO: Search a empty fild and add a alien craft there
 FIXME: We need to get rid of the tunnels to nivana
-=================
-*/
+======================*/
 void B_AssembleMap ( void )
 {
 	int row, col;
@@ -1662,11 +1604,9 @@ void B_AssembleMap ( void )
 }
 
 
-/*
-======================
+/*======================
 MN_NewBases
-======================
-*/
+======================*/
 void MN_NewBases( void )
 {
 	// reset bases
@@ -1678,21 +1618,17 @@ void MN_NewBases( void )
 	}
 }
 
-/*
-======================
+/*======================
 B_AssembleRandomBase
-======================
-*/
+======================*/
 void B_AssembleRandomBase( void )
 {
 	Cbuf_AddText( va("base_assemble %i", rand() % ccs.numBases ) );
 }
 
-/*
-======================
+/*======================
 B_SaveBases
-======================
-*/
+======================*/
 void B_SaveBases( sizebuf_t *sb )
 {
 	// save bases
@@ -1755,16 +1691,14 @@ void B_SaveBases( sizebuf_t *sb )
 		}
 }
 
-/*
-======================
+/*======================
 B_LoadBases
 
 This function is called by CL_GameLoad from cl_campaign.c
 It loads back the bases and the buildings
 You can use the buildinglist and baselist commands to verify
 the loading process
-======================
-*/
+======================*/
 void B_LoadBases( sizebuf_t *sb, int version )
 {
 	// load bases
@@ -1851,13 +1785,11 @@ void B_LoadBases( sizebuf_t *sb, int version )
 	ccs.numBases = num;
 }
 
-/*
-======================
+/*======================
 CL_BuildingList
 
 TODO: To be extended for load/save purposes
-======================
-*/
+======================*/
 void CL_BuildingList ( void )
 {
 	int i, j, k;
@@ -1896,13 +1828,11 @@ void CL_BuildingList ( void )
 	}
 }
 
-/*
-======================
+/*======================
 CL_BaseList
 
 TODO: To be extended for load/save purposes
-======================
-*/
+======================*/
 void CL_BaseList ( void )
 {
 	int i, row, col;
@@ -1927,11 +1857,9 @@ void CL_BaseList ( void )
 	}
 }
 
-/*
-======================
+/*======================
 MN_ResetBaseManagement
-======================
-*/
+======================*/
 void MN_ResetBaseManagement( void )
 {
 	// reset menu structures
@@ -1980,11 +1908,11 @@ void MN_ResetBaseManagement( void )
 
 }
 
-/*
+/*======================
 B_GetCount
 
 returns the number of founded bases
-*/
+======================*/
 int B_GetCount ( void )
 {
 	int i, cnt = 0;
@@ -1998,9 +1926,9 @@ int B_GetCount ( void )
 	return cnt;
 }
 
-/*==========================
+/*======================
 CL_UpdateBaseData
-==========================*/
+======================*/
 void CL_UpdateBaseData( void )
 {
 	building_t *b;
@@ -2055,9 +1983,9 @@ void CL_UpdateBaseData( void )
 	CL_CheckResearchStatus();
 }
 
-/*==========================
+/*======================
 B_GetBase
-==========================*/
+======================*/
 base_t* B_GetBase ( int id )
 {
 	int i;
