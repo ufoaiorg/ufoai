@@ -209,7 +209,7 @@ void RS_InitTree( void )
 		switch ( t->type )
 		{
 		case RS_TECH:
-			if ( !strcmp( t->name, "" ) )
+			if ( !*t->name )
 				Com_Printf( _("RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined."), t->id );
 			break;
 		case RS_WEAPON:
@@ -219,13 +219,13 @@ void RS_InitTree( void )
 				item = &csi.ods[j];
 				if ( !strcmp( t->provides, item->kurz ) ) { // This item has been 'provided',
 					found = true;
-					if ( !strcmp(t->name, "" ) )
+					if ( !*t->name )
 						Com_sprintf( t->name, MAX_VAR, item->name );
-					if ( !strcmp( t->mdl_top, "" ) )
+					if ( !*t->mdl_top )
 						Com_sprintf( t->mdl_top, MAX_VAR, item->model );
-					if ( !strcmp( t->image_top, "" ) )
+					if ( !*t->image_top )
 						Com_sprintf( t->image_top, MAX_VAR, item->image );
-					if ( !strcmp( t->mdl_bottom, "" ) ) {
+					if ( !*t->mdl_bottom ) {
 						if  ( t->type == RS_WEAPON) {
 							// find ammo
 							for ( k = 0; k < csi.numODs; k++ ) {
@@ -251,9 +251,9 @@ void RS_InitTree( void )
 				building = &bmBuildings[0][j];
 				if ( !strcmp( t->provides, building->name ) ) { // This building has been 'provided',
 					found = true;
-					if ( !strcmp( t->name, "") )
+					if ( !*t->name )
 						Com_sprintf( t->name, MAX_VAR, building->title );
-					if ( !strcmp( t->image_top, "") )
+					if ( !*t->image_top )
 						Com_sprintf( t->image_top, MAX_VAR, building->image );
 
 					break;	// Should return to CASE RS_xxx.
@@ -268,15 +268,15 @@ void RS_InitTree( void )
 				ac = &aircraft[j];
 				if ( !strcmp( t->provides, ac->title ) ) { // This aircraft has been 'provided',
 					found = true;
-					if ( !strcmp( t->name, "") )
+					if ( !*t->name )
 						Com_sprintf( t->name, MAX_VAR, ac->name );
 					// TODO: which model(s) are needed?
 					// NOTE: All from the aircraft definition (and maybe one more)
-					if ( !strcmp( t->mdl_top, "") )	{			// DEBUG testing
+					if ( !*t->mdl_top ) {			// DEBUG testing
 						Com_sprintf( t->mdl_top, MAX_VAR, ac->model_top );
 						Com_Printf( _("RS_InitTree: aircraft model \"%s\" \n"),ac->model_top );
 					}
-					//if ( !strcmp( t->mdl_bottom, "") )			// DEBUG testing
+					//if ( !*t->mdl_bottom )			// DEBUG testing
 					//	Com_sprintf( t->mdl_bottom, MAX_VAR, ac->model );
 
 					break;	// Should return to CASE RS_xxx.
@@ -313,7 +313,7 @@ void RS_GetName( char *id, char *name )
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {	// research item found
 			// If something is defined as name use it.
-			if ( strcmp( t->name, "" ) ) {
+			if ( *t->name ) {
 				Com_sprintf( name, MAX_VAR, _(t->name) );
 				return;
 			} else {
@@ -994,7 +994,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 
-			if ( strcmp( token, "" ) ) {
+			if ( *token ) {
 				// find chapter
 				int i;
 				for ( i = 0; i < numChapters; i++ ) {
