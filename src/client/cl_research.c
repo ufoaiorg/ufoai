@@ -66,7 +66,7 @@ void RS_MarkOneCollected ( char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( t->provides, id ) ) {	// provided item found
+		if ( !strncmp( t->provides, id, sizeof(t->provides) ) ) {	// provided item found
 			t->statusCollected = true;
 			return;
 		}
@@ -107,7 +107,7 @@ void RS_MarkOneResearchable ( char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( t->id, id ) ) {	// research item found
+		if ( !strncmp( t->id, id, sizeof(t->id) ) ) {	// research item found
 			Com_Printf( _("RS_MarkOneResearchable: \"%s\" marked as researchable.\n"), id );
 			t->statusResearchable = true;
 			return;
