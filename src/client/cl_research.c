@@ -219,9 +219,12 @@ void RS_InitTree( void )
 				item = &csi.ods[j];
 				if ( !strcmp( t->provides, item->kurz ) ) { // This item has been 'provided',
 					found = true;
-					if ( !strcmp(t->name, "" ) )		strcpy( t->name, item->name );
-					if ( !strcmp( t->mdl_top, "" ) )		strcpy( t->mdl_top, item->model );
-					if ( !strcmp( t->image_top, "" ) )	strcpy( t->image_top, item->image );
+					if ( !strcmp(t->name, "" ) )
+						Com_sprintf( t->name, MAX_VAR, item->name );
+					if ( !strcmp( t->mdl_top, "" ) )
+						Com_sprintf( t->mdl_top, MAX_VAR, item->model );
+					if ( !strcmp( t->image_top, "" ) )
+						Com_sprintf( t->image_top, MAX_VAR, item->image );
 					if ( !strcmp( t->mdl_bottom, "" ) ) {
 						if  ( t->type == RS_WEAPON) {
 							// find ammo
@@ -229,7 +232,7 @@ void RS_InitTree( void )
 								item_ammo = &csi.ods[k];
 								if ( j == item_ammo->link ) {
 									Com_DPrintf("RS_InitTree: Ammo \"%s\" for \"%s\" found.\n", item_ammo->name,  item->name);
-									strcpy( t->mdl_bottom, item_ammo->model );
+									Com_sprintf( t->mdl_bottom, MAX_VAR, item_ammo->model );
 								}
 							}
 						}
@@ -249,9 +252,9 @@ void RS_InitTree( void )
 				if ( !strcmp( t->provides, building->name ) ) { // This building has been 'provided',
 					found = true;
 					if ( !strcmp( t->name, "") )
-						strcpy( t->name, building->title );
+						Com_sprintf( t->name, MAX_VAR, building->title );
 					if ( !strcmp( t->image_top, "") )
-						strcpy( t->image_top, building->image );
+						Com_sprintf( t->image_top, MAX_VAR, building->image );
 
 					break;	// Should return to CASE RS_xxx.
 				}
@@ -266,14 +269,15 @@ void RS_InitTree( void )
 				if ( !strcmp( t->provides, ac->title ) ) { // This aircraft has been 'provided',
 					found = true;
 					if ( !strcmp( t->name, "") )
-						strcpy( t->name, ac->name );
+						Com_sprintf( t->name, MAX_VAR, ac->name );
 					// TODO: which model(s) are needed?
+					// NOTE: All from the aircraft definition (and maybe one more)
 					if ( !strcmp( t->mdl_top, "") )	{			// DEBUG testing
-						strcpy( t->mdl_top, ac->model_top );
+						Com_sprintf( t->mdl_top, MAX_VAR, ac->model_top );
 						Com_Printf( _("RS_InitTree: aircraft model \"%s\" \n"),ac->model_top );
 					}
 					//if ( !strcmp( t->mdl_bottom, "") )			// DEBUG testing
-					//	strcpy( t->mdl_bottom, ac->model );
+					//	Com_sprintf( t->mdl_bottom, MAX_VAR, ac->model );
 
 					break;	// Should return to CASE RS_xxx.
 				}
@@ -285,7 +289,7 @@ void RS_InitTree( void )
 	}
 	RS_MarkCollected();
 	RS_MarkResearchable();
-	Com_Printf( _("RS_InitTree: Technology tree initialised. %i entries found.\n"), i );
+	Com_DPrintf( _("RS_InitTree: Technology tree initialised. %i entries found.\n"), i );
 }
 
 /*======================
@@ -310,16 +314,16 @@ void RS_GetName( char *id, char *name )
 		if ( !strcmp( id, t->id ) ) {	// research item found
 			// If something is defined as name use it.
 			if ( strcmp( t->name, "" ) ) {
-				strcpy( name, t->name );
+				Com_sprintf( name, MAX_VAR, _(t->name) );
 				return;
 			} else {
-				Com_Printf( _("RS_GetName: \"%s\" - No name defined. Name defaults to id.\n"), id );
-				strcpy( name, id );	// set the name to the id.
+				Com_DPrintf( _("RS_GetName: \"%s\" - No name defined. Name defaults to id.\n"), id );
+				Com_sprintf( name, MAX_VAR, _(id) );	// set the name to the id.
 				return;
 			}
 		}
 	}
-	strcpy( name, id );	// set the name to the id.
+	Com_sprintf( name, MAX_VAR, id );	// set the name to the id.
 	Com_Printf( _("RS_GetName: \"%s\" -  Technology not found. Name defaults to id\n"), id );
 }
 
@@ -374,17 +378,17 @@ void RS_ResearchDisplayInfo ( void  )
 
 	req_temp.numEntries = 0;
 	RS_GetFirstRequired( t->id, &req_temp );
-	strcpy( dependencies, "Dependencies: ");
+	Com_sprintf( dependencies, MAX_VAR, _("Dependencies: "));
 	if ( req_temp.numEntries > 0 ) {
 		for ( i = 0; i < req_temp.numEntries; i++ ) {
 			RS_GetName( req_temp.list[i], tempstring ); //name_temp gets initialised in getname
-			strcat( dependencies, tempstring );
+			strncat( dependencies, tempstring, sizeof(dependencies) );
 
 			if ( i < req_temp.numEntries-1 )
-				strcat( dependencies, ", ");
+				strncat( dependencies, ", ", sizeof(dependencies));
 		}
 	} else {
-		strcpy( dependencies, "" );
+		*dependencies = '\0';
 	}
 	Cvar_Set( "mn_research_seldep", dependencies );
 
@@ -491,6 +495,12 @@ void RS_ResearchStart ( void )
 	if ( ! baseCurrent )
 		return;
 
+#if 0
+	// check if laboratory is available
+	if ( ! baseCurrent->hasLab )
+		return;
+#endif
+
 	// get the currently selected research-item
 	t = researchList[researchListPos];
 
@@ -525,6 +535,7 @@ RS_ResearchStop
 Pauses the research of the selected research-list entry.
 
 TODO: Check if laboratory is available
+
 ======================*/
 void RS_ResearchStop ( void )
 {
@@ -536,7 +547,7 @@ void RS_ResearchStop ( void )
 
 	// get the currently selected research-item
 	t = researchList[researchListPos];
-	
+
 	switch ( t->statusResearch )
 	{
 	case RS_RUNNING:
@@ -566,19 +577,19 @@ See menu_research.ufo for the layout/called functions.
 ======================*/
 void RS_UpdateData ( void )
 {
-	char name [MAX_VAR];
-	int i, j;
+	char	name[MAX_VAR];
+	int	i, j;
 	technology_t *t = NULL;
-	strcpy( name, "" ); // init temp-name
+	*name = '\0'; // init temp-name
 
 	// make everything the same-color.
 	Cbuf_AddText("research_clear\n");
-	
+
 	for ( i=0, j=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		strcpy( name, t->name );
+		Com_sprintf( name, MAX_VAR, t->name );
 		if ( t->statusCollected && !t->statusResearchable && (t->statusResearch != RS_FINISH ) ) { // an unresearched collected item that cannot yet be researched
-			strcat(name, " [not yet researchable]");
+			strncat(name, " [not yet researchable]", sizeof(name));
 			Cbuf_AddText( va( "researchunresearchable%i\n", j ) );	// Color the item 'unresearchable'
 			Cvar_Set( va("mn_researchitem%i", j),  name );		// Display the concated text in the correct list-entry.
 			researchList[j] = &technologies[i];					// Assign the current tech in the global list to the correct entry in the displayed list.
@@ -589,19 +600,19 @@ void RS_UpdateData ( void )
 			switch ( t->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 			{
 			case RS_RUNNING:
-				strcat(name, " [under research]");
+				strncat(name, " [under research]", sizeof(name));
 				Cbuf_AddText( va( "researchrunning%i\n", j ) );	// color the item 'research running'
 				break;
 			case RS_FINISH:
 				// DEBUG: normaly these will not be shown at all. see "if" above
-				strcat(name, " [finished]");
+				strncat(name, " [finished]", sizeof(name));
 				break;
 			case RS_PAUSED:
-				strcat(name, " [paused]");
+				strncat(name, " [paused]", sizeof(name));
 				Cbuf_AddText( va( "researchpaused%i\n", j ) );	// color the item 'research paused'
 				break;
 			case RS_NONE:
-				strcat(name, " [unknown]");
+				strncat(name, " [unknown]", sizeof(name));
 				// The color is defined in menu research.ufo by  "confunc research_clear". See also above.
 				break;
 			default:
@@ -764,6 +775,8 @@ void CL_CheckResearchStatus ( void )
 RS_TechnologyList_f
 
 List all parsed technologies and their attributes in commandline/console.
+
+Command to call this: techlist
 ======================*/
 void RS_TechnologyList_f ( void )
 {
@@ -825,6 +838,11 @@ void RS_TechnologyList_f ( void )
 
 /*======================
 MN_ResearchInit
+
+Command to call this: research_init
+
+Should be called whenever the research menu
+gets active
 ======================*/
 void MN_ResearchInit( void )
 {
@@ -834,8 +852,9 @@ void MN_ResearchInit( void )
 /*======================
 MN_ResetResearch
 
-This is more or less the initial 
+This is more or less the initial
 Bind some of the functions in htis file to console-commands that you can call ingame.
+Called from MN_ResetMenus resp. CL_InitLocal
 ======================*/
 void MN_ResetResearch( void )
 {
@@ -856,8 +875,8 @@ void MN_ResetResearch( void )
 
 /*======================
 The valid definition names in the research.ufo file.
-NOTE: the BSFS define is the same like for bases and so on...
-See cl_research.h for the macro.
+NOTE: the TECHFS macro assignes the values from scriptfile
+to the appropriate values in the corresponding struct
 ======================*/
 value_t valid_tech_vars[] =
 {
@@ -910,14 +929,14 @@ void RS_ParseTechnologies ( char* id, char** text )
 	memset( t, 0, sizeof( technology_t ) );
 
 	//set standard values
-	strcpy( t->id, id );
-	strcpy( t->name, id );	// Using id as name-placeholder. Just in case no name is found at all.
-	strcpy( t->description, "No description available." );
-	strcpy( t->provides, "" );
-	strcpy( t->image_top, "" );
-	strcpy( t->image_bottom, "" );
-	strcpy( t->mdl_top, "" );
-	strcpy( t->mdl_bottom, "" );
+	Com_sprintf( t->id, MAX_VAR, id );
+	Com_sprintf( t->name, MAX_VAR, id );	// Using id as name-placeholder. Just in case no name is found at all.
+	Com_sprintf( t->description, MAX_VAR, _("No description available.") );
+	*t->provides = '\0';
+	*t->image_top = '\0';
+	*t->image_bottom = '\0';
+	*t->mdl_top = '\0';
+	*t->mdl_bottom = '\0';
 	t->type = RS_TECH;
 	t->statusResearch = RS_NONE;
 	t->statusResearchable = false;
@@ -958,7 +977,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 					strncpy( required->list[required->numEntries++], token, MAX_VAR);
 				else
 					Com_Printf( _("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n"), id, MAX_TECHLINKS );
-				
+
 			}
 			while ( misp && required->numEntries < MAX_TECHLINKS );
 			continue;
@@ -1166,7 +1185,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 						return;
 					if ( 0 == j ) {
 						if ( required->numEntries < MAX_TECHLINKS ) {
-							strcpy( required->list[required->numEntries], id );
+							Com_sprintf( required->list[required->numEntries], MAX_VAR, id );
 							required->numEntries++;
 							Com_DPrintf("RS_GetFirstRequired2: \"%s\" - 'initial' or 'nothing' found.\n", id );
 						}
@@ -1175,7 +1194,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 				}
 				if ( RS_TechIsResearched(required_temp->list[j]) ) {
 					if ( required->numEntries < MAX_TECHLINKS ) {
-						strcpy( required->list[required->numEntries], required_temp->list[j] );
+						Com_sprintf( required->list[required->numEntries], MAX_VAR, required_temp->list[j] );
 						required->numEntries++;
 						Com_DPrintf( "RS_GetFirstRequired2: \"%s\" - next item \"%s\" already researched.\n", id, required_temp->list[j] );
 					}
@@ -1209,7 +1228,7 @@ void RS_GetProvided( char *id, char *provided )
 		t = &technologies[i];
 		if ( !strcmp( id, t->id ) ) {
 			for ( j=0; j < MAX_TECHLINKS; j++ )
-				strcpy(provided[j], t->provides);
+				Com_sprintf(provided[j], MAX_VAR, t->provides);
 			//TODO: search for dependent items.
 			for ( j=0; j < numTechnologies; j++ ) {
 				if (RS_DependsOn( t->id, id ) ) {
