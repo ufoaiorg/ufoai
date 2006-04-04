@@ -182,7 +182,7 @@ void RS_MarkResearchable( void )
 			}
 		}
 	}
-	Com_Printf( _("RS_MarkResearchable: Done.\n"));
+	Com_DPrintf( _("RS_MarkResearchable: Done.\n"));
 }
 
 /*======================
