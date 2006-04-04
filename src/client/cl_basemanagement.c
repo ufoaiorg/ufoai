@@ -1,17 +1,47 @@
-// cl_basemanagement.c
+/*
 
-// TODO:
-// new game does not reset basemangagement
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
+/*======================
+cl_basemanagement.c
+
+* Handles everything that is located an or accessed trough a base.
+
+See
+	base/ufos/basemanagement.ufo
+and
+	base/ufos/menu_bases.ufo
+	base/ufos/menu_buildings.ufo
+for the underlying content.
+
+TODO: comment on used globals variables.
+TODO: new game does not reset basemangagement
+======================*/
+
 #include "client.h"
 #include "cl_basemanagement.h"
 
-building_t    bmBuildings[MAX_BASES][MAX_BUILDINGS];
+building_t    bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global of _all_ buildings (even unbuilt) in all bases. (see client.h)
+base_t        bmBases[MAX_BASES];				// A global of _all_ bases. (see client.h)
 
-base_t        bmBases[MAX_BASES];
+production_t  bmProductions[MAX_PRODUCTIONS];		// A global of _all_ productions (see cl_basemanagement.h) TODO: what exactly is this meant for?
 
-production_t  bmProductions[MAX_PRODUCTIONS];
-
-int numBuildings;
+int numBuildings;								// The global number of entries in the bmBuildings list (see cl_basemanagement.h and client.h)
 int numProductions;
 vec2_t newBasePos;
 
@@ -25,40 +55,24 @@ char *bmData, *bmDataStart, *bmDataProductions;
 
 char infoBuildingText[MAX_MENUTEXTLEN];
 
+/*======================
+The valid definition names for buildings in the basemagagement.ufo file.
+NOTE: the BSFS macro (see cl_basemanagement.h) assignes the values from scriptfile
+to the appropriate values in the corresponding struct
+======================*/
 value_t valid_vars[] =
 {
-	//internal name of building
-	{ "name",	V_NULL,		BSFS( name ) },
-
-	//map_name for generating basemap
-	{ "map_name",   V_NULL,	        BSFS( mapPart ) },
-
-	//what does the building produce
-	{ "produce_type",V_NULL,	BSFS( produceType ) },
-
-	//how long for one unit?
-	{ "produce_time",V_FLOAT,	BSFS( produceTime ) },
-
-	//how many units
-	{ "produce",    V_INT,		BSFS( production ) },
-
-	//is the building allowed to be build more the one time?
-	{ "more_than_one",    V_INT,	BSFS( moreThanOne ) },
-
-	//displayed building name
-	{ "title",	V_STRING,	BSFS( title ) },
-
-	//the pedia-id string
-	{ "pedia",	V_NULL,		BSFS( pedia ) },
-
-	//the status of the building
-	{ "status",	V_INT,		BSFS( buildingStatus[0] ) },
-
-	//the string to identify the image for the building
-	{ "image",	V_NULL,		BSFS( image ) },
-
-	//short description
-	{ "desc",	V_NULL,		BSFS( text ) },
+	{ "name",	V_NULL,		BSFS( name ) },			// internal name of building
+	{ "map_name",   V_NULL,	        BSFS( mapPart ) },	// map_name for generating basemap
+	{ "produce_type",V_NULL,	BSFS( produceType ) },	// what does the building produce
+	{ "produce_time",V_FLOAT,	BSFS( produceTime ) },	// how long for one unit?
+	{ "produce",    V_INT,		BSFS( production ) },		// how many units
+	{ "more_than_one",    V_INT,	BSFS( moreThanOne ) },	// is the building allowed to be build more the one time?
+	{ "title",	V_STRING,	BSFS( title ) },				// displayed building name
+	{ "pedia",	V_NULL,		BSFS( pedia ) },			// the pedia-id string
+	{ "status",	V_INT,		BSFS( buildingStatus[0] ) },	// the status of the building
+	{ "image",	V_NULL,		BSFS( image ) },			// the string to identify the image for the building
+	{ "desc",	V_NULL,		BSFS( text ) },			// short description
 
 	//on which level is the building available
 	//starts at level 0 for underground - going up to level 7 (like in-game)
@@ -74,29 +88,14 @@ value_t valid_vars[] =
 	//set first part of a building to 1 all others to 0
 	//otherwise all building-parts will be on the list
 	{ "visible",	V_BOOL,		BSFS( visible ) },
-
-	//not needed yet
-// 	{ "size",	V_POS,		BSFS( size ) },
-
-	//for buildings with more than one part
-	//dont forget to set the visibility of all non-main-parts to 0
-	{ "needs",	V_NULL,		BSFS( needs ) },
-
-	//only available if this one is availabel, too
-	{ "depends",	V_NULL,		BSFS( depends ) },
-
-	//amount of energy needed for use
-	{ "energy",	V_FLOAT,	BSFS( energy ) },
-
-	//buildcosts
-	{ "fixcosts",	V_FLOAT,	BSFS( fixCosts ) },
-
-	//costs that will come up by using the building
-	{ "varcosts",	V_FLOAT,	BSFS( varCosts ) },
-	{ "worker_costs",V_FLOAT,	BSFS( workerCosts ) },
-
-	//how much days will it take to construct the building?
-	{ "build_time",	V_INT,		BSFS( buildTime ) },
+// 	{ "size",	V_POS,		BSFS( size ) },			// not needed yet
+	{ "needs",	V_NULL,		BSFS( needs ) },			// for buildings with more than one part (dont forget to set the visibility of all non-main-parts to 0)
+	{ "depends",	V_NULL,		BSFS( depends ) },	// only available if this one is availabel, too
+	{ "energy",	V_FLOAT,	BSFS( energy ) },			// amount of energy needed for use
+	{ "fixcosts",	V_FLOAT,	BSFS( fixCosts ) },		// buildcosts
+	{ "varcosts",	V_FLOAT,	BSFS( varCosts ) },		// costs that will come up by using the building
+	{ "worker_costs",V_FLOAT,	BSFS( workerCosts ) },	
+	{ "build_time",	V_INT,		BSFS( buildTime ) },	// how much days will it take to construct the building?
 
 	//event handler functions
 	{ "onconstruct",	V_STRING,	BSFS( onConstruct ) },
@@ -105,10 +104,8 @@ value_t valid_vars[] =
 	{ "onupgrade",	V_STRING,	BSFS( onUpgrade ) },
 	{ "onrepair",	V_STRING,	BSFS( onRepair ) },
 	{ "onclick",	V_STRING,	BSFS( onClick ) },
-
-	//how many workers should there for max and for min
-	{ "max_workers",V_INT,	BSFS( maxWorkers ) },
-	{ "min_workers",V_INT,	BSFS( minWorkers ) },
+	{ "max_workers",V_INT,	BSFS( maxWorkers ) },		// how many workers should there be max
+	{ "min_workers",V_INT,	BSFS( minWorkers ) },			// how many workers should there be min
 
 	//place of a building
 	//needed for flag autobuild
@@ -121,13 +118,14 @@ value_t valid_vars[] =
 	//automatically construct this building for the first base you build
 	//set also the pos-flag
 	{ "firstbase",		V_BOOL,			BSFS( firstbase ) },
-
-	//{ "islab",		V_BOOL,			BSFS( isLab ) },
-	//{ "ishangar",		V_BOOL,			BSFS( isHangar ) },
-
 	{ NULL,	0, 0 }
 };
 
+/*======================
+The valid definition names for productions in the basemagagement.ufo file.
+NOTE: the PRODFS macro (see cl_basemanagement.h) assignes the values from scriptfile
+to the appropriate values in the corresponding struct
+======================*/
 value_t production_valid_vars[] =
 {
 	{ "title",	V_STRING,	PRODFS( title ) },
@@ -137,20 +135,24 @@ value_t production_valid_vars[] =
 	{ NULL,	0, 0 }
 };
 
-// ===========================================================
 
-/*
-=====================
+/*======================
 B_HowManyPeopleInBase2
 
-returns the hole amount of soldiers/workers in base or inside a specific building/location.
-0 = all in base
-1 = all in labs
-2 = all in quaters
-4 = all in workshops
-TODO: This list should probably be made into constants or something like that.
-=====================
-*/
+Returns the whole amount of soldiers/workers in base or inside a specific building/location.
+
+IN
+	base:	The base you want to count people in.
+	location: where to look for people
+		0 = all in base
+		1 = all in labs
+		2 = all in quaters
+		4 = all in workshops
+OUT
+	B_HowManyPeopleInBase2	number of the counted people
+
+TODO: This list should probably be made into constants or something like that.	
+======================*/
 int B_HowManyPeopleInBase2 ( base_t *base, int location )
 {
 	int row, col;
@@ -185,23 +187,24 @@ int B_HowManyPeopleInBase2 ( base_t *base, int location )
 
 	return amount;
 }
-/*
-=====================
+
+/*=====================
 B_HowManyPeopleInBase
 
-returns the hole amount of soldiers/workers in base
-=====================
-*/
+Returns the whole amount of soldiers/workers in base
+
+usage -> see B_HowManyPeopleInBase2
+=====================*/
 int B_HowManyPeopleInBase( base_t *base )
 {
 	return B_HowManyPeopleInBase2 ( base , 0 );
 }
 
-/*
-=================
+/*=====================
 MN_BuildingStatus
-=================
-*/
+
+TODO: document this
+=====================*/
 void MN_BuildingStatus( void )
 {
 	int daysLeft;
@@ -244,11 +247,9 @@ void MN_BuildingStatus( void )
 	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
 }
 
-/*
-======================
+/*=====================
 MN_BuildingInfoClick_f
-======================
-*/
+=====================*/
 void MN_BuildingInfoClick_f ( void )
 {
 	if ( baseCurrent && baseCurrent->buildingCurrent )

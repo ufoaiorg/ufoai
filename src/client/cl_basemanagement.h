@@ -11,13 +11,27 @@
 #define UPGRADECOSTS 100
 #define UPGRADETIME  2
 
+#define MAX_PRODUCTIONS		256
+
+typedef struct production_s
+{
+	char    name[MAX_VAR];
+	char    title[MAX_VAR];
+	char    *text;
+	int	amount;
+	char	menu[MAX_VAR];
+} production_t;
+
 extern vec2_t newBasePos;
-extern	int numBuildings;
+extern	int numBuildings;	// The global number of entries in the bmBuildings list (see client.h)
+
+extern	production_t	bmProductions[MAX_PRODUCTIONS];	// A global of _all_ productions (TODO: what exactly is this meant for?).
 
 void MN_BuildingInit( void );
 int B_GetCount ( void );
 void B_SetUpBase ( void );
 
+void MN_ParseProductions( char *title, char **text );
 void MN_SetBuildingByClick ( int row, int col );
 void MN_DrawBase( void );
 void MN_ResetBaseManagement( void );

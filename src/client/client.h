@@ -778,7 +778,6 @@ void RS_MarkResearchable ( void );
 //
 #define MAX_LIST_CHAR		1024
 #define MAX_BUILDINGS		256
-#define MAX_PRODUCTIONS		256
 #define MAX_BASES		6
 #define MAX_DESC		256
 
@@ -1034,21 +1033,11 @@ typedef struct base_s
 	struct building_s *buildingCurrent;
 } base_t;
 
-typedef struct production_s
-{
-	char    name[MAX_VAR];
-	char    title[MAX_VAR];
-	char    *text;
-	int	amount;
-	char	menu[MAX_VAR];
-} production_t;
+extern	base_t	bmBases[MAX_BASES];					// A global list of _all_ bases.
+extern	base_t	*baseCurrent;						// Currently displayed/accessed base.
+extern	building_t	bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global list of _all_ buildings (even unbuilt) in all bases.
 
-extern	base_t	bmBases[MAX_BASES];
-extern	base_t	*baseCurrent;
-extern	building_t	bmBuildings[MAX_BASES][MAX_BUILDINGS];
-
-extern	production_t	bmProductions[MAX_PRODUCTIONS];
-extern	employee_t	employees[MAX_EMPLOYEES];	// This it the global list of employees.
+extern	employee_t	employees[MAX_EMPLOYEES];			// This it the global list of employees.
 extern	int   numEmployees;
 
 #ifndef SAVE_FILE_VERSION
@@ -1080,7 +1069,6 @@ void B_LoadBases( sizebuf_t *sb, int version );
 void MN_ResetBasemanagement( void );
 void MN_ParseBuildings( char *title, char **text );
 void MN_ParseBases( char *title, char **text );
-void MN_ParseProductions( char *title, char **text );
 void MN_BuildingInit( void );
 void B_AssembleMap( void );
 void B_BaseAttack ( void );
