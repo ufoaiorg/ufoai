@@ -36,13 +36,13 @@ TODO: new game does not reset basemangagement
 #include "client.h"
 #include "cl_basemanagement.h"
 
-base_t        bmBases[MAX_BASES];				// A global of _all_ bases. (see client.h)
+base_t        bmBases[MAX_BASES];				// A global list of _all_ bases. (see client.h)
 vec2_t newBasePos;
 
-building_t    bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global of _all_ buildings (even unbuilt) in all bases. (see client.h)
+building_t    bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global list of _all_ buildings (even unbuilt) in all bases. (see client.h)
 int numBuildings;								// The global number of entries in the bmBuildings list (see client.h)
 
-production_t  bmProductions[MAX_PRODUCTIONS];		// A global of _all_ productions (see cl_basemanagement.h) TODO: what exactly is this meant for?
+production_t  bmProductions[MAX_PRODUCTIONS];		// A list of _all_ productions. TODO: what exactly is this meant for?
 int numProductions;							// Number of entries in the bmProductions list.
 
 
@@ -203,7 +203,9 @@ int B_HowManyPeopleInBase( base_t *base )
 /*======================
 MN_BuildingStatus
 
-TODO: document this
+Displays the status of a building and keeps credist up to date.
+
+TODO: is the description above correct?
 ======================*/
 void MN_BuildingStatus( void )
 {
@@ -249,6 +251,8 @@ void MN_BuildingStatus( void )
 
 /*======================
 MN_BuildingInfoClick_f
+
+Opens up the 'pedia if you click on a building.
 ======================*/
 void MN_BuildingInfoClick_f ( void )
 {
@@ -258,8 +262,9 @@ void MN_BuildingInfoClick_f ( void )
 
 /*======================
 B_SetUpBase
-=================
-*/
+
+TODO: document this
+======================*/
 void B_SetUpBase ( void )
 {
 	int i;
@@ -299,7 +304,9 @@ IN
 	buildingName:	The unique name oif the building (building_t->name).
 
 OUT
-	building_t	B_GetBuilding	if building was found / else->NULL
+	building_t	B_GetBuilding	if a building was found it is returned,
+						if no name was give the current building is returned,
+						otherwise->NULL
 ======================*/
 building_t* B_GetBuilding ( char *buildingName )
 {
@@ -317,6 +324,10 @@ building_t* B_GetBuilding ( char *buildingName )
 
 /*======================
 MN_RemoveBuilding
+
+Removes the current building
+
+TODO: what _is_ the current building here?
 ======================*/
 void MN_RemoveBuilding( void )
 {
@@ -481,6 +492,8 @@ void MN_SetBuildingByClick ( int row, int col )
 
 /*======================
 MN_SetBuilding
+
+Places the current building in the base (x/y give via console)
 ======================*/
 void MN_SetBuilding( void )
 {
