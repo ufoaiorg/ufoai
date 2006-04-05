@@ -1379,9 +1379,7 @@ void Qcommon_Init (int argc, char **argv)
 	CL_Init ();
 
 	Com_ParseScripts ();
-#ifndef DEDICATED_ONLY
-	RS_InitTree ();
-#endif
+
 	// add + commands from command line
 	if (!Cbuf_AddLateCommands ())
 	{	// if the user didn't give any commands, run default action
