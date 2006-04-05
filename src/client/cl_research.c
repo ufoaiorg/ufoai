@@ -126,7 +126,8 @@ void RS_MarkResearchable( void )
 {
 	int i, j;
 	technology_t *t = NULL;
-	stringlist_t required;
+	stringlist_t firstrequired;
+	stringlist_t *required = NULL;
 	byte required_are_researched;
 
 
@@ -141,24 +142,23 @@ void RS_MarkResearchable( void )
 		if ( !t->statusResearchable ) {	// Redundant, since we set them all to false, but you never know.
 			if ( t->statusResearch != RS_FINISH) {
 				Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", t->id );
-				required.numEntries = 0;
-				RS_GetFirstRequired( t->id,  &required );
+				firstrequired.numEntries = 0;
+				RS_GetFirstRequired( t->id,  &firstrequired );
 
 				// If the tech has an collected item, mark the first-required techs as researchable //TODO doesn't work yet?
 				if ( t->statusCollected ) {
-					for ( j=0; j < required.numEntries; j++ ) {
-						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:firstreqired.\n", required.list[j] );
-						RS_MarkOneResearchable( required.list[j] );
+					for ( j=0; j < firstrequired.numEntries; j++ ) {
+						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:firstrequired of collected.\n", firstrequired.list[j] );
+						RS_MarkOneResearchable( firstrequired.list[j] );
 					}
 				}
 
-				// if previous techs are all researched, mark this as researched as well
-				required.numEntries = 0;
-				required = t->requires;
+				// if needed/required techs are all researched, mark this as researchable.
+				required = &t->requires;
 				required_are_researched = true;
-				for ( j=0; j < required.numEntries; j++ ) {
-					if ( ( !RS_TechIsResearched(required.list[j] ) )
-					|| ( !strncmp(required.list[j], "nothing", sizeof(required.list[j]) ) ) ) {
+				for ( j=0; j < required->numEntries; j++ ) {
+					if ( ( !RS_TechIsResearched(required->list[j] ) )
+					|| ( !strncmp( required->list[j], "nothing", sizeof(required->list[j]) ) ) ) {
 						required_are_researched = false;
 						break;
 
@@ -167,14 +167,12 @@ void RS_MarkResearchable( void )
 				if ( required_are_researched ) {
 					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:required.\n", t->id );
 					t->statusResearchable = true;
-					//RS_MarkOneResearchable( t->id  );
 				}
 
 
 				// If the tech is an initial one,  mark it as as researchable.
-				for ( j=0; j < required.numEntries; j++ ) {
-
-					if ( !strncmp( required.list[j], "initial",sizeof(required.list[j]) ) ) {
+				for ( j=0; j < required->numEntries; j++ ) {
+					if ( !strncmp( required->list[j], "initial", sizeof(required->list[j]) ) ) {
 						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable - reason:isinitial.\n", t->id );
 						t->statusResearchable = true;
 						break;
@@ -386,7 +384,7 @@ void RS_ResearchDisplayInfo ( void  )
 			strncat( dependencies, tempstring, sizeof(dependencies) );
 
 			if ( i < req_temp.numEntries-1 )
-				strncat( dependencies, ", ", sizeof(dependencies));
+				strncat( dependencies, ", ", sizeof(dependencies) );
 		}
 	} else {
 		*dependencies = '\0';
@@ -601,19 +599,19 @@ void RS_UpdateData ( void )
 			switch ( t->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 			{
 			case RS_RUNNING:
-				strncat(name, " [under research]", sizeof(name));
+				strncat(name, " [under research]", sizeof(name) );
 				Cbuf_AddText( va( "researchrunning%i\n", j ) );	// color the item 'research running'
 				break;
 			case RS_FINISH:
 				// DEBUG: normaly these will not be shown at all. see "if" above
-				strncat(name, " [finished]", sizeof(name));
+				strncat(name, " [finished]", sizeof(name) );
 				break;
 			case RS_PAUSED:
-				strncat(name, " [paused]", sizeof(name));
+				strncat(name, " [paused]", sizeof(name) );
 				Cbuf_AddText( va( "researchpaused%i\n", j ) );	// color the item 'research paused'
 				break;
 			case RS_NONE:
-				strncat(name, " [unknown]", sizeof(name));
+				strncat(name, " [unknown]", sizeof(name) );
 				// The color is defined in menu research.ufo by  "confunc research_clear". See also above.
 				break;
 			default:
@@ -725,7 +723,6 @@ void RS_MarkResearched( char *id )
 			Com_Printf( _("Depending tech \"%s\" has been researched as well.\n"),  t->id );
 		}
 	}
-	RS_MarkResearchable();
 	RS_MarkResearchable();
 }
 
@@ -929,7 +926,6 @@ void RS_ParseTechnologies ( char* id, char** text )
 
 	//set standard values
 	Com_sprintf( tech->id, MAX_VAR, id );
-	Com_sprintf( tech->name, MAX_VAR, id );	// Using id as name-placeholder. Just in case no name is found at all.
 	Com_sprintf( tech->description, MAX_VAR, _("No description available.") );
 	*tech->provides = '\0';
 	*tech->image_top = '\0';
@@ -952,10 +948,10 @@ void RS_ParseTechnologies ( char* id, char** text )
 		if (  !strncmp( token, "type", sizeof(token) ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
-			if ( !strncmp( token, "tech", sizeof(token) ) )	tech->type = RS_TECH; // redundant, but oh well.
+			if ( !strncmp( token, "tech", sizeof(token) ) )		tech->type = RS_TECH; // redundant, but oh well.
 			else if ( !strncmp( token, "weapon", sizeof(token) ) )	tech->type = RS_WEAPON;
 			else if ( !strncmp( token, "armor", sizeof(token) ) )	tech->type = RS_ARMOR;
-			else if ( !strncmp( token, "craft", sizeof(token) ) )		tech->type = RS_CRAFT;
+			else if ( !strncmp( token, "craft", sizeof(token) ) )	tech->type = RS_CRAFT;
 			else if ( !strncmp( token, "building", sizeof(token) ) )	tech->type = RS_BUILDING;
 			else Com_Printf(_("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n"), id, token );
 		}
@@ -1113,7 +1109,7 @@ byte RS_TechIsResearched(char *id )
 	technology_t *t = NULL;
 	if ( ( !strncmp( id, "initial", sizeof(id) ) )
 	|| ( !strncmp( id, "nothing", sizeof(id) ) ) )
-		return true;	// initial and nothing are always researchs. as they are just a starting "technology" that is never used.
+		return true;	// initial and nothing are always researched. as they are just starting "technologys" that are never used.
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strncmp( id, t->id, sizeof(id) ) ) {	// research item found
@@ -1175,6 +1171,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 	int i, j;
 	technology_t *t = NULL;
 	stringlist_t *required_temp = NULL;
+	
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 
@@ -1190,7 +1187,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 						if ( required->numEntries < MAX_TECHLINKS ) {
 							Com_sprintf( required->list[required->numEntries], MAX_VAR, id );
 							required->numEntries++;
-							Com_DPrintf("RS_GetFirstRequired2: \"%s\" - 'initial' or 'nothing' found.\n", id );
+							Com_DPrintf("RS_GetFirstRequired2: \"%s\" - requirement 'initial' or 'nothing' found.\n", id );
 						}
 						return;
 					}
