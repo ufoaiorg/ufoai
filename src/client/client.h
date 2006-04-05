@@ -1040,7 +1040,7 @@ extern	building_t	bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global list of _al
 extern	int numBuildings;								// The global number of entries in the bmBuildings list.
 
 extern	employee_t	employees[MAX_EMPLOYEES];			// This it the global list of employees.
-extern	int   numEmployees;
+extern	int   numEmployees;							// The global number of enris in the "employees" list.
 
 #ifndef SAVE_FILE_VERSION
 #define SAVE_FILE_VERSION 4

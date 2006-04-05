@@ -45,6 +45,8 @@ int numBuildings;								// The global number of entries in the bmBuildings list
 production_t  bmProductions[MAX_PRODUCTIONS];		// A list of _all_ productions. TODO: what exactly is this meant for?
 int numProductions;							// Number of entries in the bmProductions list.
 
+employee_t	employees[MAX_EMPLOYEES];			// This it the global list of employees (see client.h)
+int   numEmployees;							// The global number of enris in the "employees" list. (see client.h)
 
 //DrawBase
 float bvCenterX, bvCenterY;
