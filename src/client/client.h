@@ -811,6 +811,7 @@ char	buildingText[MAX_LIST_CHAR];
 // The types of employees
 typedef enum
 {
+	EMPL_UNDEF,
 	EMPL_SOLDIER,
 	EMPL_SCIENTIST,
 	EMPL_WORKER,		// unused right now
@@ -888,7 +889,7 @@ typedef struct building_s
 
 	int maxWorkers, minWorkers, assignedWorkers; // TODO: remove these and replace them with the employee_s struct
 	// A list of employees assigned to this building.
-	struct employee_s assigned_employees;
+	struct employees_s assigned_employees;
 
 	//if we can build more than one building of the same type:
 	buildingStatus_t	buildingStatus[BASE_SIZE*BASE_SIZE];

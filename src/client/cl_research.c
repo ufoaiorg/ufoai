@@ -903,7 +903,7 @@ IN
 void RS_ParseTechnologies ( char* id, char** text )
 {
 	value_t *var = NULL;
-	technology_t *t = NULL;
+	technology_t *tech = NULL;
 	char	*errhead = _("RS_ParseTechnologies: unexptected end of file.");
 	char	*token = NULL;
 	char	*misp = NULL;
@@ -912,7 +912,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 
 	// get body
 	token = COM_Parse( text );
-	if ( !*text || strcmp( token, "{" ) )
+	if ( !*text || strncmp( token, "{", sizeof(token) ) )
 	{
 		Com_Printf( _("RS_ParseTechnologies: \"%s\" technology def without body ignored.\n"), id );
 		return;
@@ -924,25 +924,25 @@ void RS_ParseTechnologies ( char* id, char** text )
 	}
 
 	// New technology (next free entry in global tech-list)
-	t = &technologies[numTechnologies++];
-	required = &t->requires;
-	memset( t, 0, sizeof( technology_t ) );
+	tech = &technologies[numTechnologies++];
+	required = &tech->requires;
+	memset( tech, 0, sizeof( technology_t ) );
 
 	//set standard values
-	Com_sprintf( t->id, MAX_VAR, id );
-	Com_sprintf( t->name, MAX_VAR, id );	// Using id as name-placeholder. Just in case no name is found at all.
-	Com_sprintf( t->description, MAX_VAR, _("No description available.") );
-	*t->provides = '\0';
-	*t->image_top = '\0';
-	*t->image_bottom = '\0';
-	*t->mdl_top = '\0';
-	*t->mdl_bottom = '\0';
-	t->type = RS_TECH;
-	t->statusResearch = RS_NONE;
-	t->statusResearchable = false;
-	t->statusCollected  = false;
-	t->time = 0;
-	t->overalltime = 0;
+	Com_sprintf( tech->id, MAX_VAR, id );
+	Com_sprintf( tech->name, MAX_VAR, id );	// Using id as name-placeholder. Just in case no name is found at all.
+	Com_sprintf( tech->description, MAX_VAR, _("No description available.") );
+	*tech->provides = '\0';
+	*tech->image_top = '\0';
+	*tech->image_bottom = '\0';
+	*tech->mdl_top = '\0';
+	*tech->mdl_bottom = '\0';
+	tech->type = RS_TECH;
+	tech->statusResearch = RS_NONE;
+	tech->statusResearchable = false;
+	tech->statusCollected  = false;
+	tech->time = 0;
+	tech->overalltime = 0;
 
 	do {
 		// get the name type
@@ -950,18 +950,18 @@ void RS_ParseTechnologies ( char* id, char** text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 		// get values
-		if (  !strcmp( token, "type" ) ) {
+		if (  !strncmp( token, "type", sizeof(token) ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
-			if ( !strcmp( token, "tech" ) )	t->type = RS_TECH; // redundant, but oh well.
-			else if ( !strcmp( token, "weapon" ) )	t->type = RS_WEAPON;
-			else if ( !strcmp( token, "armor" ) )	t->type = RS_ARMOR;
-			else if ( !strcmp( token, "craft" ) )		t->type = RS_CRAFT;
-			else if ( !strcmp( token, "building" ) )	t->type = RS_BUILDING;
+			if ( !strncmp( token, "tech", sizeof(token) ) )	tech->type = RS_TECH; // redundant, but oh well.
+			else if ( !strncmp( token, "weapon", sizeof(token) ) )	tech->type = RS_WEAPON;
+			else if ( !strncmp( token, "armor", sizeof(token) ) )	tech->type = RS_ARMOR;
+			else if ( !strncmp( token, "craft", sizeof(token) ) )		tech->type = RS_CRAFT;
+			else if ( !strncmp( token, "building", sizeof(token) ) )	tech->type = RS_BUILDING;
 			else Com_Printf(_("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n"), id, token );
 		}
 		else
-		if ( !strcmp( token, "requires" ) )
+		if ( !strncmp( token, "requires", sizeof(token) ) )
 		{
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
@@ -983,14 +983,14 @@ void RS_ParseTechnologies ( char* id, char** text )
 			continue;
 		}
 		else
-		if ( !strcmp( token, "researched" ) )
+		if ( !strncmp( token, "researched", sizeof(token) ) )
 		{
 			token = COM_EParse( text, errhead, id );
-			if ( !strcmp( token, "true" ) || !strcmp( token, "1" ) )
-				t->statusResearch = RS_FINISH;
+			if ( !strncmp( token, "true", sizeof(token) ) || !strncmp( token, "1", sizeof(token) ) )
+				tech->statusResearch = RS_FINISH;
 		}
 		else
-		if ( !strcmp( token, "up_chapter" ) ) {
+		if ( !strncmp( token, "up_chapter", sizeof(token) ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 
@@ -998,19 +998,19 @@ void RS_ParseTechnologies ( char* id, char** text )
 				// find chapter
 				int i;
 				for ( i = 0; i < numChapters; i++ ) {
-					if ( !strcmp( upChapters[i].id, token ) ) {
+					if ( !strncmp( token, upChapters[i].id, sizeof(token) ) ) {
 						// add entry to chapter
-						t->up_chapter = &upChapters[i];
+						tech->up_chapter = &upChapters[i];
 						if ( !upChapters[i].first )	{
-							upChapters[i].first = t;
-							upChapters[i].last = t;
+							upChapters[i].first = tech;
+							upChapters[i].last = tech;
 						} else {
 							technology_t *old;
-							upChapters[i].last = t;
+							upChapters[i].last = tech;
 							old = upChapters[i].first;
 							while ( old->next ) old = old->next;
-							old->next = t;
-							t->prev = old;
+							old->next = tech;
+							tech->prev = old;
 						}
 						break;
 					}
@@ -1021,14 +1021,14 @@ void RS_ParseTechnologies ( char* id, char** text )
 		}
 		else
 		for ( var = valid_tech_vars; var->string; var++ )
-			if ( !strcmp( token, var->string ) )
+			if ( !strncmp( token, var->string, sizeof(token) ) )
 			{
 				// found a definition
 				token = COM_EParse( text, errhead, id );
 				if ( !*text ) return;
 
 				if ( var->ofs && var->type != V_NULL )
-					Com_ParseValue( t, token, var->type, var->ofs );
+					Com_ParseValue( tech, token, var->type, var->ofs );
 				else
 					// NOTE: do we need a buffer here? for saving or something like that?
 					Com_Printf(_("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed\n") );

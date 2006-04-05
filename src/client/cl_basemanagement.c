@@ -56,7 +56,7 @@ char *bmData, *bmDataStart, *bmDataProductions;
 char infoBuildingText[MAX_MENUTEXTLEN];			// Building information/description.
 
 /*======================
-The valid definition names for buildings in the basemagagement.ufo file.
+The valid definition names for BUILDINGS (building_t) in the basemagagement.ufo file.
 NOTE: the BSFS macro (see cl_basemanagement.h) assignes the values from scriptfile
 to the appropriate values in the corresponding struct
 ======================*/
@@ -886,21 +886,30 @@ void MN_BuildingClick_f( void )
 
 /*======================
 MN_ParseBuildings
+
+Parses one "building" entry in the basemanagement.ufo file and writes it into the next free entry in bmBuildings[0] ... which is teh list of buildings in the first base (building_t).
+
+IN
+	id:	Unique test-id of a building_t. This is parsed from "building xxx" -> id=xxx
+	text:	TODO document this ... it appears to be the whole following text that is part of the "building" item definition in .ufo.
 ======================*/
-void MN_ParseBuildings( char *title, char **text )
+void MN_ParseBuildings( char *id, char **text )
 {
-	building_t *entry;
-	value_t *edp;
+	building_t *building = NULL;
+	employees_t *employees = NULL;
+	employee_t *employee = NULL;
+	value_t *edp = NULL;
 	char    *errhead = _("MN_ParseBuildings: unexptected end of file (names ");
-	char    *token;
+	char    *token = NULL;
 	int	i = 0;
 	int	j = 0;
+	int	numEmployees_temp = 0;
 
 	// get name list body body
 	token = COM_Parse( text );
-	if ( !*text || strcmp( token, "{" ) )
+	if ( !*text || strncmp( token, "{" , sizeof(token) ) )
 	{
-		Com_Printf( _("MN_ParseBuildings: building \"%s\" without body ignored\n"), title );
+		Com_Printf( _("MN_ParseBuildings: building \"%s\" without body ignored\n"), id );
 		return;
 	}
 	if ( numBuildings >= MAX_BUILDINGS )
@@ -910,32 +919,34 @@ void MN_ParseBuildings( char *title, char **text )
 	}
 
 	// new entry
-	entry = &bmBuildings[0][numBuildings];
-	memset( entry, 0, sizeof( building_t ) );
-	strncpy( entry->name, title, MAX_VAR );
+	building = &bmBuildings[0][numBuildings];
+	memset( building, 0, sizeof( building_t ) );
+	strncpy( building->name, id, MAX_VAR );
 
 	//set standard values
-	entry->buildingStatus[0] = B_NOT_SET;
-	entry->techLevel = 1;
-	entry->notUpOn = 0;
-	entry->used = 0;
-	entry->visible = true;
-	entry->energy = 0;
-	entry->varCosts = 0;
-	entry->workerCosts = 0;
-	entry->minWorkers = 0;
-	entry->maxWorkers = 0;
-	entry->moreThanOne = 0;
-	entry->assignedWorkers = 0;
-	entry->howManyOfThisType = 0;
-	entry->condition[0] = BUILDINGCONDITION;
-	entry->buildingType = B_MISC;
-	entry->id = numBuildings;
-
+	building->buildingStatus[0] = B_NOT_SET;
+	building->techLevel = 1;
+	building->notUpOn = 0;
+	building->used = 0;
+	building->visible = true;
+	building->energy = 0;
+	building->varCosts = 0;
+	building->workerCosts = 0;
+	building->minWorkers = 0;
+	building->maxWorkers = 0;
+	building->moreThanOne = 0;
+	building->assignedWorkers = 0;
+	building->howManyOfThisType = 0;
+	building->condition[0] = BUILDINGCONDITION;
+	building->buildingType = B_MISC;
+	building->id = numBuildings;
+	employees = &building->assigned_employees;
+	employees->cost_per_employee = 100;		// TODO: fixed value rigfht now, needs a configureable one.
+	
 	numBuildings++;
 	do {
 		// get the name type
-		token = COM_EParse( text, errhead, title );
+		token = COM_EParse( text, errhead, id );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
@@ -944,7 +955,7 @@ void MN_ParseBuildings( char *title, char **text )
 			// parse text
 			qboolean skip;
 
-			entry->text = bmData;
+			building->text = bmData;
 			token = *text;
 			skip = true;
 			while ( *token != '}' )
@@ -968,48 +979,76 @@ void MN_ParseBuildings( char *title, char **text )
 		}
 
 		// get values
-		if ( !strcmp( token, "type" ) ) {
-			token = COM_EParse( text, errhead, title );
+		if ( !strncmp( token, "type", sizeof(token) ) ) {
+			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 
-			if ( !strcmp( token, "lab" ) ) {
-				entry->buildingType = B_LAB;
-			} else if ( !strcmp( token, "hangar" ) ){
-				entry->buildingType = B_HANGAR;
-			} else if ( !strcmp( token, "quaters" ) ){
-				entry->buildingType = B_QUATERS;
-			} else if ( !strcmp( token, "workshop" ) ){
-				entry->buildingType = B_WORKSHOP;
+			if ( !strncmp( token, "lab", sizeof(token) ) ) {
+				building->buildingType = B_LAB;
+			} else if ( !strncmp( token, "hangar", sizeof(token) ) ) {
+				building->buildingType = B_HANGAR;
+			} else if ( !strncmp( token, "quaters", sizeof(token) ) ){
+				building->buildingType = B_QUATERS;
+			} else if ( !strncmp( token, "workshop", sizeof(token) ) ){
+				building->buildingType = B_WORKSHOP;
 			}
 		}
 		else
+		if ( !strncmp( token, "max_employees", sizeof(token) ) ) {
+			token = COM_EParse( text, errhead, id );
+			if ( !*text ) return;
+			employees = &building->assigned_employees;
+			if (*token) {
+				employees->maxEmployees = atoi(token);
+			} else {
+				employees->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
+			}
+		}
+		else
+			
+		if ( !strncmp( token, "employees_firstbase", sizeof(token) ) ) {
+			token = COM_EParse( text, errhead, id );
+			if ( !*text ) return;
+			if (*token) {
+				employees = &building->assigned_employees;
+				numEmployees_temp = employees->maxEmployees = atoi(token);
+				for ( employees->numEmployees = 0; employees->numEmployees < numEmployees_temp; )
+				{
+					// assign random employee infos.
+					employee = &employees->assigned[employees->numEmployees];
+					employees->numEmployees++;
+					memset( employee, 0, sizeof( building_t ) );
+				}
+			} 
+		}
+		else
 		for ( edp = valid_vars; edp->string; edp++ )
-			if ( !strcmp( token, edp->string ) )
+			if ( !strncmp( token, edp->string, sizeof(token) ) )
 			{
 				// found a definition
-				token = COM_EParse( text, errhead, title );
+				token = COM_EParse( text, errhead, id );
 				if ( !*text ) return;
 
-				if ( edp->ofs && edp->type != V_NULL ) Com_ParseValue( entry, token, edp->type, edp->ofs );
+				if ( edp->ofs && edp->type != V_NULL ) Com_ParseValue( building, token, edp->type, edp->ofs );
 				else if ( edp->type == V_NULL )
 				{
 					strcpy( bmData, token );
-					*(char **)((byte *)entry + edp->ofs) = bmData;
+					*(char **)((byte *)building + edp->ofs) = bmData;
 					bmData += strlen( token ) + 1;
 				}
 				break;
 			}
 
 		if ( !edp->string )
-			Com_Printf( _("MN_ParseBuildings: unknown token \"%s\" ignored (entry %s)\n"), token, title );
+			Com_Printf( _("MN_ParseBuildings: unknown token \"%s\" ignored (building %s)\n"), token, id );
 
 	} while ( *text );
 
 	for ( i = 1; i < MAX_BASES; i++ )
 		for ( j = 0; j < numBuildings; j++ )
 		{
-			entry = &bmBuildings[i][j];
-			memcpy( entry, &bmBuildings[0][j], sizeof( building_t ) );
+			building = &bmBuildings[i][j];
+			memcpy( building, &bmBuildings[0][j], sizeof( building_t ) );
 		}
 
 }
