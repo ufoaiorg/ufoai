@@ -301,7 +301,7 @@ void B_SetUpBase ( void )
 B_GetBuilding
 
 Returns the building in the current base that has the unique name buildingName.
-
+pa
 IN
 	buildingName:	The unique name oif the building (building_t->name).
 
@@ -898,8 +898,8 @@ IN
 void MN_ParseBuildings( char *id, char **text )
 {
 	building_t *building = NULL;
-	employees_t *employee_list = NULL;
-	employee_t *employee = NULL;
+	//employees_t *employee_list = NULL;
+	//employee_t *employee = NULL;
 	value_t *edp = NULL;
 	char    *errhead = _("MN_ParseBuildings: unexptected end of file (names ");
 	char    *token = NULL;
@@ -996,7 +996,7 @@ void MN_ParseBuildings( char *id, char **text )
 			}
 		}
 		else
-		if ( !strncmp( token, "max_employees", sizeof(token) ) ) {
+		/*if ( !strncmp( token, "max_employees", sizeof(token) ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			employee_list = &building->assigned_employees;
@@ -1029,7 +1029,7 @@ void MN_ParseBuildings( char *id, char **text )
 				}
 			}  
 		}
-		else
+		else*/
 		for ( edp = valid_vars; edp->string; edp++ )
 			if ( !strncmp( token, edp->string, sizeof(token) ) )
 			{
