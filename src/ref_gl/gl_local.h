@@ -44,7 +44,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _WIN32
 #include <jpeglib.h>
 #else
+#ifdef DEVCPP
+#include <jpeglib.h>
+#else
 #include "../win32/jpeglib.h"
+#endif
 #endif
 #endif
 #include "../client/ref.h"

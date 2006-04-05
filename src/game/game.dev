@@ -7,7 +7,7 @@ Type=3
 Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DNDEBUG -D_WINDOWS -DDEVCPP -DC_ONLY_@@_
 CppCompiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DNDEBUG -D_WINDOWS_@@_
 Includes=
-Linker=-lkernel32 -luser32 -lwinmm_@@_../win32/intl.lib_@@_
+Linker=-lkernel32 -luser32 -lwinmm_@@_../win32/intl.lib _@@_--export-all-symbols_@@__@@_
 Libs=
 UnitCount=12
 Folders="Header Files","Resource Files","Source Files"
@@ -18,8 +18,8 @@ MakeIncludes=
 Icon=
 ExeOutput=
 ObjectOutput=
-OverrideOutput=0
-OverrideOutputName=game.exe
+OverrideOutput=1
+OverrideOutputName=gamex86.dll
 HostApplication=
 CommandLine=
 UseCustomMakefile=0

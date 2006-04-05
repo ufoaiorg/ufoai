@@ -4,12 +4,12 @@ Name=ref_gl
 Ver=1
 IsCpp=1
 Type=3
-Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DNDEBUG -DWIN32 -D_WINDOWS -DDEVCPP -DC_ONLY -DUSE_SDL_@@__@@_
-CppCompiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DNDEBUG -DWIN32 -D_WINDOWS -DUSE_SDL_@@_
+Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DNDEBUG _@@_-DWIN32 _@@_-D_WINDOWS _@@_-DDEVCPP _@@_-DC_ONLY _@@_-DUSE_SDL_@@_-DSHADERS_@@_
+CppCompiler=
 Includes=
-Linker=-lkernel32 -luser32 -lgdi32 -lwinmm -llibjpeg_@@_../win32/intl.lib_@@_
+Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_../win32/intl.lib_@@_-def ref_gl.def_@@_
 Libs=
-UnitCount=28
+UnitCount=30
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=
@@ -50,16 +50,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=gl_image.c
-Folder="Source Files"
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit4]
 FileName=gl_light.c
 Folder="Source Files"
 Compile=1
@@ -69,7 +59,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit5]
+[Unit4]
 FileName=gl_mesh.c
 Folder="Source Files"
 Compile=1
@@ -79,7 +69,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit6]
+[Unit5]
 FileName=gl_model.c
 Folder="Source Files"
 Compile=1
@@ -89,7 +79,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit7]
+[Unit6]
 FileName=gl_particle.c
 Folder="Source Files"
 Compile=1
@@ -99,7 +89,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit8]
+[Unit7]
 FileName=gl_rmain.c
 Folder="Source Files"
 Compile=1
@@ -109,7 +99,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit9]
+[Unit8]
 FileName=gl_rmisc.c
 Folder="Source Files"
 Compile=1
@@ -119,7 +109,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit10]
+[Unit9]
 FileName=gl_rsurf.c
 Folder="Source Files"
 Compile=1
@@ -129,7 +119,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit11]
+[Unit10]
 FileName=gl_warp.c
 Folder="Source Files"
 Compile=1
@@ -139,7 +129,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit12]
+[Unit11]
 FileName=..\win32\glw_imp.c
 Folder="Source Files"
 Compile=1
@@ -149,7 +139,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit13]
+[Unit12]
 FileName=..\game\q_shared.c
 Folder="Source Files"
 Compile=1
@@ -159,7 +149,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit14]
+[Unit13]
 FileName=..\win32\q_shwin.c
 Folder="Source Files"
 Compile=1
@@ -169,7 +159,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit15]
+[Unit14]
 FileName=..\win32\qgl_win.c
 Folder="Source Files"
 Compile=1
@@ -179,7 +169,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit16]
+[Unit15]
 FileName=anorms.h
 Folder="Header Files"
 Compile=1
@@ -189,7 +179,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit17]
+[Unit16]
 FileName=anormtab.h
 Folder="Header Files"
 Compile=1
@@ -199,7 +189,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit18]
+[Unit17]
 FileName=gl_local.h
 Folder="Header Files"
 Compile=1
@@ -209,7 +199,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit19]
+[Unit18]
 FileName=gl_model.h
 Folder="Header Files"
 Compile=1
@@ -219,7 +209,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit20]
+[Unit19]
 FileName=..\win32\glw_win.h
 Folder="Header Files"
 Compile=1
@@ -229,8 +219,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit23]
-FileName=..\qcommon\qfiles.h
+[Unit20]
+FileName=..\game\q_shared.h
 Folder="Header Files"
 Compile=1
 CompileCpp=1
@@ -239,7 +229,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit24]
+[Unit23]
 FileName=qgl.h
 Folder="Header Files"
 Compile=1
@@ -249,7 +239,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit25]
+[Unit24]
 FileName=..\client\ref.h
 Folder="Header Files"
 Compile=1
@@ -259,7 +249,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit26]
+[Unit25]
 FileName=warpsin.h
 Folder="Header Files"
 Compile=1
@@ -269,7 +259,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit27]
+[Unit26]
 FileName=..\win32\winquake.h
 Folder="Header Files"
 Compile=1
@@ -279,25 +269,35 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit28]
+[Unit27]
 FileName=ref_gl.def
 Folder="Resource Files"
 Compile=0
 CompileCpp=1
 Link=0
 Priority=1000
+OverrideBuildCmd=1
+BuildCmd=<override this command>
+
+[Unit28]
+FileName=gl_image.c
+Folder="Source Files"
+Compile=1
+CompileCpp=0
+Link=1
+Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
 [Unit30]
-FileName=ref_gl.def
-Folder="Resource Files"
-Compile=0
+FileName=gl_arb_shader.c
+Folder=Source Files
+Compile=1
 CompileCpp=0
-Link=0
+Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c gl_arb_shader.c -o gl_arb_shader.o $(CFLAGS)
 
 [VersionInfo]
 Major=0
@@ -318,7 +318,7 @@ ProductVersion=0.1
 AutoIncBuildNr=0
 
 [Unit21]
-FileName=..\game\q_shared.h
+FileName=..\qcommon\qcommon.h
 CompileCpp=1
 Folder="Header Files"
 Compile=1
@@ -328,7 +328,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit22]
-FileName=..\qcommon\qcommon.h
+FileName=..\qcommon\qfiles.h
 CompileCpp=1
 Folder="Header Files"
 Compile=1
@@ -336,4 +336,14 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+
+[Unit29]
+FileName=gl_shadows.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c gl_shadows.c -o gl_shadows.o $(CFLAGS)
 

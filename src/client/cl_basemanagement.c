@@ -905,7 +905,7 @@ void MN_ParseBuildings( char *id, char **text )
 	char    *token = NULL;
 	int	i = 0;
 	int	j = 0;
-	int	numEmployees_temp = 0;
+	//int	numEmployees_temp = 0;
 
 	// get name list body body
 	token = COM_Parse( text );
@@ -942,8 +942,8 @@ void MN_ParseBuildings( char *id, char **text )
 	building->condition[0] = BUILDINGCONDITION;
 	building->buildingType = B_MISC;
 	building->id = numBuildings;
-	employee_list = &building->assigned_employees;
-	employee_list->cost_per_employee = 100;		// TODO: fixed value rigfht now, needs a configureable one.
+	//employee_list = &building->assigned_employees;
+	//employee_list->cost_per_employee = 100;		// TODO: fixed value rigfht now, needs a configureable one.
 	
 	numBuildings++;
 	do {

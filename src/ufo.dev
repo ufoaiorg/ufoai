@@ -4,18 +4,18 @@ Name=ufo
 Ver=1
 IsCpp=1
 Type=0
-Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DNDEBUG -D_WINDOWS -DDEVCPP -DC_ONLY -DUSE_SDL_@@_
-CppCompiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DNDEBUG -D_WINDOWS_@@_
+Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DWIN32 _@@_-DDEBUG _@@_-DNDEBUG_@@_-D_WINDOWS _@@_-DDEVCPP _@@_-DC_ONLY _@@_-DUSE_SDL_@@_-DSHADERS_@@__@@_
+CppCompiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DWIN32 _@@_-DDEBUG _@@_-DNDEBUG_@@_-D_WINDOWS_@@_
 Includes=
-Linker=-lvorbisfile -lvorbis -logg -llibjpeg -lwinmm -lwsock32 -lkernel32 -luser32 -lgdi32 -lgmon_@@_win32/intl.lib -lSDL_@@_
-Libs=
-UnitCount=74
+Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_win32/intl.lib _@@_-lSDL_@@_win32/libjpeg.lib_@@_
+Libs=C:\Dev-Cpp\lib
+UnitCount=75
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
-ResourceIncludes=
+ResourceIncludes=win32
 MakeIncludes=
-Icon=ufo.ico
+Icon=
 ExeOutput=
 ObjectOutput=
 OverrideOutput=0
@@ -795,4 +795,14 @@ Link=0
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+
+[Unit75]
+FileName=client\cl_shader.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_shader.c -o cl_shader.o $(CFLAGS)
 
