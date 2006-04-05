@@ -896,7 +896,7 @@ IN
 void MN_ParseBuildings( char *id, char **text )
 {
 	building_t *building = NULL;
-	employees_t *employees = NULL;
+	employees_t *employee_list = NULL;
 	employee_t *employee = NULL;
 	value_t *edp = NULL;
 	char    *errhead = _("MN_ParseBuildings: unexptected end of file (names ");
@@ -940,8 +940,8 @@ void MN_ParseBuildings( char *id, char **text )
 	building->condition[0] = BUILDINGCONDITION;
 	building->buildingType = B_MISC;
 	building->id = numBuildings;
-	employees = &building->assigned_employees;
-	employees->cost_per_employee = 100;		// TODO: fixed value rigfht now, needs a configureable one.
+	employee_list = &building->assigned_employees;
+	employee_list->cost_per_employee = 100;		// TODO: fixed value rigfht now, needs a configureable one.
 	
 	numBuildings++;
 	do {
@@ -997,11 +997,11 @@ void MN_ParseBuildings( char *id, char **text )
 		if ( !strncmp( token, "max_employees", sizeof(token) ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
-			employees = &building->assigned_employees;
+			employee_list = &building->assigned_employees;
 			if (*token) {
-				employees->maxEmployees = atoi(token);
+				employee_list->maxEmployees = atoi(token);
 			} else {
-				employees->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
+				employee_list->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
 			}
 		}
 		else
@@ -1010,16 +1010,22 @@ void MN_ParseBuildings( char *id, char **text )
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			if (*token) {
-				employees = &building->assigned_employees;
-				numEmployees_temp = employees->maxEmployees = atoi(token);
-				for ( employees->numEmployees = 0; employees->numEmployees < numEmployees_temp; )
+				employee_list = &building->assigned_employees;
+				numEmployees_temp = employee_list->maxEmployees = atoi(token);
+				for ( employee_list->numEmployees = 0; employee_list->numEmployees < numEmployees_temp; )
 				{
 					// assign random employee infos.
-					employee = &employees->assigned[employees->numEmployees];
-					employees->numEmployees++;
+					employees[numEmployees++] = employee_list->assigned[employee_list->numEmployees]; // link this employee to the global employee-list.
+					employee = &employee_list->assigned[employee_list->numEmployees];
+					employee_list->numEmployees++;
 					memset( employee, 0, sizeof( building_t ) );
+					employee->type = EMPL_UNDEF;
+					employee->speed = 100;
+					//employee->quaters = NULL;
+					//employee->lab = NULL;
+					//combat_stats = NULL;
 				}
-			} 
+			}  
 		}
 		else
 		for ( edp = valid_vars; edp->string; edp++ )

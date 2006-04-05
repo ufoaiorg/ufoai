@@ -157,7 +157,8 @@ void RS_MarkResearchable( void )
 				required = t->requires;
 				required_are_researched = true;
 				for ( j=0; j < required.numEntries; j++ ) {
-					if ( ( !RS_TechIsResearched(required.list[j] ) ) || ( !strcmp(required.list[j], "nothing" ) ) ) {
+					if ( ( !RS_TechIsResearched(required.list[j] ) )
+					|| ( !strncmp(required.list[j], "nothing", sizeof(required.list[j]) ) ) ) {
 						required_are_researched = false;
 						break;
 
@@ -173,7 +174,7 @@ void RS_MarkResearchable( void )
 				// If the tech is an initial one,  mark it as as researchable.
 				for ( j=0; j < required.numEntries; j++ ) {
 
-					if ( !strcmp( required.list[j], "initial" ) ) {
+					if ( !strncmp( required.list[j], "initial",sizeof(required.list[j]) ) ) {
 						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable - reason:isinitial.\n", t->id );
 						t->statusResearchable = true;
 						break;
@@ -217,7 +218,7 @@ void RS_InitTree( void )
 			found = false;
 			for ( j = 0; j < csi.numODs; j++ ) {
 				item = &csi.ods[j];
-				if ( !strcmp( t->provides, item->kurz ) ) { // This item has been 'provided',
+				if ( !strncmp( t->provides, item->kurz, sizeof(t->provides) ) ) { // This item has been 'provided',
 					found = true;
 					if ( !*t->name )
 						Com_sprintf( t->name, MAX_VAR, item->name );
@@ -249,7 +250,7 @@ void RS_InitTree( void )
 			found = false;
 			for ( j = 0; j < numBuildings; j++ ) {
 				building = &bmBuildings[0][j];
-				if ( !strcmp( t->provides, building->name ) ) { // This building has been 'provided',
+				if ( !strncmp( t->provides, building->name, sizeof(t->provides) ) ) { // This building has been 'provided',
 					found = true;
 					if ( !*t->name )
 						Com_sprintf( t->name, MAX_VAR, building->title );
@@ -266,7 +267,7 @@ void RS_InitTree( void )
 			found = false;
 			for ( j = 0; j < numAircraft; j++ ) {
 				ac = &aircraft[j];
-				if ( !strcmp( t->provides, ac->title ) ) { // This aircraft has been 'provided',
+				if ( !strncmp( t->provides, ac->title, sizeof(t->provides) ) ) { // This aircraft has been 'provided',
 					found = true;
 					if ( !*t->name )
 						Com_sprintf( t->name, MAX_VAR, ac->name );
@@ -311,7 +312,7 @@ void RS_GetName( char *id, char *name )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id, t->id ) ) {	// research item found
+		if ( !strncmp( id, t->id, sizeof(id) ) ) {	// research item found
 			// If something is defined as name use it.
 			if ( *t->name ) {
 				Com_sprintf( name, MAX_VAR, _(t->name) );
@@ -687,10 +688,10 @@ byte RS_DependsOn(char *id1, char *id2)
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id1, t->id ) ) {	// research item found
+		if ( !strncmp( id1, t->id, sizeof(id1) ) ) {	// research item found
 			required = t->requires;
 			for ( j=0; j < required.numEntries; j++ ) {
-				if ( !strcmp(required.list[j], id2 ) )	// current item (=id1) depends on id2
+				if ( !strncmp(required.list[j], id2, sizeof(required.list[j]) ) )	// current item (=id1) depends on id2
 					return true;
 			}
 			return false;
@@ -715,7 +716,7 @@ void RS_MarkResearched( char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id, t->id ) ) {
+		if ( !strncmp( id, t->id, sizeof(id) ) ) {
 			t->statusResearch = RS_FINISH;
 			Com_Printf( _("Research of \"%s\" finished.\n"), t->id );
 		}
@@ -912,13 +913,11 @@ void RS_ParseTechnologies ( char* id, char** text )
 
 	// get body
 	token = COM_Parse( text );
-	if ( !*text || strncmp( token, "{", sizeof(token) ) )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( _("RS_ParseTechnologies: \"%s\" technology def without body ignored.\n"), id );
 		return;
 	}
-	if ( numTechnologies >= MAX_TECHNOLOGIES )
-	{
+	if ( numTechnologies >= MAX_TECHNOLOGIES ) {
 		Com_Printf( _("RS_ParseTechnologies: too many technology entries. limit is %i.\n"), MAX_TECHNOLOGIES );
 		return;
 	}
@@ -986,7 +985,8 @@ void RS_ParseTechnologies ( char* id, char** text )
 		if ( !strncmp( token, "researched", sizeof(token) ) )
 		{
 			token = COM_EParse( text, errhead, id );
-			if ( !strncmp( token, "true", sizeof(token) ) || !strncmp( token, "1", sizeof(token) ) )
+			if ( !strncmp( token, "true", sizeof(token) )
+			|| !strncmp( token, "1", sizeof(token) ) )
 				tech->statusResearch = RS_FINISH;
 		}
 		else
@@ -1062,7 +1062,7 @@ void RS_GetRequired( char *id, stringlist_t *required)
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id, t->id ) ) {		// research item found
+		if ( !strncmp( id, t->id, sizeof(id) ) ) {		// research item found
 			required = &t->requires;	// is linking a good idea?
 			return;
 		}
@@ -1087,7 +1087,7 @@ byte RS_ItemIsResearched(char *id_provided )
 	technology_t *t = NULL;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id_provided, t->provides ) ) {	// provided item found
+		if ( !strncmp( id_provided, t->provides, sizeof(id_provided) ) ) {	// provided item found
 			if ( t->statusResearch == RS_FINISH )
 				return true;
 			return false;
@@ -1111,11 +1111,12 @@ byte RS_TechIsResearched(char *id )
 {
 	int i;
 	technology_t *t = NULL;
-	if ( ( !strcmp( id, "initial" ) ) || ( !strcmp( id, "nothing" ) ) )
+	if ( ( !strncmp( id, "initial", sizeof(id) ) )
+	|| ( !strncmp( id, "nothing", sizeof(id) ) ) )
 		return true;	// initial and nothing are always researchs. as they are just a starting "technology" that is never used.
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id, t->id ) ) {	// research item found
+		if ( !strncmp( id, t->id, sizeof(id) ) ) {	// research item found
 			if ( t->statusResearch == RS_FINISH )
 				return true;
 			return false;
@@ -1145,10 +1146,11 @@ byte RS_TechIsResearchable(char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id, t->id ) ) {	// research item found
+		if ( !strncmp( id, t->id, sizeof(id) ) ) {	// research item found
 			if ( t->statusResearch == RS_FINISH )
 				return false;
-			if ( ( !strcmp(  t->id, "initial" ) ) || ( !strcmp(  t->id, "nothing" ) ) )
+			if ( ( !strncmp(  t->id, "initial", sizeof(t->id) ) )
+			|| ( !strncmp(  t->id, "nothing", sizeof(t->id) ) ) )
 				return true;
 			required = &t->requires;
 			for (j=0; j < required->numEntries; j++)  {
@@ -1176,12 +1178,13 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 
-		if ( !strcmp( id, t->id ) ) {	// research item found
+		if ( !strncmp( id, t->id, sizeof(id) ) ) {	// research item found
 			required_temp = &t->requires;
 			//Com_DPrintf( "RS_GetFirstRequired2: %s - %s - %s\n", id, first_id, required_temp->list[0]  );
 			for ( j=0; j < required_temp->numEntries; j++ ) {
-				if ( ( !strcmp( required_temp->list[0] , "initial" ) ) || ( !strcmp( required_temp->list[0] , "nothing" ) ) ) {
-					if ( !strcmp( id, first_id ) )
+				if ( ( !strncmp( required_temp->list[0] , "initial", sizeof(required_temp->list[0]) ) )
+				|| ( !strncmp( required_temp->list[0] , "nothing", sizeof(required_temp->list[0]) ) ) ) {
+					if ( !strncmp( id, first_id, sizeof(id) ) )
 						return;
 					if ( 0 == j ) {
 						if ( required->numEntries < MAX_TECHLINKS ) {
@@ -1205,7 +1208,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 			return;
 		}
 	}
-	if ( !strcmp( id, first_id ) )
+	if ( !strncmp( id, first_id, sizeof(id) ) )
 		Com_Printf( _("RS_GetFirstRequired2: \"%s\" - technology not found.\n"), id );
 }
 
