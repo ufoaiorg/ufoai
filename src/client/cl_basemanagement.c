@@ -148,7 +148,7 @@ IN
 	location: where to look for people
 		0 = all in base
 		1 = all in labs
-		2 = all in quaters
+		2 = all in quarters
 		4 = all in workshops
 OUT
 	B_HowManyPeopleInBase2	number of the counted people
@@ -898,14 +898,14 @@ IN
 void MN_ParseBuildings( char *id, char **text )
 {
 	building_t *building = NULL;
-	//employees_t *employee_list = NULL;
-	//employee_t *employee = NULL;
+	employees_t *employees_in_building = NULL;
+	employee_t *employee = NULL;
 	value_t *edp = NULL;
 	char    *errhead = _("MN_ParseBuildings: unexptected end of file (names ");
 	char    *token = NULL;
 	int	i = 0;
 	int	j = 0;
-	//int	numEmployees_temp = 0;
+	int	numEmployees_temp = 0;
 
 	// get name list body body
 	token = COM_Parse( text );
@@ -942,8 +942,6 @@ void MN_ParseBuildings( char *id, char **text )
 	building->condition[0] = BUILDINGCONDITION;
 	building->buildingType = B_MISC;
 	building->id = numBuildings;
-	//employee_list = &building->assigned_employees;
-	//employee_list->cost_per_employee = 100;		// TODO: fixed value rigfht now, needs a configureable one.
 	
 	numBuildings++;
 	do {
@@ -996,40 +994,38 @@ void MN_ParseBuildings( char *id, char **text )
 			}
 		}
 		else
-		/*if ( !strncmp( token, "max_employees", sizeof(token) ) ) {
+		if ( !strncmp( token, "max_employees", sizeof(token) ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
-			employee_list = &building->assigned_employees;
+			employees_in_building = &building->assigned_employees;
 			if (*token) {
-				employee_list->maxEmployees = atoi(token);
+				employees_in_building->maxEmployees = atoi(token);
 			} else {
-				employee_list->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
+				employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
 			}
 		}
 		else
-			
 		if ( !strncmp( token, "employees_firstbase", sizeof(token) ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			if (*token) {
-				employee_list = &building->assigned_employees;
-				numEmployees_temp = employee_list->maxEmployees = atoi(token);
-				for ( employee_list->numEmployees = 0; employee_list->numEmployees < numEmployees_temp; )
+				employees_in_building = &building->assigned_employees;
+				numEmployees_temp = employees_in_building->maxEmployees = atoi(token);
+				for ( employees_in_building->numEmployees = 0; employees_in_building->numEmployees < numEmployees_temp; )
 				{
 					// assign random employee infos.
-					employees[numEmployees++] = employee_list->assigned[employee_list->numEmployees]; // link this employee to the global employee-list.
-					employee = &employee_list->assigned[employee_list->numEmployees];
-					employee_list->numEmployees++;
-					memset( employee, 0, sizeof( building_t ) );
+					employees_in_building->assigned[employees_in_building->numEmployees] = &employees[numEmployees++]; // link this employee in the building to the global employee-list.
+					employee = employees_in_building->assigned[employees_in_building->numEmployees];
+					employees_in_building->numEmployees++;
+					memset( employee, 0, sizeof( employee_t ) );
 					employee->type = EMPL_UNDEF;
-					employee->speed = 100;
-					//employee->quaters = NULL;
-					//employee->lab = NULL;
-					//combat_stats = NULL;
+					employee->quaters = NULL;		// just in case
+					employee->lab = NULL;			// just in case
+					employee->combat_stats = NULL;	// just in case
 				}
 			}  
 		}
-		else*/
+		else
 		for ( edp = valid_vars; edp->string; edp++ )
 			if ( !strncmp( token, edp->string, sizeof(token) ) )
 			{
@@ -1061,6 +1057,151 @@ void MN_ParseBuildings( char *id, char **text )
 
 }
 
+/*======================
+MN_InitEmployees
+
+Creates full information out of the parsed data for employees, and assign them into the (not yet assigned) correct rooms.
+
+This should be called after setting up the first base.
+
+TODO: this right now assumes that there are not more employees than free quarter space ... but it will not puke if there are.
+======================*/
+void MN_InitEmployees ( void )
+{
+	int i, j;
+	building_t *building = NULL;
+	employees_t *employees_in_building = NULL;
+	employee_t *employee = NULL;
+	building_t *quarters[MAX_BUILDINGS];	// a list of all available quarters
+	int numQuarters = 0;				// total number of quarters
+	int last_freeQuarter = 0;				// remembers the last quarter where a free space was fround to speed up the thing a bit.
+	// Loop trough the buildings to assign the type of employee.
+	// TODO: this right now assumes that there are not more employees than free quarter space ... but it will not puke if there are.
+	
+	for ( i = 0; i < numBuildings; i++ ) {
+		building = &bmBuildings[0][i];
+		employees_in_building = &building->assigned_employees;
+		employees_in_building->cost_per_employee = 100;			// TODO: fixed value right now, needs a configureable one.
+
+		for ( j = 0; j < employees_in_building->numEmployees; j++ ) {
+			employee = employees_in_building->assigned[j];
+			switch ( building->buildingType )
+			{
+			case B_QUATERS:
+				quarters[numQuarters++] = building;	// appending this quarter to the list of quarters.
+				employee->type = EMPL_SOLDIER;
+				break;
+			case B_LAB:
+				employee->type = EMPL_SCIENTIST;
+				break;
+			case B_WORKSHOP:
+				employee->type = EMPL_WORKER;
+				break;
+			//EMPL_MEDIC
+			//EMPL_ROBOT
+			default:
+				break;
+			}
+		}
+	}
+	
+	// generate stats for employees and assign the quarter-less to quarters.
+	for ( i=0; i < numEmployees; i++) {
+		employee = &employees[i];
+		switch ( employee->type )
+		{
+		case EMPL_SOLDIER:
+			// TODO: create random data for the employees depending on type and skill-min/max
+			// employee->combat_stats = 
+			break;
+		case EMPL_SCIENTIST:
+		case EMPL_WORKER:
+			
+			if ( employee->type == EMPL_SCIENTIST) {
+				// TODO: create random data for the employees depending on type and skill-min/max
+				employee->speed = 100;
+			} else {
+				// TODO: create random data for the employees depending on type and skill-min/max
+				employee->speed = 100;
+			}
+			
+			for ( j=last_freeQuarter; j < numQuarters; j++) {
+				employees_in_building = &quarters[j]->assigned_employees;
+				if ( employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
+					// free space found
+					employees_in_building->assigned[employees_in_building->numEmployees++] = employee;	// add employee to this quarter
+					last_freeQuarter = j;												// mark this as the last quarter a free space was found					
+					break;
+				}
+			}
+			break;
+		//case EMPL_MEDIC: break;
+		//case EMPL_ROBOT: break;
+		default:
+			break;
+		}
+	}
+}
+
+/*======================
+MN_AssignEmployee
+
+'Moves' an employee from building_source to  building_dest
+
+IN
+	building_source:
+	building_dest:
+	employee_type:
+
+OUT
+	boolean MN_AssignEmployee: returns true if 'moving' was possible otherwise false
+
+TODO: add check for lab/workshop to quarters
+======================*/
+byte MN_AssignEmployee ( building_t *building_source, building_t *building_dest, employeeType_t employee_type )
+{
+	int i;
+	employee_t *employee = NULL;
+	employees_t *employees_in_building = NULL;
+	
+	employees_in_building = &building_dest->assigned_employees;
+	if (employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
+		employees_in_building = &building_source->assigned_employees;
+		for ( i = 0; i < employees_in_building->numEmployees; i++ ) {
+			employee = employees_in_building->assigned[i];
+			if ( employee->type != employee_type )	continue;	// go to next employee if it isn't the correct type.
+
+			switch ( employee_type )
+			{
+			case EMPL_SOLDIER:
+				return false;
+				//break;
+			case EMPL_SCIENTIST:
+				if ( employee->lab == NULL ) {	// if employee isn't already in the building
+					employees_in_building->assigned[employees_in_building->numEmployees++] = employee;
+				}
+				return true;
+				//break;
+			case EMPL_WORKER:
+				if ( employee->workshop == NULL ) {	// if employee isn't already in the building
+					employees_in_building->assigned[employees_in_building->numEmployees++] = employee;
+				}
+				return true;
+				//break;
+			//EMPL_MEDIC
+			//EMPL_ROBOT
+			default:
+				break;
+			}
+		}
+	} else {
+		Com_Printf("No free room in destination building \"%s\".\n", building_dest->name);
+	}
+	return false;
+}
+
+
+			
 /*======================
 MN_ClearBase
 ======================*/
