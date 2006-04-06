@@ -30,30 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define UFO_VERSION 0.12
 
-// i18n support via gettext
-// needs to be activated via -DHAVE_GETTEXT
-#ifdef HAVE_GETTEXT
-#ifdef MACOS_X
-#include <intl/libintl.h>
-#elif defined(_WIN32)
-#define snprintf _snprintf
-#include "../win32/libintl.h"
-#else
-#include <libintl.h>
-#endif
-
-#include <locale.h>
-#define _(String) gettext(String)
-#define gettext_noop(String) String
-#define N_(String) gettext_noop (String)
-#else //HAVE_GETTEXT
-// no gettext support
-#define _(String) String
-#endif
-
 #define	BASEDIRNAME	"base"
 
-#ifdef WIN32
+#ifdef _WIN32
 
 #ifdef NDEBUG
 #define BUILDSTRING "Win32 RELEASE"
@@ -743,6 +722,7 @@ void	FS_SetGamedir (char *dir);
 char	*FS_Gamedir (void);
 char	*FS_NextPath (char *prevpath);
 void	FS_ExecAutoexec (void);
+char	*FS_GetCwd( void );
 
 void	FS_GetMaps ( void );
 

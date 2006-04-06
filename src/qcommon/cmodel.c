@@ -681,8 +681,8 @@ CM_CheckUnit
 */
 #define PH		(UH-12)
 #define QUANT	4
-const vec3_t dup = {0, 0, PH-UH/2};
-const vec3_t dwn = {0, 0, -UH/2};
+const vec3_t v_dup = {0, 0, PH-UH/2};
+const vec3_t v_dwn = {0, 0, -UH/2};
 const vec3_t testvec[5] = { {-US/2+5,-US/2+5,0}, {US/2-5,US/2-5,0}, {-US/2+5,US/2-5,0}, {US/2-5,-US/2+5,0}, {0,0,0} };
 
 void CM_CheckUnit( routing_t *map, int x, int y, int z )
@@ -708,8 +708,8 @@ void CM_CheckUnit( routing_t *map, int x, int y, int z )
 	if ( CM_EntTestLine( start, end ) )
 	{
 		PosToVec( pos, end );
-		VectorAdd( end, dup, start );
-		VectorAdd( end, dwn, end );
+		VectorAdd( end, v_dup, start );
+		VectorAdd( end, v_dwn, end );
 		height = 0;
 
 		// test for ground with a "middled" height

@@ -1262,38 +1262,40 @@ void Com_Error_f (void)
 }
 
 #ifdef HAVE_GETTEXT
+/*
+=================
+Qcommon_LocaleInit
+
+Initialize the locale settings for gettext
+po files are searched in ./base/i18n
+You can override the language-settings in setting
+the cvar s_language to a valid language-string like
+e.g. de_DE, en or en_US
+
+This function is only build in and called when
+defining HAVE_GETTEXT
+Under Linux see Makefile options for this
+=================
+*/
 void Qcommon_LocaleInit ( void )
 {
-	char *locale;
-	char *localeDir;
-	// set to system default
-	// TODO: Make me variable through a cvar
-#ifndef _WIN32 // i18n seams to work nevertheless
-	locale = setlocale ( LC_MESSAGES, "" );
-	if ( locale == NULL )
-	{
-		Com_Printf("Could not set to system language\n");
-		return;
-	}
+	cvar_t* s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE );
+
+#ifdef _WIN32
+	putenv( va("LANG=%s"), s_language->string );
+#else
+	unsetenv("LANGUAGE");
 #endif
+
+	// set to system default
+	setlocale( LC_ALL, "C" );
+	setlocale( LC_MESSAGES, s_language->string );
 
 	// use system locale dir if we can't find in gamedir
-	localeDir = bindtextdomain ( "ufoai", "./base/i18n/" );
-	if ( ! localeDir )
-	{
-		Com_Printf("Using system dir for locale settings\n");
-		bindtextdomain( "ufoai", NULL );
-	}
-	else
-		Com_Printf("Using data dir (%s) for locate settings\n", localeDir );
-
-	// set coding to utf8
-	bind_textdomain_codeset ( "ufoai", "UTF-8" );
+	bindtextdomain( TEXT_DOMAIN, va("%s/base/i18n/", FS_GetCwd() ) );
+	bind_textdomain_codeset( TEXT_DOMAIN, "UTF-8" );
 	// load language file
-	textdomain( "ufoai" );
-#ifndef _WIN32
-	Com_Printf( "Setting language to %s\n", locale );
-#endif
+	textdomain( TEXT_DOMAIN );
 }
 #endif
 

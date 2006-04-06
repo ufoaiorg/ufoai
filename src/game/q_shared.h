@@ -43,6 +43,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdlib.h>
 #include <time.h>
 
+// filesystem stuff
+#ifdef _WIN32
+#include <direct.h>
+#include <io.h>
+#else
+#include <unistd.h>
+#include <dirent.h>
+#endif
+
 // i18n support via gettext
 // needs to be activated via -DHAVE_GETTEXT
 #ifdef HAVE_GETTEXT
@@ -54,6 +63,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #else
 	#include <libintl.h>
 #endif
+
+// the used textdomain for gettext
+#define TEXT_DOMAIN "ufoai"
 
 #include <locale.h>
 #define _(String) gettext(String)

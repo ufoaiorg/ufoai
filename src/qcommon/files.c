@@ -1592,3 +1592,24 @@ int FS_WriteFile( const void *buffer, int len, const char* filename )
 	return len;
 }
 
+/*
+=================
+FS_GetCwd
+
+Return current working dir
+=================
+*/
+char* FS_GetCwd( void )
+{
+	static char buf[MAX_QPATH];
+	const char* path = getcwd(buf,sizeof(buf));
+	if ( path != NULL )
+	{
+#ifdef _WIN32
+		normPath( path );
+#endif
+		return buf;
+	} else {
+		return "";
+	}
+}
