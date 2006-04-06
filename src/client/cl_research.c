@@ -108,7 +108,7 @@ void RS_MarkOneResearchable ( char *id )
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !strncmp( t->id, id, sizeof(t->id) ) ) {	// research item found
-			Com_Printf( _("RS_MarkOneResearchable: \"%s\" marked as researchable.\n"), id );
+			Com_Printf( _("RS_MarkOneResearchable: \"%s\" marked as researchable.\n"), t->id );
 			t->statusResearchable = true;
 			return;
 		}
@@ -241,8 +241,10 @@ void RS_InitTree( void )
 
 			}
 			//no id found in csi.ods
-			if ( !found )
-				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found.\n", t->id, t->provides );
+			if ( !found ) {
+				Com_sprintf( t->name, MAX_VAR, t->id );
+				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found. Tech-id used as name.\n", t->id, t->provides );
+			}
 			break;
 		case RS_BUILDING:
 			found = false;
@@ -258,8 +260,10 @@ void RS_InitTree( void )
 					break;	// Should return to CASE RS_xxx.
 				}
 			}
-			if ( !found )
-				Com_Printf( _("RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found.\n"), t->id, t->provides );
+			if ( !found ){
+				Com_sprintf( t->name, MAX_VAR, t->id );
+				Com_Printf( _("RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n"), t->id, t->provides );
+			}
 			break;
 		case RS_CRAFT:
 			found = false;
