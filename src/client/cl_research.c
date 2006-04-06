@@ -310,7 +310,7 @@ void RS_GetName( char *id, char *name )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id, t->id, sizeof(id) ) ) {	// research item found
+		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {	// research item found
 			// If something is defined as name use it.
 			if ( *t->name ) {
 				Com_sprintf( name, MAX_VAR, _(t->name) );
@@ -686,7 +686,7 @@ byte RS_DependsOn(char *id1, char *id2)
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id1, t->id, sizeof(id1) ) ) {	// research item found
+		if ( !strncmp( id1, t->id, sizeof(t->id) ) ) {	// research item found
 			required = t->requires;
 			for ( j=0; j < required.numEntries; j++ ) {
 				if ( !strncmp(required.list[j], id2, sizeof(required.list[j]) ) )	// current item (=id1) depends on id2
@@ -714,7 +714,7 @@ void RS_MarkResearched( char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id, t->id, sizeof(id) ) ) {
+		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {
 			t->statusResearch = RS_FINISH;
 			Com_Printf( _("Research of \"%s\" finished.\n"), t->id );
 		}
@@ -1058,7 +1058,7 @@ void RS_GetRequired( char *id, stringlist_t *required)
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id, t->id, sizeof(id) ) ) {		// research item found
+		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {		// research item found
 			required = &t->requires;	// is linking a good idea?
 			return;
 		}
@@ -1083,7 +1083,7 @@ byte RS_ItemIsResearched(char *id_provided )
 	technology_t *t = NULL;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id_provided, t->provides, sizeof(id_provided) ) ) {	// provided item found
+		if ( !strncmp( id_provided, t->provides, sizeof(t->provides) ) ) {	// provided item found
 			if ( t->statusResearch == RS_FINISH )
 				return true;
 			return false;
@@ -1112,7 +1112,7 @@ byte RS_TechIsResearched(char *id )
 		return true;	// initial and nothing are always researched. as they are just starting "technologys" that are never used.
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id, t->id, sizeof(id) ) ) {	// research item found
+		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {	// research item found
 			if ( t->statusResearch == RS_FINISH )
 				return true;
 			return false;
@@ -1142,7 +1142,8 @@ byte RS_TechIsResearchable(char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id, t->id, sizeof(id) ) ) {	// research item found
+		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {	// research item found 
+		//if ( !strcmp( id, t->id ) ) {
 			if ( t->statusResearch == RS_FINISH )
 				return false;
 			if ( ( !strncmp(  t->id, "initial", sizeof(t->id) ) )
@@ -1175,7 +1176,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 
-		if ( !strncmp( id, t->id, sizeof(id) ) ) {	// research item found
+		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {	// research item found
 			required_temp = &t->requires;
 			//Com_DPrintf( "RS_GetFirstRequired2: %s - %s - %s\n", id, first_id, required_temp->list[0]  );
 			for ( j=0; j < required_temp->numEntries; j++ ) {
