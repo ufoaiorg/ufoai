@@ -96,7 +96,7 @@ value_t valid_vars[] =
 	{ "energy",	V_FLOAT,	BSFS( energy ) },			// amount of energy needed for use
 	{ "fixcosts",	V_FLOAT,	BSFS( fixCosts ) },		// buildcosts
 	{ "varcosts",	V_FLOAT,	BSFS( varCosts ) },		// costs that will come up by using the building
-	{ "worker_costs",V_FLOAT,	BSFS( workerCosts ) },	
+	{ "worker_costs",V_FLOAT,	BSFS( workerCosts ) },
 	{ "build_time",	V_INT,		BSFS( buildTime ) },	// how much days will it take to construct the building?
 
 	//event handler functions
@@ -153,7 +153,7 @@ IN
 OUT
 	B_HowManyPeopleInBase2	number of the counted people
 
-TODO: This list should probably be made into constants or something like that.	
+TODO: This list should probably be made into constants or something like that.
 ======================*/
 int B_HowManyPeopleInBase2 ( base_t *base, int location )
 {
@@ -834,8 +834,8 @@ void MN_BuildingInit( void )
 			}
 		}
 	}
-
-	MN_DrawBuilding();
+	if ( baseCurrent->buildingCurrent )
+		MN_DrawBuilding();
 }
 
 /*======================
@@ -942,7 +942,7 @@ void MN_ParseBuildings( char *id, char **text )
 	building->condition[0] = BUILDINGCONDITION;
 	building->buildingType = B_MISC;
 	building->id = numBuildings;
-	
+
 	numBuildings++;
 	do {
 		// get the name type
@@ -1023,7 +1023,7 @@ void MN_ParseBuildings( char *id, char **text )
 					employee->lab = NULL;			// just in case
 					employee->combat_stats = NULL;	// just in case
 				}
-			}  
+			}
 		}
 		else
 		for ( edp = valid_vars; edp->string; edp++ )
@@ -1077,7 +1077,7 @@ void MN_InitEmployees ( void )
 	int last_freeQuarter = 0;				// remembers the last quarter where a free space was fround to speed up the thing a bit.
 	// Loop trough the buildings to assign the type of employee.
 	// TODO: this right now assumes that there are not more employees than free quarter space ... but it will not puke if there are.
-	
+
 	for ( i = 0; i < numBuildings; i++ ) {
 		building = &bmBuildings[0][i];
 		employees_in_building = &building->assigned_employees;
@@ -1104,7 +1104,7 @@ void MN_InitEmployees ( void )
 			}
 		}
 	}
-	
+
 	// generate stats for employees and assign the quarter-less to quarters.
 	for ( i=0; i < numEmployees; i++) {
 		employee = &employees[i];
@@ -1112,11 +1112,11 @@ void MN_InitEmployees ( void )
 		{
 		case EMPL_SOLDIER:
 			// TODO: create random data for the employees depending on type and skill-min/max
-			// employee->combat_stats = 
+			// employee->combat_stats =
 			break;
 		case EMPL_SCIENTIST:
 		case EMPL_WORKER:
-			
+
 			if ( employee->type == EMPL_SCIENTIST) {
 				// TODO: create random data for the employees depending on type and skill-min/max
 				employee->speed = 100;
@@ -1124,13 +1124,13 @@ void MN_InitEmployees ( void )
 				// TODO: create random data for the employees depending on type and skill-min/max
 				employee->speed = 100;
 			}
-			
+
 			for ( j=last_freeQuarter; j < numQuarters; j++) {
 				employees_in_building = &quarters[j]->assigned_employees;
 				if ( employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
 					// free space found
 					employees_in_building->assigned[employees_in_building->numEmployees++] = employee;	// add employee to this quarter
-					last_freeQuarter = j;												// mark this as the last quarter a free space was found					
+					last_freeQuarter = j;												// mark this as the last quarter a free space was found
 					break;
 				}
 			}
@@ -1163,7 +1163,7 @@ byte MN_AssignEmployee ( building_t *building_source, building_t *building_dest,
 	int i;
 	employee_t *employee = NULL;
 	employees_t *employees_in_building = NULL;
-	
+
 	employees_in_building = &building_dest->assigned_employees;
 	if (employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
 		employees_in_building = &building_source->assigned_employees;
@@ -1201,7 +1201,7 @@ byte MN_AssignEmployee ( building_t *building_source, building_t *building_dest,
 }
 
 
-			
+
 /*======================
 MN_ClearBase
 ======================*/
