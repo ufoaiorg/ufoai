@@ -1384,6 +1384,13 @@ void MN_DrawBase( void )
 	int width, height;
 	building_t *entry;
 	building_t *secondEntry;
+
+#if 0
+	vec4_t color;
+	VectorSet( color, 0.0f, 1.0f, 0.0f );
+	color[3] = 0.3f;
+#endif
+	
 	if ( ! baseCurrent )
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
 
@@ -1479,8 +1486,13 @@ void MN_DrawBase( void )
 				statusImage = NULL;
 			}
 
-			if ( image != NULL )
+			if ( image != NULL ) {
 				re.DrawNormPic( x, y, width*bvScale, height*bvScale, 0, 0, 0, 0, 0, false, image );
+#if 0
+				re.DrawFill(x, y, width*bvScale, height*bvScale, ALIGN_UL, color);
+				re.DrawColor( NULL );
+#endif
+			}
 			if ( statusImage != NULL )
 			{
 				re.DrawGetPicSize ( &width, &height, statusImage );
