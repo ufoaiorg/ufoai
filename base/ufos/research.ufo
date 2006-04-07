@@ -15,7 +15,7 @@
 //	name
 //		self-explaining i hope :) Only needed when type=tech
 //	description
-//		A short string that is used by gettext to be translateable (e.g "itemname_txt").
+//		A short string that is used by gettext to be translateable (e.g "_itemname_txt").
 //		This needs to be a unique string in all desciptions. See the po files in the source directory (src/po/*.po)
 //	requires
 //		If you get an alien-item everything that it requires is made available for research (tree top/down)
@@ -63,7 +63,7 @@ tech weapon_assault
 {
 	type	weapon
 	up_chapter	weapons
-	description	assault_txt
+	description	"_assault_txt"
 
 	requires	initial
 	provides	assault
@@ -75,7 +75,7 @@ tech weapon_assault_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	assault_ammo_txt
+	description	"_assault_ammo_txt"
 
 	requires	weapon_assault
 	provides	assault_ammo
@@ -87,7 +87,7 @@ tech weapon_sniper
 {
 	type	weapon
 	up_chapter	weapons
-	description	sniper_txt
+	description	"_sniper_txt"
 
 	requires	initial
 	provides	sniper
@@ -99,7 +99,7 @@ tech weapon_sniper_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	sniper_ammo_txt
+	description	"_sniper_ammo_txt"
 
 	requires	weapon_sniper
 	provides	sniper_ammo
@@ -111,7 +111,7 @@ tech weapon_smg
 {
 	type	weapon
 	up_chapter	weapons
-	description	smg_txt
+	description	"_smg_txt"
 
 	requires	initial
 	provides	smg
@@ -123,7 +123,7 @@ tech weapon_smg_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	smg_ammo_txt
+	description	"_smg_ammo_txt"
 
 	requires	weapon_smg
 	provides	smg_ammo
@@ -135,7 +135,7 @@ tech weapon_shotgun
 {
 	type	weapon
 	up_chapter	weapons
-	description	shotgun_txt
+	description	"_shotgun_txt"
 
 	requires	initial
 	provides	shotgun
@@ -147,7 +147,7 @@ tech weapon_shotgun_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	shotgun_ammo_txt
+	description	"_shotgun_ammo_txt"
 
 	requires	weapon_shotgun
 	provides	shotgun_ammo
@@ -159,7 +159,7 @@ tech weapon_flamer
 {
 	type	weapon
 	up_chapter	weapons
-	description	flamer_txt
+	description	"_flamer_txt"
 
 	requires	initial
 	provides	flamer
@@ -171,7 +171,7 @@ tech weapon_flamer_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	flamer_ammo_txt
+	description	"_flamer_ammo_txt"
 
 	requires	weapon_flamer
 	provides	flamer_ammo
@@ -183,7 +183,7 @@ tech weapon_pistol
 {
 	type	weapon
 	up_chapter	weapons
-	description	pistol_txt
+	description	"_pistol_txt"
 
 	requires	initial
 	provides	pistol
@@ -195,7 +195,7 @@ tech weapon_pistol_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	pistol_ammo_txt
+	description	"_pistol_ammo_txt"
 
 	requires	weapon_pistol
 	provides	pistol_ammo
@@ -207,7 +207,7 @@ tech weapon_rpg
 {
 	type	weapon
 	up_chapter	weapons
-	description	rpg_txt
+	description	"_rpg_txt"
 
 	requires	initial
 	provides	rpg
@@ -219,7 +219,7 @@ tech weapon_rpg_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	rpg_ammo_txt
+	description	"_rpg_ammo_txt"
 
 	requires	weapon_rpg
 	provides	rpg_ammo
@@ -232,7 +232,7 @@ tech weapon_laserpistol
 {
 	type	weapon
 	up_chapter	weapons
-	description	laserpistol_txt
+	description	"_laserpistol_txt"
 
 	requires	initial
 	provides	laserpistol
@@ -244,7 +244,7 @@ tech weapon_laserpistol_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	laserpistol_ammo_txt
+	description	"_laserpistol_ammo_txt"
 
 	requires	weapon_laserpistol
 	provides	laserpistol_ammo
@@ -256,7 +256,7 @@ tech weapon_laserrifle
 {
 	type	weapon
 	up_chapter	weapons
-	description	laserrifle_txt
+	description	"_laserrifle_txt"
 
 	requires	weapon_laserpistol
 	provides	laserrifle
@@ -268,7 +268,7 @@ tech weapon_laserrifle_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	laserrifle_txt
+	description	"_laserrifle_txt"
 
 	requires	weapon_laserrifle
 	provides	laserrifle_ammo
@@ -280,7 +280,7 @@ tech weapon_fraggren
 {
 	type	weapon
 	up_chapter	weapons
-	description	fraggen_txt
+	description	"_fraggen_txt"
 
 	requires	initial
 	provides	fraggrenade
@@ -292,7 +292,7 @@ tech weapon_knife
 {
 	type	weapon
 	up_chapter	weapons
-	description	knife_txt
+	description	"_knife_txt"
 
 	requires	initial
 	provides	knife
@@ -311,7 +311,7 @@ tech tachyon
 	up_chapter	tech
 
 	requires	initial
-	description	tachyon_txt
+	description	"_tachyon_txt"
 	time	1
 	researched	false
 
@@ -325,7 +325,7 @@ tech tachyon
 //{
 //	type	weapon
 //	up_chapter	weapons
-//	description	tachyonpistol_txt
+//	description	"_tachyonpistol_txt"
 //
 //	requires	tachyon
 //	provides	tachyonpistol
@@ -337,7 +337,7 @@ tech tachyon
 //{
 //	type	weapon
 //	up_chapter	weapons
-//	description	tachyonpistol_ammo_txt
+//	description	"_tachyonpistol_ammo_txt"
 //
 //	requires	weapon_tachyonpistol
 //	provides	tachyonpistol_ammo
@@ -350,7 +350,7 @@ tech weapon_tachyonrifle
 {
 	type	weapon
 	up_chapter	weapons
-	description	tachyonrifle_txt
+	description	"_tachyonrifle_txt"
 
 	requires	tachyon
 	provides	tachyonrifle
@@ -362,7 +362,7 @@ tech weapon_tachyonrifle_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	tachyonrifle_ammo_txt
+	description	"_tachyonrifle_ammo_txt"
 
 	requires	weapon_tachyonrifle
 	provides	tachyonrifle_ammo
@@ -374,7 +374,7 @@ tech weapon_tachyonsniper
 {
 	type	weapon
 	up_chapter	weapons
-	description	tachyonsniper_txt
+	description	"_tachyonsniper_txt"
 
 	requires	weapon_tachyonrifle
 	provides	tachyonsniper
@@ -386,7 +386,7 @@ tech weapon_tachyonsniper_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	tachyonsniper_ammo_txt
+	description	"_tachyonsniper_ammo_txt"
 
 	requires	weapon_tachyonsniper
 	provides	tachyonsniper_ammo
@@ -399,31 +399,31 @@ tech plasma
 	type	tech
 	name	"Advanced Plasma Control"
 	up_chapter	tech
-	description	plasma_txt
+	description	"_plasma_txt"
 
 	requires	nothing
-	description	plasma_txt
+	description	"_plasma_txt"
 	time	1
 	researched	false
 }
 
-tech weapon_plasblade
-{
-	type	weapon
-	up_chapter	weapons
-	description	plasblade_txt
-
-	requires	plasma
-	provides	plasblade
-	time	1
-	researched	false
-}
+//tech weapon_plasblade
+//{
+//	type	weapon
+//	up_chapter	weapons
+//	description	"_plasblade_txt"
+//
+//	requires	plasma
+//	provides	plasblade
+//	time	1
+//	researched	false
+//}
 
 tech weapon_plaspistol
 {
 	type	weapon
 	up_chapter	weapons
-	description	plaspistol_txt
+	description	"_plaspistol_txt"
 
 	requires	plasma
 	provides	plaspistol
@@ -435,7 +435,7 @@ tech weapon_plaspistol_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	plaspistol_ammo_txt
+	description	"_plaspistol_ammo_txt"
 
 	requires	weapon_plaspistol
 	provides	plaspistol_ammo
@@ -447,7 +447,7 @@ tech weapon_plasrifle
 {
 	type	weapon
 	up_chapter	weapons
-	description	plasrifle_txt
+	description	"_plasrifle_txt"
 
 	requires	weapon_plaspistol
 	provides	plasrifle
@@ -459,7 +459,7 @@ tech weapon_plasrifle_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	plasrifle_ammo_txt
+	description	"_plasrifle_ammo_txt"
 
 	requires	weapon_plasrifle
 	provides	plasrifle_ammo
@@ -474,7 +474,7 @@ tech irgoggles
 {
 	type	weapon
 	up_chapter	weapons
-	description	irgoggles_txt
+	description	"_irgoggles_txt"
 	
 	requires	initial
 	provides	irgoggles
@@ -486,7 +486,7 @@ tech medikit
 {
 	type	weapon
 	up_chapter	weapons
-	description	medikit_txt
+	description	"_medikit_txt"
 	
 	requires	initial
 	provides	medikit
@@ -499,7 +499,7 @@ tech nano
 	type	tech
 	name	"Nano Technology"
 	requires	initial
-	description	nano_txt
+	description	"_nano_txt"
 	time	1
 	researched	false
 }
@@ -508,7 +508,7 @@ tech kevlar_armor
 {
 	type	armor
 	up_chapter	weapons
-	description	kevlar_armor_txt
+	description	"_kevlar_armor_txt"
 	
 	
 	requires	initial
@@ -520,7 +520,7 @@ tech kevlar_armor
 tech nano_armor
 {
 	type	armor
-	description	"nano_armor_txt"
+	description	"_nano_armor_txt"
 	up_chapter	weapons
 	
 	requires	"nano"
@@ -553,7 +553,7 @@ tech heavy_nano_armor
 tech building_entrance
 {
 	type	building
-	description	b_entrance_txt
+	description	"_b_entrance_txt"
 	up_chapter	buildings
 
 	requires	initial
@@ -565,7 +565,7 @@ tech building_entrance
 tech building_commando
 {
 	type	building
-	description	b_commando_txt
+	description	"_b_commando_txt"
 	up_chapter	buildings
 
 	requires	initial
@@ -577,7 +577,7 @@ tech building_commando
 tech building_powerplant
 {
 	type	building
-	description	b_powerplant_txt
+	description	"_b_powerplant_txt"
 	up_chapter	buildings
 
 	requires	initial
@@ -589,7 +589,7 @@ tech building_powerplant
 tech building_storage
 {
 	type	building
-	description	b_storage_txt
+	description	"_b_storage_txt"
 	up_chapter	buildings
 
 	requires	initial
@@ -601,7 +601,7 @@ tech building_storage
 tech building_hangar
 {
 	type	building
-	description	b_hangar_txt
+	description	"_b_hangar_txt"
 	up_chapter	buildings
 
 	requires	initial
@@ -613,7 +613,7 @@ tech building_hangar
 tech building_intercept
 {
 	type	building
-	description	b_intercept_txt
+	description	"_b_intercept_txt"
 	up_chapter	buildings
 
 	requires	initial
@@ -625,7 +625,7 @@ tech building_intercept
 tech building_quarters
 {
 	type	building
-	description	b_quarters_txt
+	description	"_b_quarters_txt"
 	up_chapter	buildings
 
 	requires	initial
@@ -637,7 +637,7 @@ tech building_quarters
 tech building_lab
 {
 	type	building
-	description	b_lab_txt
+	description	"_b_lab_txt"
 	up_chapter	buildings
 
 	requires	initial
@@ -649,7 +649,7 @@ tech building_lab
 tech building_teamroom
 {
 	type	building
-	description	b_teamroom_txt
+	description	"_b_teamroom_txt"
 	up_chapter	buildings
 
 	requires	initial
@@ -664,7 +664,7 @@ tech building_teamroom
 tech craft_transporter
 {
 	type	craft
-	description	transporter_txt
+	description	"_transporter_txt"
 	up_chapter	crafts
 
 	requires	initial
@@ -678,7 +678,7 @@ tech craft_transporter
 tech craft_interceptor
 {
 	type	craft
-	description	interceptor_txt
+	description	"_interceptor_txt"
 	up_chapter	crafts
 
 	requires	initial
@@ -693,7 +693,7 @@ tech craft_interceptor
 //{
 //	type	tech
 //	name	"Plasmadrive for H-92 Transport"
-//	description	transporter_txt
+//	description	"_transporter_txt"
 //	up_chapter	crafts
 
 //	requires	"craft_transporter plasma"
@@ -710,7 +710,7 @@ tech alien_ortnok
 {
 	type	tech
 	name	 "Ortnok"
-	description	ortnok_txt
+	description	"_ortnok_txt"
 	up_chapter	aliens
 
 	requires	initial
@@ -725,7 +725,7 @@ tech alien_ortnok_medium
 {
 	type	tech
 	name	 "Ortnok Warrior"
-	description	ortnok_medium_txt
+	description	"_ortnok_medium_txt"
 	up_chapter	aliens
 
 	requires	initial
