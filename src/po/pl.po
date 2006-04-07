@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-04-07 13:36+0200\n"
+"POT-Creation-Date: 2006-04-07 16:44+0200\n"
 "PO-Revision-Date: 2006-04-07 13:28+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@gmx.net>\n"
 "Language-Team: none\n"
@@ -16,6 +16,212 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+
+#: ../base/ufos/menu_geoscape.ufo:84
+msgid "Organisation capital"
+msgstr ""
+
+#: ../base/ufos/menu_geoscape.ufo:93
+msgid "Reset time to 5 seconds"
+msgstr ""
+
+#: ../base/ufos/menu_geoscape.ufo:105
+msgid "Slow down time"
+msgstr ""
+
+#: ../base/ufos/menu_geoscape.ufo:117
+msgid "Speed up time"
+msgstr ""
+
+#: ../base/ufos/menu_geoscape.ufo:157
+msgid "Intercept alien craft or visit alien (crash) site."
+msgstr ""
+
+#: ../base/ufos/menu_geoscape.ufo:175
+msgid "Organisation statistics"
+msgstr ""
+
+#: ../base/ufos/menu_geoscape.ufo:193
+msgid "Ufopedia"
+msgstr ""
+
+#: ../base/ufos/menu_geoscape.ufo:211
+msgid "Create base"
+msgstr ""
+
+#: ../base/ufos/menu_geoscape.ufo:229 ../base/ufos/menu_hud.ufo:555
+msgid "Options"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:62
+msgid "Level 1"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:71
+msgid "Level 2"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:80
+msgid "Level 3"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:89
+msgid "Level 4"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:98
+msgid "Level 5"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:107
+msgid "Level 6"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:116
+msgid "Level 7"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:125
+msgid "Level 8"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:212
+msgid "Finish round"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:223
+msgid "Enemy spotted"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:233
+msgid "Click to cycle through the spotted enemies"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:265
+msgid "Soldier 1"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:274
+msgid "Soldier 2"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:283
+msgid "Soldier 3"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:292
+msgid "Soldier 4"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:301
+msgid "Soldier 5"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:310
+msgid "Soldier 6"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:319
+msgid "Soldier 7"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:328
+msgid "Soldier 8"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:408 ../base/ufos/menu_hud.ufo:418
+msgid "Primary fire mode"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:428 ../base/ufos/menu_hud.ufo:438
+msgid "Secondary fire mode"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:448 ../base/ufos/menu_hud.ufo:459
+msgid "Reload weapon"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:504
+msgid "Crouch/Stand up"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:517
+msgid "Toggle reaction-fire"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:566
+msgid "Physical stats of this soldier"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:577
+msgid "Inventory"
+msgstr ""
+
+#: ../base/ufos/menu_research.ufo:338 ../base/ufos/menu_research.ufo:354
+#: ../base/ufos/menu_research.ufo:370 ../base/ufos/menu_research.ufo:386
+#: ../base/ufos/menu_research.ufo:402 ../base/ufos/menu_research.ufo:418
+#: ../base/ufos/menu_research.ufo:434 ../base/ufos/menu_research.ufo:450
+#: ../base/ufos/menu_research.ufo:466 ../base/ufos/menu_research.ufo:482
+#: ../base/ufos/menu_research.ufo:498 ../base/ufos/menu_research.ufo:514
+#: ../base/ufos/menu_research.ufo:530 ../base/ufos/menu_research.ufo:546
+#: ../base/ufos/menu_research.ufo:562 ../base/ufos/menu_research.ufo:578
+#: ../base/ufos/menu_research.ufo:594 ../base/ufos/menu_research.ufo:610
+#: ../base/ufos/menu_research.ufo:626 ../base/ufos/menu_research.ufo:642
+#: ../base/ufos/menu_research.ufo:658 ../base/ufos/menu_research.ufo:674
+#: ../base/ufos/menu_research.ufo:690 ../base/ufos/menu_research.ufo:706
+#: ../base/ufos/menu_research.ufo:722 ../base/ufos/menu_research.ufo:738
+#: ../base/ufos/menu_research.ufo:754 ../base/ufos/menu_research.ufo:770
+msgid "Add scientist"
+msgstr ""
+
+#: ../base/ufos/menu_research.ufo:346 ../base/ufos/menu_research.ufo:362
+#: ../base/ufos/menu_research.ufo:378 ../base/ufos/menu_research.ufo:394
+#: ../base/ufos/menu_research.ufo:410 ../base/ufos/menu_research.ufo:426
+#: ../base/ufos/menu_research.ufo:442 ../base/ufos/menu_research.ufo:458
+#: ../base/ufos/menu_research.ufo:474 ../base/ufos/menu_research.ufo:490
+#: ../base/ufos/menu_research.ufo:506 ../base/ufos/menu_research.ufo:522
+#: ../base/ufos/menu_research.ufo:538 ../base/ufos/menu_research.ufo:554
+#: ../base/ufos/menu_research.ufo:570 ../base/ufos/menu_research.ufo:586
+#: ../base/ufos/menu_research.ufo:602 ../base/ufos/menu_research.ufo:618
+#: ../base/ufos/menu_research.ufo:634 ../base/ufos/menu_research.ufo:650
+#: ../base/ufos/menu_research.ufo:666 ../base/ufos/menu_research.ufo:682
+#: ../base/ufos/menu_research.ufo:698 ../base/ufos/menu_research.ufo:714
+#: ../base/ufos/menu_research.ufo:730 ../base/ufos/menu_research.ufo:746
+#: ../base/ufos/menu_research.ufo:762 ../base/ufos/menu_research.ufo:778
+msgid "Remove scientist"
+msgstr ""
+
+#: ../base/ufos/menu_research.ufo:819
+msgid "CREDIT"
+msgstr ""
+
+#: ../base/ufos/menu_research.ufo:838
+msgid "Stop research"
+msgstr ""
+
+#: ../base/ufos/menu_research.ufo:849
+msgid "Start research"
+msgstr ""
+
+#: ../base/ufos/menu_research.ufo:863
+msgid "Back to baseview"
+msgstr ""
+
+#: ../base/ufos/menu_ufopedia.ufo:50
+msgid "Previous entry"
+msgstr ""
+
+#: ../base/ufos/menu_ufopedia.ufo:61
+msgid "Next entry"
+msgstr ""
+
+#: ../base/ufos/menu_ufopedia.ufo:72
+msgid "Back to content"
+msgstr ""
+
+#: ../base/ufos/menu_ufopedia.ufo:83
+msgid "Leave Ufopedia"
+msgstr ""
 
 #: ../base/ufos/research.ufo:66
 msgid "assault_txt"
@@ -203,6 +409,257 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:728
 msgid "ortnok_medium_txt"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:8
+msgid "intro_sentence1"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:15
+msgid "intro_sentence2"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:22
+msgid "intro_sentence3"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:29
+msgid "intro_sentence4"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:36
+msgid "intro_sentence5"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:57
+msgid "prolog_sentence1"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:65
+msgid "prolog_sentence2"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:73
+msgid "prolog_sentence3"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:81
+msgid "prolog_sentence4"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:89
+msgid "prolog_sentence5"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:97
+msgid "prolog_sentence6"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:105
+msgid "prolog_sentence7"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:6
+msgid "Assault Rifle"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:23
+msgid "Assault Rifle Clip"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:35 ../base/ufos/weapons.ufo:251
+msgid "Burst"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:54
+msgid "Auto"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:79
+msgid "Sniper Rifle"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:96
+msgid "Sniper Rifle Clip"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:108 ../base/ufos/weapons.ufo:475
+#: ../base/ufos/weapons.ufo:631
+msgid "Snap Shot"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:126 ../base/ufos/weapons.ufo:198
+#: ../base/ufos/weapons.ufo:498
+msgid "Aimed Shot"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:150
+msgid "9mm Pistol"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:167
+msgid "Pistol Clip"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:179
+msgid "Rapid Fire"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:222
+msgid "Submachine Gun"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:239
+msgid "SMG Clip"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:270
+msgid "Full Auto"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:295
+msgid "Shotgun"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:312
+msgid "Buckshots"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:324
+msgid "Single Shot"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:345
+msgid "Double Shot"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:371
+msgid "Flamethrower"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:388
+msgid "Napalm Tank"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:400
+msgid "Candlelight"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:420
+msgid "Inferno"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:446
+msgid "Rocket Launcher"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:463
+msgid "High-Explosive Rocket"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:527
+msgid "Tachyon Rifle"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:544
+msgid "Tachyon Rifle Charge"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:556 ../base/ufos/weapons.ufo:650
+msgid "Rapid Shots"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:575
+msgid "Charged Blast"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:602
+msgid "Tachyon Sniper Rifle"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:619
+msgid "Tachyon Sniper Charge"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:675
+msgid "Plasma Pistol"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:692
+msgid "Plasma Pistol Charge"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:704 ../base/ufos/weapons.ufo:777
+msgid "Charged Pulse"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:722 ../base/ufos/weapons.ufo:795
+msgid "Continuous Beam"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:748
+msgid "Plasma Rifle"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:765
+msgid "Plasma Rifle Charge"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:821
+msgid "Laser Pistol"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:838
+msgid "Laser Pistol Charge"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:850 ../base/ufos/weapons.ufo:922
+msgid "Single Pulse"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:868 ../base/ufos/weapons.ufo:940
+msgid "Multiple Pulses"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:893
+msgid "Laser Rifle"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:910
+msgid "Laser Rifle Charge"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:965
+msgid "Frag Grenade"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:980 ../base/ufos/weapons.ufo:1004
+#: ../base/ufos/weapons.ufo:1064
+msgid "Throw"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:1034
+msgid "Knife"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:1049
+msgid "Stab"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:1088
+msgid "Medikit"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:1102 ../base/ufos/weapons.ufo:1116
+msgid "Heal"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:1135
+msgid "IR Goggles"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:1149 ../base/ufos/weapons.ufo:1163
+msgid "Activate"
 msgstr ""
 
 #: client/cl_actor.c:277
@@ -1793,116 +2250,141 @@ msgstr ""
 msgid "%f seconds (%f fps)\n"
 msgstr ""
 
-#: client/cl_sequence.c:317
+#: client/cl_sequence.c:315
 msgid "Usage: seq_start <name>\n"
 msgstr ""
 
-#: client/cl_sequence.c:328
+#: client/cl_sequence.c:326
 #, c-format
 msgid "Couldn't find sequence '%s'\n"
 msgstr ""
 
-#: client/cl_sequence.c:475
+#: client/cl_sequence.c:451
+#, c-format
+msgid "Precaching model: %s\n"
+msgstr ""
+
+#: client/cl_sequence.c:460
+#, c-format
+msgid "Precaching image: %s\n"
+msgstr ""
+
+#: client/cl_sequence.c:465
 #, c-format
 msgid "SEQ_Precache: unknown format '%s'\n"
 msgstr ""
 
-#: client/cl_sequence.c:526
+#: client/cl_sequence.c:516
 msgid "Too many sequence entities\n"
 msgstr ""
 
-#: client/cl_sequence.c:556
+#: client/cl_sequence.c:540
+#, c-format
+msgid "Registering model: %s\n"
+msgstr ""
+
+#: client/cl_sequence.c:545
+#, c-format
+msgid "Change anim to: %s\n"
+msgstr ""
+
+#: client/cl_sequence.c:548
 #, c-format
 msgid "SEQ_Model: unknown token '%s'\n"
 msgstr ""
 
-#: client/cl_sequence.c:585
+#: client/cl_sequence.c:577
 msgid "Too many sequence 2d objects\n"
 msgstr ""
 
-#: client/cl_sequence.c:606
+#: client/cl_sequence.c:598
 #, c-format
 msgid "SEQ_Text: unknown token '%s'\n"
 msgstr ""
 
-#: client/cl_sequence.c:629
+#: client/cl_sequence.c:621
 #, c-format
 msgid "SEQ_Remove: couldn't find '%s'\n"
 msgstr ""
 
-#: client/cl_sequence.c:653
+#: client/cl_sequence.c:645
 msgid "CL_ParseSequence: unexptected end of file (sequence "
 msgstr ""
 
-#: client/cl_sequence.c:666
+#: client/cl_sequence.c:658
 #, c-format
 msgid ""
 "CL_ParseSequence: sequence def \"%s\" with same name found, second ignored\n"
 msgstr ""
 
-#: client/cl_sequence.c:672
+#: client/cl_sequence.c:664
 msgid "Too many sequences\n"
 msgstr ""
 
-#: client/cl_sequence.c:684
+#: client/cl_sequence.c:676
 #, c-format
 msgid "CL_ParseSequence: sequence def \"%s\" without body ignored\n"
 msgstr ""
 
-#: client/cl_sequence.c:704
+#: client/cl_sequence.c:697
 msgid "Too many sequence commands\n"
 msgstr ""
 
-#: client/cl_sequence.c:747
+#: client/cl_sequence.c:719
+#, c-format
+msgid "Too much data for sequence %s"
+msgstr ""
+
+#: client/cl_sequence.c:739
 #, c-format
 msgid "CL_ParseSequence: unknown command \"%s\" ignored (sequence %s)\n"
 msgstr ""
 
-#: client/cl_sequence.c:852
+#: client/cl_sequence.c:844
 msgid "ERROR: no free file names to create video\n"
 msgstr ""
 
-#: client/cl_sequence.c:878
+#: client/cl_sequence.c:870
 #, c-format
 msgid "Failed to write avi file %p - %i:%i\n"
 msgstr ""
 
-#: client/cl_sequence.c:939
+#: client/cl_sequence.c:931
 msgid "ERROR: Top of chunkstack breached\n"
 msgstr ""
 
-#: client/cl_sequence.c:957
+#: client/cl_sequence.c:949
 msgid "ERROR: Bottom of chunkstack breached\n"
 msgstr ""
 
-#: client/cl_sequence.c:1130
+#: client/cl_sequence.c:1122
 msgid "cl_aviFrameRate must be >= 1\n"
 msgstr ""
 
-#: client/cl_sequence.c:1137
+#: client/cl_sequence.c:1129
 #, c-format
 msgid "Could not open %s for writing\n"
 msgstr ""
 
-#: client/cl_sequence.c:1144
+#: client/cl_sequence.c:1136
 msgid "Could not open index file for writing\n"
 msgstr ""
 
-#: client/cl_sequence.c:1177
+#: client/cl_sequence.c:1169
 #, c-format
 msgid ""
 "WARNING: cl_aviFrameRate is not a divisor of the audio rate, suggest %d\n"
 msgstr ""
 
-#: client/cl_sequence.c:1183 client/cl_sequence.c:1191
+#: client/cl_sequence.c:1175 client/cl_sequence.c:1183
 msgid "No audio for video capturing\n"
 msgstr ""
 
-#: client/cl_sequence.c:1310
+#: client/cl_sequence.c:1302
 msgid "WARNING: Audio capture buffer overflow -- truncating\n"
 msgstr ""
 
-#: client/cl_sequence.c:1435
+#: client/cl_sequence.c:1427
 #, c-format
 msgid "Wrote %d:%d frames to %s\n"
 msgstr ""
