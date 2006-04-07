@@ -39,6 +39,8 @@ MSGMERGE_UPDATE = msgmerge --update
 MSGINIT = msginit
 MSGCONV = msgconv
 MSGFILTER = msgfilter
+UFOPO := $(top_srcdir)/po/ufopo.pl
+MSGCAT = msgcat
 
 POFILES = $(wildcard *.po)
 GMOFILES = $(POFILES:.po=.gmo)
@@ -119,7 +121,27 @@ $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
 	  --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
 	  --files-from=$(srcdir)/POTFILES.in \
 	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
-	  --msgid-bugs-address="$$msgid_bugs_address"
+	  --msgid-bugs-address="$$msgid_bugs_address" \
+	  --output=$(DOMAIN).c.po
+
+	if test -f $(DOMAIN).c.po ; then \
+	  sed s/charset=CHARSET/charset=UTF-8/ $(DOMAIN).c.po > $(DOMAIN).c1.po ;\
+	fi
+
+	if test -r $(srcdir)/FINDUFOS ;\
+	then ${UFOPO} --directory=$(top_srcdir) \
+	  `cd $(top_srcdir) && sh $(subdir)/FINDUFOS` > $(DOMAIN).ufo.po ;\
+	fi
+
+	if test -f $(DOMAIN).ufo.po -a -f $(DOMAIN).c1.po ; then \
+	  msgcat --sort-by-file $(DOMAIN).c1.po $(DOMAIN).ufo.po -o $(DOMAIN).po ;\
+	elif test -f $(DOMAIN).ufo.po ; then \
+	  mv $(DOMAIN).ufo.po $(DOMAIN).po ;\
+	else \
+	  mv $(DOMAIN).c1.po $(DOMAIN).po ;\
+	fi
+	rm -f $(DOMAIN).c.po $(DOMAIN).c1.po $(DOMAIN).ufo.po
+
 	test ! -f $(DOMAIN).po || { \
 	  if test -f $(srcdir)/$(DOMAIN).pot; then \
 	    sed -f remove-potcdate.sed < $(srcdir)/$(DOMAIN).pot > $(DOMAIN).1po && \
