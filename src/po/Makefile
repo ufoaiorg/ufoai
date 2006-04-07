@@ -40,7 +40,7 @@ MSGINIT = msginit
 MSGCONV = msgconv
 MSGFILTER = msgfilter
 
-POFILES = da.po de.po en_GB.po it.po pl.po fr.po
+POFILES = $(wildcard *.po)
 GMOFILES = $(POFILES:.po=.gmo)
 UPDATEPOFILES = $(POFILES:.po=.po-update)
 DUMMYPOFILES = $(POFILES:.po=.nop)
