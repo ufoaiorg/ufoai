@@ -190,6 +190,13 @@ DO_AS=$(CC) $(CFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
 DO_SHLIB_AS=$(CC) $(CFLAGS) $(SHLIBCFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
 
 #############################################################################
+# gettext stuff
+#############################################################################
+WORKSPACE = $(shell pwd)
+POFILES = $(wildcard $(WORKSPACE)/../po/*.po)
+#############################################################################
+
+#############################################################################
 # SETUP AND BUILD
 #############################################################################
 
@@ -843,10 +850,9 @@ distclean:
 		\( -name '*~' \) -type f -print`
 
 lang:
-	@mkdir -p ../../base/i18n/de/LC_MESSAGES
-	msgfmt -v -o ../../base/i18n/de/LC_MESSAGES/ufoai.mo ../po/de.po
-	@mkdir -p ../../base/i18n/en_GB/LC_MESSAGES
-	msgfmt -v -o ../../base/i18n/en_GB/LC_MESSAGES/ufoai.mo ../po/en_GB.po
-	@mkdir -p ../../base/i18n/da/LC_MESSAGES
-	msgfmt -v -o ../../base/i18n/da/LC_MESSAGES/ufoai.mo ../po/da.po
-
+	pofiles='$(POFILES)'; \
+	for po in $$pofiles; do \
+	  po=`basename $$po`; \
+	  mkdir -p ../../base/i18n/$$po/LC_MESSAGES; \
+	  msgfmt -v -o ../../base/i18n/$$po/LC_MESSAGES/ufoai.mo ../po/$$po; \
+	done
