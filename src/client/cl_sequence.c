@@ -3,11 +3,13 @@
 
 #include "client.h"
 
+#define MAX_DATA_LENGTH 1024
+
 typedef struct seqCmd_s
 {
 	void	(*handler)( char *name, char *data );
-	char	*name;
-	char	*data;
+	char	name[MAX_VAR];
+	char	data[MAX_DATA_LENGTH];
 } seqCmd_t;
 
 typedef struct sequence_s
@@ -54,14 +56,14 @@ typedef struct seqCamera_s
 typedef struct seqEnt_s
 {
 	qboolean	inuse;
-	char		*name;
+	char		name[MAX_VAR];
 	struct model_s *model;
 	int			skin;
 	vec3_t		origin, speed;
 	vec3_t		angles, omega;
 	float		alpha;
-	char		*parent;
-	char		*tag;
+	char		parent[MAX_VAR];
+	char		tag[MAX_VAR];
 	animState_t	as;
 	entity_t	*ep;
 } seqEnt_t;
@@ -69,9 +71,9 @@ typedef struct seqEnt_s
 typedef struct seq2D_s
 {
 	qboolean	inuse;
-	char		*name;
-	char		*text;
-	char		*image;
+	char		name[MAX_VAR];
+	char		text[MAX_VAR];
+	char		image[MAX_VAR];
 	vec2_t		pos, speed;
 	vec2_t		size, enlarge;
 	vec4_t		color, fade;
@@ -99,14 +101,10 @@ void (*seqCmdFunc[SEQ_NUMCMDS])( char *name, char *data ) =
 	SEQ_Command
 };
 
-#define CMDDATA_SIZE	0x10000
 #define MAX_SEQCMDS		8192
 #define MAX_SEQUENCES	32
 #define MAX_SEQENTS		128
 #define MAX_SEQ2DS		128
-
-char		*cmdData, *cmdDataCur;
-int			cmdDataSize = 0;
 
 seqCmd_t	seqCmds[MAX_SEQCMDS];
 int			numSeqCmds;
@@ -292,9 +290,9 @@ void CL_Sequence2D( void )
 
 			// render
 			re.DrawColor( s2d->color );
-			if ( s2d->text )
-				re.DrawPropString( "f_big", s2d->align, s2d->pos[0], s2d->pos[1], s2d->text );
-			if ( s2d->image )
+			if ( *s2d->text )
+				re.DrawPropString( "f_big", s2d->align, s2d->pos[0], s2d->pos[1], _(s2d->text) );
+			if ( *s2d->image )
 				re.DrawNormPic( s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1],
 					0, 0, 0, 0, s2d->align, true, s2d->image);
 		}
@@ -376,16 +374,6 @@ void CL_ResetSequences( void )
 	numSeqEnts = 0;
 	numSeq2Ds = 0;
 
-	// get command data memory
-	if ( cmdDataSize )
-		memset( cmdData, 0, cmdDataSize );
-	else
-	{
-		Hunk_Begin( CMDDATA_SIZE );
-		cmdData = Hunk_Alloc( CMDDATA_SIZE );
-		cmdDataSize = Hunk_End();
-	}
-	cmdDataCur = cmdData;
 }
 
 
@@ -410,15 +398,15 @@ value_t seqCamera_vals[] =
 
 value_t seqEnt_vals[] =
 {
-	{ "name",		V_POINTER,		SEQENTOFS( name ) },
+	{ "name",		V_STRING,		SEQENTOFS( name ) },
 	{ "skin",		V_INT,			SEQENTOFS( skin ) },
 	{ "alpha",		V_FLOAT,		SEQENTOFS( alpha ) },
 	{ "origin",		V_VECTOR,		SEQENTOFS( origin ) },
 	{ "speed",		V_VECTOR,		SEQENTOFS( speed ) },
 	{ "angles",		V_VECTOR,		SEQENTOFS( angles ) },
 	{ "omega",		V_VECTOR,		SEQENTOFS( omega ) },
-	{ "parent",		V_POINTER,		SEQENTOFS( parent ) },
-	{ "tag",		V_POINTER,		SEQENTOFS( tag ) },
+	{ "parent",		V_STRING,		SEQENTOFS( parent ) },
+	{ "tag",		V_STRING,		SEQENTOFS( tag ) },
 	{ NULL, 0, 0 },
 };
 
@@ -426,9 +414,9 @@ value_t seqEnt_vals[] =
 
 value_t seq2D_vals[] =
 {
-	{ "name",		V_POINTER,		SEQ2DOFS( name ) },
-	{ "text",		V_POINTER,		SEQ2DOFS( text ) },
-	{ "image",		V_POINTER,		SEQ2DOFS( image ) },
+	{ "name",		V_STRING,		SEQ2DOFS( name ) },
+	{ "text",		V_STRING,		SEQ2DOFS( text ) },
+	{ "image",		V_STRING,		SEQ2DOFS( image ) },
 	{ "pos",		V_POS,			SEQ2DOFS( pos ) },
 	{ "speed",		V_POS,			SEQ2DOFS( speed ) },
 	{ "size",		V_POS,			SEQ2DOFS( size ) },
@@ -460,6 +448,7 @@ void SEQ_Precache( char *name, char *data )
 	{
 		while ( *data )
 		{
+			Com_DPrintf(_("Precaching model: %s\n"), data );
 			re.RegisterModel( data );
 			data += strlen( data ) + 1;
 		}
@@ -468,6 +457,7 @@ void SEQ_Precache( char *name, char *data )
 	{
 		while ( *data )
 		{
+			Com_DPrintf(_("Precaching image: %s\n"), data );
 			re.RegisterPic( data );
 			data += strlen( data ) + 1;
 		}
@@ -529,7 +519,7 @@ void SEQ_Model( char *name, char *data )
 		// allocate
 		memset( se, 0, sizeof(seqEnt_t) );
 		se->inuse = true;
-		se->name = name;
+		Com_sprintf( se->name, MAX_VAR, name );
 	}
 
 	// get values
@@ -547,10 +537,12 @@ void SEQ_Model( char *name, char *data )
 			if ( !strcmp( data, "model" ) )
 			{
 				data += strlen( data ) + 1;
+				Com_DPrintf(_("Registering model: %s\n"), data );
 				se->model = re.RegisterModel( data );
 			} else if ( !strcmp( data, "anim" ) )
 			{
 				data += strlen( data ) + 1;
+				Com_DPrintf(_("Change anim to: %s\n"), data );
 				re.AnimChange( &se->as, se->model, data );
 			}
 			else Com_Printf( _("SEQ_Model: unknown token '%s'\n"), data );
@@ -589,7 +581,7 @@ void SEQ_2Dobj( char *name, char *data )
 		memset( s2d, 0, sizeof(seq2D_t) );
 		for ( i = 0; i < 4; i++ ) s2d->color[i] = 1.0f;
 		s2d->inuse = true;
-		s2d->name = name;
+		Com_sprintf( s2d->name, MAX_VAR, name );
 	}
 
 	// get values
@@ -653,8 +645,8 @@ void CL_ParseSequence( char *name, char **text )
 	char		*errhead = _("CL_ParseSequence: unexptected end of file (sequence ");
 	sequence_t	*sp;
 	seqCmd_t	*sc;
-	char		*token;
-	int			i, depth;
+	char		*token, *data;
+	int		i, depth, maxLength;
 
 	// search for sequences with same name
 	for ( i = 0; i < numSequences; i++ )
@@ -673,7 +665,7 @@ void CL_ParseSequence( char *name, char **text )
 
 	sp = &sequences[numSequences++];
 	memset( sp, 0, sizeof(sequence_t) );
-	strncpy( sp->name, name, MAX_VAR );
+	Com_sprintf( sp->name, MAX_VAR, name );
 	sp->start = numSeqCmds;
 
 	// get it's body
@@ -696,6 +688,7 @@ next_cmd:
 		for ( i = 0; i < SEQ_NUMCMDS; i++ )
 			if ( !strcmp( token, seqCmdName[i] ) )
 			{
+				maxLength = MAX_DATA_LENGTH;
 				// found a command
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
@@ -707,26 +700,25 @@ next_cmd:
 				sc = &seqCmds[numSeqCmds++];
 				memset( sc, 0, sizeof(seqCmd_t) );
 				sc->handler = seqCmdFunc[i];
-				sc->name = cmdDataCur;
 				sp->length++;
 
 				// copy name
-				strcpy( cmdDataCur, token );
-				cmdDataCur += strlen( token ) + 1;
-				sc->data = cmdDataCur;
+				Com_sprintf( sc->name, MAX_VAR, token );
 
 				// read data
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
-				if ( *token != '{' )
-				{
-					sc->data = NULL;
-					goto next_cmd;
-				}
-				sc->data = cmdDataCur;
+				if ( *token != '{' ) goto next_cmd;
+
 				depth = 1;
+				data = &sc->data[0];
 				while ( depth )
 				{
+					if ( maxLength <= 0 )
+					{
+						Com_Printf(_("Too much data for sequence %s"), sc->name );
+						break;
+					}
 					token = COM_EParse( text, errhead, name );
 					if ( !*text ) return;
 
@@ -734,11 +726,11 @@ next_cmd:
 					else if ( *token == '}' ) depth--;
 					if ( depth )
 					{
-						strcpy( cmdDataCur, token );
-						cmdDataCur += strlen( token ) + 1;
+						Com_sprintf( data, maxLength, token );
+						data += strlen(token)+1;
+						maxLength -= (strlen(token)+1);
 					}
 				}
-				*cmdDataCur++ = 0;
 				break;
 			}
 
