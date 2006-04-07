@@ -1904,7 +1904,7 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 	assert( i );
 
 	if ( !Com_RemoveFromInventory( i, from, fx, fy ) ) return IA_NONE; // break if source item is not removeable
-		
+
 	// if weapon is twohanded and is moved from hand to hand do nothing.
 	if ( CSI->ods[cacheItem.t].twohanded
 	&& ( ( to == CSI->idLeft && from == CSI->idRight ) || ( to == CSI->idRight && from == CSI->idLeft ) ) )
@@ -1947,7 +1947,7 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 		Com_AddToInventory( i, cacheItem, from, fx, fy );
 		return IA_NONE;
 	}
-	
+
 	// twohanded exception
 	if ( CSI->ods[cacheItem.t].twohanded && to == CSI->idLeft )
 		to = CSI->idRight;
@@ -2201,6 +2201,13 @@ typedef struct menuDepends_s
 /*
 =================
 Com_ParseValue
+
+translateable string are marked with _ at the beginning
+example:
+menu example
+{
+ string "_this is translatable"
+}
 =================
 */
 int Com_ParseValue( void *base, char *token, int type, int ofs )
@@ -2267,6 +2274,9 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		return 4;
 
 	case V_STRING:
+		// i18n marked through _ at beginning of string
+		if ( *token == '_' )
+			token++;
 		strncpy( (char *)b, token, MAX_VAR );
 		w = strlen(token)+1;
 		if ( w > MAX_VAR ) w = MAX_VAR;
