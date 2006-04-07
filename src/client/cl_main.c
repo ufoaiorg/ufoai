@@ -1272,7 +1272,7 @@ void CL_Precache_f (void)
 /*=================
 CL_ParseScriptFirst
 
-parsed if we no dedicated server
+parsed if we are no dedicated server
 =================*/
 void CL_ParseScriptFirst( char *type, char *name, char **text )
 {
@@ -1287,7 +1287,7 @@ void CL_ParseScriptFirst( char *type, char *name, char **text )
 /*=================
 CL_ParseScriptSecond
 
-parsed if we no dedicated server
+parsed if we are no dedicated server
 =================*/
 void CL_ParseScriptSecond( char *type, char *name, char **text )
 {
