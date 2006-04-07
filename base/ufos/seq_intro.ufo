@@ -3,47 +3,118 @@ sequence intro
 	cmd "ov_stop;music mission;ov_start;"
 	cmd "seq_animspeed 720;"
 
-	2dobj sentence1
+	2dobj i_sentence1
 	{
-		text	"UFO:Alien Invasion"
+		text	"_intro_sentence1"
 		pos		"512 468"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -20"
 	}
-	2dobj sentence2
+	2dobj i_sentence2
 	{
-		text	"Set up your base and assemble a team"
+		text	"_intro_sentence2"
 		pos		"512 510"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -20"
 	}
-	2dobj sentence3
+	2dobj i_sentence3
 	{
-		text	"to be prepared."
+		text	"_intro_sentence3"
 		pos		"512 535"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -20"
 	}
-	2dobj sentence4
+	2dobj i_sentence4
 	{
-		text	"More to come here"
+		text	"_intro_sentence4"
 		pos		"512 560"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -20"
 	}
-	2dobj sentence5
+	2dobj i_sentence5
 	{
-		text	"TODO"
+		text	"_intro_sentence5"
 		pos		"512 595"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -20"
 	}
 	wait 12.0
 
+	rem i_sentence1
+	rem i_sentence2
+	rem i_sentence3
+	rem i_sentence4
+	rem i_sentence5
+}
 
-	rem sentence1
-	rem sentence2
-	rem sentence3
-	rem sentence4
-	rem sentence5
+sequence prolog
+{
+	cmd "ov_stop;music mission;ov_start;"
+	cmd "seq_animspeed 720;"
+
+	2dobj p_sentence1
+	{
+		text	"_prolog_sentence1"
+		pos		"512 384"
+		align	uc
+		color	"0.5 1 0.5 1"
+		speed	"0 -20"
+	}
+	2dobj p_sentence2
+	{
+		text	"_prolog_sentence2"
+		pos		"50 510"
+		align	ul
+		color	"0 0.8 0 1"
+		speed	"0 -20"
+	}
+	2dobj p_sentence3
+	{
+		text	"_prolog_sentence3"
+		pos		"50 678"
+		align	ul
+		color	"0 0.8  0 1"
+		speed	"0 -20"
+	}
+	2dobj p_sentence4
+	{
+		text	"_prolog_sentence4"
+		pos		"50 930"
+		align	ul
+		color	"0 0.8  0 1"
+		speed	"0 -20"
+	}
+	2dobj p_sentence5
+	{
+		text	"_prolog_sentence5"
+		pos		"50 1182"
+		align	ul
+		color	"0 0.8  0 1"
+		speed	"0 -20"
+	}
+	2dobj p_sentence6
+	{
+		text	"_prolog_sentence6"
+		pos		"512 1434"
+		align	uc
+		color	"0 0.8  0 1"
+		speed	"0 -20"
+	}
+	2dobj p_sentence7
+	{
+		text	"_prolog_sentence7"
+		pos		"50 1518"
+		align	ul
+		color	"0 0.8  0 1"
+		speed	"0 -20"
+	}
+	wait 128.0
+
+	rem p_sentence1
+	rem p_sentence2
+	rem p_sentence3
+	rem p_sentence4
+	rem p_sentence5
+	rem p_sentence6
+	rem p_sentence7
 }
