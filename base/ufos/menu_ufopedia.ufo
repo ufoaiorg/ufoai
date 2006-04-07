@@ -47,6 +47,7 @@ menu ufopedia
 
 	pic bt_prev
 	{
+		tooltip "_Previous entry"
 		image	menu/ufopedia_buttons1
 		pos		"10 10"
 		texl	"0 37"
@@ -57,6 +58,7 @@ menu ufopedia
 
 	pic bt_next
 	{
+		tooltip "_Next entry"
 		image	menu/ufopedia_buttons1
 		pos		"950 10"
 		texl	"0 0"
@@ -67,6 +69,7 @@ menu ufopedia
 
 	pic button_content
 	{
+		tooltip "_Back to content"
 		image	menu/ufopedia_buttons1
 		mousefx true
 		pos		"10 720"
@@ -77,6 +80,7 @@ menu ufopedia
 
 	pic button_exit
 	{
+		tooltip "_Leave Ufopedia"
 		image	hud/buttons2
 		mousefx true
 		pos		"950 720"

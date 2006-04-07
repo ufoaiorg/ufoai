@@ -81,7 +81,7 @@ menu map
 
 	string txt_credits
 	{
-		tooltip	"Organisation capital"
+		tooltip	"_Organisation capital"
 		string	"*cvar mn_credits"
 		pos	"900 30"
 		font	f_big
@@ -90,7 +90,7 @@ menu map
 
 	pic bt_timestop
 	{
-		tooltip	"Reset time to 5 seconds"
+		tooltip	"_Reset time to 5 seconds"
 		image	menu/button_mapmen_bases
 		pos	"565 28"
 		texl	"0 222"
@@ -102,7 +102,7 @@ menu map
 
 	pic bt_timeslow
 	{
-		tooltip	"Slow down time"
+		tooltip	"_Slow down time"
 		image	menu/button_mapmen_bases
 		pos	"596 28"
 		texl	"42 222"
@@ -114,7 +114,7 @@ menu map
 
 	pic bt_timefast
 	{
-		tooltip	"Speed up time"
+		tooltip	"_Speed up time"
 		image	menu/button_mapmen_bases
 		pos	"616 28"
 		texl	"53 222"
@@ -154,7 +154,7 @@ menu map
 
 	pic bt_intercept
 	{
-		tooltip	"Intercept alien craft or visit alien (crash) site."
+		tooltip	"_Intercept alien craft or visit alien (crash) site."
 		image	menu/b_geobuttons
 		pos	"32 544"
 		texl	"0 64"
@@ -172,7 +172,7 @@ menu map
 
 	pic bt_stats
 	{
-		tooltip	"Organisation statistics"
+		tooltip	"_Organisation statistics"
 		image	menu/b_geobuttons
 		pos	"102 544"
 		texl	"64 64"
@@ -190,7 +190,7 @@ menu map
 
 	pic bt_ufopedia
 	{
-		tooltip	"Ufopedia"
+		tooltip	"_Ufopedia"
 		image	menu/b_geobuttons
 		pos	 "172 544"
 		texl	"128 64"
@@ -208,7 +208,7 @@ menu map
 
 	pic bt_base
 	{
-		tooltip	"Create base"
+		tooltip	"_Create base"
 		image	menu/b_geobuttons
 		pos	"242 544"
 		texl	"192 64"
@@ -226,7 +226,7 @@ menu map
 
 	pic bt_menu
 	{
-		tooltip	"Options"
+		tooltip	"_Options"
 		image	menu/button_mapmen_options2
 		pos	"950 15"
 		texl	"0 0"

@@ -3,7 +3,7 @@
 // =======================
 item assault
 {
-	name		"Assault Rifle"
+	name		"_Assault Rifle"
 	model		weapons/assault/assault
 	weapon		true
 	type		rifle
@@ -20,7 +20,7 @@ item assault
 
 item assault_ammo
 {
-	name		"Assault Rifle Clip"
+	name		"_Assault Rifle Clip"
 	model		weapons/assault/assault_clip
 	type		ammo
 	category	0
@@ -32,7 +32,7 @@ item assault_ammo
 
 	primary
 	{
-		name	"Burst"
+		name	"_Burst"
 		skill	assault
 		projtl	bullet
 		impact	bulletImpact
@@ -51,7 +51,7 @@ item assault_ammo
 	}
 	secondary
 	{
-		name	"Auto"
+		name	"_Auto"
 		skill	assault
 		projtl	bullet
 		impact	bulletImpact
@@ -76,7 +76,7 @@ item assault_ammo
 // =======================
 item sniper
 {
-	name		"Sniper Rifle"
+	name		"_Sniper Rifle"
 	model		weapons/sniper/sniper
 	weapon		true
 	type		rifle
@@ -93,7 +93,7 @@ item sniper
 
 item sniper_ammo
 {
-	name		"Sniper Rifle Clip"
+	name		"_Sniper Rifle Clip"
 	model		weapons/sniper/sniper_clip
 	type		ammo
 	category	0
@@ -105,7 +105,7 @@ item sniper_ammo
 
 	primary
 	{
-		name	"Snap Shot"
+		name	"_Snap Shot"
 		skill	precise
 		projtl	bullet
 		impact	bulletImpact
@@ -123,7 +123,7 @@ item sniper_ammo
 	}
 	secondary
 	{
-		name	"Aimed Shot"
+		name	"_Aimed Shot"
 		skill	precise
 		projtl	bullet
 		impact	bulletImpact
@@ -147,7 +147,7 @@ item sniper_ammo
 // =======================
 item pistol
 {
-	name		"9mm Pistol"
+	name		"_9mm Pistol"
 	model		weapons/pistol/pistol
 	weapon		true
 	type		pistol
@@ -164,7 +164,7 @@ item pistol
 
 item pistol_ammo
 {
-	name		"Pistol Clip"
+	name		"_Pistol Clip"
 	model		weapons/pistol/pistol_clip
 	type		ammo
 	category	0
@@ -176,7 +176,7 @@ item pistol_ammo
 
 	primary
 	{
-		name	"Rapid Fire"
+		name	"_Rapid Fire"
 		skill	close
 		projtl	bullet
 		impact	bulletImpact
@@ -195,7 +195,7 @@ item pistol_ammo
 	}
 	secondary
 	{
-		name	"Aimed Shot"
+		name	"_Aimed Shot"
 		skill	close
 		projtl	bullet
 		impact	bulletImpact
@@ -219,7 +219,7 @@ item pistol_ammo
 // =======================
 item smg
 {
-	name		"Submachine Gun"
+	name		"_Submachine Gun"
 	model		weapons/smg/smg
 	weapon		true
 	type		rifle
@@ -236,7 +236,7 @@ item smg
 
 item smg_ammo
 {
-	name		"SMG Clip"
+	name		"_SMG Clip"
 	model		weapons/smg/smg_clip
 	type		ammo
 	category	0
@@ -248,7 +248,7 @@ item smg_ammo
 
 	primary
 	{
-		name	"Burst"
+		name	"_Burst"
 		skill	assault
 		projtl	bullet
 		impact	bulletImpact
@@ -267,7 +267,7 @@ item smg_ammo
 	}
 	secondary
 	{
-		name	"Full Auto"
+		name	"_Full Auto"
 		skill	assault
 		projtl	bullet
 		impact	bulletImpact
@@ -292,7 +292,7 @@ item smg_ammo
 // =======================
 item shotgun
 {
-	name		Shotgun
+	name		"_Shotgun"
 	model		weapons/shotgun/shotgun
 	weapon		true
 	type		biggun
@@ -309,7 +309,7 @@ item shotgun
 
 item shotgun_ammo
 {
-	name		"Buckshots"
+	name		"_Buckshots"
 	model		weapons/shotgun/shotgun_clip
 	type		ammo
 	category	0
@@ -321,7 +321,7 @@ item shotgun_ammo
 
 	primary
 	{
-		name	"Single Shot"
+		name	"_Single Shot"
 		skill	close
 		projtl	null
 		impact	bulletImpact
@@ -342,7 +342,7 @@ item shotgun_ammo
 
 	secondary
 	{
-		name	"Double Shot"
+		name	"_Double Shot"
 		skill	close
 		projtl	null
 		impact	bulletImpact
@@ -368,7 +368,7 @@ item shotgun_ammo
 // =======================
 item flamer
 {
-	name		Flamethrower
+	name		"_Flamethrower"
 	model		weapons/flamer/flamer
 	weapon		true
 	type		biggun
@@ -385,7 +385,7 @@ item flamer
 
 item flamer_ammo
 {
-	name		"Napalm Tank"
+	name		"_Napalm Tank"
 	model		weapons/flamer/flamer_ammo
 	type		ammo
 	category	0
@@ -397,7 +397,7 @@ item flamer_ammo
 
 	primary
 	{
-		name	"Candlelight"
+		name	"_Candlelight"
 		skill	heavy
 		projtl	fireBall
 		impact	fireImpact
@@ -417,7 +417,7 @@ item flamer_ammo
 	}
 	secondary
 	{
-		name	"Inferno"
+		name	"_Inferno"
 		skill	heavy
 		projtl	fireBall
 		impact	fireImpact
@@ -443,7 +443,7 @@ item flamer_ammo
 // =======================
 item rpg
 {
-	name		"Rocket Launcher"
+	name		"_Rocket Launcher"
 	model		weapons/rpg/rpg
 	weapon		true
 	type		rpg
@@ -460,7 +460,7 @@ item rpg
 
 item rpg_ammo
 {
-	name		"High-Explosive Rocket"
+	name		"_High-Explosive Rocket"
 	model		weapons/rpg/rpg_ammo
 	type		ammo
 	category	0
@@ -472,7 +472,7 @@ item rpg_ammo
 
 	primary
 	{
-		name	"Snap Shot"
+		name	"_Snap Shot"
 		skill	explosive
 		projtl	rocket
 		impact	explosion
@@ -495,7 +495,7 @@ item rpg_ammo
 	}
 	secondary
 	{
-		name	"Aimed Shot"
+		name	"_Aimed Shot"
 		skill	explosive
 		projtl	rocket
 		impact	explosion
@@ -524,7 +524,7 @@ item rpg_ammo
 // =======================
 item tachyonrifle
 {
-	name		"Tachyon Rifle"
+	name		"_Tachyon Rifle"
 	model		weapons/tachyonrifle/tachyonrifle
 	weapon		true
 	type		rifle
@@ -541,7 +541,7 @@ item tachyonrifle
 
 item tachyonrifle_ammo
 {
-	name		"Tachyon Rifle Charge"
+	name		"_Tachyon Rifle Charge"
 	model		weapons/tachyonrifle/tachyonrifle_clip
 	type		ammo
 	category	0
@@ -553,7 +553,7 @@ item tachyonrifle_ammo
 
 	primary
 	{
-		name	"Rapid Shots"
+		name	"_Rapid Shots"
 		skill	assault
 		projtl	tachyonBall
 		impact	tachyonImpact
@@ -572,7 +572,7 @@ item tachyonrifle_ammo
 	}
 	secondary
 	{
-		name	"Charged Blast"
+		name	"_Charged Blast"
 		skill	explosive
 		projtl	tachyonBigBall
 		impact	tachyonBigImpact
@@ -599,7 +599,7 @@ item tachyonrifle_ammo
 // =======================
 item tachyonsniper
 {
-	name		"Tachyon Sniper Rifle"
+	name		"_Tachyon Sniper Rifle"
 	model		weapons/tachyonsniper/tachyonsniper
 	weapon		true
 	type		rifle
@@ -616,7 +616,7 @@ item tachyonsniper
 
 item tachyonsniper_ammo
 {
-	name		"Tachyon Sniper Charge"
+	name		"_Tachyon Sniper Charge"
 	model		weapons/tachyonsniper/tachyonsniper_clip
 	type		ammo
 	category	0
@@ -628,7 +628,7 @@ item tachyonsniper_ammo
 
 	primary
 	{
-		name	"Snap Shot"
+		name	"_Snap Shot"
 		skill	precise
 		projtl	tachyonBall
 		impact	tachyonImpact
@@ -647,7 +647,7 @@ item tachyonsniper_ammo
 	}
 	secondary
 	{
-		name	"Rapid Shots"
+		name	"_Rapid Shots"
 		skill	precise
 		projtl	tachyonMiniBall
 		impact	tachyonImpact
@@ -672,7 +672,7 @@ item tachyonsniper_ammo
 // =======================
 item plaspistol
 {
-	name		"Plasma Pistol"
+	name		"_Plasma Pistol"
 	model		weapons/plaspistol/plaspistol
 	weapon		true
 	type		pistol
@@ -689,7 +689,7 @@ item plaspistol
 
 item plaspistol_ammo
 {
-	name		"Plasma Pistol Charge"
+	name		"_Plasma Pistol Charge"
 	model		weapons/plaspistol/plaspistol_clip
 	type		ammo
 	category	0
@@ -701,7 +701,7 @@ item plaspistol_ammo
 
 	primary
 	{
-		name	"Charged Pulse"
+		name	"_Charged Pulse"
 		skill 	assault
 		projtl	plasmaChargedPulse
 		impact	plasmaImpactCharged
@@ -719,7 +719,7 @@ item plaspistol_ammo
 	}
 	secondary
 	{
-		name	"Continuous Beam"
+		name	"_Continuous Beam"
 		skill 	heavy
 		projtl	plasmaContinuous
 		impact	plasmaImpact
@@ -745,7 +745,7 @@ item plaspistol_ammo
 // =======================
 item plasrifle
 {
-	name		"Plasma Rifle"
+	name		"_Plasma Rifle"
 	model		weapons/plasrifle/plasrifle
 	weapon		true
 	type		biggun
@@ -762,7 +762,7 @@ item plasrifle
 
 item plasrifle_ammo
 {
-	name		"Plasma Rifle Charge"
+	name		"_Plasma Rifle Charge"
 	model		weapons/plasrifle/plasrifle_clip
 	type		ammo
 	category	0
@@ -774,7 +774,7 @@ item plasrifle_ammo
 
 	primary
 	{
-		name	"Charged Pulse"
+		name	"_Charged Pulse"
 		skill 	precise
 		projtl	plasmaChargedPulse
 		impact	plasmaImpactCharged
@@ -792,7 +792,7 @@ item plasrifle_ammo
 	}
 	secondary
 	{
-		name	"Continuous Beam"
+		name	"_Continuous Beam"
 		skill 	heavy
 		projtl	plasmaContinuous
 		impact	plasmaImpact
@@ -818,7 +818,7 @@ item plasrifle_ammo
 // =======================
 item laserpistol
 {
-	name		"Laser Pistol"
+	name		"_Laser Pistol"
 	model		weapons/laserpistol/laserpistol
 	weapon		true
 	type		pistol
@@ -835,7 +835,7 @@ item laserpistol
 
 item laserpistol_ammo
 {
-	name		"Laser Pistol Charge"
+	name		"_Laser Pistol Charge"
 	model		weapons/laserpistol/laserpistol_clip
 	type		ammo
 	category	0
@@ -847,7 +847,7 @@ item laserpistol_ammo
 
 	primary
 	{
-		name	"Single Pulse"
+		name	"_Single Pulse"
 		skill 	close
 		projtl	laserPulse
 		impact	laserImpact
@@ -865,7 +865,7 @@ item laserpistol_ammo
 	}
 	secondary
 	{
-		name	"Multiple Pulses"
+		name	"_Multiple Pulses"
 		skill 	close
 		projtl	laserPulse
 		impact	laserImpact
@@ -890,7 +890,7 @@ item laserpistol_ammo
 // =======================
 item laserrifle
 {
-	name		"Laser Rifle"
+	name		"_Laser Rifle"
 	model		weapons/laserrifle/laserrifle
 	weapon		true
 	type		rifle
@@ -907,7 +907,7 @@ item laserrifle
 
 item laserrifle_ammo
 {
-	name		"Laser Rifle Charge"
+	name		"_Laser Rifle Charge"
 	model		weapons/laserrifle/laserrifle_clip
 	type		ammo
 	category	0
@@ -919,7 +919,7 @@ item laserrifle_ammo
 
 	primary
 	{
-		name	"Single Pulse"
+		name	"_Single Pulse"
 		skill 	precise
 		projtl	laserPulse
 		impact	laserImpact
@@ -937,7 +937,7 @@ item laserrifle_ammo
 	}
 	secondary
 	{
-		name	"Multiple Pulses"
+		name	"_Multiple Pulses"
 		skill 	assault
 		projtl	laserPulse
 		impact	laserImpact
@@ -962,7 +962,7 @@ item laserrifle_ammo
 // =======================
 item fraggrenade
 {
-	name		"Frag Grenade"
+	name		"_Frag Grenade"
 	model		weapons/fraggren/fraggren
 	weapon		true
 	type		grenade
@@ -977,7 +977,7 @@ item fraggrenade
 
 	primary
 	{
-		name	"Throw"
+		name	"_Throw"
 		skill	explosive
 		projtl	fraggren
 		impact	frag_explosion
@@ -1001,7 +1001,7 @@ item fraggrenade
 	}
 	secondary
 	{
-		name	"Throw"
+		name	"_Throw"
 		skill	explosive
 		projtl	fraggren
 		impact	fire_explosion
@@ -1031,7 +1031,7 @@ item fraggrenade
 // =======================
 item knife
 {
-	name		"Knife"
+	name		"_Knife"
 	model		weapons/knife/knife
 	weapon		true
 	type		melee
@@ -1046,7 +1046,7 @@ item knife
 
 	primary
 	{
-		name	"Stab"
+		name	"_Stab"
 		skill	close
 		projtl	null
 		impact	null
@@ -1061,7 +1061,7 @@ item knife
 	}
 	secondary
 	{
-		name	"Throw"
+		name	"_Throw"
 		skill	close
 		projtl	knife
 		impact	null
@@ -1085,7 +1085,7 @@ item knife
 // =======================
 item medikit
 {
-	name		"Medikit"
+	name		"_Medikit"
 	model		weapons/medikit/medikit
 	weapon		false
 	type		melee
@@ -1099,7 +1099,7 @@ item medikit
 
 	primary
 	{
-		name	"Heal"
+		name	"_Heal"
 		projtl	null
 		impact	null
 		hitbody null
@@ -1113,7 +1113,7 @@ item medikit
 	}
 	secondary
 	{
-		name	"Heal"
+		name	"_Heal"
 		projtl	null
 		impact	null
 		hitbody null
@@ -1132,7 +1132,7 @@ item medikit
 // =======================
 item irgoggles
 {
-	name		"IR Goggles"
+	name		"_IR Goggles"
 	model		weapons/irgoggles/irgoggles
 	weapon		false
 	type		melee
@@ -1146,7 +1146,7 @@ item irgoggles
 
 	primary
 	{
-		name	"Activate"
+		name	"_Activate"
 		projtl	null
 		impact	null
 		hitbody null
@@ -1160,7 +1160,7 @@ item irgoggles
 	}
 	secondary
 	{
-		name	"Activate"
+		name	"_Activate"
 		projtl	null
 		impact	null
 		hitbody null

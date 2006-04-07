@@ -59,7 +59,7 @@ menu hud
 
 	pic bt_floor1
 	{
-		tooltip	"Level 1"
+		tooltip	"_Level 1"
 		pos		"6 417"
 		texl	"0 0"
 		texh	"28 36"
@@ -68,7 +68,7 @@ menu hud
 	}
 	pic bt_floor2
 	{
-		tooltip	"Level 2"
+		tooltip	"_Level 2"
 		pos		"6 377"
 		texl	"32 0"
 		texh	"60 36"
@@ -77,7 +77,7 @@ menu hud
 	}
 	pic bt_floor3
 	{
-		tooltip	"Level 3"
+		tooltip	"_Level 3"
 		pos		"6 337"
 		texl	"64 0"
 		texh	"92 36"
@@ -86,7 +86,7 @@ menu hud
 	}
 	pic bt_floor4
 	{
-		tooltip	"Level 4"
+		tooltip	"_Level 4"
 		pos		"6 297"
 		texl	"96 0"
 		texh	"124 36"
@@ -95,7 +95,7 @@ menu hud
 	}
 	pic bt_floor5
 	{
-		tooltip	"Level 5"
+		tooltip	"_Level 5"
 		pos		"6 257"
 		texl	"0 38"
 		texh	"28 74"
@@ -104,7 +104,7 @@ menu hud
 	}
 	pic bt_floor6
 	{
-		tooltip	"Level 6"
+		tooltip	"_Level 6"
 		pos		"6 217"
 		texl	"32 38"
 		texh	"60 74"
@@ -113,7 +113,7 @@ menu hud
 	}
 	pic bt_floor7
 	{
-		tooltip	"Level 7"
+		tooltip	"_Level 7"
 		pos		"6 177"
 		texl	"64 38"
 		texh	"92 74"
@@ -122,7 +122,7 @@ menu hud
 	}
 	pic bt_floor8
 	{
-		tooltip	"Level 8"
+		tooltip	"_Level 8"
 		pos		"6 137"
 		texl	"96 38"
 		texh	"124 74"
@@ -209,19 +209,18 @@ menu hud
 
 	pic bt_nextround
 	{
-		tooltip	"Finish round"
+		tooltip	"_Finish round"
 		image	hud/buttons2
 		mousefx true
 		pos		"950 10"
 		texl	"0 0"
 		texh	"64 37"
 		click	{ cmd nextround; }
-		tooltip "Click to end your round"
 	}
 
 	zone spotted
 	{
-		tooltip	"Enemy spotted"
+		tooltip	"_Enemy spotted"
 		pos		"816 12"
 		size	"48 34"
 		click	{ cmd nextalien; }
@@ -231,7 +230,7 @@ menu hud
 		string	"*cvar mn_numaliensspotted"
 		pos		"840 30"
 		align	cc
-		tooltip "Click to cycle through the spotted enemies"
+		tooltip "_Click to cycle through the spotted enemies"
 	}
 
 	confunc hudselects0 { *bt_actor0 image hud/buttons1a }
@@ -263,7 +262,7 @@ menu hud
 
 	pic bt_actor0
 	{
-		tooltip	"Soldier 1"
+		tooltip	"_Soldier 1"
 		pos		"426 10"
 		texl	"0 0"
 		texh	"28 36"
@@ -272,7 +271,7 @@ menu hud
 	}
 	pic bt_actor1
 	{
-		tooltip	"Soldier 2"
+		tooltip	"_Soldier 2"
 		pos		"457 10"
 		texl	"32 0"
 		texh	"60 36"
@@ -281,7 +280,7 @@ menu hud
 	}
 	pic bt_actor2
 	{
-		tooltip	"Soldier 3"
+		tooltip	"_Soldier 3"
 		pos		"488 10"
 		texl	"64 0"
 		texh	"92 36"
@@ -290,7 +289,7 @@ menu hud
 	}
 	pic bt_actor3
 	{
-		tooltip	"Soldier 4"
+		tooltip	"_Soldier 4"
 		pos		"519 10"
 		texl	"96 0"
 		texh	"124 36"
@@ -299,7 +298,7 @@ menu hud
 	}
 	pic bt_actor4
 	{
-		tooltip	"Soldier 5"
+		tooltip	"_Soldier 5"
 		pos		"550 10"
 		texl	"0 38"
 		texh	"28 74"
@@ -308,7 +307,7 @@ menu hud
 	}
 	pic bt_actor5
 	{
-		tooltip	"Soldier 6"
+		tooltip	"_Soldier 6"
 		pos		"581 10"
 		texl	"32 38"
 		texh	"60 74"
@@ -317,7 +316,7 @@ menu hud
 	}
 	pic bt_actor6
 	{
-		tooltip	"Soldier 7"
+		tooltip	"_Soldier 7"
 		pos		"612 10"
 		texl	"64 38"
 		texh	"92 74"
@@ -326,7 +325,7 @@ menu hud
 	}
 	pic bt_actor7
 	{
-		tooltip	"Soldier 8"
+		tooltip	"_Soldier 8"
 		pos		"643 10"
 		texl	"96 38"
 		texh	"124 74"
@@ -406,7 +405,7 @@ menu hud
 
 	pic bt_pfire_right
 	{
-		tooltip	"Primary fire mode"
+		tooltip	"_Primary fire mode"
 		mousefx true
 		pos		"174 650"
 		texl	"0 76"
@@ -416,7 +415,7 @@ menu hud
 
 	pic bt_pfire_left
 	{
-		tooltip	"Primary fire mode"
+		tooltip	"_Primary fire mode"
 		mousefx true
 		pos		"776 650"
 		texl	"0 76"
@@ -426,7 +425,7 @@ menu hud
 
 	pic bt_sfire_right
 	{
-		tooltip	"Secondary fire mode"
+		tooltip	"_Secondary fire mode"
 		mousefx true
 		pos		"174 708"
 		texl	"77 76"
@@ -436,7 +435,7 @@ menu hud
 
 	pic bt_sfire_left
 	{
-		tooltip	"Secondary fire mode"
+		tooltip	"_Secondary fire mode"
 		mousefx true
 		pos		"776 708"
 		texl	"77 76"
@@ -446,7 +445,7 @@ menu hud
 
 	pic bt_reload_left
 	{
-		tooltip	"Reload weapon"
+		tooltip	"_Reload weapon"
 		image	hud/buttons2
 		mousefx true
 		pos		"857 720"
@@ -457,7 +456,7 @@ menu hud
 
 	pic bt_reload_right
 	{
-		tooltip	"Reload weapon"
+		tooltip	"_Reload weapon"
 		image	hud/buttons2
 		mousefx true
 		pos		"103 720"
@@ -502,13 +501,12 @@ menu hud
 
 	pic bt_duck
 	{
-		tooltip	"Crouch/Stand up"
+		tooltip	"_Crouch/Stand up"
 		mousefx true
 		pos		"303 723"
 		texl	"0 75"
 		texh	"64 112"
 		click	{ cmd standcrouch }
-		tooltip "Stand/crounch"
 	}
 
 	confunc startreactions { *bt_reaction image hud/button_guarda }
@@ -516,7 +514,7 @@ menu hud
 
 	pic bt_reaction
 	{
-		tooltip	"Toggle reaction-fire"
+		tooltip	"_Toggle reaction-fire"
 		mousefx true
 		pos		"303 686"
 		click	{ cmd togglereaction }
@@ -554,7 +552,7 @@ menu hud
 
 	pic bt_game
 	{
-		tooltip	"Options"
+		tooltip	"_Options"
 		image	hud/buttons1
 		mousefx true
 		pos		"983 139"
@@ -565,7 +563,7 @@ menu hud
 
 	pic bt_physdata
 	{
-		tooltip	"Physical stats of this soldier"
+		tooltip	"_Physical stats of this soldier"
 		image	hud/buttons1
 		mousefx true
 		pos		"983 266"
@@ -576,7 +574,7 @@ menu hud
 
 	pic bt_inventory
 	{
-		tooltip	"Inventory"
+		tooltip	"_Inventory"
 		image	hud/buttons1
 		mousefx true
 		pos		"983 376"
