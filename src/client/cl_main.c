@@ -1924,7 +1924,12 @@ void CL_Shutdown(void)
 
 	if (isdown)
 	{
-		printf (_("recursive shutdown\n"));
+		// BUG [ 1444732 ] game exits with error
+		//
+		// Removing this printf(), and therefore the call to gettext(), fixes
+		// the segfault. Why is gettext() off limits here???
+		//
+		//printf (_("recursive shutdown\n"));
 		return;
 	}
 	isdown = true;
