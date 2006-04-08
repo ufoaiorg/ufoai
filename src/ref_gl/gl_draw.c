@@ -357,8 +357,10 @@ int Draw_PropCharFont (font_t *f, int x, int y, char c)
 	// we have no lower case letters in here - so go back to upper case
 	// 64 is the value where lower case chars start
 	// not in ascii but in our case - because we start to count from 32 (SPACE)
-	if ( f->rh == 0.0625 )
+	if ( f->rh == 0.0625 && n < 128 )
 		while ( n >= 64 ) n -= 32;
+	else if ( f->rh == 0.0625 && n > 223 )
+		while ( n >= 224 ) n -= 32;
 
 	if ( n < 0 || !f->wc[n] ) return (float)f->w * CHAR_EMPTYWIDTH;
 
@@ -436,8 +438,10 @@ int Draw_PropLength (char *font, char *c)
 		// we have no lower case letters in here - so go back to upper case
 		// 64 is the value where lower case chars start
 		// not in ascii but in our case - because we start to count from 32 (SPACE)
-		if ( f->rh == 0.0625 )
+		if ( f->rh == 0.0625 && n < 128 )
 			while ( n >= 64 ) n -= 32;
+		else if ( f->rh == 0.0625 && n > 223 )
+			while ( n >= 224 ) n -= 32;
 
 		if ( n < 0 || !f->wc[n] ) l += (float)f->w * CHAR_EMPTYWIDTH;
 		else l += f->wc[n]+1;
