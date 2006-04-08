@@ -81,6 +81,7 @@ void Draw_InitLocal (void)
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	GL_FindImage ("pics/f_small.tga", it_font);
 	GL_FindImage ("pics/f_big.tga", it_font);
+	GL_FindImage ("pics/f_menu.tga", it_font);
 #ifdef BUILD_FREETYPE
 	R_InitFreeType();
 #endif
@@ -204,8 +205,10 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 	int		chars;
 	byte	*tp;
 
-	// get the font name
+	// get the font name without .tga
 	l = strlen( name ) - 4;
+
+	// just get the position of the last / in name
 	for ( i = l; i > 0; i-- )
 		if ( name[i-1] == '/' || name[i-1] == '\\' ) break;
 
@@ -215,18 +218,25 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 		return NULL;
 	}
 
+	if ( numFonts >= MAX_FONTS )
+		return NULL;
+
+	// allocate new font
 	f = &fonts[numFonts];
+	// copy only fontname - without path
 	strncpy( f->name, name+i, l-i );
 
 	// check the font format (start with minimum 1x1 font)
-	for ( sx = 8; sx < w; sx <<= 1 );
+	// it has to be a power of 2
+	// minimum pixelwidth for each letter is 16 pixel
+	for ( sx = 16; sx < w; sx <<= 1 );
 	if ( sx != w )
 	{
 		ri.Con_Printf( PRINT_ALL, "Font '%s' doesn't have a valid width\n", f->name );
 		return NULL;
 	}
 
-	for ( sy = 8; sy < h; sy <<= 1 );
+	for ( sy = 16; sy < h; sy <<= 1 );
 	if ( sy != h )
 	{
 		ri.Con_Printf( PRINT_ALL, "Font '%s' doesn't have a valid height\n", f->name );
@@ -234,19 +244,31 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 	}
 
 	// get character count
-	if ( h == w << 1 ) { f->rh = 0.0625; chars = 128; }
-	else if ( h == w ) { f->rh = 0.125; chars = 64; }
-	else
-	{
+	if ( h == w << 1 ) {
+		// small letters included 1:2
+		// 32 rows => rh = 1/32
+		f->rh = 0.03125;
+		chars = 16*32;
+	} else if ( h == w ) {
+		// only big letters 1:1
+		// 16 rows => rh = 1/16
+		f->rh = 0.0625;
+		chars = 16*16;
+	} else {
+		// wrong format
 		ri.Con_Printf( PRINT_ALL, "Font '%s' doesn't have a valid format (1/2 or 1/1)\n", f->name );
 		return NULL;
 	}
 
 	// get size for single chars
-	f->w = sx >>= 3;
-	f->rw = 0.125;
-	if ( f->rh == 0.125 ) f->h = sy >>= 3;
-	else f->h = sy >>= 4;
+	// pixel size right shift by 4 means a division by 16
+	// as sx will have the width dimensions of the bitmap font
+	// this will lead to the pixelsize for each char
+	// a bitmap font needs to have 16 chars/cols in each row
+	f->w = sx >>= 4;
+	f->rw = 0.0625; // 16 cols per row (1/16)
+	if ( f->rh == 0.0625 ) f->h = sy >>= 4;
+	else f->h = sy >>= 5;
 
 	tx = 0;
 	ty = 0;
@@ -254,24 +276,31 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 	// analyze the width of the chars
 	for ( i = 0; i < chars; i++ )
 	{
-		if ( i % 8 )
+		// 16 chars per row
+		if ( i % 16 )
 		{
 			// same line
 			tx += sx;
 		}
-		else
+		else // 0, 16, 32, 48...
 		{
 			// new line
 			tx = sx-1;
-			ty = (i>>3)*sy;
+			// shift 4 times to get the current row
+			ty = (i>>4)*sy;
 		}
 
-		// test pixels (+3 for alpha)
+		// test pixels (+3 for alpha, rgba)
+		// get position of pixels for this char
+		// <<2: rgba, 4 pixels
 		tp = pic + ((tx + ty*w)<<2) + 3;
 
+		// get the char length by looping through all pixel rows (sx)
+		// and getting the
 		for ( l = sx; l > 0; l-- )
 		{
 			// test a vertical line
+			// w<<2: 4 pixels (rgba) next pixel row
 			for ( t = 0; t < sy; t++, tp += w<<2 )
 				if ( *tp ) break;
 
@@ -323,8 +352,12 @@ int Draw_PropCharFont (font_t *f, int x, int y, char c)
 	float		frow, fcol, sx, sy;
 
 	// get the char
-	n = (int)(c<32 ? 0 : c-32) & 127;
-	if ( f->rh == 0.125 )
+	n = (int)(c<32 ? 0 : c-32) & 255;
+
+	// we have no lower case letters in here - so go back to upper case
+	// 64 is the value where lower case chars start
+	// not in ascii but in our case - because we start to count from 32 (SPACE)
+	if ( f->rh == 0.0625 )
 		while ( n >= 64 ) n -= 32;
 
 	if ( n < 0 || !f->wc[n] ) return (float)f->w * CHAR_EMPTYWIDTH;
@@ -336,8 +369,8 @@ int Draw_PropCharFont (font_t *f, int x, int y, char c)
 	cy = (float)f->h * vid.ry;
 
 	// get texture coordinates
-	row = n>>3;
-	col = n&7;
+	row = n>>4;
+	col = n&15;
 
 	frow = row*f->rh;
 	fcol = col*f->rw;
@@ -399,8 +432,11 @@ int Draw_PropLength (char *font, char *c)
 	// parse the string
 	for ( l = 0; *c; c++ )
 	{
-		n = (int)(*c<32 ? 0 : *c-32) & 127;
-		if ( f->rh == 0.125 )
+		n = (int)(*c<32 ? 0 : *c-32) & 255;
+		// we have no lower case letters in here - so go back to upper case
+		// 64 is the value where lower case chars start
+		// not in ascii but in our case - because we start to count from 32 (SPACE)
+		if ( f->rh == 0.0625 )
 			while ( n >= 64 ) n -= 32;
 
 		if ( n < 0 || !f->wc[n] ) l += (float)f->w * CHAR_EMPTYWIDTH;
