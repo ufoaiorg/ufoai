@@ -195,7 +195,13 @@ void Sys_Error (char *error, ...)
 	va_start (argptr,error);
 	vsnprintf (string,1024,error,argptr);
 	va_end (argptr);
-	fprintf(stderr, _("Error: %s\n"), string);
+
+	// BUG [ 1444732 ] game exits with error
+	//
+	// Removing this fprintf(), and therefore the call to gettext(), fixes
+	// the segfault. Why is gettext() off limits here???
+	//
+	//fprintf(stderr, _("Error: %s\n"), string);
 
 	_exit (1);
 
