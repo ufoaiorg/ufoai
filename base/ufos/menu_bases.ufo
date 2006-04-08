@@ -45,7 +45,7 @@ menu bases
 
 	pic back_geo
 	{
-		tooltip	"Back to worldview"
+		tooltip	"_Back to worldview"
 		image	menu/button_mapmen_options2
 		pos	"950 10"
 		texl	"0 64"
@@ -63,7 +63,7 @@ menu bases
 
 	pic buildings
 	{
-		tooltip	"Build base-facilities"
+		tooltip	"_Build base-facilities"
 		image	menu/button_basemen
 		pos	"765 130"
 		texl	"15 15"
@@ -79,7 +79,7 @@ menu bases
 
 	pic aircraft
 	{
-		tooltip	"Manage your aircraft"
+		tooltip	"_Manage your aircraft"
 		image	menu/button_basemen
 		pos	"765 200"
 		texl	"15 79"
@@ -95,7 +95,7 @@ menu bases
 
 	pic buysell
 	{
-		tooltip	"Buy/Sell equipment"
+		tooltip	"_Buy/Sell equipment"
 		image	menu/button_basemen
 		pos	"765 270"
 		texl	"15 144"
@@ -111,7 +111,7 @@ menu bases
 
 	pic transfer
 	{
-		tooltip	"Transfer equipment or personnel"
+		tooltip	"_Transfer equipment or personnel"
 		image	menu/button_basemen
 		pos	"765 340"
 		texl	"15 207"
@@ -127,7 +127,7 @@ menu bases
 
 	pic equip
 	{
-		tooltip	"Equip your personnel"
+		tooltip	"_Equip your personnel"
 		image	menu/button_basemen
 		pos	"765 410"
 		texl	"15 271"
@@ -143,7 +143,7 @@ menu bases
 
 	pic research
 	{
-		tooltip	"Research new technology"
+		tooltip	"_Research new technology"
 		image	menu/button_basemen
 		pos	"765 480"
 		texl	"15 336"
@@ -165,7 +165,7 @@ menu bases
 
 	string txt_credits
 	{
-		tooltip	"Organisation capital"
+		tooltip	"_Organisation capital"
 		string	"*cvar mn_credits"
 		pos	"900 30"
 		font	f_big
@@ -174,7 +174,7 @@ menu bases
 
 	string title
 	{
-		tooltip	"Name of this base"
+		tooltip	"_Name of this base"
 		string	"*cvar mn_base_title"
 		pos	"60 30"
 		font	f_big
@@ -182,7 +182,7 @@ menu bases
 
 	pic prev_base
 	{
-		tooltip	"Switch to the previous base"
+		tooltip	"_Switch to the previous base"
 		image	menu/buy_buttons1
 		pos	"30 40"
 		mousefx true
@@ -193,7 +193,7 @@ menu bases
 
 	pic next_base
 	{
-		tooltip	"Switch to the next base"
+		tooltip	"_Switch to the next base"
 		image	menu/buy_buttons1
 		pos	"600 40"
 		mousefx	true
@@ -249,7 +249,7 @@ menu aircraft
 
 	pic button_squad
 	{
-		tooltip	"Assign your squad"
+		tooltip	"_Assign your squad"
 		image   menu/button_basemen
 		pos	"55 100"
 		texl	"15 400"
@@ -265,7 +265,7 @@ menu aircraft
 
 	pic button_buysell
 	{
-		tooltip	"Buy/Sell aircraft"
+		tooltip	"_Buy/Sell aircraft"
 		image	menu/button_basemen
 		pos	"55 170"
 		texl	"15 144"
@@ -281,7 +281,7 @@ menu aircraft
 
 	pic button_start
 	{
-		tooltip	"Start your aircraft"
+		tooltip	"_Start your aircraft"
 		image	menu/button_basemen
 		pos	"55 240"
 		texl	"15 464"
@@ -297,7 +297,7 @@ menu aircraft
 
 	pic button_transfer
 	{
-		tooltip	"Transfer equipment or personnel"
+		tooltip	"_Transfer equipment or personnel"
 		image	menu/button_basemen
 		pos	"55 310"
 		texl	"15 207"
@@ -371,7 +371,7 @@ menu aircraft
 
 	pic button_leave
 	{
-		tooltip	"Done"
+		tooltip	"_Done"
 		image	hud/buttons2
 		mousefx	true
 		pos		"940 720"
@@ -382,7 +382,7 @@ menu aircraft
 
 	pic prev_aircraft
 	{
-		tooltip	"Switch to the previous aircraft"
+		tooltip	"_Switch to the previous aircraft"
 		image	menu/buy_buttons1
 		pos	"500 410"
 		mousefx true
@@ -393,7 +393,7 @@ menu aircraft
 
 	pic next_aircraft
 	{
-		tooltip	"Switch to the next aircraft"
+		tooltip	"_Switch to the next aircraft"
 		image	menu/buy_buttons1
 		pos	"970 410"
 		mousefx	true
@@ -404,7 +404,7 @@ menu aircraft
 
 	pic aircraft_return
 	{
-		tooltip	"Call back"
+		tooltip	"_Call back"
 		image	menu/buy_buttons1
 		pos	"600 410"
 		mousefx true

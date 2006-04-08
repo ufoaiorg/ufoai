@@ -285,7 +285,7 @@ menu popup_intercept_ready
 
 	string name_label
 	{
-		string	"Aircraft reached desired location - what to do?"
+		string	"_Aircraft reached desired location - what to do?"
 		pos	"290 320"
 	}
 
@@ -346,14 +346,14 @@ menu popup_newbase
 
 	string title
 	{
-		string	"New base"
+		string	"_New base"
 		pos	"290 276"
 		font	f_big
 	}
 
 	string name_label
 	{
-		string	"Name:"
+		string	"_Name:"
 		pos	"290 320"
 	}
 	string name
@@ -366,12 +366,12 @@ menu popup_newbase
 
 	string cost_label
 	{
-		string	"Cost:"
+		string	"_Cost:"
 		pos	"290 380"
 	}
 	string cost
 	{
-		string "100000$"
+		string "100000 $"
 		pos	"290 390"
 		font	f_big
 	}
@@ -436,26 +436,26 @@ menu popup_intercept
 
 	string title
 	{
-		string	"Select aircraft"
+		string	"_Select aircraft"
 		pos	"290 276"
 		font	f_big
 	}
 
 	string name_label
 	{
-		string	"Name:"
+		string	"_Name:"
 		pos	"290 320"
 	}
 
 	string status_label
 	{
-		string	"Status:"
+		string	"_Status:"
 		pos	"440 320"
 	}
 
 	string base_label
 	{
-		string	"Base:"
+		string	"_Base:"
 		pos	"590 320"
 	}
 
