@@ -191,7 +191,7 @@ menu team
 
 	pic bt_actor0
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 22"
 		texl	"154 76"
 		texh	"207 113"
@@ -200,7 +200,7 @@ menu team
 	}
 	pic bt_actor1
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 60"
 		texl	"154 76"
 		texh	"207 113"
@@ -209,7 +209,7 @@ menu team
 	}
 	pic bt_actor2
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 98"
 		texl	"154 76"
 		texh	"207 113"
@@ -218,7 +218,7 @@ menu team
 	}
 	pic bt_actor3
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 136"
 		texl	"154 76"
 		texh	"207 113"
@@ -227,7 +227,7 @@ menu team
 	}
 	pic bt_actor4
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 174"
 		texl	"154 76"
 		texh	"207 113"
@@ -236,7 +236,7 @@ menu team
 	}
 	pic bt_actor5
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 212"
 		texl	"154 76"
 		texh	"207 113"
@@ -245,7 +245,7 @@ menu team
 	}
 	pic bt_actor6
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 250"
 		texl	"154 76"
 		texh	"207 113"
@@ -254,7 +254,7 @@ menu team
 	}
 	pic bt_actor7
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 288"
 		texl	"154 76"
 		texh	"207 113"
@@ -263,7 +263,7 @@ menu team
 	}
 	pic bt_actor8
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 326"
 		texl	"154 76"
 		texh	"207 113"
@@ -272,7 +272,7 @@ menu team
 	}
 	pic bt_actor9
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 364"
 		texl	"154 76"
 		texh	"207 113"
@@ -281,7 +281,7 @@ menu team
 	}
 	pic bt_actor10
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 402"
 		texl	"154 76"
 		texh	"207 113"
@@ -290,7 +290,7 @@ menu team
 	}
 	pic bt_actor11
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 440"
 		texl	"154 76"
 		texh	"207 113"
@@ -299,7 +299,7 @@ menu team
 	}
 	pic bt_actor12
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 478"
 		texl	"154 76"
 		texh	"207 113"
@@ -308,7 +308,7 @@ menu team
 	}
 	pic bt_actor13
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 516"
 		texl	"154 76"
 		texh	"207 113"
@@ -317,7 +317,7 @@ menu team
 	}
 	pic bt_actor14
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 554"
 		texl	"154 76"
 		texh	"207 113"
@@ -326,7 +326,7 @@ menu team
 	}
 	pic bt_actor15
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 592"
 		texl	"154 76"
 		texh	"207 113"
@@ -335,7 +335,7 @@ menu team
 	}
 	pic bt_actor16
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 630"
 		texl	"154 76"
 		texh	"207 113"
@@ -344,7 +344,7 @@ menu team
 	}
 	pic bt_actor17
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 668"
 		texl	"154 76"
 		texh	"207 113"
@@ -353,7 +353,7 @@ menu team
 	}
 	pic bt_actor18
 	{
-		tooltip	"Add/remove this soldier"
+		tooltip	"_Add/remove this soldier"
 		pos		"365 706"
 		texl	"154 76"
 		texh	"207 113"
@@ -514,7 +514,7 @@ menu team
 
 	pic bt_editname
 	{
-		tooltip	"Edit name of the soldier"
+		tooltip	"_Edit name of the soldier"
 		image	"menu/menu_buttons1"
 		pos		"920 10"
 		texl	"0 216"
@@ -641,7 +641,7 @@ menu team
 
 	pic bt_go
 	{
-		tooltip	"Done"
+		tooltip	"_Done"
 		image	hud/buttons2
 		mousefx	true
 		pos		"940 720"
@@ -753,7 +753,7 @@ menu equipment
 
 	pic bt_actor0
 	{
-		tooltip	"Equip this soldier"
+		tooltip	"_Equip this soldier"
 		pos		"10 14"
 		texl	"0 0"
 		texh	"28 36"
@@ -762,7 +762,7 @@ menu equipment
 	}
 	pic bt_actor1
 	{
-		tooltip	"Equip this soldier"
+		tooltip	"_Equip this soldier"
 		pos		"10 55"
 		texl	"32 0"
 		texh	"60 36"
@@ -771,7 +771,7 @@ menu equipment
 	}
 	pic bt_actor2
 	{
-		tooltip	"Equip this soldier"
+		tooltip	"_Equip this soldier"
 		pos		"10 96"
 		texl	"64 0"
 		texh	"92 36"
@@ -780,7 +780,7 @@ menu equipment
 	}
 	pic bt_actor3
 	{
-		tooltip	"Equip this soldier"
+		tooltip	"_Equip this soldier"
 		pos		"10 137"
 		texl	"96 0"
 		texh	"124 36"
@@ -789,7 +789,7 @@ menu equipment
 	}
 	pic bt_actor4
 	{
-		tooltip	"Equip this soldier"
+		tooltip	"_Equip this soldier"
 		pos		"10 178"
 		texl	"0 38"
 		texh	"28 74"
@@ -798,7 +798,7 @@ menu equipment
 	}
 	pic bt_actor5
 	{
-		tooltip	"Equip this soldier"
+		tooltip	"_Equip this soldier"
 		pos		"10 219"
 		texl	"32 38"
 		texh	"60 74"
@@ -807,7 +807,7 @@ menu equipment
 	}
 	pic bt_actor6
 	{
-		tooltip	"Equip this soldier"
+		tooltip	"_Equip this soldier"
 		pos		"10 260"
 		texl	"64 38"
 		texh	"92 74"
@@ -816,7 +816,7 @@ menu equipment
 	}
 	pic bt_actor7
 	{
-		tooltip	"Equip this soldier"
+		tooltip	"_Equip this soldier"
 		pos		"10 301"
 		texl	"96 38"
 		texh	"124 74"
@@ -899,7 +899,7 @@ menu equipment
 
 	pic bt_primary
 	{
-		tooltip	"Show only primary weapons in store"
+		tooltip	"_Show only primary weapons in store"
 		image	menu/menu_buttons1
 		mousefx	true
 		pos		"374 125"
@@ -910,7 +910,7 @@ menu equipment
 
 	pic bt_secondary
 	{
-		tooltip	"Show only secondary weapons in store"
+		tooltip	"_Show only secondary weapons in store"
 		image	menu/menu_buttons1
 		mousefx	true
 		pos		"374 180"
@@ -921,7 +921,7 @@ menu equipment
 
 	pic bt_misc
 	{
-		tooltip	"Show other equipment in store"
+		tooltip	"_Show other equipment in store"
 		image	menu/menu_buttons1
 		mousefx	true
 		pos		"374 235"
@@ -932,7 +932,7 @@ menu equipment
 
 	pic bt_armor
 	{
-		tooltip	"Show only armor in store"
+		tooltip	"_Show only armor in store"
 		image	menu/menu_buttons1
 		mousefx	true
 		pos		"374 290"
@@ -1160,7 +1160,7 @@ menu equipment
 
 	pic bt_go
 	{
-		tooltip	"Done"
+		tooltip	"_Done"
 		image	hud/buttons2
 		mousefx	true
 		pos		"940 720"
