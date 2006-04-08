@@ -1084,17 +1084,37 @@ void CL_ActorSelectMouse( void )
 	if ( mouseSpace != MS_WORLD )
 		return;
 
-	if ( cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE )
+	if ( M_MOVE == cl.cmode || M_PEND_MOVE == cl.cmode )
 	{
 		cl.cmode = M_MOVE;
-		CL_ActorSelect( mouseActor );
+
+		// Try and select another team member
+		if (!CL_ActorSelect( mouseActor ))
+		{
+			// If another team member wasn't selected, move the currently
+			// selected team member to wherever the mouse was clicked
+			if (confirm_actions->value)
+			{
+				cl.cmode = M_PEND_MOVE;
+			}
+			else
+			{
+				CL_ActorStartMove( selActor, mousePos );
+			}
+		}
 	}
 	else if ( cl.cmode > M_PEND_MOVE )
+	{
 		cl.cmode -= M_PEND_FIRE_PR - M_FIRE_PR;
-	else if (confirm_actions->value)
+	}
+	else if ( confirm_actions->value )
+	{
 		cl.cmode += M_PEND_FIRE_PR - M_FIRE_PR;
+	}
 	else
+	{
 		CL_ActorShoot( selActor, mousePos );
+	}
 }
 
 
