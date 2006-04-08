@@ -2297,7 +2297,7 @@ MN_ParseAction
 */
 qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 {
-	char			*errhead = _("MN_ParseAction: unexptected end of file (in event)");
+	char			*errhead = _("MN_ParseAction: unexpected end of file (in event)");
 	menuAction_t	*lastAction;
 	menuNode_t		*node;
 	qboolean		found;
@@ -2467,7 +2467,7 @@ MN_ParseNodeBody
 */
 qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 {
-	char		*errhead = _("MN_ParseNodeBody: unexptected end of file (node");
+	char		*errhead = _("MN_ParseNodeBody: unexpected end of file (node");
 	qboolean	found;
 	value_t	*val;
 	int		i;
@@ -2593,7 +2593,7 @@ MN_ParseMenuBody
 */
 qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 {
-	char		*errhead = _("MN_ParseMenuBody: unexptected end of file (menu");
+	char		*errhead = _("MN_ParseMenuBody: unexpected end of file (menu");
 	char		*token;
 	qboolean	found;
 	menuNode_t	*node, *lastNode;
