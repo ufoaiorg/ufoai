@@ -84,16 +84,27 @@ menu main
 		in		{ *button_options texl "0 320" *button_options texh "256 384" }
 	}
 
-	pic button_ufopedia
+	pic button_tut
 	{
-		image	menu/main_buttons1
+		image	menu/main_tut
 		pos		"640 380"
-		texl	"0 384"
-		texh	"256 448"
-		click	{ cmd "mn_push ufopedia;" }
-		out		{ *button_ufopedia texl "0 384" *button_ufopedia texh "256 448" }
-		in		{ *button_ufopedia texl "0 448" *button_ufopedia texh "256 512" }
+		texl	"0 0"
+		texh	"256 64"
+		click	{ cmd "mn_push tutorials;" }
+		out		{ *button_tut image menu/main_tut }
+		in		{ *button_tut image menu/main_tuta }
 	}
+
+// 	pic button_ufopedia
+// 	{
+// 		image	menu/main_buttons1
+// 		pos		"640 380"
+// 		texl	"0 384"
+// 		texh	"256 448"
+// 		click	{ cmd "mn_push ufopedia;" }
+// 		out		{ *button_ufopedia texl "0 384" *button_ufopedia texh "256 448" }
+// 		in		{ *button_ufopedia texl "0 448" *button_ufopedia texh "256 512" }
+// 	}
 
 	pic button_credits
 	{
