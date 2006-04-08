@@ -43,7 +43,7 @@ menu tutorials
 
 	string headline
 	{
-		string  "Tutorials"
+		string  "_Tutorials"
 		pos             "630 170"
 		font f_big
 	}
