@@ -421,7 +421,8 @@ void GetEvent(SDL_Event *event)
 }
 
 #ifdef Joystick
-qboolean OpenJoystick(cvar_t *joy_dev) {
+qboolean OpenJoystick( void )
+{
 	int num_joysticks, i;
 	joy = NULL;
 
@@ -478,6 +479,10 @@ qboolean GLimp_Init( void *hInstance, void *wndProc )
 	}
 
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+
+#ifdef Joystick
+	OpenJoystick();
+#endif
 
 	// catch signals so i can turn on auto-repeat
 #if 0
@@ -610,7 +615,7 @@ rserr_t GLimp_SetMode( unsigned int *pwidth, unsigned int *pheight, int mode, qb
 {
 	ri.Con_Printf (PRINT_ALL, "setting mode %d:", mode );
 
-	if ( !ri.Vid_GetModeInfo( pwidth, pheight, mode ) )
+	if ( !ri.Vid_GetModeInfo( (int*)pwidth, (int*)pheight, mode ) )
 	{
 		ri.Con_Printf( PRINT_ALL, " invalid mode\n" );
 		return rserr_invalid_mode;
@@ -642,6 +647,12 @@ void GLimp_Shutdown( void )
 	if (surface)
 		SDL_FreeSurface(surface);
 	surface = NULL;
+
+#ifdef Joystick
+	CloseJoystick();
+#endif
+
+	SDL_ShowCursor(SDL_ENABLE);
 
 	if (SDL_WasInit(SDL_INIT_EVERYTHING) == SDL_INIT_VIDEO)
 		SDL_Quit();
