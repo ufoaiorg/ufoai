@@ -65,7 +65,8 @@ qboolean OSS_SNDDMA_Init(void)
 	{
 		seteuid ( saved_euid );
 
-		audio_fd = open( snddevice->string, O_RDWR );
+		// see https://www.redhat.com/archives/sound-list/1999-September/msg00012.html for reason
+		audio_fd = open( snddevice->string, O_WRONLY );
 
 		if (audio_fd == -1)
 		{
