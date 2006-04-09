@@ -321,6 +321,9 @@ typedef struct
 	void	(*DrawFadeScreen) (void);
 	void	(*DrawDayAndNight) (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz );
 	void	(*DrawLineStrip) (int points, int *verts);
+	void	(*Draw3DGlobe) ( int x, int y, int w, int h, float p, float q, float cx, float cy, float iz );
+	void	(*Draw3DMapMarkers) ( float latitude, float longitude, char* image );
+	void	(*Draw3DMapLine) ( int n, float dist, vec2_t *v );
 
 	void	(*AnimAppend)( animState_t *as, struct model_s *mod, char *name );
 	void	(*AnimChange)( animState_t *as, struct model_s *mod, char *name );

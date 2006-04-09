@@ -531,6 +531,8 @@ typedef enum
 	MS_ROTATE,
 	MS_SHIFTMAP,
 	MS_ZOOMMAP,
+	MS_SHIFT3DMAP,
+	MS_ZOOM3DMAP,
 	MS_SHIFTBASEMAP,
 	MS_ZOOMBASEMAP,
 	MS_WORLD
@@ -1276,6 +1278,7 @@ void CL_UpdateCredits ( int credits );
 //
 // cl_menu.c
 //
+
 //#define MAX_MENUTEXTS		16
 #define MAX_MENUTEXTLEN		512
 

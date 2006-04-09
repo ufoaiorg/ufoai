@@ -177,6 +177,7 @@ typedef enum mn_s
 	MN_CONTAINER,
 	MN_ITEM,
 	MN_MAP,
+	MN_3DMAP,
 	MN_BASEMAP,
 
 	MN_NUM_NODETYPE
@@ -197,6 +198,7 @@ char *nt_strings[MN_NUM_NODETYPE] =
 	"container",
 	"item",
 	"map",
+	"3dmap",
 	"basemap"
 };
 
@@ -1019,6 +1021,14 @@ void MN_BarClick( menu_t *menu, menuNode_t *node, int x )
 	Cvar_SetValue( &var[6], min + frac * ( MN_GetReferenceFloat( menu, node->data[0] ) - min ) );
 }
 
+/*
+======================
+MN_3DMapClick
+======================
+*/
+void MN_3DMapClick( menuNode_t *node, int x, int y )
+{
+}
 
 /*
 ======================
@@ -1205,6 +1215,7 @@ void MN_Click( int x, int y )
 			else if ( node->type == MN_BAR ) MN_BarClick( menu, node, x );
 			else if ( node->type == MN_BASEMAP ) MN_BaseMapClick( node, x, y );
 			else if ( node->type == MN_MAP ) MN_MapClick( node, x, y );
+			else if ( node->type == MN_3DMAP ) MN_3DMapClick( node, x, y );
 			else if ( node->type == MN_MODEL ) MN_ModelClick( node );
 			else if ( node->type == MN_TEXT ) MN_TextClick( node, mouseOver );
 			else MN_ExecuteActions( menu, node->click );
@@ -1241,11 +1252,14 @@ void MN_RightClick( int x, int y )
 
 			// found a node -> do actions
 			if ( node->type == MN_BASEMAP ) mouseSpace = MS_SHIFTBASEMAP;
-			else if ( node->type == MN_MAP )
+			else if ( node->type == MN_MAP || node->type == MN_3DMAP )
 			{
 				selMis = NULL;
 				interceptAircraft = NULL;
-				mouseSpace = MS_SHIFTMAP;
+				if ( node->type == MN_MAP )
+					mouseSpace = MS_SHIFTMAP;
+				else
+					mouseSpace = MS_SHIFT3DMAP;
 			}
 			else if ( node->type == MN_TEXT ) MN_TextRightClick( node, mouseOver );
 			else MN_ExecuteActions( menu, node->rclick );
@@ -1283,6 +1297,7 @@ void MN_MiddleClick( int x, int y )
 			// found a node -> do actions
 			if ( node->type == MN_BASEMAP ) mouseSpace = MS_ZOOMBASEMAP;
 			else if ( node->type == MN_MAP ) mouseSpace = MS_ZOOMMAP;
+			else if ( node->type == MN_3DMAP ) mouseSpace = MS_ZOOM3DMAP;
 			else MN_ExecuteActions( menu, node->mclick );
 		}
 
@@ -1404,6 +1419,73 @@ void MN_DrawItem( vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 	}
 }
 
+/*
+=================
+MN_DrawMapMarkers
+=================
+*/
+void MN_Draw3DMapMarkers( menuNode_t *node, float latitude, float longitude )
+{
+	aircraft_t	*air;
+	actMis_t	*ms;
+	int	i, j, x, y;
+
+	// draw mission pics
+	menuText[TEXT_STANDARD] = NULL;
+	Cvar_Set( "mn_mapdaytime", "" );
+	for ( i = 0; i < ccs.numMissions; i++ )
+	{
+		ms = &ccs.mission[i];
+		if ( !MN_MapToScreen( node, ms->realPos, &x, &y ) )
+			continue;
+		re.Draw3DMapMarkers( latitude, longitude, "cross" );
+
+		if ( ms == selMis )
+		{
+			menuText[TEXT_STANDARD] = ms->def->text;
+			if ( selMis->def->active )
+			{
+				re.Draw3DMapMarkers( latitude, longitude, "circleactive" );
+			}
+			else
+				re.Draw3DMapMarkers( latitude, longitude, "circle" );
+
+// 			if ( CL_3DMapIsNight( ms->realPos ) ) Cvar_Set( "mn_mapdaytime", _("Night") );
+// 			else Cvar_Set( "mn_mapdaytime", _("Day") );
+		}
+	}
+
+	// draw base pics
+	for ( j = 0; j < ccs.numBases; j++ )
+		if ( bmBases[j].founded )
+		{
+			if ( !MN_MapToScreen( node, bmBases[j].pos, &x, &y ) )
+				continue;
+			re.Draw3DMapMarkers( latitude, longitude, "base" );
+		}
+
+	// draw aircraft
+	for ( j = 0; j < ccs.numBases; j++ )
+		if ( bmBases[j].founded )
+		{
+			for ( i = 0, air = (aircraft_t*)bmBases[j].aircraft; i < bmBases[j].numAircraftInBase; i++, air++ )
+				if ( air->status != AIR_HOME )
+				{
+					if ( !MN_MapToScreen( node, air->pos, &x, &y ) )
+						continue;
+					re.Draw3DMapMarkers( latitude, longitude, air->image );
+
+					if ( air->status >= AIR_TRANSIT )
+					{
+						mapline_t path;
+						path.n = air->route.n - air->point;
+						memcpy( path.p+1, air->route.p + air->point+1, (path.n-1) * sizeof(vec2_t) );
+						memcpy( path.p, air->pos, sizeof(vec2_t) );
+						re.Draw3DMapLine( path.n, path.dist, path.p );
+					}
+				}
+		}
+}
 
 /*
 =================
@@ -1470,7 +1552,6 @@ void MN_DrawMapMarkers( menuNode_t *node )
 					}
 				}
 		}
-
 }
 
 /*
@@ -1583,7 +1664,7 @@ void MN_DrawMenus( void )
 		for ( node = menu->firstNode; node; node = node->next )
 		{
 			if ( !node->invis && (node->data[0] ||
-				node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP) )
+				node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP || node->type == MN_3DMAP ) )
 			{
 				// if construct
 				if ( node->depends.var && strcmp( node->depends.value, (Cvar_Get( node->depends.var, node->depends.value, 0 ))->string ) )
@@ -1613,7 +1694,7 @@ void MN_DrawMenus( void )
 				else re.DrawColor( node->color );
 
 				// get the reference
-				if ( node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_TEXT && node->type != MN_MAP )
+				if ( node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_TEXT && node->type != MN_MAP && node->type != MN_3DMAP )
 				{
 					ref = MN_GetReferenceString( menu, node->data[0] );
 					if ( !ref )
@@ -1898,6 +1979,40 @@ void MN_DrawMenus( void )
 					} else re.DrawModelDirect( &mi, NULL, NULL );
 					break;
 
+				case MN_3DMAP:
+					{
+						float q;
+
+						// advance time
+						if ( !curCampaign ) break;
+						CL_CampaignRun();
+
+						// draw the map
+						q = (ccs.date.day % 365 + (float)(ccs.date.sec/(3600*6))/4) * 2*M_PI/365 - M_PI;
+						re.Draw3DGlobe( node->pos[0], node->pos[1], node->size[0], node->size[1], (float)ccs.date.sec/(3600*24), q,
+							ccs.center[0], ccs.center[1], 0.5/ccs.zoom );
+
+						// draw markers
+						// FIXME:
+						MN_Draw3DMapMarkers( node, 0.0, 0.0 );
+
+						// display text
+						switch ( mapAction )
+						{
+						case MA_NEWBASE:
+							menuText[TEXT_STANDARD] = _("Select the desired location of the\nnew base on the map.\n");
+							break;
+						case MA_BASEATTACK:
+							if ( ! selMis )
+								menuText[TEXT_STANDARD] = _("Aliens are attacking our base\nat this very moment.\n");
+							break;
+						case MA_INTERCEPT:
+							if ( ! selMis )
+								menuText[TEXT_STANDARD] = _("Select ufo or mission on map\n");
+							break;
+						}
+					}
+					break;
 				case MN_MAP:
 					{
 						float q;

@@ -48,7 +48,7 @@ void MN_UpDrawEntry( char *id )
 			Cbuf_AddText( "mn_upfsmall\n" );
 
 			if ( upCurrent) {
-				switch ( t->type ) 
+				switch ( t->type )
 				{
 				case RS_ARMOR:
 				case RS_WEAPON:
@@ -103,7 +103,7 @@ void MN_FindEntry_f ( void )
 	technology_t *t;
 	pediaChapter_t *upc;
 	int i;
-	
+
 	if ( Cmd_Argc() < 2 )
 	{
 		Com_Printf(_("Usage: ufopedia <id>\n"));
@@ -112,13 +112,14 @@ void MN_FindEntry_f ( void )
 
 	//what are we searching for?
 	id = Cmd_Argv( 1 );
-	
-	if ( ! strcmp( id, "" ) ) {
+
+	// FIXME: Is this possible? Cmd_Argc needs to be at least 2 here
+	if ( !*id ) {
 		Com_Printf(_("MN_FindEntry_f: No PediaEntry given as parameter\n"));
 		return;
 	}
-	
-	Com_Printf(_("MN_FindEntry_f: id=\"%s\"\n"), id); //DEBUG
+
+	Com_DPrintf(_("MN_FindEntry_f: id=\"%s\"\n"), id); //DEBUG
 
 	//search in all chapters
 	for ( i = 0; i < numChapters; i++ ) {
@@ -144,7 +145,7 @@ void MN_FindEntry_f ( void )
 		} while ( t );
 	}
 	//if we can not find it
-	Com_Printf(_("MN_FindEntry_f: No PediaEntry found for %s\n"), id );
+	Com_DPrintf(_("MN_FindEntry_f: No PediaEntry found for %s\n"), id );
 }
 
 /*=================
@@ -189,14 +190,14 @@ void MN_UpPrev_f( void )
 
 	if ( upCurrent->prev )
 	{
-		
+
 		upCurrent = upCurrent->prev;
 		MN_UpDrawEntry( upCurrent->id );
 		return;
 	}
 
 	// change chapter
-	
+
 	for ( upc = upCurrent->up_chapter - 1; upc - upChapters >= 0; upc-- )
 		if ( upc->last )
 		{
@@ -327,6 +328,7 @@ void MN_ParseUpChapters( char *id, char **text )
 		token = COM_EParse( text, errhead, id );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
+		if ( *token == '_' ) token++;
 		strncpy( upChapters[numChapters].name, _(token), MAX_VAR );
 		//Com_Printf( _("MN_ParseUupChapters: parsed chapter %s \n"), upChapters[numChapters].id ); //DEBUG
 
