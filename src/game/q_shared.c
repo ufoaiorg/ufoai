@@ -1442,7 +1442,8 @@ LIBRARY REPLACEMENT FUNCTIONS
 
 #define Q_strncasecmp(s1, s2, n) (strncasecmp(s1, s2, n))
 
-int Q_stricmp (char *s1, char *s2) {
+int Q_stricmp (char *s1, char *s2)
+{
         return strcasecmp(s1, s2);
 }
 
@@ -1450,13 +1451,45 @@ int Q_stricmp (char *s1, char *s2) {
 // FIXME: replace all Q_stricmp with Q_strcasecmp
 int Q_stricmp (char *s1, char *s2)
 {
-#if defined(WIN32)
+#ifdef _WIN32
 	return _stricmp (s1, s2);
 #else
 	return strcasecmp (s1, s2);
 #endif
 }
 
+/*
+=============
+Q_strncpyz
+
+Safe strncpy that ensures a trailing zero
+=============
+*/
+void Q_strncpyz( char *dest, const char *src, int destsize )
+{
+	// bk001129 - also NULL dest
+	if ( !dest )
+		Sys_Error( "Q_strncpyz: NULL dest" );
+	if ( !src )
+		Sys_Error( "Q_strncpyz: NULL src" );
+	if ( destsize < 1 )
+		Sys_Error( "Q_strncpyz: destsize < 1" );
+
+	strncpy( dest, src, destsize-1 );
+	dest[destsize-1] = 0;
+}
+
+// never goes past bounds or leaves without a terminating 0
+void Q_strcat( char *dest, int size, const char *src )
+{
+	int	l1;
+
+	l1 = strlen( dest );
+	if ( l1 >= size ) {
+		Sys_Error( "Q_strcat: already overflowed" );
+	}
+	Q_strncpyz( dest + l1, src, size - l1 );
+}
 
 int Q_strncasecmp (char *s1, char *s2, int n)
 {
@@ -1507,7 +1540,7 @@ void Com_sprintf (char *dest, int size, char *fmt, ...)
 	va_end (argptr);
 	if (len >= size)
 		Com_Printf ("Com_sprintf: overflow of %i in %i\n", len, size);
-	strncpy (dest, bigbuffer, size-1);
+	Q_strncpyz (dest, bigbuffer, size );
 }
 
 /*
@@ -1553,7 +1586,7 @@ char *Info_ValueForKey (char *s, char *key)
 			*o++ = *s++;
 		*o = 0;
 
-		if (!strcmp (key, pkey) )
+		if (!Q_stricmp (key, pkey) )
 			return value[valueindex];
 
 		if (!*s)
@@ -1562,7 +1595,7 @@ char *Info_ValueForKey (char *s, char *key)
 	}
 }
 
-void Info_RemoveKey (char *s, char *key)
+void Info_RemoveKey (char *s, const char *key)
 {
 	char	*start;
 	char	pkey[512];
@@ -1629,11 +1662,12 @@ qboolean Info_Validate (char *s)
 	return true;
 }
 
-void Info_SetValueForKey (char *s, char *key, char *value)
+void Info_SetValueForKey (char *s, const char *key, const char *value)
 {
-	char	newi[MAX_INFO_STRING], *v;
-	int		c;
-	int		maxsize = MAX_INFO_STRING;
+	char	newi[MAX_INFO_STRING];
+// 	char	*v;
+// 	int	c;
+// 	int	maxsize = MAX_INFO_STRING;
 
 	if (strstr (key, "\\") || strstr (value, "\\") )
 	{
@@ -1664,12 +1698,18 @@ void Info_SetValueForKey (char *s, char *key, char *value)
 
 	Com_sprintf (newi, sizeof(newi), "\\%s\\%s", key, value);
 
+#if 0
 	if (strlen(newi) + strlen(s) > maxsize)
 	{
 		Com_Printf ("Info string length exceeded\n");
 		return;
 	}
+#endif
 
+	strcat (newi, s);
+	strcpy (s, newi);
+
+#if 0
 	// only copy ascii values
 	s += strlen(s);
 	v = newi;
@@ -1681,6 +1721,7 @@ void Info_SetValueForKey (char *s, char *key, char *value)
 			*s++ = c;
 	}
 	*s = 0;
+#endif
 }
 
 
