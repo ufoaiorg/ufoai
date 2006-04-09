@@ -1,23 +1,116 @@
---------------Opening story--------------
-2084. A time of relative peace has finally come to Earth. Old wars have been fought out, borders have been established, and governments have stabilized. There are now five major political powers in the world:
-- The United States of America, which includes Canada, Cuba and Mexico.
-- The Greater European Union, which includes Turkey and Ukrain.
-- The Asian Commonwealth, spanning China, Mongolia, Japan, the Indonesian archipelago, India and the smaller Asian nations.
-- The Arab Emirate, including all the countries in the middle east, including Israel.
-- The African Union, a rising political and economical power spanning the entire continent of Africa and its islands.
-Russia, its reclaimed vassal states and the South American nations have lost most of their influence, and have degraded into political minions.
-
-It is during this time that the aliens invade Earth. They launch an attack on the city of Bombay, it being the most densely populated area on Earth. Hundreds of thousands of innocent citizend are killed before the aliens are finally driven off by Commonwealth forces. Nobody knows where they come from. An attempt at diplomacy is made, but is met with force. forty-eight hours after the initial attack, all five political blocks have declared a state of war. For two weeks, the armies of Earth try to fend off the alien menace, but they score precious few victories. The United Nations, in accordance with the five blocks' petition, authorizes the creation of a specialized combat unit: Phalanx.
-Charged with countering the alien threat, this combat unit is funded by all five of the political powers, and draws its soldiers from the elite of their armies. Whether Phalanx is able to face up to the challenge remains to be seen...
-
---------------Overall metastory--------------
+===============================
+GENERAL: Overall metastory
+===============================
 The aliens' homeworld is a small planet orbiting the star Antares. They have evolved in a similar fashion as humans, developing from single-celled life-forms into organisms, then into amphibians, then mammals, and eventually developing the opposing thumb. Today, their technology has entered the fusion age, where the power of starts is harnessed in devises small enough to carry around. They have also discovered a form of faster-than-light travel, though an interstellar trip still takes years, and the crew must be put in stasis for the duration.
 However, for all their technological advances, the Antareans are a few hundred years ahead in terms of technological development. In terms of society, however, they are several hundred years behind. Their society resembles the feudal system during Earth's middle ages. The Antarean King is the highest authority, and all defer to his will.
 The Antareans are a warlike species. They have already conquered several other worlds, enslaving the populace and, in the case of the Ortnoks, compel them to fight for their cause. Now, the Antarean warlords have set their sights on Earth. But unlike the inhabitants of their previous targets, humans turned out to be an intellectual match for the Antareans. Earth may well prove to be a tougher nut to crack than the Antarean warlords had originally thought...
 
---------------Rough story development--------------
+===============================
+GENERAL: Rough story development
+===============================
 The game should progress in the classic fashion, first battling lone UFO's and responding to terror attacks. As time passes the UFOs will grow more numerous and stronger. The Antareans will also start establishing bases of their own from which they launch their ships.
 
 Milestones in research towards the Antarean thread include but need not be limited to: studying a live Antarean, a live Antarean Commander, Antarean fusion technology, Antarean FTL technology, and logs from Antarean UFOs and bases.
 
 At the end of the game, Phalanx launches a mission to destroy the Antarean mothership, which is parked on the dark side of the moon. The mothership is destroyed, and the alien invasion is over. However, Antares will eventually notice the communications from its war fleet have stopped, and come to investigate... But for the coming twenty years, Earth has time to prepare for their arrival.
+
+===============================
+Ufopedia entry: "Political situation before the invasion"
+===============================
+2084 - A time of relative peace has finally come to Earth. Old wars have been fought out, old borders have been broken and new were esablished, and governments have stabilized. Former nations and super-nations have coalesced into major political powers and the remaining ones are working together closely. Prosperity is no longer a stranger to many of the peoples of Earth as it once was in the 20th century, and the population now trusts its leaders, to maintain the balance of power and carry them forward into a tranquil, thriving 22nd century.
+
+United Americas
+Includes the former USA, Canada, Greenland, Cuba, Mexico and the nations of the Central and Southern Americas. After the USA's military activities across the world peaked in 2017, a more inclusive foreign policy in the years that followed was credited as the catalyst for integration with its neighbours and the formation of the Asian Commonwealth and Arab Emirates. The UA retain its lead in space exploration as a result of the explosion in private enterprise in this area over the past seventy years.
+
+The Greater European Union
+The European Union continued its expansion efforts through democratic means to include more and more nations located on the European continent or adjacent to it.
+
+The GEU currently consists of the following countries:
+Albania, Austria, Belgium, Bosnia and Herzegovina, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, FYR Macedonia, Germany, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Netherlands, Norway, Poland, Portugal, Romania, Serbia and Montenegro, Slovakia, Slovenia, Spain, Sweden, Switzerland, Turkey and the United Kingdom.
+
+A heavyweight political animal, the GEU is a vibrant and often controversial source of political and social thinking. While it packs a punch, it is slow to manoeuvre in all its dealings owing to its bureaucratic infrastructure. Militarily powerful, second to the Asian Commonwealth in size, the GEU is now typically a neutral force, acting only in defense for the past half a century.
+
+The EU currently consists of the following countries:
+Albania, Austria, Belgium, Bosnia and Herzegovina, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, FYR Macedonia, Germany, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Netherlands, Norway, Poland, Portugal, Romania, Serbia and Montenegro, Slovakia, Slovenia, Spain, Sweden, Switzerland, Turkey and the United Kingdom.
+
+The Asian Commonwealth
+Spanning China, Mongolia, Japan, the Indonesian archipelago, India and the smaller Asian nations. Art, architecture, manufacturing and finance have become the backbone of the Commonwealth's economic success. Advances in nanotechnology have helped the nations of the Commonwealth to retain their manufacturing prowess; demand for their skills has come from every sector, ranging from bioengineering to space exploration. Now the largest military force, 20% larger than that of the GEU, the Commonwealth also chooses to deploy its arsenel only in defense. Crucially, they are the quickest of all the nations into action, thanks to the organisation of their military into smaller functional units and a wider teaching of rapid reaction techniques throughout their personnel.
+
+The Arab Emirates
+Composed of the countries in the middle east, including Israel.
+<TODO>list some of the countries (maybe even newly merged/splitted ones)
+
+With dwindling oil reserves restricted to pharmaceutical use by international agreement, and the World's energy crisis solved by successive Russian breakthroughs, in search of an income the Emirates have turned to their one remaining, vast resource: sand. Advanced glass technology has driven the expanse of glistening city scapes across the globe. More importantly, and with the notable exception of intense, time critical computation that now relies on diamond based microprocessors, the worldwide demand for computational power has been satiated by the construction of cheap, sprawling silicon processor farms that rise out of the deserts from which they are made.
+
+The African Union
+A rising political and economic power spanning the entire continent of Africa and its islands. Its starving population saved by developments in Australia, civil unrest subsided and a new era of growth and social order ensued. A fiercely proud people, they have held up their escape from disease and disarray as an example to the rest of the world. Excelling in finance, politics and social philosophy they are held in the highest regard by other World powers.
+
+Russia
+Rediscovered and revived its beleaguered engineering and scientific communities, establishing itself as a powerhouse of great insight and accomplishment in these fields and revered throughout the world for its advances in energy generation, transport and medicine. Such advances have brought with them a greater political voice and international support.
+<TODO> maybe add some details about the vast amount of resources located in russia that have not yet been used (e.g hard to mine until now).
+
+Australia
+Agreed in 2024 to play host to experimental terraforming work undertaken by a cooperation of the NASA and the ESA, deep in the outback. Originally funded as part of a Martian exploration programme, subsequently aborted, ten years of fruitless research suddenly gave rise to a rapidly expanding antipodean oasis spanning most of the continent. Now the major food supplier to the African Union and parts of the Asian Commonwealth, exports of shrimps and barbecues are at an unprecedented high.
+
+tech news_initial_political_situation
+{
+type craft
+name "Political situation before the invasion"
+description "_news_initial_political_situation_txt"
+up_chapter news
+
+requires initial
+time 0
+researched true
+}
+
+===============================
+Ufopedia entry: "The alien invasion"
+===============================
+<TODO> better introduction to the invasion subject without reading the above entry.
+
+It is during the political stable time in 2084 that the aliens invade Earth. They launch an attack on the city of Bombay, it being the most densely populated area on Earth. Hundreds of thousands of innocent citizend are killed before the aliens are finally driven off by Commonwealth forces.
+
+Nobody knows where they come from. An attempt at diplomacy is made, but is met with force. forty-eight hours after the initial attack, all five political blocks have declared a state of war. For two weeks, the armies of Earth try to fend off the alien menace, but they score precious few victories. The United Nations, in accordance with the five blocks' petition, authorizes the creation
+of a specialized combat unit: PHALANX
+
+Charged with countering the alien threat, this combat unit is funded by all five of the political powers, and draws its soldiers from the elite of their armies. Whether Phalanx is able to face up to the challenge remains to be seen...
+
+tech news_invasion_started
+{
+type craft
+name "The alien invasion"
+description "_news_invasion_started_txt"
+up_chapter news
+
+requires initial
+time 0
+researched true
+
+}
+
+===============================
+Sequence: "Prolog"
+===============================
+PROLOG
+
+2084 - a time of relative peace has finally come to Earth. Old wars have been fought out, borders have been established, and governments have stabilized. Remaining major political powers mostly include unions of former nations and super-nations.
+
+... the invasion begins ...
+
+It is during this time that the aliens invade Earth. They launch an attack on the city of Bombay, it being the most densely populated area on Earth. Hundreds of thousands of innocent citizend are killed before the aliens are finally driven off by Commonwealth forces.
+
+Nobody knows where they come from. An attempt at diplomacy is made, but is met with force. forty-eight hours after the initial attack, all five political blocks have declared a state of war. For two weeks, the armies of Earth try to fend off the alien menace, but they score precious few victories. The United Nations, in accordance with the five blocks' petition, authorizes the creation of a specialized combat unit: PHALANX
+
+Charged with countering the alien threat, this combat unit is funded by all five of the political powers, and draws its soldiers from the elite of their armies. Whether Phalanx is able to face up to the challenge remains to be seen...
+
+===============================
+Sequence: "First instuctions"
+===============================
+Your first task as Phalanx commander is to set up headquarter.
+
+Choose the location wisely because it will have great influence on the success of the Phalanx project.
+Recent data after the attack in Bombay revealed that alien sightings increased in the denser populated regions like the central parts of america, europe asia, africa and australia.
+You might later want to extend it to all of those parts if alien activity increases.
+
+The next task is to assemble a task-force team that you can then deploy to alien attack and counter them. Enter your base and access the aircraft-management. 
