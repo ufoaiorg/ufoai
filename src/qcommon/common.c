@@ -1279,6 +1279,7 @@ Under Linux see Makefile options for this
 */
 void Qcommon_LocaleInit ( void )
 {
+	char* locale;
 	cvar_t* s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE );
 
 #ifdef _WIN32
@@ -1289,7 +1290,14 @@ void Qcommon_LocaleInit ( void )
 
 	// set to system default
 	setlocale( LC_ALL, "C" );
-	setlocale( LC_MESSAGES, s_language->string );
+	locale = setlocale( LC_MESSAGES, s_language->string );
+	if ( ! locale )
+		Com_Printf(_("Could not set to language: %s\n"), s_language->string );
+	else
+	{
+		Com_Printf(_("Using language: %s\n"), locale );
+		Cvar_Set("s_language", locale );
+	}
 
 	// use system locale dir if we can't find in gamedir
 	bindtextdomain( TEXT_DOMAIN, va("%s/base/i18n/", FS_GetCwd() ) );
