@@ -1000,6 +1000,304 @@ void Draw_LineStrip( int points, int *verts )
 	qglEnable( GL_TEXTURE_2D );
 }
 
+/*
+================
+Globe_CoordToVec
+
+This function fills v with the x-, y-, and z-coordinate
+for the specified point on the surface.
+================
+*/
+void Globe_CoordToVec ( double lat, double lon, vec3_t v )
+{
+	v[0] = (float)sin(lon*GLOBE_TORAD)*cos(lat*GLOBE_TORAD);
+	v[1] = (float)sin(lat*GLOBE_TORAD);
+	v[2] = (float)cos(lon*GLOBE_TORAD)*cos(lat*GLOBE_TORAD);
+}
+
+/*
+================
+Globe_ToLong
+
+returns the longitude of a point on the unit sphere.
+(Longitudes are the "x" axis on a mercator projection map.)
+================
+*/
+double Globe_ToLong ( vec3_t v )
+{
+	double s;
+	if(v[1] == 1.0 || v[1] == -1.0)
+		return(5000.0);    /* Problem! The texture will warp! Actually these */
+	s = sqrt(1 - v[1]*v[1]);   /* points (the poles) are on ALL the longitudes! */
+	return((atan2(v[0]/s,v[2]/s) * GLOBE_TODEG));
+}
+
+/*
+================
+Globe_ToLat
+
+returns the latitude of a point on the unit sphere.
+(Latitudes are the "y" axis on a mercator projection map.)
+================
+*/
+double Globe_ToLat ( vec3_t v )
+{
+	return(atan2(v[1], sqrt(1 - v[1]*v[1])) * GLOBE_TODEG);
+}
+
+/*
+================
+Globe_Distance
+
+returns the actual theoretical minimum
+distance (in meters) the signal has to travel.
+================
+*/
+unsigned long Globe_Distance( int site )
+{
+	unsigned long distance_covered = 0;
+#if 0
+	int i;
+	float angle;
+	vec3_t v1, v2;
+
+	for(i=1 ; i<=site ; i++)
+	{
+		/* This is not really the way to do this. This assumes that
+			earth is round (it isn't!). I'm sure there's a good way to
+			compute the actual distance between two locations on earth. */
+
+		/*    Angle is arccos(Ax*Bx + Ay*By + Az*Bz)    */
+
+		Globe_CoordToVec ( sites[i].lat, sites[i].lon, v1 );
+		Globe_CoordToVec ( sites[i-1].lat, sites[i-1].lon, v2 );
+
+		angle = acos((float)(v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2]) * GLOBE_TODEG;
+
+		distance_covered += (int)rint((angle/360.0) * PHYSICAL_EARTH_CIRC);
+	}
+#endif
+	return distance_covered;
+}
+
+/*
+================
+Globe_Normalize
+
+normalize vector r
+================
+*/
+void Globe_Normalize(vec3_t r)
+{
+	float mag;
+
+	mag = r[0] * r[0] + r[1] * r[1] + r[2] * r[2];
+	if (mag != 0.0f)
+	{
+		mag = 1.0f / sqrt(mag);
+		r[0] *= mag;
+		r[1] *= mag;
+		r[2] *= mag;
+	}
+}
+
+/*
+================
+Globe_Lerp
+
+linearly interpolate between a & b, by fraction f
+================
+*/
+void Globe_Lerp(vec3_t a, vec3_t b, float f, vec3_t r)
+{
+	r[0] = a[0] + f*(b[0]-a[0]);
+	r[1] = a[1] + f*(b[1]-a[1]);
+	r[2] = a[2] + f*(b[2]-a[2]);
+}
+
+/*
+================
+Globe_AddVertex
+
+Convenience function used only in Draw_3DGlobe.
+Adds a vertex to a tstrip.
+================
+*/
+void Globe_AddVertex(vec3_t v, double *lastlon)
+{
+	double a, b, dist;
+	vec3_t x;
+
+	VectorCopy( x, v );
+	Globe_Normalize(x);
+	qglNormal3fv(x);
+	a = Globe_ToLong(x);
+	b = Globe_ToLat(x);
+
+	if(a == 5000.0)	/* 5000 is the slightly unintuitive value tolon() */
+	{		/* returns when it finds a value on a pole. */
+		if(b > 0)	/* If it's the north pole */
+			a = *lastlon - 36.0;
+		else		/* South pole. */
+			a = *lastlon + 36.0;
+	}
+	else if(*lastlon != 4000.0)   /* Not the first vertex in a tstrip.*/
+	{
+		/* This stuff is to get the wraparoud at the backside of the
+			sphere to work. (Or you'd get a weird zigzag line down the
+			back of the sphere.) */
+
+		dist = a - *lastlon;
+		if(dist > 100.0)
+			a -= 360.0;
+		else if(dist < -100.0)
+			a += 360.0;
+	}
+	*lastlon = a;
+	qglTexCoord2f(a/360.0+0.5, -(b/180.0+0.5));
+	qglVertex3fv(x);
+}
+
+/*
+================
+Draw_3DMapMarkers
+================
+*/
+void Draw_3DMapMarkers ( float latitude, float longitude, char* image )
+{
+
+}
+
+/*
+================
+This is only used from makeearth, to plot a line on the globe.
+There is some difficultish maths in this one.
+"to" and "from" in the comments in the code refers to the two
+points given as arguments.
+================
+*/
+void Draw_3DMapLine ( int n, float dist, vec2_t *path )
+{
+	float	vink;
+	float	linesweep;
+	vec3_t	v1, v2;
+
+	qglPushMatrix();
+// 	qglMaterialfv(GL_FRONT, GL_DIFFUSE, lineColor);
+
+	/*    Angle is arccos(Ax*Bx + Ay*By + Az*Bz)    */
+	Globe_CoordToVec ( path[n][0], path[n][1], v1 );
+	Globe_CoordToVec ( path[0][0], path[0][1], v2 );
+	linesweep = acos((float)(v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2]) * GLOBE_TODEG);
+
+	/*   This mess calculates the angle to rotate "to" to a position
+	'south' of "from". It's a somewhat adapted version of a formula
+	that calculates an angle in a triangle on a sphere given all three
+	sides. (Found the original in Beta.)                           */
+	vink = GLOBE_TODEG*acos((sin(path[n][0]*GLOBE_TORAD)-sin(path[0][0]*GLOBE_TORAD)*cos(linesweep*GLOBE_TORAD))/
+			( cos(path[0][0]*GLOBE_TORAD) * sin(linesweep*GLOBE_TORAD) )      );
+
+	/*   Compensate for the usual arccos problem. (It checks if "to" is
+	'to the right' or 'to the left' of "from")                 */
+
+	if ( path[0][1] > 0.0 && ( path[n][1] > path[0][1] || path[n][1] < path[0][1] - 180.0 ) )
+		vink = -vink;
+	else if( path[n][1] > path[0][1] && path[n][1] < path[0][1] + 180.0 )
+		vink = -vink;
+
+	/*   Rotate "to" to a position 'south' of "from".   */
+	qglRotatef(vink, v2[0], v2[1], v2[2] );
+
+	/*   ...and rotate them onto the z=0 plane.   */
+	qglRotatef(90.0+path[0][1], 0.0, 1.0, 0.0);
+
+	/*   Fix incorrect names on the lines, identifying them as the
+	sitemarker we just drew.             */
+// 	qglLoadName(NOT_SELECTABLE);
+
+// 	partialtorus((GLfloat)path[0]->[1]-180.0, (GLfloat)linesweep, zoom);
+	qglPopMatrix();
+}
+
+/*
+================
+Draw_3DGlobe
+
+responsible for drawing the 3d globe on geoscape
+================
+*/
+void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, float cy, float iz )
+{
+	int nrows = 1 << 3;
+	int s, i, j;
+	double last_lon;
+	vec3_t v0, v1, v2, v3, va, vb;
+	globe_triangle_t *t = NULL;
+	image_t *gl;
+	float nx, ny, nw, nh;
+
+	/* iterate over the 20 sides of the icosahedron */
+	for(s = 0; s < MAX_ICOSAHEDRON; s++)
+	{
+		t = &icosahedron[s];
+		for(i = 0; i < nrows; i++)
+		{
+			/* create a tstrip for each row */
+			/* number of triangles in this row is number in previous +2 */
+			/* strip the ith trapezoid block */
+			Globe_Lerp(t->vec[1], t->vec[0], (float)(i+1)/nrows, v0);
+			Globe_Lerp(t->vec[1], t->vec[0], (float)i/nrows, v1);
+			Globe_Lerp(t->vec[1], t->vec[2], (float)(i+1)/nrows, v2);
+			Globe_Lerp(t->vec[1], t->vec[2], (float)i/nrows, v3);
+
+			/* Hack to get the texturing right. */
+			last_lon = 4000.0;
+
+			qglBegin(GL_TRIANGLE_STRIP);
+			Globe_AddVertex(v0, &last_lon);
+			Globe_AddVertex(v1, &last_lon);
+			for(j = 0; j < i; j++)
+			{
+				/* calculate 2 more vertices at a time */
+				Globe_Lerp(v0, v2, (float)(j+1)/(i+1), va);
+				Globe_Lerp(v1, v3, (float)(j+1)/i, vb);
+				Globe_AddVertex(va, &last_lon);
+				Globe_AddVertex(vb, &last_lon);
+			}
+			Globe_AddVertex(v2, &last_lon);
+			qglEnd(); /* TRIANGLE_STRIP */
+		}
+	}
+	gl = GL_FindImage( "pics/menu/map_earth_day", it_wrappic );
+	GL_Bind (gl->texnum);
+
+	// TODO: map to sphere and display
+
+	// test for multitexture and env_combine support
+	if ( !qglSelectTextureSGIS && !qglActiveTextureARB )
+		return;
+
+	// init combiner
+	qglEnable( GL_BLEND );
+
+	GL_SelectTexture( gl_texture0 );
+	gl = GL_FindImage( "pics/menu/map_earth_night", it_wrappic );
+	GL_Bind( gl->texnum );
+
+	GL_SelectTexture( gl_texture1 );
+	if ( !DaN || lastQ != q )
+	{
+		GL_CalcDayAndNight( q );
+		lastQ = q;
+	}
+
+	GL_Bind( DaN->texnum );
+
+	// TODO: map to sphere and display
+
+	qglDisable( GL_BLEND );
+}
+
 #ifdef BUILD_FREETYPE
 
 void R_GetGlyphInfo(FT_GlyphSlot glyph, int *left, int *right, int *width, int *top, int *bottom, int *height, int *pitch)
