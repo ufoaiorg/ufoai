@@ -66,7 +66,7 @@ qboolean have_stencil = false;
 
 static cvar_t	*m_filter;
 static cvar_t	*in_mouse;
-static cvar_t	*in_dgamouse;
+
 // state struct passed in Init
 static in_state_t	*in_state;
 
@@ -773,17 +773,16 @@ void RW_IN_Init(in_state_t *in_state_p)
 	// mouse variables
 	m_filter = ri.Cvar_Get ("m_filter", "0", 0);
 	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
-	in_dgamouse = ri.Cvar_Get ("in_dgamouse", "0", CVAR_ARCHIVE);
+
 	freelook = ri.Cvar_Get( "freelook", "0", 0 );
 	lookstrafe = ri.Cvar_Get ("lookstrafe", "0", 0);
-	sensitivity = ri.Cvar_Get ("sensitivity", "1", CVAR_ARCHIVE);
+	sensitivity = ri.Cvar_Get ("sensitivity", "2", CVAR_ARCHIVE);
 	m_pitch = ri.Cvar_Get ("m_pitch", "0.022", 0);
 
 	m_yaw = ri.Cvar_Get ("m_yaw", "0.022", 0);
 	m_forward = ri.Cvar_Get ("m_forward", "1", 0);
 	m_side = ri.Cvar_Get ("m_side", "0.8", 0);
 
-	ri.Con_Printf(PRINT_ALL, "reset\n");
 	mx = my = 0.0;
 	mouse_avail = true;
 }

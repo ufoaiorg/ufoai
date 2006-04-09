@@ -184,8 +184,8 @@ static void install_grabs(void)
 			     0, 0, 0, 0,
 			     0, 0);
 		sensitivity->value = 1;
-#ifdef HAVE_XF86_DGA
 	} else if (in_dgamouse->value) {
+#ifdef HAVE_XF86_DGA
 		int MajorVersion, MinorVersion;
 
 		if (!XF86DGAQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
@@ -194,10 +194,14 @@ static void install_grabs(void)
 			ri.Cvar_Set( "in_dgamouse", "0" );
 		} else {
 			dgamouse = true;
+			ri.Con_Printf( PRINT_DEVELOPER, "...using XF86DGA Mouse\n" );
 			XF86DGADirectVideo(dpy, DefaultScreen(dpy), XF86DGADirectMouse);
 			XWarpPointer(dpy, None, win, 0, 0, 0, 0, 0, 0);
-			ri.Con_Printf( PRINT_ALL, "Using XF86DGA Mouse\n" );
 		}
+#else
+		ri.Con_Printf( PRINT_ALL, "...XF86DGA is not compiled in\n" );
+		ri.Cvar_Set( "in_dgamouse", "0" );
+		XWarpPointer(dpy, None, win, 0, 0, 0, 0, vid.width / 2, vid.height / 2);
 #endif /* HAVE_XF86_DGA */
 	} else
 		XWarpPointer(dpy, None, win, 0, 0, 0, 0, vid.width / 2, vid.height / 2);
@@ -233,15 +237,16 @@ static void uninstall_grabs(void)
 
 void RW_IN_Init(in_state_t *in_state_p)
 {
-//	int mtype;
-//	int i;
-
 	in_state = in_state_p;
 
 	// mouse variables
 	m_filter = ri.Cvar_Get ("m_filter", "0", 0);
 	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
+#ifdef HAVE_XF86_DGA
 	in_dgamouse = ri.Cvar_Get ("in_dgamouse", "1", CVAR_ARCHIVE);
+#else
+	in_dgamouse = ri.Cvar_Get ("in_dgamouse", "0", CVAR_ARCHIVE);
+#endif
 	freelook = ri.Cvar_Get( "freelook", "0", 0 );
 	lookstrafe = ri.Cvar_Get ("lookstrafe", "0", 0);
 	sensitivity = ri.Cvar_Get ("sensitivity", "2", 0);
@@ -494,10 +499,12 @@ static void HandleEvents(void)
 					if (mx || my)
 						dowarp = true;
 				}
-				if ( mx > vid.width ) mx = vid.width;
-				if ( my > vid.height ) my = vid.height;
+#if 0
+				if ( mx > vid.width * sensitivity->value ) mx = vid.width;
+				if ( my > vid.height * sensitivity->value ) my = vid.height;
 				if ( mx < 0 ) mx = 0;
 				if ( my < 0 ) my = 0;
+#endif
 			}
 			break;
 
@@ -510,6 +517,10 @@ static void HandleEvents(void)
 				b = 2;
 			else if (event.xbutton.button == 3)
 				b = 1;
+			else if (event.xbutton.button == 4)
+				in_state->Key_Event_fp (K_MWHEELUP, true);
+			else if (event.xbutton.button == 5)
+				in_state->Key_Event_fp (K_MWHEELDOWN, true);
 			if (b>=0 && in_state && in_state->Key_Event_fp)
 				in_state->Key_Event_fp (K_MOUSE1 + b, true);
 // 			else
@@ -524,6 +535,10 @@ static void HandleEvents(void)
 				b = 2;
 			else if (event.xbutton.button == 3)
 				b = 1;
+			else if (event.xbutton.button == 4)
+				in_state->Key_Event_fp (K_MWHEELUP, false);
+			else if (event.xbutton.button == 5)
+				in_state->Key_Event_fp (K_MWHEELDOWN, false);
 			if (b>=0 && in_state && in_state->Key_Event_fp)
 				in_state->Key_Event_fp (K_MOUSE1 + b, false);
 			break;
@@ -774,8 +789,10 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 
 				// Move the viewport to top left
 				XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
-			} else
-				fullscreen = 0;
+			} else {
+				fullscreen = false;
+				vidmode_active = false;
+			}
 		}
 	}
 #endif /* HAVE_XF86_VIDMODE */
@@ -846,7 +863,6 @@ void GLimp_Shutdown( void )
 	uninstall_grabs();
 	mouse_active = false;
 	dgamouse = false;
-
 
 	if (dpy) {
 		if (ctx)
@@ -948,7 +964,8 @@ void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
 */
 
 #ifdef Joystick
-qboolean OpenJoystick(cvar_t *joy_dev) {
+qboolean OpenJoystick(cvar_t *joy_dev)
+{
 	int i, err;
 	glob_t pglob;
 	struct js_event e;
@@ -987,7 +1004,8 @@ qboolean OpenJoystick(cvar_t *joy_dev) {
 	return false;
 }
 
-void PlatformJoyCommands(int *axis_vals, int *axis_map) {
+void PlatformJoyCommands(int *axis_vals, int *axis_map)
+{
 	struct js_event e;
 	int key_index;
 
@@ -1005,7 +1023,8 @@ void PlatformJoyCommands(int *axis_vals, int *axis_map) {
 	}
 }
 
-qboolean CloseJoystick(void) {
+qboolean CloseJoystick(void)
+{
 	if (close(joy_fd))
 		ri.Con_Printf(PRINT_ALL, "Error, Problem closing joystick.");
 	return true;
