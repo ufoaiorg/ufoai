@@ -419,6 +419,7 @@ void R_EnableLights( qboolean fixed, float *matrix, float *lightparam, float *li
 		return;
 	}
 
+	VectorClear( sumColor );
 	VectorClear( sumDelta );
 	sumDelta[3] = 1.0;
 	GLVectorTransform( matrix, sumDelta, trorigin );
@@ -430,7 +431,6 @@ void R_EnableLights( qboolean fixed, float *matrix, float *lightparam, float *li
 		VectorScale( r_newrefdef.sun->color, sumBright, sumColor );
 	} else {
 		VectorClear( sumDelta );
-		VectorClear( sumColor );
 		sumBright = 0;
 	}
 
