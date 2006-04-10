@@ -185,6 +185,7 @@ Switches camera mode between remote and firstperson
 
 void CL_CameraMode (void)
 {
+ 	if ( !selActor ) return;
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
 		CL_CameraModeChange (CAMERA_MODE_REMOTE);
 	else
