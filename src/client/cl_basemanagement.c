@@ -1146,53 +1146,62 @@ void MN_InitEmployees ( void )
 /*======================
 MN_AssignEmployee
 
-'Moves' an employee from building_source to  building_dest
+Add a free employee from the quaters to building_dest. (the employee will be linked to both of them)
 
 IN
-	building_source:
-	building_dest:
-	employee_type:
+	building_dest:	Which building to assign the employee to.
+	employee_type:	What type of employee to assign to the building
 
 OUT
-	boolean MN_AssignEmployee: returns true if 'moving' was possible otherwise false
+	boolean MN_AssignEmployee: returns true if adding was possible/sane otherwise false.
 
-TODO: add check for lab/workshop to quarters
+TODO: Add check for destination building vs. employee_type and abort if they do not match.
+TODO: Possibility to add emoployees to quaters (from the global list)
 ======================*/
-byte MN_AssignEmployee ( building_t *building_source, building_t *building_dest, employeeType_t employee_type )
+byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type )
 {
-	int i;
+	int i, j;
 	employee_t *employee = NULL;
 	employees_t *employees_in_building = NULL;
+	building_t *building_source = NULL;
+
+	if ( !baseCurrent ) {
+		Com_DPrintf( _("MN_AssignEmployee: No Base set\n") );
+		return false;
+	}
+
+	if ( building_dest->buildingType == B_QUATERS  ) {
+		Com_DPrintf( _("MN_AssignEmployee: No need to move from quaters to quaters.\n") );
+		return false;
+	}
 
 	employees_in_building = &building_dest->assigned_employees;
-	if (employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
-		employees_in_building = &building_source->assigned_employees;
-		for ( i = 0; i < employees_in_building->numEmployees; i++ ) {
-			employee = employees_in_building->assigned[i];
-			if ( employee->type != employee_type )	continue;	// go to next employee if it isn't the correct type.
 
-			switch ( employee_type )
-			{
-			case EMPL_SOLDIER:
-				return false;
-				//break;
-			case EMPL_SCIENTIST:
-				if ( employee->lab == NULL ) {	// if employee isn't already in the building
-					employees_in_building->assigned[employees_in_building->numEmployees++] = employee;
+	// check if there is enough space to add one employee in the destination building.
+	if (employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
+		// get free employee from quaters in current base
+		for ( i = 0; i < numBuildings; i++ ) {
+			building_source = &bmBuildings[baseCurrent->id][i];
+
+			// check if there is a free employee in the quaters.
+			if ( building_source->buildingType == B_QUATERS ) {
+				employees_in_building = &building_source->assigned_employees;
+
+				for ( j = 0; j < employees_in_building->numEmployees; j++ ) {
+					employee = employees_in_building->assigned[j];
+					if ( ( employee->type == employee_type)
+					&& (employee->lab == NULL )
+					&& (employee->workshop == NULL) )
+						break;
 				}
-				return true;
-				//break;
-			case EMPL_WORKER:
-				if ( employee->workshop == NULL ) {	// if employee isn't already in the building
-					employees_in_building->assigned[employees_in_building->numEmployees++] = employee;
-				}
-				return true;
-				//break;
-			//EMPL_MEDIC
-			//EMPL_ROBOT
-			default:
-				break;
 			}
+		}
+		// if an employee was found add it to to the destination building
+		if (employee) {
+			employees_in_building->assigned[employees_in_building->numEmployees++] = employee;
+			return true;
+		} else {
+			Com_Printf("No employee available in this base.\n");
 		}
 	} else {
 		Com_Printf("No free room in destination building \"%s\".\n", building_dest->name);
@@ -1200,7 +1209,116 @@ byte MN_AssignEmployee ( building_t *building_source, building_t *building_dest,
 	return false;
 }
 
+/*======================
+MN_RemoveEmployee
 
+Remove one employee from building.
+
+IN
+	building:	Which building to remove the employee from. Can be any type of building that has employees in it. If quaters are given the employee will be removed from every other building as well.
+
+OUT
+	boolean MN_AssignEmployee: returns true if adding was possible/sane otherwise false.
+
+TODO: Add check for destination building vs. employee_type and abort if they do not match.
+======================*/
+byte MN_RemoveEmployee ( building_t *building )
+{
+	int i;
+	employee_t *employee = NULL;
+	employees_t *employees_in_building = NULL;
+	building_t *building_temp = NULL;
+	byte found = false;
+
+	employees_in_building = &building->assigned_employees;
+
+	if (employees_in_building->numEmployees <= 0) {
+		Com_DPrintf( _("MN_RemoveEmployee: No employees in building. Can't remove one. %s\n"), building->name );
+		return false;
+	}
+
+	// get the last employee in the building.
+	employee = employees_in_building->assigned[employees_in_building->numEmployees];
+	// remove the employee from the list of assigned workers in the building.
+	employees_in_building->numEmployees--;
+
+	// Check where else (ehich buildings) the employee needs to be removed.
+	switch ( building->buildingType )
+	{
+	case B_QUATERS:
+		// unlink the employee from quaters and every other building. (he is now only stored in the global list)
+		employee->quaters = NULL;
+
+		//remove the employee from the other buildings (i.e their employee-list) they are listed as well before unlinking them.
+		if ( employee->lab ) {
+			building_temp = employee->lab;
+			employees_in_building = &building_temp->assigned_employees;
+			found = false;
+			for ( i = 0; i < ( employees_in_building->numEmployees - 1 ); i++ ) {
+				if ( (employees_in_building->assigned[i] == employee) || found ){
+					employees_in_building->assigned[i] = employees_in_building->assigned[i+1];
+					found = true;
+				}
+			}
+			if ( found )
+				employees_in_building->numEmployees--;
+			employee->lab = NULL;
+		}
+
+	/*	if ( employee->workshop ) {
+			building_temp = employee->workshop;
+			employees_in_building = &building_temp->assigned_employees;
+			found = false;
+			for ( i = 0; i < ( employees_in_building->numEmployees - 1 ); i++ ) {
+				if ( (employees_in_building->assigned[i] == employee) || found ){
+					employees_in_building->assigned[i] = employees_in_building->assigned[i+1];
+					found = true;
+				}
+			}
+			if ( found )
+				employees_in_building->numEmployees--;
+			employee->workshop = NULL;
+		}
+	*/
+		break;
+	case B_LAB:
+		// unlink the employee from lab (the current building).
+		employee->lab = NULL;
+	//case B_WORKSHOP:
+	//	// unlink the employee from workshop (the current building).
+	//	employee->workshop = NULL;
+	//	break;
+	//EMPL_MEDIC
+	//EMPL_ROBOT
+	default:
+		break;
+	}
+
+	return false;
+}
+
+/*======================
+MN_GetFreeBuilding
+
+Gets a building in the curent base of a given type with no assigned workers
+
+IN
+	type:	Which type of building to search for.
+
+OUT
+	building	the (empty) building.
+======================*/
+void MN_GetFreeBuilding( buildingType_t type, building_t *building )
+{
+	int i;
+	for ( i = 0; i < numBuildings; i++ ) {
+		building = &bmBuildings[baseCurrent->id][i];
+			if ( building->buildingType == type ) {
+				return;
+			}
+	}
+	building = NULL;
+}
 
 /*======================
 MN_ClearBase
@@ -1233,7 +1351,6 @@ void MN_ClearBase( base_t *base )
 			for ( levels = MAX_BASE_LEVELS-1; levels >= 0; levels-- )
 				base->map[row][col][levels] = -1;
 }
-
 
 /*======================
 MN_ParseBases
@@ -1390,7 +1507,7 @@ void MN_DrawBase( void )
 	VectorSet( color, 0.0f, 1.0f, 0.0f );
 	color[3] = 0.3f;
 #endif
-	
+
 	if ( ! baseCurrent )
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
 

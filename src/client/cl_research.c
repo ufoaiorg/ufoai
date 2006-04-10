@@ -41,8 +41,8 @@ void RS_GetFirstRequired( char *id,  stringlist_t *required);
 byte RS_TechIsResearchable(char *id );
 byte RS_TechIsResearched(char *id );
 
-technology_t technologies[MAX_TECHNOLOGIES];	// A global listof _all_ technologies (see cl_research.h) 
-int numTechnologies;						// The global number of entries in the above list  (see cl_research.h) 
+technology_t technologies[MAX_TECHNOLOGIES];	// A global listof _all_ technologies (see cl_research.h)
+int numTechnologies;						// The global number of entries in the above list  (see cl_research.h)
 
 technology_t *researchList[MAX_RESEARCHLIST];	// A (local) list of displayed technology-entries (the research list in the base)
 int researchListLength;						// The number of entries in the above list.
@@ -338,30 +338,30 @@ See menu_research.ufo for the layout/called functions.
 ======================*/
 void RS_ResearchDisplayInfo ( void  )
 {
-	technology_t *t = NULL;
+	technology_t *tech = NULL;
 	char dependencies[MAX_VAR];
 	char tempstring[MAX_VAR];
 	int i;
 	stringlist_t req_temp;
 
-	t = researchList[researchListPos];
+	tech = researchList[researchListPos];
 
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
 
-	Cvar_Set( "mn_research_selname",  t->name );
-	if ( t->overalltime ) {
-		if ( t->time > t->overalltime ) {
-			Com_Printf("RS_ResearchDisplayInfo: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", t->id, t->time, t->overalltime );
-			t->time = t->overalltime;	// just in case the values got messed up
+	Cvar_Set( "mn_research_selname",  tech->name );
+	if ( tech->overalltime ) {
+		if ( tech->time > tech->overalltime ) {
+			Com_Printf("RS_ResearchDisplayInfo: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", tech->id, tech->time, tech->overalltime );
+			tech->time = tech->overalltime;	// just in case the values got messed up
 		}
-		Cvar_Set( "mn_research_seltime", va( "Progress: %.1f\%\n", 100-(t->time*100/t->overalltime) ) );
+		Cvar_Set( "mn_research_seltime", va( "Progress: %.1f\%\n", 100-(tech->time*100/tech->overalltime) ) );
 	} else {
 		Cvar_Set( "mn_research_seltime", "" );
 	}
 
-	switch ( t->statusResearch )
+	switch ( tech->statusResearch )
 	{
 	case RS_RUNNING:
 		Cvar_Set( "mn_research_selstatus", "Status: Under research\n" );
@@ -380,7 +380,7 @@ void RS_ResearchDisplayInfo ( void  )
 	}
 
 	req_temp.numEntries = 0;
-	RS_GetFirstRequired( t->id, &req_temp );
+	RS_GetFirstRequired( tech->id, &req_temp );
 	Com_sprintf( dependencies, MAX_VAR, _("Dependencies: "));
 	if ( req_temp.numEntries > 0 ) {
 		for ( i = 0; i < req_temp.numEntries; i++ ) {
@@ -451,7 +451,13 @@ void RS_AssignScientist( void )
 		return;
 	}
 
+
 	// TODO: add scientists to research-item
+	//get tech->lab
+	// if ! lab 
+	//	assign lab
+	//	if it fails -> quit
+	// if ( MN_AssignEmployee ( lab, EMPL_SCIENTIST )) { ok } else { not possible};
 
 	RS_ResearchDisplayInfo();
 }
@@ -503,6 +509,12 @@ void RS_ResearchStart ( void )
 	if ( ! baseCurrent->hasLab )
 		return;
 #endif
+	
+	// TODO: assign lab to technology
+	//get tech->lab
+	// if ! lab 
+	//	assign lab
+	//	if it fails -> quit
 
 	// get the currently selected research-item
 	t = researchList[researchListPos];
@@ -550,6 +562,8 @@ void RS_ResearchStop ( void )
 
 	// get the currently selected research-item
 	t = researchList[researchListPos];
+	
+	// TODO: remove lab from technology and scientists from lab
 
 	switch ( t->statusResearch )
 	{
@@ -582,16 +596,22 @@ void RS_UpdateData ( void )
 {
 	char	name[MAX_VAR];
 	int	i, j;
-	technology_t *t = NULL;
+	technology_t *tech = NULL;
+	//TODO
+	employees_t *employees_in_building = NULL;
+
 	*name = '\0'; // init temp-name
 
 	// make everything the same-color.
 	Cbuf_AddText("research_clear\n");
 
+	//TODO: display total number of free scientists and free labs
+	//Cvar_Set( "cvar mn_research_sellabs", "xxx");
+	
 	for ( i=0, j=0; i < numTechnologies; i++ ) {
-		t = &technologies[i];
-		Com_sprintf( name, MAX_VAR, t->name );
-		if ( t->statusCollected && !t->statusResearchable && (t->statusResearch != RS_FINISH ) ) { // an unresearched collected item that cannot yet be researched
+		tech = &technologies[i];
+		Com_sprintf( name, MAX_VAR, tech->name );
+		if ( tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH ) ) { // an unresearched collected item that cannot yet be researched
 			strncat(name, " [not yet researchable]", sizeof(name));
 			Cbuf_AddText( va( "researchunresearchable%i\n", j ) );	// Color the item 'unresearchable'
 			Cvar_Set( va("mn_researchitem%i", j),  name );		// Display the concated text in the correct list-entry.
@@ -599,12 +619,23 @@ void RS_UpdateData ( void )
 			j++;											// counting the numbers of display-list entries.
 		}
 		else
-		if ( ( t->statusResearch != RS_FINISH ) && ( t->statusResearchable ) ) { //(  ( t->statusResearch != RS_FINISH ) && ( RS_TechIsResearchable( t->id ) ) ) {
-			switch ( t->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
+		if ( ( tech->statusResearch != RS_FINISH ) && ( tech->statusResearchable ) ) { //(  ( t->statusResearch != RS_FINISH ) && ( RS_TechIsResearchable( t->id ) ) ) {
+			//TODO:
+			Cvar_Set( va( "mn_researchassigned%i",j ), "as.");	// set the assigned number of scis to nothing. Will be displayed later.
+			Cvar_Set( va( "mn_researchavailable%i",j ), "av.");	// number of available scientists in this base (quaters)
+			//Cvar_Set( va( "mn_researchmax%i",j ), "aaa");	// max number of places in this lab
+			Cvar_Set( "mn_research_sellabs", "Free labs in this base: zzz");
+			switch ( tech->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 			{
 			case RS_RUNNING:
 				strncat(name, " [under research]", sizeof(name) );
 				Cbuf_AddText( va( "researchrunning%i\n", j ) );	// color the item 'research running'
+				/*TODO:*/
+				if ( tech->lab) {
+					employees_in_building = &tech->lab->assigned_employees;
+					Cvar_Set( va( "mn_researchassigned%i",j ), va("%i\n",employees_in_building->numEmployees ) );
+				}
+				/**/
 				break;
 			case RS_FINISH:
 				// DEBUG: normaly these will not be shown at all. see "if" above
@@ -613,6 +644,12 @@ void RS_UpdateData ( void )
 			case RS_PAUSED:
 				strncat(name, " [paused]", sizeof(name) );
 				Cbuf_AddText( va( "researchpaused%i\n", j ) );	// color the item 'research paused'
+				/*TODO:*/
+				if ( tech->lab) {
+					employees_in_building = &tech->lab->assigned_employees;
+					Cvar_Set( va( "mn_researchassigned%i",j ), va("%i\n",employees_in_building->numEmployees ) );
+				}
+				/**/
 				break;
 			case RS_NONE:
 				strncat(name, " [unknown]", sizeof(name) );
@@ -1146,7 +1183,7 @@ byte RS_TechIsResearchable(char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {	// research item found 
+		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {	// research item found
 		//if ( !strcmp( id, t->id ) ) {
 			if ( t->statusResearch == RS_FINISH )
 				return false;
@@ -1176,7 +1213,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 	int i, j;
 	technology_t *t = NULL;
 	stringlist_t *required_temp = NULL;
-	
+
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 
@@ -1190,6 +1227,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 						return;
 					if ( 0 == j ) {
 						if ( required->numEntries < MAX_TECHLINKS ) {
+							// TODO: check if the firstrequired tech has already been added (e.g indirectly from another tech)
 							Com_sprintf( required->list[required->numEntries], MAX_VAR, id );
 							required->numEntries++;
 							Com_DPrintf("RS_GetFirstRequired2: \"%s\" - requirement 'initial' or 'nothing' found.\n", id );

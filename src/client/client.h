@@ -1059,6 +1059,11 @@ int B_GetNumOnTeam ( void );
 void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version );
 void CL_UpdateHireVar ( void );
 
+void MN_GetFreeBuilding( buildingType_t type, building_t *building );
+
+byte MN_RemoveEmployee ( building_t *building );
+byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type );
+
 void CL_ResetCharacters( base_t* base );
 void CL_GenerateCharacter( char *team, base_t* base );
 
