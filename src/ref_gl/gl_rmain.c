@@ -87,7 +87,7 @@ cvar_t  *r_anisotropic;
 cvar_t  *r_ext_max_anisotropy;
 cvar_t  *r_texture_lod; // lod_bias
 
-cvar_t	*r_lightlevel;	// FIXME: This is a HACK to get the client's light level
+//cvar_t	*r_lightlevel;	// FIXME: This is a HACK to get the client's light level
 
 #ifdef BUILD_FREETYPE
 cvar_t	*r_saveFontData;
@@ -1206,7 +1206,7 @@ void R_SetLightLevel (void)
 		else
 			r_lightlevel->value = 150*shadelight[2];
 	}*/
-	r_lightlevel->value = 0;
+//	r_lightlevel->value = 0;
 
 }
 
@@ -1219,7 +1219,7 @@ R_RenderFrame
 void R_RenderFrame (refdef_t *fd)
 {
 	R_RenderView( fd );
-	R_SetLightLevel ();
+//	R_SetLightLevel ();
 	R_SetGL2D ();
 }
 
@@ -1242,7 +1242,7 @@ void R_Register( void )
 	r_texture_lod = ri.Cvar_Get( "r_texture_lod", "0", CVAR_ARCHIVE );
 // 	r_arb_samples = ri.Cvar_Get ("r_arb_samples", "1", CVAR_ARCHIVE );
 
-	r_lightlevel = ri.Cvar_Get ("r_lightlevel", "0", 0);
+//	r_lightlevel = ri.Cvar_Get ("r_lightlevel", "0", 0);
 
 #ifdef BUILD_FREETYPE
 	r_saveFontData = ri.Cvar_Get ("r_save_font_data", "0", 0);
