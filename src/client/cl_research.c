@@ -457,6 +457,7 @@ void RS_AssignScientist( void )
 	}
 	
 	tech = researchList[researchListPos];
+	Com_DPrintf( "RS_AssignScientist: %s\n", tech->name);
 	// check if there is a free lab available
 	if ( ! tech->lab ) {
 		MN_GetFreeBuilding( B_LAB, &building );
@@ -999,18 +1000,18 @@ void RS_ParseTechnologies ( char* id, char** text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 		// get values
-		if (  !strncmp( token, "type", sizeof(token) ) ) {
+		if (  !strncmp( token, "type", sizeof("type") ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
-			if ( !strncmp( token, "tech", sizeof(token) ) )		tech->type = RS_TECH; // redundant, but oh well.
-			else if ( !strncmp( token, "weapon", sizeof(token) ) )	tech->type = RS_WEAPON;
-			else if ( !strncmp( token, "armor", sizeof(token) ) )	tech->type = RS_ARMOR;
-			else if ( !strncmp( token, "craft", sizeof(token) ) )	tech->type = RS_CRAFT;
-			else if ( !strncmp( token, "building", sizeof(token) ) )	tech->type = RS_BUILDING;
+			if ( !strncmp( token, "tech", sizeof("tech") ) )		tech->type = RS_TECH; // redundant, but oh well.
+			else if ( !strncmp( token, "weapon", sizeof("weapon") ) )	tech->type = RS_WEAPON;
+			else if ( !strncmp( token, "armor", sizeof("armor") ) )	tech->type = RS_ARMOR;
+			else if ( !strncmp( token, "craft", sizeof("craft") ) )	tech->type = RS_CRAFT;
+			else if ( !strncmp( token, "building", sizeof("building") ) )	tech->type = RS_BUILDING;
 			else Com_Printf(_("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n"), id, token );
 		}
 		else
-		if ( !strncmp( token, "requires", sizeof(token) ) )
+		if ( !strncmp( token, "requires", sizeof("requires") ) )
 		{
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
@@ -1032,15 +1033,15 @@ void RS_ParseTechnologies ( char* id, char** text )
 			continue;
 		}
 		else
-		if ( !strncmp( token, "researched", sizeof(token) ) )
+		if ( !strncmp( token, "researched", sizeof("researched") ) )
 		{
 			token = COM_EParse( text, errhead, id );
-			if ( !strncmp( token, "true", sizeof(token) )
-			|| !strncmp( token, "1", sizeof(token) ) )
+			if ( !strncmp( token, "true", sizeof("true") )
+			|| !strncmp( token, "1", sizeof("1") ) )
 				tech->statusResearch = RS_FINISH;
 		}
 		else
-		if ( !strncmp( token, "up_chapter", sizeof(token) ) ) {
+		if ( !strncmp( token, "up_chapter", sizeof("up_chapter") ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 
@@ -1048,7 +1049,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 				// find chapter
 				int i;
 				for ( i = 0; i < numChapters; i++ ) {
-					if ( !strncmp( token, upChapters[i].id, sizeof(token) ) ) {
+					if ( !strncmp( token, upChapters[i].id, sizeof(upChapters[i].id) ) ) {
 						// add entry to chapter
 						tech->up_chapter = &upChapters[i];
 						if ( !upChapters[i].first )	{
@@ -1071,7 +1072,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 		}
 		else
 		for ( var = valid_tech_vars; var->string; var++ )
-			if ( !strncmp( token, var->string, sizeof(token) ) )
+			if ( !strncmp( token, var->string, sizeof(var->string) ) )
 			{
 				// found a definition
 				token = COM_EParse( text, errhead, id );

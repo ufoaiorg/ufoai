@@ -980,7 +980,7 @@ void MN_ParseBuildings( char *id, char **text )
 		}
 
 		// get values
-		if ( !strncmp( token, "type", sizeof(token) ) ) {
+		if ( !strncmp( token, "type", sizeof("type") ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 
@@ -995,18 +995,18 @@ void MN_ParseBuildings( char *id, char **text )
 			}
 		}
 		else
-		if ( !strncmp( token, "max_employees", sizeof(token) ) ) {
+		if ( !strncmp( token, "max_employees", sizeof("max_employees") ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			employees_in_building = &building->assigned_employees;
+			
+			employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
 			if ( *token ) {
 				employees_in_building->maxEmployees = atoi(token);
-			} else {
-				employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
 			}
 		}
 		else
-		if ( !strncmp( token, "employees_firstbase", sizeof(token) ) ) {
+		if ( !strncmp( token, "employees_firstbase", sizeof("employees_firstbase") ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			if (*token) {
@@ -1028,7 +1028,7 @@ void MN_ParseBuildings( char *id, char **text )
 		}
 		else
 		for ( edp = valid_vars; edp->string; edp++ )
-			if ( !strncmp( token, edp->string, sizeof(token) ) )
+			if ( !strncmp( token, edp->string, sizeof(edp->string) ) )
 			{
 				// found a definition
 				token = COM_EParse( text, errhead, id );
@@ -1180,7 +1180,7 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 	employees_in_building = &building_dest->assigned_employees;
 
 	// check if there is enough space to add one employee in the destination building.
-	if (employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
+	if ( employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
 		// get free employee from quaters in current base
 		for ( i = 0; i < numBuildings; i++ ) {
 			building_source = &bmBuildings[baseCurrent->id][i];
@@ -1199,7 +1199,7 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 			}
 		}
 		// if an employee was found add it to to the destination building
-		if (employee) {
+		if ( employee ) {
 			employees_in_building->assigned[employees_in_building->numEmployees++] = employee;
 			return true;
 		} else {
@@ -1319,7 +1319,8 @@ void MN_GetFreeBuilding( buildingType_t type, building_t *building )
 			if ( building->buildingType == type ) {
 				/* found correct building-type */
 				employees_in_building = &building->assigned_employees;
-				Com_DPrintf( "MN_GetFreeBuilding: %i / %i\n",  employees_in_building->numEmployees, employees_in_building->maxEmployees );
+				//TODO: something's not working right here...
+				Com_DPrintf( "MN_GetFreeBuilding: %i / %i - num / max\n",  employees_in_building->numEmployees, employees_in_building->maxEmployees );
 				if ( employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
 					/* the bulding has free space for employees */
 					Com_DPrintf( "MN_GetFreeBuilding: %s\n",  building->name );
