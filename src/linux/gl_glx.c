@@ -98,11 +98,11 @@ static Atom wmDeleteWindow;
 
 // this is inside the renderer shared lib, so these are called from vid_so
 
-static qboolean        mouse_avail;
-static float   mx, my;
+static qboolean	mouse_avail;
+static int	mx, my;
 static int	old_mouse_x, old_mouse_y;
 
-static int win_x, win_y;
+static int	win_x, win_y;
 
 static cvar_t	*m_filter;
 static cvar_t	*in_mouse;
@@ -282,6 +282,10 @@ IN_GetMousePos
 */
 void RW_IN_GetMousePos (int *x, int *y)
 {
+	if ( mx < 0 ) mx = 0;
+	if ( my < 0 ) my = 0;
+	if ( mx > 1024 ) mx = 1024;
+	if ( my > 768 ) my = 768;
 	*x = mx;
 	*y = my;
 }
@@ -327,111 +331,211 @@ void RW_IN_Activate(qboolean active)
 
 static int XLateKey(XKeyEvent *ev)
 {
-	int key;
+	int key = 0;
 	char buf[64];
 	KeySym keysym;
-
-	key = 0;
 
 	XLookupString(ev, buf, sizeof buf, &keysym, 0);
 
 	switch(keysym)
 	{
-		case XK_KP_Page_Up:	 key = K_KP_PGUP; break;
-		case XK_Page_Up:	 key = K_PGUP; break;
+		case XK_KP_Page_Up:
+			key = K_KP_PGUP;
+			break;
+		case XK_Page_Up:
+			key = K_PGUP;
+			break;
 
-		case XK_KP_Page_Down: key = K_KP_PGDN; break;
-		case XK_Page_Down:	 key = K_PGDN; break;
+		case XK_KP_Page_Down:
+			key = K_KP_PGDN;
+			break;
+		case XK_Page_Down:
+			key = K_PGDN;
+			break;
 
-		case XK_KP_Home: key = K_KP_HOME; break;
-		case XK_Home:	 key = K_HOME; break;
+		case XK_KP_Home:
+			key = K_KP_HOME;
+			break;
+		case XK_Home:
+			key = K_HOME;
+			break;
 
-		case XK_KP_End:  key = K_KP_END; break;
-		case XK_End:	 key = K_END; break;
+		case XK_KP_End:
+			key = K_KP_END;
+			break;
+		case XK_End:
+			key = K_END;
+			break;
 
-		case XK_KP_Left: key = K_KP_LEFTARROW; break;
-		case XK_Left:	 key = K_LEFTARROW; break;
+		case XK_KP_Left:
+			key = K_KP_LEFTARROW;
+			break;
+		case XK_Left:
+			key = K_LEFTARROW;
+			break;
 
-		case XK_KP_Right: key = K_KP_RIGHTARROW; break;
-		case XK_Right:	key = K_RIGHTARROW;		break;
+		case XK_KP_Right:
+			key = K_KP_RIGHTARROW;
+			break;
+		case XK_Right:
+			key = K_RIGHTARROW;
+			break;
 
-		case XK_KP_Down: key = K_KP_DOWNARROW; break;
-		case XK_Down:	 key = K_DOWNARROW; break;
+		case XK_KP_Down:
+			key = K_KP_DOWNARROW;
+			break;
+		case XK_Down:
+			key = K_DOWNARROW;
+			break;
 
-		case XK_KP_Up:   key = K_KP_UPARROW; break;
-		case XK_Up:		 key = K_UPARROW;	 break;
+		case XK_KP_Up:
+			key = K_KP_UPARROW;
+			break;
+		case XK_Up:
+			key = K_UPARROW;
+			break;
 
-		case XK_Escape: key = K_ESCAPE;		break;
+		case XK_Escape:
+			key = K_ESCAPE;
+			break;
 
-		case XK_KP_Enter: key = K_KP_ENTER;	break;
-		case XK_Return: key = K_ENTER;		 break;
+		case XK_KP_Enter:
+			key = K_KP_ENTER;
+			break;
+		case XK_Return:
+			key = K_ENTER;
+			break;
 
-		case XK_Tab:		key = K_TAB;			 break;
+		case XK_Tab:
+			key = K_TAB;
+			break;
 
-		case XK_F1:		 key = K_F1;				break;
+		case XK_F1:
+			key = K_F1;
+			break;
 
-		case XK_F2:		 key = K_F2;				break;
+		case XK_F2:
+			key = K_F2;
+			break;
 
-		case XK_F3:		 key = K_F3;				break;
+		case XK_F3:
+			key = K_F3;
+			break;
 
-		case XK_F4:		 key = K_F4;				break;
+		case XK_F4:
+			key = K_F4;
+			break;
 
-		case XK_F5:		 key = K_F5;				break;
+		case XK_F5:
+			key = K_F5;
+			break;
 
-		case XK_F6:		 key = K_F6;				break;
+		case XK_F6:
+			key = K_F6;
+			break;
 
-		case XK_F7:		 key = K_F7;				break;
+		case XK_F7:
+			key = K_F7;
+			break;
 
-		case XK_F8:		 key = K_F8;				break;
+		case XK_F8:
+			key = K_F8;
+			break;
 
-		case XK_F9:		 key = K_F9;				break;
+		case XK_F9:
+			key = K_F9;
+			break;
 
-		case XK_F10:		key = K_F10;			 break;
+		case XK_F10:
+			key = K_F10;
+			break;
 
-		case XK_F11:		key = K_F11;			 break;
+		case XK_F11:
+			key = K_F11;
+			break;
 
-		case XK_F12:		key = K_F12;			 break;
+		case XK_F12:
+			key = K_F12;
+			break;
 
-		case XK_BackSpace: key = K_BACKSPACE; break;
+		case XK_BackSpace:
+			key = K_BACKSPACE;
+			break;
 
-		case XK_KP_Delete: key = K_KP_DEL; break;
-		case XK_Delete: key = K_DEL; break;
+		case XK_KP_Delete:
+			key = K_KP_DEL;
+			break;
+		case XK_Delete:
+			key = K_DEL;
+			break;
 
-		case XK_Pause:	key = K_PAUSE;		 break;
+		case XK_Pause:
+			key = K_PAUSE;
+			break;
 
 		case XK_Shift_L:
-		case XK_Shift_R:	key = K_SHIFT;		break;
+		case XK_Shift_R:
+			key = K_SHIFT;
+			break;
 
 		case XK_Execute:
 		case XK_Control_L:
-		case XK_Control_R:	key = K_CTRL;		 break;
+		case XK_Control_R:
+			key = K_CTRL;
+			break;
 
 		case XK_Alt_L:
 		case XK_Meta_L:
 		case XK_Alt_R:
-		case XK_Meta_R: key = K_ALT;			break;
+		case XK_Meta_R:
+			key = K_ALT;
+			break;
 
-		case XK_KP_Begin: key = K_KP_5;	break;
+		case XK_KP_Begin:
+			key = K_KP_5;
+			break;
 
-		case XK_Insert:key = K_INS; break;
-		case XK_KP_Insert: key = K_KP_INS; break;
+		case XK_Insert:
+			key = K_INS;
+			break;
+		case XK_KP_Insert:
+			key = K_KP_INS;
+			break;
 
-		case XK_KP_Multiply: key = '*'; break;
-		case XK_KP_Add:  key = K_KP_PLUS; break;
-		case XK_KP_Subtract: key = K_KP_MINUS; break;
-		case XK_KP_Divide: key = K_KP_SLASH; break;
+		case XK_KP_Multiply:
+			key = '*';
+			break;
+		case XK_KP_Add:
+			key = K_KP_PLUS;
+			break;
+		case XK_KP_Subtract:
+			key = K_KP_MINUS;
+			break;
+		case XK_KP_Divide:
+			key = K_KP_SLASH;
+			break;
+
 
 #if 0
-		case 0x021: key = '1';break;/* [!] */
-		case 0x040: key = '2';break;/* [@] */
-		case 0x023: key = '3';break;/* [#] */
-		case 0x024: key = '4';break;/* [$] */
-		case 0x025: key = '5';break;/* [%] */
-		case 0x05e: key = '6';break;/* [^] */
-		case 0x026: key = '7';break;/* [&] */
-		case 0x02a: key = '8';break;/* [*] */
-		case 0x028: key = '9';;break;/* [(] */
-		case 0x029: key = '0';break;/* [)] */
+		case XK_exclam: key = '1'; break;
+		case XK_at: key = '2'; break;
+		case XK_numbersign: key = '3'; break;
+		case XK_dollar: key = '4'; break;
+		case XK_percent: key = '5'; break;
+		case XK_asciicircum: key = '6'; break;
+		case XK_ampersand: key = '7'; break;
+		case XK_asterisk: key = '8'; break;
+		case XK_parenleft: key = '9'; break;
+		case XK_parenright: key = '0'; break;
+
+		case XK_space:
+		case XK_KP_Space: key = K_SPACE; break;
+		// weird french keyboards ..
+		// NOTE: console toggle is hardcoded in cl_keys.c, can't be unbound
+		//   cleaner would be .. using hardware key codes instead of the key syms
+		//   could also add a new K_KP_CONSOLE
+		case XK_twosuperior: key = '~'; break;
+
 		case 0x05f: key = '-';break;/* [_] */
 		case 0x02b: key = '=';break;/* [+] */
 		case 0x07c: key = '\'';break;/* [|] */
@@ -448,6 +552,8 @@ static int XLateKey(XKeyEvent *ev)
 			key = *(unsigned char*)buf;
 			if (key >= 'A' && key <= 'Z')
 				key = key - 'A' + 'a';
+			if (key >= 1 && key <= 26) /* ctrl+alpha */
+				key = key + 'a' - 1;
 			break;
 	}
 
@@ -513,12 +619,6 @@ static void HandleEvents(void)
 							dowarp = true;
 					}
 				}
-#if 0
-				if ( mx > vid.width * sensitivity->value ) mx = vid.width;
-				if ( my > vid.height * sensitivity->value ) my = vid.height;
-				if ( mx < 0 ) mx = 0;
-				if ( my < 0 ) my = 0;
-#endif
 			}
 			break;
 
@@ -537,8 +637,6 @@ static void HandleEvents(void)
 				in_state->Key_Event_fp (K_MWHEELDOWN, true);
 			if (b>=0 && in_state && in_state->Key_Event_fp)
 				in_state->Key_Event_fp (K_MOUSE1 + b, true);
-// 			else
-// 				ri.Con_Printf(PRINT_ALL, "unknown ButtonPress-event: %i\n", event.xbutton.button );
 			break;
 
 		case ButtonRelease:
@@ -581,6 +679,9 @@ static void HandleEvents(void)
 			if( vid_grabmouse->value )
 				XUngrabPointer( dpy, CurrentTime);
 			break;
+		case VisibilityNotify:
+			// invisible -> visible
+			break;
 		}
 	}
 
@@ -588,9 +689,15 @@ static void HandleEvents(void)
 	{
 		vid_grabmouse->modified = false;
 		if ( ! vid_grabmouse->value )
+		{
 			XUngrabPointer(dpy, CurrentTime);
+			ri.Con_Printf( PRINT_ALL, "Ungrab mouse\n" );
+		}
 		else
+		{
 			XGrabPointer(dpy, win, True, 0, GrabModeAsync, GrabModeAsync, win, None, CurrentTime);
+			ri.Con_Printf( PRINT_ALL, "Grab mouse\n" );
+		}
 	}
 
 	if (dowarp && vid_grabmouse->value)

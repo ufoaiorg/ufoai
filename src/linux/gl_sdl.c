@@ -40,8 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL.h>
 
-#include <GL/gl.h>
-#include <GL/glext.h>
+#include <SDL_opengl.h>
 
 #include "../ref_gl/gl_local.h"
 #include "glw_linux.h"
@@ -109,7 +108,9 @@ int mx, my, mouse_buttonstate;
 
 // this is inside the renderer shared lib, so these are called from vid_so
 
-static float old_grabmouse;
+void RW_IN_PlatformInit( void )
+{
+}
 
 /************************
  * Joystick
@@ -118,14 +119,9 @@ static float old_grabmouse;
 static SDL_Joystick *joy;
 static int joy_oldbuttonstate;
 static int joy_numbuttons;
-#endif
 
-void RW_IN_PlatformInit( void ) 
+qboolean CloseJoystick(void)
 {
-}
-
-#ifdef Joystick
-qboolean CloseJoystick(void) {
 	if (joy) {
 		SDL_JoystickClose(joy);
 		joy = NULL;
@@ -133,7 +129,8 @@ qboolean CloseJoystick(void) {
 	return true;
 }
 
-void PlatformJoyCommands(int *axis_vals, int *axis_map) {
+void PlatformJoyCommands(int *axis_vals, int *axis_map)
+{
 	int i;
 	int key_index;
 	if (joy) {
@@ -157,60 +154,17 @@ void PlatformJoyCommands(int *axis_vals, int *axis_map) {
 }
 #endif
 
-#if 0
-static void IN_DeactivateMouse( void )
-{
-	if (!mouse_avail)
-		return;
-
-	if (mouse_active) {
-		/* uninstall_grabs(); */
-		mouse_active = false;
-	}
-}
-
-static void IN_ActivateMouse( void )
-{
-	if (!mouse_avail)
-		return;
-
-	if (!mouse_active) {
-		mx = my = 0; // don't spazz
-		/* install_grabs(); */
-		mouse_active = true;
-	}
-}
-#endif
-
 void RW_IN_Activate(qboolean active)
 {
-#if 0
-	if (active)
-		IN_ActivateMouse();
-	else
-		IN_DeactivateMouse();
-#endif
 	mouse_active = true;
 }
 
 /*****************************************************************************/
 
-#if 0 /* SDL parachute should catch everything... */
-// ========================================================================
-// Tragic death handler
-// ========================================================================
-void TragicDeath(int signal_num)
-{
-	/* SDL_Quit(); */
-	Sys_Error("This death brought to you by the number %d\n", signal_num);
-}
-#endif
-
 int XLateKey(unsigned int keysym)
 {
-	int key;
+	int key = 0;
 
-	key = 0;
 	switch(keysym) {
 	case SDLK_KP9:			key = K_KP_PGUP; break;
 	case SDLK_PAGEUP:		key = K_PGUP; break;
@@ -288,7 +242,7 @@ int XLateKey(unsigned int keysym)
 	case SDLK_WORLD_7:		key = '`'; break;
 
 	default: /* assuming that the other sdl keys are mapped to ascii */
-		if (keysym < 128)
+		if(keysym < 128)
 			key = keysym;
 		break;
 	}
@@ -337,12 +291,8 @@ void GetEvent(SDL_Event *event)
 	case SDL_MOUSEMOTION:
 		if (mouse_active)
 		{
-			mx = event->button.x; // * sensitivity->value
-			my = event->button.y; // * sensitivity->value
-			if ( mx > vid.width ) mx = vid.width;
-			if ( my > vid.height ) my = vid.height;
-			if ( mx < 0 ) mx = 0;
-			if ( my < 0 ) my = 0;
+			mx = event->motion.x; // * sensitivity->value
+			my = event->motion.y; // * sensitivity->value
 		}
 		break;
 #ifdef Joystick
@@ -478,26 +428,17 @@ qboolean GLimp_Init( void *hInstance, void *wndProc )
 		}
 	}
 
+	SDL_EnableUNICODE(1);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 
 #ifdef Joystick
 	OpenJoystick();
 #endif
 
-	// catch signals so i can turn on auto-repeat
-#if 0
-	{
-		struct sigaction sa;
-		sigaction(SIGINT, 0, &sa);
-		sa.sa_handler = TragicDeath;
-		sigaction(SIGINT, &sa, 0);
-		sigaction(SIGTERM, &sa, 0);
-	}
-#endif
 	return true;
 }
 
-static void SetSDLIcon()
+static void SetSDLIcon( void )
 {
 #include "ufoicon.xbm"
 	SDL_Surface *icon;
@@ -728,8 +669,8 @@ void KBD_Update(void)
 		if (!mx && !my)
 			SDL_GetRelativeMouseState(&mx, &my);
 
-		if (old_grabmouse != vid_grabmouse->value) {
-			old_grabmouse = vid_grabmouse->value;
+		if (vid_grabmouse->modified) {
+			vid_grabmouse->modified = false;
 
 			if (!vid_grabmouse->value) {
 				/* ungrab the pointer */
@@ -824,6 +765,10 @@ IN_GetMousePos
 */
 void RW_IN_GetMousePos (int *x, int *y)
 {
+	if ( mx < 0 ) mx = 0;
+	if ( my < 0 ) my = 0;
+	if ( mx > 1024 ) mx = 1024;
+	if ( my > 768 ) my = 768;
 	*x = mx;
 	*y = my;
 }
