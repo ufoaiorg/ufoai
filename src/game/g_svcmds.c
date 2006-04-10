@@ -281,7 +281,7 @@ void SVCmd_AI_Add_f( void )
 
 	if ( gi.argc() < 3 )
 	{
-		Com_Printf( "Usage: ai_createplayer <teamnum>\n" );
+		Com_Printf( "Usage: ai_add <teamnum>\n" );
 		return;
 	}
 	team = atoi( gi.argv( 2 ) );
