@@ -780,7 +780,7 @@ void RS_MarkResearchable ( void );
 //
 #define MAX_LIST_CHAR		1024
 #define MAX_BUILDINGS		256
-#define MAX_BASES		6
+#define MAX_BASES		8
 #define MAX_DESC		256
 
 #define BUILDINGCONDITION	100

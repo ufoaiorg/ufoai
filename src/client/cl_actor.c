@@ -908,6 +908,33 @@ void CL_ActorToggleReaction( void )
 		clc_action, PA_STATE, selActor->entnum, selActor->state ^ STATE_REACTION );
 }
 
+/*
+=================
+CL_ShowInRadius
+
+Make everything visible to 
+anyone in a specific radius 
+who can't already see it
+
+TODO: Radius
+TODO: Only Aliens (or on other team)
+=================
+*/
+void CL_ShowInRadius( int radius, le_t* le )
+{
+#if 0
+	edict_t *ent;
+	int i;
+
+	for ( i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
+		if ( ent->inuse && ent->team != le->team )
+		{
+			// TODO:
+			ent->visflags |= ~ent->visflags;
+		}
+#endif
+}
+
 
 /*
 =================
@@ -938,10 +965,11 @@ void CL_ActorDoShoot( sizebuf_t *sb )
 	//       see gl_mesh.c R_DrawAliasModel()
 	//       make player-models visible even through walls in
 	//       a little radius (but keep the view-direction)
-/*	if ( fd->irgoggles )
+	if ( fd->irgoggles )
 	{
+		CL_ShowInRadius( 20, le );
 		return;
-	}*/
+	}
 
 	// add effect le
 	LE_AddProjectile( fd, flags, muzzle, impact, normal );

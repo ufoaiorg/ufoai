@@ -199,6 +199,8 @@ base main
 	base4		"Base #4"
 	base5		"Base #5"
 	base6		"Base #6"
+	base7		"Base #7"
+	base8		"Base #8"
 }
 
 production tech_p

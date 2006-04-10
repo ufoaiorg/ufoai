@@ -180,6 +180,22 @@ menu bases
 		font	f_big
 	}
 
+	// confunc mn_base_title_changed is in menu_geoscape already
+	pic bt_edit
+	{
+		tooltip	"_Rename your base"
+		image	menu/buy_buttons1
+		pos	"400 40"
+		mousefx	true
+		texl	"16 0"
+		texh	"32 16"
+		click
+		{
+			cmd "msgmenu ?mn_base_title"
+			*title mousefx true
+		}
+	}
+
 	pic prev_base
 	{
 		tooltip	"_Switch to the previous base"

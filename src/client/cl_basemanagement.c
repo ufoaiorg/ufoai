@@ -36,8 +36,9 @@ TODO: new game does not reset basemangagement
 #include "client.h"
 #include "cl_basemanagement.h"
 
-base_t        bmBases[MAX_BASES];				// A global list of _all_ bases. (see client.h)
-vec2_t newBasePos;
+base_t	bmBases[MAX_BASES];				// A global list of _all_ bases. (see client.h)
+vec2_t	newBasePos;
+cvar_t*	mn_base_title;
 
 building_t    bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global list of _all_ buildings (even unbuilt) in all bases. (see client.h)
 int numBuildings;								// The global number of entries in the bmBuildings list (see client.h)
@@ -318,7 +319,7 @@ building_t* B_GetBuilding ( char *buildingName )
 		return baseCurrent->buildingCurrent;
 
 	for (i = 0 ; i < numBuildings; i++ )
-		if ( !strcmp( bmBuildings[ccs.actualBaseID][i].name, buildingName ) )
+		if ( !Q_strcasecmp( bmBuildings[ccs.actualBaseID][i].name, buildingName ) )
 			return &bmBuildings[ccs.actualBaseID][i];
 
 	return NULL;
@@ -683,26 +684,26 @@ void MN_DrawBuilding( void )
 		MN_UpgradeBuilding();
 
 	if ( entry->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] < B_UNDER_CONSTRUCTION && entry->fixCosts )
-		strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Costs:\t%1.2f (%i Day[s] to build)\n"), entry->fixCosts, entry->buildTime  ) );
+		Q_strcat( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Costs:\t%1.2f (%i Day[s] to build)\n"), entry->fixCosts, entry->buildTime ) );
 
-	if ( entry->varCosts    ) strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Running Costs:\t%1.2f\n"), entry->varCosts ) );
-	if ( entry->workerCosts ) strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Workercosts:\t%1.2f\n"), entry->workerCosts ) );
-	if ( entry->assignedWorkers  ) strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Workers:\t%i\n"), entry->assignedWorkers ) );
-	if ( entry->energy      ) strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Energy:\t%1.0f\n"), entry->energy ) );
+	if ( entry->varCosts    ) Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Running Costs:\t%1.2f\n"), entry->varCosts ) );
+	if ( entry->workerCosts ) Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Workercosts:\t%1.2f\n"), entry->workerCosts ) );
+	if ( entry->assignedWorkers  ) Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Workers:\t%i\n"), entry->assignedWorkers ) );
+	if ( entry->energy      ) Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Energy:\t%1.0f\n"), entry->energy ) );
 	if ( entry->produceType )
 		for (i = 0 ; i < numProductions; i++ )
-			if ( !strcmp( bmProductions[i].name, entry->produceType ) )
+			if ( !Q_stricmp( bmProductions[i].name, entry->produceType ) )
 			{
 				if ( entry->production && bmProductions[i].title )
-					strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Production:\t%s (%i/day)\n"), bmProductions[i].title, entry->production ) );
+					Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Production:\t%s (%i/day)\n"), bmProductions[i].title, entry->production ) );
 				break;
 			}
 
 	if ( entry->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] > B_CONSTRUCTION_FINISHED )
 	{
-		if ( entry->techLevel ) strcat ( menuText[TEXT_BUILDING_INFO], va ( _("Level:\t%i\n"), entry->techLevel ) );
+		if ( entry->techLevel ) Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Level:\t%i\n"), entry->techLevel ) );
 		if ( entry->condition[baseCurrent->buildingCurrent->howManyOfThisType]   )
-			strcat ( menuText[TEXT_BUILDING_INFO], va ( "%s:\t%i\n", _("Condition"), entry->condition[baseCurrent->buildingCurrent->howManyOfThisType] ) );
+			Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( "%s:\t%i\n", _("Condition"), entry->condition[baseCurrent->buildingCurrent->howManyOfThisType] ) );
 	}
 
 	//draw a second picture if building has two units
@@ -792,10 +793,10 @@ void MN_BuildingAddToList( char *title, int id )
 	if (!strstr( menuText[TEXT_BUILDINGS], tmpTitle ) )
 	{
 		//buildings are seperated by a newline
-		strcat ( tmpTitle, "\n" );
+		Q_strcat ( tmpTitle, MAX_VAR, "\n" );
 
 		//now add the buildingtitle to the list
-		strcat ( menuText[TEXT_BUILDINGS], tmpTitle );
+		Q_strcat ( menuText[TEXT_BUILDINGS], MAX_VAR, tmpTitle );
 	}
 }
 
@@ -1370,13 +1371,13 @@ void MN_ParseBases( char *title, char **text )
 {
 	char	*errhead = _("MN_ParseBases: unexptected end of file (names ");
 	char	*token;
-	base_t *base;
-	int numBases = 0;
+	base_t	*base;
+	int	numBases = 0;
 
 	// get token
 	token = COM_Parse( text );
 
-	if ( !*text || strcmp( token, "{" ) )
+	if ( !*text || *token != '{' )
 	{
 		Com_Printf( _("MN_ParseBases: base \"%s\" without body ignored\n"), title );
 		return;
@@ -1401,10 +1402,13 @@ void MN_ParseBases( char *title, char **text )
 		token = COM_EParse( text, errhead, title );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
-		strncpy( base->title, token, MAX_VAR );
+		Q_strncpyz( base->title, token, MAX_VAR );
+		Com_DPrintf("Found base %s\n", base->title );
 		MN_ResetBuildingCurrent();
 		numBases++;
 	} while ( *text );
+
+	mn_base_title = Cvar_Get( "mn_base_title", "", 0 );
 }
 
 
@@ -1413,14 +1417,14 @@ MN_ParseProductions
 ======================*/
 void MN_ParseProductions( char *title, char **text )
 {
-	production_t *entry;
-	value_t *edp;
-	char    *errhead = _("MN_ParseProductions: unexptected end of file (names ");
-	char    *token;
+	production_t	*entry;
+	value_t	*edp;
+	char	*errhead = _("MN_ParseProductions: unexptected end of file (names ");
+	char	*token;
 
 	// get name list body body
 	token = COM_Parse( text );
-	if ( !*text || strcmp( token, "{" ) )
+	if ( !*text || *token != '{' )
 	{
 		Com_Printf( _("MN_ParseProductions: production type \"%s\" without body ignored\n"), title );
 		return;
@@ -1472,7 +1476,7 @@ void MN_ParseProductions( char *title, char **text )
 
 		// get values
 		for ( edp = production_valid_vars; edp->string; edp++ )
-			if ( !strcmp( token, edp->string ) )
+			if ( !Q_stricmp( token, edp->string ) )
 			{
 				// found a definition
 				token = COM_EParse( text, errhead, title );
@@ -1525,9 +1529,6 @@ void MN_DrawBase( void )
 	bvScale = ccs.basezoom;
 	bvCenterX = ccs.basecenter[0] * SCROLLSPEED;
 	bvCenterY = ccs.basecenter[1] * SCROLLSPEED;
-
-	if ( baseCurrent->title )
-		Cvar_Set( "mn_base_title", baseCurrent->title );
 
 	IN_GetMousePos( &mx, &my );
 
@@ -1695,7 +1696,7 @@ void MN_RenameBase( void )
 	}
 
 	if ( baseCurrent )
-		strncpy( baseCurrent->title, Cmd_Argv( 1 ) , MAX_VAR );
+		Q_strncpyz( baseCurrent->title, Cmd_Argv( 1 ) , MAX_VAR );
 }
 
 /*======================
@@ -1775,6 +1776,8 @@ void MN_SelectBase( void )
 	}
 	ccs.actualBaseID = atoi( Cmd_Argv( 1 ) );
 
+	// set up a new base
+	// called from *.ufo with -1
 	if ( ccs.actualBaseID < 0 )
 	{
 		mapAction = MA_NEWBASE;
@@ -1783,8 +1786,8 @@ void MN_SelectBase( void )
 			ccs.actualBaseID++;
 		if ( ccs.actualBaseID < MAX_BASES )
 		{
-			Cvar_Set( "mn_basename", va( "base %i", ccs.actualBaseID ) );
 			baseCurrent = &bmBases[ ccs.actualBaseID ];
+			Com_Printf(_("Set up base %i %s\n"), ccs.actualBaseID, bmBases[ ccs.actualBaseID ].title );
 		}
 		else
 		{
@@ -1794,7 +1797,7 @@ void MN_SelectBase( void )
 			baseCurrent = &bmBases[ ccs.actualBaseID ];
 		}
 	}
-	else
+	else if ( ccs.actualBaseID < MAX_BASES )
 	{
 		baseCurrent = &bmBases[ ccs.actualBaseID ];
 		menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
@@ -1804,10 +1807,15 @@ void MN_SelectBase( void )
 			CL_AircraftSelect();
 		} else {
 			mapAction = MA_NEWBASE;
-			Cvar_Set( "mn_basename", va( "base %i", ccs.actualBaseID ) );
 		}
 	}
-	Cvar_SetValue( "mn_base_id", ccs.actualBaseID );
+	else
+	{
+		ccs.actualBaseID = 0;
+		baseCurrent = &bmBases[ ccs.actualBaseID ];
+	}
+	Cvar_SetValue( "mn_base_id", baseCurrent->id );
+	Cvar_Set( "mn_base_title", baseCurrent->title );
 }
 
 
@@ -1835,7 +1843,8 @@ void MN_BuildBase( void )
 			baseCurrent->founded = true;
 			mapAction = MA_NONE;
 			CL_UpdateCredits( ccs.credits - BASE_COSTS );
-			strncpy( baseCurrent->title, Cvar_VariableString( "mn_basename" ), MAX_VAR );
+			Com_Printf("Base title: %s\n",mn_base_title->string);
+			Q_strncpyz( baseCurrent->title, mn_base_title->string, sizeof(baseCurrent->title) );
 			Cbuf_AddText( "mn_push bases\n" );
 			return;
 		}
@@ -1889,7 +1898,7 @@ FIXME: We need to get rid of the tunnels to nivana
 void B_AssembleMap ( void )
 {
 	int row, col;
-	char *baseMapPart;
+	char baseMapPart[1024];
 	building_t *entry;
 	char maps[2024];
 	char coords[2048];
@@ -1904,12 +1913,11 @@ void B_AssembleMap ( void )
 	for ( row = 0; row < BASE_SIZE; row++ )
 		for ( col = 0; col < BASE_SIZE; col++ )
 		{
-			baseMapPart = "\0";
+			baseMapPart[0] = '\0';
 
 			if ( baseCurrent->map[row][col][0] != -1 )
 			{
 				entry = B_GetBuildingByID(baseCurrent->map[row][col][0]);
-// 				&bmBuildings[ccs.actualBaseID][ B_GetIDFromList( baseCurrent->map[row][col][0] ) ];
 
 				if ( ! entry->visible )
 				{
@@ -1923,24 +1931,19 @@ void B_AssembleMap ( void )
 					continue;
 
 				if ( entry->mapPart )
-					baseMapPart = va("b/%c/%s", baseCurrent->mapChar, entry->mapPart );
+					Q_strncpyz( baseMapPart, va("b/%c/%s", baseCurrent->mapChar, entry->mapPart ), sizeof(baseMapPart) );
 			}
 			else
-				baseMapPart = va("b/%c/empty", baseCurrent->mapChar );
+				Q_strncpyz( baseMapPart, va("b/%c/empty", baseCurrent->mapChar ), sizeof(baseMapPart) );
 
 			if ( strcmp (baseMapPart, "") )
 			{
-				strcat( maps, baseMapPart );
-				strcat( maps, " " );
+				Q_strcat( maps, sizeof(maps), baseMapPart );
+				Q_strcat( maps, sizeof(maps), " " );
 				// basetiles are 16 units in each direction
-				strcat( coords, va ("%i %i ", col*16, row*16 ) );
+				Q_strcat( coords, sizeof(coords), va ("%i %i ", col*16, row*16 ) );
 			}
 		}
-
-	Com_DPrintf(_("AssembleBase: tiles: %s\n"), maps );
-	Com_DPrintf(_("AssembleBase: coords: %s\n"), coords );
-	Com_DPrintf(_("AssembleBase: length(tiles): %i\n"), strlen(maps) );
-	Com_DPrintf(_("AssembleBase: length(coords): %i\n"), strlen(coords) );
 	Cbuf_AddText( va( "map \"%s\" \"%s\"\n", maps, coords ) );
 }
 
@@ -2063,7 +2066,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 		if ( version >= 2 )
 		{
 			base->id = MSG_ReadLong( sb );
-			strcpy( base->title, MSG_ReadString( sb ) );
+			Q_strncpyz( base->title, MSG_ReadString( sb ), sizeof(base->title) );
 			base->pos[0] = MSG_ReadFloat( sb );
 			base->pos[1] = MSG_ReadFloat( sb );
 			base->hasHangar = MSG_ReadByte( sb );
@@ -2075,7 +2078,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 		}
 		else
 		{
-			strcpy( base->title, MSG_ReadString( sb ) );
+			Q_strncpyz( base->title, MSG_ReadString( sb ), sizeof(base->title) );
 			base->pos[0] = MSG_ReadFloat( sb );
 			base->pos[1] = MSG_ReadFloat( sb );
 		}
