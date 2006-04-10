@@ -20,39 +20,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 
-#if 0
 /*
 =================
 Cmd_Players_f
 =================
 */
-void Cmd_Players_f (edict_t *ent)
+void Cmd_Players_f (player_t* player)
 {
 	int		i;
 	int		count;
 	char	small[64];
 	char	large[1280];
-	int		index[256];
-
-	count = 0;
-	for (i = 0 ; i < maxplayers->value ; i++)
-		if (game.players[i].pers.connected)
-		{
-			index[count] = i;
-			count++;
-		}
-
-	// sort by frags
-	qsort (index, count, sizeof(index[0]), PlayerSort);
 
 	// print information
 	large[0] = 0;
 
-	for (i = 0 ; i < count ; i++)
+	for (i = 0 ; i < maxplayers->value; i++)
 	{
-		Com_sprintf (small, sizeof(small), "%3i %s\n",
-			game.players[index[i]].ps.stats[STAT_FRAGS],
-			game.players[index[i]].pers.netname);
+		if ( ! game.players[i].pers.team )
+			continue;
+
+		Com_sprintf (small, sizeof(small), "Team %i %s\n",
+			game.players[i].pers.team, game.players[i].pers.netname);
 		if (strlen (small) + strlen(large) > sizeof(large) - 100 )
 		{	// can't print all of them in one packet
 			strcat (large, "...\n");
@@ -61,9 +50,8 @@ void Cmd_Players_f (edict_t *ent)
 		strcat (large, small);
 	}
 
-	gi.cprintf (ent, PRINT_HIGH, "%s\n%i players\n", large, count);
+	gi.cprintf (player, PRINT_HIGH, "%s\n%i players\n", large, count);
 }
-#endif
 
 /*
 ==================
@@ -121,37 +109,32 @@ void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 	}
 }
 
-#if 0
-void Cmd_PlayerList_f(edict_t *ent)
+void Cmd_PlayerList_f( player_t* player )
 {
 	int i;
 	char st[80];
 	char text[1400];
-	edict_t *e2;
+	player_t *e2;
 
-	// connect time, ping, score, name
+	// team, ping, name
 	*text = 0;
-	for (i = 0, e2 = g_edicts + 1; i < maxplayers->value; i++, e2++) {
+	for (i = 0, e2 = game.players; i < maxplayers->value; i++, e2++) {
 		if (!e2->inuse)
 			continue;
 
-		Com_sprintf(st, sizeof(st), "%02d:%02d %4d %3d %s%s\n",
-			(level.framenum - e2->player->resp.enterframe) / 600,
-			((level.framenum - e2->player->resp.enterframe) % 600)/10,
-			e2->player->ping,
-			e2->player->resp.score,
-			e2->player->pers.netname,
-			e2->player->resp.spectator ? " (spectator)" : "");
+		Com_sprintf(st, sizeof(st), "Team %i %4d %s\n",
+			e2->pers.team,
+			e2->ping,
+			e2->pers.netname);
 		if (strlen(text) + strlen(st) > sizeof(text) - 50) {
 			sprintf(text+strlen(text), "And more...\n");
-			gi.cprintf(ent, PRINT_HIGH, "%s", text);
+			gi.cprintf(player, PRINT_HIGH, "%s", text);
 			return;
 		}
 		strcat(text, st);
 	}
-	gi.cprintf(ent, PRINT_HIGH, "%s", text);
+	gi.cprintf(player, PRINT_HIGH, "%s", text);
 }
-#endif
 
 /*
 =================
@@ -167,18 +150,16 @@ void G_ClientCommand (player_t *player)
 
 	cmd = gi.argv(0);
 
-#if 0
 	if (Q_stricmp (cmd, "players") == 0)
 	{
-		Cmd_Players_f (ent);
+		Cmd_Players_f (player);
 		return;
 	}
 	if (Q_stricmp(cmd, "playerlist") == 0)
 	{
-		Cmd_PlayerList_f(ent);
+		Cmd_PlayerList_f(player);
 		return;
 	}
-#endif
 	if (Q_stricmp (cmd, "say") == 0)
 	{
 		Cmd_Say_f (player, false, false);
