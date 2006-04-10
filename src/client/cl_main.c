@@ -1395,7 +1395,7 @@ void CL_InitLocal (void)
 	cl_worldlevel = Cvar_Get ("cl_worldlevel", "0", 0);
 	cl_selected = Cvar_Get ("cl_selected", "0", CVAR_NOSET);
 
-	cl_lightlevel = Cvar_Get ("r_lightlevel", "0", 0);
+//	cl_lightlevel = Cvar_Get ("r_lightlevel", "0", 0);
 
 	cl_numnames = Cvar_Get ("cl_numnames", "19", CVAR_NOSET);
 
@@ -1497,6 +1497,8 @@ void CL_InitLocal (void)
 	Cmd_AddCommand ("invdrop", NULL);
 	Cmd_AddCommand ("weapnext", NULL);
 	Cmd_AddCommand ("weapprev", NULL);
+	Cmd_AddCommand ("playerlist", NULL);
+	Cmd_AddCommand ("players", NULL);
 }
 
 
@@ -1541,10 +1543,10 @@ cheatvar_t	cheatvars[] = {
 	{"r_drawworld", "1"},
 	{"cl_testlights", "0"},
 	{"r_fullbright", "0"},
-	{"r_drawflat", "0"},
+//	{"r_drawflat", "0"},
 	{"paused", "0"},
 	{"fixedtime", "0"},
-	{"sw_draworder", "0"},
+//	{"sw_draworder", "0"},
 	{"gl_lightmap", "0"},
 	{"gl_wire", "0"},
 	{"gl_saturatelighting", "0"},
