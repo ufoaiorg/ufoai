@@ -2458,7 +2458,7 @@ qboolean G_ClientConnect(player_t *player, char *userinfo)
 
 	// reset persistant data
 	memset( &player->pers, 0, sizeof( client_persistant_t ) );
-	strncpy (player->pers.userinfo, userinfo, sizeof(player->pers.userinfo)-1);
+	Q_strncpyz (player->pers.userinfo, userinfo, sizeof(player->pers.userinfo));
 
 	gi.bprintf (PRINT_HIGH, _("%s is connecting...\n"), Info_ValueForKey (userinfo, "name") );
 	return true;
