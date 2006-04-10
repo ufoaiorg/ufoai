@@ -1320,6 +1320,7 @@ void R_Register( void )
 	vid_ref = ri.Cvar_Get( "vid_ref", "glx", CVAR_ARCHIVE );
 // 	vid_ref = ri.Cvar_Get( "vid_ref", "soft", CVAR_ARCHIVE );
 	vid_grabmouse = ri.Cvar_Get( "vid_grabmouse", "1", CVAR_ARCHIVE );
+	vid_grabmouse->modified = false;
 
 	ri.Cmd_AddCommand( "imagelist", GL_ImageList_f );
 	ri.Cmd_AddCommand( "screenshot", GL_ScreenShot_f );
