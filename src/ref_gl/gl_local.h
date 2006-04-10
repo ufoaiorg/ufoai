@@ -668,35 +668,6 @@ typedef struct globe_triangle_s
 #define Im5     {0.,    -1.,     0.}
 
 #define MAX_ICOSAHEDRON 20
-/* vertices of a unit icosahedron */
-static globe_triangle_t icosahedron[MAX_ICOSAHEDRON]= {
-        /* "north" pole */
-
-        { {Ip1, Ip0, Ip2}, },
-        { {Ip5, Ip0, Ip1}, },
-        { {Ip4, Ip0, Ip5}, },
-        { {Ip3, Ip0, Ip4}, },
-        { {Ip2, Ip0, Ip3}, },
-
-        /* mid */
-        { {Ip1, Im1, Im0}, },
-        { {Im0, Ip5, Ip1}, },
-        { {Ip5, Im0, Im4}, },
-        { {Im4, Ip4, Ip5}, },
-        { {Ip4, Im4, Im3}, },
-        { {Im3, Ip3, Ip4}, },
-        { {Ip3, Im3, Im2}, },
-        { {Im2, Ip2, Ip3}, },
-        { {Ip2, Im2, Im1}, },
-        { {Im1, Ip1, Ip2}, },
-
-        /* "south" pole */
-        { {Im3, Im5, Im2}, },
-        { {Im4, Im5, Im3}, },
-        { {Im0, Im5, Im4}, },
-        { {Im1, Im5, Im0}, },
-        { {Im2, Im5, Im1}, },
-};
 
 #define GLOBE_TORAD (M_PI/180.0f)
 #define GLOBE_TODEG (180.0f/M_PI)

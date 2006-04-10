@@ -1000,6 +1000,36 @@ void Draw_LineStrip( int points, int *verts )
 	qglEnable( GL_TEXTURE_2D );
 }
 
+/* vertices of a unit icosahedron */
+static globe_triangle_t icosahedron[MAX_ICOSAHEDRON]= {
+        /* "north" pole */
+
+        { {Ip1, Ip0, Ip2}, },
+        { {Ip5, Ip0, Ip1}, },
+        { {Ip4, Ip0, Ip5}, },
+        { {Ip3, Ip0, Ip4}, },
+        { {Ip2, Ip0, Ip3}, },
+
+        /* mid */
+        { {Ip1, Im1, Im0}, },
+        { {Im0, Ip5, Ip1}, },
+        { {Ip5, Im0, Im4}, },
+        { {Im4, Ip4, Ip5}, },
+        { {Ip4, Im4, Im3}, },
+        { {Im3, Ip3, Ip4}, },
+        { {Ip3, Im3, Im2}, },
+        { {Im2, Ip2, Ip3}, },
+        { {Ip2, Im2, Im1}, },
+        { {Im1, Ip1, Ip2}, },
+
+        /* "south" pole */
+        { {Im3, Im5, Im2}, },
+        { {Im4, Im5, Im3}, },
+        { {Im0, Im5, Im4}, },
+        { {Im1, Im5, Im0}, },
+        { {Im2, Im5, Im1}, },
+};
+
 /*
 ================
 Globe_CoordToVec
@@ -1234,7 +1264,7 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 	vec3_t v0, v1, v2, v3, va, vb;
 	globe_triangle_t *t = NULL;
 	image_t *gl;
-	float nx, ny, nw, nh;
+// 	float nx, ny, nw, nh;
 
 	/* iterate over the 20 sides of the icosahedron */
 	for(s = 0; s < MAX_ICOSAHEDRON; s++)
