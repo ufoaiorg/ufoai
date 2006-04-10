@@ -998,7 +998,7 @@ void MN_ParseBuildings( char *id, char **text )
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			employees_in_building = &building->assigned_employees;
-			if (*token) {
+			if ( *token ) {
 				employees_in_building->maxEmployees = atoi(token);
 			} else {
 				employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
@@ -1105,7 +1105,8 @@ void MN_InitEmployees ( void )
 		}
 	}
 
-	// generate stats for employees and assign the quarter-less to quarters.
+	// Generate stats for employees and assign the quarter-less to quarters.
+	// TODO: also remove them all from their assigned buildings except quaters .. this was just needed for firstbase.
 	for ( i=0; i < numEmployees; i++) {
 		employee = &employees[i];
 		switch ( employee->type )
@@ -1311,12 +1312,22 @@ OUT
 void MN_GetFreeBuilding( buildingType_t type, building_t *building )
 {
 	int i;
+	employees_t *employees_in_building = NULL;
 	for ( i = 0; i < numBuildings; i++ ) {
 		building = &bmBuildings[baseCurrent->id][i];
 			if ( building->buildingType == type ) {
-				return;
+				/* found correct building-type */
+				employees_in_building = &building->assigned_employees;
+				Com_DPrintf( "MN_GetFreeBuilding: %i / %i\n",  employees_in_building->numEmployees, employees_in_building->maxEmployees );
+				if ( employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
+					/* the bulding has free space for employees */
+					Com_DPrintf( "MN_GetFreeBuilding: %s\n",  building->name );
+					Com_DPrintf( "MN_GetFreeBuilding: %i\n", building );
+					return;
+				}
 			}
 	}
+	/* no buildings available at all, no correct building type found or no building free */
 	building = NULL;
 }
 

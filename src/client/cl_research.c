@@ -189,6 +189,8 @@ RS_InitTree
 
 Gets all needed names/file-paths/etc... for each technology entry.
 Should be executed after the parsing of _all_ the ufo files and e.g. the research tree/inventory/etc... are initialised.
+
+TODO: add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
 ======================*/
 void RS_InitTree( void )
 {
@@ -438,7 +440,10 @@ TODO
 void RS_AssignScientist( void )
 {
 	int num;
-
+	technology_t *tech = NULL;
+	//building_t *building = NULL;
+	building_t building;
+	
 	if ( Cmd_Argc() < 2 )
 	{
 		Com_Printf( "Usage: mn_rs_add <num_in_list>\n" );
@@ -450,14 +455,28 @@ void RS_AssignScientist( void )
 		menuText[TEXT_STANDARD] = NULL;
 		return;
 	}
+	
+	// select the correct list-entry
+	Cbuf_AddText( va( "research_select %i\n", num ) );
 
-
-	// TODO: add scientists to research-item
-	//get tech->lab
-	// if ! lab 
-	//	assign lab
-	//	if it fails -> quit
-	// if ( MN_AssignEmployee ( lab, EMPL_SCIENTIST )) { ok } else { not possible};
+	tech = researchList[researchListPos];
+	// check if there is a free lab available
+	if ( ! tech->lab) {
+		MN_GetFreeBuilding( B_LAB, &building );
+		Com_DPrintf( "RS_AssignScientist: %i\n", &building);
+		if ( &building ) {
+			// assign the lab to the tech:
+			tech->lab=&building;
+		} else {
+			MN_Popup( _("Notice"), _("There is no free lab available. You need to build one or free another in order to assign scientists to research this technology.\n") );
+			return;
+		}
+	}
+	
+	// assign a scientists to the lab
+	if ( ! MN_AssignEmployee ( tech->lab, EMPL_SCIENTIST ) ) {
+		//TODO print "not possible"
+	}
 
 	RS_ResearchDisplayInfo();
 }
@@ -484,6 +503,9 @@ void RS_RemoveScientist( void )
 		menuText[TEXT_STANDARD] = NULL;
 		return;
 	}
+	
+	// select the correct list-entry
+	Cbuf_AddText( va( "research_select %i\n", num ) );
 
 	// TODO: remove scientists from research-item
 	RS_ResearchDisplayInfo();
@@ -621,21 +643,20 @@ void RS_UpdateData ( void )
 		else
 		if ( ( tech->statusResearch != RS_FINISH ) && ( tech->statusResearchable ) ) { //(  ( t->statusResearch != RS_FINISH ) && ( RS_TechIsResearchable( t->id ) ) ) {
 			//TODO:
-			Cvar_Set( va( "mn_researchassigned%i",j ), "as.");	// set the assigned number of scis to nothing. Will be displayed later.
-			Cvar_Set( va( "mn_researchavailable%i",j ), "av.");	// number of available scientists in this base (quaters)
+			Cvar_Set( va( "mn_researchassigned%i", j ), "");	// set the assigned number of scis to nothing. Will be displayed later.
+			Cvar_Set( va( "mn_researchavailable%i", j ), "av.");	// number of available scientists in this base (quaters)
+
 			//Cvar_Set( va( "mn_researchmax%i",j ), "aaa");	// max number of places in this lab
-			Cvar_Set( "mn_research_sellabs", "Free labs in this base: zzz");
+			Cvar_Set( "mn_research_sellabs", "Free labs in base: zzz");
 			switch ( tech->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 			{
 			case RS_RUNNING:
 				strncat(name, " [under research]", sizeof(name) );
 				Cbuf_AddText( va( "researchrunning%i\n", j ) );	// color the item 'research running'
-				/*TODO:*/
 				if ( tech->lab) {
 					employees_in_building = &tech->lab->assigned_employees;
-					Cvar_Set( va( "mn_researchassigned%i",j ), va("%i\n",employees_in_building->numEmployees ) );
+					Cvar_Set( va( "mn_researchassigned%i",j ), va( "%i", employees_in_building->numEmployees ) );
 				}
-				/**/
 				break;
 			case RS_FINISH:
 				// DEBUG: normaly these will not be shown at all. see "if" above
@@ -644,16 +665,18 @@ void RS_UpdateData ( void )
 			case RS_PAUSED:
 				strncat(name, " [paused]", sizeof(name) );
 				Cbuf_AddText( va( "researchpaused%i\n", j ) );	// color the item 'research paused'
-				/*TODO:*/
-				if ( tech->lab) {
+				/*if ( tech->lab) {
 					employees_in_building = &tech->lab->assigned_employees;
-					Cvar_Set( va( "mn_researchassigned%i",j ), va("%i\n",employees_in_building->numEmployees ) );
-				}
-				/**/
+					Cvar_Set( va( "mn_researchassigned%i",j ), va( "%i", employees_in_building->numEmployees ) );
+				}*/
 				break;
 			case RS_NONE:
 				strncat(name, " [unknown]", sizeof(name) );
 				// The color is defined in menu research.ufo by  "confunc research_clear". See also above.
+				/*if ( tech->lab) {
+					employees_in_building = &tech->lab->assigned_employees;
+					Cvar_Set( va( "mn_researchassigned%i",j ), va( "%i", employees_in_building->numEmployees ) );
+				}*/
 				break;
 			default:
 				break;

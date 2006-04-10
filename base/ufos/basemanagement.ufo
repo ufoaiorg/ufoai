@@ -125,6 +125,7 @@ building quarters
 	fixcosts	300
 	depends		commando
 	max_workers	20
+	max_employees	20
 	worker_costs	10
 	energy		50
 	build_time	4
