@@ -788,7 +788,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 			&& key_repeats[key] > 1)
 			return;	// ignore most autorepeats
 
-		if (key >= 200 && !keybindings[key])
+		if (key > 255 && !keybindings[key])
 			Com_Printf (_("%s is unbound, hit F4 to set.\n"), Key_KeynumToString (key) );
 	}
 	else
@@ -804,7 +804,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 	{
 		if (!down)
 			return;
-		Con_ToggleConsole_f ();
+		Con_ToggleConsole_f();
 		return;
 	}
 
@@ -824,8 +824,10 @@ void Key_Event (int key, qboolean down, unsigned time)
 			Key_Message (key);
 			break;
 		case key_game:
-		case key_console:
 			Cbuf_AddText( "mn_pop esc" );
+			break;
+		case key_console:
+			Con_ToggleConsole_f();
 			break;
 		default:
 			Com_Error (ERR_FATAL, "Bad cls.key_dest");
