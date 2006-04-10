@@ -1954,11 +1954,15 @@ MN_NewBases
 void MN_NewBases( void )
 {
 	// reset bases
-	int i;
+	int	i;
+	char	title[MAX_VAR];
+
 	ccs.actualBaseID = 0;
 	for ( i = 0; i < MAX_BASES; i++ )
 	{
+		Q_strncpyz( title, bmBases[i].title, MAX_VAR );
 		MN_ClearBase( &bmBases[i] );
+		Q_strncpyz( bmBases[i].title, title, MAX_VAR );
 	}
 }
 
