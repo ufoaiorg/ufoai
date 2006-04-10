@@ -456,17 +456,14 @@ void RS_AssignScientist( void )
 		return;
 	}
 	
-	// select the correct list-entry
-	Cbuf_AddText( va( "research_select %i\n", num ) );
-
 	tech = researchList[researchListPos];
 	// check if there is a free lab available
-	if ( ! tech->lab) {
+	if ( ! tech->lab ) {
 		MN_GetFreeBuilding( B_LAB, &building );
-		Com_DPrintf( "RS_AssignScientist: %i\n", &building);
+		Com_DPrintf( "RS_AssignScientist: %i <-pointer-building\n", &building);
 		if ( &building ) {
 			// assign the lab to the tech:
-			tech->lab=&building;
+			tech->lab = &building;
 		} else {
 			MN_Popup( _("Notice"), _("There is no free lab available. You need to build one or free another in order to assign scientists to research this technology.\n") );
 			return;
@@ -477,8 +474,9 @@ void RS_AssignScientist( void )
 	if ( ! MN_AssignEmployee ( tech->lab, EMPL_SCIENTIST ) ) {
 		//TODO print "not possible"
 	}
-
+	
 	RS_ResearchDisplayInfo();
+	RS_UpdateData();
 }
 
 /*======================
@@ -504,11 +502,9 @@ void RS_RemoveScientist( void )
 		return;
 	}
 	
-	// select the correct list-entry
-	Cbuf_AddText( va( "research_select %i\n", num ) );
-
 	// TODO: remove scientists from research-item
 	RS_ResearchDisplayInfo();
+	RS_UpdateData();
 }
 
 /*======================
@@ -643,20 +639,22 @@ void RS_UpdateData ( void )
 		else
 		if ( ( tech->statusResearch != RS_FINISH ) && ( tech->statusResearchable ) ) { //(  ( t->statusResearch != RS_FINISH ) && ( RS_TechIsResearchable( t->id ) ) ) {
 			//TODO:
-			Cvar_Set( va( "mn_researchassigned%i", j ), "");	// set the assigned number of scis to nothing. Will be displayed later.
-			Cvar_Set( va( "mn_researchavailable%i", j ), "av.");	// number of available scientists in this base (quaters)
+			Cvar_Set( va( "mn_researchassigned%i", j ), "as.");
+			Cvar_Set( va( "mn_researchavailable%i", j ), "av.");
+			Cvar_Set( va( "mn_researchmax%i", j ), "mx.");
 
-			//Cvar_Set( va( "mn_researchmax%i",j ), "aaa");	// max number of places in this lab
+			if ( tech->lab) {
+				employees_in_building = &tech->lab->assigned_employees;
+				Com_DPrintf( "MN_GetFreeBuilding: %i / %i\n", employees_in_building->numEmployees, employees_in_building->maxEmployees );
+				Cvar_Set( va( "mn_researchmax%i",j ), va( "%i", employees_in_building->maxEmployees ) );		// max number of employees in this base
+				Cvar_Set( va( "mn_researchassigned%i",j ), va( "%i", employees_in_building->numEmployees ) );	// assigned employees to the technology
+			}
 			Cvar_Set( "mn_research_sellabs", "Free labs in base: zzz");
 			switch ( tech->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 			{
 			case RS_RUNNING:
 				strncat(name, " [under research]", sizeof(name) );
 				Cbuf_AddText( va( "researchrunning%i\n", j ) );	// color the item 'research running'
-				if ( tech->lab) {
-					employees_in_building = &tech->lab->assigned_employees;
-					Cvar_Set( va( "mn_researchassigned%i",j ), va( "%i", employees_in_building->numEmployees ) );
-				}
 				break;
 			case RS_FINISH:
 				// DEBUG: normaly these will not be shown at all. see "if" above
@@ -665,18 +663,10 @@ void RS_UpdateData ( void )
 			case RS_PAUSED:
 				strncat(name, " [paused]", sizeof(name) );
 				Cbuf_AddText( va( "researchpaused%i\n", j ) );	// color the item 'research paused'
-				/*if ( tech->lab) {
-					employees_in_building = &tech->lab->assigned_employees;
-					Cvar_Set( va( "mn_researchassigned%i",j ), va( "%i", employees_in_building->numEmployees ) );
-				}*/
 				break;
 			case RS_NONE:
 				strncat(name, " [unknown]", sizeof(name) );
 				// The color is defined in menu research.ufo by  "confunc research_clear". See also above.
-				/*if ( tech->lab) {
-					employees_in_building = &tech->lab->assigned_employees;
-					Cvar_Set( va( "mn_researchassigned%i",j ), va( "%i", employees_in_building->numEmployees ) );
-				}*/
 				break;
 			default:
 				break;
