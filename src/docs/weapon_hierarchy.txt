@@ -62,6 +62,9 @@ Damage type: None, no damage
 - Stun Gas Grenade
 This grenade expels a gas that causes those who inhale it to lose consciousness. Useful when capturing live aliens. The stun gas also tends to bypass armor that doesn't provide life support.
 
+- Stun Rod
+Easy to handle device for stunning and capturing your enemy. The only downside is that you need to stand next to him to do so, but then it's a bit more effective then stun grenades.
+
 - Mine
 When a soldier sets this device, it becomes invisible. The mine becomes active on the next team's turn, so a soldier who sets this should move off the square the mine is deployed on. When any unit (including the friendly team's units and civilians!) steps on the mine, it explodes, damaging all units in its blast radius.
 Damage type: Blast
@@ -70,7 +73,7 @@ Damage type: Blast
 Like the Mine, only this one sets a part of the area alight, and all units caught in its blast radius.
 Damage type: Incendiary
 
-Stun Gas Mine
+- Stun Gas Mine
 Like the Mine, only this one expels a gas that causes those who inhale it to lose consciousness. Useful when capturing live aliens. The stun gas also tends to bypass armor that doesn't provide life support.
 Damage type: Stun
 
