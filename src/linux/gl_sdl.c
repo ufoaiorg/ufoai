@@ -120,8 +120,8 @@ static int joy_oldbuttonstate;
 static int joy_numbuttons;
 #endif
 
-void RW_IN_PlatformInit( void ) {
-	vid_grabmouse = ri.Cvar_Get ("vid_grabmouse", "0", CVAR_ARCHIVE);
+void RW_IN_PlatformInit( void ) 
+{
 }
 
 #ifdef Joystick

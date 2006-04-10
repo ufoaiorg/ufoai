@@ -21,7 +21,7 @@ HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
 BUILD_JPEG=NO		# jpeg-6 compile in or link in?
 BUILD_FREETYPE=NO	# build with freetype support?
-BUILD_WITH_DGA=YES	# dga support compiled in
+BUILD_WITH_DGA=NO	# dga support compiled in
 BUILD_WITH_VIDMODE=YES	# vidmode support
 BUILD_WITH_JOYSTICK=NO	# joystick support
 

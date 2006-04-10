@@ -18,8 +18,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 /*
-** GLW_IMP.C
-**
 ** This file contains ALL Linux specific stuff having to do with the
 ** OpenGL refresh.  When a port is being made the following functions
 ** must be implemented by the port:
@@ -49,7 +47,6 @@ static int joy_fd;
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/keysym.h>
-#include <X11/cursorfont.h>
 
 #ifdef HAVE_DGA /* makefile */
 #include <X11/extensions/xf86dga.h>
@@ -206,8 +203,7 @@ static void install_grabs(void)
 	} else
 		XWarpPointer(dpy, None, win, 0, 0, 0, 0, vid.width / 2, vid.height / 2);
 
-	if (vid_grabmouse->value)
-		XGrabKeyboard(dpy, win, False, GrabModeAsync, GrabModeAsync, CurrentTime);
+	XGrabKeyboard(dpy, win, False, GrabModeAsync, GrabModeAsync, CurrentTime);
 
 	mouse_active = true;
 
@@ -485,19 +481,37 @@ static void HandleEvents(void)
 
 		case MotionNotify:
 			if (mouse_active) {
+#ifdef HAVE_XF86_DGA
 				if (dgamouse) {
 					mx += (event.xmotion.x + win_x) * sensitivity->value;
 					my += (event.xmotion.y + win_y) * sensitivity->value;
 				}
 				else
+#endif /* HAVE_XF86_DGA */
 				{
-					mx += ((int)event.xmotion.x - mwx) * sensitivity->value;
-					my += ((int)event.xmotion.y - mwy) * sensitivity->value;
-					old_mouse_x = mwx = event.xmotion.x;
-					old_mouse_y = mwy = event.xmotion.y;
+					if (vid_grabmouse->value) {
+						int xoffset = ((int)event.xmotion.x - (int)(vid.width / 2));
+						int yoffset = ((int)event.xmotion.y - (int)(vid.height / 2));
 
-					if (mx || my)
-						dowarp = true;
+						if (xoffset != 0 || yoffset != 0) {
+
+							mx += xoffset;
+							my += yoffset;
+
+							XSelectInput(dpy, win, X_MASK & ~PointerMotionMask);
+							XWarpPointer(dpy, None, win, 0, 0, 0, 0,
+											(vid.width / 2),(vid.height / 2));
+							XSelectInput(dpy, win, X_MASK);
+						}
+					} else {
+						mx += ((int)event.xmotion.x - mwx) * sensitivity->value;
+						my += ((int)event.xmotion.y - mwy) * sensitivity->value;
+						old_mouse_x = mwx = event.xmotion.x;
+						old_mouse_y = mwy = event.xmotion.y;
+
+						if (mx || my)
+							dowarp = true;
+					}
 				}
 #if 0
 				if ( mx > vid.width * sensitivity->value ) mx = vid.width;
@@ -568,6 +582,15 @@ static void HandleEvents(void)
 				XUngrabPointer( dpy, CurrentTime);
 			break;
 		}
+	}
+
+	if (vid_grabmouse->modified)
+	{
+		vid_grabmouse->modified = false;
+		if ( ! vid_grabmouse->value )
+			XUngrabPointer(dpy, CurrentTime);
+		else
+			XGrabPointer(dpy, win, True, 0, GrabModeAsync, GrabModeAsync, win, None, CurrentTime);
 	}
 
 	if (dowarp && vid_grabmouse->value)
@@ -747,7 +770,6 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		MajorVersion = MinorVersion = 0;
 
 		int i, best_fit, best_dist, dist, x, y;
-		int actualWidth, actualHeight;
 
 		XF86VidModeGetAllModeLines(dpy, scrnum, &num_vidmodes, &vidmodes);
 
@@ -771,11 +793,11 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 			}
 
 			if (best_fit != -1) {
-				actualWidth = vidmodes[best_fit]->hdisplay;
-				actualHeight = vidmodes[best_fit]->vdisplay;
-
 				// change to the mode
 				XF86VidModeSwitchToMode(dpy, scrnum, vidmodes[best_fit]);
+				XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
+				width = vidmodes[best_fit]->hdisplay;
+				height = vidmodes[best_fit]->vdisplay;
 				vidmode_active = true;
 
 				if (XF86VidModeGetGamma(dpy, scrnum, &oldgamma)) {
@@ -786,9 +808,6 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 					vid_gamma->modified = true;
 					ri.Con_Printf( PRINT_ALL, "Using hardware gamma\n");
 				}
-
-				// Move the viewport to top left
-				XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
 			} else {
 				fullscreen = false;
 				vidmode_active = false;
