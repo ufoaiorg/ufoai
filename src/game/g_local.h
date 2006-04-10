@@ -374,6 +374,8 @@ typedef struct
 	char		userinfo[MAX_INFO_STRING];
 	char		netname[16];
 
+	// the number of the team for this player
+	// 0 is reserved for civilians and critters
 	int			team;
 	qboolean	spectator;			// client is a spectator
 	qboolean	ai;					// client controlled by ai
