@@ -803,9 +803,9 @@ void RS_MarkResearchable ( void );
 #define MAX_EMPLOYEES 1024
 #define MAX_EMPLOYEES_IN_BUILDING 64
 // TODO:
-// MAX_EMPLOYEES_IN_BUILDING should be redefined by a config variable that is lab/workshop/quaters-specific
+// MAX_EMPLOYEES_IN_BUILDING should be redefined by a config variable that is lab/workshop/quarters-specific
 // e.g.:
-// if ( !maxEmployeesInQuater ) maxEmployeesInQuater = MAX_EMPLOYEES_IN_BUILDING;
+// if ( !maxEmployeesInQuarter ) maxEmployeesInQuarter = MAX_EMPLOYEES_IN_BUILDING;
 // if ( !maxEmployeesWorkersInLab ) maxEmployeesWorkersInLab = MAX_EMPLOYEES_IN_BUILDING;
 // if ( !maxEmployeesInWorkshop ) maxEmployeesInWorkshop = MAX_EMPLOYEES_IN_BUILDING;
 
@@ -831,7 +831,7 @@ typedef struct employee_s
 
 	char speed;			// Speed of this Worker/Scientist at research/construction.
 
-	struct building_s *quaters;	// The quater this employee is assigned to. (all except EMPL_ROBOT)
+	struct building_s *quarters;	// The quarter this employee is assigned to. (all except EMPL_ROBOT)
 	struct building_s *lab;		// The lab this scientist is working in. (only EMPL_SCIENTIST)
 	struct building_s *workshop;	// The lab this worker is working in. (only EMPL_WORKER)
 	//struct building_s *sickbay;	// The sickbay this employee is medicaly treated in. (all except EMPL_ROBOT ... since all can get injured.)
@@ -875,7 +875,7 @@ typedef enum
 {
 	B_MISC,
 	B_LAB,
-	B_QUATERS,
+	B_QUARTERS,
 	B_WORKSHOP,
 	B_HANGAR
 } buildingType_t;
@@ -891,7 +891,7 @@ typedef struct building_s
 	float	energy, workerCosts, produceTime, fixCosts, varCosts;
 	int	production, level, id, timeStart, buildTime, techLevel, notUpOn;
 
-	int maxWorkers, minWorkers, assignedWorkers; // TODO: remove these and replace them with the employee_s struct
+	int	maxWorkers, minWorkers, assignedWorkers; // TODO: remove these and replace them with the employee_s struct
 	// A list of employees assigned to this building.
 	struct employees_s assigned_employees;
 

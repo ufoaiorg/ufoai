@@ -149,7 +149,7 @@ IN
 	location: where to look for people
 		0 = all in base
 		1 = all in labs
-		2 = all in quarters
+		2 = all in quatrers
 		4 = all in workshops
 OUT
 	B_HowManyPeopleInBase2	number of the counted people
@@ -631,6 +631,9 @@ void MN_RepairBuilding( void )
 		baseCurrent->buildingCurrent->timeStart = ccs.date.day;
 	}
 	else if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] == B_REPAIRING )
+		// FIXME: Having no credits will maybe lead to a repairing without any costs after
+		//        getting to some money. The timeStart + repairtime can be less or equal than the
+		//        current day
 		if ( ccs.credits )
 		{
 // 			CL_DateConvert( &ccs.date, &day, &month );
@@ -645,7 +648,7 @@ void MN_RepairBuilding( void )
 				baseCurrent->buildingCurrent->condition[baseCurrent->buildingCurrent->howManyOfThisType] = BUILDINGCONDITION;
 			}
 			else
-				ccs.credits -= REPAIRCOSTS;
+				CL_UpdateCredits( ccs.credits - REPAIRCOSTS );
 		}
 
 }
@@ -924,21 +927,9 @@ void MN_ParseBuildings( char *id, char **text )
 	Q_strncpyz( building->name, id, MAX_VAR );
 
 	//set standard values
-	building->buildingStatus[0] = B_NOT_SET;
 	building->techLevel = 1;
-	building->notUpOn = 0;
-	building->used = 0;
 	building->visible = true;
-	building->energy = 0;
-	building->varCosts = 0;
-	building->workerCosts = 0;
-	building->minWorkers = 0;
-	building->maxWorkers = 0;
-	building->moreThanOne = 0;
-	building->assignedWorkers = 0;
-	building->howManyOfThisType = 0;
 	building->condition[0] = BUILDINGCONDITION;
-	building->buildingType = B_MISC;
 	building->id = numBuildings;
 
 	numBuildings++;
@@ -985,14 +976,14 @@ void MN_ParseBuildings( char *id, char **text )
 				building->buildingType = B_LAB;
 			} else if ( !Q_strncmp( token, "hangar", 6 ) ) {
 				building->buildingType = B_HANGAR;
-			} else if ( !Q_strncmp( token, "quaters", 7 ) ){
-				building->buildingType = B_QUATERS;
+			} else if ( !Q_strncmp( token, "quarters", 7 ) ){
+				building->buildingType = B_QUARTERS;
 			} else if ( !Q_strncmp( token, "workshop", 8 ) ){
 				building->buildingType = B_WORKSHOP;
 			}
 		}
 		else
-		if ( !Q_strncmp( token, "max_employees", sizeof("max_employees") ) ) {
+		if ( !Q_strncmp( token, "max_employees", 13 ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			employees_in_building = &building->assigned_employees;
@@ -1003,7 +994,7 @@ void MN_ParseBuildings( char *id, char **text )
 			}
 		}
 		else
-		if ( !Q_strncmp( token, "employees_firstbase", sizeof("employees_firstbase") ) ) {
+		if ( !Q_strncmp( token, "employees_firstbase", 19 ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			if (*token) {
@@ -1018,10 +1009,12 @@ void MN_ParseBuildings( char *id, char **text )
 					employee = employees_in_building->assigned[employees_in_building->numEmployees];
 					employees_in_building->numEmployees++;
 					memset( employee, 0, sizeof( employee_t ) );
+#if 0 // not needed - everything is null
 					employee->type = EMPL_UNDEF;
-					employee->quaters = NULL;		// just in case
+					employee->quarters = NULL;		// just in case
 					employee->lab = NULL;			// just in case
 					employee->combat_stats = NULL;	// just in case
+#endif
 				}
 			}
 		}
@@ -1048,6 +1041,9 @@ void MN_ParseBuildings( char *id, char **text )
 
 	} while ( *text );
 
+	// now copy all buildings to all bases
+	// this is needed because every building in every base
+	// can have altered parameters
 	for ( i = 1; i < MAX_BASES; i++ )
 		for ( j = 0; j < numBuildings; j++ )
 		{
@@ -1075,7 +1071,7 @@ void MN_InitEmployees ( void )
 	building_t *quarters[MAX_BUILDINGS];	// a list of all available quarters
 	int numQuarters = 0;				// total number of quarters
 	int last_freeQuarter = 0;			// remembers the last quarter where a free space was found to speed up the thing a bit.
-	
+
 	// Loop trough the buildings to assign the type of employee.
 	// TODO: this right now assumes that there are not more employees than free quarter space ... but it will not puke if there are.
 	for ( i = 0; i < numBuildings; i++ ) {
@@ -1088,7 +1084,7 @@ void MN_InitEmployees ( void )
 			employee = employees_in_building->assigned[j];
 			switch ( building->buildingType )
 			{
-			case B_QUATERS:
+			case B_QUARTERS:
 				quarters[numQuarters++] = building;	// appending this quarter to the list of quarters.
 				employee->type = EMPL_SOLDIER;
 				break;
@@ -1107,7 +1103,7 @@ void MN_InitEmployees ( void )
 	}
 
 	// Generate stats for employees and assign the quarter-less to quarters.
-	// TODO: also remove them all from their assigned buildings except quaters .. this was just needed for firstbase.
+	// TODO: also remove them all from their assigned buildings except quarters .. this was just needed for firstbase.
 	for ( i=0; i < numEmployees; i++) {
 		employee = &employees[i];
 		switch ( employee->type )
@@ -1148,7 +1144,7 @@ void MN_InitEmployees ( void )
 /*======================
 MN_EmployeeIsFree
 
-Returns true if the employee is only assigned to quaters, otehrwise false.
+Returns true if the employee is only assigned to quarters, otherwise false.
 ======================*/
 byte MN_EmployeeIsFree ( employee_t *employee )
 {
@@ -1158,7 +1154,7 @@ byte MN_EmployeeIsFree ( employee_t *employee )
 /*======================
 MN_AssignEmployee
 
-Add a free employee from the quaters to building_dest. (the employee will be linked to both of them)
+Add a free employee from the quarters to building_dest. (the employee will be linked to both of them)
 
 IN
 	building_dest:	Which building to assign the employee to.
@@ -1168,7 +1164,7 @@ OUT
 	boolean MN_AssignEmployee: returns true if adding was possible/sane otherwise false.
 
 TODO: Add check for destination building vs. employee_type and abort if they do not match.
-TODO: Possibility to add emoployees to quaters (from the global list)
+TODO: Possibility to add emoployees to quarters (from the global list)
 ======================*/
 byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type )
 {
@@ -1182,8 +1178,8 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 		return false;
 	}
 
-	if ( building_dest->buildingType == B_QUATERS  ) {
-		Com_DPrintf( _("MN_AssignEmployee: No need to move from quaters to quaters.\n") );
+	if ( building_dest->buildingType == B_QUARTERS  ) {
+		Com_DPrintf( _("MN_AssignEmployee: No need to move from quarters to quarters.\n") );
 		return false;
 	}
 
@@ -1191,12 +1187,12 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 
 	// check if there is enough space to add one employee in the destination building.
 	if ( employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
-		// get free employee from quaters in current base
+		// get free employee from quarters in current base
 		for ( i = 0; i < numBuildings; i++ ) {
 			building_source = &bmBuildings[baseCurrent->id][i];
 
-			// check if there is a free employee in the quaters.
-			if ( building_source->buildingType == B_QUATERS ) {
+			// check if there is a free employee in the quarters.
+			if ( building_source->buildingType == B_QUARTERS ) {
 				employees_in_building = &building_source->assigned_employees;
 
 				for ( j = 0; j < employees_in_building->numEmployees; j++ ) {
@@ -1225,7 +1221,7 @@ MN_RemoveEmployee
 Remove one employee from building.
 
 IN
-	building:	Which building to remove the employee from. Can be any type of building that has employees in it. If quaters are given the employee will be removed from every other building as well.
+	building:	Which building to remove the employee from. Can be any type of building that has employees in it. If quarters are given the employee will be removed from every other building as well.
 
 OUT
 	boolean MN_AssignEmployee: returns true if adding was possible/sane otherwise false.
@@ -1255,9 +1251,9 @@ byte MN_RemoveEmployee ( building_t *building )
 	// Check where else (ehich buildings) the employee needs to be removed.
 	switch ( building->buildingType )
 	{
-	case B_QUATERS:
-		// unlink the employee from quaters and every other building. (he is now only stored in the global list)
-		employee->quaters = NULL;
+	case B_QUARTERS:
+		// unlink the employee from quarters and every other building. (he is now only stored in the global list)
+		employee->quarters = NULL;
 
 		//remove the employee from the other buildings (i.e their employee-list) they are listed as well before unlinking them.
 		if ( employee->lab ) {
@@ -1321,18 +1317,18 @@ int MN_EmloyeesInBase2 ( employeeType_t employee_type, byte free_only )
 	building_t *building = NULL;
 	employees_t *employees_in_building = NULL;
 	employee_t *employee = NULL;
-	
+
 	if ( !baseCurrent ) {
 		Com_DPrintf( _("B_EmloyeesInBase2: No Base set.\n") );
 		return 0;
 	}
-	
+
 	for ( i = 0; i < numBuildings; i++ ) {
 		building = &bmBuildings[baseCurrent->id][i];
-		if (building->buildingType == B_QUATERS) {
-			/* quaters found */
+		if (building->buildingType == B_QUARTERS) {
+			/* quarters found */
 			employees_in_building = &building->assigned_employees;
-			
+
 			//loop trough building and add to numEmployeesInBase if a match is found.
 			for ( j = 0; j < employees_in_building->numEmployees; j++ ) {
 				employee = employees_in_building->assigned[j];
