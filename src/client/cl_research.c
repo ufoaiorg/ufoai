@@ -460,7 +460,8 @@ void RS_AssignScientist( void )
 	// check if there is a free lab available
 	if ( ! tech->lab ) {
 		//MN_GetFreeBuilding( B_LAB, building );
-		building = MN_GetFreeBuilding( B_LAB );
+		//building = MN_GetFreeBuilding( B_LAB );
+		building = MN_GetUnusedLab();
 		if ( building ) {
 			// assign the lab to the tech:
 			tech->lab = building;

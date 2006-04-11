@@ -1087,7 +1087,7 @@ IN
 OUT
 	building	the (empty) building.
 ======================*/
-building_t * MN_GetFreeBuilding( buildingType_t type ) //, building_t *building )
+building_t * MN_GetFreeBuilding( buildingType_t type )
 {
 	int i;
 	building_t *building = NULL;
@@ -1098,8 +1098,6 @@ building_t * MN_GetFreeBuilding( buildingType_t type ) //, building_t *building 
 			if ( building->buildingType == type ) {
 				/* found correct building-type */
 				employees_in_building = &building->assigned_employees;
-				// TODO: make this if ( employees_in_building->numEmployees == 0 )
-				// TODO: and chek if the building is used for research/production already
 				if ( employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
 					/* the bulding has free space for employees */
 					return building;
@@ -1108,6 +1106,37 @@ building_t * MN_GetFreeBuilding( buildingType_t type ) //, building_t *building 
 	}
 	/* no buildings available at all, no correct building type found or no building free */
 	return NULL;
+}
+
+/*======================
+MN_GetUnusedLab
+
+Gets a lab in the current base of a given type with no research running.
+
+OUT
+	building	the (unused) building.
+======================*/
+building_t * MN_GetUnusedLab( void )
+{
+	int i,j;
+	building_t *building = NULL;
+	technology_t *tech = NULL;	
+	byte found = false;
+	for ( i = 0; i < numBuildings; i++ ) {
+		building = &bmBuildings[baseCurrent->id][i];
+		if ( building->buildingType == B_LAB ) {
+			for ( j=0; j < numTechnologies; j++ ) {
+				tech = &technologies[j];
+				if ( tech->lab == building) {
+					found = true;
+					continue;
+				}
+			}
+			if ( !found)
+				return building;
+		}
+	}
+	return building;
 }
 
 /*======================
@@ -1139,8 +1168,10 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 {
 	int i, j;
 	employee_t *employee = NULL;
-	employees_t *employees_in_building = NULL;
 	building_t *building_source = NULL;
+	employees_t *employees_in_building_dest = NULL;
+	employees_t *employees_in_building_source = NULL;
+	
 
 	if ( !baseCurrent ) {
 		Com_DPrintf( _("MN_AssignEmployee: No Base set\n") );
@@ -1152,28 +1183,36 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 		return false;
 	}
 
-	employees_in_building = &building_dest->assigned_employees;
-
+	employees_in_building_dest = &building_dest->assigned_employees;
+	Com_DPrintf("MN_AssignEmployee: num %i\n", employees_in_building_dest->numEmployees );
+	Com_DPrintf("MN_AssignEmployee: max %i\n", employees_in_building_dest->maxEmployees );
+	employee = NULL;
 	// check if there is enough space to add one employee in the destination building.
-	if ( employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
+	if ( employees_in_building_dest->numEmployees < employees_in_building_dest->maxEmployees ) {
 		// get free employee from quarters in current base
 		for ( i = 0; i < numBuildings; i++ ) {
 			building_source = &bmBuildings[baseCurrent->id][i];
 
 			// check if there is a free employee in the quarters.
 			if ( building_source->buildingType == B_QUARTERS ) {
-				employees_in_building = &building_source->assigned_employees;
-
-				for ( j = 0; j < employees_in_building->numEmployees; j++ ) {
-					employee = employees_in_building->assigned[j];
+				employees_in_building_source = &building_source->assigned_employees;
+				for ( j = 0; j < employees_in_building_source->numEmployees; j++ ) {
+					employee = employees_in_building_source->assigned[j];
 					if ( ( employee->type == employee_type) && MN_EmployeeIsFree(employee) )
 						break;
+					else
+						employee = NULL;
 				}
 			}
 		}
 		// if an employee was found add it to to the destination building
 		if ( employee ) {
-			employees_in_building->assigned[employees_in_building->numEmployees++] = employee;
+			employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee;
+			employee->lab = building_dest;
+			/* DEBUG */
+			Com_DPrintf("MN_AssignEmployee: build %s\n", building_dest->name );
+			Com_DPrintf("MN_AssignEmployee: num %i\n", employees_in_building_dest->numEmployees );
+			Com_DPrintf("MN_AssignEmployee: max %i\n", employees_in_building_dest->maxEmployees );
 			return true;
 		} else {
 			Com_Printf(_("No employee available in this base.\n"));

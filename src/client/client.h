@@ -1039,7 +1039,7 @@ typedef struct base_s
 } base_t;
 
 extern	base_t	bmBases[MAX_BASES];					// A global list of _all_ bases.
-extern	base_t	*baseCurrent;						// Currently displayed/accessed base.
+extern	base_t	*baseCurrent;							// Currently displayed/accessed base.
 extern	building_t	bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global list of _all_ buildings (even unbuilt) in all bases.
 extern	int numBuildings;								// The global number of entries in the bmBuildings list.
 
@@ -1061,6 +1061,7 @@ void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version );
 void CL_UpdateHireVar ( void );
 
 building_t * MN_GetFreeBuilding( buildingType_t type );
+building_t * MN_GetUnusedLab( void );
 int MN_EmloyeesInBase2 ( employeeType_t employee_type, byte free_only );
 byte MN_RemoveEmployee ( building_t *building );
 byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type );
