@@ -819,6 +819,7 @@ void CL_CheckResearchStatus ( void )
 				else
 					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("%i researches finished\n"), newResearch+1 );
 				MN_ClearBuilding( tech->lab );
+				tech->lab = NULL;
 				RS_MarkResearched( tech->id );
 				researchListPos = 0;
 				newResearch++;

@@ -1063,13 +1063,11 @@ void MN_InitEmployees ( void )
 		}
 	}
 
-	Com_Printf( "removing ...\n" );
 	// Remove them all from their assigned buildings except quarters .. this was just needed for firstbase.
 	for ( i = 0; i < numBuildings; i++ ) {
 		building = &bmBuildings[0][i];
 		employees_in_building = &building->assigned_employees;
 		if ( building->buildingType != B_QUARTERS ) {
-			Com_Printf( " %s numEmployees = 0\n", building->name );
 			employees_in_building->numEmployees = 0;
 		}
 	}
