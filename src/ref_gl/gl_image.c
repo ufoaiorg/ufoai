@@ -1377,46 +1377,46 @@ void GL_MipMap (byte *in, int width, int height)
 	}
 }
 
-#define FILTER_SIZE 5
-#define BLUR_FILTER 0
-#define LIGHT_BLUR   1
-#define EDGE_FILTER 2
-#define EMBOSS_FILTER 3
+#define FILTER_SIZE	5
+#define BLUR_FILTER	0
+#define LIGHT_BLUR	1
+#define EDGE_FILTER	2
+#define EMBOSS_FILTER	3
 
 float FilterMatrix[][FILTER_SIZE][FILTER_SIZE] =
 {
-   // regular blur
-   {
-      {0, 0, 0, 0, 0},
-      {0, 1, 1, 1, 0},
-      {0, 1, 1, 1, 0},
-      {0, 1, 1, 1, 0},
-      {0, 0, 0, 0, 0},
-   },
-   // light blur
-   {
-      {0, 0, 0, 0, 0},
-      {0, 1, 1, 1, 0},
-      {0, 1, 4, 1, 0},
-      {0, 1, 1, 1, 0},
-      {0, 0, 0, 0, 0},
-   },
-   // find edges
-   {
-      {0,  0,  0,  0, 0},
-      {0, -1, -1, -1, 0},
-      {0, -1,  8, -1, 0},
-      {0, -1, -1, -1, 0},
-      {0,  0,  0,  0, 0},
-   },
-   // emboss
-   {
-      {-1, -1, -1, -1, 0},
-      {-1, -1, -1,  0, 1},
-      {-1, -1,  0,  1, 1},
-      {-1,  0,  1,  1, 1},
-      { 0,  1,  1,  1, 1},
-   }
+	// regular blur
+	{
+		{0, 0, 0, 0, 0},
+		{0, 1, 1, 1, 0},
+		{0, 1, 1, 1, 0},
+		{0, 1, 1, 1, 0},
+		{0, 0, 0, 0, 0},
+	},
+	// light blur
+	{
+		{0, 0, 0, 0, 0},
+		{0, 1, 1, 1, 0},
+		{0, 1, 4, 1, 0},
+		{0, 1, 1, 1, 0},
+		{0, 0, 0, 0, 0},
+	},
+	// find edges
+	{
+		{0,  0,  0,  0, 0},
+		{0, -1, -1, -1, 0},
+		{0, -1,  8, -1, 0},
+		{0, -1, -1, -1, 0},
+		{0,  0,  0,  0, 0},
+	},
+	// emboss
+	{
+		{-1, -1, -1, -1, 0},
+		{-1, -1, -1,  0, 1},
+		{-1, -1,  0,  1, 1},
+		{-1,  0,  1,  1, 1},
+		{ 0,  1,  1,  1, 1},
+	}
 };
 
 /*
@@ -1433,122 +1433,122 @@ All credit due
 */
 void R_FilterTexture (int filterindex, unsigned int *data, int width, int height, float factor, float bias, qboolean greyscale, GLenum GLBlendOperator)
 {
-   int i;
-   int x;
-   int y;
-   int filterX;
-   int filterY;
-   unsigned int *temp;
+	int i;
+	int x;
+	int y;
+	int filterX;
+	int filterY;
+	unsigned int *temp;
 
-   // allocate a temp buffer
-   temp = malloc (width * height * 4);
+	// allocate a temp buffer
+	temp = malloc (width * height * 4);
 
-   for (x = 0; x < width; x++)
-   {
-      for (y = 0; y < height; y++)
-      {
-         float rgbFloat[3] = {0, 0, 0};
+	for (x = 0; x < width; x++)
+	{
+	for (y = 0; y < height; y++)
+	{
+		float rgbFloat[3] = {0, 0, 0};
 
-         for (filterX = 0; filterX < FILTER_SIZE; filterX++)
-         {
-            for (filterY = 0; filterY < FILTER_SIZE; filterY++)
-            {
-               int imageX = (x - (FILTER_SIZE / 2) + filterX + width) % width;
-               int imageY = (y - (FILTER_SIZE / 2) + filterY + height) % height;
+		for (filterX = 0; filterX < FILTER_SIZE; filterX++)
+		{
+			for (filterY = 0; filterY < FILTER_SIZE; filterY++)
+			{
+				int imageX = (x - (FILTER_SIZE / 2) + filterX + width) % width;
+				int imageY = (y - (FILTER_SIZE / 2) + filterY + height) % height;
 
-               // casting's a unary operation anyway, so the othermost set of brackets in the left part
-               // of the rvalue should not be necessary... but i'm paranoid when it comes to C...
-               rgbFloat[0] += ((float) ((byte *) &data[imageY * width + imageX])[0]) * FilterMatrix[filterindex][filterX][filterY];
-               rgbFloat[1] += ((float) ((byte *) &data[imageY * width + imageX])[1]) * FilterMatrix[filterindex][filterX][filterY];
-               rgbFloat[2] += ((float) ((byte *) &data[imageY * width + imageX])[2]) * FilterMatrix[filterindex][filterX][filterY];
-            }
-         }
+				// casting's a unary operation anyway, so the othermost set of brackets in the left part
+				// of the rvalue should not be necessary... but i'm paranoid when it comes to C...
+				rgbFloat[0] += ((float) ((byte *) &data[imageY * width + imageX])[0]) * FilterMatrix[filterindex][filterX][filterY];
+				rgbFloat[1] += ((float) ((byte *) &data[imageY * width + imageX])[1]) * FilterMatrix[filterindex][filterX][filterY];
+				rgbFloat[2] += ((float) ((byte *) &data[imageY * width + imageX])[2]) * FilterMatrix[filterindex][filterX][filterY];
+			}
+		}
 
-         // multiply by factor, add bias, and clamp
-         for (i = 0; i < 3; i++)
-         {
-            rgbFloat[i] *= factor;
-            rgbFloat[i] += bias;
+		// multiply by factor, add bias, and clamp
+		for (i = 0; i < 3; i++)
+		{
+			rgbFloat[i] *= factor;
+			rgbFloat[i] += bias;
 
-            if (rgbFloat[i] < 0) rgbFloat[i] = 0;
-            if (rgbFloat[i] > 255) rgbFloat[i] = 255;
-         }
+			if (rgbFloat[i] < 0) rgbFloat[i] = 0;
+			if (rgbFloat[i] > 255) rgbFloat[i] = 255;
+		}
 
-         if (greyscale)
-         {
-            // NTSC greyscale conversion standard
-            float avg = (rgbFloat[0] * 30 + rgbFloat[1] * 59 + rgbFloat[2] * 11) / 100;
+		if (greyscale)
+		{
+			// NTSC greyscale conversion standard
+			float avg = (rgbFloat[0] * 30 + rgbFloat[1] * 59 + rgbFloat[2] * 11) / 100;
 
-            // divide by 255 so GL operations work as expected
-            rgbFloat[0] = avg / 255.0;
-            rgbFloat[1] = avg / 255.0;
-            rgbFloat[2] = avg / 255.0;
-         }
+			// divide by 255 so GL operations work as expected
+			rgbFloat[0] = avg / 255.0;
+			rgbFloat[1] = avg / 255.0;
+			rgbFloat[2] = avg / 255.0;
+		}
 
-         // write to temp - first, write data in (to get the alpha channel quickly and
-         // easily, which will be left well alone by this particular operation...!)
-         temp[y * width + x] = data[y * width + x];
+		// write to temp - first, write data in (to get the alpha channel quickly and
+		// easily, which will be left well alone by this particular operation...!)
+		temp[y * width + x] = data[y * width + x];
 
-         // now write in each element, applying the blend operator.  blend
-         // operators are based on standard OpenGL TexEnv modes, and the
-         // formulae are derived from the OpenGL specs (http://www.opengl.org).
-         for (i = 0; i < 3; i++)
-         {
-            // divide by 255 so GL operations work as expected
-            float TempTarget;
-            float SrcData = ((float) ((byte *) &data[y * width + x])[i]) / 255.0;
+		// now write in each element, applying the blend operator.  blend
+		// operators are based on standard OpenGL TexEnv modes, and the
+		// formulae are derived from the OpenGL specs (http://www.opengl.org).
+		for (i = 0; i < 3; i++)
+		{
+			// divide by 255 so GL operations work as expected
+			float TempTarget;
+			float SrcData = ((float) ((byte *) &data[y * width + x])[i]) / 255.0;
 
-            switch (GLBlendOperator)
-            {
-            case GL_ADD:
-               TempTarget = rgbFloat[i] + SrcData;
-               break;
+			switch (GLBlendOperator)
+			{
+				case GL_ADD:
+					TempTarget = rgbFloat[i] + SrcData;
+					break;
 
-            case GL_BLEND:
-               // default is FUNC_ADD here
-               // CsS + CdD works out as Src * Dst * 2
-               TempTarget = rgbFloat[i] * SrcData * 2.0;
-               break;
+				case GL_BLEND:
+					// default is FUNC_ADD here
+					// CsS + CdD works out as Src * Dst * 2
+					TempTarget = rgbFloat[i] * SrcData * 2.0;
+					break;
 
-            case GL_DECAL:
-               // same as GL_REPLACE unless there's alpha, which we ignore for this
-            case GL_REPLACE:
-               TempTarget = rgbFloat[i];
-               break;
+				case GL_DECAL:
+				// same as GL_REPLACE unless there's alpha, which we ignore for this
+				case GL_REPLACE:
+					TempTarget = rgbFloat[i];
+					break;
 
 #ifndef _WIN32
-            case GL_ADD_SIGNED:
-               TempTarget = (rgbFloat[i] + SrcData) - 0.5;
-               break;
+				case GL_ADD_SIGNED:
+					TempTarget = (rgbFloat[i] + SrcData) - 0.5;
+					break;
 #endif
-            case GL_MODULATE:
-               // same as default
-            default:
-               TempTarget = rgbFloat[i] * SrcData;
-               break;
-            }
+				case GL_MODULATE:
+				// same as default
+				default:
+					TempTarget = rgbFloat[i] * SrcData;
+					break;
+				}
 
-            // multiply back by 255 to get the proper byte scale
-            TempTarget *= 255.0;
+				// multiply back by 255 to get the proper byte scale
+				TempTarget *= 255.0;
 
-            // bound the temp target again now, cos the operation may have thrown it out
-            if (TempTarget < 0) TempTarget = 0;
-            if (TempTarget > 255) TempTarget = 255;
+				// bound the temp target again now, cos the operation may have thrown it out
+				if (TempTarget < 0) TempTarget = 0;
+				if (TempTarget > 255) TempTarget = 255;
 
-            // and copy it in
-            ((byte *) &temp[y * width + x])[i] = (byte) TempTarget;
-         }
-      }
-   }
+				// and copy it in
+				((byte *) &temp[y * width + x])[i] = (byte) TempTarget;
+			}
+		}
+	}
 
-   // copy temp back to data
-   for (i = 0; i < (width * height); i++)
-   {
-      data[i] = temp[i];
-   }
+	// copy temp back to data
+	for (i = 0; i < (width * height); i++)
+	{
+		data[i] = temp[i];
+	}
 
-   // release the temp buffer
-   free (temp);
+	// release the temp buffer
+	free (temp);
 }
 /*
 ===============
@@ -1616,8 +1616,10 @@ qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qb
 		}
 	}
 	//emboss filter
-	if (gl_embossfilter->value && mipmap && type != it_skin)
+	if (gl_embossfilter->value && type != it_skin)
+	{
 		R_FilterTexture (EMBOSS_FILTER, data, width, height, 1, 128, true, GL_MODULATE);
+	}
 
 	if (scaled_width == width && scaled_height == height)
 	{
