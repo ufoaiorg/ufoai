@@ -38,7 +38,7 @@ static SDL_CD	*cd_id;
 static float	cdvolume = 1.0;
 static int	lastTrack = 0;
 
-cvar_t	cd_volume;
+cvar_t	*cd_volume;
 cvar_t	*cd_nocd;
 cvar_t	*cd_dev;
 
