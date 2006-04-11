@@ -205,8 +205,8 @@ lm_t *CL_AddLocalModel (char *model, char *particle, vec3_t origin, vec3_t angle
 		Sys_Error( _("Too many local models\n") );
 
 	memset( lm, 0, sizeof(lm_t) );
-	strncpy( lm->name, model, MAX_VAR );
-	strncpy( lm->particle, particle, MAX_VAR );
+	Q_strncpyz( lm->name, model, MAX_VAR );
+	Q_strncpyz( lm->particle, particle, MAX_VAR );
 	VectorCopy( origin, lm->origin );
 	VectorCopy( angles, lm->angles );
 	lm->num = num;
@@ -312,11 +312,11 @@ char *LE_GetAnim( char *anim, int right, int left, int state )
 	} else {
 		category = csi.ods[right].category;
 		type = csi.ods[right].type;
-		if ( left != NONE && !strcmp( csi.ods[right].type, "pistol" ) && !strcmp( csi.ods[left].type, "pistol" ) )
+		if ( left != NONE && !Q_strncmp( csi.ods[right].type, "pistol", 6 ) && !Q_strncmp( csi.ods[left].type, "pistol", 6 ) )
 			akimbo = true;
 	}
 
-	if ( !strcmp( anim, "stand" ) || !strcmp( anim, "walk" ) )
+	if ( !Q_strncmp( anim, "stand", 5 ) || !Q_strncmp( anim, "walk", 4 ) )
 	{
 		strcpy( mod, anim );
 		mod += strlen( anim );

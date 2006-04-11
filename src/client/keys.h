@@ -172,12 +172,14 @@ typedef enum
 	MSG_MENU
 } msg_mode_t;
 
+#define		MAXCMDLINE	256
+
 extern char		*keybindings[256];
 extern	int		key_repeats[256];
 
 extern	int	anykeydown;
 extern	int msg_mode;
-extern char msg_buffer[];
+extern char msg_buffer[MAXCMDLINE];
 extern	int msg_bufferlen;
 
 void Key_Event (int key, qboolean down, unsigned time);

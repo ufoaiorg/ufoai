@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -578,7 +578,7 @@ void SCR_PlayCinematic (char *arg)
 
 	cl.cinematicframe = 0;
 	dot = strstr (arg, ".");
-	if (dot && !strcmp (dot, ".pcx"))
+	if (dot && !Q_strncmp (dot, ".pcx", 4))
 	{	// static pcx image
 		Com_sprintf (name, sizeof(name), "pics/%s", arg);
 		SCR_LoadPCX (name, &cin.pic, &palette, &cin.width, &cin.height);

@@ -748,6 +748,7 @@ void CL_AddTargeting( void );
 #define NUM_BUYTYPES	4
 #define NUM_TEAMSKINS	4
 
+#if 0
 extern inventory_t teamInv[MAX_WHOLETEAM];
 extern inventory_t equipment;
 extern character_t wholeTeam[MAX_WHOLETEAM];
@@ -759,6 +760,7 @@ extern int deathMask;
 extern int equipType;
 extern int numHired;
 extern int hiredMask;
+#endif
 
 extern char *teamSkinNames[NUM_TEAMSKINS];
 

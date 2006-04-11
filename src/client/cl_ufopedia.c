@@ -27,7 +27,7 @@ void MN_UpDrawEntry( char *id )
 	technology_t* t;
 	for ( i = 0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strcmp( id, t->id ) ) {
+		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {
 			//Com_Printf(_("Displaying %s\n"), t->id); //DEBUG
 			Cvar_Set( "mn_uptitle", _(t->name) );
 			menuText[TEXT_UFOPEDIA] = _(t->description);
@@ -36,11 +36,11 @@ void MN_UpDrawEntry( char *id )
 			//Cvar_Set( "mn_upmodel_big", "" );
 			Cvar_Set( "mn_upimage_top", "base/empty" );
 			Cvar_Set( "mn_upimage_bottom", "base/empty" );
-			if ( strcmp( t->mdl_top, "" ) ) Cvar_Set( "mn_upmodel_top", t->mdl_top );
-			if ( strcmp( t->mdl_bottom, "" ) ) Cvar_Set( "mn_upmodel_bottom", t->mdl_bottom );
+			if ( *t->mdl_top ) Cvar_Set( "mn_upmodel_top", t->mdl_top );
+			if ( *t->mdl_bottom ) Cvar_Set( "mn_upmodel_bottom", t->mdl_bottom );
 			//if (strcmp(  t->mdl_big, "" ) ) Cvar_Set( "mn_upmodel_big", t->mdl_big );
-			if ( ( !strcmp( t->mdl_top, "" ) ) &&  ( strcmp( t->image_top, "" ) ) ) Cvar_Set( "mn_upimage_top", t->image_top );
-			if ( ( !strcmp( t->mdl_bottom, "" ) ) &&  ( strcmp( t->mdl_bottom, "" ) ) ) Cvar_Set( "mn_upimage_bottom", t->image_bottom );
+			if ( !*t->mdl_top && *t->image_top ) Cvar_Set( "mn_upimage_top", t->image_top );
+			if ( !*t->mdl_bottom && *t->mdl_bottom ) Cvar_Set( "mn_upimage_bottom", t->image_bottom );
 			//if ( entry->sound )
 			//{
 				// TODO: play the specified sound
@@ -55,7 +55,7 @@ void MN_UpDrawEntry( char *id )
 					for ( j = 0; j < csi.numODs; j++ ) {
 						//Com_Printf(_("MN_UpDrawEntry: id=%s\n"),  t->id);				//DEBUG
 						//Com_Printf(_("MN_UpDrawEntry: kurz=%s\n"),   csi.ods[j].kurz );	//DEBUG
-						if ( !strcmp( t->provides, csi.ods[j].kurz ) ) {
+						if ( !Q_strncmp( t->provides, csi.ods[j].kurz, MAX_VAR ) ) {
 							CL_ItemDescription( j );
 							//Com_Printf(_("MN_UpDrawEntry: drawing item-desc for %s\n"),  t->id); //DEBUG
 							break;
@@ -133,7 +133,7 @@ void MN_FindEntry_f ( void )
 			continue;
 		do
 		{
-			if ( !strcmp ( t->id, id ) ) {
+			if ( !Q_strncmp ( t->id, id, MAX_VAR ) ) {
 				upCurrent = t;
 				MN_UpDrawEntry( upCurrent->id );
 				return;
@@ -159,7 +159,7 @@ void MN_UpContent_f( void )
 	cp = upText;
 	for ( i = 0; i < numChapters; i++ )
 	{
-		strcpy( cp, upChapters[i].name );
+		Q_strncpyz( cp, upChapters[i].name, MAX_VAR );
 		cp += strlen( cp );
 		*cp++ = '\n';
 	}
@@ -305,7 +305,7 @@ void MN_ParseUpChapters( char *id, char **text )
 	// get name list body body
 	token = COM_Parse( text );
 
-	if ( !*text || strcmp( token, "{" ) ) {
+	if ( !*text || *token !='{' ) {
 		Com_Printf( _("MN_ParseUupChapters: chapter def \"%s\" without body ignored\n"), id );
 		return;
 	}
@@ -322,14 +322,14 @@ void MN_ParseUpChapters( char *id, char **text )
 			return;
 		}
 		memset( &upChapters[numChapters], 0, sizeof( pediaChapter_t ) );
-		strncpy( upChapters[numChapters].id, token, MAX_VAR );
+		Q_strncpyz( upChapters[numChapters].id, token, MAX_VAR );
 
 		// get the name
 		token = COM_EParse( text, errhead, id );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 		if ( *token == '_' ) token++;
-		strncpy( upChapters[numChapters].name, _(token), MAX_VAR );
+		Q_strncpyz( upChapters[numChapters].name, _(token), MAX_VAR );
 		//Com_Printf( _("MN_ParseUupChapters: parsed chapter %s \n"), upChapters[numChapters].id ); //DEBUG
 
 		numChapters++;

@@ -53,17 +53,20 @@ qboolean (*varFunc)( char *var );
 qboolean CheckOR( char **s );
 qboolean CheckAND( char **s );
 
-static void SkipWhiteSpaces( char **s ) {
+static void SkipWhiteSpaces( char **s )
+{
 	while ( **s == ' ' ) (*s)++;
 }
 
-static void NextChar( char **s ) {
+static void NextChar( char **s )
+{
 	(*s)++;
 	// skip white-spaces too
 	SkipWhiteSpaces( s );
 }
 
-static char *GetSwitchName( char **s ) {
+static char *GetSwitchName( char **s )
+{
 	int	pos = 0;
 
 	while ( **s > 32 && **s != '^' && **s != '|' && **s != '&' && **s != '!' && **s != '(' && **s != ')' ) {
@@ -75,7 +78,8 @@ static char *GetSwitchName( char **s ) {
 	return varName;
 }
 
-qboolean CheckOR( char **s ) {
+qboolean CheckOR( char **s )
+{
 	qboolean result = false;
 	int		goon = 0;
 
@@ -98,7 +102,8 @@ qboolean CheckOR( char **s ) {
 	return result;
 }
 
-qboolean CheckAND( char **s ) {
+qboolean CheckAND( char **s )
+{
 	qboolean result = true;
 	qboolean negate = false;
 	qboolean goon = false;
@@ -134,7 +139,8 @@ qboolean CheckAND( char **s ) {
 	return result;
 }
 
-qboolean CheckBEP( char *expr, qboolean (*varFuncParam)( char *var ) ) {
+qboolean CheckBEP( char *expr, qboolean (*varFuncParam)( char *var ) )
+{
 	qboolean result;
 	char	*str;
 
@@ -519,7 +525,7 @@ void CL_NewAircraft ( base_t* base, char* name )
 	for ( i = 0; i < numAircraft; i++ )
 	{
 		air = &aircraft[i];
-		if ( ! strcmp(air->title, name) )
+		if ( ! Q_strncmp(air->title, name, MAX_VAR) )
 		{
 			memcpy( &base->aircraft[base->numAircraftInBase], air, sizeof(aircraft_t) );
 			air = &base->aircraft[base->numAircraftInBase];
@@ -619,7 +625,7 @@ qboolean CL_StageSetDone( char *name )
 	int i;
 
 	for ( i = 0, set = &ccs.set[testStage->first]; i < testStage->num; i++, set++ )
-		if ( !strcmp( name, set->def->name ) )
+		if ( !Q_strncmp( name, set->def->name, MAX_VAR ) )
 		{
 			if ( set->done >= set->def->quota ) return true;
 			else return false;
@@ -669,7 +675,7 @@ stageState_t *CL_CampaignActivateStage( char *name )
 
 	for ( i = 0, stage = stages; i < numStages; i++, stage++ )
 	{
-		if ( !strcmp( stage->name, name ) )
+		if ( !Q_strncmp( stage->name, name, MAX_VAR ) )
 		{
 			// add it to the list
 			state = &ccs.stage[i];
@@ -712,7 +718,7 @@ void CL_CampaignEndStage( char *name )
 	int i;
 
 	for ( i = 0, state = ccs.stage; i < numStages; i++, state++ )
-		if ( !strcmp( state->def->name, name ) )
+		if ( !Q_strncmp( state->def->name, name, MAX_VAR ) )
 		{
 			state->active = false;
 			return;
@@ -746,7 +752,7 @@ void CL_CampaignAddMission( setState_t *set )
 	if ( set->def->expire.day )
 		mis->expire = Date_Add( ccs.date, set->def->expire );
 
-	if ( !strcmp( mis->def->name, "baseattack" ) )
+	if ( !Q_strncmp( mis->def->name, "baseattack", 10 ) )
 	{
 		baseCurrent = &bmBases[rand() % ccs.numBases];
 		mis->realPos[0] = baseCurrent->pos[0];
@@ -933,7 +939,7 @@ void CL_BuildingAircraftList_f ( void )
 		{
 			air = &bmBases[j].aircraft[i];
 			s = va("%s (%i/%i)\t%s\t%s\n", air->name, air->teamSize, air->size, CL_AircraftStatusToName( air ), bmBases[j].title );
-			strcat( aircraftListText, s );
+			Q_strcat( aircraftListText, sizeof(aircraftListText), s );
 		}
 	}
 
@@ -1251,7 +1257,7 @@ void CL_GameNew( void )
 	// get campaign
 	name = Cvar_VariableString( "campaign" );
 	for ( i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++ )
-		if ( !strcmp( name, curCampaign->name ) )
+		if ( !Q_strncmp( name, curCampaign->name, MAX_VAR ) )
 			break;
 
 	if ( i == numCampaigns )
@@ -1278,14 +1284,14 @@ void CL_GameNew( void )
 
 	// equipment
 	for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
-		if ( !strcmp( curCampaign->equipment, ed->name ) )
+		if ( !Q_strncmp( curCampaign->equipment, ed->name, MAX_VAR ) )
 			break;
 	if ( i != csi.numEDs )
 		ccs.eCampaign = *ed;
 
 	// market
 	for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
-		if ( !strcmp( curCampaign->market, ed->name ) )
+		if ( !Q_strncmp( curCampaign->market, ed->name, MAX_VAR ) )
 			break;
 	if ( i != csi.numEDs )
 		ccs.eMarket = *ed;
@@ -1342,7 +1348,7 @@ aircraft_t* AIR_FindAircraft ( char* aircraftName )
 	int i;
 	for ( i = 0; i < numAircraft; i++ )
 	{
-		if ( !strcmp(aircraft[i].title, aircraftName) )
+		if ( !Q_strncmp(aircraft[i].title, aircraftName, MAX_VAR) )
 			return &aircraft[i];
 	}
 	return NULL;
@@ -1548,8 +1554,8 @@ void CL_GameSaveCmd( void )
 	if ( Cmd_Argc() > 2 )
 	{
 		arg = Cmd_Argv( 2 );
-		if ( arg[0] == '*' ) strncpy( comment, Cvar_VariableString( arg+1 ), MAX_COMMENTLENGTH );
-		else strncpy( comment, arg, MAX_COMMENTLENGTH );
+		if ( arg[0] == '*' ) Q_strncpyz( comment, Cvar_VariableString( arg+1 ), MAX_COMMENTLENGTH );
+		else Q_strncpyz( comment, arg, MAX_COMMENTLENGTH );
 	}
 	else comment[0] = 0;
 
@@ -1620,7 +1626,7 @@ void CL_GameLoad( char *filename )
 	name = MSG_ReadString( &sb );
 
 	for ( i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++ )
-		if ( !strcmp( name, curCampaign->name ) )
+		if ( !Q_strncmp( name, curCampaign->name, MAX_VAR ) )
 			break;
 
 	if ( i == numCampaigns )
@@ -1696,7 +1702,7 @@ void CL_GameLoad( char *filename )
 		{
 			name = MSG_ReadString( &sb );
 			for ( j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++ )
-				if ( !strcmp( name, set->def->name ) )
+				if ( !Q_strncmp( name, set->def->name, MAX_VAR ) )
 					break;
 			// write on dummy set, if it's unknown
 			if ( j >= state->def->num )
@@ -1725,7 +1731,7 @@ void CL_GameLoad( char *filename )
 		// get mission definition
 		name = MSG_ReadString( &sb );
 		for ( j = 0; j < numMissions; j++ )
-			if ( !strcmp( name, missions[j].name ) )
+			if ( !Q_strncmp( name, missions[j].name, MAX_VAR ) )
 			{
 				mis->def = &missions[j];
 				break;
@@ -1736,7 +1742,7 @@ void CL_GameLoad( char *filename )
 		// get mission definition
 		name = MSG_ReadString( &sb );
 		for ( j = 0; j < numStageSets; j++ )
-			if ( !strcmp( name, stageSets[j].name ) )
+			if ( !Q_strncmp( name, stageSets[j].name, MAX_VAR ) )
 			{
 				mis->cause = &ccs.set[j];
 				break;
@@ -2072,16 +2078,25 @@ void CL_BuyType( void )
 	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
 		if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) )
 		{
-			sprintf( str, "mn_item%i", j );		Cvar_Set( str, od->name );
-			sprintf( str, "mn_storage%i", j );	Cvar_SetValue( str, ccs.eCampaign.num[i] );
-			sprintf( str, "mn_supply%i", j );	Cvar_SetValue( str, ccs.eMarket.num[i] );
-			sprintf( str, "mn_price%i", j );	Cvar_Set( str, va( "%i $", od->price ) );
+			Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );
+			Cvar_Set( str, od->name );
+
+			Q_strncpyz( str, va("mn_storage%i", j), MAX_VAR );
+			Cvar_SetValue( str, ccs.eCampaign.num[i] );
+
+			Q_strncpyz( str, va("mn_supply%i", j), MAX_VAR );
+			Cvar_SetValue( str, ccs.eMarket.num[i] );
+
+			Q_strncpyz( str, va("mn_price%i", j), MAX_VAR );
+			Cvar_Set( str, va( "%i $", od->price ) );
+
 			buyList[j] = i;
 			j++;
 		}
 
 	buyListLength = j;
 
+	// FIXME: This list needs to be scrollable - so a hardcoded end is bad
 	for ( ; j < 28; j++ )
 	{
 		Cvar_Set( va( "mn_item%i", j ), "" );
@@ -2432,7 +2447,7 @@ void CL_ParseMission( char *name, char **text )
 
 	// search for missions with same name
 	for ( i = 0; i < numMissions; i++ )
-		if ( !strcmp( name, missions[i].name ) )
+		if ( !Q_strncmp( name, missions[i].name, MAX_VAR ) )
 			break;
 
 	if ( i < numMissions )
@@ -2445,12 +2460,12 @@ void CL_ParseMission( char *name, char **text )
 	ms = &missions[numMissions++];
 	memset( ms, 0, sizeof(mission_t) );
 
-	strncpy( ms->name, name, MAX_VAR );
+	Q_strncpyz( ms->name, name, MAX_VAR );
 
 	// get it's body
 	token = COM_Parse( text );
 
-	if ( !*text || strcmp( token, "{" ) )
+	if ( !*text || *token != '{' )
 	{
 		Com_Printf( _("Com_ParseMission: mission def \"%s\" without body ignored\n"), name );
 		numMissions--;
@@ -2463,7 +2478,7 @@ void CL_ParseMission( char *name, char **text )
 		if ( *token == '}' ) break;
 
 		for ( vp = mission_vals; vp->string; vp++ )
-			if ( !strcmp( token, vp->string ) )
+			if ( !Q_strcmp( token, vp->string ) )
 			{
 				// found a definition
 				token = COM_EParse( text, errhead, name );
@@ -2528,11 +2543,11 @@ void CL_ParseStageSet( char *name, char **text )
 	// initialize the stage
 	sp = &stageSets[numStageSets++];
 	memset( sp, 0, sizeof(stageSet_t) );
-	strncpy( sp->name, name, MAX_VAR );
+	Q_strncpyz( sp->name, name, MAX_VAR );
 
 	// get it's body
 	token = COM_Parse( text );
-	if ( !*text || strcmp( token, "{" ) )
+	if ( !*text || *token != '{' )
 	{
 		Com_Printf( _("Com_ParseStageSets: stageset def \"%s\" without body ignored\n"), name );
 		numStageSets--;
@@ -2546,7 +2561,7 @@ void CL_ParseStageSet( char *name, char **text )
 
 		// check for some standard values
 		for ( vp = stageset_vals; vp->string; vp++ )
-			if ( !strcmp( token, vp->string ) )
+			if ( !Q_strcmp( token, vp->string ) )
 			{
 				// found a definition
 				token = COM_EParse( text, errhead, name );
@@ -2559,12 +2574,11 @@ void CL_ParseStageSet( char *name, char **text )
 			continue;
 
 		// get mission set
-		if ( !strcmp( token, "missions" ) )
+		if ( !Q_strncmp( token, "missions", 8 ) )
 		{
 			token = COM_EParse( text, errhead, name );
 			if ( !*text ) return;
-			strncpy( missionstr, token, 255 );
-			missionstr[strlen(missionstr)] = 0;
+			Q_strncpyz( missionstr, token, sizeof(missionstr) );
 			misp = missionstr;
 
 			// add mission options
@@ -2574,7 +2588,7 @@ void CL_ParseStageSet( char *name, char **text )
 				if ( !misp ) break;
 
 				for ( j = 0; j < numMissions; j++ )
-					if ( !strcmp( token, missions[j].name ) )
+					if ( !Q_strncmp( token, missions[j].name, MAX_VAR ) )
 					{
 						sp->missions[sp->numMissions++] = j;
 						break;
@@ -2606,7 +2620,7 @@ void CL_ParseStage( char *name, char **text )
 
 	// search for campaigns with same name
 	for ( i = 0; i < numStages; i++ )
-		if ( !strcmp( name, stages[i].name ) )
+		if ( !Q_strncmp( name, stages[i].name, MAX_VAR ) )
 			break;
 
 	if ( i < numStages )
@@ -2617,7 +2631,7 @@ void CL_ParseStage( char *name, char **text )
 
 	// get it's body
 	token = COM_Parse( text );
-	if ( !*text || strcmp( token, "{" ) )
+	if ( !*text || *token != '{' )
 	{
 		Com_Printf( _("Com_ParseStages: stage def \"%s\" without body ignored\n"), name );
 		return;
@@ -2626,7 +2640,7 @@ void CL_ParseStage( char *name, char **text )
 	// initialize the stage
 	sp = &stages[numStages++];
 	memset( sp, 0, sizeof(stage_t) );
-	strncpy( sp->name, name, MAX_VAR );
+	Q_strncpyz( sp->name, name, MAX_VAR );
 	sp->first = numStageSets;
 
 	Com_Printf( _("stage: %s\n"), name );
@@ -2636,7 +2650,7 @@ void CL_ParseStage( char *name, char **text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
-		if ( !strcmp( token, "set" ) )
+		if ( !Q_strncmp( token, "set", 3 ) )
 		{
 			token = COM_EParse( text, errhead, name );
 			CL_ParseStageSet( token, text );
@@ -2679,7 +2693,7 @@ void CL_ParseCampaign( char *name, char **text )
 
 	// search for campaigns with same name
 	for ( i = 0; i < numCampaigns; i++ )
-		if ( !strcmp( name, campaigns[i].name ) )
+		if ( !Q_strncmp( name, campaigns[i].name, MAX_VAR ) )
 			break;
 
 	if ( i < numCampaigns )
@@ -2692,12 +2706,12 @@ void CL_ParseCampaign( char *name, char **text )
 	cp = &campaigns[numCampaigns++];
 	memset( cp, 0, sizeof(campaign_t) );
 
-	strncpy( cp->name, name, MAX_VAR );
+	Q_strncpyz( cp->name, name, MAX_VAR );
 
 	// get it's body
 	token = COM_Parse( text );
 
-	if ( !*text || strcmp( token, "{" ) )
+	if ( !*text || *token != '{' )
 	{
 		Com_Printf( _("CL_ParseCampaign: campaign def \"%s\" without body ignored\n"), name );
 		numCampaigns--;
@@ -2711,7 +2725,7 @@ void CL_ParseCampaign( char *name, char **text )
 
 		// check for some standard values
 		for ( vp = campaign_vals; vp->string; vp++ )
-			if ( !strcmp( token, vp->string ) )
+			if ( !Q_strcmp( token, vp->string ) )
 			{
 				// found a definition
 				token = COM_EParse( text, errhead, name );
@@ -2773,13 +2787,13 @@ void CL_ParseAircraft( char *name, char **text )
 	memset( ac, 0, sizeof(aircraft_t) );
 
 	Com_DPrintf("...found aircraft %s\n", name);
-	strncpy( ac->title, name, MAX_VAR );
+	Q_strncpyz( ac->title, name, MAX_VAR );
 	ac->status = AIR_HOME;
 
 	// get it's body
 	token = COM_Parse( text );
 
-	if ( !*text || strcmp( token, "{" ) )
+	if ( !*text || *token != '{' )
 	{
 		Com_Printf( _("CL_ParseAircraft: aircraft def \"%s\" without body ignored\n"), name );
 		numCampaigns--;
@@ -2793,7 +2807,7 @@ void CL_ParseAircraft( char *name, char **text )
 
 		// check for some standard values
 		for ( vp = aircraft_vals; vp->string; vp++ )
-			if ( !strcmp( token, vp->string ) )
+			if ( !Q_strcmp( token, vp->string ) )
 			{
 				// found a definition
 				token = COM_EParse( text, errhead, name );
@@ -2803,7 +2817,7 @@ void CL_ParseAircraft( char *name, char **text )
 				break;
 			}
 
-		if ( vp->string && !strcmp(vp->string, "size") )
+		if ( vp->string && !Q_strncmp(vp->string, "size", 4) )
 		{
 			if ( ac->size > MAX_ACTIVETEAM )
 			{
@@ -2812,15 +2826,15 @@ void CL_ParseAircraft( char *name, char **text )
 			}
 		}
 
-		if ( !strcmp(token, "type") )
+		if ( !Q_strncmp(token, "type", 4) )
 		{
 			token = COM_EParse( text, errhead, name );
 			if ( !*text ) return;
-			if ( !strcmp( token, "transporter") )
+			if ( !Q_strncmp( token, "transporter", 11) )
 				ac->type = AIRCRAFT_TRANSPORTER;
-			else if ( !strcmp( token, "interceptor") )
+			else if ( !Q_strncmp( token, "interceptor", 11) )
 				ac->type = AIRCRAFT_INTERCEPTOR;
-			else if ( !strcmp( token, "ufo") )
+			else if ( !Q_strncmp( token, "ufo", 3) )
 				ac->type = AIRCRAFT_UFO;
 		}
 		else if ( !vp->string )

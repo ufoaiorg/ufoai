@@ -1002,7 +1002,8 @@ void jpegDest (j_compress_ptr cinfo, byte* outfile, int size)
 	dest->size = size;
 }
 
-void SaveJPG(char * filename, int quality, int image_width, int image_height, unsigned char *image_buffer) {
+void SaveJPG(char * filename, int quality, int image_width, int image_height, unsigned char *image_buffer)
+{
 	/* This struct contains the JPEG compression parameters and pointers to
 	* working space (which is allocated as needed by the JPEG library).
 	* It is possible to have several such structures, representing multiple
@@ -1095,7 +1096,7 @@ void SaveJPG(char * filename, int quality, int image_width, int image_height, un
 
 	jpeg_finish_compress(&cinfo);
 	/* After finish_compress, we can close the output file. */
-	ri.FS_WriteFile( filename, hackSize, out );
+	ri.FS_WriteFile( filename, hackSize, (char*)out );
 
 	free(out);
 

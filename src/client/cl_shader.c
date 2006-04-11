@@ -51,8 +51,7 @@ void CL_ParseShaders( char *title, char **text )
 
 	// get name list body body
 	token = COM_Parse( text );
-	if ( !*text || strcmp( token, "{" ) )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( _("CL_ParseShaders: shader \"%s\" without body ignored\n"), title );
 		return;
 	}
@@ -60,7 +59,7 @@ void CL_ParseShaders( char *title, char **text )
 	// new entry
 	entry = &r_shaders[r_numshaders++];
 	memset( entry, 0, sizeof( shader_t ) );
-	strncpy( entry->title, title, MAX_VAR );
+	Q_strncpyz( entry->title, title, MAX_VAR );
 	do {
 		// get the name type
 		token = COM_EParse( text, errhead, title );
@@ -69,7 +68,7 @@ void CL_ParseShaders( char *title, char **text )
 
 		// get values
 		for ( v = shader_values; v->string; v++ )
-			if ( !strcmp( token, v->string ) )
+			if ( !Q_strcmp( token, v->string ) )
 			{
 				// found a definition
 				token = COM_EParse( text, errhead, title );

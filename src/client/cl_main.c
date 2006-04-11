@@ -167,13 +167,13 @@ void CL_Setenv_f( void )
 		char buffer[1000];
 		int i;
 
-		strcpy( buffer, Cmd_Argv(1) );
-		strcat( buffer, "=" );
+		Q_strncpyz( buffer, Cmd_Argv(1), sizeof(buffer) );
+		Q_strcat( buffer, sizeof(buffer), "=" );
 
 		for ( i = 2; i < argc; i++ )
 		{
-			strcat( buffer, Cmd_Argv( i ) );
-			strcat( buffer, " " );
+			Q_strcat( buffer, sizeof(buffer), Cmd_Argv( i ) );
+			Q_strcat( buffer, sizeof(buffer), " " );
 		}
 
 		putenv( buffer );
@@ -312,7 +312,7 @@ void CL_CheckForResend (void)
 	if (cls.state == ca_disconnected && Com_ServerState() )
 	{
 		cls.state = ca_connecting;
-		strncpy (cls.servername, "localhost", sizeof(cls.servername)-1);
+		Q_strncpyz(cls.servername, "localhost", sizeof(cls.servername));
 		// we don't need a challenge on the localhost
 		CL_SendConnectPacket ();
 		return;
@@ -382,7 +382,7 @@ void CL_Connect_f (void)
 	CL_Disconnect ();
 
 	cls.state = ca_connecting;
-	strncpy (cls.servername, server, sizeof(cls.servername)-1);
+	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
 	cls.connect_time = -99999;	// CL_CheckForResend() will fire immediately
 }
 
@@ -415,15 +415,15 @@ void CL_Rcon_f (void)
 
 	NET_Config (true);		// allow remote
 
-	strcat (message, "rcon ");
+	Q_strcat (message, sizeof(message), "rcon ");
 
-	strcat (message, rcon_client_password->string);
-	strcat (message, " ");
+	Q_strcat (message, sizeof(message), rcon_client_password->string);
+	Q_strcat (message, sizeof(message), " ");
 
 	for (i=1 ; i<Cmd_Argc() ; i++)
 	{
-		strcat (message, Cmd_Argv(i));
-		strcat (message, " ");
+		Q_strcat (message, sizeof(message), Cmd_Argv(i));
+		Q_strcat (message, sizeof(message), " ");
 	}
 
 	if (cls.state >= ca_connected)
@@ -457,7 +457,7 @@ void CL_ClearState (void)
 //	CL_ClearTEnts ();
 	CL_InitEvents ();
 
-// wipe the entire cl structure
+	// wipe the entire cl structure
 	memset (&cl, 0, sizeof(cl));
 	memset (&cl_entities, 0, sizeof(cl_entities));
 
@@ -509,7 +509,7 @@ void CL_Disconnect (void)
 
 	// send a disconnect message to the server
 	final[0] = clc_stringcmd;
-	strcpy ((char *)final+1, "disconnect");
+	Q_strncpyz((char *)final+1, "disconnect", sizeof(final)-1);
 	Netchan_Transmit (&cls.netchan, strlen((char*)final), final);
 	Netchan_Transmit (&cls.netchan, strlen((char*)final), final);
 	Netchan_Transmit (&cls.netchan, strlen((char*)final), final);
@@ -669,7 +669,7 @@ void CL_ParseStatusMessage (void)
 		return;
 
 	serverList[serverListLength++] = net_from;
-	strcat( serverText, s );
+	Q_strcat( serverText, sizeof(serverText), s );
 	menuText[TEXT_LIST] = serverText;
 }
 
@@ -785,7 +785,7 @@ void CL_ConnectionlessPacket (void)
 	Com_Printf ("%s: %s\n", NET_AdrToString (net_from), c);
 
 	// server connection
-	if (!strcmp(c, "client_connect"))
+	if (!Q_strncmp(c, "client_connect", 13))
 	{
 		if (cls.state == ca_connected)
 		{
@@ -800,14 +800,14 @@ void CL_ConnectionlessPacket (void)
 	}
 
 	// server responding to a status broadcast
-	if (!strcmp(c, "info"))
+	if (!Q_strncmp(c, "info", 4))
 	{
 		CL_ParseStatusMessage ();
 		return;
 	}
 
 	// remote command from gui front end
-	if (!strcmp(c, "cmd"))
+	if (!Q_strncmp(c, "cmd", 3))
 	{
 		if (!NET_IsLocalAddress(net_from))
 		{
@@ -821,7 +821,7 @@ void CL_ConnectionlessPacket (void)
 		return;
 	}
 	// print command from somewhere
-	if (!strcmp(c, "print"))
+	if (!Q_strncmp(c, "print", 5))
 	{
 		s = MSG_ReadString (&net_message);
 		Com_Printf ("%s", s);
@@ -829,14 +829,14 @@ void CL_ConnectionlessPacket (void)
 	}
 
 	// ping from somewhere
-	if (!strcmp(c, "ping"))
+	if (!Q_strncmp(c, "ping", 4))
 	{
 		Netchan_OutOfBandPrint (NS_CLIENT, net_from, "ack");
 		return;
 	}
 
 	// challenge from the server we are connecting to
-	if (!strcmp(c, "challenge"))
+	if (!Q_strncmp(c, "challenge", 9))
 	{
 		cls.challenge = atoi(Cmd_Argv(1));
 		CL_SendConnectPacket ();
@@ -844,7 +844,7 @@ void CL_ConnectionlessPacket (void)
 	}
 
 	// echo request from server
-	if (!strcmp(c, "echo"))
+	if (!Q_strncmp(c, "echo", 4))
 	{
 		Netchan_OutOfBandPrint (NS_CLIENT, net_from, "%s", Cmd_Argv(1) );
 		return;
@@ -1108,13 +1108,13 @@ void CL_RequestNextDownload (void)
 					p++;
 				else
 					p = cl.configstrings[CS_PLAYERSKINS+i];
-				strcpy(model, p);
+				Q_strncpyz(model, p, MAX_QPATH);
 				p = strchr(model, '/');
 				if (!p)
 					p = strchr(model, '\\');
 				if (p) {
 					*p++ = 0;
-					strcpy(skin, p);
+					Q_strncpyz(skin, p, MAX_QPATH);
 				} else
 					*skin = 0;
 
@@ -1277,11 +1277,11 @@ parsed if we are no dedicated server
 void CL_ParseScriptFirst( char *type, char *name, char **text )
 {
 	// check for client interpretable scripts
-	if ( !strcmp( type, "menu" ) ) MN_ParseMenu( name, text );
-	else if ( !strcmp( type, "particle" ) ) CL_ParseParticle( name, text );
-	else if ( !strcmp( type, "mission" ) ) CL_ParseMission( name, text );
-	else if ( !strcmp( type, "sequence" ) ) CL_ParseSequence( name, text );
-	else if ( !strcmp( type, "up_chapters" ) ) MN_ParseUpChapters( name, text );
+	if ( !Q_strncmp( type, "menu", 4 ) ) MN_ParseMenu( name, text );
+	else if ( !Q_strncmp( type, "particle", 8 ) ) CL_ParseParticle( name, text );
+	else if ( !Q_strncmp( type, "mission", 7 ) ) CL_ParseMission( name, text );
+	else if ( !Q_strncmp( type, "sequence", 8 ) ) CL_ParseSequence( name, text );
+	else if ( !Q_strncmp( type, "up_chapters", 11 ) ) MN_ParseUpChapters( name, text );
 }
 
 /*=================
@@ -1292,15 +1292,15 @@ parsed if we are no dedicated server
 void CL_ParseScriptSecond( char *type, char *name, char **text )
 {
 	// check for client interpretable scripts
-	if ( !strcmp( type, "campaign" ) ) CL_ParseCampaign( name, text );
-	else if ( !strcmp( type, "stage" ) ) CL_ParseStage( name, text );
-	else if ( !strcmp( type, "building" ) ) MN_ParseBuildings( name, text );
-	else if ( !strcmp( type, "production" ) ) MN_ParseProductions( name, text );
-	else if ( !strcmp( type, "aircraft" ) ) CL_ParseAircraft( name, text );
+	if ( !Q_strncmp( type, "campaign", 8 ) ) CL_ParseCampaign( name, text );
+	else if ( !Q_strncmp( type, "stage", 5 ) ) CL_ParseStage( name, text );
+	else if ( !Q_strncmp( type, "building", 8 ) ) MN_ParseBuildings( name, text );
+	else if ( !Q_strncmp( type, "production", 10 ) ) MN_ParseProductions( name, text );
+	else if ( !Q_strncmp( type, "aircraft", 8 ) ) CL_ParseAircraft( name, text );
 	//TODO: Parse Base
-	else if ( !strcmp( type, "base" ) ) MN_ParseBases( name, text );
-	else if ( !strcmp( type, "tech" ) ) RS_ParseTechnologies( name, text );
-	else if ( !strcmp( type, "shader" ) ) CL_ParseShaders( name, text );
+	else if ( !Q_strncmp( type, "base", 4 ) ) MN_ParseBases( name, text );
+	else if ( !Q_strncmp( type, "tech", 4 ) ) RS_ParseTechnologies( name, text );
+	else if ( !Q_strncmp( type, "shader", 6 ) ) CL_ParseShaders( name, text );
 }
 
 
@@ -1560,7 +1560,7 @@ void CL_FixCvarCheats (void)
 	int			i;
 	cheatvar_t	*var;
 
-	if ( !strcmp(cl.configstrings[CS_MAXCLIENTS], "1")
+	if ( !Q_strncmp(cl.configstrings[CS_MAXCLIENTS], "1", MAX_TOKEN_CHARS)
 		|| !cl.configstrings[CS_MAXCLIENTS][0] )
 		return;		// single player can cheat
 
@@ -1578,7 +1578,7 @@ void CL_FixCvarCheats (void)
 	// make sure they are all set to the proper values
 	for (i=0, var = cheatvars ; i<numcheatvars ; i++, var++)
 	{
-		if ( strcmp (var->var->string, var->value) )
+		if ( Q_strcmp (var->var->string, var->value) )
 		{
 			Cvar_Set (var->name, var->value);
 		}
@@ -1657,7 +1657,7 @@ void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info)
 		return;
 	}
 
-	strcpy( mp->ptl, ptl );
+	Q_strncpyz( mp->ptl, ptl, MAX_QPATH );
 	VectorCopy( origin, mp->origin );
 	mp->info = info;
 	mp->wait[0] = wait[0]*1000;

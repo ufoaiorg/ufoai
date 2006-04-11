@@ -3,26 +3,6 @@
 
 #include "client.h"
 
-#if 0 // gone to base_t
-int		hiredMask;
-int		teamMask;
-int		deathMask;
-
-int		numHired;
-int		numOnTeam;
-int		numWholeTeam;
-
-inventory_t	teamInv[MAX_WHOLETEAM];
-inventory_t	equipment;
-
-character_t	wholeTeam[MAX_WHOLETEAM];
-character_t	curTeam[MAX_ACTIVETEAM];
-character_t	*curChr;
-
-int		equipType;
-int		nextUCN;
-#endif
-
 char *teamSkinNames[NUM_TEAMSKINS] =
 {
 	"Urban",
@@ -50,7 +30,7 @@ void CL_GiveNameCmd( void )
 
 	// get gender
 	for ( i = 0; i < NAME_LAST; i++ )
-		if ( !strcmp( Cmd_Argv(1), name_strings[i] ) )
+		if ( !Q_strcmp( Cmd_Argv(1), name_strings[i] ) )
 			break;
 
 	if ( i == NAME_LAST )
@@ -176,7 +156,7 @@ void CL_ChangeNameCmd( void )
 	assert(baseCurrent);
 
 	if ( sel >= 0 && sel < baseCurrent->numWholeTeam )
-		strcpy( baseCurrent->wholeTeam[sel].name, Cvar_VariableString( "mn_name" ) );
+		Q_strncpyz( baseCurrent->wholeTeam[sel].name, Cvar_VariableString( "mn_name" ), MAX_VAR );
 }
 
 
@@ -269,7 +249,7 @@ void CL_ItemDescription( int item )
 	{
 		if ( od->weapon )
 		{
-			if ( strcmp(od->type, "ammo") )
+			if ( Q_strncmp(od->type, "ammo", 4) )
 			{
 				Com_sprintf( itemText, MAX_MENUTEXTLEN, va( _("Primary:\t%s\nSecondary:\t%s\nDamage:\t%i / %i\nTime units:\t%i / %i\nRange:\t%1.1f / %1.1f\nSpreads:\t%1.1f / %1.1f\nAmmo:\t%i\n"),
 					od->fd[0].name, od->fd[1].name, (int)(od->fd[0].damage[0] * od->fd[0].shots + od->fd[0].spldmg[0]), (int)(od->fd[1].damage[0] * od->fd[1].shots + od->fd[0].spldmg[0]),
@@ -481,7 +461,7 @@ void CL_GenerateEquipmentCmd( void )
 		name = Cvar_VariableString( "equip" );
 		for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
 		{
-			if ( !strcmp( name, ed->name ) )
+			if ( !Q_strncmp( name, ed->name, MAX_VAR ) )
 				break;
 		}
 		if ( i == csi.numEDs )
@@ -560,7 +540,7 @@ void CL_SelectCmd( void )
 	command = Cmd_Argv(0);
 	*strchr( command, '_' ) = 0;
 
-	if ( !strcmp( command, "equip" ) )
+	if ( !Q_strncmp( command, "equip", 5 ) )
 	{
 		if ( !baseCurrent || num >= baseCurrent->numOnTeam ) return;
 		if ( menuInventory && menuInventory != baseCurrent->curTeam[num].inv )
@@ -570,11 +550,11 @@ void CL_SelectCmd( void )
 		}
 		menuInventory = baseCurrent->curTeam[num].inv;
 	}
-	else if ( !strcmp( command, "team" ) )
+	else if ( !Q_strncmp( command, "team", 4 ) )
 	{
 		if ( !baseCurrent || num >= baseCurrent->numWholeTeam ) return;
 	}
-	else if ( !strcmp( command, "hud" ) )
+	else if ( !Q_strncmp( command, "hud", 3 ) )
 	{
 		CL_ActorSelectList( num );
 		return;
@@ -586,7 +566,7 @@ void CL_SelectCmd( void )
 	Cvar_ForceSet( "cl_selected", va( "%i", num ) );
 
 	// set info cvars
-	if ( !strcmp( command, "team" ) ) CL_CharacterCvars( &baseCurrent->wholeTeam[num] );
+	if ( !Q_strncmp( command, "team", 4 ) ) CL_CharacterCvars( &baseCurrent->wholeTeam[num] );
 	else CL_CharacterCvars( &baseCurrent->curTeam[num] );
 }
 
@@ -721,9 +701,9 @@ void CL_MessageMenuCmd( void )
 	{
 		// start
 		Cbuf_AddText( "messagemenu\n" );
-		strncpy( cvarName, msg+1, MAX_VAR );
-		strncpy( nameBackup, Cvar_VariableString( cvarName ), MAX_VAR );
-		strncpy( msg_buffer, nameBackup, MAX_VAR );
+		Q_strncpyz( cvarName, msg+1, MAX_VAR );
+		Q_strncpyz( nameBackup, Cvar_VariableString( cvarName ), MAX_VAR );
+		Q_strncpyz( msg_buffer, nameBackup, sizeof(msg_buffer) );
 		msg_bufferlen = strlen( nameBackup );
 	}
 	else if ( msg[0] == '!' )
@@ -812,7 +792,7 @@ void CL_SaveTeamCmd( void )
 	}
 
 	// save
-	sprintf( filename, "%s/save/%s.mpt", FS_Gamedir(), Cmd_Argv( 1 ) );
+	Com_sprintf( filename, MAX_QPATH, "%s/save/%s.mpt", FS_Gamedir(), Cmd_Argv( 1 ) );
 	CL_SaveTeam( filename );
 }
 
@@ -827,7 +807,7 @@ void CL_SaveTeamSlotCmd( void )
 	char	filename[MAX_QPATH];
 
 	// save
-	sprintf( filename, "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString( "mn_slot" ) );
+	Com_sprintf( filename, MAX_QPATH, "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString( "mn_slot" ) );
 	CL_SaveTeam( filename );
 }
 
@@ -847,10 +827,10 @@ void CL_LoadTeamMember( sizebuf_t *sb, character_t *chr )
 	if ( chr->ucn >= baseCurrent->nextUCN ) baseCurrent->nextUCN = chr->ucn + 1;
 
 	// name and model
-	strcpy( chr->name, MSG_ReadString( sb ) );
-	strcpy( chr->path, MSG_ReadString( sb ) );
-	strcpy( chr->body, MSG_ReadString( sb ) );
-	strcpy( chr->head, MSG_ReadString( sb ) );
+	Q_strncpyz( chr->name, MSG_ReadString( sb ), MAX_VAR );
+	Q_strncpyz( chr->path, MSG_ReadString( sb ), MAX_VAR );
+	Q_strncpyz( chr->body, MSG_ReadString( sb ), MAX_VAR );
+	Q_strncpyz( chr->head, MSG_ReadString( sb ), MAX_VAR );
 	chr->skin = MSG_ReadByte( sb );
 
 	// new attributes
@@ -965,7 +945,7 @@ void CL_LoadTeamCmd( void )
 	}
 
 	// load
-	sprintf( filename, "%s/save/%s.mpt", FS_Gamedir(), Cmd_Argv( 1 ) );
+	Com_sprintf( filename, MAX_QPATH, "%s/save/%s.mpt", FS_Gamedir(), Cmd_Argv( 1 ) );
 	CL_LoadTeamMultiplayer( filename );
 
 	Com_Printf( _("Team '%s' loaded.\n"), Cmd_Argv( 1 ) );
@@ -982,7 +962,7 @@ void CL_LoadTeamSlotCmd( void )
 	char	filename[MAX_QPATH];
 
 	// load
-	sprintf( filename, "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString( "mn_slot" ) );
+	Com_sprintf( filename, MAX_QPATH, "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString( "mn_slot" ) );
 	CL_LoadTeamMultiplayer( filename );
 
 	Com_Printf( _("Team 'team%s' loaded.\n"), Cvar_VariableString( "mn_slot" ) );
@@ -996,8 +976,6 @@ CL_ResetTeams
 */
 void CL_ResetTeams( void )
 {
-//	int i;
-
 	Cmd_AddCommand( "givename", CL_GiveNameCmd );
 	Cmd_AddCommand( "gennames", CL_GenerateNamesCmd );
 	Cmd_AddCommand( "genequip", CL_GenerateEquipmentCmd );
@@ -1015,14 +993,6 @@ void CL_ResetTeams( void )
 	Cmd_AddCommand( "loadteam", CL_LoadTeamCmd );
 	Cmd_AddCommand( "loadteamslot", CL_LoadTeamSlotCmd );
 	Cmd_AddCommand( "msgmenu", CL_MessageMenuCmd );
-
-/*	Cvar_Get( "mn_name", "", CVAR_NOSET );
-	Cvar_Get( "mn_body", "", CVAR_NOSET );
-	Cvar_Get( "mn_head", "", CVAR_NOSET );
-	Cvar_Get( "mn_skin", "", CVAR_NOSET );
-	for ( i = 0; i < MAX_WHOLETEAM; i++ )
-		Cvar_Get( va( "mn_name%i", i ), "", CVAR_NOSET );
-*/
 }
 
 /*
@@ -1136,14 +1106,14 @@ void CL_ParseResults( sizebuf_t *buf )
 
 	// alien stats
 	for ( i = 1, kills = 0; i < num; i++ ) kills += (i == we) ? 0 : num_kills[we][i];
-	sprintf( resultText, _("%s killed\t%i\n"), multiEnemy, kills );
+	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("%s killed\t%i\n"), multiEnemy, kills ) );
 	for ( i = 1, res = 0; i < num; i++ ) res += (i == we) ? 0 : num_alive[i];
-	strcat( resultText, va( _("%s survivors\t%i\n\n"), singleEnemy, res ) );
+	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("%s survivors\t%i\n\n"), singleEnemy, res ) );
 
 	// team stats
-	strcat( resultText, va( _("Team losses\t%i\n"), num_spawned[we] - num_alive[we] ) );
-	strcat( resultText, va( _("Friendly fire losses\t%i\n"), num_kills[we][we] ) );
-	strcat( resultText, va( _("Team survivors\t%i\n\n"), num_alive[we] ) );
+	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Team losses\t%i\n"), num_spawned[we] - num_alive[we] ) );
+	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Friendly fire losses\t%i\n"), num_kills[we][we] ) );
+	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Team survivors\t%i\n\n"), num_alive[we] ) );
 
 	// kill civilians on campaign, if not won
 	if ( curCampaign && num_alive[TEAM_CIVILIAN] && winner != we )
@@ -1154,9 +1124,9 @@ void CL_ParseResults( sizebuf_t *buf )
 
 	// civilian stats
 	for ( i = 1, res = 0; i < num; i++ ) res += (i == we) ? 0 : num_kills[i][TEAM_CIVILIAN];
-	strcat( resultText, va( _("Civilians killed by the %s\t%i\n"), multiEnemy, res ) );
-	strcat( resultText, va( _("Civilians killed by your Team\t%i\n"), num_kills[we][TEAM_CIVILIAN] ) );
-	strcat( resultText, va( _("Civilians saved\t%i\n\n\n"), num_alive[TEAM_CIVILIAN] ) );
+	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians killed by the %s\t%i\n"), multiEnemy, res ) );
+	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians killed by your Team\t%i\n"), num_kills[we][TEAM_CIVILIAN] ) );
+	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians saved\t%i\n\n\n"), num_alive[TEAM_CIVILIAN] ) );
 
 	MN_PopMenu( true );
 	if ( !curCampaign )
@@ -1180,24 +1150,24 @@ void CL_ParseResults( sizebuf_t *buf )
 		ccs.reward = 0;
 		if ( winner == we )
 		{
-			strcat( resultText, va( _("Collected alien technology\t%i $\n"), ms->cr_win ) );
+			Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Collected alien technology\t%i $\n"), ms->cr_win ) );
 			ccs.reward += ms->cr_win;
 		}
 		if ( kills )
 		{
-			strcat( resultText, va( _("Aliens killed\t%i $\n"), kills * ms->cr_alien ) );
+			Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Aliens killed\t%i $\n"), kills * ms->cr_alien ) );
 			ccs.reward += kills * ms->cr_alien;
 		}
 		if ( winner == we && num_alive[TEAM_CIVILIAN] )
 		{
-			strcat( resultText, va( _("Civilians saved\t%i $\n"), num_alive[TEAM_CIVILIAN] * ms->cr_civilian ) );
+			Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians saved\t%i $\n"), num_alive[TEAM_CIVILIAN] * ms->cr_civilian ) );
 			ccs.reward += num_alive[TEAM_CIVILIAN] * ms->cr_civilian;
 		}
-		strcat( resultText, va( _("Total reward\t%i $\n\n\n"), ccs.reward ) );
+		Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Total reward\t%i $\n\n\n"), ccs.reward ) );
 
 		// recruits
 		if ( winner == we && ms->recruits )
-			strcat( resultText, va( _("New Recruits\t%i\n"), ms->recruits ) );
+			Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("New Recruits\t%i\n"), ms->recruits ) );
 
 		// loot the battlefield
 		CL_CollectItems( winner == we );
