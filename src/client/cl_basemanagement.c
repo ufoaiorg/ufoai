@@ -1141,6 +1141,49 @@ building_t * MN_GetUnusedLab( void )
 }
 
 /*======================
+MN_ClearBuilding
+
+Removes all assigned scientists from a lab,
+======================*/
+void MN_ClearBuilding( building_t *building )
+{
+	int i;
+	employees_t *employees_in_building = NULL;
+	employee_t *employee = NULL;
+	
+	if ( ! building )
+		return;
+
+	employees_in_building = &building->assigned_employees;
+	switch ( building->buildingType )
+	{
+	case B_QUARTERS:
+		//TODO: ignored for now, will surely be usefull later on.
+		break;
+	case B_LAB:
+		for ( i = 0; i < employees_in_building->numEmployees; i++ ) {
+			employee = employees_in_building->assigned[i];
+			employee->lab = NULL;
+		}
+		employees_in_building->numEmployees = 0;
+		break;
+	case B_WORKSHOP:
+		for ( i = 0; i < employees_in_building->numEmployees; i++ ) {
+			employee = employees_in_building->assigned[i];
+			employee->workshop = NULL;
+		}
+		employees_in_building->numEmployees = 0;
+		break;
+	/* TODO:
+	EMPL_MEDIC
+	EMPL_ROBOT
+	*/
+	default:
+		break;
+	}
+}
+
+/*======================
 MN_EmployeeIsFree
 
 Returns true if the employee is only assigned to quarters, otherwise false.

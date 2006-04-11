@@ -442,7 +442,6 @@ void RS_AssignScientist( void )
 	int num;
 	technology_t *tech = NULL;
 	building_t *building = NULL;
-	//building_t building;
 
 	if ( Cmd_Argc() < 2 )
 	{
@@ -459,8 +458,6 @@ void RS_AssignScientist( void )
 	tech = researchList[num];
 	// check if there is a free lab available
 	if ( ! tech->lab ) {
-		//MN_GetFreeBuilding( B_LAB, building );
-		//building = MN_GetFreeBuilding( B_LAB );
 		building = MN_GetUnusedLab();
 		if ( building ) {
 			// assign the lab to the tech:
@@ -805,31 +802,47 @@ TODO: document this
 void CL_CheckResearchStatus ( void )
 {
 	int i, newResearch = 0;
-	technology_t *t = NULL;
-
+	technology_t *tech = NULL;
+	building_t *building = NULL;
+	employees_t *employees_in_building = NULL;
+	
 	if ( ! researchListLength )
 		return;
 
 	for ( i=0; i < numTechnologies; i++ ) {
-		t = &technologies[i];
-		if ( t->statusResearch == RS_RUNNING )
+		tech = &technologies[i];
+		if ( tech->statusResearch == RS_RUNNING )
 		{
-			if ( t->time <= 0 ) {
+			if ( tech->time <= 0 ) {
 				if ( ! newResearch )
-					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("Research of %s finished\n"), t->name );
+					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("Research of %s finished\n"), tech->name );
 				else
 					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("%i researches finished\n"), newResearch+1 );
-				RS_MarkResearched( t->id );
+				MN_ClearBuilding( tech->lab );
+				RS_MarkResearched( tech->id );
 				researchListPos = 0;
 				newResearch++;
+				tech->time = 0;
 			} else {
-				// TODO/FIXME: Make this depending on how many scientists are hired
-				// t->time -= pow( 1.2, numAssignedScientists );	// The 1.2 may need some finetuning (do not use values lower that 1). A DEFINE for it might also be a good idea.
-				// or
-				// t->time -= pow( numAssignedScientists, 1,1 ) - (  numAssignedScientists / 4 );
-				t->time--;		// reduce one time-unit
-				if ( t->time < 0 )
-					t->time = 0; // Will be a good thing (think of percentage-calculation) once non-integer values are used.
+				if ( tech->lab ) {
+					
+					building = tech->lab;
+					Com_DPrintf("building found %s\n", building->name );
+					employees_in_building = &building->assigned_employees;
+					if ( employees_in_building->numEmployees > 0 ) {
+						Com_DPrintf("employees are there\n");
+						/* OLD 
+						tech->time--;		// reduce one time-unit
+						*/
+						Com_DPrintf("timebefore %.2f\n", tech->time );
+						Com_DPrintf("timedelta %.2f\n", employees_in_building->numEmployees * 0.8 );
+						tech->time -= employees_in_building->numEmployees * 0.8; // just for testing, better formular needed
+						Com_DPrintf("timeafter %.2f\n", tech->time );
+						//TODO include employee-skill in calculation
+						if ( tech->time < 0 )
+							tech->time = 0; // Will be a good thing (think of percentage-calculation) once non-integer values are used.
+					}
+				}
 			}
 		}
 	}

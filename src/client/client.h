@@ -1062,6 +1062,7 @@ void CL_UpdateHireVar ( void );
 
 building_t * MN_GetFreeBuilding( buildingType_t type );
 building_t * MN_GetUnusedLab( void );
+void MN_ClearBuilding( building_t *building );
 int MN_EmloyeesInBase2 ( employeeType_t employee_type, byte free_only );
 byte MN_RemoveEmployee ( building_t *building );
 byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type );
