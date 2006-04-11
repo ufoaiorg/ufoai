@@ -1184,8 +1184,6 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 	}
 
 	employees_in_building_dest = &building_dest->assigned_employees;
-	Com_DPrintf("MN_AssignEmployee: num %i\n", employees_in_building_dest->numEmployees );
-	Com_DPrintf("MN_AssignEmployee: max %i\n", employees_in_building_dest->maxEmployees );
 	employee = NULL;
 	// check if there is enough space to add one employee in the destination building.
 	if ( employees_in_building_dest->numEmployees < employees_in_building_dest->maxEmployees ) {
@@ -1209,10 +1207,6 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 		if ( employee ) {
 			employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee;
 			employee->lab = building_dest;
-			/* DEBUG */
-			Com_DPrintf("MN_AssignEmployee: build %s\n", building_dest->name );
-			Com_DPrintf("MN_AssignEmployee: num %i\n", employees_in_building_dest->numEmployees );
-			Com_DPrintf("MN_AssignEmployee: max %i\n", employees_in_building_dest->maxEmployees );
 			return true;
 		} else {
 			Com_Printf(_("No employee available in this base.\n"));
@@ -1252,10 +1246,10 @@ byte MN_RemoveEmployee ( building_t *building )
 	}
 
 	// get the last employee in the building.
+	employees_in_building->numEmployees--;
 	employee = employees_in_building->assigned[employees_in_building->numEmployees];
 	// remove the employee from the list of assigned workers in the building.
-	employees_in_building->numEmployees--;
-	Com_DPrintf( _("MN_RemoveEmployee: %i\n"), employees_in_building->numEmployees );
+	
 	
 	// Check where else (ehich buildings) the employee needs to be removed.
 	switch ( building->buildingType )
@@ -1281,20 +1275,24 @@ byte MN_RemoveEmployee ( building_t *building )
 		}
 
 	/* TODO
-		else 
 		if ( employee->workshop ) {
 		}
 	*/
-		break;
+		return true;
+		//break;
 	case B_LAB:
+		Com_DPrintf( _("MN_RemoveEmployee: %s\n"), building->name );
 		// unlink the employee from lab (the current building).
 		employee->lab = NULL;
-		break;
+		Com_DPrintf( _("MN_RemoveEmployee: %s 2\n"), building->name );
+		return true;
+		//break;
 	/* TODO
 	case B_WORKSHOP:
 		// unlink the employee from workshop (the current building).
 		employee->workshop = NULL;
-		break;
+		return true;
+		//break;
 	EMPL_MEDIC
 	EMPL_ROBOT
 	*/
