@@ -49,7 +49,7 @@ static cvar_t *Cvar_FindVar (char *var_name)
 	cvar_t	*var;
 
 	for (var=cvar_vars ; var ; var=var->next)
-		if (!strcmp (var_name, var->name))
+		if (!Q_strcmp (var_name, var->name))
 			return var;
 
 	return NULL;
@@ -97,28 +97,28 @@ char *Cvar_CompleteVariable(char *partial)
 	cvar_t *cvar;
 	char *match = NULL;
 	int len, matches = 0;
-	
+
 	len = strlen(partial);
-	
+
 	if(!len)
 		return NULL;
-		
+
 	// check for exact match
 	for(cvar = cvar_vars; cvar; cvar = cvar->next)
-		if(!strcmp(partial, cvar->name))
+		if(!Q_strncmp(partial, cvar->name, len))
 			return cvar->name;
-	
+
 	// check for partial matches
 	for(cvar = cvar_vars; cvar; cvar = cvar->next)
 	{
-		if(!strncmp(partial, cvar->name, len))
+		if(!Q_strncmp(partial, cvar->name, len))
 		{
 			Com_Printf("%s\n", cvar->name);
 			match = cvar->name;
 			matches++;
 		}
 	}
-	
+
 	return matches == 1 ? match : NULL;
 }
 
@@ -213,13 +213,13 @@ cvar_t *Cvar_Set2 (char *var_name, char *value, qboolean force)
 		{
 			if (var->latched_string)
 			{
-				if (strcmp(value, var->latched_string) == 0)
+				if (Q_strcmp(value, var->latched_string) == 0)
 					return var;
 				Z_Free (var->latched_string);
 			}
 			else
 			{
-				if (strcmp(value, var->string) == 0)
+				if (Q_strcmp(value, var->string) == 0)
 					return var;
 			}
 
@@ -232,7 +232,7 @@ cvar_t *Cvar_Set2 (char *var_name, char *value, qboolean force)
 			{
 				var->string = CopyString(value);
 				var->value = atof (var->string);
-				if (!strcmp(var->name, "game"))
+				if (!Q_strncmp(var->name, "game", 4))
 				{
 					FS_SetGamedir (var->string);
 					FS_ExecAutoexec ();
@@ -250,7 +250,7 @@ cvar_t *Cvar_Set2 (char *var_name, char *value, qboolean force)
 		}
 	}
 
-	if (!strcmp(value, var->string))
+	if (!Q_strcmp(value, var->string))
 		return var;		// not changed
 
 	var->modified = true;
@@ -351,7 +351,7 @@ void Cvar_GetLatchedVars (void)
 		var->string = var->latched_string;
 		var->latched_string = NULL;
 		var->value = atof(var->string);
-		if (!strcmp(var->name, "game"))
+		if (!Q_strncmp(var->name, "game", 4))
 		{
 			FS_SetGamedir (var->string);
 			FS_ExecAutoexec ();
@@ -408,9 +408,9 @@ void Cvar_Set_f (void)
 
 	if (c == 4)
 	{
-		if (!strcmp(Cmd_Argv(3), "u"))
+		if (!Q_strncmp(Cmd_Argv(3), "u", 1))
 			flags = CVAR_USERINFO;
-		else if (!strcmp(Cmd_Argv(3), "s"))
+		else if (!Q_strncmp(Cmd_Argv(3), "s", 1))
 			flags = CVAR_SERVERINFO;
 		else
 		{
@@ -501,7 +501,7 @@ void Cvar_List_f (void)
 	i = 0;
 	for (var = cvar_vars ; var ; var = var->next, i++)
 	{
-		if ( c == 2 && strncmp(var->name, token, l ) )
+		if ( c == 2 && Q_strncmp(var->name, token, l ) )
 		{
 			i--;
 			continue;
@@ -537,7 +537,7 @@ void Cvar_List_f (void)
 qboolean userinfo_modified;
 
 
-char	*Cvar_BitInfo (int bit)
+char *Cvar_BitInfo (int bit)
 {
 	static char	info[MAX_INFO_STRING];
 	cvar_t	*var;
@@ -553,13 +553,13 @@ char	*Cvar_BitInfo (int bit)
 }
 
 // returns an info string containing all the CVAR_USERINFO cvars
-char	*Cvar_Userinfo (void)
+char *Cvar_Userinfo (void)
 {
 	return Cvar_BitInfo (CVAR_USERINFO);
 }
 
 // returns an info string containing all the CVAR_SERVERINFO cvars
-char	*Cvar_Serverinfo (void)
+char *Cvar_Serverinfo (void)
 {
 	return Cvar_BitInfo (CVAR_SERVERINFO);
 }
