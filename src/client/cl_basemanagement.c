@@ -1127,12 +1127,12 @@ building_t * MN_GetUnusedLab( void )
 		if ( building->buildingType == B_LAB ) {
 			for ( j=0; j < numTechnologies; j++ ) {
 				tech = &technologies[j];
-				if ( tech->lab == building) {
+				if ( tech->lab == building ) {
 					found = true;
-					continue;
+					break;
 				}
 			}
-			if ( !found)
+			if ( !found )
 				return building;
 		}
 	}
@@ -1232,11 +1232,16 @@ TODO: Add check for destination building vs. employee_type and abort if they do 
 ======================*/
 byte MN_RemoveEmployee ( building_t *building )
 {
+	/* TODO
 	int i;
+	*/
 	employee_t *employee = NULL;
 	employees_t *employees_in_building = NULL;
+	
+	/* TODO
 	building_t *building_temp = NULL;
 	byte found = false;
+	*/
 
 	employees_in_building = &building->assigned_employees;
 
@@ -1244,16 +1249,11 @@ byte MN_RemoveEmployee ( building_t *building )
 		Com_DPrintf( _("MN_RemoveEmployee: No employees in building. Can't remove one. %s\n"), building->name );
 		return false;
 	}
-
-	// get the last employee in the building.
-	employees_in_building->numEmployees--;
-	employee = employees_in_building->assigned[employees_in_building->numEmployees];
-	// remove the employee from the list of assigned workers in the building.
 	
-	
-	// Check where else (ehich buildings) the employee needs to be removed.
+	// Check where else (which buildings) the employee needs to be removed.
 	switch ( building->buildingType )
 	{
+	/* TODO
 	case B_QUARTERS:
 		// unlink the employee from quarters and every other building. (he is now only stored in the global list)
 		employee->quarters = NULL;
@@ -1274,13 +1274,16 @@ byte MN_RemoveEmployee ( building_t *building )
 			employee->lab = NULL;
 		}
 
-	/* TODO
-		if ( employee->workshop ) {
-		}
-	*/
+	// TODO
+	//	if ( employee->workshop ) {
+	//	}
+
 		return true;
 		//break;
+	*/
 	case B_LAB:
+		employees_in_building->numEmployees--;	// remove the employee from the list of assigned workers in the building.
+		employee = employees_in_building->assigned[employees_in_building->numEmployees];	// get the last employee in the building.
 		Com_DPrintf( _("MN_RemoveEmployee: %s\n"), building->name );
 		// unlink the employee from lab (the current building).
 		employee->lab = NULL;
