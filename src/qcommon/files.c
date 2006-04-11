@@ -219,7 +219,7 @@ int FS_FOpenFileSingle (const char *filename, FILE **file)
 	// check for links first
 	for (link = fs_links ; link ; link=link->next)
 	{
-		if (!strncmp (filename, link->from, link->fromlength))
+		if (!Q_strncmp ((char*)filename, link->from, link->fromlength))
 		{
 			Com_sprintf (netpath, sizeof(netpath), "%s%s",link->to, filename+link->fromlength);
 			*file = fopen (netpath, "rb");
@@ -507,7 +507,7 @@ pack_t *FS_LoadPackFile (char *packfile)
 		return NULL;
 	len = strlen(packfile);
 
-	if (!strcmp(packfile+len-4, ".pak"))
+	if (!Q_strncmp(packfile+len-4, ".pak", 4))
 	{
 		// NeVo - we have a regular QII .pak file
 		fread (&header, 1, sizeof(header), packhandle);
@@ -532,12 +532,12 @@ pack_t *FS_LoadPackFile (char *packfile)
 		// parse the directory
 		for (i=0 ; i<numpackfiles ; i++)
 		{
-			strcpy (newfiles[i].name, info[i].name);
+			Q_strncpyz(newfiles[i].name, info[i].name, MAX_QPATH);
 			newfiles[i].filepos = LittleLong(info[i].filepos);
 			newfiles[i].filelen = LittleLong(info[i].filelen);
 		}
 	}
-	else if (!strcmp(packfile+len-4, ".pk3") || !strcmp(packfile+len-4, ".zip"))
+	else if (!Q_strncmp(packfile+len-4, ".pk3", 4) || !Q_strncmp(packfile+len-4, ".zip", 4))
 	{
 		// NeVo - We have a Quake III .pk3 or uncompressed .zip file
 		/*
@@ -584,7 +584,7 @@ pack_t *FS_LoadPackFile (char *packfile)
 
 		for (i=0 ; i < numpackfiles; i++)
 		{
-			strcpy (newfiles[i].name, info[i].name);
+			Q_strncpyz(newfiles[i].name, info[i].name, MAX_QPATH);
 			newfiles[i].filepos = info[i].filepos;
 			newfiles[i].filelen = info[i].filelen;
 		}
@@ -596,7 +596,7 @@ pack_t *FS_LoadPackFile (char *packfile)
 		return NULL;
 	}
 	pack = Z_Malloc (sizeof (pack_t));
-	strcpy (pack->filename, packfile);
+	Q_strncpyz(pack->filename, packfile, MAX_QPATH);
 	pack->handle = packhandle;
 	pack->numfiles = numpackfiles;
 	pack->files = newfiles;
@@ -703,7 +703,7 @@ void FS_AddGameDirectory (char *dir)
 	char *tmp;
 	//VoiD -E- *.pack support
 
-	strcpy (fs_gamedir, dir);
+	Q_strncpyz(fs_gamedir, dir, MAX_QPATH);
 
 	Com_Printf("Adding game dir: %s\n", fs_gamedir );
 
@@ -711,7 +711,7 @@ void FS_AddGameDirectory (char *dir)
 	// add the directory to the search path
 	//
 	search = Z_Malloc (sizeof(searchpath_t));
-	strncpy (search->filename, dir, sizeof(search->filename)-1);
+	Q_strncpyz(search->filename, dir, sizeof(search->filename)-1);
 	search->filename[sizeof(search->filename)-1] = 0;
 	search->next = fs_searchpaths;
 	fs_searchpaths = search;
@@ -849,7 +849,7 @@ void FS_AddHomeAsGameDirectory (char *dir)
 		if ((len > 0) && (len < sizeof(gdir)) && (gdir[len-1] == '/'))
 			gdir[len-1] = 0;
 
-		strncpy(fs_gamedir,gdir,sizeof(fs_gamedir)-1);
+		Q_strncpyz(fs_gamedir,gdir,MAX_QPATH);
 		fs_gamedir[sizeof(fs_gamedir)-1] = 0;
 
 		FS_AddGameDirectory (gdir);
@@ -922,7 +922,7 @@ void FS_SetGamedir (char *dir)
 
 	Com_sprintf (fs_gamedir, sizeof(fs_gamedir), "%s/%s", fs_basedir->string, dir);
 
-	if (!strcmp(dir,BASEDIRNAME) || (*dir == 0))
+	if (!Q_strncmp(dir,BASEDIRNAME, strlen(BASEDIRNAME)) || (*dir == 0) )
 	{
 		Cvar_FullSet ("gamedir", "", CVAR_SERVERINFO|CVAR_NOSET);
 		Cvar_FullSet ("game", "", CVAR_LATCH|CVAR_SERVERINFO);
@@ -959,7 +959,7 @@ void FS_Link_f (void)
 	prev = &fs_links;
 	for (l=fs_links ; l ; l=l->next)
 	{
-		if (!strcmp (l->from, Cmd_Argv(1)))
+		if (!Q_strcmp (l->from, Cmd_Argv(1)))
 		{
 			Z_Free (l->to);
 			if (!strlen(Cmd_Argv(2)))
@@ -1044,7 +1044,7 @@ void FS_Dir_f( void )
 
 	if ( Cmd_Argc() != 1 )
 	{
-		strcpy( wildcard, Cmd_Argv( 1 ) );
+		Q_strncpyz( wildcard, Cmd_Argv( 1 ), sizeof(wildcard) );
 	}
 
 	while ( ( path = FS_NextPath( path ) ) != NULL )
@@ -1121,7 +1121,7 @@ char *FS_NextPath (char *prevpath)
 	{
 		if (s->pack)
 			continue;
-		if ( prev && !strcmp( prevpath, prev ) )
+		if ( prev && !Q_strcmp( prevpath, prev ) )
 			return s->filename;
 		prev = s->filename;
 	}
@@ -1195,7 +1195,7 @@ void FS_BuildFileList( char *fileList )
 {
 	listBlock_t	*block, *tblock;
 	char	*path;
-	char  files[MAX_QPATH];
+	char	files[MAX_QPATH];
 	char	findname[1024];
 	char	**filenames;
 	char	*f, *fl, *tl;
@@ -1203,14 +1203,14 @@ void FS_BuildFileList( char *fileList )
 	int		len;
 
 	// bring it into normal form
-	strncpy( files, fileList, MAX_QPATH );
+	Q_strncpyz( files, fileList, MAX_QPATH );
 	normPath( files );
 
 	// check the blocklist for older searches
 	// and do a new one after deleting them
 	for ( block = fs_blocklist, tblock = NULL; block; )
 	{
-		if ( !strcmp( block->path, files ) )
+		if ( !Q_strncmp( block->path, files, MAX_QPATH ) )
 		{
 			// delete old one
 			if ( tblock ) tblock->next = block->next;
@@ -1233,7 +1233,7 @@ void FS_BuildFileList( char *fileList )
 	fs_blocklist = block;
 
 	// store the search string
-	strncpy( block->path, files, MAX_QPATH );
+	Q_strncpyz( block->path, files, MAX_QPATH );
 
 //	Com_Printf( "pattern: '%s' path: '%s'\n", block->pattern, block->path );
 
@@ -1264,7 +1264,8 @@ void FS_BuildFileList( char *fileList )
 					tl = tblock->files;
 					while ( *tl )
 					{
-						if ( !strcmp( tl, f ) ) break;
+						if ( !Q_strcmp( tl, f ) )
+							break;
 						tl += strlen( tl ) + 1;
 					}
 					if ( *tl ) break;
@@ -1283,7 +1284,7 @@ void FS_BuildFileList( char *fileList )
 						tblock->next = block->next;
 						block->next = tblock;
 
-						strncpy( tblock->path, block->path, MAX_QPATH );
+						Q_strncpyz( tblock->path, block->path, MAX_QPATH );
 						fl = tblock->files;
 						block = tblock;
 					}
@@ -1358,10 +1359,10 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 		return NULL;
 	}
 
-	if ( strcmp( files, lastList ) )
+	if ( Q_strncmp( files, lastList, MAX_QPATH ) )
 	{
 		// search for file lists
-		strncpy( lastList, files, MAX_QPATH );
+		Q_strncpyz( lastList, files, MAX_QPATH );
 
 		for ( block = fs_blocklist; block; block = block->next )
 			if ( !strcmp( files, block->path ) )
@@ -1389,11 +1390,11 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 					token = COM_Parse( text );
 				}
 
-				strncpy( headerType, token, 32 );
+				Q_strncpyz( headerType, token, sizeof(headerType) );
 				if ( *text )
 				{
 					token = COM_Parse( text );
-					strncpy( headerName, token, 32 );
+					Q_strncpyz( headerName, token, sizeof(headerName) );
 					*name = headerName;
 					return headerType;
 				}
@@ -1424,7 +1425,7 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 			}
 
 			// load a new file
-			strcpy( filename, lBlock->path );
+			Q_strncpyz( filename, lBlock->path, MAX_QPATH );
 			strcpy( strrchr( filename, '/' ) + 1, lFile );
 
 			FS_LoadFile( filename, (void**)&lBuffer );
@@ -1482,7 +1483,7 @@ void FS_GetMaps ( void )
 				Com_Printf(_("Could not allocate memory in MN_GetMaps\n"));
 				return;
 			}
-			strcpy( maps[anzInstalledMaps], found );
+			Q_strncpyz( maps[anzInstalledMaps], found, sizeof(maps[anzInstalledMaps] ) );
 			anzInstalledMaps++;
 			found = Sys_FindNext( 0, 0 );
 		}
