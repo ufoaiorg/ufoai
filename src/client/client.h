@@ -1055,7 +1055,6 @@ extern	int   numEmployees;							// The global number of enris in the "employees
 #define MAX_COMMENTLENGTH	32
 
 void CL_UpdateBaseData( void );
-int B_HowManyPeopleInBase2 ( base_t *base, int location );
 base_t* B_GetBase ( int id );
 int B_GetNumOnTeam ( void );
 void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version );
