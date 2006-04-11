@@ -149,7 +149,7 @@ IN
 	location: where to look for people
 		0 = all in base
 		1 = all in labs
-		2 = all in quatrers
+		2 = all in quarters
 		4 = all in workshops
 OUT
 	B_HowManyPeopleInBase2	number of the counted people
@@ -1290,6 +1290,7 @@ byte MN_RemoveEmployee ( building_t *building )
 	case B_LAB:
 		// unlink the employee from lab (the current building).
 		employee->lab = NULL;
+		break;
 	//case B_WORKSHOP:
 	//	// unlink the employee from workshop (the current building).
 	//	employee->workshop = NULL;

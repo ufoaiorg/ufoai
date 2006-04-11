@@ -456,7 +456,7 @@ void RS_AssignScientist( void )
 		return;
 	}
 
-	tech = researchList[researchListPos];
+	tech = researchList[num];
 	Com_DPrintf( "RS_AssignScientist: %s\n", tech->name);
 	// check if there is a free lab available
 	if ( ! tech->lab ) {
@@ -490,6 +490,7 @@ TODO
 void RS_RemoveScientist( void )
 {
 	int num;
+	technology_t *tech = NULL;
 
 	if ( Cmd_Argc() < 2 )
 	{
@@ -502,8 +503,18 @@ void RS_RemoveScientist( void )
 		menuText[TEXT_STANDARD] = NULL;
 		return;
 	}
-
+	
+	tech = researchList[num];
 	// TODO: remove scientists from research-item
+	
+	if ( tech->lab ) {
+		if ( !MN_RemoveEmployee( tech->lab ) ) {
+			//TODO print "not possible"
+		}
+	} else {
+		Com_Printf( "This tech is not research in any lab.\n" );
+	}
+
 	RS_ResearchDisplayInfo();
 	RS_UpdateData();
 }
@@ -645,14 +656,14 @@ void RS_UpdateData ( void )
 			Cvar_Set( va( "mn_researchavailable%i", j ), "av.");
 			Cvar_Set( va( "mn_researchmax%i", j ), "mx.");
 
-			if ( tech->lab) {
+			if ( tech->lab ) {
 				employees_in_building = &tech->lab->assigned_employees;
 				Com_DPrintf( "MN_GetFreeBuilding: %i / %i\n", employees_in_building->numEmployees, employees_in_building->maxEmployees );
-				Com_sprintf( tempstring, MAX_VAR, "%i\n", employees_in_building->maxEmployees );
+				Com_sprintf( tempstring, MAX_VAR, "%ima\n", employees_in_building->maxEmployees );
 				Cvar_Set( va( "mn_researchmax%i",j ), tempstring );		// max number of employees in this base
-				Com_sprintf( tempstring, MAX_VAR, "%i\n", employees_in_building->numEmployees );
+				Com_sprintf( tempstring, MAX_VAR, "%ias\n", employees_in_building->numEmployees );
 				Cvar_Set( va( "mn_researchassigned%i",j ), tempstring );	// assigned employees to the technology
-				Com_sprintf( tempstring, MAX_VAR, "%i\n", MN_EmloyeesInBase2 ( EMPL_SCIENTIST, true ) );
+				Com_sprintf( tempstring, MAX_VAR, "%iav\n", MN_EmloyeesInBase2 ( EMPL_SCIENTIST, true ) );
 				Cvar_Set( va( "mn_researchavailable%i",j ), tempstring );	// max available scis in base
 			}
 			Cvar_Set( "mn_research_sellabs", "Free labs in base: zzz");
