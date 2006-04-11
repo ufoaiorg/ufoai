@@ -1135,6 +1135,7 @@ building_t * MN_GetUnusedLab( void )
 			if ( !found )
 				return building;
 		}
+		building = NULL;
 	}
 	return building;
 }
