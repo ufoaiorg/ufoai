@@ -1060,7 +1060,7 @@ int B_GetNumOnTeam ( void );
 void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version );
 void CL_UpdateHireVar ( void );
 
-void MN_GetFreeBuilding( buildingType_t type, building_t *building );
+building_t * MN_GetFreeBuilding( buildingType_t type );
 int MN_EmloyeesInBase2 ( employeeType_t employee_type, byte free_only );
 byte MN_RemoveEmployee ( building_t *building );
 byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type );

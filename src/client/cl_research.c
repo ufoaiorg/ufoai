@@ -441,8 +441,8 @@ void RS_AssignScientist( void )
 {
 	int num;
 	technology_t *tech = NULL;
-	//building_t *building = NULL;
-	building_t building;
+	building_t *building = NULL;
+	//building_t building;
 
 	if ( Cmd_Argc() < 2 )
 	{
@@ -457,23 +457,21 @@ void RS_AssignScientist( void )
 	}
 
 	tech = researchList[num];
-	Com_DPrintf( "RS_AssignScientist: %s\n", tech->name);
 	// check if there is a free lab available
 	if ( ! tech->lab ) {
-		MN_GetFreeBuilding( B_LAB, &building );
-		Com_DPrintf( "RS_AssignScientist: %i <-pointer-building\n", &building);
-		if ( &building ) {
+		//MN_GetFreeBuilding( B_LAB, building );
+		building = MN_GetFreeBuilding( B_LAB );
+		if ( building ) {
 			// assign the lab to the tech:
-			tech->lab = &building;
+			tech->lab = building;
 		} else {
 			MN_Popup( _("Notice"), _("There is no free lab available. You need to build one or free another in order to assign scientists to research this technology.\n") );
 			return;
 		}
 	}
-
 	// assign a scientists to the lab
 	if ( ! MN_AssignEmployee ( tech->lab, EMPL_SCIENTIST ) ) {
-		//TODO print "not possible"
+		Com_Printf( _("Can't add scientist from the lab.\n") );
 	}
 
 	RS_ResearchDisplayInfo();
@@ -506,10 +504,13 @@ void RS_RemoveScientist( void )
 	
 	tech = researchList[num];
 	// TODO: remove scientists from research-item
-	
+	Com_DPrintf( "RS_RemoveScientist: %s\n", tech->id );
 	if ( tech->lab ) {
+		Com_DPrintf( "RS_RemoveScientist: %s\n", tech->lab->name );
 		if ( !MN_RemoveEmployee( tech->lab ) ) {
-			//TODO print "not possible"
+			Com_Printf( _("Can't remove scientist from the lab.\n") );
+		} else {
+			Com_DPrintf( "RS_RemoveScientist: Removal done.\n" );
 		}
 	} else {
 		Com_Printf( "This tech is not research in any lab.\n" );
@@ -627,7 +628,6 @@ void RS_UpdateData ( void )
 	char	name[MAX_VAR];
 	int	i, j;
 	technology_t *tech = NULL;
-	//TODO
 	employees_t *employees_in_building = NULL;
 	char tempstring[MAX_VAR];
 
@@ -658,8 +658,7 @@ void RS_UpdateData ( void )
 
 			if ( tech->lab ) {
 				employees_in_building = &tech->lab->assigned_employees;
-				Com_DPrintf( "MN_GetFreeBuilding: %i / %i\n", employees_in_building->numEmployees, employees_in_building->maxEmployees );
-				Com_sprintf( tempstring, MAX_VAR, "%ima\n", employees_in_building->maxEmployees );
+				Com_sprintf( tempstring, MAX_VAR, "%imx\n", employees_in_building->maxEmployees );
 				Cvar_Set( va( "mn_researchmax%i",j ), tempstring );		// max number of employees in this base
 				Com_sprintf( tempstring, MAX_VAR, "%ias\n", employees_in_building->numEmployees );
 				Cvar_Set( va( "mn_researchassigned%i",j ), tempstring );	// assigned employees to the technology

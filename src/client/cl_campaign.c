@@ -1309,7 +1309,11 @@ void CL_GameNew( void )
 	CL_GameTimeStop();
 
 	// init research tree
+	// TODO: research status is not reset after a game is played ... do this there.
 	RS_InitTree ();
+	
+	// init employee list
+	MN_InitEmployees ();
 }
 
 /*

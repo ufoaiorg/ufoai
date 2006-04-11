@@ -29,7 +29,6 @@ and
 	base/ufos/menu_buildings.ufo
 for the underlying content.
 
-TODO: comment on used globals variables.
 TODO: new game does not reset basemangagement
 ======================*/
 
@@ -1003,9 +1002,6 @@ void MN_InitEmployees ( void )
 	building_t *building = NULL;
 	employees_t *employees_in_building = NULL;
 	employee_t *employee = NULL;
-	building_t *quarters[MAX_BUILDINGS];	// a list of all available quarters
-	int numQuarters = 0;				// total number of quarters
-	int last_freeQuarter = 0;			// remembers the last quarter where a free space was found to speed up the thing a bit.
 
 	// Loop trough the buildings to assign the type of employee.
 	// TODO: this right now assumes that there are not more employees than free quarter space ... but it will not puke if there are.
@@ -1020,7 +1016,6 @@ void MN_InitEmployees ( void )
 			switch ( building->buildingType )
 			{
 			case B_QUARTERS:
-				quarters[numQuarters++] = building;	// appending this quarter to the list of quarters.
 				employee->type = EMPL_SOLDIER;
 				break;
 			case B_LAB:
@@ -1036,9 +1031,8 @@ void MN_InitEmployees ( void )
 			}
 		}
 	}
-
+	building = NULL;
 	// Generate stats for employees and assign the quarter-less to quarters.
-	// TODO: also remove them all from their assigned buildings except quarters .. this was just needed for firstbase.
 	for ( i=0; i < numEmployees; i++) {
 		employee = &employees[i];
 		switch ( employee->type )
@@ -1049,7 +1043,8 @@ void MN_InitEmployees ( void )
 			break;
 		case EMPL_SCIENTIST:
 		case EMPL_WORKER:
-
+			employee->lab = NULL;
+			employee->workshop = NULL;
 			if ( employee->type == EMPL_SCIENTIST) {
 				// TODO: create random data for the employees depending on type and skill-min/max
 				employee->speed = 100;
@@ -1057,16 +1052,9 @@ void MN_InitEmployees ( void )
 				// TODO: create random data for the employees depending on type and skill-min/max
 				employee->speed = 100;
 			}
-
-			for ( j=last_freeQuarter; j < numQuarters; j++) {
-				employees_in_building = &quarters[j]->assigned_employees;
-				if ( employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
-					// free space found
-					employees_in_building->assigned[employees_in_building->numEmployees++] = employee;	// add employee to this quarter
-					last_freeQuarter = j;												// mark this as the last quarter a free space was found
-					break;
-				}
-			}
+			building = MN_GetFreeBuilding( B_QUARTERS );
+			employees_in_building = &building->assigned_employees;
+			employees_in_building->assigned[employees_in_building->numEmployees++] = employee;
 			break;
 		//case EMPL_MEDIC: break;
 		//case EMPL_ROBOT: break;
@@ -1074,6 +1062,52 @@ void MN_InitEmployees ( void )
 			break;
 		}
 	}
+
+	Com_Printf( "removing ...\n" );
+	// Remove them all from their assigned buildings except quarters .. this was just needed for firstbase.
+	for ( i = 0; i < numBuildings; i++ ) {
+		building = &bmBuildings[0][i];
+		employees_in_building = &building->assigned_employees;
+		if ( building->buildingType != B_QUARTERS ) {
+			Com_Printf( " %s numEmployees = 0\n", building->name );
+			employees_in_building->numEmployees = 0;
+		}
+	}
+
+}
+
+/*======================
+MN_GetFreeBuilding
+
+Gets a building in the current base of a given type with no assigned workers
+
+IN
+	type:	Which type of building to search for.
+
+OUT
+	building	the (empty) building.
+======================*/
+building_t * MN_GetFreeBuilding( buildingType_t type ) //, building_t *building )
+{
+	int i;
+	building_t *building = NULL;
+	
+	employees_t *employees_in_building = NULL;
+	for ( i = 0; i < numBuildings; i++ ) {
+		building = &bmBuildings[baseCurrent->id][i];
+			if ( building->buildingType == type ) {
+				/* found correct building-type */
+				employees_in_building = &building->assigned_employees;
+				// TODO: make this if ( employees_in_building->numEmployees == 0 )
+				// TODO: and chek if the building is used for research/production already
+				if ( employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
+					/* the bulding has free space for employees */
+					return building;
+				}
+			}
+	}
+	/* no buildings available at all, no correct building type found or no building free */
+	return NULL;
 }
 
 /*======================
@@ -1182,7 +1216,8 @@ byte MN_RemoveEmployee ( building_t *building )
 	employee = employees_in_building->assigned[employees_in_building->numEmployees];
 	// remove the employee from the list of assigned workers in the building.
 	employees_in_building->numEmployees--;
-
+	Com_DPrintf( _("MN_RemoveEmployee: %i\n"), employees_in_building->numEmployees );
+	
 	// Check where else (ehich buildings) the employee needs to be removed.
 	switch ( building->buildingType )
 	{
@@ -1206,19 +1241,9 @@ byte MN_RemoveEmployee ( building_t *building )
 			employee->lab = NULL;
 		}
 
-	/*	if ( employee->workshop ) {
-			building_temp = employee->workshop;
-			employees_in_building = &building_temp->assigned_employees;
-			found = false;
-			for ( i = 0; i < ( employees_in_building->numEmployees - 1 ); i++ ) {
-				if ( (employees_in_building->assigned[i] == employee) || found ){
-					employees_in_building->assigned[i] = employees_in_building->assigned[i+1];
-					found = true;
-				}
-			}
-			if ( found )
-				employees_in_building->numEmployees--;
-			employee->workshop = NULL;
+	/* TODO
+		else 
+		if ( employee->workshop ) {
 		}
 	*/
 		break;
@@ -1226,12 +1251,14 @@ byte MN_RemoveEmployee ( building_t *building )
 		// unlink the employee from lab (the current building).
 		employee->lab = NULL;
 		break;
-	//case B_WORKSHOP:
-	//	// unlink the employee from workshop (the current building).
-	//	employee->workshop = NULL;
-	//	break;
-	//EMPL_MEDIC
-	//EMPL_ROBOT
+	/* TODO
+	case B_WORKSHOP:
+		// unlink the employee from workshop (the current building).
+		employee->workshop = NULL;
+		break;
+	EMPL_MEDIC
+	EMPL_ROBOT
+	*/
 	default:
 		break;
 	}
@@ -1261,7 +1288,7 @@ int MN_EmloyeesInBase2 ( employeeType_t employee_type, byte free_only )
 
 	for ( i = 0; i < numBuildings; i++ ) {
 		building = &bmBuildings[baseCurrent->id][i];
-		if (building->buildingType == B_QUARTERS) {
+		if ( building->buildingType == B_QUARTERS ) {
 			/* quarters found */
 			employees_in_building = &building->assigned_employees;
 
@@ -1280,40 +1307,6 @@ int MN_EmloyeesInBase2 ( employeeType_t employee_type, byte free_only )
 int MN_EmloyeesInBase ( employeeType_t employee_type )
 {
 	return MN_EmloyeesInBase2 ( employee_type, false );
-}
-
-/*======================
-MN_GetFreeBuilding
-
-Gets a building in the curent base of a given type with no assigned workers
-
-IN
-	type:	Which type of building to search for.
-
-OUT
-	building	the (empty) building.
-======================*/
-void MN_GetFreeBuilding( buildingType_t type, building_t *building )
-{
-	int i;
-	employees_t *employees_in_building = NULL;
-	for ( i = 0; i < numBuildings; i++ ) {
-		building = &bmBuildings[baseCurrent->id][i];
-			if ( building->buildingType == type ) {
-				/* found correct building-type */
-				employees_in_building = &building->assigned_employees;
-				//TODO: something's not working right here...
-				Com_DPrintf( "MN_GetFreeBuilding: %i / %i - num / max\n",  employees_in_building->numEmployees, employees_in_building->maxEmployees );
-				if ( employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
-					/* the bulding has free space for employees */
-					Com_DPrintf( "MN_GetFreeBuilding: %s\n",  building->name );
-					Com_DPrintf( "MN_GetFreeBuilding: %i\n", building );
-					return;
-				}
-			}
-	}
-	/* no buildings available at all, no correct building type found or no building free */
-	building = NULL;
 }
 
 /*======================
