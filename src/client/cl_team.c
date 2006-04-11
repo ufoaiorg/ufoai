@@ -1106,7 +1106,8 @@ void CL_ParseResults( sizebuf_t *buf )
 
 	// alien stats
 	for ( i = 1, kills = 0; i < num; i++ ) kills += (i == we) ? 0 : num_kills[we][i];
-	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("%s killed\t%i\n"), multiEnemy, kills ) );
+	// needs to be cleared and then append to it
+	Com_sprintf( resultText, MAX_MENUTEXTLEN, _("%s killed\t%i\n"), multiEnemy, kills );
 	for ( i = 1, res = 0; i < num; i++ ) res += (i == we) ? 0 : num_alive[i];
 	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("%s survivors\t%i\n\n"), singleEnemy, res ) );
 

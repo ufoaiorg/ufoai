@@ -66,7 +66,7 @@ void RS_MarkOneCollected ( char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( t->provides, id, sizeof(t->provides) ) ) {	// provided item found
+		if ( !Q_strncmp( t->provides, id, MAX_VAR ) ) {	// provided item found
 			t->statusCollected = true;
 			return;
 		}
@@ -107,7 +107,7 @@ void RS_MarkOneResearchable ( char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( t->id, id, sizeof(t->id) ) ) {	// research item found
+		if ( !Q_strncmp( t->id, id, MAX_VAR ) ) {	// research item found
 			Com_Printf( _("RS_MarkOneResearchable: \"%s\" marked as researchable.\n"), t->id );
 			t->statusResearchable = true;
 			return;
@@ -158,7 +158,7 @@ void RS_MarkResearchable( void )
 				required_are_researched = true;
 				for ( j=0; j < required->numEntries; j++ ) {
 					if ( ( !RS_TechIsResearched(required->list[j] ) )
-					|| ( !strncmp( required->list[j], "nothing", sizeof(required->list[j]) ) ) ) {
+					|| ( !Q_strncmp( required->list[j], "nothing", 7 ) ) ) {
 						required_are_researched = false;
 						break;
 
@@ -172,7 +172,7 @@ void RS_MarkResearchable( void )
 
 				// If the tech is an initial one,  mark it as as researchable.
 				for ( j=0; j < required->numEntries; j++ ) {
-					if ( !strncmp( required->list[j], "initial", sizeof(required->list[j]) ) ) {
+					if ( !Q_strncmp( required->list[j], "initial", 7 ) ) {
 						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable - reason:isinitial.\n", t->id );
 						t->statusResearchable = true;
 						break;
@@ -218,7 +218,7 @@ void RS_InitTree( void )
 			found = false;
 			for ( j = 0; j < csi.numODs; j++ ) {
 				item = &csi.ods[j];
-				if ( !strncmp( t->provides, item->kurz, sizeof(t->provides) ) ) { // This item has been 'provided',
+				if ( !Q_strncmp( t->provides, item->kurz, MAX_VAR ) ) { // This item has been 'provided',
 					found = true;
 					if ( !*t->name )
 						Com_sprintf( t->name, MAX_VAR, item->name );
@@ -252,7 +252,7 @@ void RS_InitTree( void )
 			found = false;
 			for ( j = 0; j < numBuildings; j++ ) {
 				building = &bmBuildings[0][j];
-				if ( !strncmp( t->provides, building->name, sizeof(t->provides) ) ) { // This building has been 'provided',
+				if ( !Q_strncmp( t->provides, building->name, MAX_VAR ) ) { // This building has been 'provided',
 					found = true;
 					if ( !*t->name )
 						Com_sprintf( t->name, MAX_VAR, building->title );
@@ -271,7 +271,7 @@ void RS_InitTree( void )
 			found = false;
 			for ( j = 0; j < numAircraft; j++ ) {
 				ac = &aircraft[j];
-				if ( !strncmp( t->provides, ac->title, sizeof(t->provides) ) ) { // This aircraft has been 'provided',
+				if ( !Q_strncmp( t->provides, ac->title, MAX_VAR ) ) { // This aircraft has been 'provided',
 					found = true;
 					if ( !*t->name )
 						Com_sprintf( t->name, MAX_VAR, ac->name );
@@ -316,7 +316,7 @@ void RS_GetName( char *id, char *name )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {	// research item found
+		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {	// research item found
 			// If something is defined as name use it.
 			if ( *t->name ) {
 				Com_sprintf( name, MAX_VAR, _(t->name) );
@@ -387,10 +387,10 @@ void RS_ResearchDisplayInfo ( void  )
 	if ( req_temp.numEntries > 0 ) {
 		for ( i = 0; i < req_temp.numEntries; i++ ) {
 			RS_GetName( req_temp.list[i], tempstring ); //name_temp gets initialised in getname
-			strncat( dependencies, tempstring, sizeof(dependencies) );
+			Q_strcat( dependencies, MAX_VAR, tempstring );
 
 			if ( i < req_temp.numEntries-1 )
-				strncat( dependencies, ", ", sizeof(dependencies) );
+				Q_strcat( dependencies, MAX_VAR, ", " );
 		}
 	} else {
 		*dependencies = '\0';
@@ -443,7 +443,7 @@ void RS_AssignScientist( void )
 	technology_t *tech = NULL;
 	//building_t *building = NULL;
 	building_t building;
-	
+
 	if ( Cmd_Argc() < 2 )
 	{
 		Com_Printf( "Usage: mn_rs_add <num_in_list>\n" );
@@ -455,7 +455,7 @@ void RS_AssignScientist( void )
 		menuText[TEXT_STANDARD] = NULL;
 		return;
 	}
-	
+
 	tech = researchList[researchListPos];
 	Com_DPrintf( "RS_AssignScientist: %s\n", tech->name);
 	// check if there is a free lab available
@@ -470,12 +470,12 @@ void RS_AssignScientist( void )
 			return;
 		}
 	}
-	
+
 	// assign a scientists to the lab
 	if ( ! MN_AssignEmployee ( tech->lab, EMPL_SCIENTIST ) ) {
 		//TODO print "not possible"
 	}
-	
+
 	RS_ResearchDisplayInfo();
 	RS_UpdateData();
 }
@@ -502,7 +502,7 @@ void RS_RemoveScientist( void )
 		menuText[TEXT_STANDARD] = NULL;
 		return;
 	}
-	
+
 	// TODO: remove scientists from research-item
 	RS_ResearchDisplayInfo();
 	RS_UpdateData();
@@ -528,10 +528,10 @@ void RS_ResearchStart ( void )
 	if ( ! baseCurrent->hasLab )
 		return;
 #endif
-	
+
 	// TODO: assign lab to technology
 	//get tech->lab
-	// if ! lab 
+	// if ! lab
 	//	assign lab
 	//	if it fails -> quit
 
@@ -581,7 +581,7 @@ void RS_ResearchStop ( void )
 
 	// get the currently selected research-item
 	t = researchList[researchListPos];
-	
+
 	// TODO: remove lab from technology and scientists from lab
 
 	switch ( t->statusResearch )
@@ -626,12 +626,12 @@ void RS_UpdateData ( void )
 
 	//TODO: display total number of free scientists and free labs
 	//Cvar_Set( "cvar mn_research_sellabs", "xxx");
-	
+
 	for ( i=0, j=0; i < numTechnologies; i++ ) {
 		tech = &technologies[i];
 		Com_sprintf( name, MAX_VAR, tech->name );
 		if ( tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH ) ) { // an unresearched collected item that cannot yet be researched
-			strncat(name, " [not yet researchable]", sizeof(name));
+			Q_strcat(name, MAX_VAR, " [not yet researchable]");
 			Cbuf_AddText( va( "researchunresearchable%i\n", j ) );	// Color the item 'unresearchable'
 			Cvar_Set( va("mn_researchitem%i", j),  name );		// Display the concated text in the correct list-entry.
 			researchList[j] = &technologies[i];					// Assign the current tech in the global list to the correct entry in the displayed list.
@@ -654,19 +654,19 @@ void RS_UpdateData ( void )
 			switch ( tech->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 			{
 			case RS_RUNNING:
-				strncat(name, " [under research]", sizeof(name) );
+				Q_strcat(name, MAX_VAR, " [under research]" );
 				Cbuf_AddText( va( "researchrunning%i\n", j ) );	// color the item 'research running'
 				break;
 			case RS_FINISH:
 				// DEBUG: normaly these will not be shown at all. see "if" above
-				strncat(name, " [finished]", sizeof(name) );
+				Q_strcat(name, MAX_VAR, " [finished]" );
 				break;
 			case RS_PAUSED:
-				strncat(name, " [paused]", sizeof(name) );
+				Q_strcat(name, MAX_VAR, " [paused]" );
 				Cbuf_AddText( va( "researchpaused%i\n", j ) );	// color the item 'research paused'
 				break;
 			case RS_NONE:
-				strncat(name, " [unknown]", sizeof(name) );
+				Q_strcat(name, MAX_VAR, " [unknown]" );
 				// The color is defined in menu research.ufo by  "confunc research_clear". See also above.
 				break;
 			default:
@@ -741,10 +741,10 @@ byte RS_DependsOn(char *id1, char *id2)
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id1, t->id, sizeof(t->id) ) ) {	// research item found
+		if ( !Q_strncmp( id1, t->id, MAX_VAR ) ) {	// research item found
 			required = t->requires;
 			for ( j=0; j < required.numEntries; j++ ) {
-				if ( !strncmp(required.list[j], id2, sizeof(required.list[j]) ) )	// current item (=id1) depends on id2
+				if ( !Q_strncmp(required.list[j], id2, MAX_VAR ) )	// current item (=id1) depends on id2
 					return true;
 			}
 			return false;
@@ -769,7 +769,7 @@ void RS_MarkResearched( char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {
+		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {
 			t->statusResearch = RS_FINISH;
 			Com_Printf( _("Research of \"%s\" finished.\n"), t->id );
 		}
@@ -1000,23 +1000,27 @@ void RS_ParseTechnologies ( char* id, char** text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 		// get values
-		if (  !strncmp( token, "type", sizeof("type") ) ) {
+		if (  !Q_strncmp( token, "type", 4 ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
-			if ( !strncmp( token, "tech", sizeof("tech") ) )		tech->type = RS_TECH; // redundant, but oh well.
-			else if ( !strncmp( token, "weapon", sizeof("weapon") ) )	tech->type = RS_WEAPON;
-			else if ( !strncmp( token, "armor", sizeof("armor") ) )	tech->type = RS_ARMOR;
-			else if ( !strncmp( token, "craft", sizeof("craft") ) )	tech->type = RS_CRAFT;
-			else if ( !strncmp( token, "building", sizeof("building") ) )	tech->type = RS_BUILDING;
+			if ( !Q_strncmp( token, "tech", 4 ) )
+				tech->type = RS_TECH; // redundant, but oh well.
+			else if ( !Q_strncmp( token, "weapon", 6 ) )
+				tech->type = RS_WEAPON;
+			else if ( !Q_strncmp( token, "armor", 5 ) )
+				tech->type = RS_ARMOR;
+			else if ( !Q_strncmp( token, "craft", 5 ) )
+				tech->type = RS_CRAFT;
+			else if ( !Q_strncmp( token, "building", 8 ) )
+				tech->type = RS_BUILDING;
 			else Com_Printf(_("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n"), id, token );
 		}
 		else
-		if ( !strncmp( token, "requires", sizeof("requires") ) )
+		if ( !Q_strncmp( token, "requires", 8 ) )
 		{
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
-			strncpy( temp_text, token, MAX_VAR );
-			temp_text[strlen(temp_text)] = 0;
+			Q_strncpyz( temp_text, token, MAX_VAR );
 			misp = temp_text;
 
 			required->numEntries = 0;
@@ -1024,7 +1028,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 				token = COM_Parse( &misp );
 				if ( !misp ) break;
 				if ( required->numEntries < MAX_TECHLINKS )
-					strncpy( required->list[required->numEntries++], token, MAX_VAR);
+					Q_strncpyz( required->list[required->numEntries++], token, MAX_VAR);
 				else
 					Com_Printf( _("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n"), id, MAX_TECHLINKS );
 
@@ -1033,15 +1037,14 @@ void RS_ParseTechnologies ( char* id, char** text )
 			continue;
 		}
 		else
-		if ( !strncmp( token, "researched", sizeof("researched") ) )
+		if ( !Q_strncmp( token, "researched", 10 ) )
 		{
 			token = COM_EParse( text, errhead, id );
-			if ( !strncmp( token, "true", sizeof("true") )
-			|| !strncmp( token, "1", sizeof("1") ) )
+			if ( !Q_strncmp( token, "true", 4 ) || *token == '1' )
 				tech->statusResearch = RS_FINISH;
 		}
 		else
-		if ( !strncmp( token, "up_chapter", sizeof("up_chapter") ) ) {
+		if ( !strncmp( token, "up_chapter", 10 ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 
@@ -1049,7 +1052,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 				// find chapter
 				int i;
 				for ( i = 0; i < numChapters; i++ ) {
-					if ( !strncmp( token, upChapters[i].id, sizeof(upChapters[i].id) ) ) {
+					if ( !Q_strncmp( token, upChapters[i].id, MAX_VAR ) ) {
 						// add entry to chapter
 						tech->up_chapter = &upChapters[i];
 						if ( !upChapters[i].first )	{
@@ -1072,7 +1075,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 		}
 		else
 		for ( var = valid_tech_vars; var->string; var++ )
-			if ( !strncmp( token, var->string, sizeof(var->string) ) )
+			if ( !Q_strncmp( token, var->string, sizeof(var->string) ) )
 			{
 				// found a definition
 				token = COM_EParse( text, errhead, id );
@@ -1113,7 +1116,7 @@ void RS_GetRequired( char *id, stringlist_t *required)
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {		// research item found
+		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {		// research item found
 			required = &t->requires;	// is linking a good idea?
 			return;
 		}
@@ -1138,7 +1141,7 @@ byte RS_ItemIsResearched(char *id_provided )
 	technology_t *t = NULL;
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id_provided, t->provides, sizeof(t->provides) ) ) {	// provided item found
+		if ( !Q_strncmp( id_provided, t->provides, MAX_VAR ) ) {	// provided item found
 			if ( t->statusResearch == RS_FINISH )
 				return true;
 			return false;
@@ -1162,12 +1165,11 @@ byte RS_TechIsResearched(char *id )
 {
 	int i;
 	technology_t *t = NULL;
-	if ( ( !strncmp( id, "initial", sizeof(id) ) )
-	|| ( !strncmp( id, "nothing", sizeof(id) ) ) )
+	if ( !Q_strncmp( id, "initial", 7 ) || !Q_strncmp( id, "nothing", 7 ) )
 		return true;	// initial and nothing are always researched. as they are just starting "technologys" that are never used.
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {	// research item found
+		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {	// research item found
 			if ( t->statusResearch == RS_FINISH )
 				return true;
 			return false;
@@ -1197,12 +1199,11 @@ byte RS_TechIsResearchable(char *id )
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
-		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {	// research item found
-		//if ( !strcmp( id, t->id ) ) {
+		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {	// research item found
 			if ( t->statusResearch == RS_FINISH )
 				return false;
-			if ( ( !strncmp(  t->id, "initial", sizeof(t->id) ) )
-			|| ( !strncmp(  t->id, "nothing", sizeof(t->id) ) ) )
+			if ( ( !Q_strncmp(  t->id, "initial", 7 ) )
+			|| ( !Q_strncmp(  t->id, "nothing", 7 ) ) )
 				return true;
 			required = &t->requires;
 			for (j=0; j < required->numEntries; j++)  {
@@ -1222,7 +1223,7 @@ RS_GetFirstRequired + RS_GetFirstRequired2
 Returns the first required (yet unresearched) technologies that are needed by "id".
 That means you need to research the result to be able to research (and maybe use) "id".
 ======================*/
-void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
+void RS_GetFirstRequired2 ( char *id, char *first_id, stringlist_t *required )
 {
 	int i, j;
 	technology_t *t = NULL;
@@ -1231,15 +1232,15 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 
-		if ( !strncmp( id, t->id, sizeof(t->id) ) ) {	// research item found
+		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {	// research item found
 			required_temp = &t->requires;
 			//Com_DPrintf( "RS_GetFirstRequired2: %s - %s - %s\n", id, first_id, required_temp->list[0]  );
 			for ( j=0; j < required_temp->numEntries; j++ ) {
-				if ( ( !strncmp( required_temp->list[0] , "initial", sizeof(required_temp->list[0]) ) )
-				|| ( !strncmp( required_temp->list[0] , "nothing", sizeof(required_temp->list[0]) ) ) ) {
-					if ( !strncmp( id, first_id, sizeof(id) ) )
+				if ( !Q_strncmp( required_temp->list[0] , "initial", 7 )
+				|| !Q_strncmp( required_temp->list[0] , "nothing", 7 ) ) {
+					if ( !Q_strncmp( id, first_id, MAX_VAR ) )
 						return;
-					if ( 0 == j ) {
+					if ( !j ) {
 						if ( required->numEntries < MAX_TECHLINKS ) {
 							// TODO: check if the firstrequired tech has already been added (e.g indirectly from another tech)
 							Com_sprintf( required->list[required->numEntries], MAX_VAR, id );
@@ -1262,11 +1263,11 @@ void RS_GetFirstRequired2 ( char *id, char *first_id,  stringlist_t *required )
 			return;
 		}
 	}
-	if ( !strncmp( id, first_id, sizeof(id) ) )
+	if ( !Q_strncmp( id, first_id, MAX_VAR ) )
 		Com_Printf( _("RS_GetFirstRequired2: \"%s\" - technology not found.\n"), id );
 }
 
-void RS_GetFirstRequired( char *id,  stringlist_t *required )
+void RS_GetFirstRequired( char *id, stringlist_t *required )
 {
 	 RS_GetFirstRequired2( id, id, required);
 }

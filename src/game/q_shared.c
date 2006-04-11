@@ -2274,7 +2274,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		return 0;
 
 	case V_BOOL:
-		if ( !strcmp( token, "true" ) || !strcmp( token, "1" ) )
+		if ( !Q_strncmp( token, "true", 4 ) || *token == '1' )
 			*b = true;
 		else
 			*b = false;
