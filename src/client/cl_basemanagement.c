@@ -977,17 +977,17 @@ void MN_ParseBuildings( char *id, char **text )
 		}
 
 		// get values
-		if ( !Q_strncmp( token, "type", sizeof("type") ) ) {
+		if ( !Q_strncmp( token, "type", 4 ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 
-			if ( !Q_strncmp( token, "lab", sizeof(token) ) ) {
+			if ( !Q_strncmp( token, "lab", 3 ) ) {
 				building->buildingType = B_LAB;
-			} else if ( !Q_strncmp( token, "hangar", sizeof(token) ) ) {
+			} else if ( !Q_strncmp( token, "hangar", 6 ) ) {
 				building->buildingType = B_HANGAR;
-			} else if ( !Q_strncmp( token, "quaters", sizeof(token) ) ){
+			} else if ( !Q_strncmp( token, "quaters", 7 ) ){
 				building->buildingType = B_QUATERS;
-			} else if ( !Q_strncmp( token, "workshop", sizeof(token) ) ){
+			} else if ( !Q_strncmp( token, "workshop", 8 ) ){
 				building->buildingType = B_WORKSHOP;
 			}
 		}
@@ -1008,7 +1008,9 @@ void MN_ParseBuildings( char *id, char **text )
 			if ( !*text ) return;
 			if (*token) {
 				employees_in_building = &building->assigned_employees;
-				numEmployees_temp = employees_in_building->maxEmployees = atoi(token);
+				if ( employees_in_building->maxEmployees <= 0 )
+					employees_in_building->maxEmployees = atoi(token);
+				numEmployees_temp = atoi(token);
 				for ( employees_in_building->numEmployees = 0; employees_in_building->numEmployees < numEmployees_temp; )
 				{
 					// assign random employee infos.
@@ -1072,15 +1074,16 @@ void MN_InitEmployees ( void )
 	employee_t *employee = NULL;
 	building_t *quarters[MAX_BUILDINGS];	// a list of all available quarters
 	int numQuarters = 0;				// total number of quarters
-	int last_freeQuarter = 0;				// remembers the last quarter where a free space was fround to speed up the thing a bit.
+	int last_freeQuarter = 0;			// remembers the last quarter where a free space was found to speed up the thing a bit.
+	
 	// Loop trough the buildings to assign the type of employee.
 	// TODO: this right now assumes that there are not more employees than free quarter space ... but it will not puke if there are.
-
 	for ( i = 0; i < numBuildings; i++ ) {
 		building = &bmBuildings[0][i];
 		employees_in_building = &building->assigned_employees;
 		employees_in_building->cost_per_employee = 100;			// TODO: fixed value right now, needs a configureable one.
-
+		if ( employees_in_building->maxEmployees <= 0)
+			employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
 		for ( j = 0; j < employees_in_building->numEmployees; j++ ) {
 			employee = employees_in_building->assigned[j];
 			switch ( building->buildingType )
