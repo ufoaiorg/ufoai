@@ -618,6 +618,7 @@ void RS_UpdateData ( void )
 	technology_t *tech = NULL;
 	//TODO
 	employees_t *employees_in_building = NULL;
+	char tempstring[MAX_VAR];
 
 	*name = '\0'; // init temp-name
 
@@ -647,8 +648,12 @@ void RS_UpdateData ( void )
 			if ( tech->lab) {
 				employees_in_building = &tech->lab->assigned_employees;
 				Com_DPrintf( "MN_GetFreeBuilding: %i / %i\n", employees_in_building->numEmployees, employees_in_building->maxEmployees );
-				Cvar_Set( va( "mn_researchmax%i",j ), va( "%i", employees_in_building->maxEmployees ) );		// max number of employees in this base
-				Cvar_Set( va( "mn_researchassigned%i",j ), va( "%i", employees_in_building->numEmployees ) );	// assigned employees to the technology
+				Com_sprintf( tempstring, MAX_VAR, "%i\n", employees_in_building->maxEmployees );
+				Cvar_Set( va( "mn_researchmax%i",j ), tempstring );		// max number of employees in this base
+				Com_sprintf( tempstring, MAX_VAR, "%i\n", employees_in_building->numEmployees );
+				Cvar_Set( va( "mn_researchassigned%i",j ), tempstring );	// assigned employees to the technology
+				Com_sprintf( tempstring, MAX_VAR, "%i\n", MN_EmloyeesInBase2 ( EMPL_SCIENTIST, true ) );
+				Cvar_Set( va( "mn_researchavailable%i",j ), tempstring );	// max available scis in base
 			}
 			Cvar_Set( "mn_research_sellabs", "Free labs in base: zzz");
 			switch ( tech->statusResearch ) // Set the text of the research items and mark them if they are currently researched.

@@ -1146,6 +1146,16 @@ void MN_InitEmployees ( void )
 }
 
 /*======================
+MN_EmployeeIsFree
+
+Returns true if the employee is only assigned to quaters, otehrwise false.
+======================*/
+byte MN_EmployeeIsFree ( employee_t *employee )
+{
+	return ( ( employee->lab == NULL ) && ( employee->workshop == NULL ) );
+}
+
+/*======================
 MN_AssignEmployee
 
 Add a free employee from the quaters to building_dest. (the employee will be linked to both of them)
@@ -1191,9 +1201,7 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 
 				for ( j = 0; j < employees_in_building->numEmployees; j++ ) {
 					employee = employees_in_building->assigned[j];
-					if ( ( employee->type == employee_type)
-					&& (employee->lab == NULL )
-					&& (employee->workshop == NULL) )
+					if ( ( employee->type == employee_type) && MN_EmployeeIsFree(employee) )
 						break;
 				}
 			}
@@ -1297,6 +1305,49 @@ byte MN_RemoveEmployee ( building_t *building )
 	}
 
 	return false;
+}
+/*======================
+MN_EmloyeesInBase + MN_EmloyeesInBase2
+
+Returns the number of employees in the current base (in the wuaters) of a given type.
+You can choose (free_only) if you want the nubmer of free ones or the total number.
+If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
+
+======================*/
+int MN_EmloyeesInBase2 ( employeeType_t employee_type, byte free_only )
+{
+	int i, j;
+	int numEmployeesInBase = 0;
+	building_t *building = NULL;
+	employees_t *employees_in_building = NULL;
+	employee_t *employee = NULL;
+	
+	if ( !baseCurrent ) {
+		Com_DPrintf( _("B_EmloyeesInBase2: No Base set.\n") );
+		return 0;
+	}
+	
+	for ( i = 0; i < numBuildings; i++ ) {
+		building = &bmBuildings[baseCurrent->id][i];
+		if (building->buildingType == B_QUATERS) {
+			/* quaters found */
+			employees_in_building = &building->assigned_employees;
+			
+			//loop trough building and add to numEmployeesInBase if a match is found.
+			for ( j = 0; j < employees_in_building->numEmployees; j++ ) {
+				employee = employees_in_building->assigned[j];
+				if ( ( (employee_type == employee->type) || (employee_type ==MAX_EMPL) )
+				&& ( MN_EmployeeIsFree(employee) || !free_only ) )
+					numEmployeesInBase++;
+			}
+		}
+	}
+	return numEmployeesInBase;
+}
+
+int MN_EmloyeesInBase ( employeeType_t employee_type )
+{
+	return MN_EmloyeesInBase2 ( employee_type, false );
 }
 
 /*======================
