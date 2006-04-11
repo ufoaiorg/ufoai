@@ -662,10 +662,7 @@ void MN_DrawBuilding( void )
 
 	//maybe someone call this command before the buildings are parsed??
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
-	{
-		Com_Printf( _("Called MN_DrawBuilding with no buildingCurrent set\n") );
 		return;
-	}
 
 	menuText[TEXT_BUILDING_INFO] = buildingText;
 	*menuText[TEXT_BUILDING_INFO] = '\0';
@@ -785,7 +782,7 @@ MN_BuildingAddToList
 void MN_BuildingAddToList( char *title, int id )
 {
 	char tmpTitle[MAX_VAR];
-	strncpy ( tmpTitle, title , MAX_VAR);
+	Q_strncpyz( tmpTitle, title , MAX_VAR);
 
 	assert(baseCurrent);
 
@@ -910,7 +907,7 @@ void MN_ParseBuildings( char *id, char **text )
 
 	// get name list body body
 	token = COM_Parse( text );
-	if ( !*text || strncmp( token, "{" , sizeof(token) ) )
+	if ( !*text || *token != '{' )
 	{
 		Com_Printf( _("MN_ParseBuildings: building \"%s\" without body ignored\n"), id );
 		return;
@@ -924,7 +921,7 @@ void MN_ParseBuildings( char *id, char **text )
 	// new entry
 	building = &bmBuildings[0][numBuildings];
 	memset( building, 0, sizeof( building_t ) );
-	strncpy( building->name, id, MAX_VAR );
+	Q_strncpyz( building->name, id, MAX_VAR );
 
 	//set standard values
 	building->buildingStatus[0] = B_NOT_SET;
@@ -980,33 +977,33 @@ void MN_ParseBuildings( char *id, char **text )
 		}
 
 		// get values
-		if ( !strncmp( token, "type", sizeof("type") ) ) {
+		if ( !Q_strncmp( token, "type", sizeof("type") ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 
-			if ( !strncmp( token, "lab", sizeof(token) ) ) {
+			if ( !Q_strncmp( token, "lab", sizeof(token) ) ) {
 				building->buildingType = B_LAB;
-			} else if ( !strncmp( token, "hangar", sizeof(token) ) ) {
+			} else if ( !Q_strncmp( token, "hangar", sizeof(token) ) ) {
 				building->buildingType = B_HANGAR;
-			} else if ( !strncmp( token, "quaters", sizeof(token) ) ){
+			} else if ( !Q_strncmp( token, "quaters", sizeof(token) ) ){
 				building->buildingType = B_QUATERS;
-			} else if ( !strncmp( token, "workshop", sizeof(token) ) ){
+			} else if ( !Q_strncmp( token, "workshop", sizeof(token) ) ){
 				building->buildingType = B_WORKSHOP;
 			}
 		}
 		else
-		if ( !strncmp( token, "max_employees", sizeof("max_employees") ) ) {
+		if ( !Q_strncmp( token, "max_employees", sizeof("max_employees") ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			employees_in_building = &building->assigned_employees;
-			
+
 			employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
 			if ( *token ) {
 				employees_in_building->maxEmployees = atoi(token);
 			}
 		}
 		else
-		if ( !strncmp( token, "employees_firstbase", sizeof("employees_firstbase") ) ) {
+		if ( !Q_strncmp( token, "employees_firstbase", sizeof("employees_firstbase") ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			if (*token) {
@@ -1028,7 +1025,7 @@ void MN_ParseBuildings( char *id, char **text )
 		}
 		else
 		for ( edp = valid_vars; edp->string; edp++ )
-			if ( !strncmp( token, edp->string, sizeof(edp->string) ) )
+			if ( !Q_strncmp( token, edp->string, sizeof(edp->string) ) )
 			{
 				// found a definition
 				token = COM_EParse( text, errhead, id );
@@ -1203,10 +1200,10 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 			employees_in_building->assigned[employees_in_building->numEmployees++] = employee;
 			return true;
 		} else {
-			Com_Printf("No employee available in this base.\n");
+			Com_Printf(_("No employee available in this base.\n"));
 		}
 	} else {
-		Com_Printf("No free room in destination building \"%s\".\n", building_dest->name);
+		Com_Printf(_("No free room in destination building \"%s\".\n"), building_dest->name);
 	}
 	return false;
 }
@@ -1440,7 +1437,7 @@ void MN_ParseProductions( char *title, char **text )
 	entry = &bmProductions[numProductions];
 	numProductions++;
 	memset( entry, 0, sizeof( production_t ) );
-	strncpy( entry->name, title, MAX_VAR );
+	Q_strncpyz( entry->name, title, MAX_VAR );
 	do {
 		// get the name type
 		token = COM_EParse( text, errhead, title );
@@ -1788,7 +1785,6 @@ void MN_SelectBase( void )
 		if ( ccs.actualBaseID < MAX_BASES )
 		{
 			baseCurrent = &bmBases[ ccs.actualBaseID ];
-			Com_Printf(_("Set up base %i %s\n"), ccs.actualBaseID, bmBases[ ccs.actualBaseID ].title );
 		}
 		else
 		{
@@ -1844,7 +1840,6 @@ void MN_BuildBase( void )
 			baseCurrent->founded = true;
 			mapAction = MA_NONE;
 			CL_UpdateCredits( ccs.credits - BASE_COSTS );
-			Com_Printf("Base title: %s\n",mn_base_title->string);
 			Q_strncpyz( baseCurrent->title, mn_base_title->string, sizeof(baseCurrent->title) );
 			Cbuf_AddText( "mn_push bases\n" );
 			return;
@@ -1937,7 +1932,7 @@ void B_AssembleMap ( void )
 			else
 				Q_strncpyz( baseMapPart, va("b/%c/empty", baseCurrent->mapChar ), sizeof(baseMapPart) );
 
-			if ( strcmp (baseMapPart, "") )
+			if ( *baseMapPart )
 			{
 				Q_strcat( maps, sizeof(maps), baseMapPart );
 				Q_strcat( maps, sizeof(maps), " " );

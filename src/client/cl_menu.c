@@ -243,7 +243,7 @@ menuNode_t *MN_GetNode( menu_t *menu, char *name )
 	menuNode_t	*node;
 
 	for ( node = menu->firstNode; node; node = node->next )
-		if ( !strcmp( name, node->name ) )
+		if ( !Q_strncmp( name, node->name, sizeof(node->name) ) )
 			break;
 
 	return node;
@@ -268,11 +268,11 @@ char *MN_GetReferenceString( menu_t *menu, char *ref )
 		text = ref+1;
 		token = COM_Parse( &text );
 		if ( !text ) return NULL;
-		strncpy( ident, token, MAX_VAR );
+		Q_strncpyz( ident, token, MAX_VAR );
 		token = COM_Parse( &text );
 		if ( !text ) return NULL;
 
-		if ( !strcmp( ident, "cvar" ) )
+		if ( !Q_strncmp( ident, "cvar", 4 ) )
 		{
 			// get the cvar value
 			return Cvar_VariableString( token );
@@ -289,7 +289,7 @@ char *MN_GetReferenceString( menu_t *menu, char *ref )
 
 			// get the property
 			for ( val = nps; val->type; val++ )
-				if ( !strcmp( token, val->string ) )
+				if ( !Q_stricmp( token, val->string ) )
 					break;
 
 			if ( !val->type )
@@ -328,11 +328,11 @@ float MN_GetReferenceFloat( menu_t *menu, void *ref )
 		text = (char *)ref+1;
 		token = COM_Parse( &text );
 		if ( !text ) return 0.0;
-		strncpy( ident, token, MAX_VAR );
+		Q_strncpyz( ident, token, MAX_VAR );
 		token = COM_Parse( &text );
 		if ( !text ) return 0.0;
 
-		if ( !strcmp( ident, "cvar" ) )
+		if ( !Q_strncmp( ident, "cvar", 4 ) )
 		{
 			// get the cvar value
 			return Cvar_VariableValue( token );
@@ -349,7 +349,7 @@ float MN_GetReferenceFloat( menu_t *menu, void *ref )
 
 			// get the property
 			for ( val = nps; val->type; val++ )
-				if ( !strcmp( token, val->string ) )
+				if ( !Q_stricmp( token, val->string ) )
 					break;
 
 			if ( val->type != V_FLOAT )
@@ -582,7 +582,7 @@ void MN_Command( void )
 	name = Cmd_Argv( 0 );
 	for ( i = 0; i < numMenus; i++ )
 		for ( node = menus[i].firstNode; node; node = node->next )
-			if ( node->type == MN_CONFUNC && !strcmp( node->name, name ) )
+			if ( node->type == MN_CONFUNC && !Q_strncmp( node->name, name, sizeof(node->name) ) )
 			{
 				// found the node
 				MN_ExecuteActions( &menus[i], node->click );
@@ -794,7 +794,7 @@ void MN_FindContainer( menuNode_t *node )
 	int		i, j;
 
 	for ( i = 0, id = csi.ids; i < csi.numIDs; id++, i++ )
-		if ( !strcmp( node->name, id->name ) )
+		if ( !Q_strncmp( node->name, id->name, sizeof(node->name) ) )
 			break;
 
 	if ( i == csi.numIDs ) node->mousefx = NONE;
@@ -1012,8 +1012,8 @@ void MN_BarClick( menu_t *menu, menuNode_t *node, int x )
 	if ( !node->mousefx )
 		return;
 
-	strncpy( var, node->data[2], MAX_VAR );
-	if ( !strcmp( var, "*cvar" ) )
+	Q_strncpyz( var, node->data[2], MAX_VAR );
+	if ( !Q_strncmp( var, "*cvar", 5 ) )
 		return;
 
 	frac = (float)(x - node->pos[0]) / node->size[0];
@@ -1070,7 +1070,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 		if ( x >= msx-8 && x <= msx+8 && y >= msy-8 && y <= msy+8 )
 		{
 			selMis = ms;
-			if ( !strcmp( selMis->def->name, "baseattack" ) )
+			if ( !Q_strncmp( selMis->def->name, "baseattack", 10 ) )
 			{
 				mapAction = MA_BASEATTACK;
 				// we need no dropship in our base
@@ -1614,7 +1614,7 @@ void MN_PrecacheMenus( void )
 					Com_Printf( "MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data );
 					continue;
 				}
-				strncpy( source, ref, MAX_VAR );
+				Q_strncpyz( source, ref, MAX_VAR );
 				switch ( node->type )
 				{
 					case MN_PIC:
@@ -1667,7 +1667,7 @@ void MN_DrawMenus( void )
 				node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP || node->type == MN_3DMAP ) )
 			{
 				// if construct
-				if ( node->depends.var && strcmp( node->depends.value, (Cvar_Get( node->depends.var, node->depends.value, 0 ))->string ) )
+				if ( node->depends.var && Q_stricmp( node->depends.value, (Cvar_Get( node->depends.var, node->depends.value, 0 ))->string ) )
 					continue;
 
 				// mouse effects
@@ -1704,7 +1704,7 @@ void MN_DrawMenus( void )
 						Com_Printf( "MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data );
 						continue;
 					}
-					strncpy( source, ref, MAX_VAR );
+					Q_strncpyz( source, ref, MAX_VAR );
 				}
 				else ref = NULL;
 
@@ -1712,7 +1712,7 @@ void MN_DrawMenus( void )
 				{
 				case MN_PIC:
 					// hack for ekg pics
-					if ( !strncmp( node->name, "ekg_", 4 ) )
+					if ( !Q_strncmp( node->name, "ekg_", 4 ) )
 					{
 						int pt;
 						if ( node->name[4] == 'm' ) pt = Cvar_VariableValue( "mn_morale" ) / 2;
@@ -1743,10 +1743,10 @@ void MN_DrawMenus( void )
 						char *pos, *tab1, *tab2, *end;
 						int  y, line, x;
 
-						strncpy( textCopy, menuText[node->num], MAX_MENUTEXTLEN );
+						Q_strncpyz( textCopy, menuText[node->num], MAX_MENUTEXTLEN );
 						len = strlen(textCopy);
-						if ( len < MAX_MENUTEXTLEN - 1 && textCopy[len] != '\n' )
-							strcat( textCopy, "\n" );
+						if ( textCopy[len-1] != '\n' )
+							Q_strcat( textCopy, MAX_MENUTEXTLEN, "\n" );
 
 						if ( node->data[1] )
 							font = MN_GetReferenceString( menu, node->data[1] );
@@ -1862,7 +1862,7 @@ void MN_DrawMenus( void )
 					}
 
 					for ( item.t = 0; item.t < csi.numODs; item.t++ )
-						if ( !strcmp( ref, csi.ods[item.t].kurz ) )
+						if ( !Q_strncmp( ref, csi.ods[item.t].kurz, MAX_VAR ) )
 							break;
 					if ( item.t == csi.numODs || item.t == NONE )
 						break;
@@ -1917,7 +1917,7 @@ void MN_DrawMenus( void )
 							char *anim;
 							as = node->data[4];
 							anim = re.AnimGetName( as, mi.model );
-							if ( anim && strcmp( anim, ref ) )
+							if ( anim && Q_stricmp( anim, ref ) )
 								re.AnimChange( as, mi.model, ref );
 						}
 						re.AnimRun( as, mi.model, cls.frametime*1000 );
@@ -1941,16 +1941,16 @@ void MN_DrawMenus( void )
 						char	parent[MAX_VAR];
 						char	*tag;
 
-						strncpy( parent, MN_GetReferenceString( menu, node->data[2] ), MAX_VAR );
+						Q_strncpyz( parent, MN_GetReferenceString( menu, node->data[2] ), MAX_VAR );
 						tag = parent;
 						while ( *tag && *tag != ' ' ) tag++;
 						*tag++ = 0;
 
 						for ( search = menu->firstNode; search != node && search; search = search->next )
-							if ( search->type == MN_MODEL && !strcmp( search->name, parent ) )
+							if ( search->type == MN_MODEL && !Q_strncmp( search->name, parent, MAX_VAR ) )
 							{
 								char model[MAX_VAR];
-								strncpy( model, MN_GetReferenceString( menu, search->data[0] ), MAX_VAR );
+								Q_strncpyz( model, MN_GetReferenceString( menu, search->data[0] ), MAX_VAR );
 
 								pmi.model = re.RegisterModel( model );
 								if ( !pmi.model ) break;
@@ -2104,7 +2104,7 @@ void MN_PushMenu( char *name )
 	int		i;
 
 	for ( i = 0; i < numMenus; i++ )
-		if ( !strcmp( menus[i].name, name ) )
+		if ( !Q_strncmp( menus[i].name, name, MAX_VAR ) )
 		{
 			// found the correct add it to stack or bring it on top
 			MN_DeleteMenu( &menus[i] );
@@ -2159,7 +2159,7 @@ void MN_PopMenu( qboolean all )
 
 	if ( !all && menuStackPos == 0 )
 	{
-		if ( !strcmp( menuStack[0]->name, mn_main->string ) )
+		if ( !Q_strncmp( menuStack[0]->name, mn_main->string, MAX_VAR ) )
 		{
 			if ( *mn_active->string )
 				MN_PushMenu( mn_active->string );
@@ -2178,7 +2178,7 @@ void MN_PopMenu( qboolean all )
 
 void MN_PopMenu_f( void )
 {
-	if ( Cmd_Argc() < 2 || strcmp( Cmd_Argv(1), "esc" ) )
+	if ( Cmd_Argc() < 2 || Q_strncmp( Cmd_Argv(1), "esc", 3 ) )
 		MN_PopMenu( false );
 	else
 	{
@@ -2261,7 +2261,7 @@ void MN_ModifyString_f( void )
 		if ( *list ) list++;
 		*tp = 0;
 
-		if ( *token && !first[0] ) strncpy( first, token, MAX_VAR );
+		if ( *token && !first[0] ) Q_strncpyz( first, token, MAX_VAR );
 
 		if ( !*token )
 		{
@@ -2276,7 +2276,7 @@ void MN_ModifyString_f( void )
 			return;
 		}
 
-		if ( !strcmp( token, current ) )
+		if ( !Q_strncmp( token, current, MAX_VAR ) )
 		{
 			if ( add < 0 )
 			{
@@ -2286,7 +2286,7 @@ void MN_ModifyString_f( void )
 			}
 			else next = true;
 		}
-		strncpy( last, token, MAX_VAR );
+		Q_strncpyz( last, token, MAX_VAR );
 	}
 }
 
@@ -2322,7 +2322,7 @@ void MN_Translate_f( void )
 		*trans = 0;
 		list++;
 
-		if ( !strcmp( current, original ) )
+		if ( !Q_strncmp( current, original, MAX_VAR ) )
 		{
 			Cvar_Set( Cmd_Argv(2), translation );
 			return;
@@ -2434,7 +2434,7 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 
 			// standard function execution
 			for ( i = 0; i < EA_CALL; i++ )
-				if ( !strcmp( *token, ea_strings[i] ) )
+				if ( !Q_stricmp( *token, ea_strings[i] ) )
 				{
 //					Com_Printf( "   %s", *token );
 
@@ -2497,7 +2497,7 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 //				Com_Printf( " %s", *token );
 
 				for ( val = nps, i = 0; val->type; val++, i++ )
-					if ( !strcmp( *token, val->string ) )
+					if ( !Q_stricmp( *token, val->string ) )
 					{
 						*(int *)curadata = i;
 						break;
@@ -2534,7 +2534,7 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 
 			// function calls
 			for ( node = menus[numMenus-1].firstNode; node; node = node->next )
-				if ( (node->type == MN_FUNC || node->type == MN_CONFUNC) && !strcmp( node->name, *token ) )
+				if ( (node->type == MN_FUNC || node->type == MN_CONFUNC) && !Q_strncmp( node->name, *token, sizeof(node->name) ) )
 				{
 //					Com_Printf( "   %s\n", node->name );
 
@@ -2562,7 +2562,7 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 		} while ( found );
 
 		// test for end or unknown token
-		if ( !strcmp( *token, "}" ) )
+		if ( **token == '}' )
 		{
 			// finished
 			return true;
@@ -2617,7 +2617,7 @@ qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 			found = false;
 
 			for ( val = nps; val->type; val++ )
-				if ( !strcmp( *token, val->string ) )
+				if ( !Q_strcmp( *token, val->string ) )
 				{
 //					Com_Printf( "  %s", *token );
 
@@ -2655,7 +2655,7 @@ qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 				}
 
 			for ( i = 0; i < NE_NUM_NODEEVENT; i++ )
-				if ( !strcmp( *token, ne_strings[i] ) )
+				if ( !Q_strcmp( *token, ne_strings[i] ) )
 				{
 					menuAction_t	**action;
 
@@ -2672,7 +2672,7 @@ qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 					*token = COM_EParse( text, errhead, node->name );
 					if ( !*text ) return false;
 
-					if ( !strcmp( *token, "{" ) )
+					if ( **token == '{' )
 					{
 						MN_ParseAction( *action, text, token );
 
@@ -2687,7 +2687,7 @@ qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 		} while ( found );
 
 		// test for end or unknown token
-		if ( !strcmp( *token, "}" ) )
+		if ( **token == '}' )
 		{
 			// finished
 			return true;
@@ -2728,7 +2728,7 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 			found = false;
 
 			for ( i = 0; i < MN_NUM_NODETYPE; i++ )
-				if ( !strcmp( token, nt_strings[i] ) )
+				if ( !Q_strcmp( token, nt_strings[i] ) )
 				{
 					// found node
 					// get name
@@ -2737,7 +2737,7 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 
 					// test if node already exists
 					for ( node = menu->firstNode; node; node = node->next )
-						if ( !strcmp( token, node->name ) )
+						if ( !Q_strncmp( token, node->name, sizeof(node->name) ) )
 						{
 							if ( node->type != i )
 								Com_Printf( _("MN_ParseMenuBody: node prototype type change (menu \"%s\")\n"), menu->name );
@@ -2749,7 +2749,7 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 					{
 						node = &menuNodes[numNodes++];
 						memset( node, 0, sizeof(menuNode_t) );
-						strncpy( node->name, token, MAX_VAR );
+						Q_strncpyz( node->name, token, MAX_VAR );
 
 						// link it in
 						if ( lastNode ) lastNode->next = node;
@@ -2763,28 +2763,28 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 //					Com_Printf( " %s %s\n", nt_strings[i], *token );
 
 					// check for special nodes
-					if ( node->type == MN_FUNC && !strcmp( node->name, "init" ) )
+					if ( node->type == MN_FUNC && !Q_strncmp( node->name, "init", 4 ) )
 					{
 						if ( !menu->initNode )
 							menu->initNode = node;
 						else
 							Com_Printf( _("MN_ParseMenuBody: second init function ignored (menu \"%s\")\n"), menu->name );
 					}
-					if ( node->type == MN_FUNC && !strcmp( node->name, "close" ) )
+					if ( node->type == MN_FUNC && !Q_strncmp( node->name, "close", 5 ) )
 					{
 						if ( !menu->closeNode )
 							menu->closeNode = node;
 						else
 							Com_Printf( _("MN_ParseMenuBody: second close function ignored (menu \"%s\")\n"), menu->name );
 					}
-					if ( node->type == MN_ZONE && !strcmp( node->name, "render" ) )
+					if ( node->type == MN_ZONE && !Q_strncmp( node->name, "render", 6 ) )
 					{
 						if ( !menu->renderNode )
 							menu->renderNode = node;
 						else
 							Com_Printf( _("MN_ParseMenuBody: second render node ignored (menu \"%s\")\n"), menu->name );
 					}
-					if ( node->type == MN_ZONE && !strcmp( node->name, "popup" ) )
+					if ( node->type == MN_ZONE && !Q_strncmp( node->name, "popup", 5 ) )
 					{
 						if ( !menu->popupNode )
 							menu->popupNode = node;
@@ -2802,7 +2802,7 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 					token = COM_EParse( text, errhead, menu->name );
 					if ( !*text ) return false;
 
-					if ( !strcmp( token, "{" ) )
+					if ( *token == '{' )
 					{
 						if ( !MN_ParseNodeBody( node, text, &token ) )
 						{
@@ -2825,7 +2825,7 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 		} while ( found );
 
 		// test for end or unknown token
-		if ( !strcmp( token, "}" ) )
+		if ( *token == '}' )
 		{
 			// finished
 			return true;
@@ -2854,7 +2854,7 @@ void MN_ParseMenu( char *name, char **text )
 
 	// search for menus with same name
 	for ( i = 0; i < numMenus; i++ )
-		if ( !strcmp( name, menus[i].name ) )
+		if ( !Q_strncmp( name, menus[i].name, MAX_VAR ) )
 			break;
 
 	if ( i < numMenus )
@@ -2867,12 +2867,12 @@ void MN_ParseMenu( char *name, char **text )
 	menu = &menus[numMenus++];
 	memset( menu, 0, sizeof(menu_t) );
 
-	strncpy( menu->name, name, MAX_VAR );
+	Q_strncpyz( menu->name, name, MAX_VAR );
 
 	// get it's body
 	token = COM_Parse( text );
 
-	if ( !*text || strcmp( token, "{" ) )
+	if ( !*text || *token != '{' )
 	{
 		Com_Printf( _("MN_ParseMenus: menu \"%s\" without body ignored\n"), menu->name );
 		numMenus--;

@@ -1436,6 +1436,16 @@ LIBRARY REPLACEMENT FUNCTIONS
 ============================================================================
 */
 
+int Q_strcmp (char *s1, char *s2)
+{
+        return strncmp(s1, s2, 99999);
+}
+
+int Q_strncmp (char *s1, char *s2, int n)
+{
+        return strncmp(s1, s2, n);
+}
+
 /* PATCH: matt */
 /* use our own strncasecmp instead of this implementation */
 #ifdef sun
