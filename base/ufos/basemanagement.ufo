@@ -133,7 +133,7 @@ building quarters
 	map_name	"quarters"
 	pos		"1 2"
 	firstbase	true
-	type	quaters
+	type	quarters
 	pedia		building_quarters
 }
 
