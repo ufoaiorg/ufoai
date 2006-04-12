@@ -1,6 +1,6 @@
 1. "Antarean"
 [decription]
-Humanoid, big-eyed aliens remeniscent of the "grays" that dominated the alien canon during the late 20th century. They resembly humans both in form and basic anatomy. Like humans, they have a large brain/body ratio, which helped them evolve from their primal animal society into a technologically advanced, space-faring civilization.
+Humanoid, big-eyed aliens reminiscent of the "grays" that dominated the alien canon during the late 20th century. They resemble humans both in form and basic anatomy. Like humans, they have a large brain/body ratio, which helped them evolve from their primal animal society into a technologically advanced, space-faring civilization.
 [notes]
 Having a sophisticated military apparatus, Antareans come in Worker, Soldier and Commander varieties. Small UFOs are manned by Workers, who gather information about Earth, survey the landscape, abduct cattle, the usual. Warship-class UFOs also have a squadron of Soldier Antareans, while the Commanders are found only on Juggernaut-class and Bulwark-class UFOs and in Antarean bases.
 
@@ -14,21 +14,21 @@ Ortnoks are capable of using handheld guns, but cannot throw grenades or operate
 [decription]
 An unusual quadruped life-form best described as 'nature's tank'. While not higher than an average human, they are much wider, giving them the appearance of an unholy union between a rhinoceros and a creature normally associated only with darker science-fiction movies. They are carnivores that evolved on the Antarean's homeland. Featuring two sets of jaws, these creatures can rip the limbs off a human soldier with ease. Their thick hide makes them very tough, and for this reason, the Antareans use them as a monstrous equivalent of war dogs. While the enemy is busy trying to fend off the Shevaars, the Antarean troopers lay into them from a distance.
 [notes]
-At first the Shevaars can only charge an enemy and attack them in melee combat. Later on in the game, Shevaars could be equipped with armor for extra protection, and a fusion cannon to allow for ranged attack.
+At first the Shevaars can only charge an enemy and attack them in melee combat. Later on in the game, Shevaars could be equipped with armor for extra protection, and a tachyon rifle to allow for ranged attack.
 A shevaar takes up 2x2 boxes.
 
 4. "Hovernet"
 [description]
-These are small floating, mechanical gunships dubbed "hovernets" by those who survived the first encounter with these things. They are aptly named - they hover above the ground through unknown means, and like hornets then can be extremely dangerous. They are armed with a light tachyon cannon. They can fly up and down without any restrictions, and they move very fast. It appears these machines are a sort of security system, deployed in case a landed or crashed UFO is attacked.
+These are small, floating, mechanical gunships dubbed "hovernets" by those who survived the first encounter with them. They are aptly named - they hover above the ground through unknown means, and like hornets they can be extremely dangerous. They are armed with a tachyon sniper rifle. They are extremely agile and unrelentingly quick. It appears these machines are some form of security system, deployed in case a landed or crashed UFO is attacked.
 [notes]
 Hovernets are remote-controlled, and only appear in landing/crash missions (for UFO's that have them on board) and alien base missions.
-Hovernets are mechanical and should be researched in a equipment lab rather than a biolab. Shooting them will destroy most of they internal systems. To capture one "alive", the human player must destroy the Antarean that controls them. This Antarean will invariably be found in a control center.
+While hovernets display an apparent bioluminescence, they are mechanical and should be researched in an equipment lab rather than a biolab. Shooting them will destroy most of their internal systems. To capture one "alive", the human player must destroy the Antarean that controls it. This Antarean will invariably be found in a control center.
 
 5. "Cyborg Ortnok"
 [description]
-The result on an extensive Antarean Ortnok-machine interface research program these Ortnoks retain little of their original body. Limbs and internal organs have been replaced by machines, and the skull has been reinforced with a metal shell that was grafted onto the bone. Cyborg Ortnoks retain their verocious nature, however, and are quite aggressive in combat.
+The result of an extensive Antarean Ortnok-machine interface research program, these Ortnoks retain little of their original body. Limbs and internal organs have been replaced by machines, and the skull has been reinforced with a metal shell fused to the bone. Cyborg Ortnoks retain their ferocious nature, however, and are quite aggressive in combat.
 [notes]
-Unlike normal Ortnoks, the Cyborg Ortnok's weaponry is built into it's arm modules. These modules range from heavy fusion cannons to grenade throwers.
+Unlike normal Ortnoks, the Cyborg Ortnok's weaponry is built into its arm modules. These modules range from tachyon rifles to grenade launchers.
 
 x. "placeholder"
 [description]
