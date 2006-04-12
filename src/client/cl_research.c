@@ -690,7 +690,8 @@ void RS_UpdateData ( void )
 				Com_sprintf( tempstring, MAX_VAR, "%iav\n", MN_EmloyeesInBase2 ( EMPL_SCIENTIST, true ) );
 				Cvar_Set( va( "mn_researchavailable%i",j ), tempstring );	// max available scis in base
 			}
-			Cvar_Set( "mn_research_sellabs", "Free labs in base: zzz");
+			
+			Cvar_Set( "mn_research_sellabs", va( "Free labs in base: %i", MN_GetUnusedLabs() ) );
 			switch ( tech->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 			{
 			case RS_RUNNING:

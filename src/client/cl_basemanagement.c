@@ -1079,7 +1079,7 @@ void MN_InitEmployees ( void )
 /*======================
 MN_GetFreeBuilding
 
-Gets a building in the current base of a given type with no assigned workers
+Gets a free (with no assigned workers) building in the current base of a given type.
 
 IN
 	type:	Which type of building to search for.
@@ -1111,33 +1111,72 @@ building_t * MN_GetFreeBuilding( buildingType_t type )
 /*======================
 MN_GetUnusedLab
 
-Gets a lab in the current base of a given type with no research running.
+Gets a lab in the current base with no research running.
 
 OUT
-	building	the (unused) building.
+	MN_GetUnusedLab	the (unused) lab.
 ======================*/
 building_t * MN_GetUnusedLab( void )
 {
-	int i,j;
+	int i, j;
 	building_t *building = NULL;
 	technology_t *tech = NULL;
-	byte found = false;
+	byte used = false;
+	
 	for ( i = 0; i < numBuildings; i++ ) {
 		building = &bmBuildings[baseCurrent->id][i];
 		if ( building->buildingType == B_LAB ) {
+			used = false;
+			// check in research tree if the lab is used
 			for ( j=0; j < numTechnologies; j++ ) {
 				tech = &technologies[j];
 				if ( tech->lab == building ) {
-					found = true;
+					used = true;
 					break;
 				}
 			}
-			if ( !found )
+			if ( !used )
 				return building;
 		}
 		building = NULL;
 	}
 	return building;
+}
+
+/*======================
+MN_GetUnusedLabs
+
+Gets the number of unused labsd workers) in the current base of a given type.
+
+OUT
+	MN_GetUnusedLab	number of found (empty) building
+======================*/
+int MN_GetUnusedLabs( void )
+{
+	int i, j;
+	building_t *building = NULL;
+	technology_t *tech = NULL;
+	byte used = false;
+	
+	int numFreeLabs = 0;
+	
+	for ( i = 0; i < numBuildings; i++ ) {
+		building = &bmBuildings[baseCurrent->id][i];
+		if ( building->buildingType == B_LAB ) {
+			used = false;
+			// check in research tree if the lab is used
+			for ( j=0; j < numTechnologies; j++ ) {
+				tech = &technologies[j];
+				if ( tech->lab == building ) {
+					used = true;
+					break;
+				}
+			}
+			if ( !used )
+				numFreeLabs++;
+		}
+	}
+	return numFreeLabs;
 }
 
 /*======================
