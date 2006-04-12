@@ -65,7 +65,7 @@ One nova fusion driver, two point-defense fusion needles.
 [personnel]
 Five Worker-class Antareans, one Antarean Commander, six Soldier-class Antareans, four Cyborg Otnoks, three Shevaars, five Hovernets.
 [notes]
-Bulwarks are slower even than scouts. They usually have some Fighter escorts to prevent hit-and-run attacks from enemy vessels, but any enemy determined enough to take on the nove fusion driver will usually not have too much trouble with those.
+Bulwarks are slower even than scouts. They usually have some Fighter escorts to prevent hit-and-run attacks from enemy vessels, but any enemy determined enough to take on the nova-class fusion driver will usually not have too much trouble with those.
 
 x. "placeholder"
 [description]
