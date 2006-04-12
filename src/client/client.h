@@ -773,6 +773,7 @@ void CL_ItemDescription( int item );
 //
 // cl_research.c
 //
+void RS_CopyFromSkeleton( void );
 void RS_InitTree( void );
 void RS_MarkCollected ( void );
 void RS_MarkResearchable ( void );

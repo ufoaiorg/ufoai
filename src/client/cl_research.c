@@ -42,7 +42,8 @@ byte RS_TechIsResearchable(char *id );
 byte RS_TechIsResearched(char *id );
 
 technology_t technologies[MAX_TECHNOLOGIES];	// A global listof _all_ technologies (see cl_research.h)
-int numTechnologies;						// The global number of entries in the above list  (see cl_research.h)
+technology_t technologies_skeleton[MAX_TECHNOLOGIES];	// A local listof _all_ technologies  that are used to initialise the global list on new/loaded game.
+int numTechnologies;						// The global number of entries in the global list AND the local list above.  (see cl_research.h)
 
 technology_t *researchList[MAX_RESEARCHLIST];	// A (local) list of displayed technology-entries (the research list in the base)
 int researchListLength;						// The number of entries in the above list.
@@ -185,6 +186,23 @@ void RS_MarkResearchable( void )
 }
 
 /*======================
+RS_CopyFromSkeleton
+
+Copy the research-tree skeleton parsed on game-start to the global list.
+The skeleton has all the informations about already researched items etc..
+======================*/
+void RS_CopyFromSkeleton( void )
+{
+	int i;
+	technology_t *tech = NULL;
+	
+	for ( i = 0; i < numTechnologies; i++ ) {
+		tech = &technologies[i];
+		memcpy( tech, &technologies_skeleton[i], sizeof( technology_t ) );
+	}
+}
+
+/*======================
 RS_InitTree
 
 Gets all needed names/file-paths/etc... for each technology entry.
@@ -201,6 +219,7 @@ void RS_InitTree( void )
 	building_t	*building = NULL;
 	aircraft_t	*ac = NULL;
 	byte	found;
+	
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 
@@ -1005,7 +1024,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 	}
 
 	// New technology (next free entry in global tech-list)
-	tech = &technologies[numTechnologies++];
+	tech = &technologies_skeleton[numTechnologies++];
 	required = &tech->requires;
 	memset( tech, 0, sizeof( technology_t ) );
 

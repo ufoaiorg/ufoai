@@ -1309,7 +1309,7 @@ void CL_GameNew( void )
 	CL_GameTimeStop();
 
 	// init research tree
-	// TODO: research status is not reset after a game is played ... do this there.
+	RS_CopyFromSkeleton ();
 	RS_InitTree ();
 	
 	// init employee list
@@ -1657,6 +1657,7 @@ void CL_GameLoad( char *filename )
 	B_LoadBases( &sb, version );
 
 	// load techs
+	RS_CopyFromSkeleton ();
 	RS_LoadTech( &sb, version );
 
 	// read credits
