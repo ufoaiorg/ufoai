@@ -140,6 +140,7 @@ menu map
 		pos		"34 658"
 		size	"400 100"
 		format	"20 0"
+		height	"8"
 	}
 
 	string daytime
@@ -233,6 +234,35 @@ menu map
 		texh	"64 64"
 		mousefx true
 		click	{ cmd mn_pop; }
+	}
+
+	text messagesystem
+	{
+		pos	"0 99"
+		size	"1024 40"
+		bgcolor	"0 0 0 .5"
+		format	"20 0"
+		height	2
+		// TEXT_MESSAGESYSTEM
+		num	12
+	}
+
+	pic messagesystem_show
+	{
+		tooltip	"_Open up messages"
+		image	menu/ufopedia_buttons1
+		texl	"0 74"
+		texh	"64 111"
+		pos	"950 96"
+		mousefx true
+		out	{
+				*messagesystem size "1024 40"
+				*messagesystem height "2"
+			}
+		in	{
+				*messagesystem size "1024 400"
+				*messagesystem height "20"
+			}
 	}
 
 	func init
