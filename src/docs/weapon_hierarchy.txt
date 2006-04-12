@@ -134,29 +134,30 @@ This device acts just like a Frag Grenade, but instead of an explosive blast it 
 Damage type: Plasma
 
 ==================================
-Tier 4: Alien fusion equipment
+Tier 4: Alien Tachyon equipment
 ==================================
-Completely tentative, though some current tachyon models are used.
+Some models for this tier exist.
 
-- Fusion Rifle (implemented as tachyon rifle)
-This rifle fires white-hot fusion beams at medium range. They are less accurate than most Rifle weapons, but they are a lot more powerful.
-Damage type: Fusion
+- Tachyon Rifle
+TODO: tweak the edescription a bit to match the tachyon tech better.
+This rifle fires tachyon beams at medium range. They are less accurate than most Rifle weapons, but they are a lot more powerful.
+Damage type: Tachyon
 
-- Fusion Grenade
+- Tachyon Sniper Rifle
+TODO: Add description
+Damage type: Tachyon
+
+- Tachyon Grenade
 This device acts just like a Frag Grenade, but its radius is larger than that of a Frag Grenade, and it deals much more damage.
 Damage type: Blast
 
-- Fusion Missile Launcher
-This device fires self-propelled projectiles that explode in a miniature fusion blast. It is much more effective than a standard Earth Missile Launcher.
+- Tachyon Missile Launcher
+This device fires self-propelled projectiles that explode in a concentrated tachyon blast. It is much more effective than a standard Earth Missile Launcher.
 Damage type: Blast
 
-- Proximity Fusion Mine
+- Proximity Tachyon Mine
 This device acts just like Mine, except it explodes when any unit is close enough. Its blast radius is larger than a normal Mine's, and it deals much more damage.
-Damage type: Fusion
-
-- Fusion Cannon (possibly implemented as tachyon sniper rifle)
-This weapon is so burly that it needs to be deployed on a standard before it can be fired. For all means and purposes, it has unlimited range, but it is nowhere near as accurate as a Sniper Rifle. It is slow to fire, but the damage it deals is devastating.
-Damage type: Fusion
+Damage type: Blast
 
 ==================================
 Tier 5: Psionic equipment
