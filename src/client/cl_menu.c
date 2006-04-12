@@ -1124,9 +1124,12 @@ MN_BaseMapClick
 void MN_BaseMapClick( menuNode_t *node, int x, int y )
 {
 	int	row, col;
+	building_t	*b, *entry;
 	assert(baseCurrent);
 
-	if ( baseCurrent->buildingCurrent && baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] == B_NOT_SET )
+	b = baseCurrent->buildingCurrent;
+
+	if ( b && b->buildingStatus[b->howManyOfThisType] == B_NOT_SET )
 	{
 		for ( row = 0; row < BASE_SIZE; row++ )
 			for ( col = 0; col < BASE_SIZE; col++ )
@@ -1145,11 +1148,15 @@ void MN_BaseMapClick( menuNode_t *node, int x, int y )
 			  && x >= baseCurrent->posX[row][col][baseCurrent->baseLevel] && x < baseCurrent->posX[row][col][baseCurrent->baseLevel] + picWidth*ccs.basezoom
 			  && y >= baseCurrent->posY[row][col][baseCurrent->baseLevel] && y < baseCurrent->posY[row][col][baseCurrent->baseLevel] + picHeight*ccs.basezoom )
 			{
-				building_t* entry = B_GetBuildingByID( baseCurrent->map[row][col][baseCurrent->baseLevel] );
+				entry = B_GetBuildingByID( baseCurrent->map[row][col][baseCurrent->baseLevel] );
 				if ( entry->onClick[0] )
 					Cbuf_ExecuteText( EXEC_NOW, entry->onClick );
 				else
-					UP_OpenWith( entry->pedia );
+				{
+					baseCurrent->buildingCurrent = entry;
+					MN_DrawBuilding();
+				}
+// 					UP_OpenWith( entry->pedia );
 
 				return;
 			}

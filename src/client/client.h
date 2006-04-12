@@ -860,16 +860,17 @@ typedef enum
 
 typedef enum
 {
-	B_NOT_SET,
-	B_UNDER_CONSTRUCTION,
-	B_CONSTRUCTION_FINISHED,
-	B_UPGRADE,
-	B_WORKING_120,
-	B_WORKING_100,
-	B_WORKING_50,
-	B_MAINTENANCE,
-	B_REPAIRING,
-	B_DOWN
+	B_NOT_SET, // not build yet
+	B_UNDER_CONSTRUCTION, // right now under construction
+	B_CONSTRUCTION_FINISHED, // construction finished - but no workers assigned
+				 // and building needs workers
+	B_UPGRADE, // just upgrading (not yet implemented)
+	B_WORKING_120, // a quick boost (not yet implemented)
+	B_WORKING_100, // working normal (or workers assigned when needed)
+	B_WORKING_50, // damaged or something like that
+	B_MAINTENANCE, // yes, maintenance - what else to say
+	B_REPAIRING, // repairing to get back status B_WORKING_100
+	B_DOWN // totally damaged
 } buildingStatus_t;
 
 typedef enum
@@ -1059,6 +1060,9 @@ void MN_InitEmployees ( void );
 
 void CL_UpdateBaseData( void );
 base_t* B_GetBase ( int id );
+void B_UpgradeBuilding( building_t* b );
+void B_RepairBuilding( building_t* b );
+int B_CheckBuildingConstruction ( building_t* b );
 int B_GetNumOnTeam ( void );
 void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version );
 void CL_UpdateHireVar ( void );
