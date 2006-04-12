@@ -1046,6 +1046,8 @@ extern	int numBuildings;								// The global number of entries in the bmBuildin
 extern	employee_t	employees[MAX_EMPLOYEES];			// This it the global list of employees.
 extern	int   numEmployees;							// The global number of enris in the "employees" list.
 
+void MN_InitEmployees ( void );
+
 #ifndef SAVE_FILE_VERSION
 #define SAVE_FILE_VERSION 4
 #endif
