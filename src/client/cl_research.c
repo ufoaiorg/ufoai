@@ -487,7 +487,9 @@ void RS_AssignScientist( void )
 		}
 	}
 	// assign a scientists to the lab
-	if ( ! MN_AssignEmployee ( tech->lab, EMPL_SCIENTIST ) ) {
+	if ( MN_AssignEmployee ( tech->lab, EMPL_SCIENTIST ) ) {
+		tech->statusResearch = RS_RUNNING;
+	} else {
 		Com_Printf( _("Can't add scientist from the lab.\n") );
 	}
 
@@ -506,7 +508,8 @@ void RS_RemoveScientist( void )
 {
 	int num;
 	technology_t *tech = NULL;
-
+	employees_t *employees_in_building = NULL;
+	
 	if ( Cmd_Argc() < 2 )
 	{
 		Com_Printf( "Usage: mn_rs_remove <num_in_list>\n" );
@@ -524,10 +527,15 @@ void RS_RemoveScientist( void )
 	Com_DPrintf( "RS_RemoveScientist: %s\n", tech->id );
 	if ( tech->lab ) {
 		Com_DPrintf( "RS_RemoveScientist: %s\n", tech->lab->name );
-		if ( !MN_RemoveEmployee( tech->lab ) ) {
-			Com_Printf( _("Can't remove scientist from the lab.\n") );
-		} else {
+		if ( MN_RemoveEmployee( tech->lab ) ) {
 			Com_DPrintf( "RS_RemoveScientist: Removal done.\n" );
+			employees_in_building = &tech->lab->assigned_employees;
+			if ( employees_in_building->numEmployees == 0) {
+				tech->lab = NULL;
+				tech->statusResearch = RS_PAUSED;
+			}
+		} else {
+			Com_Printf( _("Can't remove scientist from the lab.\n") );
 		}
 	} else {
 		Com_Printf( "This tech is not research in any lab.\n" );
@@ -546,7 +554,7 @@ TODO: Check if laboratory is available
 ======================*/
 void RS_ResearchStart ( void )
 {
-	technology_t *t = NULL;
+	technology_t *tech = NULL;
 
 	// we are not in base view
 	if ( ! baseCurrent )
@@ -565,23 +573,23 @@ void RS_ResearchStart ( void )
 	//	if it fails -> quit
 
 	// get the currently selected research-item
-	t = researchList[researchListPos];
+	tech = researchList[researchListPos];
 
-	if ( t->statusResearchable ) {
-		switch ( t->statusResearch )
+	if ( tech->statusResearchable ) {
+		switch ( tech->statusResearch )
 		{
 		case RS_RUNNING:
 			MN_Popup( _("Notice"), _("This item is already under research by your scientists.") );
 			break;
 		case RS_PAUSED:
 			MN_Popup( _("Notice"), _("The research on this item continues.") );
-			t->statusResearch = RS_RUNNING;
+			tech->statusResearch = RS_RUNNING;
 			break;
 		case RS_FINISH:
 			MN_Popup( _("Notice"), _("The research on this item is complete.") );
 			break;
 		case RS_NONE:
-			t->statusResearch = RS_RUNNING;
+			tech->statusResearch = RS_RUNNING;
 			break;
 		default:
 			break;
@@ -602,25 +610,25 @@ TODO: Check if laboratory is available
 ======================*/
 void RS_ResearchStop ( void )
 {
-	technology_t *t = NULL;
+	technology_t *tech = NULL;
 
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
 
 	// get the currently selected research-item
-	t = researchList[researchListPos];
+	tech = researchList[researchListPos];
 
 	// TODO: remove lab from technology and scientists from lab
 
-	switch ( t->statusResearch )
+	switch ( tech->statusResearch )
 	{
 	case RS_RUNNING:
-		t->statusResearch = RS_PAUSED;
+		tech->statusResearch = RS_PAUSED;
 		break;
 	case RS_PAUSED:
 		MN_Popup( _("Notice"), _("The research on this item continues.") );
-		t->statusResearch = RS_RUNNING;
+		tech->statusResearch = RS_RUNNING;
 		break;
 	case RS_FINISH:
 		MN_Popup( _("Notice"), _("The research on this item is complete.") );
@@ -667,7 +675,7 @@ void RS_UpdateData ( void )
 			j++;											// counting the numbers of display-list entries.
 		}
 		else
-		if ( ( tech->statusResearch != RS_FINISH ) && ( tech->statusResearchable ) ) { //(  ( t->statusResearch != RS_FINISH ) && ( RS_TechIsResearchable( t->id ) ) ) {
+		if ( ( tech->statusResearch != RS_FINISH ) && ( tech->statusResearchable ) ) { //(  ( tech->statusResearch != RS_FINISH ) && ( RS_TechIsResearchable( tech->id ) ) ) {
 			//TODO:
 			Cvar_Set( va( "mn_researchassigned%i", j ), "as.");
 			Cvar_Set( va( "mn_researchavailable%i", j ), "av.");
