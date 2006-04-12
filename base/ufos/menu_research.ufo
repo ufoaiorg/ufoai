@@ -790,7 +790,7 @@ menu research
 	string txt_selected_labs
 	{
 		string "*cvar mn_research_sellabs"
-		pos "900 200"
+		pos "700 200"
 	}
 
 	//number of available scientists (sum places in labs / used / summary)
@@ -800,7 +800,7 @@ menu research
 	//	pos "645 290"
 	//	color "0 .78 0 1"
 	//}
-	
+
 	// ==================
 	// Informations on research progress and technology details
 	// ==================

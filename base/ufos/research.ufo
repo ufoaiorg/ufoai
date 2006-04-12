@@ -45,12 +45,12 @@
 
 up_chapters main
 {
-	crafts	"Aircraft"
-	tech		"Technologies & Discoveries"
-	weapons	"Weapons"
-	buildings	"Buildings"
-	aliens	"Alien Species"
-	ufos		"UFOs"
+	crafts	"_Aircraft"
+	tech		"_Technologies & Discoveries"
+	weapons	"_Weapons"
+	buildings	"_Buildings"
+	aliens	"_Alien Species"
+	ufos		"_UFOs"
 }
 
 //====================
@@ -475,7 +475,7 @@ tech irgoggles
 	type	weapon
 	up_chapter	weapons
 	description	"_irgoggles_txt"
-	
+
 	requires	initial
 	provides	irgoggles
 	time	1
@@ -487,7 +487,7 @@ tech medikit
 	type	weapon
 	up_chapter	weapons
 	description	"_medikit_txt"
-	
+
 	requires	initial
 	provides	medikit
 	time	1
@@ -509,8 +509,8 @@ tech kevlar_armor
 	type	armor
 	up_chapter	weapons
 	description	"_kevlar_armor_txt"
-	
-	
+
+
 	requires	initial
 	provides	light
 	time	0
@@ -522,7 +522,7 @@ tech nano_armor
 	type	armor
 	description	"_nano_armor_txt"
 	up_chapter	weapons
-	
+
 	requires	"nano"
 	provides	medium
 	time	1
