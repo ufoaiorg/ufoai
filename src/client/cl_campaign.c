@@ -348,6 +348,18 @@ CL_AircraftInit
 */
 void CL_AircraftInit ( void )
 {
+	aircraft_t	*air;
+	int	i = 0;
+
+	for ( i = 0; i < numAircraft; i++ )
+	{
+		air = &aircraft[i];
+		// link with tech pointer
+		air->weapon = RS_GetTechByID( air->weapon_string );
+		// link with tech pointer
+		air->shield = RS_GetTechByID( air->shield_string );
+	}
+	Com_Printf("...aircraft inited\n");
 }
 
 /*
@@ -506,8 +518,11 @@ void CL_AircraftSelect ( void )
 	Cvar_Set( "mn_aircraft_model_top", air->model_top );
 	Cvar_Set( "mn_aircraft_model_glass", air->model_glass );
 	Cvar_Set( "mn_aircraft_model_wings", air->model_wings );
+	Cvar_Set( "mn_aircraft_weapon", air->weapon ? air->weapon->name : "" );
+	Cvar_Set( "mn_aircraft_shield", air->shield ? air->shield->name : "" );
 
-	Com_sprintf(aircraftInfo, 256, _("Speed:\t%.0f\nFuel:\t%i/%i\n"), air->speed, air->fuel, air->fuelSize );
+	// FIXME: Are these names (weapon and shield) already translated?
+	Com_sprintf(aircraftInfo, 256, _("Speed:\t%.0f\nFuel:\t%i/%i\nWeapon:\t%s\nShield:\t%s\n"), air->speed, air->fuel, air->fuelSize, air->weapon ? air->weapon->name : _("None"), air->shield ? air->shield->name : _("None") );
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 
@@ -579,7 +594,6 @@ qboolean CL_NewBase( vec2_t pos )
 	if ( MapIsWater(color) )
 	{
 		MN_AddNewMessage( _("Notice"), _("Could not set up your base at this location"), false, MSG_STANDARD, NULL );
-// 		MN_Popup( _("Notice"), _("Could not set up your base at this location") );
 		return false;
 	} else if ( MapIsDesert(color) ){
 		Com_DPrintf(_("Desertbase\n"));
@@ -922,6 +936,7 @@ void CL_SelectAircraft_f ( void )
 CL_BuildingAircraftList_f
 
 Builds the aircraft list for textfield with id
+FIXME: Rename TEXT_INTERCEPT_LIST to TEXT_AIRCRAFT_LIST
 TEXT_INTERCEPT_LIST
 ======================
 */
@@ -955,10 +970,10 @@ CL_CampaignCheckEvents
 */
 void CL_CampaignCheckEvents( void )
 {
-	stageState_t *stage;
-	setState_t   *set;
-	actMis_t     *mis;
-	int i, j;
+	stageState_t	*stage;
+	setState_t	*set;
+	actMis_t	*mis;
+	int	i, j;
 
 	// check campaign events
 	for ( i = 0, stage = ccs.stage; i < numStages; i++, stage++ )
@@ -986,8 +1001,8 @@ void CL_CampaignCheckEvents( void )
 			// ok, waiting and not doing a mission will costs money
 			int lose = mis->def->civilians * mis->def->cr_civilian;
 			CL_UpdateCredits( ccs.credits - lose );
-			Com_sprintf (text, sizeof(text), _("The mission expired and %i civilians died\\You've lost %i $"), mis->def->civilians, lose );
-			MN_Popup( _("Notice"), text );
+			Q_strncpyz(text, va(_("The mission expired and %i civilians died\\You've lost %i $"), mis->def->civilians, lose), MAX_MENUTEXTLEN );
+			MN_AddNewMessage( _("Notice"), text, false, MSG_STANDARD, NULL );
 			CL_CampaignRemoveMission( mis );
 		}
 }
@@ -1316,6 +1331,11 @@ void CL_GameNew( void )
 	// init research tree
 	RS_CopyFromSkeleton ();
 	RS_InitTree ();
+
+	// after inited the techtree
+	// we can assign the weapons
+	// and shields to aircrafts.
+	CL_AircraftInit();
 
 	// init employee list
 	MN_InitEmployees ();
@@ -1991,14 +2011,16 @@ void CL_GameAutoGo( void )
 	mis = selMis->def;
 	if ( ! mis->active )
 	{
-		//MN_Popup( _("Note"), _("Your dropship is not near the landingzone") );
+		MN_AddNewMessage( _("Notice"), _("Your dropship is not near the landingzone"), false, MSG_STANDARD, NULL );
 		return;
 	}
 
 	MN_PopMenu(false);
 
 	// FIXME: This needs work
-	won = mis->aliens > interceptAircraft->size ? 0 : 1;
+	won = mis->aliens * (int)difficulty->value > interceptAircraft->teamSize ? 0 : 1;
+
+	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int)difficulty->value, interceptAircraft->size );
 
 	// give reward
 	if ( won )
@@ -2017,6 +2039,11 @@ void CL_GameAutoGo( void )
 		CL_CampaignExecute( selMis->cause );
 
 	CL_CampaignRemoveMission( selMis );
+
+	if ( won )
+		MN_AddNewMessage( _("Notice"), _("You've won the battle"), false, MSG_STANDARD, NULL );
+	else
+		MN_AddNewMessage( _("Notice"), _("You've lost the battle"), false, MSG_STANDARD, NULL );
 
 	CL_MapActionReset();
 }
@@ -2653,7 +2680,7 @@ void CL_ParseStage( char *name, char **text )
 	Q_strncpyz( sp->name, name, MAX_VAR );
 	sp->first = numStageSets;
 
-	Com_Printf( _("stage: %s\n"), name );
+	Com_DPrintf( _("stage: %s\n"), name );
 
 	do {
 		token = COM_EParse( text, errhead, name );
@@ -2766,6 +2793,8 @@ value_t aircraft_vals[] =
 	{ "fuel",	V_INT,	AIRFS( fuel ) },
 	{ "fuelsize",	V_INT,	AIRFS( fuelSize ) },
 	{ "image",	V_STRING,	AIRFS( image ) },
+	{ "weapon",	V_STRING,	AIRFS( weapon_string ) },
+	{ "shield",	V_STRING,	AIRFS( shield_string ) },
 	{ "model",	V_STRING,	AIRFS( model ) },
 	{ "model_top",	V_STRING,	AIRFS( model_top ) },
 	{ "model_glass",	V_STRING,	AIRFS( model_glass ) },

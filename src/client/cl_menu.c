@@ -1858,7 +1858,33 @@ void MN_DrawMenus( void )
 
 							// maybe due to scrolling this line is not visible
 							if ( line > node->textScroll )
-								re.DrawPropString( font, ALIGN_UL, node->pos[0], y, message->text );
+							{
+								len = re.DrawPropLength( font, message->text );
+								if ( len > node->pos[0] + node->size[0] )
+								{
+									// TODO: not tested this....
+									// we use a backslash to determine where to break the line
+									tab1 = message->text;
+									while ( ( end = strstr( tab1, "\\" ) ) != NULL )
+									{
+										*end = '\0';
+										re.DrawPropString( font, ALIGN_UL, node->pos[0], y, tab1 );
+										tab1 = end + 1;
+										line++;
+										if ( line >= node->height )
+											break;
+										y += node->texh[0];
+									}
+								}
+								else
+								{
+									// newline to space - we don't need this
+									while ( ( end = strstr( message->text, "\\" ) ) != NULL )
+										*end = ' ';
+
+									re.DrawPropString( font, ALIGN_UL, node->pos[0], y, message->text );
+								}
+							}
 
 							y += node->texh[0];
 							message = message->next;
@@ -3076,8 +3102,9 @@ MN_AddNewMessage
 */
 void MN_AddNewMessage( const char* title, const char* text, qboolean popup, messagetype_t type, technology_t *pedia )
 {
-	message_t* mess;
-	int d, m, y, h, min, s;
+	message_t*	mess;
+	// date and time vars
+	int	d, m, y, h, min, s;
 
 	// allocate memory for new message
 	mess = (message_t*) malloc ( sizeof( message_t ) );
@@ -3098,6 +3125,7 @@ void MN_AddNewMessage( const char* title, const char* text, qboolean popup, mess
 	Q_strncpyz( mess->title, title, MAX_VAR );
 	// add date string to message
 	Q_strncpyz( mess->text, va("%02i %s %04i, %02i:%02i:%02i:\t", d, CL_DateGetMonthName(m), y, h, min, s ), MAX_MESSAGE_TEXT );
+
 	Q_strcat( mess->text, MAX_MESSAGE_TEXT, text );
 
 	if ( popup )

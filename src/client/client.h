@@ -971,10 +971,14 @@ typedef struct aircraft_s
 	int		point;
 	int		time;
 	int	teamSize;	// how many soldiers on board
-	char	model[MAX_VAR];
-	char	model_top[MAX_VAR];
-	char	model_glass[MAX_VAR];
-	char	model_wings[MAX_VAR];
+	char	model[MAX_QPATH];
+	char	model_top[MAX_QPATH];
+	char	model_glass[MAX_QPATH];
+	char	model_wings[MAX_QPATH];
+	char	weapon_string[MAX_VAR];
+	technology_t*	weapon;
+	char	shield_string[MAX_VAR];
+	technology_t*	shield;
 	mapline_t route;
 	void*	homebase;	// pointer to homebase
 } aircraft_t;

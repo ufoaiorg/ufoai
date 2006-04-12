@@ -1295,9 +1295,8 @@ void CL_ParseScriptSecond( char *type, char *name, char **text )
 	if ( !Q_strncmp( type, "campaign", 8 ) ) CL_ParseCampaign( name, text );
 	else if ( !Q_strncmp( type, "stage", 5 ) ) CL_ParseStage( name, text );
 	else if ( !Q_strncmp( type, "building", 8 ) ) MN_ParseBuildings( name, text );
-	else if ( !Q_strncmp( type, "production", 10 ) ) MN_ParseProductions( name, text );
 	else if ( !Q_strncmp( type, "aircraft", 8 ) ) CL_ParseAircraft( name, text );
-	//TODO: Parse Base
+	else if ( !Q_strncmp( type, "production", 10 ) ) MN_ParseProductions( name, text );
 	else if ( !Q_strncmp( type, "base", 4 ) ) MN_ParseBases( name, text );
 	else if ( !Q_strncmp( type, "tech", 4 ) ) RS_ParseTechnologies( name, text );
 	else if ( !Q_strncmp( type, "shader", 6 ) ) CL_ParseShaders( name, text );
@@ -1400,8 +1399,8 @@ void CL_InitLocal (void)
 
 	cl_numnames = Cvar_Get ("cl_numnames", "19", CVAR_NOSET);
 
-	difficulty = Cvar_Get ("difficulty", "-1", CVAR_ARCHIVE | CVAR_LATCH);
-	difficulty->modified = true;
+	difficulty = Cvar_Get ("difficulty", "3", CVAR_ARCHIVE | CVAR_LATCH);
+	difficulty->modified = false;
 
 	confirm_actions = Cvar_Get ("confirm_actions", "0", CVAR_ARCHIVE );
 
@@ -1668,7 +1667,7 @@ void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info)
 //	Com_Printf( "adding particle %s %i\n", ptl, numMPs );
 }
 
-
+// FIXME: Howto mark them for gettext?
 char *difficulty_names[] =
 {
 	"Chickenhearted",
@@ -1701,10 +1700,10 @@ void CL_CvarCheck( void )
 		cl_worldlevel->modified = false;
 	}
 
-	// difficulty and confirm_actions
+	// difficulty
 	if ( difficulty->modified )
 	{
-		v = (int)difficulty->value + 3;
+		v = (int)difficulty->value;
 
 		if ( v < 0 ) v = 0;
 		else if ( v > 6 ) v = 6;

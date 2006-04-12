@@ -57,11 +57,11 @@ typedef struct stringlist_s
 typedef struct technology_s
 {
 	char	id[MAX_VAR];				// Short (unique) id/name.
-	char	name[MAX_VAR];			// Full name of this technology.	
+	char	name[MAX_VAR];			// Full name of this technology.
 	char	description[MAX_VAR];		// Just a short text-id to get this via gettext.
 	researchType_t	type;
-	
-	
+
+
 	stringlist_t	requires;
 	char	provides[MAX_VAR];			// The item that this technology enables.
 	float	overalltime, time;					// The time that is needed to research this tech. (in days)
@@ -77,7 +77,7 @@ typedef struct technology_s
 
 	byte	statusCollected;				// Did we loot this item?
 	byte	statusResearchable;			// Is this item researchable?
-	
+
 	// Pedia info
 	struct	pediaChapter_s	*up_chapter;	// pedia chapter as stored in research.ufo.
 	struct	technology_s *prev;			// Previous tech in pedia.
@@ -100,5 +100,7 @@ void RS_SaveTech( sizebuf_t *sb );
 void RS_LoadTech( sizebuf_t *sb, int version );
 
 void RS_InitTree ( void );
+
+technology_t* RS_GetTechByID ( const char* id );
 
 #endif /*TECHNOLOGY_DEFINED*/

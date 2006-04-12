@@ -195,7 +195,7 @@ void RS_CopyFromSkeleton( void )
 {
 	int i;
 	technology_t *tech = NULL;
-	
+
 	for ( i = 0; i < numTechnologies; i++ ) {
 		tech = &technologies[i];
 		memcpy( tech, &technologies_skeleton[i], sizeof( technology_t ) );
@@ -219,7 +219,7 @@ void RS_InitTree( void )
 	building_t	*building = NULL;
 	aircraft_t	*ac = NULL;
 	byte	found;
-	
+
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 
@@ -371,7 +371,7 @@ void RS_ResearchDisplayInfo ( void  )
 	if ( ! baseCurrent )
 		return;
 
-	Cvar_Set( "mn_research_selname",  tech->name );
+	Cvar_Set( "mn_research_selname", tech->name );
 	if ( tech->overalltime ) {
 		if ( tech->time > tech->overalltime ) {
 			Com_Printf("RS_ResearchDisplayInfo: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", tech->id, tech->time, tech->overalltime );
@@ -509,7 +509,7 @@ void RS_RemoveScientist( void )
 	int num;
 	technology_t *tech = NULL;
 	employees_t *employees_in_building = NULL;
-	
+
 	if ( Cmd_Argc() < 2 )
 	{
 		Com_Printf( "Usage: mn_rs_remove <num_in_list>\n" );
@@ -690,7 +690,7 @@ void RS_UpdateData ( void )
 				Com_sprintf( tempstring, MAX_VAR, "%iav\n", MN_EmloyeesInBase2 ( EMPL_SCIENTIST, true ) );
 				Cvar_Set( va( "mn_researchavailable%i",j ), tempstring );	// max available scis in base
 			}
-			
+
 			Cvar_Set( "mn_research_sellabs", va( "Free labs in base: %i", MN_GetUnusedLabs() ) );
 			switch ( tech->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 			{
@@ -1394,4 +1394,26 @@ void RS_LoadTech( sizebuf_t *sb, int version )
 
 	}
 	RS_MarkResearchable ();
+}
+
+/*======================
+RS_GetTechByID
+
+return a pointer to the technology
+identified by given id string
+======================*/
+technology_t* RS_GetTechByID ( const char* id )
+{
+	int	i = 0;
+
+	if ( ! id )
+		return NULL;
+
+	for ( ; i < numTechnologies; i++ )
+	{
+		if ( !Q_strncmp( (char*)id, technologies[i].id, MAX_VAR ) )
+			return &technologies[i];
+	}
+	Com_Printf("Could not find a technology with id %s\n", id );
+	return NULL;
 }
