@@ -715,23 +715,25 @@ void MN_BuildingAddWorkers( void )
 
 /*======================
 MN_BuildingAddToList
+
+Handles the building list of constructable buildings
+
+Called everytime a building was constructed and
+thus maybe other buildings get available.
+
+menuText[TEXT_BUILDINGS] is a pointer to baseCurrent->allBuildingsList
+This way every base can hold its own building list.
+The pointer is updated everytime we select a base via mn_select_base
+(see MN_SelectBase for further information)
 ======================*/
 void MN_BuildingAddToList( char *title, int id )
 {
-	char tmpTitle[MAX_VAR];
-	Q_strncpyz( tmpTitle, title , MAX_VAR);
-
 	assert(baseCurrent);
 
 	//is the title already in list?
-	if (!strstr( menuText[TEXT_BUILDINGS], tmpTitle ) )
-	{
-		//buildings are seperated by a newline
-		Q_strcat ( tmpTitle, MAX_VAR, "\n" );
-
-		//now add the buildingtitle to the list
-		Q_strcat ( menuText[TEXT_BUILDINGS], MAX_VAR, tmpTitle );
-	}
+	//if not, then add the title to the list
+	if (!strstr( menuText[TEXT_BUILDINGS], title ) )
+		Q_strcat ( menuText[TEXT_BUILDINGS], MAX_LIST_CHAR, va("%s\n", title ) );
 }
 
 /*======================
@@ -1089,7 +1091,7 @@ building_t * MN_GetFreeBuilding( buildingType_t type )
 {
 	int i;
 	building_t *building = NULL;
-	
+
 	employees_t *employees_in_building = NULL;
 	for ( i = 0; i < numBuildings; i++ ) {
 		building = &bmBuildings[baseCurrent->id][i];
@@ -1118,7 +1120,7 @@ building_t * MN_GetUnusedLab( void )
 {
 	int i,j;
 	building_t *building = NULL;
-	technology_t *tech = NULL;	
+	technology_t *tech = NULL;
 	byte found = false;
 	for ( i = 0; i < numBuildings; i++ ) {
 		building = &bmBuildings[baseCurrent->id][i];
@@ -1148,7 +1150,7 @@ void MN_ClearBuilding( building_t *building )
 	int i;
 	employees_t *employees_in_building = NULL;
 	employee_t *employee = NULL;
-	
+
 	if ( ! building )
 		return;
 
@@ -1213,7 +1215,7 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 	building_t *building_source = NULL;
 	employees_t *employees_in_building_dest = NULL;
 	employees_t *employees_in_building_source = NULL;
-	
+
 
 	if ( !baseCurrent ) {
 		Com_DPrintf( _("MN_AssignEmployee: No Base set\n") );
@@ -1279,7 +1281,7 @@ byte MN_RemoveEmployee ( building_t *building )
 	*/
 	employee_t *employee = NULL;
 	employees_t *employees_in_building = NULL;
-	
+
 	/* TODO
 	building_t *building_temp = NULL;
 	byte found = false;
@@ -1291,7 +1293,7 @@ byte MN_RemoveEmployee ( building_t *building )
 		Com_DPrintf( _("MN_RemoveEmployee: No employees in building. Can't remove one. %s\n"), building->name );
 		return false;
 	}
-	
+
 	// Check where else (which buildings) the employee needs to be removed.
 	switch ( building->buildingType )
 	{

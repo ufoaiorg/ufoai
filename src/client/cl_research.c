@@ -463,7 +463,7 @@ void RS_AssignScientist( void )
 			// assign the lab to the tech:
 			tech->lab = building;
 		} else {
-			MN_Popup( _("Notice"), _("There is no free lab available. You need to build one or free another in order to assign scientists to research this technology.\n") );
+			MN_Popup( _("Notice"), _("There is no free lab available.\\You need to build one or free another\\in order to assign scientists to research this technology.\n") );
 			return;
 		}
 	}
@@ -499,7 +499,7 @@ void RS_RemoveScientist( void )
 		menuText[TEXT_STANDARD] = NULL;
 		return;
 	}
-	
+
 	tech = researchList[num];
 	// TODO: remove scientists from research-item
 	Com_DPrintf( "RS_RemoveScientist: %s\n", tech->id );
@@ -805,7 +805,7 @@ void CL_CheckResearchStatus ( void )
 	technology_t *tech = NULL;
 	building_t *building = NULL;
 	employees_t *employees_in_building = NULL;
-	
+
 	if ( ! researchListLength )
 		return;
 
@@ -826,13 +826,13 @@ void CL_CheckResearchStatus ( void )
 				tech->time = 0;
 			} else {
 				if ( tech->lab ) {
-					
+
 					building = tech->lab;
 					Com_DPrintf("building found %s\n", building->name );
 					employees_in_building = &building->assigned_employees;
 					if ( employees_in_building->numEmployees > 0 ) {
 						Com_DPrintf("employees are there\n");
-						/* OLD 
+						/* OLD
 						tech->time--;		// reduce one time-unit
 						*/
 						Com_DPrintf("timebefore %.2f\n", tech->time );
