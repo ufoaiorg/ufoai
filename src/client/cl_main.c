@@ -1317,6 +1317,7 @@ void CL_InitLocal (void)
 	Con_CheckResize ();
 	Com_InitInventory( invList );
 	CL_InitInput();
+	CL_InitMessageSystem();
 
 	MN_ResetMenus();
 	CL_ResetParticles();

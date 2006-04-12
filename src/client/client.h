@@ -1096,8 +1096,38 @@ void MN_GetMaps_f ( void );
 void CL_ListMaps_f ( void );
 void MN_NextMap ( void );
 void MN_PrevMap ( void );
+void MN_DrawBuilding( void );
 building_t* B_GetBuildingByID ( int id );
 building_t* B_GetBuilding ( char *buildingName );
+
+//
+// message systems
+//
+
+typedef enum
+{
+	MSG_STANDARD,
+	MSG_RESEARCH,
+	MSG_UFOSPOTTED,
+	MSG_TERRORSITE,
+	MSG_TRANSFERFINISHED
+} messagetype_t;
+
+#define MAX_MESSAGE_TEXT 1024
+typedef struct message_s
+{
+	char	title[MAX_VAR];
+	char	text[MAX_MESSAGE_TEXT];
+	messagetype_t type;
+	technology_t	*pedia;	// link to ufopedia if a research has finished.
+	struct message_s	*next;
+} message_t;
+
+message_t *messageStack;
+
+void MN_AddNewMessage( const char* title, const char* text, qboolean popup, messagetype_t type, technology_t *pedia );
+void MN_RemoveMessage( char* title );
+void CL_InitMessageSystem ( void );
 
 //
 // cl_campaign.c
@@ -1277,6 +1307,7 @@ char* CL_AircraftStatusToName ( aircraft_t* air );
 qboolean CL_MapIsNight( vec2_t pos );
 void CL_ResetCampaign( void );
 void CL_DateConvert( date_t *date, int *day, int *month );
+char* CL_DateGetMonthName ( int month );
 void CL_CampaignRun( void );
 void CL_GameTimeStop( void );
 qboolean CL_NewBase( vec2_t pos );
@@ -1312,6 +1343,7 @@ typedef enum
 	TEXT_INTERCEPT_LIST,
 	TEXT_AIRCRAFT = 10,
 	TEXT_AIRCRAFT_INFO,
+	TEXT_MESSAGESYSTEM, // just a dummy for messagesystem - we use the stack
 
 	MAX_MENUTEXTS
 } texts_t;
@@ -1330,7 +1362,7 @@ void MN_Shutdown( void );
 void MN_ParseMenu( char *name, char **text );
 void MN_PushMenu( char *name );
 void MN_PopMenu( qboolean all );
-void MN_Popup (char* title, char* text);
+void MN_Popup (const char* title, const char* text);
 
 extern int numMenus;
 extern inventory_t *menuInventory;

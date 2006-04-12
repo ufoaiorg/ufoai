@@ -578,7 +578,8 @@ qboolean CL_NewBase( vec2_t pos )
 
 	if ( MapIsWater(color) )
 	{
-		MN_Popup( _("Notice"), _("Could not set up your base at this location") );
+		MN_AddNewMessage( _("Notice"), _("Could not set up your base at this location"), false, MSG_STANDARD, NULL );
+// 		MN_Popup( _("Notice"), _("Could not set up your base at this location") );
 		return false;
 	} else if ( MapIsDesert(color) ){
 		Com_DPrintf(_("Desertbase\n"));
@@ -1116,6 +1117,10 @@ void CL_DateConvert( date_t *date, int *day, int *month )
 	*month = i;
 }
 
+char* CL_DateGetMonthName ( int month )
+{
+	return _(monthNames[month]);
+}
 
 /*
 ======================
@@ -1146,7 +1151,7 @@ void CL_CampaignRun( void )
 
 		// set time cvars
 		CL_DateConvert( &ccs.date, &day, &month );
-		Cvar_Set( "mn_mapdate", va( "%i %s %i", ccs.date.day/365, _(monthNames[month]), day ) );
+		Cvar_Set( "mn_mapdate", va( "%i %s %i", ccs.date.day/365, CL_DateGetMonthName(month), day ) );
 		Cvar_Set( "mn_mapmin", va( "%i%i", (ccs.date.sec%3600)/60/10, (ccs.date.sec%3600)/60%10 ) );
 		Cvar_Set( "mn_maphour", va( "%i:", ccs.date.sec/3600 ) );
 	}
@@ -1311,7 +1316,7 @@ void CL_GameNew( void )
 	// init research tree
 	RS_CopyFromSkeleton ();
 	RS_InitTree ();
-	
+
 	// init employee list
 	MN_InitEmployees ();
 }

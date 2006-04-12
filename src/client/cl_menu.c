@@ -41,8 +41,11 @@ typedef struct menuNode_s
 	byte		align;
 	byte		invis, blend;
 	int		mousefx;
-	int		num, height;
-	vec4_t	color;
+	int	textScroll; // textfields - current scroll position
+	int	timeOut; // ms value until invis is set (see cl.time)
+	int		num, height; // textfields - num: menutexts-id; height: max. rows to show
+	vec4_t	color; // rgba
+	vec4_t	bgcolor; // rgba
 	menuAction_t	*click, *rclick, *mclick, *mouseIn, *mouseOut;
 	menuDepends_t	depends;
 	struct menuNode_s	*next;
@@ -139,6 +142,10 @@ value_t nps[] =
 	{ "scale",		V_VECTOR,	NOFS( scale ) },
 	{ "angles",		V_VECTOR,	NOFS( angles ) },
 	{ "num",		V_INT,		NOFS( num ) },
+	{ "height",		V_INT,		NOFS( height ) },
+	{ "text_scroll",	V_INT,		NOFS( textScroll ) },
+	{ "timeout",		V_INT,		NOFS( timeOut ) },
+	{ "bgcolor",		V_COLOR,	NOFS( bgcolor ) },
 	// 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t
 	{ "tooltip",		V_STRING,	-5 },
 	{ "image",		V_STRING,	0 },
@@ -156,6 +163,7 @@ value_t nps[] =
 	{ "color",		V_COLOR,	NOFS( color ) },
 	{ "align",		V_ALIGN,	NOFS( align ) },
 	{ "if",			V_IF,		NOFS( depends ) },
+
 	{ NULL,			V_NULL,		0 },
 };
 
@@ -499,10 +507,10 @@ MN_Popup
 
 Popup in geoscape
 =================*/
-void MN_Popup (char* title, char* text)
+void MN_Popup (const char* title, const char* text)
 {
-	menuText[TEXT_POPUP] = title;
-	menuText[TEXT_POPUP_INFO] = text;
+	menuText[TEXT_POPUP] = (char*)title;
+	menuText[TEXT_POPUP_INFO] = (char*)text;
 	Cbuf_ExecuteText( EXEC_NOW, "game_timestop" );
 	MN_PushMenu( "popup" );
 }
@@ -1654,6 +1662,9 @@ void MN_DrawMenus( void )
 	item_t		item;
 	vec4_t		color;
 	int		mouseOver = 0;
+	char	*pos, *tab1, *tab2, *end;
+	int 	y, line, x, len;
+	message_t	*message;
 
 	// render every menu on top of a menu with a render node
 	pp = 0;
@@ -1693,6 +1704,9 @@ void MN_DrawMenus( void )
 						node->state = mouseOver;
 					}
 				}
+
+				if ( node->bgcolor && node->size && node->pos )
+					re.DrawFill(node->pos[0] - 3, node->pos[1] - 3, node->size[0] + 6, node->size[1] + 6, 0, node->bgcolor );
 
 				// mouse darken effect
 				VectorScale( node->color, 0.8, color );
@@ -1746,9 +1760,6 @@ void MN_DrawMenus( void )
 					if ( menuText[node->num] )
 					{
 						char textCopy[MAX_MENUTEXTLEN];
-						int len;
-						char *pos, *tab1, *tab2, *end;
-						int  y, line, x;
 
 						Q_strncpyz( textCopy, menuText[node->num], MAX_MENUTEXTLEN );
 						len = strlen(textCopy);
@@ -1765,6 +1776,14 @@ void MN_DrawMenus( void )
 						line = 0;
 						do {
 							line++;
+							// have a look that the maxline value defined in menu via
+							// the height parameter is not exceeded here
+							if ( node->height > 0 && line >= node->height )
+							{
+								// TODO: Draw the scrollbars
+								break;
+							}
+
 							x = node->pos[0];
 							end = strchr( pos, '\n' );
 							if ( !end ) break;
@@ -1775,7 +1794,10 @@ void MN_DrawMenus( void )
 
 							if ( node->mousefx && line == mouseOver ) re.DrawColor( color );
 
-							re.DrawPropString( font, ALIGN_UL, x, y, pos );
+							// maybe due to scrolling this line is not visible
+							if ( line > node->textScroll )
+								re.DrawPropString( font, ALIGN_UL, x, y, pos );
+
 							while ( tab1 )
 							{
 								*tab1 = '\t';
@@ -1784,10 +1806,12 @@ void MN_DrawMenus( void )
 								{
 									x += node->texh[1];
 									*tab2 = 0;
-									re.DrawPropString( font, node->align, x, y, tab1+1 );
+									if ( line > node->textScroll )
+										re.DrawPropString( font, node->align, x, y, tab1+1 );
 									x += node->texh[1];
 									*tab2 = '\t';
-									re.DrawPropString( font, node->align, x, y, tab2+1 );
+									if ( line > node->textScroll )
+										re.DrawPropString( font, node->align, x, y, tab2+1 );
 								}
 								else
 								{
@@ -1795,7 +1819,8 @@ void MN_DrawMenus( void )
 									else
 									{
 										x += node->texh[1];
-										re.DrawPropString( font, node->align, x, y, tab1+1 );
+										if ( line > node->textScroll )
+											re.DrawPropString( font, node->align, x, y, tab1+1 );
 									}
 								}
 								if ( tab2 )
@@ -1811,6 +1836,33 @@ void MN_DrawMenus( void )
 							y += node->texh[0];
 						}
 						while ( end );
+					}
+					else if ( node->num == TEXT_MESSAGESYSTEM )
+					{
+						if ( node->data[1] )
+							font = MN_GetReferenceString( menu, node->data[1] );
+						else
+							font = "f_small";
+
+						y = node->pos[1];
+						line = 0;
+						message = messageStack;
+						while ( message )
+						{
+							if ( line >= node->height )
+							{
+								// TODO: Draw the scrollbars
+								break;
+							}
+							line++;
+
+							// maybe due to scrolling this line is not visible
+							if ( line > node->textScroll )
+								re.DrawPropString( font, ALIGN_UL, node->pos[0], y, message->text );
+
+							y += node->texh[0];
+							message = message->next;
+						}
 					}
 					break;
 
@@ -2998,4 +3050,102 @@ void MN_PrevMap ( void )
 	else
 		mapInstalledIndex = anzInstalledMaps-1;
 	MN_MapInfo();
+}
+
+/*
+================
+CL_ShowMessagesOnStack
+
+Script command to show all messages on the stack
+================
+*/
+void CL_ShowMessagesOnStack ( void )
+{
+	message_t* m = messageStack;
+	while ( m )
+	{
+		Com_Printf("%s: %s\n", m->title, m->text );
+		m = m->next;
+	}
+}
+
+/*
+================
+MN_AddNewMessage
+================
+*/
+void MN_AddNewMessage( const char* title, const char* text, qboolean popup, messagetype_t type, technology_t *pedia )
+{
+	message_t* mess;
+	int d, m, y, h, min, s;
+
+	// allocate memory for new message
+	mess = (message_t*) malloc ( sizeof( message_t ) );
+
+	// push the new message at the beginning of the stack
+	mess->next = messageStack;
+	messageStack = mess;
+
+	mess->type = type;
+	mess->pedia = pedia; // pointer to ufopedia
+
+	CL_DateConvert( &ccs.date, &d, &m );
+	y = ccs.date.day/365;
+	h = ccs.date.sec/3600;
+	min = (ccs.date.sec%3600)/60/10;
+	s = (ccs.date.sec%3600)/60%10;
+
+	Q_strncpyz( mess->title, title, MAX_VAR );
+	// add date string to message
+	Q_strncpyz( mess->text, va("%02i %s %04i, %02i:%02i:%02i:\t", d, CL_DateGetMonthName(m), y, h, min, s ), MAX_MESSAGE_TEXT );
+	Q_strcat( mess->text, MAX_MESSAGE_TEXT, text );
+
+	if ( popup )
+	{
+		// they need to be translated already
+		MN_Popup( title, text );
+	}
+}
+
+/*
+================
+MN_RemoveMessage
+================
+*/
+void MN_RemoveMessage( char* title )
+{
+	message_t* m = messageStack;
+	message_t* prev = NULL;
+
+	while ( m )
+	{
+		if ( ! Q_strncmp( m->title, title, MAX_VAR ) )
+		{
+			if ( prev )
+				prev->next = m->next;
+			free ( m );
+			return;
+		}
+		prev = m;
+		m = m->next;
+	}
+	Com_Printf("Could not remove message from stack - %s was not found\n", title);
+}
+
+/*
+================
+CL_InitMessageSystem
+
+Inits the message system
+with no messages
+================
+*/
+void CL_InitMessageSystem ( void )
+{
+	// no messages on stack
+	messageStack = NULL;
+
+	// we will use the messages on the stack in this textfield
+	// so be sure that this is null - don't change this
+	menuText[TEXT_MESSAGESYSTEM] = NULL;
 }
