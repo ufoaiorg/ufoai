@@ -249,6 +249,9 @@ aircraft interceptor
 	fuelsize	60
 	size	1
 	image	air_interceptor
+	// FIXME: This is just testing
+	weapon	weapon_tachyonrifle
+	shield	kevlar_armor
 }
 
 aircraft ufo
