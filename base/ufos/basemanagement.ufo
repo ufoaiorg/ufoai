@@ -68,6 +68,7 @@ building lab
 	max_workers	10
 	min_workers	2
 	max_employees	10
+	more_than_one	true
 	employees_firstbase	2
 	worker_costs	10
 	energy		400
