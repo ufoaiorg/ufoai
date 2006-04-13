@@ -777,6 +777,7 @@ void RS_CopyFromSkeleton( void );
 void RS_InitTree( void );
 void RS_MarkCollected ( void );
 void RS_MarkResearchable ( void );
+technology_t* RS_GetTechByID ( const char* id );
 
 //
 // cl_basemanagment.c
@@ -886,12 +887,12 @@ typedef struct building_s
 {
 	// FIXME: This can be a char* name and char* base.... don't it? See bmData in basemanagement.c
 	char	name[MAX_VAR];
-	char	base[MAX_VAR];
 	char	title[MAX_VAR];
 	// needs determines the second building part
 	char	*text, *image, *needs, *depends, *mapPart, *produceType, *pedia;
 	float	energy, workerCosts, produceTime, fixCosts, varCosts;
 	int	production, level, id, timeStart, buildTime, techLevel, notUpOn;
+	int	base; // number of base this building is located in.
 
 	int	maxWorkers, minWorkers, assignedWorkers; // TODO: remove these and replace them with the employee_s struct
 	// A list of employees assigned to this building.
@@ -1071,11 +1072,11 @@ int B_GetNumOnTeam ( void );
 void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version );
 void CL_UpdateHireVar ( void );
 
-building_t * MN_GetFreeBuilding( buildingType_t type );
-building_t * MN_GetUnusedLab( void );
-int MN_GetUnusedLabs( void );
+building_t * MN_GetFreeBuilding( int base_id, buildingType_t type );
+building_t * MN_GetUnusedLab( int base_id );
+int MN_GetUnusedLabs( int base_id );
 void MN_ClearBuilding( building_t *building );
-int MN_EmloyeesInBase2 ( employeeType_t employee_type, byte free_only );
+int MN_EmployeesInBase2 ( int base_id, employeeType_t employee_type, byte free_only );
 byte MN_RemoveEmployee ( building_t *building );
 byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type );
 

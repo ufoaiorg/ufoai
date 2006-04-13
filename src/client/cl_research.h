@@ -100,7 +100,4 @@ void RS_SaveTech( sizebuf_t *sb );
 void RS_LoadTech( sizebuf_t *sb, int version );
 
 void RS_InitTree ( void );
-
-technology_t* RS_GetTechByID ( const char* id );
-
 #endif /*TECHNOLOGY_DEFINED*/

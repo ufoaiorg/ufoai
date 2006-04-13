@@ -1022,6 +1022,7 @@ void MN_ParseBuildings( char *id, char **text )
 		{
 			building = &bmBuildings[i][j];
 			memcpy( building, &bmBuildings[0][j], sizeof( building_t ) );
+			building->base = i;	// link the building to the currently processed base.
 		}
 
 }
@@ -1091,7 +1092,7 @@ void MN_InitEmployees ( void )
 				// TODO: create random data for the employees depending on type and skill-min/max
 				employee->speed = 100;
 			}
-			building = MN_GetFreeBuilding( B_QUARTERS );
+			building = MN_GetFreeBuilding( 0, B_QUARTERS );
 			employees_in_building = &building->assigned_employees;
 			employees_in_building->assigned[employees_in_building->numEmployees++] = employee;
 			break;
@@ -1116,22 +1117,23 @@ void MN_InitEmployees ( void )
 /*======================
 MN_GetFreeBuilding
 
-Gets a free (with no assigned workers) building in the current base of a given type.
+Gets a free (with no assigned workers) building in the given base of the given type.
 
 IN
-	type:	Which type of building to search for.
+	base_id:	The number/id of the base to search in.
+	type:		Which type of building to search for.
 
 OUT
-	building	the (empty) building.
+	building	The (empty) building.
 ======================*/
-building_t * MN_GetFreeBuilding( buildingType_t type )
+building_t * MN_GetFreeBuilding( int base_id, buildingType_t type )
 {
 	int i;
 	building_t *building = NULL;
 
 	employees_t *employees_in_building = NULL;
 	for ( i = 0; i < numBuildings; i++ ) {
-		building = &bmBuildings[baseCurrent->id][i];
+		building = &bmBuildings[base_id][i];
 			if ( building->buildingType == type ) {
 				/* found correct building-type */
 				employees_in_building = &building->assigned_employees;
@@ -1148,12 +1150,15 @@ building_t * MN_GetFreeBuilding( buildingType_t type )
 /*======================
 MN_GetUnusedLab
 
-Gets a lab in the current base with no research running.
+Gets a lab in the given base with no research running.
+
+IN
+	base_id:	The number/id of the base to search in.
 
 OUT
 	MN_GetUnusedLab	the (unused) lab.
 ======================*/
-building_t * MN_GetUnusedLab( void )
+building_t * MN_GetUnusedLab( int base_id )
 {
 	int i, j;
 	building_t *building = NULL;
@@ -1161,7 +1166,7 @@ building_t * MN_GetUnusedLab( void )
 	byte used = false;
 
 	for ( i = 0; i < numBuildings; i++ ) {
-		building = &bmBuildings[baseCurrent->id][i];
+		building = &bmBuildings[base_id][i];
 		if ( building->buildingType == B_LAB ) {
 			used = false;
 			// check in research tree if the lab is used
@@ -1183,12 +1188,15 @@ building_t * MN_GetUnusedLab( void )
 /*======================
 MN_GetUnusedLabs
 
-Gets the number of unused labsd workers) in the current base of a given type.
+Gets the number of unused labs (no assigned workers, no research) in the given base of the given type.
+
+IN
+	base_id:	The number/id of the base to search in.
 
 OUT
 	MN_GetUnusedLab	number of found (empty) building
 ======================*/
-int MN_GetUnusedLabs( void )
+int MN_GetUnusedLabs( int base_id )
 {
 	int i, j;
 	building_t *building = NULL;
@@ -1198,7 +1206,7 @@ int MN_GetUnusedLabs( void )
 	int numFreeLabs = 0;
 
 	for ( i = 0; i < numBuildings; i++ ) {
-		building = &bmBuildings[baseCurrent->id][i];
+		building = &bmBuildings[base_id][i]; 
 		if ( building->buildingType == B_LAB ) {
 			used = false;
 			// check in research tree if the lab is used
@@ -1219,7 +1227,8 @@ int MN_GetUnusedLabs( void )
 /*======================
 MN_ClearBuilding
 
-Removes all assigned scientists from a lab,
+Removes all assigned scientists from a building.
+TODO: If the building is of type "B_QUARTERS" before it's cleared all other buildings need to be checked if there is an employees there that also is in the qarter. These employees need to be removed from those buildings
 ======================*/
 void MN_ClearBuilding( building_t *building )
 {
@@ -1309,7 +1318,7 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 	if ( employees_in_building_dest->numEmployees < employees_in_building_dest->maxEmployees ) {
 		// get free employee from quarters in current base
 		for ( i = 0; i < numBuildings; i++ ) {
-			building_source = &bmBuildings[baseCurrent->id][i];
+			building_source = &bmBuildings[building_dest->base][i];
 
 			// check if there is a free employee in the quarters.
 			if ( building_source->buildingType == B_QUARTERS ) {
@@ -1426,14 +1435,13 @@ byte MN_RemoveEmployee ( building_t *building )
 	return false;
 }
 /*======================
-MN_EmloyeesInBase + MN_EmloyeesInBase2
+MN_EmployeesInBase + MN_EmployeesInBase2
 
-Returns the number of employees in the current base (in the wuaters) of a given type.
+Returns the number of employees in the given base (in the quaters) of the given type.
 You can choose (free_only) if you want the nubmer of free ones or the total number.
 If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
-
 ======================*/
-int MN_EmloyeesInBase2 ( employeeType_t employee_type, byte free_only )
+int MN_EmployeesInBase2 ( int base_id, employeeType_t employee_type, byte free_only )
 {
 	int i, j;
 	int numEmployeesInBase = 0;
@@ -1442,12 +1450,12 @@ int MN_EmloyeesInBase2 ( employeeType_t employee_type, byte free_only )
 	employee_t *employee = NULL;
 
 	if ( !baseCurrent ) {
-		Com_DPrintf( _("B_EmloyeesInBase2: No Base set.\n") );
+		Com_DPrintf( _("MN_EmployeesInBase2: No Base set.\n") );
 		return 0;
 	}
 
 	for ( i = 0; i < numBuildings; i++ ) {
-		building = &bmBuildings[baseCurrent->id][i];
+		building = &bmBuildings[base_id][i];
 		if ( building->buildingType == B_QUARTERS ) {
 			/* quarters found */
 			employees_in_building = &building->assigned_employees;
@@ -1464,9 +1472,9 @@ int MN_EmloyeesInBase2 ( employeeType_t employee_type, byte free_only )
 	return numEmployeesInBase;
 }
 
-int MN_EmloyeesInBase ( employeeType_t employee_type )
+int MN_EmployeesInBase ( int base_id, employeeType_t employee_type )
 {
-	return MN_EmloyeesInBase2 ( employee_type, false );
+	return MN_EmployeesInBase2 ( base_id, employee_type, false );
 }
 
 /*======================
