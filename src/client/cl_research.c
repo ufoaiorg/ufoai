@@ -330,25 +330,23 @@ OUT
 ======================*/
 void RS_GetName( char *id, char *name )
 {
-	int i;
-	technology_t *t = NULL;
-
-	for ( i=0; i < numTechnologies; i++ ) {
-		t = &technologies[i];
-		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {	// research item found
-			// If something is defined as name use it.
-			if ( *t->name ) {
-				Com_sprintf( name, MAX_VAR, _(t->name) );
-				return;
-			} else {
-				Com_DPrintf( _("RS_GetName: \"%s\" - No name defined. Name defaults to id.\n"), id );
-				Com_sprintf( name, MAX_VAR, _(id) );	// set the name to the id.
-				return;
-			}
-		}
+	technology_t *tech = NULL;
+	
+	tech = RS_GetTechByID( id );
+	if ( ! tech ) {
+		Com_sprintf( name, MAX_VAR, id );	// set the name to the id.
+		Com_Printf( _("RS_GetName: \"%s\" -  Technology not found. Name defaults to id\n"), id );
+		return;
 	}
-	Com_sprintf( name, MAX_VAR, id );	// set the name to the id.
-	Com_Printf( _("RS_GetName: \"%s\" -  Technology not found. Name defaults to id\n"), id );
+	
+	if ( *tech->name ) {
+		Com_sprintf( name, MAX_VAR, _(tech->name) );
+		return;
+	} else {
+		Com_DPrintf( _("RS_GetName: \"%s\" - No name defined. Name defaults to id.\n"), id );
+		Com_sprintf( name, MAX_VAR, _(id) );	// set the name to the id.
+		return;
+	}
 }
 
 /*======================
@@ -789,22 +787,22 @@ OUT
 ======================*/
 byte RS_DependsOn(char *id1, char *id2)
 {
-	int i, j;
-	technology_t *t = NULL;
+	int i;
+	technology_t *tech = NULL;
 	stringlist_t	required;
-
-	for ( i=0; i < numTechnologies; i++ ) {
-		t = &technologies[i];
-		if ( !Q_strncmp( id1, t->id, MAX_VAR ) ) {	// research item found
-			required = t->requires;
-			for ( j=0; j < required.numEntries; j++ ) {
-				if ( !Q_strncmp(required.list[j], id2, MAX_VAR ) )	// current item (=id1) depends on id2
-					return true;
-			}
-			return false;
-		}
+	
+	tech = RS_GetTechByID( id1 );
+	if ( ! tech ) {
+		Com_Printf( _("RS_DependsOn: \"%s\" <- research item not found.\n"), id1 );
+		return false;
 	}
-	Com_Printf( _("RS_DependsOn: \"%s\" <- research item not found.\n"), id1 );
+
+	/* research item found */
+			required = tech->requires;
+	for ( i=0; i < required.numEntries; i++ ) {
+		if ( !Q_strncmp(required.list[i], id2, MAX_VAR ) )	// current item (=id1) depends on id2
+			return true;
+	}
 	return false;
 }
 
@@ -1182,17 +1180,16 @@ TODO: out of order ... seems to produce garbage
 
 void RS_GetRequired( char *id, stringlist_t *required)
 {
-	int i;
-	technology_t *t = NULL;
+	technology_t *tech = NULL;
 
-	for ( i=0; i < numTechnologies; i++ ) {
-		t = &technologies[i];
-		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {		// research item found
-			required = &t->requires;	// is linking a good idea?
-			return;
-		}
+	tech = RS_GetTechByID( id );
+	if ( ! tech ) {
+		Com_Printf( _("RS_GetRequired: \"%s\" - technology not found.\n"), id );
+		return;
 	}
-	Com_Printf( _("RS_GetRequired: \"%s\" - technology not found.\n"), id );
+	
+	/* research item found */
+	required = &tech->requires;	// is linking a good idea?
 }
 
 /*======================
@@ -1209,11 +1206,12 @@ OUT
 byte RS_ItemIsResearched(char *id_provided )
 {
 	int i;
-	technology_t *t = NULL;
+	technology_t *tech = NULL;
+	
 	for ( i=0; i < numTechnologies; i++ ) {
-		t = &technologies[i];
-		if ( !Q_strncmp( id_provided, t->provides, MAX_VAR ) ) {	// provided item found
-			if ( t->statusResearch == RS_FINISH )
+		tech = &technologies[i];
+		if ( !Q_strncmp( id_provided, tech->provides, MAX_VAR ) ) {	// provided item found
+			if ( tech->statusResearch == RS_FINISH )
 				return true;
 			return false;
 		}
@@ -1234,20 +1232,22 @@ OUT
 ======================*/
 byte RS_TechIsResearched(char *id )
 {
-	int i;
-	technology_t *t = NULL;
-	if ( !Q_strncmp( id, "initial", 7 ) || !Q_strncmp( id, "nothing", 7 ) )
+	technology_t *tech = NULL;
+	
+	if ( !Q_strncmp( id, "initial", 7 )
+	|| !Q_strncmp( id, "nothing", 7 ) )
 		return true;	// initial and nothing are always researched. as they are just starting "technologys" that are never used.
-	for ( i=0; i < numTechnologies; i++ ) {
-		t = &technologies[i];
-		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {	// research item found
-			if ( t->statusResearch == RS_FINISH )
-				return true;
-			return false;
-		}
+	
+	tech = RS_GetTechByID( id );
+	if ( ! tech ) {
+		Com_Printf( _("RS_TechIsResearched: \"%s\" research item not found.\n"), id );
+		return false;
 	}
-
-	Com_Printf( _("RS_TechIsResearched: \"%s\" research item not found.\n"), id );
+	
+	/* research item found */
+	if ( tech->statusResearch == RS_FINISH )
+		return true;
+	
 	return false;
 }
 
@@ -1264,28 +1264,29 @@ OUT
 ======================*/
 byte RS_TechIsResearchable(char *id )
 {
-	int i, j;
-	technology_t *t = NULL;
+	int i;
+	technology_t *tech = NULL;
 	stringlist_t* required = NULL;
 
-	for ( i=0; i < numTechnologies; i++ ) {
-		t = &technologies[i];
-		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {	// research item found
-			if ( t->statusResearch == RS_FINISH )
-				return false;
-			if ( ( !Q_strncmp(  t->id, "initial", 7 ) )
-			|| ( !Q_strncmp(  t->id, "nothing", 7 ) ) )
-				return true;
-			required = &t->requires;
-			for (j=0; j < required->numEntries; j++)  {
-				if ( !RS_TechIsResearched( required->list[j]) )	// Research of "id" not finished (RS_FINISH) at this point.
-					return false;
-			}
-			return true;
-		}
+	tech = RS_GetTechByID( id );
+	if ( ! tech ) {
+		Com_Printf( _("RS_TechIsResearchable: \"%s\" research item not found.\n"), id );
+		return false;
 	}
-	Com_Printf( _("RS_TechIsResearchable: \"%s\" research item not found.\n"), id );
-	return false;
+	
+	/* research item found */
+	if ( tech->statusResearch == RS_FINISH )
+		return false;
+	if ( ( !Q_strncmp(  tech->id, "initial", 7 ) )
+	|| ( !Q_strncmp(  tech->id, "nothing", 7 ) ) )
+		return true;
+	required = &tech->requires;
+	for ( i=0; i < required->numEntries; i++)  {
+		if ( !RS_TechIsResearched( required->list[i]) )	// Research of "id" not finished (RS_FINISH) at this point.
+			return false;
+	}
+	return true;
+
 }
 
 /*======================
@@ -1296,46 +1297,44 @@ That means you need to research the result to be able to research (and maybe use
 ======================*/
 void RS_GetFirstRequired2 ( char *id, char *first_id, stringlist_t *required )
 {
-	int i, j;
-	technology_t *t = NULL;
+	int i;
+	technology_t *tech = NULL;
 	stringlist_t *required_temp = NULL;
 
-	for ( i=0; i < numTechnologies; i++ ) {
-		t = &technologies[i];
-
-		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {	// research item found
-			required_temp = &t->requires;
-			//Com_DPrintf( "RS_GetFirstRequired2: %s - %s - %s\n", id, first_id, required_temp->list[0]  );
-			for ( j=0; j < required_temp->numEntries; j++ ) {
-				if ( !Q_strncmp( required_temp->list[0] , "initial", 7 )
-				|| !Q_strncmp( required_temp->list[0] , "nothing", 7 ) ) {
-					if ( !Q_strncmp( id, first_id, MAX_VAR ) )
-						return;
-					if ( !j ) {
-						if ( required->numEntries < MAX_TECHLINKS ) {
-							// TODO: check if the firstrequired tech has already been added (e.g indirectly from another tech)
-							Com_sprintf( required->list[required->numEntries], MAX_VAR, id );
-							required->numEntries++;
-							Com_DPrintf("RS_GetFirstRequired2: \"%s\" - requirement 'initial' or 'nothing' found.\n", id );
-						}
-						return;
-					}
+	tech = RS_GetTechByID( id );
+	if ( ! tech ) {
+		if ( !Q_strncmp( id, first_id, MAX_VAR ) )
+			Com_Printf( _("RS_GetFirstRequired2: \"%s\" - technology not found.\n"), id );
+		return;
+	}
+	
+	required_temp = &tech->requires;
+	//Com_DPrintf( "RS_GetFirstRequired2: %s - %s - %s\n", id, first_id, required_temp->list[0]  );
+	for ( i=0; i < required_temp->numEntries; i++ ) {
+		if ( !Q_strncmp( required_temp->list[0] , "initial", 7 )
+		||  !Q_strncmp( required_temp->list[0] , "nothing", 7 ) ) {
+			if ( !Q_strncmp( id, first_id, MAX_VAR ) )
+				return;
+			if ( !i ) {
+				if ( required->numEntries < MAX_TECHLINKS ) {
+					// TODO: check if the firstrequired tech has already been added (e.g indirectly from another tech)
+					Com_sprintf( required->list[required->numEntries], MAX_VAR, id );
+					required->numEntries++;
+					Com_DPrintf("RS_GetFirstRequired2: \"%s\" - requirement 'initial' or 'nothing' found.\n", id );
 				}
-				if ( RS_TechIsResearched(required_temp->list[j]) ) {
-					if ( required->numEntries < MAX_TECHLINKS ) {
-						Com_sprintf( required->list[required->numEntries], MAX_VAR, required_temp->list[j] );
-						required->numEntries++;
-						Com_DPrintf( "RS_GetFirstRequired2: \"%s\" - next item \"%s\" already researched.\n", id, required_temp->list[j] );
-					}
-				} else {
-					RS_GetFirstRequired2( required_temp->list[j], first_id, required );
-				}
+				return;
 			}
-			return;
+		}
+		if ( RS_TechIsResearched(required_temp->list[i]) ) {
+			if ( required->numEntries < MAX_TECHLINKS ) {
+				Com_sprintf( required->list[required->numEntries], MAX_VAR, required_temp->list[i] );
+				required->numEntries++;
+				Com_DPrintf( "RS_GetFirstRequired2: \"%s\" - next item \"%s\" already researched.\n", id, required_temp->list[i] );
+			}
+		} else {
+			RS_GetFirstRequired2( required_temp->list[i], first_id, required );
 		}
 	}
-	if ( !Q_strncmp( id, first_id, MAX_VAR ) )
-		Com_Printf( _("RS_GetFirstRequired2: \"%s\" - technology not found.\n"), id );
 }
 
 void RS_GetFirstRequired( char *id, stringlist_t *required )
