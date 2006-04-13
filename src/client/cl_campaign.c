@@ -280,7 +280,7 @@ qboolean CL_MapMaskFind( byte *color, vec2_t polar )
 
 
 // ===========================================================
-#define DISTANCE 8
+#define DISTANCE 1
 
 /*
 ======================
