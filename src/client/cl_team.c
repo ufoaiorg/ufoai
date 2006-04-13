@@ -396,6 +396,9 @@ void CL_CleanTempInventory( void )
 {
 	int i, k;
 
+	if ( ! baseCurrent )
+		return;
+
 	Com_DestroyInventory( &baseCurrent->equipment );
 	for ( i = 0; i < MAX_WHOLETEAM; i++ )
 		for ( k = 0; k < csi.numIDs; k++ )
