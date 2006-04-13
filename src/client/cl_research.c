@@ -48,7 +48,6 @@ int numTechnologies;						// The global number of entries in the global list AND
 technology_t *researchList[MAX_RESEARCHLIST];	// A (local) list of displayed technology-entries (the research list in the base)
 int researchListLength;						// The number of entries in the above list.
 int researchListPos;						// The currently selected entry in the above list.
-char infoResearchText[MAX_MENUTEXTLEN];
 
 
 /*======================
@@ -331,14 +330,14 @@ OUT
 void RS_GetName( char *id, char *name )
 {
 	technology_t *tech = NULL;
-	
+
 	tech = RS_GetTechByID( id );
 	if ( ! tech ) {
 		Com_sprintf( name, MAX_VAR, id );	// set the name to the id.
 		Com_Printf( _("RS_GetName: \"%s\" -  Technology not found. Name defaults to id\n"), id );
 		return;
 	}
-	
+
 	if ( *tech->name ) {
 		Com_sprintf( name, MAX_VAR, _(tech->name) );
 		return;
@@ -543,7 +542,7 @@ void RS_RemoveScientist2( int num )
 void RS_RemoveScientist( void )
 {
 	int num;
-	
+
 	if ( Cmd_Argc() < 2 )
 	{
 		Com_Printf( "Usage: mn_rs_remove <num_in_list>\n" );
@@ -564,7 +563,7 @@ void RS_ResearchStart ( void )
 {
 	technology_t *tech = NULL;
 	employees_t *employees_in_building = NULL;
-	
+
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
@@ -790,7 +789,7 @@ byte RS_DependsOn(char *id1, char *id2)
 	int i;
 	technology_t *tech = NULL;
 	stringlist_t	required;
-	
+
 	tech = RS_GetTechByID( id1 );
 	if ( ! tech ) {
 		Com_Printf( _("RS_DependsOn: \"%s\" <- research item not found.\n"), id1 );
@@ -854,11 +853,11 @@ void CL_CheckResearchStatus ( void )
 		{
 			if ( tech->time <= 0 ) {
 				if ( ! newResearch )
-					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("Research of %s finished\n"), tech->name );
+					Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("Research of %s finished\n"), tech->name );
 				else
-					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("%i researches finished\n"), newResearch+1 );
-				MN_AddNewMessage( _("Research finished"), va(_("Research of %s finished"), tech->name ), false, MSG_RESEARCH, tech );
-				
+					Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("%i researches finished\n"), newResearch+1 );
+				MN_AddNewMessage( _("Research finished"), messageBuffer, false, MSG_RESEARCH, tech );
+
 				MN_ClearBuilding( tech->lab );
 				tech->lab = NULL;
 				RS_MarkResearched( tech->id );
@@ -890,7 +889,6 @@ void CL_CheckResearchStatus ( void )
 	}
 
 	if ( newResearch ) {
-		MN_Popup( _("Research finished"), infoResearchText );
 		CL_ResearchType();
 	}
 }
@@ -1189,7 +1187,7 @@ void RS_GetRequired( char *id, stringlist_t *required)
 		Com_Printf( _("RS_GetRequired: \"%s\" - technology not found.\n"), id );
 		return;
 	}
-	
+
 	/* research item found */
 	required = &tech->requires;	// is linking a good idea?
 }
@@ -1209,7 +1207,7 @@ byte RS_ItemIsResearched(char *id_provided )
 {
 	int i;
 	technology_t *tech = NULL;
-	
+
 	for ( i=0; i < numTechnologies; i++ ) {
 		tech = &technologies[i];
 		if ( !Q_strncmp( id_provided, tech->provides, MAX_VAR ) ) {	// provided item found
@@ -1235,21 +1233,21 @@ OUT
 byte RS_TechIsResearched(char *id )
 {
 	technology_t *tech = NULL;
-	
+
 	if ( !Q_strncmp( id, "initial", 7 )
 	|| !Q_strncmp( id, "nothing", 7 ) )
 		return true;	// initial and nothing are always researched. as they are just starting "technologys" that are never used.
-	
+
 	tech = RS_GetTechByID( id );
 	if ( ! tech ) {
 		Com_Printf( _("RS_TechIsResearched: \"%s\" research item not found.\n"), id );
 		return false;
 	}
-	
+
 	/* research item found */
 	if ( tech->statusResearch == RS_FINISH )
 		return true;
-	
+
 	return false;
 }
 
@@ -1275,7 +1273,7 @@ byte RS_TechIsResearchable(char *id )
 		Com_Printf( _("RS_TechIsResearchable: \"%s\" research item not found.\n"), id );
 		return false;
 	}
-	
+
 	/* research item found */
 	if ( tech->statusResearch == RS_FINISH )
 		return false;
@@ -1309,7 +1307,7 @@ void RS_GetFirstRequired2 ( char *id, char *first_id, stringlist_t *required )
 			Com_Printf( _("RS_GetFirstRequired2: \"%s\" - technology not found.\n"), id );
 		return;
 	}
-	
+
 	required_temp = &tech->requires;
 	//Com_DPrintf( "RS_GetFirstRequired2: %s - %s - %s\n", id, first_id, required_temp->list[0]  );
 	for ( i=0; i < required_temp->numEntries; i++ ) {

@@ -26,7 +26,7 @@ dplane_t	backplanes[MAX_MAP_PLANES];
 
 char		inbase[32], outbase[32];
 
-int			fakeplanes;					// created planes for origin offset 
+int			fakeplanes;					// created planes for origin offset
 
 int		numbounce = 0;
 qboolean	extrasamples;
@@ -130,7 +130,7 @@ void CalcVertexNormals ( int vnum )
 	found = false;
 
 	for ( i = 0, face = dfaces; i < numfaces; i++, face++ )
-		if ( texinfo[face->texinfo].flags & 0x8000 ) 		
+		if ( texinfo[face->texinfo].flags & 0x8000 )
 			for ( k = 0, se = &dsurfedges[face->firstedge]; k < face->numedges; k++, se++ )
 			{
 				if (*se < 0)
@@ -154,7 +154,7 @@ void CalcVertexNormals ( int vnum )
 
 	if ( found && !VectorCompare( normal, vec3_origin ) )
 		VectorNormalize( normal, vnormals[vnum] );
-	else			
+	else
 		VectorClear( vnormals[vnum] );
 
 //	printf( "(%1.4f %1.4f %1.4f)\n", (vnormals[vnum])[0], (vnormals[vnum])[1], (vnormals[vnum])[2] );
@@ -256,7 +256,7 @@ void MakeTransfers (int i)
 
 		trans = scale * patch2->area / (dist*dist);
 
-		if ( trans < 0.1 ) 
+		if ( trans < 0.1 )
 			continue;
 
 		// check exact transfer
@@ -282,7 +282,7 @@ void MakeTransfers (int i)
 	if (patch->numtransfers)
 	{
 		transfer_t	*t;
-		
+
 		if (patch->numtransfers < 0 || patch->numtransfers > MAX_PATCHES)
 			Error ("Weird numtransfers");
 		s = patch->numtransfers * sizeof(transfer_t);
@@ -575,7 +575,7 @@ void RadWorld (void)
 
 		// spread light around
 		BounceLight ();
-		
+
 		FreeTransfers ();
 
 		CheckPatches ();
@@ -697,7 +697,7 @@ int main (int argc, char **argv)
 
 	start = I_FloatTime ();
 
-	SetQdirFromPath (argv[i]);	
+	SetQdirFromPath (argv[i]);
 	strcpy (source, ExpandArg(argv[i]));
 	StripExtension (source);
 	DefaultExtension (source, ".bsp");
@@ -725,7 +725,7 @@ int main (int argc, char **argv)
 
 	end = I_FloatTime ();
 	printf ("%5.0f seconds elapsed\n", end-start);
-	
+
 	return 0;
 }
 

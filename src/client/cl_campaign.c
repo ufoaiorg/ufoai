@@ -545,6 +545,8 @@ void CL_NewAircraft ( base_t* base, char* name )
 			memcpy( &base->aircraft[base->numAircraftInBase], air, sizeof(aircraft_t) );
 			air = &base->aircraft[base->numAircraftInBase];
 			air->homebase = base;
+			Q_strncpyz( messageBuffer, va( _("You've got a new aircraft (a %s) in base %s"), air->name, base->title ), MAX_MESSAGE_TEXT );
+			MN_AddNewMessage( _("Notice"), messageBuffer, false, MSG_STANDARD, NULL );
 			Com_DPrintf(_("Setting aircraft to pos: %.0f:%.0f\n"), base->pos[0], base->pos[1]);
 			air->pos[0] = base->pos[0];
 			air->pos[1] = base->pos[1];
@@ -773,8 +775,9 @@ void CL_CampaignAddMission( setState_t *set )
 		mis->realPos[0] = baseCurrent->pos[0];
 		mis->realPos[1] = baseCurrent->pos[1];
 		// Add message to message-system.
-		MN_AddNewMessage( _("Baseattack"), va(_("Your base %s is under attack."), baseCurrent->title ), false, MSG_BASEATTACK, NULL );
-		
+		Q_strncpyz( messageBuffer, va(_("Your base %s is under attack."), baseCurrent->title ), MAX_MESSAGE_TEXT );
+		MN_AddNewMessage( _("Baseattack"), messageBuffer, false, MSG_BASEATTACK, NULL );
+
 		Cbuf_ExecuteText(EXEC_NOW, va("base_attack %i", baseCurrent->id) );
 	}
 	else
@@ -783,7 +786,7 @@ void CL_CampaignAddMission( setState_t *set )
 		mis->realPos[0] = mis->def->pos[0];
 		mis->realPos[1] = mis->def->pos[1];
 		CL_MapMaskFind( mis->def->mask, mis->realPos );
-		
+
 		// Add message to message-system.
 		MN_AddNewMessage( _("Alien activity"), _("Alien activity has been reported."), false, MSG_TERRORSITE, NULL );
 	}
@@ -792,7 +795,7 @@ void CL_CampaignAddMission( setState_t *set )
 	set->num++;
 	if ( set->def->number && set->num >= set->def->number ) set->active = false;
 	else set->event = Date_Add( ccs.date, Date_Random( set->def->frame ) );
-	
+
 
 
 	// stop time
@@ -970,7 +973,6 @@ void CL_BuildingAircraftList_f ( void )
 	menuText[TEXT_INTERCEPT_LIST] = aircraftListText;
 }
 
-char text[MAX_MENUTEXTLEN];
 /*
 ======================
 CL_CampaignCheckEvents
@@ -1009,8 +1011,8 @@ void CL_CampaignCheckEvents( void )
 			// ok, waiting and not doing a mission will costs money
 			int lose = mis->def->civilians * mis->def->cr_civilian;
 			CL_UpdateCredits( ccs.credits - lose );
-			Q_strncpyz(text, va(_("The mission expired and %i civilians died\\You've lost %i $"), mis->def->civilians, lose), MAX_MENUTEXTLEN );
-			MN_AddNewMessage( _("Notice"), text, false, MSG_STANDARD, NULL );
+			Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died\\You've lost %i $"), mis->def->civilians, lose), MAX_MESSAGE_TEXT );
+			MN_AddNewMessage( _("Notice"), messageBuffer, false, MSG_STANDARD, NULL );
 			CL_CampaignRemoveMission( mis );
 		}
 }

@@ -55,8 +55,6 @@ float bvScale;
 int bmDataSize = 0;
 char *bmData, *bmDataStart, *bmDataProductions;
 
-char infoBuildingText[MAX_MENUTEXTLEN];			// Building information/description.
-
 /*======================
 The valid definition names for BUILDINGS (building_t) in the basemagagement.ufo file.
 NOTE: the BSFS macro (see cl_basemanagement.h) assignes the values from scriptfile
@@ -1206,7 +1204,7 @@ int MN_GetUnusedLabs( int base_id )
 	int numFreeLabs = 0;
 
 	for ( i = 0; i < numBuildings; i++ ) {
-		building = &bmBuildings[base_id][i]; 
+		building = &bmBuildings[base_id][i];
 		if ( building->buildingType == B_LAB ) {
 			used = false;
 			// check in research tree if the lab is used
@@ -1976,7 +1974,8 @@ void MN_BuildBase( void )
 			CL_UpdateCredits( ccs.credits - BASE_COSTS );
 			Q_strncpyz( baseCurrent->title, mn_base_title->string, sizeof(baseCurrent->title) );
 			Cbuf_AddText( "mn_push bases\n" );
-			MN_AddNewMessage( _("Base built"), va(_("A new base has been built: %s."), mn_base_title->string ), false, MSG_CONSTRUCTION, NULL );
+			Q_strncpyz( messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string ), MAX_MESSAGE_TEXT );
+			MN_AddNewMessage( _("Base built"), messageBuffer, false, MSG_CONSTRUCTION, NULL );
 			return;
 		}
 	}
@@ -1991,7 +1990,6 @@ B_BaseAttack
 void B_BaseAttack ( void )
 {
 	int whichBaseID;
-	char baseAttackText[128];
 
 	if ( Cmd_Argc() < 2 )
 	{
@@ -2003,12 +2001,10 @@ void B_BaseAttack ( void )
 
 	if ( whichBaseID >= 0 && whichBaseID < ccs.numBases )
 	{
-		Com_sprintf( baseAttackText, sizeof(baseAttackText), va(_("Base %s is under attack"), bmBases[whichBaseID].title ) );
 		bmBases[whichBaseID].baseStatus = BASE_UNDER_ATTACK;
 		// TODO: New menu for:
 		//      defend -> call AssembleBase for this base
 		//      continue -> return to geoscape
-		MN_Popup( _("Base attack"), baseAttackText );
 		mapAction = MA_BASEATTACK;
 	}
 
@@ -2426,7 +2422,7 @@ void CL_UpdateBaseData( void )
 			newBuilding += new;
 			if ( new ) {
 				MN_AddNewMessage( va(_("Building finished - Base %s"), bmBases[i].title ) , va(_("Construction of building %s finished."), b->title ), false, MSG_CONSTRUCTION, NULL );
-				Com_sprintf( infoBuildingText, MAX_MENUTEXTLEN, _("Construction of building %s finished\\at base %s\n"), b->title, bmBases[i].title );
+				Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("Construction of building %s finished\\at base %s\n"), b->title, bmBases[i].title );
 			}
 		}
 		// refresh the building list
@@ -2434,8 +2430,8 @@ void CL_UpdateBaseData( void )
 		if ( newBuilding )
 		{
 			if ( newBuilding > 1 )
-				Com_sprintf( infoBuildingText, MAX_MENUTEXTLEN, _("There is at least one finished construction\\at base %s\n"), bmBases[i].title );
-			MN_Popup( _("Construction finished"), infoBuildingText );
+				Com_sprintf( messageBuffer, MAX_MENUTEXTLEN, _("There is at least one finished construction\\at base %s\n"), bmBases[i].title );
+			MN_AddNewMessage( _("Construction finished"), messageBuffer, true, MSG_STANDARD, NULL );
 		}
 
 		// only the last occurence of a building can have a status
