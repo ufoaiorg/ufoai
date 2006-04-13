@@ -1551,6 +1551,13 @@ void G_SplashDamage( edict_t *ent, fireDef_t *fd, vec3_t impact )
 		if ( dist > fd->splrad )
 			continue;
 
+		if ( fd->irgoggles && check->type == ET_ACTOR )
+		{
+			G_AppearPerishEvent( G_VisToPM( ~check->visflags ), 1, check );
+			check->visflags |= ~check->visflags;
+			continue;
+		}
+
 		// check for walls
 		if ( check->type == ET_ACTOR && !G_ActorVis( impact, check, false ) )
 			continue;
@@ -1763,7 +1770,7 @@ void G_ShootSingle( edict_t *ent, fireDef_t *fd, int type, vec3_t from, pos3_t a
 		gi.WriteByte( type );
 
 		// do splash damage
-		if ( tr.fraction < 1.0 || fd->selfDetonate )
+		if ( tr.fraction < 1.0 || fd->selfDetonate || fd->irgoggles )
 		{
 			VectorMA( impact, 8, tr.plane.normal, impact );
 			G_SplashDamage( ent, fd, impact );
@@ -1851,12 +1858,11 @@ void G_ClientShoot( player_t *player, int num, pos3_t at, int type )
 		}
 		else if ( !player->pers.ai )
 			ammo -= fd->ammo;
-	}
-
-	if (shots < 1)
-	{
-		gi.cprintf( player, PRINT_HIGH, _("Can't perform action - not enough ammo!\n") );
-		return;
+		if (shots < 1)
+		{
+			gi.cprintf( player, PRINT_HIGH, _("Can't perform action - not enough ammo!\n") );
+			return;
+		}
 	}
 
 	// rotate the player
