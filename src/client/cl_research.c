@@ -857,6 +857,8 @@ void CL_CheckResearchStatus ( void )
 					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("Research of %s finished\n"), tech->name );
 				else
 					Com_sprintf( infoResearchText, MAX_MENUTEXTLEN, _("%i researches finished\n"), newResearch+1 );
+				MN_AddNewMessage( _("Research finished"), va(_("Research of %s finished"), tech->name ), false, MSG_RESEARCH, tech );
+				
 				MN_ClearBuilding( tech->lab );
 				tech->lab = NULL;
 				RS_MarkResearched( tech->id );

@@ -1115,6 +1115,7 @@ typedef enum
 	MSG_RESEARCH,
 	MSG_UFOSPOTTED,
 	MSG_TERRORSITE,
+	MSG_BASEATTACK,
 	MSG_TRANSFERFINISHED
 } messagetype_t;
 
@@ -1126,6 +1127,7 @@ typedef struct message_s
 	messagetype_t type;
 	technology_t	*pedia;	// link to ufopedia if a research has finished.
 	struct message_s	*next;
+	int	d, m, y, h, min, s;
 } message_t;
 
 message_t *messageStack;

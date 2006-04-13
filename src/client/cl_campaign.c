@@ -772,6 +772,9 @@ void CL_CampaignAddMission( setState_t *set )
 		baseCurrent = &bmBases[rand() % ccs.numBases];
 		mis->realPos[0] = baseCurrent->pos[0];
 		mis->realPos[1] = baseCurrent->pos[1];
+		// Add message to message-system.
+		MN_AddNewMessage( _("Baseattack"), va(_("Your base %s is under attack."), baseCurrent->title ), false, MSG_BASEATTACK, NULL );
+		
 		Cbuf_ExecuteText(EXEC_NOW, va("base_attack %i", baseCurrent->id) );
 	}
 	else
@@ -780,12 +783,17 @@ void CL_CampaignAddMission( setState_t *set )
 		mis->realPos[0] = mis->def->pos[0];
 		mis->realPos[1] = mis->def->pos[1];
 		CL_MapMaskFind( mis->def->mask, mis->realPos );
+		
+		// Add message to message-system.
+		MN_AddNewMessage( _("Alien activity"), _("Alien activity has been reported."), false, MSG_TERRORSITE, NULL );
 	}
 
 	// prepare next event (if any)
 	set->num++;
 	if ( set->def->number && set->num >= set->def->number ) set->active = false;
 	else set->event = Date_Add( ccs.date, Date_Random( set->def->frame ) );
+	
+
 
 	// stop time
 	CL_GameTimeStop();

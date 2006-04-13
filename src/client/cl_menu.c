@@ -3104,7 +3104,7 @@ void MN_AddNewMessage( const char* title, const char* text, qboolean popup, mess
 {
 	message_t*	mess;
 	// date and time vars
-	int	d, m, y, h, min, s;
+	//int	d, m, y, h, min, s;
 
 	// allocate memory for new message
 	mess = (message_t*) malloc ( sizeof( message_t ) );
@@ -3116,15 +3116,15 @@ void MN_AddNewMessage( const char* title, const char* text, qboolean popup, mess
 	mess->type = type;
 	mess->pedia = pedia; // pointer to ufopedia
 
-	CL_DateConvert( &ccs.date, &d, &m );
-	y = ccs.date.day/365;
-	h = ccs.date.sec/3600;
-	min = (ccs.date.sec%3600)/60/10;
-	s = (ccs.date.sec%3600)/60%10;
+	CL_DateConvert( &ccs.date, &mess->d, &mess->m );
+	mess->y = ccs.date.day/365;
+	mess->h = ccs.date.sec/3600;
+	mess->min = (ccs.date.sec%3600)/60/10;
+	mess->s = (ccs.date.sec%3600)/60%10;
 
 	Q_strncpyz( mess->title, title, MAX_VAR );
 	// add date string to message
-	Q_strncpyz( mess->text, va("%02i %s %04i, %02i:%02i:%02i:\t", d, CL_DateGetMonthName(m), y, h, min, s ), MAX_MESSAGE_TEXT );
+	Q_strncpyz( mess->text, va("%02i %s %04i, %02i:%02i:%02i:\t", mess->d, CL_DateGetMonthName(mess->m), mess->y, mess->h, mess->min, mess->s ), MAX_MESSAGE_TEXT );
 
 	Q_strcat( mess->text, MAX_MESSAGE_TEXT, text );
 

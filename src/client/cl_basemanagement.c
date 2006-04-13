@@ -1976,6 +1976,7 @@ void MN_BuildBase( void )
 			CL_UpdateCredits( ccs.credits - BASE_COSTS );
 			Q_strncpyz( baseCurrent->title, mn_base_title->string, sizeof(baseCurrent->title) );
 			Cbuf_AddText( "mn_push bases\n" );
+			MN_AddNewMessage( _("Base built"), va(_("A new base has been built: %s."), mn_base_title->string ), false, MSG_STANDARD, NULL );
 			return;
 		}
 	}
