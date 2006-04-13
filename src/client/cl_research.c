@@ -368,18 +368,18 @@ void RS_ResearchDisplayInfo ( void  )
 		return;
 
 	tech = researchList[researchListPos];
-	
+
 	// display total number of free labs in current base
 	Cvar_Set( "mn_research_sellabs", va( _("Free labs in this base: %i"), MN_GetUnusedLabs( baseCurrent->id ) ) );
-	
+
 	// display the base this tech is researched in
 	base = &bmBases[tech->lab->base];
-	if ( base != currentBase ) {
+	if ( base != baseCurrent ) {
 		Cvar_Set( "mn_research_selbase", va( _("Researched in %s"), base->title ) );
 	} /*else {
 		Cvar_Set( "mn_research_selbase", _("Researched in this base.") );
 	}*/
-	
+
 	Cvar_Set( "mn_research_selname", tech->name );
 	if ( tech->overalltime ) {
 		if ( tech->time > tech->overalltime ) {
