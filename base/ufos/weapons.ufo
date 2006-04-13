@@ -1140,36 +1140,27 @@ item irgoggles
 	shape		"0 0 2 2"
 	center		"0 -4 -4"
 	scale		0.9
-	ammo		2
 	price		18700
 	buytype		2
 
 	primary
 	{
 		name	"_Activate"
-		projtl	null
-		impact	null
-		hitbody null
 		firesnd	misc/irgoggles01.wav
-		speed	0
+		splrad	200
 		range	55
-		shots	1
 		time	20
-		damage	"0 0"
+		shots	1
 		irgoggles	true
 	}
 	secondary
 	{
 		name	"_Activate"
-		projtl	null
-		impact	null
-		hitbody null
 		firesnd	misc/irgoggles01.wav
-		speed	0
+		splrad	400
 		range	55
+		time	25
 		shots	1
-		time	20
-		damage	"0 0"
 		irgoggles	true
 	}
 }
