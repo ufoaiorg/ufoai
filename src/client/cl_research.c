@@ -356,18 +356,30 @@ See menu_research.ufo for the layout/called functions.
 ======================*/
 void RS_ResearchDisplayInfo ( void  )
 {
+	int i;
 	technology_t *tech = NULL;
+	base_t *base = NULL;
 	char dependencies[MAX_VAR];
 	char tempstring[MAX_VAR];
-	int i;
 	stringlist_t req_temp;
-
-	tech = researchList[researchListPos];
 
 	// we are not in base view
 	if ( ! baseCurrent )
 		return;
 
+	tech = researchList[researchListPos];
+	
+	// display total number of free labs in current base
+	Cvar_Set( "mn_research_sellabs", va( _("Free labs in this base: %i"), MN_GetUnusedLabs( baseCurrent->id ) ) );
+	
+	// display the base this tech is researched in
+	base = &bmBases[tech->lab->base];
+	if ( base != currentBase ) {
+		Cvar_Set( "mn_research_selbase", va( _("Researched in %s"), base->title ) );
+	} /*else {
+		Cvar_Set( "mn_research_selbase", _("Researched in this base.") );
+	}*/
+	
 	Cvar_Set( "mn_research_selname", tech->name );
 	if ( tech->overalltime ) {
 		if ( tech->time > tech->overalltime ) {
@@ -671,9 +683,6 @@ void RS_UpdateData ( void )
 	// make everything the same-color.
 	Cbuf_AddText("research_clear\n");
 
-	//TODO: display total number of free scientists and free labs
-	//Cvar_Set( "cvar mn_research_sellabs", "xxx");
-
 	for ( i=0, j=0; i < numTechnologies; i++ ) {
 		tech = &technologies[i];
 		Com_sprintf( name, MAX_VAR, tech->name );
@@ -692,6 +701,7 @@ void RS_UpdateData ( void )
 			Cvar_Set( va( "mn_researchmax%i", j ), "mx.");
 
 			if ( tech->lab ) {
+				/* display the assigned/free/max numbers of scientists for this tech */
 				employees_in_building = &tech->lab->assigned_employees;
 				Com_sprintf( tempstring, MAX_VAR, _("%i max.\n"), employees_in_building->maxEmployees );
 				Cvar_Set( va( "mn_researchmax%i",j ), tempstring );		// max number of employees in this base
@@ -701,7 +711,6 @@ void RS_UpdateData ( void )
 				Cvar_Set( va( "mn_researchavailable%i",j ), tempstring );	// max. available scis in the base the tech is reseearched
 			}
 
-			Cvar_Set( "mn_research_sellabs", va( _("Free labs in base: %i"), MN_GetUnusedLabs( baseCurrent->id ) ) );
 			switch ( tech->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 			{
 			case RS_RUNNING:
