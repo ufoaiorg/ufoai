@@ -1551,6 +1551,7 @@ void G_SplashDamage( edict_t *ent, fireDef_t *fd, vec3_t impact )
 		if ( dist > fd->splrad )
 			continue;
 
+		// FIXME: don't make aliens in back visible
 		if ( fd->irgoggles && check->type == ET_ACTOR )
 		{
 			G_AppearPerishEvent( G_VisToPM( ~check->visflags ), 1, check );
