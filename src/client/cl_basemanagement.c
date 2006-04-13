@@ -1976,7 +1976,7 @@ void MN_BuildBase( void )
 			CL_UpdateCredits( ccs.credits - BASE_COSTS );
 			Q_strncpyz( baseCurrent->title, mn_base_title->string, sizeof(baseCurrent->title) );
 			Cbuf_AddText( "mn_push bases\n" );
-			MN_AddNewMessage( _("Base built"), va(_("A new base has been built: %s."), mn_base_title->string ), false, MSG_STANDARD, NULL );
+			MN_AddNewMessage( _("Base built"), va(_("A new base has been built: %s."), mn_base_title->string ), false, MSG_CONSTRUCTION, NULL );
 			return;
 		}
 	}
@@ -2424,8 +2424,10 @@ void CL_UpdateBaseData( void )
 			if ( ! b ) continue;
 			new = B_CheckBuildingConstruction( b );
 			newBuilding += new;
-			if ( new )
+			if ( new ) {
+				MN_AddNewMessage( va(_("Building finished - Base %s"), bmBases[i].title ) , va(_("Construction of building %s finished."), b->title ), false, MSG_CONSTRUCTION, NULL );
 				Com_sprintf( infoBuildingText, MAX_MENUTEXTLEN, _("Construction of building %s finished\\at base %s\n"), b->title, bmBases[i].title );
+			}
 		}
 		// refresh the building list
 		// and show a popup
