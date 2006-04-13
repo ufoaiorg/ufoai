@@ -7,7 +7,7 @@
 // ====================
 building entrance
 {
-	title		"Entrance"
+	title		"_Entrance"
 	image		base/entrance
 	fixcosts	0
 	build_time	1
@@ -21,7 +21,7 @@ building entrance
 
 building commando
 {
-	title		"Commando central"
+	title		"_Commando central"
 	image		base/commando
 	fixcosts	1000
 	desc		"This is the commando central"
@@ -40,7 +40,7 @@ building commando
 
 building powerplant
 {
-	title		"Powerplant"
+	title		"_Powerplant"
 	image		base/powerplant
 	fixcosts	300
 	desc		"Produces Energy"
@@ -61,7 +61,7 @@ building powerplant
 
 building lab
 {
-	title		"Laboratory"
+	title		"_Laboratory"
 	image		base/lab
 	depends		commando
 	fixcosts	1500
@@ -86,7 +86,7 @@ building lab
 
 building storage
 {
-	title		"Storage"
+	title		"_Storage"
 	image		base/storage
 	fixcosts	500
 	depends		commando
@@ -104,7 +104,7 @@ building storage
 
 building intercept
 {
-	title		"Interceptors"
+	title		"_Interceptors"
 	image		base/intercept
 	fixcosts	5000
 	depends		commando
@@ -121,7 +121,7 @@ building intercept
 
 building quarters
 {
-	title		"Quarters"
+	title		"_Quarters"
 	image		base/quarters
 	fixcosts	300
 	depends		commando
@@ -140,7 +140,7 @@ building quarters
 
 building drop1
 {
-	title		"Hangar"
+	title		"_Hangar"
 	image		base/drop2
 	fixcosts	1000
 	needs		drop2
@@ -160,7 +160,7 @@ building drop1
 
 building drop2
 {
-	title		"Hangar"
+	title		"_Hangar"
 	image		base/drop1
 	fixcosts	1000
 	depends		quarters
@@ -176,7 +176,7 @@ building drop2
 
 building teamroom
 {
-	title		"Team Room"
+	title		"_Team Room"
 	image		base/teamroom
 	fixcosts	300
 	depends		quarters
@@ -190,6 +190,21 @@ building teamroom
 	build_time	3
 	map_name	"teamroom"
 	pedia		building_teamroom
+}
+
+building radar
+{
+	title		"_Radar"
+	image		base/radar
+	fixcosts	3000
+	depends		commando
+	max_workers	5
+	min_workers	1
+	worker_costs	10
+	energy		10
+	build_time	10
+	map_name	"radar"
+	pedia		building_radar
 }
 
 base main
