@@ -564,7 +564,7 @@ menu althud
 	
 	pic teamnum_dec
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"964 464"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -572,7 +572,7 @@ menu althud
 	}
 	pic teamnum_inc
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"980 464"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true

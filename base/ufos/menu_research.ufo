@@ -336,7 +336,7 @@ menu research
 	pic bt_rs_add0
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 40"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 0; mn_rs_add 0" }
@@ -344,7 +344,7 @@ menu research
 	pic bt_rs_remove0
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 40"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 0; mn_rs_remove 0" }
@@ -352,7 +352,7 @@ menu research
 	pic bt_rs_add1
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 65"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 1; mn_rs_add 1" }
@@ -360,7 +360,7 @@ menu research
 	pic bt_rs_remove1
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 65"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 1; mn_rs_remove 1" }
@@ -368,7 +368,7 @@ menu research
 	pic bt_rs_add2
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 90"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 2; mn_rs_add 2" }
@@ -376,7 +376,7 @@ menu research
 	pic bt_rs_remove2
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 90"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 2; mn_rs_remove 2" }
@@ -384,7 +384,7 @@ menu research
 	pic bt_rs_add3
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 115"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 3; mn_rs_add 3" }
@@ -392,7 +392,7 @@ menu research
 	pic bt_rs_remove3
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 115"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 3; mn_rs_remove 3" }
@@ -400,7 +400,7 @@ menu research
 	pic bt_rs_add4
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 140"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 4; mn_rs_add 4" }
@@ -408,7 +408,7 @@ menu research
 	pic bt_rs_remove4
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 140"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 4; mn_rs_remove 4" }
@@ -416,7 +416,7 @@ menu research
 	pic bt_rs_add5
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 165"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 5; mn_rs_add 5" }
@@ -424,7 +424,7 @@ menu research
 	pic bt_rs_remove5
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 165"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 5; mn_rs_remove 5" }
@@ -432,7 +432,7 @@ menu research
 	pic bt_rs_add6
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 190"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 6; mn_rs_add 6" }
@@ -440,7 +440,7 @@ menu research
 	pic bt_rs_remove6
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 190"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 6; mn_rs_remove 6" }
@@ -448,7 +448,7 @@ menu research
 	pic bt_rs_add7
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 215"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 7; mn_rs_add 7" }
@@ -456,7 +456,7 @@ menu research
 	pic bt_rs_remove7
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 215"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 7; mn_rs_remove 7" }
@@ -464,7 +464,7 @@ menu research
 	pic bt_rs_add8
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 240"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 8; mn_rs_add 8" }
@@ -472,7 +472,7 @@ menu research
 	pic bt_rs_remove8
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 240"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 8; mn_rs_remove 8" }
@@ -480,7 +480,7 @@ menu research
 	pic bt_rs_add9
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 265"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 9; mn_rs_add 9" }
@@ -488,7 +488,7 @@ menu research
 	pic bt_rs_remove9
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 265"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 9; mn_rs_remove 9" }
@@ -496,7 +496,7 @@ menu research
 	pic bt_rs_add10
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 290"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 10; mn_rs_add 10" }
@@ -504,7 +504,7 @@ menu research
 	pic bt_rs_remove10
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 290"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 10; mn_rs_remove 10" }
@@ -512,7 +512,7 @@ menu research
 	pic bt_rs_add11
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 315"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 11; mn_rs_add 11" }
@@ -520,7 +520,7 @@ menu research
 	pic bt_rs_remove11
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 315"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 11; mn_rs_remove 11" }
@@ -528,7 +528,7 @@ menu research
 	pic bt_rs_add12
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 340"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 12; mn_rs_add 12" }
@@ -536,7 +536,7 @@ menu research
 	pic bt_rs_remove12
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 340"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 12; mn_rs_remove 12" }
@@ -544,7 +544,7 @@ menu research
 	pic bt_rs_add13
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 365"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 13; mn_rs_add 13" }
@@ -552,7 +552,7 @@ menu research
 	pic bt_rs_remove13
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 365"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 13; mn_rs_remove 13" }
@@ -560,7 +560,7 @@ menu research
 	pic bt_rs_add14
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 390"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 14; mn_rs_add 14" }
@@ -568,7 +568,7 @@ menu research
 	pic bt_rs_remove14
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 390"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 14; mn_rs_remove 14" }
@@ -576,7 +576,7 @@ menu research
 	pic bt_rs_add15
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 415"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 15; mn_rs_add 15" }
@@ -584,7 +584,7 @@ menu research
 	pic bt_rs_remove15
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 415"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 15; mn_rs_remove 15" }
@@ -592,7 +592,7 @@ menu research
 	pic bt_rs_add16
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 440"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 16; mn_rs_add 16" }
@@ -600,7 +600,7 @@ menu research
 	pic bt_rs_remove16
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 440"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 16; mn_rs_remove 16" }
@@ -608,7 +608,7 @@ menu research
 	pic bt_rs_add17
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 465"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 17; mn_rs_add 17" }
@@ -616,7 +616,7 @@ menu research
 	pic bt_rs_remove17
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 465"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 17; mn_rs_remove 17" }
@@ -624,7 +624,7 @@ menu research
 	pic bt_rs_add18
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 490"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 18; mn_rs_add 18" }
@@ -632,7 +632,7 @@ menu research
 	pic bt_rs_remove18
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 490"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 18; mn_rs_remove 18" }
@@ -640,7 +640,7 @@ menu research
 	pic bt_rs_add19
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 515"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 19; mn_rs_add 19" }
@@ -648,7 +648,7 @@ menu research
 	pic bt_rs_remove19
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 515"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 19; mn_rs_remove 19" }
@@ -656,7 +656,7 @@ menu research
 	pic bt_rs_add20
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 540"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 20; mn_rs_add 20" }
@@ -664,7 +664,7 @@ menu research
 	pic bt_rs_remove20
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 540"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 20; mn_rs_remove 20" }
@@ -672,7 +672,7 @@ menu research
 	pic bt_rs_add21
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 565"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 21; mn_rs_add 21" }
@@ -680,7 +680,7 @@ menu research
 	pic bt_rs_remove21
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 565"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 21; mn_rs_remove 21" }
@@ -688,7 +688,7 @@ menu research
 	pic bt_rs_add22
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 590"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 22; mn_rs_add 22" }
@@ -696,7 +696,7 @@ menu research
 	pic bt_rs_remove22
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 590"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 22; mn_rs_remove 22" }
@@ -704,7 +704,7 @@ menu research
 	pic bt_rs_add23
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 615"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 23; mn_rs_add 23" }
@@ -712,7 +712,7 @@ menu research
 	pic bt_rs_remove23
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 615"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 23; mn_rs_remove 23" }
@@ -720,7 +720,7 @@ menu research
 	pic bt_rs_add24
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 640"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 24; mn_rs_add 24" }
@@ -728,7 +728,7 @@ menu research
 	pic bt_rs_remove24
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 640"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 24; mn_rs_remove 24" }
@@ -736,7 +736,7 @@ menu research
 	pic bt_rs_add25
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 665"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 25; mn_rs_add 25" }
@@ -744,7 +744,7 @@ menu research
 	pic bt_rs_remove25
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 665"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 25; mn_rs_remove 25" }
@@ -752,7 +752,7 @@ menu research
 	pic bt_rs_add26
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 690"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 26; mn_rs_add 26" }
@@ -760,7 +760,7 @@ menu research
 	pic bt_rs_remove26
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 690"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 26; mn_rs_remove 26" }
@@ -768,7 +768,7 @@ menu research
 	pic bt_rs_add27
 	{
 		tooltip	"_Add scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"376 715"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 27; mn_rs_add 27" }
@@ -776,7 +776,7 @@ menu research
 	pic bt_rs_remove27
 	{
 		tooltip	"_Remove scientist"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"392 715"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 27; mn_rs_remove 27" }

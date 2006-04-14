@@ -132,7 +132,7 @@ menu options_video
 	}
 	pic res_dec
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"868 138"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -140,7 +140,7 @@ menu options_video
 	}
 	pic res_inc
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"884 138"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
@@ -160,7 +160,7 @@ menu options_video
 	}
 	pic full_dec
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"868 168"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -172,7 +172,7 @@ menu options_video
 	}
 	pic full_inc
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"884 168"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
@@ -196,7 +196,7 @@ menu options_video
 	}
 	pic compression_dec
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"868 198"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -209,7 +209,7 @@ menu options_video
 	}
 	pic compression_inc
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"884 198"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
@@ -234,7 +234,7 @@ menu options_video
 	}
 	pic texres_dec
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"868 228"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -246,7 +246,7 @@ menu options_video
 	}
 	pic texres_inc
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"884 228"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
@@ -270,7 +270,7 @@ menu options_video
 	}
 	pic fps_dec
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"868 258"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -282,7 +282,7 @@ menu options_video
 	}
 	pic fps_inc
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"884 258"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
@@ -306,7 +306,7 @@ menu options_video
 	}
 	pic aniso_dec
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"868 288"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -314,7 +314,7 @@ menu options_video
 	}
 	pic aniso_inc
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"884 288"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
@@ -334,7 +334,7 @@ menu options_video
 	}
 	pic lod_dec
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"868 318"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -346,7 +346,7 @@ menu options_video
 	}
 	pic lod_inc
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"884 318"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
@@ -475,7 +475,7 @@ menu options_sound
 	}
 	pic mix_dec
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"868 238"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -483,7 +483,7 @@ menu options_sound
 	}
 	pic mix_inc
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"884 238"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
@@ -506,7 +506,7 @@ menu options_sound
 	pic sndystem_dec
 	{
 		if "sys_os linux"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"868 318"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -520,7 +520,7 @@ menu options_sound
 	pic sndystem_inc
 	{
 		if "sys_os linux"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"884 318"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
@@ -566,7 +566,7 @@ menu options_game
 	}
 	pic dif_dec
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"868 128"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -574,7 +574,7 @@ menu options_game
 	}
 	pic dif_inc
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"884 128"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
@@ -597,7 +597,7 @@ menu options_game
 	}
 	pic confirm_dec
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"868 155"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -609,7 +609,7 @@ menu options_game
 	}
 	pic confirm_inc
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"884 155"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
@@ -636,7 +636,7 @@ menu options_game
 	}
 	pic hud_dec
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"868 178"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -644,7 +644,7 @@ menu options_game
 	}
 	pic hud_inc
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"884 178"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
@@ -667,7 +667,7 @@ menu options_game
 	}
 	pic tooltip_dec
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"868 205"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
@@ -679,7 +679,7 @@ menu options_game
 	}
 	pic tooltip_inc
 	{
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos		"884 205"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true

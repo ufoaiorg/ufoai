@@ -479,7 +479,7 @@ tech irgoggles
 	requires	initial
 	provides	irgoggles
 	time	1
-	researched	false
+	researched	true
 }
 
 tech medikit

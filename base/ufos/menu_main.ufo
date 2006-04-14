@@ -58,9 +58,20 @@ menu main
 		texl	"0 0"
 		texh	"256 64"
 		click	{ cmd "mn_push singleplayer" }
+// 		out		{ *string_singleplayer color "0 0.8 0 1" *button_singleplayer texl "0 0"  *button_singleplayer texh "256 64" }
+// 		in		{ *string_singleplayer color "1 1 1 1" *button_singleplayer texl "0 64" *button_singleplayer texh "256 128" }
 		out		{ *button_singleplayer texl "0 0"  *button_singleplayer texh "256 64" }
 		in		{ *button_singleplayer texl "0 64" *button_singleplayer texh "256 128" }
 	}
+
+// 	string string_singleplayer
+// 	{
+// 		font	f_menu
+// 		color	"0 0.8 0 1"
+// 		string	"Singleplayer"
+// 		pos	"650 180"
+// 		align	ul
+// 	}
 
 	pic button_multiplayer
 	{

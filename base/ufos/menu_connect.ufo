@@ -158,7 +158,7 @@ menu mp_lan
         }
         pic teamnum_dec
         {
-                image   menu/buy_buttons1
+                image   menu/buttons_small
                 pos             "668 658"
                 texl    "0 0"           texh    "16 16"
                 mousefx true
@@ -166,7 +166,7 @@ menu mp_lan
         }
         pic teamnum_inc
         {
-                image   menu/buy_buttons1
+                image   menu/buttons_small
                 pos             "684 658"
                 texl    "16 0"          texh    "32 16"
                 mousefx true
@@ -273,7 +273,7 @@ menu mp_internet
         }
         pic teamnum_dec
         {
-                image   menu/buy_buttons1
+                image   menu/buttons_small
                 pos             "668 658"
                 texl    "0 0"           texh    "16 16"
                 mousefx true
@@ -281,7 +281,7 @@ menu mp_internet
         }
         pic teamnum_inc
         {
-                image   menu/buy_buttons1
+                image   menu/buttons_small
                 pos             "684 658"
                 texl    "16 0"          texh    "32 16"
                 mousefx true

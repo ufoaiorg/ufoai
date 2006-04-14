@@ -184,11 +184,11 @@ menu bases
 	pic bt_edit
 	{
 		tooltip	"_Rename your base"
-		image	menu/buy_buttons1
-		pos	"400 40"
+		image	menu/buttons_small
+		pos	"570 40"
 		mousefx	true
-		texl	"16 0"
-		texh	"32 16"
+		texl	"0 48"
+		texh	"16 64"
 		click
 		{
 			cmd "msgmenu ?mn_base_title"
@@ -199,7 +199,7 @@ menu bases
 	pic prev_base
 	{
 		tooltip	"_Switch to the previous base"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos	"30 40"
 		mousefx true
 		texl	"0 0"
@@ -210,7 +210,7 @@ menu bases
 	pic next_base
 	{
 		tooltip	"_Switch to the next base"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos	"600 40"
 		mousefx	true
 		texl	"16 0"
@@ -399,7 +399,7 @@ menu aircraft
 	pic prev_aircraft
 	{
 		tooltip	"_Switch to the previous aircraft"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos	"500 410"
 		mousefx true
 		texl	"0 0"
@@ -410,7 +410,7 @@ menu aircraft
 	pic next_aircraft
 	{
 		tooltip	"_Switch to the next aircraft"
-		image	menu/buy_buttons1
+		image	menu/buttons_small
 		pos	"970 410"
 		mousefx	true
 		texl	"16 0"
@@ -421,11 +421,11 @@ menu aircraft
 	pic aircraft_return
 	{
 		tooltip	"_Call back"
-		image	menu/buy_buttons1
-		pos	"600 410"
+		image	menu/buttons_small
+		pos	"550 410"
 		mousefx true
-		texl	"0 0"
-		texh	"16 16"
+		texl	"0 32"
+		texh	"16 48"
 		click	{ cmd "aircraft_return" }
 	}
 
@@ -451,6 +451,6 @@ menu aircraft
 
 	func init
 	{
-		cmd "aircraft_init;aircraft_select"
+		cmd "aircraft_select"
 	}
 }
