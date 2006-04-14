@@ -1973,6 +1973,8 @@ void MN_BuildBase( void )
 			mapAction = MA_NONE;
 			CL_UpdateCredits( ccs.credits - BASE_COSTS );
 			Q_strncpyz( baseCurrent->title, mn_base_title->string, sizeof(baseCurrent->title) );
+			Cvar_SetValue( "mn_base_id", baseCurrent->id );
+			Cvar_Set( "mn_base_title", baseCurrent->title );
 			Cbuf_AddText( "mn_push bases\n" );
 			Q_strncpyz( messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string ), MAX_MESSAGE_TEXT );
 			MN_AddNewMessage( _("Base built"), messageBuffer, false, MSG_CONSTRUCTION, NULL );
