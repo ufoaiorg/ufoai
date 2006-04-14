@@ -1859,11 +1859,12 @@ MN_NextBase
 void MN_NextBase( void )
 {
 	ccs.actualBaseID = (int)Cvar_VariableValue( "mn_base_id" );
-	if ( ccs.actualBaseID < ccs.numBases )
+	Com_DPrintf( "cur-base=%i num-base=%i\n", ccs.actualBaseID,ccs.numBases );
+	if ( ccs.actualBaseID < ccs.numBases-1 )
 		ccs.actualBaseID++;
 	else
 		ccs.actualBaseID = 0;
-
+	Com_DPrintf( _("new-base=%i\n"), ccs.actualBaseID );
 	if ( ! bmBases[ccs.actualBaseID].founded )
 		return;
 	else
@@ -1879,10 +1880,12 @@ MN_PrevBase
 void MN_PrevBase( void )
 {
 	ccs.actualBaseID = (int)Cvar_VariableValue( "mn_base_id" );
+	Com_DPrintf( "cur-base=%i num-base=%i\n", ccs.actualBaseID,ccs.numBases );
 	if ( ccs.actualBaseID > 0 )
 		ccs.actualBaseID--;
 	else
 		ccs.actualBaseID = ccs.numBases-1;
+	Com_DPrintf( _("new-base=%i\n"), ccs.actualBaseID );
 
 	// this must be false - but i'm paranoid'
 	if ( ! bmBases[ccs.actualBaseID].founded )
