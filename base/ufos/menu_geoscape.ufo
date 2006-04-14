@@ -250,16 +250,20 @@ menu map
 	pic messagesystem_show
 	{
 		tooltip	"_Open up messages"
-		image	menu/ufopedia_buttons1
-		texl	"0 74"
-		texh	"64 111"
-		pos	"950 96"
+		image	menu/event_log
+		texl	"0 0"
+		texh	"32 36"
+		pos	"992 96"
 		mousefx true
 		out	{
+				*messagesystem_show texl "0 0"
+				*messagesystem_show texh "32 36"
 				*messagesystem size "1024 40"
 				*messagesystem height "2"
 			}
 		in	{
+				*messagesystem_show texl "0 37"
+				*messagesystem_show texh "32 73"
 				*messagesystem size "1024 400"
 				*messagesystem height "20"
 			}
