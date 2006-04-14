@@ -137,8 +137,8 @@ Sys_ScanForCD
 char *Sys_ScanForCD (void)
 {
 	static char	cddir[MAX_OSPATH];
-	static qboolean	done;
 #if 0
+	static qboolean	done;
 	char		drive[4];
 	FILE		*f;
 	char		test[MAX_QPATH];

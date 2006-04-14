@@ -484,11 +484,9 @@ void IN_StartupJoystick (void)
 }
 
 
-/*
-===========
+/*======================
 RawValuePointer
-===========
-*/
+======================*/
 PDWORD RawValuePointer (int axis)
 {
 	switch (axis)
@@ -506,6 +504,9 @@ PDWORD RawValuePointer (int axis)
 	case JOY_AXIS_V:
 		return &ji.dwVpos;
 	}
+	
+	Com_Printf ("No valid axis-type %i. Defaulting to X\n", axis );
+	return &ji.dwXpos;
 }
 
 
