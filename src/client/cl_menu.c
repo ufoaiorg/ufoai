@@ -1705,7 +1705,8 @@ void MN_DrawMenus( void )
 					}
 				}
 
-				if ( node->bgcolor && node->size && node->pos )
+				// check node size x and y value to check whether they are zero
+				if ( node->bgcolor && node->size[0] && node->size[1] && node->pos )
 					re.DrawFill(node->pos[0] - 3, node->pos[1] - 3, node->size[0] + 6, node->size[1] + 6, 0, node->bgcolor );
 
 				// mouse darken effect
