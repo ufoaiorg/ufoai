@@ -25,6 +25,17 @@ menu map
 		rclick { cmd "mn_mapaction_reset;" }
 	}
 
+	text messagesystem
+	{
+		pos	"0 99"
+		size	"1024 40"
+		bgcolor	"0 0 0 .5"
+		format	"20 0"
+		height	2
+		// TEXT_MESSAGESYSTEM
+		num	12
+	}
+
 	pic back_ul
 	{
 		image	menu/map_ul
@@ -236,24 +247,13 @@ menu map
 		click	{ cmd mn_pop; }
 	}
 
-	text messagesystem
-	{
-		pos	"0 99"
-		size	"1024 40"
-		bgcolor	"0 0 0 .5"
-		format	"20 0"
-		height	2
-		// TEXT_MESSAGESYSTEM
-		num	12
-	}
-
 	pic messagesystem_show
 	{
 		tooltip	"_Open up messages"
 		image	menu/event_log
 		texl	"0 0"
 		texh	"32 36"
-		pos	"992 96"
+		pos	"975 96"
 		mousefx true
 		out	{
 				*messagesystem_show texl "0 0"
