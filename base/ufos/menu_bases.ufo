@@ -423,10 +423,12 @@ menu aircraft
 		tooltip	"_Call back"
 		image	menu/buttons_small
 		pos	"550 410"
-		mousefx true
+		mousefx false
 		texl	"0 32"
 		texh	"16 48"
 		click	{ cmd "aircraft_return" }
+		out		{ *aircraft_return texl "0 32" *aircraft_return texh "16 48" }
+		in		{ *aircraft_return texl "16 32" *aircraft_return texh "32 48" }
 	}
 
 	string team_members
