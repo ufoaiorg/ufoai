@@ -310,7 +310,7 @@ tech tachyon
 	name	"Tachyon Control"
 	up_chapter	tech
 
-	requires	initial
+	requires	nothing
 	description	"_tachyon_txt"
 	time	1
 	researched	false

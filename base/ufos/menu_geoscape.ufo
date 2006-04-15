@@ -254,7 +254,7 @@ menu map
 		texl	"0 0"
 		texh	"32 36"
 		pos	"975 96"
-		mousefx true
+		mousefx false
 		out	{
 				*messagesystem_show texl "0 0"
 				*messagesystem_show texh "32 36"
