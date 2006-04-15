@@ -355,9 +355,23 @@ void CL_AircraftInit ( void )
 	{
 		air = &aircraft[i];
 		// link with tech pointer
-		air->weapon = RS_GetTechByID( air->weapon_string );
-		// link with tech pointer
-		air->shield = RS_GetTechByID( air->shield_string );
+		Com_DPrintf("...aircraft: %s\n", air->title );
+		if ( *air->weapon_string )
+		{
+			Com_DPrintf("....weapon: %s\n", air->weapon_string );
+			air->weapon = RS_GetTechByID( air->weapon_string );
+		}
+		else
+			air->weapon = NULL;
+
+		if ( *air->shield_string )
+		{
+			// link with tech pointer
+			Com_DPrintf("....shield: %s\n", air->shield_string );
+			air->shield = RS_GetTechByID( air->shield_string );
+		}
+		else
+			air->shield = NULL;
 	}
 	Com_Printf("...aircraft inited\n");
 }
@@ -522,7 +536,7 @@ void CL_AircraftSelect ( void )
 	Cvar_Set( "mn_aircraft_shield", air->shield ? air->shield->name : "" );
 
 	// FIXME: Are these names (weapon and shield) already translated?
-	Com_sprintf(aircraftInfo, 256, _("Speed:\t%.0f\nFuel:\t%i/%i\nWeapon:\t%s\nShield:\t%s\n"), air->speed, air->fuel, air->fuelSize, air->weapon ? air->weapon->name : _("None"), air->shield ? air->shield->name : _("None") );
+	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\nFuel:\t%i/%i\nWeapon:\t%s\nShield:\t%s\n"), air->speed, air->fuel, air->fuelSize, air->weapon ? air->weapon->name : _("None"), air->shield ? air->shield->name : _("None") );
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 
@@ -1339,8 +1353,8 @@ void CL_GameNew( void )
 	CL_GameTimeStop();
 
 	// init research tree
-	RS_CopyFromSkeleton ();
-	RS_InitTree ();
+	RS_CopyFromSkeleton();
+	RS_InitTree();
 
 	// after inited the techtree
 	// we can assign the weapons
@@ -1348,7 +1362,7 @@ void CL_GameNew( void )
 	CL_AircraftInit();
 
 	// init employee list
-	MN_InitEmployees ();
+	MN_InitEmployees();
 }
 
 /*
@@ -1444,6 +1458,7 @@ void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
 			}
 		}
 	}
+	CL_AircraftInit();
 	CL_AircraftSelect();
 	CL_MapActionReset();
 }
@@ -1601,7 +1616,6 @@ void CL_GameSaveCmd( void )
 	// save the game
 	CL_GameSave( Cmd_Argv( 1 ), comment );
 }
-
 
 /*
 ======================
@@ -1811,7 +1825,7 @@ void CL_GameLoad( char *filename )
 	CL_GameTimeStop();
 
 	// init research tree
-	RS_InitTree ( );
+	RS_InitTree();
 }
 
 
