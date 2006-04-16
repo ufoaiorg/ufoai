@@ -1,0 +1,56 @@
+// .. model:	(string)
+// .. need:	(string)
+// .. tag:	(string)
+// .. anim:	(string)	see anm-file for model
+// .. skin:	(int)		skinnumber
+// .. parent:	(string)	parent model (e.g. head and body) (at head: name of the body-model)
+// .. angles:	(vec3_t)	rotation
+
+// ============== Alien Ortnok =====================
+menu_model alien_ortnok
+{
+	model	"models/aliens/ortnok/body01.md2"
+	anim	"menu_stand"
+	skin	1
+	need	"alien_ortnok_head"
+}
+
+menu_model alien_ortnok_head
+{
+	model	"models/aliens/ortnok/head01.md2"
+	parent	alien_ortnok
+	tag	tag_head
+}
+
+// ============== Civilian female ==================
+menu_model civ_female
+{
+	model	"models/civilians/female/body03.md2"
+	skin	1
+	anim	"menu_stand"
+	need	"civ_female_head"
+}
+menu_model civ_female_head
+{
+	model	"models/civilians/female/head04c.md2"
+	parent	civ_female
+	tag	tag_head
+}
+
+// ============== Dropship =========================
+menu_model dropship
+{
+	model	"models/objects/dropship.md2"
+	need	"dropship_top"
+}
+
+menu_model dropship_top
+{
+	model	"models/objects/dropship_top.md2"
+	need	"dropship_glass"
+}
+
+menu_model dropship_glass
+{
+	model	"models/objects/dropship_glass.md2"
+}
