@@ -1370,6 +1370,7 @@ void MN_DrawItem( vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 void MN_ResetMenus( void );
 void MN_Shutdown( void );
 void MN_ParseMenu( char *name, char **text );
+void MN_ParseMenuModel( char *name, char **text );
 void MN_PushMenu( char *name );
 void MN_PopMenu( qboolean all );
 void MN_Popup (const char* title, const char* text);

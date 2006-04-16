@@ -3,11 +3,13 @@
 #include "client.h"
 
 #define	NOFS(x)		(int)&(((menuNode_t *)0)->x)
+#define	MENUMODELFS(x)		(int)&(((menuModel_t *)0)->x)
 
 #define MAX_MENUS			64
 #define MAX_MENUNODES		2048
 #define MAX_MENUACTIONS		4096
 #define MAX_MENUSTACK		16
+#define MAX_MENUMODELS		128
 
 #define MAX_MENU_COMMAND	32
 #define MAX_MENU_PICLINK	64
@@ -16,6 +18,15 @@
 #define C_UNDEFINED			0xFE
 
 // ===========================================================
+
+typedef struct menuModel_s
+{
+	char	id[MAX_VAR];
+	char	need[MAX_VAR];
+	char	model[MAX_QPATH];
+	char	tag[MAX_VAR];
+	char	parent[MAX_VAR];
+} menuModel_t;
 
 typedef struct menuAction_s
 {
@@ -37,6 +48,7 @@ typedef struct menuNode_s
 	int		type;
 	vec3_t	origin, scale, angles, center;
 	vec2_t	pos, size, texh, texl;
+	menuModel_t*	menuModel;
 	byte		state;
 	byte		align;
 	byte		invis, blend;
@@ -167,6 +179,16 @@ value_t nps[] =
 	{ NULL,			V_NULL,		0 },
 };
 
+value_t menuModelValues[] =
+{
+	{ "id",		V_STRING,	 },
+	{ "image",		V_STRING,	0 },
+	{ "md2",		V_STRING,	0 },
+	{ "anim",		V_STRING,	-1 },
+	{ "tag",		V_STRING,	-2 },
+
+	{ NULL,			V_NULL,		0 },
+};
 
 // ===========================================================
 
@@ -214,6 +236,7 @@ char *nt_strings[MN_NUM_NODETYPE] =
 // ===========================================================
 
 
+menuModel_t	menuModels[MAX_MENUMODELS];
 menuAction_t	menuActions[MAX_MENUACTIONS];
 menuNode_t		menuNodes[MAX_MENUNODES];
 menu_t			menus[MAX_MENUS];
@@ -221,6 +244,7 @@ menu_t			menus[MAX_MENUS];
 int			numActions;
 int			numNodes;
 int			numMenus;
+int			numMenuModels;
 
 byte		*adata, *curadata;
 int			adataize = 0;
@@ -2432,6 +2456,7 @@ void MN_ResetMenus( void )
 	numActions = 0;
 	numNodes = 0;
 	numMenus = 0;
+	numMenuModels = 0;
 	menuStackPos = 0;
 
 	// add commands
@@ -2925,6 +2950,73 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 	return false;
 }
 
+/*
+=================
+MN_ParseMenuModel
+
+parses the models.ufo and all files
+where menu_models are defined
+=================
+*/
+void MN_ParseMenuModel( char *name, char **text )
+{
+	menuModel_t	*menuModel;
+	char	*token;
+	int	i;
+	value_t	*v = NULL;
+	char    *errhead = _("MN_ParseMenuModel: unexptected end of file (names ");
+// 	menuModels[MAX_MENUMODELS]
+// 	value_t menuModelValues[]
+
+	// search for menumodels with same name
+	for ( i = 0; i < numMenuModels; i++ )
+		if ( !Q_strncmp( name, menuModels[i].id, MAX_VAR ) )
+			break;
+
+	if ( i < numMenuModels )
+	{
+		Com_Printf( _("MN_ParseMenuModel: menu \"%s\" with same name found, second ignored\n"), name );
+		return;
+	}
+
+	// initialize the menu
+	menuModel = &menuModels[numMenuModels++];
+	memset( menuModel, 0, sizeof(menuModel_t) );
+
+	Q_strncpyz( menuModel->id, name, MAX_VAR );
+
+	// get it's body
+	token = COM_Parse( text );
+
+	if ( !*text || *token != '{' )
+	{
+		Com_Printf( _("MN_ParseMenuModel: menu \"%s\" without body ignored\n"), menuModel->id );
+		numMenuModels--;
+		return;
+	}
+
+	do {
+		// get the name type
+		token = COM_EParse( text, errhead, name );
+		if ( !*text ) break;
+		if ( *token == '}' ) break;
+
+		for ( v = menuModelValues; v->string; v++ )
+			if ( !Q_strncmp( token, v->string, sizeof(v->string) ) )
+			{
+				// found a definition
+				token = COM_EParse( text, errhead, name );
+				if ( !*text ) return;
+
+				Com_ParseValue( menuModel, token, v->type, 0 );
+				break;
+			}
+
+		if ( !v->string )
+			Com_Printf( _("MN_ParseMenuModel: unknown token \"%s\" ignored (menu_model %s)\n"), token, name );
+
+	} while ( *text );
+}
 
 /*
 =================
