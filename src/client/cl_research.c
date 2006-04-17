@@ -382,7 +382,7 @@ void RS_ResearchDisplayInfo ( void  )
 			Cvar_Set( "mn_research_selbase", _("Researched in this base.") );
 		}
 	}
-	
+
 	Cvar_Set( "mn_research_selname", tech->name );
 	if ( tech->overalltime ) {
 		if ( tech->time > tech->overalltime ) {

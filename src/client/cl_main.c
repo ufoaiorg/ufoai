@@ -1277,8 +1277,8 @@ parsed if we are no dedicated server
 void CL_ParseScriptFirst( char *type, char *name, char **text )
 {
 	// check for client interpretable scripts
-	if ( !Q_strncmp( type, "menu", 4 ) ) MN_ParseMenu( name, text );
-	else if ( !Q_strncmp( type, "menu_model", 8 ) ) MN_ParseMenuModel( name, text );
+	if ( !Q_strncmp( type, "menu_model", 10 ) ) MN_ParseMenuModel( name, text );
+	else if ( !Q_strncmp( type, "menu", 4 ) ) MN_ParseMenu( name, text );
 	else if ( !Q_strncmp( type, "particle", 8 ) ) CL_ParseParticle( name, text );
 	else if ( !Q_strncmp( type, "mission", 7 ) ) CL_ParseMission( name, text );
 	else if ( !Q_strncmp( type, "sequence", 8 ) ) CL_ParseSequence( name, text );

@@ -748,20 +748,6 @@ void CL_AddTargeting( void );
 #define NUM_BUYTYPES	4
 #define NUM_TEAMSKINS	4
 
-#if 0
-extern inventory_t teamInv[MAX_WHOLETEAM];
-extern inventory_t equipment;
-extern character_t wholeTeam[MAX_WHOLETEAM];
-extern character_t curTeam[MAX_ACTIVETEAM];
-extern int numWholeTeam;
-extern int numOnTeam;
-extern int teamMask;
-extern int deathMask;
-extern int equipType;
-extern int numHired;
-extern int hiredMask;
-#endif
-
 extern char *teamSkinNames[NUM_TEAMSKINS];
 
 void CL_ResetTeams( void );
@@ -973,9 +959,6 @@ typedef struct aircraft_s
 	int		time;
 	int	teamSize;	// how many soldiers on board
 	char	model[MAX_QPATH];
-	char	model_top[MAX_QPATH];
-	char	model_glass[MAX_QPATH];
-	char	model_wings[MAX_QPATH];
 	char	weapon_string[MAX_VAR];
 	technology_t*	weapon;
 	char	shield_string[MAX_VAR];

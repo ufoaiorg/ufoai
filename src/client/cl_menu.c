@@ -24,8 +24,7 @@ typedef struct menuModel_s
 	char	id[MAX_VAR];
 	char	need[MAX_VAR];
 	char	model[MAX_QPATH];
-	char	tag[MAX_VAR];
-	char	parent[MAX_VAR];
+	struct menuModel_s	*next;
 } menuModel_t;
 
 typedef struct menuAction_s
@@ -181,11 +180,8 @@ value_t nps[] =
 
 value_t menuModelValues[] =
 {
-	{ "id",		V_STRING,	 },
-	{ "image",		V_STRING,	0 },
-	{ "md2",		V_STRING,	0 },
-	{ "anim",		V_STRING,	-1 },
-	{ "tag",		V_STRING,	-2 },
+	{ "model",		V_STRING,	MENUMODELFS(model) },
+	{ "need",		V_NULL,		0 },
 
 	{ NULL,			V_NULL,		0 },
 };
@@ -1650,7 +1646,7 @@ void MN_PrecacheMenus( void )
 				{
 					// bad reference
 					node->invis = true;
-					Com_Printf( "MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data );
+					Com_Printf( "MN_PrecacheMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data );
 					continue;
 				}
 				Q_strncpyz( source, ref, MAX_VAR );
@@ -1660,6 +1656,7 @@ void MN_PrecacheMenus( void )
 						re.RegisterPic( ref );
 						break;
 					case MN_MODEL:
+						// FIXME: menuModel_t!!
 						re.RegisterModel( source );
 						break;
 				}
@@ -1667,6 +1664,27 @@ void MN_PrecacheMenus( void )
 		}
 	}
 // int			numNodes;
+}
+
+/*
+=================
+MN_GetMenuModel
+
+returns pointer to menu model
+=================
+*/
+menuModel_t* MN_GetMenuModel ( char* menuModel )
+{
+	int i;
+	menuModel_t* m;
+	for ( i = 0; i < numMenuModels; i++ )
+	{
+		m = &menuModels[i];
+		if ( ! Q_strncmp( m->id, menuModel, MAX_VAR ) )
+			return m;
+	}
+	Com_Printf("MN_GetMenuModel: Could not find menu model %s (in %i definitions)\n", menuModel, numMenuModels );
+	return NULL;
 }
 
 /*
@@ -1689,6 +1707,7 @@ void MN_DrawMenus( void )
 	char	*pos, *tab1, *tab2, *end;
 	int 	y, line, x, len;
 	message_t	*message;
+	menuModel_t	*menuModel = NULL;
 
 	// render every menu on top of a menu with a render node
 	pp = 0;
@@ -1984,11 +2003,19 @@ void MN_DrawMenus( void )
 
 				case MN_MODEL:
 					// set model properties
-					mi.model = re.RegisterModel( source );
-					if ( !mi.model )
-						break;
+					node->menuModel = MN_GetMenuModel( source );
+					if ( ! node->menuModel )
+					{
+						menuModel = NULL;
+						mi.model = re.RegisterModel( source );
+						if ( !mi.model )
+							break;
+					}
+					else
+						menuModel = node->menuModel;
 
 					mi.name = source;
+
 					mi.origin = node->origin;
 					mi.angles = node->angles;
 					mi.scale = node->scale;
@@ -2008,85 +2035,98 @@ void MN_DrawMenus( void )
 					else
 						mi.skin = 0;
 
-					// do animations
-					if ( node->data[1] && *(char *)node->data[1] )
-					{
-						ref = MN_GetReferenceString( menu, node->data[1] );
-						if ( !node->data[4] )
+					menuModel = node->menuModel;
+					do {
+						if ( menuModel )
 						{
-							// new anim state
-							as = (animState_t *)curadata;
-							curadata += sizeof( animState_t );
-							memset( as, 0, sizeof( animState_t ) );
-							re.AnimChange( as, mi.model, ref );
-							node->data[4] = as;
+							mi.model = re.RegisterModel( menuModel->model );
+							mi.name = menuModel->model;
+						}
+
+						// do animations
+						if ( node->data[1] && *(char *)node->data[1] )
+						{
+							ref = MN_GetReferenceString( menu, node->data[1] );
+							if ( !node->data[4] )
+							{
+								// new anim state
+								as = (animState_t *)curadata;
+								curadata += sizeof( animState_t );
+								memset( as, 0, sizeof( animState_t ) );
+								re.AnimChange( as, mi.model, ref );
+								node->data[4] = as;
+							}
+							else
+							{
+								// change anim if needed
+								char *anim;
+								as = node->data[4];
+								anim = re.AnimGetName( as, mi.model );
+								if ( anim && Q_stricmp( anim, ref ) )
+									re.AnimChange( as, mi.model, ref );
+							}
+							re.AnimRun( as, mi.model, cls.frametime*1000 );
+
+							mi.frame = as->frame;
+							mi.oldframe = as->oldframe;
+							mi.backlerp = as->backlerp;
 						}
 						else
 						{
-							// change anim if needed
-							char *anim;
-							as = node->data[4];
-							anim = re.AnimGetName( as, mi.model );
-							if ( anim && Q_stricmp( anim, ref ) )
-								re.AnimChange( as, mi.model, ref );
+							// no animation
+							mi.frame = 0;
+							mi.oldframe = 0;
+							mi.backlerp = 0;
 						}
-						re.AnimRun( as, mi.model, cls.frametime*1000 );
 
-						mi.frame = as->frame;
-						mi.oldframe = as->oldframe;
-						mi.backlerp = as->backlerp;
-					}
-					else
-					{
-						// no animation
-						mi.frame = 0;
-						mi.oldframe = 0;
-						mi.backlerp = 0;
-					}
 
-					// place on tag
-					if ( node->data[2] )
-					{
-						menuNode_t	*search;
-						char	parent[MAX_VAR];
-						char	*tag;
+						// place on tag
+						if ( node->data[2] )
+						{
+							menuNode_t	*search;
+							char	parent[MAX_VAR];
+							char	*tag;
 
-						Q_strncpyz( parent, MN_GetReferenceString( menu, node->data[2] ), MAX_VAR );
-						tag = parent;
-						while ( *tag && *tag != ' ' ) tag++;
-						*tag++ = 0;
+							Q_strncpyz( parent, MN_GetReferenceString( menu, node->data[2] ), MAX_VAR );
+							tag = parent;
+							while ( *tag && *tag != ' ' ) tag++;
+							*tag++ = 0;
 
-						for ( search = menu->firstNode; search != node && search; search = search->next )
-							if ( search->type == MN_MODEL && !Q_strncmp( search->name, parent, MAX_VAR ) )
-							{
-								char model[MAX_VAR];
-								Q_strncpyz( model, MN_GetReferenceString( menu, search->data[0] ), MAX_VAR );
-
-								pmi.model = re.RegisterModel( model );
-								if ( !pmi.model ) break;
-
-								pmi.name = model;
-								pmi.origin = search->origin;
-								pmi.angles = search->angles;
-								pmi.scale = search->scale;
-								pmi.center = search->center;
-
-								// autoscale?
-								if ( !node->scale[0] )
+							for ( search = menu->firstNode; search != node && search; search = search->next )
+								if ( search->type == MN_MODEL && !Q_strncmp( search->name, parent, MAX_VAR ) )
 								{
-									mi.scale = NULL;
-									mi.center = node->size;
+									char model[MAX_VAR];
+									Q_strncpyz( model, MN_GetReferenceString( menu, search->data[0] ), MAX_VAR );
+
+									pmi.model = re.RegisterModel( model );
+									if ( !pmi.model ) break;
+
+									pmi.name = model;
+									pmi.origin = search->origin;
+									pmi.angles = search->angles;
+									pmi.scale = search->scale;
+									pmi.center = search->center;
+
+									// autoscale?
+									if ( !node->scale[0] )
+									{
+										mi.scale = NULL;
+										mi.center = node->size;
+									}
+
+									as = search->data[4];
+									pmi.frame = as->frame;
+									pmi.oldframe = as->oldframe;
+									pmi.backlerp = as->backlerp;
+
+									re.DrawModelDirect( &mi, &pmi, tag );
+									break;
 								}
+						} else re.DrawModelDirect( &mi, NULL, NULL );
 
-								as = search->data[4];
-								pmi.frame = as->frame;
-								pmi.oldframe = as->oldframe;
-								pmi.backlerp = as->backlerp;
-
-								re.DrawModelDirect( &mi, &pmi, tag );
-								break;
-							}
-					} else re.DrawModelDirect( &mi, NULL, NULL );
+						if ( menuModel )
+							menuModel = menuModel->next;
+					} while ( menuModel != NULL );
 					break;
 
 				case MN_3DMAP:
@@ -2445,6 +2485,20 @@ void MN_Translate_f( void )
 
 /*
 =================
+MN_ListMenuModels_f
+=================
+*/
+void MN_ListMenuModels_f ( void )
+{
+	int i;
+	// search for menumodels with same name
+	Com_Printf("menu models: %i\n", numMenuModels);
+	for ( i = 0; i < numMenuModels; i++ )
+		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", menuModels[i].id, menuModels[i].model, menuModels[i].need );
+}
+
+/*
+=================
 MN_ResetMenus
 =================
 */
@@ -2475,7 +2529,7 @@ void MN_ResetMenus( void )
 	Cmd_AddCommand( "mn_modifywrap", MN_ModifyWrap_f );
 	Cmd_AddCommand( "mn_modifystring", MN_ModifyString_f );
 	Cmd_AddCommand( "mn_translate", MN_Translate_f );
-
+	Cmd_AddCommand( "menumodelslist", MN_ListMenuModels_f );
 	// get action data memory
 	if ( adataize )
 		memset( adata, 0, adataize );
@@ -2965,25 +3019,27 @@ void MN_ParseMenuModel( char *name, char **text )
 	int	i;
 	value_t	*v = NULL;
 	char    *errhead = _("MN_ParseMenuModel: unexptected end of file (names ");
-// 	menuModels[MAX_MENUMODELS]
-// 	value_t menuModelValues[]
 
 	// search for menumodels with same name
 	for ( i = 0; i < numMenuModels; i++ )
-		if ( !Q_strncmp( name, menuModels[i].id, MAX_VAR ) )
-			break;
+		if ( !Q_strncmp( menuModels[i].id, name, MAX_VAR ) )
+		{
+			Com_Printf( _("MN_ParseMenuModel: menu_model \"%s\" with same name found, second ignored\n"), name );
+			return;
+		}
 
-	if ( i < numMenuModels )
+	if ( numMenuModels >= MAX_MENUMODELS )
 	{
-		Com_Printf( _("MN_ParseMenuModel: menu \"%s\" with same name found, second ignored\n"), name );
+		Com_Printf( _("MN_ParseMenuModel: Max menu models reached\n"), name );
 		return;
 	}
 
 	// initialize the menu
-	menuModel = &menuModels[numMenuModels++];
+	menuModel = &menuModels[numMenuModels];
 	memset( menuModel, 0, sizeof(menuModel_t) );
 
 	Q_strncpyz( menuModel->id, name, MAX_VAR );
+	Com_DPrintf("Found menu model %s (%i)\n", menuModel->id, numMenuModels );
 
 	// get it's body
 	token = COM_Parse( text );
@@ -2991,9 +3047,10 @@ void MN_ParseMenuModel( char *name, char **text )
 	if ( !*text || *token != '{' )
 	{
 		Com_Printf( _("MN_ParseMenuModel: menu \"%s\" without body ignored\n"), menuModel->id );
-		numMenuModels--;
 		return;
 	}
+
+	numMenuModels++;
 
 	do {
 		// get the name type
@@ -3005,10 +3062,18 @@ void MN_ParseMenuModel( char *name, char **text )
 			if ( !Q_strncmp( token, v->string, sizeof(v->string) ) )
 			{
 				// found a definition
-				token = COM_EParse( text, errhead, name );
-				if ( !*text ) return;
+				if ( !Q_strncmp( v->string, "need", 4 ) )
+				{
+					token = COM_EParse( text, errhead, name );
+					if ( !*text ) return;
+					menuModel->next = MN_GetMenuModel( token );
+					Q_strncpyz( menuModel->need, token, MAX_QPATH );
+				} else {
+					token = COM_EParse( text, errhead, name );
+					if ( !*text ) return;
 
-				Com_ParseValue( menuModel, token, v->type, 0 );
+					Com_ParseValue( menuModel, token, v->type, v->ofs );
+				}
 				break;
 			}
 

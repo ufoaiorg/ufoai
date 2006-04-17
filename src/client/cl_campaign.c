@@ -529,9 +529,6 @@ void CL_AircraftSelect ( void )
 	Cvar_Set( "mn_aircraftstatus", CL_AircraftStatusToName( air ) );
 	Cvar_Set( "mn_aircraftname", air->name );
 	Cvar_Set( "mn_aircraft_model", air->model );
-	Cvar_Set( "mn_aircraft_model_top", air->model_top );
-	Cvar_Set( "mn_aircraft_model_glass", air->model_glass );
-	Cvar_Set( "mn_aircraft_model_wings", air->model_wings );
 	Cvar_Set( "mn_aircraft_weapon", air->weapon ? air->weapon->name : "" );
 	Cvar_Set( "mn_aircraft_shield", air->shield ? air->shield->name : "" );
 
@@ -2820,9 +2817,6 @@ value_t aircraft_vals[] =
 	{ "weapon",	V_STRING,	AIRFS( weapon_string ) },
 	{ "shield",	V_STRING,	AIRFS( shield_string ) },
 	{ "model",	V_STRING,	AIRFS( model ) },
-	{ "model_top",	V_STRING,	AIRFS( model_top ) },
-	{ "model_glass",	V_STRING,	AIRFS( model_glass ) },
-	{ "model_wings",	V_STRING,	AIRFS( model_wings ) },
 
 	{ NULL, 0, 0 },
 };

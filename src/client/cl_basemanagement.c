@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*======================
 cl_basemanagement.c
-
+//
 * Handles everything that is located an or accessed trough a base.
 
 See
@@ -910,6 +910,7 @@ void MN_ParseBuildings( char *id, char **text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
+#if 0
 		if ( *token == '{' )
 		{
 			// parse text
@@ -937,7 +938,7 @@ void MN_ParseBuildings( char *id, char **text )
 			*text = token+1;
 			continue;
 		}
-
+#endif
 		// get values
 		if ( !Q_strncmp( token, "type", 4 ) ) {
 			token = COM_EParse( text, errhead, id );
@@ -1484,6 +1485,8 @@ void MN_ClearBase( base_t *base )
 
 	memset( base, 0, sizeof(base_t) );
 
+	// FIXME: is this needed?
+	//        the above memset should do this - why is this here?
 	memset( &base->equipment, 0, sizeof(inventory_t) );
 	base->nextUCN = 0;
 
@@ -2347,6 +2350,8 @@ void MN_ResetBaseManagement( void )
 	numProductions = 0;
 	ccs.actualBaseID = 0;
 
+	Com_DPrintf("Reset basemanagement\n");
+
 	// get data memory
 	if ( bmDataSize )
 		memset( bmDataStart, 0, bmDataSize );
@@ -2385,7 +2390,6 @@ void MN_ResetBaseManagement( void )
 	Cmd_AddCommand( "baselist", CL_BaseList );
 	Cmd_AddCommand( "buildinglist", CL_BuildingList );
 	Cvar_SetValue( "mn_base_id", ccs.actualBaseID );
-
 }
 
 /*======================
