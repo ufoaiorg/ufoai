@@ -1,56 +1,145 @@
 // .. model:	(string)
 // .. need:	(string)
-// .. tag:	(string)
-// .. anim:	(string)	see anm-file for model
-// .. skin:	(int)		skinnumber
-// .. parent:	(string)	parent model (e.g. head and body) (at head: name of the body-model)
-// .. angles:	(vec3_t)	rotation
+// NOTE: This has to be drop down
 
 // ============== Alien Ortnok =====================
-menu_model alien_ortnok
-{
-	model	"models/aliens/ortnok/body01.md2"
-	anim	"menu_stand"
-	skin	1
-	need	"alien_ortnok_head"
-}
-
 menu_model alien_ortnok_head
 {
 	model	"models/aliens/ortnok/head01.md2"
-	parent	alien_ortnok
-	tag	tag_head
+}
+menu_model alien_ortnok
+{
+	model	"models/aliens/ortnok/body01.md2"
+	need	"alien_ortnok_head"
 }
 
 // ============== Civilian female ==================
-menu_model civ_female
-{
-	model	"models/civilians/female/body03.md2"
-	skin	1
-	anim	"menu_stand"
-	need	"civ_female_head"
-}
 menu_model civ_female_head
 {
 	model	"models/civilians/female/head04c.md2"
-	parent	civ_female
-	tag	tag_head
+}
+menu_model civ_female
+{
+	model	"models/civilians/female/body03.md2"
+	need	"civ_female_head"
 }
 
 // ============== Dropship =========================
+menu_model dropship_glass
+{
+	model	"models/objects/dropship_glass.md2"
+}
+menu_model dropship_top
+{
+	model	"models/objects/dropship_top.md2"
+	need	"dropship_glass"
+}
 menu_model dropship
 {
 	model	"models/objects/dropship.md2"
 	need	"dropship_top"
 }
 
-menu_model dropship_top
+// ============== Interceptor ======================
+menu_model interceptor_glass
 {
-	model	"models/objects/dropship_top.md2"
-	need	"dropship_glass"
+	model	"models/aircrafts/fighter1_glass.md2"
+}
+menu_model interceptor_top
+{
+	model	"models/aircrafts/fighter1_engines.md2"
+	need	"interceptor_glass"
+}
+menu_model interceptor
+{
+	model	"models/aircrafts/fighter1_main.md2"
+	need	"interceptor_top"
 }
 
-menu_model dropship_glass
+// ============== UFO ==============================
+menu_model ufo1_upper
 {
-	model	"models/objects/dropship_glass.md2"
+	model	"models/objects/alienship1_upper.md2"
+}
+menu_model ufo1_engines_2
+{
+	model	"models/objects/alienship1_engines_2.md2"
+	need	"ufo1_upper"
+}
+menu_model ufo1_engines_1
+{
+	model	"models/objects/alienship1_engines_1.md2"
+	need	"ufo1_engines_2"
+}
+menu_model ufo1_hull
+{
+	model	"models/objects/alienship1_hull.md2"
+	need	"ufo1_engines_1"
+}
+menu_model ufo1_wings
+{
+	model	"models/objects/alienship1_wings.md2"
+	need	"ufo1_hull"
+}
+menu_model ufo1
+{
+	model	"models/objects/alienship1_engines.md2"
+	need	"ufo1_wings"
+}
+
+// ============== UFO BIG ==========================
+menu_model ufobig_body
+{
+	model	"models/objects/ufo1_body_closed.md2"
+}
+menu_model ufobig_engine_left
+{
+	model	"models/objects/ufo1_engine_left.md2"
+	need	"ufobig_body"
+}
+menu_model ufobig_engine_right
+{
+	model	"models/objects/ufo1_engine_right.md2"
+	need	"ufobig_engine_left"
+}
+menu_model ufobig_wing_left
+{
+	model	"models/objects/ufo1_wing_left.md2"
+	need	"ufobig_engine_right"
+}
+menu_model ufobig_wing_right
+{
+	model	"models/objects/ufo1_wing_right.md2"
+	need	"ufobig_wing_left"
+}
+menu_model ufobig
+{
+	model	"models/objects/ufo1.md2"
+	need	"ufobig_wing_right"
+}
+
+// ============== UFO CRASH ========================
+menu_model ufo_crash_wing_2
+{
+	model	"models/objects/acrash_wing_2.md2"
+}
+menu_model ufo_crash_wing_1
+{
+	model	"models/objects/acrash_wing_1.md2"
+	need	"ufo_crash_wing_2"
+}
+menu_model ufo_crash_hull_engine
+{
+	model	"models/objects/acrash_hull_engine.md2"
+	need	"ufo_crash_wing_1"
+}
+menu_model ufo_crash_engine
+{
+	model	"models/objects/acrash_engine.md2"
+	need	"ufo_crash_hull_engine"
+}
+menu_model ufo_crash
+{
+	model	"models/objects/acrash_hull.md2"
+	need	"ufo_crash_engine"
 }
