@@ -925,6 +925,7 @@ typedef struct building_s
 } building_t;
 
 #define MAX_AIRCRAFT	256
+#define MAX_CRAFTUPGRADES	64
 #define LINE_MAXSEG 64
 #define LINE_MAXPTS (LINE_MAXSEG+2)
 #define LINE_DPHI	(M_PI/LINE_MAXSEG)
@@ -943,6 +944,44 @@ typedef enum
 	AIRCRAFT_UFO
 } aircraftType_t;
 
+typedef enum
+{
+	CRAFTUPGRADE_WEAPON,
+	CRAFTUPGRADE_ENGINE,
+	CRAFTUPGRADE_ARMOR
+} craftupgrade_type_t;
+
+typedef struct craftupgrade_s	
+{
+	/* some of this informations defined here overwrite the ones in the aircraft_t struct if given. */
+
+	/* general */
+	char    id[MAX_VAR];		// Short (unique) id/name.
+	char    name[MAX_VAR];		// Full name of this upgrade
+	craftupgrade_type_t type;	// weapon/engine/armor
+	technology_t* pedia;		// -pedia link
+
+	/* armor related */
+	float armor_kinetic;		// maybe using (k)Newtons here?
+	float armor_shield;			// maybe using (k)Newtons here?
+
+	/* weapon related */
+	struct craftupgrade_t *ammo;
+	struct weapontype_t *weapontype;	// e.g beam/particle/missle ( do we already have something like that?)
+	int num_ammo;
+	float    damage_kinetic;		// maybe using (k)Newtons here?
+	float    damage_shield;		// maybe using (k)Newtons here?
+	float    range;				// meters (only for non-beam weapons. i.e projectiles, missles, etc...)
+
+	/* drive related */
+	int    speed;				// the maximum speed the craft can fly with this upgrade
+	int    fuelSize;				// the maximum fuel size
+
+	/* representation/display */
+	char    model[MAX_QPATH];	// 3D model
+	char    image[MAX_VAR];		// image
+} craftupgrade_t;
+
 typedef struct aircraft_s
 {
 	char	name[MAX_VAR];	// translateable name
@@ -958,6 +997,8 @@ typedef struct aircraft_s
 	int		point;
 	int		time;
 	int	teamSize;	// how many soldiers on board
+	// TODO
+	// xxx teamShape;    // TODO: shape of the soldier-area onboard.
 	char	model[MAX_QPATH];
 	char	weapon_string[MAX_VAR];
 	technology_t*	weapon;
@@ -965,6 +1006,10 @@ typedef struct aircraft_s
 	technology_t*	shield;
 	mapline_t route;
 	void*	homebase;	// pointer to homebase
+	
+	craftupgrade_t    *upgrades[MAX_CRAFTUPGRADES];	// TODO replace armor/weapon/engine definitions from above with this.
+	int    numUpgrades;
+	
 } aircraft_t;
 
 typedef struct base_s
@@ -1034,7 +1079,10 @@ extern	building_t	bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global list of _al
 extern	int numBuildings;								// The global number of entries in the bmBuildings list.
 
 extern	employee_t	employees[MAX_EMPLOYEES];			// This it the global list of employees.
-extern	int   numEmployees;							// The global number of enris in the "employees" list.
+extern	int   numEmployees;							// The global number of entries in the "employees" list.
+
+craftupgrade_t    *craftupgrades[MAX_CRAFTUPGRADES];		// This it the global list of all available craft-upgrades
+int    numCraftUpgrades;								// The global number of entries in the "craftupgrades" list.
 
 void MN_InitEmployees ( void );
 
