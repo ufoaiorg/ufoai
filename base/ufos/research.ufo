@@ -658,6 +658,18 @@ tech building_teamroom
 	researched	true
 }
 
+tech building_radar
+{
+	type	building
+	description	"_b_radar_txt"
+	up_chapter	buildings
+
+	requires	initial
+	provides	radar
+	time	0
+	researched	true
+}
+
 //========================
 // Crafts
 //========================
@@ -687,6 +699,39 @@ tech craft_interceptor
 	researched	true
 
 	mdl_top	models/aircrafts/fighter1_main.md2
+}
+
+// general ufo technology
+// FIXME: this should not be researched - but found via intercepter missions
+tech craft_ufo_tech
+{
+	type	tech
+	name	"_General UFO technology"
+	description	"_ufo_small_txt"
+	up_chapter	crafts
+
+	// FIXME
+	requires	found_ufo
+	provides	""
+	time	100
+	researched	false
+
+	mdl_top	""
+}
+
+tech craft_ufo_small
+{
+	type	craft
+	description	"_ufo_small_txt"
+	up_chapter	crafts
+
+	// FIXME
+	requires	craft_ufo_tech
+	provides	ufo
+	time
+	researched	false
+
+	mdl_top
 }
 
 //tech craftupgrade_transporter

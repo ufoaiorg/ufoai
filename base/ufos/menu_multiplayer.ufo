@@ -238,7 +238,7 @@ menu mp_team
 
         string current_team
         {
-                string  "Current Team"
+                string  "_Current Team"
                 pos             "500 450"
                 font    f_big
         }
@@ -273,7 +273,7 @@ menu mp_team
 
         string race_str
         {
-                string  "Race:"
+                string  "_Race:"
                 pos             "500 570"
         }
         string race_value
@@ -301,7 +301,7 @@ menu mp_team
 
         string current_name
         {
-                string  "Name"
+                string  "_Name"
                 pos             "500 620"
         }
         pic slot_teamname
@@ -388,7 +388,7 @@ menu mp_join_lan
 
         string lan_teamnum_str
         {
-                string  "Team preference:"
+                string  "_Team preference:"
                 pos             "500 660"
         }
         string lan_teamnum_value
@@ -479,7 +479,7 @@ menu mp_join_internet
         // ===================
         string current_inet_connect_to_ip
         {
-                string  "Connect to IP"
+                string  "_Connect to IP"
                 pos     "500 560"
         }
         pic slot_inet_connect_to_ip
@@ -499,7 +499,7 @@ menu mp_join_internet
 
         string inet_teamnum_str
         {
-                string  "Team preference:"
+                string  "_Team preference:"
                 pos             "500 660"
         }
         string inet_teamnum_value
@@ -552,7 +552,7 @@ menu mp_create_server
         // ===================
         string morale_str
         {
-                string  "Enable morale states:"
+                string  "_Enable morale states:"
                 pos     "500 140"
         }
         string morale_value
@@ -593,7 +593,7 @@ menu mp_create_server
         // ===================
         string dedicated_str
         {
-                string  "Dedicated server:"
+                string  "_Dedicated server:"
                 pos     "500 160"
         }
         string dedicated_value
@@ -634,7 +634,7 @@ menu mp_create_server
         // ===================
         string server_teamplay_str
         {
-                string  "Teamplay:"
+                string  "_Teamplay:"
                 pos     "500 180"
         }
         string server_teamplay_value
@@ -675,7 +675,7 @@ menu mp_create_server
         // ===================
         string maxclients_str
         {
-                string  "Max. clients:"
+                string  "_Max. clients:"
                 pos     "500 200"
 		tooltip "Sets the max allowed clients to connect"
         }
@@ -709,9 +709,9 @@ menu mp_create_server
         // ===================
         string maxperplayer_str
         {
-                string  "Max. soldiers per team:"
+                string  "_Max. soldiers per team:"
                 pos     "500 220"
-		tooltip "Sets the max allowed soldiers per team"
+		tooltip "_Sets the max allowed soldiers per team"
         }
         string maxperplayer_value
         {
@@ -743,9 +743,9 @@ menu mp_create_server
         // =====================
         string maxsoldierperplayer_str
         {
-                string  "Max soldiers per player:"
+                string  "_Max soldiers per player:"
                 pos     "500 240"
-		tooltip "Sets the max allowed soldiers per player when in teamplay"
+		tooltip "_Sets the max allowed soldiers per player when in teamplay"
         }
         string maxsoldierperplayer_value
         {
@@ -777,9 +777,9 @@ menu mp_create_server
         // ===================
         string server_teamnum_str
         {
-                string  "Team preference:"
+                string  "_Team preference:"
                 pos     "500 260"
-		tooltip "Sets the prefered team"
+		tooltip "_Sets the prefered team"
         }
         string server_teamnum_value
         {
@@ -811,7 +811,7 @@ menu mp_create_server
         // ===================
         string download_str
         {
-                string  "Allow Download:"
+                string  "_Allow Download:"
                 pos     "500 280"
         }
         string download_value
@@ -848,11 +848,45 @@ menu mp_create_server
         }
 
         // ===================
+        // AI_NUMACTORS
+        // ===================
+        string ai_numactors_str
+        {
+                string  "_Max. AI actors:"
+                pos     "500 300"
+                tooltip	"_Max AI actors for coop mode"
+        }
+        string ai_numactors_value
+        {
+                string  "*cvar mn_ai_numactors"
+                pos     "840 300"
+                align   ur
+        }
+        pic ai_numactors_dec
+        {
+                image   menu/buttons_small
+                pos     "868 298"
+                texl    "0 0"
+                texh    "16 16"
+                mousefx true
+                click   { cmd "mn_modify mn_ai_numactors -1 0 8;" }
+        }
+        pic ai_numactors_inc
+        {
+                image   menu/buttons_small
+                pos     "884 298"
+                texl    "16 0"
+                texh    "32 16"
+                mousefx true
+                click   { cmd "mn_modify mn_ai_numactors +1 0 8;" }
+        }
+
+        // ===================
         // SERVER_PASSWORD
         // ===================
         string current_server_pwd
         {
-                string  "Server-Password:"
+                string  "_Server-Password:"
                 pos     "500 330"
         }
         pic slot_server_pwd
@@ -929,7 +963,6 @@ menu mp_create_server
                 image   menu/save_slot
                 pos     "500 530"
                 mousefx true
-                click   { cmd "msgmenu ?mapname" *txt_mapname color "1 1 1 1" *txt_mapname mousefx true }
         }
         string txt_mapname
         {
@@ -937,12 +970,11 @@ menu mp_create_server
                 pos    "510 539"
                 color  "0 .78 0 1"
         }
-        confunc mapname_changed { *txt_mapname color "0 .78 0 1" *txt_mapname mousefx false }
 
 	pic prev_map
 	{
                 image   menu/buttons_small
-                pos     "488 538"
+                pos     "478 538"
                 texl    "0 0"           texh    "16 16"
                 mousefx true
                 click   { cmd "mn_prevmap" }
@@ -951,7 +983,7 @@ menu mp_create_server
         pic next_map
         {
                 image   menu/buttons_small
-                pos     "750 538"
+                pos     "760 538"
                 texl    "16 0"          texh    "32 16"
                 mousefx true
                 click   { cmd "mn_nextmap;" }

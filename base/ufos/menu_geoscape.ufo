@@ -28,10 +28,10 @@ menu map
 	text messagesystem
 	{
 		pos	"0 99"
-		size	"1024 40"
+		size	"1024 20"
 		bgcolor	"0 0 0 .5"
 		format	"20 0"
-		height	2
+		height	1
 		// TEXT_MESSAGESYSTEM
 		num	12
 	}
@@ -258,8 +258,8 @@ menu map
 		out	{
 				*messagesystem_show texl "0 0"
 				*messagesystem_show texh "32 36"
-				*messagesystem size "1024 40"
-				*messagesystem height "2"
+				*messagesystem size "1024 20"
+				*messagesystem height "1"
 			}
 		in	{
 				*messagesystem_show texl "0 37"
