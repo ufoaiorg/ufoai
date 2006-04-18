@@ -5,7 +5,7 @@
 // ====================
 // Buildings
 // ====================
-building entrance
+building building_entrance
 {
 	title		"_Entrance"
 	image		base/entrance
@@ -19,13 +19,13 @@ building entrance
 	pedia		building_entrance
 }
 
-building commando
+building building_commando
 {
 	title		"_Commando central"
 	image		base/commando
 	fixcosts	1000
 	desc		"This is the commando central"
-	depends		powerplant
+	depends		building_powerplant
 	max_workers	6
 	min_workers	2
 	worker_costs	10
@@ -38,13 +38,13 @@ building commando
 	pedia		building_commando
 }
 
-building powerplant
+building building_powerplant
 {
 	title		"_Powerplant"
 	image		base/powerplant
 	fixcosts	300
 	desc		"Produces Energy"
-	depends		entrance
+	depends		building_entrance
 	max_workers	10
 	min_workers	3
 	worker_costs	10
@@ -59,11 +59,11 @@ building powerplant
 	pedia		building_powerplant
 }
 
-building lab
+building building_lab
 {
 	title		"_Laboratory"
 	image		base/lab
-	depends		commando
+	depends		building_commando
 	fixcosts	1500
 	max_workers	10
 	min_workers	2
@@ -84,12 +84,12 @@ building lab
 	pedia		building_lab
 }
 
-building storage
+building building_storage
 {
 	title		"_Storage"
 	image		base/storage
 	fixcosts	500
-	depends		commando
+	depends		building_commando
 	max_workers	4
 	min_workers	1
 	worker_costs	10
@@ -102,12 +102,12 @@ building storage
 	pedia		building_storage
 }
 
-building intercept
+building building_intercept
 {
 	title		"_Interceptors"
 	image		base/intercept
 	fixcosts	5000
-	depends		commando
+	depends		building_commando
 	max_workers	4
 	min_workers	1
 	worker_costs	10
@@ -119,12 +119,12 @@ building intercept
 	pedia		building_intercept
 }
 
-building quarters
+building building_quarters
 {
 	title		"_Quarters"
 	image		base/quarters
 	fixcosts	300
-	depends		commando
+	depends		building_commando
 	max_workers	20
 	max_employees	20
 	worker_costs	10
@@ -138,13 +138,13 @@ building quarters
 	pedia		building_quarters
 }
 
-building drop1
+building building_hangar
 {
 	title		"_Hangar"
 	image		base/drop2
 	fixcosts	1000
-	needs		drop2
-	depends		quarters
+	needs		building_hangar2
+	depends		building_quarters
 	max_workers	5
 	min_workers	2
 	worker_costs	10
@@ -158,12 +158,12 @@ building drop1
 	pos		"1 0"
 }
 
-building drop2
+building building_hangar2
 {
 	title		"_Hangar"
 	image		base/drop1
 	fixcosts	1000
-	depends		quarters
+	depends		building_quarters
 	visible		false
 	max_workers	5
 	min_workers	2
@@ -174,12 +174,12 @@ building drop2
 	pedia		building_hangar
 }
 
-building teamroom
+building building_teamroom
 {
 	title		"_Team Room"
 	image		base/teamroom
 	fixcosts	300
-	depends		quarters
+	depends		building_quarters
 	produce_type	mind_p
 	produce		5
 	produce_time	30
@@ -192,12 +192,12 @@ building teamroom
 	pedia		building_teamroom
 }
 
-building radar
+building building_radar
 {
 	title		"_Radar"
 	image		base/radar
 	fixcosts	3000
-	depends		commando
+	depends		building_commando
 	max_workers	5
 	min_workers	1
 	worker_costs	10

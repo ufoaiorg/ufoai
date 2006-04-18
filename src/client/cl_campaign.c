@@ -567,7 +567,8 @@ aircraft_t* CL_GetAircraft ( char* name )
 		if ( ! Q_strncmp(aircraft[i].title, name, MAX_VAR) )
 			return &aircraft[i];
 	}
-	// not found
+
+	Com_Printf("Aircraft %s not found\n", name );
 	return NULL;
 }
 

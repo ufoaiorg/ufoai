@@ -22,9 +22,35 @@ char	upBuffer[MAX_UPTEXT];
 
 // ===========================================================
 
-void UP_BuildingDescription ( technology_t* t )
+void UP_TechDescription ( technology_t* t )
 {
 
+}
+
+void UP_BuildingDescription ( technology_t* t )
+{
+	building_t* b = B_GetBuilding ( t->id );
+	building_t* depends = NULL;
+
+	if ( !b )
+	{
+		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find building") );
+	} else {
+		// needs another building to be buildable
+		if ( b->depends )
+			depends = B_GetBuilding ( b->depends );
+
+		Com_sprintf(upBuffer, MAX_UPTEXT,
+			_("Depends:\t%s\nMore than once:\t%s\nBuildtime:\t%i day(s)\nFixcosts:\t%i $\nRunning costs:\t%i $\nEnergy:\t%i\nWorkercosts:\t%i $\n"),
+			depends ? depends->title : _("None"),
+			b->moreThanOne ? _("Yes") : _("No"),
+			(int)b->buildTime,
+			(int)b->fixCosts,
+			(int)b->varCosts,
+			(int)b->energy,
+			(int)b->workerCosts );
+	}
+	menuText[TEXT_STANDARD] = upBuffer;
 }
 
 void UP_AircraftDescription ( technology_t* t )
@@ -86,7 +112,8 @@ void MN_UpDrawEntry( char *id )
 					}
 					break;
 				case RS_TECH:
-					// TODO
+					UP_TechDescription( t );
+					break;
 				case RS_CRAFT:
 					UP_AircraftDescription( t );
 					break;

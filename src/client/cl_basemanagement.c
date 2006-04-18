@@ -256,6 +256,7 @@ building_t* B_GetBuilding ( char *buildingName )
 		if ( !Q_strcasecmp( bmBuildings[ccs.actualBaseID][i].name, buildingName ) )
 			return &bmBuildings[ccs.actualBaseID][i];
 
+	Com_Printf("Building %s not found\n", buildingName );
 	return NULL;
 }
 

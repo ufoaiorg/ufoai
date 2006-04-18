@@ -557,7 +557,7 @@ tech building_entrance
 	up_chapter	buildings
 
 	requires	initial
-	provides	entrance
+	provides	building_entrance
 	time	0
 	researched	true
 }
@@ -569,7 +569,7 @@ tech building_commando
 	up_chapter	buildings
 
 	requires	initial
-	provides	commando
+	provides	building_commando
 	time	0
 	researched	true
 }
@@ -581,7 +581,7 @@ tech building_powerplant
 	up_chapter	buildings
 
 	requires	initial
-	provides	powerplant
+	provides	building_powerplant
 	time	0
 	researched	true
 }
@@ -593,7 +593,7 @@ tech building_storage
 	up_chapter	buildings
 
 	requires	initial
-	provides	storage
+	provides	building_storage
 	time	0
 	researched	true
 }
@@ -605,7 +605,7 @@ tech building_hangar
 	up_chapter	buildings
 
 	requires	initial
-	provides	drop2
+	provides	building_hangar
 	time	0
 	researched	true
 }
@@ -617,7 +617,7 @@ tech building_intercept
 	up_chapter	buildings
 
 	requires	initial
-	provides	intercept
+	provides	building_intercept
 	time	0
 	researched	true
 }
@@ -629,7 +629,7 @@ tech building_quarters
 	up_chapter	buildings
 
 	requires	initial
-	provides	quarters
+	provides	building_quarters
 	time	0
 	researched	true
 }
@@ -641,7 +641,7 @@ tech building_lab
 	up_chapter	buildings
 
 	requires	initial
-	provides	lab
+	provides	building_lab
 	time	0
 	researched	true
 }
@@ -653,7 +653,7 @@ tech building_teamroom
 	up_chapter	buildings
 
 	requires	initial
-	provides	teamroom
+	provides	building_teamroom
 	time	0
 	researched	true
 }
@@ -665,7 +665,7 @@ tech building_radar
 	up_chapter	buildings
 
 	requires	initial
-	provides	radar
+	provides	building_radar
 	time	0
 	researched	true
 }
@@ -680,7 +680,7 @@ tech craft_dropship
 	up_chapter	crafts
 
 	requires	initial
-	provides	dropship
+	provides	craft_dropship
 	time	0
 	researched	true
 
@@ -694,7 +694,7 @@ tech craft_interceptor
 	up_chapter	crafts
 
 	requires	initial
-	provides	interceptor
+	provides	craft_interceptor
 	time	0
 	researched	true
 
@@ -727,7 +727,7 @@ tech craft_ufo_small
 
 	// FIXME
 	requires	craft_ufo_tech
-	provides	ufo
+	provides	craft_ufo_small
 	time	100
 	researched	false
 
@@ -742,7 +742,7 @@ tech craft_ufo_big
 
 	// FIXME
 	requires	craft_ufo_tech
-	provides	ufobig
+	provides	craft_ufo_big
 	time	100
 	researched	false
 
