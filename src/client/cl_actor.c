@@ -1151,6 +1151,10 @@ void CL_NextRound( void )
 
 	// send endround
 	MSG_WriteByte( &cls.netchan.message, clc_endround );
+
+	// change back to remote view
+	if ( camera_mode == CAMERA_MODE_FIRSTPERSON )
+		CL_CameraModeChange( CAMERA_MODE_REMOTE );
 }
 
 

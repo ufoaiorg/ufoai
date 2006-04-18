@@ -198,8 +198,11 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 	static float  save_camzoom;
 	static int save_level;
 
-	// save remote camera position, angles, zoom
+	// no camera change if this is not our round
+	if ( cls.team != cl.actTeam )
+		return;
 
+	// save remote camera position, angles, zoom
 	if (camera_mode == CAMERA_MODE_REMOTE)
 	{
 		VectorCopy(cl.cam.camorg, save_camorg);
@@ -226,7 +229,7 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 		if (!(selActor->state & STATE_CROUCHED))
 			cl.cam.camorg[2] += 10; /* raise from waist to head */
 		VectorCopy(selActor->angles, cl.cam.angles);
-		cl.cam.zoom = 1.0;
+		cl.cam.zoom = 1.1;
 		Cvar_SetValue( "cl_worldlevel", selActor->pos[2] );
 	}
 }
@@ -356,6 +359,10 @@ void CL_ZoomInQuant( void )
 {
 	float	quant;
 
+	// no zooming in first person mode
+	if ( camera_mode == CAMERA_MODE_FIRSTPERSON )
+		return;
+
 	// check zoom quant
 	if ( cl_camzoomquant->value < MIN_CAMZOOM_QUANT ) quant = 1 + MIN_CAMZOOM_QUANT;
 	else if ( cl_camzoomquant->value > MAX_CAMZOOM_QUANT ) quant = 1 + MAX_CAMZOOM_QUANT;
@@ -376,6 +383,10 @@ CL_ZoomOutQuant
 void CL_ZoomOutQuant( void )
 {
 	float	quant;
+
+	// no zooming in first person mode
+	if ( camera_mode == CAMERA_MODE_FIRSTPERSON )
+		return;
 
 	// check zoom quant
 	if ( cl_camzoomquant->value < MIN_CAMZOOM_QUANT ) quant = 1 + MIN_CAMZOOM_QUANT;
