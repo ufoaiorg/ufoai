@@ -72,8 +72,8 @@ typedef struct technology_s
 
 	char	image_top[MAX_VAR];
 	char	image_bottom[MAX_VAR];
-	char	mdl_top[MAX_VAR];
-	char	mdl_bottom[MAX_VAR];
+	char	mdl_top[MAX_QPATH];
+	char	mdl_bottom[MAX_QPATH];
 
 	byte	statusCollected;				// Did we loot this item?
 	byte	statusResearchable;			// Is this item researchable?
