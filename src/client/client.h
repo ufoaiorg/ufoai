@@ -1226,6 +1226,7 @@ void CL_SelectAircraft_f ( void );
 void CL_OpenAircraft_f ( void );
 void CL_BuildingAircraftList_f ( void );
 void CL_MapActionReset( void );
+aircraft_t* CL_GetAircraft ( char* name );
 
 typedef struct ccs_s
 {

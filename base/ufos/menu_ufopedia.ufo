@@ -133,9 +133,9 @@ menu ufopedia
 	model mdl_top
 	{
 		md2	"*cvar mn_upmodel_top"
-		origin	"770 250 0"
-		angles	"0 0 90"
+		angles	"-20 -40 120"
 		color	"0.5 0.5 0.5 1"
+		origin	"770 250 0"
 		pos	"570 220"
 		size	"240 240"
 		mousefx true

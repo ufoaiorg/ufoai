@@ -238,7 +238,7 @@ production mind_p
 	amount		100
 }
 
-aircraft dropship
+aircraft craft_dropship
 {
 	speed	10.0
 	name	"Dropship"
@@ -250,7 +250,7 @@ aircraft dropship
 	image	air_dropship
 }
 
-aircraft interceptor
+aircraft craft_interceptor
 {
 	speed	20.0
 	name	"Interceptor"
@@ -265,7 +265,7 @@ aircraft interceptor
 	shield	kevlar_armor
 }
 
-aircraft ufo
+aircraft craft_ufo_small
 {
 	speed	18.0
 	name	"UFO"
@@ -277,3 +277,14 @@ aircraft ufo
 	image	air_ufo
 }
 
+aircraft craft_ufo_big
+{
+	speed	45.0
+	name	"UFO - Destroyer class"
+	type	ufo
+	model	"ufobig"
+	size	80
+	fuel	100000
+	fuelsize	100000
+	image	air_ufo
+}

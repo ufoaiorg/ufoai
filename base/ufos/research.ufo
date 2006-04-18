@@ -673,10 +673,10 @@ tech building_radar
 //========================
 // Crafts
 //========================
-tech craft_transporter
+tech craft_dropship
 {
 	type	craft
-	description	"_transporter_txt"
+	description	"_dropship_txt"
 	up_chapter	crafts
 
 	requires	initial
@@ -684,7 +684,7 @@ tech craft_transporter
 	time	0
 	researched	true
 
-	mdl_top	models/objects/dropship.md2
+	mdl_top		dropship
 }
 
 tech craft_interceptor
@@ -698,7 +698,7 @@ tech craft_interceptor
 	time	0
 	researched	true
 
-	mdl_top	models/aircrafts/fighter1_main.md2
+	mdl_top		interceptor
 }
 
 // general ufo technology
@@ -708,7 +708,7 @@ tech craft_ufo_tech
 	type	tech
 	name	"_General UFO technology"
 	description	"_ufo_small_txt"
-	up_chapter	crafts
+	up_chapter	tech
 
 	// FIXME
 	requires	found_ufo
@@ -728,21 +728,36 @@ tech craft_ufo_small
 	// FIXME
 	requires	craft_ufo_tech
 	provides	ufo
-	time
+	time	100
 	researched	false
 
-	mdl_top
+	mdl_top		ufo1
 }
 
-//tech craftupgrade_transporter
+tech craft_ufo_big
+{
+	type	craft
+	description	"_ufo_big_txt"
+	up_chapter	crafts
+
+	// FIXME
+	requires	craft_ufo_tech
+	provides	ufobig
+	time	100
+	researched	false
+
+	mdl_top		ufobig
+}
+
+//tech craftupgrade_dropship
 //{
 //	type	tech
 //	name	"Plasmadrive for H-92 Transport"
-//	description	"_transporter_txt"
+//	description	"_dropship_upgrade_txt"
 //	up_chapter	crafts
 
-//	requires	"craft_transporter plasma"
-//	provides	transporter_plasmadrive
+//	requires	"craft_dropship plasma"
+//	provides	dropship_plasmadrive
 //	time	0
 //	researched	true
 //}

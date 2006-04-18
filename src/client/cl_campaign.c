@@ -555,6 +555,24 @@ void CL_AircraftSelect ( void )
 
 /*
 ======================
+CL_GetAircraft
+======================
+*/
+aircraft_t* CL_GetAircraft ( char* name )
+{
+	int	i;
+
+	for ( i = 0; i < numAircraft; i++ )
+	{
+		if ( ! Q_strncmp(aircraft[i].title, name, MAX_VAR) )
+			return &aircraft[i];
+	}
+	// not found
+	return NULL;
+}
+
+/*
+======================
 CL_NewAircraft
 ======================
 */
@@ -647,7 +665,7 @@ qboolean CL_NewBase( vec2_t pos )
 	B_SetUpBase();
 
 	// set up the aircraft
-	CL_NewAircraft( baseCurrent, "dropship" );
+	CL_NewAircraft( baseCurrent, "craft_dropship" );
 
 	return true;
 }
@@ -1201,7 +1219,6 @@ void CL_CampaignRun( void )
 		// calculate new date
 		int dt, day, month;
 		dt = floor( ccs.timer );
-		Com_Printf("dt: %i\n", dt );
 		ccs.date.sec += dt;
 		ccs.timer -= dt;
 		while ( ccs.date.sec > 3600*24 )

@@ -14,9 +14,35 @@ int numEntries;
 char *upData, *upDataStart;
 int upDataSize = 0;
 
-char upText[1024];
+#define MAX_UPTEXT 1024
+char	upText[MAX_UPTEXT];
+
+// this buffer is for stuff like aircraft or building info
+char	upBuffer[MAX_UPTEXT];
 
 // ===========================================================
+
+void UP_BuildingDescription ( technology_t* t )
+{
+
+}
+
+void UP_AircraftDescription ( technology_t* t )
+{
+	aircraft_t* air = CL_GetAircraft ( t->id );
+	if ( !air )
+	{
+		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find aircraft") );
+	} else {
+		Com_sprintf(upBuffer, MAX_UPTEXT,
+			_("Speed:\t%.0f\nFuel:\t%i\nWeapon:\t%s\nShield:\t%s\n"),
+			air->speed,
+			air->fuelSize,
+			air->weapon ? air->weapon->name : _("None"),
+			air->shield ? air->shield->name : _("None") );
+	}
+	menuText[TEXT_STANDARD] = upBuffer;
+}
 
 /*=================
 MN_UpDrawEntry
@@ -28,17 +54,14 @@ void MN_UpDrawEntry( char *id )
 	for ( i = 0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {
-			//Com_Printf(_("Displaying %s\n"), t->id); //DEBUG
 			Cvar_Set( "mn_uptitle", _(t->name) );
 			menuText[TEXT_UFOPEDIA] = _(t->description);
 			Cvar_Set( "mn_upmodel_top", "" );
 			Cvar_Set( "mn_upmodel_bottom", "" );
-			//Cvar_Set( "mn_upmodel_big", "" );
 			Cvar_Set( "mn_upimage_top", "base/empty" );
 			Cvar_Set( "mn_upimage_bottom", "base/empty" );
 			if ( *t->mdl_top ) Cvar_Set( "mn_upmodel_top", t->mdl_top );
 			if ( *t->mdl_bottom ) Cvar_Set( "mn_upmodel_bottom", t->mdl_bottom );
-			//if (strcmp(  t->mdl_big, "" ) ) Cvar_Set( "mn_upmodel_big", t->mdl_big );
 			if ( !*t->mdl_top && *t->image_top ) Cvar_Set( "mn_upimage_top", t->image_top );
 			if ( !*t->mdl_bottom && *t->mdl_bottom ) Cvar_Set( "mn_upimage_bottom", t->image_bottom );
 			//if ( entry->sound )
@@ -65,10 +88,10 @@ void MN_UpDrawEntry( char *id )
 				case RS_TECH:
 					// TODO
 				case RS_CRAFT:
-					// TODO
+					UP_AircraftDescription( t );
 					break;
 				case RS_BUILDING:
-					// TODO
+					UP_BuildingDescription( t );
 					break;
 				default:
 					menuText[TEXT_STANDARD] = NULL;
@@ -157,13 +180,12 @@ void MN_UpContent_f( void )
 	int i;
 
 	cp = upText;
+	*cp = '\0';
 	for ( i = 0; i < numChapters; i++ )
 	{
-		Q_strncpyz( cp, upChapters[i].name, MAX_VAR );
-		cp += strlen( cp );
-		*cp++ = '\n';
+		Q_strcat( cp, MAX_UPTEXT, upChapters[i].name );
+		Q_strcat( cp, MAX_UPTEXT, "\n" );
 	}
-	*cp = 0;
 
 	upCurrent = NULL;
 	menuText[TEXT_STANDARD] = NULL;
@@ -190,7 +212,6 @@ void MN_UpPrev_f( void )
 
 	if ( upCurrent->prev )
 	{
-
 		upCurrent = upCurrent->prev;
 		MN_UpDrawEntry( upCurrent->id );
 		return;
@@ -299,14 +320,14 @@ MN_ParseUpChapters
 ======================*/
 void MN_ParseUpChapters( char *id, char **text )
 {
-	char	*errhead = _("MN_ParseUupChapters: unexptected end of file (names ");
+	char	*errhead = _("MN_ParseUpChapters: unexptected end of file (names ");
 	char	*token;
 
 	// get name list body body
 	token = COM_Parse( text );
 
 	if ( !*text || *token !='{' ) {
-		Com_Printf( _("MN_ParseUupChapters: chapter def \"%s\" without body ignored\n"), id );
+		Com_Printf( _("MN_ParseUpChapters: chapter def \"%s\" without body ignored\n"), id );
 		return;
 	}
 
@@ -318,7 +339,7 @@ void MN_ParseUpChapters( char *id, char **text )
 
 		// add chapter
 		if ( numChapters >= MAX_PEDIACHAPTERS ) {
-			Com_Printf( _("MN_ParseUupChapters: too many chapter defs\n"), id );
+			Com_Printf( _("MN_ParseUpChapters: too many chapter defs\n"), id );
 			return;
 		}
 		memset( &upChapters[numChapters], 0, sizeof( pediaChapter_t ) );
@@ -329,8 +350,9 @@ void MN_ParseUpChapters( char *id, char **text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 		if ( *token == '_' ) token++;
+		if ( !*token )
+			continue;
 		Q_strncpyz( upChapters[numChapters].name, _(token), MAX_VAR );
-		//Com_Printf( _("MN_ParseUupChapters: parsed chapter %s \n"), upChapters[numChapters].id ); //DEBUG
 
 		numChapters++;
 	} while ( *text );
