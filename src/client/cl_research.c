@@ -746,8 +746,12 @@ void RS_UpdateData ( void )
 	researchListLength = j;
 
 	// Set rest of the list-entries to have no text at all.
-	for ( ; j < MAX_RESEARCHDISPLAY; j++ )
+	for ( ; j < MAX_RESEARCHDISPLAY; j++ ) {
 		Cvar_Set( va( "mn_researchitem%i", j ), "" );
+		Cvar_Set( va( "mn_researchassigned%i", j ), "");
+		Cvar_Set( va( "mn_researchavailable%i", j ), "");
+		Cvar_Set( va( "mn_researchmax%i", j ), "");
+	}	
 
 	// Select last selected item if possible or the very first one if not.
 	if ( researchListLength ) {
