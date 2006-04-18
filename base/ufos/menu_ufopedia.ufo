@@ -133,10 +133,11 @@ menu ufopedia
 	model mdl_top
 	{
 		md2	"*cvar mn_upmodel_top"
-		angles	"-20 -40 120"
+		angles	"0 0 120"
 		color	"0.5 0.5 0.5 1"
+		anim	"stand_still"
 		origin	"770 250 0"
-		pos	"570 220"
+		//pos	"570 220"
 		size	"240 240"
 		mousefx true
 		click { }
@@ -146,10 +147,11 @@ menu ufopedia
 	{
 		md2	"*cvar mn_upmodel_bottom"
 		origin	"770 570 0"
-		angles	"0 0 90"
+		angles	"0 0 120"
 		color	"0.5 0.5 0.5 1"
 		pos	"570 220"
 		size	"240 240"
+		scale	"6 6 6"
 		click { }
 	}
 

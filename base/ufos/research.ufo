@@ -227,7 +227,6 @@ tech weapon_rpg_ammo
 	researched	true
 }
 
-
 tech weapon_laserpistol
 {
 	type	weapon
@@ -307,7 +306,7 @@ tech weapon_knife
 tech tachyon
 {
 	type	tech
-	name	"Tachyon Control"
+	name	"_Tachyon Control"
 	up_chapter	tech
 
 	requires	nothing
@@ -397,7 +396,7 @@ tech weapon_tachyonsniper_ammo
 tech plasma
 {
 	type	tech
-	name	"Advanced Plasma Control"
+	name	"_Advanced Plasma Control"
 	up_chapter	tech
 	description	"_plasma_txt"
 
@@ -479,7 +478,7 @@ tech irgoggles
 	requires	initial
 	provides	irgoggles
 	time	1
-	researched	true
+	researched	false
 }
 
 tech medikit
@@ -497,7 +496,7 @@ tech medikit
 tech nano
 {
 	type	tech
-	name	"Nano Technology"
+	name	"_Nano Technology"
 	requires	initial
 	description	"_nano_txt"
 	time	1
@@ -532,7 +531,7 @@ tech nano_armor
 tech advanced_armor
 {
 	type	tech
-	name	"Advanced Armor Fabrics"
+	name	"_Advanced Armor Fabrics"
 	requires	"nano plasma"
 	time	1
 	researched	false
@@ -723,7 +722,7 @@ tech craft_ufo_small
 {
 	type	craft
 	description	"_ufo_small_txt"
-	up_chapter	crafts
+	up_chapter	ufos
 
 	// FIXME
 	requires	craft_ufo_tech
@@ -738,7 +737,7 @@ tech craft_ufo_big
 {
 	type	craft
 	description	"_ufo_big_txt"
-	up_chapter	crafts
+	up_chapter	ufos
 
 	// FIXME
 	requires	craft_ufo_tech
@@ -752,7 +751,7 @@ tech craft_ufo_big
 //tech craftupgrade_dropship
 //{
 //	type	tech
-//	name	"Plasmadrive for H-92 Transport"
+//	name	"_Plasmadrive for H-92 Transport"
 //	description	"_dropship_upgrade_txt"
 //	up_chapter	crafts
 
@@ -769,14 +768,14 @@ tech craft_ufo_big
 tech alien_ortnok
 {
 	type	tech
-	name	 "Ortnok"
+	name	 "_Ortnok"
 	description	"_ortnok_txt"
 	up_chapter	aliens
 
 	requires	initial
 	provides	""
 	time	0
-	researched	true
+	researched	false
 
 	mdl_top	models/aliens/ortnok/body01.md2
 }
@@ -784,14 +783,14 @@ tech alien_ortnok
 tech alien_ortnok_medium
 {
 	type	tech
-	name	 "Ortnok Warrior"
+	name	 "_Ortnok Warrior"
 	description	"_ortnok_medium_txt"
 	up_chapter	aliens
 
 	requires	initial
 	provides	""
 	time	0
-	researched	true
+	researched	false
 
 	mdl_top	models/aliens/ortnok_medium/body01.md2
 }
