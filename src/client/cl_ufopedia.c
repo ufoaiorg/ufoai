@@ -41,7 +41,7 @@ called from MN_UpDrawEntry when type of technology_t is RS_BUILDING
 =================*/
 void UP_BuildingDescription ( technology_t* t )
 {
-	building_t* b = B_GetBuilding ( t->id );
+	building_t* b = B_GetBuilding ( t->provides );
 	building_t* depends = NULL;
 
 	if ( !b )
@@ -73,7 +73,7 @@ called from MN_UpDrawEntry when type of technology_t is RS_CRAFT
 =================*/
 void UP_AircraftDescription ( technology_t* t )
 {
-	aircraft_t* air = CL_GetAircraft ( t->id );
+	aircraft_t* air = CL_GetAircraft ( t->provides );
 	if ( !air )
 	{
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find aircraft") );

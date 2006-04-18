@@ -238,7 +238,7 @@ B_GetBuilding
 Returns the building in the current base that has the unique name buildingName.
 pa
 IN
-	buildingName:	The unique name oif the building (building_t->name).
+	buildingName:	The unique name of the building (building_t->name).
 
 OUT
 	building_t	B_GetBuilding	if a building was found it is returned,
