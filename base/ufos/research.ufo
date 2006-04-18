@@ -59,7 +59,7 @@ up_chapters main
 
 // text flag is id for gettext
 
-tech weapon_assault
+tech rs_weapon_assault
 {
 	type	weapon
 	up_chapter	weapons
@@ -71,19 +71,19 @@ tech weapon_assault
 	researched	true
 }
 
-tech weapon_assault_ammo
+tech rs_weapon_assault_ammo
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_assault_ammo_txt"
 
-	requires	weapon_assault
+	requires	rs_weapon_assault
 	provides	assault_ammo
 	time	0
 	researched	true
 }
 
-tech weapon_sniper
+tech rs_weapon_sniper
 {
 	type	weapon
 	up_chapter	weapons
@@ -95,19 +95,19 @@ tech weapon_sniper
 	researched	true
 }
 
-tech weapon_sniper_ammo
+tech rs_weapon_sniper_ammo
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_sniper_ammo_txt"
 
-	requires	weapon_sniper
+	requires	rs_weapon_sniper
 	provides	sniper_ammo
 	time	0
 	researched	true
 }
 
-tech weapon_smg
+tech rs_weapon_smg
 {
 	type	weapon
 	up_chapter	weapons
@@ -119,19 +119,19 @@ tech weapon_smg
 	researched	true
 }
 
-tech weapon_smg_ammo
+tech rs_weapon_smg_ammo
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_smg_ammo_txt"
 
-	requires	weapon_smg
+	requires	rs_weapon_smg
 	provides	smg_ammo
 	time	0
 	researched	true
 }
 
-tech weapon_shotgun
+tech rs_weapon_shotgun
 {
 	type	weapon
 	up_chapter	weapons
@@ -143,19 +143,19 @@ tech weapon_shotgun
 	researched	true
 }
 
-tech weapon_shotgun_ammo
+tech rs_weapon_shotgun_ammo
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_shotgun_ammo_txt"
 
-	requires	weapon_shotgun
+	requires	rs_weapon_shotgun
 	provides	shotgun_ammo
 	time	0
 	researched	true
 }
 
-tech weapon_flamer
+tech rs_weapon_flamer
 {
 	type	weapon
 	up_chapter	weapons
@@ -167,19 +167,19 @@ tech weapon_flamer
 	researched	true
 }
 
-tech weapon_flamer_ammo
+tech rs_weapon_flamer_ammo
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_flamer_ammo_txt"
 
-	requires	weapon_flamer
+	requires	rs_weapon_flamer
 	provides	flamer_ammo
 	time	0
 	researched	true
 }
 
-tech weapon_pistol
+tech rs_weapon_pistol
 {
 	type	weapon
 	up_chapter	weapons
@@ -191,19 +191,19 @@ tech weapon_pistol
 	researched	true
 }
 
-tech weapon_pistol_ammo
+tech rs_weapon_pistol_ammo
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_pistol_ammo_txt"
 
-	requires	weapon_pistol
+	requires	rs_weapon_pistol
 	provides	pistol_ammo
 	time	0
 	researched	true
 }
 
-tech weapon_rpg
+tech rs_weapon_rpg
 {
 	type	weapon
 	up_chapter	weapons
@@ -215,19 +215,19 @@ tech weapon_rpg
 	researched	true
 }
 
-tech weapon_rpg_ammo
+tech rs_weapon_rpg_ammo
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_rpg_ammo_txt"
 
-	requires	weapon_rpg
+	requires	rs_weapon_rpg
 	provides	rpg_ammo
 	time	0
 	researched	true
 }
 
-tech weapon_laserpistol
+tech rs_weapon_laserpistol
 {
 	type	weapon
 	up_chapter	weapons
@@ -239,43 +239,43 @@ tech weapon_laserpistol
 	researched	true
 }
 
-tech weapon_laserpistol_ammo
+tech rs_weapon_laserpistol_ammo
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_laserpistol_ammo_txt"
 
-	requires	weapon_laserpistol
+	requires	rs_weapon_laserpistol
 	provides	laserpistol_ammo
 	time	0
 	researched	true
 }
 
-tech weapon_laserrifle
+tech rs_weapon_laserrifle
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_laserrifle_txt"
 
-	requires	weapon_laserpistol
+	requires	rs_weapon_laserpistol
 	provides	laserrifle
 	time	0
 	researched	true
 }
 
-tech weapon_laserrifle_ammo
+tech rs_weapon_laserrifle_ammo
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_laserrifle_txt"
 
-	requires	weapon_laserrifle
+	requires	rs_weapon_laserrifle
 	provides	laserrifle_ammo
 	time	0
 	researched	true
 }
 
-tech weapon_fraggren
+tech rs_weapon_fraggren
 {
 	type	weapon
 	up_chapter	weapons
@@ -287,7 +287,7 @@ tech weapon_fraggren
 	researched	true
 }
 
-tech weapon_knife
+tech rs_weapon_knife
 {
 	type	weapon
 	up_chapter	weapons
@@ -303,7 +303,7 @@ tech weapon_knife
 // Weapons unresearched
 //========================
 
-tech tachyon
+tech rs_tachyon
 {
 	type	tech
 	name	"_Tachyon Control"
@@ -320,80 +320,80 @@ tech tachyon
 //===============================
 // Looks like this pistol was planned but never implemented?
 //
-//tech weapon_tachyonpistol
+//tech rs_weapon_tachyonpistol
 //{
 //	type	weapon
 //	up_chapter	weapons
 //	description	"_tachyonpistol_txt"
 //
-//	requires	tachyon
+//	requires	rs_tachyon
 //	provides	tachyonpistol
 //	time	1
 //	researched	false
 //}
 
-//tech weapon_tachyonpistol_ammo
+//tech rs_weapon_tachyonpistol_ammo
 //{
 //	type	weapon
 //	up_chapter	weapons
 //	description	"_tachyonpistol_ammo_txt"
 //
-//	requires	weapon_tachyonpistol
+//	requires	rs_weapon_tachyonpistol
 //	provides	tachyonpistol_ammo
 //	time	0
 //	researched	false
 //}
 //===============================
 
-tech weapon_tachyonrifle
+tech rs_weapon_tachyonrifle
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_tachyonrifle_txt"
 
-	requires	tachyon
+	requires	rs_tachyon
 	provides	tachyonrifle
 	time	1
 	researched	false
 }
 
-tech weapon_tachyonrifle_ammo
+tech rs_weapon_tachyonrifle_ammo
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_tachyonrifle_ammo_txt"
 
-	requires	weapon_tachyonrifle
+	requires	rs_weapon_tachyonrifle
 	provides	tachyonrifle_ammo
 	time	0
 	researched	false
 }
 
-tech weapon_tachyonsniper
+tech rs_weapon_tachyonsniper
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_tachyonsniper_txt"
 
-	requires	weapon_tachyonrifle
+	requires	rs_weapon_tachyonrifle
 	provides	tachyonsniper
 	time	1
 	researched	false
 }
 
-tech weapon_tachyonsniper_ammo
+tech rs_weapon_tachyonsniper_ammo
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_tachyonsniper_ammo_txt"
 
-	requires	weapon_tachyonsniper
+	requires	rs_weapon_tachyonsniper
 	provides	tachyonsniper_ammo
 	time	0
 	researched	false
 }
 
-tech plasma
+tech rs_plasma
 {
 	type	tech
 	name	"_Advanced Plasma Control"
@@ -406,61 +406,61 @@ tech plasma
 	researched	false
 }
 
-//tech weapon_plasblade
+//tech rs_weapon_plasblade
 //{
 //	type	weapon
 //	up_chapter	weapons
 //	description	"_plasblade_txt"
 //
-//	requires	plasma
+//	requires	rs_plasma
 //	provides	plasblade
 //	time	1
 //	researched	false
 //}
 
-tech weapon_plaspistol
+tech rs_weapon_plaspistol
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_plaspistol_txt"
 
-	requires	plasma
+	requires	rs_plasma
 	provides	plaspistol
 	time	1
 	researched	false
 }
 
-tech weapon_plaspistol_ammo
+tech rs_weapon_plaspistol_ammo
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_plaspistol_ammo_txt"
 
-	requires	weapon_plaspistol
+	requires	rs_weapon_plaspistol
 	provides	plaspistol_ammo
 	time	0
 	researched	false
 }
 
-tech weapon_plasrifle
+tech rs_weapon_plasrifle
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_plasrifle_txt"
 
-	requires	weapon_plaspistol
+	requires	rs_weapon_plaspistol
 	provides	plasrifle
 	time	1
 	researched	false
 }
 
-tech weapon_plasrifle_ammo
+tech rs_weapon_plasrifle_ammo
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_plasrifle_ammo_txt"
 
-	requires	weapon_plasrifle
+	requires	rs_weapon_plasrifle
 	provides	plasrifle_ammo
 	time	0
 	researched	false
@@ -469,7 +469,7 @@ tech weapon_plasrifle_ammo
 //========================
 // Armor & Misc Equipment
 //========================
-tech irgoggles
+tech rs_irgoggles
 {
 	type	weapon
 	up_chapter	weapons
@@ -481,7 +481,7 @@ tech irgoggles
 	researched	false
 }
 
-tech medikit
+tech rs_medikit
 {
 	type	weapon
 	up_chapter	weapons
@@ -493,7 +493,7 @@ tech medikit
 	researched	false
 }
 
-tech nano
+tech rs_nano
 {
 	type	tech
 	name	"_Nano Technology"
@@ -503,7 +503,7 @@ tech nano
 	researched	false
 }
 
-tech kevlar_armor
+tech rs_kevlar_armor
 {
 	type	armor
 	up_chapter	weapons
@@ -516,31 +516,31 @@ tech kevlar_armor
 	researched	true
 }
 
-tech nano_armor
+tech rs_nano_armor
 {
 	type	armor
 	description	"_nano_armor_txt"
 	up_chapter	weapons
 
-	requires	"nano"
+	requires	rs_nano
 	provides	medium
 	time	1
 	researched	false
 }
 
-tech advanced_armor
+tech rs_advanced_armor
 {
 	type	tech
 	name	"_Advanced Armor Fabrics"
-	requires	"nano plasma"
+	requires	"rs_nano rs_plasma"
 	time	1
 	researched	false
 }
 
-tech heavy_nano_armor
+tech rs_heavy_nano_armor
 {
 	type	armor
-	requires	advanced_armor
+	requires	rs_advanced_armor
 	provides	heavy
 	time	0
 	researched	false
@@ -549,7 +549,7 @@ tech heavy_nano_armor
 //========================
 // Buildings
 //========================
-tech building_entrance
+tech rs_building_entrance
 {
 	type	building
 	description	"_b_entrance_txt"
@@ -561,7 +561,7 @@ tech building_entrance
 	researched	true
 }
 
-tech building_commando
+tech rs_building_commando
 {
 	type	building
 	description	"_b_commando_txt"
@@ -573,7 +573,7 @@ tech building_commando
 	researched	true
 }
 
-tech building_powerplant
+tech rs_building_powerplant
 {
 	type	building
 	description	"_b_powerplant_txt"
@@ -585,7 +585,7 @@ tech building_powerplant
 	researched	true
 }
 
-tech building_storage
+tech rs_building_storage
 {
 	type	building
 	description	"_b_storage_txt"
@@ -597,7 +597,7 @@ tech building_storage
 	researched	true
 }
 
-tech building_hangar
+tech rs_building_hangar
 {
 	type	building
 	description	"_b_hangar_txt"
@@ -609,7 +609,7 @@ tech building_hangar
 	researched	true
 }
 
-tech building_intercept
+tech rs_building_intercept
 {
 	type	building
 	description	"_b_intercept_txt"
@@ -621,7 +621,7 @@ tech building_intercept
 	researched	true
 }
 
-tech building_quarters
+tech rs_building_quarters
 {
 	type	building
 	description	"_b_quarters_txt"
@@ -633,7 +633,7 @@ tech building_quarters
 	researched	true
 }
 
-tech building_lab
+tech rs_building_lab
 {
 	type	building
 	description	"_b_lab_txt"
@@ -645,7 +645,7 @@ tech building_lab
 	researched	true
 }
 
-tech building_teamroom
+tech rs_building_teamroom
 {
 	type	building
 	description	"_b_teamroom_txt"
@@ -657,7 +657,7 @@ tech building_teamroom
 	researched	true
 }
 
-tech building_radar
+tech rs_building_radar
 {
 	type	building
 	description	"_b_radar_txt"
@@ -672,7 +672,7 @@ tech building_radar
 //========================
 // Crafts
 //========================
-tech craft_dropship
+tech rs_craft_dropship
 {
 	type	craft
 	description	"_dropship_txt"
@@ -686,7 +686,7 @@ tech craft_dropship
 	mdl_top		dropship
 }
 
-tech craft_interceptor
+tech rs_craft_interceptor
 {
 	type	craft
 	description	"_interceptor_txt"
@@ -702,7 +702,7 @@ tech craft_interceptor
 
 // general ufo technology
 // FIXME: this should not be researched - but found via intercepter missions
-tech craft_ufo_tech
+tech rs_craft_ufo_tech
 {
 	type	tech
 	name	"_General UFO technology"
@@ -718,14 +718,15 @@ tech craft_ufo_tech
 	//image_top  xxxxx
 }
 
-tech craft_ufo_small
+tech rs_craft_ufo_small
 {
 	type	tech
+	name	"_Small alien craft"
 	description	"_ufo_small_txt"
 	up_chapter	ufos
 
 	// FIXME
-	requires	craft_ufo_tech
+	requires	rs_craft_ufo_tech
 	provides	craft_ufo_small
 	time	100
 	researched	false
@@ -733,14 +734,15 @@ tech craft_ufo_small
 	mdl_top		ufo1
 }
 
-tech craft_ufo_big
+tech rs_craft_ufo_big
 {
 	type	tech
+	name	"_Big alien craft"
 	description	"_ufo_big_txt"
 	up_chapter	ufos
 
 	// FIXME
-	requires	craft_ufo_tech
+	requires	rs_craft_ufo_tech
 	provides	craft_ufo_big
 	time	100
 	researched	false
@@ -748,14 +750,14 @@ tech craft_ufo_big
 	mdl_top		ufobig
 }
 
-//tech craftupgrade_dropship
+//tech rs_craftupgrade_dropship
 //{
 //	type	tech
 //	name	"_Plasmadrive for H-92 Transport"
 //	description	"_dropship_upgrade_txt"
 //	up_chapter	crafts
 
-//	requires	"craft_dropship plasma"
+//	requires	"rs_craft_dropship rs_plasma"
 //	provides	dropship_plasmadrive
 //	time	0
 //	researched	true
@@ -765,7 +767,7 @@ tech craft_ufo_big
 // Aliens
 //========================
 
-tech alien_ortnok
+tech rs_alien_ortnok
 {
 	type	tech
 	name	 "_Ortnok"
@@ -780,7 +782,7 @@ tech alien_ortnok
 	mdl_top	models/aliens/ortnok/body01.md2
 }
 
-tech alien_ortnok_medium
+tech rs_alien_ortnok_medium
 {
 	type	tech
 	name	 "_Ortnok Warrior"
