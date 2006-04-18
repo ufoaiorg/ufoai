@@ -4,14 +4,14 @@
 
 //	=== Description ==============================
 //
-//	tech xxx
+//	tech rs_xxx
 //		The _unique_ name of the research item in the tree is xxx
 //	type
 //		Just says where to look for more information.
 //		tech
-//			-> items have all the information in here
-//		everything else
-//			-> see the correct .ufo file. Mind you that "building" and "craft" are currently unused -> "tech"
+//			Items have all the information in here.Especially the name and the model/image.
+//		everything else: weapon, craft, building, etc...
+//			See the correct .ufo file.
 //	name
 //		self-explaining i hope :) Only needed when type=tech
 //	description
@@ -32,6 +32,9 @@
 //	researched
 //		false or 0 - If you need to research this tech.
 //		true or 1 - If you can _produce_ it from the beginning.
+//	needscollected
+//		false or 0 - You only need to have the required technologies researched to research this item.
+//		true or 1 - To be able to research this item you need to have all required technologies researched and at least one item collected.
 //	time
 //		time the research needs.
 //		If time is 0 the item can be produced at the same time all the "required" items are finished.
@@ -355,6 +358,7 @@ tech rs_weapon_tachyonrifle
 	provides	tachyonrifle
 	time	1
 	researched	false
+	needscollected	true
 }
 
 tech rs_weapon_tachyonrifle_ammo
@@ -375,10 +379,11 @@ tech rs_weapon_tachyonsniper
 	up_chapter	weapons
 	description	"_tachyonsniper_txt"
 
-	requires	rs_weapon_tachyonrifle
+	requires	rs_tachyon
 	provides	tachyonsniper
 	time	1
 	researched	false
+	needscollected	true
 }
 
 tech rs_weapon_tachyonsniper_ammo
@@ -428,6 +433,7 @@ tech rs_weapon_plaspistol
 	provides	plaspistol
 	time	1
 	researched	false
+	needscollected	true
 }
 
 tech rs_weapon_plaspistol_ammo
@@ -448,10 +454,11 @@ tech rs_weapon_plasrifle
 	up_chapter	weapons
 	description	"_plasrifle_txt"
 
-	requires	rs_weapon_plaspistol
+	requires	rs_plasma
 	provides	plasrifle
 	time	1
 	researched	false
+	needscollected	true
 }
 
 tech rs_weapon_plasrifle_ammo
@@ -774,7 +781,7 @@ tech rs_alien_ortnok
 	description	"_ortnok_txt"
 	up_chapter	aliens
 
-	requires	initial
+	requires	nothing
 	provides	""
 	time	0
 	researched	false
@@ -789,7 +796,7 @@ tech rs_alien_ortnok_medium
 	description	"_ortnok_medium_txt"
 	up_chapter	aliens
 
-	requires	initial
+	requires	nothing
 	provides	""
 	time	0
 	researched	false

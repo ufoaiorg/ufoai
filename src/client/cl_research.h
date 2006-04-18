@@ -76,6 +76,7 @@ typedef struct technology_s
 	char	mdl_bottom[MAX_QPATH];
 
 	byte	statusCollected;				// Did we loot this item?
+	byte	needsCollected;				// Is a collected item neccessary to research this item?
 	byte	statusResearchable;			// Is this item researchable?
 
 	// Pedia info

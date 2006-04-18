@@ -164,8 +164,11 @@ void RS_MarkResearchable( void )
 
 					}
 				}
-				if ( required_are_researched ) {
+
+				if ( required_are_researched											// all required items are researched
+				&& ( ( t->needsCollected && t->statusCollected ) || !t->needsCollected ) ){	// AND ( all needed collected OR no collected needed )
 					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:required.\n", t->id );
+					
 					t->statusResearchable = true;
 				}
 
@@ -471,28 +474,31 @@ void RS_AssignScientist2( int num )
 		menuText[TEXT_STANDARD] = NULL;
 		return;
 	}
-
+	
 	tech = researchList[num];
-	// check if there is a free lab available
-	if ( ! tech->lab ) {
-		building = MN_GetUnusedLab( baseCurrent->id ); // get a free lab from the currently active base
-		if ( building ) {
-			// assign the lab to the tech:
-			tech->lab = building;
-		} else {
-			MN_Popup( _("Notice"), _("There is no free lab available.\\You need to build one or free another\\in order to assign scientists to research this technology.\n") );
-			return;
-		}
-	}
-	// assign a scientists to the lab
-	if ( MN_AssignEmployee ( tech->lab, EMPL_SCIENTIST ) ) {
-		tech->statusResearch = RS_RUNNING;
-	} else {
-		Com_Printf( _("Can't add scientist from the lab.\n") );
-	}
 
-	RS_ResearchDisplayInfo();
-	RS_UpdateData();
+	if ( tech->statusResearchable ) {
+		// check if there is a free lab available
+		if ( ! tech->lab ) {
+			building = MN_GetUnusedLab( baseCurrent->id ); // get a free lab from the currently active base
+			if ( building ) {
+				// assign the lab to the tech:
+				tech->lab = building;
+			} else {
+				MN_Popup( _("Notice"), _("There is no free lab available.\\You need to build one or free another\\in order to assign scientists to research this technology.\n") );
+				return;
+			}
+		}
+		// assign a scientists to the lab
+		if ( MN_AssignEmployee ( tech->lab, EMPL_SCIENTIST ) ) {
+			tech->statusResearch = RS_RUNNING;
+		} else {
+			Com_Printf( _("Can't add scientist from the lab.\n") );
+		}
+
+		RS_ResearchDisplayInfo();
+		RS_UpdateData();
+	}
 }
 
 void RS_AssignScientist( void )
@@ -896,6 +902,7 @@ void CL_CheckResearchStatus ( void )
 	}
 
 	if ( newResearch ) {
+		CL_GameTimeStop();
 		CL_ResearchType();
 	}
 }
@@ -1009,10 +1016,11 @@ to the appropriate values in the corresponding struct
 ======================*/
 value_t valid_tech_vars[] =
 {
-	{ "name",		V_STRING,	TECHFS( name ) },		//name of technology
+	{ "name",		V_STRING,	TECHFS( name ) },			//name of technology
 	{ "description",	V_STRING,	TECHFS( description ) },
-	{ "provides",		V_STRING,	TECHFS( provides ) },	//what does this research provide
-	{ "time",			V_FLOAT,		TECHFS( time ) },		//how long will this research last
+	{ "provides",		V_STRING,	TECHFS( provides ) },		//what does this research provide
+	{ "needscollected",	V_BOOL,		TECHFS( needsCollected ) },	// to be able to research this tech zou need all "required" and at least one collected "provides" item.
+	{ "time",			V_FLOAT,		TECHFS( time ) },			//how long will this research last
 	{ "image_top",		V_STRING,	TECHFS( image_top ) },
 	{ "image_bottom",	V_STRING,	TECHFS( image_bottom ) },
 	{ "mdl_top",		V_STRING,	TECHFS( mdl_top ) },
