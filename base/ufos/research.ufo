@@ -30,14 +30,15 @@
 //		The given names are _not_ "tech" items.
 //		This items can be produced once the "tech" item has been finished.
 //	researched
-//		false or 0 - If you need to research this tech.
-//		true or 1 - If you can _produce_ it from the beginning.
+//		false or 0 - [Default] You need to research this tech.
+//		true or 1 - You can _produce_ it from the beginning.
 //	needscollected
-//		false or 0 - You only need to have the required technologies researched to research this item.
+//		false or 0 - [Default] You only need to have the required technologies researched to research this item.
 //		true or 1 - To be able to research this item you need to have all required technologies researched and at least one item collected.
 //	time
 //		time the research needs.
 //		If time is 0 the item can be produced at the same time all the "required" items are finished.
+//		[Default] 0
 //	==========================================
 
 // TODO: the current values are test-values for faster debugging. The code currently substracts "1" each day, so a research with "time 1" is finished in one day (though the message will pop up the next day, because it isn't checked directly after subtracting)
@@ -230,16 +231,29 @@ tech rs_weapon_rpg_ammo
 	researched	true
 }
 
+tech rs_laser
+{
+	type	tech
+	name "_Advanced Laser Technology"
+	up_chapter	tech
+	description	"_laser_txt"
+
+	requires	initial
+	provides	laserpistol
+	time	0
+	researched	false
+}
+
 tech rs_weapon_laserpistol
 {
 	type	weapon
 	up_chapter	weapons
 	description	"_laserpistol_txt"
 
-	requires	initial
+	requires	rs_laser
 	provides	laserpistol
 	time	0
-	researched	true
+	researched	false
 }
 
 tech rs_weapon_laserpistol_ammo
