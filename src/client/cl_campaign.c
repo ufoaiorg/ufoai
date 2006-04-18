@@ -2134,7 +2134,7 @@ void CL_BuySelectCmd( void )
 	}
 
 	num = atoi( Cmd_Argv( 1 ) );
-	if ( num > buyListLength )
+	if ( num >= buyListLength )
 		return;
 
 	Cbuf_AddText( va( "buyselect%i\n", num ) );
@@ -2225,12 +2225,13 @@ void CL_Buy( void )
 	}
 
 	num = atoi( Cmd_Argv( 1 ) );
-	if ( num > buyListLength )
+	if ( num >= buyListLength )
 		return;
 
 	item = buyList[num];
 	Cbuf_AddText( va( "buyselect%i\n", num ) );
 	CL_ItemDescription( item );
+	Com_DPrintf("item %i\n", item );
 
 	if ( ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item] )
 	{
@@ -2259,7 +2260,7 @@ void CL_Sell( void )
 	}
 
 	num = atoi( Cmd_Argv( 1 ) );
-	if ( num > buyListLength )
+	if ( num >= buyListLength )
 		return;
 
 	item = buyList[num];
