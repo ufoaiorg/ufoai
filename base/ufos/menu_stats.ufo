@@ -67,6 +67,6 @@ menu stats
 
 	func init
 	{
-		cmd "stats_update";
+		cmd stats_update;
 	}
 }

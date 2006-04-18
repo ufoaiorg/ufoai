@@ -710,17 +710,17 @@ tech craft_ufo_tech
 	up_chapter	tech
 
 	// FIXME
-	requires	found_ufo
-	provides	""
+	requires	nothing
+	provides	found_ufo
 	time	100
 	researched	false
 
-	mdl_top	""
+	//image_top  xxxxx
 }
 
 tech craft_ufo_small
 {
-	type	craft
+	type	tech
 	description	"_ufo_small_txt"
 	up_chapter	ufos
 
@@ -735,7 +735,7 @@ tech craft_ufo_small
 
 tech craft_ufo_big
 {
-	type	craft
+	type	tech
 	description	"_ufo_big_txt"
 	up_chapter	ufos
 
