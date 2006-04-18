@@ -243,9 +243,7 @@ aircraft dropship
 	speed	10.0
 	name	"Dropship"
 	type	transporter
-	model	"models/objects/dropship.md2"
-	model_top	"models/objects/dropship_top.md2"
-	model_glass	"models/objects/dropship_glass.md2"
+	model	"dropship"
 	size	8
 	fuel	100
 	fuelsize	100
@@ -257,9 +255,7 @@ aircraft interceptor
 	speed	20.0
 	name	"Interceptor"
 	type	interceptor
-	model	"models/aircrafts/fighter1_main.md2"
-	model_top	"models/aircrafts/fighter1_engines.md2"
-	model_glass	"models/aircrafts/fighter1_glass.md2"
+	model	"interceptor"
 	fuel	60
 	fuelsize	60
 	size	1
@@ -274,10 +270,7 @@ aircraft ufo
 	speed	18.0
 	name	"UFO"
 	type	ufo
-	model	"models/objects/alienship1_engines.md2"
-	model_top	"models/objects/alienship1_upper.md2"
-	model_glass	"models/objects/alienship1_hull.md2"
-	model_wings	"models/objects/alienship1_wings.md2"
+	model	"ufo1"
 	size	8
 	fuel	100
 	fuelsize	100
