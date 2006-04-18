@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-04-18 11:22+0200\n"
-"PO-Revision-Date: 2006-04-18 12:10+0100\n"
+"PO-Revision-Date: 2006-04-18 19:34+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@gmx.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -170,7 +170,7 @@ msgstr "Optionen"
 
 #: ../base/ufos/menu_geoscape.ufo:252
 msgid "Open up messages"
-msgstr ""
+msgstr "Zeige weitere Nachrichten"
 
 #: ../base/ufos/menu_geoscape.ufo:322
 msgid "Aircraft reached desired location - what to do?"
@@ -485,7 +485,7 @@ msgstr ""
 
 #: ../base/ufos/menu_team.ufo:517
 msgid "Edit name of the soldier"
-msgstr ""
+msgstr "Ändere den Namen dieses Soldatens"
 
 #: ../base/ufos/menu_team.ufo:550
 msgid "Power:"
@@ -505,7 +505,7 @@ msgstr "Verstand:"
 
 #: ../base/ufos/menu_team.ufo:570
 msgid "Close Combat:"
-msgstr ""
+msgstr "Nahkampf"
 
 #: ../base/ufos/menu_team.ufo:575
 msgid "Heavy Weapons:"
@@ -532,23 +532,23 @@ msgstr "Granaten:"
 #: ../base/ufos/menu_team.ufo:810
 #: ../base/ufos/menu_team.ufo:819
 msgid "Equip this soldier"
-msgstr ""
+msgstr "Rüste diesen Soldaten aus"
 
 #: ../base/ufos/menu_team.ufo:902
 msgid "Show only primary weapons in store"
-msgstr ""
+msgstr "Zeige nur Primärwaffen"
 
 #: ../base/ufos/menu_team.ufo:913
 msgid "Show only secondary weapons in store"
-msgstr ""
+msgstr "Zeige nur Sekundärwaffen"
 
 #: ../base/ufos/menu_team.ufo:924
 msgid "Show other equipment in store"
-msgstr ""
+msgstr "Zeige nur Ausrüstungsgegenstände"
 
 #: ../base/ufos/menu_team.ufo:935
 msgid "Show only armor in store"
-msgstr ""
+msgstr "Zeige nur Rüstungen"
 
 #: ../base/ufos/menu_tutorials.ufo:46
 msgid "Tutorials"
@@ -1399,7 +1399,7 @@ msgstr ""
 #: client/cl_actor.c:1168
 #, c-format
 msgid "Team %i ended round"
-msgstr ""
+msgstr "Team %i hat seine Runde beendet"
 
 # # in-game (hud)
 #: client/cl_actor.c:1170
@@ -1423,12 +1423,12 @@ msgstr "Nicht plaziert"
 #: client/cl_basemanagement.c:160
 #, c-format
 msgid "Already %i in base"
-msgstr ""
+msgstr "Bereits %i-mal in der Basis"
 
 #: client/cl_basemanagement.c:162
 #, c-format
 msgid "Constructing: %i day(s)"
-msgstr ""
+msgstr "Konstruktion: %i Tag(e)"
 
 #: client/cl_basemanagement.c:164
 #: client/cl_basemanagement.c:2443
@@ -1513,7 +1513,7 @@ msgstr ""
 
 #: client/cl_basemanagement.c:435
 msgid "Invalid coordinates\n"
-msgstr ""
+msgstr "Ungültige Koordinaten\n"
 
 #: client/cl_basemanagement.c:451
 msgid "Usage: set_building <x> <y>\n"
@@ -1531,7 +1531,7 @@ msgstr ""
 #: client/cl_basemanagement.c:646
 #, c-format
 msgid "Running Costs:\t%1.2f\n"
-msgstr ""
+msgstr "Laufende Kosten:\t%1.2f\n"
 
 #: client/cl_basemanagement.c:647
 #, c-format
@@ -1541,12 +1541,12 @@ msgstr ""
 #: client/cl_basemanagement.c:648
 #, c-format
 msgid "Workers:\t%i\n"
-msgstr ""
+msgstr "Arbeiter:\t%i\n"
 
 #: client/cl_basemanagement.c:649
 #, c-format
 msgid "Energy:\t%1.0f\n"
-msgstr ""
+msgstr "Erergie:\t%1.0f\n"
 
 #: client/cl_basemanagement.c:655
 #, c-format
@@ -1615,7 +1615,7 @@ msgstr ""
 
 #: client/cl_basemanagement.c:1340
 msgid "No employee available in this base.\n"
-msgstr ""
+msgstr "Keine Arbeiter in dieser Basis vorhanden\n"
 
 #: client/cl_basemanagement.c:1343
 #, c-format
@@ -2062,11 +2062,11 @@ msgstr ""
 
 #: client/cl_campaign.c:2095
 msgid "You've won the battle"
-msgstr ""
+msgstr "Du hast die Schlacht gewonnen"
 
 #: client/cl_campaign.c:2097
 msgid "You've lost the battle"
-msgstr ""
+msgstr "Du hast die Schlacht verloren"
 
 #: client/cl_campaign.c:2132
 msgid "Usage: buy_select <num>\n"
@@ -2902,16 +2902,16 @@ msgstr "Freie Laboratorien in dieser Basis: %i"
 
 #: client/cl_research.c:366
 msgid "Not researched in any base."
-msgstr ""
+msgstr "In keiner Basis erforscht"
 
 #: client/cl_research.c:371
 #, c-format
 msgid "Researched in %s"
-msgstr ""
+msgstr "Erforscht in %s"
 
 #: client/cl_research.c:373
 msgid "Researched in this base."
-msgstr ""
+msgstr "Erforscht in dieser Basis"
 
 #: client/cl_research.c:408
 msgid "Dependencies: "
@@ -2952,7 +2952,7 @@ msgstr ""
 #: client/cl_research.c:700
 #, c-format
 msgid "%i max.\n"
-msgstr ""
+msgstr "%i max.\n"
 
 #: client/cl_research.c:775
 msgid "Build a laboratory first"
@@ -3773,7 +3773,7 @@ msgstr "%s kontrolliert nun Team %i\n"
 
 #: game/g_client.c:2458
 msgid "Banned."
-msgstr ""
+msgstr "Gebannt."
 
 #: game/g_client.c:2470
 #, c-format
