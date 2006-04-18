@@ -293,15 +293,6 @@ void RS_InitTree( void )
 					found = true;
 					if ( !*t->name )
 						Com_sprintf( t->name, MAX_VAR, ac->name );
-					// TODO: which model(s) are needed?
-					// NOTE: All from the aircraft definition (and maybe one more)
-					if ( !*t->mdl_top ) {			// DEBUG testing
-						Com_sprintf( t->mdl_top, MAX_VAR, ac->model_top );
-						Com_Printf( _("RS_InitTree: aircraft model \"%s\" \n"),ac->model_top );
-					}
-					//if ( !*t->mdl_bottom )			// DEBUG testing
-					//	Com_sprintf( t->mdl_bottom, MAX_VAR, ac->model );
-
 					break;	// Should return to CASE RS_xxx.
 				}
 			}

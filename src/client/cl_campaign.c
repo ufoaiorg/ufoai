@@ -328,7 +328,7 @@ void CL_StartAircraft ( void )
 
 	if ( !baseCurrent->aircraftCurrent )
 	{
-		Com_DPrintf(("Error - there is no aircraftCurrent in this base\n"));
+		Com_DPrintf("Error - there is no aircraftCurrent in this base\n");
 		return;
 	}
 
@@ -338,6 +338,7 @@ void CL_StartAircraft ( void )
 		air->pos[0] = baseCurrent->pos[0]+2;
 		air->pos[1] = baseCurrent->pos[1]+2;
 	}
+	MN_AddNewMessage(_("Notice"), _("Aircraft started"), false, MSG_STANDARD, NULL  );
 	air->status = AIR_IDLE;
 }
 
@@ -478,13 +479,11 @@ let the current aircraft return to base
 call this from baseview via "aircraft_return"
 ======================
 */
-void CL_AircraftReturnToBase ( void )
+void CL_AircraftReturnToBase ( aircraft_t* air )
 {
-	aircraft_t*	air;
 	base_t*	base;
-	if ( baseCurrent && baseCurrent->aircraftCurrent )
+	if ( air )
 	{
-		air = baseCurrent->aircraftCurrent;
 		if ( air->status != AIR_HOME )
 		{
 			base = (base_t*)air->homebase;
@@ -492,8 +491,25 @@ void CL_AircraftReturnToBase ( void )
 			air->status = AIR_RETURNING;
 			air->time = 0;
 			air->point = 0;
-			CL_AircraftSelect();
 		}
+	}
+}
+
+/*
+======================
+CL_AircraftReturnToBase_f
+
+script function for CL_AircraftReturnToBase
+======================
+*/
+void CL_AircraftReturnToBase_f ( void )
+{
+	aircraft_t*	air;
+	if ( baseCurrent && baseCurrent->aircraftCurrent )
+	{
+		air = baseCurrent->aircraftCurrent;
+		CL_AircraftReturnToBase( air );
+		CL_AircraftSelect();
 	}
 }
 
@@ -1080,35 +1096,48 @@ void CL_CampaignRunAircraft( int dt )
 			continue;
 
 		for ( i = 0, air = (aircraft_t*)base->aircraft; i < base->numAircraftInBase; i++, air++ )
-			if ( air->homebase && air->status > AIR_IDLE )
+			if ( air->homebase )
 			{
-				// calc distance
-				air->time += dt;
-				dist = air->speed * air->time / 3600;
-
-				// check for end point
-				if ( dist >= air->route.dist * (air->route.n-1) )
+				if ( air->status > AIR_IDLE )
 				{
-					float *end;
-					end = air->route.p[air->route.n-1];
-					air->pos[0] = end[0];
-					air->pos[1] = end[1];
-					if ( air->status == AIR_RETURNING )
-						air->status = AIR_HOME;
-					else
-						air->status = AIR_IDLE;
-					CL_CheckAircraft( air );
-					continue;
+					// calc distance
+					air->time += dt;
+					air->fuel -= dt;
+					dist = air->speed * air->time / 3600;
+
+					// check for end point
+					if ( dist >= air->route.dist * (air->route.n-1) )
+					{
+						float *end;
+						end = air->route.p[air->route.n-1];
+						air->pos[0] = end[0];
+						air->pos[1] = end[1];
+						if ( air->status == AIR_RETURNING )
+							air->status = AIR_HOME;
+						else
+							air->status = AIR_IDLE;
+						CL_CheckAircraft( air );
+						continue;
+					}
+					else if ( air->fuel <= 0 )
+					{
+						air->status = AIR_RETURNING;
+					}
+
+					// calc new position
+					frac = dist / air->route.dist;
+					p = (int)frac;
+					frac -= p;
+					air->point = p;
+
+					air->pos[0] = (1-frac) * air->route.p[p][0] + frac * air->route.p[p+1][0];
+					air->pos[1] = (1-frac) * air->route.p[p][1] + frac * air->route.p[p+1][1];
 				}
-
-				// calc new position
-				frac = dist / air->route.dist;
-				p = (int)frac;
-				frac -= p;
-				air->point = p;
-
-				air->pos[0] = (1-frac) * air->route.p[p][0] + frac * air->route.p[p+1][0];
-				air->pos[1] = (1-frac) * air->route.p[p][1] + frac * air->route.p[p+1][1];
+				// somewhere on geoscape
+				else if ( air->status == AIR_IDLE )
+				{
+					air->fuel -= dt;
+				}
 
 				CL_CheckAircraft( air );
 			}
@@ -1172,6 +1201,7 @@ void CL_CampaignRun( void )
 		// calculate new date
 		int dt, day, month;
 		dt = floor( ccs.timer );
+		Com_Printf("dt: %i\n", dt );
 		ccs.date.sec += dt;
 		ccs.timer -= dt;
 		while ( ccs.date.sec > 3600*24 )
@@ -2412,7 +2442,7 @@ void CL_MapActionReset( void )
 		if ( ! selMis )
 		{
 			baseCurrent->aircraftCurrent = interceptAircraft;
-			CL_AircraftReturnToBase();
+			CL_AircraftReturnToBase( interceptAircraft );
 		}
 		interceptAircraft = NULL; // reset selected aircraft
 	}
@@ -2453,7 +2483,7 @@ void CL_ResetCampaign( void )
 	Cmd_AddCommand( "mn_next_aircraft", MN_NextAircraft_f );
 	Cmd_AddCommand( "mn_prev_aircraft", MN_PrevAircraft_f );
 	Cmd_AddCommand( "newaircraft", CL_NewAircraft_f );
-	Cmd_AddCommand( "aircraft_return", CL_AircraftReturnToBase );
+	Cmd_AddCommand( "aircraft_return", CL_AircraftReturnToBase_f );
 	Cmd_AddCommand( "aircraft_list", CL_BuildingAircraftList_f );
 
 	re.LoadTGA( "pics/menu/map_mask.tga", &maskPic, &maskWidth, &maskHeight );

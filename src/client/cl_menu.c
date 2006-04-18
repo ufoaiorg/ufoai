@@ -1683,7 +1683,6 @@ menuModel_t* MN_GetMenuModel ( char* menuModel )
 		if ( ! Q_strncmp( m->id, menuModel, MAX_VAR ) )
 			return m;
 	}
-	Com_Printf("MN_GetMenuModel: Could not find menu model %s (in %i definitions)\n", menuModel, numMenuModels );
 	return NULL;
 }
 
@@ -3067,6 +3066,8 @@ void MN_ParseMenuModel( char *name, char **text )
 					token = COM_EParse( text, errhead, name );
 					if ( !*text ) return;
 					menuModel->next = MN_GetMenuModel( token );
+					if ( ! menuModel->next )
+						Com_Printf("Could not find menumodel %s", token );
 					Q_strncpyz( menuModel->need, token, MAX_QPATH );
 				} else {
 					token = COM_EParse( text, errhead, name );

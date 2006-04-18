@@ -1455,10 +1455,11 @@ int mapInstalledIndex = 0;
 FS_GetMaps
 ================
 */
+#define MAX_MAPNAME_LENGTH 256
 void FS_GetMaps ( void )
 {
 	char	name[MAX_OSPATH];
-	int	len;
+	int	len, status;
 	char	*found;
 	char	*path = NULL;
 	char	*baseMapName = NULL;
@@ -1476,15 +1477,21 @@ void FS_GetMaps ( void )
 		{
 			baseMapName = COM_SkipPath ( found );
 			COM_StripExtension ( baseMapName, found );
-			//searched a specific map?
-			maps[anzInstalledMaps] = (char *) malloc ( 256 * sizeof(char) );
-			if ( maps[anzInstalledMaps] == NULL )
+			status = CheckBSPFile( found );
+			if ( ! status )
 			{
-				Com_Printf(_("Could not allocate memory in MN_GetMaps\n"));
-				return;
+				//searched a specific map?
+				maps[anzInstalledMaps] = (char *) malloc ( MAX_MAPNAME_LENGTH * sizeof(char) );
+				if ( maps[anzInstalledMaps] == NULL )
+				{
+					Com_Printf(_("Could not allocate memory in MN_GetMaps\n"));
+					return;
+				}
+				Q_strncpyz( maps[anzInstalledMaps], found, MAX_MAPNAME_LENGTH );
+				anzInstalledMaps++;
 			}
-			Q_strncpyz( maps[anzInstalledMaps], found, sizeof(maps[anzInstalledMaps] ) );
-			anzInstalledMaps++;
+			else
+				Com_Printf("invalid mapstatus: %i (%s)\n", status, found );
 			found = Sys_FindNext( 0, 0 );
 		}
 	}

@@ -428,9 +428,9 @@ void G_SpawnAIPlayer( player_t *player, int numSpawn )
 		equipDef_t	*ed;
 		char name[MAX_VAR];
 
-		strcpy( name, gi.cvar_string( "ai_equipment" ) );
+		Q_strncpyz( name, gi.cvar_string( "ai_equipment" ), MAX_VAR );
 		for ( i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++ )
-			if ( !strcmp( name, ed->name ) )
+			if ( !Q_strncmp( name, ed->name, MAX_VAR ) )
 				break;
 		if ( i == gi.csi->numEDs ) ed = &gi.csi->eds[0];
 		else ed = &gi.csi->eds[i];
@@ -452,7 +452,7 @@ void G_SpawnAIPlayer( player_t *player, int numSpawn )
 			level.num_spawned[team]++;
 			level.num_alive[team]++;
 			ent->chr.skin = gi.GetModelAndName( gi.cvar_string( "ai_alien" ), ent->chr.path, ent->chr.body, ent->chr.head, ent->chr.name );
-			strcpy( ent->chr.name, _("Alien") );
+			Q_strncpyz( ent->chr.name, _("Alien"), MAX_VAR );
 			ent->type = ET_ACTOR;
 			ent->pnum = player->num;
 			gi.linkentity( ent );

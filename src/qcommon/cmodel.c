@@ -302,6 +302,47 @@ void CMod_LoadNodes (lump_t *l)
 }
 
 /*
+=============
+CheckBSPFile
+
+checks BSP-file
+return 0 if valid
+1 could not open file
+2 if magic number is bad
+3 if version of bsp-file is bad
+=============
+*/
+int CheckBSPFile (char *filename)
+{
+	int	i;
+	int	header[2];
+	FILE	*file = NULL;
+	char	name[MAX_QPATH];
+
+	// load the file
+	Com_sprintf( name, MAX_QPATH, "maps/%s.bsp", filename );
+
+	FS_FOpenFile( name, &file );
+	if ( ! file )
+		return 1;
+
+	FS_Read( header, sizeof(header), file );
+
+	FS_FCloseFile( file );
+
+	for (i=0 ; i<2 ; i++)
+		header[i] = LittleLong( header[i] );
+
+	if (header[0] != IDBSPHEADER)
+		return 2;
+	if (header[1] != BSPVERSION)
+		return 3;
+
+	// valid BSP-File
+	return 0;
+}
+
+/*
 =================
 CMod_LoadBrushes
 
@@ -1015,7 +1056,7 @@ unsigned CM_AddMapTile( char *name, int sX, int sY, int sZ )
 	static unsigned	last_checksum;
 
 	// load the file
-	sprintf( filename, "maps/%s.bsp", name );
+	Com_sprintf( filename, MAX_QPATH, "maps/%s.bsp", name );
 	length = FS_LoadFile( filename, (void **)&buf );
 	if (!buf)
 		Com_Error (ERR_DROP, "Couldn't load %s", filename);
