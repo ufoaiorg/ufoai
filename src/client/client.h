@@ -1089,6 +1089,32 @@ building_t* B_GetBuildingByID ( int id );
 building_t* B_GetBuilding ( char *buildingName );
 
 //
+// stats
+//
+
+// beware - if you add new stuff to stats_t
+// the loading of an older savegame will not work
+typedef struct stats_s
+{
+	int missionsWon;
+	int missionsLost;
+	int basesBuild;
+	int basesAttacked;
+	int interceptions;
+	int soldiersLost;
+	int soldiersNew; // new recruits
+	int killedAliens;
+	int rescuedCivilians;
+	int researchedTechnologies;
+	int moneyInterceptions;
+	int moneyBases;
+	int moneyResearch;
+	int moneyWeapons;
+} stats_t;
+
+extern stats_t	stats;
+
+//
 // message systems
 //
 

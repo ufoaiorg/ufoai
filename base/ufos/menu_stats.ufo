@@ -52,10 +52,21 @@ menu stats
 
 	string title
 	{
-		string	"Statistics"
+		string	"_Statistics"
 		pos		"512 25"
 		align	uc
 		font	f_big
 	}
 
+	text description
+	{
+		pos		"40 86"
+		size	"940 600"
+		format  "40 250"
+	}
+
+	func init
+	{
+		cmd "stats_update";
+	}
 }

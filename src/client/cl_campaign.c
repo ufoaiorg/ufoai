@@ -30,6 +30,8 @@ int		gameTimeScale;
 byte		*maskPic;
 int		maskWidth, maskHeight;
 
+// extern in client.h
+stats_t		stats;
 
 /*
 ============================================================================
@@ -1620,6 +1622,9 @@ void CL_GameSave( char *filename, char *comment )
 	//write the actual mapaction to savefile
 	MSG_WriteLong( &sb, mapAction );
 
+	// save all the stats
+	SZ_Write( &sb, &stats, sizeof(stats) );
+
 	// write data
 	res = fwrite( buf, 1, sb.cursize, f );
 	fclose( f );
@@ -1865,6 +1870,10 @@ void CL_GameLoad( char *filename )
 
 	if ( version >= 2 )
 		mapAction = MSG_ReadLong( &sb );
+
+	// load the stats
+	memcpy( &stats, sb.data + sb.readcount, sizeof(stats_t) );
+	sb.readcount += sizeof(stats_t);
 
 	Com_Printf( _("Campaign '%s' loaded.\n"), filename );
 	CL_GameTimeStop();
@@ -2468,6 +2477,28 @@ void CL_MapActionReset( void )
 	selMis = NULL; // reset selected mission
 }
 
+#define MAX_STATS_BUFFER 1024
+/*
+======================
+Stats_Update
+
+Shows the current stats from stats_t stats
+======================
+*/
+void Stats_Update ( void )
+{
+	static char statsBuffer[MAX_STATS_BUFFER];
+
+	// delete buffer
+	*statsBuffer = '\0';
+
+	// TODO: implement me
+	Com_sprintf( statsBuffer, MAX_STATS_BUFFER, _("Missions:\nwon:\t%i\tlost:\t%i\nBases:\nbuild:\t%i\tattacked:\t%i\n"),
+			stats.missionsWon, stats.missionsLost,
+			stats.basesBuild, stats.basesAttacked
+			);
+	menuText[TEXT_STANDARD] = statsBuffer;
+}
 
 /*
 ======================
@@ -2504,6 +2535,8 @@ void CL_ResetCampaign( void )
 	Cmd_AddCommand( "newaircraft", CL_NewAircraft_f );
 	Cmd_AddCommand( "aircraft_return", CL_AircraftReturnToBase_f );
 	Cmd_AddCommand( "aircraft_list", CL_BuildingAircraftList_f );
+
+	Cmd_AddCommand( "stats_update", Stats_Update );
 
 	re.LoadTGA( "pics/menu/map_mask.tga", &maskPic, &maskWidth, &maskHeight );
 	if ( maskPic ) Com_Printf( _("Map mask loaded.\n") );

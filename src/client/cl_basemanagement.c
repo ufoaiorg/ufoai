@@ -1977,6 +1977,7 @@ void MN_BuildBase( void )
 		{
 			baseCurrent->id = ccs.numBases-1;
 			baseCurrent->founded = true;
+			stats.basesBuild++;
 			mapAction = MA_NONE;
 			CL_UpdateCredits( ccs.credits - BASE_COSTS );
 			Q_strncpyz( baseCurrent->title, mn_base_title->string, sizeof(baseCurrent->title) );
