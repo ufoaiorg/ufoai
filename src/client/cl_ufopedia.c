@@ -22,11 +22,23 @@ char	upBuffer[MAX_UPTEXT];
 
 // ===========================================================
 
+/*=================
+UP_TechDescription
+
+prints the ufopedia description for technologies
+called from MN_UpDrawEntry when type of technology_t is RS_TECH
+=================*/
 void UP_TechDescription ( technology_t* t )
 {
 
 }
 
+/*=================
+UP_BuildingDescription
+
+prints the ufopedia description for buildings
+called from MN_UpDrawEntry when type of technology_t is RS_BUILDING
+=================*/
 void UP_BuildingDescription ( technology_t* t )
 {
 	building_t* b = B_GetBuilding ( t->id );
@@ -53,6 +65,12 @@ void UP_BuildingDescription ( technology_t* t )
 	menuText[TEXT_STANDARD] = upBuffer;
 }
 
+/*=================
+UP_AircraftDescription
+
+prints the ufopedia description for aircraft
+called from MN_UpDrawEntry when type of technology_t is RS_CRAFT
+=================*/
 void UP_AircraftDescription ( technology_t* t )
 {
 	aircraft_t* air = CL_GetAircraft ( t->id );
@@ -90,10 +108,6 @@ void MN_UpDrawEntry( char *id )
 			if ( *t->mdl_bottom ) Cvar_Set( "mn_upmodel_bottom", t->mdl_bottom );
 			if ( !*t->mdl_top && *t->image_top ) Cvar_Set( "mn_upimage_top", t->image_top );
 			if ( !*t->mdl_bottom && *t->mdl_bottom ) Cvar_Set( "mn_upimage_bottom", t->image_bottom );
-			//if ( entry->sound )
-			//{
-				// TODO: play the specified sound
-			//}
 			Cbuf_AddText( "mn_upfsmall\n" );
 
 			if ( upCurrent) {
@@ -102,11 +116,8 @@ void MN_UpDrawEntry( char *id )
 				case RS_ARMOR:
 				case RS_WEAPON:
 					for ( j = 0; j < csi.numODs; j++ ) {
-						//Com_Printf(_("MN_UpDrawEntry: id=%s\n"),  t->id);				//DEBUG
-						//Com_Printf(_("MN_UpDrawEntry: kurz=%s\n"),   csi.ods[j].kurz );	//DEBUG
 						if ( !Q_strncmp( t->provides, csi.ods[j].kurz, MAX_VAR ) ) {
 							CL_ItemDescription( j );
-							//Com_Printf(_("MN_UpDrawEntry: drawing item-desc for %s\n"),  t->id); //DEBUG
 							break;
 						}
 					}
@@ -245,7 +256,6 @@ void MN_UpPrev_f( void )
 	}
 
 	// change chapter
-
 	for ( upc = upCurrent->up_chapter - 1; upc - upChapters >= 0; upc-- )
 		if ( upc->last )
 		{
