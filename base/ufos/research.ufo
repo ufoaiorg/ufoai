@@ -240,7 +240,7 @@ tech rs_laser
 
 	requires	initial
 	provides	laserpistol
-	time	0
+	time	30
 	researched	false
 }
 
@@ -252,7 +252,7 @@ tech rs_weapon_laserpistol
 
 	requires	rs_laser
 	provides	laserpistol
-	time	0
+	time	20
 	researched	false
 }
 
@@ -276,7 +276,7 @@ tech rs_weapon_laserrifle
 
 	requires	rs_weapon_laserpistol
 	provides	laserrifle
-	time	0
+	time	30
 	researched	true
 }
 
