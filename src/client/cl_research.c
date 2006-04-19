@@ -368,7 +368,8 @@ void RS_ResearchDisplayInfo ( void  )
 	tech = researchList[researchListPos];
 
 	// display total number of free labs in current base
-	Cvar_Set( "mn_research_sellabs", va( _("Free labs in this base: %i"), MN_GetUnusedLabs( baseCurrent->id ) ) );
+	Cvar_Set( "mn_research_labs", va( _("Free labs in this base: %i"), MN_GetUnusedLabs( baseCurrent->id ) ) );
+	Cvar_Set( "mn_research_scis", va( _("Available scientists in this base: %i"), MN_EmployeesInBase2 ( baseCurrent->id, EMPL_SCIENTIST, true ) ) );
 
 	Cvar_Set( "mn_research_selbase", _("Not researched in any base.") );
 	// display the base this tech is researched in
@@ -387,24 +388,24 @@ void RS_ResearchDisplayInfo ( void  )
 			Com_Printf("RS_ResearchDisplayInfo: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", tech->id, tech->time, tech->overalltime );
 			tech->time = tech->overalltime;	// just in case the values got messed up
 		}
-		Cvar_Set( "mn_research_seltime", va( "Progress: %.1f\%\n", 100-(tech->time*100/tech->overalltime) ) );
+		Cvar_Set( "mn_research_seltime", va( _("Progress: %.1f\%\n"), 100-(tech->time*100/tech->overalltime) ) );
 	} else {
-		Cvar_Set( "mn_research_seltime", "" );
+		Cvar_Set( "mn_research_seltime", _("Progress: Not available.") );
 	}
 
 	switch ( tech->statusResearch )
 	{
 	case RS_RUNNING:
-		Cvar_Set( "mn_research_selstatus", "Status: Under research\n" );
+		Cvar_Set( "mn_research_selstatus", _("Status: Under research\n") );
 		break;
 	case RS_PAUSED:
-		Cvar_Set( "mn_research_selstatus", "Status: Research paused\n" );
+		Cvar_Set( "mn_research_selstatus", _("Status: Research paused\n") );
 		break;
 	case RS_FINISH:
-		Cvar_Set( "mn_research_selstatus", "Status: Research finished\n" );
+		Cvar_Set( "mn_research_selstatus", _("Status: Research finished\n") );
 		break;
 	case RS_NONE:
-		Cvar_Set( "mn_research_selstatus", "Status: Unknown technology\n" );
+		Cvar_Set( "mn_research_selstatus", _("Status: Unknown technology\n") );
 		break;
 	default:
 		break;
