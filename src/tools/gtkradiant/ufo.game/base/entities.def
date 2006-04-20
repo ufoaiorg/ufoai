@@ -23,13 +23,13 @@ Starting point for a civilian.
 /*QUAKED misc_model (1 1 0) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
 Displays a md2 model.
 Set the level flags correctly!
-Use angles [pitch yaw roll] to rotate the model. 
+Use angles [pitch yaw roll] to rotate the model.
 "model"		arbitrary .md2 file to display
 */
 
 
 /*QUAKED misc_particle (0 0 1) (-16 -16 -16) (16 16 16)
-Creates a particle. Particle properties can be set here with a preceding '-' or '+'. 
+Creates a particle. Particle properties can be set here with a preceding '-' or '+'.
 '-' property is set before calling the particle init function
 '+' do it afterwards
 Wait times are of the format "a b". It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start.
@@ -60,4 +60,6 @@ Only used for the world.
 "angles"	direction of the sun light [pitch yaw roll]
 "ambient"	ambient light (NOT normalized)
 "maxlevel"	highest selectable level
+"fog"	activate fog
+"fogcolor"	fogcolor (rgb)
 */
