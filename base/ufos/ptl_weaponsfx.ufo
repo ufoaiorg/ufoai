@@ -26,13 +26,13 @@ particle bulletImpact
 		style  facing
 		tfade  sin
 		size   "20 20"
-		
+
 		push   *v
 		mul    float 5
 		kpop   *v
 		add    *s
 		pop    *s
-		tps    1		
+		tps    1
 
 		push   int 20
 		nspawn bulletFragment
@@ -55,7 +55,7 @@ particle bulletFragment
 		style  facing
 		tfade  out
 		size   "2 2"
-		
+
 		push   *v
 		rand   float 28
 		add    float 3
@@ -63,11 +63,11 @@ particle bulletFragment
 		crand  vector "15 15 15"
 		add    #
 		pop    *v
-		
+
 		crand  vector "5 5 5"
 		add    *s
 		pop    *s
-		
+
 		rand   float 1.3
 		add    float 1.2
 		pop    *tps
@@ -115,7 +115,7 @@ particle fireImpact
 		push   pos "140 140"
 		mul    *t
 		add    pos "40 40"
-		pop    *size	
+		pop    *size
 	}
 	think { kill }
 }
@@ -150,7 +150,7 @@ particle rocketSmoke
 		tfade  out
 		tps    0.8
 		color  ".5 .5 .5 1"
-		v      "0 0 20"		
+		v      "0 0 20"
 	}
 	run
 	{
@@ -183,7 +183,7 @@ particle rocketFire
 		push   *v
 		mul    float 0.8
 		kpop   *v
-		
+
 	}
 	run
 	{
@@ -231,13 +231,13 @@ particle laserImpact
 		style  facing
 		tfade  sin
 		size   "20 20"
-		
+
 		push   *v
 		mul    float 5
 		kpop   *v
 		add    *s
 		pop    *s
-		tps    1		
+		tps    1
 
 		push   int 10
 		nspawn laserSpark
@@ -261,7 +261,7 @@ particle laserSpark
 		style  facing
 		tfade  out
 		size   "20 20"
-		
+
 		push   *v
 		rand   float 8
 		add    float 3
@@ -269,11 +269,11 @@ particle laserSpark
 		crand  vector "15 15 15"
 		add    #
 		pop    *v
-		
+
 		crand  vector "5 5 5"
 		add    *s
 		pop    *s
-		
+
 		rand   float 1.3
 		add    float 1.2
 		pop    *tps
@@ -343,14 +343,14 @@ particle plasmaParticleCharged
 		tps    2
 		size   "12 12"
 		tfade  out
-		
+
 		a      "0 0 -50"
 		push   *v
 		mul    float 25
 		crand  vector "25 25 25"
 		add    #
 		add    vector "0 0 25"
-		pop    *v		
+		pop    *v
 
 		crand  vector "2 2 2"
 		add    *s
@@ -412,14 +412,14 @@ particle plasmaParticle
 		tps    2.2
 		size   "7 7"
 		tfade  out
-		
+
 		a      "0 0 -50"
 		push   *v
 		mul    float 20
 		crand  vector "20 20 20"
 		add    #
 		add    vector "0 0 20"
-		pop    *v		
+		pop    *v
 
 		crand  vector "2 2 2"
 		add    *s
@@ -471,17 +471,17 @@ particle tachyonSplash
 		style  facing
 		tfade  out
 		size   "4 4"
-		
+
 		push   *v
 		mul    float 40
 		crand  vector "30 30 30"
 		add    #
 		pop    *v
-		
+
 		crand  vector "0 0 0"
 		add    *s
 		pop    *s
-		
+
 		rand   float 3
 		add    float 1.5
 		pop    *tps
@@ -514,11 +514,11 @@ particle tachyonSpark
 		tfade  out
 		tps    3
 		color  ".5 .5 .5 1"
-		
+
 		push   *v
 		crand  vector "8 8 8"
 		add    vector "-4 -4 -4"
-		pop    *v		
+		pop    *v
 
 		crand  vector "2 2 2"
 		add    *s
@@ -557,7 +557,7 @@ particle tachyonBigSplash
 		style  facing
 		tfade  out
 		size   "4 4"
-		
+
 		push   *v
 		rand   float 200
 		add    float 20
@@ -565,11 +565,11 @@ particle tachyonBigSplash
 		crand  vector "50 50 50"
 		add    #
 		pop    *v
-		
+
 		crand  vector "5 5 5"
 		add    *s
 		pop    *s
-		
+
 		rand   float 1.0
 		add    float 1.6
 		pop    *tps
@@ -611,6 +611,18 @@ particle fraggren
 	}
 }
 
+particle smoke_explosion
+{
+	init
+	{
+		// FIXME new smoke particle
+		spawn  smoke
+		spawn  smoke
+		push   int 50
+		nspawn grenadeSmoke
+		kill
+	}
+}
 
 particle frag_explosion
 {
@@ -624,6 +636,31 @@ particle frag_explosion
 	}
 }
 
+particle grenadeSmoke
+{
+	init
+	{
+		image  sfx/spark
+		blend  add
+		style  facing
+		tfade  out
+		size   "5 5"
+
+		push   *v
+		crand  vector "160 160 160"
+		pop    *v
+
+		crand  vector "15 15 15"
+		add    *s
+		pop    *s
+
+		rand   float 1.2
+		add    float 1.2
+		pop    *tps
+	}
+	think { kill }
+}
+
 particle grenadeFragment
 {
 	init
@@ -633,15 +670,15 @@ particle grenadeFragment
 		style  facing
 		tfade  out
 		size   "5 5"
-		
+
 		push   *v
 		crand  vector "160 160 160"
 		pop    *v
-		
+
 		crand  vector "15 15 15"
 		add    *s
 		pop    *s
-		
+
 		rand   float 1.2
 		add    float 1.2
 		pop    *tps

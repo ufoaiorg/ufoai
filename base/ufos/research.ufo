@@ -304,6 +304,18 @@ tech rs_weapon_fraggren
 	researched	true
 }
 
+tech rs_weapon_smokegren
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_smokegen_txt"
+
+	requires	initial
+	provides	smokegrenade
+	time	0
+	researched	true
+}
+
 tech rs_weapon_knife
 {
 	type	weapon

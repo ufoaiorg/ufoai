@@ -51,6 +51,7 @@ equipment campaign_player
 	rpg				1
 	rpg_ammo		4
 	fraggrenade		3
+	smokegrenade		1
 	knife			2
 	medikit			1
 	light			3
@@ -82,6 +83,7 @@ equipment campaign_market
 	laserpistol			2
 	laserpistol_ammo	16
 	fraggrenade			14
+	smokegrenade		14
 	knife				8
 	irgoggles		2
 	medikit				5

@@ -1025,6 +1025,74 @@ item fraggrenade
 	}
 }
 
+// =======================
+// SMOKE GRENADE
+// =======================
+item smokegrenade
+{
+	name		"_Smoke Grenade"
+	model		weapons/smokegren/smokegren
+	weapon		true
+	type		grenade
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.5
+	price		170
+	buytype		2
+	ammo		1
+	thrown		true
+
+	primary
+	{
+		name	"_Throw"
+		skill	explosive
+		projtl	smokegren
+		impact	smoke_explosion
+		hitbody smoke_explosion
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"7 7"
+		range	4.0
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"100 10"
+		splrad	120
+		dmgtype blast
+	}
+	secondary
+	{
+		name	"_Throw"
+		skill	explosive
+		projtl	smokegren
+		impact	smoke_explosion
+		hitbody smoke_explosion
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"7 7"
+		range	4.0
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"100 10"
+		splrad	120
+		dmgtype blast
+	}
+}
+
 
 // =======================
 // KNIFE
