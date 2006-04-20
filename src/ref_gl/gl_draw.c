@@ -79,9 +79,11 @@ void Draw_InitLocal (void)
 	GL_Bind( draw_chars->texnum );
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	// load all fonts
 	GL_FindImage ("pics/f_small.tga", it_font);
 	GL_FindImage ("pics/f_big.tga", it_font);
 	GL_FindImage ("pics/f_menu.tga", it_font);
+	GL_FindImage ("pics/f_menu_small.tga", it_font);
 #ifdef BUILD_FREETYPE
 	R_InitFreeType();
 #endif
@@ -359,6 +361,7 @@ int Draw_PropCharFont (font_t *f, int x, int y, char c)
 	// not in ascii but in our case - because we start to count from 32 (SPACE)
 	if ( f->rh == 0.0625 && n < 128 )
 		while ( n >= 64 ) n -= 32;
+	// here we also have lower case letters
 	else if ( f->rh == 0.0625 && n > 223 )
 		while ( n >= 224 ) n -= 32;
 
