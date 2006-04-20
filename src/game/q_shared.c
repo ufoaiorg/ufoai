@@ -2326,7 +2326,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		// i18n marked through _ at beginning of string
 		if ( *token == '_' )
 			token++;
-		strncpy( (char *)b, token, MAX_VAR );
+		Q_strncpyz( (char *)b, token, MAX_VAR );
 		w = strlen(token)+1;
 		if ( w > MAX_VAR ) w = MAX_VAR;
 		return w;
@@ -2342,7 +2342,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 
 	case V_ALIGN:
 		for ( w = 0; w < ALIGN_LAST; w++ )
-			if ( !strcmp( token, align_names[w] ) )
+			if ( !Q_strcmp( token, align_names[w] ) )
 				break;
 		if ( w == ALIGN_LAST ) *b = 0;
 		else *b = w;
@@ -2350,7 +2350,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 
 	case V_BLEND:
 		for ( w = 0; w < BLEND_LAST; w++ )
-			if ( !strcmp( token, blend_names[w] ) )
+			if ( !Q_strcmp( token, blend_names[w] ) )
 				break;
 		if ( w == BLEND_LAST ) *b = 0;
 		else *b = w;
@@ -2358,7 +2358,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 
 	case V_STYLE:
 		for ( w = 0; w < STYLE_LAST; w++ )
-			if ( !strcmp( token, style_names[w] ) )
+			if ( !Q_strcmp( token, style_names[w] ) )
 				break;
 		if ( w == STYLE_LAST ) *b = 0;
 		else *b = w;
@@ -2366,7 +2366,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 
 	case V_FADE:
 		for ( w = 0; w < FADE_LAST; w++ )
-			if ( !strcmp( token, fade_names[w] ) )
+			if ( !Q_strcmp( token, fade_names[w] ) )
 				break;
 		if ( w == FADE_LAST ) *b = 0;
 		else *b = w;
@@ -2391,7 +2391,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 
 	case V_DMGTYPE:
 		for ( w = 0; w < CSI->numDTs; w++ )
-			if ( !strcmp( token, CSI->dts[w] ) )
+			if ( !Q_strcmp( token, CSI->dts[w] ) )
 				break;
 		if ( w == CSI->numDTs ) *b = 0;
 		else *b = w;
