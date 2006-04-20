@@ -2194,7 +2194,7 @@ void CL_BuyType( void )
 		if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) )
 		{
 			Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );
-			Cvar_Set( str, od->name );
+			Cvar_Set( str, _(od->name) );
 
 			Q_strncpyz( str, va("mn_storage%i", j), MAX_VAR );
 			Cvar_SetValue( str, ccs.eCampaign.num[i] );
