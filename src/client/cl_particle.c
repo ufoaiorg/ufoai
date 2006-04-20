@@ -120,10 +120,14 @@ value_t pps[] =
 	{ "a",			V_VECTOR,	PPOFS( a ) },
 	{ "v",			V_VECTOR,	PPOFS( v ) },
 	{ "s",			V_VECTOR,	PPOFS( s ) },
-	{ "angles",		V_VECTOR,	PPOFS( angles ) },
-	{ "omega",		V_VECTOR,	PPOFS( omega ) },
+
+	// t and dt are not specified in particle definitions
+	// but they can be used as references
 	{ "t",			V_FLOAT,	PPOFS( t ) },
 	{ "dt",			V_FLOAT,	PPOFS( dt ) },
+
+	{ "angles",		V_VECTOR,	PPOFS( angles ) },
+	{ "omega",		V_VECTOR,	PPOFS( omega ) },
 	{ "life",		V_FLOAT,	PPOFS( life ) },
 	{ "tps",		V_FLOAT,	PPOFS( tps ) },
 	{ "lastthink",	V_FLOAT,	PPOFS( lastThink ) },
@@ -215,7 +219,7 @@ int CL_ParticleGetArt( char *name, int frame, char type )
 
 	// search for the pic in the list
 	for ( i = 0, a = ptlArt; i < numPtlArt; i++, a++ )
-		if ( a->type == type && !strncmp( name, a->name, MAX_VAR ) && a->frame == frame )
+		if ( a->type == type && !Q_strncmp( name, a->name, MAX_VAR ) && a->frame == frame )
 			break;
 
 	if ( i < numPtlArt )
@@ -239,7 +243,7 @@ int CL_ParticleGetArt( char *name, int frame, char type )
 
 	a->type = type;
 	a->frame = (type == ART_PIC) ? frame : 0;
-	strncpy( a->name, name, MAX_VAR );
+	Q_strncpyz( a->name, name, MAX_VAR );
 	numPtlArt++;
 
 	return numPtlArt-1;
@@ -533,7 +537,7 @@ ptl_t *CL_ParticleSpawn( char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t 
 
 	// find the particle definition
 	for ( i = 0; i < numPtlDefs; i++ )
-		if ( !strcmp( name, ptlDef[i].name ) )
+		if ( !Q_strncmp( name, ptlDef[i].name, MAX_VAR ) )
 			break;
 
 	if ( i == numPtlDefs )
@@ -713,7 +717,7 @@ void CL_ParseMapParticle( ptl_t *ptl, char *es, qboolean afterwards )
 		if (!es)
 			Com_Error (ERR_DROP, _("ED_ParseEntity: EOF without closing brace"));
 
-		strncpy (keyname, token, sizeof(keyname)-1);
+		Q_strncpyz(keyname, token, MAX_QPATH);
 
 		// parse value
 		token = COM_Parse (&es);
@@ -726,18 +730,16 @@ void CL_ParseMapParticle( ptl_t *ptl, char *es, qboolean afterwards )
 		if ( !afterwards && keyname[0] != '-' ) continue;
 		if (  afterwards && keyname[0] != '+' ) continue;
 
-//		Com_Printf( "key : %s\n", keyname );
-
 		for ( pp = pps; pp->string; pp++ )
-			if ( !strcmp( key, pp->string ) )
+			if ( !Q_strncmp( key, pp->string, MAX_QPATH-1 ) )
 			{
 				// register art
-				if ( !strcmp( pp->string, "image" ) )
+				if ( !Q_strncmp( pp->string, "image", 5 ) )
 				{
 					ptl->pic = CL_ParticleGetArt( token, ptl->frame, ART_PIC );
 					break;
 				}
-				if ( !strcmp( pp->string, "model" ) )
+				if ( !Q_strncmp( pp->string, "model", 5 ) )
 				{
 					ptl->model = CL_ParticleGetArt( token, 0, ART_MODEL );
 					break;
@@ -806,7 +808,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 	// get it's body
 	token = COM_Parse( text );
 
-	if ( !*text || strcmp( token, "{" ) )
+	if ( !*text || *token != '{' )
 	{
 		Com_Printf( _("CL_ParsePtlCmds: particle cmds \"%s\" without body ignored\n"), name );
 		pc = &ptlCmd[numPtlCmds++];
@@ -820,7 +822,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 		if ( *token == '}' ) break;
 
 		for ( i = 0; i < PC_NUM_PTLCMDS; i++ )
-			if ( !strcmp( token, pc_strings[i] ) )
+			if ( !Q_strcmp( token, pc_strings[i] ) )
 			{
 				// allocate an new cmd
 				pc = &ptlCmd[numPtlCmds++];
@@ -845,7 +847,6 @@ void CL_ParsePtlCmds( char *name, char **text )
 
 				if ( token[0] == '*' )
 				{
-
 					int		len;
 					// it's a variable reference
 					token++;
@@ -858,7 +859,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 						len = 0;
 
 					for ( pp = pps; pp->string; pp++ )
-						if ( !strcmp( token, pp->string ) )
+						if ( !Q_strcmp( token, pp->string ) )
 							break;
 
 					if ( !pp->string )
@@ -901,7 +902,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 				else
 				{
 					for ( j = 0; j < V_NUM_TYPES; j++ )
-						if ( !strcmp( token, vt_names[j] ) )
+						if ( !Q_strcmp( token, vt_names[j] ) )
 							break;
 
 					if ( j >= V_NUM_TYPES || !((1 << j) & pc_types[i]) )
@@ -928,7 +929,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 		if ( i < PC_NUM_PTLCMDS ) continue;
 
 		for ( pp = pps; pp->string; pp++ )
-			if ( !strcmp( token, pp->string ) )
+			if ( !Q_strcmp( token, pp->string ) )
 			{
 				// get parameter
 				token = COM_EParse( text, errhead, name );
@@ -974,7 +975,7 @@ void CL_ParseParticle( char *name, char **text )
 
 	// search for menus with same name
 	for ( i = 0; i < numPtlDefs; i++ )
-		if ( !strcmp( name, ptlDef[i].name ) )
+		if ( !Q_strncmp( name, ptlDef[i].name, MAX_VAR ) )
 			break;
 
 	if ( i < numPtlDefs )
@@ -987,12 +988,12 @@ void CL_ParseParticle( char *name, char **text )
 	pd = &ptlDef[numPtlDefs++];
 	memset( pd, 0, sizeof(ptlDef_t) );
 
-	strncpy( pd->name, name, MAX_VAR );
+	Q_strncpyz( pd->name, name, MAX_VAR );
 
 	// get it's body
 	token = COM_Parse( text );
 
-	if ( !*text || strcmp( token, "{" ) )
+	if ( !*text || *token != '{' )
 	{
 		Com_Printf( _("CL_ParseParticle: particle def \"%s\" without body ignored\n"), name );
 		numPtlDefs--;
@@ -1005,7 +1006,7 @@ void CL_ParseParticle( char *name, char **text )
 		if ( *token == '}' ) break;
 
 		for ( i = 0; i < PF_NUM_PTLFUNCS; i++ )
-			if ( !strcmp( token, pf_strings[i] ) )
+			if ( !Q_strcmp( token, pf_strings[i] ) )
 			{
 				// allocate the first particle command
 				ptlCmd_t **pc;
