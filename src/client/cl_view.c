@@ -319,7 +319,7 @@ void CL_ParseEntitystring( char *es )
 			if (!es)
 				Com_Error (ERR_DROP, _("CL_ParseEntitystring: EOF without closing brace"));
 
-			strncpy (keyname, com_token, sizeof(keyname)-1);
+			Q_strncpyz(keyname, com_token, sizeof(keyname));
 
 			// parse value
 			com_token = COM_Parse (&es);
@@ -330,57 +330,57 @@ void CL_ParseEntitystring( char *es )
 				Com_Error (ERR_DROP, _("CL_ParseEntitystring: closing brace without data"));
 
 			// filter interesting keys
-			if ( !strcmp( keyname, "classname" ) )
-				strncpy( classname, com_token, 64 );
+			if ( !Q_strcmp( keyname, "classname" ) )
+				Q_strncpyz( classname, com_token, 64 );
 
 			if ( !strcmp( keyname, "model" ) )
-				strncpy( model, com_token, MAX_VAR );
+				Q_strncpyz( model, com_token, MAX_VAR );
 
-			if ( !strcmp( keyname, "particle" ) )
-				strncpy( particle, com_token, MAX_VAR );
+			if ( !Q_strcmp( keyname, "particle" ) )
+				Q_strncpyz( particle, com_token, MAX_VAR );
 
-			if ( !strcmp( keyname, "_color" ) || !strcmp( keyname, "lightcolor" ) )
+			if ( !Q_strcmp( keyname, "_color" ) || !strcmp( keyname, "lightcolor" ) )
 				sscanf( com_token, "%f %f %f", &(color[0]), &(color[1]), &(color[2]) );
 
-			if ( !strcmp( keyname, "origin" ) )
+			if ( !Q_strcmp( keyname, "origin" ) )
 				sscanf( com_token, "%f %f %f", &(origin[0]), &(origin[1]), &(origin[2]) );
 
-			if ( !strcmp( keyname, "ambient" ) || !strcmp( keyname, "lightambient" ) )
+			if ( !Q_strcmp( keyname, "ambient" ) || !strcmp( keyname, "lightambient" ) )
 				sscanf( com_token, "%f %f %f", &(ambient[0]), &(ambient[1]), &(ambient[2]) );
 
-			if ( !strcmp( keyname, "angles" ) )
+			if ( !Q_strcmp( keyname, "angles" ) )
 				sscanf( com_token, "%f %f %f", &(angles[0]), &(angles[1]), &(angles[2]) );
 
-			if ( !strcmp( keyname, "wait" ) )
+			if ( !Q_strcmp( keyname, "wait" ) )
 				sscanf( com_token, "%f %f", &(wait[0]), &(wait[1]) );
 
-			if ( !strcmp( keyname, "light" ) )
+			if ( !Q_strcmp( keyname, "light" ) )
 				light = atof( com_token );
 
-			if ( !strcmp( keyname, "lightangles" ) )
+			if ( !Q_strcmp( keyname, "lightangles" ) )
 				sscanf( com_token, "%f %f %f", &(lightangles[0]), &(lightangles[1]), &(lightangles[2]) );
 
-			if ( !strcmp( keyname, "spawnflags" ) )
+			if ( !Q_strcmp( keyname, "spawnflags" ) )
 				spawnflags = atoi( com_token );
 
-			if ( !strcmp( keyname, "maxlevel" ) )
+			if ( !Q_strcmp( keyname, "maxlevel" ) )
 				maxlevel = atoi( com_token );
 
-			if ( !strcmp( keyname, "fog" ) )
+			if ( !Q_strcmp( keyname, "fog" ) )
 				map_fog = atof( com_token );
 
-			if ( !strcmp( keyname, "fogcolor" ) )
+			if ( !Q_strcmp( keyname, "fogcolor" ) )
 				sscanf( com_token, "%f %f %f", &(map_fogColor[0]), &(map_fogColor[1]), &(map_fogColor[2]) );
 
-			if ( !strcmp( keyname, "nosmooth" ) )
+			if ( !Q_strcmp( keyname, "nosmooth" ) )
 				nosmooth = atoi( com_token );
 
-			if ( !strcmp( keyname, "skin" ) )
+			if ( !Q_strcmp( keyname, "skin" ) )
 				skin = atoi( com_token );
 		}
 
 		// analyze values
-		if ( !strcmp( classname, "worldspawn" ) )
+		if ( !Q_strcmp( classname, "worldspawn" ) )
 		{
 			// init sun
 			angles[YAW] *= 3.14159/180;
@@ -401,7 +401,7 @@ void CL_ParseEntitystring( char *es )
 			map_maxlevel = maxlevel;
 		}
 
-		if ( !strcmp( classname, "light" ) && light )
+		if ( !Q_strcmp( classname, "light" ) && light )
 		{
 			dlight_t	*newlight;
 			// add light to list
@@ -415,7 +415,7 @@ void CL_ParseEntitystring( char *es )
 			newlight->intensity = light;
 		}
 
-		if ( !strcmp( classname, "misc_model" ) )
+		if ( !Q_strcmp( classname, "misc_model" ) )
 		{
 			lm_t *lm;
 
@@ -451,12 +451,12 @@ void CL_ParseEntitystring( char *es )
 			}
 		}
 
-		if ( !strcmp( classname, "misc_particle" ) )
+		if ( !Q_strcmp( classname, "misc_particle" ) )
 		{
 			CL_AddMapParticle( particle, origin, wait, strstart );
 		}
 
-		if ( !strcmp( classname, "func_breakable" ) )
+		if ( !Q_strcmp( classname, "func_breakable" ) )
 		{
 			angles[0] = angles[1] = angles[2] = 0.0;
 			CL_AddLocalModel( model, particle, origin, angles, entnum, (spawnflags & 0xFF) );
@@ -487,14 +487,14 @@ void CL_PrepRefresh (void)
 	SCR_AddDirtyPoint (viddef.width-1, viddef.height-1);
 
 	// register models, pics, and skins
-	Com_Printf ( _("Map: %s\n"), cl.configstrings[CS_NAME]);
+	Com_Printf ("Map: %s\n", cl.configstrings[CS_NAME]);
 	SCR_UpdateScreen ();
 	re.BeginRegistration( cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS] );
 	CL_ParseEntitystring( map_entitystring );
 	Com_Printf ("                                     \r");
 
 	// precache status bar pics
-	Com_Printf (_("pics\n") );
+	Com_Printf ("pics\n");
 	SCR_UpdateScreen ();
 	SCR_TouchPics ();
 	Com_Printf ("                                     \r");
@@ -503,7 +503,7 @@ void CL_PrepRefresh (void)
 	CL_ParticleRegisterArt ();
 
 	num_cl_weaponmodels = 1;
-	strcpy(cl_weaponmodels[0], "weapon.md2");
+	Q_strncpyz(cl_weaponmodels[0], "weapon.md2", 10 );
 
 	for (i=1 ; i<MAX_MODELS && cl.configstrings[CS_MODELS+i][0] ; i++)
 	{
@@ -549,7 +549,7 @@ void CL_PrepRefresh (void)
 		cl.model_weapons[i] = re.RegisterModel( csi.ods[i].model );
 
 	// images
-	Com_Printf (_("images\n"), i);
+	Com_Printf ("images\n", i);
 	SCR_UpdateScreen ();
 	for (i=1 ; i<MAX_IMAGES && cl.configstrings[CS_IMAGES+i][0] ; i++)
 	{
@@ -562,7 +562,7 @@ void CL_PrepRefresh (void)
 	{
 		if (!cl.configstrings[CS_PLAYERSKINS+i][0])
 			continue;
-		Com_Printf (_("client %i\n"), i);
+		Com_Printf ("client %i\n", i);
 		SCR_UpdateScreen ();
 		Sys_SendKeyEvents ();	// pump message loop
 //		CL_ParseClientinfo (i);
