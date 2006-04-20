@@ -164,6 +164,47 @@ particle smoke
 	think { kill }
 }
 
+particle smokesmall
+{
+	init
+	{
+		image  sfx/smoke
+		blend  invfilter
+		style  rotated
+		tfade  out
+		tps    0.3
+		v      "0 0 0"
+		a      "0 0 0"
+	}
+	run
+	{
+		push pos "16 16"
+		mul  *t
+		add  pos "8 8"
+		pop  *size
+	}
+	think { kill }
+}
+
+particle smokebig
+{
+	init
+	{
+		image  sfx/smoke
+		blend  invfilter
+		style  rotated
+		rounds 2
+		tfade  out
+		tps    0.5
+		v      "0 0 0"
+		a      "0 0 0"
+	}
+	run
+	{
+		spawn  smokesmall
+	}
+}
+
 particle burnFlame
 {
 	init
