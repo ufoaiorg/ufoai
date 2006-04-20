@@ -1,3 +1,63 @@
+// general description for particles
+// =================================
+// image	(string)	path to model - relative from base/pics
+// model	(string)	path to model - relative from base/models
+// blend	(string)	"replace", "blend", "add", "filter", "invfilter"
+// style	(string)	"facing", "rotated", "beam", "line"
+// tfade	(string)	"none", "in", "out", "sin", "saw", "blend"
+// ffade	(string)	"none", "in", "out", "sin", "saw", "blend"
+// size		(vec2_t)
+// scale	(vec3_t)	scaling in x, y and z direction
+// color	(vec4_t)	color vector of rgba
+// a		(vec3_t)
+// v		(vec3_t)
+// s		(vec3_t)
+// angles	(vec3_t)	angles for each particle run = oldAngles + cls.frametime * omega
+// 				start rotation vector (see omega, too)
+// omega	(vec3_t)	the rotation vector for the particle
+// life		(float)		specifies how long a particle will be active (ms)
+// rounds	(int)		specifies how many rounds a particle will be active (ms)
+// tps		(float)		think per second - call the think function in interval tps
+// frame	(int)
+// endframe	(int)
+// fps		(float)		how many frames per second (animate)
+// levelflags	(int)		display this particle only in specific levels
+//		1 = only first level	1<<1
+//		3 = first two levels	1<<2
+//		7 = first two levels	1<<3
+//		15 = first two levels	1<<4
+//		31 = first two levels	1<<5
+//		63 = first two levels	1<<6
+//		127 = first two levels	1<<7
+//		255 = first two levels	1<<8
+//		if there is a reason to display the particle e.g. in the first and third level
+//		you have to add the flag for the first level (1<<1 = 1) and the flag for the
+//		third level (1<<3 = 4) and get a levelflag with 5 - but then the particle will not
+//		be displayed in the second level (and in the levels above the third)
+//
+// stack functions
+// =================================
+// end
+// push
+// pop
+// kpop
+// add
+// sub
+// mul
+// div
+// sin
+// cos
+// tan
+// rand
+// crand
+// v2
+// v3
+// v4
+// kill		(null)		set inuse flag to false (deacticate the particle)
+// spawn
+// nspawn
+
+
 // ==================
 // BULLET EFFECTS
 // ==================
@@ -183,7 +243,6 @@ particle rocketFire
 		push   *v
 		mul    float 0.8
 		kpop   *v
-
 	}
 	run
 	{
@@ -611,13 +670,21 @@ particle fraggren
 	}
 }
 
+particle smokegren
+{
+	init
+	{
+		model  weapons/fraggren/fraggren
+		color  ".5 .5 .5 1"
+	}
+}
+
 particle smoke_explosion
 {
 	init
 	{
-		// FIXME new smoke particle
-		spawn  smoke
-		spawn  smoke
+		spawn  smokebig
+		spawn  smokebig
 		push   int 50
 		nspawn grenadeSmoke
 		kill
