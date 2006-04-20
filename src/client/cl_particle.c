@@ -126,6 +126,7 @@ value_t pps[] =
 	{ "t",			V_FLOAT,	PPOFS( t ) },
 	{ "dt",			V_FLOAT,	PPOFS( dt ) },
 
+	{ "rounds",		V_INT,	PPOFS( rounds ) },
 	{ "angles",		V_VECTOR,	PPOFS( angles ) },
 	{ "omega",		V_VECTOR,	PPOFS( omega ) },
 	{ "life",		V_FLOAT,	PPOFS( life ) },
@@ -622,6 +623,28 @@ void CL_Fading( vec4_t color, byte fade, float frac, qboolean onlyAlpha )
 	}
 }
 
+/*
+======================
+CL_ParticleCheckRounds
+
+checks whether a particle is still active in the current round
+======================
+*/
+void CL_ParticleCheckRounds( void )
+{
+	ptl_t	*p;
+	int i;
+	for ( i = 0, p = ptl; i < numPtls; i++, p++ )
+		if ( p->inuse && p->rounds )
+		{
+			p->roundsCnt--;
+			if ( p->roundsCnt <= 0 )
+			{
+				p->inuse = false;
+			}
+		}
+}
+
 
 /*
 ======================
@@ -642,6 +665,9 @@ void CL_ParticleRun( void )
 			p->t = (cl.time - p->startTime) * 0.001f;
 			p->lastThink += p->dt;
 			p->lastFrame += p->dt;
+
+			if ( p->rounds && ! p->roundsCnt )
+				p->roundsCnt = p->rounds;
 
 			// test for end of life
 			if ( p->life && p->t >= p->life )

@@ -211,6 +211,7 @@ typedef struct ptl_s
 	float		tps, lastThink;
 	byte		thinkFade, frameFade;
 	float		t, dt, life;
+	int		rounds, roundsCnt;
 	vec3_t		a, v, omega;
 } ptl_t;
 

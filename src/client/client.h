@@ -694,6 +694,7 @@ trace_t CL_Trace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t *pass
 
 lm_t *CL_AddLocalModel (char *model, char *particle, vec3_t origin, vec3_t angles, int num, int levelflags);
 void CL_AddMapParticle (char *particle, vec3_t origin, vec2_t wait, char *info);
+void CL_ParticleCheckRounds( void );
 
 //
 // cl_actor.c
@@ -951,7 +952,7 @@ typedef enum
 	CRAFTUPGRADE_ARMOR
 } craftupgrade_type_t;
 
-typedef struct craftupgrade_s	
+typedef struct craftupgrade_s
 {
 	/* some of this informations defined here overwrite the ones in the aircraft_t struct if given. */
 
@@ -1006,10 +1007,10 @@ typedef struct aircraft_s
 	technology_t*	shield;
 	mapline_t route;
 	void*	homebase;	// pointer to homebase
-	
+
 	craftupgrade_t    *upgrades[MAX_CRAFTUPGRADES];	// TODO replace armor/weapon/engine definitions from above with this.
 	int    numUpgrades;
-	
+
 } aircraft_t;
 
 typedef struct base_s
