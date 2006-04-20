@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+build commands
+[RadiantPath]: path to Radiant .. C:\Program Files\Gtkradiant
+[EnginePath]: path to the engine .. C:\ufoai\ C:\Program Files\UFOAI\ /usr/local/games/ufoai/
+-->
+<project version="2.0">
+  <var name="qbsp3">"[RadiantPath]qbsp3" -fs_basepath "[EnginePath]"</var>
+  <var name="qrad3">"[RadiantPath]qrad3" -fs_basepath "[EnginePath]"</var>
+
+  <build name="Entities">
+    <command>[qbsp3] -bsp -onlyents "[MapFile]"</command>
+  </build>
+
+  <build name="Test build">
+    <command>[qbsp3] "[MapFile]"</command>
+    <command>[qrad3] "[MapFile]"</command>
+  </build>
+
+  <build name="Final build">
+    <command>[qbsp3] "[MapFile]"</command>
+    <command>[qrad3] -extra -bounce 0 -chop 32 "[MapFile]"</command>
+  </build>
+
+</project>
+
+
