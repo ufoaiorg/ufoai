@@ -1065,7 +1065,7 @@ item smokegrenade
 		time	12
 		spldmg	"100 10"
 		splrad	120
-		dmgtype blast
+		dmgtype ""
 	}
 	secondary
 	{
@@ -1089,7 +1089,7 @@ item smokegrenade
 		time	12
 		spldmg	"100 10"
 		splrad	120
-		dmgtype blast
+		dmgtype ""
 	}
 }
 
