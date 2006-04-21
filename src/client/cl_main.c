@@ -1301,6 +1301,8 @@ void CL_ParseScriptSecond( char *type, char *name, char **text )
 	else if ( !Q_strncmp( type, "base", 4 ) ) MN_ParseBases( name, text );
 	else if ( !Q_strncmp( type, "tech", 4 ) ) RS_ParseTechnologies( name, text );
 	else if ( !Q_strncmp( type, "shader", 6 ) ) CL_ParseShaders( name, text );
+	// this is only needed when we have compiled with USE_SDL_TTF
+	else if ( !Q_strncmp( type, "font", 4 ) ) CL_ParseFont( name, text );
 }
 
 

@@ -47,7 +47,7 @@ typedef struct {
 	float glyphScale;
         char name[MAX_QPATH];
 } fontInfo_t;
-#endif
+#endif /* BUILD_FREETYPE */
 
 #define	MAX_DLIGHTS		32
 #define	MAX_ENTITIES	512
@@ -300,7 +300,13 @@ typedef struct
 #ifdef BUILD_FREETYPE
 	void    (*RegisterFTFont) (const char *fontName, int pointSize, fontInfo_t * font);
 #endif
+
+#ifdef USE_SDL_TTF
+	void (*RegisterFont) (char *name, int size, char* path, char* style);
+#else
 	struct image_s *(*RegisterFont) (char *name);
+#endif /* USE_SDL_TTF */
+
 	struct image_s *(*RegisterPic) (char *name);
 	void	(*SetSky) (char *name, float rotate, vec3_t axis);
 	void	(*EndRegistration) (void);
@@ -375,6 +381,11 @@ typedef struct
 	// dynamic memory allocator for things that need to be freed
 //	void	*(*Malloc)( int bytes );
 //	void	(*Free)( void *buf );
+
+#ifdef USE_SDL_TTF
+	// will return the size and the path for each font
+	void (*CL_GetFontData) (char *name, int *size, char *path);
+#endif
 
 	// gamedir will be the current directory that generated
 	// files should be stored to, ie: "f:\quake\id1"

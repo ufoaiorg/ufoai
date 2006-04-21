@@ -2473,13 +2473,13 @@ void MN_Translate_f( void )
 
 		if ( !Q_strncmp( current, original, MAX_VAR ) )
 		{
-			Cvar_Set( Cmd_Argv(2), translation );
+			Cvar_Set( Cmd_Argv(2), _(translation) );
 			return;
 		}
 	}
 
 	// nothing found, copy value
-	Cvar_Set( Cmd_Argv(2), current );
+	Cvar_Set( Cmd_Argv(2), _(current) );
 }
 
 /*
@@ -3336,3 +3336,122 @@ void CL_InitMessageSystem ( void )
 	// so be sure that this is null - don't change this
 	menuText[TEXT_MESSAGESYSTEM] = NULL;
 }
+
+// ==================== USE_SDL_TTF stuff =====================
+
+#ifdef USE_SDL_TTF
+#define MAX_FONTS 16
+int numFonts;
+typedef struct font_s
+{
+	char name[MAX_VAR];
+	int size;
+	char style[MAX_VAR];
+	char path[MAX_QPATH];
+} font_t;
+
+font_t fonts[MAX_FONTS];
+
+#define	FONTFS(x)		(int)&(((font_t *)0)->x)
+
+value_t fontValues[] =
+{
+	{ "font",		V_STRING,	FONTFS(path) },
+	{ "size",		V_INT,		FONTFS(size) },
+	{ "style",		V_STRING,	FONTFS(style) },
+
+	{ NULL,			V_NULL,		0 },
+};
+
+void CL_GetFontData (char *name, int *size, char *path)
+{
+	int i;
+	// search for font with this name
+	for ( i = 0; i < numFonts; i++ )
+		if ( !Q_strncmp( fonts[i].name, name, MAX_VAR ) )
+		{
+			*size = fonts[i].size;
+			path = fonts[i].path;
+			return;
+		}
+	Com_Printf("Font: %s not found\n", name );
+}
+
+#endif
+
+/*
+=================
+CL_ParseFont
+
+this is here even if we don't want to have SDL_ttf support to prevent warnings
+about unknown tokens for the font definitions
+=================
+*/
+void CL_ParseFont( char* name, char **text )
+{
+// we don't need to parse if we don't want to use the sdl_ttf lib as font-engine
+#ifdef USE_SDL_TTF
+	font_t*	font;
+	char	*errhead = _("CL_ParseFont: unexpected end of file (font");
+	char	*token;
+	int	i;
+	value_t	*v = NULL;
+
+	// search for font with same name
+	for ( i = 0; i < numFonts; i++ )
+		if ( !Q_strncmp( fonts[i].name, name, MAX_VAR ) )
+		{
+			Com_Printf( _("CL_ParseFont: font \"%s\" with same name found, second ignored\n"), name );
+			return;
+		}
+
+	if ( numFonts >= MAX_FONTS )
+	{
+		Com_Printf( _("CL_ParseFont: Max fonts reached\n"), name );
+		return;
+	}
+
+	// initialize the menu
+	font = &fonts[numFonts];
+	memset( font, 0, sizeof(font_t) );
+
+	Q_strncpyz( font->name, name, MAX_VAR );
+	Com_DPrintf("...found font %s (%i)\n", font->name, numFonts );
+
+	// get it's body
+	token = COM_Parse( text );
+
+	if ( !*text || *token != '{' )
+	{
+		Com_Printf( _("CL_ParseFont: font \"%s\" without body ignored\n"), name );
+		return;
+	}
+
+	numFonts++;
+
+	do {
+		// get the name type
+		token = COM_EParse( text, errhead, name );
+		if ( !*text ) break;
+		if ( *token == '}' ) break;
+
+		for ( v = fontValues; v->string; v++ )
+			if ( !Q_strncmp( token, v->string, sizeof(v->string) ) )
+			{
+				// found a definition
+				token = COM_EParse( text, errhead, name );
+				if ( !*text ) return;
+
+				Com_ParseValue( font, token, v->type, v->ofs );
+				break;
+			}
+
+		if ( !v->string )
+			Com_Printf( _("CL_ParseFont: unknown token \"%s\" ignored (font %s)\n"), token, name );
+
+	} while ( *text );
+
+	re.RegisterFont( font->name, font->size, font->path, font->style );
+#endif
+}
+// ===================== USE_SDL_TTF stuff end ======================

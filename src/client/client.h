@@ -1438,6 +1438,13 @@ extern int numMenus;
 extern inventory_t *menuInventory;
 extern char *menuText[MAX_MENUTEXTS];
 
+// this is the function where all the sdl_ttf fonts are parsed
+void CL_ParseFont( char* name, char **text );
+#ifdef USE_SDL_TTF
+// will return the size and the path for each font
+void CL_GetFontData (char *name, int *size, char *path);
+#endif
+
 //
 // cl_particle.c
 //
