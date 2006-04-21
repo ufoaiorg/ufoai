@@ -600,6 +600,9 @@ qboolean VID_LoadRefresh( char *name )
 	ri.Vid_GetModeInfo = VID_GetModeInfo;
 	ri.Vid_NewWindow = VID_NewWindow;
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
+#ifdef USE_SDL_TTF
+	ri.CL_GetFontData = CL_GetFontData;
+#endif
 //	ri.Malloc = Z_Malloc;
 //	ri.Free = Z_Free;
 
