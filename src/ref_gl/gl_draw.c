@@ -360,7 +360,7 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 
 	f->font = TTF_OpenFont( (char*)pic, h );
 	if ( ! f->font )
-		ri.Con_Printf(PRINT_ALL, "...could not load font file %s\n", (char*)pic );
+		ri.Sys_Error(ERR_FATAL, "...could not load font file %s\n", (char*)pic );
 
 	f->style = w;
 
