@@ -115,10 +115,11 @@ void GL_TexEnv( GLenum mode )
 
 void GL_Bind (int texnum)
 {
+#ifdef USE_SDL_TTF
 	extern	image_t	*draw_chars;
-
 	if (gl_nobind->value && draw_chars)		// performance evaluation option
 		texnum = draw_chars->texnum;
+#endif
 	if ( gl_state.currenttextures[gl_state.currenttmu] == texnum)
 		return;
 	gl_state.currenttextures[gl_state.currenttmu] = texnum;
@@ -1831,6 +1832,7 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 	}
 	image = &gltextures[i];
 
+#ifndef USE_SDL_TTF
 	if ( type == it_font )
 	{
 		font_t *font;
@@ -1838,12 +1840,14 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 		font->image = image;
 		image->type = it_pic;
 	}
-	else image->type = type;
+	else
+#endif
+		image->type = type;
 
 	len = strlen(name);
 	if (len >= sizeof(image->name))
 		ri.Sys_Error (ERR_DROP, "Draw_LoadPic: \"%s\" is too long", name);
-	strcpy (image->name, name);
+	Q_strncpyz (image->name, name, MAX_QPATH);
 	image->registration_sequence = registration_sequence;
 	// drop extension
 	if ( (*image).name[len-4] == '.' ) (*image).name[len-4] = '\0';
@@ -2082,10 +2086,51 @@ struct image_s *R_RegisterSkin (char *name)
 R_RegisterFont
 ===============
 */
+#ifdef USE_SDL_TTF
+
+typedef struct
+{
+	char	*name;
+	int	renderStyle;
+} fontRenderStyle_t;
+
+fontRenderStyle_t fontStyle[] = {
+	{"TTF_STYLE_NORMAL", TTF_STYLE_NORMAL},
+	{"TTF_STYLE_BOLD", TTF_STYLE_BOLD},
+	{"TTF_STYLE_ITALIC", TTF_STYLE_ITALIC},
+	{"TTF_STYLE_UNDERLINE", TTF_STYLE_UNDERLINE}
+};
+
+#define NUM_FONT_STYLES (sizeof(fontStyle) / sizeof (fontRenderStyle_t))
+
+void R_RegisterFont (char *name, int size, char* path, char* style)
+{
+	int renderstyle = 0; // NORMAL is standard
+	int i;
+
+	if ( style && *style )
+	{
+		for (i=0 ; i< NUM_FONT_STYLES ; i++)
+		{
+			if ( !Q_stricmp( fontStyle[i].name, style ) )
+			{
+				renderstyle = fontStyle[i].renderStyle;
+				break;
+			}
+		}
+	}
+	else
+
+	ri.Con_Printf(PRINT_DEVELOPER, "...load font file %s (%s; pt: %i; style: %s)\n", path, name, size, fontStyle[renderstyle].name );
+
+	Draw_AnalyzeFont(name, path, renderstyle, size);
+}
+#else
 struct image_s *R_RegisterFont (char *name)
 {
 	return GL_FindImage (name, it_font);
 }
+#endif /* USE_SDL_TTF */
 
 
 /*
