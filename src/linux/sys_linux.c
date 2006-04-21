@@ -198,10 +198,10 @@ void Sys_Error (char *error, ...)
 
 	// BUG [ 1444732 ] game exits with error
 	//
-	// Removing this fprintf(), and therefore the call to gettext(), fixes
+	// Removing the call to gettext(), fixes
 	// the segfault. Why is gettext() off limits here???
 	//
-	//fprintf(stderr, _("Error: %s\n"), string);
+	fprintf(stderr, "Error: %s\n", string);
 
 	_exit (1);
 
