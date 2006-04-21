@@ -1,0 +1,21 @@
+// font definitions for SDL_ttf font engine
+// Wanna use them? Compile UFO:AI with -DUSE_SDL_TTF
+// and link against SDL and SDL_ttf
+//
+// valid flags
+// =======================
+// style:	(string)	TTF_STYLE_NORMAL, TTF_STYLE_BOLD, TTF_STYLE_ITALIC, TTF_STYLE_UNDERLINE
+// size:	(int)		pixel size for font
+// font		(string)	path to truetype font file
+
+font f_small
+{
+	font	"./base/fonts/new.ttf"
+	size	15
+}
+
+font f_big
+{
+	font	"./base/fonts/new.ttf"
+	size	20
+}
