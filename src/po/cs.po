@@ -1,0 +1,3756 @@
+# translation of cs.po to
+# translation of ufoai.po to
+# #-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#
+# Copyright (C) YEAR The UFO:AI team
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Karel Volný <kavol@seznam.cz>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: cs\n"
+"Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
+"POT-Creation-Date: 2006-04-19 01:33+0200\n"
+"PO-Revision-Date: 2006-04-20 23:42+0200\n"
+"Last-Translator: Karel Volný <kavol@seznam.cz>\n"
+"Language-Team:  <cs@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"#-#-#-#-#  ufoai.ufo.po (UFO Alien Invasion)  #-#-#-#-#\n"
+"X-Generator: KBabel 1.11.1\n"
+"Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: ../base/ufos/basemanagement.ufo:10
+msgid "Entrance"
+msgstr "Vstup"
+
+#: ../base/ufos/basemanagement.ufo:24
+msgid "Commando central"
+msgstr ""
+
+#: ../base/ufos/basemanagement.ufo:43
+msgid "Powerplant"
+msgstr "Elektrárna"
+
+#: ../base/ufos/basemanagement.ufo:64
+msgid "Laboratory"
+msgstr "Laboratoř"
+
+#: ../base/ufos/basemanagement.ufo:89
+msgid "Storage"
+msgstr "Sklady"
+
+#: ../base/ufos/basemanagement.ufo:107
+#, fuzzy
+msgid "Interceptors"
+msgstr "Stíhačky"
+
+#: ../base/ufos/basemanagement.ufo:124
+msgid "Quarters"
+msgstr "Ubikace"
+
+#: ../base/ufos/basemanagement.ufo:143 ../base/ufos/basemanagement.ufo:163
+msgid "Hangar"
+msgstr "Hangár"
+
+#: ../base/ufos/basemanagement.ufo:179
+msgid "Team Room"
+msgstr ""
+
+#: ../base/ufos/basemanagement.ufo:197
+msgid "Radar"
+msgstr "Radar"
+
+#: ../base/ufos/menu_bases.ufo:48
+msgid "Back to worldview"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:66
+#, fuzzy
+msgid "Build base-facilities"
+msgstr "Vybudovat "
+
+#: ../base/ufos/menu_bases.ufo:82
+msgid "Manage your aircraft"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:98
+msgid "Buy/Sell equipment"
+msgstr "Koupit/prodat vybavení"
+
+#: ../base/ufos/menu_bases.ufo:114 ../base/ufos/menu_bases.ufo:316
+msgid "Transfer equipment or personnel"
+msgstr "Přesun vybavení nebo osob"
+
+#: ../base/ufos/menu_bases.ufo:130
+msgid "Equip your personnel"
+msgstr "Vybavit posádku"
+
+#: ../base/ufos/menu_bases.ufo:146
+msgid "Research new technology"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:168 ../base/ufos/menu_geoscape.ufo:95
+msgid "Organisation capital"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:177
+msgid "Name of this base"
+msgstr "Jméno této základny"
+
+#: ../base/ufos/menu_bases.ufo:186
+msgid "Rename your base"
+msgstr "Přejmenovat základnu"
+
+#: ../base/ufos/menu_bases.ufo:201
+msgid "Switch to the previous base"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:212
+msgid "Switch to the next base"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:268
+msgid "Assign your squad"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:284
+msgid "Buy/Sell aircraft"
+msgstr "Koupit/prodat letoun"
+
+#: ../base/ufos/menu_bases.ufo:300
+msgid "Start your aircraft"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:363 ../base/ufos/menu_team.ufo:644
+#: ../base/ufos/menu_team.ufo:1163
+msgid "Done"
+msgstr "Hotovo"
+
+#: ../base/ufos/menu_bases.ufo:374
+msgid "Switch to the previous aircraft"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:385
+msgid "Switch to the next aircraft"
+msgstr ""
+
+#: ../base/ufos/menu_bases.ufo:396
+msgid "Call back"
+msgstr ""
+
+#: ../base/ufos/menu_geoscape.ufo:104
+msgid "Reset time to 5 seconds"
+msgstr ""
+
+#: ../base/ufos/menu_geoscape.ufo:116
+msgid "Slow down time"
+msgstr "Zpomalit čas"
+
+#: ../base/ufos/menu_geoscape.ufo:128
+msgid "Speed up time"
+msgstr "Zrychlit čas"
+
+#: ../base/ufos/menu_geoscape.ufo:169
+#, fuzzy
+msgid "Intercept alien craft or visit alien (crash) site."
+msgstr "Stíhat cizácký letoun nebo prozkoumat cizácké"
+
+#: ../base/ufos/menu_geoscape.ufo:187
+msgid "Organisation statistics"
+msgstr ""
+
+#: ../base/ufos/menu_geoscape.ufo:205
+msgid "Ufopedia"
+msgstr "Ufopedie"
+
+#: ../base/ufos/menu_geoscape.ufo:223
+msgid "Create base"
+msgstr "Vybudovat základnu"
+
+#: ../base/ufos/menu_geoscape.ufo:241 ../base/ufos/menu_hud.ufo:555
+msgid "Options"
+msgstr "Volby"
+
+#: ../base/ufos/menu_geoscape.ufo:252
+#, fuzzy
+msgid "Open up messages"
+msgstr "Otevřít zprávy"
+
+#: ../base/ufos/menu_geoscape.ufo:322
+msgid "Aircraft reached desired location - what to do?"
+msgstr "Letoun dosáhl cíle - co nyní?"
+
+#: ../base/ufos/menu_geoscape.ufo:383
+msgid "New base"
+msgstr "Nová základna"
+
+#: ../base/ufos/menu_geoscape.ufo:390 ../base/ufos/menu_geoscape.ufo:480
+msgid "Name:"
+msgstr "Jméno:"
+
+#: ../base/ufos/menu_geoscape.ufo:403
+msgid "Cost:"
+msgstr "Cena:"
+
+#: ../base/ufos/menu_geoscape.ufo:473
+msgid "Select aircraft"
+msgstr "Vybrat letoun"
+
+#: ../base/ufos/menu_geoscape.ufo:486
+msgid "Status:"
+msgstr "Stav:"
+
+#: ../base/ufos/menu_geoscape.ufo:492
+msgid "Base:"
+msgstr "Základna:"
+
+#: ../base/ufos/menu_hud.ufo:62
+msgid "Level 1"
+msgstr "Úroveň 1"
+
+#: ../base/ufos/menu_hud.ufo:71
+msgid "Level 2"
+msgstr "Úroveň 2"
+
+#: ../base/ufos/menu_hud.ufo:80
+msgid "Level 3"
+msgstr "Úroveň 3"
+
+#: ../base/ufos/menu_hud.ufo:89
+msgid "Level 4"
+msgstr "Úroveň 4"
+
+#: ../base/ufos/menu_hud.ufo:98
+msgid "Level 5"
+msgstr "Úroveň 5"
+
+#: ../base/ufos/menu_hud.ufo:107
+msgid "Level 6"
+msgstr "Úroveň 6"
+
+#: ../base/ufos/menu_hud.ufo:116
+msgid "Level 7"
+msgstr "Úroveň 7"
+
+#: ../base/ufos/menu_hud.ufo:125
+msgid "Level 8"
+msgstr "Úroveň 8"
+
+#: ../base/ufos/menu_hud.ufo:212
+msgid "Finish round"
+msgstr "Ukončit tah"
+
+#: ../base/ufos/menu_hud.ufo:223
+msgid "Enemy spotted"
+msgstr "Spatřen nepřítel"
+
+#: ../base/ufos/menu_hud.ufo:233
+msgid "Click to cycle through the spotted enemies"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:265
+msgid "Soldier 1"
+msgstr "Voják 1"
+
+#: ../base/ufos/menu_hud.ufo:274
+msgid "Soldier 2"
+msgstr "Voják 2"
+
+#: ../base/ufos/menu_hud.ufo:283
+msgid "Soldier 3"
+msgstr "Voják 3"
+
+#: ../base/ufos/menu_hud.ufo:292
+msgid "Soldier 4"
+msgstr "Voják 4"
+
+#: ../base/ufos/menu_hud.ufo:301
+msgid "Soldier 5"
+msgstr "Voják 5"
+
+#: ../base/ufos/menu_hud.ufo:310
+msgid "Soldier 6"
+msgstr "Voják 6"
+
+#: ../base/ufos/menu_hud.ufo:319
+msgid "Soldier 7"
+msgstr "Voják 7"
+
+#: ../base/ufos/menu_hud.ufo:328
+msgid "Soldier 8"
+msgstr "Voják 8"
+
+#: ../base/ufos/menu_hud.ufo:408 ../base/ufos/menu_hud.ufo:418
+msgid "Primary fire mode"
+msgstr "Primární režim střelby"
+
+#: ../base/ufos/menu_hud.ufo:428 ../base/ufos/menu_hud.ufo:438
+msgid "Secondary fire mode"
+msgstr "Sekundární režim střelby"
+
+#: ../base/ufos/menu_hud.ufo:448 ../base/ufos/menu_hud.ufo:459
+msgid "Reload weapon"
+msgstr "Dobít zbraň"
+
+#: ../base/ufos/menu_hud.ufo:504
+#, fuzzy
+msgid "Crouch/Stand up"
+msgstr "Zakleknout/postavit se"
+
+#: ../base/ufos/menu_hud.ufo:517
+msgid "Toggle reaction-fire"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:566
+msgid "Physical stats of this soldier"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:577
+msgid "Inventory"
+msgstr "Inventář"
+
+#: ../base/ufos/menu_multiplayer.ufo:241
+msgid "Current Team"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:276
+#, fuzzy
+msgid "Race:"
+msgstr "Rasa:"
+
+#: ../base/ufos/menu_multiplayer.ufo:304
+msgid "Name"
+msgstr "Jméno"
+
+#: ../base/ufos/menu_multiplayer.ufo:391 ../base/ufos/menu_multiplayer.ufo:502
+#: ../base/ufos/menu_multiplayer.ufo:780
+msgid "Team preference:"
+msgstr "Výběr týmu:"
+
+#: ../base/ufos/menu_multiplayer.ufo:482
+msgid "Connect to IP"
+msgstr "Připojit se na IP"
+
+#: ../base/ufos/menu_multiplayer.ufo:555
+msgid "Enable morale states:"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:596
+msgid "Dedicated server:"
+msgstr "Vyhrazený server:"
+
+#: ../base/ufos/menu_multiplayer.ufo:637
+#, fuzzy
+msgid "Teamplay:"
+msgstr "Týmová hra:"
+
+#: ../base/ufos/menu_multiplayer.ufo:678
+msgid "Max. clients:"
+msgstr "Maximum klientů:"
+
+#: ../base/ufos/menu_multiplayer.ufo:712
+msgid "Max. soldiers per team:"
+msgstr "Maximum vojáků v týmu:"
+
+#: ../base/ufos/menu_multiplayer.ufo:714
+msgid "Sets the max allowed soldiers per team"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:746
+msgid "Max soldiers per player:"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:748
+msgid "Sets the max allowed soldiers per player when in teamplay"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:782
+msgid "Sets the prefered team"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:814
+msgid "Allow Download:"
+msgstr "Povolit stahování:"
+
+#: ../base/ufos/menu_multiplayer.ufo:855
+msgid "Max. AI actors:"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:857
+msgid "Max AI actors for coop mode"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:889
+msgid "Server-Password:"
+msgstr "Heslo serveru:"
+
+#: ../base/ufos/menu_research.ufo:338 ../base/ufos/menu_research.ufo:354
+#: ../base/ufos/menu_research.ufo:370 ../base/ufos/menu_research.ufo:386
+#: ../base/ufos/menu_research.ufo:402 ../base/ufos/menu_research.ufo:418
+#: ../base/ufos/menu_research.ufo:434 ../base/ufos/menu_research.ufo:450
+#: ../base/ufos/menu_research.ufo:466 ../base/ufos/menu_research.ufo:482
+#: ../base/ufos/menu_research.ufo:498 ../base/ufos/menu_research.ufo:514
+#: ../base/ufos/menu_research.ufo:530 ../base/ufos/menu_research.ufo:546
+#: ../base/ufos/menu_research.ufo:562 ../base/ufos/menu_research.ufo:578
+#: ../base/ufos/menu_research.ufo:594 ../base/ufos/menu_research.ufo:610
+#: ../base/ufos/menu_research.ufo:626 ../base/ufos/menu_research.ufo:642
+#: ../base/ufos/menu_research.ufo:658 ../base/ufos/menu_research.ufo:674
+#: ../base/ufos/menu_research.ufo:690 ../base/ufos/menu_research.ufo:706
+#: ../base/ufos/menu_research.ufo:722 ../base/ufos/menu_research.ufo:738
+#: ../base/ufos/menu_research.ufo:754 ../base/ufos/menu_research.ufo:770
+msgid "Add scientist"
+msgstr "Přidat vědce"
+
+#: ../base/ufos/menu_research.ufo:346 ../base/ufos/menu_research.ufo:362
+#: ../base/ufos/menu_research.ufo:378 ../base/ufos/menu_research.ufo:394
+#: ../base/ufos/menu_research.ufo:410 ../base/ufos/menu_research.ufo:426
+#: ../base/ufos/menu_research.ufo:442 ../base/ufos/menu_research.ufo:458
+#: ../base/ufos/menu_research.ufo:474 ../base/ufos/menu_research.ufo:490
+#: ../base/ufos/menu_research.ufo:506 ../base/ufos/menu_research.ufo:522
+#: ../base/ufos/menu_research.ufo:538 ../base/ufos/menu_research.ufo:554
+#: ../base/ufos/menu_research.ufo:570 ../base/ufos/menu_research.ufo:586
+#: ../base/ufos/menu_research.ufo:602 ../base/ufos/menu_research.ufo:618
+#: ../base/ufos/menu_research.ufo:634 ../base/ufos/menu_research.ufo:650
+#: ../base/ufos/menu_research.ufo:666 ../base/ufos/menu_research.ufo:682
+#: ../base/ufos/menu_research.ufo:698 ../base/ufos/menu_research.ufo:714
+#: ../base/ufos/menu_research.ufo:730 ../base/ufos/menu_research.ufo:746
+#: ../base/ufos/menu_research.ufo:762 ../base/ufos/menu_research.ufo:778
+#, fuzzy
+msgid "Remove scientist"
+msgstr "Odebrat vědce"
+
+#: ../base/ufos/menu_research.ufo:837
+msgid "CREDIT"
+msgstr ""
+
+#: ../base/ufos/menu_research.ufo:856
+msgid "Stop research"
+msgstr "Zastavit výzkum"
+
+#: ../base/ufos/menu_research.ufo:867
+msgid "Start research"
+msgstr "Začít výzkum"
+
+#: ../base/ufos/menu_research.ufo:881
+msgid "Back to baseview"
+msgstr ""
+
+#: ../base/ufos/menu_stats.ufo:55
+msgid "Statistics"
+msgstr "Statistiky"
+
+#: ../base/ufos/menu_team.ufo:194 ../base/ufos/menu_team.ufo:203
+#: ../base/ufos/menu_team.ufo:212 ../base/ufos/menu_team.ufo:221
+#: ../base/ufos/menu_team.ufo:230 ../base/ufos/menu_team.ufo:239
+#: ../base/ufos/menu_team.ufo:248 ../base/ufos/menu_team.ufo:257
+#: ../base/ufos/menu_team.ufo:266 ../base/ufos/menu_team.ufo:275
+#: ../base/ufos/menu_team.ufo:284 ../base/ufos/menu_team.ufo:293
+#: ../base/ufos/menu_team.ufo:302 ../base/ufos/menu_team.ufo:311
+#: ../base/ufos/menu_team.ufo:320 ../base/ufos/menu_team.ufo:329
+#: ../base/ufos/menu_team.ufo:338 ../base/ufos/menu_team.ufo:347
+#: ../base/ufos/menu_team.ufo:356
+msgid "Add/remove this soldier"
+msgstr "Přidat/odebrat vojáka"
+
+#: ../base/ufos/menu_team.ufo:517
+msgid "Edit name of the soldier"
+msgstr "Upravit jméno vojáka"
+
+#: ../base/ufos/menu_team.ufo:550
+msgid "Power:"
+msgstr "Síla:"
+
+#: ../base/ufos/menu_team.ufo:555
+msgid "Speed:"
+msgstr "Rychlost:"
+
+#: ../base/ufos/menu_team.ufo:560
+msgid "Accuracy:"
+msgstr "Přesnost:"
+
+#: ../base/ufos/menu_team.ufo:565
+msgid "Mind:"
+msgstr "Intelekt:"
+
+#: ../base/ufos/menu_team.ufo:570
+msgid "Close Combat:"
+msgstr "Boj zblízka:"
+
+#: ../base/ufos/menu_team.ufo:575
+msgid "Heavy Weapons:"
+msgstr "Těžké zbraně:"
+
+#: ../base/ufos/menu_team.ufo:580
+msgid "Assault Guns:"
+msgstr "Útočné pušky:"
+
+#: ../base/ufos/menu_team.ufo:585
+msgid "Sniper Rifles:"
+msgstr "Ostřelovačské pušky:"
+
+#: ../base/ufos/menu_team.ufo:590
+msgid "High Explosives:"
+msgstr "Silné výbušniny:"
+
+#: ../base/ufos/menu_team.ufo:756 ../base/ufos/menu_team.ufo:765
+#: ../base/ufos/menu_team.ufo:774 ../base/ufos/menu_team.ufo:783
+#: ../base/ufos/menu_team.ufo:792 ../base/ufos/menu_team.ufo:801
+#: ../base/ufos/menu_team.ufo:810 ../base/ufos/menu_team.ufo:819
+msgid "Equip this soldier"
+msgstr "Vybavit vojáka"
+
+#: ../base/ufos/menu_team.ufo:902
+#, fuzzy
+msgid "Show only primary weapons in store"
+msgstr "Ukázat jen primární zbraně na skladě"
+
+#: ../base/ufos/menu_team.ufo:913
+msgid "Show only secondary weapons in store"
+msgstr "Ukázat jen sekundární zbraně na skladě"
+
+#: ../base/ufos/menu_team.ufo:924
+msgid "Show other equipment in store"
+msgstr "Ukázat ostatní vybavení na skladě"
+
+#: ../base/ufos/menu_team.ufo:935
+msgid "Show only armor in store"
+msgstr "Ukázat jen zbroj na skladě"
+
+#: ../base/ufos/menu_tutorials.ufo:46
+msgid "Tutorials"
+msgstr ""
+
+#: ../base/ufos/menu_ufopedia.ufo:50
+msgid "Previous entry"
+msgstr "Předchozí položka"
+
+#: ../base/ufos/menu_ufopedia.ufo:61
+msgid "Next entry"
+msgstr "Následující položka"
+
+#: ../base/ufos/menu_ufopedia.ufo:72
+msgid "Back to content"
+msgstr "Zpět na obsah"
+
+#: ../base/ufos/menu_ufopedia.ufo:83
+msgid "Leave Ufopedia"
+msgstr "Opustit Ufopedii"
+
+#: ../base/ufos/research.ufo:52
+msgid "Aircraft"
+msgstr "Letouny"
+
+#: ../base/ufos/research.ufo:53
+msgid "Technologies & Discoveries"
+msgstr "Technologie & objevy"
+
+#: ../base/ufos/research.ufo:54
+msgid "Weapons"
+msgstr "Zbraně"
+
+#: ../base/ufos/research.ufo:55
+msgid "Buildings"
+msgstr "Budovy"
+
+#: ../base/ufos/research.ufo:56
+msgid "Alien Species"
+msgstr "Cizácké druhy"
+
+#: ../base/ufos/research.ufo:57
+msgid "UFOs"
+msgstr "UFO"
+
+#: ../base/ufos/research.ufo:70
+msgid "assault_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:82
+msgid "assault_ammo_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:94
+msgid "sniper_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:106
+msgid "sniper_ammo_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:118
+msgid "smg_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:130
+msgid "smg_ammo_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:142
+msgid "shotgun_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:154
+msgid "shotgun_ammo_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:166
+msgid "flamer_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:178
+msgid "flamer_ammo_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:190
+msgid "pistol_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:202
+msgid "pistol_ammo_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:214
+msgid "rpg_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:226
+msgid "rpg_ammo_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:237
+msgid "Advanced Laser Technology"
+msgstr ""
+
+#: ../base/ufos/research.ufo:239
+msgid "laser_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:251
+msgid "laserpistol_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:263
+msgid "laserpistol_ammo_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:275 ../base/ufos/research.ufo:287
+msgid "laserrifle_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:299
+msgid "fraggen_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:311
+msgid "knife_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:326
+msgid "Tachyon Control"
+msgstr ""
+
+#: ../base/ufos/research.ufo:330
+msgid "tachyon_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:369
+msgid "tachyonrifle_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:382
+msgid "tachyonrifle_ammo_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:394
+msgid "tachyonsniper_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:407
+msgid "tachyonsniper_ammo_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:418
+msgid "Advanced Plasma Control"
+msgstr ""
+
+#: ../base/ufos/research.ufo:420 ../base/ufos/research.ufo:423
+msgid "plasma_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:444
+msgid "plaspistol_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:457
+msgid "plaspistol_ammo_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:469
+msgid "plasrifle_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:482
+msgid "plasrifle_ammo_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:497
+msgid "irgoggles_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:509
+msgid "medikit_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:520
+msgid "Nano Technology"
+msgstr ""
+
+#: ../base/ufos/research.ufo:522
+msgid "nano_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:531
+msgid "kevlar_armor_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:543
+msgid "nano_armor_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:555
+msgid "Advanced Armor Fabrics"
+msgstr ""
+
+#: ../base/ufos/research.ufo:576
+msgid "b_entrance_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:588
+msgid "b_commando_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:600
+msgid "b_powerplant_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:612
+msgid "b_storage_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:624
+msgid "b_hangar_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:636
+msgid "b_intercept_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:648
+msgid "b_quarters_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:660
+msgid "b_lab_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:672
+msgid "b_teamroom_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:684
+msgid "b_radar_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:699
+msgid "dropship_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:713
+msgid "interceptor_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:729
+msgid "General UFO technology"
+msgstr ""
+
+#: ../base/ufos/research.ufo:730 ../base/ufos/research.ufo:746
+msgid "ufo_small_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:745
+msgid "Small alien craft"
+msgstr "Malý cizácký letoun"
+
+#: ../base/ufos/research.ufo:761
+msgid "Big alien craft"
+msgstr "Velký cizácký letoun"
+
+#: ../base/ufos/research.ufo:762
+msgid "ufo_big_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:794
+msgid "Ortnok"
+msgstr ""
+
+#: ../base/ufos/research.ufo:795
+msgid "ortnok_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:809
+msgid "Ortnok Warrior"
+msgstr ""
+
+#: ../base/ufos/research.ufo:810
+msgid "ortnok_medium_txt"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:8
+msgid "intro_sentence1"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:15
+msgid "intro_sentence2"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:22
+msgid "intro_sentence3"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:29
+msgid "intro_sentence4"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:36
+msgid "intro_sentence5"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:57
+msgid "prolog_sentence1"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:65
+msgid "prolog_sentence2"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:73
+msgid "prolog_sentence3"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:81
+msgid "prolog_sentence4"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:89
+msgid "prolog_sentence5"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:97
+msgid "prolog_sentence6"
+msgstr ""
+
+#: ../base/ufos/seq_intro.ufo:105
+msgid "prolog_sentence7"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:6
+msgid "Assault Rifle"
+msgstr "Útočná puška"
+
+#: ../base/ufos/weapons.ufo:23
+msgid "Assault Rifle Clip"
+msgstr "Zásobník útočné pušky"
+
+#: ../base/ufos/weapons.ufo:35 ../base/ufos/weapons.ufo:251
+msgid "Burst"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:54
+msgid "Auto"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:79
+msgid "Sniper Rifle"
+msgstr "Ostřelovačská puška"
+
+#: ../base/ufos/weapons.ufo:96
+msgid "Sniper Rifle Clip"
+msgstr "Zásobník pro ostřelovačské pušky"
+
+#: ../base/ufos/weapons.ufo:108 ../base/ufos/weapons.ufo:475
+#: ../base/ufos/weapons.ufo:631
+msgid "Snap Shot"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:126 ../base/ufos/weapons.ufo:198
+#: ../base/ufos/weapons.ufo:498
+msgid "Aimed Shot"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:150
+msgid "9mm Pistol"
+msgstr "Pistole ráže 9 mm"
+
+#: ../base/ufos/weapons.ufo:167
+msgid "Pistol Clip"
+msgstr "Zásobník pistole"
+
+#: ../base/ufos/weapons.ufo:179
+msgid "Rapid Fire"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:222
+msgid "Submachine Gun"
+msgstr "Samopal"
+
+#: ../base/ufos/weapons.ufo:239
+msgid "SMG Clip"
+msgstr "Zásobník samopalu"
+
+#: ../base/ufos/weapons.ufo:270
+msgid "Full Auto"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:295
+msgid "Shotgun"
+msgstr "Brokovnice"
+
+#: ../base/ufos/weapons.ufo:312
+msgid "Buckshots"
+msgstr "Náboje do brokovnice"
+
+#: ../base/ufos/weapons.ufo:324
+msgid "Single Shot"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:345
+msgid "Double Shot"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:371
+msgid "Flamethrower"
+msgstr "Plamenomet"
+
+#: ../base/ufos/weapons.ufo:388
+msgid "Napalm Tank"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:400
+msgid "Candlelight"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:420
+msgid "Inferno"
+msgstr "Peklo"
+
+#: ../base/ufos/weapons.ufo:446
+msgid "Rocket Launcher"
+msgstr "Raketomet"
+
+#: ../base/ufos/weapons.ufo:463
+msgid "High-Explosive Rocket"
+msgstr "Vysocevýbušná raketa"
+
+#: ../base/ufos/weapons.ufo:527
+msgid "Tachyon Rifle"
+msgstr "Tachyonová puška"
+
+#: ../base/ufos/weapons.ufo:544
+msgid "Tachyon Rifle Charge"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:556 ../base/ufos/weapons.ufo:650
+msgid "Rapid Shots"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:575
+msgid "Charged Blast"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:602
+msgid "Tachyon Sniper Rifle"
+msgstr "Tachyonová ostřelovačská puška"
+
+#: ../base/ufos/weapons.ufo:619
+msgid "Tachyon Sniper Charge"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:675
+msgid "Plasma Pistol"
+msgstr "Plasmová pistole"
+
+#: ../base/ufos/weapons.ufo:692
+msgid "Plasma Pistol Charge"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:704 ../base/ufos/weapons.ufo:777
+msgid "Charged Pulse"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:722 ../base/ufos/weapons.ufo:795
+msgid "Continuous Beam"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:748
+msgid "Plasma Rifle"
+msgstr "Plasmová puška"
+
+#: ../base/ufos/weapons.ufo:765
+msgid "Plasma Rifle Charge"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:821
+msgid "Laser Pistol"
+msgstr "Laserová pistole"
+
+#: ../base/ufos/weapons.ufo:838
+msgid "Laser Pistol Charge"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:850 ../base/ufos/weapons.ufo:922
+msgid "Single Pulse"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:868 ../base/ufos/weapons.ufo:940
+msgid "Multiple Pulses"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:893
+msgid "Laser Rifle"
+msgstr "Laserová puška"
+
+#: ../base/ufos/weapons.ufo:910
+msgid "Laser Rifle Charge"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:965
+msgid "Frag Grenade"
+msgstr "Tříštivý granát"
+
+#: ../base/ufos/weapons.ufo:980 ../base/ufos/weapons.ufo:1004
+#: ../base/ufos/weapons.ufo:1064
+msgid "Throw"
+msgstr "Hodit"
+
+#: ../base/ufos/weapons.ufo:1034
+msgid "Knife"
+msgstr "Nůž"
+
+#: ../base/ufos/weapons.ufo:1049
+msgid "Stab"
+msgstr "Bodnout"
+
+#: ../base/ufos/weapons.ufo:1088
+msgid "Medikit"
+msgstr "Lékárnička"
+
+#: ../base/ufos/weapons.ufo:1102 ../base/ufos/weapons.ufo:1116
+msgid "Heal"
+msgstr "Ošetřit"
+
+#: ../base/ufos/weapons.ufo:1135
+msgid "IR Goggles"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:1148 ../base/ufos/weapons.ufo:1158
+msgid "Activate"
+msgstr "Aktivovat"
+
+#: client/cl_actor.c:277
+msgid "Currently panics!\n"
+msgstr ""
+
+#: client/cl_actor.c:284
+msgid "You cannot use this unknown item. You need to research it first.\n"
+msgstr "Nelze použít tento neznámý předmět. Je třeba jej nejprve probádat.\n"
+
+#: client/cl_actor.c:316
+#, c-format
+msgid ""
+"Health\t%i\n"
+"Move\t%i\n"
+msgstr ""
+
+#: client/cl_actor.c:321
+#, c-format
+msgid "Health\t%i\n"
+msgstr "Zdraví\t%i\n"
+
+#: client/cl_actor.c:598
+msgid "CL_BuildForbiddenList: list too long"
+msgstr ""
+
+#: client/cl_actor.c:611
+msgid "Nobody selected.\n"
+msgstr ""
+
+#: client/cl_actor.c:612
+msgid "Nobody selected\n"
+msgstr ""
+
+#: client/cl_actor.c:624
+msgid "This isn't your round.\n"
+msgstr ""
+
+#: client/cl_actor.c:625
+msgid "This isn't your round\n"
+msgstr ""
+
+#: client/cl_actor.c:759
+msgid "You cannot load this unknown item. You need to research it first.\n"
+msgstr ""
+
+#: client/cl_actor.c:788
+msgid "No clip left.\n"
+msgstr ""
+
+#: client/cl_actor.c:806
+msgid "Can't move, LE doesn't exist\n"
+msgstr ""
+
+#: client/cl_actor.c:865
+msgid "Can't turn, LE doesn't exist\n"
+msgstr ""
+
+#: client/cl_actor.c:1172
+#, c-format
+msgid "Team %i ended round"
+msgstr ""
+
+#: client/cl_actor.c:1174
+#, c-format
+msgid ", team %i's round started!\n"
+msgstr ""
+
+#: client/cl_actor.c:1181
+msgid "Your round started!\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:150
+msgid "MN_BuildingStatus: No Base or no Building set\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:158
+msgid "Not set"
+msgstr ""
+
+#: client/cl_basemanagement.c:160
+#, c-format
+msgid "Already %i in base"
+msgstr ""
+
+#: client/cl_basemanagement.c:162
+#, c-format
+msgid "Constructing: %i day(s)"
+msgstr ""
+
+#: client/cl_basemanagement.c:164 client/cl_basemanagement.c:2445
+msgid "Construction finished"
+msgstr ""
+
+#: client/cl_basemanagement.c:166
+#, c-format
+msgid "Upgrade: %i day(s)"
+msgstr ""
+
+#: client/cl_basemanagement.c:168
+msgid "Working 100%"
+msgstr ""
+
+#: client/cl_basemanagement.c:170
+msgid "Working 120%"
+msgstr ""
+
+#: client/cl_basemanagement.c:172
+msgid "Working 50%"
+msgstr ""
+
+#: client/cl_basemanagement.c:174
+msgid "Maintenance"
+msgstr ""
+
+#: client/cl_basemanagement.c:176
+msgid "Repairing"
+msgstr ""
+
+#: client/cl_basemanagement.c:178
+msgid "Down"
+msgstr ""
+
+#: client/cl_basemanagement.c:308
+msgid "Not enough credits to build this\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:308 client/cl_campaign.c:343
+#: client/cl_campaign.c:597 client/cl_campaign.c:646 client/cl_campaign.c:977
+#: client/cl_campaign.c:1063 client/cl_campaign.c:2092
+#: client/cl_campaign.c:2122 client/cl_campaign.c:2124
+#: client/cl_research.c:488 client/cl_research.c:600 client/cl_research.c:603
+#: client/cl_research.c:607 client/cl_research.c:624 client/cl_research.c:656
+#: client/cl_research.c:660 client/cl_research.c:789
+msgid "Notice"
+msgstr ""
+
+#: client/cl_basemanagement.c:376 client/cl_basemanagement.c:383
+msgid "No ground where i can place building upon\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:392 client/cl_basemanagement.c:400
+msgid "Can't place any building upon this ground\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:411
+msgid ""
+"Can't place this building here - the second part overlapped with another "
+"building\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:431
+msgid "There is already a building\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:432
+#, c-format
+msgid "Building: %i at (row:%i, col:%i)\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:436
+#, fuzzy
+msgid "Invalid coordinates\n"
+msgstr "Neplatné souřadnice\n"
+
+#: client/cl_basemanagement.c:452
+msgid "Usage: set_building <x> <y>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:491
+msgid "Usage: damage_building <amount>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:645
+#, c-format
+#, fuzzy
+msgid "Costs:\t%1.2f (%i Day[s] to build)\n"
+msgstr "Cena:\t%1.2f (%i Day[s] to build)\n"
+
+#: client/cl_basemanagement.c:647
+#, c-format
+msgid "Running Costs:\t%1.2f\n"
+msgstr "Provozní náklady:\t%1.2f\n"
+
+#: client/cl_basemanagement.c:648
+#, c-format
+msgid "Workercosts:\t%1.2f\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:649
+#, c-format
+msgid "Workers:\t%i\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:650
+#, c-format
+msgid "Energy:\t%1.0f\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:656
+#, c-format
+msgid "Production:\t%s (%i/day)\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:662
+#, c-format
+msgid "Level:\t%i\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:664
+msgid "Condition"
+msgstr ""
+
+#: client/cl_basemanagement.c:684
+msgid "Usage: remove_workers <amount>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:696
+msgid "Minimum amount of workers reached for this building\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:713
+msgid "Usage: add_workers <amount>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:725
+msgid "Maximum amount of workers reached for this building\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:786
+#, c-format
+msgid "Wrong dependency in basemangagement.ufo for building %s"
+msgstr ""
+
+#: client/cl_basemanagement.c:811
+msgid "Bases not initialized\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:877
+msgid "MN_ParseBuildings: unexptected end of file (names "
+msgstr ""
+
+#: client/cl_basemanagement.c:887
+#, c-format
+msgid "MN_ParseBuildings: building \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:892
+msgid "MN_ParseBuildings: too many buildings\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1013
+#, c-format
+msgid "MN_ParseBuildings: unknown token \"%s\" ignored (building %s)\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1306
+msgid "MN_AssignEmployee: No Base set\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1311
+msgid "MN_AssignEmployee: No need to move from quarters to quarters.\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1341
+msgid "No employee available in this base.\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1344
+#, c-format
+msgid "No free room in destination building \"%s\".\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1378
+#, c-format
+msgid "MN_RemoveEmployee: No employees in building. Can't remove one. %s\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1416
+#, c-format
+msgid "MN_RemoveEmployee: %s\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1419
+#, c-format
+msgid "MN_RemoveEmployee: %s 2\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1453
+msgid "MN_EmployeesInBase2: No Base set.\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1519
+msgid "MN_ParseBases: unexptected end of file (names "
+msgstr ""
+
+#: client/cl_basemanagement.c:1529
+#, c-format
+msgid "MN_ParseBases: base \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1536
+msgid "MN_ParseBases: too many bases\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1569
+msgid "MN_ParseProductions: unexptected end of file (names "
+msgstr ""
+
+#: client/cl_basemanagement.c:1576
+#, c-format
+msgid "MN_ParseProductions: production type \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1581
+msgid "MN_ParseProductions: to many production types\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1643
+#, c-format
+msgid "MN_ParseProductions: unknown token \"%s\" ignored (entry %s)\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1711
+msgid "Error in ufo-scriptfile - could not find the needed building\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1730 client/cl_basemanagement.c:1763
+#, c-format
+msgid "Invalid picture dimension of %s\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1828
+msgid "Usage: rename_base <name>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1871 client/cl_basemanagement.c:1892
+#, c-format
+msgid "new-base=%i\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1911
+msgid "Usage: mn_select_base <baseID>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1930
+msgid "MaxBases reached\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:1987
+#, c-format
+msgid "A new base has been built: %s."
+msgstr ""
+
+#: client/cl_basemanagement.c:1988
+msgid "Base built"
+msgstr ""
+
+#: client/cl_basemanagement.c:1993
+msgid "Not enough credits to set up a new base\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2006
+msgid "Usage: base_attack <baseID>\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2061
+#, c-format
+msgid "Building %s will not be taken for baseassemble - it invisible\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2233
+#, c-format
+msgid ""
+"There was an update and there are new buildings available which aren't in "
+"your savegame. You may encounter problems. (%i:%i)\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2287
+msgid "No base selected\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2435
+#, c-format
+msgid "Building finished - Base %s"
+msgstr ""
+
+#: client/cl_basemanagement.c:2435
+#, c-format
+msgid "Construction of building %s finished."
+msgstr ""
+
+#: client/cl_basemanagement.c:2436
+#, c-format
+msgid "Construction of building %s finished\\at base %s\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2444
+#, c-format
+msgid "There is at least one finished construction\\at base %s\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2527
+msgid "no baseCurrent for mp\n"
+msgstr ""
+
+#: client/cl_basemanagement.c:2532
+msgid "Probably an error in B_GetNumOnTeam - no baseCurrent\n"
+msgstr ""
+
+#: client/cl_campaign.c:162
+#, c-format
+msgid "')' expected in BEP (%s).\n"
+msgstr ""
+
+#: client/cl_campaign.c:165
+#, c-format
+msgid "Unexpected end of condition in BEP (%s).\n"
+msgstr ""
+
+#: client/cl_campaign.c:168
+#, c-format
+msgid "Variable '%s' not found in BEP (%s).\n"
+msgstr ""
+
+#: client/cl_campaign.c:172
+#, c-format
+msgid "Unknown CheckBEP error in BEP (%s).\n"
+msgstr ""
+
+#: client/cl_campaign.c:279
+#, c-format
+msgid "Set new coords for mission to %.0f:%.0f\n"
+msgstr ""
+
+#: client/cl_campaign.c:343
+msgid "Aircraft started"
+msgstr ""
+
+#: client/cl_campaign.c:393
+msgid "Nothing - should not be displayed"
+msgstr ""
+
+#: client/cl_campaign.c:396
+msgid "At homebase"
+msgstr ""
+
+#: client/cl_campaign.c:399
+msgid "Refuel"
+msgstr ""
+
+#: client/cl_campaign.c:402
+msgid "Idle"
+msgstr ""
+
+#: client/cl_campaign.c:405
+msgid "On transit"
+msgstr ""
+
+#: client/cl_campaign.c:408
+msgid "Ready for drop down"
+msgstr ""
+
+#: client/cl_campaign.c:411
+msgid "On inteception"
+msgstr ""
+
+#: client/cl_campaign.c:414
+msgid "Transportmission"
+msgstr ""
+
+#: client/cl_campaign.c:417
+msgid "Returning to homebase"
+msgstr ""
+
+#: client/cl_campaign.c:420
+#, c-format
+msgid "Error: Unknown aircraft status for %s\n"
+msgstr ""
+
+#: client/cl_campaign.c:435
+msgid "Usage: newaircraft <type>\n"
+msgstr ""
+
+#: client/cl_campaign.c:537
+#, c-format
+msgid "Warning: No aircraft in base %s\n"
+msgstr ""
+
+#: client/cl_campaign.c:554 client/cl_ufopedia.c:57 client/cl_ufopedia.c:85
+#: client/cl_ufopedia.c:86
+msgid "None"
+msgstr ""
+
+#: client/cl_campaign.c:554
+#, c-format
+msgid ""
+"Speed:\t%.0f\n"
+"Fuel:\t%i/%i\n"
+"Weapon:\t%s\n"
+"Shield:\t%s\n"
+msgstr ""
+
+#: client/cl_campaign.c:596
+#, c-format
+msgid "You've got a new aircraft (a %s) in base %s"
+msgstr ""
+
+#: client/cl_campaign.c:598
+#, c-format
+msgid "Setting aircraft to pos: %.0f:%.0f\n"
+msgstr ""
+
+#: client/cl_campaign.c:606
+#, c-format
+msgid "Aircraft for base %s: %s\n"
+msgstr ""
+
+#: client/cl_campaign.c:610
+#, c-format
+msgid "Aircraft %s not found\n"
+msgstr ""
+
+#: client/cl_campaign.c:646
+msgid "Could not set up your base at this location"
+msgstr ""
+
+#: client/cl_campaign.c:649
+msgid "Desertbase\n"
+msgstr ""
+
+#: client/cl_campaign.c:652
+msgid "Articbase\n"
+msgstr ""
+
+#: client/cl_campaign.c:655
+msgid "Graslandbase\n"
+msgstr ""
+
+#: client/cl_campaign.c:659
+#, c-format
+msgid "Colorvalues for base: R:%i G:%i B:%i\n"
+msgstr ""
+
+#: client/cl_campaign.c:764
+#, c-format
+msgid "Activate stage %s\n"
+msgstr ""
+
+#: client/cl_campaign.c:770
+#, c-format
+msgid "CL_CampaignActivateStage: stage '%s' not found.\n"
+msgstr ""
+
+#: client/cl_campaign.c:792
+#, c-format
+msgid "CL_CampaignEndStage: stage '%s' not found.\n"
+msgstr ""
+
+#: client/cl_campaign.c:808
+msgid "Too many active missions!\n"
+msgstr ""
+
+#: client/cl_campaign.c:826
+#, c-format
+msgid "Your base %s is under attack."
+msgstr ""
+
+#: client/cl_campaign.c:827
+msgid "Baseattack"
+msgstr ""
+
+#: client/cl_campaign.c:839
+#, fuzzy
+msgid "Alien activity"
+msgstr "Cizácká činnost"
+
+#: client/cl_campaign.c:839
+msgid "Alien activity has been reported."
+msgstr "Byla hlášena cizácká aktivita."
+
+#: client/cl_campaign.c:865
+msgid "CL_CampaignRemoveMission: Can't remove mission.\n"
+msgstr ""
+
+#: client/cl_campaign.c:871
+#, c-format
+msgid "%i missions left\n"
+msgstr ""
+
+#: client/cl_campaign.c:911
+msgid "Usage: ships_rclick <num>\n"
+msgstr ""
+
+#: client/cl_campaign.c:929 client/cl_campaign.c:973
+#, c-format
+msgid "Selected aircraft: %s\n"
+msgstr ""
+
+#: client/cl_campaign.c:949
+msgid "Usage: ships_click <num>\n"
+msgstr ""
+
+#: client/cl_campaign.c:955
+msgid "No mission selected - can't start aircraft with no mission selected'\n"
+msgstr ""
+
+#: client/cl_campaign.c:977
+msgid "Assign a team to aircraft"
+msgstr ""
+
+#: client/cl_campaign.c:1062
+#, c-format
+msgid "The mission expired and %i civilians died\\You've lost %i $"
+msgstr ""
+
+#: client/cl_campaign.c:1356
+#, c-format
+msgid "CL_GameNew: Campaign \"%s\" doesn't exist.\n"
+msgstr ""
+
+#: client/cl_campaign.c:1492
+msgid "Savefile is corrupted or aircraft does not exists any longer\n"
+msgstr ""
+
+#: client/cl_campaign.c:1530
+msgid "No campaign active.\n"
+msgstr ""
+
+#: client/cl_campaign.c:1537
+msgid "Couldn't write file.\n"
+msgstr ""
+
+#: client/cl_campaign.c:1635
+#, c-format
+msgid "Campaign '%s' saved.\n"
+msgstr ""
+
+#: client/cl_campaign.c:1653
+msgid "Usage: game_save <filename> <comment>\n"
+msgstr ""
+
+#: client/cl_campaign.c:1692 client/cl_team.c:912
+#, c-format
+msgid "Couldn't open file '%s'.\n"
+msgstr ""
+
+#: client/cl_campaign.c:1705
+#, c-format
+msgid "Savefile version %d detected\n"
+msgstr ""
+
+#: client/cl_campaign.c:1717
+#, c-format
+msgid "File '%s' is a more recent version (%d) than is supported.\n"
+msgstr ""
+
+#: client/cl_campaign.c:1722
+#, c-format
+msgid ""
+"Savefileformat has changed ('%s' is version %d) - you may experience "
+"problems.\n"
+msgstr ""
+
+#: client/cl_campaign.c:1737
+#, c-format
+msgid "CL_GameLoad: Campaign \"%s\" doesn't exist.\n"
+msgstr ""
+
+#: client/cl_campaign.c:1796
+msgid "Unable to load campaign '%s', unknown stage '%'\n"
+msgstr ""
+
+#: client/cl_campaign.c:1814
+#, c-format
+msgid "Warning: Set '%s' not found\n"
+msgstr ""
+
+#: client/cl_campaign.c:1844
+#, c-format
+msgid "Warning: Mission '%s' not found\n"
+msgstr ""
+
+#: client/cl_campaign.c:1855
+#, c-format
+msgid "Warning: Stage set '%s' not found\n"
+msgstr ""
+
+#: client/cl_campaign.c:1878
+#, c-format
+msgid "Campaign '%s' loaded.\n"
+msgstr ""
+
+#: client/cl_campaign.c:1896
+msgid "Usage: game_load <filename>\n"
+msgstr ""
+
+#: client/cl_campaign.c:2020
+msgid "Assemble or load a team"
+msgstr ""
+
+#: client/cl_campaign.c:2020
+msgid "Note"
+msgstr ""
+
+#: client/cl_campaign.c:2084
+msgid "No update after automission\n"
+msgstr ""
+
+#: client/cl_campaign.c:2092
+msgid "Your dropship is not near the landingzone"
+msgstr ""
+
+#: client/cl_campaign.c:2122
+msgid "You've won the battle"
+msgstr ""
+
+#: client/cl_campaign.c:2124
+msgid "You've lost the battle"
+msgstr ""
+
+#: client/cl_campaign.c:2159
+msgid "Usage: buy_select <num>\n"
+msgstr ""
+
+#: client/cl_campaign.c:2185
+msgid "Usage: buy_type <category>\n"
+msgstr ""
+
+#: client/cl_campaign.c:2250
+msgid "Usage: buy <num>\n"
+msgstr ""
+
+#: client/cl_campaign.c:2285
+msgid "Usage: sell <num>\n"
+msgstr ""
+
+#: client/cl_campaign.c:2412
+msgid "Usage: game_results <won>\n"
+msgstr ""
+
+#: client/cl_campaign.c:2496
+#, c-format
+msgid ""
+"Missions:\n"
+"won:\t%i\tlost:\t%i\n"
+"Bases:\n"
+"build:\t%i\tattacked:\t%i\n"
+msgstr ""
+
+#: client/cl_campaign.c:2542
+msgid "Map mask loaded.\n"
+msgstr ""
+
+#: client/cl_campaign.c:2543
+msgid "Couldn't load map mask (pics/menu/map_mask.tga)\n"
+msgstr ""
+
+#: client/cl_campaign.c:2582
+msgid "CL_ParseMission: unexptected end of file (mission "
+msgstr ""
+
+#: client/cl_campaign.c:2595
+#, c-format
+msgid "Com_ParseMission: mission def \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:2610
+#, c-format
+msgid "Com_ParseMission: mission def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:2643
+#, c-format
+msgid "Com_ParseMission: unknown token \"%s\" ignored (mission %s)\n"
+msgstr ""
+
+#: client/cl_campaign.c:2676
+msgid "CL_ParseStageSet: unexptected end of file (stageset "
+msgstr ""
+
+#: client/cl_campaign.c:2692
+#, c-format
+msgid "Com_ParseStageSets: stageset def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:2738
+#, c-format
+msgid "Com_ParseStageSet: unknown mission \"%s\" ignored (stageset %s)\n"
+msgstr ""
+
+#: client/cl_campaign.c:2744
+#, c-format
+msgid "Com_ParseStageSet: unknown token \"%s\" ignored (stageset %s)\n"
+msgstr ""
+
+#: client/cl_campaign.c:2756
+msgid "CL_ParseStage: unexptected end of file (stage "
+msgstr ""
+
+#: client/cl_campaign.c:2768
+#, c-format
+msgid "Com_ParseStage: stage def \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:2776
+#, c-format
+msgid "Com_ParseStages: stage def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:2786
+#, c-format
+msgid "stage: %s\n"
+msgstr ""
+
+#: client/cl_campaign.c:2798
+#, c-format
+msgid "Com_ParseStage: unknown token \"%s\" ignored (stage %s)\n"
+msgstr ""
+
+#: client/cl_campaign.c:2828
+msgid "CL_ParseCampaign: unexptected end of file (campaign "
+msgstr ""
+
+#: client/cl_campaign.c:2841
+#, c-format
+msgid "CL_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:2856
+#, c-format
+msgid "CL_ParseCampaign: campaign def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:2880
+#, c-format
+msgid "CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n"
+msgstr ""
+
+#: client/cl_campaign.c:2913
+msgid "CL_ParseAircraft: unexptected end of file (aircraft "
+msgstr ""
+
+#: client/cl_campaign.c:2920
+#, c-format
+msgid "CL_ParseAircraft: campaign def \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:2937
+#, c-format
+msgid "CL_ParseAircraft: aircraft def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_campaign.c:2963
+#, c-format
+msgid "Set size for aircraft to the max value of %i\n"
+msgstr ""
+
+#: client/cl_campaign.c:2981
+#, c-format
+msgid "CL_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n"
+msgstr ""
+
+#: client/cl_cin.c:138
+#, c-format
+msgid "PCX file %s was malformed"
+msgstr ""
+
+#: client/cl_cin.c:415
+#, c-format
+msgid "Decompression overread by %i"
+msgstr ""
+
+#: client/cl_cin.c:459
+msgid "Bad compressed frame size"
+msgstr ""
+
+#: client/cl_cin.c:514
+#, c-format
+msgid "Dropped frame: %i > %i\n"
+msgstr ""
+
+#: client/cl_cin.c:591
+#, c-format
+msgid "%s not found.\n"
+msgstr ""
+
+#: client/cl_fx.c:99
+#, c-format
+msgid "svc_lightstyle length=%i"
+msgstr ""
+
+#: client/cl_input.c:91
+msgid "Three keys down for a button!\n"
+msgstr ""
+
+#: client/cl_input.c:216
+msgid "Changed camera mode to remote.\n"
+msgstr ""
+
+#: client/cl_input.c:225
+msgid "Changed camera mode to first-person.\n"
+msgstr ""
+
+#: client/cl_le.c:96
+#, c-format
+msgid "LM_Perish: Can't find model %i\n"
+msgstr ""
+
+#: client/cl_le.c:205
+msgid "Too many local models\n"
+msgstr ""
+
+#: client/cl_le.c:675
+msgid "Too many LEs\n"
+msgstr ""
+
+#: client/cl_main.c:191
+#, c-format
+msgid "%s undefined\n"
+msgstr ""
+
+#: client/cl_main.c:206
+#, c-format
+msgid "Can't \"%s\", not connected\n"
+msgstr ""
+
+#: client/cl_main.c:285 client/cl_main.c:331
+msgid "Bad server address\n"
+msgstr ""
+
+#: client/cl_main.c:340
+#, c-format
+msgid "Connecting to %s...\n"
+msgstr ""
+
+#: client/cl_main.c:365 client/cl_main.c:697 client/cl_menu.c:421
+msgid "Assemble a team first"
+msgstr ""
+
+#: client/cl_main.c:365 client/cl_main.c:697 client/cl_menu.c:421
+msgid "Error"
+msgstr "Chyba"
+
+#: client/cl_main.c:371
+msgid "Server quit\n"
+msgstr ""
+
+#: client/cl_main.c:406
+msgid "You must set 'rcon_password' before issuing an rcon command.\n"
+msgstr ""
+
+#: client/cl_main.c:435
+msgid ""
+"You must either be connected, or set the 'rcon_address' cvar\n"
+"to issue rcon commands\n"
+msgstr ""
+
+#: client/cl_main.c:494
+#, c-format
+msgid "%i frames, %3.1f seconds: %3.1f fps\n"
+msgstr ""
+
+#: client/cl_main.c:565
+msgid "Bad address\n"
+msgstr ""
+
+#: client/cl_main.c:608
+msgid ""
+"\n"
+"Changing map...\n"
+msgstr ""
+
+#: client/cl_main.c:628 client/cl_main.c:643
+msgid "reconnecting...\n"
+msgstr ""
+
+#: client/cl_main.c:723
+msgid "pinging broadcast...\n"
+msgstr ""
+
+#: client/cl_main.c:751
+#, c-format
+msgid "pinging %s...\n"
+msgstr ""
+
+#: client/cl_main.c:754
+#, c-format
+msgid "Bad address: %s\n"
+msgstr ""
+
+#: client/cl_main.c:792
+msgid "Dup connect received. Ignored.\n"
+msgstr ""
+
+#: client/cl_main.c:814
+msgid "Command packet from remote host. Ignored.\n"
+msgstr ""
+
+#: client/cl_main.c:853
+msgid "Unknown command.\n"
+msgstr ""
+
+#: client/cl_main.c:869
+msgid "dumnping a packet\n"
+msgstr ""
+
+#: client/cl_main.c:897
+#, c-format
+msgid "%s: Runt packet\n"
+msgstr ""
+
+#: client/cl_main.c:906
+#, c-format
+msgid "%s:sequenced packet without connection\n"
+msgstr ""
+
+#: client/cl_main.c:923
+msgid ""
+"\n"
+"Server connection timed out.\n"
+msgstr ""
+
+#: client/cl_main.c:943
+msgid "User info settings:\n"
+msgstr ""
+
+#: client/cl_main.c:1657
+msgid "Too many map particles\n"
+msgstr ""
+
+#: client/cl_menu.c:411
+msgid "Usage: mn_startserver <name>\n"
+msgstr ""
+
+#: client/cl_menu.c:430
+msgid "Set playersoldiers lower than teamsoldiers"
+msgstr ""
+
+#: client/cl_menu.c:430
+msgid "Settings doesn't make sense"
+msgstr ""
+
+#: client/cl_menu.c:581
+#, c-format
+msgid "MN_ExecuteActions: node \"%s\" doesn't exist\n"
+msgstr ""
+
+#: client/cl_menu.c:593
+msgid "unknown action type\n"
+msgstr ""
+
+#: client/cl_menu.c:1109
+#, c-format
+msgid "Select mission: %s at %.0f:%.0f\n"
+msgstr ""
+
+#: client/cl_menu.c:1555
+msgid "Night"
+msgstr ""
+
+#: client/cl_menu.c:1556
+msgid "Day"
+msgstr ""
+
+#: client/cl_menu.c:1635
+#, c-format
+msgid "...precaching %i menus\n"
+msgstr ""
+
+#: client/cl_menu.c:1988
+msgid "no container...\n"
+msgstr ""
+
+#: client/cl_menu.c:2152 client/cl_menu.c:2185
+msgid ""
+"Select the desired location of the\n"
+"new base on the map.\n"
+msgstr ""
+"Vyber na mapě umístění\n"
+"nové základny.\n"
+
+#: client/cl_menu.c:2156 client/cl_menu.c:2189
+msgid ""
+"Aliens are attacking our base\n"
+"at this very moment.\n"
+msgstr ""
+"Cizáci právě teď útočí\n"
+"na naši základnu.\n"
+
+#: client/cl_menu.c:2160 client/cl_menu.c:2193
+msgid "Select ufo or mission on map\n"
+msgstr ""
+
+#: client/cl_menu.c:2264
+msgid "Menu stack overflow\n"
+msgstr ""
+
+#: client/cl_menu.c:2275
+#, c-format
+msgid "Didn't find menu \"%s\"\n"
+msgstr ""
+
+#: client/cl_menu.c:2283
+msgid "usage: mn_push <name>\n"
+msgstr ""
+
+#: client/cl_menu.c:2352
+msgid "usage: mn_modify <name> <amount> <min> <max>\n"
+msgstr ""
+
+#: client/cl_menu.c:2373
+msgid "usage: mn_modifywrap <name> <amount> <min> <max>\n"
+msgstr ""
+
+#: client/cl_menu.c:2579
+msgid "MN_ParseAction: unexpected end of file (in event)"
+msgstr ""
+
+#: client/cl_menu.c:2672
+#, c-format
+msgid "MN_ParseAction: token \"%s\" isn't a node property (in event)\n"
+msgstr ""
+
+#: client/cl_menu.c:2735
+#, c-format
+msgid "MN_ParseAction: unknown token \"%s\" ignored (in event)\n"
+msgstr ""
+
+#: client/cl_menu.c:2749
+msgid "MN_ParseNodeBody: unexpected end of file (node"
+msgstr ""
+
+#: client/cl_menu.c:2860
+#, c-format
+msgid "MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2875
+msgid "MN_ParseMenuBody: unexpected end of file (menu"
+msgstr ""
+
+#: client/cl_menu.c:2907
+#, c-format
+msgid "MN_ParseMenuBody: node prototype type change (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2935
+#, c-format
+msgid "MN_ParseMenuBody: second init function ignored (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2942
+#, c-format
+msgid "MN_ParseMenuBody: second close function ignored (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2949
+#, c-format
+msgid "MN_ParseMenuBody: second render node ignored (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2956
+#, c-format
+msgid "MN_ParseMenuBody: second popup node ignored (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2973
+#, c-format
+msgid "MN_ParseMenuBody: node with bad body ignored (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:2998
+#, c-format
+msgid "MN_ParseMenuBody: unknown token \"%s\" ignored (menu \"%s\")\n"
+msgstr ""
+
+#: client/cl_menu.c:3020
+msgid "MN_ParseMenuModel: unexptected end of file (names "
+msgstr ""
+
+#: client/cl_menu.c:3026
+#, c-format
+msgid "MN_ParseMenuModel: menu_model \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_menu.c:3032
+msgid "MN_ParseMenuModel: Max menu models reached\n"
+msgstr ""
+
+#: client/cl_menu.c:3048
+#, c-format
+msgid "MN_ParseMenuModel: menu \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_menu.c:3082
+#, c-format
+msgid "MN_ParseMenuModel: unknown token \"%s\" ignored (menu_model %s)\n"
+msgstr ""
+
+#: client/cl_menu.c:3106
+#, c-format
+msgid "MN_ParseMenus: menu \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_menu.c:3121
+#, c-format
+msgid "MN_ParseMenus: menu \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_menu.c:3129
+#, c-format
+msgid "MN_ParseMenus: menu \"%s\" with bad body ignored\n"
+msgstr ""
+
+#: client/cl_menu.c:3137
+#, c-format
+msgid "Error in menu %s - max menu num exeeded (%i)"
+msgstr ""
+
+#: client/cl_parse.c:207 client/cl_parse.c:280
+msgid "Refusing to download a path with ..\n"
+msgstr ""
+
+#: client/cl_parse.c:286
+msgid "File already exists.\n"
+msgstr ""
+
+#: client/cl_parse.c:291
+#, c-format
+msgid "Downloading %s\n"
+msgstr ""
+
+#: client/cl_parse.c:356
+msgid "Server does not have this file.\n"
+msgstr ""
+
+#: client/cl_parse.c:378
+#, c-format
+msgid "Failed to open %s\n"
+msgstr ""
+
+#: client/cl_parse.c:418
+msgid "failed to rename.\n"
+msgstr ""
+
+#: client/cl_parse.c:449
+msgid "Serverdata packet received.\n"
+msgstr ""
+
+#: client/cl_parse.c:462
+#, c-format
+msgid "Server returned version %i, not %i"
+msgstr ""
+
+#: client/cl_parse.c:662
+#, c-format
+msgid "(player %i) It's team %i's round\n"
+msgstr ""
+
+#: client/cl_parse.c:731
+msgid "Entity appearing already visible... overwriting the old one\n"
+msgstr ""
+
+#: client/cl_parse.c:752
+msgid "Delete request ignored... LE not found\n"
+msgstr ""
+
+#: client/cl_parse.c:864
+msgid "Alien spotted!\n"
+msgstr "Spatřen cizák!\n"
+
+#: client/cl_parse.c:865
+msgid "Enemy spotted!\n"
+msgstr ""
+
+#: client/cl_parse.c:867
+msgid "Civilian spotted!\n"
+msgstr ""
+
+#: client/cl_parse.c:894
+msgid "Stats message ignored... LE not found\n"
+msgstr ""
+
+#: client/cl_parse.c:922
+msgid "StateChange message ignored... LE not found\n"
+msgstr ""
+
+#: client/cl_parse.c:1024
+msgid "InvAdd message ignored... LE not found\n"
+msgstr ""
+
+#: client/cl_parse.c:1070
+msgid "InvDel message ignored... LE not found\n"
+msgstr ""
+
+#: client/cl_parse.c:1109
+msgid "InvAmmo message ignored... LE not found\n"
+msgstr ""
+
+#: client/cl_parse.c:1176
+msgid "CL_ParseEvent: Bad event message"
+msgstr ""
+
+#: client/cl_parse.c:1190
+#, c-format
+msgid "CL_ParseEvent: invalid event %i\n"
+msgstr ""
+
+#: client/cl_parse.c:1193
+#, c-format
+msgid "CL_ParseEvent: no handling function for event %i\n"
+msgstr ""
+
+#: client/cl_parse.c:1199 client/cl_parse.c:1338
+#, c-format
+msgid "CL_Events: invalid event %i\n"
+msgstr ""
+
+#: client/cl_parse.c:1295
+msgid "CL_ParseEvent: timetable overflow\n"
+msgstr ""
+
+#: client/cl_parse.c:1400
+msgid "CL_ParseServerMessage: Bad server message"
+msgstr ""
+
+#: client/cl_parse.c:1424
+#, c-format
+msgid "CL_ParseServerMessage: Illegible server message %d\n"
+msgstr ""
+
+#: client/cl_parse.c:1432
+msgid "Server disconnected\n"
+msgstr ""
+
+#: client/cl_parse.c:1436
+msgid "Server disconnected, reconnecting\n"
+msgstr ""
+
+#: client/cl_particle.c:200 client/cl_particle.c:233
+msgid "CL_ParticleGetArt: Unknown art type\n"
+msgstr ""
+
+#: client/cl_particle.c:290 client/cl_particle.c:335 client/cl_particle.c:366
+#: client/cl_particle.c:390 client/cl_particle.c:476 client/cl_particle.c:502
+msgid "CL_ParticleFunction: stack underflow\n"
+msgstr ""
+
+#: client/cl_particle.c:312
+#, c-format
+msgid ""
+"CL_ParticleFunction: can't get components of a non-vector type (particle %"
+"s)\n"
+msgstr ""
+
+#: client/cl_particle.c:323
+msgid "CL_ParticleFunction: stack overflow\n"
+msgstr ""
+
+#: client/cl_particle.c:341
+#, c-format
+msgid "Bad type '%s' for pic (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:349
+#, c-format
+msgid "Bad type '%s' for model (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:370 client/cl_particle.c:394
+#, c-format
+msgid "CL_ParticleFunction: bad type '%s' for add (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:374
+#, c-format
+msgid "CL_ParticleFunction: bad vector dimensions for add/sub (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:402 client/cl_particle.c:414
+#, c-format
+msgid "CL_ParticleFunction: bad vector dimensions for mul/div (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:426
+#, c-format
+msgid "CL_ParticleFunction: bad type '%s' for sin (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:435
+#, c-format
+msgid "CL_ParticleFunction: bad type '%s' for cos (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:444
+#, c-format
+msgid "CL_ParticleFunction: bad type '%s' for tan (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:481
+#, c-format
+msgid "CL_ParticleFunction: bad type '%s' for vector creation (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:486
+#, c-format
+msgid "CL_ParticleFunction: created vector with dim > 4 (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:506
+#, c-format
+msgid "CL_ParticleFunction: bad type '%s' int required for nspawn (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:516
+#, c-format
+msgid "CL_ParticleFunction: unknown cmd type %i\n"
+msgstr ""
+
+#: client/cl_particle.c:541
+#, c-format
+msgid "Particle definiton \"%s\" not found\n"
+msgstr ""
+
+#: client/cl_particle.c:558
+msgid "Too many particles...\n"
+msgstr ""
+
+#: client/cl_particle.c:714 client/cl_particle.c:721
+msgid "ED_ParseEntity: EOF without closing brace"
+msgstr ""
+
+#: client/cl_particle.c:724
+msgid "ED_ParseEntity: closing brace without data"
+msgstr ""
+
+#: client/cl_particle.c:802
+msgid "CL_ParsePtlCmds: unexptected end of file"
+msgstr ""
+
+#: client/cl_particle.c:811
+#, c-format
+msgid "CL_ParsePtlCmds: particle cmds \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_particle.c:866
+#, c-format
+msgid "CL_ParsePtlCmds: bad reference \"%s\" specified (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:874
+#, c-format
+msgid "CL_ParsePtlCmds: bad type in var \"%s\" specified (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:889
+#, c-format
+msgid "CL_ParsePtlCmds: can't get components of a non-vector type (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:909
+#, c-format
+msgid "CL_ParsePtlCmds: bad type \"%s\" specified (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:953
+#, c-format
+msgid "CL_ParsePtlCmds: unknown token \"%s\" ignored (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:970
+msgid "CL_ParseParticle: unexptected end of file (particle "
+msgstr ""
+
+#: client/cl_particle.c:982
+#, c-format
+msgid "CL_ParseParticle: particle def \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_particle.c:997
+#, c-format
+msgid "CL_ParseParticle: particle def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_particle.c:1021
+#, c-format
+msgid "CL_ParseParticle: unknown token \"%s\" ignored (particle %s)\n"
+msgstr ""
+
+#: client/cl_particle.c:1028
+#, c-format
+msgid "CL_ParseParticle: particle definition %s without init function ignored\n"
+msgstr ""
+
+#: client/cl_research.c:74
+#, c-format
+msgid "RS_MarkOneCollected: \"%s\" not found. No tech provides this.\n"
+msgstr ""
+
+#: client/cl_research.c:111
+#, c-format
+msgid "RS_MarkOneResearchable: \"%s\" marked as researchable.\n"
+msgstr ""
+
+#: client/cl_research.c:116
+#, c-format
+msgid "RS_MarkOneResearchable: \"%s\" technology not found.\n"
+msgstr ""
+
+#: client/cl_research.c:187
+msgid "RS_MarkResearchable: Done.\n"
+msgstr ""
+
+#: client/cl_research.c:235
+#, c-format
+msgid "RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined."
+msgstr ""
+
+#: client/cl_research.c:288
+#, c-format
+msgid ""
+"RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id "
+"used as name.\n"
+msgstr ""
+
+#: client/cl_research.c:301
+#, c-format
+msgid "RS_InitTree: aircraft model \"%s\" \n"
+msgstr ""
+
+#: client/cl_research.c:307
+#, c-format
+msgid ""
+"RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not "
+"found.\n"
+msgstr ""
+
+#: client/cl_research.c:313
+#, c-format
+msgid "RS_InitTree: Technology tree initialised. %i entries found.\n"
+msgstr ""
+
+#: client/cl_research.c:335
+#, c-format
+msgid "RS_GetName: \"%s\" -  Technology not found. Name defaults to id\n"
+msgstr ""
+
+#: client/cl_research.c:343
+#, c-format
+msgid "RS_GetName: \"%s\" - No name defined. Name defaults to id.\n"
+msgstr ""
+
+#: client/cl_research.c:371
+#, c-format
+msgid "Free labs in this base: %i"
+msgstr ""
+
+#: client/cl_research.c:373
+msgid "Not researched in any base."
+msgstr ""
+
+#: client/cl_research.c:378
+#, c-format
+msgid "Researched in %s"
+msgstr ""
+
+#: client/cl_research.c:380
+msgid "Researched in this base."
+msgstr ""
+
+#: client/cl_research.c:415
+msgid "Dependencies: "
+msgstr ""
+
+#: client/cl_research.c:488
+msgid ""
+"There is no free lab available.\\You need to build one or free another\\in "
+"order to assign scientists to research this technology.\n"
+msgstr ""
+
+#: client/cl_research.c:496
+msgid "Can't add scientist from the lab.\n"
+msgstr ""
+
+#: client/cl_research.c:548
+msgid "Can't remove scientist from the lab.\n"
+msgstr ""
+
+#: client/cl_research.c:600
+msgid "This item is already under research by your scientists."
+msgstr ""
+
+#: client/cl_research.c:603 client/cl_research.c:656
+msgid "The research on this item continues."
+msgstr ""
+
+#: client/cl_research.c:607 client/cl_research.c:660
+msgid "The research on this item is complete."
+msgstr ""
+
+#: client/cl_research.c:624
+msgid ""
+"The research on this item is not yet possible.\n"
+"You need to research the technologies it's based on first."
+msgstr ""
+
+#: client/cl_research.c:710
+#, c-format
+msgid "%i max.\n"
+msgstr ""
+
+#: client/cl_research.c:789
+msgid "Build a laboratory first"
+msgstr ""
+
+#: client/cl_research.c:812
+#, c-format
+msgid "RS_DependsOn: \"%s\" <- research item not found.\n"
+msgstr ""
+
+#: client/cl_research.c:842
+#, c-format
+msgid "Research of \"%s\" finished.\n"
+msgstr ""
+
+#: client/cl_research.c:846
+#, c-format
+msgid "Depending tech \"%s\" has been researched as well.\n"
+msgstr ""
+
+#: client/cl_research.c:873
+#, c-format
+msgid "Research of %s finished\n"
+msgstr ""
+
+#: client/cl_research.c:875
+#, c-format
+msgid "%i researches finished\n"
+msgstr ""
+
+#: client/cl_research.c:876
+msgid "Research finished"
+msgstr ""
+
+#: client/cl_research.c:1048
+msgid "RS_ParseTechnologies: unexptected end of file."
+msgstr ""
+
+#: client/cl_research.c:1057
+#, c-format
+msgid "RS_ParseTechnologies: \"%s\" technology def without body ignored.\n"
+msgstr ""
+
+#: client/cl_research.c:1061
+#, c-format
+msgid "RS_ParseTechnologies: too many technology entries. limit is %i.\n"
+msgstr ""
+
+#: client/cl_research.c:1072
+msgid "No description available."
+msgstr ""
+
+#: client/cl_research.c:1104
+#, c-format
+msgid "RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n"
+msgstr ""
+
+#: client/cl_research.c:1121
+#, c-format
+msgid ""
+"RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - "
+"ignored.\n"
+msgstr ""
+
+#: client/cl_research.c:1160
+#, c-format
+msgid "RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n"
+msgstr ""
+
+#: client/cl_research.c:1176
+msgid ""
+"RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not "
+"allowed\n"
+msgstr ""
+
+#: client/cl_research.c:1206
+#, c-format
+msgid "RS_GetRequired: \"%s\" - technology not found.\n"
+msgstr ""
+
+#: client/cl_research.c:1262
+#, c-format
+msgid "RS_TechIsResearched: \"%s\" research item not found.\n"
+msgstr ""
+
+#: client/cl_research.c:1292
+#, c-format
+msgid "RS_TechIsResearchable: \"%s\" research item not found.\n"
+msgstr ""
+
+#: client/cl_research.c:1326
+#, c-format
+msgid "RS_GetFirstRequired2: \"%s\" - technology not found.\n"
+msgstr ""
+
+#: client/cl_research.c:1399
+#, c-format
+msgid "Saving %i technologies\n"
+msgstr ""
+
+#: client/cl_research.c:1418
+#, c-format
+msgid ""
+"There was an update and there are new technologies available which aren't in "
+"your savegame. You may encounter problems. (%i:%i)\n"
+msgstr ""
+
+#: client/cl_scrn.c:684
+#, c-format
+msgid "%f seconds (%f fps)\n"
+msgstr ""
+
+#: client/cl_sequence.c:315
+msgid "Usage: seq_start <name>\n"
+msgstr ""
+
+#: client/cl_sequence.c:326
+#, c-format
+msgid "Couldn't find sequence '%s'\n"
+msgstr ""
+
+#: client/cl_sequence.c:451
+#, c-format
+msgid "Precaching model: %s\n"
+msgstr ""
+
+#: client/cl_sequence.c:460
+#, c-format
+msgid "Precaching image: %s\n"
+msgstr ""
+
+#: client/cl_sequence.c:465
+#, c-format
+msgid "SEQ_Precache: unknown format '%s'\n"
+msgstr ""
+
+#: client/cl_sequence.c:516
+msgid "Too many sequence entities\n"
+msgstr ""
+
+#: client/cl_sequence.c:540
+#, c-format
+msgid "Registering model: %s\n"
+msgstr ""
+
+#: client/cl_sequence.c:545
+#, c-format
+msgid "Change anim to: %s\n"
+msgstr ""
+
+#: client/cl_sequence.c:548
+#, c-format
+msgid "SEQ_Model: unknown token '%s'\n"
+msgstr ""
+
+#: client/cl_sequence.c:577
+msgid "Too many sequence 2d objects\n"
+msgstr ""
+
+#: client/cl_sequence.c:598
+#, c-format
+msgid "SEQ_Text: unknown token '%s'\n"
+msgstr ""
+
+#: client/cl_sequence.c:621
+#, c-format
+msgid "SEQ_Remove: couldn't find '%s'\n"
+msgstr ""
+
+#: client/cl_sequence.c:645
+msgid "CL_ParseSequence: unexptected end of file (sequence "
+msgstr ""
+
+#: client/cl_sequence.c:658
+#, c-format
+msgid "CL_ParseSequence: sequence def \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_sequence.c:664
+msgid "Too many sequences\n"
+msgstr ""
+
+#: client/cl_sequence.c:676
+#, c-format
+msgid "CL_ParseSequence: sequence def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_sequence.c:697
+msgid "Too many sequence commands\n"
+msgstr ""
+
+#: client/cl_sequence.c:719
+#, c-format
+msgid "Too much data for sequence %s"
+msgstr ""
+
+#: client/cl_sequence.c:739
+#, c-format
+msgid "CL_ParseSequence: unknown command \"%s\" ignored (sequence %s)\n"
+msgstr ""
+
+#: client/cl_sequence.c:844
+msgid "ERROR: no free file names to create video\n"
+msgstr ""
+
+#: client/cl_sequence.c:870
+#, c-format
+msgid "Failed to write avi file %p - %i:%i\n"
+msgstr ""
+
+#: client/cl_sequence.c:931
+msgid "ERROR: Top of chunkstack breached\n"
+msgstr ""
+
+#: client/cl_sequence.c:949
+msgid "ERROR: Bottom of chunkstack breached\n"
+msgstr ""
+
+#: client/cl_sequence.c:1122
+msgid "cl_aviFrameRate must be >= 1\n"
+msgstr ""
+
+#: client/cl_sequence.c:1129
+#, c-format
+msgid "Could not open %s for writing\n"
+msgstr ""
+
+#: client/cl_sequence.c:1136
+msgid "Could not open index file for writing\n"
+msgstr ""
+
+#: client/cl_sequence.c:1169
+#, c-format
+msgid "WARNING: cl_aviFrameRate is not a divisor of the audio rate, suggest %d\n"
+msgstr ""
+
+#: client/cl_sequence.c:1175 client/cl_sequence.c:1183
+msgid "No audio for video capturing\n"
+msgstr ""
+
+#: client/cl_sequence.c:1302
+msgid "WARNING: Audio capture buffer overflow -- truncating\n"
+msgstr ""
+
+#: client/cl_sequence.c:1427
+#, c-format
+msgid "Wrote %d:%d frames to %s\n"
+msgstr ""
+
+#: client/cl_team.c:38
+#, c-format
+msgid "'%s' isn't a gender! (male and female are)\n"
+msgstr ""
+
+#: client/cl_team.c:55
+#, c-format
+msgid "No first name in category '%s'\n"
+msgstr ""
+
+#: client/cl_team.c:64
+#, c-format
+msgid ""
+"\n"
+"No last name in category '%s'\n"
+msgstr ""
+
+#: client/cl_team.c:254
+#, c-format
+#, fuzzy
+msgid ""
+"Primary:\t%s\n"
+"Secondary:\t%s\n"
+"Damage:\t%i / %i\n"
+"Time units:\t%i / %i\n"
+"Range:\t%1.1f / %1.1f\n"
+"Spreads:\t%1.1f / %1.1f\n"
+"Ammo:\t%i\n"
+msgstr ""
+"Primary:\t%s\n"
+"Secondary:\t%s\n"
+"Damage:\t%i / %i\n"
+"Time units:\t%i / %i\n"
+"Dostřel:\t%1.1f / %1.1f\n"
+"Spreads:\t%1.1f / %1.1f\n"
+"Munice:\t%i\n"
+
+#: client/cl_team.c:263
+#, c-format
+msgid ""
+"Damage:\t%i / %i\n"
+"Time units:\t%i / %i\n"
+"Range:\t%1.1f / %1.1f\n"
+"Spreads:\t%1.1f / %1.1f\n"
+"Ammo:\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:274
+#, c-format
+msgid ""
+"Action:\t%s\n"
+"Time units:\t%i\n"
+"Range:\t%1.1f\n"
+msgstr ""
+
+#: client/cl_team.c:280
+#, c-format
+msgid "Unknown - need to research this"
+msgstr ""
+
+#: client/cl_team.c:472
+#, c-format
+msgid "Equipment '%s' not found!\n"
+msgstr ""
+
+#: client/cl_team.c:610
+msgid "No base set up\n"
+msgstr ""
+
+#: client/cl_team.c:648
+msgid "Usage: hire <num>\n"
+msgstr ""
+
+#: client/cl_team.c:754
+#, c-format
+msgid "Couldn't write file (%s).\n"
+msgstr ""
+
+#: client/cl_team.c:778
+#, c-format
+msgid "Team '%s' saved.\n"
+msgstr ""
+
+#: client/cl_team.c:889
+#, c-format
+msgid "Load team with %i members and %i slots\n"
+msgstr ""
+
+#: client/cl_team.c:954
+#, c-format
+msgid "Team '%s' loaded.\n"
+msgstr ""
+
+#: client/cl_team.c:971
+#, c-format
+msgid "Team 'team%s' loaded.\n"
+msgstr ""
+
+#: client/cl_team.c:1083
+msgid "Too many teams in result message\n"
+msgstr ""
+
+#: client/cl_team.c:1088 game/g_ai.c:455
+# Alien = cizák - tradice českého překladu UFO: Enemy Unknown
+msgid "Alien"
+msgstr "Cizák"
+
+#: client/cl_team.c:1088
+msgid "Enemy"
+msgstr ""
+
+#: client/cl_team.c:1089
+msgid "Aliens"
+msgstr "Cizáci"
+
+#: client/cl_team.c:1089
+msgid "Enemies"
+msgstr ""
+
+#: client/cl_team.c:1105
+msgid "WARNING: bad result message\n"
+msgstr ""
+
+#: client/cl_team.c:1113
+#, c-format
+msgid "%s killed\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:1115
+#, c-format
+msgid ""
+"%s survivors\t%i\n"
+"\n"
+msgstr ""
+
+#: client/cl_team.c:1118
+#, c-format
+msgid "Team losses\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:1119
+#, c-format
+msgid "Friendly fire losses\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:1120
+#, c-format
+msgid ""
+"Team survivors\t%i\n"
+"\n"
+msgstr ""
+
+#: client/cl_team.c:1131
+#, c-format
+msgid "Civilians killed by the %s\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:1132
+#, c-format
+msgid "Civilians killed by your Team\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:1133
+#, c-format
+msgid ""
+"Civilians saved\t%i\n"
+"\n"
+"\n"
+msgstr ""
+
+#: client/cl_team.c:1157
+#, c-format
+msgid "Collected alien technology\t%i $\n"
+msgstr ""
+
+#: client/cl_team.c:1162
+#, c-format
+msgid "Aliens killed\t%i $\n"
+msgstr "Cizáků zabito\t%i $\n"
+
+#: client/cl_team.c:1167
+#, c-format
+msgid "Civilians saved\t%i $\n"
+msgstr "Civilistů zachráněno\t%i $\n"
+
+#: client/cl_team.c:1170
+#, c-format
+msgid ""
+"Total reward\t%i $\n"
+"\n"
+"\n"
+msgstr ""
+"Celková odměna\t%i $\n"
+"\n"
+"\n"
+
+#: client/cl_team.c:1174
+#, c-format
+msgid "New Recruits\t%i\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:49
+msgid "Error - could not find building"
+msgstr "Chyba - budovu nelze najít"
+
+#: client/cl_ufopedia.c:56
+#, c-format
+msgid ""
+"Depends:\t%s\n"
+"More than once:\t%s\n"
+"Buildtime:\t%i day(s)\n"
+"Fixcosts:\t%i $\n"
+"Running costs:\t%i $\n"
+"Energy:\t%i\n"
+"Workercosts:\t%i $\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:58
+msgid "No"
+msgstr "Ne"
+
+#: client/cl_ufopedia.c:58
+msgid "Yes"
+msgstr "Ano"
+
+#: client/cl_ufopedia.c:79
+msgid "Error - could not find aircraft"
+msgstr "Chyba - letoun nelze najít"
+
+#: client/cl_ufopedia.c:82
+#, c-format
+msgid ""
+"Speed:\t%.0f\n"
+"Fuel:\t%i\n"
+"Weapon:\t%s\n"
+"Shield:\t%s\n"
+msgstr ""
+"Rychlost:\t%.0f\n"
+"Palivo:\t%i\n"
+"Zbraň:\t%s\n"
+"Štít:\t%s\n"
+
+#: client/cl_ufopedia.c:170
+msgid "Usage: ufopedia <id>\n"
+msgstr "Použití: ufopedie <id>\n"
+
+#: client/cl_ufopedia.c:179
+msgid "MN_FindEntry_f: No PediaEntry given as parameter\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:183
+#, c-format
+msgid "MN_FindEntry_f: id=\"%s\"\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:209
+#, c-format
+msgid "MN_FindEntry_f: No PediaEntry found for %s\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:236
+msgid "Ufopedia Content"
+msgstr "Obsah ufopedie"
+
+#: client/cl_ufopedia.c:360
+msgid "MN_ParseUpChapters: unexptected end of file (names "
+msgstr ""
+
+#: client/cl_ufopedia.c:367
+#, c-format
+msgid "MN_ParseUpChapters: chapter def \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:379
+msgid "MN_ParseUpChapters: too many chapter defs\n"
+msgstr ""
+
+#: client/cl_view.c:147
+#, c-format
+msgid "Bad light style %i"
+msgstr ""
+
+#: client/cl_view.c:307
+#, c-format
+msgid "CL_ParseEntitystring: found %s when expecting {"
+msgstr ""
+
+#: client/cl_view.c:320 client/cl_view.c:327
+msgid "CL_ParseEntitystring: EOF without closing brace"
+msgstr ""
+
+#: client/cl_view.c:330
+msgid "CL_ParseEntitystring: closing brace without data"
+msgstr ""
+
+#: client/cl_view.c:410
+msgid "Too many lights...\n"
+msgstr ""
+
+#: client/cl_view.c:424
+msgid "misc_model without \"model\" specified\n"
+msgstr ""
+
+#: client/cl_view.c:490
+#, c-format
+msgid "Map: %s\n"
+msgstr "Mapa: %s\n"
+
+#: client/cl_view.c:497
+msgid "pics\n"
+msgstr ""
+
+#: client/cl_view.c:552
+msgid "images\n"
+msgstr ""
+
+#: client/cl_view.c:565
+#, c-format
+msgid "client %i\n"
+msgstr ""
+
+#: client/cl_view.c:607
+#, c-format
+msgid "Bad fov: %f"
+msgstr ""
+
+#: client/cl_view.c:736
+#, c-format
+msgid "ent:%i  lt:%i  part:%i\n"
+msgstr ""
+
+#: client/console.c:154
+#, c-format
+msgid "Dumped console text to %s.\n"
+msgstr ""
+
+#: client/console.c:159
+msgid "ERROR: couldn't open.\n"
+msgstr ""
+
+#: client/console.c:316
+msgid "Console initialized.\n"
+msgstr ""
+
+#: client/console.c:539
+msgid "say:"
+msgstr ""
+
+#: client/console.c:544
+msgid "say_team:"
+msgstr ""
+
+#: client/keys.c:558
+msgid "Usage: unbind <key> : remove commands from a key\n"
+msgstr ""
+
+#: client/keys.c:565 client/keys.c:602
+#, c-format
+msgid "\"%s\" isn't a valid key\n"
+msgstr ""
+
+#: client/keys.c:596
+msgid "Usage: bind <key> [command] : attach a command to a key\n"
+msgstr ""
+
+#: client/keys.c:611
+#, c-format
+msgid "\"%s\" is not bound\n"
+msgstr ""
+
+#: client/keys.c:792
+#, c-format
+msgid "%s is unbound, hit F4 to set.\n"
+msgstr ""
+
+#: client/snd_dma.c:102
+msgid "sound system not started\n"
+msgstr ""
+
+#: client/snd_dma.c:106
+#, c-format
+msgid "%5d stereo\n"
+msgstr ""
+
+#: client/snd_dma.c:107
+#, c-format
+msgid "%5d samples\n"
+msgstr ""
+
+#: client/snd_dma.c:108
+#, c-format
+msgid "%5d samplepos\n"
+msgstr ""
+
+#: client/snd_dma.c:109
+#, c-format
+msgid "%5d samplebits\n"
+msgstr ""
+
+#: client/snd_dma.c:110
+#, c-format
+msgid "%5d submission_chunk\n"
+msgstr ""
+
+#: client/snd_dma.c:111
+#, c-format
+msgid "%5d speed\n"
+msgstr ""
+
+#: client/snd_dma.c:112
+#, c-format
+msgid "0x%x dma buffer\n"
+msgstr ""
+
+#: client/snd_dma.c:199
+#, c-format
+msgid "sound sampling rate: %i\n"
+msgstr ""
+
+#: client/snd_dma.c:267
+msgid "S_FindName: NULL\n"
+msgstr ""
+
+#: client/snd_dma.c:269
+msgid "S_FindName: empty name\n"
+msgstr ""
+
+#: client/snd_dma.c:272
+#, c-format
+msgid "Sound name too long: %s"
+msgstr ""
+
+#: client/snd_dma.c:293 client/snd_dma.c:330
+msgid "S_FindName: out of sfx_t"
+msgstr ""
+
+#: client/snd_dma.c:609
+#, c-format
+msgid "Issue %i\n"
+msgstr ""
+
+#: client/snd_dma.c:746
+#, c-format
+msgid "S_StartLocalSound: can't cache %s\n"
+msgstr ""
+
+#: client/snd_dma.c:1214
+#, c-format
+msgid "Couldn't open 'music/%s.ogg'\n"
+msgstr ""
+
+#: client/snd_dma.c:1222
+#, c-format
+msgid "'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n"
+msgstr ""
+
+#: client/snd_dma.c:1283
+msgid "Usage: ov_play <filename>\n"
+msgstr ""
+
+#: client/snd_dma.c:1352
+#, c-format
+msgid "  placeholder : %s\n"
+msgstr ""
+
+#: client/snd_dma.c:1354
+#, c-format
+msgid "  not loaded  : %s\n"
+msgstr ""
+
+#: client/snd_dma.c:1357
+#, c-format
+msgid "Total resident: %i\n"
+msgstr ""
+
+#: client/snd_mem.c:135
+#, c-format
+msgid "Couldn't load %s\n"
+msgstr ""
+
+#: client/snd_mem.c:142
+#, c-format
+msgid "%s is a stereo sample\n"
+msgstr ""
+
+#: client/snd_mem.c:285
+msgid "Missing RIFF/WAVE chunks\n"
+msgstr ""
+
+#: client/snd_mem.c:296
+msgid "Missing fmt chunk\n"
+msgstr ""
+
+#: client/snd_mem.c:303
+msgid "Microsoft PCM format only\n"
+msgstr ""
+
+#: client/snd_mem.c:340
+msgid "Missing data chunk\n"
+msgstr ""
+
+#: client/snd_mem.c:350
+#, c-format
+msgid "Sound %s has a bad loop length"
+msgstr ""
+
+#: game/g_ai.c:421
+#, c-format
+msgid "Not enough spawn points for team %i\n"
+msgstr ""
+
+#: game/g_ai.c:526
+#, c-format
+msgid "Not enough weapons in equipment '%s'\n"
+msgstr ""
+
+#: game/g_ai.c:583
+#, c-format
+msgid "Created AI player (team %i)\n"
+msgstr ""
+
+#: game/g_client.c:589
+msgid "Can't perform action - this isn't your round!\n"
+msgstr ""
+
+#: game/g_client.c:595
+msgid "Can't perform action - object not present!\n"
+msgstr ""
+
+#: game/g_client.c:601
+msgid "Can't perform action - not an actor!\n"
+msgstr ""
+
+#: game/g_client.c:607
+msgid "Can't perform action - actor is dead!\n"
+msgstr ""
+
+#: game/g_client.c:613
+msgid "Can't perform action - not on same team!\n"
+msgstr ""
+
+#: game/g_client.c:619
+msgid "Can't perform action - no control over allied actors!\n"
+msgstr ""
+
+#: game/g_client.c:625 game/g_client.c:721
+msgid "Can't perform action - not enough TUs!\n"
+msgstr ""
+
+#: game/g_client.c:726
+msgid "Can't perform action - weapon already loaded!\n"
+msgstr ""
+
+#: game/g_client.c:1163
+msgid "Currently shaken, won't let it's guard down.\n"
+msgstr ""
+
+#: game/g_client.c:1263
+#, c-format
+msgid "Undefined morale modifier type %i\n"
+msgstr ""
+
+#: game/g_client.c:1294
+#, c-format
+msgid "%s panics!\n"
+msgstr ""
+
+#: game/g_client.c:1337
+#, c-format
+msgid "%s is on a rampage.\n"
+msgstr ""
+
+#: game/g_client.c:1338
+#, c-format
+msgid "%s is in mad rage!\n"
+msgstr ""
+
+#: game/g_client.c:1385
+#, c-format
+msgid "%s is currently shaken.\n"
+msgstr ""
+
+#: game/g_client.c:1602
+msgid "Can't perform action - impossible throw!\n"
+msgstr ""
+
+#: game/g_client.c:1847
+msgid "Can't perform action - no ammo!\n"
+msgstr ""
+
+#: game/g_client.c:1864
+msgid "Can't perform action - not enough ammo!\n"
+msgstr ""
+
+#: game/g_client.c:2108
+msgid "Get a team for teamplay\n"
+msgstr ""
+
+#: game/g_client.c:2116
+msgid "Get a team for multiplayer\n"
+msgstr ""
+
+#: game/g_client.c:2126
+#, c-format
+msgid "Team %i is already in use\n"
+msgstr ""
+
+#: game/g_client.c:2140
+msgid "Removing ai player..."
+msgstr ""
+
+#: game/g_client.c:2407
+#, c-format
+msgid "%s has taken control over team %i.\n"
+msgstr ""
+
+#: game/g_client.c:2458
+msgid "Banned."
+msgstr ""
+
+#: game/g_client.c:2470
+#, c-format
+msgid "%s is connecting...\n"
+msgstr ""
+
+#: game/g_client.c:2487
+#, c-format
+msgid "%s disconnected.\n"
+msgstr ""
+
+#: game/g_svcmds.c:174
+msgid "IP filter list is full\n"
+msgstr ""
+
+#: game/g_svcmds.c:209
+msgid "Removed.\n"
+msgstr ""
+
+#: game/g_svcmds.c:225
+msgid "Filter list:\n"
+msgstr ""
+
+#: game/q_shared.c:1875
+msgid "No free inventory space!\n"
+msgstr ""
+
+#: game/q_shared.c:2297
+msgid "Com_ParseValue: Illegal pos statement\n"
+msgstr ""
+
+#: game/q_shared.c:2304
+msgid "Com_ParseValue: Illegal vector statement\n"
+msgstr ""
+
+#: game/q_shared.c:2311
+msgid "Com_ParseValue: Illegal color statement\n"
+msgstr ""
+
+#: game/q_shared.c:2319
+msgid "Com_ParseValue: Illegal rgba statement\n"
+msgstr ""
+
+#: game/q_shared.c:2377
+msgid "Com_ParseValue: Illegal shape small statement\n"
+msgstr ""
+
+#: game/q_shared.c:2385
+msgid "Com_ParseValue: Illegal shape big statement\n"
+msgstr ""
+
+#: game/q_shared.c:2402 game/q_shared.c:2410
+msgid "Com_ParseValue: Illegal if statement\n"
+msgstr ""
+
+#: game/q_shared.c:2417
+msgid "Com_ParseValue: unknown value type\n"
+msgstr ""
+
+#: game/q_shared.c:2621
+#, c-format
+msgid "Item: %s\n"
+msgstr ""
+
+#: game/q_shared.c:2622
+#, c-format
+msgid "... name      -> %s\n"
+msgstr ""
+
+#: game/q_shared.c:2623
+#, c-format
+msgid "... type      -> %s\n"
+msgstr ""
+
+#: game/q_shared.c:2624
+#, c-format
+msgid "... category  -> %i\n"
+msgstr ""
+
+#: game/q_shared.c:2625
+#, c-format
+msgid "... weapon    -> %i\n"
+msgstr ""
+
+#: game/q_shared.c:2626
+#, c-format
+msgid "... twohanded -> %i\n"
+msgstr ""
+
+#: game/q_shared.c:2627
+#, c-format
+msgid "... thrown    -> %i\n"
+msgstr ""
+
+#: linux/snd_alsa.c:59
+msgid ""
+"Using sounddevice \"default\" - if you have problems with this try to set "
+"the cvar snddevice to a appropriate alsa-device"
+msgstr ""
+
+#: linux/snd_alsa.c:63
+#, c-format
+msgid "ALSA: cannot open device %s(%s)\n"
+msgstr ""
+
+#: linux/snd_alsa.c:68
+#, c-format
+msgid "ALSA: cannot allocate hw params(%s)\n"
+msgstr ""
+
+#: linux/snd_alsa.c:73
+#, c-format
+msgid "ALSA: cannot init hw params(%s)\n"
+msgstr ""
+
+#: linux/snd_alsa.c:79
+#, c-format
+msgid "ALSA: cannot set access(%s)\n"
+msgstr ""
+
+#: linux/snd_alsa.c:89
+msgid "ALSA: 16 bit not supported, trying 8\n"
+msgstr ""
+
+#: linux/snd_alsa.c:95
+#, c-format
+msgid "ALSA: cannot set format(%s)\n"
+msgstr ""
+
+#: linux/snd_alsa.c:106
+#, c-format
+msgid "ALSA: cannot set rate %d (%s)\n"
+msgstr ""
+
+#: linux/snd_alsa.c:109 linux/snd_alsa.c:123
+#, c-format
+msgid "ALSA: rate %d not supported, using %d\n"
+msgstr ""
+
+#: linux/snd_alsa.c:119
+#, c-format
+msgid "ALSA: cannot set rate %d(%s)\n"
+msgstr ""
+
+#: linux/snd_alsa.c:129
+msgid "ALSA: cannot set rate\n"
+msgstr ""
+
+#: linux/snd_alsa.c:139
+#, c-format
+msgid "ALSA: cannot set channels %d(%s)\n"
+msgstr ""
+
+#: linux/snd_alsa.c:147
+#, c-format
+msgid "ALSA: cannot set period size (%s)\n"
+msgstr ""
+
+#: linux/snd_alsa.c:153
+#, c-format
+msgid "ALSA: period %d not supported, using %d\n"
+msgstr ""
+
+#: linux/snd_alsa.c:157
+#, c-format
+msgid "ALSA: cannot set params(%s)\n"
+msgstr ""
+
+#: linux/snd_alsa.c:186
+msgid "Sound not inizialized\n"
+msgstr ""
+
+#: linux/sys_linux.c:154
+msgid "memory overwrite in Sys_Printf"
+msgstr ""
+
+#: linux/sys_linux.c:218
+#, c-format
+msgid "Warning: %s"
+msgstr ""
+
+#: linux/sys_linux.c:312
+msgid "Sys_GetGameAPI without Sys_UnloadingGame"
+msgstr ""
+
+#: linux/sys_linux.c:329
+#, c-format
+msgid "LoadLibrary (%s)\n"
+msgstr ""
+
+#: linux/sys_linux.c:332
+#, c-format
+msgid "LoadLibrary failed (%s)\n"
+msgstr ""
+
+#: qcommon/files.c:302
+msgid "Bad origin in FS_Seek\n"
+msgstr ""
+
+#: qcommon/files.c:845
+#, c-format
+msgid "using %s for writing\n"
+msgstr ""
+
+#: qcommon/files.c:954
+msgid "USAGE: link <from> <to>\n"
+msgstr ""
+
+#: qcommon/files.c:1487
+msgid "Could not allocate memory in MN_GetMaps\n"
+msgstr ""
+
+#: qcommon/files.c:1533
+msgid "FS_Write: 0 bytes written\n"
+msgstr ""
+
+#: qcommon/files.c:1539
+msgid "FS_Write: -1 bytes written\n"
+msgstr ""
+
