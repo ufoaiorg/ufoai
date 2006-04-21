@@ -55,6 +55,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_arb_shader.h"
 
+#ifdef USE_SDL_TTF
+#include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
+#endif /* USE_SDL_TTF */
+
 #include "qgl.h"
 
 #define	REF_VERSION	"GL 0.12"
@@ -206,12 +211,19 @@ extern transform_t	trafo[MAX_ENTITIES];
 
 typedef struct font_s
 {
+#ifdef USE_SDL_TTF
+	TTF_Font *font;
+	int style;
+#else
 	image_t	*image;
 	char	name[MAX_FONTNAME];
 	byte	wc[512]; // 256 lower case, 256 upper case
 	byte	w, h;
 	float	rw, rh, rhl;
+#endif
 } font_t;
+
+font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h );
 
 #ifdef BUILD_FREETYPE
 //new font stuff
@@ -572,6 +584,7 @@ typedef struct
 
 	qboolean blend;
 	qboolean alpha_test;
+	qboolean fog_coord;
 
 	qboolean stencil_warp;
 	qboolean anisotropic;
