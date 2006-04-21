@@ -52,9 +52,7 @@ typedef union {
 	float	ffred;
 } poor;
 
-#endif
-
-struct image_s	*R_RegisterFont (char *name);
+#endif /* BUILD_FREETYPE */
 
 // font definitions
 font_t	fonts[MAX_FONTS];
@@ -64,7 +62,6 @@ image_t		*draw_chars;
 
 int		numFonts;
 
-
 /*
 ===============
 Draw_InitLocal
@@ -72,18 +69,34 @@ Draw_InitLocal
 */
 void Draw_InitLocal (void)
 {
-	// load console characters (don't bilerp characters)
-	numFonts = 0;
-	draw_chars = GL_FindImage ("pics/conchars.pcx", it_pic);
 	shadow = GL_FindImage ("pics/sfx/shadow.tga", it_pic);
-	GL_Bind( draw_chars->texnum );
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	// load all fonts
+	numFonts = 0;
+
+#ifdef USE_SDL_TTF
+	// init the truetype font engine
+	if ( TTF_Init() )
+	{
+		ri.Con_Printf( PRINT_ALL, "...SDL_ttf error: %s\n", TTF_GetError() );
+		return;
+	}
+
+	ri.Con_Printf( PRINT_ALL, "...SDL_ttf inited\n" );
+	atexit( TTF_Quit );
+#else
+	// load console characters (don't bilerp characters)
+	draw_chars = GL_FindImage ("pics/conchars.pcx", it_pic);
+	GL_Bind( draw_chars->texnum );
+
+	ri.Con_Printf( PRINT_ALL, "...using old font engine - without utf8 support\n" );
+
 	GL_FindImage ("pics/f_small.tga", it_font);
 	GL_FindImage ("pics/f_big.tga", it_font);
 	GL_FindImage ("pics/f_menu.tga", it_font);
 	GL_FindImage ("pics/f_menu_small.tga", it_font);
+#endif /* USE_SDL_TTF */
+
 #ifdef BUILD_FREETYPE
 	R_InitFreeType();
 #endif
@@ -102,6 +115,9 @@ smoothly scrolled off.
 */
 void Draw_Char (int x, int y, int num)
 {
+#ifdef USE_SDL_TTF
+
+#else
 	int row, col;
 	float frow, fcol, sizefrow, sizefcol;
 
@@ -133,8 +149,10 @@ void Draw_Char (int x, int y, int num)
 	qglTexCoord2f (fcol, frow + sizefrow);
 	qglVertex2f (x, y+8);
 	qglEnd ();
+#endif /* USE_SDL_TTF */
 }
 
+#ifndef USE_SDL_TTF
 static byte R_FloatToByte( float x )
 {
 	union {
@@ -149,9 +167,13 @@ static byte R_FloatToByte( float x )
 	// then read as integer and kill float bits...
 	return ( byte )min( f2i.i, 255 );
 }
+#endif /* USE_SDL_TTF */
 
 void Draw_ColorChar (int x, int y, int num, vec4_t color)
 {
+#ifdef USE_SDL_TTF
+	// implement me
+#else
 	int				row, col;
 	float frow, fcol, sizefrow, sizefcol;
 	byte			colors[4];
@@ -192,19 +214,24 @@ void Draw_ColorChar (int x, int y, int num, vec4_t color)
 	qglVertex2f (x, y+8);
 	qglEnd ();
 	qglColor4f( 1,1,1,1 );
+#endif /* USE_SDL_TTF */
 }
 
 /*
 ================
 Draw_AnalyzeFont
+
+i've missused the byte* pic and int w for SDL_ttf
+byte* pic is the path of a ttf-file and int w is the
+renderStyle of a ttf-file
 ================
 */
 font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 {
 	font_t	*f;
-	int		i, l, t;
-	int		tx, ty, sx, sy;
-	int		chars;
+#ifndef USE_SDL_TTF
+	int	l, i, t, chars;
+	int	tx, ty, sx, sy;
 	byte	*tp;
 
 	// get the font name without .tga
@@ -226,7 +253,7 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 	// allocate new font
 	f = &fonts[numFonts];
 	// copy only fontname - without path
-	strncpy( f->name, name+i, l-i );
+	Q_strncpyz( f->name, name+i, l-i );
 
 	// check the font format (start with minimum 1x1 font)
 	// it has to be a power of 2
@@ -319,9 +346,28 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 	f->h--;
 	f->rhl = f->rh * (float)f->h / (f->h+1);
 
-	// return the font
 	numFonts++;
+	// return the font
 	return f;
+#else
+	if ( numFonts >= MAX_FONTS )
+		return NULL;
+
+	// allocate new font
+	f = &fonts[numFonts];
+	// copy only fontname - without path
+	Q_strncpyz( f->name, name, MAX_VAR );
+
+	f->font = TTF_OpenFont( (char*)pic, h );
+	if ( ! f->font )
+		ri.Con_Printf(PRINT_ALL, "...could not load font file %s\n", (char*)pic );
+
+	f->style = w;
+
+	numFonts++;
+	// return the font
+	return f;
+#endif /* USE_SDL_TTF */
 }
 
 /*
@@ -331,24 +377,32 @@ Draw_GetFont
 */
 font_t *Draw_GetFont( char *name )
 {
-	int		i;
-	font_t	*f;
+	int	i;
 
-	for ( i = 0, f = fonts; i < numFonts; i++, f++ )
-		if ( !strcmp( name, f->name ) )
-			return f;
-
+	for ( i = 0; i < numFonts; i++ )
+	{
+		if ( !Q_strncmp( name, fonts[i].name, MAX_FONTNAME ) )
+			return &fonts[i];
+	}
 	return NULL;
 }
 
 /*
 ================
 Draw_PropCharFont
-texture NEEDS to be binded already
+texture NEEDS to be binded already when using old font-engine
 ================
 */
+#ifdef USE_SDL_TTF
+#define MAX_TEXT_BUFFER 128
+char textBuffer[MAX_TEXT_BUFFER];
+#endif
 int Draw_PropCharFont (font_t *f, int x, int y, char c)
 {
+#ifdef USE_SDL_TTF
+	// we don't need this anymore - we draw the hole string at once'
+	return 0;
+#else
 	int			n, row, col;
 	float		nx, ny, cx, cy;
 	float		frow, fcol, sx, sy;
@@ -400,6 +454,7 @@ int Draw_PropCharFont (font_t *f, int x, int y, char c)
 	qglDisable (GL_BLEND);
 
 	return f->wc[n]+1;
+#endif
 }
 
 /*
@@ -415,8 +470,10 @@ int Draw_PropChar (char *font, int x, int y, char c)
 	f = Draw_GetFont( font );
 	if ( !f ) return 0;
 
+#ifndef USE_SDL_TTF
 	// draw the char
 	GL_Bind (f->image->texnum);
+#endif
 	return Draw_PropCharFont( f, x, y, c );
 }
 
@@ -428,12 +485,19 @@ Draw_PropLength
 int Draw_PropLength (char *font, char *c)
 {
 	font_t	*f;
-	int		l, n;
-
+	int		l;
+#ifdef USE_SDL_TTF
+	int h;
+#else
+	int n;
+#endif
 	// get the font
 	f = Draw_GetFont( font );
 	if ( !f ) return 0;
 
+#ifdef USE_SDL_TTF
+	TTF_SizeText( f->font, c, &l, &h );
+#else
 	// parse the string
 	for ( l = 0; *c; c++ )
 	{
@@ -449,7 +513,7 @@ int Draw_PropLength (char *font, char *c)
 		if ( n < 0 || !f->wc[n] ) l += (float)f->w * CHAR_EMPTYWIDTH;
 		else l += f->wc[n]+1;
 	}
-
+#endif
 	return l;
 }
 
@@ -462,11 +526,101 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 {
 	int		l;
 	font_t	*f;
+#ifdef USE_SDL_TTF
+	int h, texture, w;
+	SDL_Surface *textSurface, *openGLSurface;
+	SDL_Color color = {255,255,255};
+#endif
 
 	// get the font
 	f = Draw_GetFont( font );
-	if ( !f ) return 0;
+	if ( !f )
+	{
+		ri.Con_Printf(PRINT_ALL, "...could not find font: %s\n", font );
+		return 0;
+	}
 
+#ifdef USE_SDL_TTF
+	TTF_SizeText( f->font, c, &l, &h );
+	if ( ! l )
+		return 0;
+
+	if ( align > 0 && align < ALIGN_LAST )
+	{
+		switch ( align % 3 )
+		{
+		case 1: x -= l / 2; break;
+		case 2: x -= l; break;
+		}
+
+		switch ( align / 3 )
+		{
+		case 1: y -= h / 2; break;
+		case 2: y -= h; break;
+		}
+	}
+	textSurface = TTF_RenderText_Blended(f->font, c, color);
+	if ( ! textSurface )
+	{
+		ri.Con_Printf(PRINT_ALL, "%s\n", TTF_GetError() );
+		return 0;
+	}
+
+	// convert to power of two
+	for ( w = 1; w < textSurface->w; w <<= 1 );
+	for ( h = 1; h < textSurface->h; h <<= 1 );
+
+	openGLSurface = SDL_CreateRGBSurface(0, w, h, 32,
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+			0x000000FF,
+			0x0000FF00,
+			0x00FF0000,
+			0xFF000000
+#else
+			0xFF000000,
+			0x00FF0000,
+			0x0000FF00,
+			0x000000FF
+#endif
+	);
+	SDL_BlitSurface(textSurface, 0, openGLSurface, 0);
+
+	/* Tell GL about our new texture */
+	qglGenTextures(1, &texture);
+	GL_Bind(texture);
+	qglTexImage2D(GL_TEXTURE_2D, 0, 4, w, h, 0, GL_BGRA, GL_UNSIGNED_BYTE, openGLSurface->pixels );
+
+	/* GL_NEAREST looks horrible, if scaled... */
+// 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+// 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	/* prepare to render our texture */
+	qglEnable(GL_TEXTURE_2D);
+
+	// draw it
+	qglEnable (GL_BLEND);
+
+	qglBegin(GL_QUADS);
+	qglTexCoord2f(0.0f, 1.0f);
+	qglVertex2f(x, y);
+	qglTexCoord2f(1.0f, 1.0f);
+	qglVertex2f(x + w, y);
+	qglTexCoord2f(1.0f, 0.0f);
+	qglVertex2f(x + w, y + h);
+	qglTexCoord2f(0.0f, 0.0f);
+	qglVertex2f(x, y + h);
+	qglEnd();
+
+	qglDisable (GL_BLEND);
+
+	/* Bad things happen if we delete the texture before it finishes */
+	qglFinish();
+
+	/* Clean up */
+	SDL_FreeSurface(textSurface);
+	SDL_FreeSurface(openGLSurface);
+	qglDeleteTextures(1, &texture);
+#else
 	// get alignement
 	// (do nothing if left aligned or unknown)
 	if ( align > 0 && align < ALIGN_LAST )
@@ -496,6 +650,7 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 		else
 		    	l += Draw_PropCharFont( f, x + l, y, *c );
 	}
+#endif
 	return l;
 }
 
@@ -1543,7 +1698,7 @@ void RE_RegisterFTFont(const char *fontName, int pointSize, fontInfo_t *font)
 
 	if (!fontName)
 	{
-		ri.Con_Printf(PRINT_ALL, "RE_RegisterFont: called with empty name\n");
+		ri.Con_Printf(PRINT_ALL, "RE_RegisterFTFont: called with empty name\n");
 		return;
 	}
 
@@ -1555,7 +1710,7 @@ void RE_RegisterFTFont(const char *fontName, int pointSize, fontInfo_t *font)
 
 	if (registeredFontCount >= MAX_FONTS)
 	{
-		ri.Con_Printf(PRINT_ALL, "RE_RegisterFont: Too many fonts registered already.\n");
+		ri.Con_Printf(PRINT_ALL, "RE_RegisterFTFont: Too many fonts registered already.\n");
 		return;
 	}
 
@@ -1601,27 +1756,27 @@ void RE_RegisterFTFont(const char *fontName, int pointSize, fontInfo_t *font)
 
 	if (ftLibrary == NULL)
 	{
-		ri.Con_Printf(PRINT_ALL, "RE_RegisterFont: FreeType not initialized.\n");
+		ri.Con_Printf(PRINT_ALL, "RE_RegisterFTFont: FreeType not initialized.\n");
 		return;
 	}
 
 	len = ri.FS_LoadFile(va("%s", fontName ), &faceData);
 	if (len <= 0)
 	{
-		ri.Con_Printf(PRINT_ALL, "RE_RegisterFont: Unable to read font file\n");
+		ri.Con_Printf(PRINT_ALL, "RE_RegisterFTFont: Unable to read font file\n");
 		return;
 	}
 
 	// allocate on the stack first in case we fail
 	if (FT_New_Memory_Face( ftLibrary, faceData, len, 0, &face ))
 	{
-		ri.Con_Printf(PRINT_ALL, "RE_RegisterFont: FreeType2, unable to allocate new face.\n");
+		ri.Con_Printf(PRINT_ALL, "RE_RegisterFTFont: FreeType2, unable to allocate new face.\n");
 		return;
 	}
 
 	if (FT_Set_Char_Size( face, pointSize << 6, pointSize << 6, dpi, dpi))
 	{
-		ri.Con_Printf(PRINT_ALL, "RE_RegisterFont: FreeType2, Unable to set face char size.\n");
+		ri.Con_Printf(PRINT_ALL, "RE_RegisterFTFont: FreeType2, Unable to set face char size.\n");
 		return;
 	}
 
@@ -1633,7 +1788,7 @@ void RE_RegisterFTFont(const char *fontName, int pointSize, fontInfo_t *font)
 	out = malloc(1024*1024);
 	if (out == NULL)
 	{
-		ri.Con_Printf(PRINT_ALL, "RE_RegisterFont: malloc failure during output image creation.\n");
+		ri.Con_Printf(PRINT_ALL, "RE_RegisterFTFont: malloc failure during output image creation.\n");
 		return;
 	}
 	memset(out, 0, 1024*1024);
@@ -1716,9 +1871,9 @@ void R_InitFreeType(void)
 		ri.Con_Printf(PRINT_ALL, "R_InitFreeType: Unable to initialize FreeType.\n");
 	numFonts = 0;
 
-// 	RE_RegisterFTFont("./base/fonts/new.ttf", 12, &big );
-// 	RE_RegisterFTFont("./base/fonts/new.ttf", 10, &normal );
-// 	RE_RegisterFTFont("./base/fonts/new.ttf", 8, &small );
+// 	RE_RegisterFTFont("fonts/new.ttf", 12, &big );
+// 	RE_RegisterFTFont("fonts/new.ttf", 10, &normal );
+// 	RE_RegisterFTFont("fonts/new.ttf", 8, &small );
 }
 
 
