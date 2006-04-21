@@ -87,8 +87,6 @@ cvar_t  *r_anisotropic;
 cvar_t  *r_ext_max_anisotropy;
 cvar_t  *r_texture_lod; // lod_bias
 
-//cvar_t	*r_lightlevel;	// FIXME: This is a HACK to get the client's light level
-
 #ifdef BUILD_FREETYPE
 cvar_t	*r_saveFontData;
 #endif
@@ -977,7 +975,7 @@ void R_SetupGL (void)
 	qglDisable(GL_ALPHA_TEST);
 	qglEnable(GL_DEPTH_TEST);
 
-	if ( gl_fog->value && r_newrefdef.fog )
+	if ( gl_fog->value && r_newrefdef.fog && gl_state.fog_coord )
 	{
 		qglEnable( GL_FOG );
 		qglFogi( GL_FOG_MODE, GL_LINEAR );
@@ -1445,11 +1443,11 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	gl_config.extensions_string = (char *)qglGetString (GL_EXTENSIONS);
 	ri.Con_Printf (PRINT_ALL, "GL_EXTENSIONS: %s\n", gl_config.extensions_string );
 
-	strncpy( renderer_buffer, gl_config.renderer_string, sizeof(renderer_buffer) );
+	Q_strncpyz( renderer_buffer, gl_config.renderer_string, sizeof(renderer_buffer) );
 	renderer_buffer[sizeof(renderer_buffer)-1] = 0;
 	strlwr( renderer_buffer );
 
-	strncpy( vendor_buffer, gl_config.vendor_string, sizeof(vendor_buffer) );
+	Q_strncpyz( vendor_buffer, gl_config.vendor_string, sizeof(vendor_buffer) );
 	vendor_buffer[sizeof(vendor_buffer)-1] = 0;
 	strlwr( vendor_buffer );
 
@@ -1698,18 +1696,16 @@ qboolean R_Init( void *hinstance, void *hWnd )
 		}
 		else
 		{
-			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_texture_filter_anisotropic [%2i max] [%2i selected]\n",max_aniso, aniso_level );
+			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_texture_filter_anisotropic [%2i max] [%2i selected]\n", max_aniso, aniso_level );
 			gl_state.anisotropic = true;
 		}
 	}
 	else
 	{
 		ri.Con_Printf(PRINT_ALL, "...GL_EXT_texture_filter_anisotropic not found\n");
-		ri.Cvar_Set("r_anisotropic", "1");
+		ri.Cvar_Set("r_anisotropic", "0");
 		ri.Cvar_Set("r_ext_max_anisotropy", "0");
 	}
-
-	gl_state.lod_bias=false;
 
 	if ( strstr( gl_config.extensions_string, "GL_EXT_texture_lod_bias" ) )
 	{
@@ -1718,7 +1714,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	}
 	else
 	{
-		ri.Con_Printf(PRINT_ALL, "...GL_EXT_texture_lod_bias not support\n");
+		ri.Con_Printf(PRINT_ALL, "...GL_EXT_texture_lod_bias not found\n");
 		gl_state.lod_bias=false;
 	}
 
@@ -1735,7 +1731,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 		gl_state.sgis_mipmap=false;
 	}
 #endif
-	gl_state.stencil_warp=false;
+
 	if ( strstr( gl_config.extensions_string, "GL_EXT_stencil_wrap" ) )
 	{
 		ri.Con_Printf(PRINT_ALL, "...using GL_EXT_stencil_wrap\n");
@@ -1743,6 +1739,15 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_EXT_stencil_wrap not found\n");
 		gl_state.stencil_warp=false;
+	}
+
+	if ( strstr( gl_config.extensions_string, "GL_EXT_fog_coord" ) )
+	{
+		ri.Con_Printf(PRINT_ALL, "...using GL_EXT_fog_coord\n");
+		gl_state.fog_coord=true;
+	} else {
+		ri.Con_Printf(PRINT_ALL, "...GL_EXT_fog_coord not found\n");
+		gl_state.fog_coord=false;
 	}
 
 	gl_state.arb_fragment_program = false;
@@ -2073,7 +2078,11 @@ void R_TakeVideoFrame( int h, int w, byte* captureBuffer, byte *encodeBuffer, qb
 void	R_BeginRegistration (char *tiles, char *pos);
 struct model_s	*R_RegisterModelShort (char *name);
 struct image_s	*R_RegisterSkin (char *name);
+#ifdef USE_SDL_TTF
+void R_RegisterFont (char *name, int size, char* path, char* style);
+#else
 struct image_s	*R_RegisterFont (char *name);
+#endif
 void R_SetSky (char *name, float rotate, vec3_t axis);
 void	R_EndRegistration (void);
 
