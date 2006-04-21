@@ -1063,7 +1063,7 @@ item smokegrenade
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"100 10"
+		spldmg	"0 0"
 		splrad	120
 		dmgtype ""
 	}
@@ -1087,7 +1087,7 @@ item smokegrenade
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"100 10"
+		spldmg	"0 0"
 		splrad	120
 		dmgtype ""
 	}

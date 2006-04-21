@@ -121,7 +121,7 @@ menu options_video
 
 	string res_str
 	{
-		string	"Resolution:"
+		string	"_Resolution:"
 		pos		"500 140"
 	}
 	string res_value
@@ -149,7 +149,7 @@ menu options_video
 
 	string full_str
 	{
-		string	"Fullscreen:"
+		string	"_Fullscreen:"
 		pos		"500 170"
 	}
 	string full_value
@@ -185,7 +185,7 @@ menu options_video
 
 	string compression_str
 	{
-		string	"Texture compression:"
+		string	"_Texture compression:"
 		pos		"500 200"
 	}
 	string compression_value
@@ -223,7 +223,7 @@ menu options_video
 
 	string texres_str
 	{
-		string	"Texture resolution cap:"
+		string	"_Texture resolution cap:"
 		pos		"500 230"
 	}
 	string texres_value
@@ -259,7 +259,7 @@ menu options_video
 
 	string fps_str
 	{
-		string	"Show FPS:"
+		string	"_Show FPS:"
 		pos		"500 260"
 	}
 	string fps_value
@@ -295,7 +295,7 @@ menu options_video
 
 	string aniso_str
 	{
-		string	"Texture anisotropy level:"
+		string	"_Texture anisotropy level:"
 		pos		"500 290"
 	}
 	string aniso_value
@@ -323,7 +323,7 @@ menu options_video
 
 	string lod_str
 	{
-		string	"Texture Lod:"
+		string	"_Texture Lod:"
 		pos		"500 320"
 	}
 	string lod_value
@@ -359,7 +359,7 @@ menu options_video
 
 	string gamma_str
 	{
-		string	"Gamma:"
+		string	"_Gamma:"
 		pos		"500 490"
 	}
 	pic gamma_rahmen
@@ -411,12 +411,12 @@ menu options_sound
 
 	string volume_str
 	{
-		string	"Volume Control"
+		string	"_Volume Control"
 		pos		"500 140"
 	}
 	string effects_str
 	{
-		string	"Effects:"
+		string	"_Effects:"
 		pos		"520 170"
 	}
 	pic effects_rahmen
@@ -437,7 +437,7 @@ menu options_sound
 	}
 	string music_str
 	{
-		string	"Music:"
+		string	"_Music:"
 		pos		"520 195"
 	}
 	pic music_rahmen
@@ -458,7 +458,7 @@ menu options_sound
 	}
 	string mix_str
 	{
-		string	"Mixing Rate:"
+		string	"_Mixing Rate:"
 		pos		"500 240"
 	}
 	string mix_valuestr
@@ -493,7 +493,7 @@ menu options_sound
 	string sndystem_str
 	{
 		if "sys_os linux"
-		string	"Soundsystem:"
+		string	"_Soundsystem:"
 		pos		"500 320"
 	}
 	string sndystem_value
@@ -555,7 +555,7 @@ menu options_game
 
 	string dif_str
 	{
-		string	"Difficulty:"
+		string	"_Difficulty:"
 		pos		"500 130"
 	}
 	string dif_value
@@ -586,7 +586,7 @@ menu options_game
 	// ===================
 	string confirm_str
 	{
-		string	"Confirm Actions:"
+		string	"_Confirm Actions:"
 		pos		"500 155"
 	}
 	string confirm_value
@@ -625,7 +625,7 @@ menu options_game
 	// ===================
 	string hud_str
 	{
-		string	"HUD Design:"
+		string	"_HUD Design:"
 		pos		"500 180"
 	}
 	string hud_value
@@ -656,7 +656,7 @@ menu options_game
 	// ===================
 	string tooltip_str
 	{
-		string	"Tooltips:"
+		string	"_Tooltips:"
 		pos		"500 205"
 	}
 	string tooltip_value
@@ -692,7 +692,7 @@ menu options_game
 
 	string camspeed_str
 	{
-		string	"Camera Scroll:"
+		string	"_Camera Scroll:"
 		pos		"500 310"
 	}
 	pic camspeed_rahmen
@@ -714,7 +714,7 @@ menu options_game
 	}
 	string camrot_str
 	{
-		string	"Camera Rotation:"
+		string	"_Camera Rotation:"
 		pos		"500 330"
 	}
 	pic camrot_rahmen
@@ -740,7 +740,7 @@ menu options_game
 	// ===================
 	string current_name
 	{
-			string  "Name:"
+			string  "_Name:"
 			pos     "500 420"
 	}
 	pic slot_hostname

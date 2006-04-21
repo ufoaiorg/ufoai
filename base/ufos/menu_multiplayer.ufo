@@ -909,7 +909,7 @@ menu mp_create_server
         // ===================
         string current_rcon_pwd
         {
-                string  "RCON-Password:"
+                string  "_RCON-Password:"
                 pos     "500 390"
         }
         pic slot_rcon_pwd
@@ -932,7 +932,7 @@ menu mp_create_server
         // ===================
         string current_hostname
         {
-                string  "Hostname:"
+                string  "_Hostname:"
                 pos     "500 450"
         }
         pic slot_hostname
@@ -955,7 +955,7 @@ menu mp_create_server
         // ===================
         string current_map
         {
-                string  "Map"
+                string  "_Map"
                 pos     "500 510"
         }
         pic slot_map

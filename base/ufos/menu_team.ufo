@@ -985,47 +985,47 @@ menu equipment
 	// actor stats
 	// ==================
 
-	string pwr_lbl { pos "60 375"  string "Power:" }
+	string pwr_lbl { pos "60 375"  string "_Power:" }
 	string pwr_val { pos "335 375"  string "*cvar mn_tpwr" align ur }
 	pic pwr_rahmen { pos "67 388"  image menu/bar_rahmen }
 	bar pwr_bar    { pos "76 393" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string spd_lbl { pos "60 410" string "Speed:" }
+	string spd_lbl { pos "60 410" string "_Speed:" }
 	string spd_val { pos "335 410" string "*cvar mn_tspd" align ur }
 	pic spd_rahmen { pos "67 423" image menu/bar_rahmen }
 	bar spd_bar    { pos "76 428" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string acc_lbl { pos "60 445" string "Accuracy:" }
+	string acc_lbl { pos "60 445" string "_Accuracy:" }
 	string acc_val { pos "335 445" string "*cvar mn_tacc" align ur }
 	pic acc_rahmen { pos "67 458" image menu/bar_rahmen }
 	bar acc_bar    { pos "76 463" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string mnd_lbl { pos "60 480" string "Mind:" }
+	string mnd_lbl { pos "60 480" string "_Mind:" }
 	string mnd_val { pos "335 480" string "*cvar mn_tmnd" align ur }
 	pic mnd_rahmen { pos "67 493" image menu/bar_rahmen }
 	bar mnd_bar    { pos "76 498" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string cls_lbl { pos "60 530" string "Close Combat:" }
+	string cls_lbl { pos "60 530" string "_Close Combat:" }
 	string cls_val { pos "335 530" string "*cvar mn_tcls" align ur }
 	pic cls_rahmen { pos "67 543" image menu/bar_rahmen }
 	bar cls_bar    { pos "76 548" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string hvy_lbl { pos "60 565" string "Heavy Weapons:" }
+	string hvy_lbl { pos "60 565" string "_Heavy Weapons:" }
 	string hvy_val { pos "335 565" string "*cvar mn_thvy" align ur }
 	pic hvy_rahmen { pos "67 578" image menu/bar_rahmen }
 	bar hvy_bar    { pos "76 583" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string ass_lbl { pos "60 600" string "Assault Guns:" }
+	string ass_lbl { pos "60 600" string "_Assault Guns:" }
 	string ass_val { pos "335 600" string "*cvar mn_tass" align ur }
 	pic ass_rahmen { pos "67 613" image menu/bar_rahmen }
 	bar ass_bar    { pos "76 618" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string prc_lbl { pos "60 635" string "Sniper Rifles:" }
+	string prc_lbl { pos "60 635" string "_Sniper Rifles:" }
 	string prc_val { pos "335 635" string "*cvar mn_tprc" align ur }
 	pic prc_rahmen { pos "67 648" image menu/bar_rahmen }
 	bar prc_bar    { pos "76 653" current "*cvar mn_vprc" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string exp_lbl { pos "60 670" string "High Explosives:" }
+	string exp_lbl { pos "60 670" string "_High Explosives:" }
 	string exp_val { pos "335 670" string "*cvar mn_texp" align ur }
 	pic exp_rahmen { pos "67 683" image menu/bar_rahmen }
 	bar exp_bar    { pos "76 688" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
@@ -1080,7 +1080,7 @@ menu equipment
 
 	string txt_weaponinfo
 	{
-		string	"Object Info"
+		string	"_Object Info"
 		pos		"40 722"
 	}
 	zone zone_weaponinfo
@@ -1092,7 +1092,7 @@ menu equipment
 
 	string txt_abilities
 	{
-		string	"Actor Abilities"
+		string	"_Actor Abilities"
 		pos		"207 722"
 	}
 	zone zone_abilities
