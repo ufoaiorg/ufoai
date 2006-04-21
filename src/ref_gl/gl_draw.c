@@ -350,15 +350,24 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 	// return the font
 	return f;
 #else
+	SDL_RWops *rw;
+	void* buffer;
+	int ttfSize;
+
 	if ( numFonts >= MAX_FONTS )
 		return NULL;
 
 	// allocate new font
 	f = &fonts[numFonts];
-	// copy only fontname - without path
+
+	// copy fontname
 	Q_strncpyz( f->name, name, MAX_VAR );
 
-	f->font = TTF_OpenFont( (char*)pic, h );
+	ttfSize = ri.FS_LoadFile((char*)pic, &buffer);
+
+	rw = SDL_RWFromMem(buffer, ttfSize);
+
+	f->font = TTF_OpenFontRW( rw, 0, h );
 	if ( ! f->font )
 		ri.Sys_Error(ERR_FATAL, "...could not load font file %s\n", (char*)pic );
 
