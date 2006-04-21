@@ -3451,8 +3451,8 @@ void CL_ParseFont( char* name, char **text )
 
 	} while ( *text );
 
-	if ( FS_CheckFile( font->path ) <= 0 )
-		Sys_Error("...font file %s does not exists (font %s)\n", font->path, font->name );
+	if ( FS_CheckFile( font->path ) == -1 )
+		Sys_Error("...font file %s does not exist (font %s)\n", font->path, font->name );
 
 	re.RegisterFont( font->name, font->size, font->path, font->style );
 #endif
