@@ -10,12 +10,18 @@
 
 font f_small
 {
-	font	"./base/fonts/new.ttf"
-	size	15
+	font	"media/DejaVuSans.ttf"
+	size	14
 }
 
 font f_big
 {
-	font	"./base/fonts/new.ttf"
+	font	"media/DejaVuSans.ttf"
 	size	20
+}
+
+font f_menu
+{
+	font	"media/FreeSans.ttf"
+	size	18
 }
