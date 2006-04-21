@@ -211,12 +211,12 @@ extern transform_t	trafo[MAX_ENTITIES];
 
 typedef struct font_s
 {
+	char	name[MAX_FONTNAME];
 #ifdef USE_SDL_TTF
 	TTF_Font *font;
 	int style;
 #else
 	image_t	*image;
-	char	name[MAX_FONTNAME];
 	byte	wc[512]; // 256 lower case, 256 upper case
 	byte	w, h;
 	float	rw, rh, rhl;
