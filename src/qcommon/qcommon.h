@@ -724,6 +724,7 @@ char	*FS_Gamedir (void);
 char	*FS_NextPath (char *prevpath);
 void	FS_ExecAutoexec (void);
 char	*FS_GetCwd( void );
+qboolean	FS_FileExists (char *filename);
 
 void	FS_GetMaps ( void );
 

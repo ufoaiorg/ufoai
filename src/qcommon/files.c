@@ -382,7 +382,7 @@ int FS_CheckFile (const char *filename)
 
 /*
 =================
-FS_ReadFile
+FS_Read
 
 Properly handles partial reads
 =================
@@ -1620,4 +1620,20 @@ char* FS_GetCwd( void )
 	} else {
 		return "";
 	}
+}
+
+/*
+==============
+FS_FileExists
+==============
+*/
+qboolean FS_FileExists (char *filename)
+{
+	FILE	*f;
+
+	f = fopen (filename, "r");
+	if (!f)
+		return false;
+	fclose (f);
+	return true;
 }
