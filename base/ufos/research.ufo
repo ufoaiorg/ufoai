@@ -242,6 +242,7 @@ tech rs_laser
 	provides	laserpistol
 	time	30
 	researched	false
+	image_top	techs/laser
 }
 
 tech rs_weapon_laserpistol
