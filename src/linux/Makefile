@@ -12,6 +12,7 @@
 # (Note: not all options are available for all platforms).
 # ufo (uses OSS for sound, cdrom ioctls for cd audio) is automatically built.
 # game.so is automatically built.
+BUILD_SDL_TTF=YES	# use SDL_ttf as font engine (for utf-8 support)
 BUILD_SDLUFO=YES	# use SDL for cdrom, sound and maybe renderer (selectable)
 BUILD_GLX=YES		# X11 GLX driver. Works somewhat ok.
 BUILD_DEDICATED=YES	# build a dedicated ufo server
@@ -159,6 +160,13 @@ endif
 GLXCFLAGS=-I/usr/X11R6/include
 GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext -lXxf86dga -lXxf86vm
 SDLLDFLAGS=$(shell sdl-config --libs)
+
+ifeq ($(strip $(BUILD_SDL_TTF)),YES)
+	GLXLDFLAGS+=$(shell sdl-config --libs) -lSDL_ttf
+	SDLLDFLAGS+=-lSDL_ttf
+	BASE_CFLAGS+=-DUSE_SDL_TTF
+	GLXCFLAGS+=$(shell sdl-config --cflags) -DUSE_SDL_TTF
+endif
 
 SHLIBEXT=so
 
@@ -823,11 +831,22 @@ $(BUILDDIR)/ref_gl/gl_sdl.o :         $(LINUX_DIR)/gl_sdl.c
 
 clean: clean-debug clean-release
 
+cleanrenderer:
+	$(MAKE) cleanrenderer2 BUILDDIR=$(BUILD_DEBUG_DIR)
+
+cleanrenderer2:
+	rm -f \
+	$(REF_GL_OBJS) \
+	$(REF_GLX_OBJS) \
+	$(REF_SDL_OBJS) \
+	$(BUILDDIR)/ref_sdl.$(SHLIBEXT) \
+	$(BUILDDIR)/ref_glx.$(SHLIBEXT)
+
 clean-debug:
-	$(MAKE) clean2 BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS)"
+	$(MAKE) clean2 BUILDDIR=$(BUILD_DEBUG_DIR)
 
 clean-release:
-	$(MAKE) clean2 BUILDDIR=$(BUILD_RELEASE_DIR) CFLAGS="$(DEBUG_CFLAGS)"
+	$(MAKE) clean2 BUILDDIR=$(BUILD_RELEASE_DIR)
 
 clean2:
 	rm -f \
