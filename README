@@ -2,21 +2,36 @@ UFO:Alien Invasion Readme
 =============================================================================================
 
 Linux:
-To install the game use the liflg.org-installer. This will bring you the data-files
-which aren't in svn-repository, yet. After this do a
+====================================================
+Follow these steps:
   mkdir ufoai
   cd ufoai/
   svn co https://svn.sourceforge.net/svnroot/ufoai/ufoai/trunk .
   cd src/linux
   make
 Now you have the binaries in src/linux/debugARCH or src/linux/releaseARCH - copy them over
-the binaries that comes with the liflg.org-installer or symlink them.
+or symlink them (description in FAQ) to the appropriate places.
 
 Windows:
+====================================================
 To install the game use the Windows-Installer at
 http://sourceforge.net/project/showfiles.php?group_id=157793
-This includes the data-files which aren't in svn-repository, yet.
-[...]
+
+To compile the game download the express edition of MS Visual Studio.
+Download the svn (see http://ufoai.sf.net/tutorials.html for svn-help) and open
+the project files from repository.
+
+MacOSX:
+====================================================
+Currently the game does not run on MacOSX - we are searching help with porting.
+There is already a port of the quake2-engine available which can be adopted 
+(http://www.fruitz-of-dojo.de).
+
+PlayStation Portable:
+====================================================
+There is also a port for PSP in work (http://teamemergencyexit.com/quake2). Maybe
+we even get UFO:AI to PSP. Feel free to contribute.
+
 
 FAQ:
 =============================================================================================
