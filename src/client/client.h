@@ -872,11 +872,11 @@ typedef enum
 
 typedef struct building_s
 {
-	// FIXME: This can be a char* name and char* base.... don't it? See bmData in basemanagement.c
 	char	name[MAX_VAR];
 	char	title[MAX_VAR];
+	char	text[MAX_VAR]; // short description
 	// needs determines the second building part
-	char	*text, *image, *needs, *depends, *mapPart, *produceType, *pedia;
+	char	*image, *needs, *depends, *mapPart, *produceType, *pedia;
 	float	energy, workerCosts, produceTime, fixCosts, varCosts;
 	int	production, level, id, timeStart, buildTime, techLevel, notUpOn;
 	int	base; // number of base this building is located in.

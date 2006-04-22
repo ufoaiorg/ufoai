@@ -167,7 +167,7 @@ void MN_FindEntry_f ( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf(_("Usage: ufopedia <id>\n"));
+		Com_Printf("Usage: ufopedia <id>\n");
 		return;
 	}
 
@@ -176,11 +176,11 @@ void MN_FindEntry_f ( void )
 
 	// FIXME: Is this possible? Cmd_Argc needs to be at least 2 here
 	if ( !*id ) {
-		Com_Printf(_("MN_FindEntry_f: No PediaEntry given as parameter\n"));
+		Com_Printf("MN_FindEntry_f: No PediaEntry given as parameter\n");
 		return;
 	}
 
-	Com_DPrintf(_("MN_FindEntry_f: id=\"%s\"\n"), id); //DEBUG
+	Com_DPrintf("MN_FindEntry_f: id=\"%s\"\n", id); //DEBUG
 
 	//search in all chapters
 	for ( i = 0; i < numChapters; i++ ) {
@@ -206,7 +206,7 @@ void MN_FindEntry_f ( void )
 		} while ( t );
 	}
 	//if we can not find it
-	Com_DPrintf(_("MN_FindEntry_f: No PediaEntry found for %s\n"), id );
+	Com_DPrintf("MN_FindEntry_f: No PediaEntry found for %s\n", id );
 }
 
 /*=================
@@ -357,14 +357,14 @@ MN_ParseUpChapters
 ======================*/
 void MN_ParseUpChapters( char *id, char **text )
 {
-	char	*errhead = _("MN_ParseUpChapters: unexptected end of file (names ");
+	char	*errhead = "MN_ParseUpChapters: unexptected end of file (names ";
 	char	*token;
 
 	// get name list body body
 	token = COM_Parse( text );
 
 	if ( !*text || *token !='{' ) {
-		Com_Printf( _("MN_ParseUpChapters: chapter def \"%s\" without body ignored\n"), id );
+		Com_Printf( "MN_ParseUpChapters: chapter def \"%s\" without body ignored\n", id );
 		return;
 	}
 
@@ -376,7 +376,7 @@ void MN_ParseUpChapters( char *id, char **text )
 
 		// add chapter
 		if ( numChapters >= MAX_PEDIACHAPTERS ) {
-			Com_Printf( _("MN_ParseUpChapters: too many chapter defs\n"), id );
+			Com_Printf( "MN_ParseUpChapters: too many chapter defs\n", id );
 			return;
 		}
 		memset( &upChapters[numChapters], 0, sizeof( pediaChapter_t ) );

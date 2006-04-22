@@ -1260,7 +1260,7 @@ void G_Morale( int type, edict_t *victim, edict_t *attacker, int param )
 				if ( ent == victim ) mod *= MOR_PAIN;
 				break;
 			default:
-				Com_Printf( _("Undefined morale modifier type %i\n"), type );
+				Com_Printf( "Undefined morale modifier type %i\n", type );
 				mod = 0;
 			}
 			// clamp new morale
@@ -2105,7 +2105,7 @@ void G_GetTeam( player_t *player )
 	else if ( sv_teamplay->value )
 	{
 		// set the team specified in the userinfo
-		Com_Printf( _("Get a team for teamplay\n") );
+		Com_Printf( "Get a team for teamplay\n" );
 		i = atoi( Info_ValueForKey( player->pers.userinfo, "teamnum" ) );
 		if ( i > 0 ) player->pers.team = i;
 		else player->pers.team = 1;
@@ -2113,7 +2113,7 @@ void G_GetTeam( player_t *player )
 	else
 	{
 		// search team
-		Com_Printf( _("Get a team for multiplayer\n") );
+		Com_Printf( "Get a team for multiplayer\n" );
 		for ( i = 1; i < MAX_TEAMS; i++ )
 			if ( level.num_spawnpoints[i] )
 			{
@@ -2123,7 +2123,7 @@ void G_GetTeam( player_t *player )
 				for ( j = 0, p = game.players; j < game.maxplayers; j++, p++ )
 					if ( p->inuse && p->pers.team == i )
 					{
-						Com_Printf(_("Team %i is already in use\n" ), i );
+						Com_Printf("Team %i is already in use\n", i );
 						// team already in use
 						break;
 					}

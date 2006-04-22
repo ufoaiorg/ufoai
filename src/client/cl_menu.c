@@ -158,14 +158,14 @@ value_t nps[] =
 	{ "timeout",		V_INT,		NOFS( timeOut ) },
 	{ "bgcolor",		V_COLOR,	NOFS( bgcolor ) },
 	// 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t
-	{ "tooltip",		V_STRING,	-5 },
+	{ "tooltip",		V_STRING,	-5 }, // translated in MN_Tooltip
 	{ "image",		V_STRING,	0 },
 	{ "md2",		V_STRING,	0 },
 	{ "anim",		V_STRING,	-1 },
 	{ "tag",		V_STRING,	-2 },
 	{ "skin",		V_STRING,	-3 },
 	// -4 is animation state
-	{ "string",		V_STRING,	0 },
+	{ "string",		V_STRING,	0 }, // no gettext here - this can be a cvar, too
 	{ "font",		V_STRING,	-1 },
 	{ "max",		V_FLOAT,	0 },
 	{ "min",		V_FLOAT,	-1 },
@@ -413,7 +413,7 @@ void MN_StartServer ( void )
 {
 	if ( Cmd_Argc() <= 1 )
 	{
-		Com_Printf( _("Usage: mn_startserver <name>\n") );
+		Com_Printf( "Usage: mn_startserver <name>\n" );
 		return;
 	}
 	else
@@ -583,7 +583,7 @@ void MN_ExecuteActions( menu_t *menu, menuAction_t *first )
 				{
 					// didn't find node -> "kill" action and print error
 					action->type = EA_NULL;
-					Com_Printf( _("MN_ExecuteActions: node \"%s\" doesn't exist\n"), (char *)action->data );
+					Com_Printf( "MN_ExecuteActions: node \"%s\" doesn't exist\n", (char *)action->data );
 					break;
 				}
 
@@ -595,7 +595,7 @@ void MN_ExecuteActions( menu_t *menu, menuAction_t *first )
 			}
 			break;
 		default:
-			Sys_Error( _("unknown action type\n") );
+			Sys_Error( "unknown action type\n" );
 			break;
 		}
 }
@@ -1111,7 +1111,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 			}
 			else
 			{
-				Com_DPrintf(_("Select mission: %s at %.0f:%.0f\n"), selMis->def->name, selMis->realPos[0], selMis->realPos[1] );
+				Com_DPrintf("Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1] );
 				mapAction = MA_INTERCEPT;
 			}
 			return;
@@ -1639,7 +1639,7 @@ void MN_PrecacheMenus( void )
 	char	*ref;
 	char	source[MAX_VAR];
 
-	Com_Printf(_("...precaching %i menus\n"), numMenus);
+	Com_Printf("...precaching %i menus\n", numMenus);
 
 	for ( i = 0; i < numMenus; i++ )
 	{
@@ -1992,7 +1992,7 @@ void MN_DrawMenus( void )
 
 					if ( node->mousefx == C_UNDEFINED ) MN_FindContainer( node );
 					if ( node->mousefx == NONE ) {
-						Com_Printf( _("no container...\n") );
+						Com_Printf( "no container...\n" );
 						break;
 					}
 
@@ -2268,7 +2268,7 @@ void MN_PushMenu( char *name )
 			if ( menuStackPos < MAX_MENUSTACK )
 				menuStack[menuStackPos++] = &menus[i];
 			else
-				Com_Printf( _("Menu stack overflow\n") );
+				Com_Printf( "Menu stack overflow\n" );
 
 			// initialize it
 
@@ -2279,7 +2279,7 @@ void MN_PushMenu( char *name )
 			return;
 		}
 
-	Com_Printf( _("Didn't find menu \"%s\"\n"), name );
+	Com_Printf( "Didn't find menu \"%s\"\n", name );
 }
 
 void MN_PushMenu_f( void )
@@ -2287,7 +2287,7 @@ void MN_PushMenu_f( void )
 	if ( Cmd_Argc() > 1 )
 		MN_PushMenu( Cmd_Argv(1) );
 	else
-		Com_Printf( _("usage: mn_push <name>\n") );
+		Com_Printf( "usage: mn_push <name>\n" );
 }
 
 
@@ -2356,7 +2356,7 @@ void MN_Modify_f( void )
 	float	value;
 
 	if ( Cmd_Argc() < 5 )
-		Com_Printf( _("usage: mn_modify <name> <amount> <min> <max>\n") );
+		Com_Printf( "usage: mn_modify <name> <amount> <min> <max>\n" );
 
 	value = Cvar_VariableValue( Cmd_Argv(1) );
 	value += atof( Cmd_Argv(2) );
@@ -2377,7 +2377,7 @@ void MN_ModifyWrap_f( void )
 	float	value;
 
 	if ( Cmd_Argc() < 5 )
-		Com_Printf( _("usage: mn_modifywrap <name> <amount> <min> <max>\n") );
+		Com_Printf( "usage: mn_modifywrap <name> <amount> <min> <max>\n" );
 
 	value = Cvar_VariableValue( Cmd_Argv(1) );
 	value += atof( Cmd_Argv(2) );
@@ -2583,7 +2583,7 @@ MN_ParseAction
 */
 qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 {
-	char			*errhead = _("MN_ParseAction: unexpected end of file (in event)");
+	char			*errhead = "MN_ParseAction: unexpected end of file (in event)";
 	menuAction_t	*lastAction;
 	menuNode_t		*node;
 	qboolean		found;
@@ -2676,7 +2676,7 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 
 				if ( !val->type )
 				{
-					Com_Printf( _("MN_ParseAction: token \"%s\" isn't a node property (in event)\n"), *token );
+					Com_Printf( "MN_ParseAction: token \"%s\" isn't a node property (in event)\n", *token );
 					curadata = action->data;
 					if ( lastAction )
 					{
@@ -2739,7 +2739,7 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 			return true;
 		} else {
 			// unknown token, print message and continue
-			Com_Printf( _("MN_ParseAction: unknown token \"%s\" ignored (in event)\n"), *token );
+			Com_Printf( "MN_ParseAction: unknown token \"%s\" ignored (in event)\n", *token );
 		}
 	} while ( *text );
 
@@ -2753,7 +2753,7 @@ MN_ParseNodeBody
 */
 qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 {
-	char		*errhead = _("MN_ParseNodeBody: unexpected end of file (node");
+	char		*errhead = "MN_ParseNodeBody: unexpected end of file (node";
 	qboolean	found;
 	value_t	*val;
 	int		i;
@@ -2864,7 +2864,7 @@ qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 			return true;
 		} else {
 			// unknown token, print message and continue
-			Com_Printf( _("MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\")\n"), *token, node->name );
+			Com_Printf( "MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\")\n", *token, node->name );
 		}
 	} while ( *text );
 
@@ -2879,7 +2879,7 @@ MN_ParseMenuBody
 */
 qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 {
-	char		*errhead = _("MN_ParseMenuBody: unexpected end of file (menu");
+	char		*errhead = "MN_ParseMenuBody: unexpected end of file (menu";
 	char		*token;
 	qboolean	found;
 	menuNode_t	*node, *lastNode;
@@ -2911,7 +2911,7 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 						if ( !Q_strncmp( token, node->name, sizeof(node->name) ) )
 						{
 							if ( node->type != i )
-								Com_Printf( _("MN_ParseMenuBody: node prototype type change (menu \"%s\")\n"), menu->name );
+								Com_Printf( "MN_ParseMenuBody: node prototype type change (menu \"%s\")\n", menu->name );
 							break;
 						}
 
@@ -2939,28 +2939,28 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 						if ( !menu->initNode )
 							menu->initNode = node;
 						else
-							Com_Printf( _("MN_ParseMenuBody: second init function ignored (menu \"%s\")\n"), menu->name );
+							Com_Printf( "MN_ParseMenuBody: second init function ignored (menu \"%s\")\n", menu->name );
 					}
 					if ( node->type == MN_FUNC && !Q_strncmp( node->name, "close", 5 ) )
 					{
 						if ( !menu->closeNode )
 							menu->closeNode = node;
 						else
-							Com_Printf( _("MN_ParseMenuBody: second close function ignored (menu \"%s\")\n"), menu->name );
+							Com_Printf( "MN_ParseMenuBody: second close function ignored (menu \"%s\")\n", menu->name );
 					}
 					if ( node->type == MN_ZONE && !Q_strncmp( node->name, "render", 6 ) )
 					{
 						if ( !menu->renderNode )
 							menu->renderNode = node;
 						else
-							Com_Printf( _("MN_ParseMenuBody: second render node ignored (menu \"%s\")\n"), menu->name );
+							Com_Printf( "MN_ParseMenuBody: second render node ignored (menu \"%s\")\n", menu->name );
 					}
 					if ( node->type == MN_ZONE && !Q_strncmp( node->name, "popup", 5 ) )
 					{
 						if ( !menu->popupNode )
 							menu->popupNode = node;
 						else
-							Com_Printf( _("MN_ParseMenuBody: second popup node ignored (menu \"%s\")\n"), menu->name );
+							Com_Printf( "MN_ParseMenuBody: second popup node ignored (menu \"%s\")\n", menu->name );
 					}
 					if ( node->type == MN_CONTAINER )
 						node->mousefx = C_UNDEFINED;
@@ -2977,7 +2977,7 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 					{
 						if ( !MN_ParseNodeBody( node, text, &token ) )
 						{
-							Com_Printf( _("MN_ParseMenuBody: node with bad body ignored (menu \"%s\")\n"), menu->name );
+							Com_Printf( "MN_ParseMenuBody: node with bad body ignored (menu \"%s\")\n", menu->name );
 							numNodes--;
 							continue;
 						}
@@ -3002,7 +3002,7 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 			return true;
 		} else {
 			// unknown token, print message and continue
-			Com_Printf( _("MN_ParseMenuBody: unknown token \"%s\" ignored (menu \"%s\")\n"), *token, menu->name );
+			Com_Printf( "MN_ParseMenuBody: unknown token \"%s\" ignored (menu \"%s\")\n", *token, menu->name );
 		}
 
 	} while ( *text );
@@ -3024,19 +3024,19 @@ void MN_ParseMenuModel( char *name, char **text )
 	char	*token;
 	int	i;
 	value_t	*v = NULL;
-	char    *errhead = _("MN_ParseMenuModel: unexptected end of file (names ");
+	char    *errhead = "MN_ParseMenuModel: unexptected end of file (names ";
 
 	// search for menumodels with same name
 	for ( i = 0; i < numMenuModels; i++ )
 		if ( !Q_strncmp( menuModels[i].id, name, MAX_VAR ) )
 		{
-			Com_Printf( _("MN_ParseMenuModel: menu_model \"%s\" with same name found, second ignored\n"), name );
+			Com_Printf( "MN_ParseMenuModel: menu_model \"%s\" with same name found, second ignored\n", name );
 			return;
 		}
 
 	if ( numMenuModels >= MAX_MENUMODELS )
 	{
-		Com_Printf( _("MN_ParseMenuModel: Max menu models reached\n"), name );
+		Com_Printf( "MN_ParseMenuModel: Max menu models reached\n", name );
 		return;
 	}
 
@@ -3052,7 +3052,7 @@ void MN_ParseMenuModel( char *name, char **text )
 
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( _("MN_ParseMenuModel: menu \"%s\" without body ignored\n"), menuModel->id );
+		Com_Printf( "MN_ParseMenuModel: menu \"%s\" without body ignored\n", menuModel->id );
 		return;
 	}
 
@@ -3086,7 +3086,7 @@ void MN_ParseMenuModel( char *name, char **text )
 			}
 
 		if ( !v->string )
-			Com_Printf( _("MN_ParseMenuModel: unknown token \"%s\" ignored (menu_model %s)\n"), token, name );
+			Com_Printf( "MN_ParseMenuModel: unknown token \"%s\" ignored (menu_model %s)\n", token, name );
 
 	} while ( *text );
 }
@@ -3110,7 +3110,7 @@ void MN_ParseMenu( char *name, char **text )
 
 	if ( i < numMenus )
 	{
-		Com_Printf( _("MN_ParseMenus: menu \"%s\" with same name found, second ignored\n"), name );
+		Com_Printf( "MN_ParseMenus: menu \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
 
@@ -3125,7 +3125,7 @@ void MN_ParseMenu( char *name, char **text )
 
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( _("MN_ParseMenus: menu \"%s\" without body ignored\n"), menu->name );
+		Com_Printf( "MN_ParseMenus: menu \"%s\" without body ignored\n", menu->name );
 		numMenus--;
 		return;
 	}
@@ -3133,7 +3133,7 @@ void MN_ParseMenu( char *name, char **text )
 	// parse it's body
 	if ( !MN_ParseMenuBody( menu, text ) )
 	{
-		Com_Printf( _("MN_ParseMenus: menu \"%s\" with bad body ignored\n"), menu->name );
+		Com_Printf( "MN_ParseMenus: menu \"%s\" with bad body ignored\n", menu->name );
 		numMenus--;
 		return;
 	}
@@ -3141,7 +3141,7 @@ void MN_ParseMenu( char *name, char **text )
 	for ( i = 0; i < numMenus; i++ )
 		for ( node = menus[i].firstNode; node; node = node->next )
 			if ( node->num >= MAX_MENUTEXTS )
-				Sys_Error( _("Error in menu %s - max menu num exeeded (%i)"), menus[i].name, MAX_MENUTEXTS );
+				Sys_Error( "Error in menu %s - max menu num exeeded (%i)", menus[i].name, MAX_MENUTEXTS );
 
 	Com_DPrintf( "Nodes: %4i Menu data: %i\n", numNodes, curadata - adata );
 }
@@ -3399,7 +3399,7 @@ void CL_ParseFont( char* name, char **text )
 // we don't need to parse if we don't want to use the sdl_ttf lib as font-engine
 #ifdef USE_SDL_TTF
 	font_t*	font;
-	char	*errhead = _("CL_ParseFont: unexpected end of file (font");
+	char	*errhead = "CL_ParseFont: unexpected end of file (font";
 	char	*token;
 	int	i;
 	value_t	*v = NULL;
@@ -3408,13 +3408,13 @@ void CL_ParseFont( char* name, char **text )
 	for ( i = 0; i < numFonts; i++ )
 		if ( !Q_strncmp( fonts[i].name, name, MAX_VAR ) )
 		{
-			Com_Printf( _("CL_ParseFont: font \"%s\" with same name found, second ignored\n"), name );
+			Com_Printf( "CL_ParseFont: font \"%s\" with same name found, second ignored\n", name );
 			return;
 		}
 
 	if ( numFonts >= MAX_FONTS )
 	{
-		Com_Printf( _("CL_ParseFont: Max fonts reached\n"), name );
+		Com_Printf( "CL_ParseFont: Max fonts reached\n", name );
 		return;
 	}
 
@@ -3430,7 +3430,7 @@ void CL_ParseFont( char* name, char **text )
 
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( _("CL_ParseFont: font \"%s\" without body ignored\n"), name );
+		Com_Printf( "CL_ParseFont: font \"%s\" without body ignored\n", name );
 		return;
 	}
 
@@ -3454,7 +3454,7 @@ void CL_ParseFont( char* name, char **text )
 			}
 
 		if ( !v->string )
-			Com_Printf( _("CL_ParseFont: unknown token \"%s\" ignored (font %s)\n"), token, name );
+			Com_Printf( "CL_ParseFont: unknown token \"%s\" ignored (font %s)\n", token, name );
 
 	} while ( *text );
 

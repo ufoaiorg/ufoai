@@ -188,7 +188,7 @@ void CL_Setenv_f( void )
 		}
 		else
 		{
-			Com_Printf( _("%s undefined\n"), Cmd_Argv(1), env );
+			Com_Printf( "%s undefined\n", Cmd_Argv(1), env );
 		}
 	}
 }
@@ -203,7 +203,7 @@ void CL_ForwardToServer_f (void)
 {
 	if (cls.state != ca_connected && cls.state != ca_active)
 	{
-		Com_Printf ( _("Can't \"%s\", not connected\n"), Cmd_Argv(0));
+		Com_Printf ( "Can't \"%s\", not connected\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -282,7 +282,7 @@ void CL_SendConnectPacket (void)
 
 	if (!NET_StringToAdr (cls.servername, &adr))
 	{
-		Com_Printf ( _("Bad server address\n") );
+		Com_Printf ( "Bad server address\n" );
 		cls.connect_time = 0;
 		return;
 	}
@@ -328,7 +328,7 @@ void CL_CheckForResend (void)
 
 	if (!NET_StringToAdr (cls.servername, &adr))
 	{
-		Com_Printf (_("Bad server address\n"));
+		Com_Printf ("Bad server address\n");
 		cls.state = ca_disconnected;
 		return;
 	}
@@ -337,7 +337,7 @@ void CL_CheckForResend (void)
 
 	cls.connect_time = cls.realtime;	// for retransmit requests
 
-	Com_Printf (_("Connecting to %s...\n"), cls.servername);
+	Com_Printf ("Connecting to %s...\n", cls.servername);
 
 	Netchan_OutOfBandPrint (NS_CLIENT, adr, "getchallenge\n");
 }
@@ -368,7 +368,7 @@ void CL_Connect_f (void)
 
 	if (Com_ServerState ())
 	{	// if running a local server, kill it and reissue
-		SV_Shutdown ( _("Server quit\n"), false);
+		SV_Shutdown ( "Server quit\n", false);
 	}
 	else
 	{
@@ -403,7 +403,7 @@ void CL_Rcon_f (void)
 
 	if (!rcon_client_password->string)
 	{
-		Com_Printf (_("You must set 'rcon_password' before issuing an rcon command.\n"));
+		Com_Printf ("You must set 'rcon_password' before issuing an rcon command.\n");
 		return;
 	}
 
@@ -432,7 +432,7 @@ void CL_Rcon_f (void)
 	{
 		if (!strlen(rcon_address->string))
 		{
-			Com_Printf ( _("You must either be connected, or set the 'rcon_address' cvar\nto issue rcon commands\n") );
+			Com_Printf ( "You must either be connected, or set the 'rcon_address' cvar\nto issue rcon commands\n" );
 			return;
 		}
 		NET_StringToAdr (rcon_address->string, &to);
@@ -491,7 +491,7 @@ void CL_Disconnect (void)
 
 		time = Sys_Milliseconds () - cl.timedemo_start;
 		if (time > 0)
-			Com_Printf (_("%i frames, %3.1f seconds: %3.1f fps\n"), cl.timedemo_frames,
+			Com_Printf ("%i frames, %3.1f seconds: %3.1f fps\n", cl.timedemo_frames,
 			time/1000.0, cl.timedemo_frames*1000.0 / time);
 	}
 
@@ -562,7 +562,7 @@ void CL_Packet_f (void)
 
 	if (!NET_StringToAdr (Cmd_Argv(1), &adr))
 	{
-		Com_Printf (_("Bad address\n") );
+		Com_Printf ("Bad address\n");
 		return;
 	}
 	if (!adr.port)
@@ -605,7 +605,7 @@ void CL_Changing_f (void)
 
 	SCR_BeginLoadingPlaque ();
 	cls.state = ca_connected;	// not active anymore, but not disconnected
-	Com_Printf (_("\nChanging map...\n"));
+	Com_Printf ("\nChanging map...\n");
 }
 
 
@@ -625,7 +625,7 @@ void CL_Reconnect_f (void)
 
 	S_StopAllSounds ();
 	if (cls.state == ca_connected) {
-		Com_Printf (_("reconnecting...\n"));
+		Com_Printf ("reconnecting...\n");
 		cls.state = ca_connected;
 		MSG_WriteChar (&cls.netchan.message, clc_stringcmd);
 		MSG_WriteString (&cls.netchan.message, "new");
@@ -640,7 +640,7 @@ void CL_Reconnect_f (void)
 			cls.connect_time = -99999; // fire immediately
 
 		cls.state = ca_connecting;
-		Com_Printf (_("reconnecting...\n"));
+		Com_Printf ("reconnecting...\n");
 	}
 }
 
@@ -720,7 +720,7 @@ void CL_PingServers_f (void)
 	NET_Config (true);		// allow remote
 
 	// send a broadcast packet
-	Com_Printf (_("pinging broadcast...\n"));
+	Com_Printf ("pinging broadcast...\n");
 	serverText[0] = 0;
 	serverListLength = 0;
 
@@ -748,10 +748,10 @@ void CL_PingServers_f (void)
 		if (!adrstring || !adrstring[0])
 			continue;
 
-		Com_Printf (_("pinging %s...\n"), adrstring);
+		Com_Printf ("pinging %s...\n", adrstring);
 		if (!NET_StringToAdr (adrstring, &adr))
 		{
-			Com_Printf (_("Bad address: %s\n"), adrstring);
+			Com_Printf ("Bad address: %s\n", adrstring);
 			continue;
 		}
 		if (!adr.port)
@@ -789,7 +789,7 @@ void CL_ConnectionlessPacket (void)
 	{
 		if (cls.state == ca_connected)
 		{
-			Com_Printf (_("Dup connect received. Ignored.\n") );
+			Com_Printf ("Dup connect received. Ignored.\n");
 			return;
 		}
 		Netchan_Setup (NS_CLIENT, &cls.netchan, net_from, cls.quakePort);
@@ -811,7 +811,7 @@ void CL_ConnectionlessPacket (void)
 	{
 		if (!NET_IsLocalAddress(net_from))
 		{
-			Com_Printf (_("Command packet from remote host. Ignored.\n"));
+			Com_Printf ("Command packet from remote host. Ignored.\n");
 			return;
 		}
 		Sys_AppActivate ();
@@ -850,7 +850,7 @@ void CL_ConnectionlessPacket (void)
 		return;
 	}
 
-	Com_Printf (_("Unknown command.\n"));
+	Com_Printf ("Unknown command.\n");
 }
 
 
@@ -866,7 +866,7 @@ void CL_DumpPackets (void)
 {
 	while (NET_GetPacket (NS_CLIENT, &net_from, &net_message))
 	{
-		Com_Printf (_("dumnping a packet\n"));
+		Com_Printf ("dumnping a packet\n");
 	}
 }
 
@@ -894,7 +894,7 @@ void CL_ReadPackets (void)
 
 		if (net_message.cursize < 8)
 		{
-			Com_Printf (_("%s: Runt packet\n"),NET_AdrToString(net_from));
+			Com_Printf ("%s: Runt packet\n",NET_AdrToString(net_from));
 			continue;
 		}
 
@@ -903,8 +903,7 @@ void CL_ReadPackets (void)
 		//
 		if (!NET_CompareAdr (net_from, cls.netchan.remote_address))
 		{
-			Com_DPrintf (_("%s:sequenced packet without connection\n")
-				,NET_AdrToString(net_from));
+			Com_DPrintf ("%s:sequenced packet without connection\n",NET_AdrToString(net_from));
 			continue;
 		}
 		if (!Netchan_Process(&cls.netchan, &net_message))
@@ -920,7 +919,7 @@ void CL_ReadPackets (void)
 	{
 		if (++cl.timeoutcount > 5)	// timeoutcount saves debugger
 		{
-			Com_Printf (_("\nServer connection timed out.\n"));
+			Com_Printf ("\nServer connection timed out.\n");
 			CL_Disconnect ();
 			return;
 		}
@@ -940,7 +939,7 @@ CL_Userinfo_f
 */
 void CL_Userinfo_f (void)
 {
-	Com_Printf (_("User info settings:\n"));
+	Com_Printf ("User info settings:\n");
 	Info_Print (Cvar_Userinfo());
 }
 
@@ -1656,7 +1655,7 @@ void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info)
 
 	if ( numMPs >= MAX_MAPPARTICLES )
 	{
-		Sys_Error( _("Too many map particles\n") );
+		Sys_Error("Too many map particles\n");
 		return;
 	}
 
@@ -1929,12 +1928,7 @@ void CL_Shutdown(void)
 
 	if (isdown)
 	{
-		// BUG [ 1444732 ] game exits with error
-		//
-		// Removing this printf(), and therefore the call to gettext(), fixes
-		// the segfault. Why is gettext() off limits here???
-		//
-		//printf (_("recursive shutdown\n"));
+		printf ("recursive shutdown\n");
 		return;
 	}
 	isdown = true;

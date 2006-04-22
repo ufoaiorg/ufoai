@@ -35,7 +35,7 @@ void CL_GiveNameCmd( void )
 
 	if ( i == NAME_LAST )
 	{
-		Com_Printf( _("'%s' isn't a gender! (male and female are)\n"), Cmd_Argv(1) );
+		Com_Printf("'%s' isn't a gender! (male and female are)\n", Cmd_Argv(1) );
 		return;
 	}
 
@@ -52,7 +52,7 @@ void CL_GiveNameCmd( void )
 		name = Com_GiveName( i, Cmd_Argv(2) );
 		if ( !name )
 		{
-			Com_Printf( _("No first name in category '%s'\n"), Cmd_Argv(2) );
+			Com_Printf( "No first name in category '%s'\n", Cmd_Argv(2) );
 			return;
 		}
 		Com_Printf( name );
@@ -61,7 +61,7 @@ void CL_GiveNameCmd( void )
 		name = Com_GiveName( i + LASTNAME, Cmd_Argv(2) );
 		if ( !name )
 		{
-			Com_Printf( _("\nNo last name in category '%s'\n"), Cmd_Argv(2) );
+			Com_Printf( "\nNo last name in category '%s'\n", Cmd_Argv(2) );
 			return;
 		}
 
@@ -277,7 +277,7 @@ void CL_ItemDescription( int item )
 		}
 		menuText[TEXT_STANDARD] = itemText;
 	} else {
-		sprintf( itemText, _("Unknown - need to research this") );
+		Com_sprintf( itemText, MAX_MENUTEXTLEN, _("Unknown - need to research this") );
 		menuText[TEXT_STANDARD] = itemText;
 	}
 	// else menuText[TEXT_STANDARD] = NULL; // TODO: should not be needed anymore.
@@ -469,7 +469,7 @@ void CL_GenerateEquipmentCmd( void )
 		}
 		if ( i == csi.numEDs )
 		{
-			Com_Printf( _("Equipment '%s' not found!\n"), name );
+			Com_Printf( "Equipment '%s' not found!\n", name );
 			return;
 		}
 		unused = *ed;
@@ -607,7 +607,7 @@ void CL_MarkTeamCmd( void )
 	// or are in multiplayer mode
 	if ( ! ccs.numBases )
 	{
-		Com_Printf(_("No base set up\n"));
+		Com_Printf("No base set up\n");
 		MN_PopMenu(false);
 		return;
 	}
@@ -645,7 +645,7 @@ void CL_HireActorCmd( void )
 	// check syntax
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: hire <num>\n") );
+		Com_Printf( "Usage: hire <num>\n" );
 		return;
 	}
 	num = atoi( Cmd_Argv(1) );
@@ -751,7 +751,7 @@ void CL_SaveTeam( char *filename )
 	f = fopen( filename, "wb" );
 	if ( !f )
 	{
-		Com_Printf( _("Couldn't write file (%s).\n"), filename );
+		Com_Printf( "Couldn't write file (%s).\n", filename );
 		return;
 	}
 
@@ -775,7 +775,7 @@ void CL_SaveTeam( char *filename )
 	fclose( f );
 
 	if ( res == sb.cursize )
-		Com_Printf( _("Team '%s' saved.\n"), filename );
+		Com_Printf( "Team '%s' saved.\n", filename );
 }
 
 
@@ -886,7 +886,7 @@ void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version )
 	base->numHired = MSG_ReadByte( sb );
 	base->hiredMask = MSG_ReadLong( sb );
 
-	Com_DPrintf(_("Load team with %i members and %i slots\n"), base->numOnTeam, base->numWholeTeam );
+	Com_DPrintf("Load team with %i members and %i slots\n", base->numOnTeam, base->numWholeTeam );
 
 	for ( i = 0, p = 0; i < base->numWholeTeam; i++ )
 		if ( base->teamMask & (1 << i) )
@@ -909,7 +909,7 @@ void CL_LoadTeamMultiplayer( char *filename )
 	f = fopen( filename, "rb" );
 	if ( !f )
 	{
-		Com_Printf( _("Couldn't open file '%s'.\n"), filename );
+		Com_Printf( "Couldn't open file '%s'.\n", filename );
 		return;
 	}
 
@@ -951,7 +951,7 @@ void CL_LoadTeamCmd( void )
 	Com_sprintf( filename, MAX_QPATH, "%s/save/%s.mpt", FS_Gamedir(), Cmd_Argv( 1 ) );
 	CL_LoadTeamMultiplayer( filename );
 
-	Com_Printf( _("Team '%s' loaded.\n"), Cmd_Argv( 1 ) );
+	Com_Printf( "Team '%s' loaded.\n", Cmd_Argv( 1 ) );
 }
 
 
@@ -968,7 +968,7 @@ void CL_LoadTeamSlotCmd( void )
 	Com_sprintf( filename, MAX_QPATH, "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString( "mn_slot" ) );
 	CL_LoadTeamMultiplayer( filename );
 
-	Com_Printf( _("Team 'team%s' loaded.\n"), Cvar_VariableString( "mn_slot" ) );
+	Com_Printf( "Team 'team%s' loaded.\n", Cvar_VariableString( "mn_slot" ) );
 }
 
 
@@ -1080,7 +1080,7 @@ void CL_ParseResults( sizebuf_t *buf )
 	// get number of teams
 	num = MSG_ReadByte( buf );
 	if ( num > MAX_TEAMS )
-		Sys_Error( _("Too many teams in result message\n") );
+		Sys_Error( "Too many teams in result message\n");
 
 	// get winning team
 	winner = MSG_ReadByte( buf );
@@ -1102,7 +1102,7 @@ void CL_ParseResults( sizebuf_t *buf )
 
 	// read terminator
 	if ( MSG_ReadByte( buf ) != NONE )
-		Com_Printf( _("WARNING: bad result message\n") );
+		Com_Printf( "WARNING: bad result message\n" );
 
 	// init result text
 	menuText[TEXT_STANDARD] = resultText;

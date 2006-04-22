@@ -17,7 +17,7 @@ typedef struct production_s
 {
 	char    name[MAX_VAR];
 	char    title[MAX_VAR];
-	char    *text;
+	char    text[MAX_VAR]; //short description
 	int	amount;
 	char	menu[MAX_VAR];
 } production_t;

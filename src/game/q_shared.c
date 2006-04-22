@@ -1872,7 +1872,7 @@ invList_t *Com_AddToInventory( inventory_t *i, item_t item, int container, int x
 
 	if ( !invUnused )
 	{
-		Com_Printf( _("No free inventory space!\n") );
+		Com_Printf( "No free inventory space!\n" );
 		return NULL;
 	}
 	if ( item.t == NONE ) return NULL;
@@ -2294,21 +2294,21 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 
 	case V_POS:
 		if ( strstr(token, " ") == NULL )
-			Sys_Error( _("Com_ParseValue: Illegal pos statement\n") );
+			Sys_Error( "Com_ParseValue: Illegal pos statement\n" );
 		sscanf( token, "%f %f",
 			&((float *)b)[0], &((float *)b)[1] );
 		return 2*sizeof(float);
 
 	case V_VECTOR:
 		if ( strstr( strstr(token, " "), " ") == NULL )
-			Sys_Error( _("Com_ParseValue: Illegal vector statement\n") );
+			Sys_Error( "Com_ParseValue: Illegal vector statement\n" );
 		sscanf( token, "%f %f %f",
 			&((float *)b)[0], &((float *)b)[1], &((float *)b)[2] );
 		return 3*sizeof(float);
 
 	case V_COLOR:
 		if ( strstr( strstr( strstr(token, " "), " "), " " ) == NULL )
-			Sys_Error( _("Com_ParseValue: Illegal color statement\n") );
+			Sys_Error( "Com_ParseValue: Illegal color statement\n" );
 		sscanf( token, "%f %f %f %f",
 			&((float *)b)[0], &((float *)b)[1],
 			&((float *)b)[2], &((float *)b)[3] );
@@ -2316,7 +2316,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 
 	case V_RGBA:
 		if ( strstr( strstr( strstr(token, " "), " "), " " ) == NULL )
-			Sys_Error( _("Com_ParseValue: Illegal rgba statement\n") );
+			Sys_Error( "Com_ParseValue: Illegal rgba statement\n" );
 		sscanf( token, "%i %i %i %i",
 			&((int *)b)[0], &((int *)b)[1],
 			&((int *)b)[2], &((int *)b)[3] );
@@ -2380,7 +2380,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 
 	case V_SHAPE_SMALL:
 		if ( strstr( strstr( strstr(token, " "), " "), " " ) == NULL )
-			Sys_Error( _("Com_ParseValue: Illegal shape small statement\n") );
+			Sys_Error( "Com_ParseValue: Illegal shape small statement\n" );
 		sscanf( token, "%i %i %i %i", &x, &y, &w, &h );
 		for ( h += y; y < h ; y++ )
 			*(int *)b |= ((1<<w)-1) << x << (y*8);
@@ -2388,7 +2388,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 
 	case V_SHAPE_BIG:
 		if ( strstr( strstr( strstr(token, " "), " "), " " ) == NULL )
-			Sys_Error( _("Com_ParseValue: Illegal shape big statement\n") );
+			Sys_Error( "Com_ParseValue: Illegal shape big statement\n" );
 		sscanf( token, "%i %i %i %i", &x, &y, &w, &h );
 		w = ((1<<w)-1) << x;
 		for ( h += y; y < h ; y++ )
@@ -2405,7 +2405,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 
 	case V_DATE:
 		if ( strstr( strstr(token, " "), " ") == NULL )
-			Sys_Error( _("Com_ParseValue: Illegal if statement\n") );
+			Sys_Error( "Com_ParseValue: Illegal if statement\n" );
 		sscanf( token, "%i %i %i", &x, &y, &w );
 		((date_t*)b)->day = 365*x + y;
 		((date_t*)b)->sec = 3600*w;
@@ -2413,14 +2413,14 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 
 	case V_IF:
 		if ( strstr(token, " ") == NULL )
-			Sys_Error( _("Com_ParseValue: Illegal if statement\n") );
+			Sys_Error( "Com_ParseValue: Illegal if statement\n" );
 		sscanf( token, "%s %s", string, string2 );
 		strncpy ( ((menuDepends_t*)b)->var, string, MAX_VAR );
 		strncpy ( ((menuDepends_t*)b)->value, string2, MAX_VAR );
 		return sizeof(menuDepends_t);
 
 	default:
-		Sys_Error( _("Com_ParseValue: unknown value type\n") );
+		Sys_Error( "Com_ParseValue: unknown value type\n" );
 		return -1;
 	}
 }
@@ -2624,12 +2624,12 @@ void Com_InventoryList_f ( void )
 	objDef_t* ods_temp;
 	for (i=0; i < CSI->numODs; i++) {
 		ods_temp = &CSI->ods[i];
-		Com_Printf( _("Item: %s\n"), ods_temp->kurz );
-		Com_Printf( _("... name      -> %s\n"), ods_temp->name );
-		Com_Printf( _("... type      -> %s\n"), ods_temp->type );
-		Com_Printf( _("... category  -> %i\n"), ods_temp->category );
-		Com_Printf( _("... weapon    -> %i\n"), ods_temp->weapon );
-		Com_Printf( _("... twohanded -> %i\n"), ods_temp->twohanded );
-		Com_Printf( _("... thrown    -> %i\n"), ods_temp->thrown );
+		Com_Printf( "Item: %s\n", ods_temp->kurz );
+		Com_Printf( "... name      -> %s\n", ods_temp->name );
+		Com_Printf( "... type      -> %s\n", ods_temp->type );
+		Com_Printf( "... category  -> %i\n", ods_temp->category );
+		Com_Printf( "... weapon    -> %i\n", ods_temp->weapon );
+		Com_Printf( "... twohanded -> %i\n", ods_temp->twohanded );
+		Com_Printf( "... thrown    -> %i\n", ods_temp->thrown );
 	}
 }

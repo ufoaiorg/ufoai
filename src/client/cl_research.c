@@ -1021,8 +1021,8 @@ to the appropriate values in the corresponding struct
 ======================*/
 value_t valid_tech_vars[] =
 {
-	{ "name",		V_STRING,	TECHFS( name ) },			//name of technology
-	{ "description",	V_STRING,	TECHFS( description ) },
+	{ "name",		V_TRANSLATION_STRING,	TECHFS( name ) },			//name of technology
+	{ "description",	V_TRANSLATION_STRING,	TECHFS( description ) },
 	{ "provides",		V_STRING,	TECHFS( provides ) },		//what does this research provide
 	{ "needscollected",	V_BOOL,		TECHFS( needsCollected ) },	// to be able to research this tech zou need all "required" and at least one collected "provides" item.
 	{ "time",			V_FLOAT,		TECHFS( time ) },			//how long will this research last
@@ -1179,7 +1179,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 			}
 		//TODO: debug this thing, it crashes the game at startup.
 		//if ( !var->string ) //TODO: escape "type weapon/tech/etc.." here
-		//	Com_Printf( _("RS_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n"), token, id );
+		//	Com_Printf( "RS_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n", token, id );
 
 	} while ( *text );
 }
@@ -1386,7 +1386,7 @@ void RS_GetProvided( char *id, char *provided )
 			return;
 		}
 	}
-	Com_Printf( _("RS_GetProvided: research item \"%s\" not found.\n"), id );
+	Com_Printf( "RS_GetProvided: research item \"%s\" not found.\n", id );
 }*/
 
 /*======================

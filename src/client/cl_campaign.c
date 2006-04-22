@@ -159,17 +159,17 @@ qboolean CheckBEP( char *expr, qboolean (*varFuncParam)( char *var ) )
 		// do nothing
 		return result;
 	case BEPERR_KLAMMER:
-		Com_Printf( _("')' expected in BEP (%s).\n"), expr );
+		Com_Printf( "')' expected in BEP (%s).\n", expr );
 		return true;
 	case BEPERR_NOEND:
-		Com_Printf( _("Unexpected end of condition in BEP (%s).\n"), expr );
+		Com_Printf( "Unexpected end of condition in BEP (%s).\n", expr );
 		return result;
 	case BEPERR_NOTFOUND:
-		Com_Printf( _("Variable '%s' not found in BEP (%s).\n"), varName, expr );
+		Com_Printf( "Variable '%s' not found in BEP (%s).\n", varName, expr );
 		return false;
 	default:
 		// shouldn't happen
-		Com_Printf( _("Unknown CheckBEP error in BEP (%s).\n"), expr );
+		Com_Printf( "Unknown CheckBEP error in BEP (%s).\n", expr );
 		return true;
 	}
 }
@@ -276,7 +276,7 @@ qboolean CL_MapMaskFind( byte *color, vec2_t polar )
 	res = (c - maskPic) / 4;
 	polar[0] = 180 - 360 * ((float)(res % maskWidth) + 0.5) / maskWidth;
 	polar[1] = 90 - 180 * ((float)(res / maskWidth) + 0.5) / maskHeight;
-	Com_DPrintf(_("Set new coords for mission to %.0f:%.0f\n"), polar[0], polar[1] );
+	Com_DPrintf("Set new coords for mission to %.0f:%.0f\n", polar[0], polar[1] );
 	return true;
 }
 
@@ -432,7 +432,7 @@ void CL_NewAircraft_f ( void )
 {
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: newaircraft <type>\n") );
+		Com_Printf( "Usage: newaircraft <type>\n" );
 		return;
 	}
 
@@ -534,7 +534,7 @@ void CL_AircraftSelect ( void )
 
 	if ( aircraftID >= baseCurrent->numAircraftInBase )
 	{
-		Com_Printf(_("Warning: No aircraft in base %s\n"), baseCurrent->title );
+		Com_Printf("Warning: No aircraft in base %s\n", baseCurrent->title );
 		return;
 	}
 
@@ -595,7 +595,7 @@ void CL_NewAircraft ( base_t* base, char* name )
 			air->homebase = base;
 			Q_strncpyz( messageBuffer, va( _("You've got a new aircraft (a %s) in base %s"), air->name, base->title ), MAX_MESSAGE_TEXT );
 			MN_AddNewMessage( _("Notice"), messageBuffer, false, MSG_STANDARD, NULL );
-			Com_DPrintf(_("Setting aircraft to pos: %.0f:%.0f\n"), base->pos[0], base->pos[1]);
+			Com_DPrintf("Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 			air->pos[0] = base->pos[0];
 			air->pos[1] = base->pos[1];
 			// first aircraft is default aircraft
@@ -603,11 +603,11 @@ void CL_NewAircraft ( base_t* base, char* name )
 				base->aircraftCurrent = air;
 
 			base->numAircraftInBase++;
-			Com_DPrintf(_("Aircraft for base %s: %s\n"), base->title, air->name );
+			Com_DPrintf("Aircraft for base %s: %s\n", base->title, air->name );
 			return;
 		}
 	}
-	Com_Printf(_("Aircraft %s not found\n"), name );
+	Com_Printf("Aircraft %s not found\n", name );
 }
 
 // check for water
@@ -646,17 +646,17 @@ qboolean CL_NewBase( vec2_t pos )
 		MN_AddNewMessage( _("Notice"), _("Could not set up your base at this location"), false, MSG_STANDARD, NULL );
 		return false;
 	} else if ( MapIsDesert(color) ){
-		Com_DPrintf(_("Desertbase\n"));
+		Com_DPrintf("Desertbase\n");
 		baseCurrent->mapChar='d';
 	} else if ( MapIsArctic(color) ){
-		Com_DPrintf(_("Articbase\n"));
+		Com_DPrintf("Articbase\n");
 		baseCurrent->mapChar='a';
 	} else {
-		Com_DPrintf(_("Graslandbase\n"));
+		Com_DPrintf("Graslandbase\n");
 		baseCurrent->mapChar='g';
 	}
 
-	Com_DPrintf(_("Colorvalues for base: R:%i G:%i B:%i\n"), color[0], color[1], color[2] );
+	Com_DPrintf("Colorvalues for base: R:%i G:%i B:%i\n", color[0], color[1], color[2] );
 
 	// build base
 	baseCurrent->pos[0] = pos[0];
@@ -761,13 +761,13 @@ stageState_t *CL_CampaignActivateStage( char *name )
 			// activate stage sets
 			CL_CampaignActivateStageSets( stage );
 
-			Com_DPrintf(_("Activate stage %s\n"), stage->name );
+			Com_DPrintf("Activate stage %s\n", stage->name );
 
 			return state;
 		}
 	}
 
-	Com_Printf( _("CL_CampaignActivateStage: stage '%s' not found.\n"), name );
+	Com_Printf( "CL_CampaignActivateStage: stage '%s' not found.\n", name );
 	return NULL;
 }
 
@@ -789,7 +789,7 @@ void CL_CampaignEndStage( char *name )
 			return;
 		}
 
-	Com_Printf( _("CL_CampaignEndStage: stage '%s' not found.\n"), name );
+	Com_Printf( "CL_CampaignEndStage: stage '%s' not found.\n", name );
 }
 
 
@@ -805,7 +805,7 @@ void CL_CampaignAddMission( setState_t *set )
 	// add mission
 	if ( ccs.numMissions >= MAX_ACTMISSIONS )
 	{
-		Com_Printf( _("Too many active missions!\n") );
+		Com_Printf( "Too many active missions!\n" );
 		return;
 	}
 	mis = &ccs.mission[ccs.numMissions++];
@@ -862,13 +862,13 @@ void CL_CampaignRemoveMission( actMis_t *mis )
 	num = mis - ccs.mission;
 	if ( num >= ccs.numMissions )
 	{
-		Com_Printf( _("CL_CampaignRemoveMission: Can't remove mission.\n") );
+		Com_Printf( "CL_CampaignRemoveMission: Can't remove mission.\n" );
 		return;
 	}
 
 	ccs.numMissions--;
 
-	Com_DPrintf(_("%i missions left\n"), ccs.numMissions );
+	Com_DPrintf("%i missions left\n", ccs.numMissions );
 
 	for ( i = num; i < ccs.numMissions; i++ )
 		ccs.mission[i] = ccs.mission[i+1];
@@ -908,7 +908,7 @@ void CL_OpenAircraft_f ( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: ships_rclick <num>\n") );
+		Com_Printf( "Usage: ships_rclick <num>\n" );
 		return;
 	}
 
@@ -926,7 +926,7 @@ void CL_OpenAircraft_f ( void )
 		else if ( num >= 0 && num < bmBases[j].numAircraftInBase )
 		{
 			air = &bmBases[j].aircraft[num];
-			Com_DPrintf(_("Selected aircraft: %s\n"), air->name );
+			Com_DPrintf("Selected aircraft: %s\n", air->name );
 
 			baseCurrent = &bmBases[j];
 			baseCurrent->aircraftCurrent = air;
@@ -946,13 +946,13 @@ void CL_SelectAircraft_f ( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: ships_click <num>\n") );
+		Com_Printf( "Usage: ships_click <num>\n" );
 		return;
 	}
 
 	if ( ! selMis )
 	{
-		Com_DPrintf( _("No mission selected - can't start aircraft with no mission selected'\n") );
+		Com_DPrintf( "No mission selected - can't start aircraft with no mission selected'\n" );
 		return;
 	}
 
@@ -970,7 +970,7 @@ void CL_SelectAircraft_f ( void )
 		else if ( num >= 0 && num < bmBases[j].numAircraftInBase )
 		{
 			interceptAircraft = &bmBases[j].aircraft[num];
-			Com_DPrintf(_("Selected aircraft: %s\n"), interceptAircraft->name );
+			Com_DPrintf("Selected aircraft: %s\n", interceptAircraft->name );
 
 			if ( ! interceptAircraft->teamSize )
 			{
@@ -1353,7 +1353,7 @@ void CL_GameNew( void )
 
 	if ( i == numCampaigns )
 	{
-		Com_Printf( _("CL_GameNew: Campaign \"%s\" doesn't exist.\n"), name );
+		Com_Printf( "CL_GameNew: Campaign \"%s\" doesn't exist.\n", name );
 		return;
 	}
 
@@ -1489,7 +1489,7 @@ void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
 			}
 			else
 			{
-				Com_Printf(_("Savefile is corrupted or aircraft does not exists any longer\n"));
+				Com_Printf("Savefile is corrupted or aircraft does not exists any longer\n");
 				// try to read the values and continue with
 				// loader the other aircraft
 				MSG_ReadFloat( sb );	//pos[0]
@@ -1527,14 +1527,14 @@ void CL_GameSave( char *filename, char *comment )
 
 	if ( !curCampaign )
 	{
-		Com_Printf( _("No campaign active.\n") );
+		Com_Printf( "No campaign active.\n" );
 		return;
 	}
 
 	f = fopen( va( "%s/save/%s.sav", FS_Gamedir(), filename ), "wb" );
 	if ( !f )
 	{
-		Com_Printf( _("Couldn't write file.\n") );
+		Com_Printf( "Couldn't write file.\n" );
 		return;
 	}
 
@@ -1632,7 +1632,7 @@ void CL_GameSave( char *filename, char *comment )
 	if ( res == sb.cursize )
 	{
 		Cvar_Set( "mn_lastsave", filename );
-		Com_Printf( _("Campaign '%s' saved.\n"), filename );
+		Com_Printf( "Campaign '%s' saved.\n", filename );
 	}
 }
 
@@ -1650,7 +1650,7 @@ void CL_GameSaveCmd( void )
 	// get argument
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: game_save <filename> <comment>\n") );
+		Com_Printf( "Usage: game_save <filename> <comment>\n" );
 		return;
 	}
 
@@ -1689,7 +1689,7 @@ void CL_GameLoad( char *filename )
 	f = fopen( va( "%s/save/%s.sav", FS_Gamedir(), filename ), "rb" );
 	if ( !f )
 	{
-		Com_Printf( _("Couldn't open file '%s'.\n"), filename );
+		Com_Printf( "Couldn't open file '%s'.\n", filename );
 		return;
 	}
 
@@ -1702,7 +1702,7 @@ void CL_GameLoad( char *filename )
 	if (MSG_ReadByte( &sb ) == 0)
 	{
 		version = MSG_ReadLong( &sb );
-		Com_Printf(_("Savefile version %d detected\n"), version );
+		Com_Printf("Savefile version %d detected\n", version );
 	}
 	else
 	{
@@ -1714,12 +1714,12 @@ void CL_GameLoad( char *filename )
 	// check current version
 	if ( version > SAVE_FILE_VERSION )
 	{
-		Com_Printf( _("File '%s' is a more recent version (%d) than is supported.\n"), filename, version );
+		Com_Printf( "File '%s' is a more recent version (%d) than is supported.\n", filename, version );
 		return;
 	}
 	else if ( version < SAVE_FILE_VERSION )
 	{
-		Com_Printf( _("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n"), filename, version );
+		Com_Printf( "Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, version );
 	}
 
 	// read comment
@@ -1734,7 +1734,7 @@ void CL_GameLoad( char *filename )
 
 	if ( i == numCampaigns )
 	{
-		Com_Printf( _("CL_GameLoad: Campaign \"%s\" doesn't exist.\n"), name );
+		Com_Printf( "CL_GameLoad: Campaign \"%s\" doesn't exist.\n", name );
 		return;
 	}
 
@@ -1793,7 +1793,7 @@ void CL_GameLoad( char *filename )
 		state = CL_CampaignActivateStage( name );
 		if ( !state )
 		{
-			Com_Printf( _("Unable to load campaign '%s', unknown stage '%'\n"), filename, name );
+			Com_Printf( "Unable to load campaign '%s', unknown stage '%'\n", filename, name );
 			curCampaign = NULL;
 			Cbuf_AddText( "mn_pop\n" );
 			return;
@@ -1811,7 +1811,7 @@ void CL_GameLoad( char *filename )
 			// write on dummy set, if it's unknown
 			if ( j >= state->def->num )
 			{
-				Com_Printf( _("Warning: Set '%s' not found\n"), name );
+				Com_Printf( "Warning: Set '%s' not found\n", name );
 				set = &dummy;
 			}
 
@@ -1841,7 +1841,7 @@ void CL_GameLoad( char *filename )
 				break;
 			}
 		if ( j >= numMissions )
-			Com_Printf( _("Warning: Mission '%s' not found\n"), name );
+			Com_Printf( "Warning: Mission '%s' not found\n", name );
 
 		// get mission definition
 		name = MSG_ReadString( &sb );
@@ -1852,7 +1852,7 @@ void CL_GameLoad( char *filename )
 				break;
 			}
 		if ( j >= numStageSets )
-			Com_Printf( _("Warning: Stage set '%s' not found\n"), name );
+			Com_Printf( "Warning: Stage set '%s' not found\n", name );
 
 		// read position and time
 		mis->realPos[0] = MSG_ReadFloat( &sb );
@@ -1875,7 +1875,7 @@ void CL_GameLoad( char *filename )
 	memcpy( &stats, sb.data + sb.readcount, sizeof(stats_t) );
 	sb.readcount += sizeof(stats_t);
 
-	Com_Printf( _("Campaign '%s' loaded.\n"), filename );
+	Com_Printf( "Campaign '%s' loaded.\n", filename );
 	CL_GameTimeStop();
 
 	// init research tree
@@ -1893,7 +1893,7 @@ void CL_GameLoadCmd( void )
 	// get argument
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: game_load <filename>\n") );
+		Com_Printf( "Usage: game_load <filename>\n" );
 		return;
 	}
 
@@ -2081,7 +2081,7 @@ void CL_GameAutoGo( void )
 
 	if ( !curCampaign || !selMis || !interceptAircraft)
 	{
-		Com_DPrintf(_("No update after automission\n"));
+		Com_DPrintf("No update after automission\n");
 		return;
 	}
 
@@ -2156,7 +2156,7 @@ void CL_BuySelectCmd( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: buy_select <num>\n") );
+		Com_Printf( "Usage: buy_select <num>\n" );
 		return;
 	}
 
@@ -2182,7 +2182,7 @@ void CL_BuyType( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: buy_type <category>\n") );
+		Com_Printf( "Usage: buy_type <category>\n" );
 		return;
 	}
 	num = atoi( Cmd_Argv( 1 ) );
@@ -2247,7 +2247,7 @@ void CL_Buy( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: buy <num>\n") );
+		Com_Printf( "Usage: buy <num>\n" );
 		return;
 	}
 
@@ -2282,7 +2282,7 @@ void CL_Sell( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: sell <num>\n") );
+		Com_Printf( "Usage: sell <num>\n" );
 		return;
 	}
 
@@ -2409,7 +2409,7 @@ void CL_GameResultsCmd( void )
 	// check for win
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: game_results <won>\n") );
+		Com_Printf( "Usage: game_results <won>\n" );
 		return;
 	}
 	won = atoi( Cmd_Argv( 1 ) );
@@ -2539,8 +2539,8 @@ void CL_ResetCampaign( void )
 	Cmd_AddCommand( "stats_update", Stats_Update );
 
 	re.LoadTGA( "pics/menu/map_mask.tga", &maskPic, &maskWidth, &maskHeight );
-	if ( maskPic ) Com_Printf( _("Map mask loaded.\n") );
-	else Com_Printf( _("Couldn't load map mask (pics/menu/map_mask.tga)\n") );
+	if ( maskPic ) Com_Printf( "Map mask loaded.\n" );
+	else Com_Printf( "Couldn't load map mask (pics/menu/map_mask.tga)\n" );
 }
 
 
@@ -2550,7 +2550,7 @@ void CL_ResetCampaign( void )
 
 value_t mission_vals[] =
 {
-	{ "text",		V_STRING,		0 },
+	{ "text",		V_TRANSLATION_STRING,		0 },
 	{ "map",		V_STRING,		MISSIONOFS( map ) },
 	{ "param",		V_STRING,		MISSIONOFS( param ) },
 	{ "music",		V_STRING,		MISSIONOFS( music ) },
@@ -2579,7 +2579,7 @@ CL_ParseMission
 */
 void CL_ParseMission( char *name, char **text )
 {
-	char		*errhead = _("CL_ParseMission: unexptected end of file (mission ");
+	char		*errhead = "CL_ParseMission: unexptected end of file (mission ";
 	mission_t	*ms;
 	value_t		*vp;
 	char		*token;
@@ -2592,7 +2592,7 @@ void CL_ParseMission( char *name, char **text )
 
 	if ( i < numMissions )
 	{
-		Com_Printf( _("Com_ParseMission: mission def \"%s\" with same name found, second ignored\n"), name );
+		Com_Printf( "Com_ParseMission: mission def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
 
@@ -2607,7 +2607,7 @@ void CL_ParseMission( char *name, char **text )
 
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( _("Com_ParseMission: mission def \"%s\" without body ignored\n"), name );
+		Com_Printf( "Com_ParseMission: mission def \"%s\" without body ignored\n", name );
 		numMissions--;
 		return;
 	}
@@ -2640,7 +2640,7 @@ void CL_ParseMission( char *name, char **text )
 			}
 
 		if ( !vp->string )
-			Com_Printf( _("Com_ParseMission: unknown token \"%s\" ignored (mission %s)\n"), token, name );
+			Com_Printf( "Com_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, name );
 
 	} while ( *text );
 }
@@ -2673,7 +2673,7 @@ CL_ParseStageSet
 */
 void CL_ParseStageSet( char *name, char **text )
 {
-	char		*errhead = _("CL_ParseStageSet: unexptected end of file (stageset ");
+	char		*errhead = "CL_ParseStageSet: unexptected end of file (stageset ";
 	stageSet_t	*sp;
 	value_t		*vp;
 	char		missionstr[256];
@@ -2689,7 +2689,7 @@ void CL_ParseStageSet( char *name, char **text )
 	token = COM_Parse( text );
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( _("Com_ParseStageSets: stageset def \"%s\" without body ignored\n"), name );
+		Com_Printf( "Com_ParseStageSets: stageset def \"%s\" without body ignored\n", name );
 		numStageSets--;
 		return;
 	}
@@ -2735,13 +2735,13 @@ void CL_ParseStageSet( char *name, char **text )
 					}
 
 				if ( j == numMissions )
-					Com_Printf( _("Com_ParseStageSet: unknown mission \"%s\" ignored (stageset %s)\n"), token, name );
+					Com_Printf( "Com_ParseStageSet: unknown mission \"%s\" ignored (stageset %s)\n", token, name );
 			}
 			while ( misp && sp->numMissions < MAX_SETMISSIONS );
 			continue;
 		}
 
-		Com_Printf( _("Com_ParseStageSet: unknown token \"%s\" ignored (stageset %s)\n"), token, name );
+		Com_Printf( "Com_ParseStageSet: unknown token \"%s\" ignored (stageset %s)\n", token, name );
 	} while ( *text );
 }
 
@@ -2753,7 +2753,7 @@ CL_ParseStage
 */
 void CL_ParseStage( char *name, char **text )
 {
-	char		*errhead = _("CL_ParseStage: unexptected end of file (stage ");
+	char		*errhead = "CL_ParseStage: unexptected end of file (stage ";
 	stage_t		*sp;
 	char		*token;
 	int			i;
@@ -2765,7 +2765,7 @@ void CL_ParseStage( char *name, char **text )
 
 	if ( i < numStages )
 	{
-		Com_Printf( _("Com_ParseStage: stage def \"%s\" with same name found, second ignored\n"), name );
+		Com_Printf( "Com_ParseStage: stage def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
 
@@ -2773,7 +2773,7 @@ void CL_ParseStage( char *name, char **text )
 	token = COM_Parse( text );
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( _("Com_ParseStages: stage def \"%s\" without body ignored\n"), name );
+		Com_Printf( "Com_ParseStages: stage def \"%s\" without body ignored\n", name );
 		return;
 	}
 
@@ -2783,7 +2783,7 @@ void CL_ParseStage( char *name, char **text )
 	Q_strncpyz( sp->name, name, MAX_VAR );
 	sp->first = numStageSets;
 
-	Com_DPrintf( _("stage: %s\n"), name );
+	Com_DPrintf( "stage: %s\n", name );
 
 	do {
 		token = COM_EParse( text, errhead, name );
@@ -2795,7 +2795,7 @@ void CL_ParseStage( char *name, char **text )
 			token = COM_EParse( text, errhead, name );
 			CL_ParseStageSet( token, text );
 		}
-		else Com_Printf( _("Com_ParseStage: unknown token \"%s\" ignored (stage %s)\n"), token, name );
+		else Com_Printf( "Com_ParseStage: unknown token \"%s\" ignored (stage %s)\n", token, name );
 	} while ( *text );
 
 	sp->num = numStageSets - sp->first;
@@ -2825,7 +2825,7 @@ CL_ParseCampaign
 */
 void CL_ParseCampaign( char *name, char **text )
 {
-	char		*errhead = _("CL_ParseCampaign: unexptected end of file (campaign ");
+	char		*errhead = "CL_ParseCampaign: unexptected end of file (campaign ";
 	campaign_t	*cp;
 	value_t		*vp;
 	char		*token;
@@ -2838,7 +2838,7 @@ void CL_ParseCampaign( char *name, char **text )
 
 	if ( i < numCampaigns )
 	{
-		Com_Printf( _("CL_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n"), name );
+		Com_Printf( "CL_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
 
@@ -2853,7 +2853,7 @@ void CL_ParseCampaign( char *name, char **text )
 
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( _("CL_ParseCampaign: campaign def \"%s\" without body ignored\n"), name );
+		Com_Printf( "CL_ParseCampaign: campaign def \"%s\" without body ignored\n", name );
 		numCampaigns--;
 		return;
 	}
@@ -2877,7 +2877,7 @@ void CL_ParseCampaign( char *name, char **text )
 
 		if ( !vp->string )
 		{
-			Com_Printf( _("CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n"), token, name );
+			Com_Printf( "CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name );
 			COM_EParse( text, errhead, name );
 		}
 	} while ( *text );
@@ -2889,9 +2889,8 @@ void CL_ParseCampaign( char *name, char **text )
 
 value_t aircraft_vals[] =
 {
-	{ "name",	V_STRING,	AIRFS( name ) },
+	{ "name",	V_TRANSLATION_STRING,	AIRFS( name ) },
 	{ "speed",	V_FLOAT,	AIRFS( speed ) },
-	{ "name",	V_STRING,	AIRFS( name ) },
 	{ "size",	V_INT,	AIRFS( size ) },
 	{ "fuel",	V_INT,	AIRFS( fuel ) },
 	{ "fuelsize",	V_INT,	AIRFS( fuelSize ) },
@@ -2910,14 +2909,14 @@ CL_ParseAircraft
 */
 void CL_ParseAircraft( char *name, char **text )
 {
-	char		*errhead = _("CL_ParseAircraft: unexptected end of file (aircraft ");
+	char		*errhead = "CL_ParseAircraft: unexptected end of file (aircraft ";
 	aircraft_t	*ac;
 	value_t		*vp;
 	char		*token;
 
 	if ( numAircraft >= MAX_AIRCRAFT )
 	{
-		Com_Printf( _("CL_ParseAircraft: campaign def \"%s\" with same name found, second ignored\n"), name );
+		Com_Printf( "CL_ParseAircraft: campaign def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
 
@@ -2934,7 +2933,7 @@ void CL_ParseAircraft( char *name, char **text )
 
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( _("CL_ParseAircraft: aircraft def \"%s\" without body ignored\n"), name );
+		Com_Printf( "CL_ParseAircraft: aircraft def \"%s\" without body ignored\n", name );
 		numCampaigns--;
 		return;
 	}
@@ -2960,7 +2959,7 @@ void CL_ParseAircraft( char *name, char **text )
 		{
 			if ( ac->size > MAX_ACTIVETEAM )
 			{
-				Com_DPrintf(_("Set size for aircraft to the max value of %i\n"), MAX_ACTIVETEAM );
+				Com_DPrintf("Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM );
 				ac->size = MAX_ACTIVETEAM;
 			}
 		}
@@ -2978,7 +2977,7 @@ void CL_ParseAircraft( char *name, char **text )
 		}
 		else if ( !vp->string )
 		{
-			Com_Printf( _("CL_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n"), token, name );
+			Com_Printf( "CL_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name );
 			COM_EParse( text, errhead, name );
 		}
 	} while ( *text );

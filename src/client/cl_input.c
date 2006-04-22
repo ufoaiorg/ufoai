@@ -88,7 +88,7 @@ void KeyDown (kbutton_t *b)
 		b->down[1] = k;
 	else
 	{
-		Com_Printf (_("Three keys down for a button!\n") );
+		Com_Printf ("Three keys down for a button!\n" );
 		return;
 	}
 
@@ -213,7 +213,7 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 
 	if (new_camera_mode == CAMERA_MODE_REMOTE) /* toggle camera mode */
 	{
-		Com_Printf ( _("Changed camera mode to remote.\n") );
+		Com_Printf ( "Changed camera mode to remote.\n" );
 		camera_mode = CAMERA_MODE_REMOTE;
 		VectorCopy(save_camorg, cl.cam.camorg);
 		VectorCopy(save_camangles, cl.cam.angles);
@@ -222,7 +222,7 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 	}
 	else
 	{
-		Com_Printf ( _("Changed camera mode to first-person.\n") );
+		Com_Printf ( "Changed camera mode to first-person.\n" );
 		camera_mode = CAMERA_MODE_FIRSTPERSON;
 		VectorCopy(selActor->origin, cl.cam.camorg);
 		Cvar_SetValue( "cl_worldlevel", selActor->pos[2] );
