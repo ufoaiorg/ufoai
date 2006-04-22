@@ -1,4 +1,4 @@
-ufoai-data (0.0.svn169) unstable; urgency=low
+ufoai-data (0.0.svn) unstable; urgency=low
 
   * SVN snapshot.
   * Do not provides ufoai-music any more.
