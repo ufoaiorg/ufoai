@@ -6,8 +6,7 @@
 export LC_ALL=C
 vercmd=dpkg-parsechangelog | grep ^Version: | cut -c 10- | sed s/\\./\\./g
 
-configure: configure-stamp
-configure-stamp:
+configure: 
 	dh_testdir
 
 	set -e; if [ -d .svn ]; then \
@@ -19,10 +18,8 @@ configure-stamp:
 	  fi ;\
 	fi
 
-	touch configure-stamp
-
 build: build-stamp
-build-stamp: configure-stamp
+build-stamp: configure
 	dh_testdir
   # ensure the current dirname allows qrad3 to know where we are
 	expr $(shell basename `dirname $$PWD`) : ufo
@@ -32,7 +29,7 @@ build-stamp: configure-stamp
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp configure-stamp
+	rm -f build-stamp
 
 	find maps -name '*.bsp' | xargs --no-run-if-empty rm
 

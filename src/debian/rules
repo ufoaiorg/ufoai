@@ -22,8 +22,7 @@ ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
 	INSTALL_PROGRAM += -s
 endif
 
-configure: configure-stamp
-configure-stamp:
+configure: 
 	dh_testdir
 
 	set -e; if [ -d .svn ]; then \
@@ -35,11 +34,9 @@ configure-stamp:
 	  fi ;\
 	fi
 
-	touch configure-stamp
-
 
 build: build-stamp
-build-stamp: configure-stamp
+build-stamp: configure
 	dh_testdir
 
 	$(MAKE) -C linux
@@ -50,7 +47,7 @@ build-stamp: configure-stamp
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp configure-stamp
+	rm -f build-stamp
 
 	-$(MAKE) -C linux clean
 	-$(MAKE) -C tools clean
