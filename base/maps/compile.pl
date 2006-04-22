@@ -1,6 +1,12 @@
 #!/usr/bin/perl
 use strict;
 
+# If you have a "make" program installed, you're likely to prefer the
+# Makefile to this script, which cannot run jobs in parallel, is not
+# able to rebuild only the maps that changed since last time you
+# built, and does not handle the case when qrad3 gets interrupted
+# mid-way.
+
 my $extra = "-bounce 0 -chop 32 -extra";
 
 sub readDir
