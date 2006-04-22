@@ -133,21 +133,21 @@ qboolean SDL_SNDDMA_Init (void)
 				desired.format = AUDIO_S16LSB;
 			break;
 		default:
-			Com_Printf(_("Unknown number of audio bits: %d\n"), desired_bits);
+			Com_Printf("Unknown number of audio bits: %d\n", desired_bits);
 			return false;
 	}
 	desired.channels = (Cvar_Get("sndchannels", "2", CVAR_ARCHIVE))->value;
 	desired.callback = paint_audio;
 
-	Com_Printf (_("Bits: %i\n"), desired_bits );
-	Com_Printf (_("Frequency: %i\n"), desired.freq );
-	Com_Printf (_("Samples: %i\n"), desired.samples );
-	Com_Printf (_("Channels: %i\n"), desired.channels );
+	Com_Printf ("Bits: %i\n", desired_bits );
+	Com_Printf ("Frequency: %i\n", desired.freq );
+	Com_Printf ("Samples: %i\n", desired.samples );
+	Com_Printf ("Channels: %i\n", desired.channels );
 
 	/* Open the audio device */
 	if (SDL_OpenAudio (&desired, &obtained) == -1)
 	{
-		Com_Printf (_("Couldn't open SDL audio: %s\n"), SDL_GetError ());
+		Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 		return false;
 	}
@@ -174,7 +174,7 @@ qboolean SDL_SNDDMA_Init (void)
 			SDL_CloseAudio ();
 			if (SDL_OpenAudio (&desired, NULL) == -1)
 			{
-				Com_Printf (_("Couldn't open SDL audio (format): %s\n"), SDL_GetError ());
+				Com_Printf ("Couldn't open SDL audio (format): %s\n", SDL_GetError ());
 				return false;
 			}
 			memcpy (&obtained, &desired, sizeof (desired));
@@ -235,7 +235,7 @@ void SDL_SNDDMA_Shutdown (void)
 	}
 
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
-	Com_Printf(_("SDL audio device shut down.\n"));
+	Com_Printf("SDL audio device shut down.\n");
 }
 
 /*

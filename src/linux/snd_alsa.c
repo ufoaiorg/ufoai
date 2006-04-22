@@ -56,27 +56,27 @@ qboolean ALSA_SNDDMA_Init(struct sndinfo *si)
 
 	if(!strcmp(snddevice->string, "/dev/dsp")){  //silly oss default
 		snddevice->string = "default";
-		Com_Printf( _("Using sounddevice \"default\" - if you have problems with this try to set the cvar snddevice to a appropriate alsa-device" ) );
+		Com_Printf( "Using sounddevice \"default\" - if you have problems with this try to set the cvar snddevice to a appropriate alsa-device" );
 	}
 
 	if((err = snd_pcm_open(&pcm_handle, snddevice->string, SND_PCM_STREAM_PLAYBACK, SND_PCM_NONBLOCK)) < 0){
-		Com_Printf(_("ALSA: cannot open device %s(%s)\n"), snddevice->string, snd_strerror(err) );
+		Com_Printf("ALSA: cannot open device %s(%s)\n", snddevice->string, snd_strerror(err) );
 		return false;
 	}
 
 	if((err = snd_pcm_hw_params_malloc(&hw_params)) < 0){
-		Com_Printf(_("ALSA: cannot allocate hw params(%s)\n"), snd_strerror(err));
+		Com_Printf("ALSA: cannot allocate hw params(%s)\n", snd_strerror(err));
 		return false;
 	}
 
 	if((err = snd_pcm_hw_params_any(pcm_handle, hw_params)) < 0){
-		Com_Printf(_("ALSA: cannot init hw params(%s)\n"), snd_strerror(err));
+		Com_Printf("ALSA: cannot init hw params(%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return false;
 	}
 
 	if((err = snd_pcm_hw_params_set_access(pcm_handle, hw_params, SND_PCM_ACCESS_RW_INTERLEAVED)) < 0){
-		Com_Printf(_("ALSA: cannot set access(%s)\n"), snd_strerror(err));
+		Com_Printf("ALSA: cannot set access(%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return false;
 	}
@@ -86,13 +86,13 @@ qboolean ALSA_SNDDMA_Init(struct sndinfo *si)
 		dma.samplebits = 16;  //ensure this is set for other calculations
 
 		if((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params, SND_PCM_FORMAT_S16)) < 0){
-			Com_Printf(_("ALSA: 16 bit not supported, trying 8\n"));
+			Com_Printf("ALSA: 16 bit not supported, trying 8\n");
 			dma.samplebits = 8;
 		}
 	}
 	if(dma.samplebits == 8){  //or 8 if specifically asked to
 		if((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params, SND_PCM_FORMAT_U8)) < 0){
-			Com_Printf(_("ALSA: cannot set format(%s)\n"), snd_strerror(err));
+			Com_Printf("ALSA: cannot set format(%s)\n", snd_strerror(err));
 			snd_pcm_hw_params_free(hw_params);
 			return false;
 		}
@@ -103,10 +103,10 @@ qboolean ALSA_SNDDMA_Init(struct sndinfo *si)
 		r = dma.speed;
 
 		if((err = snd_pcm_hw_params_set_rate_near(pcm_handle, hw_params, &r, &dir)) < 0)
-			Com_Printf(_("ALSA: cannot set rate %d (%s)\n"), r, snd_strerror(err));
+			Com_Printf("ALSA: cannot set rate %d (%s)\n", r, snd_strerror(err));
 		else {  //rate succeeded, but is perhaps slightly different
 			if(dir != 0)
-				Com_Printf(_("ALSA: rate %d not supported, using %d\n"), sndspeed->value, r);
+				Com_Printf("ALSA: rate %d not supported, using %d\n", sndspeed->value, r);
 			dma.speed = r;
 		}
 	}
@@ -116,17 +116,17 @@ qboolean ALSA_SNDDMA_Init(struct sndinfo *si)
 			dir = 0;
 
 			if((err = snd_pcm_hw_params_set_rate_near(pcm_handle, hw_params, &r, &dir)) < 0)
-				Com_Printf(_("ALSA: cannot set rate %d(%s)\n"), r, snd_strerror(err));
+				Com_Printf("ALSA: cannot set rate %d(%s)\n", r, snd_strerror(err));
 			else {  //rate succeeded, but is perhaps slightly different
 				dma.speed = r;
 				if(dir != 0)
-					Com_Printf(_("ALSA: rate %d not supported, using %d\n"), RATES[i], r);
+					Com_Printf("ALSA: rate %d not supported, using %d\n", RATES[i], r);
 				break;
 			}
 		}
 	}
 	if(!dma.speed){  //failed
-		Com_Printf(_("ALSA: cannot set rate\n"));
+		Com_Printf("ALSA: cannot set rate\n");
 		snd_pcm_hw_params_free(hw_params);
 		return false;
 	}
@@ -136,25 +136,24 @@ qboolean ALSA_SNDDMA_Init(struct sndinfo *si)
 		dma.channels = 2;  //ensure either stereo or mono
 
 	if((err = snd_pcm_hw_params_set_channels(pcm_handle, hw_params, dma.channels)) < 0){
-		Com_Printf(_("ALSA: cannot set channels %d(%s)\n"),
-			sndchannels->value, snd_strerror(err));
+		Com_Printf("ALSA: cannot set channels %d(%s)\n", sndchannels->value, snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return false;
 	}
 
 	p = BUFFER_SAMPLES / dma.channels;
 	if((err = snd_pcm_hw_params_set_period_size_near(pcm_handle, hw_params, &p, &dir)) < 0){
-		Com_Printf(_("ALSA: cannot set period size (%s)\n"), snd_strerror(err));
+		Com_Printf("ALSA: cannot set period size (%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return false;
 	}
 	else {  //rate succeeded, but is perhaps slightly different
 		if(dir != 0)
-			Com_Printf(_("ALSA: period %d not supported, using %d\n"), (BUFFER_SAMPLES/dma.channels), p);
+			Com_Printf("ALSA: period %d not supported, using %d\n", (BUFFER_SAMPLES/dma.channels), p);
 	}
 
 	if((err = snd_pcm_hw_params(pcm_handle, hw_params)) < 0){  //set params
-		Com_Printf(_("ALSA: cannot set params(%s)\n"), snd_strerror(err));
+		Com_Printf("ALSA: cannot set params(%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return false;
 	}
@@ -183,7 +182,7 @@ int ALSA_SNDDMA_GetDMAPos(void)
 	if(dma.buffer)
 		return dma.samplepos;
 
-	Com_Printf(_("Sound not inizialized\n"));
+	Com_Printf("Sound not inizialized\n");
 	return 0;
 }
 
