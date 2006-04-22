@@ -2328,6 +2328,15 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		if ( w > MAX_VAR ) w = MAX_VAR;
 		return w;
 
+	case V_TRANSLATION_STRING:
+		if ( *token == '_' )
+			token++;
+
+		Q_strncpyz( (char *)b, _(token), MAX_VAR );
+		w = strlen(token)+1;
+		if ( w > MAX_VAR ) w = MAX_VAR;
+		return w;
+
 	case V_LONGSTRING:
 		strcpy( (char *)b, token );
 		w = strlen(token)+1;
