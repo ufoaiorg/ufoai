@@ -4,10 +4,10 @@ Name=ref_gl
 Ver=1
 IsCpp=1
 Type=3
-Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DNDEBUG _@@_-DWIN32 _@@_-D_WINDOWS _@@_-DDEVCPP _@@_-DC_ONLY _@@_-DUSE_SDL_@@_-DSHADERS_@@_
+Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DNDEBUG _@@_-DWIN32 _@@_-D_WINDOWS _@@_-DDEVCPP _@@_-DC_ONLY _@@_-DUSE_SDL_@@_-DSHADERS_@@_-DUSE_SDL_TTF_@@_-DHAVE_GETTEXT_@@_
 CppCompiler=
 Includes=
-Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_../win32/intl.lib_@@_-def ref_gl.def_@@_
+Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_-lSDL_ttf_@@_-lSDL_@@_../win32/intl.lib_@@_-def ref_gl.def_@@_
 Libs=
 UnitCount=30
 Folders="Header Files","Resource Files","Source Files"
