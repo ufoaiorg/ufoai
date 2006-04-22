@@ -4,10 +4,10 @@ Name=ufo
 Ver=1
 IsCpp=1
 Type=0
-Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DWIN32 _@@_-DDEBUG _@@_-DNDEBUG_@@_-D_WINDOWS _@@_-DDEVCPP _@@_-DC_ONLY _@@_-DUSE_SDL_@@_-DSHADERS_@@__@@_
+Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DWIN32 _@@_-DDEBUG _@@_-DNDEBUG_@@_-D_WINDOWS _@@_-DDEVCPP _@@_-DC_ONLY _@@_-DUSE_SDL_@@_-DSHADERS_@@_-DUSE_SDL_TTF_@@_-DHAVE_GETTEXT_@@_
 CppCompiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DWIN32 _@@_-DDEBUG _@@_-DNDEBUG_@@_-D_WINDOWS_@@_
 Includes=
-Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_win32/intl.lib _@@_-lSDL_@@_win32/libjpeg.lib_@@_
+Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_win32/libjpeg.lib_@@_
 Libs=C:\Dev-Cpp\lib
 UnitCount=75
 Folders="Header Files","Resource Files","Source Files"
