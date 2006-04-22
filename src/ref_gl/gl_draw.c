@@ -371,7 +371,10 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 	if ( ! f->font )
 		ri.Sys_Error(ERR_FATAL, "...could not load font file %s\n", (char*)pic );
 
+	// font style
 	f->style = w;
+	if ( f->style )
+		TTF_SetFontStyle( f->font, f->style );
 
 	numFonts++;
 	// return the font
@@ -539,6 +542,7 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 	int h, texture, w;
 	SDL_Surface *textSurface, *openGLSurface;
 	SDL_Color color = {255,255,255};
+	SDL_Rect rect;
 #endif
 
 	// get the font
@@ -550,6 +554,10 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 	}
 
 #ifdef USE_SDL_TTF
+	// TODO: this needs caching
+	// TTF_RenderUTF8_Blended allocates memory - which is slow
+	// SDL_CreateRGBSurface allocates memory - which is slow, too
+	// SDL_LowerBlit is the faster blitfunction - but again - all together: slow
 	TTF_SizeText( f->font, c, &l, &h );
 	if ( ! l )
 		return 0;
@@ -568,7 +576,7 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 		case 2: y -= h; break;
 		}
 	}
-	textSurface = TTF_RenderText_Blended(f->font, c, color);
+	textSurface = TTF_RenderUTF8_Blended(f->font, c, color);
 	if ( ! textSurface )
 	{
 		ri.Con_Printf(PRINT_ALL, "%s\n", TTF_GetError() );
@@ -579,48 +587,47 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 	for ( w = 1; w < textSurface->w; w <<= 1 );
 	for ( h = 1; h < textSurface->h; h <<= 1 );
 
-	openGLSurface = SDL_CreateRGBSurface(0, w, h, 32,
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN
-			0x000000FF,
-			0x0000FF00,
-			0x00FF0000,
-			0xFF000000
-#else
-			0xFF000000,
-			0x00FF0000,
-			0x0000FF00,
-			0x000000FF
-#endif
+	openGLSurface = SDL_CreateRGBSurface(
+		SDL_SWSURFACE,
+		w, h,
+		32,
+		textSurface->format->Rmask,
+		textSurface->format->Gmask,
+		textSurface->format->Bmask,
+		textSurface->format->Amask
 	);
-	SDL_BlitSurface(textSurface, 0, openGLSurface, 0);
+
+	rect.x = rect.y = 0;
+	rect.w = textSurface->w;
+	rect.h = textSurface->h;
+
+	SDL_SetAlpha(textSurface, 0, 0);
+
+	SDL_LowerBlit(textSurface, &rect, openGLSurface, &rect);
 
 	/* Tell GL about our new texture */
 	qglGenTextures(1, &texture);
 	GL_Bind(texture);
-	qglTexImage2D(GL_TEXTURE_2D, 0, 4, w, h, 0, GL_BGRA, GL_UNSIGNED_BYTE, openGLSurface->pixels );
+	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, openGLSurface->pixels );
 
-	/* GL_NEAREST looks horrible, if scaled... */
-// 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-// 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	/* prepare to render our texture */
-	qglEnable(GL_TEXTURE_2D);
+	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// draw it
-	qglEnable (GL_BLEND);
+// 	qglEnable (GL_BLEND);
 
-	qglBegin(GL_QUADS);
-	qglTexCoord2f(0.0f, 1.0f);
-	qglVertex2f(x, y);
-	qglTexCoord2f(1.0f, 1.0f);
-	qglVertex2f(x + w, y);
-	qglTexCoord2f(1.0f, 0.0f);
-	qglVertex2f(x + w, y + h);
+	glBegin(GL_TRIANGLE_STRIP);
 	qglTexCoord2f(0.0f, 0.0f);
+	qglVertex2f(x, y);
+	qglTexCoord2f(1.0f, 0.0f);
+	qglVertex2f(x + w, y);
+	qglTexCoord2f(0.0f, 1.0f);
 	qglVertex2f(x, y + h);
+	qglTexCoord2f(1.0f, 1.0f);
+	qglVertex2f(x + w, y + h);
 	qglEnd();
 
-	qglDisable (GL_BLEND);
+// 	qglDisable (GL_BLEND);
 
 	/* Bad things happen if we delete the texture before it finishes */
 	qglFinish();

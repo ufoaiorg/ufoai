@@ -431,6 +431,9 @@ void R_MarkLights (dlight_t *light, int bit, mnode_t *node);
 
 void R_AddMapTile( char *name, int sX, int sY, int sZ );
 
+void	R_SetGL2D (void);
+void	R_LeaveGL2D (void);
+
 #if 0
 short LittleShort (short l);
 short BigShort (short l);

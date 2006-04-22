@@ -1108,6 +1108,17 @@ void R_RenderView (refdef_t *fd)
 }
 
 
+void	R_LeaveGL2D (void)
+{
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+
+	glPopAttrib();
+}
+
 void	R_SetGL2D (void)
 {
 	// set 2D virtual screen size
