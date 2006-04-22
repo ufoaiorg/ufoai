@@ -4735,7 +4735,7 @@
 "origin" "-656 14 37"
 "spawnflags" "254"
 "classname" "misc_model"
-"model" "models/objects/vegi/tree01_s2.md2"
+"model" "models/objects/vegi/tree01/tree01_s2.md2"
 }
 // entity 3
 {
@@ -4745,7 +4745,7 @@
 "origin" "-656 14 36"
 "spawnflags" "1"
 "classname" "misc_model"
-"model" "models/objects/vegi/tree01_s1.md2"
+"model" "models/objects/vegi/tree01/tree01_s1.md2"
 }
 // entity 4
 {
@@ -4756,7 +4756,7 @@
 "spawnflags" "254"
 "origin" "-656 14 38"
 "classname" "misc_model"
-"model" "models/objects/vegi/tree01_l2.md2"
+"model" "models/objects/vegi/tree01/tree01_l2.md2"
 }
 // entity 5
 {
@@ -4766,7 +4766,7 @@
 "spawnflags" "255"
 "origin" "-656 14 36"
 "classname" "misc_model"
-"model" "models/objects/vegi/tree01_l1.md2"
+"model" "models/objects/vegi/tree01/tree01_l1.md2"
 }
 // entity 6
 {
@@ -4785,7 +4785,7 @@
 "light" "1"
 "spawnflags" "254"
 "classname" "misc_model"
-"model" "models/objects/vegi/palm2.md2"
+"model" "models/objects/vegi/palm2/palm2.md2"
 "origin" "696 144 40"
 }
 // entity 9
@@ -4795,7 +4795,7 @@
 "lightcolor" "0.6 0.58 0.45"
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/vegi/palm1.md2"
+"model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "696 144 40"
 }
 // entity 10
@@ -4806,7 +4806,7 @@
 // entity 11
 {
 "classname" "misc_model"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "-148 172 72"
 "light" "1"
@@ -4819,7 +4819,7 @@
 "lightcolor" "0.4 0.4 0.4"
 "lightambient" "0.6 0.6 0.6"
 "classname" "misc_model"
-"model" "models/objects/chestnut_blaetter2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "-148 172 72"
 }
@@ -4829,7 +4829,7 @@
 "light" "1"
 "lightcolor" "0.4 0.4 0.4"
 "classname" "misc_model"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "-148 172 72"
 }
@@ -4839,7 +4839,7 @@
 "lightcolor" "0.4 0.4 0.4"
 "light" "1"
 "classname" "misc_model"
-"model" "models/objects/chestnut_stamm2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "-148 172 72"
 }
@@ -4849,7 +4849,7 @@
 "lightcolor" "0.4 0.4 0.4"
 "lightambient" "0.4 0.4 0.4"
 "classname" "misc_model"
-"model" "models/objects/chestnut_stamm1.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "-148 172 72"
 }
@@ -4860,7 +4860,7 @@
 "light" "1"
 "origin" "-148 12 72"
 "spawnflags" "252"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "classname" "misc_model"
 "angles" "0 70 0"
 }
@@ -4868,7 +4868,7 @@
 {
 "origin" "-148 12 72"
 "spawnflags" "2"
-"model" "models/objects/chestnut_blaetter2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "classname" "misc_model"
 "lightambient" "0.6 0.6 0.6"
 "lightcolor" "0.4 0.4 0.4"
@@ -4879,7 +4879,7 @@
 {
 "origin" "-148 12 72"
 "spawnflags" "252"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "classname" "misc_model"
 "lightcolor" "0.4 0.4 0.4"
 "light" "1"
@@ -4890,7 +4890,7 @@
 {
 "origin" "-148 12 72"
 "spawnflags" "2"
-"model" "models/objects/chestnut_stamm2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "classname" "misc_model"
 "light" "1"
 "lightcolor" "0.4 0.4 0.4"
@@ -4901,7 +4901,7 @@
 {
 "origin" "-148 12 72"
 "spawnflags" "1"
-"model" "models/objects/chestnut_stamm1.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "classname" "misc_model"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.4 0.4 0.4"
@@ -4915,7 +4915,7 @@
 "lightcolor" "0.4 0.4 0.4"
 "origin" "144 28 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "classname" "misc_model"
 "angles" "0 130 0"
 }
@@ -4926,7 +4926,7 @@
 "light" "1"
 "origin" "144 28 56"
 "spawnflags" "1"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "classname" "misc_model"
 "angles" "0 130 0"
 }
@@ -4937,7 +4937,7 @@
 "light" "1"
 "angles" "0 130 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "spawnflags" "254"
 "origin" "144 28 56"
 }
@@ -4945,7 +4945,7 @@
 {
 "angles" "0 0 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "spawnflags" "254"
 "origin" "144 180 56"
 "lightcolor" "0.4 0.4 0.4"
@@ -4956,7 +4956,7 @@
 {
 "angles" "0 0 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "spawnflags" "1"
 "origin" "144 180 56"
 "light" "1"
@@ -4967,7 +4967,7 @@
 {
 "origin" "144 180 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "classname" "misc_model"
 "angles" "0 0 0"
 "light" "1"
@@ -4978,7 +4978,7 @@
 {
 "angles" "0 270 0"
 "classname" "misc_model"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "-148 -180 72"
 "light" "1"
@@ -4992,7 +4992,7 @@
 "lightcolor" "0.4 0.4 0.4"
 "lightambient" "0.6 0.6 0.6"
 "classname" "misc_model"
-"model" "models/objects/chestnut_blaetter2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "-148 -180 72"
 }
@@ -5003,7 +5003,7 @@
 "light" "1"
 "lightcolor" "0.4 0.4 0.4"
 "classname" "misc_model"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "-148 -180 72"
 }
@@ -5014,7 +5014,7 @@
 "lightcolor" "0.4 0.4 0.4"
 "light" "1"
 "classname" "misc_model"
-"model" "models/objects/chestnut_stamm2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "-148 -180 72"
 }
@@ -5025,7 +5025,7 @@
 "lightcolor" "0.4 0.4 0.4"
 "lightambient" "0.4 0.4 0.4"
 "classname" "misc_model"
-"model" "models/objects/chestnut_stamm1.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "-148 -180 72"
 }
@@ -5036,7 +5036,7 @@
 "lightcolor" "0.7 0.4 0.4"
 "origin" "144 -172 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "classname" "misc_model"
 "angles" "0 270 0"
 }
@@ -5047,7 +5047,7 @@
 "light" "1"
 "origin" "144 -172 56"
 "spawnflags" "1"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "classname" "misc_model"
 "angles" "0 270 0"
 }
@@ -5058,7 +5058,7 @@
 "light" "1"
 "angles" "0 270 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "spawnflags" "254"
 "origin" "144 -172 56"
 }
@@ -5074,14 +5074,14 @@
 "light" "1"
 "origin" "-148 -468 72"
 "spawnflags" "252"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "classname" "misc_model"
 }
 // entity 37
 {
 "origin" "-148 -468 72"
 "spawnflags" "2"
-"model" "models/objects/chestnut_blaetter2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "classname" "misc_model"
 "lightambient" "0.3 0.3 0.3"
 "lightcolor" "0.3 0.3 0.3"
@@ -5091,7 +5091,7 @@
 {
 "origin" "-148 -468 72"
 "spawnflags" "252"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "classname" "misc_model"
 "lightcolor" "0.3 0.3 0.3"
 "light" "1"
@@ -5101,7 +5101,7 @@
 {
 "origin" "-148 -468 72"
 "spawnflags" "2"
-"model" "models/objects/chestnut_stamm2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "classname" "misc_model"
 "light" "1"
 "lightcolor" "0.3 0.3 0.3"
@@ -5111,7 +5111,7 @@
 {
 "origin" "-148 -468 72"
 "spawnflags" "1"
-"model" "models/objects/chestnut_stamm1.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "classname" "misc_model"
 "lightambient" "0.3 0.3 0.3"
 "lightcolor" "0.3 0.3 0.3"
@@ -5121,7 +5121,7 @@
 {
 "angles" "0 70 0"
 "classname" "misc_model"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "-148 -628 72"
 "light" "1"
@@ -5135,7 +5135,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "classname" "misc_model"
-"model" "models/objects/chestnut_blaetter2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "-148 -628 72"
 }
@@ -5146,7 +5146,7 @@
 "light" "1"
 "lightcolor" "0.3 0.3 0.3"
 "classname" "misc_model"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "-148 -628 72"
 }
@@ -5157,7 +5157,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "light" "1"
 "classname" "misc_model"
-"model" "models/objects/chestnut_stamm2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "-148 -628 72"
 }
@@ -5168,7 +5168,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "classname" "misc_model"
-"model" "models/objects/chestnut_stamm1.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "-148 -628 72"
 }
@@ -5176,7 +5176,7 @@
 {
 "angles" "0 130 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "spawnflags" "254"
 "origin" "144 -612 56"
 "lightcolor" "0.4 0.4 0.4"
@@ -5187,7 +5187,7 @@
 {
 "angles" "0 130 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "spawnflags" "1"
 "origin" "144 -612 56"
 "light" "1"
@@ -5198,7 +5198,7 @@
 {
 "origin" "144 -612 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "classname" "misc_model"
 "angles" "0 130 0"
 "light" "1"
@@ -5212,7 +5212,7 @@
 "lightcolor" "0.4 0.4 0.4"
 "origin" "144 -460 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "classname" "misc_model"
 "angles" "0 0 0"
 }
@@ -5223,7 +5223,7 @@
 "light" "1"
 "origin" "144 -460 56"
 "spawnflags" "1"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "classname" "misc_model"
 "angles" "0 0 0"
 }
@@ -5234,7 +5234,7 @@
 "light" "1"
 "angles" "0 0 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "spawnflags" "254"
 "origin" "144 -460 56"
 }
@@ -5245,7 +5245,7 @@
 "light" "1"
 "origin" "-148 -820 72"
 "spawnflags" "252"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "classname" "misc_model"
 "angles" "0 270 0"
 }
@@ -5253,7 +5253,7 @@
 {
 "origin" "-148 -820 72"
 "spawnflags" "2"
-"model" "models/objects/chestnut_blaetter2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "classname" "misc_model"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -5264,7 +5264,7 @@
 {
 "origin" "-148 -820 72"
 "spawnflags" "252"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "classname" "misc_model"
 "lightcolor" "0.3 0.3 0.3"
 "light" "1"
@@ -5275,7 +5275,7 @@
 {
 "origin" "-148 -820 72"
 "spawnflags" "2"
-"model" "models/objects/chestnut_stamm2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "classname" "misc_model"
 "light" "1"
 "lightcolor" "0.3 0.3 0.3"
@@ -5286,7 +5286,7 @@
 {
 "origin" "-148 -820 72"
 "spawnflags" "1"
-"model" "models/objects/chestnut_stamm1.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "classname" "misc_model"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -5297,7 +5297,7 @@
 {
 "angles" "0 270 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "spawnflags" "254"
 "origin" "144 -812 56"
 "lightcolor" "0.4 0.4 0.4"
@@ -5308,7 +5308,7 @@
 {
 "angles" "0 270 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "spawnflags" "1"
 "origin" "144 -812 56"
 "light" "1"
@@ -5319,7 +5319,7 @@
 {
 "origin" "144 -812 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "classname" "misc_model"
 "angles" "0 270 0"
 "light" "1"
@@ -5330,7 +5330,7 @@
 {
 "angles" "0 130 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "spawnflags" "254"
 "origin" "300 28 56"
 "lightcolor" "0.4 0.4 0.4"
@@ -5341,7 +5341,7 @@
 {
 "angles" "0 130 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "spawnflags" "1"
 "origin" "300 28 56"
 "light" "1"
@@ -5352,7 +5352,7 @@
 {
 "origin" "300 28 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "classname" "misc_model"
 "angles" "0 130 0"
 "light" "1"
@@ -5366,7 +5366,7 @@
 "lightcolor" "0.4 0.4 0.4"
 "origin" "300 180 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "classname" "misc_model"
 "angles" "0 0 0"
 }
@@ -5377,7 +5377,7 @@
 "light" "1"
 "origin" "300 180 56"
 "spawnflags" "1"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "classname" "misc_model"
 "angles" "0 0 0"
 }
@@ -5388,7 +5388,7 @@
 "light" "1"
 "angles" "0 0 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree1_c.md2"
 "spawnflags" "254"
 "origin" "300 180 56"
 }
@@ -5396,7 +5396,7 @@
 {
 "angles" "0 270 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree1_b.md2"
 "spawnflags" "254"
 "origin" "300 -172 56"
 "lightcolor" "0.7 0.4 0.4"
@@ -5407,7 +5407,7 @@
 {
 "angles" "0 270 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree1_a.md2"
 "spawnflags" "1"
 "origin" "300 -172 56"
 "light" "1"
@@ -5418,7 +5418,7 @@
 {
 "origin" "300 -172 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree1_c.md2"
 "classname" "misc_model"
 "angles" "0 270 0"
 "light" "1"
@@ -5429,7 +5429,7 @@
 {
 "origin" "300 180 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "classname" "misc_model"
 "angles" "0 160 0"
 "light" "1"
@@ -5443,7 +5443,7 @@
 "light" "1"
 "angles" "0 100 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree1_c.md2"
 "spawnflags" "254"
 "origin" "300 28 56"
 }
@@ -5454,7 +5454,7 @@
 "light" "1"
 "angles" "0 120 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree1_c.md2"
 "spawnflags" "254"
 "origin" "300 -172 56"
 }
@@ -5465,7 +5465,7 @@
 "lightcolor" "0.4 0.4 0.4"
 "origin" "300 -612 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree1_b.md2"
 "classname" "misc_model"
 "angles" "0 130 0"
 }
@@ -5476,7 +5476,7 @@
 "light" "1"
 "origin" "300 -612 56"
 "spawnflags" "1"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree1_a.md2"
 "classname" "misc_model"
 "angles" "0 130 0"
 }
@@ -5487,7 +5487,7 @@
 "light" "1"
 "angles" "0 130 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree1_c.md2"
 "spawnflags" "254"
 "origin" "300 -612 56"
 }
@@ -5495,7 +5495,7 @@
 {
 "angles" "0 0 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree1_b.md2"
 "spawnflags" "254"
 "origin" "300 -460 56"
 "lightcolor" "0.4 0.4 0.4"
@@ -5506,7 +5506,7 @@
 {
 "angles" "0 0 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree1_a.md2"
 "spawnflags" "1"
 "origin" "300 -460 56"
 "light" "1"
@@ -5517,7 +5517,7 @@
 {
 "origin" "300 -460 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree1_c.md2"
 "classname" "misc_model"
 "angles" "0 0 0"
 "light" "1"
@@ -5531,7 +5531,7 @@
 "lightcolor" "0.4 0.4 0.4"
 "origin" "300 -812 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree1_b.md2"
 "classname" "misc_model"
 "angles" "0 270 0"
 }
@@ -5542,7 +5542,7 @@
 "light" "1"
 "origin" "300 -812 56"
 "spawnflags" "1"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree1_a.md2"
 "classname" "misc_model"
 "angles" "0 270 0"
 }
@@ -5553,7 +5553,7 @@
 "light" "1"
 "angles" "0 270 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree1_c.md2"
 "spawnflags" "254"
 "origin" "300 -812 56"
 }
@@ -5564,7 +5564,7 @@
 "light" "1"
 "angles" "0 160 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree1_c.md2"
 "spawnflags" "254"
 "origin" "300 -460 56"
 }
@@ -5572,7 +5572,7 @@
 {
 "origin" "300 -612 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree1_c.md2"
 "classname" "misc_model"
 "angles" "0 220 0"
 "light" "1"
@@ -5583,7 +5583,7 @@
 {
 "origin" "300 -812 56"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "classname" "misc_model"
 "angles" "0 60 0"
 "light" "1"
@@ -5613,7 +5613,7 @@
 // entity 88
 {
 "origin" "688 16 40"
-"model" "models/objects/vegi/palm2.md2"
+"model" "models/objects/vegi/palm2/palm2.md2"
 "classname" "misc_model"
 "spawnflags" "254"
 "light" "1"
@@ -5624,7 +5624,7 @@
 // entity 89
 {
 "origin" "688 16 40"
-"model" "models/objects/vegi/palm1.md2"
+"model" "models/objects/vegi/palm1/palm1.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 "lightcolor" "0.6 0.58 0.45"
@@ -5635,7 +5635,7 @@
 // entity 90
 {
 "origin" "688 -176 40"
-"model" "models/objects/vegi/palm2.md2"
+"model" "models/objects/vegi/palm2/palm2.md2"
 "classname" "misc_model"
 "spawnflags" "254"
 "light" "1"
@@ -5646,7 +5646,7 @@
 // entity 91
 {
 "origin" "688 -176 40"
-"model" "models/objects/vegi/palm1.md2"
+"model" "models/objects/vegi/palm1/palm1.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 "lightcolor" "0.6 0.58 0.45"
@@ -5657,7 +5657,7 @@
 // entity 92
 {
 "origin" "688 -496 40"
-"model" "models/objects/vegi/palm2.md2"
+"model" "models/objects/vegi/palm2/palm2.md2"
 "classname" "misc_model"
 "spawnflags" "254"
 "light" "1"
@@ -5667,7 +5667,7 @@
 // entity 93
 {
 "origin" "688 -496 40"
-"model" "models/objects/vegi/palm1.md2"
+"model" "models/objects/vegi/palm1/palm1.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 "lightcolor" "0.4 0.4 0.5"
@@ -5682,7 +5682,7 @@
 "light" "1"
 "spawnflags" "254"
 "classname" "misc_model"
-"model" "models/objects/vegi/palm2.md2"
+"model" "models/objects/vegi/palm2/palm2.md2"
 "origin" "680 -624 40"
 }
 // entity 95
@@ -5693,7 +5693,7 @@
 "lightcolor" "0.4 0.4 0.5"
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/vegi/palm1.md2"
+"model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "680 -624 40"
 }
 // entity 96
@@ -5704,7 +5704,7 @@
 "light" "1"
 "spawnflags" "254"
 "classname" "misc_model"
-"model" "models/objects/vegi/palm2.md2"
+"model" "models/objects/vegi/palm2/palm2.md2"
 "origin" "680 -816 40"
 }
 // entity 97
@@ -5715,7 +5715,7 @@
 "lightcolor" "0.4 0.4 0.5"
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/vegi/palm1.md2"
+"model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "680 -816 40"
 }
 // entity 98
@@ -5724,7 +5724,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "light" "1"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush1/bush01.md2"
 "classname" "misc_model"
 "angles" "0 30 0"
 "spawnflags" "255"
@@ -5734,7 +5734,7 @@
 "spawnflags" "255"
 "angles" "0 100 0"
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush1/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -5747,7 +5747,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "light" "1"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush1/bush01.md2"
 "classname" "misc_model"
 }
 // entity 101
@@ -5755,7 +5755,7 @@
 "spawnflags" "255"
 "angles" "0 30 0"
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush1/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -5767,7 +5767,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "light" "1"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush1/bush01.md2"
 "classname" "misc_model"
 "angles" "0 100 0"
 "spawnflags" "255"
@@ -5778,7 +5778,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "light" "1"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush1/bush01.md2"
 "classname" "misc_model"
 "angles" "0 100 0"
 "spawnflags" "255"
@@ -5788,7 +5788,7 @@
 "spawnflags" "255"
 "angles" "0 300 0"
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush1/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -5799,7 +5799,7 @@
 "spawnflags" "255"
 "angles" "0 200 0"
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush1/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"

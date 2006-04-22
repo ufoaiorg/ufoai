@@ -1422,7 +1422,7 @@
 // entity 4
 {
 "spawnflags" "255"
-"model" "models/objects/trashcan.md2"
+"model" "models/objects/furniture/trashcan/trashcan.md2"
 "classname" "misc_model"
 "origin" "464 84 12"
 "light" "1"
@@ -1432,7 +1432,7 @@
 // entity 5
 {
 "spawnflags" "255"
-"model" "models/objects/city/trash.md2"
+"model" "models/objects/city/trash/trash.md2"
 "classname" "misc_model"
 "origin" "434 52 20"
 "angles" "0 180 0"
@@ -3211,7 +3211,7 @@
 {
 "angles" "0 130 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "spawnflags" "254"
 "origin" "428 418 48"
 "lightcolor" "0.4 0.4 0.4"
@@ -3222,7 +3222,7 @@
 {
 "angles" "0 130 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "spawnflags" "1"
 "origin" "428 418 48"
 "light" "1"
@@ -3233,7 +3233,7 @@
 {
 "origin" "428 418 48"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "classname" "misc_model"
 "angles" "0 130 0"
 "light" "1"
@@ -3244,7 +3244,7 @@
 {
 "angles" "0 270 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "spawnflags" "254"
 "origin" "428 218 48"
 "lightcolor" "0.7 0.4 0.4"
@@ -3255,7 +3255,7 @@
 {
 "angles" "0 270 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "spawnflags" "1"
 "origin" "428 218 48"
 "light" "1"
@@ -3266,7 +3266,7 @@
 {
 "origin" "428 218 48"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "classname" "misc_model"
 "angles" "0 270 0"
 "light" "1"

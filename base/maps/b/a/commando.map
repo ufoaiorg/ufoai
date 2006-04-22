@@ -747,27 +747,27 @@
 {
 "origin" "256 256 168"
 "spawnflags" "252"
-"model" "models/objects/base/radar_c.md2"
+"model" "models/objects/base/radar/radar_c.md2"
 "classname" "misc_model"
 }
 // entity 2
 {
 "origin" "256 256 168"
 "spawnflags" "252"
-"model" "models/objects/base/radar_b.md2"
+"model" "models/objects/base/radar/radar_b.md2"
 "classname" "misc_model"
 }
 // entity 3
 {
 "origin" "256 256 168"
 "spawnflags" "252"
-"model" "models/objects/base/radar_a.md2"
+"model" "models/objects/base/radar/radar_a.md2"
 "classname" "misc_model"
 }
 // entity 4
 {
 "classname" "misc_model"
-"model" "models/objects/computer.md2"
+"model" "models/objects/furniture/computer/computer.md2"
 "spawnflags" "1"
 "origin" "326 364 32"
 }

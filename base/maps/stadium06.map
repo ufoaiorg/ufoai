@@ -6515,7 +6515,7 @@
 {
 "origin" "-338 287 182"
 "spawnflags" "252"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "classname" "misc_model"
 }
 // entity 2
@@ -6535,7 +6535,7 @@
 {
 "origin" "-640 -128 0"
 "angles" "0 270 0"
-"model" "models/objects/dropship.md2"
+"model" "models/aircraft/dropship/dropship.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 }
@@ -9911,28 +9911,28 @@
 // entity 98
 {
 "classname" "misc_model"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "spawnflags" "252"
 "origin" "-338 225 182"
 }
 // entity 99
 {
 "classname" "misc_model"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "spawnflags" "252"
 "origin" "-340 353 182"
 }
 // entity 100
 {
 "classname" "misc_model"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "spawnflags" "252"
 "origin" "-342 419 182"
 }
 // entity 101
 {
 "classname" "misc_model"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "spawnflags" "252"
 "origin" "-334 161 182"
 }
@@ -9940,27 +9940,27 @@
 {
 "origin" "-334 95 182"
 "spawnflags" "252"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "classname" "misc_model"
 }
 // entity 103
 {
 "origin" "-336 33 182"
 "spawnflags" "252"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "classname" "misc_model"
 }
 // entity 104
 {
 "origin" "-336 -31 182"
 "spawnflags" "252"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "classname" "misc_model"
 }
 // entity 105
 {
 "classname" "misc_model"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "spawnflags" "252"
 "origin" "-336 -97 182"
 }
@@ -9968,14 +9968,14 @@
 {
 "origin" "-336 -161 182"
 "spawnflags" "252"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "classname" "misc_model"
 }
 // entity 107
 {
 "angles" "0 180 0"
 "classname" "misc_model"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "spawnflags" "252"
 "origin" "210 -163 182"
 }
@@ -9983,7 +9983,7 @@
 {
 "origin" "208 -99 182"
 "spawnflags" "252"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "classname" "misc_model"
 "angles" "0 180 0"
 }
@@ -9991,7 +9991,7 @@
 {
 "angles" "0 180 0"
 "classname" "misc_model"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "spawnflags" "252"
 "origin" "208 -33 182"
 }
@@ -9999,7 +9999,7 @@
 {
 "angles" "0 180 0"
 "classname" "misc_model"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "spawnflags" "252"
 "origin" "210 31 182"
 }
@@ -10007,7 +10007,7 @@
 {
 "origin" "210 93 182"
 "spawnflags" "252"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "classname" "misc_model"
 "angles" "0 180 0"
 }
@@ -10015,7 +10015,7 @@
 {
 "angles" "0 180 0"
 "classname" "misc_model"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "spawnflags" "252"
 "origin" "210 159 182"
 }
@@ -10023,7 +10023,7 @@
 {
 "origin" "210 223 182"
 "spawnflags" "252"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "classname" "misc_model"
 "angles" "0 180 0"
 }
@@ -10031,7 +10031,7 @@
 {
 "angles" "0 180 0"
 "classname" "misc_model"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "spawnflags" "252"
 "origin" "208 287 182"
 }
@@ -10039,7 +10039,7 @@
 {
 "origin" "208 351 182"
 "spawnflags" "252"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "classname" "misc_model"
 "angles" "0 180 0"
 }
@@ -10047,7 +10047,7 @@
 {
 "angles" "0 180 0"
 "classname" "misc_model"
-"model" "models/objects/sun_prot.md2"
+"model" "models/objects/furniture/sunprot/sun_prot.md2"
 "spawnflags" "252"
 "origin" "206 417 182"
 }

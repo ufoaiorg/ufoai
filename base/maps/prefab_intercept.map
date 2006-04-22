@@ -138,7 +138,7 @@
 // entity 1
 {
 "classname" "misc_model"
-"model" "models/aircrafts/fighter1_engines.md2"
+"model" "models/aircraft/interceptor/fighter1_engines.md2"
 "spawnflags" "254"
 "angles" "0 0 70"
 "origin" "32 160 64"
@@ -146,14 +146,14 @@
 // entity 2
 {
 "classname" "misc_model"
-"model" "models/aircrafts/fighter1_glass.md2"
+"model" "models/aircraft/interceptor/fighter1_glass.md2"
 "spawnflags" "254"
 "origin" "32 160 64"
 }
 // entity 3
 {
 "classname" "misc_model"
-"model" "models/aircrafts/fighter1_main.md2"
+"model" "models/aircraft/interceptor/fighter1_main.md2"
 "spawnflags" "254"
 "origin" "32 160 64"
 }

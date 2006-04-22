@@ -745,21 +745,21 @@
 // entity 1
 {
 "classname" "misc_model"
-"model" "models/objects/base/radar_c.md2"
+"model" "models/objects/base/radar/radar_c.md2"
 "spawnflags" "252"
 "origin" "256 256 168"
 }
 // entity 2
 {
 "classname" "misc_model"
-"model" "models/objects/base/radar_b.md2"
+"model" "models/objects/base/radar/radar_b.md2"
 "spawnflags" "252"
 "origin" "256 256 168"
 }
 // entity 3
 {
 "classname" "misc_model"
-"model" "models/objects/base/radar_a.md2"
+"model" "models/objects/base/radar/radar_a.md2"
 "spawnflags" "252"
 "origin" "256 256 168"
 }
@@ -767,7 +767,7 @@
 {
 "origin" "326 364 32"
 "spawnflags" "1"
-"model" "models/objects/computer.md2"
+"model" "models/objects/furniture/computer/computer.md2"
 "classname" "misc_model"
 }
 // entity 5

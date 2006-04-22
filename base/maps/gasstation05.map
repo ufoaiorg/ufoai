@@ -5055,7 +5055,7 @@
 // entity 2
 {
 "origin" "1100 310 22"
-"model" "models/objects/cactus3.md2"
+"model" "models/objects/vegi/cactus/cactus3.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 }
@@ -5063,7 +5063,7 @@
 {
 "angles" "0 45 -3"
 "origin" "1390 -206 38"
-"model" "models/objects/cactus2.md2"
+"model" "models/objects/vegi/cactus/cactus2.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 }
@@ -5071,7 +5071,7 @@
 {
 "origin" "-624 -244 40"
 "angles" "5 35 0"
-"model" "models/objects/cactus1.md2"
+"model" "models/objects/vegi/cactus/cactus1.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 }
@@ -9847,7 +9847,7 @@
 // entity 131
 {
 "classname" "misc_model"
-"model" "models/objects/cactus1.md2"
+"model" "models/objects/vegi/cactus/cactus1.md2"
 "angles" "0 90 0"
 "origin" "-560 500 40"
 "spawnflags" "255"
@@ -9855,7 +9855,7 @@
 // entity 132
 {
 "classname" "misc_model"
-"model" "models/objects/cactus1.md2"
+"model" "models/objects/vegi/cactus/cactus1.md2"
 "angles" "0 210 5"
 "origin" "684 -692 32"
 "spawnflags" "255"
@@ -9864,14 +9864,14 @@
 {
 "angles" "0 150 -3"
 "classname" "misc_model"
-"model" "models/objects/cactus2.md2"
+"model" "models/objects/vegi/cactus/cactus2.md2"
 "origin" "1168 -20 38"
 "spawnflags" "255"
 }
 // entity 134
 {
 "classname" "misc_model"
-"model" "models/objects/cactus2.md2"
+"model" "models/objects/vegi/cactus/cactus2.md2"
 "origin" "1518 556 28"
 "angles" "2 130 0"
 "spawnflags" "255"
@@ -9880,7 +9880,7 @@
 {
 "angles" "0 85 0"
 "classname" "misc_model"
-"model" "models/objects/cactus3.md2"
+"model" "models/objects/vegi/cactus/cactus3.md2"
 "origin" "1484 -82 22"
 "spawnflags" "255"
 }
@@ -9888,7 +9888,7 @@
 {
 "origin" "1004 344 32"
 "angles" "0 90 0"
-"model" "models/objects/cactus1.md2"
+"model" "models/objects/vegi/cactus/cactus1.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 }
@@ -9896,7 +9896,7 @@
 {
 "angles" "3 65 0"
 "classname" "misc_model"
-"model" "models/objects/cactus3.md2"
+"model" "models/objects/vegi/cactus/cactus3.md2"
 "origin" "904 -306 22"
 "spawnflags" "255"
 }
@@ -9970,7 +9970,7 @@
 {
 "origin" "-384 -480 -16"
 "spawnflags" "254"
-"model" "models/objects/dropship_top.md2"
+"model" "models/aircraft/dropship/dropship_top.md2"
 "classname" "misc_model"
 "angles" "0 180 0"
 }
@@ -9979,14 +9979,14 @@
 "spawnflags" "255"
 "origin" "-383 -480 4"
 "angles" "0 180 0"
-"model" "models/objects/dropship_glass.md2"
+"model" "models/aircraft/dropship/dropship_glass.md2"
 "classname" "misc_model"
 }
 // entity 151
 {
 "origin" "-384 -480 4"
 "angles" "0 180 0"
-"model" "models/objects/dropship.md2"
+"model" "models/aircraft/dropship/dropship.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 }

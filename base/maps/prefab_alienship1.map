@@ -374,27 +374,27 @@
 {
 "origin" "32 160 64"
 "spawnflags" "254"
-"model" "models/objects/alienship1_wings.md2"
+"model" "models/aircraft/ufo_small/alienship1_wings.md2"
 "classname" "misc_model"
 }
 // entity 2
 {
 "origin" "32 160 64"
 "spawnflags" "254"
-"model" "models/objects/alienship1_engines_2.md2"
+"model" "models/aircraft/ufo_small/alienship1_engines_2.md2"
 "classname" "misc_model"
 }
 // entity 3
 {
 "origin" "32 160 64"
 "spawnflags" "255"
-"model" "models/objects/alienship1_engines_1.md2"
+"model" "models/aircraft/ufo_small/alienship1_engines_1.md2"
 "classname" "misc_model"
 }
 // entity 4
 {
 "origin" "32 160 64"
 "spawnflags" "255"
-"model" "models/objects/alienship1_hull.md2"
+"model" "models/aircraft/ufo_small/alienship1_hull.md2"
 "classname" "misc_model"
 }

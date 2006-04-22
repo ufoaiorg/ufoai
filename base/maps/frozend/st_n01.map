@@ -284,28 +284,28 @@
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "208 176 8"
 }
 // entity 2
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "origin" "208 176 8"
 }
 // entity 3
 {
 "spawnflags" "255"
 "origin" "368 80 20"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "classname" "misc_model"
 }
 // entity 4
 {
 "spawnflags" "255"
 "origin" "368 80 20"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "classname" "misc_model"
 "angles" "0 70 0"
 }

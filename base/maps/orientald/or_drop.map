@@ -812,7 +812,7 @@
 {
 "origin" "384 224 36"
 "spawnflags" "254"
-"model" "models/objects/dropship_top.md2"
+"model" "models/aircraft/dropship/dropship_top.md2"
 "classname" "misc_model"
 "angles" "0 180 0"
 }
@@ -821,14 +821,14 @@
 "spawnflags" "255"
 "origin" "384 224 36"
 "angles" "0 180 0"
-"model" "models/objects/dropship_glass.md2"
+"model" "models/aircraft/dropship/dropship_glass.md2"
 "classname" "misc_model"
 }
 // entity 4
 {
 "origin" "384 224 36"
 "angles" "0 180 0"
-"model" "models/objects/dropship.md2"
+"model" "models/aircraft/dropship/dropship.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 }
@@ -1136,7 +1136,7 @@
 // entity 35
 {
 "origin" "724 176 36"
-"model" "models/objects/vegi/palm2.md2"
+"model" "models/objects/vegi/palm2/palm2.md2"
 "classname" "misc_model"
 "spawnflags" "254"
 "light" "1"
@@ -1146,7 +1146,7 @@
 // entity 36
 {
 "origin" "724 176 36"
-"model" "models/objects/vegi/palm1.md2"
+"model" "models/objects/vegi/palm1/palm1.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 "lightcolor" "0.6 0.58 0.45"
@@ -1161,7 +1161,7 @@
 "light" "1"
 "spawnflags" "254"
 "classname" "misc_model"
-"model" "models/objects/vegi/palm2.md2"
+"model" "models/objects/vegi/palm2/palm2.md2"
 "origin" "716 48 36"
 }
 // entity 38
@@ -1172,13 +1172,13 @@
 "lightcolor" "0.6 0.58 0.45"
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/vegi/palm1.md2"
+"model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "716 48 36"
 }
 // entity 39
 {
 "origin" "336 464 36"
-"model" "models/objects/vegi/palm2.md2"
+"model" "models/objects/vegi/palm2/palm2.md2"
 "classname" "misc_model"
 "spawnflags" "254"
 "light" "1"
@@ -1189,7 +1189,7 @@
 // entity 40
 {
 "origin" "336 464 36"
-"model" "models/objects/vegi/palm1.md2"
+"model" "models/objects/vegi/palm1/palm1.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 "lightcolor" "0.6 0.58 0.45"

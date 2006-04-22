@@ -7637,7 +7637,7 @@
 {
 "origin" "624 -544 176"
 "spawnflags" "252"
-"model" "models/objects/oriental.md2"
+"model" "models/objects/city/oriental.md2"
 "classname" "misc_model"
 }
 // entity 2
@@ -11579,7 +11579,7 @@
 {
 "angles" "0 60 3"
 "classname" "misc_model"
-"model" "models/objects/palm.md2"
+"model" "models/objects/vegi/palm7/palm7.md2"
 "origin" "434 142 40"
 "spawnflags" "255"
 }
@@ -11587,7 +11587,7 @@
 {
 "spawnflags" "255"
 "origin" "556 142 40"
-"model" "models/objects/palm.md2"
+"model" "models/objects/vegi/palm7/palm7.md2"
 "classname" "misc_model"
 "angles" "0 0 0"
 }
@@ -11595,14 +11595,14 @@
 {
 "angles" "0 180 0"
 "classname" "misc_model"
-"model" "models/objects/dropship_top.md2"
+"model" "models/aircraft/dropship/dropship_top.md2"
 "spawnflags" "254"
 "origin" "128 -608 36"
 }
 // entity 100
 {
 "classname" "misc_model"
-"model" "models/objects/dropship_glass.md2"
+"model" "models/aircraft/dropship/dropship_glass.md2"
 "angles" "0 180 0"
 "origin" "128 -608 36"
 "spawnflags" "255"
@@ -11611,7 +11611,7 @@
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/dropship.md2"
+"model" "models/aircraft/dropship/dropship.md2"
 "angles" "0 180 0"
 "origin" "128 -608 36"
 }

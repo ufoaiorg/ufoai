@@ -297,7 +297,7 @@
 {
 "angles" "0 270 0"
 "classname" "misc_model"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "140 108 64"
 "light" "1"
@@ -311,7 +311,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "classname" "misc_model"
-"model" "models/objects/chestnut_blaetter2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "140 108 64"
 }
@@ -322,7 +322,7 @@
 "light" "1"
 "lightcolor" "0.3 0.3 0.3"
 "classname" "misc_model"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "140 108 64"
 }
@@ -333,7 +333,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "light" "1"
 "classname" "misc_model"
-"model" "models/objects/chestnut_stamm2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "140 108 64"
 }
@@ -344,7 +344,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "classname" "misc_model"
-"model" "models/objects/chestnut_stamm1.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "140 108 64"
 }

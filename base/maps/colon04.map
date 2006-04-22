@@ -15219,7 +15219,7 @@
 // entity 165
 {
 "origin" "-896 306 96"
-"model" "models/objects/alien/seat.md2"
+"model" "models/objects/alien/seat/seat.md2"
 "classname" "misc_model"
 "spawnflags" "2"
 }
@@ -15228,34 +15228,34 @@
 "spawnflags" "1"
 "origin" "-548 432 12"
 "angles" "0 90 0"
-"model" "models/objects/alien/battery.md2"
+"model" "models/objects/alien/battery/battery.md2"
 "classname" "misc_model"
 }
 // entity 167
 {
 "spawnflags" "2"
 "classname" "misc_model"
-"model" "models/objects/alien/seat.md2"
+"model" "models/objects/alien/seat/seat.md2"
 "origin" "-896 362 96"
 }
 // entity 168
 {
 "spawnflags" "2"
 "classname" "misc_model"
-"model" "models/objects/alien/seat.md2"
+"model" "models/objects/alien/seat/seat.md2"
 "origin" "-896 498 96"
 }
 // entity 169
 {
 "origin" "-896 554 96"
-"model" "models/objects/alien/seat.md2"
+"model" "models/objects/alien/seat/seat.md2"
 "classname" "misc_model"
 "spawnflags" "2"
 }
 // entity 170
 {
 "classname" "misc_model"
-"model" "models/objects/alien/battery.md2"
+"model" "models/objects/alien/battery/battery.md2"
 "angles" "0 90 0"
 "origin" "-548 400 12"
 "spawnflags" "1"
@@ -15263,7 +15263,7 @@
 // entity 171
 {
 "classname" "misc_model"
-"model" "models/objects/alien/battery.md2"
+"model" "models/objects/alien/battery/battery.md2"
 "angles" "0 90 0"
 "origin" "-228 432 12"
 "spawnflags" "1"
@@ -15273,7 +15273,7 @@
 "spawnflags" "1"
 "origin" "-228 400 12"
 "angles" "0 90 0"
-"model" "models/objects/alien/battery.md2"
+"model" "models/objects/alien/battery/battery.md2"
 "classname" "misc_model"
 }
 // entity 173
@@ -15281,13 +15281,13 @@
 "spawnflags" "1"
 "origin" "92 432 12"
 "angles" "0 90 0"
-"model" "models/objects/alien/battery.md2"
+"model" "models/objects/alien/battery/battery.md2"
 "classname" "misc_model"
 }
 // entity 174
 {
 "classname" "misc_model"
-"model" "models/objects/alien/battery.md2"
+"model" "models/objects/alien/battery/battery.md2"
 "angles" "0 90 0"
 "origin" "92 400 12"
 "spawnflags" "1"

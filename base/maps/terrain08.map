@@ -4044,7 +4044,7 @@
 {
 "spawnflags" "255"
 "origin" "-600 -256 60"
-"model" "models/objects/ufo1_engine_right.md2"
+"model" "models/aircraft/ufo_big/ufo1_engine_right.md2"
 "classname" "misc_model"
 }
 // entity 3
@@ -4057,28 +4057,28 @@
 // entity 4
 {
 "classname" "misc_model"
-"model" "models/objects/ufo1_engine_left.md2"
+"model" "models/aircraft/ufo_big/ufo1_engine_left.md2"
 "origin" "-604 -256 60"
 "spawnflags" "255"
 }
 // entity 5
 {
 "classname" "misc_model"
-"model" "models/objects/ufo1_wing_right.md2"
+"model" "models/aircraft/ufo_big/ufo1_wing_right.md2"
 "origin" "-608 -272 64"
 "spawnflags" "254"
 }
 // entity 6
 {
 "classname" "misc_model"
-"model" "models/objects/ufo1_wing_left.md2"
+"model" "models/aircraft/ufo_big/ufo1_wing_left.md2"
 "origin" "-608 -272 64"
 "spawnflags" "254"
 }
 // entity 7
 {
 "classname" "misc_model"
-"model" "models/objects/ufo1_body_open.md2"
+"model" "models/aircraft/ufo_big/ufo1_body_open.md2"
 "origin" "-608 -260 64"
 "spawnflags" "2"
 }
@@ -4120,35 +4120,35 @@
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "272 -204 8"
 }
 // entity 14
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "origin" "272 -204 8"
 }
 // entity 15
 {
 "spawnflags" "255"
 "origin" "200 -372 8"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "classname" "misc_model"
 }
 // entity 16
 {
 "spawnflags" "255"
 "origin" "200 -372 8"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "classname" "misc_model"
 }
 // entity 17
 {
 "spawnflags" "255"
 "origin" "376 -244 8"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "classname" "misc_model"
 "angles" "0 85 4"
 }
@@ -4156,7 +4156,7 @@
 {
 "spawnflags" "255"
 "origin" "376 -244 8"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "classname" "misc_model"
 "angles" "0 85 4"
 }
@@ -4164,7 +4164,7 @@
 {
 "spawnflags" "255"
 "origin" "528 -120 8"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "classname" "misc_model"
 "angles" "5 210 0"
 }
@@ -4172,7 +4172,7 @@
 {
 "spawnflags" "255"
 "origin" "528 -120 8"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "classname" "misc_model"
 "angles" "5 210 0"
 }
@@ -4180,7 +4180,7 @@
 {
 "spawnflags" "255"
 "origin" "536 -308 8"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "classname" "misc_model"
 "angles" "0 85 4"
 }
@@ -4188,7 +4188,7 @@
 {
 "spawnflags" "255"
 "origin" "536 -308 8"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "classname" "misc_model"
 "angles" "0 85 4"
 }
@@ -4196,7 +4196,7 @@
 {
 "angles" "5 210 0"
 "classname" "misc_model"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "784 392 8"
 "spawnflags" "255"
 }
@@ -4204,7 +4204,7 @@
 {
 "angles" "5 210 0"
 "classname" "misc_model"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "origin" "784 392 8"
 "spawnflags" "255"
 }
@@ -4643,7 +4643,7 @@
 {
 "angles" "5 25 0"
 "classname" "misc_model"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "-1016 392 8"
 "spawnflags" "255"
 }
@@ -4651,7 +4651,7 @@
 {
 "angles" "5 25 0"
 "classname" "misc_model"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "origin" "-1016 392 8"
 "spawnflags" "255"
 }
@@ -4659,7 +4659,7 @@
 {
 "spawnflags" "255"
 "origin" "-908 116 8"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "classname" "misc_model"
 "angles" "0 120 0"
 }
@@ -4667,7 +4667,7 @@
 {
 "spawnflags" "255"
 "origin" "-908 116 8"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "classname" "misc_model"
 "angles" "0 120 0"
 }
@@ -4675,7 +4675,7 @@
 {
 "angles" "0 170 0"
 "classname" "misc_model"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "-952 -8 8"
 "spawnflags" "255"
 }
@@ -4683,7 +4683,7 @@
 {
 "angles" "0 170 0"
 "classname" "misc_model"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "origin" "-952 -8 8"
 "spawnflags" "255"
 }
@@ -4691,7 +4691,7 @@
 {
 "spawnflags" "255"
 "origin" "-1016 -120 8"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "classname" "misc_model"
 "angles" "6 30 5"
 }
@@ -4699,7 +4699,7 @@
 {
 "spawnflags" "255"
 "origin" "-1016 -120 8"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "classname" "misc_model"
 "angles" "6 30 5"
 }
@@ -4707,7 +4707,7 @@
 {
 "spawnflags" "255"
 "origin" "-952 -376 8"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "classname" "misc_model"
 "angles" "0 170 0"
 }
@@ -4715,7 +4715,7 @@
 {
 "spawnflags" "255"
 "origin" "-952 -376 8"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "classname" "misc_model"
 "angles" "0 170 0"
 }
@@ -4723,7 +4723,7 @@
 {
 "spawnflags" "255"
 "origin" "-392 -8 8"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "classname" "misc_model"
 "angles" "0 170 0"
 }
@@ -4731,7 +4731,7 @@
 {
 "spawnflags" "255"
 "origin" "-392 -8 8"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "classname" "misc_model"
 "angles" "0 170 0"
 }
@@ -4739,7 +4739,7 @@
 {
 "angles" "0 220 5"
 "classname" "misc_model"
-"model" "models/objects/tree2_b.md2"
+"model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "-392 -376 8"
 "spawnflags" "255"
 }
@@ -4747,7 +4747,7 @@
 {
 "angles" "0 220 5"
 "classname" "misc_model"
-"model" "models/objects/tree2_a.md2"
+"model" "models/objects/vegi/tree02/tree2_a.md2"
 "origin" "-392 -376 8"
 "spawnflags" "255"
 }
@@ -5173,14 +5173,14 @@
 "angles" "235 0 0"
 "spawnflags" "252"
 "origin" "-580 -124 116"
-"model" "models/objects/ufo1_engine_left.md2"
+"model" "models/aircraft/ufo_big/ufo1_engine_left.md2"
 "classname" "misc_model"
 }
 // entity 82
 {
 "spawnflags" "252"
 "origin" "-608 -260 64"
-"model" "models/objects/ufo1_body_closed.md2"
+"model" "models/aircraft/ufo_big/ufo1_body_closed.md2"
 "classname" "misc_model"
 }
 // entity 83
@@ -6454,7 +6454,7 @@
 {
 "spawnflags" "252"
 "classname" "misc_model"
-"model" "models/objects/ufo1_engine_right.md2"
+"model" "models/aircraft/ufo_big/ufo1_engine_right.md2"
 "origin" "-864 -128 32"
 "angles" "135 0 0"
 }
@@ -6766,7 +6766,7 @@
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/dropship.md2"
+"model" "models/aircraft/dropship/dropship.md2"
 "angles" "0 180 0"
 "origin" "576 -480 4"
 }

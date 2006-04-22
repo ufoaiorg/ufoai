@@ -97,7 +97,7 @@
 "light" "1"
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/trashcan.md2"
+"model" "models/objects/furniture/trashcan/trashcan.md2"
 "angles" "0 60 0"
 "origin" "180 180 13"
 }
@@ -108,7 +108,7 @@
 "light" "1"
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/trashcan.md2"
+"model" "models/objects/furniture/trashcan/trashcan.md2"
 "angles" "0 0 0"
 "origin" "76 116 13"
 }
@@ -116,7 +116,7 @@
 {
 "origin" "76 84 13"
 "angles" "0 10 90"
-"model" "models/objects/trashcan.md2"
+"model" "models/objects/furniture/trashcan/trashcan.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 "light" "1"

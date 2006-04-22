@@ -18934,14 +18934,14 @@
 {
 "angles" "0 90 0"
 "classname" "misc_model"
-"model" "models/objects/dropship_top.md2"
+"model" "models/aircraft/dropship/dropship_top.md2"
 "spawnflags" "240"
 "origin" "-224 480 176"
 }
 // entity 315
 {
 "classname" "misc_model"
-"model" "models/objects/dropship_glass.md2"
+"model" "models/aircraft/dropship/dropship_glass.md2"
 "angles" "0 90 0"
 "origin" "-223 480 196"
 "spawnflags" "248"
@@ -18950,7 +18950,7 @@
 {
 "spawnflags" "248"
 "classname" "misc_model"
-"model" "models/objects/dropship.md2"
+"model" "models/aircraft/dropship/dropship.md2"
 "angles" "0 90 0"
 "origin" "-224 480 196"
 }

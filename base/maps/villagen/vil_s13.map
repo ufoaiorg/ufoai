@@ -256,7 +256,7 @@
 "lightambient" "0.4 0.4 0.4"
 "light" "1"
 "spawnflags" "255"
-"model" "models/objects/cars/van1t.md2"
+"model" "models/objects/cars/van/van1t.md2"
 "classname" "misc_model"
 }
 // entity 5
@@ -267,7 +267,7 @@
 "skin" "1"
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/cars/van1.md2"
+"model" "models/objects/cars/van/van1.md2"
 "origin" "64 162 16"
 "angles" "0 90 0"
 }

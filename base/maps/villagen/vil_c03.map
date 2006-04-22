@@ -2537,7 +2537,7 @@
 // entity 36
 {
 "classname" "misc_model"
-"model" "models/objects/cars/van1t.md2"
+"model" "models/objects/cars/van/van1t.md2"
 "spawnflags" "255"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
@@ -2549,7 +2549,7 @@
 {
 "angles" "0 90 0"
 "origin" "448 94 20"
-"model" "models/objects/cars/van1.md2"
+"model" "models/objects/cars/van/van1.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 "skin" "1"

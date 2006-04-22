@@ -1074,21 +1074,21 @@
 {
 "origin" "208 436 48"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "classname" "misc_model"
 }
 // entity 8
 {
 "origin" "208 436 48"
 "spawnflags" "254"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "classname" "misc_model"
 }
 // entity 9
 {
 "origin" "208 436 48"
 "spawnflags" "1"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "classname" "misc_model"
 }
 // entity 10
@@ -1708,7 +1708,7 @@
 {
 "angles" "0 120 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "spawnflags" "254"
 "origin" "272 244 48"
 }
@@ -1716,7 +1716,7 @@
 {
 "angles" "0 120 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "spawnflags" "1"
 "origin" "272 244 48"
 }
@@ -1724,7 +1724,7 @@
 {
 "angles" "0 120 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "spawnflags" "254"
 "origin" "272 244 48"
 }
@@ -1732,7 +1732,7 @@
 {
 "origin" "500 272 48"
 "spawnflags" "254"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "classname" "misc_model"
 "angles" "0 120 0"
 }
@@ -1740,7 +1740,7 @@
 {
 "origin" "500 272 48"
 "spawnflags" "1"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "classname" "misc_model"
 "angles" "0 120 0"
 }
@@ -1748,7 +1748,7 @@
 {
 "origin" "500 272 48"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "classname" "misc_model"
 "angles" "0 120 0"
 }

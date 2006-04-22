@@ -3269,27 +3269,27 @@
 "origin" "156 240 128"
 "angles" "0 0 70"
 "spawnflags" "254"
-"model" "models/aircrafts/fighter1_engines.md2"
+"model" "models/aircraft/interceptor/fighter1_engines.md2"
 "classname" "misc_model"
 }
 // entity 16
 {
 "origin" "156 240 128"
 "spawnflags" "254"
-"model" "models/aircrafts/fighter1_glass.md2"
+"model" "models/aircraft/interceptor/fighter1_glass.md2"
 "classname" "misc_model"
 }
 // entity 17
 {
 "origin" "156 240 128"
 "spawnflags" "254"
-"model" "models/aircrafts/fighter1_main.md2"
+"model" "models/aircraft/interceptor/fighter1_main.md2"
 "classname" "misc_model"
 }
 // entity 18
 {
 "classname" "misc_model"
-"model" "models/aircrafts/fighter1_engines.md2"
+"model" "models/aircraft/interceptor/fighter1_engines.md2"
 "spawnflags" "254"
 "angles" "0 0 70"
 "origin" "356 240 128"
@@ -3297,14 +3297,14 @@
 // entity 19
 {
 "classname" "misc_model"
-"model" "models/aircrafts/fighter1_glass.md2"
+"model" "models/aircraft/interceptor/fighter1_glass.md2"
 "spawnflags" "254"
 "origin" "356 240 128"
 }
 // entity 20
 {
 "classname" "misc_model"
-"model" "models/aircrafts/fighter1_main.md2"
+"model" "models/aircraft/interceptor/fighter1_main.md2"
 "spawnflags" "254"
 "origin" "356 240 128"
 }

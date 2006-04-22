@@ -11074,7 +11074,7 @@
 "origin" "-76 500 76"
 "spawnflags" "254"
 "angles" "0 90 0"
-"model" "models/objects/acrash_hull_engine.md2"
+"model" "models/objects/alien/ufo_crashed/acrash_hull_engine.md2"
 "classname" "misc_model"
 }
 // entity 10
@@ -11089,7 +11089,7 @@
 "spawnflags" "255"
 "origin" "428 368 12"
 "angles" "0 100 0"
-"model" "models/objects/acrash_wing_2.md2"
+"model" "models/objects/alien/ufo_crashed/acrash_wing_2.md2"
 "classname" "misc_model"
 }
 // entity 12
@@ -11097,7 +11097,7 @@
 "spawnflags" "255"
 "origin" "412 656 32"
 "angles" "170 110 0"
-"model" "models/objects/acrash_wing_1.md2"
+"model" "models/objects/alien/ufo_crashed/acrash_wing_1.md2"
 "classname" "misc_model"
 }
 // entity 13
@@ -11105,7 +11105,7 @@
 "spawnflags" "255"
 "origin" "652 584 40"
 "angles" "0 90 0"
-"model" "models/objects/acrash_engine.md2"
+"model" "models/objects/alien/ufo_crashed/acrash_engine.md2"
 "classname" "misc_model"
 }
 // entity 14
@@ -11113,7 +11113,7 @@
 "spawnflags" "255"
 "origin" "-92 508 68"
 "angles" "0 90 0"
-"model" "models/objects/acrash_hull.md2"
+"model" "models/objects/alien/ufo_crashed/acrash_hull.md2"
 "classname" "misc_model"
 }
 // entity 15
@@ -11549,14 +11549,14 @@
 {
 "angles" "0 0 0"
 "classname" "misc_model"
-"model" "models/objects/dropship_top.md2"
+"model" "models/aircraft/dropship/dropship_top.md2"
 "spawnflags" "252"
 "origin" "896 -576 100"
 }
 // entity 28
 {
 "classname" "misc_model"
-"model" "models/objects/dropship_glass.md2"
+"model" "models/aircraft/dropship/dropship_glass.md2"
 "angles" "0 0 0"
 "origin" "896 -576 100"
 "spawnflags" "254"
@@ -11565,7 +11565,7 @@
 {
 "spawnflags" "254"
 "classname" "misc_model"
-"model" "models/objects/dropship.md2"
+"model" "models/aircraft/dropship/dropship.md2"
 "angles" "0 0 0"
 "origin" "896 -576 100"
 }

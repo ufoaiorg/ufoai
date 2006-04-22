@@ -3839,7 +3839,7 @@
 {
 "spawnflags" "1"
 "classname" "misc_model"
-"model" "models/objects/locker.md2"
+"model" "models/objects/furniture/locker/locker.md2"
 "angles" "0 270 0"
 "origin" "468 284 24"
 }
@@ -3855,7 +3855,7 @@
 {
 "origin" "49 158 28"
 "angles" "0 90 0"
-"model" "models/objects/computer.md2"
+"model" "models/objects/furniture/computer/computer.md2"
 "classname" "misc_model"
 "spawnflags" "1"
 }
@@ -5508,7 +5508,7 @@
 "spawnflags" "1"
 "origin" "308 472 24"
 "angles" "0 270 0"
-"model" "models/objects/locker.md2"
+"model" "models/objects/furniture/locker/locker.md2"
 "classname" "misc_model"
 }
 // entity 43

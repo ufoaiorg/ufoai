@@ -2456,7 +2456,7 @@
 // entity 36
 {
 "classname" "misc_model"
-"model" "models/objects/cars/car1t.md2"
+"model" "models/objects/cars/golf/car1t.md2"
 "origin" "340 424 19"
 "spawnflags" "255"
 "angles" "0 90 0"
@@ -2464,7 +2464,7 @@
 // entity 37
 {
 "classname" "misc_model"
-"model" "models/objects/cars/car1.md2"
+"model" "models/objects/cars/golf/car1.md2"
 "skin" "3"
 "spawnflags" "255"
 "origin" "340 424 19"
@@ -2473,7 +2473,7 @@
 // entity 38
 {
 "classname" "misc_model"
-"model" "models/objects/cars/van1t.md2"
+"model" "models/objects/cars/van/van1t.md2"
 "spawnflags" "255"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
@@ -2485,7 +2485,7 @@
 {
 "angles" "0 90 0"
 "origin" "520 290 20"
-"model" "models/objects/cars/van1.md2"
+"model" "models/objects/cars/van/van1.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 "skin" "2"

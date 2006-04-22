@@ -138,14 +138,14 @@
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/vegi/tropic03.md2"
+"model" "models/objects/vegi/tropic/tropic03.md2"
 "origin" "436 60 10"
 "angles" "0 0 0"
 }
 // entity 2
 {
 "origin" "44 48 12"
-"model" "models/objects/vegi/tropic01.md2"
+"model" "models/objects/vegi/tropic/tropic01.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 }
@@ -153,7 +153,7 @@
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/vegi/tropic01.md2"
+"model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "60 180 12"
 "angles" "0 30 0"
 }
@@ -161,7 +161,7 @@
 {
 "angles" "0 70 0"
 "origin" "128 200 12"
-"model" "models/objects/vegi/tropic01.md2"
+"model" "models/objects/vegi/tropic/tropic01.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 }
@@ -169,7 +169,7 @@
 {
 "angles" "0 70 0"
 "origin" "292 40 12"
-"model" "models/objects/vegi/tropic01.md2"
+"model" "models/objects/vegi/tropic/tropic01.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 }
@@ -177,7 +177,7 @@
 {
 "angles" "0 70 0"
 "origin" "208 196 12"
-"model" "models/objects/vegi/tropic01.md2"
+"model" "models/objects/vegi/tropic/tropic01.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 }
@@ -187,7 +187,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "light" "1"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 "classname" "misc_model"
 "angles" "0 60 0"
 "spawnflags" "255"
@@ -195,7 +195,7 @@
 // entity 8
 {
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -208,7 +208,7 @@
 "spawnflags" "255"
 "angles" "0 100 0"
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -218,7 +218,7 @@
 // entity 10
 {
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -231,7 +231,7 @@
 "spawnflags" "255"
 "angles" "0 30 0"
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -243,7 +243,7 @@
 "spawnflags" "255"
 "angles" "0 300 0"
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -254,7 +254,7 @@
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/vegi/tropic03.md2"
+"model" "models/objects/vegi/tropic/tropic03.md2"
 "origin" "76 84 10"
 "angles" "0 140 0"
 "lightangles" "40 20 0"
@@ -263,7 +263,7 @@
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/vegi/tropic01.md2"
+"model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "204 44 12"
 "angles" "0 70 0"
 }

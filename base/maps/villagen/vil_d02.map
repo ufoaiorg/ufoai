@@ -198,7 +198,7 @@
 {
 "angles" "0 130 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "spawnflags" "254"
 "origin" "144 156 48"
 "lightcolor" "0.4 0.4 0.4"
@@ -209,7 +209,7 @@
 {
 "angles" "0 130 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "spawnflags" "1"
 "origin" "144 156 48"
 "light" "1"
@@ -220,7 +220,7 @@
 {
 "origin" "144 156 48"
 "spawnflags" "254"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "classname" "misc_model"
 "angles" "0 130 0"
 "light" "1"
@@ -234,7 +234,7 @@
 "light" "1"
 "angles" "0 220 0"
 "classname" "misc_model"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "spawnflags" "254"
 "origin" "144 156 48"
 }

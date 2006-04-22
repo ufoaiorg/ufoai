@@ -3721,42 +3721,42 @@
 // entity 36
 {
 "origin" "228 312 28"
-"model" "models/objects/locker.md2"
+"model" "models/objects/furniture/locker/locker.md2"
 "classname" "misc_model"
 "spawnflags" "1"
 }
 // entity 37
 {
 "classname" "misc_model"
-"model" "models/objects/locker.md2"
+"model" "models/objects/furniture/locker/locker.md2"
 "origin" "228 288 28"
 "spawnflags" "1"
 }
 // entity 38
 {
 "classname" "misc_model"
-"model" "models/objects/locker.md2"
+"model" "models/objects/furniture/locker/locker.md2"
 "origin" "228 264 28"
 "spawnflags" "1"
 }
 // entity 39
 {
 "classname" "misc_model"
-"model" "models/objects/locker.md2"
+"model" "models/objects/furniture/locker/locker.md2"
 "origin" "228 174 28"
 "spawnflags" "1"
 }
 // entity 40
 {
 "classname" "misc_model"
-"model" "models/objects/locker.md2"
+"model" "models/objects/furniture/locker/locker.md2"
 "origin" "228 432 28"
 "spawnflags" "1"
 }
 // entity 41
 {
 "origin" "228 408 28"
-"model" "models/objects/locker.md2"
+"model" "models/objects/furniture/locker/locker.md2"
 "classname" "misc_model"
 "spawnflags" "1"
 }

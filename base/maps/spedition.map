@@ -467,7 +467,7 @@
 }
 // entity 19
 {
-"model" "/home/games/ufo/base/models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "origin" "-1088 -94 204"
 "classname" "misc_model"
 }
@@ -1402,14 +1402,14 @@
 {
 "angles" "0 180 0"
 "classname" "misc_model"
-"model" "models/objects/dropship_top.md2"
+"model" "models/aircraft/dropship/dropship_top.md2"
 "spawnflags" "6"
 "origin" "802 358 36"
 }
 // entity 95
 {
 "classname" "misc_model"
-"model" "models/objects/dropship_glass.md2"
+"model" "models/aircraft/dropship/dropship_glass.md2"
 "angles" "0 180 0"
 "origin" "802 358 36"
 "spawnflags" "255"
@@ -1418,7 +1418,7 @@
 {
 "spawnflags" "7"
 "classname" "misc_model"
-"model" "models/objects/dropship.md2"
+"model" "models/aircraft/dropship/dropship.md2"
 "angles" "0 180 0"
 "origin" "802 358 36"
 }
@@ -6765,42 +6765,42 @@
 // entity 101
 {
 "spawnflags" "7"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "origin" "-848 96 158"
 "classname" "misc_model"
 }
 // entity 102
 {
 "spawnflags" "7"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "origin" "-856 96 160"
 "classname" "misc_model"
 }
 // entity 103
 {
 "spawnflags" "7"
-"model" "models/objects/tree1_a.md2"
+"model" "models/objects/vegi/tree03/tree3_a.md2"
 "origin" "-1084 -96 238"
 "classname" "misc_model"
 }
 // entity 104
 {
 "spawnflags" "7"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "origin" "760 -558 68"
 "classname" "misc_model"
 }
 // entity 105
 {
 "spawnflags" "7"
-"model" "models/objects/chestnut_blaetter2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "origin" "768 -552 50"
 "classname" "misc_model"
 }
 // entity 106
 {
 "spawnflags" "7"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "origin" "768 -550 108"
 "classname" "misc_model"
 }
@@ -6808,7 +6808,7 @@
 {
 "classname" "misc_model"
 "origin" "548 -502 68"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "7"
 }
 // entity 108
@@ -6816,7 +6816,7 @@
 "angle" "225"
 "classname" "misc_model"
 "origin" "556 -496 50"
-"model" "models/objects/chestnut_blaetter2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "7"
 }
 // entity 109
@@ -6824,7 +6824,7 @@
 "angle" "45"
 "classname" "misc_model"
 "origin" "556 -496 80"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "7"
 }
 // entity 110
@@ -6963,7 +6963,7 @@
 {
 "classname" "misc_model"
 "origin" "-73 509 49"
-"model" "models/objects/tree1_c.md2"
+"model" "models/objects/vegi/tree03/tree3_c.md2"
 "spawnflags" "7"
 "angle" "180"
 }
@@ -6971,21 +6971,21 @@
 {
 "classname" "misc_model"
 "origin" "-81 509 51"
-"model" "models/objects/tree1_b.md2"
+"model" "models/objects/vegi/tree03/tree3_b.md2"
 "spawnflags" "7"
 "angle" "180"
 }
 // entity 122
 {
 "spawnflags" "7"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "origin" "-313 65 68"
 "classname" "misc_model"
 }
 // entity 123
 {
 "spawnflags" "6"
-"model" "models/objects/chestnut_blaetter2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "origin" "-305 71 50"
 "classname" "misc_model"
 "angle" "225"
@@ -6993,7 +6993,7 @@
 // entity 124
 {
 "spawnflags" "4"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "origin" "-305 67 110"
 "classname" "misc_model"
 "angle" "45"
@@ -7003,14 +7003,14 @@
 "angle" "225"
 "classname" "misc_model"
 "origin" "-305 65 82"
-"model" "models/objects/chestnut_blaetter2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "6"
 }
 // entity 126
 {
 "classname" "misc_model"
 "origin" "-313 65 100"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "7"
 }
 // entity 127
@@ -9056,14 +9056,14 @@
 // entity 129
 {
 "spawnflags" "7"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "origin" "-612 -526 68"
 "classname" "misc_model"
 }
 // entity 130
 {
 "spawnflags" "6"
-"model" "models/objects/chestnut_blaetter2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "origin" "-604 -520 50"
 "classname" "misc_model"
 "angle" "225"
@@ -9071,7 +9071,7 @@
 // entity 131
 {
 "spawnflags" "4"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "origin" "-604 -520 80"
 "classname" "misc_model"
 "angle" "45"

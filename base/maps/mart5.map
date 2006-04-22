@@ -5467,28 +5467,28 @@
 {
 "spawnflags" "255"
 "origin" "-528 304 68"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "classname" "misc_model"
 }
 // entity 14
 {
 "spawnflags" "255"
 "origin" "-528 304 68"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "classname" "misc_model"
 }
 // entity 15
 {
 "spawnflags" "255"
 "origin" "-528 80 36"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "classname" "misc_model"
 }
 // entity 16
 {
 "spawnflags" "255"
 "origin" "-528 80 68"
-"model" "models/objects/chestnut_stamm2.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "classname" "misc_model"
 }
 // entity 17
@@ -5544,7 +5544,7 @@
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/cars/car1t.md2"
+"model" "models/objects/cars/golf/car1t.md2"
 "origin" "-174 -30 20"
 "angle" "180"
 "angles" "0 90 0"
@@ -5553,7 +5553,7 @@
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/cars/car1.md2"
+"model" "models/objects/cars/golf/car1.md2"
 "origin" "-174 -30 20"
 "angle" "180"
 "angles" "0 90 0"
@@ -5562,14 +5562,14 @@
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/cars/van1t.md2"
+"model" "models/objects/cars/van/van1t.md2"
 "origin" "-512 -48 22"
 }
 // entity 21
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/cars/van1.md2"
+"model" "models/objects/cars/van/van1.md2"
 "origin" "-512 -48 22"
 }
 // entity 22
@@ -5722,12 +5722,6 @@
 ( 256 380 27 ) ( 233 380 27 ) ( 233 380 5 ) tex_furniture/kitchen003 -12 11 -180 0.312500 -0.406250 3840 0 0
 ( 256 180 27 ) ( 256 178 27 ) ( 256 178 5 ) tex_furniture/kitchen003 25 11 -180 0.312500 -0.406250 3840 0 0
 }
-}
-// entity 26
-{
-"classname" "misc_model"
-"model" "models/objects/tescht.md2"
-"origin" "368 368 48"
 }
 // entity 27
 {
@@ -8822,7 +8816,7 @@
 {
 "spawnflags" "255"
 "origin" "80 928 22"
-"model" "models/objects/cars/van1t.md2"
+"model" "models/objects/cars/van/van1t.md2"
 "classname" "misc_model"
 "angles" "0 270 0"
 }
@@ -8830,7 +8824,7 @@
 {
 "spawnflags" "255"
 "origin" "80 928 22"
-"model" "models/objects/cars/van1.md2"
+"model" "models/objects/cars/van/van1.md2"
 "classname" "misc_model"
 "angles" "0 270 0"
 }
@@ -8838,7 +8832,7 @@
 {
 "origin" "192 -160 36"
 "spawnflags" "254"
-"model" "models/objects/dropship_top.md2"
+"model" "models/aircraft/dropship/dropship_top.md2"
 "classname" "misc_model"
 "angles" "0 180 0"
 }
@@ -8847,14 +8841,14 @@
 "spawnflags" "255"
 "origin" "192 -160 36"
 "angles" "0 180 0"
-"model" "models/objects/dropship_glass.md2"
+"model" "models/aircraft/dropship/dropship_glass.md2"
 "classname" "misc_model"
 }
 // entity 130
 {
 "origin" "192 -160 36"
 "angles" "0 180 0"
-"model" "models/objects/dropship.md2"
+"model" "models/aircraft/dropship/dropship.md2"
 "classname" "misc_model"
 "spawnflags" "255"
 }
@@ -9009,28 +9003,28 @@
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "origin" "560 80 68"
 }
 // entity 135
 {
 "spawnflags" "255"
 "classname" "misc_model"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "origin" "560 80 68"
 }
 // entity 136
 {
 "spawnflags" "255"
 "origin" "560 528 68"
-"model" "models/objects/chestnut_blaetter3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "classname" "misc_model"
 }
 // entity 137
 {
 "spawnflags" "255"
 "origin" "560 528 68"
-"model" "models/objects/chestnut_stamm3.md2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "classname" "misc_model"
 }
 // entity 138

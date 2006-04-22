@@ -2458,7 +2458,7 @@
 "angles" "0 90 0"
 "spawnflags" "255"
 "origin" "500 156 19"
-"model" "models/objects/cars/car1t.md2"
+"model" "models/objects/cars/golf/car1t.md2"
 "classname" "misc_model"
 }
 // entity 37
@@ -2470,13 +2470,13 @@
 "origin" "500 156 19"
 "spawnflags" "255"
 "skin" "3"
-"model" "models/objects/cars/car1.md2"
+"model" "models/objects/cars/golf/car1.md2"
 "classname" "misc_model"
 }
 // entity 38
 {
 "classname" "misc_model"
-"model" "models/objects/cars/car1t.md2"
+"model" "models/objects/cars/golf/car1t.md2"
 "origin" "162 330 15"
 "spawnflags" "255"
 "lightcolor" "0.6 0.6 0.6"
@@ -2486,7 +2486,7 @@
 // entity 39
 {
 "classname" "misc_model"
-"model" "models/objects/cars/car1.md2"
+"model" "models/objects/cars/golf/car1.md2"
 "skin" "4"
 "spawnflags" "255"
 "origin" "162 330 15"
