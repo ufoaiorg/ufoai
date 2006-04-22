@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-04-18 11:22+0200\n"
-"PO-Revision-Date: 2006-04-18 19:34+0100\n"
+"POT-Creation-Date: 2006-04-22 07:14+0200\n"
+"PO-Revision-Date: 2006-04-22 07:32+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@gmx.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,7 +56,7 @@ msgstr "Radarstation"
 
 #: ../base/ufos/menu_bases.ufo:48
 msgid "Back to worldview"
-msgstr "Zurück zum "
+msgstr "Zurück zur Weltkarte"
 
 #: ../base/ufos/menu_bases.ufo:66
 msgid "Build base-facilities"
@@ -182,6 +182,7 @@ msgstr "Neue Basis anlegen"
 
 #: ../base/ufos/menu_geoscape.ufo:390
 #: ../base/ufos/menu_geoscape.ufo:480
+#: ../base/ufos/menu_options.ufo:743
 msgid "Name:"
 msgstr "Name:"
 
@@ -337,7 +338,7 @@ msgstr "Aktiviere Moralschwankungen:"
 
 #: ../base/ufos/menu_multiplayer.ufo:596
 msgid "Dedicated server:"
-msgstr ""
+msgstr "Dedizierter Server:"
 
 #: ../base/ufos/menu_multiplayer.ufo:637
 msgid "Teamplay:"
@@ -369,19 +370,107 @@ msgstr ""
 
 #: ../base/ufos/menu_multiplayer.ufo:814
 msgid "Allow Download:"
-msgstr ""
+msgstr "Erlaube Download:"
 
 #: ../base/ufos/menu_multiplayer.ufo:855
 msgid "Max. AI actors:"
-msgstr ""
+msgstr "Max. KI-Spieler:"
 
 #: ../base/ufos/menu_multiplayer.ufo:857
 msgid "Max AI actors for coop mode"
-msgstr ""
+msgstr "Max. KI-Spieler für kooperativen Modus"
 
 #: ../base/ufos/menu_multiplayer.ufo:889
 msgid "Server-Password:"
+msgstr "Server-Passwort:"
+
+#: ../base/ufos/menu_multiplayer.ufo:912
+msgid "RCON-Password:"
+msgstr "RCON-Passwort:"
+
+#: ../base/ufos/menu_multiplayer.ufo:935
+msgid "Hostname:"
+msgstr "Servername:"
+
+#: ../base/ufos/menu_multiplayer.ufo:958
+msgid "Map"
+msgstr "Map"
+
+#: ../base/ufos/menu_options.ufo:124
+msgid "Resolution:"
+msgstr "Auflösung:"
+
+#: ../base/ufos/menu_options.ufo:152
+msgid "Fullscreen:"
+msgstr "Vollbild:"
+
+#: ../base/ufos/menu_options.ufo:188
+msgid "Texture compression:"
+msgstr "Texturkompression:"
+
+#: ../base/ufos/menu_options.ufo:226
+msgid "Texture resolution cap:"
 msgstr ""
+
+#: ../base/ufos/menu_options.ufo:262
+msgid "Show FPS:"
+msgstr "Zeige FPS:"
+
+#: ../base/ufos/menu_options.ufo:298
+msgid "Texture anisotropy level:"
+msgstr "Anisotrophisches Filtering:"
+
+#: ../base/ufos/menu_options.ufo:326
+msgid "Texture Lod:"
+msgstr "Textur Lod:"
+
+#: ../base/ufos/menu_options.ufo:362
+msgid "Gamma:"
+msgstr "Gamme:"
+
+#: ../base/ufos/menu_options.ufo:414
+msgid "Volume Control"
+msgstr "Laufstärkenkontrolle"
+
+#: ../base/ufos/menu_options.ufo:419
+msgid "Effects:"
+msgstr "Effekte:"
+
+#: ../base/ufos/menu_options.ufo:440
+msgid "Music:"
+msgstr "Musik:"
+
+#: ../base/ufos/menu_options.ufo:461
+msgid "Mixing Rate:"
+msgstr "Frequen:"
+
+#: ../base/ufos/menu_options.ufo:496
+msgid "Soundsystem:"
+msgstr "Soundsystem:"
+
+#: ../base/ufos/menu_options.ufo:558
+msgid "Difficulty:"
+msgstr "Schwierigkeitsgrad:"
+
+#: ../base/ufos/menu_options.ufo:589
+msgid "Confirm Actions:"
+msgstr "Aktionen bestätigten"
+
+#: ../base/ufos/menu_options.ufo:628
+msgid "HUD Design:"
+msgstr "HUD Design:"
+
+#: ../base/ufos/menu_options.ufo:659
+msgid "Tooltips:"
+msgstr "Tooltips:"
+
+#: ../base/ufos/menu_options.ufo:695
+msgid "Camera Scroll:"
+msgstr "Kamerabewegung:"
+
+#: ../base/ufos/menu_options.ufo:717
+msgid "Camera Rotation:"
+msgstr "Kamerarotation:"
 
 #: ../base/ufos/menu_research.ufo:338
 #: ../base/ufos/menu_research.ufo:354
@@ -445,21 +534,29 @@ msgstr "Wissenschafter hinzufügen"
 msgid "Remove scientist"
 msgstr "Wissenschaftler entfernen"
 
-#: ../base/ufos/menu_research.ufo:837
+#: ../base/ufos/menu_research.ufo:790
+msgid "Base Info"
+msgstr "Basis Informationen"
+
+#: ../base/ufos/menu_research.ufo:853
 msgid "CREDIT"
 msgstr ""
 
-#: ../base/ufos/menu_research.ufo:856
+#: ../base/ufos/menu_research.ufo:872
 msgid "Stop research"
 msgstr "Stoppe Forschung"
 
-#: ../base/ufos/menu_research.ufo:867
+#: ../base/ufos/menu_research.ufo:883
 msgid "Start research"
 msgstr "Starte Forschung"
 
-#: ../base/ufos/menu_research.ufo:881
+#: ../base/ufos/menu_research.ufo:897
 msgid "Back to baseview"
 msgstr "Zurück zur Basisübersicht"
+
+#: ../base/ufos/menu_stats.ufo:55
+msgid "Statistics"
+msgstr "Statistiken"
 
 #: ../base/ufos/menu_team.ufo:194
 #: ../base/ufos/menu_team.ufo:203
@@ -488,38 +585,47 @@ msgid "Edit name of the soldier"
 msgstr "Ändere den Namen dieses Soldatens"
 
 #: ../base/ufos/menu_team.ufo:550
+#: ../base/ufos/menu_team.ufo:988
 msgid "Power:"
 msgstr "Kraft:"
 
 #: ../base/ufos/menu_team.ufo:555
+#: ../base/ufos/menu_team.ufo:993
 msgid "Speed:"
 msgstr "Geschwindigkeit:"
 
 #: ../base/ufos/menu_team.ufo:560
+#: ../base/ufos/menu_team.ufo:998
 msgid "Accuracy:"
 msgstr "Genauigkeit:"
 
 #: ../base/ufos/menu_team.ufo:565
+#: ../base/ufos/menu_team.ufo:1003
 msgid "Mind:"
 msgstr "Verstand:"
 
 #: ../base/ufos/menu_team.ufo:570
+#: ../base/ufos/menu_team.ufo:1008
 msgid "Close Combat:"
 msgstr "Nahkampf"
 
 #: ../base/ufos/menu_team.ufo:575
+#: ../base/ufos/menu_team.ufo:1013
 msgid "Heavy Weapons:"
 msgstr "Schwere Waffen:"
 
 #: ../base/ufos/menu_team.ufo:580
+#: ../base/ufos/menu_team.ufo:1018
 msgid "Assault Guns:"
 msgstr "Sturmgewehre:"
 
 #: ../base/ufos/menu_team.ufo:585
+#: ../base/ufos/menu_team.ufo:1023
 msgid "Sniper Rifles:"
 msgstr "Scharfschützengewehre:"
 
 #: ../base/ufos/menu_team.ufo:590
+#: ../base/ufos/menu_team.ufo:1028
 msgid "High Explosives:"
 msgstr "Granaten:"
 
@@ -550,6 +656,14 @@ msgstr "Zeige nur Ausrüstungsgegenstände"
 msgid "Show only armor in store"
 msgstr "Zeige nur Rüstungen"
 
+#: ../base/ufos/menu_team.ufo:1083
+msgid "Object Info"
+msgstr "Objekt Informationen"
+
+#: ../base/ufos/menu_team.ufo:1095
+msgid "Actor Abilities"
+msgstr "Fähigkeiten"
+
 #: ../base/ufos/menu_tutorials.ufo:46
 msgid "Tutorials"
 msgstr "Tutorials"
@@ -570,31 +684,31 @@ msgstr "Zurück zum Inhalt"
 msgid "Leave Ufopedia"
 msgstr "Verlasse die Ufopedia"
 
-#: ../base/ufos/research.ufo:48
+#: ../base/ufos/research.ufo:52
 msgid "Aircraft"
 msgstr "Gleiter"
 
-#: ../base/ufos/research.ufo:49
+#: ../base/ufos/research.ufo:53
 msgid "Technologies & Discoveries"
 msgstr "Technologien und Entdeckungen"
 
-#: ../base/ufos/research.ufo:50
+#: ../base/ufos/research.ufo:54
 msgid "Weapons"
 msgstr "Waffen"
 
-#: ../base/ufos/research.ufo:51
+#: ../base/ufos/research.ufo:55
 msgid "Buildings"
 msgstr "Gebäude"
 
-#: ../base/ufos/research.ufo:52
+#: ../base/ufos/research.ufo:56
 msgid "Alien Species"
 msgstr "Alien Spezies"
 
-#: ../base/ufos/research.ufo:53
+#: ../base/ufos/research.ufo:57
 msgid "UFOs"
 msgstr "UFOs"
 
-#: ../base/ufos/research.ufo:66
+#: ../base/ufos/research.ufo:70
 msgid "assault_txt"
 msgstr ""
 "The AR-80 is the standard weapon of the GDF forces. Using improved ammo and a revolutionary\n"
@@ -605,7 +719,7 @@ msgstr ""
 "by removing the out of commission back end and inserting a new one. The entire process takes\n"
 "only minutes."
 
-#: ../base/ufos/research.ufo:78
+#: ../base/ufos/research.ufo:82
 #, fuzzy
 msgid "assault_ammo_txt"
 msgstr ""
@@ -617,7 +731,7 @@ msgstr ""
 "by removing the out of commission back end and inserting a new one. The entire process takes\n"
 "only minutes."
 
-#: ../base/ufos/research.ufo:90
+#: ../base/ufos/research.ufo:94
 msgid "sniper_txt"
 msgstr ""
 "Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of the most deadly weapons\n"
@@ -626,7 +740,7 @@ msgstr ""
 "and requires many precious seconds to aim, therefore the WE-78 is definitly not suitable for\n"
 "close combat."
 
-#: ../base/ufos/research.ufo:102
+#: ../base/ufos/research.ufo:106
 #, fuzzy
 msgid "sniper_ammo_txt"
 msgstr ""
@@ -636,7 +750,7 @@ msgstr ""
 "and requires many precious seconds to aim, therefore the WE-78 is definitly not suitable for\n"
 "close combat."
 
-#: ../base/ufos/research.ufo:114
+#: ../base/ufos/research.ufo:118
 msgid "smg_txt"
 msgstr ""
 "Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at the cost of less\n"
@@ -646,7 +760,7 @@ msgstr ""
 "the considerable recoil, a advanced counter-balance system is used powered by the explosion\n"
 "gases originating from the cartridges."
 
-#: ../base/ufos/research.ufo:126
+#: ../base/ufos/research.ufo:130
 #, fuzzy
 msgid "smg_ammo_txt"
 msgstr ""
@@ -657,7 +771,7 @@ msgstr ""
 "the considerable recoil, a advanced counter-balance system is used powered by the explosion\n"
 "gases originating from the cartridges."
 
-#: ../base/ufos/research.ufo:138
+#: ../base/ufos/research.ufo:142
 msgid "shotgun_txt"
 msgstr ""
 "The GDF forces are using the SG-260 with great success for quite some time now. Compared with\n"
@@ -666,7 +780,7 @@ msgstr ""
 "so it can be used not only at close but also at medium range. The SG-260 is a good choice for\n"
 "urban combat, especially for clearing a building."
 
-#: ../base/ufos/research.ufo:150
+#: ../base/ufos/research.ufo:154
 #, fuzzy
 msgid "shotgun_ammo_txt"
 msgstr ""
@@ -676,7 +790,7 @@ msgstr ""
 "so it can be used not only at close but also at medium range. The SG-260 is a good choice for\n"
 "urban combat, especially for clearing a building."
 
-#: ../base/ufos/research.ufo:162
+#: ../base/ufos/research.ufo:166
 msgid "flamer_txt"
 msgstr ""
 "The FT-207 is one of the most recent additions to tactical combat. Prior versions of this weapon\n"
@@ -685,7 +799,7 @@ msgstr ""
 "restricts the 'hot zone' created by the flamethrower to a very defined region. The area\n"
 "centimeters outside the 'hot zone' show no noticeable temperature increase."
 
-#: ../base/ufos/research.ufo:174
+#: ../base/ufos/research.ufo:178
 #, fuzzy
 msgid "flamer_ammo_txt"
 msgstr ""
@@ -695,7 +809,7 @@ msgstr ""
 "restricts the 'hot zone' created by the flamethrower to a very defined region. The area\n"
 "centimeters outside the 'hot zone' show no noticeable temperature increase."
 
-#: ../base/ufos/research.ufo:186
+#: ../base/ufos/research.ufo:190
 msgid "pistol_txt"
 msgstr ""
 "The P-95 is the standard GDF sidearm. The simple design of this handgun makes it a very reliable\n"
@@ -704,7 +818,7 @@ msgstr ""
 "accuracy. The P-95 is especially appreciated by snipers for having a valuable sidearm when it\n"
 "comes to close combat."
 
-#: ../base/ufos/research.ufo:198
+#: ../base/ufos/research.ufo:202
 #, fuzzy
 msgid "pistol_ammo_txt"
 msgstr ""
@@ -714,7 +828,7 @@ msgstr ""
 "accuracy. The P-95 is especially appreciated by snipers for having a valuable sidearm when it\n"
 "comes to close combat."
 
-#: ../base/ufos/research.ufo:210
+#: ../base/ufos/research.ufo:214
 msgid "rpg_txt"
 msgstr ""
 "The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. GDF weapon scientists and\n"
@@ -724,7 +838,7 @@ msgstr ""
 "correctly lock on the target, this rocket launcher is of limited value if it has to be used in\n"
 "snapshot mode."
 
-#: ../base/ufos/research.ufo:222
+#: ../base/ufos/research.ufo:226
 #, fuzzy
 msgid "rpg_ammo_txt"
 msgstr ""
@@ -735,7 +849,21 @@ msgstr ""
 "correctly lock on the target, this rocket launcher is of limited value if it has to be used in\n"
 "snapshot mode."
 
-#: ../base/ufos/research.ufo:235
+#: ../base/ufos/research.ufo:237
+msgid "Advanced Laser Technology"
+msgstr ""
+
+#: ../base/ufos/research.ufo:239
+#, fuzzy
+msgid "laser_txt"
+msgstr ""
+"The FT-207 is one of the most recent additions to tactical combat. Prior versions of this weapon\n"
+"were not employed do to the risk of accidentally igniting surrounding objects. This version,\n"
+"however, greatly reduces this risk by employing FHAS, or, Focused Heat Attack System, which\n"
+"restricts the 'hot zone' created by the flamethrower to a very defined region. The area\n"
+"centimeters outside the 'hot zone' show no noticeable temperature increase."
+
+#: ../base/ufos/research.ufo:252
 msgid "laserpistol_txt"
 msgstr ""
 "Using a smaller and less powerful version of the 'YAG laser reactor', the LAS-10 is like its big\n"
@@ -743,7 +871,7 @@ msgstr ""
 "technology. Due to the smaller 'YAG reactor', the photons have a lower cinetic energy and\n"
 "therefore a lessend penetrating power."
 
-#: ../base/ufos/research.ufo:247
+#: ../base/ufos/research.ufo:264
 #, fuzzy
 msgid "laserpistol_ammo_txt"
 msgstr ""
@@ -752,8 +880,8 @@ msgstr ""
 "technology. Due to the smaller 'YAG reactor', the photons have a lower cinetic energy and\n"
 "therefore a lessend penetrating power."
 
-#: ../base/ufos/research.ufo:259
-#: ../base/ufos/research.ufo:271
+#: ../base/ufos/research.ufo:276
+#: ../base/ufos/research.ufo:288
 msgid "laserrifle_txt"
 msgstr ""
 "Thanks to the recent advances in the laser technology GDF scientist were able to implement a\n"
@@ -761,14 +889,25 @@ msgstr ""
 "newly developed type of the common YAG laser technology. A advanced opical lense system is used\n"
 "to focus the beam very densely so it has the power to easily penetrate most known armors."
 
-#: ../base/ufos/research.ufo:283
+#: ../base/ufos/research.ufo:300
 msgid "fraggen_txt"
 msgstr ""
 "The fragmentation grenade is little more than an explosive core surrounded by metal. When the\n"
 "core is detonates, the surrounding metal is broken into sharp, deadly fragments which fly from\n"
 "the weapon at great speeds. The detonation is controlled by a built in timer."
 
-#: ../base/ufos/research.ufo:295
+#: ../base/ufos/research.ufo:312
+#, fuzzy
+msgid "smokegen_txt"
+msgstr ""
+"Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at the cost of less\n"
+"accuracy and penetrating power. These characteristics make the SMG-68 a ideal choice for close\n"
+"combat. Therefore GDF soldiers use the SMG-68 mainly in urban areas. To optimize the rate of\n"
+"fire, this weapon has two barrels through which the bullets are fired off alternating. To damp\n"
+"the considerable recoil, a advanced counter-balance system is used powered by the explosion\n"
+"gases originating from the cartridges."
+
+#: ../base/ufos/research.ufo:324
 msgid "knife_txt"
 msgstr ""
 "Almost every GDF soldier has his own Combat Knife as a last choice when it comes to hand to hand\n"
@@ -776,7 +915,12 @@ msgstr ""
 "warefare specialist as it can kill absolutely noiseless. Its blade is made of a special titanium\n"
 "alloy which makes it very resistant."
 
-#: ../base/ufos/research.ufo:314
+#: ../base/ufos/research.ufo:339
+#, fuzzy
+msgid "Tachyon Control"
+msgstr "Tachyongewehr"
+
+#: ../base/ufos/research.ufo:343
 #, fuzzy
 msgid "tachyon_txt"
 msgstr ""
@@ -787,7 +931,7 @@ msgstr ""
 "energy not before a penetrating distance of about 10 cm. Therefore a soldier hit by a tachyon\n"
 "charge suffers only minor superficial injury but is heavily wounded in his viscera."
 
-#: ../base/ufos/research.ufo:353
+#: ../base/ufos/research.ufo:382
 msgid "tachyonrifle_txt"
 msgstr ""
 "Although our engineers not fully understand the principles of altering the tachyons on a\n"
@@ -797,7 +941,7 @@ msgstr ""
 "energy not before a penetrating distance of about 10 cm. Therefore a soldier hit by a tachyon\n"
 "charge suffers only minor superficial injury but is heavily wounded in his viscera."
 
-#: ../base/ufos/research.ufo:365
+#: ../base/ufos/research.ufo:395
 #, fuzzy
 msgid "tachyonrifle_ammo_txt"
 msgstr ""
@@ -808,7 +952,7 @@ msgstr ""
 "energy not before a penetrating distance of about 10 cm. Therefore a soldier hit by a tachyon\n"
 "charge suffers only minor superficial injury but is heavily wounded in his viscera."
 
-#: ../base/ufos/research.ufo:377
+#: ../base/ufos/research.ufo:407
 msgid "tachyonsniper_txt"
 msgstr ""
 "The Tachyon Sniper Rifle uses also the newly discovered tachyon accelerator technology, first\n"
@@ -817,7 +961,7 @@ msgstr ""
 "shots fired by the Tachyon Sniper Rifle are more focused and hence have a greater accuracy as\n"
 "well as a bigger penetrating power."
 
-#: ../base/ufos/research.ufo:389
+#: ../base/ufos/research.ufo:420
 #, fuzzy
 msgid "tachyonsniper_ammo_txt"
 msgstr ""
@@ -827,8 +971,12 @@ msgstr ""
 "shots fired by the Tachyon Sniper Rifle are more focused and hence have a greater accuracy as\n"
 "well as a bigger penetrating power."
 
-#: ../base/ufos/research.ufo:402
-#: ../base/ufos/research.ufo:405
+#: ../base/ufos/research.ufo:431
+msgid "Advanced Plasma Control"
+msgstr ""
+
+#: ../base/ufos/research.ufo:433
+#: ../base/ufos/research.ufo:436
 #, fuzzy
 msgid "plasma_txt"
 msgstr ""
@@ -837,7 +985,7 @@ msgstr ""
 "to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
 "limited."
 
-#: ../base/ufos/research.ufo:426
+#: ../base/ufos/research.ufo:457
 msgid "plaspistol_txt"
 msgstr ""
 "Using the same technology as the Plasma Rifle, the Plasma Pistol can also do considerable damage\n"
@@ -846,7 +994,7 @@ msgstr ""
 "the magnetic field generators are not that capable as the ones used in the Plasma Rifle.\n"
 "Therefore the cinetic energy given to the plasma beam is lessened."
 
-#: ../base/ufos/research.ufo:438
+#: ../base/ufos/research.ufo:470
 #, fuzzy
 msgid "plaspistol_ammo_txt"
 msgstr ""
@@ -856,7 +1004,7 @@ msgstr ""
 "the magnetic field generators are not that capable as the ones used in the Plasma Rifle.\n"
 "Therefore the cinetic energy given to the plasma beam is lessened."
 
-#: ../base/ufos/research.ufo:450
+#: ../base/ufos/research.ufo:482
 msgid "plasrifle_txt"
 msgstr ""
 "The Plasma Rifle is the weapon most often used by ... warriors. The plasma fired by this weapon\n"
@@ -867,7 +1015,7 @@ msgstr ""
 "the magnetic field is reconfigured so that a continuous plasma beam is formed. This beam is\n"
 "focused by a second magnetic field and finally propelled to the front end of the Plasma Rifle."
 
-#: ../base/ufos/research.ufo:462
+#: ../base/ufos/research.ufo:495
 #, fuzzy
 msgid "plasrifle_ammo_txt"
 msgstr ""
@@ -879,7 +1027,7 @@ msgstr ""
 "the magnetic field is reconfigured so that a continuous plasma beam is formed. This beam is\n"
 "focused by a second magnetic field and finally propelled to the front end of the Plasma Rifle."
 
-#: ../base/ufos/research.ufo:477
+#: ../base/ufos/research.ufo:510
 #, fuzzy
 msgid "irgoggles_txt"
 msgstr ""
@@ -887,12 +1035,17 @@ msgstr ""
 "core is detonates, the surrounding metal is broken into sharp, deadly fragments which fly from\n"
 "the weapon at great speeds. The detonation is controlled by a built in timer."
 
-#: ../base/ufos/research.ufo:489
+#: ../base/ufos/research.ufo:522
 #, fuzzy
 msgid "medikit_txt"
 msgstr "Erste-Hilfe-Kasten"
 
-#: ../base/ufos/research.ufo:502
+#: ../base/ufos/research.ufo:533
+#, fuzzy
+msgid "Nano Technology"
+msgstr "Erforsche neue Techologien"
+
+#: ../base/ufos/research.ufo:535
 #, fuzzy
 msgid "nano_txt"
 msgstr ""
@@ -907,7 +1060,7 @@ msgstr ""
 "it is believed that they serve as receivers for commands. But currently this is only a\n"
 "assumption because there is no evidence proving the existence of such a master-species."
 
-#: ../base/ufos/research.ufo:511
+#: ../base/ufos/research.ufo:544
 #, fuzzy
 msgid "kevlar_armor_txt"
 msgstr ""
@@ -917,26 +1070,30 @@ msgstr ""
 "restricts the 'hot zone' created by the flamethrower to a very defined region. The area\n"
 "centimeters outside the 'hot zone' show no noticeable temperature increase."
 
-#: ../base/ufos/research.ufo:523
+#: ../base/ufos/research.ufo:556
 #, fuzzy
 msgid "nano_armor_txt"
 msgstr "Das H-92 Transporter ist der Haupttruppentransporter der GDF-Eingreiftruppe"
 
-#: ../base/ufos/research.ufo:556
+#: ../base/ufos/research.ufo:568
+msgid "Advanced Armor Fabrics"
+msgstr ""
+
+#: ../base/ufos/research.ufo:589
 #, fuzzy
 msgid "b_entrance_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:568
+#: ../base/ufos/research.ufo:601
 #, fuzzy
 msgid "b_commando_txt"
 msgstr "Die Kommandozentrale braucht ein Kraftwerk um gebaut werden zu können."
 
-#: ../base/ufos/research.ufo:580
+#: ../base/ufos/research.ufo:613
 msgid "b_powerplant_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:592
+#: ../base/ufos/research.ufo:625
 #, fuzzy
 msgid "b_storage_txt"
 msgstr ""
@@ -944,38 +1101,44 @@ msgstr ""
 "core is detonates, the surrounding metal is broken into sharp, deadly fragments which fly from\n"
 "the weapon at great speeds. The detonation is controlled by a built in timer."
 
-#: ../base/ufos/research.ufo:604
+#: ../base/ufos/research.ufo:637
 msgid "b_hangar_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:616
+#: ../base/ufos/research.ufo:649
 #, fuzzy
 msgid "b_intercept_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:628
+#: ../base/ufos/research.ufo:661
 msgid "b_quarters_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:640
+#: ../base/ufos/research.ufo:673
 msgid "b_lab_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:652
+#: ../base/ufos/research.ufo:685
 #, fuzzy
 msgid "b_teamroom_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:664
+#: ../base/ufos/research.ufo:697
 #, fuzzy
 msgid "b_radar_txt"
 msgstr "TEXT"
 
-#: ../base/ufos/research.ufo:679
-msgid "transporter_txt"
-msgstr "Das H-92 Transporter ist der Haupttruppentransporter der GDF-Eingreiftruppe"
+#: ../base/ufos/research.ufo:712
+#, fuzzy
+msgid "dropship_txt"
+msgstr ""
+"Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of the most deadly weapons\n"
+"employed by GDF forces. Powered by a advanced version of the 0.5 cartridge, it is capable to\n"
+"easily penetrate the engine block of a vehicle at 150 meters. However, the weapon is very bulky\n"
+"and requires many precious seconds to aim, therefore the WE-78 is definitly not suitable for\n"
+"close combat."
 
-#: ../base/ufos/research.ufo:693
+#: ../base/ufos/research.ufo:726
 #, fuzzy
 msgid "interceptor_txt"
 msgstr ""
@@ -987,12 +1150,12 @@ msgstr ""
 "to the subterranean flight hangars. This has been proven to be safest way to make a airfield\n"
 "almost completely undetectable."
 
-#: ../base/ufos/research.ufo:709
+#: ../base/ufos/research.ufo:742
 msgid "General UFO technology"
 msgstr "Allgemeine UFO Technologie"
 
-#: ../base/ufos/research.ufo:710
-#: ../base/ufos/research.ufo:725
+#: ../base/ufos/research.ufo:743
+#: ../base/ufos/research.ufo:759
 #, fuzzy
 msgid "ufo_small_txt"
 msgstr ""
@@ -1002,6 +1165,39 @@ msgstr ""
 "limited."
 
 #: ../base/ufos/research.ufo:758
+#, fuzzy
+msgid "Small alien craft"
+msgstr "Kaufe/Verkaufe Flugzeuge"
+
+#: ../base/ufos/research.ufo:774
+msgid "Big alien craft"
+msgstr ""
+
+#: ../base/ufos/research.ufo:775
+#, fuzzy
+msgid "ufo_big_txt"
+msgstr ""
+"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"limited."
+
+#: ../base/ufos/research.ufo:807
+#, fuzzy
+msgid "Ortnok"
+msgstr ""
+"Genetically the green skinned Ortnoks seem to be related very closely to the human race. About\n"
+"80% of their DNA is identical compared to the human's. The parts that are different are most\n"
+"likely genetically engineered because they do not show any individual variability. The fact that\n"
+"they are genetically altered and that they do not seem to have any functional reproduction\n"
+"organs suggests that they are clones made by some as yet unknown alien species. Additionally the\n"
+"Ortnoks have several cybernetic implants which involve mainly the cardiovascular system, the\n"
+"muscles, the eyes and the brain. They enhance the physical strenght and stamnia as well as the\n"
+"senses to a level superior to any human. The purpose of the brain implants is mostly unclear but\n"
+"it is believed that they serve as receivers for commands. But currently this is only a\n"
+"assumption because there is no evidence proving the existence of such a master-species."
+
+#: ../base/ufos/research.ufo:808
 msgid "ortnok_txt"
 msgstr ""
 "Genetically the green skinned Ortnoks seem to be related very closely to the human race. About\n"
@@ -1015,7 +1211,11 @@ msgstr ""
 "it is believed that they serve as receivers for commands. But currently this is only a\n"
 "assumption because there is no evidence proving the existence of such a master-species."
 
-#: ../base/ufos/research.ufo:773
+#: ../base/ufos/research.ufo:822
+msgid "Ortnok Warrior"
+msgstr ""
+
+#: ../base/ufos/research.ufo:823
 msgid "ortnok_medium_txt"
 msgstr ""
 "Having the same genetical features as the regular Ortnoks, the Ortnok Warriors have been\n"
@@ -1307,33 +1507,39 @@ msgstr "Splittergranate"
 
 #: ../base/ufos/weapons.ufo:980
 #: ../base/ufos/weapons.ufo:1004
-#: ../base/ufos/weapons.ufo:1064
+#: ../base/ufos/weapons.ufo:1048
+#: ../base/ufos/weapons.ufo:1072
+#: ../base/ufos/weapons.ufo:1132
 msgid "Throw"
 msgstr "Wurf"
 
-#: ../base/ufos/weapons.ufo:1034
+#: ../base/ufos/weapons.ufo:1033
+msgid "Smoke Grenade"
+msgstr "Rauchgranate"
+
+#: ../base/ufos/weapons.ufo:1102
 msgid "Knife"
 msgstr "Messer"
 
-#: ../base/ufos/weapons.ufo:1049
+#: ../base/ufos/weapons.ufo:1117
 msgid "Stab"
 msgstr "Stich"
 
-#: ../base/ufos/weapons.ufo:1088
+#: ../base/ufos/weapons.ufo:1156
 msgid "Medikit"
 msgstr "Erste-Hilfe-Kasten"
 
-#: ../base/ufos/weapons.ufo:1102
-#: ../base/ufos/weapons.ufo:1116
+#: ../base/ufos/weapons.ufo:1170
+#: ../base/ufos/weapons.ufo:1184
 msgid "Heal"
 msgstr "Heilen"
 
-#: ../base/ufos/weapons.ufo:1135
+#: ../base/ufos/weapons.ufo:1203
 msgid "IR Goggles"
 msgstr "Infrarot Fernglas"
 
-#: ../base/ufos/weapons.ufo:1148
-#: ../base/ufos/weapons.ufo:1158
+#: ../base/ufos/weapons.ufo:1216
+#: ../base/ufos/weapons.ufo:1226
 msgid "Activate"
 msgstr "Aktivieren"
 
@@ -1396,19 +1602,19 @@ msgstr ""
 msgid "Can't turn, LE doesn't exist\n"
 msgstr ""
 
-#: client/cl_actor.c:1168
+#: client/cl_actor.c:1172
 #, c-format
 msgid "Team %i ended round"
 msgstr "Team %i hat seine Runde beendet"
 
 # # in-game (hud)
-#: client/cl_actor.c:1170
-#, fuzzy, c-format
+#: client/cl_actor.c:1174
+#, c-format
 msgid ", team %i's round started!\n"
-msgstr "Du bist an der Reihe!\n"
+msgstr ", Team %i ist an der Reihe!\n"
 
 # # in-game (hud)
-#: client/cl_actor.c:1177
+#: client/cl_actor.c:1184
 msgid "Your round started!\n"
 msgstr "Du bist an der Reihe!\n"
 
@@ -1431,7 +1637,7 @@ msgid "Constructing: %i day(s)"
 msgstr "Konstruktion: %i Tag(e)"
 
 #: client/cl_basemanagement.c:164
-#: client/cl_basemanagement.c:2443
+#: client/cl_basemanagement.c:2445
 msgid "Construction finished"
 msgstr "Konstruktion abgeschlossen"
 
@@ -1464,385 +1670,388 @@ msgstr "Reparieren"
 msgid "Down"
 msgstr ""
 
-#: client/cl_basemanagement.c:307
+#: client/cl_basemanagement.c:308
 msgid "Not enough credits to build this\n"
-msgstr ""
+msgstr "Nicht genug Kapital um das Gebäude zu bauen\n"
 
-#: client/cl_basemanagement.c:307
-#: client/cl_campaign.c:341
-#: client/cl_campaign.c:576
-#: client/cl_campaign.c:625
-#: client/cl_campaign.c:956
-#: client/cl_campaign.c:1042
-#: client/cl_campaign.c:2065
-#: client/cl_campaign.c:2095
-#: client/cl_campaign.c:2097
-#: client/cl_research.c:479
-#: client/cl_research.c:590
-#: client/cl_research.c:593
-#: client/cl_research.c:597
-#: client/cl_research.c:614
-#: client/cl_research.c:646
-#: client/cl_research.c:650
-#: client/cl_research.c:775
+#: client/cl_basemanagement.c:308
+#: client/cl_campaign.c:343
+#: client/cl_campaign.c:597
+#: client/cl_campaign.c:646
+#: client/cl_campaign.c:977
+#: client/cl_campaign.c:1063
+#: client/cl_campaign.c:2092
+#: client/cl_campaign.c:2122
+#: client/cl_campaign.c:2124
+#: client/cl_research.c:489
+#: client/cl_research.c:601
+#: client/cl_research.c:604
+#: client/cl_research.c:608
+#: client/cl_research.c:625
+#: client/cl_research.c:657
+#: client/cl_research.c:661
+#: client/cl_research.c:790
 msgid "Notice"
 msgstr "Hinweis"
 
-#: client/cl_basemanagement.c:375
-#: client/cl_basemanagement.c:382
+#: client/cl_basemanagement.c:376
+#: client/cl_basemanagement.c:383
 msgid "No ground where i can place building upon\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:391
-#: client/cl_basemanagement.c:399
+#: client/cl_basemanagement.c:392
+#: client/cl_basemanagement.c:400
 msgid "Can't place any building upon this ground\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:410
+#: client/cl_basemanagement.c:411
 msgid "Can't place this building here - the second part overlapped with another building\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:430
+#: client/cl_basemanagement.c:431
 msgid "There is already a building\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:431
+#: client/cl_basemanagement.c:432
 #, c-format
 msgid "Building: %i at (row:%i, col:%i)\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:435
+#: client/cl_basemanagement.c:436
 msgid "Invalid coordinates\n"
 msgstr "Ungültige Koordinaten\n"
 
-#: client/cl_basemanagement.c:451
+#: client/cl_basemanagement.c:452
 msgid "Usage: set_building <x> <y>\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:490
+#: client/cl_basemanagement.c:491
 msgid "Usage: damage_building <amount>\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:644
+#: client/cl_basemanagement.c:645
 #, c-format
 msgid "Costs:\t%1.2f (%i Day[s] to build)\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:646
+#: client/cl_basemanagement.c:647
 #, c-format
 msgid "Running Costs:\t%1.2f\n"
 msgstr "Laufende Kosten:\t%1.2f\n"
 
-#: client/cl_basemanagement.c:647
+#: client/cl_basemanagement.c:648
 #, c-format
 msgid "Workercosts:\t%1.2f\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:648
+#: client/cl_basemanagement.c:649
 #, c-format
 msgid "Workers:\t%i\n"
 msgstr "Arbeiter:\t%i\n"
 
-#: client/cl_basemanagement.c:649
+#: client/cl_basemanagement.c:650
 #, c-format
 msgid "Energy:\t%1.0f\n"
 msgstr "Erergie:\t%1.0f\n"
 
-#: client/cl_basemanagement.c:655
+#: client/cl_basemanagement.c:656
 #, c-format
 msgid "Production:\t%s (%i/day)\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:661
+#: client/cl_basemanagement.c:662
 #, c-format
 msgid "Level:\t%i\n"
 msgstr "Level\t%i\n"
 
-#: client/cl_basemanagement.c:663
+#: client/cl_basemanagement.c:664
 msgid "Condition"
 msgstr "Zustand"
 
-#: client/cl_basemanagement.c:683
+#: client/cl_basemanagement.c:684
 msgid "Usage: remove_workers <amount>\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:695
+#: client/cl_basemanagement.c:696
 msgid "Minimum amount of workers reached for this building\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:712
+#: client/cl_basemanagement.c:713
 msgid "Usage: add_workers <amount>\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:724
+#: client/cl_basemanagement.c:725
 msgid "Maximum amount of workers reached for this building\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:785
+#: client/cl_basemanagement.c:786
 #, c-format
 msgid "Wrong dependency in basemangagement.ufo for building %s"
 msgstr ""
 
-#: client/cl_basemanagement.c:810
+#: client/cl_basemanagement.c:811
 msgid "Bases not initialized\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:876
+#: client/cl_basemanagement.c:877
 msgid "MN_ParseBuildings: unexptected end of file (names "
 msgstr ""
 
-#: client/cl_basemanagement.c:886
+#: client/cl_basemanagement.c:887
 #, c-format
 msgid "MN_ParseBuildings: building \"%s\" without body ignored\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:891
+#: client/cl_basemanagement.c:892
 msgid "MN_ParseBuildings: too many buildings\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1012
+#: client/cl_basemanagement.c:1013
 #, c-format
 msgid "MN_ParseBuildings: unknown token \"%s\" ignored (building %s)\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1305
+#: client/cl_basemanagement.c:1306
 msgid "MN_AssignEmployee: No Base set\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1310
+#: client/cl_basemanagement.c:1311
 msgid "MN_AssignEmployee: No need to move from quarters to quarters.\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1340
+#: client/cl_basemanagement.c:1341
 msgid "No employee available in this base.\n"
 msgstr "Keine Arbeiter in dieser Basis vorhanden\n"
 
-#: client/cl_basemanagement.c:1343
+#: client/cl_basemanagement.c:1344
 #, c-format
 msgid "No free room in destination building \"%s\".\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1377
+#: client/cl_basemanagement.c:1378
 #, c-format
 msgid "MN_RemoveEmployee: No employees in building. Can't remove one. %s\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1415
+#: client/cl_basemanagement.c:1416
 #, c-format
 msgid "MN_RemoveEmployee: %s\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1418
+#: client/cl_basemanagement.c:1419
 #, c-format
 msgid "MN_RemoveEmployee: %s 2\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1452
+#: client/cl_basemanagement.c:1453
 msgid "MN_EmployeesInBase2: No Base set.\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1518
+#: client/cl_basemanagement.c:1519
 msgid "MN_ParseBases: unexptected end of file (names "
 msgstr ""
 
-#: client/cl_basemanagement.c:1528
+#: client/cl_basemanagement.c:1529
 #, c-format
 msgid "MN_ParseBases: base \"%s\" without body ignored\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1535
+#: client/cl_basemanagement.c:1536
 msgid "MN_ParseBases: too many bases\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1568
+#: client/cl_basemanagement.c:1569
 msgid "MN_ParseProductions: unexptected end of file (names "
 msgstr ""
 
-#: client/cl_basemanagement.c:1575
+#: client/cl_basemanagement.c:1576
 #, c-format
 msgid "MN_ParseProductions: production type \"%s\" without body ignored\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1580
+#: client/cl_basemanagement.c:1581
 msgid "MN_ParseProductions: to many production types\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1642
+#: client/cl_basemanagement.c:1643
 #, c-format
 msgid "MN_ParseProductions: unknown token \"%s\" ignored (entry %s)\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1710
+#: client/cl_basemanagement.c:1711
 msgid "Error in ufo-scriptfile - could not find the needed building\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1729
-#: client/cl_basemanagement.c:1762
+#: client/cl_basemanagement.c:1730
+#: client/cl_basemanagement.c:1763
 #, c-format
 msgid "Invalid picture dimension of %s\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1827
+#: client/cl_basemanagement.c:1828
 msgid "Usage: rename_base <name>\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1870
-#: client/cl_basemanagement.c:1891
+#: client/cl_basemanagement.c:1871
+#: client/cl_basemanagement.c:1892
 #, c-format
 msgid "new-base=%i\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1910
+#: client/cl_basemanagement.c:1911
 msgid "Usage: mn_select_base <baseID>\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1929
+#: client/cl_basemanagement.c:1930
 msgid "MaxBases reached\n"
-msgstr ""
+msgstr "Max. Anzahl Basen erreicht\n"
 
-#: client/cl_basemanagement.c:1985
+#: client/cl_basemanagement.c:1987
 #, c-format
 msgid "A new base has been built: %s."
 msgstr "Eine neue Basis wurde gebaut: %s."
 
-#: client/cl_basemanagement.c:1986
+#: client/cl_basemanagement.c:1988
 msgid "Base built"
 msgstr ""
 
-#: client/cl_basemanagement.c:1991
+#: client/cl_basemanagement.c:1993
 msgid "Not enough credits to set up a new base\n"
-msgstr ""
+msgstr "Nicht genug Kapital um eine neue Basis zu bauen\n"
 
-#: client/cl_basemanagement.c:2004
+#: client/cl_basemanagement.c:2006
 msgid "Usage: base_attack <baseID>\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2059
+#: client/cl_basemanagement.c:2061
 #, c-format
 msgid "Building %s will not be taken for baseassemble - it invisible\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2231
+#: client/cl_basemanagement.c:2233
 #, c-format
 msgid "There was an update and there are new buildings available which aren't in your savegame. You may encounter problems. (%i:%i)\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2285
+#: client/cl_basemanagement.c:2287
 msgid "No base selected\n"
 msgstr "Keine Basis ausgewählt\n"
 
-#: client/cl_basemanagement.c:2433
+#: client/cl_basemanagement.c:2435
 #, c-format
 msgid "Building finished - Base %s"
-msgstr ""
+msgstr "Konstruktion abgeschlossen - Basis %s"
 
-#: client/cl_basemanagement.c:2433
+#: client/cl_basemanagement.c:2435
 #, c-format
 msgid "Construction of building %s finished."
-msgstr ""
+msgstr "Konstruktion abgeschlossen: %s."
 
-#: client/cl_basemanagement.c:2434
+#: client/cl_basemanagement.c:2436
 #, c-format
 msgid "Construction of building %s finished\\at base %s\n"
-msgstr ""
+msgstr "Konstruktion von %s\\in Basis %s abgeschlossen\n"
 
-#: client/cl_basemanagement.c:2442
+#: client/cl_basemanagement.c:2444
 #, c-format
 msgid "There is at least one finished construction\\at base %s\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2525
+#: client/cl_basemanagement.c:2527
 msgid "no baseCurrent for mp\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2530
+#: client/cl_basemanagement.c:2532
 msgid "Probably an error in B_GetNumOnTeam - no baseCurrent\n"
 msgstr ""
 
-#: client/cl_campaign.c:160
+#: client/cl_campaign.c:162
 #, c-format
 msgid "')' expected in BEP (%s).\n"
 msgstr ""
 
-#: client/cl_campaign.c:163
+#: client/cl_campaign.c:165
 #, c-format
 msgid "Unexpected end of condition in BEP (%s).\n"
 msgstr ""
 
-#: client/cl_campaign.c:166
+#: client/cl_campaign.c:168
 #, c-format
 msgid "Variable '%s' not found in BEP (%s).\n"
 msgstr ""
 
-#: client/cl_campaign.c:170
+#: client/cl_campaign.c:172
 #, c-format
 msgid "Unknown CheckBEP error in BEP (%s).\n"
 msgstr ""
 
-#: client/cl_campaign.c:277
+#: client/cl_campaign.c:279
 #, c-format
 msgid "Set new coords for mission to %.0f:%.0f\n"
 msgstr ""
 
-#: client/cl_campaign.c:341
+#: client/cl_campaign.c:343
 msgid "Aircraft started"
 msgstr "Flugzeug gestartet"
 
-#: client/cl_campaign.c:391
+#: client/cl_campaign.c:393
 msgid "Nothing - should not be displayed"
 msgstr ""
 
-#: client/cl_campaign.c:394
+#: client/cl_campaign.c:396
 msgid "At homebase"
 msgstr "In der Heimatbasis"
 
-#: client/cl_campaign.c:397
+#: client/cl_campaign.c:399
 msgid "Refuel"
 msgstr "Auftanken"
 
-#: client/cl_campaign.c:400
+#: client/cl_campaign.c:402
 msgid "Idle"
 msgstr "Idle"
 
-#: client/cl_campaign.c:403
+#: client/cl_campaign.c:405
 msgid "On transit"
 msgstr "Transportmission"
 
-#: client/cl_campaign.c:406
+#: client/cl_campaign.c:408
 msgid "Ready for drop down"
 msgstr "Warte auf Einsatz"
 
-#: client/cl_campaign.c:409
+#: client/cl_campaign.c:411
 msgid "On inteception"
 msgstr "Auf Abfangkurs"
 
-#: client/cl_campaign.c:412
+#: client/cl_campaign.c:414
 msgid "Transportmission"
 msgstr "Transportmission"
 
-#: client/cl_campaign.c:415
+#: client/cl_campaign.c:417
 msgid "Returning to homebase"
 msgstr "Rückkehr zur Heimatbasis"
 
-#: client/cl_campaign.c:418
+#: client/cl_campaign.c:420
 #, c-format
 msgid "Error: Unknown aircraft status for %s\n"
 msgstr ""
 
-#: client/cl_campaign.c:433
+#: client/cl_campaign.c:435
 msgid "Usage: newaircraft <type>\n"
 msgstr ""
 
-#: client/cl_campaign.c:535
+#: client/cl_campaign.c:537
 #, c-format
 msgid "Warning: No aircraft in base %s\n"
 msgstr ""
 
-#: client/cl_campaign.c:552
+#: client/cl_campaign.c:554
+#: client/cl_ufopedia.c:57
+#: client/cl_ufopedia.c:85
+#: client/cl_ufopedia.c:86
 msgid "None"
 msgstr "Keine"
 
-#: client/cl_campaign.c:552
+#: client/cl_campaign.c:554
 #, c-format
 msgid ""
 "Speed:\t%.0f\n"
@@ -1851,352 +2060,361 @@ msgid ""
 "Shield:\t%s\n"
 msgstr ""
 
-#: client/cl_campaign.c:575
+#: client/cl_campaign.c:596
 #, c-format
 msgid "You've got a new aircraft (a %s) in base %s"
-msgstr ""
+msgstr "Du hast ein neues Flugzeug (%s) in Basis %s"
 
-#: client/cl_campaign.c:577
+#: client/cl_campaign.c:598
 #, c-format
 msgid "Setting aircraft to pos: %.0f:%.0f\n"
 msgstr ""
 
-#: client/cl_campaign.c:585
+#: client/cl_campaign.c:606
 #, c-format
 msgid "Aircraft for base %s: %s\n"
 msgstr ""
 
-#: client/cl_campaign.c:589
+#: client/cl_campaign.c:610
 #, c-format
 msgid "Aircraft %s not found\n"
 msgstr ""
 
-#: client/cl_campaign.c:625
+#: client/cl_campaign.c:646
 msgid "Could not set up your base at this location"
 msgstr "Die Basis kann an dieser Position nicht gebaut werden"
 
-#: client/cl_campaign.c:628
+#: client/cl_campaign.c:649
 msgid "Desertbase\n"
 msgstr ""
 
-#: client/cl_campaign.c:631
+#: client/cl_campaign.c:652
 msgid "Articbase\n"
 msgstr ""
 
-#: client/cl_campaign.c:634
+#: client/cl_campaign.c:655
 msgid "Graslandbase\n"
 msgstr ""
 
-#: client/cl_campaign.c:638
+#: client/cl_campaign.c:659
 #, c-format
 msgid "Colorvalues for base: R:%i G:%i B:%i\n"
 msgstr ""
 
-#: client/cl_campaign.c:743
+#: client/cl_campaign.c:764
 #, c-format
 msgid "Activate stage %s\n"
 msgstr ""
 
-#: client/cl_campaign.c:749
+#: client/cl_campaign.c:770
 #, c-format
 msgid "CL_CampaignActivateStage: stage '%s' not found.\n"
 msgstr ""
 
-#: client/cl_campaign.c:771
+#: client/cl_campaign.c:792
 #, c-format
 msgid "CL_CampaignEndStage: stage '%s' not found.\n"
 msgstr ""
 
-#: client/cl_campaign.c:787
+#: client/cl_campaign.c:808
 msgid "Too many active missions!\n"
 msgstr ""
 
-#: client/cl_campaign.c:805
+#: client/cl_campaign.c:826
 #, c-format
 msgid "Your base %s is under attack."
 msgstr "Deine Basis %s wird angegriffen."
 
-#: client/cl_campaign.c:806
+#: client/cl_campaign.c:827
 msgid "Baseattack"
 msgstr "Basenangriff"
 
-#: client/cl_campaign.c:818
+#: client/cl_campaign.c:839
 msgid "Alien activity"
 msgstr "Alien Aktivitäten"
 
-#: client/cl_campaign.c:818
+#: client/cl_campaign.c:839
 msgid "Alien activity has been reported."
 msgstr "Alien Aktivitäten wurden gemeldet"
 
-#: client/cl_campaign.c:844
+#: client/cl_campaign.c:865
 msgid "CL_CampaignRemoveMission: Can't remove mission.\n"
 msgstr ""
 
-#: client/cl_campaign.c:850
+#: client/cl_campaign.c:871
 #, c-format
 msgid "%i missions left\n"
 msgstr ""
 
-#: client/cl_campaign.c:890
+#: client/cl_campaign.c:911
 msgid "Usage: ships_rclick <num>\n"
 msgstr ""
 
-#: client/cl_campaign.c:908
-#: client/cl_campaign.c:952
+#: client/cl_campaign.c:929
+#: client/cl_campaign.c:973
 #, c-format
 msgid "Selected aircraft: %s\n"
 msgstr ""
 
-#: client/cl_campaign.c:928
+#: client/cl_campaign.c:949
 msgid "Usage: ships_click <num>\n"
 msgstr ""
 
-#: client/cl_campaign.c:934
+#: client/cl_campaign.c:955
 msgid "No mission selected - can't start aircraft with no mission selected'\n"
 msgstr ""
 
-#: client/cl_campaign.c:956
+#: client/cl_campaign.c:977
 msgid "Assign a team to aircraft"
 msgstr "Weise dem Flugzeug zuerst ein Team zu"
 
-#: client/cl_campaign.c:1041
+#: client/cl_campaign.c:1062
 #, c-format
 msgid "The mission expired and %i civilians died\\You've lost %i $"
 msgstr ""
 
-#: client/cl_campaign.c:1336
+#: client/cl_campaign.c:1356
 #, c-format
 msgid "CL_GameNew: Campaign \"%s\" doesn't exist.\n"
 msgstr ""
 
-#: client/cl_campaign.c:1472
+#: client/cl_campaign.c:1492
 msgid "Savefile is corrupted or aircraft does not exists any longer\n"
 msgstr ""
 
-#: client/cl_campaign.c:1510
+#: client/cl_campaign.c:1530
 msgid "No campaign active.\n"
 msgstr ""
 
-#: client/cl_campaign.c:1517
+#: client/cl_campaign.c:1537
 msgid "Couldn't write file.\n"
 msgstr ""
 
-#: client/cl_campaign.c:1612
+#: client/cl_campaign.c:1635
 #, c-format
 msgid "Campaign '%s' saved.\n"
 msgstr ""
 
-#: client/cl_campaign.c:1630
+#: client/cl_campaign.c:1653
 msgid "Usage: game_save <filename> <comment>\n"
 msgstr ""
 
-#: client/cl_campaign.c:1669
+#: client/cl_campaign.c:1692
 #: client/cl_team.c:912
 #, c-format
 msgid "Couldn't open file '%s'.\n"
 msgstr ""
 
-#: client/cl_campaign.c:1682
+#: client/cl_campaign.c:1705
 #, c-format
 msgid "Savefile version %d detected\n"
 msgstr ""
 
-#: client/cl_campaign.c:1694
+#: client/cl_campaign.c:1717
 #, c-format
 msgid "File '%s' is a more recent version (%d) than is supported.\n"
 msgstr ""
 
-#: client/cl_campaign.c:1699
+#: client/cl_campaign.c:1722
 #, c-format
 msgid "Savefileformat has changed ('%s' is version %d) - you may experience problems.\n"
 msgstr ""
 
-#: client/cl_campaign.c:1714
+#: client/cl_campaign.c:1737
 #, c-format
 msgid "CL_GameLoad: Campaign \"%s\" doesn't exist.\n"
 msgstr ""
 
-#: client/cl_campaign.c:1773
+#: client/cl_campaign.c:1796
 msgid "Unable to load campaign '%s', unknown stage '%'\n"
 msgstr ""
 
-#: client/cl_campaign.c:1791
+#: client/cl_campaign.c:1814
 #, c-format
 msgid "Warning: Set '%s' not found\n"
 msgstr ""
 
-#: client/cl_campaign.c:1821
+#: client/cl_campaign.c:1844
 #, c-format
 msgid "Warning: Mission '%s' not found\n"
 msgstr ""
 
-#: client/cl_campaign.c:1832
+#: client/cl_campaign.c:1855
 #, c-format
 msgid "Warning: Stage set '%s' not found\n"
 msgstr ""
 
-#: client/cl_campaign.c:1851
+#: client/cl_campaign.c:1878
 #, c-format
 msgid "Campaign '%s' loaded.\n"
 msgstr ""
 
-#: client/cl_campaign.c:1869
+#: client/cl_campaign.c:1896
 msgid "Usage: game_load <filename>\n"
 msgstr ""
 
-#: client/cl_campaign.c:1993
+#: client/cl_campaign.c:2020
 msgid "Assemble or load a team"
-msgstr ""
+msgstr "Rüste ein Team aus oder lade ein gespeichertes Team."
 
-#: client/cl_campaign.c:1993
+#: client/cl_campaign.c:2020
 msgid "Note"
 msgstr "Hinweis"
 
-#: client/cl_campaign.c:2057
+#: client/cl_campaign.c:2084
 msgid "No update after automission\n"
 msgstr ""
 
-#: client/cl_campaign.c:2065
+#: client/cl_campaign.c:2092
 msgid "Your dropship is not near the landingzone"
 msgstr ""
 
-#: client/cl_campaign.c:2095
+#: client/cl_campaign.c:2122
 msgid "You've won the battle"
 msgstr "Du hast die Schlacht gewonnen"
 
-#: client/cl_campaign.c:2097
+#: client/cl_campaign.c:2124
 msgid "You've lost the battle"
 msgstr "Du hast die Schlacht verloren"
 
-#: client/cl_campaign.c:2132
+#: client/cl_campaign.c:2159
 msgid "Usage: buy_select <num>\n"
 msgstr ""
 
-#: client/cl_campaign.c:2158
+#: client/cl_campaign.c:2185
 msgid "Usage: buy_type <category>\n"
 msgstr ""
 
-#: client/cl_campaign.c:2223
+#: client/cl_campaign.c:2250
 msgid "Usage: buy <num>\n"
 msgstr ""
 
-#: client/cl_campaign.c:2258
+#: client/cl_campaign.c:2285
 msgid "Usage: sell <num>\n"
 msgstr ""
 
-#: client/cl_campaign.c:2385
+#: client/cl_campaign.c:2412
 msgid "Usage: game_results <won>\n"
 msgstr ""
 
-#: client/cl_campaign.c:2491
+#: client/cl_campaign.c:2496
+#, c-format
+msgid ""
+"Missions:\n"
+"won:\t%i\tlost:\t%i\n"
+"Bases:\n"
+"build:\t%i\tattacked:\t%i\n"
+msgstr ""
+
+#: client/cl_campaign.c:2542
 msgid "Map mask loaded.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2492
+#: client/cl_campaign.c:2543
 msgid "Couldn't load map mask (pics/menu/map_mask.tga)\n"
 msgstr ""
 
-#: client/cl_campaign.c:2531
+#: client/cl_campaign.c:2582
 msgid "CL_ParseMission: unexptected end of file (mission "
 msgstr ""
 
-#: client/cl_campaign.c:2544
+#: client/cl_campaign.c:2595
 #, c-format
 msgid "Com_ParseMission: mission def \"%s\" with same name found, second ignored\n"
 msgstr ""
 
-#: client/cl_campaign.c:2559
+#: client/cl_campaign.c:2610
 #, c-format
 msgid "Com_ParseMission: mission def \"%s\" without body ignored\n"
 msgstr ""
 
-#: client/cl_campaign.c:2592
+#: client/cl_campaign.c:2643
 #, c-format
 msgid "Com_ParseMission: unknown token \"%s\" ignored (mission %s)\n"
 msgstr ""
 
-#: client/cl_campaign.c:2625
+#: client/cl_campaign.c:2676
 msgid "CL_ParseStageSet: unexptected end of file (stageset "
 msgstr ""
 
-#: client/cl_campaign.c:2641
+#: client/cl_campaign.c:2692
 #, c-format
 msgid "Com_ParseStageSets: stageset def \"%s\" without body ignored\n"
 msgstr ""
 
-#: client/cl_campaign.c:2687
+#: client/cl_campaign.c:2738
 #, c-format
 msgid "Com_ParseStageSet: unknown mission \"%s\" ignored (stageset %s)\n"
 msgstr ""
 
-#: client/cl_campaign.c:2693
+#: client/cl_campaign.c:2744
 #, c-format
 msgid "Com_ParseStageSet: unknown token \"%s\" ignored (stageset %s)\n"
 msgstr ""
 
-#: client/cl_campaign.c:2705
+#: client/cl_campaign.c:2756
 msgid "CL_ParseStage: unexptected end of file (stage "
 msgstr ""
 
-#: client/cl_campaign.c:2717
+#: client/cl_campaign.c:2768
 #, c-format
 msgid "Com_ParseStage: stage def \"%s\" with same name found, second ignored\n"
 msgstr ""
 
-#: client/cl_campaign.c:2725
+#: client/cl_campaign.c:2776
 #, c-format
 msgid "Com_ParseStages: stage def \"%s\" without body ignored\n"
 msgstr ""
 
-#: client/cl_campaign.c:2735
+#: client/cl_campaign.c:2786
 #, c-format
 msgid "stage: %s\n"
 msgstr ""
 
-#: client/cl_campaign.c:2747
+#: client/cl_campaign.c:2798
 #, c-format
 msgid "Com_ParseStage: unknown token \"%s\" ignored (stage %s)\n"
 msgstr ""
 
-#: client/cl_campaign.c:2777
+#: client/cl_campaign.c:2828
 msgid "CL_ParseCampaign: unexptected end of file (campaign "
 msgstr ""
 
-#: client/cl_campaign.c:2790
+#: client/cl_campaign.c:2841
 #, c-format
 msgid "CL_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n"
 msgstr ""
 
-#: client/cl_campaign.c:2805
+#: client/cl_campaign.c:2856
 #, c-format
 msgid "CL_ParseCampaign: campaign def \"%s\" without body ignored\n"
 msgstr ""
 
-#: client/cl_campaign.c:2829
+#: client/cl_campaign.c:2880
 #, c-format
 msgid "CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n"
 msgstr ""
 
-#: client/cl_campaign.c:2862
+#: client/cl_campaign.c:2913
 msgid "CL_ParseAircraft: unexptected end of file (aircraft "
 msgstr ""
 
-#: client/cl_campaign.c:2869
+#: client/cl_campaign.c:2920
 #, c-format
 msgid "CL_ParseAircraft: campaign def \"%s\" with same name found, second ignored\n"
 msgstr ""
 
-#: client/cl_campaign.c:2886
+#: client/cl_campaign.c:2937
 #, c-format
 msgid "CL_ParseAircraft: aircraft def \"%s\" without body ignored\n"
 msgstr ""
 
-#: client/cl_campaign.c:2912
+#: client/cl_campaign.c:2963
 #, c-format
 msgid "Set size for aircraft to the max value of %i\n"
 msgstr ""
 
-#: client/cl_campaign.c:2930
+#: client/cl_campaign.c:2981
 #, c-format
 msgid "CL_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n"
 msgstr ""
@@ -2223,7 +2441,7 @@ msgstr ""
 #: client/cl_cin.c:591
 #, c-format
 msgid "%s not found.\n"
-msgstr ""
+msgstr "%s wurde nicht gefunden.\n"
 
 #: client/cl_fx.c:99
 #, c-format
@@ -2234,11 +2452,11 @@ msgstr ""
 msgid "Three keys down for a button!\n"
 msgstr ""
 
-#: client/cl_input.c:213
+#: client/cl_input.c:216
 msgid "Changed camera mode to remote.\n"
 msgstr ""
 
-#: client/cl_input.c:222
+#: client/cl_input.c:225
 msgid "Changed camera mode to first-person.\n"
 msgstr ""
 
@@ -2371,7 +2589,7 @@ msgstr ""
 msgid "User info settings:\n"
 msgstr ""
 
-#: client/cl_main.c:1657
+#: client/cl_main.c:1659
 msgid "Too many map particles\n"
 msgstr ""
 
@@ -2563,6 +2781,29 @@ msgstr ""
 msgid "Error in menu %s - max menu num exeeded (%i)"
 msgstr ""
 
+#: client/cl_menu.c:3395
+msgid "CL_ParseFont: unexpected end of file (font"
+msgstr ""
+
+#: client/cl_menu.c:3404
+#, c-format
+msgid "CL_ParseFont: font \"%s\" with same name found, second ignored\n"
+msgstr ""
+
+#: client/cl_menu.c:3410
+msgid "CL_ParseFont: Max fonts reached\n"
+msgstr ""
+
+#: client/cl_menu.c:3426
+#, c-format
+msgid "CL_ParseFont: font \"%s\" without body ignored\n"
+msgstr ""
+
+#: client/cl_menu.c:3450
+#, c-format
+msgid "CL_ParseFont: unknown token \"%s\" ignored (font %s)\n"
+msgstr ""
+
 #: client/cl_parse.c:207
 #: client/cl_parse.c:280
 msgid "Refusing to download a path with ..\n"
@@ -2685,163 +2926,163 @@ msgstr ""
 msgid "Server disconnected, reconnecting\n"
 msgstr ""
 
-#: client/cl_particle.c:200
-#: client/cl_particle.c:233
+#: client/cl_particle.c:205
+#: client/cl_particle.c:238
 msgid "CL_ParticleGetArt: Unknown art type\n"
 msgstr ""
 
-#: client/cl_particle.c:290
-#: client/cl_particle.c:335
-#: client/cl_particle.c:366
-#: client/cl_particle.c:390
-#: client/cl_particle.c:476
-#: client/cl_particle.c:502
+#: client/cl_particle.c:295
+#: client/cl_particle.c:340
+#: client/cl_particle.c:371
+#: client/cl_particle.c:395
+#: client/cl_particle.c:481
+#: client/cl_particle.c:507
 msgid "CL_ParticleFunction: stack underflow\n"
 msgstr ""
 
-#: client/cl_particle.c:312
+#: client/cl_particle.c:317
 #, c-format
 msgid "CL_ParticleFunction: can't get components of a non-vector type (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:323
+#: client/cl_particle.c:328
 msgid "CL_ParticleFunction: stack overflow\n"
 msgstr ""
 
-#: client/cl_particle.c:341
+#: client/cl_particle.c:346
 #, c-format
 msgid "Bad type '%s' for pic (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:349
+#: client/cl_particle.c:354
 #, c-format
 msgid "Bad type '%s' for model (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:370
-#: client/cl_particle.c:394
+#: client/cl_particle.c:375
+#: client/cl_particle.c:399
 #, c-format
 msgid "CL_ParticleFunction: bad type '%s' for add (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:374
+#: client/cl_particle.c:379
 #, c-format
 msgid "CL_ParticleFunction: bad vector dimensions for add/sub (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:402
-#: client/cl_particle.c:414
+#: client/cl_particle.c:407
+#: client/cl_particle.c:419
 #, c-format
 msgid "CL_ParticleFunction: bad vector dimensions for mul/div (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:426
+#: client/cl_particle.c:431
 #, c-format
 msgid "CL_ParticleFunction: bad type '%s' for sin (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:435
+#: client/cl_particle.c:440
 #, c-format
 msgid "CL_ParticleFunction: bad type '%s' for cos (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:444
+#: client/cl_particle.c:449
 #, c-format
 msgid "CL_ParticleFunction: bad type '%s' for tan (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:481
+#: client/cl_particle.c:486
 #, c-format
 msgid "CL_ParticleFunction: bad type '%s' for vector creation (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:486
+#: client/cl_particle.c:491
 #, c-format
 msgid "CL_ParticleFunction: created vector with dim > 4 (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:506
+#: client/cl_particle.c:511
 #, c-format
 msgid "CL_ParticleFunction: bad type '%s' int required for nspawn (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:516
+#: client/cl_particle.c:521
 #, c-format
 msgid "CL_ParticleFunction: unknown cmd type %i\n"
 msgstr ""
 
-#: client/cl_particle.c:541
+#: client/cl_particle.c:546
 #, c-format
 msgid "Particle definiton \"%s\" not found\n"
 msgstr ""
 
-#: client/cl_particle.c:558
+#: client/cl_particle.c:563
 msgid "Too many particles...\n"
 msgstr ""
 
-#: client/cl_particle.c:714
-#: client/cl_particle.c:721
+#: client/cl_particle.c:744
+#: client/cl_particle.c:751
 msgid "ED_ParseEntity: EOF without closing brace"
 msgstr ""
 
-#: client/cl_particle.c:724
+#: client/cl_particle.c:754
 msgid "ED_ParseEntity: closing brace without data"
 msgstr ""
 
-#: client/cl_particle.c:802
+#: client/cl_particle.c:830
 msgid "CL_ParsePtlCmds: unexptected end of file"
 msgstr ""
 
-#: client/cl_particle.c:811
+#: client/cl_particle.c:839
 #, c-format
 msgid "CL_ParsePtlCmds: particle cmds \"%s\" without body ignored\n"
 msgstr ""
 
-#: client/cl_particle.c:866
+#: client/cl_particle.c:893
 #, c-format
 msgid "CL_ParsePtlCmds: bad reference \"%s\" specified (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:874
+#: client/cl_particle.c:901
 #, c-format
 msgid "CL_ParsePtlCmds: bad type in var \"%s\" specified (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:889
+#: client/cl_particle.c:916
 #, c-format
 msgid "CL_ParsePtlCmds: can't get components of a non-vector type (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:909
+#: client/cl_particle.c:936
 #, c-format
 msgid "CL_ParsePtlCmds: bad type \"%s\" specified (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:953
+#: client/cl_particle.c:980
 #, c-format
 msgid "CL_ParsePtlCmds: unknown token \"%s\" ignored (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:970
+#: client/cl_particle.c:997
 msgid "CL_ParseParticle: unexptected end of file (particle "
 msgstr ""
 
-#: client/cl_particle.c:982
+#: client/cl_particle.c:1009
 #, c-format
 msgid "CL_ParseParticle: particle def \"%s\" with same name found, second ignored\n"
 msgstr ""
 
-#: client/cl_particle.c:997
+#: client/cl_particle.c:1024
 #, c-format
 msgid "CL_ParseParticle: particle def \"%s\" without body ignored\n"
 msgstr ""
 
-#: client/cl_particle.c:1021
+#: client/cl_particle.c:1048
 #, c-format
 msgid "CL_ParseParticle: unknown token \"%s\" ignored (particle %s)\n"
 msgstr ""
 
-#: client/cl_particle.c:1028
+#: client/cl_particle.c:1055
 #, c-format
 msgid "CL_ParseParticle: particle definition %s without init function ignored\n"
 msgstr ""
@@ -2861,195 +3102,231 @@ msgstr ""
 msgid "RS_MarkOneResearchable: \"%s\" technology not found.\n"
 msgstr ""
 
-#: client/cl_research.c:184
+#: client/cl_research.c:187
 msgid "RS_MarkResearchable: Done.\n"
 msgstr ""
 
-#: client/cl_research.c:232
+#: client/cl_research.c:235
 #, c-format
 msgid "RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined."
 msgstr ""
 
-#: client/cl_research.c:285
+#: client/cl_research.c:288
 #, c-format
 msgid "RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n"
 msgstr ""
 
-#: client/cl_research.c:300
+#: client/cl_research.c:301
+#, c-format
+msgid "RS_InitTree: aircraft model \"%s\" \n"
+msgstr ""
+
+#: client/cl_research.c:307
 #, c-format
 msgid "RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n"
 msgstr ""
 
-#: client/cl_research.c:306
+#: client/cl_research.c:313
 #, c-format
 msgid "RS_InitTree: Technology tree initialised. %i entries found.\n"
 msgstr ""
 
-#: client/cl_research.c:328
+#: client/cl_research.c:335
 #, c-format
 msgid "RS_GetName: \"%s\" -  Technology not found. Name defaults to id\n"
 msgstr ""
 
-#: client/cl_research.c:336
+#: client/cl_research.c:343
 #, c-format
 msgid "RS_GetName: \"%s\" - No name defined. Name defaults to id.\n"
 msgstr ""
 
-#: client/cl_research.c:364
+#: client/cl_research.c:371
 #, c-format
 msgid "Free labs in this base: %i"
 msgstr "Freie Laboratorien in dieser Basis: %i"
 
-#: client/cl_research.c:366
+#: client/cl_research.c:372
+#, c-format
+msgid "Available scientists in this base: %i"
+msgstr "Verfügbare Forscher in dieser Basis: %i"
+
+#: client/cl_research.c:374
 msgid "Not researched in any base."
 msgstr "In keiner Basis erforscht"
 
-#: client/cl_research.c:371
+#: client/cl_research.c:379
 #, c-format
 msgid "Researched in %s"
 msgstr "Erforscht in %s"
 
-#: client/cl_research.c:373
+#: client/cl_research.c:381
 msgid "Researched in this base."
 msgstr "Erforscht in dieser Basis"
 
+#: client/cl_research.c:391
+msgid "Progress: %.1f\\%\n"
+msgstr ""
+
+#: client/cl_research.c:393
+msgid "Progress: Not available."
+msgstr ""
+
+#: client/cl_research.c:399
+msgid "Status: Under research\n"
+msgstr "Status: Wird erforscht\n"
+
+#: client/cl_research.c:402
+msgid "Status: Research paused\n"
+msgstr "Status: Forschung angehalten\n"
+
+#: client/cl_research.c:405
+msgid "Status: Research finished\n"
+msgstr "Status: Forschung abgeschlossen\n"
+
 #: client/cl_research.c:408
+msgid "Status: Unknown technology\n"
+msgstr "Status: Unbekannte Technologie\n"
+
+#: client/cl_research.c:416
 msgid "Dependencies: "
 msgstr "Abhängigkeiten:"
 
-#: client/cl_research.c:479
+#: client/cl_research.c:489
 msgid "There is no free lab available.\\You need to build one or free another\\in order to assign scientists to research this technology.\n"
 msgstr ""
 
-#: client/cl_research.c:487
+#: client/cl_research.c:497
 msgid "Can't add scientist from the lab.\n"
 msgstr ""
 
-#: client/cl_research.c:538
+#: client/cl_research.c:549
 msgid "Can't remove scientist from the lab.\n"
 msgstr ""
 
-#: client/cl_research.c:590
+#: client/cl_research.c:601
 msgid "This item is already under research by your scientists."
-msgstr ""
+msgstr "Forschung bereits im Gange."
 
-#: client/cl_research.c:593
-#: client/cl_research.c:646
+#: client/cl_research.c:604
+#: client/cl_research.c:657
 msgid "The research on this item continues."
-msgstr ""
+msgstr "Forschung wird fortgesetzt."
 
-#: client/cl_research.c:597
-#: client/cl_research.c:650
+#: client/cl_research.c:608
+#: client/cl_research.c:661
 msgid "The research on this item is complete."
-msgstr ""
+msgstr "Forschung abgeschlossen."
 
-#: client/cl_research.c:614
+#: client/cl_research.c:625
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
 msgstr ""
+"Forschung kann nicht gestartet werden.\n"
+"Es fehlt eine zu grunde liegende Technologie."
 
-#: client/cl_research.c:700
+#: client/cl_research.c:711
 #, c-format
 msgid "%i max.\n"
 msgstr "%i max.\n"
 
-#: client/cl_research.c:775
+#: client/cl_research.c:790
 msgid "Build a laboratory first"
 msgstr "Baue erst ein Laboratorium"
 
-#: client/cl_research.c:798
+#: client/cl_research.c:813
 #, c-format
 msgid "RS_DependsOn: \"%s\" <- research item not found.\n"
 msgstr ""
 
-#: client/cl_research.c:828
+#: client/cl_research.c:843
 #, c-format
 msgid "Research of \"%s\" finished.\n"
-msgstr ""
+msgstr "Forschung abgeschlossen: %s\n"
 
-#: client/cl_research.c:832
+#: client/cl_research.c:847
 #, c-format
 msgid "Depending tech \"%s\" has been researched as well.\n"
 msgstr ""
 
-#: client/cl_research.c:859
+#: client/cl_research.c:874
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Forschung für %s ist abgeschlossen\n"
 
-#: client/cl_research.c:861
+#: client/cl_research.c:876
 #, c-format
 msgid "%i researches finished\n"
 msgstr "%i Forschungen abgeschlossen\n"
 
-#: client/cl_research.c:862
+#: client/cl_research.c:877
 msgid "Research finished"
 msgstr "Forschung abgeschlossen"
 
-#: client/cl_research.c:1032
+#: client/cl_research.c:1049
 msgid "RS_ParseTechnologies: unexptected end of file."
 msgstr ""
 
-#: client/cl_research.c:1041
+#: client/cl_research.c:1058
 #, c-format
 msgid "RS_ParseTechnologies: \"%s\" technology def without body ignored.\n"
 msgstr ""
 
-#: client/cl_research.c:1045
+#: client/cl_research.c:1062
 #, c-format
 msgid "RS_ParseTechnologies: too many technology entries. limit is %i.\n"
 msgstr ""
 
-#: client/cl_research.c:1056
+#: client/cl_research.c:1073
 msgid "No description available."
-msgstr ""
+msgstr "Keine Beschreibung vorhanden."
 
-#: client/cl_research.c:1088
+#: client/cl_research.c:1105
 #, c-format
 msgid "RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n"
 msgstr ""
 
-#: client/cl_research.c:1105
+#: client/cl_research.c:1122
 #, c-format
 msgid "RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n"
 msgstr ""
 
-#: client/cl_research.c:1144
+#: client/cl_research.c:1161
 #, c-format
 msgid "RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n"
 msgstr ""
 
-#: client/cl_research.c:1160
+#: client/cl_research.c:1177
 msgid "RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed\n"
 msgstr ""
 
-#: client/cl_research.c:1190
+#: client/cl_research.c:1207
 #, c-format
 msgid "RS_GetRequired: \"%s\" - technology not found.\n"
 msgstr ""
 
-#: client/cl_research.c:1246
+#: client/cl_research.c:1263
 #, c-format
 msgid "RS_TechIsResearched: \"%s\" research item not found.\n"
 msgstr ""
 
-#: client/cl_research.c:1276
+#: client/cl_research.c:1293
 #, c-format
 msgid "RS_TechIsResearchable: \"%s\" research item not found.\n"
 msgstr ""
 
-#: client/cl_research.c:1310
+#: client/cl_research.c:1327
 #, c-format
 msgid "RS_GetFirstRequired2: \"%s\" - technology not found.\n"
 msgstr ""
 
-#: client/cl_research.c:1383
+#: client/cl_research.c:1400
 #, c-format
 msgid "Saving %i technologies\n"
 msgstr ""
 
-#: client/cl_research.c:1402
+#: client/cl_research.c:1419
 #, c-format
 msgid "There was an update and there are new technologies available which aren't in your savegame. You may encounter problems. (%i:%i)\n"
 msgstr ""
@@ -3390,40 +3667,77 @@ msgstr ""
 msgid "New Recruits\t%i\n"
 msgstr "Neue Rekruten\t%i\n"
 
-#: client/cl_ufopedia.c:109
+#: client/cl_ufopedia.c:49
+msgid "Error - could not find building"
+msgstr ""
+
+#: client/cl_ufopedia.c:56
+#, c-format
+msgid ""
+"Depends:\t%s\n"
+"More than once:\t%s\n"
+"Buildtime:\t%i day(s)\n"
+"Fixcosts:\t%i $\n"
+"Running costs:\t%i $\n"
+"Energy:\t%i\n"
+"Workercosts:\t%i $\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:58
+msgid "No"
+msgstr "Nein"
+
+#: client/cl_ufopedia.c:58
+msgid "Yes"
+msgstr "Ja"
+
+#: client/cl_ufopedia.c:79
+msgid "Error - could not find aircraft"
+msgstr ""
+
+#: client/cl_ufopedia.c:82
+#, c-format
+msgid ""
+"Speed:\t%.0f\n"
+"Fuel:\t%i\n"
+"Weapon:\t%s\n"
+"Shield:\t%s\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:170
 msgid "Usage: ufopedia <id>\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:118
+#: client/cl_ufopedia.c:179
 msgid "MN_FindEntry_f: No PediaEntry given as parameter\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:122
+#: client/cl_ufopedia.c:183
 #, c-format
 msgid "MN_FindEntry_f: id=\"%s\"\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:148
+#: client/cl_ufopedia.c:209
 #, c-format
 msgid "MN_FindEntry_f: No PediaEntry found for %s\n"
 msgstr ""
 
 # #ufopedia
-#: client/cl_ufopedia.c:176
+#: client/cl_ufopedia.c:236
 msgid "Ufopedia Content"
 msgstr "Ufopedia Verzeichnis"
 
-#: client/cl_ufopedia.c:302
-msgid "MN_ParseUupChapters: unexptected end of file (names "
+#: client/cl_ufopedia.c:360
+msgid "MN_ParseUpChapters: unexptected end of file (names "
 msgstr ""
 
-#: client/cl_ufopedia.c:309
+#: client/cl_ufopedia.c:367
 #, c-format
-msgid "MN_ParseUupChapters: chapter def \"%s\" without body ignored\n"
+msgid "MN_ParseUpChapters: chapter def \"%s\" without body ignored\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:321
-msgid "MN_ParseUupChapters: too many chapter defs\n"
+#: client/cl_ufopedia.c:379
+msgid "MN_ParseUpChapters: too many chapter defs\n"
 msgstr ""
 
 #: client/cl_view.c:147
@@ -3451,26 +3765,6 @@ msgstr ""
 
 #: client/cl_view.c:424
 msgid "misc_model without \"model\" specified\n"
-msgstr ""
-
-#: client/cl_view.c:490
-#, c-format
-msgid "Map: %s\n"
-msgstr ""
-
-#: client/cl_view.c:497
-#, fuzzy
-msgid "pics\n"
-msgstr "%s ist panisch!\n"
-
-#: client/cl_view.c:552
-#, fuzzy
-msgid "images\n"
-msgstr "Schaden"
-
-#: client/cl_view.c:565
-#, c-format
-msgid "client %i\n"
 msgstr ""
 
 #: client/cl_view.c:607
@@ -3635,9 +3929,9 @@ msgid "Couldn't load %s\n"
 msgstr ""
 
 #: client/snd_mem.c:142
-#, fuzzy, c-format
+#, c-format
 msgid "%s is a stereo sample\n"
-msgstr "%s randaliert.\n"
+msgstr "%s ist ein Stereo sample.\n"
 
 #: client/snd_mem.c:285
 msgid "Missing RIFF/WAVE chunks\n"
@@ -3791,7 +4085,7 @@ msgstr ""
 
 #: game/g_svcmds.c:209
 msgid "Removed.\n"
-msgstr ""
+msgstr "Entfernt.\n"
 
 #: game/g_svcmds.c:225
 msgid "Filter list:\n"
@@ -3994,6 +4288,18 @@ msgstr ""
 msgid "FS_Write: -1 bytes written\n"
 msgstr ""
 
+#~ msgid "transporter_txt"
+#~ msgstr ""
+#~ "Das H-92 Transporter ist der Haupttruppentransporter der GDF-"
+#~ "Eingreiftruppe"
+
+#, fuzzy
+#~ msgid "pics\n"
+#~ msgstr "%s ist panisch!\n"
+
+#, fuzzy
+#~ msgid "images\n"
+#~ msgstr "Schaden"
 #~ msgid "Error: %s\n"
 #~ msgstr "Fehler: %s\n"
 #~ msgid "Item '%s' not allowed and removed from inventory.\n"
