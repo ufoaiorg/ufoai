@@ -24,7 +24,7 @@ build-stamp: configure
   # ensure the current dirname allows qrad3 to know where we are
 	expr $(shell basename `dirname $$PWD`) : ufo
 
-	make -C maps
+	$(MAKE) -C maps
 
 clean:
 	dh_testdir

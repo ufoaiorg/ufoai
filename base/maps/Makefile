@@ -5,6 +5,8 @@ BSPS = $(MAPSRCS:.map=.bsp)
 
 QRAD3FLAGS = -bounce 0 -chop 32 -extra
 
+all: $(BSPS)
+
 $(BSPS): %.bsp: %.map
 	qbsp3 $<
 	qrad3 $(QRAD3FLAGS) $@
