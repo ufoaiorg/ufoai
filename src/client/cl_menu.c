@@ -1046,8 +1046,11 @@ void MN_BarClick( menu_t *menu, menuNode_t *node, int x )
 		return;
 
 	Q_strncpyz( var, node->data[2], MAX_VAR );
-	if ( !Q_strncmp( var, "*cvar", 5 ) )
+	if ( Q_strncmp( var, "*cvar", 5 ) )
+	{
+		Com_Printf("Reference value is %s\n", var );
 		return;
+	}
 
 	frac = (float)(x - node->pos[0]) / node->size[0];
 	min = MN_GetReferenceFloat( menu, node->data[1] );
