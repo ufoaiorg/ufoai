@@ -94,6 +94,9 @@ void Draw_InitLocal (void)
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	numFonts = 0;
+	// load console characters (don't bilerp characters)
+	draw_chars = GL_FindImage ("pics/conchars.pcx", it_pic);
+	GL_Bind( draw_chars->texnum );
 
 #ifdef USE_SDL_TTF
 	// init the truetype font engine
@@ -106,10 +109,6 @@ void Draw_InitLocal (void)
 	ri.Con_Printf( PRINT_ALL, "...SDL_ttf inited\n" );
 	atexit( TTF_Quit );
 #else
-	// load console characters (don't bilerp characters)
-	draw_chars = GL_FindImage ("pics/conchars.pcx", it_pic);
-	GL_Bind( draw_chars->texnum );
-
 	ri.Con_Printf( PRINT_ALL, "...using old font engine - without utf8 support\n" );
 
 	GL_FindImage ("pics/f_small.tga", it_font);
@@ -136,9 +135,6 @@ smoothly scrolled off.
 */
 void Draw_Char (int x, int y, int num)
 {
-#ifdef USE_SDL_TTF
-
-#else
 	int row, col;
 	float frow, fcol, sizefrow, sizefcol;
 
@@ -170,7 +166,6 @@ void Draw_Char (int x, int y, int num)
 	qglTexCoord2f (fcol, frow + sizefrow);
 	qglVertex2f (x, y+8);
 	qglEnd ();
-#endif /* USE_SDL_TTF */
 }
 
 #ifndef USE_SDL_TTF
