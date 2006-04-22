@@ -330,6 +330,11 @@ char *MN_GetReferenceString( menu_t *menu, char *ref )
 				return Com_ValueToStr( refNode->data[-val->ofs], val->type, 0 );
 		}
 	}
+	else if ( *ref == '_' )
+	{
+		ref++;
+		return _(ref);
+	}
 	else
 	{
 		// just get the data
