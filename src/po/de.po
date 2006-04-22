@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-04-22 07:14+0200\n"
-"PO-Revision-Date: 2006-04-22 07:32+0100\n"
+"POT-Creation-Date: 2006-04-22 07:51+0200\n"
+"PO-Revision-Date: 2006-04-22 08:06+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@gmx.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -442,7 +442,7 @@ msgstr "Musik:"
 
 #: ../base/ufos/menu_options.ufo:461
 msgid "Mixing Rate:"
-msgstr "Frequen:"
+msgstr "Frequenz:"
 
 #: ../base/ufos/menu_options.ufo:496
 msgid "Soundsystem:"
