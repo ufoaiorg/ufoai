@@ -299,7 +299,7 @@ int FS_Seek( FILE* f, long offset, int origin )
 			break;
 		default:
 			_origin = SEEK_CUR;
-			Sys_Error( _("Bad origin in FS_Seek\n") );
+			Sys_Error( "Bad origin in FS_Seek\n" );
 			break;
 	}
 	return fseek( f, offset, _origin );
@@ -842,7 +842,7 @@ void FS_AddHomeAsGameDirectory (char *dir)
 	if(homedir)
 	{
 		int len = snprintf(gdir,sizeof(gdir),"%s/.ufoai/%s/", homedir, dir);
-		Com_Printf(_("using %s for writing\n"),gdir);
+		Com_Printf("using %s for writing\n",gdir);
 		FS_CreatePath (gdir);
 		FS_CreatePath (va("%s/save", gdir) );
 
@@ -951,7 +951,7 @@ void FS_Link_f (void)
 
 	if (Cmd_Argc() != 3)
 	{
-		Com_Printf (_("USAGE: link <from> <to>\n"));
+		Com_Printf ("usage: link <from> <to>\n");
 		return;
 	}
 
@@ -1484,7 +1484,7 @@ void FS_GetMaps ( void )
 				maps[anzInstalledMaps] = (char *) malloc ( MAX_MAPNAME_LENGTH * sizeof(char) );
 				if ( maps[anzInstalledMaps] == NULL )
 				{
-					Com_Printf(_("Could not allocate memory in MN_GetMaps\n"));
+					Com_Printf("Could not allocate memory in MN_GetMaps\n");
 					return;
 				}
 				Q_strncpyz( maps[anzInstalledMaps], found, MAX_MAPNAME_LENGTH );
@@ -1530,13 +1530,13 @@ int FS_Write( const void *buffer, int len, FILE* f )
 			if (!tries) {
 				tries = 1;
 			} else {
-				Com_Printf( _("FS_Write: 0 bytes written\n") );
+				Com_Printf( "FS_Write: 0 bytes written\n" );
 				return 0;
 			}
 		}
 
 		if (written == -1) {
-			Com_Printf( _("FS_Write: -1 bytes written\n") );
+			Com_Printf( "FS_Write: -1 bytes written\n" );
 			return 0;
 		}
 
