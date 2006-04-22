@@ -11,7 +11,7 @@ damagetypes standard
 
 item light
 {
-	name		"Kevlar Vest"
+	name		"_Kevlar Vest"
 	image		armor/light
 	model		soldiers/mlight/body
 	type		armor
@@ -21,7 +21,7 @@ item light
 	scale		0.7
 	price		1400
 	buytype		3
-	
+
 	protection
 	{
 		normal   20
@@ -41,12 +41,12 @@ item light
 		laser    120
 		plasma   50
 		tachyon  800
-	}	
+	}
 }
 
 item medium
 {
-	name		"Medium Armor"
+	name		"_Medium Armor"
 	image		armor/medium
 	model		soldiers/mmedium/body
 	type		armor
