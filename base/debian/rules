@@ -49,7 +49,7 @@ install: build
 
 	dh_install
   # remove unwanted stuff: cvs metadata and source files
-	find debian/ufoai-data -name CVS | xargs rm -rf
+	find debian/ufoai-data -name .svn | xargs rm -rf
 	find debian/ufoai-data -name '*.map' | xargs --no-run-if-empty rm
 
 binary-arch: build install
