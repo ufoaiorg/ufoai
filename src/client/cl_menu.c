@@ -1612,6 +1612,8 @@ void MN_Tooltip ( menuNode_t* node, int x, int y )
 		x += 5;
 		y += 5;
 		tooltip = (char *)node->data[5];
+		if ( *tooltip == '_' )
+			tooltip++;
 		l = re.DrawPropLength( "f_small", _(tooltip) );
 		if ( x + l > viddef.width )
 			x -= (l+10);
