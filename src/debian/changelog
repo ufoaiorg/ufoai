@@ -7,8 +7,10 @@ ufoai (0.0.svn) unstable; urgency=low
   * Build map- and model-building tool, in new ufoai-tools package.
   * Automatically update package version to use SVN revision number when
     run from a SVN working copy.
+  * Simplified /usr/games/ufo script much, now that ~/.ufoai is used by the
+    game itself.
 
- -- Yann Dirson <dirson@debian.org>  Thu,  2 Mar 2006 01:59:20 +0100
+ -- Yann Dirson <dirson@debian.org>  Sat, 22 Apr 2006 12:58:57 +0200
 
 ufoai (0.0.040218-0.8) unstable; urgency=low
 

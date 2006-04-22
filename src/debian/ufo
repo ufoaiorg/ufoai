@@ -23,27 +23,9 @@ set -e
 
 INSTDIR=/usr/lib/games/ufoai
 
-mkdir -p $HOME/.ufoai/base/save
-cd $HOME/.ufoai
+cd $INSTDIR
 
-for file in ${INSTDIR}/*.so
-do
-    [ -h $(basename $file) ] || ln -s $file .
-done
-for file in ${INSTDIR}/base/*
-do
-    target=base/$(basename $file)
-    if [ -d $file ]
-    then
-	# allow user to replace a link to directory with a custom directory
-	[ -d $target -o -h $target ] || ln -s $file base/
-    else
-	# allow user to replace a link to file with a custom file
-	[ -f $target -o -h $target ] || ln -s $file base/
-    fi
-done
-
-if [ $# != 0 -o -r base/config.cfg ]
+if [ $# != 0 -o -r ~/.ufoai/base/config.cfg ]
 then
     ${INSTDIR}/ufo "$@"
 else
