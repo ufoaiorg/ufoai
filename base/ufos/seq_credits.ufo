@@ -15,10 +15,10 @@ sequence credits
 		models/soldiers/mmedium/head01.md2
 		models/aliens/ortnok/body01.md2
 		models/aliens/ortnok/head02.md2
-		models/objects/alienship1_hull.md2
-		models/objects/alienship1_engines_1.md2
-		models/objects/alienship1_engines_2.md2
-		models/objects/alienship1_wings.md2
+		models/aircraft/ufo_small/alienship1_hull.md2
+		models/aircraft/ufo_small/alienship1_engines_1.md2
+		models/aircraft/ufo_small/alienship1_engines_2.md2
+		models/aircraft/ufo_small/alienship1_wings.md2
 	}
 	precache pics
 	{
@@ -394,7 +394,7 @@ sequence credits
 	2dobj ufoai { speed "0 0" }
 	2dobj demo
 	{
-		text	"Version 0.12"
+		text	"Version 0.13"
 		pos		"512 416"		align	uc
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}

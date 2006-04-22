@@ -59,7 +59,7 @@ sequence view
 
 	model cow
 	{
-		model	models/animals/cow.md2
+		model	models/animals/cow/cow.md2
 		anim	walk0
 		origin	"0 0 0"
 // 		tag	tag_floor
@@ -67,7 +67,7 @@ sequence view
 
 // 	model penguin
 // 	{
-// 		model	models/animals/penguin.md2
+// 		model	models/animals/penguin/penguin.md2
 // 		anim	walk0
 // 		origin	"0 -90 0"
 // 		tag	tag_floor

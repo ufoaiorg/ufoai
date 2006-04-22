@@ -27,119 +27,119 @@ menu_model civ_female
 // ============== Dropship =========================
 menu_model dropship_glass
 {
-	model	"models/objects/dropship_glass.md2"
+	model	"models/aircraft/dropship/dropship_glass.md2"
 }
 menu_model dropship_top
 {
-	model	"models/objects/dropship_top.md2"
+	model	"models/aircraft/dropship/dropship_top.md2"
 	need	"dropship_glass"
 }
 menu_model dropship
 {
-	model	"models/objects/dropship.md2"
+	model	"models/aircraft/dropship/dropship.md2"
 	need	"dropship_top"
 }
 
 // ============== Interceptor ======================
 menu_model interceptor_glass
 {
-	model	"models/aircrafts/fighter1_glass.md2"
+	model	"models/aircraft/interceptor/fighter1_glass.md2"
 }
 menu_model interceptor_top
 {
-	model	"models/aircrafts/fighter1_engines.md2"
+	model	"models/aircraft/interceptor/fighter1_engines.md2"
 	need	"interceptor_glass"
 }
 menu_model interceptor
 {
-	model	"models/aircrafts/fighter1_main.md2"
+	model	"models/aircraft/interceptor/fighter1_main.md2"
 	need	"interceptor_top"
 }
 
 // ============== UFO ==============================
 menu_model ufo1_upper
 {
-	model	"models/objects/alienship1_upper.md2"
+	model	"models/aircraft/ufo_small/alienship1_upper.md2"
 }
 menu_model ufo1_engines_2
 {
-	model	"models/objects/alienship1_engines_2.md2"
+	model	"models/aircraft/ufo_small/alienship1_engines_2.md2"
 	need	"ufo1_upper"
 }
 menu_model ufo1_engines_1
 {
-	model	"models/objects/alienship1_engines_1.md2"
+	model	"models/aircraft/ufo_small/alienship1_engines_1.md2"
 	need	"ufo1_engines_2"
 }
 menu_model ufo1_hull
 {
-	model	"models/objects/alienship1_hull.md2"
+	model	"models/aircraft/ufo_small/alienship1_hull.md2"
 	need	"ufo1_engines_1"
 }
 menu_model ufo1_wings
 {
-	model	"models/objects/alienship1_wings.md2"
+	model	"models/aircraft/ufo_small/alienship1_wings.md2"
 	need	"ufo1_hull"
 }
 menu_model ufo1
 {
-	model	"models/objects/alienship1_engines.md2"
+	model	"models/aircraft/ufo_small/alienship1_engines.md2"
 	need	"ufo1_wings"
 }
 
 // ============== UFO BIG ==========================
 menu_model ufobig_body
 {
-	model	"models/objects/ufo1_body_closed.md2"
+	model	"models/aircraft/ufo_big/ufo1_body_closed.md2"
 }
 menu_model ufobig_engine_left
 {
-	model	"models/objects/ufo1_engine_left.md2"
+	model	"models/aircraft/ufo_big/ufo1_engine_left.md2"
 	need	"ufobig_body"
 }
 menu_model ufobig_engine_right
 {
-	model	"models/objects/ufo1_engine_right.md2"
+	model	"models/aircraft/ufo_big/ufo1_engine_right.md2"
 	need	"ufobig_engine_left"
 }
 menu_model ufobig_wing_left
 {
-	model	"models/objects/ufo1_wing_left.md2"
+	model	"models/aircraft/ufo_big/ufo1_wing_left.md2"
 	need	"ufobig_engine_right"
 }
 menu_model ufobig_wing_right
 {
-	model	"models/objects/ufo1_wing_right.md2"
+	model	"models/aircraft/ufo_big/ufo1_wing_right.md2"
 	need	"ufobig_wing_left"
 }
 menu_model ufobig
 {
-	model	"models/objects/ufo1.md2"
+	model	"models/aircraft/ufo_big/ufo1.md2"
 	need	"ufobig_wing_right"
 }
 
 // ============== UFO CRASH ========================
 menu_model ufo_crash_wing_2
 {
-	model	"models/objects/acrash_wing_2.md2"
+	model	"models/objects/alien/ufo_crashed/acrash_wing_2.md2"
 }
 menu_model ufo_crash_wing_1
 {
-	model	"models/objects/acrash_wing_1.md2"
+	model	"models/objects/alien/ufo_crashed/acrash_wing_1.md2"
 	need	"ufo_crash_wing_2"
 }
 menu_model ufo_crash_hull_engine
 {
-	model	"models/objects/acrash_hull_engine.md2"
+	model	"models/objects/alien/ufo_crashed/acrash_hull_engine.md2"
 	need	"ufo_crash_wing_1"
 }
 menu_model ufo_crash_engine
 {
-	model	"models/objects/acrash_engine.md2"
+	model	"models/objects/alien/ufo_crashed/acrash_engine.md2"
 	need	"ufo_crash_hull_engine"
 }
 menu_model ufo_crash
 {
-	model	"models/objects/acrash_hull.md2"
+	model	"models/objects/alien/ufo_crashed/acrash_hull.md2"
 	need	"ufo_crash_engine"
 }
