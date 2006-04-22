@@ -2323,9 +2323,6 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		return 4;
 
 	case V_STRING:
-		// i18n marked through _ at beginning of string
-		if ( *token == '_' )
-			token++;
 		Q_strncpyz( (char *)b, token, MAX_VAR );
 		w = strlen(token)+1;
 		if ( w > MAX_VAR ) w = MAX_VAR;
