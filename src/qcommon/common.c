@@ -1283,7 +1283,7 @@ void Qcommon_LocaleInit ( void )
 	cvar_t* s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE );
 
 #ifdef _WIN32
-	putenv( va("LANG=%s"), s_language->string );
+	putenv( va("LANG=%s", s_language->string ) );
 #else
 	unsetenv("LANGUAGE");
 #endif
