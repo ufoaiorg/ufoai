@@ -35,6 +35,7 @@ void GL_ShaderInit( void )
 {
 	int i = 0;
 	shader_t* s;
+	image_t* image;
 	for ( i = 0; i < r_newrefdef.num_shaders; i++ )
 	{
 		s = &r_newrefdef.shaders[i];
@@ -42,6 +43,15 @@ void GL_ShaderInit( void )
 			s->fpid = SH_LoadProgram_ARB_FP(s->filename);
 		else if ( s->vertex )
 			s->vpid = SH_LoadProgram_ARB_VP(s->filename);
+
+		image = GL_FindImageForShader ( s->title );
+		if ( image )
+		{
+			ri.Con_Printf( PRINT_DEVELOPER, "...bind shader to image %s\n", s->title );
+			image->shader = s;
+		}
+		else
+			image->shader = NULL;
 	}
 }
 

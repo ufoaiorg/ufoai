@@ -1925,7 +1925,7 @@ image_t *GL_LoadWal (char *name)
 	ri.FS_LoadFile ( name, (void **)&mt);
 	if (!mt)
 	{
-		ri.Con_Printf (PRINT_ALL, "GL_FindImage: can't load %s\n", name);
+		ri.Con_Printf (PRINT_ALL, "GL_LoadWal: can't load %s\n", name);
 		return r_notexture;
 	}
 
@@ -1938,6 +1938,27 @@ image_t *GL_LoadWal (char *name)
 	ri.FS_FreeFile ((void *)mt);
 
 	return image;
+}
+
+
+/*
+===============
+GL_FindImageForShader
+
+Finds an image for a shader
+===============
+*/
+image_t *GL_FindImageForShader ( char *name )
+{
+	int i;
+	image_t* image;
+	// look for it
+	for (i=0, image=gltextures ; i<numgltextures ; i++,image++)
+	{
+		if ( ! Q_strncmp(name, image->name, MAX_VAR) )
+			return image;
+	}
+	return NULL;
 }
 
 /*

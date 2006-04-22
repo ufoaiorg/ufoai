@@ -486,6 +486,7 @@ void	WriteTGA (char *filename, byte *data, int width, int height);
 void	LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *height);
 image_t	*GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t type, int bits);
 image_t	*GL_FindImage (char *pname, imagetype_t type);
+image_t *GL_FindImageForShader ( char *name );
 void	GL_TextureMode( char *string );
 void	GL_ImageList_f (void);
 void	GL_CalcDayAndNight ( float q );
