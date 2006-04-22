@@ -62,6 +62,27 @@ image_t		*draw_chars;
 
 int		numFonts;
 
+#ifdef USE_SDL_TTF
+/*
+===============
+GL_ShutdownSDLFonts
+
+frees the SDL_ttf fonts
+===============
+*/
+void GL_ShutdownSDLFonts ( void )
+{
+	int i;
+
+	for ( i = 0; i < numFonts; i++ )
+		if ( fonts[i].font )
+			TTF_CloseFont(fonts[i].font);
+
+	// now quit SDL_ttf, too
+	TTF_Quit();
+}
+#endif
+
 /*
 ===============
 Draw_InitLocal
@@ -405,10 +426,6 @@ Draw_PropCharFont
 texture NEEDS to be binded already when using old font-engine
 ================
 */
-#ifdef USE_SDL_TTF
-#define MAX_TEXT_BUFFER 128
-char textBuffer[MAX_TEXT_BUFFER];
-#endif
 int Draw_PropCharFont (font_t *f, int x, int y, char c)
 {
 #ifdef USE_SDL_TTF
@@ -508,7 +525,7 @@ int Draw_PropLength (char *font, char *c)
 	if ( !f ) return 0;
 
 #ifdef USE_SDL_TTF
-	TTF_SizeText( f->font, c, &l, &h );
+	TTF_SizeUTF8( f->font, c, &l, &h );
 #else
 	// parse the string
 	for ( l = 0; *c; c++ )
@@ -558,7 +575,7 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 	// TTF_RenderUTF8_Blended allocates memory - which is slow
 	// SDL_CreateRGBSurface allocates memory - which is slow, too
 	// SDL_LowerBlit is the faster blitfunction - but again - all together: slow
-	TTF_SizeText( f->font, c, &l, &h );
+	TTF_SizeUTF8( f->font, c, &l, &h );
 	if ( ! l )
 		return 0;
 
@@ -614,7 +631,7 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// draw it
-// 	qglEnable (GL_BLEND);
+	qglEnable (GL_BLEND);
 
 	glBegin(GL_TRIANGLE_STRIP);
 	qglTexCoord2f(0.0f, 0.0f);
@@ -627,7 +644,7 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 	qglVertex2f(x + w, y + h);
 	qglEnd();
 
-// 	qglDisable (GL_BLEND);
+	qglDisable (GL_BLEND);
 
 	/* Bad things happen if we delete the texture before it finishes */
 	qglFinish();

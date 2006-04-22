@@ -1110,13 +1110,13 @@ void R_RenderView (refdef_t *fd)
 
 void	R_LeaveGL2D (void)
 {
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
+	qglMatrixMode(GL_MODELVIEW);
+	qglPopMatrix();
 
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
+	qglMatrixMode(GL_PROJECTION);
+	qglPopMatrix();
 
-	glPopAttrib();
+	qglPopAttrib();
 }
 
 void	R_SetGL2D (void)
@@ -1872,6 +1872,9 @@ void R_Shutdown (void)
 	GL_ShutdownImages ();
 #ifdef SHADERS
 	GL_ShutdownShaders ();
+#endif
+#ifdef USE_SDL_TTF
+	GL_ShutdownSDLFonts();
 #endif
 	/*
 	** shut down OS specific OpenGL stuff like contexts, etc.

@@ -58,6 +58,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef USE_SDL_TTF
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
+void GL_ShutdownSDLFonts ( void ); // gl_draw.c
 #endif /* USE_SDL_TTF */
 
 #include "qgl.h"
