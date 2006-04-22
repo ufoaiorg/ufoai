@@ -1,0 +1,12 @@
+// cow animations
+// name				start	end		fps
+tomampf				0		6		10
+mampf1				7		17		10
+mampf2				17		7		10
+muhen				18		27		10
+idle				28		43		5
+walk0				45		77		10
+die1				79		95		10
+dead1				95		95		10
+die2				96		117		10
+dead2				117		117		10
