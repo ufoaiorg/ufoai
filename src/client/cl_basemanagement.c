@@ -2215,7 +2215,7 @@ void CL_BuildingList ( void )
 	building_t* building;
 
 	//maybe someone call this command before the buildings are parsed??
-	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
+	if ( ! baseCurrent )
 	{
 		Com_Printf( "No base selected\n" );
 		return;

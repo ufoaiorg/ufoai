@@ -716,8 +716,8 @@ void Key_Init (void)
 		keyshift[i] = i;
 	for (i='a' ; i<='z' ; i++)
 		keyshift[i] = i - 'a' + 'A';
-	// FIXME: i18n
-#if 0
+
+#ifdef _WIN32
 	keyshift['1'] = '!';
 	keyshift['2'] = '@';
 	keyshift['3'] = '#';
