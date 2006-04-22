@@ -628,7 +628,7 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 	// draw it
 	qglEnable (GL_BLEND);
 
-	glBegin(GL_TRIANGLE_STRIP);
+	qglBegin(GL_TRIANGLE_STRIP);
 	qglTexCoord2f(0.0f, 0.0f);
 	qglVertex2f(x, y);
 	qglTexCoord2f(1.0f, 0.0f);
