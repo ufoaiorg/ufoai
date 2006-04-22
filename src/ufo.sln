@@ -7,8 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ref_gl", "ref_gl\ref_gl.vcp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ufo", "ufo.vcproj", "{81666F07-269F-43B1-BE2E-2762520E562E}"
 	ProjectSection(ProjectDependencies) = postProject
-		{7CC842F1-9F48-4E10-8477-98A18533260F} = {7CC842F1-9F48-4E10-8477-98A18533260F}
 		{A5D5E988-44F6-426F-BF5D-AEBCCBB3E694} = {A5D5E988-44F6-426F-BF5D-AEBCCBB3E694}
+		{7CC842F1-9F48-4E10-8477-98A18533260F} = {7CC842F1-9F48-4E10-8477-98A18533260F}
 	EndProjectSection
 EndProject
 Global
@@ -17,6 +17,7 @@ Global
 		Debug|Win32 = Debug|Win32
 		Release Alpha|Win32 = Release Alpha|Win32
 		Release|Win32 = Release|Win32
+		Release-SDLTTF|Win32 = Release-SDLTTF|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A5D5E988-44F6-426F-BF5D-AEBCCBB3E694}.Debug Alpha|Win32.ActiveCfg = Release|Win32
@@ -27,6 +28,8 @@ Global
 		{A5D5E988-44F6-426F-BF5D-AEBCCBB3E694}.Release Alpha|Win32.Build.0 = Release Alpha|Win32
 		{A5D5E988-44F6-426F-BF5D-AEBCCBB3E694}.Release|Win32.ActiveCfg = Release|Win32
 		{A5D5E988-44F6-426F-BF5D-AEBCCBB3E694}.Release|Win32.Build.0 = Release|Win32
+		{A5D5E988-44F6-426F-BF5D-AEBCCBB3E694}.Release-SDLTTF|Win32.ActiveCfg = Release|Win32
+		{A5D5E988-44F6-426F-BF5D-AEBCCBB3E694}.Release-SDLTTF|Win32.Build.0 = Release|Win32
 		{7CC842F1-9F48-4E10-8477-98A18533260F}.Debug Alpha|Win32.ActiveCfg = Release|Win32
 		{7CC842F1-9F48-4E10-8477-98A18533260F}.Debug Alpha|Win32.Build.0 = Release|Win32
 		{7CC842F1-9F48-4E10-8477-98A18533260F}.Debug|Win32.ActiveCfg = Debug|Win32
@@ -35,6 +38,8 @@ Global
 		{7CC842F1-9F48-4E10-8477-98A18533260F}.Release Alpha|Win32.Build.0 = Release Alpha|Win32
 		{7CC842F1-9F48-4E10-8477-98A18533260F}.Release|Win32.ActiveCfg = Release|Win32
 		{7CC842F1-9F48-4E10-8477-98A18533260F}.Release|Win32.Build.0 = Release|Win32
+		{7CC842F1-9F48-4E10-8477-98A18533260F}.Release-SDLTTF|Win32.ActiveCfg = Release|Win32
+		{7CC842F1-9F48-4E10-8477-98A18533260F}.Release-SDLTTF|Win32.Build.0 = Release|Win32
 		{81666F07-269F-43B1-BE2E-2762520E562E}.Debug Alpha|Win32.ActiveCfg = Release|Win32
 		{81666F07-269F-43B1-BE2E-2762520E562E}.Debug Alpha|Win32.Build.0 = Release|Win32
 		{81666F07-269F-43B1-BE2E-2762520E562E}.Debug|Win32.ActiveCfg = Debug|Win32
@@ -43,6 +48,8 @@ Global
 		{81666F07-269F-43B1-BE2E-2762520E562E}.Release Alpha|Win32.Build.0 = Release Alpha|Win32
 		{81666F07-269F-43B1-BE2E-2762520E562E}.Release|Win32.ActiveCfg = Release|Win32
 		{81666F07-269F-43B1-BE2E-2762520E562E}.Release|Win32.Build.0 = Release|Win32
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Release-SDLTTF|Win32.ActiveCfg = Release-SDLTTF|Win32
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Release-SDLTTF|Win32.Build.0 = Release-SDLTTF|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

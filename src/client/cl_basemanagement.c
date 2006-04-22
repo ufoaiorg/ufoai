@@ -53,7 +53,7 @@ float bvCenterX, bvCenterY;
 float bvScale;
 
 int bmDataSize = 0;
-char *bmData, *bmDataStart, *bmDataProductions;
+char *bmData, *bmDataStart;
 
 /*======================
 The valid definition names for BUILDINGS (building_t) in the basemagagement.ufo file.
@@ -1560,34 +1560,6 @@ void MN_ParseProductions( char *title, char **text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
-		if ( *token == '{' )
-		{
-			// parse text
-			qboolean skip;
-
-			entry->text = bmDataProductions;
-			token = *text;
-			skip = true;
-			while ( *token != '}' )
-			{
-				if ( *token > 32 )
-				{
-					skip = false;
-					if ( *token == '\\' ) *bmDataProductions++ = '\n';
-					else *bmDataProductions++ = *token;
-				}
-				else if ( *token == 32 )
-				{
-					if ( !skip ) *bmDataProductions++ = 32;
-				}
-				else skip = true;
-				token++;
-			}
-			*bmDataProductions++ = 0;
-			*text = token+1;
-			continue;
-		}
-
 		// get values
 		for ( edp = production_valid_vars; edp->string; edp++ )
 			if ( !Q_stricmp( token, edp->string ) )
@@ -1596,13 +1568,7 @@ void MN_ParseProductions( char *title, char **text )
 				token = COM_EParse( text, errhead, title );
 				if ( !*text ) return;
 
-				if ( edp->ofs && edp->type != V_NULL ) Com_ParseValue( entry, token, edp->type, edp->ofs );
-				else if ( edp->type == V_NULL )
-				{
-					strcpy( bmDataProductions, token );
-					*(char **)((byte *)entry + edp->ofs) = bmDataProductions;
-					bmDataProductions += strlen( token ) + 1;
-				}
+				Com_ParseValue( entry, token, edp->type, edp->ofs );
 				break;
 			}
 

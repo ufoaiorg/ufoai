@@ -336,7 +336,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
@@ -361,7 +361,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib"
+				AdditionalDependencies="winmm.lib sdl.lib sdl_ttf.lib"
 				OutputFile="..\..\base\gamex86.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"

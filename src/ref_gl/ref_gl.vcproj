@@ -335,7 +335,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
@@ -360,7 +360,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBCMTD"
-				AdditionalDependencies="winmm.lib"
+				AdditionalDependencies="winmm.lib sdl.lib sdl_ttf.lib"
 				OutputFile=".\..\../ref_gl.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
