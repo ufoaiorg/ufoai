@@ -839,22 +839,6 @@ void SCR_DrawString (int x, int y, char *string)
 	}
 }
 
-
-/*
-================
-SCR_DrawStringGreen
-================
-*/
-void SCR_DrawStringGreen (int x, int y, char *string)
-{
-	while (*string)
-	{
-		re.DrawChar (x, y, *string | 128);
-		x+=8;
-		string++;
-	}
-}
-
 //=======================================================
 
 /*
@@ -966,7 +950,7 @@ void SCR_UpdateScreen (void)
 			SCR_CheckDrawCenterString ();
 
 			if ( cl_fps->value )
-				SCR_DrawStringGreen( viddef.width - 80, 4, va( "fps: %3.1f", cls.framerate ) );
+				SCR_DrawString( viddef.width - 80, 4, va( "fps: %3.1f", cls.framerate ) );
 
 			if (scr_timegraph->value)
 				SCR_DebugGraph (cls.frametime*300, 0);

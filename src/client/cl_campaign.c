@@ -484,16 +484,13 @@ call this from baseview via "aircraft_return"
 void CL_AircraftReturnToBase ( aircraft_t* air )
 {
 	base_t*	base;
-	if ( air )
+	if ( air && air->status != AIR_HOME )
 	{
-		if ( air->status != AIR_HOME )
-		{
-			base = (base_t*)air->homebase;
-			MN_MapCalcLine( air->pos, base->pos, &air->route );
-			air->status = AIR_RETURNING;
-			air->time = 0;
-			air->point = 0;
-		}
+		base = (base_t*)air->homebase;
+		MN_MapCalcLine( air->pos, base->pos, &air->route );
+		air->status = AIR_RETURNING;
+		air->time = 0;
+		air->point = 0;
 	}
 }
 
@@ -1074,6 +1071,12 @@ void CL_CheckAircraft ( aircraft_t* air )
 {
 	actMis_t	*mis;
 
+	if ( air->fuel <= 0 && air->status >= AIR_IDLE )
+	{
+		MN_AddNewMessage( _("Notice"), _("Your dropship has low fuel and returns to base"), false, MSG_STANDARD, NULL );
+		CL_AircraftReturnToBase ( air );
+	}
+
 	// no base assigned
 	if ( ! air->homebase || !selMis )
 		return;
@@ -1083,7 +1086,7 @@ void CL_CheckAircraft ( aircraft_t* air )
 	  && abs( mis->def->pos[1] - air->pos[1] ) < DISTANCE )
 	{
 		mis->def->active = true;
-		if (air->status != AIR_DROP )
+		if (air->status != AIR_DROP && air->fuel > 0 )
 		{
 			air->status = AIR_DROP;
 			if ( ! interceptAircraft )
@@ -1134,15 +1137,15 @@ void CL_CampaignRunAircraft( int dt )
 						air->pos[0] = end[0];
 						air->pos[1] = end[1];
 						if ( air->status == AIR_RETURNING )
+						{
 							air->status = AIR_HOME;
+							if ( air->fuel < 0 )
+								air->fuel = 0;
+						}
 						else
 							air->status = AIR_IDLE;
 						CL_CheckAircraft( air );
 						continue;
-					}
-					else if ( air->fuel <= 0 )
-					{
-						air->status = AIR_RETURNING;
 					}
 
 					// calc new position
@@ -1154,11 +1157,10 @@ void CL_CampaignRunAircraft( int dt )
 					air->pos[0] = (1-frac) * air->route.p[p][0] + frac * air->route.p[p+1][0];
 					air->pos[1] = (1-frac) * air->route.p[p][1] + frac * air->route.p[p+1][1];
 				}
-				// somewhere on geoscape
 				else if ( air->status == AIR_IDLE )
-				{
 					air->fuel -= dt;
-				}
+				else if ( air->status == AIR_REFUEL )
+					air->fuel += dt;
 
 				CL_CheckAircraft( air );
 			}

@@ -1137,7 +1137,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	{
 		for ( j = 0, air = bmBases[i].aircraft; j < bmBases[i].numAircraftInBase; j++, air++ )
 		{
-			if ( air->status > AIR_HOME )
+			if ( air->status > AIR_HOME && air->fuel > 0 )
 			{
 				MN_MapCalcLine( air->pos, pos, &air->route );
 				air->status = AIR_TRANSIT;
@@ -1617,7 +1617,7 @@ void MN_Tooltip ( menuNode_t* node, int x, int y )
 		l = re.DrawPropLength( "f_small", _(tooltip) );
 		if ( x + l > viddef.width )
 			x -= (l+10);
-		re.DrawFill(x - 3, y - 3, l + 6, 20, 0, color );
+		re.DrawFill(x, y, l, fontSmall->size + 10, 0, color );
 		VectorSet( color, 0.0f, 0.8f, 0.0f );
 		color[3] = 1.0f;
 		re.DrawColor( color );
@@ -3354,17 +3354,13 @@ void CL_InitMessageSystem ( void )
 // ==================== USE_SDL_TTF stuff =====================
 
 #ifdef USE_SDL_TTF
+
 #define MAX_FONTS 16
 int numFonts;
-typedef struct font_s
-{
-	char name[MAX_VAR];
-	int size;
-	char style[MAX_VAR];
-	char path[MAX_QPATH];
-} font_t;
-
 font_t fonts[MAX_FONTS];
+
+font_t* fontBig;
+font_t* fontSmall;
 
 #define	FONTFS(x)		(int)&(((font_t *)0)->x)
 
@@ -3430,6 +3426,12 @@ void CL_ParseFont( char* name, char **text )
 	memset( font, 0, sizeof(font_t) );
 
 	Q_strncpyz( font->name, name, MAX_VAR );
+
+	if ( ! Q_strncmp( font->name, "f_small", MAX_VAR ) )
+		fontSmall = font;
+	else if ( ! Q_strncmp( font->name, "f_big", MAX_VAR ) )
+		fontBig = font;
+
 	Com_DPrintf("...found font %s (%i)\n", font->name, numFonts );
 
 	// get it's body
