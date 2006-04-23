@@ -481,7 +481,7 @@ int Draw_PropLength (char *font, char *c)
 typedef struct fontCache_s
 {
 	char string[MAX_FONT_STRING_FOR_CACHE];
-	void *pixel;
+	SDL_Surface *pixel;
 } fontCache_t;
 
 #define MAX_FONT_CACHE 1024
@@ -492,6 +492,13 @@ CleanFontCache
 ================*/
 void CleanFontCache ( void )
 {
+	int	i;
+
+	// free all saved surfaces
+	for ( i = 0; i < numInCache; i++ )
+		if ( fontCache[i].pixel )
+			SDL_FreeSurface( fontCache[i].pixel );
+
 	memset( fontCache, 0, sizeof(fontCache_t)*MAX_FONT_CACHE);
 	numInCache = 0;
 }
