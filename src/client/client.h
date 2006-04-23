@@ -1440,6 +1440,8 @@ extern char *menuText[MAX_MENUTEXTS];
 
 // this is the function where all the sdl_ttf fonts are parsed
 void CL_ParseFont( char* name, char **text );
+// here they get reinit after a vid_restart
+void CL_InitFonts( void );
 #ifdef USE_SDL_TTF
 // will return the size and the path for each font
 void CL_GetFontData (char *name, int *size, char *path);
