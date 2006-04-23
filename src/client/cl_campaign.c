@@ -344,6 +344,25 @@ void CL_StartAircraft ( void )
 	air->status = AIR_IDLE;
 }
 
+/*======================
+CL_AircraftRefuel
+======================*/
+void CL_AircraftRefuel ( aircraft_t* air )
+{
+	assert ( air );
+	air->status = AIR_REFUEL;
+	Cvar_Set( "mn_aircraftstatus", CL_AircraftStatusToName( air ) );
+}
+
+/*======================
+CL_AircraftRefuel_f
+======================*/
+void CL_AircraftRefuel_f ( void )
+{
+	if ( baseCurrent->aircraftCurrent )
+		CL_AircraftRefuel ( baseCurrent->aircraftCurrent );
+}
+
 /*
 ======================
 CL_AircraftInit
@@ -548,7 +567,7 @@ void CL_AircraftSelect ( void )
 	Cvar_Set( "mn_aircraft_shield", air->shield ? air->shield->name : "" );
 
 	// FIXME: Are these names (weapon and shield) already translated?
-	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\nFuel:\t%i/%i\nWeapon:\t%s\nShield:\t%s\n"), air->speed, air->fuel, air->fuelSize, air->weapon ? air->weapon->name : _("None"), air->shield ? air->shield->name : _("None") );
+	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\nFuel:\t%i/%i\nWeapon:\t%s\nShield:\t%s\n"), air->speed, air->fuel / 1000, air->fuelSize / 1000, air->weapon ? air->weapon->name : _("None"), air->shield ? air->shield->name : _("None") );
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 
@@ -2537,6 +2556,7 @@ void CL_ResetCampaign( void )
 	Cmd_AddCommand( "newaircraft", CL_NewAircraft_f );
 	Cmd_AddCommand( "aircraft_return", CL_AircraftReturnToBase_f );
 	Cmd_AddCommand( "aircraft_list", CL_BuildingAircraftList_f );
+	Cmd_AddCommand( "refuel", CL_AircraftRefuel_f );
 
 	Cmd_AddCommand( "stats_update", Stats_Update );
 

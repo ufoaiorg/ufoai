@@ -524,6 +524,10 @@ void* GetFontCache ( const char* s )
 
 /*================
 AddFontCache
+
+We add the font string (e.g. f_small) to the beginning
+of each string (char *s) because we can have the same strings
+but other fonts.
 TODO: caching needs hashing
 ================*/
 void AddFontCache( const char* s, void* pixel )
@@ -622,7 +626,7 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 			}
 		}
 
-		openGLSurface = GetFontCache( c );
+		openGLSurface = GetFontCache( va("%s%s", font, c ) );
 
 		if ( !openGLSurface )
 		{
@@ -657,7 +661,7 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 			SDL_FreeSurface(textSurface);
 
 // 			SDL_SaveBMP( openGLSurface, c );
-			AddFontCache( c, openGLSurface );
+			AddFontCache( va("%s%s", font, c ), openGLSurface );
 		}
 		else
 		{
