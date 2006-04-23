@@ -3464,4 +3464,25 @@ void CL_ParseFont( char* name, char **text )
 	re.RegisterFont( font->name, font->size, font->path, font->style );
 #endif
 }
+
+/*
+=================
+CL_InitFonts
+
+after a vid restart we have to reinit the fonts
+=================
+*/
+void CL_InitFonts( void )
+{
+#ifdef USE_SDL_TTF
+	int	i;
+
+	Com_Printf("...registering %i fonts\n", numFonts);
+	for ( i = 0; i < numFonts; i++ )
+	{
+		re.RegisterFont( fonts[i].name, fonts[i].size, fonts[i].path, fonts[i].style );
+	}
+
+#endif
+}
 // ===================== USE_SDL_TTF stuff end ======================
