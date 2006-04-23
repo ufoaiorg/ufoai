@@ -205,6 +205,8 @@ building building_radar
 	build_time	10
 	map_name	"radar"
 	pedia		building_radar
+	onconstruct	"inc_sensor 10"
+	ondestroy	"dec_sensor 10"
 }
 
 base main

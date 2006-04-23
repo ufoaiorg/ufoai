@@ -23,5 +23,5 @@ font f_big
 font f_menu
 {
 	font	"media/FreeSans.ttf"
-	size	18
+	size	22
 }

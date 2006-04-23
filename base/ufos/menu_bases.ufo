@@ -64,100 +64,146 @@ menu bases
 	pic buildings
 	{
 		tooltip	"_Build base-facilities"
-		image	menu/button_basemen
-		pos	"765 130"
-		texl	"15 15"
-		texh	"226 64"
+		image	menu/button
+		pos	"755 130"
+		texl	"0 0"
+		texh	"230 64"
 		mousefx true
 		click
 		{
 			cmd "mn_push buildings"
 		}
-		out		{ *buildings texl "15 15" *buildings texh "226 64" }
-		in		{ *buildings texl "239 15" *buildings texh "447 64" }
+		out		{ *txt_building color "0 0.8 0 1" *buildings texl "0 0" *buildings texh "230 64" }
+		in		{ *txt_building color "1 1 1 1" *buildings texl "230 0" *buildings texh "460 64" }
+	}
+	string txt_building
+	{
+		string	"_Buildings"
+		color	"0 0.8 0 1"
+		pos	"870 146"
+		font	f_menu
+		align	uc
 	}
 
 	pic aircraft
 	{
 		tooltip	"_Manage your aircraft"
-		image	menu/button_basemen
-		pos	"765 200"
-		texl	"15 79"
-		texh	"226 127"
+		image	menu/button
+		pos	"755 200"
+		texl	"0 0"
+		texh	"230 64"
 		mousefx true
 		click
 		{
 			cmd "mn_push aircraft"
 		}
-		out		{ *aircraft texl "15 79" *aircraft texh "226 127" }
-		in		{ *aircraft texl "239 79" *aircraft texh "447 127" }
+		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft texl "0 0" *aircraft texh "230 64" }
+		in		{ *txt_aircraft color "1 1 1 1" *aircraft texl "230 0" *aircraft texh "460 64" }
+	}
+	string txt_aircraft
+	{
+		string	"_Aircraft"
+		color	"0 0.8 0 1"
+		pos	"870 216"
+		font	f_menu
+		align	uc
 	}
 
 	pic buysell
 	{
 		tooltip	"_Buy/Sell equipment"
-		image	menu/button_basemen
-		pos	"765 270"
-		texl	"15 144"
-		texh	"226 192"
+		image	menu/button
+		pos	"755 270"
+		texl	"0 0"
+		texh	"230 64"
 		mousefx true
 		click
 		{
 			cmd "mn_push buy"
 		}
-		out		{ *buysell texl "15 144" *buysell texh "226 192" }
-		in		{ *buysell texl "240 144" *buysell texh "449 192" }
+		out		{ *txt_buysell color "0 0.8 0 1" *buysell texl "0 0" *buysell texh "230 64" }
+		in		{ *txt_buysell color "1 1 1 1" *buysell texl "230 0" *buysell texh "460 64" }
+	}
+	string txt_buysell
+	{
+		string	"_Buy/Sell Equipment"
+		color	"0 0.8 0 1"
+		pos	"870 286"
+		font	f_menu
+		align	uc
 	}
 
 	pic transfer
 	{
 		tooltip	"_Transfer equipment or personnel"
-		image	menu/button_basemen
-		pos	"765 340"
-		texl	"15 207"
-		texh	"226 256"
+		image	menu/button
+		pos	"755 340"
+		texl	"0 0"
+		texh	"230 64"
 		mousefx true
 		click
 		{
 			cmd "mn_push transfer"
 		}
-		out		{ *transfer texl "15 207" *transfer texh "226 256" }
-		in		{ *transfer texl "239 207" *transfer texh "447 256" }
+		out		{ *txt_transfer color "0 0.8 0 1" *transfer texl "0 0" *transfer texh "230 64" }
+		in		{ *txt_transfer color "1 1 1 1" *transfer texl "230 0" *transfer texh "460 64" }
+	}
+	string txt_transfer
+	{
+		string	"_Transfer"
+		color	"0 0.8 0 1"
+		pos	"870 356"
+		font	f_menu
+		align	uc
 	}
 
 	pic equip
 	{
 		tooltip	"_Equip your personnel"
-		image	menu/button_basemen
-		pos	"765 410"
-		texl	"15 271"
-		texh	"226 320"
+		image	menu/button
+		pos	"755 410"
+		texl	"0 0"
+		texh	"230 64"
 		mousefx true
 		click
 		{
 			cmd "mn_push equipment"
 		}
-		out		{ *equip texl "15 271" *equip texh "226 320" }
-		in		{ *equip texl "239 271" *equip texh "447 320" }
+		out		{ *txt_equip color "0 0.8 0 1" *equip texl "0 0" *equip texh "230 64" }
+		in		{ *txt_equip color "1 1 1 1" *equip texl "230 0" *equip texh "460 64" }
+	}
+	string txt_equip
+	{
+		string	"_Equip Soldiers"
+		color	"0 0.8 0 1"
+		pos	"870 426"
+		font	f_menu
+		align	uc
 	}
 
 	pic research
 	{
 		tooltip	"_Research new technology"
-		image	menu/button_basemen
-		pos	"765 480"
-		texl	"15 336"
-		texh	"226 383"
+		image	menu/button
+		pos	"755 480"
+		texl	"0 0"
+		texh	"230 64"
 		mousefx true
 		click
 		{
 			cmd "mn_push research"
 		}
-		out		{ *research texl "15 336" *research texh "226 383" }
-		in		{ *research texl "239 336" *research texh "447 383" }
+		out		{ *txt_research color "0 0.8 0 1" *research texl "0 0" *research texh "230 64" }
+		in		{ *txt_research color "1 1 1 1" *research texl "230 0" *research texh "460 64" }
 	}
-
-
+	string txt_research
+	{
+		string	"_Research"
+		color	"0 0.8 0 1"
+		pos	"870 496"
+		font	f_menu
+		align	uc
+	}
 
 	// ==================
 	// text and info
@@ -263,68 +309,140 @@ menu aircraft
 		pos		"512 512"
 	}
 
+	// ===============
+	// equip squad
+	// ===============
 	pic button_squad
 	{
 		tooltip	"_Assign your squad"
-		image   menu/button_basemen
-		pos	"55 100"
-		texl	"15 400"
-		texh	"226 448"
+		image   menu/button
+		pos	"45 100"
+		texl	"0 0"
+		texh	"230 64"
 		mousefx true
 		click
 		{
 			cmd "mn_push team"
 		}
-		out		{ *button_squad texl "15 400" *button_squad texh "226 448" }
-		in		{ *button_squad texl "239 400" *button_squad texh "447 448" }
+		out		{ *txt_squad color "0 0.8 0 1" *button_squad texl "0 0" *button_squad texh "230 64" }
+		in		{ *txt_squad color "1 1 1 1" *button_squad texl "230 0" *button_squad texh "460 64" }
+	}
+	string txt_squad
+	{
+		string	"_Equip Aircraft"
+		color	"0 0.8 0 1"
+		pos	"160 116"
+		font	f_menu
+		align	uc
 	}
 
+	// ===============
+	// buy/sell aircraft
+	// ===============
 	pic button_buysell
 	{
 		tooltip	"_Buy/Sell aircraft"
-		image	menu/button_basemen
-		pos	"55 170"
-		texl	"15 144"
-		texh	"226 192"
+		image	menu/button
+		pos	"45 170"
+		texl	"0 0"
+		texh	"230 64"
 		mousefx true
 		click
 		{
 			cmd "mn_push buy"
 		}
-		out		{ *button_buysell texl "15 144" *button_buysell texh "226 192" }
-		in		{ *button_buysell texl "240 144" *button_buysell texh "449 192" }
+		out		{ *txt_buysell color "0 0.8 0 1" *button_buysell texl "0 0" *button_buysell texh "230 64" }
+		in		{ *txt_buysell color "1 1 1 1" *button_buysell texl "230 0" *button_buysell texh "460 64" }
+	}
+	string txt_buysell
+	{
+		string	"_Buy/Sell Aircraft"
+		color	"0 0.8 0 1"
+		pos	"160 186"
+		font	f_menu
+		align	uc
 	}
 
+	// ===============
+	// transfer
+	// ===============
 	pic button_start
 	{
 		tooltip	"_Start your aircraft"
-		image	menu/button_basemen
-		pos	"55 240"
-		texl	"15 464"
-		texh	"226 511"
+		image	menu/button
+		pos	"45 240"
+		texl	"0 0"
+		texh	"230 64"
 		mousefx true
 		click
 		{
 			cmd "aircraft_start;mn_pop;mn_pop;"
 		}
-		out		{ *button_start texl "15 464" *button_start texh "226 511" }
-		in		{ *button_start texl "240 464" *button_start texh "449 511" }
+		out		{ *txt_start color "0 0.8 0 1" *button_start texl "0 0" *button_start texh "230 64" }
+		in		{ *txt_start color "1 1 1 1" *button_start texl "230 0" *button_start texh "460 64" }
+	}
+	string txt_start
+	{
+		string	"_Start Aircraft"
+		color	"0 0.8 0 1"
+		pos	"160 256"
+		font	f_menu
+		align	uc
 	}
 
+	// ===============
+	// transfer
+	// ===============
 	pic button_transfer
 	{
 		tooltip	"_Transfer equipment or personnel"
 		image	menu/button_basemen
-		pos	"55 310"
-		texl	"15 207"
-		texh	"226 256"
+		image	menu/button
+		pos	"45 310"
+		texl	"0 0"
+		texh	"230 64"
 		mousefx true
 		click
 		{
 			cmd "mn_push transfer"
 		}
-		out		{ *button_transfer texl "15 207" *button_transfer texh "226 256" }
-		in		{ *button_transfer texl "239 207" *button_transfer texh "447 256" }
+		out		{ *txt_transfer color "0 0.8 0 1" *button_transfer texl "0 0" *button_transfer texh "230 64" }
+		in		{ *txt_transfer color "1 1 1 1" *button_transfer texl "230 0" *button_transfer texh "460 64" }
+	}
+	string txt_transfer
+	{
+		string	"_Transfer"
+		color	"0 0.8 0 1"
+		pos	"160 326"
+		font	f_menu
+		align	uc
+	}
+
+	// ===============
+	// refuel
+	// ===============
+	pic refuel
+	{
+		tooltip	"_Refuel the selected aircraft"
+		image	menu/button
+		pos	"45 380"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "refuel"
+		}
+		out		{ *txt_refuel color "0 0.8 0 1" *refuel texl "0 0" *refuel texh "230 64" }
+		in		{ *txt_refuel color "1 1 1 1" *refuel texl "230 0" *refuel texh "460 64" }
+	}
+	string txt_refuel
+	{
+		string	"_Refuel"
+		color	"0 0.8 0 1"
+		pos	"160 396"
+		font	f_menu
+		align	uc
 	}
 
 	// ==================
