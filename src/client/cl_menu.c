@@ -1615,7 +1615,7 @@ void MN_Tooltip ( menuNode_t* node, int x, int y )
 		if ( *tooltip == '_' )
 			tooltip++;
 		l = re.DrawPropLength( "f_small", _(tooltip) );
-		if ( x + l > viddef.width )
+		if ( x + l > VID_NORM_WIDTH )
 			x -= (l+10);
 		re.DrawFill(x, y, l, fontSmall->size + 10, 0, color );
 		VectorSet( color, 0.0f, 0.8f, 0.0f );

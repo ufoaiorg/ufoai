@@ -317,6 +317,8 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 
 	rw = SDL_RWFromMem(buffer, ttfSize);
 
+	h *= vid.rx;
+
 	f->font = TTF_OpenFontRW( rw, 0, h );
 	if ( ! f->font )
 		ri.Sys_Error(ERR_FATAL, "...could not load font file %s\n", (char*)pic );
@@ -570,6 +572,11 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 	}
 
 #ifdef USE_SDL_TTF
+
+	// transform from 1024x768 coordinates for drawing
+	x = (float)x * vid.rx;
+	y = (float)y * vid.ry;
+
 	// convert all \\ to \n
 	newline = strstr( c, "\\" );
 	while ( newline )

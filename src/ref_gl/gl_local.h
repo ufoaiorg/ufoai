@@ -78,9 +78,6 @@ void GL_ShutdownSDLFonts ( void ); // gl_draw.c
 #ifndef __VIDDEF_T
 #define __VIDDEF_T
 
-#define VID_NORM_WIDTH		1024
-#define VID_NORM_HEIGHT		768
-
 typedef struct
 {
 	unsigned		width, height;			// coordinates from main game
