@@ -1447,7 +1447,7 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 // maplisting
 char* maps[MAX_MAPS];
 int anzInstalledMaps = 0;
-int mapsInstalledInit = 0;
+qboolean mapsInstalledInit = false;
 int mapInstalledIndex = 0;
 
 /*
@@ -1496,7 +1496,7 @@ void FS_GetMaps ( void )
 		}
 	}
 
-	mapsInstalledInit = 1;
+	mapsInstalledInit = true;
 
 	Sys_FindClose ();
 }

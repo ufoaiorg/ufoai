@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/snd_loc.h"
 #include "winquake.h"
 
-#ifndef USE_SDL
+#ifndef USE_SDL_SOUND
 #define iDirectSoundCreate(a,b,c)	pDirectSoundCreate(a,b,c)
 
 HRESULT (WINAPI *pDirectSoundCreate)(GUID FAR *lpGUID, LPDIRECTSOUND FAR *lplpDS, IUnknown FAR *pUnkOuter);

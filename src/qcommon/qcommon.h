@@ -697,7 +697,7 @@ FILESYSTEM
 #define MAX_MAPS 400
 extern char* maps[MAX_MAPS];
 extern int anzInstalledMaps;
-extern int mapsInstalledInit;
+extern qboolean mapsInstalledInit;
 extern int mapInstalledIndex;
 
 typedef enum {
