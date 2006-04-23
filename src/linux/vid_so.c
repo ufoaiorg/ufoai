@@ -46,7 +46,7 @@ cvar_t		*vid_grabmouse;
 // Global variables used internally by this module
 viddef_t	viddef;				// global video state; used by other modules
 void		*reflib_library;		// Handle to refresh DLL
-qboolean	reflib_active = 0;
+qboolean	reflib_active = false;
 
 #define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[0] ) )
 
@@ -217,6 +217,7 @@ qboolean VID_LoadRefresh( char *name )
 {
 	refimport_t	ri;
 	GetRefAPI_t	GetRefAPI;
+	qboolean	restart = false;
 	char	fn[MAX_OSPATH];
 	struct stat st;
 	extern uid_t saved_euid;
@@ -231,7 +232,8 @@ qboolean VID_LoadRefresh( char *name )
 		KBD_Close_fp = NULL;
 		RW_IN_Shutdown_fp = NULL;
 		re.Shutdown();
-		VID_FreeReflib ();
+		VID_FreeReflib();
+		restart = true;
 	}
 
 	Com_Printf( "------- Loading %s -------\n", name );
@@ -350,8 +352,14 @@ qboolean VID_LoadRefresh( char *name )
 	setreuid(getuid(), getuid());
 	setegid(getgid());
 
+	// vid_restart
+	if ( restart )
+		CL_InitFonts();
+
 	Com_Printf( "------------------------------------\n");
+
 	reflib_active = true;
+
 	return true;
 }
 
