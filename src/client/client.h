@@ -1058,6 +1058,10 @@ typedef struct base_s
 	int		numOnTeam;
 	int		numWholeTeam;
 
+	// the onconstruct value of the buliding
+	// building_radar increases the sensor width
+	int	sensorWidth; // radar radius
+
 	inventory_t	teamInv[MAX_WHOLETEAM];
 	inventory_t	equipment;
 

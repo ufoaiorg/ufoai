@@ -415,7 +415,7 @@ value_t seqEnt_vals[] =
 value_t seq2D_vals[] =
 {
 	{ "name",		V_STRING,		SEQ2DOFS( name ) },
-	{ "text",		V_STRING,		SEQ2DOFS( text ) },
+	{ "text",		V_TRANSLATION_STRING,		SEQ2DOFS( text ) },
 	{ "image",		V_STRING,		SEQ2DOFS( image ) },
 	{ "pos",		V_POS,			SEQ2DOFS( pos ) },
 	{ "speed",		V_POS,			SEQ2DOFS( speed ) },

@@ -326,10 +326,10 @@ void *Sys_GetGameAPI (void *parms)
 		game_library = dlopen (name, RTLD_LAZY );
 		if (game_library)
 		{
-			Com_Printf (_("LoadLibrary (%s)\n"), name);
+			Com_Printf ("LoadLibrary (%s)\n", name);
 			break;
 		} else {
-			Com_Printf (_("LoadLibrary failed (%s)\n"), name);
+			Com_Printf ("LoadLibrary failed (%s)\n", name);
 			Com_Printf("%s\n", dlerror());
 		}
 	}

@@ -36,7 +36,7 @@ value_t od_vals[] =
 	{ "protection",	V_NULL,			0 },
 	{ "hardness",	V_NULL,			0 },
 
-	{ "name",		V_STRING,		ODOFS( name ) },
+	{ "name",		V_TRANSLATION_STRING,		ODOFS( name ) },
 	{ "model",		V_STRING,		ODOFS( model ) },
 	{ "image",		V_STRING,		ODOFS( image ) },
 	{ "type",		V_STRING,		ODOFS( type ) },
@@ -61,7 +61,7 @@ value_t od_vals[] =
 
 value_t fdps[] =
 {
-	{ "name",		V_STRING,	FDOFS( name ) },
+	{ "name",		V_TRANSLATION_STRING,	FDOFS( name ) },
 	{ "shotorg",	V_POS,		FDOFS( shotOrg ) },
 	{ "projtl",		V_STRING,	FDOFS( projectile ) },
 	{ "impact",		V_STRING,	FDOFS( impact ) },
