@@ -225,6 +225,7 @@ typedef struct font_s
 } font_t;
 
 font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h );
+void CleanFontCache ( void );
 
 #ifdef BUILD_FREETYPE
 //new font stuff

@@ -2143,6 +2143,9 @@ refexport_t GetRefAPI (refimport_t rimp )
 	re.DrawPropChar = Draw_PropChar;
 	re.DrawPropLength = Draw_PropLength;
 	re.RegisterFont = R_RegisterFont;
+#ifdef USE_SDL_TTF
+	re.CleanFontCache = CleanFontCache;
+#endif
 	re.DrawTileClear = Draw_TileClear;
 	re.DrawFill = Draw_Fill;
 	re.DrawColor = Draw_Color;

@@ -115,11 +115,9 @@ void GL_TexEnv( GLenum mode )
 
 void GL_Bind (int texnum)
 {
-#ifdef USE_SDL_TTF
 	extern	image_t	*draw_chars;
 	if (gl_nobind->value && draw_chars)		// performance evaluation option
 		texnum = draw_chars->texnum;
-#endif
 	if ( gl_state.currenttextures[gl_state.currenttmu] == texnum)
 		return;
 	gl_state.currenttextures[gl_state.currenttmu] = texnum;
@@ -1992,7 +1990,7 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 	}
 #endif
 	// drop extension
-	strcpy( lname, pname );
+	Q_strncpyz( lname, pname, MAX_QPATH );
 	if ( lname[len-4] == '.' ) len -= 4;
 	ename = &(lname[len]);
 	*ename = 0;
@@ -2000,7 +1998,7 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 	// look for it
 	for (i=0, image=gltextures ; i<numgltextures ; i++,image++)
 	{
-		if (!strcmp(lname, image->name))
+		if (!Q_strncmp(lname, image->name, MAX_QPATH))
 		{
 			image->registration_sequence = registration_sequence;
 			return image;
@@ -2011,7 +2009,7 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 	etex = glerrortex;
 	while ( ( l = strlen( etex ) ) )
 	{
-		if ( !strcmp( lname, etex ) )
+		if ( !Q_strncmp( lname, etex, MAX_QPATH ) )
 			// it's in the error list
 			return r_notexture;
 
@@ -2074,7 +2072,7 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 
 	if ( (glerrortexend - glerrortex) + strlen(lname) < MAX_GLERRORTEX )
 	{
-		strcpy( glerrortexend, lname );
+		Q_strncpyz( glerrortexend, lname, MAX_QPATH );
 		glerrortexend += strlen(lname)+1;
 	} else {
 		ri.Sys_Error (ERR_DROP, "MAX_GLERRORTEX");

@@ -123,7 +123,6 @@ void Draw_InitLocal (void)
 }
 
 
-
 /*
 ================
 Draw_Char
@@ -166,71 +165,6 @@ void Draw_Char (int x, int y, int num)
 	qglTexCoord2f (fcol, frow + sizefrow);
 	qglVertex2f (x, y+8);
 	qglEnd ();
-}
-
-#ifndef USE_SDL_TTF
-static byte R_FloatToByte( float x )
-{
-	union {
-		float f;
-		unsigned int i;
-	} f2i;
-
-	// shift float to have 8bit fraction at base of number
-	f2i.f = x + 32768.0f;
-	f2i.i &= 0x7FFFFF;
-
-	// then read as integer and kill float bits...
-	return ( byte )min( f2i.i, 255 );
-}
-#endif /* USE_SDL_TTF */
-
-void Draw_ColorChar (int x, int y, int num, vec4_t color)
-{
-#ifdef USE_SDL_TTF
-	// implement me
-#else
-	int				row, col;
-	float frow, fcol, sizefrow, sizefcol;
-	byte			colors[4];
-
-	colors[0] = R_FloatToByte( color[0] );
-	colors[1] = R_FloatToByte( color[1] );
-	colors[2] = R_FloatToByte( color[2] );
-	colors[3] = R_FloatToByte( color[3] );
-
-	num &= 255;
-
-	if(num == ' ')
-		return;
-
-	if (y <= -8)
-		return;			// totally off screen
-
-	row = num>>4;
-	col = num&15;
-
-	frow = row*0.03125;
-	fcol = col*0.0625;
-	sizefcol = 0.0625; // 16 cols (conchars.pcx)
-	sizefrow = 0.03125; // 32 rows (conchars.pcx)
-
-	GL_Bind (draw_chars->texnum);
-
-	qglColor4ubv( colors );
-	GL_TexEnv(GL_MODULATE);
-	qglBegin (GL_QUADS);
-	qglTexCoord2f (fcol, frow);
-	qglVertex2f (x, y);
-	qglTexCoord2f (fcol + sizefcol, frow);
-	qglVertex2f (x+8, y);
-	qglTexCoord2f (fcol + sizefcol, frow + sizefrow);
-	qglVertex2f (x+8, y+8);
-	qglTexCoord2f (fcol, frow + sizefrow);
-	qglVertex2f (x, y+8);
-	qglEnd ();
-	qglColor4f( 1,1,1,1 );
-#endif /* USE_SDL_TTF */
 }
 
 /*
@@ -542,6 +476,67 @@ int Draw_PropLength (char *font, char *c)
 	return l;
 }
 
+#ifdef USE_SDL_TTF
+#define MAX_FONT_STRING_FOR_CACHE 256
+typedef struct fontCache_s
+{
+	char string[MAX_FONT_STRING_FOR_CACHE];
+	void *pixel;
+} fontCache_t;
+
+#define MAX_FONT_CACHE 1024
+fontCache_t fontCache[MAX_FONT_CACHE];
+int numInCache;
+/*================
+CleanFontCache
+================*/
+void CleanFontCache ( void )
+{
+	memset( fontCache, 0, sizeof(fontCache_t)*MAX_FONT_CACHE);
+	numInCache = 0;
+}
+
+/*================
+GetFontCache
+TODO: caching needs hashing
+================*/
+void* GetFontCache ( const char* s )
+{
+	int i;
+
+	for ( i = 0; i < numInCache; i++ )
+		if ( ! Q_strncmp( fontCache[i].string, (char*)s, MAX_FONT_STRING_FOR_CACHE ) && fontCache[i].pixel )
+			return fontCache[i].pixel;
+
+	return 0;
+}
+
+/*================
+AddFontCache
+TODO: caching needs hashing
+================*/
+void AddFontCache( const char* s, void* pixel )
+{
+	int i;
+
+	for ( i = 0; i < MAX_FONT_CACHE; i++ )
+	{
+		if ( ! fontCache[i].pixel )
+			break;
+	}
+
+	if ( i < MAX_FONT_CACHE )
+	{
+		Q_strncpyz( fontCache[i].string, s, MAX_FONT_STRING_FOR_CACHE );
+		fontCache[i].pixel = pixel;
+		ri.Con_Printf( PRINT_DEVELOPER, "...add string %s to font cache (%i)\n", s, numInCache );
+		numInCache++;
+	}
+	else
+		ri.Sys_Error( ERR_FATAL, "...font cache exceeded\n");
+}
+#endif
+
 /*
 ================
 Draw_PropString
@@ -552,35 +547,49 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 	int		l;
 	font_t	*f;
 #ifdef USE_SDL_TTF
-	int h, texture, w;
+	int h, texture = 0, w;
 	SDL_Surface *textSurface, *openGLSurface;
 	SDL_Color color = {255,255,255};
 	SDL_Rect rect;
-	char	*newline;
+	char	*newline, *replace;
 #endif
 
 	// get the font
 	f = Draw_GetFont( font );
 	if ( !f )
 	{
-		ri.Con_Printf(PRINT_ALL, "...could not find font: %s\n", font );
+		ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", font );
 		return 0;
 	}
 
 #ifdef USE_SDL_TTF
-	// TODO: this needs caching
-	// TTF_RenderUTF8_Blended allocates memory - which is slow
-	// SDL_CreateRGBSurface allocates memory - which is slow, too
-	// SDL_LowerBlit is the faster blitfunction - but again - all together: slow
+	// convert all \\ to \n
+	newline = strstr( c, "\\" );
+	while ( newline )
+	{
+		*newline = '\n';
+		newline = strstr( c, "\\" );
+	}
+	replace = strstr( c, "\t" );
+	while ( replace )
+	{
+		*replace = ' ';
+		replace = strstr( c, "\t" );
+	}
+
 	do
 	{
-		newline = strstr( c, "\\" );
+		newline = strstr( c, "\n" );
 		if ( newline )
-			newline='\0';
+			*newline='\0';
 
 		TTF_SizeUTF8( f->font, c, &l, &h );
 		if ( ! l )
+		{
+			if ( newline )
+				*newline='\n';
 			return 0;
+		}
 
 		if ( align > 0 && align < ALIGN_LAST )
 		{
@@ -596,36 +605,49 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 			case 2: y -= h; break;
 			}
 		}
-		textSurface = TTF_RenderUTF8_Blended(f->font, c, color);
-		if ( ! textSurface )
+
+		openGLSurface = GetFontCache( c );
+
+		if ( !openGLSurface )
 		{
-			ri.Con_Printf(PRINT_ALL, "%s\n", TTF_GetError() );
-			return 0;
+			textSurface = TTF_RenderUTF8_Blended(f->font, c, color);
+			if ( ! textSurface )
+			{
+				ri.Con_Printf(PRINT_ALL, "%s\n", TTF_GetError() );
+				return 0;
+			}
+
+			// convert to power of two
+			for ( w = 1; w < textSurface->w; w <<= 1 );
+			for ( h = 1; h < textSurface->h; h <<= 1 );
+
+			openGLSurface = SDL_CreateRGBSurface(
+				SDL_SWSURFACE,
+				w, h,
+				32,
+				textSurface->format->Rmask,
+				textSurface->format->Gmask,
+				textSurface->format->Bmask,
+				textSurface->format->Amask
+			);
+
+			rect.x = rect.y = 0;
+			rect.w = textSurface->w;
+			rect.h = textSurface->h;
+
+			SDL_SetAlpha(textSurface, 0, 0);
+
+			SDL_LowerBlit(textSurface, &rect, openGLSurface, &rect);
+			SDL_FreeSurface(textSurface);
+
+// 			SDL_SaveBMP( openGLSurface, c );
+			AddFontCache( c, openGLSurface );
 		}
-
-		// convert to power of two
-		for ( w = 1; w < textSurface->w; w <<= 1 );
-		for ( h = 1; h < textSurface->h; h <<= 1 );
-
-		openGLSurface = SDL_CreateRGBSurface(
-			SDL_SWSURFACE,
-			w, h,
-			32,
-			textSurface->format->Rmask,
-			textSurface->format->Gmask,
-			textSurface->format->Bmask,
-			textSurface->format->Amask
-		);
-
-		rect.x = rect.y = 0;
-		rect.w = textSurface->w;
-		rect.h = textSurface->h;
-
-		SDL_SetAlpha(textSurface, 0, 0);
-
-		SDL_LowerBlit(textSurface, &rect, openGLSurface, &rect);
-
-// 		SDL_SaveBMP( openGLSurface, c );
+		else
+		{
+			w = openGLSurface->w;
+			h = openGLSurface->h;
+		}
 
 		/* Tell GL about our new texture */
 		qglGenTextures(1, &texture);
@@ -651,16 +673,14 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 
 		qglDisable (GL_BLEND);
 
-		/* Bad things happen if we delete the texture before it finishes */
 		qglFinish();
-
 		/* Clean up */
-		SDL_FreeSurface(textSurface);
-		SDL_FreeSurface(openGLSurface);
 		qglDeleteTextures(1, &texture);
 
 		if ( newline )
 		{
+			// restore newline
+			*newline = '\n';
 			c = newline + 1;
 			y += TTF_FontLineSkip( f->font );
 		}
@@ -732,7 +752,7 @@ image_t	*Draw_FindPic (char *name)
 	if (name[0] != '/' && name[0] != '\\')
 		Com_sprintf (fullname, sizeof(fullname), "pics/%s", name);
 	else
-		strncpy( fullname, name+1, MAX_QPATH );
+		Q_strncpyz( fullname, name+1, MAX_QPATH );
 
 	gl = GL_FindImage (fullname, it_pic);
 	return gl;
