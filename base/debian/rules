@@ -6,6 +6,8 @@
 export LC_ALL=C
 vercmd=dpkg-parsechangelog | grep ^Version: | cut -c 10- | sed s/\\./\\./g
 
+FONTDIR=debian/ufoai-data/usr/lib/games/ufoai/base/media
+
 configure: 
 	dh_testdir
 
@@ -48,9 +50,14 @@ install: build
 	dh_installdirs
 
 	dh_install
-  # remove unwanted stuff: cvs metadata and source files
+  # remove unwanted stuff: svn metadata and source files
 	find debian/ufoai-data -name .svn | xargs rm -rf
 	find debian/ufoai-data -name '*.map' | xargs --no-run-if-empty rm
+
+  # add links to fonts
+	mkdir $(FONTDIR)
+	ln -s /usr/share/fonts/truetype/freefont/FreeSans.ttf $(FONTDIR)
+	ln -s /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf $(FONTDIR)
 
 binary-arch: build install
 # We have nothing to do

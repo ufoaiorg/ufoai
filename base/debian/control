@@ -7,7 +7,7 @@ Standards-Version: 3.6.1
 
 Package: ufoai-data
 Architecture: all
-Depends: ${misc:Depends}
+Depends: ${misc:Depends}, ttf-freefont, ttf-dejavu
 Recommends: ufoai
 Description: Data for UFO: Alien Invasion
  Maps, units, sound effects, etc.
