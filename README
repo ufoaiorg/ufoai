@@ -11,6 +11,8 @@ Follow these steps:
   make
 Now you have the binaries in src/linux/debugARCH or src/linux/releaseARCH - copy them over
 or symlink them (description in FAQ) to the appropriate places.
+After this you have to edit the default.cfg in base-folder - change vid_ref and gl_driver to
+the Linux values.
 
 Windows:
 ====================================================
@@ -24,7 +26,7 @@ the project files from repository.
 MacOSX:
 ====================================================
 Currently the game does not run on MacOSX - we are searching help with porting.
-There is already a port of the quake2-engine available which can be adopted 
+There is already a port of the quake2-engine available which can be adopted
 (http://www.fruitz-of-dojo.de).
 
 PlayStation Portable:
@@ -43,6 +45,8 @@ A: Make sure that you do not execute the binary in src/linux/debugARCH resp.
    ln -s src/linux/debugi386/ufo
    ln -s src/linux/debugi386/ufoded
    ln -s src/linux/debugi386/game.so base/
+
+   It's the same for other architectures, too. E.g. for AMD64 it is debugx86_64
 --------
 Q: I have problems with building and/or running the game
 A: Have a look at http://ufoai.sourceforge.net/tutorials.html
