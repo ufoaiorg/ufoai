@@ -247,8 +247,8 @@ aircraft craft_dropship
 	type	transporter
 	model	"dropship"
 	size	8
-	fuel	10000
-	fuelsize	10000
+	fuel	100000
+	fuelsize	100000
 	image	air_dropship
 }
 
@@ -258,8 +258,8 @@ aircraft craft_interceptor
 	name	"Interceptor"
 	type	interceptor
 	model	"interceptor"
-	fuel	6000
-	fuelsize	6000
+	fuel	60000
+	fuelsize	60000
 	size	1
 	image	air_interceptor
 	// FIXME: This is just testing
@@ -274,8 +274,8 @@ aircraft craft_ufo_small
 	type	ufo
 	model	"ufo1"
 	size	8
-	fuel	10000
-	fuelsize	10000
+	fuel	100000
+	fuelsize	100000
 	image	air_ufo
 }
 
@@ -286,7 +286,7 @@ aircraft craft_ufo_big
 	type	ufo
 	model	"ufobig"
 	size	80
-	fuel	100000
-	fuelsize	100000
+	fuel	1000000
+	fuelsize	1000000
 	image	air_ufo
 }
