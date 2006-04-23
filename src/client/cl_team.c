@@ -740,6 +740,7 @@ void CL_SaveTeam( char *filename )
 	sizebuf_t	sb;
 	byte	buf[MAX_TEAMDATASIZE];
 	FILE	*f;
+	char	*name;
 	int		res;
 
 	assert(baseCurrent);
@@ -757,8 +758,11 @@ void CL_SaveTeam( char *filename )
 	// create data
 	SZ_Init( &sb, buf, MAX_TEAMDATASIZE );
 
+	name = Cvar_VariableString( "mn_teamname" );
+	if ( !strlen(name) )
+		Cvar_Set( "mn_teamname", "NewTeam" );
 	// store teamname
-	MSG_WriteString( &sb, Cvar_VariableString( "mn_teamname" ) );
+	MSG_WriteString( &sb, name );
 
 	// store team
 	CL_SendTeamInfo( &sb, baseCurrent->wholeTeam, baseCurrent->numWholeTeam );
@@ -903,6 +907,17 @@ void CL_LoadTeamMultiplayer( char *filename )
 	sizebuf_t	sb;
 	byte	buf[MAX_TEAMDATASIZE];
 	FILE	*f;
+	char	title[MAX_VAR];
+
+	// return the base title
+	Q_strncpyz( title, bmBases[0].title, MAX_VAR );
+	MN_ClearBase( &bmBases[0] );
+	Q_strncpyz( bmBases[0].title, title, MAX_VAR );
+
+	// set base for multiplayer
+	baseCurrent = &bmBases[0];
+	ccs.numBases = 1;
+	baseCurrent->hiredMask = 0;
 
 	// open file
 	f = fopen( filename, "rb" );
@@ -919,12 +934,6 @@ void CL_LoadTeamMultiplayer( char *filename )
 
 	// load the teamname
 	Cvar_Set( "mn_teamname", MSG_ReadString( &sb ) );
-
-	MN_ClearBase( &bmBases[0] );
-
-	// set base for multiplayer
-	baseCurrent = &bmBases[0];
-	ccs.numBases = 1;
 
 	// load the team
 	CL_LoadTeam( &sb, &bmBases[0], SAVE_FILE_VERSION );
