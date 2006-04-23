@@ -564,11 +564,13 @@ qboolean VID_LoadRefresh( char *name )
 {
 	refimport_t	ri;
 	GetRefAPI_t	GetRefAPI;
+	qboolean	restart = false;
 
 	if ( reflib_active )
 	{
 		re.Shutdown();
 		VID_FreeReflib ();
+		restart = true;
 	}
 
 	Com_Printf( "------- Loading %s -------\n", name );
@@ -623,6 +625,10 @@ qboolean VID_LoadRefresh( char *name )
 		VID_FreeReflib ();
 		return false;
 	}
+
+	// vid_restart
+	if ( restart )
+		CL_InitFonts();
 
 	Com_Printf( "------------------------------------\n");
 	reflib_active = true;
