@@ -2276,6 +2276,9 @@ void MN_PushMenu( char *name )
 				MN_ExecuteActions( &menus[i], menus[i].initNode->click );
 
 			cls.key_dest = key_game;
+#ifdef USE_SDL_TTF
+			re.CleanFontCache();
+#endif
 			return;
 		}
 
@@ -2328,6 +2331,10 @@ void MN_PopMenu( qboolean all )
 				MN_PushMenu( mn_active->string );
 		}
 	}
+
+#ifdef USE_SDL_TTF
+	re.CleanFontCache();
+#endif
 
 	cls.key_dest = key_game;
 }

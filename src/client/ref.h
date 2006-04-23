@@ -129,7 +129,6 @@ typedef struct shader_s
 {
 	// title is internal for finding the shader
 
-	// TODO: when title is a valid imagename
 	// we should use this shader when loading the image
 	char	title[MAX_VAR];
 
@@ -303,6 +302,7 @@ typedef struct
 
 #ifdef USE_SDL_TTF
 	void (*RegisterFont) (char *name, int size, char* path, char* style);
+	void (*CleanFontCache) (void);
 #else
 	struct image_s *(*RegisterFont) (char *name);
 #endif /* USE_SDL_TTF */

@@ -141,11 +141,11 @@ void SCR_DebugGraph (float value, int color)
 SCR_DrawDebugGraph
 ==============
 */
-/*void SCR_DrawDebugGraph (void)
+void SCR_DrawDebugGraph (void)
 {
 	int		a, x, y, w, i, h;
 	float	v;
-	int		color;
+	vec4_t		color = {0.0, 0.0, 0.0, 1.0};
 
 	//
 	// draw the graph
@@ -155,21 +155,21 @@ SCR_DrawDebugGraph
 	x = scr_vrect.x;
 	y = scr_vrect.y+scr_vrect.height;
 	re.DrawFill (x, y-scr_graphheight->value,
-		w, scr_graphheight->value, 8);
+		w, scr_graphheight->value, 0, color );
 
 	for (a=0 ; a<w ; a++)
 	{
 		i = (current-1-a+1024) & 1023;
 		v = values[i].value;
-		color = values[i].color;
+		color[0] = color[1] = color[2] = values[i].color;
 		v = v*scr_graphscale->value + scr_graphshift->value;
 
 		if (v < 0)
 			v += scr_graphheight->value * (1+(int)(-v/scr_graphheight->value));
 		h = (int)v % (int)scr_graphheight->value;
-		re.DrawFill (x+w-1-a, y - h, 1,	h, color);
+		re.DrawFill (x+w-1-a, y - h, 1,	h, 0, color);
 	}
-}*/
+}
 
 /*
 ===============================================================================
@@ -392,9 +392,9 @@ void SCR_Init (void)
 	scr_graphshift = Cvar_Get ("graphshift", "0", 0);
 	scr_drawall = Cvar_Get ("scr_drawall", "0", 0);
 
-//
-// register our commands
-//
+	//
+	// register our commands
+	//
 	Cmd_AddCommand ("timerefresh",SCR_TimeRefresh_f);
 	Cmd_AddCommand ("loading",SCR_Loading_f);
 	Cmd_AddCommand ("sizeup",SCR_SizeUp_f);
@@ -971,8 +971,8 @@ void SCR_UpdateScreen (void)
 			if (scr_timegraph->value)
 				SCR_DebugGraph (cls.frametime*300, 0);
 
-//			if (scr_debuggraph->value || scr_timegraph->value || scr_netgraph->value)
-//				SCR_DrawDebugGraph ();
+			if (scr_debuggraph->value || scr_timegraph->value || scr_netgraph->value)
+				SCR_DrawDebugGraph ();
 
 //			M_Draw ();
 
