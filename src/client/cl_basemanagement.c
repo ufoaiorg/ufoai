@@ -2452,14 +2452,6 @@ base_t* B_GetBase ( int id )
 
 int B_GetNumOnTeam ( void )
 {
-	// multiplayer
-	if ( ! ccs.singleplayer && ! baseCurrent )
-	{
-		MN_ClearBase( &bmBases[0] );
-		baseCurrent = &bmBases[0];
-		Com_DPrintf( "no baseCurrent for mp\n" );
-	}
-
 	if ( ! baseCurrent )
 	{
 		Com_DPrintf( "Probably an error in B_GetNumOnTeam - no baseCurrent\n" );

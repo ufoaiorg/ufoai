@@ -605,14 +605,13 @@ void CL_MarkTeamCmd( void )
 	// check if we are allowed to be here?
 	// we are only allowed to be here if we already set up a base
 	// or are in multiplayer mode
-	if ( ! ccs.numBases )
+	if ( ! baseCurrent )
 	{
 		Com_Printf("No base set up\n");
 		MN_PopMenu(false);
 		return;
 	}
 
-// 	baseCurrent->hiredMask = baseCurrent->teamMask;
 	baseCurrent->numHired = baseCurrent->numOnTeam;
 
 	CL_UpdateHireVar();
@@ -929,6 +928,7 @@ void CL_LoadTeamMultiplayer( char *filename )
 
 	// load the team
 	CL_LoadTeam( &sb, &bmBases[0], SAVE_FILE_VERSION );
+	baseCurrent->hiredMask = baseCurrent->teamMask;
 }
 
 
