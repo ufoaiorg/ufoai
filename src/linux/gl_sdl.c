@@ -255,6 +255,8 @@ static unsigned char KeyStates[SDLK_LAST];
 void GetEvent(SDL_Event *event)
 {
 	unsigned int key;
+	float win_x = ( 1.0 + vid.rx );
+	float win_y = ( 1.0 + vid.ry );
 
 	switch(event->type) {
 	case SDL_MOUSEBUTTONDOWN:
@@ -291,8 +293,8 @@ void GetEvent(SDL_Event *event)
 	case SDL_MOUSEMOTION:
 		if (mouse_active)
 		{
-			mx = event->motion.x; // * sensitivity->value
-			my = event->motion.y; // * sensitivity->value
+			mx = event->motion.x * win_x; // * sensitivity->value
+			my = event->motion.y * win_y; // * sensitivity->value
 		}
 		break;
 #ifdef Joystick
@@ -608,28 +610,6 @@ void GLimp_AppActivate( qboolean active )
 }
 
 //===============================================================================
-
-/*
-================
-Sys_MakeCodeWriteable
-================
-*/
-void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length)
-{
-	int r;
-	unsigned long addr;
-	int psize = getpagesize();
-
-	addr = (startaddr & ~(psize-1)) - psize;
-
-//	fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr,
-//			addr, startaddr+length, length);
-
-	r = mprotect((char*)addr, length + startaddr - addr + psize, 7);
-
-	if (r < 0)
-		Sys_Error("Protection change failed\n");
-}
 
 /*****************************************************************************/
 /* KEYBOARD                                                                  */

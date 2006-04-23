@@ -317,6 +317,8 @@ font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h )
 
 	rw = SDL_RWFromMem(buffer, ttfSize);
 
+	// norm size is 1024x768 (1.0)
+	// scale the fontsize
 	h *= vid.rx;
 
 	f->font = TTF_OpenFontRW( rw, 0, h );
