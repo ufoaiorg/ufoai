@@ -66,7 +66,7 @@ provides "Triax"
 #####################################################################
 Phoenix
 
-Using the new possibilities for ion drives provided by the adapted antarean ion thruster, Phalanx has advanced UGV-technology (Unmanned Ground Vehicle) to create this mobile, hovering, autonomous weapon. The Phoenix can achieve strategic manuevers such as floating at any point in mid-air, scouting/attacking through second-story windows, and landing on rooftops. Though one disadvantage it shares with the Triax  - its size - remains.
+Using the knowledge of the recently reverse-engineered antarean ion thruster technology, Phalanx has advanced UGV-technology (Unmanned Ground Vehicle) to create this mobile, hovering, autonomous weapon. The Phoenix can achieve strategic manuevers such as floating at any point in mid-air, scouting/attacking through second-story windows, and landing on rooftops. Though one disadvantage it shares with the Triax - its size - remains.
 
 TODO: exact weapons/armor
 
@@ -79,7 +79,7 @@ provides "Phoenix"
 #####################################################################
 Multiwave Stealth Generator
 
-An alien ship appeared at a terror site without warning or detection. Observers say that it seemed to appear out of thin air, hovering 5 feet above the ground and then landing. Upon researching this component found at the landing site, we can tell that the aliens have achieved stealth technology which is able to redirect not only light, but other types of waves employed in conventional radar technologies. Upon researching other alien hardware, we may be able to recreate the components needed for a working stealth system.
+An alien ship appeared at a terror site without warning or detection. Observers say that it seemed to appear out of thin air, hovering a few meters above the ground and then landing. Upon researching this ship-component found at the landing site, we can tell that the aliens have achieved stealth technology which is able to redirect not only light, but other types of waves employed in conventional radar technologies. Upon researching other alien hardware, we may be able to recreate the components needed for a working stealth system.
 
 researchtime 200 days
 requires "Alien Palm Computer"
@@ -88,7 +88,7 @@ requires_item "Multiwave Stealth Generator" (from large alien ship)
 #####################################################################
 MW Stealth Detection
 
-It appears that with current human technology, detecting ships with Multiwave Stealth radar is impossible. We can only hope to obtain research data on Alien Radar Technology in the future.
+It appears that with current human technology, detecting ships equipped with multiwave stealth equipment is impossible. We can only hope to obtain research data on Alien Radar Technology in the future.
 
 researchtime 120 days
 requires "Multiwave Stealth Generator"
@@ -107,7 +107,7 @@ provides "MW Stealth Carrier" (craft)
 #####################################################################
 Ion Condensor
 
-This device, discovered in the engine room of an alien vessel, is the key to UFO propulsion technology. Unlike previous human experimentation with Ion propulsion, the Ion Condensor accelerates the ion buildup using previously unknown particle technologies, making it possible to achieve incredible amounts of thrust in an instant. Research into Ion Technology could allow us to create usable devices employing Ion propulsion.
+This device, discovered in the engine room of an alien vessel, is the key to UFO propulsion technology based on highly efficient ion thrusters. Unlike previous human experimentation with Ion propulsion, the ion condensor accelerates the ion buildup using previously unknown particle technologies, making it possible to achieve incredible amounts of thrust in an instant. Research into ion thruster technology could allow us to create usable devices employing Ion propulsion.
 
 researchtime 240 days
 requires _item "Ion Condensor" (requires that an Ion Condensor was obtained from a large alien ship)
@@ -123,7 +123,7 @@ requires "Ion Condensor"
 #####################################################################
 Alien Translation Device
 
-This device, discovered on an alien general, is the key to alien interspecies communication. This will enable us to research Alien Language and eventually translate it to human language.
+This device, discovered on an alien general, is the key to alien interspecies communication. This will enable us to research the languege used by the aliens and eventually translate it to human language.
 
 researchtime 120 days
 requires_item "Alien Translation Device" (obtained from the unconscious body or corpse of one of the rarely encountered Alien Generals)
@@ -141,7 +141,7 @@ requires "Alien Translation Device"
 #####################################################################
 Alien Palm Computer
 
-This device is an amazing combination of nanotechnology and optical circuits. The data on this device would be impossible to decode without researching alien language.
+This small mobile device is an amazing combination of nanotechnology and optical circuits. The data on this device would be impossible to decode without researching the language used by the aliens.
 
 researchtime 240 days
 requires "Nanotechnology"
@@ -153,6 +153,9 @@ Alien Mothership
 
 According to data translated from an alien palm computer, the Alien Mothership is the command center of the alien invasion. It's armaments are such that it could destroy a whole fleet of human vessels in a short time, making a direct attack impossible. We can only hope to find a safe way to board this ship and destroy it from the inside.
 
+TODO: location of the ship.
+TODO: Explaination of why it isn't attacking directly.
+
 researchtime 360 days
 requires "Alien Language"
 requires "Alien Palm Computer"
@@ -160,7 +163,7 @@ requires "Alien Palm Computer"
 #####################################################################
 Alien Radar Technology
 
-Alien Radar gives us an brief insight into subatomic-particle radar systems. This data from an Alien Palm Computer, combined with research of alien stealth hardware, could lead to production of a device that could detect alien stealth ships, or a stealth drive that prevents detection by Alien Radar.
+Alien Radar gives us an brief insight into subatomic-particle radar systems. This data from an alien palm computer, combined with research of alien stealth hardware, could lead to production of a device that could detect alien stealth ships, or a stealth drive that prevents detection by Alien Radar.
 
 researchtime 120 days
 requires "Alien Palm Computer"
