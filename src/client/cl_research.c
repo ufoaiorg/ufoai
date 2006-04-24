@@ -1021,8 +1021,8 @@ to the appropriate values in the corresponding struct
 ======================*/
 value_t valid_tech_vars[] =
 {
-	{ "name",		V_TRANSLATION_STRING,	TECHFS( name ) },			//name of technology
-	{ "description",	V_TRANSLATION_STRING,	TECHFS( description ) },
+	{ "name",		V_TRANSLATION2_STRING,	TECHFS( name ) },			//name of technology
+	{ "description",	V_TRANSLATION2_STRING,	TECHFS( description ) },
 	{ "provides",		V_STRING,	TECHFS( provides ) },		//what does this research provide
 	{ "needscollected",	V_BOOL,		TECHFS( needsCollected ) },	// to be able to research this tech zou need all "required" and at least one collected "provides" item.
 	{ "time",			V_FLOAT,		TECHFS( time ) },			//how long will this research last
@@ -1133,7 +1133,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 				tech->statusResearch = RS_FINISH;
 		}
 		else
-		if ( !strncmp( token, "up_chapter", 10 ) ) {
+		if ( !Q_strncmp( token, "up_chapter", 10 ) ) {
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 

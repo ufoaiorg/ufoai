@@ -11,9 +11,6 @@ technology_t	*upCurrent;
 int numChapters;
 int numEntries;
 
-char *upData, *upDataStart;
-int upDataSize = 0;
-
 #define MAX_UPTEXT 1024
 char	upText[MAX_UPTEXT];
 
@@ -174,7 +171,7 @@ void MN_FindEntry_f ( void )
 	//what are we searching for?
 	id = Cmd_Argv( 1 );
 
-	// FIXME: Is this possible? Cmd_Argc needs to be at least 2 here
+	// maybe we get a call like ufopedia ""
 	if ( !*id ) {
 		Com_Printf("MN_FindEntry_f: No PediaEntry given as parameter\n");
 		return;
@@ -336,17 +333,6 @@ void MN_ResetUfopedia( void )
 	Cmd_AddCommand( "mn_upnext", MN_UpNext_f );
 	Cmd_AddCommand( "ufopedia", MN_FindEntry_f );
 	Cmd_AddCommand( "ufopedia_click", MN_UpClick_f );
-
-	// get data memory
-	if ( upDataSize )
-		memset( upDataStart, 0, upDataSize );
-	else
-	{
-		Hunk_Begin( 0x10000 );
-		upDataStart = Hunk_Alloc( 0x10000 );
-		upDataSize = Hunk_End();
-	}
-	upData = upDataStart;
 }
 
 
