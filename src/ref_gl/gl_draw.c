@@ -562,7 +562,8 @@ int Draw_PropString (char *font, int align, int x, int y, char *c)
 	int		l;
 	font_t	*f;
 #ifdef USE_SDL_TTF
-	int h, texture = 0, w;
+	unsigned int texture = 0;
+	int w, h;
 	SDL_Surface *textSurface, *openGLSurface;
 	SDL_Color color = {255,255,255};
 	SDL_Rect rect;
@@ -1138,7 +1139,7 @@ Draw_DayAndNight
 */
 float	lastQ;
 
-void Draw_DayAndNight( int x, int y, int w, int h, float p, float q, float cx, float cy, float iz )
+void Draw_DayAndNight( int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char* map )
 {
 	image_t *gl;
 	float nx, ny, nw, nh;
@@ -1150,7 +1151,7 @@ void Draw_DayAndNight( int x, int y, int w, int h, float p, float q, float cx, f
 	nh = h * vid.ry;
 
 	// load day image
-	gl = GL_FindImage( "pics/menu/map_earth_day", it_wrappic );
+	gl = GL_FindImage( va("pics/menu/%s_day", map), it_wrappic );
 
 	// draw day image
 	GL_Bind (gl->texnum);
@@ -1173,7 +1174,7 @@ void Draw_DayAndNight( int x, int y, int w, int h, float p, float q, float cx, f
 	qglEnable( GL_BLEND );
 
 	GL_SelectTexture( gl_texture0 );
-	gl = GL_FindImage( "pics/menu/map_earth_night", it_wrappic );
+	gl = GL_FindImage( va("pics/menu/%s_night", map), it_wrappic );
 	GL_Bind( gl->texnum );
 
 	GL_SelectTexture( gl_texture1 );
@@ -1499,15 +1500,22 @@ Draw_3DGlobe
 responsible for drawing the 3d globe on geoscape
 ================
 */
-void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, float cy, float iz )
+void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char* map )
 {
 	int nrows = 1 << 3;
 	int s, i, j;
 	double last_lon;
-	vec3_t v0, v1, v2, v3, va, vb;
+	vec3_t v0, v1, v2, v3, veca, vecb;
 	globe_triangle_t *t = NULL;
 	image_t *gl;
 // 	float nx, ny, nw, nh;
+
+	qglEnable(GL_TEXTURE_2D);
+	gl = GL_FindImage( va("pics/menu/%s_day", map), it_wrappic );
+	GL_Bind (gl->texnum);
+
+	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 
 	/* iterate over the 20 sides of the icosahedron */
 	for(s = 0; s < MAX_ICOSAHEDRON; s++)
@@ -1532,18 +1540,15 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 			for(j = 0; j < i; j++)
 			{
 				/* calculate 2 more vertices at a time */
-				Globe_Lerp(v0, v2, (float)(j+1)/(i+1), va);
-				Globe_Lerp(v1, v3, (float)(j+1)/i, vb);
-				Globe_AddVertex(va, &last_lon);
-				Globe_AddVertex(vb, &last_lon);
+				Globe_Lerp(v0, v2, (float)(j+1)/(i+1), veca);
+				Globe_Lerp(v1, v3, (float)(j+1)/i, vecb);
+				Globe_AddVertex(veca, &last_lon);
+				Globe_AddVertex(vecb, &last_lon);
 			}
 			Globe_AddVertex(v2, &last_lon);
 			qglEnd(); /* TRIANGLE_STRIP */
 		}
 	}
-	gl = GL_FindImage( "pics/menu/map_earth_day", it_wrappic );
-	GL_Bind (gl->texnum);
-
 	// TODO: map to sphere and display
 
 	// test for multitexture and env_combine support
@@ -1554,7 +1559,7 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 	qglEnable( GL_BLEND );
 
 	GL_SelectTexture( gl_texture0 );
-	gl = GL_FindImage( "pics/menu/map_earth_night", it_wrappic );
+	gl = GL_FindImage( va("pics/menu/%s_night", map), it_wrappic );
 	GL_Bind( gl->texnum );
 
 	GL_SelectTexture( gl_texture1 );

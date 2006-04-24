@@ -458,7 +458,7 @@ void	Draw_TileClear (int x, int y, int w, int h, char *name);
 void	Draw_Fill (int x, int y, int w, int h, int style, vec4_t color);
 void	Draw_Color (float *rgba);
 void	Draw_FadeScreen (void);
-void	Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz );
+void	Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char* map );
 void	Draw_LineStrip( int points, int *verts );
 
 void	Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data);
@@ -699,7 +699,7 @@ typedef struct globe_triangle_s
                                  /* satellites, in meters. */
 #define NOT_SELECTABLE ~0U       /* For picking reasons, see which_site() */
 
-void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, float cy, float iz );
+void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char* map );
 void Draw_3DMapLine ( int n, float dist, vec2_t *path );
 void Draw_3DMapMarkers ( float latitude, float longitude, char* image );
 

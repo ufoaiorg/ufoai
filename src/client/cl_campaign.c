@@ -2835,6 +2835,7 @@ value_t campaign_vals[] =
 	{ "equipment",	V_STRING,	CAMPAIGNOFS( equipment ) },
 	{ "market",		V_STRING,	CAMPAIGNOFS( market ) },
 	{ "firststage",	V_STRING,	CAMPAIGNOFS( firststage ) },
+	{ "map",	V_STRING,	CAMPAIGNOFS( map ) },
 	{ "credits",	V_INT,		CAMPAIGNOFS( credits ) },
 	{ "date",		V_DATE,		CAMPAIGNOFS( date ) },
 	{ NULL, 0, 0 },

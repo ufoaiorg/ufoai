@@ -1288,6 +1288,7 @@ typedef struct campaign_s
 	char	team[MAX_VAR];
 	char	equipment[MAX_VAR];
 	char	market[MAX_VAR];
+	char	map[MAX_VAR]; // geoscape map
 	char	firststage[MAX_VAR];
 	int		soldiers;
 	int		credits;

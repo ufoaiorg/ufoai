@@ -2146,7 +2146,7 @@ void MN_DrawMenus( void )
 						// draw the map
 						q = (ccs.date.day % 365 + (float)(ccs.date.sec/(3600*6))/4) * 2*M_PI/365 - M_PI;
 						re.Draw3DGlobe( node->pos[0], node->pos[1], node->size[0], node->size[1], (float)ccs.date.sec/(3600*24), q,
-							ccs.center[0], ccs.center[1], 0.5/ccs.zoom );
+							ccs.center[0], ccs.center[1], 0.5/ccs.zoom, curCampaign->map );
 
 						// draw markers
 						// FIXME:
@@ -2180,7 +2180,7 @@ void MN_DrawMenus( void )
 						// draw the map
 						q = (ccs.date.day % 365 + (float)(ccs.date.sec/(3600*6))/4) * 2*M_PI/365 - M_PI;
 						re.DrawDayAndNight( node->pos[0], node->pos[1], node->size[0], node->size[1], (float)ccs.date.sec/(3600*24), q,
-							ccs.center[0], ccs.center[1], 0.5/ccs.zoom );
+							ccs.center[0], ccs.center[1], 0.5/ccs.zoom, curCampaign->map );
 
 						// draw markers
 						MN_DrawMapMarkers( node );
