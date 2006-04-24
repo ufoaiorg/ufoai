@@ -2837,6 +2837,9 @@ value_t campaign_vals[] =
 	{ "firststage",	V_STRING,	CAMPAIGNOFS( firststage ) },
 	{ "map",	V_STRING,	CAMPAIGNOFS( map ) },
 	{ "credits",	V_INT,		CAMPAIGNOFS( credits ) },
+	{ "visible",	V_BOOL,		CAMPAIGNOFS( visible ) },
+	{ "text",	V_TRANSLATION2_STRING,		CAMPAIGNOFS( text ) }, // just a gettext placeholder
+	{ "name",		V_TRANSLATION_STRING,	CAMPAIGNOFS( campaignName ) },
 	{ "date",		V_DATE,		CAMPAIGNOFS( date ) },
 	{ NULL, 0, 0 },
 };
