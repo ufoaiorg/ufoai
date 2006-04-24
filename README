@@ -1,40 +1,122 @@
 UFO:Alien Invasion Readme
 =============================================================================================
 
+====================================================
+General information:
+====================================================
+All data files are in the svn repository. But you have to keep some things in mind.
+There are only the source-map-files. Quake2 based games need to compile them. We have included
+a compile.pl (Perl-scriptfile) in base/maps (you need the programming language Perl installed).
+For Windows you can use Active State Perl. For linux you should already have Perl installed.
+
+You can also run make in the base/maps folder - this has several advantages:
++ just recompile changes maps (e.g. after a svn update)
++ use more then one cpu
+But you need GNU make installed to do this (comes with e.g. Dev-CPP - see below)
+
+
+====================================================
 Linux:
 ====================================================
+
+o Grab SVN
+====================================================
+Grab the svn-revision (version controll system) with the command:
+svn co https://svn.sourceforge.net/svnroot/ufoai/ufoai/trunk .
+
+o Compile SVN
+====================================================
 Follow these steps:
-  mkdir ufoai
-  cd ufoai/
-  svn co https://svn.sourceforge.net/svnroot/ufoai/ufoai/trunk .
   cd src/linux
   make
+  cd ../tools
+  make
+
+o Compile Maps
+====================================================
+  cd base/maps
+  make
+
+o  Installation of additional libraries (if not found on game-start):
+====================================================
+You have to have installed the following libs
+SDL Runtime Libraries, JPEG library, Gettext (some distributions have linked this into
+there standard c lib), OGG library
+Install them via your distribution package manager
+
+o Run the game
+====================================================
 Now you have the binaries in src/linux/debugARCH or src/linux/releaseARCH - copy them over
 or symlink them (description in FAQ) to the appropriate places.
 After this you have to edit the default.cfg in base-folder - change vid_ref and gl_driver to
 the Linux values.
 
+
+====================================================
 Windows:
 ====================================================
-To install the game use the Windows-Installer at
-http://sourceforge.net/project/showfiles.php?group_id=157793
 
-To compile the game download the express edition of MS Visual Studio.
-Download the svn (see http://ufoai.sf.net/tutorials.html for svn-help) and open
-the project files from repository.
+o Grab SVN
+====================================================
+For Windows you can use e.g. TortoiseSVN (http://tortoisesvn.tigris.org/) and follow the steps
+on http://ufoai.sourceforge.net/tutorials/svn.html
 
+o  Compile with Visual Studio Express
+====================================================
+To compile the game you need to download the express edition of MS Visual Studio.
+In the current svn-repository there are project files for Visual Studio.
+
+o  Compile with Dev-CPP
+====================================================
+Use the Dev-CPP webupdate feature or when installation of additional packages
+from Dev-CPP webupdate doesn't work for you (proxy etc...):
+Tools -> Package Manager -> Install -> select .DevPak file
+
+You can find the devpaks at:
+http://devpaks.org/
+or
+http://old.devpaks.org/
+
+Package: SDL Library
+Package: SDL_ttf Library
+Package: Ogg Vorbis SDK
+Package: libjpeg 6b-4
+Package: libintl (gettext)
+
+DirectX is used for sound - if you don't want to use DirectX but SDL you have to set
+the compiler-option -DUSE_SDL_SOUND in project options of ufo.dev
+
+o Compile Maps
+====================================================
++ install Active State Perl and type perl compile.pl in base/maps
++ or install GNU make (or Dev-CPP - there it is included) and type make in base/maps
+  (when make is in the PATH environment var - otherwise you need to enter the full path to make)
+
+o  Installation of additional libraries (if not found on game-start):
+====================================================
+Search the inet for following files (these will be included in every official release)
+Library: SDL Runtime Libraries (SDL.dll, SDL_ttf.dll)
+Library: JPEG library (jpeg62.dll)
+Library: Gettext (libintl.dll, libiconv.dll)
+
+
+====================================================
 MacOSX:
 ====================================================
 Currently the game does not run on MacOSX - we are searching help with porting.
 There is already a port of the quake2-engine available which can be adopted
 (http://www.fruitz-of-dojo.de).
 
+
+====================================================
 PlayStation Portable:
 ====================================================
 There is also a port for PSP in work (http://teamemergencyexit.com/quake2). Maybe
 we even get UFO:AI to PSP. Feel free to contribute.
 
 
+
+====================================================
 FAQ:
 =============================================================================================
 Q: The ufo binary can't find all the needed files
