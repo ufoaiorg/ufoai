@@ -2337,6 +2337,16 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		if ( w > MAX_VAR ) w = MAX_VAR;
 		return w;
 
+	// just remove the _ but don't translate
+	case V_TRANSLATION2_STRING:
+		if ( *token == '_' )
+			token++;
+
+		Q_strncpyz( (char *)b, token, MAX_VAR );
+		w = strlen(token)+1;
+		if ( w > MAX_VAR ) w = MAX_VAR;
+		return w;
+
 	case V_LONGSTRING:
 		strcpy( (char *)b, token );
 		w = strlen(token)+1;
@@ -2584,6 +2594,8 @@ char *Com_ValueToStr( void *base, int type, int ofs )
 			((byte *)b)[2], ((byte *)b)[3] );
 		return valuestr;
 
+	case V_TRANSLATION_STRING:
+	case V_TRANSLATION2_STRING:
 	case V_STRING:
 	case V_LONGSTRING:
 		return (char *)b;

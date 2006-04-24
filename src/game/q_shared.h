@@ -640,7 +640,8 @@ typedef enum
 	V_COLOR,
 	V_RGBA,
 	V_STRING,
-	V_TRANSLATION_STRING,
+	V_TRANSLATION_STRING, // translate via gettext
+	V_TRANSLATION2_STRING, // remove _ but don't translate
 	V_LONGSTRING,
 	V_POINTER,
 	V_ALIGN,
