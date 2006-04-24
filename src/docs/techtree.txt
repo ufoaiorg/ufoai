@@ -1,0 +1,198 @@
+This are drafts of technology descriptions that will mostly probably get into the game.
+
+The "researchtime" given is the time that one scientist would need to research the item i.e. the maximum time to complete the research with no pauses.
+
+#####################################################################
+Advanced Plasma Technology
+
+The Antareans have refined the technology to use the basic concept behind plasma (ionized gas) and perfected its use for military reasons. Not only do they use it for weapons, but they even managed to produce more powerful ion drives than mankind ever imagined possible.
+Your scientists could reproduce the basic concepts behind these improvements and we might even be able to produce similar equipment anytime soon.
+
+researchtime 90 days
+required_item something that uses plasma- or related technology
+
+#####################################################################
+Tachyon Control
+
+The research on tachyons (or tardyons, the kind that moves slower than lightspeed) have long been a big white space in human science. The antarean species has not only found out how tachyons really do fit in with the rest of all matter, but also found a way to create, manipulate and annihilate them at will. The projectiles itself do not move with near-lightspeed, but on impact the energy is emitted to the target at a speed that exceeds most physical boundaries known by mankind. This knowledge has been used to create devastating weapons that they now use to terrorize humanity. Our scientists believe that we may ber able to reproduce these weapons once we get more details lined up.
+
+researchtime 120 days
+required_item something that uses tachyon technology
+
+#####################################################################
+High-Energy Laser
+
+Laser (Light Amplification by Stimulated Emission of Radiation) technology is long known by mankind, but so-called "Tactical High-Energy Laser" or THEL have only been around for a short period of time. Though there already exist a mobile variation of this called "Mobile Tactical High-Energy Laser" or MTHEL these wepaon systems are too big and inefficient to have any real advantages to conventional weapons.
+The basic design of these weapons normaly uses a chemical laser (deuterium fluoride laser), which our scientists recently found out how to make about 5-times more efficient and compact.
+This may lead to new lightweight MTHEL weapons in the near future.
+
+researchtime 60 days
+initial technology
+
+#####################################################################
+Nanotechnology
+
+Nanotechnolgoy opens up a wide field of new production methods especially in the design and production of armor and fabric.
+By using nanotechnology it will be possible to create materials nearly completely made of fullerenes (geodesic domes at an atomic level) and use them fabricate armor that is more robust and has higher heat resistance than any known material before. Not also that, but these materials would also be lighter than comperable conventional ones.
+
+researchtime 80 days
+initial technology
+
+#####################################################################
+### Will not get included. Please ask in the forums if you really want to use it. ###
+Anti-gravity
+
+Until a few days ago no particles known to mankind had negative mass, although physicists have been able to describe some of the anticipated properties such particles may have. Assuming that particles with negative mass exit, this would produce a system where negative masses are attracted to positive masses, yet positive masses are repelled away from negative masses. As well, negative masses would produce an attractive force on one another, but would be repelled because of their negative inertial masses. Many controversial research project and theoretical discussions tried to proof and disproof the existance of negative mass, but neither side was 100% successful.
+
+This mostly theoretical assumptions (since the partical part never provided any proof) have recently been confirmed by findings in alien artefacts. Antareans seem to have found a source of these particles and not only use them in small 'flying' crafts like the hovernet, but also in most of their (bigger) spacecrafts. Since no one ever though of a good name for these particles (exept some SciFi writers) the scientists who researched these particles named them NMP (Negative Mass Particle). We currently do not know where the Antareans got these NMPs from or how they may have produced them if that's possible. So right now we depend on looted NMPs from alien AntiGrav equipment. Maybe further research will reveal more on the origins of these particles.
+--- Text to put in the research.ufo as a comment since i quoted some things from wikipedia here.. ---
+The Text above is licensed under the GNU Free Documentation License (http://www.gnu.org/copyleft/fdl.html). It uses material from the Wikipedia article "Exotic matter" (http://en.wikipedia.org/wiki/Exotic_matter).
+Mind you that the changes made to the text are not proofable at all.
+-----------------------
+
+#####################################################################
+Triax
+
+Using robotics and artificial intelligence, Phalanx has developed an all-purpose all-terrain assault vehicle for use in ground combat without the need for human intervention. The autonomous Triax UGV (Unmanned Ground Vehicle) has three axles and six-wheel suspension for manueverability on all terrains. It comes complete with heavy armor, AI-controlled (arificial intelligence) enemy recognition and machine gun turret.
+For tactical reasons the control is a hybrid of autonomous and remote control, which provides greater flexibility in situations the artificial intelligence may not recognize/act correctly. The AI is mostly used for quick enemy recognition and precise attacks.
+The only downside when using this rolling fortress of doom is the fact that it takes up alot of space in the dropship and can't reach every destination that provides enough room for it or is otherwise unreachable for ground-based units.
+
+TODO: exact weapons/armor
+
+requires TODO
+researchtime TODO
+provides "Triax"
+
+#####################################################################
+Phoenix
+
+Using the new possibilities for ion drives provided by the adapted antarean ion thruster, Phalanx has advanced UGV-technology (Unmanned Ground Vehicle) to create this mobile, hovering, autonomous weapon. The Phoenix can achieve strategic manuevers such as floating at any point in mid-air, scouting/attacking through second-story windows, and landing on rooftops. Though one disadvantage it shares with the Triax  - its size - remains.
+
+TODO: exact weapons/armor
+
+requires TODO
+researchtime TODO
+required "Ion Thruster Technology"
+requires "Triax"
+provides "Phoenix"
+
+#####################################################################
+Multiwave Stealth Generator
+
+An alien ship appeared at a terror site without warning or detection. Observers say that it seemed to appear out of thin air, hovering 5 feet above the ground and then landing. Upon researching this component found at the landing site, we can tell that the aliens have achieved stealth technology which is able to redirect not only light, but other types of waves employed in conventional radar technologies. Upon researching other alien hardware, we may be able to recreate the components needed for a working stealth system.
+
+researchtime 200 days
+requires "Alien Palm Computer"
+requires_item "Multiwave Stealth Generator" (from large alien ship)
+
+#####################################################################
+MW Stealth Detection
+
+It appears that with current human technology, detecting ships with Multiwave Stealth radar is impossible. We can only hope to obtain research data on Alien Radar Technology in the future.
+
+researchtime 120 days
+requires "Multiwave Stealth Generator"
+
+#####################################################################
+### TODO: sync this with the current crafts if needed
+MW Stealth Carrier
+
+Carrying up to twenty soldiers, the MW Stealth Carrier is a heavy transport vessel employing an enhanced version of the alien Multiwave Stealth Generator. Using our knowledge of alien radar, we can now evade it's detection. Completely invisible to alien radar, this ship could be the key to ultimate victory.
+
+researchtime 60 days
+requires "Ion Thruster Technology"
+requires "Alien Radar Technology"
+provides "MW Stealth Carrier" (craft)
+
+#####################################################################
+Ion Condensor
+
+This device, discovered in the engine room of an alien vessel, is the key to UFO propulsion technology. Unlike previous human experimentation with Ion propulsion, the Ion Condensor accelerates the ion buildup using previously unknown particle technologies, making it possible to achieve incredible amounts of thrust in an instant. Research into Ion Technology could allow us to create usable devices employing Ion propulsion.
+
+researchtime 240 days
+requires _item "Ion Condensor" (requires that an Ion Condensor was obtained from a large alien ship)
+
+#####################################################################
+Ion Thruster Technology
+Phalanx is now able to recreate the advanced in thruster found in alien propulsion units. With a more complete understanding of the technology, we can now start designing working vehicles.
+
+researchtime 120 days
+requires "Advanced Plasma Technology"
+requires "Ion Condensor"
+
+#####################################################################
+Alien Translation Device
+
+This device, discovered on an alien general, is the key to alien interspecies communication. This will enable us to research Alien Language and eventually translate it to human language.
+
+researchtime 120 days
+requires_item "Alien Translation Device" (obtained from the unconscious body or corpse of one of the rarely encountered Alien Generals)
+
+#####################################################################
+Alien Language
+
+Though each alien race seems to have a native tongue that matches its physical communication abilities, the group of alien races invading earth have developed a common lanuage of communication used in all text communications and computer hardware, enabling interspecies communications.
+
+Alien langage will help us unlock alien devices and possibly uncover information critical to the invasion.
+
+researchtime 160 days
+requires "Alien Translation Device"
+
+#####################################################################
+Alien Palm Computer
+
+This device is an amazing combination of nanotechnology and optical circuits. The data on this device would be impossible to decode without researching alien language.
+
+researchtime 240 days
+requires "Nanotechnology"
+requires "Multiwave Stealth Generator"
+requires_item "Alien Palm Computer" (obtained from an alien commander)
+
+#####################################################################
+Alien Mothership
+
+According to data translated from an alien palm computer, the Alien Mothership is the command center of the alien invasion. It's armaments are such that it could destroy a whole fleet of human vessels in a short time, making a direct attack impossible. We can only hope to find a safe way to board this ship and destroy it from the inside.
+
+researchtime 360 days
+requires "Alien Language"
+requires "Alien Palm Computer"
+
+#####################################################################
+Alien Radar Technology
+
+Alien Radar gives us an brief insight into subatomic-particle radar systems. This data from an Alien Palm Computer, combined with research of alien stealth hardware, could lead to production of a device that could detect alien stealth ships, or a stealth drive that prevents detection by Alien Radar.
+
+researchtime 120 days
+requires "Alien Palm Computer"
+requires "MW Stealth Detection"
+
+#####################################################################
+Dark Radar
+
+Using data obtained from alien computers and hardware, Phalanx has created a design plan for a radar system that employs subatomic-particles much like alien radar does. Once built, this new device could be the key to locating the alien mothership. Using a MW Stealth Carrier, Phalanx could board the ship and hope to destroy it from the inside, which seems to be the only possible way to defeat it.
+
+researchtime 60 days
+requires "Alien Radar Technology" (includes "MW Stealth Detection")
+requires "Alien Mothership"
+provides "Dark Radar" (building)
+
+#####################################################################
+Writers/Credits:
+* Werner Höhrer
+* ProtoArmor
+
+See also
+* alien_types.txt - Xenobiology of alien races and descriptions of their robots/cyborgs.
+* ufo_types.txt - UFO types
+* weapon_hierarchy.txt - Weapon- and item-descriptions
+
+Some of the sources:
+http://en.wikipedia.org/wiki/Plasma_%28physics%29
+http://en.wikipedia.org/wiki/Ion_thruster
+http://en.wikipedia.org/wiki/Tachyon
+http://en.wikipedia.org/wiki/Tactical_High_Energy_Laser
+http://en.wikipedia.org/wiki/Chemical_laser
+http://en.wikipedia.org/wiki/Nanotechnology
+http://en.wikipedia.org/wiki/Exotic_matter
+http://en.wikipedia.org/wiki/Anti-gravity
+http://en.wikipedia.org/wiki/UGV
