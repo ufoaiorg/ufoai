@@ -731,6 +731,7 @@ campaign main
 	equipment	campaign_player
 	market		campaign_market
 	credits		500000
+	map	map_earth
 
 	date		"2000 0 7"
 	firststage	intro
