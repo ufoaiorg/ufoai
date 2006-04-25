@@ -392,7 +392,7 @@ menu popup_newbase
 	}
 	string name
 	{
-		string	"*cvar mn_base_title"
+		string	"*cvar mn_base_title_new"
 		pos	"290 330"
 		size	"440 32"
 		font	f_big
@@ -432,9 +432,10 @@ menu popup_newbase
 		click	{ cmd "mn_pop;mn_build_base;" }
 	}
 
-	confunc mn_base_title_changed
+	confunc mn_base_title_new_changed
 	{
 		*name mousefx false
+		cmd	"base_changename"
 	}
 	pic bt_edit
 	{
@@ -446,9 +447,13 @@ menu popup_newbase
 		in	{ *bt_edit texl "128 108" *bt_edit texh "255 140" }
 		click
 		{
-			cmd "msgmenu ?mn_base_title"
+			cmd "msgmenu ?mn_base_title_new"
 			*name mousefx true
 		}
+	}
+	func init
+	{
+		cmd "mn_setbasetitle"
 	}
 }
 

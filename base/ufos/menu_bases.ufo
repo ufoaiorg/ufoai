@@ -218,7 +218,7 @@ menu bases
 		align	ur
 	}
 
-	string title
+	string name
 	{
 		tooltip	"_Name of this base"
 		string	"*cvar mn_base_title"
@@ -226,19 +226,23 @@ menu bases
 		font	f_big
 	}
 
-	// confunc mn_base_title_changed is in menu_geoscape already
+	confunc mn_base_title_changed
+	{
+		*name mousefx false
+		cmd	"base_changename"
+	}
+
 	pic bt_edit
 	{
 		tooltip	"_Rename your base"
 		image	menu/buttons_small
 		pos	"570 40"
-		mousefx	true
 		texl	"0 48"
 		texh	"16 64"
 		click
 		{
 			cmd "msgmenu ?mn_base_title"
-			*title mousefx true
+			*name mousefx true
 		}
 	}
 
