@@ -1508,14 +1508,16 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 	vec3_t v0, v1, v2, v3, veca, vecb;
 	globe_triangle_t *t = NULL;
 	image_t *gl;
-// 	float nx, ny, nw, nh;
 
+	qglPushMatrix();
 	qglEnable(GL_TEXTURE_2D);
 	gl = GL_FindImage( va("pics/menu/%s_day", map), it_wrappic );
 	GL_Bind (gl->texnum);
 
-	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
-	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+	qglTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+	qglTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 	/* iterate over the 20 sides of the icosahedron */
 	for(s = 0; s < MAX_ICOSAHEDRON; s++)
@@ -1549,11 +1551,13 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 			qglEnd(); /* TRIANGLE_STRIP */
 		}
 	}
-	// TODO: map to sphere and display
 
 	// test for multitexture and env_combine support
 	if ( !qglSelectTextureSGIS && !qglActiveTextureARB )
+	{
+		qglPopMatrix();
 		return;
+	}
 
 	// init combiner
 	qglEnable( GL_BLEND );
@@ -1570,10 +1574,16 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 	}
 
 	GL_Bind( DaN->texnum );
+	qglEnable( GL_TEXTURE_2D );
 
-	// TODO: map to sphere and display
+	// TODO: draw night image
+
+	// reset mode
+	qglDisable( GL_TEXTURE_2D );
+	GL_SelectTexture( gl_texture0 );
 
 	qglDisable( GL_BLEND );
+	qglPopMatrix();
 }
 
 #ifdef BUILD_FREETYPE
