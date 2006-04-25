@@ -1903,7 +1903,11 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 
 	assert( i );
 	ic = i->c[container];
-	if ( !ic ) return false;
+	if ( !ic )
+	{
+		Com_DPrintf("Com_RemoveFromInventory - no container %i\n", container );
+		return false;
+	}
 
 	if ( CSI->ids[container].single || ( ic->x == x && ic->y == y ) )
 	{
@@ -2166,10 +2170,11 @@ Com_CharGetBody
 char *Com_CharGetBody( character_t *chr )
 {
 	assert( chr );
+	assert( chr->inv );
 	if ( chr->inv->c[CSI->idArmor] )
-		sprintf( returnModel, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->body );
+		Com_sprintf( returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->body );
 	else
-		sprintf( returnModel, "%s/%s", chr->path, chr->body );
+		Com_sprintf( returnModel, MAX_VAR, "%s/%s", chr->path, chr->body );
 	return returnModel;
 }
 

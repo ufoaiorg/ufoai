@@ -23,6 +23,8 @@ typedef struct menuModel_s
 {
 	char	id[MAX_VAR];
 	char	need[MAX_VAR];
+	char	anim[MAX_VAR];
+	int	skin;
 	char	model[MAX_QPATH];
 	struct menuModel_s	*next;
 } menuModel_t;
@@ -182,6 +184,8 @@ value_t menuModelValues[] =
 {
 	{ "model",		V_STRING,	MENUMODELFS(model) },
 	{ "need",		V_NULL,		0 },
+	{ "anim",		V_STRING,	MENUMODELFS(anim) },
+	{ "skin",		V_INT,		MENUMODELFS(skin) },
 
 	{ NULL,			V_NULL,		0 },
 };
@@ -2020,6 +2024,7 @@ void MN_DrawMenus( void )
 					else
 						menuModel = node->menuModel;
 
+
 					mi.name = source;
 
 					mi.origin = node->origin;
@@ -2027,6 +2032,10 @@ void MN_DrawMenus( void )
 					mi.scale = node->scale;
 					mi.center = node->center;
 					mi.color = node->color;
+					// no animation
+					mi.frame = 0;
+					mi.oldframe = 0;
+					mi.backlerp = 0;
 
 					// autoscale?
 					if ( !node->scale[0] )
@@ -2035,100 +2044,104 @@ void MN_DrawMenus( void )
 						mi.center = node->size;
 					}
 
-					// get skin
-					if ( node->data[3] && *(char *)node->data[3] )
-						mi.skin = atoi( MN_GetReferenceString( menu, node->data[3] ) );
-					else
-						mi.skin = 0;
-
-					menuModel = node->menuModel;
 					do {
 						if ( menuModel )
 						{
 							mi.model = re.RegisterModel( menuModel->model );
 							mi.name = menuModel->model;
-						}
 
-						// do animations
-						if ( node->data[1] && *(char *)node->data[1] )
-						{
-							ref = MN_GetReferenceString( menu, node->data[1] );
-							if ( !node->data[4] )
+							if ( !mi.model )
 							{
-								// new anim state
-								as = (animState_t *)curadata;
-								curadata += sizeof( animState_t );
-								memset( as, 0, sizeof( animState_t ) );
-								re.AnimChange( as, mi.model, ref );
-								node->data[4] = as;
+								menuModel = menuModel->next;
+								if ( ! menuModel )
+									break;
+								continue;
 							}
-							else
-							{
-								// change anim if needed
-								char *anim;
-								as = node->data[4];
-								anim = re.AnimGetName( as, mi.model );
-								if ( anim && Q_stricmp( anim, ref ) )
-									re.AnimChange( as, mi.model, ref );
-							}
-							re.AnimRun( as, mi.model, cls.frametime*1000 );
-
-							mi.frame = as->frame;
-							mi.oldframe = as->oldframe;
-							mi.backlerp = as->backlerp;
+							mi.skin = menuModel->skin;
+							// TODO: implement anim for menuModels
+							re.DrawModelDirect( &mi, NULL, NULL );
 						}
 						else
 						{
-							// no animation
-							mi.frame = 0;
-							mi.oldframe = 0;
-							mi.backlerp = 0;
-						}
+							// get skin
+							if ( node->data[3] && *(char *)node->data[3] )
+								mi.skin = atoi( MN_GetReferenceString( menu, node->data[3] ) );
+							else
+								mi.skin = 0;
 
-
-						// place on tag
-						if ( node->data[2] )
-						{
-							menuNode_t	*search;
-							char	parent[MAX_VAR];
-							char	*tag;
-
-							Q_strncpyz( parent, MN_GetReferenceString( menu, node->data[2] ), MAX_VAR );
-							tag = parent;
-							while ( *tag && *tag != ' ' ) tag++;
-							*tag++ = 0;
-
-							for ( search = menu->firstNode; search != node && search; search = search->next )
-								if ( search->type == MN_MODEL && !Q_strncmp( search->name, parent, MAX_VAR ) )
+							// do animations
+							if ( node->data[1] && *(char *)node->data[1] )
+							{
+								ref = MN_GetReferenceString( menu, node->data[1] );
+								if ( !node->data[4] )
 								{
-									char model[MAX_VAR];
-									Q_strncpyz( model, MN_GetReferenceString( menu, search->data[0] ), MAX_VAR );
-
-									pmi.model = re.RegisterModel( model );
-									if ( !pmi.model ) break;
-
-									pmi.name = model;
-									pmi.origin = search->origin;
-									pmi.angles = search->angles;
-									pmi.scale = search->scale;
-									pmi.center = search->center;
-
-									// autoscale?
-									if ( !node->scale[0] )
-									{
-										mi.scale = NULL;
-										mi.center = node->size;
-									}
-
-									as = search->data[4];
-									pmi.frame = as->frame;
-									pmi.oldframe = as->oldframe;
-									pmi.backlerp = as->backlerp;
-
-									re.DrawModelDirect( &mi, &pmi, tag );
-									break;
+									// new anim state
+									as = (animState_t *)curadata;
+									curadata += sizeof( animState_t );
+									memset( as, 0, sizeof( animState_t ) );
+									re.AnimChange( as, mi.model, ref );
+									node->data[4] = as;
 								}
-						} else re.DrawModelDirect( &mi, NULL, NULL );
+								else
+								{
+									// change anim if needed
+									char *anim;
+									as = node->data[4];
+									anim = re.AnimGetName( as, mi.model );
+									if ( anim && Q_strncmp( anim, ref, MAX_VAR ) )
+										re.AnimChange( as, mi.model, ref );
+								}
+								re.AnimRun( as, mi.model, cls.frametime*1000 );
+
+								mi.frame = as->frame;
+								mi.oldframe = as->oldframe;
+								mi.backlerp = as->backlerp;
+							}
+
+							// place on tag
+							if ( node->data[2] )
+							{
+								menuNode_t	*search;
+								char	parent[MAX_VAR];
+								char	*tag;
+
+								Q_strncpyz( parent, MN_GetReferenceString( menu, node->data[2] ), MAX_VAR );
+								tag = parent;
+								while ( *tag && *tag != ' ' ) tag++;
+								*tag++ = 0;
+
+								for ( search = menu->firstNode; search != node && search; search = search->next )
+									if ( search->type == MN_MODEL && !Q_strncmp( search->name, parent, MAX_VAR ) )
+									{
+										char model[MAX_VAR];
+										Q_strncpyz( model, MN_GetReferenceString( menu, search->data[0] ), MAX_VAR );
+
+										pmi.model = re.RegisterModel( model );
+										if ( !pmi.model ) break;
+
+										pmi.name = model;
+										pmi.origin = search->origin;
+										pmi.angles = search->angles;
+										pmi.scale = search->scale;
+										pmi.center = search->center;
+
+										// autoscale?
+										if ( !node->scale[0] )
+										{
+											mi.scale = NULL;
+											mi.center = node->size;
+										}
+
+										as = search->data[4];
+										pmi.frame = as->frame;
+										pmi.oldframe = as->oldframe;
+										pmi.backlerp = as->backlerp;
+
+										re.DrawModelDirect( &mi, &pmi, tag );
+										break;
+									}
+							} else re.DrawModelDirect( &mi, NULL, NULL );
+						}
 
 						if ( menuModel )
 							menuModel = menuModel->next;
