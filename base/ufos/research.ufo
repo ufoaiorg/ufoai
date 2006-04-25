@@ -433,7 +433,7 @@ tech rs_plasma
 	description	"_plasma_txt"
 
 	requires	nothing
-	description	"_plasma_txt"
+
 	time	1
 	researched	false
 }
@@ -531,8 +531,10 @@ tech rs_nano
 {
 	type	tech
 	name	"_Nano Technology"
-	requires	initial
+	up_chapter	tech
 	description	"_nano_txt"
+
+	requires	initial
 	time	1
 	researched	false
 }
@@ -542,7 +544,6 @@ tech rs_kevlar_armor
 	type	armor
 	up_chapter	weapons
 	description	"_kevlar_armor_txt"
-
 
 	requires	initial
 	provides	light
@@ -566,6 +567,7 @@ tech rs_advanced_armor
 {
 	type	tech
 	name	"_Advanced Armor Fabrics"
+
 	requires	"rs_nano rs_plasma"
 	time	1
 	researched	false
@@ -574,6 +576,7 @@ tech rs_advanced_armor
 tech rs_heavy_nano_armor
 {
 	type	armor
+
 	requires	rs_advanced_armor
 	provides	heavy
 	time	0
@@ -717,6 +720,7 @@ tech rs_craft_dropship
 	time	0
 	researched	true
 
+	// TODO should come from craft-definition:
 	mdl_top		dropship
 }
 
@@ -731,6 +735,7 @@ tech rs_craft_interceptor
 	time	0
 	researched	true
 
+	// TODO should come from craft-definition:
 	mdl_top		interceptor
 }
 
@@ -765,6 +770,7 @@ tech rs_craft_ufo_small
 	time	100
 	researched	false
 
+	// TODO should come from craft-definition:
 	mdl_top		ufo1
 }
 
@@ -781,6 +787,7 @@ tech rs_craft_ufo_big
 	time	100
 	researched	false
 
+	// TODO should come from craft-definition:
 	mdl_top		ufobig
 }
 
@@ -813,6 +820,7 @@ tech rs_alien_ortnok
 	time	0
 	researched	false
 
+	// TODO should come from alien-definition:
 	mdl_top	models/aliens/ortnok/body01.md2
 }
 
@@ -828,5 +836,6 @@ tech rs_alien_ortnok_medium
 	time	0
 	researched	false
 
+	// TODO should come from alien-definition:
 	mdl_top	models/aliens/ortnok_medium/body01.md2
 }
