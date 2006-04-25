@@ -9,10 +9,14 @@ There are only the source-map-files. Quake2 based games need to compile them. We
 a compile.pl (Perl-scriptfile) in base/maps (you need the programming language Perl installed).
 For Windows you can use Active State Perl. For linux you should already have Perl installed.
 
-You can also run make in the base/maps folder - this has several advantages:
+You can also run make in the base/maps folder to compile the maps - this has several advantages
+over the compile.pl method:
 + just recompile changes maps (e.g. after a svn update)
 + use more then one cpu
 But you need GNU make installed to do this (comes with e.g. Dev-CPP - see below)
+
+In both cases you need the quake map compile tools (found on sf.net or in src/tools - see below)
+named qbsp3 and qrad3.
 
 
 ====================================================
@@ -24,8 +28,23 @@ o Grab SVN
 Grab the svn-revision (version controll system) with the command:
 svn co https://svn.sourceforge.net/svnroot/ufoai/ufoai/trunk .
 
+o  Installation of header files to compile the game
+====================================================
+You need to install development files for some libraries to compile
+UFO:Alien Invasion (these are the Debian package names):
+libjpeg62-dev
+libogg-dev
+libvorbis-dev
+libsdl1.2-dev
+libsdl-ttf2.0-dev
+
+others:
+OpenGL-headers (normally comes with OpenGL-drivers)
+X-headers
+
 o Compile SVN
 ====================================================
+(Of course you need to have gcc installed)
 Follow these steps:
   cd src/linux
   make
@@ -34,6 +53,7 @@ Follow these steps:
 
 o Compile Maps
 ====================================================
+To compile the maps with qbsp3 and qrad3 type:
   cd base/maps
   make
 
