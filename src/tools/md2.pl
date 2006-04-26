@@ -30,9 +30,9 @@
 use strict;
 use warnings;
 
-my $MD2IN = 'in.md2';
+my $MD2IN = 'light.md2';
 my $MD2OUT = 'out.md2';
-my $NewSkinPath ='testxx.jpg';
+my $NewSkinPath ='texture.jpg';
 
 package MD2;
 use base 'Parse::Binary';
@@ -75,13 +75,38 @@ use constant FORMAT => ('a64');
 ##    vertex_t    verts[1];       // first vertex of this frame
 ##} frame_t;
 #};
-   
-### MAIN ###
-# read -md2 file
+
+#######################################
+# MAIN
+#######################################
+
+# read .md2 file
 my $md2_file = MD2->new($MD2IN);
 
 print "SkinPath old: '", $md2_file->Path->[0][0],"'\n";
-$md2_file->Path->[0][0] = $NewSkinPath;
+
+# get new texture-path from user
+print "Enter new path (Enter=$NewSkinPath):";
+
+my $InputString = '';
+my $key = '';
+
+use Term::ReadKey;
+do {
+	$key = ReadKey(0);
+	$InputString .= $key;
+} while ($key ne "\n");
+
+chomp($InputString);
+
+# replace texture-path
+if ($InputString ne "") {
+	$md2_file->Path->[0][0] = $InputString;
+} else {
+	print "Defaulting to '$NewSkinPath'\n";
+	$md2_file->Path->[0][0] = $NewSkinPath;
+}
+
 print "SkinPath new: '", $md2_file->Path->[0][0],"'\n";
 
 # save as another .md2 file
