@@ -483,7 +483,7 @@ void SV_ExecuteClientMessage (client_t *cl)
 			break;
 
 		case clc_userinfo:
-			strncpy (cl->userinfo, MSG_ReadString (&net_message), sizeof(cl->userinfo)-1);
+			Q_strncpyz (cl->userinfo, MSG_ReadString (&net_message), sizeof(cl->userinfo));
 			SV_UserinfoChanged (cl);
 			break;
 

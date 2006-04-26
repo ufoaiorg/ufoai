@@ -361,10 +361,6 @@ void G_ActorSpawn( edict_t *ent )
 	ent->pos[2] = gi.GridFall( gi.map, ent->pos );
 	gi.GridPosToVec( gi.map, ent->pos, ent->origin );
 
-	// set stats
-	ent->HP = 100;
-	ent->AP = 100;
-
 	// link it for collision detection
 	ent->dir = AngleToDV( ent->angle );
 	ent->solid = SOLID_BBOX;
@@ -405,6 +401,8 @@ void SP_player_start (edict_t *ent)
 	// maybe there are already the max soldiers allowed per team connected
 	if ( (int)(maxsoldiers->value) > level.num_spawnpoints[ent->team] )
 	{
+		ent->HP = 100;
+		ent->AP = 100;
 		G_ActorSpawn( ent );
 		soldierCount++;
 	}
@@ -430,6 +428,14 @@ void SP_human_start (edict_t *ent)
 		return;
 	}
 	ent->team = 1;
+	// only the first time
+	if ( !ent->chr.assigned_missions )
+	{
+		ent->HP = 100;
+		ent->AP = 100;
+	}
+	// count mission
+	ent->chr.assigned_missions++;
 	G_ActorSpawn( ent );
 }
 
@@ -446,6 +452,10 @@ void SP_alien_start (edict_t *ent)
 		return;
 	}
 	ent->team = TEAM_ALIEN;
+	// set stats
+	ent->HP = 100;
+	ent->AP = 100;
+
 	G_ActorSpawn( ent );
 }
 
@@ -456,6 +466,9 @@ Starting point for a civilian.
 void SP_civilian_start (edict_t *ent)
 {
 	ent->team = TEAM_CIVILIAN;
+	// set stats
+	ent->HP = 100;
+	ent->AP = 100;
 	G_ActorSpawn( ent );
 }
 

@@ -1399,7 +1399,8 @@ void G_MoraleBehaviour( int team )
 			newMorale = ent->morale + MORALE_RANDOM( MORALE_REGENERATION );
 			if (newMorale > GET_MORALE( ent->chr.skills[ABILITY_MIND]))
 				ent->morale = GET_MORALE( ent->chr.skills[ABILITY_MIND] );
-		else ent->morale = newMorale;
+			else
+				ent->morale = newMorale;
 
 			// send phys data and state:
 			G_SendStats( ent );
@@ -1486,6 +1487,14 @@ void G_Damage( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 		gi.AddEvent( G_VisToPM( ent->visflags ), EV_ACTOR_DIE );
 		gi.WriteShort( ent->number );
 		gi.WriteByte( ent->state );
+
+		// count score
+		if ( ent->team == TEAM_CIVILIAN )
+			attacker->chr.kills[KILLED_CIVILIANS]++;
+		else if ( attacker->team == ent->team )
+			attacker->chr.kills[KILLED_TEAM]++;
+		else
+			attacker->chr.kills[KILLED_ALIENS]++;
 
 		// apply morale changes
 		G_Morale( ML_DEATH, ent, attacker, damage );
@@ -2154,9 +2163,7 @@ G_ClientTeamInfo
 */
 void G_ClientTeamInfo( player_t *player )
 {
-// 	equipDef_t *ed;
 	edict_t *ent;
-// 	char	*name;
 	int		i, j, k, length;
 	int		container, x, y;
 	item_t	item;
@@ -2171,18 +2178,6 @@ void G_ClientTeamInfo( player_t *player )
 		if ( ent->type == ET_ACTORSPAWN && player->pers.team == ent->team )
 			break;
 
-	// search equipment definition
-#if 0
-	name = gi.cvar_string( "equip" );
-	for ( i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++ )
-		if ( !strcmp( name, ed->name ) )
-			break;
-	if ( i == gi.csi->numEDs )
-	{
-		ed = NULL;
-		Com_Printf( "Equipment '%s' not found, accepting any equipment!\n", name );
-	}
-#endif
 	memset( count, 0, sizeof( count ) );
 	for ( i = 0; i < length; i++ )
 	{
@@ -2197,15 +2192,19 @@ void G_ClientTeamInfo( player_t *player )
 
 			// model
 			ent->chr.ucn = gi.ReadShort();
-			strcpy( ent->chr.name, gi.ReadString() );
-			strcpy( ent->chr.path, gi.ReadString() );
-			strcpy( ent->chr.body, gi.ReadString() );
-			strcpy( ent->chr.head, gi.ReadString() );
+			Q_strncpyz( ent->chr.name, gi.ReadString(), MAX_VAR );
+			Q_strncpyz( ent->chr.path, gi.ReadString(), MAX_VAR );
+			Q_strncpyz( ent->chr.body, gi.ReadString(), MAX_VAR );
+			Q_strncpyz( ent->chr.head, gi.ReadString(), MAX_VAR );
 			ent->chr.skin = gi.ReadByte();
 
 			// new attributes
 			for (k = 0; k<SKILL_NUM_TYPES; k++)
 				ent->chr.skills[k] = gi.ReadByte();
+
+			// scores
+			for (k = 0; k<KILLED_NUM_TYPES; k++)
+				ent->chr.kills[k] = gi.ReadByte();
 
 			ent->HP = GET_HP( ent->chr.skills[ABILITY_POWER] );
 			ent->AP = 100;
@@ -2222,19 +2221,7 @@ void G_ClientTeamInfo( player_t *player )
 				x = gi.ReadByte();
 				y = gi.ReadByte();
 
-				// check info and add item if ok
-				// NOTE: Commented out because a player should be able
-				//       to buy and collect new items and weapons
-// 				if ( !ed )
-					Com_AddToInventory( &ent->i, item, container, x, y );
-/*				else
-				{
-					count[item.t]++;
-					if ( count[item.t] > ed->num[item.t] )
-						gi.cprintf( player, PRINT_HIGH, _("Item '%s' not allowed and removed from inventory.\n"), gi.csi->ods[item.t].name );
-					else
-						Com_AddToInventory( &ent->i, item, container, x, y );
-				}*/
+				Com_AddToInventory( &ent->i, item, container, x, y );
 
 				// get next item
 				item.t = gi.ReadByte();
@@ -2425,21 +2412,21 @@ void G_ClientUserinfoChanged(player_t *player, char *userinfo)
 	// check for malformed or illegal info strings
 	if (!Info_Validate(userinfo))
 	{
-		strcpy (userinfo, "\\name\\badinfo");
+		Q_strncpyz (userinfo, "\\name\\badinfo", sizeof(userinfo));
 	}
 
 	// set name
 	s = Info_ValueForKey (userinfo, "name");
-	strncpy (player->pers.netname, s, sizeof(player->pers.netname)-1);
+	Q_strncpyz(player->pers.netname, s, sizeof(player->pers.netname));
 
 	// set spectator
 	s = Info_ValueForKey (userinfo, "spectator");
-	if (strcmp(s, "1"))
+	if (*s == '1')
 		player->pers.spectator = true;
 	else
 		player->pers.spectator = false;
 
-	strncpy (player->pers.userinfo, userinfo, sizeof(player->pers.userinfo)-1);
+	Q_strncpyz(player->pers.userinfo, userinfo, sizeof(player->pers.userinfo));
 }
 
 
