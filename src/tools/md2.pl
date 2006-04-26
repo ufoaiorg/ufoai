@@ -88,7 +88,9 @@ use constant FORMAT => ('a64');
 my $InputString = '';
 
 # parse commandline paarameters (md2-filenames)
-if ( $#ARGV == 0 ) {
+if ( $#ARGV < 0 ) {
+	print "Usage:\tmd2.pl [in.md2 [out.md2 [texturefile]]]\n";
+} elsif ( $#ARGV == 0 ) {
 	$MD2IN = $MD2OUT = $ARGV[0];
 	print "IN=OUT= \"$MD2IN\"\n";
 } elsif  ( $#ARGV == 1 ) {
