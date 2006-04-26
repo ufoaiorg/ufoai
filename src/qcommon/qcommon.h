@@ -756,6 +756,7 @@ SCRIPT PARSING
 ==============================================================
 */
 
+#define MAX_TEAMDEFS	128
 
 #define LASTNAME	3
 typedef enum
@@ -770,6 +771,19 @@ typedef enum
 
 	NAME_NUM_TYPES
 } nametypes_t;
+
+typedef struct teamDesc_s
+{
+	char title[MAX_VAR];
+	char name[MAX_VAR];
+	char text[MAX_VAR];
+	char autopsy[MAX_VAR];
+	char notes[MAX_VAR];
+} teamDesc_t;
+
+extern	teamDesc_t	teamDesc[MAX_TEAMDEFS];
+extern	int		numTeamDesc;
+
 extern	char *name_strings[NAME_NUM_TYPES];
 
 char *Com_GiveName( int gender, char *category );

@@ -385,7 +385,6 @@ void Com_ParseInventory( char *name, char **text )
 */
 
 #define MAX_NAMECATS	64
-#define MAX_TEAMDEFS	128
 #define MAX_INFOSTRING	65536
 
 typedef enum model_script_s
@@ -414,12 +413,15 @@ typedef struct teamDef_s
 	int  num;
 } teamDef_t;
 
+teamDesc_t	teamDesc[MAX_TEAMDEFS];
+
 nameCategory_t	nameCat[MAX_NAMECATS];
 teamDef_t		teamDef[MAX_TEAMDEFS];
 char	infoStr[MAX_INFOSTRING];
 char	*infoPos;
 int		numNameCats = 0;
 int		numTeamDefs = 0;
+int		numTeamDesc = 0;
 
 char *name_strings[NAME_NUM_TYPES] =
 {
@@ -822,6 +824,79 @@ void Com_ParseActors( char *title, char **text )
 	} while ( *text );
 }
 
+#define	PARSETEAMDESC(x)	(int)&(((teamDesc_t *)0)->x)
+
+value_t teamDescValues[] =
+{
+	{ "name",	V_TRANSLATION_STRING,	PARSETEAMDESC( name ) },
+	{ "text",	V_TRANSLATION2_STRING,	PARSETEAMDESC( text ) },
+	{ "notes",	V_TRANSLATION2_STRING,	PARSETEAMDESC( notes ) },
+	{ "autopsy",	V_TRANSLATION2_STRING,	PARSETEAMDESC( autopsy ) },
+
+	{ NULL,	0, 0 }
+};
+
+
+/*
+======================
+Com_ParseTeamDesc
+======================
+*/
+void Com_ParseTeamDesc( char *title, char **text )
+{
+	teamDesc_t		*td;
+	char	*errhead = _("Com_ParseTeamDesc: unexptected end of file (teamdesc ");
+	char	*token;
+	int	i;
+	value_t	*v;
+
+	// check for additions to existing team descriptions
+	for ( i = 0, td = teamDesc; i < numTeamDesc; i++, td++ )
+		if ( !Q_strncmp( td->title, title, MAX_VAR ) )
+			break;
+
+	// reset new category
+	if ( i >= MAX_TEAMDEFS )
+	{
+		Com_Printf( _("Too many team descriptions, '%s' ignored.\n"), title );
+		return;
+	}
+	memset( td, 0, sizeof( teamDesc_t ) );
+	numTeamDesc++;
+	Q_strncpyz( td->title, title, MAX_VAR );
+
+	// get name list body body
+	token = COM_Parse( text );
+
+	if ( !*text || *token != '{' )
+	{
+		Com_Printf( _("Com_ParseTeamDesc: team desc \"%s\" without body ignored\n"), title );
+		if ( numTeamDesc - 1 == td - teamDesc )
+			numTeamDesc--;
+		return;
+	}
+
+	do {
+		// get the name type
+		token = COM_EParse( text, errhead, title );
+		if ( !*text ) break;
+		if ( *token == '}' ) break;
+
+		for ( v = teamDescValues; v->string; v++ )
+			if ( !Q_strncmp( token, v->string, sizeof(v->string) ) )
+			{
+				// found a definition
+				token = COM_EParse( text, errhead, title );
+				if ( !*text ) return;
+
+				Com_ParseValue( td, token, v->type, v->ofs );
+				break;
+			}
+
+		if ( !v->string )
+			Com_Printf( "Com_ParseTeamDesc: unknown token \"%s\" ignored (teamdesc %s)\n", token, title );
+	} while ( *text );
+}
 
 /*
 ======================
@@ -1033,6 +1108,7 @@ void Com_ParseScripts( void )
 	{
 		// server/client scripts
 		if ( !Q_strncmp( type, "equipment", 9 ) ) Com_ParseEquipment( name, &text );
+		else if ( !Q_strncmp( type, "teamdesc", 8 ) ) Com_ParseTeamDesc( name, &text );
 		else if ( !Q_strncmp( type, "team", 4 ) ) Com_ParseTeam( name, &text );
 		else if ( !dedicated->value ) CL_ParseScriptSecond( type, name, &text );
 	}
