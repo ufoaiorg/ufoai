@@ -4999,7 +4999,9 @@
       #define GL_COLOR_INDEX1_EXT                                         0x80E2
       #define GL_COLOR_INDEX2_EXT                                         0x80E3
       #define GL_COLOR_INDEX4_EXT                                         0x80E4
+      #ifndef GL_COLOR_INDEX8_EXT
       #define GL_COLOR_INDEX8_EXT                                         0x80E5
+      #endif
       #define GL_COLOR_INDEX12_EXT                                        0x80E6
       #define GL_COLOR_INDEX16_EXT                                        0x80E7
       #define GL_TEXTURE_INDEX_SIZE_EXT                                   0x80ED
