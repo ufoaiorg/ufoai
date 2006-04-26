@@ -44,7 +44,7 @@ my $NewSkinPath	='texture.jpg';
 package MD2;
 use base 'Parse::Binary';
 use constant FORMAT => (
-	Magic		=> 'I',		# magic number. must be equal to "IPD2"
+	Magic		=> 'I',		# magic number. must be equal to "IDP2"
 	Version		=> 'I',		# md2 version. must be equal to 8
 	SkinWidth		=> 'I',		# width of the texture
 	SkinHeight	=> 'I',		# height of the texture
@@ -109,6 +109,13 @@ if ( $#ARGV < 0 ) {
 
 # read .md2 file
 my $md2_file = MD2->new($MD2IN);
+
+if ($md2_file->Magic != 844121161) { #844121161 equals "IDP2"
+	die "File has wrong magic number \"".$md2_file->Magic."\".\n";
+}
+if ($md2_file->Version != 8) {
+	die "File has wrong format version \"".$md2_file->Version."\".\n";
+}
 
 print "Skin old: \"", $md2_file->Path->[0][0],"\"\n";
 
