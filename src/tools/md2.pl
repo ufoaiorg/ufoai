@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 #######################################
 # Copyright (C) 2006 Werner Höherer
 # 
@@ -25,12 +26,15 @@
 
 #######################################
 # Description
-#	The scriopt currently just rellaces the texture-path from an md2 file with 
+#	The script currently just rellaces the texture-path from an md2 file with 
+# Usage
+#	md2.pl in.md2 out.md2
 #######################################
 use strict;
 use warnings;
 
-my $MD2IN = 'light.md2';
+# Default values for filepaths
+my $MD2IN = 'in.md2';
 my $MD2OUT = 'out.md2';
 my $NewSkinPath ='texture.jpg';
 
@@ -80,6 +84,17 @@ use constant FORMAT => ('a64');
 # MAIN
 #######################################
 
+# parse commandline paarameters (md2-filenames)
+if ( $#ARGV == 0 ) {
+	$MD2IN = $MD2OUT = $ARGV[0];
+	print "IN=OUT= \"$MD2IN\"\n";
+} elsif  ( $#ARGV == 1 ){
+	$MD2IN	= $ARGV[0];
+	$MD2OUT	= $ARGV[1];
+	print "IN = \"$MD2IN\"\n";
+	print "OUT= \"$MD2OUT\"\n";
+}
+
 # read .md2 file
 my $md2_file = MD2->new($MD2IN);
 
@@ -111,6 +126,8 @@ print "SkinPath new: '", $md2_file->Path->[0][0],"'\n";
 
 # save as another .md2 file
 $md2_file->write($MD2OUT);
+
+__END__
 
 ##########
 # EOF
