@@ -31,7 +31,7 @@ CL_CharacterCvars
 static char *skill_strings[10] =
 {
 	"Poor",
-	"Mediocre",
+	"Medicore",
 	"Fair",
 	"Good",
 	"Excellent",
@@ -52,6 +52,11 @@ void CL_CharacterCvars( character_t *chr )
 	Cvar_ForceSet( "mn_head", Com_CharGetHead( chr ) );
 	Cvar_ForceSet( "mn_skin", va( "%i", chr->skin ) );
 	Cvar_ForceSet( "mn_skinname", _(teamSkinNames[chr->skin]) );
+
+	Cvar_Set( "mn_chrmis", va( "%i", chr->assigned_missions ) );
+	Cvar_Set( "mn_chrkillalien", va( "%i", chr->kills[KILLED_ALIENS] ) );
+	Cvar_Set( "mn_chrkillcivilian", va( "%i", chr->kills[KILLED_CIVILIANS] ) );
+	Cvar_Set( "mn_chrkillteam", va( "%i", chr->kills[KILLED_TEAM] ) );
 
 	Cvar_Set( "mn_vpwr", va( "%i", chr->skills[ABILITY_POWER] ) );
 	Cvar_Set( "mn_vspd", va( "%i", chr->skills[ABILITY_SPEED] ) );

@@ -1610,7 +1610,7 @@ Return current working dir
 char* FS_GetCwd( void )
 {
 	static char buf[MAX_QPATH];
-	const char* path = getcwd(buf,sizeof(buf));
+	char* path = getcwd(buf,sizeof(buf));
 	if ( path != NULL )
 	{
 #ifdef _WIN32
