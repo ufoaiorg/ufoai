@@ -28,7 +28,10 @@
 # Description
 #	The script currently just rellaces the texture-path from an md2 file with 
 # Usage
-#	md2.pl in.md2 out.md2
+#	md2.pl [in.md2 [out.md2 [texturefile]]]
+#
+#	If [in.md2] is given it will also be used as outputfile
+#	Right now providing a texture file is only possible if exactly three arguments are given.
 #######################################
 use strict;
 use warnings;
@@ -84,45 +87,54 @@ use constant FORMAT => ('a64');
 # MAIN
 #######################################
 
+my $InputString = '';
+
 # parse commandline paarameters (md2-filenames)
 if ( $#ARGV == 0 ) {
 	$MD2IN = $MD2OUT = $ARGV[0];
 	print "IN=OUT= \"$MD2IN\"\n";
-} elsif  ( $#ARGV == 1 ){
+} elsif  ( $#ARGV == 1 ) {
 	$MD2IN	= $ARGV[0];
 	$MD2OUT	= $ARGV[1];
 	print "IN = \"$MD2IN\"\n";
 	print "OUT= \"$MD2OUT\"\n";
+}elsif  ( $#ARGV == 2 ) {
+	$MD2IN	= $ARGV[0];
+	$MD2OUT	= $ARGV[1];
+	$InputString	= $ARGV[2];
+	print "IN = \"$MD2IN\"\n";
+	print "OUT= \"$MD2OUT\"\n";
+	print "TEX= \"$InputString\"\n";
 }
 
 # read .md2 file
 my $md2_file = MD2->new($MD2IN);
 
-print "SkinPath old: '", $md2_file->Path->[0][0],"'\n";
+print "Skin old: \"", $md2_file->Path->[0][0],"\"\n";
 
 # get new texture-path from user
-print "Enter new path (Enter=$NewSkinPath):";
+if ($InputString eq '') {
+	print "Enter new path (Enter=$NewSkinPath):";
+	
+	my $key = '';
+	use Term::ReadKey;
+	do {
+		$key = ReadKey(0);
+		$InputString .= $key;
+	} while ($key ne "\n");
 
-my $InputString = '';
-my $key = '';
-
-use Term::ReadKey;
-do {
-	$key = ReadKey(0);
-	$InputString .= $key;
-} while ($key ne "\n");
-
-chomp($InputString);
+	chomp($InputString);
+}
 
 # replace texture-path
-if ($InputString ne "") {
+if ($InputString ne '') {
 	$md2_file->Path->[0][0] = $InputString;
 } else {
-	print "Defaulting to '$NewSkinPath'\n";
+	print "Defaulting to \"$NewSkinPath\"\n";
 	$md2_file->Path->[0][0] = $NewSkinPath;
 }
 
-print "SkinPath new: '", $md2_file->Path->[0][0],"'\n";
+print "Skin new: \"", $md2_file->Path->[0][0],"\"\n";
 
 # save as another .md2 file
 $md2_file->write($MD2OUT);
