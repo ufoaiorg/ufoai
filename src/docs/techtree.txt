@@ -114,7 +114,7 @@ requires _item "Ion Condensor" (requires that an Ion Condensor was obtained from
 
 #####################################################################
 Ion Thruster Technology
-Phalanx is now able to recreate the advanced in thruster found in alien propulsion units. With a more complete understanding of the technology, we can now start designing working vehicles.
+Phalanx is now able to recreate the advanced ion thruster technology found in alien propulsion units. We have recently produced a complete working prototype of an ion propulsion system. This prototype provides instantaneous and controllable thrust, using advanced particle technologies to reduce power requirements. We can now start designing working vehicles that implement this technology.
 
 researchtime 120 days
 requires "Advanced Plasma Technology"
