@@ -30,7 +30,7 @@ names ortnok
 	Zmuknesk
 	}
 
-	
+
 	lastname
 	{
 	"Uk Kronok"
@@ -97,7 +97,7 @@ names blue
 	Zmuknesk
 	}
 
-	
+
 	lastname
 	{
 	"Uk Kronok"
@@ -135,8 +135,54 @@ actors blue
 // TEAMS
 // ==================
 
+// TODO: Assign blue to one of the others
+
 team alien
 {
 	ortnok
+	antarean
+	shevaar
+	hovernet
+	cyborg_ortnok
 	blue
+}
+
+desc ortnok
+{
+	name "_Ortnok"
+	text "_ortnok_text"
+	autopsy "_ortnok_autopsy"
+	notes "_ortnok_notes"
+}
+
+desc antarean
+{
+	name "_Antarean"
+	text "_antarean_text"
+	autopsy "_antarean_autopsy"
+	notes "_antarean_notes"
+}
+
+desc shevaar
+{
+	name "_Shevaar"
+	text "_shevaar_text"
+	autopsy "_shevaar_autopsy"
+	notes "_shevaar_notes"
+}
+
+desc hovernet
+{
+	name "_Hovernet"
+	text "_hovernet_text"
+	autopsy "_hovernet_autopsy"
+	notes "_hovernet_notes"
+}
+
+desc cyborg_ortnok
+{
+	name "_Cyborg Ortnok"
+	text "_cyborg_ortnok_text"
+	autopsy "_cyborg_ortnok_autopsy"
+	notes "_cyborg_ortnok_notes"
 }
