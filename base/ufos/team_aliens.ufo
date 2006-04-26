@@ -147,7 +147,7 @@ team alien
 	blue
 }
 
-desc ortnok
+teamdesc ortnok
 {
 	name "_Ortnok"
 	text "_ortnok_text"
@@ -155,7 +155,7 @@ desc ortnok
 	notes "_ortnok_notes"
 }
 
-desc antarean
+teamdesc antarean
 {
 	name "_Antarean"
 	text "_antarean_text"
@@ -163,7 +163,7 @@ desc antarean
 	notes "_antarean_notes"
 }
 
-desc shevaar
+teamdesc shevaar
 {
 	name "_Shevaar"
 	text "_shevaar_text"
@@ -171,7 +171,7 @@ desc shevaar
 	notes "_shevaar_notes"
 }
 
-desc hovernet
+teamdesc hovernet
 {
 	name "_Hovernet"
 	text "_hovernet_text"
@@ -179,7 +179,7 @@ desc hovernet
 	notes "_hovernet_notes"
 }
 
-desc cyborg_ortnok
+teamdesc cyborg_ortnok
 {
 	name "_Cyborg Ortnok"
 	text "_cyborg_ortnok_text"

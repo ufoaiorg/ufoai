@@ -11,6 +11,7 @@ menu_model alien_ortnok
 {
 	model	"models/aliens/ortnok/body01.md2"
 	need	"alien_ortnok_head"
+	anim	stand_still
 }
 
 // ============== Civilian female ==================
