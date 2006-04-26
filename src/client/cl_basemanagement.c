@@ -1923,7 +1923,10 @@ void MN_BuildBase( void )
 		}
 	}
 	else
-		Com_Printf( "Not enough credits to set up a new base\n" );
+	{
+		Q_strncpyz( messageBuffer, _("Not enough credits to set up a new base."), MAX_MESSAGE_TEXT );
+		MN_AddNewMessage( _("Base built"), messageBuffer, false, MSG_CONSTRUCTION, NULL );
+	}
 }
 
 
@@ -2276,6 +2279,33 @@ void CL_BaseList ( void )
 }
 
 /*======================
+MN_SetBaseTitle
+======================*/
+void MN_SetBaseTitle ( void )
+{
+	Com_DPrintf("MN_SetBaseTitle: #bases: %i\n", ccs.numBases );
+	if ( ccs.numBases < MAX_BASES )
+		Cvar_Set("mn_base_title_new", bmBases[ccs.numBases].title );
+	else
+	{
+		MN_AddNewMessage( _("Notice"), _("You´ve reached the base limit."), false, MSG_STANDARD, NULL );
+		MN_PopMenu( false ); // remove the new base popup
+	}
+}
+
+/*======================
+CL_ChangeBaseNameCmd
+======================*/
+void CL_ChangeBaseNameCmd( void )
+{
+	// maybe called without base initialized or active
+	if ( !baseCurrent )
+		return;
+
+	Q_strncpyz( baseCurrent->title, Cvar_VariableString( "mn_base_title" ), MAX_VAR );
+}
+
+/*======================
 MN_ResetBaseManagement
 ======================*/
 void MN_ResetBaseManagement( void )
@@ -2309,11 +2339,13 @@ void MN_ResetBaseManagement( void )
 	Cmd_AddCommand( "repair_building", MN_RepairBuilding );
 	Cmd_AddCommand( "new_building", MN_NewBuildingFromList );
 	Cmd_AddCommand( "set_building", MN_SetBuilding );
+	Cmd_AddCommand( "mn_setbasetitle", MN_SetBaseTitle );
 	Cmd_AddCommand( "damage_building", MN_DamageBuilding );
 	Cmd_AddCommand( "add_workers", MN_BuildingAddWorkers );
 	Cmd_AddCommand( "remove_workers", MN_BuildingRemoveWorkers );
 	Cmd_AddCommand( "rename_base", MN_RenameBase );
 	Cmd_AddCommand( "base_attack", B_BaseAttack );
+	Cmd_AddCommand( "base_changename", CL_ChangeBaseNameCmd );
 	Cmd_AddCommand( "base_init", MN_BaseInit );
 	Cmd_AddCommand( "base_assemble", B_AssembleMap );
 	Cmd_AddCommand( "base_assemble_rand", B_AssembleRandomBase );

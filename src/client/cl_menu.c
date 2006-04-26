@@ -1129,8 +1129,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 			continue;
 		if ( x >= msx-8 && x <= msx+8 && y >= msy-8 && y <= msy+8 )
 		{
-			baseCurrent = &bmBases[i];
-			Cvar_SetValue( "mn_base_id", i );
+			Cbuf_ExecuteText( EXEC_NOW, va("mn_select_base %i", i) );
 			MN_PushMenu( "bases" );
 			return;
 		}
@@ -2544,7 +2543,6 @@ void MN_ResetMenus( void )
 	Cvar_Set( "mn_main", "main" );
 	Cvar_Set( "mn_sequence", "sequence" );
 
-//	Cmd_AddCommand( "maplist", CL_ListMaps_f );
 	Cmd_AddCommand( "getmaps", MN_GetMaps_f );
 	Cmd_AddCommand( "mn_startserver", MN_StartServer );
 	Cmd_AddCommand( "mn_nextmap", MN_NextMap );

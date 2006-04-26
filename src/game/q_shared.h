@@ -950,6 +950,15 @@ typedef struct csi_s
 
 typedef enum
 {
+	KILLED_ALIENS,
+	KILLED_CIVILIANS,
+	KILLED_TEAM,
+
+	KILLED_NUM_TYPES
+} killtypes_t;
+
+typedef enum
+{
 	ABILITY_POWER,
 	ABILITY_SPEED,
 	ABILITY_ACCURACY,
@@ -998,19 +1007,13 @@ typedef struct character_s
 	int		skills[SKILL_NUM_TYPES];
 
 	// score
-	int		kills_enemies;
-	int		kills_civilians;
-	int		kills_team;
-	int		kills_animals;
-	int		kills_neutral;
-	int		kills_male;
-	int		kills_female;
-	int		destroyed_objects;
-	int		hit_ratio;
-	int		inflicted_damage;
-	int		damage_taken;
+	killtypes_t	kills[KILLED_NUM_TYPES];
+// 	int		destroyed_objects;
+// 	int		hit_ratio;
+// 	int		inflicted_damage;
+// 	int		damage_taken;
 	int		assigned_missions;
-	int		crossed_distance;
+// 	int		crossed_distance;
 	// date		joined_edc;
 	// date		died;
 	medals_t *medals;

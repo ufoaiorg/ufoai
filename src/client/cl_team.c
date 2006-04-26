@@ -153,7 +153,9 @@ void CL_ChangeNameCmd( void )
 	int sel;
 	sel = cl_selected->value;
 
-	assert(baseCurrent);
+	// maybe called without base initialized or active
+	if ( !baseCurrent )
+		return;
 
 	if ( sel >= 0 && sel < baseCurrent->numWholeTeam )
 		Q_strncpyz( baseCurrent->wholeTeam[sel].name, Cvar_VariableString( "mn_name" ), MAX_VAR );
@@ -843,6 +845,11 @@ void CL_LoadTeamMember( sizebuf_t *sb, character_t *chr )
 	for (i = 0; i < SKILL_NUM_TYPES; i++)
 		chr->skills[i] = MSG_ReadByte( sb );
 
+	// load scores
+	for (i = 0; i < KILLED_NUM_TYPES; i++)
+		chr->kills[i] = MSG_ReadLong( sb );
+	chr->assigned_missions = MSG_ReadLong( sb );
+
 	// inventory
 	Com_DestroyInventory( chr->inv );
 	item.t = MSG_ReadByte( sb );
@@ -1058,6 +1065,10 @@ void CL_SendTeamInfo( sizebuf_t *buf, character_t *team, int num )
 		// even new attributes
 		for ( j = 0; j < SKILL_NUM_TYPES; j++ )
 			MSG_WriteByte( buf, chr->skills[j] );
+
+		// even new attributes
+		for ( j = 0; j < KILLED_NUM_TYPES; j++ )
+			MSG_WriteLong( buf, chr->kills[j] );
 
 		// equipment
 		for ( j = 0; j < csi.numIDs; j++ )
