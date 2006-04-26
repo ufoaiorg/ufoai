@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #######################################
-# Copyright (C) 2006 Werner Höherer
+# Copyright (C) 2006 Werner Höhrer
 # 
 #This program is free software; you can redistribute it and/or
 #modify it under the terms of the GNU General Public License
@@ -37,9 +37,9 @@ use strict;
 use warnings;
 
 # Default values for filepaths
-my $MD2IN = 'in.md2';
-my $MD2OUT = 'out.md2';
-my $NewSkinPath ='texture.jpg';
+my $MD2IN		= 'in.md2';
+my $MD2OUT		= 'out.md2';
+my $NewSkinPath	='texture.jpg';
 
 package MD2;
 use base 'Parse::Binary';
@@ -64,8 +64,6 @@ use constant FORMAT => (
 	OffsetEnd		=> 'I',		# offset to end of file
 	Path			=> ['a64', '{$NumSkins}', 1 ],	# 64chars * NumSkins
 	Data		=> 'a*'			# all of the rest.
-#Count	=> 'v',
-#'Icon'	=> [ 'a16', '{$Count}', 1 ],
 );
 
 package Path;
