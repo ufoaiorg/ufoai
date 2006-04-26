@@ -1905,7 +1905,7 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 	ic = i->c[container];
 	if ( !ic )
 	{
-		Com_DPrintf("Com_RemoveFromInventory - no container %i\n", container );
+		//Com_DPrintf("Com_RemoveFromInventory - no container %i\n", container );
 		return false;
 	}
 
