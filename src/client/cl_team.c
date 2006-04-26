@@ -1066,9 +1066,10 @@ void CL_SendTeamInfo( sizebuf_t *buf, character_t *team, int num )
 		for ( j = 0; j < SKILL_NUM_TYPES; j++ )
 			MSG_WriteByte( buf, chr->skills[j] );
 
-		// even new attributes
+		// scores
 		for ( j = 0; j < KILLED_NUM_TYPES; j++ )
 			MSG_WriteLong( buf, chr->kills[j] );
+		MSG_WriteLong( buf, chr->assigned_missions );
 
 		// equipment
 		for ( j = 0; j < csi.numIDs; j++ )
