@@ -85,4 +85,4 @@ $md2_file->Path->[0][0] = $NewSkinPath;
 print "SkinPath new: '", $md2_file->Path->[0][0],"'\n";
 
 # save as another .md2 file
-$md2_file->write($MD2OUT); 
+$md2_file->write($MD2OUT);
