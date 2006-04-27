@@ -28,10 +28,11 @@
 # Description
 #	The script currently just rellaces the texture-path from an md2 file with
 # Usage
-#	md2.pl [in.md2 [out.md2 [texturefile]]]
+#	md2.pl [in.md2 [out.md2 [texturefile(s)]]]
 #
 #	If [in.md2] is given it will also be used as outputfile
 #	Right now providing a texture file is only possible if exactly three arguments are given.
+#	You can provide multiple texture files seperated by space.
 #######################################
 use strict;
 use warnings;
@@ -89,7 +90,7 @@ my @TextureString = ('');
 
 # parse commandline paarameters (md2-filenames)
 if ( $#ARGV < 0 ) {
-	die "Usage:\tmd2.pl [in.md2 [out.md2 [texturefile]]]\n";
+	die "Usage:\tmd2.pl [in.md2 [out.md2 [texturefile(s)]]]\n";
 } elsif ( $#ARGV == 0 ) {
 	$MD2IN = $MD2OUT = $ARGV[0];
 	print "IN=OUT= \"$MD2IN\"\n";
