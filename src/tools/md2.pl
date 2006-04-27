@@ -62,14 +62,13 @@ use constant FORMAT => (
 	OffsetFrames	=> 'I',		# offset to frame data
 	OffsetGLcmds	=> 'I',		# offset to opengl commands
 	OffsetEnd		=> 'I',		# offset to end of file
-	Path			=> ['a64', '{$NumSkins}', 1 ],	# 64chars * NumSkins
+	Path			=> ['a64', '{$NumSkins}', 1 ],	# 64chars * NumSkins -> see "package Path"
 	Data			=> 'a*'		# TODO: The whole rest .. currently without structure.
 );
 
 package Path;
 use base 'Parse::Binary';
 use constant FORMAT => ('a64');
-use Data::Dumper;
 
 #package MD2_frame;
 #use constant FORMAT => (
@@ -99,11 +98,10 @@ if ( $#ARGV < 0 ) {
 	$MD2OUT	= $ARGV[1];
 	print "IN = \"$MD2IN\"\n";
 	print "OUT= \"$MD2OUT\"\n";
-}elsif  ( $#ARGV >= 2 ) {
+} elsif  ( $#ARGV >= 2 ) {
 	$MD2IN	= $ARGV[0];
 	$MD2OUT	= $ARGV[1];
-	for ( my $i = 0; $i <= $#ARGV - 2; $i++ )
-	{
+	for ( my $i = 0; $i <= $#ARGV - 2; $i++ ) {
 		$TextureString[$i] = $ARGV[$i+2];
 	}
 	print "IN = \"$MD2IN\"\n";
@@ -115,28 +113,20 @@ if ( $#ARGV < 0 ) {
 # read .md2 file
 my $md2_file = MD2->new($MD2IN);
 
-if ($md2_file->Magic != 844121161) { #844121161 equals "IDP2"
-	die "File has wrong magic number \"".$md2_file->Magic."\".\n";
-}
-if ($md2_file->Version != 8) {
-	die "File has wrong format version \"".$md2_file->Version."\".\n";
-}
+die "File has wrong magic number \"".$md2_file->Magic."\".\n" unless ($md2_file->Magic != 844121161); #844121161 equals "IDP2"
+die "File has wrong format version \"".$md2_file->Version."\".\n" unless ($md2_file->Version == 8);
+
 
 print $md2_file->NumSkins, " Skins found\n";
 
-print Dumper($md2_file->Path);
-
 #just to prevent warnings
-if ( $#TextureString < $md2_file->NumSkins )
-{
-	for ( my $i = $#TextureString + 1; $i < $md2_file->NumSkins; $i++ )
-	{
+if ( $#TextureString < $md2_file->NumSkins ) {
+	for ( my $i = $#TextureString + 1; $i < $md2_file->NumSkins; $i++ ) {
 		$TextureString[$i] = '';
 	}
 }
 
-for (my $i=0; $i < $md2_file->NumSkins; $i++ )
-{
+for (my $i=0; $i < $md2_file->NumSkins; $i++ ) {
 	print "Skin ",$i," old: \"", $md2_file->Path->[$i][0],"\"\n";
 
 	# get new texture-path from user if no filename was given per commandline parameter.
