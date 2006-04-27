@@ -26,13 +26,15 @@
 
 #######################################
 # Description
-#	The script currently just rellaces the texture-path from an md2 file with
+#	The script currently just replaces the texture-path from an md2 file with new ones.
 # Usage
 #	md2.pl [in.md2 [out.md2 [texturefile(s)]]]
 #
-#	If [in.md2] is given it will also be used as outputfile
-#	Right now providing a texture file is only possible if exactly three arguments are given.
-#	You can provide multiple texture files seperated by space.
+#	If [in.md2] is given it will also be used as outputfile.
+#	Right now providing a texture file is only possible if three or more arguments are given.
+#	You can provide multiple texture-files seperated by spaces.
+#	To not re-type the output-file if the name is the same as the input file just use - instead.
+#		e.g.: md2.pl model.md2 - texurefile
 #######################################
 use strict;
 use warnings;
@@ -97,6 +99,9 @@ if ( $#ARGV < 0 ) {
 } elsif  ( $#ARGV == 1 ) {
 	$MD2IN	= $ARGV[0];
 	$MD2OUT	= $ARGV[1];
+	if ($MD2OUT eq '-') {
+		$MD2OUT = $MD2IN;
+	}
 	print "IN = \"$MD2IN\"\n";
 	print "OUT= \"$MD2OUT\"\n";
 } elsif  ( $#ARGV >= 2 ) {
