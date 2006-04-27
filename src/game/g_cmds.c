@@ -74,9 +74,9 @@ void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 
 	if (arg0)
 	{
-		strcat (text, gi.argv(0));
-		strcat (text, " ");
-		strcat (text, gi.args());
+		Q_strcat (text, sizeof(text), gi.argv(0));
+		Q_strcat (text, sizeof(text), " ");
+		Q_strcat (text, sizeof(text), gi.args());
 	}
 	else
 	{
@@ -87,14 +87,14 @@ void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 			p++;
 			p[strlen(p)-1] = 0;
 		}
-		strcat(text, p);
+		Q_strcat(text, sizeof(text), p);
 	}
 
 	// don't let text be too long for malicious reasons
 	if (strlen(text) > 150)
 		text[150] = 0;
 
-	strcat(text, "\n");
+	Q_strcat(text, sizeof(text), "\n");
 
 	if (dedicated->value)
 		gi.cprintf(NULL, PRINT_CHAT, "%s", text);
@@ -127,11 +127,11 @@ void Cmd_PlayerList_f( player_t* player )
 			e2->ping,
 			e2->pers.netname);
 		if (strlen(text) + strlen(st) > sizeof(text) - 50) {
-			sprintf(text+strlen(text), "And more...\n");
+			Q_strcat(text, sizeof(text), "And more...\n");
 			gi.cprintf(player, PRINT_HIGH, "%s", text);
 			return;
 		}
-		strcat(text, st);
+		Q_strcat(text, sizeof(text), st);
 	}
 	gi.cprintf(player, PRINT_HIGH, "%s", text);
 }
@@ -151,26 +151,14 @@ void G_ClientCommand (player_t *player)
 	cmd = gi.argv(0);
 
 	if (Q_stricmp (cmd, "players") == 0)
-	{
 		Cmd_Players_f (player);
-		return;
-	}
-	if (Q_stricmp(cmd, "playerlist") == 0)
-	{
+	else if (Q_stricmp(cmd, "playerlist") == 0)
 		Cmd_PlayerList_f(player);
-		return;
-	}
-	if (Q_stricmp (cmd, "say") == 0)
-	{
+	else if (Q_stricmp (cmd, "say") == 0)
 		Cmd_Say_f (player, false, false);
-		return;
-	}
-	if (Q_stricmp (cmd, "say_team") == 0)
-	{
+	else if (Q_stricmp (cmd, "say_team") == 0)
 		Cmd_Say_f (player, false, true);
-		return;
-	}
-
-	// anything that doesn't match a command will be a chat
-	Cmd_Say_f (player, true, false);
+	else
+		// anything that doesn't match a command will be a chat
+		Cmd_Say_f (player, true, false);
 }
