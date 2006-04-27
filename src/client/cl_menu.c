@@ -1620,7 +1620,11 @@ void MN_Tooltip ( menuNode_t* node, int x, int y )
 		l = re.DrawPropLength( "f_small", _(tooltip) );
 		if ( x + l > VID_NORM_WIDTH )
 			x -= (l+10);
+#ifdef USE_SDL_TTF
 		re.DrawFill(x, y, l, fontSmall->size + 10, 0, color );
+#else
+		re.DrawFill(x, y, l, 20, 0, color );
+#endif
 		VectorSet( color, 0.0f, 0.8f, 0.0f );
 		color[3] = 1.0f;
 		re.DrawColor( color );
