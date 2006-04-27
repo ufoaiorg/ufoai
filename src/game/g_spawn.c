@@ -283,7 +283,10 @@ void SpawnEntities (char *mapname, char *entities)
 	edict_t		*ent;
 	int		inhibit, entnum;
 	char		*com_token;
-
+#ifdef DEBUG
+#define EDICT_NUM(n) ((edict_t *)((byte *)g_edicts + sizeof(edict_t)*(n)))
+	int	i = 1;
+#endif
 //	SaveClientData ();
 
 	gi.FreeTags (TAG_LEVEL);
@@ -324,8 +327,6 @@ void SpawnEntities (char *mapname, char *entities)
 	gi.dprintf ("%i entities inhibited\n", inhibit);
 
 #ifdef DEBUG
-#define EDICT_NUM(n) ((edict_t *)((byte *)ge->edicts + ge->edict_size*(n)))
-	i = 1;
 	ent = EDICT_NUM(i);
 	while (i < globals.num_edicts) {
 		if (ent->inuse != 0 || ent->inuse != 1)

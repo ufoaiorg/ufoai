@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+<?xml version="1.0" encoding="shift_jis"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="game"
 	ProjectGUID="{A5D5E988-44F6-426F-BF5D-AEBCCBB3E694}"
 	RootNamespace="game"
@@ -336,7 +336,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF;HAVE_GETTEXT"
+				PreprocessorDefinitions="WIN32;DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF;HAVE_GETTEXT"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
