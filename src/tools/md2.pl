@@ -101,9 +101,9 @@ if ( $#ARGV < 0 ) {
 }elsif  ( $#ARGV >= 2 ) {
 	$MD2IN	= $ARGV[0];
 	$MD2OUT	= $ARGV[1];
-	for ( my $i = 0; $i < $#ARGV - 2; $i++ )
+	for ( my $i = 0; $i <= $#ARGV - 2; $i++ )
 	{
-		push @TextureString, $ARGV[2];
+		$TextureString[$i] = $ARGV[$i+2];
 	}
 	print "IN = \"$MD2IN\"\n";
 	print "OUT= \"$MD2OUT\"\n";
