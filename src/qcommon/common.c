@@ -1292,10 +1292,10 @@ void Qcommon_LocaleInit ( void )
 	setlocale( LC_ALL, "C" );
 	locale = setlocale( LC_MESSAGES, s_language->string );
 	if ( ! locale )
-		Com_Printf(_("Could not set to language: %s\n"), s_language->string );
+		Com_Printf("Could not set to language: %s\n", s_language->string );
 	else
 	{
-		Com_Printf(_("Using language: %s\n"), locale );
+		Com_Printf("Using language: %s\n", locale );
 		Cvar_Set("s_language", locale );
 	}
 
