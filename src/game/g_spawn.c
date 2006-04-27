@@ -324,11 +324,12 @@ void SpawnEntities (char *mapname, char *entities)
 	gi.dprintf ("%i entities inhibited\n", inhibit);
 
 #ifdef DEBUG
+#define EDICT_NUM(n) ((edict_t *)((byte *)ge->edicts + ge->edict_size*(n)))
 	i = 1;
 	ent = EDICT_NUM(i);
 	while (i < globals.num_edicts) {
 		if (ent->inuse != 0 || ent->inuse != 1)
-			Com_DPrintf("Invalid entity %d\n", i);
+			gi.dprintf("Invalid entity %d\n", i);
 		i++, ent++;
 	}
 #endif
