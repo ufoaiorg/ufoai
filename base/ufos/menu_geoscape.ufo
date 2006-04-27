@@ -243,8 +243,16 @@ menu map
 		pos	"950 15"
 		texl	"0 0"
 		texh	"64 64"
-		mousefx true
+		mousefx false
 		click	{ cmd mn_pop; }
+		out	{
+				*bt_menu texl "0 0"
+				*bt_menu texh "64 64"
+			}
+		in	{
+				*bt_menu texl "64 0"
+				*bt_menu texh "128 64"
+			}
 	}
 
 	pic messagesystem_show

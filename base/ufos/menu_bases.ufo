@@ -50,11 +50,16 @@ menu bases
 		pos	"950 10"
 		texl	"0 64"
 		texh	"64 128"
-		mousefx true
-		click
-		{
-			cmd mn_pop;
-		}
+		mousefx false
+		click	{ cmd mn_pop; }
+		out	{
+				*back_geo texl "0 64"
+				*back_geo texh "64 128"
+			}
+		in	{
+				*back_geo texl "64 64"
+				*back_geo texh "128 128"
+			}
 	}
 
 	// ===============
