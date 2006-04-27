@@ -124,7 +124,7 @@ for (my $i=0; $i < $md2_file->NumSkins; $i++ )
 	print "Skin ",$i," old: \"", $md2_file->Path->[0][$i],"\"\n";
 
 	# get new texture-path from user if no filename was given per commandline parameter.
-	if ($TextureString eq '') {
+	if ( ($TextureString eq '') || ( $i > 0 ) ) {
 		print "Enter new path (Enter=Skip):";
 		
 		my $key = '';
@@ -139,7 +139,7 @@ for (my $i=0; $i < $md2_file->NumSkins; $i++ )
 
 	# replace texture-path
 	if ($TextureString ne '') {
-		$md2_file->Path->[0][$1] = $TextureString;
+		$md2_file->Path->[0][$i] = $TextureString;
 	}
 
 	print "Skin ",$i," new: \"", $md2_file->Path->[0][$i],"\"\n";
