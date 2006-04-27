@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #######################################
 # Copyright (C) 2006 Werner Höhrer
-# 
+#
 #This program is free software; you can redistribute it and/or
 #modify it under the terms of the GNU General Public License
 #as published by the Free Software Foundation; either version 2
@@ -26,7 +26,7 @@
 
 #######################################
 # Description
-#	The script currently just rellaces the texture-path from an md2 file with 
+#	The script currently just rellaces the texture-path from an md2 file with
 # Usage
 #	md2.pl [in.md2 [out.md2 [texturefile]]]
 #
@@ -49,7 +49,7 @@ use constant FORMAT => (
 	SkinWidth		=> 'I',		# width of the texture
 	SkinHeight		=> 'I',		# height of the texture
 	FrameSize		=> 'I',		# size of one frame in bytes
-	
+
 	NumSkins		=> 'I',		# number of textures
 	NumXYZ		=> 'I',		# number of vertices (x,y,z)
 	NumST		=> 'I',		# number of texture coordinates (s,t)
@@ -85,11 +85,11 @@ use constant FORMAT => ('a64');
 # MAIN
 #######################################
 
-my $TextureString = '';
+my @TextureString = ('');
 
 # parse commandline paarameters (md2-filenames)
 if ( $#ARGV < 0 ) {
-	print "Usage:\tmd2.pl [in.md2 [out.md2 [texturefile]]]\n";
+	die "Usage:\tmd2.pl [in.md2 [out.md2 [texturefile]]]\n";
 } elsif ( $#ARGV == 0 ) {
 	$MD2IN = $MD2OUT = $ARGV[0];
 	print "IN=OUT= \"$MD2IN\"\n";
@@ -98,13 +98,17 @@ if ( $#ARGV < 0 ) {
 	$MD2OUT	= $ARGV[1];
 	print "IN = \"$MD2IN\"\n";
 	print "OUT= \"$MD2OUT\"\n";
-}elsif  ( $#ARGV == 2 ) {
+}elsif  ( $#ARGV >= 2 ) {
 	$MD2IN	= $ARGV[0];
 	$MD2OUT	= $ARGV[1];
-	$TextureString	= $ARGV[2];
+	for ( my $i = 0; $i < $#ARGV - 2; $i++ )
+	{
+		push @TextureString, $ARGV[2];
+	}
 	print "IN = \"$MD2IN\"\n";
 	print "OUT= \"$MD2OUT\"\n";
-	print "TEX= \"$TextureString\"\n";
+
+	print "TEX= \"$_\"\n" for ( @TextureString );
 }
 
 # read .md2 file
@@ -124,22 +128,22 @@ for (my $i=0; $i < $md2_file->NumSkins; $i++ )
 	print "Skin ",$i," old: \"", $md2_file->Path->[0][$i],"\"\n";
 
 	# get new texture-path from user if no filename was given per commandline parameter.
-	if ( ($TextureString eq '') || ( $i > 0 ) ) {
+	if ($TextureString[$i] eq '') {
 		print "Enter new path (Enter=Skip):";
-		
+
 		my $key = '';
 		use Term::ReadKey;
 		do {
 			$key = ReadKey(0);
-			$TextureString .= $key;
+			$TextureString[$i] .= $key;
 		} while ($key ne "\n");
 
-		chomp($TextureString);
+		chomp($TextureString[$i]);
 	}
 
 	# replace texture-path
-	if ($TextureString ne '') {
-		$md2_file->Path->[0][$i] = $TextureString;
+	if ($TextureString[$i] ne '') {
+		$md2_file->Path->[0][$i] = $TextureString[$i];
 	}
 
 	print "Skin ",$i," new: \"", $md2_file->Path->[0][$i],"\"\n";
