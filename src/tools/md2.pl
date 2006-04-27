@@ -47,23 +47,23 @@ use constant FORMAT => (
 	Magic		=> 'I',		# magic number. must be equal to "IDP2"
 	Version		=> 'I',		# md2 version. must be equal to 8
 	SkinWidth		=> 'I',		# width of the texture
-	SkinHeight	=> 'I',		# height of the texture
-	FrameSize	=> 'I',		# size of one frame in bytes
+	SkinHeight		=> 'I',		# height of the texture
+	FrameSize		=> 'I',		# size of one frame in bytes
 	
 	NumSkins		=> 'I',		# number of textures
 	NumXYZ		=> 'I',		# number of vertices (x,y,z)
 	NumST		=> 'I',		# number of texture coordinates (s,t)
 	NumTris		=> 'I',		# number of triangles (md2 only supports tris)
 	NumGLcmds	=> 'I',		# number of OpenGL commands
-	NumFrames	=> 'I',		# total number of frames
-	OffsetSkins	=> 'I',		# offset to skin names (64 bytes each)
+	NumFrames		=> 'I',		# total number of frames
+	OffsetSkins		=> 'I',		# offset to skin names (64 bytes each)
 	OffsetST		=> 'I',		# offset to s-t texture coordinates
 	OffsetTris		=> 'I',		# offset to triangles
 	OffsetFrames	=> 'I',		# offset to frame data
 	OffsetGLcmds	=> 'I',		# offset to opengl commands
 	OffsetEnd		=> 'I',		# offset to end of file
 	Path			=> ['a64', '{$NumSkins}', 1 ],	# 64chars * NumSkins
-	Data		=> 'a*'			# all of the rest.
+	Data			=> 'a*'		# TODO: The whole rest .. currently without structure.
 );
 
 package Path;
@@ -85,7 +85,7 @@ use constant FORMAT => ('a64');
 # MAIN
 #######################################
 
-my $InputString = '';
+my $TextureString = '';
 
 # parse commandline paarameters (md2-filenames)
 if ( $#ARGV < 0 ) {
@@ -101,10 +101,10 @@ if ( $#ARGV < 0 ) {
 }elsif  ( $#ARGV == 2 ) {
 	$MD2IN	= $ARGV[0];
 	$MD2OUT	= $ARGV[1];
-	$InputString	= $ARGV[2];
+	$TextureString	= $ARGV[2];
 	print "IN = \"$MD2IN\"\n";
 	print "OUT= \"$MD2OUT\"\n";
-	print "TEX= \"$InputString\"\n";
+	print "TEX= \"$TextureString\"\n";
 }
 
 # read .md2 file
@@ -117,31 +117,33 @@ if ($md2_file->Version != 8) {
 	die "File has wrong format version \"".$md2_file->Version."\".\n";
 }
 
-print "Skin old: \"", $md2_file->Path->[0][0],"\"\n";
+print $md2_file->NumSkins, " Skins found\n";
 
-# get new texture-path from user
-if ($InputString eq '') {
-	print "Enter new path (Enter=$NewSkinPath):";
-	
-	my $key = '';
-	use Term::ReadKey;
-	do {
-		$key = ReadKey(0);
-		$InputString .= $key;
-	} while ($key ne "\n");
+for (my $i=0; $i < $md2_file->NumSkins; $i++ )
+{
+	print "Skin ",$i," old: \"", $md2_file->Path->[0][$i],"\"\n";
 
-	chomp($InputString);
+	# get new texture-path from user if no filename was given per commandline parameter.
+	if ($TextureString eq '') {
+		print "Enter new path (Enter=Skip):";
+		
+		my $key = '';
+		use Term::ReadKey;
+		do {
+			$key = ReadKey(0);
+			$TextureString .= $key;
+		} while ($key ne "\n");
+
+		chomp($TextureString);
+	}
+
+	# replace texture-path
+	if ($TextureString ne '') {
+		$md2_file->Path->[0][$1] = $TextureString;
+	}
+
+	print "Skin ",$i," new: \"", $md2_file->Path->[0][$i],"\"\n";
 }
-
-# replace texture-path
-if ($InputString ne '') {
-	$md2_file->Path->[0][0] = $InputString;
-} else {
-	print "Defaulting to \"$NewSkinPath\"\n";
-	$md2_file->Path->[0][0] = $NewSkinPath;
-}
-
-print "Skin new: \"", $md2_file->Path->[0][0],"\"\n";
 
 # save as another .md2 file
 $md2_file->write($MD2OUT);
