@@ -395,7 +395,7 @@ void SP_player_start (edict_t *ent)
 	  && soldierCount >= (int)maxsoldiersperplayer->value
 	  && (int)sv_teamplay->value )
 	{
-		gi.dprintf (_("Only %i/%i soldiers per player allowed\n"), (int)maxsoldiersperplayer->value, soldierCount );
+		gi.dprintf ("Only %i/%i soldiers per player allowed\n", (int)maxsoldiersperplayer->value, soldierCount );
 		G_FreeEdict( ent );
 		return;
 	}
@@ -410,7 +410,7 @@ void SP_player_start (edict_t *ent)
 	}
 	else if ( soldierCount <= 0 )
 	{
-		gi.dprintf (_("No free soldier slots available - please choose another team\n"));
+		gi.dprintf ("No free soldier slots available - please choose another team\n");
 		G_FreeEdict( ent );
 	}
 	else
