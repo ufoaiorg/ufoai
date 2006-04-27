@@ -36,6 +36,8 @@
 use strict;
 use warnings;
 
+use Data::Dumper;
+
 # Default values for filepaths
 my $MD2IN		= 'in.md2';
 my $MD2OUT		= 'out.md2';
@@ -98,18 +100,18 @@ if ( $#ARGV < 0 ) {
 	$MD2OUT	= $ARGV[1];
 	print "IN = \"$MD2IN\"\n";
 	print "OUT= \"$MD2OUT\"\n";
-}elsif  ( $#ARGV >= 2 ) {
-	$MD2IN	= $ARGV[0];
-	$MD2OUT	= $ARGV[1];
-	for ( my $i = 0; $i <= $#ARGV - 2; $i++ )
-	{
-		$TextureString[$i] = $ARGV[$i+2];
-	}
-	print "IN = \"$MD2IN\"\n";
-	print "OUT= \"$MD2OUT\"\n";
-
-	print "TEX= \"$_\"\n" for ( @TextureString );
-}
+#}elsif  ( $#ARGV >= 2 ) {
+#	$MD2IN	= $ARGV[0];
+#	$MD2OUT	= $ARGV[1];
+#	for ( my $i = 0; $i <= $#ARGV - 2; $i++ )
+#	{
+#		$TextureString[$i] = $ARGV[$i+2];
+#	}
+#	print "IN = \"$MD2IN\"\n";
+#	print "OUT= \"$MD2OUT\"\n";
+#
+#	print "TEX= \"$_\"\n" for ( @TextureString );
+#}
 
 # read .md2 file
 my $md2_file = MD2->new($MD2IN);
@@ -123,12 +125,14 @@ if ($md2_file->Version != 8) {
 
 print $md2_file->NumSkins, " Skins found\n";
 
+print Dumper($md2_file->Path);
+
 for (my $i=0; $i < $md2_file->NumSkins; $i++ )
 {
 	print "Skin ",$i," old: \"", $md2_file->Path->[0][$i],"\"\n";
 
 	# get new texture-path from user if no filename was given per commandline parameter.
-	if ($TextureString[$i] eq '') {
+#	if ($TextureString[$i] eq '') {
 		print "Enter new path (Enter=Skip):";
 
 		my $key = '';
@@ -139,7 +143,7 @@ for (my $i=0; $i < $md2_file->NumSkins; $i++ )
 		} while ($key ne "\n");
 
 		chomp($TextureString[$i]);
-	}
+#	}
 
 	# replace texture-path
 	if ($TextureString[$i] ne '') {
