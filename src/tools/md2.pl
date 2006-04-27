@@ -114,7 +114,7 @@ if ( $#ARGV < 0 ) {
 # read .md2 file
 my $md2_file = MD2->new($MD2IN);
 
-die "File has wrong magic number \"".$md2_file->Magic."\".\n" unless ($md2_file->Magic != 844121161); #844121161 equals "IDP2"
+die "File has wrong magic number \"".$md2_file->Magic."\".\n" unless ($md2_file->Magic == 844121161); #844121161 equals "IDP2"
 die "File has wrong format version \"".$md2_file->Version."\".\n" unless ($md2_file->Version == 8);
 
 
