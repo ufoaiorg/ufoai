@@ -127,6 +127,15 @@ print $md2_file->NumSkins, " Skins found\n";
 
 print Dumper($md2_file->Path);
 
+#just to prevent warnings
+if ( $#TextureString < $md2_file->NumSkins )
+{
+	for ( my $i = $#TextureString + 1; $i < $md2_file->NumSkins; $i++ )
+	{
+		$TextureString[$i] = '';
+	}
+}
+
 for (my $i=0; $i < $md2_file->NumSkins; $i++ )
 {
 	print "Skin ",$i," old: \"", $md2_file->Path->[0][$i],"\"\n";
