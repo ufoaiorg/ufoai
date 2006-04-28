@@ -592,6 +592,13 @@ menu team
 	pic exp_rahmen { pos "707 304" image menu/bar_rahmen }
 	bar exp_bar    { pos "716 309" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
 
+	string	missions_lbl { pos "700 325" string "_Survived Missions:" }
+	string	missions_val { pos "975 325" string "*cvar mn_chrmis" align ur }
+	string	kills_lbl { pos "700 345" string "_Killed Enemies:" }
+	string	kills_val { pos "975 345" string "*cvar mn_chrkillalien" align ur }
+	//mn_chrkillcivilian
+	//mn_chrkillteam
+
 	// ==================
 	// dropship
 	// ==================
