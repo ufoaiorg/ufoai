@@ -28,10 +28,11 @@ float shadelight[3];
 
 extern qboolean nolight;
 int c_shadow_volumes = 0;
+int worldlight = 0;
 
 /*
 =============================================
-  Dinamic Planar Shadows
+  Dynamic Planar Shadows
   Original Code By Psychospaz
   Modificated By Vortex and Kirk Barnes
 =============================================
@@ -78,11 +79,10 @@ void R_ShadowLight (vec3_t pos, vec3_t lightAdd )
 {
 	int i;
 	dlight_t *dl;
-//	worldLight_t *wl;
-//	float	shadowdist;
+	float	shadowdist;
 	float add;
 	vec3_t dist;
-//	vec3_t angle;
+	vec3_t angle;
 	nolight = false ;
 	VectorClear(lightAdd); // clear planar shadow vector
 
@@ -105,29 +105,13 @@ void R_ShadowLight (vec3_t pos, vec3_t lightAdd )
 		}
 	}
 
-	// add static world light shadow angles, find light with maximum intensity
-#if 0
-	for (i=0, wl=&r_worldLights[i]; i<r_numWorldLights; i++, wl++)
-	{
-		VectorSubtract (wl->origin, pos , dist);
-		add = sqrt(wl->intensity*gl_shadow_worldlight_override->value - VectorLength(dist));
-		add = add*(wl->intensity/VectorLength(dist));
-		VectorNormalize(dist);
-
-		if (add > 0)
-		{
-			VectorScale(dist, add , dist);
-			VectorAdd (lightAdd, dist, lightAdd);
-		}
-	}
-
 	shadowdist = VectorNormalize(lightAdd);
 	if (shadowdist > 1) shadowdist = 1;
 	if (shadowdist <= 0)
 	{
 		// old style static shadow
 		// scaled nolight shadow
-		nolight =true;
+		nolight = true;
 		return;
 	}
 	else
@@ -138,7 +122,6 @@ void R_ShadowLight (vec3_t pos, vec3_t lightAdd )
 	}
 	AngleVectors (angle, dist, NULL, NULL);
 	VectorScale(dist, shadowdist, lightAdd);
-#endif
 }
 
 /*
@@ -222,10 +205,9 @@ void GL_DrawAliasShadow (entity_t *e, dmdl_t *paliashdr, int posenum)
 		qglEnd ();
 	}
 
-    	qglDisable(GL_STENCIL_TEST);
+	qglDisable(GL_STENCIL_TEST);
 	qglDisable(GL_POLYGON_OFFSET_FILL);
 	qglColor4f (1,1,1,1);
-
 }
 
 /*
@@ -385,18 +367,18 @@ void GL_RenderVolumes(dmdl_t *paliashdr, vec3_t lightdir, int projdist)
 
 void GL_DrawAliasShadowVolume (dmdl_t *paliashdr, int posenumm)
 {
-	int		*order;
-	vec3_t	light;
+	int		*order, i, o, dist;
+	vec3_t	light, temp;
 	dtriangle_t *t, *tris;
 
 	daliasframe_t	*frame, *oldframe;
 	dtrivertx_t		*ov, *verts;
         dlight_t *l;
-//	worldLight_t *wl;
-	float cost, sint;
+	float cost, sint, is, it;
 	int projected_distance;
-	l=r_newrefdef.dlights;
+	l = r_newrefdef.dlights;
 
+	if (gl_shadows->value!=2 ) return;
 	if (r_newrefdef.vieworg[2] < (currententity->origin[2])) return;
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL ) return;
 	if (currentmodel->noshadow) return;
@@ -415,123 +397,89 @@ void GL_DrawAliasShadowVolume (dmdl_t *paliashdr, int posenumm)
 
 	cost = cos(-currententity->angles[1] / 180 * M_PI), sint = sin(-currententity->angles[1] / 180 * M_PI);
 
-	if (gl_shadows->value==2 )
+//	if (!ri.IsVisible(r_newrefdef.vieworg, currententity->origin)) return;
+
+	if (gl_shadow_debug_volume->value)
+		qglColor3f(1,0,0);
+	else
+		qglColorMask(0,0,0,0);
+
+	if (gl_state.stencil_two_side)
+		qglEnable(GL_STENCIL_TEST_TWO_SIDE_EXT);
+
+	qglEnable(GL_STENCIL_TEST);
+
+//	if (clamp) qglEnable(GL_DEPTH_CLAMP_NV);
+
+	qglDepthMask(false);
+	qglStencilMask ( ~0 );
+	qglDepthFunc( GL_LESS );
+
+	if (gl_state.ati_separate_stencil)
+		qglStencilFuncSeparateATI(GL_ALWAYS, GL_ALWAYS, 0, ~0);
+
+	qglStencilFunc( GL_ALWAYS, 0, ~0);
+
+	for (i=0; i<r_newrefdef.num_dlights; i++, l++)
 	{
-//		if (!ri.IsVisible(r_newrefdef.vieworg, currententity->origin)) return;
+		if ((l->origin[0] == currententity->origin[0]) &&
+			(l->origin[1] == currententity->origin[1]) &&
+			(l->origin[2] == currententity->origin[2]))
+			continue;
+		VectorSubtract(currententity->origin, l->origin, temp);
+		dist = sqrt(DotProduct(temp,temp));
 
-		if (gl_shadow_debug_volume->value)
-			qglColor3f(1,0,0);
-		else
-		        qglColorMask(0,0,0,0);
+		if (dist > 200)
+			continue;
+//		if (!ri.IsVisible(currententity->origin, l->origin)) continue;
 
-		if (gl_state.stencil_two_side)
-			qglEnable(GL_STENCIL_TEST_TWO_SIDE_EXT);
+		// lights origin in relation to the entity
+		for (o=0; o<3; o++)
+			light[o] = -currententity->origin[o] + l->origin[o];
 
-		qglEnable(GL_STENCIL_TEST);
+		is = light[0], it = light[1];
+		light[0] = (cost * (is - 0) + sint * (0 - it) + 0);
+		light[1] = (cost * (it - 0) + sint * (is - 0) + 0);
+		light[2]+=8;
 
-//		if (clamp) qglEnable(GL_DEPTH_CLAMP_NV);
-
-		qglDepthMask(false);
-		qglStencilMask ( ~0 );
-		qglDepthFunc( GL_LESS );
-
-		if (gl_state.ati_separate_stencil)
-			qglStencilFuncSeparateATI(GL_ALWAYS, GL_ALWAYS, 0, ~0);
-
-		qglStencilFunc( GL_ALWAYS, 0, ~0);
-
-#if 0
-		if (gl_shadow_dlight_volume->value)
-		{
-			for (i=0; i<r_newrefdef.num_dlights; i++, l++)
-			{
-				if ((l->origin[0] == currententity->origin[0]) &&
-					(l->origin[1] == currententity->origin[1]) &&
-					(l->origin[2] == currententity->origin[2]))
-					continue;
-				VectorSubtract(currententity->origin, l->origin, temp);
-				dist = sqrt(DotProduct(temp,temp));
-
-				if (dist > 200)
-					continue;
-//				if (!ri.IsVisible(currententity->origin, l->origin)) continue;
-
-				// lights origin in relation to the entity
-				for (o=0; o<3; o++)
-					light[o] = -currententity->origin[o] + l->origin[o];
-
-				is = light[0], it = light[1];
-				light[0] = (cost * (is - 0) + sint * (0 - it) + 0);
-				light[1] = (cost * (it - 0) + sint * (is - 0) + 0);
-				light[2]+=8;
-
-				c_shadow_volumes++;
-				worldlight++;
-			}
-		}
-#endif
-#if 0
-		if (gl_shadow_worldlight_volume->value)
-		{
-			for (i=0; i<r_numWorldLights; i++)
-			{
-				wl = &r_worldLights[i];
-				VectorSubtract(wl->origin, currententity->origin, temp);
-				dist = VectorNormalize(temp);
-				if (dist > wl->intensity*gl_shadow_light_scale->value)
-					continue;
-
-//				if (!ri.IsVisible(currententity->origin, wl->origin)) continue;
-				// lights origin in relation to the entity
-				for (o=0; o<3; o++)
-					light[o] = -currententity->origin[o] + wl->origin[o];
-
-				is = light[0], it = light[1];
-				light[0] = (cost * (is - 0) + sint * (0 - it) + 0);
-				light[1] = (cost * (it - 0) + sint * (is - 0) + 0);
-				light[2]+=8;
-
-				worldlight++;
-		              c_shadow_volumes++;
-			}
-		}
-		if (!worldlight)
-		{
-			//old style static shadow vector
-			VectorSet(light, 130 ,0, 200);
-			is = light[0], it = light[1];
-			light[0] = (cost * (is - 0) + sint * (0 - it) + 0);
-			light[1] = (cost * (it - 0) + sint * (is - 0) + 0);
-			light[2] += 8;
-			c_shadow_volumes++;
-			projected_distance = 1;
-		}
-		else
-#endif
-			projected_distance = 25;
-
-		GL_RenderVolumes(paliashdr, light, projected_distance);
-
-		if (gl_state.stencil_two_side)
-			qglDisable(GL_STENCIL_TEST_TWO_SIDE_EXT);
-
-		qglDisable(GL_STENCIL_TEST);
-
-//		if (clamp) qglDisable(GL_DEPTH_CLAMP_NV);
-
-		if (gl_shadow_debug_volume->value)
-			qglColor3f(1,1,1);
-		else
-		        qglColorMask(1,1,1,1);
-
-		qglDepthMask(true);
-		qglDepthFunc(GL_LEQUAL);
+		c_shadow_volumes++;
+		worldlight++;
 	}
+
+	if (!worldlight)
+	{
+		//old style static shadow vector
+		VectorSet(light, 130 ,0, 200);
+		is = light[0], it = light[1];
+		light[0] = (cost * (is - 0) + sint * (0 - it) + 0);
+		light[1] = (cost * (it - 0) + sint * (is - 0) + 0);
+		light[2] += 8;
+		c_shadow_volumes++;
+		projected_distance = 1;
+	}
+	else
+		projected_distance = 25;
+
+	GL_RenderVolumes(paliashdr, light, projected_distance);
+
+	if (gl_state.stencil_two_side)
+		qglDisable(GL_STENCIL_TEST_TWO_SIDE_EXT);
+
+	qglDisable(GL_STENCIL_TEST);
+
+// 	if (clamp) qglDisable(GL_DEPTH_CLAMP_NV);
+
+	if (gl_shadow_debug_volume->value)
+		qglColor3f(1,1,1);
+	else
+		qglColorMask(1,1,1,1);
+
+	qglDepthMask(true);
+	qglDepthFunc(GL_LEQUAL);
 }
 
 void R_DrawShadow (entity_t *e)
 {
-#if 0
 	dmdl_t		*paliashdr;
 
 	daliasframe_t	*frame, *oldframe;
@@ -600,7 +548,6 @@ void R_DrawShadow (entity_t *e)
 		qglDisable (GL_BLEND);
 		qglPopMatrix ();
 	}
-#endif
 }
 
 void R_DrawShadowVolume (entity_t *e)
@@ -697,8 +644,8 @@ void R_ShadowBlend( void )
 
 	qglEnable(GL_STENCIL_TEST);
 
-//	if(gl_state.ati_separate_stencil)
-//		qglStencilFuncSeparateATI(GL_NOTEQUAL, GL_NOTEQUAL, 0, ~0);
+	if(gl_state.ati_separate_stencil)
+		qglStencilFuncSeparateATI(GL_NOTEQUAL, GL_NOTEQUAL, 0, ~0);
 
 	qglStencilFunc( GL_NOTEQUAL, 0, ~0);
 	qglStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
