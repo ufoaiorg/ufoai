@@ -64,6 +64,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_basemanagement.h"
 #include "cl_ufopedia.h"
 #include "cl_research.h"
+#include "cl_market.h"
 
 //=============================================================================
 
@@ -991,6 +992,7 @@ typedef struct aircraft_s
 	aircraftType_t	type;
 	int		status;	// see aircraftStatus_t
 	float		speed;
+	int	price;
 	int	fuel;	// actual fuel
 	int	fuelSize;	// max fuel
 	int	size;	// how many soldiers max
@@ -1010,7 +1012,7 @@ typedef struct aircraft_s
 
 	craftupgrade_t    *upgrades[MAX_CRAFTUPGRADES];	// TODO replace armor/weapon/engine definitions from above with this.
 	int    numUpgrades;
-
+	struct aircraft_s *next; // just for linking purposes - not needed in general
 } aircraft_t;
 
 typedef struct base_s
@@ -1035,6 +1037,7 @@ typedef struct base_s
 	char	mapChar;
 
 	// all aircraft in this base
+	// FIXME: make me a linked list (see cl_market.c aircraft selling)
 	aircraft_t	aircraft[MAX_AIRCRAFT];
 	int 	numAircraftInBase;
 	void*	aircraftCurrent;

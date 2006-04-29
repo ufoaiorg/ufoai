@@ -48,8 +48,8 @@ Global
 		{81666F07-269F-43B1-BE2E-2762520E562E}.Release Alpha|Win32.Build.0 = Release Alpha|Win32
 		{81666F07-269F-43B1-BE2E-2762520E562E}.Release|Win32.ActiveCfg = Release|Win32
 		{81666F07-269F-43B1-BE2E-2762520E562E}.Release|Win32.Build.0 = Release|Win32
-		{81666F07-269F-43B1-BE2E-2762520E562E}.Release-SDLTTF|Win32.ActiveCfg = Release-SDLTTF|Win32
-		{81666F07-269F-43B1-BE2E-2762520E562E}.Release-SDLTTF|Win32.Build.0 = Release-SDLTTF|Win32
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Release-SDLTTF|Win32.ActiveCfg = Release|Win32
+		{81666F07-269F-43B1-BE2E-2762520E562E}.Release-SDLTTF|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

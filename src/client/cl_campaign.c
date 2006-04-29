@@ -2158,172 +2158,6 @@ void CL_GameAbort( void )
 	Cbuf_AddText( va( "sv win %i\n", TEAM_ALIEN ) );
 }
 
-
-// ===========================================================
-
-#define MAX_BUYLIST		32
-
-byte	buyList[MAX_BUYLIST];
-int		buyListLength;
-
-/*
-======================
-CL_BuySelectCmd
-======================
-*/
-void CL_BuySelectCmd( void )
-{
-	int num;
-
-	if ( Cmd_Argc() < 2 )
-	{
-		Com_Printf( "Usage: buy_select <num>\n" );
-		return;
-	}
-
-	num = atoi( Cmd_Argv( 1 ) );
-	if ( num >= buyListLength )
-		return;
-
-	Cbuf_AddText( va( "buyselect%i\n", num ) );
-	CL_ItemDescription( buyList[num] );
-}
-
-
-/*
-======================
-CL_BuyType
-======================
-*/
-void CL_BuyType( void )
-{
-	objDef_t *od;
-	int		i, j, num;
-	char	str[MAX_VAR];
-
-	if ( Cmd_Argc() < 2 )
-	{
-		Com_Printf( "Usage: buy_type <category>\n" );
-		return;
-	}
-	num = atoi( Cmd_Argv( 1 ) );
-
-	CL_UpdateCredits( ccs.credits );
-
-	// get item list
-	for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
-		if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) )
-		{
-			Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );
-			Cvar_Set( str, _(od->name) );
-
-			Q_strncpyz( str, va("mn_storage%i", j), MAX_VAR );
-			Cvar_SetValue( str, ccs.eCampaign.num[i] );
-
-			Q_strncpyz( str, va("mn_supply%i", j), MAX_VAR );
-			Cvar_SetValue( str, ccs.eMarket.num[i] );
-
-			Q_strncpyz( str, va("mn_price%i", j), MAX_VAR );
-			Cvar_Set( str, va( "%i $", od->price ) );
-
-			buyList[j] = i;
-			j++;
-		}
-
-	buyListLength = j;
-
-	// FIXME: This list needs to be scrollable - so a hardcoded end is bad
-	for ( ; j < 28; j++ )
-	{
-		Cvar_Set( va( "mn_item%i", j ), "" );
-		Cvar_Set( va( "mn_storage%i", j ), "" );
-		Cvar_Set( va( "mn_supply%i", j ), "" );
-		Cvar_Set( va( "mn_price%i", j ), "" );
-	}
-
-	// select first item
-	if ( buyListLength )
-	{
-		Cbuf_AddText( "buyselect0\n" );
-		CL_ItemDescription( buyList[0] );
-	} else {
-		// reset description
-		Cvar_Set( "mn_itemname", "" );
-		Cvar_Set( "mn_item", "" );
-		Cvar_Set( "mn_weapon", "" );
-		Cvar_Set( "mn_ammo", "" );
-		menuText[TEXT_STANDARD] = NULL;
-	}
-}
-
-
-/*
-======================
-CL_Buy
-======================
-*/
-void CL_Buy( void )
-{
-	int num, item;
-
-	if ( Cmd_Argc() < 2 )
-	{
-		Com_Printf( "Usage: buy <num>\n" );
-		return;
-	}
-
-	num = atoi( Cmd_Argv( 1 ) );
-	if ( num >= buyListLength )
-		return;
-
-	item = buyList[num];
-	Cbuf_AddText( va( "buyselect%i\n", num ) );
-	CL_ItemDescription( item );
-	Com_DPrintf("item %i\n", item );
-
-	if ( ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item] )
-	{
-		Cvar_SetValue( va( "mn_storage%i", num ), ++ccs.eCampaign.num[item] );
-		Cvar_SetValue( va( "mn_supply%i", num ),  --ccs.eMarket.num[item] );
-		CL_UpdateCredits( ccs.credits-csi.ods[item].price );
-	}
-	RS_MarkCollected();
-	RS_MarkResearchable();
-}
-
-
-/*
-======================
-CL_Sell
-======================
-*/
-void CL_Sell( void )
-{
-	int num, item;
-
-	if ( Cmd_Argc() < 2 )
-	{
-		Com_Printf( "Usage: sell <num>\n" );
-		return;
-	}
-
-	num = atoi( Cmd_Argv( 1 ) );
-	if ( num >= buyListLength )
-		return;
-
-	item = buyList[num];
-	Cbuf_AddText( va( "buyselect%i\n", num ) );
-	CL_ItemDescription( item );
-
-	if ( ccs.eCampaign.num[item] )
-	{
-		Cvar_SetValue( va( "mn_storage%i", num ), --ccs.eCampaign.num[item] );
-		Cvar_SetValue( va( "mn_supply%i", num ),  ++ccs.eMarket.num[item] );
-		CL_UpdateCredits( ccs.credits+csi.ods[item].price );
-	}
-}
-
-
 // ===========================================================
 
 void CL_CollectItemAmmo( invList_t *weapon , int left_hand )
@@ -2541,10 +2375,6 @@ void CL_ResetCampaign( void )
 	Cmd_AddCommand( "game_timestop", CL_GameTimeStop );
 	Cmd_AddCommand( "game_timeslow", CL_GameTimeSlow );
 	Cmd_AddCommand( "game_timefast", CL_GameTimeFast );
-	Cmd_AddCommand( "buy_type", CL_BuyType );
-	Cmd_AddCommand( "buy_select", CL_BuySelectCmd );
-	Cmd_AddCommand( "mn_buy", CL_Buy );
-	Cmd_AddCommand( "mn_sell", CL_Sell );
 	Cmd_AddCommand( "mn_mapaction_reset", CL_MapActionReset );
 
 	Cmd_AddCommand( "aircraft_start", CL_StartAircraft );
@@ -2560,9 +2390,9 @@ void CL_ResetCampaign( void )
 
 	Cmd_AddCommand( "stats_update", Stats_Update );
 
+	// FIXME: use campaign values
 	re.LoadTGA( "pics/menu/map_mask.tga", &maskPic, &maskWidth, &maskHeight );
-	if ( maskPic ) Com_Printf( "Map mask loaded.\n" );
-	else Com_Printf( "Couldn't load map mask (pics/menu/map_mask.tga)\n" );
+	if ( !maskPic ) Com_Printf( "Couldn't load map mask (pics/menu/map_mask.tga)\n" );
 }
 
 
@@ -2924,6 +2754,7 @@ value_t aircraft_vals[] =
 	{ "weapon",	V_STRING,	AIRFS( weapon_string ) },
 	{ "shield",	V_STRING,	AIRFS( shield_string ) },
 	{ "model",	V_STRING,	AIRFS( model ) },
+	{ "price",	V_INT,	AIRFS( price ) },
 
 	{ NULL, 0, 0 },
 };

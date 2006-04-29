@@ -1323,6 +1323,7 @@ void CL_InitLocal (void)
 	MN_ResetMenus();
 	CL_ResetParticles();
 	CL_ResetCampaign();
+	CL_ResetMarket();
 	CL_ResetSequences();
 	CL_ResetTeams();
 

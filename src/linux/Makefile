@@ -185,7 +185,7 @@ ifeq ($(strip $(BUILD_FREETYPE)),YES)
 	BASE_CFLAGS+=$(shell freetype-config --cflags) -DBUILD_FREETYPE
 endif
 
-DEBUG_CFLAGS=$(BASE_CFLAGS) -g -D_FORTIFY_SOURCE=2
+DEBUG_CFLAGS=$(BASE_CFLAGS) -g -D_FORTIFY_SOURCE=2 -DDEBUG
 
 DO_CC=$(CC) $(CFLAGS) -o $@ -c $<
 DO_DEBUG_CC=$(CC) $(DEBUG_CFLAGS) -o $@ -c $<
@@ -282,6 +282,7 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/cl_actor.o \
 	$(BUILDDIR)/client/cl_basemanagement.o \
 	$(BUILDDIR)/client/cl_research.o \
+	$(BUILDDIR)/client/cl_market.o \
 	$(BUILDDIR)/client/cl_campaign.o \
 	$(BUILDDIR)/client/cl_cin.o \
 	$(BUILDDIR)/client/cl_fx.o \
@@ -354,6 +355,9 @@ $(BUILDDIR)/client/cl_basemanagement.o : $(CLIENT_DIR)/cl_basemanagement.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_research.o : $(CLIENT_DIR)/cl_research.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cl_market.o : $(CLIENT_DIR)/cl_market.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_cin.o :     $(CLIENT_DIR)/cl_cin.c

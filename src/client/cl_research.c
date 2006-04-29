@@ -108,7 +108,7 @@ void RS_MarkOneResearchable ( char *id )
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !Q_strncmp( t->id, id, MAX_VAR ) ) {	// research item found
-			Com_Printf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", t->id );
+			Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", t->id );
 			t->statusResearchable = true;
 			return;
 		}
@@ -815,7 +815,7 @@ byte RS_DependsOn(char *id1, char *id2)
 	}
 
 	/* research item found */
-			required = tech->requires;
+	required = tech->requires;
 	for ( i=0; i < required.numEntries; i++ ) {
 		if ( !Q_strncmp(required.list[i], id2, MAX_VAR ) )	// current item (=id1) depends on id2
 			return true;

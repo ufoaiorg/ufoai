@@ -1453,11 +1453,6 @@ void MN_ClearBase( base_t *base )
 
 	memset( base, 0, sizeof(base_t) );
 
-	// FIXME: is this needed?
-	//        the above memset should do this - why is this here?
-	memset( &base->equipment, 0, sizeof(inventory_t) );
-	base->nextUCN = 0;
-
 	CL_ResetCharacters( base );
 
 	// setup team
