@@ -2751,10 +2751,17 @@ value_t aircraft_vals[] =
 	{ "fuel",	V_INT,	AIRFS( fuel ) },
 	{ "fuelsize",	V_INT,	AIRFS( fuelSize ) },
 	{ "image",	V_STRING,	AIRFS( image ) },
+
+	// pointer to technology_t
 	{ "weapon",	V_STRING,	AIRFS( weapon_string ) },
 	{ "shield",	V_STRING,	AIRFS( shield_string ) },
+
 	{ "model",	V_STRING,	AIRFS( model ) },
+	// price for selling/buying
 	{ "price",	V_INT,	AIRFS( price ) },
+	// this is needed to let the buy and sell screen look for the needed building
+	// to place the aircraft in
+	{ "building",	V_STRING,	AIRFS( building ) },
 
 	{ NULL, 0, 0 },
 };

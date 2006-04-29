@@ -37,21 +37,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef HAVE_GETTEXT
 #ifdef MACOS_X
 #include <intl/libintl.h>
-#elif defined(_WIN32)
+#elif defined(_WIN32) /* MACOS_X */
 #define snprintf _snprintf
 #include "../win32/libintl.h"
-#else
+#else /* MACOS_X */
 #include <libintl.h>
-#endif
+#endif /* MACOS_X */
 
 #include <locale.h>
 #define _(String) gettext(String)
 #define gettext_noop(String) String
 #define N_(String) gettext_noop (String)
-#else //HAVE_GETTEXT
+#else /* HAVE_GETTEXT */
 // no gettext support
 #define _(String) String
-#endif
+#endif /* HAVE_GETTEXT */
 
 #include "ref.h"
 #include "vid.h"
@@ -371,7 +371,7 @@ extern	cvar_t	*mn_lastsave;
 //the new soundsystem cvar 0-3 by now
 #ifndef _WIN32
 extern	cvar_t	*s_system;
-#endif
+#endif /* _WIN32 */
 
 extern	cvar_t	*confirm_actions;
 
@@ -1010,6 +1010,8 @@ typedef struct aircraft_s
 	mapline_t route;
 	void*	homebase;	// pointer to homebase
 
+	char    building[MAX_VAR];	// id of the building needed as hangar
+
 	craftupgrade_t    *upgrades[MAX_CRAFTUPGRADES];	// TODO replace armor/weapon/engine definitions from above with this.
 	int    numUpgrades;
 	struct aircraft_s *next; // just for linking purposes - not needed in general
@@ -1096,7 +1098,7 @@ void MN_InitEmployees ( void );
 
 #ifndef SAVE_FILE_VERSION
 #define SAVE_FILE_VERSION 4
-#endif
+#endif /* SAVE_FILE_VERSION */
 
 #define MAX_TEAMDATASIZE	32768
 #define MAX_GAMESAVESIZE	MAX_TEAMDATASIZE + 16384
@@ -1468,7 +1470,7 @@ extern font_t *fontBig;
 
 // will return the size and the path for each font
 void CL_GetFontData (char *name, int *size, char *path);
-#endif
+#endif /* USE_SDL_TTF */
 
 //
 // cl_particle.c
@@ -1556,24 +1558,13 @@ void CL_AddParticles (void);
 // RAFAEL
 void CL_TrapParticles (entity_t *ent);
 
-//
-// menus
-//
-/*void M_Init (void);
-void M_Keydown (int key);
-void M_Draw (void);
-void M_Menu_Main_f (void);
-void M_ForceMenuOff (void);
-void M_AddToServerList (netadr_t adr, char *info);*/
-
-
 
 #if id386
 void x86_TimerStart( void );
 void x86_TimerStop( void );
 void x86_TimerInit( unsigned long smallest, unsigned longest );
 unsigned long *x86_TimerGetHistogram( void );
-#endif
+#endif /* id386 */
 
-#endif
+#endif /* CLIENT_DEFINED */
 
