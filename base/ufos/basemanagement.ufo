@@ -138,6 +138,42 @@ building building_quarters
 	pedia		building_quarters
 }
 
+building building_ufo_hangar
+{
+	title		"_UFO Hangar"
+	image		base/ufo_drop2
+	fixcosts	1000
+	needs		building_ufo_hangar2
+	depends		building_lab
+	max_workers	5
+	min_workers	2
+	worker_costs	10
+	energy		400
+	build_time	6
+	varcosts	50
+	map_name	"ufo_drop"
+	pedia		building_ufo_hangar
+	firstbase	true
+	type	hangar
+	pos		"1 0"
+}
+
+building building_ufo_hangar2
+{
+	title		"_UFO Hangar"
+	image		base/ufo_drop1
+	fixcosts	1000
+	depends		building_lab
+	visible		false
+	max_workers	5
+	min_workers	2
+	worker_costs	10
+	energy		400
+	build_time	6
+	varcosts	50
+	pedia		building_ufo_hangar
+}
+
 building building_hangar
 {
 	title		"_Hangar"
@@ -243,10 +279,11 @@ production mind_p
 aircraft craft_dropship
 {
 	speed	10.0
-	name	"Dropship"
+	name	"_Dropship"
 	type	transporter
 	model	"dropship"
 	price	100000
+	building	building_hangar
 	size	8
 	fuel	100000
 	fuelsize	100000
@@ -256,13 +293,14 @@ aircraft craft_dropship
 aircraft craft_interceptor
 {
 	speed	20.0
-	name	"Interceptor"
+	name	"_Interceptor"
 	type	interceptor
 	model	"interceptor"
 	fuel	60000
 	fuelsize	60000
 	size	1
 	price	100000
+	building	building_intercept
 	image	air_interceptor
 	// FIXME: This is just testing
 	weapon	rs_weapon_tachyonrifle
@@ -272,10 +310,11 @@ aircraft craft_interceptor
 aircraft craft_ufo_small
 {
 	speed	18.0
-	name	"UFO"
+	name	"_UFO"
 	type	ufo
 	model	"ufo1"
 	size	8
+	building	building_ufo_hangar
 	price	1000000
 	fuel	100000
 	fuelsize	100000
@@ -285,10 +324,11 @@ aircraft craft_ufo_small
 aircraft craft_ufo_big
 {
 	speed	45.0
-	name	"UFO - Destroyer class"
+	name	"_UFO - Destroyer class"
 	type	ufo
 	model	"ufobig"
 	size	80
+	building	building_ufo_hangar
 	fuel	1000000
 	fuelsize	1000000
 	price	1000000
