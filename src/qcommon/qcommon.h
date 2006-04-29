@@ -36,63 +36,63 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifdef NDEBUG
 #define BUILDSTRING "Win32 RELEASE"
-#else
+#else /* NDEBUG */
 #define BUILDSTRING "Win32 DEBUG"
-#endif
+#endif /* NDEBUG */
 
 #ifdef _M_IX86
 #define	CPUSTRING	"x86"
-#elif defined _M_ALPHA
+#elif defined _M_ALPHA /* _M_IX86 */
 #define	CPUSTRING	"AXP"
-#else
+#else /* _M_IX86 */
 #define	CPUSTRING	"Unknown"
-#endif
+#endif /* _M_IX86 */
 
-#elif defined __linux__
+#elif defined __linux__ /* _WIN32 */
 
 #define BUILDSTRING "Linux"
 
 #ifdef __i386__
 #define CPUSTRING "i386"
-#elif defined __alpha__
+#elif defined __alpha__ /* __i386__ */
 #define CPUSTRING "axp"
-#else
+#else /* __i386__ */
 #define CPUSTRING "Unknown"
-#endif
+#endif /* __i386__ */
 
-#elif defined __sun__
+#elif defined __sun__ /* _WIN32 */
 
 #define BUILDSTRING "Solaris"
 
 #ifdef __i386__
 #define CPUSTRING "i386"
-#else
+#else /* __i386__ */
 #define CPUSTRING "sparc"
-#endif
+#endif /* __i386__ */
 
-#elif defined MACOS_X
+#elif defined MACOS_X /* _WIN32 */
 
 #define BUILDSTRING "MacOSX"
 
 #ifdef __i386__
 #define CPUSTRING "i386"
-#else
+#else /* __i386__ */
 #define CPUSTRING "sparc"
-#endif
+#endif /* __i386__ */
 
-#else	// !WIN32
+#else /* !_WIN32 */
 
 #define BUILDSTRING "NON-WIN32"
 #define	CPUSTRING	"NON-WIN32"
 
-#endif
+#endif /* _WIN32 */
 
 #ifndef DEFAULT_BASEDIR
 # define DEFAULT_BASEDIR BASEDIRNAME
-#endif
+#endif /* DEFAULT_BASEDIR */
 #ifndef DEFAULT_LIBDIR
 # define DEFAULT_LIBDIR DEFAULT_BASEDIR
-#endif
+#endif /* DEFAULT_LIBDIR */
 
 int dstrcmp( char *source, char *s1, char *s2 );
 
@@ -483,9 +483,9 @@ NET
 
 #ifdef HAVE_IPV6
 typedef enum {NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX, NA_IPV6, NA_MULTICAST6} netadrtype_t;
-#else
+#else /* HAVE_IPV6 */
 typedef enum {NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX} netadrtype_t;
-#endif
+#endif /* HAVE_IPV6 */
 
 typedef enum {NS_CLIENT, NS_SERVER} netsrc_t;
 
@@ -496,9 +496,9 @@ typedef struct
 	/* TODO: Use sockaddr_storage instead */
 	byte	ip[16];
 	unsigned int scope_id;
-#else
+#else /* HAVE_IPV6 */
 	byte	ip[4];
-#endif
+#endif /* HAVE_IPV6 */
 	byte	ipx[10];
 
 	unsigned short	port;
@@ -539,7 +539,7 @@ typedef struct
 	netadr_t	remote_address;
 	int			qport;				// qport value to write when transmitting
 
-// sequencing variables
+	// sequencing variables
 	int			incoming_sequence;
 	int			incoming_acknowledged;
 	int			incoming_reliable_acknowledged;	// single bit
@@ -550,11 +550,11 @@ typedef struct
 	int			reliable_sequence;			// single bit
 	int			last_reliable_sequence;		// sequence number of last send
 
-// reliable staging and holding areas
+	// reliable staging and holding areas
 	sizebuf_t	message;		// writing buffer to send to server
 	byte		message_buf[MAX_MSGLEN-16];		// leave space for header
 
-// message is copied to this buffer when it is first transfered
+	// message is copied to this buffer when it is first transfered
 	int			reliable_length;
 	byte		reliable_buf[MAX_MSGLEN-16];	// unacked reliable message
 } netchan_t;
@@ -632,29 +632,6 @@ int CM_EntTestLine (vec3_t start, vec3_t stop);
 int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end);
 int CM_TestLine (vec3_t start, vec3_t stop);
 int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end);
-
-/*byte		*CM_ClusterPVS (int cluster);
-byte		*CM_ClusterPHS (int cluster);
-
-int			CM_PointLeafnum (vec3_t p);
-
-// call with topnode set to the headnode, returns with topnode
-// set to the first node that splits the box
-int			CM_BoxLeafnums (vec3_t mins, vec3_t maxs, int *list,
-							int listsize, int *topnode);
-
-int			CM_LeafContents (int leafnum);
-int			CM_LeafCluster (int leafnum);
-int			CM_LeafArea (int leafnum);
-
-void		CM_SetAreaPortalState (int portalnum, qboolean open);
-qboolean	CM_AreasConnected (int area1, int area2);
-
-int			CM_WriteAreaBits (byte *buffer, int area);
-qboolean	CM_HeadnodeVisible (int headnode, byte *visbits);
-
-void		CM_WritePortalState (FILE *f);
-void		CM_ReadPortalState (FILE *f);*/
 
 
 /*
@@ -914,4 +891,4 @@ void SV_Frame (int msec);
 
 char *strlwr (char *s);
 
-#endif
+#endif /* QCOMMON_DEFINED */
