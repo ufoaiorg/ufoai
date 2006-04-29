@@ -246,6 +246,7 @@ aircraft craft_dropship
 	name	"Dropship"
 	type	transporter
 	model	"dropship"
+	price	100000
 	size	8
 	fuel	100000
 	fuelsize	100000
@@ -261,6 +262,7 @@ aircraft craft_interceptor
 	fuel	60000
 	fuelsize	60000
 	size	1
+	price	100000
 	image	air_interceptor
 	// FIXME: This is just testing
 	weapon	rs_weapon_tachyonrifle
@@ -274,6 +276,7 @@ aircraft craft_ufo_small
 	type	ufo
 	model	"ufo1"
 	size	8
+	price	1000000
 	fuel	100000
 	fuelsize	100000
 	image	air_ufo
@@ -288,5 +291,6 @@ aircraft craft_ufo_big
 	size	80
 	fuel	1000000
 	fuelsize	1000000
+	price	1000000
 	image	air_ufo
 }

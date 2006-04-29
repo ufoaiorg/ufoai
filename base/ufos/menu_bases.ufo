@@ -358,7 +358,7 @@ menu aircraft
 		mousefx true
 		click
 		{
-			cmd "mn_push buy"
+			cmd "mn_push buyaircraft"
 		}
 		out		{ *txt_buysell color "0 0.8 0 1" *button_buysell texl "0 0" *button_buysell texh "230 64" }
 		in		{ *txt_buysell color "1 1 1 1" *button_buysell texl "230 0" *button_buysell texh "460 64" }
