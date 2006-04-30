@@ -153,9 +153,7 @@ building building_ufo_hangar
 	varcosts	50
 	map_name	"ufo_drop"
 	pedia		building_ufo_hangar
-	firstbase	true
 	type	hangar
-	pos		"1 0"
 }
 
 building building_ufo_hangar2
