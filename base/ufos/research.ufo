@@ -347,33 +347,29 @@ tech rs_tachyon
 	//image_top  xxxxx
 }
 
-//===============================
-// Looks like this pistol was planned but never implemented?
-//
-//tech rs_weapon_tachyonpistol
-//{
-//	type	weapon
-//	up_chapter	weapons
-//	description	"_tachyonpistol_txt"
-//
-//	requires	rs_tachyon
-//	provides	tachyonpistol
-//	time	1
-//	researched	false
-//}
+tech rs_weapon_tachyonpistol
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_tachyonpistol_txt"
 
-//tech rs_weapon_tachyonpistol_ammo
-//{
-//	type	weapon
-//	up_chapter	weapons
-//	description	"_tachyonpistol_ammo_txt"
-//
-//	requires	rs_weapon_tachyonpistol
-//	provides	tachyonpistol_ammo
-//	time	0
-//	researched	false
-//}
-//===============================
+	requires	rs_tachyon
+	provides	tachyonpistol
+	time	1
+	researched	false
+}
+
+tech rs_weapon_tachyonpistol_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_tachyonpistol_ammo_txt"
+
+	requires	rs_weapon_tachyonpistol
+	provides	tachyonpistol_ammo
+	time	0
+	researched	false
+}
 
 tech rs_weapon_tachyonrifle
 {
@@ -438,17 +434,17 @@ tech rs_plasma
 	researched	false
 }
 
-//tech rs_weapon_plasblade
-//{
-//	type	weapon
-//	up_chapter	weapons
-//	description	"_plasblade_txt"
-//
-//	requires	rs_plasma
-//	provides	plasblade
-//	time	1
-//	researched	false
-//}
+tech rs_weapon_plasblade
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasblade_txt"
+
+	requires	rs_plasma
+	provides	plasblade
+	time	1
+	researched	false
+}
 
 tech rs_weapon_plaspistol
 {
@@ -497,6 +493,18 @@ tech rs_weapon_plasrifle_ammo
 	requires	rs_weapon_plasrifle
 	provides	plasrifle_ammo
 	time	0
+	researched	false
+}
+
+tech rs_weapon_kerrblade
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_kerrblade_txt"
+
+	requires	initial
+	provides	kerrblade
+	time	1
 	researched	false
 }
 

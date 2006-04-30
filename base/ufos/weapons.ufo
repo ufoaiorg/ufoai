@@ -215,6 +215,77 @@ item pistol_ammo
 
 
 // =======================
+// TACHYONPISTOL
+// =======================
+item tachyonpistol
+{
+	name		"_Tachyonpistol"
+	model		weapons/tachyonpistol/tachyonpistol
+	weapon		true
+	type		pistol
+	category	2
+	twohanded	false
+	shape		"0 0 3 2"
+	center		"2 0 1"
+	scale		1.2
+	ammo		12
+	reload		4
+	price		300
+	buytype		1
+}
+
+item tachyonpistol_ammo
+{
+	name		"_Tachyonpistol Clip"
+	model		weapons/tachyonpistol/tachyonpistol_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.0
+	price		40
+	buytype		1
+
+	primary
+	{
+		name	"_Rapid Fire"
+		skill	close
+		projtl	tachyonMiniBall
+		impact	tachyonImpact
+		hitbody	tachyonImpact
+		firesnd	weapons/tachyonpistol.wav
+		speed	0
+		spread	"7 9"
+		crouch	0.9
+		range	250
+		shots	3
+		ammo	3
+		rof		10
+		time	12
+		damage	"20 5"
+		dmgtype normal
+	}
+	secondary
+	{
+		name	"_Aimed Shot"
+		skill	close
+		projtl	tachyonBall
+		impact	tachyonImpact
+		hitbody	tachyonImpact
+		firesnd	weapons/tachyonpistol.wav
+		speed	0
+		spread	"2.8 4"
+		crouch	0.9
+		range	380
+		shots	1
+		ammo	1
+		time	8
+		damage	"20 5"
+		dmgtype normal
+	}
+}
+
+// =======================
 // SMG
 // =======================
 item smg
@@ -812,6 +883,58 @@ item plasrifle_ammo
 	}
 }
 
+// =======================
+// PLASMABLADE
+// =======================
+item plasmablade
+{
+	name		"_Plasmablade"
+	model		weapons/plasblade/plasblade
+	weapon		true
+	type		melee
+	category	2
+	shape		"0 0 1 2"
+	center		"-1 0 3"
+	scale		0.9
+	price		210
+	buytype		2
+	ammo		1
+	thrown		true
+
+	primary
+	{
+		name	"_Stab"
+		skill	close
+		projtl	null
+		impact	plasmaImpactCharged
+		hitbody	plasmaImpactCharged
+		firesnd	misc/klonk03.wav
+		speed	0
+		range	55
+		shots	1
+		time	8
+		damage	"100 10"
+		dmgtype normal
+	}
+	secondary
+	{
+		name	"_Throw"
+		skill	close
+		projtl	plasblade
+		impact	plasmaImpactCharged
+		hitbody	plasmaImpactCharged
+		impsnd	misc/klonk03.wav
+		bodysnd misc/klonk01.wav
+		speed	320
+		range	500
+		spread	"7 7"
+		shots	1
+		ammo	1
+		time	10
+		damage	"70 10"
+		dmgtype normal
+	}
+}
 
 // =======================
 // LASER PISTOL
@@ -1147,7 +1270,6 @@ item knife
 	}
 }
 
-
 // =======================
 // MEDIKIT
 // =======================
@@ -1230,5 +1352,58 @@ item irgoggles
 		time	25
 		shots	1
 		irgoggles	true
+	}
+}
+
+// =======================
+// KERRBLADE
+// =======================
+item kerrblade
+{
+	name		"_Blade"
+	model		weapons/kerrblade/kerrblade
+	weapon		true
+	type		melee
+	category	2
+	shape		"0 0 1 2"
+	center		"-1 0 3"
+	scale		1.0
+	price		210
+	buytype		2
+	ammo		1
+	thrown		true
+
+	primary
+	{
+		name	"_Stab"
+		skill	close
+		projtl	null
+		impact	null
+		hitbody blood
+		firesnd	misc/klonk03.wav
+		speed	0
+		range	110
+		shots	1
+		time	12
+		damage	"80 10"
+		dmgtype normal
+	}
+	secondary
+	{
+		name	"_Throw"
+		skill	close
+		projtl	kerrblade
+		impact	null
+		hitbody blood
+		impsnd	misc/klonk03.wav
+		bodysnd misc/klonk01.wav
+		speed	320
+		range	500
+		spread	"7 7"
+		shots	1
+		ammo	1
+		time	14
+		damage	"100 10"
+		dmgtype normal
 	}
 }
