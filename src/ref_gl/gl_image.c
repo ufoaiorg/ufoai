@@ -1975,7 +1975,6 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 	int		i, l, len;
 	byte	*pic, *palette;
 	int		width, height;
-	char *ptr;
 
 	if (!pname)
 		ri.Sys_Error (ERR_DROP, "GL_FindImage: NULL name");
@@ -1983,12 +1982,6 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 	if (len<5)
 		return NULL;	//	ri.Sys_Error (ERR_DROP, "GL_FindImage: bad name: %s", name);
 
-#ifndef _WIN32
-	// fix backslashes
-	while ((ptr=strchr(pname,'\\'))) {
-		*ptr = '/';
-	}
-#endif
 	// drop extension
 	Q_strncpyz( lname, pname, MAX_QPATH );
 	if ( lname[len-4] == '.' ) len -= 4;

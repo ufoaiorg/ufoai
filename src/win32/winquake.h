@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <windows.h>
 
-#ifndef USE_SDL
+#ifndef USE_SDL_SOUND
 #include <dsound.h>
 #else
 #include <SDL/SDL.h>
@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern	HINSTANCE	global_hInstance;
 
-#ifndef USE_SDL
+#ifndef USE_SDL_SOUND
 extern LPDIRECTSOUND pDS;
 extern LPDIRECTSOUNDBUFFER pDSBuf;
 

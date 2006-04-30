@@ -33,7 +33,6 @@ TODO: new game does not reset basemangagement
 ======================*/
 
 #include "client.h"
-#include "cl_basemanagement.h"
 
 base_t	bmBases[MAX_BASES];				// A global list of _all_ bases. (see client.h)
 vec2_t	newBasePos;

@@ -34,8 +34,6 @@ TODO: comment on used globasl variables.
 ======================*/
 
 #include "client.h"
-#include "cl_research.h"
-#include "cl_ufopedia.h"
 
 void RS_GetFirstRequired( char *id,  stringlist_t *required);
 byte RS_TechIsResearchable(char *id );

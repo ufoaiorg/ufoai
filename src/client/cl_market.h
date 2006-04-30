@@ -15,5 +15,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 // cl_market.h -- primary header for market stuff
+#ifndef MARKET_DEFINED
+#define MARKET_DEFINED 1
 
 void CL_ResetMarket( void );
+
+#endif /* MARKET_DEFINED */
