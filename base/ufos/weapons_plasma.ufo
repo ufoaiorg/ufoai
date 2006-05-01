@@ -147,7 +147,7 @@ item plasrifle_ammo
 // =======================
 // PLASMABLADE
 // =======================
-item plasmablade
+item plasblade
 {
 	name		"_Plasmablade"
 	model		weapons/plasblade/plasblade
@@ -155,8 +155,8 @@ item plasmablade
 	type		melee
 	category	2
 	shape		"0 0 1 2"
-	center		"0 4 0"
-	scale  0.7
+	center		"-6 -13 0"
+	scale  0.8
 	price		210
 	buytype		2
 	ammo		1
