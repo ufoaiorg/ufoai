@@ -24,7 +24,7 @@ item tachyonpistol_ammo
 	model		weapons/tachyonpistol/tachyonpistol_clip
 	type		ammo
 	category	0
-	shape		"0 0 1 2"
+	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		1.0
 	price		40

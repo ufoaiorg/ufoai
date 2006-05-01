@@ -93,8 +93,8 @@ item kerrblade
 	weapon		true
 	type		melee
 	category	2
-	shape		"0 0 1 2"
-	center		"-1 0 3"
+	shape		"0 0 5 2"
+	center		"6 0 0"
 	scale		1.0
 	price		210
 	buytype		2
@@ -110,7 +110,7 @@ item kerrblade
 		hitbody blood
 		firesnd	misc/klonk03.wav
 		speed	0
-		range	110
+		range	55
 		shots	1
 		time	12
 		damage	"80 10"

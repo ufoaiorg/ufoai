@@ -487,6 +487,26 @@ particle plasmaParticle
 	think { kill }
 }
 
+particle plasmaBall
+{
+	init
+	{
+		image  sfx/plasmaball
+		blend  add
+		style  facing
+	}
+	run
+	{
+		push pos "3 3"
+		push *t
+		mul  float 4
+		sin  #
+		mul  #
+		add  pos "8 8"
+		pop  *size
+	}
+}
+
 
 // ==================
 // TACHYON EFFECTS
@@ -656,6 +676,19 @@ particle tachyonMiniBall
 	}
 }
 
+// ==================
+// GRENADE LAUNCHER EFFECTS
+// ==================
+
+particle grenl_ammo
+{
+	init
+	{
+		model  weapons/grenl/grenl_clip
+		color  ".5 .5 .5 1"
+	}
+}
+
 
 // ==================
 // GRENADE EFFECTS
@@ -768,4 +801,25 @@ particle knife
 	}
 }
 
+particle kerrblade
+{
+	init
+	{
+		model  weapons/kerrblade/kerrblade
+		color  ".5 .5 .5 1"
+		omega  "-800 0 0"
+		angles "90 0 0"
+	}
+}
+
+particle plasblade
+{
+	init
+	{
+		model  weapons/plasblade/plasblade
+		color  ".5 .5 .5 1"
+		omega  "-800 0 0"
+		angles "90 0 0"
+	}
+}
 

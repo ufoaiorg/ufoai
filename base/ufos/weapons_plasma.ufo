@@ -155,8 +155,8 @@ item plasmablade
 	type		melee
 	category	2
 	shape		"0 0 1 2"
-	center		"-1 0 3"
-	scale		0.9
+	center		"0 4 0"
+	scale  0.7
 	price		210
 	buytype		2
 	ammo		1
@@ -194,5 +194,81 @@ item plasmablade
 		time	10
 		damage	"70 10"
 		dmgtype normal
+	}
+}
+
+// =======================
+// PLASMABLASTER
+// =======================
+item plasblaster
+{
+	name		"_Plasmablaster"
+	model		weapons/plasblaster/plasblaster
+	weapon		true
+	type		biggun
+	category	3
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"7 0 2"
+	scale		1.0
+	ammo		4
+	reload		6
+	price		5800
+	buytype		0
+}
+
+item plasblaster_ammo
+{
+	name		"_Plasmablaster Charge"
+	model		weapons/plasblaster/plasblaster_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.4
+	price		400
+	buytype		0
+
+	primary
+	{
+		name	"_Snap Shot"
+		skill 	heavy
+		projtl	plasmaBall
+		impact	plasmaImpact
+		hitbody	plasmaImpact
+		firesnd	weapons/plasma_s.wav
+		selfdet true
+		speed	250
+		spread	"5 5"
+		crouch	0.8
+		range	1200
+		shots	1
+		ammo	1
+		time	14
+		damage	"45 10"
+		spldmg	"100 30"
+		splrad	120
+		dmgtype plasma
+	}
+	secondary
+	{
+		name	"_Aimed Shot"
+		skill 	heavy
+		projtl	plasmaBall
+		impact	plasmaImpact
+		hitbody	plasmaImpact
+		firesnd	weapons/plasma_c.wav
+		selfdet true
+		speed	250
+		spread	"2.6 2.6"
+		crouch	0.6
+		range	1200
+		shots	1
+		ammo	1
+		time	20
+		damage	"45 10"
+		spldmg	"100 30"
+		splrad	120
+		dmgtype plasma
 	}
 }
