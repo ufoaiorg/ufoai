@@ -260,7 +260,7 @@ void Con_CheckResize (void)
 
 	if (width < 1)			// video hasn't been initialized yet
 	{
-		width = 38;
+		width = 80;
 		con.linewidth = width;
 		con.totallines = CON_TEXTSIZE / con.linewidth;
 		memset (con.text, ' ', CON_TEXTSIZE);
@@ -315,9 +315,9 @@ void Con_Init (void)
 
 	Com_Printf (_("Console initialized.\n"));
 
-//
-// register our commands
-//
+	//
+	// register our commands
+	//
 	con_notifytime = Cvar_Get ("con_notifytime", "3", 0);
 
 	Cmd_AddCommand ("toggleconsole", Con_ToggleConsole_f);
