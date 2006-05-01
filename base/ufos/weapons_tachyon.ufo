@@ -1,0 +1,218 @@
+// =======================
+// TACHYONPISTOL
+// =======================
+item tachyonpistol
+{
+	name		"_Tachyonpistol"
+	model		weapons/tachyonpistol/tachyonpistol
+	weapon		true
+	type		pistol
+	category	2
+	twohanded	false
+	shape		"0 0 3 2"
+	center		"2 0 1"
+	scale		1.2
+	ammo		12
+	reload		4
+	price		300
+	buytype		1
+}
+
+item tachyonpistol_ammo
+{
+	name		"_Tachyonpistol Clip"
+	model		weapons/tachyonpistol/tachyonpistol_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.0
+	price		40
+	buytype		1
+
+	primary
+	{
+		name	"_Rapid Fire"
+		skill	close
+		projtl	tachyonMiniBall
+		impact	tachyonImpact
+		hitbody	tachyonImpact
+		firesnd	weapons/tachyonpistol.wav
+		speed	0
+		spread	"7 9"
+		crouch	0.9
+		range	250
+		shots	3
+		ammo	3
+		rof		10
+		time	12
+		damage	"20 5"
+		dmgtype normal
+	}
+	secondary
+	{
+		name	"_Aimed Shot"
+		skill	close
+		projtl	tachyonBall
+		impact	tachyonImpact
+		hitbody	tachyonImpact
+		firesnd	weapons/tachyonpistol.wav
+		speed	0
+		spread	"2.8 4"
+		crouch	0.9
+		range	380
+		shots	1
+		ammo	1
+		time	8
+		damage	"20 5"
+		dmgtype normal
+	}
+}
+
+// =======================
+// TACHYON RIFLE
+// =======================
+item tachyonrifle
+{
+	name		"_Tachyon Rifle"
+	model		weapons/tachyonrifle/tachyonrifle
+	weapon		true
+	type		rifle
+	category	1
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"11 0 0.5"
+	scale		1.1
+	ammo		24
+	reload		8
+	price		4400
+	buytype		0
+}
+
+item tachyonrifle_ammo
+{
+	name		"_Tachyon Rifle Charge"
+	model		weapons/tachyonrifle/tachyonrifle_clip
+	type		ammo
+	category	0
+	shape		"0 0 2 1"
+	center		"0 0 0"
+	scale		1.1
+	price		300
+	buytype		0
+
+	primary
+	{
+		name	"_Rapid Shots"
+		skill	assault
+		projtl	tachyonBall
+		impact	tachyonImpact
+		hitbody tachyonImpact
+		firesnd	weapons/tachyon.wav
+		speed	800
+		spread	"4 4"
+		crouch	0.6
+		range	600
+		shots	4
+		ammo	4
+		rof		5
+		time	16
+		damage	"25 10"
+		dmgtype tachyon
+	}
+	secondary
+	{
+		name	"_Charged Blast"
+		skill	explosive
+		projtl	tachyonBigBall
+		impact	tachyonBigImpact
+		hitbody tachyonBigImpact
+		firesnd	weapons/tachyon.wav
+		speed	400
+		spread	"4.7 4.7"
+		crouch	0.8
+		range	600
+		shots	1
+		ammo	8
+		rof		8
+		time	24
+		damage	"80 30"
+		spldmg	"60 20"
+		splrad	80
+		dmgtype tachyon
+	}
+}
+
+
+// =======================
+// TACHYON SNIPER
+// =======================
+item tachyonsniper
+{
+	name		"_Tachyon Sniper Rifle"
+	model		weapons/tachyonsniper/tachyonsniper
+	weapon		true
+	type		rifle
+	category	1
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"9 0 1.8"
+	scale		1.1
+	ammo		12
+	reload		8
+	price		5000
+	buytype		0
+}
+
+item tachyonsniper_ammo
+{
+	name		"_Tachyon Sniper Charge"
+	model		weapons/tachyonsniper/tachyonsniper_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.1
+	price		350
+	buytype		0
+
+	primary
+	{
+		name	"_Snap Shot"
+		skill	precise
+		projtl	tachyonBall
+		impact	tachyonImpact
+		hitbody tachyonImpact
+		firesnd	weapons/tachyonsniper.wav
+		speed	800
+		spread	"2.4 2.4"
+		crouch	0.6
+		range	900
+		shots	1
+		ammo	1
+		rof		5
+		time	14
+		damage	"65 10"
+		dmgtype tachyon
+	}
+	secondary
+	{
+		name	"_Rapid Shots"
+		skill	precise
+		projtl	tachyonMiniBall
+		impact	tachyonImpact
+		hitbody tachyonImpact
+		firesnd	weapons/tachyonsniper.wav
+		speed	800
+		spread	"1.4 1.4"
+		crouch	0.8
+		range	900
+		shots	4
+		ammo	4
+		rof		5
+		time	25
+		damage	"26 4"
+		dmgtype tachyon
+	}
+}
+

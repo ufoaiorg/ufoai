@@ -1,0 +1,198 @@
+
+// =======================
+// PLASMA PISTOL
+// =======================
+item plaspistol
+{
+	name		"_Plasma Pistol"
+	model		weapons/plaspistol/plaspistol
+	weapon		true
+	type		pistol
+	category	2
+	twohanded	false
+	shape		"0 0 3 2"
+	center		"1 0 0.3"
+	scale		1.5
+	ammo		6
+	reload		6
+	price		3400
+	buytype		1
+}
+
+item plaspistol_ammo
+{
+	name		"_Plasma Pistol Charge"
+	model		weapons/plaspistol/plaspistol_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.2
+	price		170
+	buytype		1
+
+	primary
+	{
+		name	"_Charged Pulse"
+		skill 	assault
+		projtl	plasmaChargedPulse
+		impact	plasmaImpactCharged
+		hitbody	plasmaImpactCharged
+		firesnd	weapons/plasma_s.wav
+		speed	0
+		spread	"4 4"
+		crouch	0.8
+		range	500
+		shots	1
+		ammo	1
+		time	12
+		damage	"50 10"
+		dmgtype plasma
+	}
+	secondary
+	{
+		name	"_Continuous Beam"
+		skill 	heavy
+		projtl	plasmaContinuous
+		impact	plasmaImpact
+		hitbody	plasmaImpact
+		firesnd	weapons/plasma_c.wav
+		sndonce true
+		speed	0
+		spread	"14 5"
+		crouch	1.0
+		range	350
+		shots	35
+		ammo	2
+		rof		25
+		time	22
+		damage	"7 2"
+		dmgtype plasma
+	}
+}
+
+
+// =======================
+// PLASMA RIFLE
+// =======================
+item plasrifle
+{
+	name		"_Plasma Rifle"
+	model		weapons/plasrifle/plasrifle
+	weapon		true
+	type		biggun
+	category	1
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"9 0 1.5"
+	scale		1.3
+	ammo		8
+	reload		8
+	price		4000
+	buytype		0
+}
+
+item plasrifle_ammo
+{
+	name		"_Plasma Rifle Charge"
+	model		weapons/plasrifle/plasrifle_clip
+	type		ammo
+	category	0
+	shape		"0 0 2 1"
+	center		"0 0 0"
+	scale		1.4
+	price		200
+	buytype		0
+
+	primary
+	{
+		name	"_Charged Pulse"
+		skill 	precise
+		projtl	plasmaChargedPulse
+		impact	plasmaImpactCharged
+		hitbody	plasmaImpactCharged
+		firesnd	weapons/plasma_s.wav
+		speed	0
+		spread	"2.7 2.7"
+		crouch	0.7
+		range	700
+		shots	1
+		ammo	1
+		time	13
+		damage	"60 15"
+		dmgtype plasma
+	}
+	secondary
+	{
+		name	"_Continuous Beam"
+		skill 	heavy
+		projtl	plasmaContinuous
+		impact	plasmaImpact
+		hitbody	plasmaImpact
+		firesnd	weapons/plasma_c.wav
+		sndonce true
+		speed	0
+		spread	"9 5"
+		crouch	1.0
+		range	500
+		shots	35
+		ammo	3
+		rof		25
+		time	24
+		damage	"9 2"
+		dmgtype plasma
+	}
+}
+
+// =======================
+// PLASMABLADE
+// =======================
+item plasmablade
+{
+	name		"_Plasmablade"
+	model		weapons/plasblade/plasblade
+	weapon		true
+	type		melee
+	category	2
+	shape		"0 0 1 2"
+	center		"-1 0 3"
+	scale		0.9
+	price		210
+	buytype		2
+	ammo		1
+	thrown		true
+
+	primary
+	{
+		name	"_Stab"
+		skill	close
+		projtl	null
+		impact	plasmaImpactCharged
+		hitbody	plasmaImpactCharged
+		firesnd	misc/klonk03.wav
+		speed	0
+		range	55
+		shots	1
+		time	8
+		damage	"100 10"
+		dmgtype normal
+	}
+	secondary
+	{
+		name	"_Throw"
+		skill	close
+		projtl	plasblade
+		impact	plasmaImpactCharged
+		hitbody	plasmaImpactCharged
+		impsnd	misc/klonk03.wav
+		bodysnd misc/klonk01.wav
+		speed	320
+		range	500
+		spread	"7 7"
+		shots	1
+		ammo	1
+		time	10
+		damage	"70 10"
+		dmgtype normal
+	}
+}

@@ -1,0 +1,142 @@
+// =======================
+// LASER PISTOL
+// =======================
+item laserpistol
+{
+	name		"_Laser Pistol"
+	model		weapons/laserpistol/laserpistol
+	weapon		true
+	type		pistol
+	category	2
+	twohanded	false
+	shape		"0 0 3 2"
+	center		"2.5 0 1.2"
+	scale		1.7
+	ammo		12
+	reload		6
+	price		2200
+	buytype		1
+}
+
+item laserpistol_ammo
+{
+	name		"_Laser Pistol Charge"
+	model		weapons/laserpistol/laserpistol_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.5
+	price		100
+	buytype		1
+
+	primary
+	{
+		name	"_Single Pulse"
+		skill 	close
+		projtl	laserPulse
+		impact	laserImpact
+		hitbody	laserImpact
+		firesnd	weapons/laser.wav
+		speed	0
+		spread	"2.8 3.6"
+		crouch	0.8
+		range	600
+		shots	1
+		ammo	1
+		time	9
+		damage	"32 6"
+		dmgtype laser
+	}
+	secondary
+	{
+		name	"_Multiple Pulses"
+		skill 	close
+		projtl	laserPulse
+		impact	laserImpact
+		hitbody	laserImpact
+		firesnd	weapons/laser.wav
+		speed	0
+		spread	"5 7"
+		crouch	1.0
+		range	600
+		shots	4
+		ammo	4
+		rof		6
+		time	17
+		damage	"26 4"
+		dmgtype laser
+	}
+}
+
+
+// =======================
+// LASER RIFLE
+// =======================
+item laserrifle
+{
+	name		"_Laser Rifle"
+	model		weapons/laserrifle/laserrifle
+	weapon		true
+	type		rifle
+	category	1
+	twohanded	true
+	shape		"0 0 5 2"
+	center		"5 0 1.5"
+	scale		1.2
+	ammo		16
+	reload		8
+	price		3200
+	buytype		0
+}
+
+item laserrifle_ammo
+{
+	name		"_Laser Rifle Charge"
+	model		weapons/laserrifle/laserrifle_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.8
+	price		130
+	buytype		0
+
+	primary
+	{
+		name	"_Single Pulse"
+		skill 	precise
+		projtl	laserPulse
+		impact	laserImpact
+		hitbody	laserImpact
+		firesnd	weapons/laser.wav
+		speed	0
+		spread	"1.4 1.9"
+		crouch	0.7
+		range	900
+		shots	1
+		ammo	1
+		time	11
+		damage	"42 6"
+		dmgtype laser
+	}
+	secondary
+	{
+		name	"_Multiple Pulses"
+		skill 	assault
+		projtl	laserPulse
+		impact	laserImpact
+		hitbody	laserImpact
+		firesnd	weapons/laser.wav
+		speed	0
+		spread	"2.4 3.5"
+		crouch	1.0
+		range	900
+		shots	4
+		ammo	4
+		rof		6
+		time	22
+		damage	"36 6"
+		dmgtype laser
+	}
+}
