@@ -51,6 +51,10 @@ Follow these steps:
   cd ../tools
   make
 
+now symlink the qrad3 and qbsp3 from src/tools to /usr/bin
+otherwise the next step (compilation of the maps) won't find
+the needed map-compile tools
+
 o Compile Maps
 ====================================================
 To compile the maps with qbsp3 and qrad3 type:
