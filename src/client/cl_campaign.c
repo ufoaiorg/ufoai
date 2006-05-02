@@ -436,7 +436,7 @@ char* CL_AircraftStatusToName ( aircraft_t* air )
 			return _("Returning to homebase");
 			break;
 		default:
-			Com_Printf(_("Error: Unknown aircraft status for %s\n"), air->title );
+			Com_Printf( "Error: Unknown aircraft status for %s\n", air->title );
 			break;
 	}
 	return NULL;

@@ -690,6 +690,8 @@ extern	int		fb_length;
 void CL_CharacterCvars( character_t *chr );
 void CL_ActorUpdateCVars( void );
 
+void CL_DisplayHudMessage( char* text, int time );
+
 qboolean CL_ActorSelect( le_t *le );
 qboolean CL_ActorSelectList( int num );
 void CL_AddActorToTeamList( le_t *le );

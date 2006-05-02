@@ -283,12 +283,12 @@ void	CL_Download_f (void)
 
 	if (FS_LoadFile (filename, NULL) != -1)
 	{	// it exists, no need to download
-		Com_Printf(_("File already exists.\n"));
+		Com_Printf( "File already exists.\n" );
 		return;
 	}
 
 	strcpy (cls.downloadname, filename);
-	Com_Printf (_("Downloading %s\n"), cls.downloadname);
+	Com_Printf ( "Downloading %s\n", cls.downloadname);
 
 	// download to a temp name, and only rename
 	// to the real name when done, so if interrupted
@@ -659,7 +659,7 @@ void CL_Reset( sizebuf_t *sb )
 	// set the active player
 	cls.team = MSG_ReadByte( sb );
 	cl.actTeam = MSG_ReadByte( sb );
-	Com_Printf( _("(player %i) It's team %i's round\n"), cl.pnum, cl.actTeam );
+	Com_Printf( "(player %i) It's team %i's round\n", cl.pnum, cl.actTeam );
 }
 
 
@@ -728,7 +728,7 @@ void CL_EntAppear( sizebuf_t *sb )
 	if ( !le )
 		le = LE_Add( entnum );
 	else
-		Com_Printf( _("Entity appearing already visible... overwriting the old one\n") );
+		Com_Printf( "Entity appearing already visible... overwriting the old one\n" );
 
 	le->type = MSG_ReadByte( sb );
 	MSG_ReadGPos( sb, le->pos );
@@ -749,7 +749,7 @@ void CL_EntPerish( sizebuf_t *sb )
 
 	if ( !le ) 
 	{
-		Com_Printf( _("Delete request ignored... LE not found\n") );
+		Com_Printf( "Delete request ignored... LE not found\n" );
 		return;
 	}
 
@@ -858,13 +858,15 @@ void CL_ActorAppear( sizebuf_t *sb )
 			}
 
 			// message
-			cl.msgTime = cl.time + 2000;
 			if ( le->team != TEAM_CIVILIAN ) 
 			{
-				if ( curCampaign ) strcpy( cl.msgText, _("Alien spotted!\n") );
-				else strcpy( cl.msgText, _("Enemy spotted!\n") );
+				if ( curCampaign )
+					CL_DisplayHudMessage( _("Alien spotted!\n"), 2000 );
+				else 
+					CL_DisplayHudMessage( _("Enemy spotted!\n"), 2000 );
 			}
-			else strcpy( cl.msgText, _("Civilian spotted!\n") );
+			else 
+				CL_DisplayHudMessage( _("Civilian spotted!\n"), 2000 );
 		}
 	}
 
@@ -891,7 +893,7 @@ void CL_ActorStats( sizebuf_t *sb )
 
 	if ( !le ) 
 	{
-		Com_Printf( _("Stats message ignored... LE not found\n") );
+		Com_Printf( "Stats message ignored... LE not found\n" );
 		return;
 	}
 
@@ -919,7 +921,7 @@ void CL_ActorStateChange( sizebuf_t *sb )
 
 	if ( !le ) 
 	{
-		Com_Printf( _("StateChange message ignored... LE not found\n") );
+		Com_Printf( "StateChange message ignored... LE not found\n" );
 		return;
 	}
 
@@ -1021,7 +1023,7 @@ void CL_InvAdd( sizebuf_t *sb )
 	le = LE_Get( number );
 	if ( !le ) 
 	{
-		Com_Printf( _("InvAdd message ignored... LE not found\n") );
+		Com_Printf( "InvAdd message ignored... LE not found\n" );
 		return;
 	}
 
@@ -1067,7 +1069,7 @@ void CL_InvDel( sizebuf_t *sb )
 	le = LE_Get( number );
 	if ( !le ) 
 	{
-		Com_Printf( _("InvDel message ignored... LE not found\n") );
+		Com_Printf( "InvDel message ignored... LE not found\n" );
 		return;
 	}
 
@@ -1106,7 +1108,7 @@ void CL_InvAmmo( sizebuf_t *sb )
 	le = LE_Get( number );
 	if ( !le ) 
 	{
-		Com_Printf( _("InvAmmo message ignored... LE not found\n") );
+		Com_Printf( "InvAmmo message ignored... LE not found\n" );
 		return;
 	}
 

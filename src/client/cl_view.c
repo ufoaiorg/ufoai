@@ -421,7 +421,7 @@ void CL_ParseEntitystring( char *es )
 
 			if ( !model[0] )
 			{
-				Com_Printf( _("misc_model without \"model\" specified\n") );
+				Com_Printf( "misc_model without \"model\" specified\n" );
 				continue;
 			}
 

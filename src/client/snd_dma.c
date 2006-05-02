@@ -103,13 +103,13 @@ void S_SoundInfo_f(void)
 		return;
 	}
 
-	Com_Printf(_("%5d stereo\n"), dma.channels - 1);
-	Com_Printf(_("%5d samples\n"), dma.samples);
-	Com_Printf(_("%5d samplepos\n"), dma.samplepos);
-	Com_Printf(_("%5d samplebits\n"), dma.samplebits);
-	Com_Printf(_("%5d submission_chunk\n"), dma.submission_chunk);
-	Com_Printf(_("%5d speed\n"), dma.speed);
-	Com_Printf(_("0x%x dma buffer\n"), dma.buffer);
+	Com_Printf( "%5d stereo\n", dma.channels - 1);
+	Com_Printf( "%5d samples\n", dma.samples);
+	Com_Printf( "%5d samplepos\n", dma.samplepos);
+	Com_Printf( "%5d samplebits\n", dma.samplebits);
+	Com_Printf( "%5d submission_chunk\n", dma.submission_chunk);
+	Com_Printf( "%5d speed\n", dma.speed);
+	Com_Printf( "0x%x dma buffer\n", dma.buffer);
 
 }
 
@@ -1211,7 +1211,7 @@ qboolean OGG_Open( char *filename )
 	length = FS_FOpenFile( va( "music/%s.ogg", filename ), &f);
 	if ( !f )
 	{
-		Com_Printf( _("Couldn't open 'music/%s.ogg'\n"), filename );
+		Com_Printf( "Couldn't open 'music/%s.ogg'\n", filename );
 		return false;
 	}
 
@@ -1219,7 +1219,7 @@ qboolean OGG_Open( char *filename )
 	res = ov_open( f, &ovFile, NULL, 0 );
 	if ( res < 0 )
 	{
-		Com_Printf( _("'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n"), filename, res );
+		Com_Printf( "'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n", filename, res );
 		fclose( f );
 		return false;
 	}
@@ -1280,7 +1280,7 @@ void S_PlayOGG( void )
 {
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: ov_play <filename>\n") );
+		Com_Printf( "Usage: ov_play <filename>\n" );
 		return;
 	}
 	OGG_Open( Cmd_Argv(1) );
@@ -1349,10 +1349,10 @@ void S_SoundList(void)
 		else
 		{
 			if (sfx->name[0] == '*')
-				Com_Printf(_("  placeholder : %s\n"), sfx->name);
+				Com_Printf( "  placeholder : %s\n", sfx->name);
 			else
-				Com_Printf(_("  not loaded  : %s\n"), sfx->name);
+				Com_Printf( "  not loaded  : %s\n", sfx->name);
 		}
 	}
-	Com_Printf (_("Total resident: %i\n"), total);
+	Com_Printf ( "Total resident: %i\n", total);
 }

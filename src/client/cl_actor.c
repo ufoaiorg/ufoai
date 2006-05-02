@@ -286,7 +286,7 @@ void CL_ActorUpdateCVars( void )
 			  && cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE
 			  && selWeapon && !RS_ItemIsResearched( csi.ods[ selWeapon->item.t].kurz ) )
 			{
-				Com_Printf( _( "You cannot use this unknown item. You need to research it first.\n") );
+				Com_Printf( "You cannot use this unknown item. You need to research it first.\n" );
 				cl.cmode = M_MOVE;
 			}
 			// move or shoot
@@ -369,7 +369,16 @@ void CL_ActorUpdateCVars( void )
 		Cvar_Set( "mn_ammoright", "" );
 		Cvar_Set( "mn_ammoleft", "" );
 		if ( refresh ) Cbuf_AddText( "tostand\n" );
-		menuText[TEXT_STANDARD] = NULL;
+
+		// this allows us to display messages even with no actor selected
+		if ( cl.time < cl.msgTime )
+		{
+			// special message
+			Com_sprintf( infoText, MAX_MENUTEXTLEN, cl.msgText );
+			menuText[TEXT_STANDARD] = infoText;
+		}
+		else
+			menuText[TEXT_STANDARD] = NULL;
 	}
 
 	// mode
@@ -613,7 +622,7 @@ int CL_CheckAction( void )
 {
 	if ( !selActor )
 	{
-		Com_Printf( _("Nobody selected.\n") );
+		Com_Printf( "Nobody selected.\n");
 		Com_sprintf( infoText, MAX_MENUTEXTLEN, _("Nobody selected\n") );
 		return false;
 	}
@@ -626,7 +635,7 @@ int CL_CheckAction( void )
 */
 	if ( cls.team != cl.actTeam )
 	{
-		Com_Printf( _("This isn't your round.\n") );
+		Com_Printf( "This isn't your round.\n");
 		Com_sprintf( infoText, MAX_MENUTEXTLEN, _("This isn't your round\n") );
 		return false;
 	}
@@ -761,7 +770,7 @@ void CL_ActorReload( int hand )
 
 	if ( !RS_ItemIsResearched( csi.ods[weapon].kurz ) )
 	{
-		Com_Printf( _("You cannot load this unknown item. You need to research it first.\n") );
+		Com_Printf( "You cannot load this unknown item. You need to research it first.\n" );
 		return;
 	}
 
@@ -790,7 +799,7 @@ void CL_ActorReload( int hand )
 			clc_action, PA_INVMOVE, selActor->entnum, bestContainer, x, y,
 			hand, 0, 0 );
 	else
-		Com_Printf( _("No clip left.\n") );
+		Com_Printf( "No clip left.\n" );
 }
 
 
@@ -808,7 +817,7 @@ void CL_ActorDoMove( sizebuf_t *sb )
 	le = LE_Get( MSG_ReadShort( sb ) );
 	if ( !le )
 	{
-		Com_Printf( _("Can't move, LE doesn't exist\n") );
+		Com_Printf( "Can't move, LE doesn't exist\n" );
 		return;
 	}
 
@@ -867,7 +876,7 @@ void CL_ActorDoTurn( sizebuf_t *sb )
 	le = LE_Get( MSG_ReadShort( sb ) );
 	if ( !le )
 	{
-		Com_Printf( _("Can't turn, LE doesn't exist\n") );
+		Com_Printf( "Can't turn, LE doesn't exist\n" );
 		return;
 	}
 
@@ -1162,6 +1171,20 @@ void CL_NextRound( void )
 		CL_CameraModeChange( CAMERA_MODE_REMOTE );
 }
 
+/*
+=================
+CL_DisplayHudMessage
+
+Diplays a message on hud
++ time is a ms values
++ text is already translated here
+=================
+*/
+void CL_DisplayHudMessage( char* text, int time )
+{
+	cl.msgTime = cl.time + time;
+	Q_strncpyz( cl.msgText, text, sizeof(cl.msgText) );
+}
 
 /*
 =================
@@ -1174,9 +1197,9 @@ void CL_DoEndRound( sizebuf_t *sb )
 	if ( cls.team == cl.actTeam ) Cbuf_AddText( "endround\n" );
 
 	// change active player
-	Com_Printf( _("Team %i ended round"), cl.actTeam );
+	Com_Printf( "Team %i ended round", cl.actTeam );
 	cl.actTeam = MSG_ReadByte( sb );
-	Com_Printf( _(", team %i's round started!\n"), cl.actTeam );
+	Com_Printf( ", team %i's round started!\n", cl.actTeam );
 
 	// check whether a particle has to go
 	CL_ParticleCheckRounds();
@@ -1185,8 +1208,7 @@ void CL_DoEndRound( sizebuf_t *sb )
 	if ( cls.team == cl.actTeam )
 	{
 		Cbuf_AddText( "startround\n" );
-		cl.msgTime = cl.time + 2000;
-		strcpy( cl.msgText, _("Your round started!\n") );
+		CL_DisplayHudMessage( _("Your round started!\n"), 2000 );
 		if ( selActor )
 		{
 			CL_BuildForbiddenList();

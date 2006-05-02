@@ -543,7 +543,7 @@ ptl_t *CL_ParticleSpawn( char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t 
 
 	if ( i == numPtlDefs )
 	{
-		Com_Printf( _("Particle definiton \"%s\" not found\n"), name );
+		Com_Printf( "Particle definiton \"%s\" not found\n", name );
 		return NULL;
 	}
 
@@ -560,7 +560,7 @@ ptl_t *CL_ParticleSpawn( char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t 
 			numPtls++;
 		else
 		{
-			Com_Printf( _("Too many particles...\n") );
+			Com_Printf( "Too many particles...\n" );
 			return NULL;
 		}
 	}
@@ -836,7 +836,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( _("CL_ParsePtlCmds: particle cmds \"%s\" without body ignored\n"), name );
+		Com_Printf( "CL_ParsePtlCmds: particle cmds \"%s\" without body ignored\n", name );
 		pc = &ptlCmd[numPtlCmds++];
 		memset( pc, 0, sizeof( ptlCmd_t ) );
 		return;
@@ -890,7 +890,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 
 					if ( !pp->string )
 					{
-						Com_Printf( _("CL_ParsePtlCmds: bad reference \"%s\" specified (particle %s)\n"), token, name );
+						Com_Printf( "CL_ParsePtlCmds: bad reference \"%s\" specified (particle %s)\n", token, name );
 						numPtlCmds--;
 						break;
 					}
@@ -898,7 +898,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 					if ( ( (pc_types[i] & ONLY) && (pc_types[i] & ~ONLY) != pp->type ) ||
 						( !(pc_types[i] & ONLY) && !((1<<pp->type) & pc_types[i]) ) )
 					{
-						Com_Printf( _("CL_ParsePtlCmds: bad type in var \"%s\" specified (particle %s)\n"), token, name );
+						Com_Printf( "CL_ParsePtlCmds: bad type in var \"%s\" specified (particle %s)\n", token, name );
 						numPtlCmds--;
 						break;
 					}
@@ -913,7 +913,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 							break;
 						}
 						else
-							Com_Printf( _("CL_ParsePtlCmds: can't get components of a non-vector type (particle %s)\n"), name );
+							Com_Printf( "CL_ParsePtlCmds: can't get components of a non-vector type (particle %s)\n", name );
 					}
 
 					// set the values
@@ -933,7 +933,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 
 					if ( j >= V_NUM_TYPES || !((1 << j) & pc_types[i]) )
 					{
-						Com_Printf( _("CL_ParsePtlCmds: bad type \"%s\" specified (particle %s)\n"), token, name );
+						Com_Printf( "CL_ParsePtlCmds: bad type \"%s\" specified (particle %s)\n", token, name );
 						numPtlCmds--;
 						break;
 					}
@@ -977,7 +977,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 			}
 
 		if ( !pp->string )
-			Com_Printf( _("CL_ParsePtlCmds: unknown token \"%s\" ignored (particle %s)\n"), token, name );
+			Com_Printf( "CL_ParsePtlCmds: unknown token \"%s\" ignored (particle %s)\n", token, name );
 
 	} while ( *text );
 
@@ -1006,7 +1006,7 @@ void CL_ParseParticle( char *name, char **text )
 
 	if ( i < numPtlDefs )
 	{
-		Com_Printf( _("CL_ParseParticle: particle def \"%s\" with same name found, second ignored\n"), name );
+		Com_Printf( "CL_ParseParticle: particle def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
 
@@ -1021,7 +1021,7 @@ void CL_ParseParticle( char *name, char **text )
 
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( _("CL_ParseParticle: particle def \"%s\" without body ignored\n"), name );
+		Com_Printf( "CL_ParseParticle: particle def \"%s\" without body ignored\n", name );
 		numPtlDefs--;
 		return;
 	}
@@ -1045,14 +1045,14 @@ void CL_ParseParticle( char *name, char **text )
 			}
 
 		if ( i == PF_NUM_PTLFUNCS )
-			Com_Printf( _("CL_ParseParticle: unknown token \"%s\" ignored (particle %s)\n"), token, name );
+			Com_Printf( "CL_ParseParticle: unknown token \"%s\" ignored (particle %s)\n", token, name );
 
 	} while ( *text );
 
 	// check for an init function
 	if ( !pd->init )
 	{
-		Com_Printf( _("CL_ParseParticle: particle definition %s without init function ignored\n"), name );
+		Com_Printf( "CL_ParseParticle: particle definition %s without init function ignored\n", name );
 		numPtlDefs--;
 	}
 }

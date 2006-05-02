@@ -93,7 +93,7 @@ lm_t *LM_Find( int num )
 	for ( i = 0; i < numLMs; i++ )
 		if ( LMs[i].num == num ) return &LMs[i];
 
-	Com_Printf( _("LM_Perish: Can't find model %i\n"), num );
+	Com_Printf( "LM_Perish: Can't find model %i\n", num );
 	return NULL;
 }
 

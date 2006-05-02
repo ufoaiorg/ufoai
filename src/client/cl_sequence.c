@@ -312,7 +312,7 @@ void CL_SequenceStart_f( void )
 
 	if ( Cmd_Argc() < 2 )
 	{
-		Com_Printf( _("Usage: seq_start <name>\n") );
+		Com_Printf( "Usage: seq_start <name>\n" );
 		return;
 	}
 	name = Cmd_Argv( 1 );
@@ -323,7 +323,7 @@ void CL_SequenceStart_f( void )
 			break;
 	if ( i >= numSequences )
 	{
-		Com_Printf( _("Couldn't find sequence '%s'\n"), name );
+		Com_Printf( "Couldn't find sequence '%s'\n", name );
 		return;
 	}
 
@@ -462,7 +462,7 @@ void SEQ_Precache( char *name, char *data )
 			data += strlen( data ) + 1;
 		}
 	}
-	else Com_Printf( _("SEQ_Precache: unknown format '%s'\n"), name );
+	else Com_Printf( "SEQ_Precache: unknown format '%s'\n", name );
 }
 
 /*
@@ -545,7 +545,7 @@ void SEQ_Model( char *name, char *data )
 				Com_DPrintf(_("Change anim to: %s\n"), data );
 				re.AnimChange( &se->as, se->model, data );
 			}
-			else Com_Printf( _("SEQ_Model: unknown token '%s'\n"), data );
+			else Com_Printf( "SEQ_Model: unknown token '%s'\n", data );
 		}
 
 		data += strlen( data ) + 1;
@@ -595,7 +595,7 @@ void SEQ_2Dobj( char *name, char *data )
 				break;
 			}
 		if ( !vp->string )
-			Com_Printf( _("SEQ_Text: unknown token '%s'\n"), data );
+			Com_Printf( "SEQ_Text: unknown token '%s'\n", data );
 
 		data += strlen( data ) + 1;
 	}
@@ -618,7 +618,7 @@ void SEQ_Remove( char *name, char *data )
 	if ( s2d ) s2d->inuse = false;
 
 	if ( !se && !s2d )
-		Com_Printf( _("SEQ_Remove: couldn't find '%s'\n"), name );
+		Com_Printf( "SEQ_Remove: couldn't find '%s'\n", name );
 }
 
 /*
@@ -655,13 +655,13 @@ void CL_ParseSequence( char *name, char **text )
 
 	if ( i < numSequences )
 	{
-		Com_Printf( _("CL_ParseSequence: sequence def \"%s\" with same name found, second ignored\n"), name );
+		Com_Printf( "CL_ParseSequence: sequence def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
 
 	// initialize the sequence
 	if ( numSequences >= MAX_SEQUENCES )
-		Sys_Error( ERR_FATAL, _("Too many sequences\n") );
+		Sys_Error( ERR_FATAL, "Too many sequences\n" );
 
 	sp = &sequences[numSequences++];
 	memset( sp, 0, sizeof(sequence_t) );
@@ -673,7 +673,7 @@ void CL_ParseSequence( char *name, char **text )
 
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( _("CL_ParseSequence: sequence def \"%s\" without body ignored\n"), name );
+		Com_Printf( "CL_ParseSequence: sequence def \"%s\" without body ignored\n", name );
 		numSequences--;
 		return;
 	}
@@ -694,7 +694,7 @@ next_cmd:
 				if ( !*text ) return;
 
 				if ( numSeqCmds >= MAX_SEQCMDS )
-					Sys_Error( ERR_FATAL, _("Too many sequence commands\n") );
+					Sys_Error( ERR_FATAL, "Too many sequence commands\n" );
 
 				// init seqCmd
 				sc = &seqCmds[numSeqCmds++];
@@ -716,7 +716,7 @@ next_cmd:
 				{
 					if ( maxLength <= 0 )
 					{
-						Com_Printf(_("Too much data for sequence %s"), sc->name );
+						Com_Printf( "Too much data for sequence %s", sc->name );
 						break;
 					}
 					token = COM_EParse( text, errhead, name );
@@ -736,7 +736,7 @@ next_cmd:
 
 		if ( i == SEQ_NUMCMDS )
 		{
-			Com_Printf( _("CL_ParseSequence: unknown command \"%s\" ignored (sequence %s)\n"), token, name );
+			Com_Printf( "CL_ParseSequence: unknown command \"%s\" ignored (sequence %s)\n", token, name );
 			COM_EParse( text, errhead, name );
 		}
 	} while ( *text );
@@ -841,7 +841,7 @@ void CL_Video_f( void )
 
 		if ( i > 9999 )
 		{
-			Com_Printf( _("ERROR: no free file names to create video\n") );
+			Com_Printf( "ERROR: no free file names to create video\n");
 			return;
 		}
 	}
@@ -867,7 +867,7 @@ static void SafeFS_Write( const void *buffer, int len, FILE* f )
 {
 	int write = FS_Write( buffer, len, f );
 	if ( write < len )
-		Com_Printf( _("Failed to write avi file %p - %i:%i\n"), f, write,len );
+		Com_Printf( "Failed to write avi file %p - %i:%i\n", f, write,len );
 }
 
 /*
@@ -1119,21 +1119,21 @@ qboolean CL_OpenAVIForWriting( char *fileName )
 	// Don't start if a framerate has not been chosen
 	if( cl_aviFrameRate->value <= 0 )
 	{
-		Com_Printf( _("cl_aviFrameRate must be >= 1\n") );
+		Com_Printf( "cl_aviFrameRate must be >= 1\n");
 		return false;
 	}
 
 	FS_FOpenFileWrite( fileName, &afd.f );
 	if ( afd.f == NULL )
 	{
-		Com_Printf( _("Could not open %s for writing\n"), fileName );
+		Com_Printf( "Could not open %s for writing\n", fileName );
 		return false;
 	}
 
 	FS_FOpenFileWrite( va( "%s" INDEX_FILE_EXTENSION, fileName ), &afd.idxF );
 	if ( afd.idxF == NULL )
 	{
-		Com_Printf( _("Could not open index file for writing\n") );
+		Com_Printf( "Could not open index file for writing\n" );
 		FS_FCloseFile( afd.f );
 		return false;
 	}
@@ -1166,13 +1166,13 @@ qboolean CL_OpenAVIForWriting( char *fileName )
 		while( ( afd.a.rate % suggestRate ) && suggestRate >= 1 )
 			suggestRate--;
 
-		Com_Printf(_("WARNING: cl_aviFrameRate is not a divisor of the audio rate, suggest %d\n"), suggestRate );
+		Com_Printf( "WARNING: cl_aviFrameRate is not a divisor of the audio rate, suggest %d\n", suggestRate );
 	}
 
 	if( !(int)Cvar_VariableValue( "s_initsound" ) )
 	{
 		afd.audio = false;
-		Com_Printf(_("No audio for video capturing\n"));
+		Com_Printf( "No audio for video capturing\n" );
 	}
 	else
 	{
@@ -1180,7 +1180,7 @@ qboolean CL_OpenAVIForWriting( char *fileName )
 			afd.audio = true;
 		else
 		{
-			Com_Printf(_("No audio for video capturing\n"));
+			Com_Printf( "No audio for video capturing\n" );
 			afd.audio = false; //FIXME: audio not implemented for this case
 		}
 	}
@@ -1299,7 +1299,7 @@ void CL_WriteAVIAudioFrame( const byte *pcmBuffer, int size )
 
 	if( bytesInBuffer + size > PCM_BUFFER_SIZE )
 	{
-		Com_Printf( _("WARNING: Audio capture buffer overflow -- truncating\n") );
+		Com_Printf( "WARNING: Audio capture buffer overflow -- truncating\n" );
 		size = PCM_BUFFER_SIZE - bytesInBuffer;
 	}
 
@@ -1424,7 +1424,7 @@ qboolean CL_CloseAVI( void )
 	Z_Free( afd.eBuffer );
 	FS_FCloseFile( afd.f );
 
-	Com_Printf( _("Wrote %d:%d frames to %s\n"), afd.numVideoFrames, afd.numAudioFrames, afd.fileName );
+	Com_Printf( "Wrote %d:%d frames to %s\n", afd.numVideoFrames, afd.numAudioFrames, afd.fileName );
 
 	return true;
 }

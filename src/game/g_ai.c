@@ -418,7 +418,7 @@ void G_SpawnAIPlayer( player_t *player, int numSpawn )
 	// check spawn point number
 	if ( numPoints < numSpawn )
 	{
-		Com_Printf( _("Not enough spawn points for team %i\n"), team );
+		Com_Printf( "Not enough spawn points for team %i\n", team );
 		numSpawn = numPoints;
 	}
 
@@ -523,7 +523,7 @@ void G_SpawnAIPlayer( player_t *player, int numSpawn )
 			else
 			{
 				// nothing left
-				Com_Printf( _("Not enough weapons in equipment '%s'\n"), gi.cvar_string( "ai_equipment" ) );
+				Com_Printf( "Not enough weapons in equipment '%s'\n", gi.cvar_string( "ai_equipment" ) );
 			}
 		} else {
 			// spawn
@@ -580,7 +580,7 @@ player_t *AI_CreatePlayer( int team )
 			if ( team == TEAM_CIVILIAN ) G_SpawnAIPlayer( p, ai_numcivilians->value );
 			else if ( sv_maxclients->value == 1 ) G_SpawnAIPlayer( p, ai_numaliens->value );
 			else G_SpawnAIPlayer( p, ai_numactors->value );
-			Com_Printf( _("Created AI player (team %i)\n"), team );
+			Com_Printf( "Created AI player (team %i)\n", team );
 			return p;
 		}
 

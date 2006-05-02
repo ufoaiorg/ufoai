@@ -52,7 +52,7 @@ void CL_ParseShaders( char *title, char **text )
 	// get name list body body
 	token = COM_Parse( text );
 	if ( !*text || *token != '{' ) {
-		Com_Printf( _("CL_ParseShaders: shader \"%s\" without body ignored\n"), title );
+		Com_Printf( "CL_ParseShaders: shader \"%s\" without body ignored\n", title );
 		return;
 	}
 
@@ -80,7 +80,7 @@ void CL_ParseShaders( char *title, char **text )
 			}
 
 		if ( !v->string )
-			Com_Printf( _("CL_ParseShaders: unknown token \"%s\" ignored (entry %s)\n"), token, title );
+			Com_Printf( "CL_ParseShaders: unknown token \"%s\" ignored (entry %s)\n", token, title );
 
 	} while ( *text );
 }
@@ -91,10 +91,10 @@ void CL_ShaderList_f ( void )
 
 	for ( i = 0; i < r_numshaders; i++ )
 	{
-		Com_Printf( _("Shader %s\n"), r_shaders[i].title );
-		Com_Printf( _("..filename: %s\n"), r_shaders[i].filename );
-		Com_Printf( _("..frag %i\n"), (int)r_shaders[i].frag );
-		Com_Printf( _("..vertex %i\n"), (int)r_shaders[i].vertex );
+		Com_Printf( "Shader %s\n", r_shaders[i].title );
+		Com_Printf( "..filename: %s\n", r_shaders[i].filename );
+		Com_Printf( "..frag %i\n", (int)r_shaders[i].frag );
+		Com_Printf( "..vertex %i\n", (int)r_shaders[i].vertex );
 		Com_Printf( "\n" );
 	}
 }
