@@ -2282,7 +2282,7 @@ void MN_SetBaseTitle ( void )
 		Cvar_Set("mn_base_title_new", bmBases[ccs.numBases].title );
 	else
 	{
-		MN_AddNewMessage( _("Notice"), _("You´ve reached the base limit."), false, MSG_STANDARD, NULL );
+		MN_AddNewMessage( _("Notice"), _("You've reached the base limit."), false, MSG_STANDARD, NULL );
 		MN_PopMenu( false ); // remove the new base popup
 	}
 }
