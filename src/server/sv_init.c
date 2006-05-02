@@ -46,7 +46,7 @@ int SV_FindIndex (char *name, int start, int max, qboolean create)
 	if (i == max)
 		Com_Error (ERR_DROP, "*Index: overflow");
 
-	strncpy (sv.configstrings[start+i], name, sizeof(sv.configstrings[i]));
+	Q_strncpyz (sv.configstrings[start+i], name, sizeof(sv.configstrings[i]));
 
 	if (sv.state != ss_loading)
 	{	// send the update to everyone
@@ -187,7 +187,7 @@ void SV_ParseMapTile( char *filename, char **text )
 	}
 	t = &mTile[numTiles++];
 	memset( t, 0, sizeof( mTile_t ) );
-	strncpy( t->name, token, MAX_VAR );
+	Q_strncpyz( t->name, token, MAX_VAR );
 
 	// start parsing the block
 	token = COM_EParse( text, errhead, filename );
@@ -254,7 +254,7 @@ void SV_ParseAssembly( char *filename, char **text )
 	// init
 	a = &mAssembly[numAssemblies++];
 	memset( a, 0, sizeof( mAssembly_t ) );
-	strncpy( a->name, token, MAX_VAR );
+	Q_strncpyz( a->name, token, MAX_VAR );
 	a->w = 8; a->h = 8;
 
 	do {
@@ -585,7 +585,7 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 		if ( !strcmp( token, "base" ) )
 		{
 			token = COM_Parse( &text );
-			strncpy( basePath, token, MAX_QPATH );
+			Q_strncpyz( basePath, token, MAX_QPATH );
 		}
 		else if ( !strcmp( token, "tile" ) ) SV_ParseMapTile( filename, &text );
 		else if ( !strcmp( token, "assembly" ) ) SV_ParseAssembly( filename, &text );
@@ -675,7 +675,7 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 	if ( basePath[0] )
 	{
 		asmMap[0] = '-';
-		strncpy( &asmMap[1], basePath, MAX_QPATH );
+		Q_strncpyz( &asmMap[1], basePath, MAX_QPATH );
 		*map = asmMap;
 	}
 	else
@@ -689,8 +689,8 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 	// generate the strings
 	for ( i = 0, pl = mPlaced; i < numPlaced; i++, pl++ )
 	{
-		strncat( asmMap, va( " %s", pl->tile->name ), MAX_TOKEN_CHARS*MAX_TILESTRINGS );
-		strncat( asmPos, va( " %i %i", (pl->x - mAsm->w/2)*8, (pl->y - mAsm->h/2)*8 ), MAX_TOKEN_CHARS*MAX_TILESTRINGS );
+		Q_strcat( asmMap, MAX_TOKEN_CHARS*MAX_TILESTRINGS, va( " %s", pl->tile->name ) );
+		Q_strcat( asmPos, MAX_TOKEN_CHARS*MAX_TILESTRINGS, va( " %i %i", (pl->x - mAsm->w/2)*8, (pl->y - mAsm->h/2)*8 ) );
 	}
 
 //	Com_DPrintf( "tiles: %s\n", *map );
@@ -766,8 +766,8 @@ void SV_SpawnServer (char *server, char *param, server_state_t serverstate, qboo
 			pos = param;
 		}
 
-		strncpy( sv.configstrings[CS_TILES], map, MAX_TOKEN_CHARS*MAX_TILESTRINGS );
-		if ( pos ) strncpy( sv.configstrings[CS_POSITIONS], pos, MAX_TOKEN_CHARS*MAX_TILESTRINGS );
+		Q_strncpyz( sv.configstrings[CS_TILES], map, MAX_TOKEN_CHARS*MAX_TILESTRINGS );
+		if ( pos ) Q_strncpyz( sv.configstrings[CS_POSITIONS], pos, MAX_TOKEN_CHARS*MAX_TILESTRINGS );
 		else sv.configstrings[CS_POSITIONS][0] = 0;
 
 		CM_LoadMap( map, pos );

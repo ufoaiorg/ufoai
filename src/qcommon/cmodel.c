@@ -245,8 +245,8 @@ void CMod_LoadSurfaces (lump_t *l)
 
 	for ( i=0 ; i<count ; i++, in++, out++)
 	{
-		strncpy (out->c.name, in->texture, sizeof(out->c.name)-1);
-		strncpy (out->rname, in->texture, sizeof(out->rname)-1);
+		Q_strncpyz(out->c.name, in->texture, sizeof(out->c.name));
+		Q_strncpyz(out->rname, in->texture, sizeof(out->rname));
 		out->c.flags = LittleLong (in->flags);
 		out->c.value = LittleLong (in->value);
 	}
@@ -976,7 +976,7 @@ void CMod_LoadEntityString (lump_t *l)
 			if (!es)
 				Com_Error (ERR_DROP, "CMod_LoadEntityString: EOF without closing brace");
 
-			strncpy (keyname, com_token, sizeof(keyname)-1);
+			Q_strncpyz(keyname, com_token, sizeof(keyname));
 
 			// parse value
 			com_token = COM_Parse (&es);
@@ -1081,7 +1081,7 @@ unsigned CM_AddMapTile( char *name, int sX, int sY, int sZ )
 	curTile = &mapTiles[numTiles++];
 	memset( curTile, 0, sizeof( mapTile_t ) );
 	curTile->extraData = Hunk_Begin( 0x400000 );
-	strcpy( curTile->name, name );
+	Q_strncpyz( curTile->name, name, MAX_QPATH );
 
 	VectorSet( shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_SIZE );
 
@@ -1152,15 +1152,15 @@ void CM_LoadMap( char *tiles, char *pos )
 		// get base path
 		if ( token[0] == '-' )
 		{
-			strncpy( base, token+1, MAX_QPATH );
+			Q_strncpyz( base, token+1, MAX_QPATH );
 			continue;
 		}
 
 		// get tile name
 		if ( token[0] == '+' )
-			sprintf( name, "%s%s", base, token+1 );
+			Com_sprintf( name, MAX_VAR, "%s%s", base, token+1 );
 		else
-			strncpy( name, token, MAX_VAR );
+			Q_strncpyz( name, token, MAX_VAR );
 
 		if ( pos && pos[0] )
 		{
