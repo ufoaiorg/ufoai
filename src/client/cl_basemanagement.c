@@ -2316,8 +2316,8 @@ void MN_ResetBaseManagement( void )
 		memset( bmDataStart, 0, bmDataSize );
 	else
 	{
-		Hunk_Begin( 0x10000 );
-		bmDataStart = Hunk_Alloc( 0x10000 );
+		Hunk_Begin( 0x40000 );
+		bmDataStart = Hunk_Alloc( 0x40000 );
 		bmDataSize = Hunk_End();
 	}
 	bmData = bmDataStart;

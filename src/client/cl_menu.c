@@ -2563,8 +2563,8 @@ void MN_ResetMenus( void )
 		memset( adata, 0, adataize );
 	else
 	{
-		Hunk_Begin( 0x10000 );
-		adata = Hunk_Alloc( 0x10000 );
+		Hunk_Begin( 0x40000 );
+		adata = Hunk_Alloc( 0x40000 );
 		adataize = Hunk_End();
 	}
 	curadata = adata;
