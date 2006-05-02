@@ -1105,9 +1105,6 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 void CL_ResetCharacters( base_t* base );
 void CL_GenerateCharacter( char *team, base_t* base );
 
-// needed to calculate the chosen building in cl_menu.c
-int picWidth, picHeight;
-
 void MN_ClearBase( base_t *base );
 void MN_BuildNewBase( vec2_t pos );
 void MN_NewBases( void );
@@ -1320,7 +1317,6 @@ typedef struct ccs_s
 	//basemanagement
 	vec2_t	basecenter;
 	float	basezoom;
-	vec2_t	baseField;
 	int	actualBaseID;
 } ccs_t;
 
@@ -1389,8 +1385,75 @@ void CL_UpdateCredits ( int credits );
 // cl_menu.c
 //
 
+#define	NOFS(x)		(int)&(((menuNode_t *)0)->x)
+#define	MENUMODELFS(x)		(int)&(((menuModel_t *)0)->x)
+
+#define MAX_MENUS			64
+#define MAX_MENUNODES		2048
+#define MAX_MENUACTIONS		4096
+#define MAX_MENUSTACK		16
+#define MAX_MENUMODELS		128
+
+#define MAX_MENU_COMMAND	32
+#define MAX_MENU_PICLINK	64
+
+#define C_UNIT				25
+#define C_UNDEFINED			0xFE
+
 //#define MAX_MENUTEXTS		16
 #define MAX_MENUTEXTLEN		512
+
+
+typedef struct menuModel_s
+{
+	char	id[MAX_VAR];
+	char	need[MAX_VAR];
+	char	anim[MAX_VAR];
+	int	skin;
+	char	model[MAX_QPATH];
+	struct menuModel_s	*next;
+} menuModel_t;
+
+typedef struct menuAction_s
+{
+	int	type;
+	void	*data;
+	struct	menuAction_s *next;
+} menuAction_t;
+
+typedef struct menuDepends_s
+{
+	char var[MAX_VAR];
+	char value[MAX_VAR];
+} menuDepends_t;
+
+typedef struct menuNode_s
+{
+	void		*data[6]; // needs to be first
+	char	name[MAX_VAR];
+	int		type;
+	vec3_t	origin, scale, angles, center;
+	vec2_t	pos, size, texh, texl;
+	menuModel_t*	menuModel;
+	byte		state;
+	byte		align;
+	byte		invis, blend;
+	int		mousefx;
+	int	textScroll; // textfields - current scroll position
+	int	timeOut; // ms value until invis is set (see cl.time)
+	int		num, height; // textfields - num: menutexts-id; height: max. rows to show
+	vec4_t	color; // rgba
+	vec4_t	bgcolor; // rgba
+	menuAction_t	*click, *rclick, *mclick, *mouseIn, *mouseOut;
+	menuDepends_t	depends;
+	struct menuNode_s	*next;
+} menuNode_t;
+
+typedef struct menu_s
+{
+	char		name[MAX_VAR];
+	menuNode_t	*firstNode, *initNode, *closeNode, *renderNode, *popupNode, *hoverNode;
+} menu_t;
 
 typedef enum
 {
@@ -1427,6 +1490,8 @@ void MN_ParseMenuModel( char *name, char **text );
 void MN_PushMenu( char *name );
 void MN_PopMenu( qboolean all );
 void MN_Popup (const char* title, const char* text);
+
+void MN_DrawBase( menuNode_t *node );
 
 extern int numMenus;
 extern inventory_t *menuInventory;

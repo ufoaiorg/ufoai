@@ -30,7 +30,6 @@ void B_SetUpBase ( void );
 
 void MN_ParseProductions( char *title, char **text );
 void MN_SetBuildingByClick ( int row, int col );
-void MN_DrawBase( void );
 void MN_ResetBaseManagement( void );
 
 #endif /* BASEMANGEMENT_DEFINED */

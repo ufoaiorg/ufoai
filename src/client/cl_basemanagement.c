@@ -1572,147 +1572,84 @@ void MN_ParseProductions( char *title, char **text )
 	} while ( *text );
 }
 
-#define MOUSEOVER mx > baseCurrent->posX[row][col][baseCurrent->baseLevel] && mx < baseCurrent->posX[row][col][baseCurrent->baseLevel] + ( picWidth * bvScale ) && my > baseCurrent->posY[row][col][baseCurrent->baseLevel] && my < baseCurrent->posY[row][col][baseCurrent->baseLevel] + ( picHeight * bvScale )
-
 /*======================
 MN_DrawBase
-
-FIXME: faster rendering - this is all 512x512
-without texture compression my notebook stutters around
 ======================*/
-void MN_DrawBase( void )
+void MN_DrawBase( menuNode_t *node )
 {
-	int row, col, rowCnt = 0;
 	float x, y;
-	int mx, my;
-	vec2_t mouseover = {-1, -1};
-	char *image, *statusImage = NULL;
-	int width, height;
-	building_t *entry;
-	building_t *secondEntry;
-
-#if 0
-	vec4_t color;
-	VectorSet( color, 0.0f, 1.0f, 0.0f );
-	color[3] = 0.3f;
-#endif
+	int mx, my, width, height, row, col;
+	static vec4_t color = {1.0, 1.0, 1.0, 0.5};
+	char image[MAX_QPATH], statusImage[MAX_QPATH];
+	building_t *entry, *secondEntry;
 
 	if ( ! baseCurrent )
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
 
-	bvScale = ccs.basezoom;
-	bvCenterX = ccs.basecenter[0] * SCROLLSPEED;
-	bvCenterY = ccs.basecenter[1] * SCROLLSPEED;
+	width = node->size[0] / BASE_SIZE;
+	height = ( node->size[1] + BASE_SIZE*20 ) / BASE_SIZE;
+
+// 	bvScale = ccs.basezoom;
+// 	bvCenterX = ccs.basecenter[0] * SCROLLSPEED;
+// 	bvCenterY = ccs.basecenter[1] * SCROLLSPEED;
 
 	IN_GetMousePos( &mx, &my );
 
 	for ( row = 0; row < BASE_SIZE; row++ )
 	{
-		x = ( BASE_SIZE * 326 + ( rowCnt * 186 ) - bvCenterX ) * bvScale;
-		y = ( ( rowCnt * 280 ) - bvCenterY ) * bvScale; // 512 - 71 => 71 pixel overlap
-		for ( col = BASE_SIZE - 1; col >= 0; col-- )
+		for ( col = 0; col < BASE_SIZE; col++ )
 		{
-			if ( row >= 0 && row < BASE_SIZE && col >= 0 && col < BASE_SIZE )
+			if ( baseCurrent->map[row][col][baseCurrent->baseLevel] != -1 )
 			{
-				if ( baseCurrent->map[row][col][baseCurrent->baseLevel] != -1 )
+				entry = B_GetBuildingByID(baseCurrent->map[row][col][baseCurrent->baseLevel]);
+
+				if ( entry->buildingStatus[entry->howManyOfThisType] == B_UPGRADE )
+					Q_strncpyz( statusImage, "base/upgrade", MAX_QPATH );
+				else if ( entry->buildingStatus[entry->howManyOfThisType] == B_DOWN )
+					Q_strncpyz( statusImage, "base/down", MAX_QPATH );
+				else if ( entry->buildingStatus[entry->howManyOfThisType] == B_REPAIRING
+					|| entry->buildingStatus[entry->howManyOfThisType] == B_MAINTENANCE )
+					Q_strncpyz( statusImage, "base/repair", MAX_QPATH );
+				else if ( entry->buildingStatus[entry->howManyOfThisType] == B_UNDER_CONSTRUCTION )
+					Q_strncpyz( statusImage, "base/construct", MAX_QPATH );
+
+				if ( !entry->used && entry->needs && entry->visible )
 				{
-					entry = B_GetBuildingByID(baseCurrent->map[row][col][baseCurrent->baseLevel]);
-
-					// NOTE: time is not running here - commented out
-// 					B_CheckBuildingConstruction( entry );
-
-					if ( entry->buildingStatus[entry->howManyOfThisType] == B_UPGRADE )
-						statusImage = "base/upgrade";
-					else if ( entry->buildingStatus[entry->howManyOfThisType] == B_DOWN )
-						statusImage = "base/down";
-					else if ( entry->buildingStatus[entry->howManyOfThisType] == B_REPAIRING
-						|| entry->buildingStatus[entry->howManyOfThisType] == B_MAINTENANCE )
-						statusImage = "base/repair";
-					else if ( entry->buildingStatus[entry->howManyOfThisType] == B_UNDER_CONSTRUCTION )
-						statusImage = "base/construct";
-
-					if ( !entry->used && entry->needs && entry->visible )
-					{
-						secondEntry = B_GetBuilding ( entry->needs );
-						if ( ! secondEntry )
-							Com_Printf( "Error in ufo-scriptfile - could not find the needed building\n" );
-						entry->used = 1;
-						image = secondEntry->image;
-					}
-					else
-					{
-						image = entry->image;
-						entry->used = 0;
-					}
+					secondEntry = B_GetBuilding ( entry->needs );
+					if ( ! secondEntry )
+						Com_Printf( "Error in ufo-scriptfile - could not find the needed building\n" );
+					entry->used = 1;
+					Q_strncpyz( image, secondEntry->image, MAX_QPATH );
 				}
 				else
 				{
-					image = "base/grid";
+					Q_strncpyz( image, entry->image, MAX_QPATH );
+					entry->used = 0;
 				}
-
-				re.DrawGetPicSize ( &width, &height, image );
-
-				if ( width == -1 || height == -1 )
-				{
-					Com_Printf( "Invalid picture dimension of %s\n", image );
-					return;
-				}
-
-				picWidth = width;
-				picHeight = height;
-
-				if ( mouseover[0] == -1 && MOUSEOVER )
-				{
-					mouseover[0] = row;
-					mouseover[1] = col;
-				}
-
-				baseCurrent->posX[row][col][baseCurrent->baseLevel] = x;
-				baseCurrent->posY[row][col][baseCurrent->baseLevel] = y;
 			}
 			else
-			{
-				image = "base/grid";
-				statusImage = NULL;
-			}
+				Q_strncpyz( image, "base/grid", MAX_QPATH );
 
-			if ( image != NULL ) {
-				re.DrawNormPic( x, y, width*bvScale, height*bvScale, 0, 0, 0, 0, 0, false, image );
-#if 0
-				re.DrawFill(x, y, width*bvScale, height*bvScale, ALIGN_UL, color);
+			x = node->pos[0] + col * width;
+			y = node->pos[1] + row * height - row * 20 ;
+			baseCurrent->posX[row][col][baseCurrent->baseLevel] = x;
+			baseCurrent->posY[row][col][baseCurrent->baseLevel] = y;
+
+			if ( mx >= x && mx < x + width && my >= y && my < y + height )
+				re.DrawColor( color );
+
+			if ( *image )
+				re.DrawNormPic( x, y, width, height, 0, 0, 0, 0, 0, false, image );
+
+			if ( mx >= x && mx < x + width && my >= y && my < y + height )
 				re.DrawColor( NULL );
-#endif
-			}
-			if ( statusImage != NULL )
+
+			if ( *statusImage )
 			{
-				re.DrawGetPicSize ( &width, &height, statusImage );
-				if ( width == -1 || height == -1 )
-					Com_Printf( "Invalid picture dimension of %s\n", statusImage );
-				else
-					re.DrawNormPic( x + (20 * bvScale) , y + (60 * bvScale), width*bvScale, height*bvScale, 0, 0, 0, 0, 0, false, statusImage );
-
-				statusImage = NULL;
+				re.DrawNormPic( x + (20 * bvScale) , y + (60 * bvScale), width*bvScale, height*bvScale, 0, 0, 0, 0, 0, false, statusImage );
+				statusImage[0] = '\0';
 			}
-
-// 			re.DrawColor(NULL);
-
-			//adjust trafo values for correct assembly
-			x -= 325.0 * bvScale;
-			y += 162.0 * bvScale;
 		}
-		rowCnt++;
-	}
-
-	if ( mouseover[0] == -1 )
-		return;
-
-	// FIXME: Better mousehandling over tiles
-	if ( baseCurrent->buildingCurrent && baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] < B_UNDER_CONSTRUCTION )
-	{
-		image = "base/highlight";
-		re.DrawNormPic( baseCurrent->posX[(int)mouseover[0]][(int)mouseover[1]][baseCurrent->baseLevel],
-				baseCurrent->posY[(int)mouseover[0]][(int)mouseover[1]][baseCurrent->baseLevel],
-				width*bvScale, height*bvScale, 0, 0, 0, 0, 0, false, image );
 	}
 }
 

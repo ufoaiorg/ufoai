@@ -607,7 +607,7 @@ void CL_CamSetAngles ( void )
 	int c = Cmd_Argc();
 	if ( c < 3 )
 	{
-		Com_Printf("usage camsetangles <value> <value>\n");
+		Com_Printf("Usage camsetangles <value> <value>\n");
 		return;
 	}
 
@@ -631,7 +631,8 @@ void CL_MakeBaseMapShot ( void )
 	cl.cam.angles[1] = 90.0f;
 	Cvar_SetValue("r_isometric", 1);
 	MN_PushMenu( "nohud" );
-	Cbuf_ExecuteText( EXEC_NOW, "toggleconsole;screenshot" );
+	Cbuf_ExecuteText( EXEC_NOW, "toggleconsole");
+	Cbuf_ExecuteText( EXEC_NOW, "screenshot" );
 }
 
 /*
