@@ -2084,3 +2084,101 @@
 ( 60 380 22 ) ( 60 366 22 ) ( 60 366 4 ) tex_material/c_gray050 -8 8 0 0.5 0.5 256 0 0
 }
 }
+// entity 25
+{
+"classname" "light"
+"origin" "145 351 60"
+"light" "150"
+"_color" "0.5 1 0.5"
+}
+// entity 26
+{
+"classname" "light"
+"origin" "257 391 60"
+"light" "150"
+"_color" "1 1 0.95"
+}
+// entity 27
+{
+"classname" "light"
+"origin" "173 121 60"
+"light" "150"
+"_color" "1 1 0.95"
+}
+// entity 28
+{
+"classname" "light"
+"origin" "385 431 60"
+"light" "100"
+"_color" "1 1 0.95"
+}
+// entity 29
+{
+"classname" "light"
+"origin" "324 366 60"
+"light" "150"
+"_color" "1 1 0.95"
+}
+// entity 30
+{
+"classname" "light"
+"origin" "404 327 60"
+"light" "150"
+"_color" "1 1 0.95"
+}
+// entity 31
+{
+"classname" "light"
+"origin" "78 352 60"
+"light" "150"
+"_color" "1 1 0.95"
+}
+// entity 32
+{
+"classname" "light"
+"origin" "70 174 60"
+"light" "150"
+"_color" "1 1 0.95"
+}
+// entity 33
+{
+"classname" "light"
+"origin" "121 121 60"
+"light" "150"
+"_color" "1 1 0.95"
+}
+// entity 34
+{
+"classname" "light"
+"origin" "160 255 60"
+"light" "150"
+"_color" "1 1 0.95"
+}
+// entity 35
+{
+"classname" "light"
+"origin" "380 255 60"
+"light" "150"
+"_color" "1 1 0.95"
+}
+// entity 36
+{
+"classname" "light"
+"origin" "253 254 60"
+"light" "150"
+"_color" "1 1 0.95"
+}
+// entity 37
+{
+"classname" "light"
+"origin" "256 127 60"
+"light" "150"
+"_color" "1 1 0.95"
+}
+// entity 38
+{
+"classname" "light"
+"origin" "348 171 60"
+"light" "150"
+"_color" "1 1 0.95"
+}
