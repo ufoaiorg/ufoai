@@ -595,6 +595,44 @@ void CL_NextAlien( void )
 
 //==========================================================================
 
+#ifdef DEBUG
+void CL_CamPrintAngles ( void )
+{
+	Com_Printf("camera angles %0.3f:%0.3f:%0.3f\n", cl.cam.angles[0], cl.cam.angles[1], cl.cam.angles[2] );
+}
+#endif /* DEBUG */
+
+void CL_CamSetAngles ( void )
+{
+	int c = Cmd_Argc();
+	if ( c < 3 )
+	{
+		Com_Printf("usage camsetangles <value> <value>\n");
+		return;
+	}
+
+	cl.cam.angles[0] = atof(Cmd_Argv(1));
+	cl.cam.angles[1] = atof(Cmd_Argv(2));
+	cl.cam.angles[2] = 0.0f;
+}
+
+/*==================
+CL_MakeBaseMapShot
+
+Execute basemapshot in console and load a basemap
+after this all you have to do is hit the screenshot button (F12)
+to make a new screenshot of the basetile
+==================*/
+void CL_MakeBaseMapShot ( void )
+{
+	if ( Cmd_Argc() > 1 )
+		Cbuf_ExecuteText( EXEC_NOW, va("map %s", Cmd_Argv(1) ) );
+	cl.cam.angles[0] = 60.0f;
+	cl.cam.angles[1] = 90.0f;
+	Cvar_SetValue("r_isometric", 1);
+	MN_PushMenu( "nohud" );
+	Cbuf_ExecuteText( EXEC_NOW, "toggleconsole;screenshot" );
+}
 
 /*
 ============
@@ -647,6 +685,12 @@ void CL_InitInput (void)
 	Cmd_AddCommand( "zoominquant", CL_ZoomInQuant );
 	Cmd_AddCommand( "zoomoutquant", CL_ZoomOutQuant );
 	Cmd_AddCommand( "confirmaction", CL_ConfirmAction );
+
+#ifdef DEBUG
+	Cmd_AddCommand( "camangles", CL_CamPrintAngles );
+#endif /* DEBUG */
+	Cmd_AddCommand( "camsetangles", CL_CamSetAngles );
+	Cmd_AddCommand( "basemapshot", CL_MakeBaseMapShot );
 
 	Cmd_AddCommand( "cameramode", CL_CameraMode );
 
