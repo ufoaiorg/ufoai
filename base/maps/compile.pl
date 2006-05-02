@@ -41,7 +41,7 @@ sub compile
 			next;
 		}
 		next unless $_ =~ /\.map$/;
-		next if $_ =~ /^(tutorial)|(prefab)/i;
+		next if $_ =~ /^(tutorial)|(prefab)|(autosave)/i;
 		$_ =~ s/\.map$//;
 		unless ( -e "$dir/$_.bsp" )
 		{
