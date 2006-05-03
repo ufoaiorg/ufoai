@@ -2443,7 +2443,7 @@ qboolean G_ClientConnect(player_t *player, char *userinfo)
 	// check to see if they are on the banned IP list
 	value = Info_ValueForKey (userinfo, "ip");
 	if (SV_FilterPacket(value)) {
-		Info_SetValueForKey(userinfo, "rejmsg", _("Banned.") );
+		Info_SetValueForKey(userinfo, "rejmsg", "Banned." );
 		return false;
 	}
 
