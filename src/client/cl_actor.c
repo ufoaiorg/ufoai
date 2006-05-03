@@ -609,7 +609,7 @@ void CL_BuildForbiddenList( void )
 			fb_list[fb_length++] = le->pos;
 
 	if ( fb_length > MAX_FB_LIST )
-		Com_Error( ERR_DROP, _("CL_BuildForbiddenList: list too long") );
+		Com_Error( ERR_DROP, "CL_BuildForbiddenList: list too long" );
 }
 
 

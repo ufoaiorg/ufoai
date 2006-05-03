@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-05-03 19:09+0200\n"
-"PO-Revision-Date: 2006-05-03 19:17+0100\n"
+"PO-Revision-Date: 2006-05-03 20:04+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@gmx.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,11 +15,11 @@ msgstr ""
 
 #: ../base/ufos/armor.ufo:14
 msgid "Kevlar Vest"
-msgstr ""
+msgstr "Kevlarweste"
 
 #: ../base/ufos/armor.ufo:49
 msgid "Medium Armor"
-msgstr ""
+msgstr "Mittlere Panzerung"
 
 #: ../base/ufos/basemanagement.ufo:10
 msgid "Entrance"
@@ -93,7 +93,7 @@ msgstr ""
 
 #: ../base/ufos/campaign.ufo:25
 msgid "Aliens attacked one of our home bases"
-msgstr ""
+msgstr "Aliens greifen eine unserer Basen an"
 
 #: ../base/ufos/campaign.ufo:114
 msgid "Location: Uppsala\\Type: Terror Attack\\Objective: Protect inhabitants"
@@ -220,7 +220,7 @@ msgstr "Kaufe/Verkauf Ausrüstung"
 
 #: ../base/ufos/menu_bases.ufo:134
 msgid "Buy/Sell Equipment"
-msgstr "Kaufe/Verkaufe Ausrüstung"
+msgstr "Kaufe/Verkaufe"
 
 #: ../base/ufos/menu_bases.ufo:143
 #: ../base/ufos/menu_bases.ufo:407
@@ -283,7 +283,7 @@ msgstr "Kaufe/Verkaufe Flugzeuge"
 
 #: ../base/ufos/menu_bases.ufo:368
 msgid "Buy/Sell Aircraft"
-msgstr "Kaufe/Verkaufe Flugzeuge"
+msgstr "Kaufe/Verkaufe"
 
 #: ../base/ufos/menu_bases.ufo:380
 msgid "Start your aircraft"
@@ -606,7 +606,7 @@ msgstr ""
 
 #: ../base/ufos/menu_multiplayer.ufo:782
 msgid "Sets the prefered team"
-msgstr ""
+msgstr "Wähle bevorzugtes Team"
 
 #: ../base/ufos/menu_multiplayer.ufo:814
 msgid "Allow Download:"
@@ -818,7 +818,7 @@ msgstr "Statistiken"
 #: ../base/ufos/menu_team.ufo:347
 #: ../base/ufos/menu_team.ufo:356
 msgid "Add/remove this soldier"
-msgstr ""
+msgstr "Füge hinzu/Entferne diesen Soldaten"
 
 #: ../base/ufos/menu_team.ufo:517
 msgid "Edit name of the soldier"
@@ -826,7 +826,7 @@ msgstr "Ändere den Namen dieses Soldatens"
 
 #: ../base/ufos/menu_team.ufo:595
 msgid "Survived Missions:"
-msgstr ""
+msgstr "Einsätze:"
 
 #: ../base/ufos/menu_team.ufo:597
 msgid "Killed Enemies:"
@@ -1468,7 +1468,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:872
 msgid "Big alien craft"
-msgstr ""
+msgstr "Großes UFO"
 
 #: ../base/ufos/research.ufo:873
 #, fuzzy
@@ -1500,7 +1500,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:922
 msgid "Ortnok Warrior"
-msgstr ""
+msgstr "Ortnok Krieger"
 
 #: ../base/ufos/research.ufo:923
 msgid "ortnok_medium_txt"
@@ -1674,7 +1674,7 @@ msgstr ""
 
 #: ../base/ufos/team_aliens.ufo:168
 msgid "Shevaar"
-msgstr ""
+msgstr "Shevaar"
 
 #: ../base/ufos/team_aliens.ufo:169
 #, fuzzy
@@ -1691,7 +1691,7 @@ msgstr ""
 
 #: ../base/ufos/team_aliens.ufo:176
 msgid "Hovernet"
-msgstr ""
+msgstr "Hovernet"
 
 #: ../base/ufos/team_aliens.ufo:177
 #, fuzzy
@@ -1894,7 +1894,7 @@ msgstr "Messer"
 
 #: ../base/ufos/weapons_human.ufo:715
 msgid "Grenadelauncher"
-msgstr ""
+msgstr "Granatenwerfer"
 
 #: ../base/ufos/weapons_human.ufo:732
 msgid "Grenades"
@@ -2069,15 +2069,15 @@ msgstr ""
 
 #: client/cl_basemanagement.c:162
 msgid "Working 100%"
-msgstr ""
+msgstr "Arbeitet: 100%"
 
 #: client/cl_basemanagement.c:164
 msgid "Working 120%"
-msgstr ""
+msgstr "Arbeitet: 120%"
 
 #: client/cl_basemanagement.c:166
 msgid "Working 50%"
-msgstr ""
+msgstr "Arbeitet: 50%"
 
 #: client/cl_basemanagement.c:168
 msgid "Maintenance"
@@ -2089,7 +2089,7 @@ msgstr "Reparieren"
 
 #: client/cl_basemanagement.c:172
 msgid "Down"
-msgstr ""
+msgstr "Erledigt"
 
 #: client/cl_basemanagement.c:302
 msgid "Not enough credits to build this\n"
@@ -2120,7 +2120,7 @@ msgstr "Hinweis"
 #: client/cl_basemanagement.c:639
 #, c-format
 msgid "Costs:\t%1.2f (%i Day[s] to build)\n"
-msgstr ""
+msgstr "Kosten:\t%1.2f (%i Tag[e] Bauzeit)\n"
 
 #: client/cl_basemanagement.c:641
 #, c-format
@@ -2130,7 +2130,7 @@ msgstr "Laufende Kosten:\t%1.2f\n"
 #: client/cl_basemanagement.c:642
 #, c-format
 msgid "Workercosts:\t%1.2f\n"
-msgstr ""
+msgstr "Arbeiterkosten:\t%1.2f\n"
 
 #: client/cl_basemanagement.c:643
 #, c-format
@@ -2145,7 +2145,7 @@ msgstr "Erergie:\t%1.0f\n"
 #: client/cl_basemanagement.c:650
 #, c-format
 msgid "Production:\t%s (%i/day)\n"
-msgstr ""
+msgstr "Produktion:\t%s (%i/Tag)\n"
 
 #: client/cl_basemanagement.c:656
 #, c-format
@@ -2164,7 +2164,7 @@ msgstr "Eine neue Basis wurde gebaut: %s."
 #: client/cl_basemanagement.c:1850
 #: client/cl_basemanagement.c:1857
 msgid "Base built"
-msgstr ""
+msgstr "Basis gebaut"
 
 #: client/cl_basemanagement.c:1856
 msgid "Not enough credits to set up a new base."
@@ -2172,7 +2172,7 @@ msgstr "Nicht genug Kapital um eine neue Basis zu bauen."
 
 #: client/cl_basemanagement.c:2220
 msgid "You've reached the base limit."
-msgstr ""
+msgstr "Max. Basen erreicht"
 
 #: client/cl_basemanagement.c:2329
 #, c-format
@@ -2192,7 +2192,7 @@ msgstr "Konstruktion von %s\\in Basis %s abgeschlossen\n"
 #: client/cl_basemanagement.c:2338
 #, c-format
 msgid "There is at least one finished construction\\at base %s\n"
-msgstr ""
+msgstr "Mindestens ein Gebäudebau wurde in der Basis\\%s abgeschlossen\n"
 
 #: client/cl_campaign.c:343
 msgid "Aircraft started"
@@ -2245,6 +2245,10 @@ msgid ""
 "Weapon:\t%s\n"
 "Shield:\t%s\n"
 msgstr ""
+"Geschwindigkeit:\t%.0f\n"
+"Treibstoff:\t%i/%i\n"
+"Waffe:\t%s\n"
+"Schild:\t%s\n"
 
 #: client/cl_campaign.c:612
 #, c-format
@@ -2279,11 +2283,11 @@ msgstr "Weise dem Flugzeug zuerst ein Team zu"
 #: client/cl_campaign.c:1078
 #, c-format
 msgid "The mission expired and %i civilians died\\You've lost %i $"
-msgstr ""
+msgstr "Die Aliens haben %i Zivilisten getötet\\Dir wurden %i $ abgezogen"
 
 #: client/cl_campaign.c:1095
 msgid "Your dropship has low fuel and returns to base"
-msgstr ""
+msgstr "Flugzeug hat wenig Treibstoff und kehrt deshalb zur Basis zurück"
 
 #: client/cl_campaign.c:2041
 msgid "Assemble or load a team"
@@ -2295,7 +2299,7 @@ msgstr "Hinweis"
 
 #: client/cl_campaign.c:2113
 msgid "Your dropship is not near the landingzone"
-msgstr ""
+msgstr "Das Einsatzschiff ist nicht nahe einer Landungszone"
 
 #: client/cl_campaign.c:2143
 msgid "You've won the battle"
@@ -2328,11 +2332,11 @@ msgstr "Fehler"
 
 #: client/cl_menu.c:371
 msgid "Set playersoldiers lower than teamsoldiers"
-msgstr ""
+msgstr "Setze Soldaten pro Spieler niedriger als Soldaten pro Team"
 
 #: client/cl_menu.c:371
 msgid "Settings doesn't make sense"
-msgstr ""
+msgstr "Einstellungen ergeben keinen Sinn"
 
 #: client/cl_menu.c:1498
 msgid "Night"
@@ -2348,6 +2352,8 @@ msgid ""
 "Select the desired location of the\n"
 "new base on the map.\n"
 msgstr ""
+"Wähle die gewünschte Position der\n"
+"neuen Basis auf der Karte.\n"
 
 #: client/cl_menu.c:2114
 #: client/cl_menu.c:2147
@@ -2355,6 +2361,8 @@ msgid ""
 "Aliens are attacking our base\n"
 "at this very moment.\n"
 msgstr ""
+"Aliens greifen gerade eine unserer\n"
+"Basen an.\n"
 
 #: client/cl_menu.c:2118
 #: client/cl_menu.c:2151
@@ -2398,11 +2406,11 @@ msgstr "Erforscht in dieser Basis"
 
 #: client/cl_research.c:389
 msgid "Progress: %.1f\\%\n"
-msgstr ""
+msgstr "Fortschritt: %.1f\\%\n"
 
 #: client/cl_research.c:391
 msgid "Progress: Not available."
-msgstr ""
+msgstr "Fortschritt: Nicht verfügbar."
 
 #: client/cl_research.c:397
 msgid "Status: Under research\n"
@@ -2488,6 +2496,13 @@ msgid ""
 "Spreads:\t%1.1f / %1.1f\n"
 "Ammo:\t%i\n"
 msgstr ""
+"Primär:\t%s\n"
+"Sekundär:\t%s\n"
+"Schaden:\t%i / %i\n"
+"Zeiteinheiten:\t%i / %i\n"
+"Reichweite:\t%1.1f / %1.1f\n"
+"Streuung:\t%1.1f / %1.1f\n"
+"Munition:\t%i\n"
 
 #: client/cl_team.c:265
 #, c-format
@@ -2498,6 +2513,11 @@ msgid ""
 "Spreads:\t%1.1f / %1.1f\n"
 "Ammo:\t%i\n"
 msgstr ""
+"Schaden:\t%i / %i\n"
+"Zeiteinheiten:\t%i / %i\n"
+"Reichweite:\t%1.1f / %1.1f\n"
+"Streuung:\t%1.1f / %1.1f\n"
+"Munition:\t%i\n"
 
 #: client/cl_team.c:276
 #, c-format
@@ -2506,6 +2526,9 @@ msgid ""
 "Time units:\t%i\n"
 "Range:\t%1.1f\n"
 msgstr ""
+"Aktion:\t%s\n"
+"Zeiteinheiten:\t%i\n"
+"Reichweite:\t%1.1f\n"
 
 #: client/cl_team.c:282
 msgid "Unknown - need to research this"
@@ -2560,12 +2583,12 @@ msgstr ""
 #: client/cl_team.c:1152
 #, c-format
 msgid "Civilians killed by the %s\t%i\n"
-msgstr ""
+msgstr "Durch %s getötete Zivilisten\t%i\n"
 
 #: client/cl_team.c:1153
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
-msgstr ""
+msgstr "Durch eigenes Team getötete Zivilisten\t%i\n"
 
 #: client/cl_team.c:1154
 #, c-format
@@ -2608,7 +2631,7 @@ msgstr "Neue Rekruten\t%i\n"
 
 #: client/cl_ufopedia.c:46
 msgid "Error - could not find building"
-msgstr ""
+msgstr "Fehler: Konnte Gebäude nicht finden"
 
 #: client/cl_ufopedia.c:53
 #, c-format
@@ -2632,7 +2655,7 @@ msgstr "Ja"
 
 #: client/cl_ufopedia.c:76
 msgid "Error - could not find aircraft"
-msgstr ""
+msgstr "Fehler: Konnte Flugzeug nicht finden"
 
 #: client/cl_ufopedia.c:79
 #, c-format
@@ -2642,6 +2665,10 @@ msgid ""
 "Weapon:\t%s\n"
 "Shield:\t%s\n"
 msgstr ""
+"Geschwindigkeit:\t%.0f\n"
+"Treibstoff:\t%i\n"
+"Waffe:\t%s\n"
+"Schild:\t%s\n"
 
 # #ufopedia
 #: client/cl_ufopedia.c:233

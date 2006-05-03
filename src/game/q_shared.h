@@ -1067,6 +1067,7 @@ typedef enum {
 // private
 #define STATE_REACTION		0x0100
 #define STATE_SHAKEN		0x0300		// forced reaction fire
+#define STATE_STUN		0x1000		// stunned
 
 
 #define	ANGLE2SHORT(x)	((int)((x)*65536/360) & 65535)
