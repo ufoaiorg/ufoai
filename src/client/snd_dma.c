@@ -264,12 +264,12 @@ sfx_t *S_FindName (char *name, qboolean create)
 	sfx_t	*sfx;
 
 	if (!name)
-		Com_Error (ERR_FATAL, _("S_FindName: NULL\n"));
+		Com_Error (ERR_FATAL, "S_FindName: NULL\n");
 	if (!name[0])
-		Com_Error (ERR_FATAL, _("S_FindName: empty name\n"));
+		Com_Error (ERR_FATAL, "S_FindName: empty name\n");
 
 	if (strlen(name) >= MAX_QPATH)
-		Com_Error (ERR_FATAL, _("Sound name too long: %s"), name);
+		Com_Error (ERR_FATAL, "Sound name too long: %s", name);
 
 	// see if already loaded
 	for (i=0 ; i < num_sfx ; i++)
@@ -290,7 +290,7 @@ sfx_t *S_FindName (char *name, qboolean create)
 	if (i == num_sfx)
 	{
 		if (num_sfx == MAX_SFX)
-			Com_Error (ERR_FATAL, _("S_FindName: out of sfx_t"));
+			Com_Error (ERR_FATAL, "S_FindName: out of sfx_t");
 		num_sfx++;
 	}
 
@@ -327,7 +327,7 @@ sfx_t *S_AliasName (char *aliasname, char *truename)
 	if (i == num_sfx)
 	{
 		if (num_sfx == MAX_SFX)
-			Com_Error (ERR_FATAL, _("S_FindName: out of sfx_t"));
+			Com_Error (ERR_FATAL, "S_FindName: out of sfx_t");
 		num_sfx++;
 	}
 

@@ -2455,7 +2455,7 @@ qboolean G_ClientConnect(player_t *player, char *userinfo)
 	memset( &player->pers, 0, sizeof( client_persistant_t ) );
 	Q_strncpyz (player->pers.userinfo, userinfo, sizeof(player->pers.userinfo));
 
-	gi.bprintf (PRINT_HIGH, _("%s is connecting...\n"), Info_ValueForKey (userinfo, "name") );
+	gi.bprintf (PRINT_HIGH, "%s is connecting...\n", Info_ValueForKey (userinfo, "name") );
 	return true;
 }
 
@@ -2472,7 +2472,7 @@ void G_ClientDisconnect(player_t *player)
 	if ( level.activeTeam == player->pers.team )
 		G_ClientEndRound( player );
 
-	gi.bprintf (PRINT_HIGH, _("%s disconnected.\n"), player->pers.netname );
+	gi.bprintf (PRINT_HIGH, "%s disconnected.\n", player->pers.netname );
 }
 
 

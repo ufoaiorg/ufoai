@@ -171,7 +171,7 @@ void SVCmd_AddIP_f (void)
 	{
 		if (numipfilters == MAX_IPFILTERS)
 		{
-			gi.cprintf (NULL, PRINT_HIGH, _("IP filter list is full\n") );
+			gi.cprintf (NULL, PRINT_HIGH, "IP filter list is full\n" );
 			return;
 		}
 		numipfilters++;
@@ -206,7 +206,7 @@ void SVCmd_RemoveIP_f (void)
 			for (j=i+1 ; j<numipfilters ; j++)
 				ipfilters[j-1] = ipfilters[j];
 			numipfilters--;
-			gi.cprintf (NULL, PRINT_HIGH, _("Removed.\n") );
+			gi.cprintf (NULL, PRINT_HIGH, "Removed.\n" );
 			return;
 		}
 	gi.cprintf (NULL, PRINT_HIGH, "Didn't find %s.\n", gi.argv(2));
@@ -222,7 +222,7 @@ void SVCmd_ListIP_f (void)
 	int		i;
 	byte	b[4];
 
-	gi.cprintf (NULL, PRINT_HIGH, _("Filter list:\n") );
+	gi.cprintf (NULL, PRINT_HIGH, "Filter list:\n" );
 	for (i=0 ; i<numipfilters ; i++)
 	{
 		*(unsigned *)b = ipfilters[i].compare;

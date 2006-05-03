@@ -202,7 +202,7 @@ lm_t *CL_AddLocalModel (char *model, char *particle, vec3_t origin, vec3_t angle
 	lm = &LMs[numLMs++];
 
 	if ( numLMs >= MAX_LOCALMODELS )
-		Sys_Error( _("Too many local models\n") );
+		Sys_Error( "Too many local models\n" );
 
 	memset( lm, 0, sizeof(lm_t) );
 	Q_strncpyz( lm->name, model, MAX_VAR );
@@ -672,7 +672,7 @@ le_t *LE_Add( int entnum )
 		if ( numLEs >= MAX_EDICTS - numLMs )
 		{
 			// no free LEs
-			Com_Error( ERR_DROP, _("Too many LEs\n") );
+			Com_Error( ERR_DROP, "Too many LEs\n" );
 			return NULL;
 		}
 

@@ -215,7 +215,7 @@ void Sys_Warn (char *warning, ...)
 	va_start (argptr,warning);
 	vsnprintf (string,1024,warning,argptr);
 	va_end (argptr);
-	fprintf(stderr, _("Warning: %s"), string);
+	fprintf(stderr, "Warning: %s", string);
 }
 
 /*
@@ -309,7 +309,7 @@ void *Sys_GetGameAPI (void *parms)
 	setegid(getgid());
 
 	if (game_library)
-		Com_Error (ERR_FATAL, _("Sys_GetGameAPI without Sys_UnloadingGame"));
+		Com_Error (ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
 
 	getcwd(curpath, sizeof(curpath));
 

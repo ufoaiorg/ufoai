@@ -536,12 +536,12 @@ void Con_DrawNotify (void)
 	{
 		if (msg_mode == MSG_SAY)
 		{
-			DrawString (l, v, _("say:"));
+			DrawString (l, v, "say:");
 			skip = 4;
 		}
 		else
 		{
-			DrawString (l, v, _("say_team:"));
+			DrawString (l, v, "say_team:");
 			skip = 10;
 		}
 

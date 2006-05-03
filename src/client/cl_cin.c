@@ -456,7 +456,7 @@ byte *SCR_ReadNextFrame (void)
 	FS_Read (&size, 4, cl.cinematic_file);
 	size = LittleLong(size);
 	if (size > sizeof(compressed) || size < 1)
-		Com_Error (ERR_DROP, _("Bad compressed frame size") );
+		Com_Error (ERR_DROP, "Bad compressed frame size" );
 	FS_Read (compressed, size, cl.cinematic_file);
 
 	// read sound
