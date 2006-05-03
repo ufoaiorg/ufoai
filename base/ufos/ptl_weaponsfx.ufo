@@ -684,7 +684,7 @@ particle grenl_ammo
 {
 	init
 	{
-		model  weapons/grenl/grenl_clip
+		model  weapons/grenl/grenl_clip2
 		color  ".5 .5 .5 1"
 	}
 }

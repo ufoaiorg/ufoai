@@ -50,6 +50,8 @@ equipment campaign_player
 	flamer_ammo		2
 	rpg				1
 	rpg_ammo		4
+	grenl				1
+	grenl_ammo		4
 	fraggrenade		3
 	smokegrenade		1
 	knife			2

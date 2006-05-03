@@ -141,9 +141,8 @@ building building_quarters
 building building_ufo_hangar
 {
 	title		"_UFO Hangar"
-	image		base/ufo_drop2
+	image		base/ufo_hangar
 	fixcosts	1000
-	needs		building_ufo_hangar2
 	depends		building_lab
 	max_workers	5
 	min_workers	2
@@ -151,25 +150,9 @@ building building_ufo_hangar
 	energy		400
 	build_time	6
 	varcosts	50
-	map_name	"ufo_drop"
+	map_name	"ufo_hangar"
 	pedia		building_ufo_hangar
 	type	hangar
-}
-
-building building_ufo_hangar2
-{
-	title		"_UFO Hangar"
-	image		base/ufo_drop1
-	fixcosts	1000
-	depends		building_lab
-	visible		false
-	max_workers	5
-	min_workers	2
-	worker_costs	10
-	energy		400
-	build_time	6
-	varcosts	50
-	pedia		building_ufo_hangar
 }
 
 building building_hangar
