@@ -513,8 +513,6 @@ typedef enum
 	MS_ZOOMMAP,
 	MS_SHIFT3DMAP,
 	MS_ZOOM3DMAP,
-	MS_SHIFTBASEMAP,
-	MS_ZOOMBASEMAP,
 	MS_WORLD
 } mouseSpace_t;
 
@@ -1314,9 +1312,6 @@ typedef struct ccs_s
 	vec2_t	center;
 	float	zoom;
 
-	//basemanagement
-	vec2_t	basecenter;
-	float	basezoom;
 	int	actualBaseID;
 } ccs_t;
 

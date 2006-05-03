@@ -1102,8 +1102,10 @@ void MN_BaseMapClick( menuNode_t *node, int x, int y )
 		for ( row = 0; row < BASE_SIZE; row++ )
 			for ( col = 0; col < BASE_SIZE; col++ )
 				if ( baseCurrent->map[row][col][baseCurrent->baseLevel] == -1
-// 				  && x >= baseCurrent->posX[row][col][baseCurrent->baseLevel] && x < baseCurrent->posX[row][col][baseCurrent->baseLevel] + picWidth*ccs.basezoom
-// 				  && y >= baseCurrent->posY[row][col][baseCurrent->baseLevel] && y < baseCurrent->posY[row][col][baseCurrent->baseLevel] + picHeight*ccs.basezoom
+				  && x >= baseCurrent->posX[row][col][baseCurrent->baseLevel]
+				  && x < baseCurrent->posX[row][col][baseCurrent->baseLevel] + node->size[0] / BASE_SIZE
+				  && y >= baseCurrent->posY[row][col][baseCurrent->baseLevel]
+				  && y < baseCurrent->posY[row][col][baseCurrent->baseLevel] + node->size[1] / BASE_SIZE
 				)
 				{
 					MN_SetBuildingByClick( row, col );
@@ -1114,19 +1116,20 @@ void MN_BaseMapClick( menuNode_t *node, int x, int y )
 	for ( row = 0; row < BASE_SIZE; row++ )
 		for ( col = 0; col < BASE_SIZE; col++ )
 			if ( baseCurrent->map[row][col][baseCurrent->baseLevel] != -1
-// 			  && x >= baseCurrent->posX[row][col][baseCurrent->baseLevel] && x < baseCurrent->posX[row][col][baseCurrent->baseLevel] + picWidth*ccs.basezoom
-// 			  && y >= baseCurrent->posY[row][col][baseCurrent->baseLevel] && y < baseCurrent->posY[row][col][baseCurrent->baseLevel] + picHeight*ccs.basezoom
+			  && x >= baseCurrent->posX[row][col][baseCurrent->baseLevel]
+			  && x < baseCurrent->posX[row][col][baseCurrent->baseLevel] + node->size[0] / BASE_SIZE
+			  && y >= baseCurrent->posY[row][col][baseCurrent->baseLevel]
+			  && y < baseCurrent->posY[row][col][baseCurrent->baseLevel] + node->size[1] / BASE_SIZE
 			)
 			{
 				entry = B_GetBuildingByID( baseCurrent->map[row][col][baseCurrent->baseLevel] );
-				if ( entry->onClick[0] )
+				if ( ! entry )
+					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y );
+
+				if ( *entry->onClick )
 					Cbuf_ExecuteText( EXEC_NOW, entry->onClick );
 				else
-				{
-					baseCurrent->buildingCurrent = entry;
-					MN_DrawBuilding();
-				}
-// 					UP_OpenWith( entry->pedia );
+					UP_OpenWith( entry->pedia );
 
 				return;
 			}
@@ -1228,8 +1231,7 @@ void MN_RightClick( int x, int y )
 			if ( !mouseOver ) continue;
 
 			// found a node -> do actions
-			if ( node->type == MN_BASEMAP ) mouseSpace = MS_SHIFTBASEMAP;
-			else if ( node->type == MN_MAP || node->type == MN_3DMAP )
+			if ( node->type == MN_MAP || node->type == MN_3DMAP )
 			{
 				selMis = NULL;
 				interceptAircraft = NULL;
@@ -1272,8 +1274,7 @@ void MN_MiddleClick( int x, int y )
 			if ( !mouseOver ) continue;
 
 			// found a node -> do actions
-			if ( node->type == MN_BASEMAP ) mouseSpace = MS_ZOOMBASEMAP;
-			else if ( node->type == MN_MAP ) mouseSpace = MS_ZOOMMAP;
+			if ( node->type == MN_MAP ) mouseSpace = MS_ZOOMMAP;
 			else if ( node->type == MN_3DMAP ) mouseSpace = MS_ZOOM3DMAP;
 			else MN_ExecuteActions( menu, node->mclick );
 		}

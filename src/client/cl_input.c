@@ -1008,22 +1008,6 @@ void CL_ParseInput (void)
 		if ( ccs.center[1] > 1.0 - 0.5/ccs.zoom ) ccs.center[1] = 1.0 - 0.5/ccs.zoom;
 		return;
 
-	case MS_ZOOMBASEMAP:
-		// zoom the basemap
-		// FIXME: This always zooms in the upper left corner
-		//        set ccs.basecenter to the right values here
-		ccs.basezoom *= pow( 0.995, my - oldy );
-		if ( ccs.basezoom < 0.2 ) ccs.basezoom = 0.2;
-		if ( ccs.basezoom > 2.0 ) ccs.basezoom = 2.0;
-		return;
-
-
-	case MS_SHIFTBASEMAP:
-		// shift the basemap
-		ccs.basecenter[0] -= (float)(mx - oldx) / (BASEMAP_SIZE_X * ccs.basezoom);
-		ccs.basecenter[1] -= (float)(my - oldy) / (BASEMAP_SIZE_Y * ccs.basezoom);
-		return;
-
 	case MS_DRAG:
 		// do nothing
 		return;

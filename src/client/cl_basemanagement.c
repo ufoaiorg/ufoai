@@ -47,10 +47,6 @@ int numProductions;							// Number of entries in the bmProductions list.
 employee_t	employees[MAX_EMPLOYEES];			// This it the global list of employees (see client.h)
 int   numEmployees;							// The global number of enris in the "employees" list. (see client.h)
 
-//DrawBase
-float bvCenterX, bvCenterY;
-float bvScale;
-
 int bmDataSize = 0;
 char *bmData, *bmDataStart;
 
@@ -250,7 +246,6 @@ building_t* B_GetBuilding ( char *buildingName )
 	if ( ! buildingName )
 		return baseCurrent->buildingCurrent;
 
-	Com_DPrintf("Searching for building %s\n", buildingName );
 	for (i = 0 ; i < numBuildings; i++ )
 		if ( !Q_strcasecmp( bmBuildings[ccs.actualBaseID][i].name, buildingName ) )
 			return &bmBuildings[ccs.actualBaseID][i];
@@ -1589,19 +1584,31 @@ void MN_DrawBase( menuNode_t *node )
 	width = node->size[0] / BASE_SIZE;
 	height = ( node->size[1] + BASE_SIZE*20 ) / BASE_SIZE;
 
-// 	bvScale = ccs.basezoom;
-// 	bvCenterX = ccs.basecenter[0] * SCROLLSPEED;
-// 	bvCenterY = ccs.basecenter[1] * SCROLLSPEED;
-
 	IN_GetMousePos( &mx, &my );
 
 	for ( row = 0; row < BASE_SIZE; row++ )
 	{
 		for ( col = 0; col < BASE_SIZE; col++ )
 		{
+			// 20 is the height of the part where the images overlap
+			x = node->pos[0] + col * width;
+			y = node->pos[1] + row * height - row * 20 ;
+
+			// maybe we are out
+			if ( x < node->pos[0] - width ) continue;
+			if ( y < node->pos[1] - height) break;
+			if ( x > node->pos[0] + node->size[0] ) break;
+			if ( y > node->pos[1] + node->size[1] ) return;
+
+			baseCurrent->posX[row][col][baseCurrent->baseLevel] = x;
+			baseCurrent->posY[row][col][baseCurrent->baseLevel] = y;
+
 			if ( baseCurrent->map[row][col][baseCurrent->baseLevel] != -1 )
 			{
 				entry = B_GetBuildingByID(baseCurrent->map[row][col][baseCurrent->baseLevel]);
+
+				if ( ! entry )
+					Sys_Error("Error in DrawBase - no building with id %i\n", baseCurrent->map[row][col][baseCurrent->baseLevel] );
 
 				if ( entry->buildingStatus[entry->howManyOfThisType] == B_UPGRADE )
 					Q_strncpyz( statusImage, "base/upgrade", MAX_QPATH );
@@ -1613,40 +1620,36 @@ void MN_DrawBase( menuNode_t *node )
 				else if ( entry->buildingStatus[entry->howManyOfThisType] == B_UNDER_CONSTRUCTION )
 					Q_strncpyz( statusImage, "base/construct", MAX_QPATH );
 
-				if ( !entry->used && entry->needs && entry->visible )
+				if ( !entry->used )
 				{
-					secondEntry = B_GetBuilding ( entry->needs );
-					if ( ! secondEntry )
-						Com_Printf( "Error in ufo-scriptfile - could not find the needed building\n" );
-					entry->used = 1;
-					Q_strncpyz( image, secondEntry->image, MAX_QPATH );
+					if ( entry->needs )
+						entry->used = 1;
+					Q_strncpyz( image, entry->image, MAX_QPATH );
 				}
 				else
 				{
-					Q_strncpyz( image, entry->image, MAX_QPATH );
+					secondEntry = B_GetBuilding ( entry->needs );
+					if ( ! secondEntry )
+						Sys_Error( "Error in ufo-scriptfile - could not find the needed building\n" );
+					Q_strncpyz( image, secondEntry->image, MAX_QPATH );
 					entry->used = 0;
 				}
 			}
 			else
 				Q_strncpyz( image, "base/grid", MAX_QPATH );
 
-			x = node->pos[0] + col * width;
-			y = node->pos[1] + row * height - row * 20 ;
-			baseCurrent->posX[row][col][baseCurrent->baseLevel] = x;
-			baseCurrent->posY[row][col][baseCurrent->baseLevel] = y;
-
-			if ( mx >= x && mx < x + width && my >= y && my < y + height )
+			if ( mx > x && mx < x + width && my > y && my < y + height - 20 )
 				re.DrawColor( color );
 
 			if ( *image )
 				re.DrawNormPic( x, y, width, height, 0, 0, 0, 0, 0, false, image );
 
-			if ( mx >= x && mx < x + width && my >= y && my < y + height )
+			if ( mx > x && mx < x + width && my > y && my < y + height - 20 )
 				re.DrawColor( NULL );
 
 			if ( *statusImage )
 			{
-				re.DrawNormPic( x + (20 * bvScale) , y + (60 * bvScale), width*bvScale, height*bvScale, 0, 0, 0, 0, 0, false, statusImage );
+// 				re.DrawNormPic( x + 20 , y + 60, width, height, 0, 0, 0, 0, 0, false, statusImage );
 				statusImage[0] = '\0';
 			}
 		}
@@ -1670,11 +1673,6 @@ void MN_BaseInit( void )
 	{
 
 	}
-
-	// set base view
-	ccs.basecenter[0] = 0.2;
-	ccs.basecenter[1] = 0.2;
-	ccs.basezoom = 0.4;
 
 	//these are the workers you can set on buildings
 	Cvar_SetValue( "mn_available_workers", 0 );
