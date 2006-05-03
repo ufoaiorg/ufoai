@@ -63,7 +63,8 @@ Damage type: None, no damage
 This grenade expels a gas that causes those who inhale it to lose consciousness. Useful when capturing live aliens. The stun gas also tends to bypass armor that doesn't provide life support.
 
 - Stun Rod
-Easy to handle device for stunning and capturing your enemy. The only downside is that you need to stand next to him to do so, but then it's a bit more effective then stun grenades.
+Easy to handle device for stunning and capturing your enemy. The only downside is that you need to stand next to him to do so, but then it's a few times more effective then stun grenades.
+The stun rod used by Phalanx soldiers is one of the most effective devices to capture your enemies alive. It not only deploys a huge electrical discharge onto the target, but also injects very powerful narcotics and drugs. The combination of the discharge and these chemicals can knock out even the biggest lifeform known to mankind and will most likely also work on most of the aliens we have enchountered yet. The rod is eqipped with two a roto hammer like spikes that will be driven into the target and then then deploy the before mentioned discharge and chemicals.
 
 - Mine
 When a soldier sets this device, it becomes invisible. The mine becomes active on the next team's turn, so a soldier who sets this should move off the square the mine is deployed on. When any unit (including the friendly team's units and civilians!) steps on the mine, it explodes, damaging all units in its blast radius.
