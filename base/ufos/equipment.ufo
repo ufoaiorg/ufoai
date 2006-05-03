@@ -97,6 +97,8 @@ equipment campaign_market
 
 equipment campaign_alien
 {
+	plasblaster		1
+	plasblaster_ammo	12
 	plasrifle		6
 	plasrifle_ammo	8
 	plaspistol		12
