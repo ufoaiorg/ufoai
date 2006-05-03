@@ -872,3 +872,38 @@ item bolterrifle_ammo
 		dmgtype blast
 	}
 }
+
+// =======================
+// BOLTERRIFLE
+// =======================
+item stunrod
+{
+	name		"_Stunrod"
+	model		weapons/stunrod/stunrod
+	weapon		true
+	type		melee
+	category	2
+	shape		"0 0 2 1"
+	center		"-1 0 3"
+	scale		1.0
+	price		3000
+	buytype		2
+	ammo		1
+	thrown		false
+
+	primary
+	{
+		name	"_Stun"
+		skill	close
+		projtl	null
+		impact	null
+		hitbody blood
+		firesnd	misc/klonk03.wav
+		speed	0
+		range	55
+		shots	1
+		time	8
+		damage	"35 7"
+		dmgtype normal
+	}
+}
