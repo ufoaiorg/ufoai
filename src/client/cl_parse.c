@@ -375,7 +375,7 @@ void CL_ParseDownload (void)
 		if (!cls.download)
 		{
 			net_message.readcount += size;
-			Com_Printf (_("Failed to open %s\n"), cls.downloadtempname);
+			Com_Printf ("Failed to open %s\n", cls.downloadtempname);
 			CL_RequestNextDownload ();
 			return;
 		}
@@ -415,7 +415,7 @@ void CL_ParseDownload (void)
 		CL_DownloadFileName(newn, sizeof(newn), cls.downloadname);
 		r = rename (oldn, newn);
 		if (r)
-			Com_Printf (_("failed to rename.\n"));
+			Com_Printf ("failed to rename.\n");
 
 		cls.download = NULL;
 		cls.downloadpercent = 0;
