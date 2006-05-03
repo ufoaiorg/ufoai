@@ -2331,13 +2331,14 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		if ( w > MAX_VAR ) w = MAX_VAR;
 		return w;
 
+	// keep in mind, that we already need a buffer of fixed size here
 	case V_TRANSLATION_STRING:
 		if ( *token == '_' )
 			token++;
 
-		Q_strncpyz( (char *)b, _(token), MAX_VAR );
+		Q_strncpyz( (char *)b, _(token), sizeof((char*)b) );
 		w = strlen(token)+1;
-		if ( w > MAX_VAR ) w = MAX_VAR;
+		if ( w > sizeof((char*)b) ) w = sizeof((char*)b);
 		return w;
 
 	// just remove the _ but don't translate

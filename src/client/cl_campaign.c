@@ -2480,13 +2480,15 @@ void CL_ParseMission( char *name, char **text )
 					Com_ParseValue( ms, token, vp->type, vp->ofs );
 				else
 				{
-					strcpy( mtp, token );
+					if ( *token == '_' )
+						token++;
+					Q_strncpyz( mtp, _(token), 128 );
 					ms->text = mtp;
 					do {
 						mtp = strchr( mtp, '\\' );
 						if ( mtp ) *mtp = '\n';
 					} while ( mtp );
-					mtp = ms->text + strlen( token ) + 1;
+					mtp = ms->text + strlen( mtp ) + 1;
 				}
 				break;
 			}
