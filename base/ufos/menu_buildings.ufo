@@ -18,8 +18,8 @@ menu buildings
 
 	basemap thebasemap
 	{
-		pos     "0 96"
-		size    "778 672"
+		pos	"0 96"
+		size	"725 522"
 		click   { cmd "basemap_click" }
 		rclick
 		mclick
