@@ -135,7 +135,7 @@ void SCR_LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *h
 
 	if ( raw - (byte *)pcx > len)
 	{
-		Com_Printf (_("PCX file %s was malformed"), filename);
+		Com_Printf ("PCX file %s was malformed", filename);
 		Z_Free (*pic);
 		*pic = NULL;
 	}
@@ -412,7 +412,7 @@ cblock_t Huff1Decompress (cblock_t in)
 
 	if (input - in.data != in.count && input - in.data != in.count+1)
 	{
-		Com_Printf (_("Decompression overread by %i"), (input - in.data) - in.count);
+		Com_Printf ("Decompression overread by %i", (input - in.data) - in.count);
 	}
 	out.count = out_p - out.data;
 
@@ -511,7 +511,7 @@ void SCR_RunCinematic (void)
 		return;
 	if (frame > cl.cinematicframe+1)
 	{
-		Com_Printf (_("Dropped frame: %i > %i\n"), frame, cl.cinematicframe+1);
+		Com_Printf ("Dropped frame: %i > %i\n", frame, cl.cinematicframe+1);
 		cl.cinematictime = cls.realtime - cl.cinematicframe*1000/14;
 	}
 	if (cin.pic)
@@ -588,7 +588,7 @@ void SCR_PlayCinematic (char *arg)
 		cls.state = ca_active;
 		if (!cin.pic)
 		{
-			Com_Printf (_("%s not found.\n"), name);
+			Com_Printf ("%s not found.\n", name);
 			cl.cinematictime = 0;
 		}
 		else

@@ -151,12 +151,12 @@ void Con_Dump_f (void)
 
 	Com_sprintf (name, sizeof(name), "%s/%s.txt", FS_Gamedir(), Cmd_Argv(1));
 
-	Com_Printf (_("Dumped console text to %s.\n"), name);
+	Com_Printf ("Dumped console text to %s.\n", name);
 	FS_CreatePath (name);
 	f = fopen (name, "w");
 	if (!f)
 	{
-		Com_Printf (_("ERROR: couldn't open.\n"));
+		Com_Printf ("ERROR: couldn't open.\n");
 		return;
 	}
 
@@ -313,7 +313,7 @@ void Con_Init (void)
 
 	Con_CheckResize ();
 
-	Com_Printf (_("Console initialized.\n"));
+	Com_Printf ("Console initialized.\n");
 
 	//
 	// register our commands

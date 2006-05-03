@@ -204,7 +204,7 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 
 	if (strstr (filename, ".."))
 	{
-		Com_Printf (_("Refusing to download a path with ..\n"));
+		Com_Printf ("Refusing to download a path with ..\n");
 		return true;
 	}
 
@@ -277,7 +277,7 @@ void	CL_Download_f (void)
 
 	if (strstr (filename, ".."))
 	{
-		Com_Printf (_("Refusing to download a path with ..\n"));
+		Com_Printf ("Refusing to download a path with ..\n");
 		return;
 	}
 
@@ -353,7 +353,7 @@ void CL_ParseDownload (void)
 	percent = MSG_ReadByte (&net_message);
 	if (size == -1)
 	{
-		Com_Printf (_("Server does not have this file.\n"));
+		Com_Printf ("Server does not have this file.\n");
 		if (cls.download)
 		{
 			// if here, we tried to resume a file but the server said no
@@ -446,7 +446,7 @@ void CL_ParseServerData (void)
 	char	*str;
 	int		i;
 	
-	Com_DPrintf (_("Serverdata packet received.\n"));
+	Com_DPrintf ("Serverdata packet received.\n");
 	//
 	// wipe the client_state_t struct
 	//
@@ -459,7 +459,7 @@ void CL_ParseServerData (void)
 
 	// compare versions
 	if (i != PROTOCOL_VERSION)
-		Com_Error (ERR_DROP,_("Server returned version %i, not %i"), i, PROTOCOL_VERSION);
+		Com_Error (ERR_DROP,"Server returned version %i, not %i", i, PROTOCOL_VERSION);
 
 	cl.servercount = MSG_ReadLong (&net_message);
 	cl.attractloop = MSG_ReadByte (&net_message);
@@ -1175,7 +1175,7 @@ void CL_ParseEvent( void )
 	{
 		if (net_message.readcount > net_message.cursize)
 		{
-			Com_Error (ERR_DROP,_("CL_ParseEvent: Bad event message"));
+			Com_Error (ERR_DROP,"CL_ParseEvent: Bad event message");
 			break;
 		}
 
@@ -1189,16 +1189,16 @@ void CL_ParseEvent( void )
 
 		// check if eType is valid
 		if ( eType < 0 || eType >= EV_NUM_EVENTS )
-			Com_Error( ERR_DROP, _("CL_ParseEvent: invalid event %i\n"), eType );
+			Com_Error( ERR_DROP, "CL_ParseEvent: invalid event %i\n", eType );
 
 		if ( !ev_func[eType] )
-			Com_Error( ERR_DROP, _("CL_ParseEvent: no handling function for event %i\n"), eType );
+			Com_Error( ERR_DROP, "CL_ParseEvent: no handling function for event %i\n", eType );
 
 		if ( now )
 		{
 			// check if eType is valid
 			if ( eType < 0 || eType >= EV_NUM_EVENTS )
-				Com_Error( ERR_DROP, _("CL_Events: invalid event %i\n"), eType );
+				Com_Error( ERR_DROP, "CL_Events: invalid event %i\n", eType );
 
 			// log and call function
 			CL_LogEvent( eType );
@@ -1294,7 +1294,7 @@ void CL_ParseEvent( void )
 				last = et;
 			}
 
-			if ( !etUnused ) Com_Error( ERR_DROP, _("CL_ParseEvent: timetable overflow\n") );
+			if ( !etUnused ) Com_Error( ERR_DROP, "CL_ParseEvent: timetable overflow\n" );
 			cur = etUnused;
 			etUnused = cur->next;
 
@@ -1337,7 +1337,7 @@ void CL_Events( void )
 #if 0
 		// check if eType is valid
 		if ( eType < 0 || eType >= EV_NUM_EVENTS )
-			Com_Error( ERR_DROP, _("CL_Events: invalid event %i\n"), eType );
+			Com_Error( ERR_DROP, "CL_Events: invalid event %i\n", eType );
 #endif
 
 		// free timetable entry
@@ -1399,7 +1399,7 @@ void CL_ParseServerMessage (void)
 	{
 		if (net_message.readcount > net_message.cursize)
 		{
-			Com_Error (ERR_DROP,_("CL_ParseServerMessage: Bad server message"));
+			Com_Error (ERR_DROP,"CL_ParseServerMessage: Bad server message");
 			break;
 		}
 
@@ -1423,7 +1423,7 @@ void CL_ParseServerMessage (void)
 		switch (cmd)
 		{
 		default:
-			Com_Error (ERR_DROP,_("CL_ParseServerMessage: Illegible server message %d\n"), cmd);
+			Com_Error (ERR_DROP,"CL_ParseServerMessage: Illegible server message %d\n", cmd);
 			break;
 			
 		case svc_nop:
@@ -1431,11 +1431,11 @@ void CL_ParseServerMessage (void)
 			break;
 			
 		case svc_disconnect:
-			Com_Error (ERR_DISCONNECT,_("Server disconnected\n"));
+			Com_Error (ERR_DISCONNECT,"Server disconnected\n");
 			break;
 
 		case svc_reconnect:
-			Com_Printf (_("Server disconnected, reconnecting\n"));
+			Com_Printf ("Server disconnected, reconnecting\n");
 			if (cls.download) {
 				//ZOID, close download
 				fclose (cls.download);

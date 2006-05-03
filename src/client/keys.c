@@ -555,14 +555,14 @@ void Key_Unbind_f (void)
 
 	if (Cmd_Argc() != 2)
 	{
-		Com_Printf (_("Usage: unbind <key> : remove commands from a key\n"));
+		Com_Printf ("Usage: unbind <key> : remove commands from a key\n");
 		return;
 	}
 
 	b = Key_StringToKeynum (Cmd_Argv(1));
 	if (b==-1)
 	{
-		Com_Printf (_("\"%s\" isn't a valid key\n"), Cmd_Argv(1));
+		Com_Printf ("\"%s\" isn't a valid key\n", Cmd_Argv(1));
 		return;
 	}
 
@@ -593,13 +593,13 @@ void Key_Bind_f (void)
 
 	if (c < 2)
 	{
-		Com_Printf (_("Usage: bind <key> [command] : attach a command to a key\n"));
+		Com_Printf ("Usage: bind <key> [command] : attach a command to a key\n");
 		return;
 	}
 	b = Key_StringToKeynum (Cmd_Argv(1));
 	if (b==-1)
 	{
-		Com_Printf (_("\"%s\" isn't a valid key\n"), Cmd_Argv(1));
+		Com_Printf ("\"%s\" isn't a valid key\n", Cmd_Argv(1));
 		return;
 	}
 
@@ -608,7 +608,7 @@ void Key_Bind_f (void)
 		if (keybindings[b])
 			Com_Printf ("\"%s\" = \"%s\"\n", Cmd_Argv(1), keybindings[b] );
 		else
-			Com_Printf (_("\"%s\" is not bound\n"), Cmd_Argv(1) );
+			Com_Printf ("\"%s\" is not bound\n", Cmd_Argv(1) );
 		return;
 	}
 
@@ -789,7 +789,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 			return;	// ignore most autorepeats
 
 		if (key > 255 && !keybindings[key])
-			Com_Printf (_("%s is unbound, hit F4 to set.\n"), Key_KeynumToString (key) );
+			Com_Printf ("%s is unbound, hit F4 to set.\n", Key_KeynumToString (key) );
 	}
 	else
 	{

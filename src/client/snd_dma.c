@@ -99,7 +99,7 @@ void S_SoundInfo_f(void)
 {
 	if (!sound_started)
 	{
-		Com_Printf (_("sound system not started\n"));
+		Com_Printf ("sound system not started\n");
 		return;
 	}
 
@@ -196,7 +196,7 @@ void S_Init (void)
 		soundtime = 0;
 		paintedtime = 0;
 
-		Com_Printf (_("sound sampling rate: %i\n"), dma.speed);
+		Com_Printf ("sound sampling rate: %i\n", dma.speed);
 
 		S_StopAllSounds ();
 
@@ -606,7 +606,7 @@ void S_IssuePlaysound (playsound_t *ps)
 	sfxcache_t	*sc;
 
 	if (s_show->value)
-		Com_Printf (_("Issue %i\n"), ps->begin);
+		Com_Printf ("Issue %i\n", ps->begin);
 	// pick a channel to play on
 	ch = S_PickChannel(ps->entnum, ps->entchannel);
 	if (!ch)
@@ -743,7 +743,7 @@ void S_StartLocalSound (char *sound)
 	sfx = S_RegisterSound (sound);
 	if (!sfx)
 	{
-		Com_Printf (_("S_StartLocalSound: can't cache %s\n"), sound);
+		Com_Printf ("S_StartLocalSound: can't cache %s\n", sound);
 		return;
 	}
 	S_StartSound (NULL, cl.pnum, 0, sfx, 1, 1, 0);

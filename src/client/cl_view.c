@@ -304,7 +304,7 @@ void CL_ParseEntitystring( char *es )
 		if (!es)
 			break;
 		if (com_token[0] != '{')
-			Com_Error (ERR_DROP, _("CL_ParseEntitystring: found %s when expecting {"), com_token);
+			Com_Error (ERR_DROP, "CL_ParseEntitystring: found %s when expecting {", com_token);
 
 		// memorize the start
 		strstart = es;
@@ -317,17 +317,17 @@ void CL_ParseEntitystring( char *es )
 			if (com_token[0] == '}')
 				break;
 			if (!es)
-				Com_Error (ERR_DROP, _("CL_ParseEntitystring: EOF without closing brace"));
+				Com_Error (ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
 
 			Q_strncpyz(keyname, com_token, sizeof(keyname));
 
 			// parse value
 			com_token = COM_Parse (&es);
 			if (!es)
-				Com_Error (ERR_DROP, _("CL_ParseEntitystring: EOF without closing brace"));
+				Com_Error (ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
 
 			if (com_token[0] == '}')
-				Com_Error (ERR_DROP, _("CL_ParseEntitystring: closing brace without data"));
+				Com_Error (ERR_DROP, "CL_ParseEntitystring: closing brace without data");
 
 			// filter interesting keys
 			if ( !Q_strcmp( keyname, "classname" ) )
@@ -733,7 +733,7 @@ void V_RenderView( float stereo_separation )
 	// render the frame
 	re.RenderFrame (&cl.refdef);
 	if (cl_stats->value)
-		Com_Printf (_("ent:%i  lt:%i  part:%i\n"), r_numentities, r_numdlights, r_numparticles);
+		Com_Printf ("ent:%i  lt:%i  part:%i\n", r_numentities, r_numdlights, r_numparticles);
 	if ( log_stats->value && ( log_stats_file != 0 ) )
 		fprintf( log_stats_file, "%i,%i,%i,",r_numentities, r_numdlights, r_numparticles);
 

@@ -450,7 +450,7 @@ void SEQ_Precache( char *name, char *data )
 	{
 		while ( *data )
 		{
-			Com_DPrintf(_("Precaching model: %s\n"), data );
+			Com_DPrintf("Precaching model: %s\n", data );
 			re.RegisterModel( data );
 			data += strlen( data ) + 1;
 		}
@@ -459,7 +459,7 @@ void SEQ_Precache( char *name, char *data )
 	{
 		while ( *data )
 		{
-			Com_DPrintf(_("Precaching image: %s\n"), data );
+			Com_DPrintf("Precaching image: %s\n", data );
 			re.RegisterPic( data );
 			data += strlen( data ) + 1;
 		}
@@ -539,12 +539,12 @@ void SEQ_Model( char *name, char *data )
 			if ( !Q_strncmp( data, "model", 5 ) )
 			{
 				data += strlen( data ) + 1;
-				Com_DPrintf(_("Registering model: %s\n"), data );
+				Com_DPrintf("Registering model: %s\n", data );
 				se->model = re.RegisterModel( data );
 			} else if ( !Q_strncmp( data, "anim", 4 ) )
 			{
 				data += strlen( data ) + 1;
-				Com_DPrintf(_("Change anim to: %s\n"), data );
+				Com_DPrintf("Change anim to: %s\n", data );
 				re.AnimChange( &se->as, se->model, data );
 			}
 			else Com_Printf( "SEQ_Model: unknown token '%s'\n", data );
@@ -645,7 +645,7 @@ CL_ParseSequence
 */
 void CL_ParseSequence( char *name, char **text )
 {
-	char		*errhead = _("CL_ParseSequence: unexptected end of file (sequence ");
+	char		*errhead = "CL_ParseSequence: unexptected end of file (sequence ";
 	sequence_t	*sp;
 	seqCmd_t	*sc;
 	char		*token, *data;

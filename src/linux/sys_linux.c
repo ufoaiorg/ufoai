@@ -151,7 +151,7 @@ void Sys_Printf (char *fmt, ...)
 	va_end (argptr);
 
 	if (strlen(text) > sizeof(text))
-		Sys_Error(_("memory overwrite in Sys_Printf"));
+		Sys_Error("memory overwrite in Sys_Printf");
 
 	if (nostdout && nostdout->value)
 		return;

@@ -132,14 +132,14 @@ sfxcache_t *S_LoadSound (sfx_t *s)
 
 	if (!data)
 	{
-		Com_DPrintf (_("Couldn't load %s\n"), namebuffer);
+		Com_DPrintf ("Couldn't load %s\n", namebuffer);
 		return NULL;
 	}
 
 	info = GetWavinfo (s->name, data, size);
 	if (info.channels != 1)
 	{
-		Com_Printf (_("%s is a stereo sample\n"),s->name);
+		Com_Printf ("%s is a stereo sample\n",s->name);
 		FS_FreeFile (data);
 		return NULL;
 	}

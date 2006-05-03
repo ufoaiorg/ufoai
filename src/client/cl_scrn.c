@@ -681,7 +681,7 @@ void SCR_TimeRefresh_f (void)
 
 	stop = Sys_Milliseconds ();
 	time = (stop-start)/1000.0;
-	Com_Printf (_("%f seconds (%f fps)\n"), time, 128/time);
+	Com_Printf ("%f seconds (%f fps)\n", time, 128/time);
 }
 
 /*

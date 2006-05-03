@@ -46,7 +46,7 @@ void CL_ParseShaders( char *title, char **text )
 {
 	shader_t *entry;
 	value_t *v;
-	char    *errhead = _("CL_ParseShaders: unexptected end of file (names ");
+	char    *errhead = "CL_ParseShaders: unexptected end of file (names ";
 	char    *token;
 
 	// get name list body body
