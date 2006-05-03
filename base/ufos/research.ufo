@@ -377,6 +377,18 @@ tech rs_weapon_knife
 	researched	true
 }
 
+tech rs_weapon_stunrod
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_stunrod_txt"
+
+	requires	initial
+	provides	stunrod
+	time	0
+	researched	true
+}
+
 //========================
 // Weapons unresearched
 //========================
