@@ -16,7 +16,7 @@ building building_entrance
 	pos		"2 4"
 	visible		false
 	map_name	"entrance"
-	pedia		building_entrance
+	pedia		rs_building_entrance
 }
 
 building building_commando
@@ -35,7 +35,7 @@ building building_commando
 	map_name	"commando"
 	pos		"2 3"
 	firstbase	true
-	pedia		building_commando
+	pedia		rs_building_commando
 }
 
 building building_powerplant
@@ -56,7 +56,7 @@ building building_powerplant
 	firstbase	true
 	pos		"2 2"
 	map_name	"powerplant"
-	pedia		building_powerplant
+	pedia		rs_building_powerplant
 }
 
 building building_lab
@@ -81,7 +81,7 @@ building building_lab
 	pos		"2 1"
 	firstbase	true
 	type	lab
-	pedia		building_lab
+	pedia		rs_building_lab
 }
 
 building building_storage
@@ -99,7 +99,7 @@ building building_storage
 	map_name	"storage"
 	pos		"1 3"
 	firstbase	true
-	pedia		building_storage
+	pedia		rs_building_storage
 }
 
 building building_intercept
@@ -116,7 +116,7 @@ building building_intercept
 	build_time	5
 	varcosts	10
 	map_name	"intercept"
-	pedia		building_intercept
+	pedia		rs_building_intercept
 }
 
 building building_quarters
@@ -135,7 +135,7 @@ building building_quarters
 	pos		"1 2"
 	firstbase	true
 	type	quarters
-	pedia		building_quarters
+	pedia		rs_building_quarters
 }
 
 building building_ufo_hangar
@@ -151,7 +151,7 @@ building building_ufo_hangar
 	build_time	6
 	varcosts	50
 	map_name	"ufo_hangar"
-	pedia		building_ufo_hangar
+	pedia		rs_building_ufo_hangar
 	type	hangar
 }
 
@@ -169,7 +169,7 @@ building building_hangar
 	build_time	6
 	varcosts	50
 	map_name	"drop"
-	pedia		building_hangar
+	pedia		rs_building_hangar
 	firstbase	true
 	type	hangar
 	pos		"1 0"
@@ -188,7 +188,7 @@ building building_hangar2
 	energy		400
 	build_time	6
 	varcosts	50
-	pedia		building_hangar
+	pedia		rs_building_hangar
 }
 
 building building_teamroom
@@ -206,7 +206,7 @@ building building_teamroom
 	energy		10
 	build_time	3
 	map_name	"teamroom"
-	pedia		building_teamroom
+	pedia		rs_building_teamroom
 }
 
 building building_radar
@@ -221,7 +221,7 @@ building building_radar
 	energy		10
 	build_time	10
 	map_name	"radar"
-	pedia		building_radar
+	pedia		rs_building_radar
 	onconstruct	"inc_sensor 10"
 	ondestroy	"dec_sensor 10"
 }

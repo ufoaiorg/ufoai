@@ -207,6 +207,54 @@ tech rs_weapon_pistol_ammo
 	researched	true
 }
 
+tech rs_weapon_grenl
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_grenl_txt"
+
+	requires	initial
+	provides	grenl
+	time	0
+	researched	true
+}
+
+tech rs_weapon_grenl_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_grenl_ammo_txt"
+
+	requires	initial
+	provides	grenl_ammo
+	time	0
+	researched	true
+}
+
+tech rs_weapon_bolterrifle
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_bolterrifle_txt"
+
+	requires	initial
+	provides	bolterrifle
+	time	0
+	researched	true
+}
+
+tech rs_weapon_bolterrifle_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_bolterrifle_ammo_txt"
+
+	requires	initial
+	provides	bolterrifle_ammo
+	time	0
+	researched	true
+}
+
 tech rs_weapon_rpg
 {
 	type	weapon
@@ -446,6 +494,30 @@ tech rs_weapon_plasblade
 	researched	false
 }
 
+tech rs_weapon_plasblaster
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasblaster_txt"
+
+	requires	rs_plasma
+	provides	plasblaster
+	time	1
+	researched	false
+}
+
+tech rs_weapon_plasblaster_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasblaster_ammo_txt"
+
+	requires	rs_plasma
+	provides	plasblaster_ammo
+	time	1
+	researched	false
+}
+
 tech rs_weapon_plaspistol
 {
 	type	weapon
@@ -650,6 +722,18 @@ tech rs_building_hangar
 
 	requires	initial
 	provides	building_hangar
+	time	0
+	researched	true
+}
+
+tech rs_building_ufo_hangar
+{
+	type	building
+	description	"_b_ufo_hangar_txt"
+	up_chapter	buildings
+
+	requires	initial
+	provides	building_ufo_hangar
 	time	0
 	researched	true
 }
