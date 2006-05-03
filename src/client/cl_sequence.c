@@ -73,6 +73,7 @@ typedef struct seq2D_s
 	qboolean	inuse;
 	char		name[MAX_VAR];
 	char		text[MAX_VAR];
+	char		font[MAX_VAR];
 	char		image[MAX_VAR];
 	vec2_t		pos, speed;
 	vec2_t		size, enlarge;
@@ -291,7 +292,7 @@ void CL_Sequence2D( void )
 			// render
 			re.DrawColor( s2d->color );
 			if ( *s2d->text )
-				re.DrawPropString( "f_big", s2d->align, s2d->pos[0], s2d->pos[1], _(s2d->text) );
+				re.DrawPropString( s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], _(s2d->text) );
 			if ( *s2d->image )
 				re.DrawNormPic( s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1],
 					0, 0, 0, 0, s2d->align, true, s2d->image);
@@ -416,6 +417,7 @@ value_t seq2D_vals[] =
 {
 	{ "name",		V_STRING,		SEQ2DOFS( name ) },
 	{ "text",		V_TRANSLATION_STRING,		SEQ2DOFS( text ) },
+	{ "font",		V_STRING,		SEQ2DOFS( font ) },
 	{ "image",		V_STRING,		SEQ2DOFS( image ) },
 	{ "pos",		V_POS,			SEQ2DOFS( pos ) },
 	{ "speed",		V_POS,			SEQ2DOFS( speed ) },
@@ -513,7 +515,7 @@ void SEQ_Model( char *name, char *data )
 		if ( i >= numSeqEnts )
 		{
 			if ( numSeqEnts >= MAX_SEQENTS )
-				Sys_Error( ERR_FATAL, _("Too many sequence entities\n") );
+				Sys_Error( ERR_FATAL, "Too many sequence entities\n" );
 			se = &seqEnts[numSeqEnts++];
 		}
 		// allocate
@@ -574,14 +576,15 @@ void SEQ_2Dobj( char *name, char *data )
 		if ( i >= numSeq2Ds )
 		{
 			if ( numSeq2Ds >= MAX_SEQ2DS )
-				Sys_Error( ERR_FATAL, _("Too many sequence 2d objects\n") );
+				Sys_Error( ERR_FATAL, "Too many sequence 2d objects\n" );
 			s2d = &seq2Ds[numSeq2Ds++];
 		}
 		// allocate
 		memset( s2d, 0, sizeof(seq2D_t) );
 		for ( i = 0; i < 4; i++ ) s2d->color[i] = 1.0f;
 		s2d->inuse = true;
-		Com_sprintf( s2d->name, MAX_VAR, name );
+		Q_strncpyz( s2d->font, "f_big", MAX_VAR ); // default font
+		Q_strncpyz( s2d->name, name, MAX_VAR );
 	}
 
 	// get values
@@ -928,7 +931,7 @@ START_CHUNK
 static void START_CHUNK( const char *s )
 {
 	if( afd.chunkStackTop == MAX_RIFF_CHUNKS )
-		Sys_Error( _("ERROR: Top of chunkstack breached\n") );
+		Sys_Error( "ERROR: Top of chunkstack breached\n" );
 
 	afd.chunkStack[ afd.chunkStackTop ] = bufIndex;
 	afd.chunkStackTop++;
@@ -946,7 +949,7 @@ static void END_CHUNK( void )
 	int endIndex = bufIndex;
 
 	if( afd.chunkStackTop <= 0 )
-		Sys_Error( _("ERROR: Bottom of chunkstack breached\n") );
+		Sys_Error( "ERROR: Bottom of chunkstack breached\n" );
 
 	afd.chunkStackTop--;
 	bufIndex = afd.chunkStack[ afd.chunkStackTop ];

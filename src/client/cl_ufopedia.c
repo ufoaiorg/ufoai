@@ -108,6 +108,7 @@ void MN_UpDrawEntry( char *id )
 			Cbuf_AddText( "mn_upfsmall\n" );
 
 			if ( upCurrent) {
+				menuText[TEXT_STANDARD] = NULL;
 				switch ( t->type )
 				{
 				case RS_ARMOR:
@@ -129,7 +130,6 @@ void MN_UpDrawEntry( char *id )
 					UP_BuildingDescription( t );
 					break;
 				default:
-					menuText[TEXT_STANDARD] = NULL;
 					break;
 				}
 			}

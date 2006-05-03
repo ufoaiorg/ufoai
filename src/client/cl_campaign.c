@@ -2488,7 +2488,7 @@ void CL_ParseMission( char *name, char **text )
 						mtp = strchr( mtp, '\\' );
 						if ( mtp ) *mtp = '\n';
 					} while ( mtp );
-					mtp = ms->text + strlen( mtp ) + 1;
+					mtp = ms->text + strlen( ms->text ) + 1;
 				}
 				break;
 			}

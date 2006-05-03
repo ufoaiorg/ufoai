@@ -2331,15 +2331,15 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		if ( w > MAX_VAR ) w = MAX_VAR;
 		return w;
 
-	// keep in mind, that we already need a buffer of fixed size here
+	// FIXME: If we have an overlow here - it's damn hard to figure this out
+	//	every translator can put a too long string into his po file
+	//	maybe we should fill the buffer with something != 0 and then use Q_strncpyz
 	case V_TRANSLATION_STRING:
 		if ( *token == '_' )
 			token++;
 
-		Q_strncpyz( (char *)b, _(token), sizeof((char*)b) );
-		w = strlen(token)+1;
-		if ( w > sizeof((char*)b) ) w = sizeof((char*)b);
-		return w;
+		strcpy( (char *)b, _(token) );
+		return strlen(b)+1;
 
 	// just remove the _ but don't translate
 	case V_TRANSLATION2_STRING:
@@ -2347,8 +2347,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 			token++;
 
 		Q_strncpyz( (char *)b, token, MAX_VAR );
-		w = strlen(token)+1;
-		if ( w > MAX_VAR ) w = MAX_VAR;
+		w = strlen(b)+1;
 		return w;
 
 	case V_LONGSTRING:
