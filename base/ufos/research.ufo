@@ -933,6 +933,7 @@ tech rs_alien_ortnok_notes
 	provides	""
 	time	0
 	researched	false
+	needscollected	true
 
 	// TODO should come from alien-definition and be a complete model
 	mdl_top	models/aliens/ortnok/body01.md2
@@ -948,6 +949,7 @@ tech rs_alien_ortnok_autopsy
 	provides	""
 	time	60
 	researched	false
+	needscollected	true
 
 	//TODO: autopsy image
 }
@@ -962,9 +964,10 @@ tech rs_alien_ortnok_xenobiology
 	provides	""
 	time	90
 	researched	false
+	needscollected	true
 }
 
-interrogation "rs_alien_ortnok_interrogation"
+tech rs_alien_ortnok_interrogation
 {
 	type	alien
 	description	"_ortnok_interrogation_txt"
@@ -974,6 +977,7 @@ interrogation "rs_alien_ortnok_interrogation"
 	provides	""
 	time	60
 	researched	false
+	needscollected	true
 }
 
 // ORTNOK MEDIUM .. TODO:what's that?
@@ -989,6 +993,7 @@ tech rs_alien_ortnok_medium
 	provides	""
 	time	0
 	researched	false
+	needscollected	true
 
 	// TODO should come from alien-definition and be a complete model
 	mdl_top	models/aliens/ortnok_medium/body01.md2
@@ -1006,6 +1011,7 @@ tech rs_alien_antarean_notes
 	provides	""
 	time	0
 	researched	false
+	needscollected	true
 
 	// TODO should come from alien-definition and be a complete model
 	mdl_top	models/aliens/blue/body01.md2
@@ -1021,6 +1027,7 @@ tech rs_alien_antarean_autopsy
 	provides	""
 	time	60
 	researched	false
+	needscollected	true
 
 	// TODO should come from alien-definition and be a complete model
 	mdl_top	models/aliens/blue/body01.md2
@@ -1036,9 +1043,10 @@ tech rs_alien_antarean_xenobiology
 	provides	""
 	time	90
 	researched	false
+	needscollected	true
 }
 
-interrogation "rs_alien_antarean_interrogation"
+tech rs_alien_antarean_interrogation
 {
 	type	alien
 	description	"_antarean_interrogation_txt"
@@ -1048,9 +1056,10 @@ interrogation "rs_alien_antarean_interrogation"
 	provides	""
 	time	60
 	researched	false
+	needscollected	true
 }
 
-interrogation "rs_alien_antarean_interrogation_commander""
+tech rs_alien_antarean_interrogation_commander
 {
 	type	alien
 	description	"_antarean_interrogation_commander_txt"
@@ -1060,6 +1069,7 @@ interrogation "rs_alien_antarean_interrogation_commander""
 	provides	""
 	time	240
 	researched	false
+	needscollected	true
 }
 
 // SHEVAAR
@@ -1074,6 +1084,7 @@ tech rs_alien_shevaar_notes
 	provides	""
 	time	0
 	researched	false
+	needscollected	true
 
 	// TODO should come from alien-definition and be a complete model
 	//mdl_top	models/aliens/blue/body01.md2
@@ -1089,6 +1100,7 @@ tech rs_alien_shevaar_autopsy
 	provides	""
 	time	60
 	researched	false
+	needscollected	true
 
 	// TODO should come from alien-definition and be a complete model
 	//mdl_top	models/aliens/blue/body01.md2
@@ -1104,6 +1116,7 @@ tech rs_alien_shevaar_xenobiology
 	provides	""
 	time	90
 	researched	false
+	needscollected	true
 }
 
 // HOVERNET
@@ -1118,6 +1131,7 @@ tech rs_alien_hovernet_notes
 	provides	""
 	time	0
 	researched	false
+	needscollected	true
 
 	// TODO should come from alien-definition and be a complete model
 	//mdl_top	models/aliens/blue/body01.md2
@@ -1133,6 +1147,7 @@ tech rs_alien_hovernet_autopsy
 	provides	""
 	time	60
 	researched	false
+	needscollected	true
 
 	// TODO should come from alien-definition and be a complete model
 	//mdl_top	models/aliens/blue/body01.md2
@@ -1148,6 +1163,7 @@ tech rs_alien_hovernet_xenobiology
 	provides	""
 	time	90
 	researched	false
+	needscollected	true
 }
 
 // CYBORG ORTNOK
@@ -1162,6 +1178,7 @@ tech rs_alien_cyborg_ortnok_notes
 	provides	""
 	time	0
 	researched	false
+	needscollected	true
 
 	// TODO should come from alien-definition and be a complete model
 	//mdl_top	models/aliens/ortnok/body01.md2
@@ -1177,6 +1194,7 @@ tech rs_alien_cyborg_ortnok_autopsy
 	provides	""
 	time	60
 	researched	false
+	needscollected	true
 
 	//TODO: autopsy image
 }
@@ -1191,4 +1209,5 @@ tech rs_alien_cyborg_ortnok_xenobiology
 	provides	""
 	time	90
 	researched	false
+	needscollected	true
 }

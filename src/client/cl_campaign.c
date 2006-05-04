@@ -1,5 +1,6 @@
 // cl_campaign.c -- single player campaign control
 
+#include "../qcommon/qcommon.h"
 #include "client.h"
 
 // public vars
@@ -2170,8 +2171,10 @@ TODO: put them into the labs
 ======================*/
 void CL_CollectAliens( mission_t* mission )
 {
-	int i;
-	le_t *le;
+	int i, j;
+	le_t *le = NULL;
+	teamDesc_t *td = NULL;
+	technology_t *tech = NULL;
 
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 	{
@@ -2182,15 +2185,29 @@ void CL_CollectAliens( mission_t* mission )
 		{
 			if ( le->state & STATE_STUN ) {
 				/* a stunned actor */
-				// TODO: get correct research item(s)
-				// TODO: increase 'collected' status of the research item(s)
-				// TODO: ??? make alien team researchable
-				// TODO: ??? mission->alienTeam
+				for ( j = 0, td = teamDesc ; j < numTeamDesc; j++ ) {
+					if ( !Q_strncmp( td->id, selMis->def->alienTeam, MAX_VAR ) ) {
+						// get interrogation tech
+						tech = RS_GetTechByID(td->interrogation);
+						if ( tech ) { tech->statusCollected++; }
+						// get interrogation_commander tech
+						tech = RS_GetTechByID(td->interrogation_com);
+						if ( tech ) { tech->statusCollected++; }
+						// TODO: get xenobiology tech
+						tech = RS_GetTechByID(td->xenobiology);
+						if ( tech ) { tech->statusCollected++; }
+					}
+				}
 			} else
 			if ( le->HP <= 0 ) {
 				/* a death actor */
-				// TODO: get correct research item(s)
-				// TODO: increase 'collected' status of the research item(s)
+				for ( j = 0, td = teamDesc ; j < numTeamDesc; j++ ) {
+					if ( !Q_strncmp( td->id, selMis->def->alienTeam, MAX_VAR ) ) {
+						// get autopsy tech
+						tech = RS_GetTechByID(td->autopsy);
+						if ( tech ) { tech->statusCollected++; }
+					}
+				}
 			}
 		}
 	}
