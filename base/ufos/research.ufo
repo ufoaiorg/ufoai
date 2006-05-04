@@ -912,6 +912,8 @@ tech rs_craft_ufo_big
 // Aliens
 //========================
 
+// ORTNOK
+
 tech rs_alien_ortnok_notes
 {
 	type	alien
@@ -965,6 +967,8 @@ interrogation "rs_alien_ortnok_interrogation"
 	researched	false
 }
 
+// ORTNOK MEDIUM .. TODO:what's that?
+
 tech rs_alien_ortnok_medium
 {
 	type	tech
@@ -980,6 +984,8 @@ tech rs_alien_ortnok_medium
 	// TODO should come from alien-definition and be a complete model
 	mdl_top	models/aliens/ortnok_medium/body01.md2
 }
+
+// ANTAREAN
 
 tech rs_alien_antarean_notes
 {
@@ -1004,13 +1010,176 @@ tech rs_alien_antarean_autopsy
 
 	requires	nothing
 	provides	""
-	time	0
+	time	60
 	researched	false
 
 	// TODO should come from alien-definition and be a complete model
 	mdl_top	models/aliens/blue/body01.md2
 }
 
-//xenobiology "rs_alien_antarean_xenobiology"
-//interrogation "rs_alien_antarean_interrogation"
-//interrogation_com "rs_alien_antarean_interrogation_commander"
+tech rs_alien_antarean_xenobiology
+{
+	type	alien
+	description	"_antarean_xenobiology_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	90
+	researched	false
+}
+
+interrogation "rs_alien_antarean_interrogation"
+{
+	type	alien
+	description	"_antarean_interrogation_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	60
+	researched	false
+}
+
+interrogation "rs_alien_antarean_interrogation_commander""
+{
+	type	alien
+	description	"_antarean_interrogation_commander_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	240
+	researched	false
+}
+
+// SHEVAAR
+
+tech rs_alien_shevaar_notes
+{
+	type	alien
+	description	"_shevaar_notes_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	0
+	researched	false
+
+	// TODO should come from alien-definition and be a complete model
+	//mdl_top	models/aliens/blue/body01.md2
+}
+
+tech rs_alien_shevaar_autopsy
+{
+	type	alien
+	description	"_hevaar_autopsy_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	60
+	researched	false
+
+	// TODO should come from alien-definition and be a complete model
+	//mdl_top	models/aliens/blue/body01.md2
+}
+
+tech rs_alien_shevaar_xenobiology
+{
+	type	alien
+	description	"_shevaar_xenobiology_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	90
+	researched	false
+}
+
+// HOVERNET
+
+tech rs_alien_hovernet_notes
+{
+	type	alien
+	description	"_hovernet_notes_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	0
+	researched	false
+
+	// TODO should come from alien-definition and be a complete model
+	//mdl_top	models/aliens/blue/body01.md2
+}
+
+tech rs_alien_hovernet_autopsy
+{
+	type	alien
+	description	"_hovernet_autopsy_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	60
+	researched	false
+
+	// TODO should come from alien-definition and be a complete model
+	//mdl_top	models/aliens/blue/body01.md2
+}
+
+tech rs_alien_hovernet_xenobiology
+{
+	type	alien
+	description	"_hovernet_xenobiology_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	90
+	researched	false
+}
+
+// CYBORG ORTNOK
+
+tech rs_alien_cyborg_ortnok_notes
+{
+	type	alien
+	description	"_cyborg_ortnok_notes_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	0
+	researched	false
+
+	// TODO should come from alien-definition and be a complete model
+	//mdl_top	models/aliens/ortnok/body01.md2
+}
+
+tech rs_alien_cyborg_ortnok_autopsy
+{
+	type	alien
+	description	"_cyborg_ortnok_autopsy_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	60
+	researched	false
+
+	//TODO: autopsy image
+}
+
+tech rs_alien_cyborg_ortnok_xenobiology
+{
+	type	alien
+	description	"_cyborg_ortnok_xenobiology_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	90
+	researched	false
+}
