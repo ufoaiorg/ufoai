@@ -120,7 +120,7 @@ void R_MarkLights (dlight_t *light, int bit, mnode_t *node)
 	cplane_t	*splitplane;
 	float		dist;
 	msurface_t	*surf;
-	int			i;
+	int		i, sidebit;
 
 	if (node->contents != -1)
 		return;
@@ -144,6 +144,16 @@ void R_MarkLights (dlight_t *light, int bit, mnode_t *node)
 	surf = rTiles[0]->surfaces + node->firstsurface;
 	for (i=0 ; i<node->numsurfaces ; i++, surf++)
 	{
+		//Discoloda
+		dist = DotProduct (light->origin, surf->plane->normal) - surf->plane->dist;
+		if (dist >= 0)
+			sidebit = 0;
+		else
+			sidebit = SURF_PLANEBACK;
+
+		if ( (surf->flags & SURF_PLANEBACK) != sidebit )
+			continue;
+
 		if (surf->dlightframe != r_dlightframecount)
 		{
 			surf->dlightbits = 0;
