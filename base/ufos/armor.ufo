@@ -7,6 +7,7 @@ damagetypes standard
 	laser
 	plasma
 	tachyon
+	stun
 }
 
 item light
@@ -24,23 +25,25 @@ item light
 
 	protection
 	{
-		normal   20
-		blast    40
-		fire     5
-		shock    0
-		laser    5
-		plasma   30
-		tachyon  1
+		normal	20
+		blast	40
+		fire	5
+		shock	0
+		laser	5
+		plasma	30
+		tachyon	1
+		stun	20
 	}
 	hardness
 	{
-		normal   40
-		blast    60
-		fire     30
-		shock    80
-		laser    120
-		plasma   50
-		tachyon  800
+		normal	40
+		blast	60
+		fire	30
+		shock	80
+		laser	120
+		plasma	50
+		tachyon	800
+		stun	40
 	}
 }
 
@@ -59,23 +62,25 @@ item medium
 
 	protection
 	{
-		normal   35
-		blast    55
-		fire     30
-		shock    5
-		laser    20
-		plasma   50
-		tachyon  1
+		normal	35
+		blast	55
+		fire	30
+		shock	5
+		laser	20
+		plasma	50
+		tachyon	1
+		stun	35
 	}
 	hardness
 	{
-		normal   60
-		blast    90
-		fire     100
-		shock    110
-		laser    160
-		plasma   60
-		tachyon  1200
+		normal	60
+		blast	90
+		fire	100
+		shock	110
+		laser	160
+		plasma	60
+		tachyon	1200
+		stun	60
 	}
 }
 

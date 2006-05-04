@@ -905,6 +905,6 @@ item stunrod
 		time	20
 		damage	"75 7"
 		stun		true
-		dmgtype normal
+		dmgtype stun
 	}
 }

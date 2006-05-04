@@ -128,7 +128,7 @@ mission construction
 
 mission crash
 {
-	text		"_We are going put you in charge of a ;mission of utmost importance. We've ;shot down one of their crafts. Get ;there before the E.T.'s do. (difficult);"
+	text		"_We are going put you in charge of a\mission of utmost importance. We've\shot down one of their crafts. Get\there before the E.T.'s do. (difficult)\"
 	map		crashsite05
 	music		mission4
 	pos		"195 205"
@@ -143,7 +143,7 @@ mission crash
 
 mission excavation
 {
-	text		"_Some aliens have escaped from the ;mine, and their tracks lead south, ;towards a nearby excavation site. ;Protect that site at all cost.;"
+	text		"_Some aliens have escaped from the\mine, and their tracks lead south,\towards a nearby excavation site.\Protect that site at all cost.\"
 	map		excavation06
 	music		mission4
 	pos		"310 400"
@@ -353,7 +353,7 @@ mission mine
 //no day and night
 mission mine2
 {
-	text		"_There are rumors of a mine being;overrun by aliens. Altough this ;source of information is doubtful,;you'll need to investigate.;"
+	text		"_There are rumors of a mine being\overrun by aliens. Altough this\source of information is doubtful,\you'll need to investigate.\"
 	map		mine
 	music		mission4
 	pos		"315 398"
@@ -439,7 +439,7 @@ mission or_tabelbala
 //no day and night
 mission pdi
 {
-	text		"_Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		pdi08
 	music		mission3
 	pos		"308 412"
@@ -455,7 +455,7 @@ mission pdi
 //no day and night
 mission spedition
 {
-	text		"_Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		spedition
 	music		mission3
 	pos		"308 412"
@@ -471,7 +471,7 @@ mission spedition
 //no day and night
 mission stadium
 {
-	text		"_Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		stadium06
 	music		mission3
 	pos		"308 412"
@@ -487,7 +487,7 @@ mission stadium
 //no day and night
 mission subway
 {
-	text		"_Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		subway07
 	music		mission3
 	pos		"308 412"
@@ -503,7 +503,7 @@ mission subway
 //no day and night
 mission terrain
 {
-	text		"_Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		terrain08
 	music		mission3
 	pos		"308 412"
@@ -519,7 +519,7 @@ mission terrain
 //no day and night
 mission tower
 {
-	text		"_Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		tower06
 	music		mission3
 	pos		"308 412"
@@ -552,7 +552,7 @@ mission transport
 //no day and night
 mission tropic_ump
 {
-	text		"_Damn it, you've let some of them get ;away again! Reequip your squad and ;get after them!;"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		"+tropicd"
 	music		mission3
 	pos		"308 412"
