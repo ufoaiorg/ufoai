@@ -26,7 +26,7 @@
 //			The plasrifle itself will not be researchable until the plasmpistol has been researched.
 //		* "initial" - You can research (not produce) this tech from the beginning.
 //		* "nothing" - Similar to "initial", but you need to collect at least one item (that requires it directly or indirectly) to be able to research this.
-//		* everything else - a "tech" item.
+//		* everything else -> a "tech" item.
 //	provides yyy
 //		The item (only one allowed) name (yyy) in the correct ufo file or data-structure (e.g inventory).
 //		The given names are _not_ "tech" items.
@@ -926,6 +926,7 @@ tech rs_craft_ufo_big
 tech rs_alien_ortnok_notes
 {
 	type	alien
+	name	"_Ortnok - Combat notes"
 	description	"_ortnok_notes_txt"
 	up_chapter	aliens
 
@@ -942,6 +943,7 @@ tech rs_alien_ortnok_notes
 tech rs_alien_ortnok_autopsy
 {
 	type	alien
+	name	"_Ortnok - Autopsy"
 	description	"_ortnok_autopsy_txt"
 	up_chapter	aliens
 
@@ -957,6 +959,7 @@ tech rs_alien_ortnok_autopsy
 tech rs_alien_ortnok_xenobiology
 {
 	type	alien
+	name	"_Ortnok - Xenobiology"
 	description	"_ortnok_xenobiology_txt"
 	up_chapter	aliens
 
@@ -970,6 +973,7 @@ tech rs_alien_ortnok_xenobiology
 tech rs_alien_ortnok_interrogation
 {
 	type	alien
+	name	"_Ortnok - Interrogation"
 	description	"_ortnok_interrogation_txt"
 	up_chapter	aliens
 
@@ -1004,6 +1008,7 @@ tech rs_alien_ortnok_medium
 tech rs_alien_antarean_notes
 {
 	type	alien
+	name	"_Antarean - Combat notes"
 	description	"_antarean_notes_txt"
 	up_chapter	aliens
 
@@ -1020,6 +1025,7 @@ tech rs_alien_antarean_notes
 tech rs_alien_antarean_autopsy
 {
 	type	alien
+	name	"_Antarean - Autopsy"
 	description	"_antarean_autopsy_txt"
 	up_chapter	aliens
 
@@ -1036,6 +1042,7 @@ tech rs_alien_antarean_autopsy
 tech rs_alien_antarean_xenobiology
 {
 	type	alien
+	name	"_Antarean - Xenobiology"
 	description	"_antarean_xenobiology_txt"
 	up_chapter	aliens
 
@@ -1049,6 +1056,7 @@ tech rs_alien_antarean_xenobiology
 tech rs_alien_antarean_interrogation
 {
 	type	alien
+	name	"_Antarean - Interrogation"
 	description	"_antarean_interrogation_txt"
 	up_chapter	aliens
 
@@ -1062,6 +1070,7 @@ tech rs_alien_antarean_interrogation
 tech rs_alien_antarean_interrogation_commander
 {
 	type	alien
+	name	"_Antarean - Commander interrogation"
 	description	"_antarean_interrogation_commander_txt"
 	up_chapter	aliens
 
@@ -1077,6 +1086,7 @@ tech rs_alien_antarean_interrogation_commander
 tech rs_alien_shevaar_notes
 {
 	type	alien
+	name	"_Shevaar - Combat notes"
 	description	"_shevaar_notes_txt"
 	up_chapter	aliens
 
@@ -1093,6 +1103,7 @@ tech rs_alien_shevaar_notes
 tech rs_alien_shevaar_autopsy
 {
 	type	alien
+	name	"_Shevaar - Autopsy"
 	description	"_hevaar_autopsy_txt"
 	up_chapter	aliens
 
@@ -1109,6 +1120,7 @@ tech rs_alien_shevaar_autopsy
 tech rs_alien_shevaar_xenobiology
 {
 	type	alien
+	name	"_Shevaar - Xenobiology"
 	description	"_shevaar_xenobiology_txt"
 	up_chapter	aliens
 
@@ -1124,6 +1136,7 @@ tech rs_alien_shevaar_xenobiology
 tech rs_alien_hovernet_notes
 {
 	type	alien
+	name	"_Hovernet - Combat notes"
 	description	"_hovernet_notes_txt"
 	up_chapter	aliens
 
@@ -1140,6 +1153,7 @@ tech rs_alien_hovernet_notes
 tech rs_alien_hovernet_autopsy
 {
 	type	alien
+	name	"_Hovernet - wreck research"
 	description	"_hovernet_autopsy_txt"
 	up_chapter	aliens
 
@@ -1156,6 +1170,7 @@ tech rs_alien_hovernet_autopsy
 tech rs_alien_hovernet_xenobiology
 {
 	type	alien
+	name	"_Hovernet - design"
 	description	"_hovernet_xenobiology_txt"
 	up_chapter	aliens
 
@@ -1171,6 +1186,7 @@ tech rs_alien_hovernet_xenobiology
 tech rs_alien_cyborg_ortnok_notes
 {
 	type	alien
+	name	"_Cyborg Ortnok - Combat notes"
 	description	"_cyborg_ortnok_notes_txt"
 	up_chapter	aliens
 
@@ -1187,6 +1203,7 @@ tech rs_alien_cyborg_ortnok_notes
 tech rs_alien_cyborg_ortnok_autopsy
 {
 	type	alien
+	name	"_Cyborg Ortnok - Autopsy"
 	description	"_cyborg_ortnok_autopsy_txt"
 	up_chapter	aliens
 
@@ -1202,6 +1219,7 @@ tech rs_alien_cyborg_ortnok_autopsy
 tech rs_alien_cyborg_ortnok_xenobiology
 {
 	type	alien
+	name	"_Cyborg Ortnok - Xenobiology"
 	description	"_cyborg_ortnok_xenobiology_txt"
 	up_chapter	aliens
 
