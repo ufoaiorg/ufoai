@@ -102,6 +102,7 @@ void CL_ActorGlobalCVars( void )
 			sprintf( str, "%i", le->maxHP ); Cvar_Set( va( "mn_hpmax%i", i ), str );
 			sprintf( str, "%i", le->TU );    Cvar_Set( va( "mn_tu%i", i ), str );
 			sprintf( str, "%i", le->maxTU ); Cvar_Set( va( "mn_tumax%i", i ), str );
+			sprintf( str, "%i", le->STUN );    Cvar_Set( va( "mn_stun%i", i ), str );
 		}
 		else
 		{
@@ -110,6 +111,7 @@ void CL_ActorGlobalCVars( void )
 			Cvar_Set( va( "mn_hpmax%i", i ), "1" );
 			Cvar_Set( va( "mn_tu%i", i ), "0" );
 			Cvar_Set( va( "mn_tumax%i", i ), "1" );
+			Cvar_Set( va( "mn_stun%i", i ), "0" );
 		}
 	}
 }
@@ -243,6 +245,7 @@ void CL_ActorUpdateCVars( void )
 		Cvar_Set( "mn_moralemax", va( "%i", selActor->maxMorale ) );
 		Cvar_Set( "mn_hp", va( "%i", selActor->HP ) );
 		Cvar_Set( "mn_hpmax", va( "%i", selActor->maxHP ) );
+		Cvar_Set( "mn_stun", va( "%i", selActor->STUN ) );
 
 		// animation and weapons
 		name = re.AnimGetName( &selActor->as, selActor->model1 );
@@ -909,6 +912,33 @@ void CL_ActorStandCrouch( void )
 
 /*
 =================
+CL_ActorStun
+
+he will be handled as a dead actor
+but afterwards in CL_CollectAliens
+we only collect aliens with STATE_STUN
+remember: we can do this because
+STATE_STUN is 0x43 and STATE_DEAD is 0x03
+(checking for STATE_DEAD is also true when
+STATE_STUN was set)
+
+NOTE: Do we really need this as a script command?
+	currently there is no binding - but who knows
+=================
+*/
+void CL_ActorStun( void )
+{
+	if ( !CL_CheckAction() )
+		return;
+
+	// send message to server
+	MSG_WriteFormat( &cls.netchan.message, "bbss",
+		clc_action, PA_STATE, selActor->entnum, selActor->state ^ STATE_STUN );
+}
+
+
+/*
+=================
 CL_ActorToggleReaction
 =================
 */
@@ -1055,6 +1085,7 @@ void CL_ActorDie( sizebuf_t *sb )
 
 	// set relevant vars
 	le->HP = 0;
+	le->STUN = 0;
 	le->state = MSG_ReadByte( sb );
 
 	// play animation

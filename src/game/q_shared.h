@@ -844,6 +844,7 @@ typedef struct fireDef_s
 	float	splrad;
 	int		weaponSkill;
 	int		irgoggles;
+	int		stun;
 } fireDef_t;
 
 typedef struct objDef_s
@@ -1062,12 +1063,14 @@ typedef enum {
 #define STATE_DEAD			0x0003		// 0 alive, 1-3 different deaths
 #define STATE_CROUCHED		0x0004
 #define STATE_PANIC			0x0008
+
 #define STATE_RAGE			0x0010		// pretty self-explaining
 #define STATE_INSANE		0x0030
+#define STATE_STUN		0x0043		// stunned - includes death
 // private
 #define STATE_REACTION		0x0100
 #define STATE_SHAKEN		0x0300		// forced reaction fire
-#define STATE_STUN		0x1000		// stunned
+
 
 
 #define	ANGLE2SHORT(x)	((int)((x)*65536/360) & 65535)

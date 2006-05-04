@@ -403,6 +403,7 @@ void SP_player_start (edict_t *ent)
 	// maybe there are already the max soldiers allowed per team connected
 	if ( (int)(maxsoldiers->value) > level.num_spawnpoints[ent->team] )
 	{
+		ent->STUN = 100;
 		ent->HP = 100;
 		ent->AP = 100;
 		G_ActorSpawn( ent );
@@ -433,6 +434,7 @@ void SP_human_start (edict_t *ent)
 	// only the first time
 	if ( !ent->chr.assigned_missions )
 	{
+		ent->STUN = 100;
 		ent->HP = 100;
 		ent->AP = 100;
 	}
@@ -455,6 +457,7 @@ void SP_alien_start (edict_t *ent)
 	}
 	ent->team = TEAM_ALIEN;
 	// set stats
+	ent->STUN = 100;
 	ent->HP = 100;
 	ent->AP = 100;
 
@@ -469,6 +472,7 @@ void SP_civilian_start (edict_t *ent)
 {
 	ent->team = TEAM_CIVILIAN;
 	// set stats
+	ent->STUN = 1;
 	ent->HP = 100;
 	ent->AP = 100;
 	G_ActorSpawn( ent );

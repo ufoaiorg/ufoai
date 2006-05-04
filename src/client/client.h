@@ -565,6 +565,7 @@ typedef struct le_s {
 	int 		TU, maxTU;
 	int 		morale, maxMorale;
 	int 		HP, maxHP;
+	int 		STUN; /* 0 stunned - state STATE_STUN */
 	int 		state;
 
 	float		angles[3];
@@ -699,6 +700,7 @@ void CL_ActorReload( int hand );
 void CL_ActorTurnMouse( void );
 void CL_ActorDoTurn( sizebuf_t *sb );
 void CL_ActorStandCrouch( void );
+void CL_ActorStun( void );
 void CL_ActorToggleReaction( void );
 void CL_BuildForbiddenList( void );
 void CL_ActorStartMove( le_t *le, pos3_t to );
@@ -1373,6 +1375,7 @@ void CL_AircraftSelect( void );
 void CL_NewAircraft_f ( void );
 void CL_NewAircraft ( base_t* base, char* name );
 void CL_AircraftInit( void );
+void CL_CollectAliens( void );
 void CL_CollectItems( int won );
 void CL_UpdateCharacterStats ( int won );
 void CL_UpdateCredits ( int credits );

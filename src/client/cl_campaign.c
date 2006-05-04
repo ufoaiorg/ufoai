@@ -2160,6 +2160,34 @@ void CL_GameAbort( void )
 
 // ===========================================================
 
+/*======================
+CL_CollectAliens
+
+loop through all entities and put the ones that are stunned
+as living aliens into our labs
+
+TODO: put them into the labs
+======================*/
+void CL_CollectAliens( void )
+{
+	int i;
+	le_t *le;
+
+	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
+	{
+		if ( !le->inuse )
+			continue;
+		// a stunned actor
+		if ( le->type == ET_ACTOR && (le->state & STATE_STUN) )
+		{
+			// TODO
+		}
+	}
+}
+
+/*======================
+CL_CollectItemAmmo
+======================*/
 void CL_CollectItemAmmo( invList_t *weapon , int left_hand )
 {
 	if (weapon->item.t == NONE ||
@@ -2176,6 +2204,13 @@ void CL_CollectItemAmmo( invList_t *weapon , int left_hand )
 	}
 }
 
+/*======================
+CL_CollectItems
+
+collects all items from battlefield (if we've won the match)
+and put them back to inventory. Calls CL_CollectItemAmmo which
+does the real collecting
+======================*/
 void CL_CollectItems( int won )
 {
 	int i;

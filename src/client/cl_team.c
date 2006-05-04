@@ -1197,6 +1197,10 @@ void CL_ParseResults( sizebuf_t *buf )
 		// loot the battlefield
 		CL_CollectItems( winner == we );
 
+		// check for stunned aliens
+		if ( winner == we )
+			CL_CollectAliens();
+
 		// update stats
 		CL_UpdateCharacterStats( winner == we );
 

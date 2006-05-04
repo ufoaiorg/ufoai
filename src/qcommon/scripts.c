@@ -89,6 +89,7 @@ value_t fdps[] =
 	{ "splrad",		V_FLOAT,	FDOFS( splrad ) },
 	{ "dmgtype",	V_DMGTYPE,	FDOFS( dmgtype ) },
 	{ "irgoggles",	V_BOOL,		FDOFS( irgoggles ) },
+	{ "stun",	V_BOOL,		FDOFS( stun ) },
 
 	{ NULL,	0, 0 }
 };

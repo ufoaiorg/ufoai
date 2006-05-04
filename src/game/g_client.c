@@ -18,6 +18,8 @@
 /*
 =================
 G_TeamToPM
+
+generates the player mask
 =================
 */
 int G_TeamToPM( int team )
@@ -38,6 +40,8 @@ int G_TeamToPM( int team )
 /*
 =================
 G_VisToPM
+
+converts vis mask to player mask
 =================
 */
 int G_VisToPM( int vis_mask )
@@ -66,6 +70,7 @@ void G_SendStats( edict_t *ent )
 	gi.WriteShort( ent->number );
 	gi.WriteByte( ent->TU );
 	gi.WriteByte( ent->HP );
+	gi.WriteByte( ent->STUN );
 	gi.WriteByte( ent->morale );
 }
 
@@ -1526,6 +1531,95 @@ void G_Damage( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 
 /*
 =================
+G_DamageStun
+=================
+*/
+void G_DamageStun( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
+{
+	// actors don't die or don't get stunned again
+	if ( ent->state & STATE_DEAD )
+		return;
+
+	// apply difficulty settings
+	if ( sv_maxclients->value == 1 )
+	{
+		if ( attacker->team == TEAM_ALIEN && ent->team < TEAM_ALIEN )
+			damage *= pow( 1.3,  difficulty->value );
+		else if ( attacker->team < TEAM_ALIEN && ent->team == TEAM_ALIEN )
+			damage *= pow( 1.3, -difficulty->value );
+	}
+
+	// apply armor effects
+	if ( damage > 0 && ent->i.c[gi.csi->idArmor] )
+	{
+		objDef_t *ad;
+
+		ad = &gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t];
+
+		if ( ad->protection[dmgtype] )
+		{
+			if ( ad->protection[dmgtype] > 0 )
+				damage *= 1.0 - ad->protection[dmgtype] * ent->AP * 0.0001;
+			else
+				damage *= 1.0 - ad->protection[dmgtype] * 0.01;
+		}
+
+		if ( ad->hardness[dmgtype] )
+		{
+			int armorDamage;
+			armorDamage = 100 * damage / ad->hardness[dmgtype];
+			ent->AP = armorDamage < ent->AP ? ent->AP - armorDamage : 0;
+		}
+	}
+
+	if ( ent->STUN <= damage )
+	{
+		// die
+		ent->STUN = 0;
+		ent->state |= STATE_STUN;
+		VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD );
+		gi.linkentity( ent );
+		level.num_alive[ent->team]--;
+		level.num_kills[attacker->team][ent->team]++; // count the stunned ones as killed ones
+
+		// send death
+		gi.AddEvent( G_VisToPM( ent->visflags ), EV_ACTOR_DIE );
+		gi.WriteShort( ent->number );
+		gi.WriteByte( ent->state );
+
+		// count score
+		if ( ent->team == TEAM_CIVILIAN )
+			attacker->chr.kills[KILLED_CIVILIANS]++;
+		else if ( attacker->team == ent->team )
+			attacker->chr.kills[KILLED_TEAM]++;
+		else
+			attacker->chr.kills[KILLED_ALIENS]++;
+
+		// apply morale changes
+		G_Morale( ML_DEATH, ent, attacker, damage );
+
+		// handle inventory
+		G_InventoryToFloor( ent );
+
+		// check if the player appears/perishes, seen from other teams
+		G_CheckVis( ent, true );
+
+		// calc new vis for this player
+		G_CheckVisTeam( ent->team, NULL, false );
+
+		// check for win conditions
+		G_CheckEndGame();
+	} else {
+		// hit
+		ent->STUN -= damage;
+		if ( damage > 0 ) G_Morale( ML_WOUND, ent, attacker, damage );
+		G_SendStats( ent );
+	}
+}
+
+
+/*
+=================
 G_SplashDamage
 =================
 */
@@ -1565,6 +1659,12 @@ void G_SplashDamage( edict_t *ent, fireDef_t *fd, vec3_t impact )
 		{
 			G_AppearPerishEvent( G_VisToPM( ~check->visflags ), 1, check );
 			check->visflags |= ~check->visflags;
+			continue;
+		}
+		else if ( fd->stun && check->type == ET_ACTOR )
+		{
+			damage = (fd->spldmg[0] + fd->spldmg[1] * crand()) * (1.0 - dist / fd->splrad);
+			G_DamageStun( check, fd->dmgtype, damage, ent );
 			continue;
 		}
 
@@ -2209,6 +2309,7 @@ void G_ClientTeamInfo( player_t *player )
 
 			ent->HP = GET_HP( ent->chr.skills[ABILITY_POWER] );
 			ent->AP = 100;
+			ent->STUN = 100;
 			ent->morale = GET_MORALE( ent->chr.skills[ABILITY_MIND] );
 
 			// inventory
@@ -2238,6 +2339,9 @@ void G_ClientTeamInfo( player_t *player )
 			gi.ReadShort();
 			for ( k = 0; k < 4; k++ ) gi.ReadString();
 			gi.ReadByte();
+			for (k = 0; k<SKILL_NUM_TYPES; k++) gi.ReadByte();
+			for (k = 0; k<KILLED_NUM_TYPES; k++) gi.ReadLong();
+			gi.ReadLong();
 			while ( gi.ReadByte() != NONE );
 		}
 

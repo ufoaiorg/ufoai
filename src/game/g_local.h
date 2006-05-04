@@ -446,6 +446,7 @@ struct edict_s
 	int			TU; // remaining timeunits
 	int			HP; // remaining healthpoints
 	int			AP;
+	int			STUN;
 	int			morale; // the current morale value
 
 	int			state; // the player state - dead, shaken....
