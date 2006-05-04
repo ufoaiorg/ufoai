@@ -874,22 +874,22 @@ item bolterrifle_ammo
 }
 
 // =======================
-// BOLTERRIFLE
+// STUN ROD
 // =======================
 item stunrod
 {
 	name		"_Stunrod"
-	model		weapons/stunrod/stunrod
-	weapon		true
+	model	weapons/stunrod/stunrod
+	weapon	true
 	type		melee
 	category	2
-	shape		"0 0 2 1"
-	center		"-1 0 3"
+	shape	"0 0 2 1"
+	center	"-1 0 3"
 	scale		1.0
 	price		3000
-	buytype		2
-	ammo		1
-	thrown		false
+	buytype	2
+	ammo	1
+	thrown	false
 
 	primary
 	{
@@ -897,13 +897,14 @@ item stunrod
 		skill	close
 		projtl	null
 		impact	null
-		hitbody blood
+		hitbody	blood
 		firesnd	misc/klonk03.wav
 		speed	0
 		range	55
 		shots	1
-		time	8
-		damage	"35 7"
+		time	20
+		damage	"75 7"
+		stun		true
 		dmgtype normal
 	}
 }
