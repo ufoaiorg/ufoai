@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -36,7 +36,7 @@ char *svc_strings[256] =
 	"svc_stufftext",
 	"svc_serverdata",
 	"svc_configstring",
-	"svc_spawnbaseline",	
+	"svc_spawnbaseline",
 	"svc_centerprint",
 	"svc_download",
 	"svc_playerinfo",
@@ -66,7 +66,7 @@ char *ev_format[] =
 	"bb",				// EV_ACTOR_SHOOT_HIDDEN
 	"sbbpp",			// EV_ACTOR_THROW
 	"!sb",				// EV_ACTOR_DIE
-	"!sbbb",			// EV_ACTOR_STATS
+	"!sbbbb",			// EV_ACTOR_STATS
 	"!ss",				// EV_ACTOR_STATECHANGE
 
 	"!s&",				// EV_INV_ADD
@@ -183,7 +183,7 @@ int impactTime;
 
 void CL_DownloadFileName(char *dest, int destlen, char *fn)
 {
-	if (strncmp(fn, "players", 7) == 0)
+	if (Q_strncmp(fn, "players", 7) == 0)
 		Com_sprintf (dest, destlen, "%s/%s", BASEDIRNAME, fn);
 	else
 		Com_sprintf (dest, destlen, "%s/%s", FS_Gamedir(), fn);
@@ -197,10 +197,10 @@ Returns true if the file exists, otherwise it attempts
 to start a download from the server.
 ===============
 */
-qboolean	CL_CheckOrDownloadFile (char *filename)
+qboolean CL_CheckOrDownloadFile (char *filename)
 {
-//	FILE *fp;
-//	char	name[MAX_OSPATH];
+	FILE *fp;
+	char	name[MAX_OSPATH];
 
 	if (strstr (filename, ".."))
 	{
@@ -213,7 +213,6 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 		return true;
 	}
 
-/*
 	strcpy (cls.downloadname, filename);
 
 	// download to a temp name, and only rename
@@ -223,12 +222,11 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 	COM_StripExtension (cls.downloadname, cls.downloadtempname);
 	strcat (cls.downloadtempname, ".tmp");
 
-//ZOID
 	// check to see if we already have a tmp for this file, if so, try to resume
 	// open the file if not opened yet
 	CL_DownloadFileName(name, sizeof(name), cls.downloadtempname);
 
-//	FS_CreatePath (name);
+	FS_CreatePath (name);
 
 	fp = fopen (name, "r+b");
 	if (fp) { // it exists
@@ -252,9 +250,7 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 
 	cls.downloadnumber++;
 
-	return false;*/
-
-	return true;
+	return false;
 }
 
 /*
@@ -445,7 +441,7 @@ void CL_ParseServerData (void)
 	extern cvar_t	*fs_gamedirvar;
 	char	*str;
 	int		i;
-	
+
 	Com_DPrintf ("Serverdata packet received.\n");
 	//
 	// wipe the client_state_t struct
@@ -514,7 +510,7 @@ void CL_ParseConfigString (void)
 
 	strcpy (cl.configstrings[i], s);
 
-	// do something apropriate 
+	// do something apropriate
 
 	if (i >= CS_LIGHTS && i < CS_LIGHTS+MAX_LIGHTSTYLES)
 		CL_SetLightstyle (i - CS_LIGHTS);
@@ -567,36 +563,36 @@ CL_ParseStartSoundPacket
 */
 void CL_ParseStartSoundPacket(void)
 {
-    vec3_t  pos_v;
+	vec3_t  pos_v;
 	float	*pos;
-    int 	channel, ent;
-    int 	sound_num;
-    float 	volume;
-    float 	attenuation;  
+	int 	channel, ent;
+	int 	sound_num;
+	float 	volume;
+	float 	attenuation;
 	int		flags;
 	float	ofs;
 
 	flags = MSG_ReadByte (&net_message);
 	sound_num = MSG_ReadByte (&net_message);
 
-    if (flags & SND_VOLUME)
+	if (flags & SND_VOLUME)
 		volume = MSG_ReadByte (&net_message) / 255.0;
 	else
 		volume = DEFAULT_SOUND_PACKET_VOLUME;
-	
-    if (flags & SND_ATTENUATION)
+
+	if (flags & SND_ATTENUATION)
 		attenuation = MSG_ReadByte (&net_message) / 64.0;
 	else
-		attenuation = DEFAULT_SOUND_PACKET_ATTENUATION;	
+		attenuation = DEFAULT_SOUND_PACKET_ATTENUATION;
 
-    if (flags & SND_OFFSET)
+	if (flags & SND_OFFSET)
 		ofs = MSG_ReadByte (&net_message) / 1000.0;
 	else
 		ofs = 0;
 
 	if (flags & SND_ENT)
 	{	// entity reletive
-		channel = MSG_ReadShort(&net_message); 
+		channel = MSG_ReadShort(&net_message);
 		ent = channel>>3;
 		if (ent > MAX_EDICTS)
 			Com_Error (ERR_DROP,"CL_ParseStartSoundPacket: ent = %i", ent);
@@ -613,7 +609,7 @@ void CL_ParseStartSoundPacket(void)
 	if (flags & SND_POS)
 	{	// positioned in space
 		MSG_ReadPos (&net_message, pos_v);
- 
+
 		pos = pos_v;
 	}
 	else	// use entity number
@@ -623,7 +619,7 @@ void CL_ParseStartSoundPacket(void)
 		return;
 
 	S_StartSound (pos, ent, channel, cl.sound_precache[sound_num], volume, attenuation, ofs);
-}       
+}
 
 
 /*
@@ -747,18 +743,18 @@ void CL_EntPerish( sizebuf_t *sb )
 
 	le = LE_Get( MSG_ReadShort( sb ) );
 
-	if ( !le ) 
+	if ( !le )
 	{
 		Com_Printf( "Delete request ignored... LE not found\n" );
 		return;
 	}
 
 	// count spotted aliens
-	if ( le->type == ET_ACTOR && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN ) 
+	if ( le->type == ET_ACTOR && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN )
 		cl.numAliensSpotted--;
 
 	Com_DestroyInventory( &le->i );
-	if ( le->type == ET_ITEM ) 
+	if ( le->type == ET_ITEM )
 	{
 		le_t *actor;
 		actor = LE_Find( ET_ACTOR, le->pos );
@@ -807,17 +803,17 @@ void CL_ActorAppear( sizebuf_t *sb )
 	{
 		le = LE_Add( entnum );
 		newActor = true;
-	} else {		
+	} else {
 //		Com_Printf( "Actor appearing already visible... overwriting the old one\n" );
 		newActor = false;
 	}
 
 	// get the info
-	MSG_ReadFormat( sb, ev_format[EV_ACTOR_APPEAR], 
-		&le->team, &le->pnum, &le->pos, &le->dir, 
-		&le->right, &le->left, 
-		&modelnum1, &modelnum2, &le->skinnum, &le->state );	
-	
+	MSG_ReadFormat( sb, ev_format[EV_ACTOR_APPEAR],
+		&le->team, &le->pnum, &le->pos, &le->dir,
+		&le->right, &le->left,
+		&modelnum1, &modelnum2, &le->skinnum, &le->state );
+
 	le->type = ET_ACTOR;
 	le->modelnum1 = modelnum1;
 	le->modelnum2 = modelnum2;
@@ -834,10 +830,10 @@ void CL_ActorAppear( sizebuf_t *sb )
 	le->think = LET_StartIdle;
 
 	// count spotted aliens
-	if ( !(le->state & STATE_DEAD) && newActor && le->team != cls.team && le->team != TEAM_CIVILIAN ) 
+	if ( !(le->state & STATE_DEAD) && newActor && le->team != cls.team && le->team != TEAM_CIVILIAN )
 		cl.numAliensSpotted++;
 
-	if ( cls.state == ca_active && !(le->state & STATE_DEAD) ) 
+	if ( cls.state == ca_active && !(le->state & STATE_DEAD) )
 	{
 		// center view (if wanted)
 		if ( (int)cl_centerview->value > 1 || ((int)cl_centerview->value == 1 && cl.actTeam != cls.team) )
@@ -858,14 +854,14 @@ void CL_ActorAppear( sizebuf_t *sb )
 			}
 
 			// message
-			if ( le->team != TEAM_CIVILIAN ) 
+			if ( le->team != TEAM_CIVILIAN )
 			{
 				if ( curCampaign )
 					CL_DisplayHudMessage( _("Alien spotted!\n"), 2000 );
-				else 
+				else
 					CL_DisplayHudMessage( _("Enemy spotted!\n"), 2000 );
 			}
-			else 
+			else
 				CL_DisplayHudMessage( _("Civilian spotted!\n"), 2000 );
 		}
 	}
@@ -873,7 +869,7 @@ void CL_ActorAppear( sizebuf_t *sb )
 	// add team members to the actor list
 	CL_AddActorToTeamList( le );
 
-//	Com_Printf( "Player at (%i %i %i) -> (%f %f %f)\n", 
+//	Com_Printf( "Player at (%i %i %i) -> (%f %f %f)\n",
 //		le->pos[0], le->pos[1], le->pos[2], le->origin[0], le->origin[1], le->origin[2] );
 }
 
@@ -891,7 +887,7 @@ void CL_ActorStats( sizebuf_t *sb )
 	number = MSG_ReadShort( sb );
 	le = LE_Get( number );
 
-	if ( !le ) 
+	if ( !le )
 	{
 		Com_Printf( "Stats message ignored... LE not found\n" );
 		return;
@@ -899,8 +895,8 @@ void CL_ActorStats( sizebuf_t *sb )
 
 	le->TU = MSG_ReadByte( sb );
 	le->HP = MSG_ReadByte( sb );
-	le->morale = MSG_ReadByte( sb );
 	le->STUN = MSG_ReadByte( sb );
+	le->morale = MSG_ReadByte( sb );
 	if ( le->TU > le->maxTU ) le->maxTU = le->TU;
 	if ( le->HP > le->maxHP ) le->maxHP = le->HP;
 	if ( le->morale > le->maxMorale ) le->maxMorale = le->morale;
@@ -920,7 +916,7 @@ void CL_ActorStateChange( sizebuf_t *sb )
 	number = MSG_ReadShort( sb );
 	le = LE_Get( number );
 
-	if ( !le ) 
+	if ( !le )
 	{
 		Com_Printf( "StateChange message ignored... LE not found\n" );
 		return;
@@ -949,7 +945,7 @@ void CL_ActorShootHidden( sizebuf_t *sb )
 	fd = GET_FIREDEF( type );
 
 	// start the sound
-	if ( fd->fireSound[0] && ( ( first && fd->soundOnce ) || ( !first && !fd->soundOnce ) ) ) 
+	if ( fd->fireSound[0] && ( ( first && fd->soundOnce ) || ( !first && !fd->soundOnce ) ) )
 		S_StartLocalSound( fd->fireSound );
 }
 
@@ -968,7 +964,7 @@ int CL_BiggestItem( invList_t *ic )
 	{
 		shape = csi.ods[ic->item.t].shape;
 		size = (shape>>24 & 0xF) * (shape>>28 & 0xF);
-		if ( size > maxSize ) 
+		if ( size > maxSize )
 		{
 			max = ic->item.t;
 			maxSize = size;
@@ -987,15 +983,15 @@ CL_PlaceItem
 void CL_PlaceItem( le_t *le )
 {
 	le_t *actor;
-	int	biggest;			
+	int	biggest;
 
-//		if ( !le->state ) 
+//		if ( !le->state )
 	{
 		// search an owner
 		actor = LE_Find( ET_ACTOR, le->pos );
 		if ( actor ) actor->i.c[csi.idFloor] = le->i.c[csi.idFloor];
 	}
-	if ( le->i.c[csi.idFloor] ) 
+	if ( le->i.c[csi.idFloor] )
 	{
 		biggest = CL_BiggestItem( le->i.c[csi.idFloor] );
 		le->model1 = cl.model_weapons[biggest];
@@ -1022,7 +1018,7 @@ void CL_InvAdd( sizebuf_t *sb )
 
 	number = MSG_ReadShort( sb );
 	le = LE_Get( number );
-	if ( !le ) 
+	if ( !le )
 	{
 		Com_Printf( "InvAdd message ignored... LE not found\n" );
 		return;
@@ -1064,11 +1060,11 @@ void CL_InvDel( sizebuf_t *sb )
 	int		number;
 	int 	container, x, y;
 
-	MSG_ReadFormat( sb, ev_format[EV_INV_DEL], 
-		&number, &container, &x, &y );			
+	MSG_ReadFormat( sb, ev_format[EV_INV_DEL],
+		&number, &container, &x, &y );
 
 	le = LE_Get( number );
-	if ( !le ) 
+	if ( !le )
 	{
 		Com_Printf( "InvDel message ignored... LE not found\n" );
 		return;
@@ -1103,17 +1099,17 @@ void CL_InvAmmo( sizebuf_t *sb )
 	int		number;
 	int		ammo, container, x, y;
 
-	MSG_ReadFormat( sb, ev_format[EV_INV_AMMO], 
-		&number, &ammo, &container, &x, &y );			
+	MSG_ReadFormat( sb, ev_format[EV_INV_AMMO],
+		&number, &ammo, &container, &x, &y );
 
 	le = LE_Get( number );
-	if ( !le ) 
+	if ( !le )
 	{
 		Com_Printf( "InvAmmo message ignored... LE not found\n" );
 		return;
 	}
 
-	if ( le->team != cls.team ) 
+	if ( le->team != cls.team )
 		return;
 
 	ic = Com_SearchInInventory( &le->i, container, x, y );
@@ -1146,7 +1142,7 @@ void CL_InvAmmo( sizebuf_t *sb )
 CL_LogEvent
 =====================
 */
-void CL_LogEvent( int num ) 
+void CL_LogEvent( int num )
 {
 	FILE *logfile;
 
@@ -1164,7 +1160,7 @@ void CL_LogEvent( int num )
 CL_ParseEvent
 =====================
 */
-void CL_ParseEvent( void ) 
+void CL_ParseEvent( void )
 {
 	evTimes_t	*et, *last, *cur;
 	int			oldCount, eType;
@@ -1172,7 +1168,7 @@ void CL_ParseEvent( void )
 	int			next;
 	qboolean	now;
 
-	while ( ( eType = MSG_ReadByte( &net_message ) ) ) 
+	while ( ( eType = MSG_ReadByte( &net_message ) ) )
 	{
 		if (net_message.readcount > net_message.cursize)
 		{
@@ -1231,7 +1227,7 @@ void CL_ParseEvent( void )
 			switch ( eType )
 			{
 			case EV_ACTOR_APPEAR:
-				if ( cls.state == ca_active && cl.actTeam != cls.team ) 
+				if ( cls.state == ca_active && cl.actTeam != cls.team )
 					nextTime += 600;
 				break;
 			case EV_ACTOR_START_SHOOT:
@@ -1242,7 +1238,7 @@ void CL_ParseEvent( void )
 				{
 				int flags;
 				flags = MSG_ReadByte( &net_message );
-				if ( !flags ) 
+				if ( !flags )
 				{
 					fireDef_t *fd;
 					fd = GET_FIREDEF( MSG_ReadByte( &net_message ) );
@@ -1321,7 +1317,7 @@ void CL_ParseEvent( void )
 CL_Events
 =====================
 */
-void CL_Events( void ) 
+void CL_Events( void )
 {
 	evTimes_t	*last;
 	byte		eType;
@@ -1359,7 +1355,7 @@ void CL_Events( void )
 CL_InitEvents
 =====================
 */
-void CL_InitEvents( void ) 
+void CL_InitEvents( void )
 {
 	SZ_Init( &evStorage, evBuf, EV_STORAGE_SIZE );
 	evStorage.cursize = EV_STORAGE_SIZE;
@@ -1419,18 +1415,18 @@ void CL_ParseServerMessage (void)
 			else
 				SHOWNET(svc_strings[cmd]);
 		}
-	
-	// other commands
+
+		// other commands
 		switch (cmd)
 		{
 		default:
 			Com_Error (ERR_DROP,"CL_ParseServerMessage: Illegible server message %d\n", cmd);
 			break;
-			
+
 		case svc_nop:
 //			Com_Printf ("svc_nop\n");
 			break;
-			
+
 		case svc_disconnect:
 			Com_Error (ERR_DISCONNECT,"Server disconnected\n");
 			break;
@@ -1456,38 +1452,38 @@ void CL_ParseServerMessage (void)
 			Com_Printf ("%s", MSG_ReadString (&net_message));
 			con.ormask = 0;
 			break;
-			
+
 		case svc_centerprint:
 
 			SCR_CenterPrint (MSG_ReadString (&net_message));
 			break;
-			
+
 		case svc_stufftext:
 			s = MSG_ReadString (&net_message);
 			Com_DPrintf ("stufftext: %s\n", s);
 			Cbuf_AddText (s);
 			break;
-			
+
 		case svc_serverdata:
 			Cbuf_Execute ();		// make sure any stuffed commands are done
 			CL_ParseServerData ();
 			break;
-			
+
 		case svc_configstring:
 			CL_ParseConfigString ();
 			break;
-			
+
 		case svc_sound:
 			CL_ParseStartSoundPacket();
 			break;
-			
+
 		case svc_download:
 			CL_ParseDownload ();
 			break;
 
 		case svc_layout:
 			s = MSG_ReadString (&net_message);
-			strncpy (cl.layout, s, sizeof(cl.layout)-1);
+			Q_strncpyz(cl.layout, s, sizeof(cl.layout));
 			break;
 
 		case svc_event:
