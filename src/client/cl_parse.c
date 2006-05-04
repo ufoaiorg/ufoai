@@ -58,6 +58,8 @@ char *svc_strings[256] =
 // a	| angle		| 1
 // !	| do not read	| 1
 // *	| read from va	|
+// &	| read bytes 	| 1
+//	| until NONE	|
 char *ev_format[] =
 {
 	"",					// EV_NULL
