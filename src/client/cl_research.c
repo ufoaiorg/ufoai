@@ -65,7 +65,7 @@ void RS_MarkOneCollected ( char *id )
 	for ( i=0; i < numTechnologies; i++ ) {
 		t = &technologies[i];
 		if ( !Q_strncmp( t->provides, id, MAX_VAR ) ) {	// provided item found
-			t->statusCollected = true;
+			t->statusCollected = 1;
 			return;
 		}
 	}
@@ -1077,7 +1077,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 	tech->type = RS_TECH;
 	tech->statusResearch = RS_NONE;
 	tech->statusResearchable = false;
-	tech->statusCollected  = false;
+	tech->statusCollected  = 0;
 	tech->time = 0;
 	tech->overalltime = 0;
 
@@ -1399,7 +1399,7 @@ void RS_SaveTech( sizebuf_t *sb )
 	for ( i = 0; i < numTechnologies; i++ )
 	{
 		MSG_WriteByte( sb, technologies[i].statusResearch );
-		MSG_WriteByte( sb, technologies[i].statusCollected );
+		MSG_WriteLong( sb, technologies[i].statusCollected );
 		MSG_WriteFloat( sb, technologies[i].time);
 	}
 }
@@ -1418,7 +1418,7 @@ void RS_LoadTech( sizebuf_t *sb, int version )
 		for ( i = 0; i < tmp; i++ )
 		{
 			technologies[i].statusResearch = MSG_ReadByte( sb );
-			technologies[i].statusCollected = MSG_ReadByte( sb );
+			technologies[i].statusCollected = MSG_ReadLong( sb );
 			technologies[i].time = MSG_ReadFloat( sb );
 		}
 

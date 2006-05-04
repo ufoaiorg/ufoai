@@ -2177,11 +2177,21 @@ void CL_CollectAliens( mission_t* mission )
 	{
 		if ( !le->inuse )
 			continue;
-		// a stunned actor
-		if ( le->type == ET_ACTOR && le->team == TEAM_ALIEN && (le->state & STATE_STUN) )
+		
+		if ( le->type == ET_ACTOR && le->team == TEAM_ALIEN )
 		{
-			// TODO: make alien team researchable
-			// TODO: mission->alienTeam
+			if ( le->state & STATE_STUN ) {
+				/* a stunned actor */
+				// TODO: get correct research item(s)
+				// TODO: increase 'collected' status of the research item(s)
+				// TODO: ??? make alien team researchable
+				// TODO: ??? mission->alienTeam
+			} else
+			if ( le->HP <= 0 ) {
+				/* a death actor */
+				// TODO: get correct research item(s)
+				// TODO: increase 'collected' status of the research item(s)
+			}
 		}
 	}
 }
