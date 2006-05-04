@@ -71,10 +71,10 @@ actors ortnok
 }
 
 // ==================
-// blue
+// antarean
 // ==================
 
-names blue
+names antarean
 {
 	neutral
 	{
@@ -121,7 +121,7 @@ names blue
 	}
 }
 
-actors blue
+actors antarean
 {
 	neutral
 	{
@@ -135,8 +135,6 @@ actors blue
 // TEAMS
 // ==================
 
-// TODO: Assign blue to one of the others
-
 team alien
 {
 	ortnok
@@ -144,45 +142,63 @@ team alien
 	shevaar
 	hovernet
 	cyborg_ortnok
-	blue
 }
 
+// ==================
+// TEAM DESCRIPTIONS
+//
+// combat_notes	-	Will be unlocked after a battle against this enemy
+// autopsy	-	Research of the alien corpse/remains.
+// xenobiology	-	Research on the live alien.
+// interrogation	-	Information gathered from the captured live alien.
+// interrogation_com	-	Information gathered from captured live alien commander.
+// ==================
 teamdesc ortnok
 {
 	name "_Ortnok"
-	text "_ortnok_text"
-	autopsy "_ortnok_autopsy"
-	notes "_ortnok_notes"
+	combat_notes "rs_alien_ortnok_notes"
+	autopsy "rs_alien_ortnok_autopsy"
+	xenobiology "rs_alien_ortnok_xenobiology"
+	interrogation "rs_alien_ortnok_interrogation"
+	interrogation_com ""
 }
 
 teamdesc antarean
 {
 	name "_Antarean"
-	text "_antarean_text"
-	autopsy "_antarean_autopsy"
-	notes "_antarean_notes"
+	combat_notes "rs_alien_antarean_notes"
+	autopsy "rs_alien_antarean_autopsy"
+	xenobiology "rs_alien_antarean_xenobiology"
+	interrogation "rs_alien_antarean_interrogation"
+	interrogation_com "rs_alien_antarean_interrogation_commander"
 }
 
 teamdesc shevaar
 {
 	name "_Shevaar"
-	text "_shevaar_text"
-	autopsy "_shevaar_autopsy"
-	notes "_shevaar_notes"
+	combat_notes "rs_alien_shevaar_notes"
+	autopsy "rs_alien_shevaar_autopsy"
+	xenobiology "rs_alien_shevaar_xenobiology"
+	interrogation ""
+	interrogation_com ""
 }
 
 teamdesc hovernet
 {
 	name "_Hovernet"
-	text "_hovernet_text"
-	autopsy "_hovernet_autopsy"
-	notes "_hovernet_notes"
+	combat_notes "rs_alien_hovernet_notes"
+	autopsy "rs_alien_hovernet_autopsy"
+	xenobiology "rs_alien_hovernet_xenobiology"
+	interrogation ""
+	interrogation_com ""
 }
 
 teamdesc cyborg_ortnok
 {
 	name "_Cyborg Ortnok"
-	text "_cyborg_ortnok_text"
-	autopsy "_cyborg_ortnok_autopsy"
-	notes "_cyborg_ortnok_notes"
+	combat_notes "rs_alien_cyborg_ortnok_notes"
+	autopsy "rs_alien_cyborg_ortnok_autopsy"
+	xenobiology "rs_alien_cyborg_ortnok_xenobiology"
+	interrogation "rs_alien_ortnok_interrogation"
+	interrogation_com ""
 }
