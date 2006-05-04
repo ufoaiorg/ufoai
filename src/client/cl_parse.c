@@ -80,7 +80,7 @@ char *ev_format[] =
 	"!sbbppb",			// EV_ACTOR_SHOOT
 	"bb",				// EV_ACTOR_SHOOT_HIDDEN
 	"sbbpp",			// EV_ACTOR_THROW
-	"!sb",				// EV_ACTOR_DIE
+	"!ss",				// EV_ACTOR_DIE
 	"!sbbbb",			// EV_ACTOR_STATS
 	"!ss",				// EV_ACTOR_STATECHANGE
 

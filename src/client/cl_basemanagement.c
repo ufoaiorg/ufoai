@@ -2034,10 +2034,7 @@ void B_SaveBases( sizebuf_t *sb )
 			CL_SendTeamInfo( sb, base->wholeTeam, base->numWholeTeam );
 
 			// store assignement
-			MSG_WriteLong( sb, base->teamMask );
-			MSG_WriteByte( sb, base->numOnTeam );
-			MSG_WriteByte( sb, base->numHired );
-			MSG_WriteLong( sb, base->hiredMask );
+			MSG_WriteFormat( sb, "lbbl", base->teamMask, base->numOnTeam, base->numHired, base->hiredMask );
 		}
 }
 

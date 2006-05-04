@@ -136,7 +136,7 @@ void G_ResetReactionFire( int team )
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
 		if ( ent->inuse && !(ent->state & STATE_DEAD) && ent->type == ET_ACTOR && ent->team == team )
 		{
-			ent->state &= ~STATE_SHAKEN; // #STATE_SHAKEN includes STATE_REACTION
+			ent->state &= ~STATE_SHAKEN; // STATE_SHAKEN includes STATE_REACTION
 			gi.AddEvent( G_TeamToPM( ent->team ), EV_ACTOR_STATECHANGE );
 			gi.WriteShort( ent->number );
 			gi.WriteShort( ent->state );
@@ -583,6 +583,8 @@ int G_DoTurn( edict_t *ent, byte toDV )
 /*
 =================
 G_ActionCheck
+
+FIXME: Integrate into hud - don´t use cprintf
 =================
 */
 qboolean G_ActionCheck( player_t *player, edict_t *ent, int TU )
@@ -604,6 +606,12 @@ qboolean G_ActionCheck( player_t *player, edict_t *ent, int TU )
 	if ( ent->type != ET_ACTOR )
 	{
 		gi.cprintf( player, PRINT_HIGH, _("Can't perform action - not an actor!\n") );
+		return false;
+	}
+
+	if ( ent->state & STATE_STUN )
+	{
+		gi.cprintf( player, PRINT_HIGH, _("Can't perform action - actor is stunned!\n") );
 		return false;
 	}
 
@@ -1066,7 +1074,6 @@ void G_ClientMove( player_t *player, int visTeam, int num, pos3_t to, qboolean s
 
 				// check for anything appearing, seen by "the moving one"
 				status = G_CheckVisTeam( ent->team, NULL, false );
-				if ( stop && (status & VIS_STOP) ) break;
 				if ( status ) steps = 0;
 
 				// check for reaction fire
@@ -1074,6 +1081,8 @@ void G_ClientMove( player_t *player, int visTeam, int num, pos3_t to, qboolean s
 
 				// check for death
 				if ( ent->state & STATE_DEAD ) return;
+
+				if ( stop && (status & VIS_STOP) ) break;
 			}
 
 			// submit the TUs / round down
@@ -1491,7 +1500,7 @@ void G_Damage( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 		// send death
 		gi.AddEvent( G_VisToPM( ent->visflags ), EV_ACTOR_DIE );
 		gi.WriteShort( ent->number );
-		gi.WriteByte( ent->state );
+		gi.WriteShort( ent->state );
 
 		// count score
 		if ( ent->team == TEAM_CIVILIAN )
@@ -1585,7 +1594,7 @@ void G_DamageStun( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 		// send death
 		gi.AddEvent( G_VisToPM( ent->visflags ), EV_ACTOR_DIE );
 		gi.WriteShort( ent->number );
-		gi.WriteByte( ent->state );
+		gi.WriteShort( ent->state );
 
 		// count score
 		if ( ent->team == TEAM_CIVILIAN )
@@ -2080,7 +2089,7 @@ qboolean G_ReactionFire( edict_t *target )
 
 	fired = false;
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
-		if ( !(ent->state & STATE_DEAD) && (ent->state & STATE_SHAKEN)
+		if ( ent->inuse && !(ent->state & STATE_DEAD) && (ent->state & STATE_SHAKEN)
 			&& G_ActorVis( ent->origin, target, true ) > 0.4 && G_FrustomVis( ent, target->origin ) )
 		{
 			if ( target->team == TEAM_CIVILIAN || target->team == ent->team )
@@ -2115,8 +2124,8 @@ qboolean G_ReactionFire( edict_t *target )
 			level.activeTeam = team;
 
 			// check for death of the target
-//			if ( target->state & STATE_DEAD )
-//				return fired;
+			if ( target->state & STATE_DEAD )
+				return fired;
 		}
 
 	return fired;
@@ -2214,7 +2223,7 @@ void G_GetTeam( player_t *player )
 	else if ( sv_teamplay->value )
 	{
 		// set the team specified in the userinfo
-		Com_Printf( "Get a team for teamplay\n" );
+		Com_DPrintf( "Get a team for teamplay\n" );
 		i = atoi( Info_ValueForKey( player->pers.userinfo, "teamnum" ) );
 		if ( i > 0 ) player->pers.team = i;
 		else player->pers.team = 1;
@@ -2222,7 +2231,7 @@ void G_GetTeam( player_t *player )
 	else
 	{
 		// search team
-		Com_Printf( "Get a team for multiplayer\n" );
+		Com_DPrintf( "Get a team for multiplayer\n" );
 		for ( i = 1; i < MAX_TEAMS; i++ )
 			if ( level.num_spawnpoints[i] )
 			{
@@ -2246,7 +2255,7 @@ void G_GetTeam( player_t *player )
 			for ( j = 0, p = game.players + game.maxplayers; j < game.maxplayers; j++, p++ )
 				if ( p->inuse && p->pers.team == i )
 				{
-					gi.bprintf( PRINT_HIGH, _("Removing ai player...") );
+					gi.bprintf( PRINT_HIGH, "Removing ai player..." );
 					p->inuse = false;
 					break;
 				}
@@ -2496,7 +2505,7 @@ void G_ClientBegin( player_t *player )
 	gi.EndEvents();
 
 	// inform all clients
-	gi.bprintf (PRINT_HIGH, _("%s has taken control over team %i.\n"), player->pers.netname, player->pers.team );
+	gi.bprintf (PRINT_HIGH, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team );
 }
 
 

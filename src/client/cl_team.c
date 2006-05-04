@@ -762,7 +762,7 @@ void CL_SaveTeam( char *filename )
 
 	name = Cvar_VariableString( "mn_teamname" );
 	if ( !strlen(name) )
-		Cvar_Set( "mn_teamname", "NewTeam" );
+		Cvar_Set( "mn_teamname", _("NewTeam") );
 	// store teamname
 	MSG_WriteString( &sb, name );
 
@@ -770,10 +770,7 @@ void CL_SaveTeam( char *filename )
 	CL_SendTeamInfo( &sb, baseCurrent->wholeTeam, baseCurrent->numWholeTeam );
 
 	// store assignement
-	MSG_WriteLong( &sb, baseCurrent->teamMask );
-	MSG_WriteByte( &sb, baseCurrent->numOnTeam );
-	MSG_WriteByte( &sb, baseCurrent->numHired );
-	MSG_WriteLong( &sb, baseCurrent->hiredMask );
+	MSG_WriteFormat( &sb, "lbbl", baseCurrent->teamMask, baseCurrent->numOnTeam, baseCurrent->numHired, baseCurrent->hiredMask );
 
 	// write data
 	res = fwrite( buf, 1, sb.cursize, f );
@@ -891,10 +888,7 @@ void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version )
 		CL_LoadTeamMember( sb, chr );
 
 	// get assignement
-	base->teamMask = MSG_ReadLong( sb );
-	base->numOnTeam = MSG_ReadByte( sb );
-	base->numHired = MSG_ReadByte( sb );
-	base->hiredMask = MSG_ReadLong( sb );
+	MSG_ReadFormat( sb, "lbbl", &base->teamMask, &base->numOnTeam, &base->numHired, &base->hiredMask );
 
 	Com_DPrintf("Load team with %i members and %i slots\n", base->numOnTeam, base->numWholeTeam );
 
@@ -1027,12 +1021,7 @@ void CL_SendItem( sizebuf_t *buf, item_t item, int container, int x, int y )
 		item.m = item.t;
 		item.a = csi.ods[item.t].ammo;
 	}
-	MSG_WriteByte( buf, item.t );
-	MSG_WriteByte( buf, item.a );
-	MSG_WriteByte( buf, item.m );
-	MSG_WriteByte( buf, container );
-	MSG_WriteByte( buf, x );
-	MSG_WriteByte( buf, y );
+	MSG_WriteFormat( buf, "bbbbbb", item.t, item.a, item.m, container, x, y );
 }
 
 void CL_SendTeamInfo( sizebuf_t *buf, character_t *team, int num )

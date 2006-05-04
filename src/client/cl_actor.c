@@ -371,6 +371,7 @@ void CL_ActorUpdateCVars( void )
 		Cvar_Set( "mn_hpmax", "1" );
 		Cvar_Set( "mn_ammoright", "" );
 		Cvar_Set( "mn_ammoleft", "" );
+		Cvar_Set( "mn_stun", "0" );
 		if ( refresh ) Cbuf_AddText( "tostand\n" );
 
 		// this allows us to display messages even with no actor selected
@@ -704,8 +705,7 @@ void CL_ActorStartMove( le_t *le, pos3_t to )
 
 	// move seems to be possible
 	// send request to server
-	MSG_WriteFormat( &cls.netchan.message, "bbsg",
-		clc_action, PA_MOVE, le->entnum, to );
+	MSG_WriteFormat( &cls.netchan.message, "bbsg", clc_action, PA_MOVE, le->entnum, to );
 }
 
 
@@ -729,8 +729,7 @@ void CL_ActorShoot( le_t *le, pos3_t at )
 	if ( mode >= ST_LEFT_PRIMARY && !LEFT(le) )
 		mode -= 2;
 
-	MSG_WriteFormat( &cls.netchan.message, "bbsgb",
-		clc_action, PA_SHOOT, le->entnum, at, mode );
+	MSG_WriteFormat( &cls.netchan.message, "bbsgb", clc_action, PA_SHOOT, le->entnum, at, mode );
 }
 
 
@@ -834,6 +833,7 @@ void CL_ActorDoMove( sizebuf_t *sb )
 	le->pathPos = 0;
 	le->startTime = cl.time;
 	le->endTime = cl.time;
+	// FIXME: speed should somehow depend on strength of character
 	if ( le->state & STATE_CROUCHED ) le->speed = 50;
 	else le->speed = 100;
 	blockEvents = true;
@@ -861,8 +861,7 @@ void CL_ActorTurnMouse( void )
 	dv = AngleToDV( (int)(atan2( div[1], div[0] ) * 180 / M_PI) );
 
 	// send message to server
-	MSG_WriteFormat( &cls.netchan.message, "bbsb",
-		clc_action, PA_TURN, selActor->entnum, dv );
+	MSG_WriteFormat( &cls.netchan.message, "bbsb", clc_action, PA_TURN, selActor->entnum, dv );
 }
 
 
@@ -1086,7 +1085,7 @@ void CL_ActorDie( sizebuf_t *sb )
 	// set relevant vars
 	le->HP = 0;
 	le->STUN = 0;
-	le->state = MSG_ReadByte( sb );
+	le->state = MSG_ReadShort( sb );
 
 	// play animation
 	le->think = NULL;
