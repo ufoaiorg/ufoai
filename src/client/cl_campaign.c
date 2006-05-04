@@ -2168,7 +2168,7 @@ as living aliens into our labs
 
 TODO: put them into the labs
 ======================*/
-void CL_CollectAliens( void )
+void CL_CollectAliens( mission_t* mission )
 {
 	int i;
 	le_t *le;
@@ -2178,9 +2178,10 @@ void CL_CollectAliens( void )
 		if ( !le->inuse )
 			continue;
 		// a stunned actor
-		if ( le->type == ET_ACTOR && (le->state & STATE_STUN) )
+		if ( le->type == ET_ACTOR && le->team == TEAM_ALIEN && (le->state & STATE_STUN) )
 		{
-			// TODO
+			// TODO: make alien team researchable
+			// TODO: mission->alienTeam
 		}
 	}
 }

@@ -1375,7 +1375,7 @@ void CL_AircraftSelect( void );
 void CL_NewAircraft_f ( void );
 void CL_NewAircraft ( base_t* base, char* name );
 void CL_AircraftInit( void );
-void CL_CollectAliens( void );
+void CL_CollectAliens( mission_t* mission );
 void CL_CollectItems( int won );
 void CL_UpdateCharacterStats ( int won );
 void CL_UpdateCredits ( int credits );

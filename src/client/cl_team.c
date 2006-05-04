@@ -1199,7 +1199,7 @@ void CL_ParseResults( sizebuf_t *buf )
 
 		// check for stunned aliens
 		if ( winner == we )
-			CL_CollectAliens();
+			CL_CollectAliens( ms );
 
 		// update stats
 		CL_UpdateCharacterStats( winner == we );
