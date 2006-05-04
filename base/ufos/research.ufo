@@ -912,11 +912,10 @@ tech rs_craft_ufo_big
 // Aliens
 //========================
 
-tech rs_alien_ortnok
+tech rs_alien_ortnok_notes
 {
-	type	tech
-	name	 "_Ortnok"
-	description	"_ortnok_txt"
+	type	alien
+	description	"_ortnok_notes_txt"
 	up_chapter	aliens
 
 	requires	nothing
@@ -924,8 +923,46 @@ tech rs_alien_ortnok
 	time	0
 	researched	false
 
-	// TODO should come from alien-definition:
+	// TODO should come from alien-definition and be a complete model
 	mdl_top	models/aliens/ortnok/body01.md2
+}
+
+tech rs_alien_ortnok_autopsy
+{
+	type	alien
+	description	"_ortnok_autopsy_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	60
+	researched	false
+
+	//TODO: autopsy image
+}
+
+tech rs_alien_ortnok_xenobiology
+{
+	type	alien
+	description	"_ortnok_xenobiology_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	90
+	researched	false
+}
+
+interrogation "rs_alien_ortnok_interrogation"
+{
+	type	alien
+	description	"_ortnok_interrogation_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	60
+	researched	false
 }
 
 tech rs_alien_ortnok_medium
@@ -940,6 +977,40 @@ tech rs_alien_ortnok_medium
 	time	0
 	researched	false
 
-	// TODO should come from alien-definition:
+	// TODO should come from alien-definition and be a complete model
 	mdl_top	models/aliens/ortnok_medium/body01.md2
 }
+
+tech rs_alien_antarean_notes
+{
+	type	alien
+	description	"_antarean_notes_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	0
+	researched	false
+
+	// TODO should come from alien-definition and be a complete model
+	mdl_top	models/aliens/blue/body01.md2
+}
+
+tech rs_alien_antarean_autopsy
+{
+	type	alien
+	description	"_antarean_autopsy_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	0
+	researched	false
+
+	// TODO should come from alien-definition and be a complete model
+	mdl_top	models/aliens/blue/body01.md2
+}
+
+//xenobiology "rs_alien_antarean_xenobiology"
+//interrogation "rs_alien_antarean_interrogation"
+//interrogation_com "rs_alien_antarean_interrogation_commander"
