@@ -45,6 +45,19 @@ char *svc_strings[256] =
 
 //=============================================================================
 
+// id	| type		| length (bytes)
+//======================================
+// c	| char		| 1
+// b	| byte		| 1
+// s	| short		| 2
+// l	| long		| 4
+// f	| float		| 4
+// p	| pos		| 6
+// g	| gpos		| 3
+// d	| dir		| 1
+// a	| angle		| 1
+// !	| do not read	| 1
+// *	| read from va	|
 char *ev_format[] =
 {
 	"",					// EV_NULL
