@@ -1,19 +1,21 @@
 //===============
-// research tree
+// RESEARCH TREE (and other discovered things)
 //===============
 
-//	=== Description ==============================
+//=== Description ==============================
 //
 //	tech rs_xxx
 //		The _unique_ name of the research item in the tree is xxx
 //	type
-//		Just says where to look for more information.
+//		Just says where to look for more information (this is internal information and will not be displayed anywhere, but is needed to check/find information)
 //		tech
-//			Items have all the information in here.Especially the name and the model/image.
-//		everything else: weapon, craft, building, etc...
+//			Items have all the information in here. Especially the name and the model/image.
+//		everything else (weapon, craft, building, alien, etc...)
 //			See the correct .ufo file.
 //	name
 //		self-explaining i hope :) Only needed when type=tech
+//	up_chapter
+//		Defines in which chapter of the ufopedia this item will show up.
 //	description
 //		A short string that is used by gettext to be translateable (e.g "_itemname_txt").
 //		This needs to be a unique string in all desciptions. See the po files in the source directory (src/po/*.po)
@@ -29,19 +31,22 @@
 //		The item (only one allowed) name (yyy) in the correct ufo file or data-structure (e.g inventory).
 //		The given names are _not_ "tech" items.
 //		This items can be produced once the "tech" item has been finished.
+//	time
+//		time the research needs.
+//		If time is 0 the item can be produced at the same time all the "required" items are finished.
+//		[Default] 0
 //	researched
 //		false or 0 - [Default] You need to research this tech.
 //		true or 1 - You can _produce_ it from the beginning.
 //	needscollected
 //		false or 0 - [Default] You only need to have the required technologies researched to research this item.
 //		true or 1 - To be able to research this item you need to have all required technologies researched and at least one item collected.
-//	time
-//		time the research needs.
-//		If time is 0 the item can be produced at the same time all the "required" items are finished.
-//		[Default] 0
-//	==========================================
-
-// TODO: the current values are test-values for faster debugging. The code currently substracts "1" each day, so a research with "time 1" is finished in one day (though the message will pop up the next day, because it isn't checked directly after subtracting)
+//	image_top / image_bottom
+//		Path to the image that should be displayed on the top (big) or bottom (small) in the ufopedia.
+//	mdl_top / mdl_bottom
+//		Same as the image but for 3d-models.
+//		It overrides the image-definitions if it is provided.
+//==========================================
 
 //========================
 // Ufopedia categories
@@ -57,11 +62,93 @@ up_chapters main
 	ufos		"_UFOs"
 }
 
+//========================
+// Basic Technologies
+//========================
+tech rs_laser
+{
+	type	tech
+	name "_Advanced Laser Technology"
+	up_chapter	tech
+	description	"_laser_txt"
+
+	requires	initial
+	provides	laserpistol
+	time	30
+	researched	false
+	image_top	techs/laser
+}
+
+tech rs_tachyon
+{
+	type	tech
+	name	"_Tachyon Control"
+	up_chapter	tech
+
+	requires	nothing
+	description	"_tachyon_txt"
+	time	1
+	researched	false
+
+	//image_top  xxxxx
+}
+
+tech rs_plasma
+{
+	type	tech
+	name	"_Advanced Plasma Control"
+	up_chapter	tech
+	description	"_plasma_txt"
+
+	requires	nothing
+
+	time	1
+	researched	false
+}
+
+tech rs_nano
+{
+	type	tech
+	name	"_Nano Technology"
+	up_chapter	tech
+	description	"_nano_txt"
+
+	requires	initial
+	time	1
+	researched	false
+}
+
+tech rs_advanced_armor
+{
+	type	tech
+	name	"_Advanced Armor Fabrics"
+
+	requires	"rs_nano rs_plasma"
+	time	1
+	researched	false
+}
+
+// general ufo technology
+// FIXME: this should not be researched - but found via intercepter missions
+tech rs_craft_ufo_tech
+{
+	type	tech
+	name	"_General UFO technology"
+	description	"_ufo_txt"
+	up_chapter	tech
+
+	// FIXME
+	requires	nothing
+	provides	found_ufo
+	time	100
+	researched	false
+
+	//image_top  xxxxx
+}
+
 //====================
 // Weapons researched
 //====================
-
-// text flag is id for gettext
 
 tech rs_weapon_assault
 {
@@ -279,20 +366,6 @@ tech rs_weapon_rpg_ammo
 	researched	true
 }
 
-tech rs_laser
-{
-	type	tech
-	name "_Advanced Laser Technology"
-	up_chapter	tech
-	description	"_laser_txt"
-
-	requires	initial
-	provides	laserpistol
-	time	30
-	researched	false
-	image_top	techs/laser
-}
-
 tech rs_weapon_laserpistol
 {
 	type	weapon
@@ -393,20 +466,6 @@ tech rs_weapon_stunrod
 // Weapons unresearched
 //========================
 
-tech rs_tachyon
-{
-	type	tech
-	name	"_Tachyon Control"
-	up_chapter	tech
-
-	requires	nothing
-	description	"_tachyon_txt"
-	time	1
-	researched	false
-
-	//image_top  xxxxx
-}
-
 tech rs_weapon_tachyonpistol
 {
 	type	weapon
@@ -478,19 +537,6 @@ tech rs_weapon_tachyonsniper_ammo
 	requires	rs_weapon_tachyonsniper
 	provides	tachyonsniper_ammo
 	time	0
-	researched	false
-}
-
-tech rs_plasma
-{
-	type	tech
-	name	"_Advanced Plasma Control"
-	up_chapter	tech
-	description	"_plasma_txt"
-
-	requires	nothing
-
-	time	1
 	researched	false
 }
 
@@ -619,18 +665,6 @@ tech rs_medikit
 	researched	false
 }
 
-tech rs_nano
-{
-	type	tech
-	name	"_Nano Technology"
-	up_chapter	tech
-	description	"_nano_txt"
-
-	requires	initial
-	time	1
-	researched	false
-}
-
 tech rs_kevlar_armor
 {
 	type	armor
@@ -651,16 +685,6 @@ tech rs_nano_armor
 
 	requires	rs_nano
 	provides	medium
-	time	1
-	researched	false
-}
-
-tech rs_advanced_armor
-{
-	type	tech
-	name	"_Advanced Armor Fabrics"
-
-	requires	"rs_nano rs_plasma"
 	time	1
 	researched	false
 }
@@ -811,7 +835,7 @@ tech rs_building_radar
 }
 
 //========================
-// Crafts
+// Crafts - Human
 //========================
 tech rs_craft_dropship
 {
@@ -843,24 +867,22 @@ tech rs_craft_interceptor
 	mdl_top		interceptor
 }
 
-// general ufo technology
-// FIXME: this should not be researched - but found via intercepter missions
-tech rs_craft_ufo_tech
-{
-	type	tech
-	name	"_General UFO technology"
-	description	"_ufo_txt"
-	up_chapter	tech
+//tech rs_craftupgrade_dropship
+//{
+//	type	tech
+//	name	"_Plasmadrive for H-92 Transport"
+//	description	"_dropship_upgrade_txt"
+//	up_chapter	crafts
 
-	// FIXME
-	requires	nothing
-	provides	found_ufo
-	time	100
-	researched	false
+//	requires	"rs_craft_dropship rs_plasma"
+//	provides	dropship_plasmadrive
+//	time	0
+//	researched	true
+//}
 
-	//image_top  xxxxx
-}
-
+//========================
+// Crafts - UFOs
+//========================
 tech rs_craft_ufo_small
 {
 	type	tech
@@ -894,19 +916,6 @@ tech rs_craft_ufo_big
 	// TODO should come from craft-definition:
 	mdl_top		ufobig
 }
-
-//tech rs_craftupgrade_dropship
-//{
-//	type	tech
-//	name	"_Plasmadrive for H-92 Transport"
-//	description	"_dropship_upgrade_txt"
-//	up_chapter	crafts
-
-//	requires	"rs_craft_dropship rs_plasma"
-//	provides	dropship_plasmadrive
-//	time	0
-//	researched	true
-//}
 
 //========================
 // Aliens
@@ -971,7 +980,7 @@ interrogation "rs_alien_ortnok_interrogation"
 
 tech rs_alien_ortnok_medium
 {
-	type	tech
+	type	alien
 	name	 "_Ortnok Warrior"
 	description	"_ortnok_medium_txt"
 	up_chapter	aliens
