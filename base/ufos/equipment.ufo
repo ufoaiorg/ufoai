@@ -88,6 +88,7 @@ equipment campaign_market
 	bolterrifle_ammo	16
 	fraggrenade			14
 	smokegrenade		14
+	stunrod			1
 	knife				8
 	irgoggles		2
 	medikit				5
