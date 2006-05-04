@@ -829,10 +829,11 @@ void Com_ParseActors( char *title, char **text )
 value_t teamDescValues[] =
 {
 	{ "name",	V_TRANSLATION_STRING,	PARSETEAMDESC( name ) },
-	{ "text",	V_TRANSLATION2_STRING,	PARSETEAMDESC( text ) },
-	{ "notes",	V_TRANSLATION2_STRING,	PARSETEAMDESC( notes ) },
+	{ "combat_notes",	V_TRANSLATION2_STRING,	PARSETEAMDESC( combat_notes ) },
 	{ "autopsy",	V_TRANSLATION2_STRING,	PARSETEAMDESC( autopsy ) },
-
+	{ "xenobiology",	V_TRANSLATION2_STRING,	PARSETEAMDESC( xenobiology ) },
+	{ "interrogation",	V_TRANSLATION2_STRING,	PARSETEAMDESC( interrogation ) },
+	{ "interrogation_com",	V_TRANSLATION2_STRING,	PARSETEAMDESC( interrogation_com ) },
 	{ NULL,	0, 0 }
 };
 
@@ -852,7 +853,7 @@ void Com_ParseTeamDesc( char *title, char **text )
 
 	// check for additions to existing team descriptions
 	for ( i = 0, td = teamDesc; i < numTeamDesc; i++, td++ )
-		if ( !Q_strncmp( td->title, title, MAX_VAR ) )
+		if ( !Q_strncmp( td->id, title, MAX_VAR ) )
 			break;
 
 	// reset new category
@@ -863,7 +864,7 @@ void Com_ParseTeamDesc( char *title, char **text )
 	}
 	memset( td, 0, sizeof( teamDesc_t ) );
 	numTeamDesc++;
-	Q_strncpyz( td->title, title, MAX_VAR );
+	Q_strncpyz( td->id, title, MAX_VAR );
 
 	// get name list body body
 	token = COM_Parse( text );

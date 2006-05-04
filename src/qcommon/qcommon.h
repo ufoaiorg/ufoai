@@ -751,11 +751,13 @@ typedef enum
 
 typedef struct teamDesc_s
 {
-	char title[MAX_VAR];
+	char id[MAX_VAR];
 	char name[MAX_VAR];
-	char text[MAX_VAR];
+	char combat_notes[MAX_VAR];
 	char autopsy[MAX_VAR];
-	char notes[MAX_VAR];
+	char xenobiology[MAX_VAR];
+	char interrogation[MAX_VAR];
+	char interrogation_com[MAX_VAR];
 } teamDesc_t;
 
 extern	teamDesc_t	teamDesc[MAX_TEAMDEFS];
