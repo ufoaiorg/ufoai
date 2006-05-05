@@ -45,7 +45,8 @@ typedef enum researchType_s
 	RS_WEAPON,
 	RS_ARMOR,
 	RS_CRAFT,
-	RS_BUILDING
+	RS_BUILDING,
+	RS_ALIEN
 } researchType_t;
 
 typedef struct stringlist_s

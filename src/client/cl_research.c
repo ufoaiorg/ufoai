@@ -304,6 +304,9 @@ void RS_InitTree( void )
 			if ( !found )
 				Com_Printf( "RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n", t->id, t->provides );
 			break;
+		case RS_ALIEN:
+			/* does nothing right now */
+			break;
 		} // switch
 	}
 	RS_MarkCollected();
@@ -1088,6 +1091,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 		if ( *token == '}' ) break;
 		// get values
 		if (  !Q_strncmp( token, "type", 4 ) ) {
+			/* what type of tech this is */
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			if ( !Q_strncmp( token, "tech", 4 ) )
@@ -1100,11 +1104,14 @@ void RS_ParseTechnologies ( char* id, char** text )
 				tech->type = RS_CRAFT;
 			else if ( !Q_strncmp( token, "building", 8 ) )
 				tech->type = RS_BUILDING;
+			else if ( !Q_strncmp( token, "alien", 5 ) )
+				tech->type = RS_ALIEN;
 			else Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token );
 		}
 		else
 		if ( !Q_strncmp( token, "requires", 8 ) )
 		{
+			/* what other techs this one requires */
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			Q_strncpyz( temp_text, token, MAX_VAR );
@@ -1126,12 +1133,14 @@ void RS_ParseTechnologies ( char* id, char** text )
 		else
 		if ( !Q_strncmp( token, "researched", 10 ) )
 		{
+			/* tech alreadyy researched? */
 			token = COM_EParse( text, errhead, id );
 			if ( !Q_strncmp( token, "true", 4 ) || *token == '1' )
 				tech->statusResearch = RS_FINISH;
 		}
 		else
 		if ( !Q_strncmp( token, "up_chapter", 10 ) ) {
+			/* ufopedia chapter */
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 
