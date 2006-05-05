@@ -2223,7 +2223,7 @@ void G_GetTeam( player_t *player )
 	else if ( sv_teamplay->value )
 	{
 		// set the team specified in the userinfo
-		Com_DPrintf( "Get a team for teamplay\n" );
+		gi.dprintf( "Get a team for teamplay\n" );
 		i = atoi( Info_ValueForKey( player->pers.userinfo, "teamnum" ) );
 		if ( i > 0 ) player->pers.team = i;
 		else player->pers.team = 1;
@@ -2231,7 +2231,7 @@ void G_GetTeam( player_t *player )
 	else
 	{
 		// search team
-		Com_DPrintf( "Get a team for multiplayer\n" );
+		gi.dprintf( "Get a team for multiplayer\n" );
 		for ( i = 1; i < MAX_TEAMS; i++ )
 			if ( level.num_spawnpoints[i] )
 			{
