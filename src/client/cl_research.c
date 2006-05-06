@@ -693,7 +693,7 @@ void RS_UpdateData ( void )
 		tech = &technologies[i];
 		Com_sprintf( name, MAX_VAR, tech->name );
 		if ( tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH ) ) { // an unresearched collected item that cannot yet be researched
-			Q_strcat(name, MAX_VAR, " [not yet researchable]");
+			Q_strcat(name, MAX_VAR, _(" [not yet researchable]") );
 			Cbuf_AddText( va( "researchunresearchable%i\n", j ) );	// Color the item 'unresearchable'
 			Cvar_Set( va("mn_researchitem%i", j),  name );		// Display the concated text in the correct list-entry.
 			researchList[j] = &technologies[i];					// Assign the current tech in the global list to the correct entry in the displayed list.
@@ -720,19 +720,19 @@ void RS_UpdateData ( void )
 			switch ( tech->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 			{
 			case RS_RUNNING:
-				Q_strcat(name, MAX_VAR, " [under research]" );
+				Q_strcat(name, MAX_VAR, _(" [under research]") );
 				Cbuf_AddText( va( "researchrunning%i\n", j ) );	// color the item 'research running'
 				break;
 			case RS_FINISH:
 				// DEBUG: normaly these will not be shown at all. see "if" above
-				Q_strcat(name, MAX_VAR, " [finished]" );
+				Q_strcat(name, MAX_VAR, _(" [finished]") );
 				break;
 			case RS_PAUSED:
-				Q_strcat(name, MAX_VAR, " [paused]" );
+				Q_strcat(name, MAX_VAR, _(" [paused]") );
 				Cbuf_AddText( va( "researchpaused%i\n", j ) );	// color the item 'research paused'
 				break;
 			case RS_NONE:
-				Q_strcat(name, MAX_VAR, " [unknown]" );
+				Q_strcat(name, MAX_VAR, _(" [unknown]") );
 				// The color is defined in menu research.ufo by  "confunc research_clear". See also above.
 				break;
 			default:
