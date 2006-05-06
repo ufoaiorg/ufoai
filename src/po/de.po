@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-05-03 19:09+0200\n"
-"PO-Revision-Date: 2006-05-03 20:04+0100\n"
+"PO-Revision-Date: 2006-05-06 12:50+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@gmx.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1782,7 +1782,7 @@ msgstr "Sturmgewehrmunition"
 #: ../base/ufos/weapons_human.ufo:35
 #: ../base/ufos/weapons_human.ufo:250
 msgid "Burst"
-msgstr ""
+msgstr "Feuerstoß"
 
 #: ../base/ufos/weapons_human.ufo:54
 msgid "Auto"
@@ -2579,6 +2579,8 @@ msgid ""
 "Team survivors\t%i\n"
 "\n"
 msgstr ""
+"Überlebende\t%i\n"
+"\n"
 
 #: client/cl_team.c:1152
 #, c-format
@@ -2623,6 +2625,9 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
+"Summe\t%i $\n"
+"\n"
+"\n"
 
 #: client/cl_team.c:1195
 #, c-format
