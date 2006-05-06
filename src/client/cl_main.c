@@ -1420,7 +1420,7 @@ void CL_InitLocal (void)
 	//
 	info_password = Cvar_Get ("password", "", CVAR_USERINFO);
 	info_spectator = Cvar_Get ("spectator", "0", CVAR_USERINFO);
-	name = Cvar_Get ("name", "unnamed", CVAR_USERINFO | CVAR_ARCHIVE);
+	name = Cvar_Get ("name", _("unnamed"), CVAR_USERINFO | CVAR_ARCHIVE);
 #ifndef _WIN32
 	// set alsa as default
 	s_system = Cvar_Get ("s_system", "2", CVAR_USERINFO | CVAR_ARCHIVE);
