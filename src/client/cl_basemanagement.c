@@ -1505,7 +1505,8 @@ void MN_ParseBases( char *title, char **text )
 		token = COM_EParse( text, errhead, title );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
-		Q_strncpyz( base->title, token, MAX_VAR );
+		if ( *token == '_' ) token++;
+		Q_strncpyz( base->title, _(token), MAX_VAR );
 		Com_DPrintf("Found base %s\n", base->title );
 		MN_ResetBuildingCurrent();
 		numBases++;
