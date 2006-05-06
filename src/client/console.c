@@ -140,7 +140,7 @@ void Con_Dump_f (void)
 	int		l, x;
 	char	*line;
 	FILE	*f;
-	char	buffer[1024];
+	char	buffer[MAX_STRING_CHARS];
 	char	name[MAX_OSPATH];
 
 	if (Cmd_Argc() != 2)
@@ -434,7 +434,7 @@ Con_CenteredPrint
 void Con_CenteredPrint (char *text)
 {
 	int		l;
-	char	buffer[1024];
+	char	buffer[MAX_STRING_CHARS];
 
 	l = strlen(text);
 	l = (con.linewidth-l)/2;
@@ -579,8 +579,8 @@ void Con_DrawConsole (float frac)
 	char			*text;
 	int				row;
 	int				lines;
-	char			version[64];
-	char			dlbar[1024];
+	char			version[MAX_VAR];
+	char			dlbar[MAX_STRING_CHARS];
 
 	lines = viddef.height * frac;
 	if (lines <= 0)
