@@ -289,7 +289,7 @@ void CL_ActorUpdateCVars( void )
 			  && cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE
 			  && selWeapon && !RS_ItemIsResearched( csi.ods[ selWeapon->item.t].kurz ) )
 			{
-				Com_Printf( "You cannot use this unknown item. You need to research it first.\n" );
+				CL_DisplayHudMessage( _("You cannot use this unknown item.\nYou need to research it first.\n"), 2000 );
 				cl.cmode = M_MOVE;
 			}
 			// move or shoot
@@ -611,7 +611,7 @@ void CL_BuildForbiddenList( void )
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 		if ( le->inuse && !(le->state & STATE_DEAD) && le->type == ET_ACTOR )
 		{
-			if ( ! le->size )
+			if ( ! le->size[0] )
 				fb_list[fb_length++] = le->pos;
 			else
 				// we don't need the height value because
@@ -784,7 +784,7 @@ void CL_ActorReload( int hand )
 
 	if ( !RS_ItemIsResearched( csi.ods[weapon].kurz ) )
 	{
-		Com_Printf( "You cannot load this unknown item. You need to research it first.\n" );
+		CL_DisplayHudMessage( _("You cannot load this unknown item.\nYou need to research it first.\n"), 2000 );
 		return;
 	}
 
@@ -1636,11 +1636,11 @@ void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
 CL_AddTargeting
 =================
 */
-// field marker box
-const vec3_t	box_delta = {11, 11, 27};
+#define BOX_DELTA 11, 11, 27
 void CL_AddTargeting( void )
 {
-	vec3_t boxSize;
+	// field marker box
+	static vec3_t boxSize = {BOX_DELTA};
 
 	if ( mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE )
 		return;
@@ -1670,22 +1670,18 @@ void CL_AddTargeting( void )
 			// not in our team and no civilian, too
 			if ( mouseActor->team != cls.team && mouseActor->team != TEAM_CIVILIAN )
 				VectorSet( ent.angles, 1, 0, 0 );
-			if ( !mouseActor->size )
-				VectorCopy( box_delta, boxSize );
-			else
+			if ( mouseActor->size[0] )
 				VectorCopy( mouseActor->size, boxSize );
 		}
 		else
 		{
-			if ( ! selActor || (selActor && !selActor->size) )
-				VectorCopy( box_delta, boxSize );
-			else
+			if ( selActor && selActor->size[0] )
 				VectorCopy( selActor->size, boxSize );
 			ent.alpha = 0.3;
 		}
 		VectorAdd( ent.origin, boxSize, ent.oldorigin );
 		VectorSubtract( ent.origin, boxSize, ent.origin );
-//		V_AddLight( ent.origin, 256, 1.0, 0, 0 );
+// 		V_AddLight( ent.origin, 256, 1.0, 0, 0 );
 
 		// add it
 		V_AddEntity( &ent );
