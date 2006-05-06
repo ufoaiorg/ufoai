@@ -63,6 +63,7 @@ field_t fields[] = {
 	{"target", FOFS(target), F_LSTRING},
 	{"targetname", FOFS(targetname), F_LSTRING},
 	{"team", FOFS(team), F_INT},
+	{"size", FOFS(fieldSize), F_INT},
 	{"wait", FOFS(wait), F_FLOAT},
 	{"delay", FOFS(delay), F_FLOAT},
 	{"random", FOFS(random), F_FLOAT},
