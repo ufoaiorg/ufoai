@@ -285,11 +285,6 @@ void SpawnEntities (char *mapname, char *entities)
 	edict_t		*ent;
 	int		entnum;
 	char		*com_token;
-#ifdef DEBUG
-#define EDICT_NUM(n) ((edict_t *)((byte *)g_edicts + sizeof(edict_t)*(n)))
-	int	i = 1;
-#endif
-//	SaveClientData ();
 
 	gi.FreeTags (TAG_LEVEL);
 
@@ -441,7 +436,7 @@ Starting point for a single player alien.
 */
 void SP_ugv_start (edict_t *ent)
 {
-	ent->team = TEAM_HUMAN;
+	ent->team = 1;
 	// set stats
 	ent->STUN = 100;
 	ent->HP = 100;
