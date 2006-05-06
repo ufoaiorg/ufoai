@@ -15,6 +15,11 @@ Starting point for a single player alien.
 */
 
 
+/*QUAKED info_ugv_start (1 1 0) (-32 -32 -24) (32 32 32)
+Starting point for a ugv.
+*/
+
+
 /*QUAKED info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
 Starting point for a civilian.
 */
@@ -25,6 +30,7 @@ Displays a md2 model.
 Set the level flags correctly!
 Use angles [pitch yaw roll] to rotate the model.
 "model"		arbitrary .md2 file to display
+"angles"	direction of the model [pitch yaw roll]
 */
 
 
