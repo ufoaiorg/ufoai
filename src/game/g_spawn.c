@@ -431,8 +431,8 @@ void SP_human_start (edict_t *ent)
 }
 
 
-/*QUAKED info_ugv_start (1 0 0) (-16 -16 -24) (16 16 32)
-Starting point for a single player alien.
+/*QUAKED info_ugv_start (1 1 0) (-32 -32 -24) (32 32 32)
+Starting point for a ugv.
 */
 void SP_ugv_start (edict_t *ent)
 {
