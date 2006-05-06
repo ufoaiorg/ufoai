@@ -1,6 +1,6 @@
 // .. model:	(string)
 // .. need:	(string)
-// NOTE: This has to be drop down
+// NOTE: This has to be top down
 
 // ============== Alien Ortnok =====================
 menu_model alien_ortnok_head
