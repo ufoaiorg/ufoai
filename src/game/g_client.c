@@ -2269,6 +2269,8 @@ void G_GetTeam( player_t *player )
 /*
 =================
 G_ClientTeamInfo
+
+FIXME: Check size (fieldSize here)
 =================
 */
 void G_ClientTeamInfo( player_t *player )

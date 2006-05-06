@@ -2180,7 +2180,7 @@ void CL_CollectAliens( mission_t* mission )
 	{
 		if ( !le->inuse )
 			continue;
-		
+
 		if ( le->type == ET_ACTOR && le->team == TEAM_ALIEN )
 		{
 			if ( le->state & STATE_STUN ) {
@@ -2472,6 +2472,7 @@ value_t mission_vals[] =
 	{ "pos",		V_POS,			MISSIONOFS( pos ) },
 	{ "mask",		V_RGBA,			MISSIONOFS( mask ) },
 	{ "aliens",		V_INT,			MISSIONOFS( aliens ) },
+	{ "maxugv",		V_INT,			MISSIONOFS( ugv ) },
 	{ "alienteam",	V_STRING,		MISSIONOFS( alienTeam ) },
 	{ "alienequip",	V_STRING,		MISSIONOFS( alienEquipment ) },
 	{ "civilians",	V_INT,			MISSIONOFS( civilians ) },
