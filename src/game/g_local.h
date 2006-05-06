@@ -482,6 +482,7 @@ struct edict_s
 	int			count;
 	int			sounds;
 	int			dmg;
+	int			fieldSize; /* ACTOR_SIZE_* */
 
 	void		(*use)(edict_t *self, edict_t *other, edict_t *activator);
 };

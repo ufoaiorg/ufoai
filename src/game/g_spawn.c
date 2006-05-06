@@ -343,6 +343,8 @@ void G_ActorSpawn( edict_t *ent )
 	level.num_spawnpoints[ent->team]++;
 	ent->classname = "actor";
 	ent->type = ET_ACTORSPAWN;
+	if ( ent->fieldSize < ACTOR_SIZE_NORMAL )
+		ent->fieldSize = ACTOR_SIZE_NORMAL;
 
 	// fall to ground
 	ent->pos[2] = gi.GridFall( gi.map, ent->pos );
@@ -441,6 +443,7 @@ void SP_ugv_start (edict_t *ent)
 	ent->STUN = 100;
 	ent->HP = 100;
 	ent->AP = 100;
+	ent->fieldSize = ACTOR_SIZE_UGV;
 
 	// these units are bigger
 	VectorSet( ent->maxs, PLAYER_WIDTH*2, PLAYER_WIDTH*2, PLAYER_STAND );

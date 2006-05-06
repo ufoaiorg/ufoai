@@ -566,7 +566,6 @@ typedef struct le_s {
 	int 		morale, maxMorale;
 	int 		HP, maxHP;
 	int 		STUN; /* 0 stunned - state STATE_STUN */
-	vec3_t		size;
 	int 		state;
 
 	float		angles[3];
@@ -599,10 +598,11 @@ typedef struct le_s {
 	char		*ref1, *ref2;
 	inventory_t	i;
 	int			left, right;
+	int		fieldSize; /* ACTOR_SIZE_* */
 
 	// is called before adding a le to scene
 	qboolean	(*addFunc)(struct le_s *le, entity_t *ent);
-} le_t;
+} le_t; /* local entity */
 
 #define MAX_LOCALMODELS		512
 #define MAX_MAPPARTICLES	1024

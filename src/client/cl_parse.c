@@ -72,7 +72,7 @@ char *ev_format[] =
 	"!sbg",				// EV_ENT_APPEAR
 	"!s",				// EV_ENT_PERISH
 
-	"!sbbgbbbssbs",		// EV_ACTOR_APPEAR
+	"!sbbgbbbssbsb",		// EV_ACTOR_APPEAR
 	"!s",				// EV_ACTOR_START_MOVE
 	"!sb",				// EV_ACTOR_TURN
 	"!s*",				// EV_ACTOR_MOVE
@@ -827,7 +827,7 @@ void CL_ActorAppear( sizebuf_t *sb )
 	MSG_ReadFormat( sb, ev_format[EV_ACTOR_APPEAR],
 		&le->team, &le->pnum, &le->pos, &le->dir,
 		&le->right, &le->left,
-		&modelnum1, &modelnum2, &le->skinnum, &le->state );
+		&modelnum1, &modelnum2, &le->skinnum, &le->state, &le->fieldSize );
 
 	le->type = ET_ACTOR;
 	le->modelnum1 = modelnum1;

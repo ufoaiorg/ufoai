@@ -611,13 +611,15 @@ void CL_BuildForbiddenList( void )
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 		if ( le->inuse && !(le->state & STATE_DEAD) && le->type == ET_ACTOR )
 		{
-			if ( ! le->size[0] )
+			if ( le->fieldSize < 2 )
 				fb_list[fb_length++] = le->pos;
 			else
+				// FIXME: remove me after getting this stuff ready
+				Com_DPrintf("...unit bigger that 1 field (%i)\n", le->fieldSize);
 				// we don't need the height value because
 				// the unit is always on the same level
-				for ( j = 0; j < le->size[0]; j++ )
-					for ( k = 0; k < le->size[1]; k++ )
+				for ( j = 0; j < le->fieldSize; j++ )
+					for ( k = 0; k < le->fieldSize; k++ )
 						// FIXME: put all vec3_t's in here
 						fb_list[fb_length++] = le->pos;
 		}
@@ -1636,10 +1638,11 @@ void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
 CL_AddTargeting
 =================
 */
+// field marker box
+const vec3_t	boxSize = {BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT};
 void CL_AddTargeting( void )
 {
-	// field marker box
-	vec3_t boxSize = {BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT};
+	vec3_t	realBoxSize;
 
 	if ( mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE )
 		return;
@@ -1669,13 +1672,14 @@ void CL_AddTargeting( void )
 			// not in our team and no civilian, too
 			if ( mouseActor->team != cls.team && mouseActor->team != TEAM_CIVILIAN )
 				VectorSet( ent.angles, 1, 0, 0 );
-			if ( mouseActor->size[0] )
-				VectorCopy( mouseActor->size, boxSize );
+			Vector2Mul( mouseActor->fieldSize, boxSize, realBoxSize );
 		}
 		else
 		{
-			if ( selActor && selActor->size[0] )
-				VectorCopy( selActor->size, boxSize );
+			if ( selActor && selActor->fieldSize > 1 )
+				Vector2Mul( mouseActor->fieldSize, boxSize, realBoxSize );
+			else
+				VectorCopy( boxSize, realBoxSize );
 			ent.alpha = 0.3;
 		}
 		VectorAdd( ent.origin, boxSize, ent.oldorigin );

@@ -219,6 +219,7 @@ void G_AppearPerishEvent( int player_mask, int appear, edict_t *check )
 			gi.WriteShort( check->head );
 			gi.WriteByte( check->skin );
 			gi.WriteShort( check->state & STATE_PUBLIC );
+			gi.WriteByte( check->fieldSize );
 
 			if ( player_mask & G_TeamToPM( check->team ) )
 			{
