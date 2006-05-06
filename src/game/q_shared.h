@@ -1086,6 +1086,11 @@ typedef enum {
 #define PLAYER_MIN		-24
 #define PLAYER_WIDTH	9
 
+// field marker box
+#define BOX_DELTA_WIDTH 11
+#define BOX_DELTA_LENGTH 11
+#define BOX_DELTA_HEIGHT 27
+
 //
 
 #define GRAVITY			500.0

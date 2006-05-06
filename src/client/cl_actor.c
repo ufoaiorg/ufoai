@@ -1636,11 +1636,10 @@ void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
 CL_AddTargeting
 =================
 */
-#define BOX_DELTA 11, 11, 27
 void CL_AddTargeting( void )
 {
 	// field marker box
-	static vec3_t boxSize = {BOX_DELTA};
+	vec3_t boxSize = {BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT};
 
 	if ( mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE )
 		return;

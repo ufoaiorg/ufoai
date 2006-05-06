@@ -30,6 +30,7 @@ void SP_alien_start (edict_t *ent);
 void SP_civilian_start (edict_t *ent);
 void SP_func_breakable (edict_t *ent);
 void SP_worldspawn (edict_t *ent);
+void SP_ugv_start (edict_t *ent);
 
 typedef struct
 {
@@ -46,6 +47,7 @@ spawn_t	spawns[] = {
 	{"info_human_start", SP_human_start},
 	{"info_alien_start", SP_alien_start},
 	{"info_civilian_start", SP_civilian_start},
+	{"info_ugv_start", SP_ugv_start},
 	{"func_breakable", SP_func_breakable},
 
 	{NULL, NULL}
@@ -281,7 +283,7 @@ parsing textual entity definitions out of an ent file.
 void SpawnEntities (char *mapname, char *entities)
 {
 	edict_t		*ent;
-	int		inhibit, entnum;
+	int		entnum;
 	char		*com_token;
 #ifdef DEBUG
 #define EDICT_NUM(n) ((edict_t *)((byte *)g_edicts + sizeof(edict_t)*(n)))
@@ -298,7 +300,6 @@ void SpawnEntities (char *mapname, char *entities)
 
 	ent = NULL;
 	level.activeTeam = -1;
-	inhibit = 0;
 
 	// parse ents
 	entnum = 0;
@@ -323,17 +324,6 @@ void SpawnEntities (char *mapname, char *entities)
 		ent->mapNum = entnum++;
 		ED_CallSpawn (ent);
 	}
-
-	gi.dprintf ("%i entities inhibited\n", inhibit);
-
-#ifdef DEBUG
-	ent = EDICT_NUM(i);
-	while (i < globals.num_edicts) {
-		if (ent->inuse != 0 || ent->inuse != 1)
-			gi.dprintf("Invalid entity %d\n", i);
-		i++, ent++;
-	}
-#endif
 
 	// spawn ai players, if needed
 	if ( level.num_spawnpoints[TEAM_CIVILIAN] )
@@ -366,8 +356,11 @@ void G_ActorSpawn( edict_t *ent )
 	// link it for collision detection
 	ent->dir = AngleToDV( ent->angle );
 	ent->solid = SOLID_BBOX;
-	VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND );
-	VectorSet( ent->mins,-PLAYER_WIDTH,-PLAYER_WIDTH, PLAYER_MIN );
+	// maybe this is already set in one of the spawn functions
+	if ( ent->maxs[0] == 0 )
+		VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND );
+	if ( ent->mins[0] == 0 )
+		VectorSet( ent->mins,-PLAYER_WIDTH,-PLAYER_WIDTH, PLAYER_MIN );
 }
 
 /*QUAKED info_player_start (1 0 0) (-16 -16 -24) (16 16 32)
@@ -418,7 +411,6 @@ void SP_player_start (edict_t *ent)
 		G_FreeEdict( ent );
 }
 
-
 /*QUAKED info_human_start (1 0 0) (-16 -16 -24) (16 16 32)
 Starting point for a single player human.
 */
@@ -443,6 +435,26 @@ void SP_human_start (edict_t *ent)
 	G_ActorSpawn( ent );
 }
 
+
+/*QUAKED info_ugv_start (1 0 0) (-16 -16 -24) (16 16 32)
+Starting point for a single player alien.
+*/
+void SP_ugv_start (edict_t *ent)
+{
+	ent->team = TEAM_HUMAN;
+	// set stats
+	ent->STUN = 100;
+	ent->HP = 100;
+	ent->AP = 100;
+
+	// these units are bigger
+	VectorSet( ent->maxs, PLAYER_WIDTH*2, PLAYER_WIDTH*2, PLAYER_STAND );
+	VectorSet( ent->mins,-(PLAYER_WIDTH*2),-(PLAYER_WIDTH*2), PLAYER_MIN );
+
+	// spawn multiplayer and/or singleplayer
+	if ( sv_maxclients->value > 1 ) SP_player_start( ent );
+	else G_ActorSpawn( ent );
+}
 
 /*QUAKED info_alien_start (1 0 0) (-16 -16 -24) (16 16 32)
 Starting point for a single player alien.
