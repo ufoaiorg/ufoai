@@ -2313,8 +2313,8 @@ void G_ClientTeamInfo( player_t *player )
 
 			// scores
 			for (k = 0; k<KILLED_NUM_TYPES; k++)
-				ent->chr.kills[k] = gi.ReadLong();
-			ent->chr.assigned_missions = gi.ReadLong();
+				ent->chr.kills[k] = gi.ReadShort();
+			ent->chr.assigned_missions = gi.ReadShort();
 
 			ent->HP = GET_HP( ent->chr.skills[ABILITY_POWER] );
 			ent->AP = 100;
@@ -2349,8 +2349,8 @@ void G_ClientTeamInfo( player_t *player )
 			for ( k = 0; k < 4; k++ ) gi.ReadString();
 			gi.ReadByte();
 			for (k = 0; k<SKILL_NUM_TYPES; k++) gi.ReadByte();
-			for (k = 0; k<KILLED_NUM_TYPES; k++) gi.ReadLong();
-			gi.ReadLong();
+			for (k = 0; k<KILLED_NUM_TYPES; k++) gi.ReadShort();
+			gi.ReadShort();
 			while ( gi.ReadByte() != NONE );
 		}
 

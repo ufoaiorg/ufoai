@@ -338,9 +338,12 @@ void R_DrawBeam( entity_t *e )
 	qglDepthMask( GL_TRUE );
 }
 
-/*
-** R_DrawBox
-*/
+/*=============
+R_DrawBox
+
+Draws the field marker
+entity is specified in cl_actor.c CL_AddTargeting
+=============*/
 void R_DrawBox( entity_t *e )
 {
 	vec3_t	upper, lower;

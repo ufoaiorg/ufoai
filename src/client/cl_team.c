@@ -844,8 +844,8 @@ void CL_LoadTeamMember( sizebuf_t *sb, character_t *chr )
 
 	// load scores
 	for (i = 0; i < KILLED_NUM_TYPES; i++)
-		chr->kills[i] = MSG_ReadLong( sb );
-	chr->assigned_missions = MSG_ReadLong( sb );
+		chr->kills[i] = MSG_ReadShort( sb );
+	chr->assigned_missions = MSG_ReadShort( sb );
 
 	// inventory
 	Com_DestroyInventory( chr->inv );
@@ -1057,8 +1057,8 @@ void CL_SendTeamInfo( sizebuf_t *buf, character_t *team, int num )
 
 		// scores
 		for ( j = 0; j < KILLED_NUM_TYPES; j++ )
-			MSG_WriteLong( buf, chr->kills[j] );
-		MSG_WriteLong( buf, chr->assigned_missions );
+			MSG_WriteShort( buf, chr->kills[j] );
+		MSG_WriteShort( buf, chr->assigned_missions );
 
 		// equipment
 		for ( j = 0; j < csi.numIDs; j++ )

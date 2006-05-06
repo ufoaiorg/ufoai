@@ -300,16 +300,16 @@ void CL_ActorUpdateCVars( void )
 				{
 					Com_sprintf( infoText, MAX_MENUTEXTLEN,
 							"%s\n%s (%i) [%i%%] %i\n",
-							_(csi.ods[selWeapon->item.t].name),
-							_(selFD->name), selFD->ammo, selToHit,
+							csi.ods[selWeapon->item.t].name,
+							selFD->name, selFD->ammo, selToHit,
 							selFD->time );
 					time = selFD->time;
 				}
 				else if ( selWeapon )
 				{
 					Com_sprintf( infoText, MAX_MENUTEXTLEN,
-							"%s\n(empty)\n",
-							_(csi.ods[selWeapon->item.t].name) );
+							_("%s\n(empty)\n"),
+							csi.ods[selWeapon->item.t].name );
 				}
 				else
 					cl.cmode = M_MOVE;
@@ -604,13 +604,23 @@ because others are standing there already
 void CL_BuildForbiddenList( void )
 {
 	le_t	*le;
-	int		i;
+	int		i, j, k;
 
 	fb_length = 0;
 
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 		if ( le->inuse && !(le->state & STATE_DEAD) && le->type == ET_ACTOR )
-			fb_list[fb_length++] = le->pos;
+		{
+			if ( ! le->size )
+				fb_list[fb_length++] = le->pos;
+			else
+				// we don't need the height value because
+				// the unit is always on the same level
+				for ( j = 0; j < le->size[0]; j++ )
+					for ( k = 0; k < le->size[1]; k++ )
+						// FIXME: put all vec3_t's in here
+						fb_list[fb_length++] = le->pos;
+		}
 
 	if ( fb_length > MAX_FB_LIST )
 		Com_Error( ERR_DROP, "CL_BuildForbiddenList: list too long" );
@@ -650,6 +660,8 @@ int CL_CheckAction( void )
 /*
 =================
 CL_TraceMove
+
+Draws the way to walk when confirm actions is activated
 =================
 */
 int CL_TraceMove( pos3_t to )
@@ -1437,10 +1449,6 @@ TARGETING GRAPHICS
 ==============================================================
 */
 
-// field marker box
-const vec3_t	box_delta = {11, 11, 27};
-
-
 /*
 =================
 CL_TargetingToHit
@@ -1628,8 +1636,12 @@ void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
 CL_AddTargeting
 =================
 */
+// field marker box
+const vec3_t	box_delta = {11, 11, 27};
 void CL_AddTargeting( void )
 {
+	vec3_t boxSize;
+
 	if ( mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE )
 		return;
 
@@ -1641,9 +1653,6 @@ void CL_AddTargeting( void )
 		ent.flags = RF_BOX;
 
 		Grid_PosToVec( &clMap, mousePos, ent.origin );
-//		V_AddLight( ent.origin, 256, 1.0, 0, 0 );
-		VectorAdd( ent.origin, box_delta, ent.oldorigin );
-		VectorSubtract( ent.origin, box_delta, ent.origin );
 
 		// ok, paint the green box if move is possible
 		if ( selActor && actorMoveLength < 0xFF && actorMoveLength <= selActor->TU )
@@ -1661,8 +1670,22 @@ void CL_AddTargeting( void )
 			// not in our team and no civilian, too
 			if ( mouseActor->team != cls.team && mouseActor->team != TEAM_CIVILIAN )
 				VectorSet( ent.angles, 1, 0, 0 );
+			if ( !mouseActor->size )
+				VectorCopy( box_delta, boxSize );
+			else
+				VectorCopy( mouseActor->size, boxSize );
 		}
-		else ent.alpha = 0.3;
+		else
+		{
+			if ( ! selActor || (selActor && !selActor->size) )
+				VectorCopy( box_delta, boxSize );
+			else
+				VectorCopy( selActor->size, boxSize );
+			ent.alpha = 0.3;
+		}
+		VectorAdd( ent.origin, boxSize, ent.oldorigin );
+		VectorSubtract( ent.origin, boxSize, ent.origin );
+//		V_AddLight( ent.origin, 256, 1.0, 0, 0 );
 
 		// add it
 		V_AddEntity( &ent );

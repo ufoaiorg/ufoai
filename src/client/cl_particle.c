@@ -137,6 +137,7 @@ value_t pps[] =
 	{ "fps",		V_FLOAT,	PPOFS( fps ) },
 	{ "lastframe",	V_FLOAT,	PPOFS( lastFrame) },
 	{ "levelflags",	V_INT,		PPOFS( levelFlags ) },
+	{ "light",		V_BOOL,		PPOFS( light ) },
 
 	{ NULL,	0, 0 }
 };
@@ -716,6 +717,8 @@ void CL_ParticleRun( void )
 				if ( p->thinkFade ) CL_Fading( p->color, p->thinkFade, p->lastThink * p->tps, p->blend == BLEND_BLEND );
 				if ( p->frameFade ) CL_Fading( p->color, p->frameFade, p->lastFrame * p->fps, p->blend == BLEND_BLEND );
 			}
+			if ( p->light )
+				V_AddLight( p->s, 256, p->color[0], p->color[1], p->color[2] );
 		}
 }
 
