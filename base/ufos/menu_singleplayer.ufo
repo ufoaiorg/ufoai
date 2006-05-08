@@ -53,58 +53,104 @@ menu singleplayer
 
 	pic button_continue
 	{
-		image	menu/single_buttons1
-		pos		"640 170"
+		click	{ cmd game_continue }
+		pos	"640 170"
+		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
-		click	{ cmd game_continue }
-		out		{ *button_continue image menu/single_buttons1 }
-		in		{ *button_continue image menu/single_buttons1a }
+		mousefx	true
+		out	{ *string_continue color "0 0.5 0 1" *button_continue texl "0 0"  *button_continue texh "256 64" }
+		in	{ *string_continue color "1 1 1 1" *button_continue texl "0 64" *button_continue texh "256 128" }
+	}
+	string string_continue
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Continue"
+		pos	"768 180"
+		align	uc
 	}
 
 	pic button_load
 	{
-		image	menu/single_buttons1
-		pos		"640 240"
-		texl	"0 64"
-		texh	"256 128"
 		click	{ cmd "mn_push load" }
-		out		{ *button_load image menu/single_buttons1 }
-		in		{ *button_load image menu/single_buttons1a }
+		pos	"640 240"
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_load color "0 0.5 0 1" *button_load texl "0 0"  *button_load texh "256 64" }
+		in	{ *string_load color "1 1 1 1" *button_load texl "0 64" *button_load texh "256 128" }
+	}
+	string string_load
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Load"
+		pos	"768 250"
+		align	uc
 	}
 
 	pic button_save
 	{
-		image	menu/single_buttons1
-		pos		"640 310"
-		texl	"0 128"
-		texh	"256 192"
+		pos	"640 310"
 		click	{ cmd "mn_push save" }
-		out		{ *button_save image menu/single_buttons1 }
-		in		{ *button_save image menu/single_buttons1a }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_save color "0 0.5 0 1" *button_save texl "0 0"  *button_save texh "256 64" }
+		in	{ *string_save color "1 1 1 1" *button_save texl "0 64" *button_save texh "256 128" }
+	}
+	string string_save
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Save"
+		pos	"768 320"
+		align	uc
 	}
 
 	pic button_new
 	{
-		image	menu/single_buttons1
-		pos		"640 380"
-		texl	"0 192"
-		texh	"256 256"
+		pos	"640 380"
 		click	{ cmd "game_new" }
-		out		{ *button_new image menu/single_buttons1 }
-		in		{ *button_new image menu/single_buttons1a }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_new color "0 0.5 0 1" *button_new texl "0 0"  *button_new texh "256 64" }
+		in	{ *string_new color "1 1 1 1" *button_new texl "0 64" *button_new texh "256 128" }
+	}
+	string string_new
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_New"
+		pos	"768 390"
+		align	uc
 	}
 
 	pic button_exit
 	{
-		image	menu/main_buttons2
-		pos		"640 520"
-		texl	"0 128"
-		texh	"256 192"
-		click	{ cmd "game_exit;mn_pop" }
-		out		{ *button_exit texl "0 128" *button_exit texh "256 192" }
-		in		{ *button_exit texl "0 192" *button_exit texh "256 256" }
+		pos	"640 520"
+		click	{ cmd "mn_pop" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_exit color "0 0.5 0 1" *button_exit texl "0 0"  *button_exit texh "256 64" }
+		in	{ *string_exit color "1 1 1 1" *button_exit texl "0 64" *button_exit texh "256 128" }
 	}
+	string string_exit
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Exit"
+		pos	"768 530"
+		align	uc
+	}
+
 }
 
 
@@ -163,57 +209,102 @@ menu singleplayermission
 
 	pic button_continue
 	{
-		image	menu/single_buttons1
-		pos		"640 170"
+		click	{ cmd game_continue }
+		pos	"640 170"
+		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
-		click	{ cmd game_continue; }
-		out		{ *button_continue image menu/single_buttons1 }
-		in		{ *button_continue image menu/single_buttons1a }
+		mousefx	true
+		out	{ *string_continue color "0 0.5 0 1" *button_continue texl "0 0"  *button_continue texh "256 64" }
+		in	{ *string_continue color "1 1 1 1" *button_continue texl "0 64" *button_continue texh "256 128" }
+	}
+	string string_continue
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Continue"
+		pos	"768 180"
+		align	uc
 	}
 
 	pic button_abort
 	{
-		image	menu/single_buttons2
-		pos		"640 240"
+		click	{ cmd game_abort; }
+		pos	"640 240"
+		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
-		click	{ cmd game_abort; }
-		out		{ *button_abort image menu/single_buttons2 }
-		in		{ *button_abort image menu/single_buttons2a }
+		mousefx	true
+		out	{ *string_abort color "0 0.5 0 1" *button_abort texl "0 0"  *button_abort texh "256 64" }
+		in	{ *string_abort color "1 1 1 1" *button_abort texl "0 64" *button_abort texh "256 128" }
+	}
+	string string_abort
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Abort"
+		pos	"768 250"
+		align	uc
 	}
 
 	pic button_retry
 	{
-		image	menu/single_buttons2
-		pos		"640 310"
-		texl	"0 64"
-		texh	"256 128"
-		click	{ cmd game_go; }
-		out		{ *button_retry image menu/single_buttons2 }
-		in		{ *button_retry image menu/single_buttons2a }
+		pos	"640 310"
+		click	{ cmd "game_go" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_retry color "0 0.5 0 1" *button_retry texl "0 0"  *button_retry texh "256 64" }
+		in	{ *string_retry color "1 1 1 1" *button_retry texl "0 64" *button_retry texh "256 128" }
+	}
+	string string_retry
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Retry"
+		pos	"768 320"
+		align	uc
 	}
 
 	pic button_options
 	{
-		image	menu/main_buttons1
-		pos		"640 380"
-		texl	"0 256"
-		texh	"256 320"
+		pos	"640 380"
 		click	{ cmd "mn_push options;" }
-		out		{ *button_options texl "0 256" *button_options texh "256 320" }
-		in		{ *button_options texl "0 320" *button_options texh "256 384" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_options color "0 0.5 0 1" *button_options texl "0 0"  *button_options texh "256 64" }
+		in	{ *string_options color "1 1 1 1" *button_options texl "0 64" *button_options texh "256 128" }
+	}
+	string string_options
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Options"
+		pos	"768 390"
+		align	uc
 	}
 
 	pic button_exit
 	{
-		image	menu/main_buttons2
-		pos		"640 520"
-		texl	"0 128"
-		texh	"256 192"
-		click	{ cmd "game_exit;mn_pop;" }
-		out		{ *button_exit texl "0 128" *button_exit texh "256 192" }
-		in		{ *button_exit texl "0 192" *button_exit texh "256 256" }
+		pos	"640 520"
+		click	{ cmd "mn_pop;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_exit color "0 0.5 0 1" *button_exit texl "0 0"  *button_exit texh "256 64" }
+		in	{ *string_exit color "1 1 1 1" *button_exit texl "0 64" *button_exit texh "256 128" }
+	}
+	string string_exit
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Exit"
+		pos	"768 530"
+		align	uc
 	}
 }
 
@@ -358,15 +449,25 @@ menu load
 	// buttons
 	// ==================
 
+
 	pic button_exit
 	{
-		image	menu/main_buttons2
-		pos		"640 520"
-		texl	"0 128"
-		texh	"256 192"
-		click	{ cmd "game_exit;mn_pop" }
-		out		{ *button_exit texl "0 128" *button_exit texh "256 192" }
-		in		{ *button_exit texl "0 192" *button_exit texh "256 256" }
+		pos	"640 520"
+		click	{ cmd "mn_pop;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_exit color "0 0.5 0 1" *button_exit texl "0 0"  *button_exit texh "256 64" }
+		in	{ *string_exit color "1 1 1 1" *button_exit texl "0 64" *button_exit texh "256 128" }
+	}
+	string string_exit
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Exit"
+		pos	"768 530"
+		align	uc
 	}
 
 	func init
@@ -527,13 +628,22 @@ menu save
 
 	pic button_exit
 	{
-		image	menu/main_buttons2
-		pos		"640 520"
-		texl	"0 128"
-		texh	"256 192"
-		click	{ cmd "game_exit;mn_pop" }
-		out		{ *button_exit texl "0 128" *button_exit texh "256 192" }
-		in		{ *button_exit texl "0 192" *button_exit texh "256 256" }
+		pos	"640 520"
+		click	{ cmd "mn_pop;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_exit color "0 0.5 0 1" *button_exit texl "0 0"  *button_exit texh "256 64" }
+		in	{ *string_exit color "1 1 1 1" *button_exit texl "0 64" *button_exit texh "256 128" }
+	}
+	string string_exit
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Exit"
+		pos	"768 530"
+		align	uc
 	}
 
 	func init

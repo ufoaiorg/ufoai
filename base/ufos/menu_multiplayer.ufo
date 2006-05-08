@@ -53,55 +53,91 @@ menu multiplayer
         // buttons
         // ==================
 
-        pic button_connect
-        {
-                image   menu/multi_buttons1
-                texl    "0 0"
-                click   { cmd "mn_pop;mn_push mp_join_lan;" }
-                texh    "256 64"
-                pos     "80 220"
-                out     { *button_connect texl "0 0"  *button_connect texh "256 64" }
-                in      { *button_connect texl "0 64" *button_connect texh "256 128" }
-        }
+	pic button_join
+	{
+		pos	"80 220"
+		click	{ cmd "mn_pop;mn_push mp_join_lan;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_join color "0 0.5 0 1" *button_join texl "0 0"  *button_join texh "256 64" }
+		in	{ *string_join color "1 1 1 1" *button_join texl "0 64" *button_join texh "256 128" }
+	}
+	string string_join
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Join"
+		pos	"208 230"
+		align	uc
+	}
 
-        pic button_create
-        {
-                image   menu/multi_buttons1
-                texl    "0 128"
-                texh    "256 192"
-                click   { cmd "mn_pop;mn_push mp_create_server;" }
-                out     { *button_create texl "0 128" *button_create texh "256 192" }
-                in      { *button_create texl "0 192" *button_create texh "256 256" }
-                pos     "80 290"
-        }
+	pic button_create
+	{
+		pos	"80 290"
+		click	{ cmd "mn_pop;mn_push mp_create_server;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_create color "0 0.5 0 1" *button_create texl "0 0"  *button_create texh "256 64" }
+		in	{ *string_create color "1 1 1 1" *button_create texl "0 64" *button_create texh "256 128" }
+	}
+	string string_create
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Create"
+		pos	"208 300"
+		align	uc
+	}
 
-        pic button_team
-        {
-                image   menu/multi_buttons1
-                pos             "80 360"
-                texl    "0 256"
-                texh    "256 320"
-                click   { cmd "mn_pop;mn_push mp_team;" }
-                out             { *button_team texl "0 256" *button_team texh "256 320" }
-                in              { *button_team texl "0 320" *button_team texh "256 384" }
-        }
+	pic button_team
+	{
+		pos	"80 360"
+		click	{ cmd "mn_pop;mn_push mp_team;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_team color "0 0.5 0 1" *button_team texl "0 0"  *button_team texh "256 64" }
+		in	{ *string_team color "1 1 1 1" *button_team texl "0 64" *button_team texh "256 128" }
+	}
+	string string_team
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Team"
+		pos	"208 370"
+		align	uc
+	}
 
-        pic button_exit
-        {
-                image   menu/main_buttons2
-                pos             "80 450"
-                texl    "0 128"
-                texh    "256 192"
-                click   { cmd "mn_pop esc;" }
-                out             { *button_exit texl "0 128" *button_exit texh "256 192" }
-                in              { *button_exit texl "0 192" *button_exit texh "256 256" }
-        }
+	pic button_exit
+	{
+		pos	"80 450"
+		click	{ cmd "mn_pop esc" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_exit color "0 0.5 0 1" *button_exit texl "0 0"  *button_exit texh "256 64" }
+		in	{ *string_exit color "1 1 1 1" *button_exit texl "0 64" *button_exit texh "256 128" }
+	}
+	string string_exit
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Exit"
+		pos	"208 460"
+		align	uc
+	}
 
-        func init
-        {
-                cmd "mn_escpop 5;"
-                cmd "mn_push mp_join_lan;maxclients 2"
-        }
+	func init
+	{
+		cmd "mn_escpop 5;"
+		cmd "mn_push mp_join_lan;maxclients 2"
+	}
 }
 
 

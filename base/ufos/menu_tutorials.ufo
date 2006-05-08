@@ -50,12 +50,21 @@ menu tutorials
 
 	pic button_exit
 	{
-		image	menu/main_buttons2
-		pos		"640 520"
-		texl	"0 128"
-		texh	"256 192"
+		pos	"640 520"
 		click	{ cmd "mn_pop" }
-		out		{ *button_exit texl "0 128" *button_exit texh "256 192" }
-		in		{ *button_exit texl "0 192" *button_exit texh "256 256" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_exit color "0 0.5 0 1" *button_exit texl "0 0"  *button_exit texh "256 64" }
+		in	{ *string_exit color "1 1 1 1" *button_exit texl "0 64" *button_exit texh "256 128" }
+	}
+	string string_exit
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Exit"
+		pos	"768 530"
+		align	uc
 	}
 }
