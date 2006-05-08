@@ -547,6 +547,11 @@ menu team
 		scale	"1.0 1.0 1.0"
 	}
 
+	//pic		rank_img { pos "475 370" image "*cvar mn_chrrank_img" }
+	// TODO: this is a placeholder for now.
+	pic		rank_img { pos "475 370" image "hud/rank_01" }
+	string	rank_lbl { pos "475 75" string "*cvar mn_chrrank" }
+	
 	string pwr_lbl { pos "700 85"  string "_Power:" }
 	string pwr_val { pos "975 85"  string "*cvar mn_tpwr" align ur }
 	pic pwr_rahmen { pos "707 99"  image menu/bar_rahmen }
@@ -596,6 +601,8 @@ menu team
 	string	missions_val { pos "975 325" string "*cvar mn_chrmis" align ur }
 	string	kills_lbl { pos "700 345" string "_Killed Enemies:" }
 	string	kills_val { pos "975 345" string "*cvar mn_chrkillalien" align ur }
+	
+
 	//mn_chrkillcivilian
 	//mn_chrkillteam
 

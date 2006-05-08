@@ -57,6 +57,8 @@ void CL_CharacterCvars( character_t *chr )
 	Cvar_Set( "mn_chrkillalien", va( "%i", chr->kills[KILLED_ALIENS] ) );
 	Cvar_Set( "mn_chrkillcivilian", va( "%i", chr->kills[KILLED_CIVILIANS] ) );
 	Cvar_Set( "mn_chrkillteam", va( "%i", chr->kills[KILLED_TEAM] ) );
+	Com_sprintf (messageBuffer, sizeof(messageBuffer), _("Rank: %i"), chr->rank );
+	Cvar_Set( "mn_chrrank", messageBuffer );
 
 	Cvar_Set( "mn_vpwr", va( "%i", chr->skills[ABILITY_POWER] ) );
 	Cvar_Set( "mn_vspd", va( "%i", chr->skills[ABILITY_SPEED] ) );

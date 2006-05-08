@@ -960,6 +960,16 @@ typedef enum
 
 typedef enum
 {
+	RANK_ROOKIE,
+	RANK_GROUPLEADER,
+	RANK_COMMANDER,
+	RANK_CAPTAIN,
+
+	RANK_NUM_TYPES
+} ranktype_t;
+
+typedef enum
+{
 	ABILITY_POWER,
 	ABILITY_SPEED,
 	ABILITY_ACCURACY,
@@ -1017,6 +1027,7 @@ typedef struct character_s
 // 	int		crossed_distance;
 	// date		joined_edc;
 	// date		died;
+	ranktype_t rank;
 	medals_t *medals;
 	// TODO:
 	// *------------------**
