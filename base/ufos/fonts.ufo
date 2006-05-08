@@ -25,3 +25,10 @@ font f_menu
 	font	"media/FreeSans.ttf"
 	size	22
 }
+
+font f_menubig
+{
+	font	"media/FreeSans.ttf"
+	size	28
+	style	TTF_STYLE_BOLD
+}
