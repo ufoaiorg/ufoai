@@ -43,7 +43,7 @@ menu singleplayer
 
 	string version
 	{
-		string	"*cvar ver"
+		string	"*cvar version"
 		pos		"10 744"
 	}
 
@@ -134,7 +134,7 @@ menu singleplayer
 	pic button_exit
 	{
 		pos	"640 520"
-		click	{ cmd "mn_pop" }
+		click	{ cmd "game_exit;mn_pop" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
@@ -199,7 +199,7 @@ menu singleplayermission
 
 	string version
 	{
-		string	"*cvar ver"
+		string	"*cvar version"
 		pos		"10 744"
 	}
 
@@ -354,7 +354,7 @@ menu load
 
 	string version
 	{
-		string	"*cvar ver"
+		string	"*cvar version"
 		pos		"10 744"
 	}
 
@@ -522,7 +522,7 @@ menu save
 
 	string version
 	{
-		string	"*cvar ver"
+		string	"*cvar version"
 		pos		"10 744"
 	}
 
