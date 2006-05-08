@@ -2425,6 +2425,10 @@ CL_ResetCampaign
 */
 void CL_ResetCampaign( void )
 {
+	// reset some vars
+	curCampaign = NULL;
+	baseCurrent = NULL;
+
 	Cmd_AddCommand( "game_new", CL_GameNew );
 	Cmd_AddCommand( "game_continue", CL_GameContinue );
 	Cmd_AddCommand( "game_exit", CL_GameExit );
@@ -2914,18 +2918,15 @@ void CL_ParseAircraft( char *name, char **text )
 }
 
 /*======================
-CL_OnGeoscape
+CL_OnBattlescape
 
 returns true when we are not in battlefield
 ======================*/
-qboolean CL_OnGeoscape( void )
+qboolean CL_OnBattlescape( void )
 {
 	// sv.state is set to zero on every battlefield shutdown
-	if ( Com_ServerState() )
-		return false;
-	// no active game
-	if ( ! curCampaign )
-		return false;
+	if ( Com_ServerState() > 0 )
+		return true;
 
-	return true;
+	return false;
 }

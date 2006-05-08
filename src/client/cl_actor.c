@@ -1202,10 +1202,7 @@ This function finishes the current round of the player in battlescape and starts
 void CL_NextRound( void )
 {
 	// can't end round if we are not in battlescape
-	if ( CL_OnGeoscape() ) {
-		Com_Printf( "Can't proceed to next round. We are not in Battlescape.\n");
-		return;
-	}
+	if ( !CL_OnBattlescape() ) return;
 
 	// can't end round if we're not active
 	if ( cls.team != cl.actTeam )
