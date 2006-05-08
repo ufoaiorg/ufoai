@@ -20,7 +20,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "q_shared.h"
 
-#define Q2_MMX_ENABLED 1
 #ifdef Q2_MMX_ENABLED
 // used for mmx optimizations
 #include <xmmintrin.h>
