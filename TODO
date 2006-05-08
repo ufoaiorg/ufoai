@@ -7,8 +7,13 @@ Finished tasks should not be deleted, but marked with "[DONE]".
 Tasks for TechDemo3
 
 * Make unresearched items in the Ufopedia invisible.
-* Bug #1482877: map b/g/ufo_hangar.map does not compile
 * Bug #1474623: Bug in savegame: aircraft problems
-* Bug #1459713: Armored soldiers appear as purple diamonds
+* Bug #1482877: map b/g/ufo_hangar.map does not compile
+* Bugs that need to be checked (repoduceable/fixed):
+** Bug #1459713: Armored soldiers appear as purple diamonds
+** Bug #1461639: Soldier equipment vanishes on mission retry
+** Bug #1459259: there is no reaction fire?
+** Bug #1443163: Reaction fire fires at all guys around
+
 
 =================================================
