@@ -883,7 +883,7 @@ item stunrod
 	weapon	true
 	type		melee
 	category	2
-	shape	"0 0 2 1"
+	shape	"0 0 4 2"
 	center	"-1 0 3"
 	scale		1.0
 	price		3000
