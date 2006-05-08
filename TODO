@@ -1,0 +1,13 @@
+TODO list for UFO: Alien Invasion
+
+This file lists tasks that needs to be done so we can release the next version of the game. This includes "blocking" bugs, uncompleted/missing features and the like.
+Finished tasks should not be deleted, but marked with "[DONE]".
+
+=================================================
+Tasks for TechDemo3
+
+* Make unresearched items in the Ufopedia invisible.
+* Bug #1482877: map b/g/ufo_hangar.map does not compile
+* Bug #1474623: Bug in savegame: aircraft problems
+
+=================================================
