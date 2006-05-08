@@ -734,11 +734,11 @@ void SV_SpawnServer (char *server, char *param, server_state_t serverstate, qboo
 	sv.attractloop = attractloop;
 
 	// save name for levels that don't set message
-	strcpy (sv.configstrings[CS_NAME], server);
+	Q_strncpyz (sv.configstrings[CS_NAME], server, MAX_TOKEN_CHARS);
 
 	SZ_Init (&sv.multicast, sv.multicast_buf, sizeof(sv.multicast_buf));
 
-	strcpy (sv.name, server);
+	Q_strncpyz (sv.name, server, MAX_QPATH);
 
 	// leave slots at start for clients only
 	for (i=0 ; i<sv_maxclients->value ; i++)
@@ -751,8 +751,8 @@ void SV_SpawnServer (char *server, char *param, server_state_t serverstate, qboo
 
 	sv.time = 1000;
 
-	strcpy (sv.name, server);
-	strcpy (sv.configstrings[CS_NAME], server);
+	Q_strncpyz (sv.name, server, MAX_QPATH);
+	Q_strncpyz (sv.configstrings[CS_NAME], server, MAX_TOKEN_CHARS);
 
 	if ( serverstate == ss_game )
 	{

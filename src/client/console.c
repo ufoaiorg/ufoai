@@ -473,24 +473,24 @@ void Con_DrawInput (void)
 
 	text = key_lines[edit_line];
 
-// add the cursor frame
+	// add the cursor frame
 	text[key_linepos] = 10+((int)(cls.realtime>>8)&1);
 
-// fill out remainder with spaces
+	// fill out remainder with spaces
 	for (i=key_linepos+1 ; i< con.linewidth ; i++)
 		text[i] = ' ';
 
-//	prestep if horizontally scrolling
+	// prestep if horizontally scrolling
 	if (key_linepos >= con.linewidth)
 		text += 1 + key_linepos - con.linewidth;
 
-// draw it
+	// draw it
 	y = con.vislines-8;
 
 	for (i=0 ; i<con.linewidth ; i++)
 		re.DrawChar ( (i+1)<<3, con.vislines - 22, text[i]);
 
-// remove cursor
+	// remove cursor
 	key_lines[edit_line][key_linepos] = 0;
 }
 
