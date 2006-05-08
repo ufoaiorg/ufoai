@@ -43,7 +43,7 @@ menu main
 
 	string version
 	{
-		string	"*cvar ver"
+		string	"*cvar version"
 		pos		"10 744"
 	}
 
@@ -51,92 +51,125 @@ menu main
 	// buttons
 	// ==================
 
+	// SINGLEPLAYER
 	pic button_singleplayer
 	{
-		image	menu/main_buttons1
-		pos		"640 170"
+		click	{ cmd "mn_push singleplayer" }
+		pos	"640 170"
+		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
-		click	{ cmd "mn_push singleplayer" }
-// 		out		{ *string_singleplayer color "0 0.8 0 1" *button_singleplayer texl "0 0"  *button_singleplayer texh "256 64" }
-// 		in		{ *string_singleplayer color "1 1 1 1" *button_singleplayer texl "0 64" *button_singleplayer texh "256 128" }
-		out		{ *button_singleplayer texl "0 0"  *button_singleplayer texh "256 64" }
-		in		{ *button_singleplayer texl "0 64" *button_singleplayer texh "256 128" }
+		mousefx	true
+		out	{ *string_singleplayer color "0 0.5 0 1" *button_singleplayer texl "0 0"  *button_singleplayer texh "256 64" }
+		in	{ *string_singleplayer color "1 1 1 1" *button_singleplayer texl "0 64" *button_singleplayer texh "256 128" }
 	}
-
-// 	string string_singleplayer
-// 	{
-// 		font	f_menu
-// 		color	"0 0.8 0 1"
-// 		string	"Singleplayer"
-// 		pos	"650 180"
-// 		align	ul
-// 	}
+	string string_singleplayer
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Singleplayer"
+		pos	"768 180"
+		align	uc
+	}
 
 	pic button_multiplayer
 	{
-		image	menu/main_buttons1
-		pos		"640 240"
-		texl	"0 128"
-		texh	"256 192"
 		click	{ cmd "mn_push multiplayer;" }
-		out		{ *button_multiplayer texl "0 128" *button_multiplayer texh "256 192" }
-		in		{ *button_multiplayer texl "0 192" *button_multiplayer texh "256 256" }
+		pos	"640 240"
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_multiplayer color "0 0.5 0 1" *button_multiplayer texl "0 0"  *button_multiplayer texh "256 64" }
+		in	{ *string_multiplayer color "1 1 1 1" *button_multiplayer texl "0 64" *button_multiplayer texh "256 128" }
+	}
+	string string_multiplayer
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Multiplayer"
+		pos	"768 250"
+		align	uc
 	}
 
 	pic button_options
 	{
-		image	menu/main_buttons1
-		pos		"640 310"
-		texl	"0 256"
-		texh	"256 320"
+		pos	"640 310"
 		click	{ cmd "mn_push options;" }
-		out		{ *button_options texl "0 256" *button_options texh "256 320" }
-		in		{ *button_options texl "0 320" *button_options texh "256 384" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_options color "0 0.5 0 1" *button_options texl "0 0"  *button_options texh "256 64" }
+		in	{ *string_options color "1 1 1 1" *button_options texl "0 64" *button_options texh "256 128" }
+	}
+	string string_options
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Options"
+		pos	"768 320"
+		align	uc
 	}
 
 	pic button_tut
 	{
-		image	menu/main_tut
-		pos		"640 380"
+		pos	"640 380"
+		click	{ cmd "mn_push tutorials;" }
+		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
-		click	{ cmd "mn_push tutorials;" }
-		out		{ *button_tut image menu/main_tut }
-		in		{ *button_tut image menu/main_tuta }
+		mousefx	true
+		out	{ *string_tut color "0 0.5 0 1" *button_tut texl "0 0"  *button_tut texh "256 64" }
+		in	{ *string_tut color "1 1 1 1" *button_tut texl "0 64" *button_tut texh "256 128" }
 	}
-
-// 	pic button_ufopedia
-// 	{
-// 		image	menu/main_buttons1
-// 		pos		"640 380"
-// 		texl	"0 384"
-// 		texh	"256 448"
-// 		click	{ cmd "mn_push ufopedia;" }
-// 		out		{ *button_ufopedia texl "0 384" *button_ufopedia texh "256 448" }
-// 		in		{ *button_ufopedia texl "0 448" *button_ufopedia texh "256 512" }
-// 	}
+	string string_tut
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Tutorials"
+		pos	"768 390"
+		align	uc
+	}
 
 	pic button_credits
 	{
-		image	menu/main_buttons2
-		pos		"640 450"
+		pos	"640 450"
+		click	{ cmd "seq_start credits;" }
+		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
-		click	{ cmd "seq_start credits;" }
-		out		{ *button_credits texl "0 0"  *button_credits texh "256 64" }
-		in		{ *button_credits texl "0 64" *button_credits texh "256 128" }
+		mousefx	true
+		out	{ *string_credits color "0 0.5 0 1" *button_credits texl "0 0"  *button_credits texh "256 64" }
+		in	{ *string_credits color "1 1 1 1" *button_credits texl "0 64" *button_credits texh "256 128" }
+	}
+	string string_credits
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Credits"
+		pos	"768 460"
+		align	uc
 	}
 
 	pic button_exit
 	{
-		image	menu/main_buttons2
-		pos		"640 520"
-		texl	"0 128"
-		texh	"256 192"
+		pos	"640 520"
 		click	{ cmd quit }
-		out		{ *button_exit texl "0 128" *button_exit texh "256 192" }
-		in		{ *button_exit texl "0 192" *button_exit texh "256 256" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_exit color "0 0.5 0 1" *button_exit texl "0 0"  *button_exit texh "256 64" }
+		in	{ *string_exit color "1 1 1 1" *button_exit texl "0 64" *button_exit texh "256 128" }
+	}
+	string string_exit
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Exit"
+		pos	"768 530"
+		align	uc
 	}
 
 	func init
