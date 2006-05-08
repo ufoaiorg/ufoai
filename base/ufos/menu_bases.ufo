@@ -405,7 +405,6 @@ menu aircraft
 	pic button_transfer
 	{
 		tooltip	"_Transfer equipment or personnel"
-		image	menu/button_basemen
 		image	menu/button
 		pos	"45 310"
 		texl	"0 0"
