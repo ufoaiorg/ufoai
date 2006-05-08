@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-05-08 19:14+0200\n"
-"PO-Revision-Date: 2006-05-08 19:37+0100\n"
+"PO-Revision-Date: 2006-05-08 20:13+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@gmx.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -597,7 +597,7 @@ msgstr "Tutorials"
 
 #: ../base/ufos/menu_main.ufo:150
 msgid "Credits"
-msgstr "Guthaben"
+msgstr "Mitwirkende"
 
 #: ../base/ufos/menu_main.ufo:170
 #: ../base/ufos/menu_multiplayer.ufo:131
