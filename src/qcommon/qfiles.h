@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -58,7 +58,9 @@ The .pk3 files are just uncompressed zip files
 #define PAK3HEADER (0x504B0304)
 #define PAK3DIRHEADER (0x504B0102)
 
+#ifdef _MSC_VER
 #pragma pack(push, 2)
+#endif
 typedef struct dpak3header_s
 {
 	unsigned long ident;
@@ -73,12 +75,14 @@ typedef struct dpak3header_s
 	unsigned short filenameLength;
 	unsigned short extraFieldLength;
 } dpak3header_t;
+#ifdef _MSC_VER
 #pragma pack(pop)
+#endif
 
 // Make sure we have this available
 char **FS_ListFiles( char *findname, int *numfiles, unsigned musthave, unsigned canthave );
 
-// End .pk3 support 
+// End .pk3 support
 
 /*
 ========================================================================
@@ -133,7 +137,7 @@ typedef struct
 	short	t;
 } dstvert_t;
 
-typedef struct 
+typedef struct
 {
 	short	index_xyz[3];
 	short	index_st[3];
@@ -189,7 +193,7 @@ typedef struct
 	int			ofs_st;			// byte offset from start for stverts
 	int			ofs_tris;		// offset for dtriangles
 	int			ofs_frames;		// offset for first frame
-	int			ofs_glcmds;	
+	int			ofs_glcmds;
 	int			ofs_end;		// end of file
 
 } dmdl_t;
@@ -337,7 +341,7 @@ typedef struct
 typedef struct
 {
 	int			ident;
-	int			version;	
+	int			version;
 	lump_t		lumps[HEADER_LUMPS];
 } dheader_t;
 
@@ -469,7 +473,7 @@ typedef struct
 	short		side;
 
 	int			firstedge;		// we must support > 64k edges
-	short		numedges;	
+	short		numedges;
 	short		texinfo;
 
 // lighting info
