@@ -1,0 +1,39 @@
+medal cross
+{
+	name "_Cross"
+	type "medal"
+	image ""
+}
+
+medal coin
+{
+	name "_Coin"
+	type "medal"
+	image ""
+}
+
+// These ranks should be in order of lowest to highest rank
+medal rank_01
+{
+	name "_Rookie"
+	type "rank"
+	image ""
+}
+medal rank_01
+{
+	name "_Squad Leader"
+	type "rank"
+	image ""
+}
+medal rank_01
+{
+	name "_Commander"
+	type "rank"
+	image ""
+}
+medal rank_02
+{
+	name "_Captain"
+	type "rank"
+	image ""
+}
