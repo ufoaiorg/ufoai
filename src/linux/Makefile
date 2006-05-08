@@ -25,6 +25,7 @@ BUILD_FREETYPE=NO	# build with freetype support?
 BUILD_WITH_DGA=NO	# dga support compiled in
 BUILD_WITH_VIDMODE=YES	# vidmode support
 BUILD_WITH_JOYSTICK=NO	# joystick support
+BUILD_WITH_MMX=YES	# MMX support
 
 # (hopefully) end of configurable options
 
@@ -112,6 +113,10 @@ endif
 
 ifeq ($(strip $(BUILD_WITH_DGA)),YES)
 	BASE_CFLAGS+=-DHAVE_DGA
+endif
+
+ifeq ($(strip $(BUILD_WITH_MMX)),YES)
+	BASE_CFLAGS+=-DQ2_MMX_ENABLED
 endif
 
 ifeq ($(strip $(BUILD_WITH_VIDMODE)),YES)
