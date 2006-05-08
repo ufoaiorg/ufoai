@@ -20,6 +20,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "q_shared.h"
 
+#define Q2_MMX_ENABLED 1
+#ifdef Q2_MMX_ENABLED
+// used for mmx optimizations
+#include <xmmintrin.h>
+#endif
+
 #define DEG2RAD( a ) (( a * M_PI ) / 180.0F)
 
 vec3_t vec3_origin = {0,0,0};
@@ -876,23 +882,77 @@ vec_t _DotProduct (vec3_t v1, vec3_t v2)
 
 void _VectorSubtract (vec3_t veca, vec3_t vecb, vec3_t out)
 {
+#if Q2_MMX_ENABLED
+	// raynorpat: msvc sse optimization
+	__m128 xmm_veca, xmm_vecb, xmm_out;
+
+	xmm_veca = _mm_load_ss(&veca[0]);
+	xmm_vecb = _mm_load_ss(&vecb[0]);
+	xmm_out = _mm_sub_ss(xmm_veca,xmm_vecb);
+	_mm_store_ss(&out[0],xmm_out);
+
+	xmm_veca = _mm_load_ss(&veca[1]);
+	xmm_vecb = _mm_load_ss(&vecb[1]);
+	xmm_out = _mm_sub_ss(xmm_veca,xmm_vecb);
+	_mm_store_ss(&out[1],xmm_out);
+
+	xmm_veca = _mm_load_ss(&veca[2]);
+	xmm_vecb = _mm_load_ss(&vecb[2]);
+	xmm_out = _mm_sub_ss(xmm_veca,xmm_vecb);
+	_mm_store_ss(&out[2],xmm_out);
+#else
 	out[0] = veca[0]-vecb[0];
 	out[1] = veca[1]-vecb[1];
 	out[2] = veca[2]-vecb[2];
+#endif
 }
 
 void _VectorAdd (vec3_t veca, vec3_t vecb, vec3_t out)
 {
+#if Q2_MMX_ENABLED
+	// raynorpat: msvc sse optimization
+	__m128 xmm_veca, xmm_vecb, xmm_out;
+
+	xmm_veca = _mm_load_ss(&veca[0]);
+	xmm_vecb = _mm_load_ss(&vecb[0]);
+	xmm_out = _mm_add_ss(xmm_veca,xmm_vecb);
+	_mm_store_ss(&out[0],xmm_out);
+
+	xmm_veca = _mm_load_ss(&veca[1]);
+	xmm_vecb = _mm_load_ss(&vecb[1]);
+	xmm_out = _mm_add_ss(xmm_veca,xmm_vecb);
+	_mm_store_ss(&out[1],xmm_out);
+
+	xmm_veca = _mm_load_ss(&veca[2]);
+	xmm_vecb = _mm_load_ss(&vecb[2]);
+	xmm_out = _mm_add_ss(xmm_veca,xmm_vecb);
+	_mm_store_ss(&out[2],xmm_out);
+#else
 	out[0] = veca[0]+vecb[0];
 	out[1] = veca[1]+vecb[1];
 	out[2] = veca[2]+vecb[2];
+#endif
 }
 
 void _VectorCopy (vec3_t in, vec3_t out)
 {
+#if Q2_MMX_ENABLED
+	// raynorpat: msvc sse optimization
+	__m128 xmm_in;
+
+	xmm_in = _mm_load_ss(&in[0]);
+	_mm_store_ss(&out[0],xmm_in);
+
+	xmm_in = _mm_load_ss(&in[1]);
+	_mm_store_ss(&out[1],xmm_in);
+
+	xmm_in = _mm_load_ss(&in[2]);
+	_mm_store_ss(&out[2],xmm_in);
+#else
 	out[0] = in[0];
 	out[1] = in[1];
 	out[2] = in[2];
+#endif
 }
 
 void CrossProduct (vec3_t v1, vec3_t v2, vec3_t cross)
@@ -926,9 +986,29 @@ void VectorInverse (vec3_t v)
 
 void VectorScale (vec3_t in, vec_t scale, vec3_t out)
 {
+#if Q2_MMX_ENABLED
+	// raynorpat: msvc sse optimization
+	__m128 xmm_in, xmm_scale, xmm_out;
+
+	xmm_in = _mm_load_ss(&in[0]);
+	xmm_scale = _mm_load_ss(&scale);
+	xmm_out = _mm_mul_ss(xmm_in,xmm_scale);
+	_mm_store_ss(&out[0],xmm_out);
+
+	xmm_in = _mm_load_ss(&in[1]);
+	xmm_scale = _mm_load_ss(&scale);
+	xmm_out = _mm_mul_ss(xmm_in,xmm_scale);
+	_mm_store_ss(&out[1],xmm_out);
+
+	xmm_in = _mm_load_ss(&in[2]);
+	xmm_scale = _mm_load_ss(&scale);
+	xmm_out = _mm_mul_ss(xmm_in,xmm_scale);
+	_mm_store_ss(&out[2],xmm_out);
+#else
 	out[0] = in[0]*scale;
 	out[1] = in[1]*scale;
 	out[2] = in[2]*scale;
+#endif
 }
 
 
