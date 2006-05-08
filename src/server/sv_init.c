@@ -886,14 +886,14 @@ void SV_Map (qboolean attractloop, char *levelstring, qboolean loadgame)
 	if (sv.state == ss_dead && !sv.loadgame)
 		SV_InitGame ();	// the game is just starting
 
-	strcpy (level, levelstring);
+	Q_strncpyz (level, levelstring, MAX_QPATH);
 
 	// if there is a + in the map, set nextserver to the remainder
 	ch = strstr(level, "+");
 	if (ch)
 	{
 		*ch = 0;
-			Cvar_Set ("nextserver", va("gamemap \"%s\"", ch+1));
+		Cvar_Set ("nextserver", va("gamemap \"%s\"", ch+1));
 	}
 	else
 		Cvar_Set ("nextserver", "");
@@ -904,7 +904,7 @@ void SV_Map (qboolean attractloop, char *levelstring, qboolean loadgame)
 
 	// skip the end-of-unit flag if necessary
 	if (level[0] == '*')
-		strcpy (level, level+1);
+		Q_strncpyz (level, level+1, MAX_QPATH);
 
 	l = strlen(level);
 	if (l > 4 && !strcmp (level+l-4, ".cin") )

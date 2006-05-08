@@ -1381,6 +1381,8 @@ void CL_CollectAliens( mission_t* mission );
 void CL_CollectItems( int won );
 void CL_UpdateCharacterStats ( int won );
 void CL_UpdateCredits ( int credits );
+qboolean CL_OnGeoscape( void );
+
 //
 // cl_menu.c
 //

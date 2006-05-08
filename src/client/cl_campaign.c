@@ -2912,3 +2912,20 @@ void CL_ParseAircraft( char *name, char **text )
 		}
 	} while ( *text );
 }
+
+/*======================
+CL_OnGeoscape
+
+returns true when we are not in battlefield
+======================*/
+qboolean CL_OnGeoscape( void )
+{
+	// sv.state is set to zero on every battlefield shutdown
+	if ( Com_ServerState() )
+		return false;
+	// no active game
+	if ( ! curCampaign )
+		return false;
+
+	return true;
+}
