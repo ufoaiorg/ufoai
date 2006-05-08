@@ -16,6 +16,7 @@ Tasks for TechDemo3
 ** Bug #1461639: Soldier equipment vanishes on mission retry
 ** Bug #1459259: there is no reaction fire?
 ** Bug #1443163: Reaction fire fires at all guys around
-
+* Put some work into campaign.ufo - place yet unused missions to geoscape and integrate them into campaign
+* Finish the english language file
 
 =================================================
