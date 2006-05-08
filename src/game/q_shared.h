@@ -960,16 +960,6 @@ typedef enum
 
 typedef enum
 {
-	RANK_ROOKIE,
-	RANK_GROUPLEADER,
-	RANK_COMMANDER,
-	RANK_CAPTAIN,
-
-	RANK_NUM_TYPES
-} ranktype_t;
-
-typedef enum
-{
 	ABILITY_POWER,
 	ABILITY_SPEED,
 	ABILITY_ACCURACY,
@@ -995,7 +985,8 @@ typedef enum
 #define MAX_MEDALTITLE		32
 typedef struct medals_s
 {
-	char	title[MAX_MEDALTITLE];
+	char	id[MAX_MEDALTITLE];
+	char	name[MAX_MEDALTITLE];
 	medalType_t	type;
 	int	band;
 	abilityskills_t	affectedSkill;
@@ -1004,6 +995,13 @@ typedef struct medals_s
 	char	text[MAX_MEDALTEXT];
 	struct	medals_s	*next_medal;
 } medals_t;
+
+typedef struct rank_s
+{
+	char	name[MAX_MEDALTITLE];
+	struct	rank_s	*lower_rank;
+	struct	rank_s	*higher_rank;
+} rank_t;
 
 typedef struct character_s
 {
@@ -1027,7 +1025,7 @@ typedef struct character_s
 // 	int		crossed_distance;
 	// date		joined_edc;
 	// date		died;
-	ranktype_t rank;
+	rank_t *rank;
 	medals_t *medals;
 	// TODO:
 	// *------------------**

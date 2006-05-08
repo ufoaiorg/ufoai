@@ -79,6 +79,7 @@ CL_GenerateCharacter
 void CL_GenerateCharacter( char *team, base_t* base )
 {
 	character_t *chr;
+	rank_t rank;
 
 	// check for too many characters
 	if ( base->numWholeTeam >= (int)cl_numnames->value )
@@ -102,6 +103,9 @@ void CL_GenerateCharacter( char *team, base_t* base )
 	chr->skin = Com_GetModelAndName( team, chr->path, chr->body, chr->head, chr->name );
 	Cvar_ForceSet( va( "mn_name%i", base->numWholeTeam ), chr->name );
 
+	Q_strncpyz( rank.name, "Rookie", MAX_MEDALTITLE );
+	chr->rank = &rank;
+	
 	base->numWholeTeam++;
 }
 

@@ -46,7 +46,10 @@ static char *skill_strings[10] =
 
 void CL_CharacterCvars( character_t *chr )
 {
+	rank_t *rank = NULL;
 	assert( chr );
+	rank = chr->rank;
+
 	Cvar_ForceSet( "mn_name", chr->name );
 	Cvar_ForceSet( "mn_body", Com_CharGetBody( chr ) );
 	Cvar_ForceSet( "mn_head", Com_CharGetHead( chr ) );
@@ -57,8 +60,10 @@ void CL_CharacterCvars( character_t *chr )
 	Cvar_Set( "mn_chrkillalien", va( "%i", chr->kills[KILLED_ALIENS] ) );
 	Cvar_Set( "mn_chrkillcivilian", va( "%i", chr->kills[KILLED_CIVILIANS] ) );
 	Cvar_Set( "mn_chrkillteam", va( "%i", chr->kills[KILLED_TEAM] ) );
-	Com_sprintf (messageBuffer, sizeof(messageBuffer), _("Rank: %i"), chr->rank );
-	Cvar_Set( "mn_chrrank", messageBuffer );
+	//TODO: Doesn't work yet
+	//Com_sprintf (messageBuffer, sizeof(messageBuffer), "Rank: %s", rank->name );
+	//Cvar_Set( "mn_chrrank", messageBuffer );
+	Cvar_Set( "mn_chrrank", "Rank: TODO" );
 
 	Cvar_Set( "mn_vpwr", va( "%i", chr->skills[ABILITY_POWER] ) );
 	Cvar_Set( "mn_vspd", va( "%i", chr->skills[ABILITY_SPEED] ) );

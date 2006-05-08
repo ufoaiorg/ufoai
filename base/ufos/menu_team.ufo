@@ -1123,7 +1123,7 @@ menu equipment
 	string txt_actorname
 	{
 		string	"*cvar mn_name"
-		pos		"544 25"
+		pos		"544 22"
 	}
 
 	model body
