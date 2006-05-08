@@ -1259,9 +1259,10 @@ void CL_CampaignRun( void )
 
 		// set time cvars
 		CL_DateConvert( &ccs.date, &day, &month );
-		Cvar_Set( "mn_mapdate", va( "%i %s %i", ccs.date.day/365, CL_DateGetMonthName(month), day ) );
-		Cvar_Set( "mn_mapmin", va( "%i%i", (ccs.date.sec%3600)/60/10, (ccs.date.sec%3600)/60%10 ) );
-		Cvar_Set( "mn_maphour", va( "%i:", ccs.date.sec/3600 ) );
+		Cvar_Set( "mn_mapdate", va( "%i %s %i", ccs.date.day/365, CL_DateGetMonthName(month), day ) ); // CL_DateGetMonthName is already "gettexted"
+		Com_sprintf (messageBuffer, sizeof(messageBuffer), _("%02i:%i%i"), ccs.date.sec/3600, (ccs.date.sec%3600)/60/10, (ccs.date.sec%3600)/60%10  );
+		Cvar_Set( "mn_maptime", messageBuffer );
+		
 	}
 }
 

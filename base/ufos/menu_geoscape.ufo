@@ -72,24 +72,15 @@ menu map
 		font	f_big
 	}
 
-	string min
+	string time
 	{
-		string	"*cvar mn_mapmin"
+		string	"*cvar mn_maptime"
 		pos	"520 30"
 		align	ur
 		color	"0 .78 0 1"
 		font	f_big
 	}
-
-	string hour
-	{
-		string	"*cvar mn_maphour"
-		pos	"450 30"
-		align	ur
-		color	"0 .78 0 1"
-		font	f_big
-	}
-
+	
 	string txt_credits
 	{
 		tooltip	"_Organisation capital"
