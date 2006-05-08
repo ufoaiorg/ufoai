@@ -996,11 +996,27 @@ typedef struct medals_s
 	struct	medals_s	*next_medal;
 } medals_t;
 
+// enum over ranks
+// TODO: Add the others
+typedef enum
+{
+	RANK_ROOKIE,
+	RANK_COMMANDER,
+
+	MAX_RANKS
+} ranks_t;
+
+// REMOVEME: @hoehrer:ranks should have fixed attribute, don´t they?
+// the way you´ve done it won´t work - you´ve used a local var in a global context
+// i´ve done an rank array in cl_team.c and linked this to the character rank pointer
+// but if the ranks should have unique values that can differ from character to
+// character this won´t work, too
+// now increasing a rank is easy: chr->rank = &ranks[RANK_NEWRANK];
 typedef struct rank_s
 {
 	char	name[MAX_MEDALTITLE];
-	struct	rank_s	*lower_rank;
-	struct	rank_s	*higher_rank;
+// 	struct	rank_s	*lower_rank;
+// 	struct	rank_s	*higher_rank;
 } rank_t;
 
 typedef struct character_s

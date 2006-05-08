@@ -11,7 +11,6 @@ char *teamSkinNames[NUM_TEAMSKINS] =
 	"Arctic"
 };
 
-
 /*
 ======================
 CL_GiveNameCmd
@@ -70,6 +69,15 @@ void CL_GiveNameCmd( void )
 	}
 }
 
+// initialized in CL_ResetTeams
+// REMOVEME: @hoehrer see q_shared.h ranks_t and rank_t for more info
+rank_t ranks[MAX_RANKS];
+
+char* rankDef[MAX_RANKS] =
+{
+	"Rookie",
+	"Commander"
+};
 
 /*
 ======================
@@ -79,7 +87,6 @@ CL_GenerateCharacter
 void CL_GenerateCharacter( char *team, base_t* base )
 {
 	character_t *chr;
-	rank_t rank;
 
 	// check for too many characters
 	if ( base->numWholeTeam >= (int)cl_numnames->value )
@@ -103,9 +110,9 @@ void CL_GenerateCharacter( char *team, base_t* base )
 	chr->skin = Com_GetModelAndName( team, chr->path, chr->body, chr->head, chr->name );
 	Cvar_ForceSet( va( "mn_name%i", base->numWholeTeam ), chr->name );
 
-	Q_strncpyz( rank.name, "Rookie", MAX_MEDALTITLE );
-	chr->rank = &rank;
-	
+	// starting rank is rookie
+	chr->rank = &ranks[RANK_ROOKIE];
+
 	base->numWholeTeam++;
 }
 
@@ -985,7 +992,6 @@ void CL_LoadTeamSlotCmd( void )
 	Com_Printf( "Team 'team%s' loaded.\n", Cvar_VariableString( "mn_slot" ) );
 }
 
-
 /*
 ======================
 CL_ResetTeams
@@ -993,6 +999,13 @@ CL_ResetTeams
 */
 void CL_ResetTeams( void )
 {
+	int	i;
+	for ( i = 0; i < MAX_RANKS; i++ )
+	{
+		memset( &ranks[i], 0, sizeof(rank_t) );
+		Q_strncpyz( ranks[i].name, _(rankDef[i]), MAX_MEDALTITLE );
+	}
+
 	Cmd_AddCommand( "givename", CL_GiveNameCmd );
 	Cmd_AddCommand( "gennames", CL_GenerateNamesCmd );
 	Cmd_AddCommand( "genequip", CL_GenerateEquipmentCmd );
