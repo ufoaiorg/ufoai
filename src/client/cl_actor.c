@@ -1188,21 +1188,25 @@ void CL_ActorActionMouse( void )
 }
 
 
-/*
-==============================================================
+/*==============================================================
 
 ROUND MANAGEMENT
 
-==============================================================
-*/
+==============================================================*/
 
-/*
-=================
+/*======================
 CL_NextRound
-=================
-*/
+
+This function finishes the current round of the player in battlescape and starts the round fot the text team.
+======================*/
 void CL_NextRound( void )
 {
+	// can't end round if we are not in battlescape
+	if ( CL_OnGeoscape() ) {
+		Com_Printf( "Can't proceed to next round. We are not in Battlescape.\n");
+		return;
+	}
+
 	// can't end round if we're not active
 	if ( cls.team != cl.actTeam )
 		return;
@@ -1215,15 +1219,13 @@ void CL_NextRound( void )
 		CL_CameraModeChange( CAMERA_MODE_REMOTE );
 }
 
-/*
-=================
+/*======================
 CL_DisplayHudMessage
 
 Diplays a message on hud
 + time is a ms values
 + text is already translated here
-=================
-*/
+======================*/
 void CL_DisplayHudMessage( char* text, int time )
 {
 	cl.msgTime = cl.time + time;
