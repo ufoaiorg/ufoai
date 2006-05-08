@@ -133,7 +133,7 @@ menu options_video
 	pic res_dec
 	{
 		image	menu/buttons_small
-		pos		"868 138"
+		pos		"868 144"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
 		click	{ cmd "mn_modify mn_glmode -1 0 19;" }
@@ -141,7 +141,7 @@ menu options_video
 	pic res_inc
 	{
 		image	menu/buttons_small
-		pos		"884 138"
+		pos		"884 144"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click	{ cmd "mn_modify mn_glmode +1 0 19;" }
@@ -161,7 +161,7 @@ menu options_video
 	pic full_dec
 	{
 		image	menu/buttons_small
-		pos		"868 168"
+		pos		"868 174"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
 		click
@@ -173,7 +173,7 @@ menu options_video
 	pic full_inc
 	{
 		image	menu/buttons_small
-		pos		"884 168"
+		pos		"884 174"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click
@@ -197,7 +197,7 @@ menu options_video
 	pic compression_dec
 	{
 		image	menu/buttons_small
-		pos		"868 198"
+		pos		"868 204"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
 		click
@@ -210,7 +210,7 @@ menu options_video
 	pic compression_inc
 	{
 		image	menu/buttons_small
-		pos		"884 198"
+		pos		"884 204"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click
@@ -235,7 +235,7 @@ menu options_video
 	pic texres_dec
 	{
 		image	menu/buttons_small
-		pos		"868 228"
+		pos		"868 234"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
 		click
@@ -247,7 +247,7 @@ menu options_video
 	pic texres_inc
 	{
 		image	menu/buttons_small
-		pos		"884 228"
+		pos		"884 234"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click
@@ -271,7 +271,7 @@ menu options_video
 	pic fps_dec
 	{
 		image	menu/buttons_small
-		pos		"868 258"
+		pos		"868 264"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
 		click
@@ -283,7 +283,7 @@ menu options_video
 	pic fps_inc
 	{
 		image	menu/buttons_small
-		pos		"884 258"
+		pos		"884 264"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click
@@ -307,7 +307,7 @@ menu options_video
 	pic aniso_dec
 	{
 		image	menu/buttons_small
-		pos		"868 288"
+		pos		"868 294"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
 		click	{ cmd "mn_modify r_anisotropic -1 0 16;" }
@@ -315,7 +315,7 @@ menu options_video
 	pic aniso_inc
 	{
 		image	menu/buttons_small
-		pos		"884 288"
+		pos		"884 294"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click	{ cmd "mn_modify r_anisotropic +1 0 16;" }
@@ -335,7 +335,7 @@ menu options_video
 	pic lod_dec
 	{
 		image	menu/buttons_small
-		pos		"868 318"
+		pos		"868 324"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
 		click
@@ -347,7 +347,7 @@ menu options_video
 	pic lod_inc
 	{
 		image	menu/buttons_small
-		pos		"884 318"
+		pos		"884 324"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click
@@ -365,11 +365,11 @@ menu options_video
 	pic gamma_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"645 488"
+		pos		"659 495"
 	}
 	bar gamma_bar
 	{
-		pos		"654 493"
+		pos		"668 500"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar vid_gamma"
@@ -422,11 +422,11 @@ menu options_sound
 	pic effects_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"645 168"
+		pos		"645 175"
 	}
 	bar effects_bar
 	{
-		pos		"654 173"
+		pos		"654 180"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar s_volume"
@@ -443,11 +443,11 @@ menu options_sound
 	pic music_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"645 193"
+		pos		"645 200"
 	}
 	bar music_bar
 	{
-		pos		"654 198"
+		pos		"654 205"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar ov_volume"
@@ -476,7 +476,7 @@ menu options_sound
 	pic mix_dec
 	{
 		image	menu/buttons_small
-		pos		"868 238"
+		pos		"868 244"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
 		click	{ cmd "modifykhz -;" }
@@ -484,7 +484,7 @@ menu options_sound
 	pic mix_inc
 	{
 		image	menu/buttons_small
-		pos		"884 238"
+		pos		"884 244"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click	{ cmd "modifykhz +;" }
@@ -507,7 +507,7 @@ menu options_sound
 	{
 		if "sys_os linux"
 		image	menu/buttons_small
-		pos		"868 318"
+		pos		"868 324"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
 		click
@@ -521,7 +521,7 @@ menu options_sound
 	{
 		if "sys_os linux"
 		image	menu/buttons_small
-		pos		"884 318"
+		pos		"884 324"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click
@@ -567,7 +567,7 @@ menu options_game
 	pic dif_dec
 	{
 		image	menu/buttons_small
-		pos		"868 128"
+		pos		"868 134"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
 		click	{ cmd "mn_modify difficulty -1 -3 3;" }
@@ -575,7 +575,7 @@ menu options_game
 	pic dif_inc
 	{
 		image	menu/buttons_small
-		pos		"884 128"
+		pos		"884 134"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click	{ cmd "mn_modify difficulty +1 -3 3;" }
@@ -598,7 +598,7 @@ menu options_game
 	pic confirm_dec
 	{
 		image	menu/buttons_small
-		pos		"868 155"
+		pos		"868 159"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
 		click
@@ -610,7 +610,7 @@ menu options_game
 	pic confirm_inc
 	{
 		image	menu/buttons_small
-		pos		"884 155"
+		pos		"884 159"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click
@@ -637,7 +637,7 @@ menu options_game
 	pic hud_dec
 	{
 		image	menu/buttons_small
-		pos		"868 178"
+		pos		"868 184"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
 		click	{ cmd "mn_modifystring mn_hud -1 hud:althud;" }
@@ -645,7 +645,7 @@ menu options_game
 	pic hud_inc
 	{
 		image	menu/buttons_small
-		pos		"884 178"
+		pos		"884 184"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click	{ cmd "mn_modifystring mn_hud +1 hud:althud;" }
@@ -668,7 +668,7 @@ menu options_game
 	pic tooltip_dec
 	{
 		image	menu/buttons_small
-		pos		"868 205"
+		pos		"868 209"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
 		click
@@ -680,7 +680,7 @@ menu options_game
 	pic tooltip_inc
 	{
 		image	menu/buttons_small
-		pos		"884 205"
+		pos		"884 209"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click
@@ -698,11 +698,11 @@ menu options_game
 	pic camspeed_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"645 308"
+		pos		"659 315"
 	}
 	bar camspeed_bar
 	{
-		pos		"654 313"
+		pos		"668 320"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar cl_cammovespeed"
@@ -720,11 +720,11 @@ menu options_game
 	pic camrot_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"645 328"
+		pos		"659 335"
 	}
 	bar camrot_bar
 	{
-		pos		"654 333"
+		pos		"668 340"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar cl_camrotspeed"
@@ -753,7 +753,7 @@ menu options_game
 	string txt_name
 	{
 			string "*cvar name"
-			pos "510 449"
+			pos "510 445"
 			color "0 .78 0 1"
 	}
 	confunc name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
