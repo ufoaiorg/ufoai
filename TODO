@@ -9,5 +9,6 @@ Tasks for TechDemo3
 * Make unresearched items in the Ufopedia invisible.
 * Bug #1482877: map b/g/ufo_hangar.map does not compile
 * Bug #1474623: Bug in savegame: aircraft problems
+* Bug #1459713: Armored soldiers appear as purple diamonds
 
 =================================================
