@@ -87,10 +87,6 @@ cvar_t  *r_anisotropic;
 cvar_t  *r_ext_max_anisotropy;
 cvar_t  *r_texture_lod; // lod_bias
 
-#ifdef BUILD_FREETYPE
-cvar_t	*r_saveFontData;
-#endif
-
 cvar_t	*gl_nosubimage;
 cvar_t	*gl_allow_software;
 
@@ -1253,10 +1249,6 @@ void R_Register( void )
 
 //	r_lightlevel = ri.Cvar_Get ("r_lightlevel", "0", 0);
 
-#ifdef BUILD_FREETYPE
-	r_saveFontData = ri.Cvar_Get ("r_save_font_data", "0", 0);
-#endif
-
 	gl_nosubimage = ri.Cvar_Get( "gl_nosubimage", "0", 0 );
 	gl_allow_software = ri.Cvar_Get( "gl_allow_software", "0", 0 );
 
@@ -1327,11 +1319,11 @@ void R_Register( void )
 	vid_fullscreen = ri.Cvar_Get( "vid_fullscreen", "0", CVAR_ARCHIVE );
 	vid_gamma = ri.Cvar_Get( "vid_gamma", "1.0", CVAR_ARCHIVE );
 	vid_ref = ri.Cvar_Get( "vid_ref", "glx", CVAR_ARCHIVE );
-// 	vid_ref = ri.Cvar_Get( "vid_ref", "soft", CVAR_ARCHIVE );
 	vid_grabmouse = ri.Cvar_Get( "vid_grabmouse", "1", CVAR_ARCHIVE );
 	vid_grabmouse->modified = false;
 
 	ri.Cmd_AddCommand( "imagelist", GL_ImageList_f );
+	ri.Cmd_AddCommand( "fontcachelist", Font_ListCache_f );
 	ri.Cmd_AddCommand( "screenshot", GL_ScreenShot_f );
 	ri.Cmd_AddCommand( "modellist", Mod_Modellist_f );
 	ri.Cmd_AddCommand( "gl_strings", GL_Strings_f );
@@ -1873,9 +1865,8 @@ void R_Shutdown (void)
 #ifdef SHADERS
 	GL_ShutdownShaders ();
 #endif
-#ifdef USE_SDL_TTF
-	GL_ShutdownSDLFonts();
-#endif
+	Font_Shutdown();
+
 	/*
 	** shut down OS specific OpenGL stuff like contexts, etc.
 	*/
@@ -2092,11 +2083,6 @@ void R_TakeVideoFrame( int h, int w, byte* captureBuffer, byte *encodeBuffer, qb
 void	R_BeginRegistration (char *tiles, char *pos);
 struct model_s	*R_RegisterModelShort (char *name);
 struct image_s	*R_RegisterSkin (char *name);
-#ifdef USE_SDL_TTF
-void R_RegisterFont (char *name, int size, char* path, char* style);
-#else
-struct image_s	*R_RegisterFont (char *name);
-#endif
 void R_SetSky (char *name, float rotate, vec3_t axis);
 void	R_EndRegistration (void);
 
@@ -2138,14 +2124,10 @@ refexport_t GetRefAPI (refimport_t rimp )
 	re.DrawPic = Draw_Pic;
 	re.DrawNormPic = Draw_NormPic;
 	re.DrawStretchPic = Draw_StretchPic;
-	re.DrawPropString = Draw_PropString;
 	re.DrawChar = Draw_Char;
-	re.DrawPropChar = Draw_PropChar;
-	re.DrawPropLength = Draw_PropLength;
-	re.RegisterFont = R_RegisterFont;
-#ifdef USE_SDL_TTF
-	re.CleanFontCache = CleanFontCache;
-#endif
+	re.FontDrawString = Font_DrawString;
+	re.FontLength = Font_Length;
+	re.FontRegister = Font_Register;
 	re.DrawTileClear = Draw_TileClear;
 	re.DrawFill = Draw_Fill;
 	re.DrawColor = Draw_Color;
@@ -2174,9 +2156,6 @@ refexport_t GetRefAPI (refimport_t rimp )
 
 	re.AppActivate = GLimp_AppActivate;
 	re.TakeVideoFrame = R_TakeVideoFrame;
-#ifdef BUILD_FREETYPE
-	re.RegisterFTFont = RE_RegisterFTFont;
-#endif
 	Swap_Init ();
 
 	return re;
