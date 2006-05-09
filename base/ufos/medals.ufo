@@ -34,6 +34,7 @@ rank squadleader
 	image "hud/rank_02"
 	mind 75
 	killed_enemies	5
+	killed_others	3
 }
 rank commander
 {
