@@ -70,20 +70,15 @@ void CL_GiveNameCmd( void )
 }
 
 // initialized in CL_ResetTeams
-// REMOVEME: @hoehrer see q_shared.h ranks_t and rank_t for more info
-rank_t ranks[MAX_RANKS];
 
-char* rankDef[MAX_RANKS] =
-{
-	"Rookie",
-	"Commander"
-};
+// TODO: Parsing from file
+rank_t ranks[MAX_RANKS];	// A list of all ranks defined in medals.ufo.
+int numRanks;			// The number of entries in the list above.
 
-/*
-======================
+
+/*======================
 CL_GenerateCharacter
-======================
-*/
+======================*/
 void CL_GenerateCharacter( char *team, base_t* base )
 {
 	character_t *chr;
@@ -110,8 +105,12 @@ void CL_GenerateCharacter( char *team, base_t* base )
 	chr->skin = Com_GetModelAndName( team, chr->path, chr->body, chr->head, chr->name );
 	Cvar_ForceSet( va( "mn_name%i", base->numWholeTeam ), chr->name );
 
-	// starting rank is rookie
-	chr->rank = &ranks[RANK_ROOKIE];
+	// Starting rank is the first one in the list (as defined in medals.ufo)
+	if ( numRanks == 0) {								// DEBUG
+		Q_strncpyz( ranks[0].name, "Rookie", MAX_MEDALTITLE); 	// DEBUG
+		numRanks = 1;								// DEBUG
+	}											// DEBUG
+	chr->rank = &ranks[0];
 
 	base->numWholeTeam++;
 }
@@ -999,13 +998,6 @@ CL_ResetTeams
 */
 void CL_ResetTeams( void )
 {
-	int	i;
-	for ( i = 0; i < MAX_RANKS; i++ )
-	{
-		memset( &ranks[i], 0, sizeof(rank_t) );
-		Q_strncpyz( ranks[i].name, _(rankDef[i]), MAX_MEDALTITLE );
-	}
-
 	Cmd_AddCommand( "givename", CL_GiveNameCmd );
 	Cmd_AddCommand( "gennames", CL_GenerateNamesCmd );
 	Cmd_AddCommand( "genequip", CL_GenerateEquipmentCmd );
