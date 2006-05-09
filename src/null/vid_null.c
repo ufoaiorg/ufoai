@@ -150,9 +150,7 @@ void	VID_Init (void)
 	ri.Cvar_SetValue = Cvar_SetValue;
         ri.Vid_GetModeInfo = VID_GetModeInfo;
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
-#ifdef USE_SDL_TTF
 	ri.CL_GetFontData = CL_GetFontData;
-#endif
 //	ri.Malloc = Z_Malloc;
 //	ri.Free = Z_Free;
 
