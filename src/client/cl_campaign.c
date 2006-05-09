@@ -2302,13 +2302,16 @@ void CL_UpdateCharacterStats ( int won )
 				if ( chr->skills[j] < MAX_SKILL ) chr->skills[j]++;
 		}
 
-		// check if the soldier meets the requirements for a higher rank
-		for ( j = numRanks-1; j > 0; j-- ) {
-			rank = &ranks[j];
-			if ( ( chr->skills[ABILITY_MIND] >= rank->mind )
-			&& ( chr->kills[KILLED_ALIENS] >= rank->killed_enemies )
-			&& ( ( chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM] ) <= rank->killed_others ) ) {
-				chr->rank = rank;
+		// Check if the soldier meets the requirements for a higher rank -> Promotion
+		if (numRanks >= 2 ) {
+			for ( j = numRanks-1; j > 0; j-- ) {
+				rank = &ranks[j];
+				if ( ( chr->skills[ABILITY_MIND] >= rank->mind )
+				&& ( chr->kills[KILLED_ALIENS] >= rank->killed_enemies )
+				&& ( ( chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM] ) <= rank->killed_others ) ) {
+					chr->rank = rank;
+					break;
+				}
 			}
 		}
 	}
