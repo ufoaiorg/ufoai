@@ -2279,8 +2279,9 @@ FIXME: See TODO and FIXME included
 */
 void CL_UpdateCharacterStats ( int won )
 {
-	le_t *le;
-	character_t* chr;
+	le_t *le = NULL;
+	character_t* chr = NULL;
+	rank_t *rank = NULL;
 	int i, j;
 
 	for ( i = 0; i < cl.numTeamList; i++ )
@@ -2299,6 +2300,16 @@ void CL_UpdateCharacterStats ( int won )
 			// FIXME:
 			for ( j = 0; j < SKILL_NUM_TYPES; j++ )
 				if ( chr->skills[j] < MAX_SKILL ) chr->skills[j]++;
+		}
+
+		// check if the soldier meets the requirements for a higher rank
+		for ( j = numRanks-1; j > 0; j-- ) {
+			rank = &ranks[j];
+			if ( ( chr->skills[ABILITY_MIND] >= rank->mind )
+			&& ( chr->kills[KILLED_ALIENS] >= rank->killed_enemies )
+			&& ( ( chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM] ) <= rank->killed_others ) ) {
+				chr->rank = rank;
+			}
 		}
 	}
 }
