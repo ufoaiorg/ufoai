@@ -12,7 +12,6 @@
 # (Note: not all options are available for all platforms).
 # ufo (uses OSS for sound, cdrom ioctls for cd audio) is automatically built.
 # game.so is automatically built.
-BUILD_SDL_TTF=YES	# use SDL_ttf as font engine (for utf-8 support)
 BUILD_SDLUFO=YES	# use SDL for cdrom, sound and maybe renderer (selectable)
 BUILD_GLX=YES		# X11 GLX driver. Works somewhat ok.
 BUILD_DEDICATED=YES	# build a dedicated ufo server
@@ -166,12 +165,9 @@ GLXCFLAGS=-I/usr/X11R6/include
 GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext -lXxf86dga -lXxf86vm
 SDLLDFLAGS=$(shell sdl-config --libs)
 
-ifeq ($(strip $(BUILD_SDL_TTF)),YES)
-	GLXLDFLAGS+=$(shell sdl-config --libs) -lSDL_ttf
-	SDLLDFLAGS+=-lSDL_ttf
-	BASE_CFLAGS+=-DUSE_SDL_TTF
-	GLXCFLAGS+=$(shell sdl-config --cflags) -DUSE_SDL_TTF
-endif
+GLXLDFLAGS+=$(shell sdl-config --libs) -lSDL_ttf
+SDLLDFLAGS+=-lSDL_ttf
+GLXCFLAGS+=$(shell sdl-config --cflags)
 
 SHLIBEXT=so
 
@@ -673,6 +669,7 @@ $(BUILDDIR)/game/g_utils.o :     $(GAME_DIR)/g_utils.c
 REF_GL_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_anim.o \
 	$(BUILDDIR)/ref_gl/gl_draw.o \
+	$(BUILDDIR)/ref_gl/gl_font.o \
 	$(BUILDDIR)/ref_gl/gl_image.o \
 	$(BUILDDIR)/ref_gl/gl_light.o \
 	$(BUILDDIR)/ref_gl/gl_mesh.o \
@@ -780,6 +777,9 @@ $(BUILDDIR)/ref_gl/gl_anim.o :        $(REF_GL_DIR)/gl_anim.c
 	$(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_gl/gl_draw.o :        $(REF_GL_DIR)/gl_draw.c
+	$(DO_GL_SHLIB_CC)
+
+$(BUILDDIR)/ref_gl/gl_font.o :        $(REF_GL_DIR)/gl_font.c
 	$(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_gl/gl_image.o :       $(REF_GL_DIR)/gl_image.c
