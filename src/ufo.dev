@@ -9,14 +9,14 @@ CppCompiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DWIN32 _@@_-DDEBUG _
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_win32/libjpeg.lib_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=77
+UnitCount=78
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
-ResourceIncludes=win32
+ResourceIncludes=win32;D:\backup\__etc\ufoai_mod\trunk\base;D:\backup\__etc\ufoai_mod\trunk\
 MakeIncludes=
 Icon=
-ExeOutput=
+ExeOutput=..\..\trunk
 ObjectOutput=
 OverrideOutput=0
 OverrideOutputName=ufo.exe
@@ -27,7 +27,7 @@ CustomMakefile=
 IncludeVersionInfo=1
 SupportXPThemes=0
 CompilerSet=0
-CompilerSettings=0000000000000000000000
+CompilerSettings=0000000000000101000000
 
 [Unit1]
 FileName=win32\cd_win.c
@@ -788,7 +788,7 @@ ProductVersion=0.12
 AutoIncBuildNr=0
 
 [Unit78]
-FileName=win32\vorbis.lib
+FileName=..\base\pics\colormap.pcx
 Folder=Resource Files
 Compile=0
 Link=0

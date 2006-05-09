@@ -1,13 +1,11 @@
 // scripts.c -- ufo scripts used in client and server
 #include "qcommon.h"
 
-/*
-==============================================================================
+/*==============================================================================
 
 			OBJECT DEFINITION INTERPRETER
 
-==============================================================================
-*/
+==============================================================================*/
 
 char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] =
 {
@@ -97,15 +95,13 @@ value_t fdps[] =
 // ===========================================================
 
 
-/*
-======================
+/*======================
 Com_ParseFire
-======================
-*/
+======================*/
 void Com_ParseFire( char *name, char **text, fireDef_t *fd )
 {
 	value_t	*fdp;
-	char	*errhead = _("Com_ParseFire: unexptected end of file");
+	char	*errhead = "Com_ParseFire: unexptected end of file";
 	char	*token;
 
 	// get its body
@@ -156,11 +152,9 @@ void Com_ParseFire( char *name, char **text, fireDef_t *fd )
 }
 
 
-/*
-======================
+/*======================
 Com_ParseArmor
-======================
-*/
+======================*/
 void Com_ParseArmor( char *name, char **text, short *ad )
 {
 	char	*errhead = "Com_ParseFire: unexptected end of file";
@@ -197,11 +191,9 @@ void Com_ParseArmor( char *name, char **text, short *ad )
 }
 
 
-/*
-======================
+/*======================
 Com_ParseItem
-======================
-*/
+======================*/
 void Com_ParseItem( char *name, char **text )
 {
 	char		*errhead = "Com_ParseItem: unexptected end of file (weapon ";
@@ -283,13 +275,11 @@ void Com_ParseItem( char *name, char **text )
 }
 
 
-/*
-==============================================================================
+/*==============================================================================
 
 			INVENTORY DEFINITION INTERPRETER
 
-==============================================================================
-*/
+==============================================================================*/
 
 #define	IDOFS(x)	(int)&(((invDef_t *)0)->x)
 
@@ -306,11 +296,9 @@ value_t idps[] =
 	{ NULL,	0, 0 }
 };
 
-/*
-======================
+/*======================
 Com_ParseInventory
-======================
-*/
+======================*/
 void Com_ParseInventory( char *name, char **text )
 {
 	char		*errhead = "Com_ParseInventory: unexptected end of file (inventory ";
@@ -377,13 +365,11 @@ void Com_ParseInventory( char *name, char **text )
 }
 
 
-/*
-==============================================================================
+/*==============================================================================
 
 			EQUIPMENT DEFINITION INTERPRETER
 
-==============================================================================
-*/
+==============================================================================*/
 
 #define MAX_NAMECATS	64
 #define MAX_INFOSTRING	65536
@@ -414,7 +400,10 @@ typedef struct teamDef_s
 	int  num;
 } teamDef_t;
 
-teamDesc_t	teamDesc[MAX_TEAMDEFS];
+teamDesc_t	teamDesc[MAX_TEAMDEFS];	
+
+rank_t ranks[MAX_RANKS];	// Global list of all ranks defined in medals.ufo.
+int numRanks = 0;		// The number of entries in the list above.
 
 nameCategory_t	nameCat[MAX_NAMECATS];
 teamDef_t		teamDef[MAX_TEAMDEFS];
@@ -435,11 +424,9 @@ char *name_strings[NAME_NUM_TYPES] =
 };
 
 
-/*
-======================
+/*======================
 Com_ParseEquipment
-======================
-*/
+======================*/
 void Com_ParseEquipment( char *name, char **text )
 {
 	char		*errhead = "Com_ParseEquipment: unexptected end of file (equipment ";
@@ -499,19 +486,15 @@ void Com_ParseEquipment( char *name, char **text )
 }
 
 
-/*
-==============================================================================
+/*==============================================================================
 
 			NAME AND TEAM DEFINITION INTERPRETER
 
-==============================================================================
-*/
+==============================================================================*/
 
-/*
-======================
+/*======================
 Com_GiveName
-======================
-*/
+======================*/
 char returnName[MAX_VAR];
 char *Com_GiveName( int gender, char *category )
 {
@@ -541,11 +524,9 @@ char *Com_GiveName( int gender, char *category )
 	return NULL;
 }
 
-/*
-======================
+/*======================
 Com_GiveModel
-======================
-*/
+======================*/
 //char returnModel[MAX_VAR];
 char *Com_GiveModel( int type, int gender, char *category )
 {
@@ -575,11 +556,9 @@ char *Com_GiveModel( int type, int gender, char *category )
 	return NULL;
 }
 
-/*
-======================
+/*======================
 Com_GetModelAndName
-======================
-*/
+======================*/
 int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *name )
 {
 	teamDef_t	*td;
@@ -655,11 +634,9 @@ int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *n
 	return 0;
 }
 
-/*
-======================
+/*======================
 Com_ParseNames
-======================
-*/
+======================*/
 void Com_ParseNames( char *title, char **text )
 {
 	nameCategory_t	*nc;
@@ -736,11 +713,9 @@ void Com_ParseNames( char *title, char **text )
 }
 
 
-/*
-======================
+/*======================
 Com_ParseActors
-======================
-*/
+======================*/
 void Com_ParseActors( char *title, char **text )
 {
 	nameCategory_t	*nc;
@@ -839,15 +814,15 @@ value_t teamDescValues[] =
 };
 
 
-/*
-======================
+/*======================
 Com_ParseTeamDesc
-======================
-*/
+
+Parse the team descriptions (teamdesc) in the teams*.ufo files.
+======================*/
 void Com_ParseTeamDesc( char *title, char **text )
 {
 	teamDesc_t		*td;
-	char	*errhead = _("Com_ParseTeamDesc: unexptected end of file (teamdesc ");
+	char	*errhead = "Com_ParseTeamDesc: unexptected end of file (teamdesc ";
 	char	*token;
 	int	i;
 	value_t	*v;
@@ -900,11 +875,9 @@ void Com_ParseTeamDesc( char *title, char **text )
 	} while ( *text );
 }
 
-/*
-======================
+/*======================
 Com_ParseTeam
-======================
-*/
+======================*/
 void Com_ParseTeam( char *title, char **text )
 {
 	nameCategory_t	*nc;
@@ -966,14 +939,77 @@ void Com_ParseTeam( char *title, char **text )
 	} while ( *text );
 }
 
+//#define	PARSEMEDALS(x)	(int)&(((xxx_t *)0)->x)
+#define	PARSERANKS(x)	(int)&(((rank_t *)0)->x)
 
-/*
-==============================================================================
+value_t rankValues[] =
+{
+	{ "name",	V_TRANSLATION_STRING,	PARSERANKS( name ) },
+	{ "image",	V_STRING,				PARSERANKS( image ) },
+	{ NULL,	0, 0 }
+};
+
+/*======================
+Com_ParseMedalsAndRanks
+
+Parse medals and ranks defined in the medals.ufo file.
+======================*/
+void Com_ParseMedalsAndRanks( char *title, char **text, byte parserank )
+{
+	rank_t		*rank = NULL;
+	char	*errhead = "Com_ParseMedalsAndRanks: unexptected end of file (medal/rank ";
+	char	*token;
+	value_t	*v;
+
+	// get name list body body
+	token = COM_Parse( text );
+
+	if ( !*text || *token != '{' ) {
+		Com_Printf( "Com_ParseMedalsAndRanks: rank/medal \"%s\" without body ignored\n", title );
+		return;
+	}
+	
+	if ( parserank) {
+		/* parse ranks */
+		if ( numRanks >= MAX_RANKS ) {
+			Com_Printf( "Too many rank descriptions, '%s' ignored.\n", title );
+			numRanks = MAX_RANKS;
+			return;
+		}
+		
+		rank = &ranks[numRanks];
+		numRanks++;
+		memset( rank, 0, sizeof( rank_t ) );
+		
+		do {
+			// get the name type
+			token = COM_EParse( text, errhead, title );
+			if ( !*text ) break;
+			if ( *token == '}' ) break;
+			for ( v = rankValues; v->string; v++ )
+				if ( !Q_strncmp( token, v->string, sizeof(v->string) ) )
+				{
+					// found a definition
+					token = COM_EParse( text, errhead, title );
+					if ( !*text ) return;
+
+					Com_ParseValue( rank, token, v->type, v->ofs );
+					break;
+				}
+
+			if ( !v->string )
+				Com_Printf( "Com_ParseMedalsAndRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, title );
+		} while ( *text );
+	} else {
+		/* parse medals */
+	}
+}
+
+/*==============================================================================
 
 			DAMAGE TYPES INTERPRETER
 
-==============================================================================
-*/
+==============================================================================*/
 
 void Com_ParseDamageTypes( char *name, char **text )
 {
@@ -1013,19 +1049,15 @@ void Com_ParseDamageTypes( char *name, char **text )
 }
 
 
-/*
-==============================================================================
+/*==============================================================================
 
 			MAIN SCRIPT PARSING FUNCTION
 
-==============================================================================
-*/
+==============================================================================*/
 
-/*
-=================
+/*======================
 Com_AddObjectLinks
-=================
-*/
+======================*/
 void Com_AddObjectLinks( void )
 {
 	objDef_t	*od;
@@ -1058,11 +1090,9 @@ void Com_AddObjectLinks( void )
 }
 
 
-/*
-=================
+/*======================
 Com_ParseScripts
-=================
-*/
+======================*/
 void Com_ParseScripts( void )
 {
 	char		*type, *name, *text;
@@ -1111,6 +1141,8 @@ void Com_ParseScripts( void )
 		// server/client scripts
 		if ( !Q_strncmp( type, "equipment", 9 ) ) Com_ParseEquipment( name, &text );
 		else if ( !Q_strncmp( type, "teamdesc", 8 ) ) Com_ParseTeamDesc( name, &text );
+		else if ( !Q_strncmp( type, "rank", 4 ) ) Com_ParseMedalsAndRanks( name, &text, true );
+		//else if ( !Q_strncmp( type, "medal", 5 ) ) Com_ParseMedalsAndRanks( name, &text, false );
 		else if ( !Q_strncmp( type, "team", 4 ) ) Com_ParseTeam( name, &text );
 		else if ( !dedicated->value ) CL_ParseScriptSecond( type, name, &text );
 	}

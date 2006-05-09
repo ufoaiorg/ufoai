@@ -1003,6 +1003,9 @@ typedef struct rank_s
 	char	image[MAX_VAR];
 } rank_t;
 
+extern rank_t ranks[MAX_RANKS];	// Global list of all ranks defined in medals.ufo.
+extern int numRanks;			// The number of entries in the list above.
+
 typedef struct character_s
 {
 	int		ucn;
