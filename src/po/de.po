@@ -1,4 +1,4 @@
-msgid ""
+﻿msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
@@ -47,7 +47,7 @@ msgstr "Abfangjäger"
 
 #: ../base/ufos/basemanagement.ufo:124
 msgid "Quarters"
-msgstr "Quartiere"
+msgstr "Quartier"
 
 #: ../base/ufos/basemanagement.ufo:143
 msgid "UFO Hangar"
@@ -112,7 +112,7 @@ msgstr "UFO"
 
 #: ../base/ufos/basemanagement.ufo:308
 msgid "UFO - Destroyer class"
-msgstr ""
+msgstr "UFO -  Zerstörerklasse"
 
 #: ../base/ufos/campaign.ufo:8
 #: ../base/ufos/campaign.ufo:43
@@ -214,7 +214,7 @@ msgstr ""
 
 #: ../base/ufos/campaign.ufo:732
 msgid "Standard Campaign"
-msgstr ""
+msgstr "Standardkampagne"
 
 #: ../base/ufos/campaign.ufo:733
 msgid "txt_standard_campaign"
@@ -222,7 +222,7 @@ msgstr ""
 
 #: ../base/ufos/campaign.ufo:748
 msgid "Multiplayer Campaign"
-msgstr ""
+msgstr "Mehrspielerkampagne"
 
 #: ../base/ufos/medals.ufo:3
 msgid "Cross"
@@ -234,19 +234,19 @@ msgstr "Medaille"
 
 #: ../base/ufos/medals.ufo:18
 msgid "Rookie"
-msgstr "Anfänger"
+msgstr "Rekrut"
 
 #: ../base/ufos/medals.ufo:24
 msgid "Squad Leader"
-msgstr "Teamleader"
+msgstr "Gruppenführer"
 
 #: ../base/ufos/medals.ufo:30
 msgid "Commander"
-msgstr "Kommandeur"
+msgstr "Kommandant"
 
 #: ../base/ufos/medals.ufo:36
 msgid "Captain"
-msgstr "Kaptain"
+msgstr "Hauptmann"
 
 #: ../base/ufos/menu_bases.ufo:48
 msgid "Back to worldview"
@@ -268,7 +268,7 @@ msgstr "Verwalte deine Flugzeuge"
 #: ../base/ufos/menu_bases.ufo:110
 #: ../base/ufos/research.ufo:57
 msgid "Aircraft"
-msgstr "Gleiter"
+msgstr "Flugzeuge"
 
 #: ../base/ufos/menu_bases.ufo:119
 msgid "Buy/Sell equipment"
@@ -286,7 +286,7 @@ msgstr "Transferiere Ausrüstung oder Personal"
 #: ../base/ufos/menu_bases.ufo:158
 #: ../base/ufos/menu_bases.ufo:422
 msgid "Transfer"
-msgstr ""
+msgstr "Transfer"
 
 #: ../base/ufos/menu_bases.ufo:167
 msgid "Equip your personnel"
@@ -315,7 +315,7 @@ msgstr "Name der Basis"
 
 #: ../base/ufos/menu_bases.ufo:242
 msgid "Rename your base"
-msgstr "Umbenennen der Basis"
+msgstr "Basis umbenennen"
 
 #: ../base/ufos/menu_bases.ufo:256
 msgid "Switch to the previous base"
@@ -327,7 +327,7 @@ msgstr "Gehe zu nächster Basis"
 
 #: ../base/ufos/menu_bases.ufo:326
 msgid "Assign your squad"
-msgstr "Wähle Squad aus"
+msgstr "Wähle Besatzung aus"
 
 #: ../base/ufos/menu_bases.ufo:341
 msgid "Equip Aircraft"
@@ -362,7 +362,7 @@ msgstr "Auftanken"
 #: ../base/ufos/menu_team.ufo:658
 #: ../base/ufos/menu_team.ufo:1177
 msgid "Done"
-msgstr "Erledigt"
+msgstr "Fertig"
 
 #: ../base/ufos/menu_bases.ufo:500
 msgid "Switch to the previous aircraft"
@@ -2169,12 +2169,12 @@ msgstr "Bolzen Munition"
 
 #: ../base/ufos/weapons_human.ufo:881
 msgid "Stunrod"
-msgstr "Betäubungsstab"
+msgstr "Betäubungsgerät"
 
 #: ../base/ufos/weapons_human.ufo:896
 #, fuzzy
 msgid "Stun"
-msgstr "Schrotflinte"
+msgstr "Betäuben"
 
 #: ../base/ufos/weapons_laser.ufo:6
 msgid "Laser Pistol"
@@ -2187,12 +2187,12 @@ msgstr "Laserpistolenmunition"
 #: ../base/ufos/weapons_laser.ufo:35
 #: ../base/ufos/weapons_laser.ufo:107
 msgid "Single Pulse"
-msgstr "Einfachimpuls"
+msgstr "Einzelpuls"
 
 #: ../base/ufos/weapons_laser.ufo:53
 #: ../base/ufos/weapons_laser.ufo:125
 msgid "Multiple Pulses"
-msgstr "Mehrfachimpuls"
+msgstr "Mehrfachpuls"
 
 #: ../base/ufos/weapons_laser.ufo:78
 msgid "Laser Rifle"
@@ -2218,7 +2218,7 @@ msgstr "Geladener Impuls"
 #: ../base/ufos/weapons_plasma.ufo:54
 #: ../base/ufos/weapons_plasma.ufo:127
 msgid "Continuous Beam"
-msgstr "Dauerimpuls"
+msgstr "Strahlenmodus"
 
 #: ../base/ufos/weapons_plasma.ufo:80
 msgid "Plasma Rifle"
@@ -2242,46 +2242,48 @@ msgstr "Plasmawerfermunition"
 
 #: ../base/ufos/weapons_tachyon.ufo:6
 msgid "Tachyonpistol"
-msgstr "Tachyonpistole"
+msgstr "Tachyonenpistole"
 
 #: ../base/ufos/weapons_tachyon.ufo:23
 msgid "Tachyonpistol Clip"
-msgstr "Tachyonpistolenmunition"
+msgstr "Tachyonenpistolenmunition"
 
 #: ../base/ufos/weapons_tachyon.ufo:77
 msgid "Tachyon Rifle"
-msgstr "Tachyongewehr"
+msgstr "Tachyonengewehr"
 
 #: ../base/ufos/weapons_tachyon.ufo:94
 msgid "Tachyon Rifle Charge"
-msgstr "Tachyonmunition"
+msgstr "Tachyonengewehrmunition"
 
 #: ../base/ufos/weapons_tachyon.ufo:106
 #: ../base/ufos/weapons_tachyon.ufo:200
 msgid "Rapid Shots"
-msgstr "Schnellpuls"
+msgstr "Schnellschuss"
 
 #: ../base/ufos/weapons_tachyon.ufo:125
 msgid "Charged Blast"
-msgstr "Belastende Strahlen"
+msgstr "Geladener Impuls"
 
 #: ../base/ufos/weapons_tachyon.ufo:152
 msgid "Tachyon Sniper Rifle"
-msgstr "Tachyonscharfschützengewehr"
+msgstr "Tachyonenscharfschützengewehr"
 
 #: ../base/ufos/weapons_tachyon.ufo:169
 msgid "Tachyon Sniper Charge"
-msgstr "Tachyonscharfschützenmunition"
+msgstr "Tachyonenscharfschützenmunition"
 
 #: client/cl_actor.c:292
 msgid "Currently panics!\n"
-msgstr "Gerade panisch!\n"
+msgstr "In Panik!\n"
 
 #: client/cl_actor.c:299
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
 msgstr ""
+"Dieser unbekannte Gegenstand kann nicht verwendet werden.\n"
+"Er muss erst erforscht werden.\n"
 
 #: client/cl_actor.c:318
 #, c-format
@@ -2306,7 +2308,7 @@ msgstr "Gesundheit\t%i\n"
 
 #: client/cl_actor.c:649
 msgid "Nobody selected\n"
-msgstr "Es ist niemand selektiert\n"
+msgstr "Niemand selektiert\n"
 
 #: client/cl_actor.c:662
 msgid "This isn't your round\n"
@@ -2317,6 +2319,8 @@ msgid ""
 "You cannot load this unknown item.\n"
 "You need to research it first.\n"
 msgstr ""
+"Dieser unbekannte Gegenstand kann nicht geladen werden.\n"
+"Er muss erst erforscht werden.\n"
 
 #: client/cl_actor.c:1261
 msgid "Your round started!\n"
