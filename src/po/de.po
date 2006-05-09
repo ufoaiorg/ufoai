@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-05-08 19:14+0200\n"
-"PO-Revision-Date: 2006-05-08 20:13+0100\n"
+"POT-Creation-Date: 2006-05-09 09:17+0200\n"
+"PO-Revision-Date: 2006-05-09 09:23+0100\n"
 "Last-Translator: Martin Gerhardy <tlh2000@gmx.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -200,29 +200,53 @@ msgstr ""
 msgid "Location: Grenchen\\Type: Terror Attack\\Objective: Protect inhabitants"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:605
+#: ../base/ufos/campaign.ufo:607
 msgid "Location: Lille\\Type: Terror Attack\\Objective: Protect inhabitants"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:623
+#: ../base/ufos/campaign.ufo:625
 msgid "Location: Albany\\Type: Terror Attack\\Objective: Protect inhabitants"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:641
+#: ../base/ufos/campaign.ufo:643
 msgid "Location: Shannon\\Type: Major Alien Intrusion\\Objective: Stop them"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:730
+#: ../base/ufos/campaign.ufo:732
 msgid "Standard Campaign"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:731
+#: ../base/ufos/campaign.ufo:733
 msgid "txt_standard_campaign"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:746
+#: ../base/ufos/campaign.ufo:748
 msgid "Multiplayer Campaign"
 msgstr ""
+
+#: ../base/ufos/medals.ufo:3
+msgid "Cross"
+msgstr "Kreuz"
+
+#: ../base/ufos/medals.ufo:10
+msgid "Coin"
+msgstr "Medaille"
+
+#: ../base/ufos/medals.ufo:18
+msgid "Rookie"
+msgstr "Anfänger"
+
+#: ../base/ufos/medals.ufo:24
+msgid "Squad Leader"
+msgstr "Teamleader"
+
+#: ../base/ufos/medals.ufo:30
+msgid "Commander"
+msgstr "Kommandeur"
+
+#: ../base/ufos/medals.ufo:36
+msgid "Captain"
+msgstr "Kaptain"
 
 #: ../base/ufos/menu_bases.ufo:48
 msgid "Back to worldview"
@@ -335,8 +359,8 @@ msgid "Refuel"
 msgstr "Auftanken"
 
 #: ../base/ufos/menu_bases.ufo:489
-#: ../base/ufos/menu_team.ufo:651
-#: ../base/ufos/menu_team.ufo:1170
+#: ../base/ufos/menu_team.ufo:658
+#: ../base/ufos/menu_team.ufo:1177
 msgid "Done"
 msgstr "Erledigt"
 
@@ -529,56 +553,56 @@ msgid "Inventory"
 msgstr "Inventar"
 
 #: ../base/ufos/menu_hud.ufo:828
-#: ../base/ufos/menu_team.ufo:550
-#: ../base/ufos/menu_team.ufo:995
+#: ../base/ufos/menu_team.ufo:555
+#: ../base/ufos/menu_team.ufo:1002
 msgid "Power:"
 msgstr "Kraft:"
 
 #: ../base/ufos/menu_hud.ufo:833
-#: ../base/ufos/menu_team.ufo:555
-#: ../base/ufos/menu_team.ufo:1000
+#: ../base/ufos/menu_team.ufo:560
+#: ../base/ufos/menu_team.ufo:1007
 msgid "Speed:"
 msgstr "Geschwindigkeit:"
 
 #: ../base/ufos/menu_hud.ufo:838
-#: ../base/ufos/menu_team.ufo:560
-#: ../base/ufos/menu_team.ufo:1005
+#: ../base/ufos/menu_team.ufo:565
+#: ../base/ufos/menu_team.ufo:1012
 msgid "Accuracy:"
 msgstr "Genauigkeit:"
 
 #: ../base/ufos/menu_hud.ufo:843
-#: ../base/ufos/menu_team.ufo:565
-#: ../base/ufos/menu_team.ufo:1010
+#: ../base/ufos/menu_team.ufo:570
+#: ../base/ufos/menu_team.ufo:1017
 msgid "Mind:"
 msgstr "Verstand:"
 
 #: ../base/ufos/menu_hud.ufo:848
-#: ../base/ufos/menu_team.ufo:570
-#: ../base/ufos/menu_team.ufo:1015
+#: ../base/ufos/menu_team.ufo:575
+#: ../base/ufos/menu_team.ufo:1022
 msgid "Close Combat:"
 msgstr "Nahkampf"
 
 #: ../base/ufos/menu_hud.ufo:853
-#: ../base/ufos/menu_team.ufo:575
-#: ../base/ufos/menu_team.ufo:1020
+#: ../base/ufos/menu_team.ufo:580
+#: ../base/ufos/menu_team.ufo:1027
 msgid "Heavy Weapons:"
 msgstr "Schwere Waffen:"
 
 #: ../base/ufos/menu_hud.ufo:858
-#: ../base/ufos/menu_team.ufo:580
-#: ../base/ufos/menu_team.ufo:1025
+#: ../base/ufos/menu_team.ufo:585
+#: ../base/ufos/menu_team.ufo:1032
 msgid "Assault Guns:"
 msgstr "Sturmgewehre:"
 
 #: ../base/ufos/menu_hud.ufo:863
-#: ../base/ufos/menu_team.ufo:585
-#: ../base/ufos/menu_team.ufo:1030
+#: ../base/ufos/menu_team.ufo:590
+#: ../base/ufos/menu_team.ufo:1037
 msgid "Sniper Rifles:"
 msgstr "Scharfschützengewehre:"
 
 #: ../base/ufos/menu_hud.ufo:868
-#: ../base/ufos/menu_team.ufo:590
-#: ../base/ufos/menu_team.ufo:1035
+#: ../base/ufos/menu_team.ufo:595
+#: ../base/ufos/menu_team.ufo:1042
 msgid "High Explosives:"
 msgstr "Granaten:"
 
@@ -933,46 +957,46 @@ msgstr "Füge hinzu/Entferne diesen Soldaten"
 msgid "Edit name of the soldier"
 msgstr "Ändere den Namen dieses Soldatens"
 
-#: ../base/ufos/menu_team.ufo:595
+#: ../base/ufos/menu_team.ufo:600
 msgid "Survived Missions:"
 msgstr "Einsätze:"
 
-#: ../base/ufos/menu_team.ufo:597
+#: ../base/ufos/menu_team.ufo:602
 msgid "Killed Enemies:"
 msgstr "Getötete Aliens:"
 
-#: ../base/ufos/menu_team.ufo:763
-#: ../base/ufos/menu_team.ufo:772
-#: ../base/ufos/menu_team.ufo:781
-#: ../base/ufos/menu_team.ufo:790
-#: ../base/ufos/menu_team.ufo:799
-#: ../base/ufos/menu_team.ufo:808
-#: ../base/ufos/menu_team.ufo:817
-#: ../base/ufos/menu_team.ufo:826
+#: ../base/ufos/menu_team.ufo:770
+#: ../base/ufos/menu_team.ufo:779
+#: ../base/ufos/menu_team.ufo:788
+#: ../base/ufos/menu_team.ufo:797
+#: ../base/ufos/menu_team.ufo:806
+#: ../base/ufos/menu_team.ufo:815
+#: ../base/ufos/menu_team.ufo:824
+#: ../base/ufos/menu_team.ufo:833
 msgid "Equip this soldier"
 msgstr "Rüste diesen Soldaten aus"
 
-#: ../base/ufos/menu_team.ufo:909
+#: ../base/ufos/menu_team.ufo:916
 msgid "Show only primary weapons in store"
 msgstr "Zeige nur Primärwaffen"
 
-#: ../base/ufos/menu_team.ufo:920
+#: ../base/ufos/menu_team.ufo:927
 msgid "Show only secondary weapons in store"
 msgstr "Zeige nur Sekundärwaffen"
 
-#: ../base/ufos/menu_team.ufo:931
+#: ../base/ufos/menu_team.ufo:938
 msgid "Show other equipment in store"
 msgstr "Zeige nur Ausrüstungsgegenstände"
 
-#: ../base/ufos/menu_team.ufo:942
+#: ../base/ufos/menu_team.ufo:949
 msgid "Show only armor in store"
 msgstr "Zeige nur Rüstungen"
 
-#: ../base/ufos/menu_team.ufo:1090
+#: ../base/ufos/menu_team.ufo:1097
 msgid "Object Info"
 msgstr "Objekt Informationen"
 
-#: ../base/ufos/menu_team.ufo:1102
+#: ../base/ufos/menu_team.ufo:1109
 msgid "Actor Abilities"
 msgstr "Fähigkeiten"
 
@@ -1898,10 +1922,8 @@ msgstr "Prolog"
 #: ../base/ufos/seq_intro.ufo:65
 msgid "prolog_sentence2"
 msgstr ""
-"... The alien invasion has just begun.\n"
-"'Their' intentions are not clear, but\n"
-"from what is known it doesn't look\n"
-"good for mankind."
+"Willkommen Commander.\n"
+"Sie haben das Kommando über PHALANX erhalten. Ihre Mission: Beschützen sie die Bewohner dieses Planetens. Wie Sie das erledigen bleibt Ihnen überlassen, aber bedenkenSie, dass Scheitern keine Option ist."
 
 #: ../base/ufos/seq_intro.ufo:73
 msgid "prolog_sentence3"
@@ -2251,24 +2273,24 @@ msgstr "Tachyonscharfschützengewehr"
 msgid "Tachyon Sniper Charge"
 msgstr "Tachyonscharfschützenmunition"
 
-#: client/cl_actor.c:285
+#: client/cl_actor.c:292
 msgid "Currently panics!\n"
 msgstr "Gerade panisch!\n"
 
-#: client/cl_actor.c:292
+#: client/cl_actor.c:299
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
 msgstr ""
 
-#: client/cl_actor.c:311
+#: client/cl_actor.c:318
 #, c-format
 msgid ""
 "%s\n"
 "(empty)\n"
 msgstr ""
 
-#: client/cl_actor.c:324
+#: client/cl_actor.c:331
 #, c-format
 msgid ""
 "Health\t%i\n"
@@ -2277,26 +2299,26 @@ msgstr ""
 "Gesundheit\t%i\n"
 "Bewegung\t%i\n"
 
-#: client/cl_actor.c:329
+#: client/cl_actor.c:336
 #, c-format
 msgid "Health\t%i\n"
 msgstr "Gesundheit\t%i\n"
 
-#: client/cl_actor.c:642
+#: client/cl_actor.c:649
 msgid "Nobody selected\n"
 msgstr "Es ist niemand selektiert\n"
 
-#: client/cl_actor.c:655
+#: client/cl_actor.c:662
 msgid "This isn't your round\n"
 msgstr "Du bist nicht dran\n"
 
-#: client/cl_actor.c:789
+#: client/cl_actor.c:796
 msgid ""
 "You cannot load this unknown item.\n"
 "You need to research it first.\n"
 msgstr ""
 
-#: client/cl_actor.c:1254
+#: client/cl_actor.c:1261
 msgid "Your round started!\n"
 msgstr "Du bist an der Reihe!\n"
 
@@ -2592,7 +2614,7 @@ msgstr "Erstelle erst ein Team"
 msgid "Error"
 msgstr "Fehler"
 
-#: client/cl_main.c:1423
+#: client/cl_main.c:1422
 msgid "unnamed"
 msgstr "Unbekannt"
 
@@ -2612,8 +2634,8 @@ msgstr "Nacht"
 msgid "Day"
 msgstr "Tag"
 
-#: client/cl_menu.c:2110
-#: client/cl_menu.c:2143
+#: client/cl_menu.c:2112
+#: client/cl_menu.c:2145
 msgid ""
 "Select the desired location of the\n"
 "new base on the map.\n"
@@ -2621,8 +2643,8 @@ msgstr ""
 "Wähle die gewünschte Position der\n"
 "neuen Basis auf der Karte.\n"
 
-#: client/cl_menu.c:2114
-#: client/cl_menu.c:2147
+#: client/cl_menu.c:2116
+#: client/cl_menu.c:2149
 msgid ""
 "Aliens are attacking our base\n"
 "at this very moment.\n"
@@ -2630,8 +2652,8 @@ msgstr ""
 "Aliens greifen gerade eine unserer\n"
 "Basen an.\n"
 
-#: client/cl_menu.c:2118
-#: client/cl_menu.c:2151
+#: client/cl_menu.c:2120
+#: client/cl_menu.c:2153
 msgid "Select ufo or mission on map\n"
 msgstr ""
 "Wähle UFO oder Bodenmission\n"
@@ -2773,7 +2795,7 @@ msgstr "Forschung abgeschlossen"
 msgid "No description available."
 msgstr "Keine Beschreibung vorhanden."
 
-#: client/cl_team.c:256
+#: client/cl_team.c:267
 #, c-format
 msgid ""
 "Primary:\t%s\n"
@@ -2792,7 +2814,7 @@ msgstr ""
 "Streuung:\t%1.1f / %1.1f\n"
 "Munition:\t%i\n"
 
-#: client/cl_team.c:265
+#: client/cl_team.c:276
 #, c-format
 msgid ""
 "Damage:\t%i / %i\n"
@@ -2807,7 +2829,7 @@ msgstr ""
 "Streuung:\t%1.1f / %1.1f\n"
 "Munition:\t%i\n"
 
-#: client/cl_team.c:276
+#: client/cl_team.c:287
 #, c-format
 msgid ""
 "Action:\t%s\n"
@@ -2818,54 +2840,54 @@ msgstr ""
 "Zeiteinheiten:\t%i\n"
 "Reichweite:\t%1.1f\n"
 
-#: client/cl_team.c:282
+#: client/cl_team.c:293
 msgid "Unknown - need to research this"
 msgstr "Unbekannt - muss noch erforscht werden"
 
-#: client/cl_team.c:765
+#: client/cl_team.c:776
 msgid "NewTeam"
 msgstr "Neues Team"
 
-#: client/cl_team.c:1098
+#: client/cl_team.c:1115
 #: game/g_ai.c:455
 msgid "Alien"
 msgstr "Alien"
 
-#: client/cl_team.c:1098
+#: client/cl_team.c:1115
 msgid "Enemy"
 msgstr "Gegner"
 
-#: client/cl_team.c:1099
+#: client/cl_team.c:1116
 msgid "Aliens"
 msgstr "Aliens"
 
-#: client/cl_team.c:1099
+#: client/cl_team.c:1116
 msgid "Enemies"
 msgstr "Gegner"
 
-#: client/cl_team.c:1123
+#: client/cl_team.c:1140
 #, c-format
 msgid "%s killed\t%i\n"
 msgstr "%s getötet\t%i\n"
 
-#: client/cl_team.c:1125
+#: client/cl_team.c:1142
 #, c-format
 msgid ""
 "%s survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1128
+#: client/cl_team.c:1145
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Eigene Verluste\t%i\n"
 
-#: client/cl_team.c:1129
+#: client/cl_team.c:1146
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Verluste durch Friendlyfire\t%i\n"
 
-#: client/cl_team.c:1130
+#: client/cl_team.c:1147
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -2874,17 +2896,17 @@ msgstr ""
 "Überlebende\t%i\n"
 "\n"
 
-#: client/cl_team.c:1141
+#: client/cl_team.c:1158
 #, c-format
 msgid "Civilians killed by the %s\t%i\n"
 msgstr "Durch %s getötete Zivilisten\t%i\n"
 
-#: client/cl_team.c:1142
+#: client/cl_team.c:1159
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Durch eigenes Team getötete Zivilisten\t%i\n"
 
-#: client/cl_team.c:1143
+#: client/cl_team.c:1160
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -2895,22 +2917,22 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1167
+#: client/cl_team.c:1184
 #, c-format
 msgid "Collected alien technology\t%i $\n"
 msgstr "Gesammelte Alientechnology\t%i $\n"
 
-#: client/cl_team.c:1172
+#: client/cl_team.c:1189
 #, c-format
 msgid "Aliens killed\t%i $\n"
 msgstr "Aliens getötet\t%i $\n"
 
-#: client/cl_team.c:1177
+#: client/cl_team.c:1194
 #, c-format
 msgid "Civilians saved\t%i $\n"
 msgstr "Zivilisten gerettet\t%i $\n"
 
-#: client/cl_team.c:1180
+#: client/cl_team.c:1197
 #, c-format
 msgid ""
 "Total reward\t%i $\n"
@@ -2921,7 +2943,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1184
+#: client/cl_team.c:1201
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr "Neue Rekruten\t%i\n"
