@@ -946,6 +946,9 @@ value_t rankValues[] =
 {
 	{ "name",	V_TRANSLATION_STRING,	PARSERANKS( name ) },
 	{ "image",	V_STRING,				PARSERANKS( image ) },
+	{ "mind",		V_INT,			PARSERANKS( mind ) },
+	{ "killed_enemies",	V_INT,			PARSERANKS( killed_enemies ) },
+	{ "killed_others",	V_INT,			PARSERANKS( killed_others ) },
 	{ NULL,	0, 0 }
 };
 
