@@ -25,33 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
 
-#ifdef BUILD_FREETYPE
-//this is here to let the RegisterFTFont stuff work
-#define GLYPH_START 0
-#define GLYPH_END 255
-#define GLYPHS_PER_FONT GLYPH_END - GLYPH_START + 1
-typedef struct {
-	int height;       // number of scan lines
-	int top;          // top of glyph in buffer
-	int bottom;       // bottom of glyph in buffer
-	int pitch;        // width for copying
-	int xSkip;        // x adjustment
-	int imageWidth;   // width of actual image
-	int imageHeight;  // height of actual image
-	float s;          // x offset in image where glyph starts
-	float t;          // y offset in image where glyph starts
-	float s2;
-	float t2;
-	int glyph;  // handle to the shader with the glyph
-} glyphInfo_t;
-
-typedef struct {
-	glyphInfo_t glyphs [GLYPHS_PER_FONT];
-	float glyphScale;
-        char name[MAX_QPATH];
-} fontInfo_t;
-#endif /* BUILD_FREETYPE */
-
 #define	MAX_DLIGHTS		32
 #define	MAX_ENTITIES	512
 #define	MAX_PARTICLES	8192
@@ -300,17 +273,6 @@ typedef struct
 	struct model_s *(*RegisterModel) (char *name);
 	struct image_s *(*RegisterSkin) (char *name);
 
-#ifdef BUILD_FREETYPE
-	void    (*RegisterFTFont) (const char *fontName, int pointSize, fontInfo_t * font);
-#endif
-
-#ifdef USE_SDL_TTF
-	void (*RegisterFont) (char *name, int size, char* path, char* style);
-	void (*CleanFontCache) (void);
-#else
-	struct image_s *(*RegisterFont) (char *name);
-#endif /* USE_SDL_TTF */
-
 	struct image_s *(*RegisterPic) (char *name);
 	void	(*SetSky) (char *name, float rotate, vec3_t axis);
 	void	(*EndRegistration) (void);
@@ -323,9 +285,9 @@ typedef struct
 	void	(*DrawNormPic) (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
 	void	(*DrawStretchPic) (int x, int y, int w, int h, char *name);
 	void	(*DrawChar) (int x, int y, int c);
-	int	(*DrawPropChar) (char *font, int x, int y, char c);
-	int	(*DrawPropLength) (char *font, char *c);
-	int	(*DrawPropString) (char *font, int align, int x, int y, char *c);
+	void	(*FontRegister) (char *name, int size, char* path, char* style);
+	vec2_t	*(*FontLength) (char *font, char *c);
+	vec2_t	*(*FontDrawString) (char *font, int align, int x, int y, int width, char *c);
 	void	(*DrawTileClear) (int x, int y, int w, int h, char *name);
 	void	(*DrawFill) (int x, int y, int w, int h, int style, vec4_t color);
 	void	(*DrawColor) (float *rgba);
@@ -386,10 +348,8 @@ typedef struct
 //	void	*(*Malloc)( int bytes );
 //	void	(*Free)( void *buf );
 
-#ifdef USE_SDL_TTF
 	// will return the size and the path for each font
 	void (*CL_GetFontData) (char *name, int *size, char *path);
-#endif
 
 	// gamedir will be the current directory that generated
 	// files should be stored to, ie: "f:\quake\id1"

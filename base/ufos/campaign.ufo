@@ -592,6 +592,8 @@ mission vil_grenchen
 	aliens		3
 	alienteam	alien
 	alienequip	campaign_alien
+	// uncontrolled ground units (info_ugv_start)
+	maxugv		1
 	civilians	7
 	civteam		european
 	recruits	2

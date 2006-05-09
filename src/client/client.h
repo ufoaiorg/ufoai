@@ -1503,7 +1503,6 @@ extern char *menuText[MAX_MENUTEXTS];
 void CL_ParseFont( char* name, char **text );
 // here they get reinit after a vid_restart
 void CL_InitFonts( void );
-#ifdef USE_SDL_TTF
 
 typedef struct font_s
 {
@@ -1518,7 +1517,6 @@ extern font_t *fontBig;
 
 // will return the size and the path for each font
 void CL_GetFontData (char *name, int *size, char *path);
-#endif /* USE_SDL_TTF */
 
 //
 // cl_particle.c
