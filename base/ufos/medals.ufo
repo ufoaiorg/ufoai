@@ -1,39 +1,33 @@
 medal cross
 {
 	name "_Cross"
-	type "medal"
 	image ""
 }
 
 medal coin
 {
 	name "_Coin"
-	type "medal"
 	image ""
 }
 
 // These ranks should be in order of lowest to highest rank
-medal rank_01
+rank rookie
 {
 	name "_Rookie"
-	type "rank"
-	image ""
+	image "hud/rank_01"
 }
-medal rank_01
+rank squadleader
 {
 	name "_Squad Leader"
-	type "rank"
-	image ""
+	image "hud/rank_02"
 }
-medal rank_01
+rank commander
 {
 	name "_Commander"
-	type "rank"
-	image ""
+	image "hud/rank_03"
 }
-medal rank_02
+rank captain
 {
 	name "_Captain"
-	type "rank"
-	image ""
+	image "hud/rank_04"
 }
