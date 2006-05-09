@@ -547,9 +547,7 @@ menu team
 		scale	"1.0 1.0 1.0"
 	}
 
-	//pic		rank_img { pos "475 370" image "*cvar mn_chrrank_img" }
-	// TODO: this is a placeholder for now.
-	pic		rank_img { pos "475 370" image "hud/rank_01" }
+	pic	rank_img { pos "475 370" image "*cvar mn_chrrank_img" }
 	string	rank_lbl { pos "475 75" string "*cvar mn_chrrank" }
 	
 	string pwr_lbl { pos "700 85"  string "_Power:" }
