@@ -55,11 +55,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_arb_shader.h"
 
-#ifdef USE_SDL_TTF
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 void GL_ShutdownSDLFonts ( void ); // gl_draw.c
-#endif /* USE_SDL_TTF */
 
 #include "qgl.h"
 
@@ -108,7 +106,6 @@ typedef enum
 	it_wall,
 	it_pic,
 	it_wrappic,
-	it_font,
 	it_sky
 } imagetype_t;
 
@@ -202,35 +199,6 @@ typedef struct
 
 extern transform_t	trafo[MAX_ENTITIES];
 
-// fonts
-#define MAX_FONTS			16
-#define	MAX_FONTNAME		32
-#define CHAR_EMPTYWIDTH		0.5
-
-typedef struct font_s
-{
-	char	name[MAX_FONTNAME];
-#ifdef USE_SDL_TTF
-	TTF_Font *font;
-	int style;
-#else
-	image_t	*image;
-	byte	wc[512]; // 256 lower case, 256 upper case
-	byte	w, h;
-	float	rw, rh, rhl;
-#endif
-} font_t;
-
-font_t *Draw_AnalyzeFont( char *name, byte *pic, int w, int h );
-void CleanFontCache ( void );
-
-#ifdef BUILD_FREETYPE
-//new font stuff
-void            R_InitFreeType();
-void            R_DoneFreeType();
-void            RE_RegisterFTFont(const char *fontName, int pointSize, fontInfo_t * font);
-#endif /* BUILD_FREETYPE */
-
 //====================================================
 
 extern	image_t		*shadow;
@@ -283,10 +251,6 @@ extern  cvar_t  *r_anisotropic;
 extern  cvar_t  *r_ext_max_anisotropy;
 extern  cvar_t  *r_texture_lod; // lod_bias
 extern  cvar_t  *r_displayrefresh;
-
-#ifdef BUILD_FREETYPE
-extern	cvar_t	*r_saveFontData;
-#endif
 
 extern cvar_t	*gl_vertex_arrays;
 
@@ -433,15 +397,7 @@ void R_AddMapTile( char *name, int sX, int sY, int sZ );
 void	R_SetGL2D (void);
 void	R_LeaveGL2D (void);
 
-#if 0
-short LittleShort (short l);
-short BigShort (short l);
-int	LittleLong (int l);
-float LittleFloat (float f);
-
-char	*va(char *format, ...);
-// does a varargs printf into a temp buffer
-#endif
+#include "gl_font.h"
 
 void	COM_StripExtension (char *in, char *out);
 
@@ -450,10 +406,6 @@ void	Draw_Pic (int x, int y, char *name);
 void	Draw_NormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
 void	Draw_StretchPic (int x, int y, int w, int h, char *name);
 void	Draw_Char (int x, int y, int c);
-int	Draw_PropChar (char *font, int x, int y, char c);
-int	Draw_PropLength (char *font, char *c);
-font_t	*Draw_AnalyzeFont (char *name, byte *pic, int w, int h);
-int	Draw_PropString (char *font, int align, int x, int y, char *c);
 void	Draw_TileClear (int x, int y, int w, int h, char *name);
 void	Draw_Fill (int x, int y, int w, int h, int style, vec4_t color);
 void	Draw_Color (float *rgba);
