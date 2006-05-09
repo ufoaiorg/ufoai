@@ -90,52 +90,54 @@ MN_UpDrawEntry
 =================*/
 void MN_UpDrawEntry( char *id )
 {
-	int i, j;
-	technology_t* t;
-	for ( i = 0; i < numTechnologies; i++ ) {
-		t = &technologies[i];
-		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {
-			Cvar_Set( "mn_uptitle", _(t->name) );
-			menuText[TEXT_UFOPEDIA] = _(t->description);
-			Cvar_Set( "mn_upmodel_top", "" );
-			Cvar_Set( "mn_upmodel_bottom", "" );
-			Cvar_Set( "mn_upimage_top", "base/empty" );
-			Cvar_Set( "mn_upimage_bottom", "base/empty" );
-			if ( *t->mdl_top ) Cvar_Set( "mn_upmodel_top", t->mdl_top );
-			if ( *t->mdl_bottom ) Cvar_Set( "mn_upmodel_bottom", t->mdl_bottom );
-			if ( !*t->mdl_top && *t->image_top ) Cvar_Set( "mn_upimage_top", t->image_top );
-			if ( !*t->mdl_bottom && *t->mdl_bottom ) Cvar_Set( "mn_upimage_bottom", t->image_bottom );
-			Cbuf_AddText( "mn_upfsmall\n" );
+	int i;
+	technology_t* tech = NULL;
+	tech = RS_GetTechByID( id );
+	if ( ! tech ) {
+		Com_Printf("MN_UpDrawEntry: \"%s\" <- research item not found.\n", id );
+		return;
+	}
+	
+	Cvar_Set( "mn_uptitle", _(tech->name) );
+	menuText[TEXT_UFOPEDIA] = _(tech->description);
+	Cvar_Set( "mn_upmodel_top", "" );
+	Cvar_Set( "mn_upmodel_bottom", "" );
+	Cvar_Set( "mn_upimage_top", "base/empty" );
+	Cvar_Set( "mn_upimage_bottom", "base/empty" );
+	if ( *tech->mdl_top ) Cvar_Set( "mn_upmodel_top", tech->mdl_top );
+	if ( *tech->mdl_bottom ) Cvar_Set( "mn_upmodel_bottom", tech->mdl_bottom );
+	if ( !*tech->mdl_top && *tech->image_top ) Cvar_Set( "mn_upimage_top", tech->image_top );
+	if ( !*tech->mdl_bottom && *tech->mdl_bottom ) Cvar_Set( "mn_upimage_bottom", tech->image_bottom );
+	Cbuf_AddText( "mn_upfsmall\n" );
 
-			if ( upCurrent) {
-				menuText[TEXT_STANDARD] = NULL;
-				switch ( t->type )
-				{
-				case RS_ARMOR:
-				case RS_WEAPON:
-					for ( j = 0; j < csi.numODs; j++ ) {
-						if ( !Q_strncmp( t->provides, csi.ods[j].kurz, MAX_VAR ) ) {
-							CL_ItemDescription( j );
-							break;
-						}
-					}
-					break;
-				case RS_TECH:
-					UP_TechDescription( t );
-					break;
-				case RS_CRAFT:
-					UP_AircraftDescription( t );
-					break;
-				case RS_BUILDING:
-					UP_BuildingDescription( t );
-					break;
-				default:
+	if ( upCurrent) {
+		menuText[TEXT_STANDARD] = NULL;
+		switch ( tech->type )
+		{
+		case RS_ARMOR:
+		case RS_WEAPON:
+			for ( i = 0; i < csi.numODs; i++ ) {
+				if ( !Q_strncmp( tech->provides, csi.ods[i].kurz, MAX_VAR ) ) {
+					CL_ItemDescription( i );
 					break;
 				}
 			}
-			else
-				menuText[TEXT_STANDARD] = NULL;
+			break;
+		case RS_TECH:
+			UP_TechDescription( tech );
+			break;
+		case RS_CRAFT:
+			UP_AircraftDescription( tech );
+			break;
+		case RS_BUILDING:
+			UP_BuildingDescription( tech );
+			break;
+		default:
+			break;
 		}
+	}
+	else {
+		menuText[TEXT_STANDARD] = NULL;
 	}
 }
 
@@ -247,6 +249,7 @@ void MN_UpPrev_f( void )
 
 	if ( upCurrent->prev )
 	{
+		// TODO: check if the previous entry/entries is/are researched already.
 		upCurrent = upCurrent->prev;
 		MN_UpDrawEntry( upCurrent->id );
 		return;
@@ -275,6 +278,7 @@ void MN_UpNext_f( void )
 	// get next entry
 	if ( upCurrent && upCurrent->next )
 	{
+		// TODO: check if the next entry/entries is/are researched already.
 		upCurrent = upCurrent->next;
 		MN_UpDrawEntry( upCurrent->id );
 		return;
