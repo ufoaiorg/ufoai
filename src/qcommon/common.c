@@ -1292,14 +1292,23 @@ void Qcommon_LocaleInit ( void )
 	setlocale( LC_ALL, "C" );
 	locale = setlocale( LC_MESSAGES, s_language->string );
 	if ( ! locale )
-		Com_Printf("Could not set to language: %s\n", s_language->string );
+	{
+		Com_Printf("...could not set to language: %s\n", s_language->string );
+		locale = setlocale( LC_MESSAGES, "" );
+		if ( !locale )
+		{
+			Com_Printf("...could not set to system language\n" );
+			return;
+		}
+	}
 	else
 	{
-		Com_Printf("Using language: %s\n", locale );
+		Com_Printf("...using language: %s\n", locale );
 		Cvar_Set("s_language", locale );
 	}
 
 	// use system locale dir if we can't find in gamedir
+	Com_DPrintf("...using mo files from %s/base/i18n\n", FS_GetCwd() );
 	bindtextdomain( TEXT_DOMAIN, va("%s/base/i18n/", FS_GetCwd() ) );
 	bind_textdomain_codeset( TEXT_DOMAIN, "UTF-8" );
 	// load language file
@@ -1342,11 +1351,6 @@ void Qcommon_Init (int argc, char **argv)
 
 	FS_InitFilesystem ();
 
-#ifdef HAVE_GETTEXT
-	// i18n through gettext
-	Qcommon_LocaleInit();
-#endif
-
 	Cbuf_AddText ("exec default.cfg\n");
 	Cbuf_AddText ("exec config.cfg\n");
 	Cbuf_AddText ("exec keys.cfg\n");
@@ -1387,6 +1391,13 @@ void Qcommon_Init (int argc, char **argv)
 
 	SV_Init ();
 	CL_Init ();
+
+#ifdef HAVE_GETTEXT
+	// i18n through gettext
+	Qcommon_LocaleInit();
+#else
+	Com_Printf("..no gettext compiled into this binary\n");
+#endif
 
 	Com_ParseScripts ();
 
