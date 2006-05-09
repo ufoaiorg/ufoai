@@ -24,7 +24,7 @@ BUILD_FREETYPE=NO	# build with freetype support?
 BUILD_WITH_DGA=NO	# dga support compiled in
 BUILD_WITH_VIDMODE=YES	# vidmode support
 BUILD_WITH_JOYSTICK=NO	# joystick support
-BUILD_WITH_MMX=YES	# MMX support
+BUILD_WITH_MMX=NO	# MMX support
 
 # (hopefully) end of configurable options
 
