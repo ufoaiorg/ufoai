@@ -1539,7 +1539,7 @@ MN_Tooltip
 */
 void MN_Tooltip ( menuNode_t* node, int x, int y )
 {
-	int l;
+	vec2_t *l;
 	char* tooltip;
 	vec4_t color;
 	// tooltips
@@ -1552,18 +1552,16 @@ void MN_Tooltip ( menuNode_t* node, int x, int y )
 		tooltip = (char *)node->data[5];
 		if ( *tooltip == '_' )
 			tooltip++;
-		l = re.DrawPropLength( "f_small", _(tooltip) );
-		if ( x + l > VID_NORM_WIDTH )
-			x -= (l+10);
-#ifdef USE_SDL_TTF
-		re.DrawFill(x, y, l, fontSmall->size + 10, 0, color );
-#else
-		re.DrawFill(x, y, l, 20, 0, color );
-#endif
+		l = re.FontLength( "f_small", _(tooltip) );
+		if ( !l )
+			return;
+		if ( x + *l[0] > VID_NORM_WIDTH )
+			x -= (*l[0]+10);
+		re.DrawFill(x, y, *l[0], *l[1] + 10, 0, color );
 		VectorSet( color, 0.0f, 0.8f, 0.0f );
 		color[3] = 1.0f;
 		re.DrawColor( color );
-		re.DrawPropString("f_small", 0, x, y, _(tooltip) );
+		re.FontDrawString("f_small", 0, x, y, *l[0], _(tooltip) );
 		re.DrawColor( NULL );
 	}
 }
@@ -1656,6 +1654,7 @@ void MN_DrawMenus( void )
 	int 	y, line, x, len;
 	message_t	*message;
 	menuModel_t	*menuModel = NULL;
+	vec2_t* l;
 
 	// render every menu on top of a menu with a render node
 	pp = 0;
@@ -1743,9 +1742,9 @@ void MN_DrawMenus( void )
 					if ( node->data[1] ) font = MN_GetReferenceString( menu, node->data[1] );
 					else font = "f_small";
 					if ( !node->mousefx || cl.time % 1000 < 500 )
-						re.DrawPropString( font, node->align, node->pos[0], node->pos[1], ref );
+						re.FontDrawString( font, node->align, node->pos[0], node->pos[1], node->size[0], ref );
 					else
-						re.DrawPropString( font, node->align, node->pos[0], node->pos[1], va( "%s*\n", ref ) );
+						re.FontDrawString( font, node->align, node->pos[0], node->pos[1], node->size[0], va( "%s*\n", ref ) );
 					break;
 
 				case MN_TEXT:
@@ -1788,7 +1787,7 @@ void MN_DrawMenus( void )
 
 							// maybe due to scrolling this line is not visible
 							if ( line > node->textScroll )
-								re.DrawPropString( font, ALIGN_UL, x, y, pos );
+								re.FontDrawString( font, ALIGN_UL, x, y, node->size[0], pos );
 
 							while ( tab1 )
 							{
@@ -1799,20 +1798,20 @@ void MN_DrawMenus( void )
 									x += node->texh[1];
 									*tab2 = 0;
 									if ( line > node->textScroll )
-										re.DrawPropString( font, node->align, x, y, tab1+1 );
+										re.FontDrawString( font, node->align, x, y, node->size[0], tab1+1 );
 									x += node->texh[1];
 									*tab2 = '\t';
 									if ( line > node->textScroll )
-										re.DrawPropString( font, node->align, x, y, tab2+1 );
+										re.FontDrawString( font, node->align, x, y, node->size[0], tab2+1 );
 								}
 								else
 								{
-									if ( !node->texh[1] ) re.DrawPropString( font, ALIGN_UR, node->pos[0] + node->size[0], y, tab1+1 );
+									if ( !node->texh[1] ) re.FontDrawString( font, ALIGN_UR, node->pos[0] + node->size[0], y, node->size[0], tab1+1 );
 									else
 									{
 										x += node->texh[1];
 										if ( line > node->textScroll )
-											re.DrawPropString( font, node->align, x, y, tab1+1 );
+											re.FontDrawString( font, node->align, x, y, node->size[0], tab1+1 );
 									}
 								}
 								if ( tab2 )
@@ -1851,8 +1850,9 @@ void MN_DrawMenus( void )
 							// maybe due to scrolling this line is not visible
 							if ( line > node->textScroll )
 							{
-								len = re.DrawPropLength( font, message->text );
-								if ( len > node->pos[0] + node->size[0] )
+								l = re.FontLength( font, message->text );
+								if ( !l ) break;
+								if ( *l[0] > node->pos[0] + node->size[0] )
 								{
 									// TODO: not tested this....
 									// we use a backslash to determine where to break the line
@@ -1860,9 +1860,11 @@ void MN_DrawMenus( void )
 									while ( ( end = strstr( tab1, "\\" ) ) != NULL )
 									{
 										*end = '\0';
-										re.DrawPropString( font, ALIGN_UL, node->pos[0], y, tab1 );
+										re.FontDrawString( font, ALIGN_UL, node->pos[0], y, node->size[0], tab1 );
 										tab1 = end + 1;
 										line++;
+										// FIXME: Add checking for node->size[1]
+										//        DrawPropString return a vec2_t* with the needed data
 										if ( line >= node->height )
 											break;
 										y += node->texh[0];
@@ -1874,7 +1876,7 @@ void MN_DrawMenus( void )
 									while ( ( end = strstr( message->text, "\\" ) ) != NULL )
 										*end = ' ';
 
-									re.DrawPropString( font, ALIGN_UL, node->pos[0], y, message->text );
+									re.FontDrawString( font, ALIGN_UL, node->pos[0], y, node->size[0], message->text );
 								}
 							}
 
@@ -2227,9 +2229,6 @@ void MN_PushMenu( char *name )
 				MN_ExecuteActions( &menus[i], menus[i].initNode->click );
 
 			cls.key_dest = key_game;
-#ifdef USE_SDL_TTF
-			re.CleanFontCache();
-#endif
 			return;
 		}
 
@@ -2282,10 +2281,6 @@ void MN_PopMenu( qboolean all )
 				MN_PushMenu( mn_active->string );
 		}
 	}
-
-#ifdef USE_SDL_TTF
-	re.CleanFontCache();
-#endif
 
 	cls.key_dest = key_game;
 }
@@ -3303,8 +3298,6 @@ void CL_InitMessageSystem ( void )
 
 // ==================== USE_SDL_TTF stuff =====================
 
-#ifdef USE_SDL_TTF
-
 #define MAX_FONTS 16
 int numFonts;
 font_t fonts[MAX_FONTS];
@@ -3337,8 +3330,6 @@ void CL_GetFontData (char *name, int *size, char *path)
 	Com_Printf("Font: %s not found\n", name );
 }
 
-#endif
-
 /*
 =================
 CL_ParseFont
@@ -3349,8 +3340,6 @@ about unknown tokens for the font definitions
 */
 void CL_ParseFont( char* name, char **text )
 {
-// we don't need to parse if we don't want to use the sdl_ttf lib as font-engine
-#ifdef USE_SDL_TTF
 	font_t*	font;
 	char	*errhead = "CL_ParseFont: unexpected end of file (font";
 	char	*token;
@@ -3420,8 +3409,7 @@ void CL_ParseFont( char* name, char **text )
 	if ( FS_CheckFile( font->path ) == -1 )
 		Sys_Error("...font file %s does not exist (font %s)\n", font->path, font->name );
 
-	re.RegisterFont( font->name, font->size, font->path, font->style );
-#endif
+	re.FontRegister( font->name, font->size, font->path, font->style );
 }
 
 /*
@@ -3433,15 +3421,12 @@ after a vid restart we have to reinit the fonts
 */
 void CL_InitFonts( void )
 {
-#ifdef USE_SDL_TTF
 	int	i;
 
 	Com_Printf("...registering %i fonts\n", numFonts);
 	for ( i = 0; i < numFonts; i++ )
 	{
-		re.RegisterFont( fonts[i].name, fonts[i].size, fonts[i].path, fonts[i].style );
+		re.FontRegister( fonts[i].name, fonts[i].size, fonts[i].path, fonts[i].style );
 	}
-
-#endif
 }
 // ===================== USE_SDL_TTF stuff end ======================

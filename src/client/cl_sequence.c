@@ -1,4 +1,4 @@
-// // cl_sequence.c -- render non-interactive sequences
+// cl_sequence.c -- render non-interactive sequences
 // avi record functions
 
 #include "client.h"
@@ -72,13 +72,14 @@ typedef struct seq2D_s
 {
 	qboolean	inuse;
 	char		name[MAX_VAR];
-	char		text[MAX_VAR];
+	char		text[MAX_VAR]; // a placeholder for gettext (V_TRANSLATION2_STRING)
 	char		font[MAX_VAR];
 	char		image[MAX_VAR];
 	vec2_t		pos, speed;
 	vec2_t		size, enlarge;
 	vec4_t		color, fade;
 	byte		align;
+	qboolean	relativePos; // useful for translations when sentence length may differ
 } seq2D_t;
 
 void SEQ_Wait( char *name, char *data );
@@ -270,12 +271,19 @@ CL_Sequence2D
 void CL_Sequence2D( void )
 {
 	seq2D_t	*s2d;
-	int		i, j;
+	int	i, j;
+	vec2_t*	l = NULL;
+	int	yPosPre = -1;
 
 	// add texts
 	for ( i = 0, s2d = seq2Ds; i < numSeq2Ds; i++, s2d++ )
 		if ( s2d->inuse )
 		{
+			if ( s2d->relativePos && l != NULL )
+			{
+				s2d->pos[1] += yPosPre;
+			}
+			s2d->relativePos = false;
 			// advance in time
 			for ( j = 0; j < 4; j++ )
 			{
@@ -291,11 +299,18 @@ void CL_Sequence2D( void )
 
 			// render
 			re.DrawColor( s2d->color );
-			if ( *s2d->text )
-				re.DrawPropString( s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], _(s2d->text) );
+			// image can be background
 			if ( *s2d->image )
 				re.DrawNormPic( s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1],
 					0, 0, 0, 0, s2d->align, true, s2d->image);
+			if ( *s2d->text ) // gettext placeholder
+			{
+				l = re.FontDrawString( s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], (int)s2d->size[0], _(s2d->text) );
+				if ( l != NULL )
+					yPosPre = *l[1];
+			}
+			else
+				l = NULL;
 		}
 	re.DrawColor( NULL );
 }
@@ -416,7 +431,7 @@ value_t seqEnt_vals[] =
 value_t seq2D_vals[] =
 {
 	{ "name",		V_STRING,		SEQ2DOFS( name ) },
-	{ "text",		V_TRANSLATION_STRING,		SEQ2DOFS( text ) },
+	{ "text",		V_TRANSLATION2_STRING,		SEQ2DOFS( text ) },
 	{ "font",		V_STRING,		SEQ2DOFS( font ) },
 	{ "image",		V_STRING,		SEQ2DOFS( image ) },
 	{ "pos",		V_POS,			SEQ2DOFS( pos ) },
@@ -426,6 +441,7 @@ value_t seq2D_vals[] =
 	{ "color",		V_COLOR,		SEQ2DOFS( color ) },
 	{ "fade",		V_COLOR,		SEQ2DOFS( fade ) },
 	{ "align",		V_ALIGN,		SEQ2DOFS( align ) },
+	{ "relative",		V_BOOL,		SEQ2DOFS( relativePos ) },
 	{ NULL, 0, 0 },
 };
 
