@@ -241,8 +241,8 @@ msgid "Squad Leader"
 msgstr "Gruppenführer"
 
 #: ../base/ufos/medals.ufo:30
-msgid "Commander"
-msgstr "Kommandant"
+msgid "Sergeant"
+msgstr "Sergeant"
 
 #: ../base/ufos/medals.ufo:36
 msgid "Captain"

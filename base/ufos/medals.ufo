@@ -36,9 +36,9 @@ rank squadleader
 	killed_enemies	5
 	killed_others	3
 }
-rank commander
+rank sergeant
 {
-	name "_Commander"
+	name "_Sergeant"
 	image "hud/rank_03"
 	mind 80
 	killed_enemies	20

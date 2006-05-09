@@ -71,9 +71,8 @@ void CL_GiveNameCmd( void )
 
 // initialized in CL_ResetTeams
 
-// TODO: Parsing from file
 rank_t ranks[MAX_RANKS];	// Global list of all ranks defined in medals.ufo.
-int numRanks;			// The number of entries in the list above.
+int numRanks;				// The number of entries in the list above.
 
 
 /*======================
@@ -105,12 +104,6 @@ void CL_GenerateCharacter( char *team, base_t* base )
 	chr->skin = Com_GetModelAndName( team, chr->path, chr->body, chr->head, chr->name );
 	Cvar_ForceSet( va( "mn_name%i", base->numWholeTeam ), chr->name );
 
-	// Starting rank is the first one in the list (as defined in medals.ufo)
-	/*if ( numRanks == 0) {								// DEBUG
-		Q_strncpyz( ranks[0].name, "Rookie", MAX_MEDALTITLE); 	// DEBUG
-		numRanks = 1;								// DEBUG
-	}											// DEBUG
-	*/
 	chr->rank = &ranks[0];
 
 	base->numWholeTeam++;
