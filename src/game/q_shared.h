@@ -1001,6 +1001,9 @@ typedef struct rank_s
 {
 	char	name[MAX_MEDALTITLE];
 	char	image[MAX_VAR];
+	int mind;
+	int killed_enemies;
+	int killed_others;
 } rank_t;
 
 extern rank_t ranks[MAX_RANKS];	// Global list of all ranks defined in medals.ufo.
