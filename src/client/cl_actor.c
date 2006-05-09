@@ -60,10 +60,13 @@ void CL_CharacterCvars( character_t *chr )
 	Cvar_Set( "mn_chrkillalien", va( "%i", chr->kills[KILLED_ALIENS] ) );
 	Cvar_Set( "mn_chrkillcivilian", va( "%i", chr->kills[KILLED_CIVILIANS] ) );
 	Cvar_Set( "mn_chrkillteam", va( "%i", chr->kills[KILLED_TEAM] ) );
+	Cvar_Set( "mn_chrrank_img", "" );
 	//TODO: Doesn't work yet
 	Com_sprintf (messageBuffer, sizeof(messageBuffer), "Rank: %s", rank->name );
 	Cvar_Set( "mn_chrrank", messageBuffer );
-	//Cvar_Set( "mn_chrrank", "Rank: TODO" );
+	//Cvar_Set( "mn_chrrank", "Rank: TODO" ); // DEBUG
+	Com_sprintf (messageBuffer, sizeof(messageBuffer), "%s", rank->image );
+	Cvar_Set( "mn_chrrank_img", messageBuffer );
 
 	Cvar_Set( "mn_vpwr", va( "%i", chr->skills[ABILITY_POWER] ) );
 	Cvar_Set( "mn_vspd", va( "%i", chr->skills[ABILITY_SPEED] ) );
