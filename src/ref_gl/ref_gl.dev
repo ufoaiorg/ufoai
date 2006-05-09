@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_-lSDL_ttf_@@_-lSDL_@@_../win32/intl.lib_@@_-def ref_gl.def_@@_
 Libs=
-UnitCount=30
+UnitCount=31
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=
@@ -346,4 +346,14 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c gl_shadows.c -o gl_shadows.o $(CFLAGS)
+
+[Unit30]
+FileName=gl_font.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c gl_font.c -o gl_font.o $(CFLAGS)
 
