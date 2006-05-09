@@ -520,44 +520,6 @@ typedef struct _TargaHeader {
 	unsigned char	pixel_size, attributes;
 } TargaHeader;
 
-#ifdef BUILD_FREETYPE
-/*
-=============
-WriteTGA
-
-Only needed by freetype
-=============
-*/
-void WriteTGA (char *filename, byte *data, int width, int height)
-{
-	byte	*buffer;
-	int		i, c;
-
-	buffer = malloc(width*height*4 + 18);
-	memset (buffer, 0, 18);
-	buffer[2] = 2;		// uncompressed type
-	buffer[12] = width&255;
-	buffer[13] = width>>8;
-	buffer[14] = height&255;
-	buffer[15] = height>>8;
-	buffer[16] = 32;	// pixel size
-
-	// swap rgb to bgr
-	c = 18 + width * height * 4;
-	for (i=18 ; i<c ; i+=4)
-	{
-		buffer[i] = data[i-18+2];		// blue
-		buffer[i+1] = data[i-18+1];		// green
-		buffer[i+2] = data[i-18+0];		// red
-		buffer[i+3] = data[i-18+3];		// alpha
-	}
-
-	ri.FS_WriteFile(filename, c, buffer);
-
-	free (buffer);
-}
-#endif
-
 /*
 =============
 LoadTGA
@@ -1830,17 +1792,7 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 	}
 	image = &gltextures[i];
 
-#ifndef USE_SDL_TTF
-	if ( type == it_font )
-	{
-		font_t *font;
-		font = Draw_AnalyzeFont( name, pic, width, height );
-		font->image = image;
-		image->type = it_pic;
-	}
-	else
-#endif
-		image->type = type;
+	image->type = type;
 
 	len = strlen(name);
 	if (len >= sizeof(image->name))
@@ -2091,59 +2043,6 @@ struct image_s *R_RegisterSkin (char *name)
 {
 	return GL_FindImage (name, it_skin);
 }
-
-
-/*
-===============
-R_RegisterFont
-===============
-*/
-#ifdef USE_SDL_TTF
-
-typedef struct
-{
-	char	*name;
-	int	renderStyle;
-} fontRenderStyle_t;
-
-fontRenderStyle_t fontStyle[] = {
-	{"TTF_STYLE_NORMAL", TTF_STYLE_NORMAL},
-	{"TTF_STYLE_BOLD", TTF_STYLE_BOLD},
-	{"TTF_STYLE_ITALIC", TTF_STYLE_ITALIC},
-	{"TTF_STYLE_UNDERLINE", TTF_STYLE_UNDERLINE}
-};
-
-#define NUM_FONT_STYLES (sizeof(fontStyle) / sizeof (fontRenderStyle_t))
-
-void R_RegisterFont (char *name, int size, char* path, char* style)
-{
-	int renderstyle = 0; // NORMAL is standard
-	int i;
-
-	if ( style && *style )
-	{
-		for (i=0 ; i< NUM_FONT_STYLES ; i++)
-		{
-			if ( !Q_stricmp( fontStyle[i].name, style ) )
-			{
-				renderstyle = fontStyle[i].renderStyle;
-				break;
-			}
-		}
-	}
-	else
-
-	ri.Con_Printf(PRINT_DEVELOPER, "...load font file %s (%s; pt: %i; style: %s)\n", path, name, size, fontStyle[renderstyle].name );
-
-	Draw_AnalyzeFont(name, path, renderstyle, size);
-}
-#else
-struct image_s *R_RegisterFont (char *name)
-{
-	return GL_FindImage (name, it_font);
-}
-#endif /* USE_SDL_TTF */
-
 
 /*
 ================
