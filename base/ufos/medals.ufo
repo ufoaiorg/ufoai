@@ -10,7 +10,19 @@ medal coin
 	image ""
 }
 
-// These ranks should be in order of lowest to highest rank
+//=======================
+// RANKS
+//
+// These ranks should be in order of lowest to highest rank.
+//
+// mind
+//	Minimum "mind" value the soldier needs.
+// killed_enemies
+//	Minimum number of _enemies_ killed by the soldier.
+// killed_others
+//	Maximum number of killed _civilian_ targets or _own soldiers_ killed by the soldier.
+//=======================
+
 rank rookie
 {
 	name "_Rookie"
@@ -20,14 +32,22 @@ rank squadleader
 {
 	name "_Squad Leader"
 	image "hud/rank_02"
+	mind 75
+	killed_enemies	5
 }
 rank commander
 {
 	name "_Commander"
 	image "hud/rank_03"
+	mind 80
+	killed_enemies	20
+	killed_others	5
 }
 rank captain
 {
 	name "_Captain"
 	image "hud/rank_04"
+	mind 80
+	killed_enemies	30
+	killed_others	7
 }
