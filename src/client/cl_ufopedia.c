@@ -247,18 +247,16 @@ void MN_UpPrev_f( void )
 	// get previous entry
 	if ( !upCurrent ) return;
 
-	if ( upCurrent->prev )
-	{
-		// TODO: check if the previous entry/entries is/are researched already.
-		upCurrent = upCurrent->prev;
+	if ( upCurrent->prev ) {
+		// Check if the previous entry is researched already otherwise go to the next entry.
+		do {	upCurrent = upCurrent->prev; } while ( !RS_TechIsResearched(upCurrent->id) );
 		MN_UpDrawEntry( upCurrent->id );
 		return;
 	}
 
 	// change chapter
 	for ( upc = upCurrent->up_chapter - 1; upc - upChapters >= 0; upc-- )
-		if ( upc->last )
-		{
+		if ( upc->last ) {
 			upCurrent = upc->last;
 			MN_UpDrawEntry( upCurrent->id );
 			return;
@@ -276,10 +274,9 @@ void MN_UpNext_f( void )
 	pediaChapter_t *upc;
 
 	// get next entry
-	if ( upCurrent && upCurrent->next )
-	{
-		// TODO: check if the next entry/entries is/are researched already.
-		upCurrent = upCurrent->next;
+	if ( upCurrent && upCurrent->next ) {
+		// Check if the next entry is researched already otherwise go to the next entry.
+		do {	upCurrent = upCurrent->next; } while ( !RS_TechIsResearched(upCurrent->id) );
 		MN_UpDrawEntry( upCurrent->id );
 		return;
 	}
@@ -289,8 +286,7 @@ void MN_UpNext_f( void )
 	else upc = upCurrent->up_chapter + 1;
 
 	for ( ; upc - upChapters < numChapters; upc++ )
-		if ( upc->first )
-		{
+		if ( upc->first ) {
 			upCurrent = upc->first;
 			MN_UpDrawEntry( upCurrent->id );
 			return;

@@ -37,7 +37,6 @@ TODO: comment on used globasl variables.
 
 void RS_GetFirstRequired( char *id,  stringlist_t *required);
 byte RS_TechIsResearchable(char *id );
-byte RS_TechIsResearched(char *id );
 
 technology_t technologies[MAX_TECHNOLOGIES];	// A global listof _all_ technologies (see cl_research.h)
 technology_t technologies_skeleton[MAX_TECHNOLOGIES];	// A local listof _all_ technologies  that are used to initialise the global list on new/loaded game.
