@@ -183,55 +183,85 @@ names french
 {
 	female
 	{
+	Alice
+	Amelie
+	Aurelie
+	Agnes
 	Claire
-	Therese
 	Elaine
 	Eloise
-	Emanuelle
-	Amelie
+	Elise
 	Evette
 	Evonne
+	Emanuelle
+	Geraldine
+	Helene
+	Stephanie
+	Sylvie
+	Therese
+	Laure
 	Laramie
 	Leona
 	Linette	
 	Lorraine
 	Lucie
 	Michelle
-	Alice
+	Virginie
 	}
 	
 	male
 	{
-	Louis
-	Vincent
-	Pierre
+	Antoine
+	Charles
+	Christophe
+	David
+	Emeralde
 	Jean
+	Jean-Pierre
+	Louis
+	Laurence
+	Laurent
+	Lucien
+	Ludovic
+	Marc
+	Pierre
+	Romain
+	Stephane
 	Talon
 	Thiery
-	Emeralde
-	Laurence
-	Lucien
-	Jean-Pierre
+	Thierry
+
+	Vincent
 	}
 	
 	lastname
 	{
+	Aiton
+	Abney
 	Basset
+	Bataille
+	Berry
+	Beaudouin
 	Beauvais
 	Beaumont
-	Neville
-	Montague
-	Abney
-	Bodine
-	Chardonais
-	Bussey
-	"de Lorme"
-	D'Aubigne
-	Colville
-	Devereux
-	Garnier
 	Bezier
-	Aiton
+	Bodine
+	Bussey
+	Chardonais
+	Colville
+	Coustillac
+	D'Aubigne
+	"de Lorme"
+	Devereux
+	Finet
+	Garnier
+	Guaydon
+	L'Hostis
+	Montague
+	Montagne
+	Neville
+	Millet
+	Rouff
 	}
 }
 
