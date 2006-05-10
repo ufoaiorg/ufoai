@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-static const	SDL_Color color = {255,255,255};
+static const	SDL_Color color = {255, 255, 255, 0}; // The 4. value is unused
 // holds the gettext string
 static char	buf[2048];
 static int	numInCache;
@@ -61,9 +61,9 @@ TODO: Check whether font is already loaded
 ================*/
 font_t *Font_Analyze( char *name, char *path, int renderStyle, int size )
 {
-	font_t	*f;
-	SDL_RWops *rw;
-	void* buffer;
+	font_t	*f = NULL;
+	SDL_RWops *rw = NULL;
+	void *buffer = NULL;
 	int ttfSize;
 
 	if ( numFonts >= MAX_FONTS )
@@ -119,7 +119,7 @@ Font_Length
 ================*/
 vec2_t *Font_Length (char *font, char *c)
 {
-	font_t	*f;
+	font_t	*f = NULL;
 	static vec2_t	l;
 
 	// get the font
@@ -156,7 +156,7 @@ void Font_ListCache_f ( void )
 {
 	int i = 0;
 	int collCount = 0, collSum = 0;
-	fontCache_t* f = NULL;
+	fontCache_t *f = NULL;
 
 	ri.Con_Printf(PRINT_ALL, "Font cache info\n========================\n" );
 	ri.Con_Printf(PRINT_ALL, "...font cache size: %i - used %i\n", MAX_FONT_CACHE, numInCache );
@@ -202,9 +202,9 @@ static int Font_Hash( const char *string, int maxlen )
 /*================
 Font_GetFromCache
 ================*/
-static void* Font_GetFromCache ( const char* s )
+static void* Font_GetFromCache ( const char *s )
 {
-	fontCache_t* font;
+	fontCache_t *font = NULL;
 	int hashValue;
 
 	hashValue = Font_Hash( s, MAX_HASH_STRING );
@@ -225,7 +225,7 @@ but other fonts.
 static void Font_AddToCache( const char* s, void* pixel, int w, int h )
 {
 	int hashValue;
-	fontCache_t* font;
+	fontCache_t* font = NULL;
 
 	hashValue = Font_Hash( s, MAX_HASH_STRING );
 	if ( hash[hashValue] )
@@ -259,8 +259,9 @@ Font_GenerateCache
 static void* Font_GenerateCache ( const char* s, const char* fontString, TTF_Font* font )
 {
 	int w, h;
-	SDL_Surface *textSurface, *openGLSurface;
-	SDL_Rect rect = {0,0,0};
+	SDL_Surface *textSurface = NULL;
+	SDL_Surface *openGLSurface = NULL;
+	SDL_Rect rect = {0, 0, 0};
 
 	textSurface = TTF_RenderUTF8_Blended(font, s, color);
 	if ( ! textSurface )
@@ -307,7 +308,7 @@ static char* Font_GetLineWrap ( char* buffer, TTF_Font* font, int maxWidth, vec2
 	char*	space = buffer;
 	char*	newlineTest = NULL;
 	int	width = 0;
-	int	height = 0; // no needed yet
+	int	height = 0; // not needed yet
 
 	if ( ! maxWidth )
 		maxWidth = VID_NORM_WIDTH;
@@ -365,7 +366,7 @@ Font_ConvertChars
 ================*/
 static void Font_ConvertChars ( char* buffer )
 {
-	char* replace;
+	char* replace = NULL;
 
 	// convert all \\ to \n
 	replace = strstr( buffer, "\\" );
@@ -436,7 +437,7 @@ vec2_t *Font_DrawString (char *font, int align, int x, int y, int maxWidth, char
 	vec2_t dim = {0,0};
 	font_t	*f = NULL;
 	char* buffer = buf;
-	SDL_Surface *openGLSurface;
+	SDL_Surface *openGLSurface = NULL;
 	int max; // calculated maxWidth
 	max = 0;
 
@@ -458,7 +459,11 @@ vec2_t *Font_DrawString (char *font, int align, int x, int y, int maxWidth, char
 		buffer = Font_GetLineWrap( buffer, f->font, maxWidth, &dim );
 		if ( ! buffer || !strlen(buffer) )
 			return NULL;
-
+		
+		// TODO: i do not have a clou why this is need a second timen but after the Font_GetLineWrap function "f" is f... up.
+		f = Font_GetFont( font );
+		if ( !f ) ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", font );
+			
 		// check whether this line is bigger than every other
 		if ( dim[0] > max )
 			max = dim[0];
