@@ -1,4 +1,4 @@
-// ========================================================================
+﻿// ========================================================================
 // HUMANS
 // ========================================================================
 
@@ -12,68 +12,92 @@ names german
 	female
 	{
 	Anna
-	Sabine
-	Barbara
-	Katrin
-	Yvonne
-	Magdalena
-	Susi
-	Nicole
 	Andrea
-	Denise
-	Gaby
-	Anna
-	Heike
-	Meike
-	Mareike
-	Ute
+	Barbara
 	Claudia
+	Denise
+	Elisabeth
+	Gaby
+	Heike
+	Katrin
+	Lisa
+	Magdalena
+	Mareike
+	Meike
+	Nicole
+	Sabine
+	Susi
+	Ute
+	Yvonne
 	}
-	
+
 	male
 	{
-	Rolf
-	Michael
-	Felix
-	David
-	Lukas
-	Horst
-	Soenke
-	Martin
-	Bernhard
-	Kai-Uwe
-	Hans
-	Peter
-	Hans-Peter
-	Philipp
-	Samuel
-	Karl
 	Adrian
-	Silvio
+	Anton
+	Bernhard
+	Boris
+	Christian
+	David
+	Emil
+	Felix
+	Hans
+	Hans-Peter
+	Horst
+	Johann
+	Karl
+	Kai-Uwe
+	Klaus
+	Lukas
+	Martin
 	Markus
+	Michael
 	Otto
+	Peter
+	Philipp
+	Ralf
+	Rolf
+	Roman
+	Samuel
+	Silvio
+	Sönke
+	Thomas
+	Uwe
+	Ulrich
+	Walter
+	Xaver
 	}
-	
+
 	lastname
 	{
-	Meier
-	Hofer
-	Luescher
-	Schlatter
-	Sommer
+	Allensbach
+	Aschwanden
 	Beyeler
+	Baltner
+	Dorfer
+	Eitl
+	Gratner
+	Hofer
+	Jost
+	Kohlmann
+	Loher
+	Lüscher
+	Maler
+	Mayer
+	Maier
+	Meier
 	Niederer
 	Nipp
-	Allensbach
+	Rügger
+	Schlatter
+	Schmitt
+	Schiffer
+	Seidl
+	Sommer
 	Tschannen
 	Kohler
-	Zemp
-	Aschwanden
-	Loher
-	Schmitt
-	Seidl
 	Zeder
-	Ruegger
+	Zemp
 	}
 }
 
@@ -86,7 +110,7 @@ actors german
 		soldiers/female light head03a 0
 		soldiers/female light head03b 0
 	}
-	
+
 	male
 	{
 		soldiers/male light head01 0
@@ -121,7 +145,7 @@ names spanish_italian
 	Salma
 	Julia
 	}
-	
+
 	male
 	{
 	Gulliano
@@ -141,7 +165,7 @@ names spanish_italian
 	Carlos
 	Antonio
 	}
-	
+
 	lastname
 	{
 	"De Francesco"
@@ -165,7 +189,7 @@ actors spanish_italian
 		soldiers/female light head01a 0
 		soldiers/female light head01b 0
 	}
-	
+
 	male
 	{
 		soldiers/male light head03 0
@@ -176,7 +200,7 @@ actors spanish_italian
 
 
 // ==================
-// french
+// french & canadian
 // ==================
 
 names french
@@ -187,6 +211,9 @@ names french
 	Amelie
 	Aurelie
 	Agnes
+	Catherine
+	Caroline
+	Christine
 	Claire
 	Elaine
 	Eloise
@@ -196,50 +223,64 @@ names french
 	Emanuelle
 	Geraldine
 	Helene
+	Isabelle
 	Stephanie
 	Sylvie
 	Therese
 	Laure
 	Laramie
 	Leona
-	Linette	
+	Linette
 	Lorraine
 	Lucie
+	Marie
 	Michelle
 	Virginie
 	}
-	
+
 	male
 	{
+	Albin
 	Antoine
+	Benoit
 	Charles
 	Christophe
 	David
 	Emeralde
+	Henri
+	Herve
 	Jean
 	Jean-Pierre
+	Jean-Marc
 	Louis
 	Laurence
 	Laurent
 	Lucien
 	Ludovic
 	Marc
+	Michel
 	Pierre
+	Remi
+	Richard
 	Romain
 	Stephane
+	Simon
 	Talon
 	Thiery
 	Thierry
-
 	Vincent
+	Xavier
+	Yves
 	}
-	
+
 	lastname
 	{
 	Aiton
 	Abney
+	Avitabile
 	Basset
 	Bataille
+	Battesti
 	Berry
 	Beaudouin
 	Beauvais
@@ -251,17 +292,25 @@ names french
 	Colville
 	Coustillac
 	D'Aubigne
+	D'Aubigny
+	"de Bressy"
+	"de Calderac"
 	"de Lorme"
 	Devereux
 	Finet
 	Garnier
 	Guaydon
+	Laurens
+	"Le Calvez"
 	L'Hostis
 	Montague
 	Montagne
 	Neville
 	Millet
 	Rouff
+	Rougerie
+	Tresse
+	Weissenbach
 	}
 }
 
@@ -272,7 +321,7 @@ actors french
 		soldiers/female light head01a 0
 		soldiers/female light head01b 0
 	}
-	
+
 	male
 	{
 		soldiers/male light head01 0
@@ -312,7 +361,7 @@ names english_american
 	Fancy
 	Britney
 	}
-	
+
 	male
 	{
 	Aaron
@@ -337,7 +386,7 @@ names english_american
 	Norman
 	Trevor
 	}
-	
+
 	lastname
 	{
 	Gibson
@@ -368,7 +417,7 @@ actors english_american
 		soldiers/female light head03a 0
 		soldiers/female light head03b 0
 	}
-	
+
 	male
 	{
 		soldiers/male light head01 0
@@ -409,7 +458,7 @@ names arabic
 	Damaa
 	Ebra
 	}
-	
+
 	male
 	{
 	Mustaffa
@@ -434,7 +483,7 @@ names arabic
 	Hasan
 	Ahmed
 	}
-	
+
 
 	lastname
 	{
@@ -456,7 +505,7 @@ actors arabic
 	female
 	{
 	}
-	
+
 	male
 	{
 		soldiers/male light head05 0
@@ -486,7 +535,7 @@ names scandinavian
 	Sofie
 	Hendrika
 	}
-	
+
 	male
 	{
 	Berg
@@ -504,7 +553,7 @@ names scandinavian
 	Janson
 	Hans
 	}
-	
+
 	lastname
 	{
 	Zeeman
@@ -526,7 +575,7 @@ actors scandinavian
 		soldiers/female light head03a 0
 		soldiers/female light head03b 0
 	}
-	
+
 	male
 	{
 		soldiers/male light head01 0
@@ -569,7 +618,7 @@ names russian
 	Doris
 	Eva
 	}
-	
+
 	male
 	{
 	Sergej
@@ -585,7 +634,7 @@ names russian
 	Andrzej
 	Bazyli
 	}
-	
+
 	female_lastname
 	{
 	Sokolova
@@ -641,7 +690,7 @@ actors russian
 		soldiers/female light head03a 0
 		soldiers/female light head03b 0
 	}
-	
+
 	male
 	{
 		soldiers/male light head01 0
@@ -676,7 +725,7 @@ names chinese
 	"Yue Yan"
 	Zi
 	}
-	
+
 	male
 	{
 	Sun
@@ -691,7 +740,7 @@ names chinese
 	Chen
 	Sying
 	}
-	
+
 	lastname
 	{
 	Yu
@@ -726,7 +775,7 @@ actors chinese
 		soldiers/female light head02a 0
 		soldiers/female light head02b 0
 	}
-	
+
 	male
 	{
 		soldiers/male light head07 0
@@ -761,7 +810,7 @@ names japanese
 	Yumiko
 	Yoshiko
 	}
-	
+
 	male
 	{
 	Hiroshi
@@ -777,9 +826,9 @@ names japanese
 	Tadao
 	Yoshi
 	Yasuo
-	Yukio	
+	Yukio
 	}
-	
+
 	lastname
 	{
 	Satou
@@ -809,7 +858,7 @@ actors japanese
 		soldiers/female light head02a 0
 		soldiers/female light head02b 0
 	}
-	
+
 	male
 	{
 		soldiers/male light head07 0
@@ -846,7 +895,7 @@ names african
 	Zalika
 	Zola
 	}
-	
+
 	male
 	{
 	Abasi
@@ -868,7 +917,7 @@ names african
 	Yao
 	Zuberi
 	}
-	
+
 	lastname
 	{
 	Akinkuotu
@@ -893,7 +942,7 @@ actors african
 		soldiers/female light head04a 0
 		soldiers/female light head04b 0
 	}
-	
+
 	male
 	{
 		soldiers/male light head10 0
@@ -935,7 +984,6 @@ names ortnok
 	Zmuknesk
 	}
 
-	
 	lastname
 	{
 	"Uk Kronok"
@@ -1002,7 +1050,6 @@ names blue
 	Zmuknesk
 	}
 
-	
 	lastname
 	{
 	"Uk Kronok"
