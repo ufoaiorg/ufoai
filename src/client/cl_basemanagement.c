@@ -2311,7 +2311,7 @@ Called from the running campaign
 ======================*/
 void CL_UpdateBaseData( void )
 {
-	building_t *b;
+	building_t *b = NULL;
 	int i, j;
 	int newBuilding = 0, new;
 	for ( i = 0; i < MAX_BASES; i++ )

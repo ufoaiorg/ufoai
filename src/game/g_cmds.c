@@ -28,9 +28,11 @@ Cmd_Players_f
 void Cmd_Players_f (player_t* player)
 {
 	int		i;
-	int		count;
+	int		count; //TODO: why is this needed at all?
 	char	small[64];
 	char	large[1280];
+
+	count = 0;
 
 	// print information
 	large[0] = 0;

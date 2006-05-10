@@ -477,7 +477,7 @@ static void SetSDLIcon( void )
 static qboolean GLimp_InitGraphics( qboolean fullscreen )
 {
 	int flags;
-	cvar_t* use_stencil;
+	cvar_t* use_stencil = NULL;
 
 	/* Just toggle fullscreen if that's all that has been changed */
 	if (surface && (surface->w == vid.width) && (surface->h == vid.height)) {

@@ -438,6 +438,7 @@ vec2_t *Font_DrawString (char *font, int align, int x, int y, int maxWidth, char
 	char* buffer = buf;
 	SDL_Surface *openGLSurface;
 	int max; // calculated maxWidth
+	max = 0;
 
 	// get the font
 	f = Font_GetFont( font );

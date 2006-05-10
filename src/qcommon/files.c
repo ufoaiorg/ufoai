@@ -327,7 +327,7 @@ FS_SV_FOpenFileRead
 */
 int FS_FOpenFileRead( const char *filename, FILE **f )
 {
-	char *ospath;
+	char *ospath = NULL;
 	int l;
 
 	if ( ( l = FS_CheckFile( filename) ) > 0 )

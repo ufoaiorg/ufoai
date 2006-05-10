@@ -489,7 +489,7 @@ void Cvar_List_f (void)
 {
 	cvar_t	*var;
 	int	i, c, l;
-	char	*token;
+	char	*token = NULL;
 	c = Cmd_Argc();
 
 	if ( c == 2 )

@@ -887,7 +887,7 @@ void Cmd_List_f (void)
 {
 	cmd_function_t	*cmd;
 	int	i, c, l;
-	char	*token;
+	char	*token = NULL;
 	c = Cmd_Argc();
 
 	if ( c == 2 )
