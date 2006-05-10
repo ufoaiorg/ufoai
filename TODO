@@ -6,7 +6,6 @@ Finished tasks should not be deleted, but marked with "[DONE]".
 =================================================
 Tasks for TechDemo3
 
-* Make unresearched items in the Ufopedia invisible.
 * Fix "Intro" and "Prolog" text in all languages (translations needed).
 * Bug #1474623: Bug in savegame: aircraft problems
 * Bug #1482877: map b/g/ufo_hangar.map does not compile
@@ -18,4 +17,6 @@ Tasks for TechDemo3
 * Put some work into campaign.ufo - place yet unused missions to geoscape and integrate them into campaign
 * Finish the english language file
 * [DONE] Bug #1444732: game exits with error (crash: probably a string-handling error in combination with gettext)
+* [WIP] Make unresearched items in the Ufopedia invisible.
+** Needs Testing.
 =================================================
