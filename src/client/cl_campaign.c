@@ -2288,10 +2288,18 @@ void CL_UpdateCharacterStats ( int won )
 	{
 		le = cl.teamList[i];
 
+		// Check if a soldier died and report it to the message system.
+		if ( le && (le->state & STATE_DEAD) ) {
+			chr = &baseCurrent->wholeTeam[i];
+			assert( chr );
+			
+			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%s (%s) died on his last mission.\n"), chr->name, chr->rank->name);
+			MN_AddNewMessage( _("Soldier died"), messageBuffer, false, MSG_DEATH, NULL );
+		}
+		
 		// check if the soldier still lives
 		// and give him skills
-		if ( le && !(le->state & STATE_DEAD) )
-		{
+		if ( le && !(le->state & STATE_DEAD) ) {
 			// TODO: Is the array of character_t the same
 			//      as the array of le_t??
 			chr = &baseCurrent->wholeTeam[i];
@@ -2299,25 +2307,29 @@ void CL_UpdateCharacterStats ( int won )
 
 			// FIXME:
 			for ( j = 0; j < SKILL_NUM_TYPES; j++ )
-				if ( chr->skills[j] < MAX_SKILL ) chr->skills[j]++;
-		}
+				if ( chr->skills[j] < MAX_SKILL ) {
+					chr->skills[j]++;
+				}
 
-		// Check if the soldier meets the requirements for a higher rank -> Promotion
-		if (numRanks >= 2 ) {
-			for ( j = numRanks-1; j > 0; j-- ) {
-				rank = &ranks[j];
-				if ( ( chr->skills[ABILITY_MIND] >= rank->mind )
-				&& ( chr->kills[KILLED_ALIENS] >= rank->killed_enemies )
-				&& ( ( chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM] ) <= rank->killed_others ) ) {
-					if ( chr->rank != rank ) {
-						chr->rank = rank;						
-						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%s has been promoted to %s.\n"), chr->name, rank->name );
-						MN_AddNewMessage( _("Soldier promoted"), messageBuffer, false, MSG_PROMOTION, NULL );
+			// Check if the soldier meets the requirements for a higher rank -> Promotion
+			if (numRanks >= 2 ) {
+				for ( j = numRanks-1; j > 0; j-- ) {
+					rank = &ranks[j];
+					if ( ( chr->skills[ABILITY_MIND] >= rank->mind )
+					&& ( chr->kills[KILLED_ALIENS] >= rank->killed_enemies )
+					&& ( ( chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM] ) <= rank->killed_others ) ) {
+						if ( chr->rank != rank ) {
+							chr->rank = rank;						
+							Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%s has been promoted to %s.\n"), chr->name, rank->name );
+							MN_AddNewMessage( _("Soldier promoted"), messageBuffer, false, MSG_PROMOTION, NULL );
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
+
+
 	}
 }
 
