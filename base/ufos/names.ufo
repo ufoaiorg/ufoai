@@ -81,6 +81,8 @@ names german
 	{
 	Allensbach
 	Aschwanden
+	Benz
+	Berger
 	Beyeler
 	Baltner
 	Dorfer
@@ -88,7 +90,9 @@ names german
 	Gratner
 	Hofer
 	Jost
+	Klein
 	Kohlmann
+	Kohler
 	Loher
 	Lüscher
 	Maler
@@ -98,13 +102,17 @@ names german
 	Niederer
 	Nipp
 	Rügger
+	Schäfer
 	Schlatter
 	Schmitt
 	Schiffer
+	Sedlmaier
 	Seidl
 	Sommer
+	Stein
+	Tetzlaff
 	Tschannen
-	Kohler
+	Winter
 	Zeder
 	Zemp
 	}
@@ -142,6 +150,7 @@ names spanish_italian
 	Bianca
 	Carmella
 	Carmen
+	Eumelia
 	Felicia
 	Fabienne
 	Graciella
@@ -155,6 +164,7 @@ names spanish_italian
 	Lorena
 	Madonna
 	Maria
+	"Norma Alicia"
 	Odessa
 	Olivia
 	Salma
@@ -164,37 +174,63 @@ names spanish_italian
 
 	male
 	{
-	Gulliano
-	Luca
-	Mauro
-	Felice
-	Leo
-	Gustavo
-	Peso
-	Ovidio
-	Getulio
-	Luigi
 	Adolfo
+	Antonio
+	Armando
+	Carlos
+	Fabian
+	Felice
+	Garcia
+	Getulio
 	Giorgo
 	Giovanni
-	Fabian
-	Carlos
-	Antonio
+	Gustavo
+	Gulliano
+	Jesus
+	Jose
+	"Jose Guadalupe"
+	"Juan Martin"
+	Leo
+	Luca
+	Luigi
+	Mauro
+	"Martin Alejandro"
+	"Marco Antonio"
+	Ovidio
+	Peso
+	Ricardo
 	}
 
 	lastname
 	{
-	"De Francesco"
-	Esteban
 	"Al Capone"
-	Rodriguez
-	Vasquez
-	Russo
-	"De Cesare"
-	Guadalupe
-	Martinez
+	Alejandro
 	Banderas
+	Campos
+	Cano
 	Checa
+	Cuevas
+	"De Cesare"
+	"De Francesco"
+	"De La Rosa"
+	Eduardo
+	Esteban
+	Espinoza
+	Gonzalez
+	Gonzalo
+	Guadalupe
+	Lopez
+	Martinez
+	Mendez
+	Padilla
+	Prieto
+	Ramos
+	Rivera
+	Rodriguez
+	Russo
+	Segura
+	Vasquez
+	Zapata
 	}
 }
 
@@ -541,6 +577,7 @@ names scandinavian
 	female
 	{
 	Dana
+	Doris
 	Helga
 	Nada
 	Edda
@@ -572,17 +609,20 @@ names scandinavian
 	Jens
 	Janson
 	Hans
+	Ulf 
 	}
 
 	lastname
 	{
-	Zeeman
+	Andersson
+	Eriksson
+	Nelson
+	Salhoff
+	Sorenson
 	"Van Aken"
 	"Van Eych"
-	Sorenson
-	Nelson
-	Anderson
 	Vanderveer
+	Zeeman
 	}
 }
 
@@ -732,16 +772,22 @@ names chinese
 	Feng
 	"Jia Li"
 	Jin
+	Joanne
 	Lei
 	"Li Mei"
 	"Li Qin"
 	Ling
 	Ping
+	"San San"
+	Shuwei
 	Wan
 	Wei
+	Wenjing
 	Xia
 	Xue
+	"Xue Wen"
 	"Yi Min"
+	Yu
 	"Yue Yan"
 	"Zhen Shan"
 	Zi
@@ -753,6 +799,7 @@ names chinese
 	Mao
 	Fai
 	Lei
+	Hao
 	Ho
 	Long
 	Shing
@@ -764,28 +811,34 @@ names chinese
 
 	lastname
 	{
-	Yu
+	Aw
+	Chan
+	Chong
+	Chua
+	Dong
 	Huong
-	Lee
-	Zhang
-	Wang
+	Jiang
+	Lai
 	Li
 	Lu
-	Xu
-	Wu
+	Lee
 	Liang
 	Luo
+	Peng
+	Qian
 	Su
 	Song
-	Zheng
-	Dong
-	Jiang
-	Peng
 	Tao
+	Wang
+	Wu
 	Wan
-	Qian
-	Lai
-	Chan
+	Xu
+	Xia
+	Yang
+	Yu
+	Zhang
+	Zhao
+	Zheng
 	}
 }
 
@@ -823,6 +876,7 @@ names japanese
 	Kimi
 	Kyoko
 	Kyomi
+	Kyoumi
 	Maemi
 	Matsuko
 	Mutsu
