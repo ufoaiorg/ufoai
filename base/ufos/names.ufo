@@ -164,6 +164,8 @@ names spanish_italian
 	Lorena
 	Madonna
 	Maria
+	Marina
+	Marcella
 	"Norma Alicia"
 	Odessa
 	Olivia
@@ -206,6 +208,7 @@ names spanish_italian
 	"Al Capone"
 	Alejandro
 	Banderas
+	Campangolo
 	Campos
 	Cano
 	Checa
@@ -213,22 +216,30 @@ names spanish_italian
 	"De Cesare"
 	"De Francesco"
 	"De La Rosa"
+	"De Ramon Rius"
+	"De Tomaso"
+	"Di Cesare"
 	Eduardo
 	Esteban
+	Estevez
 	Espinoza
 	Gonzalez
 	Gonzalo
 	Guadalupe
 	Lopez
+	Mantovani
 	Martinez
+	Meazzi
 	Mendez
 	Padilla
+	Pizarro
 	Prieto
 	Ramos
 	Rivera
 	Rodriguez
 	Russo
 	Segura
+	Tomba
 	Vasquez
 	Zapata
 	}
@@ -397,25 +408,35 @@ names english_american
 {
 	female
 	{
+	Amy
+	Angela
+	Beverly
+	Britney
+	Buffy
+	Candice
+	Christin
+	Cindy
+	Crystal
+	Diane
+	Elisha
+	Fancy
+	Holly
+	Jenniver
+	Jodi-Ann
+	Jamie
+	Karen
+	Kelly
+	Kimberley
 	Lynn
 	Laine
-	Cindy
-	Angela
-	Jodi-Ann
 	Lisa
-	Elisha
-	Kelly
-	Jamie
-	Kimberley
-	Jenniver
-	Suzi
-	Crystal
-	Buffy
-	Amy
+	Mary
+	Mary-Jane
+	Rachel
 	Sarah
+	Suzi
+	Suzanne
 	Tina
-	Fancy
-	Britney
 	}
 
 	male
@@ -445,21 +466,32 @@ names english_american
 
 	lastname
 	{
+	Beckett
+	Borland
+	Bush
+	Black
+	Cage
+	Campbell
+	Chandler
+	Cruise
+	Clinton
+	Crawford
+	Furlong
 	Gibson
 	Gore
-	Cage
-	Cruise
-	Bush
 	Kennedy
-	Clinton
 	Lincoln
 	Little
-	Taylor
-	Crawford
-	Wood
+	Michaels
+	Mitchell
 	Pressly
-	Tyler
+	Quinn
 	Spears
+	Taylor
+	Tyler
+	Walker
+	Wayne
+	Wood
 	}
 }
 
@@ -494,65 +526,88 @@ names arabic
 {
 	female
 	{
-	Fareeda
-	Fathia
-	Fatima
 	Aaliya
 	Abia
-	Meira
-	Rasha
-	Naiya
-	Natara
-	Hanna
-	Essa
-	Isa
 	Amal
-	Emel
 	Ayar
 	Badieh
 	Dabab
 	Damaa
 	Ebra
+	Emel
+	Essa
+	Farah
+	Fareeda
+	Fathia
+	Fatima
+	Hanna
+	Isa
+	Meira
+	Naiya
+	Nadia
+	Natara
+	Nurcan
+	Soraya
+	Rasha	
+	Yasemine
 	}
 
 	male
 	{
-	Mustaffa
-	Abdel
+	Abdullah
+	Abdalrahman
+	Adish
+	Ahmad
+	Ahmed
+	Abdel-Kader
 	Abdul-Matin
 	Abdul-Majid
 	Abdul-Jalil
 	Adham
+	Ali
+	Aziz
 	Dabrir
 	Fakhir
 	Farran
-	Abdullah
-	Abdalrahman
-	Abraham
-	Adish
-	Ahmad
-	Jassir
-	Maimun
-	Manuosh
-	Rafi
-	Namir
 	Hasan
-	Ahmed
+	Jassir
+	Kader
+	Mustaffa
+	Mahmoud
+	Manuosh
+	Namir
+	Rafi
+	Seif
+	Tarik
 	}
 
 
 	lastname
 	{
-	Mubarak
-	Assar
-	Hussein
+	"Abu Rajab"
+	"Ab Del Farak"
+	Ahmadi
+	"Al Masri"
+	"Al Hussein"
+	"Al Ghadban"
+	"Al Din"
+	"Al Hashimi"
 	Arafat
-	Nasser
+	Assar
+	Bouzid
+	Hassan
+	Hussein
+	Haqzouk
+	"Jabr Solagh"
 	Jabir
-	Aziz
-	Rashid
+	Khaleq
+	Mubarak
+	Nasser
+	Rasheed
+	"Reza Shebani"
 	Sharif
 	Sulaiman
+	Zahar
 	}
 }
 
@@ -609,16 +664,25 @@ names scandinavian
 	Jens
 	Janson
 	Hans
-	Ulf 
+	Ulf
 	}
-
+// Please do not use "...son" or "...dottir" as a family name yet, they are male/female-spezific
+// Gustavson
+// Andersson
+// Eriksson
+// Hanson
+// Jenson
+// Larson
+// Sorenson
 	lastname
 	{
-	Andersson
-	Eriksson
+	"De Boer"
+	Fidjestoel
+	Heyerdal
+	Hjelset
+	Lerby
 	Nelson
 	Salhoff
-	Sorenson
 	"Van Aken"
 	"Van Eych"
 	Vanderveer
@@ -875,7 +939,7 @@ names japanese
 	Keiko
 	Kimi
 	Kyoko
-	Kyomi
+	Kiyomi
 	Kyoumi
 	Maemi
 	Matsuko
@@ -883,6 +947,7 @@ names japanese
 	Rei
 	Suki
 	Sumi
+	Shakiko
 	Yumiko
 	Yoshiko
 	}
@@ -908,21 +973,28 @@ names japanese
 	lastname
 	{
 	Aoki
+	Fujimoto
 	Fuijwara
 	Hashimoto
 	Hujita
 	Ishii
 	Kikuchi
+	Kurosawa
 	Miyamoto
 	Masuda
+	Matsumoto
 	Nakagawa
 	Ogawa
+	Sato
 	Satou
 	Saitou
 	Sakamoto
 	Suzuki
+	Takagi
 	Simizu
+	Takagi
 	Tanaka
+	Tomihira
 	Yamamoto
 	Yamada
 	}
