@@ -2,6 +2,9 @@
 // HUMANS
 // ========================================================================
 
+// TODO:
+// Sibel,Cybil (by XCOMTurcocalypse->	"whatever name emigrated from Greece to Europe,and returned 1000 years later.")
+
 
 // ==================
 // german
@@ -11,6 +14,7 @@ names german
 {
 	female
 	{
+	Alexandra
 	Anna
 	Andrea
 	Barbara
@@ -19,14 +23,19 @@ names german
 	Elisabeth
 	Gaby
 	Heike
+	Ilona
 	Katrin
 	Lisa
 	Magdalena
 	Mareike
+	Martina
 	Meike
+	Melanie
 	Nicole
 	Sabine
+	Sandra
 	Susi
+	Stefanie
 	Ute
 	Yvonne
 	}
@@ -129,21 +138,28 @@ names spanish_italian
 {
 	female
 	{
-	Maria
 	Anna
-	Fabienne
+	Bianca
+	Carmella
+	Carmen
 	Felicia
-	Madonna
+	Fabienne
+	Graciella
+	Julia
 	Larissa
 	Laura
 	Lavina
 	Lelia
 	Leola
 	Leonora
+	Lorena
+	Madonna
+	Maria
 	Odessa
 	Olivia
 	Salma
-	Julia
+	Simonetta
+	Sophia
 	}
 
 	male
@@ -209,12 +225,14 @@ names french
 	{
 	Alice
 	Amelie
+	Anette
 	Aurelie
 	Agnes
 	Catherine
 	Caroline
 	Christine
 	Claire
+	Dominique
 	Elaine
 	Eloise
 	Elise
@@ -235,6 +253,8 @@ names french
 	Lucie
 	Marie
 	Michelle
+	Monique
+	Veronique
 	Virginie
 	}
 
@@ -706,9 +726,9 @@ names chinese
 {
 	female
 	{
+	An
 	Bo
 	Chang
-	An
 	Feng
 	"Jia Li"
 	Jin
@@ -723,6 +743,7 @@ names chinese
 	Xue
 	"Yi Min"
 	"Yue Yan"
+	"Zhen Shan"
 	Zi
 	}
 
@@ -801,6 +822,7 @@ names japanese
 	Keiko
 	Kimi
 	Kyoko
+	Kyomi
 	Maemi
 	Matsuko
 	Mutsu
@@ -813,8 +835,8 @@ names japanese
 
 	male
 	{
-	Hiroshi
 	Akeno
+	Hiroshi
 	Jiro
 	Kado
 	Kaori
@@ -831,23 +853,24 @@ names japanese
 
 	lastname
 	{
-	Satou
-	Suzuki
-	Tanaka
-	Saitou
-	Yamada
-	Simizu
+	Aoki
+	Fuijwara
 	Hashimoto
-	Ogawa
-	Sakamoto
-	Nakagawa
+	Hujita
+	Ishii
+	Kikuchi
 	Miyamoto
 	Masuda
-	Kikuchi
+	Nakagawa
+	Ogawa
+	Satou
+	Saitou
+	Sakamoto
+	Suzuki
+	Simizu
+	Tanaka
 	Yamamoto
-	Hujita
-	Fuijwara
-	Aoki
+	Yamada
 	}
 }
 
