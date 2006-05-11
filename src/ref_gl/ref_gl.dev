@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_-lSDL_ttf_@@_-lSDL_@@_../win32/intl.lib_@@_-def ref_gl.def_@@_
 Libs=
-UnitCount=31
+UnitCount=32
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=
@@ -366,4 +366,14 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c gl_arb_shader.c -o gl_arb_shader.o $(CFLAGS)
+
+[Unit32]
+FileName=gl_font.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
 
