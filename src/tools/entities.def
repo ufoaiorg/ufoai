@@ -22,6 +22,11 @@ Starting point for a player.
 */
 
 
+/*QUAKED info_ugv_start (1 1 0) (-32 -32 -24) (32 32 32)
+Starting point for a single player human.
+*/
+
+
 /*QUAKED info_human_start (0 1 0) (-16 -16 -24) (16 16 32)
 Starting point for a single player human.
 */
@@ -40,13 +45,14 @@ Starting point for a civilian.
 /*QUAKED misc_model (1 1 0) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
 Displays a md2 model.
 Set the level flags correctly!
-Use angles [pitch yaw roll] to rotate the model. 
+"angles"		[pitch yaw roll] rotate the model. 
 "model"		arbitrary .md2 file to display
 */
 
 
-/*QUAKED misc_particle (0 0 1) (-16 -16 -16) (16 16 16)
+/*QUAKED misc_particle (0 0 1) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
 Creates a particle. Particle properties can be set here with a preceding '-' or '+'. 
+Set the level flags correctly!
 '-' property is set before calling the particle init function
 '+' do it afterwards
 Wait times are of the format "a b". It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start.
@@ -57,6 +63,13 @@ Wait times are of the format "a b". It spawns particles in random intervals rang
 
 /*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8) linear
 Non-displayed light.
+*/
+
+
+/*QUAKED func_breakable (0.3 0.3 0.3) ? level1 level2 level3 level4 level5 level6 level7 level8
+Used for breakable objects.
+"particle"		spawn a particle on break
+"health"		health of this entity
 */
 
 
@@ -73,4 +86,6 @@ Only used for the world.
 "angles"	direction of the sun light [pitch yaw roll]
 "ambient"	ambient light (NOT normalized)
 "maxlevel"	highest selectable level
+"fog"		activate fog
+"fogcolor"	fogcolor (rgb)
 */
