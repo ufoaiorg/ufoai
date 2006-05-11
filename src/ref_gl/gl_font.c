@@ -234,7 +234,7 @@ static void Font_AddToCache( const char* s, void* pixel, int w, int h )
 		// go to end of list
 		while ( font->next )
 			font = font->next;
-		font = &fontCache[numInCache];
+		font->next = &fontCache[numInCache];
 	}
 	else
 		hash[hashValue] = &fontCache[numInCache];
@@ -318,8 +318,8 @@ static char* Font_GetLineWrap ( char* buffer, TTF_Font* font, int maxWidth, vec2
 	if ( ! width )
 		return NULL;
 
-	*l[1] = height;
-	*l[0] = width;
+	*l[1] = (float)height;
+	*l[0] = (float)width;
 
 	if ( width < maxWidth )
 		return buffer;
@@ -437,9 +437,9 @@ vec2_t *Font_DrawString (char *font, int align, int x, int y, int maxWidth, char
 	vec2_t dim = {0,0};
 	font_t	*f = NULL;
 	char* buffer = buf;
+	char searchString[MAX_FONTNAME+MAX_HASH_STRING];
 	SDL_Surface *openGLSurface = NULL;
-	int max; // calculated maxWidth
-	max = 0;
+	int max = 0; // calculated maxWidth
 
 	// get the font
 	f = Font_GetFont( font );
@@ -465,29 +465,31 @@ vec2_t *Font_DrawString (char *font, int align, int x, int y, int maxWidth, char
 		if ( !f ) ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", font );
 			
 		// check whether this line is bigger than every other
-		if ( dim[0] > max )
-			max = dim[0];
+		if ( (int)dim[0] > max )
+			max = (int)dim[0];
 
 		if ( align > 0 && align < ALIGN_LAST )
 		{
 			switch ( align % 3 )
 			{
-			case 1: x -= dim[0] / 2; break;
-			case 2: x -= dim[0]; break;
+			case 1: x -= (int)dim[0] / 2; break;
+			case 2: x -= (int)dim[0]; break;
 			}
 
 			switch ( align / 3 )
 			{
-			case 1: y -= dim[1] / 2; break;
-			case 2: y -= dim[1]; break;
+			case 1: y -= (int)dim[1] / 2; break;
+			case 2: y -= (int)dim[1]; break;
 			}
 		}
 
-		openGLSurface = Font_GetFromCache( va("%s%s", font, buffer) );
+		Com_sprintf( searchString, MAX_FONTNAME+MAX_HASH_STRING, "%s%s", font, buffer );
+
+		openGLSurface = Font_GetFromCache( searchString );
 		if ( !openGLSurface )
 		{
-			Font_GenerateCache( buffer, va("%s%s", font, buffer), f->font );
-			openGLSurface = Font_GetFromCache( va("%s%s", font, buffer) );
+			Font_GenerateCache( buffer, searchString, f->font );
+			openGLSurface = Font_GetFromCache( searchString );
 		}
 
 		if ( !openGLSurface )
@@ -506,8 +508,8 @@ vec2_t *Font_DrawString (char *font, int align, int x, int y, int maxWidth, char
 	} while ( buffer );
 
 	// return width and height
-	l[0] = max;
-	l[1] = y;
+	l[0] = (float)max;
+	l[1] = (float)y;
 
 	return &l;
 }
