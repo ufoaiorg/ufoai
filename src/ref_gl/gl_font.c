@@ -188,15 +188,15 @@ Font_Hash
 ============*/
 static int Font_Hash( const char *string, int maxlen )
 {
-	int register hash, i;
+	int register hashValue, i;
 
-	hash = 0;
+	hashValue = 0;
 	for (i = 0; i < maxlen && string[i] != '\0'; i++)
 	{
-		hash += string[i] * (119 + i);
+		hashValue += string[i] * (119 + i);
 	}
-	hash = (hash ^ (hash >> 10) ^ (hash >> 20));
-	return hash & (MAX_FONT_CACHE - 1);
+	hashValue = (hashValue ^ (hashValue >> 10) ^ (hashValue >> 20));
+	return hashValue & (MAX_FONT_CACHE - 1);
 }
 
 /*================
@@ -261,7 +261,7 @@ static void* Font_GenerateCache ( const char* s, const char* fontString, TTF_Fon
 	int w, h;
 	SDL_Surface *textSurface = NULL;
 	SDL_Surface *openGLSurface = NULL;
-	SDL_Rect rect = {0, 0, 0};
+	SDL_Rect rect = {0, 0, 0, 0};
 
 	textSurface = TTF_RenderUTF8_Blended(font, s, color);
 	if ( ! textSurface )
