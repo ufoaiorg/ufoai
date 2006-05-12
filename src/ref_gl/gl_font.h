@@ -11,6 +11,7 @@ typedef struct font_s
 	char	name[MAX_FONTNAME];
 	TTF_Font *font;
 	int style;
+	int lineSkip; // TTF_FontLineSkip
 } font_t;
 
 // font definitions
@@ -37,7 +38,7 @@ typedef struct
 
 // public
 vec2_t *Font_DrawString (char *font, int align, int x, int y, int maxWidth, char *c);
-vec2_t	*Font_Length( char *font, char *c );
+void	Font_Length( char *font, char *c, int *width, int *height );
 void	Font_CleanCache( void );
 void	Font_Shutdown( void );
 void	Font_Init( void );

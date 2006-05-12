@@ -22,9 +22,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
+#define BUF_SIZE 2048
 static const	SDL_Color color = {255, 255, 255, 0}; // The 4. value is unused
 // holds the gettext string
-static char	buf[2048];
+static char	buf[BUF_SIZE];
 static int	numInCache;
 fontRenderStyle_t fontStyle[] = {
 	{"TTF_STYLE_NORMAL", TTF_STYLE_NORMAL},
@@ -94,6 +95,7 @@ font_t *Font_Analyze( char *name, char *path, int renderStyle, int size )
 
 // 	SDL_RWclose( rw );
 	numFonts++;
+	f->lineSkip = TTF_FontLineSkip( f->font );
 
 	// return the font
 	return f;
@@ -117,17 +119,15 @@ static font_t *Font_GetFont( char *name )
 /*================
 Font_Length
 ================*/
-vec2_t *Font_Length (char *font, char *c)
+void Font_Length (char *font, char *c, int *width, int *height)
 {
 	font_t	*f = NULL;
-	static vec2_t	l;
 
 	// get the font
 	f = Font_GetFont( font );
-	if ( !f ) return NULL;
+	if ( !f ) return;
 
-	TTF_SizeUTF8( f->font, c, (int*)&l[0], (int*)&l[1] );
-	return &l;
+	TTF_SizeUTF8( f->font, c, width, height );
 }
 
 /*================
@@ -256,14 +256,14 @@ static void Font_AddToCache( const char* s, void* pixel, int w, int h )
 /*================
 Font_GenerateCache
 ================*/
-static void* Font_GenerateCache ( const char* s, const char* fontString, TTF_Font* font )
+static void* Font_GenerateCache ( const char* s, const char* fontString, font_t* f )
 {
 	int w, h;
 	SDL_Surface *textSurface = NULL;
 	SDL_Surface *openGLSurface = NULL;
 	SDL_Rect rect = {0, 0, 0, 0};
 
-	textSurface = TTF_RenderUTF8_Blended(font, s, color);
+	textSurface = TTF_RenderUTF8_Blended(f->font, s, color);
 	if ( ! textSurface )
 	{
 		ri.Con_Printf(PRINT_ALL, "%s\n", TTF_GetError() );
@@ -303,34 +303,38 @@ Font_GetLineWrap
 
 maxWidth is a pixel value
 ================*/
-static char* Font_GetLineWrap ( char* buffer, TTF_Font* font, int maxWidth, vec2_t* l )
+static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *width, int *height )
 {
-	char*	space = buffer;
+	char*	space = NULL;
 	char*	newlineTest = NULL;
-	int	width = 0;
-	int	height = 0; // not needed yet
+	int	w = 0;
+	int	h = 0; // not needed yet
+
+	if ( buffer == NULL )
+		return NULL;
 
 	if ( ! maxWidth )
 		maxWidth = VID_NORM_WIDTH;
 
 	// no line wrap needed?
-	TTF_SizeUTF8( font, buffer, &width, &height );
+	TTF_SizeUTF8( f->font, buffer, &w, &h );
 	if ( ! width )
 		return NULL;
 
-	*l[1] = (float)height;
-	*l[0] = (float)width;
+	*width = w;
+	*height = h;
 
-	if ( width < maxWidth )
+	if ( w < maxWidth )
 		return buffer;
 
+	space = buffer;
 	newlineTest = strstr( space, "\n" );
 	if ( newlineTest )
 	{
 		*newlineTest = '\0';
-		TTF_SizeUTF8( font, buffer, &width, &height );
-		*l[0] = width;
-		if ( width < maxWidth )
+		TTF_SizeUTF8( f->font, buffer, &w, &h );
+		*width = w;
+		if ( w < maxWidth )
 			return buffer;
 		else // go on and check for spaces
 			*newlineTest = '\n';
@@ -341,9 +345,9 @@ static char* Font_GetLineWrap ( char* buffer, TTF_Font* font, int maxWidth, vec2
 	while ( ( space = strstr( space, " " ) ) != NULL )
 	{
 		*space='\0';
-		TTF_SizeUTF8( font, buffer, &width, &height );
-		maxWidth -= width;
-		*l[0] = width;
+		TTF_SizeUTF8( f->font, buffer, &w, &h );
+		maxWidth -= w;
+		*width = w;
 		if ( maxWidth < 0 )
 		{
 			newlineTest = '\0';
@@ -431,10 +435,10 @@ static void Font_GenerateGLSurface ( SDL_Surface* s, int x, int y )
 /*================
 Font_DrawString
 ================*/
-vec2_t *Font_DrawString (char *font, int align, int x, int y, int maxWidth, char *c)
+vec2_t *Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *c)
 {
+	int w = 0, h = 0;
 	static vec2_t l;
-	vec2_t dim = {0,0};
 	font_t	*f = NULL;
 	char* buffer = buf;
 	char searchString[MAX_FONTNAME+MAX_HASH_STRING];
@@ -442,53 +446,49 @@ vec2_t *Font_DrawString (char *font, int align, int x, int y, int maxWidth, char
 	int max = 0; // calculated maxWidth
 
 	// get the font
-	f = Font_GetFont( font );
-	if ( !f ) ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", font );
+	f = Font_GetFont( fontID );
+	if ( !f ) ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", fontID );
 
-	Q_strncpyz( buffer, c, sizeof(buf) );
+	Q_strncpyz( buf, c, BUF_SIZE );
 
 	// transform from 1024x768 coordinates for drawing
 	x = (float)x * vid.rx;
 	y = (float)y * vid.ry;
 	maxWidth = (float)maxWidth * vid.rx;
 
-	Font_ConvertChars( buffer );
+	Font_ConvertChars( buf );
 
 	do
 	{
-		buffer = Font_GetLineWrap( buffer, f->font, maxWidth, &dim );
+		buffer = Font_GetLineWrap( f, buffer, maxWidth, &w, &h );
 		if ( ! buffer || !strlen(buffer) )
 			return NULL;
 		
-		// TODO: i do not have a clou why this is need a second timen but after the Font_GetLineWrap function "f" is f... up.
-		f = Font_GetFont( font );
-		if ( !f ) ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", font );
-			
 		// check whether this line is bigger than every other
-		if ( (int)dim[0] > max )
-			max = (int)dim[0];
+		if ( w > max )
+			max = w;
 
 		if ( align > 0 && align < ALIGN_LAST )
 		{
 			switch ( align % 3 )
 			{
-			case 1: x -= (int)dim[0] / 2; break;
-			case 2: x -= (int)dim[0]; break;
+			case 1: x -= w / 2; break;
+			case 2: x -= w; break;
 			}
 
 			switch ( align / 3 )
 			{
-			case 1: y -= (int)dim[1] / 2; break;
-			case 2: y -= (int)dim[1]; break;
+			case 1: y -= h / 2; break;
+			case 2: y -= h; break;
 			}
 		}
 
-		Com_sprintf( searchString, MAX_FONTNAME+MAX_HASH_STRING, "%s%s", font, buffer );
+		Com_sprintf( searchString, MAX_FONTNAME+MAX_HASH_STRING, "%s%s", fontID, buffer );
 
 		openGLSurface = Font_GetFromCache( searchString );
 		if ( !openGLSurface )
 		{
-			Font_GenerateCache( buffer, searchString, f->font );
+			Font_GenerateCache( buffer, searchString, f );
 			openGLSurface = Font_GetFromCache( searchString );
 		}
 
@@ -503,9 +503,9 @@ vec2_t *Font_DrawString (char *font, int align, int x, int y, int maxWidth, char
 		Font_GenerateGLSurface( openGLSurface, x, y );
 
 		// skip for next line
-		y += TTF_FontLineSkip( f->font );
-		buffer += strlen(buffer) + 1;
-	} while ( buffer );
+		y += f->lineSkip;
+		buffer += strlen(buffer);
+	} while ( 1 );
 
 	// return width and height
 	l[0] = (float)max;

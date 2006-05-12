@@ -1539,9 +1539,10 @@ MN_Tooltip
 */
 void MN_Tooltip ( menuNode_t* node, int x, int y )
 {
-	vec2_t *l;
 	char* tooltip;
 	vec4_t color;
+	int width, height;
+
 	// tooltips
 	if ( node->data[5] )
 	{
@@ -1552,16 +1553,16 @@ void MN_Tooltip ( menuNode_t* node, int x, int y )
 		tooltip = (char *)node->data[5];
 		if ( *tooltip == '_' )
 			tooltip++;
-		l = re.FontLength( "f_small", _(tooltip) );
-		if ( !l )
+		re.FontLength( "f_small", _(tooltip), &width, &height );
+		if ( !width )
 			return;
-		if ( x + *l[0] > VID_NORM_WIDTH )
-			x -= (*l[0]+10);
-		re.DrawFill(x, y, *l[0], *l[1] + 10, 0, color );
+		if ( x + width > VID_NORM_WIDTH )
+			x -= (width+10);
+		re.DrawFill(x, y, width, height + 10, 0, color );
 		VectorSet( color, 0.0f, 0.8f, 0.0f );
 		color[3] = 1.0f;
 		re.DrawColor( color );
-		re.FontDrawString("f_small", 0, x, y, *l[0], _(tooltip) );
+		re.FontDrawString("f_small", 0, x, y, width, _(tooltip) );
 		re.DrawColor( NULL );
 	}
 }
@@ -1654,7 +1655,7 @@ void MN_DrawMenus( void )
 	int 	y, line, x, len;
 	message_t	*message;
 	menuModel_t	*menuModel = NULL;
-	vec2_t* l;
+	int		width, height;
 
 	// render every menu on top of a menu with a render node
 	pp = 0;
@@ -1850,9 +1851,9 @@ void MN_DrawMenus( void )
 							// maybe due to scrolling this line is not visible
 							if ( line > node->textScroll )
 							{
-								l = re.FontLength( font, message->text );
-								if ( !l ) break;
-								if ( *l[0] > node->pos[0] + node->size[0] )
+								re.FontLength( font, message->text, &width, &height );
+								if ( !width ) break;
+								if ( width > node->pos[0] + node->size[0] )
 								{
 									// TODO: not tested this....
 									// we use a backslash to determine where to break the line

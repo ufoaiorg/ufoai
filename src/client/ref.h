@@ -286,7 +286,7 @@ typedef struct
 	void	(*DrawStretchPic) (int x, int y, int w, int h, char *name);
 	void	(*DrawChar) (int x, int y, int c);
 	void	(*FontRegister) (char *name, int size, char* path, char* style);
-	vec2_t	*(*FontLength) (char *font, char *c);
+	void	(*FontLength) (char *font, char *c, int *width, int *height);
 	vec2_t	*(*FontDrawString) (char *font, int align, int x, int y, int width, char *c);
 	void	(*DrawTileClear) (int x, int y, int w, int h, char *name);
 	void	(*DrawFill) (int x, int y, int w, int h, int style, vec4_t color);
