@@ -1,4 +1,4 @@
-﻿// ========================================================================
+// ========================================================================
 // HUMANS
 // ========================================================================
 
@@ -69,7 +69,7 @@ names german
 	Roman
 	Samuel
 	Silvio
-	Sönke
+	Sonke
 	Thomas
 	Uwe
 	Ulrich
@@ -94,15 +94,15 @@ names german
 	Kohlmann
 	Kohler
 	Loher
-	Lüscher
+	Luscher
 	Maler
 	Mayer
 	Maier
 	Meier
 	Niederer
 	Nipp
-	Rügger
-	Schäfer
+	Rugger
+	Schafer
 	Schlatter
 	Schmitt
 	Schiffer
@@ -716,94 +716,176 @@ names russian
 {
 	female
 	{
-	Natasha
-	Anka
-	Olga
-	Tanja
-	Nikita
-	Veronica
-	Andrea
-	Anita
-	Dasha
-	Dominika
-	Maria
-	Martina
-	Masha
-	Monika
-	Nadya
-	Nastia
-	Natalia
+	Aleksandra
+	Alisa
+	Alla
+	Anastasija
+	Anna
+	Valentina
+	Valerija
+	Vera
+	Veronika
+	Viktorija
+	Galina
+	Darija
+	Evgenija
+	Ekaterina
+	Elena
+	Elizaveta
+	Zhanna
+	Zinaida
+	Inna
+	Irina
+	Karina
+	Klara
+	Larisa
+	Lidija
+	Lyudmila
+	Marina
+	Marija
+	Nadezhda
+	Natalija
 	Nina
-	Petra
-	Sveta
+	Oksana
+	Olga
+	Polina
 	Svetlana
-	Tereza
-	Zdenka
-	Doris
-	Eva
+	Tamara
+	Tatijana
+	Julija
+	Jana
 	}
 
 	male
 	{
-	Sergej
-	Dimitri
+	Alexandr
+	Alexey
+	Anatoliy
+	Andrey
+	Anton
 	Boris
-	Sasha
-	Nicholai
-	Casimir
-	Czeslaw
-	Lukasz
-	Rufin
-	Zarek
-	Andrzej
-	Bazyli
+	Vadim
+	Valeriy
+	Vasiliy
+	Viktor
+	Vitaliy
+	Vladimir
+	Gennadiy
+	Georgiy
+	Gleb
+	Grigoriy
+	Denis
+	Dmitriy
+	Evgeniy
+	Egor
+	Ivan
+	Igor
+	Kirill
+	Konstantin
+	Leonid
+	Leontiy
+	Maksim
+	Mihail
+	Nikita
+	Nikolai
+	Oleg
+	Pavel
+	Piotr
+	Roman
+	Sergey
+	Stepan
+	Fiodor
+	Juriy
 	}
 
 	female_lastname
 	{
-	Sokolova
 	Ivanova
-	Smirnova
-	Kolmogorova
-	Pavlova
-	Kovaleva
-	Titova
-	Lukinova
-	Illinova
-	Nikitinova
-	Kozlova
-	Lebedeva
 	Vasileva
-	Federova
-	Zaitseva
-	Zakharova
-	Tichimozova
-	Lalakova
-	Adamkova
+	Petrova
+	Smirnova
+	Mihailova
+	Fiodorova
+	Sokolova
+	Jakovleva
+	Popova
+	Andreeva
+	Alekseeva
+	Aleksandrova
+	Lebedeva
+	Grigorieva
+	Stepanova
+	Semionova
+	Pavlova
+	Bogdanova
+	Nikolaeva
+	Dmitrieva
+	Egorova
+	Volkova
+	Kuznetzova
+	Nikitina
+	Soloviova
+	Timofeeva
+	Orlova
+	Afanasieva
+	Filippova
+	Sergeeva
+	Zaharova
+	Matveeva
+	Vinogradova
+	Kuzmina
+	Maksimova
+	Kozlova
+	Gerasimova
+	Markova
+	Novikova
+	Morozova
+	Romanova
 	}
 
 	male_lastname
 	{
-	Sokolov
 	Ivanov
-	Smirnov
-	Kolmogorov
-	Pavlov
-	Kovalev
-	Titov
-	Lukin
-	Illin
-	Nikitin
-	Kozlov
-	Lebedev
 	Vasilev
-	Federov
-	Zaitsev
-	Zakharov
-	Tichimozov
-	Lalakov
-	Adamkov
-	Benowsky
+	Petrov
+	Smirnov
+	Mihailov
+	Fiodorov
+	Sokolov
+	Jakovlev
+	Popov
+	Andreev
+	Alekseev
+	Aleksandrov
+	Lebedev
+	Grigoriev
+	Stepanov
+	Semionov
+	Pavlov
+	Bogdanov
+	Nikolaev
+	Dmitriev
+	Egorov
+	Volkov
+	Kuznetzov
+	Nikitin
+	Soloviov
+	Timofeev
+	Orlov
+	Afanasiev
+	Filippov
+	Sergeev
+	Zaharov
+	Matveev
+	Vinogradov
+	Kuzmin
+	Maksimov
+	Kozlov
+	Gerasimov
+	Markov
+	Novikov
+	Morozov
+	Romanov
 	}
 }
 
