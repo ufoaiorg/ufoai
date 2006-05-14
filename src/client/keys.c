@@ -29,7 +29,7 @@ key up events are sent even if in console mode
 #define		MAXCMDLINE	256
 char	key_lines[32][MAXCMDLINE];
 int		key_linepos;
-int		shift_down=false;
+int		shift_down=qfalse;
 int	anykeydown;
 
 int		edit_line=0;
@@ -88,11 +88,6 @@ keyname_t keynames[] =
 	{"MOUSE1", K_MOUSE1},
 	{"MOUSE2", K_MOUSE2},
 	{"MOUSE3", K_MOUSE3},
-
-	{"JOY1", K_JOY1},
-	{"JOY2", K_JOY2},
-	{"JOY3", K_JOY3},
-	{"JOY4", K_JOY4},
 
 	{"AUX1", K_AUX1},
 	{"AUX2", K_AUX2},
@@ -394,16 +389,16 @@ void Key_Message (int key)
 	if ( key == K_ENTER || key == K_KP_ENTER )
 	{
 		qboolean send;
-		send = true;
+		send = qtrue;
 		switch ( msg_mode )
 		{
 		case MSG_SAY:
 			if ( msg_buffer[0] ) Cbuf_AddText ("say \"");
-			else send = false;
+			else send = qfalse;
 			break;
 		case MSG_SAY_TEAM:
 			if ( msg_buffer[0] ) Cbuf_AddText ("say_team \"");
-			else send = false;
+			else send = qfalse;
 			break;
 		case MSG_MENU:
 			Cbuf_AddText ("msgmenu \":");
@@ -677,40 +672,40 @@ void Key_Init (void)
 	// init ascii characters in console mode
 	//
 	for (i=32 ; i<128 ; i++)
-		consolekeys[i] = true;
-	consolekeys[K_ENTER] = true;
-	consolekeys[K_KP_ENTER] = true;
-	consolekeys[K_TAB] = true;
-	consolekeys[K_LEFTARROW] = true;
-	consolekeys[K_KP_LEFTARROW] = true;
-	consolekeys[K_RIGHTARROW] = true;
-	consolekeys[K_KP_RIGHTARROW] = true;
-	consolekeys[K_UPARROW] = true;
-	consolekeys[K_KP_UPARROW] = true;
-	consolekeys[K_DOWNARROW] = true;
-	consolekeys[K_KP_DOWNARROW] = true;
-	consolekeys[K_BACKSPACE] = true;
-	consolekeys[K_HOME] = true;
-	consolekeys[K_KP_HOME] = true;
-	consolekeys[K_END] = true;
-	consolekeys[K_KP_END] = true;
-	consolekeys[K_PGUP] = true;
-	consolekeys[K_KP_PGUP] = true;
-	consolekeys[K_PGDN] = true;
-	consolekeys[K_KP_PGDN] = true;
-	consolekeys[K_SHIFT] = true;
-	consolekeys[K_INS] = true;
-	consolekeys[K_KP_INS] = true;
-	consolekeys[K_KP_DEL] = true;
-	consolekeys[K_KP_SLASH] = true;
-	consolekeys[K_KP_PLUS] = true;
-	consolekeys[K_KP_MINUS] = true;
-	consolekeys[K_KP_5] = true;
-	consolekeys[K_MWHEELUP] = true;
-	consolekeys[K_MWHEELDOWN] = true;
+		consolekeys[i] = qtrue;
+	consolekeys[K_ENTER] = qtrue;
+	consolekeys[K_KP_ENTER] = qtrue;
+	consolekeys[K_TAB] = qtrue;
+	consolekeys[K_LEFTARROW] = qtrue;
+	consolekeys[K_KP_LEFTARROW] = qtrue;
+	consolekeys[K_RIGHTARROW] = qtrue;
+	consolekeys[K_KP_RIGHTARROW] = qtrue;
+	consolekeys[K_UPARROW] = qtrue;
+	consolekeys[K_KP_UPARROW] = qtrue;
+	consolekeys[K_DOWNARROW] = qtrue;
+	consolekeys[K_KP_DOWNARROW] = qtrue;
+	consolekeys[K_BACKSPACE] = qtrue;
+	consolekeys[K_HOME] = qtrue;
+	consolekeys[K_KP_HOME] = qtrue;
+	consolekeys[K_END] = qtrue;
+	consolekeys[K_KP_END] = qtrue;
+	consolekeys[K_PGUP] = qtrue;
+	consolekeys[K_KP_PGUP] = qtrue;
+	consolekeys[K_PGDN] = qtrue;
+	consolekeys[K_KP_PGDN] = qtrue;
+	consolekeys[K_SHIFT] = qtrue;
+	consolekeys[K_INS] = qtrue;
+	consolekeys[K_KP_INS] = qtrue;
+	consolekeys[K_KP_DEL] = qtrue;
+	consolekeys[K_KP_SLASH] = qtrue;
+	consolekeys[K_KP_PLUS] = qtrue;
+	consolekeys[K_KP_MINUS] = qtrue;
+	consolekeys[K_KP_5] = qtrue;
+	consolekeys[K_MWHEELUP] = qtrue;
+	consolekeys[K_MWHEELDOWN] = qtrue;
 
-	consolekeys['`'] = false;
-	consolekeys['~'] = false;
+	consolekeys['`'] = qfalse;
+	consolekeys['~'] = qfalse;
 
 	for (i=0 ; i<256 ; i++)
 		keyshift[i] = i;
@@ -741,9 +736,9 @@ void Key_Init (void)
 	keyshift['\\'] = '|';
 #endif
 
-	menubound[K_ESCAPE] = true;
+	menubound[K_ESCAPE] = qtrue;
 	for (i=0 ; i<12 ; i++)
-		menubound[K_F1+i] = true;
+		menubound[K_F1+i] = qtrue;
 
 	//
 	// register our functions
@@ -927,12 +922,12 @@ void Key_ClearStates (void)
 {
 	int		i;
 
-	anykeydown = false;
+	anykeydown = qfalse;
 
 	for (i=0 ; i<256 ; i++)
 	{
 		if ( keydown[i] || key_repeats[i] )
-			Key_Event( i, false, 0 );
+			Key_Event( i, qfalse, 0 );
 		keydown[i] = 0;
 		key_repeats[i] = 0;
 	}

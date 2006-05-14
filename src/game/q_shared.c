@@ -744,9 +744,9 @@ qboolean VectorNearer (vec3_t v1, vec3_t v2, vec3_t comp)
 
 	for (i=0 ; i<3 ; i++)
 		if ( fabs(v1[i]-comp[i]) < fabs(v2[i]-comp[i]) )
-			return true;
+			return qtrue;
 
-	return false;
+	return qfalse;
 }
 
 
@@ -1058,10 +1058,10 @@ static qboolean Com_CharIsOneOfCharset( char c, char *set )
 	for( i = 0; i < strlen( set ); i++ )
 	{
 		if( set[ i ] == c )
-			return true;
+			return qtrue;
 	}
 
-	return false;
+	return qfalse;
 }
 
 /*
@@ -1326,7 +1326,7 @@ void Swap_Init (void)
 	// set the byte swapping variables in a portable manner
 	if ( *(short *)swaptest == 1)
 	{
-		bigendien = false;
+		bigendien = qfalse;
 		_BigShort = ShortSwap;
 		_LittleShort = ShortNoSwap;
 		_BigLong = LongSwap;
@@ -1336,7 +1336,7 @@ void Swap_Init (void)
 	}
 	else
 	{
-		bigendien = true;
+		bigendien = qtrue;
 		_BigShort = ShortNoSwap;
 		_LittleShort = ShortSwap;
 		_BigLong = LongNoSwap;
@@ -1739,10 +1739,10 @@ can mess up the server's parsing
 qboolean Info_Validate (char *s)
 {
 	if (strstr (s, "\""))
-		return false;
+		return qfalse;
 	if (strstr (s, ";"))
-		return false;
-	return true;
+		return qfalse;
+	return qtrue;
 }
 
 void Info_SetValueForKey (char *s, const char *key, const char *value)
@@ -1864,9 +1864,9 @@ qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, i
 	// armor vs item
 	if ( !strcmp( CSI->ods[item].type, "armor" ) )
 	{
-		if ( !CSI->ids[container].armor && !CSI->ids[container].all ) return false;
+		if ( !CSI->ids[container].armor && !CSI->ids[container].all ) return qfalse;
 	}
-	else if ( CSI->ids[container].armor ) return false;
+	else if ( CSI->ids[container].armor ) return qfalse;
 
 	// special hand checks
 	right = i->c[CSI->idRight];
@@ -1874,26 +1874,26 @@ qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, i
 
 	if ( container == CSI->idRight )
 	{
-		if ( !right && ( !CSI->ods[item].twohanded || !left ) ) return true;
-		else return false;
+		if ( !right && ( !CSI->ods[item].twohanded || !left ) ) return qtrue;
+		else return qfalse;
 	}
 	else if ( container == CSI->idLeft )
 	{
 		if ( !left && ((right && !CSI->ods[right->item.t].twohanded
-			&& !CSI->ods[item].twohanded) || !right) ) return true;
-		else return false;
+			&& !CSI->ods[item].twohanded) || !right) ) return qtrue;
+		else return qfalse;
 	}
 
 	// single item containers
 	if ( CSI->ids[container].single )
 	{
-		if ( i->c[container] ) return false;
-		else return true;
+		if ( i->c[container] ) return qfalse;
+		else return qtrue;
 	}
 
 	// check bounds
 	if ( x < 0 || y < 0 || x >= 32 || y >= 16 )
-		return false;
+		return qfalse;
 
 	// extract shape info
 	for ( j = 0; j < 16; j++ )
@@ -1907,10 +1907,10 @@ qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, i
 	// test for collisions with newly generated mask
 	for ( j = 0; j < 4; j++ )
 		if ( (((CSI->ods[item].shape >> j*8) & 0xFF) << x) & mask[y+j] )
-			return false;
+			return qfalse;
 
 	// everything ok
-	return true;
+	return qtrue;
 }
 
 
@@ -1981,7 +1981,7 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 	if ( !ic )
 	{
 		//Com_DPrintf("Com_RemoveFromInventory - no container %i\n", container );
-		return false;
+		return qfalse;
 	}
 
 	if ( CSI->ids[container].single || ( ic->x == x && ic->y == y ) )
@@ -1991,7 +1991,7 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 		cacheItem = ic->item;
 		i->c[container] = ic->next;
 		invUnused->next = old;
-		return true;
+		return qtrue;
 	}
 
 	for ( ; ic->next; ic = ic->next )
@@ -2002,10 +2002,10 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 			cacheItem = ic->next->item;
 			ic->next = ic->next->next;
 			invUnused->next = old;
-			return true;
+			return qtrue;
 		}
 
-	return false;
+	return qfalse;
 }
 
 /*
@@ -2357,9 +2357,9 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 
 	case V_BOOL:
 		if ( !Q_strncmp( token, "true", 4 ) || *token == '1' )
-			*b = true;
+			*b = qtrue;
 		else
-			*b = false;
+			*b = qfalse;
 		return sizeof(byte);
 
 	case V_CHAR:
@@ -2538,9 +2538,9 @@ int Com_SetValue( void *base, void *set, int type, int ofs )
 
 	case V_BOOL:
 		if ( *(byte *)set )
-			*b = true;
+			*b = qtrue;
 		else
-			*b = false;
+			*b = qfalse;
 		return sizeof(byte);
 
 	case V_CHAR:

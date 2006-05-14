@@ -154,7 +154,7 @@ char *Sys_ScanForCD (void)
 	drive[2] = '\\';
 	drive[3] = 0;
 
-	done = true;
+	done = qtrue;
 
 	// scan the drives
 	for (drive[0] = 'c' ; drive[0] <= 'z' ; drive[0]++)
@@ -268,7 +268,7 @@ void Sys_Init (void)
 	if (vinfo.dwPlatformId == VER_PLATFORM_WIN32s) // win3.x with win32 extensions
 		Sys_Error ("UFO: AI doesn't run on Win32s");
 	else if ( vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS ) // win95, 98, me
-		s_win95 = true;
+		s_win95 = qtrue;
 
 	Cvar_Get("sys_os", "win", 0);
 

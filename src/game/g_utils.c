@@ -43,7 +43,7 @@ void G_FreeEdict (edict_t *ed)
 	memset (ed, 0, sizeof(*ed));
 	ed->classname = "freed";
 	ed->freetime = level.time;
-	ed->inuse = false;
+	ed->inuse = qfalse;
 }
 
 
@@ -281,7 +281,7 @@ char *G_CopyString (char *in)
 
 void G_InitEdict (edict_t *e)
 {
-	e->inuse = true;
+	e->inuse = qtrue;
 	e->classname = "noclass";
 	e->number = e - g_edicts;
 }

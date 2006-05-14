@@ -93,7 +93,7 @@ void Cmd_Load (void)
 {
 	char	*name;
 
-	GetToken (false);
+	GetToken (qfalse);
 
 	if (g_release)
 		return;
@@ -122,21 +122,21 @@ void Cmd_SpriteFrame (void)
 	byte			*cropped;
 	char			savename[1024];
 
-	GetToken (false);
+	GetToken (qfalse);
 	xl = atoi (token);
-	GetToken (false);
+	GetToken (qfalse);
 	yl = atoi (token);
-	GetToken (false);
+	GetToken (qfalse);
 	w = atoi (token);
-	GetToken (false);
+	GetToken (qfalse);
 	h = atoi (token);
 
 	// origin offset is optional
 	if (TokenAvailable ())
 	{
-		GetToken (false);
+		GetToken (qfalse);
 		ox = atoi (token);
-		GetToken (false);
+		GetToken (qfalse);
 		oy = atoi (token);		
 	}
 	else
@@ -199,7 +199,7 @@ void Cmd_SpriteName (void)
 	if (sprite.numframes)
 		FinishSprite ();
 
-	GetToken (false);
+	GetToken (qfalse);
 	strcpy (spritename, token);
 	memset (&sprite, 0, sizeof(sprite));
 	memset (&frames, 0, sizeof(frames));

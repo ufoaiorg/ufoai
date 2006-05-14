@@ -161,8 +161,8 @@ qboolean IsSky (dface_t *f)
 
 	tx = &texinfo[f->texinfo];
 	if (tx->flags & SURF_SKY)
-		return true;
-	return false;
+		return qtrue;
+	return qfalse;
 }
 
 /*

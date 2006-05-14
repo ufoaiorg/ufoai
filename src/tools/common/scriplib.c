@@ -62,8 +62,8 @@ void LoadScriptFile (char *filename)
 	script = scriptstack;
 	AddScriptToStack (filename);
 
-	endofscript = false;
-	tokenready = false;
+	endofscript = qfalse;
+	tokenready = qfalse;
 }
 
 
@@ -85,8 +85,8 @@ void ParseFromMemory (char *buffer, int size)
 	script->script_p = script->buffer;
 	script->end_p = script->buffer + size;
 
-	endofscript = false;
-	tokenready = false;
+	endofscript = qfalse;
+	tokenready = qfalse;
 }
 
 
@@ -97,16 +97,16 @@ UnGetToken
 Signals that the current token was not used, and should be reported
 for the next GetToken.  Note that
 
-GetToken (true);
+GetToken (qtrue);
 UnGetToken ();
-GetToken (false);
+GetToken (qfalse);
 
 could cross a line boundary.
 ==============
 */
 void UnGetToken (void)
 {
-	tokenready = true;
+	tokenready = qtrue;
 }
 
 
@@ -117,15 +117,15 @@ qboolean EndOfScript (qboolean crossline)
 
 	if (!strcmp (script->filename, "memory buffer"))
 	{
-		endofscript = true;
-		return false;
+		endofscript = qtrue;
+		return qfalse;
 	}
 
 	free (script->buffer);
 	if (script == scriptstack+1)
 	{
-		endofscript = true;
-		return false;
+		endofscript = qtrue;
+		return qfalse;
 	}
 	script--;
 	scriptline = script->line;
@@ -144,16 +144,16 @@ qboolean GetToken (qboolean crossline)
 
 	if (tokenready)                         // is a token allready waiting?
 	{
-		tokenready = false;
-		return true;
+		tokenready = qfalse;
+		return qtrue;
 	}
 
 	if (script->script_p >= script->end_p)
 		return EndOfScript (crossline);
 
-//
-// skip space
-//
+	//
+	// skip space
+	//
 skipspace:
 	while (*script->script_p <= 32)
 	{
@@ -198,9 +198,9 @@ skipspace:
 		goto skipspace;
 	}
 
-//
-// copy token
-//
+	//
+	// copy token
+	//
 	token_p = token;
 
 	if (*script->script_p == '"')
@@ -231,12 +231,12 @@ skipspace:
 
 	if (!strcmp (token, "$include"))
 	{
-		GetToken (false);
+		GetToken (qfalse);
 		AddScriptToStack (token);
 		return GetToken (crossline);
 	}
 
-	return true;
+	return qtrue;
 }
 
 
@@ -254,22 +254,22 @@ qboolean TokenAvailable (void)
 	search_p = script->script_p;
 
 	if (search_p >= script->end_p)
-		return false;
+		return qfalse;
 
 	while ( *search_p <= 32)
 	{
 		if (*search_p == '\n')
-			return false;
+			return qfalse;
 		search_p++;
 		if (search_p == script->end_p)
-			return false;
+			return qfalse;
 
 	}
 
 	if (*search_p == ';')
-		return false;
+		return qfalse;
 
-	return true;
+	return qtrue;
 }
 
 

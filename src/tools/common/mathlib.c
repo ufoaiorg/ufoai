@@ -25,9 +25,9 @@ qboolean VectorCompare (vec3_t v1, vec3_t v2)
 	
 	for (i=0 ; i<3 ; i++)
 		if (fabs(v1[i]-v2[i]) > EQUAL_EPSILON)
-			return false;
+			return qfalse;
 			
-	return true;
+	return qtrue;
 }
 
 qboolean VectorNearer (vec3_t v1, vec3_t v2, vec3_t comp)
@@ -36,9 +36,9 @@ qboolean VectorNearer (vec3_t v1, vec3_t v2, vec3_t comp)
 	
 	for (i=0 ; i<3 ; i++)
 		if (fabs(v1[i]-comp[i]) < fabs(v2[i]-comp[i]) )
-			return true;
+			return qtrue;
 			
-	return false;
+	return qfalse;
 }
 
 vec_t Q_rint (vec_t in)

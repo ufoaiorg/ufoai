@@ -33,7 +33,7 @@ void Draw_ClearWindow (void)
 
 	if (!init)
 	{
-		init = true;
+		init = qtrue;
 		InitWindow ();
 	}
 
@@ -159,7 +159,7 @@ void GLS_BeginScene (void)
 
 	if (!wins_init)
 	{
-		wins_init = true;
+		wins_init = qtrue;
 
 		wVersionRequested = MAKEWORD(1, 1); 
 

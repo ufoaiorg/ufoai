@@ -111,12 +111,12 @@ vidmode_t vid_modes[] =
 qboolean VID_GetModeInfo( int *width, int *height, int mode )
 {
         if ( mode < 0 || mode >= VID_NUM_MODES )
-	        return false;
+	        return qfalse;
 
         *width  = vid_modes[mode].width;
 	*height = vid_modes[mode].height;
 
-        return true;
+        return qtrue;
 }
 
 

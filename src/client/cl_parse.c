@@ -220,12 +220,12 @@ qboolean CL_CheckOrDownloadFile (char *filename)
 	if (strstr (filename, ".."))
 	{
 		Com_Printf ("Refusing to download a path with ..\n");
-		return true;
+		return qtrue;
 	}
 
 	if (FS_LoadFile (filename, NULL) != -1)
 	{	// it exists, no need to download
-		return true;
+		return qtrue;
 	}
 
 	strcpy (cls.downloadname, filename);
@@ -265,7 +265,7 @@ qboolean CL_CheckOrDownloadFile (char *filename)
 
 	cls.downloadnumber++;
 
-	return false;
+	return qfalse;
 }
 
 /*
@@ -500,7 +500,7 @@ void CL_ParseServerData (void)
 		Com_Printf ("%c%s\n", 2, str);
 
 		// need to prep refresh at next oportunity
-		cl.refresh_prepped = false;
+		cl.refresh_prepped = qfalse;
 	}
 }
 
@@ -532,7 +532,7 @@ void CL_ParseConfigString (void)
 	else if (i == CS_CDTRACK)
 	{
 		if (cl.refresh_prepped)
-			CDAudio_Play (atoi(cl.configstrings[CS_CDTRACK]), true);
+			CDAudio_Play (atoi(cl.configstrings[CS_CDTRACK]), qtrue);
 	}
 	else if (i >= CS_MODELS && i < CS_MODELS+MAX_MODELS)
 	{
@@ -665,7 +665,7 @@ void CL_Reset( sizebuf_t *sb )
 	nextTime = 0;
 	shootTime = 0;
 	impactTime = 0;
-	blockEvents = false;
+	blockEvents = qfalse;
 
 	// set the active player
 	cls.team = MSG_ReadByte( sb );
@@ -689,7 +689,7 @@ void CL_StartGame( sizebuf_t *sb )
 	camera_mode = CAMERA_MODE_REMOTE;
 
 	// center on first actor
-	cl_worldlevel->modified = true;
+	cl_worldlevel->modified = qtrue;
 	if ( cl.numTeamList )
 	{
 		le_t	*le;
@@ -779,7 +779,7 @@ void CL_EntPerish( sizebuf_t *sb )
 	if ( le->type == ET_ACTOR )
 		CL_RemoveActorFromTeamList( le );
 
-	le->inuse = false;
+	le->inuse = qfalse;
 
 //	le->startTime = cl.time;
 //	le->think = LET_Perish;
@@ -817,10 +817,10 @@ void CL_ActorAppear( sizebuf_t *sb )
 	if ( !le )
 	{
 		le = LE_Add( entnum );
-		newActor = true;
+		newActor = qtrue;
 	} else {
 //		Com_Printf( "Actor appearing already visible... overwriting the old one\n" );
-		newActor = false;
+		newActor = qfalse;
 	}
 
 	// get the info
@@ -1194,10 +1194,10 @@ void CL_ParseEvent( void )
 		// check instantly flag
 		if ( eType & INSTANTLY )
 		{
-			now = true;
+			now = qtrue;
 			eType &= ~INSTANTLY;
 		}
-		else now = false;
+		else now = qfalse;
 
 		// check if eType is valid
 		if ( eType < 0 || eType >= EV_NUM_EVENTS )

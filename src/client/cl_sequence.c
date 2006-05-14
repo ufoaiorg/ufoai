@@ -210,7 +210,7 @@ void CL_SequenceRender( void )
 		if ( seqCmd >= seqEndCmd )
 		{
 			CL_SequenceEnd_f();
-			MN_PopMenu(false);
+			MN_PopMenu(qfalse);
 			return;
 		}
 
@@ -283,7 +283,7 @@ void CL_Sequence2D( void )
 			{
 				s2d->pos[1] += yPosPre;
 			}
-			s2d->relativePos = false;
+			s2d->relativePos = qfalse;
 			// advance in time
 			for ( j = 0; j < 4; j++ )
 			{
@@ -302,7 +302,7 @@ void CL_Sequence2D( void )
 			// image can be background
 			if ( *s2d->image )
 				re.DrawNormPic( s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1],
-					0, 0, 0, 0, s2d->align, true, s2d->image);
+					0, 0, 0, 0, s2d->align, qtrue, s2d->image);
 			if ( *s2d->text ) // gettext placeholder
 			{
 				l = re.FontDrawString( s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], (int)s2d->size[0], _(s2d->text) );
@@ -355,7 +355,7 @@ void CL_SequenceStart_f( void )
 	Cbuf_AddText( "stopsound\n" );
 	MN_PushMenu( mn_sequence->string );
 	cls.state = ca_sequence;
-	cl.refresh_prepped = true;
+	cl.refresh_prepped = qtrue;
 
 	// init sun
 	VectorSet( map_sun.dir, 2, 2, 3 );
@@ -536,7 +536,7 @@ void SEQ_Model( char *name, char *data )
 		}
 		// allocate
 		memset( se, 0, sizeof(seqEnt_t) );
-		se->inuse = true;
+		se->inuse = qtrue;
 		Com_sprintf( se->name, MAX_VAR, name );
 	}
 
@@ -598,7 +598,7 @@ void SEQ_2Dobj( char *name, char *data )
 		// allocate
 		memset( s2d, 0, sizeof(seq2D_t) );
 		for ( i = 0; i < 4; i++ ) s2d->color[i] = 1.0f;
-		s2d->inuse = true;
+		s2d->inuse = qtrue;
 		Q_strncpyz( s2d->font, "f_big", MAX_VAR ); // default font
 		Q_strncpyz( s2d->name, name, MAX_VAR );
 	}
@@ -631,10 +631,10 @@ void SEQ_Remove( char *name, char *data )
 	seq2D_t		*s2d;
 
 	se = CL_SequenceFindEnt( name );
-	if ( se ) se->inuse = false;
+	if ( se ) se->inuse = qfalse;
 
 	s2d = CL_SequenceFind2D( name );
-	if ( s2d ) s2d->inuse = false;
+	if ( s2d ) s2d->inuse = qfalse;
 
 	if ( !se && !s2d )
 		Com_Printf( "SEQ_Remove: couldn't find '%s'\n", name );
@@ -1131,7 +1131,7 @@ writing the actual data can begin
 qboolean CL_OpenAVIForWriting( char *fileName )
 {
 	if( afd.fileOpen )
-		return false;
+		return qfalse;
 
 	memset( &afd, 0, sizeof( aviFileData_t ) );
 
@@ -1139,14 +1139,14 @@ qboolean CL_OpenAVIForWriting( char *fileName )
 	if( cl_aviFrameRate->value <= 0 )
 	{
 		Com_Printf( "cl_aviFrameRate must be >= 1\n");
-		return false;
+		return qfalse;
 	}
 
 	FS_FOpenFileWrite( fileName, &afd.f );
 	if ( afd.f == NULL )
 	{
 		Com_Printf( "Could not open %s for writing\n", fileName );
-		return false;
+		return qfalse;
 	}
 
 	FS_FOpenFileWrite( va( "%s" INDEX_FILE_EXTENSION, fileName ), &afd.idxF );
@@ -1154,7 +1154,7 @@ qboolean CL_OpenAVIForWriting( char *fileName )
 	{
 		Com_Printf( "Could not open index file for writing\n" );
 		FS_FCloseFile( afd.f );
-		return false;
+		return qfalse;
 	}
 
 	Com_sprintf( afd.fileName, MAX_QPATH, fileName );
@@ -1165,9 +1165,9 @@ qboolean CL_OpenAVIForWriting( char *fileName )
 	afd.height = viddef.height;
 
 	if( cl_aviMotionJpeg->value )
-		afd.motionJpeg = true;
+		afd.motionJpeg = qtrue;
 	else
-		afd.motionJpeg = false;
+		afd.motionJpeg = qfalse;
 
 	afd.cBuffer = Z_Malloc( afd.width * afd.height * 4 );
 	afd.eBuffer = Z_Malloc( afd.width * afd.height * 4 );
@@ -1190,17 +1190,17 @@ qboolean CL_OpenAVIForWriting( char *fileName )
 
 	if( !(int)Cvar_VariableValue( "s_initsound" ) )
 	{
-		afd.audio = false;
+		afd.audio = qfalse;
 		Com_Printf( "No audio for video capturing\n" );
 	}
 	else
 	{
 		if( afd.a.bits == 16 && afd.a.channels == 2 )
-			afd.audio = true;
+			afd.audio = qtrue;
 		else
 		{
 			Com_Printf( "No audio for video capturing\n" );
-			afd.audio = false; //FIXME: audio not implemented for this case
+			afd.audio = qfalse; //FIXME: audio not implemented for this case
 		}
 	}
 
@@ -1216,9 +1216,9 @@ qboolean CL_OpenAVIForWriting( char *fileName )
 	SafeFS_Write( buffer, bufIndex, afd.idxF );
 
 	afd.moviSize = 4; // For the "movi"
-	afd.fileOpen = true;
+	afd.fileOpen = qtrue;
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -1246,10 +1246,10 @@ static qboolean CL_CheckFileSize( int bytesToAdd )
 		// ...And open a new one
 		CL_OpenAVIForWriting( va( "%s_", afd.fileName ) );
 
-		return true;
+		return qtrue;
 	}
 
-	return false;
+	return qfalse;
 }
 
 /*
@@ -1390,9 +1390,9 @@ qboolean CL_CloseAVI( void )
 
 	// AVI file isn't open
 	if( !afd.fileOpen )
-		return false;
+		return qfalse;
 
-	afd.fileOpen = false;
+	afd.fileOpen = qfalse;
 
 	FS_Seek( afd.idxF, 4, FS_SEEK_SET );
 	bufIndex = 0;
@@ -1406,7 +1406,7 @@ qboolean CL_CloseAVI( void )
 	if( ( indexSize = FS_FOpenFile( idxFileName, &afd.idxF ) ) <= 0 )
 	{
 		FS_FCloseFile( afd.f );
-		return false;
+		return qfalse;
 	}
 
 	indexRemainder = indexSize;
@@ -1445,7 +1445,7 @@ qboolean CL_CloseAVI( void )
 
 	Com_Printf( "Wrote %d:%d frames to %s\n", afd.numVideoFrames, afd.numAudioFrames, afd.fileName );
 
-	return true;
+	return qtrue;
 }
 
 /*

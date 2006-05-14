@@ -83,7 +83,7 @@ void R_ShadowLight (vec3_t pos, vec3_t lightAdd )
 	float add;
 	vec3_t dist;
 	vec3_t angle;
-	nolight = false ;
+	nolight = qfalse ;
 	VectorClear(lightAdd); // clear planar shadow vector
 
 	if ( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) return;
@@ -111,7 +111,7 @@ void R_ShadowLight (vec3_t pos, vec3_t lightAdd )
 	{
 		// old style static shadow
 		// scaled nolight shadow
-		nolight = true;
+		nolight = qtrue;
 		return;
 	}
 	else
@@ -411,7 +411,7 @@ void GL_DrawAliasShadowVolume (dmdl_t *paliashdr, int posenumm)
 
 //	if (clamp) qglEnable(GL_DEPTH_CLAMP_NV);
 
-	qglDepthMask(false);
+	qglDepthMask(qfalse);
 	qglStencilMask ( ~0 );
 	qglDepthFunc( GL_LESS );
 
@@ -474,7 +474,7 @@ void GL_DrawAliasShadowVolume (dmdl_t *paliashdr, int posenumm)
 	else
 		qglColorMask(1,1,1,1);
 
-	qglDepthMask(true);
+	qglDepthMask(qtrue);
 	qglDepthFunc(GL_LEQUAL);
 }
 
@@ -640,7 +640,7 @@ void R_ShadowBlend( void )
 
 	qglDisable (GL_DEPTH_TEST);
 
-	qglDepthMask(false);
+	qglDepthMask(qfalse);
 
 	qglEnable(GL_STENCIL_TEST);
 
@@ -661,7 +661,7 @@ void R_ShadowBlend( void )
 	qglEnable (GL_TEXTURE_2D);
 	GLSTATE_ENABLE_ALPHATEST
 	qglDisable(GL_STENCIL_TEST);
-	qglDepthMask(true);
+	qglDepthMask(qtrue);
 
 	if (gl_shadow_debug_shade->value)
 		qglColor3f (1,1,1);

@@ -63,17 +63,17 @@ int SV_FindIndex (char *name, int start, int max, qboolean create)
 
 int SV_ModelIndex (char *name)
 {
-	return SV_FindIndex (name, CS_MODELS, MAX_MODELS, true);
+	return SV_FindIndex (name, CS_MODELS, MAX_MODELS, qtrue);
 }
 
 int SV_SoundIndex (char *name)
 {
-	return SV_FindIndex (name, CS_SOUNDS, MAX_SOUNDS, true);
+	return SV_FindIndex (name, CS_SOUNDS, MAX_SOUNDS, qtrue);
 }
 
 int SV_ImageIndex (char *name)
 {
-	return SV_FindIndex (name, CS_IMAGES, MAX_IMAGES, true);
+	return SV_FindIndex (name, CS_IMAGES, MAX_IMAGES, qtrue);
 }
 
 
@@ -343,10 +343,10 @@ void SV_AddTile( byte map[32][32][MAX_TILEALTS], mTile_t *tile, int x, int y, in
 				// calc remaining connection options
 				for ( a = 0; map[y+ty][x+tx][a] && a < MAX_TILEALTS; a++ )
 				{
-					bad = true;
+					bad = qtrue;
 					for ( b = 0; bad && tile->spec[ty][tx][b] && b < MAX_TILEALTS; b++ )
 						if ( tile->spec[ty][tx][b] == map[y+ty][x+tx][a] )
-							bad = false;
+							bad = qfalse;
 
 					if ( bad )
 					{
@@ -386,11 +386,11 @@ qboolean SV_FitTile( byte map[32][32][MAX_TILEALTS], mTile_t *tile, int x, int y
 
 	// check for map border
 	if ( x + tile->w > mapX + mapW + 2 || y + tile->h > mapY + mapH + 2 )
-		return false;
+		return qfalse;
 
 	// require touching tiles
-	if ( x == mapX ) touch = true;
-	else touch = false;
+	if ( x == mapX ) touch = qtrue;
+	else touch = qfalse;
 
 	// test for fit
 	spec = &tile->spec[0][0][0];
@@ -402,12 +402,12 @@ qboolean SV_FitTile( byte map[32][32][MAX_TILEALTS], mTile_t *tile, int x, int y
 			if ( *spec == SOLID && *m == SOLID )
 			{
 				// already something there
-				return false;
+				return qfalse;
 			}
 			else if ( *spec && *m )
 			{
 				// check connection, avoid contradictory connections
-				if ( *m == SOLID ) touch = true;
+				if ( *m == SOLID ) touch = qtrue;
 
 				for ( a = 0; spec[a] && a < MAX_TILEALTS; a++ )
 					for ( b = 0; m[b] && b < MAX_TILEALTS; b++ )
@@ -415,7 +415,7 @@ qboolean SV_FitTile( byte map[32][32][MAX_TILEALTS], mTile_t *tile, int x, int y
 							goto fine;
 
 				// not jumped => impossible
-				return false;
+				return qfalse;
 			}
 			fine:;
 		}
@@ -424,8 +424,8 @@ qboolean SV_FitTile( byte map[32][32][MAX_TILEALTS], mTile_t *tile, int x, int y
 	}
 
 	// it fits, check for touch
-	if ( touch || !force ) return true;
-	else return false;
+	if ( touch || !force ) return qtrue;
+	else return qfalse;
 }
 
 
@@ -440,14 +440,9 @@ qboolean SV_AddRegion( byte map[32][32][MAX_TILEALTS], byte *num )
 	int i, j, x, y;
 	int toFill, oldToFill, oldNumPlaced;
 	int pos, lastPos;
-//	byte oldMap[32][32][MAX_TILEALTS];
-//	byte oldNum[MAX_TILETYPES];
-//	int tries;
 
 	// store old values
 	oldNumPlaced = numPlaced;
-//	memcpy( &oldMap[0][0][0], map, sizeof( map ) );
-//	memcpy( &oldNum[0], num, sizeof( num ) );
 
 	// count tiles to fill in
 	oldToFill = 0;
@@ -455,13 +450,10 @@ qboolean SV_AddRegion( byte map[32][32][MAX_TILEALTS], byte *num )
 		for ( x = mapX+1; x < mapX+mapW+1; x++ )
 			if ( map[y][x][0] != SOLID ) oldToFill++;
 
-//	for ( tries = 0; tries < MAX_REGIONRETRIES; tries++ )
 	{
 		// restore old values
 		toFill = oldToFill;
 		numPlaced = oldNumPlaced;
-//		memcpy( &map[0][0][0], oldMap, sizeof( map ) );
-//		memcpy( &num[0], oldNum, sizeof( num ) );
 
 		RandomList( mapSize, prList );
 		lastPos = mapSize-1;
@@ -486,7 +478,7 @@ qboolean SV_AddRegion( byte map[32][32][MAX_TILEALTS], byte *num )
 					tile = &mTile[j];
 
 					// add the tile, if it fits
-					if ( SV_FitTile( map, tile, x, y, true ) )
+					if ( SV_FitTile( map, tile, x, y, qtrue ) )
 					{
 						// mark as used and add the tile
 						num[j]++;
@@ -503,11 +495,11 @@ qboolean SV_AddRegion( byte map[32][32][MAX_TILEALTS], byte *num )
 			if ( pos == lastPos ) break;
 		}
 		// check for success
-		if ( toFill <= 0 ) return true;
+		if ( toFill <= 0 ) return qtrue;
 	}
 
 	// too many retries
-	return false;
+	return qfalse;
 }
 
 
@@ -530,19 +522,19 @@ qboolean SV_AddMandatoryParts( byte map[32][32][MAX_TILEALTS], byte *num )
 			{
 				x = prList[n] % mapW;
 				y = prList[n] / mapH;
-				if ( SV_FitTile( map, tile, x, y, false ) )
+				if ( SV_FitTile( map, tile, x, y, qfalse ) )
 				{
 					// add tile
 					SV_AddTile( map, tile, x, y, NULL );
 					break;
 				}
 			}
-			if ( n >= mapSize ) return false;
+			if ( n >= mapSize ) return qfalse;
 		}
 		num[i] = mAsm->min[i];
 	}
 	// success
-	return true;
+	return qtrue;
 }
 
 
@@ -652,7 +644,7 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 		if ( !SV_AddMandatoryParts( curMap, curNum ) ) continue;
 
 		// start region assembly
-		ok = true;
+		ok = qtrue;
 		for ( y = 0; y < regNumY && ok; y++ )
 			for ( x = 0; x < regNumX && ok; x++ )
 			{
@@ -661,7 +653,7 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 				mapW = (int)((x+1) * regFracX + 0.1) - (int)(x * regFracX);
 				mapH = (int)((y+1) * regFracY + 0.1) - (int)(y * regFracY);
 				mapSize = mapW * mapH;
-				if ( !SV_AddRegion( curMap, curNum ) ) ok = false;
+				if ( !SV_AddRegion( curMap, curNum ) ) ok = qfalse;
 			}
 
 		// break if everything seems to be ok
@@ -822,7 +814,7 @@ void SV_InitGame (void)
 	if (svs.initialized)
 	{
 		// cause any connected clients to reconnect
-		SV_Shutdown ("Server restarted\n", true);
+		SV_Shutdown ("Server restarted\n", qtrue);
 	}
 	else
 	{
@@ -837,7 +829,7 @@ void SV_InitGame (void)
 	// get any latched variable changes (maxclients, etc)
 	Cvar_GetLatchedVars ();
 
-	svs.initialized = true;
+	svs.initialized = qtrue;
 
 //	Cvar_FullSet ("maxclients", "8", CVAR_SERVERINFO | CVAR_LATCH);
 

@@ -52,7 +52,7 @@ void Cmd_Grab (void)
 	char			savename[1024];
 	char			dest[1024];
 
-	GetToken (false);
+	GetToken (qfalse);
 
 	if (token[0] == '/' || token[0] == '\\')
 		sprintf (savename, "%s%s.pcx", gamedir, token+1);
@@ -70,13 +70,13 @@ void Cmd_Grab (void)
 		return;
 	}
 
-	GetToken (false);
+	GetToken (qfalse);
 	xl = atoi (token);
-	GetToken (false);
+	GetToken (qfalse);
 	yl = atoi (token);
-	GetToken (false);
+	GetToken (qfalse);
 	w = atoi (token);
-	GetToken (false);
+	GetToken (qfalse);
 	h = atoi (token);
 
 	if (xl<0 || yl<0 || w<0 || h<0 || xl+w>byteimagewidth || yl+h>byteimageheight)
@@ -111,7 +111,7 @@ void Cmd_Raw (void)
 	char			savename[1024];
 	char			dest[1024];
 
-	GetToken (false);
+	GetToken (qfalse);
 
 	sprintf (savename, "%s%s.lmp", gamedir, token);
 
@@ -122,13 +122,13 @@ void Cmd_Raw (void)
 		return;
 	}
 
-	GetToken (false);
+	GetToken (qfalse);
 	xl = atoi (token);
-	GetToken (false);
+	GetToken (qfalse);
 	yl = atoi (token);
-	GetToken (false);
+	GetToken (qfalse);
 	w = atoi (token);
-	GetToken (false);
+	GetToken (qfalse);
 	h = atoi (token);
 
 	if (xl<0 || yl<0 || w<0 || h<0 || xl+w>byteimagewidth || yl+h>byteimageheight)
@@ -171,9 +171,9 @@ byte BestColor (int r, int g, int b, int start, int stop)
 	int	bestcolor;
 	byte	*pal;
 
-//
-// let any color go to 0 as a last resort
-//
+	//
+	// let any color go to 0 as a last resort
+	//
 	bestdistortion = 256*256*4;
 	bestcolor = 0;
 
@@ -221,7 +221,7 @@ void Cmd_Colormap (void)
 	char	savename[1024];
 	char	dest[1024];
 
-	colormap_issued = true;
+	colormap_issued = qtrue;
 	if (!g_release)
 		memcpy (colormap_palette, lbmpalette, 768);
 
@@ -230,7 +230,7 @@ void Cmd_Colormap (void)
 		return;
 	}
 
-	GetToken (false);
+	GetToken (qfalse);
 	sprintf (savename, "%spics/%s.pcx", gamedir, token);
 
 	if (g_release)
@@ -247,7 +247,7 @@ void Cmd_Colormap (void)
 	cropped = malloc((levels+256)*256);
 	lump_p = cropped;
 
-// shaded levels
+        // shaded levels
 	for (l=0;l<levels;l++)
 	{
 		frac = range - range*(float)l/(levels-1);
@@ -261,11 +261,11 @@ void Cmd_Colormap (void)
 			green = (int)(green*frac+0.5);
 			blue = (int)(blue*frac+0.5);
 			
-//
-// note: 254 instead of 255 because 255 is the transparent color, and we
-// don't want anything remapping to that
-// don't use color 0, because NT can't remap that (or 255)
-//
+			//
+			// note: 254 instead of 255 because 255 is the transparent color, and we
+			// don't want anything remapping to that
+			// don't use color 0, because NT can't remap that (or 255)
+			//
 			*lump_p++ = BestColor(red,green,blue, 1, 254);
 		}
 
@@ -274,7 +274,7 @@ void Cmd_Colormap (void)
 			*lump_p++ = c;
 	}
 	
-// 66% transparancy table
+	// 66% transparancy table
 	for (l=0;l<255;l++)
 	{
 		for (c=0 ; c<255 ; c++)
@@ -352,7 +352,7 @@ void BuildPalmap (void)
 
 	if (palmap_built)
 		return;
-	palmap_built = true;
+	palmap_built = qtrue;
 
 	for (r=4 ; r<256 ; r+=8)
 	{
@@ -500,16 +500,16 @@ void Cmd_Mip (void)
 	char			filename[1024];
 	char			animname[64];
 
-	GetToken (false);
+	GetToken (qfalse);
 	strcpy (lumpname, token);
 	
-	GetToken (false);
+	GetToken (qfalse);
 	xl = atoi (token);
-	GetToken (false);
+	GetToken (qfalse);
 	yl = atoi (token);
-	GetToken (false);
+	GetToken (qfalse);
 	w = atoi (token);
-	GetToken (false);
+	GetToken (qfalse);
 	h = atoi (token);
 
 	if ( (w & 15) || (h & 15) )
@@ -524,7 +524,7 @@ void Cmd_Mip (void)
 	// get optional flags and values
 	while (TokenAvailable ())
 	{
-		GetToken (false);
+		GetToken (qfalse);
 	
 		for (mp=mipparms ; mp->name ; mp++)
 		{
@@ -533,7 +533,7 @@ void Cmd_Mip (void)
 				switch (mp->type)
 				{
 				case pt_animvalue:
-					GetToken (false);	// specify the next animation frame
+					GetToken (qfalse);	// specify the next animation frame
 					strcpy (animname, token);
 					break;
 				case pt_flags:
@@ -544,7 +544,7 @@ void Cmd_Mip (void)
 					break;
 				case pt_flagvalue:
 					flags |= mp->flags;
-					GetToken (false);	// specify the light value
+					GetToken (qfalse);	// specify the light value
 					value = atoi(token);
 					break;
 				}
@@ -643,7 +643,7 @@ Cmd_Mippal
 */
 void Cmd_Mippal (void)
 {
-	colormap_issued = true;
+	colormap_issued = qtrue;
 	if (g_release)
 		return;
 
@@ -662,7 +662,7 @@ void Cmd_Mipdir (void)
 {
 	char	filename[1024];
 
-	GetToken (false);
+	GetToken (qfalse);
 	strcpy (mip_prefix, token);
 	// create the directory if needed
 	sprintf (filename, "%stextures", gamedir, mip_prefix);
@@ -697,7 +697,7 @@ void Cmd_Environment (void)
 	byte	image[256*256];
 	byte	*tga;
 
-	GetToken (false);
+	GetToken (qfalse);
 
 	if (g_release)
 	{

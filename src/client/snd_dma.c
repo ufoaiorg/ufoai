@@ -43,7 +43,7 @@ int			s_registration_sequence;
 
 channel_t	channels[MAX_CHANNELS];
 
-qboolean	snd_initialized = false;
+qboolean	snd_initialized = qfalse;
 int			sound_started=0;
 
 dma_t		dma;
@@ -350,7 +350,7 @@ S_BeginRegistration
 void S_BeginRegistration (void)
 {
 	s_registration_sequence++;
-	s_registering = true;
+	s_registering = qtrue;
 }
 
 /*
@@ -366,7 +366,7 @@ sfx_t *S_RegisterSound (char *name)
 	if (!sound_started)
 		return NULL;
 
-	sfx = S_FindName (name, true);
+	sfx = S_FindName (name, qtrue);
 	sfx->registration_sequence = s_registration_sequence;
 
 	if (!s_registering)
@@ -418,7 +418,7 @@ void S_EndRegistration (void)
 		S_LoadSound (sfx);
 	}
 
-	s_registering = false;
+	s_registering = qfalse;
 }
 
 
@@ -681,10 +681,10 @@ void S_StartSound(vec3_t origin, int entnum, int entchannel, sfx_t *sfx, float f
 	if (origin)
 	{
 		VectorCopy (origin, ps->origin);
-		ps->fixed_origin = true;
+		ps->fixed_origin = qtrue;
 	}
 	else
-		ps->fixed_origin = false;
+		ps->fixed_origin = qfalse;
 
 	ps->entnum = entnum;
 	ps->entchannel = entchannel;
@@ -894,7 +894,7 @@ void S_AddLoopSounds (void)
 			right_total = 255;
 		ch->leftvol = left_total;
 		ch->rightvol = right_total;
-		ch->autosound = true;	// remove next frame
+		ch->autosound = qtrue;	// remove next frame
 		ch->sfx = sfx;
 		/* sometimes, the sc->length argument can become 0, and in that
 		 * case we get a SIGFPE in the next modulo.  The workaround checks
@@ -1045,7 +1045,7 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 #ifdef __linux__
 	if (s_system->modified)
 	{
-		s_system->modified = false;
+		s_system->modified = qfalse;
 		CL_Snd_Restart_f();
 	}
 #endif
@@ -1198,12 +1198,12 @@ qboolean OGG_Open( char *filename )
 	vorbis_info *vi;
 
 	if ( ov_volume->value <= 0 )
-		return false;
+		return qfalse;
 
 	// check running music
 	if ( ovPlaying[0] )
 	{
-		if ( !strcmp( ovPlaying, filename ) ) return true;
+		if ( !strcmp( ovPlaying, filename ) ) return qtrue;
 		else OGG_Stop();
 	}
 
@@ -1212,7 +1212,7 @@ qboolean OGG_Open( char *filename )
 	if ( !f )
 	{
 		Com_Printf( "Couldn't open 'music/%s.ogg'\n", filename );
-		return false;
+		return qfalse;
 	}
 
 	// open ogg vorbis file
@@ -1221,20 +1221,20 @@ qboolean OGG_Open( char *filename )
 	{
 		Com_Printf( "'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n", filename, res );
 		fclose( f );
-		return false;
+		return qfalse;
 	}
 
 	vi = ov_info( &ovFile, -1 );
 	if( (vi->channels != 1) && (vi->channels != 2) ) {
 		Com_Printf( "%s has an unsupported number of channels: %i\n", filename, vi->channels );
 		fclose ( f );
-		return false;
+		return qfalse;
 	}
 
 //	Com_Printf( "Playing '%s'\n", filename );
 	strcpy( ovPlaying, filename );
 	ovSection = 0;
-	return true;
+	return qtrue;
 }
 
 /*

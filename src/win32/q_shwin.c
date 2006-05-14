@@ -120,12 +120,12 @@ int	curtime;
 int Sys_Milliseconds (void)
 {
 	static int		base;
-	static qboolean	initialized = false;
+	static qboolean	initialized = qfalse;
 
 	if (!initialized)
 	{	// let base retain 16 bits of effectively random data
 		base = timeGetTime() & 0xffff0000;
-		initialized = true;
+		initialized = qtrue;
 	}
 	curtime = timeGetTime() - base;
 
@@ -146,28 +146,28 @@ int		findhandle;
 static qboolean CompareAttributes( unsigned found, unsigned musthave, unsigned canthave )
 {
 	if ( ( found & _A_RDONLY ) && ( canthave & SFF_RDONLY ) )
-		return false;
+		return qfalse;
 	if ( ( found & _A_HIDDEN ) && ( canthave & SFF_HIDDEN ) )
-		return false;
+		return qfalse;
 	if ( ( found & _A_SYSTEM ) && ( canthave & SFF_SYSTEM ) )
-		return false;
+		return qfalse;
 	if ( ( found & _A_SUBDIR ) && ( canthave & SFF_SUBDIR ) )
-		return false;
+		return qfalse;
 	if ( ( found & _A_ARCH ) && ( canthave & SFF_ARCH ) )
-		return false;
+		return qfalse;
 
 	if ( ( musthave & SFF_RDONLY ) && !( found & _A_RDONLY ) )
-		return false;
+		return qfalse;
 	if ( ( musthave & SFF_HIDDEN ) && !( found & _A_HIDDEN ) )
-		return false;
+		return qfalse;
 	if ( ( musthave & SFF_SYSTEM ) && !( found & _A_SYSTEM ) )
-		return false;
+		return qfalse;
 	if ( ( musthave & SFF_SUBDIR ) && !( found & _A_SUBDIR ) )
-		return false;
+		return qfalse;
 	if ( ( musthave & SFF_ARCH ) && !( found & _A_ARCH ) )
-		return false;
+		return qfalse;
 
-	return true;
+	return qtrue;
 }
 
 char *Sys_FindFirst (char *path, unsigned musthave, unsigned canthave )

@@ -3124,7 +3124,7 @@ qboolean QGL_Init( const char *dllname )
 
 		if ( ( glw_state.OpenGLLib = dlopen( fn, RTLD_LAZY ) ) == 0 ) {
 			ri.Con_Printf( PRINT_ALL, "%s\n", dlerror() );
-			return false;
+			return qfalse;
 		}
 	}
 
@@ -3513,7 +3513,7 @@ qboolean QGL_Init( const char *dllname )
 	qglGetVertexAttribPointervARB = 0;
 	qglIsProgramARB = 0;
 
-	return true;
+	return qtrue;
 }
 
 void GLimp_EnableLogging( qboolean enable )

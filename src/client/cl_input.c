@@ -737,7 +737,7 @@ float CL_GetKeyMouseState ( int dir )
 
 //==========================================================================
 
-qboolean	cameraRoute = false;
+qboolean	cameraRoute = qfalse;
 vec3_t		routeFrom, routeDelta;
 float		routeDist;
 int			routeLevelStart, routeLevelEnd;
@@ -839,8 +839,8 @@ void CL_CameraMoveRemote (void)
 			VectorNormalize2( cl.cam.speed, delta );
 			if ( DotProduct( delta, routeDelta ) < 0.05 )
 			{
-				blockEvents = false;
-				cameraRoute = false;
+				blockEvents = qfalse;
+				cameraRoute = qfalse;
 			}
 		}
 		else VectorMA( cl.cam.speed, frac, routeDelta, cl.cam.speed );
@@ -953,8 +953,8 @@ void CL_CameraRoute( pos3_t from, pos3_t target )
 	Cvar_SetValue( "cl_worldlevel", target[2] );
 
 	VectorClear( cl.cam.speed );
-	cameraRoute = true;
-	blockEvents = true;
+	cameraRoute = qtrue;
+	blockEvents = qtrue;
 }
 
 /*

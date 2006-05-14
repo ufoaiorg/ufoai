@@ -39,12 +39,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client/client.h"
 
-static qboolean cdValid = false;
-static qboolean	playing = false;
-static qboolean	wasPlaying = false;
-static qboolean	initialized = false;
-static qboolean	enabled = true;
-static qboolean playLooping = false;
+static qboolean cdValid = qfalse;
+static qboolean	playing = qfalse;
+static qboolean	wasPlaying = qfalse;
+static qboolean	initialized = qfalse;
+static qboolean	enabled = qtrue;
+static qboolean playLooping = qfalse;
 static float	cdvolume;
 static byte 	remap[100];
 static byte		playTrack;
@@ -98,7 +98,7 @@ static int CDAudio_GetAudioDiskInfo(void)
 	struct cdrom_tochdr tochdr;
 #endif
 
-	cdValid = false;
+	cdValid = qfalse;
 
 #if defined(__FreeBSD__)
 	if ( ioctl(cdfile, CDIOREADTOCHEADER, &tochdr) == -1 )
@@ -124,7 +124,7 @@ static int CDAudio_GetAudioDiskInfo(void)
 		return -1;
 	}
 
-	cdValid = true;
+	cdValid = qtrue;
 #if defined(__FreeBSD__)
 	maxTrack = tochdr.ending_track;
 #endif
@@ -237,7 +237,7 @@ void CDAudio_Play(int track, qboolean looping)
 
 	playLooping = looping;
 	playTrack = track;
-	playing = true;
+	playing = qtrue;
 
 	if (cd_volume->value == 0.0)
 		CDAudio_Pause ();
@@ -347,9 +347,9 @@ void CDAudio_RandomPlay(void)
 		}
 		else
 		{
-			playLooping = true;
+			playLooping = qtrue;
 			playTrack = remap_track;
-			playing = true;
+			playing = qtrue;
 			break;
 		}
 	}
@@ -376,8 +376,8 @@ void CDAudio_Stop(void)
 #endif
 		Com_DPrintf("ioctl cdromstop failed (%d)\n", errno);
 
-	wasPlaying = false;
-	playing = false;
+	wasPlaying = qfalse;
+	playing = qfalse;
 }
 
 void CDAudio_Pause(void)
@@ -398,7 +398,7 @@ void CDAudio_Pause(void)
 #endif
 
 	wasPlaying = playing;
-	playing = false;
+	playing = qfalse;
 }
 
 void CDAudio_Resume(void)
@@ -420,7 +420,7 @@ void CDAudio_Resume(void)
 	if ( ioctl(cdfile, CDROMRESUME) == -1 )
 		Com_DPrintf("ioctl cdromresume failed\n");
 #endif
-	playing = true;
+	playing = qtrue;
 }
 
 static void CD_f (void)
@@ -436,7 +436,7 @@ static void CD_f (void)
 
 	if (Q_strcasecmp(command, "on") == 0)
 	{
-		enabled = true;
+		enabled = qtrue;
 		return;
 	}
 
@@ -444,13 +444,13 @@ static void CD_f (void)
 	{
 		if (playing)
 			CDAudio_Stop();
-		enabled = false;
+		enabled = qfalse;
 		return;
 	}
 
 	if (Q_strcasecmp(command, "reset") == 0)
 	{
-		enabled = true;
+		enabled = qtrue;
 		if (playing)
 			CDAudio_Stop();
 		for (n = 0; n < 100; n++)
@@ -492,13 +492,13 @@ static void CD_f (void)
 
 	if (Q_strcasecmp(command, "play") == 0)
 	{
-		CDAudio_Play((byte)atoi(Cmd_Argv (2)), false);
+		CDAudio_Play((byte)atoi(Cmd_Argv (2)), qfalse);
 		return;
 	}
 
 	if (Q_strcasecmp(command, "loop") == 0)
 	{
-		CDAudio_Play((byte)atoi(Cmd_Argv (2)), true);
+		CDAudio_Play((byte)atoi(Cmd_Argv (2)), qtrue);
 		return;
 	}
 
@@ -525,7 +525,7 @@ static void CD_f (void)
 		if (playing)
 			CDAudio_Stop();
 		CDAudio_Eject();
-		cdValid = false;
+		cdValid = qfalse;
 		return;
 	}
 
@@ -581,28 +581,28 @@ void CDAudio_Update(void)
 		subchnl.data = &data;
 		if (ioctl(cdfile, CDIOCREADSUBCHANNEL, &subchnl) == -1 ) {
 			Com_DPrintf("ioctl cdiocreadsubchannel failed\n");
-			playing = false;
+			playing = qfalse;
 			return;
 		}
 		if (subchnl.data->header.audio_status != CD_AS_PLAY_IN_PROGRESS &&
 			subchnl.data->header.audio_status != CD_AS_PLAY_PAUSED) {
-			playing = false;
+			playing = qfalse;
 			if (playLooping)
-				CDAudio_Play(playTrack, true);
+				CDAudio_Play(playTrack, qtrue);
 		}
 #endif
 #if defined(__linux__)
 		subchnl.cdsc_format = CDROM_MSF;
 		if (ioctl(cdfile, CDROMSUBCHNL, &subchnl) == -1 ) {
 			Com_DPrintf("ioctl cdromsubchnl failed\n");
-			playing = false;
+			playing = qfalse;
 			return;
 		}
 		if (subchnl.cdsc_audiostatus != CDROM_AUDIO_PLAY &&
 			subchnl.cdsc_audiostatus != CDROM_AUDIO_PAUSED) {
-			playing = false;
+			playing = qfalse;
 			if (playLooping)
-				CDAudio_Play(playTrack, true);
+				CDAudio_Play(playTrack, qtrue);
 		}
 #endif
 	}
@@ -644,13 +644,13 @@ int CDAudio_Init(void)
 	for (i = 0; i < 100; i++)
 		remap[i] = i;
 
-	initialized = true;
-	enabled = true;
+	initialized = qtrue;
+	enabled = qtrue;
 
 	if (CDAudio_GetAudioDiskInfo())
 	{
 		Com_Printf("CDAudio_Init: No CD in player.\n");
-		cdValid = false;
+		cdValid = qfalse;
 	}
 
 	Cmd_AddCommand ("cd", CD_f);
@@ -675,5 +675,5 @@ void CDAudio_Shutdown(void)
 	CDAudio_Stop();
 	close(cdfile);
 	cdfile = -1;
-	initialized = false;
+	initialized = qfalse;
 }

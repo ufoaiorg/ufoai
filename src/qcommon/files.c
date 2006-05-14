@@ -86,12 +86,12 @@ qboolean strwildcomp (const char *string, const char *pattern)
 
 	s = string;
 
-	while (true) {
+	while (qtrue) {
 		switch (c = *pattern++) {
 		case 0:
-			return !*s ? true : false;
+			return !*s ? qtrue : qfalse;
 		case '?':
-			if (*s == '\0') return false;
+			if (*s == '\0') return qfalse;
 			s++;
 			break;
 		case '*':
@@ -100,15 +100,15 @@ qboolean strwildcomp (const char *string, const char *pattern)
 				c = *++pattern;
 
 			if (!c)
-				return true;
+				return qtrue;
 
 			while (*s) {
-				if (strwildcomp (s, pattern)) return true;
+				if (strwildcomp (s, pattern)) return qtrue;
 				s++;
 			}
-			return false;
+			return qfalse;
 		default:
-			if (c != *s) return false;
+			if (c != *s) return qfalse;
 			++s;
 			break;
 		}
@@ -1447,7 +1447,7 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 // maplisting
 char* maps[MAX_MAPS];
 int anzInstalledMaps = 0;
-qboolean mapsInstalledInit = false;
+qboolean mapsInstalledInit = qfalse;
 int mapInstalledIndex = 0;
 
 /*
@@ -1496,7 +1496,7 @@ void FS_GetMaps ( void )
 		}
 	}
 
-	mapsInstalledInit = true;
+	mapsInstalledInit = qtrue;
 
 	Sys_FindClose ();
 }
@@ -1633,7 +1633,7 @@ qboolean FS_FileExists (char *filename)
 
 	f = fopen (filename, "r");
 	if (!f)
-		return false;
+		return qfalse;
 	fclose (f);
-	return true;
+	return qtrue;
 }

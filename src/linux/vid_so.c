@@ -46,7 +46,7 @@ cvar_t		*vid_grabmouse;
 // Global variables used internally by this module
 viddef_t	viddef;				// global video state; used by other modules
 void		*reflib_library;		// Handle to refresh DLL
-qboolean	reflib_active = false;
+qboolean	reflib_active = qfalse;
 
 #define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[0] ) )
 
@@ -127,7 +127,7 @@ cause the entire video mode and refresh DLL to be reset on the next frame.
 */
 void VID_Restart_f (void)
 {
-	vid_ref->modified = true;
+	vid_ref->modified = qtrue;
 }
 
 /*
@@ -162,12 +162,12 @@ vidmode_t vid_modes[] =
 qboolean VID_GetModeInfo( int *width, int *height, int mode )
 {
 	if ( mode < 0 || mode >= VID_NUM_MODES )
-		return false;
+		return qfalse;
 
 	*width  = vid_modes[mode].width;
 	*height = vid_modes[mode].height;
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -205,7 +205,7 @@ void VID_FreeReflib (void)
 
 	memset (&re, 0, sizeof(re));
 	reflib_library = NULL;
-	reflib_active  = false;
+	reflib_active  = qfalse;
 }
 
 /*
@@ -217,7 +217,7 @@ qboolean VID_LoadRefresh( char *name )
 {
 	refimport_t	ri;
 	GetRefAPI_t	GetRefAPI;
-	qboolean	restart = false;
+	qboolean	restart = qfalse;
 	char	fn[MAX_OSPATH];
 	struct stat st;
 	extern uid_t saved_euid;
@@ -233,7 +233,7 @@ qboolean VID_LoadRefresh( char *name )
 		RW_IN_Shutdown_fp = NULL;
 		re.Shutdown();
 		VID_FreeReflib();
-		restart = true;
+		restart = qtrue;
 	}
 
 	Com_Printf( "------- Loading %s -------\n", name );
@@ -259,13 +259,13 @@ qboolean VID_LoadRefresh( char *name )
 	if (stat(fn, &st) == -1)
 	{
 		Com_Printf( "LoadLibrary(\"%s\") failed: %s\n", name, strerror(errno));
-		return false;
+		return qfalse;
 	}
 
 	if ( ( reflib_library = dlopen( fn, RTLD_LAZY | RTLD_GLOBAL ) ) == 0 )
 	{
 		Com_Printf( "LoadLibrary(\"%s\") failed: %s\n", name , dlerror());
-		return false;
+		return qfalse;
 	}
 
 	Com_Printf( "LoadLibrary(\"%s\")\n", fn );
@@ -323,7 +323,7 @@ qboolean VID_LoadRefresh( char *name )
 	{
 		re.Shutdown();
 		VID_FreeReflib ();
-		return false;
+		return qfalse;
 	}
 
 	/* Init KBD */
@@ -356,9 +356,9 @@ qboolean VID_LoadRefresh( char *name )
 
 	Com_Printf( "------------------------------------\n");
 
-	reflib_active = true;
+	reflib_active = qtrue;
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -385,10 +385,10 @@ void VID_CheckChanges (void)
 		/*
 		** refresh has changed
 		*/
-		vid_ref->modified = false;
-		vid_fullscreen->modified = true;
-		cl.refresh_prepped = false;
-		cls.disable_screen = true;
+		vid_ref->modified = qfalse;
+		vid_fullscreen->modified = qtrue;
+		cl.refresh_prepped = qfalse;
+		cls.disable_screen = qtrue;
 
 		sprintf( name, "ref_%s.so", vid_ref->string );
 		if ( !VID_LoadRefresh( name ) )
@@ -397,7 +397,7 @@ void VID_CheckChanges (void)
 
 			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
 		}
-		cls.disable_screen = false;
+		cls.disable_screen = qfalse;
 	}
 
 }
@@ -453,12 +453,8 @@ void VID_Shutdown (void)
 /* INPUT                                                                     */
 /*****************************************************************************/
 
-cvar_t	*in_joystick;
-
-// This is fake, it's acutally done by the Refresh load
-void IN_Init (void)
+void IN_Init ( void )
 {
-	in_joystick	= Cvar_Get ("in_joystick", "0", CVAR_ARCHIVE);
 }
 
 void Real_IN_Init (void)
@@ -490,9 +486,9 @@ void IN_Frame (void)
 	if (RW_IN_Activate_fp)
 	{
 		if ( cls.key_dest == key_console)
-			RW_IN_Activate_fp(false);
+			RW_IN_Activate_fp(qfalse);
 		else
-			RW_IN_Activate_fp(true);
+			RW_IN_Activate_fp(qtrue);
 	}
 
 	if (RW_IN_Frame_fp)

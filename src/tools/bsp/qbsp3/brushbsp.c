@@ -506,7 +506,7 @@ int	TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 	int			front, back;
 
 	*numsplits = 0;
-	*hintsplit = false;
+	*hintsplit = qfalse;
 
 	// if the brush actually uses the planenum,
 	// we can tell the side for sure
@@ -560,7 +560,7 @@ int	TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 			{
 				(*numsplits)++;
 				if (brush->sides[i].surf & SURF_HINT)
-					*hintsplit = true;
+					*hintsplit = qtrue;
 			}
 		}
 	}
@@ -599,8 +599,8 @@ qboolean WindingIsTiny (winding_t *w)
 {
 #if 0
 	if (WindingArea (w) < 1)
-		return true;
-	return false;
+		return qtrue;
+	return qfalse;
 #else
 	int		i, j;
 	vec_t	len;
@@ -616,10 +616,10 @@ qboolean WindingIsTiny (winding_t *w)
 		if (len > EDGE_LENGTH)
 		{
 			if (++edges == 3)
-				return false;
+				return qfalse;
 		}
 	}
-	return true;
+	return qtrue;
 #endif
 }
 
@@ -639,9 +639,9 @@ qboolean WindingIsHuge (winding_t *w)
 	{
 		for (j=0 ; j<3 ; j++)
 			if (w->p[i][j] < -8000 || w->p[i][j] > 8000)
-				return true;
+				return qtrue;
 	}
-	return false;
+	return qfalse;
 }
 
 //============================================================
@@ -799,7 +799,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 						for (j=0 ; j<test->numsides ; j++)
 						{
 							if ( (test->sides[j].planenum&~1) == pnum)
-								test->sides[j].tested = true;
+								test->sides[j].tested = qtrue;
 						}
 					}
 					if (s & PSIDE_FRONT)
@@ -847,7 +847,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 					c_nonvis++;
 			}
 			if (pass > 0)
-				node->detail_seperator = true;	// not needed for vis
+				node->detail_seperator = qtrue;	// not needed for vis
 			break;
 		}
 	}
@@ -858,7 +858,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 	for (brush = brushes ; brush ; brush=brush->next)
 	{
 		for (i=0 ; i<brush->numsides ; i++)
-			brush->sides[i].tested = false;
+			brush->sides[i].tested = qfalse;
 	}
 
 	return bestside;
@@ -1016,7 +1016,7 @@ void SplitBrush (bspbrush_t *brush, int planenum,
 //			cs->visible = s->visible;
 //			cs->original = s->original;
 			cs->winding = cw[j];
-			cs->tested = false;
+			cs->tested = qfalse;
 		}
 	}
 
@@ -1069,15 +1069,15 @@ void SplitBrush (bspbrush_t *brush, int planenum,
 
 		cs->planenum = planenum^i^1;
 		cs->texinfo = TEXINFO_NODE;
-		cs->visible = false;
-		cs->tested = false;
+		cs->visible = qfalse;
+		cs->tested = qfalse;
 		if (i==0)
 			cs->winding = CopyWinding (midwinding);
 		else
 			cs->winding = midwinding;
 	}
 
-{
+	{
 	vec_t	v1;
 	int		i;
 
@@ -1091,7 +1091,7 @@ void SplitBrush (bspbrush_t *brush, int planenum,
 //			qprintf ("tiny volume after clip\n");
 		}
 	}
-}
+	}
 
 	*front = b[0];
 	*back = b[1];

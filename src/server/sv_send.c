@@ -178,7 +178,7 @@ void SV_Multicast (int mask)
 			if ( c->addMsg == c->curMsg )
 			{
 				// client overflowed
-				c->netchan.message.overflowed = true; 
+				c->netchan.message.overflowed = qtrue; 
 				continue;
 			}
 			SZ_Clear( &c->reliable[c->addMsg] );
@@ -216,7 +216,7 @@ qboolean SV_RateDrop (client_t *c)
 
 	// never drop over the loopback
 	if (c->netchan.remote_address.type == NA_LOOPBACK)
-		return false;
+		return qfalse;
 
 	total = 0;
 
@@ -229,10 +229,10 @@ qboolean SV_RateDrop (client_t *c)
 	{
 		c->surpressCount++;
 		c->message_size[sv.framenum % RATE_MESSAGES] = 0;
-		return true;
+		return qtrue;
 	}
 
-	return false;
+	return qfalse;
 }
 
 /*

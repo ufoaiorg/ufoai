@@ -678,7 +678,7 @@ qboolean CM_TestConnection( routing_t *map, int x, int y, int z, int dir, qboole
 
 	// totally blocked unit
 	if ( ( fill && (filled[y][x] & (1<<z)) ) || ( map->fall[y][x] == 0xFF ) )
-		return false;
+		return qfalse;
 
 	// get step height and trace vectors
 	sh = (map->step[y][x] & (1<<z)) ? sh_big : sh_low;
@@ -697,21 +697,21 @@ qboolean CM_TestConnection( routing_t *map, int x, int y, int z, int dir, qboole
 	map->route[z][y][x] &= ~(0x10 << dir);
 
 	// test filled
-	if ( fill && (filled[ay][ax] & (1<<az)) ) return false;
+	if ( fill && (filled[ay][ax] & (1<<az)) ) return qfalse;
 
 	// test height
-	if ( (map->route[az][ay][ax] & 0x0F) > h ) return false;
+	if ( (map->route[az][ay][ax] & 0x0F) > h ) return qfalse;
 
 	// center check
-	if ( CM_EntTestLine( start, end ) ) return false;
+	if ( CM_EntTestLine( start, end ) ) return qfalse;
 
 	// lower check
 	start[2] = end[2] -= UH/2 - sh*4 - 2;
-	if ( CM_EntTestLine( start, end ) ) return false;
+	if ( CM_EntTestLine( start, end ) ) return qfalse;
 
 	// no wall
 	map->route[z][y][x] |= 0x10 << dir;
-	return true;
+	return qtrue;
 }
 
 
@@ -922,8 +922,8 @@ void CMod_LoadRouting (lump_t *l, int sX, int sY, int sZ)
 					// check for walls
 					for ( z = 0; z < 8; z++ )
 					{
-						CM_TestConnection( &clMap, x+sX, y+sY, z, i, false );
-						CM_TestConnection( &clMap, ax+sX, ay+sY, z, i^1, false );
+						CM_TestConnection( &clMap, x+sX, y+sY, z, i, qfalse );
+						CM_TestConnection( &clMap, ax+sX, ay+sY, z, i^1, qfalse );
 					}
 				}
 			}
@@ -1539,8 +1539,8 @@ void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2,
 
 	c_brush_traces++;
 
-	getout = false;
-	startout = false;
+	getout = qfalse;
+	startout = qfalse;
 	leadside = NULL;
 
 	for (i=0 ; i<brush->numsides ; i++)
@@ -1575,9 +1575,9 @@ void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2,
 		d2 = DotProduct (p2, plane->normal) - dist;
 
 		if (d2 > 0)
-			getout = true;	// endpoint is not in solid
+			getout = qtrue;	// endpoint is not in solid
 		if (d1 > 0)
-			startout = true;
+			startout = qtrue;
 
 		// if completely in front of face, no intersection
 		if (d1 > 0 && d2 >= d1)
@@ -1607,9 +1607,9 @@ void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2,
 
 	if (!startout)
 	{	// original point was inside brush
-		trace->startsolid = true;
+		trace->startsolid = qtrue;
 		if (!getout)
-			trace->allsolid = true;
+			trace->allsolid = qtrue;
 		return;
 	}
 	if (enterfrac < leavefrac)
@@ -1675,7 +1675,7 @@ void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1,
 	}
 
 	// inside this brush
-	trace->startsolid = trace->allsolid = true;
+	trace->startsolid = trace->allsolid = qtrue;
 	trace->fraction = 0;
 	trace->contents = brush->contents;
 }
@@ -1939,12 +1939,12 @@ trace_t		CM_BoxTrace (vec3_t start, vec3_t end,
 	if (mins[0] == 0 && mins[1] == 0 && mins[2] == 0
 		&& maxs[0] == 0 && maxs[1] == 0 && maxs[2] == 0)
 	{
-		trace_ispoint = true;
+		trace_ispoint = qtrue;
 		VectorClear (trace_extents);
 	}
 	else
 	{
-		trace_ispoint = false;
+		trace_ispoint = qfalse;
 		trace_extents[0] = -mins[0] > maxs[0] ? -mins[0] : maxs[0];
 		trace_extents[1] = -mins[1] > maxs[1] ? -mins[1] : maxs[1];
 		trace_extents[2] = -mins[2] > maxs[2] ? -mins[2] : maxs[2];
@@ -2009,9 +2009,9 @@ trace_t		CM_TransformedBoxTrace (vec3_t start, vec3_t end,
 	// rotate start and end into the models frame of reference
 	if (headnode != curTile->box_headnode &&
 	(angles[0] || angles[1] || angles[2]) )
-		rotated = true;
+		rotated = qtrue;
 	else
-		rotated = false;
+		rotated = qfalse;
 
 	if (rotated)
 	{
@@ -2518,8 +2518,8 @@ qboolean Grid_CheckForbidden( struct routing_s *map, int x, int y, int z )
 
 	for ( i = 0, p = map->fblist; i < map->fblength; i++, p++ )
 		if ( x == (*p)[0] && y == (*p)[1] && z == (*p)[2] )
-			return true;
-	return false;
+			return qtrue;
+	return qfalse;
 }
 
 
@@ -2836,7 +2836,7 @@ void Grid_RecalcRouting( struct routing_s *map, char *name, char **list )
 		for ( y = min[1]; y < max[1]; y++ )
 			for ( x = min[0]; x < max[0]; x++ )
 				for ( i = 0; i < 4; i++ )
-					CM_TestConnection( map, x, y, z, i, true );
+					CM_TestConnection( map, x, y, z, i, qtrue );
 
 	inlineList = NULL;
 }

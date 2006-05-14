@@ -426,7 +426,7 @@ void CL_ActorUpdateCVars( void )
 			else
 				Cbuf_AddText( va( "huddeselect%i\n", i ) );
 		}
-		cl_selected->modified = false;
+		cl_selected->modified = qfalse;
 	}
 }
 
@@ -492,7 +492,7 @@ void CL_RemoveActorFromTeamList( le_t *le )
 
 		if ( i == cl.numTeamList )
 		{
-			selActor->selected = false;
+			selActor->selected = qfalse;
 			selActor = NULL;
 		}
 	}
@@ -532,11 +532,11 @@ qboolean CL_ActorSelect( le_t *le )
 
 	// test team
 	if ( !le || le->team != cls.team || (le->state & STATE_DEAD) )
-		return false;
+		return qfalse;
 
 	// select him
-	if ( selActor ) selActor->selected = false;
-	if ( le ) le->selected = true;
+	if ( selActor ) selActor->selected = qfalse;
+	if ( le ) le->selected = qtrue;
 	selActor = le;
 	menuInventory = &selActor->i;
 
@@ -558,10 +558,10 @@ qboolean CL_ActorSelect( le_t *le )
 
 			cl.cmode = M_MOVE;
 
-			return true;
+			return qtrue;
 		}
 
-	return false;
+	return qfalse;
 }
 
 
@@ -576,19 +576,19 @@ qboolean CL_ActorSelectList( int num )
 
 	// check if actor exists
 	if ( num >= cl.numTeamList )
-		return false;
+		return qfalse;
 
 	// select actor
 	le = cl.teamList[num];
 	if ( !CL_ActorSelect( le ) )
-		return false;
+		return qfalse;
 
 	// center view
 	VectorCopy( le->origin, cl.cam.reforg );
 	// change to worldlevel were actor is right now
 	Cvar_SetValue( "cl_worldlevel", le->pos[2] );
 
-	return true;
+	return qtrue;
 }
 
 
@@ -650,23 +650,23 @@ int CL_CheckAction( void )
 	{
 		Com_Printf( "Nobody selected.\n");
 		Com_sprintf( infoText, MAX_MENUTEXTLEN, _("Nobody selected\n") );
-		return false;
+		return qfalse;
 	}
 
 /*	if ( blockEvents )
 	{
 		Com_Printf( "Can't do that right now.\n" );
-		return false;
+		return qfalse;
 	}
 */
 	if ( cls.team != cl.actTeam )
 	{
 		Com_Printf( "This isn't your round.\n");
 		Com_sprintf( infoText, MAX_MENUTEXTLEN, _("This isn't your round\n") );
-		return false;
+		return qfalse;
 	}
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -683,7 +683,7 @@ int CL_TraceMove( pos3_t to )
 	pos3_t	pos;
 	int		dv;
 
-	length = Grid_MoveLength( &clMap, to, false );
+	length = Grid_MoveLength( &clMap, to, qfalse );
 
 	if ( !selActor || !length || length >= 0x3F )
 		return 0;
@@ -693,7 +693,7 @@ int CL_TraceMove( pos3_t to )
 
 	while ( (dv = Grid_MoveNext( &clMap, pos )) < 0xFF )
 	{
-		length = Grid_MoveLength( &clMap, pos, false );
+		length = Grid_MoveLength( &clMap, pos, qfalse );
 		PosAddDV( pos, dv );
 		Grid_PosToVec( &clMap, pos, vec );
 		if ( length > selActor->TU )
@@ -719,7 +719,7 @@ void CL_ActorStartMove( le_t *le, pos3_t to )
 	if ( !CL_CheckAction() )
 		return;
 
-	length = Grid_MoveLength( &clMap, to, false );
+	length = Grid_MoveLength( &clMap, to, qfalse );
 
 	if ( !length || length >= 0xFF )
 	{
@@ -860,7 +860,7 @@ void CL_ActorDoMove( sizebuf_t *sb )
 	// FIXME: speed should somehow depend on strength of character
 	if ( le->state & STATE_CROUCHED ) le->speed = 50;
 	else le->speed = 100;
-	blockEvents = true;
+	blockEvents = qtrue;
 }
 
 
@@ -1006,7 +1006,7 @@ void CL_ActorDoShoot( sizebuf_t *sb )
 	// start the sound
 	if ( (!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED) )
 		S_StartLocalSound( fd->fireSound );
-	firstShot = false;
+	firstShot = qfalse;
 
 	// do actor related stuff
 	if ( !le ) return;
@@ -1044,7 +1044,7 @@ void CL_ActorDoThrow( sizebuf_t *sb )
 	// start the sound
 	if ( (!fd->soundOnce || firstShot) && fd->fireSound[0] )
 		S_StartLocalSound( fd->fireSound );
-	firstShot = false;
+	firstShot = qfalse;
 }
 
 
@@ -1072,7 +1072,7 @@ void CL_ActorStartShoot( sizebuf_t *sb )
 		CL_CameraRoute( from, target );
 
 	// first shot
-	firstShot = true;
+	firstShot = qtrue;
 
 	// actor dependant stuff following
 	if ( !le ) return;
@@ -1364,7 +1364,7 @@ void CL_ActorMouseTrace( void )
 	if ( selActor && !VectorCompare( mousePos, mouseLastPos ) )
 	{
 		VectorCopy( mousePos, mouseLastPos );
-		actorMoveLength = Grid_MoveLength( &clMap, mousePos, false );
+		actorMoveLength = Grid_MoveLength( &clMap, mousePos, qfalse );
 		if ( selActor->state & STATE_CROUCHED ) actorMoveLength *= 1.5;
 	}
 
@@ -1448,7 +1448,7 @@ qboolean CL_AddActor( le_t *le, entity_t *ent )
 		}
 	}
 
-	return true;
+	return qtrue;
 }
 
 

@@ -439,7 +439,7 @@ int	SmallestNode (void)
 	if (bestnode == -1)
 		return -1;
 
-	hnodes[bestnode].used = true;
+	hnodes[bestnode].used = qtrue;
 	return bestnode;
 }
 
@@ -794,7 +794,7 @@ int	SmallestNode1 (hnode_t *hnodes, int numhnodes)
 	if (bestnode == -1)
 		return -1;
 
-	hnodes[bestnode].used = true;
+	hnodes[bestnode].used = qtrue;
 	return bestnode;
 }
 
@@ -1104,7 +1104,7 @@ void Cmd_Video (void)
 	int		swap;
 
 
-	GetToken (false);
+	GetToken (qfalse);
 	strcpy (base, token);
 	if (g_release)
 	{
@@ -1113,13 +1113,13 @@ void Cmd_Video (void)
 		return;
 	}
 
-	GetToken (false);
+	GetToken (qfalse);
 	digits = atoi(token);
 
 	// optionally skip frames
 	if (TokenAvailable ())
 	{
-		GetToken (false);
+		GetToken (qfalse);
 		startframe = atoi(token);
 	}
 	else

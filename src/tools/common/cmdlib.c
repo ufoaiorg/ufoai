@@ -134,7 +134,7 @@ void Error (char *error, ...)
 #endif
 
 // only printf if in verbose mode
-qboolean verbose = false;
+qboolean verbose = qfalse;
 void qprintf (char *format, ...)
 {
 	va_list argptr;
@@ -349,7 +349,7 @@ skipwhite:
 	{
 		if (c == 0)
 		{
-			com_eof = true;
+			com_eof = qtrue;
 			return NULL;			// end of file;
 		}
 		data++;
@@ -564,9 +564,9 @@ qboolean	FileExists (char *filename)
 
 	f = fopen (filename, "r");
 	if (!f)
-		return false;
+		return qfalse;
 	fclose (f);
-	return true;
+	return qtrue;
 }
 
 /*

@@ -65,7 +65,7 @@ void PairEdges (void)
 			{
 				// determine if coplanar
 				if (e->faces[0]->planenum == e->faces[1]->planenum)
-					e->coplanar = true;
+					e->coplanar = qtrue;
 			}
 		}
 	}
@@ -351,10 +351,10 @@ qboolean PointInTriangle (vec3_t point, triangle_t *t)
 		e = t->edges[i];
 		d = DotProduct (e->normal, point) - e->dist;
 		if (d < 0)
-			return false;	// not inside
+			return qfalse;	// not inside
 	}
 
-	return true;
+	return qtrue;
 }
 
 /*

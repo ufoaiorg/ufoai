@@ -144,7 +144,7 @@ void ProcessModels (void)
 			ProcessSubModel ();
 
 		if (!verboseentities)
-			verbose = false;	// don't bother printing submodels
+			verbose = qfalse;	// don't bother printing submodels
 	}
 
 	EndBSPFile ();
@@ -173,82 +173,82 @@ int main (int argc, char **argv)
 		}
 		else if (!strcmp(argv[i],"-glview"))
 		{
-			glview = true;
+			glview = qtrue;
 		}
 		else if (!strcmp(argv[i], "-v"))
 		{
 			printf ("verbose = true\n");
-			verbose = true;
+			verbose = qtrue;
 		}
 		else if (!strcmp(argv[i], "-draw"))
 		{
 			printf ("drawflag = true\n");
-			drawflag = true;
+			drawflag = qtrue;
 		}
 		else if (!strcmp(argv[i], "-noweld"))
 		{
 			printf ("noweld = true\n");
-			noweld = true;
+			noweld = qtrue;
 		}
 		else if (!strcmp(argv[i], "-nocsg"))
 		{
 			printf ("nocsg = true\n");
-			nocsg = true;
+			nocsg = qtrue;
 		}
 		else if (!strcmp(argv[i], "-noshare"))
 		{
 			printf ("noshare = true\n");
-			noshare = true;
+			noshare = qtrue;
 		}
 		else if (!strcmp(argv[i], "-notjunc"))
 		{
 			printf ("notjunc = true\n");
-			notjunc = true;
+			notjunc = qtrue;
 		}
 		else if (!strcmp(argv[i], "-nowater"))
 		{
 			printf ("nowater = true\n");
-			nowater = true;
+			nowater = qtrue;
 		}
 		else if (!strcmp(argv[i], "-noopt"))
 		{
 			printf ("noopt = true\n");
-			noopt = true;
+			noopt = qtrue;
 		}
 		else if (!strcmp(argv[i], "-noprune"))
 		{
 			printf ("noprune = true\n");
-			noprune = true;
+			noprune = qtrue;
 		}
 		else if (!strcmp(argv[i], "-nofill"))
 		{
 			printf ("nofill = true\n");
-			nofill = true;
+			nofill = qtrue;
 		}
 		else if (!strcmp(argv[i], "-nomerge"))
 		{
 			printf ("nomerge = true\n");
-			nomerge = true;
+			nomerge = qtrue;
 		}
 		else if (!strcmp(argv[i], "-nosubdiv"))
 		{
 			printf ("nosubdiv = true\n");
-			nosubdiv = true;
+			nosubdiv = qtrue;
 		}
 		else if (!strcmp(argv[i], "-nodetail"))
 		{
 			printf ("nodetail = true\n");
-			nodetail = true;
+			nodetail = qtrue;
 		}
 		else if (!strcmp(argv[i], "-fulldetail"))
 		{
 			printf ("fulldetail = true\n");
-			fulldetail = true;
+			fulldetail = qtrue;
 		}
 		else if (!strcmp(argv[i], "-onlyents"))
 		{
 			printf ("onlyents = true\n");
-			onlyents = true;
+			onlyents = qtrue;
 		}
 		else if (!strcmp(argv[i], "-micro"))
 		{
@@ -259,12 +259,12 @@ int main (int argc, char **argv)
 		else if (!strcmp(argv[i], "-leaktest"))
 		{
 			printf ("leaktest = true\n");
-			leaktest = true;
+			leaktest = qtrue;
 		}
 		else if (!strcmp(argv[i], "-verboseentities"))
 		{
 			printf ("verboseentities = true\n");
-			verboseentities = true;
+			verboseentities = qtrue;
 		}
 		else if (!strcmp(argv[i], "-chop"))
 		{
@@ -296,12 +296,12 @@ int main (int argc, char **argv)
 		else if (!strcmp (argv[i],"-norouting"))
 		{
 			printf ("norouting = true\n");
-			norouting = true;
+			norouting = qtrue;
 		}
 		else if (!strcmp(argv[i], "-nobackclip"))
 		{
 			printf ("nobackclip = true\n");
-			nobackclip = true;
+			nobackclip = qtrue;
 		}
 		else if (argv[i][0] == '-')
 			Error ("Unknown option \"%s\"", argv[i]);

@@ -483,7 +483,7 @@ void	LoadBSPFile (char *filename)
 //
 // swap everything
 //	
-	SwapBSPFile (false);
+	SwapBSPFile (qfalse);
 }
 
 
@@ -526,7 +526,7 @@ void	LoadBSPFileTexinfo (char *filename)
 
 	free (header);		// everything has been copied out
 		
-	SwapBSPFile (false);
+	SwapBSPFile (qfalse);
 }
 
 
@@ -558,7 +558,7 @@ void	WriteBSPFile (char *filename)
 	header = &outheader;
 	memset (header, 0, sizeof(dheader_t));
 	
-	SwapBSPFile (true);
+	SwapBSPFile (qtrue);
 
 	header->ident = LittleLong (IDBSPHEADER);
 	header->version = LittleLong (BSPVERSION);
@@ -673,7 +673,7 @@ epair_t *ParseEpair (void)
 	if (strlen(token) >= MAX_KEY-1)
 		Error ("ParseEpar: token too long");
 	e->key = copystring(token);
-	GetToken (false);
+	GetToken (qfalse);
 	if (strlen(token) >= MAX_VALUE-1)
 		Error ("ParseEpar: token too long");
 	e->value = copystring(token);
@@ -696,8 +696,8 @@ qboolean	ParseEntity (void)
 	epair_t		*e;
 	entity_t	*mapent;
 
-	if (!GetToken (true))
-		return false;
+	if (!GetToken (qtrue))
+		return qfalse;
 
 	if (strcmp (token, "{") )
 		Error ("ParseEntity: { not found");
@@ -710,7 +710,7 @@ qboolean	ParseEntity (void)
 
 	do
 	{
-		if (!GetToken (true))
+		if (!GetToken (qtrue))
 			Error ("ParseEntity: EOF without closing brace");
 		if (!strcmp (token, "}") )
 			break;
@@ -719,7 +719,7 @@ qboolean	ParseEntity (void)
 		mapent->epairs = e;
 	} while (1);
 	
-	return true;
+	return qtrue;
 }
 
 /*

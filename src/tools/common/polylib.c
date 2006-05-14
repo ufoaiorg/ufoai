@@ -550,12 +550,12 @@ void CheckWinding (winding_t *w)
 
 		j = i+1 == w->numpoints ? 0 : i+1;
 		
-	// check the point is on the face plane
+		// check the point is on the face plane
 		d = DotProduct (p1, facenormal) - facedist;
 		if (d < -ON_EPSILON || d > ON_EPSILON)
 			Error ("CheckWinding: point off plane");
 	
-	// check the edge isnt degenerate
+		// check the edge isnt degenerate
 		p2 = w->p[j];
 		VectorSubtract (p2, p1, dir);
 		
@@ -567,7 +567,7 @@ void CheckWinding (winding_t *w)
 		edgedist = DotProduct (p1, edgenormal);
 		edgedist += ON_EPSILON;
 		
-	// all other points must be on front side
+		// all other points must be on front side
 		for (j=0 ; j<w->numpoints ; j++)
 		{
 			if (j == i)
@@ -591,8 +591,8 @@ int		WindingOnPlaneSide (winding_t *w, vec3_t normal, vec_t dist)
 	int			i;
 	vec_t		d;
 
-	front = false;
-	back = false;
+	front = qfalse;
+	back = qfalse;
 	for (i=0 ; i<w->numpoints ; i++)
 	{
 		d = DotProduct (w->p[i], normal) - dist;
@@ -600,14 +600,14 @@ int		WindingOnPlaneSide (winding_t *w, vec3_t normal, vec_t dist)
 		{
 			if (front)
 				return SIDE_CROSS;
-			back = true;
+			back = qtrue;
 			continue;
 		}
 		if (d > ON_EPSILON)
 		{
 			if (back)
 				return SIDE_CROSS;
-			front = true;
+			front = qtrue;
 			continue;
 		}
 	}

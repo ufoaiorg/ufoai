@@ -61,24 +61,24 @@ qboolean ALSA_SNDDMA_Init(struct sndinfo *si)
 
 	if((err = snd_pcm_open(&pcm_handle, snddevice->string, SND_PCM_STREAM_PLAYBACK, SND_PCM_NONBLOCK)) < 0){
 		Com_Printf("ALSA: cannot open device %s(%s)\n", snddevice->string, snd_strerror(err) );
-		return false;
+		return qfalse;
 	}
 
 	if((err = snd_pcm_hw_params_malloc(&hw_params)) < 0){
 		Com_Printf("ALSA: cannot allocate hw params(%s)\n", snd_strerror(err));
-		return false;
+		return qfalse;
 	}
 
 	if((err = snd_pcm_hw_params_any(pcm_handle, hw_params)) < 0){
 		Com_Printf("ALSA: cannot init hw params(%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
-		return false;
+		return qfalse;
 	}
 
 	if((err = snd_pcm_hw_params_set_access(pcm_handle, hw_params, SND_PCM_ACCESS_RW_INTERLEAVED)) < 0){
 		Com_Printf("ALSA: cannot set access(%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
-		return false;
+		return qfalse;
 	}
 
 	dma.samplebits = (int)sndbits->value;
@@ -94,7 +94,7 @@ qboolean ALSA_SNDDMA_Init(struct sndinfo *si)
 		if((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params, SND_PCM_FORMAT_U8)) < 0){
 			Com_Printf("ALSA: cannot set format(%s)\n", snd_strerror(err));
 			snd_pcm_hw_params_free(hw_params);
-			return false;
+			return qfalse;
 		}
 	}
 
@@ -128,7 +128,7 @@ qboolean ALSA_SNDDMA_Init(struct sndinfo *si)
 	if(!dma.speed){  //failed
 		Com_Printf("ALSA: cannot set rate\n");
 		snd_pcm_hw_params_free(hw_params);
-		return false;
+		return qfalse;
 	}
 
 	dma.channels = sndchannels->value;
@@ -138,14 +138,14 @@ qboolean ALSA_SNDDMA_Init(struct sndinfo *si)
 	if((err = snd_pcm_hw_params_set_channels(pcm_handle, hw_params, dma.channels)) < 0){
 		Com_Printf("ALSA: cannot set channels %d(%s)\n", sndchannels->value, snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
-		return false;
+		return qfalse;
 	}
 
 	p = BUFFER_SAMPLES / dma.channels;
 	if((err = snd_pcm_hw_params_set_period_size_near(pcm_handle, hw_params, &p, &dir)) < 0){
 		Com_Printf("ALSA: cannot set period size (%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
-		return false;
+		return qfalse;
 	}
 	else {  //rate succeeded, but is perhaps slightly different
 		if(dir != 0)
@@ -155,7 +155,7 @@ qboolean ALSA_SNDDMA_Init(struct sndinfo *si)
 	if((err = snd_pcm_hw_params(pcm_handle, hw_params)) < 0){  //set params
 		Com_Printf("ALSA: cannot set params(%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
-		return false;
+		return qfalse;
 	}
 
 	sample_bytes = dma.samplebits / 8;
@@ -171,7 +171,7 @@ qboolean ALSA_SNDDMA_Init(struct sndinfo *si)
 
 	snd_pcm_prepare(pcm_handle);
 
-	return true;
+	return qtrue;
 }
 
 /*

@@ -141,7 +141,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 	workcount = workcnt;
 	oldf = -1;
 	pacifier = showpacifier;
-	threaded = true;
+	threaded = qtrue;
 
 	//
 	// run threads in parallel
@@ -170,7 +170,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 	}
 	DeleteCriticalSection (&crit);
 
-	threaded = false;
+	threaded = qfalse;
 	end = I_FloatTime ();
 	if (pacifier)
 		printf (" (%i)\n", end-start);
@@ -237,7 +237,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 	workcount = workcnt;
 	oldf = -1;
 	pacifier = showpacifier;
-	threaded = true;
+	threaded = qtrue;
 
 	if (pacifier)
 		setbuf (stdout, NULL);
@@ -271,7 +271,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 			Error ("pthread_join failed");
 	}
 
-	threaded = false;
+	threaded = qfalse;
 
 	end = I_FloatTime ();
 	if (pacifier)
@@ -338,7 +338,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 	workcount = workcnt;
 	oldf = -1;
 	pacifier = showpacifier;
-	threaded = true;
+	threaded = qtrue;
 
 	if (pacifier)
 		setbuf (stdout, NULL);
@@ -363,7 +363,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 	for (i=0 ; i<numthreads-1 ; i++)
 		wait (NULL);
 
-	threaded = false;
+	threaded = qfalse;
 
 	end = I_FloatTime ();
 	if (pacifier)

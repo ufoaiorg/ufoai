@@ -179,7 +179,7 @@ build (default.cfg, maps, etc)
 */
 void Cmd_File (void)
 {
-	GetToken (false);
+	GetToken (qfalse);
 	ReleaseFile (token);
 }
 
@@ -282,7 +282,7 @@ release build (sounds, etc)
 */
 void Cmd_Dir (void)
 {
-	GetToken (false);
+	GetToken (qfalse);
 	PackDirectory_r (token);	
 }
 
@@ -327,7 +327,7 @@ void Cmd_Maps (void)
 
 	while (TokenAvailable ())
 	{
-		GetToken (false);
+		GetToken (qfalse);
 		sprintf (map, "maps/%s.bsp", token);
 		ReleaseFile (map);
 
@@ -356,13 +356,13 @@ void ParseScript (void)
 	{
 		do
 		{	// look for a line starting with a $ command
-			GetToken (true);
+			GetToken (qtrue);
 			if (endofscript)
 				return;
 			if (token[0] == '$')
 				break;				
 			while (TokenAvailable())
-				GetToken (false);
+				GetToken (qfalse);
 		} while (1);
 	
 		//
@@ -452,27 +452,27 @@ int main (int argc, char **argv)
 		if (!strcmp(argv[i], "-archive"))
 		{
 			// -archive f:/quake2/release/dump_11_30
-			archive = true;
+			archive = qtrue;
 			strcpy (archivedir, argv[i+1]);
 			printf ("Archiving source to: %s\n", archivedir);
 			i++;
 		}
 		else if (!strcmp(argv[i], "-release"))
 		{
-			g_release = true;
+			g_release = qtrue;
 			strcpy (g_releasedir, argv[i+1]);
 			printf ("Copy output to: %s\n", g_releasedir);
 			i++;
 		}
 		else if (!strcmp(argv[i], "-compress"))
 		{
-			g_compress_pak = true;
+			g_compress_pak = qtrue;
 			printf ("Compressing pakfile\n");
 		}
 		else if (!strcmp(argv[i], "-pak"))
 		{
-			g_release = true;
-			g_pak = true;
+			g_release = qtrue;
+			g_pak = qtrue;
 			printf ("Building pakfile: %s\n", argv[i+1]);
 			BeginPak (argv[i+1]);
 			i++;
@@ -485,7 +485,7 @@ int main (int argc, char **argv)
 		}
 		else if (!strcmp(argv[i], "-3ds"))
 		{
-			do3ds = true;
+			do3ds = qtrue;
 			printf ("loading .3ds files\n");
 		}
 		else if (argv[i][0] == '-')

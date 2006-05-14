@@ -65,7 +65,7 @@ qboolean SNDDMA_Init(void)
 	Com_Printf("Don't currently support %i-bit data.  Forcing 16-bit.\n",
 		   dma.samplebits);
 	dma.samplebits = 16;
-	Cvar_SetValue( "s_loadas8bit", false );
+	Cvar_SetValue( "s_loadas8bit", qfalse );
     }
 
     s_khz = Cvar_Get("s_khz", "0", CVAR_ARCHIVE);
@@ -139,7 +139,7 @@ qboolean SNDDMA_Init(void)
     dma.samplepos = 0;
 
     alFreeConfig( ac );
-    return true;
+    return qtrue;
 }
 
 

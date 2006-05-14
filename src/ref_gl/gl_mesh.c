@@ -277,7 +277,7 @@ static qboolean R_CullAliasModel( entity_t *e )
 	vec4_t		bbox[8];
 
 	if ( r_isometric->value )
-		return false;
+		return qfalse;
 
 	paliashdr = (dmdl_t *)currentmodel->extradata;
 
@@ -381,10 +381,10 @@ static qboolean R_CullAliasModel( entity_t *e )
 
 		if ( aggregatemask )
 		{
-			return true;
+			return qtrue;
 		}
 
-		return false;
+		return qfalse;
 	}
 }
 
@@ -550,7 +550,7 @@ void R_DrawAliasModel (entity_t *e)
 	//
 	// set-up lighting
 	//
-	lightfixed = e->flags & RF_LIGHTFIXED ? true : false;
+	lightfixed = e->flags & RF_LIGHTFIXED ? qtrue : qfalse;
 	if ( lightfixed )  R_EnableLights( lightfixed, e->lightcolor, e->lightparam, e->lightambient );
 	else R_EnableLights( lightfixed, trafo[e - r_newrefdef.entities].matrix, e->lightparam, NULL );
 

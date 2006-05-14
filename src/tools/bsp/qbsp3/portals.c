@@ -96,13 +96,13 @@ qboolean Portal_VisFlood (portal_t *p)
 	int		c1, c2;
 
 	if (!p->onnode)
-		return false;	// to global outsideleaf
+		return qfalse;	// to global outsideleaf
 
 	c1 = ClusterContents(p->nodes[0]);
 	c2 = ClusterContents(p->nodes[1]);
 
 	if (!VisibleContents (c1^c2))
-		return true;
+		return qtrue;
 
 	if (c1 & (CONTENTS_TRANSLUCENT|CONTENTS_DETAIL))
 		c1 = 0;
@@ -110,14 +110,14 @@ qboolean Portal_VisFlood (portal_t *p)
 		c2 = 0;
 
 	if ( (c1|c2) & CONTENTS_SOLID )
-		return false;		// can't see through solid
+		return qfalse;		// can't see through solid
 
 	if (! (c1 ^ c2))
-		return true;		// identical on both sides
+		return qtrue;		// identical on both sides
 
 	if (!VisibleContents (c1^c2))
-		return true;
-	return false;
+		return qtrue;
+	return qfalse;
 }
 
 
@@ -139,10 +139,10 @@ qboolean Portal_EntityFlood (portal_t *p, int s)
 	// can never cross to a solid 
 	if ( (p->nodes[0]->contents & CONTENTS_SOLID)
 	|| (p->nodes[1]->contents & CONTENTS_SOLID) )
-		return false;
+		return qfalse;
 
 	// can flood through everything else
-	return true;
+	return qtrue;
 }
 
 
@@ -623,12 +623,12 @@ qboolean PlaceOccupant (node_t *headnode, vec3_t origin, entity_t *occupant)
 	}
 
 	if (node->contents == CONTENTS_SOLID)
-		return false;
+		return qfalse;
 	node->occupant = occupant;
 
 	FloodPortals_r (node, 1);
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -648,7 +648,7 @@ qboolean FloodEntities (tree_t *tree)
 
 	headnode = tree->headnode;
 	qprintf ("--- FloodEntities ---\n");
-	inside = false;
+	inside = qfalse;
 	tree->outside_node.occupied = 0;
 
 	for (i=1 ; i<num_entities ; i++)
@@ -674,7 +674,7 @@ qboolean FloodEntities (tree_t *tree)
 					origin[1] += y;
 					if (PlaceOccupant (headnode, origin, &entities[i]))
 					{
-						inside = true;
+						inside = qtrue;
 						goto gotit;
 					}
 					origin[0] -= x;
@@ -686,7 +686,7 @@ gotit: ;
 		else
 		{
 			if (PlaceOccupant (headnode, origin, &entities[i]))
-				inside = true;
+				inside = qtrue;
 		}
 	}
 
@@ -1020,7 +1020,7 @@ gotit:
 	if (!bestside)
 		qprintf ("WARNING: side not found for portal\n");
 
-	p->sidefound = true;
+	p->sidefound = qtrue;
 	p->side = bestside;
 }
 
@@ -1056,7 +1056,7 @@ void MarkVisibleSides_r (node_t *node)
 		if (!p->sidefound)
 			FindPortalSide (p);
 		if (p->side)
-			p->side->visible = true;
+			p->side->visible = qtrue;
 	}
 
 }
@@ -1083,7 +1083,7 @@ void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
 
 		numsides = mb->numsides;
 		for (j=0 ; j<numsides ; j++)
-			mb->original_sides[j].visible = false;
+			mb->original_sides[j].visible = qfalse;
 	}
 
 	// set visible flags on the sides that are used by portals

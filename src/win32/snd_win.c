@@ -40,7 +40,7 @@ cvar_t	*s_wavonly;
 
 static qboolean	dsound_init;
 static qboolean	wav_init;
-static qboolean	snd_firsttime = true, snd_isdirect, snd_iswave;
+static qboolean	snd_firsttime = qtrue, snd_isdirect, snd_iswave;
 static qboolean	primary_format_set;
 
 // starts at 0 for disabled
@@ -123,7 +123,7 @@ static qboolean DS_CreateBuffers( void )
 	{
 		Com_Printf ("failed\n");
 		FreeSound ();
-		return false;
+		return qfalse;
 	}
 	Com_DPrintf("ok\n" );
 
@@ -137,7 +137,7 @@ static qboolean DS_CreateBuffers( void )
 
 	memset(&dsbcaps, 0, sizeof(dsbcaps));
 	dsbcaps.dwSize = sizeof(dsbcaps);
-	primary_format_set = false;
+	primary_format_set = qfalse;
 
 	Com_DPrintf( "...creating primary buffer: " );
 	if (DS_OK == pDS->lpVtbl->CreateSoundBuffer(pDS, &dsbuf, &pDSPBuf, NULL))
@@ -155,7 +155,7 @@ static qboolean DS_CreateBuffers( void )
 			if (snd_firsttime)
 				Com_DPrintf ("...setting primary sound format: ok\n");
 
-			primary_format_set = true;
+			primary_format_set = qtrue;
 		}
 	}
 	else
@@ -178,7 +178,7 @@ static qboolean DS_CreateBuffers( void )
 		{
 			Com_Printf( "failed\n" );
 			FreeSound ();
-			return false;
+			return qfalse;
 		}
 		Com_DPrintf( "ok\n" );
 
@@ -190,7 +190,7 @@ static qboolean DS_CreateBuffers( void )
 		{
 			Com_Printf ("*** GetCaps failed ***\n");
 			FreeSound ();
-			return false;
+			return qfalse;
 		}
 
 		Com_Printf ("...using secondary sound buffer\n");
@@ -204,14 +204,14 @@ static qboolean DS_CreateBuffers( void )
 		{
 			Com_Printf( "failed\n" );
 			FreeSound ();
-			return false;
+			return qfalse;
 		}
 		Com_DPrintf( "ok\n" );
 
 		if (DS_OK != pDSPBuf->lpVtbl->GetCaps (pDSPBuf, &dsbcaps))
 		{
 			Com_Printf ("*** GetCaps failed ***\n");
-			return false;
+			return qfalse;
 		}
 
 		pDSBuf = pDSPBuf;
@@ -221,10 +221,7 @@ static qboolean DS_CreateBuffers( void )
 	pDSBuf->lpVtbl->Play(pDSBuf, 0, 0, DSBPLAY_LOOPING);
 
 	if (snd_firsttime)
-		Com_Printf("   %d channel(s)\n"
-		               "   %d bits/sample\n"
-					   "   %d bytes/sec\n",
-					   dma.channels, dma.samplebits, dma.speed);
+		Com_Printf("   %d channel(s)\n   %d bits/sample\n   %d bytes/sec\n", dma.channels, dma.samplebits, dma.speed);
 
 	gSndBufSize = dsbcaps.dwBufferBytes;
 
@@ -241,7 +238,7 @@ static qboolean DS_CreateBuffers( void )
 	dma.buffer = (unsigned char *) lpData;
 	sample16 = (dma.samplebits/8) - 1;
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -341,8 +338,8 @@ void FreeSound (void)
 	hWaveHdr = 0;
 	lpData = NULL;
 	lpWaveHdr = NULL;
-	dsound_init = false;
-	wav_init = false;
+	dsound_init = qfalse;
+	wav_init = qfalse;
 }
 
 /*
@@ -429,7 +426,7 @@ sndinitstat SNDDMA_InitDirect (void)
 	if ( !DS_CreateBuffers() )
 		return SIS_FAILURE;
 
-	dsound_init = true;
+	dsound_init = qtrue;
 
 	Com_DPrintf("...completed successfully\n" );
 
@@ -470,32 +467,27 @@ qboolean SNDDMA_InitWav (void)
 	format.nChannels = dma.channels;
 	format.wBitsPerSample = dma.samplebits;
 	format.nSamplesPerSec = dma.speed;
-	format.nBlockAlign = format.nChannels
-		*format.wBitsPerSample / 8;
+	format.nBlockAlign = format.nChannels * format.wBitsPerSample / 8;
 	format.cbSize = 0;
-	format.nAvgBytesPerSec = format.nSamplesPerSec
-		*format.nBlockAlign;
+	format.nAvgBytesPerSec = format.nSamplesPerSec * format.nBlockAlign;
 
 	/* Open a waveform device for output using window callback. */
 	Com_DPrintf ("...opening waveform device: ");
-	while ((hr = waveOutOpen((LPHWAVEOUT)&hWaveOut, WAVE_MAPPER,
-					&format,
-					0, 0L, CALLBACK_NULL)) != MMSYSERR_NOERROR)
+	while ((hr = waveOutOpen((LPHWAVEOUT)&hWaveOut, WAVE_MAPPER, &format, 0, 0L, CALLBACK_NULL)) != MMSYSERR_NOERROR)
 	{
 		if (hr != MMSYSERR_ALLOCATED)
 		{
 			Com_Printf ("failed\n");
-			return false;
+			return qfalse;
 		}
 
-		if (MessageBox (NULL,
-						"The sound hardware is in use by another app.\n\n"
-					    "Select Retry to try to start sound again or Cancel to run Quake 2 with no sound.",
-						"Sound not available",
-						MB_RETRYCANCEL | MB_SETFOREGROUND | MB_ICONEXCLAMATION) != IDRETRY)
+		if (MessageBox (NULL, "The sound hardware is in use by another app.\n\n"
+			"Select Retry to try to start sound again or Cancel to run Quake 2 with no sound.",
+			"Sound not available",
+			MB_RETRYCANCEL | MB_SETFOREGROUND | MB_ICONEXCLAMATION) != IDRETRY)
 		{
 			Com_Printf ("hw in use\n" );
-			return false;
+			return qfalse;
 		}
 	}
 	Com_DPrintf( "ok\n" );
@@ -513,7 +505,7 @@ qboolean SNDDMA_InitWav (void)
 	{
 		Com_Printf( " failed\n" );
 		FreeSound ();
-		return false;
+		return qfalse;
 	}
 	Com_DPrintf( "ok\n" );
 
@@ -523,7 +515,7 @@ qboolean SNDDMA_InitWav (void)
 	{
 		Com_Printf( " failed\n" );
 		FreeSound ();
-		return false;
+		return qfalse;
 	}
 	memset (lpData, 0, gSndBufSize);
 	Com_DPrintf( "ok\n" );
@@ -541,7 +533,7 @@ qboolean SNDDMA_InitWav (void)
 	{
 		Com_Printf( "failed\n" );
 		FreeSound ();
-		return false;
+		return qfalse;
 	}
 	Com_DPrintf( "ok\n" );
 
@@ -552,7 +544,7 @@ qboolean SNDDMA_InitWav (void)
 	{
 		Com_Printf( "failed\n" );
 		FreeSound ();
-		return false;
+		return qfalse;
 	}
 	memset (lpWaveHdr, 0, sizeof(WAVEHDR) * WAV_BUFFERS);
 	Com_DPrintf( "ok\n" );
@@ -569,7 +561,7 @@ qboolean SNDDMA_InitWav (void)
 		{
 			Com_Printf ("failed\n");
 			FreeSound ();
-			return false;
+			return qfalse;
 		}
 	}
 	Com_DPrintf ("ok\n");
@@ -580,9 +572,9 @@ qboolean SNDDMA_InitWav (void)
 	dma.buffer = (unsigned char *) lpData;
 	sample16 = (dma.samplebits/8) - 1;
 
-	wav_init = true;
+	wav_init = qtrue;
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -614,23 +606,23 @@ qboolean SNDDMA_Init(struct sndinfo *s)
 
 			if (stat == SIS_SUCCESS)
 			{
-				snd_isdirect = true;
+				snd_isdirect = qtrue;
 
 				if (snd_firsttime)
 					Com_Printf ("dsound init succeeded\n" );
 			}
 			else
 			{
-				snd_isdirect = false;
+				snd_isdirect = qfalse;
 				Com_Printf ("*** dsound init failed ***\n");
 			}
 		}
 	}
 
-// if DirectSound didn't succeed in initializing, try to initialize
-// waveOut sound, unless DirectSound failed because the hardware is
-// already allocated (in which case the user has already chosen not
-// to have sound)
+	// if DirectSound didn't succeed in initializing, try to initialize
+	// waveOut sound, unless DirectSound failed because the hardware is
+	// already allocated (in which case the user has already chosen not
+	// to have sound)
 	if (!dsound_init && (stat != SIS_NOTAVAIL))
 	{
 		if (snd_firsttime || snd_iswave)
@@ -650,7 +642,7 @@ qboolean SNDDMA_Init(struct sndinfo *s)
 		}
 	}
 
-	snd_firsttime = false;
+	snd_firsttime = qfalse;
 
 	snd_buffer_count = 1;
 
@@ -912,7 +904,7 @@ qboolean SNDDMA_Init (struct sndinfo *s)
 	char drivername[128];
 
 	if (snd_inited)
-		return true;
+		return qtrue;
 
 	snd_inited = 0;
 
@@ -923,7 +915,7 @@ qboolean SNDDMA_Init (struct sndinfo *s)
 		if (SDL_Init(SDL_INIT_AUDIO) == -1)
 		{
 			Com_Printf("Couldn't init SDL audio: %s\n", SDL_GetError () );
-			return false;
+			return qfalse;
 		}
 	}
 
@@ -969,7 +961,7 @@ qboolean SNDDMA_Init (struct sndinfo *s)
 			break;
 		default:
 			Com_Printf ("Unknown number of audio bits: %d\n", desired_bits);
-			return false;
+			return qfalse;
 	}
 	desired.channels = (Cvar_Get("sndchannels", "2", CVAR_ARCHIVE))->value;
 	desired.callback = paint_audio;
@@ -984,7 +976,7 @@ qboolean SNDDMA_Init (struct sndinfo *s)
 	{
 		Com_Printf ("Couldn't open SDL audio - quitting soundsystem: %s\n", SDL_GetError ());
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
-		return false;
+		return qfalse;
 	}
 
 	/* Make sure we can support the audio format */
@@ -1010,7 +1002,7 @@ qboolean SNDDMA_Init (struct sndinfo *s)
 			if (SDL_OpenAudio (&desired, NULL) < 0)
 			{
 				Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
-				return false;
+				return qfalse;
 			}
 			memcpy (&obtained, &desired, sizeof (desired));
 			break;
@@ -1049,7 +1041,7 @@ qboolean SNDDMA_Init (struct sndinfo *s)
 
 	SDL_PauseAudio (0);
 	snd_inited = 1;
-	return true;
+	return qtrue;
 }
 
 int SNDDMA_GetDMAPos (void)

@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 qboolean SNDDMA_Init(void)
 {
-	return false;
+	return qfalse;
 }
 
 int	SNDDMA_GetDMAPos(void)

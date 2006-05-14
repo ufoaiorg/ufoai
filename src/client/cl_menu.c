@@ -397,9 +397,9 @@ qboolean Com_CheckShape( int shape[16], int x, int y )
 	int row = shape[y];
 	int position=pow(2, x);
 	if ((row & position) == 0)
-		return false;
+		return qfalse;
 	else
-		return true;
+		return qtrue;
 }
 
 /*
@@ -587,8 +587,8 @@ qboolean MN_MapToScreen( menuNode_t *node, vec2_t pos, int *x, int *y )
 	*x = node->pos[0] + 0.5*node->size[0] - sx * node->size[0] * ccs.zoom;
 	*y = node->pos[1] + 0.5*node->size[1] - (pos[1]/180 + ccs.center[1]-0.5) * node->size[1] * ccs.zoom;
 
-	if ( *x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0]+node->size[0] && *y > node->pos[1]+node->size[1] ) return false;
-	return true;
+	if ( *x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0]+node->size[0] && *y > node->pos[1]+node->size[1] ) return qfalse;
+	return qtrue;
 }
 
 
@@ -797,20 +797,20 @@ qboolean MN_CheckNodeZone( menuNode_t *node, int x, int y )
 	if ( node->type == MN_CONTAINER )
 	{
 		if ( node->mousefx == C_UNDEFINED ) MN_FindContainer( node );
-		if ( node->mousefx == NONE ) return false;
+		if ( node->mousefx == NONE ) return qfalse;
 
 		// check bounding box
 		if ( x < node->pos[0] || y < node->pos[1] || x > node->pos[0] + node->size[0] || y > node->pos[1] + node->size[1] )
-			return false;
+			return qfalse;
 
 		// found a container
-		return true;
+		return qtrue;
 	}
 
 	// check for click action
 	if ( node->invis || ( !node->click && !node->rclick && !node->mclick &&
 		!node->mouseIn && !node->mouseOut ) )
-		return false;
+		return qfalse;
 
 	// get the rectangle size out of the pic if necessary
 	if ( !node->size[0] || !node->size[1] )
@@ -823,7 +823,7 @@ qboolean MN_CheckNodeZone( menuNode_t *node, int x, int y )
 			} else
 				re.DrawGetPicSize( &sx, &sy, node->data[0] );
 		}
-		else return false;
+		else return qfalse;
 	}
 	else
 	{
@@ -836,11 +836,11 @@ qboolean MN_CheckNodeZone( menuNode_t *node, int x, int y )
 	ty = y - node->pos[1];
 
 	if ( tx < 0 || ty < 0 || tx > sx || ty > sy )
-		return false;
+		return qfalse;
 
 	// on the node
 	if ( node->type == MN_TEXT ) return (int)(ty / node->texh[0]) + 1;
-	else return true;
+	else return qtrue;
 }
 
 
@@ -864,18 +864,18 @@ qboolean MN_CursorOnMenu( int x, int y )
 			if ( MN_CheckNodeZone( node, x, y ) )
 			{
 				// found an element
-				return true;
+				return qtrue;
 			}
 
 		if ( menu->renderNode )
 		{
 			// don't care about non-rendered windows
-			if ( menu->renderNode->invis ) return true;
-			else return false;
+			if ( menu->renderNode->invis ) return qtrue;
+			else return qfalse;
 		}
 	}
 
-	return false;
+	return qfalse;
 }
 
 
@@ -1043,7 +1043,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 			{
 				mapAction = MA_BASEATTACK;
 				// we need no dropship in our base
-				selMis->def->active = true;
+				selMis->def->active = qtrue;
 			}
 			else
 			{
@@ -1360,7 +1360,7 @@ void MN_DrawItem( vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 		// draw the image
 		// fix fixed size
 		re.DrawNormPic( org[0] + C_UNIT/2.0*sx + C_UNIT*x, org[1] + C_UNIT/2.0*sy + C_UNIT*y,
-			80, 80, 0, 0, 0, 0, ALIGN_CC, true, od->image );
+			80, 80, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image );
 	}
 	else if ( od->model[0] )
 	{
@@ -1484,16 +1484,16 @@ void MN_DrawMapMarkers( menuNode_t *node )
 		ms = &ccs.mission[i];
 		if ( !MN_MapToScreen( node, ms->realPos, &x, &y ) )
 			continue;
-		re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, "cross" );
+		re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross" );
 		if ( ms == selMis )
 		{
 			menuText[TEXT_STANDARD] = ms->def->text;
 			if ( selMis->def->active )
 			{
-				re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "circleactive" );
+				re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circleactive" );
 			}
 			else
-				re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "circle" );
+				re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle" );
 
 			if ( CL_MapIsNight( ms->realPos ) ) Cvar_Set( "mn_mapdaytime", _("Night") );
 			else Cvar_Set( "mn_mapdaytime", _("Day") );
@@ -1506,7 +1506,7 @@ void MN_DrawMapMarkers( menuNode_t *node )
 		{
 			if ( !MN_MapToScreen( node, bmBases[j].pos, &x, &y ) )
 				continue;
-			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, "base" );
+			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base" );
 		}
 
 	// draw aircraft
@@ -1518,7 +1518,7 @@ void MN_DrawMapMarkers( menuNode_t *node )
 				{
 					if ( !MN_MapToScreen( node, air->pos, &x, &y ) )
 						continue;
-					re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, air->image );
+					re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, air->image );
 
 					if ( air->status >= AIR_TRANSIT )
 					{
@@ -1593,7 +1593,7 @@ void MN_PrecacheMenus( void )
 				if ( !ref )
 				{
 					// bad reference
-					node->invis = true;
+					node->invis = qtrue;
 					Com_Printf( "MN_PrecacheMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data );
 					continue;
 				}
@@ -1713,7 +1713,7 @@ void MN_DrawMenus( void )
 					if ( !ref )
 					{
 						// bad reference
-						node->invis = true;
+						node->invis = qtrue;
 						Com_Printf( "MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data );
 						continue;
 					}
@@ -2163,7 +2163,7 @@ void MN_DrawMenus( void )
 				} // switch
 
 				// mouseover?
-				if ( node->state == true )
+				if ( node->state == qtrue )
 					menu->hoverNode = node;
 			} // if
 		} // for
@@ -2289,12 +2289,12 @@ void MN_PopMenu( qboolean all )
 void MN_PopMenu_f( void )
 {
 	if ( Cmd_Argc() < 2 || Q_strncmp( Cmd_Argv(1), "esc", 3 ) )
-		MN_PopMenu( false );
+		MN_PopMenu( qfalse );
 	else
 	{
 		int i;
 		for ( i = 0; i < (int)mn_escpop->value; i++ )
-			MN_PopMenu( false );
+			MN_PopMenu( qfalse );
 		Cvar_Set( "mn_escpop", "1" );
 	}
 }
@@ -2362,7 +2362,7 @@ void MN_ModifyString_f( void )
 	list = Cmd_Argv(3);
 	last[0] = 0;
 	first[0] = 0;
-	next = false;
+	next = qfalse;
 
 	while ( add )
 	{
@@ -2394,7 +2394,7 @@ void MN_ModifyString_f( void )
 				else Cvar_Set( Cmd_Argv(1), first );
 				return;
 			}
-			else next = true;
+			else next = qtrue;
 		}
 		Q_strncpyz( last, token, MAX_VAR );
 	}
@@ -2418,7 +2418,7 @@ void MN_Translate_f( void )
 
 	current = Cvar_VariableString( Cmd_Argv(1) );
 	list = Cmd_Argv(3);
-	next = false;
+	next = qfalse;
 
 	while ( *list )
 	{
@@ -2549,12 +2549,12 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 	{
 		// get new token
 		*token = COM_EParse( text, errhead, NULL );
-		if ( !*token ) return false;
+		if ( !*token ) return qfalse;
 
 		// get actions
 		do
 		{
-			found = false;
+			found = qfalse;
 
 			// standard function execution
 			for ( i = 0; i < EA_CALL; i++ )
@@ -2575,7 +2575,7 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 					{
 						// get parameter values
 						*token = COM_EParse( text, errhead, NULL );
-						if ( !*text ) return false;
+						if ( !*text ) return qfalse;
 
 //						Com_Printf( " %s", *token );
 
@@ -2588,10 +2588,10 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 
 					// get next token
 					*token = COM_EParse( text, errhead, NULL );
-					if ( !*text ) return false;
+					if ( !*text ) return qfalse;
 
 					lastAction = action;
-					found = true;
+					found = qtrue;
 					break;
 				}
 
@@ -2616,7 +2616,7 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 
 				// get the node property
 				*token = COM_EParse( text, errhead, NULL );
-				if ( !*text ) return false;
+				if ( !*text ) return qfalse;
 
 //				Com_Printf( " %s", *token );
 
@@ -2641,7 +2641,7 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 
 				// get the value
 				*token = COM_EParse( text, errhead, NULL );
-				if ( !*text ) return false;
+				if ( !*text ) return qfalse;
 
 //				Com_Printf( " %s\n", *token );
 
@@ -2650,10 +2650,10 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 
 				// get next token
 				*token = COM_EParse( text, errhead, NULL );
-				if ( !*text ) return false;
+				if ( !*text ) return qfalse;
 
 				lastAction = action;
-				found = true;
+				found = qtrue;
 			}
 
 			// function calls
@@ -2677,10 +2677,10 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 
 					// get next token
 					*token = COM_EParse( text, errhead, NULL );
-					if ( !*text ) return false;
+					if ( !*text ) return qfalse;
 
 					lastAction = action;
-					found = true;
+					found = qtrue;
 					break;
 				}
 		} while ( found );
@@ -2689,14 +2689,14 @@ qboolean MN_ParseAction( menuAction_t *action, char **text, char **token )
 		if ( **token == '}' )
 		{
 			// finished
-			return true;
+			return qtrue;
 		} else {
 			// unknown token, print message and continue
 			Com_Printf( "MN_ParseAction: unknown token \"%s\" ignored (in event)\n", *token );
 		}
 	} while ( *text );
 
-	return false;
+	return qfalse;
 }
 
 /*
@@ -2733,12 +2733,12 @@ qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 	{
 		// get new token
 		*token = COM_EParse( text, errhead, node->name );
-		if ( !*text ) return false;
+		if ( !*text ) return qfalse;
 
 		// get properties, events and actions
 		do
 		{
-			found = false;
+			found = qfalse;
 
 			for ( val = nps; val->type; val++ )
 				if ( !Q_strcmp( *token, val->string ) )
@@ -2749,7 +2749,7 @@ qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 					{
 						// get parameter values
 						*token = COM_EParse( text, errhead, node->name );
-						if ( !*text ) return false;
+						if ( !*text ) return qfalse;
 
 //						Com_Printf( " %s", *token );
 
@@ -2772,9 +2772,9 @@ qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 
 					// get next token
 					*token = COM_EParse( text, errhead, node->name );
-					if ( !*text ) return false;
+					if ( !*text ) return qfalse;
 
-					found = true;
+					found = qtrue;
 					break;
 				}
 
@@ -2794,7 +2794,7 @@ qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 
 					// get the action body
 					*token = COM_EParse( text, errhead, node->name );
-					if ( !*text ) return false;
+					if ( !*text ) return qfalse;
 
 					if ( **token == '{' )
 					{
@@ -2802,10 +2802,10 @@ qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 
 						// get next token
 						*token = COM_EParse( text, errhead, node->name );
-						if ( !*text ) return false;
+						if ( !*text ) return qfalse;
 					}
 
-					found = true;
+					found = qtrue;
 					break;
 				}
 		} while ( found );
@@ -2814,14 +2814,14 @@ qboolean MN_ParseNodeBody( menuNode_t *node, char **text, char **token )
 		if ( **token == '}' )
 		{
 			// finished
-			return true;
+			return qtrue;
 		} else {
 			// unknown token, print message and continue
 			Com_Printf( "MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\")\n", *token, node->name );
 		}
 	} while ( *text );
 
-	return false;
+	return qfalse;
 }
 
 
@@ -2844,12 +2844,12 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 	{
 		// get new token
 		token = COM_EParse( text, errhead, menu->name );
-		if ( !*text ) return false;
+		if ( !*text ) return qfalse;
 
 		// get node type
 		do
 		{
-			found = false;
+			found = qfalse;
 
 			for ( i = 0; i < MN_NUM_NODETYPE; i++ )
 				if ( !Q_strcmp( token, nt_strings[i] ) )
@@ -2857,7 +2857,7 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 					// found node
 					// get name
 					token = COM_EParse( text, errhead, menu->name );
-					if ( !*text ) return false;
+					if ( !*text ) return qfalse;
 
 					// test if node already exists
 					for ( node = menu->firstNode; node; node = node->next )
@@ -2924,7 +2924,7 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 
 					// get parameters
 					token = COM_EParse( text, errhead, menu->name );
-					if ( !*text ) return false;
+					if ( !*text ) return qfalse;
 
 					if ( *token == '{' )
 					{
@@ -2936,14 +2936,14 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 						}
 
 						token = COM_EParse( text, errhead, menu->name );
-						if ( !*text ) return false;
+						if ( !*text ) return qfalse;
 					}
 
 					// set standard color
 					if ( !node->color[3] )
 						node->color[0] = node->color[1] = node->color[2] = node->color[3] = 1.0f;
 
-					found = true;
+					found = qtrue;
 					break;
 				}
 		} while ( found );
@@ -2952,7 +2952,7 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 		if ( *token == '}' )
 		{
 			// finished
-			return true;
+			return qtrue;
 		} else {
 			// unknown token, print message and continue
 			Com_Printf( "MN_ParseMenuBody: unknown token \"%s\" ignored (menu \"%s\")\n", *token, menu->name );
@@ -2960,7 +2960,7 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 
 	} while ( *text );
 
-	return false;
+	return qfalse;
 }
 
 /*

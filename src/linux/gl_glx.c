@@ -39,11 +39,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <signal.h>
 #include <unistd.h>
 #include <dlfcn.h>
-#ifdef Joystick
-#include <fcntl.h>
-static int joy_fd;
-#endif
-
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/keysym.h>
@@ -69,14 +64,6 @@ static int joy_fd;
 #include "../linux/rw_linux.h"
 #include "../linux/glw_linux.h"
 
-#ifdef Joystick
-# if defined (__linux__)
-#include <linux/joystick.h>
-# elif defined (__FreeBSD__)
-#include <sys/joystick.h>
-# endif
-#include <glob.h>
-#endif
 #include <GL/glx.h>
 
 glwstate_t glw_state;
@@ -114,16 +101,16 @@ static cvar_t	*r_fakeFullscreen;
 static XF86VidModeModeInfo **vidmodes;
 static int num_vidmodes;
 static XF86VidModeGamma oldgamma;
-static qboolean vidmode_ext = false;
+static qboolean vidmode_ext = qfalse;
 #endif /* HAVE_XF86_VIDMODE */
 
 // static int default_dotclock_vidmode;
-static qboolean vidmode_active = false;
+static qboolean vidmode_active = qfalse;
 
 // static qboolean	mlooking;
 
-static qboolean mouse_active = false;
-static qboolean dgamouse = false;
+static qboolean mouse_active = qfalse;
+static qboolean dgamouse = qfalse;
 
 // state struct passed in Init
 static in_state_t	*in_state;
@@ -137,7 +124,7 @@ static cvar_t *m_forward;
 static cvar_t *freelook;
 
 /* stencilbuffer shadows */
-qboolean have_stencil = false;
+qboolean have_stencil = qfalse;
 
 static Cursor CreateNullCursor(Display *display, Window root)
 {
@@ -190,7 +177,7 @@ static void install_grabs(void)
 			ri.Con_Printf( PRINT_ALL, "Failed to detect XF86DGA Mouse\n" );
 			ri.Cvar_Set( "in_dgamouse", "0" );
 		} else {
-			dgamouse = true;
+			dgamouse = qtrue;
 			ri.Con_Printf( PRINT_DEVELOPER, "...using XF86DGA Mouse\n" );
 			XF86DGADirectVideo(dpy, DefaultScreen(dpy), XF86DGADirectMouse);
 			XWarpPointer(dpy, None, win, 0, 0, 0, 0, 0, 0);
@@ -206,7 +193,7 @@ static void install_grabs(void)
 	if (vid_grabmouse->value || vid_fullscreen->value)
 		XGrabKeyboard(dpy, win, False, GrabModeAsync, GrabModeAsync, CurrentTime);
 
-	mouse_active = true;
+	mouse_active = qtrue;
 
 	XSync(dpy, True);
 }
@@ -218,7 +205,7 @@ static void uninstall_grabs(void)
 
 #ifdef HAVE_XF86_DGA
 	if (dgamouse) {
-		dgamouse = false;
+		dgamouse = qfalse;
 		XF86DGADirectVideo(dpy, DefaultScreen(dpy), 0);
 	}
 #endif /* HAVE_XF86_DGA */
@@ -229,7 +216,7 @@ static void uninstall_grabs(void)
 	// inviso cursor
 	XUndefineCursor(dpy, win);
 
-	mouse_active = false;
+	mouse_active = qfalse;
 }
 
 void RW_IN_Init(in_state_t *in_state_p)
@@ -254,16 +241,16 @@ void RW_IN_Init(in_state_t *in_state_p)
 	m_side = ri.Cvar_Get ("m_side", "0.8", 0);
 
 	mx = my = 0.0;
-	mouse_avail = true;
+	mouse_avail = qtrue;
 }
 
 void RW_IN_Shutdown(void)
 {
-	RW_IN_Activate (false);
+	RW_IN_Activate (qfalse);
 
 	if (mouse_avail)
 	{
-		mouse_avail = false;
+		mouse_avail = qfalse;
 	}
 }
 
@@ -285,6 +272,7 @@ void RW_IN_GetMousePos (int *x, int *y)
 {
 	if ( mx < 0 ) mx = 0;
 	if ( my < 0 ) my = 0;
+	// FIXME VID_NORM_WIDTH
 	if ( mx > 1024 ) mx = 1024;
 	if ( my > 768 ) my = 768;
 	*x = mx;
@@ -298,7 +286,7 @@ static void IN_DeactivateMouse( void )
 
 	if (mouse_active) {
 		uninstall_grabs();
-		mouse_active = false;
+		mouse_active = qfalse;
 	}
 }
 
@@ -310,7 +298,7 @@ static void IN_ActivateMouse( void )
 	if (!mouse_active) {
 		mx = my = 0; // don't spazz
 		install_grabs();
-		mouse_active = true;
+		mouse_active = qtrue;
 	}
 }
 
@@ -566,7 +554,7 @@ static void HandleEvents(void)
 {
 	XEvent event;
 	int b;
-	qboolean dowarp = false;
+	qboolean dowarp = qfalse;
 	int mwx = vid_grabmouse->value ? vid.width/2  : old_mouse_x;
 	int mwy = vid_grabmouse->value ? vid.height/2 : old_mouse_y;
 
@@ -617,7 +605,7 @@ static void HandleEvents(void)
 						old_mouse_y = mwy = event.xmotion.y;
 
 						if (mx || my)
-							dowarp = true;
+							dowarp = qtrue;
 					}
 				}
 			}
@@ -633,11 +621,11 @@ static void HandleEvents(void)
 			else if (event.xbutton.button == 3)
 				b = 1;
 			else if (event.xbutton.button == 4)
-				in_state->Key_Event_fp (K_MWHEELUP, true);
+				in_state->Key_Event_fp (K_MWHEELUP, qtrue);
 			else if (event.xbutton.button == 5)
-				in_state->Key_Event_fp (K_MWHEELDOWN, true);
+				in_state->Key_Event_fp (K_MWHEELDOWN, qtrue);
 			if (b>=0 && in_state && in_state->Key_Event_fp)
-				in_state->Key_Event_fp (K_MOUSE1 + b, true);
+				in_state->Key_Event_fp (K_MOUSE1 + b, qtrue);
 			break;
 
 		case ButtonRelease:
@@ -649,11 +637,11 @@ static void HandleEvents(void)
 			else if (event.xbutton.button == 3)
 				b = 1;
 			else if (event.xbutton.button == 4)
-				in_state->Key_Event_fp (K_MWHEELUP, false);
+				in_state->Key_Event_fp (K_MWHEELUP, qfalse);
 			else if (event.xbutton.button == 5)
-				in_state->Key_Event_fp (K_MWHEELDOWN, false);
+				in_state->Key_Event_fp (K_MWHEELDOWN, qfalse);
 			if (b>=0 && in_state && in_state->Key_Event_fp)
-				in_state->Key_Event_fp (K_MOUSE1 + b, false);
+				in_state->Key_Event_fp (K_MOUSE1 + b, qfalse);
 			break;
 
 		case CreateNotify :
@@ -688,7 +676,7 @@ static void HandleEvents(void)
 
 	if (vid_grabmouse->modified)
 	{
-		vid_grabmouse->modified = false;
+		vid_grabmouse->modified = qfalse;
 		if ( ! vid_grabmouse->value )
 		{
 			XUngrabPointer(dpy, CurrentTime);
@@ -818,11 +806,11 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	int MajorVersion, MinorVersion;
 	MajorVersion = MinorVersion = 0;
 	if (!XF86VidModeQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
-		vidmode_ext = false;
+		vidmode_ext = qfalse;
 	} else {
 		ri.Con_Printf(PRINT_ALL, "Using XFree86-VidModeExtension Version %d.%d\n",
 			MajorVersion, MinorVersion);
-		vidmode_ext = true;
+		vidmode_ext = qtrue;
 	}
 #endif /* HAVE_XF86_VIDMODE */
 
@@ -838,7 +826,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		return rserr_invalid_mode;
 	}
 
-	gl_state.hwgamma = false;
+	gl_state.hwgamma = qfalse;
 
 	/* do some pantsness */
 	if ( qglXGetConfig )
@@ -866,11 +854,11 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		if (!qglXGetConfig(dpy, visinfo, GLX_STENCIL_SIZE, &stencil_bits)) {
 			ri.Con_Printf(PRINT_ALL, "I: got %d bits of stencil\n", stencil_bits);
 			if (stencil_bits >= 1) {
-				have_stencil = true;
+				have_stencil = qtrue;
 			}
 		}
 	} else {
-		have_stencil = true;
+		have_stencil = qtrue;
 	}
 
 #ifdef HAVE_XF86_VIDMODE
@@ -906,19 +894,19 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 				XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
 				width = vidmodes[best_fit]->hdisplay;
 				height = vidmodes[best_fit]->vdisplay;
-				vidmode_active = true;
+				vidmode_active = qtrue;
 
 				if (XF86VidModeGetGamma(dpy, scrnum, &oldgamma)) {
-					gl_state.hwgamma = true;
+					gl_state.hwgamma = qtrue;
 					/* We can not reliably detect hardware gamma
 					   changes across software gamma calls, which
 					   can reset the flag, so change it anyway */
-					vid_gamma->modified = true;
+					vid_gamma->modified = qtrue;
 					ri.Con_Printf( PRINT_ALL, "Using hardware gamma\n");
 				}
 			} else {
-				fullscreen = false;
-				vidmode_active = false;
+				fullscreen = qfalse;
+				vidmode_active = qfalse;
 			}
 		}
 	}
@@ -988,8 +976,8 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 void GLimp_Shutdown( void )
 {
 	uninstall_grabs();
-	mouse_active = false;
-	dgamouse = false;
+	mouse_active = qfalse;
+	dgamouse = qfalse;
 
 	if (dpy) {
 		if (ctx)
@@ -1021,7 +1009,7 @@ qboolean GLimp_Init( void *hinstance, void *wndproc )
 {
 	InitSig();
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -1085,78 +1073,3 @@ void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
 	}
 	qgl3DfxSetPaletteEXT((GLuint *)temptable);
 }
-
-/*
-** X11 Input Stuff
-*/
-
-#ifdef Joystick
-qboolean OpenJoystick(cvar_t *joy_dev)
-{
-	int i, err;
-	glob_t pglob;
-	struct js_event e;
-
-	err = glob(joy_dev->string, 0, NULL, &pglob);
-
-	if (err) {
-		switch (err) {
-			case GLOB_NOSPACE:
-				ri.Con_Printf(PRINT_ALL, "Error, out of memory while looking for joysticks\n");
-				break;
-			case GLOB_NOMATCH:
-				ri.Con_Printf(PRINT_ALL, "No joysticks found\n");
-				break;
-			default:
-				ri.Con_Printf(PRINT_ALL, "Error #%d while looking for joysticks\n",err);
-		}
-		return false;
-	}
-
-	for (i=0;i<pglob.gl_pathc;i++) {
-		ri.Con_Printf(PRINT_ALL, "Trying joystick dev %s\n", pglob.gl_pathv[i]);
-		joy_fd = open (pglob.gl_pathv[i], O_RDONLY | O_NONBLOCK);
-		if (joy_fd == -1) {
-			ri.Con_Printf(PRINT_ALL, "Error opening joystick dev %s\n",
-					pglob.gl_pathv[i]);
-			return false;
-		} else {
-			while (read(joy_fd, &e, sizeof(struct js_event))!=-1 &&	(e.type & JS_EVENT_INIT))
-				ri.Con_Printf(PRINT_ALL, "Read init event\n");
-			ri.Con_Printf(PRINT_ALL, "Using joystick dev %s\n", pglob.gl_pathv[i]);
-			return true;
-		}
-	}
-	globfree(&pglob);
-	return false;
-}
-
-void PlatformJoyCommands(int *axis_vals, int *axis_map)
-{
-	struct js_event e;
-	int key_index;
-
-	while (read(joy_fd, &e, sizeof(struct js_event))!=-1) {
-		if (JS_EVENT_BUTTON & e.type) {
-			key_index = (e.number < 4) ? K_JOY1 : K_AUX1;
-			if (e.value) {
-				in_state->Key_Event_fp (key_index + e.number, true);
-			} else {
-				in_state->Key_Event_fp (key_index + e.number, false);
-			}
-		} else if (JS_EVENT_AXIS & e.type) {
-			axis_vals[axis_map[e.number]] = e.value;
-		}
-	}
-}
-
-qboolean CloseJoystick(void)
-{
-	if (close(joy_fd))
-		ri.Con_Printf(PRINT_ALL, "Error, Problem closing joystick.");
-	return true;
-}
-#endif
-
-
-

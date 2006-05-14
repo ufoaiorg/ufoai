@@ -120,7 +120,7 @@ void ED_CallSpawn (edict_t *ent)
 	}
 
 	gi.dprintf ("%s doesn't have a spawn function\n", ent->classname);
-	ent->inuse = false;
+	ent->inuse = qfalse;
 }
 
 /*
@@ -234,7 +234,7 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 	char		keyname[256];
 	char		*com_token;
 
-	init = false;
+	init = qfalse;
 	memset (&st, 0, sizeof(st));
 
 	// go through all the dictionary pairs
@@ -257,7 +257,7 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 		if (com_token[0] == '}')
 			gi.error ("ED_ParseEntity: closing brace without data");
 
-		init = true;
+		init = qtrue;
 
 		// keynames with a leading underscore are used for utility comments,
 		// and are immediately discarded by quake
@@ -530,7 +530,7 @@ Only used for the world.
 void SP_worldspawn (edict_t *ent)
 {
 	ent->solid = SOLID_BSP;
-	ent->inuse = true;			// since the world doesn't use G_Spawn()
+	ent->inuse = qtrue; // since the world doesn't use G_Spawn()
 
 	//---------------
 

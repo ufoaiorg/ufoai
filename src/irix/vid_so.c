@@ -127,7 +127,7 @@ cause the entire video mode and refresh DLL to be reset on the next frame.
 */
 void VID_Restart_f (void)
 {
-	vid_ref->modified = true;
+	vid_ref->modified = qtrue;
 }
 
 /*
@@ -167,12 +167,12 @@ vidmode_t vid_modes[] =
 qboolean VID_GetModeInfo( int *width, int *height, int mode )
 {
 	if ( mode < 0 || mode >= VID_NUM_MODES )
-		return false;
+		return qfalse;
 
 	*width  = vid_modes[mode].width;
 	*height = vid_modes[mode].height;
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -211,7 +211,7 @@ void VID_FreeReflib (void)
 
 	memset (&re, 0, sizeof(re));
 	reflib_library = NULL;
-	reflib_active  = false;
+	reflib_active  = qfalse;
 }
 
 /*
@@ -231,7 +231,7 @@ qboolean VID_LoadRefresh( char *name )
 	FILE *fp;
 	char	*path;
 	char	curpath[MAX_OSPATH];
-	qboolean	restart = false;
+	qboolean	restart = qfalse;
 
 	if ( reflib_active )
 	{
@@ -243,7 +243,7 @@ qboolean VID_LoadRefresh( char *name )
 		RW_IN_Shutdown_fp = NULL;
 		re.Shutdown();
 		VID_FreeReflib ();
-		restart = true;
+		restart = qtrue;
 	}
 
 #ifndef REF_HARD_LINKED
@@ -342,7 +342,7 @@ qboolean VID_LoadRefresh( char *name )
 	{
 		re.Shutdown();
 		VID_FreeReflib ();
-		return false;
+		return qfalse;
 	}
 
 	// give up root now
@@ -374,8 +374,8 @@ qboolean VID_LoadRefresh( char *name )
 		CL_InitFonts();
 
 	Com_Printf( "------------------------------------\n");
-	reflib_active = true;
-	return true;
+	reflib_active = qtrue;
+	return qtrue;
 }
 
 /*
@@ -402,10 +402,10 @@ void VID_CheckChanges (void)
 		/*
 		** refresh has changed
 		*/
-		vid_ref->modified = false;
-		vid_fullscreen->modified = true;
-		cl.refresh_prepped = false;
-		cls.disable_screen = true;
+		vid_ref->modified = qfalse;
+		vid_fullscreen->modified = qtrue;
+		cl.refresh_prepped = qfalse;
+		cls.disable_screen = qtrue;
 
 		sprintf( name, "ref_%s.so", vid_ref->string );
 		if ( !VID_LoadRefresh( name ) )
@@ -413,7 +413,7 @@ void VID_CheckChanges (void)
 			Cmd_ExecuteString( "condump gl_debug" );
 			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
 		}
-		cls.disable_screen = false;
+		cls.disable_screen = qfalse;
 	}
 
 }
@@ -467,12 +467,8 @@ void VID_Shutdown (void)
 /* INPUT                                                                     */
 /*****************************************************************************/
 
-cvar_t	*in_joystick;
-
-// This if fake, it's acutally done by the Refresh load
-void IN_Init (void)
+void IN_Init ( void )
 {
-	in_joystick	= Cvar_Get ("in_joystick", "0", CVAR_ARCHIVE);
 }
 
 void Real_IN_Init (void)

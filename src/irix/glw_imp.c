@@ -87,8 +87,8 @@ int current_framebuffer;
 static int				x_shmeventtype;
 //static XShmSegmentInfo	x_shminfo;
 
-static qboolean			oktodraw = false;
-static qboolean			X11_active = false;
+static qboolean			oktodraw = qfalse;
+static qboolean			X11_active = qfalse;
 
 struct
 {
@@ -231,10 +231,10 @@ void GLimp_Shutdown( void )
 */
 int GLimp_Init( void *hinstance, void *wndproc )
 {
-// catch signals so i can turn on auto-repeat and stuff
+	// catch signals so i can turn on auto-repeat and stuff
 	InitSig();
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -329,14 +329,14 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	XAutoRepeatOff(x_disp);
 
-// for debugging only
+	// for debugging only
 	XSynchronize(x_disp, True);
 
-// check for command-line window size
+	// check for command-line window size
 	template_mask = 0;
 
 #if 0
-// specify a visual id
+	// specify a visual id
 	if ((pnum=COM_CheckParm("-visualid")))
 	{
 		if (pnum >= com_argc-1)
@@ -345,7 +345,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 		template_mask = VisualIDMask;
 	}
 
-// If not specified, use default visual
+	// If not specified, use default visual
 	else
 #endif
 	{
@@ -356,8 +356,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 		template_mask = VisualIDMask;
 	}
 
-// pick a visual- warn if more than one was available
-
+	// pick a visual- warn if more than one was available
 	x_visinfo = glXChooseVisual( x_disp, DefaultScreen( x_disp ),
 				     StudlyRGBattributes );
 	if (!x_visinfo)
@@ -385,7 +384,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	x_vis = x_visinfo->visual;
 
-// setup attributes for main window
+	// setup attributes for main window
 	{
 	   int attribmask = CWEventMask  | CWColormap | CWBorderPixel;
 	   XSetWindowAttributes attribs;
@@ -400,7 +399,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	   attribs.border_pixel = 0;
 	   attribs.colormap = tmpcmap;
 
-// create the main window
+		// create the main window
 		x_win = XCreateWindow(	x_disp,
 			root_win,		
 			0, 0,	// x, y
@@ -411,7 +410,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 			x_vis,
 			attribmask,
 			&attribs );
-		XStoreName(x_disp, x_win, "Quake II");
+		XStoreName(x_disp, x_win, "UFO:Alien Invasion");
 
 		if (x_visinfo->class != TrueColor)
 			XFreeColormap(x_disp, tmpcmap);
@@ -419,7 +418,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	if (x_visinfo->depth == 8)
 	{
-	// create and upload the palette
+		// create and upload the palette
 		if (x_visinfo->class == PseudoColor)
 		{
 			x_cmap = XCreateColormap(x_disp, x_win, x_vis, AllocAll);
@@ -428,10 +427,10 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	}
 
-// inviso cursor
+	// inviso cursor
 	XDefineCursor(x_disp, x_win, CreateNullCursor(x_disp, x_win));
 
-// create the GC
+	// create the GC
 	{
 		XGCValues xgcvalues;
 		int valuemask = GCGraphicsExposures;
@@ -439,7 +438,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 		x_gc = XCreateGC(x_disp, x_win, valuemask, &xgcvalues );
 	}
 
-// set window properties for full screen
+	// set window properties for full screen
 	if (fullscreen) {
 	    MotifWmHints    wmhints;
 	    Atom aHints;
@@ -449,8 +448,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	    aHints = XInternAtom( x_disp, "_MOTIF_WM_HINTS", 0 );
 	    if (aHints == None)
 	    {
-                ri.Con_Printf( PRINT_ALL, "Could not intern X atom for _MOTIF_WM_HINTS." );
-/*                 return( false ); */
+                    ri.Con_Printf( PRINT_ALL, "Could not intern X atom for _MOTIF_WM_HINTS." );
 	    }
 	    else {
 		wmhints.flags = MWM_HINTS_DECORATIONS;
@@ -477,33 +475,33 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	    }
 	}
 
-// map the window
+	// map the window
 	XMapWindow(x_disp, x_win);
 
-// wait for first exposure event
+	// wait for first exposure event
 	{
 		XEvent event;
 		do
 		{
 			XNextEvent(x_disp, &event);
 			if (event.type == Expose && !event.xexpose.count)
-				oktodraw = true;
+				oktodraw = qtrue;
 		} while (!oktodraw);
 	}
-// now safe to draw
+	// now safe to draw
 
-    gl_cx = glXCreateContext( x_disp, x_visinfo, 0, True );
-    if (!glXMakeCurrent( x_disp, x_win, gl_cx ))
+        gl_cx = glXCreateContext( x_disp, x_visinfo, 0, True );
+	if (!glXMakeCurrent( x_disp, x_win, gl_cx ))
 		Sys_Error( "Can't make window current to context\n" );
 
-// even if MITSHM is available, make sure it's a local connection
+	// even if MITSHM is available, make sure it's a local connection
 #if 0
-// This is messing up the DISPLAY environment variable so can't close and
-// reopen the window (it lops off the :0.0)...
+	// This is messing up the DISPLAY environment variable so can't close and
+	// reopen the window (it lops off the :0.0)...
 	if (XShmQueryExtension(x_disp))
 	{
 		char *displayname;
-		doShm = true;
+		doShm = qtrue;
 		displayname = (char *) getenv("DISPLAY");
 		if (displayname)
 		{
@@ -511,7 +509,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 			while (*d && (*d != ':')) d++;
 			if (*d) *d = 0;
 			if (!(!strcasecmp(displayname, "unix") || !*displayname))
-				doShm = false;
+				doShm = qfalse;
 		}
 	}
 #endif
@@ -532,9 +530,9 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 //	XSynchronize(x_disp, False);
 
-	X11_active = true;
+	X11_active = qtrue;
 
-	return true;
+	return qtrue;
 }
 
 /*****************************************************************************/
@@ -679,12 +677,12 @@ void GetEvent(void)
 	switch(x_event.type) {
 	case KeyPress:
 		keyq[keyq_head].key = XLateKey(&x_event.xkey);
-		keyq[keyq_head].down = true;
+		keyq[keyq_head].down = qtrue;
 		keyq_head = (keyq_head + 1) & 63;
 		break;
 	case KeyRelease:
 		keyq[keyq_head].key = XLateKey(&x_event.xkey);
-		keyq[keyq_head].down = false;
+		keyq[keyq_head].down = qfalse;
 		keyq_head = (keyq_head + 1) & 63;
 		break;
 
@@ -738,7 +736,7 @@ void GetEvent(void)
 
 	default:
 		if (doShm && x_event.type == x_shmeventtype)
-			oktodraw = true;
+			oktodraw = qtrue;
 	}
    
 	if (old_windowed_mouse != _windowed_mouse->value) {
@@ -796,12 +794,12 @@ static void Force_CenterView_f (void)
 
 static void RW_IN_MLookDown (void) 
 { 
-	mlooking = true; 
+	mlooking = qtrue; 
 }
 
 static void RW_IN_MLookUp (void) 
 {
-	mlooking = false;
+	mlooking = qfalse;
 	in_state->IN_CenterView_fp ();
 }
 
@@ -817,7 +815,7 @@ void RW_IN_Init(in_state_t *in_state_p)
 	// mouse variables
 	_windowed_mouse = ri.Cvar_Get ("_windowed_mouse", "0", CVAR_ARCHIVE);
 	m_filter = ri.Cvar_Get ("m_filter", "0", 0);
-    in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
+        in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
 	freelook = ri.Cvar_Get( "freelook", "0", 0 );
 	lookstrafe = ri.Cvar_Get ("lookstrafe", "0", 0);
 	sensitivity = ri.Cvar_Get ("sensitivity", "2", 0);
@@ -832,12 +830,12 @@ void RW_IN_Init(in_state_t *in_state_p)
 	ri.Cmd_AddCommand ("force_centerview", Force_CenterView_f);
 
 	mouse_x = mouse_y = 0.0;
-	mouse_avail = true;
+	mouse_avail = qtrue;
 }
 
 void RW_IN_Shutdown(void)
 {
-	mouse_avail = false;
+	mouse_avail = qfalse;
 
 	ri.Cmd_RemoveCommand ("force_centerview");
 	ri.Cmd_RemoveCommand ("+mlook");
@@ -858,10 +856,10 @@ void RW_IN_Commands (void)
    
 	for (i=0 ; i<3 ; i++) {
 		if ( (mouse_buttonstate & (1<<i)) && !(mouse_oldbuttonstate & (1<<i)) )
-			in_state->Key_Event_fp (K_MOUSE1 + i, true);
+			in_state->Key_Event_fp (K_MOUSE1 + i, qtrue);
 
 		if ( !(mouse_buttonstate & (1<<i)) && (mouse_oldbuttonstate & (1<<i)) )
-			in_state->Key_Event_fp (K_MOUSE1 + i, false);
+			in_state->Key_Event_fp (K_MOUSE1 + i, qfalse);
 	}
 	mouse_oldbuttonstate = mouse_buttonstate;
 }
@@ -894,7 +892,7 @@ void RW_IN_Move (usercmd_t *cmd)
 	mouse_x *= sensitivity->value;
 	mouse_y *= sensitivity->value;
 
-// add mouse X/Y movement to cmd
+	// add mouse X/Y movement to cmd
 	if ( (*in_state->in_strafe_state & 1) || 
 		(lookstrafe->value && mlooking ))
 		cmd->sidemove += m_side->value * mouse_x;

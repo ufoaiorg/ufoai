@@ -31,12 +31,12 @@ Cvar_InfoValidate
 static qboolean Cvar_InfoValidate (char *s)
 {
 	if (strstr (s, "\\"))
-		return false;
+		return qfalse;
 	if (strstr (s, "\""))
-		return false;
+		return qfalse;
 	if (strstr (s, ";"))
-		return false;
-	return true;
+		return qfalse;
+	return qtrue;
 }
 
 /*
@@ -165,7 +165,7 @@ cvar_t *Cvar_Get (char *var_name, char *var_value, int flags)
 	var = Z_Malloc (sizeof(*var));
 	var->name = CopyString (var_name);
 	var->string = CopyString (var_value);
-	var->modified = true;
+	var->modified = qtrue;
 	var->value = atof (var->string);
 
 	// link the variable in
@@ -253,12 +253,12 @@ cvar_t *Cvar_Set2 (char *var_name, char *value, qboolean force)
 	if (!Q_strcmp(value, var->string))
 		return var;		// not changed
 
-	var->modified = true;
+	var->modified = qtrue;
 
 	if (var->flags & CVAR_USERINFO)
-		userinfo_modified = true;	// transmit at next oportunity
+		userinfo_modified = qtrue; // transmit at next oportunity
 
-	Z_Free (var->string);	// free the old value string
+	Z_Free (var->string); // free the old value string
 
 	var->string = CopyString(value);
 	var->value = atof (var->string);
@@ -273,7 +273,7 @@ Cvar_ForceSet
 */
 cvar_t *Cvar_ForceSet (char *var_name, char *value)
 {
-	return Cvar_Set2 (var_name, value, true);
+	return Cvar_Set2 (var_name, value, qtrue);
 }
 
 /*
@@ -283,7 +283,7 @@ Cvar_Set
 */
 cvar_t *Cvar_Set (char *var_name, char *value)
 {
-	return Cvar_Set2 (var_name, value, false);
+	return Cvar_Set2 (var_name, value, qfalse);
 }
 
 /*
@@ -301,12 +301,12 @@ cvar_t *Cvar_FullSet (char *var_name, char *value, int flags)
 		return Cvar_Get (var_name, value, flags);
 	}
 
-	var->modified = true;
+	var->modified = qtrue;
 
 	if (var->flags & CVAR_USERINFO)
-		userinfo_modified = true;	// transmit at next oportunity
+		userinfo_modified = qtrue; // transmit at next oportunity
 
-	Z_Free (var->string);	// free the old value string
+	Z_Free (var->string); // free the old value string
 
 	var->string = CopyString(value);
 	var->value = atof (var->string);
@@ -373,17 +373,17 @@ qboolean Cvar_Command (void)
 	// check variables
 	v = Cvar_FindVar (Cmd_Argv(0));
 	if (!v)
-		return false;
+		return qfalse;
 
 	// perform a variable print or set
 	if (Cmd_Argc() == 1)
 	{
 		Com_Printf ("\"%s\" is \"%s\"\n", v->name, v->string);
-		return true;
+		return qtrue;
 	}
 
 	Cvar_Set (v->name, Cmd_Argv(1));
-	return true;
+	return qtrue;
 }
 
 

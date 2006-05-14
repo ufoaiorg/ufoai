@@ -44,12 +44,12 @@ qboolean AI_CheckFF( edict_t *ent, vec3_t target, float spread )
 				VectorAdd( dcheck, back, dcheck );
 				VectorNormalize( dcheck );
 				if ( DotProduct( dtarget, dcheck ) > cosSpread )
-					return true;
+					return qtrue;
 			}
 		}
 
 	// no ally in danger
-	return false;
+	return qfalse;
 }
 
 
@@ -88,7 +88,7 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 	VectorCopy( to, aia->stop );
 	gi.GridPosToVec( gi.map, to, ent->origin );
 
-	move = gi.MoveLength( gi.map, to, true );
+	move = gi.MoveLength( gi.map, to, qtrue );
 	tu = ent->TU - move;
 	if ( ent->i.c[gi.csi->idRight] && ent->i.c[gi.csi->idRight]->item.m != NONE )
 		od = &gi.csi->ods[ent->i.c[gi.csi->idRight]->item.m];
@@ -130,7 +130,7 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 							continue;
 
 						// calculate expected damage
-						dmg = G_ActorVis( ent->origin, check, true );
+						dmg = G_ActorVis( ent->origin, check, qtrue );
 						if ( dmg == 0.0 ) continue;
 
 						dmg *= fd->damage[0] * fd->shots * shots;
@@ -202,7 +202,7 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 			for ( ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++ )
 			{
 				// time
-				delta = gi.MoveLength( gi.map, ent->pos, false );
+				delta = gi.MoveLength( gi.map, ent->pos, qfalse );
 				if ( delta > tu ) continue;
 				tu -= delta;
 
@@ -248,7 +248,7 @@ float AI_CivilianCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 	VectorCopy( to, aia->stop );
 	gi.GridPosToVec( gi.map, to, ent->origin );
 
-	move = gi.MoveLength( gi.map, to, true );
+	move = gi.MoveLength( gi.map, to, qtrue );
 	tu = ent->TU - move;
 
 	// test for time
@@ -310,7 +310,7 @@ void AI_ActorThink( player_t *player, edict_t *ent )
 	for ( to[2] = 0; to[2] < HEIGHT; to[2]++ )
 		for ( to[1] = yl; to[1] < yh; to[1]++ )
 			for ( to[0] = xl; to[0] < xh; to[0]++ )
-				if ( gi.MoveLength( gi.map, to, true ) < 0xFF )
+				if ( gi.MoveLength( gi.map, to, qtrue ) < 0xFF )
 				{
 					if ( ent->team == TEAM_CIVILIAN || ent->state & STATE_PANIC )
 						guete = AI_CivilianCalcGuete( ent, to, &aia );
@@ -332,7 +332,7 @@ void AI_ActorThink( player_t *player, edict_t *ent )
 		return;
 
 	// do the first move
-	G_ClientMove( player, 0, ent->number, bestAia.to, false );
+	G_ClientMove( player, 0, ent->number, bestAia.to, qfalse );
 
 //	Com_Printf( "(%i %i %i) (%i %i %i)\n",
 //		(int)bestAia.to[0], (int)bestAia.to[1], (int)bestAia.to[2],
@@ -343,7 +343,7 @@ void AI_ActorThink( player_t *player, edict_t *ent )
 	{
 		for ( i = 0; i < bestAia.shots; i++ )
 			G_ClientShoot( player, ent->number, bestAia.target->pos, bestAia.mode );
-		G_ClientMove( player, ent->team, ent->number, bestAia.stop, false );
+		G_ClientMove( player, ent->team, ent->number, bestAia.stop, qfalse );
 	}
 }
 
@@ -550,7 +550,7 @@ void G_SpawnAIPlayer( player_t *player, int numSpawn )
 
 	// show visible actors
 	G_ClearVisFlags( team );
-	G_CheckVis( NULL, false );
+	G_CheckVis( NULL, qfalse );
 
 	// give time
 	G_GiveTimeUnits( team );
@@ -574,11 +574,11 @@ player_t *AI_CreatePlayer( int team )
 		if ( !p->inuse )
 		{
 			memset( p, 0, sizeof( player_t ) );
-			p->inuse = true;
+			p->inuse = qtrue;
 			p->num = p - game.players;
 			p->ping = 0;
 			p->pers.team = team;
-			p->pers.ai = true;
+			p->pers.ai = qtrue;
 			if ( team == TEAM_CIVILIAN ) G_SpawnAIPlayer( p, ai_numcivilians->value );
 			else if ( sv_maxclients->value == 1 ) G_SpawnAIPlayer( p, ai_numaliens->value );
 			else G_SpawnAIPlayer( p, ai_numactors->value );

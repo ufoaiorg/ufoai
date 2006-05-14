@@ -896,7 +896,7 @@ void MN_ParseBuildings( char *id, char **text )
 
 	//set standard values
 	building->techLevel = 1;
-	building->visible = true;
+	building->visible = qtrue;
 	building->condition[0] = BUILDINGCONDITION;
 	building->id = numBuildings;
 
@@ -1124,17 +1124,17 @@ building_t * MN_GetUnusedLab( int base_id )
 	int i, j;
 	building_t *building = NULL;
 	technology_t *tech = NULL;
-	byte used = false;
+	byte used = qfalse;
 
 	for ( i = 0; i < numBuildings; i++ ) {
 		building = &bmBuildings[base_id][i];
 		if ( building->buildingType == B_LAB ) {
-			used = false;
+			used = qfalse;
 			// check in research tree if the lab is used
 			for ( j=0; j < numTechnologies; j++ ) {
 				tech = &technologies[j];
 				if ( tech->lab == building ) {
-					used = true;
+					used = qtrue;
 					break;
 				}
 			}
@@ -1162,19 +1162,19 @@ int MN_GetUnusedLabs( int base_id )
 	int i, j;
 	building_t *building = NULL;
 	technology_t *tech = NULL;
-	byte used = false;
+	byte used = qfalse;
 
 	int numFreeLabs = 0;
 
 	for ( i = 0; i < numBuildings; i++ ) {
 		building = &bmBuildings[base_id][i];
 		if ( building->buildingType == B_LAB ) {
-			used = false;
+			used = qfalse;
 			// check in research tree if the lab is used
 			for ( j=0; j < numTechnologies; j++ ) {
 				tech = &technologies[j];
 				if ( tech->lab == building ) {
-					used = true;
+					used = qtrue;
 					break;
 				}
 			}
@@ -1265,12 +1265,12 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 
 	if ( !baseCurrent ) {
 		Com_DPrintf( "MN_AssignEmployee: No Base set\n" );
-		return false;
+		return qfalse;
 	}
 
 	if ( building_dest->buildingType == B_QUARTERS  ) {
 		Com_DPrintf( "MN_AssignEmployee: No need to move from quarters to quarters.\n" );
-		return false;
+		return qfalse;
 	}
 
 	employees_in_building_dest = &building_dest->assigned_employees;
@@ -1297,14 +1297,14 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 		if ( employee ) {
 			employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee;
 			employee->lab = building_dest;
-			return true;
+			return qtrue;
 		} else {
 			Com_Printf( "No employee available in this base.\n" );
 		}
 	} else {
 		Com_Printf( "No free room in destination building \"%s\".\n", building_dest->name);
 	}
-	return false;
+	return qfalse;
 }
 
 /*======================
@@ -1330,14 +1330,14 @@ byte MN_RemoveEmployee ( building_t *building )
 
 	/* TODO
 	building_t *building_temp = NULL;
-	byte found = false;
+	byte found = qfalse;
 	*/
 
 	employees_in_building = &building->assigned_employees;
 
 	if (employees_in_building->numEmployees <= 0) {
 		Com_DPrintf( "MN_RemoveEmployee: No employees in building. Can't remove one. %s\n", building->name );
-		return false;
+		return qfalse;
 	}
 
 	// Check where else (which buildings) the employee needs to be removed.
@@ -1352,11 +1352,11 @@ byte MN_RemoveEmployee ( building_t *building )
 		if ( employee->lab ) {
 			building_temp = employee->lab;
 			employees_in_building = &building_temp->assigned_employees;
-			found = false;
+			found = qfalse;
 			for ( i = 0; i < ( employees_in_building->numEmployees - 1 ); i++ ) {
 				if ( (employees_in_building->assigned[i] == employee) || found ){
 					employees_in_building->assigned[i] = employees_in_building->assigned[i+1];
-					found = true;
+					found = qtrue;
 				}
 			}
 			if ( found )
@@ -1368,7 +1368,7 @@ byte MN_RemoveEmployee ( building_t *building )
 	//	if ( employee->workshop ) {
 	//	}
 
-		return true;
+		return qtrue;
 		//break;
 	*/
 	case B_LAB:
@@ -1378,13 +1378,13 @@ byte MN_RemoveEmployee ( building_t *building )
 		// unlink the employee from lab (the current building).
 		employee->lab = NULL;
 		Com_DPrintf( "MN_RemoveEmployee: %s 2\n", building->name );
-		return true;
+		return qtrue;
 		//break;
 	/* TODO
 	case B_WORKSHOP:
 		// unlink the employee from workshop (the current building).
 		employee->workshop = NULL;
-		return true;
+		return qtrue;
 		//break;
 	EMPL_MEDIC
 	EMPL_ROBOT
@@ -1393,7 +1393,7 @@ byte MN_RemoveEmployee ( building_t *building )
 		break;
 	}
 
-	return false;
+	return qfalse;
 }
 /*======================
 MN_EmployeesInBase + MN_EmployeesInBase2
@@ -1435,7 +1435,7 @@ int MN_EmployeesInBase2 ( int base_id, employeeType_t employee_type, byte free_o
 
 int MN_EmployeesInBase ( int base_id, employeeType_t employee_type )
 {
-	return MN_EmployeesInBase2 ( base_id, employee_type, false );
+	return MN_EmployeesInBase2 ( base_id, employee_type, qfalse );
 }
 
 /*======================
@@ -1643,14 +1643,14 @@ void MN_DrawBase( menuNode_t *node )
 				re.DrawColor( color );
 
 			if ( *image )
-				re.DrawNormPic( x, y, width, height, 0, 0, 0, 0, 0, false, image );
+				re.DrawNormPic( x, y, width, height, 0, 0, 0, 0, 0, qfalse, image );
 
 			if ( mx > x && mx < x + width && my > y && my < y + height - 20 )
 				re.DrawColor( NULL );
 
 			if ( *statusImage )
 			{
-// 				re.DrawNormPic( x + 20 , y + 60, width, height, 0, 0, 0, 0, 0, false, statusImage );
+// 				re.DrawNormPic( x + 20 , y + 60, width, height, 0, 0, 0, 0, 0, qfalse, statusImage );
 				statusImage[0] = '\0';
 			}
 		}
@@ -1832,14 +1832,14 @@ void MN_BuildBase( void )
 	assert(baseCurrent);
 
 	// FIXME: This should not be here - but we only build bases in singleplayer
-	ccs.singleplayer = true;
+	ccs.singleplayer = qtrue;
 
 	if ( ccs.credits - BASE_COSTS > 0 )
 	{
 		if ( CL_NewBase( newBasePos ) )
 		{
 			baseCurrent->id = ccs.numBases-1;
-			baseCurrent->founded = true;
+			baseCurrent->founded = qtrue;
 			stats.basesBuild++;
 			mapAction = MA_NONE;
 			CL_UpdateCredits( ccs.credits - BASE_COSTS );
@@ -1848,14 +1848,14 @@ void MN_BuildBase( void )
 			Cvar_Set( "mn_base_title", baseCurrent->title );
 			Cbuf_AddText( "mn_push bases\n" );
 			Q_strncpyz( messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string ), MAX_MESSAGE_TEXT );
-			MN_AddNewMessage( _("Base built"), messageBuffer, false, MSG_CONSTRUCTION, NULL );
+			MN_AddNewMessage( _("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL );
 			return;
 		}
 	}
 	else
 	{
 		Q_strncpyz( messageBuffer, _("Not enough credits to set up a new base."), MAX_MESSAGE_TEXT );
-		MN_AddNewMessage( _("Base built"), messageBuffer, false, MSG_CONSTRUCTION, NULL );
+		MN_AddNewMessage( _("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL );
 	}
 }
 
@@ -2066,7 +2066,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 		baseCurrent = base;
 		baseCurrent->allBuildingsList[0] = '\0';
 		baseCurrent->aircraftCurrent = NULL; // FIXME: Load the first one
-		base->founded = true;
+		base->founded = qtrue;
 		if ( version >= 2 )
 		{
 			base->id = MSG_ReadLong( sb );
@@ -2153,7 +2153,7 @@ void CL_BuildingList ( void )
 
 	for ( i = 0, base = bmBases; i < MAX_BASES; i++, base++ )
 	{
-		if ( base->founded == false )
+		if ( base->founded == qfalse )
 			continue;
 
 		building = bmBuildings[i];
@@ -2215,8 +2215,8 @@ void MN_SetBaseTitle ( void )
 		Cvar_Set("mn_base_title_new", bmBases[ccs.numBases].title );
 	else
 	{
-		MN_AddNewMessage( _("Notice"), _("You've reached the base limit."), false, MSG_STANDARD, NULL );
-		MN_PopMenu( false ); // remove the new base popup
+		MN_AddNewMessage( _("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL );
+		MN_PopMenu( qfalse ); // remove the new base popup
 	}
 }
 
@@ -2324,7 +2324,7 @@ void CL_UpdateBaseData( void )
 			new = B_CheckBuildingConstruction( b );
 			newBuilding += new;
 			if ( new ) {
-				MN_AddNewMessage( va(_("Building finished - Base %s"), bmBases[i].title ) , va(_("Construction of building %s finished."), b->title ), false, MSG_CONSTRUCTION, NULL );
+				MN_AddNewMessage( va(_("Building finished - Base %s"), bmBases[i].title ) , va(_("Construction of building %s finished."), b->title ), qfalse, MSG_CONSTRUCTION, NULL );
 				Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("Construction of building %s finished\\at base %s\n"), b->title, bmBases[i].title );
 			}
 		}
@@ -2334,7 +2334,7 @@ void CL_UpdateBaseData( void )
 		{
 			if ( newBuilding > 1 )
 				Com_sprintf( messageBuffer, MAX_MENUTEXTLEN, _("There is at least one finished construction\\at base %s\n"), bmBases[i].title );
-			MN_AddNewMessage( _("Construction finished"), messageBuffer, true, MSG_STANDARD, NULL );
+			MN_AddNewMessage( _("Construction finished"), messageBuffer, qtrue, MSG_STANDARD, NULL );
 		}
 
 		// only the last occurence of a building can have a status

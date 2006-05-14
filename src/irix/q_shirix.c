@@ -136,21 +136,21 @@ static qboolean CompareAttributes(char *path, char *name,
 	struct stat st;
 	char fn[MAX_OSPATH];
 
-// . and .. never match
+	// . and .. never match
 	if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0)
-		return false;
+		return qfalse;
 
 	sprintf(fn, "%s/%s", path, name);
 	if (stat(fn, &st) == -1)
-		return false; // shouldn't happen
+		return qfalse; // shouldn't happen
 
 	if ( ( st.st_mode & S_IFDIR ) && ( canthave & SFF_SUBDIR ) )
-		return false;
+		return qfalse;
 
 	if ( ( musthave & SFF_SUBDIR ) && !( st.st_mode & S_IFDIR ) )
-		return false;
+		return qfalse;
 
-	return true;
+	return qtrue;
 }
 
 char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)

@@ -133,7 +133,7 @@ qboolean BrushesDisjoint (bspbrush_t *a, bspbrush_t *b)
 	for (i=0 ; i<3 ; i++)
 		if (a->mins[i] >= b->maxs[i]
 		|| a->maxs[i] <= b->mins[i])
-			return true;	// bounding boxes don't overlap
+			return qtrue;	// bounding boxes don't overlap
 
 	// check for opposing planes
 	for (i=0 ; i<a->numsides ; i++)
@@ -142,11 +142,11 @@ qboolean BrushesDisjoint (bspbrush_t *a, bspbrush_t *b)
 		{
 			if (a->sides[i].planenum ==
 			(b->sides[j].planenum^1) )
-				return true;	// opposite planes, so not touching
+				return qtrue;	// opposite planes, so not touching
 		}
 	}
 
-	return false;	// might intersect
+	return qfalse;	// might intersect
 }
 
 /*
@@ -218,7 +218,7 @@ bspbrush_t	*ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t clipmaxs)
 			|| p == minplanenums[0] || p == minplanenums[1])
 		{
 			brush->sides[i].texinfo = TEXINFO_NODE;
-			brush->sides[i].visible = false;
+			brush->sides[i].visible = qfalse;
 		}
 	}
 	return brush;
@@ -234,35 +234,35 @@ qboolean IsInLevel( int contents, int level )
 {
 	// special levels
 	if ( level == 256 )
-		if (contents & CONTENTS_WEAPONCLIP) return true;
-		else return false;
+		if (contents & CONTENTS_WEAPONCLIP) return qtrue;
+		else return qfalse;
 
 	if ( level == 257 )
-		if (contents & CONTENTS_PLAYERCLIP) return true;
-		else return false;
+		if (contents & CONTENTS_PLAYERCLIP) return qtrue;
+		else return qfalse;
 
 	if ( level == 258 ) 
-		if (contents & CONTENTS_STEPON) return true;
-		else return false;
+		if (contents & CONTENTS_STEPON) return qtrue;
+		else return qfalse;
 
 
 	if (contents & MASK_CLIP )
-		return false;
+		return qfalse;
 
 	// standard levels
 	if ( level == -1 )
 	{
-		return true;
+		return qtrue;
 	}
 	else if ( level )
 	{
-		if ( ((contents >> 8) & 0xFF) == level ) return true;
-		else return false;
+		if ( ((contents >> 8) & 0xFF) == level ) return qtrue;
+		else return qfalse;
 	} 
 	else 
 	{
-		if ( contents & 0xFF00 ) return false;
-		else return true;
+		if ( contents & 0xFF00 ) return qfalse;
+		else return qtrue;
 	}
 }
 
@@ -374,7 +374,7 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level,
 		if (j != 3)
 			continue;
 
-		mb->finished = true;
+		mb->finished = qtrue;
 
 		//
 		// make a copy of the brush
@@ -388,7 +388,7 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level,
 			if (newbrush->sides[j].winding)
 				newbrush->sides[j].winding = CopyWinding (newbrush->sides[j].winding);
 			if (newbrush->sides[j].surf & SURF_HINT)
-				newbrush->sides[j].visible = true;	// hints are always visible
+				newbrush->sides[j].visible = qtrue; // hints are always visible
 		}
 		VectorCopy (mb->mins, newbrush->mins);
 		VectorCopy (mb->maxs, newbrush->maxs);
@@ -512,10 +512,10 @@ qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
 	// detail brushes never bite structural brushes
 	if ( (b1->original->contents & CONTENTS_DETAIL) 
 		&& !(b2->original->contents & CONTENTS_DETAIL) )
-		return false;
+		return qfalse;
 	if (b1->original->contents & CONTENTS_SOLID)
-		return true;
-	return false;
+		return qtrue;
+	return qfalse;
 }
 
 /*
@@ -539,7 +539,7 @@ bspbrush_t *ChopBrushes (bspbrush_t *head)
 
 #if 0
 	if (startbrush == 0)
-		WriteBrushList ("before.gl", head, false);
+		WriteBrushList ("before.gl", head, qfalse);
 #endif
 	keep = NULL;
 
@@ -632,7 +632,7 @@ newlist:
 	qprintf ("output brushes: %i\n", CountBrushList (keep));
 #if 0
 	{
-		WriteBrushList ("after.gl", keep, false);
+		WriteBrushList ("after.gl", keep, qfalse);
 		WriteBrushMap ("after.map", keep);
 	}
 #endif
@@ -671,8 +671,8 @@ bspbrush_t *InitialBrushList (bspbrush_t *list)
 		for (i=0 ; i<b->numsides ; i++)
 		{
 			newb->sides[i].original = &b->sides[i];
-//			newb->sides[i].visible = true;
-			b->sides[i].visible = false;
+//			newb->sides[i].visible = qtrue;
+			b->sides[i].visible = qfalse;
 		}
 	}
 
@@ -704,7 +704,7 @@ bspbrush_t *OptimizedBrushList (bspbrush_t *list)
 		out = newb;
 	}
 
-//	WriteBrushList ("vis.gl", out, true);
+//	WriteBrushList ("vis.gl", out, qtrue);
 
 	return out;
 }

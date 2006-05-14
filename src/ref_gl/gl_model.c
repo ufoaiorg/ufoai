@@ -1331,7 +1331,7 @@ void Mod_FindSharedEdges(model_t *mod)
 	dtriangle_t *tris = (dtriangle_t *)((unsigned char*)hdr + hdr->ofs_tris);
 	int i,o;
 
-	mod->noshadow = false;
+	mod->noshadow = qfalse;
 
 	for (i=0; i<hdr->num_tris; i++)
 	{
@@ -1341,7 +1341,7 @@ void Mod_FindSharedEdges(model_t *mod)
 
 		for (o=0; o<3; o++)
 			if (mod->edge_tri[i][o] == -1)
-				mod->noshadow = true;
+				mod->noshadow = qtrue;
 
 		tris++;
 	}
@@ -1361,7 +1361,7 @@ struct model_s *R_RegisterModel (char *name)
 	dsprite_t	*sprout;
 	dmdl_t		*pheader;
 
-	mod = Mod_ForName (name, false);
+	mod = Mod_ForName (name, qfalse);
 	if (mod)
 	{
 		// register any images used by the models

@@ -285,7 +285,7 @@ static void CL_SellAircraft( void )
 	int num, aircraftID, i, j;
 	base_t*	base;
 	aircraft_t*	air;
-	qboolean	found = false;
+	qboolean	found = qfalse;
 
 	if ( Cmd_Argc() < 2 )
 	{
@@ -310,13 +310,13 @@ static void CL_SellAircraft( void )
 			{
 				if ( air->teamSize )
 					continue;
-				found = true;
+				found = qtrue;
 				break;
 			}
 		}
 		// ok, we've found an empty aircraft (no team) in a base
 		// so now we can sell it
-		if ( found == true )
+		if ( found )
 		{
 			// FIXME: Do the selling here...
 			// reassign the aircraft-array in base_t

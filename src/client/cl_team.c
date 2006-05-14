@@ -429,7 +429,7 @@ void CL_GenerateEquipmentCmd( void )
 
 	if ( !baseCurrent->numHired )
 	{
-		MN_PopMenu( false );
+		MN_PopMenu( qfalse );
 		return;
 	}
 
@@ -614,7 +614,7 @@ void CL_MarkTeamCmd( void )
 	if ( ! baseCurrent )
 	{
 		Com_Printf("No base set up\n");
-		MN_PopMenu(false);
+		MN_PopMenu( qfalse );
 		return;
 	}
 
@@ -1145,7 +1145,7 @@ void CL_ParseResults( sizebuf_t *buf )
 	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians killed by your Team\t%i\n"), num_kills[we][TEAM_CIVILIAN] ) );
 	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians saved\t%i\n\n\n"), num_alive[TEAM_CIVILIAN] ) );
 
-	MN_PopMenu( true );
+	MN_PopMenu( qtrue );
 	if ( !curCampaign )
 	{
 		// get correct menus

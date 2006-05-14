@@ -48,20 +48,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/keys.h"
 #include "rw_linux.h"
 
-#ifdef Joystick
-# if defined (__linux__)
-#include <linux/joystick.h>
-# elif defined (__FreeBSD__)
-#include <sys/joystick.h>
-# endif
-#include <glob.h>
-#endif
-
 /*****************************************************************************/
 
-static qboolean                 X11_active = false;
+static qboolean                 X11_active = qfalse;
 
-qboolean have_stencil = false;
+qboolean have_stencil = qfalse;
 
 static cvar_t	*m_filter;
 static cvar_t	*in_mouse;
@@ -112,51 +103,9 @@ void RW_IN_PlatformInit( void )
 {
 }
 
-/************************
- * Joystick
- ************************/
-#ifdef Joystick
-static SDL_Joystick *joy;
-static int joy_oldbuttonstate;
-static int joy_numbuttons;
-
-qboolean CloseJoystick(void)
-{
-	if (joy) {
-		SDL_JoystickClose(joy);
-		joy = NULL;
-	}
-	return true;
-}
-
-void PlatformJoyCommands(int *axis_vals, int *axis_map)
-{
-	int i;
-	int key_index;
-	if (joy) {
-		for (i=0 ; i < joy_numbuttons ; i++) {
-			if ( SDL_JoystickGetButton(joy, i) && joy_oldbuttonstate!=i ) {
-				key_index = (i < 4) ? K_JOY1 : K_AUX1;
-				in_state->Key_Event_fp (key_index + i, true);
-				joy_oldbuttonstate = i;
-			}
-
-			if ( !SDL_JoystickGetButton(joy, i) && joy_oldbuttonstate!=i ) {
-				key_index = (i < 4) ? K_JOY1 : K_AUX1;
-				in_state->Key_Event_fp (key_index + i, false);
-				joy_oldbuttonstate = i;
-			}
-		}
-		for (i=0;i<6;i++) {
-			axis_vals[axis_map[i]] = (int)SDL_JoystickGetAxis(joy, i);
-		}
-	}
-}
-#endif
-
 void RW_IN_Activate(qboolean active)
 {
-	mouse_active = true;
+	mouse_active = qtrue;
 }
 
 /*****************************************************************************/
@@ -286,7 +235,7 @@ void GetEvent(SDL_Event *event)
 #endif
 			default: mouse_buttonstate = K_AUX1 + (event->button.button - 8)%16; break;
 		}
-		keyq[keyq_head].down = event->type == SDL_MOUSEBUTTONDOWN ? true : false;
+		keyq[keyq_head].down = event->type == SDL_MOUSEBUTTONDOWN ? qtrue : qfalse;
 		keyq[keyq_head].key = mouse_buttonstate;
 		keyq_head = (keyq_head + 1) & 63;
 		break;
@@ -297,22 +246,6 @@ void GetEvent(SDL_Event *event)
 			my = event->motion.y * win_y; // * sensitivity->value
 		}
 		break;
-#ifdef Joystick
-	case SDL_JOYBUTTONDOWN:
-		keyq[keyq_head].key =
-		((((SDL_JoyButtonEvent*)event)->button < 4)?K_JOY1:K_AUX1)+
-		((SDL_JoyButtonEvent*)event)->button;
-		keyq[keyq_head].down = true;
-		keyq_head = (keyq_head + 1) & 63;
-		break;
-	case SDL_JOYBUTTONUP:
-		keyq[keyq_head].key =
-		((((SDL_JoyButtonEvent*)event)->button < 4)?K_JOY1:K_AUX1)+
-		((SDL_JoyButtonEvent*)event)->button;
-		keyq[keyq_head].down = false;
-		keyq_head = (keyq_head + 1) & 63;
-		break;
-#endif
 	case SDL_KEYDOWN:
 		if ( (KeyStates[SDLK_LALT] || KeyStates[SDLK_RALT]) &&
 			(event->key.keysym.sym == SDLK_RETURN) ) {
@@ -325,7 +258,7 @@ void GetEvent(SDL_Event *event)
 				ri.Cvar_SetValue( "vid_fullscreen", 0 );
 			}
 
-			vid_fullscreen->modified = false; /* we just changed it with SDL. */
+			vid_fullscreen->modified = qfalse; /* we just changed it with SDL. */
 
 			break; /* ignore this key */
 		}
@@ -347,7 +280,7 @@ void GetEvent(SDL_Event *event)
 		key = XLateKey(event->key.keysym.sym);
 		if (key) {
 			keyq[keyq_head].key = key;
-			keyq[keyq_head].down = true;
+			keyq[keyq_head].down = qtrue;
 			keyq_head = (keyq_head + 1) & 63;
 		}
 		break;
@@ -360,7 +293,7 @@ void GetEvent(SDL_Event *event)
 			key = XLateKey(event->key.keysym.sym);
 			if (key) {
 				keyq[keyq_head].key = key;
-				keyq[keyq_head].down = false;
+				keyq[keyq_head].down = qfalse;
 				keyq_head = (keyq_head + 1) & 63;
 			}
 		}
@@ -372,43 +305,6 @@ void GetEvent(SDL_Event *event)
 
 }
 
-#ifdef Joystick
-qboolean OpenJoystick( void )
-{
-	int num_joysticks, i;
-	joy = NULL;
-
-	if (!(SDL_INIT_JOYSTICK&SDL_WasInit(SDL_INIT_JOYSTICK))) {
-		ri.Con_Printf(PRINT_ALL, "SDL Joystick not initialized, trying to init...\n");
-		SDL_Init(SDL_INIT_JOYSTICK);
-	}
-	ri.Con_Printf(PRINT_ALL, "Trying to start-up joystick...\n");
-	if ((num_joysticks=SDL_NumJoysticks())) {
-		for(i=0;i<num_joysticks;i++) {
-			ri.Con_Printf(PRINT_ALL, "Trying joystick [%s]\n",
-					SDL_JoystickName(i));
-			if (!SDL_JoystickOpened(i)) {
-				joy = SDL_JoystickOpen(i);
-				if (joy) {
-					ri.Con_Printf(PRINT_ALL, "Joytick activated.\n");
-					joy_numbuttons = SDL_JoystickNumButtons(joy);
-					break;
-				}
-			}
-		}
-		if (!joy) {
-			ri.Con_Printf(PRINT_ALL, "Failed to open any joysticks\n");
-			return false;
-		}
-	}
-	else {
-		ri.Con_Printf(PRINT_ALL, "No joysticks available\n");
-		return false;
-	}
-	return true;
-}
-#endif
-//
 /*****************************************************************************/
 
 void *GLimp_GetProcAddress(const char *func)
@@ -421,23 +317,19 @@ qboolean GLimp_Init( void *hInstance, void *wndProc )
 	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_CDROM|SDL_INIT_VIDEO) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 			Sys_Error("SDL Init failed: %s\n", SDL_GetError());
-			return false;
+			return qfalse;
 		}
 	} else if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
 		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
 			Sys_Error("SDL Init failed: %s\n", SDL_GetError());
-			return false;
+			return qfalse;
 		}
 	}
 
 	SDL_EnableUNICODE(1);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 
-#ifdef Joystick
-	OpenJoystick();
-#endif
-
-	return true;
+	return qtrue;
 }
 
 static void SetSDLIcon( void )
@@ -487,7 +379,7 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 		isfullscreen = (surface->flags & SDL_FULLSCREEN) ? 1 : 0;
 		if (fullscreen == isfullscreen)
-			return true;
+			return qtrue;
 	}
 
 	srandom(getpid());
@@ -516,20 +408,20 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	if ((surface = SDL_SetVideoMode(vid.width, vid.height, 0, flags)) == NULL) {
 		Sys_Error("(SDLGL) SDL SetVideoMode failed: %s\n", SDL_GetError());
-		return false;
+		return qfalse;
 	}
 
 	// stencilbuffer shadows
  	if (use_stencil) {
 		int stencil_bits;
 
-		have_stencil = false;
+		have_stencil = qfalse;
 
 		if (!SDL_GL_GetAttribute(SDL_GL_STENCIL_SIZE, &stencil_bits))
 		{
 			ri.Con_Printf(PRINT_ALL, "I: got %d bits of stencil\n", stencil_bits);
 			if (stencil_bits >= 1)
-				have_stencil = true;
+				have_stencil = qtrue;
 		}
 	}
 
@@ -537,9 +429,9 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	SDL_ShowCursor( SDL_DISABLE );
 
-	X11_active = true;
+	X11_active = qtrue;
 
-	return true;
+	return qtrue;
 }
 
 void GLimp_BeginFrame( float camera_seperation )
@@ -591,10 +483,6 @@ void GLimp_Shutdown( void )
 		SDL_FreeSurface(surface);
 	surface = NULL;
 
-#ifdef Joystick
-	CloseJoystick();
-#endif
-
 	SDL_ShowCursor(SDL_ENABLE);
 
 	if (SDL_WasInit(SDL_INIT_EVERYTHING) == SDL_INIT_VIDEO)
@@ -602,7 +490,7 @@ void GLimp_Shutdown( void )
 	else
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 
-	X11_active = false;
+	X11_active = qfalse;
 }
 
 void GLimp_AppActivate( qboolean active )
@@ -650,7 +538,7 @@ void KBD_Update(void)
 			SDL_GetRelativeMouseState(&mx, &my);
 
 		if (vid_grabmouse->modified) {
-			vid_grabmouse->modified = false;
+			vid_grabmouse->modified = qfalse;
 
 			if (!vid_grabmouse->value) {
 				/* ungrab the pointer */
@@ -716,16 +604,16 @@ void RW_IN_Init(in_state_t *in_state_p)
 	m_side = ri.Cvar_Get ("m_side", "0.8", 0);
 
 	mx = my = 0.0;
-	mouse_avail = true;
+	mouse_avail = qtrue;
 }
 
 void RW_IN_Shutdown(void)
 {
-	RW_IN_Activate (false);
+	RW_IN_Activate (qfalse);
 
 	if (mouse_avail)
 	{
-		mouse_avail = false;
+		mouse_avail = qfalse;
 	}
 }
 

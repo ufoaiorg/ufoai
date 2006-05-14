@@ -290,7 +290,7 @@ void CL_SendConnectPacket (void)
 		adr.port = BigShort (PORT_SERVER);
 
 	port = Cvar_VariableValue ("qport");
-	userinfo_modified = false;
+	userinfo_modified = qfalse;
 
 	Netchan_OutOfBandPrint (NS_CLIENT, adr, "connect %i %i %i \"%s\"\n",
 		PROTOCOL_VERSION, port, cls.challenge, Cvar_Userinfo() );
@@ -368,7 +368,7 @@ void CL_Connect_f (void)
 
 	if (Com_ServerState ())
 	{	// if running a local server, kill it and reissue
-		SV_Shutdown ( "Server quit\n", false);
+		SV_Shutdown ( "Server quit\n", qfalse);
 	}
 	else
 	{
@@ -377,7 +377,7 @@ void CL_Connect_f (void)
 
 	server = Cmd_Argv (1);
 
-	NET_Config (true);		// allow remote
+	NET_Config (qtrue); // allow remote
 
 	CL_Disconnect ();
 
@@ -413,7 +413,7 @@ void CL_Rcon_f (void)
 	message[3] = (char)255;
 	message[4] = 0;
 
-	NET_Config (true);		// allow remote
+	NET_Config (qtrue); // allow remote
 
 	Q_strcat (message, sizeof(message), "rcon ");
 
@@ -499,7 +499,7 @@ void CL_Disconnect (void)
 	re.CinematicSetPalette(NULL);
 
 	// go to main menu and bring up console
-/*	MN_PopMenu( true );
+/*	MN_PopMenu( qtrue );
 	MN_PushMenu( mn_main->string );
 	cls.key_dest = key_console;
 */
@@ -558,7 +558,7 @@ void CL_Packet_f (void)
 		return;
 	}
 
-	NET_Config (true);		// allow remote
+	NET_Config (qtrue);		// allow remote
 
 	if (!NET_StringToAdr (Cmd_Argv(1), &adr))
 	{
@@ -717,7 +717,7 @@ void CL_PingServers_f (void)
 	cvar_t		*noudp;
 	cvar_t		*noipx;
 
-	NET_Config (true);		// allow remote
+	NET_Config (qtrue);		// allow remote
 
 	// send a broadcast packet
 	Com_Printf ("pinging broadcast...\n");
@@ -778,7 +778,7 @@ void CL_ConnectionlessPacket (void)
 
 	s = MSG_ReadStringLine (&net_message);
 
-	Cmd_TokenizeString (s, false);
+	Cmd_TokenizeString (s, qfalse);
 
 	c = Cmd_Argv(0);
 
@@ -1246,7 +1246,7 @@ void CL_Precache_f (void)
 {
 	// stop sound, back to the console
 	S_StopAllSounds();
-	MN_PopMenu( true );
+	MN_PopMenu( qtrue );
 
 	//Yet another hack to let old demos work
 	//the old precache sequence
@@ -1402,7 +1402,7 @@ void CL_InitLocal (void)
 	cl_numnames = Cvar_Get ("cl_numnames", "19", CVAR_NOSET);
 
 	difficulty = Cvar_Get ("difficulty", "3", CVAR_ARCHIVE | CVAR_LATCH);
-	difficulty->modified = false;
+	difficulty->modified = qfalse;
 
 	confirm_actions = Cvar_Get ("confirm_actions", "0", CVAR_ARCHIVE );
 
@@ -1604,7 +1604,7 @@ void CL_SendCmd (void)
 	{
 		if (userinfo_modified)
 		{
-			userinfo_modified = false;
+			userinfo_modified = qfalse;
 			MSG_WriteByte (&cls.netchan.message, clc_userinfo);
 			MSG_WriteString (&cls.netchan.message, Cvar_Userinfo() );
 		}
@@ -1699,7 +1699,7 @@ void CL_CvarCheck( void )
 		for ( i = 0; i < map_maxlevel; i++ ) Cbuf_AddText( va( "deselfloor%i\n", i ) );
 		for ( ; i < 8; i++ ) Cbuf_AddText( va( "disfloor%i\n", i ) );
 		Cbuf_AddText( va( "selfloor%i\n", (int)cl_worldlevel->value ) );
-		cl_worldlevel->modified = false;
+		cl_worldlevel->modified = qfalse;
 	}
 
 	// difficulty
@@ -1737,15 +1737,15 @@ void CL_Frame (int msec)
 	{
 		if ( (int)sv_maxclients->value > 1 )
 		{
-			ccs.singleplayer = false;
+			ccs.singleplayer = qfalse;
 			Com_Printf("Changing to Multiplayer\n");
 		}
 		else
 		{
-			ccs.singleplayer = true;
+			ccs.singleplayer = qtrue;
 			Com_Printf("Changing to Singleplayer\n");
 		}
-		sv_maxclients->modified = false;
+		sv_maxclients->modified = qfalse;
 	}
 
 	extratime += msec;
@@ -1901,7 +1901,7 @@ void CL_Init (void)
 //	M_Init ();
 
 	SCR_Init ();
-	cls.disable_screen = true;	// don't draw yet
+	cls.disable_screen = qtrue;	// don't draw yet
 
 	CDAudio_Init ();
 	CL_InitLocal ();
@@ -1924,14 +1924,14 @@ to run quit through here before the final handoff to the sys code.
 */
 void CL_Shutdown(void)
 {
-	static qboolean isdown = false;
+	static qboolean isdown = qfalse;
 
 	if (isdown)
 	{
 		printf ("recursive shutdown\n");
 		return;
 	}
-	isdown = true;
+	isdown = qtrue;
 
 	CL_WriteConfiguration ();
 

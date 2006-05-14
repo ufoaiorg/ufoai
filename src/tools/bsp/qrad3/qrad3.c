@@ -127,7 +127,7 @@ void CalcVertexNormals ( int vnum )
 	vnum++;
 	VectorCopy( dvertexes[vnum].point, vert );
 	VectorClear( normal );
-	found = false;
+	found = qfalse;
 
 	for ( i = 0, face = dfaces; i < numfaces; i++, face++ )
 		if ( texinfo[face->texinfo].flags & 0x8000 )
@@ -142,7 +142,7 @@ void CalcVertexNormals ( int vnum )
 				{
 					// found a plane containing that vertex
 					VectorAdd( normal, dplanes[face->planenum].normal, normal );
-					found = true;
+					found = qtrue;
 					break;
 				}
 			}
@@ -507,7 +507,7 @@ void BounceLight (void)
 
 	for (i=0 ; i<numbounce ; i++)
 	{
-		RunThreadsOnIndividual (num_patches, false, ShootLight);
+		RunThreadsOnIndividual (num_patches, qfalse, ShootLight);
 		added = CollectLight ();
 
 		qprintf ("bounce:%i added:%f\n", i, added);
@@ -558,18 +558,18 @@ void RadWorld (void)
 	SubdividePatches ();
 
 	// calculate vertex normals for smooth lightning
-//	RunThreadsOnIndividual (numvertexes-1, true, CalcVertexNormals);
+//	RunThreadsOnIndividual (numvertexes-1, qtrue, CalcVertexNormals);
 
 	// create directlights out of patches and lights
 	CreateDirectLights ();
 
 	// build initial facelights
-	RunThreadsOnIndividual (numfaces, true, BuildFacelights);
+	RunThreadsOnIndividual (numfaces, qtrue, BuildFacelights);
 
 	if (numbounce > 0)
 	{
 		// build transfer lists
-		RunThreadsOnIndividual (num_patches, true, MakeTransfers);
+		RunThreadsOnIndividual (num_patches, qtrue, MakeTransfers);
 		qprintf ("transfer lists: %5.1f megs\n"
 		, (float)total_transfer * sizeof(transfer_t) / (1024*1024));
 
@@ -592,7 +592,7 @@ void RadWorld (void)
 	dlightdata[0] = lightquant;
 	lightdatasize = 1;
 
-	RunThreadsOnIndividual (numfaces, true, FinalLightFace);
+	RunThreadsOnIndividual (numfaces, qtrue, FinalLightFace);
 }
 
 
@@ -611,12 +611,12 @@ int main (int argc, char **argv)
 
 	printf ("----- Radiosity ----\n");
 
-	verbose = false;
+	verbose = qfalse;
 
 	for (i=1 ; i<argc ; i++)
 	{
 		if (!strcmp(argv[i],"-dump"))
-			dumppatches = true;
+			dumppatches = qtrue;
 		else if (!strcmp(argv[i],"-bounce"))
 		{
 			numbounce = atoi (argv[i+1]);
@@ -624,11 +624,11 @@ int main (int argc, char **argv)
 		}
 		else if (!strcmp(argv[i],"-v"))
 		{
-			verbose = true;
+			verbose = qtrue;
 		}
 		else if (!strcmp(argv[i],"-extra"))
 		{
-			extrasamples = true;
+			extrasamples = qtrue;
 			printf ("extrasamples = true\n");
 		}
 		else if (!strcmp(argv[i],"-threads"))
@@ -666,12 +666,12 @@ int main (int argc, char **argv)
 		}
 		else if (!strcmp(argv[i],"-glview"))
 		{
-			glview = true;
+			glview = qtrue;
 			printf ("glview = true\n");
 		}
 		else if (!strcmp(argv[i],"-nopvs"))
 		{
-			nopvs = true;
+			nopvs = qtrue;
 			printf ("nopvs = true\n");
 		}
 		else if (!strcmp(argv[i],"-maxlight"))

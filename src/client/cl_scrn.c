@@ -403,7 +403,7 @@ void SCR_Init (void)
 
 	SCR_TouchPics ();
 
-	scr_initialized = true;
+	scr_initialized = qtrue;
 }
 
 
@@ -452,7 +452,7 @@ void SCR_DrawLoading (void)
 	if (!scr_draw_loading)
 		return;
 
-	scr_draw_loading = false;
+	scr_draw_loading = qfalse;
 	re.DrawGetPicSize (&w, &h, "loading");
 	re.DrawPic ((viddef.width-w)/2, (viddef.height-h)/2, "loading");
 }
@@ -470,7 +470,7 @@ void SCR_DrawCursor (void)
 
 	if (cursor->modified)
 	{
-		cursor->modified = false;
+		cursor->modified = qfalse;
 		SCR_TouchPics ();
 	}
 
@@ -479,14 +479,14 @@ void SCR_DrawCursor (void)
 
 	if ( mouseSpace != MS_DRAG )
 	{
-		re.DrawNormPic (mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, cursor_pic);
+		re.DrawNormPic (mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
 
 		if ( cls.state == ca_active && mouseSpace == MS_WORLD )
 		{
 			if ( cls.team != cl.actTeam )
-				re.DrawNormPic (mx+16, my+16, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "sanduhr" );
+				re.DrawNormPic (mx+16, my+16, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "sanduhr" );
 			else if ( selActor && selActor->state & STATE_CROUCHED )
-				re.DrawNormPic (mx+16, my+16, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "ducked" );
+				re.DrawNormPic (mx+16, my+16, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked" );
 		}
 	} else {
 		vec3_t scale  = {3.5, 3.5, 3.5};
@@ -584,7 +584,7 @@ SCR_BeginLoadingPlaque
 void SCR_BeginLoadingPlaque (void)
 {
 	S_StopAllSounds ();
-	cl.sound_prepped = false;		// don't play ambients
+	cl.sound_prepped = qfalse; // don't play ambients
 	CDAudio_Stop ();
 	if (cls.disable_screen)
 		return;
@@ -901,7 +901,7 @@ void SCR_UpdateScreen (void)
 			int		w, h;
 
 			re.CinematicSetPalette(NULL);
-			scr_draw_loading = false;
+			scr_draw_loading = qfalse;
 			re.DrawGetPicSize (&w, &h, "loading");
 			re.DrawPic ((viddef.width-w)/2, (viddef.height-h)/2, "loading");
 			re.EndFrame();
@@ -916,7 +916,7 @@ void SCR_UpdateScreen (void)
 				if (cl.cinematicpalette_active)
 				{
 					re.CinematicSetPalette(NULL);
-					cl.cinematicpalette_active = false;
+					cl.cinematicpalette_active = qfalse;
 				}
 				SCR_DrawConsole ();
 				re.EndFrame();
@@ -935,7 +935,7 @@ void SCR_UpdateScreen (void)
 			if (cl.cinematicpalette_active)
 			{
 				re.CinematicSetPalette(NULL);
-				cl.cinematicpalette_active = false;
+				cl.cinematicpalette_active = qfalse;
 			}
 
 			// do 3D refresh drawing, and then update the screen

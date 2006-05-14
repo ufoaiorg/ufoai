@@ -304,7 +304,7 @@ void S_InitScaletable (void)
 	int		i, j;
 	int		scale;
 
-	s_volume->modified = false;
+	s_volume->modified = qfalse;
 	for (i=0 ; i<32 ; i++)
 	{
 		scale = i * 8 * 256 * s_volume->value;

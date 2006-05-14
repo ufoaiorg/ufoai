@@ -463,7 +463,7 @@ vec2_t *Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, ch
 		buffer = Font_GetLineWrap( f, buffer, maxWidth, &w, &h );
 		if ( ! buffer || !strlen(buffer) )
 			return NULL;
-		
+
 		// check whether this line is bigger than every other
 		if ( w > max )
 			max = w;

@@ -390,8 +390,8 @@ void Scrap_Upload (void)
 {
 	scrap_uploads++;
 	GL_Bind(TEXNUM_SCRAPS);
-	GL_Upload8 (scrap_texels[0], BLOCK_WIDTH, BLOCK_HEIGHT, false, false, it_pic );
-	scrap_dirty = false;
+	GL_Upload8 (scrap_texels[0], BLOCK_WIDTH, BLOCK_HEIGHT, qfalse, qfalse, it_pic );
+	scrap_dirty = qfalse;
 }
 
 /*
@@ -798,7 +798,7 @@ void LoadJPG (char *filename, byte **pic, int *width, int *height)
 	jpeg_mem_src(&cinfo, rawdata, rawsize);
 
 	// Process JPEG header
-	jpeg_read_header(&cinfo, true);
+	jpeg_read_header(&cinfo, qtrue);
 
 	// Start Decompression
 	jpeg_start_decompress(&cinfo);
@@ -1579,7 +1579,7 @@ qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qb
 	//emboss filter
 	if (gl_embossfilter->value && type != it_skin)
 	{
-		R_FilterTexture (EMBOSS_FILTER, data, width, height, 1, 128, true, GL_MODULATE);
+		R_FilterTexture (EMBOSS_FILTER, data, width, height, 1, 128, qtrue, GL_MODULATE);
 	}
 
 	if (scaled_width == width && scaled_height == height)
@@ -1688,7 +1688,7 @@ qboolean GL_Upload8 (byte *data, int width, int height, qboolean mipmap, qboolea
 		}
 	}
 
-	return GL_Upload32 (trans, width, height, mipmap, true, type);
+	return GL_Upload32 (trans, width, height, mipmap, qtrue, type);
 }
 
 
@@ -1822,7 +1822,7 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 		texnum = Scrap_AllocBlock (image->width, image->height, &x, &y);
 		if (texnum == -1)
 			goto nonscrap;
-		scrap_dirty = true;
+		scrap_dirty = qtrue;
 
 		// copy the texels into the scrap block
 		k = 0;
@@ -1830,8 +1830,8 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 			for (j=0 ; j<image->width ; j++, k++)
 				scrap_texels[texnum][(y+i)*BLOCK_WIDTH + x + j] = pic[k];
 		image->texnum = TEXNUM_SCRAPS + texnum;
-		image->scrap = true;
-		image->has_alpha = true;
+		image->scrap = qtrue;
+		image->has_alpha = qtrue;
 		image->sl = (x+0.01)/(float)BLOCK_WIDTH;
 		image->sh = (x+image->width-0.01)/(float)BLOCK_WIDTH;
 		image->tl = (y+0.01)/(float)BLOCK_WIDTH;
@@ -1840,7 +1840,7 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 	else
 	{
 nonscrap:
-		image->scrap = false;
+		image->scrap = qfalse;
 		image->texnum = TEXNUM_IMAGES + (image - gltextures);
 		GL_Bind(image->texnum);
 		if (bits == 8)
@@ -1850,7 +1850,7 @@ nonscrap:
 				(image->type != it_pic && image->type != it_wrappic && image->type != it_sky), image->type == it_pic, image->type );
 		image->upload_width = upload_width;		// after power of 2 and scales
 		image->upload_height = upload_height;
-		image->paletted = false;
+		image->paletted = qfalse;
 		image->sl = 0;
 		image->sh = 1;
 		image->tl = 0;

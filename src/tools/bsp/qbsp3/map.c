@@ -83,15 +83,15 @@ qboolean	PlaneEqual (plane_t *p, vec3_t normal, vec_t dist)
 	&& fabs(p->normal[1] - normal[1]) < NORMAL_EPSILON
 	&& fabs(p->normal[2] - normal[2]) < NORMAL_EPSILON
 	&& fabs(p->dist - dist) < DIST_EPSILON )
-		return true;
+		return qtrue;
 #else
 	if (p->normal[0] == normal[0]
 		&& p->normal[1] == normal[1]
 		&& p->normal[2] == normal[2]
 		&& p->dist == dist)
-		return true;
+		return qtrue;
 #endif
-	return false;
+	return qfalse;
 }
 
 /*
@@ -362,7 +362,7 @@ void AddBrushBevels (mapbrush_t *b)
 				s->planenum = FindFloatPlane (normal, dist);
 				s->texinfo = b->original_sides[0].texinfo;
 				s->contents = b->original_sides[0].contents;
-				s->bevel = true;
+				s->bevel = qtrue;
 				c_boxbevels++;
 			}
 
@@ -452,7 +452,7 @@ void AddBrushBevels (mapbrush_t *b)
 					s2->planenum = FindFloatPlane (normal, dist);
 					s2->texinfo = b->original_sides[0].texinfo;
 					s2->contents = b->original_sides[0].contents;
-					s2->bevel = true;
+					s2->bevel = qtrue;
 					c_edgebevels++;
 					b->numsides++;
 				}
@@ -496,7 +496,7 @@ qboolean MakeBrushWindings (mapbrush_t *ob)
 		side->winding = w;
 		if (w)
 		{
-			side->visible = true;
+			side->visible = qtrue;
 			for (j=0 ; j<w->numpoints ; j++)
 				AddPointToBounds (w->p[j], ob->mins, ob->maxs);
 		}
@@ -510,7 +510,7 @@ qboolean MakeBrushWindings (mapbrush_t *ob)
 			printf ("entity %i, brush %i: no visible sides on brush\n", ob->entitynum, ob->brushnum);
 	}
 
-	return true;
+	return qtrue;
 }
 
 
@@ -539,7 +539,7 @@ void ParseBrush (entity_t *mapent)
 
 	do
 	{
-		if (!GetToken (true))
+		if (!GetToken (qtrue))
 			break;
 		if (!strcmp (token, "}") )
 			break;
@@ -552,17 +552,17 @@ void ParseBrush (entity_t *mapent)
 		for (i=0 ; i<3 ; i++)
 		{
 			if (i != 0)
-				GetToken (true);
+				GetToken (qtrue);
 			if (strcmp (token, "(") )
 				Error ("parsing brush");
 			
 			for (j=0 ; j<3 ; j++)
 			{
-				GetToken (false);
+				GetToken (qfalse);
 				planepts[i][j] = atoi(token);
 			}
 			
-			GetToken (false);
+			GetToken (qfalse);
 			if (strcmp (token, ")") )
 				Error ("parsing brush");
 				
@@ -572,18 +572,18 @@ void ParseBrush (entity_t *mapent)
 		//
 		// read the texturedef
 		//
-		GetToken (false);
+		GetToken (qfalse);
 		strcpy (td.name, token);
 
-		GetToken (false);
+		GetToken (qfalse);
 		td.shift[0] = atoi(token);
-		GetToken (false);
+		GetToken (qfalse);
 		td.shift[1] = atoi(token);
-		GetToken (false);
+		GetToken (qfalse);
 		td.rotate = atoi(token);	
-		GetToken (false);
+		GetToken (qfalse);
 		td.scale[0] = atof(token);
-		GetToken (false);
+		GetToken (qfalse);
 		td.scale[1] = atof(token);
 
 		// find default flags and values
@@ -595,11 +595,11 @@ void ParseBrush (entity_t *mapent)
 
 		if (TokenAvailable())
 		{
-			GetToken (false);
+			GetToken (qfalse);
 			side->contents = atoi(token);
-			GetToken (false);
+			GetToken (qfalse);
 			side->surf = td.flags = atoi(token);
-			GetToken (false);
+			GetToken (qfalse);
 			td.value = atoi(token);
 		}
 
@@ -801,7 +801,7 @@ qboolean	ParseMapEntity (void)
 	mapbrush_t	*b;
 
 	if (!GetToken (true))
-		return false;
+		return qfalse;
 
 	if (strcmp (token, "{") )
 		Error ("ParseEntity: { not found");
@@ -822,7 +822,7 @@ qboolean	ParseMapEntity (void)
 
 	do
 	{
-		if (!GetToken (true))
+		if (!GetToken (qtrue))
 			Error ("ParseEntity: EOF without closing brace");
 		if (!strcmp (token, "}") )
 			break;
@@ -834,7 +834,7 @@ qboolean	ParseMapEntity (void)
 			e->next = mapent->epairs;
 			mapent->epairs = e;
 		}
-	} while (1);
+	} while (qtrue);
 
 	GetVectorForKey (mapent, "origin", mapent->origin);
 
@@ -866,7 +866,7 @@ qboolean	ParseMapEntity (void)
 		MoveBrushesToWorld (mapent);
 		mapent->numbrushes = 0;
 		num_entities--;
-		return true;
+		return qtrue;
 	}
 
 	// areaportal entities move their brushes, but don't eliminate
@@ -886,10 +886,10 @@ qboolean	ParseMapEntity (void)
 		sprintf (str, "%i", c_areaportals);
 		SetKeyValue (mapent, "style", str);
 		MoveBrushesToWorld (mapent);
-		return true;
+		return qtrue;
 	}
 
-	return true;
+	return qtrue;
 }
 
 //===================================================================
@@ -922,7 +922,7 @@ void LoadMapFile (char *filename)
 	}
 
 	for ( i = 0; i < nummapbrushes; i++ )
-		mapbrushes[i].finished = false;
+		mapbrushes[i].finished = qfalse;
 
 	// save a copy of the brushes
 	memcpy( mapbrushes + nummapbrushes, mapbrushes, sizeof(mapbrush_t)*nummapbrushes );

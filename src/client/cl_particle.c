@@ -495,7 +495,7 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 			break;
 
 		case PC_KILL:
-			p->inuse = false;
+			p->inuse = qfalse;
 			return;
 
 		case PC_SPAWN:
@@ -571,7 +571,7 @@ ptl_t *CL_ParticleSpawn( char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t 
 	memset( p, 0, sizeof( ptl_t ) );
 
 	// set basic values
-	p->inuse = true;
+	p->inuse = qtrue;
 	p->startTime = cl.time;
 	p->ctrl = pd;
 	p->color[0] = p->color[1] = p->color[2] = p->color[3] = 1.0f;
@@ -641,7 +641,7 @@ void CL_ParticleCheckRounds( void )
 			p->roundsCnt--;
 			if ( p->roundsCnt <= 0 )
 			{
-				p->inuse = false;
+				p->inuse = qfalse;
 			}
 		}
 }
@@ -673,7 +673,7 @@ void CL_ParticleRun( void )
 			// test for end of life
 			if ( p->life && p->t >= p->life )
 			{
-				p->inuse = false;
+				p->inuse = qfalse;
 				continue;
 			}
 
@@ -805,9 +805,9 @@ void CL_RunMapParticles( void )
 			}
 
 			// init the particle
-			CL_ParseMapParticle( ptl, mp->info, false );
+			CL_ParseMapParticle( ptl, mp->info, qfalse );
 			CL_ParticleFunction( ptl, ptl->ctrl->init );
-			CL_ParseMapParticle( ptl, mp->info, true );
+			CL_ParseMapParticle( ptl, mp->info, qtrue );
 
 			// prepare next spawning
 			if ( mp->wait[0] || mp->wait[1] )

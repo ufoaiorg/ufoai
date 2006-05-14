@@ -238,7 +238,7 @@ void LE_Status ( void )
 {
 	le_t *le;
 	int i;
-	qboolean endRound = true;
+	qboolean endRound = qtrue;
 
 	if ( ! numLEs ) return;
 
@@ -249,7 +249,7 @@ void LE_Status ( void )
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 		if ( le->inuse && le->team == cls.team && !(le->state & STATE_DEAD)  )
 			// call think function
-			endRound = false;
+			endRound = qfalse;
 
 	// ok, no players alive in multiplayer - end this round automatically
 	if ( endRound )
@@ -303,17 +303,17 @@ char *LE_GetAnim( char *anim, int right, int left, int state )
 	if ( state & STATE_CROUCHED ) *mod++ = 'c';
 
 	// determine relevant data
-	akimbo = false;
+	akimbo = qfalse;
 	if ( right == NONE )
 	{
 		category = '0';
 		if ( left == NONE ) type = "item";
-		else { akimbo = true; type = csi.ods[left].type; }
+		else { akimbo = qtrue; type = csi.ods[left].type; }
 	} else {
 		category = csi.ods[right].category;
 		type = csi.ods[right].type;
 		if ( left != NONE && !Q_strncmp( csi.ods[right].type, "pistol", 6 ) && !Q_strncmp( csi.ods[left].type, "pistol", 6 ) )
-			akimbo = true;
+			akimbo = qtrue;
 	}
 
 	if ( !Q_strncmp( anim, "stand", 5 ) || !Q_strncmp( anim, "walk", 4 ) )
@@ -399,7 +399,7 @@ void LET_Perish( le_t *le )
 {
 	if ( cl.time > le->startTime + PERISH_TIME )
 	{
-		le->inuse = false;
+		le->inuse = qfalse;
 		return;
 	}
 
@@ -459,7 +459,7 @@ void LET_PathMove( le_t *le )
 			floor = LE_Find( ET_ITEM, le->pos );
 			if ( floor ) le->i.c[csi.idFloor] = floor->i.c[csi.idFloor];
 
-			blockEvents = false;
+			blockEvents = qfalse;
 			le->think = LET_StartIdle;
 			le->think( le );
 			if (camera_mode == CAMERA_MODE_FIRSTPERSON)
@@ -505,8 +505,8 @@ void LET_Projectile( le_t *le )
 {
 	if ( cl.time >= le->endTime )
 	{
-		le->ptl->inuse = false;
-		le->inuse = false;
+		le->ptl->inuse = qfalse;
+		le->inuse = qfalse;
 		if ( le->ref1 && le->ref1[0] )
 		{
 			vec3_t impact;
@@ -533,13 +533,13 @@ void LE_AddProjectile( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, i
 
 	// add le
 	le = LE_Add( 0 );
-	le->invis = true;
+	le->invis = qtrue;
 
 	// bind particle
 	le->ptl = CL_ParticleSpawn( fd->projectile, 0, muzzle, NULL, NULL );
 	if ( !le->ptl )
 	{
-		le->inuse = false;
+		le->inuse = qfalse;
 		return;
 	}
 
@@ -554,7 +554,7 @@ void LE_AddProjectile( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, i
 	{
 		// infinite speed projectile
 		ptl_t	*ptl;
-		le->inuse = false;
+		le->inuse = qfalse;
 		le->ptl->size[0] = dist;
 		VectorMA( muzzle, 0.5, delta, le->ptl->s );
 		if ( flags & (SF_IMPACT|SF_BODY) || fd->selfDetonate )
@@ -605,14 +605,14 @@ void LE_AddGrenade( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t v0, int dt )
 
 	// add le
 	le = LE_Add( 0 );
-	le->invis = true;
+	le->invis = qtrue;
 
 	// bind particle
 	VectorSet( accel, 0, 0, -GRAVITY );
 	le->ptl = CL_ParticleSpawn( fd->projectile, 0, muzzle, v0, accel );
 	if ( !le->ptl )
 	{
-		le->inuse = false;
+		le->inuse = qfalse;
 		return;
 	}
 	// particle properties
@@ -682,7 +682,7 @@ le_t *LE_Add( int entnum )
 
 	// initialize the new LE
 	memset( le, 0, sizeof( le_t ) );
-	le->inuse = true;
+	le->inuse = qtrue;
 	le->entnum = entnum;
 	return le;
 }
@@ -836,10 +836,10 @@ void CL_ClipMoveToLEs ( moveclip_t *clip )
 		{
 			trace.le = le;
 			clip->trace = trace;
-		 	if (clip->trace.startsolid) clip->trace.startsolid = true;
+		 	if (clip->trace.startsolid) clip->trace.startsolid = qtrue;
 		}
 		else if (trace.startsolid)
-			clip->trace.startsolid = true;
+			clip->trace.startsolid = qtrue;
 	}
 }
 

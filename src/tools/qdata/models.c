@@ -81,7 +81,7 @@ void ClearModel (void)
 	scale_up = 1.0;	
 	VectorCopy (vec3_origin, adjust);
 	g_fixedwidth = g_fixedheight = 0;
-	g_skipmodel = false;
+	g_skipmodel = qfalse;
 }
 
 
@@ -681,7 +681,7 @@ void Cmd_Base (void)
 	int		time1;
 	char	file1[1024];
 
-	GetToken (false);
+	GetToken (qfalse);
 
 	if (g_skipmodel || g_release || g_archive)
 		return;
@@ -949,7 +949,7 @@ void Cmd_Frame (void)
 {
 	while (TokenAvailable())
 	{
-		GetToken (false);
+		GetToken (qfalse);
 		if (g_skipmodel)
 			continue;
 		if (g_release || g_archive)
@@ -982,7 +982,7 @@ void Cmd_Skin (void)
 	int		y;
 	char	name[1024], savename[1024];
 
-	GetToken (false);
+	GetToken (qfalse);
 
 	if (model.num_skins == MAX_MD2SKINS)
 		Error ("model.num_skins == MAX_MD2SKINS");
@@ -996,7 +996,7 @@ void Cmd_Skin (void)
 
 	if (TokenAvailable())
 	{
-		GetToken (false);
+		GetToken (qfalse);
 		sprintf (g_skins[model.num_skins], "%s.pcx", token);
 		sprintf (savename, "%s%s.pcx", gamedir, g_skins[model.num_skins]);
 	}
@@ -1045,13 +1045,13 @@ void Cmd_Origin (void)
 {
 	// rotate points into frame of reference so model points down the
 	// positive x axis
-	GetToken (false);
+	GetToken (qfalse);
 	adjust[1] = -atof (token);
 
-	GetToken (false);
+	GetToken (qfalse);
 	adjust[0] = atof (token);
 
-	GetToken (false);
+	GetToken (qfalse);
 	adjust[2] = -atof (token);
 }
 
@@ -1063,7 +1063,7 @@ Cmd_ScaleUp
 */
 void Cmd_ScaleUp (void)
 {
-	GetToken (false);
+	GetToken (qfalse);
 	scale_up = atof (token);
 	if (g_skipmodel || g_release || g_archive)
 		return;
@@ -1081,9 +1081,9 @@ Set a skin size other than the default
 */
 void Cmd_Skinsize (void)
 {
-	GetToken (false);
+	GetToken (qfalse);
 	g_fixedwidth = atoi(token);
-	GetToken (false);
+	GetToken (qfalse);
 	g_fixedheight = atoi(token);
 }
 
@@ -1096,7 +1096,7 @@ Gives a different name/location for the file, instead of the cddir
 */
 void Cmd_Modelname (void)
 {
-	GetToken (false);
+	GetToken (qfalse);
 	strcpy (modelname, token);
 }
 
@@ -1110,7 +1110,7 @@ void Cmd_Cd (void)
 	FinishModel ();
 	ClearModel ();
 
-	GetToken (false);
+	GetToken (qfalse);
 
 	// this is a silly mess...
 	sprintf (cdpartial, "models/%s", token); 
@@ -1124,7 +1124,7 @@ void Cmd_Cd (void)
 		return;
 	if (strncmp(token, g_only, strlen(g_only)))
 	{
-		g_skipmodel = true;
+		g_skipmodel = qtrue;
 		printf ("skipping %s\n", cdpartial);
 	}
 }

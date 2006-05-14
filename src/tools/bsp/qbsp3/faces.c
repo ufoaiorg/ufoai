@@ -495,7 +495,7 @@ void FixFaceEdges (node_t *node, face_t *f)
 	}
 	if (i == f->numpoints)
 	{
-		f->badstartvert = true;
+		f->badstartvert = qtrue;
 		c_badstartverts++;
 		base = 0;
 	}

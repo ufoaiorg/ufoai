@@ -113,7 +113,7 @@ void Cmd_Alphalight (void)
 {
 	char	savename[1024];
 
-	GetToken (false);
+	GetToken (qfalse);
 
 	if (g_release)
 	{
@@ -124,7 +124,7 @@ void Cmd_Alphalight (void)
 	sprintf (savename, "%s%s", gamedir, token);
 	printf ("Building alphalight table...\n");
 
-	RunThreadsOnIndividual (32*32*32, true, Alphalight_Thread);
+	RunThreadsOnIndividual (32*32*32, qtrue, Alphalight_Thread);
 
 	SaveFile (savename, (byte *)alphamap, sizeof(alphamap));
 }

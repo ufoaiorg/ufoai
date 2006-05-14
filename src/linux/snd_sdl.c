@@ -78,7 +78,7 @@ qboolean SDL_SNDDMA_Init (void)
 	char drivername[128];
 
 	if (snd_inited)
-		return true;
+		return qtrue;
 
 	snd_inited = 0;
 
@@ -89,7 +89,7 @@ qboolean SDL_SNDDMA_Init (void)
 		if (SDL_Init(SDL_INIT_AUDIO) == -1)
 		{
 			Com_Printf("Couldn't init SDL audio: %s\n", SDL_GetError () );
-			return false;
+			return qfalse;
 		}
 	}
 
@@ -134,7 +134,7 @@ qboolean SDL_SNDDMA_Init (void)
 			break;
 		default:
 			Com_Printf("Unknown number of audio bits: %d\n", desired_bits);
-			return false;
+			return qfalse;
 	}
 	desired.channels = (Cvar_Get("sndchannels", "2", CVAR_ARCHIVE))->value;
 	desired.callback = paint_audio;
@@ -149,7 +149,7 @@ qboolean SDL_SNDDMA_Init (void)
 	{
 		Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
-		return false;
+		return qfalse;
 	}
 
 	/* Make sure we can support the audio format */
@@ -175,7 +175,7 @@ qboolean SDL_SNDDMA_Init (void)
 			if (SDL_OpenAudio (&desired, NULL) == -1)
 			{
 				Com_Printf ("Couldn't open SDL audio (format): %s\n", SDL_GetError ());
-				return false;
+				return qfalse;
 			}
 			memcpy (&obtained, &desired, sizeof (desired));
 			break;
@@ -214,7 +214,7 @@ qboolean SDL_SNDDMA_Init (void)
 
 	SDL_PauseAudio (0);
 	snd_inited = 1;
-	return true;
+	return qtrue;
 }
 
 int SDL_SNDDMA_GetDMAPos (void)

@@ -157,10 +157,10 @@ void G_ClientCommand (player_t *player)
 	else if (Q_stricmp(cmd, "playerlist") == 0)
 		Cmd_PlayerList_f(player);
 	else if (Q_stricmp (cmd, "say") == 0)
-		Cmd_Say_f (player, false, false);
+		Cmd_Say_f (player, qfalse, qfalse);
 	else if (Q_stricmp (cmd, "say_team") == 0)
-		Cmd_Say_f (player, false, true);
+		Cmd_Say_f (player, qfalse, qtrue);
 	else
 		// anything that doesn't match a command will be a chat
-		Cmd_Say_f (player, true, false);
+		Cmd_Say_f (player, qtrue, qfalse);
 }

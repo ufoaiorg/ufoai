@@ -241,7 +241,7 @@ void	PF_ReadData ( void *buffer, int size) {MSG_ReadData( &net_message, buffer, 
 
 //==============================================
 
-qboolean	pfe_pending = false;
+qboolean	pfe_pending = qfalse;
 int		pfe_mask;
 
 void PF_EndEvents( void ) 
@@ -252,7 +252,7 @@ void PF_EndEvents( void )
 	PF_WriteByte( EV_NULL ); 
 	SV_Multicast( pfe_mask ); 
 //	SV_SendClientMessages();
-	pfe_pending = false;
+	pfe_pending = qfalse;
 }
 
 void PF_AddEvent( int mask, int eType ) 
@@ -265,7 +265,7 @@ void PF_AddEvent( int mask, int eType )
 			PF_EndEvents();
 
 		// start the new event
-		pfe_pending = true;
+		pfe_pending = qtrue;
 		pfe_mask = mask;
 		PF_WriteByte( svc_event );
 	}

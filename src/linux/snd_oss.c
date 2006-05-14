@@ -40,7 +40,7 @@ qboolean OSS_SNDDMA_Init(void)
 	extern uid_t saved_euid;
 
 	if (snd_inited)
-		return true;
+		return qtrue;
 
 	snd_inited = 0;
 
@@ -73,7 +73,7 @@ qboolean OSS_SNDDMA_Init(void)
 			perror( snddevice->string );
 			seteuid( getuid() );
 			Com_Printf("SNDDMA_Init: Could not open %s.\n", snddevice->string);
-			return false;
+			return qfalse;
 		}
 		seteuid( getuid() );
 	}
@@ -85,7 +85,7 @@ qboolean OSS_SNDDMA_Init(void)
 		Com_Printf("SNDDMA_Init: Could not reset %s.\n", snddevice->string);
 		close(audio_fd);
 		audio_fd = -1;
-		return false;
+		return qfalse;
 	}
 
 	if ( ioctl ( audio_fd, SNDCTL_DSP_GETCAPS, &caps ) == -1 )
@@ -94,7 +94,7 @@ qboolean OSS_SNDDMA_Init(void)
 		Com_Printf("SNDDMA_Init: Sound driver too old.\n");
 		close(audio_fd);
 		audio_fd = -1;
-		return false;
+		return qfalse;
 	}
 
 	if ( ! ( caps & DSP_CAP_TRIGGER ) || ! ( caps & DSP_CAP_MMAP ) )
@@ -102,7 +102,7 @@ qboolean OSS_SNDDMA_Init(void)
 		Com_Printf("SNDDMA_Init: Sorry, but your soundcard doesn't support trigger or mmap. (%08x)\n", caps);
 		close(audio_fd);
 		audio_fd = -1;
-		return false;
+		return qfalse;
 	}
 
 	if ( ioctl(audio_fd, SNDCTL_DSP_GETOSPACE, &info) == -1 )
@@ -111,7 +111,7 @@ qboolean OSS_SNDDMA_Init(void)
 		Com_Printf("SNDDMA_Init: GETOSPACE ioctl failed.\n");
 		close(audio_fd);
 		audio_fd = -1;
-		return false;
+		return qfalse;
 	}
 
 	// set sample bits & speed
@@ -134,7 +134,7 @@ qboolean OSS_SNDDMA_Init(void)
 			Com_Printf("SNDDMA_Init: Could not support 16-bit data.  Try 8-bit.\n");
 			close(audio_fd);
 			audio_fd = -1;
-			return false;
+			return qfalse;
 		}
 	}
 	else if (dma.samplebits == 8)
@@ -147,7 +147,7 @@ qboolean OSS_SNDDMA_Init(void)
 			Com_Printf("SNDDMA_Init: Could not support 8-bit data.\n");
 			close(audio_fd);
 			audio_fd = -1;
-			return false;
+			return qfalse;
 		}
 	}
 	else
@@ -156,7 +156,7 @@ qboolean OSS_SNDDMA_Init(void)
 		Com_Printf("SNDDMA_Init: %d-bit sound not supported.", dma.samplebits);
 		close(audio_fd);
 		audio_fd = -1;
-		return false;
+		return qfalse;
 	}
 
 	dma.speed = (int)sndspeed->value;
@@ -182,7 +182,7 @@ qboolean OSS_SNDDMA_Init(void)
 		Com_Printf("SNDDMA_Init: Could not set %s to stereo=%d.", snddevice->string, dma.channels);
 		close(audio_fd);
 		audio_fd = -1;
-		return false;
+		return qfalse;
 	}
 
 	if (tmp)
@@ -198,7 +198,7 @@ qboolean OSS_SNDDMA_Init(void)
 		Com_Printf("SNDDMA_Init: Could not set %s speed to %d.", snddevice->string, dma.speed);
 		close(audio_fd);
 		audio_fd = -1;
-		return false;
+		return qfalse;
 	}
 
 	dma.samples = info.fragstotal * info.fragsize / (dma.samplebits/8);
@@ -215,7 +215,7 @@ qboolean OSS_SNDDMA_Init(void)
 		Com_Printf("SNDDMA_Init: Could not mmap %s.\n", snddevice->string);
 		close(audio_fd);
 		audio_fd = -1;
-		return false;
+		return qfalse;
 	}
 
 	// toggle the trigger & start her up
@@ -228,7 +228,7 @@ qboolean OSS_SNDDMA_Init(void)
 		Com_Printf("SNDDMA_Init: Could not toggle. (1)\n");
 		close(audio_fd);
 		audio_fd = -1;
-		return false;
+		return qfalse;
 	}
 	tmp = PCM_ENABLE_OUTPUT;
 	rc = ioctl(audio_fd, SNDCTL_DSP_SETTRIGGER, &tmp);
@@ -238,13 +238,13 @@ qboolean OSS_SNDDMA_Init(void)
 		Com_Printf("SNDDMA_Init: Could not toggle. (2)\n");
 		close(audio_fd);
 		audio_fd = -1;
-		return false;
+		return qfalse;
 	}
 
 	dma.samplepos = 0;
 
 	snd_inited = 1;
-	return true;
+	return qtrue;
 }
 
 int OSS_SNDDMA_GetDMAPos(void)

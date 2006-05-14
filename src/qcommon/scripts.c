@@ -1144,8 +1144,8 @@ void Com_ParseScripts( void )
 		// server/client scripts
 		if ( !Q_strncmp( type, "equipment", 9 ) ) Com_ParseEquipment( name, &text );
 		else if ( !Q_strncmp( type, "teamdesc", 8 ) ) Com_ParseTeamDesc( name, &text );
-		else if ( !Q_strncmp( type, "rank", 4 ) ) Com_ParseMedalsAndRanks( name, &text, true );
-		//else if ( !Q_strncmp( type, "medal", 5 ) ) Com_ParseMedalsAndRanks( name, &text, false );
+		else if ( !Q_strncmp( type, "rank", 4 ) ) Com_ParseMedalsAndRanks( name, &text, qtrue );
+		//else if ( !Q_strncmp( type, "medal", 5 ) ) Com_ParseMedalsAndRanks( name, &text, qfalse );
 		else if ( !Q_strncmp( type, "team", 4 ) ) Com_ParseTeam( name, &text );
 		else if ( !dedicated->value ) CL_ParseScriptSecond( type, name, &text );
 	}

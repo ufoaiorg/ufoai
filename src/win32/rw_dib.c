@@ -99,7 +99,7 @@ qboolean DIB_Init( unsigned char **ppbuffer, int *ppitch )
 	if ( !sww_state.hDC )
 	{
 		if ( ( sww_state.hDC = GetDC( sww_state.hWnd ) ) == NULL )
-			return false;
+			return qfalse;
 	}
 
 	/*
@@ -107,18 +107,18 @@ qboolean DIB_Init( unsigned char **ppbuffer, int *ppitch )
 	*/
  	if ( GetDeviceCaps( sww_state.hDC, RASTERCAPS ) & RC_PALETTE )
 	{
-		sww_state.palettized = true;
+		sww_state.palettized = qtrue;
 
 		// save system colors
 		if ( !s_systemcolors_saved )
 		{
 			DIB_SaveSystemColors();
-			s_systemcolors_saved = true;
+			s_systemcolors_saved = qtrue;
 		}
 	}
 	else
 	{
-		sww_state.palettized = false;
+		sww_state.palettized = qfalse;
 	}
 
 	/*
@@ -149,12 +149,7 @@ qboolean DIB_Init( unsigned char **ppbuffer, int *ppitch )
 	/*
 	** create the DIB section
 	*/
-	sww_state.hDIBSection = CreateDIBSection( sww_state.hDC,
-		                                     pbmiDIB,
-											 DIB_RGB_COLORS,
-											 &sww_state.pDIBBase,
-											 NULL,
-											 0 );
+	sww_state.hDIBSection = CreateDIBSection( sww_state.hDC, pbmiDIB, DIB_RGB_COLORS, &sww_state.pDIBBase, NULL, 0 );
 
 	if ( sww_state.hDIBSection == NULL )
 	{
@@ -163,17 +158,17 @@ qboolean DIB_Init( unsigned char **ppbuffer, int *ppitch )
 	}
 
 	if ( pbmiDIB->bmiHeader.biHeight > 0 )
-    {
+        {
 		// bottom up
 		*ppbuffer	= sww_state.pDIBBase + ( vid.height - 1 ) * vid.width;
 		*ppitch		= -vid.width;
-    }
-    else
-    {
+        }
+        else
+        {
 		// top down
 		*ppbuffer	= sww_state.pDIBBase;
 		*ppitch		= vid.width;
-    }
+	}
 
 	/*
 	** clear the DIB memory buffer
@@ -191,11 +186,11 @@ qboolean DIB_Init( unsigned char **ppbuffer, int *ppitch )
 		goto fail;
 	}
 
-	return true;
+	return qtrue;
 
 fail:
 	DIB_Shutdown();
-	return false;
+	return qfalse;
 	
 }
 

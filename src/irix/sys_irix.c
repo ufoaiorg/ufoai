@@ -48,7 +48,7 @@ cvar_t *nostdout;
 unsigned	sys_frame_time;
 
 uid_t saved_euid;
-qboolean stdin_active = true;
+qboolean stdin_active = qtrue;
 
 // =======================================================================
 // General routines
@@ -178,7 +178,7 @@ char *Sys_ConsoleInput(void)
 
 	len = read (0, text, sizeof(text));
 	if (len == 0) { // eof!
-		stdin_active = false;
+		stdin_active = qfalse;
 		return NULL;
 	}
 
@@ -322,15 +322,15 @@ void Sys_CopyProtect(void)
 	struct mntent *ent;
 	char path[MAX_OSPATH];
 	struct stat st;
-	qboolean found_cd = false;
+	qboolean found_cd = qfalse;
 
-	static qboolean checked = false;
+	static qboolean checked = qfalse;
 
 	if (checked)
 		return;
 
         Com_Printf("XXX - Sys_CopyProtect disabled\n");
-	checked = true;
+	checked = qtrue;
 	return;
 
 	if ((mnt = setmntent("/etc/mtab", "r")) == NULL)
@@ -339,25 +339,25 @@ void Sys_CopyProtect(void)
 	while ((ent = getmntent(mnt)) != NULL) {
 		if (strcmp(ent->mnt_type, "iso9660") == 0) {
 			// found a cd file system
-			found_cd = true;
+			found_cd = qtrue;
 			sprintf(path, "%s/%s", ent->mnt_dir, "install/data/quake2.exe");
 			if (stat(path, &st) == 0) {
 				// found it
-				checked = true;
+				checked = qtrue;
 				endmntent(mnt);
 				return;
 			}
 			sprintf(path, "%s/%s", ent->mnt_dir, "Install/Data/quake2.exe");
 			if (stat(path, &st) == 0) {
 				// found it
-				checked = true;
+				checked = qtrue;
 				endmntent(mnt);
 				return;
 			}
 			sprintf(path, "%s/%s", ent->mnt_dir, "quake2.exe");
 			if (stat(path, &st) == 0) {
 				// found it
-				checked = true;
+				checked = qtrue;
 				endmntent(mnt);
 				return;
 			}

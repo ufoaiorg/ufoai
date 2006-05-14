@@ -199,7 +199,7 @@ void SH_UseShader(shader_t* shader)
 {
 	assert(shader);
 	// no shaders supported
-	if ( gl_state.arb_fragment_program == false )
+	if ( gl_state.arb_fragment_program == qfalse )
 		return;
 	if ( shader->fpid > 0 )
 		SH_UseProgram_ARB_FP(shader->fpid);
