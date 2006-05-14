@@ -387,7 +387,7 @@ tech rs_weapon_laserpistol_ammo
 	requires	rs_weapon_laserpistol
 	provides	laserpistol_ammo
 	time	0
-	researched	true
+	researched	false
 }
 
 tech rs_weapon_laserrifle
@@ -399,7 +399,7 @@ tech rs_weapon_laserrifle
 	requires	rs_weapon_laserpistol
 	provides	laserrifle
 	time	30
-	researched	true
+	researched	false
 }
 
 tech rs_weapon_laserrifle_ammo
@@ -411,7 +411,7 @@ tech rs_weapon_laserrifle_ammo
 	requires	rs_weapon_laserrifle
 	provides	laserrifle_ammo
 	time	0
-	researched	true
+	researched	false
 }
 
 tech rs_weapon_fraggren

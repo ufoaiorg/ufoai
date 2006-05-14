@@ -1260,6 +1260,8 @@ byte RS_TechIsResearched(char *id )
 {
 	technology_t *tech = NULL;
 
+	if ( !id ) return qfalse;
+	
 	if ( !Q_strncmp( id, "initial", 7 )
 	|| !Q_strncmp( id, "nothing", 7 ) )
 		return qtrue;	// initial and nothing are always researched. as they are just starting "technologys" that are never used.
