@@ -64,7 +64,7 @@ CC=gcc
 
 VERSION=$(shell grep UFO_VERSION $(MOUNT_DIR)/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/')
 
-MOUNT_DIR=..
+MOUNT_DIR=.
 
 BUILD_DEBUG_DIR=debug$(ARCH)
 BUILD_RELEASE_DIR=release$(ARCH)
