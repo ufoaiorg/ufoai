@@ -290,7 +290,7 @@ menu singleplayermission
 	pic button_exit
 	{
 		pos	"640 520"
-		click	{ cmd "mn_pop;" }
+		click	{ cmd "game_exit;mn_pop;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
