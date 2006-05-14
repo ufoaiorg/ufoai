@@ -46,7 +46,7 @@ o Compile SVN
 ====================================================
 (Of course you need to have gcc installed)
 Follow these steps:
-  cd src/linux
+  cd src
   make
   cd ../tools
   make
