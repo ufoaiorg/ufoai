@@ -2193,12 +2193,17 @@ TODO: To be extended for load/save purposes
 ======================*/
 void CL_BaseList ( void )
 {
-	int i, row, col;
+	int i, row, col, j;
 	base_t* base;
 	for ( i = 0, base = bmBases; i < MAX_BASES; i++, base++ )
 	{
 		Com_Printf("Base id %i\n", base->id );
 		Com_Printf("Base title %s\n", base->title );
+		Com_Printf("Base aircraft %i\n", base->numAircraftInBase );
+		for ( j = 0; j < base->numAircraftInBase; j++ )
+		{
+			Com_Printf("Base aircraft-team %i\n", base->aircraft[j].teamSize );
+		}
 		Com_Printf("Base pos %f:%f\n", base->pos[0], base->pos[1] );
 		Com_Printf("Base map:\n");
 		for ( row = 0; row < BASE_SIZE; row++ )

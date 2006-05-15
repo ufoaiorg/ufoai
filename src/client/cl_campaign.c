@@ -404,7 +404,7 @@ void CL_AircraftInit ( void )
 
 /*
 ======================
-CL_AircraftInit
+CL_AircraftStatusToName
 ======================
 */
 char* CL_AircraftStatusToName ( aircraft_t* air )
@@ -1392,6 +1392,22 @@ void CL_GameTimeFast( void )
 
 // ===========================================================
 
+
+/*
+======================
+CL_GameExit
+======================
+*/
+void CL_GameExit( void )
+{
+	Cbuf_AddText( "disconnect\n" );
+	curCampaign = NULL;
+	Cvar_Set( "mn_main", "main" );
+	Cvar_Set( "mn_active", "" );
+	ccs.singleplayer = qfalse;
+}
+
+
 /*
 ======================
 CL_GameNew
@@ -1406,7 +1422,10 @@ void CL_GameNew( void )
 	Cvar_Set( "mn_main", "singleplayer" );
 	Cvar_Set( "mn_active", "map" );
 	Cvar_SetValue("maxclients", 1 );
-// 	ccs.singleplayer = qtrue;
+
+	// exit running game
+	if ( curCampaign ) CL_GameExit();
+	ccs.singleplayer = qtrue;
 
 	// get campaign
 	name = Cvar_VariableString( "campaign" );
@@ -1531,7 +1550,8 @@ void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
 		n = MSG_ReadByte( sb );
 		for ( i = 0; i < n; i++ )
 		{
-			air = AIR_FindAircraft( MSG_ReadString(sb) );
+			CL_NewAircraft( baseCurrent, MSG_ReadString(sb) );
+			air = &base->aircraft[i];
 			if ( air )
 			{
 				air->pos[0] = MSG_ReadFloat( sb );
@@ -2013,21 +2033,6 @@ void CL_GameCommentsCmd( void )
 		Cvar_Set( va( "mn_slot%i", i ), comment );
 		fclose( f );
 	}
-}
-
-
-/*
-======================
-CL_GameExit
-======================
-*/
-void CL_GameExit( void )
-{
-	Cbuf_AddText( "disconnect\n" );
-	curCampaign = NULL;
-	Cvar_Set( "mn_main", "main" );
-	Cvar_Set( "mn_active", "" );
-	ccs.singleplayer = qfalse;
 }
 
 
