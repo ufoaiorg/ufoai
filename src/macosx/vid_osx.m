@@ -3,20 +3,20 @@
 //               and OpenGL rendering versions of the Quake refresh engine.
 //
 // Written by:	awe				[mailto:awe@fruitz-of-dojo.de].
-//		©2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de].
+//		2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de].
 //
-// Quake IIª is copyrighted by id software	[http://www.idsoftware.com].
+// Quake II is copyrighted by id software	[http://www.idsoftware.com].
 //
 // Version History:
-// v1.0.8: ¥ Fixed an issue with CMD-TABing in fullscreen mode with ATI Radeon class gfx boards.
-// v1.0.6: ¥ Added support for "vid_minrefresh" and "vid_maxrefresh".
-//	   ¥ The variable for FSAA has changed to "gl_arb_multisample".
-//         ¥ Removed underscore from symbolname parameter at call to "dlsym ()" [because of new "dlopen.c"].
-// v1.0.5: ¥ Added support for new variables [gl_anisotropic, gl_fsaa and gl_truform].
-// v1.0.3: ¥ Renderer specific vars are now archived here additionally, so that they don't get lost...
-// v1.0.2: ¥ Added CMD-TABing in fullscreen mode.
-// v1.0.1: ¥ Resolution list is now created dynamically.
-// v1.0.0: ¥ Initial release.
+// v1.0.8:  Fixed an issue with CMD-TABing in fullscreen mode with ATI Radeon class gfx boards.
+// v1.0.6:  Added support for "vid_minrefresh" and "vid_maxrefresh".
+//	    The variable for FSAA has changed to "gl_arb_multisample".
+//          Removed underscore from symbolname parameter at call to "dlsym ()" [because of new "dlopen.c"].
+// v1.0.5:  Added support for new variables [gl_anisotropic, gl_fsaa and gl_truform].
+// v1.0.3:  Renderer specific vars are now archived here additionally, so that they don't get lost...
+// v1.0.2:  Added CMD-TABing in fullscreen mode.
+// v1.0.1:  Resolution list is now created dynamically.
+// v1.0.0:  Initial release.
 //__________________________________________________________________________________________________________iNCLUDE
 
 #pragma mark =Includes=
@@ -96,7 +96,7 @@ typedef struct ref_lib_store_s	{
                                 } ref_lib_store_t;
 
 #pragma mark -
-                                
+
 //________________________________________________________________________________________________________vARIABLES
 
 #pragma mark =Variables=
@@ -184,330 +184,323 @@ static void	VID_FadeGammaIn (BOOL theFadeOnAllDisplays, float theDuration);
 
 void VID_Printf (int thePrintLevel, char *theFormat, ...)
 {
-    va_list		myArgPtr;
-    char		myMessage[VID_MAX_PRINT_MSG];
+	va_list		myArgPtr;
+	char		myMessage[VID_MAX_PRINT_MSG];
 
-    // formatted output conversion:
-    va_start (myArgPtr, theFormat);
-    vsnprintf (myMessage, VID_MAX_PRINT_MSG, theFormat, myArgPtr);
-    va_end (myArgPtr);
+	// formatted output conversion:
+	va_start (myArgPtr, theFormat);
+	vsnprintf (myMessage, VID_MAX_PRINT_MSG, theFormat, myArgPtr);
+	va_end (myArgPtr);
 
-    // print according to the print level:
-    if (thePrintLevel == PRINT_ALL)
-    {
-        Com_Printf ("%s", myMessage);
-    }
-    else
-    {
-        Com_DPrintf ("%s", myMessage);
-    }
+	// print according to the print level:
+	if (thePrintLevel == PRINT_ALL)
+		Com_Printf ("%s", myMessage);
+	else
+		Com_DPrintf ("%s", myMessage);
 }
 
 //______________________________________________________________________________________________________VID_Error()
 
 void VID_Error (int theErrorLevel, char *theFormat, ...)
 {
-    va_list		myArgPtr;
-    char		myMessage[VID_MAX_PRINT_MSG];
+	va_list		myArgPtr;
+	char		myMessage[VID_MAX_PRINT_MSG];
 
-    // formatted output conversion:
-    va_start (myArgPtr, theFormat);
-    vsnprintf (myMessage, VID_MAX_PRINT_MSG, theFormat, myArgPtr);
-    va_end (myArgPtr);
+	// formatted output conversion:
+	va_start (myArgPtr, theFormat);
+	vsnprintf (myMessage, VID_MAX_PRINT_MSG, theFormat, myArgPtr);
+	va_end (myArgPtr);
 
-    // submitt the error string:
-    Com_Error (theErrorLevel, "%s", myMessage);
+	// submitt the error string:
+	Com_Error (theErrorLevel, "%s", myMessage);
 }
 
 //__________________________________________________________________________________________________VID_NewWindow()
 
 void VID_NewWindow (int theWidth, int theHeight)
 {
-    viddef.width = theWidth;
-    viddef.height = theHeight;
+	viddef.width = theWidth;
+	viddef.height = theHeight;
 }
 
 //________________________________________________________________________________________________VID_GetModeInfo()
 
 qboolean VID_GetModeInfo (int *theWidth, int *theHeight, int theMode)
 {
-    // just return the current video size, false if the mode is not available:
-    if (theMode < 0 || theMode >= gVIDModeCount)
-    {
-        *theWidth  = gVIDModes[0].width;
-        *theHeight = gVIDModes[0].height;
-        Cvar_SetValue ("vid_refreshrate", gVIDModes[0].refresh);
-        
-        return (false);
-    }
+	// just return the current video size, false if the mode is not available:
+	if (theMode < 0 || theMode >= gVIDModeCount)
+	{
+		*theWidth  = gVIDModes[0].width;
+		*theHeight = gVIDModes[0].height;
+		Cvar_SetValue ("vid_refreshrate", gVIDModes[0].refresh);
+		return (false);
+	}
 
-    *theWidth  = gVIDModes[theMode].width;
-    *theHeight = gVIDModes[theMode].height;
-    Cvar_SetValue ("vid_refreshrate", gVIDModes[theMode].refresh);
-    
-    return (true);
+	*theWidth  = gVIDModes[theMode].width;
+	*theHeight = gVIDModes[theMode].height;
+	Cvar_SetValue ("vid_refreshrate", gVIDModes[theMode].refresh);
+
+	return (true);
 }
 
 //_______________________________________________________________________________________________________VID_Init()
 
-void	VID_Init (void)
+void VID_Init (void)
 {
 #ifdef VID_DO_NOT_UNLOAD_MODULES
 
-    UInt8 		i;
+	UInt8 		i;
 
-    for (i = 0; i < VID_MAX_MODULES; i++)
-    {
-        gVIDModuleList[i].library = NULL;
-    }
-    
+	for (i = 0; i < VID_MAX_MODULES; i++)
+	{
+		gVIDModuleList[i].library = NULL;
+	}
+
 #endif /* VID_DO_NOT_UNLOAD_MODULES */
 
-    vid_ref 	    = Cvar_Get ("vid_ref", 	   "soft", CVAR_ARCHIVE);
-    vid_xpos 	    = Cvar_Get ("vid_xpos", 	   "0",    CVAR_ARCHIVE);
-    vid_ypos 	    = Cvar_Get ("vid_ypos", 	   "0",	   CVAR_ARCHIVE);
-    vid_fullscreen  = Cvar_Get ("vid_fullscreen",  "0",    CVAR_ARCHIVE);
-    vid_gamma 	    = Cvar_Get ("vid_gamma", 	   "1",    CVAR_ARCHIVE);
-    vid_minrefresh  = Cvar_Get ("vid_minrefresh",  "0",    CVAR_ARCHIVE);
-    vid_maxrefresh  = Cvar_Get ("vid_maxrefresh",  "-1",    CVAR_ARCHIVE);
+	vid_ref 	    = Cvar_Get ("vid_ref", 	   "soft", CVAR_ARCHIVE);
+	vid_xpos 	    = Cvar_Get ("vid_xpos", 	   "0",    CVAR_ARCHIVE);
+	vid_ypos 	    = Cvar_Get ("vid_ypos", 	   "0",	   CVAR_ARCHIVE);
+	vid_fullscreen  = Cvar_Get ("vid_fullscreen",  "0",    CVAR_ARCHIVE);
+	vid_gamma 	    = Cvar_Get ("vid_gamma", 	   "1",    CVAR_ARCHIVE);
+	vid_minrefresh  = Cvar_Get ("vid_minrefresh",  "0",    CVAR_ARCHIVE);
+	vid_maxrefresh  = Cvar_Get ("vid_maxrefresh",  "-1",    CVAR_ARCHIVE);
 
-    // required so that they are remembered, even if the approriate renderer is not used:
-    Cvar_Get ("sw_allow_modex",  	      "1", 			  CVAR_ARCHIVE);
-    Cvar_Get ("sw_stipplealpha",	      "0", 			  CVAR_ARCHIVE);
-    Cvar_Get ("sw_mode", 	 	      "0", 			  CVAR_ARCHIVE);
-    Cvar_Get ("hand", 		 	      "0", 			  CVAR_USERINFO | CVAR_ARCHIVE);
-    Cvar_Get ("gl_particle_min_size",         "2", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_particle_max_size",         "40", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_particle_size", 	      "40", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_particle_att_a", 	      "0.01", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_particle_att_b", 	      "0.0", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_particle_att_c", 	      "0.01", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_modulate", 		      "1", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_mode", 		      "0", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_shadows", 		      "0", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_finish",		      "0", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_driver",                    "opengl32", 		  CVAR_ARCHIVE);
-    Cvar_Get ("gl_texturemode",               "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE);
-    Cvar_Get ("gl_texturealphamode",          "default", 		  CVAR_ARCHIVE);
-    Cvar_Get ("gl_texturesolidmode",          "default", 		  CVAR_ARCHIVE);
-    Cvar_Get ("gl_vertex_arrays", 	      "0", 		 	  CVAR_ARCHIVE);
-    Cvar_Get ("gl_ext_swapinterval", 	      "1", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_ext_palettedtexture",       "0", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_ext_multitexture", 	      "0", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_ext_pointparameters",       "1", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_ext_compiled_vertex_array", "1", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_swapinterval", 	      "1", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_3dlabs_broken", 	      "1",  			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_force16bit",   	      "0",			  CVAR_ARCHIVE);
+	// required so that they are remembered, even if the approriate renderer is not used:
+	Cvar_Get ("sw_allow_modex",  	      "1", 			  CVAR_ARCHIVE);
+	Cvar_Get ("sw_stipplealpha",	      "0", 			  CVAR_ARCHIVE);
+	Cvar_Get ("sw_mode", 	 	      "0", 			  CVAR_ARCHIVE);
+	Cvar_Get ("hand", 		 	      "0", 			  CVAR_USERINFO | CVAR_ARCHIVE);
+	Cvar_Get ("gl_particle_min_size",         "2", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_particle_max_size",         "40", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_particle_size", 	      "40", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_particle_att_a", 	      "0.01", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_particle_att_b", 	      "0.0", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_particle_att_c", 	      "0.01", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_modulate", 		      "1", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_mode", 		      "0", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_shadows", 		      "0", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_finish",		      "0", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_driver",                    "opengl32", 		  CVAR_ARCHIVE);
+	Cvar_Get ("gl_texturemode",               "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE);
+	Cvar_Get ("gl_texturealphamode",          "default", 		  CVAR_ARCHIVE);
+	Cvar_Get ("gl_texturesolidmode",          "default", 		  CVAR_ARCHIVE);
+	Cvar_Get ("gl_vertex_arrays", 	      "0", 		 	  CVAR_ARCHIVE);
+	Cvar_Get ("gl_ext_swapinterval", 	      "1", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_ext_palettedtexture",       "0", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_ext_multitexture", 	      "0", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_ext_pointparameters",       "1", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_ext_compiled_vertex_array", "1", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_swapinterval", 	      "1", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_3dlabs_broken", 	      "1",  			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_force16bit",   	      "0",			  CVAR_ARCHIVE);
 
-    Cvar_Get ("gl_anisotropic",   	      "0",			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_arb_multisample", 	      "0",			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_truform", 	  	      "-1",			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_overbright_gamma",	      "1", 			  CVAR_ARCHIVE);
-    Cvar_Get ("gl_arb_multitexture", 	      "0", 			  CVAR_ARCHIVE);
-                    
-    if (_windowed_mouse == NULL)
-    {
-        _windowed_mouse = Cvar_Get( "_windowed_mouse", "0", CVAR_ARCHIVE );
-    }
-        
-    // Add some console commands that we want to handle:
-    Cmd_AddCommand ("vid_restart", VID_Restart_f);
+	Cvar_Get ("gl_anisotropic",   	      "0",			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_arb_multisample", 	      "0",			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_truform", 	  	      "-1",			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_overbright_gamma",	      "1", 			  CVAR_ARCHIVE);
+	Cvar_Get ("gl_arb_multitexture", 	      "0", 			  CVAR_ARCHIVE);
 
-    // Build display mode list:
-    VID_GetDisplayModes ();
+	if (_windowed_mouse == NULL)
+	{
+		_windowed_mouse = Cvar_Get( "_windowed_mouse", "0", CVAR_ARCHIVE );
+	}
 
-    // Hide the cursor:
-    if (vid_fullscreen->value != 0.0f || _windowed_mouse->value != 0.0f)
-    {
-        IN_ShowCursor (NO);
-    }
+	// Add some console commands that we want to handle:
+	Cmd_AddCommand ("vid_restart", VID_Restart_f);
 
-    // Capture the screen(s):
-    if (vid_fullscreen->value != 0.0f)
-    {
-        VID_FadeGammaOut (VID_FADE_ALL_SCREENS, VID_FADE_DURATION);
-        VID_CAPTURE_DISPLAYS ();
-        VID_FadeGammaIn (VID_FADE_ALL_SCREENS, 0.0f);
-    }
-    
-    // Start the graphics mode and load refresh DLL:
-    VID_CheckChanges();
+	// Build display mode list:
+	VID_GetDisplayModes ();
+
+	// Hide the cursor:
+	if (vid_fullscreen->value != 0.0f || _windowed_mouse->value != 0.0f)
+	{
+		IN_ShowCursor (NO);
+	}
+
+	// Capture the screen(s):
+	if (vid_fullscreen->value != 0.0f)
+	{
+		VID_FadeGammaOut (VID_FADE_ALL_SCREENS, VID_FADE_DURATION);
+		VID_CAPTURE_DISPLAYS ();
+		VID_FadeGammaIn (VID_FADE_ALL_SCREENS, 0.0f);
+	}
+
+	// Start the graphics mode and load refresh DLL:
+	VID_CheckChanges();
 }
 
 //___________________________________________________________________________________________________VID_Shutdown()
 
-void	VID_Shutdown (void)
+void VID_Shutdown (void)
 {
-    // shutdown the ref library:
-    if (reflib_active)
-    {
-        re.Shutdown ();
-        VID_FreeReflib ();
-    }
+	// shutdown the ref library:
+	if (reflib_active)
+	{
+		re.Shutdown ();
+		VID_FreeReflib ();
+	}
 
-    // release the screen(s):
-    if (vid_fullscreen->value != 0.0f)
-    {
-        VID_FadeGammaOut (VID_FADE_ALL_SCREENS, 0.0f);
-        if (CGDisplayIsCaptured (kCGDirectMainDisplay) == true)
-        {
-            VID_RELEASE_DISPLAYS ();
-        }
-        VID_FadeGammaIn (VID_FADE_ALL_SCREENS, VID_FADE_DURATION);
-    }
+	// release the screen(s):
+	if (vid_fullscreen->value != 0.0f)
+	{
+		VID_FadeGammaOut (VID_FADE_ALL_SCREENS, 0.0f);
+		if (CGDisplayIsCaptured (kCGDirectMainDisplay) == true)
+		{
+		VID_RELEASE_DISPLAYS ();
+		}
+		VID_FadeGammaIn (VID_FADE_ALL_SCREENS, VID_FADE_DURATION);
+	}
 
-    // free the mode list:
-    if (gVIDModes != NULL)
-    {
-        free (gVIDModes);
-        gVIDModes = NULL;
-        gVIDModeCount = 0;
-    }
+	// free the mode list:
+	if (gVIDModes != NULL)
+	{
+		free (gVIDModes);
+		gVIDModes = NULL;
+		gVIDModeCount = 0;
+	}
 
-    // show the cursor:
-    IN_ShowCursor (YES);
+	// show the cursor:
+	IN_ShowCursor (YES);
 }
 
 //________________________________________________________________________________________________VID_LoadRefresh()
 
 qboolean VID_LoadRefresh (char *theName)
 {
-    refimport_t		myRefImport;
-    GetRefAPI_t		myGetRefAPIProc;
-    NSBundle		*myAppBundle = NULL;
-    char		*myBundlePath = NULL,
-                        myCurrentPath[MAXPATHLEN],
-                        myFileName[MAXPATHLEN];
+	refimport_t	myRefImport;
+	GetRefAPI_t	myGetRefAPIProc;
+	NSBundle	*myAppBundle = NULL;
+	char		*myBundlePath = NULL,
+			myCurrentPath[MAXPATHLEN],
+			myFileName[MAXPATHLEN];
 
-    // get current game directory:
-    getcwd (myCurrentPath, sizeof (myCurrentPath));
-    
-    // get the plugin dir of the application:
-    myAppBundle = [NSBundle mainBundle];
-    if (myAppBundle == NULL)
-    {
-        Sys_Error ("Error while loading the renderer plug-in (invalid application bundle)!\n");
-    }
+	// get current game directory:
+	getcwd (myCurrentPath, sizeof (myCurrentPath));
 
-    myBundlePath = (char *) [[myAppBundle builtInPlugInsPath] fileSystemRepresentation];
-    if (myBundlePath == NULL)
-    {
-        Sys_Error ("Error while loading the renderer plug-in (invalid plug-in path)!\n");
-    }
-    
-    chdir (myBundlePath);
-    [myAppBundle release];
-    
-    // prepare the bundle name:
-    snprintf (myFileName, MAXPATHLEN, "%s.q2plug/Contents/MacOS/%s", theName, theName);
+	// get the plugin dir of the application:
+	myAppBundle = [NSBundle mainBundle];
+	if (myAppBundle == NULL)
+	{
+		Sys_Error ("Error while loading the renderer plug-in (invalid application bundle)!\n");
+	}
 
-    if (reflib_active == true)
-    {
-        re.Shutdown ();
-        VID_FreeReflib ();
-        reflib_active = false;
-    }
+	myBundlePath = (char *) [[myAppBundle builtInPlugInsPath] fileSystemRepresentation];
+	if (myBundlePath == NULL)
+	{
+		Sys_Error ("Error while loading the renderer plug-in (invalid plug-in path)!\n");
+	}
 
-    Com_Printf("------- Loading %s -------\n", theName);
+	chdir (myBundlePath);
+	[myAppBundle release];
 
-#ifdef VID_DO_NOT_UNLOAD_MODULES
+	// prepare the bundle name:
+	snprintf (myFileName, MAXPATHLEN, "%s.q2plug/Contents/MacOS/%s", theName, theName);
 
-    {
-        UInt8 		i;
+	if (reflib_active == true)
+	{
+		re.Shutdown ();
+		VID_FreeReflib ();
+		reflib_active = false;
+	}
 
-        for (i = 0; i < VID_MAX_MODULES; i++)
-        {
-            if (gVIDModuleList[i].library != NULL)
-            {
-                if (strcmp (gVIDModuleList[i].name, theName) == 0)
-                {
-                    reflib_library = gVIDModuleList[i].library;
-                    break;
-                }
-            }
-        }
-    }
-
-    if (!reflib_library)
-    
-#endif /* VID_DO_NOT_UNLOAD_MODULES */
-
-    reflib_library = dlopen (myFileName, RTLD_LAZY | RTLD_GLOBAL);
-
-    // return to the game directory:
-    chdir (myCurrentPath);
-
-    if (reflib_library == NULL)
-    {
-        Com_Printf ("LoadLibrary(\"%s\") failed: %s\n", theName , dlerror());
-        return (false);
-    }
-
-    Com_Printf ("LoadLibrary(\"%s\")\n", myFileName);
-
-    if ((myGetRefAPIProc = (void *) dlsym (reflib_library, "GetRefAPI")) == NULL)
-    {
-        Com_Error (ERR_FATAL, "dlsym failed on %s", theName);
-    }
+	Com_Printf("------- Loading %s -------\n", theName);
 
 #ifdef VID_DO_NOT_UNLOAD_MODULES
 
-    {
-        UInt8 		i;
+	{
+		UInt8 		i;
 
-        for (i = 0; i < VID_MAX_MODULES; i++)
-        {
-            if (strcmp (gVIDModuleList[i].name, theName) == 0 || gVIDModuleList[i].library == NULL)
-            {
-                gVIDModuleList[i].library = reflib_library;
-                strcpy (gVIDModuleList[i].name, theName);
-                break;
-            }
-        }
-        if (i == VID_MAX_MODULES)
-        {
-            Com_Error (ERR_FATAL, "Module load failed (no free slots)!");
-        }
-    }
-    
+		for (i = 0; i < VID_MAX_MODULES; i++)
+		{
+			if (gVIDModuleList[i].library != NULL)
+			{
+				if (strcmp (gVIDModuleList[i].name, theName) == 0)
+				{
+					reflib_library = gVIDModuleList[i].library;
+					break;
+				}
+			}
+		}
+	}
+
+	if (!reflib_library)
+#endif /* VID_DO_NOT_UNLOAD_MODULES */
+		reflib_library = dlopen (myFileName, RTLD_LAZY | RTLD_GLOBAL);
+
+	// return to the game directory:
+	chdir (myCurrentPath);
+
+	if (reflib_library == NULL)
+	{
+		Com_Printf ("LoadLibrary(\"%s\") failed: %s\n", theName , dlerror());
+		return (false);
+	}
+
+	Com_Printf ("LoadLibrary(\"%s\")\n", myFileName);
+
+	if ((myGetRefAPIProc = (void *) dlsym (reflib_library, "GetRefAPI")) == NULL)
+	{
+		Com_Error (ERR_FATAL, "dlsym failed on %s", theName);
+	}
+
+#ifdef VID_DO_NOT_UNLOAD_MODULES
+
+	{
+		UInt8 		i;
+
+		for (i = 0; i < VID_MAX_MODULES; i++)
+		{
+			if (strcmp (gVIDModuleList[i].name, theName) == 0 || gVIDModuleList[i].library == NULL)
+			{
+				gVIDModuleList[i].library = reflib_library;
+				strcpy (gVIDModuleList[i].name, theName);
+				break;
+			}
+		}
+		if (i == VID_MAX_MODULES)
+		{
+			Com_Error (ERR_FATAL, "Module load failed (no free slots)!");
+		}
+	}
+
 #endif /* VID_DO_NOT_UNLOAD_MODULES */
 
-    myRefImport.Cmd_AddCommand = Cmd_AddCommand;
-    myRefImport.Cmd_RemoveCommand = Cmd_RemoveCommand;
-    myRefImport.Cmd_Argc = Cmd_Argc;
-    myRefImport.Cmd_Argv = Cmd_Argv;
-    myRefImport.Cmd_ExecuteText = Cbuf_ExecuteText;
-    myRefImport.Con_Printf = VID_Printf;
-    myRefImport.Sys_Error = VID_Error;
-    myRefImport.FS_LoadFile = FS_LoadFile;
-    myRefImport.FS_FreeFile = FS_FreeFile;
-    myRefImport.FS_Gamedir = FS_Gamedir;
-    myRefImport.Cvar_Get = Cvar_Get;
-    myRefImport.Cvar_Set = Cvar_Set;
-    myRefImport.Cvar_SetValue = Cvar_SetValue;
-    myRefImport.Vid_GetModeInfo = VID_GetModeInfo;
-    //myRefImport.Vid_MenuInit = VID_MenuInit; // Member does not exist according to the compiler...
-    myRefImport.Vid_NewWindow = VID_NewWindow;
+	myRefImport.Cmd_AddCommand = Cmd_AddCommand;
+	myRefImport.Cmd_RemoveCommand = Cmd_RemoveCommand;
+	myRefImport.Cmd_Argc = Cmd_Argc;
+	myRefImport.Cmd_Argv = Cmd_Argv;
+	myRefImport.Cmd_ExecuteText = Cbuf_ExecuteText;
+	myRefImport.Con_Printf = VID_Printf;
+	myRefImport.Sys_Error = VID_Error;
+	myRefImport.FS_LoadFile = FS_LoadFile;
+	myRefImport.FS_FreeFile = FS_FreeFile;
+	myRefImport.FS_Gamedir = FS_Gamedir;
+	myRefImport.Cvar_Get = Cvar_Get;
+	myRefImport.Cvar_Set = Cvar_Set;
+	myRefImport.Cvar_SetValue = Cvar_SetValue;
+	myRefImport.Vid_GetModeInfo = VID_GetModeInfo;
+	//myRefImport.Vid_MenuInit = VID_MenuInit; // Member does not exist according to the compiler...
+	myRefImport.Vid_NewWindow = VID_NewWindow;
 
-    re = myGetRefAPIProc (myRefImport);
+	re = myGetRefAPIProc (myRefImport);
 
-    if (re.api_version != API_VERSION)
-    {
-            VID_FreeReflib ();
-            Com_Error (ERR_FATAL, "%s has incompatible api_version!", theName);
-    }
+	if (re.api_version != API_VERSION)
+	{
+		VID_FreeReflib ();
+		Com_Error (ERR_FATAL, "%s has incompatible api_version!", theName);
+	}
 
-    if (re.Init (0, 0) == -1)
-    {
-            re.Shutdown ();
-            VID_FreeReflib ();
-            return (false);
-    }
+	if (re.Init (0, 0) == -1)
+	{
+		re.Shutdown ();
+		VID_FreeReflib ();
+		return (false);
+	}
 
-    Com_Printf ("------------------------------------\n");
-    reflib_active = true;
-    return (true);
+	Com_Printf ("------------------------------------\n");
+	reflib_active = true;
+	return (true);
 }
 
 //_________________________________________________________________________________________________VID_FreeReflib()
@@ -516,58 +509,58 @@ void	VID_FreeReflib (void)
 {
 #ifndef VID_DO_NOT_UNLOAD_MODULES
 
-    if (reflib_library != NULL)
-    {
-        dlclose (reflib_library);
-    }
+	if (reflib_library != NULL)
+	{
+		dlclose (reflib_library);
+	}
 
 #endif /* VID_DO_NOT_UNLOAD_MODULES */
 
-    memset (&re, 0, sizeof (re));
-    reflib_library = NULL;
-    reflib_active  = false;
+	memset (&re, 0, sizeof (re));
+	reflib_library = NULL;
+	reflib_active  = false;
 }
 
 //__________________________________________________________________________________________________VID_SetPaused()
 
 void	VID_SetPaused (BOOL theState)
 {
-    if (vid_fullscreen->value != 0.0f)
-    {
-        static BOOL	myState = NO;
+	if (vid_fullscreen->value != 0.0f)
+	{
+		static BOOL	myState = NO;
 
-        if (theState != myState)
-        {
-            if (theState == YES)
-            {
-                // release the screen(s):
-                VID_FadeGammaOut (VID_FADE_ALL_SCREENS, 0.0f);
+		if (theState != myState)
+		{
+			if (theState == YES)
+			{
+				// release the screen(s):
+				VID_FadeGammaOut (VID_FADE_ALL_SCREENS, 0.0f);
 
-                if (reflib_active)
-                {
-                    re.Shutdown ();
-                    VID_FreeReflib ();
-                }                
+				if (reflib_active)
+				{
+					re.Shutdown ();
+					VID_FreeReflib ();
+				}
 
-                if (CGDisplayIsCaptured (kCGDirectMainDisplay) == true)
-                {
-                    VID_RELEASE_DISPLAYS ();
-                }
+				if (CGDisplayIsCaptured (kCGDirectMainDisplay) == true)
+				{
+					VID_RELEASE_DISPLAYS ();
+				}
 
-                VID_FadeGammaIn (VID_FADE_ALL_SCREENS, 0.0f);
-            }
-            else
-            {
-                // Capture the screen(s):
-                VID_FadeGammaOut (VID_FADE_ALL_SCREENS, 0.0f);
-                VID_CAPTURE_DISPLAYS ();
-                VID_FadeGammaIn (VID_FADE_ALL_SCREENS, 0.0f);
-                vid_ref->modified = YES;
-                VID_CheckChanges ();
-            }
-            myState = theState;
-        }
-    }
+				VID_FadeGammaIn (VID_FADE_ALL_SCREENS, 0.0f);
+			}
+			else
+			{
+				// Capture the screen(s):
+				VID_FadeGammaOut (VID_FADE_ALL_SCREENS, 0.0f);
+				VID_CAPTURE_DISPLAYS ();
+				VID_FadeGammaIn (VID_FADE_ALL_SCREENS, 0.0f);
+				vid_ref->modified = YES;
+				VID_CheckChanges ();
+			}
+			myState = theState;
+		}
+	}
 }
 
 //_______________________________________________________________________________________________VID_CheckChanges()
@@ -626,339 +619,301 @@ void	VID_CheckChanges (void)
 
 void VID_Restart_f (void)
 {
-    vid_ref->modified = true;
+	vid_ref->modified = true;
 }
 
 //_______________________________________________________________________________________________VID_AddModeToLis()
 
-void	VID_AddModeToList (UInt16 theWidth, UInt16 theHeight, float theRefresh)
+void VID_AddModeToList (UInt16 theWidth, UInt16 theHeight, float theRefresh)
 {
-    UInt32	j;
+	UInt32	j;
 
-    // check if the max refresh is smaller than the min refresh. If yes, set it to infinite:
-    if (vid_maxrefresh->value > 0.0f && vid_maxrefresh->value < vid_minrefresh->value)
-    {
-        Com_Printf ("vid_maxrefresh is smaller than vid_minrefresh.\nSetting vid_maxrefresh to -1 [=infinite].\n");
-        Cvar_SetValue ("vid_maxrefresh", -1.0f);
-    }
-    
-    if (vid_minrefresh->value < 0.0f)
-    {
-        Com_Printf ("vid_minrefresh is smaller than zero.\nSetting vid_minrefresh to zero.\n");
-        Cvar_SetValue ("vid_minrefresh", 0.0f);
-    }
-    
-    // check if our refresh rate is inside the range of "vid_minrefresh" and "vid_maxrefresh":
-    if ((theRefresh < vid_minrefresh->value) || (vid_maxrefresh->value > 0 && theRefresh > vid_maxrefresh->value))
-    {
-        return;
-    }
-    
-    if (vid_minrefresh->value == 0.0f && vid_maxrefresh->value < 0.0f)
-    {
-        theRefresh = -1.0f;
-    }
-    
-    // collect each resolution only once:
-    for (j = 0; j < gVIDModeCount; j++)
-    {
-        if (gVIDModes[j].width == theWidth && gVIDModes[j].height == theHeight)
-        {
-            break;
-        }
-    }
-    
-    // insert the new mode in our mode list:
-    if (j == gVIDModeCount)
-    {
-        gVIDModes[gVIDModeCount].width = theWidth;
-        gVIDModes[gVIDModeCount].height = theHeight;
-        gVIDModes[gVIDModeCount].refresh = theRefresh;
-        gVIDModeCount++;
-    }
+	// check if the max refresh is smaller than the min refresh. If yes, set it to infinite:
+	if (vid_maxrefresh->value > 0.0f && vid_maxrefresh->value < vid_minrefresh->value)
+	{
+		Com_Printf ("vid_maxrefresh is smaller than vid_minrefresh.\nSetting vid_maxrefresh to -1 [=infinite].\n");
+		Cvar_SetValue ("vid_maxrefresh", -1.0f);
+	}
+
+	if (vid_minrefresh->value < 0.0f)
+	{
+		Com_Printf ("vid_minrefresh is smaller than zero.\nSetting vid_minrefresh to zero.\n");
+		Cvar_SetValue ("vid_minrefresh", 0.0f);
+	}
+
+	// check if our refresh rate is inside the range of "vid_minrefresh" and "vid_maxrefresh":
+	if ((theRefresh < vid_minrefresh->value) || (vid_maxrefresh->value > 0 && theRefresh > vid_maxrefresh->value))
+		return;
+
+	if (vid_minrefresh->value == 0.0f && vid_maxrefresh->value < 0.0f)
+		theRefresh = -1.0f;
+
+	// collect each resolution only once:
+	for (j = 0; j < gVIDModeCount; j++)
+	{
+		if (gVIDModes[j].width == theWidth && gVIDModes[j].height == theHeight)
+		{
+			break;
+		}
+	}
+
+	// insert the new mode in our mode list:
+	if (j == gVIDModeCount)
+	{
+		gVIDModes[gVIDModeCount].width = theWidth;
+		gVIDModes[gVIDModeCount].height = theHeight;
+		gVIDModes[gVIDModeCount].refresh = theRefresh;
+		gVIDModeCount++;
+	}
 }
 
 //____________________________________________________________________________________________VID_GetDisplayModes()
 
-void	VID_GetDisplayModes (void)
+void VID_GetDisplayModes (void)
 {
-    NSArray		*myDisplayModes;
-    float		myRate;
-    UInt16		myModeCount = 0,
-                        myWidth,
-                        myHeight,
-                        i;
-    
-    // get rid of the old display list, if there is any:
-    if (gVIDModes != NULL)
-    {
-        free (gVIDModes);
-        gVIDModes = NULL;
-        gVIDModeCount = 0;
-    }
+	NSArray		*myDisplayModes;
+	float		myRate;
+	UInt16		myModeCount = 0,
+				myWidth,
+				myHeight,
+				i;
 
-    // retrieve a list with all display modes:
-    myDisplayModes = [(NSArray *) CGDisplayAvailableModes (kCGDirectMainDisplay) retain];
-    if (myDisplayModes == NULL)
-    {
-        Sys_Error ("Unable to get list of available display modes.");
-    }
+	// get rid of the old display list, if there is any:
+	if (gVIDModes != NULL)
+	{
+		free (gVIDModes);
+		gVIDModes = NULL;
+		gVIDModeCount = 0;
+	}
 
-    myModeCount = [myDisplayModes count];
-    if (myModeCount == 0)
-    {
-        Sys_Error ("Unable to get list of available display modes.");
-    }
+	// retrieve a list with all display modes:
+	myDisplayModes = [(NSArray *) CGDisplayAvailableModes (kCGDirectMainDisplay) retain];
+	if (myDisplayModes == NULL)
+	{
+		Sys_Error ("Unable to get list of available display modes.");
+	}
+
+	myModeCount = [myDisplayModes count];
+	if (myModeCount == 0)
+	{
+		Sys_Error ("Unable to get list of available display modes.");
+	}
 
 
-    gVIDModes = malloc ((myModeCount + 1) * sizeof(vidmode_t_) * 2);
-    if (gVIDModes == NULL)
-    {
-        Sys_Error ("Out of memory!");
-    }
-    
-    // scan for 2x2 modes first:
-    for (i = 0; i < myModeCount; i++)
-    {
-        myWidth = [[[myDisplayModes objectAtIndex: i] objectForKey: (NSString *) kCGDisplayWidth] intValue];
-        myHeight = [[[myDisplayModes objectAtIndex: i] objectForKey: (NSString *) kCGDisplayHeight] intValue];
-        myRate = [[[myDisplayModes objectAtIndex: i] objectForKey: (NSString *) kCGDisplayRefreshRate] floatValue];
-        
-        if (myWidth < 640 || myHeight < 480)
-        {
-            continue;
-        }
-        
-        myWidth = myWidth >> 1;
-        myHeight = myHeight >> 1;
-        
-        if (myWidth < 640 || myHeight < 480)
-        {
-            VID_AddModeToList (myWidth, myHeight, myRate);            
-        }
-    }
-    
-    // scan for 1x1 modes next:
-    for (i = 0; i < myModeCount; i++)
-    {
-        myWidth = [[[myDisplayModes objectAtIndex: i] objectForKey: (NSString *) kCGDisplayWidth] intValue];
-        myHeight = [[[myDisplayModes objectAtIndex: i] objectForKey: (NSString *) kCGDisplayHeight] intValue];
-        myRate = [[[myDisplayModes objectAtIndex: i] objectForKey: (NSString *) kCGDisplayRefreshRate] floatValue];
-        
-        if (myWidth < 640 || myHeight < 480)
-        {
-            continue;
-        }
+	gVIDModes = malloc ((myModeCount + 1) * sizeof(vidmode_t_) * 2);
+	if (gVIDModes == NULL)
+	{
+		Sys_Error ("Out of memory!");
+	}
 
-        VID_AddModeToList (myWidth, myHeight, myRate);
-    }
-    
-    [myDisplayModes release];
-    
-    if (gVIDModeCount == 0)
-    {
-        Sys_Error ("Unable to get list of available display modes.");
-    }
+	// scan for 2x2 modes first:
+	for (i = 0; i < myModeCount; i++)
+	{
+		myWidth = [[[myDisplayModes objectAtIndex: i] objectForKey: (NSString *) kCGDisplayWidth] intValue];
+		myHeight = [[[myDisplayModes objectAtIndex: i] objectForKey: (NSString *) kCGDisplayHeight] intValue];
+		myRate = [[[myDisplayModes objectAtIndex: i] objectForKey: (NSString *) kCGDisplayRefreshRate] floatValue];
+
+		if (myWidth < 640 || myHeight < 480)
+			continue;
+
+		myWidth = myWidth >> 1;
+		myHeight = myHeight >> 1;
+
+		if (myWidth < 640 || myHeight < 480)
+			VID_AddModeToList (myWidth, myHeight, myRate);
+	}
+
+	// scan for 1x1 modes next:
+	for (i = 0; i < myModeCount; i++)
+	{
+		myWidth = [[[myDisplayModes objectAtIndex: i] objectForKey: (NSString *) kCGDisplayWidth] intValue];
+		myHeight = [[[myDisplayModes objectAtIndex: i] objectForKey: (NSString *) kCGDisplayHeight] intValue];
+		myRate = [[[myDisplayModes objectAtIndex: i] objectForKey: (NSString *) kCGDisplayRefreshRate] floatValue];
+
+		if (myWidth < 640 || myHeight < 480)
+			continue;
+
+		VID_AddModeToList (myWidth, myHeight, myRate);
+	}
+
+	[myDisplayModes release];
+
+	if (gVIDModeCount == 0)
+	{
+		Sys_Error ("Unable to get list of available display modes.");
+	}
 }
 
 //______________________________________________________________________________________________VID_FadeGammaInit()
 
-BOOL	VID_FadeGammaInit (BOOL theFadeOnAllDisplays)
+BOOL VID_FadeGammaInit (BOOL theFadeOnAllDisplays)
 {
-    static BOOL		myFadeOnAllDisplays = NO;
-    CGDirectDisplayID  	myDisplayList[VID_MAX_DISPLAYS];
-    CGDisplayErr	myError;
-    UInt32		i;
+	static BOOL		myFadeOnAllDisplays = NO;
+	CGDirectDisplayID  	myDisplayList[VID_MAX_DISPLAYS];
+	CGDisplayErr	myError;
+	UInt32		i;
 
-    // if init fails, no gamma fading will be used!    
-    if (gVIDOriginalGamma != NULL)
-    {
-        // initialized, but did we change the number of displays?
-        if (theFadeOnAllDisplays == myFadeOnAllDisplays)
-        {
-            return (YES);
-        }
-        free (gVIDOriginalGamma);
-        gVIDOriginalGamma = NULL;
-    }
+	// if init fails, no gamma fading will be used!
+	if (gVIDOriginalGamma != NULL)
+	{
+		// initialized, but did we change the number of displays?
+		if (theFadeOnAllDisplays == myFadeOnAllDisplays)
+			return (YES);
+		free (gVIDOriginalGamma);
+		gVIDOriginalGamma = NULL;
+	}
 
-    // get the list of displays:
-    if (CGGetActiveDisplayList (VID_MAX_DISPLAYS, myDisplayList, &gVIDGammaCount) != CGDisplayNoErr)
-    {
-        return (NO);
-    }
-    
-    if (gVIDGammaCount == 0)
-    {
-        return (NO);
-    }
-    
-    if (theFadeOnAllDisplays == NO)
-    {
-        gVIDGammaCount = 1;
-    }
-    
-    // get memory for our original gamma table(s):
-    gVIDOriginalGamma = malloc (sizeof (vidgamma_t) * gVIDGammaCount);
-    if (gVIDOriginalGamma == NULL)
-    {
-        return (NO);
-    }
-    
-    // store the original gamma values within this table(s):
-    for (i = 0; i < gVIDGammaCount; i++)
-    {
-        if (gVIDGammaCount == 1)
-        {
-            gVIDOriginalGamma[i].displayID = kCGDirectMainDisplay;
-        }
-        else
-        {
-            gVIDOriginalGamma[i].displayID = myDisplayList[i];
-        }
+	// get the list of displays:
+	if (CGGetActiveDisplayList (VID_MAX_DISPLAYS, myDisplayList, &gVIDGammaCount) != CGDisplayNoErr)
+		return (NO);
 
-        myError = CGGetDisplayTransferByFormula (gVIDOriginalGamma[i].displayID,
-                                                 &gVIDOriginalGamma[i].component[0],
-                                                 &gVIDOriginalGamma[i].component[1],
-                                                 &gVIDOriginalGamma[i].component[2],
-                                                 &gVIDOriginalGamma[i].component[3],
-                                                 &gVIDOriginalGamma[i].component[4],
-                                                 &gVIDOriginalGamma[i].component[5],
-                                                 &gVIDOriginalGamma[i].component[6],
-                                                 &gVIDOriginalGamma[i].component[7],
-                                                 &gVIDOriginalGamma[i].component[8]);
-        if (myError != CGDisplayNoErr)
-        {
-            free (gVIDOriginalGamma);
-            gVIDOriginalGamma = NULL;
-            return (NO);
-        }
-    }
-    myFadeOnAllDisplays = theFadeOnAllDisplays;
+	if (gVIDGammaCount == 0)
+		return (NO);
 
-    return (YES);
+	if (theFadeOnAllDisplays == NO)
+		gVIDGammaCount = 1;
+
+	// get memory for our original gamma table(s):
+	gVIDOriginalGamma = malloc (sizeof (vidgamma_t) * gVIDGammaCount);
+	if (gVIDOriginalGamma == NULL)
+		return (NO);
+
+	// store the original gamma values within this table(s):
+	for (i = 0; i < gVIDGammaCount; i++)
+	{
+		if (gVIDGammaCount == 1)
+			gVIDOriginalGamma[i].displayID = kCGDirectMainDisplay;
+		else
+			gVIDOriginalGamma[i].displayID = myDisplayList[i];
+
+		myError = CGGetDisplayTransferByFormula (gVIDOriginalGamma[i].displayID,
+							&gVIDOriginalGamma[i].component[0],
+							&gVIDOriginalGamma[i].component[1],
+							&gVIDOriginalGamma[i].component[2],
+							&gVIDOriginalGamma[i].component[3],
+							&gVIDOriginalGamma[i].component[4],
+							&gVIDOriginalGamma[i].component[5],
+							&gVIDOriginalGamma[i].component[6],
+							&gVIDOriginalGamma[i].component[7],
+							&gVIDOriginalGamma[i].component[8]);
+		if (myError != CGDisplayNoErr)
+		{
+			free (gVIDOriginalGamma);
+			gVIDOriginalGamma = NULL;
+			return (NO);
+		}
+	}
+	myFadeOnAllDisplays = theFadeOnAllDisplays;
+
+	return (YES);
 }
 
 //___________________________________________________________________________________VID_FadeGammaOut()
 
 void	VID_FadeGammaOut (BOOL theFadeOnAllDisplays, float theDuration)
 {
-    vidgamma_t		myCurGamma;
-    float		myStartTime = 0.0f, myCurScale = 0.0f;
-    UInt32		i, j;
+	vidgamma_t		myCurGamma;
+	float		myStartTime = 0.0f, myCurScale = 0.0f;
+	UInt32		i, j;
 
-    // check if initialized:
-    if (VID_FadeGammaInit (theFadeOnAllDisplays) == NO)
-    {
-        return;
-    }
-    
-    // get the time of the fade start:
-    myStartTime = Sys_Milliseconds ();
-    theDuration *= 1000.0f;
-    
-    // fade for the choosen duration:
-    while (1)
-    {
-        // calculate the current scale and clamp it:
-        if (theDuration > 0.0f)
-        {
-            myCurScale = 1.0f - (Sys_Milliseconds () - myStartTime) / theDuration;
-            if (myCurScale < 0.0f)
-            {
-                myCurScale = 0.0f;
-            }
-        }
+	// check if initialized:
+	if (VID_FadeGammaInit (theFadeOnAllDisplays) == NO)
+		return;
 
-        // fade the gamma for each display:        
-        for (i = 0; i < gVIDGammaCount; i++)
-        {
-            // calculate the current intensity for each color component:
-            for (j = 1; j < 9; j += 3)
-            {
-                myCurGamma.component[j] = myCurScale * gVIDOriginalGamma[i].component[j];
-            }
+	// get the time of the fade start:
+	myStartTime = Sys_Milliseconds ();
+	theDuration *= 1000.0f;
 
-            // set the current gamma:
-            CGSetDisplayTransferByFormula (gVIDOriginalGamma[i].displayID,
-                                           gVIDOriginalGamma[i].component[0],
-                                           myCurGamma.component[1],
-                                           gVIDOriginalGamma[i].component[2],
-                                           gVIDOriginalGamma[i].component[3],
-                                           myCurGamma.component[4],
-                                           gVIDOriginalGamma[i].component[5],
-                                           gVIDOriginalGamma[i].component[6],
-                                           myCurGamma.component[7],
-                                           gVIDOriginalGamma[i].component[8]);
-        }
-        
-        // are we finished?
-        if(myCurScale <= 0.0f)
-        {
-            break;
-        } 
-    }
+	// fade for the choosen duration:
+	while (1)
+	{
+		// calculate the current scale and clamp it:
+		if (theDuration > 0.0f)
+		{
+			myCurScale = 1.0f - (Sys_Milliseconds () - myStartTime) / theDuration;
+			if (myCurScale < 0.0f)
+				myCurScale = 0.0f;
+		}
+
+		// fade the gamma for each display:
+		for (i = 0; i < gVIDGammaCount; i++)
+		{
+			// calculate the current intensity for each color component:
+			for (j = 1; j < 9; j += 3)
+				myCurGamma.component[j] = myCurScale * gVIDOriginalGamma[i].component[j];
+
+			// set the current gamma:
+			CGSetDisplayTransferByFormula (gVIDOriginalGamma[i].displayID,
+						gVIDOriginalGamma[i].component[0],
+						myCurGamma.component[1],
+						gVIDOriginalGamma[i].component[2],
+						gVIDOriginalGamma[i].component[3],
+						myCurGamma.component[4],
+						gVIDOriginalGamma[i].component[5],
+						gVIDOriginalGamma[i].component[6],
+						myCurGamma.component[7],
+						gVIDOriginalGamma[i].component[8]);
+		}
+
+		// are we finished?
+		if(myCurScale <= 0.0f)
+			break;
+	}
 }
 
 //____________________________________________________________________________________VID_FadeGammaIn()
 
-void	VID_FadeGammaIn (BOOL theFadeOnAllDisplays, float theDuration)
+void VID_FadeGammaIn (BOOL theFadeOnAllDisplays, float theDuration)
 {
-    vidgamma_t		myCurGamma;
-    float		myStartTime = 0.0f, myCurScale = 1.0f;
-    UInt32		i, j;
+	vidgamma_t	myCurGamma;
+	float		myStartTime = 0.0f, myCurScale = 1.0f;
+	UInt32		i, j;
 
-    // check if initialized:
-    if (gVIDOriginalGamma == NULL)
-    {
-        return;
-    }
-    
-    // get the time of the fade start:
-    myStartTime = Sys_Milliseconds ();
-    theDuration *= 1000.0f;
-    
-    // fade for the choosen duration:
-    while (1)
-    {
-        // calculate the current scale and clamp it:
-        if (theDuration > 0.0f)
-        {
-            myCurScale = (Sys_Milliseconds () - myStartTime) / theDuration;
-            if (myCurScale > 1.0f)
-            {
-                myCurScale = 1.0f;
-            }
-        }
+	// check if initialized:
+	if (gVIDOriginalGamma == NULL)
+		return;
 
-        // fade the gamma for each display:
-        for (i = 0; i < gVIDGammaCount; i++)
-        {
-            // calculate the current intensity for each color component:
-            for (j = 1; j < 9; j += 3)
-            {
-                myCurGamma.component[j] = myCurScale * gVIDOriginalGamma[i].component[j];
-            }
+	// get the time of the fade start:
+	myStartTime = Sys_Milliseconds ();
+	theDuration *= 1000.0f;
 
-            // set the current gamma:
-            CGSetDisplayTransferByFormula (gVIDOriginalGamma[i].displayID,
-                                           gVIDOriginalGamma[i].component[0],
-                                           myCurGamma.component[1],
-                                           gVIDOriginalGamma[i].component[2],
-                                           gVIDOriginalGamma[i].component[3],
-                                           myCurGamma.component[4],
-                                           gVIDOriginalGamma[i].component[5],
-                                           gVIDOriginalGamma[i].component[6],
-                                           myCurGamma.component[7],
-                                           gVIDOriginalGamma[i].component[8]);
-        }
-        
-        // are we finished?
-        if(myCurScale >= 1.0f)
-        {
-            break;
-        } 
-    }
+	// fade for the choosen duration:
+	while (1)
+	{
+		// calculate the current scale and clamp it:
+		if (theDuration > 0.0f)
+		{
+			myCurScale = (Sys_Milliseconds () - myStartTime) / theDuration;
+			if (myCurScale > 1.0f)
+				myCurScale = 1.0f;
+		}
+
+		// fade the gamma for each display:
+		for (i = 0; i < gVIDGammaCount; i++)
+		{
+			// calculate the current intensity for each color component:
+			for (j = 1; j < 9; j += 3)
+			{
+				myCurGamma.component[j] = myCurScale * gVIDOriginalGamma[i].component[j];
+			}
+
+			// set the current gamma:
+			CGSetDisplayTransferByFormula (gVIDOriginalGamma[i].displayID,
+						gVIDOriginalGamma[i].component[0],
+						myCurGamma.component[1],
+						gVIDOriginalGamma[i].component[2],
+						gVIDOriginalGamma[i].component[3],
+						myCurGamma.component[4],
+						gVIDOriginalGamma[i].component[5],
+						gVIDOriginalGamma[i].component[6],
+						myCurGamma.component[7],
+						gVIDOriginalGamma[i].component[8]);
+		}
+
+		// are we finished?
+		if(myCurScale >= 1.0f)
+			break;
+	}
 }
 
 //______________________________________________________________________________________________________________eOF
