@@ -62,6 +62,7 @@ names german
 	Hans-Peter
 	Horst
 	Johann
+	Jürgen
 	Karl
 	Kai-Uwe
 	Klaus
@@ -197,6 +198,8 @@ names spanish_italian
 	Gustavo
 	Gulliano
 	Jesus
+	Joaquín
+	"Joaquín Sánchez"
 	Jose
 	"Jose Guadalupe"
 	"Juan Martin"
@@ -215,11 +218,14 @@ names spanish_italian
 	{
 	"Al Capone"
 	Alejandro
+	Andújar
 	Banderas
+	Balaguer
 	Campangolo
 	Campos
 	Cano
 	Checa
+	Cortés
 	Cuevas
 	"De Cesare"
 	"De Francesco"
@@ -231,12 +237,14 @@ names spanish_italian
 	Esteban
 	Estevez
 	Espinoza
-	Gonzalez
+	González
 	Gonzalo
 	Guadalupe
-	Lopez
+	Lavín
+	López
 	Mantovani
 	Martinez
+	Maurín
 	Meazzi
 	Mendez
 	Padilla
@@ -244,12 +252,15 @@ names spanish_italian
 	Prieto
 	Ramos
 	Rivera
-	Rodriguez
+	Rodríguez
 	Russo
+	Sabina
 	Segura
 	Tomba
+	Turina
 	Vasquez
 	Zapata
+	Zavala
 	}
 }
 
