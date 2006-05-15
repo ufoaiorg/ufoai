@@ -123,6 +123,8 @@ void Font_Length (char *font, char *c, int *width, int *height)
 {
 	font_t	*f = NULL;
 
+	*width = *height = 0;
+
 	// get the font
 	f = Font_GetFont( font );
 	if ( !f ) return;
@@ -389,6 +391,9 @@ static void Font_ConvertChars ( char* buffer )
 		replace++;
 		replace = strstr( replace, "\t" );
 	}
+	replace = strstr( buffer, "\n\0" );
+	if ( replace )
+		replace = '\0';
 }
 
 /*================

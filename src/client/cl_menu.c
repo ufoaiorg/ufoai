@@ -1546,16 +1546,15 @@ void MN_Tooltip ( menuNode_t* node, int x, int y )
 	// tooltips
 	if ( node->data[5] )
 	{
-		VectorSet( color, 0.0f, 0.0f, 0.0f );
-		color[3] = 0.7f;
-		x += 5;
-		y += 5;
 		tooltip = (char *)node->data[5];
 		if ( *tooltip == '_' )
 			tooltip++;
 		re.FontLength( "f_small", _(tooltip), &width, &height );
 		if ( !width )
 			return;
+		VectorSet( color, 0.0f, 0.0f, 0.0f );
+		color[3] = 0.7f;
+		x += 5; y += 5;
 		if ( x + width > VID_NORM_WIDTH )
 			x -= (width+10);
 		re.DrawFill(x, y, width, height + 10, 0, color );

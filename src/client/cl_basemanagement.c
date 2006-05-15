@@ -1575,9 +1575,10 @@ void MN_DrawBase( menuNode_t *node )
 {
 	float x, y;
 	int mx, my, width, height, row, col;
-	static vec4_t color = {1.0, 1.0, 1.0, 0.5};
+	qboolean hover = qfalse;
+	static vec4_t color = {0.5f, 1.0f, 0.5f, 1.0};
 	char image[MAX_QPATH], statusImage[MAX_QPATH];
-	building_t *entry, *secondEntry;
+	building_t *entry, *secondEntry = NULL, *hoverBuilding = NULL;
 
 	if ( ! baseCurrent )
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
@@ -1594,12 +1595,6 @@ void MN_DrawBase( menuNode_t *node )
 			// 20 is the height of the part where the images overlap
 			x = node->pos[0] + col * width;
 			y = node->pos[1] + row * height - row * 20 ;
-
-			// maybe we are out
-			if ( x < node->pos[0] - width ) continue;
-			if ( y < node->pos[1] - height) break;
-			if ( x > node->pos[0] + node->size[0] ) break;
-			if ( y > node->pos[1] + node->size[1] ) return;
 
 			baseCurrent->posX[row][col][baseCurrent->baseLevel] = x;
 			baseCurrent->posY[row][col][baseCurrent->baseLevel] = y;
@@ -1640,12 +1635,21 @@ void MN_DrawBase( menuNode_t *node )
 				Q_strncpyz( image, "base/grid", MAX_QPATH );
 
 			if ( mx > x && mx < x + width && my > y && my < y + height - 20 )
+			{
+				hover = qtrue;
+				if ( baseCurrent->map[row][col][baseCurrent->baseLevel] != -1 )
+					hoverBuilding = entry;
+			}
+			else
+				hover = qfalse;
+
+			if ( hover )
 				re.DrawColor( color );
 
 			if ( *image )
 				re.DrawNormPic( x, y, width, height, 0, 0, 0, 0, 0, qfalse, image );
 
-			if ( mx > x && mx < x + width && my > y && my < y + height - 20 )
+			if ( hover )
 				re.DrawColor( NULL );
 
 			if ( *statusImage )
@@ -1654,6 +1658,12 @@ void MN_DrawBase( menuNode_t *node )
 				statusImage[0] = '\0';
 			}
 		}
+	}
+	if ( hoverBuilding )
+	{
+		re.DrawColor( color );
+		re.FontDrawString( "f_small", 0, mx+3, my, 10, _(hoverBuilding->title) );
+		re.DrawColor( NULL );
 	}
 }
 
