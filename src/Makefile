@@ -301,14 +301,12 @@ TOOLS_OBJS = \
 	$(BUILDDIR)/tools/ufo2map/faces.o \
 	$(BUILDDIR)/tools/ufo2map/gldraw.o \
 	$(BUILDDIR)/tools/ufo2map/glfile.o \
-	$(BUILDDIR)/tools/ufo2map/leakfile.o \
 	$(BUILDDIR)/tools/ufo2map/levels.o \
 	$(BUILDDIR)/tools/ufo2map/lightmap.o \
 	$(BUILDDIR)/tools/ufo2map/map.o \
 	$(BUILDDIR)/tools/ufo2map/nodraw.o \
 	$(BUILDDIR)/tools/ufo2map/patches.o \
 	$(BUILDDIR)/tools/ufo2map/portals.o \
-	$(BUILDDIR)/tools/ufo2map/prtfile.o \
 	$(BUILDDIR)/tools/ufo2map/routing.o \
 	$(BUILDDIR)/tools/ufo2map/textures.o \
 	$(BUILDDIR)/tools/ufo2map/tree.o \

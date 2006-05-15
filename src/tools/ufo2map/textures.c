@@ -110,8 +110,7 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin)
 	if (!bt->scale[1])
 		bt->scale[1] = 1;
 
-
-// rotate axis
+	// rotate axis
 	if (bt->rotate == 0)
 		{ sinv = 0 ; cosv = 1; }
 	else if (bt->rotate == 90)

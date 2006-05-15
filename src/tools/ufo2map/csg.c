@@ -22,7 +22,7 @@ evaluate split side
 cost = 0
 for all sides
 	for all sides
-		get 
+		get
 		if side splits side and splitside is on same child
 			cost++;
 }
@@ -34,12 +34,6 @@ void SplitBrush2 (bspbrush_t *brush, int planenum,
 	bspbrush_t **front, bspbrush_t **back)
 {
 	SplitBrush (brush, planenum, front, back);
-#if 0
-	if (*front && (*front)->sides[(*front)->numsides-1].texinfo == -1)
-		(*front)->sides[(*front)->numsides-1].texinfo = (*front)->sides[0].texinfo;	// not -1
-	if (*back && (*back)->sides[(*back)->numsides-1].texinfo == -1)
-		(*back)->sides[(*back)->numsides-1].texinfo = (*back)->sides[0].texinfo;	// not -1
-#endif
 }
 
 /*
@@ -214,7 +208,7 @@ bspbrush_t	*ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t clipmaxs)
 	for (i=0 ; i<brush->numsides ; i++)
 	{
 		p = brush->sides[i].planenum & ~1;
-		if (p == maxplanenums[0] || p == maxplanenums[1] 
+		if (p == maxplanenums[0] || p == maxplanenums[1]
 			|| p == minplanenums[0] || p == minplanenums[1])
 		{
 			brush->sides[i].texinfo = TEXINFO_NODE;
@@ -245,7 +239,7 @@ qboolean IsInLevel( int contents, int level )
 		else return qfalse;
 	}
 
-	if ( level == 258 ) 
+	if ( level == 258 )
 	{
 		if (contents & CONTENTS_STEPON) return qtrue;
 		else return qfalse;
@@ -263,8 +257,8 @@ qboolean IsInLevel( int contents, int level )
 	{
 		if ( ((contents >> 8) & 0xFF) == level ) return qtrue;
 		else return qfalse;
-	} 
-	else 
+	}
+	else
 	{
 		if ( contents & 0xFF00 ) return qfalse;
 		else return qtrue;
@@ -277,7 +271,7 @@ qboolean IsInLevel( int contents, int level )
 MapBrushesBounds
 ============
 */
-int MapBrushesBounds( int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, 
+int MapBrushesBounds( int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs,
 					  vec3_t mins, vec3_t maxs )
 {
 	mapbrush_t	*b;
@@ -291,7 +285,7 @@ int MapBrushesBounds( int startbrush, int endbrush, int level, vec3_t clipmins, 
 		b = &mapbrushes[i];
 
 		// don't use finished brushes again
-		if ( b->finished ) 
+		if ( b->finished )
 			continue;
 
 		if ( !IsInLevel( b->contents, level ) )
@@ -309,14 +303,14 @@ int MapBrushesBounds( int startbrush, int endbrush, int level, vec3_t clipmins, 
 		AddPointToBounds( b->mins, mins, maxs );
 		AddPointToBounds( b->maxs, mins, maxs );
 	}
-	
+
 	return num;
 }
 
 
 /*
 ===============
-MakeBspBrushList 
+MakeBspBrushList
 ===============
 */
 bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level,
@@ -331,9 +325,6 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level,
 	int			vis;
 	vec3_t		normal;
 	float		dist;
-
-	// back copy backup brush sides structure
-//	memcpy( mapbrushes, mapbrushes + nummapbrushes, sizeof(mapbrush_t)*nummapbrushes );
 
 	for (i=0 ; i<2 ; i++)
 	{
@@ -367,10 +358,6 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level,
 		for (j=0 ; j<numsides ; j++)
 			if (mb->original_sides[j].visible && mb->original_sides[j].winding)
 				vis++;
-#if 0
-		if (!vis)
-			continue;	// no faces at all
-#endif
 		// if the brush is outside the clip area, skip it
 		for (j=0 ; j<3 ; j++)
 			if (mb->mins[j] < clipmins[j]
@@ -515,7 +502,7 @@ Returns true if b1 is allowed to bite b2
 qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
 {
 	// detail brushes never bite structural brushes
-	if ( (b1->original->contents & CONTENTS_DETAIL) 
+	if ( (b1->original->contents & CONTENTS_DETAIL)
 		&& !(b2->original->contents & CONTENTS_DETAIL) )
 		return qfalse;
 	if (b1->original->contents & CONTENTS_SOLID)
@@ -528,7 +515,7 @@ qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
 ChopBrushes
 
 Carves any intersecting solid brushes into the minimum number
-of non-intersecting brushes. 
+of non-intersecting brushes.
 =================
 */
 bspbrush_t *ChopBrushes (bspbrush_t *head)
@@ -542,10 +529,6 @@ bspbrush_t *ChopBrushes (bspbrush_t *head)
 	qprintf ("---- ChopBrushes ----\n");
 	qprintf ("original brushes: %i\n", CountBrushList (head));
 
-#if 0
-	if (startbrush == 0)
-		WriteBrushList ("before.gl", head, qfalse);
-#endif
 	keep = NULL;
 
 newlist:
@@ -635,12 +618,6 @@ newlist:
 	}
 
 	qprintf ("output brushes: %i\n", CountBrushList (keep));
-#if 0
-	{
-		WriteBrushList ("after.gl", keep, qfalse);
-		WriteBrushMap ("after.map", keep);
-	}
-#endif
 	return keep;
 }
 
@@ -660,13 +637,6 @@ bspbrush_t *InitialBrushList (bspbrush_t *list)
 	out = NULL;
 	for (b=list ; b ; b=b->next)
 	{
-#if 0
-		for (i=0 ; i<b->numsides ; i++)
-			if (b->sides[i].visible)
-				break;
-		if (i == b->numsides)
-			continue;
-#endif
 		newb = CopyBrush (b);
 		newb->next = out;
 		out = newb;
@@ -676,7 +646,6 @@ bspbrush_t *InitialBrushList (bspbrush_t *list)
 		for (i=0 ; i<b->numsides ; i++)
 		{
 			newb->sides[i].original = &b->sides[i];
-//			newb->sides[i].visible = qtrue;
 			b->sides[i].visible = qfalse;
 		}
 	}
@@ -708,8 +677,6 @@ bspbrush_t *OptimizedBrushList (bspbrush_t *list)
 		newb->next = out;
 		out = newb;
 	}
-
-//	WriteBrushList ("vis.gl", out, qtrue);
 
 	return out;
 }
