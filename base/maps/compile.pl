@@ -46,13 +46,9 @@ sub compile
 		unless ( -e "$dir/$_.bsp" )
 		{
 			print "..found $dir/$_\n";
-			if (system("qbsp3 $dir/$_.map") != 0)
+			if (system("ufo2map $extra $dir/$_") != 0)
 			{
-				die "qbsp3 failed";
-			}
-			if (system("qrad3 $extra $dir/$_.bsp") != 0)
-			{
-				die "qrad3 failed";
+				die "ufo2map failed";
 			}
 			$found++;
 		}
@@ -70,7 +66,7 @@ print "=====================================================\n";
 print "Mapcompiler for UFO:AI (http://sf.net/projects/ufoai)\n";
 print "Giving base/maps as parameter or start from base/maps\n";
 print "will compile all maps were no bsp-file exists\n";
-print "Keep in mind that qbsp3 and qrad3 needs to be in path\n";
+print "Keep in mind that ufo2map needs to be in path\n";
 print "=====================================================\n";
 
 die "Dir $dir does not exists\n" if ( !-e $dir );

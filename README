@@ -15,9 +15,8 @@ over the compile.pl method:
 + use more then one cpu
 But you need GNU make installed to do this (comes with e.g. Dev-CPP - see below)
 
-In both cases you need the quake map compile tools (found on sf.net or in src/tools - see below)
-named qbsp3 and qrad3.
-
+In both cases you need the quake map compile tool (found on sf.net or in src/tools - see below)
+named ufo2map
 
 ====================================================
 Linux:
@@ -48,16 +47,14 @@ o Compile SVN
 Follow these steps:
   cd src
   make
-  cd ../tools
-  make
 
-now symlink the qrad3 and qbsp3 from src/tools to /usr/bin
+now symlink ufo2map from src/debugARCH to /usr/bin
 otherwise the next step (compilation of the maps) won't find
 the needed map-compile tools
 
 o Compile Maps
 ====================================================
-To compile the maps with qbsp3 and qrad3 type:
+To compile the maps with ufo2map type:
   cd base/maps
   make
 
@@ -70,7 +67,7 @@ Install them via your distribution package manager
 
 o Run the game
 ====================================================
-Now you have the binaries in src/linux/debugARCH or src/linux/releaseARCH - copy them over
+Now you have the binaries in src/debugARCH or src/releaseARCH - copy them over
 or symlink them (description in FAQ) to the appropriate places.
 After this you have to edit the default.cfg in base-folder - change vid_ref and gl_driver to
 the Linux values.
@@ -144,13 +141,13 @@ we even get UFO:AI to PSP. Feel free to contribute.
 FAQ:
 =============================================================================================
 Q: The ufo binary can't find all the needed files
-A: Make sure that you do not execute the binary in src/linux/debugARCH resp.
-   src/linux/releaseARCH dir.
+A: Make sure that you do not execute the binary in src/debugARCH resp.
+   src/releaseARCH dir.
    You need to copy or link the files to svn-root dir:
-   ln -s src/linux/debugi386/ref_glx.so
-   ln -s src/linux/debugi386/ufo
-   ln -s src/linux/debugi386/ufoded
-   ln -s src/linux/debugi386/game.so base/
+   ln -s src/debugi386/ref_glx.so
+   ln -s src/debugi386/ufo
+   ln -s src/debugi386/ufoded
+   ln -s src/debugi386/game.so base/
 
    It's the same for other architectures, too. E.g. for AMD64 it is debugx86_64
 --------

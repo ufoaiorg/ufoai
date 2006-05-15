@@ -141,7 +141,7 @@ building building_quarters
 building building_ufo_hangar
 {
 	title		"_UFO Hangar"
-	image		base/ufo_hangar
+	image		base/adrop
 	fixcosts	1000
 	depends		building_lab
 	max_workers	5
@@ -150,7 +150,7 @@ building building_ufo_hangar
 	energy		400
 	build_time	6
 	varcosts	50
-	map_name	"ufo_hangar"
+	map_name	"adrop"
 	pedia		rs_building_ufo_hangar
 	type	hangar
 }

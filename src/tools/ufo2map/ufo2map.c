@@ -128,7 +128,7 @@ void Check_BSP_Parameter ( int argc, char **argv )
 			block_yl = atoi(argv[i+2]);
 			block_xh = atoi(argv[i+3]);
 			block_yh = atoi(argv[i+4]);
-			printf ("blocks: %i,%i to %i,%i\n", 
+			printf ("blocks: %i,%i to %i,%i\n",
 				block_xl, block_yl, block_xh, block_yh);
 			i+=4;
 		}
@@ -146,8 +146,6 @@ void Check_BSP_Parameter ( int argc, char **argv )
 			printf ("nobackclip = true\n");
 			nobackclip = qtrue;
 		}
-		else if (argv[i][0] == '-')
-			Error ("Unknown option \"%s\"", argv[i]);
 		else
 			break;
 	}
@@ -266,7 +264,7 @@ int main (int argc, char **argv)
 	sprintf (path, "%s.lin", source);
 	remove (path);
 
-	strcpy (name, ExpandArg (argv[argc-1]));	
+	strcpy (name, ExpandArg (argv[argc-1]));
 	DefaultExtension (name, ".map");	// might be .reg
 
 	//
@@ -306,9 +304,9 @@ int main (int argc, char **argv)
 	if (!onlyents)
 	{
 		printf ("----- Radiosity ----\n");
-	
+
 		begin = start;
-	
+
 		start = I_FloatTime ();
 		DefaultExtension (source, ".bsp");
 
@@ -319,15 +317,15 @@ int main (int argc, char **argv)
 		LoadBSPFile (name);
 		ParseEntities ();
 		CalcTextureReflectivity ();
-	
+
 		RadWorld ();
-	
+
 		sprintf (name, "%s%s", outbase, source);
 		printf ("writing %s\n", name);
 		WriteBSPFile (name);
-	
+
 		end = I_FloatTime ();
-	
+
 		printf ("%5.0f seconds elapsed\n", end-start);
 		printf ("sum: %5.0f seconds elapsed\n", end-begin);
 	}
