@@ -10,7 +10,7 @@
 // color
 //	TODO: Defines the color used to seperate the nations in the geoscape (internally)
 // names
-//	TODO: defines what "type" of names should be used.
+//	TODO: Defines what "type" of names should be used. They are defined in names.ufo.
 // alien_friendly (percentage 0-100)
 //	TODO: Indicated the friendlyness (political and civilan) towards the aliens and influence the chance that this country stops it's funding after some time.
 //	TODO This value should be changed according to Phalanx' performance on it's territory and the terror missions of the aliens.
@@ -25,7 +25,7 @@
 nation ua
 {
 	name "_United Americas"
-	color TODO
+//	color TODO
 	names "english_american spanish_italian french german scandinavian"
 	funding	1100000
 	alien_friendly	40
@@ -36,6 +36,7 @@ nation ua
 nation geu
 {
 	name "_Greater European Union"
+//	color TODO
 	names "german spanish_italian french english_american scandinavian"
 	funding	900000
 	alien_friendly	45
@@ -46,6 +47,7 @@ nation geu
 nation ac
 {
 	name "_Asian Commonwealth"
+//	color TODO
 	names "chinese japanese"
 	funding	1200000
 	alien_friendly	30
@@ -56,6 +58,7 @@ nation ac
 nation ae
 {
 	name "_Arab Emirates"
+//	color TODO
 	names "arabic"
 	funding	1500000
 	alien_friendly	25
@@ -66,6 +69,7 @@ nation ae
 nation au
 {
 	name "_African Union"
+//	color TODO
 	names "african"
 	funding	900000
 	alien_friendly	25
@@ -76,6 +80,7 @@ nation au
 nation russia
 {
 	name "_Russia"
+//	color TODO
 	names "russian"
 	funding	1400000
 	alien_friendly	30
@@ -86,6 +91,7 @@ nation russia
 nation australia
 {
 	name "_Australia"
+//	color TODO
 	names "english_american"
 	funding	1100000
 	alien_friendly	45
