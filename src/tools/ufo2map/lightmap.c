@@ -1097,7 +1097,7 @@ void BuildFacelights (int facenum)
 // 	vec3_t		normal;
 // 	vec3_t		tv[32], tn[32];
 // 	vec3_t		p, q, inv[2];
-	float		/*idet*/;
+// 	float		idet;
 
 	f = &dfaces[facenum];
 

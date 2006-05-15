@@ -252,7 +252,6 @@ int main (int argc, char **argv)
 
 	ThreadSetDefault ();
 	// numthreads = 1;		// multiple threads aren't helping...
-	printf("argc: %i\n", argc);
 	SetQdirFromPath (argv[argc-1]);
 
 	strcpy (source, ExpandArg (argv[argc-1]));
@@ -327,7 +326,7 @@ int main (int argc, char **argv)
 		end = I_FloatTime ();
 
 		printf ("%5.0f seconds elapsed\n", end-start);
-		printf ("sum: %5.0f seconds elapsed\n", end-begin);
+		printf ("sum: %5.0f seconds elapsed\n\n", end-begin);
 	}
 
 	return 0;

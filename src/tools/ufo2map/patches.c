@@ -19,11 +19,7 @@ CalcTextureReflectivity
 void CalcTextureReflectivity (void)
 {
 	int				i, j;
-/*	int				k, texels;
-	int				color[3];
-	int				texel;
-	float			r, scale;
-	miptex_t		*mt;*/
+
 	byte			*palette;
 	char			path[1024];
 
@@ -54,41 +50,6 @@ void CalcTextureReflectivity (void)
 		texture_reflectivity[i][0] = 0.5;
 		texture_reflectivity[i][1] = 0.5;
 		texture_reflectivity[i][2] = 0.5;
-
-		// load the wal file
-/*		sprintf (path, "%stextures/%s.wal", gamedir, texinfo[i].texture);
-		if (TryLoadFile (path, (void **)&mt) == -1)
-		{
-			printf ("Couldn't load %s\n", path);
-			texture_reflectivity[i][0] = 0.5;
-			texture_reflectivity[i][1] = 0.5;
-			texture_reflectivity[i][2] = 0.5;
-			continue;
-		}
-		texels = LittleLong(mt->width)*LittleLong(mt->height);
-		color[0] = color[1] = color[2] = 0;
-
-		for (j=0 ; j<texels ; j++)
-		{
-			texel = ((byte *)mt)[LittleLong(mt->offsets[0]) + j];
-			for (k=0 ; k<3 ; k++)
-				color[k] += palette[texel*3+k];
-		}
-
-		for (j=0 ; j<3 ; j++)
-		{
-			r = color[j]/texels/255.0;
-			texture_reflectivity[i][j] = r;
-		}
-		// scale the reflectivity up, because the textures are
-		// so dim
-		scale = ColorNormalize (texture_reflectivity[i],
-			texture_reflectivity[i]);
-		if (scale < 0.5)
-		{
-			scale *= 2;
-			VectorScale (texture_reflectivity[i], scale, texture_reflectivity[i]);
-		}*/
 	}
 }
 
@@ -282,7 +243,7 @@ void MakePatches (void)
 		// bmodels with origin brushes need to be offset into their
 		// in-use position
 //		GetVectorForKey (ent, "origin", origin);
-VectorCopy (vec3_origin, origin);
+		VectorCopy (vec3_origin, origin);
 
 		for (j=0 ; j<mod->numfaces ; j++)
 		{
@@ -381,7 +342,7 @@ void	SubdividePatch (patch_t *patch)
 	if (i == 3)
 	{
 		// no splitting needed
-		return;		
+		return;
 	}
 
 	//
@@ -437,7 +398,7 @@ void	DicePatch (patch_t *patch)
 	if (i == 3)
 	{
 		// no splitting needed
-		return;		
+		return;
 	}
 
 	//

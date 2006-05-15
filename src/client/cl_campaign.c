@@ -919,6 +919,12 @@ void CL_CampaignExecute( setState_t *set )
 
 char	aircraftListText[1024];
 
+/*======================
+CL_OpenAircraft_f
+
+opens up aircraft by rightclicking them
+(from the aircraft list after selecting a mission on geoscape)
+======================*/
 void CL_OpenAircraft_f ( void )
 {
 	int	num, j;
@@ -958,6 +964,11 @@ void CL_OpenAircraft_f ( void )
 	}
 }
 
+/*======================
+CL_SelectAircraft_f
+
+sends the selected aircraft to selected mission (leftclick)
+======================*/
 void CL_SelectAircraft_f ( void )
 {
 	int	num, j;
@@ -1013,8 +1024,6 @@ void CL_SelectAircraft_f ( void )
 CL_BuildingAircraftList_f
 
 Builds the aircraft list for textfield with id
-FIXME: Rename TEXT_INTERCEPT_LIST to TEXT_AIRCRAFT_LIST
-TEXT_INTERCEPT_LIST
 ======================
 */
 void CL_BuildingAircraftList_f ( void )
@@ -1036,7 +1045,7 @@ void CL_BuildingAircraftList_f ( void )
 		}
 	}
 
-	menuText[TEXT_INTERCEPT_LIST] = aircraftListText;
+	menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
 }
 
 /*
@@ -1231,6 +1240,28 @@ char* CL_DateGetMonthName ( int month )
 	return _(monthNames[month]);
 }
 
+/*======================
+CL_UpdateNationData
+
+Update the nation data from all parsed nation each month
+Called from CL_CampaignRun
+
+TODO: to be extended
+======================*/
+void CL_UpdateNationData ( void )
+{
+	int i;
+	char message[1024];
+	nation_t* nation;
+	for ( i = 0; i < numNations; i++ )
+	{
+		nation = &nations[i];
+		Com_sprintf( message, 1024, _("Gained %i $ of nation %s"), nation->funding, _(nation->name) );
+		MN_AddNewMessage( _("Notice"), message, qfalse, MSG_STANDARD, NULL );
+		CL_UpdateCredits( ccs.credits + nation->funding );
+	}
+}
+
 /*
 ======================
 CL_CampaignRun
@@ -1238,6 +1269,7 @@ CL_CampaignRun
 */
 void CL_CampaignRun( void )
 {
+	static qboolean fund = qtrue;
 	// advance time
 	ccs.timer += cls.frametime * gameTimeScale;
 	if ( ccs.timer >= 1.0 )
@@ -1251,6 +1283,7 @@ void CL_CampaignRun( void )
 		{
 			ccs.date.sec -= 3600*24;
 			ccs.date.day++;
+			// every day
 			CL_UpdateBaseData();
 		}
 
@@ -1260,10 +1293,16 @@ void CL_CampaignRun( void )
 
 		// set time cvars
 		CL_DateConvert( &ccs.date, &day, &month );
+		// every first day of a month
+		if ( day == 1 && fund == qfalse )
+		{
+			CL_UpdateNationData();
+			fund = qtrue;
+		}
+		else if ( day > 1 ) fund = qfalse;
 		Cvar_Set( "mn_mapdate", va( "%i %s %i", ccs.date.day/365, CL_DateGetMonthName(month), day ) ); // CL_DateGetMonthName is already "gettexted"
 		Com_sprintf (messageBuffer, sizeof(messageBuffer), _("%02i:%i%i"), ccs.date.sec/3600, (ccs.date.sec%3600)/60/10, (ccs.date.sec%3600)/60%10  );
 		Cvar_Set( "mn_maptime", messageBuffer );
-		
 	}
 }
 
@@ -2293,11 +2332,11 @@ void CL_UpdateCharacterStats ( int won )
 		if ( le && (le->state & STATE_DEAD) ) {
 			chr = &baseCurrent->wholeTeam[i];
 			assert( chr );
-			
+
 			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%s (%s) died on his last mission.\n"), chr->name, chr->rank->name);
 			MN_AddNewMessage( _("Soldier died"), messageBuffer, qfalse, MSG_DEATH, NULL );
 		}
-		
+
 		// check if the soldier still lives
 		// and give him skills
 		if ( le && !(le->state & STATE_DEAD) ) {
@@ -2320,7 +2359,7 @@ void CL_UpdateCharacterStats ( int won )
 					&& ( chr->kills[KILLED_ALIENS] >= rank->killed_enemies )
 					&& ( ( chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM] ) <= rank->killed_others ) ) {
 						if ( chr->rank != rank ) {
-							chr->rank = rank;						
+							chr->rank = rank;
 							Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%s has been promoted to %s.\n"), chr->name, rank->name );
 							MN_AddNewMessage( _("Soldier promoted"), messageBuffer, qfalse, MSG_PROMOTION, NULL );
 						}
