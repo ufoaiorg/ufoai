@@ -8,6 +8,9 @@ mission_t	missions[MAX_MISSIONS];
 int		numMissions;
 actMis_t	*selMis;
 
+nation_t	nations[MAX_NATIONS];
+int		numNations = 0;
+
 campaign_t	campaigns[MAX_CAMPAIGNS];
 int		numCampaigns = 0;
 
@@ -2879,7 +2882,7 @@ void CL_ParseAircraft( char *name, char **text )
 
 	if ( numAircraft >= MAX_AIRCRAFT )
 	{
-		Com_Printf( "CL_ParseAircraft: campaign def \"%s\" with same name found, second ignored\n", name );
+		Com_Printf( "CL_ParseAircraft: aircraft def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
 
@@ -2945,6 +2948,79 @@ void CL_ParseAircraft( char *name, char **text )
 		}
 	} while ( *text );
 }
+
+// ===========================================================
+
+#define	NATFS(x)	(int)&(((nation_t *)0)->x)
+
+value_t nation_vals[] =
+{
+	{ "name",	V_TRANSLATION_STRING,	NATFS( name ) },
+	{ "color",	V_COLOR,	NATFS( color ) },
+	{ "funding",	V_INT,	NATFS( funding ) },
+
+	{ NULL, 0, 0 },
+};
+/*
+======================
+CL_ParseNations
+======================
+*/
+void CL_ParseNations( char *name, char **text )
+{
+	char		*errhead = "CL_ParseNations: unexptected end of file (aircraft ";
+	nation_t	*nation;
+	value_t		*vp;
+	char		*token;
+
+	if ( numNations >= MAX_NATIONS )
+	{
+		Com_Printf( "CL_ParseNations: nation def \"%s\" with same name found, second ignored\n", name );
+		return;
+	}
+
+	// initialize the menu
+	nation = &nations[numNations++];
+	memset( nation, 0, sizeof(nation_t) );
+
+	Com_DPrintf("...found nation %s\n", name);
+	Q_strncpyz( nation->id, name, MAX_VAR );
+
+	// get it's body
+	token = COM_Parse( text );
+
+	if ( !*text || *token != '{' )
+	{
+		Com_Printf( "CL_ParseNations: nation def \"%s\" without body ignored\n", name );
+		numNations--;
+		return;
+	}
+
+	do {
+		token = COM_EParse( text, errhead, name );
+		if ( !*text ) break;
+		if ( *token == '}' ) break;
+
+		// check for some standard values
+		for ( vp = nation_vals; vp->string; vp++ )
+			if ( !Q_strcmp( token, vp->string ) )
+			{
+				// found a definition
+				token = COM_EParse( text, errhead, name );
+				if ( !*text ) return;
+
+				Com_ParseValue( nation, token, vp->type, vp->ofs );
+				break;
+			}
+
+		if ( !vp->string  )
+		{
+			Com_Printf( "CL_ParseNations: unknown token \"%s\" ignored (nation %s)\n", token, name );
+			COM_EParse( text, errhead, name );
+		}
+	} while ( *text );
+}
+
 
 /*======================
 CL_OnBattlescape

@@ -945,6 +945,16 @@ extern aircraft_t	aircraft[MAX_AIRCRAFT];
 extern int		numAircraft;
 extern aircraft_t	*interceptAircraft;
 
+typedef struct nation_s
+{
+	char	id[MAX_VAR];
+	char	name[MAX_VAR];
+	int	funding;
+	vec4_t	color;
+} nation_t;
+
+#define MAX_NATIONS 8
+
 void MN_MapCalcLine( vec2_t start, vec2_t end, mapline_t *line );
 void CL_SelectAircraft_f ( void );
 void CL_OpenAircraft_f ( void );
