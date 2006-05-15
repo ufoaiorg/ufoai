@@ -312,3 +312,11 @@ void IN_ClearStates (void)
 	my_accum = 0;
 	mouse_oldbuttonstate = 0;
 }
+/*
+===========
+IN_Commands
+===========
+*/
+void IN_Commands (void)
+{
+}

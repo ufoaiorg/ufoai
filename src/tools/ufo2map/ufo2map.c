@@ -303,31 +303,34 @@ int main (int argc, char **argv)
 	end = I_FloatTime ();
 	printf ("%5.0f seconds elapsed\n", end-start);
 
-	printf ("----- Radiosity ----\n");
+	if (!onlyents)
+	{
+		printf ("----- Radiosity ----\n");
+	
+		begin = start;
+	
+		start = I_FloatTime ();
+		DefaultExtension (source, ".bsp");
 
-	begin = start;
+//		ReadLightFile ();
 
-	start = I_FloatTime ();
-	DefaultExtension (source, ".bsp");
-
-//	ReadLightFile ();
-
-	sprintf (name, "%s%s", inbase, source);
-	printf ("reading %s\n", name);
-	LoadBSPFile (name);
-	ParseEntities ();
-	CalcTextureReflectivity ();
-
-	RadWorld ();
-
-	sprintf (name, "%s%s", outbase, source);
-	printf ("writing %s\n", name);
-	WriteBSPFile (name);
-
-	end = I_FloatTime ();
-
-	printf ("%5.0f seconds elapsed\n", end-start);
-	printf ("sum: %5.0f seconds elapsed\n", end-begin);
+		sprintf (name, "%s%s", inbase, source);
+		printf ("reading %s\n", name);
+		LoadBSPFile (name);
+		ParseEntities ();
+		CalcTextureReflectivity ();
+	
+		RadWorld ();
+	
+		sprintf (name, "%s%s", outbase, source);
+		printf ("writing %s\n", name);
+		WriteBSPFile (name);
+	
+		end = I_FloatTime ();
+	
+		printf ("%5.0f seconds elapsed\n", end-start);
+		printf ("sum: %5.0f seconds elapsed\n", end-begin);
+	}
 
 	return 0;
 }
