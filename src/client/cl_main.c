@@ -1297,6 +1297,7 @@ void CL_ParseScriptSecond( char *type, char *name, char **text )
 	else if ( !Q_strncmp( type, "building", 8 ) ) MN_ParseBuildings( name, text );
 	else if ( !Q_strncmp( type, "aircraft", 8 ) ) CL_ParseAircraft( name, text );
 	else if ( !Q_strncmp( type, "production", 10 ) ) MN_ParseProductions( name, text );
+	else if ( !Q_strncmp( type, "nation", 6 ) ) CL_ParseNations( name, text );
 	else if ( !Q_strncmp( type, "base", 4 ) ) MN_ParseBases( name, text );
 	else if ( !Q_strncmp( type, "tech", 4 ) ) RS_ParseTechnologies( name, text );
 	else if ( !Q_strncmp( type, "shader", 6 ) ) CL_ParseShaders( name, text );
