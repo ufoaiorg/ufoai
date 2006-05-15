@@ -1,14 +1,17 @@
 
-#include "cmdlib.h"
-#include "mathlib.h"
-#include "bspfile.h"
-#include "polylib.h"
-#include "threads.h"
-#include "lbmlib.h"
+#include "common/cmdlib.h"
+#include "common/mathlib.h"
+#include "common/bspfile.h"
+#include "common/polylib.h"
+#include "common/threads.h"
+#include "common/lbmlib.h"
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <windows.h>
 #endif
+
+extern qboolean	glview;
+
 
 typedef enum
 {
@@ -101,6 +104,9 @@ void LinkPlaneFaces (void);
 
 extern	qboolean	extrasamples;
 extern int numbounce;
+extern qboolean	dumppatches;
+extern qboolean	nopvs;
+extern char		inbase[32], outbase[32];
 
 extern	directlight_t	*directlights;
 
@@ -122,7 +128,7 @@ int TestLine (vec3_t start, vec3_t stop);
 
 void CreateDirectLights (void);
 
-dleaf_t		*PointInLeaf (vec3_t point);
+dleaf_t		*PointInLeafRad (vec3_t point);
 
 
 extern	dplane_t	backplanes[MAX_MAP_PLANES];

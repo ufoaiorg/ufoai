@@ -662,7 +662,7 @@ void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 					surf[j] = l->texorg[j] + l->textoworld[0][j]*us
 					+ l->textoworld[1][j]*ut;
 
-				leaf = PointInLeaf (surf);
+				leaf = PointInLeafRad (surf);
 				if (leaf->contents != CONTENTS_SOLID)
 				{
 					if (!TestLine (facemid, surf))
@@ -788,7 +788,7 @@ void CreateDirectLights (void)
 
 		VectorCopy (p->origin, dl->origin);
 
-		leaf = PointInLeaf (dl->origin);
+		leaf = PointInLeafRad (dl->origin);
 		dl->next = directlights;
 		directlights = dl;
 
@@ -1085,19 +1085,19 @@ void BuildFacelights (int facenum)
 	dface_t	*f;
 	lightinfo_t	*l;
 	float		*styletable[MAX_LSTYLES];
-	int			i, j, k;
+	int			i, j;
 	float		*spot;
 	patch_t		*patch;
 	int			numsamples;
 	int			tablesize;
 	facelight_t		*fl;
-	int			*se;
-	int			v, a, b;
-	vec3_t		delta;
-	vec3_t		normal;
-	vec3_t		tv[32], tn[32];
-	vec3_t		p, q, inv[2];
-	float		idet;
+// 	int			*se;
+// 	int			v, a, b;
+// 	vec3_t		delta;
+// 	vec3_t		normal;
+// 	vec3_t		tv[32], tn[32];
+// 	vec3_t		p, q, inv[2];
+	float		/*idet*/;
 
 	f = &dfaces[facenum];
 

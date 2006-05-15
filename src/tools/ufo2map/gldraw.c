@@ -1,3 +1,4 @@
+#ifdef _WIN32
 
 #include <windows.h>
 #include <GL/gl.h>
@@ -17,9 +18,9 @@ vec3_t	draw_mins, draw_maxs;
 
 void InitWindow (void)
 {
-    auxInitDisplayMode (AUX_SINGLE | AUX_RGB);
-    auxInitPosition (0, 0, WIN_SIZE, WIN_SIZE);
-    auxInitWindow ("qcsg");
+	auxInitDisplayMode (AUX_SINGLE | AUX_RGB);
+	auxInitPosition (0, 0, WIN_SIZE, WIN_SIZE);
+	auxInitWindow ("qcsg");
 }
 
 void Draw_ClearWindow (void)
@@ -49,7 +50,7 @@ void Draw_ClearWindow (void)
 	g = w > h ? w : h;
 
 	glLoadIdentity ();
-    gluPerspective (90,  1,  2,  16384);
+	gluPerspective (90,  1,  2,  16384);
 	gluLookAt (mx, my, draw_maxs[2] + g/2, mx , my, draw_maxs[2], 0, 1, 0);
 
 	glColor3f (0,0,0);
@@ -209,3 +210,4 @@ void GLS_EndScene (void)
 	closesocket (draw_socket);
 	draw_socket = 0;
 }
+#endif

@@ -261,14 +261,15 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 		r = TestLineDist_r (tnode->children[0], start, stop);
 		if ( r ) VectorCopy( tr_end, mid );
 		side = TestLineDist_r (tnode->children[1], start, stop);
-		if ( side && r ) 
+		if ( side && r )
+		{ 
 			if ( VectorNearer( mid, tr_end, start ) )
 			{
 				VectorCopy( mid, tr_end );
 				return r;
 			}
 			else return side;
-
+		}
 		if ( r )
 		{
 			VectorCopy( mid, tr_end );

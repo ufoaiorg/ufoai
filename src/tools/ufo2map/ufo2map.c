@@ -1,169 +1,12 @@
-// csg4.c
-
+#include "qrad.h"
 #include "qbsp.h"
 
-extern	float subdivide_size;
+char source[1024];
+char name[1024];
 
-char		source[1024];
-char		name[1024];
-
-vec_t		microvolume = 1.0;
-qboolean	noprune;
-qboolean	glview;
-qboolean	nodetail;
-qboolean	fulldetail;
-qboolean	onlyents;
-qboolean	nomerge;
-qboolean	nowater;
-qboolean	nofill;
-qboolean	nocsg;
-qboolean	noweld;
-qboolean	noshare;
-qboolean	nosubdiv;
-qboolean	notjunc;
-qboolean	noopt;
-qboolean	leaktest;
-qboolean	verboseentities;
-qboolean	norouting;
-qboolean	nobackclip;
-
-char		outbase[32];
-int			block_xl = -8, block_xh = 7, block_yl = -8, block_yh = 7;
-int			entity_num;
-vec3_t		g_mins, g_maxs;
-node_t		*block_nodes[18][18];
-int			level;
-
-
-
-/*
-============
-ProcessWorldModel
-
-============
-*/
-void ProcessWorldModel (void)
+void Check_BSP_Parameter ( int argc, char **argv )
 {
-	entity_t	*e;
-	int			i;
-
-//	BeginModel ();
-
-	e = &entities[entity_num];
-
-	brush_start = e->firstbrush;
-	brush_end = brush_start + e->numbrushes;
-
-	ClearBounds( worldMins, worldMaxs );
-
-	// process levels
-	{
-		int	start, end;
-		nummodels = 258;
-
-		start = I_FloatTime();
-		for ( i = 0; i < 258; i++ )
-		{
-			if ( !(i%26) )
-				printf ("%i...", (int)(i/26) );
-
-			// process brushes with that level mask
-			ProcessLevel( i );
-		}
-		end = I_FloatTime();
-
-		printf( " (%i)\n", end-start );
-	}
-
-	// calculate routing
-	if ( !norouting ) 
-		DoRouting();
-}
-
-
-/*
-============
-ProcessSubModel
-
-============
-*/
-void ProcessSubModel (void)
-{
-	entity_t	*e;
-	int			start, end;
-	tree_t		*tree;
-	bspbrush_t	*list;
-	vec3_t		mins, maxs;
-
-	BeginModel ();
-
-	e = &entities[entity_num];
-
-	start = e->firstbrush;
-	end = start + e->numbrushes;
-
-	if ( !strcmp ("func_detail", ValueForKey (e, "classname") ) )
-	{
-	}
-
-	mins[0] = mins[1] = mins[2] = -4096;
-	maxs[0] = maxs[1] = maxs[2] = 4096;
-	list = MakeBspBrushList (start, end, -1, mins, maxs);
-	if (!nocsg)
-		list = ChopBrushes (list);
-	tree = BrushBSP (list, mins, maxs);
-	MakeTreePortals (tree);
-	MarkVisibleSides (tree, start, end);
-	MakeFaces (tree->headnode);
-	FixTjuncs (tree->headnode);
-	WriteBSP (tree->headnode);
-	FreeTree (tree);
-
-	EndModel ();
-}
-
-
-/*
-============
-ProcessModels
-============
-*/
-void ProcessModels (void)
-{
-	BeginBSPFile ();
-
-	for (entity_num=0 ; entity_num< num_entities ; entity_num++)
-	{
-		if (!entities[entity_num].numbrushes)
-			continue;
-
-		qprintf ("############### model %i ###############\n", nummodels);
-		if (entity_num == 0)
-			ProcessWorldModel ();
-		else
-			ProcessSubModel ();
-
-		if (!verboseentities)
-			verbose = qfalse;	// don't bother printing submodels
-	}
-
-	EndBSPFile ();
-}
-
-
-/*
-============
-main
-============
-*/
-int main (int argc, char **argv)
-{
-	int		i;
-	double		start, end;
-	char		path[1024];
-
-	printf ("---- qbsp3 ----\n");
-
+	int i;
 	for (i=1 ; i<argc ; i++)
 	{
 		if (!strcmp(argv[i],"-threads"))
@@ -308,17 +151,113 @@ int main (int argc, char **argv)
 		else
 			break;
 	}
+}
 
-	if (i != argc - 1)
-		Error ("usage: qbsp3 [-threads num] [-glview] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noopt] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-leaktest] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] mapfile");
+
+void Check_RAD_Parameter( int argc, char** argv )
+{
+	int i;
+	for (i=1 ; i<argc ; i++)
+	{
+		if (!strcmp(argv[i],"-dump"))
+			dumppatches = qtrue;
+		else if (!strcmp(argv[i],"-bounce"))
+		{
+			numbounce = atoi (argv[i+1]);
+			i++;
+		}
+		else if (!strcmp(argv[i],"-v"))
+		{
+			verbose = qtrue;
+		}
+		else if (!strcmp(argv[i],"-extra"))
+		{
+			extrasamples = qtrue;
+			printf ("extrasamples = true\n");
+		}
+		else if (!strcmp(argv[i],"-threads"))
+		{
+			numthreads = atoi (argv[i+1]);
+			i++;
+		}
+		else if (!strcmp(argv[i],"-chop"))
+		{
+			subdiv = atoi (argv[i+1]);
+			i++;
+		}
+		else if (!strcmp(argv[i],"-quant"))
+		{
+			lightquant = atoi (argv[i+1]);
+			if ( lightquant < 1 || lightquant > 6 ) lightquant = 3;
+			i++;
+		}
+		else if (!strcmp(argv[i],"-scale"))
+		{
+			lightscale = atof (argv[i+1]);
+			i++;
+		}
+		else if (!strcmp(argv[i],"-direct"))
+		{
+			direct_scale *= atof(argv[i+1]);
+			printf ("direct light scaling at %f\n", direct_scale);
+			i++;
+		}
+		else if (!strcmp(argv[i],"-entity"))
+		{
+			entity_scale *= atof(argv[i+1]);
+			printf ("entity light scaling at %f\n", entity_scale);
+			i++;
+		}
+		else if (!strcmp(argv[i],"-glview"))
+		{
+			glview = qtrue;
+			printf ("glview = true\n");
+		}
+		else if (!strcmp(argv[i],"-nopvs"))
+		{
+			nopvs = qtrue;
+			printf ("nopvs = true\n");
+		}
+		else if (!strcmp(argv[i],"-maxlight"))
+		{
+			maxlight = atof (argv[i+1]) * 128;
+			i++;
+		}
+		else if (!strcmp (argv[i],"-tmpin"))
+			strcpy (inbase, "/tmp");
+		else if (!strcmp (argv[i],"-tmpout"))
+			strcpy (outbase, "/tmp");
+		else
+			break;
+	}
+}
+
+/*
+============
+main
+============
+*/
+int main (int argc, char **argv)
+{
+	double		begin, start, end;
+	char		path[1024];
+
+	printf ("---- ufo2map ----\n");
+
+	Check_BSP_Parameter( argc, argv );
+	Check_RAD_Parameter( argc, argv );
+
+	if (argc < 2)
+		Error ("usage: ufo2map [-threads num] [-glview] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noopt] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-leaktest] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] mapfile");
 
 	start = I_FloatTime ();
 
 	ThreadSetDefault ();
 	// numthreads = 1;		// multiple threads aren't helping...
-	SetQdirFromPath (argv[i]);
+	printf("argc: %i\n", argc);
+	SetQdirFromPath (argv[argc-1]);
 
-	strcpy (source, ExpandArg (argv[i]));
+	strcpy (source, ExpandArg (argv[argc-1]));
 	StripExtension (source);
 
 	// delete portal and line files
@@ -327,7 +266,7 @@ int main (int argc, char **argv)
 	sprintf (path, "%s.lin", source);
 	remove (path);
 
-	strcpy (name, ExpandArg (argv[i]));	
+	strcpy (name, ExpandArg (argv[argc-1]));	
 	DefaultExtension (name, ".map");	// might be .reg
 
 	//
@@ -364,6 +303,31 @@ int main (int argc, char **argv)
 	end = I_FloatTime ();
 	printf ("%5.0f seconds elapsed\n", end-start);
 
+	printf ("----- Radiosity ----\n");
+
+	begin = start;
+
+	start = I_FloatTime ();
+	DefaultExtension (source, ".bsp");
+
+//	ReadLightFile ();
+
+	sprintf (name, "%s%s", inbase, source);
+	printf ("reading %s\n", name);
+	LoadBSPFile (name);
+	ParseEntities ();
+	CalcTextureReflectivity ();
+
+	RadWorld ();
+
+	sprintf (name, "%s%s", outbase, source);
+	printf ("writing %s\n", name);
+	WriteBSPFile (name);
+
+	end = I_FloatTime ();
+
+	printf ("%5.0f seconds elapsed\n", end-start);
+	printf ("sum: %5.0f seconds elapsed\n", end-begin);
+
 	return 0;
 }
-

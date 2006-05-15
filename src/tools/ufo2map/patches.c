@@ -27,7 +27,7 @@ void CalcTextureReflectivity (void)
 	byte			*palette;
 	char			path[1024];
 
-	sprintf (path, "%sbase/pics/colormap.pcx", gamedir);
+	sprintf (path, "%spics/colormap.pcx", gamedir);
 
 	// get the game palette
 	Load256Image (path, NULL, &palette, NULL, NULL);
@@ -212,7 +212,7 @@ void MakePatchForFace (int fn, winding_t *w)
 
 	WindingCenter (w, patch->origin);
 	VectorAdd (patch->origin, patch->plane->normal, patch->origin);
-	leaf = PointInLeaf(patch->origin);
+	leaf = PointInLeafRad(patch->origin);
 	patch->cluster = leaf->cluster;
 	if (patch->cluster == -1)
 		qprintf ("patch->cluster == -1\n");
@@ -330,14 +330,14 @@ void FinishSplit (patch_t *patch, patch_t *newp)
 
 	WindingCenter (patch->winding, patch->origin);
 	VectorAdd (patch->origin, patch->plane->normal, patch->origin);
-	leaf = PointInLeaf(patch->origin);
+	leaf = PointInLeafRad(patch->origin);
 	patch->cluster = leaf->cluster;
 	if (patch->cluster == -1)
 		qprintf ("patch->cluster == -1\n");
 
 	WindingCenter (newp->winding, newp->origin);
 	VectorAdd (newp->origin, newp->plane->normal, newp->origin);
-	leaf = PointInLeaf(newp->origin);
+	leaf = PointInLeafRad(newp->origin);
 	newp->cluster = leaf->cluster;
 	if (newp->cluster == -1)
 		qprintf ("patch->cluster == -1\n");

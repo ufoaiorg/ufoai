@@ -1,10 +1,10 @@
 
-#include "cmdlib.h"
-#include "mathlib.h"
-#include "scriplib.h"
-#include "polylib.h"
-#include "threads.h"
-#include "bspfile.h"
+#include "common/cmdlib.h"
+#include "common/mathlib.h"
+#include "common/scriplib.h"
+#include "common/polylib.h"
+#include "common/threads.h"
+#include "common/bspfile.h"
 
 #define	MAX_BRUSH_SIDES	128
 #define	CLIP_EPSILON	0.1
@@ -391,3 +391,21 @@ void ProcessLevel( int levelnum );
 
 void DoRouting( void );
 
+extern qboolean	noprune;
+extern qboolean	nodetail;
+extern qboolean	fulldetail;
+extern qboolean	onlyents;
+extern qboolean	nomerge;
+extern qboolean	nowater;
+extern qboolean	nofill;
+extern qboolean	nocsg;
+extern qboolean	noweld;
+extern qboolean	noshare;
+extern qboolean	nosubdiv;
+extern qboolean	notjunc;
+extern qboolean	noopt;
+extern qboolean	leaktest;
+extern qboolean	verboseentities;
+extern qboolean	norouting;
+extern qboolean	nobackclip;
+extern float subdivide_size;

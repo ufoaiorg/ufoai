@@ -800,7 +800,7 @@ qboolean	ParseMapEntity (void)
 	vec_t		newdist;
 	mapbrush_t	*b;
 
-	if (!GetToken (true))
+	if (!GetToken (qtrue))
 		return qfalse;
 
 	if (strcmp (token, "{") )

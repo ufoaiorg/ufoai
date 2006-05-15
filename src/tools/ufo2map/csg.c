@@ -234,17 +234,22 @@ qboolean IsInLevel( int contents, int level )
 {
 	// special levels
 	if ( level == 256 )
+	{
 		if (contents & CONTENTS_WEAPONCLIP) return qtrue;
 		else return qfalse;
+	}
 
 	if ( level == 257 )
+	{
 		if (contents & CONTENTS_PLAYERCLIP) return qtrue;
 		else return qfalse;
+	}
 
 	if ( level == 258 ) 
+	{
 		if (contents & CONTENTS_STEPON) return qtrue;
 		else return qfalse;
-
+	}
 
 	if (contents & MASK_CLIP )
 		return qfalse;

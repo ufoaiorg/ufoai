@@ -1,5 +1,8 @@
 // scriplib.h
 
+#ifndef _SCRIPTLIB
+#define _SCRIPTLIB
+
 #ifndef __CMDLIB__
 #include "cmdlib.h"
 #endif
@@ -21,3 +24,4 @@ void UnGetToken (void);
 qboolean TokenAvailable (void);
 
 
+#endif /* _SCRIPTLIB */

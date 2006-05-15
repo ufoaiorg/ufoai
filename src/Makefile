@@ -68,6 +68,7 @@ MOUNT_DIR=.
 
 BUILD_DEBUG_DIR=debug$(ARCH)
 BUILD_RELEASE_DIR=release$(ARCH)
+TOOLS_DIR=$(MOUNT_DIR)/tools
 CLIENT_DIR=$(MOUNT_DIR)/client
 SERVER_DIR=$(MOUNT_DIR)/server
 REF_GL_DIR=$(MOUNT_DIR)/ref_gl
@@ -78,6 +79,8 @@ NULL_DIR=$(MOUNT_DIR)/null
 JPDIR=$(MOUNT_DIR)/jpeg-6
 
 BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp
+TOOLSCFLAGS=-Wall
+TOOLSLDFLAGS=-lm
 
 ifneq ($(ARCH),i386)
 	BASE_CFLAGS+=-DC_ONLY
@@ -256,7 +259,7 @@ ifeq ($(ARCH),i386)
 		TARGETS += $(BUILDDIR)/ref_sdl.$(SHLIBEXT)
 	endif
 endif # ARCH i386
-
+TARGETS += $(BUILDDIR)/ufo2map
 debug: build_debug
 all: build_debug build_release lang
 release: build_release
@@ -266,7 +269,10 @@ build_debug:
 		$(BUILD_DEBUG_DIR)/client \
 		$(BUILD_DEBUG_DIR)/ded \
 		$(BUILD_DEBUG_DIR)/ref_gl \
-		$(BUILD_DEBUG_DIR)/game
+		$(BUILD_DEBUG_DIR)/game \
+		$(BUILD_DEBUG_DIR)/tools \
+		$(BUILD_DEBUG_DIR)/tools/ufo2map \
+		$(BUILD_DEBUG_DIR)/tools/ufo2map/common
 	$(MAKE) targets BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS) -DLINUX_VERSION='\"$(VERSION) Debug\"'"
 
 build_release:
@@ -274,10 +280,143 @@ build_release:
 		$(BUILD_RELEASE_DIR)/client \
 		$(BUILD_RELEASE_DIR)/ded \
 		$(BUILD_RELEASE_DIR)/ref_gl \
-		$(BUILD_RELEASE_DIR)/game
+		$(BUILD_RELEASE_DIR)/game \
+		$(BUILD_RELEASE_DIR)/tools \
+		$(BUILD_RELEASE_DIR)/tools/ufo2map \
+		$(BUILD_RELEASE_DIR)/tools/ufo2map/common
 	$(MAKE) targets BUILDDIR=$(BUILD_RELEASE_DIR) CFLAGS="$(RELEASE_CFLAGS) -DLINUX_VERSION='\"$(VERSION)\"'"
 
 targets: $(TARGETS)
+
+#############################################################################
+# TOOLS
+#############################################################################
+
+TOOLS_OBJS = \
+	$(BUILDDIR)/tools/ufo2map/ufo2map.o \
+	$(BUILDDIR)/tools/ufo2map/qrad3.o \
+	$(BUILDDIR)/tools/ufo2map/qbsp3.o \
+	$(BUILDDIR)/tools/ufo2map/brushbsp.o \
+	$(BUILDDIR)/tools/ufo2map/csg.o \
+	$(BUILDDIR)/tools/ufo2map/faces.o \
+	$(BUILDDIR)/tools/ufo2map/gldraw.o \
+	$(BUILDDIR)/tools/ufo2map/glfile.o \
+	$(BUILDDIR)/tools/ufo2map/leakfile.o \
+	$(BUILDDIR)/tools/ufo2map/levels.o \
+	$(BUILDDIR)/tools/ufo2map/lightmap.o \
+	$(BUILDDIR)/tools/ufo2map/map.o \
+	$(BUILDDIR)/tools/ufo2map/nodraw.o \
+	$(BUILDDIR)/tools/ufo2map/patches.o \
+	$(BUILDDIR)/tools/ufo2map/portals.o \
+	$(BUILDDIR)/tools/ufo2map/prtfile.o \
+	$(BUILDDIR)/tools/ufo2map/routing.o \
+	$(BUILDDIR)/tools/ufo2map/textures.o \
+	$(BUILDDIR)/tools/ufo2map/tree.o \
+	$(BUILDDIR)/tools/ufo2map/writebsp.o \
+	$(BUILDDIR)/tools/ufo2map/common/bspfile.o \
+	$(BUILDDIR)/tools/ufo2map/common/cmdlib.o \
+	$(BUILDDIR)/tools/ufo2map/common/l3dslib.o \
+	$(BUILDDIR)/tools/ufo2map/common/lbmlib.o \
+	$(BUILDDIR)/tools/ufo2map/common/mathlib.o \
+	$(BUILDDIR)/tools/ufo2map/common/polylib.o \
+	$(BUILDDIR)/tools/ufo2map/common/scriplib.o \
+	$(BUILDDIR)/tools/ufo2map/common/threads.o \
+	$(BUILDDIR)/tools/ufo2map/common/trace.o \
+	$(BUILDDIR)/tools/ufo2map/common/trilib.o
+
+$(BUILDDIR)/ufo2map : $(TOOLS_OBJS)
+	$(CC) $(TOOLSCFLAGS) -o $@ $(TOOLS_OBJS) $(TOOLSLDFLAGS)
+
+$(BUILDDIR)/tools/ufo2map/ufo2map.o :    $(TOOLS_DIR)/ufo2map/ufo2map.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/qbsp3.o :    $(TOOLS_DIR)/ufo2map/qbsp3.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/qrad3.o :    $(TOOLS_DIR)/ufo2map/qrad3.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/brushbsp.o :    $(TOOLS_DIR)/ufo2map/brushbsp.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/csg.o :    $(TOOLS_DIR)/ufo2map/csg.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/faces.o :    $(TOOLS_DIR)/ufo2map/faces.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/gldraw.o :    $(TOOLS_DIR)/ufo2map/gldraw.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/glfile.o :    $(TOOLS_DIR)/ufo2map/glfile.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/leakfile.o :    $(TOOLS_DIR)/ufo2map/leakfile.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/levels.o :    $(TOOLS_DIR)/ufo2map/levels.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/lightmap.o :    $(TOOLS_DIR)/ufo2map/lightmap.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/map.o :    $(TOOLS_DIR)/ufo2map/map.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/nodraw.o :    $(TOOLS_DIR)/ufo2map/nodraw.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/patches.o :    $(TOOLS_DIR)/ufo2map/patches.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/portals.o :    $(TOOLS_DIR)/ufo2map/portals.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/prtfile.o :    $(TOOLS_DIR)/ufo2map/prtfile.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/routing.o :    $(TOOLS_DIR)/ufo2map/routing.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/textures.o :    $(TOOLS_DIR)/ufo2map/textures.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/tree.o :    $(TOOLS_DIR)/ufo2map/tree.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/writebsp.o :    $(TOOLS_DIR)/ufo2map/writebsp.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/common/bspfile.o :    $(TOOLS_DIR)/ufo2map/common/bspfile.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/common/cmdlib.o :    $(TOOLS_DIR)/ufo2map/common/cmdlib.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/common/l3dslib.o :    $(TOOLS_DIR)/ufo2map/common/l3dslib.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/common/lbmlib.o :    $(TOOLS_DIR)/ufo2map/common/lbmlib.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/common/mathlib.o :    $(TOOLS_DIR)/ufo2map/common/mathlib.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/common/polylib.o :    $(TOOLS_DIR)/ufo2map/common/polylib.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/common/scriplib.o :    $(TOOLS_DIR)/ufo2map/common/scriplib.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/common/threads.o :    $(TOOLS_DIR)/ufo2map/common/threads.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/common/trace.o :    $(TOOLS_DIR)/ufo2map/common/trace.c
+	$(DO_CC)
+
+$(BUILDDIR)/tools/ufo2map/common/trilib.o :    $(TOOLS_DIR)/ufo2map/common/trilib.c
+	$(DO_CC)
+
 
 #############################################################################
 # CLIENT/SERVER
@@ -873,6 +1012,7 @@ clean-release:
 
 clean2:
 	rm -f \
+	$(TOOLS_OBJS) \
 	$(QUAKE2_OBJS) \
 	$(QUAKE2_AS_OBJS) \
 	$(GAME_OBJS) \

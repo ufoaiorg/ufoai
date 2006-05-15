@@ -1,3 +1,5 @@
+#ifndef _POLYLIB
+#define _POLYLIB
 
 typedef struct
 {
@@ -32,3 +34,5 @@ void	ChopWindingInPlace (winding_t **w, vec3_t normal, vec_t dist, vec_t epsilon
 // frees the original if clipped
 
 void pw(winding_t *w);
+
+#endif /* POLYLIB */

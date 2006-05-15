@@ -57,7 +57,7 @@ void ThreadWorkerFunction (int threadnum)
 		work = GetThreadWork ();
 		if (work == -1)
 			break;
-//printf ("thread %i, work %i\n", threadnum, work);
+// 		printf ("thread %i, work %i\n", threadnum, work);
 		workfunction(work);
 	}
 }
@@ -78,7 +78,7 @@ WIN32
 
 ===================================================================
 */
-#ifdef WIN32
+#ifdef _WIN32
 
 #define	USED
 
@@ -405,7 +405,6 @@ RunThreadsOn
 */
 void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 {
-	int		i;
 	int		start, end;
 
 	dispatch = 0;

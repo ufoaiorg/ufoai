@@ -157,6 +157,7 @@ vidmode_t vid_modes[] =
  	{ "Mode 17: 1280x800",  1280,  800, 17 },
  	{ "Mode 18: 1680x1050", 1680, 1050, 18 },
  	{ "Mode 19: 1920x1200", 1920, 1200, 19 },
+ 	{ "Mode 20: 1400x1050", 1400, 1050, 20 }, /* samsung x20 */
 };
 
 qboolean VID_GetModeInfo( int *width, int *height, int mode )

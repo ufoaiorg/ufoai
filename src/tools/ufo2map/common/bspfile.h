@@ -1,3 +1,5 @@
+#ifndef _BSPFILE
+#define _BSPFILE
 
 #include "qfiles.h"
 
@@ -108,3 +110,5 @@ void PrintEntity (entity_t *ent);
 
 byte *CompressRouting( byte *dataStart, byte *destStart, int l );
 int DeCompressRouting( byte **source, byte *dataStart );
+
+#endif /* _BSP_FILE */
