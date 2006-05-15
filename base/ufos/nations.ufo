@@ -1,0 +1,94 @@
+//=================================================
+//
+// NATIONS	- A list of nations funding the Phalanx project.
+//
+//=================================================
+// Description
+//
+// funding	(credits)
+//	Initial funding per month of this faction.
+// color
+//	TODO: Defines the color used to seperate the nations in the geoscape (internally)
+// names
+//	TODO: defines what "type" of names should be used.
+// alien_friendly (percentage 0-100)
+//	TODO: Indicated the friendlyness (political and civilan) towards the aliens and influence the chance that this country stops it's funding after some time.
+//	TODO This value should be changed according to Phalanx' performance on it's territory and the terror missions of the aliens.
+// soldiers,scientists (number of people)
+//	TODO: The number of people (the best of the best ;)) you can hire (additionally) from this nation each month.
+//=================================================
+// TODO: Parsing
+// TODO: Update of these values each month.
+// TODO: Logging this data in a seperate list so a statistic can be calculated.
+//=================================================
+
+nation ua
+{
+	name "_United Americas"
+	color TODO
+	names "english_american spanish_italian french german scandinavian"
+	funding	1100000
+	alien_friendly	40
+	soldiers 5
+	scientists 2
+}
+
+nation geu
+{
+	name "_Greater European Union"
+	names "german spanish_italian french english_american scandinavian"
+	funding	900000
+	alien_friendly	45
+	soldiers 3
+	scientists 3
+}
+
+nation ac
+{
+	name "_Asian Commonwealth"
+	names "chinese japanese"
+	funding	1200000
+	alien_friendly	30
+	soldiers 5
+	scientists 1
+}
+
+nation ae
+{
+	name "_Arab Emirates"
+	names "arabic"
+	funding	1500000
+	alien_friendly	25
+	soldiers 1
+	scientists 3
+}
+
+nation au
+{
+	name "_African Union"
+	names "african"
+	funding	900000
+	alien_friendly	25
+	soldiers 6
+	scientists 1
+}
+
+nation russia
+{
+	name "_Russia"
+	names "russian"
+	funding	1400000
+	alien_friendly	30
+	soldiers 5
+	scientists 5
+}
+
+nation australia
+{
+	name "_Australia"
+	names "english_american"
+	funding	1100000
+	alien_friendly	45
+	soldiers 4
+	scientists 2
+}

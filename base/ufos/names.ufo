@@ -1,14 +1,21 @@
-// ========================================================================
-// HUMANS
-// ========================================================================
-
+//========================================================================
+// NAME list (Humans/Aliens)
+//========================================================================
+// Used in
+//	nations.ufo
+//========================================================================
 // TODO:
-// Sibel,Cybil (by XCOMTurcocalypse->	"whatever name emigrated from Greece to Europe,and returned 1000 years later.")
+//	Sibel,Cybil (by XCOMTurcocalypse -> "whatever name emigrated from Greece to Europe,and returned 1000 years later.")
+//========================================================================
 
 
-// ==================
+//========================================================================
+// HUMANS
+//========================================================================
+
+//==================
 // german
-// ==================
+//==================
 
 names german
 {
@@ -138,9 +145,9 @@ actors german
 }
 
 
-// ==================
+//==================
 // spanish_italian
-// ==================
+//==================
 
 names spanish_italian
 {
@@ -262,9 +269,9 @@ actors spanish_italian
 }
 
 
-// ==================
+//==================
 // french & canadian
-// ==================
+//==================
 
 names french
 {
@@ -400,9 +407,9 @@ actors french
 }
 
 
-// ==================
+//==================
 // english_american
-// ==================
+//==================
 
 names english_american
 {
@@ -518,9 +525,9 @@ actors english_american
 }
 
 
-// ==================
+//==================
 // arabic
-// ==================
+//==================
 
 names arabic
 {
@@ -623,9 +630,9 @@ actors arabic
 	}
 }
 
-// ==================
+//==================
 // scandinavian
-// ==================
+//==================
 
 names scandinavian
 {
@@ -666,14 +673,11 @@ names scandinavian
 	Hans
 	Ulf
 	}
-// Please do not use "...son" or "...dottir" as a family name yet, they are male/female-spezific
-// Gustavson
-// Andersson
-// Eriksson
-// Hanson
-// Jenson
-// Larson
-// Sorenson
+//===================
+// TODO: Please do not use "...son" or "...dottir" as a family name yet, they are male/female-spezific. This is not yet implemented. A lastname_female and lastname_male list should fix this.
+// Until this works please list the names below as a comment:
+// Gustavson, Andersson, Eriksson, Hanson, Jenson, Larson, Sorenson
+//===================
 	lastname
 	{
 	"De Boer"
@@ -708,9 +712,9 @@ actors scandinavian
 }
 
 
-// ==================
+//==================
 // russian
-// ==================
+//==================
 
 names russian
 {
@@ -904,9 +908,9 @@ actors russian
 	}
 }
 
-// ==================
+//==================
 // chinese
-// ==================
+//==================
 
 names chinese
 {
@@ -1005,9 +1009,12 @@ actors chinese
 }
 
 
-// ==================
+//==================
 // japanese
-// ==================
+//==================
+// TODO: Japanese names are normally written as "Last name" "First name". It would be good to have a "lastnamefirst true" parameter. 
+// See http://ufo.myexp.de/phpBB2/viewtopic.php?p=755#755
+//===================
 
 names japanese
 {
@@ -1099,9 +1106,9 @@ actors japanese
 }
 
 
-// ==================
+//==================
 // african
-// ==================
+//==================
 
 names african
 {
@@ -1183,14 +1190,14 @@ actors african
 }
 
 
-// ========================================================================
+//========================================================================
 // ALIENS
-// ========================================================================
+//========================================================================
 
 
-// ==================
+//==================
 // ortnok
-// ==================
+//==================
 
 names ortnok
 {
@@ -1254,9 +1261,9 @@ actors ortnok
 	}
 }
 
-// ==================
+//==================
 // blue
-// ==================
+//==================
 
 names blue
 {
@@ -1313,14 +1320,14 @@ actors blue
 	}
 }
 
-// ========================================================================
+//========================================================================
 // CIVILIANS
-// ========================================================================
+//========================================================================
 
 
-// ==================
+//==================
 // civilian
-// ==================
+//==================
 
 names civilian
 {
