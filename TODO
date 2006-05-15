@@ -7,7 +7,7 @@ Finished tasks should not be deleted, but marked with "[DONE]".
 Tasks for TechDemo3
 
 * Fix "Intro" and "Prolog" text in all languages (translations needed).
-* Bug #1474623: Bug in savegame: aircraft problems
+* [DONE] Bug #1474623: Bug in savegame: aircraft problems
 * [DONE] Bug #1482877: map b/g/ufo_hangar.map does not compile
 * Bugs that need to be checked (reproduceable/fixed):
 ** Bug #1459713: Armored soldiers appear as purple diamonds
