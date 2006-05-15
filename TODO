@@ -17,6 +17,5 @@ Tasks for TechDemo3
 * Put some work into campaign.ufo - place yet unused missions to geoscape and integrate them into campaign
 * Finish the english language file
 * [DONE] Bug #1444732: game exits with error (crash: probably a string-handling error in combination with gettext)
-* [WIP] Make unresearched items in the Ufopedia invisible.
-** Needs Testing.
+* [DONE] Make unresearched items in the Ufopedia invisible.
 =================================================
