@@ -209,7 +209,7 @@ DO_SHLIB_AS=$(CC) $(CFLAGS) $(SHLIBCFLAGS) -DELF -x assembler-with-cpp -o $@ -c 
 # gettext stuff
 #############################################################################
 WORKSPACE = $(shell pwd)
-POFILES = $(wildcard $(WORKSPACE)/../po/*.po)
+POFILES = $(wildcard $(WORKSPACE)/po/*.po)
 #############################################################################
 
 #############################################################################
@@ -1034,6 +1034,6 @@ lang:
 	for po in $$pofiles; do \
 	  po=`basename $$po`; \
 	  dir=`echo $$po | sed -e 's,\.po,,'`; \
-	  mkdir -p ../../base/i18n/$$dir/LC_MESSAGES; \
-	  msgfmt -v -o ../../base/i18n/$$dir/LC_MESSAGES/ufoai.mo ../po/$$po; \
+	  mkdir -p ../base/i18n/$$dir/LC_MESSAGES; \
+	  msgfmt -v -o ../base/i18n/$$dir/LC_MESSAGES/ufoai.mo po/$$po; \
 	done
