@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-05-16 15:11+0200\n"
-"PO-Revision-Date: 2006-05-16 15:20+0100\n"
+"POT-Creation-Date: 2006-05-16 16:03+0200\n"
+"PO-Revision-Date: 2006-05-16 16:09+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1429,7 +1429,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:433
 #, fuzzy
-msgid "smokegen_txt"
+msgid "smokegren_txt"
 msgstr ""
 "Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at the cost of less\n"
 "accuracy and penetrating power. These characteristics make the SMG-68 a ideal choice for close\n"
@@ -1882,7 +1882,7 @@ msgstr "Shevaar - Autopsie"
 
 #: ../base/ufos/research.ufo:1107
 #, fuzzy
-msgid "hevaar_autopsy_txt"
+msgid "shevaar_autopsy_txt"
 msgstr "TEXT"
 
 #: ../base/ufos/research.ufo:1123
@@ -3157,7 +3157,4 @@ msgstr "Keine Munition\n"
 #: game/g_client.c:1983
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Nicht genug Munition\n"
-
-#~ msgid "Multiplayer Campaign"
-#~ msgstr "Mehrspielerkampagne"
 
