@@ -272,18 +272,19 @@ void CL_Sequence2D( void )
 {
 	seq2D_t	*s2d;
 	int	i, j;
-	vec2_t*	l = NULL;
-	int	yPosPre = -1;
+	int	height = 0;
+	int	yPosPre = 0;
 
 	// add texts
 	for ( i = 0, s2d = seq2Ds; i < numSeq2Ds; i++, s2d++ )
 		if ( s2d->inuse )
 		{
-			if ( s2d->relativePos && l != NULL )
+			if ( s2d->relativePos )
 			{
+				printf("old pos: %f, new pos: %f\n", s2d->pos[1], s2d->pos[1] + yPosPre );
 				s2d->pos[1] += yPosPre;
+				s2d->relativePos = qfalse;
 			}
-			s2d->relativePos = qfalse;
 			// advance in time
 			for ( j = 0; j < 4; j++ )
 			{
@@ -305,12 +306,10 @@ void CL_Sequence2D( void )
 					0, 0, 0, 0, s2d->align, qtrue, s2d->image);
 			if ( *s2d->text ) // gettext placeholder
 			{
-				l = re.FontDrawString( s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], (int)s2d->size[0], _(s2d->text) );
-				if ( l != NULL )
-					yPosPre = *l[1];
+				height = re.FontDrawString( s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], (int)s2d->size[0], _(s2d->text) );
+				if ( height )
+					yPosPre += height;
 			}
-			else
-				l = NULL;
 		}
 	re.DrawColor( NULL );
 }
