@@ -1,14 +1,14 @@
 sequence intro
 {
 	cmd "ov_stop;music mission;ov_start;"
-	cmd "seq_animspeed 720;"
+	cmd "seq_animspeed 100;"
 
 	2dobj i_sentence1
 	{
 		text	"_intro_sentence1"
-		pos		"512 468"		align	uc
+		pos		"512 485"		align	uc
 		color	"0 1 0 1"
-		speed	"0 -20"
+		speed	"0 -30"
 		relative	true
 	}
 	2dobj i_sentence2
@@ -16,7 +16,7 @@ sequence intro
 		text	"_intro_sentence2"
 		pos		"512 510"		align	uc
 		color	"0 1 0 1"
-		speed	"0 -20"
+		speed	"0 -30"
 		relative	true
 	}
 	2dobj i_sentence3
@@ -24,7 +24,7 @@ sequence intro
 		text	"_intro_sentence3"
 		pos		"512 535"		align	uc
 		color	"0 1 0 1"
-		speed	"0 -20"
+		speed	"0 -30"
 		relative	true
 	}
 	2dobj i_sentence4
@@ -32,18 +32,18 @@ sequence intro
 		text	"_intro_sentence4"
 		pos		"512 560"		align	uc
 		color	"0 1 0 1"
-		speed	"0 -20"
+		speed	"0 -30"
 		relative	true
 	}
 	2dobj i_sentence5
 	{
 		text	"_intro_sentence5"
-		pos		"512 595"		align	uc
+		pos		"512 585"		align	uc
 		color	"0 1 0 1"
-		speed	"0 -20"
+		speed	"0 -30"
 		relative	true
 	}
-	wait 12.0
+	wait 200.0
 
 	rem i_sentence1
 	rem i_sentence2
@@ -55,69 +55,70 @@ sequence intro
 sequence prolog
 {
 	cmd "ov_stop;music mission;ov_start;"
-	cmd "seq_animspeed 720;"
+	cmd "seq_animspeed 100;"
 
 	2dobj p_sentence1
 	{
 		text	"_prolog_sentence1"
-		pos		"512 384"
+		pos	"512 385"
 		align	uc
 		color	"0.5 1 0.5 1"
-		speed	"0 -20"
+		speed	"0 -30"
+		font	f_big
 		relative	true
 	}
 	2dobj p_sentence2
 	{
 		text	"_prolog_sentence2"
-		pos		"50 510"
-		align	ul
+		pos	"512 485"
+		align	uc
 		color	"0 0.8 0 1"
-		speed	"0 -20"
+		speed	"0 -30"
 		relative	true
 	}
 	2dobj p_sentence3
 	{
 		text	"_prolog_sentence3"
-		pos		"50 678"
-		align	ul
+		pos	"512 510"
+		align	uc
 		color	"0 0.8  0 1"
-		speed	"0 -20"
+		speed	"0 -30"
 		relative	true
 	}
 	2dobj p_sentence4
 	{
 		text	"_prolog_sentence4"
-		pos		"50 930"
-		align	ul
+		pos	"512 535"
+		align	uc
 		color	"0 0.8  0 1"
-		speed	"0 -20"
+		speed	"0 -30"
 		relative	true
 	}
 	2dobj p_sentence5
 	{
 		text	"_prolog_sentence5"
-		pos		"50 1182"
-		align	ul
+		pos	"512 560"
+		align	uc
 		color	"0 0.8  0 1"
-		speed	"0 -20"
+		speed	"0 -30"
 		relative	true
 	}
 	2dobj p_sentence6
 	{
 		text	"_prolog_sentence6"
-		pos		"512 1434"
+		pos	"512 585"
 		align	uc
 		color	"0 0.8  0 1"
-		speed	"0 -20"
+		speed	"0 -30"
 		relative	true
 	}
 	2dobj p_sentence7
 	{
 		text	"_prolog_sentence7"
-		pos		"50 1518"
-		align	ul
+		pos	"512 610"
+		align	uc
 		color	"0 0.8  0 1"
-		speed	"0 -20"
+		speed	"0 -30"
 		relative	true
 	}
 	wait 128.0

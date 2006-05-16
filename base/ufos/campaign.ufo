@@ -742,18 +742,3 @@ campaign main
 	date		"2000 0 7"
 	firststage	intro
 }
-
-campaign multiplayer
-{
-	name		"_Multiplayer Campaign"
-	team		human
-	soldiers	8
-	equipment	campaign_player
-	market		campaign_market
-	credits		150000
-	visible		false
-
-	date		"2000 0 7"
-}
-
-
