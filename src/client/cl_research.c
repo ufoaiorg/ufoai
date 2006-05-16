@@ -1246,6 +1246,32 @@ byte RS_ItemIsResearched(char *id_provided )
 }
 
 /*======================
+RS_ItemCollected
+
+Returns the number of collected ("provided") items.
+
+IN
+	id_provided:	Unique id of an item/building/etc.. that is provided by a technology_t
+
+OUT
+	int	RS_ItemIsResearched	Number of the collected items.
+======================*/
+int RS_ItemCollected(char *id_provided )
+{
+	int	i = 0;
+
+	if ( ! id_provided )
+		return 0;
+
+	for ( ; i < numTechnologies; i++ ) {
+		if ( !Q_strncmp( (char*)id_provided, technologies[i].provides, MAX_VAR ) )
+			return technologies[i].statusCollected;
+	}
+	Com_Printf("RS_ItemCollected: \"%s\" <- research item that 'provides' this item not found.\n", id_provided );
+	return 0;
+}
+
+/*======================
 RS_TechIsResearched
 
 Checks if the technology (tech-id) has been researched.
@@ -1373,6 +1399,7 @@ void RS_GetFirstRequired( char *id, stringlist_t *required )
 /*======================
 RS_GetProvided
 
+TODO
 Returns a list of .ufo items that are produceable when this item has been researched (=provided)
 This list also incldues other items that "require" this one (id) and have a reseach_time of 0.
 ======================

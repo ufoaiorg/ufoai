@@ -98,6 +98,7 @@ void RS_UpdateData ( void );
 void RS_ParseTechnologies ( char* title, char** text );
 byte RS_ItemIsResearched(char *id_provided );
 byte RS_TechIsResearched(char *id );
+int RS_ItemCollected(char *id_provided );
 
 void RS_SaveTech( sizebuf_t *sb );
 void RS_LoadTech( sizebuf_t *sb, int version );

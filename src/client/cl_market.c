@@ -104,27 +104,29 @@ static void CL_BuyType( void )
 
 	CL_UpdateCredits( ccs.credits );
 
-	if ( num < NUM_BUYTYPES )
+	if ( num < NUM_BUYTYPES ) // 'normal' items
 	{
 		// get item list
 		for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
-			if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) )
-			{
-				Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );
-				Cvar_Set( str, _(od->name) );
-
-				Q_strncpyz( str, va("mn_storage%i", j), MAX_VAR );
-				Cvar_SetValue( str, ccs.eCampaign.num[i] );
-
-				Q_strncpyz( str, va("mn_supply%i", j), MAX_VAR );
-				Cvar_SetValue( str, ccs.eMarket.num[i] );
-
-				Q_strncpyz( str, va("mn_price%i", j), MAX_VAR );
-				Cvar_Set( str, va( "%i $", od->price ) );
-
-				buyList[j] = i;
-				j++;
-			}
+			if ( RS_ItemIsResearched(od->kurz) || RS_ItemCollected(od->kurz) ) {
+    			if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) )
+    			{
+    				Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );
+    				Cvar_Set( str, _(od->name) );
+    
+    				Q_strncpyz( str, va("mn_storage%i", j), MAX_VAR );
+    				Cvar_SetValue( str, ccs.eCampaign.num[i] );
+    
+    				Q_strncpyz( str, va("mn_supply%i", j), MAX_VAR );
+    				Cvar_SetValue( str, ccs.eMarket.num[i] );
+    
+    				Q_strncpyz( str, va("mn_price%i", j), MAX_VAR );
+    				Cvar_Set( str, va( "%i $", od->price ) );
+    
+    				buyList[j] = i;
+    				j++;
+    			}
+			} // is researched OR collected
 	}
 	else if ( num == NUM_BUYTYPES ) // aircraft
 	{
