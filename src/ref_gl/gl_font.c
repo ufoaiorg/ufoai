@@ -123,7 +123,11 @@ void Font_Length (char *font, char *c, int *width, int *height)
 {
 	font_t	*f = NULL;
 
-	*width = *height = 0;
+	if ( width && height )
+		*width = *height = 0;
+
+	if ( ! c || ! font )
+		return;
 
 	// get the font
 	f = Font_GetFont( font );
@@ -327,7 +331,7 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 	*height = h;
 
 	if ( w < maxWidth )
-		return buffer;
+		return NULL;
 
 	space = buffer;
 	newlineTest = strstr( space, "\n" );
@@ -337,34 +341,27 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 		TTF_SizeUTF8( f->font, buffer, &w, &h );
 		*width = w;
 		if ( w < maxWidth )
-			return buffer;
-		else // go on and check for spaces
-			*newlineTest = '\n';
+			return newlineTest+1;
+		*newlineTest = '\n';
 	}
 
 	// uh - this line is getting longer than allowed...
 	newlineTest = space;
 	while ( ( space = strstr( space, " " ) ) != NULL )
 	{
-		*space='\0';
+		*space = '\0';
 		TTF_SizeUTF8( f->font, buffer, &w, &h );
 		maxWidth -= w;
 		*width = w;
-		if ( maxWidth < 0 )
-		{
-			newlineTest = '\0';
-			return buffer;
-		}
-		else if ( maxWidth == 0 )
-			return space;
+		if ( maxWidth <= 0 )
+			return space+1;
+		*space++ = ' ';
 		// maybe there is space for one more word?
-		*space = ' ';
 		newlineTest = space;
-		space++;
 	};
 
 	// return the start pos of this string
-	return buffer;
+	return NULL;
 }
 
 /*================
@@ -442,10 +439,11 @@ Font_DrawString
 ================*/
 vec2_t *Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *c)
 {
-	int w = 0, h = 0;
+	int w = 0, h = 0, locX;
 	static vec2_t l;
 	font_t	*f = NULL;
 	char* buffer = buf;
+	char* pos;
 	char searchString[MAX_FONTNAME+MAX_HASH_STRING];
 	SDL_Surface *openGLSurface = NULL;
 	int max = 0; // calculated maxWidth
@@ -461,13 +459,14 @@ vec2_t *Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, ch
 	y = (float)y * vid.ry;
 	maxWidth = (float)maxWidth * vid.rx;
 
+	l[0] = l[1] = 0;
 	Font_ConvertChars( buf );
+	// for linebreaks
+	locX = x;
 
 	do
 	{
-		buffer = Font_GetLineWrap( f, buffer, maxWidth, &w, &h );
-		if ( ! buffer || !strlen(buffer) )
-			return NULL;
+		pos = Font_GetLineWrap( f, buffer, maxWidth, &w, &h );
 
 		// check whether this line is bigger than every other
 		if ( w > max )
@@ -502,19 +501,19 @@ vec2_t *Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, ch
 // 			ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n" );
 			// FIXME: This "should" be a sys_error and not a return null
 			ri.Con_Printf(PRINT_DEVELOPER, "...could not generate font surface\n" );
-			return NULL;
+			return &l;
 		}
 
 		Font_GenerateGLSurface( openGLSurface, x, y );
 
 		// skip for next line
-		y += f->lineSkip;
-		buffer += strlen(buffer);
-	} while ( 1 );
-
-	// return width and height
-	l[0] = (float)max;
-	l[1] = (float)y;
+		y += h;
+		buffer = pos;
+		// return width and height
+		l[0] = (float)max;
+		l[1] = (float)y;
+		x = locX;
+	} while ( buffer );
 
 	return &l;
 }
