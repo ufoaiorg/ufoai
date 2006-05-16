@@ -130,6 +130,17 @@ cvar_t		*seq_animspeed;
 
 /*
 ======================
+CL_SequenceEnd_f
+======================
+*/
+void CL_SequenceEnd_f( void )
+{
+	cls.state = ca_disconnected;
+}
+
+
+/*
+======================
 CL_SequenceCamera
 ======================
 */
@@ -273,16 +284,14 @@ void CL_Sequence2D( void )
 	seq2D_t	*s2d;
 	int	i, j;
 	int	height = 0;
-	int	yPosPre = 0;
 
 	// add texts
 	for ( i = 0, s2d = seq2Ds; i < numSeq2Ds; i++, s2d++ )
 		if ( s2d->inuse )
 		{
-			if ( s2d->relativePos )
+			if ( s2d->relativePos && height > 0 )
 			{
-				printf("old pos: %f, new pos: %f\n", s2d->pos[1], s2d->pos[1] + yPosPre );
-				s2d->pos[1] += yPosPre;
+				s2d->pos[1] += height;
 				s2d->relativePos = qfalse;
 			}
 			// advance in time
@@ -305,11 +314,7 @@ void CL_Sequence2D( void )
 				re.DrawNormPic( s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1],
 					0, 0, 0, 0, s2d->align, qtrue, s2d->image);
 			if ( *s2d->text ) // gettext placeholder
-			{
-				height = re.FontDrawString( s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], (int)s2d->size[0], _(s2d->text) );
-				if ( height )
-					yPosPre += height;
-			}
+				height += re.FontDrawString( s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], (int)s2d->size[0], _(s2d->text) );
 		}
 	re.DrawColor( NULL );
 }
@@ -362,16 +367,6 @@ void CL_SequenceStart_f( void )
 	map_sun.ambient[3] = 1.0;
 	VectorSet( map_sun.color, 1.2, 1.2, 1.2 );
 	map_sun.color[3] = 1.0;
-}
-
-/*
-======================
-CL_SequenceEnd_f
-======================
-*/
-void CL_SequenceEnd_f( void )
-{
-	cls.state = ca_disconnected;
 }
 
 
