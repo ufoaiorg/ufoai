@@ -299,7 +299,6 @@ TOOLS_OBJS = \
 	$(BUILDDIR)/tools/ufo2map/brushbsp.o \
 	$(BUILDDIR)/tools/ufo2map/csg.o \
 	$(BUILDDIR)/tools/ufo2map/faces.o \
-	$(BUILDDIR)/tools/ufo2map/gldraw.o \
 	$(BUILDDIR)/tools/ufo2map/glfile.o \
 	$(BUILDDIR)/tools/ufo2map/levels.o \
 	$(BUILDDIR)/tools/ufo2map/lightmap.o \
