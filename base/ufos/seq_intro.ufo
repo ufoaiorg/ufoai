@@ -9,6 +9,7 @@ sequence intro
 		pos		"512 468"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -20"
+		relative	true
 	}
 	2dobj i_sentence2
 	{
@@ -16,6 +17,7 @@ sequence intro
 		pos		"512 510"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -20"
+		relative	true
 	}
 	2dobj i_sentence3
 	{
@@ -23,6 +25,7 @@ sequence intro
 		pos		"512 535"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -20"
+		relative	true
 	}
 	2dobj i_sentence4
 	{
@@ -30,6 +33,7 @@ sequence intro
 		pos		"512 560"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -20"
+		relative	true
 	}
 	2dobj i_sentence5
 	{
@@ -37,6 +41,7 @@ sequence intro
 		pos		"512 595"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -20"
+		relative	true
 	}
 	wait 12.0
 
@@ -59,6 +64,7 @@ sequence prolog
 		align	uc
 		color	"0.5 1 0.5 1"
 		speed	"0 -20"
+		relative	true
 	}
 	2dobj p_sentence2
 	{
@@ -67,6 +73,7 @@ sequence prolog
 		align	ul
 		color	"0 0.8 0 1"
 		speed	"0 -20"
+		relative	true
 	}
 	2dobj p_sentence3
 	{
@@ -75,6 +82,7 @@ sequence prolog
 		align	ul
 		color	"0 0.8  0 1"
 		speed	"0 -20"
+		relative	true
 	}
 	2dobj p_sentence4
 	{
@@ -83,6 +91,7 @@ sequence prolog
 		align	ul
 		color	"0 0.8  0 1"
 		speed	"0 -20"
+		relative	true
 	}
 	2dobj p_sentence5
 	{
@@ -91,6 +100,7 @@ sequence prolog
 		align	ul
 		color	"0 0.8  0 1"
 		speed	"0 -20"
+		relative	true
 	}
 	2dobj p_sentence6
 	{
@@ -99,6 +109,7 @@ sequence prolog
 		align	uc
 		color	"0 0.8  0 1"
 		speed	"0 -20"
+		relative	true
 	}
 	2dobj p_sentence7
 	{
@@ -107,6 +118,7 @@ sequence prolog
 		align	ul
 		color	"0 0.8  0 1"
 		speed	"0 -20"
+		relative	true
 	}
 	wait 128.0
 
