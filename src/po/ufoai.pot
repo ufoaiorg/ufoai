@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-05-16 15:11+0200\n"
+"POT-Creation-Date: 2006-05-16 16:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.ufo.po (UFO Alien Invasion)  #-#-#-#-#\n"
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: http://www.sourceforge.net/projects/ufoai/\n"
-"POT-Creation-Date: 2006-05-16 15:11+0200\n"
+"POT-Creation-Date: 2006-05-16 16:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1188,7 +1188,7 @@ msgid "fraggen_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:433
-msgid "smokegen_txt"
+msgid "smokegren_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:445
@@ -1432,7 +1432,7 @@ msgid "Shevaar - Autopsy"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1107
-msgid "hevaar_autopsy_txt"
+msgid "shevaar_autopsy_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1123
