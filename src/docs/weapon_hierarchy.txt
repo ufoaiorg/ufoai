@@ -74,7 +74,7 @@ This grenade expels a gas that causes those who inhale it to lose consciousness.
 
 - Stun Rod (implemented)
 Easy to handle device for stunning and capturing your enemy. The only downside is that you need to stand next to him to do so, but then it's a few times more effective then stun grenades.
-The stun rod used by Phalanx soldiers is one of the most effective devices to capture your enemies alive. It not only deploys a huge electrical discharge onto the target, but also injects very powerful narcotics and drugs. The combination of the discharge and these chemicals can knock out even the biggest lifeform known to mankind and will most likely also work on most of the aliens we have enchountered yet. The rod is eqipped with two a roto hammer like spikes that will be driven into the target and then then deploy the before mentioned discharge and chemicals.
+The stun rod used by Phalanx soldiers is one of the most effective devices to capture your enemies alive. It not only deploys a huge electrical discharge onto the target, but also injects very powerful narcotics and drugs. The combination of the discharge and these chemicals can knock out even the biggest lifeform known to mankind and will most likely also work on most of the aliens we have encountered yet. The rod is equipped with two a roto hammer like spikes that will be driven into the target and then then deploy the before mentioned discharge and chemicals.
 Weapon class: Close
 
 - Mine
@@ -165,16 +165,17 @@ Tier 4: Alien Tachyon equipment
 Some models for this tier exist.
 
 - Tachyon Pistol (implemented)
-TODO: Add description
+This weapon is powered by a miniaturized version of the tachyon accelerator. Therefore the Tachyon Pistol has a lower rate of fire as well as a diminished accuracy compared to the other two tachyon weapons. The major advantage of the Tachyon Pistol is its low weight and its small dimensions which makes it a valuable sidearm.
 Damage type: Tachyon
 
 - Tachyon Rifle (implemented)
 TODO: tweak the description a bit to match the tachyon tech better.
+Although our engineers not fully understand the principles of altering the tachyons on a subatomic level, they were able to reproduce the tachyon accelerator technology. Apparently the tachyons are given a defined spin inside the accelerator so they are able to interact with any material. They still tend to infiltrate easily through any known armor and lose their particle energy not before a penetrating distance of about 10 cm. Therefore a soldier hit by a tachyon charge suffers only minor superficial injury but is heavily wounded in his viscera.
 This rifle fires tachyon beams at medium range. They are less accurate than most Rifle weapons, but they are a lot more powerful.
 Damage type: Tachyon
 
 - Tachyon Sniper Rifle (implemented)
-TODO: Add description
+The Tachyon Sniper Rifle uses also the newly discovered tachyon accelerator technology, first found in a Ortnok scout spaceship. Unlike the Tachyon Rifle, this weapon has a low rate of fire because the tachyon particles are intensely charged before they are fired. This means that the shots fired by the Tachyon Sniper Rifle are more focused and hence have a greater accuracy as well as a bigger penetrating power.
 Damage type: Tachyon
 
 - Tachyon Grenade
