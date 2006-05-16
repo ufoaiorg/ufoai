@@ -430,7 +430,7 @@ tech rs_weapon_smokegren
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_smokegen_txt"
+	description	"_smokegren_txt"
 
 	requires	initial
 	provides	smokegrenade
