@@ -397,3 +397,10 @@ extern qboolean	verboseentities;
 extern qboolean	norouting;
 extern qboolean	nobackclip;
 extern float subdivide_size;
+
+//=============================================================================
+
+// qbsp3.c
+
+void ProcessModels (void);
+void RadWorld (void);

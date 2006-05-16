@@ -244,7 +244,7 @@ char *ExpandPathAndArchive (char *path)
 char *copystring(char *s)
 {
 	char	*b;
-	b = malloc(strlen(s)+1);
+	b = (char*)malloc(sizeof(char)*(strlen(s)+1));
 	strcpy (b, s);
 	return b;
 }

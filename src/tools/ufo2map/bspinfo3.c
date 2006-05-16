@@ -1,7 +1,7 @@
 
-#include "cmdlib.h"
-#include "mathlib.h"
-#include "bspfile.h"
+#include "common/cmdlib.h"
+#include "common/mathlib.h"
+#include "common/bspfile.h"
 
 int main (int argc, char **argv)
 {
