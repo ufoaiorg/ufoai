@@ -37,7 +37,7 @@ typedef struct
 #define NUM_FONT_STYLES (sizeof(fontStyle) / sizeof (fontRenderStyle_t))
 
 // public
-vec2_t *Font_DrawString (char *font, int align, int x, int y, int maxWidth, char *c);
+int	Font_DrawString (char *font, int align, int x, int y, int maxWidth, char *c);
 void	Font_Length( char *font, char *c, int *width, int *height );
 void	Font_CleanCache( void );
 void	Font_Shutdown( void );

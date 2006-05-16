@@ -272,7 +272,7 @@ static void* Font_GenerateCache ( const char* s, const char* fontString, font_t*
 	textSurface = TTF_RenderUTF8_Blended(f->font, s, color);
 	if ( ! textSurface )
 	{
-		ri.Con_Printf(PRINT_ALL, "%s\n", TTF_GetError() );
+		ri.Con_Printf(PRINT_ALL, "%s (%s)\n", TTF_GetError(), fontString );
 		return NULL;
 	}
 
@@ -437,10 +437,10 @@ static void Font_GenerateGLSurface ( SDL_Surface* s, int x, int y )
 /*================
 Font_DrawString
 ================*/
-vec2_t *Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *c)
+int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *c)
 {
 	int w = 0, h = 0, locX;
-	static vec2_t l;
+	int returnHeight = 0;
 	font_t	*f = NULL;
 	char* buffer = buf;
 	char* pos;
@@ -459,13 +459,14 @@ vec2_t *Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, ch
 	y = (float)y * vid.ry;
 	maxWidth = (float)maxWidth * vid.rx;
 
-	l[0] = l[1] = 0;
 	Font_ConvertChars( buf );
 	// for linebreaks
 	locX = x;
 
 	do
 	{
+		if ( ! strlen(buffer) )
+			return returnHeight;
 		pos = Font_GetLineWrap( f, buffer, maxWidth, &w, &h );
 
 		// check whether this line is bigger than every other
@@ -491,31 +492,21 @@ vec2_t *Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, ch
 
 		openGLSurface = Font_GetFromCache( searchString );
 		if ( !openGLSurface )
-		{
-			Font_GenerateCache( buffer, searchString, f );
-			openGLSurface = Font_GetFromCache( searchString );
-		}
+			openGLSurface = Font_GenerateCache( buffer, searchString, f );
 
 		if ( !openGLSurface )
-		{
-// 			ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n" );
-			// FIXME: This "should" be a sys_error and not a return null
-			ri.Con_Printf(PRINT_DEVELOPER, "...could not generate font surface\n" );
-			return &l;
-		}
+			ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n" );
 
 		Font_GenerateGLSurface( openGLSurface, x, y );
 
 		// skip for next line
 		y += h;
 		buffer = pos;
-		// return width and height
-		l[0] = (float)max;
-		l[1] = (float)y;
+		returnHeight += h;
 		x = locX;
 	} while ( buffer );
 
-	return &l;
+	return returnHeight;
 }
 
 /*================
