@@ -13,8 +13,8 @@ Tasks for TechDemo3
 ** Bug #1459259: there is no reaction fire?
 ** Bug #1443163: Reaction fire fires at all guys around
 * Check and balance the new weapons (grenade launcher, stunrod, etc..)
-** Stunrod is not displayed correctly and is to big
-** [STAYS] Laser weapons should not be buyable (they are researched by Phalanx) DAMN we need to leave them in, because we can't "produce" yet.
+** Stunrod is not displayed correctly and is to big.
+** [DONE] Laser weapons should not be buyable (they are researched by Phalanx) DAMN we need to leave them in, because we can't "produce" yet.
 * Put some work into campaign.ufo - place yet unused missions to geoscape and integrate them into campaign
 * Finish the english language file
 * [DONE] Bug #1474623: Bug in savegame: aircraft problems
