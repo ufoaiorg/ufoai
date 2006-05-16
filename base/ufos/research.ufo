@@ -1104,7 +1104,7 @@ tech rs_alien_shevaar_autopsy
 {
 	type	alien
 	name	"_Shevaar - Autopsy"
-	description	"_hevaar_autopsy_txt"
+	description	"_shevaar_autopsy_txt"
 	up_chapter	aliens
 
 	requires	nothing
