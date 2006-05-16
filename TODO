@@ -7,15 +7,18 @@ Finished tasks should not be deleted, but marked with "[DONE]".
 Tasks for TechDemo3
 
 * Fix "Intro" and "Prolog" text in all languages (translations needed).
-* [DONE] Bug #1474623: Bug in savegame: aircraft problems
-* [DONE] Bug #1482877: map b/g/ufo_hangar.map does not compile
 * Bugs that need to be checked (reproduceable/fixed):
 ** Bug #1459713: Armored soldiers appear as purple diamonds
 ** Bug #1461639: Soldier equipment vanishes on mission retry
 ** Bug #1459259: there is no reaction fire?
 ** Bug #1443163: Reaction fire fires at all guys around
+* Check and balance the new weapons (grenade launcher, stunrod, etc..)
+** Stunrod is not displayed correctly and is to big
+** [STAYS] Laser weapons should not be buyable (they are researched by Phalanx) DAMN we need to leave them in, because we can't "produce" yet.
 * Put some work into campaign.ufo - place yet unused missions to geoscape and integrate them into campaign
 * Finish the english language file
+* [DONE] Bug #1474623: Bug in savegame: aircraft problems
+* [DONE] Bug #1482877: map b/g/ufo_hangar.map does not compile
 * [DONE] Bug #1444732: game exits with error (crash: probably a string-handling error in combination with gettext)
 * [DONE] Make unresearched items in the Ufopedia invisible.
 =================================================
