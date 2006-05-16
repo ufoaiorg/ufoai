@@ -313,8 +313,8 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 {
 	char*	space = NULL;
 	char*	newlineTest = NULL;
-	int	w = 0;
-	int	h = 0; // not needed yet
+	int	w = 0, oldW = 0;
+	int	h = 0;
 
 	if ( buffer == NULL )
 		return NULL;
@@ -324,7 +324,7 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 
 	// no line wrap needed?
 	TTF_SizeUTF8( f->font, buffer, &w, &h );
-	if ( ! width )
+	if ( ! w )
 		return NULL;
 
 	*width = w;
@@ -351,16 +351,22 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 	{
 		*space = '\0';
 		TTF_SizeUTF8( f->font, buffer, &w, &h );
-		maxWidth -= w;
 		*width = w;
-		if ( maxWidth <= 0 )
-			return space+1;
+		if ( maxWidth - w < 0 )
+		{
+			*width = oldW;
+			*space = ' ';
+			*newlineTest = '\0';
+			return newlineTest + 1;
+		}
+		else if ( maxWidth - w == 0 )
+			return space + 1;
+		newlineTest = space;
+		oldW = w;
 		*space++ = ' ';
 		// maybe there is space for one more word?
-		newlineTest = space;
 	};
 
-	// return the start pos of this string
 	return NULL;
 }
 
