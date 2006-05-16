@@ -50,7 +50,7 @@ void UP_BuildingDescription ( technology_t* t )
 			depends = B_GetBuilding ( b->depends );
 
 		Com_sprintf(upBuffer, MAX_UPTEXT,
-			_("Depends:\t%s\nMore than once:\t%s\nBuildtime:\t%i day(s)\nFixcosts:\t%i $\nRunning costs:\t%i $\nEnergy:\t%i\nWorkercosts:\t%i $\n"),
+			_("Depends:\t%s\nMore than once:\t%s\nBuildtime:\t%i day(s)\nFixcosts:\t%i c\nRunning costs:\t%i c\nEnergy:\t%i\nWorkercosts:\t%i c\n"),
 			depends ? depends->title : _("None"),
 			b->moreThanOne ? _("Yes") : _("No"),
 			(int)b->buildTime,

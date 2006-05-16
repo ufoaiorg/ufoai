@@ -1688,7 +1688,7 @@ void MN_BaseInit( void )
 	//these are the workers you can set on buildings
 	Cvar_SetValue( "mn_available_workers", 0 );
 
-	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
+	Cvar_Set( "mn_credits", va( "%i c", ccs.credits ) );
 }
 
 /*======================

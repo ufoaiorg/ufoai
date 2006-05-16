@@ -1167,20 +1167,20 @@ void CL_ParseResults( sizebuf_t *buf )
 		ccs.reward = 0;
 		if ( winner == we )
 		{
-			Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Collected alien technology\t%i $\n"), ms->cr_win ) );
+			Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Collected alien technology\t%i c\n"), ms->cr_win ) );
 			ccs.reward += ms->cr_win;
 		}
 		if ( kills )
 		{
-			Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Aliens killed\t%i $\n"), kills * ms->cr_alien ) );
+			Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Aliens killed\t%i c\n"), kills * ms->cr_alien ) );
 			ccs.reward += kills * ms->cr_alien;
 		}
 		if ( winner == we && num_alive[TEAM_CIVILIAN] )
 		{
-			Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians saved\t%i $\n"), num_alive[TEAM_CIVILIAN] * ms->cr_civilian ) );
+			Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians saved\t%i c\n"), num_alive[TEAM_CIVILIAN] * ms->cr_civilian ) );
 			ccs.reward += num_alive[TEAM_CIVILIAN] * ms->cr_civilian;
 		}
-		Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Total reward\t%i $\n\n\n"), ccs.reward ) );
+		Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Total reward\t%i c\n\n\n"), ccs.reward ) );
 
 		// recruits
 		if ( winner == we && ms->recruits )

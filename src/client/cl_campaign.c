@@ -1086,7 +1086,7 @@ void CL_CampaignCheckEvents( void )
 			// ok, waiting and not doing a mission will costs money
 			int lose = mis->def->civilians * mis->def->cr_civilian;
 			CL_UpdateCredits( ccs.credits - lose );
-			Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died\\You've lost %i $"), mis->def->civilians, lose), MAX_MESSAGE_TEXT );
+			Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died\\You've lost %i credits."), mis->def->civilians, lose), MAX_MESSAGE_TEXT );
 			MN_AddNewMessage( _("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL );
 			CL_CampaignRemoveMission( mis );
 		}
@@ -1256,7 +1256,7 @@ void CL_UpdateNationData ( void )
 	for ( i = 0; i < numNations; i++ )
 	{
 		nation = &nations[i];
-		Com_sprintf( message, 1024, _("Gained %i $ of nation %s"), nation->funding, _(nation->name) );
+		Com_sprintf( message, 1024, _("Gained %i credits from nation %s"), nation->funding, _(nation->name) );
 		MN_AddNewMessage( _("Notice"), message, qfalse, MSG_STANDARD, NULL );
 		CL_UpdateCredits( ccs.credits + nation->funding );
 	}
@@ -1369,7 +1369,7 @@ void CL_UpdateCredits ( int credits )
 {
 	// credits
 	ccs.credits = credits;
-	Cvar_Set( "mn_credits", va( "%i $", ccs.credits ) );
+	Cvar_Set( "mn_credits", va( "%i c", ccs.credits ) );
 }
 
 /*

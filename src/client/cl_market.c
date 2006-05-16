@@ -121,7 +121,7 @@ static void CL_BuyType( void )
     				Cvar_SetValue( str, ccs.eMarket.num[i] );
     
     				Q_strncpyz( str, va("mn_price%i", j), MAX_VAR );
-    				Cvar_Set( str, va( "%i $", od->price ) );
+    				Cvar_Set( str, va( "%i c", od->price ) );
     
     				buyList[j] = i;
     				j++;
@@ -143,7 +143,7 @@ static void CL_BuyType( void )
 			Cvar_SetValue( str, supply );
 
 			Q_strncpyz( str, va("mn_price%i", j), MAX_VAR );
-			Cvar_Set( str, va( "%i $", air->price ) );
+			Cvar_Set( str, va( "%i c", air->price ) );
 
 			buyList[j] = i;
 			j++;
