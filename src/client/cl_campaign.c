@@ -431,7 +431,7 @@ char* CL_AircraftStatusToName ( aircraft_t* air )
 			return _("Ready for drop down");
 			break;
 		case AIR_INTERCEPT:
-			return _("On inteception");
+			return _("On interception");
 			break;
 		case AIR_TRANSPORT:
 			return _("Transportmission");
