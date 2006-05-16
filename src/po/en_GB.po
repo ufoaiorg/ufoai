@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-05-16 16:03+0200\n"
-"PO-Revision-Date: 2006-05-16 16:04+0100\n"
+"PO-Revision-Date: 2006-05-16 18:13+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1515,44 +1515,36 @@ msgstr ""
 "n encounters a enemy UFO."
 
 #: ../base/ufos/research.ufo:708
-#, fuzzy
 msgid "b_entrance_txt"
-msgstr "TEXT"
+msgstr "This is the personnel entrance to the Phalanx base. It is basically an elevator riding from the surface to an underground corridor that leads into the base. The entrance to the elevator is camouflaged so it can't be spotted easily from the air, reducing the chance of the base being discovered by the aliens. The elevator cage can hold up to four people at any one time. This is a security measure, preventing enemy forces from penetrating into the base in large numbers. However, because it is one of the few structures that links the base with the surface, the Entrance remains a weak spot in the base's defenses. In the event of an alien attack, the aliens will likely enter from here."
 
 #: ../base/ufos/research.ufo:720
-#, fuzzy
 msgid "b_commando_txt"
-msgstr "The commando central needs a powerplant in order to be buildable."
+msgstr "The Command Center is the heart of any Phalanx base. All missions are planned here, and all information gathered by the base's sensors and field operatives converges here. Without a Command Center, no base can function, so any new base must set up a Command Center before it can become operational."
 
 #: ../base/ufos/research.ufo:732
 msgid "b_powerplant_txt"
-msgstr ""
+msgstr "The Power Plant supplies a base with energy. Without energy, most base facilities will not function. For this reason, the Power Plant is a vital facility, and is likely to be the target in case enemy forces invade the base."
 
 #: ../base/ufos/research.ufo:744
-#, fuzzy
 msgid "b_storage_txt"
-msgstr ""
-"The fragmentation grenade is little more than an explosive core surrounded by metal. When the\n"
-"core is detonates, the surrounding metal is broken into sharp, deadly fragments which fly from\n"
-"the weapon at great speeds. The detonation is controlled by a built in timer."
+msgstr "This building is used to store equipment and spare parts. Each Storage facility provides space for 50 pieces of equipment."
 
 #: ../base/ufos/research.ufo:756
 msgid "b_hangar_txt"
-msgstr ""
+msgstr "The Hangar is where Phalanx combat craft are stored and maintained. The Hangar is stocked with all the tools the engineers need to keep the craft in top condition. Most of the Hangar floor is a massive elevator. When a craft is to be launched, the elevator transports the craft to the surface before it takes off. The Hangar bay doors are camouflaged, so they can't be spotted easily from the air, reducing the chance of the base being discovered by the aliens. However, because it is one of the few structures that links the base with the surface, the Hangar remains a weak spot in the base's defenses. In the event of an alien attack, the aliens will likely enter from here."
 
 #: ../base/ufos/research.ufo:768
-#, fuzzy
 msgid "b_ufo_hangar_txt"
-msgstr "TEXT"
+msgstr "The UFO Hangar is where captured UFOs are stored. Obviously, it is not practical to disassemble a captured UFO on the spot, as it would invite counter-attacks by alien forces. Instead, once the UFO is secured, it is towed to the nearest Phalanx base equipped with an unoccupied UFO Hangar. This is done by regular military units, and thus the operation is of no concern to the Phalanx Commander. A UFO Hangar can house any UFO up to Transport class."
 
 #: ../base/ufos/research.ufo:780
-#, fuzzy
 msgid "b_intercept_txt"
-msgstr "TEXT"
+msgstr "Interceptor missiles are a basic anti-air defense that protect the base from UFO invasions. UFOs trying to land near the base will be targeted and shot down. Though Interceptor missiles are an adequate defense against light raids, they cannot hope to stop larger UFOs."
 
 #: ../base/ufos/research.ufo:792
 msgid "b_quarters_txt"
-msgstr ""
+msgstr "The Quarters facility provides space for all Phalanx personnel living in the base. Soldiers and scientists, as well as the command staff, call this place home. Each employee has his or her own cubicle, which is equipped with a bunk, a small desk and basic sanitary facilities. In addition, the Quarters has a common living space where employees go to relax and socialize. Each Quarters facility provides living space for twenty people."
 
 #: ../base/ufos/research.ufo:804
 msgid "b_lab_txt"
@@ -1564,9 +1556,8 @@ msgid "b_teamroom_txt"
 msgstr "TEXT"
 
 #: ../base/ufos/research.ufo:828
-#, fuzzy
 msgid "b_radar_txt"
-msgstr "TEXT"
+msgstr "The Radar facility is the control center for a radar array set up outside the base. Using the radar array, UFOs can be detected from a long distance away, allowing intercept missions to be launched and giving advance warning to the Command Center should the UFO intend to attack the base."
 
 #: ../base/ufos/research.ufo:843
 #, fuzzy
