@@ -216,7 +216,7 @@ msgstr "Standard Campaign"
 
 #: ../base/ufos/campaign.ufo:733
 msgid "txt_standard_campaign"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/medals.ufo:3
 msgid "Cross"
@@ -1265,8 +1265,7 @@ msgid "rpg_txt"
 #: ../base/ufos/research.ufo:361
 #, fuzzy
 msgid "rpg_ammo_txt"
-msgstr ""
-"The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. Phalanx weapon scientists and engineers developed a new tracking system not only capable to fight airborne but also ground targets. The RL-1056's rockets use a combination of laser guidance and high speed cameras to identify the target. Despite a good accuracy when the tracking system had enough time to correctly lock on the target, this rocket launcher is of limited value if it has to be used in snapshot mode."
+msgstr "The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. Phalanx weapon scientists and engineers developed a new tracking system not only capable to fight airborne but also ground targets. The RL-1056's rockets use a combination of laser guidance and high speed cameras to identify the target. Despite a good accuracy when the tracking system had enough time to correctly lock on the target, this rocket launcher is of limited value if it has to be used in snapshot mode."
 
 #: ../base/ufos/research.ufo:373
 msgid "laserpistol_txt"
@@ -1298,8 +1297,7 @@ msgstr "Your basic knife. Can be used at very short range or can be thrown. Like
 
 #: ../base/ufos/research.ufo:457
 msgid "stunrod_txt"
-msgstr ""
-"Easy to handle device for stunning and capturing your enemy. The only downside is that you need to stand next to him to do so, but then it's a few times more effective then stun grenades.\n"
+msgstr "Easy to handle device for stunning and capturing your enemy. The only downside is that you need to stand next to him to do so, but then it's a few times more effective then stun grenades.\n"
 "The stun rod used by Phalanx soldiers is one of the most effective devices to capture your enemies alive. It not only deploys a huge electrical discharge onto the target, but also injects very powerful narcotics and drugs. The combination of the discharge and these chemicals can knock out even the biggest lifeform known to mankind and will most likely also work on most of the aliens we have encountered yet. The rod is equipped with two a roto hammer like spikes that will be driven into the target and then then deploy the before mentioned discharge and chemicals."
 
 #: ../base/ufos/research.ufo:473
@@ -1366,7 +1364,7 @@ msgstr "The Plasma Rifle is the weapon most often used by <TODO> warriors. The p
 
 #: ../base/ufos/research.ufo:633
 msgid "kerrblade_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:648
 msgid "irgoggles_txt"
@@ -1540,7 +1538,7 @@ msgstr "Antarean - Commander interrogation"
 
 #: ../base/ufos/research.ufo:1074
 msgid "antarean_interrogation_commander_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1089
 msgid "Shevaar - Combat notes"
@@ -1973,12 +1971,8 @@ msgid "Currently panics!\n"
 msgstr "Currently panics!\n"
 
 #: client/cl_actor.c:302
-msgid ""
-"You cannot use this unknown item.\n"
-"You need to research it first.\n"
-msgstr ""
-"You cannot use this unknown item.\n"
-"You need to research it first.\n"
+msgid "You cannot use this unknown item.\nYou need to research it first.\n"
+msgstr "You cannot use this unknown item.\nYou need to research it first.\n"
 
 #: client/cl_actor.c:321
 #, c-format
@@ -2012,12 +2006,8 @@ msgid "This isn't your round\n"
 msgstr "This isn't your round\n"
 
 #: client/cl_actor.c:799
-msgid ""
-"You cannot load this unknown item.\n"
-"You need to research it first.\n"
-msgstr ""
-"You cannot load this unknown item.\n"
-"You need to research it first.\n"
+msgid "You cannot load this unknown item.\nYou need to research it first.\n"
+msgstr "You cannot load this unknown item.\nYou need to research it first.\n"
 
 #: client/cl_actor.c:1264
 msgid "Your round started!\n"
@@ -2365,21 +2355,13 @@ msgstr "Day"
 
 #: client/cl_menu.c:2112
 #: client/cl_menu.c:2145
-msgid ""
-"Select the desired location of the\n"
-"new base on the map.\n"
-msgstr ""
-"Select the desired location of the\n"
-"new base on the map.\n"
+msgid "Select the desired location of the\nnew base on the map.\n"
+msgstr "Select the desired location of the\nnew base on the map.\n"
 
 #: client/cl_menu.c:2116
 #: client/cl_menu.c:2149
-msgid ""
-"Aliens are attacking our base\n"
-"at this very moment.\n"
-msgstr ""
-"Aliens are attacking our base\n"
-"at this very moment.\n"
+msgid "Aliens are attacking our base\nat this very moment.\n"
+msgstr "Aliens are attacking our base\nat this very moment.\n"
 
 #: client/cl_menu.c:2120
 #: client/cl_menu.c:2153
@@ -2468,12 +2450,8 @@ msgid "The research on this item is complete."
 msgstr "The research on this item is complete."
 
 #: client/cl_research.c:625
-msgid ""
-"The research on this item is not yet possible.\n"
-"You need to research the technologies it's based on first."
-msgstr ""
-"The research on this item is not yet possible.\n"
-"You need to research the technologies it's based on first."
+msgid "The research on this item is not yet possible.\nYou need to research the technologies it's based on first."
+msgstr "The research on this item is not yet possible.\nYou need to research the technologies it's based on first."
 
 #: client/cl_research.c:695
 msgid " [not yet researchable]"
