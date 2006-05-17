@@ -13,6 +13,7 @@
 #endif
 
 #define	BASEDIR_ID_FILE	".gamedir"	// This is the name of the "trunk" directory.
+#define	BASEDIR	"base"	// This is the directory the game-data is stored.
 #define PATHSEPERATOR   '/'
 
 // set these before calling CheckParm
@@ -187,6 +188,7 @@ void SetQdirFromPath (char *path)
 		sprintf (temp, "%s/%s", c, BASEDIR_ID_FILE);
 		if ( FileExists(temp) ) {
 			strncpy (gamedir, c, strlen(c)-1);
+			sprintf (gamedir, "%s/%s/", gamedir, BASEDIR);
 			qprintf ("gamedir: %s\n", gamedir);
 			return;
 		}
