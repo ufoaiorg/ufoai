@@ -1425,7 +1425,7 @@ msgstr "Hire scientist to research alien technology."
 #: ../base/ufos/research.ufo:816
 #, fuzzy
 msgid "b_teamroom_txt"
-msgstr "TEXT"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:828
 msgid "b_radar_txt"
@@ -1506,7 +1506,7 @@ msgstr "Antarean - Combat notes"
 #: ../base/ufos/research.ufo:1012
 #, fuzzy
 msgid "antarean_notes_txt"
-msgstr "TEXT"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1028
 msgid "Antarean - Autopsy"
@@ -1549,7 +1549,7 @@ msgstr "Shevaar - Combat notes"
 #: ../base/ufos/research.ufo:1090
 #, fuzzy
 msgid "shevaar_notes_txt"
-msgstr "TEXT"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1106
 msgid "Shevaar - Autopsy"
@@ -1566,7 +1566,7 @@ msgstr "Shevaar - Xenobiology"
 #: ../base/ufos/research.ufo:1124
 #, fuzzy
 msgid "shevaar_xenobiology_txt"
-msgstr "TEXT"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1139
 msgid "Hovernet - Combat notes"
@@ -1575,7 +1575,7 @@ msgstr "Hovernet - Combat notes"
 #: ../base/ufos/research.ufo:1140
 #, fuzzy
 msgid "hovernet_notes_txt"
-msgstr "TEXT"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1156
 msgid "Hovernet - wreck research"
@@ -1592,7 +1592,7 @@ msgstr "Hovernet - design"
 #: ../base/ufos/research.ufo:1174
 #, fuzzy
 msgid "hovernet_xenobiology_txt"
-msgstr "TEXT"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1189
 msgid "Cyborg Ortnok - Combat notes"
