@@ -12,7 +12,7 @@
 #include <libc.h>
 #endif
 
-#define	BASEDIRNAME	"ufo"
+#define	BASEDIRNAME	"ufo" // This is the name of the "trunk" directory.
 #define PATHSEPERATOR   '/'
 
 // set these before calling CheckParm
@@ -197,7 +197,7 @@ void SetQdirFromPath (char *path)
 			Error ("No gamedir in %s", path);
 			return;
 		}
-	Error ("SetQdirFromPath: no '%s' in %s", BASEDIRNAME, path);
+	Error ("SetQdirFromPath: No directory '%s' in path %s", BASEDIRNAME, path);
 }
 
 char *ExpandArg (char *path)
