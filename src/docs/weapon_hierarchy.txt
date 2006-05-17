@@ -95,9 +95,15 @@ This device allows the soldier who uses it to spot all sources of heat, such as 
 - Mine Sensor
 This device allows the soldier who uses it so spot mines in a small area around himself. Once mines have been spotted this way they become visible and can be destroyed.
 
-- Bolter Rifle (implemented)
-TODO: Add description
-Damage type: Blast
+- Elecromagnetic Rifle [was: Bolter Rifle] (implemented)
+The MkII Electromagnetic Rifle launches a ferrite projectile at very high velocities. The projectile is larger than the standard  projectile used in the AR-80 assault rifle, and at supersonic speeds, it is capable of doing significant damage to any soft target unfortunate enough to get in the way. The EM Rifle has no moving parts, and is therefore silent apart from the sound of the bullet as it breaks the sound barrier.
+
+As the ammunition is larger, capacity is reduced. Additionally, there is a significant recharge time between shots that makes fully automatic fire impossible.
+
+(It's a little unrealistic, but we can assume that technology has advanced a little...
+I made up the last bit, and it's possible you'll want the Bolter to be fully auto... in which case, maybe you could simply make the shots take up more TUs than the standard rifle, to simulate the recharge time. -PsyW) 
+
+Damage type: Projectile
 Weapon class: Heavy
 
 - Grenade Launcher (implemented)
