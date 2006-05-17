@@ -12,7 +12,7 @@
 #include <libc.h>
 #endif
 
-#define	BASEDIRNAME	"ufo" // This is the name of the "trunk" directory.
+#define	BASEDIR_ID_FILE	".gamedir"	// This is the name of the "trunk" directory.
 #define PATHSEPERATOR   '/'
 
 // set these before calling CheckParm
@@ -165,8 +165,8 @@ char		gamedir[1024];
 void SetQdirFromPath (char *path)
 {
 	char	temp[1024];
-	char	*c;
-	int		len;
+	char	c[1024];
+	int pathlength = 0;
 
 	if (!(path[0] == '/' || path[0] == '\\' || path[1] == ':'))
 	{	// path is partial
@@ -175,29 +175,23 @@ void SetQdirFromPath (char *path)
 		path = temp;
 	}
 
-	// search for "quake2" in path
+	// search for ".gamedir"-file in path
 
-	len = strlen(BASEDIRNAME);
-	for (c=path+strlen(path)-1 ; c != path ; c--)
-		if (!Q_strncasecmp (c, BASEDIRNAME, len))
-		{
-			strncpy (qdir, path, c+len+1-path);
-			qprintf ("qdir: %s\n", qdir);
-			c += len+1;
-			while (*c)
-			{
-				if (*c == '/' || *c == '\\')
-				{
-					strncpy (gamedir, path, c+1-path);
-					qprintf ("gamedir: %s\n", gamedir);
-					return;
-				}
-				c++;
-			}
-			Error ("No gamedir in %s", path);
+	strncpy (c, path, strlen(path)-1);
+	for (pathlength=strlen(c)-1; pathlength > 0 ; pathlength--) {
+		c[pathlength] = 0;
+		if ( (!c[strlen(c)-1] == '/')
+		&& (!c[strlen(c)-1] == '\\')
+		&& (!c[strlen(c)-1] == ':') )
+			continue;
+		sprintf (temp, "%s/%s", c, BASEDIR_ID_FILE);
+		if ( FileExists(temp) ) {
+			strncpy (gamedir, c, strlen(c)-1);
+			qprintf ("gamedir: %s\n", gamedir);
 			return;
 		}
-	Error ("SetQdirFromPath: No directory '%s' in path %s", BASEDIRNAME, path);
+	}
+	Error ("SetQdirFromPath: No file '%s' found in any directory of the path %s", BASEDIR_ID_FILE, path);
 }
 
 char *ExpandArg (char *path)
