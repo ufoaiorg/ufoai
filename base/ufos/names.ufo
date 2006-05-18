@@ -50,17 +50,22 @@ names german
 	male
 	{
 	Adrian
+	Andreas
 	Anton
+	Axel
 	Bernhard
 	Boris
 	Christian
 	David
 	Emil
 	Felix
+	Frank
 	Günter
 	Hans
 	Hans-Peter
+	Henrik
 	Horst
+	Holger
 	Johann
 	Jürgen
 	Karl
@@ -69,6 +74,7 @@ names german
 	Lukas
 	Martin
 	Markus
+	Mathias
 	Michael
 	Otto
 	Peter
@@ -188,11 +194,16 @@ names spanish_italian
 	Adolfo
 	Antonio
 	Armando
+	Bernardo
 	Carlos
+	Claudio
+	Emilio
 	Fabian
+	Fabrizio
 	Felice
 	Garcia
 	Getulio
+	Giancarlo
 	Giorgo
 	Giovanni
 	Gustavo
@@ -209,6 +220,7 @@ names spanish_italian
 	Mauro
 	"Martin Alejandro"
 	"Marco Antonio"
+	Massimo
 	Ovidio
 	Peso
 	Ricardo
@@ -333,9 +345,12 @@ names french
 	Christophe
 	David
 	Emeralde
+	Guillaume
 	Henri
+	Henry
 	Herve
 	Jean
+	Jean-Luc
 	Jean-Pierre
 	Jean-Marc
 	Louis
@@ -461,25 +476,36 @@ names english_american
 	male
 	{
 	Aaron
-	Jack
-	Bradley
-	Tom
-	Garfield
-	Geoffrey
-	Gilbert
-	Jim
-	Bill
-	George
-	Flint
-	Robert
-	Thomas
-	Steven
-	Gary
-	Larry
 	Andrew
-	Raymond
+	Al
+	Bill
+	Bradley
+	Bruce
+	Chris
+	Dennis
+	Evan
+	Flint
+	Garfield
+	Gary
+	Geoffrey
+	George
+	Gilbert
+	Jack
+	Jim
 	Joe
+	Larry
+	Mark
 	Norman
+	Paul
+	Phillip
+	Raymond
+	Robert
+	Sam
+	Steven
+	Shawn
+	Tom
+	Thomas
+	Tim
 	Trevor
 	}
 
@@ -673,16 +699,21 @@ names scandinavian
 	Devoss
 	Godewyn
 	Groot
+	Hans
 	Jan
-	Nicolaas
 	Jilt
-	Nils
-	Lars
-	Knut
-	Royd
 	Jens
 	Janson
-	Hans
+	Knut
+	Lars
+	Magnus
+	Nicolaas
+	Nils
+	Ottar
+	Ole-Gunnar 
+	Soeren
+	Ragnar
+	Royd
 	Ulf
 	}
 //===================
@@ -1061,7 +1092,9 @@ names japanese
 	Kado
 	Kaori
 	Keiji
+	Kenjiro
 	Kin
+	Matsuhiro
 	Makoto
 	Naoko
 	Shiro
