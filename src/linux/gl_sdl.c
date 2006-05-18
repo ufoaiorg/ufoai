@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include <unistd.h>
+#include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -312,6 +313,26 @@ void *GLimp_GetProcAddress(const char *func)
 	return SDL_GL_GetProcAddress(func);
 }
 
+static void signal_handler(int sig)
+{
+	printf("Received signal %d, exiting...\n", sig);
+	GLimp_Shutdown();
+	_exit(0);
+}
+
+void InitSig(void)
+{
+	signal(SIGHUP, signal_handler);
+	signal(SIGQUIT, signal_handler);
+	signal(SIGILL, signal_handler);
+	signal(SIGTRAP, signal_handler);
+	signal(SIGIOT, signal_handler);
+	signal(SIGBUS, signal_handler);
+	signal(SIGFPE, signal_handler);
+	signal(SIGSEGV, signal_handler);
+	signal(SIGTERM, signal_handler);
+}
+
 qboolean GLimp_Init( void *hInstance, void *wndProc )
 {
 	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_CDROM|SDL_INIT_VIDEO) == 0) {
@@ -328,6 +349,8 @@ qboolean GLimp_Init( void *hInstance, void *wndProc )
 
 	SDL_EnableUNICODE(1);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+
+	InitSig();
 
 	return qtrue;
 }

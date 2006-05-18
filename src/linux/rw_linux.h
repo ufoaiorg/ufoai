@@ -42,5 +42,5 @@ typedef struct in_state {
 	int *in_speed_state;
 } in_state_t;
 
-
+void InitSig(void);
 

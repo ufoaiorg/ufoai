@@ -3216,13 +3216,13 @@ void CL_ShowMessagesOnStack ( void )
 /*
 ================
 MN_AddNewMessage
+
+TODO: This needs saving
 ================
 */
 void MN_AddNewMessage( const char* title, const char* text, qboolean popup, messagetype_t type, technology_t *pedia )
 {
 	message_t*	mess;
-	// date and time vars
-	//int	d, m, y, h, min, s;
 
 	// allocate memory for new message
 	mess = (message_t*) malloc ( sizeof( message_t ) );
@@ -3250,6 +3250,25 @@ void MN_AddNewMessage( const char* title, const char* text, qboolean popup, mess
 	{
 		// they need to be translated already
 		MN_Popup( title, text );
+	}
+}
+/*
+================
+MN_ShutdownMessageSystem
+
+FIXME: This needs to be called at shutdown
+================
+*/
+void MN_ShutdownMessageSystem( void )
+{
+	message_t* m = messageStack;
+	message_t* d;
+
+	while ( m )
+	{
+		d = m;
+		m = m->next;
+		free ( d );
 	}
 }
 

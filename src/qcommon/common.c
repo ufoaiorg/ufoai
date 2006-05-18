@@ -267,8 +267,9 @@ do the apropriate things.
 void Com_Quit (void)
 {
 	SV_Shutdown ("Server quit\n", qfalse);
+#ifndef DEDICATED_ONLY
 	CL_Shutdown ();
-
+#endif
 	if (logfile)
 	{
 		fclose (logfile);
@@ -1295,6 +1296,7 @@ void Qcommon_LocaleInit ( void )
 	{
 		Com_Printf("...could not set to language: %s\n", s_language->string );
 		locale = setlocale( LC_MESSAGES, "" );
+		Cvar_Set("s_language", "" );
 		if ( !locale )
 		{
 			Com_Printf("...could not set to system language\n" );

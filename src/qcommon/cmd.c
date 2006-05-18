@@ -491,7 +491,6 @@ typedef struct cmd_function_s
 	xcommand_t				function;
 } cmd_function_t;
 
-
 static	int			cmd_argc;
 static	char		*cmd_argv[MAX_STRING_TOKENS];
 static	char		*cmd_null_string = "";
@@ -809,7 +808,7 @@ char *Cmd_CompleteCommand(char *partial)
 	// and then aliases
 	for(a = cmd_alias; a; a = a->next)
 	{
-		if(!Q_strncmp(partial, a->name, len))
+		if(strstr(a->name, partial))
 		{
 			Com_Printf("%s\n", a->name);
 			match = a->name;

@@ -23,7 +23,6 @@ campaign_t	*curCampaign;
 ccs_t		ccs;
 base_t		*baseCurrent;
 
-// TODO: Save me
 aircraft_t	aircraft[MAX_AIRCRAFT];
 int		numAircraft;
 aircraft_t	*interceptAircraft;
@@ -321,12 +320,12 @@ void CL_ListAircraft_f ( void )
 
 /*
 ======================
-CL_StartAircraft
+CL_AircraftStart_f
 
 Start a Aircraft or stops the current mission and let the aircraft idle around
 ======================
 */
-void CL_StartAircraft ( void )
+void CL_AircraftStart_f ( void )
 {
 	aircraft_t	*air;
 
@@ -1392,106 +1391,27 @@ void CL_GameTimeFast( void )
 
 // ===========================================================
 
-
+#define MAX_STATS_BUFFER 1024
 /*
 ======================
-CL_GameExit
+CL_Stats_Update
+
+Shows the current stats from stats_t stats
 ======================
 */
-void CL_GameExit( void )
+void CL_Stats_Update ( void )
 {
-	Cbuf_AddText( "disconnect\n" );
-	curCampaign = NULL;
-	Cvar_Set( "mn_main", "main" );
-	Cvar_Set( "mn_active", "" );
-	ccs.singleplayer = qfalse;
-}
+	static char statsBuffer[MAX_STATS_BUFFER];
 
+	// delete buffer
+	*statsBuffer = '\0';
 
-/*
-======================
-CL_GameNew
-======================
-*/
-void CL_GameNew( void )
-{
-	equipDef_t	*ed;
-	char	*name;
-	int		i;
-
-	Cvar_Set( "mn_main", "singleplayer" );
-	Cvar_Set( "mn_active", "map" );
-	Cvar_SetValue("maxclients", 1 );
-
-	// exit running game
-	if ( curCampaign ) CL_GameExit();
-	ccs.singleplayer = qtrue;
-
-	// get campaign
-	name = Cvar_VariableString( "campaign" );
-	for ( i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++ )
-		if ( !Q_strncmp( name, curCampaign->name, MAX_VAR ) )
-			break;
-
-	if ( i == numCampaigns )
-	{
-		Com_Printf( "CL_GameNew: Campaign \"%s\" doesn't exist.\n", name );
-		return;
-	}
-
-	// base setup
-	ccs.numBases = 0;
-	MN_NewBases();
-
-	// reset, set time
-	selMis = NULL;
-	memset( &ccs, 0, sizeof( ccs_t ) );
-	ccs.date = curCampaign->date;
-
-	// set map view
-	ccs.center[0] = 0.5;
-	ccs.center[1] = 0.5;
-	ccs.zoom = 1.0;
-
-	CL_UpdateCredits( curCampaign->credits );
-
-	// equipment
-	for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
-		if ( !Q_strncmp( curCampaign->equipment, ed->name, MAX_VAR ) )
-			break;
-	if ( i != csi.numEDs )
-		ccs.eCampaign = *ed;
-
-	// market
-	for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
-		if ( !Q_strncmp( curCampaign->market, ed->name, MAX_VAR ) )
-			break;
-	if ( i != csi.numEDs )
-		ccs.eMarket = *ed;
-
-	// stage setup
-	CL_CampaignActivateStage( curCampaign->firststage );
-
-	MN_PopMenu( qtrue );
-	MN_PushMenu( "map" );
-
-	// create a base as first step
-	Cbuf_AddText( "mn_select_base -1" );
-	Cbuf_Execute();
-
-	CL_GameTimeStop();
-
-	// init research tree
-	RS_CopyFromSkeleton();
-	RS_InitTree();
-
-	// after inited the techtree
-	// we can assign the weapons
-	// and shields to aircrafts.
-	CL_AircraftInit();
-
-	// init employee list
-	MN_InitEmployees();
+	// TODO: implement me
+	Com_sprintf( statsBuffer, MAX_STATS_BUFFER, _("Missions:\nwon:\t%i\tlost:\t%i\nBases:\nbuild:\t%i\tattacked:\t%i\n"),
+			stats.missionsWon, stats.missionsLost,
+			stats.basesBuild, stats.basesAttacked
+			);
+	menuText[TEXT_STANDARD] = statsBuffer;
 }
 
 /*
@@ -2471,72 +2391,6 @@ void CL_MapActionReset( void )
 	selMis = NULL; // reset selected mission
 }
 
-#define MAX_STATS_BUFFER 1024
-/*
-======================
-Stats_Update
-
-Shows the current stats from stats_t stats
-======================
-*/
-void Stats_Update ( void )
-{
-	static char statsBuffer[MAX_STATS_BUFFER];
-
-	// delete buffer
-	*statsBuffer = '\0';
-
-	// TODO: implement me
-	Com_sprintf( statsBuffer, MAX_STATS_BUFFER, _("Missions:\nwon:\t%i\tlost:\t%i\nBases:\nbuild:\t%i\tattacked:\t%i\n"),
-			stats.missionsWon, stats.missionsLost,
-			stats.basesBuild, stats.basesAttacked
-			);
-	menuText[TEXT_STANDARD] = statsBuffer;
-}
-
-/*
-======================
-CL_ResetCampaign
-======================
-*/
-void CL_ResetCampaign( void )
-{
-	// reset some vars
-	curCampaign = NULL;
-	baseCurrent = NULL;
-
-	Cmd_AddCommand( "game_new", CL_GameNew );
-	Cmd_AddCommand( "game_continue", CL_GameContinue );
-	Cmd_AddCommand( "game_exit", CL_GameExit );
-	Cmd_AddCommand( "game_save", CL_GameSaveCmd );
-	Cmd_AddCommand( "game_load", CL_GameLoadCmd );
-	Cmd_AddCommand( "game_comments", CL_GameCommentsCmd );
-	Cmd_AddCommand( "game_go", CL_GameGo );
-	Cmd_AddCommand( "game_auto_go", CL_GameAutoGo );
-	Cmd_AddCommand( "game_abort", CL_GameAbort );
-	Cmd_AddCommand( "game_results", CL_GameResultsCmd );
-	Cmd_AddCommand( "game_timestop", CL_GameTimeStop );
-	Cmd_AddCommand( "game_timeslow", CL_GameTimeSlow );
-	Cmd_AddCommand( "game_timefast", CL_GameTimeFast );
-	Cmd_AddCommand( "mn_mapaction_reset", CL_MapActionReset );
-
-	Cmd_AddCommand( "aircraft_start", CL_StartAircraft );
-	Cmd_AddCommand( "aircraftlist", CL_ListAircraft_f );
-	Cmd_AddCommand( "aircraft_select", CL_AircraftSelect );
-	Cmd_AddCommand( "aircraft_init", CL_AircraftInit );
-	Cmd_AddCommand( "mn_next_aircraft", MN_NextAircraft_f );
-	Cmd_AddCommand( "mn_prev_aircraft", MN_PrevAircraft_f );
-	Cmd_AddCommand( "newaircraft", CL_NewAircraft_f );
-	Cmd_AddCommand( "aircraft_return", CL_AircraftReturnToBase_f );
-	Cmd_AddCommand( "aircraft_list", CL_BuildingAircraftList_f );
-	Cmd_AddCommand( "refuel", CL_AircraftRefuel_f );
-
-	Cmd_AddCommand( "stats_update", Stats_Update );
-
-	// FIXME: use campaign values
-	re.LoadTGA( "pics/menu/map_mask.tga", &maskPic, &maskWidth, &maskHeight );
-	if ( !maskPic ) Com_Printf( "Couldn't load map mask (pics/menu/map_mask.tga)\n" );
-}
 
 
 // ===========================================================
@@ -3078,4 +2932,162 @@ qboolean CL_OnBattlescape( void )
 		return qtrue;
 
 	return qfalse;
+}
+
+// =====================================================================
+
+// these commands are only available in singleplayer
+cmdList_t game_commands[] = {
+	{ "aircraft_start", CL_AircraftStart_f },
+	{ "aircraftlist", CL_ListAircraft_f },
+	{ "aircraft_select", CL_AircraftSelect },
+	{ "aircraft_init", CL_AircraftInit },
+	{ "mn_next_aircraft", MN_NextAircraft_f },
+	{ "mn_prev_aircraft", MN_PrevAircraft_f },
+	{ "newaircraft", CL_NewAircraft_f },
+	{ "aircraft_return", CL_AircraftReturnToBase_f },
+	{ "aircraft_list", CL_BuildingAircraftList_f },
+	{ "refuel", CL_AircraftRefuel_f },
+	{ "stats_update", CL_Stats_Update },
+	{ "game_go", CL_GameGo },
+	{ "game_auto_go", CL_GameAutoGo },
+	{ "game_abort", CL_GameAbort },
+	{ "game_results", CL_GameResultsCmd },
+	{ "game_timestop", CL_GameTimeStop },
+	{ "game_timeslow", CL_GameTimeSlow },
+	{ "game_timefast", CL_GameTimeFast },
+	{ "mn_mapaction_reset", CL_MapActionReset },
+
+	{NULL, NULL}
+};
+
+/*
+======================
+CL_GameExit
+======================
+*/
+void CL_GameExit( void )
+{
+	cmdList_t *commands;
+	Cbuf_AddText( "disconnect\n" );
+	curCampaign = NULL;
+	Cvar_Set( "mn_main", "main" );
+	Cvar_Set( "mn_active", "" );
+	ccs.singleplayer = qfalse;
+	// singleplayer commands are no longer available
+	for ( commands = game_commands; commands->name; commands++ )
+		Cmd_RemoveCommand( commands->name );
+}
+
+/*
+======================
+CL_GameNew
+======================
+*/
+void CL_GameNew( void )
+{
+	cmdList_t *commands;
+	equipDef_t	*ed;
+	char	*name;
+	int		i;
+
+	Cvar_Set( "mn_main", "singleplayer" );
+	Cvar_Set( "mn_active", "map" );
+	Cvar_SetValue("maxclients", 1 );
+
+	// exit running game
+	if ( curCampaign ) CL_GameExit();
+	ccs.singleplayer = qtrue;
+
+	// get campaign
+	name = Cvar_VariableString( "campaign" );
+	for ( i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++ )
+		if ( !Q_strncmp( name, curCampaign->name, MAX_VAR ) )
+			break;
+
+	if ( i == numCampaigns )
+	{
+		Com_Printf( "CL_GameNew: Campaign \"%s\" doesn't exist.\n", name );
+		return;
+	}
+
+	// base setup
+	ccs.numBases = 0;
+	MN_NewBases();
+
+	// reset, set time
+	selMis = NULL;
+	memset( &ccs, 0, sizeof( ccs_t ) );
+	ccs.date = curCampaign->date;
+
+	// set map view
+	ccs.center[0] = 0.5;
+	ccs.center[1] = 0.5;
+	ccs.zoom = 1.0;
+
+	CL_UpdateCredits( curCampaign->credits );
+
+	// equipment
+	for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
+		if ( !Q_strncmp( curCampaign->equipment, ed->name, MAX_VAR ) )
+			break;
+	if ( i != csi.numEDs )
+		ccs.eCampaign = *ed;
+
+	// market
+	for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
+		if ( !Q_strncmp( curCampaign->market, ed->name, MAX_VAR ) )
+			break;
+	if ( i != csi.numEDs )
+		ccs.eMarket = *ed;
+
+	// stage setup
+	CL_CampaignActivateStage( curCampaign->firststage );
+
+	MN_PopMenu( qtrue );
+	MN_PushMenu( "map" );
+
+	// create a base as first step
+	Cbuf_AddText( "mn_select_base -1" );
+	Cbuf_Execute();
+
+	CL_GameTimeStop();
+
+	// init research tree
+	RS_CopyFromSkeleton();
+	RS_InitTree();
+
+	// after inited the techtree
+	// we can assign the weapons
+	// and shields to aircrafts.
+	CL_AircraftInit();
+
+	// init employee list
+	MN_InitEmployees();
+
+	for ( commands = game_commands; commands->name; commands++ )
+		Cmd_AddCommand( commands->name, commands->function );
+}
+
+/*
+======================
+CL_ResetCampaign
+======================
+*/
+void CL_ResetCampaign( void )
+{
+	// reset some vars
+	curCampaign = NULL;
+	baseCurrent = NULL;
+
+	Cmd_AddCommand( "game_new", CL_GameNew );
+	Cmd_AddCommand( "game_continue", CL_GameContinue );
+	Cmd_AddCommand( "game_exit", CL_GameExit );
+	Cmd_AddCommand( "game_save", CL_GameSaveCmd );
+	Cmd_AddCommand( "game_load", CL_GameLoadCmd );
+	Cmd_AddCommand( "game_comments", CL_GameCommentsCmd );
+
+	// FIXME: use campaign values
+	re.LoadTGA( "pics/menu/map_mask.tga", &maskPic, &maskWidth, &maskHeight );
+	if ( !maskPic ) Com_Printf( "Couldn't load map mask (pics/menu/map_mask.tga)\n" );
 }

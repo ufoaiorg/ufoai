@@ -1715,6 +1715,7 @@ void CL_CvarCheck( void )
 
 	// gl_mode and fullscreen
 	v = Cvar_VariableValue( "mn_glmode" );
+	// FIXME: Check whether this mode exists
 	Cvar_Set( "mn_glmodestr", va( "%i*%i", vid_modes[v].width, vid_modes[v].height ) );
 }
 

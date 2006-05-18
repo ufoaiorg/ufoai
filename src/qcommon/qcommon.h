@@ -355,6 +355,12 @@ then searches for a command or variable that matches the first token.
 
 typedef void (*xcommand_t) (void);
 
+typedef struct cmdList_s
+{
+	char*	name;
+	xcommand_t	function;
+} cmdList_t;
+
 void	Cmd_Init (void);
 
 void	Cmd_AddCommand (char *cmd_name, xcommand_t function);

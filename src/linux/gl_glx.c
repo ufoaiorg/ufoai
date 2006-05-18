@@ -717,26 +717,6 @@ void KBD_Close(void)
 
 qboolean GLimp_InitGL (void);
 
-static void signal_handler(int sig)
-{
-	printf("Received signal %d, exiting...\n", sig);
-	GLimp_Shutdown();
-	_exit(0);
-}
-
-static void InitSig(void)
-{
-	signal(SIGHUP, signal_handler);
-	signal(SIGQUIT, signal_handler);
-	signal(SIGILL, signal_handler);
-	signal(SIGTRAP, signal_handler);
-	signal(SIGIOT, signal_handler);
-	signal(SIGBUS, signal_handler);
-	signal(SIGFPE, signal_handler);
-	signal(SIGSEGV, signal_handler);
-	signal(SIGTERM, signal_handler);
-}
-
 /*
 ** GLimp_SetMode
 */
@@ -1000,6 +980,44 @@ void GLimp_Shutdown( void )
 }
 
 /*
+** XErrorHandler (ioq3)
+**   the default X error handler exits the application
+**   I found out that on some hosts some operations would raise X errors (GLXUnsupportedPrivateRequest)
+**   but those don't seem to be fatal .. so the default would be to just ignore them
+**   our implementation mimics the default handler behaviour (not completely cause I'm lazy)
+*/
+int qXErrorHandler(Display *dpy, XErrorEvent *ev)
+{
+	static char buf[1024];
+	XGetErrorText(dpy, ev->error_code, buf, 1024);
+	ri.Con_Printf( PRINT_ALL, "X Error of failed request: %s\n", buf);
+	ri.Con_Printf( PRINT_ALL, "  Major opcode of failed request: %d\n", ev->request_code, buf);
+	ri.Con_Printf( PRINT_ALL, "  Minor opcode of failed request: %d\n", ev->minor_code);
+	ri.Con_Printf( PRINT_ALL, "  Serial number of failed request: %d\n", ev->serial);
+	return 0;
+}
+
+static void signal_handler(int sig)
+{
+	printf("Received signal %d, exiting...\n", sig);
+	GLimp_Shutdown();
+	_exit(0);
+}
+
+void InitSig(void)
+{
+	signal(SIGHUP, signal_handler);
+	signal(SIGQUIT, signal_handler);
+	signal(SIGILL, signal_handler);
+	signal(SIGTRAP, signal_handler);
+	signal(SIGIOT, signal_handler);
+	signal(SIGBUS, signal_handler);
+	signal(SIGFPE, signal_handler);
+	signal(SIGSEGV, signal_handler);
+	signal(SIGTERM, signal_handler);
+}
+
+/*
 ** GLimp_Init
 **
 ** This routine is responsible for initializing the OS specific portions
@@ -1008,6 +1026,9 @@ void GLimp_Shutdown( void )
 qboolean GLimp_Init( void *hinstance, void *wndproc )
 {
 	InitSig();
+
+	// set up our custom error handler for X failures
+	XSetErrorHandler(&qXErrorHandler);
 
 	return qtrue;
 }
