@@ -453,6 +453,22 @@ mission pdi
 }
 
 //no day and night
+mission rocketsilo
+{
+	text		"_The Aliens have tacken over a rocket silo. Go and capture it again."
+	map		pdi08
+	music		mission3
+	pos		"308 412"
+	aliens		4
+	civilians	2
+	alienequip	alien_spedition
+	recruits	4
+	$win		400
+	$alien		250
+	$civilian	200
+}
+
+//no day and night
 mission spedition
 {
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"

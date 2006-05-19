@@ -172,7 +172,7 @@ menu options_video
 		pos		"868 144"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
-		click	{ cmd "mn_modify mn_glmode -1 0 19;" }
+		click	{ cmd "mn_modify mn_glmode -1 0 20;" }
 	}
 	pic res_inc
 	{
@@ -180,7 +180,7 @@ menu options_video
 		pos		"884 144"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
-		click	{ cmd "mn_modify mn_glmode +1 0 19;" }
+		click	{ cmd "mn_modify mn_glmode +1 0 20;" }
 	}
 
 	string full_str
@@ -238,7 +238,6 @@ menu options_video
 		mousefx	true
 		click
 		{
-			cmd "copy gl_mode mn_glmode;"
 			cmd "mn_modifywrap gl_ext_texture_compression -1 0 1;"
 			cmd "mn_translate gl_ext_texture_compression mn_compression 0:No,1:Yes;"
 		}
@@ -251,7 +250,6 @@ menu options_video
 		mousefx	true
 		click
 		{
-			cmd "copy gl_mode mn_glmode;"
 			cmd "mn_modifywrap gl_ext_texture_compression +1 0 1;"
 			cmd "mn_translate gl_ext_texture_compression mn_compression 0:No,1:Yes;"
 		}
