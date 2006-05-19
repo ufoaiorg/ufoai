@@ -2347,5 +2347,8 @@ base_t* B_GetBase ( int id )
 
 int B_GetNumOnTeam ( void )
 {
+	// level testing via commandline
+	if ( ! baseCurrent )
+		return 0;
 	return baseCurrent->numOnTeam[baseCurrent->aircraftCurrent];
 }
