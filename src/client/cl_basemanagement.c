@@ -68,17 +68,6 @@ value_t valid_vars[] =
 	{ "image",	V_NULL,		BSFS( image ) },			// the string to identify the image for the building
 	{ "desc",	V_TRANSLATION_STRING,		BSFS( text ) },			// short description
 
-	//on which level is the building available
-	//starts at level 0 for underground - going up to level 7 (like in-game)
-	//this flag is only needed if you have several baselevels
-	//defined with MAX_BASE_LEVELS in client.h
-	{ "level",	V_INT,		BSFS( level ) },
-
-	//if this flag is set nothing can built upon this building
-	//this flag is only needed if you have several baselevels
-	//defined with MAX_BASE_LEVELS in client.h
-	{ "not_upon",	V_BOOL,		BSFS( notUpOn ) },
-
 	//set first part of a building to 1 all others to 0
 	//otherwise all building-parts will be on the list
 	{ "visible",	V_BOOL,		BSFS( visible ) },
@@ -276,9 +265,9 @@ void MN_RemoveBuilding( void )
 	{
 		b->buildingStatus[b->howManyOfThisType] = B_NOT_SET;
 		b->howManyOfThisType--;
-// 		baseCurrent->map[b->pos[0]][b->pos[1]][baseCurrent->baseLevel] = -1;
+// 		baseCurrent->map[b->pos[0]][b->pos[1]] = -1;
 // 		if (b->dependsBuilding)
-// 			baseCurrent->map[b->dependsBuilding->pos[0]][b->dependsBuilding->pos[1]][baseCurrent->baseLevel] = -1;
+// 			baseCurrent->map[b->dependsBuilding->pos[0]][b->dependsBuilding->pos[1]] = -1;
 		MN_BuildingStatus();
 	}
 }
@@ -352,61 +341,24 @@ MN_SetBuildingByClick
 ======================*/
 void MN_SetBuildingByClick ( int row, int col )
 {
-	building_t *building = NULL;
 	building_t *secondBuildingPart = NULL;
 
 	if ( row < BASE_SIZE && col < BASE_SIZE )
 	{
-		if ( baseCurrent->map[row][col][baseCurrent->baseLevel] == -1 )
+		if ( baseCurrent->map[row][col] == -1 )
 		{
 			if ( baseCurrent->buildingCurrent->needs && baseCurrent->buildingCurrent->visible )
 				secondBuildingPart = B_GetBuilding( baseCurrent->buildingCurrent->needs );
 
-			if ( baseCurrent->baseLevel >= 1 )
-			{
-				// a building on the upper level needs a building on the lower level
-				if ( baseCurrent->map[row][col][baseCurrent->baseLevel-1] == -1 )
-				{
-					Com_Printf( "No ground where i can place building upon\n" );
-					return;
-				}
-				else if ( secondBuildingPart && baseCurrent->map[row+1][col][baseCurrent->baseLevel-1] == -1 )
-				{
-					if ( baseCurrent->map[row][col+1][baseCurrent->baseLevel-1] == -1 )
-					{
-						Com_Printf( "No ground where i can place building upon\n" );
-						return;
-					}
-				}
-				else
-				{
-					building = B_GetBuildingByID( baseCurrent->map[row][col][baseCurrent->baseLevel-1] );
-					if ( building->notUpOn )
-					{
-						Com_Printf( "Can't place any building upon this ground\n" );
-						return;
-					}
-					else if ( secondBuildingPart )
-					{
-						building = B_GetBuildingByID( baseCurrent->map[row][col+1][baseCurrent->baseLevel-1] );
-						if ( building->notUpOn )
-						{
-							Com_Printf( "Can't place any building upon this ground\n" );
-							return;
-						}
-					}
-				}
-			}
-
 			if ( secondBuildingPart )
 			{
-				if ( baseCurrent->map[row][col+1][baseCurrent->baseLevel] != -1 )
+				if ( baseCurrent->map[row][col+1] != -1 )
 				{
 					Com_Printf( "Can't place this building here - the second part overlapped with another building\n" );
 					return;
 				}
 
- 				baseCurrent->map[row][col+1][baseCurrent->baseLevel] = baseCurrent->buildingCurrent->id;
+ 				baseCurrent->map[row][col+1] = baseCurrent->buildingCurrent->id;
 				baseCurrent->buildingToBuild = secondBuildingPart;
 			}
 			else
@@ -414,7 +366,7 @@ void MN_SetBuildingByClick ( int row, int col )
 			if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] <= B_UNDER_CONSTRUCTION )
 				MN_NewBuilding();
 
- 			baseCurrent->map[row][col][baseCurrent->baseLevel] = baseCurrent->buildingCurrent->id;
+ 			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->id;
 
  			if ( baseCurrent->buildingCurrent->buildingType == B_LAB )
  				baseCurrent->hasLab = 1;
@@ -423,7 +375,7 @@ void MN_SetBuildingByClick ( int row, int col )
 			MN_ResetBuildingCurrent();
 		} else {
 			Com_Printf( "There is already a building\n" );
-			Com_DPrintf( "Building: %i at (row:%i, col:%i)\n", baseCurrent->map[row][col][baseCurrent->baseLevel], row, col );
+			Com_DPrintf( "Building: %i at (row:%i, col:%i)\n", baseCurrent->map[row][col], row, col );
 		}
 	}
 	else
@@ -1443,7 +1395,7 @@ MN_ClearBase
 ======================*/
 void MN_ClearBase( base_t *base )
 {
-	int	row, col, levels, i;
+	int	row, col, i;
 
 	memset( base, 0, sizeof(base_t) );
 
@@ -1463,8 +1415,7 @@ void MN_ClearBase( base_t *base )
 
 	for ( row = BASE_SIZE-1; row >= 0; row-- )
 		for ( col = BASE_SIZE-1; col >= 0; col-- )
-			for ( levels = MAX_BASE_LEVELS-1; levels >= 0; levels-- )
-				base->map[row][col][levels] = -1;
+			base->map[row][col] = -1;
 }
 
 /*======================
@@ -1596,15 +1547,15 @@ void MN_DrawBase( menuNode_t *node )
 			x = node->pos[0] + col * width;
 			y = node->pos[1] + row * height - row * 20 ;
 
-			baseCurrent->posX[row][col][baseCurrent->baseLevel] = x;
-			baseCurrent->posY[row][col][baseCurrent->baseLevel] = y;
+			baseCurrent->posX[row][col] = x;
+			baseCurrent->posY[row][col] = y;
 
-			if ( baseCurrent->map[row][col][baseCurrent->baseLevel] != -1 )
+			if ( baseCurrent->map[row][col] != -1 )
 			{
-				entry = B_GetBuildingByID(baseCurrent->map[row][col][baseCurrent->baseLevel]);
+				entry = B_GetBuildingByID(baseCurrent->map[row][col]);
 
 				if ( ! entry )
-					Sys_Error("Error in DrawBase - no building with id %i\n", baseCurrent->map[row][col][baseCurrent->baseLevel] );
+					Sys_Error("Error in DrawBase - no building with id %i\n", baseCurrent->map[row][col] );
 
 				if ( entry->buildingStatus[entry->howManyOfThisType] == B_UPGRADE )
 					Q_strncpyz( statusImage, "base/upgrade", MAX_QPATH );
@@ -1637,7 +1588,7 @@ void MN_DrawBase( menuNode_t *node )
 			if ( mx > x && mx < x + width && my > y && my < y + height - 20 )
 			{
 				hover = qtrue;
-				if ( baseCurrent->map[row][col][baseCurrent->baseLevel] != -1 )
+				if ( baseCurrent->map[row][col] != -1 )
 					hoverBuilding = entry;
 			}
 			else
@@ -1676,9 +1627,6 @@ void MN_BaseInit( void )
 
 	baseCurrent = &bmBases[ ccs.actualBaseID ];
 
-	if ( ! baseCurrent->baseLevel )
-		baseCurrent->baseLevel = 0;
-
 	// stuff for homebase
 	if ( ccs.actualBaseID == 0 )
 	{
@@ -1704,30 +1652,6 @@ void MN_RenameBase( void )
 
 	if ( baseCurrent )
 		Q_strncpyz( baseCurrent->title, Cmd_Argv( 1 ) , MAX_VAR );
-}
-
-/*======================
-MN_BaseLevelDown
-======================*/
-void MN_BaseLevelDown( void )
-{
-	if ( baseCurrent && baseCurrent->baseLevel > 0 )
-	{
-		baseCurrent->baseLevel--;
-		Cvar_SetValue( "mn_base_level", baseCurrent->baseLevel );
-	}
-}
-
-/*======================
-MN_BaseLevelUp
-======================*/
-void MN_BaseLevelUp( void )
-{
-	if ( baseCurrent && baseCurrent->baseLevel < MAX_BASE_LEVELS-1 )
-	{
-		baseCurrent->baseLevel++;
-		Cvar_SetValue( "mn_base_level", baseCurrent->baseLevel );
-	}
 }
 
 /*======================
@@ -1928,9 +1852,9 @@ void B_AssembleMap ( void )
 		{
 			baseMapPart[0] = '\0';
 
-			if ( baseCurrent->map[row][col][0] != -1 )
+			if ( baseCurrent->map[row][col] != -1 )
 			{
-				entry = B_GetBuildingByID(baseCurrent->map[row][col][0]);
+				entry = B_GetBuildingByID(baseCurrent->map[row][col]);
 
 				if ( ! entry->visible )
 				{
@@ -2013,9 +1937,8 @@ void B_SaveBases( sizebuf_t *sb )
 			MSG_WriteByte( sb, base->hasLab );
 			MSG_WriteChar( sb, base->mapChar );
 			MSG_WriteLong( sb, base->baseStatus );
-			MSG_WriteLong( sb, base->baseLevel );
 			MSG_WriteFloat( sb, base->condition );
-			SZ_Write( sb, &base->map[0][0][0], sizeof(base->map) );
+			SZ_Write( sb, &base->map[0][0], sizeof(base->map) );
 
 			// maybe count of buildings change due to an update
 			MSG_WriteLong( sb, numBuildings );
@@ -2045,7 +1968,9 @@ void B_SaveBases( sizebuf_t *sb )
 			CL_SendTeamInfo( sb, base->wholeTeam, base->numWholeTeam );
 
 			// store assignement
-			MSG_WriteFormat( sb, "lbbl", base->teamMask, base->numOnTeam, base->numHired, base->hiredMask );
+			MSG_WriteFormat( sb, "bl", base->numHired, base->hiredMask );
+			for ( n = 0; n < base->numAircraftInBase; n++ )
+				MSG_WriteFormat( sb, "bl", base->numOnTeam[n], base->teamMask[n] );
 		}
 }
 
@@ -2075,7 +2000,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 		ccs.actualBaseID = i;
 		baseCurrent = base;
 		baseCurrent->allBuildingsList[0] = '\0';
-		baseCurrent->aircraftCurrent = NULL; // FIXME: Load the first one
+		baseCurrent->aircraftCurrent = 0;
 		base->founded = qtrue;
 		if ( version >= 2 )
 		{
@@ -2087,7 +2012,6 @@ void B_LoadBases( sizebuf_t *sb, int version )
 			base->hasLab = MSG_ReadByte( sb );
 			base->mapChar = MSG_ReadChar( sb );
 			base->baseStatus = MSG_ReadLong( sb );
-			base->baseLevel = MSG_ReadLong( sb );
 			base->condition = MSG_ReadFloat( sb );
 		}
 		else
@@ -2096,7 +2020,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 			base->pos[0] = MSG_ReadFloat( sb );
 			base->pos[1] = MSG_ReadFloat( sb );
 		}
-		memcpy( &base->map[0][0][0], sb->data + sb->readcount, sizeof(base->map) );
+		memcpy( &base->map[0][0], sb->data + sb->readcount, sizeof(base->map) );
 		sb->readcount += sizeof(base->map);
 		if ( version >= 2 )
 		{
@@ -2134,7 +2058,6 @@ void B_LoadBases( sizebuf_t *sb, int version )
 			}
 			MN_BuildingInit();
 			AIR_LoadAircraft( sb, base, version );
-			base->aircraftCurrent = &base->aircraft[0];
 
 			// read whole team list
 			CL_LoadTeam( sb, base, version );
@@ -2213,7 +2136,7 @@ void CL_BaseList ( void )
 			for ( col = 0; col < BASE_SIZE; col++ )
 			{
 				// just show the first level - all others are not used yet
-				Com_Printf("%i ", base->map[row][col][0] );
+				Com_Printf("%i ", base->map[row][col] );
 			}
 		}
 		Com_Printf("\n");
@@ -2271,8 +2194,6 @@ void MN_ResetBaseManagement( void )
 	bmData = bmDataStart;
 
 	// add commands and cvars
-	Cmd_AddCommand( "mn_base_level_down", MN_BaseLevelDown );
-	Cmd_AddCommand( "mn_base_level_up", MN_BaseLevelUp );
 	Cmd_AddCommand( "mn_prev_base", MN_PrevBase );
 	Cmd_AddCommand( "mn_next_base", MN_NextBase );
 	Cmd_AddCommand( "mn_select_base", MN_SelectBase );
@@ -2426,11 +2347,5 @@ base_t* B_GetBase ( int id )
 
 int B_GetNumOnTeam ( void )
 {
-	if ( ! baseCurrent )
-	{
-		Com_DPrintf( "Probably an error in B_GetNumOnTeam - no baseCurrent\n" );
-		return 0;
-	}
-
-	return baseCurrent->numOnTeam;
+	return baseCurrent->numOnTeam[baseCurrent->aircraftCurrent];
 }

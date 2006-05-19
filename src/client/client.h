@@ -943,7 +943,7 @@ typedef struct campaign_s
 
 extern aircraft_t	aircraft[MAX_AIRCRAFT];
 extern int		numAircraft;
-extern aircraft_t	*interceptAircraft;
+extern int		interceptAircraft;
 
 typedef struct nation_s
 {

@@ -25,7 +25,7 @@ base_t		*baseCurrent;
 
 aircraft_t	aircraft[MAX_AIRCRAFT];
 int		numAircraft;
-aircraft_t	*interceptAircraft;
+int		interceptAircraft;
 
 int		mapAction;
 int		gameTimeScale;
@@ -36,6 +36,7 @@ int		maskWidth, maskHeight;
 // extern in client.h
 stats_t		stats;
 
+extern	cmdList_t game_commands[];
 /*
 ============================================================================
 
@@ -331,13 +332,13 @@ void CL_AircraftStart_f ( void )
 
 	assert(baseCurrent);
 
-	if ( !baseCurrent->aircraftCurrent )
+	if ( baseCurrent->aircraftCurrent < 0 )
 	{
 		Com_DPrintf("Error - there is no aircraftCurrent in this base\n");
 		return;
 	}
 
-	air = baseCurrent->aircraftCurrent;
+	air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	if ( air->status < AIR_IDLE )
 	{
 		air->pos[0] = baseCurrent->pos[0]+2;
@@ -362,8 +363,8 @@ CL_AircraftRefuel_f
 ======================*/
 void CL_AircraftRefuel_f ( void )
 {
-	if ( baseCurrent->aircraftCurrent )
-		CL_AircraftRefuel ( baseCurrent->aircraftCurrent );
+	if ( baseCurrent->aircraftCurrent >= 0 )
+		CL_AircraftRefuel ( &baseCurrent->aircraft[baseCurrent->aircraftCurrent] );
 }
 
 /*
@@ -479,6 +480,8 @@ void MN_NextAircraft_f ( void )
 		Cvar_SetValue("mn_aircraft_id", (int)Cvar_VariableValue("mn_aircraft_id") + 1 );
 		CL_AircraftSelect();
 	}
+	else
+		Com_DPrintf("mn_aircraft_id: %i - numAircraftInBase: %i\n",(int)Cvar_VariableValue("mn_aircraft_id"), baseCurrent->numAircraftInBase );
 }
 
 /*
@@ -526,9 +529,9 @@ script function for CL_AircraftReturnToBase
 void CL_AircraftReturnToBase_f ( void )
 {
 	aircraft_t*	air;
-	if ( baseCurrent && baseCurrent->aircraftCurrent )
+	if ( baseCurrent && baseCurrent->aircraftCurrent >= 0 )
 	{
-		air = baseCurrent->aircraftCurrent;
+		air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 		CL_AircraftReturnToBase( air );
 		CL_AircraftSelect();
 	}
@@ -551,15 +554,9 @@ void CL_AircraftSelect ( void )
 	if ( aircraftID >= baseCurrent->numAircraftInBase )
 		aircraftID = 0;
 
-	if ( aircraftID >= baseCurrent->numAircraftInBase )
-	{
-		Com_Printf("Warning: No aircraft in base %s\n", baseCurrent->title );
-		return;
-	}
-
 	air = &baseCurrent->aircraft[aircraftID];
 
-	baseCurrent->aircraftCurrent = (void*)air;
+	baseCurrent->aircraftCurrent = aircraftID;
 
 	CL_UpdateHireVar();
 
@@ -604,6 +601,10 @@ void CL_NewAircraft ( base_t* base, char* name )
 	int	i;
 
 	assert(base);
+
+	// first aircraft is default aircraft
+	base->aircraftCurrent = 0;
+
 	for ( i = 0; i < numAircraft; i++ )
 	{
 		air = &aircraft[i];
@@ -612,14 +613,16 @@ void CL_NewAircraft ( base_t* base, char* name )
 			memcpy( &base->aircraft[base->numAircraftInBase], air, sizeof(aircraft_t) );
 			air = &base->aircraft[base->numAircraftInBase];
 			air->homebase = base;
+			// this is the aircraft array id in current base
+			// NOTE: when we send the aircraft to another base this has to be changed, too
+			air->id = base->numAircraftInBase;
+			// link the teamSize pointer in
+			air->teamSize = &base->numOnTeam[base->numAircraftInBase];
 			Q_strncpyz( messageBuffer, va( _("You've got a new aircraft (a %s) in base %s"), air->name, base->title ), MAX_MESSAGE_TEXT );
 			MN_AddNewMessage( _("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL );
 			Com_DPrintf("Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 			air->pos[0] = base->pos[0];
 			air->pos[1] = base->pos[1];
-			// first aircraft is default aircraft
-			if ( ! base->aircraftCurrent )
-				base->aircraftCurrent = air;
 
 			base->numAircraftInBase++;
 			Com_DPrintf("Aircraft for base %s: %s\n", base->title, air->name );
@@ -927,7 +930,6 @@ opens up aircraft by rightclicking them
 void CL_OpenAircraft_f ( void )
 {
 	int	num, j;
-	aircraft_t*	air;
 
 	if ( Cmd_Argc() < 2 )
 	{
@@ -948,11 +950,10 @@ void CL_OpenAircraft_f ( void )
 		}
 		else if ( num >= 0 && num < bmBases[j].numAircraftInBase )
 		{
-			air = &bmBases[j].aircraft[num];
-			Com_DPrintf("Selected aircraft: %s\n", air->name );
+			Com_DPrintf("Selected aircraft: %s\n", bmBases[j].aircraft[num].name );
 
 			baseCurrent = &bmBases[j];
-			baseCurrent->aircraftCurrent = air;
+			baseCurrent->aircraftCurrent = num;
 			CL_AircraftSelect();
 			MN_PopMenu(qfalse);
 			CL_MapActionReset();
@@ -997,20 +998,21 @@ void CL_SelectAircraft_f ( void )
 		}
 		else if ( num >= 0 && num < bmBases[j].numAircraftInBase )
 		{
-			interceptAircraft = &bmBases[j].aircraft[num];
-			Com_DPrintf("Selected aircraft: %s\n", interceptAircraft->name );
+			interceptAircraft = num;
+			Com_DPrintf("Selected aircraft: %s\n", bmBases[j].aircraft[interceptAircraft].name );
 
-			if ( ! interceptAircraft->teamSize )
+			if ( ! bmBases[j].aircraft[interceptAircraft].teamSize )
 			{
 				MN_Popup(_("Notice"), _("Assign a team to aircraft"));
 				return;
 			}
-			MN_MapCalcLine( interceptAircraft->pos, selMis->def->pos, &interceptAircraft->route );
-			interceptAircraft->status = AIR_TRANSIT;
-			interceptAircraft->time = 0;
-			interceptAircraft->point = 0;
-			baseCurrent = interceptAircraft->homebase;
-			baseCurrent->aircraftCurrent = interceptAircraft;
+			MN_MapCalcLine( bmBases[j].aircraft[interceptAircraft].pos, selMis->def->pos,
+				&bmBases[j].aircraft[interceptAircraft].route );
+			bmBases[j].aircraft[interceptAircraft].status = AIR_TRANSIT;
+			bmBases[j].aircraft[interceptAircraft].time = 0;
+			bmBases[j].aircraft[interceptAircraft].point = 0;
+			baseCurrent = bmBases[j].aircraft[interceptAircraft].homebase;
+			baseCurrent->aircraftCurrent = num;
 			CL_AircraftSelect();
 			MN_PopMenu(qfalse);
 			return;
@@ -1118,8 +1120,8 @@ void CL_CheckAircraft ( aircraft_t* air )
 		if (air->status != AIR_DROP && air->fuel > 0 )
 		{
 			air->status = AIR_DROP;
-			if ( ! interceptAircraft )
-				interceptAircraft = air;
+			if ( ! interceptAircraft < 0 )
+				interceptAircraft = air->id;
 			MN_PushMenu( "popup_intercept_ready" );
 		}
 	}
@@ -1435,7 +1437,6 @@ void AIR_SaveAircraft( sizebuf_t *sb, base_t* base )
 		MSG_WriteLong( sb, air->speed );
 		MSG_WriteLong( sb, air->point );
 		MSG_WriteLong( sb, air->time );
-		MSG_WriteLong( sb, air->teamSize );
 		SZ_Write( sb, &air->route, sizeof(mapline_t) );
 	}
 }
@@ -1467,13 +1468,16 @@ void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
 	aircraft_t* air;
 	if ( version >= 4 )
 	{
+		// paranoid
+		base->numAircraftInBase = 0;
+
 		n = MSG_ReadByte( sb );
 		for ( i = 0; i < n; i++ )
 		{
-			CL_NewAircraft( baseCurrent, MSG_ReadString(sb) );
-			air = &base->aircraft[i];
-			if ( air )
+			CL_NewAircraft( base, MSG_ReadString(sb) );
+			if ( base->numAircraftInBase )
 			{
+				air = &base->aircraft[base->numAircraftInBase-1];
 				air->pos[0] = MSG_ReadFloat( sb );
 				air->pos[1] = MSG_ReadFloat( sb );
 				air->status = MSG_ReadByte( sb );
@@ -1483,12 +1487,9 @@ void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
 				air->homebase = base;
 				air->point = MSG_ReadLong( sb );
 				air->time = MSG_ReadLong( sb );
-				air->teamSize = MSG_ReadLong( sb );
+				air->id = i;
 				memcpy( &air->route, sb->data + sb->readcount, sizeof(mapline_t) );
 				sb->readcount += sizeof(mapline_t);
-				memcpy( &base->aircraft[base->numAircraftInBase++], air, sizeof(aircraft_t) );
-				if ( ! base->aircraftCurrent )
-					base->aircraftCurrent = air;
 			}
 			else
 			{
@@ -1503,12 +1504,10 @@ void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
 				MSG_ReadLong( sb );	//speed
 				MSG_ReadLong( sb );	//point
 				MSG_ReadLong( sb );	//time
-				MSG_ReadLong( sb );	//teamSize
 				sb->readcount += sizeof(mapline_t);	//route
 			}
 		}
 	}
-	CL_AircraftInit();
 	CL_AircraftSelect();
 	CL_MapActionReset();
 }
@@ -1687,6 +1686,7 @@ void CL_GameLoad( char *filename )
 	FILE	*f;
 	int		version;
 	int		i, j, num;
+	cmdList_t	*commands;
 
 	// open file
 	f = fopen( va( "%s/save/%s.sav", FS_Gamedir(), filename ), "rb" );
@@ -1741,9 +1741,12 @@ void CL_GameLoad( char *filename )
 		return;
 	}
 
+	for ( commands = game_commands; commands->name; commands++ )
+		Cmd_AddCommand( commands->name, commands->function );
+
 	// reset
 	selMis = NULL;
-	interceptAircraft = NULL;
+	interceptAircraft = -1;
 	memset( &ccs, 0, sizeof( ccs_t ) );
 
 	// read date
@@ -2008,7 +2011,7 @@ void CL_GameGo( void )
 		MN_Popup( _("Note"), _("Assemble or load a team") );
 		return;
 	}
-	else if ( ( ! mis->active || ( interceptAircraft && ! interceptAircraft->teamSize ) )
+	else if ( ( ! mis->active || (interceptAircraft >= 0 && ! baseCurrent->numOnTeam[interceptAircraft] ) )
 		&& ccs.singleplayer )
 		// dropship not near landingzone
 		return;
@@ -2067,7 +2070,7 @@ void CL_GameAutoGo( void )
 	mission_t	*mis;
 	int	won, i;
 
-	if ( !curCampaign || !selMis || !interceptAircraft)
+	if ( !curCampaign || !selMis || interceptAircraft < 0 )
 	{
 		Com_DPrintf("No update after automission\n");
 		return;
@@ -2084,9 +2087,9 @@ void CL_GameAutoGo( void )
 	MN_PopMenu(qfalse);
 
 	// FIXME: This needs work
-	won = mis->aliens * (int)difficulty->value > interceptAircraft->teamSize ? 0 : 1;
+	won = mis->aliens * (int)difficulty->value > baseCurrent->numOnTeam[interceptAircraft] ? 0 : 1;
 
-	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int)difficulty->value, interceptAircraft->size );
+	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int)difficulty->value, baseCurrent->numOnTeam[interceptAircraft] );
 
 	// give reward
 	if ( won )
@@ -2337,10 +2340,10 @@ void CL_GameResultsCmd( void )
 		if ( baseCurrent->deathMask & (1<<i) )
 		{
 			baseCurrent->deathMask >>= 1;
-			tempMask = baseCurrent->teamMask >> 1;
-			baseCurrent->teamMask = (baseCurrent->teamMask & ((1<<i)-1)) | (tempMask & ~((1<<i)-1));
+			tempMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent] >> 1;
+			baseCurrent->teamMask[baseCurrent->aircraftCurrent] = (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & ((1<<i)-1)) | (tempMask & ~((1<<i)-1));
 			baseCurrent->numWholeTeam--;
-			baseCurrent->numOnTeam--;
+			baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
 			Com_DestroyInventory( &baseCurrent->teamInv[i] );
 			for ( j = i; j < baseCurrent->numWholeTeam; j++ )
 			{
@@ -2379,14 +2382,14 @@ void CL_MapActionReset( void )
 	if ( ccs.numBases )
 		mapAction = MA_NONE;
 
-	if ( interceptAircraft )
+	if ( interceptAircraft >= 0 )
 	{
 		if ( ! selMis )
 		{
 			baseCurrent->aircraftCurrent = interceptAircraft;
-			CL_AircraftReturnToBase( interceptAircraft );
+			CL_AircraftReturnToBase( &baseCurrent->aircraft[interceptAircraft] );
 		}
-		interceptAircraft = NULL; // reset selected aircraft
+		interceptAircraft = -1; // reset selected aircraft
 	}
 	selMis = NULL; // reset selected mission
 }
@@ -2924,6 +2927,7 @@ void CL_ParseNations( char *name, char **text )
 CL_OnBattlescape
 
 returns true when we are not in battlefield
+TODO: Check cvar mn_main for value
 ======================*/
 qboolean CL_OnBattlescape( void )
 {
@@ -2986,7 +2990,7 @@ CL_GameNew
 */
 void CL_GameNew( void )
 {
-	cmdList_t *commands;
+	cmdList_t	*commands;
 	equipDef_t	*ed;
 	char	*name;
 	int		i;

@@ -1101,11 +1101,10 @@ void MN_BaseMapClick( menuNode_t *node, int x, int y )
 	{
 		for ( row = 0; row < BASE_SIZE; row++ )
 			for ( col = 0; col < BASE_SIZE; col++ )
-				if ( baseCurrent->map[row][col][baseCurrent->baseLevel] == -1
-				  && x >= baseCurrent->posX[row][col][baseCurrent->baseLevel]
-				  && x < baseCurrent->posX[row][col][baseCurrent->baseLevel] + node->size[0] / BASE_SIZE
-				  && y >= baseCurrent->posY[row][col][baseCurrent->baseLevel]
-				  && y < baseCurrent->posY[row][col][baseCurrent->baseLevel] + node->size[1] / BASE_SIZE
+				if ( baseCurrent->map[row][col] == -1 && x >= baseCurrent->posX[row][col]
+				  && x < baseCurrent->posX[row][col] + node->size[0] / BASE_SIZE
+				  && y >= baseCurrent->posY[row][col]
+				  && y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE
 				)
 				{
 					MN_SetBuildingByClick( row, col );
@@ -1115,14 +1114,13 @@ void MN_BaseMapClick( menuNode_t *node, int x, int y )
 
 	for ( row = 0; row < BASE_SIZE; row++ )
 		for ( col = 0; col < BASE_SIZE; col++ )
-			if ( baseCurrent->map[row][col][baseCurrent->baseLevel] != -1
-			  && x >= baseCurrent->posX[row][col][baseCurrent->baseLevel]
-			  && x < baseCurrent->posX[row][col][baseCurrent->baseLevel] + node->size[0] / BASE_SIZE
-			  && y >= baseCurrent->posY[row][col][baseCurrent->baseLevel]
-			  && y < baseCurrent->posY[row][col][baseCurrent->baseLevel] + node->size[1] / BASE_SIZE
+			if ( baseCurrent->map[row][col] != -1 && x >= baseCurrent->posX[row][col]
+			  && x < baseCurrent->posX[row][col] + node->size[0] / BASE_SIZE
+			  && y >= baseCurrent->posY[row][col]
+			  && y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE
 			)
 			{
-				entry = B_GetBuildingByID( baseCurrent->map[row][col][baseCurrent->baseLevel] );
+				entry = B_GetBuildingByID( baseCurrent->map[row][col] );
 				if ( ! entry )
 					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y );
 
@@ -1234,7 +1232,7 @@ void MN_RightClick( int x, int y )
 			if ( node->type == MN_MAP || node->type == MN_3DMAP )
 			{
 				selMis = NULL;
-				interceptAircraft = NULL;
+				interceptAircraft = -1;
 				if ( node->type == MN_MAP )
 					mouseSpace = MS_SHIFTMAP;
 				else

@@ -130,9 +130,12 @@ void CL_ResetCharacters( base_t* base )
 	// reset hire info
 	Cvar_ForceSet( "cl_selected", "0" );
 	base->numWholeTeam = 0;
-	base->numOnTeam = 0;
 	base->numHired = 0;
-	base->teamMask = 0;
+	for ( i = 0; i < base->numAircraftInBase; i++ )
+	{
+		base->numOnTeam[i] = 0;
+		base->teamMask[i] = 0;
+	}
 }
 
 
@@ -369,6 +372,8 @@ void CL_CheckInventory( equipDef_t *equip )
 	invList_t	*ic, *next;
 	int p, container;
 
+	assert(baseCurrent);
+
 	// Iterate through in container order (right hand, left hand, belt,
 	// armor, backpack) at the top level, i.e. each squad member fills
 	// their right hand, then each fills their left hand, etc.  The effect
@@ -379,7 +384,7 @@ void CL_CheckInventory( equipDef_t *equip )
 	// others with unloaded guns in their hands.
 	for ( container = 0; container < csi.numIDs; container++ )
 	{
-		for ( p = 0, cp = baseCurrent->curTeam; p < baseCurrent->numOnTeam; p++, cp++ )
+		for ( p = 0, cp = baseCurrent->curTeam; p < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; p++, cp++ )
 		{
 			for ( ic = cp->inv->c[container]; ic; ic = next )
 			{
@@ -438,10 +443,10 @@ void CL_GenerateEquipmentCmd( void )
 
 	// store hired names
 	Cvar_ForceSet( "cl_selected", "0" );
-	baseCurrent->numOnTeam = baseCurrent->numHired;
-	baseCurrent->teamMask = baseCurrent->hiredMask;
+// 	baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] = baseCurrent->numHired;
+// 	baseCurrent->teamMask[baseCurrent->aircraftCurrent] = baseCurrent->hiredMask;
 	for ( i = 0, p = 0; i < baseCurrent->numWholeTeam; i++ )
-		if ( baseCurrent->hiredMask & (1 << i) )
+		if ( baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i) )
 		{
 			baseCurrent->curTeam[p] = baseCurrent->wholeTeam[i];
 			Cvar_ForceSet( va( "mn_name%i", p ), baseCurrent->curTeam[p].name );
@@ -551,7 +556,7 @@ void CL_SelectCmd( void )
 
 	if ( !Q_strncmp( command, "equip", 5 ) )
 	{
-		if ( !baseCurrent || num >= baseCurrent->numOnTeam ) return;
+		if ( !baseCurrent || num > baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] ) return;
 		if ( menuInventory && menuInventory != baseCurrent->curTeam[num].inv )
 		{
 			baseCurrent->curTeam[num].inv->c[csi.idEquip] = menuInventory->c[csi.idEquip];
@@ -588,14 +593,10 @@ void CL_UpdateHireVar ( void )
 {
 	aircraft_t* air = NULL;
 
-	// maybe we are in multiplayer - and there is no baseCurrent
-	if ( baseCurrent->aircraftCurrent )
-	{
-		air = (aircraft_t*)baseCurrent->aircraftCurrent;
-		Cvar_Set( "mn_hired", va( "%i of %i\n", air->teamSize, air->size ) );
-	}
-	else
-		Cvar_Set( "mn_hired", va( "%i of %i\n", baseCurrent->numHired, MAX_ACTIVETEAM ) );
+	assert(baseCurrent);
+
+	air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	Cvar_Set( "mn_hired", va( "%i of %i\n", baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], air->size ) );
 
 }
 
@@ -610,15 +611,12 @@ void CL_MarkTeamCmd( void )
 
 	// check if we are allowed to be here?
 	// we are only allowed to be here if we already set up a base
-	// or are in multiplayer mode
 	if ( ! baseCurrent )
 	{
 		Com_Printf("No base set up\n");
 		MN_PopMenu( qfalse );
 		return;
 	}
-
-	baseCurrent->numHired = baseCurrent->numOnTeam;
 
 	CL_UpdateHireVar();
 
@@ -655,29 +653,31 @@ void CL_HireActorCmd( void )
 	}
 	num = atoi( Cmd_Argv(1) );
 
-	if ( baseCurrent && baseCurrent->aircraftCurrent )
-		air = (aircraft_t*)baseCurrent->aircraftCurrent;
-
 	if ( num >= baseCurrent->numWholeTeam )
 		return;
 
-	if ( baseCurrent->hiredMask & (1 << num) )
+	if ( baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << num) )
 	{
 		// unhire
 		Cbuf_AddText( va( "listdel%i\n", num ) );
 		baseCurrent->hiredMask &= ~(1 << num);
+		baseCurrent->teamMask[baseCurrent->aircraftCurrent] &= ~(1 << num);
 		baseCurrent->numHired--;
-		if ( air )
-			air->teamSize--;
+		baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
 	}
-	else if ( baseCurrent->numHired < MAX_ACTIVETEAM && ( ( air && air->size > air->teamSize ) || ! air ) )
+	else if ( baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] < MAX_ACTIVETEAM && !(baseCurrent->hiredMask & (1<<num)) )
 	{
+		if ( baseCurrent && baseCurrent->aircraftCurrent >= 0 )
+			air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 		// hire
-		Cbuf_AddText( va( "listadd%i\n", num ) );
-		baseCurrent->hiredMask |= (1 << num);
-		baseCurrent->numHired++;
-		if ( air && air->size >= air->teamSize )
-			air->teamSize++;
+		if ( !air || air->size > baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] )
+		{
+			Cbuf_AddText( va( "listadd%i\n", num ) );
+			baseCurrent->hiredMask |= (1 << num);
+			baseCurrent->numHired++;
+			baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]++;
+			baseCurrent->teamMask[baseCurrent->aircraftCurrent] |= (1 << num);
+		}
 	}
 
 	// select the desired one anyways
@@ -892,12 +892,14 @@ void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version )
 		CL_LoadTeamMember( sb, chr );
 
 	// get assignement
-	MSG_ReadFormat( sb, "lbbl", &base->teamMask, &base->numOnTeam, &base->numHired, &base->hiredMask );
+	MSG_ReadFormat( sb, "bl", &base->numHired, &base->hiredMask );
+	for ( i = 0; i < base->numAircraftInBase; i++ )
+		MSG_ReadFormat( sb, "bl", &base->numOnTeam[i], &base->teamMask[i] );
 
-	Com_DPrintf("Load team with %i members and %i slots\n", base->numOnTeam, base->numWholeTeam );
+	Com_DPrintf("Load team with %i members and %i slots\n", base->numHired, base->numWholeTeam );
 
 	for ( i = 0, p = 0; i < base->numWholeTeam; i++ )
-		if ( base->teamMask & (1 << i) )
+		if ( base->teamMask[base->aircraftCurrent] & (1 << i) )
 			base->curTeam[p++] = base->wholeTeam[i];
 }
 
@@ -923,6 +925,7 @@ void CL_LoadTeamMultiplayer( char *filename )
 	baseCurrent = &bmBases[0];
 	ccs.numBases = 1;
 	baseCurrent->hiredMask = 0;
+	CL_NewAircraft( baseCurrent, "craft_dropship" );
 
 	// open file
 	f = fopen( filename, "rb" );
@@ -942,7 +945,6 @@ void CL_LoadTeamMultiplayer( char *filename )
 
 	// load the team
 	CL_LoadTeam( &sb, &bmBases[0], SAVE_FILE_VERSION );
-	baseCurrent->hiredMask = baseCurrent->teamMask;
 }
 
 

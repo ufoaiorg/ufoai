@@ -242,7 +242,9 @@ typedef struct aircraft_s
 	vec2_t	pos;	// actual pos on geoscape
 	int		point;
 	int		time;
-	int	teamSize;	// how many soldiers on board
+	int	id;	// id in base
+	int	*teamSize;	// how many soldiers on board
+				// pointer to base->numOnTeam[AIRCRAFT_ID]
 	// TODO
 	// xxx teamShape;    // TODO: shape of the soldier-area onboard.
 	char	model[MAX_QPATH];
@@ -265,7 +267,7 @@ typedef struct base_s
 	//the internal base-id
 	int	id;
 	char	title[MAX_VAR];
-	int	map[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
+	int	map[BASE_SIZE][BASE_SIZE];
 
 	qboolean founded;
 	vec2_t pos;
@@ -285,26 +287,23 @@ typedef struct base_s
 	// FIXME: make me a linked list (see cl_market.c aircraft selling)
 	aircraft_t	aircraft[MAX_AIRCRAFT];
 	int 	numAircraftInBase;
-	void*	aircraftCurrent;
+	int	aircraftCurrent;
 
-	int	posX[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
-	int	posY[BASE_SIZE][BASE_SIZE][MAX_BASE_LEVELS];
+	int	posX[BASE_SIZE][BASE_SIZE];
+	int	posY[BASE_SIZE][BASE_SIZE];
 
 	//FIXME: change building condition to base condition
 	float	condition;
 
 	baseStatus_t	baseStatus;
 
-	// which level to display?
-	int	baseLevel;
-
-	int		hiredMask;
-	int		teamMask;
+	int		hiredMask; // hired mask for all soldiers in base
+	int		teamMask[MAX_AIRCRAFT]; // assigned to a specific aircraft
 	int		deathMask;
 
 	int		numHired;
-	int		numOnTeam;
-	int		numWholeTeam;
+	int		numOnTeam[MAX_AIRCRAFT];
+	int		numWholeTeam; // available soldiers in this base
 
 	// the onconstruct value of the buliding
 	// building_radar increases the sensor width
@@ -318,7 +317,7 @@ typedef struct base_s
 	character_t	*curChr;
 
 	int		equipType;
-	int		nextUCN;
+	int		nextUCN; // unified character id (base dependent)
 
 	// needed if there is another buildingpart to build
 	struct building_s *buildingToBuild;
