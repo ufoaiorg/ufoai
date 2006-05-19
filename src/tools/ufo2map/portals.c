@@ -515,6 +515,7 @@ void CalcNodeBounds (node_t *node)
 	for (p = node->portals ; p ; p = p->next[s])
 	{
 		s = (p->nodes[1] == node);
+		if (!p->winding) continue;
 		for (i=0 ; i<p->winding->numpoints ; i++)
 			AddPointToBounds (p->winding->p[i], node->mins, node->maxs);
 	}
