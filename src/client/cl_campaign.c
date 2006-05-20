@@ -2384,11 +2384,11 @@ void CL_MapActionReset( void )
 
 	if ( interceptAircraft >= 0 )
 	{
-		if ( ! selMis )
-		{
-			baseCurrent->aircraftCurrent = interceptAircraft;
-			CL_AircraftReturnToBase( &baseCurrent->aircraft[interceptAircraft] );
-		}
+// 		if ( ! selMis )
+// 		{
+// 			baseCurrent->aircraftCurrent = interceptAircraft;
+// 			CL_AircraftReturnToBase( &baseCurrent->aircraft[interceptAircraft] );
+// 		}
 		interceptAircraft = -1; // reset selected aircraft
 	}
 	selMis = NULL; // reset selected mission
