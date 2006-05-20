@@ -1,0 +1,284 @@
+Index: radiant/filters.cpp
+===================================================================
+--- radiant/filters.cpp	(revision 70)
++++ radiant/filters.cpp	(working copy)
+@@ -165,6 +165,16 @@
+ 
+ void Filters_constructMenu(GtkMenu* menu_in_menu)
+ {
++  create_check_menu_item_with_mnemonic(menu_in_menu, "StepOn", "FilterStepOn");
++  create_check_menu_item_with_mnemonic(menu_in_menu, "Level1", "FilterLevel1");
++  create_check_menu_item_with_mnemonic(menu_in_menu, "Level2", "FilterLevel2");
++  create_check_menu_item_with_mnemonic(menu_in_menu, "Level3", "FilterLevel3");
++  create_check_menu_item_with_mnemonic(menu_in_menu, "Level4", "FilterLevel4");
++  create_check_menu_item_with_mnemonic(menu_in_menu, "Level5", "FilterLevel5");
++  create_check_menu_item_with_mnemonic(menu_in_menu, "Level6", "FilterLevel6");
++  create_check_menu_item_with_mnemonic(menu_in_menu, "Level7", "FilterLevel7");
++  create_check_menu_item_with_mnemonic(menu_in_menu, "Level8", "FilterLevel8");
++
+   create_check_menu_item_with_mnemonic(menu_in_menu, "World", "FilterWorldBrushes");
+   create_check_menu_item_with_mnemonic(menu_in_menu, "Entities", "FilterEntities");
+   if(g_pGameDescription->mGameType == "doom3")
+@@ -212,24 +222,34 @@
+ {
+   GlobalPreferenceSystem().registerPreference("SI_Exclude", SizeImportStringCaller(g_filters_globals.exclude), SizeExportStringCaller(g_filters_globals.exclude));
+ 
+-  add_filter_command(EXCLUDE_WORLD, "FilterWorldBrushes", Accelerator('1', (GdkModifierType)GDK_MOD1_MASK));
+-  add_filter_command(EXCLUDE_ENT, "FilterEntities", Accelerator('2', (GdkModifierType)GDK_MOD1_MASK));
++  add_filter_command(EXCLUDE_STEPON, "FilterStepOn", Accelerator('S', (GdkModifierType)GDK_MOD1_MASK));
++  add_filter_command(EXCLUDE_LEVEL1, "FilterLevel1", Accelerator('1', (GdkModifierType)GDK_MOD1_MASK));
++  add_filter_command(EXCLUDE_LEVEL2, "FilterLevel2", Accelerator('2', (GdkModifierType)GDK_MOD1_MASK));
++  add_filter_command(EXCLUDE_LEVEL3, "FilterLevel3", Accelerator('3', (GdkModifierType)GDK_MOD1_MASK));
++  add_filter_command(EXCLUDE_LEVEL4, "FilterLevel4", Accelerator('4', (GdkModifierType)GDK_MOD1_MASK));
++  add_filter_command(EXCLUDE_LEVEL5, "FilterLevel5", Accelerator('5', (GdkModifierType)GDK_MOD1_MASK));
++  add_filter_command(EXCLUDE_LEVEL6, "FilterLevel6", Accelerator('6', (GdkModifierType)GDK_MOD1_MASK));
++  add_filter_command(EXCLUDE_LEVEL7, "FilterLevel7", Accelerator('7', (GdkModifierType)GDK_MOD1_MASK));
++  add_filter_command(EXCLUDE_LEVEL8, "FilterLevel8", Accelerator('8', (GdkModifierType)GDK_MOD1_MASK));
++
++  add_filter_command(EXCLUDE_WORLD, "FilterWorldBrushes", accelerator_null());
++  add_filter_command(EXCLUDE_ENT, "FilterEntities", accelerator_null());
+   if(g_pGameDescription->mGameType == "doom3")
+   {
+-    add_filter_command(EXCLUDE_VISPORTALS, "FilterVisportals", Accelerator('3', (GdkModifierType)GDK_MOD1_MASK));
++    add_filter_command(EXCLUDE_VISPORTALS, "FilterVisportals", accelerator_null());
+   }
+   else
+   {
+-    add_filter_command(EXCLUDE_AREAPORTALS, "FilterAreaportals", Accelerator('3', (GdkModifierType)GDK_MOD1_MASK));
++    add_filter_command(EXCLUDE_AREAPORTALS, "FilterAreaportals", accelerator_null());
+   }
+-  add_filter_command(EXCLUDE_TRANSLUCENT, "FilterTranslucent", Accelerator('4', (GdkModifierType)GDK_MOD1_MASK));
+-  add_filter_command(EXCLUDE_LIQUIDS, "FilterLiquids", Accelerator('5', (GdkModifierType)GDK_MOD1_MASK));
+-  add_filter_command(EXCLUDE_CAULK, "FilterCaulk", Accelerator('6', (GdkModifierType)GDK_MOD1_MASK ));
+-  add_filter_command(EXCLUDE_CLIP, "FilterClips", Accelerator('7', (GdkModifierType)GDK_MOD1_MASK));
+-  add_filter_command(EXCLUDE_PATHS, "FilterPaths", Accelerator('8', (GdkModifierType)GDK_MOD1_MASK));
++  add_filter_command(EXCLUDE_TRANSLUCENT, "FilterTranslucent", accelerator_null());
++  add_filter_command(EXCLUDE_LIQUIDS, "FilterLiquids", accelerator_null());
++  add_filter_command(EXCLUDE_CAULK, "FilterCaulk", accelerator_null());
++  add_filter_command(EXCLUDE_CLIP, "FilterClips", accelerator_null());
++  add_filter_command(EXCLUDE_PATHS, "FilterPaths", accelerator_null());
+   if(g_pGameDescription->mGameType != "doom3")
+   {
+-    add_filter_command(EXCLUDE_CLUSTERPORTALS, "FilterClusterportals", Accelerator('9', (GdkModifierType)GDK_MOD1_MASK));
++    add_filter_command(EXCLUDE_CLUSTERPORTALS, "FilterClusterportals", accelerator_null());
+   }
+   add_filter_command(EXCLUDE_LIGHTS, "FilterLights", Accelerator('0', (GdkModifierType)GDK_MOD1_MASK));
+   add_filter_command(EXCLUDE_STRUCTURAL, "FilterStructural", Accelerator('D', (GdkModifierType)(GDK_SHIFT_MASK|GDK_CONTROL_MASK)));
+Index: radiant/brushmanip.cpp
+===================================================================
+--- radiant/brushmanip.cpp	(revision 70)
++++ radiant/brushmanip.cpp	(working copy)
+@@ -138,7 +138,7 @@
+   planepts[2][axis] = mins[axis];
+ 
+   brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
+- 
++
+   for (std::size_t i=0 ; i<sides ; ++i)
+   {
+     double sv = sin (i*3.14159265*2/sides);
+@@ -869,6 +869,19 @@
+   }
+ };
+ 
++class filter_face_level : public FaceFilter
++{
++  int m_contents;
++public:
++  filter_face_level(int contents) : m_contents(contents)
++  {
++  }
++  bool filter(const Face& face) const
++  {
++    return (face.getShader().m_flags.m_contentFlags & m_contents) == 0;
++  }
++};
++
+ class filter_face_contents : public FaceFilter
+ {
+   int m_contents;
+@@ -914,7 +927,7 @@
+     bool filtered;
+     Brush_forEachFace(brush, FaceFilterAny(m_filter, filtered));
+     return filtered;
+-  }   
++  }
+ };
+ 
+ class FaceFilterAll
+@@ -947,7 +960,7 @@
+     bool filtered;
+     Brush_forEachFace(brush, FaceFilterAll(m_filter, filtered));
+     return filtered;
+-  }   
++  }
+ };
+ 
+ 
+@@ -999,7 +1012,34 @@
+ filter_face_contents g_filter_face_detail(CONTENTS_DETAIL);
+ filter_brush_all_faces g_filter_brush_detail(&g_filter_face_detail);
+ 
++filter_face_level g_filter_face_level1(CONTENTS_LEVEL1);
++filter_brush_all_faces g_filter_brush_level1(&g_filter_face_level1);
+ 
++filter_face_level g_filter_face_level2(CONTENTS_LEVEL2);
++filter_brush_all_faces g_filter_brush_level2(&g_filter_face_level2);
++
++filter_face_level g_filter_face_level3(CONTENTS_LEVEL3);
++filter_brush_all_faces g_filter_brush_level3(&g_filter_face_level3);
++
++filter_face_level g_filter_face_level4(CONTENTS_LEVEL4);
++filter_brush_all_faces g_filter_brush_level4(&g_filter_face_level4);
++
++filter_face_level g_filter_face_level5(CONTENTS_LEVEL5);
++filter_brush_all_faces g_filter_brush_level5(&g_filter_face_level5);
++
++filter_face_level g_filter_face_level6(CONTENTS_LEVEL6);
++filter_brush_all_faces g_filter_brush_level6(&g_filter_face_level6);
++
++filter_face_level g_filter_face_level7(CONTENTS_LEVEL7);
++filter_brush_all_faces g_filter_brush_level7(&g_filter_face_level7);
++
++filter_face_level g_filter_face_level8(CONTENTS_LEVEL8);
++filter_brush_all_faces g_filter_brush_level8(&g_filter_face_level8);
++
++filter_face_contents g_filter_face_stepon(CONTENTS_STEPON);
++filter_brush_all_faces g_filter_brush_stepon(&g_filter_face_stepon);
++
++
+ void BrushFilters_construct()
+ {
+   add_brush_filter(g_filter_brush_clip, EXCLUDE_CLIP);
+@@ -1019,6 +1059,15 @@
+   add_brush_filter(g_filter_brush_detail, EXCLUDE_DETAILS);
+   add_brush_filter(g_filter_brush_detail, EXCLUDE_STRUCTURAL, true);
+   add_brush_filter(g_filter_brush_lightgrid, EXCLUDE_LIGHTGRID);
++  add_brush_filter(g_filter_brush_level1, EXCLUDE_LEVEL1);
++  add_brush_filter(g_filter_brush_level2, EXCLUDE_LEVEL2);
++  add_brush_filter(g_filter_brush_level3, EXCLUDE_LEVEL3);
++  add_brush_filter(g_filter_brush_level4, EXCLUDE_LEVEL4);
++  add_brush_filter(g_filter_brush_level5, EXCLUDE_LEVEL5);
++  add_brush_filter(g_filter_brush_level6, EXCLUDE_LEVEL6);
++  add_brush_filter(g_filter_brush_level7, EXCLUDE_LEVEL7);
++  add_brush_filter(g_filter_brush_level8, EXCLUDE_LEVEL8);
++  add_brush_filter(g_filter_brush_stepon, EXCLUDE_STEPON);
+ }
+ 
+ #if 0
+@@ -1146,7 +1195,7 @@
+     test_normal(normalise(1, 1, 0));
+     test_normal(normalise(1, 0, 1));
+     test_normal(normalise(0, 1, 1));
+-    
++
+     test_normal(normalise(10000, 10000, 10000));
+     test_normal(normalise(10000, 10000, 10001));
+     test_normal(normalise(10000, 10000, 10002));
+Index: radiant/brush.h
+===================================================================
+--- radiant/brush.h	(revision 70)
++++ radiant/brush.h	(working copy)
+@@ -67,6 +67,16 @@
+ 
+ #define CONTENTS_DETAIL 0x8000000
+ 
++// ufo:ai
++#define CONTENTS_LEVEL8 0x8000
++#define CONTENTS_LEVEL7 0x4000
++#define CONTENTS_LEVEL6 0x2000
++#define CONTENTS_LEVEL5 0x1000
++#define CONTENTS_LEVEL4 0x0800
++#define CONTENTS_LEVEL3 0x0400
++#define CONTENTS_LEVEL2 0x0200
++#define CONTENTS_LEVEL1 0x0100
++#define CONTENTS_STEPON 0x40000000
+ 
+ enum EBrushType
+ {
+@@ -1208,7 +1218,7 @@
+     m_observer->planeChanged();
+   }
+ 
+-  /// \brief Reverts the transformable state of the brush to identity. 
++  /// \brief Reverts the transformable state of the brush to identity.
+   void revertTransform()
+   {
+     m_planeTransformed = m_plane;
+@@ -1710,7 +1720,7 @@
+   mutable bool m_transformChanged; // transform evaluation required
+   // ----
+ 
+-public:  
++public:
+   STRING_CONSTANT(Name, "Brush");
+ 
+   Callback m_lightsChanged;
+@@ -2275,7 +2285,7 @@
+       {
+         const Face& clip = *m_faces[i];
+ 
+-        if(plane3_equal(clip.plane3(), plane) 
++        if(plane3_equal(clip.plane3(), plane)
+           || !plane3_valid(clip.plane3()) || !plane_unique(i)
+           || plane3_opposing(plane, clip.plane3()))
+         {
+@@ -2459,7 +2469,7 @@
+     for (std::size_t i = 0;  i < m_faces.size(); ++i)
+     {
+       Winding& degen = m_faces[i]->getWinding();
+-      
++
+       if(degen.numpoints == 2)
+       {
+ #if BRUSH_DEGENERATE_DEBUG
+@@ -2914,12 +2924,12 @@
+       m_points.push_back(pointvertex_for_windingpoint(point, colour_selected));
+     }
+   };
+-  
++
+   void iterate_selected(RenderablePointVector& points) const
+   {
+     SelectedComponents_foreach(RenderablePointVectorPushBack(points));
+   }
+-  
++
+   bool intersectVolume(const VolumeTest& volume, const Matrix4& localToWorld) const
+   {
+     return m_face->intersectVolume(volume, localToWorld);
+@@ -3716,12 +3726,12 @@
+   void renderCommon(Renderer& renderer, const VolumeTest& volume) const
+   {
+     bool componentMode = GlobalSelectionSystem().Mode() == SelectionSystem::eComponent;
+-    
++
+     if(componentMode && isSelected())
+     {
+       renderComponents(renderer, volume);
+     }
+-    
++
+     if(parentSelected())
+     {
+       if(!componentMode)
+Index: include/ifilter.h
+===================================================================
+--- include/ifilter.h	(revision 70)
++++ include/ifilter.h	(working copy)
+@@ -46,6 +46,15 @@
+    EXCLUDE_STRUCTURAL       = 0x00020000,
+    EXCLUDE_BOTCLIP          = 0x00040000,
+    EXCLUDE_VISPORTALS       = 0x00080000,
++   EXCLUDE_LEVEL1           = 0x00100000,
++   EXCLUDE_LEVEL2           = 0x00200000,
++   EXCLUDE_LEVEL3           = 0x00400000,
++   EXCLUDE_LEVEL4           = 0x00800000,
++   EXCLUDE_LEVEL5           = 0x01000000,
++   EXCLUDE_LEVEL6           = 0x02000000,
++   EXCLUDE_LEVEL7           = 0x04000000,
++   EXCLUDE_LEVEL8           = 0x08000000,
++   EXCLUDE_STEPON           = 0x10000000
+ };
+ 
+ class Filter
