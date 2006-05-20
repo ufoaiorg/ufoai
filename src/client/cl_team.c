@@ -1089,7 +1089,6 @@ void CL_ParseResults( sizebuf_t *buf )
 	byte	num_alive[MAX_TEAMS];
 	byte	num_kills[MAX_TEAMS][MAX_TEAMS];
 	byte	winner, we;
-	char	*singleEnemy, *multiEnemy;
 	int		i, j, num, res, kills;
 
 	// get number of teams
@@ -1100,8 +1099,6 @@ void CL_ParseResults( sizebuf_t *buf )
 	// get winning team
 	winner = MSG_ReadByte( buf );
 	we = cls.team;
-	singleEnemy = curCampaign ? _("Alien") : _("Enemy");
-	multiEnemy = curCampaign ? _("Aliens") : _("Enemies");
 
 	// get spawn and alive count
 	for ( i = 0; i < num; i++ )
@@ -1125,9 +1122,15 @@ void CL_ParseResults( sizebuf_t *buf )
 	// alien stats
 	for ( i = 1, kills = 0; i < num; i++ ) kills += (i == we) ? 0 : num_kills[we][i];
 	// needs to be cleared and then append to it
-	Com_sprintf( resultText, MAX_MENUTEXTLEN, _("%s killed\t%i\n"), multiEnemy, kills );
+	if ( curCampaign )
+		Com_sprintf( resultText, MAX_MENUTEXTLEN, _("Aliens killed\t%i\n"), kills );
+	else
+		Com_sprintf( resultText, MAX_MENUTEXTLEN, _("Enemies killed\t%i\n"), kills );
 	for ( i = 1, res = 0; i < num; i++ ) res += (i == we) ? 0 : num_alive[i];
-	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("%s survivors\t%i\n\n"), singleEnemy, res ) );
+	if ( curCampaign )
+		Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Alien survivors\t%i\n\n"), res ) );
+	else
+		Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Enemy survivors\t%i\n\n"), res ) );
 
 	// team stats
 	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Team losses\t%i\n"), num_spawned[we] - num_alive[we] ) );
@@ -1143,7 +1146,10 @@ void CL_ParseResults( sizebuf_t *buf )
 
 	// civilian stats
 	for ( i = 1, res = 0; i < num; i++ ) res += (i == we) ? 0 : num_kills[i][TEAM_CIVILIAN];
-	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians killed by the %s\t%i\n"), multiEnemy, res ) );
+	if ( curCampaign )
+		Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians killed by the Aliens\t%i\n"), res ) );
+	else
+		Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians killed by the Enemies\t%i\n"), res ) );
 	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians killed by your Team\t%i\n"), num_kills[we][TEAM_CIVILIAN] ) );
 	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians saved\t%i\n\n\n"), num_alive[TEAM_CIVILIAN] ) );
 
