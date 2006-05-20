@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+<?xml version="1.0" encoding="shift_jis"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="ref_gl"
 	ProjectGUID="{7CC842F1-9F48-4E10-8477-98A18533260F}"
 	RootNamespace="ref_gl"
@@ -335,7 +335,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF;SHADERS;HAVE_GETTEXT"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF;SHADERS;Q2_MMX_ENABLED"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
@@ -512,6 +512,10 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\gl_font.c"
+				>
 			</File>
 			<File
 				RelativePath="gl_image.c"
@@ -1028,6 +1032,14 @@
 			</File>
 			<File
 				RelativePath="anormtab.h"
+				>
+			</File>
+			<File
+				RelativePath=".\gl_arb_shader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\gl_font.h"
 				>
 			</File>
 			<File
