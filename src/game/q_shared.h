@@ -235,6 +235,8 @@ extern long Q_ftol( float f );
 #define VectorDistSqr(a,b)		((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])+(b[2]-a[2])*(b[2]-a[2]))
 #define VectorDist(a,b)			(sqrt((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])+(b[2]-a[2])*(b[2]-a[2])))
 #define VectorLengthSqr(a)		(a[0]*a[0]+a[1]*a[1]+a[2]*a[2])
+#define VectorNotEmpty(a)			(a[0]||a[1]||a[2])
+#define Vector4NotEmpty(a)			(a[0]||a[1]||a[2]||a[3])
 
 #define PosAddDV(p,dv)			(p[0]+=dvecs[dv&7][0], p[1]+=dvecs[dv&7][1], p[2]=(dv>>3)&7)
 int AngleToDV( int angle );
