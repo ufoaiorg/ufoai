@@ -92,6 +92,7 @@ static void CL_BuyType( void )
 {
 	objDef_t	*od;
 	aircraft_t	*air;
+	technology_t	*tech;
 	int		i, j, num, storage, supply;
 	char	str[MAX_VAR];
 
@@ -108,25 +109,28 @@ static void CL_BuyType( void )
 	{
 		// get item list
 		for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
-			if ( RS_ItemIsResearched(od->kurz) || RS_ItemCollected(od->kurz) ) {
-    			if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) )
-    			{
-    				Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );
-    				Cvar_Set( str, _(od->name) );
-    
-    				Q_strncpyz( str, va("mn_storage%i", j), MAX_VAR );
-    				Cvar_SetValue( str, ccs.eCampaign.num[i] );
-    
-    				Q_strncpyz( str, va("mn_supply%i", j), MAX_VAR );
-    				Cvar_SetValue( str, ccs.eMarket.num[i] );
-    
-    				Q_strncpyz( str, va("mn_price%i", j), MAX_VAR );
-    				Cvar_Set( str, va( "%i c", od->price ) );
-    
-    				buyList[j] = i;
-    				j++;
-    			}
+		{
+			tech = RS_GetTechByID(od->kurz);
+			if ( !tech || RS_Collected_(tech) || RS_IsResearched_(tech) ) {
+				if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) )
+				{
+					Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );
+					Cvar_Set( str, _(od->name) );
+
+					Q_strncpyz( str, va("mn_storage%i", j), MAX_VAR );
+					Cvar_SetValue( str, ccs.eCampaign.num[i] );
+
+					Q_strncpyz( str, va("mn_supply%i", j), MAX_VAR );
+					Cvar_SetValue( str, ccs.eMarket.num[i] );
+
+					Q_strncpyz( str, va("mn_price%i", j), MAX_VAR );
+					Cvar_Set( str, va( "%i c", od->price ) );
+
+					buyList[j] = i;
+					j++;
+				}
 			} // is researched OR collected
+		}
 	}
 	else if ( num == NUM_BUYTYPES ) // aircraft
 	{

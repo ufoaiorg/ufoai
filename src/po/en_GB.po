@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-05-20 17:40+0200\n"
+"POT-Creation-Date: 2006-05-21 11:13+0200\n"
 "PO-Revision-Date: 2006-05-20 17:39+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -474,6 +474,11 @@ msgstr "Options"
 #: ../base/ufos/menu_geoscape.ufo:251
 msgid "Open up messages"
 msgstr "Open up messages"
+
+#: ../base/ufos/menu_geoscape.ufo:314
+#, fuzzy
+msgid "Ready"
+msgstr "Retry"
 
 #: ../base/ufos/menu_geoscape.ufo:321
 msgid "Aircraft reached desired location - what to do?"
@@ -2292,11 +2297,16 @@ msgstr "Tachyon Sniper Rifle"
 msgid "Tachyon Sniper Charge"
 msgstr "Tachyon Sniper Charge"
 
-#: client/cl_actor.c:295
+#: client/cl_actor.c:65
+#, c-format
+msgid "Rank: %s"
+msgstr ""
+
+#: client/cl_actor.c:294
 msgid "Currently panics!\n"
 msgstr "Currently panics!\n"
 
-#: client/cl_actor.c:302
+#: client/cl_actor.c:301
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -2304,7 +2314,7 @@ msgstr ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
 
-#: client/cl_actor.c:321
+#: client/cl_actor.c:320
 #, c-format
 msgid ""
 "%s\n"
@@ -2313,7 +2323,7 @@ msgstr ""
 "%s\n"
 "(empty)\n"
 
-#: client/cl_actor.c:334
+#: client/cl_actor.c:333
 #, c-format
 msgid ""
 "Health\t%i\n"
@@ -2322,20 +2332,20 @@ msgstr ""
 "Health\t%i\n"
 "Move\t%i\n"
 
-#: client/cl_actor.c:339
+#: client/cl_actor.c:338
 #, c-format
 msgid "Health\t%i\n"
 msgstr "Health\t%i\n"
 
-#: client/cl_actor.c:652
+#: client/cl_actor.c:651
 msgid "Nobody selected\n"
 msgstr "Nobody selected\n"
 
-#: client/cl_actor.c:665
+#: client/cl_actor.c:664
 msgid "This isn't your round\n"
 msgstr "This isn't your round\n"
 
-#: client/cl_actor.c:799
+#: client/cl_actor.c:798
 msgid ""
 "You cannot load this unknown item.\n"
 "You need to research it first.\n"
@@ -2343,7 +2353,7 @@ msgstr ""
 "You cannot load this unknown item.\n"
 "You need to research it first.\n"
 
-#: client/cl_actor.c:1264
+#: client/cl_actor.c:1263
 msgid "Your round started!\n"
 msgstr "Your round started!\n"
 
@@ -2399,11 +2409,11 @@ msgid "Not enough credits to build this\n"
 msgstr "Not enough credits to build this\n"
 
 #: client/cl_basemanagement.c:291 client/cl_basemanagement.c:2156
-#: client/cl_campaign.c:347 client/cl_campaign.c:622 client/cl_campaign.c:668
-#: client/cl_campaign.c:1006 client/cl_campaign.c:1091
-#: client/cl_campaign.c:1107 client/cl_campaign.c:1261
-#: client/cl_campaign.c:2083 client/cl_campaign.c:2113
-#: client/cl_campaign.c:2115 client/cl_research.c:489 client/cl_research.c:601
+#: client/cl_campaign.c:347 client/cl_campaign.c:621 client/cl_campaign.c:667
+#: client/cl_campaign.c:1005 client/cl_campaign.c:1090
+#: client/cl_campaign.c:1106 client/cl_campaign.c:1260
+#: client/cl_campaign.c:2085 client/cl_campaign.c:2115
+#: client/cl_campaign.c:2117 client/cl_research.c:489 client/cl_research.c:601
 #: client/cl_research.c:604 client/cl_research.c:608 client/cl_research.c:625
 #: client/cl_research.c:657 client/cl_research.c:661 client/cl_research.c:790
 msgid "Notice"
@@ -2521,12 +2531,12 @@ msgstr "Transportmission"
 msgid "Returning to homebase"
 msgstr "Returning to homebase"
 
-#: client/cl_campaign.c:570 client/cl_ufopedia.c:54 client/cl_ufopedia.c:82
+#: client/cl_campaign.c:569 client/cl_ufopedia.c:54 client/cl_ufopedia.c:82
 #: client/cl_ufopedia.c:83
 msgid "None"
 msgstr "None"
 
-#: client/cl_campaign.c:570
+#: client/cl_campaign.c:569
 #, c-format
 msgid ""
 "Speed:\t%.0f\n"
@@ -2539,56 +2549,56 @@ msgstr ""
 "Weapon:\t%s\n"
 "Shield:\t%s\n"
 
-#: client/cl_campaign.c:621
+#: client/cl_campaign.c:620
 #, c-format
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "You've got a new aircraft (a %s) in base %s"
 
-#: client/cl_campaign.c:668
+#: client/cl_campaign.c:667
 msgid "Could not set up your base at this location"
 msgstr "Could not set up your base at this location"
 
-#: client/cl_campaign.c:848
+#: client/cl_campaign.c:847
 #, c-format
 msgid "Your base %s is under attack."
 msgstr "Your base %s is under attack."
 
-#: client/cl_campaign.c:849
+#: client/cl_campaign.c:848
 msgid "Baseattack"
 msgstr "Baseattack"
 
-#: client/cl_campaign.c:861
+#: client/cl_campaign.c:860
 msgid "Alien activity"
 msgstr "Alien activity"
 
-#: client/cl_campaign.c:861
+#: client/cl_campaign.c:860
 msgid "Alien activity has been reported."
 msgstr "Alien activity has been reported."
 
-#: client/cl_campaign.c:1006
+#: client/cl_campaign.c:1005
 msgid "Assign a team to aircraft"
 msgstr "Assign a team to aircraft"
 
-#: client/cl_campaign.c:1090
+#: client/cl_campaign.c:1089
 #, c-format
 msgid "The mission expired and %i civilians died\\You've lost %i credits."
 msgstr "The mission expired and %i civilians died\\You've lost %i credits."
 
-#: client/cl_campaign.c:1107
+#: client/cl_campaign.c:1106
 msgid "Your dropship has low fuel and returns to base"
 msgstr "Your dropship has low fuel and returns to base"
 
-#: client/cl_campaign.c:1260
+#: client/cl_campaign.c:1259
 #, c-format
 msgid "Gained %i credits from nation %s"
 msgstr "Gained %i credits from nation %s"
 
-#: client/cl_campaign.c:1305
+#: client/cl_campaign.c:1304
 #, c-format
 msgid "%02i:%i%i"
 msgstr "%02i:%i%i"
 
-#: client/cl_campaign.c:1412
+#: client/cl_campaign.c:1411
 #, c-format
 msgid ""
 "Missions:\n"
@@ -2601,49 +2611,49 @@ msgstr ""
 "Bases:\n"
 "build:\t%i\tattacked:\t%i\n"
 
-#: client/cl_campaign.c:2011
+#: client/cl_campaign.c:2013
 msgid "Assemble or load a team"
 msgstr "Assemble or load a team"
 
-#: client/cl_campaign.c:2011
+#: client/cl_campaign.c:2013
 msgid "Note"
 msgstr "Note"
 
-#: client/cl_campaign.c:2083
+#: client/cl_campaign.c:2085
 msgid "Your dropship is not near the landingzone"
 msgstr "Your dropship is not near the landingzone"
 
-#: client/cl_campaign.c:2113
+#: client/cl_campaign.c:2115
 msgid "You've won the battle"
 msgstr "You've won the battle"
 
-#: client/cl_campaign.c:2115
+#: client/cl_campaign.c:2117
 msgid "You've lost the battle"
 msgstr "You've lost the battle"
 
-#: client/cl_campaign.c:2264
+#: client/cl_campaign.c:2266
 #, c-format
 msgid "%s (%s) died on his last mission.\n"
 msgstr "%s (%s) died on his last mission.\n"
 
-#: client/cl_campaign.c:2265
+#: client/cl_campaign.c:2267
 msgid "Soldier died"
 msgstr "Soldier died"
 
-#: client/cl_campaign.c:2291
+#: client/cl_campaign.c:2293
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s has been promoted to %s.\n"
 
-#: client/cl_campaign.c:2292
+#: client/cl_campaign.c:2294
 msgid "Soldier promoted"
 msgstr "Soldier promoted"
 
-#: client/cl_main.c:365 client/cl_main.c:697 client/cl_menu.c:362
+#: client/cl_main.c:365 client/cl_main.c:697 client/cl_menu.c:367
 msgid "Assemble a team first"
 msgstr "Assemble a team first"
 
-#: client/cl_main.c:365 client/cl_main.c:697 client/cl_menu.c:362
+#: client/cl_main.c:365 client/cl_main.c:697 client/cl_menu.c:367
 msgid "Error"
 msgstr "Error"
 
@@ -2651,23 +2661,23 @@ msgstr "Error"
 msgid "unnamed"
 msgstr "unnamed"
 
-#: client/cl_menu.c:371
+#: client/cl_menu.c:376
 msgid "Set playersoldiers lower than teamsoldiers"
 msgstr "Set playersoldiers lower than teamsoldiers"
 
-#: client/cl_menu.c:371
+#: client/cl_menu.c:376
 msgid "Settings doesn't make sense"
 msgstr "Settings doesn't make sense"
 
-#: client/cl_menu.c:1496
+#: client/cl_menu.c:1501
 msgid "Night"
 msgstr "Night"
 
-#: client/cl_menu.c:1497
+#: client/cl_menu.c:1502
 msgid "Day"
 msgstr "Day"
 
-#: client/cl_menu.c:2110 client/cl_menu.c:2143
+#: client/cl_menu.c:2131 client/cl_menu.c:2164
 msgid ""
 "Select the desired location of the\n"
 "new base on the map.\n"
@@ -2675,7 +2685,7 @@ msgstr ""
 "Select the desired location of the\n"
 "new base on the map.\n"
 
-#: client/cl_menu.c:2114 client/cl_menu.c:2147
+#: client/cl_menu.c:2135 client/cl_menu.c:2168
 msgid ""
 "Aliens are attacking our base\n"
 "at this very moment.\n"
@@ -2683,7 +2693,7 @@ msgstr ""
 "Aliens are attacking our base\n"
 "at this very moment.\n"
 
-#: client/cl_menu.c:2118 client/cl_menu.c:2151
+#: client/cl_menu.c:2139 client/cl_menu.c:2172
 msgid "Select ufo or mission on map\n"
 msgstr "Select ufo or mission on map\n"
 
@@ -2878,47 +2888,45 @@ msgstr "Unknown - need to research this"
 msgid "NewTeam"
 msgstr "NewTeam"
 
-#: client/cl_team.c:1103 game/g_ai.c:455
-msgid "Alien"
-msgstr "Alien"
-
-#: client/cl_team.c:1103
-msgid "Enemy"
-msgstr "Enemy"
-
-#: client/cl_team.c:1104
-msgid "Aliens"
-msgstr "Aliens"
-
-#: client/cl_team.c:1104
-msgid "Enemies"
-msgstr "Enemies"
+#: client/cl_team.c:1126
+#, fuzzy, c-format
+msgid "Aliens killed\t%i\n"
+msgstr "Aliens killed\t%i c\n"
 
 #: client/cl_team.c:1128
-#, c-format
-msgid "%s killed\t%i\n"
+#, fuzzy, c-format
+msgid "Enemies killed\t%i\n"
 msgstr "%s killed\t%i\n"
 
-#: client/cl_team.c:1130
-#, c-format
+#: client/cl_team.c:1131
+#, fuzzy, c-format
 msgid ""
-"%s survivors\t%i\n"
+"Alien survivors\t%i\n"
 "\n"
 msgstr ""
-"%s survivors\t%i\n"
+"Team survivors\t%i\n"
 "\n"
 
 #: client/cl_team.c:1133
+#, fuzzy, c-format
+msgid ""
+"Enemy survivors\t%i\n"
+"\n"
+msgstr ""
+"Team survivors\t%i\n"
+"\n"
+
+#: client/cl_team.c:1136
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Team losses\t%i\n"
 
-#: client/cl_team.c:1134
+#: client/cl_team.c:1137
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Friendly fire losses\t%i\n"
 
-#: client/cl_team.c:1135
+#: client/cl_team.c:1138
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -2927,17 +2935,22 @@ msgstr ""
 "Team survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1146
-#, c-format
-msgid "Civilians killed by the %s\t%i\n"
+#: client/cl_team.c:1150
+#, fuzzy, c-format
+msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civilians killed by the %s\t%i\n"
 
-#: client/cl_team.c:1147
+#: client/cl_team.c:1152
+#, fuzzy, c-format
+msgid "Civilians killed by the Enemies\t%i\n"
+msgstr "Civilians killed by the %s\t%i\n"
+
+#: client/cl_team.c:1153
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civilians killed by your Team\t%i\n"
 
-#: client/cl_team.c:1148
+#: client/cl_team.c:1154
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -2948,22 +2961,22 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1172
+#: client/cl_team.c:1178
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr "Collected alien technology\t%i c\n"
 
-#: client/cl_team.c:1177
+#: client/cl_team.c:1183
 #, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr "Aliens killed\t%i c\n"
 
-#: client/cl_team.c:1182
+#: client/cl_team.c:1188
 #, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr "Civilians saved\t%i c\n"
 
-#: client/cl_team.c:1185
+#: client/cl_team.c:1191
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -2974,7 +2987,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1189
+#: client/cl_team.c:1195
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr "New Recruits\t%i\n"
@@ -3027,9 +3040,13 @@ msgstr ""
 "Weapon:\t%s\n"
 "Shield:\t%s\n"
 
-#: client/cl_ufopedia.c:235
+#: client/cl_ufopedia.c:240
 msgid "Ufopedia Content"
 msgstr "Ufopedia Content"
+
+#: game/g_ai.c:455
+msgid "Alien"
+msgstr "Alien"
 
 #: game/g_client.c:597
 msgid "Can't perform action - this isn't your round!\n"
@@ -3102,3 +3119,19 @@ msgstr "Can't perform action - no ammo!\n"
 #: game/g_client.c:1983
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Can't perform action - not enough ammo!\n"
+
+#~ msgid "Enemy"
+#~ msgstr "Enemy"
+
+#~ msgid "Aliens"
+#~ msgstr "Aliens"
+
+#~ msgid "Enemies"
+#~ msgstr "Enemies"
+
+#~ msgid ""
+#~ "%s survivors\t%i\n"
+#~ "\n"
+#~ msgstr ""
+#~ "%s survivors\t%i\n"
+#~ "\n"

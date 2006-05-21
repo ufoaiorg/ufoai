@@ -96,8 +96,10 @@ void MN_ResetResearch( void );
 void CL_CheckResearchStatus( void );
 void RS_UpdateData ( void );
 void RS_ParseTechnologies ( char* title, char** text );
-byte RS_ItemIsResearched(char *id_provided );
-byte RS_TechIsResearched(char *id );
+qboolean RS_ItemIsResearched(char *id_provided );
+qboolean RS_TechIsResearched(char *id );
+qboolean RS_IsResearched_ ( technology_t* t );
+qboolean RS_Collected_ ( technology_t* t );
 int RS_ItemCollected(char *id_provided );
 
 void RS_SaveTech( sizebuf_t *sb );

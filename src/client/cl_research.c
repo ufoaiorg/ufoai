@@ -36,7 +36,7 @@ TODO: comment on used globasl variables.
 #include "client.h"
 
 void RS_GetFirstRequired( char *id,  stringlist_t *required);
-byte RS_TechIsResearchable(char *id );
+qboolean RS_TechIsResearchable(char *id );
 
 technology_t technologies[MAX_TECHNOLOGIES];	// A global listof _all_ technologies (see cl_research.h)
 technology_t technologies_skeleton[MAX_TECHNOLOGIES];	// A local listof _all_ technologies  that are used to initialise the global list on new/loaded game.
@@ -1219,6 +1219,18 @@ void RS_GetRequired( char *id, stringlist_t *required)
 }
 
 /*======================
+RS_TechIsResearched
+
+call this function if you already hold a tech pointer
+======================*/
+qboolean RS_IsResearched_ ( technology_t* t )
+{
+	if ( t->statusResearch == RS_FINISH )
+		return qtrue;
+	return qfalse;
+}
+
+/*======================
 RS_ItemIsResearched
 
 Checks if the item (as listed in "provides") has been researched
@@ -1229,20 +1241,27 @@ IN
 OUT
 	boolean	RS_ItemIsResearched
 ======================*/
-byte RS_ItemIsResearched(char *id_provided )
+qboolean RS_ItemIsResearched(char *id_provided )
 {
 	int i;
 	technology_t *tech = NULL;
 
 	for ( i=0; i < numTechnologies; i++ ) {
 		tech = &technologies[i];
-		if ( !Q_strncmp( id_provided, tech->provides, MAX_VAR ) ) {	// provided item found
-			if ( tech->statusResearch == RS_FINISH )
-				return qtrue;
-			return qfalse;
-		}
+		if ( !Q_strncmp( id_provided, tech->provides, MAX_VAR ) )	// provided item found
+			return RS_IsResearched_( tech );
 	}
 	return qtrue;	// no research needed
+}
+
+/*======================
+RS_ItemCollected
+
+call this function if you already hold a tech pointer
+======================*/
+qboolean RS_Collected_ ( technology_t* t )
+{
+	return t->statusCollected;
 }
 
 /*======================
@@ -1265,7 +1284,7 @@ int RS_ItemCollected(char *id_provided )
 
 	for ( ; i < numTechnologies; i++ ) {
 		if ( !Q_strncmp( (char*)id_provided, technologies[i].provides, MAX_VAR ) )
-			return technologies[i].statusCollected;
+			return RS_Collected_( &technologies[i] );
 	}
 	Com_Printf("RS_ItemCollected: \"%s\" <- research item that 'provides' this item not found.\n", id_provided );
 	return 0;
@@ -1282,12 +1301,12 @@ IN
 OUT
 	boolean	RS_TechIsResearched
 ======================*/
-byte RS_TechIsResearched(char *id )
+qboolean RS_TechIsResearched(char *id )
 {
 	technology_t *tech = NULL;
 
 	if ( !id ) return qfalse;
-	
+
 	if ( !Q_strncmp( id, "initial", 7 )
 	|| !Q_strncmp( id, "nothing", 7 ) )
 		return qtrue;	// initial and nothing are always researched. as they are just starting "technologys" that are never used.
@@ -1316,7 +1335,7 @@ IN
 OUT
 	boolean	RS_TechIsResearchable
 ======================*/
-byte RS_TechIsResearchable(char *id )
+qboolean RS_TechIsResearchable(char *id )
 {
 	int i;
 	technology_t *tech = NULL;
