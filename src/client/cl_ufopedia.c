@@ -49,15 +49,13 @@ void UP_BuildingDescription ( technology_t* t )
 		if ( b->depends )
 			depends = B_GetBuilding ( b->depends );
 
-		Com_sprintf(upBuffer, MAX_UPTEXT,
-			_("Depends:\t%s\nMore than once:\t%s\nBuildtime:\t%i day(s)\nFixcosts:\t%i c\nRunning costs:\t%i c\nEnergy:\t%i\nWorkercosts:\t%i c\n"),
-			depends ? depends->title : _("None"),
-			b->moreThanOne ? _("Yes") : _("No"),
-			(int)b->buildTime,
-			(int)b->fixCosts,
-			(int)b->varCosts,
-			(int)b->energy,
-			(int)b->workerCosts );
+		Com_sprintf(upBuffer, MAX_UPTEXT, _("Depends:\t%s\n"), depends ? depends->title : _("None") );
+		Q_strcat(upBuffer, MAX_UPTEXT, va(_("More than once:\t%s\n"), b->moreThanOne ? _("Yes") : _("No") ) );
+		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Buildtime:\t%i day(s)\n"), (int)b->buildTime ) );
+		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Fixcosts:\t%i c\n"), (int)b->fixCosts ) );
+		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Running costs:\t%i c\n"), (int)b->varCosts ) );
+		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Energy:\t%i\n"), (int)b->energy ) );
+		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Workercosts:\t%i c\n"), (int)b->workerCosts ) );
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
 }
@@ -75,12 +73,10 @@ void UP_AircraftDescription ( technology_t* t )
 	{
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find aircraft") );
 	} else {
-		Com_sprintf(upBuffer, MAX_UPTEXT,
-			_("Speed:\t%.0f\nFuel:\t%i\nWeapon:\t%s\nShield:\t%s\n"),
-			air->speed,
-			air->fuelSize,
-			air->weapon ? air->weapon->name : _("None"),
-			air->shield ? air->shield->name : _("None") );
+		Com_sprintf(upBuffer, MAX_UPTEXT, _("Speed:\t%.0f\n"), air->speed );
+		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Fuel:\t%i\n"), air->fuelSize ) );
+		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Weapon:\t%s\n"), air->weapon ? air->weapon->name : _("None") ) );
+		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Shield:\t%s\n"), air->shield ? air->shield->name : _("None") ) );
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
 }
