@@ -1629,11 +1629,9 @@ FS_FileExists
 */
 qboolean FS_FileExists (char *filename)
 {
-	FILE	*f;
-
-	f = fopen (filename, "r");
-	if (!f)
-		return qfalse;
-	fclose (f);
-	return qtrue;
+#ifdef _WIN32
+	return (_access(filename, 00) == 0);
+#else
+	return (access(filename, R_OK) == 0);
+#endif
 }
