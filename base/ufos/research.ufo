@@ -936,8 +936,8 @@ tech rs_alien_ortnok_notes
 	researched	false
 	needscollected	true
 
-	// TODO should come from alien-definition and be a complete model
-	mdl_top	models/aliens/ortnok/body01.md2
+	// menuModel - see models.ufo
+	mdl_top	alien_ortnok
 }
 
 tech rs_alien_ortnok_autopsy
@@ -952,6 +952,9 @@ tech rs_alien_ortnok_autopsy
 	time	60
 	researched	false
 	needscollected	true
+
+	// menuModel - see models.ufo
+	mdl_top	alien_ortnok
 
 	//TODO: autopsy image
 }
@@ -968,6 +971,9 @@ tech rs_alien_ortnok_xenobiology
 	time	90
 	researched	false
 	needscollected	true
+
+	// menuModel - see models.ufo
+	mdl_top	alien_ortnok
 }
 
 tech rs_alien_ortnok_interrogation
@@ -982,9 +988,31 @@ tech rs_alien_ortnok_interrogation
 	time	60
 	researched	false
 	needscollected	true
+
+	// menuModel - see models.ufo
+	mdl_top	alien_ortnok
 }
 
-// ORTNOK MEDIUM .. TODO:what's that?
+// ORTNOK LIGHT ..
+
+tech rs_alien_ortnok_light
+{
+	type	alien
+	name	 "_Ortnok TODO: FIND A NAME"
+	description	"_ortnok_light_txt"
+	up_chapter	aliens
+
+	requires	nothing
+	provides	""
+	time	0
+	researched	false
+	needscollected	true
+
+	// menuModel - see models.ufo
+	mdl_top	alien_ortnok_light
+}
+
+// ORTNOK MEDIUM ..
 
 tech rs_alien_ortnok_medium
 {
@@ -999,8 +1027,8 @@ tech rs_alien_ortnok_medium
 	researched	false
 	needscollected	true
 
-	// TODO should come from alien-definition and be a complete model
-	mdl_top	models/aliens/ortnok_medium/body01.md2
+	// menuModel - see models.ufo
+	mdl_top	alien_ortnok_medium
 }
 
 // ANTAREAN
@@ -1018,8 +1046,8 @@ tech rs_alien_antarean_notes
 	researched	false
 	needscollected	true
 
-	// TODO should come from alien-definition and be a complete model
-	mdl_top	models/aliens/blue/body01.md2
+	// menuModel - see models.ufo
+	mdl_top	alien_antarean
 }
 
 tech rs_alien_antarean_autopsy
@@ -1035,8 +1063,8 @@ tech rs_alien_antarean_autopsy
 	researched	false
 	needscollected	true
 
-	// TODO should come from alien-definition and be a complete model
-	mdl_top	models/aliens/blue/body01.md2
+	// menuModel - see models.ufo
+	mdl_top	alien_antarean
 }
 
 tech rs_alien_antarean_xenobiology
@@ -1051,6 +1079,9 @@ tech rs_alien_antarean_xenobiology
 	time	90
 	researched	false
 	needscollected	true
+
+	// menuModel - see models.ufo
+	mdl_top	alien_antarean
 }
 
 tech rs_alien_antarean_interrogation
@@ -1065,6 +1096,9 @@ tech rs_alien_antarean_interrogation
 	time	60
 	researched	false
 	needscollected	true
+
+	// menuModel - see models.ufo
+	mdl_top	alien_antarean
 }
 
 tech rs_alien_antarean_interrogation_commander
@@ -1079,6 +1113,9 @@ tech rs_alien_antarean_interrogation_commander
 	time	240
 	researched	false
 	needscollected	true
+
+	// menuModel - see models.ufo
+	mdl_top	alien_antarean
 }
 
 // SHEVAAR
@@ -1096,8 +1133,8 @@ tech rs_alien_shevaar_notes
 	researched	false
 	needscollected	true
 
-	// TODO should come from alien-definition and be a complete model
-	//mdl_top	models/aliens/blue/body01.md2
+	// menuModel - see models.ufo
+	mdl_top	alien_shevaar
 }
 
 tech rs_alien_shevaar_autopsy
@@ -1113,8 +1150,8 @@ tech rs_alien_shevaar_autopsy
 	researched	false
 	needscollected	true
 
-	// TODO should come from alien-definition and be a complete model
-	//mdl_top	models/aliens/blue/body01.md2
+	// menuModel - see models.ufo
+	mdl_top	alien_shevaar
 }
 
 tech rs_alien_shevaar_xenobiology
@@ -1129,6 +1166,9 @@ tech rs_alien_shevaar_xenobiology
 	time	90
 	researched	false
 	needscollected	true
+
+	// menuModel - see models.ufo
+	mdl_top	alien_shevaar
 }
 
 // HOVERNET
@@ -1146,8 +1186,8 @@ tech rs_alien_hovernet_notes
 	researched	false
 	needscollected	true
 
-	// TODO should come from alien-definition and be a complete model
-	//mdl_top	models/aliens/blue/body01.md2
+	// menuModel - see models.ufo
+	mdl_top	alien_hovernet
 }
 
 tech rs_alien_hovernet_autopsy
@@ -1163,8 +1203,8 @@ tech rs_alien_hovernet_autopsy
 	researched	false
 	needscollected	true
 
-	// TODO should come from alien-definition and be a complete model
-	//mdl_top	models/aliens/blue/body01.md2
+	// menuModel - see models.ufo
+	mdl_top	alien_hovernet
 }
 
 tech rs_alien_hovernet_xenobiology
@@ -1179,6 +1219,9 @@ tech rs_alien_hovernet_xenobiology
 	time	90
 	researched	false
 	needscollected	true
+
+	// menuModel - see models.ufo
+	mdl_top	alien_hovernet
 }
 
 // CYBORG ORTNOK
@@ -1196,8 +1239,8 @@ tech rs_alien_cyborg_ortnok_notes
 	researched	false
 	needscollected	true
 
-	// TODO should come from alien-definition and be a complete model
-	//mdl_top	models/aliens/ortnok/body01.md2
+	// menuModel - see models.ufo
+	mdl_top	alien_cyborg_ortnok
 }
 
 tech rs_alien_cyborg_ortnok_autopsy
@@ -1213,7 +1256,8 @@ tech rs_alien_cyborg_ortnok_autopsy
 	researched	false
 	needscollected	true
 
-	//TODO: autopsy image
+	// menuModel - see models.ufo
+	mdl_top	alien_cyborg_ortnok
 }
 
 tech rs_alien_cyborg_ortnok_xenobiology
@@ -1228,4 +1272,7 @@ tech rs_alien_cyborg_ortnok_xenobiology
 	time	90
 	researched	false
 	needscollected	true
+
+	// menuModel - see models.ufo
+	mdl_top	alien_cyborg_ortnok
 }

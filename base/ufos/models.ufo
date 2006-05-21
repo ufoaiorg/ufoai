@@ -2,7 +2,7 @@
 // .. need:	(string)
 // NOTE: This has to be top down
 
-// ============== Alien Ortnok =====================
+// ============== Aliens ===========================
 menu_model alien_ortnok_head
 {
 	model	"models/aliens/ortnok/head01.md2"
@@ -13,6 +13,73 @@ menu_model alien_ortnok
 	need	"alien_ortnok_head"
 	anim	stand_still
 }
+
+menu_model alien_ortnok_medium_head
+{
+	model	"models/aliens/ortnok_medium/head01.md2"
+}
+menu_model alien_ortnok_medium
+{
+	model	"models/aliens/ortnok_medium/body01.md2"
+	need	"alien_ortnok_medium_head"
+	anim	stand_still
+}
+
+menu_model alien_ortnok_light_head
+{
+	model	"models/aliens/ortnok_light/head01.md2"
+}
+menu_model alien_ortnok_light
+{
+	model	"models/aliens/ortnok_light/body01.md2"
+	need	"alien_ortnok_light_head"
+	anim	stand_still
+}
+
+menu_model alien_antarean_head
+{
+	model	"models/aliens/antarean/head01.md2"
+}
+menu_model alien_antarean
+{
+	model	"models/aliens/antarean/body01.md2"
+	need	"alien_antarean_head"
+	anim	stand_still
+}
+
+menu_model alien_shevaar_head
+{
+	model	"models/aliens/shevaar/head01.md2"
+}
+menu_model alien_shevaar
+{
+	model	"models/aliens/shevaar/body01.md2"
+	need	"alien_shevaar_head"
+	anim	stand_still
+}
+
+menu_model alien_hovernet_head
+{
+	model	"models/aliens/hovernet/head01.md2"
+}
+menu_model alien_hovernet
+{
+	model	"models/aliens/hovernet/body01.md2"
+	need	"alien_hovernet_head"
+	anim	stand_still
+}
+
+menu_model alien_cyborg_ortnok_head
+{
+	model	"models/aliens/cyborg_ortnok/head01.md2"
+}
+menu_model alien_cyborg_ortnok
+{
+	model	"models/aliens/cyborg_ortnok/body01.md2"
+	need	"alien_cyborg_ortnok_head"
+	anim	stand_still
+}
+
 
 // ============== Civilian female ==================
 menu_model civ_female_head
