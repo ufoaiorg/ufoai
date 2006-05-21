@@ -1114,7 +1114,7 @@ void Com_AddObjectTechs( void )
 		od->tech = RS_GetTechByProvided( od->kurz );
 #ifdef DEBUG
 		if ( ! od->tech )
-			Sys_Error("Could not find a valid tech for item %s\n", od->kurz );
+			Sys_Error("Com_AddObjectTechs: Could not find a valid tech for item %s\n", od->kurz );
 #endif /* DEBUG */
 #endif /* DEDICATED_ONLY */
 	}
