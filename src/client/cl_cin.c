@@ -547,7 +547,7 @@ qboolean SCR_DrawCinematic (void)
 
 	if (!cl.cinematicpalette_active)
 	{
-		re.CinematicSetPalette(cl.cinematicpalette);
+		re.CinematicSetPalette((unsigned char*)cl.cinematicpalette);
 		cl.cinematicpalette_active = qtrue;
 	}
 
