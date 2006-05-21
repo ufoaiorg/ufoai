@@ -34,13 +34,41 @@ typedef struct cmdalias_s
 
 cmdalias_t	*cmd_alias;
 
-qboolean	cmd_wait;
+qboolean	cmd_wait, cmd_closed;
 
 #define	ALIAS_LOOP_COUNT	16
 int		alias_count;		// for detecting runaway loops
 
 
 //=============================================================================
+
+/*
+============
+Cmd_Open_f
+
+Reopens the command buffer for writing
+============
+*/
+void Cmd_Open_f (void)
+{
+	Com_DPrintf("Cmd_Close_f: command buffer opened again\n");
+	cmd_closed = qfalse;
+}
+
+/*
+============
+Cmd_Close_f
+
+Will no longer add any command to command buffer
+...until cmd_close is qfalse again
+Does not affect EXEC_NOW
+============
+*/
+void Cmd_Close_f (void)
+{
+	Com_DPrintf("Cmd_Close_f: command buffer closed\n");
+	cmd_closed = qtrue;
+}
 
 /*
 ============
@@ -90,6 +118,15 @@ Adds command text at the end of the buffer
 void Cbuf_AddText (char *text)
 {
 	int		l;
+	char	*cmdopen;
+	if ( cmd_closed && (cmdopen = strstr(text, "cmdopen")) != NULL )
+		text = cmdopen;
+	else if ( cmd_closed )
+	{
+		Com_DPrintf ("Cbuf_AddText: currently closed\n");
+		return;
+	}
+
 
 	l = strlen (text);
 
@@ -923,5 +960,7 @@ void Cmd_Init (void)
 	Cmd_AddCommand ("echo",Cmd_Echo_f);
 	Cmd_AddCommand ("alias",Cmd_Alias_f);
 	Cmd_AddCommand ("wait", Cmd_Wait_f);
+	Cmd_AddCommand ("cmdclose", Cmd_Close_f);
+	Cmd_AddCommand ("cmdopen", Cmd_Open_f);
 }
 
