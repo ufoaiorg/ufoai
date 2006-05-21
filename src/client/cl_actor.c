@@ -62,9 +62,8 @@ void CL_CharacterCvars( character_t *chr )
 	Cvar_Set( "mn_chrkillteam", va( "%i", chr->kills[KILLED_TEAM] ) );
 	Cvar_Set( "mn_chrrank_img", "" );
 	//TODO: Doesn't work yet
-	Com_sprintf (messageBuffer, sizeof(messageBuffer), "Rank: %s", rank->name );
+	Com_sprintf (messageBuffer, sizeof(messageBuffer), _("Rank: %s"), _(rank->name) );
 	Cvar_Set( "mn_chrrank", messageBuffer );
-	//Cvar_Set( "mn_chrrank", "Rank: TODO" ); // DEBUG
 	Com_sprintf (messageBuffer, sizeof(messageBuffer), "%s", rank->image );
 	Cvar_Set( "mn_chrrank_img", messageBuffer );
 

@@ -566,7 +566,6 @@ void CL_AircraftSelect ( void )
 	Cvar_Set( "mn_aircraft_weapon", air->weapon ? air->weapon->name : "" );
 	Cvar_Set( "mn_aircraft_shield", air->shield ? air->shield->name : "" );
 
-	// FIXME: Are these names (weapon and shield) already translated?
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\nFuel:\t%i/%i\nWeapon:\t%s\nShield:\t%s\n"), air->speed, air->fuel / 1000, air->fuelSize / 1000, air->weapon ? air->weapon->name : _("None"), air->shield ? air->shield->name : _("None") );
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
@@ -1740,6 +1739,9 @@ void CL_GameLoad( char *filename )
 		Com_Printf( "CL_GameLoad: Campaign \"%s\" doesn't exist.\n", name );
 		return;
 	}
+
+	re.LoadTGA( va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight );
+	if ( !maskPic ) Sys_Error( "Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map );
 
 	for ( commands = game_commands; commands->name; commands++ )
 		Cmd_AddCommand( commands->name, commands->function );
@@ -3015,6 +3017,9 @@ void CL_GameNew( void )
 		return;
 	}
 
+	re.LoadTGA( va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight );
+	if ( !maskPic ) Sys_Error( "Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map );
+
 	// base setup
 	ccs.numBases = 0;
 	MN_NewBases();
@@ -3090,8 +3095,4 @@ void CL_ResetCampaign( void )
 	Cmd_AddCommand( "game_save", CL_GameSaveCmd );
 	Cmd_AddCommand( "game_load", CL_GameLoadCmd );
 	Cmd_AddCommand( "game_comments", CL_GameCommentsCmd );
-
-	// FIXME: use campaign values
-	re.LoadTGA( "pics/menu/map_mask.tga", &maskPic, &maskWidth, &maskHeight );
-	if ( !maskPic ) Com_Printf( "Couldn't load map mask (pics/menu/map_mask.tga)\n" );
 }
