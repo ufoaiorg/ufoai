@@ -1275,19 +1275,19 @@ IN
 OUT
 	int	RS_ItemIsResearched	Number of the collected items.
 ======================*/
-int RS_ItemCollected(char *id_provided )
+qboolean RS_ItemCollected(char *id_provided )
 {
 	int	i = 0;
 
 	if ( ! id_provided )
-		return 0;
+		return qfalse;
 
 	for ( ; i < numTechnologies; i++ ) {
 		if ( !Q_strncmp( (char*)id_provided, technologies[i].provides, MAX_VAR ) )
 			return RS_Collected_( &technologies[i] );
 	}
-	Com_Printf("RS_ItemCollected: \"%s\" <- research item that 'provides' this item not found.\n", id_provided );
-	return 0;
+	Com_DPrintf("RS_ItemCollected: \"%s\" <- research item that 'provides' this item not found.\n", id_provided );
+	return qfalse;
 }
 
 /*======================
@@ -1312,10 +1312,8 @@ qboolean RS_TechIsResearched(char *id )
 		return qtrue;	// initial and nothing are always researched. as they are just starting "technologys" that are never used.
 
 	tech = RS_GetTechByID( id );
-	if ( ! tech ) {
-		Com_Printf( "RS_TechIsResearched: \"%s\" research item not found.\n", id );
+	if ( ! tech )
 		return qfalse;
-	}
 
 	/* research item found */
 	if ( tech->statusResearch == RS_FINISH )
@@ -1342,22 +1340,23 @@ qboolean RS_TechIsResearchable(char *id )
 	stringlist_t* required = NULL;
 
 	tech = RS_GetTechByID( id );
-	if ( ! tech ) {
-		Com_Printf( "RS_TechIsResearchable: \"%s\" research item not found.\n", id );
+	if ( ! tech )
 		return qfalse;
-	}
 
 	/* research item found */
 	if ( tech->statusResearch == RS_FINISH )
 		return qfalse;
+
 	if ( ( !Q_strncmp(  tech->id, "initial", 7 ) )
-	|| ( !Q_strncmp(  tech->id, "nothing", 7 ) ) )
+	  || ( !Q_strncmp(  tech->id, "nothing", 7 ) ) )
 		return qtrue;
+
 	required = &tech->requires;
-	for ( i=0; i < required->numEntries; i++)  {
+
+	for ( i=0; i < required->numEntries; i++)
 		if ( !RS_TechIsResearched( required->list[i]) )	// Research of "id" not finished (RS_FINISH) at this point.
 			return qfalse;
-	}
+
 	return qtrue;
 
 }
@@ -1477,7 +1476,6 @@ void RS_LoadTech( sizebuf_t *sb, int version )
 			technologies[i].statusCollected = MSG_ReadLong( sb );
 			technologies[i].time = MSG_ReadFloat( sb );
 		}
-
 	}
 	RS_MarkResearchable ();
 }

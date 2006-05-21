@@ -100,7 +100,7 @@ qboolean RS_ItemIsResearched(char *id_provided );
 qboolean RS_TechIsResearched(char *id );
 qboolean RS_IsResearched_ ( technology_t* t );
 qboolean RS_Collected_ ( technology_t* t );
-int RS_ItemCollected(char *id_provided );
+qboolean RS_ItemCollected(char *id_provided );
 
 void RS_SaveTech( sizebuf_t *sb );
 void RS_LoadTech( sizebuf_t *sb, int version );
