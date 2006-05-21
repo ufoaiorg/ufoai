@@ -191,8 +191,9 @@ provides "Dark Radar" (building)
 
 #####################################################################
 Writers/Credits:
-* Werner Höhrer
+* Werner Hï¿½rer
 * ProtoArmor
+* Virtul
 
 See also
 * aircrafts.txt - Phalanx aircrafts descriptions
