@@ -1058,10 +1058,6 @@ void Com_ParseDamageTypes( char *name, char **text )
 
 ==============================================================================*/
 
-#ifndef DEDICATED_ONLY
-void* RS_GetTechByID ( const char* id );
-#endif
-
 
 /*======================
 Com_AddObjectLinks
@@ -1099,15 +1095,18 @@ void Com_AddObjectLinks( void )
 	}
 }
 
+#ifndef DEDICATED_ONLY
+void* RS_GetTechByProvided( const char *id_provided );
+#endif /* DEDICATED_ONLY */
 /*======================
 Com_AddObjectTechs
 ======================*/
 void Com_AddObjectTechs( void )
 {
+#ifndef DEDICATED_ONLY
 	objDef_t	*od;
 	int		i;
 
-#ifndef DEDICATED_ONLY
 	// add weapon link to ammo
 	for ( i = 0, od = csi.ods; i < csi.numODs; i++, od++ )
 	{
