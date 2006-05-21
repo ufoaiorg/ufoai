@@ -1500,6 +1500,6 @@ technology_t* RS_GetTechByID ( const char* id )
 		if ( !Q_strncmp( (char*)id, technologies[i].id, MAX_VAR ) )
 			return &technologies[i];
 	}
-	Com_Printf("RS_GetTechByID: Could not find a technology with id \"%s\"\n", id );
+	Com_DPrintf("RS_GetTechByID: Could not find a technology with id \"%s\"\n", id );
 	return NULL;
 }
