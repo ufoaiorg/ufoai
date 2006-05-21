@@ -80,7 +80,7 @@ menu map
 		color	"0 .78 0 1"
 		font	f_big
 	}
-	
+
 	string txt_credits
 	{
 		tooltip	"_Organisation capital"
@@ -311,7 +311,7 @@ menu popup_intercept_ready
 
 	string title
 	{
-		string	"Ready"
+		string	"_Ready"
 		pos	"290 276"
 		font	f_big
 	}
