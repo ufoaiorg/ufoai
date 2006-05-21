@@ -1107,17 +1107,17 @@ void Com_AddObjectTechs( void )
 	objDef_t	*od;
 	int		i;
 
+#ifndef DEDICATED_ONLY
 	// add weapon link to ammo
 	for ( i = 0, od = csi.ods; i < csi.numODs; i++, od++ )
 	{
-#ifndef DEDICATED_ONLY
 		od->tech = RS_GetTechByProvided( od->kurz );
 #ifdef DEBUG
 		if ( ! od->tech )
 			Sys_Error("Com_AddObjectTechs: Could not find a valid tech for item %s\n", od->kurz );
 #endif /* DEBUG */
-#endif /* DEDICATED_ONLY */
 	}
+#endif /* DEDICATED_ONLY */
 }
 
 
