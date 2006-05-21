@@ -1095,31 +1095,6 @@ void Com_AddObjectLinks( void )
 	}
 }
 
-#ifndef DEDICATED_ONLY
-void* RS_GetTechByProvided( const char *id_provided );
-#endif /* DEDICATED_ONLY */
-/*======================
-Com_AddObjectTechs
-======================*/
-void Com_AddObjectTechs( void )
-{
-#ifndef DEDICATED_ONLY
-	objDef_t	*od;
-	int		i;
-
-	// add weapon link to ammo
-	for ( i = 0, od = csi.ods; i < csi.numODs; i++, od++ )
-	{
-		od->tech = RS_GetTechByProvided( od->kurz );
-#ifdef DEBUG
-		if ( ! od->tech )
-			Sys_Error("Com_AddObjectTechs: Could not find a valid tech for item %s\n", od->kurz );
-#endif /* DEBUG */
-	}
-#endif /* DEDICATED_ONLY */
-}
-
-
 /*======================
 Com_ParseScripts
 ======================*/
@@ -1176,8 +1151,6 @@ void Com_ParseScripts( void )
 		else if ( !Q_strncmp( type, "team", 4 ) ) Com_ParseTeam( name, &text );
 		else if ( !dedicated->value ) CL_ParseScriptSecond( type, name, &text );
 	}
-
-	Com_AddObjectTechs();
 
 	Com_Printf( "Shared Client/Server Info loaded\n" );
 }

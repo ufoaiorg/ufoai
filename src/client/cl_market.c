@@ -110,7 +110,7 @@ static void CL_BuyType( void )
 		// get item list
 		for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
 		{
-			tech = od->tech;
+			tech = (technology_t*)od->tech;
 			if ( !tech || RS_Collected_(tech) || RS_IsResearched_(tech) ) {
 				if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) )
 				{

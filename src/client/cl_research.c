@@ -184,6 +184,26 @@ void RS_MarkResearchable( void )
 	Com_DPrintf( "RS_MarkResearchable: Done.\n");
 }
 
+
+/*======================
+Com_AddObjectTechs
+======================*/
+void RS_AddObjectTechs( void )
+{
+	objDef_t	*od;
+	int		i;
+
+	// add weapon link to ammo
+	for ( i = 0, od = csi.ods; i < csi.numODs; i++, od++ )
+	{
+		od->tech = RS_GetTechByProvided( od->kurz );
+#ifdef DEBUG
+		if ( ! od->tech )
+			Sys_Error("Com_AddObjectTechs: Could not find a valid tech for item %s\n", od->kurz );
+#endif /* DEBUG */
+	}
+}
+
 /*======================
 RS_CopyFromSkeleton
 
@@ -199,6 +219,9 @@ void RS_CopyFromSkeleton( void )
 		tech = &technologies[i];
 		memcpy( tech, &technologies_skeleton[i], sizeof( technology_t ) );
 	}
+
+	// link in the tech pointers
+	RS_AddObjectTechs();
 }
 
 /*======================
@@ -1511,8 +1534,10 @@ technology_t* RS_GetTechByProvided( const char *id_provided )
 {
 	int i;
 	for ( i=0; i < numTechnologies; i++ )
+	{
 		if ( !Q_strncmp( (char*)id_provided, technologies[i].provides, MAX_VAR ) )
 			return &technologies[i];
+	}
 	Com_DPrintf("RS_GetTechByProvided: Could not find a technology that provides \"%s\"\n", id_provided );
 	return NULL;
 }
