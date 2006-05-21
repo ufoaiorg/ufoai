@@ -876,6 +876,9 @@ typedef struct objDef_s
 	int		reload;
 	fireDef_t	fd[2];
 
+	// technology link
+	void		*tech;
+
 	// armor specific
 	short	protection[MAX_DAMAGETYPES];
 	short	hardness[MAX_DAMAGETYPES];

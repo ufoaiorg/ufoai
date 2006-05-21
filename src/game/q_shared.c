@@ -2418,7 +2418,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 			token++;
 
 		strcpy( (char *)b, _(token) );
-		return strlen(b)+1;
+		return strlen((char*)b)+1;
 
 	// just remove the _ but don't translate
 	case V_TRANSLATION2_STRING:
@@ -2426,7 +2426,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 			token++;
 
 		Q_strncpyz( (char *)b, token, MAX_VAR );
-		w = strlen(b)+1;
+		w = strlen((char*)b)+1;
 		return w;
 
 	case V_LONGSTRING:
@@ -2507,8 +2507,8 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		if ( strstr(token, " ") == NULL )
 			Sys_Error( "Com_ParseValue: Illegal if statement\n" );
 		sscanf( token, "%s %s", string, string2 );
-		strncpy ( ((menuDepends_t*)b)->var, string, MAX_VAR );
-		strncpy ( ((menuDepends_t*)b)->value, string2, MAX_VAR );
+		Q_strncpyz( ((menuDepends_t*)b)->var, string, MAX_VAR );
+		Q_strncpyz( ((menuDepends_t*)b)->value, string2, MAX_VAR );
 		return sizeof(menuDepends_t);
 
 	default:

@@ -2189,8 +2189,7 @@ CL_CollectItemAmmo
 ======================*/
 void CL_CollectItemAmmo( invList_t *weapon , int left_hand )
 {
-	if (weapon->item.t == NONE ||
-			(left_hand && csi.ods[weapon->item.t].twohanded))
+	if (weapon->item.t == NONE || (left_hand && csi.ods[weapon->item.t].twohanded))
 		return;
 	ccs.eMission.num[weapon->item.t]++;
 	if ( !csi.ods[weapon->item.t].reload || weapon->item.m == NONE )

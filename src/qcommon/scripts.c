@@ -400,7 +400,7 @@ typedef struct teamDef_s
 	int  num;
 } teamDef_t;
 
-teamDesc_t	teamDesc[MAX_TEAMDEFS];	
+teamDesc_t	teamDesc[MAX_TEAMDEFS];
 
 rank_t ranks[MAX_RANKS];	// Global list of all ranks defined in medals.ufo.
 int numRanks = 0;		// The number of entries in the list above.
@@ -971,7 +971,7 @@ void Com_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 		Com_Printf( "Com_ParseMedalsAndRanks: rank/medal \"%s\" without body ignored\n", title );
 		return;
 	}
-	
+
 	if ( parserank) {
 		/* parse ranks */
 		if ( numRanks >= MAX_RANKS ) {
@@ -979,11 +979,11 @@ void Com_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 			numRanks = MAX_RANKS;
 			return;
 		}
-		
+
 		rank = &ranks[numRanks];
 		numRanks++;
 		memset( rank, 0, sizeof( rank_t ) );
-		
+
 		do {
 			// get the name type
 			token = COM_EParse( text, errhead, title );
@@ -1058,6 +1058,11 @@ void Com_ParseDamageTypes( char *name, char **text )
 
 ==============================================================================*/
 
+#ifndef DEDICATED_ONLY
+void* RS_GetTechByID ( const char* id );
+#endif
+
+
 /*======================
 Com_AddObjectLinks
 ======================*/
@@ -1074,6 +1079,7 @@ void Com_AddObjectLinks( void )
 
 	// add weapon link to ammo
 	for ( i = 0, od = csi.ods; i < csi.numODs; i++, od++ )
+	{
 		if ( !Q_strncmp( od->type, "ammo", 4 ) )
 		{
 			// check for the underline
@@ -1090,6 +1096,28 @@ void Com_AddObjectLinks( void )
 					break;
 				}
 		}
+	}
+}
+
+/*======================
+Com_AddObjectTechs
+======================*/
+void Com_AddObjectTechs( void )
+{
+	objDef_t	*od;
+	int		i;
+
+	// add weapon link to ammo
+	for ( i = 0, od = csi.ods; i < csi.numODs; i++, od++ )
+	{
+#ifndef DEDICATED_ONLY
+		od->tech = RS_GetTechByProvided( od->kurz );
+#ifdef DEBUG
+		if ( ! od->tech )
+			Sys_Error("Could not find a valid tech for item %s\n", od->kurz );
+#endif /* DEBUG */
+#endif /* DEDICATED_ONLY */
+	}
 }
 
 
@@ -1149,6 +1177,8 @@ void Com_ParseScripts( void )
 		else if ( !Q_strncmp( type, "team", 4 ) ) Com_ParseTeam( name, &text );
 		else if ( !dedicated->value ) CL_ParseScriptSecond( type, name, &text );
 	}
+
+	Com_AddObjectTechs();
 
 	Com_Printf( "Shared Client/Server Info loaded\n" );
 }

@@ -1501,3 +1501,18 @@ technology_t* RS_GetTechByID ( const char* id )
 	Com_DPrintf("RS_GetTechByID: Could not find a technology with id \"%s\"\n", id );
 	return NULL;
 }
+
+/*======================
+RS_GetTechByProvided
+
+returns a pointer to the item tech (as listed in "provides")
+======================*/
+technology_t* RS_GetTechByProvided( const char *id_provided )
+{
+	int i;
+	for ( i=0; i < numTechnologies; i++ )
+		if ( !Q_strncmp( (char*)id_provided, technologies[i].provides, MAX_VAR ) )
+			return &technologies[i];
+	Com_DPrintf("RS_GetTechByProvided: Could not find a technology that provides \"%s\"\n", id_provided );
+	return NULL;
+}

@@ -253,8 +253,16 @@ void CL_ItemDescription( int item )
 		Cvar_Set( "mn_item", "" );
 	}*/
 
+#ifdef DEBUG
+	if (! od->tech )
+	{
+		Com_sprintf( itemText, MAX_MENUTEXTLEN, "Error - no tech assigned\n");
+		menuText[TEXT_STANDARD] = itemText;
+	}
 	// set description text
-	if ( RS_ItemIsResearched(od->kurz)  )
+	else
+#endif
+	if ( RS_IsResearched_(od->tech)  )
 	{
 		if ( od->weapon )
 		{
@@ -289,7 +297,6 @@ void CL_ItemDescription( int item )
 		Com_sprintf( itemText, MAX_MENUTEXTLEN, _("Unknown - need to research this") );
 		menuText[TEXT_STANDARD] = itemText;
 	}
-	// else menuText[TEXT_STANDARD] = NULL; // TODO: should not be needed anymore.
 }
 
 

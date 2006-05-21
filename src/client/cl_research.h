@@ -112,4 +112,5 @@ void RS_InitTree( void );
 void RS_MarkCollected ( void );
 void RS_MarkResearchable ( void );
 technology_t* RS_GetTechByID ( const char* id );
+technology_t* RS_GetTechByProvided( const char *id_provided );
 #endif /*TECHNOLOGY_DEFINED*/
