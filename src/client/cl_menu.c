@@ -118,6 +118,11 @@ value_t menuModelValues[] =
 	{ "need",		V_NULL,		0 },
 	{ "anim",		V_STRING,	MENUMODELFS(anim) },
 	{ "skin",		V_INT,		MENUMODELFS(skin) },
+	{ "origin",		V_VECTOR,	MENUMODELFS(origin) },
+	{ "center",		V_VECTOR,	MENUMODELFS(center) },
+	{ "scale",		V_VECTOR,	MENUMODELFS(scale) },
+	{ "angles",		V_VECTOR,	MENUMODELFS(angles) },
+	{ "color",		V_COLOR,	MENUMODELFS(color) },
 
 	{ NULL,			V_NULL,		0 },
 };
@@ -1643,6 +1648,7 @@ void MN_DrawMenus( void )
 	menu_t		*menu;
 	animState_t	*as;
 	char		*ref, *font;
+	char		*anim; // model anim state
 	char		source[MAX_VAR];
 	int			sp, pp;
 	item_t		item;
@@ -1988,6 +1994,17 @@ void MN_DrawMenus( void )
 							mi.model = re.RegisterModel( menuModel->model );
 							mi.name = menuModel->model;
 
+							if ( menuModel->origin )
+								mi.origin = menuModel->origin;
+							if ( menuModel->angles )
+								mi.angles = menuModel->angles;
+							if ( menuModel->scale )
+								mi.scale = menuModel->scale;
+							if ( menuModel->center )
+								mi.center = menuModel->center;
+							if ( menuModel->color )
+								mi.color = menuModel->color;
+
 							if ( !mi.model )
 							{
 								menuModel = menuModel->next;
@@ -1996,7 +2013,14 @@ void MN_DrawMenus( void )
 								continue;
 							}
 							mi.skin = menuModel->skin;
-							// TODO: implement anim for menuModels
+							if ( *menuModel->anim )
+							{
+								as = &menuModel->animState;
+								anim = re.AnimGetName( as, mi.model );
+								if ( anim && Q_strncmp( anim, ref, MAX_VAR ) )
+									re.AnimChange( as, mi.model, ref );
+								re.AnimRun( as, mi.model, cls.frametime*1000 );
+							}
 							re.DrawModelDirect( &mi, NULL, NULL );
 						}
 						else
@@ -2023,13 +2047,12 @@ void MN_DrawMenus( void )
 								else
 								{
 									// change anim if needed
-									char *anim;
 									as = node->data[4];
 									anim = re.AnimGetName( as, mi.model );
 									if ( anim && Q_strncmp( anim, ref, MAX_VAR ) )
 										re.AnimChange( as, mi.model, ref );
+									re.AnimRun( as, mi.model, cls.frametime*1000 );
 								}
-								re.AnimRun( as, mi.model, cls.frametime*1000 );
 
 								mi.frame = as->frame;
 								mi.oldframe = as->oldframe;

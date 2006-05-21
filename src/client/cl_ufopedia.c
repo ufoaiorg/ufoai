@@ -97,17 +97,22 @@ void MN_UpDrawEntry( char *id )
 		Com_Printf("MN_UpDrawEntry: \"%s\" <- research item not found.\n", id );
 		return;
 	}
-	
+
 	Cvar_Set( "mn_uptitle", _(tech->name) );
 	menuText[TEXT_UFOPEDIA] = _(tech->description);
 	Cvar_Set( "mn_upmodel_top", "" );
 	Cvar_Set( "mn_upmodel_bottom", "" );
 	Cvar_Set( "mn_upimage_top", "base/empty" );
 	Cvar_Set( "mn_upimage_bottom", "base/empty" );
-	if ( *tech->mdl_top ) Cvar_Set( "mn_upmodel_top", tech->mdl_top );
-	if ( *tech->mdl_bottom ) Cvar_Set( "mn_upmodel_bottom", tech->mdl_bottom );
-	if ( !*tech->mdl_top && *tech->image_top ) Cvar_Set( "mn_upimage_top", tech->image_top );
-	if ( !*tech->mdl_bottom && *tech->mdl_bottom ) Cvar_Set( "mn_upimage_bottom", tech->image_bottom );
+	if ( *tech->image_top && tech->type == RS_ARMOR )
+		Cvar_Set( "mn_upimage_top", tech->image_top );
+	else
+	{
+		if ( *tech->mdl_top ) Cvar_Set( "mn_upmodel_top", tech->mdl_top );
+		if ( *tech->mdl_bottom ) Cvar_Set( "mn_upmodel_bottom", tech->mdl_bottom );
+		if ( !*tech->mdl_top && *tech->image_top ) Cvar_Set( "mn_upimage_top", tech->image_top );
+		if ( !*tech->mdl_bottom && *tech->mdl_bottom ) Cvar_Set( "mn_upimage_bottom", tech->image_bottom );
+	}
 	Cbuf_AddText( "mn_upfsmall\n" );
 
 	if ( upCurrent) {
@@ -245,10 +250,10 @@ void MN_UpPrev_f( void )
 	pediaChapter_t *upc;
 
 	if ( !upCurrent ) return;
-	
+
 	// get previous chapter
 	upc = upCurrent->up_chapter - 1;
-	
+
 	// get previous entry
 	if ( upCurrent->prev ) {
 		// Check if the previous entry is researched already otherwise go to the next entry.
@@ -257,9 +262,9 @@ void MN_UpPrev_f( void )
 			MN_UpDrawEntry( upCurrent->id );
 			return;
 		}
-		
+
 	}
-	
+
 	// change chapter
 	for (; upc - upChapters >= 0; upc-- )
 		if ( upc->last ) {
@@ -285,7 +290,7 @@ void MN_UpNext_f( void )
 	// change chapter
 	if ( !upCurrent ) upc = upChapters;
 	else upc = upCurrent->up_chapter + 1;
-		
+
 	// get next entry
 	if ( upCurrent && upCurrent->next ) {
 		// Check if the next entry is researched already otherwise go to the next entry.
@@ -295,7 +300,7 @@ void MN_UpNext_f( void )
 			return;
 		}
 	}
-	
+
 	/* no 'next' entry defined (=NULL) or no current entry at all */
 
 	// change chapter

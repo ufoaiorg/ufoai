@@ -1080,6 +1080,9 @@ typedef struct menuModel_s
 	char	anim[MAX_VAR];
 	int	skin;
 	char	model[MAX_QPATH];
+	animState_t	animState;
+	vec3_t	origin, scale, angles, center;
+	vec4_t	color; // rgba
 	struct menuModel_s	*next;
 } menuModel_t;
 
