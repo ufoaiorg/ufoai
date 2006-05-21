@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-05-21 16:11+0200\n"
-"PO-Revision-Date: 2006-05-21 16:16+0100\n"
+"PO-Revision-Date: 2006-05-21 16:17+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2960,7 +2960,7 @@ msgstr "Nein"
 #: client/cl_team.c:279
 #, c-format
 msgid "Twohanded:\t%s"
-msgstr "Beihändig:\t%s"
+msgstr "Beidhändig:\t%s"
 
 #: client/cl_team.c:279
 #: client/cl_ufopedia.c:53
