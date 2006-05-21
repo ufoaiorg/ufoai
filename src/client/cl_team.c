@@ -70,9 +70,9 @@ void CL_GiveNameCmd( void )
 }
 
 // initialized in CL_ResetTeams
-
-rank_t ranks[MAX_RANKS];	// Global list of all ranks defined in medals.ufo.
-int numRanks;				// The number of entries in the list above.
+// defined in scripts.c
+extern rank_t ranks[MAX_RANKS];	// Global list of all ranks defined in medals.ufo.
+extern int numRanks;		// The number of entries in the list above.
 
 
 /*======================

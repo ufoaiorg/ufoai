@@ -1993,18 +1993,16 @@ void MN_DrawMenus( void )
 						{
 							mi.model = re.RegisterModel( menuModel->model );
 							mi.name = menuModel->model;
-
-							if ( menuModel->origin )
+							if ( VectorNotEmpty(menuModel->origin) )
 								mi.origin = menuModel->origin;
-							if ( menuModel->angles )
+							if ( VectorNotEmpty(menuModel->angles) )
 								mi.angles = menuModel->angles;
-							if ( menuModel->scale )
+							if ( VectorNotEmpty(menuModel->scale) )
 								mi.scale = menuModel->scale;
-							if ( menuModel->center )
+							if ( VectorNotEmpty(menuModel->center) )
 								mi.center = menuModel->center;
-							if ( menuModel->color )
+							if ( Vector4NotEmpty(menuModel->color) )
 								mi.color = menuModel->color;
-
 							if ( !mi.model )
 							{
 								menuModel = menuModel->next;
