@@ -1,52 +1,127 @@
+#####################################################################
 1. "Antarean"
-[decription]
-Humanoid, big-eyed aliens reminiscent of the "grays" that dominated the alien canon during the late 20th century. They resemble humans both in form and basic anatomy. Like humans, they have a large brain/body ratio, which helped them evolve from their primal animal society into a technologically advanced, space-faring civilization.
-[notes]
+
 Having a sophisticated military apparatus, Antareans come in Worker, Soldier and Commander varieties. Small UFOs are manned by Workers, who gather information about Earth, survey the landscape, abduct cattle, the usual. Warship-class UFOs also have a squadron of Soldier Antareans, while the Commanders are found only on Juggernaut-class and Bulwark-class UFOs and in Antarean bases.
-[autopsy]
+
+Humanoid, big-eyed aliens reminiscent of the "grays" that dominated the alien canon during the late 20th century. They resemble humans both in form and basic anatomy. Like humans, they have a large brain/body ratio, which helped them evolve from their primal animal society into a technologically advanced, space-faring civilization.
+
+[antarean_notes_txt]
+<TODO>
+
+[antarean_autopsy_txt]
 Possesses a superficially similar complement of internal organs to humans. On closer inspection the heart is found to have a more complicated structure, tighter integration with the lungs and a connection to a small, liver-like organ. Electrically stimulating the Antarean heart produces a smooth, four stroke heart beat that takes in blood, aerates the blood within the lungs, filters the aerated blood of pollutants and toxins through the additional organ, before pumping the blood around the body. This circulatory system must contribute greatly to the stamina of the species.
 DNA analysis of specimens of different rank reveals differences in the amount of junk DNA carried by each specimen. Specimens of a higher rank have noticeably less junk DNA, and it appears to have been replaced by DNA containing patterns that yield easily to mathematical modelling. It is possible that this species uses genetic manipulation to confer knowledge upon those who are destined to lead before they are even born. Advanced psionic attacks may provide access to this information.
 
+[antarean_xenobiology_txt]
+<TODO>
+
+[antarean_interrogation_txt]
+<TODO>
+
+[antarean_interrogation_commander_txt]
+<TODO>
+
+#####################################################################
 2. "Ortnok"
-[decription]
-Green-skinned grunt soldiers. Conquered by the Antareans centuries past, they are now slaves in their empire. Intellectually not much more sophisticated than Earth monkeys, the male Ortnoks are drilled from birth to be tough, relentless soldiers. The females are kept in breeding pits, ensuring the Antareans are never short of shock troops.
-[notes]
+
 Ortnoks are capable of using handheld guns, but cannot throw grenades or operate heavy weaponry.
-[autopsy]
+
+Green-skinned grunt soldiers. Conquered by the Antareans centuries past, they are now slaves in their empire. Intellectually not much more sophisticated than Earth monkeys, the male Ortnoks are drilled from birth to be tough, relentless soldiers. The females are kept in breeding pits, ensuring the Antareans are never short of shock troops.
+
+[ortnok_notes_txt]
+Genetically the green skinned Ortnoks seem to be related very closely to the human race. About 80% of their DNA is identical compared to the human's. The parts that are different are most likely genetically engineered because they do not show any individual variability. The fact that they are genetically altered and that they do not seem to have any functional reproduction organs suggests that they are clones made by some as yet unknown alien species. Additionally the Ortnoks have several cybernetic implants which involve mainly the cardiovascular system, the muscles, the eyes and the brain. They enhance the physical strenght and stamnia as well as the senses to a level superior to any human. The purpose of the brain implants is mostly unclear but it is believed that they serve as receivers for commands. But currently this is only a assumption because there is no evidence proving the existence of such a master-species.
+
+[ortnok_autopsy_txt]
 The green skin is scaly and tough, and cellular analysis reveals an abundance of chlorophyll, the molecule that makes plant leaves green. The digestive system does not appear to be undersized so we can only surmize that the Ortnok must have evolved in an environment where food could be scarce and falling back on solar energy was the only option in such situations.
 The reproductive organs of this species are very active, only ceasing to function 14 hours after death. Small wonder the Antareans use them as a limitless supply of cannon fodder in every terrain they choose to conquer.
 
+[ortnok_xenobiology_txt]
+<TODO>
+
+[ortnok_interrogation_txt]
+<TODO>
+
+#####################################################################
 3. "Shevaar"
-[decription]
-An unusual quadruped life-form best described as 'nature's tank'. While not higher than an average human, they are much wider, giving them the appearance of an unholy union between a rhinoceros and a creature normally associated only with darker science-fiction movies. They are carnivores that evolved on the Antarean's homeland. Featuring two sets of jaws, these creatures can rip the limbs off a human soldier with ease. Their thick hide makes them very tough, and for this reason, the Antareans use them as a monstrous equivalent of war dogs. While the enemy is busy trying to fend off the Shevaars, the Antarean troopers lay into them from a distance.
-[notes]
+
 At first the Shevaars can only charge an enemy and attack them in melee combat. Later on in the game, Shevaars could be equipped with armor for extra protection, and a tachyon rifle to allow for ranged attack.
 A shevaar takes up 2x2 boxes.
-[autopsy]
+
+An unusual quadruped life-form best described as 'nature's tank'. While not higher than an average human, they are much wider, giving them the appearance of an unholy union between a rhinoceros and a creature normally associated only with darker science-fiction movies. They are carnivores that evolved on the Antarean's homeland. Featuring two sets of jaws, these creatures can rip the limbs off a human soldier with ease. Their thick hide makes them very tough, and for this reason, the Antareans use them as a monstrous equivalent of war dogs. While the enemy is busy trying to fend off the Shevaars, the Antarean troopers lay into them from a distance.
+
+[shevaar_notes_txt]
+<TODO>
+
+[shevaar_autopsy_txt]
 The sheer muscular bulk of the Shevaar is supported by a stout, rugged skeleton, giving the species its fearsome strength. The two sets of jaws are anchored on the creature's enourmous shoulder blades, making them as wide as the creature itself, and provide phenomenal crushing force.
 The huge wet nose of the beast is in fact its brain, covered with a dense array of sensory cells of varying types. While the ability of the Shevaar to hunt down its prey is heightened by this combined sensory and cognitive organ, its prominent placement and lack of protective bone renders it susceptible to psionic attack, as well as providing an obvious weak point in melee combat.
 
+[shevaar_xenobiology_txt]
+<TODO>
+
+#####################################################################
 4. "Hovernet"
-[description]
-These are small, floating, mechanical gunships dubbed "hovernets" by those who survived the first encounter with them. They are aptly named - they hover above the ground through unknown means, and like hornets they can be extremely dangerous. They are armed with a tachyon sniper rifle. They are extremely agile and unrelentingly quick. It appears these machines are some form of security system, deployed in case a landed or crashed UFO is attacked.
-[notes]
+
 Hovernets are remote-controlled, and only appear in landing/crash missions (for UFO's that have them on board) and alien base missions.
 While hovernets display an apparent bioluminescence, they are mechanical and should be researched in an equipment lab rather than a biolab. Shooting them will destroy most of their internal systems. To capture one "alive", the human player must destroy the Antarean that controls it. This Antarean will invariably be found in a control center.
-[autopsy]
+
+These are small, floating, mechanical gunships dubbed "hovernets" by those who survived the first encounter with them. They are aptly named - they hover above the ground through unknown means, and like hornets they can be extremely dangerous. They are armed with a tachyon sniper rifle. They are extremely agile and unrelentingly quick. It appears these machines are some form of security system, deployed in case a landed or crashed UFO is attacked.
+
+[hovernet_notes_txt]
+<TODO>
+
+[hovernet_autopsy_txt]
 Untangling the network of loose, fibrous material that forms at least 90% of the hovernet reveals a solid disc of unknown construction. Mounting points for weaponry are clearly visible, though the markings alongside them have yet to be deciphered and would be our first breakthrough in understanding the alien language.
 No joints can be seen between the disc and the dozens of fibres that protrude from it, even under an electron microscope. It is possible that the fibres are extruded from the disc itself, which must provide the most efficient distribution of the hovernet's energy and propulsive force.
 The loose arrangement of the fibres suggests that a successful hit with a projectile or directed energy weapon is unlikely, and blast or incendiary weapons would have greater effect.
 
+[hovernet_xenobiology_txt]
+<TODO>
+
+#####################################################################
 5. "Cyborg Ortnok"
-[description]
-The result of an extensive Antarean Ortnok-machine interface research program, these Ortnoks retain little of their original body. Limbs and internal organs have been replaced by machines, and the skull has been reinforced with a metal shell fused to the bone. Cyborg Ortnoks retain their ferocious nature, however, and are quite aggressive in combat.
-[notes]
+
 Unlike normal Ortnoks, the Cyborg Ortnok's weaponry is built into its arm modules. These modules range from tachyon rifles to grenade launchers.
-[autopsy]
+
+The result of an extensive Antarean Ortnok-machine interface research program, these Ortnoks retain little of their original body. Limbs and internal organs have been replaced by machines, and the skull has been reinforced with a metal shell fused to the bone. Cyborg Ortnoks retain their ferocious nature, however, and are quite aggressive in combat.
+
+[cyborg_ortnok_notes_txt]
+<TODO>
+
+[cyborg_ortnok_autopsy_txt]
 Separating the cyborg endoskeleton from the specimen's flesh generates sparks and releases choking, acidic vapours. The internals of the endoskeleton slide out of access holes in the artifical bone structure, attached to surgically implanted tendrils that appear to be biomechanical. It seems that digestive systems and reproductive organs have been removed and replaced by numerous small engines encased within the endoskeleton. Energy created by the chlorophyll in the Ortnok's skin appears to kickstart the reactions in these micro-engines.
 The purpose of the Antarean cyborg programme is clearly the conversion of the Ortnok into a biomechanical weapons platform that demands much greater energy output and suppression of the reproductive instinct.
 
+[cyborg_ortnok_xenobiology_txt]
+<TODO>
+
+#####################################################################
+6. "Ortnok Warrior"
+
+[ortnok_medium_txt]
+Having the same genetical features as the regular Ortnoks, the Ortnok Warriors have been\n
+extensively modified with cybernetic implants. All these additional implants obviously aim to\n
+achieve a better performance in combat. Therefore the legs and arms have been almost completely\n
+replaced by cybernetic prostheses which allow a physical strength far beyond the potential of a\n
+human beeing. The claw shaped hands are designed to handle extreme weights. The chest area is\n
+covered with a thick steel plating which is almost impenetrable for regular rifle ammunition.\n
+The face mask serves as a protection against hazardous gases as well as a augmentation of the\n
+upper airways to allow a better lung function. The disadvantage of this massive cybernetic\n
+augmentation is the increased vulnerability to electromagnetic pulses (EMP).
+
+[Autopsy]
+
+[Xenobiology]
+
+[Interrogation]
+
+#####################################################################
 x. "placeholder"
-[description]
-[notes]
-[autopsy]
+----
+description
+
+[Combat notes]
+[Autopsy]
+[Xenobiology]
+[Interrogation]
+[Commander interrogation]

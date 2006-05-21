@@ -1,0 +1,12 @@
+#####################################################################
+1. Dropship
+
+[dropship_txt]
+The H-92 dropship is the main troop transport for the Phalanx rapid intervention forces. Powered by four General Electrics HM-5600 turbo jet engines, this dropship achieves a top speed of mach 1.0. The four engine exhausts can be pivoted so the H-92 has the ability to take off and land vertically. This technical feature is essential for rapidly deploying troops to any location\n
+nworldwide. On the downside the H-92 has hardly no combat value because of only minor armament. Therefore Phalanx commanders always have some interceptors stading by for air cover if a H-92 encounters a enemy UFO.
+
+#####################################################################
+2. Interceptor
+
+[interceptor_txt]
+<TODO>

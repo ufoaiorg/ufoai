@@ -3,40 +3,50 @@ This are drafts of technology descriptions that will mostly probably get into th
 The "researchtime" given is the time that one scientist would need to research the item i.e. the maximum time to complete the research with no pauses.
 
 #####################################################################
-Advanced Plasma Technology
-
-The Antareans have refined the technology to use the basic concept behind plasma (ionized gas) and perfected its use for military reasons. Not only do they use it for weapons, but they even managed to produce more powerful ion drives than mankind ever imagined possible.
-Your scientists could reproduce the basic concepts behind these improvements and we might even be able to produce similar equipment anytime soon.
+Advanced Plasma Control
 
 researchtime 90 days
 required_item something that uses plasma- or related technology
 
+[plasma_txt]
+The Antareans have refined the technology to use the basic concept behind plasma (ionized gas) and perfected its use for military reasons. Not only do they use it for weapons, but they even managed to produce more powerful ion drives than mankind ever imagined possible.Your scientists could reproduce the basic concepts behind these improvements and we might even be able to produce similar equipment anytime soon.
+
 #####################################################################
 Tachyon Control
-
-The research on tachyons (or tardyons, the kind that moves slower than lightspeed) have long been a big white space in human science. The antarean species has not only found out how tachyons really do fit in with the rest of all matter, but also found a way to create, manipulate and annihilate them at will. The projectiles itself do not move with near-lightspeed, but on impact the energy is emitted to the target at a speed that exceeds most physical boundaries known by mankind. This knowledge has been used to create devastating weapons that they now use to terrorize humanity. Our scientists believe that we may ber able to reproduce these weapons once we get more details lined up.
 
 researchtime 120 days
 required_item something that uses tachyon technology
 
-#####################################################################
-High-Energy Laser
+[tachyon_txt]
+The research on tachyons (or tardyons, the kind that moves slower than lightspeed) have long been a big white space in human science. The antarean species has not only found out how tachyons really do fit in with the rest of all matter, but also found a way to create, manipulate and annihilate them at will. The projectiles itself do not move with near-lightspeed, but on impact the energy is emitted to the target at a speed that exceeds most physical boundaries known by mankind. This knowledge has been used to create devastating weapons that they now use to terrorize humanity. Our scientists believe that we may ber able to reproduce these weapons once we get more details lined up.
 
-Laser (Light Amplification by Stimulated Emission of Radiation) technology is long known by mankind, but so-called "Tactical High-Energy Laser" or THEL have only been around for a short period of time. Though there already exist a mobile variation of this called "Mobile Tactical High-Energy Laser" or MTHEL these wepaon systems are too big and inefficient to have any real advantages to conventional weapons.
-The basic design of these weapons normaly uses a chemical laser (deuterium fluoride laser), which our scientists recently found out how to make about 5-times more efficient and compact.
-This may lead to new lightweight MTHEL weapons in the near future.
+#####################################################################
+Advanced Laser Technology
 
 researchtime 60 days
 initial technology
 
-#####################################################################
-Nanotechnology
+[laser_txt]
+Laser (Light Amplification by Stimulated Emission of Radiation) technology is long known by mankind, but so-called \"Tactical High-Energy Laser\" or THEL have only been around for a short period of time. Though there already exist a mobile variation of this called \"Mobile Tactical High-Energy Laser\" or MTHEL these wepaon systems are too big and inefficient to have any real advantages to conventional weapons.The basic design of these weapons normaly uses a chemical laser (deuterium fluoride laser), which our scientists recently found out how to make about 5-times more efficient and compact.This may lead to new lightweight MTHEL weapons in the near future.
 
-Nanotechnolgoy opens up a wide field of new production methods especially in the design and production of armor and fabric.
-By using nanotechnology it will be possible to create materials nearly completely made of fullerenes (geodesic domes at an atomic level) and use them fabricate armor that is more robust and has higher heat resistance than any known material before. Not also that, but these materials would also be lighter than comperable conventional ones.
+#####################################################################
+Nano Technology
 
 researchtime 80 days
 initial technology
+
+[nano_txt]
+Nanotechnolgoy opens up a wide field of new production methods especially in the design and production of armor and fabric.By using nanotechnology it will be possible to create materials nearly completely made of fullerenes (geodesic domes at an atomic level) and use them fabricate armor that is more robust and has higher heat resistance than any known material before. Not also that, but these materials would also be lighter than comperable conventional ones.
+
+#####################################################################
+Advanced Armor Fabrics
+
+<TODO>
+
+#####################################################################
+General UFO technology
+
+<TODO>
 
 #####################################################################
 ### Will not get included. Please ask in the forums if you really want to use it. ###
@@ -185,9 +195,12 @@ Writers/Credits:
 * ProtoArmor
 
 See also
+* aircrafts.txt - Phalanx aircrafts descriptions
 * alien_types.txt - Xenobiology of alien races and descriptions of their robots/cyborgs.
+* facilities.txt - Phalanx base facilities descriptions
+* storyline.txt - Storyline and plot description
 * ufo_types.txt - UFO types
-* weapon_hierarchy.txt - Weapon- and item-descriptions
+* weapons.txt - Weapon- and item-descriptions
 
 Some of the sources:
 http://en.wikipedia.org/wiki/Plasma_%28physics%29

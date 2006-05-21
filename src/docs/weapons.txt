@@ -1,0 +1,526 @@
+Most of this is tentative and serves as a "proposed" outline of the weapon hierarchy. Descriptions in the UFOpaedia should be longer than the ones given here. Balancing tentative, other than the vague comparisons given here. It also implies changes to the tactical combat simulator (smoke, fire, stealth, etc).
+I abstract from the ammo clips that are appropriate for each weapon. Note that even Laser weapons use ammo, unlike in UFO:EU.
+I abstract from alien armor.
+
+
+
+
+==================================
+Tier 1: Human standard equipment
+==================================
+Part of this tier is alread fully implemented. Equipment from this tier can be bought through the trade screen.
+
+#####################################################################
+- Assault Rifle (implemented)
+
+A rifle with medium accuracy that can fire with optimum accuracy over medium range.
+Damage type: Projectile
+Weapon class: Assault
+
+[ufopedia description]
+[assault_txt]
+[assault_ammo_txt]
+The AR-80 is the standard weapon of the Phalanx forces. Using improved ammo and a revolutionary design, this rifle can do more damage as any comparable assault rifle. The AR-80s rear loaded clip allows the weapon to fire with greater accuracy as the bullet has to move down an extended muzzle before exiting the weapon. The Assault Rifle can also be repaired much easier due to the fact that it is built in modules. For example, the firing mechanism can be field repaired simply by removing the out of commission back end and inserting a new one. The entire process takes only minutes.
+
+#####################################################################
+- Pistol (implemented)
+
+A one-handed firearm that is very accurate at medium range, and can be fired at short notice, but lacks the stopping power of the Assault Rifle. Useful for self-defense, and covering fire. A soldier may use two pistols at the same time, gaining twice the firepower at a small accuracy cost, but using the same amount of TUs as when firing a single gun.
+Damage type: Projectile
+Weapon class: Close
+
+[ufopedia description]
+[pistol_txt]
+[pistol_ammo_txt]
+The P-95 is the standard Phalanx sidearm. The simple design of this handgun makes it a very reliable addition to every soldier's equipment. Because of the weapon's low weight a experienced gunner can also use two pistols at the same time with the considerable drawback of a massivly reduced accuracy. The P-95 is especially appreciated by snipers for having a valuable sidearm when it comes to close combat. It is very accurate at medium range, and can be fired at short notice, but lacks the stopping power of the Assault Rifle.
+
+#####################################################################
+- Submachine Gun (implemented)
+
+Rather inaccurate at medium range, but performs well at short range. Does more damage than the pistol at short range. A good weapon to take to close-quarter combat situations.
+Damage type: Projectile
+Weapon class: Assault
+
+[ufopedia description]
+[smg_txt]
+[smg_ammo_txt]
+Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at the cost of less accuracy and penetrating power. These characteristics make the SMG-68 a ideal choice for close combat. Therefore Phalanx soldiers use the SMG-68 mainly in urban areas. To optimize the rate of fire, this weapon has two barrels through which the bullets are fired off alternating. To damp the considerable recoil, a advanced counter-balance system is used powered by the explosion gases originating from the cartridges.The SMG-68 is rather inaccurate at medium range, but performs well at short range. 
+
+#####################################################################
+- Flame Thrower (implemented)
+A weapon that shoots burning napalm from its muzzle. It has 100% accuracy, but very limited range.
+Damage type: Incendiary
+Weapon class: Heavy
+
+[ufopedia description]
+[flamer_txt]
+[flamer_ammo_txt]
+The FT-207 is one of the most recent additions to tactical combat. Prior versions of this weapon were not employed do to the risk of accidentally igniting surrounding objects. This version, however, greatly reduces this risk by employing FHAS, or, Focused Heat Attack System, which restricts the 'hot zone' created by the flamethrower to a very defined region. The area centimeters outside the 'hot zone' show no noticeable temperature increase.
+
+#####################################################################
+- Shotgun (implemented)
+
+A close-combat weapon. Its advantage over the Submachine Gun is that it does more damage per shot, making it a better weapon against armored targets. Its drawback is that it takes longer to fire it, allowing for less shots per round and a smaller action radius for the soldier when saving TUs for reaction fire.
+Damage type: Projectile
+Weapon class: Close
+
+[ufopedia description]
+[shotgun_txt]
+[shotgun_ammo_txt]
+The Phalanx forces are using the SG-260 with great success for quite some time now. Compared with the shotguns traditionally used by mainy SWAT teams, the SG-260 is capable to better channel the bullets fired off from the buckshots. Therefore the effective range of this weapon is increased so it can be used not only at close but also at medium range. The SG-260 is a good choice for urban combat, especially for clearing a building.Its advantage over the Submachine Gun is that it does more damage per shot, making it a better weapon against armored targets.
+
+#####################################################################
+- Rocket Launcher (implemented)
+
+The Rocket Launcher fires rocket-propelled grenades. It is capable of firing a High Explosive projectile, which damages all units in its blast radius, or an Incendiary one, which sets a part of the area alight, and all units caught in its blast radius.
+Damage type: Blast or Incendiary
+Weapon class: Explosive
+
+[ufopedia description]
+[rpg_txt]
+[rpg_ammo_txt]
+The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. Phalanx weapon scientists and engineers developed a new tracking system not only capable to fight airborne but also ground targets. The RL-1056's rockets use a combination of laser guidance and high speed cameras to identify the target. Despite a good accuracy when the tracking system had enough time to correctly lock on the target, this rocket launcher is of limited value if it has to be used in snapshot mode.
+
+#####################################################################
+- Sniper Rifle (implemented)
+
+A gun that has great accuracy at long range. It takes very long to fire, and a soldier cannot typically move and fire the Sniper Rifle in one turn. Best suited for reaction fire.
+Damage type: Projectile
+Weapon class: Precise
+
+[ufopedia description]
+[sniper_txt]
+[sniper_ammo_txt]
+Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of the most deadly weapons employed by Phalanx forces. Powered by a advanced version of the 0.5 cartridge, it is capable to easily penetrate the engine block of a vehicle at 150 meters. However, the weapon is very bulky and requires many precious seconds to aim, therefore the WE-78 is definitly not suitable for close combat.
+
+#####################################################################
+- Frag Grenade (implemented)
+
+Damage type: Blast
+Weapon class: Explosive
+
+[ufopedia description]
+[fraggen_txt]
+The fragmentation grenade can be thrown by a soldier. Its explosion damages all units caught in its blast radius. The timer can be set between 0 and 9. 0 means the grenade explodes immediately after being thrown, 1 means it explodes on the start of the player's next turn, etc. Timed grenades may be picked up and thrown back.
+
+#####################################################################
+- Knife (implemented)
+
+Damage type: Projectile
+Weapon class: Close
+
+[ufopedia description]
+[knife_txt]
+Your basic knife. Can be used at very short range or can be thrown. Like Pistols, knives may be used ambidextrously.
+
+#####################################################################
+- Medikit (implemented)
+
+Damage type: None, bypasses armor.
+
+[ufopedia description]
+[medikit_txt]
+A set of field medical supplies. Capable of restoring health to wounded soldiers.
+
+#####################################################################
+- Incendiary Grenade
+
+This grenade will set alight a small area on the battlefield, and all units caught in its blast radius. It can be timed in the same way as the Frag Grenade.
+Damage type: Incendiary
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Smoke Grenade
+
+Damage type: Stun
+Weapon class: Explosive
+
+[ufopedia description]
+[smokegren_txt]
+This grenade does very little damage to those caught in its blast radius, but it sets up a smoke screen that obstructs view.
+
+#####################################################################
+- Flare
+
+This grenade illuminates the surrounding area. Useful on night missions.
+Damage type: None, no damage
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Stun Gas Grenade
+
+This grenade expels a gas that causes those who inhale it to lose consciousness. Useful when capturing live aliens. The stun gas also tends to bypass armor that doesn't provide life support.
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Stun Rod (implemented)
+
+Weapon class: Close
+
+[ufopedia description]
+[stunrod_txt]
+Easy to handle device for stunning and capturing your enemy. The only downside is that you need to stand next to him to do so, but then it's a few times more effective then stun grenades.
+The stun rod used by Phalanx soldiers is one of the most effective devices to capture your enemies alive. It not only deploys a huge electrical discharge onto the target, but also injects very powerful narcotics and drugs. The combination of the discharge and these chemicals can knock out even the biggest lifeform known to mankind and will most likely also work on most of the aliens we have encountered yet. The rod is equipped with two a roto hammer like spikes that will be driven into the target and then then deploy the before mentioned discharge and chemicals.
+
+#####################################################################
+- Mine
+
+When a soldier sets this device, it becomes invisible. The mine becomes active on the next team's turn, so a soldier who sets this should move off the square the mine is deployed on. When any unit (including the friendly team's units and civilians!) steps on the mine, it explodes, damaging all units in its blast radius.
+Damage type: Blast
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+-Incendiary Mine
+
+Like the Mine, only this one sets a part of the area alight, and all units caught in its blast radius.
+Damage type: Incendiary
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Stun Gas Mine
+
+Like the Mine, only this one expels a gas that causes those who inhale it to lose consciousness. Useful when capturing live aliens. The stun gas also tends to bypass armor that doesn't provide life support.
+Damage type: Stun
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- IR Goggles (implemented)
+
+[ufopedia description]
+[irgoggles_txt]
+This device allows the soldier who uses it to spot all sources of heat, such as aliens. Useful to locate aliens behind walls.
+
+#####################################################################
+- Mine Sensor
+
+This device allows the soldier who uses it so spot mines in a small area around himself. Once mines have been spotted this way they become visible and can be destroyed.
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Elecromagnetic Rifle [was: Bolter Rifle] (implemented)
+
+(It's a little unrealistic, but we can assume that technology has advanced a little...
+I made up the last bit, and it's possible you'll want the Bolter to be fully auto... in which case, maybe you could simply make the shots take up more TUs than the standard rifle, to simulate the recharge time. -PsyW) 
+
+Damage type: Projectile
+Weapon class: Heavy
+
+[ufopedia description]
+[bolterrifle_txt]
+[bolterrifle_ammo_txt]
+The MkII Electromagnetic Rifle launches a ferrite projectile at very high velocities. The projectile is larger than the standard  projectile used in the AR-80 assault rifle, and at supersonic speeds, it is capable of doing significant damage to any soft target unfortunate enough to get in the way. The EM Rifle has no moving parts, and is therefore silent apart from the sound of the bullet as it breaks the sound barrier.\n
+As the ammunition is larger, capacity is reduced. Additionally, there is a significant recharge time between shots that makes fully automatic fire impossible, but still enables the operator to fire multiple shots.
+
+#####################################################################
+- Grenade Launcher (implemented)
+
+TODO: Add description
+Damage type: Blast
+Weapon class: Heavy
+
+[ufopedia description]
+[grenl_txt]
+[grenl_ammo_txt]
+<TODO>
+
+
+
+
+==================================
+Tier 2: Human laser equipment
+==================================
+Some models for this tier exist.
+
+#####################################################################
+- Laser Pistol (implemented)
+
+A one-handed firearm that is very accurate at medium range, and can be fired at short notice. It deals limited damage, but is more accurate then the Pistol due to the lack of recoil. Like Pistols, Laser Pistols may be used ambidextrously.
+Damage type: Laser
+
+[ufopedia description]
+[laserpistol_txt]
+[laserpistol_ammo_txt]
+Using a smaller and less powerful version of the 'YAG laser reactor', the LAS-10 is like its big brother, the LAS-24 Laser Rifle, a offspring of the recent advances made in the field of laser technology. Due to the smaller 'YAG reactor', the photons have a lower kinetic energy and therefore a lessend penetrating power. It deals limited damage, but is more accurate then the Pistol due to the lack of recoil. Like Pistols, Laser Pistols may be used ambidextrously.
+
+#####################################################################
+- Laser Rifle (implemented)
+
+Like the Assault Rifle, the Laser Rifle is effective at medium range. It deals fair damage and is more accurate than the Assault Rifle due to the lack of recoil.
+Damage type: Laser
+
+[ufopedia description]
+<TODO>
+[laserrifle_txt]
+<TODO>
+
+#####################################################################
+- Laser Sniper Rifle
+
+Laser Sniper Rifles are very accurate at long range. They fulfill the same role as normal Sniper Rifles, only the lack of recoil makes them even more accurate.
+Damage type: Laser
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Heavy Laser
+
+Heavy Lasers are bulky and unwieldy due to the triple Laser generators it houses. Because of its bulk, the heavy Laser is less accurate than a Laser Rifle, but it has a longer effective range. It also does a lot more damage.
+Damage type: Laser
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Proximity Laser Mine
+
+Not really a "mine", this device is nevertheless handled like one. Once set and activated, this mine will wait for any unit (including the friendly team's units and civilians!) comes close enough, and will fire a laser burst in reaction fire at that unit. The damage of the laser burst is equivalent to a Laser Pistol's, but the accuracy is almost 100%. Once it fires, the mine will become visible and can be destroyed. It will continue to operate until it is destroyed, or until its ammo runs out.
+Damage type: Laser
+
+[ufopedia description]
+<TODO>
+
+
+
+
+==================================
+Tier 3: Alien plasma equipment
+==================================
+Some models for this tier exist.
+
+#####################################################################
+- Plasma Pistol (implemented)
+
+The basic alien weaponry issued to Workers. It generally does more damage to an unprotected target than a normal Pistol, and is about as accurate as one. Like Pistols, Plasma Pistols may be used ambidextrously.
+Damage type: Plasma
+
+[ufopedia description]
+[plaspistol_txt]
+[plaspistol_ammo_txt]
+Using the same technology as the Plasma Rifle, the Plasma Pistol can also do considerable damage to its target. The overheated xenon plasma is also contained inside a strong magnetic field implemented in the pistol's clip. Because of the smaller dimensions of this one-handed weapon, the magnetic field generators are not that capable as the ones used in the Plasma Rifle. Therefore the cinetic energy given to the plasma beam is lessened.
+
+#####################################################################
+- Plasma Rifle (implemented)
+
+Standard issue weapons for Soldier-class Antareans. It does more damage to an unprotected target than an Assault Rifle, and is about as accurate as one.
+Damage type: Plasma
+
+[ufopedia description]
+[plasrifle_txt]
+[plasrifle_ammo_txt]
+[plasblaster_txt]
+[plasblaster_ammo_txt]
+
+The Plasma Rifle is the weapon most often used by ... warriors. The plasma fired by this weapon easly cuts through almost every known material. Therefore the standard Phalanx kevlar vest only provides minor protection. Soldiers wounded by a Plasma Rifle's beam suffer of extensive burns which are in many cases instantly lethal. The overheated highly energetic xenon gas plasma is stored inside a intense magnetic field integrated in the weapon's clip. If the trigger is used, the magnetic field is reconfigured so that a continuous plasma beam is formed. This beam is focused by a second magnetic field and finally propelled to the front end of the Plasma Rifle.
+
+#####################################################################
+- Heavy Plasma (implemented)
+
+A weapon normally used to destroy armored targets. Heavy and slow to fire, this weapon is more powerful than anything Earth-made.
+Damage type: Plasma
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Plasma Mine
+
+This device acts like a normal mine, but instead of an explosive blast it creates a ball of hot plasma in its effective radius. This radius is slightly larger than that of a standard mine.
+Damage type: Plasma
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Plasma Grenade
+
+This device acts just like a Frag Grenade, but instead of an explosive blast it creates a ball of hot plasma in its effective radius. This radius is slightly larger than that of a Frag Grenade.
+Damage type: Plasma
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Plasma Blade
+
+Damage type: Plasma
+
+[ufopedia description]
+[plasblade_txt]
+This melee weapon has proven to be of great value in hand to hand combat because of the devestating burns it can inflict when someone touches its blade. Generally the enemy is unable to fight onward just after one strike. On the downside the range of this weapon is utterly limited.
+
+
+
+
+==================================
+Tier 4: Alien Tachyon equipment
+==================================
+Some models for this tier exist.
+
+#####################################################################
+- Tachyon Pistol (implemented)
+
+Damage type: Tachyon
+
+[ufopedia description]
+[tachyonpistol_txt]
+[tachyonpistol_ammo_txt]
+
+This weapon is powered by a miniaturized version of the tachyon accelerator. Therefore the Tachyon Pistol has a lower rate of fire as well as a diminished accuracy compared to the other two tachyon weapons. The major advantage of the Tachyon Pistol is its low weight and its small dimensions which makes it a valuable sidearm.
+
+#####################################################################
+- Tachyon Rifle (implemented)
+
+TODO: tweak the description a bit to match the tachyon tech better.
+This rifle fires tachyon beams at medium range. They are less accurate than most Rifle weapons, but they are a lot more powerful.
+Damage type: Tachyon
+
+[ufopedia description]
+[tachyonrifle_txt]
+[tachyonrifle_ammo_txt]
+Although our engineers not fully understand the principles of altering the tachyons on a subatomic level, they were able to reproduce the tachyon accelerator technology. Apparently the tachyons are given a defined spin inside the accelerator so they are able to interact with any material. They still tend to infiltrate easily through any known armor and lose their particle energy not before a penetrating distance of about 10 cm. Therefore a soldier hit by a tachyon charge suffers only minor superficial injury but is heavily wounded in his viscera.
+
+#####################################################################
+- Tachyon Sniper Rifle (implemented)
+
+Damage type: Tachyon
+
+[ufopedia description]
+[tachyonsniper_txt]
+[tachyonsniper_ammo_txt]
+
+The Tachyon Sniper Rifle uses also the newly discovered tachyon accelerator technology, first found in a Ortnok scout spaceship. Unlike the Tachyon Rifle, this weapon has a low rate of fire because the tachyon particles are intensely charged before they are fired. This means that the shots fired by the Tachyon Sniper Rifle are more focused and hence have a greater accuracy as well as a bigger penetrating power.
+
+#####################################################################
+- Tachyon Grenade
+
+This device acts just like a Frag Grenade, but its radius is larger than that of a Frag Grenade, and it deals much more damage.
+Damage type: Blast
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Tachyon Missile Launcher
+
+This device fires self-propelled projectiles that explode in a concentrated tachyon blast. It is much more effective than a standard Earth Missile Launcher.
+Damage type: Blast
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Proximity Tachyon Mine
+
+This device acts just like Mine, except it explodes when any unit is close enough. Its blast radius is larger than a normal Mine's, and it deals much more damage.
+Damage type: Blast
+
+[ufopedia description]
+<TODO>
+
+
+
+
+==================================
+Tier 5: Psionic equipment
+==================================
+Completely tentative.
+
+#####################################################################
+- Psionic Amplifier
+
+This device allows a soldier to attack a target's mind. Psionic attacks are barely affected by armor, and in addition to causing pain and panic, skilled Psionics can cause a victim to fall unconscious, or even take over a victim's mind. The Psionic Amplifier has a long range, but the victim must be visible for the attack to succeed.
+Damage type: Psi
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Psionic Pulse Mine
+
+This device acts like a proximity mine, but instead of exploding it emits a strong psionic pulse, overloading the neural pathways of any unit who is too close when it goes off. Most units will lose consciousness when caught in the blast radius. Those who retain consciousness will panic, unless their psionic resistance is unusually high. Once the mine is activated it is rendered useless.
+Damage type: Psi
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Psionic Pulse Grenade
+
+This device acts like any other grenade, but it does Psi damage in the same way the Psionic Pulse Mine does. Once used, it is reduced to so much scrap metal.
+Damage type: Psi
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Psionic Linker
+
+The Psionic Linker allows two Psionics to establish a bond with one another. Their minds temporarily join as one, and the psionic force of that mind is equal to the combined psionic force of the two minds separate. Usually, the linked mind will reside in one body, while the other is left inanimate.
+
+[ufopedia description]
+<TODO>
+
+
+
+
+==================================
+Tier 6: Armor
+==================================
+Some armor exists already.
+
+#####################################################################
+- Light Armor (implemented)
+
+A light armor offering some protection from enemy fire.
+
+[ufopedia description]
+[kevlar_armor_txt]
+<TODO>
+
+#####################################################################
+- Medium Armor (implemented)
+
+A stronger armor offering more protection.
+
+[ufopedia description]
+[nano_armor_txt]
+<TODO>
+
+#####################################################################
+- Power Armor
+
+An armor that completely surrounds the soldier's body, effectively quarantining the soldier from his or her environment. The suit is internally powered to allow for full manoueverability, and provides internal life support to the soldier, rendering stun gas ineffective.
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Hover Armor
+
+An armor like the Power Armor, but it allows the soldier to float for short periods of time. It cannot sustain flight for very long, and any soldier who ends his turn in the air will fall to the ground.
+
+[ufopedia description]
+<TODO>
+
+#####################################################################
+- Psi-Amp Armor
+
+A modified Medium Armor that offers good protection against psionic attacks. It also offers a bomus to a soldier's psionic abilities.
+
+[ufopedia description]
+<TODO>
