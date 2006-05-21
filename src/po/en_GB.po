@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-05-21 11:13+0200\n"
-"PO-Revision-Date: 2006-05-21 11:44+0100\n"
+"POT-Creation-Date: 2006-05-21 16:11+0200\n"
+"PO-Revision-Date: 2006-05-21 16:16+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1182,9 +1182,8 @@ msgid "General UFO technology"
 msgstr "General UFO technology"
 
 #: ../base/ufos/research.ufo:137
-#, fuzzy
 msgid "ufo_txt"
-msgstr "Hire scientist to research alien technology."
+msgstr ""
 
 #: ../base/ufos/research.ufo:157
 msgid "assault_txt"
@@ -1451,27 +1450,36 @@ msgstr "Ortnok - Autopsy"
 msgid "ortnok_autopsy_txt"
 msgstr "The green skin is scaly and tough, and cellular analysis reveals an abundance of chlorophyll, the molecule that makes plant leaves green. The digestive system does not appear to be undersized so we can only surmize that the Ortnok must have evolved in an environment where food could be scarce and falling back on solar energy was the only option in such situations.The reproductive organs of this species are very active, only ceasing to function 14 hours after death. Small wonder the Antareans use them as a limitless supply of cannon fodder in every terrain they choose to conquer."
 
-#: ../base/ufos/research.ufo:962
+#: ../base/ufos/research.ufo:965
 msgid "Ortnok - Xenobiology"
 msgstr "Ortnok - Xenobiology"
 
-#: ../base/ufos/research.ufo:963
+#: ../base/ufos/research.ufo:966
 msgid "ortnok_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:976
+#: ../base/ufos/research.ufo:982
 msgid "Ortnok - Interrogation"
 msgstr "Ortnok - Interrogation"
 
-#: ../base/ufos/research.ufo:977
+#: ../base/ufos/research.ufo:983
 msgid "ortnok_interrogation_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:992
+#: ../base/ufos/research.ufo:1001
+msgid "Ortnok TODO: FIND A NAME"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1002
+#, fuzzy
+msgid "ortnok_light_txt"
+msgstr "Genetically the green skinned Ortnoks seem to be related very closely to the human race. About 80% of their DNA is identical compared to the human's. The parts that are different are most likely genetically engineered because they do not show any individual variability. The fact that they are genetically altered and that they do not seem to have any functional reproduction organs suggests that they are clones made by some as yet unknown alien species. Additionally the Ortnoks have several cybernetic implants which involve mainly the cardiovascular system, the muscles, the eyes and the brain. They enhance the physical strenght and stamnia as well as the senses to a level superior to any human. The purpose of the brain implants is mostly unclear but it is believed that they serve as receivers for commands. But currently this is only a assumption because there is no evidence proving the existence of such a master-species."
+
+#: ../base/ufos/research.ufo:1020
 msgid "Ortnok Warrior"
 msgstr "Ortnok Warrior"
 
-#: ../base/ufos/research.ufo:993
+#: ../base/ufos/research.ufo:1021
 msgid "ortnok_medium_txt"
 msgstr ""
 "Having the same genetical features as the regular Ortnoks, the Ortnok Warriors have been\n"
@@ -1484,115 +1492,115 @@ msgstr ""
 "upper airways to allow a better lung function. The disadvantage of this massive cybernetic\n"
 "augmentation is the increased vulnerability to electromagnetic pulses (EMP)."
 
-#: ../base/ufos/research.ufo:1011
+#: ../base/ufos/research.ufo:1039
 msgid "Antarean - Combat notes"
 msgstr "Antarean - Combat notes"
 
-#: ../base/ufos/research.ufo:1012
+#: ../base/ufos/research.ufo:1040
 msgid "antarean_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1028
+#: ../base/ufos/research.ufo:1056
 msgid "Antarean - Autopsy"
 msgstr "Antarean - Autopsy"
 
-#: ../base/ufos/research.ufo:1029
+#: ../base/ufos/research.ufo:1057
 msgid "antarean_autopsy_txt"
 msgstr "Possesses a superficially similar complement of internal organs to humans. On closer inspection the heart is found to have a more complicated structure, tighter integration with the lungs and a connection to a small, liver-like organ. Electrically stimulating the Antarean heart produces a smooth, four stroke heart beat that takes in blood, aerates the blood within the lungs, filters the aerated blood of pollutants and toxins through the additional organ, before pumping the blood around the body. This circulatory system must contribute greatly to the stamina of the species.DNA analysis of specimens of different rank reveals differences in the amount of junk DNA carried by each specimen. Specimens of a higher rank have noticeably less junk DNA, and it appears to have been replaced by DNA containing patterns that yield easily to mathematical modelling. It is possible that this species uses genetic manipulation to confer knowledge upon those who are destined to lead before they are even born. Advanced psionic attacks may provide access to this information."
 
-#: ../base/ufos/research.ufo:1045
+#: ../base/ufos/research.ufo:1073
 msgid "Antarean - Xenobiology"
 msgstr "Antarean - Xenobiology"
 
-#: ../base/ufos/research.ufo:1046
+#: ../base/ufos/research.ufo:1074
 msgid "antarean_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1059
+#: ../base/ufos/research.ufo:1090
 msgid "Antarean - Interrogation"
 msgstr "Antarean - Interrogation"
 
-#: ../base/ufos/research.ufo:1060
+#: ../base/ufos/research.ufo:1091
 msgid "antarean_interrogation_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1073
+#: ../base/ufos/research.ufo:1107
 msgid "Antarean - Commander interrogation"
 msgstr "Antarean - Commander interrogation"
 
-#: ../base/ufos/research.ufo:1074
+#: ../base/ufos/research.ufo:1108
 msgid "antarean_interrogation_commander_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1089
+#: ../base/ufos/research.ufo:1126
 msgid "Shevaar - Combat notes"
 msgstr "Shevaar - Combat notes"
 
-#: ../base/ufos/research.ufo:1090
+#: ../base/ufos/research.ufo:1127
 msgid "shevaar_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1106
+#: ../base/ufos/research.ufo:1143
 msgid "Shevaar - Autopsy"
 msgstr "Shevaar - Autopsy"
 
-#: ../base/ufos/research.ufo:1107
+#: ../base/ufos/research.ufo:1144
 msgid "shevaar_autopsy_txt"
 msgstr "The sheer muscular bulk of the Shevaar is supported by a stout, rugged skeleton, giving the species its fearsome strength. The two sets of jaws are anchored on the creature's enourmous shoulder blades, making them as wide as the creature itself, and provide phenomenal crushing force.The huge wet nose of the beast is in fact its brain, covered with a dense array of sensory cells of varying types. While the ability of the Shevaar to hunt down its prey is heightened by this combined sensory and cognitive organ, its prominent placement and lack of protective bone renders it susceptible to psionic attack, as well as providing an obvious weak point in melee combat."
 
-#: ../base/ufos/research.ufo:1123
+#: ../base/ufos/research.ufo:1160
 msgid "Shevaar - Xenobiology"
 msgstr "Shevaar - Xenobiology"
 
-#: ../base/ufos/research.ufo:1124
+#: ../base/ufos/research.ufo:1161
 msgid "shevaar_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1139
+#: ../base/ufos/research.ufo:1179
 msgid "Hovernet - Combat notes"
 msgstr "Hovernet - Combat notes"
 
-#: ../base/ufos/research.ufo:1140
+#: ../base/ufos/research.ufo:1180
 msgid "hovernet_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1156
+#: ../base/ufos/research.ufo:1196
 msgid "Hovernet - wreck research"
 msgstr "Hovernet - wreck research"
 
-#: ../base/ufos/research.ufo:1157
+#: ../base/ufos/research.ufo:1197
 msgid "hovernet_autopsy_txt"
 msgstr "Untangling the network of loose, fibrous material that forms at least 90% of the hovernet reveals a solid disc of unknown construction. Mounting points for weaponry are clearly visible, though the markings alongside them have yet to be deciphered and would be our first breakthrough in understanding the alien language.No joints can be seen between the disc and the dozens of fibres that protrude from it, even under an electron microscope. It is possible that the fibres are extruded from the disc itself, which must provide the most efficient distribution of the hovernet's energy and propulsive force.The loose arrangement of the fibres suggests that a successful hit with a projectile or directed energy weapon is unlikely, and blast or incendiary weapons would have greater effect."
 
-#: ../base/ufos/research.ufo:1173
+#: ../base/ufos/research.ufo:1213
 msgid "Hovernet - design"
 msgstr "Hovernet - design"
 
-#: ../base/ufos/research.ufo:1174
+#: ../base/ufos/research.ufo:1214
 msgid "hovernet_xenobiology_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1189
+#: ../base/ufos/research.ufo:1232
 msgid "Cyborg Ortnok - Combat notes"
 msgstr "Cyborg Ortnok - Combat notes"
 
-#: ../base/ufos/research.ufo:1190
+#: ../base/ufos/research.ufo:1233
 msgid "cyborg_ortnok_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1206
+#: ../base/ufos/research.ufo:1249
 msgid "Cyborg Ortnok - Autopsy"
 msgstr "Cyborg Ortnok - Autopsy"
 
-#: ../base/ufos/research.ufo:1207
+#: ../base/ufos/research.ufo:1250
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr "Separating the cyborg endoskeleton from the specimen's flesh generates sparks and releases choking, acidic vapours. The internals of the endoskeleton slide out of access holes in the artifical bone structure, attached to surgically implanted tendrils that appear to be biomechanical. It seems that digestive systems and reproductive organs have been removed and replaced by numerous small engines encased within the endoskeleton. Energy created by the chlorophyll in the Ortnok's skin appears to kickstart the reactions in these micro-engines.The purpose of the Antarean cyborg programme is clearly the conversion of the Ortnok into a biomechanical weapons platform that demands much greater energy output and suppression of the reproductive instinct."
 
-#: ../base/ufos/research.ufo:1222
+#: ../base/ufos/research.ufo:1266
 msgid "Cyborg Ortnok - Xenobiology"
 msgstr "Cyborg Ortnok - Xenobiology"
 
-#: ../base/ufos/research.ufo:1223
+#: ../base/ufos/research.ufo:1267
 msgid "cyborg_ortnok_xenobiology_txt"
 msgstr "<TODO>"
 
@@ -2068,14 +2076,14 @@ msgstr "Not enough credits to build this\n"
 #: client/cl_campaign.c:2085
 #: client/cl_campaign.c:2115
 #: client/cl_campaign.c:2117
-#: client/cl_research.c:489
-#: client/cl_research.c:601
-#: client/cl_research.c:604
-#: client/cl_research.c:608
-#: client/cl_research.c:625
-#: client/cl_research.c:657
-#: client/cl_research.c:661
-#: client/cl_research.c:790
+#: client/cl_research.c:512
+#: client/cl_research.c:624
+#: client/cl_research.c:627
+#: client/cl_research.c:631
+#: client/cl_research.c:648
+#: client/cl_research.c:680
+#: client/cl_research.c:684
+#: client/cl_research.c:813
 msgid "Notice"
 msgstr "Notice"
 
@@ -2193,9 +2201,9 @@ msgid "Returning to homebase"
 msgstr "Returning to homebase"
 
 #: client/cl_campaign.c:569
-#: client/cl_ufopedia.c:54
-#: client/cl_ufopedia.c:82
-#: client/cl_ufopedia.c:83
+#: client/cl_ufopedia.c:52
+#: client/cl_ufopedia.c:78
+#: client/cl_ufopedia.c:79
 msgid "None"
 msgstr "None"
 
@@ -2294,21 +2302,21 @@ msgstr "You've won the battle"
 msgid "You've lost the battle"
 msgstr "You've lost the battle"
 
-#: client/cl_campaign.c:2266
+#: client/cl_campaign.c:2265
 #, c-format
 msgid "%s (%s) died on his last mission.\n"
 msgstr "%s (%s) died on his last mission.\n"
 
-#: client/cl_campaign.c:2267
+#: client/cl_campaign.c:2266
 msgid "Soldier died"
 msgstr "Soldier died"
 
-#: client/cl_campaign.c:2293
+#: client/cl_campaign.c:2292
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s has been promoted to %s.\n"
 
-#: client/cl_campaign.c:2294
+#: client/cl_campaign.c:2293
 msgid "Soldier promoted"
 msgstr "Soldier promoted"
 
@@ -2379,76 +2387,76 @@ msgstr "Enemy spotted!\n"
 msgid "Civilian spotted!\n"
 msgstr "Civilian spotted!\n"
 
-#: client/cl_research.c:371
+#: client/cl_research.c:394
 #, c-format
 msgid "Free labs in this base: %i"
 msgstr "Free labs in this base: %i"
 
-#: client/cl_research.c:372
+#: client/cl_research.c:395
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr "Available scientists in this base: %i"
 
-#: client/cl_research.c:374
+#: client/cl_research.c:397
 msgid "Not researched in any base."
 msgstr "Not researched in any base."
 
-#: client/cl_research.c:379
+#: client/cl_research.c:402
 #, c-format
 msgid "Researched in %s"
 msgstr "Researched in %s"
 
-#: client/cl_research.c:381
+#: client/cl_research.c:404
 msgid "Researched in this base."
 msgstr "Researched in this base."
 
-#: client/cl_research.c:391
+#: client/cl_research.c:414
 msgid "Progress: %.1f\\%\n"
 msgstr "Progress: %.1f\\%\n"
 
-#: client/cl_research.c:393
+#: client/cl_research.c:416
 msgid "Progress: Not available."
 msgstr "Progress: Not available."
 
-#: client/cl_research.c:399
+#: client/cl_research.c:422
 msgid "Status: Under research\n"
 msgstr "Status: Under research\n"
 
-#: client/cl_research.c:402
+#: client/cl_research.c:425
 msgid "Status: Research paused\n"
 msgstr "Status: Research paused\n"
 
-#: client/cl_research.c:405
+#: client/cl_research.c:428
 msgid "Status: Research finished\n"
 msgstr "Status: Research finished\n"
 
-#: client/cl_research.c:408
+#: client/cl_research.c:431
 msgid "Status: Unknown technology\n"
 msgstr "Status: Unknown technology\n"
 
-#: client/cl_research.c:416
+#: client/cl_research.c:439
 msgid "Dependencies: "
 msgstr "Dependencies: "
 
-#: client/cl_research.c:489
+#: client/cl_research.c:512
 msgid "There is no free lab available.\\You need to build one or free another\\in order to assign scientists to research this technology.\n"
 msgstr "There is no free lab available.\\You need to build one or free another\\in order to assign scientists to research this technology.\n"
 
-#: client/cl_research.c:601
+#: client/cl_research.c:624
 msgid "This item is already under research by your scientists."
 msgstr "This item is already under research by your scientists."
 
-#: client/cl_research.c:604
-#: client/cl_research.c:657
+#: client/cl_research.c:627
+#: client/cl_research.c:680
 msgid "The research on this item continues."
 msgstr "The research on this item continues."
 
-#: client/cl_research.c:608
-#: client/cl_research.c:661
+#: client/cl_research.c:631
+#: client/cl_research.c:684
 msgid "The research on this item is complete."
 msgstr "The research on this item is complete."
 
-#: client/cl_research.c:625
+#: client/cl_research.c:648
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -2456,117 +2464,137 @@ msgstr ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
 
-#: client/cl_research.c:695
+#: client/cl_research.c:718
 msgid " [not yet researchable]"
 msgstr " [not yet researchable]"
 
-#: client/cl_research.c:711
+#: client/cl_research.c:734
 #, c-format
 msgid "%i max.\n"
 msgstr "%i max.\n"
 
-#: client/cl_research.c:722
+#: client/cl_research.c:745
 msgid " [under research]"
 msgstr " [under research]"
 
-#: client/cl_research.c:727
+#: client/cl_research.c:750
 msgid " [finished]"
 msgstr " [finished]"
 
-#: client/cl_research.c:730
+#: client/cl_research.c:753
 msgid " [paused]"
 msgstr " [paused]"
 
-#: client/cl_research.c:734
+#: client/cl_research.c:757
 msgid " [unknown]"
 msgstr " [unknown]"
 
-#: client/cl_research.c:790
+#: client/cl_research.c:813
 msgid "Build a laboratory first"
 msgstr "Build a laboratory first"
 
-#: client/cl_research.c:874
+#: client/cl_research.c:897
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Research of %s finished\n"
 
-#: client/cl_research.c:876
+#: client/cl_research.c:899
 #, c-format
 msgid "%i researches finished\n"
 msgstr "%i researches finished\n"
 
-#: client/cl_research.c:877
+#: client/cl_research.c:900
 msgid "Research finished"
 msgstr "Research finished"
 
-#: client/cl_research.c:1073
+#: client/cl_research.c:1096
 msgid "No description available."
 msgstr "No description available."
 
-#: client/cl_team.c:263
+#: client/cl_team.c:269
 #, c-format
-msgid ""
-"Primary:\t%s\n"
-"Secondary:\t%s\n"
-"Damage:\t%i / %i\n"
-"Time units:\t%i / %i\n"
-"Range:\t%1.1f / %1.1f\n"
-"Spreads:\t%1.1f / %1.1f\n"
-"Ammo:\t%i\n"
-msgstr ""
-"Primary:\t%s\n"
-"Secondary:\t%s\n"
-"Damage:\t%i / %i\n"
-"Time units:\t%i / %i\n"
-"Range:\t%1.1f / %1.1f\n"
-"Spreads:\t%1.1f / %1.1f\n"
-"Ammo:\t%i\n"
+msgid "Primary:\t%s\n"
+msgstr "Primary:\t%s\n"
+
+#: client/cl_team.c:270
+#, c-format
+msgid "Secondary:\t%s\n"
+msgstr "Secondary:\t%s\n"
+
+#: client/cl_team.c:271
+#, c-format
+msgid "Damage:\t%i / %i\n"
+msgstr "Damage:\t%i / %i\n"
 
 #: client/cl_team.c:272
 #, c-format
-msgid ""
-"Damage:\t%i / %i\n"
-"Time units:\t%i / %i\n"
-"Range:\t%1.1f / %1.1f\n"
-"Spreads:\t%1.1f / %1.1f\n"
-"Ammo:\t%i\n"
-msgstr ""
-"Damage:\t%i / %i\n"
-"Time units:\t%i / %i\n"
-"Range:\t%1.1f / %1.1f\n"
-"Spreads:\t%1.1f / %1.1f\n"
-"Ammo:\t%i\n"
+msgid "Time units:\t%i / %i\n"
+msgstr "Time units:\t%i / %i\n"
 
-#: client/cl_team.c:283
+#: client/cl_team.c:273
 #, c-format
-msgid ""
-"Action:\t%s\n"
-"Time units:\t%i\n"
-"Range:\t%1.1f\n"
-msgstr ""
-"Action:\t%s\n"
-"Time units:\t%i\n"
-"Range:\t%1.1f\n"
+msgid "Range:\t%1.1f / %1.1f\n"
+msgstr "Range:\t%1.1f / %1.1f\n"
 
-#: client/cl_team.c:289
+#: client/cl_team.c:274
+#, c-format
+msgid "Spreads:\t%1.1f / %1.1f\n"
+msgstr "Spreads:\t%1.1f / %1.1f\n"
+
+#: client/cl_team.c:278
+#, c-format
+msgid "Ammo:\t%i\n"
+msgstr "Ammo:\t%i\n"
+
+#: client/cl_team.c:279
+#: client/cl_ufopedia.c:53
+msgid "No"
+msgstr "No"
+
+#: client/cl_team.c:279
+#, c-format
+msgid "Twohanded:\t%s"
+msgstr "Twohanded:\t%s"
+
+#: client/cl_team.c:279
+#: client/cl_ufopedia.c:53
+msgid "Yes"
+msgstr "Yes"
+
+#: client/cl_team.c:285
+#, c-format
+msgid "Action:\t%s\n"
+msgstr "Action:\t%s\n"
+
+#: client/cl_team.c:286
+#, c-format
+msgid "Time units:\t%i\n"
+msgstr "Time units:\t%i\n"
+
+#: client/cl_team.c:287
+#, c-format
+msgid "Range:\t%1.1f\n"
+msgstr "Range:\t%1.1f\n"
+
+#: client/cl_team.c:291
 msgid "Unknown - need to research this"
 msgstr "Unknown - need to research this"
 
-#: client/cl_team.c:769
+#: client/cl_team.c:770
 msgid "NewTeam"
 msgstr "NewTeam"
 
-#: client/cl_team.c:1126
+#: client/cl_team.c:1127
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens killed\t%i\n"
 
-#: client/cl_team.c:1128
+#: client/cl_team.c:1129
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Enemies killed\t%i\n"
 
-#: client/cl_team.c:1131
+#: client/cl_team.c:1132
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -2575,7 +2603,7 @@ msgstr ""
 "Alien survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1133
+#: client/cl_team.c:1134
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -2584,17 +2612,17 @@ msgstr ""
 "Enemy survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1136
+#: client/cl_team.c:1137
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Team losses\t%i\n"
 
-#: client/cl_team.c:1137
+#: client/cl_team.c:1138
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Friendly fire losses\t%i\n"
 
-#: client/cl_team.c:1138
+#: client/cl_team.c:1139
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -2603,22 +2631,22 @@ msgstr ""
 "Team survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1150
+#: client/cl_team.c:1151
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civilians killed by the Aliens\t%i\n"
 
-#: client/cl_team.c:1152
+#: client/cl_team.c:1153
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civilians killed by the Enemies\t%i\n"
 
-#: client/cl_team.c:1153
+#: client/cl_team.c:1154
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civilians killed by your Team\t%i\n"
 
-#: client/cl_team.c:1154
+#: client/cl_team.c:1155
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -2629,22 +2657,22 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1178
+#: client/cl_team.c:1179
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr "Collected alien technology\t%i c\n"
 
-#: client/cl_team.c:1183
+#: client/cl_team.c:1184
 #, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr "Aliens killed\t%i c\n"
 
-#: client/cl_team.c:1188
+#: client/cl_team.c:1189
 #, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr "Civilians saved\t%i c\n"
 
-#: client/cl_team.c:1191
+#: client/cl_team.c:1192
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -2655,7 +2683,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1195
+#: client/cl_team.c:1196
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr "New Recruits\t%i\n"
@@ -2664,51 +2692,66 @@ msgstr "New Recruits\t%i\n"
 msgid "Error - could not find building"
 msgstr "Error - could not find building"
 
+#: client/cl_ufopedia.c:52
+#, c-format
+msgid "Depends:\t%s\n"
+msgstr "Depends:\t%s\n"
+
 #: client/cl_ufopedia.c:53
 #, c-format
-msgid ""
-"Depends:\t%s\n"
-"More than once:\t%s\n"
-"Buildtime:\t%i day(s)\n"
-"Fixcosts:\t%i c\n"
-"Running costs:\t%i c\n"
-"Energy:\t%i\n"
-"Workercosts:\t%i c\n"
-msgstr ""
-"Depends:\t%s\n"
-"More than once:\t%s\n"
-"Buildtime:\t%i day(s)\n"
-"Fixcosts:\t%i c\n"
-"Running costs:\t%i c\n"
-"Energy:\t%i\n"
-"Workercosts:\t%i c\n"
+msgid "More than once:\t%s\n"
+msgstr "More than once:\t%s\n"
+
+#: client/cl_ufopedia.c:54
+#, c-format
+msgid "Buildtime:\t%i day(s)\n"
+msgstr "Buildtime:\t%i day(s)\n"
 
 #: client/cl_ufopedia.c:55
-msgid "No"
-msgstr "No"
+#, c-format
+msgid "Fixcosts:\t%i c\n"
+msgstr "Fixcosts:\t%i c\n"
 
-#: client/cl_ufopedia.c:55
-msgid "Yes"
-msgstr "Yes"
+#: client/cl_ufopedia.c:56
+#, c-format
+msgid "Running costs:\t%i c\n"
+msgstr "Running costs:\t%i c\n"
 
-#: client/cl_ufopedia.c:76
+#: client/cl_ufopedia.c:57
+#, c-format
+msgid "Energy:\t%i\n"
+msgstr "Energy:\t%i\n"
+
+#: client/cl_ufopedia.c:58
+#, c-format
+msgid "Workercosts:\t%i c\n"
+msgstr "Workercosts:\t%i c\n"
+
+#: client/cl_ufopedia.c:74
 msgid "Error - could not find aircraft"
 msgstr "Error - could not find aircraft"
 
+#: client/cl_ufopedia.c:76
+#, c-format
+msgid "Speed:\t%.0f\n"
+msgstr "Speed:\t%.0f\n"
+
+#: client/cl_ufopedia.c:77
+#, c-format
+msgid "Fuel:\t%i\n"
+msgstr "Fuel:\t%i\n"
+
+#: client/cl_ufopedia.c:78
+#, c-format
+msgid "Weapon:\t%s\n"
+msgstr "Weapon:\t%s\n"
+
 #: client/cl_ufopedia.c:79
 #, c-format
-msgid ""
-"Speed:\t%.0f\n"
-"Fuel:\t%i\n"
-"Weapon:\t%s\n"
-"Shield:\t%s\n"
-msgstr ""
-"Speed:\t%.0f\n"
-"Fuel:\t%i\n"
-"Weapon:\t%s\n"
-"Shield:\t%s\n"
+msgid "Shield:\t%s\n"
+msgstr "Shield:\t%s\n"
 
-#: client/cl_ufopedia.c:240
+#: client/cl_ufopedia.c:236
 msgid "Ufopedia Content"
 msgstr "Ufopedia Content"
 
@@ -2789,6 +2832,68 @@ msgstr "Can't perform action - no ammo!\n"
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Can't perform action - not enough ammo!\n"
 
+#~ msgid ""
+#~ "Depends:\t%s\n"
+#~ "More than once:\t%s\n"
+#~ "Buildtime:\t%i day(s)\n"
+#~ "Fixcosts:\t%i c\n"
+#~ "Running costs:\t%i c\n"
+#~ "Energy:\t%i\n"
+#~ "Workercosts:\t%i c\n"
+#~ msgstr ""
+#~ "Depends:\t%s\n"
+#~ "More than once:\t%s\n"
+#~ "Buildtime:\t%i day(s)\n"
+#~ "Fixcosts:\t%i c\n"
+#~ "Running costs:\t%i c\n"
+#~ "Energy:\t%i\n"
+#~ "Workercosts:\t%i c\n"
+#~ msgid ""
+#~ "Speed:\t%.0f\n"
+#~ "Fuel:\t%i\n"
+#~ "Weapon:\t%s\n"
+#~ "Shield:\t%s\n"
+#~ msgstr ""
+#~ "Speed:\t%.0f\n"
+#~ "Fuel:\t%i\n"
+#~ "Weapon:\t%s\n"
+#~ "Shield:\t%s\n"
+#~ msgid ""
+#~ "Primary:\t%s\n"
+#~ "Secondary:\t%s\n"
+#~ "Damage:\t%i / %i\n"
+#~ "Time units:\t%i / %i\n"
+#~ "Range:\t%1.1f / %1.1f\n"
+#~ "Spreads:\t%1.1f / %1.1f\n"
+#~ "Ammo:\t%i\n"
+#~ msgstr ""
+#~ "Primary:\t%s\n"
+#~ "Secondary:\t%s\n"
+#~ "Damage:\t%i / %i\n"
+#~ "Time units:\t%i / %i\n"
+#~ "Range:\t%1.1f / %1.1f\n"
+#~ "Spreads:\t%1.1f / %1.1f\n"
+#~ "Ammo:\t%i\n"
+#~ msgid ""
+#~ "Damage:\t%i / %i\n"
+#~ "Time units:\t%i / %i\n"
+#~ "Range:\t%1.1f / %1.1f\n"
+#~ "Spreads:\t%1.1f / %1.1f\n"
+#~ "Ammo:\t%i\n"
+#~ msgstr ""
+#~ "Damage:\t%i / %i\n"
+#~ "Time units:\t%i / %i\n"
+#~ "Range:\t%1.1f / %1.1f\n"
+#~ "Spreads:\t%1.1f / %1.1f\n"
+#~ "Ammo:\t%i\n"
+#~ msgid ""
+#~ "Action:\t%s\n"
+#~ "Time units:\t%i\n"
+#~ "Range:\t%1.1f\n"
+#~ msgstr ""
+#~ "Action:\t%s\n"
+#~ "Time units:\t%i\n"
+#~ "Range:\t%1.1f\n"
 #~ msgid "Enemy"
 #~ msgstr "Enemy"
 #~ msgid "Aliens"
