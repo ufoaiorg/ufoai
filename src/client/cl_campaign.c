@@ -1089,7 +1089,8 @@ void CL_CampaignCheckEvents( void )
 			// ok, waiting and not doing a mission will costs money
 			int lose = mis->def->civilians * mis->def->cr_civilian;
 			CL_UpdateCredits( ccs.credits - lose );
-			Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died\\You've lost %i credits."), mis->def->civilians, lose), MAX_MESSAGE_TEXT );
+			// TODO: nation stuff
+			Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died. You've lost %i credits."), mis->def->civilians, lose), MAX_MESSAGE_TEXT );
 			MN_AddNewMessage( _("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL );
 			CL_CampaignRemoveMission( mis );
 		}
