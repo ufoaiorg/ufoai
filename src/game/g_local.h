@@ -445,7 +445,7 @@ struct edict_s
 
 	int			TU; // remaining timeunits
 	int			HP; // remaining healthpoints
-	int			AP;
+	int			AP; // remaining armor protection
 	int			STUN;
 	int			morale; // the current morale value
 
