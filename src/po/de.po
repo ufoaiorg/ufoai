@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-05-22 19:42+0200\n"
-"PO-Revision-Date: 2006-05-22 20:06+0100\n"
+"PO-Revision-Date: 2006-05-22 20:12+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1767,7 +1767,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:969
 msgid "Ortnok - Xenobiology"
-msgstr ""
+msgstr "Ortnok - Xenobiologie"
 
 #: ../base/ufos/research.ufo:970
 #, fuzzy
@@ -1784,9 +1784,8 @@ msgstr ""
 "augmentation is the increased vulnerability to electromagnetic pulses (EMP)."
 
 #: ../base/ufos/research.ufo:986
-#, fuzzy
 msgid "Ortnok - Interrogation"
-msgstr "Ortnok Krieger"
+msgstr "Ortnok - Verhör"
 
 #: ../base/ufos/research.ufo:987
 #, fuzzy
@@ -1858,7 +1857,7 @@ msgstr "TEXT"
 
 #: ../base/ufos/research.ufo:1077
 msgid "Antarean - Xenobiology"
-msgstr ""
+msgstr "Antarean - Xenobiologie"
 
 #: ../base/ufos/research.ufo:1078
 #, fuzzy
@@ -1867,7 +1866,7 @@ msgstr "TEXT"
 
 #: ../base/ufos/research.ufo:1094
 msgid "Antarean - Interrogation"
-msgstr ""
+msgstr "Antarean - Verhör"
 
 #: ../base/ufos/research.ufo:1095
 #, fuzzy
@@ -1876,7 +1875,7 @@ msgstr "TEXT"
 
 #: ../base/ufos/research.ufo:1111
 msgid "Antarean - Commander interrogation"
-msgstr ""
+msgstr "Antarean - Kommander Verhör"
 
 #: ../base/ufos/research.ufo:1112
 msgid "antarean_interrogation_commander_txt"
@@ -1902,7 +1901,7 @@ msgstr "TEXT"
 
 #: ../base/ufos/research.ufo:1164
 msgid "Shevaar - Xenobiology"
-msgstr ""
+msgstr "Shevaar - Xenobiologie"
 
 #: ../base/ufos/research.ufo:1165
 #, fuzzy
@@ -1928,9 +1927,8 @@ msgid "hovernet_autopsy_txt"
 msgstr "TEXT"
 
 #: ../base/ufos/research.ufo:1217
-#, fuzzy
 msgid "Hovernet - design"
-msgstr "Hovernet"
+msgstr "Hovernet - Design/Aufbau"
 
 #: ../base/ufos/research.ufo:1218
 #, fuzzy
@@ -1976,9 +1974,8 @@ msgstr ""
 "assumption because there is no evidence proving the existence of such a master-species."
 
 #: ../base/ufos/research.ufo:1270
-#, fuzzy
 msgid "Cyborg Ortnok - Xenobiology"
-msgstr "Cyborg Ortnok"
+msgstr "Cyborg Ortnok - Xenobiologie"
 
 #: ../base/ufos/research.ufo:1271
 #, fuzzy
@@ -2584,7 +2581,7 @@ msgstr "Flugzeug gestartet"
 
 #: client/cl_campaign.c:416
 msgid "Nothing - should not be displayed"
-msgstr ""
+msgstr "Nichts - sollte nicht dargestellt werden"
 
 #: client/cl_campaign.c:419
 msgid "At homebase"
