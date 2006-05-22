@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-05-22 23:49+0200\n"
+"POT-Creation-Date: 2006-05-22 19:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.ufo.po (UFO Alien Invasion)  #-#-#-#-#\n"
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: http://www.sourceforge.net/projects/ufoai/\n"
-"POT-Creation-Date: 2006-05-22 23:49+0200\n"
+"POT-Creation-Date: 2006-05-22 19:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1619,23 +1619,23 @@ msgstr ""
 msgid "prolog_sentence7"
 msgstr ""
 
-#: ../base/ufos/team_aliens.ufo:158
+#: ../base/ufos/team_aliens.ufo:227
 msgid "Ortnok"
 msgstr ""
 
-#: ../base/ufos/team_aliens.ufo:168
+#: ../base/ufos/team_aliens.ufo:237
 msgid "Antarean"
 msgstr ""
 
-#: ../base/ufos/team_aliens.ufo:178
+#: ../base/ufos/team_aliens.ufo:247
 msgid "Shevaar"
 msgstr ""
 
-#: ../base/ufos/team_aliens.ufo:188
+#: ../base/ufos/team_aliens.ufo:257
 msgid "Hovernet"
 msgstr ""
 
-#: ../base/ufos/team_aliens.ufo:198
+#: ../base/ufos/team_aliens.ufo:267
 msgid "Cyborg Ortnok"
 msgstr ""
 
@@ -2004,11 +2004,11 @@ msgid "Not enough credits to build this\n"
 msgstr ""
 
 #: client/cl_basemanagement.c:291 client/cl_basemanagement.c:2156
-#: client/cl_campaign.c:347 client/cl_campaign.c:621 client/cl_campaign.c:667
-#: client/cl_campaign.c:1005 client/cl_campaign.c:1090
-#: client/cl_campaign.c:1106 client/cl_campaign.c:1260
-#: client/cl_campaign.c:2085 client/cl_campaign.c:2115
-#: client/cl_campaign.c:2117 client/cl_research.c:512 client/cl_research.c:624
+#: client/cl_campaign.c:347 client/cl_campaign.c:624 client/cl_campaign.c:670
+#: client/cl_campaign.c:1008 client/cl_campaign.c:1093
+#: client/cl_campaign.c:1109 client/cl_campaign.c:1263
+#: client/cl_campaign.c:2088 client/cl_campaign.c:2118
+#: client/cl_campaign.c:2120 client/cl_research.c:512 client/cl_research.c:624
 #: client/cl_research.c:627 client/cl_research.c:631 client/cl_research.c:648
 #: client/cl_research.c:680 client/cl_research.c:684 client/cl_research.c:813
 msgid "Notice"
@@ -2126,70 +2126,81 @@ msgstr ""
 msgid "Returning to homebase"
 msgstr ""
 
-#: client/cl_campaign.c:569 client/cl_ufopedia.c:84 client/cl_ufopedia.c:110
-#: client/cl_ufopedia.c:111
+#: client/cl_campaign.c:569 client/cl_ufopedia.c:114
+#, c-format
+msgid "Speed:\t%.0f\n"
+msgstr ""
+
+#: client/cl_campaign.c:570
+#, c-format
+msgid "Fuel:\t%i/%i\n"
+msgstr ""
+
+#: client/cl_campaign.c:571 client/cl_campaign.c:572 client/cl_ufopedia.c:90
+#: client/cl_ufopedia.c:116 client/cl_ufopedia.c:117
 msgid "None"
 msgstr ""
 
-#: client/cl_campaign.c:569
+#: client/cl_campaign.c:571 client/cl_ufopedia.c:116
 #, c-format
-msgid ""
-"Speed:\t%.0f\n"
-"Fuel:\t%i/%i\n"
-"Weapon:\t%s\n"
-"Shield:\t%s\n"
+msgid "Weapon:\t%s\n"
 msgstr ""
 
-#: client/cl_campaign.c:620
+#: client/cl_campaign.c:572
+#, c-format
+msgid "Shield:\t%s"
+msgstr ""
+
+#: client/cl_campaign.c:623
 #, c-format
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr ""
 
-#: client/cl_campaign.c:667
+#: client/cl_campaign.c:670
 msgid "Could not set up your base at this location"
 msgstr ""
 
-#: client/cl_campaign.c:847
+#: client/cl_campaign.c:850
 #, c-format
 msgid "Your base %s is under attack."
 msgstr ""
 
-#: client/cl_campaign.c:848
+#: client/cl_campaign.c:851
 msgid "Baseattack"
 msgstr ""
 
-#: client/cl_campaign.c:860
+#: client/cl_campaign.c:863
 msgid "Alien activity"
 msgstr ""
 
-#: client/cl_campaign.c:860
+#: client/cl_campaign.c:863
 msgid "Alien activity has been reported."
 msgstr ""
 
-#: client/cl_campaign.c:1005
+#: client/cl_campaign.c:1008
 msgid "Assign a team to aircraft"
 msgstr ""
 
-#: client/cl_campaign.c:1089
+#: client/cl_campaign.c:1092
 #, c-format
 msgid "The mission expired and %i civilians died\\You've lost %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:1106
+#: client/cl_campaign.c:1109
 msgid "Your dropship has low fuel and returns to base"
 msgstr ""
 
-#: client/cl_campaign.c:1259
+#: client/cl_campaign.c:1262
 #, c-format
 msgid "Gained %i credits from nation %s"
 msgstr ""
 
-#: client/cl_campaign.c:1304
+#: client/cl_campaign.c:1307
 #, c-format
 msgid "%02i:%i%i"
 msgstr ""
 
-#: client/cl_campaign.c:1411
+#: client/cl_campaign.c:1414
 #, c-format
 msgid ""
 "Missions:\n"
@@ -2198,41 +2209,41 @@ msgid ""
 "build:\t%i\tattacked:\t%i\n"
 msgstr ""
 
-#: client/cl_campaign.c:2013
+#: client/cl_campaign.c:2016
 msgid "Assemble or load a team"
 msgstr ""
 
-#: client/cl_campaign.c:2013
+#: client/cl_campaign.c:2016
 msgid "Note"
 msgstr ""
 
-#: client/cl_campaign.c:2085
+#: client/cl_campaign.c:2088
 msgid "Your dropship is not near the landingzone"
 msgstr ""
 
-#: client/cl_campaign.c:2115
+#: client/cl_campaign.c:2118
 msgid "You've won the battle"
 msgstr ""
 
-#: client/cl_campaign.c:2117
+#: client/cl_campaign.c:2120
 msgid "You've lost the battle"
 msgstr ""
 
-#: client/cl_campaign.c:2265
+#: client/cl_campaign.c:2268
 #, c-format
 msgid "%s (%s) died on his last mission.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2266
+#: client/cl_campaign.c:2269
 msgid "Soldier died"
 msgstr ""
 
-#: client/cl_campaign.c:2292
+#: client/cl_campaign.c:2295
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2293
+#: client/cl_campaign.c:2296
 msgid "Soldier promoted"
 msgstr ""
 
@@ -2264,19 +2275,19 @@ msgstr ""
 msgid "Day"
 msgstr ""
 
-#: client/cl_menu.c:2131 client/cl_menu.c:2164
+#: client/cl_menu.c:2118 client/cl_menu.c:2151
 msgid ""
 "Select the desired location of the\n"
 "new base on the map.\n"
 msgstr ""
 
-#: client/cl_menu.c:2135 client/cl_menu.c:2168
+#: client/cl_menu.c:2122 client/cl_menu.c:2155
 msgid ""
 "Aliens are attacking our base\n"
 "at this very moment.\n"
 msgstr ""
 
-#: client/cl_menu.c:2139 client/cl_menu.c:2172
+#: client/cl_menu.c:2126 client/cl_menu.c:2159
 msgid "Select ufo or mission on map\n"
 msgstr ""
 
@@ -2316,7 +2327,7 @@ msgid "Researched in this base."
 msgstr ""
 
 #: client/cl_research.c:414
-msgid "Progress: %.1f\\%\n"
+msgid "Progress: %.1f\\%"
 msgstr ""
 
 #: client/cl_research.c:416
@@ -2324,19 +2335,19 @@ msgid "Progress: Not available."
 msgstr ""
 
 #: client/cl_research.c:422
-msgid "Status: Under research\n"
+msgid "Status: Under research"
 msgstr ""
 
 #: client/cl_research.c:425
-msgid "Status: Research paused\n"
+msgid "Status: Research paused"
 msgstr ""
 
 #: client/cl_research.c:428
-msgid "Status: Research finished\n"
+msgid "Status: Research finished"
 msgstr ""
 
 #: client/cl_research.c:431
-msgid "Status: Unknown technology\n"
+msgid "Status: Unknown technology"
 msgstr ""
 
 #: client/cl_research.c:439
@@ -2449,7 +2460,7 @@ msgstr ""
 msgid "Ammo:\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:279 client/cl_ufopedia.c:85
+#: client/cl_team.c:279 client/cl_ufopedia.c:91
 msgid "No"
 msgstr ""
 
@@ -2458,7 +2469,7 @@ msgstr ""
 msgid "Twohanded:\t%s"
 msgstr ""
 
-#: client/cl_team.c:279 client/cl_ufopedia.c:85
+#: client/cl_team.c:279 client/cl_ufopedia.c:91
 msgid "Yes"
 msgstr ""
 
@@ -2479,6 +2490,11 @@ msgstr ""
 
 #: client/cl_team.c:291
 msgid "Unknown - need to research this"
+msgstr ""
+
+#: client/cl_team.c:600
+#, c-format
+msgid "%i of %i"
 msgstr ""
 
 #: client/cl_team.c:770
@@ -2577,84 +2593,74 @@ msgstr ""
 msgid "New Recruits\t%i\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:37
+#: client/cl_ufopedia.c:43
 msgid "Could not find armor definition"
 msgstr ""
 
-#: client/cl_ufopedia.c:39
+#: client/cl_ufopedia.c:45
 #, c-format
 msgid "Item %s is no armor but %s"
 msgstr ""
 
-#: client/cl_ufopedia.c:49
+#: client/cl_ufopedia.c:55
 #, c-format
 msgid "%s:\tProtection: %i\tHardness: %i\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:78
-msgid "Error - could not find building"
-msgstr ""
-
 #: client/cl_ufopedia.c:84
-#, c-format
-msgid "Depends:\t%s\n"
-msgstr ""
-
-#: client/cl_ufopedia.c:85
-#, c-format
-msgid "More than once:\t%s\n"
-msgstr ""
-
-#: client/cl_ufopedia.c:86
-#, c-format
-msgid "Buildtime:\t%i day(s)\n"
-msgstr ""
-
-#: client/cl_ufopedia.c:87
-#, c-format
-msgid "Fixcosts:\t%i c\n"
-msgstr ""
-
-#: client/cl_ufopedia.c:88
-#, c-format
-msgid "Running costs:\t%i c\n"
-msgstr ""
-
-#: client/cl_ufopedia.c:89
-#, c-format
-msgid "Energy:\t%i\n"
+msgid "Error - could not find building"
 msgstr ""
 
 #: client/cl_ufopedia.c:90
 #, c-format
+msgid "Depends:\t%s\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:91
+#, c-format
+msgid "More than once:\t%s\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:92
+#, c-format
+msgid "Buildtime:\t%i day(s)\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:93
+#, c-format
+msgid "Fixcosts:\t%i c\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:94
+#, c-format
+msgid "Running costs:\t%i c\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:95
+#, c-format
+msgid "Energy:\t%i\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:96
+#, c-format
 msgid "Workercosts:\t%i c\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:106
+#: client/cl_ufopedia.c:112
 msgid "Error - could not find aircraft"
 msgstr ""
 
-#: client/cl_ufopedia.c:108
-#, c-format
-msgid "Speed:\t%.0f\n"
-msgstr ""
-
-#: client/cl_ufopedia.c:109
+#: client/cl_ufopedia.c:115
 #, c-format
 msgid "Fuel:\t%i\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:110
-#, c-format
-msgid "Weapon:\t%s\n"
-msgstr ""
-
-#: client/cl_ufopedia.c:111
+#: client/cl_ufopedia.c:117
 #, c-format
 msgid "Shield:\t%s\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:265
+#: client/cl_ufopedia.c:271
 msgid "Ufopedia Content"
 msgstr ""
 

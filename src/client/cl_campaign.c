@@ -566,10 +566,10 @@ void CL_AircraftSelect ( void )
 	Cvar_Set( "mn_aircraft_weapon", air->weapon ? air->weapon->name : "" );
 	Cvar_Set( "mn_aircraft_shield", air->shield ? air->shield->name : "" );
 
-	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f"), air->speed );
+	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\n"), air->speed );
 	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Fuel:\t%i/%i\n"), air->fuel / 1000, air->fuelSize / 1000 ) );
 	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Weapon:\t%s\n"), air->weapon ? air->weapon->name : _("None") ) );
-	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Shield:\t%s\n"), air->shield ? air->shield->name : _("None") ) );
+	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Shield:\t%s"), air->shield ? air->shield->name : _("None") ) );
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 

@@ -411,7 +411,7 @@ void RS_ResearchDisplayInfo ( void  )
 			Com_Printf("RS_ResearchDisplayInfo: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", tech->id, tech->time, tech->overalltime );
 			tech->time = tech->overalltime;	// just in case the values got messed up
 		}
-		Cvar_Set( "mn_research_seltime", va( _("Progress: %.1f\%\n"), 100-(tech->time*100/tech->overalltime) ) );
+		Cvar_Set( "mn_research_seltime", va( _("Progress: %.1f\%"), 100-(tech->time*100/tech->overalltime) ) );
 	} else {
 		Cvar_Set( "mn_research_seltime", _("Progress: Not available.") );
 	}
@@ -419,16 +419,16 @@ void RS_ResearchDisplayInfo ( void  )
 	switch ( tech->statusResearch )
 	{
 	case RS_RUNNING:
-		Cvar_Set( "mn_research_selstatus", _("Status: Under research\n") );
+		Cvar_Set( "mn_research_selstatus", _("Status: Under research") );
 		break;
 	case RS_PAUSED:
-		Cvar_Set( "mn_research_selstatus", _("Status: Research paused\n") );
+		Cvar_Set( "mn_research_selstatus", _("Status: Research paused") );
 		break;
 	case RS_FINISH:
-		Cvar_Set( "mn_research_selstatus", _("Status: Research finished\n") );
+		Cvar_Set( "mn_research_selstatus", _("Status: Research finished") );
 		break;
 	case RS_NONE:
-		Cvar_Set( "mn_research_selstatus", _("Status: Unknown technology\n") );
+		Cvar_Set( "mn_research_selstatus", _("Status: Unknown technology") );
 		break;
 	default:
 		break;

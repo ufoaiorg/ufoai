@@ -597,7 +597,7 @@ void CL_UpdateHireVar ( void )
 	assert(baseCurrent);
 
 	air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	Cvar_Set( "mn_hired", va( "%i of %i\n", baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], air->size ) );
+	Cvar_Set( "mn_hired", va( _("%i of %i"), baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], air->size ) );
 
 }
 

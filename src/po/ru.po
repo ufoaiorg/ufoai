@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-05-16 16:03+0200\n"
+"POT-Creation-Date: 2006-05-22 19:42+0200\n"
 "PO-Revision-Date: 2006-05-21 20:59+0300\n"
 "Last-Translator: Virtul <virtul@gmail.com>\n"
 "Language-Team: \n"
@@ -13,13 +13,82 @@ msgstr ""
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 
+#: ../base/ufos/armor.ufo:3
+msgid "normal"
+msgstr ""
+
+#: ../base/ufos/armor.ufo:4
+msgid "blast"
+msgstr ""
+
+#: ../base/ufos/armor.ufo:5
+msgid "fire"
+msgstr ""
+
+#: ../base/ufos/armor.ufo:6
+msgid "shock"
+msgstr ""
+
+#: ../base/ufos/armor.ufo:7
+#, fuzzy
+msgid "laser"
+msgstr ""
+"Лазер (в оригинале Laser расшифровывается как Light Amplification by "
+"Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией "
+"Радиации) технология долго известная человечеству, но технология называемая "
+"THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический "
+"Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и "
+"существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком "
+"большими и неэффективными, чтобы иметь реальные преимущества перед обычным "
+"вооружением. Основная конструкция этого оружия, как правило, использует "
+"химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более "
+"эффективным и компактным наши ученые недавно узнали. Это позволит "
+"разработать более лёгкое MTHEL оружие в ближайшем будущем."
+
+#: ../base/ufos/armor.ufo:8
+#, fuzzy
+msgid "plasma"
+msgstr ""
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+
+#: ../base/ufos/armor.ufo:9
+#, fuzzy
+msgid "tachyon"
+msgstr ""
+"Исследования тахионов (частиц движущихся быстрее скорости света) и их "
+"противоположности тардионов всегда были белым пятном в современной науке. "
+"Антареане не только изучили поведение тахионов и их отношение к остальной "
+"части материи, но и нашли способ создавать, управлять и уничтожать эти "
+"частицы. Сами снаряды их орудий не движутся со скоростью света, но при "
+"попадании энергия испускается в цель со скоростью, которая превышает "
+"большинство физических границ, известных человечеству. Эти знания "
+"используются для создания разрушительного оружия, которое пришельцы "
+"используют, чтобы терроризировать человечество. Наши ученые полагают, что мы "
+"сможем воспроизвести это оружие, как только получим более подробную "
+"информацию."
+
+#: ../base/ufos/armor.ufo:10
+#, fuzzy
+msgid "stun"
+msgstr "Оглушить"
+
 #: ../base/ufos/armor.ufo:15
 msgid "Kevlar Vest"
 msgstr "Бронежилет"
 
 #: ../base/ufos/armor.ufo:52
-msgid "Medium Armor"
-msgstr "Средняя Броня"
+msgid "Nano Armor"
+msgstr ""
+
+#: ../base/ufos/armor.ufo:89
+msgid "Heavy Nano Armor"
+msgstr ""
 
 #: ../base/ufos/basemanagement.ufo:10
 msgid "Entrance"
@@ -53,8 +122,7 @@ msgstr "Жилой модуль"
 msgid "UFO Hangar"
 msgstr "Ангар НЛО"
 
-#: ../base/ufos/basemanagement.ufo:160
-#: ../base/ufos/basemanagement.ufo:180
+#: ../base/ufos/basemanagement.ufo:160 ../base/ufos/basemanagement.ufo:180
 msgid "Hangar"
 msgstr "Ангар"
 
@@ -114,12 +182,9 @@ msgstr "НЛО"
 msgid "UFO - Destroyer class"
 msgstr "НЛО - Класса эсминец"
 
-#: ../base/ufos/campaign.ufo:8
-#: ../base/ufos/campaign.ufo:43
-#: ../base/ufos/campaign.ufo:61
-#: ../base/ufos/campaign.ufo:79
-#: ../base/ufos/campaign.ufo:97
-#: ../base/ufos/campaign.ufo:388
+#: ../base/ufos/campaign.ufo:8 ../base/ufos/campaign.ufo:43
+#: ../base/ufos/campaign.ufo:61 ../base/ufos/campaign.ufo:79
+#: ../base/ufos/campaign.ufo:97 ../base/ufos/campaign.ufo:388
 msgid "Location: Gwandaf\\Type: Terror Attack\\Objective: Protect inhabitants"
 msgstr "Локация: Gwandaf\\Тип: Террор Пришельцев\\Задание: Защита населения"
 
@@ -132,42 +197,59 @@ msgid "Location: Uppsala\\Type: Terror Attack\\Objective: Protect inhabitants"
 msgstr "Локация: Uppsala\\Тип: Террор Пришельцев\\Задание: Защита населения"
 
 #: ../base/ufos/campaign.ufo:131
-msgid "We are going put you in charge of a\\mission of utmost importance. We've\\shot down one of their crafts. Get\\there before the E.T.'s do. (difficult)\\"
-msgstr "Мы поручаем Вам миссию повышенной\\важности. Мы подбили один из\\их кораблей.\\Доберитесь туда раньше, чем Е.Т. (сложно)\\"
+msgid ""
+"We are going put you in charge of a\\mission of utmost importance. We've"
+"\\shot down one of their crafts. Get\\there before the E.T.'s do. (difficult)"
+"\\"
+msgstr ""
+"Мы поручаем Вам миссию повышенной\\важности. Мы подбили один из\\их кораблей."
+"\\Доберитесь туда раньше, чем Е.Т. (сложно)\\"
 
 #: ../base/ufos/campaign.ufo:146
-msgid "Some aliens have escaped from the\\mine, and their tracks lead south,\\towards a nearby excavation site.\\Protect that site at all cost.\\"
-msgstr "Некоторые пришельцы сбежали из\\шахты и их следы ведут на Юг,\\по направлению к близлежащему карьеру.\\Защитить карьер любой ценой.\\"
+msgid ""
+"Some aliens have escaped from the\\mine, and their tracks lead south,"
+"\\towards a nearby excavation site.\\Protect that site at all cost.\\"
+msgstr ""
+"Некоторые пришельцы сбежали из\\шахты и их следы ведут на Юг,\\по "
+"направлению к близлежащему карьеру.\\Защитить карьер любой ценой.\\"
 
-#: ../base/ufos/campaign.ufo:162
-#: ../base/ufos/campaign.ufo:180
-#: ../base/ufos/campaign.ufo:197
-#: ../base/ufos/campaign.ufo:214
-msgid "Location: Revelstoke\\Type: Landed Alien Ship\\Objective: Secure Alien Ship before Liftoff"
-msgstr "Локация: Revelstoke\\Тип: Приземлившееся НЛО\\Задание: Захват НЛО до его взлёта"
+#: ../base/ufos/campaign.ufo:162 ../base/ufos/campaign.ufo:180
+#: ../base/ufos/campaign.ufo:197 ../base/ufos/campaign.ufo:214
+msgid ""
+"Location: Revelstoke\\Type: Landed Alien Ship\\Objective: Secure Alien Ship "
+"before Liftoff"
+msgstr ""
+"Локация: Revelstoke\\Тип: Приземлившееся НЛО\\Задание: Захват НЛО до его "
+"взлёта"
 
-#: ../base/ufos/campaign.ufo:232
-#: ../base/ufos/campaign.ufo:251
+#: ../base/ufos/campaign.ufo:232 ../base/ufos/campaign.ufo:251
 #: ../base/ufos/campaign.ufo:268
-msgid "Location: Marina Serra\\Type: Terror Attack\\Objective: Protect inhabitants"
-msgstr "Локация: Marina Serra\\Тип: Террор Пришельцев\\Задание: Защита населения"
+msgid ""
+"Location: Marina Serra\\Type: Terror Attack\\Objective: Protect inhabitants"
+msgstr ""
+"Локация: Marina Serra\\Тип: Террор Пришельцев\\Задание: Защита населения"
 
 #: ../base/ufos/campaign.ufo:285
 msgid "Location: Morioka\\Type: Alien Hideout\\Objective: Eliminate intruders"
-msgstr "Локация: Morioka\\Тип: Убежище Пришельцев\\Задание: Нейтрализовать врага"
+msgstr ""
+"Локация: Morioka\\Тип: Убежище Пришельцев\\Задание: Нейтрализовать врага"
 
 #: ../base/ufos/campaign.ufo:302
-msgid "Location: Tazovskij\\Type: Terror Attack\\Objective: Protect inhabitants"
+msgid ""
+"Location: Tazovskij\\Type: Terror Attack\\Objective: Protect inhabitants"
 msgstr "Локация: Tazovskij\\Тип: Террор Пришельцев\\Задание: Защита населения"
 
-#: ../base/ufos/campaign.ufo:320
-#: ../base/ufos/campaign.ufo:338
+#: ../base/ufos/campaign.ufo:320 ../base/ufos/campaign.ufo:338
 msgid "Location: Gobabis\\Type: Crash Site\\Objective: Secure Area"
 msgstr "Локация: Gobabis\\Тип: Место Аварии\\Задание: Захват области"
 
 #: ../base/ufos/campaign.ufo:356
-msgid "There are rumors of a mine being\\overrun by aliens. Altough this\\source of information is doubtful,\\you'll need to investigate.\\"
-msgstr "Появились слухи о шахте полной\\пришельцев. Хотя наш источник\\информации ненадёжен,\\Вам поручено её исследовать.\\"
+msgid ""
+"There are rumors of a mine being\\overrun by aliens. Altough this\\source of "
+"information is doubtful,\\you'll need to investigate.\\"
+msgstr ""
+"Появились слухи о шахте полной\\пришельцев. Хотя наш источник\\информации "
+"ненадёжен,\\Вам поручено её исследовать.\\"
 
 #: ../base/ufos/campaign.ufo:371
 msgid "Location: Mackay\\Type: Terror Attack\\Objective: Protect inhabitants"
@@ -178,25 +260,27 @@ msgid "Location: Asyut\\Type: Terror Attack\\Objective: Protect inhabitants"
 msgstr "Локация: Asyut\\Тип: Террор Пришельцев\\Задание: Защита населения"
 
 #: ../base/ufos/campaign.ufo:424
-msgid "Location: Tabelbala\\Type: Terror Attack\\Objective: Protect inhabitants"
+msgid ""
+"Location: Tabelbala\\Type: Terror Attack\\Objective: Protect inhabitants"
 msgstr "Локация: Tabelbala\\Тип: Террор Пришельцев\\Задание: Защита населения"
 
-#: ../base/ufos/campaign.ufo:442
-#: ../base/ufos/campaign.ufo:474
-#: ../base/ufos/campaign.ufo:490
-#: ../base/ufos/campaign.ufo:506
-#: ../base/ufos/campaign.ufo:522
-#: ../base/ufos/campaign.ufo:538
+#: ../base/ufos/campaign.ufo:442 ../base/ufos/campaign.ufo:474
+#: ../base/ufos/campaign.ufo:490 ../base/ufos/campaign.ufo:506
+#: ../base/ufos/campaign.ufo:522 ../base/ufos/campaign.ufo:538
 #: ../base/ufos/campaign.ufo:571
-msgid "Damn it, you've let some of them get\\away again! Reequip your squad and\\get after them!\\"
-msgstr "Чёрт побери, Вы дали некоторым из\\них снова сбежать! Перевооружите\\отряд и за ними!\\"
+msgid ""
+"Damn it, you've let some of them get\\away again! Reequip your squad and"
+"\\get after them!\\"
+msgstr ""
+"Чёрт побери, Вы дали некоторым из\\них снова сбежать! Перевооружите\\отряд и "
+"за ними!\\"
 
 #: ../base/ufos/campaign.ufo:458
 msgid "The Aliens have tacken over a rocket silo. Go and capture it again."
-msgstr "Пришельцы захватили ракетный бункер. Необходимо отбить у них этот объект."
+msgstr ""
+"Пришельцы захватили ракетный бункер. Необходимо отбить у них этот объект."
 
-#: ../base/ufos/campaign.ufo:553
-#: ../base/ufos/campaign.ufo:586
+#: ../base/ufos/campaign.ufo:553 ../base/ufos/campaign.ufo:586
 msgid "Location: Fargo\\Type: Terror Attack\\Objective: Protect inhabitants"
 msgstr "Локация: Fargo\\Тип: Террор Пришельцев\\Задание: Защита населения"
 
@@ -214,7 +298,9 @@ msgstr "Локация: Albany\\Тип: Террор Пришельцев\\За�
 
 #: ../base/ufos/campaign.ufo:659
 msgid "Location: Shannon\\Type: Major Alien Intrusion\\Objective: Stop them"
-msgstr "Локация: Shannon\\Тип: Основное Вторжение Пришельцев\\Задание: Остановить вторжение любой ценой"
+msgstr ""
+"Локация: Shannon\\Тип: Основное Вторжение Пришельцев\\Задание: Остановить "
+"вторжение любой ценой"
 
 #: ../base/ufos/campaign.ufo:748
 msgid "Standard Campaign"
@@ -256,8 +342,7 @@ msgstr "Обратно к обзору планеты"
 msgid "Build base-facilities"
 msgstr "Строительство модулей"
 
-#: ../base/ufos/menu_bases.ufo:86
-#: ../base/ufos/research.ufo:60
+#: ../base/ufos/menu_bases.ufo:86 ../base/ufos/research.ufo:61
 msgid "Buildings"
 msgstr "Постройки"
 
@@ -265,8 +350,7 @@ msgstr "Постройки"
 msgid "Manage your aircraft"
 msgstr "Управление перехватчиками"
 
-#: ../base/ufos/menu_bases.ufo:110
-#: ../base/ufos/research.ufo:57
+#: ../base/ufos/menu_bases.ufo:110 ../base/ufos/research.ufo:57
 msgid "Aircraft"
 msgstr "Перехватчики"
 
@@ -278,13 +362,11 @@ msgstr "Купля-продажа снаряжения"
 msgid "Buy/Sell Equipment"
 msgstr "Снаряжение"
 
-#: ../base/ufos/menu_bases.ufo:143
-#: ../base/ufos/menu_bases.ufo:407
+#: ../base/ufos/menu_bases.ufo:143 ../base/ufos/menu_bases.ufo:407
 msgid "Transfer equipment or personnel"
 msgstr "Транспортировка снаряжения и персонала"
 
-#: ../base/ufos/menu_bases.ufo:158
-#: ../base/ufos/menu_bases.ufo:422
+#: ../base/ufos/menu_bases.ufo:158 ../base/ufos/menu_bases.ufo:422
 msgid "Transfer"
 msgstr "Транспорт"
 
@@ -304,8 +386,7 @@ msgstr "Исследование технологий"
 msgid "Research"
 msgstr "Исследования"
 
-#: ../base/ufos/menu_bases.ufo:219
-#: ../base/ufos/menu_geoscape.ufo:86
+#: ../base/ufos/menu_bases.ufo:219 ../base/ufos/menu_geoscape.ufo:86
 msgid "Organisation capital"
 msgstr "Столица организации"
 
@@ -353,13 +434,11 @@ msgstr "Запустить"
 msgid "Refuel the selected aircraft"
 msgstr "Заправка выбранного перехватчика"
 
-#: ../base/ufos/menu_bases.ufo:449
-#: client/cl_campaign.c:422
+#: ../base/ufos/menu_bases.ufo:449 client/cl_campaign.c:422
 msgid "Refuel"
 msgstr "Заправить"
 
-#: ../base/ufos/menu_bases.ufo:489
-#: ../base/ufos/menu_team.ufo:656
+#: ../base/ufos/menu_bases.ufo:489 ../base/ufos/menu_team.ufo:656
 #: ../base/ufos/menu_team.ufo:1175
 msgid "Done"
 msgstr "Готово"
@@ -376,65 +455,37 @@ msgstr "Перейти к следующему перехватчику"
 msgid "Call back"
 msgstr "Отозвать"
 
-#: ../base/ufos/menu_buy.ufo:255
-#: ../base/ufos/menu_buy.ufo:271
-#: ../base/ufos/menu_buy.ufo:287
-#: ../base/ufos/menu_buy.ufo:303
-#: ../base/ufos/menu_buy.ufo:319
-#: ../base/ufos/menu_buy.ufo:335
-#: ../base/ufos/menu_buy.ufo:351
-#: ../base/ufos/menu_buy.ufo:367
-#: ../base/ufos/menu_buy.ufo:383
-#: ../base/ufos/menu_buy.ufo:399
-#: ../base/ufos/menu_buy.ufo:415
-#: ../base/ufos/menu_buy.ufo:431
-#: ../base/ufos/menu_buy.ufo:447
-#: ../base/ufos/menu_buy.ufo:463
-#: ../base/ufos/menu_buy.ufo:479
-#: ../base/ufos/menu_buy.ufo:495
-#: ../base/ufos/menu_buy.ufo:511
-#: ../base/ufos/menu_buy.ufo:527
-#: ../base/ufos/menu_buy.ufo:543
-#: ../base/ufos/menu_buy.ufo:559
-#: ../base/ufos/menu_buy.ufo:575
-#: ../base/ufos/menu_buy.ufo:591
-#: ../base/ufos/menu_buy.ufo:607
-#: ../base/ufos/menu_buy.ufo:623
-#: ../base/ufos/menu_buy.ufo:639
-#: ../base/ufos/menu_buy.ufo:655
-#: ../base/ufos/menu_buy.ufo:671
-#: ../base/ufos/menu_buy.ufo:687
+#: ../base/ufos/menu_buy.ufo:255 ../base/ufos/menu_buy.ufo:271
+#: ../base/ufos/menu_buy.ufo:287 ../base/ufos/menu_buy.ufo:303
+#: ../base/ufos/menu_buy.ufo:319 ../base/ufos/menu_buy.ufo:335
+#: ../base/ufos/menu_buy.ufo:351 ../base/ufos/menu_buy.ufo:367
+#: ../base/ufos/menu_buy.ufo:383 ../base/ufos/menu_buy.ufo:399
+#: ../base/ufos/menu_buy.ufo:415 ../base/ufos/menu_buy.ufo:431
+#: ../base/ufos/menu_buy.ufo:447 ../base/ufos/menu_buy.ufo:463
+#: ../base/ufos/menu_buy.ufo:479 ../base/ufos/menu_buy.ufo:495
+#: ../base/ufos/menu_buy.ufo:511 ../base/ufos/menu_buy.ufo:527
+#: ../base/ufos/menu_buy.ufo:543 ../base/ufos/menu_buy.ufo:559
+#: ../base/ufos/menu_buy.ufo:575 ../base/ufos/menu_buy.ufo:591
+#: ../base/ufos/menu_buy.ufo:607 ../base/ufos/menu_buy.ufo:623
+#: ../base/ufos/menu_buy.ufo:639 ../base/ufos/menu_buy.ufo:655
+#: ../base/ufos/menu_buy.ufo:671 ../base/ufos/menu_buy.ufo:687
 msgid "Buy item"
 msgstr "Купить предмет"
 
-#: ../base/ufos/menu_buy.ufo:263
-#: ../base/ufos/menu_buy.ufo:279
-#: ../base/ufos/menu_buy.ufo:295
-#: ../base/ufos/menu_buy.ufo:311
-#: ../base/ufos/menu_buy.ufo:327
-#: ../base/ufos/menu_buy.ufo:343
-#: ../base/ufos/menu_buy.ufo:359
-#: ../base/ufos/menu_buy.ufo:375
-#: ../base/ufos/menu_buy.ufo:391
-#: ../base/ufos/menu_buy.ufo:407
-#: ../base/ufos/menu_buy.ufo:423
-#: ../base/ufos/menu_buy.ufo:439
-#: ../base/ufos/menu_buy.ufo:455
-#: ../base/ufos/menu_buy.ufo:471
-#: ../base/ufos/menu_buy.ufo:487
-#: ../base/ufos/menu_buy.ufo:503
-#: ../base/ufos/menu_buy.ufo:519
-#: ../base/ufos/menu_buy.ufo:535
-#: ../base/ufos/menu_buy.ufo:551
-#: ../base/ufos/menu_buy.ufo:567
-#: ../base/ufos/menu_buy.ufo:583
-#: ../base/ufos/menu_buy.ufo:599
-#: ../base/ufos/menu_buy.ufo:615
-#: ../base/ufos/menu_buy.ufo:631
-#: ../base/ufos/menu_buy.ufo:647
-#: ../base/ufos/menu_buy.ufo:663
-#: ../base/ufos/menu_buy.ufo:679
-#: ../base/ufos/menu_buy.ufo:695
+#: ../base/ufos/menu_buy.ufo:263 ../base/ufos/menu_buy.ufo:279
+#: ../base/ufos/menu_buy.ufo:295 ../base/ufos/menu_buy.ufo:311
+#: ../base/ufos/menu_buy.ufo:327 ../base/ufos/menu_buy.ufo:343
+#: ../base/ufos/menu_buy.ufo:359 ../base/ufos/menu_buy.ufo:375
+#: ../base/ufos/menu_buy.ufo:391 ../base/ufos/menu_buy.ufo:407
+#: ../base/ufos/menu_buy.ufo:423 ../base/ufos/menu_buy.ufo:439
+#: ../base/ufos/menu_buy.ufo:455 ../base/ufos/menu_buy.ufo:471
+#: ../base/ufos/menu_buy.ufo:487 ../base/ufos/menu_buy.ufo:503
+#: ../base/ufos/menu_buy.ufo:519 ../base/ufos/menu_buy.ufo:535
+#: ../base/ufos/menu_buy.ufo:551 ../base/ufos/menu_buy.ufo:567
+#: ../base/ufos/menu_buy.ufo:583 ../base/ufos/menu_buy.ufo:599
+#: ../base/ufos/menu_buy.ufo:615 ../base/ufos/menu_buy.ufo:631
+#: ../base/ufos/menu_buy.ufo:647 ../base/ufos/menu_buy.ufo:663
+#: ../base/ufos/menu_buy.ufo:679 ../base/ufos/menu_buy.ufo:695
 msgid "Sell item"
 msgstr "Продать предмет"
 
@@ -454,8 +505,7 @@ msgstr "Показать только снаряжение"
 msgid "Show only armor"
 msgstr "Показать только броню"
 
-#: ../base/ufos/menu_buy.ufo:776
-#: ../base/ufos/menu_research.ufo:897
+#: ../base/ufos/menu_buy.ufo:776 ../base/ufos/menu_research.ufo:897
 msgid "Back to baseview"
 msgstr "Обратно к обзору базы"
 
@@ -487,10 +537,8 @@ msgstr "Нлопедия"
 msgid "Create base"
 msgstr "Построить базу"
 
-#: ../base/ufos/menu_geoscape.ufo:232
-#: ../base/ufos/menu_hud.ufo:555
-#: ../base/ufos/menu_main.ufo:110
-#: ../base/ufos/menu_singleplayer.ufo:285
+#: ../base/ufos/menu_geoscape.ufo:232 ../base/ufos/menu_hud.ufo:555
+#: ../base/ufos/menu_main.ufo:110 ../base/ufos/menu_singleplayer.ufo:285
 msgid "Options"
 msgstr "Опции"
 
@@ -512,8 +560,7 @@ msgstr ""
 msgid "New base"
 msgstr "Новая база"
 
-#: ../base/ufos/menu_geoscape.ufo:389
-#: ../base/ufos/menu_geoscape.ufo:484
+#: ../base/ufos/menu_geoscape.ufo:389 ../base/ufos/menu_geoscape.ufo:484
 #: ../base/ufos/menu_options.ufo:777
 msgid "Name:"
 msgstr "Имя:"
@@ -610,18 +657,15 @@ msgstr "Солдат 7"
 msgid "Soldier 8"
 msgstr "Солдат 8"
 
-#: ../base/ufos/menu_hud.ufo:408
-#: ../base/ufos/menu_hud.ufo:418
+#: ../base/ufos/menu_hud.ufo:408 ../base/ufos/menu_hud.ufo:418
 msgid "Primary fire mode"
 msgstr "Первичный режим стрельбы"
 
-#: ../base/ufos/menu_hud.ufo:428
-#: ../base/ufos/menu_hud.ufo:438
+#: ../base/ufos/menu_hud.ufo:428 ../base/ufos/menu_hud.ufo:438
 msgid "Secondary fire mode"
 msgstr "Вторичный режим стрельбы"
 
-#: ../base/ufos/menu_hud.ufo:448
-#: ../base/ufos/menu_hud.ufo:459
+#: ../base/ufos/menu_hud.ufo:448 ../base/ufos/menu_hud.ufo:459
 msgid "Reload weapon"
 msgstr "Перезарядить оружие"
 
@@ -641,56 +685,47 @@ msgstr "Физические характеристики этого солда�
 msgid "Inventory"
 msgstr "Инвентарь"
 
-#: ../base/ufos/menu_hud.ufo:828
-#: ../base/ufos/menu_team.ufo:553
+#: ../base/ufos/menu_hud.ufo:828 ../base/ufos/menu_team.ufo:553
 #: ../base/ufos/menu_team.ufo:1000
 msgid "Power:"
 msgstr "Сила:"
 
-#: ../base/ufos/menu_hud.ufo:833
-#: ../base/ufos/menu_team.ufo:558
+#: ../base/ufos/menu_hud.ufo:833 ../base/ufos/menu_team.ufo:558
 #: ../base/ufos/menu_team.ufo:1005
 msgid "Speed:"
 msgstr "Скорость:"
 
-#: ../base/ufos/menu_hud.ufo:838
-#: ../base/ufos/menu_team.ufo:563
+#: ../base/ufos/menu_hud.ufo:838 ../base/ufos/menu_team.ufo:563
 #: ../base/ufos/menu_team.ufo:1010
 msgid "Accuracy:"
 msgstr "Точность:"
 
-#: ../base/ufos/menu_hud.ufo:843
-#: ../base/ufos/menu_team.ufo:568
+#: ../base/ufos/menu_hud.ufo:843 ../base/ufos/menu_team.ufo:568
 #: ../base/ufos/menu_team.ufo:1015
 msgid "Mind:"
 msgstr "Психика:"
 
-#: ../base/ufos/menu_hud.ufo:848
-#: ../base/ufos/menu_team.ufo:573
+#: ../base/ufos/menu_hud.ufo:848 ../base/ufos/menu_team.ufo:573
 #: ../base/ufos/menu_team.ufo:1020
 msgid "Close Combat:"
 msgstr "Ближний Бой:"
 
-#: ../base/ufos/menu_hud.ufo:853
-#: ../base/ufos/menu_team.ufo:578
+#: ../base/ufos/menu_hud.ufo:853 ../base/ufos/menu_team.ufo:578
 #: ../base/ufos/menu_team.ufo:1025
 msgid "Heavy Weapons:"
 msgstr "Тяжёлое Оружие:"
 
-#: ../base/ufos/menu_hud.ufo:858
-#: ../base/ufos/menu_team.ufo:583
+#: ../base/ufos/menu_hud.ufo:858 ../base/ufos/menu_team.ufo:583
 #: ../base/ufos/menu_team.ufo:1030
 msgid "Assault Guns:"
 msgstr "Штурмовые:"
 
-#: ../base/ufos/menu_hud.ufo:863
-#: ../base/ufos/menu_team.ufo:588
+#: ../base/ufos/menu_hud.ufo:863 ../base/ufos/menu_team.ufo:588
 #: ../base/ufos/menu_team.ufo:1035
 msgid "Sniper Rifles:"
 msgstr "Снайперские:"
 
-#: ../base/ufos/menu_hud.ufo:868
-#: ../base/ufos/menu_team.ufo:593
+#: ../base/ufos/menu_hud.ufo:868 ../base/ufos/menu_team.ufo:593
 #: ../base/ufos/menu_team.ufo:1040
 msgid "High Explosives:"
 msgstr "Взрывчатка:"
@@ -703,8 +738,7 @@ msgstr "Новая игра"
 msgid "Multiplayer"
 msgstr "Сетевая"
 
-#: ../base/ufos/menu_main.ufo:130
-#: ../base/ufos/menu_tutorials.ufo:46
+#: ../base/ufos/menu_main.ufo:130 ../base/ufos/menu_tutorials.ufo:46
 msgid "Tutorials"
 msgstr "Обучение"
 
@@ -712,14 +746,11 @@ msgstr "Обучение"
 msgid "Credits"
 msgstr "Титры"
 
-#: ../base/ufos/menu_main.ufo:170
-#: ../base/ufos/menu_multiplayer.ufo:131
-#: ../base/ufos/menu_options.ufo:131
-#: ../base/ufos/menu_singleplayer.ufo:149
+#: ../base/ufos/menu_main.ufo:170 ../base/ufos/menu_multiplayer.ufo:131
+#: ../base/ufos/menu_options.ufo:131 ../base/ufos/menu_singleplayer.ufo:149
 #: ../base/ufos/menu_singleplayer.ufo:305
 #: ../base/ufos/menu_singleplayer.ufo:468
-#: ../base/ufos/menu_singleplayer.ufo:644
-#: ../base/ufos/menu_tutorials.ufo:66
+#: ../base/ufos/menu_singleplayer.ufo:644 ../base/ufos/menu_tutorials.ufo:66
 msgid "Exit"
 msgstr "Выход"
 
@@ -747,8 +778,7 @@ msgstr "Раса:"
 msgid "Name"
 msgstr "Имя"
 
-#: ../base/ufos/menu_multiplayer.ufo:427
-#: ../base/ufos/menu_multiplayer.ufo:538
+#: ../base/ufos/menu_multiplayer.ufo:427 ../base/ufos/menu_multiplayer.ufo:538
 #: ../base/ufos/menu_multiplayer.ufo:816
 msgid "Team preference:"
 msgstr "Команда:"
@@ -787,7 +817,8 @@ msgstr "Максимум солдат у игрока:"
 
 #: ../base/ufos/menu_multiplayer.ufo:784
 msgid "Sets the max allowed soldiers per player when in teamplay"
-msgstr "Устанавливает максимальное число солдат у игрока во время командной игры"
+msgstr ""
+"Устанавливает максимальное число солдат у игрока во время командной игры"
 
 #: ../base/ufos/menu_multiplayer.ufo:818
 msgid "Sets the prefered team"
@@ -909,65 +940,37 @@ msgstr "Скорость Камеры:"
 msgid "Camera Rotation:"
 msgstr "Скорость Вращения:"
 
-#: ../base/ufos/menu_research.ufo:338
-#: ../base/ufos/menu_research.ufo:354
-#: ../base/ufos/menu_research.ufo:370
-#: ../base/ufos/menu_research.ufo:386
-#: ../base/ufos/menu_research.ufo:402
-#: ../base/ufos/menu_research.ufo:418
-#: ../base/ufos/menu_research.ufo:434
-#: ../base/ufos/menu_research.ufo:450
-#: ../base/ufos/menu_research.ufo:466
-#: ../base/ufos/menu_research.ufo:482
-#: ../base/ufos/menu_research.ufo:498
-#: ../base/ufos/menu_research.ufo:514
-#: ../base/ufos/menu_research.ufo:530
-#: ../base/ufos/menu_research.ufo:546
-#: ../base/ufos/menu_research.ufo:562
-#: ../base/ufos/menu_research.ufo:578
-#: ../base/ufos/menu_research.ufo:594
-#: ../base/ufos/menu_research.ufo:610
-#: ../base/ufos/menu_research.ufo:626
-#: ../base/ufos/menu_research.ufo:642
-#: ../base/ufos/menu_research.ufo:658
-#: ../base/ufos/menu_research.ufo:674
-#: ../base/ufos/menu_research.ufo:690
-#: ../base/ufos/menu_research.ufo:706
-#: ../base/ufos/menu_research.ufo:722
-#: ../base/ufos/menu_research.ufo:738
-#: ../base/ufos/menu_research.ufo:754
-#: ../base/ufos/menu_research.ufo:770
+#: ../base/ufos/menu_research.ufo:338 ../base/ufos/menu_research.ufo:354
+#: ../base/ufos/menu_research.ufo:370 ../base/ufos/menu_research.ufo:386
+#: ../base/ufos/menu_research.ufo:402 ../base/ufos/menu_research.ufo:418
+#: ../base/ufos/menu_research.ufo:434 ../base/ufos/menu_research.ufo:450
+#: ../base/ufos/menu_research.ufo:466 ../base/ufos/menu_research.ufo:482
+#: ../base/ufos/menu_research.ufo:498 ../base/ufos/menu_research.ufo:514
+#: ../base/ufos/menu_research.ufo:530 ../base/ufos/menu_research.ufo:546
+#: ../base/ufos/menu_research.ufo:562 ../base/ufos/menu_research.ufo:578
+#: ../base/ufos/menu_research.ufo:594 ../base/ufos/menu_research.ufo:610
+#: ../base/ufos/menu_research.ufo:626 ../base/ufos/menu_research.ufo:642
+#: ../base/ufos/menu_research.ufo:658 ../base/ufos/menu_research.ufo:674
+#: ../base/ufos/menu_research.ufo:690 ../base/ufos/menu_research.ufo:706
+#: ../base/ufos/menu_research.ufo:722 ../base/ufos/menu_research.ufo:738
+#: ../base/ufos/menu_research.ufo:754 ../base/ufos/menu_research.ufo:770
 msgid "Add scientist"
 msgstr "Добавить ученого"
 
-#: ../base/ufos/menu_research.ufo:346
-#: ../base/ufos/menu_research.ufo:362
-#: ../base/ufos/menu_research.ufo:378
-#: ../base/ufos/menu_research.ufo:394
-#: ../base/ufos/menu_research.ufo:410
-#: ../base/ufos/menu_research.ufo:426
-#: ../base/ufos/menu_research.ufo:442
-#: ../base/ufos/menu_research.ufo:458
-#: ../base/ufos/menu_research.ufo:474
-#: ../base/ufos/menu_research.ufo:490
-#: ../base/ufos/menu_research.ufo:506
-#: ../base/ufos/menu_research.ufo:522
-#: ../base/ufos/menu_research.ufo:538
-#: ../base/ufos/menu_research.ufo:554
-#: ../base/ufos/menu_research.ufo:570
-#: ../base/ufos/menu_research.ufo:586
-#: ../base/ufos/menu_research.ufo:602
-#: ../base/ufos/menu_research.ufo:618
-#: ../base/ufos/menu_research.ufo:634
-#: ../base/ufos/menu_research.ufo:650
-#: ../base/ufos/menu_research.ufo:666
-#: ../base/ufos/menu_research.ufo:682
-#: ../base/ufos/menu_research.ufo:698
-#: ../base/ufos/menu_research.ufo:714
-#: ../base/ufos/menu_research.ufo:730
-#: ../base/ufos/menu_research.ufo:746
-#: ../base/ufos/menu_research.ufo:762
-#: ../base/ufos/menu_research.ufo:778
+#: ../base/ufos/menu_research.ufo:346 ../base/ufos/menu_research.ufo:362
+#: ../base/ufos/menu_research.ufo:378 ../base/ufos/menu_research.ufo:394
+#: ../base/ufos/menu_research.ufo:410 ../base/ufos/menu_research.ufo:426
+#: ../base/ufos/menu_research.ufo:442 ../base/ufos/menu_research.ufo:458
+#: ../base/ufos/menu_research.ufo:474 ../base/ufos/menu_research.ufo:490
+#: ../base/ufos/menu_research.ufo:506 ../base/ufos/menu_research.ufo:522
+#: ../base/ufos/menu_research.ufo:538 ../base/ufos/menu_research.ufo:554
+#: ../base/ufos/menu_research.ufo:570 ../base/ufos/menu_research.ufo:586
+#: ../base/ufos/menu_research.ufo:602 ../base/ufos/menu_research.ufo:618
+#: ../base/ufos/menu_research.ufo:634 ../base/ufos/menu_research.ufo:650
+#: ../base/ufos/menu_research.ufo:666 ../base/ufos/menu_research.ufo:682
+#: ../base/ufos/menu_research.ufo:698 ../base/ufos/menu_research.ufo:714
+#: ../base/ufos/menu_research.ufo:730 ../base/ufos/menu_research.ufo:746
+#: ../base/ufos/menu_research.ufo:762 ../base/ufos/menu_research.ufo:778
 msgid "Remove scientist"
 msgstr "Удалить ученого"
 
@@ -1016,24 +1019,15 @@ msgstr "Повторить"
 msgid "Statistics"
 msgstr "Статистика"
 
-#: ../base/ufos/menu_team.ufo:194
-#: ../base/ufos/menu_team.ufo:203
-#: ../base/ufos/menu_team.ufo:212
-#: ../base/ufos/menu_team.ufo:221
-#: ../base/ufos/menu_team.ufo:230
-#: ../base/ufos/menu_team.ufo:239
-#: ../base/ufos/menu_team.ufo:248
-#: ../base/ufos/menu_team.ufo:257
-#: ../base/ufos/menu_team.ufo:266
-#: ../base/ufos/menu_team.ufo:275
-#: ../base/ufos/menu_team.ufo:284
-#: ../base/ufos/menu_team.ufo:293
-#: ../base/ufos/menu_team.ufo:302
-#: ../base/ufos/menu_team.ufo:311
-#: ../base/ufos/menu_team.ufo:320
-#: ../base/ufos/menu_team.ufo:329
-#: ../base/ufos/menu_team.ufo:338
-#: ../base/ufos/menu_team.ufo:347
+#: ../base/ufos/menu_team.ufo:194 ../base/ufos/menu_team.ufo:203
+#: ../base/ufos/menu_team.ufo:212 ../base/ufos/menu_team.ufo:221
+#: ../base/ufos/menu_team.ufo:230 ../base/ufos/menu_team.ufo:239
+#: ../base/ufos/menu_team.ufo:248 ../base/ufos/menu_team.ufo:257
+#: ../base/ufos/menu_team.ufo:266 ../base/ufos/menu_team.ufo:275
+#: ../base/ufos/menu_team.ufo:284 ../base/ufos/menu_team.ufo:293
+#: ../base/ufos/menu_team.ufo:302 ../base/ufos/menu_team.ufo:311
+#: ../base/ufos/menu_team.ufo:320 ../base/ufos/menu_team.ufo:329
+#: ../base/ufos/menu_team.ufo:338 ../base/ufos/menu_team.ufo:347
 #: ../base/ufos/menu_team.ufo:356
 msgid "Add/remove this soldier"
 msgstr "Добавить/удалить этого солдата"
@@ -1050,14 +1044,10 @@ msgstr "Выполнено Заданий:"
 msgid "Killed Enemies:"
 msgstr "Убито Противников:"
 
-#: ../base/ufos/menu_team.ufo:768
-#: ../base/ufos/menu_team.ufo:777
-#: ../base/ufos/menu_team.ufo:786
-#: ../base/ufos/menu_team.ufo:795
-#: ../base/ufos/menu_team.ufo:804
-#: ../base/ufos/menu_team.ufo:813
-#: ../base/ufos/menu_team.ufo:822
-#: ../base/ufos/menu_team.ufo:831
+#: ../base/ufos/menu_team.ufo:768 ../base/ufos/menu_team.ufo:777
+#: ../base/ufos/menu_team.ufo:786 ../base/ufos/menu_team.ufo:795
+#: ../base/ufos/menu_team.ufo:804 ../base/ufos/menu_team.ufo:813
+#: ../base/ufos/menu_team.ufo:822 ../base/ufos/menu_team.ufo:831
 msgid "Equip this soldier"
 msgstr "Снарядить этого солдата"
 
@@ -1137,462 +1127,559 @@ msgstr "Технологии и Открытия"
 msgid "Weapons"
 msgstr "Оружие"
 
-#: ../base/ufos/research.ufo:61
+#: ../base/ufos/research.ufo:60
+msgid "Armors"
+msgstr ""
+
+#: ../base/ufos/research.ufo:62
 msgid "Alien Species"
 msgstr "Пришельцы"
 
-#: ../base/ufos/research.ufo:62
+#: ../base/ufos/research.ufo:63
 msgid "UFOs"
 msgstr "НЛО"
 
-#: ../base/ufos/research.ufo:71
+#: ../base/ufos/research.ufo:64
+msgid "UGVs"
+msgstr ""
+
+#: ../base/ufos/research.ufo:73
 msgid "Advanced Laser Technology"
 msgstr "Улучшенная Лазерная Технология"
 
-#: ../base/ufos/research.ufo:73
+#: ../base/ufos/research.ufo:75
 msgid "laser_txt"
-msgstr "Лазер (в оригинале Laser расшифровывается как Light Amplification by Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией Радиации) технология долго известная человечеству, но технология называемая THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком большими и неэффективными, чтобы иметь реальные преимущества перед обычным вооружением. Основная конструкция этого оружия, как правило, использует химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более эффективным и компактным наши ученые недавно узнали. Это позволит разработать более лёгкое MTHEL оружие в ближайшем будущем."
+msgstr ""
+"Лазер (в оригинале Laser расшифровывается как Light Amplification by "
+"Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией "
+"Радиации) технология долго известная человечеству, но технология называемая "
+"THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический "
+"Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и "
+"существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком "
+"большими и неэффективными, чтобы иметь реальные преимущества перед обычным "
+"вооружением. Основная конструкция этого оружия, как правило, использует "
+"химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более "
+"эффективным и компактным наши ученые недавно узнали. Это позволит "
+"разработать более лёгкое MTHEL оружие в ближайшем будущем."
 
-#: ../base/ufos/research.ufo:85
+#: ../base/ufos/research.ufo:87
 msgid "Tachyon Control"
 msgstr "Контроль Тахионов"
 
-#: ../base/ufos/research.ufo:89
+#: ../base/ufos/research.ufo:91
 msgid "tachyon_txt"
-msgstr "Исследования тахионов (частиц движущихся быстрее скорости света) и их противоположности тардионов всегда были белым пятном в современной науке. Антареане не только изучили поведение тахионов и их отношение к остальной части материи, но и нашли способ создавать, управлять и уничтожать эти частицы. Сами снаряды их орудий не движутся со скоростью света, но при попадании энергия испускается в цель со скоростью, которая превышает большинство физических границ, известных человечеству. Эти знания используются для создания разрушительного оружия, которое пришельцы используют, чтобы терроризировать человечество. Наши ученые полагают, что мы сможем воспроизвести это оружие, как только получим более подробную информацию."
+msgstr ""
+"Исследования тахионов (частиц движущихся быстрее скорости света) и их "
+"противоположности тардионов всегда были белым пятном в современной науке. "
+"Антареане не только изучили поведение тахионов и их отношение к остальной "
+"части материи, но и нашли способ создавать, управлять и уничтожать эти "
+"частицы. Сами снаряды их орудий не движутся со скоростью света, но при "
+"попадании энергия испускается в цель со скоростью, которая превышает "
+"большинство физических границ, известных человечеству. Эти знания "
+"используются для создания разрушительного оружия, которое пришельцы "
+"используют, чтобы терроризировать человечество. Наши ученые полагают, что мы "
+"сможем воспроизвести это оружие, как только получим более подробную "
+"информацию."
 
-#: ../base/ufos/research.ufo:99
+#: ../base/ufos/research.ufo:101
 msgid "Advanced Plasma Control"
 msgstr "Улучшенный Контроль Плазмы"
 
-#: ../base/ufos/research.ufo:101
+#: ../base/ufos/research.ufo:103
 msgid "plasma_txt"
-msgstr "Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+msgstr ""
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
-#: ../base/ufos/research.ufo:112
+#: ../base/ufos/research.ufo:114
 msgid "Nano Technology"
 msgstr "Нано Технология"
 
-#: ../base/ufos/research.ufo:114
+#: ../base/ufos/research.ufo:116
 msgid "nano_txt"
-msgstr "Нанотехнология открывает широкие возможности для разработки и производства новых видов брони и материалов. При использовании нанотехнологии будет возможно создание материалов, почти полностью сделанных из фуллеренов - класса аллотропных форм углерода (как и алмаз, карбин, графит) на атомном уровне представляющих из себя выпуклые замкнутые многогранники составленные из четного числа трехкоординированных атомов углерода. А после использовать их при изготовлении брони, более крепкой и имеющей более высокое сопротивление высоким температурам, чем любой другой ранее известный материал. Также ожидается, что эти материалы будут гораздо легче используемых в настоящее время."
+msgstr ""
+"Нанотехнология открывает широкие возможности для разработки и производства "
+"новых видов брони и материалов. При использовании нанотехнологии будет "
+"возможно создание материалов, почти полностью сделанных из фуллеренов - "
+"класса аллотропных форм углерода (как и алмаз, карбин, графит) на атомном "
+"уровне представляющих из себя выпуклые замкнутые многогранники составленные "
+"из четного числа трехкоординированных атомов углерода. А после использовать "
+"их при изготовлении брони, более крепкой и имеющей более высокое "
+"сопротивление высоким температурам, чем любой другой ранее известный "
+"материал. Также ожидается, что эти материалы будут гораздо легче "
+"используемых в настоящее время."
 
-#: ../base/ufos/research.ufo:124
+#: ../base/ufos/research.ufo:126
 msgid "Advanced Armor Fabrics"
 msgstr "Улучшенная Защитная Материя"
 
-#: ../base/ufos/research.ufo:136
+#: ../base/ufos/research.ufo:138
 msgid "General UFO technology"
 msgstr "Общая Технология НЛО"
 
-#: ../base/ufos/research.ufo:137
+#: ../base/ufos/research.ufo:139
 msgid "ufo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:157
+#: ../base/ufos/research.ufo:159
 msgid "assault_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:169
+#: ../base/ufos/research.ufo:171
 msgid "assault_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:181
+#: ../base/ufos/research.ufo:183
 msgid "sniper_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:193
+#: ../base/ufos/research.ufo:195
 msgid "sniper_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:205
+#: ../base/ufos/research.ufo:207
 msgid "smg_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:217
+#: ../base/ufos/research.ufo:219
 msgid "smg_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:229
+#: ../base/ufos/research.ufo:231
 msgid "shotgun_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:241
+#: ../base/ufos/research.ufo:243
 msgid "shotgun_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:253
+#: ../base/ufos/research.ufo:255
 msgid "flamer_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:265
+#: ../base/ufos/research.ufo:267
 msgid "flamer_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:277
+#: ../base/ufos/research.ufo:279
 msgid "pistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:289
+#: ../base/ufos/research.ufo:291
 msgid "pistol_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:301
+#: ../base/ufos/research.ufo:303
 msgid "grenl_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:313
+#: ../base/ufos/research.ufo:315
 msgid "grenl_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:325
+#: ../base/ufos/research.ufo:327
 msgid "bolterrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:337
+#: ../base/ufos/research.ufo:339
 msgid "bolterrifle_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:349
+#: ../base/ufos/research.ufo:351
 msgid "rpg_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:361
+#: ../base/ufos/research.ufo:363
 msgid "rpg_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:373
+#: ../base/ufos/research.ufo:375
 msgid "laserpistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:385
+#: ../base/ufos/research.ufo:387
 msgid "laserpistol_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:397
-#: ../base/ufos/research.ufo:409
+#: ../base/ufos/research.ufo:399 ../base/ufos/research.ufo:411
 msgid "laserrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:421
+#: ../base/ufos/research.ufo:423
 msgid "fraggen_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:433
+#: ../base/ufos/research.ufo:435
 msgid "smokegren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:445
+#: ../base/ufos/research.ufo:447
 msgid "knife_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:457
+#: ../base/ufos/research.ufo:459
 msgid "stunrod_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:473
+#: ../base/ufos/research.ufo:475
 msgid "tachyonpistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:485
+#: ../base/ufos/research.ufo:487
 msgid "tachyonpistol_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:497
+#: ../base/ufos/research.ufo:499
 msgid "tachyonrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:510
+#: ../base/ufos/research.ufo:512
 msgid "tachyonrifle_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:522
+#: ../base/ufos/research.ufo:524
 msgid "tachyonsniper_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:535
+#: ../base/ufos/research.ufo:537
 msgid "tachyonsniper_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:547
+#: ../base/ufos/research.ufo:549
 msgid "plasblade_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:559
+#: ../base/ufos/research.ufo:561
 msgid "plasblaster_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:571
+#: ../base/ufos/research.ufo:573
 msgid "plasblaster_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:583
+#: ../base/ufos/research.ufo:585
 msgid "plaspistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:596
+#: ../base/ufos/research.ufo:598
 msgid "plaspistol_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:608
+#: ../base/ufos/research.ufo:610
 msgid "plasrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:621
+#: ../base/ufos/research.ufo:623
 msgid "plasrifle_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:633
+#: ../base/ufos/research.ufo:635
 msgid "kerrblade_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:648
+#: ../base/ufos/research.ufo:650
 msgid "irgoggles_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:660
+#: ../base/ufos/research.ufo:662
 msgid "medikit_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:672
+#: ../base/ufos/research.ufo:674
 msgid "kevlar_armor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:683
+#: ../base/ufos/research.ufo:685
 msgid "nano_armor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:708
+#: ../base/ufos/research.ufo:697
+msgid "nano_heavy_armor_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:712
 msgid "b_entrance_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:720
+#: ../base/ufos/research.ufo:724
 msgid "b_commando_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:732
+#: ../base/ufos/research.ufo:736
 msgid "b_powerplant_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:744
+#: ../base/ufos/research.ufo:748
 msgid "b_storage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:756
+#: ../base/ufos/research.ufo:760
 msgid "b_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:768
+#: ../base/ufos/research.ufo:772
 msgid "b_ufo_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:780
+#: ../base/ufos/research.ufo:784
 msgid "b_intercept_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:792
+#: ../base/ufos/research.ufo:796
 msgid "b_quarters_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:804
+#: ../base/ufos/research.ufo:808
 msgid "b_lab_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:816
+#: ../base/ufos/research.ufo:820
 msgid "b_teamroom_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:828
+#: ../base/ufos/research.ufo:832
 msgid "b_radar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:843
+#: ../base/ufos/research.ufo:847
 msgid "dropship_txt"
-msgstr "Транспорт H-92 является главным транспортировочным судном для сил быстрого реагирования ФАЛАНКС. Этот оснащённый турбо реактивными двигателями General Electrics HM-5600 транспорт может достигать скорости в 1.0 махов. Четыре двигателя обладают технологией управляемого вектора тяги, благодаря чему H-92 может вертикально взлётать и садиться. Эти технологические преимущества необходимы для наиболее быстрой доставки бойцов в любую точку мира и их мгновенной высадки. Слабой стороной H-92 является полное отсутствие боевых качеств, поэтому необходимо всегда иметь несколько перехватчиков для воздушного прикрытия H-92 в случае обнаружения НЛО."
+msgstr ""
+"Транспорт H-92 является главным транспортировочным судном для сил быстрого "
+"реагирования ФАЛАНКС. Этот оснащённый турбо реактивными двигателями General "
+"Electrics HM-5600 транспорт может достигать скорости в 1.0 махов. Четыре "
+"двигателя обладают технологией управляемого вектора тяги, благодаря чему H-"
+"92 может вертикально взлётать и садиться. Эти технологические преимущества "
+"необходимы для наиболее быстрой доставки бойцов в любую точку мира и их "
+"мгновенной высадки. Слабой стороной H-92 является полное отсутствие боевых "
+"качеств, поэтому необходимо всегда иметь несколько перехватчиков для "
+"воздушного прикрытия H-92 в случае обнаружения НЛО."
 
-#: ../base/ufos/research.ufo:858
+#: ../base/ufos/research.ufo:862
 msgid "interceptor_txt"
-msgstr "Истребитель F-48 является главной опорой воздушных сил ФАЛАНКС. Эта оснащённая двумя реактивными двигателями Volkot VO-36 машина может достигать скорости в 1.4 махов. Это значительно меньше, чем скорость большинства НЛО пришельцев, но в отношении маневренности F-48 может с лёгкостью соперничать почти со всеми своими противниками. Как и транспорт H-92, истребитель F-48 обладает технологией вертикального взлёта и посадки. Поэтому все базы ФАЛАНКС оснащены вертикальными шахтами, ведущими с поверхности в подземные ангары. Этот технология взлёта-посадки позволяет сделать базу практически полностью необнаружаемой."
+msgstr ""
+"Истребитель F-48 является главной опорой воздушных сил ФАЛАНКС. Эта "
+"оснащённая двумя реактивными двигателями Volkot VO-36 машина может достигать "
+"скорости в 1.4 махов. Это значительно меньше, чем скорость большинства НЛО "
+"пришельцев, но в отношении маневренности F-48 может с лёгкостью соперничать "
+"почти со всеми своими противниками. Как и транспорт H-92, истребитель F-48 "
+"обладает технологией вертикального взлёта и посадки. Поэтому все базы "
+"ФАЛАНКС оснащены вертикальными шахтами, ведущими с поверхности в подземные "
+"ангары. Этот технология взлёта-посадки позволяет сделать базу практически "
+"полностью необнаружаемой."
 
-#: ../base/ufos/research.ufo:889
+#: ../base/ufos/research.ufo:893
 msgid "Small alien craft"
 msgstr "Малый истребитель пришельцев"
 
-#: ../base/ufos/research.ufo:890
+#: ../base/ufos/research.ufo:894
 msgid "ufo_small_txt"
-msgstr "Небольшое судно посылаемое Антареанами для исследования ландшафта и идентификации возможных научных и военных целей."
+msgstr ""
+"Небольшое судно посылаемое Антареанами для исследования ландшафта и "
+"идентификации возможных научных и военных целей."
 
-#: ../base/ufos/research.ufo:906
+#: ../base/ufos/research.ufo:910
 msgid "Big alien craft"
 msgstr "Крупный истребитель пришельцев"
 
-#: ../base/ufos/research.ufo:907
+#: ../base/ufos/research.ufo:911
 msgid "ufo_big_txt"
-msgstr "Флагманы это крупные летательные аппараты, которые обладают большей боевой мощью, чем Крейсера и перевозят столько же пехоты противника, как и Транспорты. Эти суда несут большую опасность даже в одиночку, поэтому подлежат уничтожению с большой осторожностью."
+msgstr ""
+"Флагманы это крупные летательные аппараты, которые обладают большей боевой "
+"мощью, чем Крейсера и перевозят столько же пехоты противника, как и "
+"Транспорты. Эти суда несут большую опасность даже в одиночку, поэтому "
+"подлежат уничтожению с большой осторожностью."
 
-#: ../base/ufos/research.ufo:929
+#: ../base/ufos/research.ufo:933
 msgid "Ortnok - Combat notes"
 msgstr "Ортнок - Боевые заметки"
 
-#: ../base/ufos/research.ufo:930
+#: ../base/ufos/research.ufo:934
 msgid "ortnok_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:946
+#: ../base/ufos/research.ufo:950
 msgid "Ortnok - Autopsy"
 msgstr "Ортнок - Вскрытие"
 
-#: ../base/ufos/research.ufo:947
+#: ../base/ufos/research.ufo:951
 msgid "ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:965
+#: ../base/ufos/research.ufo:969
 msgid "Ortnok - Xenobiology"
 msgstr "Ортнок - Ксенобиология"
 
-#: ../base/ufos/research.ufo:966
+#: ../base/ufos/research.ufo:970
 msgid "ortnok_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:982
+#: ../base/ufos/research.ufo:986
 msgid "Ortnok - Interrogation"
 msgstr "Ортнок - Допрос"
 
-#: ../base/ufos/research.ufo:983
+#: ../base/ufos/research.ufo:987
 msgid "ortnok_interrogation_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1001
+#: ../base/ufos/research.ufo:1005
 msgid "Ortnok TODO: FIND A NAME"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1002
+#: ../base/ufos/research.ufo:1006
 msgid "ortnok_light_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1020
+#: ../base/ufos/research.ufo:1024
 msgid "Ortnok Warrior"
 msgstr "Ортнок Воин"
 
-#: ../base/ufos/research.ufo:1021
+#: ../base/ufos/research.ufo:1025
 msgid "ortnok_medium_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1039
+#: ../base/ufos/research.ufo:1043
 msgid "Antarean - Combat notes"
 msgstr "Антареан - Боевые заметки"
 
-#: ../base/ufos/research.ufo:1040
+#: ../base/ufos/research.ufo:1044
 msgid "antarean_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1056
+#: ../base/ufos/research.ufo:1060
 msgid "Antarean - Autopsy"
 msgstr "Антареан - Вскрытие"
 
-#: ../base/ufos/research.ufo:1057
+#: ../base/ufos/research.ufo:1061
 msgid "antarean_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1073
+#: ../base/ufos/research.ufo:1077
 msgid "Antarean - Xenobiology"
 msgstr "Антареан - Ксенобиология"
 
-#: ../base/ufos/research.ufo:1074
+#: ../base/ufos/research.ufo:1078
 msgid "antarean_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1090
+#: ../base/ufos/research.ufo:1094
 msgid "Antarean - Interrogation"
 msgstr "Антареан - Допрос"
 
-#: ../base/ufos/research.ufo:1091
+#: ../base/ufos/research.ufo:1095
 msgid "antarean_interrogation_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1107
+#: ../base/ufos/research.ufo:1111
 msgid "Antarean - Commander interrogation"
 msgstr "Антареан - Допрос командующего"
 
-#: ../base/ufos/research.ufo:1108
+#: ../base/ufos/research.ufo:1112
 msgid "antarean_interrogation_commander_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1126
+#: ../base/ufos/research.ufo:1130
 msgid "Shevaar - Combat notes"
 msgstr "Шеваар - Боевые заметики"
 
-#: ../base/ufos/research.ufo:1127
+#: ../base/ufos/research.ufo:1131
 msgid "shevaar_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1143
+#: ../base/ufos/research.ufo:1147
 msgid "Shevaar - Autopsy"
 msgstr "Шеваар - Вскрытие"
 
-#: ../base/ufos/research.ufo:1144
+#: ../base/ufos/research.ufo:1148
 msgid "shevaar_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1160
+#: ../base/ufos/research.ufo:1164
 msgid "Shevaar - Xenobiology"
 msgstr "Шеваар - Ксенобиология"
 
-#: ../base/ufos/research.ufo:1161
+#: ../base/ufos/research.ufo:1165
 msgid "shevaar_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1179
+#: ../base/ufos/research.ufo:1183
 msgid "Hovernet - Combat notes"
 msgstr "Ховернет - Боевые заметки"
 
-#: ../base/ufos/research.ufo:1180
+#: ../base/ufos/research.ufo:1184
 msgid "hovernet_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1196
+#: ../base/ufos/research.ufo:1200
 msgid "Hovernet - wreck research"
 msgstr "Ховернет - Исследование обломков"
 
-#: ../base/ufos/research.ufo:1197
+#: ../base/ufos/research.ufo:1201
 msgid "hovernet_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1213
+#: ../base/ufos/research.ufo:1217
 msgid "Hovernet - design"
 msgstr "Ховернет - дизайн"
 
-#: ../base/ufos/research.ufo:1214
+#: ../base/ufos/research.ufo:1218
 msgid "hovernet_xenobiology_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1232
+#: ../base/ufos/research.ufo:1236
 msgid "Cyborg Ortnok - Combat notes"
 msgstr "Ортнок Киборг - Боевые заметки"
 
-#: ../base/ufos/research.ufo:1233
+#: ../base/ufos/research.ufo:1237
 msgid "cyborg_ortnok_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1249
+#: ../base/ufos/research.ufo:1253
 msgid "Cyborg Ortnok - Autopsy"
 msgstr "Ортнок Киборг - Вскрытие"
 
-#: ../base/ufos/research.ufo:1250
+#: ../base/ufos/research.ufo:1254
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1266
+#: ../base/ufos/research.ufo:1270
 msgid "Cyborg Ortnok - Xenobiology"
 msgstr "Ортнок Киборг - Ксенобиология"
 
-#: ../base/ufos/research.ufo:1267
+#: ../base/ufos/research.ufo:1271
 msgid "cyborg_ortnok_xenobiology_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1290
+msgid "UGV Phoenix"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1291
+msgid "ugv_phoenix_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1306
+msgid "UGV Triax"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1307
+msgid "ugv_triax_txt"
 msgstr ""
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "2084 – На Земле, наконец, наступает время относительного мира и спокойствия. Войны завершились, споры разрешены, а новые границы признаны правительствами вовлечённых в конфликты стран. Старые государства и супер-державы интегрируются в мощные политические коалиции, либо организуют союзы. Достаток и богатство перестают быть экзотикой, как это было когда-то в 20м веке, люди начинают доверять своим лидерам, аккуратно поддерживающим мировой баланс сил и ведущим их в стабильный, интригующий 22ой век."
+msgstr ""
+"2084 – На Земле, наконец, наступает время относительного мира и спокойствия. "
+"Войны завершились, споры разрешены, а новые границы признаны правительствами "
+"вовлечённых в конфликты стран. Старые государства и супер-державы "
+"интегрируются в мощные политические коалиции, либо организуют союзы. "
+"Достаток и богатство перестают быть экзотикой, как это было когда-то в 20м "
+"веке, люди начинают доверять своим лидерам, аккуратно поддерживающим мировой "
+"баланс сил и ведущим их в стабильный, интригующий 22ой век."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
@@ -1600,15 +1687,30 @@ msgstr "... начинается вторжение ..."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "Именно в этот период пришельцы вторгаются на Землю. Они начинают своё наступление с атаки на город Бомбей – самую густонаселённую точку Земли. Сотни тысяч невинных граждан умирают, пока, наконец, пришельцы не вытесняются силами Содружества."
+msgstr ""
+"Именно в этот период пришельцы вторгаются на Землю. Они начинают своё "
+"наступление с атаки на город Бомбей – самую густонаселённую точку Земли. "
+"Сотни тысяч невинных граждан умирают, пока, наконец, пришельцы не "
+"вытесняются силами Содружества."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "Никто не знает, откуда они пришли. Попытка установить дипломатический контакт встречается агрессией. В течении сорока восьми часов все семь политических блоков переходят на военное положение. На протяжении двух недель армии Земли отражают атаки пришельцев, но неподготовленная к подобным боям армия практически неэффективна. Большие потери вынуждают все семь блоков в сотрудничестве с ООН создать специализированное боевое подразделение под названием ФАЛАНКС."
+msgstr ""
+"Никто не знает, откуда они пришли. Попытка установить дипломатический "
+"контакт встречается агрессией. В течении сорока восьми часов все семь "
+"политических блоков переходят на военное положение. На протяжении двух "
+"недель армии Земли отражают атаки пришельцев, но неподготовленная к подобным "
+"боям армия практически неэффективна. Большие потери вынуждают все семь "
+"блоков в сотрудничестве с ООН создать специализированное боевое "
+"подразделение под названием ФАЛАНКС."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Обязанное противостоять внеземной угрозе, это подразделение финансируется всеми семи политическими силами и получает в свои ряды только лучших бойцов из их национальных армий. Сможет ли ФАЛАНКС противостоять новой угрозе будет ясно совсем скоро..."
+msgstr ""
+"Обязанное противостоять внеземной угрозе, это подразделение финансируется "
+"всеми семи политическими силами и получает в свои ряды только лучших бойцов "
+"из их национальных армий. Сможет ли ФАЛАНКС противостоять новой угрозе будет "
+"ясно совсем скоро..."
 
 #: ../base/ufos/seq_intro.ufo:62
 msgid "prolog_sentence1"
@@ -1616,45 +1718,60 @@ msgstr "Входящее Сообщение:"
 
 #: ../base/ufos/seq_intro.ufo:72
 msgid "prolog_sentence2"
-msgstr "Добро пожаловать, Командор. Вам поручено командовать подразделением ФАЛАНКС. Ваша миссия: противостоять захватчикам и обеспечивать защиту населения. Как это выполнить – Ваше лично дело, но знайте, провал недопустим."
+msgstr ""
+"Добро пожаловать, Командор. Вам поручено командовать подразделением ФАЛАНКС. "
+"Ваша миссия: противостоять захватчикам и обеспечивать защиту населения. Как "
+"это выполнить – Ваше лично дело, но знайте, провал недопустим."
 
 #: ../base/ufos/seq_intro.ufo:81
 msgid "prolog_sentence3"
-msgstr "Первое, что необходимо сделать, это построить Вашу основную базу. Место для нее выбирайте обдуманно, так как её расположение будет оказывать огромное влияние на результат проекта ФАЛАНКС."
+msgstr ""
+"Первое, что необходимо сделать, это построить Вашу основную базу. Место для "
+"нее выбирайте обдуманно, так как её расположение будет оказывать огромное "
+"влияние на результат проекта ФАЛАНКС."
 
 #: ../base/ufos/seq_intro.ufo:90
 msgid "prolog_sentence4"
-msgstr "Недавний анализ атаки на Бомбей показал, что как раз в это время активность пришельцев возросла в наиболее плотно населённых районах Центральной Америки, Европы, Азии, Африки и Австралии. Расширяя территорию проводимых операций Вам необходимо учитывать и эту информацию."
+msgstr ""
+"Недавний анализ атаки на Бомбей показал, что как раз в это время активность "
+"пришельцев возросла в наиболее плотно населённых районах Центральной "
+"Америки, Европы, Азии, Африки и Австралии. Расширяя территорию проводимых "
+"операций Вам необходимо учитывать и эту информацию."
 
 #: ../base/ufos/seq_intro.ufo:99
 msgid "prolog_sentence5"
-msgstr "После того, как Вы построите первую базу, будет необходимо подготовить боевой отряд. Рекруты, направленные в ФАЛАНКС, должны быть назначены на перехватчики и соответственно экипированы."
+msgstr ""
+"После того, как Вы построите первую базу, будет необходимо подготовить "
+"боевой отряд. Рекруты, направленные в ФАЛАНКС, должны быть назначены на "
+"перехватчики и соответственно экипированы."
 
 #: ../base/ufos/seq_intro.ufo:108
 msgid "prolog_sentence6"
-msgstr "И не забудьте обеспечить им хорошую защиту. Живой солдат, как правило, может убить больше пришельцев, чем мёртвый."
+msgstr ""
+"И не забудьте обеспечить им хорошую защиту. Живой солдат, как правило, может "
+"убить больше пришельцев, чем мёртвый."
 
 #: ../base/ufos/seq_intro.ufo:117
 msgid "prolog_sentence7"
 msgstr "На этом всё, Командор. Удачи Вам."
 
-#: ../base/ufos/team_aliens.ufo:158
+#: ../base/ufos/team_aliens.ufo:227
 msgid "Ortnok"
 msgstr "Ортнок"
 
-#: ../base/ufos/team_aliens.ufo:168
+#: ../base/ufos/team_aliens.ufo:237
 msgid "Antarean"
 msgstr "Антареан"
 
-#: ../base/ufos/team_aliens.ufo:178
+#: ../base/ufos/team_aliens.ufo:247
 msgid "Shevaar"
 msgstr "Шеваар"
 
-#: ../base/ufos/team_aliens.ufo:188
+#: ../base/ufos/team_aliens.ufo:257
 msgid "Hovernet"
 msgstr "Ховернет"
 
-#: ../base/ufos/team_aliens.ufo:198
+#: ../base/ufos/team_aliens.ufo:267
 msgid "Cyborg Ortnok"
 msgstr "Ортнок Киборг"
 
@@ -1662,8 +1779,7 @@ msgstr "Ортнок Киборг"
 msgid "Medikit"
 msgstr "Меди-комплект"
 
-#: ../base/ufos/weapons.ufo:20
-#: ../base/ufos/weapons.ufo:34
+#: ../base/ufos/weapons.ufo:20 ../base/ufos/weapons.ufo:34
 msgid "Heal"
 msgstr "Лечить"
 
@@ -1671,8 +1787,7 @@ msgstr "Лечить"
 msgid "IR Goggles"
 msgstr "Прибор Сенсорного Зрения"
 
-#: ../base/ufos/weapons.ufo:66
-#: ../base/ufos/weapons.ufo:76
+#: ../base/ufos/weapons.ufo:66 ../base/ufos/weapons.ufo:76
 msgid "Activate"
 msgstr "Активировать"
 
@@ -1680,18 +1795,14 @@ msgstr "Активировать"
 msgid "Blade"
 msgstr "Лезвие"
 
-#: ../base/ufos/weapons.ufo:106
-#: ../base/ufos/weapons_human.ufo:677
+#: ../base/ufos/weapons.ufo:106 ../base/ufos/weapons_human.ufo:677
 #: ../base/ufos/weapons_plasma.ufo:167
 msgid "Stab"
 msgstr "Удар"
 
-#: ../base/ufos/weapons.ufo:121
-#: ../base/ufos/weapons_human.ufo:540
-#: ../base/ufos/weapons_human.ufo:564
-#: ../base/ufos/weapons_human.ufo:608
-#: ../base/ufos/weapons_human.ufo:632
-#: ../base/ufos/weapons_human.ufo:692
+#: ../base/ufos/weapons.ufo:121 ../base/ufos/weapons_human.ufo:540
+#: ../base/ufos/weapons_human.ufo:564 ../base/ufos/weapons_human.ufo:608
+#: ../base/ufos/weapons_human.ufo:632 ../base/ufos/weapons_human.ufo:692
 #: ../base/ufos/weapons_plasma.ufo:182
 msgid "Throw"
 msgstr "Метнуть"
@@ -1704,8 +1815,7 @@ msgstr "Штурмовая Винтовка"
 msgid "Assault Rifle Clip"
 msgstr "Обойма Штурмовой Винтовки"
 
-#: ../base/ufos/weapons_human.ufo:35
-#: ../base/ufos/weapons_human.ufo:250
+#: ../base/ufos/weapons_human.ufo:35 ../base/ufos/weapons_human.ufo:250
 msgid "Burst"
 msgstr "Короткая Очередь"
 
@@ -1721,17 +1831,13 @@ msgstr "Снайперская Винтовка"
 msgid "Sniper Rifle Clip"
 msgstr "Обойма Снайперской Винтовки"
 
-#: ../base/ufos/weapons_human.ufo:108
-#: ../base/ufos/weapons_human.ufo:474
-#: ../base/ufos/weapons_plasma.ufo:234
-#: ../base/ufos/weapons_tachyon.ufo:181
+#: ../base/ufos/weapons_human.ufo:108 ../base/ufos/weapons_human.ufo:474
+#: ../base/ufos/weapons_plasma.ufo:234 ../base/ufos/weapons_tachyon.ufo:181
 msgid "Snap Shot"
 msgstr "Выстрел На Вскидку"
 
-#: ../base/ufos/weapons_human.ufo:126
-#: ../base/ufos/weapons_human.ufo:198
-#: ../base/ufos/weapons_human.ufo:497
-#: ../base/ufos/weapons_plasma.ufo:255
+#: ../base/ufos/weapons_human.ufo:126 ../base/ufos/weapons_human.ufo:198
+#: ../base/ufos/weapons_human.ufo:497 ../base/ufos/weapons_plasma.ufo:255
 #: ../base/ufos/weapons_tachyon.ufo:54
 msgid "Aimed Shot"
 msgstr "Прицельный Выстрел"
@@ -1744,8 +1850,7 @@ msgstr "9мм Пистолет"
 msgid "Pistol Clip"
 msgstr "Обойма Пистолета"
 
-#: ../base/ufos/weapons_human.ufo:179
-#: ../base/ufos/weapons_tachyon.ufo:35
+#: ../base/ufos/weapons_human.ufo:179 ../base/ufos/weapons_tachyon.ufo:35
 msgid "Rapid Fire"
 msgstr "Несколько Выстрелов"
 
@@ -1769,10 +1874,8 @@ msgstr "Дробовик"
 msgid "Buckshots"
 msgstr "Дробь"
 
-#: ../base/ufos/weapons_human.ufo:323
-#: ../base/ufos/weapons_human.ufo:744
-#: ../base/ufos/weapons_human.ufo:769
-#: ../base/ufos/weapons_human.ufo:827
+#: ../base/ufos/weapons_human.ufo:323 ../base/ufos/weapons_human.ufo:744
+#: ../base/ufos/weapons_human.ufo:769 ../base/ufos/weapons_human.ufo:827
 #: ../base/ufos/weapons_human.ufo:852
 msgid "Single Shot"
 msgstr "Одиночный Выстрел"
@@ -1849,13 +1952,11 @@ msgstr "Лазерный Пистолет"
 msgid "Laser Pistol Charge"
 msgstr "Заряды Лазерного Пистолета"
 
-#: ../base/ufos/weapons_laser.ufo:35
-#: ../base/ufos/weapons_laser.ufo:107
+#: ../base/ufos/weapons_laser.ufo:35 ../base/ufos/weapons_laser.ufo:107
 msgid "Single Pulse"
 msgstr "Одиночный Импульс"
 
-#: ../base/ufos/weapons_laser.ufo:53
-#: ../base/ufos/weapons_laser.ufo:125
+#: ../base/ufos/weapons_laser.ufo:53 ../base/ufos/weapons_laser.ufo:125
 msgid "Multiple Pulses"
 msgstr "Очередь Импульсов"
 
@@ -1875,13 +1976,11 @@ msgstr "Плазменный Пистолет"
 msgid "Plasma Pistol Charge"
 msgstr "Заряды Плазменного Пистолета"
 
-#: ../base/ufos/weapons_plasma.ufo:36
-#: ../base/ufos/weapons_plasma.ufo:109
+#: ../base/ufos/weapons_plasma.ufo:36 ../base/ufos/weapons_plasma.ufo:109
 msgid "Charged Pulse"
 msgstr "Мощный Импульс"
 
-#: ../base/ufos/weapons_plasma.ufo:54
-#: ../base/ufos/weapons_plasma.ufo:127
+#: ../base/ufos/weapons_plasma.ufo:54 ../base/ufos/weapons_plasma.ufo:127
 msgid "Continuous Beam"
 msgstr "Непрерывный Луч"
 
@@ -1921,8 +2020,7 @@ msgstr "Тахионная Винтовка"
 msgid "Tachyon Rifle Charge"
 msgstr "Заряды Тахионной Винтовки"
 
-#: ../base/ufos/weapons_tachyon.ufo:106
-#: ../base/ufos/weapons_tachyon.ufo:200
+#: ../base/ufos/weapons_tachyon.ufo:106 ../base/ufos/weapons_tachyon.ufo:200
 msgid "Rapid Shots"
 msgstr "Очередь"
 
@@ -2012,8 +2110,7 @@ msgstr "Построено на базе: %i"
 msgid "Constructing: %i day(s)"
 msgstr "Дней до завершения строительства: %i"
 
-#: client/cl_basemanagement.c:147
-#: client/cl_basemanagement.c:2273
+#: client/cl_basemanagement.c:147 client/cl_basemanagement.c:2273
 msgid "Construction finished"
 msgstr "Строительство завершено"
 
@@ -2050,26 +2147,14 @@ msgstr "Отключено"
 msgid "Not enough credits to build this\n"
 msgstr "Недостаточно средств для постройки.\n"
 
-#: client/cl_basemanagement.c:291
-#: client/cl_basemanagement.c:2156
-#: client/cl_campaign.c:347
-#: client/cl_campaign.c:621
-#: client/cl_campaign.c:667
-#: client/cl_campaign.c:1005
-#: client/cl_campaign.c:1090
-#: client/cl_campaign.c:1106
-#: client/cl_campaign.c:1260
-#: client/cl_campaign.c:2085
-#: client/cl_campaign.c:2115
-#: client/cl_campaign.c:2117
-#: client/cl_research.c:512
-#: client/cl_research.c:624
-#: client/cl_research.c:627
-#: client/cl_research.c:631
-#: client/cl_research.c:648
-#: client/cl_research.c:680
-#: client/cl_research.c:684
-#: client/cl_research.c:813
+#: client/cl_basemanagement.c:291 client/cl_basemanagement.c:2156
+#: client/cl_campaign.c:347 client/cl_campaign.c:624 client/cl_campaign.c:670
+#: client/cl_campaign.c:1008 client/cl_campaign.c:1093
+#: client/cl_campaign.c:1109 client/cl_campaign.c:1263
+#: client/cl_campaign.c:2088 client/cl_campaign.c:2118
+#: client/cl_campaign.c:2120 client/cl_research.c:512 client/cl_research.c:624
+#: client/cl_research.c:627 client/cl_research.c:631 client/cl_research.c:648
+#: client/cl_research.c:680 client/cl_research.c:684 client/cl_research.c:813
 msgid "Notice"
 msgstr "Предупреждение"
 
@@ -2119,8 +2204,7 @@ msgstr "Состояние"
 msgid "A new base has been built: %s."
 msgstr "Построена новая база: %s."
 
-#: client/cl_basemanagement.c:1785
-#: client/cl_basemanagement.c:1792
+#: client/cl_basemanagement.c:1785 client/cl_basemanagement.c:1792
 msgid "Base built"
 msgstr "База построена"
 
@@ -2188,76 +2272,83 @@ msgstr "Перевозит груз"
 msgid "Returning to homebase"
 msgstr "Возвращается на базу"
 
-#: client/cl_campaign.c:569
-#: client/cl_ufopedia.c:52
-#: client/cl_ufopedia.c:78
-#: client/cl_ufopedia.c:79
+#: client/cl_campaign.c:569 client/cl_ufopedia.c:114
+#, c-format
+msgid "Speed:\t%.0f\n"
+msgstr "Скорость:\t%.0f\n"
+
+#: client/cl_campaign.c:570
+#, fuzzy, c-format
+msgid "Fuel:\t%i/%i\n"
+msgstr "Топливо:\t%i\n"
+
+#: client/cl_campaign.c:571 client/cl_campaign.c:572 client/cl_ufopedia.c:90
+#: client/cl_ufopedia.c:116 client/cl_ufopedia.c:117
 msgid "None"
 msgstr "Нет"
 
-#: client/cl_campaign.c:569
+#: client/cl_campaign.c:571 client/cl_ufopedia.c:116
 #, c-format
-msgid ""
-"Speed:\t%.0f\n"
-"Fuel:\t%i/%i\n"
-"Weapon:\t%s\n"
-"Shield:\t%s\n"
-msgstr ""
-"Скорость:\t%.0f\n"
-"Топливо:\t%i/%i\n"
-"Оружие:\t%s\n"
-"Щит:\t%s\n"
+msgid "Weapon:\t%s\n"
+msgstr "Оружие:\t%s\n"
 
-#: client/cl_campaign.c:620
+#: client/cl_campaign.c:572
+#, fuzzy, c-format
+msgid "Shield:\t%s"
+msgstr "Щит:\t%s\n"
+
+#: client/cl_campaign.c:623
 #, c-format
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Прибыл новый истребитель: %s на базу: %s"
 
-#: client/cl_campaign.c:667
+#: client/cl_campaign.c:670
 msgid "Could not set up your base at this location"
 msgstr "В этом месте невозможно построить базу."
 
-#: client/cl_campaign.c:847
+#: client/cl_campaign.c:850
 #, c-format
 msgid "Your base %s is under attack."
 msgstr "База %s атакована."
 
-#: client/cl_campaign.c:848
+#: client/cl_campaign.c:851
 msgid "Baseattack"
 msgstr "Атака базы"
 
-#: client/cl_campaign.c:860
+#: client/cl_campaign.c:863
 msgid "Alien activity"
 msgstr "Активность пришельцев"
 
-#: client/cl_campaign.c:860
+#: client/cl_campaign.c:863
 msgid "Alien activity has been reported."
 msgstr "Обнаружена активность пришельцев."
 
-#: client/cl_campaign.c:1005
+#: client/cl_campaign.c:1008
 msgid "Assign a team to aircraft"
 msgstr "Назначить отряд на перехватчик"
 
-#: client/cl_campaign.c:1089
+#: client/cl_campaign.c:1092
 #, c-format
 msgid "The mission expired and %i civilians died\\You've lost %i credits."
-msgstr "Миссия не была во время выполнена, погибло гражданских: %i\\Вы потеряли %i кредитов."
+msgstr ""
+"Миссия не была во время выполнена, погибло гражданских: %i\\Вы потеряли %i "
+"кредитов."
 
-#: client/cl_campaign.c:1106
+#: client/cl_campaign.c:1109
 msgid "Your dropship has low fuel and returns to base"
 msgstr "У транспорта заканчивается топливо, и он возвращается на базу"
 
-#: client/cl_campaign.c:1259
+#: client/cl_campaign.c:1262
 #, c-format
 msgid "Gained %i credits from nation %s"
 msgstr "Получено %i кредитов от нации: %s"
 
-#: client/cl_campaign.c:1304
+#: client/cl_campaign.c:1307
 #, c-format
 msgid "%02i:%i%i"
 msgstr ""
 
-#: client/cl_campaign.c:1411
+#: client/cl_campaign.c:1414
 #, c-format
 msgid ""
 "Missions:\n"
@@ -2270,53 +2361,49 @@ msgstr ""
 "Баз:\n"
 "построено:\t%i\tатаковано:\t%i\n"
 
-#: client/cl_campaign.c:2013
+#: client/cl_campaign.c:2016
 msgid "Assemble or load a team"
 msgstr "Создайте или загрузите отряд"
 
-#: client/cl_campaign.c:2013
+#: client/cl_campaign.c:2016
 msgid "Note"
 msgstr "Замечание"
 
-#: client/cl_campaign.c:2085
+#: client/cl_campaign.c:2088
 msgid "Your dropship is not near the landingzone"
 msgstr "Ваш транспорт далеко от зоны высадки"
 
-#: client/cl_campaign.c:2115
+#: client/cl_campaign.c:2118
 msgid "You've won the battle"
 msgstr "Вы победили"
 
-#: client/cl_campaign.c:2117
+#: client/cl_campaign.c:2120
 msgid "You've lost the battle"
 msgstr "Вы проиграли"
 
-#: client/cl_campaign.c:2265
+#: client/cl_campaign.c:2268
 #, c-format
 msgid "%s (%s) died on his last mission.\n"
 msgstr "%s (%s) умерло на последней миссии.\n"
 
-#: client/cl_campaign.c:2266
+#: client/cl_campaign.c:2269
 msgid "Soldier died"
 msgstr "Солдат умер"
 
-#: client/cl_campaign.c:2292
+#: client/cl_campaign.c:2295
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s был повышел до ранга %s.\n"
 
-#: client/cl_campaign.c:2293
+#: client/cl_campaign.c:2296
 msgid "Soldier promoted"
 msgstr "Солдат повышен"
 
-#: client/cl_main.c:365
-#: client/cl_main.c:697
-#: client/cl_menu.c:367
+#: client/cl_main.c:365 client/cl_main.c:697 client/cl_menu.c:367
 msgid "Assemble a team first"
 msgstr "Сначала создайте отряд"
 
-#: client/cl_main.c:365
-#: client/cl_main.c:697
-#: client/cl_menu.c:367
+#: client/cl_main.c:365 client/cl_main.c:697 client/cl_menu.c:367
 msgid "Error"
 msgstr "Ошибка"
 
@@ -2340,8 +2427,7 @@ msgstr "Ночь"
 msgid "Day"
 msgstr "День"
 
-#: client/cl_menu.c:2131
-#: client/cl_menu.c:2164
+#: client/cl_menu.c:2118 client/cl_menu.c:2151
 msgid ""
 "Select the desired location of the\n"
 "new base on the map.\n"
@@ -2349,8 +2435,7 @@ msgstr ""
 "Выберите место для постройки\n"
 "новой базы.\n"
 
-#: client/cl_menu.c:2135
-#: client/cl_menu.c:2168
+#: client/cl_menu.c:2122 client/cl_menu.c:2155
 msgid ""
 "Aliens are attacking our base\n"
 "at this very moment.\n"
@@ -2358,8 +2443,7 @@ msgstr ""
 "Пришельцы атакуют нашу базу\n"
 "в этот самый момент.\n"
 
-#: client/cl_menu.c:2139
-#: client/cl_menu.c:2172
+#: client/cl_menu.c:2126 client/cl_menu.c:2159
 msgid "Select ufo or mission on map\n"
 msgstr "Выберете НЛО или миссию на карте\n"
 
@@ -2399,7 +2483,8 @@ msgid "Researched in this base."
 msgstr "Исследовано на этой базе."
 
 #: client/cl_research.c:414
-msgid "Progress: %.1f\\%\n"
+#, fuzzy
+msgid "Progress: %.1f\\%"
 msgstr "Прогресс: %.1f\\%\n"
 
 #: client/cl_research.c:416
@@ -2407,19 +2492,23 @@ msgid "Progress: Not available."
 msgstr "Прогресс: Не доступно."
 
 #: client/cl_research.c:422
-msgid "Status: Under research\n"
+#, fuzzy
+msgid "Status: Under research"
 msgstr "Статус: Исследуется\n"
 
 #: client/cl_research.c:425
-msgid "Status: Research paused\n"
+#, fuzzy
+msgid "Status: Research paused"
 msgstr "Статус: Приостановлено\n"
 
 #: client/cl_research.c:428
-msgid "Status: Research finished\n"
+#, fuzzy
+msgid "Status: Research finished"
 msgstr "Статус: Завершено\n"
 
 #: client/cl_research.c:431
-msgid "Status: Unknown technology\n"
+#, fuzzy
+msgid "Status: Unknown technology"
 msgstr "Статус: Неизвестная технология\n"
 
 #: client/cl_research.c:439
@@ -2427,20 +2516,22 @@ msgid "Dependencies: "
 msgstr "Зависимости: "
 
 #: client/cl_research.c:512
-msgid "There is no free lab available.\\You need to build one or free another\\in order to assign scientists to research this technology.\n"
-msgstr "Нет свободной лаборатории.\\Чтобы начать исследование необходимо\\освободить существующую или построить новую.\n"
+msgid ""
+"There is no free lab available.\\You need to build one or free another\\in "
+"order to assign scientists to research this technology.\n"
+msgstr ""
+"Нет свободной лаборатории.\\Чтобы начать исследование необходимо\\освободить "
+"существующую или построить новую.\n"
 
 #: client/cl_research.c:624
 msgid "This item is already under research by your scientists."
 msgstr "Этот объект уже исследуется Вашими учеными."
 
-#: client/cl_research.c:627
-#: client/cl_research.c:680
+#: client/cl_research.c:627 client/cl_research.c:680
 msgid "The research on this item continues."
 msgstr "Исследование этого объекта продолжаются."
 
-#: client/cl_research.c:631
-#: client/cl_research.c:684
+#: client/cl_research.c:631 client/cl_research.c:684
 msgid "The research on this item is complete."
 msgstr "Исследование этого объекта завершено."
 
@@ -2534,8 +2625,7 @@ msgstr "Разброс:\t%1.1f / %1.1f\n"
 msgid "Ammo:\t%i\n"
 msgstr "Зарядов:\t%i\n"
 
-#: client/cl_team.c:279
-#: client/cl_ufopedia.c:53
+#: client/cl_team.c:279 client/cl_ufopedia.c:91
 msgid "No"
 msgstr "Нет"
 
@@ -2544,8 +2634,7 @@ msgstr "Нет"
 msgid "Twohanded:\t%s"
 msgstr "Двуручное:\t%s"
 
-#: client/cl_team.c:279
-#: client/cl_ufopedia.c:53
+#: client/cl_team.c:279 client/cl_ufopedia.c:91
 msgid "Yes"
 msgstr "Да"
 
@@ -2567,6 +2656,11 @@ msgstr "Дальность:\t%1.1f\n"
 #: client/cl_team.c:291
 msgid "Unknown - need to research this"
 msgstr "Неизвестно - необходимо исследовать"
+
+#: client/cl_team.c:600
+#, c-format
+msgid "%i of %i"
+msgstr ""
 
 #: client/cl_team.c:770
 msgid "NewTeam"
@@ -2676,70 +2770,74 @@ msgstr ""
 msgid "New Recruits\t%i\n"
 msgstr "Новых рекрутов\t%i\n"
 
-#: client/cl_ufopedia.c:46
+#: client/cl_ufopedia.c:43
+msgid "Could not find armor definition"
+msgstr ""
+
+#: client/cl_ufopedia.c:45
+#, c-format
+msgid "Item %s is no armor but %s"
+msgstr ""
+
+#: client/cl_ufopedia.c:55
+#, c-format
+msgid "%s:\tProtection: %i\tHardness: %i\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:84
 msgid "Error - could not find building"
 msgstr ""
 
-#: client/cl_ufopedia.c:52
+#: client/cl_ufopedia.c:90
 #, c-format
 msgid "Depends:\t%s\n"
 msgstr "Зависит:\t%s\n"
 
-#: client/cl_ufopedia.c:53
+#: client/cl_ufopedia.c:91
 #, c-format
 msgid "More than once:\t%s\n"
 msgstr "Больше чем одно:\t%s\n"
 
-#: client/cl_ufopedia.c:54
+#: client/cl_ufopedia.c:92
 #, c-format
 msgid "Buildtime:\t%i day(s)\n"
 msgstr "Время постройки:\t%i day(s)\n"
 
-#: client/cl_ufopedia.c:55
+#: client/cl_ufopedia.c:93
 #, c-format
 msgid "Fixcosts:\t%i c\n"
 msgstr "Цена:\t%i c\n"
 
-#: client/cl_ufopedia.c:56
+#: client/cl_ufopedia.c:94
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Цена обслуживания:\t%i c\n"
 
-#: client/cl_ufopedia.c:57
+#: client/cl_ufopedia.c:95
 #, c-format
 msgid "Energy:\t%i\n"
 msgstr "Энергия:\t%i\n"
 
-#: client/cl_ufopedia.c:58
+#: client/cl_ufopedia.c:96
 #, c-format
 msgid "Workercosts:\t%i c\n"
 msgstr "Работники:\t%i c\n"
 
-#: client/cl_ufopedia.c:74
+#: client/cl_ufopedia.c:112
 msgid "Error - could not find aircraft"
 msgstr ""
 
-#: client/cl_ufopedia.c:76
-#, c-format
-msgid "Speed:\t%.0f\n"
-msgstr "Скорость:\t%.0f\n"
-
-#: client/cl_ufopedia.c:77
+#: client/cl_ufopedia.c:115
 #, c-format
 msgid "Fuel:\t%i\n"
 msgstr "Топливо:\t%i\n"
 
-#: client/cl_ufopedia.c:78
-#, c-format
-msgid "Weapon:\t%s\n"
-msgstr "Оружие:\t%s\n"
-
-#: client/cl_ufopedia.c:79
+#: client/cl_ufopedia.c:117
 #, c-format
 msgid "Shield:\t%s\n"
 msgstr "Щит:\t%s\n"
 
-#: client/cl_ufopedia.c:236
+#: client/cl_ufopedia.c:271
 msgid "Ufopedia Content"
 msgstr "Содержание Нлопедии"
 
@@ -2773,10 +2871,11 @@ msgstr "Невозможно выполнить действие - в друго
 
 #: game/g_client.c:633
 msgid "Can't perform action - no control over allied actors!\n"
-msgstr "Невозможно выполнить действие - нет контроля над дружественными персонажами!\n"
+msgstr ""
+"Невозможно выполнить действие - нет контроля над дружественными "
+"персонажами!\n"
 
-#: game/g_client.c:639
-#: game/g_client.c:735
+#: game/g_client.c:639 game/g_client.c:735
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Невозможно выполнить действие - не хватает очков действий!\n"
 
@@ -2820,3 +2919,20 @@ msgstr "Невозможно выполнить действие - нет аму
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Невозможно выполнить действие - не хватает амуниции!\n"
 
+#, fuzzy
+#~ msgid "Speed:\t%.0f"
+#~ msgstr "Скорость:\t%.0f\n"
+
+#~ msgid "Medium Armor"
+#~ msgstr "Средняя Броня"
+
+#~ msgid ""
+#~ "Speed:\t%.0f\n"
+#~ "Fuel:\t%i/%i\n"
+#~ "Weapon:\t%s\n"
+#~ "Shield:\t%s\n"
+#~ msgstr ""
+#~ "Скорость:\t%.0f\n"
+#~ "Топливо:\t%i/%i\n"
+#~ "Оружие:\t%s\n"
+#~ "Щит:\t%s\n"
