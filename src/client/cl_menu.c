@@ -1638,6 +1638,20 @@ menuModel_t* MN_GetMenuModel ( char* menuModel )
 
 /*
 =================
+MN_GetFont
+
+Return the font for a specific node or default font
+=================
+*/
+char* MN_GetFont ( menu_t* m, menuNode_t* n )
+{
+	if ( n->data[1] )
+		return MN_GetReferenceString( m, n->data[1] );
+	return "f_small";
+}
+
+/*
+=================
 MN_DrawMenus
 =================
 */
@@ -1654,7 +1668,7 @@ void MN_DrawMenus( void )
 	item_t		item;
 	vec4_t		color;
 	int		mouseOver = 0;
-	char	*pos, *tab1, *tab2, *end;
+	char	*pos, *tab, *end;
 	int 	y, line, x, len;
 	message_t	*message;
 	menuModel_t	*menuModel = NULL;
@@ -1743,8 +1757,7 @@ void MN_DrawMenus( void )
 					break;
 
 				case MN_STRING:
-					if ( node->data[1] ) font = MN_GetReferenceString( menu, node->data[1] );
-					else font = "f_small";
+					font = MN_GetFont( menu, node );
 					if ( !node->mousefx || cl.time % 1000 < 500 )
 						re.FontDrawString( font, node->align, node->pos[0], node->pos[1], node->size[0], ref );
 					else
@@ -1758,79 +1771,55 @@ void MN_DrawMenus( void )
 
 						Q_strncpyz( textCopy, menuText[node->num], MAX_MENUTEXTLEN );
 						len = strlen(textCopy);
-						if ( textCopy[len-1] != '\n' )
-							Q_strcat( textCopy, MAX_MENUTEXTLEN, "\n" );
 
-						if ( node->data[1] )
-							font = MN_GetReferenceString( menu, node->data[1] );
-						else
-							font = "f_small";
+						font = MN_GetFont( menu, node );
 
 						pos = textCopy;
 						y = node->pos[1];
 						line = 0;
-						do {
+						do
+						{
 							line++;
 							// have a look that the maxline value defined in menu via
 							// the height parameter is not exceeded here
+							// TODO: Draw the scrollbars
 							if ( node->height > 0 && line >= node->height )
-							{
-								// TODO: Draw the scrollbars
 								break;
-							}
+							// maybe due to scrolling this line is not visible
+							if ( line < node->textScroll )
+								break;
 
+							// new line starts from node x pos
 							x = node->pos[0];
+
 							end = strchr( pos, '\n' );
-							if ( !end ) break;
-							*end = 0;
-
-							tab1 = strchr( pos, '\t' );
-							if ( tab1 ) *tab1 = 0;
-
+							if ( end )
+								*end++ = '\0';
 							if ( node->mousefx && line == mouseOver ) re.DrawColor( color );
 
-							// maybe due to scrolling this line is not visible
-							if ( line > node->textScroll )
-								re.FontDrawString( font, ALIGN_UL, x, y, node->size[0], pos );
-
-							while ( tab1 )
+							do
 							{
-								*tab1 = '\t';
-								tab2 = strchr( tab1+1,'\t' );
-								if ( tab2 )
-								{
-									x += node->texh[1];
-									*tab2 = 0;
-									if ( line > node->textScroll )
-										re.FontDrawString( font, node->align, x, y, node->size[0], tab1+1 );
-									x += node->texh[1];
-									*tab2 = '\t';
-									if ( line > node->textScroll )
-										re.FontDrawString( font, node->align, x, y, node->size[0], tab2+1 );
-								}
+								tab = strchr( pos, '\t' );
+								if ( !tab )
+									break;
+
+								*tab++ = '\0';
+								re.FontDrawString( font, node->align, x, y, node->size[0], pos );
+								if ( !node->texh[1] )
+									x += ( node->size[0] / 3 );
 								else
-								{
-									if ( !node->texh[1] ) re.FontDrawString( font, ALIGN_UR, node->pos[0] + node->size[0], y, node->size[0], tab1+1 );
-									else
-									{
-										x += node->texh[1];
-										if ( line > node->textScroll )
-											re.FontDrawString( font, node->align, x, y, node->size[0], tab1+1 );
-									}
-								}
-								if ( tab2 )
-									tab1 = strchr( tab2+1,'\t' );
-								else
-									tab1 = NULL;
-							}
-							*end = '\n';
+									x += node->texh[1];
+								pos = tab;
+							} while ( 1 );
+
+							re.FontDrawString( font, node->align, x, y, node->size[0], pos );
 
 							if ( node->mousefx && line == mouseOver ) re.DrawColor( node->color );
 
-							pos = end+1;
+							pos = end;
 							y += node->texh[0];
 						}
-						while ( end );
+						while ( pos );
 					}
 					else if ( node->num == TEXT_MESSAGESYSTEM )
 					{
@@ -1860,15 +1849,13 @@ void MN_DrawMenus( void )
 								{
 									// TODO: not tested this....
 									// we use a backslash to determine where to break the line
-									tab1 = message->text;
-									while ( ( end = strstr( tab1, "\\" ) ) != NULL )
+									tab = message->text;
+									while ( ( end = strstr( tab, "\\" ) ) != NULL )
 									{
-										*end = '\0';
-										re.FontDrawString( font, ALIGN_UL, node->pos[0], y, node->size[0], tab1 );
-										tab1 = end + 1;
+										*end++ = '\0';
+										re.FontDrawString( font, ALIGN_UL, node->pos[0], y, node->size[0], tab );
+										tab = end;
 										line++;
-										// FIXME: Add checking for node->size[1]
-										//        DrawPropString return a vec2_t* with the needed data
 										if ( line >= node->height )
 											break;
 										y += node->texh[0];

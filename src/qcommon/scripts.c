@@ -1045,6 +1045,8 @@ void Com_ParseDamageTypes( char *name, char **text )
 			if ( csi.numDTs >= MAX_DAMAGETYPES )
 				Sys_Error( "Com_ParseTypes: Too many damage types.\n" );
 
+			// gettext marker
+			if ( *token == '_' ) token++;
 			Q_strncpyz( csi.dts[csi.numDTs], token, MAX_VAR );
 			csi.numDTs++;
 		}

@@ -19,6 +19,38 @@ char	upBuffer[MAX_UPTEXT];
 
 // ===========================================================
 
+void UP_ArmorDescription ( technology_t* t )
+{
+	objDef_t	*od = NULL;
+	int	i;
+
+	// select item
+	for ( i = 0; i < csi.numODs; i++ )
+		if ( !Q_strncmp( t->provides, csi.ods[i].kurz, MAX_VAR ) )
+		{
+			od = &csi.ods[i];
+			break;
+		}
+
+#ifdef DEBUG
+	if ( od == NULL )
+		Com_sprintf( upBuffer, MAX_UPTEXT, _("Could not find armor definition") );
+	else if ( Q_strncmp(od->type, "armor", MAX_VAR ) )
+		Com_sprintf( upBuffer, MAX_UPTEXT, _("Item %s is no armor but %s"), od->kurz, od->type );
+	else
+#endif
+	{
+		Cvar_Set( "mn_upmodel_top", "" );
+		Cvar_Set( "mn_upmodel_bottom", "" );
+		Cvar_Set( "mn_upimage_bottom", "base/empty" );
+		Cvar_Set( "mn_upimage_top", t->image_top );
+		upBuffer[0] = '\0';
+		for ( i = 0; i < csi.numDTs; i++ )
+			Q_strcat( upBuffer, MAX_UPTEXT, va ( _("%s:\tProtection: %i\tHardness: %i\n"), _(csi.dts[i]), od->protection[i], od->hardness[i] ) );
+	}
+	menuText[TEXT_STANDARD] = upBuffer;
+}
+
 /*=================
 UP_TechDescription
 
@@ -100,15 +132,10 @@ void MN_UpDrawEntry( char *id )
 	Cvar_Set( "mn_upmodel_bottom", "" );
 	Cvar_Set( "mn_upimage_top", "base/empty" );
 	Cvar_Set( "mn_upimage_bottom", "base/empty" );
-	if ( *tech->image_top && tech->type == RS_ARMOR )
-		Cvar_Set( "mn_upimage_top", tech->image_top );
-	else
-	{
-		if ( *tech->mdl_top ) Cvar_Set( "mn_upmodel_top", tech->mdl_top );
-		if ( *tech->mdl_bottom ) Cvar_Set( "mn_upmodel_bottom", tech->mdl_bottom );
-		if ( !*tech->mdl_top && *tech->image_top ) Cvar_Set( "mn_upimage_top", tech->image_top );
-		if ( !*tech->mdl_bottom && *tech->mdl_bottom ) Cvar_Set( "mn_upimage_bottom", tech->image_bottom );
-	}
+	if ( *tech->mdl_top ) Cvar_Set( "mn_upmodel_top", tech->mdl_top );
+	if ( *tech->mdl_bottom ) Cvar_Set( "mn_upmodel_bottom", tech->mdl_bottom );
+	if ( !*tech->mdl_top && *tech->image_top ) Cvar_Set( "mn_upimage_top", tech->image_top );
+	if ( !*tech->mdl_bottom && *tech->mdl_bottom ) Cvar_Set( "mn_upimage_bottom", tech->image_bottom );
 	Cbuf_AddText( "mn_upfsmall\n" );
 
 	if ( upCurrent) {
@@ -116,6 +143,8 @@ void MN_UpDrawEntry( char *id )
 		switch ( tech->type )
 		{
 		case RS_ARMOR:
+			UP_ArmorDescription( tech );
+			break;
 		case RS_WEAPON:
 			for ( i = 0; i < csi.numODs; i++ ) {
 				if ( !Q_strncmp( tech->provides, csi.ods[i].kurz, MAX_VAR ) ) {
@@ -253,7 +282,7 @@ void MN_UpPrev_f( void )
 	// get previous entry
 	if ( upCurrent->prev ) {
 		// Check if the previous entry is researched already otherwise go to the next entry.
-		do { upCurrent = upCurrent->prev; } while ( upCurrent && !RS_TechIsResearched(upCurrent->id) );
+		do { upCurrent = upCurrent->prev; } while ( upCurrent && !RS_IsResearched_(upCurrent) );
 		if ( upCurrent ) {
 			MN_UpDrawEntry( upCurrent->id );
 			return;
@@ -265,7 +294,7 @@ void MN_UpPrev_f( void )
 	for (; upc - upChapters >= 0; upc-- )
 		if ( upc->last ) {
 			upCurrent = upc->last;
-			if ( RS_TechIsResearched(upCurrent->id) )
+			if ( RS_IsResearched_(upCurrent) )
 				MN_UpDrawEntry( upCurrent->id );
 			else
 				MN_UpPrev_f();
@@ -303,7 +332,7 @@ void MN_UpNext_f( void )
 	for ( ; upc - upChapters < numChapters; upc++ )
 		if ( upc->first ) {
 			upCurrent = upc->first;
-			if ( RS_TechIsResearched(upCurrent->id) )
+			if ( RS_IsResearched_(upCurrent) )
 				MN_UpDrawEntry( upCurrent->id );
 			else
 				MN_UpNext_f();
@@ -328,7 +357,7 @@ void MN_UpClick_f( void )
 	if ( num < numChapters && upChapters[num].first )
 	{
 		upCurrent = upChapters[num].first;
-		if ( RS_TechIsResearched(upCurrent->id) )
+		if ( RS_IsResearched_(upCurrent) )
 			MN_UpDrawEntry( upCurrent->id );
 	}
 }

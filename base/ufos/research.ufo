@@ -57,6 +57,7 @@ up_chapters main
 	crafts	"_Aircraft"
 	tech		"_Technologies & Discoveries"
 	weapons	"_Weapons"
+	armors	"_Armors"
 	buildings	"_Buildings"
 	aliens	"_Alien Species"
 	ufos		"_UFOs"
@@ -669,7 +670,7 @@ tech rs_medikit
 tech rs_kevlar_armor
 {
 	type	armor
-	up_chapter	weapons
+	up_chapter	armors
 	description	"_kevlar_armor_txt"
 
 	requires	initial
@@ -682,7 +683,7 @@ tech rs_nano_armor
 {
 	type	armor
 	description	"_nano_armor_txt"
-	up_chapter	weapons
+	up_chapter	armors
 
 	requires	rs_nano
 	provides	medium
@@ -693,10 +694,12 @@ tech rs_nano_armor
 tech rs_heavy_nano_armor
 {
 	type	armor
+	description	"_nano_heavy_armor_txt"
+	up_chapter	armors
 
 	requires	rs_advanced_armor
 	provides	heavy
-	time	0
+	time	1
 	researched	false
 }
 

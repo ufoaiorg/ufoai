@@ -2860,6 +2860,10 @@ value_t nation_vals[] =
 	{ "name",	V_TRANSLATION_STRING,	NATFS( name ) },
 	{ "color",	V_COLOR,	NATFS( color ) },
 	{ "funding",	V_INT,	NATFS( funding ) },
+	{ "alien_friendly",	V_FLOAT,	NATFS( alienFriendly ) },
+	{ "soldiers",	V_INT,	NATFS( soldiers ) },
+	{ "scientists",	V_INT,	NATFS( scientists ) },
+	{ "names",	V_INT,	NATFS( names ) },
 
 	{ NULL, 0, 0 },
 };

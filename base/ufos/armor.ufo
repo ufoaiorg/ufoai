@@ -1,13 +1,13 @@
 damagetypes standard
 {
-	normal
-	blast
-	fire
-	shock
-	laser
-	plasma
-	tachyon
-	stun
+	"_normal"
+	"_blast"
+	"_fire"
+	"_shock"
+	"_laser"
+	"_plasma"
+	"_tachyon"
+	"_stun"
 }
 
 item light
@@ -49,7 +49,7 @@ item light
 
 item medium
 {
-	name		"_Medium Armor"
+	name		"_Nano Armor"
 	image		armor/medium
 	model		soldiers/mmedium/body
 	type		armor
@@ -84,3 +84,39 @@ item medium
 	}
 }
 
+item heavy
+{
+	name		"_Heavy Nano Armor"
+	image		armor/heavy
+	model		soldiers/mheavy/body
+	type		armor
+	category	3
+	shape		"0 0 3 4"
+	center		"0 0 -5"
+	scale		0.7
+	price		7500
+	buytype		3
+
+	protection
+	{
+		normal	35
+		blast	55
+		fire	30
+		shock	5
+		laser	20
+		plasma	50
+		tachyon	1
+		stun	35
+	}
+	hardness
+	{
+		normal	60
+		blast	90
+		fire	100
+		shock	110
+		laser	160
+		plasma	60
+		tachyon	1200
+		stun	60
+	}
+}

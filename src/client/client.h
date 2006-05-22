@@ -951,6 +951,10 @@ typedef struct nation_s
 	char	name[MAX_VAR];
 	int	funding;
 	vec4_t	color;
+	float	alienFriendly;
+	int	soldiers;
+	int	scientists;
+	char	names[MAX_VAR];
 } nation_t;
 
 #define MAX_NATIONS 8

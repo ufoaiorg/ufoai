@@ -130,6 +130,75 @@ actors antarean
 	}
 }
 
+// ==================
+// shevaar
+// ==================
+
+names shevaar
+{
+	neutral
+	{
+	Akrokk
+	Mkeek
+	Rniuk
+	}
+}
+
+actors shevaar
+{
+	neutral
+	{
+		aliens/shevaar body01 head01 0
+		aliens/shevaar body01 head01 1
+	}
+}
+
+// ==================
+// cyborg_ortnok
+// ==================
+
+names cyborg_ortnok
+{
+	neutral
+	{
+	Akrokk
+	Mkeek
+	Rniuk
+	}
+}
+
+actors cyborg_ortnok
+{
+	neutral
+	{
+		aliens/cyborg_ortnok body01 head01 0
+		aliens/cyborg_ortnok body01 head01 1
+	}
+}
+
+// ==================
+// hovernet
+// ==================
+
+names hovernet
+{
+	neutral
+	{
+	Akrokk
+	Mkeek
+	Rniuk
+	}
+}
+
+actors hovernet
+{
+	neutral
+	{
+		aliens/hovernet body01 head01 0
+		aliens/hovernet body01 head01 1
+	}
+}
+
 
 // ==================
 // TEAMS
