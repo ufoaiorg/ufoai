@@ -381,8 +381,7 @@ static void Font_ConvertChars ( char* buffer )
 	replace = strstr( buffer, "\\" );
 	while ( replace != NULL )
 	{
-		*replace = '\n';
-		replace++;
+		*replace++ = '\n';
 		replace = strstr( replace, "\\" );
 	}
 
@@ -390,13 +389,12 @@ static void Font_ConvertChars ( char* buffer )
 	replace = strstr( buffer, "\t" );
 	while ( replace != NULL  )
 	{
-		*replace = ' ';
-		replace++;
+		*replace++ = ' ';
 		replace = strstr( replace, "\t" );
 	}
 	replace = strstr( buffer, "\n\0" );
 	if ( replace )
-		replace = '\0';
+		*replace = '\0';
 }
 
 /*================
