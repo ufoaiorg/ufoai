@@ -19,6 +19,12 @@ char	upBuffer[MAX_UPTEXT];
 
 // ===========================================================
 
+/*=================
+UP_ArmorDescription
+
+prints the ufopedia description for armors
+called from MN_UpDrawEntry when type of technology_t is RS_ARMOR
+=================*/
 void UP_ArmorDescription ( technology_t* t )
 {
 	objDef_t	*od = NULL;
