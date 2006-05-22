@@ -60,6 +60,7 @@ up_chapters main
 	buildings	"_Buildings"
 	aliens	"_Alien Species"
 	ufos		"_UFOs"
+	ugv		"_UGVs"
 }
 
 //========================
@@ -1275,4 +1276,38 @@ tech rs_alien_cyborg_ortnok_xenobiology
 
 	// menuModel - see models.ufo
 	mdl_top	alien_cyborg_ortnok
+}
+
+// UGVs
+
+tech rs_ugv_phoenix
+{
+	type	tech
+	up_chapter	ugv
+	name	"_UGV Phoenix"
+	description	"_ugv_phoenix_txt"
+
+	requires	nothing
+	provides	""
+	time	0
+	researched	false
+	needscollected	true
+
+	mdl_top	"models/soldiers/ugv_phoenix/phoenix"
+}
+
+tech rs_ugv_triax
+{
+	type	tech
+	up_chapter	ugv
+	name	"_UGV Triax"
+	description	"_ugv_triax_txt"
+
+	requires	nothing
+	provides	""
+	time	0
+	researched	false
+	needscollected	true
+
+	mdl_top	"models/soldiers/ugv_triax/triax"
 }
