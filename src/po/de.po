@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-05-22 23:49+0200\n"
-"PO-Revision-Date: 2006-05-22 18:24+0100\n"
+"PO-Revision-Date: 2006-05-22 19:02+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1267,11 +1267,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:159
 msgid "assault_txt"
-msgstr "Das AR-80 ist die Standardwaffe der Phalanx. Durch die verbesserte Munition und ein revolutionäres Design richtet diese Waffe mehr Schaden als alle vergleichbaren Sturmgewehre an. Das rückwärtig abgebrachte Magazin erhöht die Genauigkeit der Waffe indem Kugel die Kugel einen längeren Weg bis zur Mündung zurücklegen muss. Darüber hinaus kann sie einfacher repariert werden, denn sie ist in Modulen zusammengebaut. Zum Beispiel kann der Feuermechanismus direkt im Einsatz ausgetauscht werden, indem man einfach das defekte hintere Ende aus der Waffe herauszieht und austauscht. Dieser Vorgang dauert nur Minuten."
+msgstr "Das AR-80 ist die Standardwaffe der Phalanx. Durch die verbesserte Munition und ein revolutionäres Design richtet diese Waffe mehr Schaden als alle vergleichbaren Sturmgewehre an. Das rückwärtig abgebrachte Magazin erhöht die Genauigkeit der Waffe indem die Kugel einen längeren Weg bis zur Mündung zurücklegen muss. Darüber hinaus kann sie einfacher repariert werden, denn sie ist in Modulen zusammengebaut. Zum Beispiel kann der Feuermechanismus direkt im Einsatz ausgetauscht werden, indem man einfach das defekte hintere Ende aus der Waffe herauszieht und austauscht. Dieser Vorgang dauert nur Minuten."
 
 #: ../base/ufos/research.ufo:171
 msgid "assault_ammo_txt"
-msgstr "Das AR-80 ist die Standardwaffe der Phalanx. Durch die verbesserte Munition und ein revolutionäres Design richtet diese Waffe mehr Schaden als alle vergleichbaren Sturmgewehre an. Das rückwärtig abgebrachte Magazin erhöht die Genauigkeit der Waffe indem Kugel die Kugel einen längeren Weg bis zur Mündung zurücklegen muss. Darüber hinaus kann sie einfacher repariert werden, denn sie ist in Modulen zusammengebaut. Zum Beispiel kann der Feuermechanismus direkt im Einsatz ausgetauscht werden, indem man einfach das defekte hintere Ende aus der Waffe herauszieht und austauscht. Dieser Vorgang dauert nur Minuten."
+msgstr "Das AR-80 ist die Standardwaffe der Phalanx. Durch die verbesserte Munition und ein revolutionäres Design richtet diese Waffe mehr Schaden als alle vergleichbaren Sturmgewehre an. Das rückwärtig abgebrachte Magazin erhöht die Genauigkeit der Waffe indem die Kugel einen längeren Weg bis zur Mündung zurücklegen muss. Darüber hinaus kann sie einfacher repariert werden, denn sie ist in Modulen zusammengebaut. Zum Beispiel kann der Feuermechanismus direkt im Einsatz ausgetauscht werden, indem man einfach das defekte hintere Ende aus der Waffe herauszieht und austauscht. Dieser Vorgang dauert nur Minuten."
 
 #: ../base/ufos/research.ufo:183
 msgid "sniper_txt"
@@ -1289,7 +1289,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:207
 msgid "smg_txt"
-msgstr "Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at the cost of less accuracy and penetrating power. These characteristics make the SMG-68 a ideal choice for close combat. Therefore Phalanx soldiers use the SMG-68 mainly in urban areas. To optimize the rate of fire, this weapon has two barrels through which the bullets are fired off alternating. To damp the considerable recoil, a advanced counter-balance system is used powered by the explosion gases originating from the cartridges.The SMG-68 is rather inaccurate at medium range, but performs well at short range."
+msgstr "Verglichen mit dem AR-80 Sturmgewehr bietet das SMG-68 eine höhere Feuerrate - allerdings auf Kosten der Genauigkeit und Durchschlagskraft. Diese Charakteristika machen das SMG-68 zur idealen Wahl bei Nahkämpfen. Deshalb setzt die Phalanx es hauptsächlich in Stadtgebieten ein. Um die Feuerrate zu optimieren hat diese Waffe zwei Läufe, durch die die Kugeln abwechselt geleitet werden. Um den beträchtlichen Rückstoß zu dämpfen wird ein Ausgleichssystem eingesetzt, dass vom Explosionsdruck genährt wird. Das SMG-68 ist extrem ungenau auf mittlere Reichweite - aber sehr gut geeignet für Nahkämpfe."
 
 #: ../base/ufos/research.ufo:219
 #, fuzzy
@@ -1304,7 +1304,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:231
 msgid "shotgun_txt"
-msgstr "The Phalanx forces are using the SG-260 with great success for quite some time now. Compared with the shotguns traditionally used by mainy SWAT teams, the SG-260 is capable to better channel the bullets fired off from the buckshots. Therefore the effective range of this weapon is increased so it can be used not only at close but also at medium range. The SG-260 is a good choice for urban combat, especially for clearing a building.Its advantage over the Submachine Gun is that it does more damage per shot, making it a better weapon against armored targets."
+msgstr "Das SG-260 wird seit einiger Zeit mit großen Erfolg eingesetzt. Verglichen mit anderen Schrotflinten bietet das SG-260 eine bessere Bündelung der Kugeln die durch das Schrot verschossen werden. Dadurch wird die effektive Reichweite der Waffe erhöht - sie ist also nicht nur für Nahkämpfe, sondern auch für mittlere Entfernungen gut geeingnet. Das SG-260 ist ein gute Wahl für Stadtkämpfe - speziell um Gebäude zu \"reinigen\". Der Vorteil gegenüber dem SMG-68 ist, dass das SG_260 mehr Durchschlagskraft hat. Deshalb ist diese Waffe besonders bei gepanzerten Einheiten effektiver."
 
 #: ../base/ufos/research.ufo:243
 #, fuzzy
@@ -1318,12 +1318,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:255
 msgid "flamer_txt"
-msgstr ""
-"The FT-207 is one of the most recent additions to tactical combat. Prior versions of this weapon\n"
-"were not employed do to the risk of accidentally igniting surrounding objects. This version,\n"
-"however, greatly reduces this risk by employing FHAS, or, Focused Heat Attack System, which\n"
-"restricts the 'hot zone' created by the flamethrower to a very defined region. The area\n"
-"centimeters outside the 'hot zone' show no noticeable temperature increase."
+msgstr "Das FT-207 ist eine der neusten Errungenschaften für taktische Einsätze. Vorgänger dieser Waffe waren nicht gegen das Risiko gewappnet auch angrenzende Objekte zu beschädigen. Diese Version hingegen reduziert dieses Risiko auf ein Minimum durch den Einsatz der so genannten FHAS Technologie - einem Hitzefokusierungssystem. Dieses System zeigt einen sehr geringen Anstieg der Temperaturen nahe dem Feuerkegel."
 
 #: ../base/ufos/research.ufo:267
 #, fuzzy
