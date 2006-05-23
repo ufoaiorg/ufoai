@@ -53,6 +53,7 @@ typedef struct stringlist_s
 {
 	char	list[MAX_TECHLINKS][MAX_VAR];	// A list of strings.
 	int		numEntries;					// The number of used strings.
+	struct technology_s	*techPtr[MAX_TECHLINKS];	// holds a tech pointer for faster operation after finding it once
 } stringlist_t;
 
 typedef struct technology_s
