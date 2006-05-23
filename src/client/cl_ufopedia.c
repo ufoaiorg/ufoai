@@ -127,10 +127,8 @@ void MN_UpDrawEntry( char *id )
 	int i;
 	technology_t* tech = NULL;
 	tech = RS_GetTechByID( id );
-	if ( ! tech ) {
-		Com_Printf("MN_UpDrawEntry: \"%s\" <- research item not found.\n", id );
+	if ( ! tech )
 		return;
-	}
 
 	Cvar_Set( "mn_uptitle", _(tech->name) );
 	menuText[TEXT_UFOPEDIA] = _(tech->description);
@@ -293,7 +291,6 @@ void MN_UpPrev_f( void )
 			MN_UpDrawEntry( upCurrent->id );
 			return;
 		}
-
 	}
 
 	// change chapter
@@ -325,7 +322,7 @@ void MN_UpNext_f( void )
 	// get next entry
 	if ( upCurrent && upCurrent->next ) {
 		// Check if the next entry is researched already otherwise go to the next entry.
-		do { upCurrent = upCurrent->next; } while ( upCurrent && !RS_TechIsResearched(upCurrent->id) );
+		do { upCurrent = upCurrent->next; } while ( upCurrent && !RS_IsResearched_(upCurrent) );
 		if ( upCurrent ) {
 			MN_UpDrawEntry( upCurrent->id );
 			return;
@@ -363,14 +360,30 @@ void MN_UpClick_f( void )
 	if ( num < numChapters && upChapters[num].first )
 	{
 		upCurrent = upChapters[num].first;
-		if ( RS_IsResearched_(upCurrent) )
-			MN_UpDrawEntry( upCurrent->id );
+		do
+		{
+			if ( RS_IsResearched_(upCurrent) )
+			{
+				MN_UpDrawEntry( upCurrent->id );
+				return;
+			}
+			upCurrent = upCurrent->next;
+		} while ( upCurrent );
 	}
 }
 
 
 // ===========================================================
 
+/*=================
+UP_List_f
+
+shows available ufopedia entries
+TODO: Implement me
+=================*/
+void UP_List_f ( void )
+{
+}
 
 /*=================
 MN_ResetUfopedia
@@ -382,6 +395,7 @@ void MN_ResetUfopedia( void )
 	numEntries = 0;
 
 	// add commands and cvars
+	Cmd_AddCommand( "ufopedialist", UP_List_f );
 	Cmd_AddCommand( "mn_upcontent", MN_UpContent_f );
 	Cmd_AddCommand( "mn_upprev", MN_UpPrev_f );
 	Cmd_AddCommand( "mn_upnext", MN_UpNext_f );
