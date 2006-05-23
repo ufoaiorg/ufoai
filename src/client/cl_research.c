@@ -376,6 +376,9 @@ void RS_ResearchDisplayInfo ( void  )
 	if ( ! baseCurrent )
 		return;
 
+	if ( researchListLength <= 0 )
+		return;
+	
 	tech = researchList[researchListPos];
 
 	// display total number of free labs in current base
