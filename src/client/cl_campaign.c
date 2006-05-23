@@ -1003,7 +1003,7 @@ void CL_SelectAircraft_f ( void )
 			interceptAircraft = num;
 			Com_DPrintf("Selected aircraft: %s\n", bmBases[j].aircraft[interceptAircraft].name );
 
-			if ( ! bmBases[j].aircraft[interceptAircraft].teamSize )
+			if ( ! *(bmBases[j].aircraft[interceptAircraft].teamSize) )
 			{
 				MN_Popup(_("Notice"), _("Assign a team to aircraft"));
 				return;

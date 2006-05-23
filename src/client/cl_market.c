@@ -314,7 +314,7 @@ static void CL_SellAircraft( void )
 		{
 			if ( !Q_strncmp( air->title, aircraft[aircraftID].title, MAX_VAR ) )
 			{
-				if ( air->teamSize )
+				if ( *air->teamSize )
 					continue;
 				found = qtrue;
 				break;

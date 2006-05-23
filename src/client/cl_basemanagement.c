@@ -2125,7 +2125,7 @@ void CL_BaseList ( void )
 		Com_Printf("Base aircraft %i\n", base->numAircraftInBase );
 		for ( j = 0; j < base->numAircraftInBase; j++ )
 		{
-			Com_Printf("Base aircraft-team %i\n", base->aircraft[j].teamSize );
+			Com_Printf("Base aircraft-team %i\n", *(base->aircraft[j].teamSize) );
 		}
 		Com_Printf("Base pos %f:%f\n", base->pos[0], base->pos[1] );
 		Com_Printf("Base map:\n");
