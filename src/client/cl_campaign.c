@@ -1043,7 +1043,7 @@ void CL_BuildingAircraftList_f ( void )
 		for ( i = 0; i < bmBases[j].numAircraftInBase; i++ )
 		{
 			air = &bmBases[j].aircraft[i];
-			s = va("%s (%i/%i)\t%s\t%s\n", air->name, air->teamSize, air->size, CL_AircraftStatusToName( air ), bmBases[j].title );
+			s = va("%s (%i/%i)\t%s\t%s\n", air->name, *air->teamSize, air->size, CL_AircraftStatusToName( air ), bmBases[j].title );
 			Q_strcat( aircraftListText, sizeof(aircraftListText), s );
 		}
 	}
