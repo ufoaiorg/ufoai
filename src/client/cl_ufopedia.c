@@ -122,11 +122,9 @@ void UP_AircraftDescription ( technology_t* t )
 /*=================
 MN_UpDrawEntry
 =================*/
-void MN_UpDrawEntry( char *id )
+void MN_UpDrawEntry( technology_t* tech )
 {
 	int i;
-	technology_t* tech = NULL;
-	tech = RS_GetTechByID( id );
 	if ( ! tech )
 		return;
 
@@ -229,7 +227,7 @@ void MN_FindEntry_f ( void )
 		{
 			if ( !Q_strncmp ( t->id, id, MAX_VAR ) ) {
 				upCurrent = t;
-				MN_UpDrawEntry( upCurrent->id );
+				MN_UpDrawEntry( upCurrent );
 				return;
 			}
 			if (t->next)
@@ -288,7 +286,7 @@ void MN_UpPrev_f( void )
 		// Check if the previous entry is researched already otherwise go to the next entry.
 		do { upCurrent = upCurrent->prev; } while ( upCurrent && !RS_IsResearched_(upCurrent) );
 		if ( upCurrent ) {
-			MN_UpDrawEntry( upCurrent->id );
+			MN_UpDrawEntry( upCurrent );
 			return;
 		}
 	}
@@ -298,7 +296,7 @@ void MN_UpPrev_f( void )
 		if ( upc->last ) {
 			upCurrent = upc->last;
 			if ( RS_IsResearched_(upCurrent) )
-				MN_UpDrawEntry( upCurrent->id );
+				MN_UpDrawEntry( upCurrent );
 			else
 				MN_UpPrev_f();
 			return;
@@ -324,7 +322,7 @@ void MN_UpNext_f( void )
 		// Check if the next entry is researched already otherwise go to the next entry.
 		do { upCurrent = upCurrent->next; } while ( upCurrent && !RS_IsResearched_(upCurrent) );
 		if ( upCurrent ) {
-			MN_UpDrawEntry( upCurrent->id );
+			MN_UpDrawEntry( upCurrent );
 			return;
 		}
 	}
@@ -336,7 +334,7 @@ void MN_UpNext_f( void )
 		if ( upc->first ) {
 			upCurrent = upc->first;
 			if ( RS_IsResearched_(upCurrent) )
-				MN_UpDrawEntry( upCurrent->id );
+				MN_UpDrawEntry( upCurrent );
 			else
 				MN_UpNext_f();
 			return;
@@ -364,7 +362,7 @@ void MN_UpClick_f( void )
 		{
 			if ( RS_IsResearched_(upCurrent) )
 			{
-				MN_UpDrawEntry( upCurrent->id );
+				MN_UpDrawEntry( upCurrent );
 				return;
 			}
 			upCurrent = upCurrent->next;
