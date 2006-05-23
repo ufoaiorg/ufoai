@@ -492,17 +492,19 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 			}
 		}
 
-		Com_sprintf( searchString, MAX_FONTNAME+MAX_HASH_STRING, "%s%s", fontID, buffer );
+		if ( strlen(buffer) ) {
+			Com_sprintf( searchString, MAX_FONTNAME+MAX_HASH_STRING, "%s%s", fontID, buffer );
 
-		openGLSurface = Font_GetFromCache( searchString );
-		if ( !openGLSurface )
-			openGLSurface = Font_GenerateCache( buffer, searchString, f );
+			openGLSurface = Font_GetFromCache( searchString );
+			if ( !openGLSurface )
+				openGLSurface = Font_GenerateCache( buffer, searchString, f );
 
-		if ( !openGLSurface )
-			ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n" );
+			if ( !openGLSurface )
+				ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n" );
 
-		Font_GenerateGLSurface( openGLSurface, x, y );
-
+			Font_GenerateGLSurface( openGLSurface, x, y );
+		}
+		
 		// skip for next line
 		y += h;
 		buffer = pos;
