@@ -1079,6 +1079,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 {
 	value_t *var = NULL;
 	technology_t *tech = NULL;
+	technology_t *tech_just_for_linking = NULL;
 	char	*errhead = "RS_ParseTechnologies: unexptected end of file.";
 	char	*token = NULL;
 	char	*misp = NULL;
@@ -1097,7 +1098,11 @@ void RS_ParseTechnologies ( char* id, char** text )
 	}
 
 	// New technology (next free entry in global tech-list)
-	tech = &technologies_skeleton[numTechnologies++];
+	tech = &technologies_skeleton[numTechnologies];
+	tech_just_for_linking = &technologies[numTechnologies];
+	numTechnologies++;
+	// Mind you that "tech" points to the skeleton and tech_just_for_linking points to a yet 'empty' array.
+	
 	required = &tech->requires;
 	memset( tech, 0, sizeof( technology_t ) );
 
@@ -1184,14 +1189,14 @@ void RS_ParseTechnologies ( char* id, char** text )
 						// add entry to chapter
 						tech->up_chapter = &upChapters[i];
 						if ( !upChapters[i].first ) {
-							upChapters[i].first = tech;
-							upChapters[i].last = tech;
+							upChapters[i].first = tech_just_for_linking;
+							upChapters[i].last = tech_just_for_linking;
 						} else {
 							technology_t *old;
-							upChapters[i].last = tech;
+							upChapters[i].last = tech_just_for_linking;
 							old = upChapters[i].first;
 							while ( old->next ) old = old->next;
-							old->next = tech;
+							old->next = tech_just_for_linking;
 							tech->prev = old;
 						}
 						break;
