@@ -337,7 +337,6 @@ void MN_UpNext_f( void )
 	// get next entry
 	if ( upCurrent && upCurrent->next ) {
 		// Check if the next entry is researched already otherwise go to the next entry.
-		//Com_Printf( "xxx %s\n", upCurrent->id); // DEBUG: TODO the next-button doesn#t work as expected, the prev-button does.
 		do { upCurrent = upCurrent->next; } while ( upCurrent && !RS_IsResearched_(upCurrent) );
 		
 		if ( upCurrent ) {
@@ -345,7 +344,6 @@ void MN_UpNext_f( void )
 			return;
 		}
 	}
-	//Com_Printf( "yyy %s\n", upCurrent->id); // DEBUG: TODO the next-button doesn#t work as expected, the prev-button does.
 	
 	/* no 'next' entry defined (=NULL) or no current entry at all */
 
