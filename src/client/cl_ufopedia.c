@@ -5,11 +5,14 @@
 #include "cl_research.h"
 
 pediaChapter_t	upChapters[MAX_PEDIACHAPTERS];
+int numChapters;
+pediaChapter_t	*upChapters_displaylist[MAX_PEDIACHAPTERS];
+int numChapters_displaylist;
 
 technology_t	*upCurrent;
 
-int numChapters;
-int numEntries;
+
+//int numEntries;
 
 #define MAX_UPTEXT 1024
 char	upText[MAX_UPTEXT];
@@ -186,9 +189,9 @@ MN_FindEntry_f
 =================*/
 void MN_FindEntry_f ( void )
 {
-	char *id;
-	technology_t *t;
-	pediaChapter_t *upc;
+	char *id = NULL;
+	technology_t *tech = NULL;
+	pediaChapter_t *upc = NULL;
 	int i;
 
 	if ( Cmd_Argc() < 2 )
@@ -213,23 +216,23 @@ void MN_FindEntry_f ( void )
 		upc = &upChapters[i];
 
 		//search from beginning
-		t = upc->first;
+		tech = upc->first;
 
-		//empty chapter
-		if ( ! t )
+		//empty chapter/tech
+		if ( ! tech )
 			continue;
 		do
 		{
-			if ( !Q_strncmp ( t->id, id, MAX_VAR ) ) {
-				upCurrent = t;
+			if ( !Q_strncmp ( tech->id, id, MAX_VAR ) ) {
+				upCurrent = tech;
 				MN_UpDrawEntry( upCurrent );
 				return;
 			}
-			if (t->next)
-				t = t->next;
+			if (tech->next)
+				tech = tech->next;
 			else
-				t = NULL;
-		} while ( t );
+				tech = NULL;
+		} while ( tech );
 	}
 	//if we can not find it
 	Com_DPrintf("MN_FindEntry_f: No PediaEntry found for %s\n", id );
@@ -240,15 +243,34 @@ MN_UpContent_f
 =================*/
 void MN_UpContent_f( void )
 {
-	char *cp;
+	char *cp = NULL;
 	int i;
+	char researched_entries;
+	numChapters_displaylist = 0;
 
 	cp = upText;
 	*cp = '\0';
+	
 	for ( i = 0; i < numChapters; i++ )
 	{
-		Q_strcat( cp, MAX_UPTEXT, upChapters[i].name );
-		Q_strcat( cp, MAX_UPTEXT, "\n" );
+		// Check if there are any researched items in this chapter ...
+		researched_entries = qfalse;
+		upCurrent = upChapters[i].first;
+		do
+		{
+			if ( RS_IsResearched_(upCurrent) ) {
+				researched_entries = qtrue;
+				break;
+			}
+			upCurrent = upCurrent->next;
+		} while ( upCurrent );
+		
+		// .. and if so add them to the displaylist of chapters.
+		if ( researched_entries ) {
+			upChapters_displaylist[numChapters_displaylist++] = &upChapters[i];
+			Q_strcat( cp, MAX_UPTEXT, upChapters[i].name );
+			Q_strcat( cp, MAX_UPTEXT, "\n" );
+		}
 	}
 
 	upCurrent = NULL;
@@ -269,7 +291,7 @@ MN_UpPrev_f
 =================*/
 void MN_UpPrev_f( void )
 {
-	pediaChapter_t *upc;
+	pediaChapter_t *upc = NULL;
 
 	if ( !upCurrent ) return;
 
@@ -306,7 +328,7 @@ MN_UpNext_f
 =================*/
 void MN_UpNext_f( void )
 {
-	pediaChapter_t *upc;
+	pediaChapter_t *upc = NULL;
 
 	// change chapter
 	if ( !upCurrent ) upc = upChapters;
@@ -315,13 +337,16 @@ void MN_UpNext_f( void )
 	// get next entry
 	if ( upCurrent && upCurrent->next ) {
 		// Check if the next entry is researched already otherwise go to the next entry.
+		//Com_Printf( "xxx %s\n", upCurrent->id); // DEBUG: TODO the next-button doesn#t work as expected, the prev-button does.
 		do { upCurrent = upCurrent->next; } while ( upCurrent && !RS_IsResearched_(upCurrent) );
+		
 		if ( upCurrent ) {
 			MN_UpDrawEntry( upCurrent );
 			return;
 		}
 	}
-
+	//Com_Printf( "yyy %s\n", upCurrent->id); // DEBUG: TODO the next-button doesn#t work as expected, the prev-button does.
+	
 	/* no 'next' entry defined (=NULL) or no current entry at all */
 
 	// change chapter
@@ -350,9 +375,9 @@ void MN_UpClick_f( void )
 		return;
 	num = atoi( Cmd_Argv( 1 ) );
 
-	if ( num < numChapters && upChapters[num].first )
+	if ( num < numChapters_displaylist && upChapters_displaylist[num]->first )
 	{
-		upCurrent = upChapters[num].first;
+		upCurrent = upChapters_displaylist[num]->first;
 		do
 		{
 			if ( RS_IsResearched_(upCurrent) )
@@ -385,7 +410,7 @@ void UP_ResetUfopedia( void )
 {
 	// reset menu structures
 	numChapters = 0;
-	numEntries = 0;
+	//numEntries = 0;
 
 	// add commands and cvars
 	Cmd_AddCommand( "ufopedialist", UP_List_f );
