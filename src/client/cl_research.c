@@ -35,6 +35,9 @@ TODO: comment on used globasl variables.
 
 #include "client.h"
 
+pediaChapter_t	upChapters[MAX_PEDIACHAPTERS];
+int numChapters;
+
 void RS_GetFirstRequired( technology_t* tech,  stringlist_t *required);
 qboolean RS_TechIsResearchable( technology_t* t );
 
@@ -204,11 +207,31 @@ void RS_CopyFromSkeleton( void )
 	int i;
 	technology_t *tech = NULL;
 
+	// copy skeleton to 'working' copy
 	for ( i = 0; i < numTechnologies; i++ ) {
 		tech = &technologies[i];
 		memcpy( tech, &technologies_skeleton[i], sizeof( technology_t ) );
+
+		tech = &technologies_skeleton[i];
+		//Q_strncpyz( tech->name, "Credits:", MAX_VAR ); // DEBUG: just to test if anything is point to the skeleton :)
+	}
+	
+	// Re-link the prev/next tech-pointers in the working topy to the 'working' copy :)
+	for ( i = 0; i < numTechnologies; i++ ) {
+		tech = &technologies[i];
+		tech->next = RS_GetTechByID(tech->next->id);
+		tech->prev = RS_GetTechByID(tech->prev->id);
 	}
 
+	// Re-link the tech-pointers in the chapter-list to the 'working' copy.
+	for ( i = 0; i < numChapters; i++ ) {
+		upChapters[i].first->prev = NULL;
+		upChapters[i].last->next = NULL;
+		upChapters[i].first = RS_GetTechByID(upChapters[i].first->id);
+		upChapters[i].last = RS_GetTechByID(upChapters[i].last->id);
+		upChapters[i].first->prev = NULL;
+		upChapters[i].last->next = NULL;
+	}
 	// link in the tech pointers
 	RS_AddObjectTechs();
 }
@@ -1079,13 +1102,13 @@ void RS_ParseTechnologies ( char* id, char** text )
 {
 	value_t *var = NULL;
 	technology_t *tech_in_skeleton = NULL;
-	technology_t *tech_just_for_linking = NULL;
 	technology_t *tech_old = NULL;
 	char	*errhead = "RS_ParseTechnologies: unexptected end of file.";
 	char	*token = NULL;
 	char	*misp = NULL;
 	char	temp_text[MAX_VAR];
 	stringlist_t *required = NULL;
+	int i;
 
 	// get body
 	token = COM_Parse( text );
@@ -1100,9 +1123,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 
 	// New technology (next free entry in global tech-list)
 	tech_in_skeleton = &technologies_skeleton[numTechnologies];
-	tech_just_for_linking = &technologies[numTechnologies];
 	numTechnologies++;
-	// Mind you that "tech" points to the skeleton and tech_just_for_linking points to a yet 'empty' array.
 
 	required = &tech_in_skeleton->requires;
 	memset( tech_in_skeleton, 0, sizeof( technology_t ) );
@@ -1184,21 +1205,22 @@ void RS_ParseTechnologies ( char* id, char** text )
 
 			if ( *token ) {
 				// find chapter
-				int i;
 				for ( i = 0; i < numChapters; i++ ) {
 					if ( !Q_strncmp( token, upChapters[i].id, MAX_VAR ) ) {
 						// add entry to chapter
 						tech_in_skeleton->up_chapter = &upChapters[i];
 						if ( !upChapters[i].first ) {
-							upChapters[i].first = tech_just_for_linking;
-							upChapters[i].last = tech_just_for_linking;
-						} else {
+							upChapters[i].first = tech_in_skeleton;
+							upChapters[i].last = tech_in_skeleton;
+							tech_in_skeleton->prev = NULL;
+							tech_in_skeleton->next = NULL;
 							
-							upChapters[i].last = tech_just_for_linking;
-							tech_old = upChapters[i].first;
-							while ( tech_old->next ) tech_old = tech_old->next;
-							tech_old->next = tech_just_for_linking;
-							tech_in_skeleton->prev = tech_old;
+						} else {
+							tech_old = upChapters[i].last; // get "last entry" in chapter
+							upChapters[i].last = tech_in_skeleton; // set new "last entry" 
+							tech_old->next = tech_in_skeleton;
+							upChapters[i].last->prev = tech_old;
+							upChapters[i].last->next = NULL;
 						}
 						break;
 					}

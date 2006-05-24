@@ -262,7 +262,11 @@ void MN_UpContent_f( void )
 				researched_entries = qtrue;
 				break;
 			}
-			upCurrent = upCurrent->next;
+			if (upCurrent != upCurrent->next)
+				upCurrent = upCurrent->next;
+			else {
+				upCurrent = NULL;
+			}
 		} while ( upCurrent );
 		
 		// .. and if so add them to the displaylist of chapters.
@@ -337,7 +341,14 @@ void MN_UpNext_f( void )
 	// get next entry
 	if ( upCurrent && upCurrent->next ) {
 		// Check if the next entry is researched already otherwise go to the next entry.
-		do { upCurrent = upCurrent->next; } while ( upCurrent && !RS_IsResearched_(upCurrent) );
+		do {
+			if (upCurrent != upCurrent->next) {
+				upCurrent = upCurrent->next;
+			} else {
+				Com_DPrintf("MN_UpNext_f: There was a 'next' entry for '%s' where there should not be one.\n",upCurrent->id);
+				upCurrent = NULL;
+			}
+		} while ( upCurrent && !RS_IsResearched_(upCurrent) );
 		
 		if ( upCurrent ) {
 			MN_UpDrawEntry( upCurrent );
