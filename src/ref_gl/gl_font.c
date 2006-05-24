@@ -308,6 +308,7 @@ static void* Font_GenerateCache ( const char* s, const char* fontString, font_t*
 Font_GetLineWrap
 
 maxWidth is a pixel value
+FIXME: if maxWidth is too small to display even the first word this has bugs
 ================*/
 static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *width, int *height )
 {
