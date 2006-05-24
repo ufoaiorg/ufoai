@@ -36,6 +36,8 @@ fontRenderStyle_t fontStyle[] = {
 
 //==============================================================
 
+static void Font_ConvertChars ( char* buffer );
+
 /*===============
 Font_Shutdown
 
@@ -132,7 +134,6 @@ void Font_Length (char *font, char *c, int *width, int *height)
 	// get the font
 	f = Font_GetFont( font );
 	if ( !f ) return;
-
 	TTF_SizeUTF8( f->font, c, width, height );
 }
 

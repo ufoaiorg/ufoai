@@ -266,7 +266,7 @@ typedef struct base_s
 {
 	//the internal base-id
 	int	id;
-	char	title[MAX_VAR];
+	char	title[MAX_VAR]; // FIXME: should be named 'name' not title
 	int	map[BASE_SIZE][BASE_SIZE];
 
 	qboolean founded;
@@ -308,6 +308,7 @@ typedef struct base_s
 	// the onconstruct value of the buliding
 	// building_radar increases the sensor width
 	int	sensorWidth; // radar radius
+	qboolean	drawSensor; // ufo in range?
 
 	inventory_t	teamInv[MAX_WHOLETEAM];
 	inventory_t	equipment;

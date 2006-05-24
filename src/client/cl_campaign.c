@@ -19,6 +19,7 @@ stage_t		stages[MAX_STAGES];
 int		numStageSets = 0;
 int		numStages = 0;
 
+ufoOnGeoscape_t	ufoOnGeoscape[MAX_UFOONGEOSCAPE];
 campaign_t	*curCampaign;
 ccs_t		ccs;
 base_t		*baseCurrent;
@@ -649,7 +650,7 @@ byte *CL_GetmapColor( vec2_t pos )
 
 	return maskPic + 4 * (x + y * maskWidth);
 }
-	
+
 /*======================
 CL_NewBase
 ======================*/
@@ -1046,6 +1047,21 @@ void CL_BuildingAircraftList_f ( void )
 	menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
 }
 
+/*======================
+CL_HandleNationData
+
+if expires is true a mission expires without any reaction
+this will cost money and decrease nation support for this area
+TODO: Use mis->pos to determine the position on the geoscape and get the nation
+TODO: Use colors for nations
+======================*/
+void CL_HandleNationData ( qboolean expires, actMis_t* mis )
+{
+
+}
+
+#define GEO_DISTANCE(pos1, pos2) sqrt(abs(pos1[0]-pos2[0])*2+abs(pos1[1]-pos2[1])*2)
+
 /*
 ======================
 CL_CampaignCheckEvents
@@ -1076,15 +1092,48 @@ void CL_CampaignCheckEvents( void )
 					else
 						CL_CampaignExecute( set );
 				}
+				else if ( ccs.numUfoOnGeoscape > 0 )
+				{
+					for ( j = 0; j < ccs.numBases; j++ )
+					{
+						// no radar?
+						if ( !bmBases[i].sensorWidth )
+							continue;
+						for ( i = 0; i < ccs.numUfoOnGeoscape; i++ )
+							if ( bmBases[j].sensorWidth >= GEO_DISTANCE( bmBases[j].pos, ufoOnGeoscape[i].pos) )
+							{
+								// cl_menu.c MN_DrawMapMarkers
+								mapAction = MA_UFORADAR;
+								if ( bmBases[j].drawSensor == qfalse )
+									MN_AddNewMessage( _("Notice"), _("UFO appears on our radar"), qfalse, MSG_STANDARD, NULL );
+								else
+									bmBases[j].drawSensor = qtrue;
+							}
+							else
+							{
+								if ( bmBases[j].drawSensor == qtrue )
+								{
+									bmBases[j].drawSensor = qfalse;
+									// FIXME: grammar: from/of/on
+									MN_AddNewMessage( _("Notice"), _("UFO disappears on our radar"), qfalse, MSG_STANDARD, NULL );
+								}
+								mapAction = MA_NONE;
+							}
+					}
+				}
+				else
+				{
+					// TODO: Spawn a random ufo on geoscape
+				}
 
 	// let missions expire
 	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ )
 		if ( mis->expire.day && Date_LaterThan( ccs.date, mis->expire ) )
 		{
 			// ok, waiting and not doing a mission will costs money
-			int lose = mis->def->civilians * mis->def->cr_civilian;
+			int lose = mis->def->cr_win + mis->def->civilians * mis->def->cr_civilian;
 			CL_UpdateCredits( ccs.credits - lose );
-			// TODO: nation stuff
+			CL_HandleNationData( qtrue, mis );
 			Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died. You've lost %i credits."), mis->def->civilians, lose), MAX_MESSAGE_TEXT );
 			MN_AddNewMessage( _("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL );
 			CL_CampaignRemoveMission( mis );

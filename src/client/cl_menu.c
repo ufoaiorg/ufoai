@@ -2,6 +2,9 @@
 
 #include "client.h"
 
+static vec4_t tooltipBG = {0.0f,0.0f,0.0f,0.7f};
+static vec4_t tooltipColor = {0.0f,0.8f,0.0f,1.0f};
+
 // ===========================================================
 
 typedef enum ea_s
@@ -1039,6 +1042,11 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	{
 		MN_PushMenu( "popup_baseattack" );
 	}
+	else if ( mapAction == MA_UFORADAR )
+	{
+		// TODO: Select aircraft - follow ufo - fight
+		// if shoot down - we have a new crashsite mission if color != water
+	}
 
 	// mission selection
 	for ( i = 0, ms = ccs.mission; i < ccs.numMissions; i++, ms++ )
@@ -1406,7 +1414,7 @@ void MN_DrawItem( vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 
 /*
 =================
-MN_DrawMapMarkers
+MN_Draw3DMapMarkers
 =================
 */
 void MN_Draw3DMapMarkers( menuNode_t *node, float latitude, float longitude )
@@ -1514,6 +1522,8 @@ void MN_DrawMapMarkers( menuNode_t *node )
 			if ( !MN_MapToScreen( node, bmBases[j].pos, &x, &y ) )
 				continue;
 			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base" );
+			if ( bmBases[j].drawSensor )
+				re.DrawNormPic( x + 10, y - 10, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "sensor" );
 		}
 
 	// draw aircraft
@@ -1537,18 +1547,47 @@ void MN_DrawMapMarkers( menuNode_t *node )
 					}
 				}
 		}
+
+	for ( j = 0; j < ccs.numUfoOnGeoscape; j++ )
+	{
+		if ( !MN_MapToScreen( node, ufoOnGeoscape[j].pos, &x, &y ) )
+			continue;
+		re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, ufoOnGeoscape[j].image );
+	}
+}
+
+/*=================
+MN_DrawTooltip
+
+generic tooltip function
+=================*/
+void MN_DrawTooltip ( char* font, char* string, int x, int y )
+{
+	int width = 0, height = 0;
+
+	re.FontLength( font, string, &width, &height );
+	if ( !width )
+		return;
+
+	x += 5; y += 5;
+	if ( x + width > VID_NORM_WIDTH )
+		x -= (width+10);
+	re.DrawFill( x-1, y-1, width, height, 0, tooltipBG );
+	re.DrawColor( tooltipColor );
+	re.FontDrawString( font , 0, x+1, y+1, width, string );
+	re.DrawColor( NULL );
 }
 
 /*
 =================
 MN_Tooltip
+
+Wrapper for menu tooltips
 =================
 */
 void MN_Tooltip ( menuNode_t* node, int x, int y )
 {
 	char* tooltip;
-	vec4_t color;
-	int width, height;
 
 	// tooltips
 	if ( node->data[5] )
@@ -1556,20 +1595,7 @@ void MN_Tooltip ( menuNode_t* node, int x, int y )
 		tooltip = (char *)node->data[5];
 		if ( *tooltip == '_' )
 			tooltip++;
-		re.FontLength( "f_small", _(tooltip), &width, &height );
-		if ( !width )
-			return;
-		VectorSet( color, 0.0f, 0.0f, 0.0f );
-		color[3] = 0.7f;
-		x += 5; y += 5;
-		if ( x + width > VID_NORM_WIDTH )
-			x -= (width+10);
-		re.DrawFill(x, y, width, height + 10, 0, color );
-		VectorSet( color, 0.0f, 0.8f, 0.0f );
-		color[3] = 1.0f;
-		re.DrawColor( color );
-		re.FontDrawString("f_small", 0, x, y, width, _(tooltip) );
-		re.DrawColor( NULL );
+		MN_DrawTooltip( "f_small", _(tooltip), x, y );
 	}
 }
 
@@ -2161,6 +2187,10 @@ void MN_DrawMenus( void )
 						case MA_INTERCEPT:
 							if ( ! selMis )
 								menuText[TEXT_STANDARD] = _("Select ufo or mission on map\n");
+							break;
+						case MA_UFORADAR:
+							if ( ! selMis )
+								menuText[TEXT_STANDARD] = _("UFO in radar range\n");
 							break;
 						}
 					}
