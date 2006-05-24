@@ -836,7 +836,7 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 		memset( building, 0, sizeof( building_t ) );
 		Q_strncpyz( building->id, id, MAX_VAR );
 
-		Com_DPrintf("...found building %s\n", building->name );
+		Com_DPrintf("...found building %s\n", building->id );
 
 		//set standard values
 		building->techLevel = 1;
@@ -1636,7 +1636,7 @@ void B_DrawBase( menuNode_t *node )
 	if ( hoverBuilding )
 	{
 		re.DrawColor( color );
-		re.FontDrawString( "f_small", 0, mx+3, my, 10, _(hoverBuilding->name) );
+		re.FontDrawString( "f_small", 0, mx+3, my, 0, hoverBuilding->name );
 		re.DrawColor( NULL );
 	}
 }

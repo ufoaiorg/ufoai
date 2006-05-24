@@ -456,7 +456,7 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 	f = Font_GetFont( fontID );
 	if ( !f ) ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", fontID );
 
-	Q_strncpyz( buf, c, BUF_SIZE );
+	Q_strncpyz( buffer, c, BUF_SIZE );
 
 	// transform from 1024x768 coordinates for drawing
 	x = (float)x * vid.rx;
@@ -504,7 +504,7 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 
 			Font_GenerateGLSurface( openGLSurface, x, y );
 		}
-		
+
 		// skip for next line
 		y += h;
 		buffer = pos;
