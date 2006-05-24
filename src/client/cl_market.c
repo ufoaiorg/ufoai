@@ -93,7 +93,7 @@ static void CL_BuyType( void )
 	objDef_t	*od;
 	aircraft_t	*air;
 	technology_t	*tech;
-	int		i, j, num, storage, supply;
+	int		i, j = 0, num, storage, supply;
 	char	str[MAX_VAR];
 
 	if ( Cmd_Argc() < 2 )

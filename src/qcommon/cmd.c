@@ -922,7 +922,7 @@ Cmd_List_f
 void Cmd_List_f (void)
 {
 	cmd_function_t	*cmd;
-	int	i, c, l;
+	int	i, c, l = 0;
 	char	*token = NULL;
 	c = Cmd_Argc();
 

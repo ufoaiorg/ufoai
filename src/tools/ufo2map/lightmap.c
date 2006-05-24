@@ -199,7 +199,7 @@ TriEdge_r
 */
 void TriEdge_r (triangulation_t *trian, triedge_t *e)
 {
-	int		i, bestp;
+	int		i, bestp = 0;
 	vec3_t	v1, v2;
 	vec_t	*p0, *p1, *p;
 	vec_t	best, ang;
@@ -254,7 +254,7 @@ void TriangulatePoints (triangulation_t *trian)
 {
 	vec_t	d, bestd;
 	vec3_t	v1;
-	int		bp1, bp2, i, j;
+	int		bp1 = 0, bp2 = 0, i, j;
 	vec_t	*p1, *p2;
 	triedge_t	*e, *e2;
 
@@ -945,7 +945,7 @@ void GatherSampleLight (vec3_t pos, vec3_t normal,
 	vec3_t			delta;
 	float			dot, dot2;
 	float			dist;
-	float			scale;
+	float			scale = 0.0f;
 	float			*dest;
 
 	for (l=directlights ; l ; l=l->next)
@@ -1209,7 +1209,7 @@ void FinalLightFace (int facenum)
 	int			i, j, k, st;
 	vec3_t		lb;
 	patch_t		*patch;
-	triangulation_t	*trian;
+	triangulation_t	*trian = NULL;
 	facelight_t	*fl;
 	float		minlight;
 	float		max, newmax;

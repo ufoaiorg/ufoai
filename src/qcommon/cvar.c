@@ -488,7 +488,7 @@ Cvar_List_f
 void Cvar_List_f (void)
 {
 	cvar_t	*var;
-	int	i, c, l;
+	int	i, c, l = 0;
 	char	*token = NULL;
 	c = Cmd_Argc();
 

@@ -1552,7 +1552,7 @@ void B_DrawBase( menuNode_t *node )
 	qboolean hover = qfalse;
 	static vec4_t color = {0.5f, 1.0f, 0.5f, 1.0};
 	char image[MAX_QPATH], statusImage[MAX_QPATH];
-	building_t *entry, *secondEntry = NULL, *hoverBuilding = NULL;
+	building_t *entry = NULL, *secondEntry = NULL, *hoverBuilding = NULL;
 
 	if ( ! baseCurrent )
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );

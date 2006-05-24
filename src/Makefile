@@ -82,6 +82,8 @@ BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp
 TOOLSCFLAGS=-Wall
 TOOLSLDFLAGS=-lm
 
+MAKE_FLAGS=--keep-going --silent
+
 ifneq ($(ARCH),i386)
 	BASE_CFLAGS+=-DC_ONLY
 endif
@@ -155,7 +157,7 @@ ifeq ($(ARCH),sparc)
 endif
 
 ifeq ($(ARCH),i386)
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -O3 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing
 endif
 
 ifeq ($(ARCH),x86_64)
@@ -195,15 +197,14 @@ endif
 
 DEBUG_CFLAGS=$(BASE_CFLAGS) -g -D_FORTIFY_SOURCE=2 -DDEBUG
 
-DO_CC=$(CC) $(CFLAGS) -o $@ -c $<
-DO_DEBUG_CC=$(CC) $(DEBUG_CFLAGS) -o $@ -c $<
-DO_DED_CC=$(CC) $(CFLAGS) -DDEDICATED_ONLY -o $@ -c $<
-DO_DED_DEBUG_CC=$(CC) $(DEBUG_CFLAGS) -DDEDICATED_ONLY -o $@ -c $<
-DO_O_CC=$(CC) $(CFLAGS) -O -o $@ -c $<
-DO_SHLIB_CC=$(CC) $(CFLAGS) $(SHLIBCFLAGS) -o $@ -c $<
-DO_GL_SHLIB_CC=$(CC) $(CFLAGS) $(SHLIBCFLAGS) $(GLXCFLAGS) -o $@ -c $<
-DO_AS=$(CC) $(CFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
-DO_SHLIB_AS=$(CC) $(CFLAGS) $(SHLIBCFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
+DO_CC=echo " * [UFO] $@"; $(CC) $(CFLAGS) -o $@ -c $<
+DO_DED_CC=echo " * [DED] $@"; $(CC) $(CFLAGS) -DDEDICATED_ONLY -o $@ -c $<
+DO_TOOLS_CC=echo " * [MAP] $@"; $(CC) $(CFLAGS) -o $@ -c $<
+DO_O_CC=echo " * [OPT] $@"; $(CC) $(CFLAGS) -O -o $@ -c $<
+DO_SHLIB_CC=echo " * [LIB] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -o $@ -c $<
+DO_GL_SHLIB_CC=echo " * [REF] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) $(GLXCFLAGS) -o $@ -c $<
+DO_AS=echo " * [AS.] $@"; $(CC) $(CFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
+DO_SHLIB_AS=echo " * [ASL] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
 
 #############################################################################
 # gettext stuff
@@ -273,7 +274,18 @@ build_debug:
 		$(BUILD_DEBUG_DIR)/tools \
 		$(BUILD_DEBUG_DIR)/tools/ufo2map \
 		$(BUILD_DEBUG_DIR)/tools/ufo2map/common
-	$(MAKE) targets BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS) -DLINUX_VERSION='\"$(VERSION) Debug\"'"
+	@$(MAKE) $(MAKE_FLAGS) targets BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS) -DLINUX_VERSION='\"$(VERSION) Debug\"'"
+	@echo
+	@echo "Flags"
+	@echo $(DEBUG_CFLAGS)
+	@echo
+	@echo "This is the debug version."
+	@echo "For better performace type 'make release' to build optimzed binaries."
+	@echo "To debug this version type 'gdb ufo'"
+	@echo "Enter 'run +set vid_fullscreen 0 +set vid_grabmouse 0'"
+	@echo "After a crash type 'bt' to gdb console"
+	@echo
+	@echo "Type 'make lang' to compile the gettext translation files"
 
 build_release:
 	@-mkdir -p $(BUILD_RELEASE_DIR) \
@@ -284,7 +296,12 @@ build_release:
 		$(BUILD_RELEASE_DIR)/tools \
 		$(BUILD_RELEASE_DIR)/tools/ufo2map \
 		$(BUILD_RELEASE_DIR)/tools/ufo2map/common
-	$(MAKE) targets BUILDDIR=$(BUILD_RELEASE_DIR) CFLAGS="$(RELEASE_CFLAGS) -DLINUX_VERSION='\"$(VERSION)\"'"
+	@$(MAKE) $(MAKE_FLAGS) targets BUILDDIR=$(BUILD_RELEASE_DIR) CFLAGS="$(RELEASE_CFLAGS) -DLINUX_VERSION='\"$(VERSION)\"'"
+	@echo
+	@echo "Flags"
+	@echo $(RELEASE_CFLAGS)
+	@echo
+	@echo "Type 'make lang' to compile the gettext translation files"
 
 targets: $(TARGETS)
 
@@ -325,94 +342,94 @@ $(BUILDDIR)/ufo2map : $(TOOLS_OBJS)
 	$(CC) $(TOOLSCFLAGS) -o $@ $(TOOLS_OBJS) $(TOOLSLDFLAGS)
 
 $(BUILDDIR)/tools/ufo2map/ufo2map.o :    $(TOOLS_DIR)/ufo2map/ufo2map.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/qbsp3.o :    $(TOOLS_DIR)/ufo2map/qbsp3.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/qrad3.o :    $(TOOLS_DIR)/ufo2map/qrad3.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/brushbsp.o :    $(TOOLS_DIR)/ufo2map/brushbsp.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/csg.o :    $(TOOLS_DIR)/ufo2map/csg.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/faces.o :    $(TOOLS_DIR)/ufo2map/faces.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/gldraw.o :    $(TOOLS_DIR)/ufo2map/gldraw.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/glfile.o :    $(TOOLS_DIR)/ufo2map/glfile.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/leakfile.o :    $(TOOLS_DIR)/ufo2map/leakfile.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/levels.o :    $(TOOLS_DIR)/ufo2map/levels.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/lightmap.o :    $(TOOLS_DIR)/ufo2map/lightmap.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/map.o :    $(TOOLS_DIR)/ufo2map/map.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/nodraw.o :    $(TOOLS_DIR)/ufo2map/nodraw.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/patches.o :    $(TOOLS_DIR)/ufo2map/patches.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/portals.o :    $(TOOLS_DIR)/ufo2map/portals.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/prtfile.o :    $(TOOLS_DIR)/ufo2map/prtfile.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/routing.o :    $(TOOLS_DIR)/ufo2map/routing.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/textures.o :    $(TOOLS_DIR)/ufo2map/textures.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/tree.o :    $(TOOLS_DIR)/ufo2map/tree.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/writebsp.o :    $(TOOLS_DIR)/ufo2map/writebsp.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/common/bspfile.o :    $(TOOLS_DIR)/ufo2map/common/bspfile.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/common/cmdlib.o :    $(TOOLS_DIR)/ufo2map/common/cmdlib.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/common/l3dslib.o :    $(TOOLS_DIR)/ufo2map/common/l3dslib.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/common/lbmlib.o :    $(TOOLS_DIR)/ufo2map/common/lbmlib.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/common/mathlib.o :    $(TOOLS_DIR)/ufo2map/common/mathlib.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/common/polylib.o :    $(TOOLS_DIR)/ufo2map/common/polylib.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/common/scriplib.o :    $(TOOLS_DIR)/ufo2map/common/scriplib.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/common/threads.o :    $(TOOLS_DIR)/ufo2map/common/threads.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/common/trace.o :    $(TOOLS_DIR)/ufo2map/common/trace.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 $(BUILDDIR)/tools/ufo2map/common/trilib.o :    $(TOOLS_DIR)/ufo2map/common/trilib.c
-	$(DO_CC)
+	$(DO_TOOLS_CC)
 
 
 #############################################################################
