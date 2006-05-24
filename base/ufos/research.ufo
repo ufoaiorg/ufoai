@@ -1296,7 +1296,7 @@ tech rs_ugv_phoenix
 	researched	false
 	needscollected	true
 
-	mdl_top	"models/soldiers/ugv_phoenix/phoenix"
+	mdl_top	"soldiers/ugv_phoenix/phoenix"
 }
 
 tech rs_ugv_triax
@@ -1312,5 +1312,5 @@ tech rs_ugv_triax
 	researched	false
 	needscollected	true
 
-	mdl_top	"models/soldiers/ugv_triax/triax"
+	mdl_top	"soldiers/ugv_triax/triax"
 }
