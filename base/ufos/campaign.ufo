@@ -1,7 +1,56 @@
 // ==================
 // CAMPAIGN: STANDARD
 // ==================
-
+// stage values
+// =========================================================
+// delay	V_DATE (year, day, hour)	delay after getting activated
+// frame	V_DATE (year, day, hour)	only day and hour are used to randomize the activation
+// expire	V_DATE (year, day, hour)	time after which the mission expires
+// seq		V_STRING	sequence id to play
+// missions	V_STRING	string of missions included in this stage
+// number	V_INT		how many missions needs to appear on geoscape until next set is called
+// quota	V_INT		how many missions needs to be done until next set is called
+// needed	V_STRING	need another stage to be finished?
+// nextstage	V_STRING	which is the next stage we should enter?
+// endstage	V_STRING
+// commands	V_STRING	console command
+//
+// mission values
+// =========================================================
+// text		V_TRANSLATION_STRING	"_translated"	(marked with _ to let the parser detect the string as translatable)
+// map		V_STRING		africa04	a valid map file without d or n (for day and night map - last char of mapname)
+//							this string may contain a + as first char - this means that this is a random assembled map (see *.ump)
+//							with . as first char we have a base attack map
+// param	V_STRING		commercial	this if for maps with + as first char - sets the map style (see *.ump)
+// music	V_STRING		mission		music from base/music *.ogg
+// pos		V_POS			"-82 125"	x, y
+// aliens	V_INT			5		how many aliens in this mission?
+// alienteam	V_STRING		alien		which alienrace?
+// alienequip	V_STRING				campaign_alien	which equipment the alien uses in this mission
+// civilians	V_INT			6		how many civilians will be in the mission?
+// civteam	V_STRING		oriental	which race of civilians
+// recruits	V_INT			3		how many recruits/soldiers you are allowed to carry to battle
+// $win		V_INT			1200		how much credits you will get on win
+// $alien	V_INT			100		how much credits for each killed alien
+// $civilian	V_INT			500		how much you will lose for each killed civilian
+//
+// campaign values
+// =========================================================
+// name		V_STRING	"_Standard Campaign"		name of campaign
+// text		V_STRING	"_txt_standard_campaign"	campaign description
+// team		V_STRING	human				which team?
+// soldiers	V_INT		12				how many soldiers in this campaign?
+// equipment	V_STRING	campaign_player			which equipment to use
+// market	V_STRING	campaign_market			which market definition to use
+// credits	V_INT		500000				how much credits at start
+// map		V_STRING	map_earth			which map to use for geoscape
+// visible	V_BOOL		true				is this campaign visible in campaign list
+// date		V_DATE		"2000 0 7"			starting date
+// firststage	V_STRING	intro				first stage to enter
+//
+//
+//
+//
 //no day and night
 mission africa
 {
@@ -726,6 +775,10 @@ stage ufos_are_coming
 
 stage invasion
 {
+	set first
+	{
+		seq	invasion
+	}
 	set baseinvasion
 	{
 		delay		"0 0 1"
@@ -738,6 +791,24 @@ stage invasion
 	set stop
 	{
 		needed		baseinvasion
+		delay		"0 110 0"
+		endstage	invasion
+	}
+}
+
+stage alienbase
+{
+	set first
+	{
+		seq	alienbase
+	}
+	set aliencolony
+	{
+
+	}
+	set stop
+	{
+		needed		aliencolony
 		delay		"0 110 0"
 		commands	"mn_push enddemo;"
 	}
