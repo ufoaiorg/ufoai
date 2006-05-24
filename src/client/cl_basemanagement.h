@@ -116,13 +116,12 @@ typedef enum
 
 typedef struct building_s
 {
+	char	id[MAX_VAR];
 	char	name[MAX_VAR];
-	char	title[MAX_VAR];
-	char	text[MAX_VAR]; // short description
 	// needs determines the second building part
-	char	*image, *needs, *depends, *mapPart, *produceType, *pedia;
+	char	*image, *needs, *mapPart, *produceType, *pedia;
 	float	energy, workerCosts, produceTime, fixCosts, varCosts;
-	int	production, level, id, timeStart, buildTime, techLevel, notUpOn;
+	int	production, level, idInList, timeStart, buildTime, techLevel, notUpOn;
 	int	base; // number of base this building is located in.
 
 	int	maxWorkers, minWorkers, assignedWorkers; // TODO: remove these and replace them with the employee_s struct
@@ -166,6 +165,7 @@ typedef struct building_s
 	//this way we can rename the buildings without loosing the control
 	buildingType_t	buildingType;
 
+	technology_t*	tech;
 	struct building_s *dependsBuilding;
 } building_t;
 
@@ -336,51 +336,52 @@ extern	int   numEmployees;							// The global number of entries in the "employe
 craftupgrade_t    *craftupgrades[MAX_CRAFTUPGRADES];		// This it the global list of all available craft-upgrades
 int    numCraftUpgrades;								// The global number of entries in the "craftupgrades" list.
 
-void MN_InitEmployees ( void );
-void CL_UpdateBaseData( void );
+void B_InitEmployees ( void );
+void B_UpdateBaseData( void );
 base_t* B_GetBase ( int id );
 void B_UpgradeBuilding( building_t* b );
 void B_RepairBuilding( building_t* b );
 int B_CheckBuildingConstruction ( building_t* b );
 int B_GetNumOnTeam ( void );
-building_t * MN_GetFreeBuilding( int base_id, buildingType_t type );
-building_t * MN_GetUnusedLab( int base_id );
-int MN_GetUnusedLabs( int base_id );
-void MN_ClearBuilding( building_t *building );
-int MN_EmployeesInBase2 ( int base_id, employeeType_t employee_type, byte free_only );
-byte MN_RemoveEmployee ( building_t *building );
-byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type );
+building_t * B_GetFreeBuilding( int base_id, buildingType_t type );
+building_t * B_GetUnusedLab( int base_id );
+int B_GetUnusedLabs( int base_id );
+void B_ClearBuilding( building_t *building );
+int B_EmployeesInBase2 ( int base_id, employeeType_t employee_type, byte free_only );
+byte B_RemoveEmployee ( building_t *building );
+byte B_AssignEmployee ( building_t *building_dest, employeeType_t employee_type );
 void B_SaveBases( sizebuf_t *sb );
 void B_LoadBases( sizebuf_t *sb, int version );
-void MN_ParseBuildings( char *title, char **text );
-void MN_ParseBases( char *title, char **text );
-void MN_BuildingInit( void );
+void B_ParseBuildings( char *id, char **text, qboolean link );
+void B_ParseBases( char *title, char **text );
+void B_BuildingInit( void );
 void B_AssembleMap( void );
 void B_BaseAttack ( void );
-void MN_DrawBuilding( void );
+void B_DrawBuilding( void );
 building_t* B_GetBuildingByID ( int id );
 building_t* B_GetBuilding ( char *buildingName );
 
 typedef struct production_s
 {
+	char    id[MAX_VAR];
 	char    name[MAX_VAR];
-	char    title[MAX_VAR];
 	char    text[MAX_VAR]; //short description
 	int	amount;
 	char	menu[MAX_VAR];
+	technology_t* tech;
 } production_t;
 
 extern vec2_t newBasePos;
 
-void MN_BuildingInit( void );
+void B_BuildingInit( void );
 int B_GetCount ( void );
 void B_SetUpBase ( void );
 
-void MN_ParseProductions( char *title, char **text );
-void MN_SetBuildingByClick ( int row, int col );
-void MN_ResetBaseManagement( void );
-void MN_ClearBase( base_t *base );
-void MN_NewBases( void );
+void B_ParseProductions( char *title, char **text );
+void B_SetBuildingByClick ( int row, int col );
+void B_ResetBaseManagement( void );
+void B_ClearBase( base_t *base );
+void B_NewBases( void );
 
 #endif /* BASEMANGEMENT_DEFINED */
 

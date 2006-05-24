@@ -77,17 +77,12 @@ called from MN_UpDrawEntry when type of technology_t is RS_BUILDING
 void UP_BuildingDescription ( technology_t* t )
 {
 	building_t* b = B_GetBuilding ( t->provides );
-	building_t* depends = NULL;
 
 	if ( !b )
 	{
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find building") );
 	} else {
-		// needs another building to be buildable
-		if ( b->depends )
-			depends = B_GetBuilding ( b->depends );
-
-		Com_sprintf(upBuffer, MAX_UPTEXT, _("Depends:\t%s\n"), depends ? depends->title : _("None") );
+		Com_sprintf(upBuffer, MAX_UPTEXT, _("Depends:\t%s\n"), b->dependsBuilding ? b->dependsBuilding->name : _("None") );
 		Q_strcat(upBuffer, MAX_UPTEXT, va(_("More than once:\t%s\n"), b->moreThanOne ? _("Yes") : _("No") ) );
 		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Buildtime:\t%i day(s)\n"), (int)b->buildTime ) );
 		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Fixcosts:\t%i c\n"), (int)b->fixCosts ) );
@@ -384,9 +379,9 @@ void UP_List_f ( void )
 }
 
 /*=================
-MN_ResetUfopedia
+UP_ResetUfopedia
 =================*/
-void MN_ResetUfopedia( void )
+void UP_ResetUfopedia( void )
 {
 	// reset menu structures
 	numChapters = 0;
@@ -405,18 +400,18 @@ void MN_ResetUfopedia( void )
 // ===========================================================
 
 /*======================
-MN_ParseUpChapters
+UP_ParseUpChapters
 ======================*/
-void MN_ParseUpChapters( char *id, char **text )
+void UP_ParseUpChapters( char *id, char **text )
 {
-	char	*errhead = "MN_ParseUpChapters: unexptected end of file (names ";
+	char	*errhead = "UP_ParseUpChapters: unexptected end of file (names ";
 	char	*token;
 
 	// get name list body body
 	token = COM_Parse( text );
 
 	if ( !*text || *token !='{' ) {
-		Com_Printf( "MN_ParseUpChapters: chapter def \"%s\" without body ignored\n", id );
+		Com_Printf( "UP_ParseUpChapters: chapter def \"%s\" without body ignored\n", id );
 		return;
 	}
 
@@ -428,7 +423,7 @@ void MN_ParseUpChapters( char *id, char **text )
 
 		// add chapter
 		if ( numChapters >= MAX_PEDIACHAPTERS ) {
-			Com_Printf( "MN_ParseUpChapters: too many chapter defs\n", id );
+			Com_Printf( "UP_ParseUpChapters: too many chapter defs\n", id );
 			return;
 		}
 		memset( &upChapters[numChapters], 0, sizeof( pediaChapter_t ) );

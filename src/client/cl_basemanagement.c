@@ -62,18 +62,16 @@ value_t valid_vars[] =
 	{ "produce_time",V_FLOAT,	BSFS( produceTime ) },	// how long for one unit?
 	{ "produce",    V_INT,		BSFS( production ) },		// how many units
 	{ "more_than_one",    V_BOOL,	BSFS( moreThanOne ) },	// is the building allowed to be build more the one time?
-	{ "title",	V_TRANSLATION_STRING,	BSFS( title ) },				// displayed building name
+	{ "name",	V_TRANSLATION_STRING,	BSFS( name ) },				// displayed building name
 	{ "pedia",	V_NULL,		BSFS( pedia ) },			// the pedia-id string
 	{ "status",	V_INT,		BSFS( buildingStatus[0] ) },	// the status of the building
 	{ "image",	V_NULL,		BSFS( image ) },			// the string to identify the image for the building
-	{ "desc",	V_TRANSLATION_STRING,		BSFS( text ) },			// short description
 
 	//set first part of a building to 1 all others to 0
 	//otherwise all building-parts will be on the list
 	{ "visible",	V_BOOL,		BSFS( visible ) },
 // 	{ "size",	V_POS,		BSFS( size ) },			// not needed yet
 	{ "needs",	V_NULL,		BSFS( needs ) },			// for buildings with more than one part (dont forget to set the visibility of all non-main-parts to 0)
-	{ "depends",	V_NULL,		BSFS( depends ) },	// only available if this building is availabel, too
 	{ "energy",	V_FLOAT,	BSFS( energy ) },			// amount of energy needed for use
 	{ "fixcosts",	V_FLOAT,	BSFS( fixCosts ) },		// buildcosts
 	{ "varcosts",	V_FLOAT,	BSFS( varCosts ) },		// costs that will come up by using the building
@@ -111,7 +109,7 @@ to the appropriate values in the corresponding struct
 ======================*/
 value_t production_valid_vars[] =
 {
-	{ "title",	V_TRANSLATION_STRING,	PRODFS( title ) },
+	{ "name",	V_TRANSLATION_STRING,	PRODFS( name ) },
 	{ "desc",	V_TRANSLATION_STRING,	PRODFS( text ) },
 	{ "amount",	V_INT,	PRODFS( amount ) },
 	{ "menu",	V_STRING,	PRODFS( menu ) },
@@ -119,18 +117,18 @@ value_t production_valid_vars[] =
 };
 
 /*======================
-MN_BuildingStatus
+B_BuildingStatus
 
 Displays the status of a building for baseview
 ======================*/
-void MN_BuildingStatus( void )
+void B_BuildingStatus( void )
 {
 	int daysLeft;
 
 	//maybe someone call this command before the buildings are parsed??
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 	{
-		Com_DPrintf( "MN_BuildingStatus: No Base or no Building set\n" );
+		Com_DPrintf( "B_BuildingStatus: No Base or no Building set\n" );
 		return;
 	}
 
@@ -164,17 +162,6 @@ void MN_BuildingStatus( void )
 }
 
 /*======================
-MN_BuildingInfoClick
-
-Opens up the 'pedia if you right click on a building in the list.
-======================*/
-void MN_BuildingInfoClick( void )
-{
-	if ( baseCurrent && baseCurrent->buildingCurrent )
-		UP_OpenWith ( baseCurrent->buildingCurrent->pedia );
-}
-
-/*======================
 B_SetUpBase
 
 TODO: document this
@@ -184,33 +171,33 @@ void B_SetUpBase ( void )
 	int i;
 
 	assert( baseCurrent );
-	MN_BuildingInit();
+	B_BuildingInit();
 	Com_DPrintf("Set up for %i\n", baseCurrent->id );
 	for (i = 0 ; i < numBuildings; i++ )
 	{
 		if ( ccs.numBases == 1 && bmBuildings[ccs.actualBaseID][i].firstbase )
 		{
 			baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][i];
-			Com_DPrintf("firstbase: %s (%i) at (%.0f:%.0f)\n", baseCurrent->buildingCurrent->name, i, bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
-			MN_SetBuildingByClick ( (int)bmBuildings[ccs.actualBaseID][i].pos[0], (int)bmBuildings[ccs.actualBaseID][i].pos[1] );
+			Com_DPrintf("firstbase: %s (%i) at (%.0f:%.0f)\n", baseCurrent->buildingCurrent->id, i, bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
+			B_SetBuildingByClick ( (int)bmBuildings[ccs.actualBaseID][i].pos[0], (int)bmBuildings[ccs.actualBaseID][i].pos[1] );
 			bmBuildings[ccs.actualBaseID][i].buildingStatus[bmBuildings[ccs.actualBaseID][i].howManyOfThisType] = B_WORKING_100;
 			if ( bmBuildings[ccs.actualBaseID][i].moreThanOne
 			  && bmBuildings[ccs.actualBaseID][i].howManyOfThisType < BASE_SIZE*BASE_SIZE )
 				bmBuildings[ccs.actualBaseID][i].howManyOfThisType++;
 			//update the array
-			MN_BuildingInit();
+			B_BuildingInit();
 		}
 		else if ( bmBuildings[ccs.actualBaseID][i].autobuild )
 		{
 			baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][i];
-			Com_DPrintf("autobuild: %s (%i) at (%.0f:%.0f)\n", baseCurrent->buildingCurrent->name, i, bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
-			MN_SetBuildingByClick ( (int)bmBuildings[ccs.actualBaseID][i].pos[0], (int)bmBuildings[ccs.actualBaseID][i].pos[1] );
+			Com_DPrintf("autobuild: %s (%i) at (%.0f:%.0f)\n", baseCurrent->buildingCurrent->id, i, bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
+			B_SetBuildingByClick ( (int)bmBuildings[ccs.actualBaseID][i].pos[0], (int)bmBuildings[ccs.actualBaseID][i].pos[1] );
 			bmBuildings[ccs.actualBaseID][i].buildingStatus[bmBuildings[ccs.actualBaseID][i].howManyOfThisType] = B_WORKING_100;
 			if ( bmBuildings[ccs.actualBaseID][i].moreThanOne
 			  && bmBuildings[ccs.actualBaseID][i].howManyOfThisType < BASE_SIZE*BASE_SIZE )
 				bmBuildings[ccs.actualBaseID][i].howManyOfThisType++;
 			//update the array
-			MN_BuildingInit();
+			B_BuildingInit();
 		}
 	}
 }
@@ -218,14 +205,14 @@ void B_SetUpBase ( void )
 /*======================
 B_GetBuilding
 
-Returns the building in the current base that has the unique name buildingName.
+Returns the building in the current base that has the unique name buildingID.
 pa
 IN
-	buildingName:	The unique name of the building (building_t->name).
+	buildingName:	The unique id of the building (building_t->id).
 
 OUT
 	building_t	B_GetBuilding	if a building was found it is returned,
-						if no name was give the current building is returned,
+						if no id was give the current building is returned,
 						otherwise->NULL
 ======================*/
 building_t* B_GetBuilding ( char *buildingName )
@@ -236,7 +223,7 @@ building_t* B_GetBuilding ( char *buildingName )
 		return baseCurrent->buildingCurrent;
 
 	for (i = 0 ; i < numBuildings; i++ )
-		if ( !Q_strcasecmp( bmBuildings[ccs.actualBaseID][i].name, buildingName ) )
+		if ( !Q_strcasecmp( bmBuildings[ccs.actualBaseID][i].id, buildingName ) )
 			return &bmBuildings[ccs.actualBaseID][i];
 
 	Com_Printf("Building %s not found\n", buildingName );
@@ -244,13 +231,13 @@ building_t* B_GetBuilding ( char *buildingName )
 }
 
 /*======================
-MN_RemoveBuilding
+B_RemoveBuilding
 
 Removes the current selected building
 but this is only allowed if its still under construction
 you will not get any money back
 ======================*/
-void MN_RemoveBuilding( void )
+void B_RemoveBuilding( void )
 {
 	building_t* b;
 
@@ -268,18 +255,18 @@ void MN_RemoveBuilding( void )
 // 		baseCurrent->map[b->pos[0]][b->pos[1]] = -1;
 // 		if (b->dependsBuilding)
 // 			baseCurrent->map[b->dependsBuilding->pos[0]][b->dependsBuilding->pos[1]] = -1;
-		MN_BuildingStatus();
+		B_BuildingStatus();
 	}
 }
 
 /*======================
-MN_ConstructBuilding
+B_ConstructBuilding
 
 Check whether the player has enough credits to construct
 the current selected building.
 Start construction if yes, otherwise
 ======================*/
-void MN_ConstructBuilding( void )
+void B_ConstructBuilding( void )
 {
 	//maybe someone call this command before the buildings are parsed??
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
@@ -292,7 +279,7 @@ void MN_ConstructBuilding( void )
 		return;
 	}
 
-	Com_DPrintf("Construction of %s is starting\n", baseCurrent->buildingCurrent->title );
+	Com_DPrintf("Construction of %s is starting\n", baseCurrent->buildingCurrent->id );
 
 	// second building part
 	if ( baseCurrent->buildingToBuild != NULL )
@@ -308,38 +295,36 @@ void MN_ConstructBuilding( void )
 }
 
 /*======================
-MN_ResetBuildingCurrent
+B_ResetBuildingCurrent
 
 is called e.g. when leaving the build-menu
 but also several times from cl_basemanagement.c
 ======================*/
-void MN_ResetBuildingCurrent ( void )
+void B_ResetBuildingCurrent ( void )
 {
 	if ( baseCurrent )
 		baseCurrent->buildingCurrent = NULL;
 }
 
 /*======================
-MN_NewBuilding
+B_NewBuilding
 ======================*/
-void MN_NewBuilding( void )
+void B_NewBuilding( void )
 {
 	//maybe someone call this command before the buildings are parsed??
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 		return;
 
 	if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] < B_UNDER_CONSTRUCTION )
-		MN_ConstructBuilding();
+		B_ConstructBuilding();
 
-	MN_BuildingStatus();
+	B_BuildingStatus();
 }
 
 /*======================
-MN_SetBuildingByClick
-
-//level 0 - underground
+B_SetBuildingByClick
 ======================*/
-void MN_SetBuildingByClick ( int row, int col )
+void B_SetBuildingByClick ( int row, int col )
 {
 	building_t *secondBuildingPart = NULL;
 
@@ -358,21 +343,21 @@ void MN_SetBuildingByClick ( int row, int col )
 					return;
 				}
 
- 				baseCurrent->map[row][col+1] = baseCurrent->buildingCurrent->id;
+ 				baseCurrent->map[row][col+1] = baseCurrent->buildingCurrent->idInList;
 				baseCurrent->buildingToBuild = secondBuildingPart;
 			}
 			else
 				baseCurrent->buildingToBuild = NULL;
 			if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] <= B_UNDER_CONSTRUCTION )
-				MN_NewBuilding();
+				B_NewBuilding();
 
- 			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->id;
+ 			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->idInList;
 
  			if ( baseCurrent->buildingCurrent->buildingType == B_LAB )
  				baseCurrent->hasLab = 1;
  			if ( baseCurrent->buildingCurrent->buildingType == B_HANGAR )
  				baseCurrent->hasHangar = 1;
-			MN_ResetBuildingCurrent();
+			B_ResetBuildingCurrent();
 		} else {
 			Com_Printf( "There is already a building\n" );
 			Com_DPrintf( "Building: %i at (row:%i, col:%i)\n", baseCurrent->map[row][col], row, col );
@@ -385,11 +370,11 @@ void MN_SetBuildingByClick ( int row, int col )
 }
 
 /*======================
-MN_SetBuilding
+B_SetBuilding
 
 Places the current building in the base (x/y give via console)
 ======================*/
-void MN_SetBuilding( void )
+void B_SetBuilding( void )
 {
 	int row, col;
 
@@ -407,29 +392,29 @@ void MN_SetBuilding( void )
 	col = atoi( Cmd_Argv( 2 ) );
 
 	//emulate the mouseclick with the given coordinates
-	MN_SetBuildingByClick ( row, col );
+	B_SetBuildingByClick ( row, col );
 }
 
 /*======================
-MN_NewBuildingFromList
+B_NewBuildingFromList
 ======================*/
-void MN_NewBuildingFromList( void )
+void B_NewBuildingFromList( void )
 {
 	//maybe someone call this command before the buildings are parsed??
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 		return;
 
 	if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] < B_UNDER_CONSTRUCTION )
-		MN_NewBuilding();
+		B_NewBuilding();
 	else
-		MN_RemoveBuilding();
+		B_RemoveBuilding();
 
 }
 
 /*======================
-MN_DamageBuilding
+B_DamageBuilding
 ======================*/
-void MN_DamageBuilding( void )
+void B_DamageBuilding( void )
 {
 	int damage;
 	if ( Cmd_Argc() < 2 )
@@ -469,13 +454,13 @@ void MN_DamageBuilding( void )
 }
 
 /*======================
-MN_UpgradeBuilding
+B_UpgradeBuilding_f
 
 Only the last building (if moreThanOne is true)
 will describe the status of the buildings which
 are the same type
 ======================*/
-void MN_UpgradeBuilding ( void )
+void B_UpgradeBuilding_f ( void )
 {
 	building_t* b;
 
@@ -515,13 +500,13 @@ void B_UpgradeBuilding( building_t* b )
 }
 
 /*======================
-MN_RepairBuilding
+B_RepairBuilding_f
 
 Only the last building (if moreThanOne is true)
 will describe the status of the buildings which
 are the same type
 ======================*/
-void MN_RepairBuilding( void )
+void B_RepairBuilding_f( void )
 {
 	building_t* b;
 
@@ -568,9 +553,9 @@ void B_RepairBuilding( building_t* b )
 }
 
 /*======================
-MN_DrawBuilding
+B_DrawBuilding
 ======================*/
-void MN_DrawBuilding( void )
+void B_DrawBuilding( void )
 {
 	int i = 0;
 
@@ -585,7 +570,7 @@ void MN_DrawBuilding( void )
 
 	entry = baseCurrent->buildingCurrent;
 
-	MN_BuildingStatus();
+	B_BuildingStatus();
 
 	if ( entry->buildingStatus[entry->howManyOfThisType] < B_UNDER_CONSTRUCTION && entry->fixCosts )
 		Q_strcat( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Costs:\t%1.2f (%i Day[s] to build)\n"), entry->fixCosts, entry->buildTime ) );
@@ -596,10 +581,10 @@ void MN_DrawBuilding( void )
 	if ( entry->energy      ) Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Energy:\t%1.0f\n"), entry->energy ) );
 	if ( entry->produceType )
 		for (i = 0 ; i < numProductions; i++ )
-			if ( !Q_stricmp( bmProductions[i].name, entry->produceType ) )
+			if ( !Q_stricmp( bmProductions[i].id, entry->produceType ) )
 			{
-				if ( entry->production && bmProductions[i].title )
-					Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Production:\t%s (%i/day)\n"), bmProductions[i].title, entry->production ) );
+				if ( entry->production && bmProductions[i].name )
+					Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Production:\t%s (%i/day)\n"), bmProductions[i].name, entry->production ) );
 				break;
 			}
 
@@ -610,14 +595,14 @@ void MN_DrawBuilding( void )
 			Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( "%s:\t%i\n", _("Condition"), entry->condition[baseCurrent->buildingCurrent->howManyOfThisType] ) );
 	}
 
-	if ( entry->name  ) Cvar_Set( "mn_building_name", entry->name );
-	if ( entry->title ) Cvar_Set( "mn_building_title", entry->title );
+	if ( entry->id  ) Cvar_Set( "mn_building_name", entry->id );
+	if ( entry->name ) Cvar_Set( "mn_building_title", entry->name );
 }
 
 /*======================
-MN_BuildingRemoveWorkers
+B_BuildingRemoveWorkers
 ======================*/
-void MN_BuildingRemoveWorkers( void )
+void B_BuildingRemoveWorkers( void )
 {
 	int workers;
 
@@ -644,9 +629,9 @@ void MN_BuildingRemoveWorkers( void )
 }
 
 /*======================
-MN_BuildingAddWorkers
+B_BuildingAddWorkers
 ======================*/
-void MN_BuildingAddWorkers( void )
+void B_BuildingAddWorkers( void )
 {
 	int workers;
 
@@ -673,7 +658,7 @@ void MN_BuildingAddWorkers( void )
 }
 
 /*======================
-MN_BuildingAddToList
+B_BuildingAddToList
 
 Handles the building list of constructable buildings
 
@@ -683,9 +668,9 @@ thus maybe other buildings get available.
 menuText[TEXT_BUILDINGS] is a pointer to baseCurrent->allBuildingsList
 This way every base can hold its own building list.
 The pointer is updated everytime we select a base via mn_select_base
-(see MN_SelectBase for further information)
+(see B_SelectBase for further information)
 ======================*/
-void MN_BuildingAddToList( char *title, int id )
+void B_BuildingAddToList( char *title, int id )
 {
 	assert(baseCurrent);
 
@@ -696,12 +681,11 @@ void MN_BuildingAddToList( char *title, int id )
 }
 
 /*======================
-MN_BuildingInit
+B_BuildingInit
 ======================*/
-void MN_BuildingInit( void )
+void B_BuildingInit( void )
 {
 	int i = 1;
-	building_t *building;
 
 	// maybe someone call this command before the bases are parsed??
 	if ( ! baseCurrent )
@@ -725,24 +709,16 @@ void MN_BuildingInit( void )
 			  && bmBuildings[ccs.actualBaseID][i].howManyOfThisType >= BASE_SIZE*BASE_SIZE )
 				continue;
 
-			if ( bmBuildings[ccs.actualBaseID][i].depends )
+			if ( RS_IsResearched_( bmBuildings[ccs.actualBaseID][i].tech ) )
 			{
-				building = B_GetBuilding ( bmBuildings[ccs.actualBaseID][i].depends );
-				if ( ! building )
-					Sys_Error("Wrong dependency in basemangagement.ufo for building %s (depends on %s)", bmBuildings[ccs.actualBaseID][i].name, bmBuildings[ccs.actualBaseID][i].depends );
-				bmBuildings[ccs.actualBaseID][i].dependsBuilding = building;
 				if ( bmBuildings[ccs.actualBaseID][i].dependsBuilding->buildingStatus[0] >= B_UNDER_CONSTRUCTION )
-					MN_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i].title), i );
-			}
-			else
-			{
-				MN_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i].title), i );
+					B_BuildingAddToList( _(bmBuildings[ccs.actualBaseID][i].name), i );
 			}
 		}
 	}
 	if ( baseCurrent->buildingCurrent )
 	{
-		MN_DrawBuilding();
+		B_DrawBuilding();
 	}
 }
 
@@ -761,12 +737,22 @@ building_t* B_GetBuildingByID ( int id )
 }
 
 /*======================
-MN_BuildingClick
+B_BuildingInfoClick_f
 
-Script function for clicking the building list
-text field
+Opens up the 'pedia if you right click on a building in the list.
 ======================*/
-void MN_BuildingClick( void )
+void B_BuildingInfoClick_f( void )
+{
+	if ( baseCurrent && baseCurrent->buildingCurrent )
+		UP_OpenWith ( baseCurrent->buildingCurrent->pedia );
+}
+
+/*======================
+B_BuildingClick_f
+
+Script function for clicking the building list text field
+======================*/
+void B_BuildingClick_f( void )
 {
 	int	num, i;
 
@@ -778,7 +764,11 @@ void MN_BuildingClick( void )
 
 	for ( i = 0; i < numBuildings; i++)
 	{
-		//make an entry in list for this building
+		// not available in research tree
+		if ( !RS_IsResearched_(bmBuildings[ccs.actualBaseID][i].tech) )
+			continue;
+
+		// not visible
 		if ( !bmBuildings[ccs.actualBaseID][i].visible )
 			continue;
 
@@ -801,12 +791,12 @@ void MN_BuildingClick( void )
 	if (i != numBuildings)
 	{
 		baseCurrent->buildingCurrent = B_GetBuildingByID(i);
-		MN_DrawBuilding();
+		B_DrawBuilding();
 	}
 }
 
 /*======================
-MN_ParseBuildings
+B_ParseBuildings
 
 Parses one "building" entry in the basemanagement.ufo file and writes it into the next free entry in bmBuildings[0] ... which is teh list of buildings in the first base (building_t).
 
@@ -814,134 +804,167 @@ IN
 	id:	Unique test-id of a building_t. This is parsed from "building xxx" -> id=xxx
 	text:	TODO document this ... it appears to be the whole following text that is part of the "building" item definition in .ufo.
 ======================*/
-void MN_ParseBuildings( char *id, char **text )
+void B_ParseBuildings( char *id, char **text, qboolean link )
 {
 	building_t *building = NULL;
 	employees_t *employees_in_building = NULL;
 	employee_t *employee = NULL;
 	value_t *edp = NULL;
-	char    *errhead = "MN_ParseBuildings: unexptected end of file (names ";
+	char    *errhead = "B_ParseBuildings: unexptected end of file (names ";
 	char    *token = NULL;
 	int	i = 0;
 	int	j = 0;
 	int	numEmployees_temp = 0;
 
-	// get name list body body
+	// get id list body
 	token = COM_Parse( text );
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( "MN_ParseBuildings: building \"%s\" without body ignored\n", id );
+		Com_Printf( "B_ParseBuildings: building \"%s\" without body ignored\n", id );
 		return;
 	}
 	if ( numBuildings >= MAX_BUILDINGS )
 	{
-		Com_Printf( "MN_ParseBuildings: too many buildings\n" );
+		Com_Printf( "B_ParseBuildings: too many buildings\n" );
 		return;
 	}
 
-	// new entry
-	building = &bmBuildings[0][numBuildings];
-	memset( building, 0, sizeof( building_t ) );
-	Q_strncpyz( building->name, id, MAX_VAR );
+	if ( !link )
+	{
+		// new entry
+		building = &bmBuildings[0][numBuildings];
+		memset( building, 0, sizeof( building_t ) );
+		Q_strncpyz( building->id, id, MAX_VAR );
 
-	Com_DPrintf("...found building %s\n", building->name );
+		Com_DPrintf("...found building %s\n", building->name );
 
-	//set standard values
-	building->techLevel = 1;
-	building->visible = qtrue;
-	building->condition[0] = BUILDINGCONDITION;
-	building->id = numBuildings;
+		//set standard values
+		building->techLevel = 1;
+		building->visible = qtrue;
+		building->condition[0] = BUILDINGCONDITION;
+		building->idInList = numBuildings;
 
-	numBuildings++;
-	do {
-		// get the name type
-		token = COM_EParse( text, errhead, id );
-		if ( !*text ) break;
-		if ( *token == '}' ) break;
-
-		// get values
-		if ( !Q_strncmp( token, "type", 4 ) ) {
+		numBuildings++;
+		do {
+			// get the name type
 			token = COM_EParse( text, errhead, id );
-			if ( !*text ) return;
+			if ( !*text ) break;
+			if ( *token == '}' ) break;
 
-			if ( !Q_strncmp( token, "lab", 3 ) ) {
-				building->buildingType = B_LAB;
-			} else if ( !Q_strncmp( token, "hangar", 6 ) ) {
-				building->buildingType = B_HANGAR;
-			} else if ( !Q_strncmp( token, "quarters", 7 ) ){
-				building->buildingType = B_QUARTERS;
-			} else if ( !Q_strncmp( token, "workshop", 8 ) ){
-				building->buildingType = B_WORKSHOP;
-			}
-		}
-		else
-		if ( !Q_strncmp( token, "max_employees", 13 ) ) {
-			token = COM_EParse( text, errhead, id );
-			if ( !*text ) return;
-			employees_in_building = &building->assigned_employees;
-
-			employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
-			if ( *token ) {
-				employees_in_building->maxEmployees = atoi(token);
-			}
-		}
-		else
-		if ( !Q_strncmp( token, "employees_firstbase", 19 ) ) {
-			token = COM_EParse( text, errhead, id );
-			if ( !*text ) return;
-			if (*token) {
-				employees_in_building = &building->assigned_employees;
-				if ( employees_in_building->maxEmployees <= 0 )
-					employees_in_building->maxEmployees = atoi(token);
-				numEmployees_temp = atoi(token);
-				for ( employees_in_building->numEmployees = 0; employees_in_building->numEmployees < numEmployees_temp; )
-				{
-					// assign random employee infos.
-					employees_in_building->assigned[employees_in_building->numEmployees] = &employees[numEmployees++]; // link this employee in the building to the global employee-list.
-					employee = employees_in_building->assigned[employees_in_building->numEmployees];
-					employees_in_building->numEmployees++;
-					memset( employee, 0, sizeof( employee_t ) );
-				}
-			}
-		}
-		else
-		for ( edp = valid_vars; edp->string; edp++ )
-			if ( !Q_strncmp( token, edp->string, sizeof(edp->string) ) )
-			{
-				// found a definition
+			// get values
+			if ( !Q_strncmp( token, "type", 4 ) ) {
 				token = COM_EParse( text, errhead, id );
 				if ( !*text ) return;
 
-				if ( edp->ofs && edp->type != V_NULL ) Com_ParseValue( building, token, edp->type, edp->ofs );
-				else if ( edp->type == V_NULL )
-				{
-					strcpy( bmData, token );
-					*(char **)((byte *)building + edp->ofs) = bmData;
-					bmData += strlen( token ) + 1;
+				if ( !Q_strncmp( token, "lab", 3 ) ) {
+					building->buildingType = B_LAB;
+				} else if ( !Q_strncmp( token, "hangar", 6 ) ) {
+					building->buildingType = B_HANGAR;
+				} else if ( !Q_strncmp( token, "quarters", 7 ) ){
+					building->buildingType = B_QUARTERS;
+				} else if ( !Q_strncmp( token, "workshop", 8 ) ){
+					building->buildingType = B_WORKSHOP;
 				}
-				break;
+			}
+			else
+			if ( !Q_strncmp( token, "max_employees", 13 ) ) {
+				token = COM_EParse( text, errhead, id );
+				if ( !*text ) return;
+				employees_in_building = &building->assigned_employees;
+
+				employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
+				if ( *token ) {
+					employees_in_building->maxEmployees = atoi(token);
+				}
+			}
+			else
+			// no linking yet
+			if ( !Q_strncmp( token, "depends", 7 ) ) {
+				token = COM_EParse( text, errhead, id );
+				if ( !*text ) return;
+			}
+			else
+			if ( !Q_strncmp( token, "employees_firstbase", 19 ) ) {
+				token = COM_EParse( text, errhead, id );
+				if ( !*text ) return;
+				if (*token) {
+					employees_in_building = &building->assigned_employees;
+					if ( employees_in_building->maxEmployees <= 0 )
+						employees_in_building->maxEmployees = atoi(token);
+					numEmployees_temp = atoi(token);
+					for ( employees_in_building->numEmployees = 0; employees_in_building->numEmployees < numEmployees_temp; )
+					{
+						// assign random employee infos.
+						employees_in_building->assigned[employees_in_building->numEmployees] = &employees[numEmployees++]; // link this employee in the building to the global employee-list.
+						employee = employees_in_building->assigned[employees_in_building->numEmployees];
+						employees_in_building->numEmployees++;
+						memset( employee, 0, sizeof( employee_t ) );
+					}
+				}
+			}
+			else
+			for ( edp = valid_vars; edp->string; edp++ )
+				if ( !Q_strncmp( token, edp->string, sizeof(edp->string) ) )
+				{
+					// found a definition
+					token = COM_EParse( text, errhead, id );
+					if ( !*text ) return;
+
+					if ( edp->ofs && edp->type != V_NULL ) Com_ParseValue( building, token, edp->type, edp->ofs );
+					else if ( edp->type == V_NULL )
+					{
+						strcpy( bmData, token );
+						*(char **)((byte *)building + edp->ofs) = bmData;
+						bmData += strlen( token ) + 1;
+					}
+					break;
+				}
+
+			if ( !edp->string )
+				Com_Printf( "B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, id );
+
+		} while ( *text );
+
+		// now copy all buildings to all bases
+		// this is needed because every building in every base
+		// can have altered parameters
+		for ( i = 1; i < MAX_BASES; i++ )
+			for ( j = 0; j < numBuildings; j++ )
+			{
+				building = &bmBuildings[i][j];
+				memcpy( building, &bmBuildings[0][j], sizeof( building_t ) );
+				building->base = i;	// link the building to the currently processed base.
+			}
+	}
+	else
+	{
+		building = B_GetBuilding( id );
+		if ( ! building ) // i´m paranoid
+			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", id );
+		building->tech = RS_GetTechByProvided( id );
+		if ( ! building->tech )
+			Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", id );
+		do {
+			// get the name type
+			token = COM_EParse( text, errhead, id );
+			if ( !*text ) break;
+			if ( *token == '}' ) break;
+			// get values
+			if ( !Q_strncmp( token, "depends", 4 ) ) {
+
+				building->dependsBuilding = B_GetBuilding( COM_EParse( text, errhead, id ) );
+				if ( !building->dependsBuilding )
+					Sys_Error("Could not find building depend of %s\n", building->id );
+				if ( !*text ) return;
 			}
 
-		if ( !edp->string )
-			Com_Printf( "MN_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, id );
+		} while ( *text );
 
-	} while ( *text );
-
-	// now copy all buildings to all bases
-	// this is needed because every building in every base
-	// can have altered parameters
-	for ( i = 1; i < MAX_BASES; i++ )
-		for ( j = 0; j < numBuildings; j++ )
-		{
-			building = &bmBuildings[i][j];
-			memcpy( building, &bmBuildings[0][j], sizeof( building_t ) );
-			building->base = i;	// link the building to the currently processed base.
-		}
-
+	}
 }
 
 /*======================
-MN_InitEmployees
+B_InitEmployees
 
 Creates full information out of the parsed data for employees, and assign them into the (not yet assigned) correct rooms.
 
@@ -949,7 +972,7 @@ This should be called after setting up the first base.
 
 TODO: this right now assumes that there are not more employees than free quarter space ... but it will not puke if there are.
 ======================*/
-void MN_InitEmployees ( void )
+void B_InitEmployees ( void )
 {
 	int i, j;
 	building_t *building = NULL;
@@ -1005,7 +1028,7 @@ void MN_InitEmployees ( void )
 				// TODO: create random data for the employees depending on type and skill-min/max
 				employee->speed = 100;
 			}
-			building = MN_GetFreeBuilding( 0, B_QUARTERS );
+			building = B_GetFreeBuilding( 0, B_QUARTERS );
 			employees_in_building = &building->assigned_employees;
 			employees_in_building->assigned[employees_in_building->numEmployees++] = employee;
 			break;
@@ -1028,7 +1051,7 @@ void MN_InitEmployees ( void )
 }
 
 /*======================
-MN_GetFreeBuilding
+B_GetFreeBuilding
 
 Gets a free (with no assigned workers) building in the given base of the given type.
 
@@ -1039,7 +1062,7 @@ IN
 OUT
 	building	The (empty) building.
 ======================*/
-building_t * MN_GetFreeBuilding( int base_id, buildingType_t type )
+building_t * B_GetFreeBuilding( int base_id, buildingType_t type )
 {
 	int i;
 	building_t *building = NULL;
@@ -1061,7 +1084,7 @@ building_t * MN_GetFreeBuilding( int base_id, buildingType_t type )
 }
 
 /*======================
-MN_GetUnusedLab
+B_GetUnusedLab
 
 Gets a lab in the given base with no research running.
 
@@ -1069,9 +1092,9 @@ IN
 	base_id:	The number/id of the base to search in.
 
 OUT
-	MN_GetUnusedLab	the (unused) lab.
+	B_GetUnusedLab	the (unused) lab.
 ======================*/
-building_t * MN_GetUnusedLab( int base_id )
+building_t * B_GetUnusedLab( int base_id )
 {
 	int i, j;
 	building_t *building = NULL;
@@ -1099,7 +1122,7 @@ building_t * MN_GetUnusedLab( int base_id )
 }
 
 /*======================
-MN_GetUnusedLabs
+B_GetUnusedLabs
 
 Gets the number of unused labs (no assigned workers, no research) in the given base of the given type.
 
@@ -1107,9 +1130,9 @@ IN
 	base_id:	The number/id of the base to search in.
 
 OUT
-	MN_GetUnusedLab	number of found (empty) building
+	B_GetUnusedLab	number of found (empty) building
 ======================*/
-int MN_GetUnusedLabs( int base_id )
+int B_GetUnusedLabs( int base_id )
 {
 	int i, j;
 	building_t *building = NULL;
@@ -1138,12 +1161,12 @@ int MN_GetUnusedLabs( int base_id )
 }
 
 /*======================
-MN_ClearBuilding
+B_ClearBuilding
 
 Removes all assigned scientists from a building.
 TODO: If the building is of type "B_QUARTERS" before it's cleared all other buildings need to be checked if there is an employees there that also is in the qarter. These employees need to be removed from those buildings
 ======================*/
-void MN_ClearBuilding( building_t *building )
+void B_ClearBuilding( building_t *building )
 {
 	int i;
 	employees_t *employees_in_building = NULL;
@@ -1182,17 +1205,17 @@ void MN_ClearBuilding( building_t *building )
 }
 
 /*======================
-MN_EmployeeIsFree
+B_EmployeeIsFree
 
 Returns true if the employee is only assigned to quarters, otherwise false.
 ======================*/
-byte MN_EmployeeIsFree ( employee_t *employee )
+byte B_EmployeeIsFree ( employee_t *employee )
 {
 	return ( ( employee->lab == NULL ) && ( employee->workshop == NULL ) );
 }
 
 /*======================
-MN_AssignEmployee
+B_AssignEmployee
 
 Add a free employee from the quarters to building_dest. (the employee will be linked to both of them)
 
@@ -1201,12 +1224,12 @@ IN
 	employee_type:	What type of employee to assign to the building
 
 OUT
-	boolean MN_AssignEmployee: returns true if adding was possible/sane otherwise false.
+	boolean B_AssignEmployee: returns true if adding was possible/sane otherwise false.
 
 TODO: Add check for destination building vs. employee_type and abort if they do not match.
 TODO: Possibility to add emoployees to quarters (from the global list)
 ======================*/
-byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type )
+byte B_AssignEmployee ( building_t *building_dest, employeeType_t employee_type )
 {
 	int i, j;
 	employee_t *employee = NULL;
@@ -1216,12 +1239,12 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 
 
 	if ( !baseCurrent ) {
-		Com_DPrintf( "MN_AssignEmployee: No Base set\n" );
+		Com_DPrintf( "B_AssignEmployee: No Base set\n" );
 		return qfalse;
 	}
 
 	if ( building_dest->buildingType == B_QUARTERS  ) {
-		Com_DPrintf( "MN_AssignEmployee: No need to move from quarters to quarters.\n" );
+		Com_DPrintf( "B_AssignEmployee: No need to move from quarters to quarters.\n" );
 		return qfalse;
 	}
 
@@ -1238,7 +1261,7 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 				employees_in_building_source = &building_source->assigned_employees;
 				for ( j = 0; j < employees_in_building_source->numEmployees; j++ ) {
 					employee = employees_in_building_source->assigned[j];
-					if ( ( employee->type == employee_type) && MN_EmployeeIsFree(employee) )
+					if ( ( employee->type == employee_type) && B_EmployeeIsFree(employee) )
 						break;
 					else
 						employee = NULL;
@@ -1254,13 +1277,13 @@ byte MN_AssignEmployee ( building_t *building_dest, employeeType_t employee_type
 			Com_Printf( "No employee available in this base.\n" );
 		}
 	} else {
-		Com_Printf( "No free room in destination building \"%s\".\n", building_dest->name);
+		Com_Printf( "No free room in destination building \"%s\".\n", building_dest->id);
 	}
 	return qfalse;
 }
 
 /*======================
-MN_RemoveEmployee
+B_RemoveEmployee
 
 Remove one employee from building.
 
@@ -1268,11 +1291,11 @@ IN
 	building:	Which building to remove the employee from. Can be any type of building that has employees in it. If quarters are given the employee will be removed from every other building as well.
 
 OUT
-	boolean MN_AssignEmployee: returns true if adding was possible/sane otherwise false.
+	boolean B_AssignEmployee: returns true if adding was possible/sane otherwise false.
 
 TODO: Add check for destination building vs. employee_type and abort if they do not match.
 ======================*/
-byte MN_RemoveEmployee ( building_t *building )
+byte B_RemoveEmployee ( building_t *building )
 {
 	/* TODO
 	int i;
@@ -1288,7 +1311,7 @@ byte MN_RemoveEmployee ( building_t *building )
 	employees_in_building = &building->assigned_employees;
 
 	if (employees_in_building->numEmployees <= 0) {
-		Com_DPrintf( "MN_RemoveEmployee: No employees in building. Can't remove one. %s\n", building->name );
+		Com_DPrintf( "B_RemoveEmployee: No employees in building. Can't remove one. %s\n", building->id );
 		return qfalse;
 	}
 
@@ -1326,10 +1349,10 @@ byte MN_RemoveEmployee ( building_t *building )
 	case B_LAB:
 		employees_in_building->numEmployees--;	// remove the employee from the list of assigned workers in the building.
 		employee = employees_in_building->assigned[employees_in_building->numEmployees];	// get the last employee in the building.
-		Com_DPrintf( "MN_RemoveEmployee: %s\n", building->name );
+		Com_DPrintf( "B_RemoveEmployee: %s\n", building->id );
 		// unlink the employee from lab (the current building).
 		employee->lab = NULL;
-		Com_DPrintf( "MN_RemoveEmployee: %s 2\n", building->name );
+		Com_DPrintf( "B_RemoveEmployee: %s 2\n", building->id );
 		return qtrue;
 		//break;
 	/* TODO
@@ -1348,13 +1371,13 @@ byte MN_RemoveEmployee ( building_t *building )
 	return qfalse;
 }
 /*======================
-MN_EmployeesInBase + MN_EmployeesInBase2
+B_EmployeesInBase + B_EmployeesInBase2
 
 Returns the number of employees in the given base (in the quaters) of the given type.
 You can choose (free_only) if you want the nubmer of free ones or the total number.
 If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
 ======================*/
-int MN_EmployeesInBase2 ( int base_id, employeeType_t employee_type, byte free_only )
+int B_EmployeesInBase2 ( int base_id, employeeType_t employee_type, byte free_only )
 {
 	int i, j;
 	int numEmployeesInBase = 0;
@@ -1363,7 +1386,7 @@ int MN_EmployeesInBase2 ( int base_id, employeeType_t employee_type, byte free_o
 	employee_t *employee = NULL;
 
 	if ( !baseCurrent ) {
-		Com_DPrintf( "MN_EmployeesInBase2: No Base set.\n" );
+		Com_DPrintf( "B_EmployeesInBase2: No Base set.\n" );
 		return 0;
 	}
 
@@ -1377,7 +1400,7 @@ int MN_EmployeesInBase2 ( int base_id, employeeType_t employee_type, byte free_o
 			for ( j = 0; j < employees_in_building->numEmployees; j++ ) {
 				employee = employees_in_building->assigned[j];
 				if ( ( (employee_type == employee->type) || (employee_type ==MAX_EMPL) )
-				&& ( MN_EmployeeIsFree(employee) || !free_only ) )
+				&& ( B_EmployeeIsFree(employee) || !free_only ) )
 					numEmployeesInBase++;
 			}
 		}
@@ -1385,15 +1408,15 @@ int MN_EmployeesInBase2 ( int base_id, employeeType_t employee_type, byte free_o
 	return numEmployeesInBase;
 }
 
-int MN_EmployeesInBase ( int base_id, employeeType_t employee_type )
+int B_EmployeesInBase ( int base_id, employeeType_t employee_type )
 {
-	return MN_EmployeesInBase2 ( base_id, employee_type, qfalse );
+	return B_EmployeesInBase2 ( base_id, employee_type, qfalse );
 }
 
 /*======================
-MN_ClearBase
+B_ClearBase
 ======================*/
-void MN_ClearBase( base_t *base )
+void B_ClearBase( base_t *base )
 {
 	int	row, col, i;
 
@@ -1419,11 +1442,11 @@ void MN_ClearBase( base_t *base )
 }
 
 /*======================
-MN_ParseBases
+B_ParseBases
 ======================*/
-void MN_ParseBases( char *title, char **text )
+void B_ParseBases( char *title, char **text )
 {
-	char	*errhead = "MN_ParseBases: unexptected end of file (names ";
+	char	*errhead = "B_ParseBases: unexptected end of file (names ";
 	char	*token;
 	base_t	*base;
 	int	numBases = 0;
@@ -1433,14 +1456,14 @@ void MN_ParseBases( char *title, char **text )
 
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( "MN_ParseBases: base \"%s\" without body ignored\n", title );
+		Com_Printf( "B_ParseBases: base \"%s\" without body ignored\n", title );
 		return;
 	}
 	do {
 		// add base
 		if ( numBases > MAX_BASES )
 		{
-			Com_Printf( "MN_ParseBases: too many bases\n" );
+			Com_Printf( "B_ParseBases: too many bases\n" );
 			return;
 		}
 
@@ -1459,7 +1482,7 @@ void MN_ParseBases( char *title, char **text )
 		if ( *token == '_' ) token++;
 		Q_strncpyz( base->title, _(token), MAX_VAR );
 		Com_DPrintf("Found base %s\n", base->title );
-		MN_ResetBuildingCurrent();
+		B_ResetBuildingCurrent();
 		numBases++;
 	} while ( *text );
 
@@ -1468,25 +1491,25 @@ void MN_ParseBases( char *title, char **text )
 
 
 /*======================
-MN_ParseProductions
+B_ParseProductions
 ======================*/
-void MN_ParseProductions( char *title, char **text )
+void B_ParseProductions( char *title, char **text )
 {
 	production_t	*entry;
 	value_t	*edp;
-	char	*errhead = "MN_ParseProductions: unexptected end of file (names ";
+	char	*errhead = "B_ParseProductions: unexptected end of file (names ";
 	char	*token;
 
 	// get name list body body
 	token = COM_Parse( text );
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( "MN_ParseProductions: production type \"%s\" without body ignored\n", title );
+		Com_Printf( "B_ParseProductions: production type \"%s\" without body ignored\n", title );
 		return;
 	}
 	if ( numProductions >= MAX_PRODUCTIONS )
 	{
-		Com_Printf( "MN_ParseProductions: to many production types\n" );
+		Com_Printf( "B_ParseProductions: to many production types\n" );
 		return;
 	}
 
@@ -1494,7 +1517,7 @@ void MN_ParseProductions( char *title, char **text )
 	entry = &bmProductions[numProductions];
 	numProductions++;
 	memset( entry, 0, sizeof( production_t ) );
-	Q_strncpyz( entry->name, title, MAX_VAR );
+	Q_strncpyz( entry->id, title, MAX_VAR );
 	do {
 		// get the name type
 		token = COM_EParse( text, errhead, title );
@@ -1514,15 +1537,15 @@ void MN_ParseProductions( char *title, char **text )
 			}
 
 		if ( !edp->string )
-			Com_Printf( "MN_ParseProductions: unknown token \"%s\" ignored (entry %s)\n", token, title );
+			Com_Printf( "B_ParseProductions: unknown token \"%s\" ignored (entry %s)\n", token, title );
 
 	} while ( *text );
 }
 
 /*======================
-MN_DrawBase
+B_DrawBase
 ======================*/
-void MN_DrawBase( menuNode_t *node )
+void B_DrawBase( menuNode_t *node )
 {
 	float x, y;
 	int mx, my, width, height, row, col;
@@ -1613,15 +1636,15 @@ void MN_DrawBase( menuNode_t *node )
 	if ( hoverBuilding )
 	{
 		re.DrawColor( color );
-		re.FontDrawString( "f_small", 0, mx+3, my, 10, _(hoverBuilding->title) );
+		re.FontDrawString( "f_small", 0, mx+3, my, 10, _(hoverBuilding->name) );
 		re.DrawColor( NULL );
 	}
 }
 
 /*======================
-MN_BaseInit
+B_BaseInit
 ======================*/
-void MN_BaseInit( void )
+void B_BaseInit( void )
 {
 	ccs.actualBaseID = (int) Cvar_VariableValue("mn_base_id");
 
@@ -1640,9 +1663,9 @@ void MN_BaseInit( void )
 }
 
 /*======================
-MN_RenameBase
+B_RenameBase
 ======================*/
-void MN_RenameBase( void )
+void B_RenameBase( void )
 {
 	if ( Cmd_Argc() < 2 )
 	{
@@ -1655,9 +1678,9 @@ void MN_RenameBase( void )
 }
 
 /*======================
-MN_NextBase
+B_NextBase
 ======================*/
-void MN_NextBase( void )
+void B_NextBase( void )
 {
 	ccs.actualBaseID = (int)Cvar_VariableValue( "mn_base_id" );
 	Com_DPrintf( "cur-base=%i num-base=%i\n", ccs.actualBaseID,ccs.numBases );
@@ -1676,9 +1699,9 @@ void MN_NextBase( void )
 }
 
 /*======================
-MN_PrevBase
+B_PrevBase
 ======================*/
-void MN_PrevBase( void )
+void B_PrevBase( void )
 {
 	ccs.actualBaseID = (int)Cvar_VariableValue( "mn_base_id" );
 	Com_DPrintf( "cur-base=%i num-base=%i\n", ccs.actualBaseID,ccs.numBases );
@@ -1699,9 +1722,9 @@ void MN_PrevBase( void )
 }
 
 /*======================
-MN_SelectBase
+B_SelectBase
 ======================*/
-void MN_SelectBase( void )
+void B_SelectBase( void )
 {
 	if ( Cmd_Argc() < 2 )
 	{
@@ -1757,11 +1780,11 @@ void MN_SelectBase( void )
 #define BASE_COSTS 100000
 
 /*======================
-MN_BuildBase
+B_BuildBase
 
 TODO: First base needs to be constructed automatically
 ======================*/
-void MN_BuildBase( void )
+void B_BuildBase( void )
 {
 	assert(baseCurrent);
 
@@ -1858,7 +1881,7 @@ void B_AssembleMap ( void )
 
 				if ( ! entry->visible )
 				{
-					Com_DPrintf( "Building %s will not be taken for baseassemble - it's' invisible\n", entry->name );
+					Com_DPrintf( "Building %s will not be taken for baseassemble - it's' invisible\n", entry->id );
 					continue;
 				}
 
@@ -1886,9 +1909,9 @@ void B_AssembleMap ( void )
 
 
 /*======================
-MN_NewBases
+B_NewBases
 ======================*/
-void MN_NewBases( void )
+void B_NewBases( void )
 {
 	// reset bases
 	int	i;
@@ -1898,7 +1921,7 @@ void MN_NewBases( void )
 	for ( i = 0; i < MAX_BASES; i++ )
 	{
 		Q_strncpyz( title, bmBases[i].title, MAX_VAR );
-		MN_ClearBase( &bmBases[i] );
+		B_ClearBase( &bmBases[i] );
 		Q_strncpyz( bmBases[i].title, title, MAX_VAR );
 	}
 }
@@ -1989,7 +2012,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 	building_t* building;
 	int i, j, num, tmp;
 
-	MN_NewBases();
+	B_NewBases();
 	num = MSG_ReadByte( sb );
 	//FIXME: This will align the bases
 	//     If a base was attacked and destroyed - a save followed
@@ -2056,7 +2079,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 				// how many workers?
 				building->assignedWorkers = MSG_ReadLong( sb );
 			}
-			MN_BuildingInit();
+			B_BuildingInit();
 			AIR_LoadAircraft( sb, base, version );
 
 			// read whole team list
@@ -2067,11 +2090,11 @@ void B_LoadBases( sizebuf_t *sb, int version )
 }
 
 /*======================
-CL_BuildingList
+B_BuildingList
 
 TODO: To be extended for load/save purposes
 ======================*/
-void CL_BuildingList ( void )
+void B_BuildingList ( void )
 {
 	int i, j, k;
 	base_t* base;
@@ -2093,7 +2116,7 @@ void CL_BuildingList ( void )
 		Com_Printf("\nBase id %i: %s\n", i, base->title );
 		for ( j = 0; j < numBuildings; j++ )
 		{
-			Com_Printf("...Building: %s #%i - id: %i\n", building->name, building->howManyOfThisType, building->id );
+			Com_Printf("...Building: %s #%i - id: %i\n", building->id, building->howManyOfThisType, building->idInList );
 			Com_Printf(".....Status:\n");
 			for ( k = 0; k < BASE_SIZE*BASE_SIZE; k++ )
 			{
@@ -2110,11 +2133,11 @@ void CL_BuildingList ( void )
 }
 
 /*======================
-CL_BaseList
+B_BaseList
 
 TODO: To be extended for load/save purposes
 ======================*/
-void CL_BaseList ( void )
+void B_BaseList ( void )
 {
 	int i, row, col, j;
 	base_t* base;
@@ -2144,11 +2167,11 @@ void CL_BaseList ( void )
 }
 
 /*======================
-MN_SetBaseTitle
+B_SetBaseTitle
 ======================*/
-void MN_SetBaseTitle ( void )
+void B_SetBaseTitle ( void )
 {
-	Com_DPrintf("MN_SetBaseTitle: #bases: %i\n", ccs.numBases );
+	Com_DPrintf("B_SetBaseTitle: #bases: %i\n", ccs.numBases );
 	if ( ccs.numBases < MAX_BASES )
 		Cvar_Set("mn_base_title_new", bmBases[ccs.numBases].title );
 	else
@@ -2159,9 +2182,9 @@ void MN_SetBaseTitle ( void )
 }
 
 /*======================
-CL_ChangeBaseNameCmd
+B_ChangeBaseNameCmd
 ======================*/
-void CL_ChangeBaseNameCmd( void )
+void B_ChangeBaseNameCmd( void )
 {
 	// maybe called without base initialized or active
 	if ( !baseCurrent )
@@ -2171,9 +2194,9 @@ void CL_ChangeBaseNameCmd( void )
 }
 
 /*======================
-MN_ResetBaseManagement
+B_ResetBaseManagement
 ======================*/
-void MN_ResetBaseManagement( void )
+void B_ResetBaseManagement( void )
 {
 	// reset menu structures
 	numBuildings = 0;
@@ -2194,31 +2217,31 @@ void MN_ResetBaseManagement( void )
 	bmData = bmDataStart;
 
 	// add commands and cvars
-	Cmd_AddCommand( "mn_prev_base", MN_PrevBase );
-	Cmd_AddCommand( "mn_next_base", MN_NextBase );
-	Cmd_AddCommand( "mn_select_base", MN_SelectBase );
-	Cmd_AddCommand( "mn_build_base", MN_BuildBase );
-	Cmd_AddCommand( "upgrade_building", MN_UpgradeBuilding );
-	Cmd_AddCommand( "repair_building", MN_RepairBuilding );
-	Cmd_AddCommand( "new_building", MN_NewBuildingFromList );
-	Cmd_AddCommand( "set_building", MN_SetBuilding );
-	Cmd_AddCommand( "mn_setbasetitle", MN_SetBaseTitle );
-	Cmd_AddCommand( "damage_building", MN_DamageBuilding );
-	Cmd_AddCommand( "add_workers", MN_BuildingAddWorkers );
-	Cmd_AddCommand( "remove_workers", MN_BuildingRemoveWorkers );
-	Cmd_AddCommand( "rename_base", MN_RenameBase );
+	Cmd_AddCommand( "mn_prev_base", B_PrevBase );
+	Cmd_AddCommand( "mn_next_base", B_NextBase );
+	Cmd_AddCommand( "mn_select_base", B_SelectBase );
+	Cmd_AddCommand( "mn_build_base", B_BuildBase );
+	Cmd_AddCommand( "upgrade_building", B_UpgradeBuilding_f );
+	Cmd_AddCommand( "repair_building", B_RepairBuilding_f );
+	Cmd_AddCommand( "new_building", B_NewBuildingFromList );
+	Cmd_AddCommand( "set_building", B_SetBuilding );
+	Cmd_AddCommand( "mn_setbasetitle", B_SetBaseTitle );
+	Cmd_AddCommand( "damage_building", B_DamageBuilding );
+	Cmd_AddCommand( "add_workers", B_BuildingAddWorkers );
+	Cmd_AddCommand( "remove_workers", B_BuildingRemoveWorkers );
+	Cmd_AddCommand( "rename_base", B_RenameBase );
 	Cmd_AddCommand( "base_attack", B_BaseAttack );
-	Cmd_AddCommand( "base_changename", CL_ChangeBaseNameCmd );
-	Cmd_AddCommand( "base_init", MN_BaseInit );
+	Cmd_AddCommand( "base_changename", B_ChangeBaseNameCmd );
+	Cmd_AddCommand( "base_init", B_BaseInit );
 	Cmd_AddCommand( "base_assemble", B_AssembleMap );
 	Cmd_AddCommand( "base_assemble_rand", B_AssembleRandomBase );
-	Cmd_AddCommand( "building_init", MN_BuildingInit );
-	Cmd_AddCommand( "building_status", MN_BuildingStatus );
-	Cmd_AddCommand( "buildinginfo_click", MN_BuildingInfoClick );
-	Cmd_AddCommand( "buildings_click", MN_BuildingClick );
-	Cmd_AddCommand( "reset_building_current", MN_ResetBuildingCurrent );
-	Cmd_AddCommand( "baselist", CL_BaseList );
-	Cmd_AddCommand( "buildinglist", CL_BuildingList );
+	Cmd_AddCommand( "building_init", B_BuildingInit );
+	Cmd_AddCommand( "building_status", B_BuildingStatus );
+	Cmd_AddCommand( "buildinginfo_click", B_BuildingInfoClick_f );
+	Cmd_AddCommand( "buildings_click", B_BuildingClick_f );
+	Cmd_AddCommand( "reset_building_current", B_ResetBuildingCurrent );
+	Cmd_AddCommand( "baselist", B_BaseList );
+	Cmd_AddCommand( "buildinglist", B_BuildingList );
 	Cvar_SetValue( "mn_base_id", ccs.actualBaseID );
 }
 
@@ -2241,11 +2264,11 @@ int B_GetCount ( void )
 }
 
 /*======================
-CL_UpdateBaseData
+B_UpdateBaseData
 
 Called from the running campaign
 ======================*/
-void CL_UpdateBaseData( void )
+void B_UpdateBaseData( void )
 {
 	building_t *b = NULL;
 	int i, j;
@@ -2260,8 +2283,8 @@ void CL_UpdateBaseData( void )
 			new = B_CheckBuildingConstruction( b );
 			newBuilding += new;
 			if ( new ) {
-				MN_AddNewMessage( va(_("Building finished - Base %s"), bmBases[i].title ) , va(_("Construction of building %s finished."), b->title ), qfalse, MSG_CONSTRUCTION, NULL );
-				Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("Construction of building %s finished\\at base %s\n"), b->title, bmBases[i].title );
+				MN_AddNewMessage( va(_("Building finished - Base %s"), bmBases[i].title ) , va(_("Construction of building %s finished."), b->name ), qfalse, MSG_CONSTRUCTION, NULL );
+				Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("Construction of building %s finished\\at base %s\n"), b->name, bmBases[i].title );
 			}
 		}
 		// refresh the building list
@@ -2325,7 +2348,7 @@ int B_CheckBuildingConstruction ( building_t* b )
 		b->buildingStatus[b->howManyOfThisType] = B_CONSTRUCTION_FINISHED;
 #endif
 	if ( newBuilding )
-		MN_BuildingInit();
+		B_BuildingInit();
 
 	return newBuilding;
 }

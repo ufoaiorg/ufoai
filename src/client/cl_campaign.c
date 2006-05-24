@@ -1288,7 +1288,7 @@ void CL_CampaignRun( void )
 			ccs.date.sec -= 3600*24;
 			ccs.date.day++;
 			// every day
-			CL_UpdateBaseData();
+			B_UpdateBaseData();
 		}
 
 		// check for campaign events
@@ -3029,7 +3029,7 @@ void CL_GameNew( void )
 
 	// base setup
 	ccs.numBases = 0;
-	MN_NewBases();
+	B_NewBases();
 
 	// reset, set time
 	selMis = NULL;
@@ -3079,7 +3079,7 @@ void CL_GameNew( void )
 	CL_AircraftInit();
 
 	// init employee list
-	MN_InitEmployees();
+	B_InitEmployees();
 
 	for ( commands = game_commands; commands->name; commands++ )
 		Cmd_AddCommand( commands->name, commands->function );

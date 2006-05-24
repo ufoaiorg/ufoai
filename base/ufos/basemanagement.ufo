@@ -7,7 +7,7 @@
 // ====================
 building building_entrance
 {
-	title		"_Entrance"
+	name		"_Entrance"
 	image		base/entrance
 	fixcosts	0
 	build_time	1
@@ -21,10 +21,9 @@ building building_entrance
 
 building building_commando
 {
-	title		"_Commando central"
+	name		"_Commando central"
 	image		base/commando
 	fixcosts	1000
-	desc		"This is the commando central"
 	depends		building_powerplant
 	max_workers	6
 	min_workers	2
@@ -40,10 +39,9 @@ building building_commando
 
 building building_powerplant
 {
-	title		"_Powerplant"
+	name		"_Powerplant"
 	image		base/powerplant
 	fixcosts	300
-	desc		"Produces Energy"
 	depends		building_entrance
 	max_workers	10
 	min_workers	3
@@ -61,7 +59,7 @@ building building_powerplant
 
 building building_lab
 {
-	title		"_Laboratory"
+	name		"_Laboratory"
 	image		base/lab
 	depends		building_commando
 	fixcosts	1500
@@ -86,7 +84,7 @@ building building_lab
 
 building building_storage
 {
-	title		"_Storage"
+	name		"_Storage"
 	image		base/storage
 	fixcosts	500
 	depends		building_commando
@@ -104,7 +102,7 @@ building building_storage
 
 building building_intercept
 {
-	title		"_Interceptors"
+	name		"_Interceptors"
 	image		base/intercept
 	fixcosts	5000
 	depends		building_commando
@@ -121,7 +119,7 @@ building building_intercept
 
 building building_quarters
 {
-	title		"_Quarters"
+	name		"_Quarters"
 	image		base/quarters
 	fixcosts	300
 	depends		building_commando
@@ -140,7 +138,7 @@ building building_quarters
 
 building building_ufo_hangar
 {
-	title		"_UFO Hangar"
+	name		"_UFO Hangar"
 	image		base/adrop
 	fixcosts	1000
 	depends		building_lab
@@ -157,7 +155,7 @@ building building_ufo_hangar
 
 building building_hangar
 {
-	title		"_Hangar"
+	name		"_Hangar"
 	image		base/drop2
 	fixcosts	1000
 	needs		building_hangar2
@@ -177,7 +175,7 @@ building building_hangar
 
 building building_hangar2
 {
-	title		"_Hangar"
+	name		"_Hangar"
 	image		base/drop1
 	fixcosts	1000
 	depends		building_quarters
@@ -193,7 +191,7 @@ building building_hangar2
 
 building building_teamroom
 {
-	title		"_Team Room"
+	name		"_Team Room"
 	image		base/teamroom
 	fixcosts	300
 	depends		building_quarters
@@ -211,7 +209,7 @@ building building_teamroom
 
 building building_radar
 {
-	title		"_Radar"
+	name		"_Radar"
 	image		base/radar
 	fixcosts	3000
 	depends		building_commando
@@ -240,20 +238,20 @@ base main
 
 production tech_p
 {
-	title		"Technology"
+	name		"Technology"
 	menu		research
 	amount		100
 }
 
 production energy_p
 {
-	title		"Energy"
+	name		"Energy"
 	amount		100
 }
 
 production mind_p
 {
-	title		"Mind"
+	name		"Mind"
 	amount		100
 }
 

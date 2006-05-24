@@ -241,7 +241,7 @@ void RS_InitTree( void )
 		{
 		case RS_TECH:
 			if ( !*t->name )
-				Com_Printf( "RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", t->id );
+				Com_DPrintf( "RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", t->id );
 			break;
 		case RS_WEAPON:
 		case RS_ARMOR:
@@ -275,7 +275,7 @@ void RS_InitTree( void )
 			//no id found in csi.ods
 			if ( !found ) {
 				Com_sprintf( t->name, MAX_VAR, t->id );
-				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found. Tech-id used as name.\n", t->id, t->provides );
+				Com_DPrintf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found. Tech-id used as name.\n", t->id, t->provides );
 			}
 			break;
 		case RS_BUILDING:
@@ -285,7 +285,7 @@ void RS_InitTree( void )
 				if ( !Q_strncmp( t->provides, building->name, MAX_VAR ) ) { // This building has been 'provided',
 					found = qtrue;
 					if ( !*t->name )
-						Com_sprintf( t->name, MAX_VAR, building->title );
+						Com_sprintf( t->name, MAX_VAR, building->name );
 					if ( !*t->image_top )
 						Com_sprintf( t->image_top, MAX_VAR, building->image );
 
@@ -294,7 +294,7 @@ void RS_InitTree( void )
 			}
 			if ( !found ){
 				Com_sprintf( t->name, MAX_VAR, t->id );
-				Com_Printf( "RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n", t->id, t->provides );
+				Com_DPrintf( "RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n", t->id, t->provides );
 			}
 			break;
 		case RS_CRAFT:
@@ -307,13 +307,13 @@ void RS_InitTree( void )
 						Com_sprintf( t->name, MAX_VAR, ac->name );
 					if ( !*t->mdl_top ) {			// DEBUG testing
 						Com_sprintf( t->mdl_top, MAX_VAR, ac->model );
-						Com_Printf( "RS_InitTree: aircraft model \"%s\" \n",ac->model );
+						Com_DPrintf( "RS_InitTree: aircraft model \"%s\" \n",ac->model );
 					}
 					break;	// Should return to CASE RS_xxx.
 				}
 			}
 			if ( !found )
-				Com_Printf( "RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n", t->id, t->provides );
+				Com_DPrintf( "RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n", t->id, t->provides );
 			break;
 		case RS_ALIEN:
 			/* does nothing right now */
@@ -378,12 +378,12 @@ void RS_ResearchDisplayInfo ( void  )
 
 	if ( researchListLength <= 0 )
 		return;
-	
+
 	tech = researchList[researchListPos];
 
 	// display total number of free labs in current base
-	Cvar_Set( "mn_research_labs", va( _("Free labs in this base: %i"), MN_GetUnusedLabs( baseCurrent->id ) ) );
-	Cvar_Set( "mn_research_scis", va( _("Available scientists in this base: %i"), MN_EmployeesInBase2 ( baseCurrent->id, EMPL_SCIENTIST, qtrue ) ) );
+	Cvar_Set( "mn_research_labs", va( _("Free labs in this base: %i"), B_GetUnusedLabs( baseCurrent->id ) ) );
+	Cvar_Set( "mn_research_scis", va( _("Available scientists in this base: %i"), B_EmployeesInBase2 ( baseCurrent->id, EMPL_SCIENTIST, qtrue ) ) );
 
 	Cvar_Set( "mn_research_selbase", _("Not researched in any base.") );
 	// display the base this tech is researched in
@@ -495,7 +495,7 @@ void RS_AssignScientist2( int num )
 	if ( tech->statusResearchable ) {
 		// check if there is a free lab available
 		if ( ! tech->lab ) {
-			building = MN_GetUnusedLab( baseCurrent->id ); // get a free lab from the currently active base
+			building = B_GetUnusedLab( baseCurrent->id ); // get a free lab from the currently active base
 			if ( building ) {
 				// assign the lab to the tech:
 				tech->lab = building;
@@ -505,7 +505,7 @@ void RS_AssignScientist2( int num )
 			}
 		}
 		// assign a scientists to the lab
-		if ( MN_AssignEmployee ( tech->lab, EMPL_SCIENTIST ) ) {
+		if ( B_AssignEmployee ( tech->lab, EMPL_SCIENTIST ) ) {
 			tech->statusResearch = RS_RUNNING;
 		} else {
 			Com_Printf( "Can't add scientist from the lab.\n" );
@@ -552,7 +552,7 @@ void RS_RemoveScientist2( int num )
 	Com_DPrintf( "RS_RemoveScientist: %s\n", tech->id );
 	if ( tech->lab ) {
 		Com_DPrintf( "RS_RemoveScientist: %s\n", tech->lab->name );
-		if ( MN_RemoveEmployee( tech->lab ) ) {
+		if ( B_RemoveEmployee( tech->lab ) ) {
 			Com_DPrintf( "RS_RemoveScientist: Removal done.\n" );
 			employees_in_building = &tech->lab->assigned_employees;
 			if ( employees_in_building->numEmployees == 0) {
@@ -726,7 +726,7 @@ void RS_UpdateData ( void )
 				Cvar_Set( va( "mn_researchmax%i",j ), tempstring );		// max number of employees in this base
 				Com_sprintf( tempstring, MAX_VAR, "%i\n", employees_in_building->numEmployees );
 				Cvar_Set( va( "mn_researchassigned%i",j ), tempstring );	// assigned employees to the technology
-				Com_sprintf( tempstring, MAX_VAR, "%i\n", MN_EmployeesInBase2 ( tech->lab->base, EMPL_SCIENTIST, qtrue ) );
+				Com_sprintf( tempstring, MAX_VAR, "%i\n", B_EmployeesInBase2 ( tech->lab->base, EMPL_SCIENTIST, qtrue ) );
 				Cvar_Set( va( "mn_researchavailable%i",j ), tempstring );	// max. available scis in the base the tech is reseearched
 			}
 
@@ -888,7 +888,7 @@ void CL_CheckResearchStatus ( void )
 					Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("%i researches finished\n"), newResearch+1 );
 				MN_AddNewMessage( _("Research finished"), messageBuffer, qfalse, MSG_RESEARCH, tech );
 
-				MN_ClearBuilding( tech->lab );
+				B_ClearBuilding( tech->lab );
 				tech->lab = NULL;
 				RS_MarkResearched( tech->id );
 				researchListPos = 0;
@@ -1022,13 +1022,13 @@ void RS_DebugResearchAll ( void )
 #endif
 
 /*======================
-MN_ResetResearch
+RS_ResetResearch
 
 This is more or less the initial
 Bind some of the functions in htis file to console-commands that you can call ingame.
 Called from MN_ResetMenus resp. CL_InitLocal
 ======================*/
-void MN_ResetResearch( void )
+void RS_ResetResearch( void )
 {
 	researchListLength = 0;
 	// add commands and cvars
@@ -1102,7 +1102,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 	tech_just_for_linking = &technologies[numTechnologies];
 	numTechnologies++;
 	// Mind you that "tech" points to the skeleton and tech_just_for_linking points to a yet 'empty' array.
-	
+
 	required = &tech->requires;
 	memset( tech, 0, sizeof( technology_t ) );
 
@@ -1523,7 +1523,8 @@ technology_t* RS_GetTechByID ( const char* id )
 
 	for ( ; i < numTechnologies; i++ )
 	{
-		if ( !Q_strncmp( (char*)id, technologies[i].id, MAX_VAR ) )
+		// use technologies_skeleton for search but return technologies
+		if ( !Q_strncmp( (char*)id, technologies_skeleton[i].id, MAX_VAR ) )
 			return &technologies[i];
 	}
 	Com_DPrintf("RS_GetTechByID: Could not find a technology with id \"%s\"\n", id );
@@ -1540,9 +1541,10 @@ technology_t* RS_GetTechByProvided( const char *id_provided )
 	int i;
 	for ( i=0; i < numTechnologies; i++ )
 	{
-		if ( !Q_strncmp( (char*)id_provided, technologies[i].provides, MAX_VAR ) )
+		// use technologies_skeleton for search but return technologies
+		if ( !Q_strncmp( (char*)id_provided, technologies_skeleton[i].provides, MAX_VAR ) )
 			return &technologies[i];
 	}
-	Com_DPrintf("RS_GetTechByProvided: Could not find a technology that provides \"%s\"\n", id_provided );
+	Com_DPrintf("RS_GetTechByProvided: Could not find a technology that provides \"%s\" (%i)\n", id_provided, numTechnologies );
 	return NULL;
 }

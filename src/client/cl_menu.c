@@ -1112,7 +1112,7 @@ void MN_BaseMapClick( menuNode_t *node, int x, int y )
 				  && y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE
 				)
 				{
-					MN_SetBuildingByClick( row, col );
+					B_SetBuildingByClick( row, col );
 					return;
 				}
 	}
@@ -2163,7 +2163,7 @@ void MN_DrawMenus( void )
 					break;
 
 				case MN_BASEMAP:
-					MN_DrawBase( node );
+					B_DrawBase( node );
 					break;
 				} // switch
 
@@ -2510,9 +2510,9 @@ void MN_ResetMenus( void )
 		menuText[i] = NULL;
 
 	// reset ufopedia & basemanagement
-	MN_ResetUfopedia();
-	MN_ResetBaseManagement();
-	MN_ResetResearch();
+	UP_ResetUfopedia();
+	B_ResetBaseManagement();
+	RS_ResetResearch();
 }
 
 /*

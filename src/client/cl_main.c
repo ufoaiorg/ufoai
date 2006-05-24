@@ -1272,6 +1272,8 @@ void CL_Precache_f (void)
 CL_ParseScriptFirst
 
 parsed if we are no dedicated server
+first stage parses all the main data into their struct
+see CL_ParseScriptSecond for more details about parsing stages
 =================*/
 void CL_ParseScriptFirst( char *type, char *name, char **text )
 {
@@ -1281,27 +1283,31 @@ void CL_ParseScriptFirst( char *type, char *name, char **text )
 	else if ( !Q_strncmp( type, "particle", 8 ) ) CL_ParseParticle( name, text );
 	else if ( !Q_strncmp( type, "mission", 7 ) ) CL_ParseMission( name, text );
 	else if ( !Q_strncmp( type, "sequence", 8 ) ) CL_ParseSequence( name, text );
-	else if ( !Q_strncmp( type, "up_chapters", 11 ) ) MN_ParseUpChapters( name, text );
+	else if ( !Q_strncmp( type, "up_chapters", 11 ) ) UP_ParseUpChapters( name, text );
+	else if ( !Q_strncmp( type, "building", 8 ) ) B_ParseBuildings( name, text, qfalse );
+	else if ( !Q_strncmp( type, "tech", 4 ) ) RS_ParseTechnologies( name, text );
+	else if ( !Q_strncmp( type, "aircraft", 8 ) ) CL_ParseAircraft( name, text );
+	else if ( !Q_strncmp( type, "production", 10 ) ) B_ParseProductions( name, text );
+	else if ( !Q_strncmp( type, "base", 4 ) ) B_ParseBases( name, text );
+	else if ( !Q_strncmp( type, "nation", 6 ) ) CL_ParseNations( name, text );
+	else if ( !Q_strncmp( type, "shader", 6 ) ) CL_ParseShaders( name, text );
+	else if ( !Q_strncmp( type, "font", 4 ) ) CL_ParseFont( name, text );
 }
 
 /*=================
 CL_ParseScriptSecond
 
 parsed if we are no dedicated server
+second stage links all the parsed data from first stage
+example: we need a techpointer in a building - in the second stage the buildings and the
+         techs are already parsed - so now we can link them
 =================*/
 void CL_ParseScriptSecond( char *type, char *name, char **text )
 {
 	// check for client interpretable scripts
 	if ( !Q_strncmp( type, "campaign", 8 ) ) CL_ParseCampaign( name, text );
 	else if ( !Q_strncmp( type, "stage", 5 ) ) CL_ParseStage( name, text );
-	else if ( !Q_strncmp( type, "building", 8 ) ) MN_ParseBuildings( name, text );
-	else if ( !Q_strncmp( type, "aircraft", 8 ) ) CL_ParseAircraft( name, text );
-	else if ( !Q_strncmp( type, "production", 10 ) ) MN_ParseProductions( name, text );
-	else if ( !Q_strncmp( type, "nation", 6 ) ) CL_ParseNations( name, text );
-	else if ( !Q_strncmp( type, "base", 4 ) ) MN_ParseBases( name, text );
-	else if ( !Q_strncmp( type, "tech", 4 ) ) RS_ParseTechnologies( name, text );
-	else if ( !Q_strncmp( type, "shader", 6 ) ) CL_ParseShaders( name, text );
-	else if ( !Q_strncmp( type, "font", 4 ) ) CL_ParseFont( name, text );
+	else if ( !Q_strncmp( type, "building", 8 ) ) B_ParseBuildings( name, text, qtrue );
 }
 
 

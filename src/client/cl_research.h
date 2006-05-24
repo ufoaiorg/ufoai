@@ -93,7 +93,7 @@ typedef struct technology_s
 extern	technology_t	technologies[MAX_TECHNOLOGIES];
 extern	int	numTechnologies;
 
-void MN_ResetResearch( void );
+void RS_ResetResearch( void );
 void CL_CheckResearchStatus( void );
 void RS_UpdateData ( void );
 void RS_ParseTechnologies ( char* title, char** text );

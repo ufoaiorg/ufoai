@@ -919,7 +919,7 @@ void CL_LoadTeamMultiplayer( char *filename )
 
 	// return the base title
 	Q_strncpyz( title, bmBases[0].title, MAX_VAR );
-	MN_ClearBase( &bmBases[0] );
+	B_ClearBase( &bmBases[0] );
 	Q_strncpyz( bmBases[0].title, title, MAX_VAR );
 
 	// set base for multiplayer

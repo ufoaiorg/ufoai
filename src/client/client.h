@@ -1167,7 +1167,7 @@ void MN_PushMenu( char *name );
 void MN_PopMenu( qboolean all );
 void MN_Popup (const char* title, const char* text);
 
-void MN_DrawBase( menuNode_t *node );
+void B_DrawBase( menuNode_t *node );
 
 extern int numMenus;
 extern inventory_t *menuInventory;

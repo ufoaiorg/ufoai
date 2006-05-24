@@ -37,8 +37,8 @@ typedef struct pediaChapter_s
 extern pediaChapter_t	upChapters[MAX_PEDIACHAPTERS];
 extern	int	numChapters;
 
-void MN_ResetUfopedia( void );
-void MN_ParseUpChapters( char *title, char **text );
+void UP_ResetUfopedia( void );
+void UP_ParseUpChapters( char *title, char **text );
 void UP_OpenWith ( char *name );
 
 #endif
