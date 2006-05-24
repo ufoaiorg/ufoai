@@ -634,28 +634,12 @@ void CL_NewAircraft ( base_t* base, char* name )
 	Com_Printf("Aircraft %s not found\n", name );
 }
 
-// check for water
-// blue value is 64
-#define MapIsWater(color) (color[0] == 0 && color[1] == 0 && color[2] == 64)
-#define MapIsArctic(color) (color[0] == 128 && color[1] == 255 && color[2] == 255)
-#define MapIsDesert(color) (color[0] == 255 && color[1] == 128 && color[2] == 0)
-// others:
-// red 255, 0, 0
-// yellow 255, 255, 0
-// green 128, 255, 0
-// violet 128, 0, 128
-// blue (not water) 128, 128, 255
-// blue (not water, too) 0, 0, 255
-
-/*
-======================
-CL_NewBase
-======================
-*/
-qboolean CL_NewBase( vec2_t pos )
+/*======================
+CL_GetmapColor
+======================*/
+byte *CL_GetmapColor( vec2_t pos )
 {
 	int x, y;
-	byte *color;
 
 	// get coordinates
 	x = (180 - pos[0]) / 360 * maskWidth;
@@ -663,10 +647,21 @@ qboolean CL_NewBase( vec2_t pos )
 	if ( x < 0 ) x = 0;
 	if ( y < 0 ) y = 0;
 
-	color = maskPic + 4 * (x + y * maskWidth);
+	return maskPic + 4 * (x + y * maskWidth);
+}
+	
+/*======================
+CL_NewBase
+======================*/
+qboolean CL_NewBase( vec2_t pos )
+{
+	byte *color;
+
+	color = CL_GetmapColor( pos );
 
 	if ( MapIsWater(color) )
 	{
+		// This should already have been catched in MN_MapClick (cl_menu.c), but just in case.
 		MN_AddNewMessage( _("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL );
 		return qfalse;
 	} else if ( MapIsDesert(color) ){

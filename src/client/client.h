@@ -854,6 +854,19 @@ void CL_InitMessageSystem ( void );
 #define MAX_STAGESETS	256
 #define MAX_STAGES		64
 
+// check for water
+// blue value is 64
+#define MapIsWater(color) (color[0] == 0 && color[1] == 0 && color[2] == 64)
+#define MapIsArctic(color) (color[0] == 128 && color[1] == 255 && color[2] == 255)
+#define MapIsDesert(color) (color[0] == 255 && color[1] == 128 && color[2] == 0)
+// others:
+// red 255, 0, 0
+// yellow 255, 255, 0
+// green 128, 255, 0
+// violet 128, 0, 128
+// blue (not water) 128, 128, 255
+// blue (not water, too) 0, 0, 255
+
 typedef struct mission_s
 {
 	char	*text;
@@ -1038,6 +1051,7 @@ void CL_DateConvert( date_t *date, int *day, int *month );
 char* CL_DateGetMonthName ( int month );
 void CL_CampaignRun( void );
 void CL_GameTimeStop( void );
+byte *CL_GetmapColor( vec2_t pos );
 qboolean CL_NewBase( vec2_t pos );
 void CL_ParseMission( char *name, char **text );
 void CL_ParseStage( char *name, char **text );

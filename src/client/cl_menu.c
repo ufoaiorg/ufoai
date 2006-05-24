@@ -1022,10 +1022,14 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	// new base construction
 	if ( mapAction == MA_NEWBASE )
 	{
-		newBasePos[0] = pos[0];
-		newBasePos[1] = pos[1];
-		MN_PushMenu( "popup_newbase" );
-		return;
+		if ( !MapIsWater(CL_GetmapColor( pos )) ) {
+			newBasePos[0] = pos[0];
+			newBasePos[1] = pos[1];
+			MN_PushMenu( "popup_newbase" );
+			return;
+		} else {
+			MN_AddNewMessage( _("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL );
+		}
 	}
 	else if ( mapAction == MA_INTERCEPT && ! interceptAircraft && selMis )
 	{
