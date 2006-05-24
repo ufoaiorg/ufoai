@@ -215,7 +215,7 @@ void RS_CopyFromSkeleton( void )
 		tech = &technologies_skeleton[i];
 		//Q_strncpyz( tech->name, "Credits:", MAX_VAR ); // DEBUG: just to test if anything is point to the skeleton :)
 	}
-	
+
 	// Re-link the prev/next tech-pointers in the working topy to the 'working' copy :)
 	for ( i = 0; i < numTechnologies; i++ ) {
 		tech = &technologies[i];
@@ -305,7 +305,7 @@ void RS_InitTree( void )
 			found = qfalse;
 			for ( j = 0; j < numBuildings; j++ ) {
 				building = &bmBuildings[0][j];
-				if ( !Q_strncmp( t->provides, building->name, MAX_VAR ) ) { // This building has been 'provided',
+				if ( !Q_strncmp( t->provides, building->id, MAX_VAR ) ) { // This building has been 'provided',
 					found = qtrue;
 					if ( !*t->name )
 						Com_sprintf( t->name, MAX_VAR, building->name );
@@ -1214,10 +1214,10 @@ void RS_ParseTechnologies ( char* id, char** text )
 							upChapters[i].last = tech_in_skeleton;
 							tech_in_skeleton->prev = NULL;
 							tech_in_skeleton->next = NULL;
-							
+
 						} else {
 							tech_old = upChapters[i].last; // get "last entry" in chapter
-							upChapters[i].last = tech_in_skeleton; // set new "last entry" 
+							upChapters[i].last = tech_in_skeleton; // set new "last entry"
 							tech_old->next = tech_in_skeleton;
 							upChapters[i].last->prev = tech_old;
 							upChapters[i].last->next = NULL;

@@ -2090,11 +2090,11 @@ void B_LoadBases( sizebuf_t *sb, int version )
 }
 
 /*======================
-B_BuildingList
+B_BuildingList_f
 
 TODO: To be extended for load/save purposes
 ======================*/
-void B_BuildingList ( void )
+void B_BuildingList_f ( void )
 {
 	int i, j, k;
 	base_t* base;
@@ -2107,7 +2107,7 @@ void B_BuildingList ( void )
 		return;
 	}
 
-	for ( i = 0, base = bmBases; i < MAX_BASES; i++, base++ )
+	for ( i = 0, base = bmBases; i < ccs.numBases; i++, base++ )
 	{
 		if ( base->founded == qfalse )
 			continue;
@@ -2117,6 +2117,7 @@ void B_BuildingList ( void )
 		for ( j = 0; j < numBuildings; j++ )
 		{
 			Com_Printf("...Building: %s #%i - id: %i\n", building->id, building->howManyOfThisType, building->idInList );
+			Com_Printf("...image: %s\n", building->image );
 			Com_Printf(".....Status:\n");
 			for ( k = 0; k < BASE_SIZE*BASE_SIZE; k++ )
 			{
@@ -2133,11 +2134,11 @@ void B_BuildingList ( void )
 }
 
 /*======================
-B_BaseList
+B_BaseList_f
 
 TODO: To be extended for load/save purposes
 ======================*/
-void B_BaseList ( void )
+void B_BaseList_f ( void )
 {
 	int i, row, col, j;
 	base_t* base;
@@ -2240,8 +2241,8 @@ void B_ResetBaseManagement( void )
 	Cmd_AddCommand( "buildinginfo_click", B_BuildingInfoClick_f );
 	Cmd_AddCommand( "buildings_click", B_BuildingClick_f );
 	Cmd_AddCommand( "reset_building_current", B_ResetBuildingCurrent );
-	Cmd_AddCommand( "baselist", B_BaseList );
-	Cmd_AddCommand( "buildinglist", B_BuildingList );
+	Cmd_AddCommand( "baselist", B_BaseList_f );
+	Cmd_AddCommand( "buildinglist", B_BuildingList_f );
 	Cvar_SetValue( "mn_base_id", ccs.actualBaseID );
 }
 
