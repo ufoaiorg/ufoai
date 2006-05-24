@@ -1078,8 +1078,9 @@ IN
 void RS_ParseTechnologies ( char* id, char** text )
 {
 	value_t *var = NULL;
-	technology_t *tech = NULL;
+	technology_t *tech_in_skeleton = NULL;
 	technology_t *tech_just_for_linking = NULL;
+	technology_t *tech_old = NULL;
 	char	*errhead = "RS_ParseTechnologies: unexptected end of file.";
 	char	*token = NULL;
 	char	*misp = NULL;
@@ -1098,28 +1099,28 @@ void RS_ParseTechnologies ( char* id, char** text )
 	}
 
 	// New technology (next free entry in global tech-list)
-	tech = &technologies_skeleton[numTechnologies];
+	tech_in_skeleton = &technologies_skeleton[numTechnologies];
 	tech_just_for_linking = &technologies[numTechnologies];
 	numTechnologies++;
 	// Mind you that "tech" points to the skeleton and tech_just_for_linking points to a yet 'empty' array.
 
-	required = &tech->requires;
-	memset( tech, 0, sizeof( technology_t ) );
+	required = &tech_in_skeleton->requires;
+	memset( tech_in_skeleton, 0, sizeof( technology_t ) );
 
 	//set standard values
-	Com_sprintf( tech->id, MAX_VAR, id );
-	Com_sprintf( tech->description, MAX_VAR, _("No description available.") );
-	*tech->provides = '\0';
-	*tech->image_top = '\0';
-	*tech->image_bottom = '\0';
-	*tech->mdl_top = '\0';
-	*tech->mdl_bottom = '\0';
-	tech->type = RS_TECH;
-	tech->statusResearch = RS_NONE;
-	tech->statusResearchable = qfalse;
-	tech->statusCollected  = 0;
-	tech->time = 0;
-	tech->overalltime = 0;
+	Com_sprintf( tech_in_skeleton->id, MAX_VAR, id );
+	Com_sprintf( tech_in_skeleton->description, MAX_VAR, _("No description available.") );
+	*tech_in_skeleton->provides = '\0';
+	*tech_in_skeleton->image_top = '\0';
+	*tech_in_skeleton->image_bottom = '\0';
+	*tech_in_skeleton->mdl_top = '\0';
+	*tech_in_skeleton->mdl_bottom = '\0';
+	tech_in_skeleton->type = RS_TECH;
+	tech_in_skeleton->statusResearch = RS_NONE;
+	tech_in_skeleton->statusResearchable = qfalse;
+	tech_in_skeleton->statusCollected  = 0;
+	tech_in_skeleton->time = 0;
+	tech_in_skeleton->overalltime = 0;
 
 	do {
 		// get the name type
@@ -1132,17 +1133,17 @@ void RS_ParseTechnologies ( char* id, char** text )
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			if ( !Q_strncmp( token, "tech", 4 ) )
-				tech->type = RS_TECH; // redundant, but oh well.
+				tech_in_skeleton->type = RS_TECH; // redundant, but oh well.
 			else if ( !Q_strncmp( token, "weapon", 6 ) )
-				tech->type = RS_WEAPON;
+				tech_in_skeleton->type = RS_WEAPON;
 			else if ( !Q_strncmp( token, "armor", 5 ) )
-				tech->type = RS_ARMOR;
+				tech_in_skeleton->type = RS_ARMOR;
 			else if ( !Q_strncmp( token, "craft", 5 ) )
-				tech->type = RS_CRAFT;
+				tech_in_skeleton->type = RS_CRAFT;
 			else if ( !Q_strncmp( token, "building", 8 ) )
-				tech->type = RS_BUILDING;
+				tech_in_skeleton->type = RS_BUILDING;
 			else if ( !Q_strncmp( token, "alien", 5 ) )
-				tech->type = RS_ALIEN;
+				tech_in_skeleton->type = RS_ALIEN;
 			else Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token );
 		}
 		else
@@ -1173,7 +1174,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 			/* tech alreadyy researched? */
 			token = COM_EParse( text, errhead, id );
 			if ( !Q_strncmp( token, "true", 4 ) || *token == '1' )
-				tech->statusResearch = RS_FINISH;
+				tech_in_skeleton->statusResearch = RS_FINISH;
 		}
 		else
 		if ( !Q_strncmp( token, "up_chapter", 10 ) ) {
@@ -1187,17 +1188,17 @@ void RS_ParseTechnologies ( char* id, char** text )
 				for ( i = 0; i < numChapters; i++ ) {
 					if ( !Q_strncmp( token, upChapters[i].id, MAX_VAR ) ) {
 						// add entry to chapter
-						tech->up_chapter = &upChapters[i];
+						tech_in_skeleton->up_chapter = &upChapters[i];
 						if ( !upChapters[i].first ) {
 							upChapters[i].first = tech_just_for_linking;
 							upChapters[i].last = tech_just_for_linking;
 						} else {
-							technology_t *old;
+							
 							upChapters[i].last = tech_just_for_linking;
-							old = upChapters[i].first;
-							while ( old->next ) old = old->next;
-							old->next = tech_just_for_linking;
-							tech->prev = old;
+							tech_old = upChapters[i].first;
+							while ( tech_old->next ) tech_old = tech_old->next;
+							tech_old->next = tech_just_for_linking;
+							tech_in_skeleton->prev = tech_old;
 						}
 						break;
 					}
@@ -1215,7 +1216,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 				if ( !*text ) return;
 
 				if ( var->ofs && var->type != V_NULL )
-					Com_ParseValue( tech, token, var->type, var->ofs );
+					Com_ParseValue( tech_in_skeleton, token, var->type, var->ofs );
 				else
 					// NOTE: do we need a buffer here? for saving or something like that?
 					Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed\n" );
