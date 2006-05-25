@@ -344,7 +344,7 @@ void B_UpdateBaseData( void );
 base_t* B_GetBase ( int id );
 void B_UpgradeBuilding( building_t* b );
 void B_RepairBuilding( building_t* b );
-int B_CheckBuildingConstruction ( building_t* b );
+int B_CheckBuildingConstruction ( building_t* b, int baseID );
 int B_GetNumOnTeam ( void );
 building_t * B_GetFreeBuilding( int base_id, buildingType_t type );
 building_t * B_GetUnusedLab( int base_id );

@@ -133,7 +133,7 @@ void B_SetSensor( void )
 	i = atoi(Cmd_Argv(2));
 	if ( i >= ccs.numBases )
 	{
-		Com_Printf( "invalid baseID (%i)\n", i );
+		Com_Printf( "invalid baseID (%s)\n", Cmd_Argv(2) );
 		return;
 	}
 	amount = atoi(Cmd_Argv(1));
@@ -670,7 +670,18 @@ void B_BuildingRemoveWorkers( void )
 /*======================
 B_BuildingAddWorkers
 ======================*/
-void B_BuildingAddWorkers( void )
+void B_BuildingAddWorkers( building_t* b, int workers )
+{
+	if ( b->assignedWorkers + workers <= b->maxWorkers * ( b->howManyOfThisType + 1 ) )
+		b->assignedWorkers += workers;
+	else
+		Com_Printf( "Maximum amount of workers reached for building %s\n", b->id );
+}
+
+/*======================
+B_BuildingAddWorkers_f
+======================*/
+void B_BuildingAddWorkers_f( void )
 {
 	int workers;
 
@@ -687,13 +698,7 @@ void B_BuildingAddWorkers( void )
 	//how many workers?
 	workers = atoi( Cmd_Argv( 1 ) );
 
-	if ( baseCurrent->buildingCurrent->assignedWorkers + workers
-	  <= baseCurrent->buildingCurrent->maxWorkers
-	     * ( baseCurrent->buildingCurrent->howManyOfThisType + 1 ) )
-		baseCurrent->buildingCurrent->assignedWorkers += workers;
-	else
-		Com_Printf( "Maximum amount of workers reached for this building\n" );
-
+	B_BuildingAddWorkers( baseCurrent->buildingCurrent, workers );
 }
 
 /*======================
@@ -2269,7 +2274,7 @@ void B_ResetBaseManagement( void )
 	Cmd_AddCommand( "set_building", B_SetBuilding );
 	Cmd_AddCommand( "mn_setbasetitle", B_SetBaseTitle );
 	Cmd_AddCommand( "damage_building", B_DamageBuilding );
-	Cmd_AddCommand( "add_workers", B_BuildingAddWorkers );
+	Cmd_AddCommand( "add_workers", B_BuildingAddWorkers_f );
 	Cmd_AddCommand( "remove_workers", B_BuildingRemoveWorkers );
 	Cmd_AddCommand( "rename_base", B_RenameBase );
 	Cmd_AddCommand( "base_attack", B_BaseAttack );
@@ -2322,7 +2327,7 @@ void B_UpdateBaseData( void )
 		{
 			b = &bmBuildings[i][j];
 			if ( ! b ) continue;
-			new = B_CheckBuildingConstruction( b );
+			new = B_CheckBuildingConstruction( b, i );
 			newBuilding += new;
 			if ( new )
 				MN_AddNewMessage( va(_("Building finished - Base %s"), bmBases[i].title ) , va(_("Construction of building %s finished."), b->name ), qfalse, MSG_CONSTRUCTION, NULL );
@@ -2345,7 +2350,7 @@ B_CheckBuildingConstruction
 Checks wheter the construction of a building is finished
 Calls the onConstruct functions and assign workers, too
 ======================*/
-int B_CheckBuildingConstruction ( building_t* b )
+int B_CheckBuildingConstruction ( building_t* b, int baseID )
 {
 	int k, newBuilding = 0;
 
@@ -2364,13 +2369,10 @@ int B_CheckBuildingConstruction ( building_t* b )
 				b->howManyOfThisType++;
 
 			if ( b->onConstruct )
-				Cbuf_AddText( va("%s %i", b->onConstruct, b->id ) );
+				Cbuf_AddText( va("%s %i", b->onConstruct, baseID ) );
 
 			if ( b->minWorkers )
-			{
-				Cbuf_AddText( va( "add_workers %i\n", b->minWorkers ) );
-				Cbuf_Execute();
-			}
+				B_BuildingAddWorkers( b, b->minWorkers );
 
 			newBuilding++;
 		}
