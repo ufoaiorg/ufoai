@@ -22,16 +22,6 @@
 // blue (not water, too) 0, 0, 255
 
 #define MAX_UFOONGEOSCAPE 8
-typedef struct ufoOnGeoscape_s
-{
-// 	ufoType_t	type;
-	vec3_t		pos; // position on geoscape (vec3_t => globe)
-	int		hitpoints;
-	float		speed;
-	technology_t*	weapon;
-	technology_t*	shield;
-	char		image[MAX_VAR];
-} ufoOnGeoscape_t;
 
 typedef struct mission_s
 {
@@ -123,7 +113,7 @@ typedef struct campaign_s
 extern aircraft_t	aircraft[MAX_AIRCRAFT];
 extern int		numAircraft;
 extern int		interceptAircraft;
-extern ufoOnGeoscape_t	ufoOnGeoscape[MAX_UFOONGEOSCAPE];
+extern aircraft_t*	ufoOnGeoscape[MAX_UFOONGEOSCAPE];
 
 typedef struct nation_s
 {
@@ -181,7 +171,8 @@ typedef enum mapAction_s
 
 typedef enum aircraftStatus_s
 {
-	AIR_NONE,
+	AIR_UFOMOVE = -1,	// a moving ufo
+	AIR_NONE = 0,
 	AIR_REFUEL,	// refill fuel
 	AIR_HOME,	// in homebase
 	AIR_IDLE,	// just sit there on geoscape

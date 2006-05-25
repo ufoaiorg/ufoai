@@ -573,7 +573,9 @@ void B_DrawBuilding( void )
 	B_BuildingStatus();
 
 	if ( entry->buildingStatus[entry->howManyOfThisType] < B_UNDER_CONSTRUCTION && entry->fixCosts )
-		Q_strcat( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Costs:\t%1.2f (%i Day[s] to build)\n"), entry->fixCosts, entry->buildTime ) );
+		Com_sprintf( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.2f\n"), entry->fixCosts );
+
+	Q_strcat( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("%i Day(s) to build)\n"), entry->buildTime ) );
 
 	if ( entry->varCosts    ) Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Running Costs:\t%1.2f\n"), entry->varCosts ) );
 	if ( entry->workerCosts ) Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Workercosts:\t%1.2f\n"), entry->workerCosts ) );
@@ -2283,18 +2285,8 @@ void B_UpdateBaseData( void )
 			if ( ! b ) continue;
 			new = B_CheckBuildingConstruction( b );
 			newBuilding += new;
-			if ( new ) {
+			if ( new )
 				MN_AddNewMessage( va(_("Building finished - Base %s"), bmBases[i].title ) , va(_("Construction of building %s finished."), b->name ), qfalse, MSG_CONSTRUCTION, NULL );
-				Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("Construction of building %s finished\\at base %s\n"), b->name, bmBases[i].title );
-			}
-		}
-		// refresh the building list
-		// and show a popup
-		if ( newBuilding )
-		{
-			if ( newBuilding > 1 )
-				Com_sprintf( messageBuffer, MAX_MENUTEXTLEN, _("There is at least one finished construction\\at base %s\n"), bmBases[i].title );
-			MN_AddNewMessage( _("Construction finished"), messageBuffer, qtrue, MSG_STANDARD, NULL );
 		}
 
 		// only the last occurence of a building can have a status

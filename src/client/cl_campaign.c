@@ -19,7 +19,7 @@ stage_t		stages[MAX_STAGES];
 int		numStageSets = 0;
 int		numStages = 0;
 
-ufoOnGeoscape_t	ufoOnGeoscape[MAX_UFOONGEOSCAPE];
+aircraft_t	*ufoOnGeoscape[MAX_UFOONGEOSCAPE];
 campaign_t	*curCampaign;
 ccs_t		ccs;
 base_t		*baseCurrent;
@@ -1047,6 +1047,32 @@ void CL_BuildingAircraftList_f ( void )
 	menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
 }
 
+
+/*======================
+CP_NewUfoOnGeoscape
+======================*/
+void CP_NewUfoOnGeoscape ( int probability )
+{
+	int i;
+
+	// check max amount
+	if ( ccs.numUfoOnGeoscape >= MAX_UFOONGEOSCAPE )
+		return;
+
+	i = rand() % probability;
+	if ( i != 1 )
+		return;
+
+	for ( i = (rand()%numAircraft); i < MAX_AIRCRAFT; i++ )
+	{
+		// search for a ufo
+		if ( aircraft[i].type != AIRCRAFT_UFO )
+			continue;
+
+		ufoOnGeoscape[ccs.numUfoOnGeoscape++] = &aircraft[i];
+	}
+}
+
 /*======================
 CL_HandleNationData
 
@@ -1072,6 +1098,7 @@ void CL_CampaignCheckEvents( void )
 	stageState_t	*stage;
 	setState_t	*set;
 	actMis_t	*mis;
+	int	saveMapAction;
 	int	i, j;
 
 	// check campaign events
@@ -1092,39 +1119,48 @@ void CL_CampaignCheckEvents( void )
 					else
 						CL_CampaignExecute( set );
 				}
-				else if ( ccs.numUfoOnGeoscape > 0 )
+
+	saveMapAction = mapAction;
+
+	if ( ccs.numUfoOnGeoscape > 0 )
+	{
+		for ( i = 0; i < ccs.numUfoOnGeoscape; i++ )
+		{
+			ufoOnGeoscape[i]->status = AIR_NONE;
+			mapAction = MA_NONE;
+			for ( j = 0; j < ccs.numBases; j++ )
+			{
+				// no radar?
+				if ( !bmBases[j].sensorWidth )
+					continue;
+				if ( bmBases[j].sensorWidth >= GEO_DISTANCE( bmBases[j].pos, ufoOnGeoscape[i]->pos) )
 				{
-					for ( j = 0; j < ccs.numBases; j++ )
-					{
-						// no radar?
-						if ( !bmBases[i].sensorWidth )
-							continue;
-						for ( i = 0; i < ccs.numUfoOnGeoscape; i++ )
-							if ( bmBases[j].sensorWidth >= GEO_DISTANCE( bmBases[j].pos, ufoOnGeoscape[i].pos) )
-							{
-								// cl_menu.c MN_DrawMapMarkers
-								mapAction = MA_UFORADAR;
-								if ( bmBases[j].drawSensor == qfalse )
-									MN_AddNewMessage( _("Notice"), _("UFO appears on our radar"), qfalse, MSG_STANDARD, NULL );
-								else
-									bmBases[j].drawSensor = qtrue;
-							}
-							else
-							{
-								if ( bmBases[j].drawSensor == qtrue )
-								{
-									bmBases[j].drawSensor = qfalse;
-									// FIXME: grammar: from/of/on
-									MN_AddNewMessage( _("Notice"), _("UFO disappears on our radar"), qfalse, MSG_STANDARD, NULL );
-								}
-								mapAction = MA_NONE;
-							}
-					}
+					// cl_menu.c MN_DrawMapMarkers
+					mapAction = MA_UFORADAR;
+					if ( bmBases[j].drawSensor == qfalse )
+						MN_AddNewMessage( _("Notice"), _("UFO appears on our radar"), qfalse, MSG_STANDARD, NULL );
+					bmBases[j].drawSensor = qtrue;
+					ufoOnGeoscape[i]->status = AIR_UFOMOVE;
 				}
 				else
 				{
-					// TODO: Spawn a random ufo on geoscape
+					if ( bmBases[j].drawSensor == qtrue )
+					{
+						bmBases[j].drawSensor = qfalse;
+						// FIXME: grammar: from/of/on
+						MN_AddNewMessage( _("Notice"), _("UFO disappears on our radar"), qfalse, MSG_STANDARD, NULL );
+					}
 				}
+				// TODO: ufo disappears?
+			}
+		}
+		CP_NewUfoOnGeoscape(100000);
+	}
+	else
+		CP_NewUfoOnGeoscape(10000);
+
+	if ( mapAction == MA_NONE )
+		mapAction = saveMapAction;
 
 	// let missions expire
 	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ )
@@ -1242,6 +1278,47 @@ void CL_CampaignRunAircraft( int dt )
 
 				CL_CheckAircraft( air );
 			}
+	}
+
+	// now the ufo are flying around, too
+	for ( j = 0; j < ccs.numUfoOnGeoscape; j++ )
+	{
+		air = ufoOnGeoscape[j];
+		air->time += dt;
+		air->fuel -= dt;
+		if ( air->fuel <= 0 )
+		{
+			//TODO: crash or disappear
+		}
+		dist = air->speed * air->time / 3600;
+
+		// check for end point
+		if ( dist >= air->route.dist * (air->route.n-1) )
+		{
+			float *end;
+			end = air->route.p[air->route.n-1];
+			air->pos[0] = end[0];
+			air->pos[1] = end[1];
+			if ( air->status == AIR_RETURNING )
+			{
+				air->status = AIR_HOME;
+				if ( air->fuel < 0 )
+					air->fuel = 0;
+			}
+			else
+				air->status = AIR_IDLE;
+			CL_CheckAircraft( air );
+			continue;
+		}
+
+		// calc new position
+		frac = dist / air->route.dist;
+		p = (int)frac;
+		frac -= p;
+		air->point = p;
+
+		air->pos[0] = (1-frac) * air->route.p[p][0] + frac * air->route.p[p+1][0];
+		air->pos[1] = (1-frac) * air->route.p[p][1] + frac * air->route.p[p+1][1];
 	}
 }
 
