@@ -117,6 +117,43 @@ value_t production_valid_vars[] =
 };
 
 /*======================
+B_SetSensor
+======================*/
+void B_SetSensor( void )
+{
+	int i = 0;
+	int amount = 0;
+
+	if ( Cmd_Argc() < 3 )
+	{
+		Com_Printf( "Usage: %s <amount> <baseID>\n", Cmd_Argv(0) );
+		return;
+	}
+
+	i = atoi(Cmd_Argv(2));
+	if ( i >= ccs.numBases )
+	{
+		Com_Printf( "invalid baseID (%i)\n", i );
+		return;
+	}
+	amount = atoi(Cmd_Argv(1));
+
+	if ( !Q_strncmp( Cmd_Argv(0), "inc", 3 ) ) // inc_sensor
+	{
+		bmBases[i].sensorWidth += amount;
+	}
+	else if ( !Q_strncmp( Cmd_Argv(0), "dec", 3 ) ) // dec_sensor
+	{
+		bmBases[i].sensorWidth -= amount;
+		if ( bmBases[i].sensorWidth < 0 )
+		{
+			bmBases[i].sensorWidth = 0;
+			bmBases[i].drawSensor = qfalse;
+		}
+	}
+}
+
+/*======================
 B_BuildingStatus
 
 Displays the status of a building for baseview
@@ -1845,7 +1882,7 @@ void B_BaseAttack ( void )
 
 #if 0	//TODO: run eventhandler for each building in base
 	if ( b->onAttack )
-		Cbuf_AddText( b->onAttack );
+		Cbuf_AddText( va("%s %i", b->onAttack, b->id ) );
 #endif
 
 }
@@ -2148,6 +2185,8 @@ void B_BaseList_f ( void )
 	{
 		Com_Printf("Base id %i\n", base->id );
 		Com_Printf("Base title %s\n", base->title );
+		Com_Printf("Base sensorWidth %s\n", base->sensorWidth );
+		Com_Printf("Base drawSensor %s\n", base->drawSensor );
 		Com_Printf("Base aircraft %i\n", base->numAircraftInBase );
 		for ( j = 0; j < base->numAircraftInBase; j++ )
 		{
@@ -2325,7 +2364,7 @@ int B_CheckBuildingConstruction ( building_t* b )
 				b->howManyOfThisType++;
 
 			if ( b->onConstruct )
-				Cbuf_AddText( b->onConstruct );
+				Cbuf_AddText( va("%s %i", b->onConstruct, b->id ) );
 
 			if ( b->minWorkers )
 			{

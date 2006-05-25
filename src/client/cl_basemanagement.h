@@ -186,7 +186,8 @@ typedef enum
 {
 	AIRCRAFT_TRANSPORTER,
 	AIRCRAFT_INTERCEPTOR,
-	AIRCRAFT_UFO
+	AIRCRAFT_UFO,	// e.g. ufo on geoscape
+	AIRCRAFT_CAPTUREDUFO // ufo in our base - or our ufo on geoscape
 } aircraftType_t;
 
 typedef enum
@@ -337,6 +338,7 @@ extern	int   numEmployees;							// The global number of entries in the "employe
 craftupgrade_t    *craftupgrades[MAX_CRAFTUPGRADES];		// This it the global list of all available craft-upgrades
 int    numCraftUpgrades;								// The global number of entries in the "craftupgrades" list.
 
+void B_SetSensor( void );
 void B_InitEmployees ( void );
 void B_UpdateBaseData( void );
 base_t* B_GetBase ( int id );

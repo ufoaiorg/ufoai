@@ -1521,9 +1521,10 @@ void MN_DrawMapMarkers( menuNode_t *node )
 		{
 			if ( !MN_MapToScreen( node, bmBases[j].pos, &x, &y ) )
 				continue;
+			i = bmBases[j].sensorWidth;
 			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base" );
 			if ( bmBases[j].drawSensor )
-				re.DrawNormPic( x + 10, y - 10, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "sensor" );
+				re.DrawNormPic( x - i, y - i, i, i, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor" );
 		}
 
 	// draw aircraft

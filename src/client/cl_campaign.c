@@ -1141,6 +1141,7 @@ void CL_CampaignCheckEvents( void )
 						MN_AddNewMessage( _("Notice"), _("UFO appears on our radar"), qfalse, MSG_STANDARD, NULL );
 					bmBases[j].drawSensor = qtrue;
 					ufoOnGeoscape[i]->status = AIR_UFOMOVE;
+					CL_GameTimeStop();
 				}
 				else
 				{
@@ -1154,10 +1155,10 @@ void CL_CampaignCheckEvents( void )
 				// TODO: ufo disappears?
 			}
 		}
-		CP_NewUfoOnGeoscape(100000);
+		CP_NewUfoOnGeoscape(1000);
 	}
 	else
-		CP_NewUfoOnGeoscape(10000);
+		CP_NewUfoOnGeoscape(100);
 
 	if ( mapAction == MA_NONE )
 		mapAction = saveMapAction;
@@ -1234,7 +1235,7 @@ void CL_CampaignRunAircraft( int dt )
 			continue;
 
 		for ( i = 0, air = (aircraft_t*)base->aircraft; i < base->numAircraftInBase; i++, air++ )
-			if ( air->homebase )
+			if ( air->homebase && air->type != AIRCRAFT_UFO )
 			{
 				if ( air->status > AIR_IDLE )
 				{
@@ -1295,19 +1296,11 @@ void CL_CampaignRunAircraft( int dt )
 		// check for end point
 		if ( dist >= air->route.dist * (air->route.n-1) )
 		{
+			// TODO: New route or disappear
 			float *end;
 			end = air->route.p[air->route.n-1];
 			air->pos[0] = end[0];
 			air->pos[1] = end[1];
-			if ( air->status == AIR_RETURNING )
-			{
-				air->status = AIR_HOME;
-				if ( air->fuel < 0 )
-					air->fuel = 0;
-			}
-			else
-				air->status = AIR_IDLE;
-			CL_CheckAircraft( air );
 			continue;
 		}
 
@@ -3090,6 +3083,8 @@ cmdList_t game_commands[] = {
 	{ "game_timestop", CL_GameTimeStop },
 	{ "game_timeslow", CL_GameTimeSlow },
 	{ "game_timefast", CL_GameTimeFast },
+	{ "inc_sensor", B_SetSensor },
+	{ "dec_sensor", B_SetSensor },
 	{ "mn_mapaction_reset", CL_MapActionReset },
 
 	{NULL, NULL}
