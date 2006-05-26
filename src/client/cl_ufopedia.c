@@ -1,3 +1,21 @@
+/*
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
 // cl_ufopedia.c -- ufopedia script interpreter
 //we need a cl_ufopedia.h to include in client.h (to avoid warnings from needed functions)
 
@@ -250,7 +268,7 @@ void MN_UpContent_f( void )
 
 	cp = upText;
 	*cp = '\0';
-	
+
 	for ( i = 0; i < numChapters; i++ )
 	{
 		// Check if there are any researched items in this chapter ...
@@ -268,7 +286,7 @@ void MN_UpContent_f( void )
 				upCurrent = NULL;
 			}
 		} while ( upCurrent );
-		
+
 		// .. and if so add them to the displaylist of chapters.
 		if ( researched_entries ) {
 			upChapters_displaylist[numChapters_displaylist++] = &upChapters[i];
@@ -349,13 +367,13 @@ void MN_UpNext_f( void )
 				upCurrent = NULL;
 			}
 		} while ( upCurrent && !RS_IsResearched_(upCurrent) );
-		
+
 		if ( upCurrent ) {
 			MN_UpDrawEntry( upCurrent );
 			return;
 		}
 	}
-	
+
 	/* no 'next' entry defined (=NULL) or no current entry at all */
 
 	// change chapter

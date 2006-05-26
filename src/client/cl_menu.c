@@ -1,3 +1,21 @@
+/*
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
 // cl_menu.c -- client menu functions
 
 #include "client.h"
@@ -612,6 +630,8 @@ void MN_ScreenToMap( menuNode_t *node, int x, int y, vec2_t pos )
 
 	while ( pos[0] > 180.0 ) pos[0] -= 360.0;
 	while ( pos[0] <-180.0 ) pos[0] += 360.0;
+
+	Com_Printf("pos: %.0f:%.0f\n", pos[0], pos[1] );
 }
 
 
