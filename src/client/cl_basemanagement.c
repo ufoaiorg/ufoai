@@ -2329,8 +2329,10 @@ void B_UpdateBaseData( void )
 			if ( ! b ) continue;
 			new = B_CheckBuildingConstruction( b, i );
 			newBuilding += new;
-			if ( new )
-				MN_AddNewMessage( va(_("Building finished - Base %s"), bmBases[i].title ) , va(_("Construction of building %s finished."), b->name ), qfalse, MSG_CONSTRUCTION, NULL );
+			if ( new ) {
+				Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("Construction of %s building finished in base %s."), b->name, bmBases[i].title);
+				MN_AddNewMessage(_("Building finished"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL );
+			}
 		}
 
 		// only the last occurence of a building can have a status
