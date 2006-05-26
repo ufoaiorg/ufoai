@@ -1034,7 +1034,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 			MN_AddNewMessage( _("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL );
 		}
 	}
-	else if ( mapAction == MA_INTERCEPT && ! interceptAircraft && selMis )
+	else if ( mapAction == MA_INTERCEPT && selMis )
 	{
 		MN_PushMenu( "popup_intercept" );
 	}
@@ -1044,6 +1044,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	}
 	else if ( mapAction == MA_UFORADAR )
 	{
+		MN_PushMenu( "popup_intercept_ufo" );
 		// TODO: Select aircraft - follow ufo - fight
 		// if shoot down - we have a new crashsite mission if color != water
 	}
@@ -1248,8 +1249,7 @@ void MN_RightClick( int x, int y )
 			// found a node -> do actions
 			if ( node->type == MN_MAP || node->type == MN_3DMAP )
 			{
-				selMis = NULL;
-				interceptAircraft = -1;
+				CL_MapActionReset();
 				if ( node->type == MN_MAP )
 					mouseSpace = MS_SHIFTMAP;
 				else
@@ -1524,7 +1524,7 @@ void MN_DrawMapMarkers( menuNode_t *node )
 			i = bmBases[j].sensorWidth;
 			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base" );
 			if ( bmBases[j].drawSensor )
-				re.DrawNormPic( x - i, y - i, i, i, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor" );
+				re.DrawNormPic( x, y, i, i, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor" );
 		}
 
 	// draw aircraft

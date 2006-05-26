@@ -186,8 +186,7 @@ typedef enum
 {
 	AIRCRAFT_TRANSPORTER,
 	AIRCRAFT_INTERCEPTOR,
-	AIRCRAFT_UFO,	// e.g. ufo on geoscape
-	AIRCRAFT_CAPTUREDUFO // ufo in our base - or our ufo on geoscape
+	AIRCRAFT_UFO
 } aircraftType_t;
 
 typedef enum

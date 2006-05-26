@@ -1050,10 +1050,13 @@ void CL_BuildingAircraftList_f ( void )
 
 /*======================
 CP_NewUfoOnGeoscape
+NOTE: These ufos are not saved - and i don't think we need this
 ======================*/
 void CP_NewUfoOnGeoscape ( int probability )
 {
 	int i;
+	vec2_t pos;
+	aircraft_t* a;
 
 	// check max amount
 	if ( ccs.numUfoOnGeoscape >= MAX_UFOONGEOSCAPE )
@@ -1069,9 +1072,28 @@ void CP_NewUfoOnGeoscape ( int probability )
 		if ( aircraft[i].type != AIRCRAFT_UFO )
 			continue;
 
-		ufoOnGeoscape[ccs.numUfoOnGeoscape++] = &aircraft[i];
+		pos[0] = (rand() % 180) - (rand() % 180);
+		pos[1] = (rand() % 90) - (rand() % 90);
+		a = &aircraft[i];
+		ufoOnGeoscape[ccs.numUfoOnGeoscape] = a;
+		a->status = AIR_UFOMOVE;
+		MN_MapCalcLine( a->pos, pos, &a->route );
+		ccs.numUfoOnGeoscape++;
 	}
 }
+
+/*======================
+CP_NewUfoOnGeoscape
+======================*/
+void CP_RemoveUfoFromGeoscape( int probability )
+{
+	if ( rand() % probability == 1 )
+	{
+		ccs.numUfoOnGeoscape--;
+		ufoOnGeoscape[ccs.numUfoOnGeoscape]->status = AIR_NONE;
+	}
+}
+
 
 /*======================
 CL_HandleNationData
@@ -1086,7 +1108,19 @@ void CL_HandleNationData ( qboolean expires, actMis_t* mis )
 
 }
 
-#define GEO_DISTANCE(pos1, pos2) sqrt(abs(pos1[0]-pos2[0])*2+abs(pos1[1]-pos2[1])*2)
+
+
+/*======================
+CP_GetDistance
+======================*/
+int CP_GetDistance ( vec2_t pos1, vec2_t pos2 )
+{
+	int a, b, c;
+	a = abs(pos1[0]-pos2[0]);
+	b = abs(pos1[1]-pos2[1]);
+	c = (a*a) + (b*b);
+	return sqrt(c);
+}
 
 /*
 ======================
@@ -1098,8 +1132,7 @@ void CL_CampaignCheckEvents( void )
 	stageState_t	*stage;
 	setState_t	*set;
 	actMis_t	*mis;
-	int	saveMapAction;
-	int	i, j;
+	int	i, j, dist;
 
 	// check campaign events
 	for ( i = 0, stage = ccs.stage; i < numStages; i++, stage++ )
@@ -1120,48 +1153,45 @@ void CL_CampaignCheckEvents( void )
 						CL_CampaignExecute( set );
 				}
 
-	saveMapAction = mapAction;
-
 	if ( ccs.numUfoOnGeoscape > 0 )
 	{
 		for ( i = 0; i < ccs.numUfoOnGeoscape; i++ )
 		{
-			ufoOnGeoscape[i]->status = AIR_NONE;
-			mapAction = MA_NONE;
 			for ( j = 0; j < ccs.numBases; j++ )
 			{
 				// no radar?
-				if ( !bmBases[j].sensorWidth )
+				if ( !bmBases[j].founded || !bmBases[j].sensorWidth )
 					continue;
-				if ( bmBases[j].sensorWidth >= GEO_DISTANCE( bmBases[j].pos, ufoOnGeoscape[i]->pos) )
+				dist = CP_GetDistance( bmBases[j].pos, ufoOnGeoscape[i]->pos);
+				if ( bmBases[j].sensorWidth >= dist )
 				{
-					// cl_menu.c MN_DrawMapMarkers
-					mapAction = MA_UFORADAR;
+#ifdef DEBUG
+					Com_DPrintf("...distance of ufo to base: %i\n", dist);
+#endif
 					if ( bmBases[j].drawSensor == qfalse )
+					{
+						ufoOnGeoscape[i]->status = AIR_UFOMOVE;
 						MN_AddNewMessage( _("Notice"), _("UFO appears on our radar"), qfalse, MSG_STANDARD, NULL );
-					bmBases[j].drawSensor = qtrue;
-					ufoOnGeoscape[i]->status = AIR_UFOMOVE;
-					CL_GameTimeStop();
+						bmBases[j].drawSensor = qtrue;
+						CL_GameTimeStop();
+					}
 				}
 				else
 				{
 					if ( bmBases[j].drawSensor == qtrue )
 					{
+						ufoOnGeoscape[i]->status = AIR_NONE;
 						bmBases[j].drawSensor = qfalse;
 						// FIXME: grammar: from/of/on
 						MN_AddNewMessage( _("Notice"), _("UFO disappears on our radar"), qfalse, MSG_STANDARD, NULL );
 					}
 				}
-				// TODO: ufo disappears?
 			}
 		}
-		CP_NewUfoOnGeoscape(1000);
+		CP_NewUfoOnGeoscape(10000);
 	}
 	else
-		CP_NewUfoOnGeoscape(100);
-
-	if ( mapAction == MA_NONE )
-		mapAction = saveMapAction;
+		CP_NewUfoOnGeoscape(1000);
 
 	// let missions expire
 	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ )
@@ -1204,7 +1234,7 @@ void CL_CheckAircraft ( aircraft_t* air )
 		if (air->status != AIR_DROP && air->fuel > 0 )
 		{
 			air->status = AIR_DROP;
-			if ( ! interceptAircraft < 0 )
+			if ( interceptAircraft < 0 )
 				interceptAircraft = air->id;
 			MN_PushMenu( "popup_intercept_ready" );
 		}
@@ -1228,6 +1258,7 @@ void CL_CampaignRunAircraft( int dt )
 	float	dist, frac;
 	base_t*	base;
 	int	i, p, j;
+	vec2_t	pos;
 
 	for ( j = 0, base = bmBases; j < ccs.numBases; j++, base++ )
 	{
@@ -1235,7 +1266,7 @@ void CL_CampaignRunAircraft( int dt )
 			continue;
 
 		for ( i = 0, air = (aircraft_t*)base->aircraft; i < base->numAircraftInBase; i++, air++ )
-			if ( air->homebase && air->type != AIRCRAFT_UFO )
+			if ( air->homebase )
 			{
 				if ( air->status > AIR_IDLE )
 				{
@@ -1281,26 +1312,24 @@ void CL_CampaignRunAircraft( int dt )
 			}
 	}
 
-	// now the ufo are flying around, too
+	// now the ufos are flying around, too
 	for ( j = 0; j < ccs.numUfoOnGeoscape; j++ )
 	{
 		air = ufoOnGeoscape[j];
 		air->time += dt;
 		air->fuel -= dt;
-		if ( air->fuel <= 0 )
-		{
-			//TODO: crash or disappear
-		}
 		dist = air->speed * air->time / 3600;
 
 		// check for end point
 		if ( dist >= air->route.dist * (air->route.n-1) )
 		{
-			// TODO: New route or disappear
 			float *end;
 			end = air->route.p[air->route.n-1];
 			air->pos[0] = end[0];
 			air->pos[1] = end[1];
+			pos[0] = (rand() % 180) - (rand() % 180);
+			pos[1] = (rand() % 90) - (rand() % 90);
+			MN_MapCalcLine( air->pos, pos, &air->route );
 			continue;
 		}
 
@@ -1312,6 +1341,17 @@ void CL_CampaignRunAircraft( int dt )
 
 		air->pos[0] = (1-frac) * air->route.p[p][0] + frac * air->route.p[p+1][0];
 		air->pos[1] = (1-frac) * air->route.p[p][1] + frac * air->route.p[p+1][1];
+	}
+	i = ccs.numUfoOnGeoscape;
+	for ( j = 0; j < i; j++ )
+	{
+		air = ufoOnGeoscape[j];
+		// TODO: Crash
+		if ( air->fuel <= 0 )
+		{
+			air->fuel = air->fuelSize;
+			CP_RemoveUfoFromGeoscape( 10 );
+		}
 	}
 }
 
@@ -2501,15 +2541,7 @@ void CL_MapActionReset( void )
 	if ( ccs.numBases )
 		mapAction = MA_NONE;
 
-	if ( interceptAircraft >= 0 )
-	{
-// 		if ( ! selMis )
-// 		{
-// 			baseCurrent->aircraftCurrent = interceptAircraft;
-// 			CL_AircraftReturnToBase( &baseCurrent->aircraft[interceptAircraft] );
-// 		}
-		interceptAircraft = -1; // reset selected aircraft
-	}
+	interceptAircraft = -1;
 	selMis = NULL; // reset selected mission
 }
 

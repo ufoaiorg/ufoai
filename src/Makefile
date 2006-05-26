@@ -24,6 +24,7 @@ BUILD_WITH_DGA=NO	# dga support compiled in
 BUILD_WITH_VIDMODE=YES	# vidmode support
 BUILD_WITH_JOYSTICK=NO	# joystick support
 BUILD_WITH_MMX=NO	# MMX support
+BUILD_FOR_PROFILING=YES # build with -pg option for profiling via gprof
 
 # (hopefully) end of configurable options
 
@@ -81,6 +82,7 @@ JPDIR=$(MOUNT_DIR)/jpeg-6
 BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp
 TOOLSCFLAGS=-Wall
 TOOLSLDFLAGS=-lm
+PROFILER_CFLAGS=
 
 MAKE_FLAGS=--keep-going --silent
 
@@ -144,6 +146,10 @@ else
 	NET_UDP=net_udp
 endif
 
+ifeq ($(strip $(BUILD_FOR_PROFILING)),YES)
+	PROFILER_CFLAGS+=-pg
+endif
+
 ifeq ($(ARCH),axp)
 	RELEASE_CFLAGS=$(BASE_CFLAGS) -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations
 endif
@@ -195,7 +201,7 @@ else
 	SDLLDFLAGS+=-ljpeg
 endif
 
-DEBUG_CFLAGS=$(BASE_CFLAGS) -g -D_FORTIFY_SOURCE=2 -DDEBUG
+DEBUG_CFLAGS=$(BASE_CFLAGS) -g -D_FORTIFY_SOURCE=2 -DDEBUG $(PROFILER_CFLAGS)
 
 DO_CC=echo " * [UFO] $@"; $(CC) $(CFLAGS) -o $@ -c $<
 DO_DED_CC=echo " * [DED] $@"; $(CC) $(CFLAGS) -DDEDICATED_ONLY -o $@ -c $<

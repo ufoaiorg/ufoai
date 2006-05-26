@@ -162,35 +162,11 @@ menu bases
 		align	uc
 	}
 
-	pic equip
-	{
-		tooltip	"_Equip your personnel"
-		image	menu/button
-		pos	"755 410"
-		texl	"0 0"
-		texh	"230 64"
-		mousefx true
-		click
-		{
-			cmd "mn_push equipment"
-		}
-		out		{ *txt_equip color "0 0.8 0 1" *equip texl "0 0" *equip texh "230 64" }
-		in		{ *txt_equip color "1 1 1 1" *equip texl "230 0" *equip texh "460 64" }
-	}
-	string txt_equip
-	{
-		string	"_Equip Soldiers"
-		color	"0 0.8 0 1"
-		pos	"870 426"
-		font	f_menu
-		align	uc
-	}
-
 	pic research
 	{
 		tooltip	"_Research new technology"
 		image	menu/button
-		pos	"755 480"
+		pos	"755 410"
 		texl	"0 0"
 		texh	"230 64"
 		mousefx true
@@ -205,7 +181,7 @@ menu bases
 	{
 		string	"_Research"
 		color	"0 0.8 0 1"
-		pos	"870 496"
+		pos	"870 426"
 		font	f_menu
 		align	uc
 	}

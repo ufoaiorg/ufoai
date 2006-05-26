@@ -220,8 +220,8 @@ building building_radar
 	build_time	10
 	map_name	"radar"
 	pedia		rs_building_radar
-	onconstruct	"inc_sensor 1000"
-	ondestroy	"dec_sensor 1000"
+	onconstruct	"inc_sensor 30"
+	ondestroy	"dec_sensor 30"
 }
 
 base main
@@ -288,7 +288,7 @@ aircraft craft_interceptor
 
 aircraft craft_ufo_small
 {
-	speed	18.0
+	speed	25.0
 	name	"_UFO"
 	type	ufo
 	model	"ufo1"
@@ -302,11 +302,11 @@ aircraft craft_ufo_small
 
 aircraft craft_ufo_big
 {
-	speed	45.0
+	speed	18.0
 	name	"_UFO - Destroyer class"
 	type	ufo
 	model	"ufobig"
-	size	80
+	size	12
 	building	building_ufo_hangar
 	fuel	1000000
 	fuelsize	1000000

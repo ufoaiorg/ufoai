@@ -557,7 +557,7 @@ void CL_SelectCmd( void )
 
 	if ( !Q_strncmp( command, "equip", 5 ) )
 	{
-		if ( !baseCurrent || num > baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] ) return;
+		if ( !baseCurrent || baseCurrent->aircraftCurrent < 0 || num > baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] ) return;
 		if ( menuInventory && menuInventory != baseCurrent->curTeam[num].inv )
 		{
 			baseCurrent->curTeam[num].inv->c[csi.idEquip] = menuInventory->c[csi.idEquip];

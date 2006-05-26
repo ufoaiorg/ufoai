@@ -2245,6 +2245,7 @@ Com_CharGetBody
 char *Com_CharGetBody( character_t *chr )
 {
 	assert( chr );
+	assert( chr->inv );
 
 	if ( chr->inv->c[CSI->idArmor] )
 		Com_sprintf( returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->body );
