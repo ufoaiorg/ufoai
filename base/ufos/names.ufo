@@ -676,64 +676,107 @@ names scandinavian
 {
 	female
 	{
+	Aina
+	Anne
+	Anna
+	Astrid
+	Berit
+	Betje
 	Dana
 	Doris
-	Helga
-	Nada
 	Edda
-	Aina
-	Kirsten
-	Katrina
-	Inge
-	Nyssa
-	Betje
-	Lina
-	Neve
-	Sofie
+	Emma
+	Eli
+	Eva
 	Hendrika
+	Helga
+	Ida
+	Ingrid
+	Kari
+	Karin
+	Katrina
+	Kirsten
+	Lina
+	Lise
+	Liv
+	Nada
+	Nyssa
+	Neve
+	Sara
+	Sofie
+	Tove
+	Unni
 	}
 
 	male
 	{
-	Berg
+	Anders
+	Andreas
+	Bjørn
+	Björn
+	Christian
 	Devoss
 	Godewyn
 	Groot
+	Gustaf
+	Gustav
 	Hans
+	Henrik
+	Inge
 	Jan
 	Jilt
 	Jens
-	Janson
+	Jon
 	Knut
+	Kristian
+	Kjell
 	Lars
 	Magnus
+	Martin
 	Nicolaas
 	Nils
 	Ottar
+	Olav
+	Olaf
 	Ole-Gunnar 
 	Soeren
+	Sven
+	Tor
 	Ragnar
 	Royd
+	Rune
 	Ulf
 	}
-//===================
-// TODO: Please do not use "...son" or "...dottir" as a family name yet, they are male/female-spezific. This is not yet implemented. A lastname_female and lastname_male list should fix this.
-// Until this works please list the names below as a comment:
-// Gustavson, Andersson, Eriksson, Hanson, Jenson, Larson, Sorenson
-//===================
+
 	lastname
 	{
+	Aas
+	Berg
 	"De Boer"
 	Fidjestoel
+	Hagen
+	Haugen
 	Heyerdal
 	Hjelset
 	Lerby
+	Lie
+	Lund
 	Nelson
 	Salhoff
+	Skog
 	"Van Aken"
 	"Van Eych"
 	Vanderveer
+	Vik
 	Zeeman
+// "...son" or "...dottir" names:
+	Andersson
+	Eriksson
+	Gustavson
+	Hanson
+	Jenson
+	Larson
+	Sorenson
 	}
 }
 
