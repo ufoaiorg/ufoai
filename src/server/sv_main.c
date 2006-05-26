@@ -916,15 +916,13 @@ void SV_Init (void)
 	SV_InitOperatorCommands	();
 
 	rcon_password = Cvar_Get ("rcon_password", "", 0);
-	Cvar_Get ("skill", "1", 0);
+//	Cvar_Get ("skill", "1", 0);
 	Cvar_Get ("deathmatch", "0", CVAR_LATCH);
-	Cvar_Get ("coop", "0", CVAR_LATCH);
-	Cvar_Get ("fraglimit", "0", CVAR_SERVERINFO);
 	Cvar_Get ("timelimit", "0", CVAR_SERVERINFO);
 	Cvar_Get ("cheats", "0", CVAR_SERVERINFO|CVAR_LATCH);
 	Cvar_Get ("protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO|CVAR_NOSET);;
 	sv_maxclients = Cvar_Get ("maxclients", "1", CVAR_SERVERINFO );
-	hostname = Cvar_Get ("hostname", "noname", CVAR_SERVERINFO | CVAR_ARCHIVE);
+	hostname = Cvar_Get ("hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE);
 	timeout = Cvar_Get ("timeout", "125", 0);
 	zombietime = Cvar_Get ("zombietime", "2", 0);
 	sv_showclamp = Cvar_Get ("showclamp", "0", 0);

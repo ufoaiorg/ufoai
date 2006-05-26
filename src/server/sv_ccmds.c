@@ -374,7 +374,7 @@ void SV_WriteServerFile (qboolean autosave)
 	fwrite (svs.mapcmd, 1, sizeof(svs.mapcmd), f);
 
 	// write all CVAR_LATCH cvars
-	// these will be things like coop, skill, deathmatch, etc
+	// these will be things like skill, deathmatch, etc
 	for (var = cvar_vars ; var ; var=var->next)
 	{
 		if (!(var->flags & CVAR_LATCH))
@@ -429,7 +429,7 @@ void SV_ReadServerFile (void)
 	FS_Read (mapcmd, sizeof(mapcmd), f);
 
 	// read all CVAR_LATCH cvars
-	// these will be things like coop, skill, deathmatch, etc
+	// these will be things like skill, deathmatch, etc
 	while (1)
 	{
 		if (!fread (name, 1, sizeof(name), f))

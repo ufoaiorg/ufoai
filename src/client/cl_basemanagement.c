@@ -800,7 +800,7 @@ void B_BuildingClick_f( void )
 {
 	int	num, i;
 
-	if ( Cmd_Argc() < 2 )
+	if ( Cmd_Argc() < 2 || ! baseCurrent )
 		return;
 
 	//which building?

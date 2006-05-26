@@ -890,10 +890,6 @@ void SV_Map (qboolean attractloop, char *levelstring, qboolean loadgame)
 	else
 		Cvar_Set ("nextserver", "");
 
-	//ZOID special hack for end game screen in coop mode
-	if (Cvar_VariableValue ("coop") && !Q_stricmp(level, "victory.pcx"))
-		Cvar_Set ("nextserver", "gamemap \"*base1\"");
-
 	// skip the end-of-unit flag if necessary
 	if (level[0] == '*')
 		Q_strncpyz (level, level+1, MAX_QPATH);

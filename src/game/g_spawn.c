@@ -520,25 +520,17 @@ Only used for the world.
 "sounds"	music cd track number
 "gravity"	800 is default gravity
 "message"	text to print at user logon
+"maxlevel"	max. level to use in the map
 */
 void SP_worldspawn (edict_t *ent)
 {
 	ent->solid = SOLID_BSP;
 	ent->inuse = qtrue; // since the world doesn't use G_Spawn()
 
-	//---------------
-
-	// reserve some spots for dead player bodies for coop / deathmatch
-	//InitBodyQue ();
-
-	// set configstrings for items
-	//SetItemNames ();
-
 	if (st.nextmap)
 		strcpy (level.nextmap, st.nextmap);
 
 	// make some data visible to the server
-
 	if (ent->message && ent->message[0])
 	{
 		gi.configstring (CS_NAME, ent->message);

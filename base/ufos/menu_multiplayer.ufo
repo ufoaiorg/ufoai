@@ -843,58 +843,17 @@ menu mp_create_server
         }
 
         // ===================
-        // ALLOW_DOWNLOAD
-        // ===================
-        string download_str
-        {
-                string  "_Allow Download:"
-                pos     "500 280"
-        }
-        string download_value
-        {
-                string  "*cvar mn_download"
-                pos     "840 280"
-                align   ur
-        }
-        pic download_dec
-        {
-                image   menu/buttons_small
-                pos     "868 278"
-                texl    "0 0"
-                texh    "16 16"
-                mousefx true
-                click
-                {
-                        cmd "mn_modify allow_download -1 0 1;"
-                        cmd "mn_translate allow_download mn_download 0:No,1:Yes;"
-                }
-        }
-        pic download_inc
-        {
-                image   menu/buttons_small
-                pos     "884 278"
-                texl    "16 0"
-                texh    "32 16"
-                mousefx true
-                click
-                {
-                        cmd "mn_modify allow_download +1 0 1;"
-                        cmd "mn_translate allow_download mn_download 0:No,1:Yes;"
-                }
-        }
-
-        // ===================
         // AI_NUMACTORS
         // ===================
         string ai_numactors_str
         {
                 string  "_Max. AI actors:"
                 pos     "500 300"
-                tooltip	"_Max AI actors for coop mode"
+                tooltip	"_Max AI actors for teamplay mode"
         }
         string ai_numactors_value
         {
-                string  "*cvar mn_ai_numactors"
+                string  "*cvar ai_numactors"
                 pos     "840 300"
                 align   ur
         }
@@ -905,7 +864,7 @@ menu mp_create_server
                 texl    "0 0"
                 texh    "16 16"
                 mousefx true
-                click   { cmd "mn_modify mn_ai_numactors -1 0 8;" }
+                click   { cmd "mn_modify ai_numactors -1 0 8;" }
         }
         pic ai_numactors_inc
         {
@@ -914,7 +873,7 @@ menu mp_create_server
                 texl    "16 0"
                 texh    "32 16"
                 mousefx true
-                click   { cmd "mn_modify mn_ai_numactors +1 0 8;" }
+                click   { cmd "mn_modify ai_numactors +1 0 8;" }
         }
 
         // ===================
@@ -1080,7 +1039,6 @@ menu mp_create_server
                 cmd "getmaps;"
                 cmd "mn_modify sv_teamplay -1 0 1;"
                 cmd "mn_translate dedicated mn_dedicated 0:No,1:Yes;"
-                cmd "mn_translate allow_download mn_download 0:No,1:Yes;"
                 cmd "mn_translate sv_teamplay mn_teamplay 0:No,1:Yes;"
                 cmd "mn_translate sv_enablemorale mn_enablemorale 0:No,1:Yes;"
         }

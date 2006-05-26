@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -53,6 +53,7 @@ SV_New_f
 
 Sends the first message from the server to a connected client.
 This will be sent on the initial connection and upon each server load.
+Client reads via CL_ParseServerData in cl_parse.c
 ================
 */
 void SV_New_f (void)
@@ -100,14 +101,13 @@ void SV_New_f (void)
 
 	//
 	// game server
-	// 
+	//
 	if (sv.state == ss_game)
 	{
 		// begin fetching configstrings
 		MSG_WriteByte (&sv_client->netchan.message, svc_stufftext);
 		MSG_WriteString (&sv_client->netchan.message, va("cmd configstrings %i 0\n",svs.spawncount) );
 	}
-
 }
 
 /*
@@ -134,12 +134,11 @@ void SV_Configstrings_f (void)
 		SV_New_f ();
 		return;
 	}
-	
+
 	start = atoi(Cmd_Argv(2));
 
 	// write a packet full of data
-
-	while ( sv_client->netchan.message.cursize < MAX_MSGLEN/2 
+	while ( sv_client->netchan.message.cursize < MAX_MSGLEN/2
 		&& start < MAX_CONFIGSTRINGS)
 	{
 		if (sv.configstrings[start][0])
@@ -152,7 +151,6 @@ void SV_Configstrings_f (void)
 	}
 
 	// send next command
-
 	if (start == MAX_CONFIGSTRINGS)
 	{
 		MSG_WriteByte (&sv_client->netchan.message, svc_stufftext);
@@ -184,7 +182,7 @@ void SV_Begin_f (void)
 	}
 
 	sv_client->state = cs_spawned;
-	
+
 	// call the game begin function
 	ge->ClientBegin (sv_player);
 
@@ -203,7 +201,7 @@ The client is going to disconnect, so remove the connection immediately
 void SV_Disconnect_f (void)
 {
 //	SV_EndRedirect ();
-	SV_DropClient (sv_client);	
+	SV_DropClient (sv_client);
 }
 
 
@@ -220,13 +218,25 @@ void SV_ShowServerinfo_f (void)
 }
 
 
+/*
+==================
+SV_Nextserver
+
+This variable holds the name of the next alias to be executed.
+A looping series of aliases is created which look something like
+'alias l1 "somecommandhere; set nextserver l2"'
+and
+'alias l2 "someothercommandhere; set nextserver l1"'.
+These two aliases would loop the commands until a key is pressed.
+==================
+*/
 void SV_Nextserver (void)
 {
 	char	*v;
 
-	//ZOID, ss_pic can be nextserver'd in coop mode
-	if (sv.state == ss_game || (sv.state == ss_pic && !Cvar_VariableValue("coop")))
-		return;		// can't nextserver while playing a normal game
+	// can't nextserver while playing a normal game
+	if (sv.state == ss_game )
+		return;
 
 	svs.spawncount++;	// make sure another doesn't sneak in
 	v = Cvar_VariableString ("nextserver");
@@ -277,7 +287,7 @@ ucmd_t ucmds[] =
 
 	{"disconnect", SV_Disconnect_f},
 
-	// issued by hand at client consoles	
+	// issued by hand at client consoles
 	{"info", SV_ShowServerinfo_f},
 
 	{NULL, NULL}
@@ -291,7 +301,7 @@ SV_ExecuteUserCommand
 void SV_ExecuteUserCommand (char *s)
 {
 	ucmd_t	*u;
-	
+
 	Cmd_TokenizeString (s, qfalse);
 	sv_player = sv_client->player;
 
@@ -325,11 +335,7 @@ void SV_ExecuteClientMessage (client_t *cl)
 	int		c;
 	char	*s;
 
-//	int		net_drop;
 	int		stringCmdCount;
-//	int		checksum, calculatedChecksum;
-//	int		checksumIndex;
-//	int		lastframe;
 
 	sv_client = cl;
 	sv_player = sv_client->player;
@@ -345,19 +351,19 @@ void SV_ExecuteClientMessage (client_t *cl)
 				    net_message.readcount, net_message.cursize);
 			SV_DropClient (cl);
 			return;
-		}	
+		}
 
 		c = MSG_ReadByte (&net_message);
 		if (c == -1)
 			break;
-				
+
 		switch (c)
 		{
 		default:
 			Com_Printf ("SV_ExecuteClientMessage: unknown command char '%d'\n", c);
 			SV_DropClient (cl);
 			return;
-						
+
 		case clc_nop:
 			break;
 
@@ -366,7 +372,7 @@ void SV_ExecuteClientMessage (client_t *cl)
 			SV_UserinfoChanged (cl);
 			break;
 
-		case clc_stringcmd:	
+		case clc_stringcmd:
 			s = MSG_ReadString (&net_message);
 
 			// malicious users may try using too many string commands

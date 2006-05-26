@@ -119,7 +119,7 @@ void InitGame (void)
 	ai_equipment = gi.cvar ("ai_equipment", "standard", 0);
 	ai_numaliens = gi.cvar ("ai_numaliens", "8", 0 );
 	ai_numcivilians = gi.cvar ("ai_numcivilians", "8", 0 );
-	ai_numactors = gi.cvar ("ai_numactors", "8", 0 );
+	ai_numactors = gi.cvar ("ai_numactors", "8", CVAR_ARCHIVE );
 	ai_autojoin = gi.cvar ("ai_autojoin", "0", 0 );
 
 	difficulty = gi.cvar ("difficulty", "-1", CVAR_ARCHIVE | CVAR_LATCH);
