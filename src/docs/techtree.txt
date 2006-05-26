@@ -1,4 +1,4 @@
-This are drafts of technology descriptions that will mostly probably get into the game.
+﻿This are drafts of technology descriptions that will mostly probably get into the game.
 
 The "researchtime" given is the time that one scientist would need to research the item i.e. the maximum time to complete the research with no pauses.
 
@@ -44,18 +44,62 @@ researchtime 80 days
 initial technology
 
 [nano_txt]
-Nanotechnolgoy opens up a wide field of new production methods especially in the design and production of armor and fabric.By using nanotechnology it will be possible to create materials nearly completely made of fullerenes (geodesic domes at an atomic level) and use them fabricate armor that is more robust and has higher heat resistance than any known material before. Not also that, but these materials would also be lighter than comperable conventional ones.
+Nano technology opens up a wide field of new production methods especially in the design and production of armor and fabric. By using nano technology it will be possible to create materials nearly completely made of fullerenes (geodesic domes at an atomic level) and use them fabricate armor that is more robust and has higher heat resistance than any known material before. Not only that, but these materials would also be lighter than similar conventional materials.
 
 #####################################################################
-Advanced Armor Fabrics
+Fullerene Armor
 
-<TODO>
+researchtime 200 days
+requires "Nanotech"
+
+[fullerine_armor_txt]
+Using a light-weight, fabric made up of linked fullerine rings like nano-scale chain-mail, this armor is virtually indestructible. Physical impacts will be spread across the surrounding area, reducing the overall damage done to the wearer. Energy attacks will be rapidly disappated away from the point of impact and spread across the surface of the suit, then gradually radiated away.
+
+Development notes:
+This it the required technology for the "medium" armor that is currently in the game.
+
+#####################################################################
+Active-Surface Armor (i.e Alien based armor)
+
+researchtime 300 days
+requires "Fullerine Armor"
+[TODO] requires "Alien Armor" OR "Alien Nanite Techology"
+
+[active_surface_armor_txt]
+Based on fullerine armor but thicker, heavier and incorporating active nanites in the fabric of the suit. Under normal conditions the material behaves like thick leather - however, upon physical impact the nanites react instantly, stiffening the material of the suit to provide protection equivalent to 10mm plate steel. Energy attacks are disappated throughout the fabric of the suit and then away from it in the most efficient manner available, either through the ground or (if not possible) into the surrounding air.
+
+Development notes:
+Should be the requried technology to produce stronger battlesuits (e.g "Active-Surface Armorsuit") and ship hulls.
 
 #####################################################################
 General UFO technology
 
 [ufo_txt]
 <TODO>
+
+#####################################################################
+### Will not get included. Please ask in the forums if you really want to use it. ###
+General UFO technology
+
+requires_research "UFO Engine"
+requires_research "UFO Power Source"
+requires_research "UFO Navigation Computer"
+requires_research "UFO Control Interface"
+
+[ufo_txt]
+The alien UFOs take their power directly from the fabric of space 
+itself using a technology we are currently unable to reproduce ourselves. 
+Control is via a dir
+ect neural interface based on psionic technology. The engines distort 
+space, cre
+ating a wave in 4-dimensional space and riding the leading edge.
+
+TODO: 2 different engines? Distortion engine only operates in space, 
+away from the gravity well of planets. Perhaps the distortion engine 
+could just be on a mothership, which sends down UFOs with in-well engines? 
+Could have a gateway out be
+yond the solar-system in deep space which takes them back to their own 
+system instantaneously.
 
 #####################################################################
 ### Will not get included. Please ask in the forums if you really want to use it. ###
@@ -200,9 +244,10 @@ provides "Dark Radar" (building)
 
 #####################################################################
 Writers/Credits:
-* Werner H�rer
+* Werner "hoehrer" Höhrer
 * ProtoArmor
 * Virtul
+* Tom "thomash833152" Hudson
 
 See also
 * aircrafts.txt - Phalanx aircrafts descriptions
