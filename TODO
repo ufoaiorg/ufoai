@@ -13,10 +13,14 @@ it's more of a roadmap.
 
 
 =================================================
-Tasks for the next release
+Tasks for future releases
 
-* Pre- and post-research descriptions.
+* [Hoehrer] Pre- and post-research descriptions.
 * Some kinda "target-list" for the geoscape that lists all the available ufos/locations in a nice list and let you select them in the map.
+** This is related to FR #1489070: Make missions appear a minimum distance from a base.
+** Additional to the global list a 'per-click list' would be cool. e.g.: If multiple targets are in the same spot popup a list with only these entries.
+* [Hoehrer] Add an event system (id/message+type/year+day are defined) and integrate it into the research-system, the current messag esystem and the ufopedia ("news").
+* FR #1493721: Change of building-selection (building info)
 
 =================================================
 Tasks for TechDemo3
