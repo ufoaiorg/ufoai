@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-05-22 19:42+0200\n"
-"PO-Revision-Date: 2006-05-26 10:41+0100\n"
+"PO-Revision-Date: 2006-05-26 11:17+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1669,7 +1669,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "2084 - A time of relative peace has finally come to Earth. Old wars have been fought out, old borders have been broken and new ones esablished, and governments have stabilized. Former nations and super-nations have coalesced into major political powers and the remaining lone nations are working together closely. Prosperity is no longer a stranger to many of the peoples of Earth as it once was in the 20th century, and the population now trusts its leaders to maintain the balance of power and carry them forward into a tranquil, thriving 22nd century."
+msgstr "2084 - A time of relative peace has finally come to Earth. Old wars have been fought out, old borders have been broken and new ones established, and governments have stabilized. Former nations and super-nations have coalesced into major political powers and the remaining lone nations are working together closely. Prosperity is no longer a stranger to many of the peoples of Earth as it once was in the 20th century, and the population now trusts its leaders to maintain the balance of power and carry them forward into a tranquil, thriving 22nd century."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
