@@ -60,7 +60,6 @@ typedef struct
 
 
 #define	SURF_PLANEBACK		2
-#define	SURF_DRAWSKY		4
 #define SURF_DRAWTURB		0x10
 #define SURF_DRAWBACKGROUND	0x40
 #define SURF_UNDERWATER		0x80

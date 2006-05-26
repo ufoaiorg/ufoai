@@ -112,10 +112,6 @@ typedef struct client_s
 	sizebuf_t		datagram;
 	byte			datagram_buf[MAX_MSGLEN];
 
-	byte			*download;			// file being downloaded
-	int				downloadsize;		// total bytes (can't use EOF because of paks)
-	int				downloadcount;		// bytes sent
-
 	int				lastmessage;		// sv.framenum when packet was last received
 	int				lastconnect;
 

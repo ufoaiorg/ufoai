@@ -38,7 +38,6 @@ char *svc_strings[256] =
 	"svc_configstring",
 	"svc_spawnbaseline",
 	"svc_centerprint",
-	"svc_download",
 	"svc_playerinfo",
 	"svc_event"
 };
@@ -196,124 +195,6 @@ int impactTime;
 
 //=============================================================================
 
-void CL_DownloadFileName(char *dest, int destlen, char *fn)
-{
-	if (Q_strncmp(fn, "players", 7) == 0)
-		Com_sprintf (dest, destlen, "%s/%s", BASEDIRNAME, fn);
-	else
-		Com_sprintf (dest, destlen, "%s/%s", FS_Gamedir(), fn);
-}
-
-/*
-===============
-CL_CheckOrDownloadFile
-
-Returns true if the file exists, otherwise it attempts
-to start a download from the server.
-===============
-*/
-qboolean CL_CheckOrDownloadFile (char *filename)
-{
-	FILE *fp;
-	char	name[MAX_OSPATH];
-
-	if (strstr (filename, ".."))
-	{
-		Com_Printf ("Refusing to download a path with ..\n");
-		return qtrue;
-	}
-
-	if (FS_LoadFile (filename, NULL) != -1)
-	{	// it exists, no need to download
-		return qtrue;
-	}
-
-	strcpy (cls.downloadname, filename);
-
-	// download to a temp name, and only rename
-	// to the real name when done, so if interrupted
-
-	// a runt file wont be left
-	COM_StripExtension (cls.downloadname, cls.downloadtempname);
-	strcat (cls.downloadtempname, ".tmp");
-
-	// check to see if we already have a tmp for this file, if so, try to resume
-	// open the file if not opened yet
-	CL_DownloadFileName(name, sizeof(name), cls.downloadtempname);
-
-	FS_CreatePath (name);
-
-	fp = fopen (name, "r+b");
-	if (fp) { // it exists
-		int len;
-		fseek(fp, 0, SEEK_END);
-		len = ftell(fp);
-
-		cls.download = fp;
-
-		// give the server an offset to start the download
-		Com_Printf ("Resuming %s\n", cls.downloadname);
-		MSG_WriteByte (&cls.netchan.message, clc_stringcmd);
-		MSG_WriteString (&cls.netchan.message,
-			va("download %s %i", cls.downloadname, len));
-	} else {
-		Com_Printf ("Downloading %s\n", cls.downloadname);
-		MSG_WriteByte (&cls.netchan.message, clc_stringcmd);
-		MSG_WriteString (&cls.netchan.message,
-			va("download %s", cls.downloadname));
-	}
-
-	cls.downloadnumber++;
-
-	return qfalse;
-}
-
-/*
-===============
-CL_Download_f
-
-Request a download from the server
-===============
-*/
-void	CL_Download_f (void)
-{
-	char filename[MAX_OSPATH];
-
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: download <filename>\n");
-		return;
-	}
-
-	Com_sprintf(filename, sizeof(filename), "%s", Cmd_Argv(1));
-
-	if (strstr (filename, ".."))
-	{
-		Com_Printf ("Refusing to download a path with ..\n");
-		return;
-	}
-
-	if (FS_LoadFile (filename, NULL) != -1)
-	{	// it exists, no need to download
-		Com_Printf( "File already exists.\n" );
-		return;
-	}
-
-	strcpy (cls.downloadname, filename);
-	Com_Printf ( "Downloading %s\n", cls.downloadname);
-
-	// download to a temp name, and only rename
-	// to the real name when done, so if interrupted
-	// a runt file wont be left
-	COM_StripExtension (cls.downloadname, cls.downloadtempname);
-	strcat (cls.downloadtempname, ".tmp");
-
-	MSG_WriteByte (&cls.netchan.message, clc_stringcmd);
-	MSG_WriteString (&cls.netchan.message,
-		va("download %s", cls.downloadname));
-
-	cls.downloadnumber++;
-}
-
 /*
 ======================
 CL_RegisterSounds
@@ -344,99 +225,6 @@ void CL_RegisterSounds (void)
 
 	S_EndRegistration ();
 }
-
-
-/*
-=====================
-CL_ParseDownload
-
-A download message has been received from the server
-=====================
-*/
-void CL_ParseDownload (void)
-{
-	int		size, percent;
-	char	name[MAX_OSPATH];
-	int		r;
-
-	// read the data
-	size = MSG_ReadShort (&net_message);
-	percent = MSG_ReadByte (&net_message);
-	if (size == -1)
-	{
-		Com_Printf ("Server does not have this file.\n");
-		if (cls.download)
-		{
-			// if here, we tried to resume a file but the server said no
-			fclose (cls.download);
-			cls.download = NULL;
-		}
-		CL_RequestNextDownload ();
-		return;
-	}
-
-	// open the file if not opened yet
-	if (!cls.download)
-	{
-		CL_DownloadFileName(name, sizeof(name), cls.downloadtempname);
-
-		FS_CreatePath (name);
-
-		cls.download = fopen (name, "wb");
-		if (!cls.download)
-		{
-			net_message.readcount += size;
-			Com_Printf ("Failed to open %s\n", cls.downloadtempname);
-			CL_RequestNextDownload ();
-			return;
-		}
-	}
-
-	fwrite (net_message.data + net_message.readcount, 1, size, cls.download);
-	net_message.readcount += size;
-
-	if (percent != 100)
-	{
-		// request next block
-		// change display routines by zoid
-#if 0
-		Com_Printf (".");
-		if (10*(percent/10) != cls.downloadpercent)
-		{
-			cls.downloadpercent = 10*(percent/10);
-			Com_Printf ("%i%%", cls.downloadpercent);
-		}
-#endif
-		cls.downloadpercent = percent;
-
-		MSG_WriteByte (&cls.netchan.message, clc_stringcmd);
-		SZ_Print (&cls.netchan.message, "nextdl");
-	}
-	else
-	{
-		char	oldn[MAX_OSPATH];
-		char	newn[MAX_OSPATH];
-
-//		Com_Printf ("100%%\n");
-
-		fclose (cls.download);
-
-		// rename the temp file to it's final name
-		CL_DownloadFileName(oldn, sizeof(oldn), cls.downloadtempname);
-		CL_DownloadFileName(newn, sizeof(newn), cls.downloadname);
-		r = rename (oldn, newn);
-		if (r)
-			Com_Printf ("failed to rename.\n");
-
-		cls.download = NULL;
-		cls.downloadpercent = 0;
-
-		// get another file if needed
-
-		CL_RequestNextDownload ();
-	}
-}
-
 
 /*
 =====================================================================
@@ -1448,11 +1236,6 @@ void CL_ParseServerMessage (void)
 
 		case svc_reconnect:
 			Com_Printf ("Server disconnected, reconnecting\n");
-			if (cls.download) {
-				//ZOID, close download
-				fclose (cls.download);
-				cls.download = NULL;
-			}
 			cls.state = ca_connecting;
 			cls.connect_time = -99999;	// CL_CheckForResend() will fire immediately
 			break;
@@ -1490,10 +1273,6 @@ void CL_ParseServerMessage (void)
 
 		case svc_sound:
 			CL_ParseStartSoundPacket();
-			break;
-
-		case svc_download:
-			CL_ParseDownload ();
 			break;
 
 		case svc_layout:

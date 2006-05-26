@@ -213,14 +213,6 @@ typedef enum {
 	ca_active			// game views should be displayed
 } connstate_t;
 
-typedef enum {
-	dl_none,
-	dl_model,
-	dl_sound,
-	dl_skin,
-	dl_single
-} dltype_t;		// download type
-
 typedef enum {key_game, key_console, key_message} keydest_t;
 
 typedef struct
@@ -252,13 +244,6 @@ typedef struct
 	int			serverProtocol;		// in case we are doing some kind of version hack
 
 	int			challenge;			// from the server to use for connecting
-
-	FILE		*download;			// file transfer from server
-	char		downloadtempname[MAX_OSPATH];
-	char		downloadname[MAX_OSPATH];
-	int			downloadnumber;
-	dltype_t	downloadtype;
-	int			downloadpercent;
 
 	// demo recording info must be here, so it isn't cleared on level change
 	qboolean	demorecording;
@@ -375,7 +360,6 @@ extern	netadr_t	net_from;
 
 void DrawString (int x, int y, char *s);
 void DrawAltString (int x, int y, char *s);	// toggle high bit
-qboolean	CL_CheckOrDownloadFile (char *filename);
 
 void CL_AddNetgraph (void);
 
@@ -487,7 +471,6 @@ void CL_Disconnect_f (void);
 void CL_GetChallengePacket (void);
 void CL_PingServers_f (void);
 void CL_Snd_Restart_f (void);
-void CL_RequestNextDownload (void);
 
 //
 // cl_input
@@ -1011,7 +994,6 @@ void CL_ParseServerMessage (void);
 void CL_LoadClientinfo (clientinfo_t *ci, char *s);
 void SHOWNET(char *s);
 void CL_ParseClientinfo (int player);
-void CL_Download_f (void);
 void CL_InitEvents (void);
 void CL_Events (void);
 

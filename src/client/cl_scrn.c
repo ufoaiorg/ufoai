@@ -331,43 +331,6 @@ void SCR_SizeDown_f (void)
 	Cvar_SetValue ("viewsize",scr_viewsize->value-10);
 }
 
-/*
-=================
-SCR_Sky_f
-
-Set a specific sky and rotation speed
-=================
-*/
-void SCR_Sky_f (void)
-{
-	float	rotate;
-	vec3_t	axis;
-
-	if (Cmd_Argc() < 2)
-	{
-		Com_Printf ("Usage: sky <basename> <rotate> <axis x y z>\n");
-		return;
-	}
-	if (Cmd_Argc() > 2)
-		rotate = atof(Cmd_Argv(2));
-	else
-		rotate = 0;
-	if (Cmd_Argc() == 6)
-	{
-		axis[0] = atof(Cmd_Argv(3));
-		axis[1] = atof(Cmd_Argv(4));
-		axis[2] = atof(Cmd_Argv(5));
-	}
-	else
-	{
-		axis[0] = 0;
-		axis[1] = 0;
-		axis[2] = 1;
-	}
-
-	re.SetSky (Cmd_Argv(1), rotate, axis);
-}
-
 //============================================================================
 
 /*
@@ -399,7 +362,6 @@ void SCR_Init (void)
 	Cmd_AddCommand ("loading",SCR_Loading_f);
 	Cmd_AddCommand ("sizeup",SCR_SizeUp_f);
 	Cmd_AddCommand ("sizedown",SCR_SizeDown_f);
-	Cmd_AddCommand ("sky",SCR_Sky_f);
 
 	SCR_TouchPics ();
 

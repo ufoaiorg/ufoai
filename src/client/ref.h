@@ -274,7 +274,6 @@ typedef struct
 	struct image_s *(*RegisterSkin) (char *name);
 
 	struct image_s *(*RegisterPic) (char *name);
-	void	(*SetSky) (char *name, float rotate, vec3_t axis);
 	void	(*EndRegistration) (void);
 
 	void	(*RenderFrame) (refdef_t *fd);

@@ -569,15 +569,6 @@ void CL_PrepRefresh (void)
 		Com_Printf ("                                     \r");
 	}
 
-	// set sky textures and speed
-/*	Com_Printf ("sky\r", i);
-	SCR_UpdateScreen ();
-	rotate = atof (cl.configstrings[CS_SKYROTATE]);
-	sscanf (cl.configstrings[CS_SKYAXIS], "%f %f %f",
-		&axis[0], &axis[1], &axis[2]);
-	re.SetSky (cl.configstrings[CS_SKY], rotate, axis);
-	Com_Printf ("                                     \r");*/
-
 	// the renderer can now free unneeded stuff
 	re.EndRegistration ();
 

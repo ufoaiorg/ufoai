@@ -79,9 +79,6 @@ field_t fields[] = {
 
 	//need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves
 	{"gravity", STOFS(gravity), F_LSTRING, FFL_SPAWNTEMP},
-	{"sky", STOFS(sky), F_LSTRING, FFL_SPAWNTEMP},
-	{"skyrotate", STOFS(skyrotate), F_FLOAT, FFL_SPAWNTEMP},
-	{"skyaxis", STOFS(skyaxis), F_VECTOR, FFL_SPAWNTEMP},
 	{"minyaw", STOFS(minyaw), F_FLOAT, FFL_SPAWNTEMP},
 	{"maxyaw", STOFS(maxyaw), F_FLOAT, FFL_SPAWNTEMP},
 	{"minpitch", STOFS(minpitch), F_FLOAT, FFL_SPAWNTEMP},
@@ -520,9 +517,6 @@ void SP_func_breakable (edict_t *self)
 /*QUAKED worldspawn (0 0 0) ?
 
 Only used for the world.
-"sky"	environment map name
-"skyaxis"	vector axis for rotating sky
-"skyrotate"	speed of rotation in degrees/second
 "sounds"	music cd track number
 "gravity"	800 is default gravity
 "message"	text to print at user logon
@@ -552,16 +546,6 @@ void SP_worldspawn (edict_t *ent)
 	}
 	else
 		Q_strncpyz (level.level_name, level.mapname, sizeof(level.level_name));
-
-/*	if (st.sky && st.sky[0])
-		gi.configstring (CS_SKY, st.sky);
-	else
-		gi.configstring (CS_SKY, "unit1_");
-
-	gi.configstring (CS_SKYROTATE, va("%f", st.skyrotate) );
-
-	gi.configstring (CS_SKYAXIS, va("%f %f %f",
-		st.skyaxis[0], st.skyaxis[1], st.skyaxis[2]) );*/
 
 	gi.configstring (CS_CDTRACK, va("%i", ent->sounds) );
 

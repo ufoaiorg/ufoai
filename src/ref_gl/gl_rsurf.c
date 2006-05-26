@@ -532,7 +532,7 @@ void R_RenderBrushPoly (msurface_t *fa)
 dynamic:
 		if ( gl_dynamic->value )
 		{
-			if (!( fa->texinfo->flags & (SURF_SKY|SURF_TRANS33|SURF_TRANS66|SURF_WARP ) ) )
+			if (!( fa->texinfo->flags & (SURF_TRANS33|SURF_TRANS66|SURF_WARP ) ) )
 			{
 				is_dynamic = qtrue;
 			}
@@ -723,7 +723,7 @@ static void GL_RenderLightmappedPoly( msurface_t *surf )
 dynamic:
 		if ( gl_dynamic->value )
 		{
-			if ( !(surf->texinfo->flags & (SURF_SKY|SURF_TRANS33|SURF_TRANS66|SURF_WARP ) ) )
+			if ( !(surf->texinfo->flags & (SURF_TRANS33|SURF_TRANS66|SURF_WARP ) ) )
 			{
 				is_dynamic = qtrue;
 			}
@@ -1100,11 +1100,7 @@ void R_RecursiveWorldNode (mnode_t *node)
 		if ( (surf->flags & SURF_PLANEBACK) != sidebit )
 			continue;		// wrong side
 
-		if (surf->texinfo->flags & SURF_SKY)
-		{	// just adds to visible sky bounds
-			R_AddSkySurface (surf);
-		}
-		else if (surf->texinfo->flags & (SURF_TRANS33|SURF_TRANS66))
+		if (surf->texinfo->flags & (SURF_TRANS33|SURF_TRANS66))
 		{	// add to the translucent chain
 			surf->texturechain = r_alpha_surfaces;
 			r_alpha_surfaces = surf;
@@ -1443,7 +1439,7 @@ void GL_CreateSurfaceLightmap (msurface_t *surf)
 	int		smax, tmax;
 	byte	*base;
 
-	if (surf->flags & (SURF_DRAWSKY|SURF_DRAWTURB))
+	if (surf->flags & SURF_DRAWTURB)
 		return;
 
 	smax = (surf->extents[0]>>surf->lquant)+1;

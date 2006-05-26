@@ -191,125 +191,7 @@ void SV_Begin_f (void)
 	Cbuf_InsertFromDefer ();
 }
 
-//=============================================================================
-
-/*
-==================
-SV_NextDownload_f
-==================
-*/
-void SV_NextDownload_f (void)
-{
-	int		r;
-	int		percent;
-	int		size;
-
-	if (!sv_client->download)
-		return;
-
-	r = sv_client->downloadsize - sv_client->downloadcount;
-	if (r > 1024)
-		r = 1024;
-
-	MSG_WriteByte (&sv_client->netchan.message, svc_download);
-	MSG_WriteShort (&sv_client->netchan.message, r);
-
-	sv_client->downloadcount += r;
-	size = sv_client->downloadsize;
-	if (!size)
-		size = 1;
-	percent = sv_client->downloadcount*100/size;
-	MSG_WriteByte (&sv_client->netchan.message, percent);
-	SZ_Write (&sv_client->netchan.message,
-		sv_client->download + sv_client->downloadcount - r, r);
-
-	if (sv_client->downloadcount != sv_client->downloadsize)
-		return;
-
-	FS_FreeFile (sv_client->download);
-	sv_client->download = NULL;
-}
-
-/*
-==================
-SV_BeginDownload_f
-==================
-*/
-void SV_BeginDownload_f(void)
-{
-	char	*name;
-	extern	cvar_t *allow_download;
-	extern	cvar_t *allow_download_players;
-	extern	cvar_t *allow_download_models;
-	extern	cvar_t *allow_download_sounds;
-	extern	cvar_t *allow_download_maps;
-	extern	int		file_from_pak; // ZOID did file come from pak?
-	int offset = 0;
-
-	name = Cmd_Argv(1);
-
-	if (Cmd_Argc() > 2)
-		offset = atoi(Cmd_Argv(2)); // downloaded offset
-
-	// hacked by zoid to allow more conrol over download
-	// first off, no .. or global allow check
-	if (strstr (name, "..") || !allow_download->value
-		// leading dot is no good
-		|| *name == '.' 
-		// leading slash bad as well, must be in subdir
-		|| *name == '/'
-		// next up, skin check
-		|| (strncmp(name, "players/", 8) == 0 && !allow_download_players->value)
-		// now models
-		|| (strncmp(name, "models/", 7) == 0 && !allow_download_models->value)
-		// now sounds
-		|| (strncmp(name, "sound/", 6) == 0 && !allow_download_sounds->value)
-		// now maps (note special case for maps, must not be in pak)
-		|| (strncmp(name, "maps/", 5) == 0 && !allow_download_maps->value)
-		// MUST be in a subdirectory	
-		|| !strstr (name, "/") )	
-	{	// don't allow anything with .. path
-		MSG_WriteByte (&sv_client->netchan.message, svc_download);
-		MSG_WriteShort (&sv_client->netchan.message, -1);
-		MSG_WriteByte (&sv_client->netchan.message, 0);
-		return;
-	}
-
-
-	if (sv_client->download)
-		FS_FreeFile (sv_client->download);
-
-	sv_client->downloadsize = FS_LoadFile (name, (void **)&sv_client->download);
-	sv_client->downloadcount = offset;
-
-	if (offset > sv_client->downloadsize)
-		sv_client->downloadcount = sv_client->downloadsize;
-
-	if (!sv_client->download
-		// special check for maps, if it came from a pak file, don't allow
-		// download  ZOID
-		|| (strncmp(name, "maps/", 5) == 0 && file_from_pak))
-	{
-		Com_DPrintf ("Couldn't download %s to %s\n", name, sv_client->name);
-		if (sv_client->download) {
-			FS_FreeFile (sv_client->download);
-			sv_client->download = NULL;
-		}
-
-		MSG_WriteByte (&sv_client->netchan.message, svc_download);
-		MSG_WriteShort (&sv_client->netchan.message, -1);
-		MSG_WriteByte (&sv_client->netchan.message, 0);
-		return;
-	}
-
-	SV_NextDownload_f ();
-	Com_DPrintf ("Downloading %s to %s\n", name, sv_client->name);
-}
-
-
-
 //============================================================================
-
 
 /*
 =================
@@ -397,9 +279,6 @@ ucmd_t ucmds[] =
 
 	// issued by hand at client consoles	
 	{"info", SV_ShowServerinfo_f},
-
-	{"download", SV_BeginDownload_f},
-	{"nextdl", SV_NextDownload_f},
 
 	{NULL, NULL}
 };

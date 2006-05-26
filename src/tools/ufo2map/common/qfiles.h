@@ -354,7 +354,7 @@ typedef struct
 
 #define	SURF_SLICK		0x2		// effects game physics
 
-#define	SURF_SKY		0x4		// don't draw, but add to skybox
+#define	SURF_SKY		0x4		// sky
 #define	SURF_WARP		0x8		// turbulent water warp
 #define	SURF_TRANS33	0x10
 #define	SURF_TRANS66	0x20

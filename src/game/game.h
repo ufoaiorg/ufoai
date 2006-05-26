@@ -116,7 +116,7 @@ typedef struct
 	void	(*centerprintf) (player_t *player, char *fmt, ...);
 
 	// config strings hold all the index strings, the lightstyles,
-	// and misc data like the sky definition and cdtrack.
+	// and misc data like the cdtrack.
 	// All of the current configstrings are sent to clients when
 	// they connect, and changes are sent to all connected clients.
 	void	(*configstring) (int num, char *string);

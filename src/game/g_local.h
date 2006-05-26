@@ -142,9 +142,6 @@ typedef struct
 typedef struct
 {
 	// world vars
-	char		*sky;
-	float		skyrotate;
-	vec3_t		skyaxis;
 	char		*nextmap;
 
 	int			lip;

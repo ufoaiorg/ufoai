@@ -574,13 +574,12 @@ Draws the console with the solid background
 */
 void Con_DrawConsole (float frac)
 {
-	int				i, j, x, y, n;
+	int				i, x, y;
 	int				rows;
 	char			*text;
 	int				row;
 	int				lines;
 	char			version[MAX_VAR];
-	char			dlbar[MAX_STRING_CHARS];
 
 	lines = viddef.height * frac;
 	if (lines <= 0)
@@ -634,49 +633,6 @@ void Con_DrawConsole (float frac)
 
 		for (x=0 ; x<con.linewidth ; x++)
 			re.DrawChar ( (x+1)<<3, y, text[x]);
-	}
-
-	// draw the download bar
-	// figure out width
-	if (cls.download) {
-		if ((text = strrchr(cls.downloadname, '/')) != NULL)
-			text++;
-		else
-			text = cls.downloadname;
-
-		x = con.linewidth - ((con.linewidth * 7) / 40);
-		y = x - strlen(text) - 8;
-		i = con.linewidth/3;
-		if (strlen(text) > i) {
-			y = x - i - 11;
-			strncpy(dlbar, text, i);
-			dlbar[i] = 0;
-			strcat(dlbar, "...");
-		} else
-			strcpy(dlbar, text);
-		strcat(dlbar, ": ");
-		i = strlen(dlbar);
-		dlbar[i++] = '\x80';
-		// where's the dot go?
-		if (cls.downloadpercent == 0)
-			n = 0;
-		else
-			n = y * cls.downloadpercent / 100;
-
-		for (j = 0; j < y; j++)
-			if (j == n)
-				dlbar[i++] = '\x83';
-			else
-				dlbar[i++] = '\x81';
-		dlbar[i++] = '\x82';
-		dlbar[i] = 0;
-
-		sprintf(dlbar + strlen(dlbar), " %02d%%", cls.downloadpercent);
-
-		// draw it
-		y = con.vislines-12;
-		for (i = 0; i < strlen(dlbar); i++)
-			re.DrawChar ( (i+1)<<3, y, dlbar[i]);
 	}
 
 	// draw the input prompt, user text, and cursor if desired

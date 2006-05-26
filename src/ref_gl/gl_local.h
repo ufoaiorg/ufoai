@@ -105,8 +105,7 @@ typedef enum
 	it_sprite,
 	it_wall,
 	it_pic,
-	it_wrappic,
-	it_sky
+	it_wrappic
 } imagetype_t;
 
 typedef struct image_s
@@ -291,7 +290,6 @@ extern	cvar_t	*gl_nobind;
 extern	cvar_t	*gl_round_down;
 extern	cvar_t	*gl_picmip;
 extern	cvar_t	*gl_maxtexres;
-extern	cvar_t	*gl_skymip;
 extern	cvar_t	*gl_showtris;
 extern	cvar_t	*gl_finish;
 extern	cvar_t	*gl_ztrick;
@@ -386,10 +384,7 @@ void R_MarkLeaves (void);
 
 glpoly_t *WaterWarpPolyVerts (glpoly_t *p);
 void EmitWaterPolys (msurface_t *fa);
-void R_AddSkySurface (msurface_t *fa);
 void R_DrawTriangleOutlines (void);
-void R_ClearSkyBox (void);
-void R_DrawSkyBox (void);
 void R_MarkLights (dlight_t *light, int bit, mnode_t *node);
 
 void R_AddMapTile( char *name, int sX, int sY, int sZ );

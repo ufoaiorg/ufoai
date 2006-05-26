@@ -34,12 +34,6 @@ cvar_t	*zombietime;			// seconds to sink messages after disconnect
 
 cvar_t	*rcon_password;			// password for remote server commands
 
-cvar_t	*allow_download;
-cvar_t *allow_download_players;
-cvar_t *allow_download_models;
-cvar_t *allow_download_sounds;
-cvar_t *allow_download_maps;
-
 cvar_t *sv_airaccelerate;
 
 cvar_t	*sv_noreload;			// don't reload level state when reentering
@@ -80,12 +74,6 @@ void SV_DropClient (client_t *drop)
 		// call the prog function for removing a client
 		// this will remove the body, among other things
 		ge->ClientDisconnect (drop->player);
-	}
-
-	if (drop->download)
-	{
-		FS_FreeFile (drop->download);
-		drop->download = NULL;
 	}
 
 	drop->player->inuse = qfalse;
@@ -946,11 +934,6 @@ void SV_Init (void)
 	sv_enablemorale = Cvar_Get ("sv_enablemorale", "1", CVAR_ARCHIVE|CVAR_SERVERINFO);
 	maxsoldiers = Cvar_Get ("maxsoldiers", "4", CVAR_ARCHIVE|CVAR_SERVERINFO);
 	maxsoldiersperplayer = Cvar_Get ("maxsoldiersperplayer", "8", CVAR_ARCHIVE|CVAR_SERVERINFO);
-	allow_download = Cvar_Get ("allow_download", "0", CVAR_ARCHIVE);
-	allow_download_players = Cvar_Get ("allow_download_players", "0", CVAR_ARCHIVE);
-	allow_download_models = Cvar_Get ("allow_download_models", "1", CVAR_ARCHIVE);
-	allow_download_sounds = Cvar_Get ("allow_download_sounds", "1", CVAR_ARCHIVE);
-	allow_download_maps = Cvar_Get ("allow_download_maps", "1", CVAR_ARCHIVE);
 
 	sv_noreload = Cvar_Get ("sv_noreload", "0", 0);
 	sv_airaccelerate = Cvar_Get("sv_airaccelerate", "0", CVAR_LATCH);

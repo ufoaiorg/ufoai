@@ -463,7 +463,6 @@ mipparm_t	mipparms[] =
 	{"slick",	SURF_SLICK, pt_flags},
 
 	// drawing attributes
-	{"sky",		SURF_SKY, pt_flags},
 	{"warping",	SURF_WARP, pt_flags},		// only valid with 64x64 textures
 	{"trans33",	SURF_TRANS33, pt_flags},	// translucent should allso set fullbright
 	{"trans66",	SURF_TRANS66, pt_flags},

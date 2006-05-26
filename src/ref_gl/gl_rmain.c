@@ -128,7 +128,6 @@ cvar_t	*gl_nobind;
 cvar_t	*gl_round_down;
 cvar_t	*gl_picmip;
 cvar_t	*gl_maxtexres;
-cvar_t	*gl_skymip;
 cvar_t	*gl_showtris;
 cvar_t	*gl_ztrick;
 cvar_t	*gl_finish;
@@ -1064,15 +1063,9 @@ void R_RenderView (refdef_t *fd)
 
 	R_SetupGL ();
 
-//	R_MarkLeaves ();	// done here so we know if we're in water
-
 	if (gl_wire->value) qglPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
 
-	R_ClearSkyBox ();
-//	R_DrawWorld( r_worldmodel->nodes );
-
 	R_DrawLevelBrushes ();
-	R_DrawSkyBox ();
 	R_DrawTriangleOutlines ();
 
 	R_TransformEntitiesOnList();
@@ -1275,7 +1268,6 @@ void R_Register( void )
 	gl_round_down = ri.Cvar_Get ("gl_round_down", "1", 0);
 	gl_picmip = ri.Cvar_Get ("gl_picmip", "0", 0);
 	gl_maxtexres = ri.Cvar_Get ("gl_maxtexres", "2048", CVAR_ARCHIVE);
-	gl_skymip = ri.Cvar_Get ("gl_skymip", "0", 0);
 	gl_showtris = ri.Cvar_Get ("gl_showtris", "0", 0);
 	gl_ztrick = ri.Cvar_Get ("gl_ztrick", "0", 0);
 	gl_finish = ri.Cvar_Get ("gl_finish", "0", CVAR_ARCHIVE);
@@ -2083,7 +2075,6 @@ void R_TakeVideoFrame( int h, int w, byte* captureBuffer, byte *encodeBuffer, qb
 void	R_BeginRegistration (char *tiles, char *pos);
 struct model_s	*R_RegisterModelShort (char *name);
 struct image_s	*R_RegisterSkin (char *name);
-void R_SetSky (char *name, float rotate, vec3_t axis);
 void	R_EndRegistration (void);
 
 void	R_RenderFrame (refdef_t *fd);
@@ -2114,7 +2105,6 @@ refexport_t GetRefAPI (refimport_t rimp )
 	re.RegisterModel = R_RegisterModelShort;
 	re.RegisterSkin = R_RegisterSkin;
 	re.RegisterPic = Draw_FindPic;
-	re.SetSky = R_SetSky;
 	re.EndRegistration = R_EndRegistration;
 
 	re.RenderFrame = R_RenderFrame;

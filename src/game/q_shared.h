@@ -479,7 +479,6 @@ COLLISION DETECTION
 
 #define	SURF_SLICK		0x2		// effects game physics
 
-#define	SURF_SKY		0x4		// don't draw, but add to skybox
 #define	SURF_WARP		0x8		// turbulent water warp
 #define	SURF_TRANS33	0x10
 #define	SURF_TRANS66	0x20
@@ -1124,15 +1123,12 @@ typedef enum {
 //
 #define	CS_NAME				0
 #define	CS_CDTRACK			1
-#define	CS_SKY				2
-#define	CS_SKYAXIS			3		// %f %f %f format
-#define	CS_SKYROTATE		4
-#define	CS_STATUSBAR		5		// display program string
-#define	CS_MAXCLIENTS		6
-#define	CS_MAPCHECKSUM		7		// for catching cheater maps
-#define	CS_MAXSOLDIERS		8               // max soldiers per team
-#define	CS_MAXSOLDIERSPERPLAYER	9               // max soldiers per player when in teamplay mode
-#define	CS_ENABLEMORALE		10              // enable the morale states in multiplayer
+#define	CS_STATUSBAR		2		// display program string
+#define	CS_MAXCLIENTS		3
+#define	CS_MAPCHECKSUM		4		// for catching cheater maps
+#define	CS_MAXSOLDIERS		5               // max soldiers per team
+#define	CS_MAXSOLDIERSPERPLAYER	6               // max soldiers per player when in teamplay mode
+#define	CS_ENABLEMORALE		7              // enable the morale states in multiplayer
 
 #define CS_TILES			16
 #define CS_POSITIONS		(CS_TILES+MAX_TILESTRINGS)

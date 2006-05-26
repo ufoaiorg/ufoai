@@ -34,7 +34,7 @@ extern cvar_t		*gl_embossfilter;
 
 unsigned	d_8to24table[256];
 
-qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboolean is_sky, imagetype_t type );
+qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, imagetype_t type );
 qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap, qboolean clamp, imagetype_t type );
 
 
@@ -216,7 +216,7 @@ void GL_TextureMode( char *string )
 	// change all the existing mipmap texture objects
 	for (i=0, glt=gltextures ; i<numgltextures ; i++, glt++)
 	{
-		if (glt->type != it_pic && glt->type != it_sky )
+		if ( glt->type != it_pic )
 		{
 			GL_Bind (glt->texnum);
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
@@ -390,7 +390,7 @@ void Scrap_Upload (void)
 {
 	scrap_uploads++;
 	GL_Bind(TEXNUM_SCRAPS);
-	GL_Upload8 (scrap_texels[0], BLOCK_WIDTH, BLOCK_HEIGHT, qfalse, qfalse, it_pic );
+	GL_Upload8 (scrap_texels[0], BLOCK_WIDTH, BLOCK_HEIGHT, qfalse, it_pic );
 	scrap_dirty = qfalse;
 }
 
@@ -1651,7 +1651,7 @@ GL_Upload8
 Returns has_alpha
 ===============
 */
-qboolean GL_Upload8 (byte *data, int width, int height, qboolean mipmap, qboolean is_sky, imagetype_t type )
+qboolean GL_Upload8 (byte *data, int width, int height, qboolean mipmap, imagetype_t type )
 {
 	unsigned	trans[512*256];
 	int			i, s;
@@ -1844,10 +1844,10 @@ nonscrap:
 		image->texnum = TEXNUM_IMAGES + (image - gltextures);
 		GL_Bind(image->texnum);
 		if (bits == 8)
-			image->has_alpha = GL_Upload8 (pic, width, height, (image->type != it_pic && image->type != it_sky), image->type == it_sky, image->type );
+			image->has_alpha = GL_Upload8 (pic, width, height, (image->type != it_pic), image->type );
 		else
 			image->has_alpha = GL_Upload32 ((unsigned *)pic, width, height,
-				(image->type != it_pic && image->type != it_wrappic && image->type != it_sky), image->type == it_pic, image->type );
+				(image->type != it_pic && image->type != it_wrappic), image->type == it_pic, image->type );
 		image->upload_width = upload_width;		// after power of 2 and scales
 		image->upload_height = upload_height;
 		image->paletted = qfalse;

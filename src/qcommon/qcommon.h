@@ -247,7 +247,6 @@ enum svc_ops_e
 	svc_configstring,			// [short] [string]
 	svc_spawnbaseline,
 	svc_centerprint,			// [string] to put in center of the screen
-	svc_download,				// [short] size [size bytes]
 	svc_playerinfo,				// variable
 	svc_event					// ...
 };
