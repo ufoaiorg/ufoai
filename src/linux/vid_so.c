@@ -254,8 +254,8 @@ qboolean VID_LoadRefresh( char *name )
 			fn[strlen(fn) - 1] = 0;
 	}
 
-	strcat(fn, "/");
-	strcat(fn, name);
+	Q_strcat(fn, MAX_OSPATH, "/");
+	Q_strcat(fn, MAX_OSPATH, name);
 
 	if (stat(fn, &st) == -1)
 	{

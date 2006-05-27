@@ -528,16 +528,16 @@ void SP_worldspawn (edict_t *ent)
 	ent->inuse = qtrue; // since the world doesn't use G_Spawn()
 
 	if (st.nextmap)
-		strcpy (level.nextmap, st.nextmap);
+		Q_strncpyz (level.nextmap, st.nextmap, MAX_QPATH);
 
 	// make some data visible to the server
 	if (ent->message && ent->message[0])
 	{
 		gi.configstring (CS_NAME, ent->message);
-		Q_strncpyz (level.level_name, ent->message, sizeof(level.level_name));
+		Q_strncpyz (level.level_name, ent->message, MAX_QPATH);
 	}
 	else
-		Q_strncpyz (level.level_name, level.mapname, sizeof(level.level_name));
+		Q_strncpyz (level.level_name, level.mapname, MAX_QPATH);
 
 	gi.configstring (CS_CDTRACK, va("%i", ent->sounds) );
 

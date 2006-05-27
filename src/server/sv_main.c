@@ -98,7 +98,7 @@ SV_StatusString
 Builds the string that is sent as heartbeats and status replies
 ===============
 */
-char	*SV_StatusString (void)
+char *SV_StatusString (void)
 {
 	char	player[1024];
 	static char	status[MAX_MSGLEN - 16];
@@ -107,8 +107,8 @@ char	*SV_StatusString (void)
 	int		statusLength;
 	int		playerLength;
 
-	strcpy (status, Cvar_Serverinfo());
-	strcat (status, "\n");
+	Q_strncpyz (status, Cvar_Serverinfo(), MAX_MSGLEN - 16);
+	Q_strcat (status, MAX_MSGLEN - 16, "\n");
 	statusLength = strlen(status);
 
 	for (i=0 ; i<sv_maxclients->value ; i++)
@@ -121,7 +121,7 @@ char	*SV_StatusString (void)
 			playerLength = strlen(player);
 			if (statusLength + playerLength >= sizeof(status) )
 				break;		// can't hold any more
-			strcpy (status + statusLength, player);
+			Q_strcat (status, MAX_MSGLEN - 16, player);
 			statusLength += playerLength;
 		}
 	}
@@ -455,8 +455,8 @@ void SVC_RemoteCommand (void)
 
 		for (i=2 ; i<Cmd_Argc() ; i++)
 		{
-			strcat (remaining, Cmd_Argv(i) );
-			strcat (remaining, " ");
+			Q_strcat (remaining, 1024, Cmd_Argv(i) );
+			Q_strcat (remaining, 1024, " ");
 		}
 
 		Cmd_ExecuteString (remaining);

@@ -1211,7 +1211,7 @@ void COM_FilePath (char *in, char *out)
 	out[s-in] = 0;
 }
 
-
+#if 0
 /*
 ==================
 COM_DefaultExtension
@@ -1235,6 +1235,7 @@ void COM_DefaultExtension (char *path, char *extension)
 
 	strcat (path, extension);
 }
+#endif
 
 /*
 ============================================================================
@@ -1715,7 +1716,7 @@ void Info_RemoveKey (char *s, const char *key)
 		}
 		*o = 0;
 
-		if (!strcmp (key, pkey) )
+		if (!Q_strncmp ((char*)key, pkey, 512) )
 		{
 			strcpy (start, s);	// remove this part
 			return;
@@ -1789,8 +1790,8 @@ void Info_SetValueForKey (char *s, const char *key, const char *value)
 	}
 #endif
 
-	strcat (newi, s);
-	strcpy (s, newi);
+	Q_strcat (newi, MAX_INFO_STRING, s);
+	Q_strncpyz (s, newi, MAX_INFO_STRING );
 
 #if 0
 	// only copy ascii values
@@ -2582,7 +2583,7 @@ int Com_SetValue( void *base, void *set, int type, int ofs )
 		return 4;
 
 	case V_STRING:
-		strncpy( (char *)b, (char *)set, MAX_VAR );
+		Q_strncpyz( (char *)b, (char *)set, MAX_VAR );
 		len = strlen((char *)set)+1;
 		if ( len > MAX_VAR ) len = MAX_VAR;
 		return len;

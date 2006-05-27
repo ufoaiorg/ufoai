@@ -195,7 +195,7 @@ void PF_Configstring (int index, char *val)
 		val = "";
 
 	// change the string in sv
-	strcpy (sv.configstrings[index], val);
+	Q_strncpyz (sv.configstrings[index], val, MAX_TOKEN_CHARS);
 
 	
 	if (sv.state != ss_loading)

@@ -963,9 +963,10 @@ int	memsearch (byte *start, int count, int search)
 char *CopyString (char *in)
 {
 	char	*out;
+	int l = strlen(in);
 
-	out = Z_Malloc (strlen(in)+1);
-	strcpy (out, in);
+	out = Z_Malloc (l+1);
+	Q_strncpyz (out, in, l+1);
 	return out;
 }
 

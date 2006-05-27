@@ -506,7 +506,7 @@ void Cmd_Alias_f (void)
 	{
 		Q_strcat (cmd, sizeof(cmd), Cmd_Argv(i));
 		if (i != (c - 1))
-			strcat (cmd, " ");
+			Q_strcat (cmd, 1024, " ");
 	}
 	Q_strcat (cmd, sizeof(cmd), "\n");
 

@@ -296,7 +296,7 @@ sfx_t *S_FindName (char *name, qboolean create)
 
 	sfx = &known_sfx[i];
 	memset (sfx, 0, sizeof(*sfx));
-	strcpy (sfx->name, name);
+	Q_strncpyz (sfx->name, name, MAX_QPATH);
 	sfx->registration_sequence = s_registration_sequence;
 
 	return sfx;
@@ -317,7 +317,7 @@ sfx_t *S_AliasName (char *aliasname, char *truename)
 	int		i;
 
 	s = Z_Malloc (MAX_QPATH);
-	strcpy (s, truename);
+	Q_strncpyz (s, truename, MAX_QPATH);
 
 	// find a free sfx
 	for (i=0 ; i < num_sfx ; i++)
@@ -333,7 +333,7 @@ sfx_t *S_AliasName (char *aliasname, char *truename)
 
 	sfx = &known_sfx[i];
 	memset (sfx, 0, sizeof(*sfx));
-	strcpy (sfx->name, aliasname);
+	Q_strncpyz (sfx->name, aliasname, MAX_QPATH);
 	sfx->registration_sequence = s_registration_sequence;
 	sfx->truename = s;
 
@@ -1180,7 +1180,7 @@ void S_Update_(void)
 ==========================================================
 */
 
-char	ovPlaying[MAX_VAR];
+char	ovPlaying[MAX_QPATH];
 OggVorbis_File	ovFile;
 char	ovBuf[4096];
 int		ovSection;
@@ -1232,7 +1232,7 @@ qboolean OGG_Open( char *filename )
 	}
 
 //	Com_Printf( "Playing '%s'\n", filename );
-	strcpy( ovPlaying, filename );
+	Q_strncpyz( ovPlaying, filename, MAX_QPATH );
 	ovSection = 0;
 	return qtrue;
 }
@@ -1312,11 +1312,11 @@ void S_Play(void)
 	{
 		if (!strrchr(Cmd_Argv(i), '.'))
 		{
-			strcpy(name, Cmd_Argv(i));
-			strcat(name, ".wav");
+			Q_strncpyz(name, Cmd_Argv(i), 256);
+			Q_strcat(name, 256, ".wav");
 		}
 		else
-			strcpy(name, Cmd_Argv(i));
+			Q_strncpyz(name, Cmd_Argv(i), 256);
 		sfx = S_RegisterSound(name);
 		S_StartSound(NULL, cl.pnum, 0, sfx, 1.0, 1.0, 0);
 		i++;

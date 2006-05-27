@@ -170,7 +170,7 @@ void CompleteCommand (void)
 	if (cmd)
 	{
 		key_lines[edit_line][1] = '/';
-		strcpy (key_lines[edit_line]+2, cmd);
+		Q_strncpyz (key_lines[edit_line]+2, cmd, MAXCMDLINE-2);
 		key_linepos = strlen(cmd)+2;
 		key_lines[edit_line][key_linepos] = ' ';
 		key_linepos++;
@@ -312,7 +312,7 @@ void Key_Console (int key)
 				&& !key_lines[history_line][1]);
 		if (history_line == edit_line)
 			history_line = (edit_line+1)&31;
-		strcpy(key_lines[edit_line], key_lines[history_line]);
+		Q_strncpyz(key_lines[edit_line], key_lines[history_line], MAXCMDLINE);
 		key_linepos = strlen(key_lines[edit_line]);
 		return;
 	}
@@ -334,7 +334,7 @@ void Key_Console (int key)
 		}
 		else
 		{
-			strcpy(key_lines[edit_line], key_lines[history_line]);
+			Q_strncpyz(key_lines[edit_line], key_lines[history_line], MAXCMDLINE);
 			key_linepos = strlen(key_lines[edit_line]);
 		}
 		return;
@@ -534,8 +534,7 @@ void Key_SetBinding (int keynum, char *binding)
 	// allocate memory for new binding
 	l = strlen (binding);
 	new = Z_Malloc (l+1);
-	strcpy (new, binding);
-	new[l] = 0;
+	Q_strncpyz (new, binding, l+1);
 	keybindings[keynum] = new;
 }
 

@@ -137,53 +137,6 @@ qboolean SV_SetPlayer (void)
 	return qfalse;
 }
 
-
-/*
-===============================================================================
-
-SAVEGAME FILES
-
-===============================================================================
-*/
-
-/*
-=====================
-SV_WipeSavegame
-
-Delete save/<XXX>/
-=====================
-*/
-void SV_WipeSavegame (char *savename)
-{
-	char	name[MAX_OSPATH];
-	char	*s;
-
-	Com_DPrintf("SV_WipeSaveGame(%s)\n", savename);
-
-	Com_sprintf (name, sizeof(name), "%s/save/%s/server.ssv", FS_Gamedir (), savename);
-	remove (name);
-	Com_sprintf (name, sizeof(name), "%s/save/%s/game.ssv", FS_Gamedir (), savename);
-	remove (name);
-
-	Com_sprintf (name, sizeof(name), "%s/save/%s/*.sav", FS_Gamedir (), savename);
-	s = Sys_FindFirst( name, 0, 0 );
-	while (s)
-	{
-		remove (s);
-		s = Sys_FindNext( 0, 0 );
-	}
-	Sys_FindClose ();
-	Com_sprintf (name, sizeof(name), "%s/save/%s/*.sv2", FS_Gamedir (), savename);
-	s = Sys_FindFirst(name, 0, 0 );
-	while (s)
-	{
-		remove (s);
-		s = Sys_FindNext( 0, 0 );
-	}
-	Sys_FindClose ();
-}
-
-
 /*
 ================
 CopyFile
@@ -219,244 +172,6 @@ void CopyFile (char *src, char *dst)
 	fclose (f2);
 }
 
-
-/*
-================
-SV_CopySaveGame
-================
-*/
-void SV_CopySaveGame (char *src, char *dst)
-{
-/*	char	name[MAX_OSPATH], name2[MAX_OSPATH];
-	int		l, len;
-	char	*found;
-
-	Com_DPrintf("SV_CopySaveGame(%s, %s)\n", src, dst);
-
-	SV_WipeSavegame (dst);
-
-	// copy the savegame over
-	Com_sprintf (name, sizeof(name), "%s/save/%s/server.ssv", FS_Gamedir(), src);
-	Com_sprintf (name2, sizeof(name2), "%s/save/%s/server.ssv", FS_Gamedir(), dst);
-	FS_CreatePath (name2);
-	CopyFile (name, name2);
-
-	Com_sprintf (name, sizeof(name), "%s/save/%s/game.ssv", FS_Gamedir(), src);
-	Com_sprintf (name2, sizeof(name2), "%s/save/%s/game.ssv", FS_Gamedir(), dst);
-	CopyFile (name, name2);
-
-	Com_sprintf (name, sizeof(name), "%s/save/%s/", FS_Gamedir(), src);
-	len = strlen(name);
-	*/
-	//to avoid compiler_warnings '/*.sav'
-	//Com_sprintf (name, sizeof(name), "%s/save/%s/*.sav", FS_Gamedir(), src);
-	/*found = Sys_FindFirst(name, 0, 0 );
-	while (found)
-	{
-		strcpy (name+len, found+len);
-
-		Com_sprintf (name2, sizeof(name2), "%s/save/%s/%s", FS_Gamedir(), dst, found+len);
-		CopyFile (name, name2);
-
-		// change sav to sv2
-		l = strlen(name);
-		strcpy (name+l-3, "sv2");
-		l = strlen(name2);
-		strcpy (name2+l-3, "sv2");
-		CopyFile (name, name2);
-
-		found = Sys_FindNext( 0, 0 );
-	}
-	Sys_FindClose ();*/
-}
-
-
-/*
-==============
-SV_WriteLevelFile
-
-==============
-*/
-void SV_WriteLevelFile (void)
-{
-/*	char	name[MAX_OSPATH];
-	FILE	*f;
-
-	Com_DPrintf("SV_WriteLevelFile()\n");
-
-	Com_sprintf (name, sizeof(name), "%s/save/current/%s.sv2", FS_Gamedir(), sv.name);
-	f = fopen(name, "wb");
-	if (!f)
-	{
-		Com_Printf ("Failed to open %s\n", name);
-		return;
-	}
-	fwrite (sv.configstrings, sizeof(sv.configstrings), 1, f);
-	CM_WritePortalState (f);
-	fclose (f);
-
-	Com_sprintf (name, sizeof(name), "%s/save/current/%s.sav", FS_Gamedir(), sv.name);
-	//ge->WriteLevel (name);*/
-}
-
-/*
-==============
-SV_ReadLevelFile
-
-==============
-*/
-void SV_ReadLevelFile (void)
-{
-/*	char	name[MAX_OSPATH];
-	FILE	*f;
-
-	Com_DPrintf("SV_ReadLevelFile()\n");
-
-	Com_sprintf (name, sizeof(name), "%s/save/current/%s.sv2", FS_Gamedir(), sv.name);
-	f = fopen(name, "rb");
-	if (!f)
-	{
-		Com_Printf ("Failed to open %s\n", name);
-		return;
-	}
-	FS_Read (sv.configstrings, sizeof(sv.configstrings), f);
-	CM_ReadPortalState (f);
-	fclose (f);
-
-	Com_sprintf (name, sizeof(name), "%s/save/current/%s.sav", FS_Gamedir(), sv.name);
-	ge->ReadLevel (name);*/
-}
-
-/*
-==============
-SV_WriteServerFile
-
-==============
-*/
-void SV_WriteServerFile (qboolean autosave)
-{
-/*	FILE	*f;
-	cvar_t	*var;
-	char	name[MAX_OSPATH], string[128];
-	char	comment[32];
-	time_t	aclock;
-	struct tm	*newtime;
-
-	Com_DPrintf("SV_WriteServerFile(%s)\n", autosave ? "true" : "false");
-
-	Com_sprintf (name, sizeof(name), "%s/save/current/server.ssv", FS_Gamedir());
-	f = fopen (name, "wb");
-	if (!f)
-	{
-		Com_Printf ("Couldn't write %s\n", name);
-		return;
-	}
-	// write the comment field
-	memset (comment, 0, sizeof(comment));
-
-	if (!autosave)
-	{
-		time (&aclock);
-		newtime = localtime (&aclock);
-		Com_sprintf (comment,sizeof(comment), "%2i:%i%i %2i/%2i  ", newtime->tm_hour
-			, newtime->tm_min/10, newtime->tm_min%10,
-			newtime->tm_mon+1, newtime->tm_mday);
-		strncat (comment, sv.configstrings[CS_NAME], sizeof(comment)-1-strlen(comment) );
-	}
-	else
-	{	// autosaved
-		Com_sprintf (comment, sizeof(comment), "ENTERING %s", sv.configstrings[CS_NAME]);
-	}
-
-	fwrite (comment, 1, sizeof(comment), f);
-
-	// write the mapcmd
-	fwrite (svs.mapcmd, 1, sizeof(svs.mapcmd), f);
-
-	// write all CVAR_LATCH cvars
-	// these will be things like skill, deathmatch, etc
-	for (var = cvar_vars ; var ; var=var->next)
-	{
-		if (!(var->flags & CVAR_LATCH))
-			continue;
-		if (strlen(var->name) >= sizeof(name)-1
-			|| strlen(var->string) >= sizeof(string)-1)
-		{
-			Com_Printf ("Cvar too long: %s = %s\n", var->name, var->string);
-			continue;
-		}
-		memset (name, 0, sizeof(name));
-		memset (string, 0, sizeof(string));
-		strcpy (name, var->name);
-		strcpy (string, var->string);
-		fwrite (name, 1, sizeof(name), f);
-		fwrite (string, 1, sizeof(string), f);
-	}
-
-	fclose (f);
-
-	// write game state
-	Com_sprintf (name, sizeof(name), "%s/save/current/game.ssv", FS_Gamedir());
-	//ge->WriteGame (name, autosave);*/
-}
-
-/*
-==============
-SV_ReadServerFile
-
-==============
-*/
-void SV_ReadServerFile (void)
-{
-	FILE	*f;
-	char	name[MAX_OSPATH], string[128];
-	char	comment[32];
-	char	mapcmd[MAX_TOKEN_CHARS];
-
-	Com_DPrintf("SV_ReadServerFile()\n");
-
-	Com_sprintf (name, sizeof(name), "%s/save/current/server.ssv", FS_Gamedir());
-	f = fopen (name, "rb");
-	if (!f)
-	{
-		Com_Printf ("Couldn't read %s\n", name);
-		return;
-	}
-	// read the comment field
-	FS_Read (comment, sizeof(comment), f);
-
-	// read the mapcmd
-	FS_Read (mapcmd, sizeof(mapcmd), f);
-
-	// read all CVAR_LATCH cvars
-	// these will be things like skill, deathmatch, etc
-	while (1)
-	{
-		if (!fread (name, 1, sizeof(name), f))
-			break;
-		FS_Read (string, sizeof(string), f);
-		Com_DPrintf ("Set %s = %s\n", name, string);
-		Cvar_ForceSet (name, string);
-	}
-
-	fclose (f);
-
-	// start a new game fresh with new cvars
-	SV_InitGame ();
-
-	strcpy (svs.mapcmd, mapcmd);
-
-	// read game state
-	Com_sprintf (name, sizeof(name), "%s/save/current/game.ssv", FS_Gamedir());
-	//ge->ReadGame (name);
-}
-
-
-//=========================================================
-
-
-
-
 /*
 ==================
 SV_DemoMap_f
@@ -471,112 +186,13 @@ void SV_DemoMap_f (void)
 
 /*
 ==================
-SV_GameMap_f
-
-Saves the state of the map just being exited and goes to a new map.
-
-If the initial character of the map string is '*', the next map is
-in a new unit, so the current savegame directory is cleared of
-map files.
-
-Example:
-
-*inter.cin+jail
-
-Clears the archived maps, plays the inter.cin cinematic, then
-goes to map jail.bsp.
-==================
-*/
-void SV_GameMap_f (void)
-{
-	char		*map;
-//	int			i;
-//	client_t	*cl;
-//	qboolean	*savedInuse;
-
-	if (Cmd_Argc() != 2)
-	{
-		Com_Printf ("USAGE: gamemap <map>\n");
-		return;
-	}
-
-	Com_DPrintf("SV_GameMap(%s)\n", Cmd_Argv(1));
-
-//	FS_CreatePath (va("%s/save/current/", FS_Gamedir()));
-
-	// check for clearing the current savegame
-	map = Cmd_Argv(1);
-/*	if (map[0] == '*')
-	{
-		// wipe all the *.sav files
-		SV_WipeSavegame ("current");
-	}
-	else
-	{	// save the map just exited
-		if (sv.state == ss_game)
-		{
-			// clear all the client inuse flags before saving so that
-			// when the level is re-entered, the clients will spawn
-			// at spawn points instead of occupying body shells
-			savedInuse = malloc(sv_maxclients->value * sizeof(qboolean));
-			for (i=0,cl=svs.clients ; i<sv_maxclients->value; i++,cl++)
-			{
-				savedInuse[i] = cl->edict->inuse;
-				cl->edict->inuse = qfalse;
-			}
-
-			SV_WriteLevelFile ();
-
-			// we must restore these for clients to transfer over correctly
-			for (i=0,cl=svs.clients ; i<sv_maxclients->value; i++,cl++)
-				cl->edict->inuse = savedInuse[i];
-			free (savedInuse);
-		}
-	}*/
-
-	// start up the next map
-	SV_Map (qfalse, Cmd_Argv(1), qfalse );
-
-	// archive server state
-	strncpy (svs.mapcmd, Cmd_Argv(1), sizeof(svs.mapcmd)-1);
-
-	// copy off the level to the autosave slot
-	if (!dedicated->value)
-	{
-		SV_WriteServerFile (qtrue);
-		SV_CopySaveGame ("current", "save0");
-	}
-}
-
-/*
-==================
 SV_Map_f
 
-Goes directly to a given map without any savegame archiving.
-For development work
+Goes directly to a given map
 ==================
 */
 void SV_Map_f (void)
 {
-/*	char	*map;
-	char	expanded[MAX_QPATH];
-
-	// if not a pcx, demo, or cinematic, check to make sure the tiles exist
-	map = Cmd_Argv(1);
-	if (!strstr (map, "."))
-	{
-		Com_sprintf (expanded, sizeof(expanded), "maps/%s.bsp", map);
-		if (FS_LoadFile (expanded, NULL) == -1)
-		{
-			Com_Printf ("Can't find %s\n", expanded);
-			return;
-		}
-	}
-
-	sv.state = ss_dead;		// don't save current level when changing
-	//SV_WipeSavegame("current");
-	SV_GameMap_f ();*/
-
 	// change
 	sv.state = ss_dead;
 	sv.loadgame = qfalse;
@@ -591,120 +207,6 @@ void SV_Map_f (void)
 
 	SV_BroadcastCommand ("reconnect\n");
 }
-
-/*
-=====================================================================
-
-  SAVEGAMES
-
-=====================================================================
-*/
-
-
-/*
-==============
-SV_Loadgame_f
-
-==============
-*/
-void SV_Loadgame_f (void)
-{
-	char	name[MAX_OSPATH];
-	FILE	*f;
-	char	*dir;
-
-	if (Cmd_Argc() != 2)
-	{
-		Com_Printf ("USAGE: loadgame <directory>\n");
-		return;
-	}
-
-	Com_Printf ("Loading game...\n");
-
-	dir = Cmd_Argv(1);
-	if (strstr (dir, "..") || strstr (dir, "/") || strstr (dir, "\\") )
-	{
-		Com_Printf ("Bad savedir.\n");
-	}
-
-	// make sure the server.ssv file exists
-	Com_sprintf (name, sizeof(name), "%s/save/%s/server.ssv", FS_Gamedir(), Cmd_Argv(1));
-	f = fopen (name, "rb");
-	if (!f)
-	{
-		Com_Printf ("No such savegame: %s\n", name);
-		return;
-	}
-	fclose (f);
-
-	SV_CopySaveGame (Cmd_Argv(1), "current");
-
-	SV_ReadServerFile ();
-
-	// go to the map
-	sv.state = ss_dead;		// don't save current level when changing
-	SV_Map (qfalse, svs.mapcmd, qtrue);
-}
-
-
-
-/*
-==============
-SV_Savegame_f
-
-==============
-*/
-void SV_Savegame_f (void)
-{
-/*	char	*dir;
-
-	if (sv.state != ss_game)
-	{
-		Com_Printf ("You must be in a game to save.\n");
-		return;
-	}
-
-	if (Cmd_Argc() != 2)
-	{
-		Com_Printf ("USAGE: savegame <directory>\n");
-		return;
-	}
-
-	if (Cvar_VariableValue("deathmatch"))
-	{
-		Com_Printf ("Can't savegame in a deathmatch\n");
-		return;
-	}
-
-	if (!strcmp (Cmd_Argv(1), "current"))
-	{
-		Com_Printf ("Can't save to 'current'\n");
-		return;
-	}
-
-	dir = Cmd_Argv(1);
-	if (strstr (dir, "..") || strstr (dir, "/") || strstr (dir, "\\") )
-	{
-		Com_Printf ("Bad savedir.\n");
-	}
-
-	Com_Printf ("Saving game...\n");
-
-	// archive current level, including all client edicts.
-	// when the level is reloaded, they will be shells awaiting
-	// a connecting client
-	SV_WriteLevelFile ();
-
-	// save server state
-	SV_WriteServerFile (qfalse);
-
-	// copy it off
-	SV_CopySaveGame ("current", dir);
-
-	Com_Printf ("Done.\n");*/
-}
-
-//===============================================================
 
 /*
 ==================
@@ -810,7 +312,7 @@ void SV_ConSay_f(void)
 	if (Cmd_Argc () < 2)
 		return;
 
-	strcpy (text, "console: ");
+	Q_strncpyz (text, "console: ", 1024);
 	p = Cmd_Args();
 
 	if (*p == '"')
@@ -819,7 +321,7 @@ void SV_ConSay_f(void)
 		p[strlen(p)-1] = 0;
 	}
 
-	strcat(text, p);
+	Q_strcat(text, 1024, p);
 
 	for (j = 0, client = svs.clients; j < sv_maxclients->value; j++, client++)
 	{
@@ -1057,9 +559,8 @@ void SV_InitOperatorCommands (void)
 
 	Cmd_AddCommand ("map", SV_Map_f);
 /*	Cmd_AddCommand ("demomap", SV_DemoMap_f);*/
-	Cmd_AddCommand( "maplist", SV_ListMaps_f );
+	Cmd_AddCommand ("maplist", SV_ListMaps_f);
 
-	Cmd_AddCommand ("gamemap", SV_GameMap_f);
 	Cmd_AddCommand ("setmaster", SV_SetMaster_f);
 
 	if ( dedicated->value )
@@ -1067,9 +568,6 @@ void SV_InitOperatorCommands (void)
 
 	Cmd_AddCommand ("serverrecord", SV_ServerRecord_f);
 	Cmd_AddCommand ("serverstop", SV_ServerStop_f);
-
-	Cmd_AddCommand ("save", SV_Savegame_f);
-	Cmd_AddCommand ("load", SV_Loadgame_f);
 
 	Cmd_AddCommand ("killserver", SV_KillServer_f);
 

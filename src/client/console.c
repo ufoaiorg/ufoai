@@ -441,8 +441,8 @@ void Con_CenteredPrint (char *text)
 	if (l < 0)
 		l = 0;
 	memset (buffer, ' ', l);
-	strcpy (buffer+l, text);
-	strcat (buffer, "\n");
+	Q_strcat (buffer, MAX_STRING_CHARS, text);
+	Q_strcat (buffer, MAX_STRING_CHARS, "\n");
 	Con_Print (buffer);
 }
 

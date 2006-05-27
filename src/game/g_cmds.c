@@ -46,10 +46,10 @@ void Cmd_Players_f (player_t* player)
 			game.players[i].pers.team, game.players[i].pers.netname);
 		if (strlen (small) + strlen(large) > sizeof(large) - 100 )
 		{	// can't print all of them in one packet
-			strcat (large, "...\n");
+			Q_strcat (large, 1280, "...\n");
 			break;
 		}
-		strcat (large, small);
+		Q_strcat (large, 1280, small);
 	}
 
 	gi.cprintf (player, PRINT_HIGH, "%s\n%i players\n", large, count);

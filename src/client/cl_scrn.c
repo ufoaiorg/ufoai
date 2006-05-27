@@ -586,23 +586,6 @@ void SCR_Loading_f (void)
 	SCR_BeginLoadingPlaque ();
 }
 
-#if 0
-int entitycmpfnc( const entity_t *a, const entity_t *b )
-{
-	/*
-	** all other models are sorted by model then skin
-	*/
-	if ( a->model == b->model )
-	{
-		return ( ( int ) a->skin - ( int ) b->skin );
-	}
-	else
-	{
-		return ( ( int ) a->model - ( int ) b->model );
-	}
-}
-#endif
-
 /*
 ================
 SCR_TimeRefresh_f

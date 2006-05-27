@@ -336,17 +336,15 @@ char *LE_GetAnim( char *anim, int right, int left, int state )
 
 	if ( !Q_strncmp( anim, "stand", 5 ) || !Q_strncmp( anim, "walk", 4 ) )
 	{
-		strcpy( mod, anim );
+		Q_strncpyz( mod, anim, MAX_VAR );
 		mod += strlen( anim );
 		*mod++ = category;
 		*mod++ = 0;
 	} else {
-		strcpy( mod, anim );
-		mod += strlen( anim );
-		*mod++ = '_';
-		strcpy( mod, type );
-		mod += strlen( type );
-		if ( akimbo ) strcpy( mod, "_d" );
+		Q_strncpyz( mod, anim, MAX_VAR );
+		Q_strcat( mod, MAX_VAR, "_");
+		Q_strcat( mod, MAX_VAR, type );
+		if ( akimbo ) Q_strcat( mod, MAX_VAR, "_d" );
 	}
 
 	return retAnim;

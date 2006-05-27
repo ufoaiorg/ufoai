@@ -21,6 +21,7 @@ Tasks for future releases
 ** Additional to the global list a 'per-click list' would be cool. e.g.: If multiple targets are in the same spot popup a list with only these entries.
 * [Hoehrer] Add an event system (id/message+type/year+day are defined) and integrate it into the research-system, the current messag esystem and the ufopedia ("news").
 * FR #1493721: Change of building-selection (building info)
+* [Mattn/tlh2000] Multiplayer: Inform via broadcast whether chosen team is free (or if teamplay: Check whether there are enough free soldier slots)
 
 =================================================
 Tasks for TechDemo3

@@ -507,7 +507,7 @@ void CL_PrepRefresh (void)
 
 	for (i=1 ; i<MAX_MODELS && cl.configstrings[CS_MODELS+i][0] ; i++)
 	{
-		strcpy (name, cl.configstrings[CS_MODELS+i]);
+		Q_strncpyz (name, cl.configstrings[CS_MODELS+i], MAX_QPATH);
 		name[37] = 0;	// never go beyond one line
 		Com_Printf( name );
 		if (name[0] != '*')

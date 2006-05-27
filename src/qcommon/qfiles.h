@@ -35,7 +35,7 @@ The .pak files are just a linear collapse of a directory tree
 
 typedef struct
 {
-	char	name[56];
+	char	name[MAX_QPATH];
 	int		filepos, filelen;
 } dpackfile_t;
 
