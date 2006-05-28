@@ -303,20 +303,19 @@ void CL_ParseConfigString (void)
 {
 	int		i;
 	char	*s;
-	char	olds[MAX_QPATH];
 
+	// which configstring?
 	i = MSG_ReadShort (&net_message);
 	if (i < 0 || i >= MAX_CONFIGSTRINGS)
 		Com_Error (ERR_DROP, "configstring > MAX_CONFIGSTRINGS");
+	// value
 	s = MSG_ReadString(&net_message);
 
-	Q_strncpyz (olds, cl.configstrings[i], MAX_TOKEN_CHARS);
-	olds[sizeof(olds) - 1] = 0;
-
-	Q_strncpyz (cl.configstrings[i], s, MAX_TOKEN_CHARS);
+	// there may be overflows in i==CS_TILES - but thats ok
+	// see definition of configstrings and MAX_TILESTRINGS
+	strcpy (cl.configstrings[i], s);
 
 	// do something apropriate
-
 	if (i >= CS_LIGHTS && i < CS_LIGHTS+MAX_LIGHTSTYLES)
 		CL_SetLightstyle (i - CS_LIGHTS);
 	else if (i == CS_CDTRACK)
@@ -345,11 +344,6 @@ void CL_ParseConfigString (void)
 		if (cl.refresh_prepped)
 			cl.image_precache[i-CS_IMAGES] = re.RegisterPic (cl.configstrings[i]);
 	}
-	/*else if (i >= CS_PLAYERSKINS && i < CS_PLAYERSKINS+MAX_CLIENTS)
-	{
-		if (cl.refresh_prepped && strcmp(olds, s))
-			CL_ParseClientinfo (i-CS_PLAYERSKINS);
-	}*/
 }
 
 

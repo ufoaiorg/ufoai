@@ -637,11 +637,9 @@ netadr_t	serverList[MAX_SERVERLIST];
 
 void CL_ParseStatusMessage (void)
 {
-	char	*s;
+	char *s = MSG_ReadString(&net_message);
 
-	s = MSG_ReadString(&net_message);
-
-//	Com_Printf ("%s\n", s);
+	Com_DPrintf ("CL_ParseStatusMessage: %s\n", s);
 
 	if ( serverListLength >= MAX_SERVERLIST )
 		return;
@@ -651,24 +649,51 @@ void CL_ParseStatusMessage (void)
 	menuText[TEXT_LIST] = serverText;
 }
 
+char serverInfoText[MAX_MESSAGE_TEXT];
+void CL_ParseServerInfoMessage ( void )
+{
+	char *s = MSG_ReadString (&net_message);
+	char *var = NULL;
+	char *value = NULL;
 
-/*
-=================
-CL_ConnectList_f
+	// clear list
+	serverInfoText[0] = '\0';
+
+	if ( ! s )
+		return;
+	Com_DPrintf ("%s\n", s);
+
+	Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("IP\t%s\n\n"), NET_AdrToString (net_from) ) );
+
+	while ( ( s = strstr(s, "\\") ) != NULL )
+	{
+		*s++ = '\0';
+		if ( var && value )
+		{
+			if ( Q_strncmp(var, "mapname", 7 ) )
+				Cvar_Set("mn_mappic", value );
+
+			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va("%s\t%s\n", var, value) );
+		}
+		var = s;
+		s = strstr( s, "\\" );
+		*s++ = '\0';
+		value = s;
+	}
+	menuText[TEXT_STANDARD] = serverInfoText;
+	MN_PushMenu("serverinfo");
+}
+
+/*=================
+CL_ServerConnect_f
+
+called via server_connect
 
 FIXME: Spectator needs no team
-=================
-*/
-void CL_ConnectList_f (void)
+=================*/
+void CL_ServerConnect_f( void )
 {
-	int num;
-
-	if ( Cmd_Argc() < 2 )
-	{
-		Com_Printf( "Usage: servers_click <num>\n" );
-		return;
-	}
-	num = atoi( Cmd_Argv( 1 ) );
+	char* ip = Cvar_VariableString("mn_server_ip");
 
 	if ( ! B_GetNumOnTeam() )
 	{
@@ -676,16 +701,36 @@ void CL_ConnectList_f (void)
 		return;
 	}
 
-	if ( num >= 0 && num < serverListLength )
-		Cbuf_AddText( va( "connect %s\n", NET_AdrToString( serverList[num] ) ) );
+	if ( ip )
+		Cbuf_AddText( va( "connect %s\n", ip ) );
 }
 
+/*=================
+CL_ServerListClick_f
+=================*/
+char serverInfoText[MAX_MESSAGE_TEXT];
+void CL_ServerListClick_f (void)
+{
+	int num;
 
-/*
-=================
+	if ( Cmd_Argc() < 2 )
+	{
+		Com_Printf( "usage: servers_click <num>\n" );
+		return;
+	}
+	num = atoi( Cmd_Argv( 1 ) );
+
+	menuText[TEXT_STANDARD] = serverInfoText;
+	if ( num >= 0 && num < serverListLength )
+	{
+		Netchan_OutOfBandPrint (NS_CLIENT, serverList[num], va("status %i", PROTOCOL_VERSION));
+		Cvar_Set("mn_server_ip", NET_AdrToString( serverList[num] ) );
+	}
+}
+
+/*=================
 CL_PingServers_f
-=================
-*/
+=================*/
 void CL_PingServers_f (void)
 {
 	int			i;
@@ -698,7 +743,7 @@ void CL_PingServers_f (void)
 	NET_Config (qtrue);		// allow remote
 
 	// send a broadcast packet
-	Com_Printf ("pinging broadcast...\n");
+	Com_DPrintf ("pinging broadcast...\n");
 	serverText[0] = 0;
 	serverListLength = 0;
 
@@ -726,7 +771,7 @@ void CL_PingServers_f (void)
 		if (!adrstring || !adrstring[0])
 			continue;
 
-		Com_Printf ("pinging %s...\n", adrstring);
+		Com_DPrintf ("pinging %s...\n", adrstring);
 		if (!NET_StringToAdr (adrstring, &adr))
 		{
 			Com_Printf ("Bad address: %s\n", adrstring);
@@ -801,8 +846,7 @@ void CL_ConnectionlessPacket (void)
 	// print command from somewhere
 	if (!Q_strncmp(c, "print", 5))
 	{
-		s = MSG_ReadString (&net_message);
-		Com_Printf ("%s", s);
+		CL_ParseServerInfoMessage ();
 		return;
 	}
 
@@ -1144,7 +1188,8 @@ void CL_InitLocal (void)
 	Cmd_AddCommand ("pingservers", CL_PingServers_f);
 
 	// text id is servers in menu_multiplayer.ufo
-	Cmd_AddCommand ("servers_click", CL_ConnectList_f);
+	Cmd_AddCommand ("servers_click", CL_ServerListClick_f);
+	Cmd_AddCommand ("server_connect", CL_ServerConnect_f);
 
 	// text id is ships in menu_geoscape.ufo
 	Cmd_AddCommand ("ships_click", CL_SelectAircraft_f);
