@@ -24,6 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _Q_SHARED_H
 #define _Q_SHARED_H 1
 
+#ifdef DEBUG
+#define Q_strncpyz(string1,string2,length) Q_strncpyzDebug( string1, string2, length, __FILE__, __LINE__ )
+#endif
+
 #ifdef _MSC_VER
 // unknown pragmas are SUPPOSED to be ignored, but....
 #pragma warning(disable : 4244)     // MIPS
@@ -326,7 +330,11 @@ int Q_strcmp (char *s1, char *s2);
 int Q_stricmp (char *s1, char *s2);
 int Q_strcasecmp (char *s1, char *s2);
 int Q_strncasecmp (char *s1, char *s2, int n);
+#ifndef DEBUG
 void Q_strncpyz( char *dest, const char *src, int destsize );
+#else
+void Q_strncpyzDebug( char *dest, const char *src, int destsize, char* file, int line );
+#endif
 void Q_strcat( char *dest, int size, const char *src );
 
 //=============================================

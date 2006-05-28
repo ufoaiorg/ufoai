@@ -1578,16 +1578,20 @@ Q_strncpyz
 Safe strncpy that ensures a trailing zero
 =============
 */
+#ifdef DEBUG
+void Q_strncpyzDebug( char *dest, const char *src, int destsize, char* file, int line )
+#else
 void Q_strncpyz( char *dest, const char *src, int destsize )
+#endif
 {
-	// bk001129 - also NULL dest
+#ifdef DEBUG
 	if ( !dest )
-		Sys_Error( "Q_strncpyz: NULL dest" );
+		Sys_Error( "Q_strncpyz: NULL dest (%s, %i)", file, line );
 	if ( !src )
-		Sys_Error( "Q_strncpyz: NULL src" );
+		Sys_Error( "Q_strncpyz: NULL src (%s, %i)", file, line );
 	if ( destsize < 1 )
-		Sys_Error( "Q_strncpyz: destsize < 1" );
-
+		Sys_Error( "Q_strncpyz: destsize < 1 (%s, %i)", file, line );
+#endif
 	strncpy( dest, src, destsize-1 );
 	dest[destsize-1] = 0;
 }
