@@ -1279,6 +1279,7 @@ void CL_DoEndRound( sizebuf_t *sb )
 	{
 		Cbuf_AddText( "startround\n" );
 		CL_DisplayHudMessage( _("Your round started!\n"), 2000 );
+		S_StartLocalSound("misc/roundstart.wav");
 		if ( selActor )
 		{
 			CL_BuildForbiddenList();
