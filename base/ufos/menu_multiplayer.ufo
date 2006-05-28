@@ -41,14 +41,6 @@ menu multiplayer
                 pos             "512 512"
         }
 
-        pic multiplayer_label
-        {
-                image   menu/multi_buttons1
-                pos             "80 165"
-                texl    "0 475"
-                texh    "256 510"
-        }
-
         // ==================
         // buttons
         // ==================
@@ -148,14 +140,6 @@ menu multiplayer
 
 menu mp_team
 {
-	pic team
-	{
-		image   menu/multi_buttons1
-		pos             "580 80"
-		texl    "0 445"
-		texh    "256 474"
-	}
-
 	// ==================
 	// slots
 	// ==================
@@ -252,21 +236,38 @@ menu mp_team
 		pos             "780 130"
 		texl    "0 0"
 		texh    "128 64"
-		out             { *button_load image menu/multi_buttons2 }
-		in              { *button_load image menu/multi_buttons2a }
+		out             { *string_load color "0 0.5 0 1" *button_load texl "0 0" *button_load texh "128 64" }
+		in              { *string_load color "1 1 1 1" *button_load texl "0 64" *button_load texh "128 128" }
 		click   { cmd "loadteamslot;" }
+	}
+	string string_load
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Load"
+		pos	"844 140"
+		align	uc
 	}
 
 	pic button_save
 	{
 		image   menu/multi_buttons2
 		pos             "780 200"
-		texl    "0 64"
-		texh    "128 128"
-		out             { *button_save image menu/multi_buttons2 }
-		in              { *button_save image menu/multi_buttons2a }
+		texl    "0 0"
+		texh    "128 64"
+		out             { *string_save color "0 0.5 0 1" *button_save texl "0 0" *button_save texh "128 64" }
+		in              { *string_save color "1 1 1 1" *button_save texl "0 64" *button_save texh "128 128" }
 		click   { cmd "saveteamslot;team_comments;" }
 	}
+	string string_save
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Save"
+		pos	"844 210"
+		align	uc
+	}
+
 
 	// ==================
 	// current team
@@ -283,28 +284,44 @@ menu mp_team
 	{
 		image   menu/multi_buttons2
 		pos             "500 490"
-		texl    "0 192"
-		texh    "128 256"
+		texl    "0 0"
+		texh    "128 64"
+		out             { *string_edit color "0 0.5 0 1" *button_edit texl "0 0" *button_edit texh "128 64" }
+		in              { *string_edit color "1 1 1 1" *button_edit texl "0 64" *button_edit texh "128 128" }
 		click
 		{
 			cmd "mn_push team;"
 		}
-		out             { *button_edit image menu/multi_buttons2 }
-		in              { *button_edit image menu/multi_buttons2a }
+	}
+	string string_edit
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Edit"
+		pos	"564 500"
+		align	uc
 	}
 
 	pic button_new
 	{
 		image   menu/multi_buttons2
 		pos             "640 490"
-		texl    "0 128"
-		texh    "128 192"
+		texl    "0 0"
+		texh    "128 64"
+		out             { *string_new color "0 0.5 0 1" *button_new texl "0 0" *button_new texh "128 64" }
+		in              { *string_new color "1 1 1 1" *button_new texl "0 64" *button_new texh "128 128" }
 		click
 		{
 			cmd "set mn_teamname NewTeam;gennames;mn_push team;"
 		}
-		out             { *button_new image menu/multi_buttons2 }
-		in              { *button_new image menu/multi_buttons2a }
+	}
+	string string_new
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_New"
+		pos	"704 500"
+		align	uc
 	}
 
 	string race_str
@@ -407,6 +424,23 @@ menu serverinfo
 		num	0
 	}
 
+	string mapstring
+	{
+		font	f_menubig
+		color	"1 1 1 1"
+		string	"*cvar mapname"
+		pos	"500 110"
+		align	ul
+	}
+
+	pic mappic
+	{
+		image   "*cvar mn_mappic"
+		pos     "800 80"
+		texl    "0 0"
+		texh    "128 96"
+	}
+
 	pic button_favorite
 	{
 		pos	"80 270"
@@ -483,27 +517,19 @@ menu serverinfo
 // ==================
 menu mp_join_lan
 {
-	pic lan
-	{
-		image   menu/multi_buttons1
-		pos             "580 80"
-		texl    "0 385"
-		texh    "256 414"
-	}
-
 	// ====================
 	// lan / inet buttons
 	// ====================
 	pic button_lan_lan
 	{
-		image   menu/multi_buttons4a
+		image   menu/multi_buttons3a
 		texh    "256 64"
 		texl    "0 32"
 		pos     "500 130"
 	}
 	pic button_lan_inet
 	{
-		image   menu/multi_buttons4
+		image   menu/multi_buttons3
 		click
 		{
 			cmd "mn_escpop 1;"
@@ -511,11 +537,27 @@ menu mp_join_lan
 			cmd "mn_push mp_join_internet;"
 			cmd "mn_escpop 3;"
 		}
-		texh    "256 32"
-		texl    "0 0"
+		texh    "256 64"
+		texl    "0 32"
 		pos     "726 130"
-		out     { *button_lan_inet image menu/multi_buttons4 }
-		in      { *button_lan_inet image menu/multi_buttons4a }
+		out     { *string_inet color "0 0.5 0 1" *button_lan_inet image menu/multi_buttons3 }
+		in      { *string_inet color "1 1 1 1" *button_lan_inet image menu/multi_buttons3a }
+	}
+	string string_lan
+	{
+		font	f_menu
+		color	"1 1 1 1"
+		string	"_LAN"
+		pos	"590 130"
+		align	uc
+	}
+	string string_inet
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Internet"
+		pos	"816 130"
+		align	uc
 	}
 
 	// servers_click is CL_ServerListClick_f in cl_main.c
@@ -573,33 +615,41 @@ menu mp_join_lan
 
 menu mp_join_internet
 {
-	pic internet
-	{
-		image   menu/multi_buttons1
-		pos             "580 80"
-		texl    "0 385"
-		texh    "256 414"
-	}
-
 	// ====================
 	// lan / inet buttons
 	// ====================
-	pic button_inet_lan
+	pic button_lan_lan
 	{
-		image   menu/multi_buttons4
+		image   menu/multi_buttons3
 		texh    "256 64"
 		texl    "0 32"
 		pos     "500 130"
-		out     { *button_inet_lan image menu/multi_buttons4 }
-		in      { *button_inet_lan image menu/multi_buttons4a }
-		click   { cmd "mn_pop esc; mn_push multiplayer;" }
+		out     { *string_lan color "0 0.5 0 1" *button_lan_lan image menu/multi_buttons3 }
+		in      { *string_lan color "1 1 1 1" *button_lan_lan image menu/multi_buttons3a }
+		click	{ cmd "mn_pop esc; mn_push multiplayer;" }
 	}
-	pic button_inet_inet
+	pic button_lan_inet
 	{
-		image   menu/multi_buttons4a
-		texh    "256 32"
-		texl    "0 0"
+		image   menu/multi_buttons3a
+		texh    "256 64"
+		texl    "0 32"
 		pos     "726 130"
+	}
+	string string_lan
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_LAN"
+		pos	"590 130"
+		align	uc
+	}
+	string string_inet
+	{
+		font	f_menu
+		color	"1 1 1 1"
+		string	"_Internet"
+		pos	"816 130"
+		align	uc
 	}
 
 	// ====================
@@ -612,9 +662,23 @@ menu mp_join_internet
 		texh    "256 32"
 		texl    "0 0"
 		pos     "500 615"
-		out     { *button_inet_connect_to_ip image menu/multi_buttons3 }
-		in      { *button_inet_connect_to_ip image menu/multi_buttons3a }
+		out     { *string_inet_connect_to_ip color "0 0.5 0 1" *button_inet_connect_to_ip image menu/multi_buttons3 }
+		in      { *string_inet_connect_to_ip color "1 1 1 1" *button_inet_connect_to_ip image menu/multi_buttons3a }
 	}
+	string string_inet_connect_to_ip
+	{
+		string  "_Connect to IP"
+		pos     "628 614"
+		string  "_Connect"
+		font	f_menu
+		color	"0 0.5 0 1"
+		align	uc
+	}
+
+	// ==================
+	// bookmarks
+	// ==================
+
 
 	// ==================
 	// preferences
@@ -683,14 +747,6 @@ menu mp_join_internet
 
 menu mp_create_server
 {
-	pic server
-	{
-		image   menu/multi_buttons1
-		pos     "580 80"
-		texl    "0 415"
-		texh    "256 444"
-	}
-
 	// ===================
 	// MORALE
 	// ===================
@@ -887,7 +943,7 @@ menu mp_create_server
 	// =====================
 	string maxsoldierperplayer_str
 	{
-		string  "_Max soldiers per player:"
+		string  "_Max. soldiers per player:"
 		pos     "500 240"
 		tooltip "_Sets the max allowed soldiers per player when in teamplay"
 	}
@@ -948,6 +1004,40 @@ menu mp_create_server
 		texh    "32 16"
 		mousefx true
 		click   { cmd "mn_modify teamnum +1 1 4;" }
+	}
+
+	// ===================
+	// MAX PLAYER PER TEAM
+	// max is half of maxclients
+	// ===================
+	string server_maxplayerperteam_str
+	{
+		string  "_Max. players per team:"
+		pos     "500 280"
+	}
+	string server_maxplayerperteam_value
+	{
+		string  "*cvar maxplayers"
+		pos     "840 280"
+		align   ur
+	}
+	pic server_maxplayerperteam_dec
+	{
+		image   menu/buttons_small
+		pos     "868 278"
+		texl    "0 0"
+		texh    "16 16"
+		mousefx true
+		click   { cmd "mn_modify maxplayers -1 1 8;" }
+	}
+	pic server_maxplayerperteam_inc
+	{
+		image   menu/buttons_small
+		pos     "884 278"
+		texl    "16 0"
+		texh    "32 16"
+		mousefx true
+		click   { cmd "mn_modify maxplayers +1 1 8;" }
 	}
 
 	// ===================
@@ -1122,13 +1212,22 @@ menu mp_create_server
 	// ====================
 	pic button_server
 	{
-		image   menu/multi_buttons1
-		pos             "570 630"
-		texl    "0 128"
-		texh    "256 192"
-		click   { cmd "mn_startserver *mapname" }
-		out     { *button_server texl "0 128" *button_server texh "256 192" }
-		in      { *button_server texl "0 192" *button_server texh "256 256" }
+		pos	"570 630"
+		click	{ cmd "mn_startserver *mapname" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_server color "0 0.5 0 1" *button_server texl "0 0"  *button_server texh "256 64" }
+		in	{ *string_server color "1 1 1 1" *button_server texl "0 64" *button_server texh "256 128" }
+	}
+	string string_server
+	{
+		pos	"690 640"
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Start server"
+		align	uc
 	}
 
 	// ===================
@@ -1139,6 +1238,7 @@ menu mp_create_server
 		cmd "killserver;"
 		cmd "maxclients 2;"
 		cmd "getmaps;"
+		cmd "set maxplayers 8; set ai_numactors 0"
 		cmd "mn_modify sv_teamplay -1 0 1;"
 		cmd "mn_translate dedicated mn_dedicated 0:No,1:Yes;"
 		cmd "mn_translate sv_teamplay mn_teamplay 0:No,1:Yes;"

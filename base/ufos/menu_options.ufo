@@ -41,14 +41,6 @@ menu options
 		pos		"512 512"
 	}
 
-	pic options_label
-	{
-		image	menu/options_buttons1
-		pos		"80 165"
-		texl	"0 475"
-		texh	"256 510"
-	}
-
 	// ==================
 	// buttons
 	// ==================
@@ -147,14 +139,6 @@ menu options
 
 menu options_video
 {
-	pic video
-	{
-		image	menu/options_buttons1
-		pos		"580 80"
-		texl	"0 385"
-		texh	"256 414"
-	}
-
 	string res_str
 	{
 		string	"_Resolution:"
@@ -435,14 +419,6 @@ menu options_video
 
 menu options_sound
 {
-	pic sound
-	{
-		image	menu/options_buttons1
-		pos		"580 80"
-		texl	"0 415"
-		texh	"256 444"
-	}
-
 	string volume_str
 	{
 		string	"_Volume Control"
@@ -579,14 +555,6 @@ menu options_sound
 
 menu options_game
 {
-	pic game
-	{
-		image	menu/options_buttons1
-		pos		"580 80"
-		texl	"0 445"
-		texh	"256 474"
-	}
-
 	string dif_str
 	{
 		string	"_Difficulty:"
