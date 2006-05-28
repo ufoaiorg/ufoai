@@ -14,6 +14,8 @@ The .pak files are just a linear collapse of a directory tree
 
 #define IDPAKHEADER		(('K'<<24)+('C'<<16)+('A'<<8)+'P')
 
+#define MAX_QPATH 64
+
 typedef struct
 {
 	char	name[MAX_QPATH];
