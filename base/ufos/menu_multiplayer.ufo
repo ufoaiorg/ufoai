@@ -234,6 +234,7 @@ menu mp_team
 	{
 		image   menu/multi_buttons2
 		pos             "780 130"
+		tooltip	"_Load team from current selected slot"
 		texl    "0 0"
 		texh    "128 64"
 		out             { *string_load color "0 0.5 0 1" *button_load texl "0 0" *button_load texh "128 64" }
@@ -253,6 +254,7 @@ menu mp_team
 	{
 		image   menu/multi_buttons2
 		pos             "780 200"
+		tooltip	"_Save team to current selected slot"
 		texl    "0 0"
 		texh    "128 64"
 		out             { *string_save color "0 0.5 0 1" *button_save texl "0 0" *button_save texh "128 64" }
@@ -284,6 +286,7 @@ menu mp_team
 	{
 		image   menu/multi_buttons2
 		pos             "500 490"
+		tooltip	"_Edit your team after loading"
 		texl    "0 0"
 		texh    "128 64"
 		out             { *string_edit color "0 0.5 0 1" *button_edit texl "0 0" *button_edit texh "128 64" }
@@ -306,6 +309,7 @@ menu mp_team
 	{
 		image   menu/multi_buttons2
 		pos             "640 490"
+		tooltip	"_Generate a new team"
 		texl    "0 0"
 		texh    "128 64"
 		out             { *string_new color "0 0.5 0 1" *button_new texl "0 0" *button_new texh "128 64" }
