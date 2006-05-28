@@ -467,6 +467,15 @@ menu serverinfo
 		align	uc
 	}
 
+	func init
+	{
+		cmd "mn_escpop 1"
+	}
+
+	func close
+	{
+		cmd "mn_escpop 3"
+	}
 }
 
 // ==================
