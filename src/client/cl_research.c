@@ -753,22 +753,23 @@ void RS_UpdateData ( void )
 				Cvar_Set( va( "mn_researchavailable%i",j ), tempstring );	// max. available scis in the base the tech is reseearched
 			}
 
+			
 			switch ( tech->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 			{
 			case RS_RUNNING:
-				Q_strcat(name, MAX_VAR, _(" [under research]") );
+				//Q_strcat(name, MAX_VAR, _(" [under research]") ); // this is not needed anymore since wqe now have research-status icons.
 				Cbuf_AddText( va( "researchrunning%i\n", j ) );	// color the item 'research running'
 				break;
 			case RS_FINISH:
 				// DEBUG: normaly these will not be shown at all. see "if" above
-				Q_strcat(name, MAX_VAR, _(" [finished]") );
+				//Q_strcat(name, MAX_VAR, _(" [finished]") ); // this is not needed anymore since wqe now have research-status icons.
 				break;
 			case RS_PAUSED:
-				Q_strcat(name, MAX_VAR, _(" [paused]") );
+				//Q_strcat(name, MAX_VAR, _(" [paused]") ); // this is not needed anymore since wqe now have research-status icons.
 				Cbuf_AddText( va( "researchpaused%i\n", j ) );	// color the item 'research paused'
 				break;
 			case RS_NONE:
-				Q_strcat(name, MAX_VAR, _(" [unknown]") );
+				//Q_strcat(name, MAX_VAR, _(" [unknown]") ); // this is not needed anymore since wqe now have research-status icons.
 				// The color is defined in menu research.ufo by  "confunc research_clear". See also above.
 				break;
 			default:

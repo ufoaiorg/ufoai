@@ -1197,8 +1197,12 @@ int B_GetUnusedLabs( int base_id )
 					break;
 				}
 			}
-			if ( !used )
+			if ( !used ) {
+				Com_DPrintf("B_GetUnusedLabs: %s is unused in base %i\n", building->id, base_id );
 				numFreeLabs++;
+			} else {
+				Com_DPrintf("B_GetUnusedLabs: %s is used in base %i\n", building->id, base_id );
+			}
 		}
 	}
 	return numFreeLabs;
