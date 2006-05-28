@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -60,7 +60,7 @@ void PF_dprintf (char *fmt, ...)
 {
 	char		msg[1024];
 	va_list		argptr;
-	
+
 	va_start (argptr,fmt);
 	vsprintf (msg, fmt, argptr);
 	va_end (argptr);
@@ -113,8 +113,8 @@ void PF_centerprintf (player_t *player, char *fmt, ...)
 	char		msg[1024];
 	va_list		argptr;
 	int			n;
-	
-	if ( !player ) 
+
+	if ( !player )
 		return;
 
 	n = player->num;
@@ -142,7 +142,7 @@ void PF_error (char *fmt, ...)
 {
 	char		msg[1024];
 	va_list		argptr;
-	
+
 	va_start (argptr,fmt);
 	vsprintf (msg, fmt, argptr);
 	va_end (argptr);
@@ -197,7 +197,6 @@ void PF_Configstring (int index, char *val)
 	// change the string in sv
 	Q_strncpyz (sv.configstrings[index], val, MAX_TOKEN_CHARS);
 
-	
 	if (sv.state != ss_loading)
 	{	// send the update to everyone
 		SZ_Clear (&sv.multicast);
@@ -244,18 +243,18 @@ void	PF_ReadData ( void *buffer, int size) {MSG_ReadData( &net_message, buffer, 
 qboolean	pfe_pending = qfalse;
 int		pfe_mask;
 
-void PF_EndEvents( void ) 
+void PF_EndEvents( void )
 {
 	if ( !pfe_pending )
 		return;
 
-	PF_WriteByte( EV_NULL ); 
-	SV_Multicast( pfe_mask ); 
+	PF_WriteByte( EV_NULL );
+	SV_Multicast( pfe_mask );
 //	SV_SendClientMessages();
 	pfe_pending = qfalse;
 }
 
-void PF_AddEvent( int mask, int eType ) 
+void PF_AddEvent( int mask, int eType )
 {
 	if ( !pfe_pending || mask != pfe_mask )
 	{

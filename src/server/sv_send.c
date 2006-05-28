@@ -141,6 +141,9 @@ void SV_BroadcastCommand (char *fmt, ...)
 	va_end (argptr);
 
 	MSG_WriteByte (&sv.multicast, svc_stufftext);
+#ifdef DEBUG
+	Com_DPrintf("broadcast%s\n", string );
+#endif
 	MSG_WriteString (&sv.multicast, string);
 	SV_Multicast( ~0 );
 }
