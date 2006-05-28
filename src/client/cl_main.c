@@ -656,30 +656,63 @@ void CL_ParseServerInfoMessage ( void )
 	char *var = NULL;
 	char *value = NULL;
 
-	// clear list
-	serverInfoText[0] = '\0';
-
 	if ( ! s )
 		return;
+
+	var = strstr(s, "\n");
+	*var = '\0';
 	Com_DPrintf ("%s\n", s);
+	Cvar_Set("mn_mappic", "maps/shots/na.jpg" );
 
-	Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("IP\t%s\n\n"), NET_AdrToString (net_from) ) );
+	Com_sprintf( serverInfoText, MAX_MESSAGE_TEXT, _("IP\t%s\n\n"), NET_AdrToString (net_from) );
 
-	while ( ( s = strstr(s, "\\") ) != NULL )
+	s++; // first char is slash
+	do
 	{
-		*s++ = '\0';
-		if ( var && value )
-		{
-			if ( Q_strncmp(var, "mapname", 7 ) )
-				Cvar_Set("mn_mappic", value );
-
-			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va("%s\t%s\n", var, value) );
-		}
+		// var
 		var = s;
-		s = strstr( s, "\\" );
+		s = strstr(s, "\\");
 		*s++ = '\0';
+
+		// value
 		value = s;
-	}
+		s = strstr(s, "\\");
+		// last?
+		if ( s )
+			*s++ = '\0';
+
+		if ( !Q_strncmp(var, "mapname", 7 ) )
+		{
+			if ( FS_CheckFile( va("pics/maps/shots/%s.jpg", value) ) != -1 )
+				Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value) );
+
+			Cvar_ForceSet("mapname", value );
+			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Map:\t%s\n"), value) );
+		}
+		else if ( !Q_strncmp(var, "version", 7 ) )
+			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Version:\t%s\n"), value) );
+		else if ( !Q_strncmp(var, "hostname", 8 ) )
+			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Servername:\t%s\n"), value) );
+		else if ( !Q_strncmp(var, "sv_enablemorale", 15 ) )
+			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Moralestates:\t%s\n"), value) );
+		else if ( !Q_strncmp(var, "sv_teamplay", 11 ) )
+		{
+
+			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Teamplay:\t%s\n"), value) );
+		}
+		else if ( !Q_strncmp(var, "maxplayers", 10 ) )
+			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Max. players per team:\t%s\n"), value) );
+		else if ( !Q_strncmp(var, "maxclients", 10 ) )
+			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Max. clients:\t%s\n"), value) );
+		else if ( !Q_strncmp(var, "maxsoldiersperplayer", 20 ) )
+			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Max. soldiers per player:\t%s\n"), value) );
+		else if ( !Q_strncmp(var, "maxsoldiers", 11 ) )
+			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Max. soldiers per team:\t%s\n"), value) );
+#ifdef DEBUG
+		else
+			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va("%s\t%s\n", var, value) );
+#endif
+	} while ( s != NULL );
 	menuText[TEXT_STANDARD] = serverInfoText;
 	MN_PushMenu("serverinfo");
 }
@@ -703,6 +736,85 @@ void CL_ServerConnect_f( void )
 
 	if ( ip )
 		Cbuf_AddText( va( "connect %s\n", ip ) );
+}
+
+/*=================
+CL_BookmarkPrint_f
+=================*/
+char bookmarkText[MAX_MESSAGE_TEXT];
+void CL_BookmarkPrint_f ( void )
+{
+	int i;
+
+	// clear list;
+	bookmarkText[0] = '\0';
+
+	for ( i = 0; i < 16; i++ )
+	{
+		Q_strcat( bookmarkText, MAX_MESSAGE_TEXT, va( "%s\n", Cvar_VariableString( va("adr%i", i) ) ) );
+	}
+	menuText[TEXT_LIST] = bookmarkText;
+}
+
+/*=================
+CL_BookmarkAdd_f
+=================*/
+void CL_BookmarkAdd_f ( void )
+{
+	int	i;
+	char	*bookmark = NULL;
+	char	*newBookmark = NULL;
+	netadr_t	adr;
+
+	if ( Cmd_Argc() < 2 )
+	{
+		newBookmark = Cvar_VariableString("mn_server_ip");
+		if ( ! newBookmark )
+		{
+			Com_Printf( "usage: bookmark_add <ip>\n" );
+			return;
+		}
+	}
+	else
+		newBookmark = Cmd_Argv( 1 );
+
+	if (!NET_StringToAdr (newBookmark, &adr))
+	{
+		Com_Printf("CL_BookmarkAdd_f: Invalid address %s\n", newBookmark );
+		return;
+	}
+
+	for ( i = 0; i < 16; i++ )
+	{
+		bookmark = Cvar_VariableString( va("adr%i", i) );
+		if ( !bookmark || !NET_StringToAdr (bookmark, &adr) )
+		{
+			Cvar_Set( va("adr%i", i), newBookmark );
+			return;
+		}
+	}
+	// bookmarks are full - overwrite the first entry
+	Cvar_Set( "adr0", newBookmark );
+}
+
+/*=================
+CL_BookmarkListClick_f
+=================*/
+void CL_BookmarkListClick_f ( void )
+{
+	int	num;
+	char	*bookmark = NULL;
+
+	if ( Cmd_Argc() < 2 )
+	{
+		Com_Printf( "usage: bookmarks_click <num>\n" );
+		return;
+	}
+	num = atoi( Cmd_Argv( 1 ) );
+	bookmark = Cvar_VariableString( va("adr%i", num) );
+
+	if ( bookmark )
+		Cbuf_AddText( va( "connect %s\n", bookmark ) );
 }
 
 /*=================
@@ -1190,6 +1302,9 @@ void CL_InitLocal (void)
 	// text id is servers in menu_multiplayer.ufo
 	Cmd_AddCommand ("servers_click", CL_ServerListClick_f);
 	Cmd_AddCommand ("server_connect", CL_ServerConnect_f);
+	Cmd_AddCommand ("bookmarks_click", CL_BookmarkListClick_f);
+	Cmd_AddCommand ("bookmarks_print", CL_BookmarkPrint_f);
+	Cmd_AddCommand ("bookmark_add", CL_BookmarkAdd_f );
 
 	// text id is ships in menu_geoscape.ufo
 	Cmd_AddCommand ("ships_click", CL_SelectAircraft_f);

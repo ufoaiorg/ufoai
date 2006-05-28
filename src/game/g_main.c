@@ -91,18 +91,22 @@ void InitGame (void)
 	gi.dprintf ("==== InitGame ====\n");
 
 	// noset vars
-	dedicated = gi.cvar ("dedicated", "0", CVAR_NOSET);
+	dedicated = gi.cvar ("dedicated", "0", CVAR_SERVERINFO|CVAR_NOSET);
 
 	// latched vars
 	sv_cheats = gi.cvar ("cheats", "0", CVAR_SERVERINFO|CVAR_LATCH);
 	gi.cvar ("gamename", GAMEVERSION , CVAR_SERVERINFO | CVAR_LATCH);
 	gi.cvar ("gamedate", __DATE__ , CVAR_SERVERINFO | CVAR_LATCH);
 
+	// max. players per team (original quake)
 	maxplayers = gi.cvar ("maxplayers", "8", CVAR_SERVERINFO | CVAR_LATCH);
+	// max. soldiers per team
 	maxsoldiers = gi.cvar ("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
+	// max soldiers per player
 	maxsoldiersperplayer = gi.cvar ("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
+	// enable moralestates in multiplayer
 	sv_enablemorale = gi.cvar ("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
-	maxspectators = gi.cvar ("maxspectators", "8", CVAR_SERVERINFO);
+	maxspectators = gi.cvar ("maxspectators", "8", CVAR_SERVERINFO|CVAR_LATCH);
 	maxentities = gi.cvar ("maxentities", "1024", CVAR_LATCH);
 
 	// change anytime vars
@@ -112,14 +116,19 @@ void InitGame (void)
 	filterban = gi.cvar ("filterban", "1", 0);
 	sv_ai = gi.cvar ("sv_ai", "1", 0);
 	sv_teamplay = gi.cvar ("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_SERVERINFO);
+	// how many connected clients
 	sv_maxclients = gi.cvar ("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH);
 
 	ai_alien = gi.cvar ("ai_alien", "alien", 0);
 	ai_civilian = gi.cvar ("ai_civilian", "civilian", 0);
 	ai_equipment = gi.cvar ("ai_equipment", "standard", 0);
+	// aliens in singleplayer (can differ each mission)
 	ai_numaliens = gi.cvar ("ai_numaliens", "8", 0 );
+	// civilians for singleplayer
 	ai_numcivilians = gi.cvar ("ai_numcivilians", "8", 0 );
+	// aliens in multiplayer
 	ai_numactors = gi.cvar ("ai_numactors", "8", CVAR_ARCHIVE );
+	// autojoin aliens
 	ai_autojoin = gi.cvar ("ai_autojoin", "0", 0 );
 
 	difficulty = gi.cvar ("difficulty", "-1", CVAR_ARCHIVE | CVAR_LATCH);

@@ -621,6 +621,29 @@ void CL_UpdateHireVar ( void )
 
 /*
 ======================
+CL_ResetTeamInBase
+
+only for multiplayer when setting up a new team
+======================
+*/
+void CL_ResetTeamInBase( void )
+{
+	if ( ccs.singleplayer )
+		return;
+
+	Com_DPrintf("Reset of baseCurrent team flags like hiredMask\n");
+	if ( ! baseCurrent )
+	{
+		Com_DPrintf("CL_ResetTeamInBase: No baseCurrent\n");
+		return;
+	}
+
+	CL_CleanTempInventory();
+	baseCurrent->teamMask[0] = baseCurrent->hiredMask = baseCurrent->numOnTeam[0] = 0;
+}
+
+/*
+======================
 CL_MarkTeamCmd
 ======================
 */
@@ -766,7 +789,7 @@ void CL_SaveTeam( char *filename )
 	byte	buf[MAX_TEAMDATASIZE];
 	FILE	*f;
 	char	*name;
-	int		res;
+	int		res, i;
 
 	assert(baseCurrent);
 
@@ -793,7 +816,10 @@ void CL_SaveTeam( char *filename )
 	CL_SendTeamInfo( &sb, baseCurrent->wholeTeam, baseCurrent->numWholeTeam );
 
 	// store assignement
-	MSG_WriteFormat( &sb, "lbbl", baseCurrent->teamMask, baseCurrent->numOnTeam, baseCurrent->numHired, baseCurrent->hiredMask );
+	// get assignement
+	MSG_WriteFormat( &sb, "bl", baseCurrent->numHired, baseCurrent->hiredMask );
+	for ( i = 0; i < baseCurrent->numAircraftInBase; i++ )
+		MSG_WriteFormat( &sb, "bl", baseCurrent->numOnTeam[i], baseCurrent->teamMask[i] );
 
 	// write data
 	res = fwrite( buf, 1, sb.cursize, f );
@@ -935,6 +961,8 @@ void CL_LoadTeamMultiplayer( char *filename )
 	FILE	*f;
 	char	title[MAX_VAR];
 
+	CL_ResetTeamInBase();
+
 	// return the base title
 	Q_strncpyz( title, bmBases[0].title, MAX_VAR );
 	B_ClearBase( &bmBases[0] );
@@ -1015,6 +1043,7 @@ void CL_ResetTeams( void )
 {
 	Cmd_AddCommand( "givename", CL_GiveNameCmd );
 	Cmd_AddCommand( "gennames", CL_GenerateNamesCmd );
+	Cmd_AddCommand( "team_reset", CL_ResetTeamInBase );
 	Cmd_AddCommand( "genequip", CL_GenerateEquipmentCmd );
 	Cmd_AddCommand( "equip_type", CL_EquipTypeCmd );
 	Cmd_AddCommand( "team_mark", CL_MarkTeamCmd );

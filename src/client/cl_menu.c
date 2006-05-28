@@ -3188,33 +3188,19 @@ void MN_MapInfo ( void )
 	if ( !mapsInstalledInit )
 		FS_GetMaps();
 
+	Cvar_Set("mn_mappic", "maps/shots/na.jpg" );
+	Cvar_Set("mn_mappic2", "maps/shots/na.jpg" );
+	Cvar_Set("mn_mappic3", "maps/shots/na.jpg" );
+
 	Cvar_ForceSet("mapname", maps[mapInstalledIndex] );
-	if ( FS_CheckFile ( va ( "pics/maps/shots/%s.jpg", maps[mapInstalledIndex] ) ) != -1 )
-	{
-		Cvar_Set("mn_mappic", va ( "maps/shots/%s.jpg", maps[mapInstalledIndex] ) );
-	}
-	else
-	{
-		Cvar_Set("mn_mappic", va ( "maps/shots/na.jpg", maps[mapInstalledIndex] ) );
-	}
+	if ( FS_CheckFile( va("pics/maps/shots/%s.jpg", maps[mapInstalledIndex]) ) != -1 )
+		Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", maps[mapInstalledIndex]) );
 
-	if ( FS_CheckFile ( va ( "pics/maps/shots/%s_2.jpg", maps[mapInstalledIndex] ) ) != -1 )
-	{
-		Cvar_Set("mn_mappic2", va ( "maps/shots/%s_2.jpg", maps[mapInstalledIndex] ) );
-	}
-	else
-	{
-		Cvar_Set("mn_mappic2", va ( "maps/shots/na.jpg", maps[mapInstalledIndex] ) );
-	}
+	if ( FS_CheckFile( va("pics/maps/shots/%s_2.jpg", maps[mapInstalledIndex]) ) != -1 )
+		Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", maps[mapInstalledIndex]) );
 
-	if ( FS_CheckFile ( va ( "pics/maps/shots/%s_3.jpg", maps[mapInstalledIndex] ) ) != -1 )
-	{
-		Cvar_Set("mn_mappic3", va ( "maps/shots/%s_3.jpg", maps[mapInstalledIndex] ) );
-	}
-	else
-	{
-		Cvar_Set("mn_mappic3", va ( "maps/shots/na.jpg", maps[mapInstalledIndex] ) );
-	}
+	if ( FS_CheckFile( va("pics/maps/shots/%s_3.jpg", maps[mapInstalledIndex]) ) != -1 )
+		Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", maps[mapInstalledIndex]) );
 }
 
 /*

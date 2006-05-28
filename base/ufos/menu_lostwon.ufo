@@ -1,7 +1,7 @@
 // ==================
 // WON MENU
 // ==================
-	
+
 menu won
 {
 	// ==================
@@ -11,30 +11,30 @@ menu won
 	zone render
 	{
 		invis true
-	}	
-	
+	}
+
 	// ==================
 	// background
 	// ==================
-	
+
 	pic back_ul
 	{
 		image	menu/won_ul
 		pos		"0 0"
-	}	
-		
+	}
+
 	pic back_ur
 	{
 		image	menu/won_ur
 		pos		"512 0"
-	}	
-		
+	}
+
 	pic back_ll
 	{
 		image	menu/won_ll
 		pos		"0 512"
-	}	
-		
+	}
+
 	pic back_lr
 	{
 		image	menu/won_lr
@@ -44,7 +44,7 @@ menu won
 	// ==================
 	// text
 	// ==================
-	
+
 	text results
 	{
 		pos		"500 150"
@@ -55,7 +55,7 @@ menu won
 	// ==================
 	// buttons
 	// ==================
-	
+
 	pic bt_tryagain
 	{
 		image	menu/button_aftermission
@@ -65,7 +65,7 @@ menu won
 		mousefx true
 		click	{ cmd "set game_tryagain 1;mn_pop;" }
 	}
-	
+
 //	pic bt_replay
 //	{
 //		image	menu/button_aftermission
@@ -75,7 +75,7 @@ menu won
 //		mousefx true
 //		click
 //	}
-	
+
 	pic bt_continue
 	{
 		image	menu/button_aftermission
@@ -85,12 +85,12 @@ menu won
 		mousefx true
 		click	{ cmd "set game_tryagain 0;mn_pop;" }
 	}
-	
+
 	func init
 	{
 		cmd "music geoscape;ov_start;"
 	}
-	
+
 	func close
 	{
 		cmd "game_results 1;"
@@ -100,7 +100,7 @@ menu won
 // ==================
 // LOST MENU
 // ==================
-	
+
 menu lost
 {
 	// ==================
@@ -110,30 +110,30 @@ menu lost
 	zone render
 	{
 		invis true
-	}	
-	
+	}
+
 	// ==================
 	// background
 	// ==================
-	
+
 	pic back_ul
 	{
 		image	menu/lost_ul
 		pos		"0 0"
-	}	
-		
+	}
+
 	pic back_ur
 	{
 		image	menu/lost_ur
 		pos		"512 0"
-	}	
-		
+	}
+
 	pic back_ll
 	{
 		image	menu/lost_ll
 		pos		"0 512"
-	}	
-		
+	}
+
 	pic back_lr
 	{
 		image	menu/lost_lr
@@ -143,18 +143,18 @@ menu lost
 	// ==================
 	// text
 	// ==================
-	
+
 	text results
 	{
 		pos		"500 150"
 		size	"480 680"
 		format	"20 0"
-	}	
+	}
 
 	// ==================
 	// buttons
 	// ==================
-	
+
 	pic bt_tryagain
 	{
 		image	menu/button_aftermission
@@ -164,7 +164,7 @@ menu lost
 		mousefx true
 		click	{ cmd "set game_tryagain 1;mn_pop;" }
 	}
-	
+
 //	pic bt_replay
 //	{
 //		image	menu/button_aftermission
@@ -174,7 +174,7 @@ menu lost
 //		mousefx true
 //		click
 //	}
-	
+
 	pic bt_continue
 	{
 		image	menu/button_aftermission
@@ -189,7 +189,7 @@ menu lost
 	{
 		cmd "music geoscape;ov_start;"
 	}
-	
+
 	func close
 	{
 		cmd "game_results 0;"

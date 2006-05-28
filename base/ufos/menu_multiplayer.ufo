@@ -316,7 +316,7 @@ menu mp_team
 		in              { *string_new color "1 1 1 1" *button_new texl "0 64" *button_new texh "128 128" }
 		click
 		{
-			cmd "set mn_teamname NewTeam;gennames;mn_push team;"
+			cmd "team_reset; set mn_teamname NewTeam;gennames;mn_push team;"
 		}
 	}
 	string string_new
@@ -448,7 +448,7 @@ menu serverinfo
 	pic button_favorite
 	{
 		pos	"80 270"
-		click	{ cmd "addtofavorite" }
+		click	{ cmd "bookmark_add" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
@@ -656,6 +656,25 @@ menu mp_join_internet
 		align	uc
 	}
 
+	string inet_bookmarks
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Bookmarks"
+		pos	"700 170"
+		align	uc
+	}
+
+	text bookmarks
+	{
+		pos	"500 200"
+		size	"420 550"
+		format	"20 200"
+		mousefx	true
+		num	1
+		click	{ }
+	}
+
 	// ====================
 	// connect to ip button
 	// ====================
@@ -678,15 +697,6 @@ menu mp_join_internet
 		color	"0 0.5 0 1"
 		align	uc
 	}
-
-	// ==================
-	// bookmarks
-	// ==================
-
-
-	// ==================
-	// preferences
-	// ==================
 
 	// ===================
 	// connect_to_ip
@@ -741,6 +751,7 @@ menu mp_join_internet
 
 	func init
 	{
+		cmd "bookmarks_print;"
 	}
 }
 
