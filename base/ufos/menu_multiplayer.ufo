@@ -690,9 +690,8 @@ menu mp_join_internet
 	}
 	string string_inet_connect_to_ip
 	{
-		string  "_Connect to IP"
-		pos     "628 614"
 		string  "_Connect"
+		pos     "628 614"
 		font	f_menu
 		color	"0 0.5 0 1"
 		align	uc
@@ -710,7 +709,7 @@ menu mp_join_internet
 	{
 		image   menu/save_slot
 		pos     "500 580"
-		mousefx true
+		mousefx false
 		click   { cmd "msgmenu ?mn_server_ip" *txt_inet_ip color "1 1 1 1" *txt_inet_ip mousefx true }
 	}
 	string txt_inet_ip
@@ -719,7 +718,7 @@ menu mp_join_internet
 		pos    "510 589"
 		color  "0 .78 0 1"
 	}
-	confunc mn_inet_ip_changed { *txt_inet_ip color "0 .78 0 1" *txt_inet_ip mousefx false }
+	confunc mn_server_ip_changed { *txt_inet_ip color "0 .78 0 1" *txt_inet_ip mousefx false }
 
 	string inet_teamnum_str
 	{

@@ -276,7 +276,7 @@ void CL_SendConnectPacket (void)
 
 	if (!NET_StringToAdr (cls.servername, &adr))
 	{
-		Com_Printf ( "Bad server address\n" );
+		Com_Printf ( "Bad server address: %s\n", cls.servername );
 		cls.connect_time = 0;
 		return;
 	}
@@ -322,7 +322,7 @@ void CL_CheckForResend (void)
 
 	if (!NET_StringToAdr (cls.servername, &adr))
 	{
-		Com_Printf ("Bad server address\n");
+		Com_Printf ("Bad server address: %s\n", cls.servername);
 		cls.state = ca_disconnected;
 		return;
 	}
@@ -735,7 +735,10 @@ void CL_ServerConnect_f( void )
 	}
 
 	if ( ip )
+	{
+		Com_DPrintf("CL_ServerConnect_f: connect to %s\n", ip);
 		Cbuf_AddText( va( "connect %s\n", ip ) );
+	}
 }
 
 /*=================
@@ -804,6 +807,7 @@ void CL_BookmarkListClick_f ( void )
 {
 	int	num;
 	char	*bookmark = NULL;
+	netadr_t	adr;
 
 	if ( Cmd_Argc() < 2 )
 	{
@@ -814,7 +818,18 @@ void CL_BookmarkListClick_f ( void )
 	bookmark = Cvar_VariableString( va("adr%i", num) );
 
 	if ( bookmark )
-		Cbuf_AddText( va( "connect %s\n", bookmark ) );
+	{
+		if (!NET_StringToAdr (bookmark, &adr))
+		{
+			Com_Printf ("Bad address: %s\n", bookmark);
+			return;
+		}
+		if ( adr.port == 0 )
+			adr.port = BigShort(PORT_SERVER);
+
+		Cvar_Set("mn_server_ip", bookmark );
+		Netchan_OutOfBandPrint (NS_CLIENT, adr, "status %i", PROTOCOL_VERSION );
+	}
 }
 
 /*=================
@@ -835,7 +850,7 @@ void CL_ServerListClick_f (void)
 	menuText[TEXT_STANDARD] = serverInfoText;
 	if ( num >= 0 && num < serverListLength )
 	{
-		Netchan_OutOfBandPrint (NS_CLIENT, serverList[num], va("status %i", PROTOCOL_VERSION));
+		Netchan_OutOfBandPrint (NS_CLIENT, serverList[num], "status %i", PROTOCOL_VERSION );
 		Cvar_Set("mn_server_ip", NET_AdrToString( serverList[num] ) );
 	}
 }
@@ -864,7 +879,7 @@ void CL_PingServers_f (void)
 	{
 		adr.type = NA_BROADCAST;
 		adr.port = BigShort(PORT_SERVER);
-		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));
+		Netchan_OutOfBandPrint (NS_CLIENT, adr, "info %i", PROTOCOL_VERSION );
 	}
 
 	noipx = Cvar_Get ("noipx", "0", CVAR_NOSET);
@@ -872,7 +887,7 @@ void CL_PingServers_f (void)
 	{
 		adr.type = NA_BROADCAST_IPX;
 		adr.port = BigShort(PORT_SERVER);
-		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));
+		Netchan_OutOfBandPrint (NS_CLIENT, adr, "info %i", PROTOCOL_VERSION );
 	}
 
 	// send a packet to each address book entry
@@ -891,7 +906,7 @@ void CL_PingServers_f (void)
 		}
 		if (!adr.port)
 			adr.port = BigShort(PORT_SERVER);
-		Netchan_OutOfBandPrint (NS_CLIENT, adr, va("info %i", PROTOCOL_VERSION));
+		Netchan_OutOfBandPrint (NS_CLIENT, adr, "info %i", PROTOCOL_VERSION );
 	}
 }
 
