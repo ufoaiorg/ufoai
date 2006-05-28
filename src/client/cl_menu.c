@@ -630,8 +630,6 @@ void MN_ScreenToMap( menuNode_t *node, int x, int y, vec2_t pos )
 
 	while ( pos[0] > 180.0 ) pos[0] -= 360.0;
 	while ( pos[0] <-180.0 ) pos[0] += 360.0;
-
-	Com_Printf("pos: %.0f:%.0f\n", pos[0], pos[1] );
 }
 
 
