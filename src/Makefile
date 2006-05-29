@@ -80,7 +80,7 @@ NULL_DIR=$(MOUNT_DIR)/null
 JPDIR=$(MOUNT_DIR)/jpeg-6
 
 BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp
-TOOLSCFLAGS=-Wall
+TOOLSCFLAGS=
 TOOLSLDFLAGS=-lm
 PROFILER_CFLAGS=
 
@@ -147,7 +147,9 @@ else
 endif
 
 ifeq ($(strip $(BUILD_FOR_PROFILING)),YES)
-	PROFILER_CFLAGS+=-pg
+# -pg for gprof
+# -fprofile-arcs -ftest-coverage for gcov
+	PROFILER_CFLAGS+=-pg -DPROFILING -fprofile-arcs -ftest-coverage
 endif
 
 ifeq ($(ARCH),axp)
@@ -345,7 +347,8 @@ TOOLS_OBJS = \
 	$(BUILDDIR)/tools/ufo2map/common/trilib.o
 
 $(BUILDDIR)/ufo2map : $(TOOLS_OBJS)
-	$(CC) $(TOOLSCFLAGS) -o $@ $(TOOLS_OBJS) $(TOOLSLDFLAGS)
+	CFLAGS+=$(TOOLSCFLAGS)
+	$(CC) $(CFLAGS) -o $@ $(TOOLS_OBJS) $(TOOLSLDFLAGS)
 
 $(BUILDDIR)/tools/ufo2map/ufo2map.o :    $(TOOLS_DIR)/ufo2map/ufo2map.c
 	$(DO_TOOLS_CC)
