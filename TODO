@@ -38,7 +38,6 @@ Tasks for TechDemo3
 * Check and balance the new weapons (grenade launcher, stunrod, etc..)
 ** Stunrod is not displayed correctly and is to big.
 ** [DONE] Laser weapons should not be buyable (they are researched by Phalanx) DAMN we need to leave them in, because we can't "produce" yet.
-
 * [DONE] Bug #1474623: Bug in savegame: aircraft problems
 * [DONE] Bug #1482877: map b/g/ufo_hangar.map does not compile
 * [DONE] Bug #1444732: game exits with error (crash: probably a string-handling error in combination with gettext)

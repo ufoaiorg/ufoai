@@ -89,7 +89,11 @@ void Sys_Quit (void)
 	CL_Shutdown ();
 	Qcommon_Shutdown ();
 	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+#ifndef PROFILING
 	_exit(0);
+#else
+	exit(0);
+#endif
 }
 
 void Sys_Init(void)
@@ -115,8 +119,12 @@ void Sys_Error (char *error, ...)
 
 	CL_Shutdown ();
 	Qcommon_Shutdown ();
-	_exit (1);
 
+#ifndef PROFILING
+	_exit (1);
+#else
+	exit (0);
+#endif
 }
 
 void Sys_Warn (char *warning, ...)

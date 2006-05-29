@@ -454,6 +454,7 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 		|| pcx->ymax >= 480)
 	{
 		ri.Con_Printf (PRINT_ALL, "Bad pcx file %s\n", filename);
+		ri.FS_FreeFile (raw);
 		return;
 	}
 
@@ -826,7 +827,7 @@ void LoadJPG (char *filename, byte **pic, int *width, int *height)
 	*width = cinfo.output_width; *height = cinfo.output_height;
 
 	// Allocate Scanline buffer
-	scanline = malloc(cinfo.output_width * 3);
+	scanline = malloc(cinfo.output_width * 4);
 	if(!scanline)
 	{
 		ri.Con_Printf(PRINT_ALL, "Insufficient RAM for JPEG scanline buffer\n");
@@ -865,6 +866,7 @@ void LoadJPG (char *filename, byte **pic, int *width, int *height)
 
 	// Return the 'rgbadata'
 	*pic = rgbadata;
+	ri.FS_FreeFile(rawdata);
 }
 
 /* Expanded data destination object for stdio output */

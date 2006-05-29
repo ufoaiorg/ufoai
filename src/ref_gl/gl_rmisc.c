@@ -124,7 +124,7 @@ void GL_ScreenShot_f (void)
 	//
 	// find a file name to save it to
 	//
-	strcpy(picname,"ufo00.tga");
+	Q_strncpyz(picname,"ufo00.tga", sizeof(checkname) );
 
 	for (i=0 ; i<=99 ; i++)
 	{

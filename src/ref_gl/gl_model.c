@@ -1137,7 +1137,7 @@ void Mod_LoadAliasModel (model_t *mod, void *buffer)
 	//
 	// load the tags
 	//
-	strncpy( mod->tagname, mod->name, MAX_QPATH );
+	Q_strncpyz( mod->tagname, mod->name, MAX_QPATH );
 	i = strlen( mod->tagname ) - 4;
 	strcpy( &(mod->tagname[i]), ".tag" );
 
@@ -1153,7 +1153,7 @@ void Mod_LoadAliasModel (model_t *mod, void *buffer)
 	//
 	// load the animations
 	//
-	strncpy( mod->animname, mod->name, MAX_QPATH );
+	Q_strncpyz( mod->animname, mod->name, MAX_QPATH );
 	i = strlen( mod->animname ) - 4;
 	strcpy( &(mod->animname[i]), ".anm" );
 
@@ -1293,13 +1293,6 @@ void R_BeginRegistration ( char *tiles, char *pos )
 	}
 
 	ri.Sys_Error( ERR_DROP, "R_BeginRegistration: invalid tile names\n" );
-
-//	R_AddMapTile( "maps/breakable.bsp", 0, 0, 0 );
-//	R_AddMapTile( "maps/breakable.bsp", 22, 0, 0 );
-//	R_AddMapTile( "maps/vil_p02.bsp", 16, 0, 0 );
-//	R_AddMapTile( "maps/vil_p03.bsp", 8, 8, 0 );
-//	R_AddMapTile( "maps/vil_p04.bsp", 0, -8, 0 );
-
 }
 
 signed int Mod_GetTris(short p1, short p2, dtriangle_t *side1, dmdl_t *hdr)

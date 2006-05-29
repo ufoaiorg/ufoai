@@ -13,18 +13,19 @@
 # ufo (uses OSS for sound, cdrom ioctls for cd audio) is automatically built.
 # game.so is automatically built.
 BUILD_SDLUFO=YES	# use SDL for cdrom, sound and maybe renderer (selectable)
-BUILD_GLX=YES		# X11 GLX driver. Works somewhat ok.
+BUILD_GLX=YES		# X11 GLX driver
 BUILD_DEDICATED=YES	# build a dedicated ufo server
 BUILD_ALSA=YES		# build with alsa-support
 BUILD_WITH_SHADER=NO	# build with shader support
 HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
+#FIXME: YES will produce jpeg glitches
 BUILD_JPEG=NO		# jpeg-6 compile in or link in?
 BUILD_WITH_DGA=NO	# dga support compiled in
 BUILD_WITH_VIDMODE=YES	# vidmode support
-BUILD_WITH_JOYSTICK=NO	# joystick support
 BUILD_WITH_MMX=NO	# MMX support
-BUILD_FOR_PROFILING=YES # build with -pg option for profiling via gprof
+BUILD_FOR_PROFILING=NO # build with -pg option for profiling via gprof
+BUILD_COMPILETOOLS=YES	# build ufo2map bsp compile tool
 
 # (hopefully) end of configurable options
 
@@ -99,7 +100,7 @@ ifeq ($(OSTYPE),Linux)
 endif
 
 ifeq ($(OSTYPE),Darwin)
-	LDFLAGS=-ldl -lm -lvorbisfile -lvorbis -lasound -llibintl
+	LDFLAGS=-ldl -lm -lvorbisfile -lvorbis -lasound -lintl
 endif
 
 ifeq ($(strip $(BUILD_SDLUFO)),YES)
@@ -110,10 +111,6 @@ endif
 ifeq ($(strip $(BUILD_ALSA)),YES)
 	BASE_CFLAGS+=-DUSE_ALSA
 	LDFLAGS+=-lasound
-endif
-
-ifeq ($(strip $(BUILD_WITH_JOYSTICK)),YES)
-	BASE_CFLAGS+=-DJoystick
 endif
 
 ifeq ($(strip $(BUILD_WITH_DGA)),YES)
@@ -183,18 +180,30 @@ ifeq ($(ARCH),i386)
 endif
 
 
-GLXCFLAGS=-I/usr/X11R6/include
-GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext -lXxf86dga -lXxf86vm
-SDLLDFLAGS=$(shell sdl-config --libs)
+GLXCFLAGS=-I/usr/X11R6/include $(shell sdl-config --cflags)
+GLXLDFLAGS=-L/usr/X11R6/lib$(_LIB) -lX11 -lXext $(shell sdl-config --libs) -lSDL_ttf
+ifeq ($(strip $(BUILD_WITH_DGA)),YES)
+	GLXLDFLAGS+=-lXxf86dga
+endif
 
-GLXLDFLAGS+=$(shell sdl-config --libs) -lSDL_ttf
-SDLLDFLAGS+=-lSDL_ttf
-GLXCFLAGS+=$(shell sdl-config --cflags)
+ifeq ($(strip $(BUILD_WITH_VIDMODE)),YES)
+	GLXLDFLAGS+=-lXxf86vm
+endif
 
+SDLLDFLAGS=$(shell sdl-config --libs) -lSDL_ttf
+
+ifeq ($(OSTYPE),Darwin)
+SHLIBEXT=dylib
+SHLIBCFLAGS=-fPIC -fno-common
+SHLIBLDFLAGS=-dynamiclib $(LDFLAGS)
+NOTSHLIBCFLAGS=-mdynamic-no-pic
+else
 SHLIBEXT=so
-
 SHLIBCFLAGS=-fPIC
 SHLIBLDFLAGS=-shared
+NOTSHLIBCFLAGS=
+endif
+
 
 ifeq ($(strip $(BUILD_JPEG)),YES)
 	BASE_CFLAGS+=-DBUILD_JPEG
@@ -203,11 +212,12 @@ else
 	SDLLDFLAGS+=-ljpeg
 endif
 
-DEBUG_CFLAGS=$(BASE_CFLAGS) -g -D_FORTIFY_SOURCE=2 -DDEBUG $(PROFILER_CFLAGS)
+DEBUG_CFLAGS=$(BASE_CFLAGS) -g -O0 -D_FORTIFY_SOURCE=2 -DDEBUG $(PROFILER_CFLAGS)
 
-DO_CC=echo " * [UFO] $@"; $(CC) $(CFLAGS) -o $@ -c $<
+DO_CC=echo " * [UFO] $@"; $(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -o $@ -c $<
 DO_DED_CC=echo " * [DED] $@"; $(CC) $(CFLAGS) -DDEDICATED_ONLY -o $@ -c $<
 DO_TOOLS_CC=echo " * [MAP] $@"; $(CC) $(CFLAGS) -o $@ -c $<
+DO_JPEG_CC=echo " * [JPG] $@"; $(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -o $@ -c $<
 DO_O_CC=echo " * [OPT] $@"; $(CC) $(CFLAGS) -O -o $@ -c $<
 DO_SHLIB_CC=echo " * [LIB] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -o $@ -c $<
 DO_GL_SHLIB_CC=echo " * [REF] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) $(GLXCFLAGS) -o $@ -c $<
@@ -235,7 +245,10 @@ endif
 
 ifeq ($(ARCH),axp)
 	ifeq ($(strip $(BUILD_GLX)),YES)
-		$(warning Warning: support not supported for $(ARCH))
+		$(warning Warning: GLX support not supported for $(ARCH))
+	endif
+	ifeq ($(strip $(BUILD_SDLUFO)),YES)
+		$(warning Warning: SDL support not supported for $(ARCH))
 	endif
 endif # ARCH axp
 
@@ -243,11 +256,17 @@ ifeq ($(ARCH),ppc)
 	ifeq ($(strip $(BUILD_GLX)),YES)
 		TARGETS += $(BUILDDIR)/ref_glx.$(SHLIBEXT)
 	endif
+	ifeq ($(strip $(BUILD_SDLUFO)),YES)
+		TARGETS += $(BUILDDIR)/ref_sdl.$(SHLIBEXT)
+	endif
 endif # ARCH ppc
 
 ifeq ($(ARCH),sparc)
 	ifeq ($(strip $(BUILD_GLX)),YES)
 		$(warning Warning: GLX support not supported for $(ARCH))
+	endif
+	ifeq ($(strip $(BUILD_SDLUFO)),YES)
+		$(warning Warning: SDL support not supported for $(ARCH))
 	endif
 endif # ARCH sparc
 
@@ -268,7 +287,11 @@ ifeq ($(ARCH),i386)
 		TARGETS += $(BUILDDIR)/ref_sdl.$(SHLIBEXT)
 	endif
 endif # ARCH i386
-TARGETS += $(BUILDDIR)/ufo2map
+
+ifeq ($(strip $(BUILD_COMPILETOOLS)),YES)
+	TARGETS += $(BUILDDIR)/ufo2map
+endif
+
 debug: build_debug
 all: build_debug build_release lang
 release: build_release
@@ -284,16 +307,42 @@ build_debug:
 		$(BUILD_DEBUG_DIR)/tools/ufo2map/common
 	@$(MAKE) $(MAKE_FLAGS) targets BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS) -DLINUX_VERSION='\"$(VERSION) Debug\"'"
 	@echo
-	@echo "Flags"
+	@echo "CFLAGS"
+	@echo "-----------------------"
 	@echo $(DEBUG_CFLAGS)
 	@echo
+	@echo "LDFLAGS"
+	@echo "-----------------------"
+	@echo $(LDFLAGS)
+	@echo
+	@echo "Options"
+	@echo "-----------------------"
+	@echo "BUILD_SDLUFO = $(BUILD_SDLUFO)"
+	@echo "BUILD_GLX = $(BUILD_GLX)"
+	@echo "BUILD_DEDICATED = $(BUILD_DEDICATED)"
+	@echo "BUILD_ALSA = $(BUILD_ALSA)"
+	@echo "BUILD_WITH_SHADER = $(BUILD_WITH_SHADER)"
+	@echo "HAVE_IPV6 = $(HAVE_IPV6)"
+	@echo "HAVE_GETTEXT = $(HAVE_GETTEXT)"
+	@echo "BUILD_JPEG = $(BUILD_JPEG)"
+	@echo "BUILD_WITH_DGA = $(BUILD_WITH_DGA)"
+	@echo "BUILD_WITH_VIDMODE = $(BUILD_WITH_VIDMODE)"
+	@echo "BUILD_WITH_MMX = $(BUILD_WITH_MMX)"
+	@echo "BUILD_FOR_PROFILING = $(BUILD_FOR_PROFILING)"
+	@echo "BUILD_COMPILETOOLS = $(BUILD_COMPILETOOLS)"
+	@echo
+	@echo "Note"
+	@echo "-----------------------"
 	@echo "This is the debug version."
 	@echo "For better performace type 'make release' to build optimzed binaries."
 	@echo "To debug this version type 'gdb ufo'"
 	@echo "Enter 'run +set vid_fullscreen 0 +set vid_grabmouse 0'"
 	@echo "After a crash type 'bt' to gdb console"
 	@echo
+	@echo "Gettext"
+	@echo "-----------------------"
 	@echo "Type 'make lang' to compile the gettext translation files"
+	@echo
 
 build_release:
 	@-mkdir -p $(BUILD_RELEASE_DIR) \
@@ -306,10 +355,34 @@ build_release:
 		$(BUILD_RELEASE_DIR)/tools/ufo2map/common
 	@$(MAKE) $(MAKE_FLAGS) targets BUILDDIR=$(BUILD_RELEASE_DIR) CFLAGS="$(RELEASE_CFLAGS) -DLINUX_VERSION='\"$(VERSION)\"'"
 	@echo
-	@echo "Flags"
+	@echo "CFLAGS"
+	@echo "-----------------------"
 	@echo $(RELEASE_CFLAGS)
 	@echo
+	@echo "LDFLAGS"
+	@echo "-----------------------"
+	@echo $(LDFLAGS)
+	@echo
+	@echo "Options"
+	@echo "-----------------------"
+	@echo "BUILD_SDLUFO = $(BUILD_SDLUFO)"
+	@echo "BUILD_GLX = $(BUILD_GLX)"
+	@echo "BUILD_DEDICATED = $(BUILD_DEDICATED)"
+	@echo "BUILD_ALSA = $(BUILD_ALSA)"
+	@echo "BUILD_WITH_SHADER = $(BUILD_WITH_SHADER)"
+	@echo "HAVE_IPV6 = $(HAVE_IPV6)"
+	@echo "HAVE_GETTEXT = $(HAVE_GETTEXT)"
+	@echo "BUILD_JPEG = $(BUILD_JPEG)"
+	@echo "BUILD_WITH_DGA = $(BUILD_WITH_DGA)"
+	@echo "BUILD_WITH_VIDMODE = $(BUILD_WITH_VIDMODE)"
+	@echo "BUILD_WITH_MMX = $(BUILD_WITH_MMX)"
+	@echo "BUILD_FOR_PROFILING = $(BUILD_FOR_PROFILING)"
+	@echo "BUILD_COMPILETOOLS = $(BUILD_COMPILETOOLS)"
+	@echo
+	@echo "Gettext"
+	@echo "-----------------------"
 	@echo "Type 'make lang' to compile the gettext translation files"
+	@echo
 
 targets: $(TARGETS)
 
@@ -348,6 +421,7 @@ TOOLS_OBJS = \
 
 $(BUILDDIR)/ufo2map : $(TOOLS_OBJS)
 	CFLAGS+=$(TOOLSCFLAGS)
+	@echo " * [MAP] ...linking";
 	$(CC) $(CFLAGS) -o $@ $(TOOLS_OBJS) $(TOOLSLDFLAGS)
 
 $(BUILDDIR)/tools/ufo2map/ufo2map.o :    $(TOOLS_DIR)/ufo2map/ufo2map.c
@@ -510,6 +584,7 @@ ifeq ($(strip $(BUILD_ALSA)),YES)
 endif
 
 $(BUILDDIR)/ufo : $(QUAKE2_OBJS) $(QUAKE2_LNX_OBJS)
+	@echo " * [UFO] ...linking";
 	$(CC) $(CFLAGS) -o $@ $(QUAKE2_OBJS) $(QUAKE2_LNX_OBJS) $(LDFLAGS)
 
 $(BUILDDIR)/client/cl_actor.o :    $(CLIENT_DIR)/cl_actor.c
@@ -709,6 +784,7 @@ Q2DED_OBJS = \
 	$(BUILDDIR)/ded/cd_null.o
 
 $(BUILDDIR)/ufoded : $(Q2DED_OBJS)
+	@echo " * [DED] ...linking";
 	$(CC) $(CFLAGS) -o $@ $(Q2DED_OBJS) $(LDFLAGS)
 
 $(BUILDDIR)/ded/cmd.o :        $(COMMON_DIR)/cmd.c
@@ -802,6 +878,7 @@ GAME_OBJS = \
 	$(BUILDDIR)/game/g_utils.o
 
 $(BUILDDIR)/game.$(SHLIBEXT) : $(GAME_OBJS)
+	@echo " * [LIB] ...linking";
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(GAME_OBJS)
 
 $(BUILDDIR)/game/q_shared.o :    $(GAME_DIR)/q_shared.c
@@ -900,51 +977,54 @@ REF_SDL_OBJS = \
 REF_PS2_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_ps2mesa.o
 
-$(BUILDDIR)/ref_gl/jcapimin.o : $(JPDIR)/jcapimin.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jchuff.o : $(JPDIR)/jchuff.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jcinit.o : $(JPDIR)/jcinit.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jccoefct.o : $(JPDIR)/jccoefct.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jccolor.o : $(JPDIR)/jccolor.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jfdctflt.o : $(JPDIR)/jfdctflt.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jcdctmgr.o : $(JPDIR)/jcdctmgr.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jcmainct.o : $(JPDIR)/jcmainct.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jcmarker.o : $(JPDIR)/jcmarker.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jcmaster.o : $(JPDIR)/jcmaster.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jcomapi.o : $(JPDIR)/jcomapi.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jcparam.o : $(JPDIR)/jcparam.c;  $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jcprepct.o : $(JPDIR)/jcprepct.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jcsample.o : $(JPDIR)/jcsample.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jcapimin.o : $(JPDIR)/jcapimin.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jchuff.o : $(JPDIR)/jchuff.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jcinit.o : $(JPDIR)/jcinit.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jccoefct.o : $(JPDIR)/jccoefct.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jccolor.o : $(JPDIR)/jccolor.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jfdctflt.o : $(JPDIR)/jfdctflt.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jcdctmgr.o : $(JPDIR)/jcdctmgr.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jcmainct.o : $(JPDIR)/jcmainct.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jcmarker.o : $(JPDIR)/jcmarker.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jcmaster.o : $(JPDIR)/jcmaster.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jcomapi.o : $(JPDIR)/jcomapi.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jcparam.o : $(JPDIR)/jcparam.c;  $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jcprepct.o : $(JPDIR)/jcprepct.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jcsample.o : $(JPDIR)/jcsample.c; $(DO_JPEG_CC)
 
-$(BUILDDIR)/ref_gl/jdapimin.o : $(JPDIR)/jdapimin.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jdapistd.o : $(JPDIR)/jdapistd.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jdatasrc.o : $(JPDIR)/jdatasrc.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jdcoefct.o : $(JPDIR)/jdcoefct.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jdcolor.o : $(JPDIR)/jdcolor.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jcphuff.o : $(JPDIR)/jcphuff.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jddctmgr.o : $(JPDIR)/jddctmgr.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jdhuff.o : $(JPDIR)/jdhuff.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jdinput.o : $(JPDIR)/jdinput.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jdmainct.o : $(JPDIR)/jdmainct.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jdmarker.o : $(JPDIR)/jdmarker.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jdmaster.o : $(JPDIR)/jdmaster.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jdpostct.o : $(JPDIR)/jdpostct.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jdsample.o : $(JPDIR)/jdsample.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jdtrans.o : $(JPDIR)/jdtrans.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jerror.o : $(JPDIR)/jerror.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jidctflt.o : $(JPDIR)/jidctflt.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jmemmgr.o : $(JPDIR)/jmemmgr.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jmemnobs.o : $(JPDIR)/jmemnobs.c; $(DO_GL_SHLIB_CC)
-$(BUILDDIR)/ref_gl/jutils.o : $(JPDIR)/jutils.c; $(DO_GL_SHLIB_CC)
+$(BUILDDIR)/ref_gl/jdapimin.o : $(JPDIR)/jdapimin.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jdapistd.o : $(JPDIR)/jdapistd.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jdatasrc.o : $(JPDIR)/jdatasrc.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jdcoefct.o : $(JPDIR)/jdcoefct.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jdcolor.o : $(JPDIR)/jdcolor.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jcphuff.o : $(JPDIR)/jcphuff.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jddctmgr.o : $(JPDIR)/jddctmgr.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jdhuff.o : $(JPDIR)/jdhuff.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jdinput.o : $(JPDIR)/jdinput.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jdmainct.o : $(JPDIR)/jdmainct.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jdmarker.o : $(JPDIR)/jdmarker.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jdmaster.o : $(JPDIR)/jdmaster.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jdpostct.o : $(JPDIR)/jdpostct.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jdsample.o : $(JPDIR)/jdsample.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jdtrans.o : $(JPDIR)/jdtrans.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jerror.o : $(JPDIR)/jerror.c; $(DO_JPEG_CC) $(GL_CFLAGS)
+$(BUILDDIR)/ref_gl/jidctflt.o : $(JPDIR)/jidctflt.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jmemmgr.o : $(JPDIR)/jmemmgr.c; $(DO_JPEG_CC)
+$(BUILDDIR)/ref_gl/jmemnobs.o : $(JPDIR)/jmemnobs.c; $(DO_JPEG_CC) $(GL_CFLAGS)
+$(BUILDDIR)/ref_gl/jutils.o : $(JPDIR)/jutils.c; $(DO_JPEG_CC)
 
 $(BUILDDIR)/ref_glx.$(SHLIBEXT) : $(REF_GL_OBJS) $(REF_GLX_OBJS)
+	@echo " * [GLX] ...linking";
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(REF_GL_OBJS) $(REF_GLX_OBJS) $(GLXLDFLAGS)
 
 $(BUILDDIR)/ref_sdl.$(SHLIBEXT) : $(REF_GL_OBJS) $(REF_SDL_OBJS)
+	@echo " * [SDL] ...linking";
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(REF_GL_OBJS) $(REF_SDL_OBJS) $(SDLLDFLAGS)
 
 ifeq ($(ARCH),mipsEE)
 $(BUILDDIR)/ref_sdl.$(SHLIBEXT) : $(REF_GL_OBJS) $(REF_PS2_OBJS)
-	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(REF_GL_OBJS) $(REF_PS2_OBJS)
+	@echo " * [PSP] ...linking";
+	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(REF_GL_OBJS) $(REF_PS2_OBJS) $(SDLLDFLAGS)
 endif
 
 $(BUILDDIR)/ref_gl/gl_anim.o :        $(REF_GL_DIR)/gl_anim.c

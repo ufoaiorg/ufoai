@@ -95,7 +95,10 @@ font_t *Font_Analyze( char *name, char *path, int renderStyle, int size )
 	if ( f->style )
 		TTF_SetFontStyle( f->font, f->style );
 
+	// FIXME: We need to free this
+// 	ri.FS_FreeFile( buffer );
 // 	SDL_RWclose( rw );
+
 	numFonts++;
 	f->lineSkip = TTF_FontLineSkip( f->font );
 
@@ -144,7 +147,7 @@ void Font_CleanCache ( void )
 {
 	int i = 0;
 
-	if ( numInCache < MAX_FONT_CACHE ) return;
+	if ( numInCache < MAX_FONT_CACHE / 2 ) return;
 
 	// free the surfaces
 	for ( ; i < numInCache; i++ )
@@ -234,6 +237,8 @@ static void Font_AddToCache( const char* s, void* pixel, int w, int h )
 	int hashValue;
 	fontCache_t* font = NULL;
 
+	if ( numInCache >= MAX_FONT_CACHE ) Font_CleanCache();
+
 	hashValue = Font_Hash( s, MAX_HASH_STRING );
 	if ( hash[hashValue] )
 	{
@@ -257,7 +262,6 @@ static void Font_AddToCache( const char* s, void* pixel, int w, int h )
 		ri.Sys_Error( ERR_FATAL, "...font cache exceeded with %i\n", hashValue );
 
 	numInCache++;
-	if ( numInCache >= MAX_FONT_CACHE ) Font_CleanCache();
 }
 
 /*================
