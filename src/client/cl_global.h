@@ -17,6 +17,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+
+#include "cl_research.h"
 #include "cl_basemanagement.h"
 
 // ============================
@@ -34,7 +36,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct globalData_s
 {
+	technology_t	technologies[MAX_TECHNOLOGIES];	// A list of all research-topics resp. the research-tree.
+	int	numTechnologies;						// Total nubmer of technologies.
+	
 	/* TODO
+	pediaChapter_t	upChapters[MAX_PEDIACHAPTERS];
+	int numChapters;
+	
 	base_t	bases[MAX_BASES];
 	int	numBases;
 	
@@ -68,4 +76,7 @@ typedef struct globalData_s
 	*/
 } globalData_t;
 
+extern globalData_t gd;
+
 globalData_t gd;
+

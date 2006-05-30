@@ -20,7 +20,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //we need a cl_ufopedia.h to include in client.h (to avoid warnings from needed functions)
 
 #include "cl_ufopedia.h"
-#include "cl_research.h"
+//#include "cl_research.h"
+
+#include "cl_global.h"
 
 pediaChapter_t	upChapters[MAX_PEDIACHAPTERS];
 int numChapters;
@@ -253,7 +255,7 @@ void MN_UpContent_f( void )
 	{
 		// Check if there are any researched items in this chapter ...
 		researched_entries = qfalse;
-		upCurrent = &technologies[upChapters[i].first];
+		upCurrent = &gd.technologies[upChapters[i].first];
 		do
 		{
 			if ( RS_IsResearched_(upCurrent) ) {
@@ -261,7 +263,7 @@ void MN_UpContent_f( void )
 				break;
 			}
 			if (upCurrent->idx != upCurrent->next)
-				upCurrent = &technologies[upCurrent->next];
+				upCurrent = &gd.technologies[upCurrent->next];
 			else {
 				upCurrent = NULL;
 			}
@@ -304,7 +306,7 @@ void MN_UpPrev_f( void )
 	// get previous entry
 	if ( upCurrent->prev ) {
 		// Check if the previous entry is researched already otherwise go to the next entry.
-		do { upCurrent = &technologies[upCurrent->prev]; } while ( upCurrent && !RS_IsResearched_(upCurrent) );
+		do { upCurrent = &gd.technologies[upCurrent->prev]; } while ( upCurrent && !RS_IsResearched_(upCurrent) );
 		if ( upCurrent ) {
 			MN_UpDrawEntry( upCurrent );
 			return;
@@ -314,7 +316,7 @@ void MN_UpPrev_f( void )
 	// change chapter
 	for (; upc >= 0; upc-- )
 		if ( upChapters[upc].last >= 0 ) {
-			upCurrent = &technologies[upChapters[upc].last];
+			upCurrent = &gd.technologies[upChapters[upc].last];
 			if ( RS_IsResearched_(upCurrent) )
 				MN_UpDrawEntry( upCurrent );
 			else
@@ -342,7 +344,7 @@ void MN_UpNext_f( void )
 		// Check if the next entry is researched already otherwise go to the next entry.
 		do {
 			if ( upCurrent->idx != upCurrent->next ) {
-				upCurrent = &technologies[upCurrent->next];
+				upCurrent = &gd.technologies[upCurrent->next];
 			} else {
 				Com_DPrintf("MN_UpNext_f: There was a 'next' entry for '%s' where there should not be one.\n",upCurrent->id);
 				upCurrent = NULL;
@@ -360,7 +362,7 @@ void MN_UpNext_f( void )
 	// change chapter
 	for ( ; upc < numChapters; upc++ )
 		if ( upChapters[upc].first >= 0 ) {
-			upCurrent = &technologies[upChapters[upc].first];
+			upCurrent = &gd.technologies[upChapters[upc].first];
 			if ( RS_IsResearched_(upCurrent) )
 				MN_UpDrawEntry( upCurrent );
 			else
@@ -385,7 +387,7 @@ void MN_UpClick_f( void )
 
 	if ( num < numChapters_displaylist && upChapters_displaylist[num]->first )
 	{
-		upCurrent = &technologies[upChapters_displaylist[num]->first];
+		upCurrent = &gd.technologies[upChapters_displaylist[num]->first];
 		do
 		{
 			if ( RS_IsResearched_(upCurrent) )
@@ -393,7 +395,7 @@ void MN_UpClick_f( void )
 				MN_UpDrawEntry( upCurrent );
 				return;
 			}
-			upCurrent = &technologies[upCurrent->next];
+			upCurrent = &gd.technologies[upCurrent->next];
 		} while ( upCurrent );
 	}
 }

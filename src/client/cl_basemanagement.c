@@ -33,6 +33,7 @@ TODO: new game does not reset basemangagement
 ======================*/
 
 #include "client.h"
+#include "cl_global.h"
 
 base_t	bmBases[MAX_BASES];				// A global list of _all_ bases. (see client.h)
 vec2_t	newBasePos;
@@ -978,8 +979,8 @@ building_t * B_GetUnusedLab( int base_id )
 		if ( building->buildingType == B_LAB ) {
 			used = qfalse;
 			// check in research tree if the lab is used
-			for ( j=0; j < numTechnologies; j++ ) {
-				tech = &technologies[j];
+			for ( j=0; j < gd.numTechnologies; j++ ) {
+				tech = &gd.technologies[j];
 				if ( tech->lab == building ) {
 					used = qtrue;
 					break;
@@ -1018,8 +1019,8 @@ int B_GetUnusedLabs( int base_id )
 		if ( building->buildingType == B_LAB ) {
 			used = qfalse;
 			// check in research tree if the lab is used
-			for ( j=0; j < numTechnologies; j++ ) {
-				tech = &technologies[j];
+			for ( j=0; j < gd.numTechnologies; j++ ) {
+				tech = &gd.technologies[j];
 				if ( tech->lab == building ) {
 					used = qtrue;
 					break;

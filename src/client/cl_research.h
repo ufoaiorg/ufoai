@@ -91,8 +91,8 @@ typedef struct technology_s
 #define	TECHFS(x)	(int)&(((technology_t *)0)->x)
 
 // use this for saving and allocating
-extern	technology_t	technologies[MAX_TECHNOLOGIES];
-extern	int	numTechnologies;
+//extern	technology_t	technologies[MAX_TECHNOLOGIES];
+//extern	int	numTechnologies;
 
 void RS_ResetResearch( void );
 void CL_CheckResearchStatus( void );
