@@ -50,6 +50,9 @@ Wait times are of the format "a b". It spawns particles in random intervals rang
 
 /*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8) linear
 Non-displayed light.
+"style"		"1-32"
+"_color"	Color for the light RGB
+"light"		intensity 0-255
 */
 
 
@@ -57,8 +60,8 @@ Non-displayed light.
 Only for editor convenience.
 */
 
-/*QUAKED func_breakable (0 0 0) ?
-Only for editor convenience.
+/*QUAKED func_breakable (0 0 0) ? level1 level2 level3 level4 level5 level6 level7 level8
+"health"	damage until destroyed
 */
 
 
@@ -66,7 +69,7 @@ Only for editor convenience.
 Only used for the world.
 
 "light"		intensity of the sun light
-"_color"	color of the sun light (normalized)
+"_color"	color of the sun light (normalized) RGB
 "angles"	direction of the sun light [pitch yaw roll]
 "ambient"	ambient light (NOT normalized)
 "maxlevel"	highest selectable level
