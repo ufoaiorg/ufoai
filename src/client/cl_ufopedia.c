@@ -104,12 +104,9 @@ void UP_BuildingDescription ( technology_t* t )
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find building") );
 	} else {
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Depends:\t%s\n"), b->dependsBuilding ? b->dependsBuilding->name : _("None") );
-		Q_strcat(upBuffer, MAX_UPTEXT, va(_("More than once:\t%s\n"), b->moreThanOne ? _("Yes") : _("No") ) );
 		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Buildtime:\t%i day(s)\n"), (int)b->buildTime ) );
 		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Fixcosts:\t%i c\n"), (int)b->fixCosts ) );
 		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Running costs:\t%i c\n"), (int)b->varCosts ) );
-		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Energy:\t%i\n"), (int)b->energy ) );
-		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Workercosts:\t%i c\n"), (int)b->workerCosts ) );
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
 }

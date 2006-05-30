@@ -27,8 +27,6 @@ building building_commando
 	depends		building_powerplant
 	max_workers	6
 	min_workers	2
-	worker_costs	10
-	energy		300
 	build_time	4
 	varcosts	50
 	map_name	"commando"
@@ -45,10 +43,6 @@ building building_powerplant
 	depends		building_entrance
 	max_workers	10
 	min_workers	3
-	worker_costs	10
-	produce_type	energy_p
-	produce_time	30
-	produce		1150
 	build_time	2
 	varcosts	150
 	firstbase	true
@@ -68,11 +62,6 @@ building building_lab
 	max_employees	10
 	more_than_one	true
 	employees_firstbase	2
-	worker_costs	10
-	energy		400
-	produce_type	tech_p
-	produce		5
-	produce_time	30
 	build_time	12
 	varcosts	300
 	map_name	"lab"
@@ -90,8 +79,6 @@ building building_storage
 	depends		building_commando
 	max_workers	4
 	min_workers	1
-	worker_costs	10
-	energy		50
 	build_time	5
 	varcosts	10
 	map_name	"storage"
@@ -108,9 +95,7 @@ building building_intercept
 	depends		building_commando
 	max_workers	4
 	min_workers	1
-	worker_costs	10
 	onconstruct	"newaircraft interceptor;aircraft_list;"
-	energy		50
 	build_time	5
 	varcosts	10
 	map_name	"intercept"
@@ -125,8 +110,6 @@ building building_quarters
 	depends		building_commando
 	max_workers	20
 	max_employees	20
-	worker_costs	10
-	energy		50
 	build_time	4
 	varcosts	10
 	map_name	"quarters"
@@ -144,8 +127,6 @@ building building_ufo_hangar
 	depends		building_lab
 	max_workers	5
 	min_workers	2
-	worker_costs	10
-	energy		400
 	build_time	6
 	varcosts	50
 	map_name	"adrop"
@@ -162,8 +143,6 @@ building building_hangar
 	depends		building_quarters
 	max_workers	5
 	min_workers	2
-	worker_costs	10
-	energy		400
 	build_time	6
 	varcosts	50
 	map_name	"drop"
@@ -182,8 +161,6 @@ building building_hangar2
 	visible		false
 	max_workers	5
 	min_workers	2
-	worker_costs	10
-	energy		400
 	build_time	6
 	varcosts	50
 	pedia		rs_building_hangar
@@ -195,13 +172,8 @@ building building_teamroom
 	image		base/teamroom
 	fixcosts	300
 	depends		building_quarters
-	produce_type	mind_p
-	produce		5
-	produce_time	30
 	max_workers	20
 	min_workers	1
-	worker_costs	10
-	energy		10
 	build_time	3
 	map_name	"teamroom"
 	pedia		rs_building_teamroom
@@ -215,8 +187,6 @@ building building_radar
 	depends		building_commando
 	max_workers	5
 	min_workers	1
-	worker_costs	10
-	energy		10
 	build_time	10
 	map_name	"radar"
 	pedia		rs_building_radar
@@ -234,25 +204,6 @@ base main
 	base6		"_Base #6"
 	base7		"_Base #7"
 	base8		"_Base #8"
-}
-
-production tech_p
-{
-	name		"Technology"
-	menu		research
-	amount		100
-}
-
-production energy_p
-{
-	name		"Energy"
-	amount		100
-}
-
-production mind_p
-{
-	name		"Mind"
-	amount		100
 }
 
 aircraft craft_dropship

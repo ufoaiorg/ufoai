@@ -37,8 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_BASES		8
 #define MAX_DESC		256
 
-#define BUILDINGCONDITION	100
-
 #define SCROLLSPEED		1000
 
 // this is not best - but better than hardcoded every time i used it
@@ -115,12 +113,7 @@ typedef enum
 	B_UNDER_CONSTRUCTION, // right now under construction
 	B_CONSTRUCTION_FINISHED, // construction finished - but no workers assigned
 				 // and building needs workers
-	B_UPGRADE, // just upgrading (not yet implemented)
-	B_WORKING_120, // a quick boost (not yet implemented)
-	B_WORKING_100, // working normal (or workers assigned when needed)
-	B_WORKING_50, // damaged or something like that
-	B_MAINTENANCE, // yes, maintenance - what else to say
-	B_REPAIRING, // repairing to get back status B_WORKING_100
+	B_WORKING, // working normal (or workers assigned when needed)
 	B_DOWN // totally damaged
 } buildingStatus_t;
 
@@ -138,9 +131,9 @@ typedef struct building_s
 	char	id[MAX_VAR];
 	char	name[MAX_VAR];
 	// needs determines the second building part
-	char	*image, *needs, *mapPart, *produceType, *pedia;
-	float	energy, workerCosts, produceTime, fixCosts, varCosts;
-	int	production, level, idInList, timeStart, buildTime, techLevel, notUpOn;
+	char	*image, *needs, *mapPart, *pedia;
+	float	fixCosts, varCosts;
+	int	idInList, timeStart, buildTime;
 	int	base; // number of base this building is located in.
 
 	int	maxWorkers, minWorkers, assignedWorkers; // TODO: remove these and replace them with the employee_s struct
@@ -149,9 +142,7 @@ typedef struct building_s
 
 	//if we can build more than one building of the same type:
 	buildingStatus_t	buildingStatus[BASE_SIZE*BASE_SIZE];
-	int	condition[BASE_SIZE*BASE_SIZE];
 
-	vec2_t	size;
 	byte	visible;
 	// needed for baseassemble
 	// when there are two tiles (like hangar) - we only load the first tile
@@ -230,8 +221,8 @@ typedef struct craftupgrade_s
 	float armor_shield;			// maybe using (k)Newtons here?
 
 	/* weapon related */
-	struct craftupgrade_t *ammo;
-	struct weapontype_t *weapontype;	// e.g beam/particle/missle ( do we already have something like that?)
+	struct craftupgrade_s *ammo;
+	struct weapontype_s *weapontype;	// e.g beam/particle/missle ( do we already have something like that?)
 	int num_ammo;
 	float    damage_kinetic;		// maybe using (k)Newtons here?
 	float    damage_shield;		// maybe using (k)Newtons here?
@@ -311,8 +302,7 @@ typedef struct base_s
 	int	posX[BASE_SIZE][BASE_SIZE];
 	int	posY[BASE_SIZE][BASE_SIZE];
 
-	//FIXME: change building condition to base condition
-	float	condition;
+	int	condition;
 
 	baseStatus_t	baseStatus;
 
