@@ -32,13 +32,13 @@ Starting point for a civilian.
 /*QUAKED misc_model (1 1 0) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
 Displays a md2 model.
 Set the level flags correctly!
-Use angles [pitch yaw roll] to rotate the model.
+Use angles [pitch yaw roll] to rotate the model. pitch (up/down), yaw (left/right) and roll (fall over)
 "model"		arbitrary .md2 file to display
 "angles"	direction of the model [pitch yaw roll]
 */
 
 
-/*QUAKED misc_particle (0 0 1) (-16 -16 -16) (16 16 16)
+/*QUAKED misc_particle (0 0 1) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
 Creates a particle. Particle properties can be set here with a preceding '-' or '+'.
 '-' property is set before calling the particle init function
 '+' do it afterwards
@@ -70,7 +70,7 @@ Only used for the world.
 
 "light"		intensity of the sun light
 "_color"	color of the sun light (normalized) RGB
-"angles"	direction of the sun light [pitch yaw roll]
+"angles"	direction of the sun light [pitch yaw roll] - pitch (up/down), yaw (left/right) and roll (fall over)
 "ambient"	ambient light (NOT normalized)
 "maxlevel"	highest selectable level
 "fog"	activate fog
