@@ -2961,6 +2961,7 @@ void CL_ParseAircraft( char *name, char **text )
 	memset( ac, 0, sizeof(aircraft_t) );
 
 	Com_DPrintf("...found aircraft %s\n", name);
+	ac->idx = numAircraft-1;
 	Q_strncpyz( ac->id, name, MAX_VAR );
 	ac->status = AIR_HOME;
 
