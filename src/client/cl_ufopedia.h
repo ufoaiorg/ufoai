@@ -27,15 +27,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct pediaChapter_s
 {
+	int idx;				// self-link
 	char	id[MAX_VAR];
 	char	name[MAX_VAR];
 	int first;
 	int last;
 } pediaChapter_t;
-
-// use this for saving and allocating
-extern pediaChapter_t	upChapters[MAX_PEDIACHAPTERS];
-extern	int	numChapters;
 
 void UP_ResetUfopedia( void );
 void UP_ParseUpChapters( char *title, char **text );

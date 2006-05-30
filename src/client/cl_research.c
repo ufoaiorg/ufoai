@@ -36,17 +36,8 @@ TODO: comment on used globasl variables.
 #include "client.h"
 #include "cl_global.h"
 
-//technology_t technologies[MAX_TECHNOLOGIES];	// A global listof _all_ technologies (see cl_research.h)
-//technology_t technologies_skeleton[MAX_TECHNOLOGIES];	// A local listof _all_ technologies  that are used to initialise the global list on new/loaded game.
-//int numTechnologies;	
-
-pediaChapter_t	upChapters[MAX_PEDIACHAPTERS];
-int numChapters;
-
-void RS_GetFirstRequired( int tech,  stringlist_t *required);
+void RS_GetFirstRequired( int tech_idx,  stringlist_t *required);
 qboolean RS_TechIsResearchable( technology_t* t );
-
-					// The global number of entries in the global list AND the local list above.  (see cl_research.h)
 
 technology_t *researchList[MAX_RESEARCHLIST];	// A (local) list of displayed technology-entries (the research list in the base)
 int researchListLength;						// The number of entries in the above list.
@@ -103,10 +94,10 @@ Marks one tech as researchedable.
 IN
 	id:	unique id of a technology_t
 ======================*/
-void RS_MarkOneResearchable ( int tech )
+void RS_MarkOneResearchable ( int tech_idx )
 {
-	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", gd.technologies[tech].id );
-	gd.technologies[tech].statusResearchable = qtrue;
+	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", gd.technologies[tech_idx].id );
+	gd.technologies[tech_idx].statusResearchable = qtrue;
 }
 
 /*======================
@@ -1197,26 +1188,26 @@ void RS_ParseTechnologies ( char* id, char** text )
 
 			if ( *token ) {
 				// find chapter
-				for ( i = 0; i < numChapters; i++ ) {
-					if ( !Q_strncmp( token, upChapters[i].id, MAX_VAR ) ) {
+				for ( i = 0; i < gd.numChapters; i++ ) {
+					if ( !Q_strncmp( token, gd.upChapters[i].id, MAX_VAR ) ) {
 						// add entry to chapter
 						tech->up_chapter = i;
-						if ( !upChapters[i].first ) {
-							upChapters[i].first = tech->idx;
-							upChapters[i].last = tech->idx;
+						if ( !gd.upChapters[i].first ) {
+							gd.upChapters[i].first = tech->idx;
+							gd.upChapters[i].last = tech->idx;
 							tech->prev = -1;
 							tech->next = -1;
 
 						} else {
-							tech_old = upChapters[i].last; // get "last entry" in chapter
-							upChapters[i].last =  tech->idx;
+							tech_old = gd.upChapters[i].last; // get "last entry" in chapter
+							gd.upChapters[i].last =  tech->idx;
 							gd.technologies[tech_old].next = tech->idx;
-							gd.technologies[upChapters[i].last].prev = tech_old;
-							gd.technologies[upChapters[i].last].next = -1;
+							gd.technologies[gd.upChapters[i].last].prev = tech_old;
+							gd.technologies[gd.upChapters[i].last].next = -1;
 						}
 						break;
 					}
-					if ( i == numChapters )
+					if ( i == gd.numChapters )
 						Com_Printf("RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n", id, token );
 				}
 			}
@@ -1373,7 +1364,7 @@ RS_TechIsResearchable
 Checks if the technology (tech-id) is researchable.
 
 IN
-	t:	pointer to technology_t.
+	tech:	pointer to technology_t.
 
 OUT
 	boolean	RS_TechIsResearchable
@@ -1407,48 +1398,48 @@ qboolean RS_TechIsResearchable( technology_t* tech )
 /*======================
 RS_GetFirstRequired + RS_GetFirstRequired2
 
-Returns the first required (yet unresearched) technologies that are needed by "id".
+Returns the first required (yet unresearched) technologies that are needed by "tech_idx".
 That means you need to research the result to be able to research (and maybe use) "id".
 ======================*/
-void RS_GetFirstRequired2 ( int tech, char *first_id, stringlist_t *required )
+void RS_GetFirstRequired2 ( int tech_idx, int first_tech_idx, stringlist_t *required )
 {
 	int i;
 	stringlist_t *required_temp = NULL;
-	technology_t* t = NULL;
+	technology_t* tech = NULL;
 
-	if ( ! tech )
+	if ( tech_idx < 0)
 		return;
 
-	required_temp = &gd.technologies[tech].requires;
-	//Com_DPrintf( "RS_GetFirstRequired2: %s - %s - %s\n", id, first_id, required_temp->string[0]  );
+	required_temp = &gd.technologies[tech_idx].requires;
+	
 	if ( !Q_strncmp( required_temp->string[0] , "initial", 7 ) || !Q_strncmp( required_temp->string[0] , "nothing", 7 ) ) {
-		if ( !Q_strncmp( gd.technologies[tech].id, first_id, MAX_VAR ) )
+		if ( tech_idx == first_tech_idx )
 			return;
 		if ( required->numEntries < MAX_TECHLINKS ) {
 			// TODO: check if the firstrequired tech has already been added (e.g indirectly from another tech)
-			required->idx[required->numEntries] = tech;
-			Q_strncpyz( required->string[required->numEntries++], gd.technologies[tech].id, MAX_VAR );
-			Com_DPrintf("RS_GetFirstRequired2: \"%s\" - requirement 'initial' or 'nothing' found.\n", gd.technologies[tech].id );
+			required->idx[required->numEntries] = tech_idx;
+			Q_strncpyz( required->string[required->numEntries++], gd.technologies[tech_idx].id, MAX_VAR );
+			Com_DPrintf("RS_GetFirstRequired2: \"%s\" - requirement 'initial' or 'nothing' found.\n", gd.technologies[tech_idx].id );
 		}
 		return;
 	}
 	for ( i=0; i < required_temp->numEntries; i++ ) {
-		t = RS_GetTechByID( required_temp->string[i] );
-		if ( RS_IsResearched_(t) ) {
+		tech = RS_GetTechByID( required_temp->string[i] );
+		if ( RS_IsResearched_(tech) ) {
 			if ( required->numEntries < MAX_TECHLINKS ) {
-				required->idx[required->numEntries] = t->idx;
-				Q_strncpyz( required->string[required->numEntries++], t->id, MAX_VAR );
-				Com_DPrintf( "RS_GetFirstRequired2: \"%s\" - next item \"%s\" already researched.\n", gd.technologies[tech].id, t->id );
+				required->idx[required->numEntries] = tech->idx;
+				Q_strncpyz( required->string[required->numEntries++], tech->id, MAX_VAR );
+				Com_DPrintf( "RS_GetFirstRequired2: \"%s\" - next item \"%s\" already researched.\n", gd.technologies[tech_idx].id, tech->id );
 			}
 		} else {
-			RS_GetFirstRequired2( t->idx, first_id, required );
+			RS_GetFirstRequired2( tech->idx, first_tech_idx, required );
 		}
 	}
 }
 
-void RS_GetFirstRequired( int tech, stringlist_t *required )
+void RS_GetFirstRequired( int tech_idx, stringlist_t *required )
 {
-	 RS_GetFirstRequired2( tech, gd.technologies[tech].id, required);
+	 RS_GetFirstRequired2( tech_idx, tech_idx, required);
 }
 
 /*======================

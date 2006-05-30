@@ -19,7 +19,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "cl_research.h"
+#include "cl_ufopedia.h"
 #include "cl_basemanagement.h"
+
 
 // ============================
 // globalData_t gd
@@ -43,10 +45,12 @@ typedef struct globalData_s
 	int	numTechnologies;
 
 	// == pedia ==
-	/* TODO
+	// A list of all Ufopedia chapters.
 	pediaChapter_t	upChapters[MAX_PEDIACHAPTERS];
+	// Total number uf upchapters,
 	int numChapters;
 
+	/* TODO
 	base_t	bases[MAX_BASES];
 	int	numBases;
 

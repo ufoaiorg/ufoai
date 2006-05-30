@@ -17,22 +17,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 // cl_ufopedia.c -- ufopedia script interpreter
-//we need a cl_ufopedia.h to include in client.h (to avoid warnings from needed functions)
 
 #include "cl_ufopedia.h"
-//#include "cl_research.h"
-
 #include "cl_global.h"
 
-pediaChapter_t	upChapters[MAX_PEDIACHAPTERS];
-int numChapters;
 pediaChapter_t	*upChapters_displaylist[MAX_PEDIACHAPTERS];
 int numChapters_displaylist;
 
 technology_t	*upCurrent;
-
-
-//int numEntries;
 
 #define MAX_UPTEXT 1024
 char	upText[MAX_UPTEXT];
@@ -251,11 +243,11 @@ void MN_UpContent_f( void )
 	cp = upText;
 	*cp = '\0';
 
-	for ( i = 0; i < numChapters; i++ )
+	for ( i = 0; i < gd.numChapters; i++ )
 	{
 		// Check if there are any researched items in this chapter ...
 		researched_entries = qfalse;
-		upCurrent = &gd.technologies[upChapters[i].first];
+		upCurrent = &gd.technologies[gd.upChapters[i].first];
 		do
 		{
 			if ( RS_IsResearched_(upCurrent) ) {
@@ -271,8 +263,8 @@ void MN_UpContent_f( void )
 
 		// .. and if so add them to the displaylist of chapters.
 		if ( researched_entries ) {
-			upChapters_displaylist[numChapters_displaylist++] = &upChapters[i];
-			Q_strcat( cp, MAX_UPTEXT, upChapters[i].name );
+			upChapters_displaylist[numChapters_displaylist++] = &gd.upChapters[i];
+			Q_strcat( cp, MAX_UPTEXT, gd.upChapters[i].name );
 			Q_strcat( cp, MAX_UPTEXT, "\n" );
 		}
 	}
@@ -315,8 +307,8 @@ void MN_UpPrev_f( void )
 
 	// change chapter
 	for (; upc >= 0; upc-- )
-		if ( upChapters[upc].last >= 0 ) {
-			upCurrent = &gd.technologies[upChapters[upc].last];
+		if ( gd.upChapters[upc].last >= 0 ) {
+			upCurrent = &gd.technologies[gd.upChapters[upc].last];
 			if ( RS_IsResearched_(upCurrent) )
 				MN_UpDrawEntry( upCurrent );
 			else
@@ -336,7 +328,7 @@ void MN_UpNext_f( void )
 	int upc;
 
 	// change chapter
-	if ( !upCurrent ) upc = 0; //upChapters;
+	if ( !upCurrent ) upc = 0;
 	else upc = upCurrent->up_chapter + 1;
 
 	// get next entry
@@ -360,9 +352,9 @@ void MN_UpNext_f( void )
 	/* no 'next' entry defined (=NULL) or no current entry at all */
 
 	// change chapter
-	for ( ; upc < numChapters; upc++ )
-		if ( upChapters[upc].first >= 0 ) {
-			upCurrent = &gd.technologies[upChapters[upc].first];
+	for ( ; upc < gd.numChapters; upc++ )
+		if ( gd.upChapters[upc].first >= 0 ) {
+			upCurrent = &gd.technologies[gd.upChapters[upc].first];
 			if ( RS_IsResearched_(upCurrent) )
 				MN_UpDrawEntry( upCurrent );
 			else
@@ -419,7 +411,7 @@ UP_ResetUfopedia
 void UP_ResetUfopedia( void )
 {
 	// reset menu structures
-	numChapters = 0;
+	gd.numChapters = 0;
 	//numEntries = 0;
 
 	// add commands and cvars
@@ -457,13 +449,14 @@ void UP_ParseUpChapters( char *id, char **text )
 		if ( *token == '}' ) break;
 
 		// add chapter
-		if ( numChapters >= MAX_PEDIACHAPTERS ) {
+		if ( gd.numChapters >= MAX_PEDIACHAPTERS ) {
 			Com_Printf( "UP_ParseUpChapters: too many chapter defs\n", id );
 			return;
 		}
-		memset( &upChapters[numChapters], 0, sizeof( pediaChapter_t ) );
-		Q_strncpyz( upChapters[numChapters].id, token, MAX_VAR );
-
+		memset( &gd.upChapters[gd.numChapters], 0, sizeof( pediaChapter_t ) );
+		Q_strncpyz( gd.upChapters[gd.numChapters].id, token, MAX_VAR );
+		gd.upChapters[gd.numChapters].idx = gd.numChapters;	// set self-link
+		
 		// get the name
 		token = COM_EParse( text, errhead, id );
 		if ( !*text ) break;
@@ -471,8 +464,8 @@ void UP_ParseUpChapters( char *id, char **text )
 		if ( *token == '_' ) token++;
 		if ( !*token )
 			continue;
-		Q_strncpyz( upChapters[numChapters].name, _(token), MAX_VAR );
+		Q_strncpyz( gd.upChapters[gd.numChapters].name, _(token), MAX_VAR );
 
-		numChapters++;
+		gd.numChapters++;
 	} while ( *text );
 }
