@@ -51,10 +51,14 @@ typedef struct globalData_s
 	int numChapters;
 
 	// == buildings & bases ==
-	// A list of all bases.
-	base_t	bases[MAX_BASES];
-	// Total number of bases.
+	// Total number of parsed base-names.
+	int	numBaseNames;
+	
+	// Total number of built bases (how many are enabled).
 	int	numBases;
+	// A list of _all_ bases ... even unbuilt ones.
+	base_t	bases[MAX_BASES];
+	
 	
 	// A list of all possible unique buldings.
 	building_t buildingTypes[MAX_BUILDINGS];
@@ -91,3 +95,5 @@ extern globalData_t	gd;
 
 globalData_t	gd;
 
+// TODO: Implement the saving of the initial parsed data.
+//globalData_t	gd_on_startup;

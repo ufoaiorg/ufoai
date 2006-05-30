@@ -35,7 +35,6 @@ TODO: new game does not reset basemangagement
 #include "client.h"
 #include "cl_global.h"
 
-base_t	bmBases[MAX_BASES];				// A global list of _all_ bases. (see client.h)
 vec2_t	newBasePos;
 cvar_t*	mn_base_title;
 
@@ -118,15 +117,15 @@ void B_SetSensor( void )
 
 	if ( !Q_strncmp( Cmd_Argv(0), "inc", 3 ) ) // inc_sensor
 	{
-		bmBases[i].sensorWidth += amount;
+		gd.bases[i].sensorWidth += amount;
 	}
 	else if ( !Q_strncmp( Cmd_Argv(0), "dec", 3 ) ) // dec_sensor
 	{
-		bmBases[i].sensorWidth -= amount;
-		if ( bmBases[i].sensorWidth < 0 )
+		gd.bases[i].sensorWidth -= amount;
+		if ( gd.bases[i].sensorWidth < 0 )
 		{
-			bmBases[i].sensorWidth = 0;
-			bmBases[i].drawSensor = qfalse;
+			gd.bases[i].sensorWidth = 0;
+			gd.bases[i].drawSensor = qfalse;
 		}
 	}
 }
@@ -1349,7 +1348,7 @@ void B_ParseBases( char *title, char **text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
-		base = &bmBases[numBases];
+		base = &gd.bases[numBases];
 		memset( base, 0, sizeof( base_t ) );
 
 		// get the title
@@ -1469,7 +1468,7 @@ void B_BaseInit( void )
 {
 	ccs.actualBaseID = (int) Cvar_VariableValue("mn_base_id");
 
-	baseCurrent = &bmBases[ ccs.actualBaseID ];
+	baseCurrent = &gd.bases[ ccs.actualBaseID ];
 
 	// stuff for homebase
 	if ( ccs.actualBaseID == 0 )
@@ -1510,7 +1509,7 @@ void B_NextBase( void )
 	else
 		ccs.actualBaseID = 0;
 	Com_DPrintf( "new-base=%i\n", ccs.actualBaseID );
-	if ( ! bmBases[ccs.actualBaseID].founded )
+	if ( ! gd.bases[ccs.actualBaseID].founded )
 		return;
 	else
 	{
@@ -1533,7 +1532,7 @@ void B_PrevBase( void )
 	Com_DPrintf( "new-base=%i\n", ccs.actualBaseID );
 
 	// this must be false - but i'm paranoid'
-	if ( ! bmBases[ccs.actualBaseID].founded )
+	if ( ! gd.bases[ccs.actualBaseID].founded )
 		return;
 	else
 	{
@@ -1560,23 +1559,23 @@ void B_SelectBase( void )
 	{
 		mapAction = MA_NEWBASE;
 		ccs.actualBaseID = 0;
-		while ( bmBases[ccs.actualBaseID].founded && ccs.actualBaseID < MAX_BASES )
+		while ( gd.bases[ccs.actualBaseID].founded && ccs.actualBaseID < MAX_BASES )
 			ccs.actualBaseID++;
 		if ( ccs.actualBaseID < MAX_BASES )
 		{
-			baseCurrent = &bmBases[ ccs.actualBaseID ];
+			baseCurrent = &gd.bases[ ccs.actualBaseID ];
 		}
 		else
 		{
 			Com_Printf( "MaxBases reached\n" );
 			// select the first base in list
 			ccs.actualBaseID = 0;
-			baseCurrent = &bmBases[ ccs.actualBaseID ];
+			baseCurrent = &gd.bases[ ccs.actualBaseID ];
 		}
 	}
 	else if ( ccs.actualBaseID < MAX_BASES )
 	{
-		baseCurrent = &bmBases[ ccs.actualBaseID ];
+		baseCurrent = &gd.bases[ ccs.actualBaseID ];
 		menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
 		if ( baseCurrent->founded ) {
 			mapAction = MA_NONE;
@@ -1589,7 +1588,7 @@ void B_SelectBase( void )
 	else
 	{
 		ccs.actualBaseID = 0;
-		baseCurrent = &bmBases[ ccs.actualBaseID ];
+		baseCurrent = &gd.bases[ ccs.actualBaseID ];
 	}
 	Cvar_SetValue( "mn_base_id", baseCurrent->id );
 	Cvar_Set( "mn_base_title", baseCurrent->title );
@@ -1655,7 +1654,7 @@ void B_BaseAttack ( void )
 
 	if ( whichBaseID >= 0 && whichBaseID < ccs.numBases )
 	{
-		bmBases[whichBaseID].baseStatus = BASE_UNDER_ATTACK;
+		gd.bases[whichBaseID].baseStatus = BASE_UNDER_ATTACK;
 		// TODO: New menu for:
 		//      defend -> call AssembleBase for this base
 		//      continue -> return to geoscape
@@ -1741,9 +1740,9 @@ void B_NewBases( void )
 	ccs.actualBaseID = 0;
 	for ( i = 0; i < MAX_BASES; i++ )
 	{
-		Q_strncpyz( title, bmBases[i].title, MAX_VAR );
-		B_ClearBase( &bmBases[i] );
-		Q_strncpyz( bmBases[i].title, title, MAX_VAR );
+		Q_strncpyz( title, gd.bases[i].title, MAX_VAR );
+		B_ClearBase( &gd.bases[i] );
+		Q_strncpyz( gd.bases[i].title, title, MAX_VAR );
 	}
 }
 
@@ -1766,11 +1765,11 @@ void B_SaveBases( sizebuf_t *sb )
 	int i, n, j;
 
 	n = 0;
-	for ( i = 0, base = bmBases; i < MAX_BASES; i++, base++ )
+	for ( i = 0, base = gd.bases; i < MAX_BASES; i++, base++ )
 		if ( base->founded ) n++;
 	MSG_WriteByte( sb, n );
 
-	for ( i = 0, base = bmBases; i < MAX_BASES; i++, base++ )
+	for ( i = 0, base = gd.bases; i < MAX_BASES; i++, base++ )
 		if ( base->founded )
 		{
 			MSG_WriteLong( sb, base->id );
@@ -1832,7 +1831,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 	//     If a base was attacked and destroyed - a save followed
 	//     by a load will lead to the slot (where the base->found is
 	//     not true) being lost. Do you understand what I mean??
-	for ( i = 0, base = bmBases; i < num; i++, base++ )
+	for ( i = 0, base = gd.bases; i < num; i++, base++ )
 	{
 		ccs.actualBaseID = i;
 		baseCurrent = base;
@@ -1912,7 +1911,7 @@ void B_BuildingList_f ( void )
 		return;
 	}
 
-	for ( i = 0, base = bmBases; i < ccs.numBases; i++, base++ )
+	for ( i = 0, base = gd.bases; i < ccs.numBases; i++, base++ )
 	{
 		if ( base->founded == qfalse )
 			continue;
@@ -1947,7 +1946,7 @@ void B_BaseList_f ( void )
 {
 	int i, row, col, j;
 	base_t* base;
-	for ( i = 0, base = bmBases; i < MAX_BASES; i++, base++ )
+	for ( i = 0, base = gd.bases; i < MAX_BASES; i++, base++ )
 	{
 		Com_Printf("Base id %i\n", base->id );
 		Com_Printf("Base title %s\n", base->title );
@@ -1978,7 +1977,7 @@ void B_SetBaseTitle ( void )
 {
 	Com_DPrintf("B_SetBaseTitle: #bases: %i\n", ccs.numBases );
 	if ( ccs.numBases < MAX_BASES )
-		Cvar_Set("mn_base_title_new", bmBases[ccs.numBases].title );
+		Cvar_Set("mn_base_title_new", gd.bases[ccs.numBases].title );
 	else
 	{
 		MN_AddNewMessage( _("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL );
@@ -2057,7 +2056,7 @@ int B_GetCount ( void )
 
 	for ( i = 0; i < MAX_BASES; i++ )
 	{
-		if ( ! bmBases[i].founded ) continue;
+		if ( ! gd.bases[i].founded ) continue;
 		cnt++;
 	}
 
@@ -2076,7 +2075,7 @@ void B_UpdateBaseData( void )
 	int newBuilding = 0, new;
 	for ( i = 0; i < MAX_BASES; i++ )
 	{
-		if ( ! bmBases[i].founded ) continue;
+		if ( ! gd.bases[i].founded ) continue;
 		for ( j = 0; j < numBuildings; j++ )
 		{
 			b = &bmBuildings[i][j];
@@ -2084,7 +2083,7 @@ void B_UpdateBaseData( void )
 			new = B_CheckBuildingConstruction( b, i );
 			newBuilding += new;
 			if ( new ) {
-				Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("Construction of %s building finished in base %s."), b->name, bmBases[i].title);
+				Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("Construction of %s building finished in base %s."), b->name, gd.bases[i].title);
 				MN_AddNewMessage(_("Building finished"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL );
 			}
 		}
@@ -2144,8 +2143,8 @@ base_t* B_GetBase ( int id )
 
 	for ( i = 0; i < MAX_BASES; i++ )
 	{
-		if ( bmBases[i].id == id )
-			return &bmBases[i];
+		if ( gd.bases[i].id == id )
+			return &gd.bases[i];
 	}
 	return NULL;
 }

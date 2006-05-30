@@ -390,7 +390,7 @@ void RS_ResearchDisplayInfo ( void  )
 	// display the base this tech is researched in
 	if (tech->lab) {
 		if ( tech->lab->base != baseCurrent->id ) {
-			base = &bmBases[tech->lab->base];
+			base = &gd.bases[tech->lab->base];
 			Cvar_Set( "mn_research_selbase", va( _("Researched in %s"), base->title ) );
 		} else {
 			Cvar_Set( "mn_research_selbase", _("Researched in this base.") );

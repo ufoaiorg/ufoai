@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../qcommon/qcommon.h"
 #include "client.h"
+#include "cl_global.h"
 
 // public vars
 mission_t	missions[MAX_MISSIONS];
@@ -318,7 +319,7 @@ void CL_ListAircraft_f ( void )
 	base_t*	base;
 	aircraft_t*	air;
 
-	for ( j = 0, base = bmBases; j < ccs.numBases; j++, base++ )
+	for ( j = 0, base = gd.bases; j < ccs.numBases; j++, base++ )
 	{
 		if ( ! base->founded )
 			continue;
@@ -856,7 +857,7 @@ void CL_CampaignAddMission( setState_t *set )
 
 	if ( !Q_strncmp( mis->def->name, "baseattack", 10 ) )
 	{
-		baseCurrent = &bmBases[rand() % ccs.numBases];
+		baseCurrent = &gd.bases[rand() % ccs.numBases];
 		mis->realPos[0] = baseCurrent->pos[0];
 		mis->realPos[1] = baseCurrent->pos[1];
 		// Add message to message-system.
@@ -955,19 +956,19 @@ void CL_OpenAircraft_f ( void )
 	num = atoi( Cmd_Argv( 1 ) );
 	for ( j = 0; j < ccs.numBases; j++ )
 	{
-		if ( !bmBases[j].founded )
+		if ( !gd.bases[j].founded )
 			continue;
 
-		if ( num - bmBases[j].numAircraftInBase >= 0 )
+		if ( num - gd.bases[j].numAircraftInBase >= 0 )
 		{
-			num -= bmBases[j].numAircraftInBase;
+			num -= gd.bases[j].numAircraftInBase;
 			continue;
 		}
-		else if ( num >= 0 && num < bmBases[j].numAircraftInBase )
+		else if ( num >= 0 && num < gd.bases[j].numAircraftInBase )
 		{
-			Com_DPrintf("Selected aircraft: %s\n", bmBases[j].aircraft[num].name );
+			Com_DPrintf("Selected aircraft: %s\n", gd.bases[j].aircraft[num].name );
 
-			baseCurrent = &bmBases[j];
+			baseCurrent = &gd.bases[j];
 			baseCurrent->aircraftCurrent = num;
 			CL_AircraftSelect();
 			MN_PopMenu(qfalse);
@@ -1003,30 +1004,30 @@ void CL_SelectAircraft_f ( void )
 	num = atoi( Cmd_Argv( 1 ) );
 	for ( j = 0; j < ccs.numBases; j++ )
 	{
-		if ( !bmBases[j].founded )
+		if ( !gd.bases[j].founded )
 			continue;
 
-		if ( num - bmBases[j].numAircraftInBase >= 0 )
+		if ( num - gd.bases[j].numAircraftInBase >= 0 )
 		{
-			num -= bmBases[j].numAircraftInBase;
+			num -= gd.bases[j].numAircraftInBase;
 			continue;
 		}
-		else if ( num >= 0 && num < bmBases[j].numAircraftInBase )
+		else if ( num >= 0 && num < gd.bases[j].numAircraftInBase )
 		{
 			interceptAircraft = num;
-			Com_DPrintf("Selected aircraft: %s\n", bmBases[j].aircraft[interceptAircraft].name );
+			Com_DPrintf("Selected aircraft: %s\n", gd.bases[j].aircraft[interceptAircraft].name );
 
-			if ( ! *(bmBases[j].aircraft[interceptAircraft].teamSize) )
+			if ( ! *(gd.bases[j].aircraft[interceptAircraft].teamSize) )
 			{
 				MN_Popup(_("Notice"), _("Assign a team to aircraft"));
 				return;
 			}
-			MN_MapCalcLine( bmBases[j].aircraft[interceptAircraft].pos, selMis->def->pos,
-				&bmBases[j].aircraft[interceptAircraft].route );
-			bmBases[j].aircraft[interceptAircraft].status = AIR_TRANSIT;
-			bmBases[j].aircraft[interceptAircraft].time = 0;
-			bmBases[j].aircraft[interceptAircraft].point = 0;
-			baseCurrent = bmBases[j].aircraft[interceptAircraft].homebase;
+			MN_MapCalcLine( gd.bases[j].aircraft[interceptAircraft].pos, selMis->def->pos,
+				&gd.bases[j].aircraft[interceptAircraft].route );
+			gd.bases[j].aircraft[interceptAircraft].status = AIR_TRANSIT;
+			gd.bases[j].aircraft[interceptAircraft].time = 0;
+			gd.bases[j].aircraft[interceptAircraft].point = 0;
+			baseCurrent = gd.bases[j].aircraft[interceptAircraft].homebase;
 			baseCurrent->aircraftCurrent = num;
 			CL_AircraftSelect();
 			MN_PopMenu(qfalse);
@@ -1050,13 +1051,13 @@ void CL_BuildingAircraftList_f ( void )
 	memset( aircraftListText, 0, sizeof(aircraftListText) );
 	for ( j = 0; j < ccs.numBases; j++ )
 	{
-		if (! bmBases[j].founded )
+		if (! gd.bases[j].founded )
 			continue;
 
-		for ( i = 0; i < bmBases[j].numAircraftInBase; i++ )
+		for ( i = 0; i < gd.bases[j].numAircraftInBase; i++ )
 		{
-			air = &bmBases[j].aircraft[i];
-			s = va("%s (%i/%i)\t%s\t%s\n", air->name, *air->teamSize, air->size, CL_AircraftStatusToName( air ), bmBases[j].title );
+			air = &gd.bases[j].aircraft[i];
+			s = va("%s (%i/%i)\t%s\t%s\n", air->name, *air->teamSize, air->size, CL_AircraftStatusToName( air ), gd.bases[j].title );
 			Q_strcat( aircraftListText, sizeof(aircraftListText), s );
 		}
 	}
@@ -1177,28 +1178,28 @@ void CL_CampaignCheckEvents( void )
 			for ( j = 0; j < ccs.numBases; j++ )
 			{
 				// no radar?
-				if ( !bmBases[j].founded || !bmBases[j].sensorWidth )
+				if ( !gd.bases[j].founded || !gd.bases[j].sensorWidth )
 					continue;
-				dist = CP_GetDistance( bmBases[j].pos, ufoOnGeoscape[i]->pos);
-				if ( bmBases[j].sensorWidth >= dist )
+				dist = CP_GetDistance( gd.bases[j].pos, ufoOnGeoscape[i]->pos);
+				if ( gd.bases[j].sensorWidth >= dist )
 				{
 #ifdef DEBUG
 					Com_DPrintf("...distance of ufo to base: %i\n", dist);
 #endif
-					if ( bmBases[j].drawSensor == qfalse )
+					if ( gd.bases[j].drawSensor == qfalse )
 					{
 						ufoOnGeoscape[i]->status = AIR_UFOMOVE;
 						MN_AddNewMessage( _("Notice"), _("UFO appears on our radar"), qfalse, MSG_STANDARD, NULL );
-						bmBases[j].drawSensor = qtrue;
+						gd.bases[j].drawSensor = qtrue;
 						CL_GameTimeStop();
 					}
 				}
 				else
 				{
-					if ( bmBases[j].drawSensor == qtrue )
+					if ( gd.bases[j].drawSensor == qtrue )
 					{
 						ufoOnGeoscape[i]->status = AIR_NONE;
-						bmBases[j].drawSensor = qfalse;
+						gd.bases[j].drawSensor = qfalse;
 						// FIXME: grammar: from/of/on
 						MN_AddNewMessage( _("Notice"), _("UFO disappears on our radar"), qfalse, MSG_STANDARD, NULL );
 					}
@@ -1277,7 +1278,7 @@ void CL_CampaignRunAircraft( int dt )
 	int	i, p, j;
 	vec2_t	pos;
 
-	for ( j = 0, base = bmBases; j < ccs.numBases; j++, base++ )
+	for ( j = 0, base = gd.bases; j < ccs.numBases; j++, base++ )
 	{
 		if ( ! base->founded )
 			continue;

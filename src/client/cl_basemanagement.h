@@ -337,7 +337,6 @@ typedef struct base_s
 	struct building_s *buildingCurrent;
 } base_t;
 
-extern	base_t	bmBases[MAX_BASES];					// A global list of _all_ bases.
 extern	base_t	*baseCurrent;							// Currently displayed/accessed base.
 extern	building_t	bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global list of _all_ buildings (even unbuilt) in all bases.
 extern	int numBuildings;								// The global number of entries in the bmBuildings list.

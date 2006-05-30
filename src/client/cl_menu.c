@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // cl_menu.c -- client menu functions
 
 #include "client.h"
+#include "cl_global.h"
 
 static vec4_t tooltipBG = {0.0f,0.0f,0.0f,0.7f};
 static vec4_t tooltipColor = {0.0f,0.8f,0.0f,1.0f};
@@ -1093,7 +1094,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	// base selection
 	for ( i = 0; i < ccs.numBases; i++ )
 	{
-		if ( !MN_MapToScreen( node, bmBases[i].pos, &msx, &msy ) )
+		if ( !MN_MapToScreen( node, gd.bases[i].pos, &msx, &msy ) )
 			continue;
 		if ( x >= msx-8 && x <= msx+8 && y >= msy-8 && y <= msy+8 )
 		{
@@ -1106,7 +1107,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	// draw aircraft
 	for ( i = 0; i < ccs.numBases; i++ )
 	{
-		for ( j = 0, air = bmBases[i].aircraft; j < bmBases[i].numAircraftInBase; j++, air++ )
+		for ( j = 0, air = gd.bases[i].aircraft; j < gd.bases[i].numAircraftInBase; j++, air++ )
 		{
 			if ( air->status > AIR_HOME && air->fuel > 0 )
 			{
@@ -1468,18 +1469,18 @@ void MN_Draw3DMapMarkers( menuNode_t *node, float latitude, float longitude )
 
 	// draw base pics
 	for ( j = 0; j < ccs.numBases; j++ )
-		if ( bmBases[j].founded )
+		if ( gd.bases[j].founded )
 		{
-			if ( !MN_MapToScreen( node, bmBases[j].pos, &x, &y ) )
+			if ( !MN_MapToScreen( node, gd.bases[j].pos, &x, &y ) )
 				continue;
 			re.Draw3DMapMarkers( latitude, longitude, "base" );
 		}
 
 	// draw aircraft
 	for ( j = 0; j < ccs.numBases; j++ )
-		if ( bmBases[j].founded )
+		if ( gd.bases[j].founded )
 		{
-			for ( i = 0, air = (aircraft_t*)bmBases[j].aircraft; i < bmBases[j].numAircraftInBase; i++, air++ )
+			for ( i = 0, air = (aircraft_t*)gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, air++ )
 				if ( air->status != AIR_HOME )
 				{
 					if ( !MN_MapToScreen( node, air->pos, &x, &y ) )
@@ -1535,21 +1536,21 @@ void MN_DrawMapMarkers( menuNode_t *node )
 
 	// draw base pics
 	for ( j = 0; j < ccs.numBases; j++ )
-		if ( bmBases[j].founded )
+		if ( gd.bases[j].founded )
 		{
-			if ( !MN_MapToScreen( node, bmBases[j].pos, &x, &y ) )
+			if ( !MN_MapToScreen( node, gd.bases[j].pos, &x, &y ) )
 				continue;
-			i = bmBases[j].sensorWidth;
+			i = gd.bases[j].sensorWidth;
 			re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base" );
-			if ( bmBases[j].drawSensor )
+			if ( gd.bases[j].drawSensor )
 				re.DrawNormPic( x, y, i, i, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor" );
 		}
 
 	// draw aircraft
 	for ( j = 0; j < ccs.numBases; j++ )
-		if ( bmBases[j].founded )
+		if ( gd.bases[j].founded )
 		{
-			for ( i = 0, air = (aircraft_t*)bmBases[j].aircraft; i < bmBases[j].numAircraftInBase; i++, air++ )
+			for ( i = 0, air = (aircraft_t*)gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, air++ )
 				if ( air->status != AIR_HOME )
 				{
 					if ( !MN_MapToScreen( node, air->pos, &x, &y ) )

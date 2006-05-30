@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "client.h"
+#include "cl_global.h"
 
 char *teamSkinNames[NUM_TEAMSKINS] =
 {
@@ -964,12 +965,12 @@ void CL_LoadTeamMultiplayer( char *filename )
 	CL_ResetTeamInBase();
 
 	// return the base title
-	Q_strncpyz( title, bmBases[0].title, MAX_VAR );
-	B_ClearBase( &bmBases[0] );
-	Q_strncpyz( bmBases[0].title, title, MAX_VAR );
+	Q_strncpyz( title, gd.bases[0].title, MAX_VAR );
+	B_ClearBase( &gd.bases[0] );
+	Q_strncpyz( gd.bases[0].title, title, MAX_VAR );
 
 	// set base for multiplayer
-	baseCurrent = &bmBases[0];
+	baseCurrent = &gd.bases[0];
 	ccs.numBases = 1;
 	baseCurrent->hiredMask = 0;
 	CL_NewAircraft( baseCurrent, "craft_dropship" );
@@ -991,7 +992,7 @@ void CL_LoadTeamMultiplayer( char *filename )
 	Cvar_Set( "mn_teamname", MSG_ReadString( &sb ) );
 
 	// load the team
-	CL_LoadTeam( &sb, &bmBases[0], SAVE_FILE_VERSION );
+	CL_LoadTeam( &sb, &gd.bases[0], SAVE_FILE_VERSION );
 }
 
 

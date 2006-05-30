@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // cl_market.c -- single player market stuff
 
 #include "client.h"
+#include "cl_global.h"
 
 #define MAX_BUYLIST		32
 
@@ -66,7 +67,7 @@ static void AIR_GetStorageSupplyCount( char *aircraft, int *storage, int *supply
 
 	*supply = MAX_AIRCRAFT_STORAGE;
 
-	for ( i = 0, base = bmBases; i < ccs.numBases; i++, base++ )
+	for ( i = 0, base = gd.bases; i < ccs.numBases; i++, base++ )
 	{
 		if ( ! base->founded ) continue;
 		for ( j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++ )
@@ -307,7 +308,7 @@ static void CL_SellAircraft( void )
 	if ( aircraftID > numAircraft )
 		return;
 
-	for ( i = 0, base = bmBases; i < ccs.numBases; i++, base++ )
+	for ( i = 0, base = gd.bases; i < ccs.numBases; i++, base++ )
 	{
 		if ( ! base->founded ) continue;
 		for ( j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++ )
