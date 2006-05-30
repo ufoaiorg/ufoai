@@ -327,8 +327,8 @@ void CL_ListAircraft_f ( void )
 		for ( i = 0; i < base->numAircraftInBase; i++ )
 		{
 			air = &base->aircraft[i];
-			Com_Printf("Aircraft %s\n", air->title );
-			Com_Printf("...name %s\n", air->name );
+			Com_Printf("Aircraft %s\n", air->name );
+			Com_Printf("...name %s\n", air->id );
 			Com_Printf("...speed %0.2f\n", air->speed );
 			Com_Printf("...type %i\n", air->type );
 			Com_Printf("...size %i\n", air->size );
@@ -400,7 +400,7 @@ void CL_AircraftInit ( void )
 	{
 		air = &aircraft[i];
 		// link with tech pointer
-		Com_DPrintf("...aircraft: %s\n", air->title );
+		Com_DPrintf("...aircraft: %s\n", air->name );
 		if ( *air->weapon_string )
 		{
 			Com_DPrintf("....weapon: %s\n", air->weapon_string );
@@ -459,7 +459,7 @@ char* CL_AircraftStatusToName ( aircraft_t* air )
 			return _("Returning to homebase");
 			break;
 		default:
-			Com_Printf( "Error: Unknown aircraft status for %s\n", air->title );
+			Com_Printf( "Error: Unknown aircraft status for %s\n", air->name );
 			break;
 	}
 	return NULL;
@@ -603,7 +603,7 @@ aircraft_t* CL_GetAircraft ( char* name )
 
 	for ( i = 0; i < numAircraft; i++ )
 	{
-		if ( ! Q_strncmp(aircraft[i].title, name, MAX_VAR) )
+		if ( ! Q_strncmp(aircraft[i].id, name, MAX_VAR) )
 			return &aircraft[i];
 	}
 
@@ -629,14 +629,14 @@ void CL_NewAircraft ( base_t* base, char* name )
 	for ( i = 0; i < numAircraft; i++ )
 	{
 		air = &aircraft[i];
-		if ( ! Q_strncmp(air->title, name, MAX_VAR) )
+		if ( ! Q_strncmp(air->id, name, MAX_VAR) )
 		{
 			memcpy( &base->aircraft[base->numAircraftInBase], air, sizeof(aircraft_t) );
 			air = &base->aircraft[base->numAircraftInBase];
 			air->homebase = base;
 			// this is the aircraft array id in current base
 			// NOTE: when we send the aircraft to another base this has to be changed, too
-			air->id = base->numAircraftInBase;
+			air->idx_base = base->numAircraftInBase;
 			// link the teamSize pointer in
 			air->teamSize = &base->numOnTeam[base->numAircraftInBase];
 			Q_strncpyz( messageBuffer, va( _("You've got a new aircraft (a %s) in base %s"), air->name, base->title ), MAX_MESSAGE_TEXT );
@@ -1253,7 +1253,7 @@ void CL_CheckAircraft ( aircraft_t* air )
 		{
 			air->status = AIR_DROP;
 			if ( interceptAircraft < 0 )
-				interceptAircraft = air->id;
+				interceptAircraft = air->idx_base;
 			MN_PushMenu( "popup_intercept_ready" );
 		}
 	}
@@ -1603,7 +1603,7 @@ void AIR_SaveAircraft( sizebuf_t *sb, base_t* base )
 	MSG_WriteByte( sb, base->numAircraftInBase );
 	for ( i = 0, air = base->aircraft; i < base->numAircraftInBase; i++, air++ )
 	{
-		MSG_WriteString( sb, air->title );
+		MSG_WriteString( sb, air->id );
 		MSG_WriteFloat( sb, air->pos[0] );
 		MSG_WriteFloat( sb, air->pos[1] );
 		MSG_WriteByte( sb, air->status );
@@ -1626,7 +1626,7 @@ aircraft_t* AIR_FindAircraft ( char* aircraftName )
 	int i;
 	for ( i = 0; i < numAircraft; i++ )
 	{
-		if ( !Q_strncmp(aircraft[i].title, aircraftName, MAX_VAR) )
+		if ( !Q_strncmp(aircraft[i].id, aircraftName, MAX_VAR) )
 			return &aircraft[i];
 	}
 	return NULL;
@@ -1662,7 +1662,7 @@ void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
 				air->homebase = base;
 				air->point = MSG_ReadLong( sb );
 				air->time = MSG_ReadLong( sb );
-				air->id = i;
+				air->idx_base = i;
 				memcpy( &air->route, sb->data + sb->readcount, sizeof(mapline_t) );
 				sb->readcount += sizeof(mapline_t);
 			}
@@ -2961,7 +2961,7 @@ void CL_ParseAircraft( char *name, char **text )
 	memset( ac, 0, sizeof(aircraft_t) );
 
 	Com_DPrintf("...found aircraft %s\n", name);
-	Q_strncpyz( ac->title, name, MAX_VAR );
+	Q_strncpyz( ac->id, name, MAX_VAR );
 	ac->status = AIR_HOME;
 
 	// get it's body

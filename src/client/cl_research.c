@@ -308,7 +308,7 @@ void RS_InitTree( void )
 			found = qfalse;
 			for ( j = 0; j < numAircraft; j++ ) {
 				ac = &aircraft[j];
-				if ( !Q_strncmp( t->provides, ac->title, MAX_VAR ) ) { // This aircraft has been 'provided',
+				if ( !Q_strncmp( t->provides, ac->id, MAX_VAR ) ) { // This aircraft has been 'provided',
 					found = qtrue;
 					if ( !*t->name )
 						Com_sprintf( t->name, MAX_VAR, ac->name );

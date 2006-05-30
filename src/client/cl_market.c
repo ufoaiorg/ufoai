@@ -71,7 +71,7 @@ static void AIR_GetStorageSupplyCount( char *aircraft, int *storage, int *supply
 		if ( ! base->founded ) continue;
 		for ( j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++ )
 		{
-			if ( !Q_strncmp( air->title, aircraft, MAX_VAR ) )
+			if ( !Q_strncmp( air->id, aircraft, MAX_VAR ) )
 			{
 				*storage++;
 			}
@@ -136,7 +136,7 @@ static void CL_BuyType( void )
 	{
 		for ( i = 0, j = 0, air = aircraft; i < numAircraft; i++, air++ )
 		{
-			AIR_GetStorageSupplyCount( air->title, &storage, &supply );
+			AIR_GetStorageSupplyCount( air->id, &storage, &supply );
 			Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );
 			Cvar_Set( str, _(air->name) );
 
@@ -312,7 +312,7 @@ static void CL_SellAircraft( void )
 		if ( ! base->founded ) continue;
 		for ( j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++ )
 		{
-			if ( !Q_strncmp( air->title, aircraft[aircraftID].title, MAX_VAR ) )
+			if ( !Q_strncmp( air->id, aircraft[aircraftID].id, MAX_VAR ) )
 			{
 				if ( *air->teamSize )
 					continue;

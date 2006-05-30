@@ -240,8 +240,9 @@ typedef struct craftupgrade_s
 
 typedef struct aircraft_s
 {
-	char	name[MAX_VAR];	// translateable name
-	char	title[MAX_VAR];	// internal id
+	int idx;			// Self-link in the global list
+	char	id[MAX_VAR];	// translateable name
+	char	name[MAX_VAR];	// internal id
 	char	image[MAX_VAR];	// image on geoscape
 	aircraftType_t	type;
 	int		status;	// see aircraftStatus_t
@@ -253,7 +254,7 @@ typedef struct aircraft_s
 	vec2_t	pos;	// actual pos on geoscape
 	int		point;
 	int		time;
-	int	id;	// id in base
+	int	idx_base;	// id in base
 	int	*teamSize;	// how many soldiers on board
 				// pointer to base->numOnTeam[AIRCRAFT_ID]
 	// TODO
