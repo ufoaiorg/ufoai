@@ -138,8 +138,8 @@ void RS_MarkResearchable( void )
 				// If the tech has an collected item, mark the first-required techs as researchable //TODO doesn't work yet?
 				if ( t->statusCollected ) {
 					for ( j=0; j < firstrequired.numEntries; j++ ) {
-						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:firstrequired of collected.\n", firstrequired.list[j] );
-						RS_MarkOneResearchable( firstrequired.techPtr[j] );
+						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:firstrequired of collected.\n", firstrequired.string[j] );
+						RS_MarkOneResearchable( firstrequired.idx[j] );
 					}
 				}
 
@@ -147,8 +147,8 @@ void RS_MarkResearchable( void )
 				required = &t->requires;
 				required_are_researched = qtrue;
 				for ( j=0; j < required->numEntries; j++ ) {
-					if ( ( !RS_TechIsResearched(required->list[j] ) )
-					  || ( !Q_strncmp( required->list[j], "nothing", 7 ) ) ) {
+					if ( ( !RS_TechIsResearched(required->idx[j] ) )
+					  || ( !Q_strncmp( required->string[j], "nothing", 7 ) ) ) {
 						required_are_researched = qfalse;
 						break;
 					}
@@ -164,7 +164,7 @@ void RS_MarkResearchable( void )
 
 				// If the tech is an initial one,  mark it as as researchable.
 				for ( j=0; j < required->numEntries; j++ ) {
-					if ( !Q_strncmp( required->list[j], "initial", 7 ) ) {
+					if ( !Q_strncmp( required->string[j], "initial", 7 ) ) {
 						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable - reason:isinitial.\n", t->id );
 						t->statusResearchable = qtrue;
 						break;
@@ -437,7 +437,7 @@ void RS_ResearchDisplayInfo ( void  )
 	Com_sprintf( dependencies, MAX_VAR, _("Dependencies: "));
 	if ( req_temp.numEntries > 0 ) {
 		for ( i = 0; i < req_temp.numEntries; i++ ) {
-			RS_GetName( req_temp.list[i], tempstring ); //name_temp gets initialised in getname
+			RS_GetName( req_temp.string[i], tempstring ); //name_temp gets initialised in getname
 			Q_strcat( dependencies, MAX_VAR, tempstring );
 
 			if ( i < req_temp.numEntries-1 )
@@ -837,7 +837,7 @@ byte RS_DependsOn(char *id1, char *id2)
 	/* research item found */
 	required = tech->requires;
 	for ( i=0; i < required.numEntries; i++ ) {
-		if ( !Q_strncmp(required.list[i], id2, MAX_VAR ) )	// current item (=id1) depends on id2
+		if ( !Q_strncmp(required.string[i], id2, MAX_VAR ) )	// current item (=id1) depends on id2
 			return qtrue;
 	}
 	return qfalse;
@@ -955,7 +955,7 @@ void RS_TechnologyList_f ( void )
 		Com_Printf("... name      -> %s\n", t->name );
 		Com_Printf("... requires  ->");
 		for ( j = 0; j < req->numEntries; j++ )
-			Com_Printf( " %s",req->list[j] );
+			Com_Printf( " %s",req->string[j] );
 		Com_Printf("\n");
 		Com_Printf( "... provides  -> %s", t->provides );
 		Com_Printf("\n");
@@ -991,7 +991,7 @@ void RS_TechnologyList_f ( void )
 		req_temp.numEntries = 0;
 		RS_GetFirstRequired( t->idx, &req_temp );
 		for ( j = 0; j < req_temp.numEntries; j++ )
-			Com_Printf( " %s", req_temp.list[j] );
+			Com_Printf( " %s", req_temp.string[j] );
 
 		Com_Printf("\n");
 	}
@@ -1167,7 +1167,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 				token = COM_Parse( &misp );
 				if ( !misp ) break;
 				if ( required->numEntries < MAX_TECHLINKS )
-					Q_strncpyz( required->list[required->numEntries++], token, MAX_VAR);
+					Q_strncpyz( required->string[required->numEntries++], token, MAX_VAR);
 				else
 					Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS );
 
@@ -1341,27 +1341,21 @@ RS_TechIsResearched
 Checks if the technology (tech-id) has been researched.
 
 IN
-	id:	Unique id of a technology_t.
+	tech_idx:	index of the technology.
 
 OUT
 	boolean	RS_TechIsResearched
 ======================*/
-qboolean RS_TechIsResearched(char *id )
+qboolean RS_TechIsResearched( int tech_idx )
 {
-	technology_t *tech = NULL;
+	if ( !( tech_idx >=0 ) ) return qfalse;
 
-	if ( !id ) return qfalse;
-
-	if ( !Q_strncmp( id, "initial", 7 )
-	|| !Q_strncmp( id, "nothing", 7 ) )
+	if ( !Q_strncmp( technologies[tech_idx].id, "initial", 7 )
+	|| !Q_strncmp( technologies[tech_idx].id, "nothing", 7 ) )
 		return qtrue;	// initial and nothing are always researched. as they are just starting "technologys" that are never used.
 
-	tech = RS_GetTechByID( id );
-	if ( ! tech )
-		return qfalse;
-
 	/* research item found */
-	if ( tech->statusResearch == RS_FINISH )
+	if ( technologies[tech_idx].statusResearch == RS_FINISH )
 		return qtrue;
 
 	return qfalse;
@@ -1397,7 +1391,7 @@ qboolean RS_TechIsResearchable( technology_t* tech )
 	required = &tech->requires;
 
 	for ( i=0; i < required->numEntries; i++)
-		if ( !RS_TechIsResearched( required->list[i]) )	// Research of "id" not finished (RS_FINISH) at this point.
+		if ( !RS_TechIsResearched( required->idx[i]) )	// Research of "id" not finished (RS_FINISH) at this point.
 			return qfalse;
 
 	return qtrue;
@@ -1420,24 +1414,24 @@ void RS_GetFirstRequired2 ( int tech, char *first_id, stringlist_t *required )
 		return;
 
 	required_temp = &technologies[tech].requires;
-	//Com_DPrintf( "RS_GetFirstRequired2: %s - %s - %s\n", id, first_id, required_temp->list[0]  );
-	if ( !Q_strncmp( required_temp->list[0] , "initial", 7 ) || !Q_strncmp( required_temp->list[0] , "nothing", 7 ) ) {
+	//Com_DPrintf( "RS_GetFirstRequired2: %s - %s - %s\n", id, first_id, required_temp->string[0]  );
+	if ( !Q_strncmp( required_temp->string[0] , "initial", 7 ) || !Q_strncmp( required_temp->string[0] , "nothing", 7 ) ) {
 		if ( !Q_strncmp( technologies[tech].id, first_id, MAX_VAR ) )
 			return;
 		if ( required->numEntries < MAX_TECHLINKS ) {
 			// TODO: check if the firstrequired tech has already been added (e.g indirectly from another tech)
-			required->techPtr[required->numEntries] = tech;
-			Q_strncpyz( required->list[required->numEntries++], technologies[tech].id, MAX_VAR );
+			required->idx[required->numEntries] = tech;
+			Q_strncpyz( required->string[required->numEntries++], technologies[tech].id, MAX_VAR );
 			Com_DPrintf("RS_GetFirstRequired2: \"%s\" - requirement 'initial' or 'nothing' found.\n", technologies[tech].id );
 		}
 		return;
 	}
 	for ( i=0; i < required_temp->numEntries; i++ ) {
-		t = RS_GetTechByID( required_temp->list[i] );
+		t = RS_GetTechByID( required_temp->string[i] );
 		if ( RS_IsResearched_(t) ) {
 			if ( required->numEntries < MAX_TECHLINKS ) {
-				required->techPtr[required->numEntries] = t->idx;
-				Q_strncpyz( required->list[required->numEntries++], t->id, MAX_VAR );
+				required->idx[required->numEntries] = t->idx;
+				Q_strncpyz( required->string[required->numEntries++], t->id, MAX_VAR );
 				Com_DPrintf( "RS_GetFirstRequired2: \"%s\" - next item \"%s\" already researched.\n", technologies[tech].id, t->id );
 			}
 		} else {

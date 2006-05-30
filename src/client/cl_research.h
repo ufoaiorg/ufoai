@@ -52,8 +52,8 @@ typedef enum researchType_s
 typedef struct stringlist_s
 {
 	int	numEntries;					// The number of used strings/techs.
-	char	list[MAX_TECHLINKS][MAX_VAR];	// A list of strings.
-	int	techPtr[MAX_TECHLINKS];		// holds the indices of the tech for faster operation after finding it once
+	char	string[MAX_TECHLINKS][MAX_VAR];	// A list of strings.
+	int	idx[MAX_TECHLINKS];			// holds the indices of the tech for faster operation after finding it once
 } stringlist_t;
 
 typedef struct technology_s
@@ -99,7 +99,7 @@ void CL_CheckResearchStatus( void );
 void RS_UpdateData ( void );
 void RS_ParseTechnologies ( char* title, char** text );
 qboolean RS_ItemIsResearched(char *id_provided );
-qboolean RS_TechIsResearched(char *id );
+qboolean RS_TechIsResearched( int tech_idx );
 qboolean RS_IsResearched_ ( technology_t* t );
 qboolean RS_Collected_ ( technology_t* t );
 qboolean RS_ItemCollected(char *id_provided );
