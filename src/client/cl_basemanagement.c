@@ -452,7 +452,7 @@ void B_DrawBuilding( void )
 	if ( entry->buildingStatus[entry->howManyOfThisType] < B_UNDER_CONSTRUCTION && entry->fixCosts )
 		Com_sprintf( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.2f\n"), entry->fixCosts );
 
-	Q_strcat( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("%i Day(s) to build)\n"), entry->buildTime ) );
+	Q_strcat( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("%i Day(s) to build\n"), entry->buildTime ) );
 
 	if ( entry->varCosts )
 		Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Running Costs:\t%1.2f\n"), entry->varCosts ) );
@@ -1371,10 +1371,10 @@ B_DrawBase
 void B_DrawBase( menuNode_t *node )
 {
 	float x, y;
-	int mx, my, width, height, row, col;
+	int mx, my, width, height, row, col, time;
 	qboolean hover = qfalse;
 	static vec4_t color = {0.5f, 1.0f, 0.5f, 1.0};
-	char image[MAX_QPATH], statusImage[MAX_QPATH];
+	char image[MAX_QPATH];
 	building_t *entry = NULL, *secondEntry = NULL, *hoverBuilding = NULL;
 
 	if ( ! baseCurrent )
@@ -1403,11 +1403,6 @@ void B_DrawBase( menuNode_t *node )
 				if ( ! entry )
 					Sys_Error("Error in DrawBase - no building with id %i\n", baseCurrent->map[row][col] );
 
-				if ( entry->buildingStatus[entry->howManyOfThisType] == B_DOWN )
-					Q_strncpyz( statusImage, "base/down", MAX_QPATH );
-				else if ( entry->buildingStatus[entry->howManyOfThisType] == B_UNDER_CONSTRUCTION )
-					Q_strncpyz( statusImage, "base/construct", MAX_QPATH );
-
 				if ( !entry->used )
 				{
 					if ( entry->needs )
@@ -1424,7 +1419,10 @@ void B_DrawBase( menuNode_t *node )
 				}
 			}
 			else
+			{
+				entry = NULL;
 				Q_strncpyz( image, "base/grid", MAX_QPATH );
+			}
 
 			if ( mx > x && mx < x + width && my > y && my < y + height - 20 )
 			{
@@ -1435,26 +1433,30 @@ void B_DrawBase( menuNode_t *node )
 			else
 				hover = qfalse;
 
-			if ( hover )
-				re.DrawColor( color );
-
 			if ( *image )
 				re.DrawNormPic( x, y, width, height, 0, 0, 0, 0, 0, qfalse, image );
 
-			if ( hover )
-				re.DrawColor( NULL );
-
-			if ( *statusImage )
+			if ( entry )
 			{
-// 				re.DrawNormPic( x + 20 , y + 60, width, height, 0, 0, 0, 0, 0, qfalse, statusImage );
-				statusImage[0] = '\0';
+				switch ( entry->buildingStatus[entry->howManyOfThisType] )
+				{
+				case B_DOWN:
+				case B_CONSTRUCTION_FINISHED:
+					break;
+				case B_UNDER_CONSTRUCTION:
+					time = entry->buildTime - ( ccs.date.day - entry->timeStart );
+					re.FontDrawString( "f_small", 0, x + 10, y + 10, node->size[0], va(_("%i days left"), time ) );
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
 	if ( hoverBuilding )
 	{
 		re.DrawColor( color );
-		re.FontDrawString( "f_small", 0, mx+3, my, 0, hoverBuilding->name );
+		re.FontDrawString( "f_small", 0, mx+3, my, node->size[0], hoverBuilding->name );
 		re.DrawColor( NULL );
 	}
 }
