@@ -211,17 +211,18 @@ typedef struct craftupgrade_s
 	/* some of this informations defined here overwrite the ones in the aircraft_t struct if given. */
 
 	/* general */
-	char    id[MAX_VAR];		// Short (unique) id/name.
-	char    name[MAX_VAR];		// Full name of this upgrade
+	char	id[MAX_VAR];		// Short (unique) id/name.
+	int	idx;				// Self-link in the global list
+	char	name[MAX_VAR];		// Full name of this upgrade
 	craftupgrade_type_t type;	// weapon/engine/armor
-	technology_t* pedia;		// -pedia link
+	int	pedia;			// -pedia link
 
 	/* armor related */
 	float armor_kinetic;		// maybe using (k)Newtons here?
 	float armor_shield;			// maybe using (k)Newtons here?
 
 	/* weapon related */
-	struct craftupgrade_s *ammo;
+	int ammo;				// index of the 'ammo' craftupgrade entry.
 	struct weapontype_s *weapontype;	// e.g beam/particle/missle ( do we already have something like that?)
 	int num_ammo;
 	float    damage_kinetic;		// maybe using (k)Newtons here?
