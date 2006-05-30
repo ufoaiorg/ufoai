@@ -383,15 +383,15 @@ void RS_ResearchDisplayInfo ( void  )
 	tech = researchList[researchListPos];
 
 	// display total number of free labs in current base
-	Cvar_Set( "mn_research_labs", va( _("Free labs in this base: %i"), B_GetUnusedLabs( baseCurrent->id ) ) );
-	Cvar_Set( "mn_research_scis", va( _("Available scientists in this base: %i"), B_EmployeesInBase2 ( baseCurrent->id, EMPL_SCIENTIST, qtrue ) ) );
+	Cvar_Set( "mn_research_labs", va( _("Free labs in this base: %i"), B_GetUnusedLabs( baseCurrent->idx ) ) );
+	Cvar_Set( "mn_research_scis", va( _("Available scientists in this base: %i"), B_EmployeesInBase2 ( baseCurrent->idx, EMPL_SCIENTIST, qtrue ) ) );
 
 	Cvar_Set( "mn_research_selbase", _("Not researched in any base.") );
 	// display the base this tech is researched in
 	if (tech->lab) {
-		if ( tech->lab->base != baseCurrent->id ) {
+		if ( tech->lab->base != baseCurrent->idx ) {
 			base = &gd.bases[tech->lab->base];
-			Cvar_Set( "mn_research_selbase", va( _("Researched in %s"), base->title ) );
+			Cvar_Set( "mn_research_selbase", va( _("Researched in %s"), base->name ) );
 		} else {
 			Cvar_Set( "mn_research_selbase", _("Researched in this base.") );
 		}
@@ -496,7 +496,7 @@ void RS_AssignScientist2( int num )
 	if ( tech->statusResearchable ) {
 		// check if there is a free lab available
 		if ( ! tech->lab ) {
-			building = B_GetUnusedLab( baseCurrent->id ); // get a free lab from the currently active base
+			building = B_GetUnusedLab( baseCurrent->idx ); // get a free lab from the currently active base
 			if ( building ) {
 				// assign the lab to the tech:
 				tech->lab = building;
@@ -800,7 +800,7 @@ void CL_ResearchType ( void )
 	RS_UpdateData();
 
 	// nothing to research here
-	if ( ! researchListLength || !ccs.numBases )
+	if ( ! researchListLength || !gd.numBases )
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
 	else if ( baseCurrent && ! baseCurrent->hasLab )
 		MN_Popup( _("Notice"), _("Build a laboratory first") );

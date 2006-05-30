@@ -1092,7 +1092,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	}
 
 	// base selection
-	for ( i = 0; i < ccs.numBases; i++ )
+	for ( i = 0; i < gd.numBases; i++ )
 	{
 		if ( !MN_MapToScreen( node, gd.bases[i].pos, &msx, &msy ) )
 			continue;
@@ -1105,7 +1105,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 	}
 
 	// draw aircraft
-	for ( i = 0; i < ccs.numBases; i++ )
+	for ( i = 0; i < gd.numBases; i++ )
 	{
 		for ( j = 0, air = gd.bases[i].aircraft; j < gd.bases[i].numAircraftInBase; j++, air++ )
 		{
@@ -1468,7 +1468,7 @@ void MN_Draw3DMapMarkers( menuNode_t *node, float latitude, float longitude )
 	}
 
 	// draw base pics
-	for ( j = 0; j < ccs.numBases; j++ )
+	for ( j = 0; j < gd.numBases; j++ )
 		if ( gd.bases[j].founded )
 		{
 			if ( !MN_MapToScreen( node, gd.bases[j].pos, &x, &y ) )
@@ -1477,7 +1477,7 @@ void MN_Draw3DMapMarkers( menuNode_t *node, float latitude, float longitude )
 		}
 
 	// draw aircraft
-	for ( j = 0; j < ccs.numBases; j++ )
+	for ( j = 0; j < gd.numBases; j++ )
 		if ( gd.bases[j].founded )
 		{
 			for ( i = 0, air = (aircraft_t*)gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, air++ )
@@ -1535,7 +1535,7 @@ void MN_DrawMapMarkers( menuNode_t *node )
 	}
 
 	// draw base pics
-	for ( j = 0; j < ccs.numBases; j++ )
+	for ( j = 0; j < gd.numBases; j++ )
 		if ( gd.bases[j].founded )
 		{
 			if ( !MN_MapToScreen( node, gd.bases[j].pos, &x, &y ) )
@@ -1547,7 +1547,7 @@ void MN_DrawMapMarkers( menuNode_t *node )
 		}
 
 	// draw aircraft
-	for ( j = 0; j < ccs.numBases; j++ )
+	for ( j = 0; j < gd.numBases; j++ )
 		if ( gd.bases[j].founded )
 		{
 			for ( i = 0, air = (aircraft_t*)gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, air++ )

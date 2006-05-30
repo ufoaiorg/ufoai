@@ -276,17 +276,16 @@ typedef struct aircraft_s
 
 typedef struct base_s
 {
-	//the internal base-id
-	int	id;
-	char	title[MAX_VAR]; // FIXME: should be named 'name' not title
-	int	map[BASE_SIZE][BASE_SIZE];
+	int		idx;	// self link
+	char	name[MAX_VAR];
+	int		map[BASE_SIZE][BASE_SIZE];
 
 	qboolean founded;
 	vec2_t pos;
 
 	// to decide which actions are available in the basemenu
 	byte	hasHangar;
-	byte	hasLab;
+	byte	hasLab;	// TODO: still needed.
 
 	//this is here to allocate the needed memory for the buildinglist
 	char	allBuildingsList[MAX_LIST_CHAR];

@@ -164,7 +164,6 @@ typedef struct ccs_s
 	int		numMissions;
 	int 		numUfoOnGeoscape;
 
-	int		numBases;
 	qboolean	singleplayer;
 
 	int		credits;

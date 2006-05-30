@@ -108,7 +108,7 @@ void B_SetSensor( void )
 	}
 
 	i = atoi(Cmd_Argv(2));
-	if ( i >= ccs.numBases )
+	if ( i >= gd.numBases )
 	{
 		Com_Printf( "invalid baseID (%s)\n", Cmd_Argv(2) );
 		return;
@@ -185,10 +185,10 @@ void B_SetUpBase ( void )
 
 	assert( baseCurrent );
 	B_BuildingInit();
-	Com_DPrintf("Set up for %i\n", baseCurrent->id );
+	Com_DPrintf("Set up for %i\n", baseCurrent->idx );
 	for (i = 0 ; i < numBuildings; i++ )
 	{
-		if ( ccs.numBases == 1 && bmBuildings[ccs.actualBaseID][i].firstbase )
+		if ( gd.numBases == 1 && bmBuildings[ccs.actualBaseID][i].firstbase )
 		{
 			baseCurrent->buildingCurrent = &bmBuildings[ccs.actualBaseID][i];
 			Com_DPrintf("firstbase: %s (%i) at (%.0f:%.0f)\n", baseCurrent->buildingCurrent->id, i, bmBuildings[ccs.actualBaseID][i].pos[0], bmBuildings[ccs.actualBaseID][i].pos[1] );
@@ -602,7 +602,7 @@ B_GetBuildingByID
 building_t* B_GetBuildingByID ( int id )
 {
 	if ( baseCurrent )
-		return &bmBuildings[baseCurrent->id][id];
+		return &bmBuildings[baseCurrent->idx][id];
 	else
 		Sys_Error( "Bases not initialized\n" );
 
@@ -1325,7 +1325,8 @@ void B_ParseBases( char *title, char **text )
 	char	*errhead = "B_ParseBases: unexptected end of file (names ";
 	char	*token;
 	base_t	*base;
-	int	numBases = 0;
+	
+	gd.numBaseNames = 0;
 
 	// get token
 	token = COM_Parse( text );
@@ -1337,7 +1338,7 @@ void B_ParseBases( char *title, char **text )
 	}
 	do {
 		// add base
-		if ( numBases > MAX_BASES )
+		if ( gd.numBaseNames > MAX_BASES )
 		{
 			Com_Printf( "B_ParseBases: too many bases\n" );
 			return;
@@ -1348,18 +1349,19 @@ void B_ParseBases( char *title, char **text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
-		base = &gd.bases[numBases];
+		base = &gd.bases[gd.numBaseNames];
 		memset( base, 0, sizeof( base_t ) );
-
+		base->idx=gd.numBaseNames;
+		
 		// get the title
 		token = COM_EParse( text, errhead, title );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 		if ( *token == '_' ) token++;
-		Q_strncpyz( base->title, _(token), MAX_VAR );
-		Com_DPrintf("Found base %s\n", base->title );
+		Q_strncpyz( base->name, _(token), MAX_VAR );
+		Com_DPrintf("Found base %s\n", base->name );
 		B_ResetBuildingCurrent();
-		numBases++;
+		gd.numBaseNames++;
 	} while ( *text );
 
 	mn_base_title = Cvar_Get( "mn_base_title", "", 0 );
@@ -1494,7 +1496,7 @@ void B_RenameBase( void )
 	}
 
 	if ( baseCurrent )
-		Q_strncpyz( baseCurrent->title, Cmd_Argv( 1 ) , MAX_VAR );
+		Q_strncpyz( baseCurrent->name, Cmd_Argv( 1 ) , MAX_VAR );
 }
 
 /*======================
@@ -1503,8 +1505,8 @@ B_NextBase
 void B_NextBase( void )
 {
 	ccs.actualBaseID = (int)Cvar_VariableValue( "mn_base_id" );
-	Com_DPrintf( "cur-base=%i num-base=%i\n", ccs.actualBaseID,ccs.numBases );
-	if ( ccs.actualBaseID < ccs.numBases-1 )
+	Com_DPrintf( "cur-base=%i num-base=%i\n", ccs.actualBaseID, gd.numBases );
+	if ( ccs.actualBaseID < gd.numBases-1 )
 		ccs.actualBaseID++;
 	else
 		ccs.actualBaseID = 0;
@@ -1524,11 +1526,11 @@ B_PrevBase
 void B_PrevBase( void )
 {
 	ccs.actualBaseID = (int)Cvar_VariableValue( "mn_base_id" );
-	Com_DPrintf( "cur-base=%i num-base=%i\n", ccs.actualBaseID,ccs.numBases );
+	Com_DPrintf( "cur-base=%i num-base=%i\n", ccs.actualBaseID, gd.numBases );
 	if ( ccs.actualBaseID > 0 )
 		ccs.actualBaseID--;
 	else
-		ccs.actualBaseID = ccs.numBases-1;
+		ccs.actualBaseID = gd.numBases-1;
 	Com_DPrintf( "new-base=%i\n", ccs.actualBaseID );
 
 	// this must be false - but i'm paranoid'
@@ -1590,8 +1592,8 @@ void B_SelectBase( void )
 		ccs.actualBaseID = 0;
 		baseCurrent = &gd.bases[ ccs.actualBaseID ];
 	}
-	Cvar_SetValue( "mn_base_id", baseCurrent->id );
-	Cvar_Set( "mn_base_title", baseCurrent->title );
+	Cvar_SetValue( "mn_base_id", baseCurrent->idx );
+	Cvar_Set( "mn_base_title", baseCurrent->name );
 }
 
 
@@ -1615,14 +1617,14 @@ void B_BuildBase( void )
 	{
 		if ( CL_NewBase( newBasePos ) )
 		{
-			baseCurrent->id = ccs.numBases-1;
+			baseCurrent->idx = gd.numBases-1;
 			baseCurrent->founded = qtrue;
 			stats.basesBuild++;
 			mapAction = MA_NONE;
 			CL_UpdateCredits( ccs.credits - BASE_COSTS );
-			Q_strncpyz( baseCurrent->title, mn_base_title->string, sizeof(baseCurrent->title) );
-			Cvar_SetValue( "mn_base_id", baseCurrent->id );
-			Cvar_Set( "mn_base_title", baseCurrent->title );
+			Q_strncpyz( baseCurrent->name, mn_base_title->string, sizeof(baseCurrent->name) );
+			Cvar_SetValue( "mn_base_id", baseCurrent->idx );
+			Cvar_Set( "mn_base_title", baseCurrent->name );
 			Cbuf_AddText( "mn_push bases\n" );
 			Q_strncpyz( messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string ), MAX_MESSAGE_TEXT );
 			MN_AddNewMessage( _("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL );
@@ -1652,7 +1654,7 @@ void B_BaseAttack ( void )
 
 	whichBaseID = atoi( Cmd_Argv( 1 ) );
 
-	if ( whichBaseID >= 0 && whichBaseID < ccs.numBases )
+	if ( whichBaseID >= 0 && whichBaseID < gd.numBases )
 	{
 		gd.bases[whichBaseID].baseStatus = BASE_UNDER_ATTACK;
 		// TODO: New menu for:
@@ -1740,9 +1742,9 @@ void B_NewBases( void )
 	ccs.actualBaseID = 0;
 	for ( i = 0; i < MAX_BASES; i++ )
 	{
-		Q_strncpyz( title, gd.bases[i].title, MAX_VAR );
+		Q_strncpyz( title, gd.bases[i].name, MAX_VAR );
 		B_ClearBase( &gd.bases[i] );
-		Q_strncpyz( gd.bases[i].title, title, MAX_VAR );
+		Q_strncpyz( gd.bases[i].name, title, MAX_VAR );
 	}
 }
 
@@ -1751,7 +1753,7 @@ B_AssembleRandomBase
 ======================*/
 void B_AssembleRandomBase( void )
 {
-	Cbuf_AddText( va("base_assemble %i", rand() % ccs.numBases ) );
+	Cbuf_AddText( va("base_assemble %i", rand() % gd.numBases ) );
 }
 
 /*======================
@@ -1772,8 +1774,8 @@ void B_SaveBases( sizebuf_t *sb )
 	for ( i = 0, base = gd.bases; i < MAX_BASES; i++, base++ )
 		if ( base->founded )
 		{
-			MSG_WriteLong( sb, base->id );
-			MSG_WriteString( sb, base->title );
+			MSG_WriteLong( sb, base->idx );
+			MSG_WriteString( sb, base->name );
 			MSG_WriteFloat( sb, base->pos[0] );
 			MSG_WriteFloat( sb, base->pos[1] );
 			MSG_WriteByte( sb, base->hasHangar );
@@ -1840,8 +1842,8 @@ void B_LoadBases( sizebuf_t *sb, int version )
 		base->founded = qtrue;
 		if ( version >= 2 )
 		{
-			base->id = MSG_ReadLong( sb );
-			Q_strncpyz( base->title, MSG_ReadString( sb ), sizeof(base->title) );
+			base->idx = MSG_ReadLong( sb );
+			Q_strncpyz( base->name, MSG_ReadString( sb ), sizeof(base->name) );
 			base->pos[0] = MSG_ReadFloat( sb );
 			base->pos[1] = MSG_ReadFloat( sb );
 			base->hasHangar = MSG_ReadByte( sb );
@@ -1852,7 +1854,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 		}
 		else
 		{
-			Q_strncpyz( base->title, MSG_ReadString( sb ), sizeof(base->title) );
+			Q_strncpyz( base->name, MSG_ReadString( sb ), sizeof(base->name) );
 			base->pos[0] = MSG_ReadFloat( sb );
 			base->pos[1] = MSG_ReadFloat( sb );
 		}
@@ -1890,7 +1892,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 			CL_LoadTeam( sb, base, version );
 		}
 	}
-	ccs.numBases = num;
+	gd.numBases = num;
 }
 
 /*======================
@@ -1911,13 +1913,13 @@ void B_BuildingList_f ( void )
 		return;
 	}
 
-	for ( i = 0, base = gd.bases; i < ccs.numBases; i++, base++ )
+	for ( i = 0, base = gd.bases; i < gd.numBases; i++, base++ )
 	{
 		if ( base->founded == qfalse )
 			continue;
 
 		building = bmBuildings[i];
-		Com_Printf("\nBase id %i: %s\n", i, base->title );
+		Com_Printf("\nBase id %i: %s\n", i, base->name );
 		for ( j = 0; j < numBuildings; j++ )
 		{
 			Com_Printf("...Building: %s #%i - id: %i\n", building->id, building->howManyOfThisType, building->idInList );
@@ -1948,8 +1950,8 @@ void B_BaseList_f ( void )
 	base_t* base;
 	for ( i = 0, base = gd.bases; i < MAX_BASES; i++, base++ )
 	{
-		Com_Printf("Base id %i\n", base->id );
-		Com_Printf("Base title %s\n", base->title );
+		Com_Printf("Base id %i\n", base->idx );
+		Com_Printf("Base title %s\n", base->name );
 		Com_Printf("Base sensorWidth %s\n", base->sensorWidth );
 		Com_Printf("Base drawSensor %s\n", base->drawSensor );
 		Com_Printf("Base aircraft %i\n", base->numAircraftInBase );
@@ -1975,9 +1977,9 @@ B_SetBaseTitle
 ======================*/
 void B_SetBaseTitle ( void )
 {
-	Com_DPrintf("B_SetBaseTitle: #bases: %i\n", ccs.numBases );
-	if ( ccs.numBases < MAX_BASES )
-		Cvar_Set("mn_base_title_new", gd.bases[ccs.numBases].title );
+	Com_DPrintf("B_SetBaseTitle: #bases: %i\n", gd.numBases );
+	if ( gd.numBases < MAX_BASES )
+		Cvar_Set("mn_base_title_new", gd.bases[gd.numBases].name );
 	else
 	{
 		MN_AddNewMessage( _("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL );
@@ -1994,7 +1996,7 @@ void B_ChangeBaseNameCmd( void )
 	if ( !baseCurrent )
 		return;
 
-	Q_strncpyz( baseCurrent->title, Cvar_VariableString( "mn_base_title" ), MAX_VAR );
+	Q_strncpyz( baseCurrent->name, Cvar_VariableString( "mn_base_title" ), MAX_VAR );
 }
 
 /*======================
@@ -2083,7 +2085,7 @@ void B_UpdateBaseData( void )
 			new = B_CheckBuildingConstruction( b, i );
 			newBuilding += new;
 			if ( new ) {
-				Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("Construction of %s building finished in base %s."), b->name, gd.bases[i].title);
+				Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("Construction of %s building finished in base %s."), b->name, gd.bases[i].name);
 				MN_AddNewMessage(_("Building finished"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL );
 			}
 		}
@@ -2137,13 +2139,13 @@ int B_CheckBuildingConstruction ( building_t* b, int baseID )
 /*======================
 B_GetBase
 ======================*/
-base_t* B_GetBase ( int id )
+base_t* B_GetBase ( int idx )
 {
 	int i;
 
 	for ( i = 0; i < MAX_BASES; i++ )
 	{
-		if ( gd.bases[i].id == id )
+		if ( gd.bases[i].idx == idx )
 			return &gd.bases[i];
 	}
 	return NULL;

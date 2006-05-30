@@ -319,12 +319,12 @@ void CL_ListAircraft_f ( void )
 	base_t*	base;
 	aircraft_t*	air;
 
-	for ( j = 0, base = gd.bases; j < ccs.numBases; j++, base++ )
+	for ( j = 0, base = gd.bases; j < gd.numBases; j++, base++ )
 	{
 		if ( ! base->founded )
 			continue;
 
-		Com_Printf("Aircrafts in base %s: %i\n", base->title, base->numAircraftInBase );
+		Com_Printf("Aircrafts in base %s: %i\n", base->name, base->numAircraftInBase );
 		for ( i = 0; i < base->numAircraftInBase; i++ )
 		{
 			air = &base->aircraft[i];
@@ -640,14 +640,14 @@ void CL_NewAircraft ( base_t* base, char* name )
 			air->idx_base = base->numAircraftInBase;
 			// link the teamSize pointer in
 			air->teamSize = &base->numOnTeam[base->numAircraftInBase];
-			Q_strncpyz( messageBuffer, va( _("You've got a new aircraft (a %s) in base %s"), air->name, base->title ), MAX_MESSAGE_TEXT );
+			Q_strncpyz( messageBuffer, va( _("You've got a new aircraft (a %s) in base %s"), air->name, base->name ), MAX_MESSAGE_TEXT );
 			MN_AddNewMessage( _("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL );
 			Com_DPrintf("Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 			air->pos[0] = base->pos[0];
 			air->pos[1] = base->pos[1];
 
 			base->numAircraftInBase++;
-			Com_DPrintf("Aircraft for base %s: %s\n", base->title, air->name );
+			Com_DPrintf("Aircraft for base %s: %s\n", base->name, air->name );
 			return;
 		}
 	}
@@ -700,7 +700,7 @@ qboolean CL_NewBase( vec2_t pos )
 	baseCurrent->pos[0] = pos[0];
 	baseCurrent->pos[1] = pos[1];
 
-	ccs.numBases++;
+	gd.numBases++;
 
 	// set up the base with buildings that have the autobuild flag set
 	B_SetUpBase();
@@ -857,14 +857,14 @@ void CL_CampaignAddMission( setState_t *set )
 
 	if ( !Q_strncmp( mis->def->name, "baseattack", 10 ) )
 	{
-		baseCurrent = &gd.bases[rand() % ccs.numBases];
+		baseCurrent = &gd.bases[rand() % gd.numBases];
 		mis->realPos[0] = baseCurrent->pos[0];
 		mis->realPos[1] = baseCurrent->pos[1];
 		// Add message to message-system.
-		Q_strncpyz( messageBuffer, va(_("Your base %s is under attack."), baseCurrent->title ), MAX_MESSAGE_TEXT );
+		Q_strncpyz( messageBuffer, va(_("Your base %s is under attack."), baseCurrent->name ), MAX_MESSAGE_TEXT );
 		MN_AddNewMessage( _("Baseattack"), messageBuffer, qfalse, MSG_BASEATTACK, NULL );
 
-		Cbuf_ExecuteText(EXEC_NOW, va("base_attack %i", baseCurrent->id) );
+		Cbuf_ExecuteText(EXEC_NOW, va("base_attack %i", baseCurrent->idx) );
 	}
 	else
 	{
@@ -954,7 +954,7 @@ void CL_OpenAircraft_f ( void )
 	}
 
 	num = atoi( Cmd_Argv( 1 ) );
-	for ( j = 0; j < ccs.numBases; j++ )
+	for ( j = 0; j < gd.numBases; j++ )
 	{
 		if ( !gd.bases[j].founded )
 			continue;
@@ -973,7 +973,7 @@ void CL_OpenAircraft_f ( void )
 			CL_AircraftSelect();
 			MN_PopMenu(qfalse);
 			CL_MapActionReset();
-			Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i\n", baseCurrent->id) );
+			Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i\n", baseCurrent->idx) );
 			MN_PushMenu("aircraft");
 			return;
 		}
@@ -1002,7 +1002,7 @@ void CL_SelectAircraft_f ( void )
 	}
 
 	num = atoi( Cmd_Argv( 1 ) );
-	for ( j = 0; j < ccs.numBases; j++ )
+	for ( j = 0; j < gd.numBases; j++ )
 	{
 		if ( !gd.bases[j].founded )
 			continue;
@@ -1049,7 +1049,7 @@ void CL_BuildingAircraftList_f ( void )
 	int	i, j;
 	aircraft_t*	air;
 	memset( aircraftListText, 0, sizeof(aircraftListText) );
-	for ( j = 0; j < ccs.numBases; j++ )
+	for ( j = 0; j < gd.numBases; j++ )
 	{
 		if (! gd.bases[j].founded )
 			continue;
@@ -1057,7 +1057,7 @@ void CL_BuildingAircraftList_f ( void )
 		for ( i = 0; i < gd.bases[j].numAircraftInBase; i++ )
 		{
 			air = &gd.bases[j].aircraft[i];
-			s = va("%s (%i/%i)\t%s\t%s\n", air->name, *air->teamSize, air->size, CL_AircraftStatusToName( air ), gd.bases[j].title );
+			s = va("%s (%i/%i)\t%s\t%s\n", air->name, *air->teamSize, air->size, CL_AircraftStatusToName( air ), gd.bases[j].name );
 			Q_strcat( aircraftListText, sizeof(aircraftListText), s );
 		}
 	}
@@ -1175,7 +1175,7 @@ void CL_CampaignCheckEvents( void )
 	{
 		for ( i = 0; i < ccs.numUfoOnGeoscape; i++ )
 		{
-			for ( j = 0; j < ccs.numBases; j++ )
+			for ( j = 0; j < gd.numBases; j++ )
 			{
 				// no radar?
 				if ( !gd.bases[j].founded || !gd.bases[j].sensorWidth )
@@ -1278,7 +1278,7 @@ void CL_CampaignRunAircraft( int dt )
 	int	i, p, j;
 	vec2_t	pos;
 
-	for ( j = 0, base = gd.bases; j < ccs.numBases; j++, base++ )
+	for ( j = 0, base = gd.bases; j < gd.numBases; j++, base++ )
 	{
 		if ( ! base->founded )
 			continue;
@@ -1526,7 +1526,7 @@ CL_GameTimeSlow
 void CL_GameTimeSlow( void )
 {
 	//first we have to set up a home base
-	if ( ! ccs.numBases )
+	if ( ! gd.numBases )
 		CL_GameTimeStop();
 	else
 	{
@@ -1556,7 +1556,7 @@ CL_GameTimeFast
 void CL_GameTimeFast( void )
 {
 	//first we have to set up a home base
-	if ( ! ccs.numBases )
+	if ( ! gd.numBases )
 		CL_GameTimeStop();
 	else
 	{
@@ -2222,7 +2222,7 @@ void CL_GameGo( void )
 	{
 		if ( B_GetCount() > 0 && baseCurrent && baseCurrent->baseStatus == BASE_UNDER_ATTACK )
 		{
-			Cbuf_AddText( va("base_assemble %i", baseCurrent->id ) );
+			Cbuf_AddText( va("base_assemble %i", baseCurrent->idx ) );
 			return;
 		}
 		else
@@ -2556,7 +2556,7 @@ CL_MapActionReset
 void CL_MapActionReset( void )
 {
 	// don't allow a reset when no base is set up
-	if ( ccs.numBases )
+	if ( gd.numBases )
 		mapAction = MA_NONE;
 
 	interceptAircraft = -1;
@@ -3195,7 +3195,7 @@ void CL_GameNew( void )
 	if ( !maskPic ) Sys_Error( "Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map );
 
 	// base setup
-	ccs.numBases = 0;
+	gd.numBases = 0;
 	B_NewBases();
 
 	// reset, set time

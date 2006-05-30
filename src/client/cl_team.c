@@ -965,13 +965,13 @@ void CL_LoadTeamMultiplayer( char *filename )
 	CL_ResetTeamInBase();
 
 	// return the base title
-	Q_strncpyz( title, gd.bases[0].title, MAX_VAR );
+	Q_strncpyz( title, gd.bases[0].name, MAX_VAR );
 	B_ClearBase( &gd.bases[0] );
-	Q_strncpyz( gd.bases[0].title, title, MAX_VAR );
+	Q_strncpyz( gd.bases[0].name, title, MAX_VAR );
 
 	// set base for multiplayer
 	baseCurrent = &gd.bases[0];
-	ccs.numBases = 1;
+	gd.numBases = 1;
 	baseCurrent->hiredMask = 0;
 	CL_NewAircraft( baseCurrent, "craft_dropship" );
 
