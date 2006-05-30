@@ -205,9 +205,8 @@ MN_FindEntry_f
 void MN_FindEntry_f ( void )
 {
 	char *id = NULL;
-	int tech;
-	pediaChapter_t *upc = NULL;
-	int i;
+	int tech_idx;
+	int upc;
 
 	if ( Cmd_Argc() < 2 )
 	{
@@ -227,27 +226,23 @@ void MN_FindEntry_f ( void )
 	Com_DPrintf("MN_FindEntry_f: id=\"%s\"\n", id); //DEBUG
 
 	//search in all chapters
-	for ( i = 0; i < numChapters; i++ ) {
-		upc = &upChapters[i];
-
+	for ( upc = 0; upc < numChapters; upc++ ) {
 		//search from beginning
-		tech = upc->first;
+		tech_idx = upChapters[upc].first;
 
 		//empty chapter/tech
-		if ( !( tech  >= 0 ) )
-			continue;
+		if ( tech_idx < 0 ) continue;
+
 		do
 		{
-			if ( !Q_strncmp ( technologies[tech].id, id, MAX_VAR ) ) {
-				upCurrent = &technologies[tech];
+			if ( !Q_strncmp ( technologies[tech_idx].id, id, MAX_VAR ) ) {
+				upCurrent = &technologies[tech_idx];
 				MN_UpDrawEntry( upCurrent );
 				return;
 			}
-			if ( technologies[tech].next >= 0 )
-				tech = technologies[tech].next;
-			else
-				tech = -1;
-		} while ( tech >= 0 );
+			
+			tech_idx = technologies[tech_idx].next;
+		} while ( tech_idx >= 0 );
 	}
 	//if we can not find it
 	Com_DPrintf("MN_FindEntry_f: No PediaEntry found for %s\n", id );
