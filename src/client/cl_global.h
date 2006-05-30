@@ -50,10 +50,22 @@ typedef struct globalData_s
 	// Total number uf upchapters,
 	int numChapters;
 
-	/* TODO
+	// == buildings & bases ==
+	// A list of all bases.
 	base_t	bases[MAX_BASES];
+	// Total number of bases.
 	int	numBases;
+	
+	// A list of all possible unique buldings.
+	building_t buildingTypes[MAX_BUILDINGS];
+	int numBuildingTypes;
 
+	// A list of the building-list per base. (new buildings in a base get copied from buildingTypes)
+	building_t buildings[MAX_BASES][MAX_BUILDINGS];
+	// Total number of buildings per base.
+	int numBuildings[MAX_BASES];
+
+	/* TODO
 	building_t	buildings[MAX_BASES][MAX_BUILDINGS];
 	int numBuildings;
 
@@ -72,15 +84,6 @@ typedef struct globalData_s
 
 	inventory_t	inventory[MAX_BASES][MAX_TEAMS];
 	int numInv;
-	*/
-
-	// ===================
-
-	/*  even further down the road -> TODO
-	building_t buildingTypes[MAX_BUILDING_TYPES];		// will hold the parsed data (.ufo)
-	int numBuildingTypes;
-	building_t buildings[MAX_BASES][MAX_BUILDINGS];	// new buildings in the MAX_BUILDINGS listz will get _copied_ from buildingTypes
-	int numBuildings[MAX_BASES];					// holds the building-numbers of each base.
 	*/
 } globalData_t;
 
