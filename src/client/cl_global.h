@@ -36,38 +36,42 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct globalData_s
 {
-	technology_t	technologies[MAX_TECHNOLOGIES];	// A list of all research-topics resp. the research-tree.
-	int	numTechnologies;						// Total nubmer of technologies.
-	
+	// == technolgies ==
+	// A list of all research-topics resp. the research-tree.
+	technology_t	technologies[MAX_TECHNOLOGIES];
+	// Total nubmer of technologies.
+	int	numTechnologies;
+
+	// == pedia ==
 	/* TODO
 	pediaChapter_t	upChapters[MAX_PEDIACHAPTERS];
 	int numChapters;
-	
+
 	base_t	bases[MAX_BASES];
 	int	numBases;
-	
+
 	building_t	buildings[MAX_BASES][MAX_BUILDINGS];
 	int numBuildings;
-	
+
 	employee_t	employees[MAX_EMPLOYEES];
 	int   numEmployees;
 
 	craftupgrade_t craftupgrades[MAX_CRAFTUPGRADES];
 	int    numCraftUpgrades;
-	
-		
+
+
 	aircraft_t	aircraft[MAX_BASES][MAX_AIRCRAFT];
 	int	numAircraft;
-	
+
 	team_t	teams[MAX_BASES][MAX_TEAMS];
 	int numTeams;
-	
+
 	inventory_t	inventory[MAX_BASES][MAX_TEAMS];
 	int numInv;
 	*/
-	
+
 	// ===================
-	
+
 	/*  even further down the road -> TODO
 	building_t buildingTypes[MAX_BUILDING_TYPES];		// will hold the parsed data (.ufo)
 	int numBuildingTypes;
@@ -76,7 +80,7 @@ typedef struct globalData_s
 	*/
 } globalData_t;
 
-extern globalData_t gd;
+extern globalData_t	gd;
 
-globalData_t gd;
+globalData_t	gd;
 
