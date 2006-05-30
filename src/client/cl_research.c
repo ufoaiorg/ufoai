@@ -38,7 +38,7 @@ TODO: comment on used globasl variables.
 pediaChapter_t	upChapters[MAX_PEDIACHAPTERS];
 int numChapters;
 
-void RS_GetFirstRequired( technology_t* tech,  stringlist_t *required);
+void RS_GetFirstRequired( int tech,  stringlist_t *required);
 qboolean RS_TechIsResearchable( technology_t* t );
 
 technology_t technologies[MAX_TECHNOLOGIES];	// A global listof _all_ technologies (see cl_research.h)
@@ -100,10 +100,10 @@ Marks one tech as researchedable.
 IN
 	id:	unique id of a technology_t
 ======================*/
-void RS_MarkOneResearchable ( technology_t* t )
+void RS_MarkOneResearchable ( int tech )
 {
-	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", t->id );
-	t->statusResearchable = qtrue;
+	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", technologies[tech].id );
+	technologies[tech].statusResearchable = qtrue;
 }
 
 /*======================
@@ -133,7 +133,7 @@ void RS_MarkResearchable( void )
 			if ( t->statusResearch != RS_FINISH) {
 				Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", t->id );
 				firstrequired.numEntries = 0;
-				RS_GetFirstRequired( t,  &firstrequired );
+				RS_GetFirstRequired( t->idx,  &firstrequired );
 
 				// If the tech has an collected item, mark the first-required techs as researchable //TODO doesn't work yet?
 				if ( t->statusCollected ) {
@@ -216,22 +216,6 @@ void RS_CopyFromSkeleton( void )
 		//Q_strncpyz( tech->name, "Credits:", MAX_VAR ); // DEBUG: just to test if anything is point to the skeleton :)
 	}
 
-	// Re-link the prev/next tech-pointers in the working topy to the 'working' copy :)
-	for ( i = 0; i < numTechnologies; i++ ) {
-		tech = &technologies[i];
-		tech->next = RS_GetTechByID(tech->next->id);
-		tech->prev = RS_GetTechByID(tech->prev->id);
-	}
-
-	// Re-link the tech-pointers in the chapter-list to the 'working' copy.
-	for ( i = 0; i < numChapters; i++ ) {
-		upChapters[i].first->prev = NULL;
-		upChapters[i].last->next = NULL;
-		upChapters[i].first = RS_GetTechByID(upChapters[i].first->id);
-		upChapters[i].last = RS_GetTechByID(upChapters[i].last->id);
-		upChapters[i].first->prev = NULL;
-		upChapters[i].last->next = NULL;
-	}
 	// link in the tech pointers
 	RS_AddObjectTechs();
 }
@@ -449,7 +433,7 @@ void RS_ResearchDisplayInfo ( void  )
 	}
 
 	req_temp.numEntries = 0;
-	RS_GetFirstRequired( tech, &req_temp );
+	RS_GetFirstRequired( tech->idx, &req_temp );
 	Com_sprintf( dependencies, MAX_VAR, _("Dependencies: "));
 	if ( req_temp.numEntries > 0 ) {
 		for ( i = 0; i < req_temp.numEntries; i++ ) {
@@ -1005,7 +989,7 @@ void RS_TechnologyList_f ( void )
 
 		Com_Printf("... req_first ->");
 		req_temp.numEntries = 0;
-		RS_GetFirstRequired( t, &req_temp );
+		RS_GetFirstRequired( t->idx, &req_temp );
 		for ( j = 0; j < req_temp.numEntries; j++ )
 			Com_Printf( " %s", req_temp.list[j] );
 
@@ -1103,7 +1087,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 {
 	value_t *var = NULL;
 	technology_t *tech_in_skeleton = NULL;
-	technology_t *tech_old = NULL;
+	int tech_old;
 	char	*errhead = "RS_ParseTechnologies: unexptected end of file.";
 	char	*token = NULL;
 	char	*misp = NULL;
@@ -1130,6 +1114,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 	memset( tech_in_skeleton, 0, sizeof( technology_t ) );
 
 	//set standard values
+	tech_in_skeleton->idx = numTechnologies-1;
 	Com_sprintf( tech_in_skeleton->id, MAX_VAR, id );
 	Com_sprintf( tech_in_skeleton->description, MAX_VAR, _("No description available.") );
 	*tech_in_skeleton->provides = '\0';
@@ -1209,19 +1194,19 @@ void RS_ParseTechnologies ( char* id, char** text )
 				for ( i = 0; i < numChapters; i++ ) {
 					if ( !Q_strncmp( token, upChapters[i].id, MAX_VAR ) ) {
 						// add entry to chapter
-						tech_in_skeleton->up_chapter = &upChapters[i];
+						tech_in_skeleton->up_chapter = i;
 						if ( !upChapters[i].first ) {
-							upChapters[i].first = tech_in_skeleton;
-							upChapters[i].last = tech_in_skeleton;
-							tech_in_skeleton->prev = NULL;
-							tech_in_skeleton->next = NULL;
+							upChapters[i].first = numTechnologies-1; //tech_in_skeleton
+							upChapters[i].last = numTechnologies-1; //tech_in_skeleton
+							tech_in_skeleton->prev = -1;
+							tech_in_skeleton->next = -1;
 
 						} else {
 							tech_old = upChapters[i].last; // get "last entry" in chapter
-							upChapters[i].last = tech_in_skeleton; // set new "last entry"
-							tech_old->next = tech_in_skeleton;
-							upChapters[i].last->prev = tech_old;
-							upChapters[i].last->next = NULL;
+							upChapters[i].last =  numTechnologies-1; //tech_in_skeleton // set new "last entry"
+							technologies[tech_old].next = numTechnologies-1; //tech_in_skeleton
+							technologies[upChapters[i].last].prev = tech_old;
+							technologies[upChapters[i].last].next = -1;
 						}
 						break;
 					}
@@ -1425,7 +1410,7 @@ RS_GetFirstRequired + RS_GetFirstRequired2
 Returns the first required (yet unresearched) technologies that are needed by "id".
 That means you need to research the result to be able to research (and maybe use) "id".
 ======================*/
-void RS_GetFirstRequired2 ( technology_t* tech, char *first_id, stringlist_t *required )
+void RS_GetFirstRequired2 ( int tech, char *first_id, stringlist_t *required )
 {
 	int i;
 	stringlist_t *required_temp = NULL;
@@ -1434,16 +1419,16 @@ void RS_GetFirstRequired2 ( technology_t* tech, char *first_id, stringlist_t *re
 	if ( ! tech )
 		return;
 
-	required_temp = &tech->requires;
+	required_temp = &technologies[tech].requires;
 	//Com_DPrintf( "RS_GetFirstRequired2: %s - %s - %s\n", id, first_id, required_temp->list[0]  );
 	if ( !Q_strncmp( required_temp->list[0] , "initial", 7 ) || !Q_strncmp( required_temp->list[0] , "nothing", 7 ) ) {
-		if ( !Q_strncmp( tech->id, first_id, MAX_VAR ) )
+		if ( !Q_strncmp( technologies[tech].id, first_id, MAX_VAR ) )
 			return;
 		if ( required->numEntries < MAX_TECHLINKS ) {
 			// TODO: check if the firstrequired tech has already been added (e.g indirectly from another tech)
 			required->techPtr[required->numEntries] = tech;
-			Q_strncpyz( required->list[required->numEntries++], tech->id, MAX_VAR );
-			Com_DPrintf("RS_GetFirstRequired2: \"%s\" - requirement 'initial' or 'nothing' found.\n", tech->id );
+			Q_strncpyz( required->list[required->numEntries++], technologies[tech].id, MAX_VAR );
+			Com_DPrintf("RS_GetFirstRequired2: \"%s\" - requirement 'initial' or 'nothing' found.\n", technologies[tech].id );
 		}
 		return;
 	}
@@ -1451,19 +1436,19 @@ void RS_GetFirstRequired2 ( technology_t* tech, char *first_id, stringlist_t *re
 		t = RS_GetTechByID( required_temp->list[i] );
 		if ( RS_IsResearched_(t) ) {
 			if ( required->numEntries < MAX_TECHLINKS ) {
-				required->techPtr[required->numEntries] = t;
+				required->techPtr[required->numEntries] = t->idx;
 				Q_strncpyz( required->list[required->numEntries++], t->id, MAX_VAR );
-				Com_DPrintf( "RS_GetFirstRequired2: \"%s\" - next item \"%s\" already researched.\n", tech->id, t->id );
+				Com_DPrintf( "RS_GetFirstRequired2: \"%s\" - next item \"%s\" already researched.\n", technologies[tech].id, t->id );
 			}
 		} else {
-			RS_GetFirstRequired2( t, first_id, required );
+			RS_GetFirstRequired2( t->idx, first_id, required );
 		}
 	}
 }
 
-void RS_GetFirstRequired( technology_t* tech, stringlist_t *required )
+void RS_GetFirstRequired( int tech, stringlist_t *required )
 {
-	 RS_GetFirstRequired2( tech, tech->id, required);
+	 RS_GetFirstRequired2( tech, technologies[tech].id, required);
 }
 
 /*======================

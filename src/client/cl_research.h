@@ -51,14 +51,15 @@ typedef enum researchType_s
 
 typedef struct stringlist_s
 {
+	int	numEntries;					// The number of used strings/techs.
 	char	list[MAX_TECHLINKS][MAX_VAR];	// A list of strings.
-	int		numEntries;					// The number of used strings.
-	struct technology_s	*techPtr[MAX_TECHLINKS];	// holds a tech pointer for faster operation after finding it once
+	int	techPtr[MAX_TECHLINKS];		// holds the indices of the tech for faster operation after finding it once
 } stringlist_t;
 
 typedef struct technology_s
 {
 	char	id[MAX_VAR];				// Short (unique) id/name.
+	int	idx;				// Self-link in the global list
 	char	name[MAX_VAR];			// Full name of this technology.
 	char	description[MAX_VAR];		// Just a short text-id to get this via gettext.
 	researchType_t	type;
@@ -82,9 +83,9 @@ typedef struct technology_s
 	byte	statusResearchable;			// Is this item researchable?
 
 	// Pedia info
-	struct	pediaChapter_s	*up_chapter;	// pedia chapter as stored in research.ufo.
-	struct	technology_s *prev;			// Previous tech in pedia.
-	struct	technology_s *next;			// Next tech in pedia.
+	int	up_chapter;	// pedia chapter as stored in research.ufo.
+	int prev;			// Previous tech in pedia.
+	int next;			// Next tech in pedia.
 } technology_t;
 
 #define	TECHFS(x)	(int)&(((technology_t *)0)->x)

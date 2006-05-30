@@ -29,8 +29,8 @@ typedef struct pediaChapter_s
 {
 	char	id[MAX_VAR];
 	char	name[MAX_VAR];
-	struct	technology_s *first;
-	struct	technology_s *last;
+	int first;
+	int last;
 } pediaChapter_t;
 
 // use this for saving and allocating

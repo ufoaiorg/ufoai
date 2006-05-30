@@ -205,7 +205,7 @@ MN_FindEntry_f
 void MN_FindEntry_f ( void )
 {
 	char *id = NULL;
-	technology_t *tech = NULL;
+	int tech;
 	pediaChapter_t *upc = NULL;
 	int i;
 
@@ -234,20 +234,20 @@ void MN_FindEntry_f ( void )
 		tech = upc->first;
 
 		//empty chapter/tech
-		if ( ! tech )
+		if ( !( tech  >= 0 ) )
 			continue;
 		do
 		{
-			if ( !Q_strncmp ( tech->id, id, MAX_VAR ) ) {
-				upCurrent = tech;
+			if ( !Q_strncmp ( technologies[tech].id, id, MAX_VAR ) ) {
+				upCurrent = &technologies[tech];
 				MN_UpDrawEntry( upCurrent );
 				return;
 			}
-			if (tech->next)
-				tech = tech->next;
+			if ( technologies[tech].next >= 0 )
+				tech = technologies[tech].next;
 			else
-				tech = NULL;
-		} while ( tech );
+				tech = -1;
+		} while ( tech >= 0 );
 	}
 	//if we can not find it
 	Com_DPrintf("MN_FindEntry_f: No PediaEntry found for %s\n", id );
@@ -270,15 +270,15 @@ void MN_UpContent_f( void )
 	{
 		// Check if there are any researched items in this chapter ...
 		researched_entries = qfalse;
-		upCurrent = upChapters[i].first;
+		upCurrent = &technologies[upChapters[i].first];
 		do
 		{
 			if ( RS_IsResearched_(upCurrent) ) {
 				researched_entries = qtrue;
 				break;
 			}
-			if (upCurrent != upCurrent->next)
-				upCurrent = upCurrent->next;
+			if (upCurrent->idx != upCurrent->next)
+				upCurrent = &technologies[upCurrent->next];
 			else {
 				upCurrent = NULL;
 			}
@@ -310,17 +310,18 @@ MN_UpPrev_f
 =================*/
 void MN_UpPrev_f( void )
 {
-	pediaChapter_t *upc = NULL;
-
+	int upc;
+	
 	if ( !upCurrent ) return;
 
 	// get previous chapter
-	upc = upCurrent->up_chapter - 1;
+	if (upc > 0)
+		upc = upCurrent->up_chapter - 1;
 
 	// get previous entry
 	if ( upCurrent->prev ) {
 		// Check if the previous entry is researched already otherwise go to the next entry.
-		do { upCurrent = upCurrent->prev; } while ( upCurrent && !RS_IsResearched_(upCurrent) );
+		do { upCurrent = &technologies[upCurrent->prev]; } while ( upCurrent && !RS_IsResearched_(upCurrent) );
 		if ( upCurrent ) {
 			MN_UpDrawEntry( upCurrent );
 			return;
@@ -328,9 +329,9 @@ void MN_UpPrev_f( void )
 	}
 
 	// change chapter
-	for (; upc - upChapters >= 0; upc-- )
-		if ( upc->last ) {
-			upCurrent = upc->last;
+	for (; upc >= 0; upc-- )
+		if ( upChapters[upc].last >= 0 ) {
+			upCurrent = &technologies[upChapters[upc].last];
 			if ( RS_IsResearched_(upCurrent) )
 				MN_UpDrawEntry( upCurrent );
 			else
@@ -347,18 +348,18 @@ MN_UpNext_f
 =================*/
 void MN_UpNext_f( void )
 {
-	pediaChapter_t *upc = NULL;
+	int upc;
 
 	// change chapter
-	if ( !upCurrent ) upc = upChapters;
+	if ( !upCurrent ) upc = 0; //upChapters;
 	else upc = upCurrent->up_chapter + 1;
 
 	// get next entry
-	if ( upCurrent && upCurrent->next ) {
+	if ( upCurrent && ( upCurrent->next >= 0) ) {
 		// Check if the next entry is researched already otherwise go to the next entry.
 		do {
-			if (upCurrent != upCurrent->next) {
-				upCurrent = upCurrent->next;
+			if ( upCurrent->idx != upCurrent->next ) {
+				upCurrent = &technologies[upCurrent->next];
 			} else {
 				Com_DPrintf("MN_UpNext_f: There was a 'next' entry for '%s' where there should not be one.\n",upCurrent->id);
 				upCurrent = NULL;
@@ -374,9 +375,9 @@ void MN_UpNext_f( void )
 	/* no 'next' entry defined (=NULL) or no current entry at all */
 
 	// change chapter
-	for ( ; upc - upChapters < numChapters; upc++ )
-		if ( upc->first ) {
-			upCurrent = upc->first;
+	for ( ; upc < numChapters; upc++ )
+		if ( upChapters[upc].first >= 0 ) {
+			upCurrent = &technologies[upChapters[upc].first];
 			if ( RS_IsResearched_(upCurrent) )
 				MN_UpDrawEntry( upCurrent );
 			else
@@ -401,7 +402,7 @@ void MN_UpClick_f( void )
 
 	if ( num < numChapters_displaylist && upChapters_displaylist[num]->first )
 	{
-		upCurrent = upChapters_displaylist[num]->first;
+		upCurrent = &technologies[upChapters_displaylist[num]->first];
 		do
 		{
 			if ( RS_IsResearched_(upCurrent) )
@@ -409,7 +410,7 @@ void MN_UpClick_f( void )
 				MN_UpDrawEntry( upCurrent );
 				return;
 			}
-			upCurrent = upCurrent->next;
+			upCurrent = &technologies[upCurrent->next];
 		} while ( upCurrent );
 	}
 }
