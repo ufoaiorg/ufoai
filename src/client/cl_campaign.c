@@ -678,17 +678,16 @@ qboolean CL_NewBase( vec2_t pos )
 
 	color = CL_GetmapColor( pos );
 
-	if ( MapIsWater(color) )
-	{
-		// This should already have been catched in MN_MapClick (cl_menu.c), but just in case.
-		MN_AddNewMessage( _("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL );
-		return qfalse;
-	} else if ( MapIsDesert(color) ){
+	if ( MapIsDesert(color) ){
 		Com_DPrintf("Desertbase\n");
 		baseCurrent->mapChar='d';
 	} else if ( MapIsArctic(color) ){
 		Com_DPrintf("Articbase\n");
 		baseCurrent->mapChar='a';
+	} else if ( MapIsWater(color) ){
+		// This should already have been catched in MN_MapClick (cl_menu.c), but just in case.
+		MN_AddNewMessage( _("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL );
+		return qfalse;
 	} else {
 		Com_DPrintf("Graslandbase\n");
 		baseCurrent->mapChar='g';
