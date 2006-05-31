@@ -764,10 +764,12 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 					for ( employees_in_building->numEmployees = 0; employees_in_building->numEmployees < numEmployees_temp; )
 					{
 						// assign random employee infos.
-						employees_in_building->assigned[employees_in_building->numEmployees] = gd.numEmployees++; // link this employee in the building to the global employee-list.
-						employee = &gd.employees[employees_in_building->assigned[employees_in_building->numEmployees]];
+						employees_in_building->assigned[employees_in_building->numEmployees] = gd.numEmployees; // link this employee in the building to the global employee-list.
 						employees_in_building->numEmployees++;
+						employee = &gd.employees[gd.numEmployees];
+						employee->idx = gd.numEmployees;
 						memset( employee, 0, sizeof( employee_t ) );
+						gd.numEmployees++;
 					}
 				}
 			}
