@@ -599,10 +599,32 @@ int B_GetNumberOfBuildingsInBaseByType ( int base_idx, buildingType_t buildingTy
 	
 	for ( i = 0; i < gd.numBuildings[base_idx]; i++)
 	{
-		if ( gd.buildings[base_idx][i].buildingType == buildingType)
+		if ( gd.buildings[base_idx][i].buildingType == buildingType )
 			NumberOfBuildings++; 
 	}
 	return NumberOfBuildings;
+}
+
+/*======================
+B_GetMaximumBuildinStatus
+======================*/
+buildingStatus_t B_GetMaximumBuildinStatus ( int base_idx,  buildingType_t buildingType )
+{
+	int i;
+	buildingStatus_t status = B_NOT_SET;
+	
+	if ( base_idx < 0 )  {
+		Com_Printf("Bad base-index given: %i\n", base_idx );
+		return -1;
+	}
+	
+	for ( i = 0; i < gd.numBuildings[base_idx]; i++)
+	{
+		if ( gd.buildings[base_idx][i].buildingType == buildingType )
+			if ( gd.buildings[base_idx][i].buildingStatus > status )
+				status = gd.buildings[base_idx][i].buildingStatus;
+	}
+	return status;
 }
 
 /*======================
@@ -626,9 +648,8 @@ void B_BuildingInit( void )
 		//make an entry in list for this building
 		
 		
-		/*DEBUG
 		if ( buildingType->visible )
-		{*/
+		{
 			
 			/*
 			// TODO search for all existig buildings of this building in the base
@@ -646,17 +667,14 @@ void B_BuildingInit( void )
 			if ( RS_IsResearched_idx( buildingType->tech ) )
 			{
 				Com_DPrintf("Building researched %s\n", buildingType->id );
-				//TODO get maximum-building-status for this type of building from thje existing buildings
 				if ( buildingType->dependsBuilding < 0
-				|| gd.buildingTypes[buildingType->dependsBuilding].buildingStatus >= B_UNDER_CONSTRUCTION ) {
+				|| B_GetMaximumBuildinStatus (baseCurrent->idx,  buildingType->buildingType ) >= B_UNDER_CONSTRUCTION ) {
 					B_BuildingAddToList( _(buildingType->name) );
 				}
 			} else {
 				Com_DPrintf("Building not researched yet %s\n", buildingType->id );
 			}
-		/*DEBUG
 		}
-		*/
 	}
 	if ( baseCurrent->buildingCurrent )
 	{
