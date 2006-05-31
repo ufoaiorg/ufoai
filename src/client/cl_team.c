@@ -281,7 +281,7 @@ void CL_ItemDescription( int item )
 	// set description text
 	else
 #endif
-	if ( RS_IsResearched_(od->tech)  )
+	if ( RS_IsResearched_ptr(od->tech)  )
 	{
 		if ( !Q_strncmp(od->type, "ammo", 4) )
 		{

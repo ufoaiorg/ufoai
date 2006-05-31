@@ -112,7 +112,7 @@ static void CL_BuyType( void )
 		for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
 		{
 			tech = (technology_t*)od->tech;
-			if ( !tech || RS_Collected_(tech) || RS_IsResearched_(tech) ) {
+			if ( !tech || RS_Collected_(tech) || RS_IsResearched_ptr(tech) ) {
 				if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) )
 				{
 					Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );

@@ -1133,6 +1133,9 @@ void RS_ParseTechnologies ( char* id, char** text )
 	tech->statusCollected  = 0;
 	tech->time = 0;
 	tech->overalltime = 0;
+	tech->prev = -1;
+	tech->next = -1;
+	
 
 	do {
 		// get the name type
@@ -1268,12 +1271,26 @@ void RS_GetRequired( char *id, stringlist_t *required)
 	required = &tech->requires;	// is linking a good idea?
 }
 
+
 /*======================
-RS_IsResearched_
+RS_IsResearched_idx
 
 call this function if you already hold a tech pointer
 ======================*/
-qboolean RS_IsResearched_ ( technology_t* t )
+qboolean RS_IsResearched_idx ( int idx )
+{
+	if ( idx >= 0)
+		if ( gd.technologies[idx].statusResearch == RS_FINISH )
+			return qtrue;
+	return qfalse;
+}
+
+/*======================
+RS_IsResearched_ptr
+
+call this function if you already hold a tech pointer
+======================*/
+qboolean RS_IsResearched_ptr ( technology_t* t )
 {
 	if ( t && t->statusResearch == RS_FINISH )
 		return qtrue;
@@ -1299,7 +1316,7 @@ qboolean RS_ItemIsResearched(char *id_provided )
 	for ( i=0; i < gd.numTechnologies; i++ ) {
 		tech = &gd.technologies[i];
 		if ( !Q_strncmp( id_provided, tech->provides, MAX_VAR ) )	// provided item found
-			return RS_IsResearched_( tech );
+			return RS_IsResearched_ptr( tech );
 	}
 	return qtrue;	// no research needed
 }
@@ -1433,7 +1450,7 @@ void RS_GetFirstRequired2 ( int tech_idx, int first_tech_idx, stringlist_t *requ
 	}
 	for ( i=0; i < required_temp->numEntries; i++ ) {
 		tech = RS_GetTechByID( required_temp->string[i] );
-		if ( RS_IsResearched_(tech) ) {
+		if ( RS_IsResearched_ptr(tech) ) {
 			if ( required->numEntries < MAX_TECHLINKS ) {
 				required->idx[required->numEntries] = tech->idx;
 				Q_strncpyz( required->string[required->numEntries++], tech->id, MAX_VAR );

@@ -136,7 +136,8 @@ typedef struct building_s
 	char	id[MAX_VAR];
 	char	name[MAX_VAR];
 	// needs determines the second building part
-	char	*image, *needs, *mapPart, *pedia;
+	char	*image, *mapPart, *pedia;
+	char *needs;	// if the buildign has a second part
 	float	fixCosts, varCosts;
 
 	int	timeStart, buildTime;
@@ -179,8 +180,8 @@ typedef struct building_s
 	//this way we can rename the buildings without loosing the control
 	buildingType_t	buildingType;
 
-	technology_t*	tech;
-	struct building_s *dependsBuilding;
+	int tech;			// link to the building-technology
+	int dependsBuilding;	// if the building needs another one to work (= to be buildable) .. links to gd.buildingTypes
 } building_t;
 
 #define MAX_AIRCRAFT	256

@@ -281,7 +281,7 @@ void B_RemoveBuilding( void )
 		building->buildingStatus[building->howManyOfThisType] = B_NOT_SET;
 		building->howManyOfThisType--;
 //		baseCurrent->map[building->pos[0]][building->pos[1]] = -1;
-// 		if ( building->dependsBuilding )
+// 		if ( building->dependsBuilding >= 0)
 // 			baseCurrent->map[building->dependsBuilding->pos[0]][building->dependsBuilding->pos[1]] = -1;
 		B_BuildingStatus();
 	}
@@ -612,9 +612,9 @@ void B_BuildingInit( void )
 			  && buildingType->howManyOfThisType >= BASE_SIZE*BASE_SIZE )
 				continue;
 
-			if ( RS_IsResearched_( buildingType->tech ) )
+			if ( RS_IsResearched_idx( buildingType->tech ) )
 			{
-				if ( buildingType->dependsBuilding->buildingStatus[0] >= B_UNDER_CONSTRUCTION )
+				if ( gd.buildingTypes[buildingType->dependsBuilding].buildingStatus[0] >= B_UNDER_CONSTRUCTION )
 					B_BuildingAddToList( _(buildingType->name), i );
 			}
 		}
@@ -670,7 +670,7 @@ void B_BuildingClick_f( void )
 	{
 		building = &gd.buildings[ccs.actualBaseID][i];
 		// not available in research tree
-		if ( !RS_IsResearched_(building->tech) )
+		if ( !RS_IsResearched_idx(building->tech) )
 			continue;
 
 		// not visible
@@ -712,7 +712,9 @@ IN
 void B_ParseBuildings( char *id, char **text, qboolean link )
 {
 	building_t *building = NULL;
+	building_t *dependsBuilding = NULL;
 	employees_t *employees_in_building = NULL;
+	technology_t *tech_link = NULL;
 	employee_t *employee = NULL;
 	value_t *edp = NULL;
 	char    *errhead = "B_ParseBuildings: unexptected end of file (names ";
@@ -740,15 +742,17 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 		// new entry
 		building = &gd.buildingTypes[gd.numBuildingTypes];
 		memset( building, 0, sizeof( building_t ) );
-		building->idx = gd.numBuildingTypes;
 		Q_strncpyz( building->id, id, MAX_VAR );
 
 		Com_DPrintf("...found building %s\n", building->id );
 
 		//set standard values
-		building->visible = qtrue;
 		building->idx = gd.numBuildingTypes;
-
+		building->base_idx = -1;
+		building->tech = -1;
+		building->dependsBuilding = -1;
+		building->visible = qtrue;
+		
 		gd.numBuildingTypes++;
 		do {
 			// get the name type
@@ -801,10 +805,10 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 					{
 						// assign random employee infos.
 						employees_in_building->assigned[employees_in_building->numEmployees] = gd.numEmployees; // link this employee in the building to the global employee-list.
-						employees_in_building->numEmployees++;
 						employee = &gd.employees[gd.numEmployees];
-						employee->idx = gd.numEmployees;
 						memset( employee, 0, sizeof( employee_t ) );
+						employee->idx = gd.numEmployees;
+						employees_in_building->numEmployees++;
 						gd.numEmployees++;
 					}
 				}
@@ -844,15 +848,16 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 				building->base = i;	// link the building to the currently processed base.
 			}
 		*/
-	}
-	else
-	{
+	} else {
 		building = B_GetBuildingType( id );
 		if ( ! building ) // i'm paranoid
 			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", id );
-		building->tech = RS_GetTechByProvided( id );
-		if ( ! building->tech )
+		
+		tech_link = RS_GetTechByProvided( id );
+		if ( !tech_link )
 			Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", id );
+		building->tech = tech_link->idx;
+
 		do {
 			// get the name type
 			token = COM_EParse( text, errhead, id );
@@ -860,10 +865,10 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 			if ( *token == '}' ) break;
 			// get values
 			if ( !Q_strncmp( token, "depends", 4 ) ) {
-
-				building->dependsBuilding = B_GetBuildingType( COM_EParse( text, errhead, id ) );
-				if ( !building->dependsBuilding )
+				dependsBuilding = B_GetBuildingType( COM_EParse( text, errhead, id ) );
+				if ( !dependsBuilding )
 					Sys_Error("Could not find building depend of %s\n", building->id );
+				building->dependsBuilding = dependsBuilding->idx;
 				if ( !*text ) return;
 			}
 

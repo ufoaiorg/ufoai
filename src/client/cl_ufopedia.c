@@ -97,7 +97,7 @@ void UP_BuildingDescription ( technology_t* t )
 	{
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find building") );
 	} else {
-		Com_sprintf(upBuffer, MAX_UPTEXT, _("Depends:\t%s\n"), b->dependsBuilding ? b->dependsBuilding->name : _("None") );
+		Com_sprintf(upBuffer, MAX_UPTEXT, _("Depends:\t%s\n"), b->dependsBuilding >= 0 ? gd.buildingTypes[b->dependsBuilding].name : _("None") );
 		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Buildtime:\t%i day(s)\n"), (int)b->buildTime ) );
 		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Fixcosts:\t%i c\n"), (int)b->fixCosts ) );
 		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Running costs:\t%i c\n"), (int)b->varCosts ) );
@@ -250,7 +250,7 @@ void MN_UpContent_f( void )
 		upCurrent = &gd.technologies[gd.upChapters[i].first];
 		do
 		{
-			if ( RS_IsResearched_(upCurrent) ) {
+			if ( RS_IsResearched_ptr(upCurrent) ) {
 				researched_entries = qtrue;
 				break;
 			}
@@ -298,7 +298,7 @@ void MN_UpPrev_f( void )
 	// get previous entry
 	if ( upCurrent->prev ) {
 		// Check if the previous entry is researched already otherwise go to the next entry.
-		do { upCurrent = &gd.technologies[upCurrent->prev]; } while ( upCurrent && !RS_IsResearched_(upCurrent) );
+		do { upCurrent = &gd.technologies[upCurrent->prev]; } while ( upCurrent && !RS_IsResearched_ptr(upCurrent) );
 		if ( upCurrent ) {
 			MN_UpDrawEntry( upCurrent );
 			return;
@@ -309,7 +309,7 @@ void MN_UpPrev_f( void )
 	for (; upc >= 0; upc-- )
 		if ( gd.upChapters[upc].last >= 0 ) {
 			upCurrent = &gd.technologies[gd.upChapters[upc].last];
-			if ( RS_IsResearched_(upCurrent) )
+			if ( RS_IsResearched_ptr(upCurrent) )
 				MN_UpDrawEntry( upCurrent );
 			else
 				MN_UpPrev_f();
@@ -341,7 +341,7 @@ void MN_UpNext_f( void )
 				Com_DPrintf("MN_UpNext_f: There was a 'next' entry for '%s' where there should not be one.\n",upCurrent->id);
 				upCurrent = NULL;
 			}
-		} while ( upCurrent && !RS_IsResearched_(upCurrent) );
+		} while ( upCurrent && !RS_IsResearched_ptr(upCurrent) );
 
 		if ( upCurrent ) {
 			MN_UpDrawEntry( upCurrent );
@@ -355,7 +355,7 @@ void MN_UpNext_f( void )
 	for ( ; upc < gd.numChapters; upc++ )
 		if ( gd.upChapters[upc].first >= 0 ) {
 			upCurrent = &gd.technologies[gd.upChapters[upc].first];
-			if ( RS_IsResearched_(upCurrent) )
+			if ( RS_IsResearched_ptr(upCurrent) )
 				MN_UpDrawEntry( upCurrent );
 			else
 				MN_UpNext_f();
@@ -382,7 +382,7 @@ void MN_UpClick_f( void )
 		upCurrent = &gd.technologies[upChapters_displaylist[num]->first];
 		do
 		{
-			if ( RS_IsResearched_(upCurrent) )
+			if ( RS_IsResearched_ptr(upCurrent) )
 			{
 				MN_UpDrawEntry( upCurrent );
 				return;

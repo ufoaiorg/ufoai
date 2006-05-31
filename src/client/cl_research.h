@@ -86,8 +86,8 @@ typedef struct technology_s
 
 	// Pedia info
 	int	up_chapter;	// pedia chapter as stored in research.ufo.
-	int prev;			// Previous tech in pedia.
-	int next;			// Next tech in pedia.
+	int	prev;			// Previous tech in pedia.
+	int	next;			// Next tech in pedia.
 } technology_t;
 
 #define	TECHFS(x)	(int)&(((technology_t *)0)->x)
@@ -102,7 +102,8 @@ void RS_UpdateData ( void );
 void RS_ParseTechnologies ( char* title, char** text );
 qboolean RS_ItemIsResearched(char *id_provided );
 qboolean RS_TechIsResearched( int tech_idx );
-qboolean RS_IsResearched_ ( technology_t* t );
+qboolean RS_IsResearched_idx ( int idx );
+qboolean RS_IsResearched_ptr ( technology_t* t );
 qboolean RS_Collected_ ( technology_t* t );
 qboolean RS_ItemCollected(char *id_provided );
 
