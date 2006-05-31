@@ -194,7 +194,7 @@ void B_SetUpBase ( void )
 			building->idx = gd.numBuildings[ccs.actualBaseID];	// self-link to building-list in base
 			building->base_idx = ccs.actualBaseID;			// Link to the base.
 			Com_DPrintf("firstbase: %s (%i) at (%.0f:%.0f)\n", building->id, i, building->pos[0], building->pos[1] );
-			
+			baseCurrent->buildingCurrent = building;
 			B_SetBuildingByClick ( (int)building->pos[0], (int)building->pos[1] );
 			building->buildingStatus[building->howManyOfThisType] = B_WORKING;
 			/*
@@ -215,6 +215,7 @@ void B_SetUpBase ( void )
 			building->idx = gd.numBuildings[ccs.actualBaseID];	// self-link to building-list in base
 			building->base_idx = ccs.actualBaseID;			// Link to the base.
 			Com_DPrintf("autobuild: %s (%i) at (%.0f:%.0f)\n", building->id, i, building->pos[0], building->pos[1] );
+			baseCurrent->buildingCurrent = building;
 			B_SetBuildingByClick ( (int)building->pos[0], (int)building->pos[1] );
 			building->buildingStatus[building->howManyOfThisType] = B_WORKING;
 			/*
@@ -359,15 +360,15 @@ void B_SetBuildingByClick ( int row, int col )
 {
 	building_t *secondBuildingPart = NULL;
 
+	if (!baseCurrent) Sys_Error( "no current base\n" );
+	if (!baseCurrent->buildingCurrent) Sys_Error( "no current building\n" );
+		
 	if ( row < BASE_SIZE && col < BASE_SIZE )
 	{
 		if ( baseCurrent->map[row][col] == -1 )
 		{
-			// TODO: FIXME
-			//Sys_Error( "OK 1\n" );
 			if ( baseCurrent->buildingCurrent->needs && baseCurrent->buildingCurrent->visible )
 				secondBuildingPart = B_GetBuildingType( baseCurrent->buildingCurrent->needs );
-			Sys_Error( "BAD\n" );	// never reached
 			if ( secondBuildingPart )
 			{
 				if ( baseCurrent->map[row][col+1] != -1 )
