@@ -355,6 +355,7 @@ void B_NewBuilding( void )
 		B_ConstructBuilding();
 
 	B_BuildingStatus();
+	Com_DPrintf("B_NewBuilding: buildingCurrent->buildingStatus = %i\n", baseCurrent->buildingCurrent->buildingStatus );
 }
 
 /*======================
@@ -696,11 +697,15 @@ building_t* B_GetBuildingByIdx ( int idx )
 B_BuildingInfoClick_f
 
 Opens up the 'pedia if you right click on a building in the list.
+TODO: really only do this on rightclick
+TODO: left cklick should show building-status
 ======================*/
 void B_BuildingInfoClick_f( void )
 {
-	if ( baseCurrent && baseCurrent->buildingCurrent )
+	if ( baseCurrent && baseCurrent->buildingCurrent ) {
+		Com_DPrintf("B_BuildingInfoClick_f: %s - %i\n",  baseCurrent->buildingCurrent->id,  baseCurrent->buildingCurrent->buildingStatus );
 		UP_OpenWith ( baseCurrent->buildingCurrent->pedia );
+	}
 }
 
 /*======================
@@ -726,32 +731,6 @@ void B_BuildingClick_f( void )
 	
 	building = &gd.buildingTypes[BuildingConstructionList[num]];
 
-	/*for ( i = 0; i < gd.numBuildings[baseCurrent->idx]; i++)
-	{
-		building = &gd.buildings[baseCurrent->idx][i];
-		// not available in research tree
-		
-
-		// not visible
-		if ( !building->visible )
-			continue;
-
-		// only allowed to set up once
-		if ( building->buildingStatus > B_UNDER_CONSTRUCTION
-		  && !building->moreThanOne )
-			continue;
-
-		// allowed more than one time - but limit of BASE_SIZE*BASE_SIZE exceeded
-		if ( building->moreThanOne
-		  && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, building->buildingType) >= BASE_SIZE*BASE_SIZE )
-			continue;
-
-
-		// ok, this needs to be in the list
-		num--;
-		if ( num < 0 )
-			break;
-	}*/
 	baseCurrent->buildingCurrent = building;
 	B_DrawBuilding();
 }
@@ -1153,10 +1132,10 @@ int B_GetUnusedLabs( int base_idx )
 				}
 			}
 			if ( !used ) {
-				Com_DPrintf("B_GetUnusedLabs: %s is unused in base %i\n", building->id, base_idx );
+				//Com_DPrintf("B_GetUnusedLabs: %s is unused in base %i\n", building->id, base_idx );
 				numFreeLabs++;
 			} else {
-				Com_DPrintf("B_GetUnusedLabs: %s is used in base %i\n", building->id, base_idx );
+				//Com_DPrintf("B_GetUnusedLabs: %s is used in base %i\n", building->id, base_idx );
 			}
 		}
 	}
@@ -1505,7 +1484,7 @@ void B_DrawBase( menuNode_t *node )
 	qboolean hover = qfalse;
 	static vec4_t color = {0.5f, 1.0f, 0.5f, 1.0};
 	char image[MAX_QPATH];
-	building_t *entry = NULL, *secondEntry = NULL, *hoverBuilding = NULL;
+	building_t *building = NULL, *secondBuilding = NULL, *hoverBuilding = NULL;
 
 	if ( ! baseCurrent )
 		Cbuf_ExecuteText( EXEC_NOW, "mn_pop" );
@@ -1528,29 +1507,29 @@ void B_DrawBase( menuNode_t *node )
 
 			if ( baseCurrent->map[row][col] != -1 )
 			{
-				entry = B_GetBuildingByIdx(baseCurrent->map[row][col]);
+				building = B_GetBuildingByIdx(baseCurrent->map[row][col]);
 
-				if ( ! entry )
+				if ( ! building )
 					Sys_Error("Error in DrawBase - no building with id %i\n", baseCurrent->map[row][col] );
 
-				if ( !entry->used )
+				if ( !building->used )
 				{
-					if ( entry->needs )
-						entry->used = 1;
-					Q_strncpyz( image, entry->image, MAX_QPATH );
+					if ( building->needs )
+						building->used = 1;
+					Q_strncpyz( image, building->image, MAX_QPATH );
 				}
 				else
 				{
-					secondEntry = B_GetBuildingType ( entry->needs );
-					if ( ! secondEntry )
+					secondBuilding = B_GetBuildingType ( building->needs );
+					if ( ! secondBuilding )
 						Sys_Error( "Error in ufo-scriptfile - could not find the needed building\n" );
-					Q_strncpyz( image, secondEntry->image, MAX_QPATH );
-					entry->used = 0;
+					Q_strncpyz( image, secondBuilding->image, MAX_QPATH );
+					building->used = 0;
 				}
 			}
 			else
 			{
-				entry = NULL;
+				building = NULL;
 				Q_strncpyz( image, "base/grid", MAX_QPATH );
 			}
 
@@ -1558,23 +1537,24 @@ void B_DrawBase( menuNode_t *node )
 			{
 				hover = qtrue;
 				if ( baseCurrent->map[row][col] != -1 )
-					hoverBuilding = entry;
-			}
-			else
+					hoverBuilding = building;
+			} else {
 				hover = qfalse;
+			}
 
-			if ( *image )
+			if ( *image ) {
 				re.DrawNormPic( x, y, width, height, 0, 0, 0, 0, 0, qfalse, image );
+			}
 
-			if ( entry )
+			if ( building )
 			{
-				switch ( entry->buildingStatus )
+				switch ( building->buildingStatus )
 				{
 				case B_DOWN:
 				case B_CONSTRUCTION_FINISHED:
 					break;
 				case B_UNDER_CONSTRUCTION:
-					time = entry->buildTime - ( ccs.date.day - entry->timeStart );
+					time = building->buildTime - ( ccs.date.day - building->timeStart );
 					re.FontDrawString( "f_small", 0, x + 10, y + 10, node->size[0], va(_("%i days left"), time ) );
 					break;
 				default:

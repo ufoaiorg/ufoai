@@ -1133,6 +1133,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 	tech->statusCollected  = 0;
 	tech->time = 0;
 	tech->overalltime = 0;
+	tech->lab = -1;
 	tech->prev = -1;
 	tech->next = -1;
 	
