@@ -854,9 +854,12 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", id );
 		
 		tech_link = RS_GetTechByProvided( id );
-		if ( !tech_link )
+		if ( tech_link ) {
+			building->tech = tech_link->idx;
+		} else {
+			// TODO: are the techs already parsed?
 			Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", id );
-		building->tech = tech_link->idx;
+		}
 
 		do {
 			// get the name type
