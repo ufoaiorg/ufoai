@@ -254,7 +254,7 @@ void MN_UpContent_f( void )
 				researched_entries = qtrue;
 				break;
 			}
-			if (upCurrent->idx != upCurrent->next)
+			if (upCurrent->idx != upCurrent->next && upCurrent->next >= 0 )
 				upCurrent = &gd.technologies[upCurrent->next];
 			else {
 				upCurrent = NULL;
