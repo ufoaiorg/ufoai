@@ -1134,7 +1134,7 @@ void MN_BaseMapClick( menuNode_t *node, int x, int y )
 
 	b = baseCurrent->buildingCurrent;
 
-	if ( b && b->buildingStatus[b->howManyOfThisType] == B_NOT_SET )
+	if ( b && b->buildingStatus == B_NOT_SET )
 	{
 		for ( row = 0; row < BASE_SIZE; row++ )
 			for ( col = 0; col < BASE_SIZE; col++ )

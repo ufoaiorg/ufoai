@@ -37,6 +37,7 @@ TODO: new game does not reset basemangagement
 
 //building_t * B_GetFreeBuilding( int base_idx, buildingType_t type );
 building_t * B_GetFreeBuildingType( buildingType_t type );
+int B_GetNumberOfBuildingsInBaseByType ( int base_idx, buildingType_t buildingType );
 
 vec2_t	newBasePos;
 cvar_t*	mn_base_title;
@@ -55,7 +56,7 @@ value_t valid_vars[] =
 	{ "more_than_one",    V_BOOL,	BSFS( moreThanOne ) },	// is the building allowed to be build more the one time?
 	{ "name",	V_TRANSLATION_STRING,	BSFS( name ) },				// displayed building name
 	{ "pedia",	V_NULL,		BSFS( pedia ) },			// the pedia-id string
-	{ "status",	V_INT,		BSFS( buildingStatus[0] ) },	// the status of the building
+	{ "status",	V_INT,		BSFS( buildingStatus ) },	// the status of the building
 	{ "image",	V_NULL,		BSFS( image ) },			// the string to identify the image for the building
 
 	//set first part of a building to 1 all others to 0
@@ -135,7 +136,7 @@ Displays the status of a building for baseview
 void B_BuildingStatus( void )
 {
 	int daysLeft;
-
+	int NumberOfBuildings = 0;
 	//maybe someone call this command before the buildings are parsed??
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 	{
@@ -147,11 +148,12 @@ void B_BuildingStatus( void )
 
 	Cvar_Set("mn_building_status", _("Not set") );
 
-	switch ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] )
+	switch ( baseCurrent->buildingCurrent->buildingStatus )
 	{
 		case B_NOT_SET:
-			if ( baseCurrent->buildingCurrent->howManyOfThisType )
-				Cvar_Set("mn_building_status", va(_("Already %i in base"), baseCurrent->buildingCurrent->howManyOfThisType ));
+			NumberOfBuildings = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, baseCurrent->buildingCurrent->buildingType);
+			if ( NumberOfBuildings )
+				Cvar_Set("mn_building_status", va(_("Already %i in base"), NumberOfBuildings ));
 			break;
 		case B_UNDER_CONSTRUCTION:
 			Cvar_Set("mn_building_status", va ( _("Constructing: %i day(s)"), daysLeft ) );
@@ -196,7 +198,7 @@ void B_SetUpBase ( void )
 			Com_DPrintf("firstbase: %s (%i) at (%.0f:%.0f)\n", building->id, i, building->pos[0], building->pos[1] );
 			baseCurrent->buildingCurrent = building;
 			B_SetBuildingByClick ( (int)building->pos[0], (int)building->pos[1] );
-			building->buildingStatus[building->howManyOfThisType] = B_WORKING;
+			building->buildingStatus = B_WORKING;
 			/*
 			if ( building->moreThanOne
 			  && building->howManyOfThisType < BASE_SIZE*BASE_SIZE )
@@ -217,7 +219,7 @@ void B_SetUpBase ( void )
 			Com_DPrintf("autobuild: %s (%i) at (%.0f:%.0f)\n", building->id, i, building->pos[0], building->pos[1] );
 			baseCurrent->buildingCurrent = building;
 			B_SetBuildingByClick ( (int)building->pos[0], (int)building->pos[1] );
-			building->buildingStatus[building->howManyOfThisType] = B_WORKING;
+			building->buildingStatus = B_WORKING;
 			/*
 			if ( building->moreThanOne
 			  && building->howManyOfThisType < BASE_SIZE*BASE_SIZE )
@@ -277,10 +279,9 @@ void B_RemoveBuilding( void )
 	building = baseCurrent->buildingCurrent;
 
 	//only allowed when it is still under construction
-	if ( building->buildingStatus[building->howManyOfThisType] == B_UNDER_CONSTRUCTION )
+	if ( building->buildingStatus == B_UNDER_CONSTRUCTION )
 	{
-		building->buildingStatus[building->howManyOfThisType] = B_NOT_SET;
-		building->howManyOfThisType--;
+		building->buildingStatus = B_NOT_SET;
 //		baseCurrent->map[building->pos[0]][building->pos[1]] = -1;
 // 		if ( building->dependsBuilding >= 0)
 // 			baseCurrent->map[building->dependsBuilding->pos[0]][building->dependsBuilding->pos[1]] = -1;
@@ -316,11 +317,11 @@ void B_ConstructBuilding( void )
 	if ( baseCurrent->buildingToBuild >= 0 )
 	{
 		building_to_build = &gd.buildingTypes[baseCurrent->buildingToBuild];
-		building_to_build->buildingStatus[building_to_build->howManyOfThisType] = B_UNDER_CONSTRUCTION;
+		building_to_build->buildingStatus = B_UNDER_CONSTRUCTION;
 		baseCurrent->buildingToBuild = -1;
 	}
 
-	baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] = B_UNDER_CONSTRUCTION;
+	baseCurrent->buildingCurrent->buildingStatus = B_UNDER_CONSTRUCTION;
 	baseCurrent->buildingCurrent->timeStart = ccs.date.day;
 
 	CL_UpdateCredits( ccs.credits - baseCurrent->buildingCurrent->fixCosts );
@@ -347,7 +348,7 @@ void B_NewBuilding( void )
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 		return;
 
-	if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] < B_UNDER_CONSTRUCTION )
+	if ( baseCurrent->buildingCurrent->buildingStatus < B_UNDER_CONSTRUCTION )
 		B_ConstructBuilding();
 
 	B_BuildingStatus();
@@ -383,7 +384,7 @@ void B_SetBuildingByClick ( int row, int col )
 			else {
 				baseCurrent->buildingToBuild = -1;
 			}
-			if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] <= B_UNDER_CONSTRUCTION )
+			if ( baseCurrent->buildingCurrent->buildingStatus <= B_UNDER_CONSTRUCTION )
 				B_NewBuilding();
 
  			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->idx;
@@ -446,7 +447,7 @@ void B_NewBuildingFromList( void )
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 		return;
 
-	if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] < B_UNDER_CONSTRUCTION )
+	if ( baseCurrent->buildingCurrent->buildingStatus < B_UNDER_CONSTRUCTION )
 		B_NewBuilding();
 	else
 		B_RemoveBuilding();
@@ -472,7 +473,7 @@ void B_DrawBuilding( void )
 	
 	B_BuildingStatus();
 
-	if ( building->buildingStatus[building->howManyOfThisType] < B_UNDER_CONSTRUCTION && building->fixCosts )
+	if ( building->buildingStatus < B_UNDER_CONSTRUCTION && building->fixCosts )
 		Com_sprintf( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.2f\n"), building->fixCosts );
 
 	Q_strcat( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("%i Day(s) to build\n"), building->buildTime ) );
@@ -573,7 +574,7 @@ This way every base can hold its own building list.
 The pointer is updated everytime we select a base via mn_select_base
 (see B_SelectBase for further information)
 ======================*/
-void B_BuildingAddToList( char *title, int id )
+void B_BuildingAddToList( char *title )
 {
 	assert(baseCurrent);
 
@@ -584,12 +585,34 @@ void B_BuildingAddToList( char *title, int id )
 }
 
 /*======================
+B_GetNumberOfBuildingsInBaseByType
+======================*/
+int B_GetNumberOfBuildingsInBaseByType ( int base_idx, buildingType_t buildingType )
+{
+	int i;
+	int NumberOfBuildings = 0;
+	if ( base_idx < 0 )  {
+		Com_Printf("Bad base-index given: %i\n", base_idx );
+		return -1;
+	}
+	
+	
+	for ( i = 0; i < gd.numBuildings[base_idx]; i++)
+	{
+		if ( gd.buildings[base_idx][i].buildingType == buildingType)
+			NumberOfBuildings++; 
+	}
+	return NumberOfBuildings;
+}
+
+/*======================
 B_BuildingInit
 ======================*/
 void B_BuildingInit( void )
 {
-	int i = 1;
+	int i;
 	building_t *buildingType = NULL;
+	
 	// maybe someone call this command before the bases are parsed??
 	if ( ! baseCurrent )
 		return;
@@ -601,24 +624,39 @@ void B_BuildingInit( void )
 	{
 		buildingType = &gd.buildingTypes[i];
 		//make an entry in list for this building
+		
+		
+		/*DEBUG
 		if ( buildingType->visible )
-		{
+		{*/
+			
+			/*
+			// TODO search for all existig buildings of this building in the base
 			// only allowed once?
-			if ( buildingType->buildingStatus[0] > B_UNDER_CONSTRUCTION
-			  && !buildingType->moreThanOne )
+			if ( buildingType->buildingStatus > B_UNDER_CONSTRUCTION
+			&& !buildingType->moreThanOne )
 				continue;
+			*/
 
 			// allowed more than one time - but limit of BASE_SIZE*BASE_SIZE exceeded
 			if ( buildingType->moreThanOne
-			  && buildingType->howManyOfThisType >= BASE_SIZE*BASE_SIZE )
+			&& B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, buildingType->buildingType) >= BASE_SIZE*BASE_SIZE )
 				continue;
 
 			if ( RS_IsResearched_idx( buildingType->tech ) )
 			{
-				if ( gd.buildingTypes[buildingType->dependsBuilding].buildingStatus[0] >= B_UNDER_CONSTRUCTION )
-					B_BuildingAddToList( _(buildingType->name), i );
+				Com_DPrintf("Building researched %s\n", buildingType->id );
+				//TODO get maximum-building-status for this type of building from thje existing buildings
+				if ( buildingType->dependsBuilding < 0
+				|| gd.buildingTypes[buildingType->dependsBuilding].buildingStatus >= B_UNDER_CONSTRUCTION ) {
+					B_BuildingAddToList( _(buildingType->name) );
+				}
+			} else {
+				Com_DPrintf("Building not researched yet %s\n", buildingType->id );
 			}
+		/*DEBUG
 		}
+		*/
 	}
 	if ( baseCurrent->buildingCurrent )
 	{
@@ -679,13 +717,13 @@ void B_BuildingClick_f( void )
 			continue;
 
 		// only allowed to set up once
-		if ( building->buildingStatus[0] > B_UNDER_CONSTRUCTION
+		if ( building->buildingStatus > B_UNDER_CONSTRUCTION
 		  && !building->moreThanOne )
 			continue;
 
 		// allowed more than one time - but limit of BASE_SIZE*BASE_SIZE exceeded
 		if ( building->moreThanOne
-		  && building->howManyOfThisType >= BASE_SIZE*BASE_SIZE )
+		  && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, building->buildingType) >= BASE_SIZE*BASE_SIZE )
 			continue;
 
 
@@ -1513,7 +1551,7 @@ void B_DrawBase( menuNode_t *node )
 
 			if ( entry )
 			{
-				switch ( entry->buildingStatus[entry->howManyOfThisType] )
+				switch ( entry->buildingStatus )
 				{
 				case B_DOWN:
 				case B_CONSTRUCTION_FINISHED:
@@ -1865,8 +1903,7 @@ void B_SaveBases( sizebuf_t *sb )
 			for ( j = 0, building = &gd.buildings[base->idx][i]; j < gd.numBuildings[base->idx]; j++ )
 			{
 				employees_in_building = &building->assigned_employees;
-				SZ_Write( sb, &building->buildingStatus[0], sizeof(building->buildingStatus) );
-				MSG_WriteLong( sb, building->howManyOfThisType );
+				SZ_Write( sb, &building->buildingStatus, sizeof(building->buildingStatus) );
 				MSG_WriteFloat( sb, building->pos[0] );
 				MSG_WriteFloat( sb, building->pos[1] );
 				//maybe still constructing
@@ -1951,11 +1988,10 @@ void B_LoadBases( sizebuf_t *sb, int version )
 
 			for ( j = 0, building = &gd.buildings[base->idx][i]; j < tmp; j++, building++ )
 			{
-				memcpy( &building->buildingStatus[0], sb->data + sb->readcount, sizeof(building->buildingStatus) );
+				memcpy( &building->buildingStatus, sb->data + sb->readcount, sizeof(building->buildingStatus) );
 				employees_in_building = &building->assigned_employees;
 				sb->readcount += sizeof(building->buildingStatus);
 
-				building->howManyOfThisType = MSG_ReadLong( sb );
 				building->pos[0] = MSG_ReadFloat( sb );
 				building->pos[1] = MSG_ReadFloat( sb );
 				//maybe still constructing
@@ -2001,15 +2037,16 @@ void B_BuildingList_f ( void )
 		Com_Printf("\nBase id %i: %s\n", i, base->name );
 		for ( j = 0; j < gd.numBuildings[base->idx]; j++ )
 		{
-			Com_Printf("...Building: %s #%i - id: %i\n", building->id, building->howManyOfThisType, building->idx );
+			
+			Com_Printf("...Building: %s #%i - id: %i\n", building->id, B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, building->buildingType), building->idx );
 			Com_Printf("...image: %s\n", building->image );
 			Com_Printf(".....Status:\n");
 			for ( k = 0; k < BASE_SIZE*BASE_SIZE; k++ )
 			{
 				if ( k > 1 && k % BASE_SIZE == 0 )
 					Com_Printf("\n");
-				Com_Printf("%i ", building->buildingStatus[k] );
-				if ( ! building->buildingStatus[k] )
+				Com_Printf("%i ", building->buildingStatus );
+				if ( ! building->buildingStatus )
 					break;
 			}
 			Com_Printf("\n");
@@ -2180,38 +2217,30 @@ B_CheckBuildingConstruction
 Checks wheter the construction of a building is finished
 Calls the onConstruct functions and assign workers, too
 ======================*/
-int B_CheckBuildingConstruction ( building_t* b, int baseID )
+int B_CheckBuildingConstruction ( building_t* building, int base_idx )
 {
-	int k, newBuilding = 0;
+	int newBuilding = 0;
 
-	for ( k = 0; k < b->howManyOfThisType + 1; k++ )
-	{
-		if ( b->buildingStatus[k] != B_UNDER_CONSTRUCTION )
-			continue;
-		if ( b->timeStart && ( b->timeStart + b->buildTime ) <= ccs.date.day )
+	if ( building->buildingStatus == B_UNDER_CONSTRUCTION ) {
+		if ( building->timeStart && ( building->timeStart + building->buildTime ) <= ccs.date.day )
 		{
-			b->buildingStatus[k] = B_WORKING;
+			building->buildingStatus = B_WORKING;
 
-			// more than one building of this type is allowed
-			// so we need to allow further constructions
-			// thus we increase the howManyOfThisType value
-			if ( b->moreThanOne && b->howManyOfThisType < BASE_SIZE*BASE_SIZE )
-				b->howManyOfThisType++;
-
-			if ( b->onConstruct )
-				Cbuf_AddText( va("%s %i", b->onConstruct, baseID ) );
+			if ( building->onConstruct )
+				Cbuf_AddText( va("%s %i", building->onConstruct, base_idx ) );
 
 			/*
-			if ( b->minWorkers )
-				B_BuildingAddWorkers( b, b->minWorkers );
+			if ( building->minWorkers )
+				B_BuildingAddWorkers( building, building->minWorkers );
 			*/
 
 			newBuilding++;
 		}
 	}
+	
 #if 0
-	if ( b->buildingStatus[b->howManyOfThisType] == B_UNDER_CONSTRUCTION && b->timeStart + b->buildTime < ccs.date.day )
-		b->buildingStatus[b->howManyOfThisType] = B_CONSTRUCTION_FINISHED;
+	if ( building->buildingStatus == B_UNDER_CONSTRUCTION && building->timeStart + building->buildTime < ccs.date.day )
+		building->buildingStatus = B_CONSTRUCTION_FINISHED;
 #endif
 	if ( newBuilding )
 		B_BuildingInit();

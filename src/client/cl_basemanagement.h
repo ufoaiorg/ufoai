@@ -146,7 +146,7 @@ typedef struct building_s
 	struct employees_s assigned_employees;
 
 	//if we can build more than one building of the same type:
-	buildingStatus_t	buildingStatus[BASE_SIZE*BASE_SIZE];
+	buildingStatus_t	buildingStatus; //[BASE_SIZE*BASE_SIZE];
 
 	byte	visible;
 	// needed for baseassemble
@@ -163,10 +163,6 @@ typedef struct building_s
 
 	//more than one building of the same type allowed?
 	int	moreThanOne;
-
-	//how many buildings are there of the same type?
-	//depends on the value of moreThanOne ^^
-	int	howManyOfThisType;
 
 	//position of autobuild
 	vec2_t	pos;
