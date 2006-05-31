@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-05-30 16:57+0200\n"
+"POT-Creation-Date: 2006-05-31 18:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.ufo.po (UFO Alien Invasion)  #-#-#-#-#\n"
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: http://www.sourceforge.net/projects/ufoai/\n"
-"POT-Creation-Date: 2006-05-30 16:57+0200\n"
+"POT-Creation-Date: 2006-05-31 18:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -277,6 +277,14 @@ msgstr ""
 msgid "txt_standard_campaign"
 msgstr ""
 
+#: ../base/ufos/events.ufo:21
+msgid "Devastating alien terror attack on mumbay"
+msgstr ""
+
+#: ../base/ufos/events.ufo:29
+msgid "Alien stealth aircraft sighted"
+msgstr ""
+
 #: ../base/ufos/medals.ufo:3
 msgid "Cross"
 msgstr ""
@@ -393,7 +401,7 @@ msgstr ""
 msgid "Refuel the selected aircraft"
 msgstr ""
 
-#: ../base/ufos/menu_bases.ufo:425 client/cl_campaign.c:441
+#: ../base/ufos/menu_bases.ufo:425 client/cl_campaign.c:442
 msgid "Refuel"
 msgstr ""
 
@@ -1994,219 +2002,219 @@ msgstr ""
 msgid "Your round started!\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:152
+#: client/cl_basemanagement.c:148
 msgid "Not set"
 msgstr ""
 
-#: client/cl_basemanagement.c:158
+#: client/cl_basemanagement.c:154
 #, c-format
 msgid "Already %i in base"
 msgstr ""
 
-#: client/cl_basemanagement.c:161
+#: client/cl_basemanagement.c:157
 #, c-format
 msgid "Constructing: %i day(s)"
 msgstr ""
 
-#: client/cl_basemanagement.c:164
+#: client/cl_basemanagement.c:160
 msgid "Construction finished"
 msgstr ""
 
-#: client/cl_basemanagement.c:167
+#: client/cl_basemanagement.c:163
 msgid "Working 100%"
 msgstr ""
 
-#: client/cl_basemanagement.c:170
+#: client/cl_basemanagement.c:166
 msgid "Down"
 msgstr ""
 
-#: client/cl_basemanagement.c:292
+#: client/cl_basemanagement.c:309
 msgid "Not enough credits to build this\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:292 client/cl_basemanagement.c:1984
-#: client/cl_campaign.c:366 client/cl_campaign.c:643 client/cl_campaign.c:689
-#: client/cl_campaign.c:1021 client/cl_campaign.c:1191
-#: client/cl_campaign.c:1203 client/cl_campaign.c:1222
-#: client/cl_campaign.c:1238 client/cl_campaign.c:1435
-#: client/cl_campaign.c:2260 client/cl_campaign.c:2290
-#: client/cl_campaign.c:2292 client/cl_menu.c:1052 client/cl_research.c:504
-#: client/cl_research.c:616 client/cl_research.c:619 client/cl_research.c:623
-#: client/cl_research.c:640 client/cl_research.c:672 client/cl_research.c:676
-#: client/cl_research.c:806
+#: client/cl_basemanagement.c:309 client/cl_basemanagement.c:2064
+#: client/cl_campaign.c:367 client/cl_campaign.c:644 client/cl_campaign.c:690
+#: client/cl_campaign.c:1022 client/cl_campaign.c:1192
+#: client/cl_campaign.c:1204 client/cl_campaign.c:1223
+#: client/cl_campaign.c:1239 client/cl_campaign.c:1436
+#: client/cl_campaign.c:2261 client/cl_campaign.c:2291
+#: client/cl_campaign.c:2293 client/cl_menu.c:1053 client/cl_research.c:505
+#: client/cl_research.c:621 client/cl_research.c:624 client/cl_research.c:628
+#: client/cl_research.c:646 client/cl_research.c:678 client/cl_research.c:682
+#: client/cl_research.c:814
 msgid "Notice"
 msgstr ""
 
-#: client/cl_basemanagement.c:454
+#: client/cl_basemanagement.c:476
 #, c-format
 msgid "Costs:\t%1.2f\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:456
+#: client/cl_basemanagement.c:478
 #, c-format
 msgid "%i Day(s) to build\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:459
+#: client/cl_basemanagement.c:481
 #, c-format
 msgid "Running Costs:\t%1.2f\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:462
+#: client/cl_basemanagement.c:484
 #, c-format
 msgid "Workers:\t%i\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1449
+#: client/cl_basemanagement.c:1523
 #, c-format
 msgid "%i days left"
 msgstr ""
 
-#: client/cl_basemanagement.c:1628
+#: client/cl_basemanagement.c:1702
 #, c-format
 msgid "A new base has been built: %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:1629 client/cl_basemanagement.c:1636
+#: client/cl_basemanagement.c:1703 client/cl_basemanagement.c:1710
 msgid "Base built"
 msgstr ""
 
-#: client/cl_basemanagement.c:1635
+#: client/cl_basemanagement.c:1709
 msgid "Not enough credits to set up a new base."
 msgstr ""
 
-#: client/cl_basemanagement.c:1984
+#: client/cl_basemanagement.c:2064
 msgid "You've reached the base limit."
 msgstr ""
 
-#: client/cl_basemanagement.c:2087
+#: client/cl_basemanagement.c:2169
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:2088
+#: client/cl_basemanagement.c:2170
 msgid "Building finished"
 msgstr ""
 
-#: client/cl_campaign.c:366
+#: client/cl_campaign.c:367
 msgid "Aircraft started"
 msgstr ""
 
-#: client/cl_campaign.c:435
+#: client/cl_campaign.c:436
 msgid "Nothing - should not be displayed"
 msgstr ""
 
-#: client/cl_campaign.c:438
+#: client/cl_campaign.c:439
 msgid "At homebase"
 msgstr ""
 
-#: client/cl_campaign.c:444
+#: client/cl_campaign.c:445
 msgid "Idle"
 msgstr ""
 
-#: client/cl_campaign.c:447
+#: client/cl_campaign.c:448
 msgid "On transit"
 msgstr ""
 
-#: client/cl_campaign.c:450
+#: client/cl_campaign.c:451
 msgid "Ready for drop down"
 msgstr ""
 
-#: client/cl_campaign.c:453
+#: client/cl_campaign.c:454
 msgid "On interception"
 msgstr ""
 
-#: client/cl_campaign.c:456
+#: client/cl_campaign.c:457
 msgid "Transportmission"
 msgstr ""
 
-#: client/cl_campaign.c:459
+#: client/cl_campaign.c:460
 msgid "Returning to homebase"
 msgstr ""
 
-#: client/cl_campaign.c:588 client/cl_ufopedia.c:121
+#: client/cl_campaign.c:589 client/cl_ufopedia.c:121
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr ""
 
-#: client/cl_campaign.c:589
+#: client/cl_campaign.c:590
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr ""
 
-#: client/cl_campaign.c:590 client/cl_campaign.c:591 client/cl_ufopedia.c:100
+#: client/cl_campaign.c:591 client/cl_campaign.c:592 client/cl_ufopedia.c:100
 #: client/cl_ufopedia.c:123 client/cl_ufopedia.c:124
 msgid "None"
 msgstr ""
 
-#: client/cl_campaign.c:590 client/cl_ufopedia.c:123
+#: client/cl_campaign.c:591 client/cl_ufopedia.c:123
 #, c-format
 msgid "Weapon:\t%s\n"
 msgstr ""
 
-#: client/cl_campaign.c:591
+#: client/cl_campaign.c:592
 #, c-format
 msgid "Shield:\t%s"
 msgstr ""
 
-#: client/cl_campaign.c:642
+#: client/cl_campaign.c:643
 #, c-format
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr ""
 
-#: client/cl_campaign.c:689 client/cl_menu.c:1052
+#: client/cl_campaign.c:690 client/cl_menu.c:1053
 msgid "Could not set up your base at this location"
 msgstr ""
 
-#: client/cl_campaign.c:863
+#: client/cl_campaign.c:864
 #, c-format
 msgid "Your base %s is under attack."
 msgstr ""
 
-#: client/cl_campaign.c:864
+#: client/cl_campaign.c:865
 msgid "Baseattack"
 msgstr ""
 
-#: client/cl_campaign.c:876
+#: client/cl_campaign.c:877
 msgid "Alien activity"
 msgstr ""
 
-#: client/cl_campaign.c:876
+#: client/cl_campaign.c:877
 msgid "Alien activity has been reported."
 msgstr ""
 
-#: client/cl_campaign.c:1021
+#: client/cl_campaign.c:1022
 msgid "Assign a team to aircraft"
 msgstr ""
 
-#: client/cl_campaign.c:1191
+#: client/cl_campaign.c:1192
 msgid "UFO appears on our radar"
 msgstr ""
 
-#: client/cl_campaign.c:1203
+#: client/cl_campaign.c:1204
 msgid "UFO disappears on our radar"
 msgstr ""
 
-#: client/cl_campaign.c:1221
+#: client/cl_campaign.c:1222
 #, c-format
 msgid "The mission expired and %i civilians died. You've lost %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:1238
+#: client/cl_campaign.c:1239
 msgid "Your dropship has low fuel and returns to base"
 msgstr ""
 
-#: client/cl_campaign.c:1434
+#: client/cl_campaign.c:1435
 #, c-format
 msgid "Gained %i credits from nation %s"
 msgstr ""
 
-#: client/cl_campaign.c:1479
+#: client/cl_campaign.c:1480
 #, c-format
 msgid "%02i:%i%i"
 msgstr ""
 
-#: client/cl_campaign.c:1586
+#: client/cl_campaign.c:1587
 #, c-format
 msgid ""
 "Missions:\n"
@@ -2215,49 +2223,49 @@ msgid ""
 "build:\t%i\tattacked:\t%i\n"
 msgstr ""
 
-#: client/cl_campaign.c:2188
+#: client/cl_campaign.c:2189
 msgid "Assemble or load a team"
 msgstr ""
 
-#: client/cl_campaign.c:2188
+#: client/cl_campaign.c:2189
 msgid "Note"
 msgstr ""
 
-#: client/cl_campaign.c:2260
+#: client/cl_campaign.c:2261
 msgid "Your dropship is not near the landingzone"
 msgstr ""
 
-#: client/cl_campaign.c:2290
+#: client/cl_campaign.c:2291
 msgid "You've won the battle"
 msgstr ""
 
-#: client/cl_campaign.c:2292
+#: client/cl_campaign.c:2293
 msgid "You've lost the battle"
 msgstr ""
 
-#: client/cl_campaign.c:2440
+#: client/cl_campaign.c:2441
 #, c-format
 msgid "%s (%s) died on his last mission.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2441
+#: client/cl_campaign.c:2442
 msgid "Soldier died"
 msgstr ""
 
-#: client/cl_campaign.c:2467
+#: client/cl_campaign.c:2468
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2468
+#: client/cl_campaign.c:2469
 msgid "Soldier promoted"
 msgstr ""
 
-#: client/cl_main.c:359 client/cl_main.c:733 client/cl_menu.c:388
+#: client/cl_main.c:359 client/cl_main.c:733 client/cl_menu.c:389
 msgid "Assemble a team first"
 msgstr ""
 
-#: client/cl_main.c:359 client/cl_main.c:733 client/cl_menu.c:388
+#: client/cl_main.c:359 client/cl_main.c:733 client/cl_menu.c:389
 msgid "Error"
 msgstr ""
 
@@ -2317,39 +2325,39 @@ msgstr ""
 msgid "unnamed"
 msgstr ""
 
-#: client/cl_menu.c:397
+#: client/cl_menu.c:398
 msgid "Set playersoldiers lower than teamsoldiers"
 msgstr ""
 
-#: client/cl_menu.c:397
+#: client/cl_menu.c:398
 msgid "Settings doesn't make sense"
 msgstr ""
 
-#: client/cl_menu.c:1531
+#: client/cl_menu.c:1532
 msgid "Night"
 msgstr ""
 
-#: client/cl_menu.c:1532
+#: client/cl_menu.c:1533
 msgid "Day"
 msgstr ""
 
-#: client/cl_menu.c:2168 client/cl_menu.c:2201
+#: client/cl_menu.c:2169 client/cl_menu.c:2202
 msgid ""
 "Select the desired location of the\n"
 "new base on the map.\n"
 msgstr ""
 
-#: client/cl_menu.c:2172 client/cl_menu.c:2205
+#: client/cl_menu.c:2173 client/cl_menu.c:2206
 msgid ""
 "Aliens are attacking our base\n"
 "at this very moment.\n"
 msgstr ""
 
-#: client/cl_menu.c:2176 client/cl_menu.c:2209
+#: client/cl_menu.c:2177 client/cl_menu.c:2210
 msgid "Select ufo or mission on map\n"
 msgstr ""
 
-#: client/cl_menu.c:2213
+#: client/cl_menu.c:2214
 msgid "UFO in radar range\n"
 msgstr ""
 
@@ -2416,194 +2424,194 @@ msgstr ""
 msgid "Dependencies: "
 msgstr ""
 
-#: client/cl_research.c:504
+#: client/cl_research.c:505
 msgid ""
 "There is no free lab available.\\You need to build one or free another\\in "
 "order to assign scientists to research this technology.\n"
 msgstr ""
 
-#: client/cl_research.c:616
+#: client/cl_research.c:621
 msgid "This item is already under research by your scientists."
 msgstr ""
 
-#: client/cl_research.c:619 client/cl_research.c:672
+#: client/cl_research.c:624 client/cl_research.c:678
 msgid "The research on this item continues."
 msgstr ""
 
-#: client/cl_research.c:623 client/cl_research.c:676
+#: client/cl_research.c:628 client/cl_research.c:682
 msgid "The research on this item is complete."
 msgstr ""
 
-#: client/cl_research.c:640
+#: client/cl_research.c:646
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
 msgstr ""
 
-#: client/cl_research.c:710
+#: client/cl_research.c:717
 msgid " [not yet researchable]"
 msgstr ""
 
-#: client/cl_research.c:726
+#: client/cl_research.c:734
 #, c-format
 msgid "%i max.\n"
 msgstr ""
 
-#: client/cl_research.c:806
+#: client/cl_research.c:814
 msgid "Build a laboratory first"
 msgstr ""
 
-#: client/cl_research.c:888
+#: client/cl_research.c:896
 #, c-format
 msgid "Research of %s finished\n"
 msgstr ""
 
-#: client/cl_research.c:890
+#: client/cl_research.c:898
 #, c-format
 msgid "%i researches finished\n"
 msgstr ""
 
-#: client/cl_research.c:891
+#: client/cl_research.c:899
 msgid "Research finished"
 msgstr ""
 
-#: client/cl_research.c:1116
+#: client/cl_research.c:1124
 msgid "No description available."
-msgstr ""
-
-#: client/cl_team.c:287
-#, c-format
-msgid "Primary:\t%s\n"
 msgstr ""
 
 #: client/cl_team.c:288
 #, c-format
-msgid "Secondary:\t%s\n"
+msgid "Primary:\t%s\n"
 msgstr ""
 
 #: client/cl_team.c:289
 #, c-format
-msgid "Damage:\t%i / %i\n"
+msgid "Secondary:\t%s\n"
 msgstr ""
 
 #: client/cl_team.c:290
 #, c-format
-msgid "Time units:\t%i / %i\n"
+msgid "Damage:\t%i / %i\n"
 msgstr ""
 
 #: client/cl_team.c:291
 #, c-format
-msgid "Range:\t%1.1f / %1.1f\n"
+msgid "Time units:\t%i / %i\n"
 msgstr ""
 
 #: client/cl_team.c:292
 #, c-format
+msgid "Range:\t%1.1f / %1.1f\n"
+msgstr ""
+
+#: client/cl_team.c:293
+#, c-format
 msgid "Spreads:\t%1.1f / %1.1f\n"
 msgstr ""
 
-#: client/cl_team.c:296
+#: client/cl_team.c:297
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:297
+#: client/cl_team.c:298
 msgid "No"
 msgstr ""
 
-#: client/cl_team.c:297
+#: client/cl_team.c:298
 #, c-format
 msgid "Twohanded:\t%s"
 msgstr ""
 
-#: client/cl_team.c:297
+#: client/cl_team.c:298
 msgid "Yes"
-msgstr ""
-
-#: client/cl_team.c:303
-#, c-format
-msgid "Action:\t%s\n"
 msgstr ""
 
 #: client/cl_team.c:304
 #, c-format
-msgid "Time units:\t%i\n"
+msgid "Action:\t%s\n"
 msgstr ""
 
 #: client/cl_team.c:305
 #, c-format
+msgid "Time units:\t%i\n"
+msgstr ""
+
+#: client/cl_team.c:306
+#, c-format
 msgid "Range:\t%1.1f\n"
 msgstr ""
 
-#: client/cl_team.c:309
+#: client/cl_team.c:310
 msgid "Unknown - need to research this"
 msgstr ""
 
-#: client/cl_team.c:618
+#: client/cl_team.c:619
 #, c-format
 msgid "%i of %i"
 msgstr ""
 
-#: client/cl_team.c:811
+#: client/cl_team.c:812
 msgid "NewTeam"
 msgstr ""
 
-#: client/cl_team.c:1174
+#: client/cl_team.c:1175
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1176
+#: client/cl_team.c:1177
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1179
+#: client/cl_team.c:1180
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1181
+#: client/cl_team.c:1182
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1184
+#: client/cl_team.c:1185
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1185
+#: client/cl_team.c:1186
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1186
+#: client/cl_team.c:1187
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1198
+#: client/cl_team.c:1199
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1200
+#: client/cl_team.c:1201
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1201
+#: client/cl_team.c:1202
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1202
+#: client/cl_team.c:1203
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -2611,22 +2619,22 @@ msgid ""
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1226
+#: client/cl_team.c:1227
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr ""
 
-#: client/cl_team.c:1231
+#: client/cl_team.c:1232
 #, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr ""
 
-#: client/cl_team.c:1236
+#: client/cl_team.c:1237
 #, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr ""
 
-#: client/cl_team.c:1239
+#: client/cl_team.c:1240
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -2634,7 +2642,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1243
+#: client/cl_team.c:1244
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr ""
