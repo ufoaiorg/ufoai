@@ -363,20 +363,33 @@ B_SetBuildingByClick
 ======================*/
 void B_SetBuildingByClick ( int row, int col )
 {
+	building_t *building = NULL;
 	building_t *secondBuildingPart = NULL;
 
 	if (!baseCurrent) Sys_Error( "no current base\n" );
 	if (!baseCurrent->buildingCurrent) Sys_Error( "no current building\n" );
 		
-	if ( row < BASE_SIZE && col < BASE_SIZE )
+	//TODO: this is bad style (baseCurrent->buildingCurrent shouldn't link to gd.buildingTypes at all ... it's just not logical)
+	if ( baseCurrent->buildingCurrent->base_idx < 0) { // if the building is in gd.buildingTypes[] 
+		// copy building from type-list to base-buildings-list
+		building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
+		memcpy( building, &gd.buildingTypes[baseCurrent->buildingCurrent->idx], sizeof( building_t ) );
+		building->idx = gd.numBuildings[baseCurrent->idx];	// self-link to building-list in base
+		building->base_idx = baseCurrent->idx;				// Link to the base.
+		baseCurrent->buildingCurrent = building;
+		gd.numBuildings[baseCurrent->idx]++;
+	}
+	
+	if ( 0 <= row&& row < BASE_SIZE
+	&& 0 <= col && col < BASE_SIZE )
 	{
-		if ( baseCurrent->map[row][col] == -1 )
+		if ( baseCurrent->map[row][col] < 0 )
 		{
 			if ( baseCurrent->buildingCurrent->needs && baseCurrent->buildingCurrent->visible )
 				secondBuildingPart = B_GetBuildingType( baseCurrent->buildingCurrent->needs );
 			if ( secondBuildingPart )
 			{
-				if ( baseCurrent->map[row][col+1] != -1 )
+				if ( baseCurrent->map[row][col+1] >= 0 )
 				{
 					Com_Printf( "Can't place this building here - the second part overlapped with another building\n" );
 					return;
@@ -1459,6 +1472,7 @@ void B_ParseBases( char *title, char **text )
 		memset( base, 0, sizeof( base_t ) );
 		base->idx = gd.numBaseNames;
 		base->buildingToBuild = -1;
+		memset( base->map, -1, sizeof( int)*BASE_SIZE*BASE_SIZE );
 		
 		// get the title
 		token = COM_EParse( text, errhead, title );
@@ -1505,7 +1519,7 @@ void B_DrawBase( menuNode_t *node )
 			baseCurrent->posX[row][col] = x;
 			baseCurrent->posY[row][col] = y;
 
-			if ( baseCurrent->map[row][col] != -1 )
+			if ( baseCurrent->map[row][col] >= 0 )
 			{
 				building = B_GetBuildingByIdx(baseCurrent->map[row][col]);
 
@@ -1516,7 +1530,11 @@ void B_DrawBase( menuNode_t *node )
 				{
 					if ( building->needs )
 						building->used = 1;
-					Q_strncpyz( image, building->image, MAX_QPATH );
+					if (building->image) { // TODO:DEBUG
+						Q_strncpyz( image, building->image, MAX_QPATH );
+					} else {
+						Com_DPrintf( "B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx );
+					}
 				}
 				else
 				{
@@ -1536,7 +1554,7 @@ void B_DrawBase( menuNode_t *node )
 			if ( mx > x && mx < x + width && my > y && my < y + height - 20 )
 			{
 				hover = qtrue;
-				if ( baseCurrent->map[row][col] != -1 )
+				if ( baseCurrent->map[row][col] >= 0 )
 					hoverBuilding = building;
 			} else {
 				hover = qfalse;
