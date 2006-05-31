@@ -1,0 +1,56 @@
+// ==============================================
+// EVENT DEFINITIONS - for the 'news' and storyline events.
+// ==============================================
+// This is a WIP. No parser needed until the syntax is fixed.
+// ==============================================
+// Description
+//	name
+//		Translated name of the event.
+//	event
+//		This defined other events that need to have occured so this one get's displayed.
+//	min_date
+//	max_date
+//		The time-frame in which the event pops up.
+//		syntax: "year_since_gamestart day_in_year"
+//	pedia
+//		Link to the ufopedia entry.
+// ==============================================
+
+news_event mumbay
+{
+	name "_Devastating alien terror attack on mumbay"
+	min_date "0 0"
+	max_date "0 0"
+	pedia	rs_news_mumbay
+}
+
+news_event stealth_craft_sighted
+{
+	name "_Alien stealth aircraft sighted"
+	min_date "1 100"	// one year and 100 days after start
+	max_date "1 150"
+	event	mumbay
+	pedia	rs_news_stealth_craft_sighted
+}
+
+// pedia entries for the above
+//
+//tech rs_news_mumbay
+//{
+//	type	news
+//	description	"_mumbay_txt"
+//
+//	requires	nothing
+//	time	999999
+//	researched	false
+//}
+//
+//tech rs_news_stealth_craft_sighted
+//{
+//	type	news
+//	description	"_stealth_craft_sighted_txt"
+//
+//	requires	nothing
+//	time	999999
+//	researched	false
+//}
