@@ -363,13 +363,13 @@ void B_SetBuildingByClick ( int row, int col )
 	{
 		if ( baseCurrent->map[row][col] == -1 )
 		{
+			// TODO: FIXME
 			//Sys_Error( "OK 1\n" );
 			if ( baseCurrent->buildingCurrent->needs && baseCurrent->buildingCurrent->visible )
 				secondBuildingPart = B_GetBuildingType( baseCurrent->buildingCurrent->needs );
-			Sys_Error( "OK 2\n" );
+			Sys_Error( "BAD\n" );	// never reached
 			if ( secondBuildingPart )
 			{
-				Sys_Error( "OK 2-1\n" );
 				if ( baseCurrent->map[row][col+1] != -1 )
 				{
 					Com_Printf( "Can't place this building here - the second part overlapped with another building\n" );
@@ -380,10 +380,8 @@ void B_SetBuildingByClick ( int row, int col )
 				baseCurrent->buildingToBuild = secondBuildingPart->idx;
 			}
 			else {
-				Sys_Error( "OK 2-2\n" );
 				baseCurrent->buildingToBuild = -1;
 			}
-			Sys_Error( "BAD\n" );
 			if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] <= B_UNDER_CONSTRUCTION )
 				B_NewBuilding();
 
