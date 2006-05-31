@@ -1157,7 +1157,7 @@ void MN_BaseMapClick( menuNode_t *node, int x, int y )
 			  && y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE
 			)
 			{
-				entry = B_GetBuildingByID( baseCurrent->map[row][col] );
+				entry = B_GetBuildingByIdx( baseCurrent->map[row][col] );
 				if ( ! entry )
 					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y );
 

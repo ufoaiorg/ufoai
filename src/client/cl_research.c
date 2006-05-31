@@ -281,8 +281,8 @@ void RS_InitTree( void )
 			break;
 		case RS_BUILDING:
 			found = qfalse;
-			for ( j = 0; j < numBuildings; j++ ) {
-				building = &bmBuildings[0][j];
+			for ( j = 0; j < gd.numBuildingTypes; j++ ) {
+				building = &gd.buildingTypes[j];
 				if ( !Q_strncmp( t->provides, building->id, MAX_VAR ) ) { // This building has been 'provided',
 					found = qtrue;
 					if ( !*t->name )
@@ -389,8 +389,8 @@ void RS_ResearchDisplayInfo ( void  )
 	Cvar_Set( "mn_research_selbase", _("Not researched in any base.") );
 	// display the base this tech is researched in
 	if (tech->lab) {
-		if ( tech->lab->base != baseCurrent->idx ) {
-			base = &gd.bases[tech->lab->base];
+		if ( tech->lab->base_idx != baseCurrent->idx ) {
+			base = &gd.bases[tech->lab->base_idx];
 			Cvar_Set( "mn_research_selbase", va( _("Researched in %s"), base->name ) );
 		} else {
 			Cvar_Set( "mn_research_selbase", _("Researched in this base.") );
@@ -727,7 +727,7 @@ void RS_UpdateData ( void )
 				Cvar_Set( va( "mn_researchmax%i",j ), tempstring );		// max number of employees in this base
 				Com_sprintf( tempstring, MAX_VAR, "%i\n", employees_in_building->numEmployees );
 				Cvar_Set( va( "mn_researchassigned%i",j ), tempstring );	// assigned employees to the technology
-				Com_sprintf( tempstring, MAX_VAR, "%i\n", B_EmployeesInBase2 ( tech->lab->base, EMPL_SCIENTIST, qtrue ) );
+				Com_sprintf( tempstring, MAX_VAR, "%i\n", B_EmployeesInBase2 ( tech->lab->base_idx, EMPL_SCIENTIST, qtrue ) );
 				Cvar_Set( va( "mn_researchavailable%i",j ), tempstring );	// max. available scis in the base the tech is reseearched
 			}
 

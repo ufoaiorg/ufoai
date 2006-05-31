@@ -129,16 +129,17 @@ typedef enum
 
 typedef struct building_s
 {
+	int	idx;		// self link in "buildingTypes" OR "buildings" list.
+	int	base_idx;	// Number/index of base this building is located in.
+	
 	char	id[MAX_VAR];
 	char	name[MAX_VAR];
 	// needs determines the second building part
 	char	*image, *needs, *mapPart, *pedia;
 	float	fixCosts, varCosts;
-	int	idInList, timeStart, buildTime;
-	int	base; // number of base this building is located in.
-	/*
-	int	maxWorkers, minWorkers, assignedWorkers; // TODO: remove these and replace them with the employee_s struct
-	*/
+
+	int	timeStart, buildTime;
+
 	// A list of employees assigned to this building.
 	struct employees_s assigned_employees;
 
@@ -278,9 +279,9 @@ typedef struct aircraft_s
 
 typedef struct base_s
 {
-	int		idx;	// self link
+	int	idx;	// self link
 	char	name[MAX_VAR];
-	int		map[BASE_SIZE][BASE_SIZE];
+	int	map[BASE_SIZE][BASE_SIZE];
 
 	qboolean founded;
 	vec2_t pos;
@@ -339,8 +340,6 @@ typedef struct base_s
 } base_t;
 
 extern	base_t	*baseCurrent;							// Currently displayed/accessed base.
-extern	building_t	bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global list of _all_ buildings (even unbuilt) in all bases.
-extern	int numBuildings;								// The global number of entries in the bmBuildings list.
 
 craftupgrade_t    *craftupgrades[MAX_CRAFTUPGRADES];		// This it the global list of all available craft-upgrades
 int    numCraftUpgrades;								// The global number of entries in the "craftupgrades" list.
@@ -368,7 +367,7 @@ void B_BuildingInit( void );
 void B_AssembleMap( void );
 void B_BaseAttack ( void );
 void B_DrawBuilding( void );
-building_t* B_GetBuildingByID ( int id );
+building_t* B_GetBuildingByIdx ( int idx );
 building_t* B_GetBuilding ( char *buildingName );
 
 typedef struct production_s
