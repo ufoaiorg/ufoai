@@ -45,6 +45,9 @@ cvar_t*	mn_base_title;
 int bmDataSize = 0;
 char *bmData, *bmDataStart;
 
+int BuildingConstructionList[MAX_BUILDINGS];
+int numBuildingConstructionList;
+
 /*======================
 The valid definition names for BUILDINGS (building_t) in the basemagagement.ufo file.
 NOTE: the BSFS macro (see cl_basemanagement.h) assignes the values from scriptfile
@@ -641,7 +644,7 @@ void B_BuildingInit( void )
 
 	memset( baseCurrent->allBuildingsList, 0, sizeof(baseCurrent->allBuildingsList) );
 	menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
-
+	numBuildingConstructionList = 0;
 	for ( i = 0; i < gd.numBuildingTypes; i++)
 	{
 		buildingType = &gd.buildingTypes[i];
@@ -650,15 +653,6 @@ void B_BuildingInit( void )
 		
 		if ( buildingType->visible )
 		{
-			
-			/*
-			// TODO search for all existig buildings of this building in the base
-			// only allowed once?
-			if ( buildingType->buildingStatus > B_UNDER_CONSTRUCTION
-			&& !buildingType->moreThanOne )
-				continue;
-			*/
-
 			// allowed more than one time - but limit of BASE_SIZE*BASE_SIZE exceeded
 			if ( buildingType->moreThanOne
 			&& B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, buildingType->buildingType) >= BASE_SIZE*BASE_SIZE )
@@ -670,6 +664,8 @@ void B_BuildingInit( void )
 				if ( buildingType->dependsBuilding < 0
 				|| B_GetMaximumBuildinStatus (baseCurrent->idx,  buildingType->buildingType ) >= B_UNDER_CONSTRUCTION ) {
 					B_BuildingAddToList( _(buildingType->name) );
+					BuildingConstructionList[numBuildingConstructionList] = buildingType->idx;
+					numBuildingConstructionList++;
 				}
 			} else {
 				Com_DPrintf("Building not researched yet %s\n", buildingType->id );
@@ -714,7 +710,7 @@ Script function for clicking the building list text field
 ======================*/
 void B_BuildingClick_f( void )
 {
-	int	num, i;
+	int	num;
 	building_t *building = NULL;
 	
 	if ( Cmd_Argc() < 2 || ! baseCurrent )
@@ -722,13 +718,19 @@ void B_BuildingClick_f( void )
 
 	//which building?
 	num = atoi( Cmd_Argv( 1 ) );
+		
+	Com_DPrintf("B_BuildingClick_f: listnumber %i base %i\n", num, baseCurrent->idx );
 	
-	for ( i = 0; i < gd.numBuildings[ccs.actualBaseID]; i++)
+	if ( num > numBuildingConstructionList || num < 0)
+		return;
+	
+	building = &gd.buildingTypes[BuildingConstructionList[num]];
+
+	/*for ( i = 0; i < gd.numBuildings[baseCurrent->idx]; i++)
 	{
-		building = &gd.buildings[ccs.actualBaseID][i];
+		building = &gd.buildings[baseCurrent->idx][i];
 		// not available in research tree
-		if ( !RS_IsResearched_idx(building->tech) )
-			continue;
+		
 
 		// not visible
 		if ( !building->visible )
@@ -749,12 +751,9 @@ void B_BuildingClick_f( void )
 		num--;
 		if ( num < 0 )
 			break;
-	}
-	if (i != gd.numBuildings[ccs.actualBaseID])
-	{
-		baseCurrent->buildingCurrent = building;
-		B_DrawBuilding();
-	}
+	}*/
+	baseCurrent->buildingCurrent = building;
+	B_DrawBuilding();
 }
 
 /*======================
