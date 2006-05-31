@@ -35,6 +35,9 @@ TODO: new game does not reset basemangagement
 #include "client.h"
 #include "cl_global.h"
 
+//building_t * B_GetFreeBuilding( int base_idx, buildingType_t type );
+building_t * B_GetFreeBuildingType( buildingType_t type );
+
 vec2_t	newBasePos;
 cvar_t*	mn_base_title;
 
@@ -931,12 +934,9 @@ void B_InitEmployees ( void )
 				// TODO: create random data for the employees depending on type and skill-min/max
 				employee->speed = 100;
 			}
-			building = B_GetFreeBuilding( 0, B_QUARTERS );
+			building = B_GetFreeBuildingType( B_QUARTERS );
 			employees_in_building = &building->assigned_employees;
-			// TODO: Fixme
-			// DEBUG OK
 			employees_in_building->assigned[employees_in_building->numEmployees++] = employee->idx;
-			// DEBUG BAD
 			break;
 		//case EMPL_MEDIC: break;
 		//case EMPL_ROBOT: break;
@@ -968,6 +968,7 @@ IN
 OUT
 	building	The (empty) building.
 ======================*/
+/*
 building_t * B_GetFreeBuilding( int base_idx, buildingType_t type )
 {
 	int i;
@@ -976,6 +977,28 @@ building_t * B_GetFreeBuilding( int base_idx, buildingType_t type )
 	
 	for ( i = 0; i < gd.numBuildings[base_idx]; i++ ) {
 		building = &gd.buildings[base_idx][i];
+			if ( building->buildingType == type ) {
+				// found correct building-type
+				employees_in_building = &building->assigned_employees;
+				if ( employees_in_building->numEmployees < employees_in_building->maxEmployees ) {
+					// the bulding has free space for employees
+					return building;
+				}
+			}
+	}
+	// no buildings available at all, no correct building type found or no building free
+	return NULL;
+}
+*/
+
+building_t * B_GetFreeBuildingType( buildingType_t type )
+{
+	int i;
+	building_t *building = NULL;
+	employees_t *employees_in_building = NULL;
+	
+	for ( i = 0; i < gd.numBuildingTypes; i++ ) {
+		building = &gd.buildingTypes[i];
 			if ( building->buildingType == type ) {
 				/* found correct building-type */
 				employees_in_building = &building->assigned_employees;
