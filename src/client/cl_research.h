@@ -69,8 +69,10 @@ typedef struct technology_s
 	char	provides[MAX_VAR];			// The item that this technology enables.
 	float	overalltime, time;					// The time that is needed to research this tech. (in days)
 	researchStatus_t	statusResearch;
-	struct	building_s	*lab;		// Where this techology is currently researched.
-	//struct	building_s	*workshop;	// Where the 'provided' item is currently produced.
+	
+	int base_idx;	// The base this tech is researched in.
+	int lab;		// Where this techology is currently researched.
+	//int workshop;	// Where the 'provided' item is currently produced.
 
 
 	char	image_top[MAX_VAR];

@@ -839,7 +839,7 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 	else
 	{
 		building = B_GetBuilding( id );
-		if ( ! building ) // i´m paranoid
+		if ( ! building ) // i'm paranoid
 			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", id );
 		building->tech = RS_GetTechByProvided( id );
 		if ( ! building->tech )
@@ -881,7 +881,9 @@ void B_InitEmployees ( void )
 
 	// Loop trough the buildings to assign the type of employee.
 	// TODO: this right now assumes that there are not more employees than free quarter space ... but it will not puke if there are.
+
 	for ( i = 0; i < gd.numBuildingTypes; i++ ) {
+		Com_DPrintf("B_InitEmployees: 1 type %i\n", i );
 		building = &gd.buildingTypes[i];
 		employees_in_building = &building->assigned_employees;
 		employees_in_building->cost_per_employee = 100;			// TODO: fixed value right now, needs a configureable one.
@@ -907,6 +909,7 @@ void B_InitEmployees ( void )
 			}
 		}
 	}
+
 	building = NULL;
 	// Generate stats for employees and assign the quarter-less to quarters.
 	for ( i=0; i < gd.numEmployees; i++) {
@@ -919,8 +922,8 @@ void B_InitEmployees ( void )
 			break;
 		case EMPL_SCIENTIST:
 		case EMPL_WORKER:
-			employee->lab = NULL;
-			employee->workshop = NULL;
+			employee->lab = -1;
+			employee->workshop = -1;
 			if ( employee->type == EMPL_SCIENTIST) {
 				// TODO: create random data for the employees depending on type and skill-min/max
 				employee->speed = 100;
@@ -930,7 +933,10 @@ void B_InitEmployees ( void )
 			}
 			building = B_GetFreeBuilding( 0, B_QUARTERS );
 			employees_in_building = &building->assigned_employees;
+			// TODO: Fixme
+			// DEBUG OK
 			employees_in_building->assigned[employees_in_building->numEmployees++] = employee->idx;
+			// DEBUG BAD
 			break;
 		//case EMPL_MEDIC: break;
 		//case EMPL_ROBOT: break;
@@ -1008,7 +1014,7 @@ building_t * B_GetUnusedLab( int base_idx )
 			// check in research tree if the lab is used
 			for ( j=0; j < gd.numTechnologies; j++ ) {
 				tech = &gd.technologies[j];
-				if ( tech->lab == building ) {
+				if ( tech->lab == building->idx ) {
 					used = qtrue;
 					break;
 				}
@@ -1048,7 +1054,7 @@ int B_GetUnusedLabs( int base_idx )
 			// check in research tree if the lab is used
 			for ( j=0; j < gd.numTechnologies; j++ ) {
 				tech = &gd.technologies[j];
-				if ( tech->lab == building ) {
+				if ( tech->lab == building->idx ) {
 					used = qtrue;
 					break;
 				}
@@ -1088,14 +1094,14 @@ void B_ClearBuilding( building_t *building )
 	case B_LAB:
 		for ( i = 0; i < employees_in_building->numEmployees; i++ ) {
 			employee = &gd.employees[employees_in_building->assigned[i]];
-			employee->lab = NULL;
+			employee->lab = -1;
 		}
 		employees_in_building->numEmployees = 0;
 		break;
 	case B_WORKSHOP:
 		for ( i = 0; i < employees_in_building->numEmployees; i++ ) {
 			employee = &gd.employees[employees_in_building->assigned[i]];
-			employee->workshop = NULL;
+			employee->workshop = -1;
 		}
 		employees_in_building->numEmployees = 0;
 		break;
@@ -1115,7 +1121,7 @@ Returns true if the employee is only assigned to quarters, otherwise false.
 ======================*/
 byte B_EmployeeIsFree ( employee_t *employee )
 {
-	return ( ( employee->lab == NULL ) && ( employee->workshop == NULL ) );
+	return ( ( employee->lab < 0 ) && ( employee->workshop < 0 ) );
 }
 
 /*======================
@@ -1175,7 +1181,7 @@ byte B_AssignEmployee ( building_t *building_dest, employeeType_t employee_type 
 		// if an employee was found add it to to the destination building
 		if ( employee ) {
 			employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee->idx;
-			employee->lab = building_dest;
+			employee->lab = building_dest->idx;
 			return qtrue;
 		} else {
 			Com_Printf( "No employee available in this base.\n" );
@@ -1255,7 +1261,7 @@ byte B_RemoveEmployee ( building_t *building )
 		employee = &gd.employees[employees_in_building->assigned[employees_in_building->numEmployees]];	// get the last employee in the building.
 		Com_DPrintf( "B_RemoveEmployee: %s\n", building->id );
 		// unlink the employee from lab (the current building).
-		employee->lab = NULL;
+		employee->lab = -1;
 		Com_DPrintf( "B_RemoveEmployee: %s 2\n", building->id );
 		return qtrue;
 		//break;

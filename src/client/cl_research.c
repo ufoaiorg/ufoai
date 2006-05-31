@@ -388,9 +388,9 @@ void RS_ResearchDisplayInfo ( void  )
 
 	Cvar_Set( "mn_research_selbase", _("Not researched in any base.") );
 	// display the base this tech is researched in
-	if (tech->lab) {
-		if ( tech->lab->base_idx != baseCurrent->idx ) {
-			base = &gd.bases[tech->lab->base_idx];
+	if ( tech->lab >= 0 ) {
+		if ( tech->base_idx != baseCurrent->idx ) {
+			base = &gd.bases[tech->base_idx];
 			Cvar_Set( "mn_research_selbase", va( _("Researched in %s"), base->name ) );
 		} else {
 			Cvar_Set( "mn_research_selbase", _("Researched in this base.") );
@@ -495,18 +495,19 @@ void RS_AssignScientist2( int num )
 
 	if ( tech->statusResearchable ) {
 		// check if there is a free lab available
-		if ( ! tech->lab ) {
+		if ( tech->lab < 0) {
 			building = B_GetUnusedLab( baseCurrent->idx ); // get a free lab from the currently active base
 			if ( building ) {
 				// assign the lab to the tech:
-				tech->lab = building;
+				tech->lab = building->idx;
+				tech->base_idx = building->base_idx;
 			} else {
 				MN_Popup( _("Notice"), _("There is no free lab available.\\You need to build one or free another\\in order to assign scientists to research this technology.\n") );
 				return;
 			}
 		}
 		// assign a scientists to the lab
-		if ( B_AssignEmployee ( tech->lab, EMPL_SCIENTIST ) ) {
+		if ( B_AssignEmployee ( &gd.buildings[baseCurrent->idx][tech->lab], EMPL_SCIENTIST ) ) {
 			tech->statusResearch = RS_RUNNING;
 		} else {
 			Com_Printf( "Can't add scientist from the lab.\n" );
@@ -540,6 +541,7 @@ Remove scientist from the selected research-project.
 void RS_RemoveScientist2( int num )
 {
 	technology_t *tech = NULL;
+	building_t	*building = NULL;
 	employees_t *employees_in_building = NULL;
 
 	if ( num >= researchListLength )
@@ -551,13 +553,15 @@ void RS_RemoveScientist2( int num )
 	tech = researchList[num];
 	// TODO: remove scientists from research-item
 	Com_DPrintf( "RS_RemoveScientist: %s\n", tech->id );
-	if ( tech->lab ) {
-		Com_DPrintf( "RS_RemoveScientist: %s\n", tech->lab->name );
-		if ( B_RemoveEmployee( tech->lab ) ) {
+	if ( tech->lab >= 0 ) {
+		building = &gd.buildings[tech->base_idx][tech->lab];
+		Com_DPrintf( "RS_RemoveScientist: %s\n", building->name );
+		if ( B_RemoveEmployee( building ) ) {
 			Com_DPrintf( "RS_RemoveScientist: Removal done.\n" );
-			employees_in_building = &tech->lab->assigned_employees;
+			employees_in_building = &building->assigned_employees;
 			if ( employees_in_building->numEmployees == 0) {
-				tech->lab = NULL;
+				tech->lab = -1;
+				tech->base_idx = -1;
 				tech->statusResearch = RS_PAUSED;
 			}
 		} else {
@@ -594,6 +598,7 @@ TODO: Check if laboratory is available
 void RS_ResearchStart ( void )
 {
 	technology_t *tech = NULL;
+	building_t *building = NULL;
 	employees_t *employees_in_building = NULL;
 
 	// we are not in base view
@@ -623,10 +628,11 @@ void RS_ResearchStart ( void )
 			MN_Popup( _("Notice"), _("The research on this item is complete.") );
 			break;
 		case RS_NONE:
-			if ( ! tech->lab ) {
+			if ( tech->lab < 0 ) {
 				RS_AssignScientist2( researchListPos ); // add scientists to tech
 			} else {
-				employees_in_building = &tech->lab->assigned_employees;
+				building = &gd.buildings[tech->base_idx][tech->lab];
+				employees_in_building = &building->assigned_employees;
 				if ( employees_in_building->numEmployees < 1  ) {
 					RS_AssignScientist2( researchListPos ); // add scientists to tech
 				}
@@ -695,6 +701,7 @@ void RS_UpdateData ( void )
 	char	name[MAX_VAR];
 	int	i, j;
 	technology_t *tech = NULL;
+	building_t *building = NULL;
 	employees_t *employees_in_building = NULL;
 	char tempstring[MAX_VAR];
 
@@ -720,14 +727,15 @@ void RS_UpdateData ( void )
 			Cvar_Set( va( "mn_researchavailable%i", j ), "av.");
 			Cvar_Set( va( "mn_researchmax%i", j ), "mx.");
 
-			if ( tech->lab ) {
+			if ( tech->lab >= 0 ) {
 				/* display the assigned/free/max numbers of scientists for this tech */
-				employees_in_building = &tech->lab->assigned_employees;
+				building = &gd.buildings[tech->base_idx][tech->lab];
+				employees_in_building = &building->assigned_employees;
 				Com_sprintf( tempstring, MAX_VAR, _("%i max.\n"), employees_in_building->maxEmployees );
 				Cvar_Set( va( "mn_researchmax%i",j ), tempstring );		// max number of employees in this base
 				Com_sprintf( tempstring, MAX_VAR, "%i\n", employees_in_building->numEmployees );
 				Cvar_Set( va( "mn_researchassigned%i",j ), tempstring );	// assigned employees to the technology
-				Com_sprintf( tempstring, MAX_VAR, "%i\n", B_EmployeesInBase2 ( tech->lab->base_idx, EMPL_SCIENTIST, qtrue ) );
+				Com_sprintf( tempstring, MAX_VAR, "%i\n", B_EmployeesInBase2 ( building->base_idx, EMPL_SCIENTIST, qtrue ) );
 				Cvar_Set( va( "mn_researchavailable%i",j ), tempstring );	// max. available scis in the base the tech is reseearched
 			}
 
@@ -890,16 +898,16 @@ void CL_CheckResearchStatus ( void )
 					Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("%i researches finished\n"), newResearch+1 );
 				MN_AddNewMessage( _("Research finished"), messageBuffer, qfalse, MSG_RESEARCH, tech );
 
-				B_ClearBuilding( tech->lab );
-				tech->lab = NULL;
+				B_ClearBuilding( &gd.buildings[tech->base_idx][tech->lab] );
+				tech->base_idx = -1;
+				tech->lab = -1;
 				RS_MarkResearched( tech->id );
 				researchListPos = 0;
 				newResearch++;
 				tech->time = 0;
 			} else {
-				if ( tech->lab ) {
-
-					building = tech->lab;
+				if ( tech->lab >= 0) {
+					building = &gd.buildings[tech->base_idx][tech->lab];
 					Com_DPrintf("building found %s\n", building->name );
 					employees_in_building = &building->assigned_employees;
 					if ( employees_in_building->numEmployees > 0 ) {

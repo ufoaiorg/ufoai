@@ -82,11 +82,12 @@ typedef struct employee_s
 
 	char speed;			// Speed of this Worker/Scientist at research/construction.
 
-	struct building_s *quarters;	// The quarter this employee is assigned to. (all except EMPL_ROBOT)
-	struct building_s *lab;		// The lab this scientist is working in. (only EMPL_SCIENTIST)
-	struct building_s *workshop;	// The lab this worker is working in. (only EMPL_WORKER)
-	//struct building_s *sickbay;	// The sickbay this employee is medicaly treated in. (all except EMPL_ROBOT ... since all can get injured.)
-	//struct building_s *training_room;	// The room this soldier is training in in. (only EMPL_SOLDIER)
+	int base_idx;	// what base this employee is in.
+	int quarters;	// The quarter this employee is assigned to. (all except EMPL_ROBOT)
+	int lab;		// The lab this scientist is working in. (only EMPL_SCIENTIST)
+	int workshop;	// The lab this worker is working in. (only EMPL_WORKER)
+	//int sickbay;	// The sickbay this employee is medicaly treated in. (all except EMPL_ROBOT ... since all can get injured.)
+	//int training_room;	// The room this soldier is training in in. (only EMPL_SOLDIER)
 
 	struct character_s *combat_stats;	// Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked)
 } employee_t;
