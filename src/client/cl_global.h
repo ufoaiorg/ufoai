@@ -50,35 +50,37 @@ typedef struct globalData_s
 	// Total number uf upchapters,
 	int numChapters;
 
-	// == buildings & bases ==
-	// Total number of parsed base-names.
-	int	numBaseNames;
-	
-	// Total number of built bases (how many are enabled).
-	int	numBases;
+	// == employees ==
+	// A list of all phalanx employees (soldiers, scies, workers, etc...).
+	employee_t	employees[MAX_EMPLOYEES];
+	// Total number of employees.
+	int   numEmployees;
+
+	// == bases ==
 	// A list of _all_ bases ... even unbuilt ones.
 	base_t	bases[MAX_BASES];
 	
-	
-	// A list of all possible unique buldings.
+	// Total number of parsed base-names.
+	int	numBaseNames;
+	// Total number of built bases (how many are enabled).
+	int	numBases;
+
+	// == buildings in bases ==
+	// TODO: A list of all possible unique buldings.
 	building_t buildingTypes[MAX_BUILDINGS];
 	int numBuildingTypes;
 
-	// A list of the building-list per base. (new buildings in a base get copied from buildingTypes)
+	// TODO: A list of the building-list per base. (new buildings in a base get copied from buildingTypes)
 	building_t buildings[MAX_BASES][MAX_BUILDINGS];
-	// Total number of buildings per base.
+	// TODO: Total number of buildings per base.
 	int numBuildings[MAX_BASES];
-
+	
 	/* TODO
 	building_t	buildings[MAX_BASES][MAX_BUILDINGS];
 	int numBuildings;
 
-	employee_t	employees[MAX_EMPLOYEES];
-	int   numEmployees;
-
 	craftupgrade_t craftupgrades[MAX_CRAFTUPGRADES];
 	int    numCraftUpgrades;
-
 
 	aircraft_t	aircraft[MAX_BASES][MAX_AIRCRAFT];
 	int	numAircraft;

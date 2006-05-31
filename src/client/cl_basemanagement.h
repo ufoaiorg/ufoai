@@ -77,6 +77,7 @@ typedef enum
 // The definition of an employee
 typedef struct employee_s
 {
+	int idx;				// self link in global employee-list.
 	employeeType_t type;		// What profession does this employee has.
 
 	char speed;			// Speed of this Worker/Scientist at research/construction.
@@ -94,10 +95,10 @@ typedef struct employee_s
 // Struct to be used in building definition - List of employees.
 typedef struct employees_s
 {
-	struct employee_s *assigned[MAX_EMPLOYEES_IN_BUILDING];	// List of employees.
-	int numEmployees;								// Current number of employees.
-	int maxEmployees;								// Max. number of employees (from config file)
-	float cost_per_employee;							// Costs per employee that are added to toom-total-costs-
+	int assigned[MAX_EMPLOYEES_IN_BUILDING];	// List of employees (links to global list).
+	int numEmployees;					// Current number of employees.
+	int maxEmployees;					// Max. number of employees (from config file)
+	float cost_per_employee;				// Costs per employee that are added to toom-total-costs-
 } employees_t;
 
 typedef enum
@@ -339,9 +340,6 @@ typedef struct base_s
 extern	base_t	*baseCurrent;							// Currently displayed/accessed base.
 extern	building_t	bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global list of _all_ buildings (even unbuilt) in all bases.
 extern	int numBuildings;								// The global number of entries in the bmBuildings list.
-
-extern	employee_t	employees[MAX_EMPLOYEES];			// This it the global list of employees.
-extern	int   numEmployees;							// The global number of entries in the "employees" list.
 
 craftupgrade_t    *craftupgrades[MAX_CRAFTUPGRADES];		// This it the global list of all available craft-upgrades
 int    numCraftUpgrades;								// The global number of entries in the "craftupgrades" list.

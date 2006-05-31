@@ -41,9 +41,6 @@ cvar_t*	mn_base_title;
 building_t    bmBuildings[MAX_BASES][MAX_BUILDINGS];	// A global list of _all_ buildings (even unbuilt) in all bases. (see client.h)
 int numBuildings;								// The global number of entries in the bmBuildings list (see client.h)
 
-employee_t	employees[MAX_EMPLOYEES];			// This it the global list of employees (see client.h)
-int   numEmployees;							// The global number of enris in the "employees" list. (see client.h)
-
 int bmDataSize = 0;
 char *bmData, *bmDataStart;
 
@@ -767,8 +764,8 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 					for ( employees_in_building->numEmployees = 0; employees_in_building->numEmployees < numEmployees_temp; )
 					{
 						// assign random employee infos.
-						employees_in_building->assigned[employees_in_building->numEmployees] = &employees[numEmployees++]; // link this employee in the building to the global employee-list.
-						employee = employees_in_building->assigned[employees_in_building->numEmployees];
+						employees_in_building->assigned[employees_in_building->numEmployees] = gd.numEmployees++; // link this employee in the building to the global employee-list.
+						employee = &gd.employees[employees_in_building->assigned[employees_in_building->numEmployees]];
 						employees_in_building->numEmployees++;
 						memset( employee, 0, sizeof( employee_t ) );
 					}
@@ -860,7 +857,7 @@ void B_InitEmployees ( void )
 		if ( employees_in_building->maxEmployees <= 0)
 			employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
 		for ( j = 0; j < employees_in_building->numEmployees; j++ ) {
-			employee = employees_in_building->assigned[j];
+			employee = &gd.employees[employees_in_building->assigned[j]];
 			switch ( building->buildingType )
 			{
 			case B_QUARTERS:
@@ -881,8 +878,8 @@ void B_InitEmployees ( void )
 	}
 	building = NULL;
 	// Generate stats for employees and assign the quarter-less to quarters.
-	for ( i=0; i < numEmployees; i++) {
-		employee = &employees[i];
+	for ( i=0; i < gd.numEmployees; i++) {
+		employee = &gd.employees[i];
 		switch ( employee->type )
 		{
 		case EMPL_SOLDIER:
@@ -902,7 +899,7 @@ void B_InitEmployees ( void )
 			}
 			building = B_GetFreeBuilding( 0, B_QUARTERS );
 			employees_in_building = &building->assigned_employees;
-			employees_in_building->assigned[employees_in_building->numEmployees++] = employee;
+			employees_in_building->assigned[employees_in_building->numEmployees++] = employee->idx;
 			break;
 		//case EMPL_MEDIC: break;
 		//case EMPL_ROBOT: break;
@@ -1059,14 +1056,14 @@ void B_ClearBuilding( building_t *building )
 		break;
 	case B_LAB:
 		for ( i = 0; i < employees_in_building->numEmployees; i++ ) {
-			employee = employees_in_building->assigned[i];
+			employee = &gd.employees[employees_in_building->assigned[i]];
 			employee->lab = NULL;
 		}
 		employees_in_building->numEmployees = 0;
 		break;
 	case B_WORKSHOP:
 		for ( i = 0; i < employees_in_building->numEmployees; i++ ) {
-			employee = employees_in_building->assigned[i];
+			employee = &gd.employees[employees_in_building->assigned[i]];
 			employee->workshop = NULL;
 		}
 		employees_in_building->numEmployees = 0;
@@ -1136,7 +1133,7 @@ byte B_AssignEmployee ( building_t *building_dest, employeeType_t employee_type 
 			if ( building_source->buildingType == B_QUARTERS ) {
 				employees_in_building_source = &building_source->assigned_employees;
 				for ( j = 0; j < employees_in_building_source->numEmployees; j++ ) {
-					employee = employees_in_building_source->assigned[j];
+					employee = &gd.employees[employees_in_building_source->assigned[j]];
 					if ( ( employee->type == employee_type) && B_EmployeeIsFree(employee) )
 						break;
 					else
@@ -1146,7 +1143,7 @@ byte B_AssignEmployee ( building_t *building_dest, employeeType_t employee_type 
 		}
 		// if an employee was found add it to to the destination building
 		if ( employee ) {
-			employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee;
+			employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee->idx;
 			employee->lab = building_dest;
 			return qtrue;
 		} else {
@@ -1224,7 +1221,7 @@ byte B_RemoveEmployee ( building_t *building )
 	*/
 	case B_LAB:
 		employees_in_building->numEmployees--;	// remove the employee from the list of assigned workers in the building.
-		employee = employees_in_building->assigned[employees_in_building->numEmployees];	// get the last employee in the building.
+		employee = &gd.employees[employees_in_building->assigned[employees_in_building->numEmployees]];	// get the last employee in the building.
 		Com_DPrintf( "B_RemoveEmployee: %s\n", building->id );
 		// unlink the employee from lab (the current building).
 		employee->lab = NULL;
@@ -1274,7 +1271,7 @@ int B_EmployeesInBase2 ( int base_id, employeeType_t employee_type, byte free_on
 
 			//loop trough building and add to numEmployeesInBase if a match is found.
 			for ( j = 0; j < employees_in_building->numEmployees; j++ ) {
-				employee = employees_in_building->assigned[j];
+				employee = &gd.employees[employees_in_building->assigned[j]];
 				if ( ( (employee_type == employee->type) || (employee_type ==MAX_EMPL) )
 				&& ( B_EmployeeIsFree(employee) || !free_only ) )
 					numEmployeesInBase++;
