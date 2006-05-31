@@ -136,8 +136,9 @@ typedef struct building_s
 	float	fixCosts, varCosts;
 	int	idInList, timeStart, buildTime;
 	int	base; // number of base this building is located in.
-
+	/*
 	int	maxWorkers, minWorkers, assignedWorkers; // TODO: remove these and replace them with the employee_s struct
+	*/
 	// A list of employees assigned to this building.
 	struct employees_s assigned_employees;
 

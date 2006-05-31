@@ -73,8 +73,8 @@ value_t valid_vars[] =
 	{ "onupgrade",	V_STRING,	BSFS( onUpgrade ) },
 	{ "onrepair",	V_STRING,	BSFS( onRepair ) },
 	{ "onclick",	V_STRING,	BSFS( onClick ) },
-	{ "max_workers",V_INT,	BSFS( maxWorkers ) },		// how many workers should there be max
-	{ "min_workers",V_INT,	BSFS( minWorkers ) },			// how many workers should there be min
+	//{ "max_workers",V_INT,	BSFS( maxWorkers ) },		// how many workers should there be max
+	//{ "min_workers",V_INT,	BSFS( minWorkers ) },			// how many workers should there be min
 
 	//place of a building
 	//needed for flag autobuild
@@ -433,8 +433,8 @@ B_DrawBuilding
 ======================*/
 void B_DrawBuilding( void )
 {
-	building_t *entry;
-
+	building_t *building;
+	employees_t *employees_in_building = NULL;
 	//maybe someone call this command before the buildings are parsed??
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 		return;
@@ -442,32 +442,34 @@ void B_DrawBuilding( void )
 	menuText[TEXT_BUILDING_INFO] = buildingText;
 	*menuText[TEXT_BUILDING_INFO] = '\0';
 
-	entry = baseCurrent->buildingCurrent;
-
+	building = baseCurrent->buildingCurrent;
+	employees_in_building = &building->assigned_employees;
+	
 	B_BuildingStatus();
 
-	if ( entry->buildingStatus[entry->howManyOfThisType] < B_UNDER_CONSTRUCTION && entry->fixCosts )
-		Com_sprintf( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.2f\n"), entry->fixCosts );
+	if ( building->buildingStatus[building->howManyOfThisType] < B_UNDER_CONSTRUCTION && building->fixCosts )
+		Com_sprintf( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.2f\n"), building->fixCosts );
 
-	Q_strcat( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("%i Day(s) to build\n"), entry->buildTime ) );
+	Q_strcat( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("%i Day(s) to build\n"), building->buildTime ) );
 
-	if ( entry->varCosts )
-		Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Running Costs:\t%1.2f\n"), entry->varCosts ) );
+	if ( building->varCosts )
+		Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Running Costs:\t%1.2f\n"), building->varCosts ) );
 
-	if ( entry->assignedWorkers )
-		Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Workers:\t%i\n"), entry->assignedWorkers ) );
+	if ( employees_in_building->numEmployees )
+		Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Workers:\t%i\n"), employees_in_building->numEmployees ) );
 
 	// FIXME: Rename mn_building_name and mn_building_title
-	if ( entry->id )
-		Cvar_Set( "mn_building_name", entry->id );
+	if ( building->id )
+		Cvar_Set( "mn_building_name", building->id );
 
-	if ( entry->name )
-		Cvar_Set( "mn_building_title", entry->name );
+	if ( building->name )
+		Cvar_Set( "mn_building_title", building->name );
 }
 
 /*======================
 B_BuildingRemoveWorkers
 ======================*/
+/* TODO: change to employee-list
 void B_BuildingRemoveWorkers( void )
 {
 	int workers;
@@ -493,10 +495,12 @@ void B_BuildingRemoveWorkers( void )
 		Com_Printf( "Minimum amount of workers reached for this building\n" );
 
 }
+*/
 
 /*======================
 B_BuildingAddWorkers
 ======================*/
+/* TODO: change to employee-list
 void B_BuildingAddWorkers( building_t* b, int workers )
 {
 	if ( b->assignedWorkers + workers <= b->maxWorkers * ( b->howManyOfThisType + 1 ) )
@@ -504,10 +508,12 @@ void B_BuildingAddWorkers( building_t* b, int workers )
 	else
 		Com_Printf( "Maximum amount of workers reached for building %s\n", b->id );
 }
+*/
 
 /*======================
 B_BuildingAddWorkers_f
 ======================*/
+/* TODO: change to employee-list
 void B_BuildingAddWorkers_f( void )
 {
 	int workers;
@@ -527,6 +533,7 @@ void B_BuildingAddWorkers_f( void )
 
 	B_BuildingAddWorkers( baseCurrent->buildingCurrent, workers );
 }
+*/
 
 /*======================
 B_BuildingAddToList
@@ -1763,6 +1770,8 @@ void B_SaveBases( sizebuf_t *sb )
 	// save bases
 	base_t *base;
 	building_t* building;
+	employees_t *employees_in_building = NULL;
+	
 	int i, n, j;
 
 	n = 0;
@@ -1788,6 +1797,7 @@ void B_SaveBases( sizebuf_t *sb )
 			MSG_WriteLong( sb, numBuildings );
 			for ( j = 0, building = bmBuildings[i]; j < numBuildings; j++ )
 			{
+				employees_in_building = &building->assigned_employees;
 				SZ_Write( sb, &building->buildingStatus[0], sizeof(building->buildingStatus) );
 				MSG_WriteLong( sb, building->howManyOfThisType );
 				MSG_WriteFloat( sb, building->pos[0] );
@@ -1796,7 +1806,7 @@ void B_SaveBases( sizebuf_t *sb )
 				MSG_WriteLong( sb, building->timeStart );
 				MSG_WriteLong( sb, building->buildTime );
 				// how many workers?
-				MSG_WriteLong( sb, building->assignedWorkers );
+				MSG_WriteLong( sb, employees_in_building->numEmployees );
 				building++;
 			}
 			AIR_SaveAircraft( sb, base );
@@ -1824,6 +1834,8 @@ void B_LoadBases( sizebuf_t *sb, int version )
 	// load bases
 	base_t *base;
 	building_t* building;
+	employees_t *employees_in_building = NULL;
+	
 	int i, j, num, tmp;
 
 	B_NewBases();
@@ -1873,6 +1885,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 			for ( j = 0, building = bmBuildings[i]; j < tmp; j++, building++ )
 			{
 				memcpy( &building->buildingStatus[0], sb->data + sb->readcount, sizeof(building->buildingStatus) );
+				employees_in_building = &building->assigned_employees;
 				sb->readcount += sizeof(building->buildingStatus);
 
 				building->howManyOfThisType = MSG_ReadLong( sb );
@@ -1882,7 +1895,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 				building->timeStart = MSG_ReadLong( sb );
 				building->buildTime = MSG_ReadLong( sb );
 				// how many workers?
-				building->assignedWorkers = MSG_ReadLong( sb );
+				employees_in_building->numEmployees = MSG_ReadLong( sb );
 			}
 			B_BuildingInit();
 			AIR_LoadAircraft( sb, base, version );
@@ -2028,8 +2041,10 @@ void B_ResetBaseManagement( void )
 	Cmd_AddCommand( "new_building", B_NewBuildingFromList );
 	Cmd_AddCommand( "set_building", B_SetBuilding );
 	Cmd_AddCommand( "mn_setbasetitle", B_SetBaseTitle );
+	/* TODO: change to employee-list
 	Cmd_AddCommand( "add_workers", B_BuildingAddWorkers_f );
 	Cmd_AddCommand( "remove_workers", B_BuildingRemoveWorkers );
+	*/
 	Cmd_AddCommand( "rename_base", B_RenameBase );
 	Cmd_AddCommand( "base_attack", B_BaseAttack );
 	Cmd_AddCommand( "base_changename", B_ChangeBaseNameCmd );
@@ -2119,8 +2134,10 @@ int B_CheckBuildingConstruction ( building_t* b, int baseID )
 			if ( b->onConstruct )
 				Cbuf_AddText( va("%s %i", b->onConstruct, baseID ) );
 
+			/*
 			if ( b->minWorkers )
 				B_BuildingAddWorkers( b, b->minWorkers );
+			*/
 
 			newBuilding++;
 		}
