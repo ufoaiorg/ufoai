@@ -231,7 +231,7 @@ void B_SetUpBase ( void )
 }
 
 /*======================
-B_GetBuilding
+B_GetBuildingType
 
 Returns the building in the global building-types list that has the unique name buildingID.
 pa
@@ -243,7 +243,7 @@ OUT
 						if no id was give the current building is returned,
 						otherwise->NULL
 ======================*/
-building_t* B_GetBuilding ( char *buildingName )
+building_t* B_GetBuildingType ( char *buildingName )
 {
 	int i = 0;
 
@@ -296,6 +296,8 @@ Start construction if yes, otherwise
 ======================*/
 void B_ConstructBuilding( void )
 {
+	building_t *building_to_build = NULL;
+	
 	//maybe someone call this command before the buildings are parsed??
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 		return;
@@ -310,10 +312,11 @@ void B_ConstructBuilding( void )
 	Com_DPrintf("Construction of %s is starting\n", baseCurrent->buildingCurrent->id );
 
 	// second building part
-	if ( baseCurrent->buildingToBuild != NULL )
+	if ( baseCurrent->buildingToBuild >= 0 )
 	{
-		baseCurrent->buildingToBuild->buildingStatus[baseCurrent->buildingToBuild->howManyOfThisType] = B_UNDER_CONSTRUCTION;
-		baseCurrent->buildingToBuild = NULL;
+		building_to_build = &gd.buildingTypes[baseCurrent->buildingToBuild];
+		building_to_build->buildingStatus[building_to_build->howManyOfThisType] = B_UNDER_CONSTRUCTION;
+		baseCurrent->buildingToBuild = -1;
 	}
 
 	baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] = B_UNDER_CONSTRUCTION;
@@ -360,11 +363,13 @@ void B_SetBuildingByClick ( int row, int col )
 	{
 		if ( baseCurrent->map[row][col] == -1 )
 		{
+			//Sys_Error( "OK 1\n" );
 			if ( baseCurrent->buildingCurrent->needs && baseCurrent->buildingCurrent->visible )
-				secondBuildingPart = B_GetBuilding( baseCurrent->buildingCurrent->needs );
-
+				secondBuildingPart = B_GetBuildingType( baseCurrent->buildingCurrent->needs );
+			Sys_Error( "OK 2\n" );
 			if ( secondBuildingPart )
 			{
+				Sys_Error( "OK 2-1\n" );
 				if ( baseCurrent->map[row][col+1] != -1 )
 				{
 					Com_Printf( "Can't place this building here - the second part overlapped with another building\n" );
@@ -372,10 +377,13 @@ void B_SetBuildingByClick ( int row, int col )
 				}
 
  				baseCurrent->map[row][col+1] = baseCurrent->buildingCurrent->idx;
-				baseCurrent->buildingToBuild = secondBuildingPart;
+				baseCurrent->buildingToBuild = secondBuildingPart->idx;
 			}
-			else
-				baseCurrent->buildingToBuild = NULL;
+			else {
+				Sys_Error( "OK 2-2\n" );
+				baseCurrent->buildingToBuild = -1;
+			}
+			Sys_Error( "BAD\n" );
 			if ( baseCurrent->buildingCurrent->buildingStatus[baseCurrent->buildingCurrent->howManyOfThisType] <= B_UNDER_CONSTRUCTION )
 				B_NewBuilding();
 
@@ -841,7 +849,7 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 	}
 	else
 	{
-		building = B_GetBuilding( id );
+		building = B_GetBuildingType( id );
 		if ( ! building ) // i'm paranoid
 			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", id );
 		building->tech = RS_GetTechByProvided( id );
@@ -855,7 +863,7 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 			// get values
 			if ( !Q_strncmp( token, "depends", 4 ) ) {
 
-				building->dependsBuilding = B_GetBuilding( COM_EParse( text, errhead, id ) );
+				building->dependsBuilding = B_GetBuildingType( COM_EParse( text, errhead, id ) );
 				if ( !building->dependsBuilding )
 					Sys_Error("Could not find building depend of %s\n", building->id );
 				if ( !*text ) return;
@@ -1408,7 +1416,8 @@ void B_ParseBases( char *title, char **text )
 
 		base = &gd.bases[gd.numBaseNames];
 		memset( base, 0, sizeof( base_t ) );
-		base->idx=gd.numBaseNames;
+		base->idx = gd.numBaseNames;
+		base->buildingToBuild = -1;
 		
 		// get the title
 		token = COM_EParse( text, errhead, title );
@@ -1470,7 +1479,7 @@ void B_DrawBase( menuNode_t *node )
 				}
 				else
 				{
-					secondEntry = B_GetBuilding ( entry->needs );
+					secondEntry = B_GetBuildingType ( entry->needs );
 					if ( ! secondEntry )
 						Sys_Error( "Error in ufo-scriptfile - could not find the needed building\n" );
 					Q_strncpyz( image, secondEntry->image, MAX_QPATH );

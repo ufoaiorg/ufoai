@@ -91,7 +91,7 @@ called from MN_UpDrawEntry when type of technology_t is RS_BUILDING
 =================*/
 void UP_BuildingDescription ( technology_t* t )
 {
-	building_t* b = B_GetBuilding ( t->provides );
+	building_t* b = B_GetBuildingType ( t->provides );
 
 	if ( !b )
 	{

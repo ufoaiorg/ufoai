@@ -334,8 +334,8 @@ typedef struct base_s
 	int		equipType;
 	int		nextUCN; // unified character id (base dependent)
 
-	// needed if there is another buildingpart to build
-	struct building_s *buildingToBuild;
+	// needed if there is another buildingpart to build (link to gd.buildingTypes)
+	int buildingToBuild;
 
 	struct building_s *buildingCurrent;
 } base_t;
@@ -368,7 +368,7 @@ void B_AssembleMap( void );
 void B_BaseAttack ( void );
 void B_DrawBuilding( void );
 building_t* B_GetBuildingByIdx ( int idx );
-building_t* B_GetBuilding ( char *buildingName );
+building_t* B_GetBuildingType ( char *buildingName );
 
 typedef struct production_s
 {
