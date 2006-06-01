@@ -111,12 +111,12 @@ typedef enum
 
 typedef enum
 {
-	B_NOT_SET, // not build yet
-	B_UNDER_CONSTRUCTION, // right now under construction
-	B_CONSTRUCTION_FINISHED, // construction finished - but no workers assigned
+	B_STATUS_NOT_SET, // not build yet
+	B_STATUS_UNDER_CONSTRUCTION, // right now under construction
+	B_STATUS_CONSTRUCTION_FINISHED, // construction finished - no workers assigned
 				 // and building needs workers
-	B_WORKING, // working normal (or workers assigned when needed)
-	B_DOWN // totally damaged
+	B_STATUS_WORKING, // working normal (or workers assigned when needed)
+	B_STATUS_DOWN // totally damaged
 } buildingStatus_t;
 
 typedef enum
@@ -132,7 +132,7 @@ typedef struct building_s
 {
 	int	idx;		// self link in "buildingTypes" OR "buildings" list.
 	int	base_idx;	// Number/index of base this building is located in.
-	
+
 	char	id[MAX_VAR];
 	char	name[MAX_VAR];
 	// needs determines the second building part

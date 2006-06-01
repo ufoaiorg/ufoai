@@ -153,21 +153,21 @@ void B_BuildingStatus( void )
 
 	switch ( baseCurrent->buildingCurrent->buildingStatus )
 	{
-		case B_NOT_SET:
+		case B_STATUS_NOT_SET:
 			NumberOfBuildings = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, baseCurrent->buildingCurrent->buildingType);
 			if ( NumberOfBuildings )
 				Cvar_Set("mn_building_status", va(_("Already %i in base"), NumberOfBuildings ));
 			break;
-		case B_UNDER_CONSTRUCTION:
+		case B_STATUS_UNDER_CONSTRUCTION:
 			Cvar_Set("mn_building_status", va ( _("Constructing: %i day(s)"), daysLeft ) );
 			break;
-		case B_CONSTRUCTION_FINISHED:
+		case B_STATUS_CONSTRUCTION_FINISHED:
 			Cvar_Set("mn_building_status", _("Construction finished") );
 			break;
-		case B_WORKING:
+		case B_STATUS_WORKING:
 			Cvar_Set("mn_building_status", _("Working 100%") );
 			break;
-		case B_DOWN:
+		case B_STATUS_DOWN:
 			Cvar_Set("mn_building_status", _("Down") );
 			break;
 		default:
@@ -204,7 +204,7 @@ void B_SetUpBase ( void )
 			Com_DPrintf("Base %i new building:%s (%i) at (%.0f:%.0f)\n", baseCurrent->idx, building->id, i, building->pos[0], building->pos[1] );
 			baseCurrent->buildingCurrent = building;
 			B_SetBuildingByClick ( (int)building->pos[0], (int)building->pos[1] );
-			building->buildingStatus = B_WORKING;
+			building->buildingStatus = B_STATUS_WORKING;
 			/*
 			if ( building->moreThanOne
 			  && building->howManyOfThisType < BASE_SIZE*BASE_SIZE )
@@ -262,9 +262,9 @@ void B_RemoveBuilding( void )
 	building = baseCurrent->buildingCurrent;
 
 	//only allowed when it is still under construction
-	if ( building->buildingStatus == B_UNDER_CONSTRUCTION )
+	if ( building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION )
 	{
-		building->buildingStatus = B_NOT_SET;
+		building->buildingStatus = B_STATUS_NOT_SET;
 //		baseCurrent->map[building->pos[0]][building->pos[1]] = -1;
 // 		if ( building->dependsBuilding >= 0)
 // 			baseCurrent->map[building->dependsBuilding->pos[0]][building->dependsBuilding->pos[1]] = -1;
@@ -300,11 +300,11 @@ void B_ConstructBuilding( void )
 	if ( baseCurrent->buildingToBuild >= 0 )
 	{
 		building_to_build = &gd.buildingTypes[baseCurrent->buildingToBuild];
-		building_to_build->buildingStatus = B_UNDER_CONSTRUCTION;
+		building_to_build->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
 		baseCurrent->buildingToBuild = -1;
 	}
 
-	baseCurrent->buildingCurrent->buildingStatus = B_UNDER_CONSTRUCTION;
+	baseCurrent->buildingCurrent->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
 	baseCurrent->buildingCurrent->timeStart = ccs.date.day;
 
 	CL_UpdateCredits( ccs.credits - baseCurrent->buildingCurrent->fixCosts );
@@ -331,7 +331,7 @@ void B_NewBuilding( void )
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 		return;
 
-	if ( baseCurrent->buildingCurrent->buildingStatus < B_UNDER_CONSTRUCTION )
+	if ( baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION )
 		B_ConstructBuilding();
 
 	B_BuildingStatus();
@@ -381,7 +381,7 @@ void B_SetBuildingByClick ( int row, int col )
 			else {
 				baseCurrent->buildingToBuild = -1;
 			}
-			if ( baseCurrent->buildingCurrent->buildingStatus <= B_UNDER_CONSTRUCTION )
+			if ( baseCurrent->buildingCurrent->buildingStatus <= B_STATUS_UNDER_CONSTRUCTION )
 				B_NewBuilding();
 
  			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->idx;
@@ -445,7 +445,7 @@ void B_NewBuildingFromList( void )
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 		return;
 
-	if ( baseCurrent->buildingCurrent->buildingStatus < B_UNDER_CONSTRUCTION )
+	if ( baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION )
 		B_NewBuilding();
 	else
 		B_RemoveBuilding();
@@ -471,7 +471,7 @@ void B_DrawBuilding( void )
 
 	B_BuildingStatus();
 
-	if ( building->buildingStatus < B_UNDER_CONSTRUCTION && building->fixCosts )
+	if ( building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts )
 		Com_sprintf( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.2f\n"), building->fixCosts );
 
 	Q_strcat( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("%i Day(s) to build\n"), building->buildTime ) );
@@ -542,7 +542,7 @@ B_GetMaximumBuildingStatus
 buildingStatus_t B_GetMaximumBuildingStatus ( int base_idx,  buildingType_t buildingType )
 {
 	int i;
-	buildingStatus_t status = B_NOT_SET;
+	buildingStatus_t status = B_STATUS_NOT_SET;
 
 	if ( base_idx < 0 )  {
 		Com_Printf("Bad base-index given: %i\n", base_idx );
@@ -604,7 +604,11 @@ void B_BuildingInit( void )
 			{
 				/* TODO: check if this out-commented code is still needed
 				if ( buildingType->dependsBuilding < 0
+<<<<<<< .mine
+				|| B_GetMaximumBuildinStatus (baseCurrent->idx,  buildingType->buildingType ) >= B_STATUS_UNDER_CONSTRUCTION ) {
+=======
 				|| B_GetMaximumBuildingStatus (baseCurrent->idx,  buildingType->buildingType ) >= B_UNDER_CONSTRUCTION ) {
+>>>>>>> .r1220
 				*/
 					B_BuildingAddToList( _(buildingType->name) );
 					BuildingConstructionList[numBuildingConstructionList] = buildingType->idx;
@@ -1499,10 +1503,10 @@ void B_DrawBase( menuNode_t *node )
 			{
 				switch ( building->buildingStatus )
 				{
-				case B_DOWN:
-				case B_CONSTRUCTION_FINISHED:
+				case B_STATUS_DOWN:
+				case B_STATUS_CONSTRUCTION_FINISHED:
 					break;
-				case B_UNDER_CONSTRUCTION:
+				case B_STATUS_UNDER_CONSTRUCTION:
 					time = building->buildTime - ( ccs.date.day - building->timeStart );
 					re.FontDrawString( "f_small", 0, x + 10, y + 10, node->size[0], va(_("%i days left"), time ) );
 					break;
@@ -2150,10 +2154,10 @@ int B_CheckBuildingConstruction ( building_t* building, int base_idx )
 {
 	int newBuilding = 0;
 
-	if ( building->buildingStatus == B_UNDER_CONSTRUCTION ) {
+	if ( building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION ) {
 		if ( building->timeStart && ( building->timeStart + building->buildTime ) <= ccs.date.day )
 		{
-			building->buildingStatus = B_WORKING;
+			building->buildingStatus = B_STATUS_WORKING;
 
 			if ( building->onConstruct )
 				Cbuf_AddText( va("%s %i", building->onConstruct, base_idx ) );
@@ -2168,8 +2172,8 @@ int B_CheckBuildingConstruction ( building_t* building, int base_idx )
 	}
 
 #if 0
-	if ( building->buildingStatus == B_UNDER_CONSTRUCTION && building->timeStart + building->buildTime < ccs.date.day )
-		building->buildingStatus = B_CONSTRUCTION_FINISHED;
+	if ( building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION && building->timeStart + building->buildTime < ccs.date.day )
+		building->buildingStatus = B_STATUS_CONSTRUCTION_FINISHED;
 #endif
 	if ( newBuilding )
 		B_BuildingInit();	//update the building-list
