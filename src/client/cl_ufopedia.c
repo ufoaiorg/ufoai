@@ -298,7 +298,14 @@ void MN_UpPrev_f( void )
 	// get previous entry
 	if ( upCurrent->prev ) {
 		// Check if the previous entry is researched already otherwise go to the next entry.
-		do { upCurrent = &gd.technologies[upCurrent->prev]; } while ( upCurrent && !RS_IsResearched_ptr(upCurrent) );
+		do {
+			if ( upCurrent->idx != upCurrent->prev && upCurrent->prev >= 0 ) {
+				upCurrent = &gd.technologies[upCurrent->prev];
+			} else {
+				Com_DPrintf("MN_UpPrev_f: There was a 'prev' entry for '%s' where there should not be one.\n",upCurrent->id);
+				upCurrent = NULL;
+			}
+		} while ( upCurrent && !RS_IsResearched_ptr(upCurrent) );
 		if ( upCurrent ) {
 			MN_UpDrawEntry( upCurrent );
 			return;
@@ -335,7 +342,7 @@ void MN_UpNext_f( void )
 	if ( upCurrent && ( upCurrent->next >= 0) ) {
 		// Check if the next entry is researched already otherwise go to the next entry.
 		do {
-			if ( upCurrent->idx != upCurrent->next ) {
+			if ( upCurrent->idx != upCurrent->next && upCurrent->next >= 0 ) {
 				upCurrent = &gd.technologies[upCurrent->next];
 			} else {
 				Com_DPrintf("MN_UpNext_f: There was a 'next' entry for '%s' where there should not be one.\n",upCurrent->id);
