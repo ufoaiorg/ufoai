@@ -187,7 +187,7 @@ void B_SetUpBase ( void )
 	building_t	*building = NULL;
 
 	assert( baseCurrent );
-	B_BuildingInit();
+	B_BuildingInit();	//update the building-list
 	Com_DPrintf("Set up for %i\n", baseCurrent->idx );
 	
 	for (i = 0 ; i < gd.numBuildingTypes; i++ )
@@ -200,6 +200,7 @@ void B_SetUpBase ( void )
 			building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 			memcpy( building, &gd.buildingTypes[i], sizeof( building_t ) );
 			building->idx = gd.numBuildings[baseCurrent->idx];	// self-link to building-list in base
+			gd.numBuildings[baseCurrent->idx]++;
 			building->base_idx = baseCurrent->idx;			// Link to the base.
 			Com_DPrintf("Base %i new building:%s (%i) at (%.0f:%.0f)\n", baseCurrent->idx, building->id, i, building->pos[0], building->pos[1] );
 			baseCurrent->buildingCurrent = building;
@@ -210,10 +211,8 @@ void B_SetUpBase ( void )
 			  && building->howManyOfThisType < BASE_SIZE*BASE_SIZE )
 				building->howManyOfThisType++;
 			*/
-			//update the array
-			baseCurrent->buildingCurrent = building;
-			gd.numBuildings[baseCurrent->idx]++;
-			B_BuildingInit();
+
+			B_BuildingInit();	//update the building-list
 		}
 	}
 }
@@ -357,9 +356,9 @@ void B_SetBuildingByClick ( int row, int col )
 		building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 		memcpy( building, &gd.buildingTypes[baseCurrent->buildingCurrent->idx], sizeof( building_t ) );
 		building->idx = gd.numBuildings[baseCurrent->idx];	// self-link to building-list in base
+		gd.numBuildings[baseCurrent->idx]++;
 		building->base_idx = baseCurrent->idx;				// Link to the base.
 		baseCurrent->buildingCurrent = building;
-		gd.numBuildings[baseCurrent->idx]++;
 	}
 	
 	if ( 0 <= row&& row < BASE_SIZE
@@ -400,7 +399,7 @@ void B_SetBuildingByClick ( int row, int col )
 					break;
 			}
 			B_ResetBuildingCurrent();
-			B_BuildingInit();	// update buildings-list
+			B_BuildingInit();	// update the building-list
 		} else {
 			Com_Printf( "There is already a building\n" );
 			Com_DPrintf( "Building: %i at (row:%i, col:%i)\n", baseCurrent->map[row][col], row, col );
@@ -631,6 +630,8 @@ buildingStatus_t B_GetMaximumBuildinStatus ( int base_idx,  buildingType_t build
 
 /*======================
 B_BuildingInit
+
+update the building-list
 ======================*/
 void B_BuildingInit( void )
 {
@@ -2019,7 +2020,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 				// how many workers?
 				employees_in_building->numEmployees = MSG_ReadLong( sb );
 			}
-			B_BuildingInit();
+			B_BuildingInit();	//update the building-list
 			AIR_LoadAircraft( sb, base, version );
 
 			// read whole team list
@@ -2262,7 +2263,7 @@ int B_CheckBuildingConstruction ( building_t* building, int base_idx )
 		building->buildingStatus = B_CONSTRUCTION_FINISHED;
 #endif
 	if ( newBuilding )
-		B_BuildingInit();
+		B_BuildingInit();	//update the building-list
 
 	return newBuilding;
 }
