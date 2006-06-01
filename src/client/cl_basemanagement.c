@@ -35,9 +35,8 @@ TODO: new game does not reset basemangagement
 #include "client.h"
 #include "cl_global.h"
 
-//building_t * B_GetFreeBuilding( int base_idx, buildingType_t type );
 building_t * B_GetFreeBuildingType( buildingType_t type );
-int B_GetNumberOfBuildingsInBaseByType ( int base_idx, buildingType_t buildingType );
+int B_GetNumberOfBuildingsInBaseByType ( int base_idx, int type_idx );
 
 vec2_t	newBasePos;
 cvar_t*	mn_base_title;
@@ -154,7 +153,7 @@ void B_BuildingStatus( void )
 	switch ( baseCurrent->buildingCurrent->buildingStatus )
 	{
 		case B_STATUS_NOT_SET:
-			NumberOfBuildings = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, baseCurrent->buildingCurrent->buildingType);
+			NumberOfBuildings = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, baseCurrent->buildingCurrent->type_idx);
 			if ( NumberOfBuildings )
 				Cvar_Set("mn_building_status", va(_("Already %i in base"), NumberOfBuildings ));
 			break;
@@ -353,7 +352,7 @@ void B_SetBuildingByClick ( int row, int col )
 	if ( baseCurrent->buildingCurrent->base_idx < 0) { // if the building is in gd.buildingTypes[]
 		// copy building from type-list to base-buildings-list
 		building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
-		memcpy( building, &gd.buildingTypes[baseCurrent->buildingCurrent->idx], sizeof( building_t ) );
+		memcpy( building, &gd.buildingTypes[baseCurrent->buildingCurrent->type_idx], sizeof( building_t ) );
 		building->idx = gd.numBuildings[baseCurrent->idx];	// self-link to building-list in base
 		gd.numBuildings[baseCurrent->idx]++;
 		building->base_idx = baseCurrent->idx;				// Link to the base.
@@ -516,7 +515,7 @@ void B_BuildingAddToList( char *title )
 /*======================
 B_GetNumberOfBuildingsInBaseByType
 ======================*/
-int B_GetNumberOfBuildingsInBaseByType ( int base_idx, buildingType_t buildingType )
+int B_GetNumberOfBuildingsInBaseByType ( int base_idx, int type_idx )
 {
 	int i;
 	int NumberOfBuildings;
@@ -529,10 +528,10 @@ int B_GetNumberOfBuildingsInBaseByType ( int base_idx, buildingType_t buildingTy
 	NumberOfBuildings = 0;
 	for ( i = 0; i < gd.numBuildings[base_idx]; i++ )
 	{
-		if ( gd.buildings[base_idx][i].buildingType == buildingType )
+		if ( gd.buildings[base_idx][i].type_idx == type_idx )
 			NumberOfBuildings++;
 	}
-	Com_DPrintf("B_GetNumberOfB...Type: '%s' - type: %i - num_b: %i\n", gd.bases[base_idx].name, buildingType, NumberOfBuildings);
+	Com_DPrintf("B_GetNumberOfB...Type: '%s' - type_idx: %i - num_b: %i\n", gd.bases[base_idx].name, gd.buildingTypes[type_idx].id, NumberOfBuildings);
 	return NumberOfBuildings;
 }
 
@@ -587,7 +586,7 @@ void B_BuildingInit( void )
 
 		if ( buildingType->visible )
 		{
-			numSameBuildings = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, buildingType->buildingType);
+			numSameBuildings = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, buildingType->type_idx);
 
 			if ( buildingType->moreThanOne) {
 				// skip if limit of BASE_SIZE*BASE_SIZE exceeded
@@ -726,7 +725,8 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 		Com_DPrintf("...found building %s\n", building->id );
 
 		//set standard values
-		building->idx = gd.numBuildingTypes;
+		building->type_idx = gd.numBuildingTypes;
+		building->idx = -1;
 		building->base_idx = -1;
 		building->tech = -1;
 		building->dependsBuilding = -1;
