@@ -376,24 +376,24 @@ void B_SetBuildingByClick ( int row, int col )
 					return;
 				}
 
- 				baseCurrent->map[row][col+1] = baseCurrent->buildingCurrent->idx;
+				baseCurrent->map[row][col+1] = baseCurrent->buildingCurrent->idx;
 				baseCurrent->buildingToBuild = secondBuildingPart->idx;
 			}
 			else {
 				baseCurrent->buildingToBuild = -1;
 			}
-			if ( baseCurrent->buildingCurrent->buildingStatus <= B_STATUS_UNDER_CONSTRUCTION )
+			if ( baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION )
 				B_NewBuilding();
 
- 			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->idx;
+			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->idx;
 
- 			switch ( baseCurrent->buildingCurrent->buildingType )
- 			{
+			switch ( baseCurrent->buildingCurrent->buildingType )
+			{
 				case B_LAB:
-	 				baseCurrent->hasLab = 1;
+					baseCurrent->hasLab = 1;
 					break;
 				case B_HANGAR:
-	 				baseCurrent->hasHangar = 1;
+					baseCurrent->hasHangar = 1;
 					break;
 				default:
 					break;
@@ -407,8 +407,6 @@ void B_SetBuildingByClick ( int row, int col )
 	}
 	else
 		Com_Printf( "Invalid coordinates\n" );
-
-
 }
 
 /*======================
@@ -450,7 +448,6 @@ void B_NewBuildingFromList( void )
 		B_NewBuilding();
 	else
 		B_RemoveBuilding();
-
 }
 
 /*======================
