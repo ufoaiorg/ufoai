@@ -349,18 +349,20 @@ void B_SetBuildingByClick ( int row, int col )
 	if (!baseCurrent->buildingCurrent) Sys_Error( "no current building\n" );
 
 	//TODO: this is bad style (baseCurrent->buildingCurrent shouldn't link to gd.buildingTypes at all ... it's just not logical)
-	if ( baseCurrent->buildingCurrent->base_idx < 0) { // if the building is in gd.buildingTypes[]
+	// if the building is in gd.buildingTypes[]
+	if ( baseCurrent->buildingCurrent->base_idx < 0) {
 		// copy building from type-list to base-buildings-list
 		building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 		memcpy( building, &gd.buildingTypes[baseCurrent->buildingCurrent->type_idx], sizeof( building_t ) );
-		building->idx = gd.numBuildings[baseCurrent->idx];	// self-link to building-list in base
+		// self-link to building-list in base
+		building->idx = gd.numBuildings[baseCurrent->idx];
 		gd.numBuildings[baseCurrent->idx]++;
-		building->base_idx = baseCurrent->idx;				// Link to the base.
+		// Link to the base.
+		building->base_idx = baseCurrent->idx;
 		baseCurrent->buildingCurrent = building;
 	}
 
-	if ( 0 <= row&& row < BASE_SIZE
-	&& 0 <= col && col < BASE_SIZE )
+	if ( 0 <= row&& row < BASE_SIZE && 0 <= col && col < BASE_SIZE )
 	{
 		if ( baseCurrent->map[row][col] < 0 )
 		{
@@ -469,6 +471,8 @@ void B_DrawBuilding( void )
 	employees_in_building = &building->assigned_employees;
 
 	B_BuildingStatus();
+
+	Com_sprintf( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va("%s\n", building->name) );
 
 	if ( building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts )
 		Com_sprintf( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.2f\n"), building->fixCosts );
@@ -637,7 +641,7 @@ B_BuildingInfoClick_f
 
 Opens up the 'pedia if you right click on a building in the list.
 TODO: really only do this on rightclick
-TODO: left cklick should show building-status
+TODO: left click should show building-status
 ======================*/
 void B_BuildingInfoClick_f( void )
 {
@@ -666,7 +670,10 @@ void B_BuildingClick_f( void )
 	Com_DPrintf("B_BuildingClick_f: listnumber %i base %i\n", num, baseCurrent->idx );
 
 	if ( num > numBuildingConstructionList || num < 0)
+	{
+		Com_DPrintf("B_BuildingClick_f: max exceeded %i/%i\n", num, numBuildingConstructionList );
 		return;
+	}
 
 	building = &gd.buildingTypes[BuildingConstructionList[num]];
 
