@@ -193,7 +193,7 @@ void B_SetUpBase ( void )
 	{
 		if ( gd.numBases == 1 && gd.buildingTypes[i].firstbase )
 		{
-			// TODO: implement check for moreThanOne and remove the howManyOfThisType
+			// TODO: implement check for moreThanOne
 			building = &gd.buildings[ccs.actualBaseID][gd.numBuildings[ccs.actualBaseID]];
 			memcpy( building, &gd.buildingTypes[i], sizeof( building_t ) );
 			building->idx = gd.numBuildings[ccs.actualBaseID];	// self-link to building-list in base
@@ -650,6 +650,7 @@ B_BuildingInit
 void B_BuildingInit( void )
 {
 	int i;
+	int numSameBuildings;
 	building_t *buildingType = NULL;
 	
 	// maybe someone call this command before the bases are parsed??
@@ -667,11 +668,19 @@ void B_BuildingInit( void )
 		
 		if ( buildingType->visible )
 		{
-			// allowed more than one time - but limit of BASE_SIZE*BASE_SIZE exceeded
-			if ( buildingType->moreThanOne
-			&& B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, buildingType->buildingType) >= BASE_SIZE*BASE_SIZE )
-				continue;
+			numSameBuildings = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, buildingType->buildingType);
 
+			if ( buildingType->moreThanOne) {
+				// skip if limit of BASE_SIZE*BASE_SIZE exceeded
+				if (numSameBuildings >= BASE_SIZE*BASE_SIZE )
+					continue;
+			} else {
+				// skip if there is already one and not more than one is allowed.
+				if ( numSameBuildings > 0) 
+					continue;
+			}
+			
+			// if the building is researched add it to the list
 			if ( RS_IsResearched_idx( buildingType->tech ) )
 			{
 				Com_DPrintf("Building researched %s\n", buildingType->id );
