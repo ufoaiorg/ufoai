@@ -189,13 +189,12 @@ void B_SetUpBase ( void )
 	assert( baseCurrent );
 	B_BuildingInit();	//update the building-list
 	Com_DPrintf("Set up for %i\n", baseCurrent->idx );
-	
+
 	for (i = 0 ; i < gd.numBuildingTypes; i++ )
 	{
 		if (( gd.numBases == 1 && gd.buildingTypes[i].firstbase )
 		|| gd.buildingTypes[i].autobuild )
 		{
-			Com_DPrintf("DEBUG: idx %i  actual %i\n", baseCurrent->idx, i, ccs.actualBaseID );
 			// TODO: implement check for moreThanOne
 			building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 			memcpy( building, &gd.buildingTypes[i], sizeof( building_t ) );
@@ -283,7 +282,7 @@ Start construction if yes, otherwise
 void B_ConstructBuilding( void )
 {
 	building_t *building_to_build = NULL;
-	
+
 	//maybe someone call this command before the buildings are parsed??
 	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
 		return;
@@ -349,9 +348,9 @@ void B_SetBuildingByClick ( int row, int col )
 
 	if (!baseCurrent) Sys_Error( "no current base\n" );
 	if (!baseCurrent->buildingCurrent) Sys_Error( "no current building\n" );
-		
+
 	//TODO: this is bad style (baseCurrent->buildingCurrent shouldn't link to gd.buildingTypes at all ... it's just not logical)
-	if ( baseCurrent->buildingCurrent->base_idx < 0) { // if the building is in gd.buildingTypes[] 
+	if ( baseCurrent->buildingCurrent->base_idx < 0) { // if the building is in gd.buildingTypes[]
 		// copy building from type-list to base-buildings-list
 		building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 		memcpy( building, &gd.buildingTypes[baseCurrent->buildingCurrent->idx], sizeof( building_t ) );
@@ -360,7 +359,7 @@ void B_SetBuildingByClick ( int row, int col )
 		building->base_idx = baseCurrent->idx;				// Link to the base.
 		baseCurrent->buildingCurrent = building;
 	}
-	
+
 	if ( 0 <= row&& row < BASE_SIZE
 	&& 0 <= col && col < BASE_SIZE )
 	{
@@ -469,7 +468,7 @@ void B_DrawBuilding( void )
 
 	building = baseCurrent->buildingCurrent;
 	employees_in_building = &building->assigned_employees;
-	
+
 	B_BuildingStatus();
 
 	if ( building->buildingStatus < B_UNDER_CONSTRUCTION && building->fixCosts )
@@ -590,12 +589,12 @@ int B_GetNumberOfBuildingsInBaseByType ( int base_idx, buildingType_t buildingTy
 {
 	int i;
 	int NumberOfBuildings;
-	
+
 	if ( base_idx < 0 || base_idx >= gd.numBases )  {
 		Com_Printf("Bad base-index given: %i\n", base_idx );
 		return -1;
 	}
-	
+
 	NumberOfBuildings = 0;
 	for ( i = 0; i < gd.numBuildings[base_idx]; i++ )
 	{
@@ -613,12 +612,12 @@ buildingStatus_t B_GetMaximumBuildinStatus ( int base_idx,  buildingType_t build
 {
 	int i;
 	buildingStatus_t status = B_NOT_SET;
-	
+
 	if ( base_idx < 0 )  {
 		Com_Printf("Bad base-index given: %i\n", base_idx );
 		return -1;
 	}
-	
+
 	for ( i = 0; i < gd.numBuildings[base_idx]; i++)
 	{
 		if ( gd.buildings[base_idx][i].buildingType == buildingType )
@@ -638,18 +637,18 @@ void B_BuildingInit( void )
 	int i;
 	int numSameBuildings;
 	building_t *buildingType = NULL;
-	
+
 	// maybe someone call this command before the bases are parsed??
 	if ( ! baseCurrent )
 		return;
-	
+
 	Com_DPrintf("B_BuildingInit: Updating b-list for '%s'\n", baseCurrent->name );
 	Com_DPrintf("B_BuildingInit: Buildings in base: %i\n", gd.numBuildings[baseCurrent->idx]);
-	
+
 	memset( baseCurrent->allBuildingsList, 0, sizeof(baseCurrent->allBuildingsList) );
 	menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
 	numBuildingConstructionList = 0;
-	
+
 	for ( i = 0; i < gd.numBuildingTypes; i++)
 	{
 		buildingType = &gd.buildingTypes[i];
@@ -665,7 +664,7 @@ void B_BuildingInit( void )
 					continue;
 			} else {
 				// skip if there is already one and not more than one is allowed.
-				if ( numSameBuildings > 0) 
+				if ( numSameBuildings > 0)
 					continue;
 			}
 
@@ -731,18 +730,18 @@ void B_BuildingClick_f( void )
 {
 	int	num;
 	building_t *building = NULL;
-	
+
 	if ( Cmd_Argc() < 2 || ! baseCurrent )
 		return;
 
 	//which building?
 	num = atoi( Cmd_Argv( 1 ) );
-		
+
 	Com_DPrintf("B_BuildingClick_f: listnumber %i base %i\n", num, baseCurrent->idx );
-	
+
 	if ( num > numBuildingConstructionList || num < 0)
 		return;
-	
+
 	building = &gd.buildingTypes[BuildingConstructionList[num]];
 
 	baseCurrent->buildingCurrent = building;
@@ -801,7 +800,7 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 		building->tech = -1;
 		building->dependsBuilding = -1;
 		building->visible = qtrue;
-		
+
 		gd.numBuildingTypes++;
 		do {
 			// get the name type
@@ -901,7 +900,7 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 		building = B_GetBuildingType( id );
 		if ( ! building ) // i'm paranoid
 			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", id );
-		
+
 		tech_link = RS_GetTechByProvided( id );
 		if ( tech_link ) {
 			building->tech = tech_link->idx;
@@ -1037,7 +1036,7 @@ building_t * B_GetFreeBuilding( int base_idx, buildingType_t type )
 	int i;
 	building_t *building = NULL;
 	employees_t *employees_in_building = NULL;
-	
+
 	for ( i = 0; i < gd.numBuildings[base_idx]; i++ ) {
 		building = &gd.buildings[base_idx][i];
 			if ( building->buildingType == type ) {
@@ -1059,7 +1058,7 @@ building_t * B_GetFreeBuildingType( buildingType_t type )
 	int i;
 	building_t *building = NULL;
 	employees_t *employees_in_building = NULL;
-	
+
 	for ( i = 0; i < gd.numBuildingTypes; i++ ) {
 		building = &gd.buildingTypes[i];
 			if ( building->buildingType == type ) {
@@ -1445,7 +1444,7 @@ void B_ParseBases( char *title, char **text )
 	char	*errhead = "B_ParseBases: unexptected end of file (names ";
 	char	*token;
 	base_t	*base;
-	
+
 	gd.numBaseNames = 0;
 
 	// get token
@@ -1474,7 +1473,7 @@ void B_ParseBases( char *title, char **text )
 		base->idx = gd.numBaseNames;
 		base->buildingToBuild = -1;
 		memset( base->map, -1, sizeof( int)*BASE_SIZE*BASE_SIZE );
-		
+
 		// get the title
 		token = COM_EParse( text, errhead, title );
 		if ( !*text ) break;
@@ -1595,15 +1594,9 @@ B_BaseInit
 ======================*/
 void B_BaseInit( void )
 {
-	ccs.actualBaseID = (int) Cvar_VariableValue("mn_base_id");
+	int baseID = (int) Cvar_VariableValue("mn_base_id");
 
-	baseCurrent = &gd.bases[ ccs.actualBaseID ];
-
-	// stuff for homebase
-	if ( ccs.actualBaseID == 0 )
-	{
-
-	}
+	baseCurrent = &gd.bases[ baseID ];
 
 	//these are the workers you can set on buildings
 	Cvar_SetValue( "mn_available_workers", 0 );
@@ -1631,18 +1624,18 @@ B_NextBase
 ======================*/
 void B_NextBase( void )
 {
-	ccs.actualBaseID = (int)Cvar_VariableValue( "mn_base_id" );
-	Com_DPrintf( "cur-base=%i num-base=%i\n", ccs.actualBaseID, gd.numBases );
-	if ( ccs.actualBaseID < gd.numBases-1 )
-		ccs.actualBaseID++;
+	int baseID = (int)Cvar_VariableValue( "mn_base_id" );
+	Com_DPrintf( "cur-base=%i num-base=%i\n", baseID, gd.numBases );
+	if ( baseID < gd.numBases-1 )
+		baseID++;
 	else
-		ccs.actualBaseID = 0;
-	Com_DPrintf( "new-base=%i\n", ccs.actualBaseID );
-	if ( ! gd.bases[ccs.actualBaseID].founded )
+		baseID = 0;
+	Com_DPrintf( "new-base=%i\n", baseID );
+	if ( ! gd.bases[baseID].founded )
 		return;
 	else
 	{
-		Cbuf_AddText( va( "mn_select_base %i\n", ccs.actualBaseID ) );
+		Cbuf_AddText( va( "mn_select_base %i\n", baseID ) );
 		Cbuf_Execute();
 	}
 }
@@ -1652,20 +1645,20 @@ B_PrevBase
 ======================*/
 void B_PrevBase( void )
 {
-	ccs.actualBaseID = (int)Cvar_VariableValue( "mn_base_id" );
-	Com_DPrintf( "cur-base=%i num-base=%i\n", ccs.actualBaseID, gd.numBases );
-	if ( ccs.actualBaseID > 0 )
-		ccs.actualBaseID--;
+	int baseID = (int)Cvar_VariableValue( "mn_base_id" );
+	Com_DPrintf( "cur-base=%i num-base=%i\n", baseID, gd.numBases );
+	if ( baseID > 0 )
+		baseID--;
 	else
-		ccs.actualBaseID = gd.numBases-1;
-	Com_DPrintf( "new-base=%i\n", ccs.actualBaseID );
+		baseID = gd.numBases-1;
+	Com_DPrintf( "new-base=%i\n", baseID );
 
 	// this must be false - but i'm paranoid'
-	if ( ! gd.bases[ccs.actualBaseID].founded )
+	if ( ! gd.bases[baseID].founded )
 		return;
 	else
 	{
-		Cbuf_AddText( va( "mn_select_base %i\n", ccs.actualBaseID ) );
+		Cbuf_AddText( va( "mn_select_base %i\n", baseID ) );
 		Cbuf_Execute();
 	}
 }
@@ -1675,40 +1668,34 @@ B_SelectBase
 ======================*/
 void B_SelectBase( void )
 {
+	int baseID;
 	if ( Cmd_Argc() < 2 )
 	{
 		Com_Printf( "Usage: mn_select_base <baseID>\n" );
 		return;
 	}
-	ccs.actualBaseID = atoi( Cmd_Argv( 1 ) );
+	baseID = atoi( Cmd_Argv( 1 ) );
 
 	// set up a new base
 	// called from *.ufo with -1
-	if ( ccs.actualBaseID < 0 )
+	if ( baseID < 0 )
 	{
 		mapAction = MA_NEWBASE;
-		ccs.actualBaseID = 0;
-		// get next unused base
-		/* TODO: remove
-		while ( gd.bases[ccs.actualBaseID].founded && ccs.actualBaseID < MAX_BASES )
-			ccs.actualBaseID++;
-		*/
-		ccs.actualBaseID = gd.numBases;
-		if ( ccs.actualBaseID < MAX_BASES )
+		baseID = gd.numBases;
+		if ( baseID < MAX_BASES )
 		{
-			baseCurrent = &gd.bases[ ccs.actualBaseID ];
+			baseCurrent = &gd.bases[ baseID ];
 		}
 		else
 		{
 			Com_Printf( "MaxBases reached\n" );
 			// select the first base in list
-			ccs.actualBaseID = 0;
-			baseCurrent = &gd.bases[ ccs.actualBaseID ];
+			baseCurrent = &gd.bases[0];
 		}
 	}
-	else if ( ccs.actualBaseID < MAX_BASES )
+	else if ( baseID < MAX_BASES )
 	{
-		baseCurrent = &gd.bases[ ccs.actualBaseID ];
+		baseCurrent = &gd.bases[ baseID ];
 		menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
 		if ( baseCurrent->founded ) {
 			mapAction = MA_NONE;
@@ -1719,10 +1706,8 @@ void B_SelectBase( void )
 		}
 	}
 	else
-	{
-		ccs.actualBaseID = 0;
 		baseCurrent = &gd.bases[0];
-	}
+
 	Cvar_SetValue( "mn_base_id", baseCurrent->idx );
 	Cvar_Set( "mn_base_title", baseCurrent->name );
 }
@@ -1870,7 +1855,6 @@ void B_NewBases( void )
 	int	i;
 	char	title[MAX_VAR];
 
-	ccs.actualBaseID = 0;
 	for ( i = 0; i < MAX_BASES; i++ )
 	{
 		Q_strncpyz( title, gd.bases[i].name, MAX_VAR );
@@ -1896,7 +1880,7 @@ void B_SaveBases( sizebuf_t *sb )
 	base_t *base;
 	building_t* building;
 	employees_t *employees_in_building = NULL;
-	
+
 	int i, n, j;
 
 	n = 0;
@@ -1959,7 +1943,7 @@ void B_LoadBases( sizebuf_t *sb, int version )
 	base_t *base;
 	building_t* building;
 	employees_t *employees_in_building = NULL;
-	
+
 	int i, j, num, tmp;
 
 	B_NewBases();
@@ -1970,7 +1954,6 @@ void B_LoadBases( sizebuf_t *sb, int version )
 	//     not true) being lost. Do you understand what I mean??
 	for ( i = 0, base = gd.bases; i < num; i++, base++ )
 	{
-		ccs.actualBaseID = i;
 		baseCurrent = base;
 		baseCurrent->allBuildingsList[0] = '\0';
 		baseCurrent->aircraftCurrent = 0;
@@ -2057,7 +2040,7 @@ void B_BuildingList_f ( void )
 		Com_Printf("\nBase id %i: %s\n", i, base->name );
 		for ( j = 0; j < gd.numBuildings[base->idx]; j++ )
 		{
-			
+
 			Com_Printf("...Building: %s #%i - id: %i\n", building->id, B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, building->buildingType), building->idx );
 			Com_Printf("...image: %s\n", building->image );
 			Com_Printf(".....Status:\n");
@@ -2140,10 +2123,6 @@ B_ResetBaseManagement
 ======================*/
 void B_ResetBaseManagement( void )
 {
-	// reset menu structures
-	gd.numBuildings[ccs.actualBaseID] = 0;
-	ccs.actualBaseID = 0;
-
 	Com_DPrintf("Reset basemanagement\n");
 
 	// get data memory
@@ -2182,7 +2161,6 @@ void B_ResetBaseManagement( void )
 	Cmd_AddCommand( "reset_building_current", B_ResetBuildingCurrent );
 	Cmd_AddCommand( "baselist", B_BaseList_f );
 	Cmd_AddCommand( "buildinglist", B_BuildingList_f );
-	Cvar_SetValue( "mn_base_id", ccs.actualBaseID );
 }
 
 /*======================
@@ -2257,7 +2235,7 @@ int B_CheckBuildingConstruction ( building_t* building, int base_idx )
 			newBuilding++;
 		}
 	}
-	
+
 #if 0
 	if ( building->buildingStatus == B_UNDER_CONSTRUCTION && building->timeStart + building->buildTime < ccs.date.day )
 		building->buildingStatus = B_CONSTRUCTION_FINISHED;

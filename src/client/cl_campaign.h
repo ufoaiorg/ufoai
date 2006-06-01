@@ -173,8 +173,6 @@ typedef struct ccs_s
 
 	vec2_t	center;
 	float	zoom;
-
-	int	actualBaseID;
 } ccs_t;
 
 typedef enum mapAction_s
