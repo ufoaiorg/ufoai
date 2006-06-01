@@ -192,7 +192,8 @@ void B_SetUpBase ( void )
 	
 	for (i = 0 ; i < gd.numBuildingTypes; i++ )
 	{
-		if ( gd.numBases == 1 && gd.buildingTypes[i].firstbase )
+		if (( gd.numBases == 1 && gd.buildingTypes[i].firstbase )
+		|| gd.buildingTypes[i].autobuild )
 		{
 			Com_DPrintf("DEBUG: idx %i  actual %i\n", baseCurrent->idx, i, ccs.actualBaseID );
 			// TODO: implement check for moreThanOne
@@ -200,29 +201,7 @@ void B_SetUpBase ( void )
 			memcpy( building, &gd.buildingTypes[i], sizeof( building_t ) );
 			building->idx = gd.numBuildings[baseCurrent->idx];	// self-link to building-list in base
 			building->base_idx = baseCurrent->idx;			// Link to the base.
-			Com_DPrintf("firstbase: %s (%i) at (%.0f:%.0f)\n", building->id, i, building->pos[0], building->pos[1] );
-			baseCurrent->buildingCurrent = building;
-			B_SetBuildingByClick ( (int)building->pos[0], (int)building->pos[1] );
-			building->buildingStatus = B_WORKING;
-			/*
-			if ( building->moreThanOne
-			  && building->howManyOfThisType < BASE_SIZE*BASE_SIZE )
-				building->howManyOfThisType++;
-			*/
-			//update the array
-			baseCurrent->buildingCurrent = building;
-			gd.numBuildings[baseCurrent->idx]++;
-			B_BuildingInit();
-		}
-		else if ( gd.buildingTypes[i].autobuild )
-		{
-			Com_DPrintf("DEBUG: idx %i  actual %i\n", baseCurrent->idx, i, ccs.actualBaseID );
-			// TODO: implement check for moreThanOne and remove the howManyOfThisType
-			building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
-			memcpy( building, &gd.buildingTypes[i], sizeof( building_t ) );
-			building->idx = gd.numBuildings[baseCurrent->idx];	// self-link to building-list in base
-			building->base_idx = baseCurrent->idx;			// Link to the base.
-			Com_DPrintf("autobuild: %s (%i) at (%.0f:%.0f)\n", building->id, i, building->pos[0], building->pos[1] );
+			Com_DPrintf("Base %i new building:%s (%i) at (%.0f:%.0f)\n", baseCurrent->idx, building->id, i, building->pos[0], building->pos[1] );
 			baseCurrent->buildingCurrent = building;
 			B_SetBuildingByClick ( (int)building->pos[0], (int)building->pos[1] );
 			building->buildingStatus = B_WORKING;
@@ -421,6 +400,7 @@ void B_SetBuildingByClick ( int row, int col )
 					break;
 			}
 			B_ResetBuildingCurrent();
+			B_BuildingInit();	// update buildings-list
 		} else {
 			Com_Printf( "There is already a building\n" );
 			Com_DPrintf( "Building: %i at (row:%i, col:%i)\n", baseCurrent->map[row][col], row, col );
@@ -661,16 +641,19 @@ void B_BuildingInit( void )
 	// maybe someone call this command before the bases are parsed??
 	if ( ! baseCurrent )
 		return;
-
+	
+	Com_DPrintf("B_BuildingInit: Updating b-list for '%s'\n", baseCurrent->name );
+	Com_DPrintf("B_BuildingInit: Buildings in base: %i\n", gd.numBuildings[baseCurrent->idx]);
+	
 	memset( baseCurrent->allBuildingsList, 0, sizeof(baseCurrent->allBuildingsList) );
 	menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
 	numBuildingConstructionList = 0;
+	
 	for ( i = 0; i < gd.numBuildingTypes; i++)
 	{
 		buildingType = &gd.buildingTypes[i];
 		//make an entry in list for this building
-		
-		
+
 		if ( buildingType->visible )
 		{
 			numSameBuildings = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, buildingType->buildingType);
@@ -684,7 +667,7 @@ void B_BuildingInit( void )
 				if ( numSameBuildings > 0) 
 					continue;
 			}
-			
+
 			// if the building is researched add it to the list
 			if ( RS_IsResearched_idx( buildingType->tech ) )
 			{
@@ -1550,7 +1533,7 @@ void B_DrawBase( menuNode_t *node )
 					if (building->image) { // TODO:DEBUG
 						Q_strncpyz( image, building->image, MAX_QPATH );
 					} else {
-						Com_DPrintf( "B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx );
+						//Com_DPrintf( "B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx );
 					}
 				}
 				else
@@ -1704,8 +1687,12 @@ void B_SelectBase( void )
 	{
 		mapAction = MA_NEWBASE;
 		ccs.actualBaseID = 0;
+		// get next unused base
+		/* TODO: remove
 		while ( gd.bases[ccs.actualBaseID].founded && ccs.actualBaseID < MAX_BASES )
 			ccs.actualBaseID++;
+		*/
+		ccs.actualBaseID = gd.numBases;
 		if ( ccs.actualBaseID < MAX_BASES )
 		{
 			baseCurrent = &gd.bases[ ccs.actualBaseID ];
@@ -1733,7 +1720,7 @@ void B_SelectBase( void )
 	else
 	{
 		ccs.actualBaseID = 0;
-		baseCurrent = &gd.bases[ ccs.actualBaseID ];
+		baseCurrent = &gd.bases[0];
 	}
 	Cvar_SetValue( "mn_base_id", baseCurrent->idx );
 	Cvar_Set( "mn_base_title", baseCurrent->name );
