@@ -604,11 +604,7 @@ void B_BuildingInit( void )
 			{
 				/* TODO: check if this out-commented code is still needed
 				if ( buildingType->dependsBuilding < 0
-<<<<<<< .mine
 				|| B_GetMaximumBuildinStatus (baseCurrent->idx,  buildingType->buildingType ) >= B_STATUS_UNDER_CONSTRUCTION ) {
-=======
-				|| B_GetMaximumBuildingStatus (baseCurrent->idx,  buildingType->buildingType ) >= B_UNDER_CONSTRUCTION ) {
->>>>>>> .r1220
 				*/
 					B_BuildingAddToList( _(buildingType->name) );
 					BuildingConstructionList[numBuildingConstructionList] = buildingType->idx;
