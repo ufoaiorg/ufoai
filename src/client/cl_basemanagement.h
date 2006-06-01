@@ -130,7 +130,8 @@ typedef enum
 
 typedef struct building_s
 {
-	int	idx;		// self link in "buildingTypes" OR "buildings" list.
+	int	idx;		// self link in "buildings" list.
+	int	type_idx;	// self link in "buildingTypes" list.
 	int	base_idx;	// Number/index of base this building is located in.
 
 	char	id[MAX_VAR];
