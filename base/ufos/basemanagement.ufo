@@ -25,8 +25,6 @@ building building_commando
 	image		base/commando
 	fixcosts	1000
 	depends		building_powerplant
-//	max_workers	6
-//	min_workers	2
 	build_time	4
 	varcosts	50
 	map_name	"commando"
@@ -41,8 +39,6 @@ building building_powerplant
 	image		base/powerplant
 	fixcosts	300
 	depends		building_entrance
-//	max_workers	10
-//	min_workers	3
 	build_time	2
 	varcosts	150
 	firstbase	true
@@ -57,8 +53,6 @@ building building_lab
 	image		base/lab
 	depends		building_commando
 	fixcosts	1500
-//	max_workers	10
-//	min_workers	2
 	max_employees	10
 	more_than_one	true
 	employees_firstbase	2
@@ -77,8 +71,6 @@ building building_storage
 	image		base/storage
 	fixcosts	500
 	depends		building_commando
-//	max_workers	4
-//	min_workers	1
 	build_time	5
 	varcosts	10
 	map_name	"storage"
@@ -93,8 +85,7 @@ building building_intercept
 	image		base/intercept
 	fixcosts	5000
 	depends		building_commando
-//	max_workers	4
-//	min_workers	1
+	more_than_one	true
 	onconstruct	"newaircraft interceptor;aircraft_list;"
 	build_time	5
 	varcosts	10
@@ -108,7 +99,7 @@ building building_quarters
 	image		base/quarters
 	fixcosts	300
 	depends		building_commando
-//	max_workers	20
+	more_than_one	true
 	max_employees	20
 	build_time	4
 	varcosts	10
@@ -125,8 +116,7 @@ building building_ufo_hangar
 	image		base/adrop
 	fixcosts	1000
 	depends		building_lab
-//	max_workers	5
-//	min_workers	2
+	more_than_one	true
 	build_time	6
 	varcosts	50
 	map_name	"adrop"
@@ -141,8 +131,7 @@ building building_hangar
 	fixcosts	1000
 	needs		building_hangar2
 	depends		building_quarters
-//	max_workers	5
-//	min_workers	2
+	more_than_one	true
 	build_time	6
 	varcosts	50
 	map_name	"drop"
@@ -157,10 +146,9 @@ building building_hangar2
 	name		"_Hangar"
 	image		base/drop1
 	fixcosts	1000
+	more_than_one	true
 	depends		building_quarters
 	visible		false
-//	max_workers	5
-//	min_workers	2
 	build_time	6
 	varcosts	50
 	pedia		rs_building_hangar
@@ -172,8 +160,6 @@ building building_teamroom
 	image		base/teamroom
 	fixcosts	300
 	depends		building_quarters
-//	max_workers	20
-//	min_workers	1
 	build_time	3
 	map_name	"teamroom"
 	pedia		rs_building_teamroom
@@ -185,8 +171,6 @@ building building_radar
 	image		base/radar
 	fixcosts	3000
 	depends		building_commando
-//	max_workers	5
-//	min_workers	1
 	build_time	10
 	map_name	"radar"
 	pedia		rs_building_radar
