@@ -491,75 +491,6 @@ void B_DrawBuilding( void )
 }
 
 /*======================
-B_BuildingRemoveWorkers
-======================*/
-/* TODO: change to employee-list
-void B_BuildingRemoveWorkers( void )
-{
-	int workers;
-
-	//maybe someone call this command before the buildings are parsed??
-	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
-		return;
-
-	if ( Cmd_Argc() < 2 )
-	{
-		Com_Printf( "Usage: remove_workers <amount>\n" );
-		return;
-	}
-
-	//how many workers?
-	workers = atoi( Cmd_Argv( 1 ) );
-
-	if (baseCurrent->buildingCurrent->assignedWorkers - workers
-	 >= baseCurrent->buildingCurrent->minWorkers
-	    * ( baseCurrent->buildingCurrent->howManyOfThisType + 1 ) )
-		baseCurrent->buildingCurrent->assignedWorkers -= workers;
-	else
-		Com_Printf( "Minimum amount of workers reached for this building\n" );
-
-}
-*/
-
-/*======================
-B_BuildingAddWorkers
-======================*/
-/* TODO: change to employee-list
-void B_BuildingAddWorkers( building_t* b, int workers )
-{
-	if ( b->assignedWorkers + workers <= b->maxWorkers * ( b->howManyOfThisType + 1 ) )
-		b->assignedWorkers += workers;
-	else
-		Com_Printf( "Maximum amount of workers reached for building %s\n", b->id );
-}
-*/
-
-/*======================
-B_BuildingAddWorkers_f
-======================*/
-/* TODO: change to employee-list
-void B_BuildingAddWorkers_f( void )
-{
-	int workers;
-
-	//maybe someone call this command before the buildings are parsed??
-	if ( ! baseCurrent || ! baseCurrent->buildingCurrent )
-		return;
-
-	if ( Cmd_Argc() < 2 )
-	{
-		Com_Printf( "Usage: add_workers <amount>\n" );
-		return;
-	}
-
-	//how many workers?
-	workers = atoi( Cmd_Argv( 1 ) );
-
-	B_BuildingAddWorkers( baseCurrent->buildingCurrent, workers );
-}
-*/
-
-/*======================
 B_BuildingAddToList
 
 Handles the building list of constructable buildings
@@ -601,14 +532,14 @@ int B_GetNumberOfBuildingsInBaseByType ( int base_idx, buildingType_t buildingTy
 		if ( gd.buildings[base_idx][i].buildingType == buildingType )
 			NumberOfBuildings++;
 	}
-	Com_DPrintf("B_GetNumberOfBuildings...Type: base '%s' - type: %i - num_b: %i\n", gd.bases[base_idx].name, buildingType, NumberOfBuildings);
+	Com_DPrintf("B_GetNumberOfB...Type: '%s' - type: %i - num_b: %i\n", gd.bases[base_idx].name, buildingType, NumberOfBuildings);
 	return NumberOfBuildings;
 }
 
 /*======================
-B_GetMaximumBuildinStatus
+B_GetMaximumBuildingStatus
 ======================*/
-buildingStatus_t B_GetMaximumBuildinStatus ( int base_idx,  buildingType_t buildingType )
+buildingStatus_t B_GetMaximumBuildingStatus ( int base_idx,  buildingType_t buildingType )
 {
 	int i;
 	buildingStatus_t status = B_NOT_SET;
@@ -673,7 +604,7 @@ void B_BuildingInit( void )
 			{
 				/* TODO: check if this out-commented code is still needed
 				if ( buildingType->dependsBuilding < 0
-				|| B_GetMaximumBuildinStatus (baseCurrent->idx,  buildingType->buildingType ) >= B_UNDER_CONSTRUCTION ) {
+				|| B_GetMaximumBuildingStatus (baseCurrent->idx,  buildingType->buildingType ) >= B_UNDER_CONSTRUCTION ) {
 				*/
 					B_BuildingAddToList( _(buildingType->name) );
 					BuildingConstructionList[numBuildingConstructionList] = buildingType->idx;
