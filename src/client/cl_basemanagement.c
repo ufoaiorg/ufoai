@@ -619,6 +619,7 @@ int B_GetNumberOfBuildingsInBaseByType ( int base_idx, buildingType_t buildingTy
 		if ( gd.buildings[base_idx][i].buildingType == buildingType )
 			NumberOfBuildings++; 
 	}
+	Com_DPrintf("B_GetNumberOfBuildingsInBaseByType: base %i - type: %i - num_buildings: %i\n", base_idx, buildingType, NumberOfBuildings);
 	return NumberOfBuildings;
 }
 
