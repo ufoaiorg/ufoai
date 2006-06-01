@@ -192,7 +192,7 @@ void B_SetUpBase ( void )
 	for (i = 0 ; i < gd.numBuildingTypes; i++ )
 	{
 		if (( gd.numBases == 1 && gd.buildingTypes[i].firstbase )
-		|| gd.buildingTypes[i].autobuild )
+		  || gd.buildingTypes[i].autobuild )
 		{
 			// TODO: implement check for moreThanOne
 			building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
@@ -572,7 +572,7 @@ void B_BuildingInit( void )
 	if ( ! baseCurrent )
 		return;
 
-	Com_DPrintf("B_BuildingInit: Updating b-list for '%s'\n", baseCurrent->name );
+	Com_DPrintf("B_BuildingInit: Updating b-list for '%s' (%i)\n", baseCurrent->name, baseCurrent->idx );
 	Com_DPrintf("B_BuildingInit: Buildings in base: %i\n", gd.numBuildings[baseCurrent->idx]);
 
 	memset( baseCurrent->allBuildingsList, 0, sizeof(baseCurrent->allBuildingsList) );
@@ -592,25 +592,21 @@ void B_BuildingInit( void )
 				// skip if limit of BASE_SIZE*BASE_SIZE exceeded
 				if (numSameBuildings >= BASE_SIZE*BASE_SIZE )
 					continue;
-			} else {
-				// skip if there is already one and not more than one is allowed.
-				if ( numSameBuildings > 0)
-					continue;
+			} else if ( numSameBuildings > 0 ) {
+				continue;
 			}
 
 			// if the building is researched add it to the list
 			if ( RS_IsResearched_idx( buildingType->tech ) )
 			{
-				/* TODO: check if this out-commented code is still needed
+				// TODO: check if this out-commented code is still needed
 				if ( buildingType->dependsBuilding < 0
-				|| B_GetMaximumBuildinStatus (baseCurrent->idx,  buildingType->buildingType ) >= B_STATUS_UNDER_CONSTRUCTION ) {
-				*/
+				  || B_GetMaximumBuildingStatus (baseCurrent->idx, buildingType->buildingType ) >= B_STATUS_CONSTRUCTION_FINISHED )
+				{
 					B_BuildingAddToList( _(buildingType->name) );
 					BuildingConstructionList[numBuildingConstructionList] = buildingType->idx;
 					numBuildingConstructionList++;
-				/*
 				}
-				END TODO*/
 			} else {
 				Com_DPrintf("Building not researched yet %s\n", buildingType->id );
 			}
@@ -1596,6 +1592,9 @@ void B_PrevBase( void )
 
 /*======================
 B_SelectBase
+
+Called when a base is opened or a new base is created on geoscape
+for a new base the baseID is -1
 ======================*/
 void B_SelectBase( void )
 {
@@ -1613,9 +1612,12 @@ void B_SelectBase( void )
 	{
 		mapAction = MA_NEWBASE;
 		baseID = gd.numBases;
+		Com_DPrintf( "B_SelectBase: new baseID is %i\n", baseID );
 		if ( baseID < MAX_BASES )
 		{
 			baseCurrent = &gd.bases[ baseID ];
+			baseCurrent->idx = baseID;
+			Com_DPrintf( "B_SelectBase: baseID is valid for base: %s\n", baseCurrent->name );
 		}
 		else
 		{
@@ -1626,6 +1628,7 @@ void B_SelectBase( void )
 	}
 	else if ( baseID < MAX_BASES )
 	{
+		Com_DPrintf( "B_SelectBase: select base with id %i\n", baseID );
 		baseCurrent = &gd.bases[ baseID ];
 		menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
 		if ( baseCurrent->founded ) {
@@ -1664,6 +1667,7 @@ void B_BuildBase( void )
 	{
 		if ( CL_NewBase( newBasePos ) )
 		{
+			Com_DPrintf("B_BuildBase: numBases: %i\n", gd.numBases );
 			baseCurrent->idx = gd.numBases-1;
 			baseCurrent->founded = qtrue;
 			stats.basesBuild++;
