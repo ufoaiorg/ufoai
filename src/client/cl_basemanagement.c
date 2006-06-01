@@ -189,15 +189,17 @@ void B_SetUpBase ( void )
 	assert( baseCurrent );
 	B_BuildingInit();
 	Com_DPrintf("Set up for %i\n", baseCurrent->idx );
+	
 	for (i = 0 ; i < gd.numBuildingTypes; i++ )
 	{
 		if ( gd.numBases == 1 && gd.buildingTypes[i].firstbase )
 		{
+			Com_DPrintf("DEBUG: idx %i  actual %i\n", baseCurrent->idx, i, ccs.actualBaseID );
 			// TODO: implement check for moreThanOne
-			building = &gd.buildings[ccs.actualBaseID][gd.numBuildings[ccs.actualBaseID]];
+			building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 			memcpy( building, &gd.buildingTypes[i], sizeof( building_t ) );
-			building->idx = gd.numBuildings[ccs.actualBaseID];	// self-link to building-list in base
-			building->base_idx = ccs.actualBaseID;			// Link to the base.
+			building->idx = gd.numBuildings[baseCurrent->idx];	// self-link to building-list in base
+			building->base_idx = baseCurrent->idx;			// Link to the base.
 			Com_DPrintf("firstbase: %s (%i) at (%.0f:%.0f)\n", building->id, i, building->pos[0], building->pos[1] );
 			baseCurrent->buildingCurrent = building;
 			B_SetBuildingByClick ( (int)building->pos[0], (int)building->pos[1] );
@@ -209,16 +211,17 @@ void B_SetUpBase ( void )
 			*/
 			//update the array
 			baseCurrent->buildingCurrent = building;
-			gd.numBuildings[ccs.actualBaseID]++;
+			gd.numBuildings[baseCurrent->idx]++;
 			B_BuildingInit();
 		}
 		else if ( gd.buildingTypes[i].autobuild )
 		{
+			Com_DPrintf("DEBUG: idx %i  actual %i\n", baseCurrent->idx, i, ccs.actualBaseID );
 			// TODO: implement check for moreThanOne and remove the howManyOfThisType
-			building = &gd.buildings[ccs.actualBaseID][gd.numBuildings[ccs.actualBaseID]];
+			building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 			memcpy( building, &gd.buildingTypes[i], sizeof( building_t ) );
-			building->idx = gd.numBuildings[ccs.actualBaseID];	// self-link to building-list in base
-			building->base_idx = ccs.actualBaseID;			// Link to the base.
+			building->idx = gd.numBuildings[baseCurrent->idx];	// self-link to building-list in base
+			building->base_idx = baseCurrent->idx;			// Link to the base.
 			Com_DPrintf("autobuild: %s (%i) at (%.0f:%.0f)\n", building->id, i, building->pos[0], building->pos[1] );
 			baseCurrent->buildingCurrent = building;
 			B_SetBuildingByClick ( (int)building->pos[0], (int)building->pos[1] );
@@ -230,7 +233,7 @@ void B_SetUpBase ( void )
 			*/
 			//update the array
 			baseCurrent->buildingCurrent = building;
-			gd.numBuildings[ccs.actualBaseID]++;
+			gd.numBuildings[baseCurrent->idx]++;
 			B_BuildingInit();
 		}
 	}
@@ -607,19 +610,20 @@ B_GetNumberOfBuildingsInBaseByType
 int B_GetNumberOfBuildingsInBaseByType ( int base_idx, buildingType_t buildingType )
 {
 	int i;
-	int NumberOfBuildings = 0;
-	if ( base_idx < 0 )  {
+	int NumberOfBuildings;
+	
+	if ( base_idx < 0 || base_idx >= gd.numBases )  {
 		Com_Printf("Bad base-index given: %i\n", base_idx );
 		return -1;
 	}
 	
-	
-	for ( i = 0; i < gd.numBuildings[base_idx]; i++)
+	NumberOfBuildings = 0;
+	for ( i = 0; i < gd.numBuildings[base_idx]; i++ )
 	{
 		if ( gd.buildings[base_idx][i].buildingType == buildingType )
-			NumberOfBuildings++; 
+			NumberOfBuildings++;
 	}
-	Com_DPrintf("B_GetNumberOfBuildingsInBaseByType: base %i - type: %i - num_buildings: %i\n", base_idx, buildingType, NumberOfBuildings);
+	Com_DPrintf("B_GetNumberOfBuildings...Type: base '%s' - type: %i - num_b: %i\n", gd.bases[base_idx].name, buildingType, NumberOfBuildings);
 	return NumberOfBuildings;
 }
 
@@ -684,13 +688,16 @@ void B_BuildingInit( void )
 			// if the building is researched add it to the list
 			if ( RS_IsResearched_idx( buildingType->tech ) )
 			{
-				Com_DPrintf("Building researched %s\n", buildingType->id );
+				/* TODO: check if this out-commented code is still needed
 				if ( buildingType->dependsBuilding < 0
 				|| B_GetMaximumBuildinStatus (baseCurrent->idx,  buildingType->buildingType ) >= B_UNDER_CONSTRUCTION ) {
+				*/
 					B_BuildingAddToList( _(buildingType->name) );
 					BuildingConstructionList[numBuildingConstructionList] = buildingType->idx;
 					numBuildingConstructionList++;
+				/*
 				}
+				END TODO*/
 			} else {
 				Com_DPrintf("Building not researched yet %s\n", buildingType->id );
 			}
