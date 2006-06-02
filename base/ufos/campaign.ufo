@@ -755,6 +755,7 @@ stage ufos_are_coming
 	set first
 	{
 		seq	ufos_are_coming
+		commands	"addufo"
 	}
 	set crashed_and_landed
 	{
