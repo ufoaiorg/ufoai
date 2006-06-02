@@ -918,6 +918,7 @@ typedef enum
 	TEXT_AIRCRAFT = 10,
 	TEXT_AIRCRAFT_INFO,
 	TEXT_MESSAGESYSTEM, // just a dummy for messagesystem - we use the stack
+	TEXT_CAMPAIGN_LIST,
 
 	MAX_MENUTEXTS
 } texts_t;

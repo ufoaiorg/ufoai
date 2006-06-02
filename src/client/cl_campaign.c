@@ -2618,6 +2618,12 @@ void CL_ParseMission( char *name, char **text )
 		return;
 	}
 
+	if ( numMissions >= MAX_MISSIONS )
+	{
+		Com_Printf("CL_ParseMission: Max missions reached\n");
+		return;
+	}
+
 	// initialize the menu
 	ms = &missions[numMissions++];
 	memset( ms, 0, sizeof(mission_t) );
@@ -2703,6 +2709,12 @@ void CL_ParseStageSet( char *name, char **text )
 	char		missionstr[256];
 	char		*token, *misp;
 	int			j;
+
+	if ( numStageSets >= MAX_STAGESETS )
+	{
+		Com_Printf("CL_ParseStageSet: Max stagesets reached\n");
+		return;
+	}
 
 	// initialize the stage
 	sp = &stageSets[numStageSets++];
@@ -2793,6 +2805,12 @@ void CL_ParseStage( char *name, char **text )
 		return;
 	}
 
+	if ( numStages >= MAX_STAGES )
+	{
+		Com_Printf("CL_ParseStages: Max stages reached\n");
+		return;
+	}
+
 	// get it's body
 	token = COM_Parse( text );
 	if ( !*text || *token != '{' )
@@ -2867,6 +2885,12 @@ void CL_ParseCampaign( char *name, char **text )
 	if ( i < numCampaigns )
 	{
 		Com_Printf( "CL_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", name );
+		return;
+	}
+
+	if ( numCampaigns >= MAX_CAMPAIGNS )
+	{
+		Com_Printf( "CL_ParseCampaign: Max campaigns reached (%i)\n", MAX_CAMPAIGNS );
 		return;
 	}
 
@@ -3252,6 +3276,49 @@ void CL_GameNew( void )
 		Cmd_AddCommand( commands->name, commands->function );
 }
 
+/*======================
+CP_GetCampaigns_f
+
+fill a list with available campaigns
+======================*/
+#define MAXCAMPAIGNTEXT 1024
+static char campaignText[MAXCAMPAIGNTEXT];
+static char campaignDesc[MAXCAMPAIGNTEXT];
+void CP_GetCampaigns_f ( void )
+{
+	int i;
+	*campaignText = *campaignDesc = '\0';
+	for ( i = 0; i < numCampaigns; i++ )
+		Q_strcat( campaignText, MAXCAMPAIGNTEXT, va("%s\n", campaigns[i].campaignName ) );
+	// default campaign
+	Cvar_Set( "campaign", "main" );
+	Com_Printf("%s\n", campaignText );
+	menuText[TEXT_STANDARD] = campaignDesc;
+}
+
+/*======================
+CP_CampaignsClick_f
+======================*/
+void CP_CampaignsClick_f ( void )
+{
+	int num;
+
+	if ( Cmd_Argc() < 2 )
+		return;
+
+	//which building?
+	num = atoi( Cmd_Argv( 1 ) );
+
+	if ( num > numCampaigns || num < 0 )
+		return;
+
+	Cvar_Set( "campaign", campaigns[num].name );
+	// FIXME: Translate the race to the name of a race
+	Com_sprintf( campaignDesc, MAXCAMPAIGNTEXT, va(_("Race: %s\n"), campaigns[num].team ) );
+	Q_strcat( campaignDesc, MAXCAMPAIGNTEXT, _(campaigns[num].text) );
+	menuText[TEXT_STANDARD] = campaignDesc;
+}
+
 /*
 ======================
 CL_ResetCampaign
@@ -3262,7 +3329,10 @@ void CL_ResetCampaign( void )
 	// reset some vars
 	curCampaign = NULL;
 	baseCurrent = NULL;
+	menuText[TEXT_CAMPAIGN_LIST] = campaignText;
 
+	Cmd_AddCommand( "campaignlist_click", CP_CampaignsClick_f );
+	Cmd_AddCommand( "getcampaigns", CP_GetCampaigns_f );
 	Cmd_AddCommand( "game_new", CL_GameNew );
 	Cmd_AddCommand( "game_continue", CL_GameContinue );
 	Cmd_AddCommand( "game_exit", CL_GameExit );
