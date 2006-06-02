@@ -858,12 +858,11 @@ CL_PingServers_f
 =================*/
 void CL_PingServers_f (void)
 {
-	int			i;
 	netadr_t	adr;
-	char		name[32];
-	char		*adrstring;
 	cvar_t		*noudp;
 	cvar_t		*noipx;
+
+	menuText[TEXT_LIST] = NULL;
 
 	NET_Config (qtrue);		// allow remote
 
@@ -885,25 +884,6 @@ void CL_PingServers_f (void)
 	{
 		adr.type = NA_BROADCAST_IPX;
 		adr.port = BigShort(PORT_SERVER);
-		Netchan_OutOfBandPrint (NS_CLIENT, adr, "info %i", PROTOCOL_VERSION );
-	}
-
-	// send a packet to each address book entry
-	for (i=0 ; i<16 ; i++)
-	{
-		Com_sprintf (name, sizeof(name), "adr%i", i);
-		adrstring = Cvar_VariableString (name);
-		if (!adrstring || !adrstring[0])
-			continue;
-
-		Com_DPrintf ("pinging %s...\n", adrstring);
-		if (!NET_StringToAdr (adrstring, &adr))
-		{
-			Com_Printf ("Bad address: %s\n", adrstring);
-			continue;
-		}
-		if (!adr.port)
-			adr.port = BigShort(PORT_SERVER);
 		Netchan_OutOfBandPrint (NS_CLIENT, adr, "info %i", PROTOCOL_VERSION );
 	}
 }

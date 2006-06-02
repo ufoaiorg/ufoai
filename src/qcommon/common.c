@@ -198,8 +198,8 @@ do the apropriate things.
 void Com_Error (int code, char *fmt, ...)
 {
 	va_list		argptr;
-	static char		msg[MAXPRINTMSG];
-	static	qboolean	recursive;
+	static char	msg[MAXPRINTMSG];
+	static qboolean	recursive;
 
 	if (recursive)
 		Sys_Error ("recursive error after: %s", msg);
