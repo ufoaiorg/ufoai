@@ -2140,7 +2140,6 @@ refexport_t GetRefAPI (refimport_t rimp )
 	re.Init = R_Init;
 	re.Shutdown = R_Shutdown;
 
-	re.CinematicSetPalette = R_SetPalette;
 	re.BeginFrame = R_BeginFrame;
 	re.EndFrame = GLimp_EndFrame;
 

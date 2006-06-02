@@ -3208,8 +3208,9 @@ void CL_GameExit( void )
 	Cvar_Set( "mn_active", "" );
 	ccs.singleplayer = qfalse;
 	// singleplayer commands are no longer available
-	for ( commands = game_commands; commands->name; commands++ )
-		Cmd_RemoveCommand( commands->name );
+	if ( curCampaign )
+		for ( commands = game_commands; commands->name; commands++ )
+			Cmd_RemoveCommand( commands->name );
 }
 
 /*
@@ -3337,7 +3338,7 @@ void CP_CampaignsClick_f ( void )
 	//which building?
 	num = atoi( Cmd_Argv( 1 ) );
 
-	if ( num > numCampaigns || num < 0 )
+	if ( num >= numCampaigns || num < 0 )
 		return;
 
 	Cvar_Set( "campaign", campaigns[num].name );

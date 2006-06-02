@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
   put up loading plaque
   blanked background with loading plaque
   blanked background with menu
-  cinematics
   full screen image for quit and victory
 
   end of unit intermissions
@@ -446,7 +445,7 @@ void SCR_DrawCursor (void)
 		if ( cls.state == ca_active && mouseSpace == MS_WORLD )
 		{
 			if ( cls.team != cl.actTeam )
-				re.DrawNormPic (mx+16, my+16, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "sanduhr" );
+				re.DrawNormPic (mx+16, my+16, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait" );
 			else if ( selActor && selActor->state & STATE_CROUCHED )
 				re.DrawNormPic (mx+16, my+16, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked" );
 		}
@@ -548,19 +547,16 @@ void SCR_BeginLoadingPlaque (void)
 	S_StopAllSounds ();
 	cl.sound_prepped = qfalse; // don't play ambients
 	CDAudio_Stop ();
-	if (cls.disable_screen)
-		return;
 	if (developer->value)
 		return;
 	if (cls.state == ca_disconnected)
 		return;	// if at console, don't bring up the plaque
 	if (cls.key_dest == key_console)
 		return;
-	if (cl.cinematictime > 0)
-		scr_draw_loading = 2;	// clear to balack first
-	else
-		scr_draw_loading = 1;
-//	SCR_UpdateScreen ();
+
+	scr_draw_loading = 2;	// clear to black first
+
+	SCR_UpdateScreen ();
 	cls.disable_screen = Sys_Milliseconds ();
 	cls.disable_servercount = cl.servercount;
 }
@@ -652,99 +648,7 @@ void SCR_DirtyScreen (void)
 	SCR_AddDirtyPoint (viddef.width-1, viddef.height-1);
 }
 
-/*
-==============
-SCR_TileClear
-
-Clear any parts of the tiled background that were drawn on last frame
-==============
-*/
-/*void SCR_TileClear (void)
-{
-	int		i;
-	int		top, bottom, left, right;
-	dirty_t	clear;
-
-	if (scr_drawall->value)
-		SCR_DirtyScreen ();	// for power vr or broken page flippers...
-
-	if (scr_con_current == 1.0)
-		return;		// full screen console
-	if (scr_viewsize->value == 100)
-		return;		// full screen rendering
-	if (cl.cinematictime > 0)
-		return;		// full screen cinematic
-
-	// erase rect will be the union of the past three frames
-	// so tripple buffering works properly
-	clear = scr_dirty;
-	for (i=0 ; i<2 ; i++)
-	{
-		if (scr_old_dirty[i].x1 < clear.x1)
-			clear.x1 = scr_old_dirty[i].x1;
-		if (scr_old_dirty[i].x2 > clear.x2)
-			clear.x2 = scr_old_dirty[i].x2;
-		if (scr_old_dirty[i].y1 < clear.y1)
-			clear.y1 = scr_old_dirty[i].y1;
-		if (scr_old_dirty[i].y2 > clear.y2)
-			clear.y2 = scr_old_dirty[i].y2;
-	}
-
-	scr_old_dirty[1] = scr_old_dirty[0];
-	scr_old_dirty[0] = scr_dirty;
-
-	scr_dirty.x1 = 9999;
-	scr_dirty.x2 = -9999;
-	scr_dirty.y1 = 9999;
-	scr_dirty.y2 = -9999;
-
-	// don't bother with anything convered by the console)
-	top = scr_con_current*viddef.height;
-	if (top >= clear.y1)
-		clear.y1 = top;
-
-	if (clear.y2 <= clear.y1)
-		return;		// nothing disturbed
-
-	top = scr_vrect.y;
-	bottom = top + scr_vrect.height-1;
-	left = scr_vrect.x;
-	right = left + scr_vrect.width-1;
-
-	if (clear.y1 < top)
-	{	// clear above view screen
-		i = clear.y2 < top-1 ? clear.y2 : top-1;
-		re.DrawTileClear (clear.x1 , clear.y1,
-			clear.x2 - clear.x1 + 1, i - clear.y1+1, "backtile");
-		clear.y1 = top;
-	}
-	if (clear.y2 > bottom)
-	{	// clear below view screen
-		i = clear.y1 > bottom+1 ? clear.y1 : bottom+1;
-		re.DrawTileClear (clear.x1, i,
-			clear.x2-clear.x1+1, clear.y2-i+1, "backtile");
-		clear.y2 = bottom;
-	}
-	if (clear.x1 < left)
-	{	// clear left of view screen
-		i = clear.x2 < left-1 ? clear.x2 : left-1;
-		re.DrawTileClear (clear.x1, clear.y1,
-			i-clear.x1+1, clear.y2 - clear.y1 + 1, "backtile");
-		clear.x1 = left;
-	}
-	if (clear.x2 > right)
-	{	// clear left of view screen
-		i = clear.x1 > right+1 ? clear.x1 : right+1;
-		re.DrawTileClear (i, clear.y1,
-			clear.x2-i+1, clear.y2 - clear.y1 + 1, "backtile");
-		clear.x2 = right;
-	}
-
-}*/
-
-
 //===============================================================
-
 
 /*
 ===============
@@ -760,7 +664,7 @@ void SCR_TouchPics (void)
 		if (cursor->value > 9 || cursor->value < 0)
 			cursor->value = 1;
 
-		re.RegisterPic( "sanduhr" );
+		re.RegisterPic( "wait" );
 		re.RegisterPic( "ducked" );
 		Com_sprintf (cursor_pic, sizeof(cursor_pic), "cursor%i", (int)(cursor->value));
 		if ( !re.RegisterPic( cursor_pic ) )
@@ -802,7 +706,7 @@ void SCR_UpdateScreen (void)
 
 	// if the screen is disabled (loading plaque is up, or vid mode changing)
 	// do nothing at all
-/*	if (cls.disable_screen)
+	if (cls.disable_screen)
 	{
 		if (Sys_Milliseconds() - cls.disable_screen > 120000)
 		{
@@ -810,10 +714,11 @@ void SCR_UpdateScreen (void)
 			Com_Printf ("Loading plaque timed out.\n");
 		}
 		return;
-	}*/
+	}
 
+	// not initialized yet
 	if (!scr_initialized || !con.initialized)
-		return;				// not initialized yet
+		return;
 
 	/*
 	** range check cl_camera_separation so we don't inadvertently fry someone's
@@ -841,48 +746,13 @@ void SCR_UpdateScreen (void)
 	{
 		re.BeginFrame( separation[i] );
 
-		if (scr_draw_loading == 2)
-		{	//  loading plaque over black screen
-			int		w, h;
-
-			re.CinematicSetPalette(NULL);
-			scr_draw_loading = qfalse;
-			re.DrawGetPicSize (&w, &h, "loading");
-			re.DrawPic ((viddef.width-w)/2, (viddef.height-h)/2, "loading");
-			re.EndFrame();
-			return;
-		}
-		// if a cinematic is supposed to be running, handle menus
-		// and console specially
-		else if (cl.cinematictime > 0)
+		if (scr_draw_loading)
 		{
-			if (cls.key_dest == key_console)
-			{
-				if (cl.cinematicpalette_active)
-				{
-					re.CinematicSetPalette(NULL);
-					cl.cinematicpalette_active = qfalse;
-				}
-				SCR_DrawConsole ();
-				re.EndFrame();
-				return;
-			}
-			else
-			{
-				SCR_DrawCinematic();
-				re.EndFrame();
-				return;
-			}
+			SCR_DrawLoading();
+			continue;
 		}
 		else
 		{
-			// make sure the game palette is active
-			if (cl.cinematicpalette_active)
-			{
-				re.CinematicSetPalette(NULL);
-				cl.cinematicpalette_active = qfalse;
-			}
-
 			// do 3D refresh drawing, and then update the screen
 			MN_SetViewRect ();
 
@@ -903,13 +773,9 @@ void SCR_UpdateScreen (void)
 			if (scr_debuggraph->value || scr_timegraph->value || scr_netgraph->value)
 				SCR_DrawDebugGraph ();
 
-//			M_Draw ();
-
 			SCR_DrawPause ();
 
 			SCR_DrawConsole ();
-
-//			SCR_DrawLoading ();
 
 			if ( cls.state != ca_sequence )
 				SCR_DrawCursor ();

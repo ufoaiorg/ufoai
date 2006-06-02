@@ -279,11 +279,7 @@ void CL_ParseServerData (void)
 	// get the full level name
 	str = MSG_ReadString (&net_message);
 
-	if (cl.pnum == -1)
-	{	// playing a cinematic or showing a pic, not a level
-		SCR_PlayCinematic (str);
-	}
-	else
+	if (cl.pnum >= 0)
 	{
 		// seperate the printfs so the server message can have a color
 		Com_Printf("\n\n\35\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\37\n\n");

@@ -490,16 +490,13 @@ void CL_Disconnect (void)
 	}
 
 	VectorClear (cl.refdef.blend);
-	re.CinematicSetPalette(NULL);
 
 	// go to main menu and bring up console
-/*	MN_PopMenu( qtrue );
+	MN_PopMenu( qtrue );
 	MN_PushMenu( mn_main->string );
 	cls.key_dest = key_console;
-*/
-	cls.connect_time = 0;
 
-	SCR_StopCinematic ();
+	cls.connect_time = 0;
 
 	// send a disconnect message to the server
 	final[0] = clc_stringcmd;
@@ -511,8 +508,8 @@ void CL_Disconnect (void)
 	CL_ClearState ();
 
 	// Stop recording any video
-	if( CL_VideoRecording( ) )
-		CL_CloseAVI( );
+	if ( CL_VideoRecording() )
+		CL_CloseAVI();
 
 	cls.state = ca_disconnected;
 }
@@ -1718,7 +1715,6 @@ void CL_Frame (int msec)
 	// advance local effects for next frame
 	CL_RunDLights ();
 	CL_RunLightStyles ();
-	SCR_RunCinematic ();
 	SCR_RunConsole ();
 
 	cls.framecount++;
@@ -1759,14 +1755,14 @@ void CL_Init (void)
 		return;		// nothing running on the client
 
 	// all archived variables will now be loaded
-
 	Con_Init ();
-#if defined __linux__ || defined __sgi || defined __MINGW__
+#ifdef _WIN32
+	// sound must be initialized after window is created
+	VID_Init ();
+	S_Init ();
+#else
 	S_Init ();
 	VID_Init ();
-#else
-	VID_Init ();
-	S_Init ();	// sound must be initialized after window is created
 #endif
 
 	V_Init ();
@@ -1774,16 +1770,14 @@ void CL_Init (void)
 	net_message.data = net_message_buffer;
 	net_message.maxsize = sizeof(net_message_buffer);
 
-//	M_Init ();
-
 	SCR_Init ();
-	cls.disable_screen = qtrue;	// don't draw yet
 
 	CDAudio_Init ();
 	CL_InitLocal ();
 	IN_Init ();
 
-//	Cbuf_AddText ("exec autoexec.cfg\n");
+	Cbuf_AddText ("exec autoexec.cfg\n");
+	// FIXME: Maybe we should activate this again when all savegames issues are solved
 //	Cbuf_AddText( "loadteam current\n" );
 	FS_ExecAutoexec ();
 	Cbuf_Execute ();

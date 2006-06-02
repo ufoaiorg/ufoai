@@ -525,7 +525,6 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/cl_research.o \
 	$(BUILDDIR)/client/cl_market.o \
 	$(BUILDDIR)/client/cl_campaign.o \
-	$(BUILDDIR)/client/cl_cin.o \
 	$(BUILDDIR)/client/cl_fx.o \
 	$(BUILDDIR)/client/cl_input.o \
 	$(BUILDDIR)/client/cl_le.o \
@@ -600,9 +599,6 @@ $(BUILDDIR)/client/cl_research.o : $(CLIENT_DIR)/cl_research.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_market.o : $(CLIENT_DIR)/cl_market.c
-	$(DO_CC)
-
-$(BUILDDIR)/client/cl_cin.o :     $(CLIENT_DIR)/cl_cin.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_fx.o :      $(CLIENT_DIR)/cl_fx.c
