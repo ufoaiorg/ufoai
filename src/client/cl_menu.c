@@ -1571,6 +1571,12 @@ void MN_DrawMapMarkers( menuNode_t *node )
 	for ( j = 0; j < ccs.numUfoOnGeoscape; j++ )
 	{
 		// if not AIR_UFOMOVE - the ufo is not in radar width
+#ifdef DEBUG
+		// in debug mode you execute set showufos 1 to see the ufos on geoscape
+		if ( Cvar_VariableValue("showufos") )
+			MN_MapToScreen( node, ufoOnGeoscape[j]->pos, &x, &y );
+		else
+#endif
 		if ( ufoOnGeoscape[j]->status != AIR_UFOMOVE || !MN_MapToScreen( node, ufoOnGeoscape[j]->pos, &x, &y ) )
 			continue;
 		re.DrawNormPic( x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, ufoOnGeoscape[j]->image );
