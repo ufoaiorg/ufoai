@@ -3285,8 +3285,7 @@ void CL_GameNew( void )
 	MN_PushMenu( "map" );
 
 	// create a base as first step
-	Cbuf_AddText( "mn_select_base -1" );
-	Cbuf_Execute();
+	Cbuf_ExecuteText(EXEC_NOW, "mn_select_base -1" );
 
 	CL_GameTimeStop();
 

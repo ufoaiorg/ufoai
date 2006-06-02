@@ -980,8 +980,7 @@ void Com_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 			return;
 		}
 
-		rank = &ranks[numRanks];
-		numRanks++;
+		rank = &ranks[numRanks++];
 		memset( rank, 0, sizeof( rank_t ) );
 
 		do {

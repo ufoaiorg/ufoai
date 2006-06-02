@@ -1134,6 +1134,7 @@ void CL_ParseScriptFirst( char *type, char *name, char **text )
 	else if ( !Q_strncmp( type, "nation", 6 ) ) CL_ParseNations( name, text );
 	else if ( !Q_strncmp( type, "shader", 6 ) ) CL_ParseShaders( name, text );
 	else if ( !Q_strncmp( type, "font", 4 ) ) CL_ParseFont( name, text );
+	else if ( !Q_strncmp( type, "tutorial", 8 ) ) MN_ParseTutorials( name, text );
 }
 
 /*=================

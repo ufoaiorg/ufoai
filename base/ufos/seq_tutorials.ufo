@@ -1,4 +1,21 @@
+tutorial gameplay
+{
+	name	"_Gameplay"
+	sequence	tut_gameplay
+}
+
 sequence tut_gameplay
 {
-	
+
+}
+
+tutorial tacticalmission
+{
+	name	"_Tactical mission"
+	sequence	tut_tacticalmission
+}
+
+sequence tut_tacticalmission
+{
+
 }

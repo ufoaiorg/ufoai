@@ -44,6 +44,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_market.h"
 
 //=============================================================================
+typedef struct tutorial_s
+{
+	char name[MAX_VAR];
+	char sequence[MAX_VAR];
+} tutorial_t;
+
+#define MAX_TUTORIALS 16
+
+extern tutorial_t tutorials[MAX_TUTORIALS];
+
+//=============================================================================
 
 #define MAX_TEAMLIST	8
 
@@ -940,6 +951,7 @@ void MN_PushMenu( char *name );
 void MN_PopMenu( qboolean all );
 void MN_Popup (const char* title, const char* text);
 void MN_DrawTooltip ( char* font, char* string, int x, int y );
+void MN_ParseTutorials( char *title, char **text );
 
 void B_DrawBase( menuNode_t *node );
 

@@ -67,4 +67,17 @@ menu tutorials
 		pos	"768 530"
 		align	uc
 	}
+
+	text tutoriallist
+	{
+		pos	"640 220"
+		format	"20 0"
+		size	"260 390"
+		num	1
+		click	{ }
+	}
+	func init
+	{
+		cmd	"gettutorials;"
+	}
 }

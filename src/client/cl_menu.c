@@ -204,6 +204,7 @@ int			numActions;
 int			numNodes;
 int			numMenus;
 int			numMenuModels;
+int			numTutorials;
 
 byte		*adata, *curadata;
 int			adataize = 0;
@@ -2509,12 +2510,68 @@ void MN_Translate_f( void )
 	Cvar_Set( Cmd_Argv(2), _(current) );
 }
 
+/*=================
+MN_GetTutorials_f
+=================*/
+#define MAX_TUTORIALLIST 512
+static char tutorialList[MAX_TUTORIALLIST];
+static void MN_GetTutorials_f ( void )
+{
+	int	i;
+	tutorial_t*	t;
+	menuText[TEXT_LIST] = tutorialList;
+	tutorialList[0] = 0;
+	for ( i = 0; i < numTutorials; i++ )
+	{
+		t = &tutorials[i];
+		Q_strcat( tutorialList, MAX_TUTORIALLIST, va("%s\n", t->name) );
+	}
+}
+
+/*=================
+MN_ListTutorials_f
+=================*/
+static void MN_ListTutorials_f ( void )
+{
+	int	i;
+
+	Com_Printf("Tutorials: %i\n", numTutorials );
+	for ( i = 0; i < numTutorials; i++ )
+	{
+		Com_Printf("tutorial: %s\n", tutorials[i].name);
+		Com_Printf("..sequence: %s\n", tutorials[i].sequence);
+	}
+}
+
+/*=================
+MN_TutorialListClick_f
+
+click function for text tutoriallist
+in menu_tutorials.ufo
+=================*/
+static void MN_TutorialListClick_f ( void )
+{
+	int	num;
+
+	if ( Cmd_Argc() < 2 )
+	{
+		Com_Printf( "Usage: tutoriallist_click <num>\n" );
+		return;
+	}
+
+	num = atoi( Cmd_Argv( 1 ) );
+	if ( num < 0 || num >= numTutorials )
+		return;
+
+	Cbuf_ExecuteText(EXEC_NOW, va("seq_start %s", tutorials[num].sequence) );
+}
+
 /*
 =================
 MN_ListMenuModels_f
 =================
 */
-void MN_ListMenuModels_f ( void )
+static void MN_ListMenuModels_f ( void )
 {
 	int i;
 	// search for menumodels with same name
@@ -2538,11 +2595,17 @@ void MN_ResetMenus( void )
 	numMenus = 0;
 	numMenuModels = 0;
 	menuStackPos = 0;
+	numTutorials = 0;
 
 	// add commands
 	mn_escpop = Cvar_Get( "mn_escpop", "1", 0 );
 	Cvar_Set( "mn_main", "main" );
 	Cvar_Set( "mn_sequence", "sequence" );
+
+	// tutorial stuff
+	Cmd_AddCommand( "listtutorials", MN_ListTutorials_f );
+	Cmd_AddCommand( "gettutorials", MN_GetTutorials_f );
+	Cmd_AddCommand( "tutoriallist_click", MN_TutorialListClick_f );
 
 	Cmd_AddCommand( "getmaps", MN_GetMaps_f );
 	Cmd_AddCommand( "mn_startserver", MN_StartServer );
@@ -3502,3 +3565,62 @@ void CL_InitFonts( void )
 	}
 }
 // ===================== USE_SDL_TTF stuff end ======================
+
+#define	PARSETUT(x)	(int)&(((tutorial_t *)0)->x)
+
+value_t tutValues[] =
+{
+	{ "name",	V_TRANSLATION_STRING,	PARSETUT( name ) },
+	{ "sequence",	V_STRING,		PARSETUT( sequence ) },
+	{ NULL,	0, 0 }
+};
+
+tutorial_t tutorials[MAX_TUTORIALS];
+/*======================
+MN_ParseTutorials
+======================*/
+void MN_ParseTutorials( char *title, char **text )
+{
+	tutorial_t	*t = NULL;
+	char	*errhead = "MN_ParseTutorials: unexptected end of file (tutorial ";
+	char	*token;
+	value_t	*v;
+
+	// get name list body body
+	token = COM_Parse( text );
+
+	if ( !*text || *token != '{' ) {
+		Com_Printf( "MN_ParseTutorials: tutorial \"%s\" without body ignored\n", title );
+		return;
+	}
+
+	/* parse ranks */
+	if ( numTutorials >= MAX_TUTORIALS ) {
+		Com_Printf( "Too many tutorials, '%s' ignored.\n", title );
+		numTutorials = MAX_TUTORIALS;
+		return;
+	}
+
+	t = &tutorials[numTutorials++];
+	memset( t, 0, sizeof( tutorial_t ) );
+	do {
+		// get the name type
+		token = COM_EParse( text, errhead, title );
+		if ( !*text ) break;
+		if ( *token == '}' ) break;
+		for ( v = tutValues; v->string; v++ )
+			if ( !Q_strncmp( token, v->string, sizeof(v->string) ) )
+			{
+				// found a definition
+				token = COM_EParse( text, errhead, title );
+				if ( !*text ) return;
+					Com_ParseValue( t, token, v->type, v->ofs );
+				break;
+			}
+			if ( !v->string )
+			Com_Printf( "MN_ParseTutorials: unknown token \"%s\" ignored (tutorial %s)\n", token, title );
+	} while ( *text );
+}
+
+// ============================================================
+
