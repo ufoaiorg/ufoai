@@ -530,7 +530,7 @@ menu mp_join_lan
 	{
 		image	menu/multi_buttons3a
 		texh	"256 64"
-		texl	"0 32"
+		texl	"0 33"
 		pos	"500 130"
 	}
 	pic button_lan_inet
@@ -544,7 +544,7 @@ menu mp_join_lan
 			cmd "mn_escpop 3;"
 		}
 		texh	"256 64"
-		texl	"0 32"
+		texl	"0 33"
 		pos	"726 130"
 		out	{ *string_inet color "0 0.5 0 1" *button_lan_inet image menu/multi_buttons3 }
 		in	{ *string_inet color "1 1 1 1" *button_lan_inet image menu/multi_buttons3a }
@@ -572,7 +572,7 @@ menu mp_join_lan
 		pos	"500 200"
 		size	"420 550"
 		format	"20 200"
-		mousefx	true
+		mousefx	truepingservers;
 		num	1
 		click	{ }
 	}
@@ -611,6 +611,25 @@ menu mp_join_lan
 		click	{ cmd "mn_modify teamnum +1 1 4;" }
 	}
 
+	pic button_lan_refresh
+	{
+		image	menu/multi_buttons3
+		click	{ cmd "pingservers;" }
+		texh	"256 64"
+		texl	"0 33"
+		pos	"726 650"
+		out	{ *string_refresh color "0 0.5 0 1" *button_lan_refresh image menu/multi_buttons3 }
+		in	{ *string_refresh color "1 1 1 1" *button_lan_refresh image menu/multi_buttons3a }
+	}
+	string string_refresh
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Refresh"
+		pos	"816 648"
+		align	uc
+	}
+
 	func init
 	{
 		cmd	"pingservers;"
@@ -634,7 +653,7 @@ menu mp_join_internet
 		pos	"500 130"
 		out	{ *string_lan color "0 0.5 0 1" *button_lan_lan image menu/multi_buttons3 }
 		in	{ *string_lan color "1 1 1 1" *button_lan_lan image menu/multi_buttons3a }
-		click	{ cmd "mn_pop esc; mn_push multiplayer;" }
+		click	{ cmd "mn_pop esc; mn_push multiplayer;pingservers;" }
 	}
 	pic button_lan_inet
 	{
