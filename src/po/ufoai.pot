@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-05-31 18:59+0200\n"
+"POT-Creation-Date: 2006-06-02 10:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.ufo.po (UFO Alien Invasion)  #-#-#-#-#\n"
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: http://www.sourceforge.net/projects/ufoai/\n"
-"POT-Creation-Date: 2006-05-31 18:59+0200\n"
+"POT-Creation-Date: 2006-06-02 10:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,87 +80,87 @@ msgstr ""
 msgid "Commando central"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:40
+#: ../base/ufos/basemanagement.ufo:38
 msgid "Powerplant"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:56
+#: ../base/ufos/basemanagement.ufo:52
 msgid "Laboratory"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:76
+#: ../base/ufos/basemanagement.ufo:70
 msgid "Storage"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:92
+#: ../base/ufos/basemanagement.ufo:84
 msgid "Interceptors"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:107
+#: ../base/ufos/basemanagement.ufo:98
 msgid "Quarters"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:124
+#: ../base/ufos/basemanagement.ufo:115
 msgid "UFO Hangar"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:139 ../base/ufos/basemanagement.ufo:157
+#: ../base/ufos/basemanagement.ufo:129 ../base/ufos/basemanagement.ufo:146
 msgid "Hangar"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:171
+#: ../base/ufos/basemanagement.ufo:159
 msgid "Team Room"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:184
+#: ../base/ufos/basemanagement.ufo:170
 msgid "Radar"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:199
+#: ../base/ufos/basemanagement.ufo:183
 msgid "Home"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:200
+#: ../base/ufos/basemanagement.ufo:184
 msgid "Base #2"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:201
+#: ../base/ufos/basemanagement.ufo:185
 msgid "Base #3"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:202
+#: ../base/ufos/basemanagement.ufo:186
 msgid "Base #4"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:203
+#: ../base/ufos/basemanagement.ufo:187
 msgid "Base #5"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:204
+#: ../base/ufos/basemanagement.ufo:188
 msgid "Base #6"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:205
+#: ../base/ufos/basemanagement.ufo:189
 msgid "Base #7"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:206
+#: ../base/ufos/basemanagement.ufo:190
 msgid "Base #8"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:212
+#: ../base/ufos/basemanagement.ufo:196
 msgid "Dropship"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:226
+#: ../base/ufos/basemanagement.ufo:210
 msgid "Interceptor"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:243
+#: ../base/ufos/basemanagement.ufo:227
 msgid "UFO"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:257
+#: ../base/ufos/basemanagement.ufo:241
 msgid "UFO - Destroyer class"
 msgstr ""
 
@@ -257,23 +257,31 @@ msgstr ""
 msgid "Location: Grenchen\\Type: Terror Attack\\Objective: Protect inhabitants"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:672
+#: ../base/ufos/campaign.ufo:673
 msgid "Location: Lille\\Type: Terror Attack\\Objective: Protect inhabitants"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:690
+#: ../base/ufos/campaign.ufo:691
 msgid "Location: Albany\\Type: Terror Attack\\Objective: Protect inhabitants"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:708
+#: ../base/ufos/campaign.ufo:709
 msgid "Location: Shannon\\Type: Major Alien Intrusion\\Objective: Stop them"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:819
+#: ../base/ufos/campaign.ufo:821
+msgid "Test Campaign"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:822
+msgid "txt_test_campaign"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:837
 msgid "Standard Campaign"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:820
+#: ../base/ufos/campaign.ufo:838
 msgid "txt_standard_campaign"
 msgstr ""
 
@@ -474,6 +482,19 @@ msgstr ""
 
 #: ../base/ufos/menu_buy.ufo:776 ../base/ufos/menu_research.ufo:932
 msgid "Back to baseview"
+msgstr ""
+
+#: ../base/ufos/menu_campaign.ufo:53
+msgid "Campaigns"
+msgstr ""
+
+#: ../base/ufos/menu_campaign.ufo:76
+msgid "Start campaign"
+msgstr ""
+
+#: ../base/ufos/menu_campaign.ufo:96 ../base/ufos/menu_multiplayer.ufo:123
+#: ../base/ufos/menu_multiplayer.ufo:505
+msgid "Back"
 msgstr ""
 
 #: ../base/ufos/menu_geoscape.ufo:95
@@ -711,8 +732,8 @@ msgstr ""
 msgid "Credits"
 msgstr ""
 
-#: ../base/ufos/menu_main.ufo:170 ../base/ufos/menu_multiplayer.ufo:123
-#: ../base/ufos/menu_options.ufo:123 ../base/ufos/menu_singleplayer.ufo:149
+#: ../base/ufos/menu_main.ufo:170 ../base/ufos/menu_options.ufo:123
+#: ../base/ufos/menu_singleplayer.ufo:149
 #: ../base/ufos/menu_singleplayer.ufo:305
 #: ../base/ufos/menu_singleplayer.ufo:468
 #: ../base/ufos/menu_singleplayer.ufo:644 ../base/ufos/menu_tutorials.ufo:66
@@ -773,108 +794,104 @@ msgstr ""
 msgid "Race:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:361
+#: ../base/ufos/menu_multiplayer.ufo:363
 msgid "Name"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:463
+#: ../base/ufos/menu_multiplayer.ufo:465
 msgid "Bookmark"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:483 ../base/ufos/menu_multiplayer.ufo:693
+#: ../base/ufos/menu_multiplayer.ufo:485 ../base/ufos/menu_multiplayer.ufo:697
 msgid "Connect"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:503
-msgid "Back"
-msgstr ""
-
-#: ../base/ufos/menu_multiplayer.ufo:554 ../base/ufos/menu_multiplayer.ufo:646
+#: ../base/ufos/menu_multiplayer.ufo:556 ../base/ufos/menu_multiplayer.ufo:650
 msgid "LAN"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:562 ../base/ufos/menu_multiplayer.ufo:654
+#: ../base/ufos/menu_multiplayer.ufo:564 ../base/ufos/menu_multiplayer.ufo:658
 msgid "Internet"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:584 ../base/ufos/menu_multiplayer.ufo:725
-#: ../base/ufos/menu_multiplayer.ufo:994
+#: ../base/ufos/menu_multiplayer.ufo:586 ../base/ufos/menu_multiplayer.ufo:729
+#: ../base/ufos/menu_multiplayer.ufo:1000
 msgid "Team preference:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:663
+#: ../base/ufos/menu_multiplayer.ufo:667
 msgid "Bookmarks"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:705
+#: ../base/ufos/menu_multiplayer.ufo:709
 msgid "Connect to IP"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:769
+#: ../base/ufos/menu_multiplayer.ufo:775
 msgid "Enable morale states:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:810
+#: ../base/ufos/menu_multiplayer.ufo:816
 msgid "Dedicated server:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:851
+#: ../base/ufos/menu_multiplayer.ufo:857
 msgid "Teamplay:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:892
+#: ../base/ufos/menu_multiplayer.ufo:898
 msgid "Max. clients:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:926
+#: ../base/ufos/menu_multiplayer.ufo:932
 msgid "Max. soldiers per team:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:928
+#: ../base/ufos/menu_multiplayer.ufo:934
 msgid "Sets the max allowed soldiers per team"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:960
+#: ../base/ufos/menu_multiplayer.ufo:966
 msgid "Max. soldiers per player:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:962
+#: ../base/ufos/menu_multiplayer.ufo:968
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:996
+#: ../base/ufos/menu_multiplayer.ufo:1002
 msgid "Sets the prefered team"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1029
+#: ../base/ufos/menu_multiplayer.ufo:1035
 msgid "Max. players per team:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1062
+#: ../base/ufos/menu_multiplayer.ufo:1068
 msgid "Max. AI actors:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1064
+#: ../base/ufos/menu_multiplayer.ufo:1070
 msgid "Max AI actors for teamplay mode"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1096
+#: ../base/ufos/menu_multiplayer.ufo:1102
 msgid "Server-Password:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1119
+#: ../base/ufos/menu_multiplayer.ufo:1125
 msgid "RCON-Password:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1142
+#: ../base/ufos/menu_multiplayer.ufo:1148
 msgid "Hostname:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1165
+#: ../base/ufos/menu_multiplayer.ufo:1171
 msgid "Map"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1243
+#: ../base/ufos/menu_multiplayer.ufo:1251
 msgid "Start server"
 msgstr ""
 
@@ -2002,97 +2019,97 @@ msgstr ""
 msgid "Your round started!\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:148
+#: client/cl_basemanagement.c:151
 msgid "Not set"
 msgstr ""
 
-#: client/cl_basemanagement.c:154
+#: client/cl_basemanagement.c:158
 #, c-format
 msgid "Already %i in base"
 msgstr ""
 
-#: client/cl_basemanagement.c:157
+#: client/cl_basemanagement.c:161
 #, c-format
 msgid "Constructing: %i day(s)"
 msgstr ""
 
-#: client/cl_basemanagement.c:160
+#: client/cl_basemanagement.c:164
 msgid "Construction finished"
 msgstr ""
 
-#: client/cl_basemanagement.c:163
+#: client/cl_basemanagement.c:167
 msgid "Working 100%"
 msgstr ""
 
-#: client/cl_basemanagement.c:166
+#: client/cl_basemanagement.c:170
 msgid "Down"
 msgstr ""
 
-#: client/cl_basemanagement.c:309
+#: client/cl_basemanagement.c:292
 msgid "Not enough credits to build this\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:309 client/cl_basemanagement.c:2064
+#: client/cl_basemanagement.c:292 client/cl_basemanagement.c:2040
 #: client/cl_campaign.c:367 client/cl_campaign.c:644 client/cl_campaign.c:690
-#: client/cl_campaign.c:1022 client/cl_campaign.c:1192
-#: client/cl_campaign.c:1204 client/cl_campaign.c:1223
-#: client/cl_campaign.c:1239 client/cl_campaign.c:1436
-#: client/cl_campaign.c:2261 client/cl_campaign.c:2291
-#: client/cl_campaign.c:2293 client/cl_menu.c:1053 client/cl_research.c:505
+#: client/cl_campaign.c:1027 client/cl_campaign.c:1220
+#: client/cl_campaign.c:1231 client/cl_campaign.c:1244
+#: client/cl_campaign.c:1260 client/cl_campaign.c:1460
+#: client/cl_campaign.c:2285 client/cl_campaign.c:2315
+#: client/cl_campaign.c:2317 client/cl_menu.c:1053 client/cl_research.c:505
 #: client/cl_research.c:621 client/cl_research.c:624 client/cl_research.c:628
 #: client/cl_research.c:646 client/cl_research.c:678 client/cl_research.c:682
 #: client/cl_research.c:814
 msgid "Notice"
 msgstr ""
 
-#: client/cl_basemanagement.c:476
+#: client/cl_basemanagement.c:475
 #, c-format
 msgid "Costs:\t%1.2f\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:478
+#: client/cl_basemanagement.c:477
 #, c-format
 msgid "%i Day(s) to build\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:481
+#: client/cl_basemanagement.c:480
 #, c-format
 msgid "Running Costs:\t%1.2f\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:484
+#: client/cl_basemanagement.c:483
 #, c-format
 msgid "Workers:\t%i\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:1523
+#: client/cl_basemanagement.c:1505
 #, c-format
 msgid "%i days left"
 msgstr ""
 
-#: client/cl_basemanagement.c:1702
+#: client/cl_basemanagement.c:1681
 #, c-format
 msgid "A new base has been built: %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:1703 client/cl_basemanagement.c:1710
+#: client/cl_basemanagement.c:1682 client/cl_basemanagement.c:1689
 msgid "Base built"
 msgstr ""
 
-#: client/cl_basemanagement.c:1709
+#: client/cl_basemanagement.c:1688
 msgid "Not enough credits to set up a new base."
 msgstr ""
 
-#: client/cl_basemanagement.c:2064
+#: client/cl_basemanagement.c:2040
 msgid "You've reached the base limit."
 msgstr ""
 
-#: client/cl_basemanagement.c:2169
+#: client/cl_basemanagement.c:2140
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:2170
+#: client/cl_basemanagement.c:2141
 msgid "Building finished"
 msgstr ""
 
@@ -2166,55 +2183,55 @@ msgstr ""
 msgid "Could not set up your base at this location"
 msgstr ""
 
-#: client/cl_campaign.c:864
+#: client/cl_campaign.c:869
 #, c-format
 msgid "Your base %s is under attack."
 msgstr ""
 
-#: client/cl_campaign.c:865
+#: client/cl_campaign.c:870
 msgid "Baseattack"
 msgstr ""
 
-#: client/cl_campaign.c:877
+#: client/cl_campaign.c:882
 msgid "Alien activity"
 msgstr ""
 
-#: client/cl_campaign.c:877
+#: client/cl_campaign.c:882
 msgid "Alien activity has been reported."
 msgstr ""
 
-#: client/cl_campaign.c:1022
+#: client/cl_campaign.c:1027
 msgid "Assign a team to aircraft"
 msgstr ""
 
-#: client/cl_campaign.c:1192
+#: client/cl_campaign.c:1220
 msgid "UFO appears on our radar"
 msgstr ""
 
-#: client/cl_campaign.c:1204
+#: client/cl_campaign.c:1231
 msgid "UFO disappears on our radar"
 msgstr ""
 
-#: client/cl_campaign.c:1222
+#: client/cl_campaign.c:1243
 #, c-format
 msgid "The mission expired and %i civilians died. You've lost %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:1239
+#: client/cl_campaign.c:1260
 msgid "Your dropship has low fuel and returns to base"
 msgstr ""
 
-#: client/cl_campaign.c:1435
+#: client/cl_campaign.c:1459
 #, c-format
 msgid "Gained %i credits from nation %s"
 msgstr ""
 
-#: client/cl_campaign.c:1480
+#: client/cl_campaign.c:1504
 #, c-format
 msgid "%02i:%i%i"
 msgstr ""
 
-#: client/cl_campaign.c:1587
+#: client/cl_campaign.c:1611
 #, c-format
 msgid ""
 "Missions:\n"
@@ -2223,42 +2240,47 @@ msgid ""
 "build:\t%i\tattacked:\t%i\n"
 msgstr ""
 
-#: client/cl_campaign.c:2189
+#: client/cl_campaign.c:2213
 msgid "Assemble or load a team"
 msgstr ""
 
-#: client/cl_campaign.c:2189
+#: client/cl_campaign.c:2213
 msgid "Note"
 msgstr ""
 
-#: client/cl_campaign.c:2261
+#: client/cl_campaign.c:2285
 msgid "Your dropship is not near the landingzone"
 msgstr ""
 
-#: client/cl_campaign.c:2291
+#: client/cl_campaign.c:2315
 msgid "You've won the battle"
 msgstr ""
 
-#: client/cl_campaign.c:2293
+#: client/cl_campaign.c:2317
 msgid "You've lost the battle"
 msgstr ""
 
-#: client/cl_campaign.c:2441
+#: client/cl_campaign.c:2465
 #, c-format
 msgid "%s (%s) died on his last mission.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2442
+#: client/cl_campaign.c:2466
 msgid "Soldier died"
 msgstr ""
 
-#: client/cl_campaign.c:2468
+#: client/cl_campaign.c:2492
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2469
+#: client/cl_campaign.c:2493
 msgid "Soldier promoted"
+msgstr ""
+
+#: client/cl_campaign.c:3345
+#, c-format
+msgid "Race: %s\n"
 msgstr ""
 
 #: client/cl_main.c:359 client/cl_main.c:733 client/cl_menu.c:389
@@ -2341,23 +2363,23 @@ msgstr ""
 msgid "Day"
 msgstr ""
 
-#: client/cl_menu.c:2169 client/cl_menu.c:2202
+#: client/cl_menu.c:2175 client/cl_menu.c:2208
 msgid ""
 "Select the desired location of the\n"
 "new base on the map.\n"
 msgstr ""
 
-#: client/cl_menu.c:2173 client/cl_menu.c:2206
+#: client/cl_menu.c:2179 client/cl_menu.c:2212
 msgid ""
 "Aliens are attacking our base\n"
 "at this very moment.\n"
 msgstr ""
 
-#: client/cl_menu.c:2177 client/cl_menu.c:2210
+#: client/cl_menu.c:2183 client/cl_menu.c:2216
 msgid "Select ufo or mission on map\n"
 msgstr ""
 
-#: client/cl_menu.c:2214
+#: client/cl_menu.c:2220
 msgid "UFO in radar range\n"
 msgstr ""
 
