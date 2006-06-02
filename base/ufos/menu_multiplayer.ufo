@@ -4,46 +4,46 @@
 
 menu multiplayer
 {
-        // ==================
-        // don't render
-        // ==================
+	// ==================
+	// don't render
+	// ==================
 
-        zone render
-        {
-                invis true
-        }
+	zone render
+	{
+		invis	true
+	}
 
-        // ==================
-        // background
-        // ==================
+	// ==================
+	// background
+	// ==================
 
-        pic back_ul
-        {
-                image   menu/options_ul
-                pos             "0 0"
-        }
+	pic back_ul
+	{
+		image	menu/options_ul
+		pos	"0 0"
+	}
 
-        pic back_ur
-        {
-                image   menu/options_ur
-                pos             "512 0"
-        }
+	pic back_ur
+	{
+		image	menu/options_ur
+		pos	"512 0"
+	}
 
-        pic back_ll
-        {
-                image   menu/options_ll
-                pos             "0 512"
-        }
+	pic back_ll
+	{
+		image	menu/options_ll
+		pos	"0 512"
+	}
 
-        pic back_lr
-        {
-                image   menu/options_lr
-                pos             "512 512"
-        }
+	pic back_lr
+	{
+		image	menu/options_lr
+		pos	"512 512"
+	}
 
-        // ==================
-        // buttons
-        // ==================
+	// ==================
+	// buttons
+	// ==================
 
 	pic button_join
 	{
@@ -120,7 +120,7 @@ menu multiplayer
 	{
 		font	f_menubig
 		color	"0 0.5 0 1"
-		string	"_Exit"
+		string	"_Back"
 		pos	"208 460"
 		align	uc
 	}
@@ -166,59 +166,59 @@ menu mp_team
 
 	pic slot0
 	{
-		image   menu/save_slot
-		pos             "500 130"
-		mousefx true
-		click   { teamslot0 }
+		image	menu/save_slot
+		pos	"500 130"
+		mousefx	true
+		click	{ teamslot0 }
 	}
 	pic slot1
 	{
-		image   menu/save_slot
-		pos             "500 165"
-		mousefx true
-		click   { teamslot1 }
+		image	menu/save_slot
+		pos	"500 165"
+		mousefx	true
+		click	{ teamslot1 }
 	}
 	pic slot2
 	{
-		image   menu/save_slot
-		pos             "500 200"
-		mousefx true
-		click   { teamslot2 }
+		image	menu/save_slot
+		pos	"500 200"
+		mousefx	true
+		click	{ teamslot2 }
 	}
 	pic slot3
 	{
-		image   menu/save_slot
-		pos             "500 235"
-		mousefx true
-		click   { teamslot3 }
+		image	menu/save_slot
+		pos	"500 235"
+		mousefx	true
+		click	{ teamslot3 }
 	}
 	pic slot4
 	{
-		image   menu/save_slot
-		pos             "500 270"
-		mousefx true
-		click   { teamslot4 }
+		image	menu/save_slot
+		pos	"500 270"
+		mousefx	true
+		click	{ teamslot4 }
 	}
 	pic slot5
 	{
-		image   menu/save_slot
-		pos             "500 305"
-		mousefx true
-		click   { teamslot5 }
+		image	menu/save_slot
+		pos	"500 305"
+		mousefx	true
+		click	{ teamslot5 }
 	}
 	pic slot6
 	{
-		image   menu/save_slot
-		pos             "500 340"
-		mousefx true
-		click   { teamslot6 }
+		image	menu/save_slot
+		pos	"500 340"
+		mousefx	true
+		click	{ teamslot6 }
 	}
 	pic slot7
 	{
-		image   menu/save_slot
-		pos             "500 375"
-		mousefx true
-		click   { teamslot7 }
+		image	menu/save_slot
+		pos	"500 375"
+		mousefx	true
+		click	{ teamslot7 }
 	}
 
 	string txt_slot0 { string "*cvar mn_slot0" pos "510 139" color "0 .78 0 1" }
@@ -232,14 +232,14 @@ menu mp_team
 
 	pic button_load
 	{
-		image   menu/multi_buttons2
-		pos             "780 130"
+		image	menu/multi_buttons2
+		pos	"780 130"
 		tooltip	"_Load team from current selected slot"
-		texl    "0 0"
-		texh    "128 64"
-		out             { *string_load color "0 0.5 0 1" *button_load texl "0 0" *button_load texh "128 64" }
-		in              { *string_load color "1 1 1 1" *button_load texl "0 64" *button_load texh "128 128" }
-		click   { cmd "loadteamslot;" }
+		texl	"0 0"
+		texh	"128 64"
+		out	{ *string_load color "0 0.5 0 1" *button_load texl "0 0" *button_load texh "128 64" }
+		in	{ *string_load color "1 1 1 1" *button_load texl "0 64" *button_load texh "128 128" }
+		click	{ cmd "loadteamslot;" }
 	}
 	string string_load
 	{
@@ -252,14 +252,14 @@ menu mp_team
 
 	pic button_save
 	{
-		image   menu/multi_buttons2
-		pos             "780 200"
+		image	menu/multi_buttons2
+		pos	"780 200"
 		tooltip	"_Save team to current selected slot"
-		texl    "0 0"
-		texh    "128 64"
-		out             { *string_save color "0 0.5 0 1" *button_save texl "0 0" *button_save texh "128 64" }
-		in              { *string_save color "1 1 1 1" *button_save texl "0 64" *button_save texh "128 128" }
-		click   { cmd "saveteamslot;team_comments;" }
+		texl	"0 0"
+		texh	"128 64"
+		out	{ *string_save color "0 0.5 0 1" *button_save texl "0 0" *button_save texh "128 64" }
+		in	{ *string_save color "1 1 1 1" *button_save texl "0 64" *button_save texh "128 128" }
+		click	{ cmd "saveteamslot;team_comments;" }
 	}
 	string string_save
 	{
@@ -277,20 +277,20 @@ menu mp_team
 
 	string current_team
 	{
-		string  "_Current Team"
-		pos             "500 450"
-		font    f_big
+		string	"_Current Team"
+		pos	"500 450"
+		font	f_big
 	}
 
 	pic button_edit
 	{
-		image   menu/multi_buttons2
-		pos             "500 490"
+		image	menu/multi_buttons2
+		pos	"500 490"
 		tooltip	"_Edit your team after loading"
-		texl    "0 0"
-		texh    "128 64"
-		out             { *string_edit color "0 0.5 0 1" *button_edit texl "0 0" *button_edit texh "128 64" }
-		in              { *string_edit color "1 1 1 1" *button_edit texl "0 64" *button_edit texh "128 128" }
+		texl	"0 0"
+		texh	"128 64"
+		out	{ *string_edit color "0 0.5 0 1" *button_edit texl "0 0" *button_edit texh "128 64" }
+		in	{ *string_edit color "1 1 1 1" *button_edit texl "0 64" *button_edit texh "128 128" }
 		click
 		{
 			cmd "mn_push team;"
@@ -307,13 +307,13 @@ menu mp_team
 
 	pic button_new
 	{
-		image   menu/multi_buttons2
-		pos             "640 490"
+		image	menu/multi_buttons2
+		pos	"640 490"
 		tooltip	"_Generate a new team"
-		texl    "0 0"
-		texh    "128 64"
-		out             { *string_new color "0 0.5 0 1" *button_new texl "0 0" *button_new texh "128 64" }
-		in              { *string_new color "1 1 1 1" *button_new texl "0 64" *button_new texh "128 128" }
+		texl	"0 0"
+		texh	"128 64"
+		out	{ *string_new color "0 0.5 0 1" *button_new texl "0 0" *button_new texh "128 64" }
+		in	{ *string_new color "1 1 1 1" *button_new texl "0 64" *button_new texh "128 128" }
 		click
 		{
 			cmd "team_reset; set mn_teamname NewTeam;gennames;mn_push team;"
@@ -330,49 +330,51 @@ menu mp_team
 
 	string race_str
 	{
-		string  "_Race:"
-		pos             "500 570"
+		string	"_Race:"
+		pos	"500 570"
 	}
 	string race_value
 	{
-		string  "*cvar team"
-		pos             "620 570"
-		align   ur
+		string	"*cvar team"
+		pos	"620 570"
+		align	ur
 	}
 	pic race_dec
 	{
-		image   menu/buttons_small
-		pos             "628 568"
-		texl    "0 0"           texh    "16 16"
-		mousefx true
-		click   { cmd "mn_modifystring team -1 human:alien;" }
+		image	menu/buttons_small
+		pos	"628 568"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modifystring team -1 human:alien;" }
 	}
 	pic race_inc
 	{
-		image   menu/buttons_small
-		pos             "638 568"
-		texl    "16 0"          texh    "32 16"
-		mousefx true
-		click   { cmd "mn_modifystring team +1 human:alien;" }
+		image	menu/buttons_small
+		pos	"638 568"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modifystring team +1 human:alien;" }
 	}
 
 	string current_name
 	{
-		string  "_Name"
-		pos             "500 620"
+		string	"_Name"
+		pos	"500 620"
 	}
 	pic slot_teamname
 	{
-		image   menu/save_slot
-		pos             "500 640"
-		mousefx true
-		click   { cmd "msgmenu ?mn_teamname" *txt_teamname color "1 1 1 1" *txt_teamname mousefx true }
+		image	menu/save_slot
+		pos	"500 640"
+		mousefx	true
+		click	{ cmd "msgmenu ?mn_teamname" *txt_teamname color "1 1 1 1" *txt_teamname mousefx true }
 	}
 	string txt_teamname
 	{
-		string "*cvar mn_teamname"
-		pos "510 649"
-		color "0 .78 0 1"
+		string	"*cvar mn_teamname"
+		pos	"510 649"
+		color	"0 .78 0 1"
 	}
 	confunc mn_teamname_changed { *txt_teamname color "0 .78 0 1" *txt_teamname mousefx false }
 
@@ -382,7 +384,7 @@ menu mp_team
 
 	func init
 	{
-		cmd "set mn_slot 0;team_comments;loadteamslot;"
+		cmd	"set mn_slot 0;team_comments;loadteamslot;"
 		teamslot0
 	}
 
@@ -395,30 +397,30 @@ menu serverinfo
 {
 	zone popup
 	{
-		invis true
+		invis	true
 	}
         pic back_ul
         {
-                image   menu/options_ul
-                pos             "0 0"
+                image	menu/options_ul
+                pos	"0 0"
         }
 
         pic back_ur
         {
-                image   menu/options_ur
-                pos             "512 0"
+                image	menu/options_ur
+                pos	"512 0"
         }
 
         pic back_ll
         {
-                image   menu/options_ll
-                pos             "0 512"
+                image	menu/options_ll
+                pos	"0 512"
         }
 
         pic back_lr
         {
-                image   menu/options_lr
-                pos             "512 512"
+                image	menu/options_lr
+                pos	"512 512"
         }
 	text server_info
 	{
@@ -507,12 +509,12 @@ menu serverinfo
 
 	func init
 	{
-		cmd "mn_escpop 1"
+		cmd	"mn_escpop 1"
 	}
 
 	func close
 	{
-		cmd "mn_escpop 3"
+		cmd	"mn_escpop 3"
 	}
 }
 
@@ -526,14 +528,14 @@ menu mp_join_lan
 	// ====================
 	pic button_lan_lan
 	{
-		image   menu/multi_buttons3a
-		texh    "256 64"
-		texl    "0 32"
-		pos     "500 130"
+		image	menu/multi_buttons3a
+		texh	"256 64"
+		texl	"0 32"
+		pos	"500 130"
 	}
 	pic button_lan_inet
 	{
-		image   menu/multi_buttons3
+		image	menu/multi_buttons3
 		click
 		{
 			cmd "mn_escpop 1;"
@@ -541,11 +543,11 @@ menu mp_join_lan
 			cmd "mn_push mp_join_internet;"
 			cmd "mn_escpop 3;"
 		}
-		texh    "256 64"
-		texl    "0 32"
-		pos     "726 130"
-		out     { *string_inet color "0 0.5 0 1" *button_lan_inet image menu/multi_buttons3 }
-		in      { *string_inet color "1 1 1 1" *button_lan_inet image menu/multi_buttons3a }
+		texh	"256 64"
+		texl	"0 32"
+		pos	"726 130"
+		out	{ *string_inet color "0 0.5 0 1" *button_lan_inet image menu/multi_buttons3 }
+		in	{ *string_inet color "1 1 1 1" *button_lan_inet image menu/multi_buttons3a }
 	}
 	string string_lan
 	{
@@ -581,35 +583,37 @@ menu mp_join_lan
 
 	string lan_teamnum_str
 	{
-		string  "_Team preference:"
-		pos             "500 660"
+		string	"_Team preference:"
+		pos	"500 660"
 	}
 	string lan_teamnum_value
 	{
-		string  "*cvar teamnum"
-		pos             "650 660"
-		align   ur
+		string	"*cvar teamnum"
+		pos	"650 660"
+		align	ur
 	}
 	pic lan_teamnum_dec
 	{
-		image   menu/buttons_small
-		pos             "668 658"
-		texl    "0 0"           texh    "16 16"
-		mousefx true
-		click   { cmd "mn_modify teamnum -1 1 4;" }
+		image	menu/buttons_small
+		pos	"668 658"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify teamnum -1 1 4;" }
 	}
 	pic lan_teamnum_inc
 	{
-		image   menu/buttons_small
-		pos             "684 658"
-		texl    "16 0"          texh    "32 16"
-		mousefx true
-		click   { cmd "mn_modify teamnum +1 1 4;" }
+		image	menu/buttons_small
+		pos	"684 658"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify teamnum +1 1 4;" }
 	}
 
 	func init
 	{
-		cmd "pingservers;"
+		cmd	"pingservers;"
 	}
 }
 
@@ -624,20 +628,20 @@ menu mp_join_internet
 	// ====================
 	pic button_lan_lan
 	{
-		image   menu/multi_buttons3
-		texh    "256 64"
-		texl    "0 32"
-		pos     "500 130"
-		out     { *string_lan color "0 0.5 0 1" *button_lan_lan image menu/multi_buttons3 }
-		in      { *string_lan color "1 1 1 1" *button_lan_lan image menu/multi_buttons3a }
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 32"
+		pos	"500 130"
+		out	{ *string_lan color "0 0.5 0 1" *button_lan_lan image menu/multi_buttons3 }
+		in	{ *string_lan color "1 1 1 1" *button_lan_lan image menu/multi_buttons3a }
 		click	{ cmd "mn_pop esc; mn_push multiplayer;" }
 	}
 	pic button_lan_inet
 	{
-		image   menu/multi_buttons3a
-		texh    "256 64"
-		texl    "0 32"
-		pos     "726 130"
+		image	menu/multi_buttons3a
+		texh	"256 64"
+		texl	"0 32"
+		pos	"726 130"
 	}
 	string string_lan
 	{
@@ -680,18 +684,18 @@ menu mp_join_internet
 	// ====================
 	pic button_inet_connect_to_ip
 	{
-		image   menu/multi_buttons3
-		click   { cmd "connect *mn_server_ip" }
-		texh    "256 32"
-		texl    "0 0"
-		pos     "500 615"
-		out     { *string_inet_connect_to_ip color "0 0.5 0 1" *button_inet_connect_to_ip image menu/multi_buttons3 }
-		in      { *string_inet_connect_to_ip color "1 1 1 1" *button_inet_connect_to_ip image menu/multi_buttons3a }
+		image	menu/multi_buttons3
+		click	{ cmd "connect *mn_server_ip" }
+		texh	"256 32"
+		texl	"0 0"
+		pos	"500 615"
+		out	{ *string_inet_connect_to_ip color "0 0.5 0 1" *button_inet_connect_to_ip image menu/multi_buttons3 }
+		in	{ *string_inet_connect_to_ip color "1 1 1 1" *button_inet_connect_to_ip image menu/multi_buttons3a }
 	}
 	string string_inet_connect_to_ip
 	{
-		string  "_Connect"
-		pos     "628 614"
+		string	"_Connect"
+		pos	"628 614"
 		font	f_menu
 		color	"0 0.5 0 1"
 		align	uc
@@ -702,55 +706,57 @@ menu mp_join_internet
 	// ===================
 	string current_inet_connect_to_ip
 	{
-		string  "_Connect to IP"
-		pos     "500 560"
+		string	"_Connect to IP"
+		pos	"500 560"
 	}
 	pic slot_inet_connect_to_ip
 	{
-		image   menu/save_slot
-		pos     "500 580"
-		mousefx false
-		click   { cmd "msgmenu ?mn_server_ip" *txt_inet_ip color "1 1 1 1" *txt_inet_ip mousefx true }
+		image	menu/save_slot
+		pos	"500 580"
+		mousefx	false
+		click	{ cmd "msgmenu ?mn_server_ip" *txt_inet_ip color "1 1 1 1" *txt_inet_ip mousefx true }
 	}
 	string txt_inet_ip
 	{
-		string "*cvar mn_server_ip"
-		pos    "510 589"
-		color  "0 .78 0 1"
+		string	"*cvar mn_server_ip"
+		pos	"510 589"
+		color	"0 .78 0 1"
 	}
 	confunc mn_server_ip_changed { *txt_inet_ip color "0 .78 0 1" *txt_inet_ip mousefx false }
 
 	string inet_teamnum_str
 	{
-		string  "_Team preference:"
-		pos             "500 660"
+		string	"_Team preference:"
+		pos	"500 660"
 	}
 	string inet_teamnum_value
 	{
-		string  "*cvar teamnum"
-		pos             "650 660"
-		align   ur
+		string	"*cvar teamnum"
+		pos	"650 660"
+		align	ur
 	}
 	pic inet_teamnum_dec
 	{
-		image   menu/buttons_small
-		pos             "668 658"
-		texl    "0 0"           texh    "16 16"
-		mousefx true
-		click   { cmd "mn_modify teamnum -1 1 4;" }
+		image	menu/buttons_small
+		pos	"668 658"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify teamnum -1 1 4;" }
 	}
 	pic inet_teamnum_inc
 	{
-		image   menu/buttons_small
-		pos             "684 658"
-		texl    "16 0"          texh    "32 16"
-		mousefx true
-		click   { cmd "mn_modify teamnum +1 1 4;" }
+		image	menu/buttons_small
+		pos	"684 658"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify teamnum +1 1 4;" }
 	}
 
 	func init
 	{
-		cmd "bookmarks_print;"
+		cmd	"bookmarks_print;"
 	}
 }
 
@@ -766,22 +772,22 @@ menu mp_create_server
 	// ===================
 	string morale_str
 	{
-		string  "_Enable morale states:"
-		pos     "500 140"
+		string	"_Enable morale states:"
+		pos	"500 140"
 	}
 	string morale_value
 	{
-		string  "*cvar mn_enablemorale"
-		pos     "840 140"
-		align   ur
+		string	"*cvar mn_enablemorale"
+		pos	"840 140"
+		align	ur
 	}
 	pic morale_dec
 	{
-		image   menu/buttons_small
-		pos     "868 138"
-		texl    "0 0"
-		texh    "16 16"
-		mousefx true
+		image	menu/buttons_small
+		pos	"868 138"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
 		click
 		{
 			cmd "mn_modify sv_enablemorale -1 0 1;"
@@ -790,11 +796,11 @@ menu mp_create_server
 	}
 	pic morale_inc
 	{
-		image   menu/buttons_small
-		pos     "884 138"
-		texl    "16 0"
-		texh    "32 16"
-		mousefx true
+		image	menu/buttons_small
+		pos	"884 138"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
 		click
 		{
 			cmd "mn_modify sv_enablemorale +1 0 1;"
@@ -807,22 +813,22 @@ menu mp_create_server
 	// ===================
 	string dedicated_str
 	{
-		string  "_Dedicated server:"
-		pos     "500 160"
+		string	"_Dedicated server:"
+		pos	"500 160"
 	}
 	string dedicated_value
 	{
-		string  "*cvar mn_dedicated"
-		pos     "840 160"
-		align   ur
+		string	"*cvar mn_dedicated"
+		pos	"840 160"
+		align	ur
 	}
 	pic dedicated_dec
 	{
-		image   menu/buttons_small
-		pos     "868 158"
-		texl    "0 0"
-		texh    "16 16"
-		mousefx true
+		image	menu/buttons_small
+		pos	"868 158"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
 		click
 		{
 			cmd "mn_modify dedicated -1 0 1;"
@@ -831,11 +837,11 @@ menu mp_create_server
 	}
 	pic dedicated_inc
 	{
-		image   menu/buttons_small
-		pos     "884 158"
-		texl    "16 0"
-		texh    "32 16"
-		mousefx true
+		image	menu/buttons_small
+		pos	"884 158"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
 		click
 		{
 			cmd "mn_modify dedicated +1 0 1;"
@@ -848,22 +854,22 @@ menu mp_create_server
 	// ===================
 	string server_teamplay_str
 	{
-		string  "_Teamplay:"
-		pos     "500 180"
+		string	"_Teamplay:"
+		pos	"500 180"
 	}
 	string server_teamplay_value
 	{
-		string  "*cvar mn_teamplay"
-		pos     "840 180"
-		align   ur
+		string	"*cvar mn_teamplay"
+		pos	"840 180"
+		align	ur
 	}
 	pic server_teamplay_dec
 	{
-		image   menu/buttons_small
-		pos     "868 178"
-		texl    "0 0"
-		texh    "16 16"
-		mousefx true
+		image	menu/buttons_small
+		pos	"868 178"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
 		click
 		{
 			cmd "mn_modify sv_teamplay -1 0 1;"
@@ -872,11 +878,11 @@ menu mp_create_server
 	}
 	pic server_teamplay_inc
 	{
-		image   menu/buttons_small
-		pos     "884 178"
-		texl    "16 0"
-		texh    "32 16"
-		mousefx true
+		image	menu/buttons_small
+		pos	"884 178"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
 		click
 		{
 			cmd "mn_modify sv_teamplay +1 0 1;"
@@ -889,33 +895,33 @@ menu mp_create_server
 	// ===================
 	string maxclients_str
 	{
-		string  "_Max. clients:"
-		pos     "500 200"
-		tooltip "Sets the max allowed clients to connect"
+		string	"_Max. clients:"
+		pos	"500 200"
+		tooltip	"Sets the max allowed clients to connect"
 	}
 	string maxclients_value
 	{
-		string  "*cvar maxclients"
-		pos     "840 200"
-		align   ur
+		string	"*cvar maxclients"
+		pos	"840 200"
+		align	ur
 	}
 	pic maxclients_dec
 	{
-		image   menu/buttons_small
-		pos     "868 198"
-		texl    "0 0"
-		texh    "16 16"
-		mousefx true
-		click   { cmd "mn_modify maxclients -1 1 16;" }
+		image	menu/buttons_small
+		pos	"868 198"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify maxclients -1 1 16;" }
 	}
 	pic maxclients_inc
 	{
-		image   menu/buttons_small
-		pos     "884 198"
-		texl    "16 0"
-		texh    "32 16"
-		mousefx true
-		click   { cmd "mn_modify maxclients +1 1 16;" }
+		image	menu/buttons_small
+		pos	"884 198"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify maxclients +1 1 16;" }
 	}
 
 	// ===================
@@ -923,33 +929,33 @@ menu mp_create_server
 	// ===================
 	string maxperplayer_str
 	{
-		string  "_Max. soldiers per team:"
-		pos     "500 220"
-		tooltip "_Sets the max allowed soldiers per team"
+		string	"_Max. soldiers per team:"
+		pos	"500 220"
+		tooltip	"_Sets the max allowed soldiers per team"
 	}
 	string maxperplayer_value
 	{
-		string  "*cvar maxsoldiers"
-		pos     "840 220"
-		align   ur
+		string	"*cvar maxsoldiers"
+		pos	"840 220"
+		align	ur
 	}
 	pic maxperplayer_dec
 	{
-		image   menu/buttons_small
-		pos     "868 218"
-		texl    "0 0"
-		texh    "16 16"
-		mousefx true
-		click   { cmd "mn_modify maxsoldiers -1 1 8;" }
+		image	menu/buttons_small
+		pos	"868 218"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify maxsoldiers -1 1 8;" }
 	}
 	pic maxperplayer_inc
 	{
-		image   menu/buttons_small
-		pos     "884 218"
-		texl    "16 0"
-		texh    "32 16"
-		mousefx true
-		click   { cmd "mn_modify maxsoldiers +1 1 8;" }
+		image	menu/buttons_small
+		pos	"884 218"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify maxsoldiers +1 1 8;" }
 	}
 
 	// =====================
@@ -957,33 +963,33 @@ menu mp_create_server
 	// =====================
 	string maxsoldierperplayer_str
 	{
-		string  "_Max. soldiers per player:"
-		pos     "500 240"
-		tooltip "_Sets the max allowed soldiers per player when in teamplay"
+		string	"_Max. soldiers per player:"
+		pos	"500 240"
+		tooltip	"_Sets the max allowed soldiers per player when in teamplay"
 	}
 	string maxsoldierperplayer_value
 	{
-		string  "*cvar maxsoldiersperplayer"
-		pos     "840 240"
-		align   ur
+		string	"*cvar maxsoldiersperplayer"
+		pos	"840 240"
+		align	ur
 	}
 	pic maxsoldierperplayer_dec
 	{
-		image   menu/buttons_small
-		pos     "868 238"
-		texl    "0 0"
-		texh    "16 16"
-		mousefx true
-		click   { cmd "mn_modify maxsoldiersperplayer -1 1 8;" }
+		image	menu/buttons_small
+		pos	"868 238"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify maxsoldiersperplayer -1 1 8;" }
 	}
 	pic maxsoldierperplayer_inc
 	{
-		image   menu/buttons_small
-		pos     "884 238"
-		texl    "16 0"
-		texh    "32 16"
-		mousefx true
-		click   { cmd "mn_modify maxsoldiersperplayer +1 1 8;" }
+		image	menu/buttons_small
+		pos	"884 238"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify maxsoldiersperplayer +1 1 8;" }
 	}
 
 	// ===================
@@ -991,33 +997,33 @@ menu mp_create_server
 	// ===================
 	string server_teamnum_str
 	{
-		string  "_Team preference:"
-		pos     "500 260"
-		tooltip "_Sets the prefered team"
+		string	"_Team preference:"
+		pos	"500 260"
+		tooltip	"_Sets the prefered team"
 	}
 	string server_teamnum_value
 	{
-		string  "*cvar teamnum"
-		pos     "840 260"
-		align   ur
+		string	"*cvar teamnum"
+		pos	"840 260"
+		align	ur
 	}
 	pic server_teamnum_dec
 	{
-		image   menu/buttons_small
-		pos     "868 258"
-		texl    "0 0"
-		texh    "16 16"
-		mousefx true
-		click   { cmd "mn_modify teamnum -1 1 4;" }
+		image	menu/buttons_small
+		pos	"868 258"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify teamnum -1 1 4;" }
 	}
 	pic server_teamnum_inc
 	{
-		image   menu/buttons_small
-		pos     "884 258"
-		texl    "16 0"
-		texh    "32 16"
-		mousefx true
-		click   { cmd "mn_modify teamnum +1 1 4;" }
+		image	menu/buttons_small
+		pos	"884 258"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify teamnum +1 1 4;" }
 	}
 
 	// ===================
@@ -1026,32 +1032,32 @@ menu mp_create_server
 	// ===================
 	string server_maxplayerperteam_str
 	{
-		string  "_Max. players per team:"
-		pos     "500 280"
+		string	"_Max. players per team:"
+		pos	"500 280"
 	}
 	string server_maxplayerperteam_value
 	{
-		string  "*cvar maxplayers"
-		pos     "840 280"
-		align   ur
+		string	"*cvar maxplayers"
+		pos	"840 280"
+		align	ur
 	}
 	pic server_maxplayerperteam_dec
 	{
-		image   menu/buttons_small
-		pos     "868 278"
-		texl    "0 0"
-		texh    "16 16"
-		mousefx true
-		click   { cmd "mn_modify maxplayers -1 1 8;" }
+		image	menu/buttons_small
+		pos	"868 278"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify maxplayers -1 1 8;" }
 	}
 	pic server_maxplayerperteam_inc
 	{
-		image   menu/buttons_small
-		pos     "884 278"
-		texl    "16 0"
-		texh    "32 16"
-		mousefx true
-		click   { cmd "mn_modify maxplayers +1 1 8;" }
+		image	menu/buttons_small
+		pos	"884 278"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify maxplayers +1 1 8;" }
 	}
 
 	// ===================
@@ -1059,33 +1065,33 @@ menu mp_create_server
 	// ===================
 	string ai_numactors_str
 	{
-		string  "_Max. AI actors:"
-		pos     "500 300"
+		string	"_Max. AI actors:"
+		pos	"500 300"
 		tooltip	"_Max AI actors for teamplay mode"
 	}
 	string ai_numactors_value
 	{
-		string  "*cvar ai_numactors"
-		pos     "840 300"
-		align   ur
+		string	"*cvar ai_numactors"
+		pos	"840 300"
+		align	ur
 	}
 	pic ai_numactors_dec
 	{
-		image   menu/buttons_small
-		pos     "868 298"
-		texl    "0 0"
-		texh    "16 16"
-		mousefx true
-		click   { cmd "mn_modify ai_numactors -1 0 8;" }
+		image	menu/buttons_small
+		pos	"868 298"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify ai_numactors -1 0 8;" }
 	}
 	pic ai_numactors_inc
 	{
-		image   menu/buttons_small
-		pos     "884 298"
-		texl    "16 0"
-		texh    "32 16"
-		mousefx true
-		click   { cmd "mn_modify ai_numactors +1 0 8;" }
+		image	menu/buttons_small
+		pos	"884 298"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify ai_numactors +1 0 8;" }
 	}
 
 	// ===================
@@ -1093,21 +1099,21 @@ menu mp_create_server
 	// ===================
 	string current_server_pwd
 	{
-		string  "_Server-Password:"
-		pos     "500 330"
+		string	"_Server-Password:"
+		pos	"500 330"
 	}
 	pic slot_server_pwd
 	{
-		image   menu/save_slot
-		pos     "500 350"
-		mousefx true
-		click   { cmd "msgmenu ?password" *txt_server_pwd color "1 1 1 1" *txt_server_pwd mousefx true }
+		image	menu/save_slot
+		pos	"500 350"
+		mousefx	true
+		click	{ cmd "msgmenu ?password" *txt_server_pwd color "1 1 1 1" *txt_server_pwd mousefx true }
 	}
 	string txt_server_pwd
 	{
-		string "*cvar password"
-		pos "510 359"
-		color "0 .78 0 1"
+		string	"*cvar password"
+		pos	"510 359"
+		color	"0 .78 0 1"
 	}
 	confunc password_changed { *txt_server_pwd color "0 .78 0 1" *txt_server_pwd mousefx false }
 
@@ -1116,21 +1122,21 @@ menu mp_create_server
 	// ===================
 	string current_rcon_pwd
 	{
-		string  "_RCON-Password:"
-		pos     "500 390"
+		string	"_RCON-Password:"
+		pos	"500 390"
 	}
 	pic slot_rcon_pwd
 	{
-		image   menu/save_slot
-		pos     "500 410"
-		mousefx true
-		click   { cmd "msgmenu ?rcon_password" *txt_rcon_pwd color "1 1 1 1" *txt_rcon_pwd mousefx true }
+		image	menu/save_slot
+		pos	"500 410"
+		mousefx	true
+		click	{ cmd "msgmenu ?rcon_password" *txt_rcon_pwd color "1 1 1 1" *txt_rcon_pwd mousefx true }
 	}
 	string txt_rcon_pwd
 	{
-		string "*cvar rcon_password"
-		pos "510 419"
-		color "0 .78 0 1"
+		string	"*cvar rcon_password"
+		pos	"510 419"
+		color	"0 .78 0 1"
 	}
 	confunc rcon_password_changed { *txt_rcon_pwd color "0 .78 0 1" *txt_rcon_pwd mousefx false }
 
@@ -1139,21 +1145,21 @@ menu mp_create_server
 	// ===================
 	string current_hostname
 	{
-		string  "_Hostname:"
-		pos     "500 450"
+		string	"_Hostname:"
+		pos	"500 450"
 	}
 	pic slot_hostname
 	{
-		image   menu/save_slot
-		pos     "500 470"
-		mousefx true
-		click   { cmd "msgmenu ?hostname" *txt_hostname color "1 1 1 1" *txt_hostname mousefx true }
+		image	menu/save_slot
+		pos	"500 470"
+		mousefx	true
+		click	{ cmd "msgmenu ?hostname" *txt_hostname color "1 1 1 1" *txt_hostname mousefx true }
 	}
 	string txt_hostname
 	{
-		string "*cvar hostname"
-		pos "510 479"
-		color "0 .78 0 1"
+		string	"*cvar hostname"
+		pos	"510 479"
+		color	"0 .78 0 1"
 	}
 	confunc hostname_changed { *txt_hostname color "0 .78 0 1" *txt_hostname mousefx false }
 
@@ -1162,63 +1168,65 @@ menu mp_create_server
 	// ===================
 	string current_map
 	{
-		string  "_Map"
-		pos     "500 510"
+		string	"_Map"
+		pos	"500 510"
 	}
 	pic slot_map
 	{
-		image   menu/save_slot
-		pos     "500 530"
-		mousefx true
+		image	menu/save_slot
+		pos	"500 530"
+		mousefx	true
 	}
 	string txt_mapname
 	{
-		string "*cvar mapname"
-		pos    "510 539"
-		color  "0 .78 0 1"
+		string	"*cvar mapname"
+		pos	"510 539"
+		color	"0 .78 0 1"
 	}
 	pic prev_map
 	{
-		image   menu/buttons_small
-		pos     "478 538"
-		texl    "0 0"           texh    "16 16"
-		mousefx true
-		click   { cmd "mn_prevmap" }
+		image	menu/buttons_small
+		pos	"478 538"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_prevmap" }
 	}
 	pic next_map
 	{
-		image   menu/buttons_small
-		pos     "760 538"
-		texl    "16 0"          texh    "32 16"
-		mousefx true
-		click   { cmd "mn_nextmap;" }
+		image	menu/buttons_small
+		pos	"760 538"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_nextmap;" }
 	}
 	pic mappic
 	{
-		image   "*cvar mn_mappic"
-		pos     "800 330"
-		texl    "0 0"
-		texh    "128 96"
-		click   { cmd "mn_nextmap" }
-		rclick  { cmd "mn_prevmap" }
+		image	"*cvar mn_mappic"
+		pos	"800 330"
+		texl	"0 0"
+		texh	"128 96"
+		click	{ cmd "mn_nextmap" }
+		rclick	{ cmd "mn_prevmap" }
 	}
 	pic mappic2
 	{
-		image   "*cvar mn_mappic2"
-		pos     "800 430"
-		texl    "0 0"
-		texh    "128 96"
-		click   { cmd "mn_nextmap" }
-		rclick  { cmd "mn_prevmap" }
+		image	"*cvar mn_mappic2"
+		pos	"800 430"
+		texl	"0 0"
+		texh	"128 96"
+		click	{ cmd "mn_nextmap" }
+		rclick	{ cmd "mn_prevmap" }
 	}
 	pic mappic3
 	{
-		image   "*cvar mn_mappic3"
-		pos     "800 530"
-		texl    "0 0"
-		texh    "128 96"
-		click   { cmd "mn_nextmap" }
-		rclick  { cmd "mn_prevmap" }
+		image	"*cvar mn_mappic3"
+		pos	"800 530"
+		texl	"0 0"
+		texh	"128 96"
+		click	{ cmd "mn_nextmap" }
+		rclick	{ cmd "mn_prevmap" }
 	}
 
 	// ====================
@@ -1259,6 +1267,3 @@ menu mp_create_server
 		cmd "mn_translate sv_enablemorale mn_enablemorale 0:No,1:Yes;"
 	}
 }
-
-
-

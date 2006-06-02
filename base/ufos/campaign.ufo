@@ -814,6 +814,22 @@ stage alienbase
 	}
 }
 
+campaign test
+{
+	name		"_Test Campaign"
+	text		"_txt_test_campaign"
+	team		alien
+	soldiers	12
+	equipment	campaign_player
+	market		campaign_market
+	credits		500000
+	map		map_test
+	visible		true
+
+	date		"2000 0 7"
+	firststage	intro
+}
+
 campaign main
 {
 	name		"_Standard Campaign"

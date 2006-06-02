@@ -114,7 +114,7 @@ menu singleplayer
 	pic button_new
 	{
 		pos	"640 380"
-		click	{ cmd "game_new" }
+		click	{ cmd "mn_push campaigns" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"

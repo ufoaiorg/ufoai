@@ -1,0 +1,123 @@
+// ==================
+// CAMPAIGN MENU
+// ==================
+
+menu campaigns
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis	true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/options_ul
+		pos	"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/options_ur
+		pos	"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/options_ll
+		pos	"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/options_lr
+		pos	"512 512"
+	}
+
+	string version
+	{
+		string	"*cvar version"
+		pos	"10 744"
+	}
+
+
+	string c_headline
+	{
+		string	"_Campaigns"
+		pos	"150 170"
+		font	f_big
+	}
+
+	// ==================
+	// buttons
+	// ==================
+	pic c_button_start
+	{
+		pos	"80 320"
+		click	{ cmd "game_new" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *c_string_start color "0 0.5 0 1" *c_button_start texl "0 0"  *c_button_start texh "256 64" }
+		in	{ *c_string_start color "1 1 1 1" *c_button_start texl "0 64" *c_button_start texh "256 128" }
+	}
+	string c_string_start
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Start campaign"
+		pos	"208 330"
+		align	uc
+	}
+
+	pic c_button_exit
+	{
+		pos	"80 450"
+		click	{ cmd "mn_pop esc" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *c_string_exit color "0 0.5 0 1" *c_button_exit texl "0 0"  *c_button_exit texh "256 64" }
+		in	{ *c_string_exit color "1 1 1 1" *c_button_exit texl "0 64" *c_button_exit texh "256 128" }
+	}
+	string c_string_exit
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Back"
+		pos	"208 460"
+		align	uc
+	}
+
+	text campaignlist
+	{
+		pos	"500 80"
+		size	"420 400"
+		mousefx	true
+		format	"20 0"
+		num	13
+		click	{ }
+	}
+
+	text campaign_desc
+	{
+		pos	"500 500"
+		format	"20 0"
+		size	"420 200"
+		num	0
+	}
+
+	func init
+	{
+		cmd "getcampaigns"
+	}
+}
