@@ -498,19 +498,17 @@ Handles the building list of constructable buildings
 Called everytime a building was constructed and
 thus maybe other buildings get available.
 
-menuText[TEXT_BUILDINGS] is a pointer to baseCurrent->allBuildingsList
+menuText[TEXT_BUILDINGS] is a pointer to baseCurrent->allBuildingsList which will be displayed in the build-screen.
 This way every base can hold its own building list.
-The pointer is updated everytime we select a base via mn_select_base
-(see B_SelectBase for further information)
+The content is updated everytime B_BuildingInit is called (i.e everytime the buildings-list is dispplayed/updated)
 ======================*/
-void B_BuildingAddToList( char *title )
+void B_BuildingAddToList( building_t *building )
 {
 	assert(baseCurrent);
 
-	//is the title already in list?
-	//if not, then add the title to the list
-	if (!strstr( menuText[TEXT_BUILDINGS], title ) )
-		Q_strcat ( menuText[TEXT_BUILDINGS], MAX_LIST_CHAR, va("%s\n", title ) );
+	Q_strcat ( menuText[TEXT_BUILDINGS], MAX_LIST_CHAR, va("%s\n", _(building->name) ) );
+	BuildingConstructionList[numBuildingConstructionList] = building->type_idx;
+	numBuildingConstructionList++;
 }
 
 /*======================
@@ -576,9 +574,11 @@ void B_BuildingInit( void )
 	Com_DPrintf("B_BuildingInit: Updating b-list for '%s' (%i)\n", baseCurrent->name, baseCurrent->idx );
 	Com_DPrintf("B_BuildingInit: Buildings in base: %i\n", gd.numBuildings[baseCurrent->idx]);
 
+	// initialising the vars used in B_BuildingAddToList
 	memset( baseCurrent->allBuildingsList, 0, sizeof(baseCurrent->allBuildingsList) );
 	menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
 	numBuildingConstructionList = 0;
+	// ------------------
 
 	for ( i = 0; i < gd.numBuildingTypes; i++)
 	{
@@ -604,9 +604,7 @@ void B_BuildingInit( void )
 				if ( buildingType->dependsBuilding < 0
 				  || B_GetMaximumBuildingStatus (baseCurrent->idx, buildingType->buildingType ) >= B_STATUS_CONSTRUCTION_FINISHED )
 				{
-					B_BuildingAddToList( _(buildingType->name) );
-					BuildingConstructionList[numBuildingConstructionList] = buildingType->idx;
-					numBuildingConstructionList++;
+					B_BuildingAddToList( buildingType );
 				}
 			} else {
 				Com_DPrintf("Building not researched yet %s\n", buildingType->id );
@@ -1634,7 +1632,6 @@ void B_SelectBase( void )
 	{
 		Com_DPrintf( "B_SelectBase: select base with id %i\n", baseID );
 		baseCurrent = &gd.bases[ baseID ];
-		menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
 		if ( baseCurrent->founded ) {
 			mapAction = MA_NONE;
 			MN_PushMenu( "bases" );
