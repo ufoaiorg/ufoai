@@ -494,7 +494,8 @@ void CL_Disconnect (void)
 	// go to main menu and bring up console
 	MN_PopMenu( qtrue );
 	MN_PushMenu( mn_main->string );
-	cls.key_dest = key_console;
+// 	if ( ! ccs.singleplayer )
+// 		cls.key_dest = key_console;
 
 	cls.connect_time = 0;
 
