@@ -25,5 +25,5 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: UFO: Alien Invasion - data-building tool
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
- Tis package includes modified versions of the quake2 map- and
- model-building tools: qbsp3, qrad3, qbspinfo3.
+ This package includes a modified version of the quake2 map-building 
+ tool: ufo2map.
