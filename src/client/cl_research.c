@@ -196,6 +196,7 @@ RS_CopyFromSkeleton
 Copy the research-tree skeleton parsed on game-start to the global list.
 The skeleton has all the informations about already researched items etc..
 ======================*/
+//TODO: this function needs to be removed and replaced with a global one that handles the initial parsed "gd" struct.
 void RS_CopyFromSkeleton( void )
 {/*
 	int i;
@@ -209,9 +210,9 @@ void RS_CopyFromSkeleton( void )
 		tech = &technologies_skeleton[i];
 		//Q_strncpyz( tech->name, "Credits:", MAX_VAR ); // DEBUG: just to test if anything is point to the skeleton :)
 	}
-
-	// link in the tech pointers
-	RS_AddObjectTechs();*/
+	*/
+	// link in the tech pointers in the items.
+	RS_AddObjectTechs();
 }
 
 /*======================
