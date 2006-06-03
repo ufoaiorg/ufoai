@@ -16,21 +16,27 @@ tutorial tacticalmission
 
 sequence tut_tacticalmission
 {
-	2dobj gameplay1
+	// just precaching the background image
+	precache pics
+	{
+		tutorial/tactical1
+	}
+
+	2dobj tactical_bg
 	{
 		image	tutorial/tactical1
 		align	ul
 		pos	"0 0"
 	}
 
-	2dobj p_hover1
+	2dobj level_hover
 	{
 		pos	"0 125"
 		size	"40 340"
 		align	ul
 		bgcolor	"1 0 0 0.3"
 	}
-	2dobj p_sentence1
+	2dobj switch_level_text
 	{
 		text	"_Switch view level"
 		pos	"30 420"
@@ -40,4 +46,8 @@ sequence tut_tacticalmission
 		font	f_small
 	}
 	wait 5
+
+	rem tactical_bg
+	rem level_hover
+	rem switch_level_text
 }
