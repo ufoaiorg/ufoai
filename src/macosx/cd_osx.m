@@ -23,9 +23,7 @@
 
 #include <sys/mount.h>
 
-#define MAC_OSX_M_SPECIAL_BOOLEAN
-
-#include "client.h"
+#include "../client/client.h"
 
 #pragma mark -
 

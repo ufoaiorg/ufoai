@@ -44,11 +44,9 @@
 #include <dlfcn.h>
 #include <fcntl.h>
 
-#import  <drivers/event_status_driver.h>
+#import <IOKit/hidsystem/event_status_driver.h>
 
-#define MAC_OSX_M_SPECIAL_BOOLEAN 1
-
-#include "client.h"
+#include "../client/client.h"
 
 #pragma mark -
 
@@ -300,7 +298,7 @@ extern	void	IN_ReceiveMouseMove (CGMouseDelta theDeltaX, CGMouseDelta theDeltaY)
 extern  BOOL	CDAudio_GetTrackList (void);
 extern	void	CDAudio_Enable (BOOL theState);
 extern qboolean	SNDDMA_ReserveBufferSize (void);
-extern	void	VID_SetPaused (BOOL theState);
+// extern	void	VID_SetPaused (BOOL theState); // FIXME Re-enable after finding the function :)
 
 int		Sys_CheckSpecialKeys (int theKey);
 void		Sys_Sleep (void);
@@ -1183,8 +1181,8 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     }
                         
     if ((vid_fullscreen != NULL && vid_fullscreen->value != 0.0f) ||
-        ((in_mouse == NULL || (in_mouse != NULL && in_mouse->value == 0.0f) &&
-         (_windowed_mouse != NULL && _windowed_mouse->value != 0.0f))))
+        ((in_mouse == NULL || ((in_mouse != NULL && in_mouse->value == 0.0f) &&
+         (_windowed_mouse != NULL && _windowed_mouse->value != 0.0f)))))
     {
         IN_ShowCursor (NO);
     }
@@ -1197,7 +1195,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     IN_SetF12EjectEnabled (NO);
     gSysIsDeactivated = NO;
     CDAudio_Enable (YES);
-    VID_SetPaused (NO);
+    // VID_SetPaused (NO);
     gSysHidden = NO;
     
     CGPostKeyboardEvent ((CGCharCode) 0, (CGKeyCode) 55, NO);	// CMD
@@ -1225,7 +1223,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     CDAudio_Enable (NO);
     gSysHidden = YES;
     gSysIsDeactivated = YES;
-    VID_SetPaused (YES);
+    // VID_SetPaused (YES);
 
     if (gFrameTimer != NULL)
     {

@@ -12,10 +12,9 @@
 #include <sys/param.h>
 #include <unistd.h>
 #include <dlfcn.h>
+#include <stdio.h>
 
-#define MAC_OSX_M_SPECIAL_BOOLEAN 1
-
-#include "client.h"
+#include "../client/client.h"
 
 #pragma mark -
 
@@ -295,7 +294,7 @@ qboolean VID_LoadRefresh (char *theName)
 	[myAppBundle release];
 
 	// prepare the bundle name:
-	Com_snprintf (myFileName, MAXPATHLEN, "%s.q2plug/Contents/MacOS/%s", theName, theName);
+	snprintf (myFileName, MAXPATHLEN, "%s.q2plug/Contents/MacOS/%s", theName, theName);
 
 	if (reflib_active == true)
 	{
@@ -393,7 +392,7 @@ void VID_CheckChanges (void)
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
 
-		Com_snprintf (myName, VID_MAX_REF_NAME, "ref_%s", vid_ref->string);
+		snprintf (myName, VID_MAX_REF_NAME, "ref_%s", vid_ref->string);
 		if (VID_LoadRefresh (myName) == qfalse)
 		{
 			if (cls.key_dest != key_console)
@@ -426,7 +425,7 @@ qboolean VID_FadeGammaInit (qboolean theFadeOnAllDisplays)
 	{
 		// initialized, but did we change the number of displays?
 		if (theFadeOnAllDisplays == myFadeOnAllDisplays)
-			return qboolean;
+			return qtrue; // FIXME Should this be qfalse? It was just qboolean, but that can't be right...
 		free (gVIDOriginalGamma);
 		gVIDOriginalGamma = NULL;
 	}

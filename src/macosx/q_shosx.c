@@ -22,8 +22,8 @@
 #include <sys/time.h>
 #include <ctype.h>
 
-#include "glob.h"
-#include "qcommon.h"
+#include "../unix/glob.h"
+#include "../qcommon/qcommon.h"
 
 #pragma mark -
 

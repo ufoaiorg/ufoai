@@ -128,6 +128,8 @@ typedef enum {
 	K_AUX30,
 	K_AUX31,
 	K_AUX32,
+	
+	K_NUMLOCK,
 
 	K_LAST_KEY		// this had better be <256!
 } keyNum_t;

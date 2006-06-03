@@ -43,8 +43,6 @@
 #define GL_PN_TRIANGLES_NORMAL_MODE_LINEAR_ATIX         0x6097
 #define GL_PN_TRIANGLES_NORMAL_MODE_QUADRATIC_ATIX      0x6098
 
-
-#define MAC_OSX_M_SPECIAL_BOOLEAN 1
 #include "../ref_gl/gl_local.h"
 
 #pragma mark -

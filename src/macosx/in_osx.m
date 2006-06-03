@@ -19,11 +19,9 @@
 #import <IOKit/IOKitLib.h>
 #import <IOKit/hidsystem/IOHIDLib.h>
 #import <IOKit/hidsystem/IOHIDParameter.h>
-#import <drivers/event_status_driver.h>
+#import <IOKit/hidsystem/event_status_driver.h>
 
-#define MAC_OSX_M_SPECIAL_BOOLEAN 1
-
-#include "client.h"
+#include "../client/client.h"
 
 #pragma mark -
 

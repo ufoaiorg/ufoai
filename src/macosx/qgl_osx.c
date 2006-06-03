@@ -29,7 +29,6 @@
 #pragma mark =Includes=
 
 #import <mach-o/dyld.h>
-#define MAC_OSX_M_SPECIAL_BOOLEAN 1
 #include "../ref_gl/gl_local.h"
 
 #pragma mark -

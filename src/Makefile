@@ -46,7 +46,7 @@ endif
 
 
 # this nice line comes from the linux kernel makefile
-ARCH := $(shell uname -m | sed -e s/i.86/i386/ -e s/sun4u/sparc/ -e s/sparc64/sparc/ -e s/arm.*/arm/ -e s/sa110/arm/ -e s/alpha/axp/ )
+ARCH := $(shell uname -m | sed -e s/i.86/i386/ -e s/sun4u/sparc/ -e s/sparc64/sparc/ -e s/arm.*/arm/ -e s/sa110/arm/ -e s/alpha/axp/ -e 's/Power Macintosh/ppc/' )
 
 ifneq ($(ARCH),x86_64)
 	ifneq ($(ARCH),i386)
@@ -76,6 +76,8 @@ SERVER_DIR=$(MOUNT_DIR)/server
 REF_GL_DIR=$(MOUNT_DIR)/ref_gl
 COMMON_DIR=$(MOUNT_DIR)/qcommon
 LINUX_DIR=$(MOUNT_DIR)/linux
+MACOSX_DIR=$(MOUNT_DIR)/macosx
+UNIX_DIR=$(MOUNT_DIR)/unix
 GAME_DIR=$(MOUNT_DIR)/game
 NULL_DIR=$(MOUNT_DIR)/null
 JPDIR=$(MOUNT_DIR)/jpeg-6
@@ -100,7 +102,23 @@ ifeq ($(OSTYPE),Linux)
 endif
 
 ifeq ($(OSTYPE),Darwin)
-	LDFLAGS=-ldl -lm -lvorbisfile -lvorbis -lasound -lintl
+	# Turn off about everything, until we get the support right...
+	BUILD_SDLUFO=NO	# use SDL for cdrom, sound and maybe renderer (selectable)
+	BUILD_GLX=NO		# X11 GLX driver
+	BUILD_DEDICATED=NO	# build a dedicated ufo server
+	BUILD_ALSA=NO		# build with alsa-support
+	BUILD_WITH_SHADER=NO	# build with shader support
+	HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
+	HAVE_GETTEXT=YES	# Compile with multilanguage-support?
+	BUILD_JPEG=NO		# jpeg-6 compile in or link in?
+	BUILD_WITH_DGA=NO	# dga support compiled in
+	BUILD_WITH_VIDMODE=NO	# vidmode support
+	BUILD_WITH_MMX=NO	# MMX support
+	BUILD_FOR_PROFILING=NO # build with -pg option for profiling via gprof
+	BUILD_COMPILETOOLS=NO	# build ufo2map bsp compile tool
+
+	LDFLAGS=-L/sw/lib -ldl -lm -lvorbisfile -lvorbis -lintl -framework IOKit -framework AppKit -framework QuickTime -framework CoreAudio
+	BASE_CFLAGS+=-I/sw/include
 endif
 
 ifeq ($(strip $(BUILD_SDLUFO)),YES)
@@ -420,9 +438,8 @@ TOOLS_OBJS = \
 	$(BUILDDIR)/tools/ufo2map/common/trilib.o
 
 $(BUILDDIR)/ufo2map : $(TOOLS_OBJS)
-	CFLAGS+=$(TOOLSCFLAGS)
 	@echo " * [MAP] ...linking";
-	$(CC) $(CFLAGS) -o $@ $(TOOLS_OBJS) $(TOOLSLDFLAGS)
+	$(CC) $(CFLAGS) $(TOOLSCFLAGS) -o $@ $(TOOLS_OBJS) $(TOOLSLDFLAGS)
 
 $(BUILDDIR)/tools/ufo2map/ufo2map.o :    $(TOOLS_DIR)/ufo2map/ufo2map.c
 	$(DO_TOOLS_CC)
@@ -562,20 +579,40 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/sv_user.o \
 	$(BUILDDIR)/client/sv_world.o \
 	\
+	$(BUILDDIR)/client/q_shared.o
+
+ifeq ($(OSTYPE),Linux) 
+	QUAKE2_OBJS+= \
 	$(BUILDDIR)/client/q_shlinux.o \
 	$(BUILDDIR)/client/vid_so.o \
 	$(BUILDDIR)/client/sys_linux.o \
 	$(BUILDDIR)/client/glob.o \
 	$(BUILDDIR)/client/net_udp.o \
 	$(BUILDDIR)/client/snd_linux.o \
-	$(BUILDDIR)/client/snd_oss.o \
-	\
-	$(BUILDDIR)/client/q_shared.o
+	$(BUILDDIR)/client/snd_oss.o
+endif
+
+ifeq ($(OSTYPE),Darwin)
+	QUAKE2_OBJS+= \
+	$(BUILDDIR)/client/sys_osx.o \
+	$(BUILDDIR)/client/vid_osx.o \
+	$(BUILDDIR)/client/in_osx.o \
+	$(BUILDDIR)/client/snddma_osx.o \
+	$(BUILDDIR)/client/glob.o \
+	$(BUILDDIR)/client/net_udp.o \
+	$(BUILDDIR)/client/q_shosx.o
+	# FIXME Add more objects
+endif
 
 ifeq ($(strip $(BUILD_SDLUFO)),YES)
 	QUAKE2_OBJS+=$(BUILDDIR)/client/snd_sdl.o $(BUILDDIR)/client/cd_sdl.o
 else
-	QUAKE2_OBJS+=$(BUILDDIR)/client/cd_linux.o
+	ifeq ($(OSTYPE),Linux)
+		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_linux.o
+	endif
+	ifeq ($(OSTYPE),Darwin)
+		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_osx.o
+	endif
 endif
 
 ifeq ($(strip $(BUILD_ALSA)),YES)
@@ -727,22 +764,40 @@ $(BUILDDIR)/client/snd_oss.o :   $(LINUX_DIR)/snd_oss.c
 $(BUILDDIR)/client/sys_linux.o :   $(LINUX_DIR)/sys_linux.c
 	$(DO_CC)
 
-$(BUILDDIR)/client/glob.o :        $(LINUX_DIR)/glob.c
+$(BUILDDIR)/client/glob.o :        $(UNIX_DIR)/glob.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/q_shared.o :    $(GAME_DIR)/q_shared.c
 	$(DO_CC)
 
-$(BUILDDIR)/client/net_udp.o :    $(LINUX_DIR)/net_udp.c
+$(BUILDDIR)/client/net_udp.o :    $(UNIX_DIR)/net_udp.c
 	$(DO_CC)
 
-$(BUILDDIR)/client/net_udp6.o :    $(LINUX_DIR)/net_udp6.c
+$(BUILDDIR)/client/net_udp6.o :    $(UNIX_DIR)/net_udp6.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cd_sdl.o :     $(LINUX_DIR)/cd_sdl.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/snd_sdl.o :     $(LINUX_DIR)/snd_sdl.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cd_osx.o :    $(MACOSX_DIR)/cd_osx.m
+	$(DO_CC)
+
+$(BUILDDIR)/client/sys_osx.o :    $(MACOSX_DIR)/sys_osx.m
+	$(DO_CC)
+
+$(BUILDDIR)/client/in_osx.o :    $(MACOSX_DIR)/in_osx.m
+	$(DO_CC)
+
+$(BUILDDIR)/client/vid_osx.o :    $(MACOSX_DIR)/vid_osx.m
+	$(DO_CC)
+
+$(BUILDDIR)/client/snddma_osx.o :    $(MACOSX_DIR)/snddma_osx.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/q_shosx.o :    $(MACOSX_DIR)/q_shosx.c
 	$(DO_CC)
 
 #############################################################################
@@ -846,10 +901,10 @@ $(BUILDDIR)/ded/q_shlinux.o :  $(LINUX_DIR)/q_shlinux.c
 $(BUILDDIR)/ded/sys_linux.o :  $(LINUX_DIR)/sys_linux.c
 	$(DO_DED_CC)
 
-$(BUILDDIR)/ded/glob.o :	$(LINUX_DIR)/glob.c
+$(BUILDDIR)/ded/glob.o :	$(UNIX_DIR)/glob.c
 	$(DO_DED_CC)
 
-$(BUILDDIR)/ded/net_udp.o :    $(LINUX_DIR)/net_udp.c
+$(BUILDDIR)/ded/net_udp.o :    $(UNIX_DIR)/net_udp.c
 	$(DO_DED_CC)
 
 $(BUILDDIR)/ded/cd_null.o :    $(NULL_DIR)/cd_null.c
@@ -1074,7 +1129,7 @@ $(BUILDDIR)/ref_gl/q_shared.o :       $(GAME_DIR)/q_shared.c
 $(BUILDDIR)/ref_gl/q_shlinux.o :      $(LINUX_DIR)/q_shlinux.c
 	$(DO_GL_SHLIB_CC)
 
-$(BUILDDIR)/ref_gl/glob.o :           $(LINUX_DIR)/glob.c
+$(BUILDDIR)/ref_gl/glob.o :           $(UNIX_DIR)/glob.c
 	$(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_gl/gl_glx.o :         $(LINUX_DIR)/gl_glx.c

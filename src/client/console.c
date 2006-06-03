@@ -29,7 +29,7 @@ extern	char	key_lines[32][MAXCMDLINE];
 extern	int		edit_line;
 extern	int		key_linepos;
 
-void DrawString (int x, int y, char *s)
+void DisplayString (int x, int y, char *s)
 {
 	while (*s)
 	{
@@ -536,12 +536,12 @@ void Con_DrawNotify (void)
 	{
 		if (msg_mode == MSG_SAY)
 		{
-			DrawString (l, v, "say:");
+			DisplayString (l, v, "say:");
 			skip = 4;
 		}
 		else
 		{
-			DrawString (l, v, "say_team:");
+			DisplayString (l, v, "say_team:");
 			skip = 10;
 		}
 

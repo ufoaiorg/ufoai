@@ -15,10 +15,8 @@
 
 #include <CoreAudio/AudioHardware.h>
 
-#define MAC_OSX_M_SPECIAL_BOOLEAN
-
-#include "client.h"
-#include "snd_loc.h"
+#include "../client/client.h"
+#include "../client/snd_loc.h"
 
 #pragma mark -
 
