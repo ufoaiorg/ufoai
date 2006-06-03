@@ -1,6 +1,6 @@
 MAPSDIR = .
 
-MAPSRCS = $(shell find $(MAPSDIR) -name '*.map' -not -name 'tutorial*' -not -name 'prefab*')
+MAPSRCS = $(shell find $(MAPSDIR) -name '*.map' -not -name 'tutorial*' -not -name '*autosave*' -not -name 'prefab*')
 BSPS = $(MAPSRCS:.map=.bsp)
 
 QRAD3FLAGS = -bounce 0 -chop 32 -extra
