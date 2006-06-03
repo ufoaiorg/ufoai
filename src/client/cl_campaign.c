@@ -2262,6 +2262,17 @@ void CL_GameGo( void )
 		Cbuf_AddText( va( "map %s %s\n", mis->map, mis->param ) );
 }
 
+/*======================
+CP_ExecuteMissionTrigger
+======================*/
+void CP_ExecuteMissionTrigger( mission_t* m, int won )
+{
+	if ( won && *m->onwin )
+		Cbuf_ExecuteText( EXEC_NOW, m->onwin );
+	else if ( !won && *m->onlose )
+		Cbuf_ExecuteText( EXEC_NOW, m->onlose );
+}
+
 /*
 ======================
 CL_GameAutoGo
@@ -2310,6 +2321,9 @@ void CL_GameAutoGo( void )
 		CL_CampaignExecute( selMis->cause );
 
 	CL_CampaignRemoveMission( selMis );
+
+	// onwin and onlose triggers
+	CP_ExecuteMissionTrigger( selMis->def, won );
 
 	if ( won )
 		MN_AddNewMessage( _("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL );
@@ -2562,6 +2576,9 @@ void CL_GameResultsCmd( void )
 		for ( i = 0; i < selMis->def->recruits; i++ )
 			CL_GenerateCharacter( curCampaign->team, baseCurrent );
 
+	// onwin and onlose triggers
+	CP_ExecuteMissionTrigger( selMis->def, won );
+
 	// campaign effects
 	selMis->cause->done++;
 	if ( selMis->cause->done >= selMis->cause->def->quota )
@@ -2604,6 +2621,8 @@ value_t mission_vals[] =
 	{ "aliens",		V_INT,			MISSIONOFS( aliens ) },
 	{ "maxugv",		V_INT,			MISSIONOFS( ugv ) },
 	{ "commands",	V_STRING,	MISSIONOFS( cmds ) },
+	{ "onwin",	V_STRING,	MISSIONOFS( onwin ) },
+	{ "onlose",	V_STRING,	MISSIONOFS( onlose ) },
 	{ "alienteam",	V_STRING,		MISSIONOFS( alienTeam ) },
 	{ "alienequip",	V_STRING,		MISSIONOFS( alienEquipment ) },
 	{ "civilians",	V_INT,			MISSIONOFS( civilians ) },

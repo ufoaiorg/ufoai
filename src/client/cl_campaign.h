@@ -52,6 +52,8 @@ typedef struct mission_s
 	char	alienEquipment[MAX_VAR];
 	char	civTeam[MAX_VAR];
 	char	cmds[MAX_VAR];
+	char	onwin[MAX_VAR];
+	char	onlose[MAX_VAR];
 	int	ugv; // uncontrolled ground units (entity: info_ugv_start)
 	qboolean	active; // aircraft at place?
 	vec2_t	pos;
