@@ -6,7 +6,6 @@ tutorial gameplay
 
 sequence tut_gameplay
 {
-
 }
 
 tutorial tacticalmission
@@ -17,5 +16,28 @@ tutorial tacticalmission
 
 sequence tut_tacticalmission
 {
+	2dobj gameplay1
+	{
+		image	tutorial/tactical1
+		align	ul
+		pos	"0 0"
+	}
 
+	2dobj p_hover1
+	{
+		pos	"0 125"
+		size	"40 340"
+		align	ul
+		bgcolor	"1 0 0 0.3"
+	}
+	2dobj p_sentence1
+	{
+		text	"_Switch view level"
+		pos	"30 420"
+		align	ul
+		color	"1 1 1 1"
+		speed	"0 -60"
+		font	f_small
+	}
+	wait 5
 }
