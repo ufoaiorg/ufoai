@@ -95,7 +95,7 @@ typedef struct seq2D_s
 	char		image[MAX_VAR];
 	vec2_t		pos, speed;
 	vec2_t		size, enlarge;
-	vec4_t		color, fade;
+	vec4_t		color, fade, bgcolor;
 	byte		align;
 	qboolean	relativePos; // useful for translations when sentence length may differ
 } seq2D_t;
@@ -327,10 +327,19 @@ void CL_Sequence2D( void )
 
 			// render
 			re.DrawColor( s2d->color );
+
 			// image can be background
 			if ( *s2d->image )
 				re.DrawNormPic( s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1],
 					0, 0, 0, 0, s2d->align, qtrue, s2d->image);
+
+			// bgcolor can be overlay
+			if ( s2d->bgcolor[3] > 0.0 )
+				re.DrawFill(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], s2d->align, s2d->bgcolor );
+
+			// render
+			re.DrawColor( s2d->color );
+
 			if ( *s2d->text ) // gettext placeholder
 				height += re.FontDrawString( s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], (int)s2d->size[0], _(s2d->text) );
 		}
@@ -450,6 +459,7 @@ value_t seq2D_vals[] =
 	{ "speed",		V_POS,			SEQ2DOFS( speed ) },
 	{ "size",		V_POS,			SEQ2DOFS( size ) },
 	{ "enlarge",	V_POS,			SEQ2DOFS( enlarge ) },
+	{ "bgcolor",		V_COLOR,		SEQ2DOFS( bgcolor ) },
 	{ "color",		V_COLOR,		SEQ2DOFS( color ) },
 	{ "fade",		V_COLOR,		SEQ2DOFS( fade ) },
 	{ "align",		V_ALIGN,		SEQ2DOFS( align ) },

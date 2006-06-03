@@ -255,7 +255,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 			dm.dmFields		|= DM_DISPLAYFREQUENCY;
 			ri.Con_Printf(PRINT_ALL, "...display frequency is %d hz\n", gl_state.displayrefresh);
 		}
-		else 
+		else
 		{
 			HDC hdc = GetDC (NULL);
 			int displayref = GetDeviceCaps (hdc, VREFRESH);
@@ -589,14 +589,12 @@ qboolean GLimp_InitGL (void)
 	if ( ( glw_state.hGLRC = qwglCreateContext( glw_state.hDC ) ) == 0 )
 	{
 		ri.Con_Printf (PRINT_ALL, "GLimp_Init() - qwglCreateContext failed\n");
-
 		goto fail;
 	}
 
 	if ( !qwglMakeCurrent( glw_state.hDC, glw_state.hGLRC ) )
 	{
 		ri.Con_Printf (PRINT_ALL, "GLimp_Init() - qwglMakeCurrent failed\n");
-
 		goto fail;
 	}
 
