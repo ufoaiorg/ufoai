@@ -105,7 +105,7 @@ ifeq ($(OSTYPE),Darwin)
 	# Turn off about everything, until we get the support right...
 	BUILD_SDLUFO=NO	# use SDL for cdrom, sound and maybe renderer (selectable)
 	BUILD_GLX=NO		# X11 GLX driver
-	BUILD_DEDICATED=NO	# build a dedicated ufo server
+	BUILD_DEDICATED=YES	# build a dedicated ufo server
 	BUILD_ALSA=NO		# build with alsa-support
 	BUILD_WITH_SHADER=NO	# build with shader support
 	HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
@@ -824,15 +824,26 @@ Q2DED_OBJS = \
 	$(BUILDDIR)/ded/sv_user.o \
 	$(BUILDDIR)/ded/sv_world.o \
 	\
-	$(BUILDDIR)/ded/q_shlinux.o \
-	$(BUILDDIR)/ded/sys_linux.o \
-	$(BUILDDIR)/ded/glob.o \
-	$(BUILDDIR)/ded/net_udp.o \
-	\
 	$(BUILDDIR)/ded/q_shared.o \
 	\
 	$(BUILDDIR)/ded/cl_null.o \
 	$(BUILDDIR)/ded/cd_null.o
+
+ifeq ($(OSTYPE),Linux) 
+	Q2DED_OBJS += \
+	$(BUILDDIR)/ded/q_shlinux.o \
+	$(BUILDDIR)/ded/sys_linux.o \
+	$(BUILDDIR)/ded/glob.o \
+	$(BUILDDIR)/ded/net_udp.o
+endif
+
+ifeq ($(OSTYPE),Darwin) 
+	Q2DED_OBJS += \
+	$(BUILDDIR)/ded/sys_osx.o \
+	$(BUILDDIR)/ded/q_shosx.o \
+	$(BUILDDIR)/ded/glob.o \
+	$(BUILDDIR)/ded/net_udp.o
+endif
 
 $(BUILDDIR)/ufoded : $(Q2DED_OBJS)
 	@echo " * [DED] ...linking";
@@ -913,6 +924,11 @@ $(BUILDDIR)/ded/cd_null.o :    $(NULL_DIR)/cd_null.c
 $(BUILDDIR)/ded/cl_null.o :    $(NULL_DIR)/cl_null.c
 	$(DO_DED_CC)
 
+$(BUILDDIR)/ded/sys_osx.o :    $(MACOSX_DIR)/sys_osx.m
+	$(DO_DED_CC)
+
+$(BUILDDIR)/ded/q_shosx.o :    $(MACOSX_DIR)/q_shosx.c
+	$(DO_DED_CC)
 
 #############################################################################
 # GAME
