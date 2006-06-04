@@ -2612,7 +2612,7 @@ void CL_MapActionReset( void )
 
 value_t mission_vals[] =
 {
-	{ "text",		V_TRANSLATION2_STRING,		MISSIONOFS( text ) },
+	{ "text",		V_TRANSLATION_STRING,		0 },
 	{ "map",		V_STRING,		MISSIONOFS( map ) },
 	{ "param",		V_STRING,		MISSIONOFS( param ) },
 	{ "music",		V_STRING,		MISSIONOFS( music ) },
@@ -2649,7 +2649,7 @@ void CL_ParseMission( char *name, char **text )
 	mission_t	*ms;
 	value_t		*vp;
 	char		*token;
-	int			i;
+	int		i;
 
 	// search for missions with same name
 	for ( i = 0; i < numMissions; i++ )
@@ -2698,6 +2698,18 @@ void CL_ParseMission( char *name, char **text )
 
 				if ( vp->ofs )
 					Com_ParseValue( ms, token, vp->type, vp->ofs );
+				else
+				{
+					if ( *token == '_' )
+						token++;
+					Q_strncpyz( mtp, _(token), 128 );
+					ms->text = mtp;
+					do {
+						mtp = strchr( mtp, '\\' );
+						if ( mtp ) *mtp = '\n';
+					} while ( mtp );
+					mtp = ms->text + strlen( ms->text ) + 1;
+				}
 				break;
 			}
 
