@@ -2612,7 +2612,7 @@ void CL_MapActionReset( void )
 
 value_t mission_vals[] =
 {
-	{ "text",		V_TRANSLATION_STRING,		0 },
+	{ "text",		V_TRANSLATION2_STRING,		MISSIONOFS( text ) },
 	{ "map",		V_STRING,		MISSIONOFS( map ) },
 	{ "param",		V_STRING,		MISSIONOFS( param ) },
 	{ "music",		V_STRING,		MISSIONOFS( music ) },
@@ -2698,18 +2698,6 @@ void CL_ParseMission( char *name, char **text )
 
 				if ( vp->ofs )
 					Com_ParseValue( ms, token, vp->type, vp->ofs );
-				else
-				{
-					if ( *token == '_' )
-						token++;
-					Q_strncpyz( mtp, _(token), 128 );
-					ms->text = mtp;
-					do {
-						mtp = strchr( mtp, '\\' );
-						if ( mtp ) *mtp = '\n';
-					} while ( mtp );
-					mtp = ms->text + strlen( ms->text ) + 1;
-				}
 				break;
 			}
 
@@ -3361,8 +3349,7 @@ void CP_CampaignsClick_f ( void )
 
 	Cvar_Set( "campaign", campaigns[num].name );
 	// FIXME: Translate the race to the name of a race
-	Com_sprintf( campaignDesc, MAXCAMPAIGNTEXT, va(_("Race: %s\n"), campaigns[num].team ) );
-	Q_strcat( campaignDesc, MAXCAMPAIGNTEXT, _(campaigns[num].text) );
+	Com_sprintf( campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\n%s\n"), campaigns[num].team, _(campaigns[num].text) );
 	menuText[TEXT_STANDARD] = campaignDesc;
 }
 

@@ -856,8 +856,7 @@ void CL_InitMessageSystem ( void );
 #define C_UNIT				25
 #define C_UNDEFINED			0xFE
 
-//#define MAX_MENUTEXTS		16
-#define MAX_MENUTEXTLEN		512
+#define MAX_MENUTEXTLEN		1024
 
 
 typedef struct menuModel_s
