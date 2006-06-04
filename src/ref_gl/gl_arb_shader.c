@@ -84,13 +84,13 @@ unsigned int SH_LoadProgram_ARB_FP(char *path)
 
 	if (!fbuf)
 	{
-		ri.Con_Printf (PRINT_ALL, _("Could not load shader %s\n"), path);
+		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
 		return -1;
 	}
 
 	if (size < 16)
 	{
-		ri.Con_Printf (PRINT_ALL, _("Could not load shader %s\n"), path);
+		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
 		ri.FS_FreeFile (fbuf);
 		return -1;
 	}
@@ -127,13 +127,13 @@ unsigned int SH_LoadProgram_ARB_VP(char *path)
 
 	if (!fbuf)
 	{
-		ri.Con_Printf (PRINT_ALL, _("Could not load shader %s\n"), path);
+		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
 		return -1;
 	}
 
 	if (size < 16)
 	{
-		ri.Con_Printf (PRINT_ALL, _("Could not load shader %s\n"), path);
+		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
 		ri.FS_FreeFile (fbuf);
 		return -1;
 	}
