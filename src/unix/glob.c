@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -46,40 +46,6 @@ static int glob_match_after_star(char *pattern, char *text)
 			return 0;
 	}
 }
-
-/* Return nonzero if PATTERN has any special globbing chars in it.  */
-
-#if !defined (__APPLE__) && !defined (MACOSX)
-
-static int glob_pattern_p(char *pattern)
-{
-	register char *p = pattern;
-	register char c;
-	int open = 0;
-
-	while ((c = *p++) != '\0')
-		switch (c) {
-		case '?':
-		case '*':
-			return 1;
-
-		case '[':		/* Only accept an open brace if there is a close */
-			open++;		/* brace to match it.  Bracket expressions must be */
-			continue;	/* complete, according to Posix.2 */
-		case ']':
-			if (open)
-				return 1;
-			continue;
-
-		case '\\':
-			if (*p++ == '\0')
-				return 0;
-		}
-
-	return 0;
-}
-
-#endif /* !__APPLE__ && !MACOSX */
 
 /* Match the pattern PATTERN against the string TEXT;
    return 1 if it matches, 0 otherwise.
