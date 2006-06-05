@@ -18442,29 +18442,36 @@
 {
 "classname" "misc_particle"
 "origin" "790 116 112"
+"particle" "corona"
+"spawnflags" "14"
 }
 // entity 341
 {
 "classname" "misc_particle"
 "origin" "180 -262 175"
-"spawnflags" "14"
+"spawnflags" "12"
+"particle" "corona"
 }
 // entity 342
 {
 "classname" "misc_particle"
 "origin" "790 460 112"
+"particle" "corona"
+"spawnflags" "14"
 }
 // entity 343
 {
 "classname" "misc_particle"
 "origin" "190 564 175"
-"spawnflags" "14"
+"spawnflags" "12"
+"particle" "corona"
 }
 // entity 344
 {
 "classname" "misc_particle"
 "origin" "190 320 175"
-"spawnflags" "14"
+"spawnflags" "12"
+"particle" "corona"
 }
 // entity 345
 {
