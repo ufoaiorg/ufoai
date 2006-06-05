@@ -17,7 +17,7 @@ BUILD_GLX=YES		# X11 GLX driver
 BUILD_DEDICATED=YES	# build a dedicated ufo server
 BUILD_ALSA=YES		# build with alsa-support
 BUILD_WITH_SHADER=NO	# build with shader support
-HAVE_IPV6=YES		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
+HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
 #FIXME: YES will produce jpeg glitches
 BUILD_JPEG=NO		# jpeg-6 compile in or link in?
