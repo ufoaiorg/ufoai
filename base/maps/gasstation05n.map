@@ -3,7 +3,7 @@
 {
 "classname" "worldspawn"
 "angles" "0 180 0"
-"light" "70"
+"light" "60"
 "_color" "0.2 0.2 0.3"
 "ambient" "0.1 0.1 0.15"
 // brush 0
@@ -10433,4 +10433,58 @@
 "_color" "1 0.8 0.55"
 "light" "220"
 "origin" "432 -264 22"
+}
+// entity 165
+{
+"classname" "misc_particle"
+"origin" "-564 -640 116"
+"particle" "corona"
+}
+// entity 166
+{
+"classname" "misc_particle"
+"origin" "204 -640 116"
+"particle" "corona"
+}
+// entity 167
+{
+"classname" "misc_particle"
+"origin" "1444 -640 116"
+"particle" "corona"
+}
+// entity 168
+{
+"classname" "misc_particle"
+"origin" "1092 -640 116"
+"particle" "corona"
+}
+// entity 169
+{
+"classname" "misc_particle"
+"origin" "764 -640 116"
+"particle" "corona"
+}
+// entity 170
+{
+"classname" "misc_particle"
+"origin" "640 52 116"
+"particle" "corona"
+}
+// entity 171
+{
+"classname" "misc_particle"
+"origin" "-52 -640 116"
+"particle" "corona"
+}
+// entity 172
+{
+"classname" "misc_particle"
+"origin" "-308 -640 116"
+"particle" "corona"
+}
+// entity 173
+{
+"classname" "misc_particle"
+"origin" "460 -640 116"
+"particle" "corona"
 }
