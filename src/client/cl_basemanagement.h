@@ -177,8 +177,9 @@ typedef struct building_s
 	//this way we can rename the buildings without loosing the control
 	buildingType_t	buildingType;
 
-	int tech;			// link to the building-technology
-	int dependsBuilding;	// if the building needs another one to work (= to be buildable) .. links to gd.buildingTypes
+	int tech; // link to the building-technology
+	// if the building needs another one to work (= to be buildable) .. links to gd.buildingTypes
+	int dependsBuilding;
 } building_t;
 
 #define MAX_AIRCRAFT	256
@@ -338,10 +339,13 @@ typedef struct base_s
 	struct building_s *buildingCurrent;
 } base_t;
 
-extern	base_t	*baseCurrent;							// Currently displayed/accessed base.
+// Currently displayed/accessed base.
+extern	base_t	*baseCurrent;
 
-craftupgrade_t    *craftupgrades[MAX_CRAFTUPGRADES];		// This it the global list of all available craft-upgrades
-int    numCraftUpgrades;								// The global number of entries in the "craftupgrades" list.
+// This it the global list of all available craft-upgrades
+craftupgrade_t    *craftupgrades[MAX_CRAFTUPGRADES];
+// The global number of entries in the "craftupgrades" list.
+int    numCraftUpgrades;
 
 void B_SetSensor( void );
 void B_InitEmployees ( void );
