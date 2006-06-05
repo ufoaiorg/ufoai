@@ -51,7 +51,6 @@
 //
 //
 //
-//no day and night
 mission africa
 {
 	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
@@ -86,7 +85,6 @@ mission baseattack
 	$civilian	200
 }
 
-//no day and night
 mission bunker
 {
 	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
@@ -203,24 +201,6 @@ mission excavation
 	$win		750
 	$alien		200
 	$civilian		100
-}
-
-//no day and night
-mission falcon
-{
-	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
-	map			falcon05
-	music		mission
-	pos			"116 52"
-	aliens		7
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	3
-	civteam		european
-	recruits	3
-	$win		6000
-	$alien		100
-	$civilian	500
 }
 
 //no day and night
@@ -367,9 +347,9 @@ mission lake
 mission mart
 {
 	text		"_Location: Gobabis\Type: Crash Site\Objective: Secure Area"
-	map			mart5
+	map		mart05
 	music		mission
-	pos			"-20 -23"
+	pos		"-20 -23"
 	aliens		3
 	alienteam	alien
 	alienequip	campaign_alien
@@ -385,9 +365,9 @@ mission mart
 mission mine
 {
 	text		"_Location: Gobabis\Type: Crash Site\Objective: Secure Area"
-	map			mine05
+	map		mine_crash05
 	music		mission
-	pos			"-20 -23"
+	pos		"-20 -23"
 	aliens		3
 	alienteam	alien
 	alienequip	campaign_alien
@@ -403,7 +383,7 @@ mission mine
 mission mine2
 {
 	text		"_There are rumors of a mine being\overrun by aliens. Altough this\source of information is doubtful,\you'll need to investigate.\"
-	map		mine
+	map		mine01
 	music		mission4
 	pos		"315 398"
 	aliens		5

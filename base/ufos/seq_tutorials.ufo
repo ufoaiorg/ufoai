@@ -16,19 +16,43 @@ tutorial tacticalmission
 
 sequence tut_tacticalmission
 {
+	// ==============================================
 	// just precaching the background image
 	precache pics
 	{
 		tutorial/tactical1
 	}
+	// ==============================================
 
+	// ==============================================
+	// welcome message
+	2dobj tactical_welcome
+	{
+		text	"_Tactical mission tutorial"
+		pos	"512 0"
+		align	uc
+		color	"0 0.6 0 1"
+		speed	"0 40"
+		font	f_big
+	}
+	wait 4
+	2dobj tactical_welcome { speed	"0 0" }
+	wait 2
+	rem tactical_welcome
+	// ==============================================
+
+	// ==============================================
+	// background image
 	2dobj tactical_bg
 	{
 		image	tutorial/tactical1
 		align	ul
 		pos	"0 0"
 	}
+	// ==============================================
 
+	// ==============================================
+	// switch level
 	2dobj level_hover
 	{
 		pos	"0 125"
@@ -38,7 +62,7 @@ sequence tut_tacticalmission
 	}
 	2dobj switch_level_text
 	{
-		text	"_Switch view level"
+		text	"_Switch view level via left mouseclick"
 		pos	"30 420"
 		align	ul
 		color	"1 1 1 1"
@@ -46,8 +70,22 @@ sequence tut_tacticalmission
 		font	f_small
 	}
 	wait 5
-
-	rem tactical_bg
 	rem level_hover
 	rem switch_level_text
+
+	2dobj switch_level_text2
+	{
+		text	"_You can also use the cursor keys to switch the levels"
+		pos	"30 320"
+		align	ul
+		color	"1 1 1 1"
+		font	f_small
+	}
+	wait 5
+	rem switch_level_text2
+	// ==============================================
+
+
+	// end of tutorial - remove background, too
+	rem tactical_bg
 }

@@ -101,7 +101,7 @@ menu campaigns
 	text campaignlist
 	{
 		pos	"500 80"
-		size	"420 400"
+		size	"420 200"
 		mousefx	true
 		format	"20 0"
 		num	13
@@ -110,9 +110,9 @@ menu campaigns
 
 	text campaign_desc
 	{
-		pos	"500 500"
+		pos	"500 300"
 		format	"20 0"
-		size	"420 200"
+		size	"420 400"
 		num	0
 	}
 
