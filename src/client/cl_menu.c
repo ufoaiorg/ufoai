@@ -3252,6 +3252,10 @@ MN_MapInfo
 */
 void MN_MapInfo ( void )
 {
+	char	normalizedName[MAX_VAR];
+	int	length = 0;
+	qboolean	normalized = qfalse, found = qfalse;
+
 	// maybe mn_next/prev_map are called before getmaps???
 	if ( !mapsInstalledInit )
 		FS_GetMaps();
@@ -3260,15 +3264,55 @@ void MN_MapInfo ( void )
 	Cvar_Set("mn_mappic2", "maps/shots/na.jpg" );
 	Cvar_Set("mn_mappic3", "maps/shots/na.jpg" );
 
+	// remove the day and night char
+	Q_strncpyz( normalizedName, maps[mapInstalledIndex], MAX_VAR );
+	length = strlen( normalizedName );
+	if ( normalizedName[length-1] == 'n' || normalizedName[length-1] == 'd' )
+	{
+		normalizedName[length-1] = '\0';
+		normalized = qtrue;
+	}
+
 	Cvar_ForceSet("mapname", maps[mapInstalledIndex] );
 	if ( FS_CheckFile( va("pics/maps/shots/%s.jpg", maps[mapInstalledIndex]) ) != -1 )
+	{
 		Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", maps[mapInstalledIndex]) );
+		found = qtrue;
+	}
 
 	if ( FS_CheckFile( va("pics/maps/shots/%s_2.jpg", maps[mapInstalledIndex]) ) != -1 )
+	{
 		Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", maps[mapInstalledIndex]) );
+		found = qtrue;
+	}
 
 	if ( FS_CheckFile( va("pics/maps/shots/%s_3.jpg", maps[mapInstalledIndex]) ) != -1 )
+	{
 		Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", maps[mapInstalledIndex]) );
+		found = qtrue;
+	}
+
+	// then check the normalized names
+	if ( ! found && normalized )
+	{
+		if ( FS_CheckFile( va("pics/maps/shots/%s.jpg", normalizedName) ) != -1 )
+		{
+			Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", normalizedName) );
+			found = qtrue;
+		}
+
+		if ( FS_CheckFile( va("pics/maps/shots/%s_2.jpg", normalizedName) ) != -1 )
+		{
+			Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", normalizedName) );
+			found = qtrue;
+		}
+
+		if ( FS_CheckFile( va("pics/maps/shots/%s_3.jpg", normalizedName) ) != -1 )
+		{
+			Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", normalizedName) );
+			found = qtrue;
+		}
+	}
 }
 
 /*
