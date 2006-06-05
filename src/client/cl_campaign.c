@@ -3341,6 +3341,15 @@ void CP_GetCampaigns_f ( void )
 	// default campaign
 	Cvar_Set( "campaign", "main" );
 	menuText[TEXT_STANDARD] = campaignDesc;
+
+	// select main as default
+	for ( i = 0; i < numCampaigns; i++ )
+		if ( !Q_strncmp( "main", campaigns[i].name, MAX_VAR ) )
+		{
+			Com_sprintf( campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\n%s\n"), campaigns[i].team, _(campaigns[i].text) );
+			break;
+		}
+
 }
 
 /*======================
