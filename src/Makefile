@@ -17,7 +17,7 @@ BUILD_GLX=YES		# X11 GLX driver
 BUILD_DEDICATED=YES	# build a dedicated ufo server
 BUILD_ALSA=YES		# build with alsa-support
 BUILD_WITH_SHADER=NO	# build with shader support
-HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
+HAVE_IPV6=YES		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
 #FIXME: YES will produce jpeg glitches
 BUILD_JPEG=NO		# jpeg-6 compile in or link in?
@@ -315,6 +315,7 @@ all: build_debug build_release lang
 
 links:
 	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so
+	ln -s src/$(BUILD_DEBUG_DIR)/ufoded ../ufoded
 	ln -s src/$(BUILD_DEBUG_DIR)/ufo ../ufo
 	ln -s src/$(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
 	ln -s src/$(BUILD_DEBUG_DIR)/ref_sdl.so ../ref_glx.so
@@ -596,7 +597,7 @@ ifeq ($(OSTYPE),Linux)
 	$(BUILDDIR)/client/vid_so.o \
 	$(BUILDDIR)/client/sys_linux.o \
 	$(BUILDDIR)/client/glob.o \
-	$(BUILDDIR)/client/net_udp.o \
+	$(BUILDDIR)/client/$(NET_UDP).o \
 	$(BUILDDIR)/client/snd_linux.o \
 	$(BUILDDIR)/client/snd_oss.o
 endif
@@ -608,7 +609,7 @@ ifeq ($(OSTYPE),Darwin)
 	$(BUILDDIR)/client/in_osx.o \
 	$(BUILDDIR)/client/snddma_osx.o \
 	$(BUILDDIR)/client/glob.o \
-	$(BUILDDIR)/client/net_udp.o \
+	$(BUILDDIR)/client/$(NET_UDP).o \
 	$(BUILDDIR)/client/q_shosx.o
 	# FIXME Add more objects
 endif
@@ -843,7 +844,7 @@ ifeq ($(OSTYPE),Linux)
 	$(BUILDDIR)/ded/q_shlinux.o \
 	$(BUILDDIR)/ded/sys_linux.o \
 	$(BUILDDIR)/ded/glob.o \
-	$(BUILDDIR)/ded/net_udp.o
+	$(BUILDDIR)/ded/$(NET_UDP).o
 endif
 
 ifeq ($(OSTYPE),Darwin)
@@ -851,7 +852,7 @@ ifeq ($(OSTYPE),Darwin)
 	$(BUILDDIR)/ded/sys_osx.o \
 	$(BUILDDIR)/ded/q_shosx.o \
 	$(BUILDDIR)/ded/glob.o \
-	$(BUILDDIR)/ded/net_udp.o
+	$(BUILDDIR)/ded/$(NET_UDP).o
 endif
 
 $(BUILDDIR)/ufoded : $(Q2DED_OBJS)
@@ -925,6 +926,9 @@ $(BUILDDIR)/ded/glob.o :	$(UNIX_DIR)/glob.c
 	$(DO_DED_CC)
 
 $(BUILDDIR)/ded/net_udp.o :    $(UNIX_DIR)/net_udp.c
+	$(DO_DED_CC)
+
+$(BUILDDIR)/ded/net_udp6.o :    $(UNIX_DIR)/net_udp6.c
 	$(DO_DED_CC)
 
 $(BUILDDIR)/ded/cd_null.o :    $(NULL_DIR)/cd_null.c
