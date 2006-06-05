@@ -453,7 +453,7 @@ void CL_ParseEntitystring( char *es )
 
 		if ( !Q_strcmp( classname, "misc_particle" ) )
 		{
-			CL_AddMapParticle( particle, origin, wait, strstart );
+			CL_AddMapParticle( particle, origin, wait, strstart, (spawnflags & 0xFF) );
 		}
 
 		if ( !Q_strcmp( classname, "func_breakable" ) )

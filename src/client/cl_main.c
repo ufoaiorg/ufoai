@@ -1501,7 +1501,7 @@ void CL_SendCommand (void)
 CL_AddMapParticle
 ==================
 */
-void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info)
+void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info, int levelflags)
 {
 	mp_t	*mp;
 
@@ -1516,11 +1516,12 @@ void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info)
 	Q_strncpyz( mp->ptl, ptl, MAX_QPATH );
 	VectorCopy( origin, mp->origin );
 	mp->info = info;
+	mp->levelflags = levelflags;
 	mp->wait[0] = wait[0]*1000;
 	mp->wait[1] = wait[1]*1000;
 	mp->nextTime = cl.time + wait[0] + wait[1]*frand() + 1;
 
-//	Com_Printf( "adding particle %s %i\n", ptl, numMPs );
+	Com_DPrintf( "Adding map particle %s (%i) with levelflags %i\n", ptl, numMPs, levelflags );
 }
 
 // FIXME: Howto mark them for gettext?

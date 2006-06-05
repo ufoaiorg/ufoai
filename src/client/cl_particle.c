@@ -601,6 +601,7 @@ ptl_t *CL_ParticleSpawn( char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t 
 	if ( s ) VectorCopy( s, p->s );
 	if ( v ) VectorCopy( v, p->v );
 	if ( a ) VectorCopy( a, p->a );
+
 	p->levelFlags = levelFlags;
 
 	// run init function
@@ -815,7 +816,7 @@ void CL_RunMapParticles( void )
 		if ( mp->nextTime && cl.time >= mp->nextTime )
 		{
 			// spawn a new particle
-			ptl = CL_ParticleSpawn( mp->ptl, 0, mp->origin, NULL, NULL );
+			ptl = CL_ParticleSpawn( mp->ptl, mp->levelflags, mp->origin, NULL, NULL );
 			if ( !ptl )
 			{
 				mp->nextTime = 0;

@@ -312,6 +312,15 @@ endif
 
 debug: build_debug
 all: build_debug build_release lang
+
+links:
+	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so
+	ln -s src/$(BUILD_DEBUG_DIR)/ufo ../ufo
+	ln -s src/$(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
+	ln -s src/$(BUILD_DEBUG_DIR)/ref_sdl.so ../ref_glx.so
+	ln -s src/$(BUILD_DEBUG_DIR)/ref_glx.so ../ref_sdl.so
+	ln -s ../src/$(BUILD_DEBUG_DIR)/game.so ../base/game.so
+
 release: build_release
 
 build_debug:
@@ -581,7 +590,7 @@ QUAKE2_OBJS = \
 	\
 	$(BUILDDIR)/client/q_shared.o
 
-ifeq ($(OSTYPE),Linux) 
+ifeq ($(OSTYPE),Linux)
 	QUAKE2_OBJS+= \
 	$(BUILDDIR)/client/q_shlinux.o \
 	$(BUILDDIR)/client/vid_so.o \
@@ -829,7 +838,7 @@ Q2DED_OBJS = \
 	$(BUILDDIR)/ded/cl_null.o \
 	$(BUILDDIR)/ded/cd_null.o
 
-ifeq ($(OSTYPE),Linux) 
+ifeq ($(OSTYPE),Linux)
 	Q2DED_OBJS += \
 	$(BUILDDIR)/ded/q_shlinux.o \
 	$(BUILDDIR)/ded/sys_linux.o \
@@ -837,7 +846,7 @@ ifeq ($(OSTYPE),Linux)
 	$(BUILDDIR)/ded/net_udp.o
 endif
 
-ifeq ($(OSTYPE),Darwin) 
+ifeq ($(OSTYPE),Darwin)
 	Q2DED_OBJS += \
 	$(BUILDDIR)/ded/sys_osx.o \
 	$(BUILDDIR)/ded/q_shosx.o \

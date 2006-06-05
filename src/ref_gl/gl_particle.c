@@ -196,7 +196,7 @@ void R_DrawPtls( void )
 			GL_SetBlendMode( p->blend );
 			if ( p->style == STYLE_LINE ) R_DrawPtlLine( p );
 			if ( p->pic != -1 ) R_DrawSprite( p );
-			if ( p->model != -1 ) 
+			if ( p->model != -1 )
 			{
 				qglEnable( GL_CULL_FACE );
 				R_DrawPtlModel( p );
