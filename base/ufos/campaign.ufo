@@ -645,6 +645,7 @@ mission vil_grenchen
 	$win		1000
 	$alien		100
 	$civilian	500
+	storyrelated	true
 }
 
 mission vil_lille
@@ -823,6 +824,6 @@ campaign main
 	map		map_earth
 	visible		true
 
-	date		"2000 0 7"
+	date		"2048 0 7"
 	firststage	intro
 }

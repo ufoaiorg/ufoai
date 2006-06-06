@@ -346,6 +346,7 @@ menu popup_intercept_ready
 
 	pic bt_auto_go
 	{
+		if	"game_autogo 1.0"
 		image	menu/button_mapmen_bases
 		pos	"600 450"
 		texl	"0 180"
@@ -357,7 +358,7 @@ menu popup_intercept_ready
 
 	func init
 	{
-		cmd "game_timestop;"
+		cmd "game_auto_check;game_timestop;"
 	}
 }
 
