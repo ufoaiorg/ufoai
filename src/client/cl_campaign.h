@@ -56,6 +56,7 @@ typedef struct mission_s
 	char	onlose[MAX_VAR];
 	int	ugv; // uncontrolled ground units (entity: info_ugv_start)
 	qboolean	active; // aircraft at place?
+	qboolean	storyRelated; // auto mission play disabled when true
 	vec2_t	pos;
 	byte	mask[4];
 	int		aliens, civilians;

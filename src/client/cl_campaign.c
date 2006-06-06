@@ -497,7 +497,7 @@ void MN_NextAircraft_f ( void )
 
 	if ( (int)Cvar_VariableValue("mn_aircraft_id") < baseCurrent->numAircraftInBase )
 	{
-		Cvar_SetValue("mn_aircraft_id", (int)Cvar_VariableValue("mn_aircraft_id") + 1 );
+		Cvar_SetValue("mn_aircraft_id", (float)Cvar_VariableValue("mn_aircraft_id") + 1.0f );
 		CL_AircraftSelect();
 	}
 	else
@@ -513,7 +513,7 @@ void MN_PrevAircraft_f ( void )
 {
 	if ( (int)Cvar_VariableValue("mn_aircraft_id") > 0 )
 	{
-		Cvar_SetValue("mn_aircraft_id", (int)Cvar_VariableValue("mn_aircraft_id") - 1 );
+		Cvar_SetValue("mn_aircraft_id", (float)Cvar_VariableValue("mn_aircraft_id") - 1.0f );
 		CL_AircraftSelect();
 	}
 }
@@ -2219,8 +2219,8 @@ void CL_GameGo( void )
 		return;
 
 	// start the map
-	Cvar_SetValue( "ai_numaliens", mis->aliens );
-	Cvar_SetValue( "ai_numcivilians", mis->civilians );
+	Cvar_SetValue( "ai_numaliens", (float)mis->aliens );
+	Cvar_SetValue( "ai_numcivilians", (float)mis->civilians );
 	Cvar_Set( "ai_alien", mis->alienTeam );
 	Cvar_Set( "ai_civilian", mis->civTeam );
 	Cvar_Set( "ai_equipment", mis->alienEquipment );
@@ -2273,11 +2273,33 @@ void CP_ExecuteMissionTrigger( mission_t* m, int won )
 		Cbuf_ExecuteText( EXEC_NOW, m->onlose );
 }
 
-/*
-======================
+/*======================
+CL_GameAutoCheck
+======================*/
+void CL_GameAutoCheck ( void )
+{
+	if ( !curCampaign || !selMis || interceptAircraft < 0 )
+	{
+		Com_DPrintf("No update after automission\n");
+		return;
+	}
+
+	switch ( selMis->def->storyRelated )
+	{
+	case qtrue:
+		Com_DPrintf("story related - auto mission is disabled\n");
+		Cvar_Set("game_autogo", "0");
+		break;
+	default:
+		Com_DPrintf("auto mission is enabled\n");
+		Cvar_Set("game_autogo", "1");
+		break;
+	}
+}
+
+/*======================
 CL_GameAutoGo
-======================
-*/
+======================*/
 void CL_GameAutoGo( void )
 {
 	mission_t	*mis;
@@ -2294,6 +2316,11 @@ void CL_GameAutoGo( void )
 	if ( ! mis->active )
 	{
 		MN_AddNewMessage( _("Notice"), _("Your dropship is not near the landingzone"), qfalse, MSG_STANDARD, NULL );
+		return;
+	}
+	else if ( mis->storyRelated )
+	{
+		Com_DPrintf("You have to play this mission, because it's story related\n");
 		return;
 	}
 
@@ -2628,6 +2655,7 @@ value_t mission_vals[] =
 	{ "civilians",	V_INT,			MISSIONOFS( civilians ) },
 	{ "civteam",	V_STRING,		MISSIONOFS( civTeam ) },
 	{ "recruits",	V_INT,			MISSIONOFS( recruits ) },
+	{ "storyrelated",	V_BOOL,			MISSIONOFS( storyRelated ) },
 	{ "$win",		V_INT,			MISSIONOFS( cr_win ) },
 	{ "$alien",		V_INT,			MISSIONOFS( cr_alien ) },
 	{ "$civilian",	V_INT,			MISSIONOFS( cr_civilian ) },
@@ -3196,6 +3224,7 @@ cmdList_t game_commands[] = {
 	{ "refuel", CL_AircraftRefuel_f },
 	{ "stats_update", CL_Stats_Update },
 	{ "game_go", CL_GameGo },
+	{ "game_auto_check", CL_GameAutoCheck },
 	{ "game_auto_go", CL_GameAutoGo },
 	{ "game_abort", CL_GameAbort },
 	{ "game_results", CL_GameResultsCmd },
@@ -3246,7 +3275,7 @@ void CL_GameNew( void )
 
 	Cvar_Set( "mn_main", "singleplayer" );
 	Cvar_Set( "mn_active", "map" );
-	Cvar_SetValue("maxclients", 1 );
+	Cvar_SetValue("maxclients", 1.0f );
 
 	// exit running game
 	if ( curCampaign ) CL_GameExit();

@@ -740,7 +740,7 @@ void RS_UpdateData ( void )
 				Cvar_Set( va( "mn_researchavailable%i",j ), tempstring );	// max. available scis in the base the tech is reseearched
 			}
 
-			
+
 			switch ( tech->statusResearch ) // Set the text of the research items and mark them if they are currently researched.
 			{
 			case RS_RUNNING:
@@ -1137,7 +1137,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 	tech->lab = -1;
 	tech->prev = -1;
 	tech->next = -1;
-	
+
 
 	do {
 		// get the name type
@@ -1438,7 +1438,7 @@ void RS_GetFirstRequired2 ( int tech_idx, int first_tech_idx, stringlist_t *requ
 		return;
 
 	required_temp = &gd.technologies[tech_idx].requires;
-	
+
 	if ( !Q_strncmp( required_temp->string[0] , "initial", 7 ) || !Q_strncmp( required_temp->string[0] , "nothing", 7 ) ) {
 		if ( tech_idx == first_tech_idx )
 			return;
