@@ -168,34 +168,34 @@ ifeq ($(strip $(BUILD_FOR_PROFILING)),YES)
 endif
 
 ifeq ($(ARCH),axp)
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -DNDEBUG
 endif
 
 ifeq ($(ARCH),ppc)
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -DNDEBUG
 endif
 
 ifeq ($(ARCH),sparc)
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -DNDEBUG
 endif
 
 ifeq ($(ARCH),i386)
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -O3 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -O3 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing -DNDEBUG
 endif
 
 ifeq ($(ARCH),x86_64)
 	_LIB := 64
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing -DNDEBUG
 endif
 
-ifeq ($(ARCH),mipsEE)
-	GLCFLAGS=-I$(MESA_DIR)/include -I/usr/X11R6/include
-	GLLDFLAGS=-L$(MESA_DIR)/lib -L/usr/X11R6/lib -L/usr/local/lib -lm -lGL -lGLU -lps2dev
-endif
-ifeq ($(ARCH),i386)
-	GLCFLAGS=-I$(MESA_DIR)/include -I/usr/include/glide -I/usr/X11R6/include
-	GLLDFLAGS=-L/usr/X11R6/lib -L/usr/local/lib -L$(MESA_DIR)/lib -lX11 -lXext -lvga -lm
-endif
+#ifeq ($(ARCH),mipsEE)
+#	GLCFLAGS=-I$(MESA_DIR)/include -I/usr/X11R6/include
+#	GLLDFLAGS=-L$(MESA_DIR)/lib -L/usr/X11R6/lib -L/usr/local/lib -lm -lGL -lGLU -lps2dev
+#endif
+#ifeq ($(ARCH),i386)
+#	GLCFLAGS=-I$(MESA_DIR)/include -I/usr/include/glide -I/usr/X11R6/include
+#	GLLDFLAGS=-L/usr/X11R6/lib -L/usr/local/lib -L$(MESA_DIR)/lib -lX11 -lXext -lvga -lm
+#endif
 
 
 GLXCFLAGS=-I/usr/X11R6/include $(shell sdl-config --cflags)
