@@ -23,7 +23,6 @@ int		theadlevel[260];
 
 int		neededContents = (CONTENTS_SOLID | CONTENTS_STEPON | CONTENTS_PLAYERCLIP);
 int		forbiddenContents = (CONTENTS_PASSABLE);
-
 vec3_t	tr_end;
 
 /*
@@ -39,7 +38,7 @@ void MakeTnode (int nodenum)
 	dplane_t		*plane;
 	int				i, contents;
 	dnode_t 		*node;
-	
+
 	t = tnode_p++;
 
 	node = dnodes + nodenum;
@@ -48,24 +47,24 @@ void MakeTnode (int nodenum)
 	t->type = plane->type;
 	VectorCopy (plane->normal, t->normal);
 	t->dist = plane->dist;
-	
+
 	for (i=0 ; i<2 ; i++)
 	{
-		if (node->children[i] < 0) 
+		if (node->children[i] < 0)
 		{
 			contents = dleafs[-node->children[i] - 1].contents & ~(1<<31);
 			if ( (contents & neededContents) && !(contents & forbiddenContents) )
 				t->children[i] = 1 | (1<<31); //-node->children[i] | (1<<31); // leaf+1
-			else 
+			else
 				t->children[i] = (1<<31);
-		} 
+		}
 		else
 		{
 			t->children[i] = tnode_p - tnodes;
 			MakeTnode (node->children[i]);
 		}
 	}
-			
+
 }
 
 
@@ -94,7 +93,7 @@ void BuildTnode_r( int node )
 		VectorCopy( dnodes[n->children[0]].maxs, c0maxs );
 		VectorCopy( dnodes[n->children[1]].mins, c1mins );
 
-		//	printf( "(%i %i : %i %i) (%i %i : %i %i)\n", 
+		//	printf( "(%i %i : %i %i) (%i %i : %i %i)\n",
 		//		(int)dnodes[n->children[0]].mins[0], (int)dnodes[n->children[0]].mins[1], (int)dnodes[n->children[0]].maxs[0], (int)dnodes[n->children[0]].maxs[1],
 		//		(int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1] );
 
@@ -111,14 +110,14 @@ void BuildTnode_r( int node )
 				t->children[1] = tnode_p - tnodes;
 				BuildTnode_r( n->children[0] );
 				t->children[0] = tnode_p - tnodes;
-				BuildTnode_r( n->children[1] );			
+				BuildTnode_r( n->children[1] );
 				return;
 			}
 
 		// can't construct such a separation plane
 		t->type = PLANE_NONE;
 
-		for ( i = 0; i < 2; i++ ) 
+		for ( i = 0; i < 2; i++ )
 		{
 			t->children[i] = tnode_p - tnodes;
 			BuildTnode_r( n->children[i] );
@@ -145,7 +144,12 @@ void MakeTnodes ( int levels )
 
 	// 32 byte align the structs
 	tnodes = malloc( (numnodes+1) * sizeof(tnode_t));
+	printf("t_nodes: %i\n", numnodes+1);
+#ifndef __x86_64__
 	tnodes = (tnode_t *)(((int)tnodes + 31)&~31);
+#else
+#warning Strange fix for AMD64 at cmodel.c CM_MakeTnodes
+#endif
 	tnode_p = tnodes;
 	numtheads = 0;
 
@@ -157,7 +161,6 @@ void MakeTnodes ( int levels )
 		thead[numtheads] = tnode_p - tnodes;
 		theadlevel[numtheads] = i;
 		numtheads++;
-
 		BuildTnode_r( dmodels[i].headnode );
 	}
 }
@@ -207,12 +210,12 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
 		return TestLine_r (tnode->children[0], start, stop);
-	
+
 	if (front < ON_EPSILON && back < ON_EPSILON)
 		return TestLine_r (tnode->children[1], start, stop);
 
 	side = front < 0;
-	
+
 	frac = front / (front-back);
 
 	mid[0] = start[0] + (stop[0] - start[0])*frac;
@@ -262,7 +265,7 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 		if ( r ) VectorCopy( tr_end, mid );
 		side = TestLineDist_r (tnode->children[1], start, stop);
 		if ( side && r )
-		{ 
+		{
 			if ( VectorNearer( mid, tr_end, start ) )
 			{
 				VectorCopy( mid, tr_end );
@@ -277,7 +280,7 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 		}
 
 		return side;
-				
+
 		break;
 	default:
 		front = (start[0]*tnode->normal[0] + start[1]*tnode->normal[1] + start[2]*tnode->normal[2]) - tnode->dist;
@@ -287,12 +290,12 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
 		return TestLineDist_r (tnode->children[0], start, stop);
-	
+
 	if (front < ON_EPSILON && back < ON_EPSILON)
 		return TestLineDist_r (tnode->children[1], start, stop);
 
 	side = front < 0;
-	
+
 	frac = front / (front-back);
 
 	mid[0] = start[0] + (stop[0] - start[0])*frac;
