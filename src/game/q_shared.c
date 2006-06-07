@@ -1626,8 +1626,10 @@ void Com_sprintf (char *dest, int size, char *fmt, ...)
 	len = vsprintf (bigbuffer,fmt,argptr);
 #endif
 	va_end (argptr);
+#ifdef DEBUG
 	if (len >= size)
-		Com_DPrintf ("Com_sprintf: overflow of %i in %i\n", len, size);
+		Com_Printf ("Com_sprintf: overflow of %i in %i\n", len, size);
+#endif
 	Q_strncpyz (dest, bigbuffer, size );
 }
 
