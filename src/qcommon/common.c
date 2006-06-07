@@ -38,6 +38,7 @@ jmp_buf abortframe;		// an ERR_DROP occured, exit the entire frame
 
 FILE	*log_stats_file;
 
+cvar_t	*s_language;
 cvar_t	*host_speeds;
 cvar_t	*log_stats;
 cvar_t	*developer;
@@ -1282,12 +1283,25 @@ Under Linux see Makefile options for this
 void Qcommon_LocaleInit ( void )
 {
 	char* locale;
-	cvar_t* s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE );
+#ifdef _WIN32
+	static char languageID[32];
+#endif
+	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE );
+	s_language->modified = qfalse;
 
 #ifdef _WIN32
-	putenv( va("LANG=%s", s_language->string ) );
+	Com_sprintf( languageID, 32, "LANG=%s", s_language->string );
+	putenv( languageID );
 #else
+#ifndef SOLARIS
 	unsetenv("LANGUAGE");
+#endif
+#ifdef __APPLE__
+	if(setenv ("LANGUAGE", s_language->string, 1) == -1)
+		Com_Printf("...setenv for LANGUAGE failed: %s\n", s_language->string );
+	if(setenv ("LC_ALL", s_language->string, 1) == -1)
+		Com_Printf("...setenv for LC_ALL failed: %s\n", s_language->string );
+#endif
 #endif
 
 	// set to system default
@@ -1297,7 +1311,6 @@ void Qcommon_LocaleInit ( void )
 	{
 		Com_Printf("...could not set to language: %s\n", s_language->string );
 		locale = setlocale( LC_MESSAGES, "" );
-		Cvar_Set("s_language", "" );
 		if ( !locale )
 		{
 			Com_Printf("...could not set to system language\n" );
@@ -1309,6 +1322,7 @@ void Qcommon_LocaleInit ( void )
 		Com_Printf("...using language: %s\n", locale );
 		Cvar_Set("s_language", locale );
 	}
+	s_language->modified = qfalse;
 
 	// use system locale dir if we can't find in gamedir
 	Com_DPrintf("...using mo files from %s/base/i18n\n", FS_GetCwd() );
@@ -1316,6 +1330,7 @@ void Qcommon_LocaleInit ( void )
 	bind_textdomain_codeset( TEXT_DOMAIN, "UTF-8" );
 	// load language file
 	textdomain( TEXT_DOMAIN );
+	
 }
 #endif
 
