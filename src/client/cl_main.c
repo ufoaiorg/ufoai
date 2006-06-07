@@ -1566,6 +1566,11 @@ void CL_CvarCheck( void )
 		else if ( v > 6 ) v = 6;
 		Cvar_Set( "mn_difficulty", _(difficulty_names[v]) );
 	}
+#ifdef HAVE_GETTEXT
+	// language
+	if ( s_language->modified )
+         Qcommon_LocaleInit();
+#endif
 
 	// gl_mode and fullscreen
 	v = Cvar_VariableValue( "mn_glmode" );
