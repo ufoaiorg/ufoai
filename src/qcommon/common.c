@@ -1283,11 +1283,22 @@ Under Linux see Makefile options for this
 void Qcommon_LocaleInit ( void )
 {
 	char* locale;
+	char languagePath[MAX_QPATH];
 #ifdef _WIN32
-	static char languageID[32];
+	char languageID[32];
 #endif
 	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE );
 	s_language->modified = qfalse;
+
+	setlocale( LC_ALL, "C" );
+	setlocale( LC_MESSAGES, "" );
+	// use system locale dir if we can't find in gamedir
+	Com_sprintf( languagePath, MAX_QPATH, "%s/base/i18n/", FS_GetCwd() );
+	Com_DPrintf("...using mo files from %s\n", languagePath );
+	bindtextdomain( TEXT_DOMAIN, languagePath );
+	bind_textdomain_codeset( TEXT_DOMAIN, "UTF-8" );
+	// load language file
+	textdomain( TEXT_DOMAIN );
 
 #ifdef _WIN32
 	Com_sprintf( languageID, 32, "LANG=%s", s_language->string );
@@ -1323,14 +1334,6 @@ void Qcommon_LocaleInit ( void )
 		Cvar_Set("s_language", locale );
 	}
 	s_language->modified = qfalse;
-
-	// use system locale dir if we can't find in gamedir
-	Com_DPrintf("...using mo files from %s/base/i18n\n", FS_GetCwd() );
-	bindtextdomain( TEXT_DOMAIN, va("%s/base/i18n/", FS_GetCwd() ) );
-	bind_textdomain_codeset( TEXT_DOMAIN, "UTF-8" );
-	// load language file
-	textdomain( TEXT_DOMAIN );
-	
 }
 #endif
 
