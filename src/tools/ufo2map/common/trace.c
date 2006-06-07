@@ -144,7 +144,6 @@ void MakeTnodes ( int levels )
 
 	// 32 byte align the structs
 	tnodes = malloc( (numnodes+1) * sizeof(tnode_t));
-	printf("t_nodes: %i\n", numnodes+1);
 #ifndef __x86_64__
 	tnodes = (tnode_t *)(((int)tnodes + 31)&~31);
 #else
