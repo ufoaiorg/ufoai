@@ -147,7 +147,7 @@ void Com_Printf (char *fmt, ...)
 
 		if (!logfile)
 		{
-			Com_sprintf (name, sizeof(name), "%s/qconsole.log", FS_Gamedir ());
+			Com_sprintf (name, sizeof(name), "%s/ufoconsole.log", FS_Gamedir ());
 			if (logfile_active->value > 2)
 				logfile = fopen (name, "a");
 			else
@@ -1283,22 +1283,11 @@ Under Linux see Makefile options for this
 void Qcommon_LocaleInit ( void )
 {
 	char* locale;
-	char languagePath[MAX_QPATH];
 #ifdef _WIN32
 	char languageID[32];
 #endif
 	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE );
 	s_language->modified = qfalse;
-
-	setlocale( LC_ALL, "C" );
-	setlocale( LC_MESSAGES, "" );
-	// use system locale dir if we can't find in gamedir
-	Com_sprintf( languagePath, MAX_QPATH, "%s/base/i18n/", FS_GetCwd() );
-	Com_DPrintf("...using mo files from %s\n", languagePath );
-	bindtextdomain( TEXT_DOMAIN, languagePath );
-	bind_textdomain_codeset( TEXT_DOMAIN, "UTF-8" );
-	// load language file
-	textdomain( TEXT_DOMAIN );
 
 #ifdef _WIN32
 	Com_sprintf( languageID, 32, "LANG=%s", s_language->string );
@@ -1345,6 +1334,10 @@ Qcommon_Init
 void Qcommon_Init (int argc, char **argv)
 {
 	char	*s;
+#ifdef HAVE_GETTEXT
+	// i18n through gettext
+	char languagePath[MAX_OSPATH];
+#endif
 
 	if (setjmp (abortframe) )
 		Sys_Error ("Error during initialization");
@@ -1415,6 +1408,16 @@ void Qcommon_Init (int argc, char **argv)
 
 #ifdef HAVE_GETTEXT
 	// i18n through gettext
+	setlocale( LC_ALL, "C" );
+	setlocale( LC_MESSAGES, "" );
+	// use system locale dir if we can't find in gamedir
+	Com_sprintf( languagePath, MAX_QPATH, "%s/base/i18n/", FS_GetCwd() );
+	Com_DPrintf("...using mo files from %s\n", languagePath );
+	bindtextdomain( TEXT_DOMAIN, languagePath );
+	bind_textdomain_codeset( TEXT_DOMAIN, "UTF-8" );
+	// load language file
+	textdomain( TEXT_DOMAIN );
+
 	Qcommon_LocaleInit();
 #else
 	Com_Printf("..no gettext compiled into this binary\n");
