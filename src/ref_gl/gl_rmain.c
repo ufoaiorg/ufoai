@@ -976,6 +976,7 @@ void R_SetupGL (void)
 		qglFogi( GL_FOG_MODE, GL_LINEAR );
 		qglFogf( GL_FOG_START, 0.1 * r_newrefdef.fog );
 		qglFogf( GL_FOG_END, r_newrefdef.fog );
+//		qglFogDensity(GL_FOG_DENSITY, 0.ß1 * r_newrefdef.fog );
 		qglFogfv( GL_FOG_COLOR, r_newrefdef.fogColor );
 	}
 }
