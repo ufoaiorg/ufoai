@@ -19,6 +19,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <stdarg.h>
+#include <stddef.h>
 
 #ifndef __BYTEBOOL__
 #define __BYTEBOOL__

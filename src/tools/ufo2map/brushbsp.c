@@ -298,9 +298,9 @@ AllocBrush
 bspbrush_t *AllocBrush (int numsides)
 {
 	bspbrush_t	*bb;
-	int			c;
+	ptrdiff_t			c;
 
-	c = (int)&(((bspbrush_t *)0)->sides[numsides]);
+	c = (ptrdiff_t)&(((bspbrush_t *)0)->sides[numsides]);
 	bb = malloc(c);
 	memset (bb, 0, c);
 	if (numthreads == 1)
@@ -340,7 +340,7 @@ void FreeBrushList (bspbrush_t *brushes)
 		next = brushes->next;
 
 		FreeBrush (brushes);
-	}		
+	}
 }
 
 /*
@@ -352,11 +352,11 @@ Duplicates the brush, the sides, and the windings
 */
 bspbrush_t *CopyBrush (bspbrush_t *brush)
 {
-	bspbrush_t *newbrush;
-	int			size;
-	int			i;
-	
-	size = (int)&(((bspbrush_t *)0)->sides[brush->numsides]);
+	bspbrush_t	*newbrush;
+	ptrdiff_t	size;
+	int	i;
+
+	size = (ptrdiff_t)&(((bspbrush_t *)0)->sides[brush->numsides]);
 
 	newbrush = AllocBrush (brush->numsides);
 	memcpy (newbrush, brush, size);
@@ -1102,7 +1102,7 @@ void SplitBrush (bspbrush_t *brush, int planenum,
 SplitBrushList
 ================
 */
-void SplitBrushList (bspbrush_t *brushes, 
+void SplitBrushList (bspbrush_t *brushes,
 	node_t *node, bspbrush_t **front, bspbrush_t **back)
 {
 	bspbrush_t	*brush, *newbrush, *newbrush2;

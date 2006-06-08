@@ -252,7 +252,7 @@ void GLS_EndScene (void);
 /* csg */
 
 qboolean IsInLevel( int contents, int level );
-int MapBrushesBounds( int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, 
+int MapBrushesBounds( int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs,
 					  vec3_t mins, vec3_t maxs );
 bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level,
 		vec3_t clipmins, vec3_t clipmaxs);
@@ -398,9 +398,11 @@ extern qboolean	norouting;
 extern qboolean	nobackclip;
 extern float subdivide_size;
 
-/*============================================================================= */
+/*=============================================================================
+ */
 
-/* qbsp3.c */
+/* qbsp3.c
+ */
 
 void ProcessModels (void);
 void RadWorld (void);
