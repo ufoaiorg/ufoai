@@ -1,4 +1,4 @@
-/*
+f/*
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -1931,7 +1931,7 @@ void CL_GameLoad( char *filename )
 	name = MSG_ReadString( &sb );
 
 	for ( i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++ )
-		if ( !Q_strncmp( name, curCampaign->name, MAX_VAR ) )
+		if ( !Q_strncmp( name, curCampaign->id, MAX_VAR ) )
 			break;
 
 	if ( i == numCampaigns )
