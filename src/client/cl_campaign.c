@@ -1750,7 +1750,7 @@ void CL_GameSave( char *filename, char *comment )
 	MSG_WriteString( &sb, comment );
 
 	// store campaign name
-	MSG_WriteString( &sb, curCampaign->name );
+	MSG_WriteString( &sb, curCampaign->id );
 
 	// store date
 	MSG_WriteLong( &sb, ccs.date.day );
@@ -2931,7 +2931,7 @@ value_t campaign_vals[] =
 	{ "credits",	V_INT,		CAMPAIGNOFS( credits ) },
 	{ "visible",	V_BOOL,		CAMPAIGNOFS( visible ) },
 	{ "text",	V_TRANSLATION2_STRING,		CAMPAIGNOFS( text ) }, // just a gettext placeholder
-	{ "name",		V_TRANSLATION_STRING,	CAMPAIGNOFS( campaignName ) },
+	{ "name",		V_TRANSLATION_STRING,	CAMPAIGNOFS( name ) },
 	{ "date",		V_DATE,		CAMPAIGNOFS( date ) },
 	{ NULL, 0, 0 },
 };
@@ -2941,7 +2941,7 @@ value_t campaign_vals[] =
 CL_ParseCampaign
 ======================
 */
-void CL_ParseCampaign( char *name, char **text )
+void CL_ParseCampaign( char *id, char **text )
 {
 	char		*errhead = "CL_ParseCampaign: unexptected end of file (campaign ";
 	campaign_t	*cp;
@@ -2951,12 +2951,12 @@ void CL_ParseCampaign( char *name, char **text )
 
 	// search for campaigns with same name
 	for ( i = 0; i < numCampaigns; i++ )
-		if ( !Q_strncmp( name, campaigns[i].name, MAX_VAR ) )
+		if ( !Q_strncmp( name, campaigns[i].id, MAX_VAR ) )
 			break;
 
 	if ( i < numCampaigns )
 	{
-		Com_Printf( "CL_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", name );
+		Com_Printf( "CL_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", id );
 		return;
 	}
 
@@ -2970,20 +2970,20 @@ void CL_ParseCampaign( char *name, char **text )
 	cp = &campaigns[numCampaigns++];
 	memset( cp, 0, sizeof(campaign_t) );
 
-	Q_strncpyz( cp->name, name, MAX_VAR );
+	Q_strncpyz( cp->id, id, MAX_VAR );
 
 	// get it's body
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
 	{
-		Com_Printf( "CL_ParseCampaign: campaign def \"%s\" without body ignored\n", name );
+		Com_Printf( "CL_ParseCampaign: campaign def \"%s\" without body ignored\n", id );
 		numCampaigns--;
 		return;
 	}
 
 	do {
-		token = COM_EParse( text, errhead, name );
+		token = COM_EParse( text, errhead, id );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
@@ -2992,7 +2992,7 @@ void CL_ParseCampaign( char *name, char **text )
 			if ( !Q_strcmp( token, vp->string ) )
 			{
 				// found a definition
-				token = COM_EParse( text, errhead, name );
+				token = COM_EParse( text, errhead, id );
 				if ( !*text ) return;
 
 				Com_ParseValue( cp, token, vp->type, vp->ofs );
@@ -3001,8 +3001,8 @@ void CL_ParseCampaign( char *name, char **text )
 
 		if ( !vp->string )
 		{
-			Com_Printf( "CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name );
-			COM_EParse( text, errhead, name );
+			Com_Printf( "CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, id );
+			COM_EParse( text, errhead, id );
 		}
 	} while ( *text );
 }
@@ -3366,14 +3366,14 @@ void CP_GetCampaigns_f ( void )
 	int i;
 	*campaignText = *campaignDesc = '\0';
 	for ( i = 0; i < numCampaigns; i++ )
-		Q_strcat( campaignText, MAXCAMPAIGNTEXT, va("%s\n", campaigns[i].campaignName ) );
+		Q_strcat( campaignText, MAXCAMPAIGNTEXT, va("%s\n", campaigns[i].name ) );
 	// default campaign
 	Cvar_Set( "campaign", "main" );
 	menuText[TEXT_STANDARD] = campaignDesc;
 
 	// select main as default
 	for ( i = 0; i < numCampaigns; i++ )
-		if ( !Q_strncmp( "main", campaigns[i].name, MAX_VAR ) )
+		if ( !Q_strncmp( "main", campaigns[i].id, MAX_VAR ) )
 		{
 			Com_sprintf( campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\n%s\n"), campaigns[i].team, _(campaigns[i].text) );
 			break;
@@ -3397,7 +3397,7 @@ void CP_CampaignsClick_f ( void )
 	if ( num >= numCampaigns || num < 0 )
 		return;
 
-	Cvar_Set( "campaign", campaigns[num].name );
+	Cvar_Set( "campaign", campaigns[num].id );
 	// FIXME: Translate the race to the name of a race
 	Com_sprintf( campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\n%s\n"), campaigns[num].team, _(campaigns[num].text) );
 	menuText[TEXT_STANDARD] = campaignDesc;

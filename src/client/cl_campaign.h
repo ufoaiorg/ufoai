@@ -116,11 +116,11 @@ typedef struct actMis_s
 
 typedef struct campaign_s
 {
+	char	id[MAX_VAR];
 	char	name[MAX_VAR];
 	char	team[MAX_VAR];
 	char	equipment[MAX_VAR];
 	char	market[MAX_VAR];
-	char	campaignName[MAX_VAR];
 	char	text[MAX_VAR]; // placeholder for gettext stuff
 	char	map[MAX_VAR]; // geoscape map
 	char	firststage[MAX_VAR];
