@@ -2226,7 +2226,7 @@ void CM_MakeTnodes( void )
 #ifndef __x86_64__
 	curTile->tnodes = (tnode_t *)(((int)curTile->tnodes + 31)&~31);
 #else
-#warning Strange fix for AMD64 at cmodel.c CM_MakeTnodes
+	curTile->tnodes = (tnode_t *)(((ptrdiff_t)curTile->tnodes + 31)&~31);
 #endif
 	tnode_p = curTile->tnodes;
 

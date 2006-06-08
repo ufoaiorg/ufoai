@@ -3,6 +3,7 @@
 #include "cmdlib.h"
 #include "mathlib.h"
 #include "bspfile.h"
+#include <stddef.h>
 
 #define	ON_EPSILON	0.1
 
@@ -147,7 +148,7 @@ void MakeTnodes ( int levels )
 #ifndef __x86_64__
 	tnodes = (tnode_t *)(((int)tnodes + 31)&~31);
 #else
-#warning Strange fix for AMD64 at cmodel.c CM_MakeTnodes
+	tnodes = (tnode_t *)(((ptrdiff_t)tnodes + 31)&~31);
 #endif
 	tnode_p = tnodes;
 	numtheads = 0;
