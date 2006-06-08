@@ -314,7 +314,7 @@ debug: build_debug
 all: build_debug build_release lang
 
 links:
-	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so
+	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so ../ufoded
 	ln -s src/$(BUILD_DEBUG_DIR)/ufoded ../ufoded
 	ln -s src/$(BUILD_DEBUG_DIR)/ufo ../ufo
 	ln -s src/$(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
@@ -369,7 +369,11 @@ build_debug:
 	@echo
 	@echo "Gettext"
 	@echo "-----------------------"
-	@echo "Type 'make lang' to compile the gettext translation files"
+	@echo "Type 'make lang' to compile the gettext translation files. Type 'make update-po' in src/po to update with newest strings"
+	@echo
+	@echo "Maps"
+	@echo "-----------------------"
+	@echo "Type 'make' in base/maps to compile the maps"
 	@echo
 
 build_release:
@@ -409,7 +413,11 @@ build_release:
 	@echo
 	@echo "Gettext"
 	@echo "-----------------------"
-	@echo "Type 'make lang' to compile the gettext translation files"
+	@echo "Type 'make lang' to compile the gettext translation files. Type 'make update-po' in src/po to update with newest strings"
+	@echo
+	@echo "Maps"
+	@echo "-----------------------"
+	@echo "Type 'make' in base/maps to compile the maps"
 	@echo
 
 targets: $(TARGETS)
