@@ -2951,7 +2951,7 @@ void CL_ParseCampaign( char *id, char **text )
 
 	// search for campaigns with same name
 	for ( i = 0; i < numCampaigns; i++ )
-		if ( !Q_strncmp( name, campaigns[i].id, MAX_VAR ) )
+		if ( !Q_strncmp( id, campaigns[i].id, MAX_VAR ) )
 			break;
 
 	if ( i < numCampaigns )
