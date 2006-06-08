@@ -2251,7 +2251,6 @@ void CM_MakeTnodes( void )
 
 //==========================================================
 
-//FIXME : See other FIXME in TestLine_r and TestLineDist_r
 vec3_t tmpVec;
 int errorCount;
 /*
@@ -2274,23 +2273,7 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 
 	tnode = &curTile->tnodes[node];
 	assert(tnode);
-#if 0
-	// FIXME: This causes trouble in pathfinding
-	//       this is also responsible for tracer(-quad) problems
-	if ( ! tnode->dist && tnode->type <= PLANE_Z
-		&& VectorCompare(start, tmpVec) )
-	{
-	 	if ( errorCount > 10 )
-	 	{
-			errorCount = 0;
-			return 0;
-		}
-		else
-			errorCount++;
-	}
-	VectorCopy( start, tmpVec );
-	// END OF FIXME
-#endif
+
 	switch (tnode->type)
 	{
 	case PLANE_X:
@@ -2360,23 +2343,7 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 
 	tnode = &curTile->tnodes[node];
 	assert( tnode );
-#if 0
-	// FIXME: This causes trouble in pathfinding
-	//       this is also responsible for tracer(-quad) problems
-	if ( ! tnode->dist && tnode->type <= PLANE_Z
-		&& VectorCompare(start, tmpVec) )
-	{
-	 	if ( errorCount > 10 )
-	 	{
-			errorCount = 0;
-			return 0;
-		}
-		else
-			errorCount++;
-	}
-	VectorCopy( start, tmpVec );
-	// END OF FIXME
-#endif
+
 	switch (tnode->type)
 	{
 	case PLANE_X:
