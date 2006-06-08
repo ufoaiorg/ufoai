@@ -16,13 +16,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// cl_campaign.c -- single player campaign control
+/* cl_campaign.c -- single player campaign control */
 
 #include "../qcommon/qcommon.h"
 #include "client.h"
 #include "cl_global.h"
 
-// public vars
+/* public vars */
 mission_t	missions[MAX_MISSIONS];
 int		numMissions;
 actMis_t	*selMis;
@@ -53,7 +53,7 @@ int		gameTimeScale;
 byte		*maskPic;
 int		maskWidth, maskHeight;
 
-// extern in client.h
+/* extern in client.h */
 stats_t		stats;
 
 extern	cmdList_t game_commands[];
@@ -87,7 +87,7 @@ static void SkipWhiteSpaces( char **s )
 static void NextChar( char **s )
 {
 	(*s)++;
-	// skip white-spaces too
+	/* skip white-spaces too */
 	SkipWhiteSpaces( s );
 }
 
@@ -146,7 +146,7 @@ qboolean CheckAND( char **s )
 			if ( **s != ')' ) BEPerror = BEPERR_KLAMMER;
 			NextChar( s );
 		} else {
-			// get the variable state
+			/* get the variable state */
 			value = varFunc( GetSwitchName( s ) );
 			if ( value == -1 ) BEPerror = BEPERR_NOTFOUND;
 			else result &= value ^ negate;
@@ -175,12 +175,12 @@ qboolean CheckBEP( char *expr, qboolean (*varFuncParam)( char *var ) )
 	str = expr;
 	result = CheckOR( &str );
 
-	// check for no end error
+	/* check for no end error */
 	if ( *str && !BEPerror ) BEPerror = BEPERR_NOEND;
 
 	switch ( BEPerror ) {
 	case BEPERR_NONE:
-		// do nothing
+		/* do nothing */
 		return result;
 	case BEPERR_KLAMMER:
 		Com_Printf( "')' expected in BEP (%s).\n", expr );
@@ -192,14 +192,14 @@ qboolean CheckBEP( char *expr, qboolean (*varFuncParam)( char *var ) )
 		Com_Printf( "Variable '%s' not found in BEP (%s).\n", varName, expr );
 		return qfalse;
 	default:
-		// shouldn't happen
+		/* shouldn't happen */
 		Com_Printf( "Unknown CheckBEP error in BEP (%s).\n", expr );
 		return qtrue;
 	}
 }
 
 
-// ===========================================================
+/* =========================================================== */
 
 
 /*
@@ -263,7 +263,7 @@ date_t Date_Random( date_t frame )
 }
 
 
-// ===========================================================
+/* =========================================================== */
 
 
 /*
@@ -276,27 +276,27 @@ qboolean CL_MapMaskFind( byte *color, vec2_t polar )
 	byte *c;
 	int res, i, num;
 
-	// check color
+	/* check color */
 	if ( !color[0] && !color[1] && !color[2] )
 		return qfalse;
 
-	// find possible positions
+	/* find possible positions */
 	res = maskWidth*maskHeight;
 	num = 0;
 	for ( i = 0, c = maskPic; i < res; i++, c += 4 )
 		if ( c[0] == color[0] && c[1] == color[1] && c[2] == color[2] )
 			num++;
 
-	// nothing found?
+	/* nothing found? */
 	if ( !num ) return qfalse;
 
-	// get position
+	/* get position */
 	num *= frand();
 	for ( i = 0, c = maskPic; i < num; c += 4 )
 		if ( c[0] == color[0] && c[1] == color[1] && c[2] == color[2] )
 			i++;
 
-	// transform to polar coords
+	/* transform to polar coords */
 	res = (c - maskPic) / 4;
 	polar[0] = 180 - 360 * ((float)(res % maskWidth) + 0.5) / maskWidth;
 	polar[1] = 90 - 180 * ((float)(res / maskWidth) + 0.5) / maskHeight;
@@ -305,7 +305,7 @@ qboolean CL_MapMaskFind( byte *color, vec2_t polar )
 }
 
 
-// ===========================================================
+/* =========================================================== */
 #define DISTANCE 1
 
 /*
@@ -400,7 +400,7 @@ void CL_AircraftInit ( void )
 	for ( i = 0; i < numAircraft; i++ )
 	{
 		air = &aircraft[i];
-		// link with tech pointer
+		/* link with tech pointer */
 		Com_DPrintf("...aircraft: %s\n", air->name );
 		if ( *air->weapon_string )
 		{
@@ -412,7 +412,7 @@ void CL_AircraftInit ( void )
 
 		if ( *air->shield_string )
 		{
-			// link with tech pointer
+			/* link with tech pointer */
 			Com_DPrintf("....shield: %s\n", air->shield_string );
 			air->shield = RS_GetTechByID( air->shield_string );
 		}
@@ -624,7 +624,7 @@ void CL_NewAircraft ( base_t* base, char* name )
 
 	assert(base);
 
-	// first aircraft is default aircraft
+	/* first aircraft is default aircraft */
 	base->aircraftCurrent = 0;
 
 	for ( i = 0; i < numAircraft; i++ )
@@ -635,10 +635,10 @@ void CL_NewAircraft ( base_t* base, char* name )
 			memcpy( &base->aircraft[base->numAircraftInBase], air, sizeof(aircraft_t) );
 			air = &base->aircraft[base->numAircraftInBase];
 			air->homebase = base;
-			// this is the aircraft array id in current base
-			// NOTE: when we send the aircraft to another base this has to be changed, too
+			/* this is the aircraft array id in current base */
+			/* NOTE: when we send the aircraft to another base this has to be changed, too */
 			air->idx_base = base->numAircraftInBase;
-			// link the teamSize pointer in
+			/* link the teamSize pointer in */
 			air->teamSize = &base->numOnTeam[base->numAircraftInBase];
 			Q_strncpyz( messageBuffer, va( _("You've got a new aircraft (a %s) in base %s"), air->name, base->name ), MAX_MESSAGE_TEXT );
 			MN_AddNewMessage( _("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL );
@@ -661,7 +661,7 @@ byte *CL_GetmapColor( vec2_t pos )
 {
 	int x, y;
 
-	// get coordinates
+	/* get coordinates */
 	x = (180 - pos[0]) / 360 * maskWidth;
 	y = (90 - pos[1]) / 180 * maskHeight;
 	if ( x < 0 ) x = 0;
@@ -686,7 +686,7 @@ qboolean CL_NewBase( vec2_t pos )
 		Com_DPrintf("Articbase\n");
 		baseCurrent->mapChar='a';
 	} else if ( MapIsWater(color) ){
-		// This should already have been catched in MN_MapClick (cl_menu.c), but just in case.
+		/* This should already have been catched in MN_MapClick (cl_menu.c), but just in case. */
 		MN_AddNewMessage( _("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL );
 		return qfalse;
 	} else {
@@ -696,23 +696,23 @@ qboolean CL_NewBase( vec2_t pos )
 
 	Com_DPrintf("Colorvalues for base: R:%i G:%i B:%i\n", color[0], color[1], color[2] );
 
-	// build base
+	/* build base */
 	baseCurrent->pos[0] = pos[0];
 	baseCurrent->pos[1] = pos[1];
 
 	gd.numBases++;
 
-	// set up the base with buildings that have the autobuild flag set
+	/* set up the base with buildings that have the autobuild flag set */
 	B_SetUpBase();
 
-	// set up the aircraft
+	/* set up the aircraft */
 	CL_NewAircraft( baseCurrent, "craft_dropship" );
 
 	return qtrue;
 }
 
 
-// ===========================================================
+/* =========================================================== */
 
 
 /*
@@ -734,7 +734,7 @@ qboolean CL_StageSetDone( char *name )
 			else return qfalse;
 		}
 
-	// didn't find set
+	/* didn't find set */
 	return qfalse;
 }
 
@@ -753,11 +753,11 @@ void CL_CampaignActivateStageSets( stage_t *stage )
 	for ( i = 0, set = &ccs.set[stage->first]; i < stage->num; i++, set++ )
 		if ( !set->active && !set->done && !set->num )
 		{
-			// check needed sets
+			/* check needed sets */
 			if ( set->def->needed[0] && !CheckBEP( set->def->needed, CL_StageSetDone ) )
 				continue;
 
-			// activate it
+			/* activate it */
 			set->active = qtrue;
 			set->start = Date_Add( ccs.date, set->def->delay );
 			set->event = Date_Add( set->start, Date_Random( set->def->frame ) );
@@ -780,13 +780,13 @@ stageState_t *CL_CampaignActivateStage( char *name )
 	{
 		if ( !Q_strncmp( stage->name, name, MAX_VAR ) )
 		{
-			// add it to the list
+			/* add it to the list */
 			state = &ccs.stage[i];
 			state->active = qtrue;
 			state->def = stage;
 			state->start = ccs.date;
 
-			// add stage sets
+			/* add stage sets */
 			for ( j = stage->first; j < stage->first + stage->num; j++ )
 			{
 				memset( &ccs.set[j], 0, sizeof(setState_t) );
@@ -796,7 +796,7 @@ stageState_t *CL_CampaignActivateStage( char *name )
 					Cbuf_ExecuteText( EXEC_APPEND, va("seq_start %s;\n", stageSets[j].sequence) );
 			}
 
-			// activate stage sets
+			/* activate stage sets */
 			CL_CampaignActivateStageSets( stage );
 
 			Com_DPrintf("Activate stage %s\n", stage->name );
@@ -840,7 +840,7 @@ void CL_CampaignAddMission( setState_t *set )
 {
 	actMis_t *mis;
 
-	// add mission
+	/* add mission */
 	if ( ccs.numMissions >= MAX_ACTMISSIONS )
 	{
 		Com_Printf( "Too many active missions!\n" );
@@ -849,11 +849,11 @@ void CL_CampaignAddMission( setState_t *set )
 	mis = &ccs.mission[ccs.numMissions++];
 	memset( mis, 0, sizeof(actMis_t) );
 
-	// set relevant info
+	/* set relevant info */
 	mis->def = &missions[ set->def->missions[(int)(set->def->numMissions*frand())] ];
 	mis->cause = set;
 
-	// execute mission commands
+	/* execute mission commands */
 	if ( *mis->def->cmds )
 		Cbuf_ExecuteText(EXEC_NOW, mis->def->cmds);
 
@@ -865,7 +865,7 @@ void CL_CampaignAddMission( setState_t *set )
 		baseCurrent = &gd.bases[rand() % gd.numBases];
 		mis->realPos[0] = baseCurrent->pos[0];
 		mis->realPos[1] = baseCurrent->pos[1];
-		// Add message to message-system.
+		/* Add message to message-system. */
 		Q_strncpyz( messageBuffer, va(_("Your base %s is under attack."), baseCurrent->name ), MAX_MESSAGE_TEXT );
 		MN_AddNewMessage( _("Baseattack"), messageBuffer, qfalse, MSG_BASEATTACK, NULL );
 
@@ -873,21 +873,21 @@ void CL_CampaignAddMission( setState_t *set )
 	}
 	else
 	{
-		// get default position first, then try to find a corresponding mask color
+		/* get default position first, then try to find a corresponding mask color */
 		mis->realPos[0] = mis->def->pos[0];
 		mis->realPos[1] = mis->def->pos[1];
 		CL_MapMaskFind( mis->def->mask, mis->realPos );
 
-		// Add message to message-system.
+		/* Add message to message-system. */
 		MN_AddNewMessage( _("Alien activity"), _("Alien activity has been reported."), qfalse, MSG_TERRORSITE, NULL );
 	}
 
-	// prepare next event (if any)
+	/* prepare next event (if any) */
 	set->num++;
 	if ( set->def->number && set->num >= set->def->number ) set->active = qfalse;
 	else set->event = Date_Add( ccs.date, Date_Random( set->def->frame ) );
 
-	// stop time
+	/* stop time */
 	CL_GameTimeStop();
 }
 
@@ -926,7 +926,7 @@ CL_CampaignExecute
 */
 void CL_CampaignExecute( setState_t *set )
 {
-	// handle stages, execute commands
+	/* handle stages, execute commands */
 	if ( *set->def->nextstage )
 		CL_CampaignActivateStage( set->def->nextstage );
 
@@ -936,7 +936,7 @@ void CL_CampaignExecute( setState_t *set )
 	if ( *set->def->cmds )
 		Cbuf_AddText( set->def->cmds );
 
-	// activate new sets in old stage
+	/* activate new sets in old stage */
 	CL_CampaignActivateStageSets( set->stage );
 }
 
@@ -1100,13 +1100,13 @@ void CP_NewUfoOnGeoscape ( void )
 	vec2_t pos;
 	aircraft_t* a;
 
-	// check max amount
+	/* check max amount */
 	if ( ccs.numUfoOnGeoscape >= MAX_UFOONGEOSCAPE )
 		return;
 
 	for ( i = (rand()%numAircraft); i < MAX_AIRCRAFT; i++ )
 	{
-		// search for a ufo
+		/* search for a ufo */
 		if ( aircraft[i].type != AIRCRAFT_UFO )
 			continue;
 
@@ -1174,7 +1174,7 @@ void CL_CampaignCheckEvents( void )
 	int	i, j, dist;
 	qboolean	visible;
 
-	// check campaign events
+	/* check campaign events */
 	for ( i = 0, stage = ccs.stage; i < numStages; i++, stage++ )
 		if ( stage->active )
 			for ( j = 0, set = &ccs.set[stage->def->first]; j < stage->def->num; j++, set++ )
@@ -1201,10 +1201,10 @@ void CL_CampaignCheckEvents( void )
 			ufoOnGeoscape[i]->status = AIR_NONE;
 			for ( j = 0; j < gd.numBases; j++ )
 			{
-				// no radar?
+				/* no radar? */
 				if ( !gd.bases[j].sensorWidth )
 				{
-					// maybe sensorWidth is decreased due to a attack?
+					/* maybe sensorWidth is decreased due to a attack? */
 					gd.bases[j].drawSensor = qfalse;
 					continue;
 				}
@@ -1225,18 +1225,18 @@ void CL_CampaignCheckEvents( void )
 				else if ( gd.bases[j].drawSensor == qtrue )
 					gd.bases[j].drawSensor = qfalse;
 			}
-			// check whether this ufo is not visible on any existing radar
+			/* check whether this ufo is not visible on any existing radar */
 			if ( visible && ufoOnGeoscape[i]->status != AIR_UFOMOVE )
-				// FIXME: grammar: from/of/on
+				/* FIXME: grammar: from/of/on */
 				MN_AddNewMessage( _("Notice"), _("UFO disappears on our radar"), qfalse, MSG_STANDARD, NULL );
 		}
 	}
 
-	// let missions expire
+	/* let missions expire */
 	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ )
 		if ( mis->expire.day && Date_LaterThan( ccs.date, mis->expire ) )
 		{
-			// ok, waiting and not doing a mission will costs money
+			/* ok, waiting and not doing a mission will costs money */
 			int lose = mis->def->cr_win + mis->def->civilians * mis->def->cr_civilian;
 			CL_UpdateCredits( ccs.credits - lose );
 			CL_HandleNationData( qtrue, mis );
@@ -1261,7 +1261,7 @@ void CL_CheckAircraft ( aircraft_t* air )
 		CL_AircraftReturnToBase ( air );
 	}
 
-	// no base assigned
+	/* no base assigned */
 	if ( ! air->homebase || !selMis )
 		return;
 
@@ -1320,12 +1320,12 @@ void CL_CampaignRunAircraft( int dt )
 			{
 				if ( air->status > AIR_IDLE )
 				{
-					// calc distance
+					/* calc distance */
 					air->time += dt;
 					air->fuel -= dt;
 					dist = air->speed * air->time / 3600;
 
-					// check for end point
+					/* check for end point */
 					if ( dist >= air->route.dist * (air->route.n-1) )
 					{
 						float *end;
@@ -1344,7 +1344,7 @@ void CL_CampaignRunAircraft( int dt )
 						continue;
 					}
 
-					// calc new position
+					/* calc new position */
 					frac = dist / air->route.dist;
 					p = (int)frac;
 					frac -= p;
@@ -1362,20 +1362,20 @@ void CL_CampaignRunAircraft( int dt )
 			}
 	}
 
-	// now the ufos are flying around, too
+	/* now the ufos are flying around, too */
 	for ( j = 0; j < ccs.numUfoOnGeoscape; j++ )
 	{
 		air = ufoOnGeoscape[j];
 		air->time += dt;
 		dist = air->speed * air->time / 3600;
 
-		// calc new position
+		/* calc new position */
 		frac = dist / air->route.dist;
 		p = (int)frac;
 		frac -= p;
 		air->point = p;
 
-		// check for end point
+		/* check for end point */
 		if ( air->point >= air->route.n )
 		{
 			CP_GetRandomPosForAircraft( pos );
@@ -1391,7 +1391,7 @@ void CL_CampaignRunAircraft( int dt )
 		air->pos[0] = (1-frac) * air->route.p[p][0] + frac * air->route.p[p+1][0];
 		air->pos[1] = (1-frac) * air->route.p[p][1] + frac * air->route.p[p+1][1];
 
-		// TODO: Crash
+		/* TODO: Crash */
 		if ( air->fuel <= 0 )
 			air->fuel = air->fuelSize;
 	}
@@ -1425,12 +1425,12 @@ void CL_DateConvert( date_t *date, int *day, int *month )
 {
 	int i, d;
 
-	// get day
+	/* get day */
 	d = date->day % 365;
 	for ( i = 0; d >= monthLength[i]; i++ )
 		d -= monthLength[i];
 
-	// prepare return values
+	/* prepare return values */
 	*day = d+1;
 	*month = i;
 }
@@ -1470,11 +1470,11 @@ CL_CampaignRun
 void CL_CampaignRun( void )
 {
 	static qboolean fund = qtrue;
-	// advance time
+	/* advance time */
 	ccs.timer += cls.frametime * gameTimeScale;
 	if ( ccs.timer >= 1.0 )
 	{
-		// calculate new date
+		/* calculate new date */
 		int dt, day, month;
 		dt = floor( ccs.timer );
 		ccs.date.sec += dt;
@@ -1483,31 +1483,31 @@ void CL_CampaignRun( void )
 		{
 			ccs.date.sec -= 3600*24;
 			ccs.date.day++;
-			// every day
+			/* every day */
 			B_UpdateBaseData();
 		}
 
-		// check for campaign events
+		/* check for campaign events */
 		CL_CampaignRunAircraft( dt );
 		CL_CampaignCheckEvents();
 
-		// set time cvars
+		/* set time cvars */
 		CL_DateConvert( &ccs.date, &day, &month );
-		// every first day of a month
+		/* every first day of a month */
 		if ( day == 1 && fund == qfalse )
 		{
 			CL_UpdateNationData();
 			fund = qtrue;
 		}
 		else if ( day > 1 ) fund = qfalse;
-		Cvar_Set( "mn_mapdate", va( "%i %s %i", ccs.date.day/365, CL_DateGetMonthName(month), day ) ); // CL_DateGetMonthName is already "gettexted"
+		Cvar_Set( "mn_mapdate", va( "%i %s %i", ccs.date.day/365, CL_DateGetMonthName(month), day ) ); /* CL_DateGetMonthName is already "gettexted" */
 		Com_sprintf (messageBuffer, sizeof(messageBuffer), _("%02i:%i%i"), ccs.date.sec/3600, (ccs.date.sec%3600)/60/10, (ccs.date.sec%3600)/60%10  );
 		Cvar_Set( "mn_maptime", messageBuffer );
 	}
 }
 
 
-// ===========================================================
+/* =========================================================== */
 
 typedef struct gameLapse_s
 {
@@ -1549,7 +1549,7 @@ CL_GameTimeSlow
 */
 void CL_GameTimeSlow( void )
 {
-	//first we have to set up a home base
+	/*first we have to set up a home base */
 	if ( ! gd.numBases )
 		CL_GameTimeStop();
 	else
@@ -1567,7 +1567,7 @@ CL_UpdateCredits
 */
 void CL_UpdateCredits ( int credits )
 {
-	// credits
+	/* credits */
 	ccs.credits = credits;
 	Cvar_Set( "mn_credits", va( "%i c", ccs.credits ) );
 }
@@ -1579,7 +1579,7 @@ CL_GameTimeFast
 */
 void CL_GameTimeFast( void )
 {
-	//first we have to set up a home base
+	/*first we have to set up a home base */
 	if ( ! gd.numBases )
 		CL_GameTimeStop();
 	else
@@ -1590,7 +1590,7 @@ void CL_GameTimeFast( void )
 	}
 }
 
-// ===========================================================
+/* =========================================================== */
 
 #define MAX_STATS_BUFFER 1024
 /*
@@ -1604,10 +1604,10 @@ void CL_Stats_Update ( void )
 {
 	static char statsBuffer[MAX_STATS_BUFFER];
 
-	// delete buffer
+	/* delete buffer */
 	*statsBuffer = '\0';
 
-	// TODO: implement me
+	/* TODO: implement me */
 	Com_sprintf( statsBuffer, MAX_STATS_BUFFER, _("Missions:\nwon:\t%i\tlost:\t%i\nBases:\nbuild:\t%i\tattacked:\t%i\n"),
 			stats.missionsWon, stats.missionsLost,
 			stats.basesBuild, stats.basesAttacked
@@ -1667,7 +1667,7 @@ void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
 	aircraft_t* air;
 	if ( version >= 4 )
 	{
-		// paranoid
+		/* paranoid */
 		base->numAircraftInBase = 0;
 
 		n = MSG_ReadByte( sb );
@@ -1693,17 +1693,17 @@ void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
 			else
 			{
 				Com_Printf("Savefile is corrupted or aircraft does not exists any longer\n");
-				// try to read the values and continue with
-				// loader the other aircraft
-				MSG_ReadFloat( sb );	//pos[0]
-				MSG_ReadFloat( sb );	//pos[1]
-				MSG_ReadByte( sb );	//status
-				MSG_ReadLong( sb );	//fuel
-				MSG_ReadLong( sb );	//size
-				MSG_ReadLong( sb );	//speed
-				MSG_ReadLong( sb );	//point
-				MSG_ReadLong( sb );	//time
-				sb->readcount += sizeof(mapline_t);	//route
+				/* try to read the values and continue with */
+				/* loader the other aircraft */
+				MSG_ReadFloat( sb );	/*pos[0] */
+				MSG_ReadFloat( sb );	/*pos[1] */
+				MSG_ReadByte( sb );	/*status */
+				MSG_ReadLong( sb );	/*fuel */
+				MSG_ReadLong( sb );	/*size */
+				MSG_ReadLong( sb );	/*speed */
+				MSG_ReadLong( sb );	/*point */
+				MSG_ReadLong( sb );	/*time */
+				sb->readcount += sizeof(mapline_t);	/*route */
 			}
 		}
 	}
@@ -1739,60 +1739,60 @@ void CL_GameSave( char *filename, char *comment )
 		return;
 	}
 
-	// create data
+	/* create data */
 	SZ_Init( &sb, buf, MAX_GAMESAVESIZE );
 
-	// write prefix and version
+	/* write prefix and version */
 	MSG_WriteByte( &sb, 0 );
 	MSG_WriteLong( &sb, SAVE_FILE_VERSION );
 
-	// store comment
+	/* store comment */
 	MSG_WriteString( &sb, comment );
 
-	// store campaign name
+	/* store campaign name */
 	MSG_WriteString( &sb, curCampaign->id );
 
-	// store date
+	/* store date */
 	MSG_WriteLong( &sb, ccs.date.day );
 	MSG_WriteLong( &sb, ccs.date.sec );
 
-	// store map view
+	/* store map view */
 	MSG_WriteFloat( &sb, ccs.center[0] );
 	MSG_WriteFloat( &sb, ccs.center[1] );
 	MSG_WriteFloat( &sb, ccs.zoom );
 
-	// store bases
+	/* store bases */
 	B_SaveBases( &sb );
 
-	// store techs
+	/* store techs */
 	RS_SaveTech( &sb );
 
-	// store credits
+	/* store credits */
 	MSG_WriteLong( &sb, ccs.credits );
 
-	// store equipment
+	/* store equipment */
 	for ( i = 0; i < MAX_OBJDEFS; i++ )
 	{
 		MSG_WriteLong( &sb, ccs.eCampaign.num[i] );
 		MSG_WriteByte( &sb, ccs.eCampaign.num_loose[i] );
 	}
 
-	// store market
+	/* store market */
 	for ( i = 0; i < MAX_OBJDEFS; i++ )
 		MSG_WriteLong( &sb, ccs.eMarket.num[i] );
 
-	// store campaign data
+	/* store campaign data */
 	for ( i = 0, state = ccs.stage; i < numStages; i++, state++ )
 		if ( state->active )
 		{
-			// write head
+			/* write head */
 			setState_t *set;
 			MSG_WriteString( &sb, state->def->name );
 			MSG_WriteLong( &sb, state->start.day );
 			MSG_WriteLong( &sb, state->start.sec );
 			MSG_WriteByte( &sb, state->def->num );
 
-			// write all sets
+			/* write all sets */
 			for ( j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++ )
 			{
 				MSG_WriteString( &sb, set->def->name );
@@ -1805,10 +1805,10 @@ void CL_GameSave( char *filename, char *comment )
 				MSG_WriteLong( &sb, set->event.sec );
 			}
 		}
-	// terminate list
+	/* terminate list */
 	MSG_WriteByte( &sb, 0 );
 
-	// store active missions
+	/* store active missions */
 	MSG_WriteByte( &sb, ccs.numMissions );
 	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ )
 	{
@@ -1820,13 +1820,13 @@ void CL_GameSave( char *filename, char *comment )
 		MSG_WriteLong( &sb, mis->expire.sec );
 	}
 
-	//write the actual mapaction to savefile
+	/*write the actual mapaction to savefile */
 	MSG_WriteLong( &sb, mapAction );
 
-	// save all the stats
+	/* save all the stats */
 	SZ_Write( &sb, &stats, sizeof(stats) );
 
-	// write data
+	/* write data */
 	res = fwrite( buf, 1, sb.cursize, f );
 	fclose( f );
 
@@ -1848,14 +1848,14 @@ void CL_GameSaveCmd( void )
 	char	comment[MAX_COMMENTLENGTH];
 	char	*arg;
 
-	// get argument
+	/* get argument */
 	if ( Cmd_Argc() < 2 )
 	{
 		Com_Printf( "Usage: game_save <filename> <comment>\n" );
 		return;
 	}
 
-	// get comment
+	/* get comment */
 	if ( Cmd_Argc() > 2 )
 	{
 		arg = Cmd_Argv( 2 );
@@ -1864,7 +1864,7 @@ void CL_GameSaveCmd( void )
 	}
 	else comment[0] = 0;
 
-	// save the game
+	/* save the game */
 	CL_GameSave( Cmd_Argv( 1 ), comment );
 }
 
@@ -1887,7 +1887,7 @@ void CL_GameLoad( char *filename )
 	int		i, j, num;
 	cmdList_t	*commands;
 
-	// open file
+	/* open file */
 	f = fopen( va( "%s/save/%s.sav", FS_Gamedir(), filename ), "rb" );
 	if ( !f )
 	{
@@ -1895,12 +1895,12 @@ void CL_GameLoad( char *filename )
 		return;
 	}
 
-	// read data
+	/* read data */
 	SZ_Init( &sb, buf, MAX_GAMESAVESIZE );
 	sb.cursize = fread( buf, 1, MAX_GAMESAVESIZE, f );
 	fclose( f );
 
-	// Check if save file is versioned
+	/* Check if save file is versioned */
 	if (MSG_ReadByte( &sb ) == 0)
 	{
 		version = MSG_ReadLong( &sb );
@@ -1908,12 +1908,12 @@ void CL_GameLoad( char *filename )
 	}
 	else
 	{
-		// no - reset position and take version as 0
+		/* no - reset position and take version as 0 */
 		MSG_BeginReading ( &sb );
 		version = 0;
 	}
 
-	// check current version
+	/* check current version */
 	if ( version > SAVE_FILE_VERSION )
 	{
 		Com_Printf( "File '%s' is a more recent version (%d) than is supported.\n", filename, version );
@@ -1924,10 +1924,10 @@ void CL_GameLoad( char *filename )
 		Com_Printf( "Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, version );
 	}
 
-	// read comment
+	/* read comment */
 	MSG_ReadString( &sb );
 
-	// read campaign name
+	/* read campaign name */
 	name = MSG_ReadString( &sb );
 
 	for ( i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++ )
@@ -1946,31 +1946,31 @@ void CL_GameLoad( char *filename )
 	for ( commands = game_commands; commands->name; commands++ )
 		Cmd_AddCommand( commands->name, commands->function );
 
-	// reset
+	/* reset */
 	selMis = NULL;
 	interceptAircraft = -1;
 	memset( &ccs, 0, sizeof( ccs_t ) );
 
-	// read date
+	/* read date */
 	ccs.date.day = MSG_ReadLong( &sb );
 	ccs.date.sec = MSG_ReadLong( &sb );
 
-	// read map view
+	/* read map view */
 	ccs.center[0] = MSG_ReadFloat( &sb );
 	ccs.center[1] = MSG_ReadFloat( &sb );
 	ccs.zoom = MSG_ReadFloat( &sb );
 
-	// load bases
+	/* load bases */
 	B_LoadBases( &sb, version );
 
-	// load techs
+	/* load techs */
 	RS_CopyFromSkeleton ();
 	RS_LoadTech( &sb, version );
 
-	// read credits
+	/* read credits */
 	CL_UpdateCredits( MSG_ReadLong( &sb ) );
 
-	// read equipment
+	/* read equipment */
 	for ( i = 0; i < MAX_OBJDEFS; i++ )
 	{
 		if (version == 0)
@@ -1985,7 +1985,7 @@ void CL_GameLoad( char *filename )
 		}
 	}
 
-	// read market
+	/* read market */
 	for ( i = 0; i < MAX_OBJDEFS; i++ )
 	{
 		if (version == 0)
@@ -1994,7 +1994,7 @@ void CL_GameLoad( char *filename )
 			ccs.eMarket.num[i] = MSG_ReadLong( &sb );
 	}
 
-	// read campaign data
+	/* read campaign data */
 	name = MSG_ReadString( &sb );
 	while ( *name )
 	{
@@ -2016,7 +2016,7 @@ void CL_GameLoad( char *filename )
 			for ( j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++ )
 				if ( !Q_strncmp( name, set->def->name, MAX_VAR ) )
 					break;
-			// write on dummy set, if it's unknown
+			/* write on dummy set, if it's unknown */
 			if ( j >= state->def->num )
 			{
 				Com_Printf( "Warning: Set '%s' not found\n", name );
@@ -2032,15 +2032,15 @@ void CL_GameLoad( char *filename )
 			set->event.sec = MSG_ReadLong( &sb );
 		}
 
-		// read next stage name
+		/* read next stage name */
 		name = MSG_ReadString( &sb );
 	}
 
-	// store active missions
+	/* store active missions */
 	ccs.numMissions = MSG_ReadByte( &sb );
 	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ )
 	{
-		// get mission definition
+		/* get mission definition */
 		name = MSG_ReadString( &sb );
 		for ( j = 0; j < numMissions; j++ )
 			if ( !Q_strncmp( name, missions[j].name, MAX_VAR ) )
@@ -2051,7 +2051,7 @@ void CL_GameLoad( char *filename )
 		if ( j >= numMissions )
 			Com_Printf( "Warning: Mission '%s' not found\n", name );
 
-		// get mission definition
+		/* get mission definition */
 		name = MSG_ReadString( &sb );
 		for ( j = 0; j < numStageSets; j++ )
 			if ( !Q_strncmp( name, stageSets[j].name, MAX_VAR ) )
@@ -2062,13 +2062,13 @@ void CL_GameLoad( char *filename )
 		if ( j >= numStageSets )
 			Com_Printf( "Warning: Stage set '%s' not found\n", name );
 
-		// read position and time
+		/* read position and time */
 		mis->realPos[0] = MSG_ReadFloat( &sb );
 		mis->realPos[1] = MSG_ReadFloat( &sb );
 		mis->expire.day = MSG_ReadLong( &sb );
 		mis->expire.sec = MSG_ReadLong( &sb );
 
-		// ignore incomplete info
+		/* ignore incomplete info */
 		if ( !mis->def || !mis->cause )
 		{
 			memset( mis, 0, sizeof(actMis_t) );
@@ -2079,14 +2079,14 @@ void CL_GameLoad( char *filename )
 	if ( version >= 2 )
 		mapAction = MSG_ReadLong( &sb );
 
-	// load the stats
+	/* load the stats */
 	memcpy( &stats, sb.data + sb.readcount, sizeof(stats_t) );
 	sb.readcount += sizeof(stats_t);
 
 	Com_Printf( "Campaign '%s' loaded.\n", filename );
 	CL_GameTimeStop();
 
-	// init research tree
+	/* init research tree */
 	RS_InitTree();
 }
 
@@ -2098,14 +2098,14 @@ CL_GameLoadCmd
 */
 void CL_GameLoadCmd( void )
 {
-	// get argument
+	/* get argument */
 	if ( Cmd_Argc() < 2 )
 	{
 		Com_Printf( "Usage: game_load <filename>\n" );
 		return;
 	}
 
-	// load and go to map
+	/* load and go to map */
 	CL_GameLoad( Cmd_Argv( 1 ) );
 
 	Cvar_Set( "mn_main", "singleplayer" );
@@ -2132,7 +2132,7 @@ void CL_GameCommentsCmd( void )
 
 	for ( i = 0; i < 8; i++ )
 	{
-		// open file
+		/* open file */
 		f = fopen( va( "%s/save/slot%i.sav", FS_Gamedir(), i ), "rb" );
 		if ( !f )
 		{
@@ -2140,18 +2140,18 @@ void CL_GameCommentsCmd( void )
 			continue;
 		}
 
-		// check if it's versioned
+		/* check if it's versioned */
 		first_char = fgetc( f );
 		if ( first_char == 0 )
 		{
-			// skip the version number
+			/* skip the version number */
 			fread( comment, sizeof(int), 1, f );
-			// read the comment
+			/* read the comment */
 			fread( comment, 1, MAX_VAR, f );
 		}
 		else
 		{
-			// not versioned - first_char is the first character of the comment
+			/* not versioned - first_char is the first character of the comment */
 			comment[0] = first_char;
 			fread( comment + 1, 1, MAX_VAR - 1, f );
 		}
@@ -2176,7 +2176,7 @@ void CL_GameContinue( void )
 
 	if ( !curCampaign )
 	{
-		// try to load the current campaign
+		/* try to load the current campaign */
 		CL_GameLoad( mn_lastsave->string );
 		if ( !curCampaign ) return;
 	}
@@ -2207,7 +2207,7 @@ void CL_GameGo( void )
 
 	mis = selMis->def;
 
-	// multiplayer
+	/* multiplayer */
 	if ( B_GetNumOnTeam() == 0 && ! ccs.singleplayer )
 	{
 		MN_Popup( _("Note"), _("Assemble or load a team") );
@@ -2215,10 +2215,10 @@ void CL_GameGo( void )
 	}
 	else if ( ( ! mis->active || (interceptAircraft >= 0 && ! baseCurrent->numOnTeam[interceptAircraft] ) )
 		&& ccs.singleplayer )
-		// dropship not near landingzone
+		/* dropship not near landingzone */
 		return;
 
-	// start the map
+	/* start the map */
 	Cvar_SetValue( "ai_numaliens", (float)mis->aliens );
 	Cvar_SetValue( "ai_numcivilians", (float)mis->civilians );
 	Cvar_Set( "ai_alien", mis->alienTeam );
@@ -2227,21 +2227,21 @@ void CL_GameGo( void )
 	Cvar_Set( "music", mis->music );
 	Cvar_Set( "equip", curCampaign->equipment );
 
-	// check inventory
+	/* check inventory */
 	ccs.eMission = ccs.eCampaign;
 	CL_CheckInventory( &ccs.eMission );
 
-	// prepare
+	/* prepare */
 	baseCurrent->deathMask = 0;
 	MN_PopMenu( qtrue );
 	Cvar_Set( "mn_main", "singleplayermission" );
 
-	// get appropriate map
+	/* get appropriate map */
 	if ( CL_MapIsNight( mis->pos ) ) timeChar = 'n';
 	else timeChar = 'd';
 
-	// base attack
-	// maps starts with a dot
+	/* base attack */
+	/* maps starts with a dot */
 	if ( mis->map[0] == '.' )
 	{
 		if ( B_GetCount() > 0 && baseCurrent && baseCurrent->baseStatus == BASE_UNDER_ATTACK )
@@ -2311,7 +2311,7 @@ void CL_GameAutoGo( void )
 		return;
 	}
 
-	// start the map
+	/* start the map */
 	mis = selMis->def;
 	if ( ! mis->active )
 	{
@@ -2326,30 +2326,30 @@ void CL_GameAutoGo( void )
 
 	MN_PopMenu(qfalse);
 
-	// FIXME: This needs work
+	/* FIXME: This needs work */
 	won = mis->aliens * (int)difficulty->value > baseCurrent->numOnTeam[interceptAircraft] ? 0 : 1;
 
 	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int)difficulty->value, baseCurrent->numOnTeam[interceptAircraft] );
 
-	// give reward
+	/* give reward */
 	if ( won )
 		CL_UpdateCredits( ccs.credits+mis->cr_win+(mis->cr_alien*mis->aliens) );
 	else
 		CL_UpdateCredits( ccs.credits+mis->cr_win-(mis->cr_civilian*mis->civilians) );
 
-	// add recruits
+	/* add recruits */
 	if ( won && mis->recruits )
 		for ( i = 0; i < mis->recruits; i++ )
 			CL_GenerateCharacter( curCampaign->team, baseCurrent );
 
-	// campaign effects
+	/* campaign effects */
 	selMis->cause->done++;
 	if ( selMis->cause->done >= selMis->cause->def->quota )
 		CL_CampaignExecute( selMis->cause );
 
 	CL_CampaignRemoveMission( selMis );
 
-	// onwin and onlose triggers
+	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger( selMis->def, won );
 
 	if ( won )
@@ -2367,11 +2367,11 @@ CL_GameAbort
 */
 void CL_GameAbort( void )
 {
-	// aborting means letting the aliens win
+	/* aborting means letting the aliens win */
 	Cbuf_AddText( va( "sv win %i\n", TEAM_ALIEN ) );
 }
 
-// ===========================================================
+/* =========================================================== */
 
 /*======================
 CL_CollectAliens
@@ -2399,13 +2399,13 @@ void CL_CollectAliens( mission_t* mission )
 				/* a stunned actor */
 				for ( j = 0, td = teamDesc ; j < numTeamDesc; j++ ) {
 					if ( !Q_strncmp( td->id, selMis->def->alienTeam, MAX_VAR ) ) {
-						// get interrogation tech
+						/* get interrogation tech */
 						tech = RS_GetTechByID(td->interrogation);
 						if ( tech ) { tech->statusCollected++; }
-						// get interrogation_commander tech
+						/* get interrogation_commander tech */
 						tech = RS_GetTechByID(td->interrogation_com);
 						if ( tech ) { tech->statusCollected++; }
-						// TODO: get xenobiology tech
+						/* TODO: get xenobiology tech */
 						tech = RS_GetTechByID(td->xenobiology);
 						if ( tech ) { tech->statusCollected++; }
 					}
@@ -2415,7 +2415,7 @@ void CL_CollectAliens( mission_t* mission )
 				/* a death actor */
 				for ( j = 0, td = teamDesc ; j < numTeamDesc; j++ ) {
 					if ( !Q_strncmp( td->id, selMis->def->alienTeam, MAX_VAR ) ) {
-						// get autopsy tech
+						/* get autopsy tech */
 						tech = RS_GetTechByID(td->autopsy);
 						if ( tech ) { tech->statusCollected++; }
 					}
@@ -2459,9 +2459,9 @@ void CL_CollectItems( int won )
 
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 	{
-		// Winner collects everything on the floor, and everything carried
-		// by surviving actors.  Loser only gets what their living team
-		// members carry.
+		/* Winner collects everything on the floor, and everything carried */
+		/* by surviving actors.  Loser only gets what their living team */
+		/* members carry. */
 		if ( !le->inuse )
 			;
 		else if ( le->type == ET_ITEM && won )
@@ -2498,7 +2498,7 @@ void CL_UpdateCharacterStats ( int won )
 	{
 		le = cl.teamList[i];
 
-		// Check if a soldier died and report it to the message system.
+		/* Check if a soldier died and report it to the message system. */
 		if ( le && (le->state & STATE_DEAD) ) {
 			chr = &baseCurrent->wholeTeam[i];
 			assert( chr );
@@ -2507,21 +2507,21 @@ void CL_UpdateCharacterStats ( int won )
 			MN_AddNewMessage( _("Soldier died"), messageBuffer, qfalse, MSG_DEATH, NULL );
 		}
 
-		// check if the soldier still lives
-		// and give him skills
+		/* check if the soldier still lives */
+		/* and give him skills */
 		if ( le && !(le->state & STATE_DEAD) ) {
-			// TODO: Is the array of character_t the same
-			//      as the array of le_t??
+			/* TODO: Is the array of character_t the same */
+			/*      as the array of le_t?? */
 			chr = &baseCurrent->wholeTeam[i];
 			assert( chr );
 
-			// FIXME:
+			/* FIXME: */
 			for ( j = 0; j < SKILL_NUM_TYPES; j++ )
 				if ( chr->skills[j] < MAX_SKILL ) {
 					chr->skills[j]++;
 				}
 
-			// Check if the soldier meets the requirements for a higher rank -> Promotion
+			/* Check if the soldier meets the requirements for a higher rank -> Promotion */
 			if (numRanks >= 2 ) {
 				for ( j = numRanks-1; j > 0; j-- ) {
 					rank = &ranks[j];
@@ -2554,18 +2554,18 @@ void CL_GameResultsCmd( void )
 	int i, j;
 	int tempMask;
 
-	// multiplayer?
+	/* multiplayer? */
 	if ( !curCampaign )
 		return;
 
-	// check for replay
+	/* check for replay */
 	if ( (int)Cvar_VariableValue( "game_tryagain" ) )
 	{
 		CL_GameGo();
 		return;
 	}
 
-	// check for win
+	/* check for win */
 	if ( Cmd_Argc() < 2 )
 	{
 		Com_Printf( "Usage: game_results <won>\n" );
@@ -2573,10 +2573,10 @@ void CL_GameResultsCmd( void )
 	}
 	won = atoi( Cmd_Argv( 1 ) );
 
-	// give reward, change equipment
+	/* give reward, change equipment */
 	CL_UpdateCredits( ccs.credits+ccs.reward );
 
-	// remove the dead (and their item preference)
+	/* remove the dead (and their item preference) */
 	for ( i = 0; i < baseCurrent->numWholeTeam; )
 	{
 		if ( baseCurrent->deathMask & (1<<i) )
@@ -2598,20 +2598,20 @@ void CL_GameResultsCmd( void )
 		else i++;
 	}
 
-	// add recruits
+	/* add recruits */
 	if ( won && selMis->def->recruits )
 		for ( i = 0; i < selMis->def->recruits; i++ )
 			CL_GenerateCharacter( curCampaign->team, baseCurrent );
 
-	// onwin and onlose triggers
+	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger( selMis->def, won );
 
-	// campaign effects
+	/* campaign effects */
 	selMis->cause->done++;
 	if ( selMis->cause->done >= selMis->cause->def->quota )
 		CL_CampaignExecute( selMis->cause );
 
-	// remove mission from list
+	/* remove mission from list */
 	CL_CampaignRemoveMission( selMis );
 }
 
@@ -2623,17 +2623,17 @@ CL_MapActionReset
 */
 void CL_MapActionReset( void )
 {
-	// don't allow a reset when no base is set up
+	/* don't allow a reset when no base is set up */
 	if ( gd.numBases )
 		mapAction = MA_NONE;
 
 	interceptAircraft = -1;
-	selMis = NULL; // reset selected mission
+	selMis = NULL; /* reset selected mission */
 }
 
 
 
-// ===========================================================
+/* =========================================================== */
 
 #define	MISSIONOFS(x)	(int)&(((mission_t *)0)->x)
 
@@ -2679,7 +2679,7 @@ void CL_ParseMission( char *name, char **text )
 	char		*token;
 	int		i;
 
-	// search for missions with same name
+	/* search for missions with same name */
 	for ( i = 0; i < numMissions; i++ )
 		if ( !Q_strncmp( name, missions[i].name, MAX_VAR ) )
 			break;
@@ -2696,13 +2696,13 @@ void CL_ParseMission( char *name, char **text )
 		return;
 	}
 
-	// initialize the menu
+	/* initialize the menu */
 	ms = &missions[numMissions++];
 	memset( ms, 0, sizeof(mission_t) );
 
 	Q_strncpyz( ms->name, name, MAX_VAR );
 
-	// get it's body
+	/* get it's body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -2720,7 +2720,7 @@ void CL_ParseMission( char *name, char **text )
 		for ( vp = mission_vals; vp->string; vp++ )
 			if ( !Q_strcmp( token, vp->string ) )
 			{
-				// found a definition
+				/* found a definition */
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
 
@@ -2748,7 +2748,7 @@ void CL_ParseMission( char *name, char **text )
 }
 
 
-// ===========================================================
+/* =========================================================== */
 
 
 #define	STAGESETOFS(x)	(int)&(((stageSet_t *)0)->x)
@@ -2788,12 +2788,12 @@ void CL_ParseStageSet( char *name, char **text )
 		return;
 	}
 
-	// initialize the stage
+	/* initialize the stage */
 	sp = &stageSets[numStageSets++];
 	memset( sp, 0, sizeof(stageSet_t) );
 	Q_strncpyz( sp->name, name, MAX_VAR );
 
-	// get it's body
+	/* get it's body */
 	token = COM_Parse( text );
 	if ( !*text || *token != '{' )
 	{
@@ -2807,11 +2807,11 @@ void CL_ParseStageSet( char *name, char **text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
-		// check for some standard values
+		/* check for some standard values */
 		for ( vp = stageset_vals; vp->string; vp++ )
 			if ( !Q_strcmp( token, vp->string ) )
 			{
-				// found a definition
+				/* found a definition */
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
 
@@ -2821,7 +2821,7 @@ void CL_ParseStageSet( char *name, char **text )
 		if ( vp->string )
 			continue;
 
-		// get mission set
+		/* get mission set */
 		if ( !Q_strncmp( token, "missions", 8 ) )
 		{
 			token = COM_EParse( text, errhead, name );
@@ -2829,7 +2829,7 @@ void CL_ParseStageSet( char *name, char **text )
 			Q_strncpyz( missionstr, token, sizeof(missionstr) );
 			misp = missionstr;
 
-			// add mission options
+			/* add mission options */
 			sp->numMissions = 0;
 			do {
 				token = COM_Parse( &misp );
@@ -2866,7 +2866,7 @@ void CL_ParseStage( char *name, char **text )
 	char		*token;
 	int			i;
 
-	// search for campaigns with same name
+	/* search for campaigns with same name */
 	for ( i = 0; i < numStages; i++ )
 		if ( !Q_strncmp( name, stages[i].name, MAX_VAR ) )
 			break;
@@ -2883,7 +2883,7 @@ void CL_ParseStage( char *name, char **text )
 		return;
 	}
 
-	// get it's body
+	/* get it's body */
 	token = COM_Parse( text );
 	if ( !*text || *token != '{' )
 	{
@@ -2891,7 +2891,7 @@ void CL_ParseStage( char *name, char **text )
 		return;
 	}
 
-	// initialize the stage
+	/* initialize the stage */
 	sp = &stages[numStages++];
 	memset( sp, 0, sizeof(stage_t) );
 	Q_strncpyz( sp->name, name, MAX_VAR );
@@ -2916,7 +2916,7 @@ void CL_ParseStage( char *name, char **text )
 }
 
 
-// ===========================================================
+/* =========================================================== */
 
 #define	CAMPAIGNOFS(x)	(int)&(((campaign_t *)0)->x)
 
@@ -2930,7 +2930,7 @@ value_t campaign_vals[] =
 	{ "map",	V_STRING,	CAMPAIGNOFS( map ) },
 	{ "credits",	V_INT,		CAMPAIGNOFS( credits ) },
 	{ "visible",	V_BOOL,		CAMPAIGNOFS( visible ) },
-	{ "text",	V_TRANSLATION2_STRING,		CAMPAIGNOFS( text ) }, // just a gettext placeholder
+	{ "text",	V_TRANSLATION2_STRING,		CAMPAIGNOFS( text ) }, /* just a gettext placeholder */
 	{ "name",		V_TRANSLATION_STRING,	CAMPAIGNOFS( name ) },
 	{ "date",		V_DATE,		CAMPAIGNOFS( date ) },
 	{ NULL, 0, 0 },
@@ -2949,7 +2949,7 @@ void CL_ParseCampaign( char *id, char **text )
 	char		*token;
 	int			i;
 
-	// search for campaigns with same name
+	/* search for campaigns with same name */
 	for ( i = 0; i < numCampaigns; i++ )
 		if ( !Q_strncmp( id, campaigns[i].id, MAX_VAR ) )
 			break;
@@ -2966,13 +2966,13 @@ void CL_ParseCampaign( char *id, char **text )
 		return;
 	}
 
-	// initialize the menu
+	/* initialize the menu */
 	cp = &campaigns[numCampaigns++];
 	memset( cp, 0, sizeof(campaign_t) );
 
 	Q_strncpyz( cp->id, id, MAX_VAR );
 
-	// get it's body
+	/* get it's body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -2987,11 +2987,11 @@ void CL_ParseCampaign( char *id, char **text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
-		// check for some standard values
+		/* check for some standard values */
 		for ( vp = campaign_vals; vp->string; vp++ )
 			if ( !Q_strcmp( token, vp->string ) )
 			{
-				// found a definition
+				/* found a definition */
 				token = COM_EParse( text, errhead, id );
 				if ( !*text ) return;
 
@@ -3007,7 +3007,7 @@ void CL_ParseCampaign( char *id, char **text )
 	} while ( *text );
 }
 
-// ===========================================================
+/* =========================================================== */
 
 #define	AIRFS(x)	(int)&(((aircraft_t *)0)->x)
 
@@ -3020,15 +3020,15 @@ value_t aircraft_vals[] =
 	{ "fuelsize",	V_INT,	AIRFS( fuelSize ) },
 	{ "image",	V_STRING,	AIRFS( image ) },
 
-	// pointer to technology_t
+	/* pointer to technology_t */
 	{ "weapon",	V_STRING,	AIRFS( weapon_string ) },
 	{ "shield",	V_STRING,	AIRFS( shield_string ) },
 
 	{ "model",	V_STRING,	AIRFS( model ) },
-	// price for selling/buying
+	/* price for selling/buying */
 	{ "price",	V_INT,	AIRFS( price ) },
-	// this is needed to let the buy and sell screen look for the needed building
-	// to place the aircraft in
+	/* this is needed to let the buy and sell screen look for the needed building */
+	/* to place the aircraft in */
 	{ "building",	V_STRING,	AIRFS( building ) },
 
 	{ NULL, 0, 0 },
@@ -3052,7 +3052,7 @@ void CL_ParseAircraft( char *name, char **text )
 		return;
 	}
 
-	// initialize the menu
+	/* initialize the menu */
 	ac = &aircraft[numAircraft++];
 	memset( ac, 0, sizeof(aircraft_t) );
 
@@ -3061,7 +3061,7 @@ void CL_ParseAircraft( char *name, char **text )
 	Q_strncpyz( ac->id, name, MAX_VAR );
 	ac->status = AIR_HOME;
 
-	// get it's body
+	/* get it's body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -3076,11 +3076,11 @@ void CL_ParseAircraft( char *name, char **text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
-		// check for some standard values
+		/* check for some standard values */
 		for ( vp = aircraft_vals; vp->string; vp++ )
 			if ( !Q_strcmp( token, vp->string ) )
 			{
-				// found a definition
+				/* found a definition */
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
 
@@ -3116,7 +3116,7 @@ void CL_ParseAircraft( char *name, char **text )
 	} while ( *text );
 }
 
-// ===========================================================
+/* =========================================================== */
 
 #define	NATFS(x)	(int)&(((nation_t *)0)->x)
 
@@ -3150,14 +3150,14 @@ void CL_ParseNations( char *name, char **text )
 		return;
 	}
 
-	// initialize the menu
+	/* initialize the menu */
 	nation = &nations[numNations++];
 	memset( nation, 0, sizeof(nation_t) );
 
 	Com_DPrintf("...found nation %s\n", name);
 	Q_strncpyz( nation->id, name, MAX_VAR );
 
-	// get it's body
+	/* get it's body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -3172,11 +3172,11 @@ void CL_ParseNations( char *name, char **text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
-		// check for some standard values
+		/* check for some standard values */
 		for ( vp = nation_vals; vp->string; vp++ )
 			if ( !Q_strcmp( token, vp->string ) )
 			{
-				// found a definition
+				/* found a definition */
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
 
@@ -3201,16 +3201,16 @@ TODO: Check cvar mn_main for value
 ======================*/
 qboolean CL_OnBattlescape( void )
 {
-	// sv.state is set to zero on every battlefield shutdown
+	/* sv.state is set to zero on every battlefield shutdown */
 	if ( Com_ServerState() > 0 )
 		return qtrue;
 
 	return qfalse;
 }
 
-// =====================================================================
+/* ===================================================================== */
 
-// these commands are only available in singleplayer
+/* these commands are only available in singleplayer */
 cmdList_t game_commands[] = {
 	{ "aircraft_start", CL_AircraftStart_f },
 	{ "aircraftlist", CL_ListAircraft_f },
@@ -3255,7 +3255,7 @@ void CL_GameExit( void )
 	Cvar_Set( "mn_main", "main" );
 	Cvar_Set( "mn_active", "" );
 	ccs.singleplayer = qfalse;
-	// singleplayer commands are no longer available
+	/* singleplayer commands are no longer available */
 	if ( curCampaign )
 		for ( commands = game_commands; commands->name; commands++ )
 			Cmd_RemoveCommand( commands->name );
@@ -3277,11 +3277,11 @@ void CL_GameNew( void )
 	Cvar_Set( "mn_active", "map" );
 	Cvar_SetValue("maxclients", 1.0f );
 
-	// exit running game
+	/* exit running game */
 	if ( curCampaign ) CL_GameExit();
 	ccs.singleplayer = qtrue;
 
-	// get campaign
+	/* get campaign */
 	name = Cvar_VariableString( "campaign" );
 	for ( i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++ )
 		if ( !Q_strncmp( name, curCampaign->name, MAX_VAR ) )
@@ -3296,57 +3296,57 @@ void CL_GameNew( void )
 	re.LoadTGA( va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight );
 	if ( !maskPic ) Sys_Error( "Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map );
 
-	// base setup
+	/* base setup */
 	gd.numBases = 0;
 	B_NewBases();
 
-	// reset, set time
+	/* reset, set time */
 	selMis = NULL;
 	memset( &ccs, 0, sizeof( ccs_t ) );
 	ccs.date = curCampaign->date;
 
-	// set map view
+	/* set map view */
 	ccs.center[0] = 0.5;
 	ccs.center[1] = 0.5;
 	ccs.zoom = 1.0;
 
 	CL_UpdateCredits( curCampaign->credits );
 
-	// equipment
+	/* equipment */
 	for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
 		if ( !Q_strncmp( curCampaign->equipment, ed->name, MAX_VAR ) )
 			break;
 	if ( i != csi.numEDs )
 		ccs.eCampaign = *ed;
 
-	// market
+	/* market */
 	for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
 		if ( !Q_strncmp( curCampaign->market, ed->name, MAX_VAR ) )
 			break;
 	if ( i != csi.numEDs )
 		ccs.eMarket = *ed;
 
-	// stage setup
+	/* stage setup */
 	CL_CampaignActivateStage( curCampaign->firststage );
 
 	MN_PopMenu( qtrue );
 	MN_PushMenu( "map" );
 
-	// create a base as first step
+	/* create a base as first step */
 	Cbuf_ExecuteText(EXEC_NOW, "mn_select_base -1" );
 
 	CL_GameTimeStop();
 
-	// init research tree
+	/* init research tree */
 	RS_CopyFromSkeleton();
 	RS_InitTree();
 
-	// after inited the techtree
-	// we can assign the weapons
-	// and shields to aircrafts.
+	/* after inited the techtree */
+	/* we can assign the weapons */
+	/* and shields to aircrafts. */
 	CL_AircraftInit();
 
-	// init employee list
+	/* init employee list */
 	B_InitEmployees();
 
 	for ( commands = game_commands; commands->name; commands++ )
@@ -3367,11 +3367,11 @@ void CP_GetCampaigns_f ( void )
 	*campaignText = *campaignDesc = '\0';
 	for ( i = 0; i < numCampaigns; i++ )
 		Q_strcat( campaignText, MAXCAMPAIGNTEXT, va("%s\n", campaigns[i].name ) );
-	// default campaign
+	/* default campaign */
 	Cvar_Set( "campaign", "main" );
 	menuText[TEXT_STANDARD] = campaignDesc;
 
-	// select main as default
+	/* select main as default */
 	for ( i = 0; i < numCampaigns; i++ )
 		if ( !Q_strncmp( "main", campaigns[i].id, MAX_VAR ) )
 		{
@@ -3391,14 +3391,14 @@ void CP_CampaignsClick_f ( void )
 	if ( Cmd_Argc() < 2 )
 		return;
 
-	//which building?
+	/*which building? */
 	num = atoi( Cmd_Argv( 1 ) );
 
 	if ( num >= numCampaigns || num < 0 )
 		return;
 
 	Cvar_Set( "campaign", campaigns[num].id );
-	// FIXME: Translate the race to the name of a race
+	/* FIXME: Translate the race to the name of a race */
 	Com_sprintf( campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\n%s\n"), campaigns[num].team, _(campaigns[num].text) );
 	menuText[TEXT_STANDARD] = campaignDesc;
 }
@@ -3410,7 +3410,7 @@ CL_ResetCampaign
 */
 void CL_ResetCampaign( void )
 {
-	// reset some vars
+	/* reset some vars */
 	curCampaign = NULL;
 	baseCurrent = NULL;
 	menuText[TEXT_CAMPAIGN_LIST] = campaignText;

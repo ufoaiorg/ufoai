@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// sys_win.h
+/* sys_win.h */
 
 #include "../qcommon/qcommon.h"
 #include "winquake.h"
@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MINIMUM_WIN_MEMORY	0x0a00000
 #define MAXIMUM_WIN_MEMORY	0x1000000
 
-//#define DEMO
+/*#define DEMO */
 
 qboolean s_win95;
 
@@ -81,7 +81,7 @@ void Sys_Error (char *error, ...)
 	if (qwclsemaphore)
 		CloseHandle (qwclsemaphore);
 
-	// shut down QHOST hooks if necessary
+	/* shut down QHOST hooks if necessary */
 	DeinitConProc ();
 
 	exit (1);
@@ -97,7 +97,7 @@ void Sys_Quit (void)
 	if (dedicated && dedicated->value)
 		FreeConsole ();
 
-	// shut down QHOST hooks if necessary
+	/* shut down QHOST hooks if necessary */
 	DeinitConProc ();
 
 	exit (0);
@@ -112,20 +112,20 @@ void WinError (void)
 		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
 		NULL,
 		GetLastError(),
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), /* Default language */
 		(LPTSTR) &lpMsgBuf,
 		0,
 		NULL
 	);
 
-	// Display the string.
+	/* Display the string. */
 	MessageBox( NULL, lpMsgBuf, "GetLastError", MB_OK|MB_ICONINFORMATION );
 
-	// Free the buffer.
+	/* Free the buffer. */
 	LocalFree( lpMsgBuf );
 }
 
-//================================================================
+/*================================================================ */
 
 
 /*
@@ -143,10 +143,10 @@ char *Sys_ScanForCD (void)
 	FILE		*f;
 	char		test[MAX_QPATH];
 
-	if (done)		// don't re-check
+	if (done)		/* don't re-check */
 		return cddir;
 
-	// no abort/retry/fail errors
+	/* no abort/retry/fail errors */
 	SetErrorMode (SEM_FAILCRITICALERRORS);
 
 	drive[0] = 'c';
@@ -156,10 +156,10 @@ char *Sys_ScanForCD (void)
 
 	done = qtrue;
 
-	// scan the drives
+	/* scan the drives */
 	for (drive[0] = 'c' ; drive[0] <= 'z' ; drive[0]++)
 	{
-		// where activision put the stuff...
+		/* where activision put the stuff... */
 		sprintf (cddir, "%sinstall\\data", drive);
 		sprintf (test, "%sinstall\\data\\quake2.exe", drive);
 		f = fopen(test, "r");
@@ -195,7 +195,7 @@ void	Sys_CopyProtect (void)
 }
 
 
-//================================================================
+/*================================================================ */
 
 char *Sys_GetCurrentUser( void )
 {
@@ -237,10 +237,10 @@ void Sys_Init (void)
 	OSVERSIONINFO	vinfo;
 
 #if 0
-	// allocate a named semaphore on the client so the
-	// front end can tell if it is alive
+	/* allocate a named semaphore on the client so the */
+	/* front end can tell if it is alive */
 
-	// mutex will fail if semephore already exists
+	/* mutex will fail if semephore already exists */
     qwclsemaphore = CreateMutex(
         NULL,         /* Security attributes */
         0,            /* owner       */
@@ -263,11 +263,11 @@ void Sys_Init (void)
 	if (!GetVersionEx (&vinfo))
 		Sys_Error ("Couldn't get OS info");
 
-	if (vinfo.dwMajorVersion < 4) // at least win nt 4
+	if (vinfo.dwMajorVersion < 4) /* at least win nt 4 */
 		Sys_Error ("UFO: AI requires windows version 4 or greater");
-	if (vinfo.dwPlatformId == VER_PLATFORM_WIN32s) // win3.x with win32 extensions
+	if (vinfo.dwPlatformId == VER_PLATFORM_WIN32s) /* win3.x with win32 extensions */
 		Sys_Error ("UFO: AI doesn't run on Win32s");
-	else if ( vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS ) // win95, 98, me
+	else if ( vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS ) /* win95, 98, me */
 		s_win95 = qtrue;
 
 	Cvar_Get("sys_os", "win", 0);
@@ -279,7 +279,7 @@ void Sys_Init (void)
 		hinput = GetStdHandle (STD_INPUT_HANDLE);
 		houtput = GetStdHandle (STD_OUTPUT_HANDLE);
 
-		// let QHOST hook in
+		/* let QHOST hook in */
 		InitConProc (argc, argv);
 	}
 }
@@ -417,8 +417,8 @@ void Sys_SendKeyEvents (void)
 		DispatchMessage (&msg);
 	}
 
-	// grab frame time
-	sys_frame_time = timeGetTime();	// FIXME: should this be at start?
+	/* grab frame time */
+	sys_frame_time = timeGetTime();	/* FIXME: should this be at start? */
 }
 
 
@@ -529,7 +529,7 @@ void *Sys_GetGameAPI (void *parms)
 	if (game_library)
 		Com_Error (ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
 
-	// check the current debug directory first for development purposes
+	/* check the current debug directory first for development purposes */
 	_getcwd (cwd, sizeof(cwd));
 	Com_sprintf (name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
 	game_library = LoadLibrary ( name );
@@ -540,7 +540,7 @@ void *Sys_GetGameAPI (void *parms)
 	else
 	{
 #ifdef DEBUG
-		// check the current directory for other development purposes
+		/* check the current directory for other development purposes */
 		Com_sprintf (name, sizeof(name), "%s/%s", cwd, gamename);
 		game_library = LoadLibrary ( name );
 		if (game_library)
@@ -550,13 +550,13 @@ void *Sys_GetGameAPI (void *parms)
 		else
 #endif
 		{
-			// now run through the search paths
+			/* now run through the search paths */
 			path = NULL;
 			while (1)
 			{
 				path = FS_NextPath (path);
 				if (!path)
-					return NULL;		// couldn't find one anywhere
+					return NULL;		/* couldn't find one anywhere */
 				Com_sprintf (name, sizeof(name), "%s/%s", path, gamename);
 				game_library = LoadLibrary (name);
 				if (game_library)
@@ -578,7 +578,7 @@ void *Sys_GetGameAPI (void *parms)
 	return GetGameAPI (parms);
 }
 
-//=======================================================================
+/*======================================================================= */
 
 
 /*
@@ -639,13 +639,13 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 	ParseCommandLine (lpCmdLine);
 
-	// if we find the CD, add a +set cddir xxx command line
+	/* if we find the CD, add a +set cddir xxx command line */
 	cddir = Sys_ScanForCD ();
 	if (cddir && argc < MAX_NUM_ARGVS - 3)
 	{
 		int		i;
 
-		// don't override a cddir on the command line
+		/* don't override a cddir on the command line */
 		for (i=0 ; i<argc ; i++)
 			if (!strcmp(argv[i], "cddir"))
 				break;
@@ -661,13 +661,13 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	timescale = 1.0;
 	oldtime = Sys_Milliseconds ();
 
-// 	srand( getpid() );
+/* 	srand( getpid() ); */
 	srand( oldtime );
 
 	/* main window message loop */
 	while (1)
 	{
-		// if at a full screen console, don't update unless needed
+		/* if at a full screen console, don't update unless needed */
 		if (Minimized || (dedicated && dedicated->value) )
 		{
 			Sleep (1);
@@ -687,15 +687,15 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			newtime = Sys_Milliseconds ();
 			time = timescale * (newtime - oldtime);
 		} while (time < 1);
-//			Con_Printf ("time:%5.2f - %5.2f = %5.2f\n", newtime, oldtime, time);
+/*			Con_Printf ("time:%5.2f - %5.2f = %5.2f\n", newtime, oldtime, time); */
 
-		//	_controlfp( ~( _EM_ZERODIVIDE ), _MCW_EM );
+		/*	_controlfp( ~( _EM_ZERODIVIDE ), _MCW_EM ); */
 		_controlfp( _PC_24, _MCW_PC );
 
 		timescale = Qcommon_Frame (time);
 		oldtime = newtime;
 	}
 
-	// never gets here
+	/* never gets here */
 	return TRUE;
 }

@@ -1,4 +1,4 @@
-// scriplib.h
+/* scriplib.h */
 
 #ifndef _SCRIPTLIB
 #define _SCRIPTLIB

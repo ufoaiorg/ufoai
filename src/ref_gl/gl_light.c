@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// r_light.c
+/* r_light.c */
 
 #include "gl_local.h"
 
@@ -44,9 +44,9 @@ void R_RenderDlight (dlight_t *light)
 
 	VectorSubtract (light->origin, r_origin, v);
 #if 0
-	// FIXME?
+	/* FIXME? */
 	if (VectorLength (v) < rad)
-	{	// view is inside the dlight
+	{	/* view is inside the dlight */
 		V_AddBlend (light->color[0], light->color[1], light->color[2], light->intensity * 0.0003, v_blend);
 		return;
 	}
@@ -82,8 +82,8 @@ void R_RenderDlights (void)
 	if (!gl_flashblend->value)
 		return;
 
-	r_dlightframecount = r_framecount + 1;	// because the count hasn't
-											//  advanced yet for this frame
+	r_dlightframecount = r_framecount + 1;	/* because the count hasn't */
+											/*  advanced yet for this frame */
 	qglDepthMask (0);
 	qglDisable (GL_TEXTURE_2D);
 	qglShadeModel (GL_SMOOTH);
@@ -139,12 +139,12 @@ void R_MarkLights (dlight_t *light, int bit, mnode_t *node)
 		return;
 	}
 
-	// mark the polygons
-	// FIXME: Go through other rTiles, too
+	/* mark the polygons */
+	/* FIXME: Go through other rTiles, too */
 	surf = rTiles[0]->surfaces + node->firstsurface;
 	for (i=0 ; i<node->numsurfaces ; i++, surf++)
 	{
-		//Discoloda
+		/*Discoloda */
 		dist = DotProduct (light->origin, surf->plane->normal) - surf->plane->dist;
 		if (dist >= 0)
 			sidebit = 0;
@@ -196,7 +196,7 @@ LIGHT SAMPLING
 =============================================================================
 */
 
-//===================================================================
+/*=================================================================== */
 
 static float s_blocklights[34*34*3];
 /*
@@ -225,16 +225,16 @@ void R_AddDynamicLights (msurface_t *surf)
 	for (lnum=0 ; lnum<r_newrefdef.num_dlights ; lnum++)
 	{
 		if ( !(surf->dlightbits & (1<<lnum) ) )
-			continue;		// not lit by this light
+			continue;		/* not lit by this light */
 
 		dl = &r_newrefdef.dlights[lnum];
 		frad = dl->intensity;
 		fdist = DotProduct (dl->origin, surf->plane->normal) -
 				surf->plane->dist;
 		frad -= fabs(fdist);
-		// rad is now the highest intensity on the plane
+		/* rad is now the highest intensity on the plane */
 
-		fminlight = DLIGHT_CUTOFF;	// FIXME: make configurable?
+		fminlight = DLIGHT_CUTOFF;	/* FIXME: make configurable? */
 		if (frad < fminlight)
 			continue;
 		fminlight = frad - fminlight;
@@ -321,7 +321,7 @@ void R_BuildLightMap (msurface_t *surf, byte *dest, int stride)
 	if (size > (sizeof(s_blocklights)>>surf->lquant) )
 		ri.Sys_Error (ERR_DROP, "Bad s_blocklights size");
 
-	// set to full bright if no light data
+	/* set to full bright if no light data */
 	if (!surf->samples)
 	{
 		int maps;
@@ -334,12 +334,12 @@ void R_BuildLightMap (msurface_t *surf, byte *dest, int stride)
 		goto store;
 	}
 
-	// count the # of maps
+	/* count the # of maps */
 	for ( nummaps = 0 ; nummaps < MAXLIGHTMAPS && surf->styles[nummaps] != 255; nummaps++);
 
 	lightmap = surf->samples;
 
-	// add all the lightmaps
+	/* add all the lightmaps */
 	if ( nummaps == 1 )
 	{
 		int maps;
@@ -369,7 +369,7 @@ void R_BuildLightMap (msurface_t *surf, byte *dest, int stride)
 					bl[2] = lightmap[i*3+2] * scale[2];
 				}
 			}
-			lightmap += size*3; // skip to next lightmap
+			lightmap += size*3; /* skip to next lightmap */
 		}
 	}
 	else
@@ -403,15 +403,15 @@ void R_BuildLightMap (msurface_t *surf, byte *dest, int stride)
 					bl[2] += lightmap[i*3+2] * scale[2];
 				}
 			}
-			lightmap += size*3;		// skip to next lightmap
+			lightmap += size*3;		/* skip to next lightmap */
 		}
 	}
 
-	// add all the dynamic lights
+	/* add all the dynamic lights */
 	if (surf->dlightframe == r_framecount)
 		R_AddDynamicLights (surf);
 
-	// put into texture format
+	/* put into texture format */
 store:
 	stride -= (smax<<2);
 	bl = s_blocklights;
@@ -429,7 +429,7 @@ store:
 				g = Q_ftol( bl[1] );
 				b = Q_ftol( bl[2] );
 
-				// catch negative lights
+				/* catch negative lights */
 				if (r < 0)
 					r = 0;
 				if (g < 0)
@@ -489,7 +489,7 @@ store:
 				g = Q_ftol( bl[1] );
 				b = Q_ftol( bl[2] );
 
-				// catch negative lights
+				/* catch negative lights */
 				if (r < 0)
 					r = 0;
 				if (g < 0)
@@ -540,7 +540,7 @@ store:
 					g = b = 0;
 					break;
 				case 'C':
-					// try faking colored lighting
+					/* try faking colored lighting */
 					a = 255 - ((r+g+b)/3);
 					r *= a/255.0;
 					g *= a/255.0;
@@ -566,7 +566,7 @@ store:
 }
 
 vec3_t			pointcolor;
-cplane_t		*lightplane;		// used as shadow plane
+cplane_t		*lightplane;		/* used as shadow plane */
 vec3_t			lightspot;
 
 int RecursiveLightPoint (mnode_t *node, vec3_t start, vec3_t end)
@@ -584,10 +584,10 @@ int RecursiveLightPoint (mnode_t *node, vec3_t start, vec3_t end)
 	int			r;
 
 	if (node->contents != -1)
-		return -1;		// didn't hit anything
+		return -1;		/* didn't hit anything */
 
-	// calculate mid point
-	// FIXME: optimize for axial
+	/* calculate mid point */
+	/* FIXME: optimize for axial */
 	plane = node->plane;
 	front = DotProduct (start, plane->normal) - plane->dist;
 	back = DotProduct (end, plane->normal) - plane->dist;
@@ -601,25 +601,25 @@ int RecursiveLightPoint (mnode_t *node, vec3_t start, vec3_t end)
 	mid[1] = start[1] + (end[1] - start[1])*frac;
 	mid[2] = start[2] + (end[2] - start[2])*frac;
 
-	// go down front side
+	/* go down front side */
 	r = RecursiveLightPoint (node->children[side], start, mid);
 	if (r >= 0)
-		return r;		// hit something
+		return r;		/* hit something */
 
 	if ( (back < 0) == side )
-		return -1;		// didn't hit anuthing
+		return -1;		/* didn't hit anuthing */
 
-	// check for impact on this node
+	/* check for impact on this node */
 	VectorCopy (mid, lightspot);
 	lightplane = plane;
 
-	// FIXME: Go through other rTiles, too
+	/* FIXME: Go through other rTiles, too */
 	surf = rTiles[0]->surfaces + node->firstsurface;
 
 	for (i=0 ; i<node->numsurfaces ; i++, surf++)
 	{
 		if (surf->flags&SURF_DRAWTURB)
-			continue;	// no lightmaps
+			continue;	/* no lightmaps */
 
 		tex = surf->texinfo;
 
@@ -664,7 +664,7 @@ int RecursiveLightPoint (mnode_t *node, vec3_t start, vec3_t end)
 		return 1;
 	}
 
-	// go down back side
+	/* go down back side */
 	return RecursiveLightPoint (node->children[!side], mid, end);
 }
 
@@ -683,7 +683,7 @@ void R_LightPoint (vec3_t p, vec3_t color)
 	vec3_t		dist;
 	float		add;
 
-	// FIXME: Go through other rTiles, too
+	/* FIXME: Go through other rTiles, too */
 	if (!rTiles[0]->lightdata)
 	{
 		color[0] = color[1] = color[2] = 1.0;
@@ -694,7 +694,7 @@ void R_LightPoint (vec3_t p, vec3_t color)
 	end[1] = p[1];
 	end[2] = p[2] - 2048;
 
-	// FIXME: Go through other rTiles, too
+	/* FIXME: Go through other rTiles, too */
 	r = RecursiveLightPoint (rTiles[0]->nodes, p, end);
 
 	if (r == -1)
@@ -702,13 +702,13 @@ void R_LightPoint (vec3_t p, vec3_t color)
 	else
 		VectorCopy (pointcolor, color);
 
-	//this catches too bright modulated color
+	/*this catches too bright modulated color */
 	for (i=0;i<3;i++)
 		if (color[i]>1) color[i] = 1;
 
-	//
-	// add dynamic lights
-	//
+	/* */
+	/* add dynamic lights */
+	/* */
 	light = 0;
 	dl = r_newrefdef.dlights;
 	for (lnum=0 ; lnum<r_newrefdef.num_dlights ; lnum++, dl++)
@@ -717,11 +717,11 @@ void R_LightPoint (vec3_t p, vec3_t color)
 						dl->origin,
 						dist);
 		add = dl->intensity - VectorLength(dist);
-//		add *= 0.00390625;
+/*		add *= 0.00390625; */
 		add /= 64.0f;
 		if (add > 0)
 			VectorMA (color, add, dl->color, color);
 	}
-//	VectorScale (color, r_modulate->value, color);
+/*	VectorScale (color, r_modulate->value, color); */
 }
 

@@ -16,16 +16,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// cl_particle.c -- client particle parsing and rendering functions
+/* cl_particle.c -- client particle parsing and rendering functions */
 
 #include "client.h"
 
-// ===========================================================
+/* =========================================================== */
 
-//
+/* */
 mp_t	MPs[MAX_MAPPARTICLES];
 int		numMPs;
-//
+/* */
 
 #define	PFOFS(x)	(int)&(((ptlDef_t *)0)->x)
 #define	PPOFS(x)	(int)&(((ptl_t *)0)->x)
@@ -47,7 +47,7 @@ typedef struct ptlDef_s
 } ptlDef_t;
 
 
-// ===========================================================
+/* =========================================================== */
 
 typedef enum pf_s
 {
@@ -139,8 +139,8 @@ value_t pps[] =
 	{ "v",			V_VECTOR,	PPOFS( v ) },
 	{ "s",			V_VECTOR,	PPOFS( s ) },
 
-	// t and dt are not specified in particle definitions
-	// but they can be used as references
+	/* t and dt are not specified in particle definitions */
+	/* but they can be used as references */
 	{ "t",			V_FLOAT,	PPOFS( t ) },
 	{ "dt",			V_FLOAT,	PPOFS( dt ) },
 
@@ -167,7 +167,7 @@ typedef enum art_s
 } art_t;
 
 
-// ===========================================================
+/* =========================================================== */
 
 #define		MAX_PTLDEFS		256
 #define		MAX_PTLCMDS		(MAX_PTLDEFS*32)
@@ -196,7 +196,7 @@ ptl_t		ptl[MAX_PTLS];
 int		numPtlArt;
 int		numPtls;
 
-// ===========================================================
+/* =========================================================== */
 
 
 /*
@@ -211,7 +211,7 @@ void CL_ParticleRegisterArt( void )
 
 	for ( i = 0, a = ptlArt; i < numPtlArt; i++, a++ )
 	{
-		// register the art
+		/* register the art */
 		switch ( a->type )
 		{
 		case ART_PIC:
@@ -237,7 +237,7 @@ int CL_ParticleGetArt( char *name, int frame, char type )
 	ptlArt_t	*a;
 	int			i;
 
-	// search for the pic in the list
+	/* search for the pic in the list */
 	for ( i = 0, a = ptlArt; i < numPtlArt; i++, a++ )
 		if ( a->type == type && !Q_strncmp( name, a->name, MAX_VAR ) && a->frame == frame )
 			break;
@@ -245,7 +245,7 @@ int CL_ParticleGetArt( char *name, int frame, char type )
 	if ( i < numPtlArt )
 		return i;
 
-	// register new art
+	/* register new art */
 	switch ( type )
 	{
 	case ART_PIC:
@@ -257,7 +257,7 @@ int CL_ParticleGetArt( char *name, int frame, char type )
 	default: Sys_Error( "CL_ParticleGetArt: Unknown art type\n" );
 	}
 
-	// check for an error
+	/* check for an error */
 	if ( !a->art )
 		return -1;
 
@@ -299,11 +299,11 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 	void	*radr;
 	float	arg;
 
-	// test for null cmd
+	/* test for null cmd */
 	if ( !cmd )
 		return;
 
-	// run until finding PC_END
+	/* run until finding PC_END */
 	for ( s = 0, e = 0; cmd->cmd != PC_END; cmd++ )
 	{
 		if ( cmd->ref > RSTACK )
@@ -313,19 +313,19 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 			if ( !s )
 				Com_Error( ERR_FATAL, "CL_ParticleFunction: stack underflow\n" );
 
-			// pop an element off the stack
+			/* pop an element off the stack */
 			e = (byte *)stackPtr[--s] - cmdStack;
 
 			i = RSTACK - cmd->ref;
 			if ( !i )
 			{
-				// normal stack reference
+				/* normal stack reference */
 				radr = stackPtr[s];
 				cmd->type = stackType[s];
 			}
 			else
 			{
-				// stack reference to element of vector
+				/* stack reference to element of vector */
 				if ( (1<<stackType[s]) & V_VECS )
 				{
 					cmd->type = V_FLOAT;
@@ -342,11 +342,11 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 		switch ( cmd->cmd )
 		{
 		case PC_PUSH:
-			// check for stack overflow
+			/* check for stack overflow */
 			if ( s >= MAX_STACK_DEPTH )
 				Com_Error( ERR_FATAL, "CL_ParticleFunction: stack overflow\n" );
 
-			// store the value in the stack
+			/* store the value in the stack */
 			stackPtr[s] = &cmdStack[e];
 			stackType[s] = cmd->type;
 			e += Com_SetValue( stackPtr[s++], radr, cmd->type, 0 );
@@ -354,11 +354,11 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 
 		case PC_POP:
 		case PC_KPOP:
-			// check for stack underflow
+			/* check for stack underflow */
 			if ( s == 0 )
 				Com_Error( ERR_FATAL, "CL_ParticleFunction: stack underflow\n" );
 
-			// get pics and models
+			/* get pics and models */
 			if ( PPOFS( pic ) == -cmd->ref )
 			{
 				if ( stackType[--s] != V_STRING )
@@ -376,7 +376,7 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 				break;
 			}
 
-			// get different data
+			/* get different data */
 			if ( cmd->cmd == PC_POP )
 				e -= Com_SetValue( radr, stackPtr[--s], cmd->type, 0 );
 			else
@@ -385,7 +385,7 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 
 		case PC_ADD:
 		case PC_SUB:
-			// check for stack underflow
+			/* check for stack underflow */
 			if ( s == 0 )
 				Com_Error( ERR_FATAL, "CL_ParticleFunction: stack underflow\n" );
 
@@ -393,7 +393,7 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 			if ( !( (1<<type) & V_VECS ) )
 				Com_Error( ERR_FATAL, "CL_ParticleFunction: bad type '%s' for add (particle %s)\n", vt_names[stackType[s-1]], p->ctrl->name );
 
-			// float based vector addition
+			/* float based vector addition */
 			if ( type != cmd->type )
 				Com_Error( ERR_FATAL, "CL_ParticleFunction: bad vector dimensions for add/sub (particle %s)\n", p->ctrl->name );
 
@@ -409,7 +409,7 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 
 		case PC_MUL:
 		case PC_DIV:
-			// check for stack underflow
+			/* check for stack underflow */
 			if ( s == 0 )
 				Com_Error( ERR_FATAL, "CL_ParticleFunction: stack underflow\n" );
 
@@ -421,7 +421,7 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 
 			if ( type > V_FLOAT && cmd->type > V_FLOAT )
 			{
-				// component wise multiplication
+				/* component wise multiplication */
 				if ( type != cmd->type )
 					Com_Error( ERR_FATAL, "CL_ParticleFunction: bad vector dimensions for mul/div (particle %s)\n", p->ctrl->name );
 
@@ -437,7 +437,7 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 			if ( cmd->type > V_FLOAT )
 				Com_Error( ERR_FATAL, "CL_ParticleFunction: bad vector dimensions for mul/div (particle %s)\n", p->ctrl->name );
 
-			// scalar multiplication with scalar in second argument
+			/* scalar multiplication with scalar in second argument */
 			if ( cmd->cmd == PC_DIV ) arg = 1.0 / (*(float *)radr);
 			else arg = *(float *)radr;
 			for ( i = 0; i < n; i++ )
@@ -521,7 +521,7 @@ void CL_ParticleFunction( ptl_t *p, ptlCmd_t *cmd )
 			break;
 
 		case PC_NSPAWN:
-			// check for stack underflow
+			/* check for stack underflow */
 			if ( s == 0 )
 				Com_Error( ERR_FATAL, "CL_ParticleFunction: stack underflow\n" );
 
@@ -555,7 +555,7 @@ ptl_t *CL_ParticleSpawn( char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t 
 	ptl_t		*p;
 	int		i;
 
-	// find the particle definition
+	/* find the particle definition */
 	for ( i = 0; i < numPtlDefs; i++ )
 		if ( !Q_strncmp( name, ptlDef[i].name, MAX_VAR ) )
 			break;
@@ -568,7 +568,7 @@ ptl_t *CL_ParticleSpawn( char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t 
 
 	pd = &ptlDef[i];
 
-	// add the particle
+	/* add the particle */
 	for ( i = 0; i < numPtls; i++ )
 		if ( !ptl[i].inuse )
 			break;
@@ -584,11 +584,11 @@ ptl_t *CL_ParticleSpawn( char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t 
 		}
 	}
 
-	// allocate particle
+	/* allocate particle */
 	p = &ptl[i];
 	memset( p, 0, sizeof( ptl_t ) );
 
-	// set basic values
+	/* set basic values */
 	p->inuse = qtrue;
 	p->startTime = cl.time;
 	p->ctrl = pd;
@@ -597,14 +597,14 @@ ptl_t *CL_ParticleSpawn( char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t 
 	p->pic = -1;
 	p->model = -1;
 
-	// execute init function
+	/* execute init function */
 	if ( s ) VectorCopy( s, p->s );
 	if ( v ) VectorCopy( v, p->v );
 	if ( a ) VectorCopy( a, p->a );
 
 	p->levelFlags = levelFlags;
 
-	// run init function
+	/* run init function */
 	CL_ParticleFunction( p, pd->init );
 
 	return p;
@@ -638,7 +638,7 @@ void CL_Fading( vec4_t color, byte fade, float frac, qboolean onlyAlpha )
 			for ( i = onlyAlpha ? 3 : 0; i < 4; i++ ) color[i] *= (1.0 - frac) * 2;
 		break;
 	default:
-		// shouldn't happen
+		/* shouldn't happen */
 		break;
 	}
 }
@@ -680,7 +680,7 @@ void CL_ParticleRun( void )
 	for ( i = 0, p = ptl; i < numPtls; i++, p++ )
 		if ( p->inuse )
 		{
-			// advance time
+			/* advance time */
 			p->dt = cls.frametime;
 			p->t = (cl.time - p->startTime) * 0.001f;
 			p->lastThink += p->dt;
@@ -689,14 +689,14 @@ void CL_ParticleRun( void )
 			if ( p->rounds && ! p->roundsCnt )
 				p->roundsCnt = p->rounds;
 
-			// test for end of life
+			/* test for end of life */
 			if ( p->life && p->t >= p->life )
 			{
 				p->inuse = qfalse;
 				continue;
 			}
 
-			// kinematics
+			/* kinematics */
 			if ( p->style != STYLE_LINE )
 			{
 				VectorMA( p->s, 0.5*p->dt*p->dt, p->a, p->s );
@@ -705,29 +705,29 @@ void CL_ParticleRun( void )
 				VectorMA( p->angles, p->dt, p->omega, p->angles );
 			}
 
-			// run
+			/* run */
 			CL_ParticleFunction( p, p->ctrl->run );
 
-			// think
+			/* think */
 			while ( p->tps && p->lastThink * p->tps >= 1 )
 			{
 				CL_ParticleFunction( p, p->ctrl->think );
 				p->lastThink -= 1.0 / p->tps;
 			}
 
-			// animate
+			/* animate */
 			while ( p->fps && p->lastFrame * p->fps >= 1 )
 			{
-				// advance frame
+				/* advance frame */
 				p->frame++;
 				if ( p->frame > p->endFrame ) p->frame = 0;
 				p->lastFrame -= 1.0 / p->fps;
 
-				// load next frame
+				/* load next frame */
 				p->pic = CL_ParticleGetArt( ptlArt[p->pic].name, p->frame, ART_PIC );
 			}
 
-			// fading
+			/* fading */
 			if ( p->thinkFade || p->frameFade )
 			{
 				onlyAlpha = (p->blend == BLEND_BLEND);
@@ -742,7 +742,7 @@ void CL_ParticleRun( void )
 }
 
 
-// ===========================================================
+/* =========================================================== */
 
 /*
 ==============
@@ -758,7 +758,7 @@ void CL_ParseMapParticle( ptl_t *ptl, char *es, qboolean afterwards )
 	key = keyname+1;
 	do
 	{
-		// get keyname
+		/* get keyname */
 		token = COM_Parse (&es);
 		if (token[0] == '}')
 			break;
@@ -767,7 +767,7 @@ void CL_ParseMapParticle( ptl_t *ptl, char *es, qboolean afterwards )
 
 		Q_strncpyz(keyname, token, MAX_QPATH);
 
-		// parse value
+		/* parse value */
 		token = COM_Parse (&es);
 		if (!es)
 			Com_Error (ERR_DROP, "ED_ParseEntity: EOF without closing brace");
@@ -781,7 +781,7 @@ void CL_ParseMapParticle( ptl_t *ptl, char *es, qboolean afterwards )
 		for ( pp = pps; pp->string; pp++ )
 			if ( !Q_strncmp( key, pp->string, MAX_QPATH-1 ) )
 			{
-				// register art
+				/* register art */
 				if ( !Q_strncmp( pp->string, "image", 5 ) )
 				{
 					ptl->pic = CL_ParticleGetArt( token, ptl->frame, ART_PIC );
@@ -793,7 +793,7 @@ void CL_ParseMapParticle( ptl_t *ptl, char *es, qboolean afterwards )
 					break;
 				}
 
-				// found a normal particle value
+				/* found a normal particle value */
 				Com_ParseValue( ptl, token, pp->type, pp->ofs );
 				break;
 			}
@@ -815,7 +815,7 @@ void CL_RunMapParticles( void )
 	for ( i = 0, mp = MPs; i < numMPs; i++, mp++ )
 		if ( mp->nextTime && cl.time >= mp->nextTime )
 		{
-			// spawn a new particle
+			/* spawn a new particle */
 			ptl = CL_ParticleSpawn( mp->ptl, mp->levelflags, mp->origin, NULL, NULL );
 			if ( !ptl )
 			{
@@ -823,12 +823,12 @@ void CL_RunMapParticles( void )
 				continue;
 			}
 
-			// init the particle
+			/* init the particle */
 			CL_ParseMapParticle( ptl, mp->info, qfalse );
 			CL_ParticleFunction( ptl, ptl->ctrl->init );
 			CL_ParseMapParticle( ptl, mp->info, qtrue );
 
-			// prepare next spawning
+			/* prepare next spawning */
 			if ( mp->wait[0] || mp->wait[1] )
 				mp->nextTime += mp->wait[0] + mp->wait[1]*frand();
 			else
@@ -837,7 +837,7 @@ void CL_RunMapParticles( void )
 }
 
 
-// ===========================================================
+/* =========================================================== */
 
 
 /*
@@ -853,7 +853,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 	char	*token;
 	int		i, j;
 
-	// get it's body
+	/* get it's body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -872,7 +872,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 		for ( i = 0; i < PC_NUM_PTLCMDS; i++ )
 			if ( !Q_strcmp( token, pc_strings[i] ) )
 			{
-				// allocate an new cmd
+				/* allocate an new cmd */
 				pc = &ptlCmd[numPtlCmds++];
 				memset( pc, 0, sizeof( ptlCmd_t ) );
 
@@ -881,7 +881,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 				if ( !pc_types[i] )
 					break;
 
-				// get parameter type
+				/* get parameter type */
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
 
@@ -896,10 +896,10 @@ void CL_ParsePtlCmds( char *name, char **text )
 				if ( token[0] == '*' )
 				{
 					int		len;
-					// it's a variable reference
+					/* it's a variable reference */
 					token++;
 
-					// check for component specifier
+					/* check for component specifier */
 					len = strlen(token);
 					if ( token[len-2] == '.' )
 						token[len-2] = 0;
@@ -927,7 +927,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 
 					if ( len )
 					{
-						// get single component
+						/* get single component */
 						if ( (1<<pp->type) & V_VECS )
 						{
 							pc->type = V_FLOAT;
@@ -938,13 +938,13 @@ void CL_ParsePtlCmds( char *name, char **text )
 							Com_Printf( "CL_ParsePtlCmds: can't get components of a non-vector type (particle %s)\n", name );
 					}
 
-					// set the values
+					/* set the values */
 					pc->type = pp->type;
 					pc->ref = -pp->ofs;
 					break;
 				}
 
-				// get the type
+				/* get the type */
 				if ( pc_types[i] & ONLY )
 					j = pc_types[i] & ~ONLY;
 				else
@@ -960,17 +960,17 @@ void CL_ParsePtlCmds( char *name, char **text )
 						break;
 					}
 
-					// get the value
+					/* get the value */
 					token = COM_EParse( text, errhead, name );
 					if ( !*text ) return;
 				}
 
-				// set the values
+				/* set the values */
 				pc->type = j;
 				pc->ref = pcmdPos;
 				pcmdPos += Com_ParseValue( &pcmdData[pc->ref], token, pc->type, 0 );
 
-//				Com_Printf( "%s %s %i\n", vt_names[pc->type], token, pcmdPos - pc->ref, (char *)pc->ref );
+/*				Com_Printf( "%s %s %i\n", vt_names[pc->type], token, pcmdPos - pc->ref, (char *)pc->ref ); */
 				break;
 			}
 
@@ -979,12 +979,12 @@ void CL_ParsePtlCmds( char *name, char **text )
 		for ( pp = pps; pp->string; pp++ )
 			if ( !Q_strcmp( token, pp->string ) )
 			{
-				// get parameter
+				/* get parameter */
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
 
 
-				// translate set to a push and pop
+				/* translate set to a push and pop */
 				pc = &ptlCmd[numPtlCmds++];
 				pc->cmd = PC_PUSH;
 				pc->type = pp->type;
@@ -1003,7 +1003,7 @@ void CL_ParsePtlCmds( char *name, char **text )
 
 	} while ( *text );
 
-	// terminalize cmd chain
+	/* terminalize cmd chain */
 	pc = &ptlCmd[numPtlCmds++];
 	memset( pc, 0, sizeof( ptlCmd_t ) );
 }
@@ -1021,7 +1021,7 @@ void CL_ParseParticle( char *name, char **text )
 	char		*token;
 	int			i;
 
-	// search for menus with same name
+	/* search for menus with same name */
 	for ( i = 0; i < numPtlDefs; i++ )
 		if ( !Q_strncmp( name, ptlDef[i].name, MAX_VAR ) )
 			break;
@@ -1032,13 +1032,13 @@ void CL_ParseParticle( char *name, char **text )
 		return;
 	}
 
-	// initialize the menu
+	/* initialize the menu */
 	pd = &ptlDef[numPtlDefs++];
 	memset( pd, 0, sizeof(ptlDef_t) );
 
 	Q_strncpyz( pd->name, name, MAX_VAR );
 
-	// get it's body
+	/* get it's body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -1056,12 +1056,12 @@ void CL_ParseParticle( char *name, char **text )
 		for ( i = 0; i < PF_NUM_PTLFUNCS; i++ )
 			if ( !Q_strcmp( token, pf_strings[i] ) )
 			{
-				// allocate the first particle command
+				/* allocate the first particle command */
 				ptlCmd_t **pc;
 				pc = (ptlCmd_t **)((byte *)pd + pf_values[i]);
 				*pc = &ptlCmd[numPtlCmds];
 
-				// parse the commands
+				/* parse the commands */
 				CL_ParsePtlCmds( name, text );
 				break;
 			}
@@ -1071,7 +1071,7 @@ void CL_ParseParticle( char *name, char **text )
 
 	} while ( *text );
 
-	// check for an init function
+	/* check for an init function */
 	if ( !pd->init )
 	{
 		Com_Printf( "CL_ParseParticle: particle definition %s without init function ignored\n", name );

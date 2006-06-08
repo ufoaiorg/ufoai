@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// sv_user.c -- server code for moving users
+/* sv_user.c -- server code for moving users */
 
 #include "server.h"
 
@@ -60,7 +60,7 @@ void SV_New_f (void)
 {
 	char		*gamedir;
 	int			playernum;
-//	edict_t		*ent;
+/*	edict_t		*ent; */
 
 	Com_DPrintf ("New() from %s\n", sv_client->name);
 
@@ -70,20 +70,20 @@ void SV_New_f (void)
 		return;
 	}
 
-	// demo servers just dump the file message
+	/* demo servers just dump the file message */
 	if (sv.state == ss_demo)
 	{
 		SV_BeginDemoserver ();
 		return;
 	}
 
-	//
-	// serverdata needs to go over for all types of servers
-	// to make sure the protocol is right, and to set the gamedir
-	//
+	/* */
+	/* serverdata needs to go over for all types of servers */
+	/* to make sure the protocol is right, and to set the gamedir */
+	/* */
 	gamedir = Cvar_VariableString ("gamedir");
 
-	// send the serverdata
+	/* send the serverdata */
 	MSG_WriteByte (&sv_client->netchan.message, svc_serverdata);
 	MSG_WriteLong (&sv_client->netchan.message, PROTOCOL_VERSION);
 	MSG_WriteLong (&sv_client->netchan.message, svs.spawncount);
@@ -96,15 +96,15 @@ void SV_New_f (void)
 		playernum = sv_client - svs.clients;
 	MSG_WriteShort (&sv_client->netchan.message, playernum);
 
-	// send full levelname
+	/* send full levelname */
 	MSG_WriteString (&sv_client->netchan.message, sv.configstrings[CS_NAME]);
 
-	//
-	// game server
-	//
+	/* */
+	/* game server */
+	/* */
 	if (sv.state == ss_game)
 	{
-		// begin fetching configstrings
+		/* begin fetching configstrings */
 		MSG_WriteByte (&sv_client->netchan.message, svc_stufftext);
 		MSG_WriteString (&sv_client->netchan.message, va("cmd configstrings %i 0\n",svs.spawncount) );
 	}
@@ -127,7 +127,7 @@ void SV_Configstrings_f (void)
 		return;
 	}
 
-	// handle the case of a level changing while a client was connecting
+	/* handle the case of a level changing while a client was connecting */
 	if ( atoi(Cmd_Argv(1)) != svs.spawncount )
 	{
 		Com_Printf ("SV_Configstrings_f from different level\n");
@@ -137,7 +137,7 @@ void SV_Configstrings_f (void)
 
 	start = atoi(Cmd_Argv(2));
 
-	// write a packet full of data
+	/* write a packet full of data */
 	while ( sv_client->netchan.message.cursize < MAX_MSGLEN/2 && start < MAX_CONFIGSTRINGS)
 	{
 		if (sv.configstrings[start][0])
@@ -149,7 +149,7 @@ void SV_Configstrings_f (void)
 		start++;
 	}
 
-	// send next command
+	/* send next command */
 	if (start == MAX_CONFIGSTRINGS)
 	{
 		MSG_WriteByte (&sv_client->netchan.message, svc_stufftext);
@@ -172,7 +172,7 @@ void SV_Begin_f (void)
 {
 	Com_DPrintf ("Begin() from %s\n", sv_client->name);
 
-	// handle the case of a level changing while a client was connecting
+	/* handle the case of a level changing while a client was connecting */
 	if ( atoi(Cmd_Argv(1)) != svs.spawncount )
 	{
 		Com_Printf ("SV_Begin_f from different level\n");
@@ -182,13 +182,13 @@ void SV_Begin_f (void)
 
 	sv_client->state = cs_spawned;
 
-	// call the game begin function
+	/* call the game begin function */
 	ge->ClientBegin (sv_player);
 
 	Cbuf_InsertFromDefer ();
 }
 
-//============================================================================
+/*============================================================================ */
 
 /*
 =================
@@ -199,7 +199,7 @@ The client is going to disconnect, so remove the connection immediately
 */
 void SV_Disconnect_f (void)
 {
-//	SV_EndRedirect ();
+/*	SV_EndRedirect (); */
 	SV_DropClient (sv_client);
 }
 
@@ -233,11 +233,11 @@ void SV_Nextserver (void)
 {
 	char	*v;
 
-	// can't nextserver while playing a normal game
+	/* can't nextserver while playing a normal game */
 	if (sv.state == ss_game )
 		return;
 
-	svs.spawncount++;	// make sure another doesn't sneak in
+	svs.spawncount++;	/* make sure another doesn't sneak in */
 	v = Cvar_VariableString ("nextserver");
 	if (!v[0])
 		Cbuf_AddText ("killserver\n");
@@ -261,7 +261,7 @@ void SV_Nextserver_f (void)
 {
 	if ( atoi(Cmd_Argv(1)) != svs.spawncount ) {
 		Com_DPrintf ("Nextserver() from wrong level, from %s\n", sv_client->name);
-		return;		// leftover from last server
+		return;		/* leftover from last server */
 	}
 
 	Com_DPrintf ("Nextserver() from %s\n", sv_client->name);
@@ -277,7 +277,7 @@ typedef struct
 
 ucmd_t ucmds[] =
 {
-	// auto issued
+	/* auto issued */
 	{"new", SV_New_f},
 	{"configstrings", SV_Configstrings_f},
 	{"begin", SV_Begin_f},
@@ -286,7 +286,7 @@ ucmd_t ucmds[] =
 
 	{"disconnect", SV_Disconnect_f},
 
-	// issued by hand at client consoles
+	/* issued by hand at client consoles */
 	{"info", SV_ShowServerinfo_f},
 
 	{NULL, NULL}
@@ -304,7 +304,7 @@ void SV_ExecuteUserCommand (char *s)
 	Cmd_TokenizeString (s, qfalse);
 	sv_player = sv_client->player;
 
-//	SV_BeginRedirect (RD_CLIENT);
+/*	SV_BeginRedirect (RD_CLIENT); */
 
 	for (u=ucmds ; u->name ; u++)
 		if (!strcmp (Cmd_Argv(0), u->name) )
@@ -317,7 +317,7 @@ void SV_ExecuteUserCommand (char *s)
 	if (!u->name && sv.state == ss_game)
 		ge->ClientCommand (sv_player);
 
-//	SV_EndRedirect ();
+/*	SV_EndRedirect (); */
 }
 
 
@@ -339,7 +339,7 @@ void SV_ExecuteClientMessage (client_t *cl)
 	sv_client = cl;
 	sv_player = sv_client->player;
 
-	// only allow one move command
+	/* only allow one move command */
 	stringCmdCount = 0;
 
 	while (1)
@@ -374,27 +374,27 @@ void SV_ExecuteClientMessage (client_t *cl)
 		case clc_stringcmd:
 			s = MSG_ReadString (&net_message);
 
-			// malicious users may try using too many string commands
+			/* malicious users may try using too many string commands */
 			if (++stringCmdCount < MAX_STRINGCMDS)
 				SV_ExecuteUserCommand (s);
 
 			if (cl->state == cs_zombie)
-				return;	// disconnect command
+				return;	/* disconnect command */
 			break;
 
 		case clc_action:
-			// client actions are handled by the game module
+			/* client actions are handled by the game module */
 			ge->ClientAction( sv_player );
 			break;
 
 		case clc_endround:
-			// player wants to end round
+			/* player wants to end round */
 			ge->ClientEndRound( sv_player );
 			break;
 
 		case clc_teaminfo:
-			// player sends team info
-			// actors spawn accordingly
+			/* player sends team info */
+			/* actors spawn accordingly */
 			ge->ClientTeamInfo( sv_player );
 			break;
 		}

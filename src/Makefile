@@ -19,8 +19,6 @@ BUILD_ALSA=YES		# build with alsa-support
 BUILD_WITH_SHADER=NO	# build with shader support
 HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
-#FIXME: YES will produce jpeg glitches
-BUILD_JPEG=NO		# jpeg-6 compile in or link in?
 BUILD_WITH_DGA=NO	# dga support compiled in
 BUILD_WITH_VIDMODE=YES	# vidmode support
 BUILD_WITH_MMX=NO	# MMX support
@@ -68,8 +66,8 @@ VERSION=$(shell grep UFO_VERSION $(MOUNT_DIR)/qcommon/qcommon.h | sed -e 's/.*UF
 
 MOUNT_DIR=.
 
-BUILD_DEBUG_DIR=debug$(ARCH)
-BUILD_RELEASE_DIR=release$(ARCH)
+BUILD_DEBUG_DIR=../debug$(ARCH)
+BUILD_RELEASE_DIR=../release$(ARCH)
 TOOLS_DIR=$(MOUNT_DIR)/tools
 CLIENT_DIR=$(MOUNT_DIR)/client
 SERVER_DIR=$(MOUNT_DIR)/server
@@ -80,14 +78,15 @@ MACOSX_DIR=$(MOUNT_DIR)/macosx
 UNIX_DIR=$(MOUNT_DIR)/unix
 GAME_DIR=$(MOUNT_DIR)/game
 NULL_DIR=$(MOUNT_DIR)/null
-JPDIR=$(MOUNT_DIR)/jpeg-6
 
-BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp
+BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
+# Put this in when it is fixed
+# -ansi -pedantic
 TOOLSCFLAGS=
 TOOLSLDFLAGS=-lm
 PROFILER_CFLAGS=
 
-MAKE_FLAGS=--keep-going --silent
+MAKE_FLAGS=--stop --silent
 
 ifneq ($(ARCH),i386)
 	BASE_CFLAGS+=-DC_ONLY
@@ -110,7 +109,6 @@ ifeq ($(OSTYPE),Darwin)
 	BUILD_WITH_SHADER=NO	# build with shader support
 	HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 	HAVE_GETTEXT=YES	# Compile with multilanguage-support?
-	BUILD_JPEG=NO		# jpeg-6 compile in or link in?
 	BUILD_WITH_DGA=NO	# dga support compiled in
 	BUILD_WITH_VIDMODE=NO	# vidmode support
 	BUILD_WITH_MMX=NO	# MMX support
@@ -180,12 +178,12 @@ ifeq ($(ARCH),sparc)
 endif
 
 ifeq ($(ARCH),i386)
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -O3 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing -DNDEBUG
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -O3 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing -DNDEBUG -fweb
 endif
 
 ifeq ($(ARCH),x86_64)
 	_LIB := 64
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing -DNDEBUG
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing -DNDEBUG -fweb
 endif
 
 #ifeq ($(ARCH),mipsEE)
@@ -222,15 +220,10 @@ SHLIBLDFLAGS=-shared
 NOTSHLIBCFLAGS=
 endif
 
+GLXLDFLAGS+=-ljpeg
+SDLLDFLAGS+=-ljpeg
 
-ifeq ($(strip $(BUILD_JPEG)),YES)
-	BASE_CFLAGS+=-DBUILD_JPEG
-else
-	GLXLDFLAGS+=-ljpeg
-	SDLLDFLAGS+=-ljpeg
-endif
-
-DEBUG_CFLAGS=$(BASE_CFLAGS) -g -O0 -D_FORTIFY_SOURCE=2 -DDEBUG $(PROFILER_CFLAGS)
+DEBUG_CFLAGS=$(BASE_CFLAGS) -g -O0 -D_FORTIFY_SOURCE=2 -DDEBUG $(PROFILER_CFLAGS) -fweb
 
 DO_CC=echo " * [UFO] $@"; $(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -o $@ -c $<
 DO_DED_CC=echo " * [DED] $@"; $(CC) $(CFLAGS) -DDEDICATED_ONLY -o $@ -c $<
@@ -352,7 +345,6 @@ build_debug:
 	@echo "BUILD_WITH_SHADER = $(BUILD_WITH_SHADER)"
 	@echo "HAVE_IPV6 = $(HAVE_IPV6)"
 	@echo "HAVE_GETTEXT = $(HAVE_GETTEXT)"
-	@echo "BUILD_JPEG = $(BUILD_JPEG)"
 	@echo "BUILD_WITH_DGA = $(BUILD_WITH_DGA)"
 	@echo "BUILD_WITH_VIDMODE = $(BUILD_WITH_VIDMODE)"
 	@echo "BUILD_WITH_MMX = $(BUILD_WITH_MMX)"
@@ -404,7 +396,6 @@ build_release:
 	@echo "BUILD_WITH_SHADER = $(BUILD_WITH_SHADER)"
 	@echo "HAVE_IPV6 = $(HAVE_IPV6)"
 	@echo "HAVE_GETTEXT = $(HAVE_GETTEXT)"
-	@echo "BUILD_JPEG = $(BUILD_JPEG)"
 	@echo "BUILD_WITH_DGA = $(BUILD_WITH_DGA)"
 	@echo "BUILD_WITH_VIDMODE = $(BUILD_WITH_VIDMODE)"
 	@echo "BUILD_WITH_MMX = $(BUILD_WITH_MMX)"
@@ -1018,44 +1009,6 @@ REF_GL_OBJS = \
 	$(BUILDDIR)/ref_gl/q_shlinux.o \
 	$(BUILDDIR)/ref_gl/glob.o
 
-ifeq ($(strip $(BUILD_JPEG)),YES)
-REF_GL_OBJS += \
-	$(BUILDDIR)/ref_gl/jcapimin.o \
-	$(BUILDDIR)/ref_gl/jchuff.o   \
-	$(BUILDDIR)/ref_gl/jcinit.o \
-	$(BUILDDIR)/ref_gl/jccoefct.o  \
-	$(BUILDDIR)/ref_gl/jccolor.o \
-	$(BUILDDIR)/ref_gl/jfdctflt.o \
-	$(BUILDDIR)/ref_gl/jcdctmgr.o \
-	$(BUILDDIR)/ref_gl/jcphuff.o \
-	$(BUILDDIR)/ref_gl/jcmainct.o \
-	$(BUILDDIR)/ref_gl/jcmarker.o \
-	$(BUILDDIR)/ref_gl/jcmaster.o \
-	$(BUILDDIR)/ref_gl/jcomapi.o \
-	$(BUILDDIR)/ref_gl/jcparam.o \
-	$(BUILDDIR)/ref_gl/jcprepct.o \
-	$(BUILDDIR)/ref_gl/jcsample.o \
-	$(BUILDDIR)/ref_gl/jdapimin.o \
-	$(BUILDDIR)/ref_gl/jdapistd.o \
-	$(BUILDDIR)/ref_gl/jdatasrc.o \
-	$(BUILDDIR)/ref_gl/jdcoefct.o \
-	$(BUILDDIR)/ref_gl/jdcolor.o \
-	$(BUILDDIR)/ref_gl/jddctmgr.o \
-	$(BUILDDIR)/ref_gl/jdhuff.o \
-	$(BUILDDIR)/ref_gl/jdinput.o \
-	$(BUILDDIR)/ref_gl/jdmainct.o \
-	$(BUILDDIR)/ref_gl/jdmarker.o \
-	$(BUILDDIR)/ref_gl/jdmaster.o \
-	$(BUILDDIR)/ref_gl/jdpostct.o \
-	$(BUILDDIR)/ref_gl/jdsample.o \
-	$(BUILDDIR)/ref_gl/jdtrans.o \
-	$(BUILDDIR)/ref_gl/jerror.o \
-	$(BUILDDIR)/ref_gl/jidctflt.o \
-	$(BUILDDIR)/ref_gl/jmemmgr.o \
-	$(BUILDDIR)/ref_gl/jmemnobs.o \
-	$(BUILDDIR)/ref_gl/jutils.o
-endif
-
 REF_GLX_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_glx.o
 
@@ -1064,42 +1017,6 @@ REF_SDL_OBJS = \
 
 REF_PS2_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_ps2mesa.o
-
-$(BUILDDIR)/ref_gl/jcapimin.o : $(JPDIR)/jcapimin.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jchuff.o : $(JPDIR)/jchuff.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jcinit.o : $(JPDIR)/jcinit.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jccoefct.o : $(JPDIR)/jccoefct.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jccolor.o : $(JPDIR)/jccolor.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jfdctflt.o : $(JPDIR)/jfdctflt.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jcdctmgr.o : $(JPDIR)/jcdctmgr.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jcmainct.o : $(JPDIR)/jcmainct.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jcmarker.o : $(JPDIR)/jcmarker.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jcmaster.o : $(JPDIR)/jcmaster.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jcomapi.o : $(JPDIR)/jcomapi.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jcparam.o : $(JPDIR)/jcparam.c;  $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jcprepct.o : $(JPDIR)/jcprepct.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jcsample.o : $(JPDIR)/jcsample.c; $(DO_JPEG_CC)
-
-$(BUILDDIR)/ref_gl/jdapimin.o : $(JPDIR)/jdapimin.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jdapistd.o : $(JPDIR)/jdapistd.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jdatasrc.o : $(JPDIR)/jdatasrc.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jdcoefct.o : $(JPDIR)/jdcoefct.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jdcolor.o : $(JPDIR)/jdcolor.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jcphuff.o : $(JPDIR)/jcphuff.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jddctmgr.o : $(JPDIR)/jddctmgr.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jdhuff.o : $(JPDIR)/jdhuff.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jdinput.o : $(JPDIR)/jdinput.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jdmainct.o : $(JPDIR)/jdmainct.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jdmarker.o : $(JPDIR)/jdmarker.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jdmaster.o : $(JPDIR)/jdmaster.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jdpostct.o : $(JPDIR)/jdpostct.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jdsample.o : $(JPDIR)/jdsample.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jdtrans.o : $(JPDIR)/jdtrans.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jerror.o : $(JPDIR)/jerror.c; $(DO_JPEG_CC) $(GL_CFLAGS)
-$(BUILDDIR)/ref_gl/jidctflt.o : $(JPDIR)/jidctflt.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jmemmgr.o : $(JPDIR)/jmemmgr.c; $(DO_JPEG_CC)
-$(BUILDDIR)/ref_gl/jmemnobs.o : $(JPDIR)/jmemnobs.c; $(DO_JPEG_CC) $(GL_CFLAGS)
-$(BUILDDIR)/ref_gl/jutils.o : $(JPDIR)/jutils.c; $(DO_JPEG_CC)
 
 $(BUILDDIR)/ref_glx.$(SHLIBEXT) : $(REF_GL_OBJS) $(REF_GLX_OBJS)
 	@echo " * [GLX] ...linking";

@@ -1,4 +1,4 @@
-// trace.c
+/* trace.c */
 
 #include "cmdlib.h"
 #include "mathlib.h"
@@ -55,7 +55,7 @@ void MakeTnode (int nodenum)
 		{
 			contents = dleafs[-node->children[i] - 1].contents & ~(1<<31);
 			if ( (contents & neededContents) && !(contents & forbiddenContents) )
-				t->children[i] = 1 | (1<<31); //-node->children[i] | (1<<31); // leaf+1
+				t->children[i] = 1 | (1<<31); /*-node->children[i] | (1<<31); // leaf+1 */
 			else
 				t->children[i] = (1<<31);
 		}
@@ -85,7 +85,7 @@ void BuildTnode_r( int node )
 
 		n = &dnodes[node];
 
-		// alloc new node
+		/* alloc new node */
 		t = tnode_p++;
 
 		if ( n->children[0] < 0 || n->children[1] < 0 )
@@ -94,14 +94,14 @@ void BuildTnode_r( int node )
 		VectorCopy( dnodes[n->children[0]].maxs, c0maxs );
 		VectorCopy( dnodes[n->children[1]].mins, c1mins );
 
-		//	printf( "(%i %i : %i %i) (%i %i : %i %i)\n",
-		//		(int)dnodes[n->children[0]].mins[0], (int)dnodes[n->children[0]].mins[1], (int)dnodes[n->children[0]].maxs[0], (int)dnodes[n->children[0]].maxs[1],
-		//		(int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1] );
+		/*	printf( "(%i %i : %i %i) (%i %i : %i %i)\n", */
+		/*		(int)dnodes[n->children[0]].mins[0], (int)dnodes[n->children[0]].mins[1], (int)dnodes[n->children[0]].maxs[0], (int)dnodes[n->children[0]].maxs[1], */
+		/*		(int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1] ); */
 
 		for ( i = 0; i < 2; i++ )
 			if ( c0maxs[i] <= c1mins[i] )
 			{
-				// create a separation plane
+				/* create a separation plane */
 				t->type = i;
 				t->normal[0] = i;
 				t->normal[1] = i^1;
@@ -115,7 +115,7 @@ void BuildTnode_r( int node )
 				return;
 			}
 
-		// can't construct such a separation plane
+		/* can't construct such a separation plane */
 		t->type = PLANE_NONE;
 
 		for ( i = 0; i < 2; i++ )
@@ -143,7 +143,7 @@ void MakeTnodes ( int levels )
 {
 	int		i;
 
-	// 32 byte align the structs
+	/* 32 byte align the structs */
 	tnodes = malloc( (numnodes+1) * sizeof(tnode_t));
 #ifndef __x86_64__
 	tnodes = (tnode_t *)(((int)tnodes + 31)&~31);
@@ -166,7 +166,7 @@ void MakeTnodes ( int levels )
 }
 
 
-//==========================================================
+/*========================================================== */
 
 
 int TestLine_r (int node, vec3_t start, vec3_t stop)
@@ -179,7 +179,7 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 	int		r;
 
 	if (node & (1<<31))
-		return node & ~(1<<31);	// leaf node
+		return node & ~(1<<31);	/* leaf node */
 
 	tnode = &tnodes[node];
 	switch (tnode->type)
@@ -242,7 +242,7 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 	{
 		r = node & ~(1<<31);
 		if ( r ) VectorCopy( start, tr_end );
-		return r;	// leaf node
+		return r;	/* leaf node */
 	}
 
 	tnode = &tnodes[node];
@@ -372,7 +372,7 @@ int TestContents_r (int node, vec3_t pos)
 	int		r;
 
 	if (node & (1<<31))
-		return node & ~(1<<31);	// leaf node
+		return node & ~(1<<31);	/* leaf node */
 
 	tnode = &tnodes[node];
 	switch (tnode->type)

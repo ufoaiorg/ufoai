@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// cl_scrn.c -- master for refresh, status bar, console, chat, notify, etc
+/* cl_scrn.c -- master for refresh, status bar, console, chat, notify, etc */
 
 /*
 
@@ -33,14 +33,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-float		scr_con_current;	// aproaches scr_conlines at scr_conspeed
-float		scr_conlines;		// 0.0 to 1.0 lines of console to display
+float		scr_con_current;	/* aproaches scr_conlines at scr_conspeed */
+float		scr_conlines;		/* 0.0 to 1.0 lines of console to display */
 
-qboolean	scr_initialized;		// ready to draw
+qboolean	scr_initialized;		/* ready to draw */
 
 int			scr_draw_loading;
 
-vrect_t		scr_vrect;		// position of render window on screen
+vrect_t		scr_vrect;		/* position of render window on screen */
 
 cvar_t		*scr_viewsize;
 cvar_t		*scr_conspeed;
@@ -92,8 +92,8 @@ void CL_AddNetgraph (void)
 	int		in;
 	int		ping;
 
-	// if using the debuggraph for something else, don't
-	// add the net lines
+	/* if using the debuggraph for something else, don't */
+	/* add the net lines */
 	if (scr_debuggraph->value || scr_timegraph->value)
 		return;
 
@@ -103,9 +103,9 @@ void CL_AddNetgraph (void)
 	for (i=0 ; i<cl.surpressCount ; i++)
 		SCR_DebugGraph (30, 0xdf);
 
-	// see what the latency was on this packet
+	/* see what the latency was on this packet */
 	in = cls.netchan.incoming_acknowledged & (CMD_BACKUP-1);
-//	ping = cls.realtime - cl.cmd_time[in];
+/*	ping = cls.realtime - cl.cmd_time[in]; */
 	ping = 100;
 	ping /= 30;
 	if (ping > 30)
@@ -146,9 +146,9 @@ void SCR_DrawDebugGraph (void)
 	float	v;
 	vec4_t		color = {0.0, 0.0, 0.0, 1.0};
 
-	//
-	// draw the graph
-	//
+	/* */
+	/* draw the graph */
+	/* */
 	w = scr_vrect.width;
 
 	x = scr_vrect.x;
@@ -179,7 +179,7 @@ CENTER PRINTING
 */
 
 char		scr_centerstring[1024];
-float		scr_centertime_start;	// for slow victory printing
+float		scr_centertime_start;	/* for slow victory printing */
 float		scr_centertime_off;
 int			scr_center_lines;
 int			scr_erase_center;
@@ -202,7 +202,7 @@ void SCR_CenterPrint (char *str)
 	scr_centertime_off = scr_centertime->value;
 	scr_centertime_start = cl.time;
 
-	// count the number of lines for centering
+	/* count the number of lines for centering */
 	scr_center_lines = 1;
 	s = str;
 	while (*s)
@@ -212,13 +212,13 @@ void SCR_CenterPrint (char *str)
 		s++;
 	}
 
-	// echo it to the console
+	/* echo it to the console */
 	Com_Printf("\n\n\35\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\37\n\n");
 
 	s = str;
 	do
 	{
-	// scan the width of the line
+	/* scan the width of the line */
 		for (l=0 ; l<40 ; l++)
 			if (s[l] == '\n' || !s[l])
 				break;
@@ -240,7 +240,7 @@ void SCR_CenterPrint (char *str)
 
 		if (!*s)
 			break;
-		s++;		// skip the \n
+		s++;		/* skip the \n */
 	} while (1);
 	Com_Printf("\n\n\35\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\37\n\n");
 	Con_ClearNotify ();
@@ -255,7 +255,7 @@ void SCR_DrawCenterString (void)
 	int		x, y;
 	int		remaining;
 
-// the finale prints the characters one at a time
+/* the finale prints the characters one at a time */
 	remaining = 9999;
 
 	scr_erase_center = 0;
@@ -268,7 +268,7 @@ void SCR_DrawCenterString (void)
 
 	do
 	{
-	// scan the width of the line
+	/* scan the width of the line */
 		for (l=0 ; l<40 ; l++)
 			if (start[l] == '\n' || !start[l])
 				break;
@@ -289,7 +289,7 @@ void SCR_DrawCenterString (void)
 
 		if (!*start)
 			break;
-		start++;		// skip the \n
+		start++;		/* skip the \n */
 	} while (1);
 }
 
@@ -303,7 +303,7 @@ void SCR_CheckDrawCenterString (void)
 	SCR_DrawCenterString ();
 }
 
-//=============================================================================
+/*============================================================================= */
 
 /*
 =================
@@ -330,7 +330,7 @@ void SCR_SizeDown_f (void)
 	Cvar_SetValue ("viewsize",scr_viewsize->value-10);
 }
 
-//============================================================================
+/*============================================================================ */
 
 /*
 ==================
@@ -354,9 +354,9 @@ void SCR_Init (void)
 	scr_graphshift = Cvar_Get ("graphshift", "0", 0);
 	scr_drawall = Cvar_Get ("scr_drawall", "0", 0);
 
-	//
-	// register our commands
-	//
+	/* */
+	/* register our commands */
+	/* */
 	Cmd_AddCommand ("timerefresh",SCR_TimeRefresh_f);
 	Cmd_AddCommand ("loading",SCR_Loading_f);
 	Cmd_AddCommand ("sizeup",SCR_SizeUp_f);
@@ -391,7 +391,7 @@ void SCR_DrawPause (void)
 {
 	int		w, h;
 
-	if (!scr_showpause->value)		// turn off for screenshots
+	if (!scr_showpause->value)		/* turn off for screenshots */
 		return;
 
 	if (!cl_paused->value)
@@ -461,7 +461,7 @@ void SCR_DrawCursor (void)
 }
 
 
-//=============================================================================
+/*============================================================================= */
 
 /*
 ==================
@@ -472,11 +472,11 @@ Scroll it up or down
 */
 void SCR_RunConsole (void)
 {
-	// decide on the height of the console
+	/* decide on the height of the console */
 	if (cls.key_dest == key_console)
-		scr_conlines = scr_consize->value;	// half screen
+		scr_conlines = scr_consize->value;	/* half screen */
 	else
-		scr_conlines = 0;					// none visible
+		scr_conlines = 0;					/* none visible */
 
 	if (scr_conlines < scr_con_current)
 	{
@@ -505,25 +505,25 @@ void SCR_DrawConsole (void)
 
 	if (!scr_vrect.width || !scr_vrect.height)
 	{
-		// active full screen menu
-		// draw the console like in game
+		/* active full screen menu */
+		/* draw the console like in game */
 		if ( scr_con_current ) Con_DrawConsole (scr_con_current);
 		return;
 	}
 
 	if (cls.state == ca_connecting || cls.state == ca_connected)
-	{	// forced full screen console
+	{	/* forced full screen console */
 		Con_DrawConsole (1.0);
 		return;
 	}
-
-/*	if ((cls.state != ca_active && cls.state != ca_sequence) || !cl.refresh_prepped)
-	{	// connected, but can't render
+#if 0
+	if ((cls.state != ca_active && cls.state != ca_sequence) || !cl.refresh_prepped)
+	{	/* connected, but can't render */
 		Con_DrawConsole (0.5);
 		re.DrawFill (0, viddef.height/2, viddef.width, viddef.height/2, 0, vec4_origin);
 		return;
 	}
-*/
+#endif 
 	if (scr_con_current)
 	{
 		Con_DrawConsole (scr_con_current);
@@ -531,11 +531,11 @@ void SCR_DrawConsole (void)
 	else
 	{
 		if ((cls.key_dest == key_game || cls.key_dest == key_message) && cls.state != ca_sequence)
-			Con_DrawNotify ();	// only draw notify in game
+			Con_DrawNotify ();	/* only draw notify in game */
 	}
 }
 
-//=============================================================================
+/*============================================================================= */
 
 /*
 ================
@@ -545,16 +545,16 @@ SCR_BeginLoadingPlaque
 void SCR_BeginLoadingPlaque (void)
 {
 	S_StopAllSounds ();
-	cl.sound_prepped = qfalse; // don't play ambients
+	cl.sound_prepped = qfalse; /* don't play ambients */
 	CDAudio_Stop ();
 	if (developer->value)
 		return;
 	if (cls.state == ca_disconnected)
-		return;	// if at console, don't bring up the plaque
+		return;	/* if at console, don't bring up the plaque */
 	if (cls.key_dest == key_console)
 		return;
 
-	scr_draw_loading = 2;	// clear to black first
+	scr_draw_loading = 2;	/* clear to black first */
 
 	SCR_UpdateScreen ();
 	cls.disable_screen = Sys_Milliseconds ();
@@ -599,7 +599,7 @@ void SCR_TimeRefresh_f (void)
 	start = Sys_Milliseconds ();
 
 	if (Cmd_Argc() == 2)
-	{	// run without page flipping
+	{	/* run without page flipping */
 		re.BeginFrame( 0 );
 		for (i=0 ; i<128 ; i++)
 		{
@@ -648,7 +648,7 @@ void SCR_DirtyScreen (void)
 	SCR_AddDirtyPoint (viddef.width-1, viddef.height-1);
 }
 
-//===============================================================
+/*=============================================================== */
 
 /*
 ===============
@@ -688,7 +688,7 @@ void SCR_DrawString (int x, int y, char *string)
 	}
 }
 
-//=======================================================
+/*======================================================= */
 
 /*
 ==================
@@ -704,8 +704,8 @@ void SCR_UpdateScreen (void)
 	int i;
 	float separation[2] = { 0, 0 };
 
-	// if the screen is disabled (loading plaque is up, or vid mode changing)
-	// do nothing at all
+	/* if the screen is disabled (loading plaque is up, or vid mode changing) */
+	/* do nothing at all */
 	if (cls.disable_screen)
 	{
 		if (Sys_Milliseconds() - cls.disable_screen > 120000)
@@ -716,7 +716,7 @@ void SCR_UpdateScreen (void)
 		return;
 	}
 
-	// not initialized yet
+	/* not initialized yet */
 	if (!scr_initialized || !con.initialized)
 		return;
 
@@ -753,12 +753,12 @@ void SCR_UpdateScreen (void)
 		}
 		else
 		{
-			// do 3D refresh drawing, and then update the screen
+			/* do 3D refresh drawing, and then update the screen */
 			MN_SetViewRect ();
 
 			V_RenderView ( separation[i] );
 
-			// draw the menus
+			/* draw the menus */
 			MN_DrawMenus ();
 
 			SCR_DrawNet ();

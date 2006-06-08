@@ -57,19 +57,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
-void GL_ShutdownSDLFonts ( void ); // gl_draw.c
+void GL_ShutdownSDLFonts ( void ); /* gl_draw.c */
 
 #include "qgl.h"
 
 #define	REF_VERSION	"GL 0.12"
 
-// up / down
+/* up / down */
 #define	PITCH	0
 
-// left / right
+/* left / right */
 #define	YAW		1
 
-// fall over
+/* fall over */
 #define	ROLL	2
 
 
@@ -78,7 +78,7 @@ void GL_ShutdownSDLFonts ( void ); // gl_draw.c
 
 typedef struct
 {
-	unsigned		width, height;			// coordinates from main game
+	unsigned		width, height;			/* coordinates from main game */
 	float			rx, ry;
 } viddef_t;
 #endif
@@ -110,17 +110,17 @@ typedef enum
 
 typedef struct image_s
 {
-	char	name[MAX_QPATH];			// game path, including extension, must be first
+	char	name[MAX_QPATH];			/* game path, including extension, must be first */
 	imagetype_t	type;
-	int		width, height;				// source image
-	int		upload_width, upload_height;	// after power of two and picmip
-	int		registration_sequence;		// 0 = free
-	struct msurface_s	*texturechain;	// for sort-by-texture world drawing
-	int		texnum;						// gl texture binding
-	float	sl, tl, sh, th;				// 0,0 - 1,1 unless part of the scrap
+	int		width, height;				/* source image */
+	int		upload_width, upload_height;	/* after power of two and picmip */
+	int		registration_sequence;		/* 0 = free */
+	struct msurface_s	*texturechain;	/* for sort-by-texture world drawing */
+	int		texnum;						/* gl texture binding */
+	float	sl, tl, sh, th;				/* 0,0 - 1,1 unless part of the scrap */
 	qboolean	scrap;
 	qboolean	has_alpha;
-	shader_t	*shader;	// pointer to shader from refdef_t
+	shader_t	*shader;	/* pointer to shader from refdef_t */
 
 	qboolean paletted;
 } image_t;
@@ -132,7 +132,7 @@ typedef struct image_s
 #define		MAX_GLERRORTEX	4096
 #define		MAX_GLTEXTURES	1024
 
-//===================================================================
+/*=================================================================== */
 
 typedef struct {
 	int	width;
@@ -146,7 +146,7 @@ int SaveJPGToBuffer( byte *buffer, int quality, int image_width, int image_heigh
 void RE_TakeVideoFrame( int width, int height, byte *captureBuffer, byte *encodeBuffer, qboolean motionJpeg );
 const void *RB_TakeVideoFrameCmd( const void *data );
 
-//===================================================================
+/*=================================================================== */
 
 typedef enum
 {
@@ -188,7 +188,7 @@ typedef struct
 extern model_t	mod_inline[MAX_MOD_KNOWN];
 extern int		numInline;
 
-// entity transform
+/* entity transform */
 typedef struct
 {
 	qboolean	done;
@@ -198,7 +198,7 @@ typedef struct
 
 extern transform_t	trafo[MAX_ENTITIES];
 
-//====================================================
+/*==================================================== */
 
 extern	image_t		*shadow;
 
@@ -220,17 +220,17 @@ extern	int			gl_filter_min, gl_filter_max;
 
 extern	image_t		*DaN;
 
-//
-// view origin
-//
+/* */
+/* view origin */
+/* */
 extern	vec3_t	vup;
 extern	vec3_t	vpn;
 extern	vec3_t	vright;
 extern	vec3_t	r_origin;
 
-//
-// screen size info
-//
+/* */
+/* screen size info */
+/* */
 extern	refdef_t	r_newrefdef;
 
 extern	cvar_t	*r_norefresh;
@@ -244,11 +244,11 @@ extern	cvar_t	*r_nocull;
 extern	cvar_t	*r_isometric;
 extern	cvar_t	*r_lerpmodels;
 
-extern	cvar_t	*r_lightlevel;	// FIXME: This is a HACK to get the client's light level
+extern	cvar_t	*r_lightlevel;	/* FIXME: This is a HACK to get the client's light level */
 
 extern  cvar_t  *r_anisotropic;
 extern  cvar_t  *r_ext_max_anisotropy;
-extern  cvar_t  *r_texture_lod; // lod_bias
+extern  cvar_t  *r_texture_lod; /* lod_bias */
 extern  cvar_t  *r_displayrefresh;
 
 extern cvar_t	*gl_vertex_arrays;
@@ -341,7 +341,7 @@ void GL_SelectTexture( GLenum );
 void R_LightPoint (vec3_t p, vec3_t color);
 void R_PushDlights (mnode_t *node);
 
-//====================================================================
+/*==================================================================== */
 
 extern	model_t	*rTiles[MAX_MAPTILES];
 extern	int		rNumTiles;
@@ -380,7 +380,7 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs);
 void R_RotateForEntity (entity_t *e);
 void R_MarkLeaves (void);
 
-//model_s *R_RegisterModelShort( char *name );
+/*model_s *R_RegisterModelShort( char *name ); */
 
 glpoly_t *WaterWarpPolyVerts (glpoly_t *p);
 void EmitWaterPolys (msurface_t *fa);
@@ -409,7 +409,7 @@ void	Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, f
 void	Draw_LineStrip( int points, int *verts );
 
 void	Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data);
-//void	Draw_Model (int x, int y, );
+/*void	Draw_Model (int x, int y, ); */
 
 void	R_BeginFrame( float camera_separation );
 void	R_SwapBuffers( int );
@@ -583,8 +583,8 @@ void		GLimp_AppActivate( qboolean active );
 void		GLimp_EnableLogging( qboolean enable );
 void		GLimp_LogNewFrame( void );
 
-// NOTE TTimo linux works with float gamma value, not the gamma table
-//   the params won't be used, getting the r_gamma cvar directly
+/* NOTE TTimo linux works with float gamma value, not the gamma table */
+/*   the params won't be used, getting the r_gamma cvar directly */
 void		GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] );
 
 

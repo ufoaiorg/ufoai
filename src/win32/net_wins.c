@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// net_wins.c
+/* net_wins.c */
 
 #include "winsock.h"
 #include "wsipx.h"
@@ -48,7 +48,7 @@ int			ipx_sockets[2];
 
 char *NET_ErrorString (void);
 
-//=============================================================================
+/*============================================================================= */
 
 void NetadrToSockadr (netadr_t *a, struct sockaddr *s)
 {
@@ -200,7 +200,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 	
 	memset (sadr, 0, sizeof(*sadr));
 
-	if ((strlen(s) >= 23) && (s[8] == ':') && (s[21] == ':'))	// check for an IPX address
+	if ((strlen(s) >= 23) && (s[8] == ':') && (s[21] == ':'))	/* check for an IPX address */
 	{
 		((struct sockaddr_ipx *)sadr)->sa_family = AF_IPX;
 		copy[2] = 0;
@@ -224,7 +224,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 		((struct sockaddr_in *)sadr)->sin_port = 0;
 
 		strcpy (copy, s);
-		// strip off a trailing :port if present
+		/* strip off a trailing :port if present */
 		for (colon = copy ; *colon ; colon++)
 			if (*colon == ':')
 			{
@@ -332,7 +332,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	loop->msgs[i].datalen = length;
 }
 
-//=============================================================================
+/*============================================================================= */
 
 qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
@@ -374,7 +374,7 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 				continue;
 			}
 
-			if (dedicated->value)	// let dedicated servers continue after errors
+			if (dedicated->value)	/* let dedicated servers continue after errors */
 				Com_Printf ("NET_GetPacket: %s from %s\n", NET_ErrorString(),
 						NET_AdrToString(*net_from));
 			else
@@ -396,7 +396,7 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 	return qfalse;
 }
 
-//=============================================================================
+/*============================================================================= */
 
 void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 {
@@ -444,15 +444,15 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	{
 		int err = WSAGetLastError();
 
-		// wouldblock is silent
+		/* wouldblock is silent */
 		if (err == WSAEWOULDBLOCK)
 			return;
 
-		// some PPP links dont allow broadcasts
+		/* some PPP links dont allow broadcasts */
 		if ((err == WSAEADDRNOTAVAIL) && ((to.type == NA_BROADCAST) || (to.type == NA_BROADCAST_IPX)))
 			return;
 
-		if (dedicated->value)	// let dedicated servers continue after errors
+		if (dedicated->value)	/* let dedicated servers continue after errors */
 		{
 			Com_Printf ("NET_SendPacket ERROR: %s to %s\n", NET_ErrorString(),
 				NET_AdrToString (to));
@@ -474,7 +474,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 }
 
 
-//=============================================================================
+/*============================================================================= */
 
 
 /*
@@ -498,14 +498,14 @@ int NET_IPSocket (char *net_interface, int port)
 		return 0;
 	}
 
-	// make it non-blocking
+	/* make it non-blocking */
 	if (ioctlsocket (newsocket, FIONBIO, &_true) == -1)
 	{
 		Com_Printf ("WARNING: UDP_OpenSocket: ioctl FIONBIO: %s\n", NET_ErrorString());
 		return 0;
 	}
 
-	// make it broadcast capable
+	/* make it broadcast capable */
 	if (setsockopt(newsocket, SOL_SOCKET, SO_BROADCAST, (char *)&i, sizeof(i)) == -1)
 	{
 		Com_Printf ("WARNING: UDP_OpenSocket: setsockopt SO_BROADCAST: %s\n", NET_ErrorString());
@@ -567,7 +567,7 @@ void NET_OpenIP (void)
 	}
 
 
-	// dedicated servers don't need client ports
+	/* dedicated servers don't need client ports */
 	if (dedicated)
 		return;
 
@@ -607,14 +607,14 @@ int NET_IPXSocket (int port)
 		return 0;
 	}
 
-	// make it non-blocking
+	/* make it non-blocking */
 	if (ioctlsocket (newsocket, FIONBIO, &_true) == -1)
 	{
 		Com_Printf ("WARNING: IPX_Socket: ioctl FIONBIO: %s\n", NET_ErrorString());
 		return 0;
 	}
 
-	// make it broadcast capable
+	/* make it broadcast capable */
 	if (setsockopt(newsocket, SOL_SOCKET, SO_BROADCAST, (char *)&_true, sizeof(_true)) == -1)
 	{
 		Com_Printf ("WARNING: IPX_Socket: setsockopt SO_BROADCAST: %s\n", NET_ErrorString());
@@ -666,7 +666,7 @@ void NET_OpenIPX (void)
 		ipx_sockets[NS_SERVER] = NET_IPXSocket (port);
 	}
 
-	// dedicated servers don't need client ports
+	/* dedicated servers don't need client ports */
 	if (dedicated)
 		return;
 
@@ -704,7 +704,7 @@ void	NET_Config (qboolean multiplayer)
 	old_config = multiplayer;
 
 	if (!multiplayer)
-	{	// shut down any existing sockets
+	{	/* shut down any existing sockets */
 		for (i=0 ; i<2 ; i++)
 		{
 			if (ip_sockets[i])
@@ -720,7 +720,7 @@ void	NET_Config (qboolean multiplayer)
 		}
 	}
 	else
-	{	// open sockets
+	{	/* open sockets */
 		if (! noudp->value)
 			NET_OpenIP ();
 		if (! noipx->value)
@@ -728,7 +728,7 @@ void	NET_Config (qboolean multiplayer)
 	}
 }
 
-// sleeps msec or until net socket is ready
+/* sleeps msec or until net socket is ready */
 void NET_Sleep(int msec)
 {
     struct timeval timeout;
@@ -737,16 +737,16 @@ void NET_Sleep(int msec)
 	int i;
 
 	if (!dedicated || !dedicated->value)
-		return; // we're not a server, just run full speed
+		return; /* we're not a server, just run full speed */
 
 	FD_ZERO(&fdset);
 	i = 0;
 	if (ip_sockets[NS_SERVER]) {
-		FD_SET(ip_sockets[NS_SERVER], &fdset); // network socket
+		FD_SET(ip_sockets[NS_SERVER], &fdset); /* network socket */
 		i = ip_sockets[NS_SERVER];
 	}
 	if (ipx_sockets[NS_SERVER]) {
-		FD_SET(ipx_sockets[NS_SERVER], &fdset); // network socket
+		FD_SET(ipx_sockets[NS_SERVER], &fdset); /* network socket */
 		if (ipx_sockets[NS_SERVER] > i)
 			i = ipx_sockets[NS_SERVER];
 	}
@@ -755,7 +755,7 @@ void NET_Sleep(int msec)
 	select(i+1, &fdset, NULL, NULL, &timeout);
 }
 
-//===================================================================
+/*=================================================================== */
 
 
 static WSADATA		winsockdata;
@@ -793,7 +793,7 @@ NET_Shutdown
 */
 void	NET_Shutdown (void)
 {
-	NET_Config (qfalse);	// close sockets
+	NET_Config (qfalse);	/* close sockets */
 
 	WSACleanup ();
 }

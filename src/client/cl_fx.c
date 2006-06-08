@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// cl_fx.c -- entity effects parsing and management
+/* cl_fx.c -- entity effects parsing and management */
 
 #include "client.h"
 
@@ -149,7 +149,7 @@ cdlight_t *CL_AllocDlight (int key)
 	int		i;
 	cdlight_t	*dl;
 
-	// first look for an exact key match
+	/* first look for an exact key match */
 	if (key)
 	{
 		dl = cl_dlights;
@@ -164,7 +164,7 @@ cdlight_t *CL_AllocDlight (int key)
 		}
 	}
 
-	// then look for anything else
+	/* then look for anything else */
 	dl = cl_dlights;
 	for (i=0 ; i<MAX_DLIGHTS ; i++, dl++)
 	{
@@ -365,7 +365,7 @@ void CL_ParticleEffect2 (vec3_t org, vec3_t dir, int color, int count)
 }
 
 
-// RAFAEL
+/* RAFAEL */
 /*
 ===============
 CL_ParticleEffect3
@@ -425,14 +425,14 @@ void CL_LogoutEffect (vec3_t org, int type)
 		active_particles = p;
 
 		p->time = cl.time;
-
-/*		if (type == MZ_LOGIN)
-			p->color = 0xd0 + (rand()&7);	// green
+#if 0
+		if (type == MZ_LOGIN)
+			p->color = 0xd0 + (rand()&7);	/* green */
 		else if (type == MZ_LOGOUT)
-			p->color = 0x40 + (rand()&7);	// red
+			p->color = 0x40 + (rand()&7);	/* red */
 		else
-			p->color = 0xe0 + (rand()&7);	// yellow
-*/
+			p->color = 0xe0 + (rand()&7);	/* yellow */
+#endif 
 		p->org[0] = org[0] - 16 + frand()*32;
 		p->org[1] = org[1] - 16 + frand()*32;
 		p->org[2] = org[2] - 24 + frand()*56;
@@ -470,7 +470,7 @@ void CL_ItemRespawnParticles (vec3_t org)
 
 		p->time = cl.time;
 
-		p->color = 0xd4 + (rand()&3);	// green
+		p->color = 0xd4 + (rand()&3);	/* green */
 
 		p->org[0] = org[0] + crand()*8;
 		p->org[1] = org[1] + crand()*8;
@@ -634,7 +634,7 @@ void CL_BlasterTrail (vec3_t start, vec3_t end)
 	dec = 5;
 	VectorScale (vec, 5, vec);
 
-	// FIXME: this is a really silly way to have a loop
+	/* FIXME: this is a really silly way to have a loop */
 	while (len > 0)
 	{
 		len -= dec;
@@ -807,7 +807,7 @@ void CL_DiminishingTrail (vec3_t start, vec3_t end, centity_t *old, int flags)
 		if (!free_particles)
 			return;
 
-		// drop less particles as it flies
+		/* drop less particles as it flies */
 		if ((rand()&1023) < old->trailcount)
 		{
 			p = free_particles;
@@ -841,8 +841,8 @@ void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
 {
 	float		d;
 
-	// this rotate and negat guarantees a vector
-	// not colinear with the original
+	/* this rotate and negat guarantees a vector */
+	/* not colinear with the original */
 	right[1] = -forward[0];
 	right[2] = forward[1];
 	right[0] = forward[2];
@@ -867,10 +867,10 @@ void CL_RocketTrail (vec3_t start, vec3_t end, centity_t *old)
 	cparticle_t	*p;
 	float		dec;
 
-	// smoke
+	/* smoke */
 	CL_DiminishingTrail (start, end, old, 0);
 
-	// fire
+	/* fire */
 	VectorCopy (start, move);
 	VectorSubtract (end, start, vec);
 	len = VectorNormalize (vec);
@@ -999,7 +999,7 @@ void CL_RailTrail (vec3_t start, vec3_t end)
 	}
 }
 
-// RAFAEL
+/* RAFAEL */
 /*
 ===============
 CL_IonripperTrail
@@ -1287,7 +1287,7 @@ void CL_BfgParticles (entity_t *ent)
 CL_TrapParticles
 ===============
 */
-// RAFAEL
+/* RAFAEL */
 void CL_TrapParticles (entity_t *ent)
 {
 	vec3_t		move;
@@ -1310,7 +1310,7 @@ void CL_TrapParticles (entity_t *ent)
 	dec = 5;
 	VectorScale (vec, 5, vec);
 
-	// FIXME: this is a really silly way to have a loop
+	/* FIXME: this is a really silly way to have a loop */
 	while (len > 0)
 	{
 		len -= dec;
@@ -1394,7 +1394,7 @@ void CL_TrapParticles (entity_t *ent)
 CL_BFGExplosionParticles
 ===============
 */
-//FIXME combined with CL_ExplosionParticles
+/*FIXME combined with CL_ExplosionParticles */
 void CL_BFGExplosionParticles (vec3_t org)
 {
 	int			i, j;
@@ -1491,19 +1491,19 @@ void CL_AddParticles (void)
 	active = NULL;
 	tail = NULL;
 
-	// might be uninitialized
+	/* might be uninitialized */
 	time = 0.0;
 	for (p=active_particles ; p ; p=next)
 	{
 		next = p->next;
 
-		// PMM - added INSTANT_PARTICLE handling for heat beam
+		/* PMM - added INSTANT_PARTICLE handling for heat beam */
 		if (p->alphavel != INSTANT_PARTICLE)
 		{
 			time = (cl.time - p->time)*0.001;
 			alpha = p->alpha + time*p->alphavel;
 			if (alpha <= 0)
-			{	// faded out
+			{	/* faded out */
 				p->next = free_particles;
 				free_particles = p;
 				continue;
@@ -1535,7 +1535,7 @@ void CL_AddParticles (void)
 		org[2] = p->org[2] + p->vel[2]*time + p->accel[2]*time2;
 
 		V_AddParticle (org, color, alpha);
-		// PMM
+		/* PMM */
 		if (p->alphavel == INSTANT_PARTICLE)
 		{
 			p->alphavel = 0.0;

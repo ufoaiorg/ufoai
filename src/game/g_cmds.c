@@ -28,13 +28,13 @@ Cmd_Players_f
 void Cmd_Players_f (player_t* player)
 {
 	int		i;
-	int		count; //TODO: why is this needed at all?
+	int		count; /*TODO: why is this needed at all? */
 	char	small[64];
 	char	large[1280];
 
 	count = 0;
 
-	// print information
+	/* print information */
 	large[0] = 0;
 
 	for (i = 0 ; i < maxplayers->value; i++)
@@ -45,7 +45,7 @@ void Cmd_Players_f (player_t* player)
 		Com_sprintf (small, sizeof(small), "Team %i %s\n",
 			game.players[i].pers.team, game.players[i].pers.netname);
 		if (strlen (small) + strlen(large) > sizeof(large) - 100 )
-		{	// can't print all of them in one packet
+		{	/* can't print all of them in one packet */
 			Q_strcat (large, 1280, "...\n");
 			break;
 		}
@@ -92,7 +92,7 @@ void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 		Q_strcat(text, sizeof(text), p);
 	}
 
-	// don't let text be too long for malicious reasons
+	/* don't let text be too long for malicious reasons */
 	if (strlen(text) > 150)
 		text[150] = 0;
 
@@ -118,7 +118,7 @@ void Cmd_PlayerList_f( player_t* player )
 	char text[1400];
 	player_t *e2;
 
-	// team, ping, name
+	/* team, ping, name */
 	*text = 0;
 	for (i = 0, e2 = game.players; i < maxplayers->value; i++, e2++) {
 		if (!e2->inuse)
@@ -148,7 +148,7 @@ void G_ClientCommand (player_t *player)
 	char	*cmd;
 
 	if (!player->inuse)
-		return;		// not fully in game yet
+		return;		/* not fully in game yet */
 
 	cmd = gi.argv(0);
 
@@ -161,6 +161,6 @@ void G_ClientCommand (player_t *player)
 	else if (Q_stricmp (cmd, "say_team") == 0)
 		Cmd_Say_f (player, qfalse, qtrue);
 	else
-		// anything that doesn't match a command will be a chat
+		/* anything that doesn't match a command will be a chat */
 		Cmd_Say_f (player, qtrue, qfalse);
 }

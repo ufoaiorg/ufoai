@@ -16,27 +16,27 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// cl_le.c -- local entity management
+/* cl_le.c -- local entity management */
 
 #include "client.h"
 
-//
+/* */
 lm_t	LMs[MAX_LOCALMODELS];
 int		numLMs;
-//
+/* */
 le_t	LEs[MAX_EDICTS];
 int		numLEs;
-//
+/* */
 
 vec3_t player_mins = {-PLAYER_WIDTH, -PLAYER_WIDTH, -PLAYER_MIN };
 vec3_t player_maxs = { PLAYER_WIDTH,  PLAYER_WIDTH,  PLAYER_STAND };
 
 
-//===========================================================================
-//
-// LM handling
-//
-//===========================================================================
+/*=========================================================================== */
+/* */
+/* LM handling */
+/* */
+/*=========================================================================== */
 
 char *lmList[MAX_LOCALMODELS+1];
 
@@ -72,11 +72,11 @@ void LM_AddToScene( void )
 
 	for ( i = 0, lm = LMs; i < numLMs; i++, lm++ )
 	{
-		// check for visibility
+		/* check for visibility */
 		if ( !((1 << (int)cl_worldlevel->value) & lm->levelflags) )
 			continue;
 
-		// set entity values
+		/* set entity values */
 		memset( &ent, 0, sizeof(entity_t) );
 		VectorCopy( lm->origin, ent.origin );
 		VectorCopy( lm->origin, ent.oldorigin );
@@ -94,7 +94,7 @@ void LM_AddToScene( void )
 		}
 		else ent.lightparam = &lm->sunfrac;
 
-		// add it to the scene
+		/* add it to the scene */
 		V_AddEntity( &ent );
 	}
 }
@@ -169,7 +169,7 @@ void LM_Explode( sizebuf_t *sb )
 		cmodel_t *mod;
 		vec3_t center;
 
-		// create particles
+		/* create particles */
 		mod = CM_InlineModel (lm->name);
 		VectorAdd( mod->mins, mod->maxs, center );
 		VectorScale( center, 0.5, center );
@@ -195,10 +195,10 @@ void CL_RegisterLocalModels ( void )
 
 	for ( i = 0, lm = LMs; i < numLMs; i++, lm++ )
 	{
-		// register the model and recalculate routing info
+		/* register the model and recalculate routing info */
 		lm->model = re.RegisterModel( lm->name );
 
-		// calculate sun lighting and register model if not yet done
+		/* calculate sun lighting and register model if not yet done */
 		VectorMA( lm->origin, 512, sunDir, sunOrigin );
 		if ( !CM_TestLine( lm->origin, sunOrigin ) )
 			lm->sunfrac = 1.0f;
@@ -232,17 +232,17 @@ lm_t *CL_AddLocalModel (char *model, char *particle, vec3_t origin, vec3_t angle
 
 	LM_GenerateList();
 	Grid_RecalcRouting( &clMap, lm->name, lmList );
-	//	Com_Printf( "adding model %s %i\n", lm->name, numLMs );
+	/*	Com_Printf( "adding model %s %i\n", lm->name, numLMs ); */
 
 	return lm;
 }
 
 
-//===========================================================================
-//
-// LE thinking
-//
-//===========================================================================
+/*=========================================================================== */
+/* */
+/* LE thinking */
+/* */
+/*=========================================================================== */
 
 /*
 ==============
@@ -260,16 +260,16 @@ void LE_Status ( void )
 
 	if ( ! numLEs ) return;
 
-	// only multiplayer - but maybe not our round?
+	/* only multiplayer - but maybe not our round? */
 	if ( (int)Cvar_VariableValue("maxclients") > 1 && cls.team != cl.actTeam )
 		return;
 
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 		if ( le->inuse && le->team == cls.team && !(le->state & STATE_DEAD)  )
-			// call think function
+			/* call think function */
 			endRound = qfalse;
 
-	// ok, no players alive in multiplayer - end this round automatically
+	/* ok, no players alive in multiplayer - end this round automatically */
 	if ( endRound )
 	{
 		CL_NextRound();
@@ -289,16 +289,16 @@ void LE_Think( void )
 
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 		if ( le->inuse && le->think )
-			// call think function
+			/* call think function */
 			le->think( le );
 }
 
 
-//===========================================================================
-//
-// LE think functions
-//
-//===========================================================================
+/*=========================================================================== */
+/* */
+/* LE think functions */
+/* */
+/*=========================================================================== */
 
 char retAnim[MAX_VAR];
 
@@ -317,10 +317,10 @@ char *LE_GetAnim( char *anim, int right, int left, int state )
 
 	mod = retAnim;
 
-	// add crouched flag
+	/* add crouched flag */
 	if ( state & STATE_CROUCHED ) *mod++ = 'c';
 
-	// determine relevant data
+	/* determine relevant data */
 	akimbo = qfalse;
 	if ( right == NONE )
 	{
@@ -434,18 +434,18 @@ void LET_PathMove( le_t *le )
 	float	frac;
 	vec3_t	start, dest, delta;
 
-	// check for start
+	/* check for start */
 	if ( cl.time <= le->startTime )
 		return;
 
-	// move ahead
+	/* move ahead */
 	while ( cl.time > le->endTime )
 	{
 		VectorCopy( le->pos, le->oldPos );
 
 		if ( le->pathPos < le->pathLength )
 		{
-			// next part
+			/* next part */
 			dv = le->path[le->pathPos++];
 			PosAddDV( le->pos, dv );
 			le->dir = dv&7;
@@ -456,18 +456,18 @@ void LET_PathMove( le_t *le )
 				(int)cl_worldlevel->value == le->oldPos[2] &&
 				le->pos[2] != le->oldPos[2])
 			{
-				//PosToVec( le->pos, dest );
-				//VectorCopy( dest, cl.cam.reforg );
+				/*PosToVec( le->pos, dest ); */
+				/*VectorCopy( dest, cl.cam.reforg ); */
 				Cvar_SetValue( "cl_worldlevel", le->pos[2] );
 			}
 		}
 		else
 		{
-			// end of move
+			/* end of move */
 			le_t *floor;
 			Grid_PosToVec( &clMap, le->pos, le->origin );
 
-			// calculate next possible moves
+			/* calculate next possible moves */
 			CL_BuildForbiddenList();
 			if ( selActor == le )
 				Grid_MoveCalc( &clMap, le->pos, MAX_ROUTE, fb_list, fb_length );
@@ -488,7 +488,7 @@ void LET_PathMove( le_t *le )
 		}
 	}
 
-	// interpolate the position
+	/* interpolate the position */
 	Grid_PosToVec( &clMap, le->oldPos, start );
 	Grid_PosToVec( &clMap, le->pos, dest );
 	VectorSubtract( dest, start, delta );
@@ -535,11 +535,11 @@ void LET_Projectile( le_t *le )
 	}
 }
 
-//===========================================================================
-//
-// LE Special Effects
-//
-//===========================================================================
+/*=========================================================================== */
+/* */
+/* LE Special Effects */
+/* */
+/*=========================================================================== */
 
 void LE_AddProjectile( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, int normal )
 {
@@ -547,11 +547,11 @@ void LE_AddProjectile( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, i
 	vec3_t	delta;
 	float	dist;
 
-	// add le
+	/* add le */
 	le = LE_Add( 0 );
 	le->invis = qtrue;
 
-	// bind particle
+	/* bind particle */
 	le->ptl = CL_ParticleSpawn( fd->projectile, 0, muzzle, NULL, NULL );
 	if ( !le->ptl )
 	{
@@ -559,7 +559,7 @@ void LE_AddProjectile( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, i
 		return;
 	}
 
-	// calculate parameters
+	/* calculate parameters */
 	VectorSubtract( impact, muzzle, delta );
 	dist = VectorLength( delta );
 
@@ -568,7 +568,7 @@ void LE_AddProjectile( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, i
 
 	if ( !fd->speed )
 	{
-		// infinite speed projectile
+		/* infinite speed projectile */
 		ptl_t	*ptl;
 		le->inuse = qfalse;
 		le->ptl->size[0] = dist;
@@ -588,11 +588,11 @@ void LE_AddProjectile( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, i
 		}
 		return;
 	}
-	// particle properties
+	/* particle properties */
 	VectorScale( delta, fd->speed / dist, le->ptl->v );
 	le->endTime = cl.time + 1000 * dist / fd->speed;
 
-	// think function
+	/* think function */
 	if ( flags & SF_BODY )
 	{
 		le->ref1 = fd->hitBody;
@@ -619,11 +619,11 @@ void LE_AddGrenade( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t v0, int dt )
 	le_t	*le;
 	vec3_t	accel;
 
-	// add le
+	/* add le */
 	le = LE_Add( 0 );
 	le->invis = qtrue;
 
-	// bind particle
+	/* bind particle */
 	VectorSet( accel, 0, 0, -GRAVITY );
 	le->ptl = CL_ParticleSpawn( fd->projectile, 0, muzzle, v0, accel );
 	if ( !le->ptl )
@@ -631,11 +631,11 @@ void LE_AddGrenade( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t v0, int dt )
 		le->inuse = qfalse;
 		return;
 	}
-	// particle properties
+	/* particle properties */
 	VectorSet( le->ptl->angles, 360*crand(), 360*crand(), 360*crand() );
 	VectorSet( le->ptl->omega, 500*crand(), 500*crand(), 500*crand() );
 
-	// think function
+	/* think function */
 	if ( flags & SF_BODY )
 	{
 		le->ref1 = fd->hitBody;
@@ -653,17 +653,17 @@ void LE_AddGrenade( fireDef_t *fd, int flags, vec3_t muzzle, vec3_t v0, int dt )
 	}
 
 	le->endTime = cl.time + dt;
-	le->state = 5; // direction (0,0,1)
+	le->state = 5; /* direction (0,0,1) */
 	le->think = LET_Projectile;
 	le->think( le );
 }
 
 
-//===========================================================================
-//
-// LE Management functions
-//
-//===========================================================================
+/*=========================================================================== */
+/* */
+/* LE Management functions */
+/* */
+/*=========================================================================== */
 
 
 /*
@@ -679,24 +679,24 @@ le_t *LE_Add( int entnum )
 
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 		if ( !le->inuse )
-			// found a free LE
+			/* found a free LE */
 			break;
 
-	// list full, try to make list longer
+	/* list full, try to make list longer */
 	if ( i == numLEs )
 	{
 		if ( numLEs >= MAX_EDICTS - numLMs )
 		{
-			// no free LEs
+			/* no free LEs */
 			Com_Error( ERR_DROP, "Too many LEs\n" );
 			return NULL;
 		}
 
-		// list isn't too long
+		/* list isn't too long */
 		numLEs++;
 	}
 
-	// initialize the new LE
+	/* initialize the new LE */
 	memset( le, 0, sizeof( le_t ) );
 	le->inuse = qtrue;
 	le->entnum = entnum;
@@ -715,10 +715,10 @@ le_t *LE_Get( int entnum )
 
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 		if ( le->inuse && le->entnum == entnum )
-			// found the LE
+			/* found the LE */
 			return le;
 
-	// didn't find it
+	/* didn't find it */
 	return NULL;
 }
 
@@ -735,10 +735,10 @@ le_t *LE_Find( int type, pos3_t pos )
 
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 		if ( le->inuse && le->type == type && VectorCompare( le->pos, pos ) )
-			// found the LE
+			/* found the LE */
 			return le;
 
-	// didn't find it
+	/* didn't find it */
 	return NULL;
 }
 
@@ -761,7 +761,7 @@ void LE_AddToScene( void )
 		{
 			memset( &ent, 0, sizeof(entity_t) );
 
-			// calculate sun lighting
+			/* calculate sun lighting */
 			if ( !VectorCompare( le->origin, le->oldOrigin ) )
 			{
 				VectorCopy( le->origin, le->oldOrigin );
@@ -774,42 +774,42 @@ void LE_AddToScene( void )
 			ent.lightparam = &le->sunfrac;
 			ent.alpha = le->alpha;
 
-			// set entity values
+			/* set entity values */
 			VectorCopy( le->origin, ent.origin );
 			VectorCopy( le->origin, ent.oldorigin );
 			VectorCopy( le->angles, ent.angles );
 			ent.model = le->model1;
 			ent.skinnum = le->skinnum;
 
-			// do animation
+			/* do animation */
 			re.AnimRun( &le->as, ent.model, cls.frametime*1000 );
 			ent.as = le->as;
 
-			// call add function
-			// if it returns false, don't draw
+			/* call add function */
+			/* if it returns false, don't draw */
 			if ( le->addFunc )
 				if ( !le->addFunc( le, &ent ) )
 					continue;
 
-			// add it to the scene
+			/* add it to the scene */
 			V_AddEntity( &ent );
 		}
 	}
 }
 
 
-//===========================================================================
-//
-// LE Tracing
-//
-//===========================================================================
+/*=========================================================================== */
+/* */
+/* LE Tracing */
+/* */
+/*=========================================================================== */
 
 
 typedef struct
 {
-	vec3_t		boxmins, boxmaxs;// enclose the test object along entire move
-	float		*mins, *maxs;	// size of the moving object
-	vec3_t		mins2, maxs2;	// size when clipping against mosnters
+	vec3_t		boxmins, boxmaxs;/* enclose the test object along entire move */
+	float		*mins, *maxs;	/* size of the moving object */
+	vec3_t		mins2, maxs2;	/* size when clipping against mosnters */
 	float		*start, *end;
 	trace_t		trace;
 	le_t		*passle;
@@ -840,7 +840,7 @@ void CL_ClipMoveToLEs ( moveclip_t *clip )
 		if ( le == clip->passle )
 			continue;
 
-		// might intersect, so do an exact clip
+		/* might intersect, so do an exact clip */
 		headnode = CM_HeadnodeForBox( 0, le->mins, le->maxs );
 
 		trace = CM_TransformedBoxTrace (clip->start, clip->end,
@@ -898,11 +898,11 @@ trace_t CL_Trace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t *pass
 {
 	moveclip_t		clip;
 
-	// clip to world
+	/* clip to world */
 	clip.trace = CM_CompleteBoxTrace (start, end, mins, maxs, (1<<((int)cl_worldlevel->value+1))-1, contentmask);
 	clip.trace.le = NULL;
 	if ( clip.trace.fraction == 0 )
-		return clip.trace;		// blocked by the world
+		return clip.trace;		/* blocked by the world */
 
 	clip.contentmask = contentmask;
 	clip.start = start;
@@ -911,10 +911,10 @@ trace_t CL_Trace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t *pass
 	clip.maxs = maxs;
 	clip.passle = passle;
 
-	// create the bounding box of the entire move
+	/* create the bounding box of the entire move */
 	CL_TraceBounds ( start, mins, maxs, end, clip.boxmins, clip.boxmaxs );
 
-	// clip to other solid entities
+	/* clip to other solid entities */
 	CL_ClipMoveToLEs ( &clip );
 
 	return clip.trace;

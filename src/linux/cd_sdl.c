@@ -106,7 +106,7 @@ void CDAudio_RandomPlay(void)
 	if (track_bools == 0)
 		return;
 
-	//create array of available audio tracknumbers
+	/*create array of available audio tracknumbers */
 
 	for (; i < cd_id->numtracks; i++)
 	{
@@ -120,7 +120,7 @@ void CDAudio_RandomPlay(void)
 		goto free_end;
 	}
 
-	//choose random audio track
+	/*choose random audio track */
 	do
 	{
 		do

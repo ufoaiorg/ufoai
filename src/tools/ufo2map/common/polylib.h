@@ -4,12 +4,12 @@
 typedef struct
 {
 	int		numpoints;
-	vec3_t	p[4];		// variable sized
+	vec3_t	p[4];		/* variable sized */
 } winding_t;
 
 #define	MAX_POINTS_ON_WINDING	64
 
-// you can define on_epsilon in the makefile as tighter
+/* you can define on_epsilon in the makefile as tighter */
 #ifndef	ON_EPSILON
 #define	ON_EPSILON	0.1
 #endif
@@ -31,7 +31,7 @@ void	FreeWinding (winding_t *w);
 void	WindingBounds (winding_t *w, vec3_t mins, vec3_t maxs);
 
 void	ChopWindingInPlace (winding_t **w, vec3_t normal, vec_t dist, vec_t epsilon);
-// frees the original if clipped
+/* frees the original if clipped */
 
 void pw(winding_t *w);
 

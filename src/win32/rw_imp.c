@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "rw_win.h"
 #include "winquake.h"
 
-// Console variables that we need to access from this module
+/* Console variables that we need to access from this module */
 
 swwstate_t sww_state;
 
@@ -105,7 +105,7 @@ void VID_CreateWindow( int width, int height, int stylebits )
 	SetForegroundWindow( sww_state.hWnd );
 	SetFocus( sww_state.hWnd );
 
-	// let the sound and input subsystems know about the new window
+	/* let the sound and input subsystems know about the new window */
 	ri.Vid_NewWindow (width, height);
 }
 
@@ -135,13 +135,13 @@ int SWimp_Init( void *hInstance, void *wndProc )
 */
 static qboolean SWimp_InitGraphics( qboolean fullscreen )
 {
-	// free resources in use
+	/* free resources in use */
 	SWimp_Shutdown ();
 
-	// create a new window
+	/* create a new window */
 	VID_CreateWindow (vid.width, vid.height, WINDOW_STYLE);
 
-	// initialize the appropriate subsystem
+	/* initialize the appropriate subsystem */
 	if ( !fullscreen )
 	{
 		if ( !DIB_Init( &vid.buffer, &vid.rowbytes ) )
@@ -179,8 +179,8 @@ void SWimp_EndFrame (void)
 	{
 		if ( sww_state.palettized )
 		{
-//			holdpal = SelectPalette(hdcScreen, hpalDIB, FALSE);
-//			RealizePalette(hdcScreen);
+/*			holdpal = SelectPalette(hdcScreen, hpalDIB, FALSE); */
+/*			RealizePalette(hdcScreen); */
 		}
 
 	    
@@ -194,7 +194,7 @@ void SWimp_EndFrame (void)
 
 		if ( sww_state.palettized )
 		{
-//			SelectPalette(hdcScreen, holdpal, FALSE);
+/*			SelectPalette(hdcScreen, holdpal, FALSE); */
 		}
 	}
 	else
@@ -285,20 +285,20 @@ rserr_t SWimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen 
 		{
 			if ( SWimp_InitGraphics( 0 ) )
 			{
-				// mode is legal but not as fullscreen
+				/* mode is legal but not as fullscreen */
 				fullscreen = 0;
 				retval = rserr_invalid_fullscreen;
 			}
 			else
 			{
-				// failed to set a valid mode in windowed mode
+				/* failed to set a valid mode in windowed mode */
 				retval = rserr_unknown;
 			}
 		}
 	}
 	else
 	{
-		// failure to set a valid mode in windowed mode
+		/* failure to set a valid mode in windowed mode */
 		if ( !SWimp_InitGraphics( fullscreen ) )
 		{
 			sww_state.initializing = qtrue;
@@ -332,10 +332,10 @@ rserr_t SWimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen 
 */
 void SWimp_SetPalette( const unsigned char *palette )
 {
-	// MGL - what the fuck was kendall doing here?!
-	// clear screen to black and change palette
-	//	for (i=0 ; i<vid.height ; i++)
-	//		memset (vid.buffer + i*vid.rowbytes, 0, vid.width);
+	/* MGL - what the fuck was kendall doing here?! */
+	/* clear screen to black and change palette */
+	/*	for (i=0 ; i<vid.height ; i++) */
+	/*		memset (vid.buffer + i*vid.rowbytes, 0, vid.width); */
 
 	if ( !palette )
 		palette = ( const unsigned char * ) sw_state.currentpalette;
@@ -365,7 +365,7 @@ void SWimp_Shutdown( void )
 	if ( sww_state.hWnd )
 	{
 		ri.Con_Printf( PRINT_ALL, "...destroying window\n" );
-		ShowWindow( sww_state.hWnd, SW_SHOWNORMAL );	// prevents leaving empty slots in the taskbar
+		ShowWindow( sww_state.hWnd, SW_SHOWNORMAL );	/* prevents leaving empty slots in the taskbar */
 		DestroyWindow (sww_state.hWnd);
 		sww_state.hWnd = NULL;
 		UnregisterClass (WINDOW_CLASS_NAME, sww_state.hInstance);
@@ -397,7 +397,7 @@ void SWimp_AppActivate( qboolean active )
 	}
 }
 
-//===============================================================================
+/*=============================================================================== */
 
 
 /*

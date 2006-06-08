@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// Quake is a trademark of Id Software, Inc., (c) 1996 Id Software, Inc. All
-// rights reserved.
+/* Quake is a trademark of Id Software, Inc., (c) 1996 Id Software, Inc. All */
+/* rights reserved. */
 
 #include <windows.h>
 #include "../client/client.h"
@@ -32,7 +32,7 @@ static qboolean	initialized = qfalse;
 static qboolean	enabled = qfalse;
 static qboolean playLooping = qfalse;
 static byte 	remap[100];
-//static byte		cdrom;
+/*static byte		cdrom; */
 static byte		playTrack;
 static byte		maxTrack;
 
@@ -130,7 +130,7 @@ void CDAudio_Play2(int track, qboolean looping)
 		return;
 	}
 
-	// don't try to play a non-audio track
+	/* don't try to play a non-audio track */
 	mciStatusParms.dwItem = MCI_CDA_STATUS_TYPE_TRACK;
 	mciStatusParms.dwTrack = track;
 	dwReturn = mciSendCommand(wDeviceID, MCI_STATUS, MCI_STATUS_ITEM | MCI_TRACK | MCI_WAIT, (DWORD) (LPVOID) &mciStatusParms);
@@ -145,7 +145,7 @@ void CDAudio_Play2(int track, qboolean looping)
 		return;
 	}
 
-	// get the length of the track to be played
+	/* get the length of the track to be played */
 	mciStatusParms.dwItem = MCI_STATUS_LENGTH;
 	mciStatusParms.dwTrack = track;
 	dwReturn = mciSendCommand(wDeviceID, MCI_STATUS, MCI_STATUS_ITEM | MCI_TRACK | MCI_WAIT, (DWORD) (LPVOID) &mciStatusParms);
@@ -183,8 +183,8 @@ void CDAudio_Play2(int track, qboolean looping)
 
 void CDAudio_Play(int track, qboolean looping)
 {
-	// set a loop counter so that this track will change to the
-	// looptrack later
+	/* set a loop counter so that this track will change to the */
+	/* looptrack later */
 	loopcounter = 0;
 	CDAudio_Play2(track, looping);
 }
@@ -385,8 +385,8 @@ LONG CDAudio_MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				playing = qfalse;
 				if (playLooping)
 				{
-					// if the track has played the given number of times,
-					// go to the ambient track
+					/* if the track has played the given number of times, */
+					/* go to the ambient track */
 					if (++loopcounter >= cd_loopcount->value)
 						CDAudio_Play2(cd_looptrack->value, qtrue);
 					else
@@ -453,7 +453,7 @@ int CDAudio_Init(void)
 	}
 	wDeviceID = mciOpenParms.wDeviceID;
 
-        // Set the time format to track/minute/second/frame (TMSF).
+        /* Set the time format to track/minute/second/frame (TMSF). */
         mciSetParms.dwTimeFormat = MCI_FORMAT_TMSF;
         if ( ( dwReturn = mciSendCommand(wDeviceID, MCI_SET, MCI_SET_TIME_FORMAT, (DWORD)(LPVOID) &mciSetParms) ) )
         {
@@ -469,7 +469,7 @@ int CDAudio_Init(void)
 
 	if (CDAudio_GetAudioDiskInfo())
 	{
-//		Com_Printf("CDAudio_Init: No CD in player.\n");
+/*		Com_Printf("CDAudio_Init: No CD in player.\n"); */
 		cdValid = qfalse;
 		enabled = qfalse;
 	}

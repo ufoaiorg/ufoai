@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// screen.h
+/* screen.h */
 
 void	SCR_Init (void);
 
@@ -36,14 +36,14 @@ void	SCR_TouchPics (void);
 void	SCR_RunConsole (void);
 
 extern	float		scr_con_current;
-extern	float		scr_conlines;		// lines of console to display
+extern	float		scr_conlines;		/* lines of console to display */
 
 extern	int			sb_lines;
 
 extern	cvar_t		*scr_viewsize;
 extern	cvar_t		*cursor;
 
-extern	vrect_t		scr_vrect;		// position of render window
+extern	vrect_t		scr_vrect;		/* position of render window */
 
 extern	char		cursor_pic[MAX_QPATH];
 

@@ -1,4 +1,4 @@
-// gl_anim.c -- animation parsing and playing
+/* gl_anim.c -- animation parsing and playing */
 
 #include "gl_local.h"
 
@@ -36,13 +36,13 @@ void Anim_Append( animState_t *as, model_t *mod, char *name )
 
 	if ( !mod || mod->type != mod_alias ) return;
 
-	// get animation
+	/* get animation */
 	anim = Anim_Get( mod, name );
 	if ( !anim ) return;
 
 	if ( as->lcur == as->ladd )
 	{
-		// first animation
+		/* first animation */
 		as->oldframe = anim->from;
 		if ( anim->to > anim->from ) as->frame = anim->from+1;
 		else as->frame = anim->from;
@@ -55,11 +55,11 @@ void Anim_Append( animState_t *as, model_t *mod, char *name )
 	}
 	else
 	{
-		// next animation
+		/* next animation */
 		as->list[as->ladd] = anim - mod->animdata;
 	}
 
-	// advance in list (no overflow protection!)
+	/* advance in list (no overflow protection!) */
 	as->ladd = LNEXT( as->ladd );
 }
 
@@ -75,13 +75,13 @@ void Anim_Change( animState_t *as, model_t *mod, char *name )
 
 	if ( !mod || mod->type != mod_alias ) return;
 
-	// get animation
+	/* get animation */
 	anim = Anim_Get( mod, name );
 	if ( !anim ) return;
 
 	if ( as->lcur == as->ladd )
 	{
-		// first animation
+		/* first animation */
 		as->oldframe = anim->from;
 		if ( anim->to > anim->from ) as->frame = anim->from+1;
 		else as->frame = anim->from;
@@ -94,11 +94,11 @@ void Anim_Change( animState_t *as, model_t *mod, char *name )
 	}
 	else
 	{
-		// don't change to same animation
-//		if ( anim == mod->animdata + as->list[as->lcur] )
-//			return;
+		/* don't change to same animation */
+/*		if ( anim == mod->animdata + as->list[as->lcur] ) */
+/*			return; */
 
-		// next animation
+		/* next animation */
 		as->ladd = LNEXT( as->lcur );
 		as->list[as->ladd] = anim - mod->animdata;
 
@@ -106,7 +106,7 @@ void Anim_Change( animState_t *as, model_t *mod, char *name )
 			as->time = anim->time;
 	}
 
-	// advance in list (no overflow protection!)
+	/* advance in list (no overflow protection!) */
 	as->ladd = LNEXT( as->ladd );
 	as->change = qtrue;
 }
@@ -135,13 +135,13 @@ void Anim_Run( animState_t *as, model_t *mod, int msec )
 
 		if ( as->change || as->frame >= anim->to )
 		{
-			// go to next animation if it isn't the last one
+			/* go to next animation if it isn't the last one */
 			if ( LNEXT( as->lcur ) != as->ladd ) 
 				as->lcur = LNEXT( as->lcur );
 
 			anim = mod->animdata + as->list[as->lcur];
 
-			// prepare next frame
+			/* prepare next frame */
 			as->dt = 0;
 			as->time = anim->time;
 			as->oldframe = as->frame;
@@ -150,7 +150,7 @@ void Anim_Run( animState_t *as, model_t *mod, int msec )
 		}
 		else
 		{
-			// next frame of the same animation
+			/* next frame of the same animation */
 			as->time = anim->time;
 			as->oldframe = as->frame;
 			as->frame++;

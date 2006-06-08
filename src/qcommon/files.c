@@ -21,9 +21,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qcommon.h"
 
 
-//
-// in memory
-//
+/* */
+/* in memory */
+/* */
 
 typedef struct
 {
@@ -57,12 +57,12 @@ filelink_t	*fs_links;
 typedef struct searchpath_s
 {
 	char	filename[MAX_OSPATH];
-	pack_t	*pack;		// only one of filename / pack will be used
+	pack_t	*pack;		/* only one of filename / pack will be used */
 	struct searchpath_s *next;
 } searchpath_t;
 
 searchpath_t	*fs_searchpaths;
-searchpath_t	*fs_base_searchpaths;	// without gamedirs
+searchpath_t	*fs_base_searchpaths;	/* without gamedirs */
 
 
 /*
@@ -164,7 +164,7 @@ void	FS_CreatePath (char *path)
 	for (ofs = path+1 ; *ofs ; ofs++)
 	{
 		if (*ofs == '/')
-		{	// create the directory
+		{	/* create the directory */
 			*ofs = 0;
 			Sys_Mkdir (path);
 			*ofs = '/';
@@ -216,7 +216,7 @@ int FS_FOpenFileSingle (const char *filename, FILE **file)
 
 	file_from_pak = 0;
 
-	// check for links first
+	/* check for links first */
 	for (link = fs_links ; link ; link=link->next)
 	{
 		if (!Q_strncmp ((char*)filename, link->from, link->fromlength))
@@ -232,22 +232,22 @@ int FS_FOpenFileSingle (const char *filename, FILE **file)
 		}
 	}
 
-	//
-	// search through the path, one element at a time
-	//
+	/* */
+	/* search through the path, one element at a time */
+	/* */
 	for (search = fs_searchpaths ; search ; search = search->next)
 	{
-		// is the element a pak file?
+		/* is the element a pak file? */
 		if (search->pack)
 		{
-			// look through all the pak file elements
+			/* look through all the pak file elements */
 			pak = search->pack;
 			for (i=0 ; i<pak->numfiles ; i++)
 				if (!Q_strcasecmp (pak->files[i].name, (char*)filename))
-				{	// found it!
+				{	/* found it! */
 					file_from_pak = 1;
 					Com_DPrintf ("PackFile: %s : %s\n",pak->filename, filename);
-					// open a new file on the pakfile
+					/* open a new file on the pakfile */
 					*file = fopen (pak->filename, "rb");
 					if (!*file)
 						Com_Error (ERR_FATAL, "Couldn't reopen %s", pak->filename);
@@ -257,7 +257,7 @@ int FS_FOpenFileSingle (const char *filename, FILE **file)
 		}
 		else
 		{
-			// check a file in the directory tree
+			/* check a file in the directory tree */
 
 			Com_sprintf (netpath, sizeof(netpath), "%s/%s",search->filename, filename);
 
@@ -310,10 +310,10 @@ int FS_FOpenFile (const char *filename, FILE **file)
 	int		result, len;
 	len = strlen( filename );
 
-	// open file
+	/* open file */
 	result =  FS_FOpenFileSingle( filename, file );
 
-	// nothing corresponding found
+	/* nothing corresponding found */
 	if ( result == -1 )
 		Com_DPrintf ("FindFile: can't find %s\n", filename);
 
@@ -332,8 +332,8 @@ int FS_FOpenFileRead( const char *filename, FILE **f )
 
 	if ( ( l = FS_CheckFile( filename) ) > 0 )
 	{
-		// don't let sound stutter
-// 		S_ClearBuffer();
+		/* don't let sound stutter */
+/* 		S_ClearBuffer(); */
 
 		*f = fopen( ospath, "rb" );
 	}
@@ -388,7 +388,7 @@ Properly handles partial reads
 =================
 */
 void CDAudio_Stop(void);
-#define	MAX_READ	0x10000		// read in blocks of 64k
+#define	MAX_READ	0x10000		/* read in blocks of 64k */
 void FS_Read (void *buffer, int len, FILE *f)
 {
 	int		block, remaining;
@@ -398,7 +398,7 @@ void FS_Read (void *buffer, int len, FILE *f)
 
 	buf = (byte *)buffer;
 
-	// read in chunks for progress bar
+	/* read in chunks for progress bar */
 	remaining = len;
 	tries = 0;
 	while (remaining)
@@ -409,7 +409,7 @@ void FS_Read (void *buffer, int len, FILE *f)
 		read = fread (buf, 1, block, f);
 		if (read == 0)
 		{
-			// we might have been trying to read from a CD
+			/* we might have been trying to read from a CD */
 			if (!tries)
 			{
 				tries = 1;
@@ -422,7 +422,7 @@ void FS_Read (void *buffer, int len, FILE *f)
 		if (read == -1)
 			Com_Error (ERR_FATAL, "FS_Read: -1 bytes read");
 
-		// do some progress bar thing here...
+		/* do some progress bar thing here... */
 
 		remaining -= read;
 		buf += read;
@@ -443,9 +443,9 @@ int FS_LoadFile (char *path, void **buffer)
 	byte	*buf;
 	int	len;
 
-	buf = NULL;	// quiet compiler warning
+	buf = NULL;	/* quiet compiler warning */
 
-	// look for it in the filesystem or pack files
+	/* look for it in the filesystem or pack files */
 	len = FS_FOpenFile (path, &h);
 	if (!h)
 	{
@@ -509,7 +509,7 @@ pack_t *FS_LoadPackFile (char *packfile)
 
 	if (!Q_strncmp(packfile+len-4, ".pak", 4))
 	{
-		// NeVo - we have a regular QII .pak file
+		/* NeVo - we have a regular QII .pak file */
 		fread (&header, 1, sizeof(header), packhandle);
 		if (LittleLong(header.ident) != IDPAKHEADER)
 			Com_Error (ERR_FATAL, "%s is not a packfile", packfile);
@@ -526,10 +526,10 @@ pack_t *FS_LoadPackFile (char *packfile)
 		fseek (packhandle, header.dirofs, SEEK_SET);
 		fread (info, 1, header.dirlen, packhandle);
 
-		// crc the directory to check for modifications
+		/* crc the directory to check for modifications */
 		checksum = Com_BlockChecksum ((void *)info, header.dirlen);
 
-		// parse the directory
+		/* parse the directory */
 		for (i=0 ; i<numpackfiles ; i++)
 		{
 			Q_strncpyz(newfiles[i].name, info[i].name, MAX_QPATH);
@@ -539,47 +539,46 @@ pack_t *FS_LoadPackFile (char *packfile)
 	}
 	else if (!Q_strncmp(packfile+len-4, ".pk3", 4) || !Q_strncmp(packfile+len-4, ".zip", 4))
 	{
-		// NeVo - We have a Quake III .pk3 or uncompressed .zip file
-		/*
+		/* NeVo - We have a Quake III .pk3 or uncompressed .zip file */
+#if 0	
 		NeVo - crcing the zip file is pointless
-		// crc the directory to check for modifications
+		/* crc the directory to check for modifications */
 		checksum = Com_BlockChecksum ((void *)info, header.dirlen);
-
-		*/
+#endif
 		for( i = 0; i < MAX_FILES_IN_PACK; ++i)
 		{
-			//-- Get the local header of the file.
+			/*-- Get the local header of the file. */
 			fread(&temp, sizeof(dpak3header_t), 1, packhandle);
 
-			//-- Check if finished with pak file item collection.
+			/*-- Check if finished with pak file item collection. */
 			if (BigLong(temp.ident) == PAK3DIRHEADER)
 				break;
 
-			//-- Check if header signature is correct for the first item.
+			/*-- Check if header signature is correct for the first item. */
 			if ((BigLong(temp.ident) != PAK3HEADER) && (i == 0))
 				Com_Error (ERR_FATAL, "%s is not a packfile", packfile);
 
-			//-- Check if compression is used or any flags are set.
+			/*-- Check if compression is used or any flags are set. */
 			if ((temp.compression != 0) || (temp.flags != 0))
 				Com_Error (ERR_FATAL, "%s contains errors or is compressed" , packfile );
 
-			//-- Get length of data area
+			/*-- Get length of data area */
 			info[i].filelen = temp.uncompressedSize;
 
-			//-- Get the data areas filename and add \0 to the end
+			/*-- Get the data areas filename and add \0 to the end */
 			fread( &info[i].name, temp.filenameLength, 1, packhandle);
 			info[i].name[temp.filenameLength] = '\0';
 
-			//-- Get the offset of the data area
+			/*-- Get the offset of the data area */
 			info[i].filepos = (ftell(packhandle) + temp.extraFieldLength);
 
-			//-- Goto the next header
+			/*-- Goto the next header */
 			fseek( packhandle, (info[i].filelen + info[i].filepos), SEEK_SET);
 		}
-		//-- Allocate space for array of packfile structures (filename, offset, length)
+		/*-- Allocate space for array of packfile structures (filename, offset, length) */
 		newfiles = Z_Malloc (i * sizeof(packfile_t));
 
-		//-- The save the number of items collected from the zip file.
+		/*-- The save the number of items collected from the zip file. */
 		numpackfiles = i;
 
 		for (i=0 ; i < numpackfiles; i++)
@@ -591,7 +590,7 @@ pack_t *FS_LoadPackFile (char *packfile)
 	}
 	else
 	{
-		// Unrecognized file type!
+		/* Unrecognized file type! */
 		Com_Printf ("Pack file type %s unrecognized\n", packfile+len-4);
 		return NULL;
 	}
@@ -647,10 +646,10 @@ pack_t *FS_LoadPackFile (char *packfile)
 	fseek (packhandle, header.dirofs, SEEK_SET);
 	fread (info, 1, header.dirlen, packhandle);
 
-	// crc the directory to check for modifications
+	/* crc the directory to check for modifications */
 	checksum = Com_BlockChecksum ((void *)info, header.dirlen);
 
-	// parse the directory
+	/* parse the directory */
 	for (i=0 ; i<numpackfiles ; i++)
 	{
 		Q_strncpyz (newfiles[i].name, info[i].name, MAX_QPATH);
@@ -695,31 +694,31 @@ void FS_AddGameDirectory (char *dir)
 	searchpath_t *search;
 	pack_t *pak;
 	char pakfile[MAX_OSPATH];
-	//VoiD -S- *.pak support
-	//char *path = NULL;
+	/*VoiD -S- *.pak support */
+	/*char *path = NULL; */
 	char findname[1024];
 	char **dirnames;
 	int ndirs;
 	char *tmp;
-	//VoiD -E- *.pack support
+	/*VoiD -E- *.pack support */
 
 	Q_strncpyz(fs_gamedir, dir, MAX_QPATH);
 
 	Com_Printf("Adding game dir: %s\n", fs_gamedir );
 
-	//
-	// add the directory to the search path
-	//
+	/* */
+	/* add the directory to the search path */
+	/* */
 	search = Z_Malloc (sizeof(searchpath_t));
 	Q_strncpyz(search->filename, dir, sizeof(search->filename)-1);
 	search->filename[sizeof(search->filename)-1] = 0;
 	search->next = fs_searchpaths;
 	fs_searchpaths = search;
 
-	//
-	// add any pak files in the format pak0.pak pak1.pak, ...
-	//
-	for (i=0; i<100; i++) // Pooy - paks can now go up to 100
+	/* */
+	/* add any pak files in the format pak0.pak pak1.pak, ... */
+	/* */
+	for (i=0; i<100; i++) /* Pooy - paks can now go up to 100 */
 	{
 		Com_sprintf (pakfile, sizeof(pakfile), "%s/pak%i.pak", dir, i);
 		pak = FS_LoadPackFile (pakfile);
@@ -730,11 +729,11 @@ void FS_AddGameDirectory (char *dir)
 		search->next = fs_searchpaths;
 		fs_searchpaths = search;
 	}
-	//
-	// NeVo - pak3's!
-	// add any pk3 files in the format pak0.pk3 pak1.pk3, ...
-	//
-	for ( i=0; i<100; i++ ) // Pooy - paks can now go up to 100
+	/* */
+	/* NeVo - pak3's! */
+	/* add any pk3 files in the format pak0.pk3 pak1.pk3, ... */
+	/* */
+	for ( i=0; i<100; i++ ) /* Pooy - paks can now go up to 100 */
 	{
 		Com_sprintf (pakfile, sizeof(pakfile), "%s/pak%i.pk3", dir, i);
 		pak = FS_LoadPackFile (pakfile);
@@ -745,11 +744,11 @@ void FS_AddGameDirectory (char *dir)
 		search->next = fs_searchpaths;
 		fs_searchpaths = search;
 	}
-	//
-	// NeVo - pak3's!
-	// add any pk3 files in the format pak0.pk3 pak1.pk3, ...
-	//
-	for ( i=0; i<100; i++ ) // Pooy - paks can now go up to 100
+	/* */
+	/* NeVo - pak3's! */
+	/* add any pk3 files in the format pak0.pk3 pak1.pk3, ... */
+	/* */
+	for ( i=0; i<100; i++ ) /* Pooy - paks can now go up to 100 */
 	{
 		Com_sprintf (pakfile, sizeof(pakfile), "%s/pak%i.zip", dir, i);
 		pak = FS_LoadPackFile (pakfile);
@@ -760,25 +759,25 @@ void FS_AddGameDirectory (char *dir)
 		search->next = fs_searchpaths;
 		fs_searchpaths = search;
 	}
-	//VoiD -S- *.pack support
+	/*VoiD -S- *.pack support */
 	for (i=0; i<3; i++)
 	{
-		// NeVo - Set filetype
+		/* NeVo - Set filetype */
 		switch (i) {
 			case 0:
-				// Standard Quake II pack file '.pak'
+				/* Standard Quake II pack file '.pak' */
 				Com_sprintf( findname, sizeof(findname), "%s/%s", dir, ".pak" );
 				break;
 			case 1:
-				// Quake III pack file '.pk3'
+				/* Quake III pack file '.pk3' */
 				Com_sprintf( findname, sizeof(findname), "%s/%s", dir, ".pk3" );
 				break;
 			case 2:
-				// Uncompressed zip file '.zip'
+				/* Uncompressed zip file '.zip' */
 				Com_sprintf( findname, sizeof(findname), "%s/%s", dir, ".zip" );
 				break;
 			default:
-				// Standard Quake II pack file '.pak'
+				/* Standard Quake II pack file '.pak' */
 				Com_sprintf( findname, sizeof(findname), "%s/%s", dir, ".pak" );
 				break;
 		}
@@ -809,7 +808,7 @@ void FS_AddGameDirectory (char *dir)
 			}
 			free( dirnames );
 		}
-		//VoiD -E- *.pack support
+		/*VoiD -E- *.pack support */
 	}
 }
 
@@ -839,9 +838,10 @@ void FS_AddHomeAsGameDirectory (char *dir)
 #ifndef _WIN32
 	char gdir[MAX_OSPATH];
 	char *homedir=getenv("HOME");
+	int len;
 	if(homedir)
 	{
-		int len = snprintf(gdir,sizeof(gdir),"%s/.ufoai/%s/", homedir, dir);
+		len = snprintf(gdir,sizeof(gdir),"%s/.ufoai/%s/", homedir, dir);
 		Com_Printf("using %s for writing\n",gdir);
 		FS_CreatePath (gdir);
 		FS_CreatePath (va("%s/save", gdir) );
@@ -898,9 +898,9 @@ void FS_SetGamedir (char *dir)
 		return;
 	}
 
-	//
-	// free up any current game dir info
-	//
+	/* */
+	/* free up any current game dir info */
+	/* */
 	while (fs_searchpaths != fs_base_searchpaths)
 	{
 		if (fs_searchpaths->pack)
@@ -914,9 +914,9 @@ void FS_SetGamedir (char *dir)
 		fs_searchpaths = next;
 	}
 
-	//
-	// flush all data, so it will be forced to reload
-	//
+	/* */
+	/* flush all data, so it will be forced to reload */
+	/* */
 	if (dedicated && !dedicated->value)
 		Cbuf_AddText ("vid_restart\nsnd_restart\n");
 
@@ -955,7 +955,7 @@ void FS_Link_f (void)
 		return;
 	}
 
-	// see if the link already exists
+	/* see if the link already exists */
 	prev = &fs_links;
 	for (l=fs_links ; l ; l=l->next)
 	{
@@ -963,7 +963,7 @@ void FS_Link_f (void)
 		{
 			Z_Free (l->to);
 			if (!strlen(Cmd_Argv(2)))
-			{	// delete it
+			{	/* delete it */
 				*prev = l->next;
 				Z_Free (l->from);
 				Z_Free (l);
@@ -975,7 +975,7 @@ void FS_Link_f (void)
 		prev = &l->next;
 	}
 
-	// create a new link
+	/* create a new link */
 	l = Z_Malloc(sizeof(*l));
 	l->next = fs_links;
 	fs_links = l;
@@ -1006,7 +1006,7 @@ char **FS_ListFiles( char *findname, int *numfiles, unsigned musthave, unsigned 
 	if ( !nfiles )
 		return NULL;
 
-	nfiles++; // add space for a guard
+	nfiles++; /* add space for a guard */
 	*numfiles = nfiles;
 
 	list = malloc( sizeof( char * ) * nfiles );
@@ -1116,7 +1116,7 @@ char *FS_NextPath (char *prevpath)
 	if (!prevpath)
 		return fs_gamedir;
 
-	prev = NULL; //fs_gamedir;
+	prev = NULL; /*fs_gamedir; */
 	for (s=fs_searchpaths ; s ; s=s->next)
 	{
 		if (s->pack)
@@ -1141,35 +1141,35 @@ void FS_InitFilesystem (void)
 	Cmd_AddCommand ("link", FS_Link_f);
 	Cmd_AddCommand ("dir", FS_Dir_f );
 
-	//
-	// basedir <path>
-	// allows the game to run from outside the data tree
-	//
+	/* */
+	/* basedir <path> */
+	/* allows the game to run from outside the data tree */
+	/* */
 	fs_basedir = Cvar_Get ("basedir", ".", CVAR_NOSET);
 
-	//
-	// cddir <path>
-	// Logically concatenates the cddir after the basedir for
-	// allows the game to run from outside the data tree
-	//
+	/* */
+	/* cddir <path> */
+	/* Logically concatenates the cddir after the basedir for */
+	/* allows the game to run from outside the data tree */
+	/* */
 	fs_cddir = Cvar_Get ("cddir", "", CVAR_NOSET);
 	if (fs_cddir->string[0])
 		FS_AddGameDirectory (va("%s/"BASEDIRNAME, fs_cddir->string) );
 
-	//
-	// start up with base by default
-	//
+	/* */
+	/* start up with base by default */
+	/* */
 	FS_AddGameDirectory (va("%s/"BASEDIRNAME, fs_basedir->string) );
 
- 	//
- 	// then add a '.ufoai/base' directory in home directory by default
- 	//
+ 	/* */
+ 	/* then add a '.ufoai/base' directory in home directory by default */
+ 	/* */
  	FS_AddHomeAsGameDirectory(BASEDIRNAME);
 
-	// any set gamedirs will be freed up to here
+	/* any set gamedirs will be freed up to here */
 	fs_base_searchpaths = fs_searchpaths;
 
-	// check for game override
+	/* check for game override */
 	fs_gamedirvar = Cvar_Get ("game", "", CVAR_LATCH|CVAR_SERVERINFO);
 	if (fs_gamedirvar->string[0])
 		FS_SetGamedir (fs_gamedirvar->string);
@@ -1202,17 +1202,17 @@ void FS_BuildFileList( char *fileList )
 	int		nfiles;
 	int		len;
 
-	// bring it into normal form
+	/* bring it into normal form */
 	Q_strncpyz( files, fileList, MAX_QPATH );
 	normPath( files );
 
-	// check the blocklist for older searches
-	// and do a new one after deleting them
+	/* check the blocklist for older searches */
+	/* and do a new one after deleting them */
 	for ( block = fs_blocklist, tblock = NULL; block; )
 	{
 		if ( !Q_strncmp( block->path, files, MAX_QPATH ) )
 		{
-			// delete old one
+			/* delete old one */
 			if ( tblock ) tblock->next = block->next;
 			else fs_blocklist = block->next;
 
@@ -1227,17 +1227,17 @@ void FS_BuildFileList( char *fileList )
 		block = block->next;
 	}
 
-	// allocate a new block and link it into the list
+	/* allocate a new block and link it into the list */
 	block = Z_Malloc (sizeof(listBlock_t));
 	block->next = fs_blocklist;
 	fs_blocklist = block;
 
-	// store the search string
+	/* store the search string */
 	Q_strncpyz( block->path, files, MAX_QPATH );
 
-//	Com_Printf( "pattern: '%s' path: '%s'\n", block->pattern, block->path );
+/*	Com_Printf( "pattern: '%s' path: '%s'\n", block->pattern, block->path ); */
 
-	// search for the files
+	/* search for the files */
 	path = NULL;
 	fl = block->files;
 	tl = 0;
@@ -1258,7 +1258,7 @@ void FS_BuildFileList( char *fileList )
 				if ( !f ) f = filenames[i];
 				else f++;
 
-				// check for double occurences
+				/* check for double occurences */
 				for ( tblock = block; tblock; tblock = tblock->next )
 				{
 					tl = tblock->files;
@@ -1276,10 +1276,10 @@ void FS_BuildFileList( char *fileList )
 					len = strlen( f );
 					if ( fl - block->files + len >= FL_BLOCKSIZE )
 					{
-						// terminalize the last block
+						/* terminalize the last block */
 						*fl = 0;
 
-						// allocate a new block
+						/* allocate a new block */
 						tblock = Z_Malloc (sizeof(listBlock_t));
 						tblock->next = block->next;
 						block->next = tblock;
@@ -1289,7 +1289,7 @@ void FS_BuildFileList( char *fileList )
 						block = tblock;
 					}
 
-					// add the new file
+					/* add the new file */
 					strcpy( fl, f );
 					fl += len+1;
 				}
@@ -1300,10 +1300,10 @@ void FS_BuildFileList( char *fileList )
 		}
 	}
 
-	// terminalize the list
+	/* terminalize the list */
 	*fl = 0;
 
-	// print out the file list
+	/* print out the file list */
 /*	for ( tblock = fs_blocklist; tblock; tblock = tblock->next )
 		if ( !strcmp( tblock->path, files ) )
 		{
@@ -1361,7 +1361,7 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 
 	if ( Q_strncmp( files, lastList, MAX_QPATH ) )
 	{
-		// search for file lists
+		/* search for file lists */
 		Q_strncpyz( lastList, files, MAX_QPATH );
 
 		for ( block = fs_blocklist; block; block = block->next )
@@ -1369,7 +1369,7 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 				break;
 
 		if ( !block )
-			// didn't find any valid file list
+			/* didn't find any valid file list */
 			return NULL;
 
 		lBlock = block;
@@ -1380,7 +1380,7 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 	{
 		if ( lBuffer )
 		{
-			// continue reading the current file
+			/* continue reading the current file */
 			if ( *text )
 			{
 				token = COM_Parse( text );
@@ -1400,11 +1400,11 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 				}
 			}
 
-			// search a new file
+			/* search a new file */
 			lFile += strlen( lFile ) + 1;
 
 			while ( !*lFile && lBlock )
-				// it was the last file in the block, continue to next block
+				/* it was the last file in the block, continue to next block */
 				for ( lBlock = lBlock->next; lBlock; lBlock = lBlock->next )
 					if ( !strcmp( files, lBlock->path ) )
 					{
@@ -1417,14 +1417,14 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 		{
 			char	filename[MAX_QPATH];
 
-			// free the old file
+			/* free the old file */
 			if ( lBuffer )
 			{
 				FS_FreeFile( lBuffer );
 				lBuffer = NULL;
 			}
 
-			// load a new file
+			/* load a new file */
 			Q_strncpyz( filename, lBlock->path, MAX_QPATH );
 			strcpy( strrchr( filename, '/' ) + 1, lFile );
 
@@ -1433,18 +1433,18 @@ char *FS_NextScriptHeader( char *files, char **name, char **text )
 		}
 	}
 
-	// free the old file
+	/* free the old file */
 	if ( lBuffer )
 	{
 		FS_FreeFile( lBuffer );
 		lBuffer = NULL;
 	}
 
-	// finished
+	/* finished */
 	return NULL;
 }
 
-// maplisting
+/* maplisting */
 char* maps[MAX_MAPS];
 int anzInstalledMaps = 0;
 qboolean mapsInstalledInit = qfalse;
@@ -1467,7 +1467,7 @@ void FS_GetMaps ( void )
 	if ( mapsInstalledInit )
 		return;
 
-	Com_sprintf (name, sizeof(name), "maps/*.bsp");//, FS_Gamedir());
+	Com_sprintf (name, sizeof(name), "maps/*.bsp");/*, FS_Gamedir()); */
 	len = strlen(name);
 	mapInstalledIndex = 0;
 	while ( ( path = FS_NextPath( path ) ) )
@@ -1480,7 +1480,7 @@ void FS_GetMaps ( void )
 			status = CheckBSPFile( found );
 			if ( ! status )
 			{
-				//searched a specific map?
+				/*searched a specific map? */
 				maps[anzInstalledMaps] = (char *) malloc ( MAX_MAPNAME_LENGTH * sizeof(char) );
 				if ( maps[anzInstalledMaps] == NULL )
 				{
@@ -1543,7 +1543,7 @@ int FS_Write( const void *buffer, int len, FILE* f )
 		remaining -= written;
 		buf += written;
 	}
-// 	fflush( f );
+/* 	fflush( f ); */
 	return len;
 }
 
@@ -1567,7 +1567,7 @@ int FS_WriteFile( const void *buffer, int len, const char* filename )
 		Com_Error( ERR_FATAL, "Filesystem call made without initialization\n" );
 	}
 
-	// FIXME: Do we need more for security reasons?
+	/* FIXME: Do we need more for security reasons? */
 	if ( ( filename[0] == '.' && filename[1] == '.' ) || filename[0] == '/' )
 		return 0;
 

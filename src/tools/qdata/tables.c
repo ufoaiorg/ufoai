@@ -23,7 +23,7 @@ static int FindNearestColor( unsigned int color )
 	float d;
 	float r[2], g[2], b[2];
 
-	// incoming color is assumed to be in 0xRRGGBB format
+	/* incoming color is assumed to be in 0xRRGGBB format */
 	r[0] = ( color & 31 ) << 3;
 	g[0] = ( ( color >> 5 ) & 63 ) << 2;
 	b[0] = ( ( color >> 11 ) & 31 ) << 3;

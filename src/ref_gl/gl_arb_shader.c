@@ -198,7 +198,7 @@ void SH_UseProgram_ARB_VP(unsigned int vpid)
 void SH_UseShader(shader_t* shader)
 {
 	assert(shader);
-	// no shaders supported
+	/* no shaders supported */
 	if ( gl_state.arb_fragment_program == qfalse )
 		return;
 	if ( shader->fpid > 0 )
@@ -238,7 +238,7 @@ unsigned int SH_CompileWaterShader(unsigned int arb_water_id)
 	qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, arb_water_id);
 	qglProgramStringARB ( GL_FRAGMENT_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, strlen ( arb_water ), arb_water );
 	return arb_water_id;
-//	qglDeleteProgramsARB(1, &arb_water_id);
+/*	qglDeleteProgramsARB(1, &arb_water_id); */
 }
 
 #endif /* SHADERS */

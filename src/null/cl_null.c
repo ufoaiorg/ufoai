@@ -18,8 +18,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-// cl_null.c -- this file can stub out the entire client system
-// for pure dedicated servers
+/* cl_null.c -- this file can stub out the entire client system */
+/* for pure dedicated servers */
 
 #include "../qcommon/qcommon.h"
 

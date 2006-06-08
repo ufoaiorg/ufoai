@@ -6,14 +6,14 @@
 
 void GetLeafNums (void);
 
-//=============================================================================
+/*============================================================================= */
 
 int			nummodels;
 dmodel_t	dmodels[MAX_MAP_MODELS];
 
 int			routedatasize;
 byte		droutedata[MAX_MAP_ROUTING];
-//dvis_t		*dvis = (dvis_t *)droutedata;
+/*dvis_t		*dvis = (dvis_t *)droutedata; */
 
 int			lightdatasize;
 byte		dlightdata[MAX_MAP_LIGHTING];
@@ -85,7 +85,7 @@ byte *CompressRouting( byte *dataStart, byte *destStart, int l )
 	{
 		if ( data+1 < dend && *data == *(data+1) )
 		{
-			// repetitions
+			/* repetitions */
 			val = *data++;
 			c = 0;
 			while ( data+1 < dend && *data == *(data+1) ) 
@@ -99,7 +99,7 @@ byte *CompressRouting( byte *dataStart, byte *destStart, int l )
 		}
 		else
 		{
-			// identities
+			/* identities */
 			count_p = dest_p++;
 			c = 0;
 			while ( (data+1 < dend && *data != *(data+1)) || data == dend-1 )
@@ -112,7 +112,7 @@ byte *CompressRouting( byte *dataStart, byte *destStart, int l )
 		}
 	}
 
-	// terminate compressed data
+	/* terminate compressed data */
 	*dest_p++ = 0;
 
 	return dest_p;
@@ -131,14 +131,14 @@ int DeCompressRouting( byte **source, byte *dataStart )
 	{
 		if ( *src & 0x80 )
 		{
-			// repetitions
+			/* repetitions */
 			c = *src++ & ~0x80;
 			for ( i = 0; i < c+1; i++ ) *data_p++ = *src;
 			src++;
 		}
 		else
 		{
-			// identities
+			/* identities */
 			c = *src++;
 			for ( i = 0; i < c; i++ ) *data_p++ = *src++;
 		}
@@ -156,7 +156,8 @@ CompressVis
 
 ===============
 */
-/*int CompressVis (byte *vis, byte *dest)
+#if 0
+int CompressVis (byte *vis, byte *dest)
 {
 	int		j;
 	int		rep;
@@ -164,7 +165,7 @@ CompressVis
 	byte	*dest_p;
 	
 	dest_p = dest;
-//	visrow = (r_numvisleafs + 7)>>3;
+	/* visrow = (r_numvisleafs + 7)>>3; */
 	visrow = (dvis->numclusters + 7)>>3;
 	
 	for (j=0 ; j<visrow ; j++)
@@ -184,7 +185,8 @@ CompressVis
 	}
 	
 	return dest_p - dest;
-}*/
+}
+#endif
 
 
 /*
@@ -192,13 +194,14 @@ CompressVis
 DecompressVis
 ===================
 */
-/*void DecompressVis (byte *in, byte *decompressed)
+#if 0
+void DecompressVis (byte *in, byte *decompressed)
 {
 	int		c;
 	byte	*out;
 	int		row;
 
-//	row = (r_numvisleafs+7)>>3;	
+	/* row = (r_numvisleafs+7)>>3;	 */
 	row = (dvis->numclusters+7)>>3;	
 	out = decompressed;
 
@@ -220,9 +223,10 @@ DecompressVis
 			c--;
 		}
 	} while (out - decompressed < row);
-}*/
+}
+#endif
 
-//=============================================================================
+/*============================================================================= */
 
 /*
 =============
@@ -237,7 +241,7 @@ void SwapBSPFile (qboolean todisk)
 	dmodel_t		*d;
 
 	
-// models	
+/* models	 */
 	for (i=0 ; i<nummodels ; i++)
 	{
 		d = &dmodels[i];
@@ -254,18 +258,18 @@ void SwapBSPFile (qboolean todisk)
 		}
 	}
 
-//
-// vertexes
-//
+/* */
+/* vertexes */
+/* */
 	for (i=0 ; i<numvertexes ; i++)
 	{
 		for (j=0 ; j<3 ; j++)
 			dvertexes[i].point[j] = LittleFloat (dvertexes[i].point[j]);
 	}
 		
-//
-// planes
-//	
+/* */
+/* planes */
+/*	 */
 	for (i=0 ; i<numplanes ; i++)
 	{
 		for (j=0 ; j<3 ; j++)
@@ -274,9 +278,9 @@ void SwapBSPFile (qboolean todisk)
 		dplanes[i].type = LittleLong (dplanes[i].type);
 	}
 	
-//
-// texinfos
-//	
+/* */
+/* texinfos */
+/*	 */
 	for (i=0 ; i<numtexinfo ; i++)
 	{
 		for (j=0 ; j<8 ; j++)
@@ -286,9 +290,9 @@ void SwapBSPFile (qboolean todisk)
 		texinfo[i].nexttexinfo = LittleLong (texinfo[i].nexttexinfo);
 	}
 	
-//
-// faces
-//
+/* */
+/* faces */
+/* */
 	for (i=0 ; i<numfaces ; i++)
 	{
 		dfaces[i].texinfo = LittleShort (dfaces[i].texinfo);
@@ -299,9 +303,9 @@ void SwapBSPFile (qboolean todisk)
 		dfaces[i].numedges = LittleShort (dfaces[i].numedges);
 	}
 
-//
-// nodes
-//
+/* */
+/* nodes */
+/* */
 	for (i=0 ; i<numnodes ; i++)
 	{
 		dnodes[i].planenum = LittleLong (dnodes[i].planenum);
@@ -316,9 +320,9 @@ void SwapBSPFile (qboolean todisk)
 		dnodes[i].numfaces = LittleShort (dnodes[i].numfaces);
 	}
 
-//
-// leafs
-//
+/* */
+/* leafs */
+/* */
 	for (i=0 ; i<numleafs ; i++)
 	{
 		dleafs[i].contents = LittleLong (dleafs[i].contents);
@@ -336,36 +340,36 @@ void SwapBSPFile (qboolean todisk)
 		dleafs[i].numleafbrushes = LittleShort (dleafs[i].numleafbrushes);
 	}
 
-//
-// leaffaces
-//
+/* */
+/* leaffaces */
+/* */
 	for (i=0 ; i<numleaffaces ; i++)
 		dleaffaces[i] = LittleShort (dleaffaces[i]);
 
-//
-// leafbrushes
-//
+/* */
+/* leafbrushes */
+/* */
 	for (i=0 ; i<numleafbrushes ; i++)
 		dleafbrushes[i] = LittleShort (dleafbrushes[i]);
 
-//
-// surfedges
-//
+/* */
+/* surfedges */
+/* */
 	for (i=0 ; i<numsurfedges ; i++)
 		dsurfedges[i] = LittleLong (dsurfedges[i]);
 
-//
-// edges
-//
+/* */
+/* edges */
+/* */
 	for (i=0 ; i<numedges ; i++)
 	{
 		dedges[i].v[0] = LittleShort (dedges[i].v[0]);
 		dedges[i].v[1] = LittleShort (dedges[i].v[1]);
 	}
 
-//
-// brushes
-//
+/* */
+/* brushes */
+/* */
 	for (i=0 ; i<numbrushes ; i++)
 	{
 		dbrushes[i].firstside = LittleLong (dbrushes[i].firstside);
@@ -373,36 +377,36 @@ void SwapBSPFile (qboolean todisk)
 		dbrushes[i].contents = LittleLong (dbrushes[i].contents);
 	}
 
-//
-// areas
-//
+/* */
+/* areas */
+/* */
 	for (i=0 ; i<numareas ; i++)
 	{
 		dareas[i].numareaportals = LittleLong (dareas[i].numareaportals);
 		dareas[i].firstareaportal = LittleLong (dareas[i].firstareaportal);
 	}
 
-//
-// areasportals
-//
+/* */
+/* areasportals */
+/* */
 	for (i=0 ; i<numareaportals ; i++)
 	{
 		dareaportals[i].portalnum = LittleLong (dareaportals[i].portalnum);
 		dareaportals[i].otherarea = LittleLong (dareaportals[i].otherarea);
 	}
 
-//
-// brushsides
-//
+/* */
+/* brushsides */
+/* */
 	for (i=0 ; i<numbrushsides ; i++)
 	{
 		dbrushsides[i].planenum = LittleShort (dbrushsides[i].planenum);
 		dbrushsides[i].texinfo = LittleShort (dbrushsides[i].texinfo);
 	}
 
-//
-// visibility
-//
+/* */
+/* visibility */
+/* */
 /*	if (todisk)
 		j = dvis->numclusters;
 	else
@@ -442,12 +446,12 @@ void	LoadBSPFile (char *filename)
 {
 	int			i;
 	
-//
-// load the file header
-//
+/* */
+/* load the file header */
+/* */
 	LoadFile (filename, (void **)&header);
 
-// swap the header
+/* swap the header */
 	for (i=0 ; i< sizeof(dheader_t)/4 ; i++)
 		((int *)header)[i] = LittleLong ( ((int *)header)[i]);
 
@@ -478,11 +482,11 @@ void	LoadBSPFile (char *filename)
 
 	CopyLump (LUMP_POP, dpop, 1);
 
-	free (header);		// everything has been copied out
+	free (header);		/* everything has been copied out */
 		
-//
-// swap everything
-//	
+/* */
+/* swap everything */
+/*	 */
 	SwapBSPFile (qfalse);
 }
 
@@ -505,7 +509,7 @@ void	LoadBSPFileTexinfo (char *filename)
 	f = fopen (filename, "rb");
 	fread (header, sizeof(dheader_t), 1, f);
 
-// swap the header
+/* swap the header */
 	for (i=0 ; i< sizeof(dheader_t)/4 ; i++)
 		((int *)header)[i] = LittleLong ( ((int *)header)[i]);
 
@@ -524,13 +528,13 @@ void	LoadBSPFileTexinfo (char *filename)
 
 	numtexinfo = length / sizeof(texinfo_t);
 
-	free (header);		// everything has been copied out
+	free (header);		/* everything has been copied out */
 		
 	SwapBSPFile (qfalse);
 }
 
 
-//============================================================================
+/*============================================================================ */
 
 FILE		*wadfile;
 dheader_t	outheader;
@@ -564,7 +568,7 @@ void	WriteBSPFile (char *filename)
 	header->version = LittleLong (BSPVERSION);
 	
 	wadfile = SafeOpenWrite (filename);
-	SafeWrite (wadfile, header, sizeof(dheader_t));	// overwritten later
+	SafeWrite (wadfile, header, sizeof(dheader_t));	/* overwritten later */
 
 	AddLump (LUMP_PLANES, dplanes, numplanes*sizeof(dplane_t));
 	AddLump (LUMP_LEAFS, dleafs, numleafs*sizeof(dleaf_t));
@@ -592,7 +596,7 @@ void	WriteBSPFile (char *filename)
 	fclose (wadfile);	
 }
 
-//============================================================================
+/*============================================================================ */
 
 /*
 =============
@@ -641,7 +645,7 @@ void PrintBSPFileSizes (void)
 }
 
 
-//============================================
+/*============================================ */
 
 int			num_entities;
 entity_t	entities[MAX_MAP_ENTITIES];
@@ -678,7 +682,7 @@ epair_t *ParseEpair (void)
 		Error ("ParseEpar: token too long");
 	e->value = copystring(token);
 
-	// strip trailing spaces
+	/* strip trailing spaces */
 	StripTrailing (e->key);
 	StripTrailing (e->value);
 
@@ -763,7 +767,7 @@ void UnparseEntities (void)
 	{
 		ep = entities[i].epairs;
 		if (!ep)
-			continue;	// ent got removed
+			continue;	/* ent got removed */
 		
 		strcat (end,"{\n");
 		end += 2;
@@ -842,7 +846,7 @@ void 	GetVectorForKey (entity_t *ent, char *key, vec3_t vec)
 	double	v1, v2, v3;
 
 	k = ValueForKey (ent, key);
-// scanf into doubles, then assign, so it is vec_t size independent
+/* scanf into doubles, then assign, so it is vec_t size independent */
 	v1 = v2 = v3 = 0;
 	sscanf (k, "%lf %lf %lf", &v1, &v2, &v3);
 	vec[0] = v1;

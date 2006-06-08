@@ -17,14 +17,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-// cl_research.h
+/* cl_research.h */
 
 #ifndef TECHNOLOGY_DEFINED
 #define TECHNOLOGY_DEFINED 1
 
 #include "cl_ufopedia.h"
 
-#define MAX_RESEARCHDISPLAY 28	// number of the available string (in the list) in the research menu
+#define MAX_RESEARCHDISPLAY 28	/* number of the available string (in the list) in the research menu */
 #define MAX_RESEARCHLIST 32
 #define MAX_TECHNOLOGIES 256
 #define MAX_TECHLINKS 32
@@ -51,28 +51,28 @@ typedef enum researchType_s
 
 typedef struct stringlist_s
 {
-	int	numEntries;					// The number of used strings/techs.
-	char	string[MAX_TECHLINKS][MAX_VAR];	// A list of strings.
-	int	idx[MAX_TECHLINKS];			// holds the indices of the tech for faster operation after finding it once
+	int	numEntries;					/* The number of used strings/techs. */
+	char	string[MAX_TECHLINKS][MAX_VAR];	/* A list of strings. */
+	int	idx[MAX_TECHLINKS];			/* holds the indices of the tech for faster operation after finding it once */
 } stringlist_t;
 
 typedef struct technology_s
 {
-	char	id[MAX_VAR];				// Short (unique) id/name.
-	int	idx;				// Self-link in the global list
-	char	name[MAX_VAR];			// Full name of this technology.
-	char	description[MAX_VAR];		// Just a short text-id to get this via gettext.
+	char	id[MAX_VAR];				/* Short (unique) id/name. */
+	int	idx;				/* Self-link in the global list */
+	char	name[MAX_VAR];			/* Full name of this technology. */
+	char	description[MAX_VAR];		/* Just a short text-id to get this via gettext. */
 	researchType_t	type;
 
 
 	stringlist_t	requires;
-	char	provides[MAX_VAR];			// The item that this technology enables.
-	float	overalltime, time;					// The time that is needed to research this tech. (in days)
+	char	provides[MAX_VAR];			/* The item that this technology enables. */
+	float	overalltime, time;					/* The time that is needed to research this tech. (in days) */
 	researchStatus_t	statusResearch;
 	
-	int base_idx;	// The base this tech is researched in.
-	int lab;		// Where this techology is currently researched.
-	//int workshop;	// Where the 'provided' item is currently produced.
+	int base_idx;	/* The base this tech is researched in. */
+	int lab;		/* Where this techology is currently researched. */
+	/*int workshop;	// Where the 'provided' item is currently produced. */
 
 
 	char	image_top[MAX_VAR];
@@ -80,21 +80,21 @@ typedef struct technology_s
 	char	mdl_top[MAX_QPATH];
 	char	mdl_bottom[MAX_QPATH];
 
-	int	statusCollected;				// Did we loot this item (and how mach of it -> aliens/corpses) ?
-	byte	needsCollected;				// Is a collected item neccessary to research this item?
-	byte	statusResearchable;			// Is this item researchable?
+	int	statusCollected;				/* Did we loot this item (and how mach of it -> aliens/corpses) ? */
+	byte	needsCollected;				/* Is a collected item neccessary to research this item? */
+	byte	statusResearchable;			/* Is this item researchable? */
 
-	// Pedia info
-	int	up_chapter;	// pedia chapter as stored in research.ufo.
-	int	prev;			// Previous tech in pedia.
-	int	next;			// Next tech in pedia.
+	/* Pedia info */
+	int	up_chapter;	/* pedia chapter as stored in research.ufo. */
+	int	prev;			/* Previous tech in pedia. */
+	int	next;			/* Next tech in pedia. */
 } technology_t;
 
 #define	TECHFS(x)	(int)&(((technology_t *)0)->x)
 
-// use this for saving and allocating
-//extern	technology_t	technologies[MAX_TECHNOLOGIES];
-//extern	int	numTechnologies;
+/* use this for saving and allocating */
+/*extern	technology_t	technologies[MAX_TECHNOLOGIES]; */
+/*extern	int	numTechnologies; */
 
 void RS_ResetResearch( void );
 void CL_CheckResearchStatus( void );

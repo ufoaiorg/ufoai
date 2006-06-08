@@ -3106,8 +3106,8 @@ qboolean QGL_Init( const char *dllname )
 	qglGetTexGenfv               = 	dllGetTexGenfv               = glGetTexGenfv;
 	qglGetTexGeniv               = 	dllGetTexGeniv               = glGetTexGeniv;
 	qglGetTexImage               = 	dllGetTexImage               = glGetTexImage;
-//	qglGetTexLevelParameterfv    = 	dllGetTexLevelParameterfv    = glGetLevelParameterfv;
-//	qglGetTexLevelParameteriv    = 	dllGetTexLevelParameteriv    = glGetLevelParameteriv;
+/*	qglGetTexLevelParameterfv    = 	dllGetTexLevelParameterfv    = glGetLevelParameterfv; */
+/*	qglGetTexLevelParameteriv    = 	dllGetTexLevelParameteriv    = glGetLevelParameteriv; */
 	qglGetTexParameterfv         = 	dllGetTexParameterfv         = glGetTexParameterfv;
 	qglGetTexParameteriv         = 	dllGetTexParameteriv         = glGetTexParameteriv;
 	qglHint                      = 	dllHint                      = glHint;
@@ -3472,8 +3472,8 @@ void GLimp_EnableLogging( qboolean enable )
 		qglGetTexGenfv               = 	logGetTexGenfv               ;
 		qglGetTexGeniv               = 	logGetTexGeniv               ;
 		qglGetTexImage               = 	logGetTexImage               ;
-//		qglGetTexLevelParameterfv    = 	logGetTexLevelParameterfv    ;
-//		qglGetTexLevelParameteriv    = 	logGetTexLevelParameteriv    ;
+/*		qglGetTexLevelParameterfv    = 	logGetTexLevelParameterfv    ; */
+/*		qglGetTexLevelParameteriv    = 	logGetTexLevelParameteriv    ; */
 		qglGetTexParameterfv         = 	logGetTexParameterfv         ;
 		qglGetTexParameteriv         = 	logGetTexParameteriv         ;
 		qglHint                      = 	logHint                      ;

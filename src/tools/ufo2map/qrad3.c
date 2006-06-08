@@ -1,4 +1,4 @@
-// qrad.c
+/* qrad.c */
 
 #include "qrad.h"
 
@@ -18,15 +18,15 @@ entity_t	*face_entity[MAX_MAP_FACES];
 patch_t		patches[MAX_PATCHES];
 unsigned	num_patches;
 
-vec3_t		radiosity[MAX_PATCHES];		// light leaving a patch
-vec3_t		illumination[MAX_PATCHES];	// light arriving at a patch
+vec3_t		radiosity[MAX_PATCHES];		/* light leaving a patch */
+vec3_t		illumination[MAX_PATCHES];	/* light arriving at a patch */
 
-vec3_t		face_offset[MAX_MAP_FACES];		// for rotating bmodels
+vec3_t		face_offset[MAX_MAP_FACES];		/* for rotating bmodels */
 dplane_t	backplanes[MAX_MAP_PLANES];
 
 char		inbase[32], outbase[32];
 
-int			fakeplanes;					// created planes for origin offset
+int			fakeplanes;					/* created planes for origin offset */
 
 int		numbounce = 0;
 qboolean	extrasamples;
@@ -123,7 +123,7 @@ void CalcVertexNormals ( int vnum )
 	vec3_t	normal;
 	vec3_t	vert;
 
-	// clear normal and successively add plane normal vectors
+	/* clear normal and successively add plane normal vectors */
 	vnum++;
 	VectorCopy( dvertexes[vnum].point, vert );
 	VectorClear( normal );
@@ -140,7 +140,7 @@ void CalcVertexNormals ( int vnum )
 
 				if ( v == vnum || VectorCompare( dvertexes[v].point, vert ) )
 				{
-					// found a plane containing that vertex
+					/* found a plane containing that vertex */
 					VectorAdd( normal, dplanes[face->planenum].normal, normal );
 					found = qtrue;
 					break;
@@ -157,7 +157,7 @@ void CalcVertexNormals ( int vnum )
 	else
 		VectorClear( vnormals[vnum] );
 
-//	printf( "(%1.4f %1.4f %1.4f)\n", (vnormals[vnum])[0], (vnormals[vnum])[1], (vnormals[vnum])[2] );
+/*	printf( "(%1.4f %1.4f %1.4f)\n", (vnormals[vnum])[0], (vnormals[vnum])[1], (vnormals[vnum])[2] ); */
 }
 
 
@@ -230,8 +230,8 @@ void MakeTransfers (int i)
 	VectorCopy (patch->origin, origin);
 	plane = *patch->plane;
 
-	// find out which patch2s will collect light
-	// from patch
+	/* find out which patch2s will collect light */
+	/* from patch */
 
 	all_transfers = transfers;
 	patch->numtransfers = 0;
@@ -242,13 +242,13 @@ void MakeTransfers (int i)
 		if (j == i)
 			continue;
 
-		// calculate vector
+		/* calculate vector */
 		VectorSubtract (patch2->origin, origin, delta);
 		dist = VectorNormalize (delta, delta);
 		if (!dist)
-			continue;	// should never happen
+			continue;	/* should never happen */
 
-		// reletive angles
+		/* reletive angles */
 		scale = DotProduct (delta, plane.normal);
 		scale *= -DotProduct (delta, patch2->plane->normal);
 		if (scale <= 0)
@@ -259,12 +259,12 @@ void MakeTransfers (int i)
 		if ( trans < 0.1 )
 			continue;
 
-		// check exact transfer
+		/* check exact transfer */
 		if (TestLine (patch->origin, patch2->origin) )
 			continue;
 
-//		if (trans < 0)
-//			trans = 0;		// rounding errors...
+/*		if (trans < 0) */
+/*			trans = 0;		// rounding errors... */
 
 		transfers[j] = trans;
 		if (trans > 0)
@@ -274,11 +274,11 @@ void MakeTransfers (int i)
 		}
 	}
 
-	// copy the transfers out and normalize
-	// total should be somewhere near PI if everything went right
-	// because partial occlusion isn't accounted for, and nearby
-	// patches have underestimated form factors, it will usually
-	// be higher than PI
+	/* copy the transfers out and normalize */
+	/* total should be somewhere near PI if everything went right */
+	/* because partial occlusion isn't accounted for, and nearby */
+	/* patches have underestimated form factors, it will usually */
+	/* be higher than PI */
 	if (patch->numtransfers)
 	{
 		transfer_t	*t;
@@ -290,10 +290,10 @@ void MakeTransfers (int i)
 		if (!patch->transfers)
 			Error ("Memory allocation failure");
 
-		//
-		// normalize all transfers so all of the light
-		// is transfered to the surroundings
-		//
+		/* */
+		/* normalize all transfers so all of the light */
+		/* is transfered to the surroundings */
+		/* */
 		t = patch->transfers;
 		itotal = 0;
 		for (j=0 ; j<num_patches ; j++)
@@ -308,7 +308,7 @@ void MakeTransfers (int i)
 		}
 	}
 
-	// don't bother locking around this.  not that important.
+	/* don't bother locking around this.  not that important. */
 	total_transfer += patch->numtransfers;
 }
 
@@ -330,7 +330,7 @@ void FreeTransfers (void)
 }
 
 
-//===================================================================
+/*=================================================================== */
 
 /*
 =============
@@ -411,7 +411,7 @@ void WriteGlView (void)
 }
 
 
-//==============================================================
+/*============================================================== */
 
 /*
 =============
@@ -428,7 +428,7 @@ float CollectLight (void)
 
 	for (i=0, patch=patches ; i<num_patches ; i++, patch++)
 	{
-		// skys never collect light, it is just dropped
+		/* skys never collect light, it is just dropped */
 		if (patch->sky)
 		{
 			VectorClear (radiosity[i]);
@@ -466,9 +466,9 @@ void ShootLight (int patchnum)
 	patch_t		*patch;
 	vec3_t		send;
 
-	// this is the amount of light we are distributing
-	// prescale it so that multiplying by the 16 bit
-	// transfer values gives a proper output value
+	/* this is the amount of light we are distributing */
+	/* prescale it so that multiplying by the 16 bit */
+	/* transfer values gives a proper output value */
 	for (k=0 ; k<3 ; k++)
 		send[k] = radiosity[patchnum][k] / 0x10000;
 	patch = &patches[patchnum];
@@ -500,7 +500,7 @@ void BounceLight (void)
 		p = &patches[i];
 		for (j=0 ; j<3 ; j++)
 		{
-//			p->totallight[j] = p->samplelight[j];
+/*			p->totallight[j] = p->samplelight[j]; */
 			radiosity[i][j] = p->samplelight[j] * p->reflectivity[j] * p->area;
 		}
 	}
@@ -521,7 +521,7 @@ void BounceLight (void)
 
 
 
-//==============================================================
+/*============================================================== */
 
 void CheckPatches (void)
 {
@@ -551,29 +551,29 @@ void RadWorld (void)
 	forbiddenContents = CONTENTS_TRANSLUCENT;
 	MakeTnodes ( 256 );
 
-	// turn each face into a single patch
+	/* turn each face into a single patch */
 	MakePatches ();
 
-	// subdivide patches to a maximum dimension
+	/* subdivide patches to a maximum dimension */
 	SubdividePatches ();
 
-	// calculate vertex normals for smooth lightning
-//	RunThreadsOnIndividual (numvertexes-1, qtrue, CalcVertexNormals);
+	/* calculate vertex normals for smooth lightning */
+/*	RunThreadsOnIndividual (numvertexes-1, qtrue, CalcVertexNormals); */
 
-	// create directlights out of patches and lights
+	/* create directlights out of patches and lights */
 	CreateDirectLights ();
 
-	// build initial facelights
+	/* build initial facelights */
 	RunThreadsOnIndividual (numfaces, qtrue, BuildFacelights);
 
 	if (numbounce > 0)
 	{
-		// build transfer lists
+		/* build transfer lists */
 		RunThreadsOnIndividual (num_patches, qtrue, MakeTransfers);
 		qprintf ("transfer lists: %5.1f megs\n"
 		, (float)total_transfer * sizeof(transfer_t) / (1024*1024));
 
-		// spread light around
+		/* spread light around */
 		BounceLight ();
 
 		FreeTransfers ();
@@ -584,11 +584,11 @@ void RadWorld (void)
 	if (glview)
 		WriteGlView ();
 
-	// blend bounced light into direct light and save
+	/* blend bounced light into direct light and save */
 	PairEdges ();
 	LinkPlaneFaces ();
 
-	// initialize light data
+	/* initialize light data */
 	dlightdata[0] = lightquant;
 	lightdatasize = 1;
 

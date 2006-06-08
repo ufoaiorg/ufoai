@@ -18,13 +18,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-// gl_font.c
+/* gl_font.c */
 
 #include "gl_local.h"
 
 #define BUF_SIZE 2048
-static const	SDL_Color color = {255, 255, 255, 0}; // The 4. value is unused
-// holds the gettext string
+static const	SDL_Color color = {255, 255, 255, 0}; /* The 4. value is unused */
+/* holds the gettext string */
 static char	buf[BUF_SIZE];
 static int	numInCache;
 fontRenderStyle_t fontStyle[] = {
@@ -34,7 +34,7 @@ fontRenderStyle_t fontStyle[] = {
 	{"TTF_STYLE_UNDERLINE", TTF_STYLE_UNDERLINE}
 };
 
-//==============================================================
+/*============================================================== */
 
 static void Font_ConvertChars ( char* buffer );
 
@@ -53,7 +53,7 @@ void Font_Shutdown ( void )
 		if ( fonts[i].font )
 			TTF_CloseFont(fonts[i].font);
 
-	// now quit SDL_ttf, too
+	/* now quit SDL_ttf, too */
 	TTF_Quit();
 }
 
@@ -72,37 +72,37 @@ font_t *Font_Analyze( char *name, char *path, int renderStyle, int size )
 	if ( numFonts >= MAX_FONTS )
 		return NULL;
 
-	// allocate new font
+	/* allocate new font */
 	f = &fonts[numFonts];
 
-	// copy fontname
+	/* copy fontname */
 	Q_strncpyz( f->name, name, MAX_VAR );
 
 	ttfSize = ri.FS_LoadFile(path, &buffer);
 
 	rw = SDL_RWFromMem(buffer, ttfSize);
 
-	// norm size is 1024x768 (1.0)
-	// scale the fontsize
+	/* norm size is 1024x768 (1.0) */
+	/* scale the fontsize */
 	size *= vid.rx;
 
 	f->font = TTF_OpenFontRW( rw, 0, size );
 	if ( ! f->font )
 		ri.Sys_Error(ERR_FATAL, "...could not load font file %s\n", path );
 
-	// font style
+	/* font style */
 	f->style = renderStyle;
 	if ( f->style )
 		TTF_SetFontStyle( f->font, f->style );
 
-	// FIXME: We need to free this
-// 	ri.FS_FreeFile( buffer );
-// 	SDL_RWclose( rw );
+	/* FIXME: We need to free this */
+/* 	ri.FS_FreeFile( buffer ); */
+/* 	SDL_RWclose( rw ); */
 
 	numFonts++;
 	f->lineSkip = TTF_FontLineSkip( f->font );
 
-	// return the font
+	/* return the font */
 	return f;
 }
 
@@ -134,7 +134,7 @@ void Font_Length (char *font, char *c, int *width, int *height)
 	if ( ! c || ! font )
 		return;
 
-	// get the font
+	/* get the font */
 	f = Font_GetFont( font );
 	if ( !f ) return;
 	TTF_SizeUTF8( f->font, c, width, height );
@@ -149,7 +149,7 @@ void Font_CleanCache ( void )
 
 	if ( numInCache < MAX_FONT_CACHE / 2 ) return;
 
-	// free the surfaces
+	/* free the surfaces */
 	for ( ; i < numInCache; i++ )
 		if ( fontCache[i].pixel )
 			SDL_FreeSurface( fontCache[i].pixel );
@@ -171,7 +171,7 @@ void Font_ListCache_f ( void )
 	ri.Con_Printf(PRINT_ALL, "Font cache info\n========================\n" );
 	ri.Con_Printf(PRINT_ALL, "...font cache size: %i - used %i\n", MAX_FONT_CACHE, numInCache );
 
-	// free the surfaces
+	/* free the surfaces */
 	for ( ; i < numInCache; i++ )
 	{
 		f = &fontCache[i];
@@ -243,7 +243,7 @@ static void Font_AddToCache( const char* s, void* pixel, int w, int h )
 	if ( hash[hashValue] )
 	{
 		font = hash[hashValue];
-		// go to end of list
+		/* go to end of list */
 		while ( font->next )
 			font = font->next;
 		font->next = &fontCache[numInCache];
@@ -281,7 +281,7 @@ static void* Font_GenerateCache ( const char* s, const char* fontString, font_t*
 		return NULL;
 	}
 
-	// convert to power of two
+	/* convert to power of two */
 	for ( w = 1; w < textSurface->w; w <<= 1 );
 	for ( h = 1; h < textSurface->h; h <<= 1 );
 
@@ -304,7 +304,7 @@ static void* Font_GenerateCache ( const char* s, const char* fontString, font_t*
 	SDL_LowerBlit(textSurface, &rect, openGLSurface, &rect);
 	SDL_FreeSurface(textSurface);
 
-// 	SDL_SaveBMP( openGLSurface, buffer );
+/* 	SDL_SaveBMP( openGLSurface, buffer ); */
 	Font_AddToCache( fontString, openGLSurface, textSurface->w, textSurface->h );
 	return openGLSurface;
 }
@@ -328,7 +328,7 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 	if ( ! maxWidth )
 		maxWidth = VID_NORM_WIDTH;
 
-	// no line wrap needed?
+	/* no line wrap needed? */
 	TTF_SizeUTF8( f->font, buffer, &w, &h );
 	if ( ! w )
 		return NULL;
@@ -351,7 +351,7 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 		*newlineTest = '\n';
 	}
 
-	// uh - this line is getting longer than allowed...
+	/* uh - this line is getting longer than allowed... */
 	newlineTest = space;
 	while ( ( space = strstr( space, " " ) ) != NULL )
 	{
@@ -370,7 +370,7 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 		newlineTest = space;
 		oldW = w;
 		*space++ = ' ';
-		// maybe there is space for one more word?
+		/* maybe there is space for one more word? */
 	};
 
 	return NULL;
@@ -383,7 +383,7 @@ static void Font_ConvertChars ( char* buffer )
 {
 	char* replace = NULL;
 
-	// convert all \\ to \n
+	/* convert all \\ to \n */
 	replace = strstr( buffer, "\\" );
 	while ( replace != NULL )
 	{
@@ -391,7 +391,7 @@ static void Font_ConvertChars ( char* buffer )
 		replace = strstr( replace, "\\" );
 	}
 
-	// convert all tabs to spaces
+	/* convert all tabs to spaces */
 	replace = strstr( buffer, "\t" );
 	while ( replace != NULL  )
 	{
@@ -423,7 +423,7 @@ static void Font_GenerateGLSurface ( SDL_Surface* s, int x, int y )
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	// draw it
+	/* draw it */
 	qglEnable (GL_BLEND);
 
 	qglBegin(GL_TRIANGLE_STRIP);
@@ -456,21 +456,21 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 	char* pos;
 	char searchString[MAX_FONTNAME+MAX_HASH_STRING];
 	SDL_Surface *openGLSurface = NULL;
-	int max = 0; // calculated maxWidth
+	int max = 0; /* calculated maxWidth */
 
-	// get the font
+	/* get the font */
 	f = Font_GetFont( fontID );
 	if ( !f ) ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", fontID );
 
 	Q_strncpyz( buffer, c, BUF_SIZE );
 
-	// transform from 1024x768 coordinates for drawing
+	/* transform from 1024x768 coordinates for drawing */
 	x = (float)x * vid.rx;
 	y = (float)y * vid.ry;
 	maxWidth = (float)maxWidth * vid.rx;
 
 	Font_ConvertChars( buf );
-	// for linebreaks
+	/* for linebreaks */
 	locX = x;
 
 	do
@@ -479,7 +479,7 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 			return returnHeight;
 		pos = Font_GetLineWrap( f, buffer, maxWidth, &w, &h );
 
-		// check whether this line is bigger than every other
+		/* check whether this line is bigger than every other */
 		if ( w > max )
 			max = w;
 
@@ -511,7 +511,7 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 			Font_GenerateGLSurface( openGLSurface, x, y );
 		}
 
-		// skip for next line
+		/* skip for next line */
 		y += h;
 		buffer = pos;
 		returnHeight += h;
@@ -528,7 +528,7 @@ void Font_Init ( void )
 {
 	numFonts = 0;
 
-	// init the truetype font engine
+	/* init the truetype font engine */
 	if ( TTF_Init() )
 		ri.Sys_Error( ERR_FATAL, "...SDL_ttf error: %s\n", TTF_GetError() );
 
@@ -541,7 +541,7 @@ Font_Register
 ===============*/
 void Font_Register( char *name, int size, char* path, char* style )
 {
-	int renderstyle = 0; // NORMAL is standard
+	int renderstyle = 0; /* NORMAL is standard */
 	int i;
 
 	if ( style && *style )

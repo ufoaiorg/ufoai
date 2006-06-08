@@ -128,9 +128,9 @@ char *Sys_GetHomeDirectory (void)
 }
 
 
-// =======================================================================
-// General routines
-// =======================================================================
+/* ======================================================================= */
+/* General routines */
+/* ======================================================================= */
 
 void Sys_ConsoleOutput (char *string)
 {
@@ -181,7 +181,7 @@ void Sys_Init(void)
 {
 	Cvar_Get("sys_os", "linux", 0);
 #if id386
-//	Sys_SetFPCW();
+/*	Sys_SetFPCW(); */
 #endif
 }
 
@@ -190,7 +190,7 @@ void Sys_Error (char *error, ...)
 	va_list     argptr;
 	char        string[1024];
 
-	// change stdin to non blocking
+	/* change stdin to non blocking */
 	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
 	CL_Shutdown ();
@@ -200,11 +200,11 @@ void Sys_Error (char *error, ...)
 	vsnprintf (string,1024,error,argptr);
 	va_end (argptr);
 
-	// BUG [ 1444732 ] game exits with error
-	//
-	// Removing the call to gettext(), fixes
-	// the segfault. Why is gettext() off limits here???
-	//
+	/* BUG [ 1444732 ] game exits with error */
+	/* */
+	/* Removing the call to gettext(), fixes */
+	/* the segfault. Why is gettext() off limits here??? */
+	/* */
 	fprintf(stderr, "Error: %s\n", string);
 #ifndef PROFILING
 	_exit (1);
@@ -243,7 +243,7 @@ int	Sys_FileTime (char *path)
 
 void floating_point_exception_handler(int whatever)
 {
-//	Sys_Warn("floating point exception\n");
+/*	Sys_Warn("floating point exception\n"); */
 	signal(SIGFPE, floating_point_exception_handler);
 }
 
@@ -261,21 +261,21 @@ char *Sys_ConsoleInput(void)
 		return NULL;
 
 	FD_ZERO(&fdset);
-	FD_SET(0, &fdset); // stdin
+	FD_SET(0, &fdset); /* stdin */
 	timeout.tv_sec = 0;
 	timeout.tv_usec = 0;
 	if (select (1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(0, &fdset))
 		return NULL;
 
 	len = read (0, text, sizeof(text));
-	if (len == 0) { // eof!
+	if (len == 0) { /* eof! */
 		stdin_active = qfalse;
 		return NULL;
 	}
 
 	if (len < 1)
 		return NULL;
-	text[len-1] = 0;    // rip off the /n and terminate
+	text[len-1] = 0;    /* rip off the /n and terminate */
 
 	return text;
 }
@@ -327,7 +327,7 @@ void *Sys_GetGameAPI (void *parms)
 	{
 		path = FS_NextPath (path);
 		if (!path)
-			return NULL;		// couldn't find one anywhere
+			return NULL;		/* couldn't find one anywhere */
 		Com_sprintf (name, MAX_OSPATH, "%s/%s/game.so", curpath, path);
 		game_library = dlopen (name, RTLD_LAZY );
 		if (game_library)
@@ -363,7 +363,7 @@ void Sys_SendKeyEvents (void)
 		KBD_Update_fp();
 #endif
 
-	// grab frame time
+	/* grab frame time */
 	sys_frame_time = Sys_Milliseconds();
 }
 
@@ -378,7 +378,7 @@ int main (int argc, char **argv)
 {
 	int 	time, oldtime, newtime;
 
-	// go back to real user for config loads
+	/* go back to real user for config loads */
 	saved_euid = geteuid();
 	seteuid(getuid());
 
@@ -394,7 +394,7 @@ int main (int argc, char **argv)
 	oldtime = Sys_Milliseconds ();
 	while (1)
 	{
-		// find time spent rendering last frame
+		/* find time spent rendering last frame */
 		do {
 			newtime = Sys_Milliseconds ();
 			time = newtime - oldtime;

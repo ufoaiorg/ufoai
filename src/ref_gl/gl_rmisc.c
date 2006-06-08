@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// r_misc.c
+/* r_misc.c */
 
 #include "gl_local.h"
 
@@ -55,9 +55,9 @@ void R_InitParticleTexture (void)
 	int		x,y;
 	byte	data[8][8][4];
 
-	//
-	// particle texture
-	//
+	/* */
+	/* particle texture */
+	/* */
 	for (x=0 ; x<8 ; x++)
 	{
 		for (y=0 ; y<8 ; y++)
@@ -70,9 +70,9 @@ void R_InitParticleTexture (void)
 	}
 	r_particletexture = GL_LoadPic ("***particle***", (byte *)data, 8, 8, it_sprite, 32);
 
-	//
-	// also use this for bad textures, but without alpha
-	//
+	/* */
+	/* also use this for bad textures, but without alpha */
+	/* */
 	for (x=0 ; x<8 ; x++)
 	{
 		for (y=0 ; y<8 ; y++)
@@ -117,13 +117,13 @@ void GL_ScreenShot_f (void)
 	int			i, c, temp;
 	FILE		*f;
 
-	// create the scrnshots directory if it doesn't exist
+	/* create the scrnshots directory if it doesn't exist */
 	Com_sprintf (checkname, sizeof(checkname), "%s/scrnshot", ri.FS_Gamedir());
 	Sys_Mkdir (checkname);
 
-	//
-	// find a file name to save it to
-	//
+	/* */
+	/* find a file name to save it to */
+	/* */
 	Q_strncpyz(picname,"ufo00.tga", sizeof(checkname) );
 
 	for (i=0 ; i<=99 ; i++)
@@ -133,7 +133,7 @@ void GL_ScreenShot_f (void)
 		Com_sprintf (checkname, sizeof(checkname), "%s/scrnshot/%s", ri.FS_Gamedir(), picname);
 		f = fopen (checkname, "rb");
 		if (!f)
-			break;	// file doesn't exist
+			break;	/* file doesn't exist */
 		fclose (f);
 	}
 	if (i==100)
@@ -145,16 +145,16 @@ void GL_ScreenShot_f (void)
 
 	buffer = malloc(vid.width*vid.height*3 + 18);
 	memset (buffer, 0, 18);
-	buffer[2] = 2;		// uncompressed type
+	buffer[2] = 2;		/* uncompressed type */
 	buffer[12] = vid.width&255;
 	buffer[13] = vid.width>>8;
 	buffer[14] = vid.height&255;
 	buffer[15] = vid.height>>8;
-	buffer[16] = 24;	// pixel size
+	buffer[16] = 24;	/* pixel size */
 
 	qglReadPixels (0, 0, vid.width, vid.height, GL_RGB, GL_UNSIGNED_BYTE, buffer+18 );
 
-	// swap rgb to bgr
+	/* swap rgb to bgr */
 	c = 18+vid.width*vid.height*3;
 	for (i=18 ; i<c ; i+=3)
 	{
@@ -238,7 +238,7 @@ void GL_SetDefaultState( void )
 
 	GL_UpdateSwapInterval();
 
-	// doesn't really belong here... but works fine
+	/* doesn't really belong here... but works fine */
 	vid.rx = (float)vid.width / VID_NORM_WIDTH;
 	vid.ry = (float)vid.height / VID_NORM_HEIGHT;
 }
@@ -349,8 +349,8 @@ void R_DrawBox( entity_t *e )
 	vec3_t	upper, lower;
 	float	dx, dy;
 
-//	if ( R_CullBox( e->origin, e->oldorigin ) )
-//		return;
+/*	if ( R_CullBox( e->origin, e->oldorigin ) ) */
+/*		return; */
 
 	qglDepthMask( GL_FALSE );
 	qglEnable( GL_BLEND );

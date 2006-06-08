@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 HRESULT (WINAPI *pDirectSoundCreate)(GUID FAR *lpGUID, LPDIRECTSOUND FAR *lplpDS, IUnknown FAR *pUnkOuter);
 
-// 64K is > 1 second at 16-bit, 22050 Hz
+/* 64K is > 1 second at 16-bit, 22050 Hz */
 #define	WAV_BUFFERS				64
 #define	WAV_MASK				0x3F
 #define	WAV_BUFFER_SIZE			0x0400
@@ -43,7 +43,7 @@ static qboolean	wav_init;
 static qboolean	snd_firsttime = qtrue, snd_isdirect, snd_iswave;
 static qboolean	primary_format_set;
 
-// starts at 0 for disabled
+/* starts at 0 for disabled */
 static int	snd_buffer_count = 0;
 static int	sample16;
 static int	snd_sent, snd_completed;
@@ -127,8 +127,8 @@ static qboolean DS_CreateBuffers( void )
 	}
 	Com_DPrintf("ok\n" );
 
-	// get access to the primary buffer, if possible, so we can set the
-	// sound hardware format
+	/* get access to the primary buffer, if possible, so we can set the */
+	/* sound hardware format */
 	memset (&dsbuf, 0, sizeof(dsbuf));
 	dsbuf.dwSize = sizeof(DSBUFFERDESC);
 	dsbuf.dwFlags = DSBCAPS_PRIMARYBUFFER;
@@ -163,7 +163,7 @@ static qboolean DS_CreateBuffers( void )
 
 	if ( !primary_format_set || !s_primary->value)
 	{
-		// create the secondary buffer we'll actually work with
+		/* create the secondary buffer we'll actually work with */
 		memset (&dsbuf, 0, sizeof(dsbuf));
 		dsbuf.dwSize = sizeof(DSBUFFERDESC);
 		dsbuf.dwFlags = DSBCAPS_CTRLFREQUENCY | DSBCAPS_LOCSOFTWARE;
@@ -217,7 +217,7 @@ static qboolean DS_CreateBuffers( void )
 		pDSBuf = pDSPBuf;
 	}
 
-	// Make sure mixer is active
+	/* Make sure mixer is active */
 	pDSBuf->lpVtbl->Play(pDSBuf, 0, 0, DSBPLAY_LOOPING);
 
 	if (snd_firsttime)
@@ -260,7 +260,7 @@ static void DS_DestroyBuffers( void )
 		pDSBuf->lpVtbl->Release( pDSBuf );
 	}
 
-	// only release primary buffer if it's not also the mixing buffer we just released
+	/* only release primary buffer if it's not also the mixing buffer we just released */
 	if ( pDSPBuf && ( pDSBuf != pDSPBuf ) )
 	{
 		Com_DPrintf( "...releasing primary buffer\n" );
@@ -595,7 +595,7 @@ qboolean SNDDMA_Init(struct sndinfo *s)
 
 	dsound_init = wav_init = 0;
 
-	stat = SIS_FAILURE;	// assume DirectSound won't initialize
+	stat = SIS_FAILURE;	/* assume DirectSound won't initialize */
 
 	/* Init DirectSound */
 	if (!s_wavonly->value)
@@ -619,10 +619,10 @@ qboolean SNDDMA_Init(struct sndinfo *s)
 		}
 	}
 
-	// if DirectSound didn't succeed in initializing, try to initialize
-	// waveOut sound, unless DirectSound failed because the hardware is
-	// already allocated (in which case the user has already chosen not
-	// to have sound)
+	/* if DirectSound didn't succeed in initializing, try to initialize */
+	/* waveOut sound, unless DirectSound failed because the hardware is */
+	/* already allocated (in which case the user has already chosen not */
+	/* to have sound) */
 	if (!dsound_init && (stat != SIS_NOTAVAIL))
 	{
 		if (snd_firsttime || snd_iswave)
@@ -710,7 +710,7 @@ void SNDDMA_BeginPainting (void)
 	if (!pDSBuf)
 		return;
 
-	// if the buffer was lost or stopped, restore it and/or restart it
+	/* if the buffer was lost or stopped, restore it and/or restart it */
 	if (pDSBuf->lpVtbl->GetStatus (pDSBuf, &dwStatus) != DS_OK)
 		Com_Printf ("Couldn't get sound buffer status\n");
 
@@ -720,7 +720,7 @@ void SNDDMA_BeginPainting (void)
 	if (!(dwStatus & DSBSTATUS_PLAYING))
 		pDSBuf->lpVtbl->Play(pDSBuf, 0, 0, DSBPLAY_LOOPING);
 
-	// lock the dsound buffer
+	/* lock the dsound buffer */
 
 	reps = 0;
 	dma.buffer = NULL;
@@ -761,16 +761,16 @@ void SNDDMA_Submit(void)
 	if (!dma.buffer)
 		return;
 
-	// unlock the dsound buffer
+	/* unlock the dsound buffer */
 	if (pDSBuf)
 		pDSBuf->lpVtbl->Unlock(pDSBuf, dma.buffer, locksize, NULL, 0);
 
 	if (!wav_init)
 		return;
 
-	//
-	// find which sound blocks have completed
-	//
+	/* */
+	/* find which sound blocks have completed */
+	/* */
 	while (1)
 	{
 		if ( snd_completed == snd_sent )
@@ -784,19 +784,19 @@ void SNDDMA_Submit(void)
 			break;
 		}
 
-		snd_completed++;	// this buffer has been played
+		snd_completed++;	/* this buffer has been played */
 	}
 
-//Com_Printf ("completed %i\n", snd_completed);
-	//
-	// submit a few new sound blocks
-	//
+/*Com_Printf ("completed %i\n", snd_completed); */
+	/* */
+	/* submit a few new sound blocks */
+	/* */
 	while (((snd_sent - snd_completed) >> sample16) < 8)
 	{
 		h = lpWaveHdr + ( snd_sent&WAV_MASK );
 	if (paintedtime/256 <= snd_sent)
-		break;	//	Com_Printf ("submit overrun\n");
-//Com_Printf ("send %i\n", snd_sent);
+		break;	/*	Com_Printf ("submit overrun\n"); */
+/*Com_Printf ("send %i\n", snd_sent); */
 		snd_sent++;
 		/*
 		 * Now the data block can be sent to the output device. The
@@ -854,7 +854,7 @@ void S_Activate (qboolean active)
 	}
 }
 
-#else // ifndef USE_SDL
+#else /* ifndef USE_SDL */
 
 static int  snd_inited;
 static dma_t *shm;
@@ -871,7 +871,7 @@ static void paint_audio (void *unused, Uint8 * stream, int len)
 		shm->buffer = stream;
 		shm->samplepos += len / (shm->samplebits / 4);
 
-		// Check for samplepos overflow?
+		/* Check for samplepos overflow? */
 		S_PaintChannels (shm->samplepos);
 #else
 		int tobufend = shm->dmasize - pos;  /* bytes to buffer's end. */
@@ -1008,18 +1008,18 @@ qboolean SNDDMA_Init (struct sndinfo *s)
 			break;
 	}
 
-	// dma.samples needs to be big, or id's mixer will just refuse to
-	//  work at all; we need to keep it significantly bigger than the
-	//  amount of SDL callback samples, and just copy a little each time
-	//  the callback runs.
-	// 32768 is what the OSS driver filled in here on my system. I don't
-	//  know if it's a good value overall, but at least we know it's
-	//  reasonable...this is why I let the user override.
+	/* dma.samples needs to be big, or id's mixer will just refuse to */
+	/*  work at all; we need to keep it significantly bigger than the */
+	/*  amount of SDL callback samples, and just copy a little each time */
+	/*  the callback runs. */
+	/* 32768 is what the OSS driver filled in here on my system. I don't */
+	/*  know if it's a good value overall, but at least we know it's */
+	/*  reasonable...this is why I let the user override. */
 	tmp = sdlMixSamples->value;
 	if (!tmp)
 		tmp = (obtained.samples * obtained.channels) * 10;
 
-	if (tmp & (tmp - 1))  // not a power of two? Seems to confuse something.
+	if (tmp & (tmp - 1))  /* not a power of two? Seems to confuse something. */
 	{
 		int val = 1;
 		while (val < tmp)
@@ -1077,4 +1077,4 @@ void SNDDMA_BeginPainting(void)
 
 void S_Activate (qboolean active){}
 
-#endif // ifndef USE_SDL
+#endif /* ifndef USE_SDL */

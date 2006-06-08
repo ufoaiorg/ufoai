@@ -37,10 +37,10 @@ int		history_line=0;
 
 int		key_waiting;
 char	*keybindings[256];
-qboolean	consolekeys[256];	// if true, can't be rebound while in console
-qboolean	menubound[256];	// if true, can't be rebound while in menu
-int		keyshift[256];		// key to map to if shift held down in console
-int		key_repeats[256];	// if > 1, it is autorepeating
+qboolean	consolekeys[256];	/* if true, can't be rebound while in console */
+qboolean	menubound[256];	/* if true, can't be rebound while in menu */
+int		keyshift[256];		/* key to map to if shift held down in console */
+int		key_repeats[256];	/* if > 1, it is autorepeating */
 qboolean	keydown[256];
 
 typedef struct
@@ -143,7 +143,7 @@ keyname_t keynames[] =
 
 	{"PAUSE", K_PAUSE},
 
-	{"SEMICOLON", ';'},	// because a raw semicolon seperates commands
+	{"SEMICOLON", ';'},	/* because a raw semicolon seperates commands */
 
 	{NULL,0}
 };
@@ -235,7 +235,7 @@ void Key_Console (int key)
 		break;
 	}
 
-	// ctrl-V gets clipboard data
+	/* ctrl-V gets clipboard data */
 	if ( ( toupper( key ) == 'V' && keydown[K_CTRL] ) ||
 		 ( ( ( key == K_INS ) || ( key == K_KP_INS ) ) && keydown[K_SHIFT] ) )
 	{
@@ -263,7 +263,7 @@ void Key_Console (int key)
 		return;
 	}
 
-	// ctrl-L clears screen
+	/* ctrl-L clears screen */
 	if ( key == 'l' && keydown[K_CTRL] )
 	{
 		Cbuf_AddText ("clear\n");
@@ -271,11 +271,11 @@ void Key_Console (int key)
 	}
 
 	if ( key == K_ENTER || key == K_KP_ENTER )
-	{	// backslash text are commands, else chat
+	{	/* backslash text are commands, else chat */
 		if (key_lines[edit_line][1] == '\\' || key_lines[edit_line][1] == '/')
-			Cbuf_AddText (key_lines[edit_line]+2);	// skip the >
+			Cbuf_AddText (key_lines[edit_line]+2);	/* skip the > */
 		else
-			Cbuf_AddText (key_lines[edit_line]+1);	// valid command
+			Cbuf_AddText (key_lines[edit_line]+1);	/* valid command */
 
 		Cbuf_AddText ("\n");
 		Com_Printf ("%s\n",key_lines[edit_line]);
@@ -284,13 +284,13 @@ void Key_Console (int key)
 		key_lines[edit_line][0] = ']';
 		key_linepos = 1;
 		if (cls.state == ca_disconnected)
-			SCR_UpdateScreen ();	// force an update, because the command
-						// may take some time
+			SCR_UpdateScreen ();	/* force an update, because the command */
+						/* may take some time */
 		return;
 	}
 
 	if (key == K_TAB)
-	{	// command completion
+	{	/* command completion */
 		CompleteCommand ();
 		return;
 	}
@@ -367,7 +367,7 @@ void Key_Console (int key)
 	}
 
 	if (key < 32 || key > 127)
-		return;	// non printable
+		return;	/* non printable */
 
 	if (key_linepos < MAXCMDLINE-1)
 	{
@@ -378,7 +378,7 @@ void Key_Console (int key)
 
 }
 
-//============================================================================
+/*============================================================================ */
 
 int			msg_mode;
 char		msg_buffer[MAXCMDLINE];
@@ -427,7 +427,7 @@ void Key_Message (int key)
 	}
 
 	if (key < 32 || key > 127)
-		return;	// non printable
+		return;	/* non printable */
 
 	if (key == K_BACKSPACE)
 	{
@@ -442,7 +442,7 @@ void Key_Message (int key)
 	}
 
 	if (msg_bufferlen == sizeof(msg_buffer)-1)
-		return; // all full
+		return; /* all full */
 
 	msg_buffer[msg_bufferlen++] = key;
 	msg_buffer[msg_bufferlen] = 0;
@@ -451,7 +451,7 @@ void Key_Message (int key)
 		Cbuf_AddText( va( "msgmenu \"%s\"\n", msg_buffer ) );
 }
 
-//============================================================================
+/*============================================================================ */
 
 
 /*
@@ -497,7 +497,7 @@ char *Key_KeynumToString (int keynum)
 	if (keynum == -1)
 		return "<KEY NOT FOUND>";
 	if (keynum > 32 && keynum < 127)
-	{	// printable ascii
+	{	/* printable ascii */
 		tinystr[0] = keynum;
 		tinystr[1] = 0;
 		return tinystr;
@@ -524,14 +524,14 @@ void Key_SetBinding (int keynum, char *binding)
 	if (keynum == -1)
 		return;
 
-	// free old bindings
+	/* free old bindings */
 	if (keybindings[keynum])
 	{
 		Z_Free (keybindings[keynum]);
 		keybindings[keynum] = NULL;
 	}
 
-	// allocate memory for new binding
+	/* allocate memory for new binding */
 	l = strlen (binding);
 	new = Z_Malloc (l+1);
 	Q_strncpyz (new, binding, l+1);
@@ -606,8 +606,8 @@ void Key_Bind_f (void)
 		return;
 	}
 
-	// copy the rest of the command line
-	cmd[0] = 0;		// start out with a null string
+	/* copy the rest of the command line */
+	cmd[0] = 0;		/* start out with a null string */
 	for (i=2 ; i< c ; i++)
 	{
 		strcat (cmd, Cmd_Argv(i));
@@ -667,9 +667,9 @@ void Key_Init (void)
 	}
 	key_linepos = 1;
 
-	//
-	// init ascii characters in console mode
-	//
+	/* */
+	/* init ascii characters in console mode */
+	/* */
 	for (i=32 ; i<128 ; i++)
 		consolekeys[i] = qtrue;
 	consolekeys[K_ENTER] = qtrue;
@@ -739,9 +739,9 @@ void Key_Init (void)
 	for (i=0 ; i<12 ; i++)
 		menubound[K_F1+i] = qtrue;
 
-	//
-	// register our functions
-	//
+	/* */
+	/* register our functions */
+	/* */
 	Cmd_AddCommand ("bind",Key_Bind_f);
 	Cmd_AddCommand ("unbind",Key_Unbind_f);
 	Cmd_AddCommand ("unbindall",Key_Unbindall_f);
@@ -761,7 +761,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 	char	*kb;
 	char	cmd[1024];
 
-	// hack for modal presses
+	/* hack for modal presses */
 	if (key_waiting == -1)
 	{
 		if (down)
@@ -769,7 +769,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 		return;
 	}
 
-	// update auto-repeat status
+	/* update auto-repeat status */
 	if (down)
 	{
 		key_repeats[key]++;
@@ -780,7 +780,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 			&& key != K_PGDN
 			&& key != K_KP_PGDN
 			&& key_repeats[key] > 1)
-			return;	// ignore most autorepeats
+			return;	/* ignore most autorepeats */
 
 		if (key > 255 && !keybindings[key])
 			Com_Printf ("%s is unbound, hit F4 to set.\n", Key_KeynumToString (key) );
@@ -793,7 +793,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 	if (key == K_SHIFT)
 		shift_down = down;
 
-	// console key is hardcoded, so the user can never unbind it
+	/* console key is hardcoded, so the user can never unbind it */
 	if (key == '`' || key == '~')
 	{
 		if (!down)
@@ -802,11 +802,11 @@ void Key_Event (int key, qboolean down, unsigned time)
 		return;
 	}
 
-	// any key during the attract mode will bring up the menu
+	/* any key during the attract mode will bring up the menu */
 	if (cl.attractloop && !(key >= K_F1 && key <= K_F12))
 		key = K_ESCAPE;
 
-	// menu key is hardcoded, so the user can never unbind it
+	/* menu key is hardcoded, so the user can never unbind it */
 	if (key == K_ESCAPE)
 	{
 		if (!down)
@@ -829,7 +829,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 		return;
 	}
 
-	// track if any key is down for BUTTON_ANY
+	/* track if any key is down for BUTTON_ANY */
 	keydown[key] = down;
 	if (down)
 	{
@@ -843,13 +843,13 @@ void Key_Event (int key, qboolean down, unsigned time)
 			anykeydown = 0;
 	}
 
-	//
-	// key up events only generate commands if the game key binding is
-	// a button command (leading + sign).  These will occur even in console mode,
-	// to keep the character from continuing an action started before a console
-	// switch.  Button commands include the kenum as a parameter, so multiple
-	// downs can be matched with ups
-	//
+	/* */
+	/* key up events only generate commands if the game key binding is */
+	/* a button command (leading + sign).  These will occur even in console mode, */
+	/* to keep the character from continuing an action started before a console */
+	/* switch.  Button commands include the kenum as a parameter, so multiple */
+	/* downs can be matched with ups */
+	/* */
 	if (!down)
 	{
 		kb = keybindings[key];
@@ -870,16 +870,16 @@ void Key_Event (int key, qboolean down, unsigned time)
 		return;
 	}
 
-	//
-	// if not a consolekey, send to the interpreter no matter what mode is
-	//
-	if ( cls.key_dest == key_game ) //&& !consolekeys[key] )
+	/* */
+	/* if not a consolekey, send to the interpreter no matter what mode is */
+	/* */
+	if ( cls.key_dest == key_game ) /*&& !consolekeys[key] ) */
 	{
 		kb = keybindings[key];
 		if (kb)
 		{
 			if (kb[0] == '+')
-			{	// button commands add keynum and time as a parm
+			{	/* button commands add keynum and time as a parm */
 				Com_sprintf (cmd, sizeof(cmd), "%s %i %i\n", kb, key, time);
 				Cbuf_AddText (cmd);
 			}
@@ -893,7 +893,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 	}
 
 	if (!down)
-		return;		// other systems only care about key down events
+		return;		/* other systems only care about key down events */
 
 	if (shift_down)
 		key = keyshift[key];

@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// conproc.c -- support for qhost
+/* conproc.c -- support for qhost */
 #include <stdio.h>
 #include <ctype.h>
 #include <process.h>
@@ -25,17 +25,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "conproc.h"
 
 #define CCOM_WRITE_TEXT		0x2
-// Param1 : Text
+/* Param1 : Text */
 
 #define CCOM_GET_TEXT		0x3
-// Param1 : Begin line
-// Param2 : End line
+/* Param1 : Begin line */
+/* Param2 : End line */
 
 #define CCOM_GET_SCR_LINES	0x4
-// No params
+/* No params */
 
 #define CCOM_SET_SCR_LINES	0x5
-// Param1 : Number of lines
+/* Param1 : Number of lines */
 
 
 HANDLE	heventDone;
@@ -93,7 +93,7 @@ void InitConProc (int argc, char **argv)
 	ccom_argc = argc;
 	ccom_argv = argv;
 
-// give QHOST a chance to hook into the console
+/* give QHOST a chance to hook into the console */
 	if ((t = CCheckParm ("-HFILE")) > 0)
 	{
 		if (t < argc)
@@ -113,7 +113,7 @@ void InitConProc (int argc, char **argv)
 	}
 
 
-// ignore if we don't have all the events.
+/* ignore if we don't have all the events. */
 	if (!hFile || !heventParent || !heventChild)
 	{
 		printf ("Qhost not present.\n");
@@ -126,7 +126,7 @@ void InitConProc (int argc, char **argv)
 	heventParentSend = heventParent;
 	heventChildSend = heventChild;
 
-// so we'll know when to go away.
+/* so we'll know when to go away. */
 	heventDone = CreateEvent (NULL, FALSE, FALSE, NULL);
 
 	if (!heventDone)
@@ -142,11 +142,11 @@ void InitConProc (int argc, char **argv)
 		return;
 	}
 
-// save off the input/output handles.
+/* save off the input/output handles. */
 	hStdout = GetStdHandle (STD_OUTPUT_HANDLE);
 	hStdin = GetStdHandle (STD_INPUT_HANDLE);
 
-// force 80 character width, at least 25 character height
+/* force 80 character width, at least 25 character height */
 	SetConsoleCXCY (hStdout, 80, 25);
 }
 
@@ -172,13 +172,13 @@ unsigned _stdcall RequestProc (void *arg)
 	{
 		dwRet = WaitForMultipleObjects (2, heventWait, FALSE, INFINITE);
 
-	// heventDone fired, so we're exiting.
+	/* heventDone fired, so we're exiting. */
 		if (dwRet == WAIT_OBJECT_0 + 1)	
 			break;
 
 		pBuffer = (int *) GetMappedBuffer (hfileBuffer);
 		
-	// hfileBuffer is invalid.  Just leave.
+	/* hfileBuffer is invalid.  Just leave. */
 		if (!pBuffer)
 		{
 			printf ("Invalid hfileBuffer\n");
@@ -188,13 +188,13 @@ unsigned _stdcall RequestProc (void *arg)
 		switch (pBuffer[0])
 		{
 			case CCOM_WRITE_TEXT:
-			// Param1 : Text
+			/* Param1 : Text */
 				pBuffer[0] = WriteText ((LPCTSTR) (pBuffer + 1));
 				break;
 
 			case CCOM_GET_TEXT:
-			// Param1 : Begin line
-			// Param2 : End line
+			/* Param1 : Begin line */
+			/* Param2 : End line */
 				iBeginLine = pBuffer[1];
 				iEndLine = pBuffer[2];
 				pBuffer[0] = ReadText ((LPTSTR) (pBuffer + 1), iBeginLine, 
@@ -202,12 +202,12 @@ unsigned _stdcall RequestProc (void *arg)
 				break;
 
 			case CCOM_GET_SCR_LINES:
-			// No params
+			/* No params */
 				pBuffer[0] = GetScreenBufferLines (&pBuffer[1]);
 				break;
 
 			case CCOM_SET_SCR_LINES:
-			// Param1 : Number of lines
+			/* Param1 : Number of lines */
 				pBuffer[0] = SetScreenBufferLines (pBuffer[1]);
 				break;
 		}
@@ -275,7 +275,7 @@ BOOL ReadText (LPTSTR pszText, int iBeginLine, int iEndLine)
 		coord,
 		&dwRead);
 
-	// Make sure it's null terminated.
+	/* Make sure it's null terminated. */
 	if (bRet)
 		pszText[dwRead] = '\0';
 
@@ -293,7 +293,7 @@ BOOL WriteText (LPCTSTR szText)
 
 	while (*sz)
 	{
-	// 13 is the code for a carriage return (\n) instead of 10.
+	/* 13 is the code for a carriage return (\n) instead of 10. */
 		if (*sz == 10)
 			*sz = 13;
 
@@ -370,7 +370,7 @@ BOOL SetConsoleCXCY(HANDLE hStdout, int cx, int cy)
 	if (!GetConsoleScreenBufferInfo(hStdout, &info))
 		return FALSE;
  
-// height
+/* height */
     info.srWindow.Left = 0;         
     info.srWindow.Right = info.dwSize.X - 1;                
     info.srWindow.Top = 0;
@@ -400,7 +400,7 @@ BOOL SetConsoleCXCY(HANDLE hStdout, int cx, int cy)
 	if (!GetConsoleScreenBufferInfo(hStdout, &info))
 		return FALSE;
  
-// width
+/* width */
 	info.srWindow.Left = 0;         
 	info.srWindow.Right = cx - 1;
 	info.srWindow.Top = 0;

@@ -1,13 +1,13 @@
 #include "qdata.h"
 
 qboolean	g_compress_pak;
-qboolean	g_release;			// don't grab, copy output data to new tree
-qboolean	g_pak;				// if true, copy to pak instead of release
-char		g_releasedir[1024];	// c:\quake2\baseq2, etc
-qboolean	g_archive;			// don't grab, copy source data to new tree
+qboolean	g_release;			/* don't grab, copy output data to new tree */
+qboolean	g_pak;				/* if true, copy to pak instead of release */
+char		g_releasedir[1024];	/* c:\quake2\baseq2, etc */
+qboolean	g_archive;			/* don't grab, copy source data to new tree */
 qboolean	do3ds;
-char		g_only[256];		// if set, only grab this cd
-qboolean	g_skipmodel;		// set true when a cd is not g_only
+char		g_only[256];		/* if set, only grab this cd */
+qboolean	g_skipmodel;		/* set true when a cd is not g_only */
 
 char		*ext_3ds = "3ds";
 char		*ext_tri= "tri";
@@ -55,7 +55,7 @@ void BeginPak (char *outname)
 
 	pakfile = SafeOpenWrite (outname);
 
-	// leave space for header
+	/* leave space for header */
 	SafeWrite (pakfile, &pakheader, sizeof(pakheader));
 	
 	pf = pfiles;
@@ -84,14 +84,14 @@ void ReleaseFile (char *filename)
 	sprintf (source, "%s%s", gamedir, filename);
 
 	if (!g_pak)
-	{	// copy it
+	{	/* copy it */
 		sprintf (dest, "%s/%s", g_releasedir, filename);
 		printf ("copying to %s\n", dest);
 		QCopyFile (source, dest);
 		return;
 	}
 
-	// pak it
+	/* pak it */
 	printf ("paking %s\n", filename);
 	if (strlen(filename) >= sizeof(pf->name))
 		Error ("Filename too long for pak: %s", filename);
@@ -208,12 +208,12 @@ void PackDirectory_r (char *dir)
 	{
 		sprintf (filename, "%s/%s", dir, fileinfo.name);
 		if (fileinfo.attrib & _A_SUBDIR)
-		{	// directory
-			if (fileinfo.name[0] != '.')	// don't pak . and ..
+		{	/* directory */
+			if (fileinfo.name[0] != '.')	/* don't pak . and .. */
 				PackDirectory_r (filename);
 			continue;
 		}
-		// copy or pack the file
+		/* copy or pack the file */
 		ReleaseFile (filename);		
 	} while (_findnext( handle, &fileinfo ) != -1);
 
@@ -260,12 +260,12 @@ void PackDirectory_r (char *dir)
 		if (stat (dirstring, &st) == -1)
 			Error ("fstating %s", pf->name);
 		if (st.st_mode & S_IFDIR)
-		{	// directory
+		{	/* directory */
 			PackDirectory_r (fullname);
 			continue;
 		}
 
-		// copy or pack the file
+		/* copy or pack the file */
 		ReleaseFile (fullname);		
 	}
 }
@@ -286,7 +286,7 @@ void Cmd_Dir (void)
 	PackDirectory_r (token);	
 }
 
-//========================================================================
+/*======================================================================== */
 
 #define	MAX_RTEX	16384
 int		numrtex;
@@ -334,7 +334,7 @@ void Cmd_Maps (void)
 		if (!g_release)
 			continue;
 
-		// get all the texture references
+		/* get all the texture references */
 		sprintf (map, "%smaps/%s.bsp", gamedir, token);
 		LoadBSPFileTexinfo (map);
 		for (i=0 ; i<numtexinfo ; i++)
@@ -343,7 +343,7 @@ void Cmd_Maps (void)
 }
 
 
-//==============================================================
+/*============================================================== */
 
 /*
 ===============
@@ -355,7 +355,7 @@ void ParseScript (void)
 	while (1)
 	{
 		do
-		{	// look for a line starting with a $ command
+		{	/* look for a line starting with a $ command */
 			GetToken (qtrue);
 			if (endofscript)
 				return;
@@ -365,9 +365,9 @@ void ParseScript (void)
 				GetToken (qfalse);
 		} while (1);
 	
-		//
-		// model commands
-		//
+		/* */
+		/* model commands */
+		/* */
 		if (!strcmp (token, "$modelname"))
 			Cmd_Modelname ();
 		else if (!strcmp (token, "$base"))
@@ -384,18 +384,18 @@ void ParseScript (void)
 			Cmd_Skin ();
 		else if (!strcmp (token, "$skinsize"))
 			Cmd_Skinsize ();
-		//
-		// sprite commands
-		//
+		/* */
+		/* sprite commands */
+		/* */
 		else if (!strcmp (token, "$spritename"))
 			Cmd_SpriteName ();
 		else if (!strcmp (token, "$load"))
 			Cmd_Load ();
 		else if (!strcmp (token, "$spriteframe"))
 			Cmd_SpriteFrame ();
-		//
-		// image commands
-		//
+		/* */
+		/* image commands */
+		/* */
 		else if (!strcmp (token, "$grab"))
 			Cmd_Grab ();
 		else if (!strcmp (token, "$raw"))
@@ -410,14 +410,14 @@ void ParseScript (void)
 			Cmd_Mip ();
 		else if (!strcmp (token, "$environment"))
 			Cmd_Environment ();
-		//
-		// video
-		//
+		/* */
+		/* video */
+		/* */
 		else if (!strcmp (token, "$video"))
 			Cmd_Video ();
-		//
-		// misc
-		//
+		/* */
+		/* misc */
+		/* */
 		else if (!strcmp (token, "$file"))
 			Cmd_File ();
 		else if (!strcmp (token, "$dir"))
@@ -433,7 +433,7 @@ void ParseScript (void)
 	}
 }
 
-//=======================================================
+/*======================================================= */
 
 /*
 ==============
@@ -442,7 +442,7 @@ main
 */
 int main (int argc, char **argv)
 {
-	static	int		i;		// VC4.2 compiler bug if auto...
+	static	int		i;		/* VC4.2 compiler bug if auto... */
 	char	path[1024];
 
 	ExpandWildcards (&argc, &argv);
@@ -451,7 +451,7 @@ int main (int argc, char **argv)
 	{
 		if (!strcmp(argv[i], "-archive"))
 		{
-			// -archive f:/quake2/release/dump_11_30
+			/* -archive f:/quake2/release/dump_11_30 */
 			archive = qtrue;
 			strcpy (archivedir, argv[i+1]);
 			printf ("Archiving source to: %s\n", archivedir);
@@ -505,18 +505,18 @@ int main (int argc, char **argv)
 	for ( ; i<argc ; i++)
 	{
 		printf ("--------------- %s ---------------\n", argv[i]);
-		// load the script
+		/* load the script */
 		strcpy (path, argv[i]);
 		DefaultExtension (path, ".qdt");
 		SetQdirFromPath (path);
 		LoadScriptFile (ExpandArg(path));
 		
-		//
-		// parse it
-		//
+		/* */
+		/* parse it */
+		/* */
 		ParseScript ();
 
-		// write out the last model
+		/* write out the last model */
 		FinishModel ();
 		FinishSprite ();
 	}

@@ -251,24 +251,24 @@ int main (int argc, char **argv)
 	start = I_FloatTime ();
 
 	ThreadSetDefault ();
-	// numthreads = 1;		// multiple threads aren't helping...
+	/* numthreads = 1;		// multiple threads aren't helping... */
 	SetQdirFromPath (argv[argc-1]);
 
 	strcpy (source, ExpandArg (argv[argc-1]));
 	StripExtension (source);
 
-	// delete portal and line files
+	/* delete portal and line files */
 	sprintf (path, "%s.prt", source);
 	remove (path);
 	sprintf (path, "%s.lin", source);
 	remove (path);
 
 	strcpy (name, ExpandArg (argv[argc-1]));
-	DefaultExtension (name, ".map");	// might be .reg
+	DefaultExtension (name, ".map");	/* might be .reg */
 
-	//
-	// if onlyents, just grab the entites and resave
-	//
+	/* */
+	/* if onlyents, just grab the entites and resave */
+	/* */
 	if (onlyents)
 	{
 		char out[1024];
@@ -287,9 +287,9 @@ int main (int argc, char **argv)
 	}
 	else
 	{
-		//
-		// start from scratch
-		//
+		/* */
+		/* start from scratch */
+		/* */
 		LoadMapFile (name);
 		SetModelNumbers ();
 		SetLightStyles ();
@@ -309,7 +309,7 @@ int main (int argc, char **argv)
 		start = I_FloatTime ();
 		DefaultExtension (source, ".bsp");
 
-//		ReadLightFile ();
+/*		ReadLightFile (); */
 
 		sprintf (name, "%s%s", inbase, source);
 		printf ("reading %s\n", name);

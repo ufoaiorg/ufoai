@@ -54,18 +54,18 @@ qboolean OSS_SNDDMA_Init(void)
 		snddevice = Cvar_Get("snddevice", "/dev/dsp", CVAR_ARCHIVE);
 	}
 
-	//alsa => oss
+	/*alsa => oss */
 	if ( ! strcmp (snddevice->string, "default") )
 	{
 		snddevice->string = "/dev/dsp";
 	}
-	// open /dev/dsp, confirm capability to mmap, and get size of dma buffer
+	/* open /dev/dsp, confirm capability to mmap, and get size of dma buffer */
 
 	if (audio_fd == -1)
 	{
 		seteuid ( saved_euid );
 
-		// see https://www.redhat.com/archives/sound-list/1999-September/msg00012.html for reason
+		/* see https://www.redhat.com/archives/sound-list/1999-September/msg00012.html for reason */
 		audio_fd = open( snddevice->string, O_WRONLY );
 
 		if (audio_fd == -1)
@@ -114,7 +114,7 @@ qboolean OSS_SNDDMA_Init(void)
 		return qfalse;
 	}
 
-	// set sample bits & speed
+	/* set sample bits & speed */
 
 	dma.samplebits = (int)sndbits->value;
 	if (dma.samplebits != 16 && dma.samplebits != 8)
@@ -175,7 +175,7 @@ qboolean OSS_SNDDMA_Init(void)
 	tmp = 0;
 	if (dma.channels == 2)
 		tmp = 1;
-	rc = ioctl(audio_fd, SNDCTL_DSP_STEREO, &tmp); //FP: bugs here.
+	rc = ioctl(audio_fd, SNDCTL_DSP_STEREO, &tmp); /*FP: bugs here. */
 	if (rc < 0)
 	{
 		perror(snddevice->string);
@@ -204,7 +204,7 @@ qboolean OSS_SNDDMA_Init(void)
 	dma.samples = info.fragstotal * info.fragsize / (dma.samplebits/8);
 	dma.submission_chunk = 1;
 
-	// memory map the dma buffer
+	/* memory map the dma buffer */
 
 	if (!dma.buffer)
 		dma.buffer = (unsigned char *) mmap(NULL, info.fragstotal
@@ -218,7 +218,7 @@ qboolean OSS_SNDDMA_Init(void)
 		return qfalse;
 	}
 
-	// toggle the trigger & start her up
+	/* toggle the trigger & start her up */
 
 	tmp = 0;
 	rc  = ioctl(audio_fd, SNDCTL_DSP_SETTRIGGER, &tmp);
@@ -256,7 +256,7 @@ int OSS_SNDDMA_GetDMAPos(void)
 
 	if (ioctl(audio_fd, SNDCTL_DSP_GETOPTR, &count)==-1)
 	{
-// 		perror(snddevice->string);
+/* 		perror(snddevice->string); */
 		Com_Printf("SNDDMA_GetDMAPos: GETOPTR failed.\n");
 		close(audio_fd);
 		audio_fd = -1;

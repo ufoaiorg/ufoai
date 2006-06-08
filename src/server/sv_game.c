@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// sv_game.c -- interface to the game dll
+/* sv_game.c -- interface to the game dll */
 
 #include "server.h"
 
@@ -167,7 +167,7 @@ void PF_SetModel (edict_t *ent, char *name)
 
 	ent->modelindex = SV_ModelIndex (name);
 
-	// if it is an inline model, get the size information for it
+	/* if it is an inline model, get the size information for it */
 	if (name[0] == '*')
 	{
 		mod = CM_InlineModel (name);
@@ -194,11 +194,11 @@ void PF_Configstring (int index, char *val)
 	if (!val)
 		val = "";
 
-	// change the string in sv
+	/* change the string in sv */
 	Q_strncpyz (sv.configstrings[index], val, MAX_TOKEN_CHARS);
 
 	if (sv.state != ss_loading)
-	{	// send the update to everyone
+	{	/* send the update to everyone */
 		SZ_Clear (&sv.multicast);
 		MSG_WriteChar (&sv.multicast, svc_configstring);
 		MSG_WriteShort (&sv.multicast, index);
@@ -238,7 +238,7 @@ float	PF_ReadAngle ( void ) {return MSG_ReadAngle( &net_message );}
 void	PF_ReadData ( void *buffer, int size) {MSG_ReadData( &net_message, buffer, size );}
 
 
-//==============================================
+/*============================================== */
 
 qboolean	pfe_pending = qfalse;
 int		pfe_mask;
@@ -250,7 +250,7 @@ void PF_EndEvents( void )
 
 	PF_WriteByte( EV_NULL );
 	SV_Multicast( pfe_mask );
-//	SV_SendClientMessages();
+/*	SV_SendClientMessages(); */
 	pfe_pending = qfalse;
 }
 
@@ -258,22 +258,22 @@ void PF_AddEvent( int mask, int eType )
 {
 	if ( !pfe_pending || mask != pfe_mask )
 	{
-		// the target clients have changed or nothing is pending
+		/* the target clients have changed or nothing is pending */
 		if ( pfe_pending )
-			// finish the last event chain
+			/* finish the last event chain */
 			PF_EndEvents();
 
-		// start the new event
+		/* start the new event */
 		pfe_pending = qtrue;
 		pfe_mask = mask;
 		PF_WriteByte( svc_event );
 	}
 
-	// write header
+	/* write header */
 	PF_WriteByte( eType );
 }
 
-//==============================================
+/*============================================== */
 
 /*
 ===============
@@ -305,12 +305,12 @@ void SV_InitGameProgs (void)
 {
 	game_import_t	import;
 
-	// unload anything we have now
+	/* unload anything we have now */
 	if (ge)
 		SV_ShutdownGameProgs ();
 
 
-	// load a new game dll
+	/* load a new game dll */
 	import.multicast = SV_Multicast;
 	import.unicast = PF_Unicast;
 	import.bprintf = SV_BroadcastPrintf;
@@ -354,7 +354,7 @@ void SV_InitGameProgs (void)
 	import.WriteGPos = PF_WriteGPos;
 	import.WriteDir = PF_WriteDir;
 	import.WriteAngle = PF_WriteAngle;
-//	import.WriteFormat = PF_WriteFormat;
+/*	import.WriteFormat = PF_WriteFormat; */
 
 	import.WriteNewSave = PF_WriteNewSave;
 	import.WriteToSave = PF_WriteToSave;
@@ -391,8 +391,8 @@ void SV_InitGameProgs (void)
 	import.AddCommandString = Cbuf_AddText;
 
 	import.DebugGraph = SCR_DebugGraph;
-//	import.SetAreaPortalState = CM_SetAreaPortalState;
-//	import.AreasConnected = CM_AreasConnected;
+/*	import.SetAreaPortalState = CM_SetAreaPortalState; */
+/*	import.AreasConnected = CM_AreasConnected; */
 
 	import.seed = Sys_Milliseconds();
 	import.csi = &csi;

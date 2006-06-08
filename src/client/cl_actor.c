@@ -16,11 +16,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// cl_actor.c -- actor related routines
+/* cl_actor.c -- actor related routines */
 
 #include "client.h"
 
-// public
+/* public */
 le_t	*selActor;
 fireDef_t	*selFD;
 character_t	*selChr;
@@ -29,7 +29,7 @@ int		selToHit;
 int		actorMoveLength;
 invList_t	invList[MAX_INVLIST];
 
-// private
+/* private */
 le_t	*mouseActor;
 pos3_t	mousePos, mouseLastPos;
 
@@ -79,7 +79,7 @@ void CL_CharacterCvars( character_t *chr )
 	Cvar_Set( "mn_chrkillcivilian", va( "%i", chr->kills[KILLED_CIVILIANS] ) );
 	Cvar_Set( "mn_chrkillteam", va( "%i", chr->kills[KILLED_TEAM] ) );
 	Cvar_Set( "mn_chrrank_img", "" );
-	//TODO: Doesn't work yet
+	/*TODO: Doesn't work yet */
 	Com_sprintf (messageBuffer, sizeof(messageBuffer), _("Rank: %s"), rank->name );
 	Cvar_Set( "mn_chrrank", messageBuffer );
 	Com_sprintf (messageBuffer, sizeof(messageBuffer), "%s", rank->image );
@@ -158,13 +158,13 @@ static void CL_RefreshWeaponButtons( int time )
 
 	if (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE)
 	{
-		// If we're not in move mode, leave the rendering of the fire buttons alone
+		/* If we're not in move mode, leave the rendering of the fire buttons alone */
 		primary_right = secondary_right = primary_left = secondary_left = -2;
 		return;
 	}
 	else if (primary_right == -2)
 	{
-		// skip one cycle to let things settle down
+		/* skip one cycle to let things settle down */
 		primary_right = -1;
 		return;
 	}
@@ -198,7 +198,7 @@ static void CL_RefreshWeaponButtons( int time )
 		secondary_right = 1;
 	}
 
-	// check for two-handed weapon - if not, switch to left hand
+	/* check for two-handed weapon - if not, switch to left hand */
 	if ( !weapon || !csi.ods[weapon->item.t].twohanded )
 		weapon = LEFT(selActor);
 
@@ -253,10 +253,10 @@ void CL_ActorUpdateCVars( void )
 		Cvar_Set( "cl_worldlevel", cl_worldlevel->string );
 	}
 
-	// set Cvars for all actors
+	/* set Cvars for all actors */
 	CL_ActorGlobalCVars();
 
-	// force them empty first
+	/* force them empty first */
 	Cvar_Set( "mn_anim", "stand0" );
 	Cvar_Set( "mn_rweapon", "" );
 	Cvar_Set( "mn_lweapon", "" );
@@ -265,7 +265,7 @@ void CL_ActorUpdateCVars( void )
 	{
 		invList_t *selWeapon;
 
-		// set generic cvars
+		/* set generic cvars */
 		Cvar_Set( "mn_tu", va( "%i", selActor->TU ) );
 		Cvar_Set( "mn_tumax", va( "%i", selActor->maxTU ) );
 		Cvar_Set( "mn_morale", va( "%i", selActor->morale ) );
@@ -274,13 +274,13 @@ void CL_ActorUpdateCVars( void )
 		Cvar_Set( "mn_hpmax", va( "%i", selActor->maxHP ) );
 		Cvar_Set( "mn_stun", va( "%i", selActor->STUN ) );
 
-		// animation and weapons
+		/* animation and weapons */
 		name = re.AnimGetName( &selActor->as, selActor->model1 );
 		if ( name ) Cvar_Set( "mn_anim", name );
 		if ( RIGHT(selActor) ) Cvar_Set( "mn_rweapon", csi.ods[RIGHT(selActor)->item.t].model );
 		if ( LEFT(selActor) ) Cvar_Set( "mn_lweapon", csi.ods[LEFT(selActor)->item.t].model );
 
-		// get weapon
+		/* get weapon */
 		if ( cl.cmode > M_PEND_MOVE )
 			selWeapon = (cl.cmode-M_PEND_FIRE_PR)/2 ? LEFT(selActor) : RIGHT(selActor);
 		else
@@ -299,19 +299,19 @@ void CL_ActorUpdateCVars( void )
 		else
 			selFD = NULL;
 
-		// write info
+		/* write info */
 		time = 0;
 		if ( cl.time < cl.msgTime )
 		{
-			// special message
+			/* special message */
 			Com_sprintf( infoText, MAX_MENUTEXTLEN, cl.msgText );
 		}
 		else if ( selActor->state & STATE_PANIC )
 		{
-			// panic
+			/* panic */
 			Com_sprintf( infoText, MAX_MENUTEXTLEN, _("Currently panics!\n") );
 		} else {
-			// in multiplayer we should be able to use the aliens weapons
+			/* in multiplayer we should be able to use the aliens weapons */
  			if ( ccs.singleplayer
 			  && cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE
 			  && selWeapon && !RS_ItemIsResearched( csi.ods[ selWeapon->item.t].kurz ) )
@@ -319,7 +319,7 @@ void CL_ActorUpdateCVars( void )
 				CL_DisplayHudMessage( _("You cannot use this unknown item.\nYou need to research it first.\n"), 2000 );
 				cl.cmode = M_MOVE;
 			}
-			// move or shoot
+			/* move or shoot */
  			if ( cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE )
 			{
 				CL_RefreshWeaponButtons( 0 );
@@ -343,7 +343,7 @@ void CL_ActorUpdateCVars( void )
 			}
  			if ( cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE )
 			{
-				// If the mouse is outside the world, blank move
+				/* If the mouse is outside the world, blank move */
  				if ( mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE )
 					actorMoveLength = 0xFF;
 				if ( actorMoveLength < 0xFF )
@@ -360,12 +360,12 @@ void CL_ActorUpdateCVars( void )
 			}
 		}
 
-		// calc remaining TUs
+		/* calc remaining TUs */
 		time = selActor->TU - time;
 		if ( time < 0 ) time = 0;
 		Cvar_Set( "mn_turemain", va( "%i", time ) );
 
-		// print ammo
+		/* print ammo */
 		if ( RIGHT(selActor) ) Cvar_SetValue( "mn_ammoright", RIGHT(selActor)->item.a );
 		else Cvar_Set( "mn_ammoright", "" );
 		if ( LEFT(selActor) ) Cvar_SetValue( "mn_ammoleft", LEFT(selActor)->item.a );
@@ -373,7 +373,7 @@ void CL_ActorUpdateCVars( void )
 		if ( !LEFT(selActor) && RIGHT(selActor) && csi.ods[RIGHT(selActor)->item.t].twohanded )
 			Cvar_Set( "mn_ammoleft", Cvar_VariableString( "mn_ammoright" ) );
 
-		// change stand-crouch
+		/* change stand-crouch */
 		if ( cl.oldstate != selActor->state || refresh )
 		{
 			cl.oldstate = selActor->state;
@@ -383,12 +383,12 @@ void CL_ActorUpdateCVars( void )
 			else Cbuf_AddText( "stopreaction\n" );
 		}
 
-		// set info text
+		/* set info text */
 		menuText[TEXT_STANDARD] = infoText;
 	}
 	else
 	{
-		// no actor selected, reset cvars
+		/* no actor selected, reset cvars */
 		Cvar_Set( "mn_tu", "0" );
 		Cvar_Set( "mn_turemain", "0" );
 		Cvar_Set( "mn_tumax", "30" );
@@ -401,10 +401,10 @@ void CL_ActorUpdateCVars( void )
 		Cvar_Set( "mn_stun", "0" );
 		if ( refresh ) Cbuf_AddText( "tostand\n" );
 
-		// this allows us to display messages even with no actor selected
+		/* this allows us to display messages even with no actor selected */
 		if ( cl.time < cl.msgTime )
 		{
-			// special message
+			/* special message */
 			Com_sprintf( infoText, MAX_MENUTEXTLEN, cl.msgText );
 			menuText[TEXT_STANDARD] = infoText;
 		}
@@ -412,7 +412,7 @@ void CL_ActorUpdateCVars( void )
 			menuText[TEXT_STANDARD] = NULL;
 	}
 
-	// mode
+	/* mode */
 	if ( cl.oldcmode != cl.cmode || refresh )
 	{
 		switch ( cl.cmode )
@@ -422,7 +422,7 @@ void CL_ActorUpdateCVars( void )
 		case M_FIRE_PR: case M_PEND_FIRE_PR: Cbuf_AddText( "towpr\n" ); break;
 		case M_FIRE_SR: case M_PEND_FIRE_SR: Cbuf_AddText( "towsr\n" ); break;
 		default:
-			// If we've just changing between move modes, don't reset
+			/* If we've just changing between move modes, don't reset */
 			if (cl.oldcmode != M_MOVE && cl.oldcmode != M_PEND_MOVE)
 				Cbuf_AddText( "tomov\n" ); break;
 			break;
@@ -430,7 +430,7 @@ void CL_ActorUpdateCVars( void )
 		cl.oldcmode = cl.cmode;
 	}
 
-	// player bar
+	/* player bar */
 	if ( cl_selected->modified || refresh )
 	{
 		int i;
@@ -465,20 +465,20 @@ void CL_AddActorToTeamList( le_t *le )
 {
 	int		i;
 
-	// test team
+	/* test team */
 	if ( !le || le->team != cls.team || le->pnum != cl.pnum || (le->state & STATE_DEAD) )
 		return;
 
-	// check list length
+	/* check list length */
 	if ( cl.numTeamList >= MAX_TEAMLIST )
 		return;
 
-	// check list for that actor
+	/* check list for that actor */
 	for ( i = 0; i < cl.numTeamList; i++ )
 		if ( cl.teamList[i] == le )
 			break;
 
-	// add it
+	/* add it */
 	if ( i == cl.numTeamList )
 	{
 		cl.teamList[cl.numTeamList++] = le;
@@ -500,7 +500,7 @@ void CL_RemoveActorFromTeamList( le_t *le )
 
 	if ( !le ) return;
 
-	// check selection
+	/* check selection */
 	if ( selActor == le )
 	{
 		for ( i = 0; i < cl.numTeamList; i++ )
@@ -517,13 +517,13 @@ void CL_RemoveActorFromTeamList( le_t *le )
 	for ( i = 0; i < cl.numTeamList; i++ )
 		if ( cl.teamList[i] == le )
 		{
-			// disable hud button
+			/* disable hud button */
 			Cbuf_AddText( va( "huddisable%i\n", i ) );
 
-			// remove from list
+			/* remove from list */
 			cl.teamList[i] = NULL;
 
-			// campaign death
+			/* campaign death */
 			if ( !curCampaign )
 				return;
 
@@ -547,11 +547,11 @@ qboolean CL_ActorSelect( le_t *le )
 {
 	int i;
 
-	// test team
+	/* test team */
 	if ( !le || le->team != cls.team || (le->state & STATE_DEAD) )
 		return qfalse;
 
-	// select him
+	/* select him */
 	if ( selActor ) selActor->selected = qfalse;
 	if ( le ) le->selected = qtrue;
 	selActor = le;
@@ -560,16 +560,16 @@ qboolean CL_ActorSelect( le_t *le )
 	for ( i = 0; i < cl.numTeamList; i++ )
 		if ( cl.teamList[i] == le )
 		{
-			// console commands, update cvars
+			/* console commands, update cvars */
 			Cvar_ForceSet( "cl_selected", va( "%i", i ) );
 			selChr = &baseCurrent->curTeam[i];
 			CL_CharacterCvars( selChr );
 
-			// calculate possible moves
+			/* calculate possible moves */
 			CL_BuildForbiddenList();
 			Grid_MoveCalc( &clMap, le->pos, MAX_ROUTE, fb_list, fb_length );
 
-			// move first person camera to new actor
+			/* move first person camera to new actor */
 			if ( camera_mode == CAMERA_MODE_FIRSTPERSON )
 				CL_CameraModeChange( CAMERA_MODE_FIRSTPERSON );
 
@@ -591,18 +591,18 @@ qboolean CL_ActorSelectList( int num )
 {
 	le_t	*le;
 
-	// check if actor exists
+	/* check if actor exists */
 	if ( num >= cl.numTeamList )
 		return qfalse;
 
-	// select actor
+	/* select actor */
 	le = cl.teamList[num];
 	if ( !CL_ActorSelect( le ) )
 		return qfalse;
 
-	// center view
+	/* center view */
 	VectorCopy( le->origin, cl.cam.reforg );
-	// change to worldlevel were actor is right now
+	/* change to worldlevel were actor is right now */
 	Cvar_SetValue( "cl_worldlevel", le->pos[2] );
 
 	return qtrue;
@@ -641,13 +641,13 @@ void CL_BuildForbiddenList( void )
 			if ( le->fieldSize < 2 )
 				fb_list[fb_length++] = le->pos;
 			else
-				// FIXME: remove me after getting this stuff ready
+				/* FIXME: remove me after getting this stuff ready */
 				Com_DPrintf("...unit bigger that 1 field (%i)\n", le->fieldSize);
-				// we don't need the height value because
-				// the unit is always on the same level
+				/* we don't need the height value because */
+				/* the unit is always on the same level */
 				for ( j = 0; j < le->fieldSize; j++ )
 					for ( k = 0; k < le->fieldSize; k++ )
-						// FIXME: put all vec3_t's in here
+						/* FIXME: put all vec3_t's in here */
 						fb_list[fb_length++] = le->pos;
 		}
 
@@ -740,12 +740,12 @@ void CL_ActorStartMove( le_t *le, pos3_t to )
 
 	if ( !length || length >= 0xFF )
 	{
-		// move not valid, don't even care to send
+		/* move not valid, don't even care to send */
 		return;
 	}
 
-	// move seems to be possible
-	// send request to server
+	/* move seems to be possible */
+	/* send request to server */
 	MSG_WriteFormat( &cls.netchan.message, "bbsg", clc_action, PA_MOVE, le->entnum, to );
 }
 
@@ -762,7 +762,7 @@ void CL_ActorShoot( le_t *le, pos3_t at )
 	if ( !CL_CheckAction() )
 		return;
 
-	// send request to server
+	/* send request to server */
 	if ( cl.cmode > M_PEND_MOVE )
 		mode = cl.cmode - M_PEND_FIRE_PR;
 	else
@@ -789,10 +789,10 @@ void CL_ActorReload( int hand )
 	if ( !CL_CheckAction() )
 		return;
 
-	// check weapon
+	/* check weapon */
 	inv = &selActor->i;
 
-	// search for clips and select the one that is available easely
+	/* search for clips and select the one that is available easely */
 	x = 0; y = 0;
 	tu = 100;
 	bestContainer = NONE;
@@ -801,7 +801,7 @@ void CL_ActorReload( int hand )
 		weapon = inv->c[hand]->item.t;
 	else
 	{
-		// Check for two-handed weapon
+		/* Check for two-handed weapon */
 		hand = 1 - hand;
 		if ( !inv->c[hand] || !csi.ods[inv->c[hand]->item.t].twohanded )
 			return;
@@ -821,10 +821,10 @@ void CL_ActorReload( int hand )
 	{
 		if ( csi.ids[container].out < tu )
 		{
-			// Once we've found at least one clip, there's no point
-			// searching other containers if it would take longer to
-			// retrieve the ammo from them than the one we've already
-			// found.
+			/* Once we've found at least one clip, there's no point */
+			/* searching other containers if it would take longer to */
+			/* retrieve the ammo from them than the one we've already */
+			/* found. */
 			for ( ic = inv->c[container]; ic; ic = ic->next )
 				if ( csi.ods[ic->item.t].link == weapon )
 				{
@@ -836,7 +836,7 @@ void CL_ActorReload( int hand )
 		}
 	}
 
-	// send request
+	/* send request */
 	if ( bestContainer != NONE )
 		MSG_WriteFormat( &cls.netchan.message, "bbsbbbbbb",
 			clc_action, PA_INVMOVE, selActor->entnum, bestContainer, x, y,
@@ -854,9 +854,9 @@ CL_ActorDoMove
 void CL_ActorDoMove( sizebuf_t *sb )
 {
 	le_t	*le;
-//	int		i;
+/*	int		i; */
 
-	// get le
+	/* get le */
 	le = LE_Get( MSG_ReadShort( sb ) );
 	if ( !le )
 	{
@@ -864,17 +864,17 @@ void CL_ActorDoMove( sizebuf_t *sb )
 		return;
 	}
 
-	// get length
+	/* get length */
 	MSG_ReadFormat( sb, ev_format[EV_ACTOR_MOVE],
 		&le->pathLength, le->path );
 
-	// activate PathMove function
+	/* activate PathMove function */
 	le->i.c[csi.idFloor] = NULL;
 	le->think = LET_StartPathMove;
 	le->pathPos = 0;
 	le->startTime = cl.time;
 	le->endTime = cl.time;
-	// FIXME: speed should somehow depend on strength of character
+	/* FIXME: speed should somehow depend on strength of character */
 	if ( le->state & STATE_CROUCHED ) le->speed = 50;
 	else le->speed = 100;
 	blockEvents = qtrue;
@@ -897,11 +897,11 @@ void CL_ActorTurnMouse( void )
 	if ( !CL_CheckAction() )
 		return;
 
-	// calculate dv
+	/* calculate dv */
 	VectorSubtract( mousePos, selActor->pos, div );
 	dv = AngleToDV( (int)(atan2( div[1], div[0] ) * 180 / M_PI) );
 
-	// send message to server
+	/* send message to server */
 	MSG_WriteFormat( &cls.netchan.message, "bbsb", clc_action, PA_TURN, selActor->entnum, dv );
 }
 
@@ -915,7 +915,7 @@ void CL_ActorDoTurn( sizebuf_t *sb )
 {
 	le_t	*le;
 
-	// get le
+	/* get le */
 	le = LE_Get( MSG_ReadShort( sb ) );
 	if ( !le )
 	{
@@ -926,9 +926,9 @@ void CL_ActorDoTurn( sizebuf_t *sb )
 	le->dir = MSG_ReadByte( sb );
 	le->angles[YAW] = dangle[le->dir];
 
-// 	cl.cmode = M_MOVE;
+/* 	cl.cmode = M_MOVE; */
 
-	// calculate possible moves
+	/* calculate possible moves */
 	CL_BuildForbiddenList();
 	Grid_MoveCalc( &clMap, le->pos, MAX_ROUTE, fb_list, fb_length );
 }
@@ -944,7 +944,7 @@ void CL_ActorStandCrouch( void )
 	if ( !CL_CheckAction() )
 		return;
 
-	// send message to server
+	/* send message to server */
 	MSG_WriteFormat( &cls.netchan.message, "bbss",
 		clc_action, PA_STATE, selActor->entnum, selActor->state ^ STATE_CROUCHED );
 }
@@ -971,7 +971,7 @@ void CL_ActorStun( void )
 	if ( !CL_CheckAction() )
 		return;
 
-	// send message to server
+	/* send message to server */
 	MSG_WriteFormat( &cls.netchan.message, "bbss",
 		clc_action, PA_STATE, selActor->entnum, selActor->state ^ STATE_STUN );
 }
@@ -987,7 +987,7 @@ void CL_ActorToggleReaction( void )
 	if ( !CL_CheckAction() )
 		return;
 
-	// send message to server
+	/* send message to server */
 	MSG_WriteFormat( &cls.netchan.message, "bbss",
 		clc_action, PA_STATE, selActor->entnum, selActor->state ^ STATE_REACTION );
 }
@@ -1007,28 +1007,28 @@ void CL_ActorDoShoot( sizebuf_t *sb )
 	vec3_t	muzzle, impact;
 	int	flags, normal;
 
-	// get le
+	/* get le */
 	le = LE_Get( MSG_ReadShort( sb ) );
 
-	// read data
+	/* read data */
 	MSG_ReadFormat( sb, ev_format[EV_ACTOR_SHOOT],
 		&type, &flags, &muzzle, &impact, &normal );
 
-	// get the fire def
+	/* get the fire def */
 	fd = GET_FIREDEF( type );
 
-	// add effect le
+	/* add effect le */
 	LE_AddProjectile( fd, flags, muzzle, impact, normal );
 
-	// start the sound
+	/* start the sound */
 	if ( (!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED) )
 		S_StartLocalSound( fd->fireSound );
 	firstShot = qfalse;
 
-	// do actor related stuff
+	/* do actor related stuff */
 	if ( !le ) return;
 
-	// animate
+	/* animate */
 	re.AnimChange( &le->as, le->model1, LE_GetAnim( "shoot", le->right, le->left, le->state ) );
 	re.AnimAppend( &le->as, le->model1, LE_GetAnim( "stand", le->right, le->left, le->state ) );
 	Grid_MoveCalc( &clMap, le->pos, MAX_ROUTE, fb_list, fb_length );
@@ -1048,17 +1048,17 @@ void CL_ActorDoThrow( sizebuf_t *sb )
 	int		flags;
 	int		dtime;
 
-	// read data
+	/* read data */
 	MSG_ReadFormat( sb, ev_format[EV_ACTOR_THROW],
 		&dtime, &type, &flags, &muzzle, &v0 );
 
-	// get the fire def
+	/* get the fire def */
 	fd = GET_FIREDEF( type );
 
-	// add effect le
+	/* add effect le */
 	LE_AddGrenade( fd, flags, muzzle, v0, dtime );
 
-	// start the sound
+	/* start the sound */
 	if ( (!fd->soundOnce || firstShot) && fd->fireSound[0] )
 		S_StartLocalSound( fd->fireSound );
 	firstShot = qfalse;
@@ -1084,24 +1084,24 @@ void CL_ActorStartShoot( sizebuf_t *sb )
 	MSG_ReadGPos( sb, from );
 	MSG_ReadGPos( sb, target );
 
-	// center view (if wanted)
+	/* center view (if wanted) */
 	if ( (int)cl_centerview->value && cl.actTeam != cls.team )
 		CL_CameraRoute( from, target );
 
-	// first shot
+	/* first shot */
 	firstShot = qtrue;
 
-	// actor dependant stuff following
+	/* actor dependant stuff following */
 	if ( !le ) return;
 
-	// erase one-time weapons from storage
+	/* erase one-time weapons from storage */
 	if ( curCampaign && le->team == cls.team && !csi.ods[type].ammo )
 	{
 		if ( ccs.eMission.num[type] )
 			ccs.eMission.num[type]--;
 	}
 
-	// animate
+	/* animate */
 	re.AnimChange( &le->as, le->model1, LE_GetAnim( "move", le->right, le->left, le->state ) );
 }
 
@@ -1115,25 +1115,25 @@ void CL_ActorDie( sizebuf_t *sb )
 {
 	le_t	*le;
 
-	// get le
+	/* get le */
 	le = LE_Get( MSG_ReadShort( sb ) );
 	if ( !le ) return;
 
-	// count spotted aliens
+	/* count spotted aliens */
 	if ( le->team != cls.team && le->team != TEAM_CIVILIAN )
 		cl.numAliensSpotted--;
 
-	// set relevant vars
+	/* set relevant vars */
 	le->HP = 0;
 	le->STUN = 0;
 	le->state = MSG_ReadShort( sb );
 
-	// play animation
+	/* play animation */
 	le->think = NULL;
 	re.AnimChange( &le->as, le->model1, va( "death%i", le->state & STATE_DEAD ) );
 	re.AnimAppend( &le->as, le->model1, va( "dead%i",  le->state & STATE_DEAD ) );
 
-	// calculate possible moves
+	/* calculate possible moves */
 	CL_BuildForbiddenList();
 	Grid_MoveCalc( &clMap, le->pos, MAX_ROUTE, fb_list, fb_length );
 
@@ -1163,11 +1163,11 @@ void CL_ActorSelectMouse( void )
 	{
 		cl.cmode = M_MOVE;
 
-		// Try and select another team member
+		/* Try and select another team member */
 		if (!CL_ActorSelect( mouseActor ))
 		{
-			// If another team member wasn't selected, move the currently
-			// selected team member to wherever the mouse was clicked
+			/* If another team member wasn't selected, move the currently */
+			/* selected team member to wherever the mouse was clicked */
 			if (confirm_actions->value)
 			{
 				cl.cmode = M_PEND_MOVE;
@@ -1228,17 +1228,17 @@ This function finishes the current round of the player in battlescape and starts
 ======================*/
 void CL_NextRound( void )
 {
-	// can't end round if we are not in battlescape
+	/* can't end round if we are not in battlescape */
 	if ( !CL_OnBattlescape() ) return;
 
-	// can't end round if we're not active
+	/* can't end round if we're not active */
 	if ( cls.team != cl.actTeam )
 		return;
 
-	// send endround
+	/* send endround */
 	MSG_WriteByte( &cls.netchan.message, clc_endround );
 
-	// change back to remote view
+	/* change back to remote view */
 	if ( camera_mode == CAMERA_MODE_FIRSTPERSON )
 		CL_CameraModeChange( CAMERA_MODE_REMOTE );
 }
@@ -1263,18 +1263,18 @@ CL_DoEndRound
 */
 void CL_DoEndRound( sizebuf_t *sb )
 {
-	// hud changes
+	/* hud changes */
 	if ( cls.team == cl.actTeam ) Cbuf_AddText( "endround\n" );
 
-	// change active player
+	/* change active player */
 	Com_Printf( "Team %i ended round", cl.actTeam );
 	cl.actTeam = MSG_ReadByte( sb );
 	Com_Printf( ", team %i's round started!\n", cl.actTeam );
 
-	// check whether a particle has to go
+	/* check whether a particle has to go */
 	CL_ParticleCheckRounds();
 
-	// hud changes
+	/* hud changes */
 	if ( cls.team == cl.actTeam )
 	{
 		Cbuf_AddText( "startround\n" );
@@ -1325,13 +1325,13 @@ void CL_ActorMouseTrace( void )
 	int		i;
 	vec3_t	from;
 
-	// get camera parameters
+	/* get camera parameters */
 	d = (scr_vrect.width / 2) / tan( (FOV / cl.cam.zoom)*M_PI/360 );
 	angles[YAW]   = atan( (mx*viddef.rx - scr_vrect.width /2 - scr_vrect.x) / d ) * 180/M_PI;
 	angles[PITCH] = atan( (my*viddef.ry - scr_vrect.height/2 - scr_vrect.y) / d ) * 180/M_PI;
 	angles[ROLL]  = 0;
 
-	// get trace vectors
+	/* get trace vectors */
 	if ( camera_mode == CAMERA_MODE_FIRSTPERSON )
 	{
 		VectorCopy( selActor->origin, from );
@@ -1350,14 +1350,14 @@ void CL_ActorMouseTrace( void )
 	}
 	VectorMA( from, 2048, forward, stop );
 
-	// do the trace
+	/* do the trace */
 	CM_EntTestLineDM( cl.cam.camorg, stop, end );
 
-	// the mouse is out of the world
+	/* the mouse is out of the world */
 	if ( end[2] < 0.0 )
 		return;
 
-	// get position
+	/* get position */
 	mousePos[2] = end[2] / UH;
 	if ( mousePos[2] > cl_worldlevel->value )
 		mousePos[2] = cl_worldlevel->value;
@@ -1369,7 +1369,7 @@ void CL_ActorMouseTrace( void )
 	VecToPos( stop, mousePos );
 	mousePos[2] = Grid_Fall( &clMap, mousePos );
 
-	// search for an actor on this field
+	/* search for an actor on this field */
 	mouseActor = NULL;
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 		if ( le->inuse && !(le->state & STATE_DEAD) && le->type == ET_ACTOR && VectorCompare( le->pos, mousePos ) )
@@ -1378,7 +1378,7 @@ void CL_ActorMouseTrace( void )
 			break;
 		}
 
-	// calculate move length
+	/* calculate move length */
 	if ( selActor && !VectorCompare( mousePos, mouseLastPos ) )
 	{
 		VectorCopy( mousePos, mouseLastPos );
@@ -1386,7 +1386,7 @@ void CL_ActorMouseTrace( void )
 		if ( selActor->state & STATE_CROUCHED ) actorMoveLength *= 1.5;
 	}
 
-	// mouse is in the world
+	/* mouse is in the world */
 	mouseSpace = MS_WORLD;
 }
 
@@ -1410,7 +1410,7 @@ qboolean CL_AddActor( le_t *le, entity_t *ent )
 
 	if ( !(le->state & STATE_DEAD) )
 	{
-		// add weapon
+		/* add weapon */
 		if ( le->left != NONE )
 		{
 			memset( &add, 0, sizeof( entity_t ) );
@@ -1424,7 +1424,7 @@ qboolean CL_AddActor( le_t *le, entity_t *ent )
 			V_AddEntity( &add );
 		}
 
-		// add weapon
+		/* add weapon */
 		if ( le->right != NONE )
 		{
 			memset( &add, 0, sizeof( entity_t ) );
@@ -1440,7 +1440,7 @@ qboolean CL_AddActor( le_t *le, entity_t *ent )
 		}
 	}
 
-	// add head
+	/* add head */
 	memset( &add, 0, sizeof( entity_t ) );
 
 	add.lightparam = &le->sunfrac;
@@ -1453,7 +1453,7 @@ qboolean CL_AddActor( le_t *le, entity_t *ent )
 
 	V_AddEntity( &add );
 
-	// add actor special effects
+	/* add actor special effects */
 	ent->flags |= RF_SHADOW;
 
 	if ( !(le->state & STATE_DEAD) )
@@ -1498,13 +1498,13 @@ float CL_TargetingToHit( pos3_t toPos )
 			break;
 
 	if ( i >= numLEs )
-		// no target there
+		/* no target there */
 		return 0.0;
 
 	VectorCopy( selActor->origin, shooter );
 	VectorCopy( le->origin, target );
 
-	//Calculate HitZone:
+	/*Calculate HitZone: */
 	distx = fabs( shooter[0]-target[0] );
 	disty = fabs( shooter[1]-target[1] );
 	distance = sqrt( distx*distx + disty*disty );
@@ -1523,7 +1523,7 @@ float CL_TargetingToHit( pos3_t toPos )
 	if ( height / (2 * distance * tan(acc * selFD->spread[1])) < 1)
 		hitchance *= height / (2 * distance * tan(acc * selFD->spread[1]));
 
-	//Calculate cover:
+	/*Calculate cover: */
 	n = 0;
 	height = height / 18;
 	width = width / 18;
@@ -1585,7 +1585,7 @@ void CL_TargetingStraight( pos3_t fromPos, pos3_t toPos )
 	Grid_PosToVec( &clMap, fromPos, start );
 	Grid_PosToVec( &clMap, toPos, end );
 
-	// show cross and trace
+	/* show cross and trace */
 	if ( VectorDistSqr( start, end ) > selFD->range * selFD->range )
 	{
 		VectorSubtract(end, start, dir);
@@ -1623,13 +1623,13 @@ void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
 	if ( !selActor || (fromPos[0] == toPos[0] && fromPos[1] == toPos[1]) )
 		return;
 
-	// get vectors, paint cross
+	/* get vectors, paint cross */
 	Grid_PosToVec( &clMap, fromPos, from );
 	Grid_PosToVec( &clMap, toPos, at );
 
 	at[2] -= 9;
 
-	// calculate parabola
+	/* calculate parabola */
 	dt = Com_GrenadeTarget( from, at, v0 );
 	if ( !dt )
 	{
@@ -1646,7 +1646,7 @@ void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
 	VectorScale( ds, 1.0/GRENADE_PARTITIONS, ds );
 	ds[2] = 0;
 
-	// paint
+	/* paint */
 	vz = v0[2];
 	for ( i = 0; i < GRENADE_PARTITIONS; i++ )
 	{
@@ -1665,7 +1665,7 @@ void CL_TargetingGrenade( pos3_t fromPos, pos3_t toPos )
 CL_AddTargeting
 =================
 */
-// field marker box
+/* field marker box */
 const vec3_t	boxSize = {BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT};
 void CL_AddTargeting( void )
 {
@@ -1683,20 +1683,20 @@ void CL_AddTargeting( void )
 
 		Grid_PosToVec( &clMap, mousePos, ent.origin );
 
-		// ok, paint the green box if move is possible
+		/* ok, paint the green box if move is possible */
 		if ( selActor && actorMoveLength < 0xFF && actorMoveLength <= selActor->TU )
 			VectorSet( ent.angles, 0, 1, 0 );
-		// and paint the blue one if move is impossible or the soldier
-		// does not have enough TimeUnits left
+		/* and paint the blue one if move is impossible or the soldier */
+		/* does not have enough TimeUnits left */
 		else
 			VectorSet( ent.angles, 0, 0, 1 );
 
-		// color
+		/* color */
 		if ( mouseActor )
 		{
 			ent.alpha = 0.4 + 0.2*sin((float)cl.time/80);
-			// paint the box red if the soldiers under the cursor is
-			// not in our team and no civilian, too
+			/* paint the box red if the soldiers under the cursor is */
+			/* not in our team and no civilian, too */
 			if ( mouseActor->team != cls.team && mouseActor->team != TEAM_CIVILIAN )
 				VectorSet( ent.angles, 1, 0, 0 );
 			Vector2Mul( mouseActor->fieldSize, boxSize, realBoxSize );
@@ -1711,9 +1711,9 @@ void CL_AddTargeting( void )
 		}
 		VectorAdd( ent.origin, boxSize, ent.oldorigin );
 		VectorSubtract( ent.origin, boxSize, ent.origin );
-// 		V_AddLight( ent.origin, 256, 1.0, 0, 0 );
+/* 		V_AddLight( ent.origin, 256, 1.0, 0, 0 ); */
 
-		// add it
+		/* add it */
 		V_AddEntity( &ent );
 		if (cl.cmode == M_PEND_MOVE)
 			if (!CL_TraceMove( mousePos ))

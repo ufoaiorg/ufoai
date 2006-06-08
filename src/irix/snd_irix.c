@@ -33,7 +33,7 @@ Returns true and fills in the "dma" structure with information for the mixer.
 ==================
 */
 
-// must be power of two!
+/* must be power of two! */
 #define QSND_SKID	    2
 #define QSND_BUFFER_FRAMES  8192
 #define QSND_BUFFER_SIZE    (QSND_BUFFER_FRAMES*2)
@@ -120,7 +120,7 @@ qboolean SNDDMA_Init(void)
 	printf( "failed to open audio port!\n" );
     }
 
-    // set desired sample rate
+    /* set desired sample rate */
     pvbuf[0].param = AL_MASTER_CLOCK;
     pvbuf[0].value.i = AL_CRYSTAL_MCLK_TYPE;
     pvbuf[1].param = AL_RATE;
@@ -160,7 +160,7 @@ int SNDDMA_GetDMAPos(void)
     dmGetUST( (unsigned long long *)&ustNow );
     sgisnd_startframe -= (long long)((ustFuture - ustNow) * sgisnd_frames_per_ns);
     sgisnd_startframe += 100;
-//printf( "frame %ld pos %d\n", frame, UST_TO_BUFFPOS( sgisnd_startframe ) );
+/*printf( "frame %ld pos %d\n", frame, UST_TO_BUFFPOS( sgisnd_startframe ) ); */
     return( UST_TO_BUFFPOS( sgisnd_startframe ) );
 }
 
@@ -207,21 +207,21 @@ void SNDDMA_Submit(void)
 
     nPos = UST_TO_BUFFPOS( sgisnd_startframe );
 
-    // dump re-written contents of the buffer
+    /* dump re-written contents of the buffer */
     if (sgisnd_lastframewritten > sgisnd_startframe)
     {
 	alDiscardFrames( sgisnd_aport, sgisnd_lastframewritten - sgisnd_startframe );
     }
     else if ((int)(sgisnd_startframe - sgisnd_lastframewritten) >= QSND_BUFFER_FRAMES)
     {
-	// blow away everything if we've underflowed
+	/* blow away everything if we've underflowed */
 	alDiscardFrames( sgisnd_aport, QSND_BUFFER_FRAMES );
     }
 
-    // don't block
+    /* don't block */
     if (nFrames > nFillable) nFrames = nFillable;
 
-    // account for stereo
+    /* account for stereo */
     nFramesLeft = nFrames;
     if (nPos + nFrames * dma.channels > QSND_BUFFER_SIZE)
     {

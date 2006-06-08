@@ -18,7 +18,7 @@ typedef struct
 	int			channels;
 	int			loopstart;
 	int			samples;
-	int			dataofs;		// chunk starts this many bytes from file start
+	int			dataofs;		/* chunk starts this many bytes from file start */
 } wavinfo_t;
 
 
@@ -60,7 +60,7 @@ void FindNextChunk(char *name)
 		data_p=last_chunk;
 
 		if (data_p >= iff_end)
-		{	// didn't find the chunk
+		{	/* didn't find the chunk */
 			data_p = NULL;
 			return;
 		}
@@ -72,8 +72,8 @@ void FindNextChunk(char *name)
 			data_p = NULL;
 			return;
 		}
-//		if (iff_chunk_len > 1024*1024)
-//			Sys_Error ("FindNextChunk: %i length is past the 1 meg sanity limit", iff_chunk_len);
+/*		if (iff_chunk_len > 1024*1024) */
+/*			Sys_Error ("FindNextChunk: %i length is past the 1 meg sanity limit", iff_chunk_len); */
 		data_p -= 8;
 		last_chunk = data_p + 8 + ( (iff_chunk_len + 1) & ~1 );
 		if (!strncmp(data_p, name, 4))
@@ -124,7 +124,7 @@ wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 	iff_data = wav;
 	iff_end = wav + wavlength;
 
-// find "RIFF" chunk
+/* find "RIFF" chunk */
 	FindChunk("RIFF");
 	if (!(data_p && !strncmp(data_p+8, "WAVE", 4)))
 	{
@@ -132,9 +132,9 @@ wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 		return info;
 	}
 
-// get "fmt " chunk
+/* get "fmt " chunk */
 	iff_data = data_p + 12;
-// DumpChunks ();
+/* DumpChunks (); */
 
 	FindChunk("fmt ");
 	if (!data_p)
@@ -155,22 +155,22 @@ wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 	data_p += 4+2;
 	info.width = GetLittleShort() / 8;
 
-// get cue chunk
+/* get cue chunk */
 	FindChunk("cue ");
 	if (data_p)
 	{
 		data_p += 32;
 		info.loopstart = GetLittleLong();
-//		Com_Printf("loopstart=%d\n", sfx->loopstart);
+/*		Com_Printf("loopstart=%d\n", sfx->loopstart); */
 
-	// if the next chunk is a LIST chunk, look for a cue length marker
+	/* if the next chunk is a LIST chunk, look for a cue length marker */
 		FindNextChunk ("LIST");
 		if (data_p)
 		{
 			if (!strncmp (data_p + 28, "mark", 4))
-			{	// this is not a proper parse, but it works with cooledit...
+			{	/* this is not a proper parse, but it works with cooledit... */
 				data_p += 24;
-				i = GetLittleLong ();	// samples in loop
+				i = GetLittleLong ();	/* samples in loop */
 				info.samples = info.loopstart + i;
 			}
 		}
@@ -178,7 +178,7 @@ wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 	else
 		info.loopstart = -1;
 
-// find data chunk
+/* find data chunk */
 	FindChunk("data");
 	if (!data_p)
 	{
@@ -202,7 +202,7 @@ wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 	return info;
 }
 
-//=====================================================================
+/*===================================================================== */
 
 /*
 ==============
@@ -232,7 +232,7 @@ void LoadSoundtrack (void)
 
 	wavinfo = GetWavinfo (name, soundtrack, len);
 
-	// count samples for compression
+	/* count samples for compression */
 	memset (samplecounts, 0, sizeof(samplecounts));
 
 	j = wavinfo.samples/2;
@@ -279,7 +279,7 @@ void WriteSound (FILE *output, int frame)
 	}
 }
 
-//==========================================================================
+/*========================================================================== */
 
 /*
 ==================
@@ -295,7 +295,7 @@ cblock_t MTF (cblock_t in)
 
 	out_p = out.data = malloc(in.count + 4);
 
-	// write count
+	/* write count */
 	*out_p++ = in.count&255;
 	*out_p++ = (in.count>>8)&255;
 	*out_p++ = (in.count>>16)&255;
@@ -310,7 +310,7 @@ cblock_t MTF (cblock_t in)
 		code = index[b];
 		*out_p++ = code;
 		
-		// shuffle b indexes to 0
+		/* shuffle b indexes to 0 */
 		for (j=0 ; j<256 ; j++)
 			if (index[j] < code)
 				index[j]++;
@@ -323,7 +323,7 @@ cblock_t MTF (cblock_t in)
 }
 
 
-//==========================================================================
+/*========================================================================== */
 
 int		bwt_size;
 byte	*bwt_data;
@@ -376,13 +376,13 @@ cblock_t BWT (cblock_t in)
 
 	out_p = out.data = malloc(in.count + 8);
 
-	// write count
+	/* write count */
 	*out_p++ = in.count&255;
 	*out_p++ = (in.count>>8)&255;
 	*out_p++ = (in.count>>16)&255;
 	*out_p++ = (in.count>>24)&255;
 
-	// write head index
+	/* write head index */
 	for (i=0 ; i<in.count ; i++)
 		if (sorted[i] == 0)
 			break;
@@ -391,7 +391,7 @@ cblock_t BWT (cblock_t in)
 	*out_p++ = (i>>16)&255;
 	*out_p++ = (i>>24)&255;
 
-	// write the L column
+	/* write the L column */
 	for (i=0 ; i<in.count ; i++)
 		*out_p++ = in.data[(sorted[i]+in.count-1)%in.count];
 
@@ -402,7 +402,7 @@ cblock_t BWT (cblock_t in)
 	return out;
 }
 
-//==========================================================================
+/*========================================================================== */
 
 typedef struct hnode_s
 {
@@ -479,12 +479,12 @@ cblock_t Huffman (cblock_t in)
 	cblock_t	out;
 	int			max, maxchar;
 
-	// count
+	/* count */
 	memset (hnodes, 0, sizeof(hnodes));
 	for (i=0 ; i<in.count ; i++)
 		hnodes[in.data[i]].count++;
 
-	// normalize counts
+	/* normalize counts */
 	max = 0;
 	maxchar = 0;
 	for (i=0 ; i<256 ; i++)
@@ -503,16 +503,16 @@ cblock_t Huffman (cblock_t in)
 		hnodes[i].count = (hnodes[i].count*255+max-1) / max;
 	}
 
-	// build the nodes
+	/* build the nodes */
 	numhnodes = 256;
 	while (numhnodes != 511)
 	{
 		node = &hnodes[numhnodes];
 
-		// pick two lowest counts
+		/* pick two lowest counts */
 		node->children[0] = SmallestNode ();
 		if (node->children[0] == -1)
-			break;	// no more
+			break;	/* no more */
 
 		node->children[1] = SmallestNode ();
 		if (node->children[1] == -1)
@@ -531,17 +531,17 @@ cblock_t Huffman (cblock_t in)
 	out_p = out.data = malloc(in.count*2 + 1024);
 	memset (out_p, 0, in.count*2+1024);
 
-	// write count
+	/* write count */
 	*out_p++ = in.count&255;
 	*out_p++ = (in.count>>8)&255;
 	*out_p++ = (in.count>>16)&255;
 	*out_p++ = (in.count>>24)&255;
 
-	// save out the 256 normalized counts so the tree can be recreated
+	/* save out the 256 normalized counts so the tree can be recreated */
 	for (i=0 ; i<256 ; i++)
 		*out_p++ = hnodes[i].count;
 
-	// write bits
+	/* write bits */
 	outbits = 0;
 	for (i=0 ; i<in.count ; i++)
 	{
@@ -563,7 +563,7 @@ cblock_t Huffman (cblock_t in)
 	return out;
 }
 
-//==========================================================================
+/*========================================================================== */
 
 /*
 ==================
@@ -586,7 +586,7 @@ cblock_t RLE (cblock_t in)
 
 	out_p = out.data = malloc (in.count*2);
 
-	// write count
+	/* write count */
 	*out_p++ = in.count&255;
 	*out_p++ = (in.count>>8)&255;
 	*out_p++ = (in.count>>16)&255;
@@ -622,7 +622,7 @@ rle_counts[repeat]++;
 	return out;
 }
 
-//==========================================================================
+/*========================================================================== */
 
 unsigned	lzss_head[256];
 unsigned	lzss_next[0x20000];
@@ -654,7 +654,7 @@ Error ("LZSS: too big");
 	out_p = out.data = malloc (in.count*2);
 	memset (out.data, 0, in.count*2);
 
-	// write count
+	/* write count */
 	*out_p++ = in.count&255;
 	*out_p++ = (in.count>>8)&255;
 	*out_p++ = (in.count>>16)&255;
@@ -665,7 +665,7 @@ Error ("LZSS: too big");
 	{
 		val = in.data[i];
 #if 1
-// chained search
+/* chained search */
 		bestlength = 0;
 		beststart = 0;
 
@@ -676,7 +676,7 @@ Error ("LZSS: too big");
 		start = lzss_head[val];
 		while (start != -1 && start >= i-BACK_WINDOW)
 		{			
-			// count match length
+			/* count match length */
 			for (j=0 ; j<max ; j++)
 				if (in.data[start+j] != in.data[i+j])
 					break;
@@ -689,8 +689,8 @@ Error ("LZSS: too big");
 		}
 
 #else
-// slow simple search
-		// search for a match
+/* slow simple search */
+		/* search for a match */
 		max = FRONT_WINDOW;
 		if (i + max > in.count)
 			max = in.count - i;
@@ -704,7 +704,7 @@ Error ("LZSS: too big");
 		{
 			if (in.data[start] != val)
 				continue;
-			// count match length
+			/* count match length */
 			for (j=0 ; j<max ; j++)
 				if (in.data[start+j] != in.data[i+j])
 					break;
@@ -718,18 +718,18 @@ Error ("LZSS: too big");
 		beststart = BACK_WINDOW - (i-beststart);
 
 		if (bestlength < 3)
-		{	// output a single char
+		{	/* output a single char */
 			bestlength = 1;
 
-			out_p[outbits>>3] |= 1<<(outbits&7);	// set bit to mark char
+			out_p[outbits>>3] |= 1<<(outbits&7);	/* set bit to mark char */
 			outbits++;
 			for (j=0 ; j<8 ; j++, outbits++)
 				if (val & (1<<j) )
 					out_p[outbits>>3] |= 1<<(outbits&7);
 		}
 		else
-		{	// output a phrase
-			outbits++;	// leave a 0 bit to mark phrase
+		{	/* output a phrase */
+			outbits++;	/* leave a 0 bit to mark phrase */
 			for (j=0 ; j<BACK_BITS ; j++, outbits++)
 				if (beststart & (1<<j) )
 					out_p[outbits>>3] |= 1<<(outbits&7);
@@ -752,7 +752,7 @@ Error ("LZSS: too big");
 	return out;
 }
 
-//==========================================================================
+/*========================================================================== */
 
 #define	MIN_REPT	15
 #define	MAX_REPT	0
@@ -835,17 +835,17 @@ void BuildTree1 (int prev)
 	hnode_t		*node, *nodebase;
 	int			numhnodes;
 
-	// build the nodes
+	/* build the nodes */
 	numhnodes = HUF_TOKENS;
 	nodebase = hnodes1[prev];
 	while (1)
 	{
 		node = &nodebase[numhnodes];
 
-		// pick two lowest counts
+		/* pick two lowest counts */
 		node->children[0] = SmallestNode1 (nodebase, numhnodes);
 		if (node->children[0] == -1)
-			break;	// no more
+			break;	/* no more */
 
 		node->children[1] = SmallestNode1 (nodebase, numhnodes);
 		if (node->children[1] == -1)
@@ -907,7 +907,7 @@ void Huffman1_Build (FILE *f)
 
 	for (i=0 ; i<256 ; i++)
 	{
-		// normalize and save the counts
+		/* normalize and save the counts */
 		max = 0;
 		for (j=0 ; j<HUF_TOKENS ; j++)
 		{
@@ -918,7 +918,7 @@ void Huffman1_Build (FILE *f)
 			max = 1;
 		total = 0;
 		for (j=0 ; j<HUF_TOKENS ; j++)
-		{	// easy to overflow 32 bits here!
+		{	/* easy to overflow 32 bits here! */
 			v = (hnodes1[i][j].count*(double)255+max-1)/max;
 			if (v > 255)
 				Error ("v > 255");
@@ -927,7 +927,7 @@ void Huffman1_Build (FILE *f)
 				total++;
 		}
 		if (total == 1)
-		{	// must have two tokens
+		{	/* must have two tokens */
 			if (!scaled[i][0])
 				scaled[i][0] = hnodes1[i][0].count = 1;
 			else
@@ -938,7 +938,7 @@ void Huffman1_Build (FILE *f)
 	}
 
 #if 0
-	// count up the total bits
+	/* count up the total bits */
 	total = 0;
 	for (i=0 ; i<256 ; i++)
 		for (j=0 ; j<256 ; j++)
@@ -972,13 +972,13 @@ cblock_t Huffman1 (cblock_t in)
 	out_p = out.data = malloc(in.count*2 + 1024);
 	memset (out_p, 0, in.count*2+1024);
 
-	// write count
+	/* write count */
 	*out_p++ = in.count&255;
 	*out_p++ = (in.count>>8)&255;
 	*out_p++ = (in.count>>16)&255;
 	*out_p++ = (in.count>>24)&255;
 
-	// write bits
+	/* write bits */
 	outbits = 0;
 	prev = 0;
 	for (i=0 ; i<in.count ; i++)
@@ -999,7 +999,7 @@ cblock_t Huffman1 (cblock_t in)
 
 		prev = v;
 #if 1
-		// check for repeat encodes
+		/* check for repeat encodes */
 		for (rept=1 ; i+rept < in.count && rept < MAX_REPT ; rept++)
 			if (in.data[i+rept] != v)
 				break;
@@ -1028,7 +1028,7 @@ cblock_t Huffman1 (cblock_t in)
 	return out;
 }
 
-//==========================================================================
+/*========================================================================== */
 
 
 /*
@@ -1068,10 +1068,10 @@ cblock_t LoadFrame (char *base, int frame, int digits, byte **palette)
 	printf ("%s\n", name);
 	Load256Image (name, &in.data, palette, &width, &height);
 	in.count = width*height;
-// FIXME: map 0 and 255!
+/* FIXME: map 0 and 255! */
 
 #if 0
-	// rle compress
+	/* rle compress */
 	rle = RLE(in);
 	free (in.data);
 
@@ -1108,15 +1108,15 @@ void Cmd_Video (void)
 	strcpy (base, token);
 	if (g_release)
 	{
-//		sprintf (savename, "video/%s.cin", token);
-//		ReleaseFile (savename);
+/*		sprintf (savename, "video/%s.cin", token); */
+/*		ReleaseFile (savename); */
 		return;
 	}
 
 	GetToken (qfalse);
 	digits = atoi(token);
 
-	// optionally skip frames
+	/* optionally skip frames */
 	if (TokenAvailable ())
 	{
 		GetToken (qfalse);
@@ -1128,7 +1128,7 @@ void Cmd_Video (void)
 	sprintf (savename, "%svideo/%s.cin", gamedir, base);
 
 
-	// clear stuff
+	/* clear stuff */
 	memset (charbits1, 0, sizeof(charbits1));
 	memset (charbitscount1, 0, sizeof(charbitscount1));
 	memset (hnodes1, 0, sizeof(hnodes1));
@@ -1136,7 +1136,7 @@ void Cmd_Video (void)
 	memset (order0counts, 0, sizeof(order0counts));
 
 
-	// load the entire sound wav file if present
+	/* load the entire sound wav file if present */
 	LoadSoundtrack ();
 
 	if (digits == 4)
@@ -1151,7 +1151,7 @@ void Cmd_Video (void)
 	if (!output)
 		Error ("Can't open %s", savename);
 
-	// write header info
+	/* write header info */
 	i = LittleLong (width);
 	fwrite (&i, 4, 1, output);
 	i = LittleLong (height);
@@ -1163,7 +1163,7 @@ void Cmd_Video (void)
 	i = LittleLong (wavinfo.channels);
 	fwrite (&i, 4, 1, output);
 
-	// build the dictionary
+	/* build the dictionary */
 	for ( frame=startframe ;  ; frame++)
 	{
 		printf ("counting ", frame);
@@ -1175,13 +1175,13 @@ void Cmd_Video (void)
 	}
 	printf ("\n");
 
-	// build nodes and write counts
+	/* build nodes and write counts */
 	Huffman1_Build (output);
 
 
 	memset (current_palette, 0, sizeof(current_palette));
 
-	// compress it with the dictionary
+	/* compress it with the dictionary */
 	for (frame=startframe ;  ; frame++)
 	{
 		printf ("packing ", frame);
@@ -1189,11 +1189,11 @@ void Cmd_Video (void)
 		if (!in.data)
 			break;
 
-		// see if the palette has changed
+		/* see if the palette has changed */
 		for (i=0 ; i<768 ; i++)
 			if (palette[i] != current_palette[i])
 			{
-				// write a palette change
+				/* write a palette change */
 				memcpy (current_palette, palette, sizeof(current_palette));
 				command = LittleLong(1);
 				fwrite (&command, 1, 4, output);
@@ -1202,11 +1202,11 @@ void Cmd_Video (void)
 			}
 		if (i == 768)
 		{
-			command = 0;	// no palette change
+			command = 0;	/* no palette change */
 			fwrite (&command, 1, 4, output);
 		}
 
-		// save the image
+		/* save the image */
 		huffman = Huffman1 (in);
 		printf ("%5i bytes after huffman1\n", huffman.count);
 
@@ -1215,7 +1215,7 @@ void Cmd_Video (void)
 
 		fwrite (huffman.data, 1, huffman.count, output);
 
-		// save some sound samples
+		/* save some sound samples */
 		WriteSound (output, frame);
 
 		free (palette);
@@ -1224,7 +1224,7 @@ void Cmd_Video (void)
 	}
 	printf ("\n");
 
-	// write end-of-file command
+	/* write end-of-file command */
 	command = 2;
 	fwrite (&command, 1, 4, output);
 

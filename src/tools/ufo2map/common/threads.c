@@ -57,7 +57,7 @@ void ThreadWorkerFunction (int threadnum)
 		work = GetThreadWork ();
 		if (work == -1)
 			break;
-// 		printf ("thread %i, work %i\n", threadnum, work);
+/* 		printf ("thread %i, work %i\n", threadnum, work); */
 		workfunction(work);
 	}
 }
@@ -92,7 +92,7 @@ void ThreadSetDefault (void)
 {
 	SYSTEM_INFO info;
 
-	if (numthreads == -1)	// not set manually
+	if (numthreads == -1)	/* not set manually */
 	{
 		GetSystemInfo (&info);
 		numthreads = info.dwNumberOfProcessors;
@@ -143,13 +143,13 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 	pacifier = showpacifier;
 	threaded = qtrue;
 
-	//
-	// run threads in parallel
-	//
+	/* */
+	/* run threads in parallel */
+	/* */
 	InitializeCriticalSection (&crit);
 
 	if (numthreads == 1)
-	{	// use same thread
+	{	/* use same thread */
 		func (0);
 	}
 	else
@@ -157,11 +157,11 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 		for (i=0 ; i<numthreads ; i++)
 		{
 			threadhandle[i] = CreateThread(
-			   NULL,	// LPSECURITY_ATTRIBUTES lpsa,
-			   0,		// DWORD cbStack,
-			   (LPTHREAD_START_ROUTINE)func,	// LPTHREAD_START_ROUTINE lpStartAddr,
-			   (LPVOID)i,	// LPVOID lpvThreadParm,
-			   0,			//   DWORD fdwCreate,
+			   NULL,	/* LPSECURITY_ATTRIBUTES lpsa, */
+			   0,		/* DWORD cbStack, */
+			   (LPTHREAD_START_ROUTINE)func,	/* LPTHREAD_START_ROUTINE lpStartAddr, */
+			   (LPVOID)i,	/* LPVOID lpvThreadParm, */
+			   0,			/*   DWORD fdwCreate, */
 			   &threadid[i]);
 		}
 
@@ -194,7 +194,7 @@ int		numthreads = 4;
 
 void ThreadSetDefault (void)
 {
-	if (numthreads == -1)	// not set manually
+	if (numthreads == -1)	/* not set manually */
 	{
 		numthreads = 4;
 	}
@@ -306,7 +306,7 @@ void ThreadSetDefault (void)
 	if (numthreads == -1)
 		numthreads = prctl(PR_MAXPPROCS);
 	printf ("%i threads\n", numthreads);
-//@@
+/*@@ */
 	usconfig (CONF_INITUSERS, numthreads);
 }
 
@@ -349,8 +349,8 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
 	{
 		pid[i] = sprocsp ( (void (*)(void *, size_t))func, PR_SALL, (void *)i
 			, NULL, 0x100000);
-//		pid[i] = sprocsp ( (void (*)(void *, size_t))func, PR_SALL, (void *)i
-//			, NULL, 0x80000);
+/*		pid[i] = sprocsp ( (void (*)(void *, size_t))func, PR_SALL, (void *)i */
+/*			, NULL, 0x80000); */
 		if (pid[i] == -1)
 		{
 			perror ("sproc");

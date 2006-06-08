@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int			r_numshaders;
 
-// shader_t is in client/ref.h
-// r_shaders is external and is linked to cl.refdef.shaders in cl_view.c V_RenderView
+/* shader_t is in client/ref.h */
+/* r_shaders is external and is linked to cl.refdef.shaders in cl_view.c V_RenderView */
 shader_t	r_shaders[MAX_SHADERS];
 
 value_t shader_values[] =
@@ -49,28 +49,28 @@ void CL_ParseShaders( char *title, char **text )
 	char    *errhead = "CL_ParseShaders: unexptected end of file (names ";
 	char    *token;
 
-	// get name list body body
+	/* get name list body body */
 	token = COM_Parse( text );
 	if ( !*text || *token != '{' ) {
 		Com_Printf( "CL_ParseShaders: shader \"%s\" without body ignored\n", title );
 		return;
 	}
 
-	// new entry
+	/* new entry */
 	entry = &r_shaders[r_numshaders++];
 	memset( entry, 0, sizeof( shader_t ) );
 	Q_strncpyz( entry->title, title, MAX_VAR );
 	do {
-		// get the name type
+		/* get the name type */
 		token = COM_EParse( text, errhead, title );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
-		// get values
+		/* get values */
 		for ( v = shader_values; v->string; v++ )
 			if ( !Q_strcmp( token, v->string ) )
 			{
-				// found a definition
+				/* found a definition */
 				token = COM_EParse( text, errhead, title );
 				if ( !*text ) return;
 

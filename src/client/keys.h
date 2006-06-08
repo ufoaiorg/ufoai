@@ -18,11 +18,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-//
-// these are the key numbers that should be passed to KeyEvent
-//
+/* */
+/* these are the key numbers that should be passed to KeyEvent */
+/* */
 
-// normal keys should be passed as lowercased ascii
+/* normal keys should be passed as lowercased ascii */
 
 typedef enum {
 	K_TAB = 9,
@@ -131,7 +131,7 @@ typedef enum {
 	
 	K_NUMLOCK,
 
-	K_LAST_KEY		// this had better be <256!
+	K_LAST_KEY		/* this had better be <256! */
 } keyNum_t;
 
 typedef enum

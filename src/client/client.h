@@ -17,9 +17,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// client.h -- primary header for client
+/* client.h -- primary header for client */
 
-//define	PARANOID			// speed sapping error checking
+/*define	PARANOID			// speed sapping error checking */
 
 
 #ifndef CLIENT_DEFINED
@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_ufopedia.h"
 #include "cl_market.h"
 
-//=============================================================================
+/*============================================================================= */
 typedef struct tutorial_s
 {
 	char name[MAX_VAR];
@@ -54,7 +54,7 @@ typedef struct tutorial_s
 
 extern tutorial_t tutorials[MAX_TUTORIALS];
 
-//=============================================================================
+/*============================================================================= */
 
 #define MAX_TEAMLIST	8
 
@@ -64,15 +64,15 @@ extern tutorial_t tutorials[MAX_TUTORIALS];
 
 typedef struct
 {
-	int			serverframe;		// if not current, this ent isn't in the frame
+	int			serverframe;		/* if not current, this ent isn't in the frame */
 
-	int			trailcount;			// for diminishing grenade trails
-	vec3_t		lerp_origin;		// for trails (variable hz)
+	int			trailcount;			/* for diminishing grenade trails */
+	vec3_t		lerp_origin;		/* for trails (variable hz) */
 
 	int			fly_stoptime;
 } centity_t;
 
-#define MAX_CLIENTWEAPONMODELS		20		// PGM -- upped from 16 to fit the chainfist vwep
+#define MAX_CLIENTWEAPONMODELS		20		/* PGM -- upped from 16 to fit the chainfist vwep */
 
 typedef struct
 {
@@ -88,10 +88,10 @@ typedef struct
 extern char cl_weaponmodels[MAX_CLIENTWEAPONMODELS][MAX_QPATH];
 extern int num_cl_weaponmodels;
 
-#define	CMD_BACKUP		64	// allow a lot of command backups for very fast systems
+#define	CMD_BACKUP		64	/* allow a lot of command backups for very fast systems */
 
-//
-//
+/* */
+/* */
 #define FOV				60.0
 
 typedef struct
@@ -101,7 +101,7 @@ typedef struct
 	vec3_t	speed;
 	vec3_t	angles;
 	vec3_t	omega;
-	vec3_t	axis[3];	// set when refdef.angles is set
+	vec3_t	axis[3];	/* set when refdef.angles is set */
 
 	float	lerplevel;
 	float	zoom;
@@ -112,7 +112,7 @@ typedef enum { CAMERA_MODE_REMOTE, CAMERA_MODE_FIRSTPERSON } camera_mode_t;
 
 camera_mode_t camera_mode;
 
-// don't mess with the order!!!
+/* don't mess with the order!!! */
 typedef enum
 {
 	M_MOVE,
@@ -127,10 +127,10 @@ typedef enum
 	M_PEND_FIRE_SL
 } cmodes_t;
 
-//
-// the client_state_t structure is wiped completely at every
-// server map change
-//
+/* */
+/* the client_state_t structure is wiped completely at every */
+/* server map change */
+/* */
 typedef struct
 {
 	int			timeoutcount;
@@ -138,17 +138,17 @@ typedef struct
 	int			timedemo_frames;
 	int			timedemo_start;
 
-	qboolean	refresh_prepped;	// false if on new level or new ref dll
-	qboolean	sound_prepped;		// ambient sounds can start
-	qboolean	force_refdef;		// vid has changed, so we can't use a paused refdef
+	qboolean	refresh_prepped;	/* false if on new level or new ref dll */
+	qboolean	sound_prepped;		/* ambient sounds can start */
+	qboolean	force_refdef;		/* vid has changed, so we can't use a paused refdef */
 
-	int			surpressCount;		// number of messages rate supressed
+	int			surpressCount;		/* number of messages rate supressed */
 
-	int			parse_entities;		// index (not anded off) into cl_parse_entities[]
+	int			parse_entities;		/* index (not anded off) into cl_parse_entities[] */
 
-	int			time;			// this is the time value that the client
-								// is rendering at.  always <= cls.realtime
-	int			eventTime;		// similar to time, but not counting if blockEvents is set
+	int			time;			/* this is the time value that the client */
+								/* is rendering at.  always <= cls.realtime */
+	int			eventTime;		/* similar to time, but not counting if blockEvents is set */
 
 	camera_t	cam;
 
@@ -165,34 +165,34 @@ typedef struct
 	int			numTeamList;
 	int			numAliensSpotted;
 
-	//
-	// transient data from server
-	//
-	char		layout[1024];		// general 2D overlay
+	/* */
+	/* transient data from server */
+	/* */
+	char		layout[1024];		/* general 2D overlay */
 
-	//
-	// non-gameserver infornamtion
-	// FIXME: move this cinematic stuff into the cin_t structure
+	/* */
+	/* non-gameserver infornamtion */
+	/* FIXME: move this cinematic stuff into the cin_t structure */
 	FILE		*cinematic_file;
-	int			cinematictime;		// cls.realtime for first cinematic frame
+	int			cinematictime;		/* cls.realtime for first cinematic frame */
 	int			cinematicframe;
 	char		cinematicpalette[768];
 	qboolean	cinematicpalette_active;
 
-	//
-	// server state information
-	//
-	qboolean	attractloop;		// running the attract loop, any key will menu
-	int			servercount;	// server identification for prespawns
+	/* */
+	/* server state information */
+	/* */
+	qboolean	attractloop;		/* running the attract loop, any key will menu */
+	int			servercount;	/* server identification for prespawns */
 	char		gamedir[MAX_QPATH];
 	int			pnum;
 	int			actTeam;
 
 	char		configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
-	//
-	// locally derived information from server state
-	//
+	/* */
+	/* locally derived information from server state */
+	/* */
 	struct model_s	*model_draw[MAX_MODELS];
 	struct cmodel_s	*model_clip[MAX_MODELS];
 	struct model_s	*model_weapons[MAX_OBJDEFS];
@@ -217,11 +217,11 @@ of server connections
 
 typedef enum {
 	ca_uninitialized,
-	ca_disconnected, 	// not talking to a server
-	ca_sequence,		// rendering a sequence
-	ca_connecting,		// sending request packets to the server
-	ca_connected,		// netchan_t established, waiting for svc_serverdata
-	ca_active			// game views should be displayed
+	ca_disconnected, 	/* not talking to a server */
+	ca_sequence,		/* rendering a sequence */
+	ca_connecting,		/* sending request packets to the server */
+	ca_connected,		/* netchan_t established, waiting for svc_serverdata */
+	ca_active			/* game views should be displayed */
 } connstate_t;
 
 typedef enum {key_game, key_console, key_message} keydest_t;
@@ -232,46 +232,46 @@ typedef struct
 	keydest_t	key_dest;
 
 	int			framecount;
-	int			realtime;			// always increasing, no clamping, etc
-	float		frametime;			// seconds since last frame
+	int			realtime;			/* always increasing, no clamping, etc */
+	float		frametime;			/* seconds since last frame */
 
 	int			framedelta;
 	float		framerate;
 
-	// screen rendering information
-	float		disable_screen;		// showing loading plaque between levels
-									// or changing rendering dlls
-									// if time gets > 30 seconds ahead, break it
-	int			disable_servercount;	// when we receive a frame and cl.servercount
-									// > cls.disable_servercount, clear disable_screen
+	/* screen rendering information */
+	float		disable_screen;		/* showing loading plaque between levels */
+									/* or changing rendering dlls */
+									/* if time gets > 30 seconds ahead, break it */
+	int			disable_servercount;	/* when we receive a frame and cl.servercount */
+									/* > cls.disable_servercount, clear disable_screen */
 
-	// connection information
-	char		servername[MAX_OSPATH];	// name of server from original connect
-	float		connect_time;		// for connection retransmits
+	/* connection information */
+	char		servername[MAX_OSPATH];	/* name of server from original connect */
+	float		connect_time;		/* for connection retransmits */
 
-	int			quakePort;			// a 16 bit value that allows quake servers
-									// to work around address translating routers
+	int			quakePort;			/* a 16 bit value that allows quake servers */
+									/* to work around address translating routers */
 	netchan_t	netchan;
-	int			serverProtocol;		// in case we are doing some kind of version hack
+	int			serverProtocol;		/* in case we are doing some kind of version hack */
 
-	int			challenge;			// from the server to use for connecting
+	int			challenge;			/* from the server to use for connecting */
 
-	// demo recording info must be here, so it isn't cleared on level change
+	/* demo recording info must be here, so it isn't cleared on level change */
 	qboolean	demorecording;
-	qboolean	demowaiting;	// don't record until a non-delta message is received
+	qboolean	demowaiting;	/* don't record until a non-delta message is received */
 	FILE		*demofile;
 
-	// needs to be here, because server can be shutdown, before we see the ending screen
+	/* needs to be here, because server can be shutdown, before we see the ending screen */
 	int			team;
 } client_static_t;
 
 extern client_static_t	cls;
 
-//=============================================================================
+/*============================================================================= */
 
-//
-// cvars
-//
+/* */
+/* cvars */
+/* */
 #ifdef HAVE_GETTEXT
 extern	cvar_t	*s_language;
 #endif
@@ -323,7 +323,7 @@ extern	cvar_t	*freelook;
 
 extern	cvar_t	*cl_logevents;
 
-extern	cvar_t	*cl_lightlevel;	// FIXME HACK
+extern	cvar_t	*cl_lightlevel;	/* FIXME HACK */
 
 extern	cvar_t	*cl_paused;
 extern	cvar_t	*cl_timedemo;
@@ -344,7 +344,7 @@ extern	cvar_t	*mn_main;
 extern	cvar_t	*mn_sequence;
 extern	cvar_t	*mn_hud;
 extern	cvar_t	*mn_lastsave;
-//the new soundsystem cvar 0-3 by now
+/*the new soundsystem cvar 0-3 by now */
 #ifndef _WIN32
 extern	cvar_t	*s_system;
 #endif /* _WIN32 */
@@ -355,46 +355,46 @@ extern cvar_t	*cl_precachemenus;
 
 typedef struct
 {
-	int		key;				// so entities can reuse same entry
+	int		key;				/* so entities can reuse same entry */
 	vec3_t	color;
 	vec3_t	origin;
 	float	radius;
-	float	die;				// stop lighting after this time
-	float	decay;				// drop this each second
-	float	minlight;			// don't add when contributing less
+	float	die;				/* stop lighting after this time */
+	float	decay;				/* drop this each second */
+	float	minlight;			/* don't add when contributing less */
 } cdlight_t;
 
 extern	centity_t	cl_entities[MAX_EDICTS];
 extern	cdlight_t	cl_dlights[MAX_DLIGHTS];
 
-//=============================================================================
+/*============================================================================= */
 
 extern	netadr_t	net_from;
-//extern	sizebuf_t	net_message;
+/*extern	sizebuf_t	net_message; */
 
 void DisplayString (int x, int y, char *s);
-void DrawAltString (int x, int y, char *s);	// toggle high bit
+void DrawAltString (int x, int y, char *s);	/* toggle high bit */
 
 void CL_AddNetgraph (void);
 
 void CL_ParticleEffect (vec3_t org, vec3_t dir, int color, int count);
 void CL_ParticleEffect2 (vec3_t org, vec3_t dir, int color, int count);
-// RAFAEL
+/* RAFAEL */
 void CL_ParticleEffect3 (vec3_t org, vec3_t dir, int color, int count);
 
-//=================================================
-// shader stuff
-// =================================================
+/*================================================= */
+/* shader stuff */
+/* ================================================= */
 
 void CL_ShaderList_f ( void );
 void CL_ParseShaders( char *title, char **text );
 extern int	r_numshaders;
 extern shader_t	r_shaders[MAX_SHADERS];
 
-// =================================================
+/* ================================================= */
 
-// ========
-// PGM
+/* ======== */
+/* PGM */
 typedef struct particle_s
 {
 	struct particle_s	*next;
@@ -414,10 +414,10 @@ typedef struct particle_s
 
 #define	PARTICLE_GRAVITY	40
 #define BLASTER_PARTICLE_COLOR		0xe0
-// PMM
+/* PMM */
 #define INSTANT_PARTICLE	-10000.0
-// PGM
-// ========
+/* PGM */
+/* ======== */
 
 void CL_ClearEffects (void);
 void CL_ClearTEnts (void);
@@ -427,7 +427,7 @@ void CL_RailTrail (vec3_t start, vec3_t end);
 void CL_BubbleTrail (vec3_t start, vec3_t end);
 void CL_FlagTrail (vec3_t start, vec3_t end, float color);
 
-// RAFAEL
+/* RAFAEL */
 void CL_IonripperTrail (vec3_t start, vec3_t end);
 
 int CL_ParseEntityBits (unsigned *bits);
@@ -448,7 +448,7 @@ void CL_AddDLights (void);
 void CL_AddTEnts (void);
 void CL_AddLightStyles (void);
 
-//=================================================
+/*================================================= */
 
 void CL_PrepRefresh (void);
 void CL_RegisterSounds (void);
@@ -460,9 +460,9 @@ void IN_Accumulate (void);
 
 void CL_ParseLayout (void);
 
-//
-// cl_sequence.c (avi stuff)
-//
+/* */
+/* cl_sequence.c (avi stuff) */
+/* */
 qboolean CL_OpenAVIForWriting( char *filename );
 void CL_TakeVideoFrame( void );
 void CL_WriteAVIVideoFrame( const byte *imageBuffer, int size );
@@ -472,10 +472,10 @@ qboolean CL_VideoRecording( void );
 void CL_StopVideo_f( void );
 void CL_Video_f( void );
 
-//
-// cl_main
-//
-extern	refexport_t	re;		// interface to refresh .dll
+/* */
+/* cl_main */
+/* */
+extern	refexport_t	re;		/* interface to refresh .dll */
 
 void CL_Init (void);
 
@@ -486,15 +486,15 @@ void CL_GetChallengePacket (void);
 void CL_PingServers_f (void);
 void CL_Snd_Restart_f (void);
 
-//
-// cl_input
-//
+/* */
+/* cl_input */
+/* */
 
 typedef struct
 {
-	int			down[2];		// key nums holding it down
-	unsigned	downtime;		// msec timestamp
-	unsigned	msec;			// msec down this frame
+	int			down[2];		/* key nums holding it down */
+	unsigned	downtime;		/* msec timestamp */
+	unsigned	msec;			/* msec down this frame */
 	int			state;
 } kbutton_t;
 
@@ -543,9 +543,9 @@ void CL_Sniper(void);
 void CL_SniperModeSet(void);
 void CL_SniperModeUnset(void);
 
-//
-// cl_le.c
-//
+/* */
+/* cl_le.c */
+/* */
 typedef struct le_s {
 	qboolean	inuse;
 	qboolean	invis;
@@ -576,18 +576,18 @@ typedef struct le_s {
 	int			modelnum1, modelnum2, skinnum;
 	struct model_s	*model1, *model2;
 
-// 	character_t	*chr;
+/* 	character_t	*chr; */
 
-	// is called every frame
+	/* is called every frame */
 	void		(*think)(struct le_s *le);
 
-	// various think function vars
+	/* various think function vars */
 	byte		path[32];
 	int			pathLength, pathPos;
 	int			startTime, endTime;
 	int			speed;
 
-	// gfx
+	/* gfx */
 	animState_t	as;
 	ptl_t		*ptl;
 	char		*ref1, *ref2;
@@ -595,7 +595,7 @@ typedef struct le_s {
 	int			left, right;
 	int		fieldSize; /* ACTOR_SIZE_* */
 
-	// is called before adding a le to scene
+	/* is called before adding a le to scene */
 	qboolean	(*addFunc)(struct le_s *le, entity_t *ent);
 } le_t; /* local entity */
 
@@ -671,9 +671,9 @@ lm_t *CL_AddLocalModel (char *model, char *particle, vec3_t origin, vec3_t angle
 void CL_AddMapParticle (char *particle, vec3_t origin, vec2_t wait, char *info, int levelflags);
 void CL_ParticleCheckRounds( void );
 
-//
-// cl_actor.c
-//
+/* */
+/* cl_actor.c */
+/* */
 
 extern	le_t		*selActor;
 extern	int			actorMoveLength;
@@ -719,9 +719,9 @@ qboolean CL_AddActor( le_t *le, entity_t *ent );
 
 void CL_AddTargeting( void );
 
-//
-// cl_team.c
-//
+/* */
+/* cl_team.c */
+/* */
 #define MAX_ACTIVETEAM	8
 #define MAX_WHOLETEAM	32
 #define NUM_BUYTYPES	4
@@ -735,29 +735,29 @@ void CL_SendTeamInfo( sizebuf_t *buf, character_t *team, int num );
 void CL_CheckInventory( equipDef_t *equip );
 void CL_ItemDescription( int item );
 
-//
-// cl_research.c
-//
+/* */
+/* cl_research.c */
+/* */
 #include "cl_research.h"
 
-//
-// SAVEGAMES
-//
+/* */
+/* SAVEGAMES */
+/* */
 #ifndef SAVE_FILE_VERSION
 #define SAVE_FILE_VERSION 4
 #endif /* SAVE_FILE_VERSION */
 
-//
-// cl_basemanagment.c
-//
+/* */
+/* cl_basemanagment.c */
+/* */
 /* needs the MAX_ACTIVETEAM definition from above. */
 #include "cl_basemanagement.h"
 
 
-//
-// MISC
-// TODO: needs to be sorted (e.g what file is it defined?)
-//
+/* */
+/* MISC */
+/* TODO: needs to be sorted (e.g what file is it defined?) */
+/* */
 #define MAX_TEAMDATASIZE	32768
 #define MAX_GAMESAVESIZE	MAX_TEAMDATASIZE + 16384
 #define MAX_COMMENTLENGTH	32
@@ -774,14 +774,14 @@ void MN_GetMaps_f ( void );
 void CL_ListMaps_f ( void );
 void MN_NextMap ( void );
 void MN_PrevMap ( void );
-// END MISC
+/* END MISC */
 
-//
-// stats
-//
+/* */
+/* stats */
+/* */
 
-// beware - if you add new stuff to stats_t
-// the loading of an older savegame will not work
+/* beware - if you add new stuff to stats_t */
+/* the loading of an older savegame will not work */
 typedef struct stats_s
 {
 	int missionsWon;
@@ -790,7 +790,7 @@ typedef struct stats_s
 	int basesAttacked;
 	int interceptions;
 	int soldiersLost;
-	int soldiersNew; // new recruits
+	int soldiersNew; /* new recruits */
 	int killedAliens;
 	int rescuedCivilians;
 	int researchedTechnologies;
@@ -802,9 +802,9 @@ typedef struct stats_s
 
 extern stats_t	stats;
 
-//
-// message systems
-//
+/* */
+/* message systems */
+/* */
 
 typedef enum
 {
@@ -825,7 +825,7 @@ typedef struct message_s
 	char	title[MAX_VAR];
 	char	text[MAX_MESSAGE_TEXT];
 	messagetype_t type;
-	technology_t	*pedia;	// link to ufopedia if a research has finished.
+	technology_t	*pedia;	/* link to ufopedia if a research has finished. */
 	struct message_s	*next;
 	int	d, m, y, h, min, s;
 } message_t;
@@ -840,9 +840,9 @@ void CL_InitMessageSystem ( void );
 
 #include "cl_campaign.h"
 
-//
-// cl_menu.c
-//
+/* */
+/* cl_menu.c */
+/* */
 
 #define	NOFS(x)		(int)&(((menuNode_t *)0)->x)
 #define	MENUMODELFS(x)		(int)&(((menuModel_t *)0)->x)
@@ -871,7 +871,7 @@ typedef struct menuModel_s
 	char	model[MAX_QPATH];
 	animState_t	animState;
 	vec3_t	origin, scale, angles, center;
-	vec4_t	color; // rgba
+	vec4_t	color; /* rgba */
 	struct menuModel_s	*next;
 } menuModel_t;
 
@@ -890,7 +890,7 @@ typedef struct menuDepends_s
 
 typedef struct menuNode_s
 {
-	void		*data[6]; // needs to be first
+	void		*data[6]; /* needs to be first */
 	char	name[MAX_VAR];
 	int		type;
 	vec3_t	origin, scale, angles, center;
@@ -900,11 +900,11 @@ typedef struct menuNode_s
 	byte		align;
 	byte		invis, blend;
 	int		mousefx;
-	int	textScroll; // textfields - current scroll position
-	int	timeOut; // ms value until invis is set (see cl.time)
-	int		num, height; // textfields - num: menutexts-id; height: max. rows to show
-	vec4_t	color; // rgba
-	vec4_t	bgcolor; // rgba
+	int	textScroll; /* textfields - current scroll position */
+	int	timeOut; /* ms value until invis is set (see cl.time) */
+	int		num, height; /* textfields - num: menutexts-id; height: max. rows to show */
+	vec4_t	color; /* rgba */
+	vec4_t	bgcolor; /* rgba */
 	menuAction_t	*click, *rclick, *mclick, *mouseIn, *mouseOut;
 	menuDepends_t	depends;
 	struct menuNode_s	*next;
@@ -930,7 +930,7 @@ typedef enum
 	TEXT_AIRCRAFT_LIST,
 	TEXT_AIRCRAFT = 10,
 	TEXT_AIRCRAFT_INFO,
-	TEXT_MESSAGESYSTEM, // just a dummy for messagesystem - we use the stack
+	TEXT_MESSAGESYSTEM, /* just a dummy for messagesystem - we use the stack */
 	TEXT_CAMPAIGN_LIST,
 
 	MAX_MENUTEXTS
@@ -961,9 +961,9 @@ extern int numMenus;
 extern inventory_t *menuInventory;
 extern char *menuText[MAX_MENUTEXTS];
 
-// this is the function where all the sdl_ttf fonts are parsed
+/* this is the function where all the sdl_ttf fonts are parsed */
 void CL_ParseFont( char* name, char **text );
-// here they get reinit after a vid_restart
+/* here they get reinit after a vid_restart */
 void CL_InitFonts( void );
 
 typedef struct font_s
@@ -977,12 +977,12 @@ typedef struct font_s
 extern font_t *fontSmall;
 extern font_t *fontBig;
 
-// will return the size and the path for each font
+/* will return the size and the path for each font */
 void CL_GetFontData (char *name, int *size, char *path);
 
-//
-// cl_particle.c
-//
+/* */
+/* cl_particle.c */
+/* */
 void CL_ParticleRegisterArt( void );
 void CL_ResetParticles( void );
 void CL_ParticleRun( void );
@@ -997,9 +997,9 @@ extern int		numPtlArt;
 extern int		numPtls;
 
 
-//
-// cl_parse.c
-//
+/* */
+/* cl_parse.c */
+/* */
 extern	char *svc_strings[256];
 extern	char *ev_format[128];
 extern	void (*ev_func[128])( sizebuf_t *sb );
@@ -1012,9 +1012,9 @@ void CL_ParseClientinfo (int player);
 void CL_InitEvents (void);
 void CL_Events (void);
 
-//
-// cl_view.c
-//
+/* */
+/* cl_view.c */
+/* */
 extern sun_t	map_sun;
 extern int		map_maxlevel;
 
@@ -1027,9 +1027,9 @@ void V_AddLightStyle (int style, float r, float g, float b);
 entity_t *V_GetEntity( void );
 void V_CenterView( pos3_t pos );
 
-//
-// cl_sequence.c
-//
+/* */
+/* cl_sequence.c */
+/* */
 void CL_SequenceRender( void );
 void CL_Sequence2D( void );
 void CL_SequenceStart_f( void );
@@ -1037,24 +1037,24 @@ void CL_SequenceEnd_f( void );
 void CL_ResetSequences( void );
 void CL_ParseSequence( char *name, char **text );
 
-//
-// cl_tent.c
-//
+/* */
+/* cl_tent.c */
+/* */
 void CL_RegisterTEntSounds (void);
 void CL_RegisterTEntModels (void);
 void CL_SmokeAndFlash(vec3_t origin);
 
 
-//
-// cl_pred.c
-//
+/* */
+/* cl_pred.c */
+/* */
 void CL_InitPrediction (void);
 void CL_PredictMove (void);
 void CL_CheckPredictionError (void);
 
-//
-// cl_fx.c
-//
+/* */
+/* cl_fx.c */
+/* */
 cdlight_t *CL_AllocDlight (int key);
 void CL_BigTeleportParticles (vec3_t org);
 void CL_RocketTrail (vec3_t start, vec3_t end, centity_t *old);
@@ -1062,7 +1062,7 @@ void CL_DiminishingTrail (vec3_t start, vec3_t end, centity_t *old, int flags);
 void CL_FlyEffect (centity_t *ent, vec3_t origin);
 void CL_BfgParticles (entity_t *ent);
 void CL_AddParticles (void);
-// RAFAEL
+/* RAFAEL */
 void CL_TrapParticles (entity_t *ent);
 
 

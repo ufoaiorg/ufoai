@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// common.c -- misc functions used in client and server
+/* common.c -- misc functions used in client and server */
 #include "qcommon.h"
 #include <setjmp.h>
 #include <ctype.h>
@@ -33,7 +33,7 @@ char	*com_argv[MAX_NUM_ARGVS+1];
 
 int		realtime;
 
-jmp_buf abortframe;		// an ERR_DROP occured, exit the entire frame
+jmp_buf abortframe;		/* an ERR_DROP occured, exit the entire frame */
 
 
 FILE	*log_stats_file;
@@ -44,7 +44,7 @@ cvar_t	*log_stats;
 cvar_t	*developer;
 cvar_t	*timescale;
 cvar_t	*fixedtime;
-cvar_t	*logfile_active;	// 1 = buffer log, 2 = flush after each print
+cvar_t	*logfile_active;	/* 1 = buffer log, 2 = flush after each print */
 cvar_t	*showtrace;
 cvar_t	*dedicated;
 
@@ -52,7 +52,7 @@ FILE	*logfile;
 
 int			server_state;
 
-// host_speeds times
+/* host_speeds times */
 int		time_before_game;
 int		time_after_game;
 int		time_before_ref;
@@ -137,10 +137,10 @@ void Com_Printf (char *fmt, ...)
 
 	Con_Print (msg);
 
-	// also echo to debugging console
+	/* also echo to debugging console */
 	Sys_ConsoleOutput (msg);
 
-	// logfile
+	/* logfile */
 	if (logfile_active && logfile_active->value)
 	{
 		char	name[MAX_QPATH];
@@ -156,7 +156,7 @@ void Com_Printf (char *fmt, ...)
 		if (logfile)
 			fprintf (logfile, "%s", msg);
 		if (logfile_active->value > 1)
-			fflush (logfile);		// force it to save every time
+			fflush (logfile);		/* force it to save every time */
 	}
 }
 
@@ -174,7 +174,7 @@ void Com_DPrintf (char *fmt, ...)
 	char		msg[MAXPRINTMSG];
 
 	if (!developer || !developer->value)
-		return;			// don't confuse non-developers with techie stuff...
+		return;			/* don't confuse non-developers with techie stuff... */
 
 	va_start (argptr,fmt);
 #ifndef _WIN32
@@ -316,9 +316,9 @@ vec3_t	bytedirs[NUMVERTEXNORMALS] =
 #include "../client/anorms.h"
 };
 
-//
-// writing functions
-//
+/* */
+/* writing functions */
+/* */
 
 void MSG_WriteChar (sizebuf_t *sb, int c)
 {
@@ -455,7 +455,7 @@ void MSG_WriteFormat( sizebuf_t *sb, char *format, ... )
 	va_list	ap;
 	char	typeID;
 
-	// initialize ap
+	/* initialize ap */
 	va_start( ap, format );
 
 	while ( *format )
@@ -477,7 +477,7 @@ void MSG_WriteFormat( sizebuf_t *sb, char *format, ... )
 			MSG_WriteLong( sb, va_arg( ap, int ) );
 			break;
 		case 'f':
-			// NOTE: float is promoted to double through ...
+			/* NOTE: float is promoted to double through ... */
 			MSG_WriteFloat( sb, va_arg( ap, double ) );
 			break;
 		case 'p':
@@ -490,7 +490,7 @@ void MSG_WriteFormat( sizebuf_t *sb, char *format, ... )
 			MSG_WriteDir( sb, va_arg( ap, float* ) );
 			break;
 		case 'a':
-			// NOTE: float is promoted to double through ...
+			/* NOTE: float is promoted to double through ... */
 			MSG_WriteAngle( sb, va_arg( ap, double ) );
 			break;
 		case '!':
@@ -516,18 +516,18 @@ void MSG_WriteFormat( sizebuf_t *sb, char *format, ... )
 }
 
 
-//============================================================
+/*============================================================ */
 
-//
-// reading functions
-//
+/* */
+/* reading functions */
+/* */
 
 void MSG_BeginReading (sizebuf_t *msg)
 {
 	msg->readcount = 0;
 }
 
-// returns -1 if no more characters are available
+/* returns -1 if no more characters are available */
 int MSG_ReadChar (sizebuf_t *msg_read)
 {
 	int	c;
@@ -704,7 +704,7 @@ void MSG_ReadFormat( sizebuf_t *msg_read, char *format, ... )
 	va_list	ap;
 	char	typeID;
 
-	// initialize ap
+	/* initialize ap */
 	va_start( ap, format );
 
 	while ( *format )
@@ -796,7 +796,7 @@ int MSG_LengthFormat( sizebuf_t *sb, char *format )
 				Com_Error( ERR_DROP, "LengthFormat: Unknown type!\n" );
 		}
 
-		// advance in buffer
+		/* advance in buffer */
 		sb->readcount += delta;
 		length += delta;
 	}
@@ -806,7 +806,7 @@ int MSG_LengthFormat( sizebuf_t *sb, char *format )
 }
 
 
-//===========================================================================
+/*=========================================================================== */
 
 void SZ_Init (sizebuf_t *buf, byte *data, int length)
 {
@@ -858,16 +858,16 @@ void SZ_Print (sizebuf_t *buf, char *data)
 	if (buf->cursize)
 	{
 		if (buf->data[buf->cursize-1])
-			memcpy ((byte *)SZ_GetSpace(buf, len),data,len); // no trailing 0
+			memcpy ((byte *)SZ_GetSpace(buf, len),data,len); /* no trailing 0 */
 		else
-			memcpy ((byte *)SZ_GetSpace(buf, len-1)-1,data,len); // write over trailing 0
+			memcpy ((byte *)SZ_GetSpace(buf, len-1)-1,data,len); /* write over trailing 0 */
 	}
 	else
 		memcpy ((byte *)SZ_GetSpace(buf, len),data,len);
 }
 
 
-//============================================================================
+/*============================================================================ */
 
 
 /*
@@ -949,7 +949,7 @@ void COM_AddParm (char *parm)
 
 
 
-/// just for debugging
+/*/ just for debugging */
 int	memsearch (byte *start, int count, int search)
 {
 	int		i;
@@ -1034,7 +1034,7 @@ typedef struct zhead_s
 {
 	struct zhead_s	*prev, *next;
 	short	magic;
-	short	tag;			// for group free
+	short	tag;			/* for group free */
 	int		size;
 } zhead_t;
 
@@ -1134,7 +1134,7 @@ void *Z_Malloc (int size)
 }
 
 
-//============================================================================
+/*============================================================================ */
 
 
 static byte chktbl[1024] = {
@@ -1246,7 +1246,7 @@ byte	COM_BlockSequenceCRCByte (byte *base, int length, int sequence)
 	return (byte)crc;
 }
 
-//========================================================
+/*======================================================== */
 
 void Key_Init (void);
 void SCR_EndLoadingPlaque (void);
@@ -1304,7 +1304,7 @@ void Qcommon_LocaleInit ( void )
 #endif
 #endif
 
-	// set to system default
+	/* set to system default */
 	setlocale( LC_ALL, "C" );
 	locale = setlocale( LC_MESSAGES, s_language->string );
 	if ( ! locale )
@@ -1335,7 +1335,7 @@ void Qcommon_Init (int argc, char **argv)
 {
 	char	*s;
 #ifdef HAVE_GETTEXT
-	// i18n through gettext
+	/* i18n through gettext */
 	char languagePath[MAX_OSPATH];
 #endif
 
@@ -1344,8 +1344,8 @@ void Qcommon_Init (int argc, char **argv)
 
 	z_chain.next = z_chain.prev = &z_chain;
 
-	// prepare enough of the subsystems to handle
-	// cvar and command buffer management
+	/* prepare enough of the subsystems to handle */
+	/* cvar and command buffer management */
 	COM_InitArgv (argc, argv);
 
 	Swap_Init ();
@@ -1356,10 +1356,10 @@ void Qcommon_Init (int argc, char **argv)
 
 	Key_Init ();
 
-	// we need to add the early commands twice, because
-	// a basedir or cddir needs to be set before execing
-	// config files, but we want other parms to override
-	// the settings of the config files
+	/* we need to add the early commands twice, because */
+	/* a basedir or cddir needs to be set before execing */
+	/* config files, but we want other parms to override */
+	/* the settings of the config files */
 	Cbuf_AddEarlyCommands (qfalse);
 	Cbuf_Execute ();
 
@@ -1372,9 +1372,9 @@ void Qcommon_Init (int argc, char **argv)
 	Cbuf_AddEarlyCommands (qtrue);
 	Cbuf_Execute ();
 
-	//
-	// init commands and vars
-	//
+	/* */
+	/* init commands and vars */
+	/* */
 	Cmd_AddCommand ("z_stats", Z_Stats_f);
 	Cmd_AddCommand ("error", Com_Error_f);
 
@@ -1407,15 +1407,15 @@ void Qcommon_Init (int argc, char **argv)
 	CL_Init ();
 
 #ifdef HAVE_GETTEXT
-	// i18n through gettext
+	/* i18n through gettext */
 	setlocale( LC_ALL, "C" );
 	setlocale( LC_MESSAGES, "" );
-	// use system locale dir if we can't find in gamedir
+	/* use system locale dir if we can't find in gamedir */
 	Com_sprintf( languagePath, MAX_QPATH, "%s/base/i18n/", FS_GetCwd() );
 	Com_DPrintf("...using mo files from %s\n", languagePath );
 	bindtextdomain( TEXT_DOMAIN, languagePath );
 	bind_textdomain_codeset( TEXT_DOMAIN, "UTF-8" );
-	// load language file
+	/* load language file */
 	textdomain( TEXT_DOMAIN );
 
 	Qcommon_LocaleInit();
@@ -1425,9 +1425,9 @@ void Qcommon_Init (int argc, char **argv)
 
 	Com_ParseScripts ();
 
-	// add + commands from command line
+	/* add + commands from command line */
 	if (!Cbuf_AddLateCommands ())
-	{	// if the user didn't give any commands, run default action
+	{	/* if the user didn't give any commands, run default action */
 		if (!dedicated->value)
 			Cbuf_AddText ("init\n");
 		else
@@ -1435,8 +1435,8 @@ void Qcommon_Init (int argc, char **argv)
 		Cbuf_Execute ();
 	}
 	else
-	{	// the user asked for something explicit
-		// so drop the loading plaque
+	{	/* the user asked for something explicit */
+		/* so drop the loading plaque */
 		SCR_EndLoadingPlaque ();
 	}
 
@@ -1459,7 +1459,7 @@ float Qcommon_Frame (int msec)
 	int		time_before = 0, time_between = 0, time_after = 0;
 
 	if (setjmp (abortframe) )
-		return 1.0;			// an ERR_DROP was thrown
+		return 1.0;			/* an ERR_DROP was thrown */
 
 	if ( timescale->value > 5.0 )
 		Cvar_SetValue( "timescale", 5.0 );
@@ -1490,8 +1490,8 @@ float Qcommon_Frame (int msec)
 		}
 	}
 
-//	if (fixedtime->value)
-//		msec = fixedtime->value;
+/*	if (fixedtime->value) */
+/*		msec = fixedtime->value; */
 
 	if (showtrace->value)
 	{
@@ -1552,3 +1552,4 @@ Qcommon_Shutdown
 void Qcommon_Shutdown (void)
 {
 }
+

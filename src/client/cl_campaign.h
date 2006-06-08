@@ -26,18 +26,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_STAGESETS	256
 #define MAX_STAGES		64
 
-// check for water
-// blue value is 64
+/* check for water */
+/* blue value is 64 */
 #define MapIsWater(color) (color[0] == 0 && color[1] == 0 && color[2] == 64)
 #define MapIsArctic(color) (color[0] == 128 && color[1] == 255 && color[2] == 255)
 #define MapIsDesert(color) (color[0] == 255 && color[1] == 128 && color[2] == 0)
-// others:
-// red 255, 0, 0
-// yellow 255, 255, 0
-// green 128, 255, 0
-// violet 128, 0, 128
-// blue (not water) 128, 128, 255
-// blue (not water, too) 0, 0, 255
+/* others: */
+/* red 255, 0, 0 */
+/* yellow 255, 255, 0 */
+/* green 128, 255, 0 */
+/* violet 128, 0, 128 */
+/* blue (not water) 128, 128, 255 */
+/* blue (not water, too) 0, 0, 255 */
 
 #define MAX_UFOONGEOSCAPE 8
 
@@ -54,9 +54,9 @@ typedef struct mission_s
 	char	cmds[MAX_VAR];
 	char	onwin[MAX_VAR];
 	char	onlose[MAX_VAR];
-	int	ugv; // uncontrolled ground units (entity: info_ugv_start)
-	qboolean	active; // aircraft at place?
-	qboolean	storyRelated; // auto mission play disabled when true
+	int	ugv; /* uncontrolled ground units (entity: info_ugv_start) */
+	qboolean	active; /* aircraft at place? */
+	qboolean	storyRelated; /* auto mission play disabled when true */
 	vec2_t	pos;
 	byte	mask[4];
 	int		aliens, civilians;
@@ -71,7 +71,7 @@ typedef struct stageSet_s
 	char	nextstage[MAX_VAR];
 	char	endstage[MAX_VAR];
 	char	cmds[MAX_VAR];
-	// play a sequence when entering a new stage?
+	/* play a sequence when entering a new stage? */
 	char	sequence[MAX_VAR];
 	date_t	delay;
 	date_t	frame;
@@ -121,8 +121,8 @@ typedef struct campaign_s
 	char	team[MAX_VAR];
 	char	equipment[MAX_VAR];
 	char	market[MAX_VAR];
-	char	text[MAX_VAR]; // placeholder for gettext stuff
-	char	map[MAX_VAR]; // geoscape map
+	char	text[MAX_VAR]; /* placeholder for gettext stuff */
+	char	map[MAX_VAR]; /* geoscape map */
 	char	firststage[MAX_VAR];
 	int		soldiers;
 	int		credits;
@@ -182,24 +182,24 @@ typedef struct ccs_s
 typedef enum mapAction_s
 {
 	MA_NONE,
-	MA_NEWBASE,	// build a new base
-	MA_INTERCEPT,	// intercept TODO:
-	MA_BASEATTACK,	// base attacking
-	MA_UFORADAR	// ufos are in our radar
+	MA_NEWBASE,	/* build a new base */
+	MA_INTERCEPT,	/* intercept TODO: */
+	MA_BASEATTACK,	/* base attacking */
+	MA_UFORADAR	/* ufos are in our radar */
 } mapAction_t;
 
 typedef enum aircraftStatus_s
 {
-	AIR_UFOMOVE = -1,	// a moving ufo
+	AIR_UFOMOVE = -1,	/* a moving ufo */
 	AIR_NONE = 0,
-	AIR_REFUEL,	// refill fuel
-	AIR_HOME,	// in homebase
-	AIR_IDLE,	// just sit there on geoscape
-	AIR_TRANSIT,	// moving
-	AIR_DROP,	// ready to drop down
-	AIR_INTERCEPT,	// ready to intercept
-	AIR_TRANSPORT,	// transporting from one base to another
-	AIR_RETURNING	// returning to homebase
+	AIR_REFUEL,	/* refill fuel */
+	AIR_HOME,	/* in homebase */
+	AIR_IDLE,	/* just sit there on geoscape */
+	AIR_TRANSIT,	/* moving */
+	AIR_DROP,	/* ready to drop down */
+	AIR_INTERCEPT,	/* ready to intercept */
+	AIR_TRANSPORT,	/* transporting from one base to another */
+	AIR_RETURNING	/* returning to homebase */
 } aircraftStatus_t;
 
 extern	mission_t	missions[MAX_MISSIONS];

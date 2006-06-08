@@ -8,16 +8,16 @@ int PortalVisibleSides (portal_t *p)
 	int		fcon, bcon;
 
 	if (!p->onnode)
-		return 0;		// outside
+		return 0;		/* outside */
 
 	fcon = p->nodes[0]->contents;
 	bcon = p->nodes[1]->contents;
 
-	// same contents never create a face
+	/* same contents never create a face */
 	if (fcon == bcon)
 		return 0;
 
-	// FIXME: is this correct now?
+	/* FIXME: is this correct now? */
 	if (!fcon)
 		return 1;
 	if (!bcon)
@@ -65,7 +65,7 @@ void OutputPortal (portal_t *p, FILE *glview)
 
 	w = p->winding;
 
-	if (sides == 2)		// back side
+	if (sides == 2)		/* back side */
 		w = ReverseWinding (w);
 
 	OutputWinding (w, glview);
@@ -90,7 +90,7 @@ void WriteGLView_r (node_t *node, FILE *glview)
 		return;
 	}
 
-	// write all the portals
+	/* write all the portals */
 	for (p=node->portals ; p ; p=nextp)
 	{
 		if (p->nodes[0] == node)

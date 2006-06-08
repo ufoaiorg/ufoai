@@ -34,7 +34,7 @@ void RW_IN_Activate();
 void getMouse(int *x, int *y, int *state);
 
 typedef struct in_state {
-	// Pointers to functions back in client, set by vid_so
+	/* Pointers to functions back in client, set by vid_so */
 	void (*IN_CenterView_fp)(void);
 	Key_Event_fp_t Key_Event_fp;
 	vec_t *viewangles;

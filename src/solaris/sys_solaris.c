@@ -47,9 +47,9 @@ unsigned	sys_frame_time;
 
 qboolean stdin_active = qtrue;
 
-// =======================================================================
-// General routines
-// =======================================================================
+/* ======================================================================= */
+/* General routines */
+/* ======================================================================= */
 
 void Sys_ConsoleOutput (char *string)
 {
@@ -100,7 +100,7 @@ void Sys_Init(void)
 {
 	Cvar_Get("sys_os", "solaris", 0);
 #if id386
-//	Sys_SetFPCW();
+/*	Sys_SetFPCW(); */
 #endif
 }
 
@@ -109,7 +109,7 @@ void Sys_Error (char *error, ...)
 	va_list     argptr;
 	char        string[1024];
 
-	// change stdin to non blocking
+	/* change stdin to non blocking */
 	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
 	va_start (argptr,error);
@@ -157,7 +157,7 @@ int	Sys_FileTime (char *path)
 
 void floating_point_exception_handler(int whatever)
 {
-//	Sys_Warn("floating point exception\n");
+/*	Sys_Warn("floating point exception\n"); */
 	signal(SIGFPE, floating_point_exception_handler);
 }
 
@@ -175,20 +175,20 @@ char *Sys_ConsoleInput(void)
 		return NULL;
 
 	FD_ZERO(&fdset);
-	FD_SET(0, &fdset); // stdin
+	FD_SET(0, &fdset); /* stdin */
 	timeout.tv_sec = 0;
 	timeout.tv_usec = 0;
 	if (select (1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(0, &fdset))
 		return NULL;
 
 	len = read (0, text, sizeof(text));
-	if (len == 0) { // eof!
+	if (len == 0) { /* eof! */
 		stdin_active = qfalse;
 		return NULL;
 	}
 	if (len < 1)
 		return NULL;
-	text[len-1] = 0;    // rip off the /n and terminate
+	text[len-1] = 0;    /* rip off the /n and terminate */
 
 	return text;
 }
@@ -232,13 +232,13 @@ void *Sys_GetGameAPI (void *parms)
 
 	Com_Printf("------- Loading %s -------", gamename);
 
-	// now run through the search paths
+	/* now run through the search paths */
 	path = NULL;
 	while (1)
 	{
 		path = FS_NextPath (path);
 		if (!path)
-			return NULL;		// couldn't find one anywhere
+			return NULL;		/* couldn't find one anywhere */
 		sprintf (name, "%s/%s/%s", curpath, path, gamename);
 		game_library = dlopen (name, RTLD_NOW );
 		if (game_library)
@@ -267,7 +267,7 @@ void Sys_AppActivate (void)
 
 void Sys_SendKeyEvents (void)
 {
-	// grab frame time
+	/* grab frame time */
 	sys_frame_time = Sys_Milliseconds();
 }
 
@@ -287,7 +287,7 @@ int main (int argc, char **argv)
 	char **newargv;
 	int i;
 
-	// force dedicated
+	/* force dedicated */
 	newargc = argc;
 	newargv = malloc((argc + 3) * sizeof(char *));
 	newargv[0] = argv[0];
@@ -309,13 +309,13 @@ int main (int argc, char **argv)
 
 	if (!nostdout->value) {
 		fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
-//		printf ("Linux Quake -- Version %0.3f\n", LINUX_VERSION);
+/*		printf ("Linux Quake -- Version %0.3f\n", LINUX_VERSION); */
 	}
 
 	oldtime = Sys_Milliseconds ();
 	while (1)
 	{
-		// find time spent rendering last frame
+		/* find time spent rendering last frame */
 		do {
 			newtime = Sys_Milliseconds ();
 			time = newtime - oldtime;
@@ -346,8 +346,8 @@ void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length)
 
 	addr = (startaddr & ~(psize-1)) - psize;
 
-//	fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr,
-//			addr, startaddr+length, length);
+/*	fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr, */
+/*			addr, startaddr+length, length); */
 
 	r = mprotect((char*)addr, length + startaddr - addr + psize, 7);
 

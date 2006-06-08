@@ -17,20 +17,20 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// g_local.h -- local definitions for game module
+/* g_local.h -- local definitions for game module */
 
 #include "q_shared.h"
 
-// define GAME_INCLUDE so that game.h does not define the
-// short, server-visible player_t and edict_t structures,
-// because we define the full size ones in this file
+/* define GAME_INCLUDE so that game.h does not define the */
+/* short, server-visible player_t and edict_t structures, */
+/* because we define the full size ones in this file */
 #define	GAME_INCLUDE
 #include "game.h"
 
-// the "gameversion" client command will print this plus compile date
+/* the "gameversion" client command will print this plus compile date */
 #define	GAMEVERSION	"baseufo"
 
-// protocol bytes that can be directly added to messages
+/* protocol bytes that can be directly added to messages */
 /*#define	svc_muzzleflash		1
 #define	svc_muzzleflash2	2
 #define	svc_temp_entity		3
@@ -38,93 +38,93 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	svc_inventory		5
 #define	svc_stufftext		11*/
 
-//==================================================================
+/*================================================================== */
 
 #define MAX_SPOT_DIST	768
 
 #define P_MASK(p)		(p->num < game.maxplayers ? 1<<(p->num) : 0)
 #define PM_ALL			0xFFFFFFFF
 
-// edict->spawnflags
-// these are set with checkboxes on each entity in the map editor
+/* edict->spawnflags */
+/* these are set with checkboxes on each entity in the map editor */
 #define	SPAWNFLAG_NOT_EASY			0x00000100
 #define	SPAWNFLAG_NOT_MEDIUM		0x00000200
 #define	SPAWNFLAG_NOT_HARD			0x00000400
 #define	SPAWNFLAG_NOT_DEATHMATCH	0x00000800
 #define	SPAWNFLAG_NOT_COOP			0x00001000
 
-// edict->flags
+/* edict->flags */
 #define	FL_FLY					0x00000001
-#define	FL_SWIM					0x00000002	// implied immunity to drowining
+#define	FL_SWIM					0x00000002	/* implied immunity to drowining */
 #define FL_IMMUNE_LASER			0x00000004
 #define	FL_INWATER				0x00000008
 #define	FL_GODMODE				0x00000010
 #define	FL_NOTARGET				0x00000020
 #define FL_IMMUNE_SLIME			0x00000040
 #define FL_IMMUNE_LAVA			0x00000080
-#define	FL_PARTIALGROUND		0x00000100	// not all corners are valid
-#define	FL_WATERJUMP			0x00000200	// player jumping out of water
-#define	FL_TEAMSLAVE			0x00000400	// not the first on the team
+#define	FL_PARTIALGROUND		0x00000100	/* not all corners are valid */
+#define	FL_WATERJUMP			0x00000200	/* player jumping out of water */
+#define	FL_TEAMSLAVE			0x00000400	/* not the first on the team */
 #define FL_NO_KNOCKBACK			0x00000800
-#define FL_POWER_ARMOR			0x00001000	// power armor (if any) is active
-#define FL_RESPAWN				0x80000000	// used for item respawning
+#define FL_POWER_ARMOR			0x00001000	/* power armor (if any) is active */
+#define FL_RESPAWN				0x80000000	/* used for item respawning */
 
 
 #define	FRAMETIME		0.1
 
-// memory tags to allow dynamic memory to be cleaned up
-#define	TAG_GAME	765		// clear when unloading the dll
-#define	TAG_LEVEL	766		// clear when loading a new level
+/* memory tags to allow dynamic memory to be cleaned up */
+#define	TAG_GAME	765		/* clear when unloading the dll */
+#define	TAG_LEVEL	766		/* clear when loading a new level */
 
 
 
-//
-// this structure is left intact through an entire game
-// it should be initialized at dll load time, and read/written to
-// the server.ssv file for savegames
-//
+/* */
+/* this structure is left intact through an entire game */
+/* it should be initialized at dll load time, and read/written to */
+/* the server.ssv file for savegames */
+/* */
 typedef struct
 {
 	char		helpmessage1[512];
 	char		helpmessage2[512];
-	int			helpchanged;	// flash F1 icon if non 0, play sound
-								// and increment only if 1, 2, or 3
+	int			helpchanged;	/* flash F1 icon if non 0, play sound */
+								/* and increment only if 1, 2, or 3 */
 
-	player_t	*players;		// [maxplayers]
+	player_t	*players;		/* [maxplayers] */
 
-	// store latched cvars here that we want to get at often
+	/* store latched cvars here that we want to get at often */
 	int			maxplayers;
 	int			maxentities;
 
-	// cross level triggers
+	/* cross level triggers */
 	int			serverflags;
 
-	// items
+	/* items */
 	int			num_items;
 
 	qboolean	autosaved;
 } game_locals_t;
 
-//
-// this structure is cleared as each map is entered
-// it is read/written to the level.sav file for savegames
-//
+/* */
+/* this structure is cleared as each map is entered */
+/* it is read/written to the level.sav file for savegames */
+/* */
 typedef struct
 {
 	int			framenum;
 	float		time;
 
-	char		level_name[MAX_QPATH];	// the descriptive name (Outer Base, etc)
-	char		mapname[MAX_QPATH];		// the server name (base1, etc)
-	char		nextmap[MAX_QPATH];		// go here when fraglimit is hit
+	char		level_name[MAX_QPATH];	/* the descriptive name (Outer Base, etc) */
+	char		mapname[MAX_QPATH];		/* the server name (base1, etc) */
+	char		nextmap[MAX_QPATH];		/* go here when fraglimit is hit */
 	qboolean	routed;
 
-	// intermission state
+	/* intermission state */
 	char		*changemap;
 	float		intermissionTime;
 	int			winningTeam;
 
-	// round statistics
+	/* round statistics */
 	int			numplayers;
 	int			activeTeam;
 	int			nextEndRound;
@@ -136,12 +136,12 @@ typedef struct
 } level_locals_t;
 
 
-// spawn_temp_t is only used to hold entity field values that
-// can be set from the editor, but aren't actualy present
-// in edict_t during gameplay
+/* spawn_temp_t is only used to hold entity field values that */
+/* can be set from the editor, but aren't actualy present */
+/* in edict_t during gameplay */
 typedef struct
 {
-	// world vars
+	/* world vars */
 	char		*nextmap;
 
 	int			lip;
@@ -214,32 +214,32 @@ extern	cvar_t	*difficulty;
 
 #define world	(&g_edicts[0])
 
-// item spawnflags
+/* item spawnflags */
 #define ITEM_TRIGGER_SPAWN		0x00000001
 #define ITEM_NO_TOUCH			0x00000002
-// 6 bits reserved for editor flags
-// 8 bits used as power cube id bits for coop games
+/* 6 bits reserved for editor flags */
+/* 8 bits used as power cube id bits for coop games */
 #define DROPPED_ITEM			0x00010000
 #define	DROPPED_PLAYER_ITEM		0x00020000
 #define ITEM_TARGETS_USED		0x00040000
 
-//
-// fields are needed for spawning from the entity string
-// and saving / loading games
-//
+/* */
+/* fields are needed for spawning from the entity string */
+/* and saving / loading games */
+/* */
 #define FFL_SPAWNTEMP		1
 #define FFL_NOSPAWN			2
 
 typedef enum {
 	F_INT,
 	F_FLOAT,
-	F_LSTRING,			// string on disk, pointer in memory, TAG_LEVEL
-	F_GSTRING,			// string on disk, pointer in memory, TAG_GAME
+	F_LSTRING,			/* string on disk, pointer in memory, TAG_LEVEL */
+	F_GSTRING,			/* string on disk, pointer in memory, TAG_GAME */
 	F_VECTOR,
 	F_ANGLEHACK,
-	F_EDICT,			// index on disk, pointer in memory
-//	F_ITEM,				// index on disk, pointer in memory
-	F_CLIENT,			// index on disk, pointer in memory
+	F_EDICT,			/* index on disk, pointer in memory */
+/*	F_ITEM,				// index on disk, pointer in memory */
+	F_CLIENT,			/* index on disk, pointer in memory */
 	F_FUNCTION,
 	F_IGNORE
 } fieldtype_t;
@@ -256,16 +256,16 @@ typedef struct
 extern	field_t fields[];
 
 
-//
-// g_cmds.c
-//
+/* */
+/* g_cmds.c */
+/* */
 void Cmd_Help_f (edict_t *ent);
 void Cmd_Score_f (edict_t *ent);
 
 
-//
-// g_utils.c
-//
+/* */
+/* g_utils.c */
+/* */
 qboolean	KillBox (edict_t *ent);
 void	G_ProjectSource (vec3_t point, vec3_t distance, vec3_t forward, vec3_t right, vec3_t result);
 edict_t *G_Find (edict_t *from, int fieldofs, char *match);
@@ -294,9 +294,9 @@ void	G_CompleteRecalcRouting( void );
 void	G_RecalcRouting( edict_t *ent );
 
 
-//
-// g_client.c
-//
+/* */
+/* g_client.c */
+/* */
 #define VIS_CHANGE	1
 #define VIS_YES		2
 #define VIS_STOP	4
@@ -331,33 +331,33 @@ int G_VisToPM( int vis_mask );
 void G_SendInventory( int player_mask, edict_t *ent );
 int G_TeamToPM( int team );
 
-//
-// g_ai.c
-//
+/* */
+/* g_ai.c */
+/* */
 void AI_Run( void );
 void AI_ActorThink( player_t *player, edict_t *ent );
 player_t *AI_CreatePlayer( int team );
 
-//
-// g_svcmds.c
-//
+/* */
+/* g_svcmds.c */
+/* */
 void	ServerCommand (void);
 qboolean SV_FilterPacket (char *from);
 
 
-//
-//
-// g_main.c
-//
+/* */
+/* */
+/* g_main.c */
+/* */
 void SaveClientData (void);
 void FetchClientEntData (edict_t *ent);
 void G_EndGame( int team );
 void G_CheckEndGame( void );
 
-//============================================================================
+/*============================================================================ */
 
-// client_t->anim_priority
-#define	ANIM_BASIC		0		// stand / run
+/* client_t->anim_priority */
+#define	ANIM_BASIC		0		/* stand / run */
 #define	ANIM_WAVE		1
 #define	ANIM_JUMP		2
 #define	ANIM_PAIN		3
@@ -365,32 +365,32 @@ void G_CheckEndGame( void );
 #define	ANIM_DEATH		5
 #define	ANIM_REVERSE	6
 
-// client data that stays across multiple level loads
+/* client data that stays across multiple level loads */
 typedef struct
 {
 	char		userinfo[MAX_INFO_STRING];
 	char		netname[16];
 
-	// the number of the team for this player
-	// 0 is reserved for civilians and critters
+	/* the number of the team for this player */
+	/* 0 is reserved for civilians and critters */
 	int			team;
-	qboolean	spectator;			// client is a spectator
-	qboolean	ai;					// client controlled by ai
+	qboolean	spectator;			/* client is a spectator */
+	qboolean	ai;					/* client controlled by ai */
 
-	// ai specific data
+	/* ai specific data */
 	edict_t		*last;
 } client_persistant_t;
 
-// this structure is cleared on each PutClientInServer(),
-// except for 'client->pers'
+/* this structure is cleared on each PutClientInServer(), */
+/* except for 'client->pers' */
 struct player_s
 {
-	// known to server
+	/* known to server */
 	qboolean	inuse;
 	int			num;
 	int			ping;
 
-	// private to game
+	/* private to game */
 	qboolean	spawned;
 	qboolean	ready;
 	client_persistant_t	pers;
@@ -407,12 +407,12 @@ struct edict_s
 	vec3_t		origin;
 	vec3_t		angles;
 
-	// FIXME: move these fields to a server private sv_entity_t
-	link_t		area;				// linked to a division node or leaf
+	/* FIXME: move these fields to a server private sv_entity_t */
+	link_t		area;				/* linked to a division node or leaf */
 
-	int			headnode;			// unused if num_clusters != -1
+	int			headnode;			/* unused if num_clusters != -1 */
 
-	// tracing info
+	/* tracing info */
 	solid_t		solid;
 	int			svflags;
 
@@ -424,41 +424,41 @@ struct edict_s
 	int			clipmask;
 	int			modelindex;
 
-	//================================
+	/*================================ */
 
 	int			mapNum;
 	char		*model;
-	float		freetime;			// sv.time when the object was freed
+	float		freetime;			/* sv.time when the object was freed */
 
-	//
-	// only used locally in game, not by server
-	//
+	/* */
+	/* only used locally in game, not by server */
+	/* */
 
 	int			type;
 	int			visflags;
 
 	pos3_t		pos;
-	byte		dir; // direction the player looks at
+	byte		dir; /* direction the player looks at */
 
-	int			TU; // remaining timeunits
-	int			HP; // remaining healthpoints
-	int			AP; // remaining armor protection
+	int			TU; /* remaining timeunits */
+	int			HP; /* remaining healthpoints */
+	int			AP; /* remaining armor protection */
 	int			STUN;
-	int			morale; // the current morale value
+	int			morale; /* the current morale value */
 
-	int			state; // the player state - dead, shaken....
+	int			state; /* the player state - dead, shaken.... */
 
-	int			team; // player of which team?
-	int			pnum; // the actual player slot
-	// the models (hud)
+	int			team; /* player of which team? */
+	int			pnum; /* the actual player slot */
+	/* the models (hud) */
 	int			body;
 	int			head;
 	int			skin;
 
-	// here are the character values
+	/* here are the character values */
 	character_t chr;
 
-	// this is the inventory
+	/* this is the inventory */
 	inventory_t i;
 
 	int			spawnflags;

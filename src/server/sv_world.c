@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// world.c -- world query functions
+/* world.c -- world query functions */
 
 #include "server.h"
 
@@ -30,16 +30,16 @@ FIXME: this use of "area" is different from the bsp file use
 ===============================================================================
 */
 
-// (type *)STRUCT_FROM_LINK(link_t *link, type, member)
-// ent = STRUCT_FROM_LINK(link,entity_t,order)
-// FIXME: remove this mess!
+/* (type *)STRUCT_FROM_LINK(link_t *link, type, member) */
+/* ent = STRUCT_FROM_LINK(link,entity_t,order) */
+/* FIXME: remove this mess! */
 #define	STRUCT_FROM_LINK(l,t,m) ((t *)((byte *)l - (int)&(((t *)0)->m)))
 
 #define	EDICT_FROM_AREA(l) STRUCT_FROM_LINK(l,edict_t,area)
 
 typedef struct areanode_s
 {
-	int		axis;		// -1 = leaf node
+	int		axis;		/* -1 = leaf node */
 	float	dist;
 	struct areanode_s	*children[2];
 	link_t	trigger_edicts;
@@ -60,7 +60,7 @@ int		area_type;
 int SV_HullForEntity (edict_t *ent, int *tile);
 
 
-// ClearLink is used for new headnodes
+/* ClearLink is used for new headnodes */
 void ClearLink (link_t *l)
 {
 	l->prev = l->next = l;
@@ -149,7 +149,7 @@ SV_UnlinkEdict
 void SV_UnlinkEdict (edict_t *ent)
 {
 	if (!ent->area.prev)
-		return;		// not linked in anywhere
+		return;		/* not linked in anywhere */
 	RemoveLink (&ent->area);
 	ent->area.prev = ent->area.next = NULL;
 }
@@ -167,32 +167,32 @@ void SV_LinkEdict (edict_t *ent)
 	areanode_t	*node;
 
 	if (ent->area.prev)
-		SV_UnlinkEdict (ent);	// unlink from old position
+		SV_UnlinkEdict (ent);	/* unlink from old position */
 		
 	if (ent == ge->edicts)
-		return;		// don't add the world
+		return;		/* don't add the world */
 
 	if (!ent->inuse)
 		return;
 
-	// set the size
+	/* set the size */
 	VectorSubtract (ent->maxs, ent->mins, ent->size);
 	
-	// set the abs box
-	// normal
+	/* set the abs box */
+	/* normal */
 	VectorAdd (ent->origin, ent->mins, ent->absmin);	
 	VectorAdd (ent->origin, ent->maxs, ent->absmax);
 
-	//get all leafs, including solids
-//	num_leafs = CM_BoxLeafnums (ent->absmin, ent->absmax,
-//		leafs, MAX_TOTAL_ENT_LEAFS, &topnode);
+	/*get all leafs, including solids */
+/*	num_leafs = CM_BoxLeafnums (ent->absmin, ent->absmax, */
+/*		leafs, MAX_TOTAL_ENT_LEAFS, &topnode); */
 
 	ent->linkcount++;
 
 	if (ent->solid == SOLID_NOT)
 		return;
 
-	// find the first node that the ent's box crosses
+	/* find the first node that the ent's box crosses */
 	node = sv_areanodes;
 	while (1)
 	{
@@ -203,13 +203,13 @@ void SV_LinkEdict (edict_t *ent)
 		else if (ent->absmax[node->axis] < node->dist)
 			node = node->children[1];
 		else
-			break;		// crosses the node
+			break;		/* crosses the node */
 	}
 	
-	// link it in	
-//	if (ent->solid == SOLID_TRIGGER)
-//		InsertLinkBefore (&ent->area, &node->trigger_edicts);
-//	else
+	/* link it in	 */
+/*	if (ent->solid == SOLID_TRIGGER) */
+/*		InsertLinkBefore (&ent->area, &node->trigger_edicts); */
+/*	else */
 		InsertLinkBefore (&ent->area, &node->solid_edicts);
 }
 
@@ -228,7 +228,7 @@ void SV_AreaEdicts_r (areanode_t *node)
 
 	count = 0;
 
-	// touch linked edicts
+	/* touch linked edicts */
 	if (area_type == AREA_SOLID)
 		start = &node->solid_edicts;
 	else
@@ -240,14 +240,14 @@ void SV_AreaEdicts_r (areanode_t *node)
 		check = EDICT_FROM_AREA(l);
 
 		if (check->solid == SOLID_NOT)
-			continue;		// deactivated
+			continue;		/* deactivated */
 		if (check->absmin[0] > area_maxs[0]
 		|| check->absmin[1] > area_maxs[1]
 		|| check->absmin[2] > area_maxs[2]
 		|| check->absmax[0] < area_mins[0]
 		|| check->absmax[1] < area_mins[1]
 		|| check->absmax[2] < area_mins[2])
-			continue;		// not touching
+			continue;		/* not touching */
 
 		if (area_count == area_maxcount)
 		{
@@ -260,9 +260,9 @@ void SV_AreaEdicts_r (areanode_t *node)
 	}
 	
 	if (node->axis == -1)
-		return;		// terminal node
+		return;		/* terminal node */
 
-	// recurse down both sides
+	/* recurse down both sides */
 	if ( area_maxs[node->axis] > node->dist )
 		SV_AreaEdicts_r ( node->children[0] );
 	if ( area_mins[node->axis] < node->dist )
@@ -290,7 +290,7 @@ int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t **list,
 }
 
 
-//===========================================================================
+/*=========================================================================== */
 
 /*
 =============
@@ -299,22 +299,23 @@ SV_PointContents
 */
 int SV_PointContents (vec3_t p)
 {
-/*	edict_t		*touch[MAX_EDICTS], *hit;
+#if 0
+	edict_t		*touch[MAX_EDICTS], *hit;
 	int			i, num;
 	int			contents, c2;
 	int			headnode;
 
-	// get base contents from world
+	/* get base contents from world */
 	contents = CM_PointContents (p, sv.models[1]->headnode);
 
-	// or in contents from all the other entities
+	/* or in contents from all the other entities */
 	num = SV_AreaEdicts (p, p, touch, MAX_EDICTS, AREA_SOLID);
 
 	for (i=0 ; i<num ; i++)
 	{
 		hit = touch[i];
 
-		// might intersect, so do an exact clip
+		/* might intersect, so do an exact clip */
 		headnode = SV_HullForEntity (hit);
 
 		c2 = CM_TransformedPointContents( p, headnode, hit->origin, vec3_origin );
@@ -322,7 +323,8 @@ int SV_PointContents (vec3_t p)
 		contents |= c2;
 	}
 
-	return contents;*/
+	return contents;
+#endif
 	return 0;
 }
 
@@ -330,9 +332,9 @@ int SV_PointContents (vec3_t p)
 
 typedef struct
 {
-	vec3_t		boxmins, boxmaxs;// enclose the test object along entire move
-	float		*mins, *maxs;	// size of the moving object
-	vec3_t		mins2, maxs2;	// size when clipping against mosnters
+	vec3_t		boxmins, boxmaxs;/* enclose the test object along entire move */
+	float		*mins, *maxs;	/* size of the moving object */
+	vec3_t		mins2, maxs2;	/* size when clipping against mosnters */
 	float		*start, *end;
 	trace_t		trace;
 	edict_t		*passedict;
@@ -355,9 +357,9 @@ int SV_HullForEntity( edict_t *ent, int *tile )
 {
 	cmodel_t *model;
 
-	// decide which clipping hull to use, based on the size
+	/* decide which clipping hull to use, based on the size */
 	if (ent->solid == SOLID_BSP)
-	{	// explicit hulls in the BSP model
+	{	/* explicit hulls in the BSP model */
 		model = sv.models[ ent->modelindex ];
 
 		if (!model)
@@ -367,13 +369,13 @@ int SV_HullForEntity( edict_t *ent, int *tile )
 		return model->headnode;
 	}
 
-	// create a temp hull from bounding box sizes
+	/* create a temp hull from bounding box sizes */
 	*tile = 0;
 	return CM_HeadnodeForBox( 0, ent->mins, ent->maxs );
 }
 
 
-//===========================================================================
+/*=========================================================================== */
 
 /*
 ====================
@@ -391,8 +393,8 @@ void SV_ClipMoveToEntities ( moveclip_t *clip )
 	num = SV_AreaEdicts (clip->boxmins, clip->boxmaxs, touchlist
 		, MAX_EDICTS, AREA_SOLID);
 
-	// be careful, it is possible to have an entity in this
-	// list removed before we get to it (killtriggered)
+	/* be careful, it is possible to have an entity in this */
+	/* list removed before we get to it (killtriggered) */
 	for (i=0 ; i<num ; i++)
 	{
 		touch = touchlist[i];
@@ -402,15 +404,16 @@ void SV_ClipMoveToEntities ( moveclip_t *clip )
 			continue;
 		if (clip->trace.allsolid)
 			return;
-/*		if (clip->passedict)
+#if 0
+		if (clip->passedict)
 		{
 		 	if (touch->owner == clip->passedict)
-				continue;	// don't clip against own missiles
+				continue;	/* don't clip against own missiles */
 			if (clip->passedict->owner == touch)
-				continue;	// don't clip against owner
+				continue;	/* don't clip against owner */
 		}
-*/
-		// might intersect, so do an exact clip
+#endif
+		/* might intersect, so do an exact clip */
 		headnode = SV_HullForEntity( touch, &tile );
 		
 		
@@ -449,7 +452,7 @@ SV_TraceBounds
 void SV_TraceBounds (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
 {
 #if 0
-// debug to test against everything
+/* debug to test against everything */
 boxmins[0] = boxmins[1] = boxmins[2] = -9999;
 boxmaxs[0] = boxmaxs[1] = boxmaxs[2] = 9999;
 #else
@@ -492,11 +495,11 @@ trace_t SV_Trace (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t *p
 
 	memset ( &clip, 0, sizeof ( moveclip_t ) );
 
-	// clip to world
+	/* clip to world */
 	clip.trace = CM_CompleteBoxTrace (start, end, mins, maxs, 0x1FF, contentmask);
 	clip.trace.ent = ge->edicts;
 	if (clip.trace.fraction == 0)
-		return clip.trace;		// blocked by the world
+		return clip.trace;		/* blocked by the world */
 
 	clip.contentmask = contentmask;
 	clip.start = start;
@@ -508,10 +511,10 @@ trace_t SV_Trace (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t *p
 	VectorCopy (mins, clip.mins2);
 	VectorCopy (maxs, clip.maxs2);
 	
-	// create the bounding box of the entire move
+	/* create the bounding box of the entire move */
 	SV_TraceBounds ( start, clip.mins2, clip.maxs2, end, clip.boxmins, clip.boxmaxs );
 
-	// clip to other solid entities
+	/* clip to other solid entities */
 	SV_ClipMoveToEntities ( &clip );
 
 	return clip.trace;

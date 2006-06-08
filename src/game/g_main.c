@@ -74,7 +74,7 @@ extern void G_RunFrame (void);
 invList_t	invChain[MAX_INVLIST];
 
 
-//===================================================================
+/*=================================================================== */
 
 
 /*
@@ -90,57 +90,57 @@ void InitGame (void)
 {
 	gi.dprintf ("==== InitGame ====\n");
 
-	// noset vars
+	/* noset vars */
 	dedicated = gi.cvar ("dedicated", "0", CVAR_SERVERINFO|CVAR_NOSET);
 
-	// latched vars
+	/* latched vars */
 	sv_cheats = gi.cvar ("cheats", "0", CVAR_SERVERINFO|CVAR_LATCH);
 	gi.cvar ("gamename", GAMEVERSION , CVAR_SERVERINFO | CVAR_LATCH);
 	gi.cvar ("gamedate", __DATE__ , CVAR_SERVERINFO | CVAR_LATCH);
 
-	// max. players per team (original quake)
+	/* max. players per team (original quake) */
 	maxplayers = gi.cvar ("maxplayers", "8", CVAR_SERVERINFO | CVAR_LATCH);
-	// max. soldiers per team
+	/* max. soldiers per team */
 	maxsoldiers = gi.cvar ("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
-	// max soldiers per player
+	/* max soldiers per player */
 	maxsoldiersperplayer = gi.cvar ("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
-	// enable moralestates in multiplayer
+	/* enable moralestates in multiplayer */
 	sv_enablemorale = gi.cvar ("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH);
 	maxspectators = gi.cvar ("maxspectators", "8", CVAR_SERVERINFO|CVAR_LATCH);
 	maxentities = gi.cvar ("maxentities", "1024", CVAR_LATCH);
 
-	// change anytime vars
+	/* change anytime vars */
 	password = gi.cvar ("password", "", CVAR_USERINFO);
 	spectator_password = gi.cvar ("spectator_password", "", CVAR_USERINFO);
 	needpass = gi.cvar ("needpass", "0", CVAR_SERVERINFO);
 	filterban = gi.cvar ("filterban", "1", 0);
 	sv_ai = gi.cvar ("sv_ai", "1", 0);
 	sv_teamplay = gi.cvar ("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_SERVERINFO);
-	// how many connected clients
+	/* how many connected clients */
 	sv_maxclients = gi.cvar ("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH);
 
 	ai_alien = gi.cvar ("ai_alien", "alien", 0);
 	ai_civilian = gi.cvar ("ai_civilian", "civilian", 0);
 	ai_equipment = gi.cvar ("ai_equipment", "standard", 0);
-	// aliens in singleplayer (can differ each mission)
+	/* aliens in singleplayer (can differ each mission) */
 	ai_numaliens = gi.cvar ("ai_numaliens", "8", 0 );
-	// civilians for singleplayer
+	/* civilians for singleplayer */
 	ai_numcivilians = gi.cvar ("ai_numcivilians", "8", 0 );
-	// aliens in multiplayer
+	/* aliens in multiplayer */
 	ai_numactors = gi.cvar ("ai_numactors", "8", CVAR_ARCHIVE );
-	// autojoin aliens
+	/* autojoin aliens */
 	ai_autojoin = gi.cvar ("ai_autojoin", "0", 0 );
 
 	difficulty = gi.cvar ("difficulty", "-1", CVAR_ARCHIVE | CVAR_LATCH);
 
 	g_select_empty = gi.cvar ("g_select_empty", "0", CVAR_ARCHIVE);
 
-	// flood control
+	/* flood control */
 	flood_msgs = gi.cvar ("flood_msgs", "4", 0);
 	flood_persecond = gi.cvar ("flood_persecond", "4", 0);
 	flood_waitdelay = gi.cvar ("flood_waitdelay", "10", 0);
 
-	// dm map list
+	/* dm map list */
 	sv_maplist = gi.cvar ("sv_maplist", "", 0);
 
 	Com_sprintf (game.helpmessage1, sizeof(game.helpmessage1), "");
@@ -150,24 +150,24 @@ void InitGame (void)
 	game.maxentities = maxentities->value;
 	game.maxplayers = maxplayers->value;
 
-	// initialize all entities for this game
+	/* initialize all entities for this game */
 	g_edicts =  gi.TagMalloc (game.maxentities * sizeof(g_edicts[0]), TAG_GAME);
 	globals.edicts = g_edicts;
 	globals.max_edicts = game.maxentities;
 	globals.num_edicts = game.maxplayers;
 
-	// initialize all players for this game
+	/* initialize all players for this game */
 	game.players = gi.TagMalloc (game.maxplayers * 2 * sizeof(game.players[0]), TAG_GAME);
 	globals.players = game.players;
 	globals.max_players = game.maxplayers;
 
-	// init csi and inventory
+	/* init csi and inventory */
 	Com_InitCSI( gi.csi );
 	Com_InitInventory( invChain );
 }
 
 
-//===================================================================
+/*=================================================================== */
 
 
 void ShutdownGame (void)
@@ -222,7 +222,7 @@ game_export_t *GetGameAPI (game_import_t *import)
 }
 
 #ifndef GAME_HARD_LINKED
-// this is only here so the functions in q_shared.c and q_shwin.c can link
+/* this is only here so the functions in q_shared.c and q_shwin.c can link */
 void Sys_Error (char *error, ...)
 {
 	va_list		argptr;
@@ -248,7 +248,7 @@ void Com_Printf (char *msg, ...)
 }
 #endif
 
-//======================================================================
+/*====================================================================== */
 
 
 /*
@@ -260,8 +260,8 @@ void CheckNeedPass (void)
 {
 	int need;
 
-	// if password or spectator_password has changed, update needpass
-	// as needed
+	/* if password or spectator_password has changed, update needpass */
+	/* as needed */
 	if (password->modified || spectator_password->modified)
 	{
 		password->modified = spectator_password->modified = qfalse;
@@ -301,7 +301,7 @@ void G_EndGame( int team )
 	edict_t *ent;
 	int i, j;
 
-	// Make everything visible to anyone who can't already see it
+	/* Make everything visible to anyone who can't already see it */
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 		if ( ent->inuse )
 		{
@@ -310,7 +310,7 @@ void G_EndGame( int team )
 				G_SendInventory( PM_ALL ^ G_TeamToPM( ent->team ), ent );
 		}
 
-	// send results
+	/* send results */
 	gi.AddEvent( PM_ALL, EV_RESULTS );
 	gi.WriteByte( MAX_TEAMS );
 	gi.WriteByte( team );
@@ -346,7 +346,7 @@ void G_CheckEndGame( void )
 			activeTeams++;
 		}
 
-	// prepare for sending results
+	/* prepare for sending results */
 	if ( activeTeams < 2 )
 	{
 		level.intermissionTime = level.time + 4.0;
@@ -364,12 +364,12 @@ void G_RunFrame (void)
 {
 	level.framenum++;
 	level.time = level.framenum*FRAMETIME;
-//	Com_Printf( "frame: %i   time: %f\n", level.framenum, level.time );
+/*	Com_Printf( "frame: %i   time: %f\n", level.framenum, level.time ); */
 
-	// check for intermission
+	/* check for intermission */
 	if ( level.intermissionTime && level.time > level.intermissionTime )
 		G_EndGame( level.winningTeam );
 
-	// run ai
+	/* run ai */
 	AI_Run();
 }

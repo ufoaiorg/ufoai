@@ -42,7 +42,7 @@ void EmitPlanes (void)
 }
 
 
-//========================================================
+/*======================================================== */
 
 void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
 {
@@ -61,13 +61,13 @@ void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
 
 	facenum = f->outputnumber;
 	if (facenum == -1)
-		return;	// degenerate face
+		return;	/* degenerate face */
 
 	if (facenum < 0 || facenum >= numfaces)
 		Error ("Bad leafface");
 	for (i=leaf_p->firstleafface ; i<numleaffaces ; i++)
 		if (dleaffaces[i] == facenum)
-			break;		// merged out face
+			break;		/* merged out face */
 	if (i == numleaffaces)
 	{
 		if (numleaffaces >= MAX_MAP_LEAFFACES)
@@ -95,7 +95,7 @@ void EmitLeaf (node_t *node)
 	int			i;
 	int			brushnum;
 
-	// emit a leaf
+	/* emit a leaf */
 	if (numleafs >= MAX_MAP_LEAFS)
 		Error ("MAX_MAP_LEAFS");
 
@@ -106,15 +106,15 @@ void EmitLeaf (node_t *node)
 	leaf_p->cluster = node->cluster;
 	leaf_p->area = node->area;
 
-	//
-	// write bounding box info
-	//	
+	/* */
+	/* write bounding box info */
+	/*	 */
 	VectorCopy (node->mins, leaf_p->mins);
 	VectorCopy (node->maxs, leaf_p->maxs);
 	
-	//
-	// write the leafbrushes
-	//
+	/* */
+	/* write the leafbrushes */
+	/* */
 	leaf_p->firstleafbrush = numleafbrushes;
 	for (b=node->brushlist ; b ; b=b->next)
 	{
@@ -133,11 +133,11 @@ void EmitLeaf (node_t *node)
 	}
 	leaf_p->numleafbrushes = numleafbrushes - leaf_p->firstleafbrush;
 
-	//
-	// write the leaffaces
-	//
+	/* */
+	/* write the leaffaces */
+	/* */
 	if (leaf_p->contents & CONTENTS_SOLID)
-		return;		// no leaffaces in solids
+		return;		/* no leaffaces in solids */
 
 	leaf_p->firstleafface = numleaffaces;
 
@@ -146,7 +146,7 @@ void EmitLeaf (node_t *node)
 		s = (p->nodes[1] == node);
 		f = p->face[s];
 		if (!f)
-			continue;	// not a visible portal
+			continue;	/* not a visible portal */
 
 		EmitMarkFace (leaf_p, f);
 	}
@@ -170,14 +170,14 @@ void EmitFace (face_t *f)
 
 	if (f->numpoints < 3)
 	{
-		return;		// degenerated
+		return;		/* degenerated */
 	}
 	if (f->merged || f->split[0] || f->split[1])
 	{
-		return;		// not a final face
+		return;		/* not a final face */
 	}
 
-	// save output number so leaffaces can use
+	/* save output number so leaffaces can use */
 	f->outputnumber = numfaces;
 
 	if (numfaces >= MAX_MAP_FACES)
@@ -185,7 +185,7 @@ void EmitFace (face_t *f)
 	df = &dfaces[numfaces];
 	numfaces++;
 
-	// planenum is used by qlight, but not quake
+	/* planenum is used by qlight, but not quake */
 	df->planenum = f->planenum & (~1);
 	df->side = f->planenum & 1;
 
@@ -194,7 +194,7 @@ void EmitFace (face_t *f)
 	df->texinfo = f->texinfo;
 	for (i=0 ; i<f->numpoints ; i++)
 	{
-//		e = GetEdge (f->pts[i], f->pts[(i+1)%f->numpoints], f);
+/*		e = GetEdge (f->pts[i], f->pts[(i+1)%f->numpoints], f); */
 		e = GetEdge2 (f->vertexnums[i], f->vertexnums[(i+1)%f->numpoints], f);
 		if (numsurfedges >= MAX_MAP_SURFEDGES)
 			Error ("numsurfedges == MAX_MAP_SURFEDGES");
@@ -220,7 +220,7 @@ int EmitDrawNode_r (node_t *node)
 		return -numleafs;
 	}
 
-	// emit a node	
+	/* emit a node	 */
 	if (numnodes == MAX_MAP_NODES)
 		Error ("MAX_MAP_NODES");
 	n = &dnodes[numnodes];
@@ -248,9 +248,9 @@ int EmitDrawNode_r (node_t *node)
 	n->numfaces = numfaces - n->firstface;
 
 
-	//
-	// recursively output the other nodes
-	//	
+	/* */
+	/* recursively output the other nodes */
+	/*	 */
 	for (i=0 ; i<2 ; i++)
 	{
 		if (node->children[i]->planenum == PLANENUM_LEAF)
@@ -268,7 +268,7 @@ int EmitDrawNode_r (node_t *node)
 	return n - dnodes;
 }
 
-//=========================================================
+/*========================================================= */
 
 
 /*
@@ -294,7 +294,7 @@ void WriteBSP (node_t *headnode)
 	qprintf ("%5i faces\n", numfaces-oldfaces);
 }
 
-//===========================================================
+/*=========================================================== */
 
 /*
 ============
@@ -336,8 +336,8 @@ void SetLightStyles (void)
 	char	lighttargets[MAX_SWITCHED_LIGHTS][64];
 
 
-	// any light that is controlled (has a targetname)
-	// must have a unique style number generated for it
+	/* any light that is controlled (has a targetname) */
+	/* must have a unique style number generated for it */
 
 	stylenum = 0;
 	for (i=1 ; i<num_entities ; i++)
@@ -351,7 +351,7 @@ void SetLightStyles (void)
 		if (!t[0])
 			continue;
 		
-		// find this targetname
+		/* find this targetname */
 		for (j=0 ; j<stylenum ; j++)
 			if (!strcmp (lighttargets[j], t))
 				break;
@@ -368,7 +368,7 @@ void SetLightStyles (void)
 
 }
 
-//===========================================================
+/*=========================================================== */
 
 /*
 ============
@@ -406,11 +406,11 @@ void EmitBrushes (void)
 			cp->texinfo = b->original_sides[j].texinfo;
 		}
 
-		// add any axis planes not contained in the brush to bevel off corners
+		/* add any axis planes not contained in the brush to bevel off corners */
 		for (x=0 ; x<3 ; x++)
 			for (s=-1 ; s<=1 ; s+=2)
 			{
-			// add the plane
+			/* add the plane */
 				VectorCopy (vec3_origin, normal);
 				normal[x] = s;
 				if (s == -1)
@@ -438,7 +438,7 @@ void EmitBrushes (void)
 
 }
 
-//===========================================================
+/*=========================================================== */
 
 /*
 ==================
@@ -447,8 +447,8 @@ BeginBSPFile
 */
 void BeginBSPFile (void)
 {
-	// these values may actually be initialized
-	// if the file existed when loaded, so clear them explicitly
+	/* these values may actually be initialized */
+	/* if the file existed when loaded, so clear them explicitly */
 	nummodels = 0;
 	numfaces = 0;
 	numbrushsides = 0;
@@ -458,13 +458,13 @@ void BeginBSPFile (void)
 	numsurfedges = 0;
 	numnodes = 0;
 
-	// edge 0 is not used, because 0 can't be negated
+	/* edge 0 is not used, because 0 can't be negated */
 	numedges = 1;
 
-	// leave vertex 0 as an error
+	/* leave vertex 0 as an error */
 	numvertexes = 1;
 
-	// leave leaf 0 as an error
+	/* leave leaf 0 as an error */
 	numleafs = 1;
 	dleafs[0].contents = CONTENTS_SOLID;
 }
@@ -478,15 +478,15 @@ EndBSPFile
 void EndBSPFile (void)
 {
 	char	path[1024];
-//	int		len;
-//	byte	*buf;
+/*	int		len; */
+/*	byte	*buf; */
 
 
 	EmitBrushes ();
 	EmitPlanes ();
 	UnparseEntities ();
 
-	// load the pop
+	/* load the pop */
 #if 0
 	sprintf (path, "%s/pics/pop.lmp", gamedir);
 	len = LoadFile (path, &buf);
@@ -494,7 +494,7 @@ void EndBSPFile (void)
 	free (buf);
 #endif
 
-	// write the map
+	/* write the map */
 	sprintf (path, "%s.bsp", source);
 	printf ("Writing %s\n", path);
 	WriteBSPFile (path);
@@ -528,9 +528,9 @@ void BeginModel (void)
 	firstmodeledge = numedges;
 	firstmodelface = numfaces;
 
-	//
-	// bound the brushes
-	//
+	/* */
+	/* bound the brushes */
+	/* */
 	e = &entities[entity_num];
 
 	start = e->firstbrush;
@@ -541,7 +541,7 @@ void BeginModel (void)
 	{
 		b = &mapbrushes[j];
 		if (!b->numsides)
-			continue;	// not a real brush (origin brush)
+			continue;	/* not a real brush (origin brush) */
 		AddPointToBounds (b->mins, mins, maxs);
 		AddPointToBounds (b->maxs, mins, maxs);
 	}

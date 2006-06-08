@@ -36,8 +36,12 @@ cvar_t* sdlMixSamples;
 
 static void paint_audio (void *unused, Uint8 * stream, int len)
 {
+	int pos;
+	int tobufend;
+	int len1;
+	int len2;
 	if (shm) {
-		int pos = (shm->dmapos * (shm->samplebits/8));
+		pos = (shm->dmapos * (shm->samplebits/8));
 		if (pos >= shm->dmasize)
 			shm->dmapos = pos = 0;
 
@@ -45,12 +49,12 @@ static void paint_audio (void *unused, Uint8 * stream, int len)
 		shm->buffer = stream;
 		shm->samplepos += len / (shm->samplebits / 4);
 
-		// Check for samplepos overflow?
+		/* Check for samplepos overflow? */
 		S_PaintChannels (shm->samplepos);
 #else
-		int tobufend = shm->dmasize - pos;  /* bytes to buffer's end. */
-		int len1 = len;
-		int len2 = 0;
+		tobufend = shm->dmasize - pos;  /* bytes to buffer's end. */
+		len1 = len;
+		len2 = 0;
 
 		if (len1 > tobufend)
 		{
@@ -181,18 +185,18 @@ qboolean SDL_SNDDMA_Init (void)
 			break;
 	}
 
-	// dma.samples needs to be big, or id's mixer will just refuse to
-	//  work at all; we need to keep it significantly bigger than the
-	//  amount of SDL callback samples, and just copy a little each time
-	//  the callback runs.
-	// 32768 is what the OSS driver filled in here on my system. I don't
-	//  know if it's a good value overall, but at least we know it's
-	//  reasonable...this is why I let the user override.
+	/* dma.samples needs to be big, or id's mixer will just refuse to */
+	/*  work at all; we need to keep it significantly bigger than the */
+	/*  amount of SDL callback samples, and just copy a little each time */
+	/*  the callback runs. */
+	/* 32768 is what the OSS driver filled in here on my system. I don't */
+	/*  know if it's a good value overall, but at least we know it's */
+	/*  reasonable...this is why I let the user override. */
 	tmp = sdlMixSamples->value;
 	if (!tmp)
 		tmp = (obtained.samples * obtained.channels) * 10;
 
-	if (tmp & (tmp - 1))  // not a power of two? Seems to confuse something.
+	if (tmp & (tmp - 1))  /* not a power of two? Seems to confuse something. */
 	{
 		int val = 1;
 		while (val < tmp)

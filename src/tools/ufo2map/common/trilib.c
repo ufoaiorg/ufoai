@@ -1,20 +1,20 @@
-//
-// trilib.c: library for loading triangles from an Alias triangle file
-//
+/* */
+/* trilib.c: library for loading triangles from an Alias triangle file */
+/* */
 
 #include <stdio.h>
 #include "cmdlib.h"
 #include "mathlib.h"
 #include "trilib.h"
 
-// on disk representation of a face
+/* on disk representation of a face */
 
 
 #define	FLOAT_START	99999.0
 #define	FLOAT_END	-FLOAT_START
 #define MAGIC       123322
 
-//#define NOISY 1
+/*#define NOISY 1 */
 
 typedef struct {
 	float v[3];
@@ -92,14 +92,14 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 					fread( &(name[i]), sizeof( char ), 1, input);
 				} while( name[i] != '\0' );
 	
-//				indent();
-//				fprintf(stdout,"OBJECT START: %s\n",name);
+/*				indent(); */
+/*				fprintf(stdout,"OBJECT START: %s\n",name); */
 				fread( &count, sizeof(int), 1, input);
 				count = BigLong(count);
 				++iLevel;
 				if (count != 0) {
-//					indent();
-//					fprintf(stdout,"NUMBER OF TRIANGLES: %d\n",count);
+/*					indent(); */
+/*					fprintf(stdout,"NUMBER OF TRIANGLES: %d\n",count); */
 	
 					i = -1;
 					do {
@@ -107,8 +107,8 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 						fread( &(tex[i]), sizeof( char ), 1, input);
 					} while( tex[i] != '\0' );
 	
-//					indent();
-//					fprintf(stdout,"  Object texture name: '%s'\n",tex);
+/*					indent(); */
+/*					fprintf(stdout,"  Object texture name: '%s'\n",tex); */
 				}
 	
 				/* Else (count == 0) this is the start of a group, and */
@@ -127,15 +127,15 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 					fread( &(name[i]), sizeof( char ), 1, input);
 				} while( name[i] != '\0' );
 	
-//				indent();
-//				fprintf(stdout,"OBJECT END: %s\n",name);
+/*				indent(); */
+/*				fprintf(stdout,"OBJECT END: %s\n",name); */
 				continue;
 			}
 		}
 
-//
-// read the triangles
-//		
+/* */
+/* read the triangles */
+/*		 */
 		for (i = 0; i < count; ++i) {
 			int		j;
 

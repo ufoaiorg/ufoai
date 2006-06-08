@@ -166,7 +166,7 @@ void SVCmd_AddIP_f (void)
 
 	for (i=0 ; i<numipfilters ; i++)
 		if (ipfilters[i].compare == 0xffffffff)
-			break;		// free spot
+			break;		/* free spot */
 	if (i == numipfilters)
 	{
 		if (numipfilters == MAX_IPFILTERS)
@@ -323,7 +323,7 @@ void SVCmd_ShowAll_f( void )
 	edict_t *ent;
 	int i;
 
-	// Make everything visible to anyone who can't already see it
+	/* Make everything visible to anyone who can't already see it */
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 		if ( ent->inuse )
 		{

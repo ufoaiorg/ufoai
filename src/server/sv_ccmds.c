@@ -40,20 +40,20 @@ void SV_SetMaster_f (void)
 {
 	int		i, slot;
 
-	// only dedicated servers send heartbeats
+	/* only dedicated servers send heartbeats */
 	if (!dedicated->value)
 	{
 		Com_Printf ("Only dedicated servers use masters.\n");
 		return;
 	}
 
-	// make sure the server is listed public
+	/* make sure the server is listed public */
 	Cvar_Set ("public", "1");
 
 	for (i=1 ; i<MAX_MASTERS ; i++)
 		memset (&master_adr[i], 0, sizeof(master_adr[i]));
 
-	slot = 1;		// slot 0 will always contain the id master
+	slot = 1;		/* slot 0 will always contain the id master */
 	for (i=1 ; i<Cmd_Argc() ; i++)
 	{
 		if (slot == MAX_MASTERS)
@@ -100,7 +100,7 @@ qboolean SV_SetPlayer (void)
 
 	s = Cmd_Argv(1);
 
-	// numeric values are just slot numbers
+	/* numeric values are just slot numbers */
 	if (s[0] >= '0' && s[0] <= '9')
 	{
 		idnum = atoi(Cmd_Argv(1));
@@ -120,7 +120,7 @@ qboolean SV_SetPlayer (void)
 		return qtrue;
 	}
 
-	// check for a name match
+	/* check for a name match */
 	for (i=0,cl=svs.clients ; i<sv_maxclients->value; i++,cl++)
 	{
 		if (!cl->state)
@@ -193,7 +193,7 @@ Goes directly to a given map
 */
 void SV_Map_f (void)
 {
-	// change
+	/* change */
 	sv.state = ss_dead;
 	sv.loadgame = qfalse;
 	sv.attractloop = qfalse;
@@ -233,11 +233,11 @@ void SV_Kick_f (void)
 		return;
 
 	SV_BroadcastPrintf (PRINT_HIGH, "%s was kicked\n", sv_client->name);
-	// print directly, because the dropped client won't get the
-	// SV_BroadcastPrintf message
+	/* print directly, because the dropped client won't get the */
+	/* SV_BroadcastPrintf message */
 	SV_ClientPrintf (sv_client, PRINT_HIGH, "You were kicked from the game\n");
 	SV_DropClient (sv_client);
-	sv_client->lastmessage = svs.realtime;	// min case there is a funny zombie
+	sv_client->lastmessage = svs.realtime;	/* min case there is a funny zombie */
 }
 
 
@@ -416,9 +416,9 @@ void SV_ServerRecord_f (void)
 		return;
 	}
 
-	//
-	// open the demo file
-	//
+	/* */
+	/* open the demo file */
+	/* */
 	Com_sprintf (name, sizeof(name), "%s/demos/%s.dm2", FS_Gamedir(), Cmd_Argv(1));
 
 	Com_Printf ("recording to %s.\n", name);
@@ -430,27 +430,27 @@ void SV_ServerRecord_f (void)
 		return;
 	}
 
-	// setup a buffer to catch all multicasts
+	/* setup a buffer to catch all multicasts */
 	SZ_Init (&svs.demo_multicast, svs.demo_multicast_buf, sizeof(svs.demo_multicast_buf));
 
-	//
-	// write a single giant fake message with all the startup info
-	//
+	/* */
+	/* write a single giant fake message with all the startup info */
+	/* */
 	SZ_Init (&buf, buf_data, sizeof(buf_data));
 
-	//
-	// serverdata needs to go over for all types of servers
-	// to make sure the protocol is right, and to set the gamedir
-	//
-	// send the serverdata
+	/* */
+	/* serverdata needs to go over for all types of servers */
+	/* to make sure the protocol is right, and to set the gamedir */
+	/* */
+	/* send the serverdata */
 	MSG_WriteByte (&buf, svc_serverdata);
 	MSG_WriteLong (&buf, PROTOCOL_VERSION);
 	MSG_WriteLong (&buf, svs.spawncount);
-	// 2 means server demo
-	MSG_WriteByte (&buf, 2);	// demos are always attract loops
+	/* 2 means server demo */
+	MSG_WriteByte (&buf, 2);	/* demos are always attract loops */
 	MSG_WriteString (&buf, Cvar_VariableString ("gamedir"));
 	MSG_WriteShort (&buf, -1);
-	// send full levelname
+	/* send full levelname */
 	MSG_WriteString (&buf, sv.configstrings[CS_NAME]);
 
 	for (i=0 ; i<MAX_CONFIGSTRINGS ; i++)
@@ -461,13 +461,13 @@ void SV_ServerRecord_f (void)
 			MSG_WriteString (&buf, sv.configstrings[i]);
 		}
 
-	// write it to the demo file
+	/* write it to the demo file */
 	Com_DPrintf ("signon message length: %i\n", buf.cursize);
 	len = LittleLong (buf.cursize);
 	fwrite (&len, 4, 1, svs.demofile);
 	fwrite (buf.data, buf.cursize, 1, svs.demofile);
 
-	// the rest of the demo file will be individual frames
+	/* the rest of the demo file will be individual frames */
 }
 
 
@@ -504,7 +504,7 @@ void SV_KillServer_f (void)
 	if (!svs.initialized)
 		return;
 	SV_Shutdown ("Server was killed.\n", qfalse);
-	NET_Config ( qfalse );	// close network sockets
+	NET_Config ( qfalse );	/* close network sockets */
 }
 
 /*
@@ -525,7 +525,7 @@ void SV_ServerCommand_f (void)
 	ge->ServerCommand();
 }
 
-//===========================================================
+/*=========================================================== */
 
 /*
 ================

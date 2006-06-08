@@ -4,7 +4,7 @@
 int		nummiptex;
 textureref_t	textureref[MAX_MAP_TEXTURES];
 
-//==========================================================================
+/*========================================================================== */
 
 
 int	FindMiptex (char *name)
@@ -22,7 +22,7 @@ int	FindMiptex (char *name)
 		Error ("MAX_MAP_TEXTURES");
 	strcpy (textureref[i].name, name);
 
-	// load the miptex to get the flags and values
+	/* load the miptex to get the flags and values */
 	sprintf (path, "%stextures/%s.wal", gamedir, name);
 	if (TryLoadFile (path, (void **)&mt) != -1)
 	{
@@ -48,12 +48,12 @@ textureAxisFromPlane
 */
 vec3_t	baseaxis[18] =
 {
-{0,0,1}, {1,0,0}, {0,-1,0},			// floor
-{0,0,-1}, {1,0,0}, {0,-1,0},		// ceiling
-{1,0,0}, {0,1,0}, {0,0,-1},			// west wall
-{-1,0,0}, {0,1,0}, {0,0,-1},		// east wall
-{0,1,0}, {1,0,0}, {0,0,-1},			// south wall
-{0,-1,0}, {1,0,0}, {0,0,-1}			// north wall
+{0,0,1}, {1,0,0}, {0,-1,0},			/* floor */
+{0,0,-1}, {1,0,0}, {0,-1,0},		/* ceiling */
+{1,0,0}, {0,1,0}, {0,0,-1},			/* west wall */
+{-1,0,0}, {0,1,0}, {0,0,-1},		/* east wall */
+{0,1,0}, {1,0,0}, {0,0,-1},			/* south wall */
+{0,-1,0}, {1,0,0}, {0,0,-1}			/* north wall */
 };
 
 void TextureAxisFromPlane(plane_t *pln, vec3_t xv, vec3_t yv)
@@ -110,7 +110,7 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin)
 	if (!bt->scale[1])
 		bt->scale[1] = 1;
 
-	// rotate axis
+	/* rotate axis */
 	if (bt->rotate == 0)
 		{ sinv = 0 ; cosv = 1; }
 	else if (bt->rotate == 90)
@@ -157,9 +157,9 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin)
 	tx.flags = bt->flags;
 	tx.value = bt->value;
 
-	//
-	// find the texinfo
-	//
+	/* */
+	/* find the texinfo */
+	/* */
 	tc = texinfo;
 	for (i=0 ; i<numtexinfo ; i++, tc++)
 	{
@@ -183,7 +183,7 @@ skip:;
 	*tc = tx;
 	numtexinfo++;
 
-	// load the next animation
+	/* load the next animation */
 	mt = FindMiptex (bt->name);
 	if (textureref[mt].animname[0])
 	{

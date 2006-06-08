@@ -25,17 +25,17 @@ void CalcTextureReflectivity (void)
 
 	sprintf (path, "%spics/colormap.pcx", gamedir);
 
-	// get the game palette
+	/* get the game palette */
 	Load256Image (path, NULL, &palette, NULL, NULL);
 
-	// allways set index 0 even if no textures
+	/* allways set index 0 even if no textures */
 	texture_reflectivity[0][0] = 0.5;
 	texture_reflectivity[0][1] = 0.5;
 	texture_reflectivity[0][2] = 0.5;
 
 	for (i=0 ; i<numtexinfo ; i++)
 	{
-		// see if an earlier texinfo allready got the value
+		/* see if an earlier texinfo allready got the value */
 		for (j=0 ; j<i ; j++)
 		{
 			if (!strcmp (texinfo[i].texture, texinfo[j].texture))
@@ -103,9 +103,9 @@ void BaseLightForFace (dface_t *f, vec3_t color)
 {
 	texinfo_t	*tx;
 
-	//
-	// check for light emited by texture
-	//
+	/* */
+	/* check for light emited by texture */
+	/* */
 	tx = &texinfo[f->texinfo];
 	if (!(tx->flags & SURF_LIGHT) || tx->value == 0)
 	{
@@ -160,7 +160,7 @@ void MakePatchForFace (int fn, winding_t *w)
 	else
 		patch->plane = &dplanes[f->planenum];
 	if (face_offset[fn][0] || face_offset[fn][1] || face_offset[fn][2] )
-	{	// origin offset faces must create new planes
+	{	/* origin offset faces must create new planes */
 		if (numplanes + fakeplanes >= MAX_MAP_PLANES)
 			Error ("numplanes + fakeplanes >= MAX_MAP_PLANES");
 		pl = &dplanes[numplanes + fakeplanes];
@@ -185,7 +185,7 @@ void MakePatchForFace (int fn, winding_t *w)
 
 	VectorCopy (texture_reflectivity[f->texinfo], patch->reflectivity);
 
-	// non-bmodel patches can emit light
+	/* non-bmodel patches can emit light */
 	if (fn < dmodels[0].numfaces)
 	{
 		BaseLightForFace (f, patch->baselight);
@@ -208,7 +208,7 @@ entity_t *EntityForModel (int modnum)
 	char	name[16];
 
 	sprintf (name, "*%i", modnum);
-	// search the entities for one using modnum
+	/* search the entities for one using modnum */
 	for (i=0 ; i<num_entities ; i++)
 	{
 		s = ValueForKey (&entities[i], "model");
@@ -232,23 +232,23 @@ void MakePatches (void)
 	winding_t	*w;
 	dmodel_t	*mod;
 	vec3_t		origin;
-//	entity_t	*ent;
+/*	entity_t	*ent; */
 
 	qprintf ("%i faces\n", numfaces);
 
 	for (i=0 ; i<nummodels ; i++)
 	{
 		mod = &dmodels[i];
-//		ent = EntityForModel (i);
-		// bmodels with origin brushes need to be offset into their
-		// in-use position
-//		GetVectorForKey (ent, "origin", origin);
+/*		ent = EntityForModel (i); */
+		/* bmodels with origin brushes need to be offset into their */
+		/* in-use position */
+/*		GetVectorForKey (ent, "origin", origin); */
 		VectorCopy (vec3_origin, origin);
 
 		for (j=0 ; j<mod->numfaces ; j++)
 		{
 			fn = mod->firstface + j;
-//			face_entity[fn] = ent;
+/*			face_entity[fn] = ent; */
 			VectorCopy (origin, face_offset[fn]);
 			f = &dfaces[fn];
 			w = WindingFromFace (f);
@@ -341,21 +341,21 @@ void	SubdividePatch (patch_t *patch)
 			break;
 	if (i == 3)
 	{
-		// no splitting needed
+		/* no splitting needed */
 		return;
 	}
 
-	//
-	// split the winding
-	//
+	/* */
+	/* split the winding */
+	/* */
 	VectorCopy (vec3_origin, split);
 	split[i] = 1;
 	dist = (mins[i] + maxs[i])*0.5;
 	ClipWindingEpsilon (w, split, dist, ON_EPSILON, &o1, &o2);
 
-	//
-	// create a new patch
-	//
+	/* */
+	/* create a new patch */
+	/* */
 	if (num_patches == MAX_PATCHES)
 		Error ("MAX_PATCHES");
 	newp = &patches[num_patches];
@@ -397,21 +397,21 @@ void	DicePatch (patch_t *patch)
 			break;
 	if (i == 3)
 	{
-		// no splitting needed
+		/* no splitting needed */
 		return;
 	}
 
-	//
-	// split the winding
-	//
+	/* */
+	/* split the winding */
+	/* */
 	VectorCopy (vec3_origin, split);
 	split[i] = 1;
 	dist = subdiv*(1+floor((mins[i]+1)/subdiv));
 	ClipWindingEpsilon (w, split, dist, ON_EPSILON, &o1, &o2);
 
-	//
-	// create a new patch
-	//
+	/* */
+	/* create a new patch */
+	/* */
 	if (num_patches == MAX_PATCHES)
 		Error ("MAX_PATCHES");
 	newp = &patches[num_patches];
@@ -442,13 +442,13 @@ void SubdividePatches (void)
 	if (subdiv < 1)
 		return;
 
-	num = num_patches;	// because the list will grow
+	num = num_patches;	/* because the list will grow */
 	for (i=0 ; i<num ; i++)
 	{
-//		SubdividePatch (&patches[i]);
+/*		SubdividePatch (&patches[i]); */
 		DicePatch (&patches[i]);
 	}
 	qprintf ("%i patches after subdivision\n", num_patches);
 }
 
-//=====================================================================
+/*===================================================================== */

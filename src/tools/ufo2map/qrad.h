@@ -31,14 +31,14 @@ typedef struct directlight_s
 	int			style;
 	vec3_t		origin;
 	vec3_t		color;
-	vec3_t		normal;		// for surfaces and spotlights
-	float		stopdot;		// for spotlights
+	vec3_t		normal;		/* for surfaces and spotlights */
+	float		stopdot;		/* for spotlights */
 } directlight_t;
 
 
-// the sum of all tranfer->transfer values for a given patch
-// should equal exactly 0x10000, showing that all radiance
-// reaches other patches
+/* the sum of all tranfer->transfer values for a given patch */
+/* should equal exactly 0x10000, showing that all radiance */
+/* reaches other patches */
 typedef struct
 {
 	unsigned short	patch;
@@ -46,39 +46,39 @@ typedef struct
 } transfer_t;
 
 
-#define	MAX_PATCHES	65000			// larger will cause 32 bit overflows
+#define	MAX_PATCHES	65000			/* larger will cause 32 bit overflows */
 
 typedef struct patch_s
 {
 	winding_t	*winding;
-	struct patch_s		*next;		// next in face
+	struct patch_s		*next;		/* next in face */
 	int			numtransfers;
 	transfer_t	*transfers;
 
-	int			cluster;			// for pvs checking
+	int			cluster;			/* for pvs checking */
 	vec3_t		origin;
 	dplane_t	*plane;
 
 	qboolean	sky;
 
-	vec3_t		totallight;			// accumulated by radiosity
-									// does NOT include light
-									// accounted for by direct lighting
+	vec3_t		totallight;			/* accumulated by radiosity */
+									/* does NOT include light */
+									/* accounted for by direct lighting */
 	float		area;
 
-	// illuminance * reflectivity = radiosity
+	/* illuminance * reflectivity = radiosity */
 	vec3_t		reflectivity;
-	vec3_t		baselight;			// emissivity only
+	vec3_t		baselight;			/* emissivity only */
 
-	// each style 0 lightmap sample in the patch will be
-	// added up to get the average illuminance of the entire patch
+	/* each style 0 lightmap sample in the patch will be */
+	/* added up to get the average illuminance of the entire patch */
 	vec3_t		samplelight;
-	int			samples;		// for averaging direct light
+	int			samples;		/* for averaging direct light */
 } patch_t;
 
 extern	patch_t		*face_patches[MAX_MAP_FACES];
 extern	entity_t	*face_entity[MAX_MAP_FACES];
-extern	vec3_t		face_offset[MAX_MAP_FACES];		// for rotating bmodels
+extern	vec3_t		face_offset[MAX_MAP_FACES];		/* for rotating bmodels */
 extern	patch_t		patches[MAX_PATCHES];
 extern	unsigned	num_patches;
 
@@ -90,13 +90,13 @@ extern	int		lightquant;
 
 void MakeShadowSplits (void);
 
-//==============================================
+/*============================================== */
 
 
 void BuildVisMatrix (void);
 qboolean CheckVisBit (unsigned p1, unsigned p2);
 
-//==============================================
+/*============================================== */
 
 extern	float ambient_red, ambient_green, ambient_blue, maxlight;
 
@@ -132,7 +132,7 @@ dleaf_t		*PointInLeafRad (vec3_t point);
 
 
 extern	dplane_t	backplanes[MAX_MAP_PLANES];
-extern	int			fakeplanes;					// created planes for origin offset 
+extern	int			fakeplanes;					/* created planes for origin offset  */
 
 extern	float	subdiv;
 

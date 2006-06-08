@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-// gl_draw.c
+/* gl_draw.c */
 
 #include "gl_local.h"
 
@@ -31,7 +31,7 @@ void Scrap_Upload (void);
 image_t		*shadow;
 
 
-// console font
+/* console font */
 image_t		*draw_chars;
 
 /*
@@ -44,7 +44,7 @@ void Draw_InitLocal (void)
 	shadow = GL_FindImage ("pics/sfx/shadow.tga", it_pic);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	// load console characters (don't bilerp characters)
+	/* load console characters (don't bilerp characters) */
 	draw_chars = GL_FindImage ("pics/conchars.pcx", it_pic);
 	GL_Bind( draw_chars->texnum );
 
@@ -68,18 +68,18 @@ void Draw_Char (int x, int y, int num)
 
 	num &= 255;
 
-	if((num&127) == 32) // space
+	if((num&127) == 32) /* space */
 		return;
 
 	if (y <= -8)
-		return; // totally off screen
+		return; /* totally off screen */
 
 	row = num>>4;
 	col = num&15;
 
 	frow = row*0.0625;
 	fcol = col*0.0625;
-	size = 0.0625; // 16 cols (conchars.pcx)
+	size = 0.0625; /* 16 cols (conchars.pcx) */
 
 	GL_Bind (draw_chars->texnum);
 
@@ -206,7 +206,7 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 	if (scrap_dirty)
 		Scrap_Upload ();
 
-	// normalize
+	/* normalize */
 	nx = x * vid.rx;
 	ny = y * vid.ry;
 
@@ -231,8 +231,8 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 		sh = 1; th = 1;
 	}
 
-	// get alignement
-	// (do nothing if left aligned or unknown)
+	/* get alignement */
+	/* (do nothing if left aligned or unknown) */
 	if ( align > 0 && align < ALIGN_LAST )
 	{
 		switch ( align % 3 )
@@ -385,7 +385,7 @@ void Draw_Fill (int x, int y, int w, int h, int style, vec4_t color)
 	qglEnable (GL_TEXTURE_2D);
 }
 
-//=============================================================================
+/*============================================================================= */
 
 /*
 ================
@@ -412,7 +412,7 @@ void Draw_FadeScreen (void)
 }
 
 
-//====================================================================
+/*==================================================================== */
 
 
 /*
@@ -499,16 +499,16 @@ void Draw_DayAndNight( int x, int y, int w, int h, float p, float q, float cx, f
 	image_t *gl;
 	float nx, ny, nw, nh;
 
-	// normalize
+	/* normalize */
 	nx = x * vid.rx;
 	ny = y * vid.ry;
 	nw = w * vid.rx;
 	nh = h * vid.ry;
 
-	// load day image
+	/* load day image */
 	gl = GL_FindImage( va("pics/menu/%s_day", map), it_wrappic );
 
-	// draw day image
+	/* draw day image */
 	GL_Bind (gl->texnum);
 	qglBegin (GL_QUADS);
 	qglTexCoord2f( cx-iz, cy-iz );
@@ -521,11 +521,11 @@ void Draw_DayAndNight( int x, int y, int w, int h, float p, float q, float cx, f
 	qglVertex2f (nx, ny+nh);
 	qglEnd ();
 
-	// test for multitexture and env_combine support
+	/* test for multitexture and env_combine support */
 	if ( !qglSelectTextureSGIS && !qglActiveTextureARB )
 		return;
 
-	// init combiner
+	/* init combiner */
 	qglEnable( GL_BLEND );
 
 	GL_SelectTexture( gl_texture0 );
@@ -542,7 +542,7 @@ void Draw_DayAndNight( int x, int y, int w, int h, float p, float q, float cx, f
 	GL_Bind( DaN->texnum );
 	qglEnable( GL_TEXTURE_2D );
 
-	// draw night image
+	/* draw night image */
 	qglBegin (GL_QUADS);
 	qglMTexCoord2fSGIS( gl_texture0, cx-iz, cy-iz );
 	qglMTexCoord2fSGIS( gl_texture1, p+cx-iz, cy-iz );
@@ -558,7 +558,7 @@ void Draw_DayAndNight( int x, int y, int w, int h, float p, float q, float cx, f
 	qglVertex2f (nx, ny+nh);
 	qglEnd ();
 
-	// reset mode
+	/* reset mode */
 	qglDisable( GL_TEXTURE_2D );
 	GL_SelectTexture( gl_texture0 );
 
@@ -575,9 +575,9 @@ void Draw_LineStrip( int points, int *verts )
 {
 	static int vs[MAX_LINEVERTS*2];
 	int i;
-//	int *v;
+/*	int *v; */
 
-	// fit it on screen
+	/* fit it on screen */
 	if ( points > MAX_LINEVERTS*2 ) points = MAX_LINEVERTS*2;
 
 	for ( i = 0; i < points*2; i += 2 )
@@ -586,15 +586,15 @@ void Draw_LineStrip( int points, int *verts )
 		vs[i+1] = verts[i+1] * vid.ry;
 	}
 
-	// init vertex array
+	/* init vertex array */
 	qglDisable( GL_TEXTURE_2D );
 	qglEnableClientState( GL_VERTEX_ARRAY );
 	qglVertexPointer( 2, GL_INT, 0, vs );
 
-	// draw
+	/* draw */
 	qglDrawArrays( GL_LINE_STRIP, 0, points );
 
-	// reset state
+	/* reset state */
 	qglDisableClientState( GL_VERTEX_ARRAY );
 	qglEnable( GL_TEXTURE_2D );
 }
@@ -812,7 +812,7 @@ void Draw_3DMapLine ( int n, float dist, vec2_t *path )
 	vec3_t	v1, v2;
 
 	qglPushMatrix();
-// 	qglMaterialfv(GL_FRONT, GL_DIFFUSE, lineColor);
+/* 	qglMaterialfv(GL_FRONT, GL_DIFFUSE, lineColor); */
 
 	/*    Angle is arccos(Ax*Bx + Ay*By + Az*Bz)    */
 	Globe_CoordToVec ( path[n][0], path[n][1], v1 );
@@ -842,9 +842,9 @@ void Draw_3DMapLine ( int n, float dist, vec2_t *path )
 
 	/*   Fix incorrect names on the lines, identifying them as the
 	sitemarker we just drew.             */
-// 	qglLoadName(NOT_SELECTABLE);
+/* 	qglLoadName(NOT_SELECTABLE); */
 
-// 	partialtorus((GLfloat)path[0]->[1]-180.0, (GLfloat)linesweep, zoom);
+/* 	partialtorus((GLfloat)path[0]->[1]-180.0, (GLfloat)linesweep, zoom); */
 	qglPopMatrix();
 }
 
@@ -907,14 +907,14 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 		}
 	}
 
-	// test for multitexture and env_combine support
+	/* test for multitexture and env_combine support */
 	if ( !qglSelectTextureSGIS && !qglActiveTextureARB )
 	{
 		qglPopMatrix();
 		return;
 	}
 
-	// init combiner
+	/* init combiner */
 	qglEnable( GL_BLEND );
 
 	GL_SelectTexture( gl_texture0 );
@@ -931,9 +931,9 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 	GL_Bind( DaN->texnum );
 	qglEnable( GL_TEXTURE_2D );
 
-	// TODO: draw night image
+	/* TODO: draw night image */
 
-	// reset mode
+	/* reset mode */
 	qglDisable( GL_TEXTURE_2D );
 	GL_SelectTexture( gl_texture0 );
 

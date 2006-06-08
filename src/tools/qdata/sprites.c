@@ -43,7 +43,7 @@ void FinishSprite (void)
 
 		sprintf (name, "%s.sp2", spritename);
 		ReleaseFile (name);
-		spritename[0] = 0;		// clear for a new sprite
+		spritename[0] = 0;		/* clear for a new sprite */
 		sprite.numframes = 0;
 		return;
 	}
@@ -54,18 +54,18 @@ void FinishSprite (void)
 	spriteouthandle = SafeOpenWrite (savename);
 
 
-//
-// write out the sprite header
-//
+/* */
+/* write out the sprite header */
+/* */
 	spritetemp.ident = LittleLong (IDSPRITEHEADER);
 	spritetemp.version = LittleLong (SPRITE_VERSION);
 	spritetemp.numframes = LittleLong (sprite.numframes);
 
 	SafeWrite (spriteouthandle, &spritetemp, 12);
 
-//
-// write out the frames
-//
+/* */
+/* write out the frames */
+/* */
 	curframe = 0;
 
 	for (i=0 ; i<sprite.numframes ; i++)
@@ -79,7 +79,7 @@ void FinishSprite (void)
 
 	fclose (spriteouthandle);
 	
-	spritename[0] = 0;		// clear for a new sprite
+	spritename[0] = 0;		/* clear for a new sprite */
 	sprite.numframes = 0;
 }
 
@@ -100,7 +100,7 @@ void Cmd_Load (void)
 
 	name = ExpandPathAndArchive(token);
 
-	// load the image
+	/* load the image */
 	printf ("loading %s\n", name);
 	Load256Image (name, &byteimage, &lbmpalette, 
 		&byteimagewidth, &byteimageheight);
@@ -131,7 +131,7 @@ void Cmd_SpriteFrame (void)
 	GetToken (qfalse);
 	h = atoi (token);
 
-	// origin offset is optional
+	/* origin offset is optional */
 	if (TokenAvailable ())
 	{
 		GetToken (qfalse);
@@ -172,14 +172,14 @@ void Cmd_SpriteFrame (void)
 		return;
 	}
 
-	// crop it to the proper size
+	/* crop it to the proper size */
 	cropped = malloc (w*h);
 	for (y=0 ; y<h ; y++)
 	{
 		memcpy (cropped+y*w, byteimage+(y+yl)*byteimagewidth+xl, w);
 	}
 
-	// save off the new image
+	/* save off the new image */
 	printf ("saving %s\n", savename);
 	CreatePath (savename);
 	WritePCXfile (savename, cropped, w,	h, lbmpalette);

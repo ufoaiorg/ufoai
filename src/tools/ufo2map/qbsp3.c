@@ -1,4 +1,4 @@
-// csg4.c
+/* csg4.c */
 
 #include "qbsp.h"
 
@@ -41,7 +41,7 @@ void ProcessWorldModel (void)
 	entity_t	*e;
 	int			i;
 
-//	BeginModel ();
+/*	BeginModel (); */
 
 	e = &entities[entity_num];
 
@@ -50,7 +50,7 @@ void ProcessWorldModel (void)
 
 	ClearBounds( worldMins, worldMaxs );
 
-	// process levels
+	/* process levels */
 	{
 		int	start, end;
 		nummodels = 258;
@@ -61,7 +61,7 @@ void ProcessWorldModel (void)
 			if ( !(i%26) )
 				printf ("%i...", (int)(i/26) );
 
-			// process brushes with that level mask
+			/* process brushes with that level mask */
 			ProcessLevel( i );
 		}
 		end = I_FloatTime();
@@ -69,7 +69,7 @@ void ProcessWorldModel (void)
 		printf( " (%i)\n", end-start );
 	}
 
-	// calculate routing
+	/* calculate routing */
 	if ( !norouting ) 
 		DoRouting();
 }
@@ -138,7 +138,7 @@ void ProcessModels (void)
 			ProcessSubModel ();
 
 		if (!verboseentities)
-			verbose = qfalse;	// don't bother printing submodels
+			verbose = qfalse;	/* don't bother printing submodels */
 	}
 
 	EndBSPFile ();

@@ -1,14 +1,14 @@
-//______________________________________________________________________________________________________________nFO
-// "q_shosx.c" - shared functions for the plug-ins.
-//
-// Written by:	awe				[mailto:awe@fruitz-of-dojo.de].
-//		©2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de].
-//
-// Quake IIª is copyrighted by id software	[http://www.idsoftware.com].
-//
-// Version History:
-// v1.0.0:   Initial release.
-//_________________________________________________________________________________________________________iNCLUDES
+/*______________________________________________________________________________________________________________nFO */
+/* "q_shosx.c" - shared functions for the plug-ins. */
+/* */
+/* Written by:	awe				[mailto:awe@fruitz-of-dojo.de]. */
+//		©2001-2002 Fruitz Of Dojo 	[http:/*www.fruitz-of-dojo.de]. */
+/* */
+// Quake IIª is copyrighted by id software	[http:/*www.idsoftware.com]. */
+/* */
+/* Version History: */
+/* v1.0.0:   Initial release. */
+/*_________________________________________________________________________________________________________iNCLUDES */
 
 #pragma mark =Includes=
 
@@ -27,7 +27,7 @@
 
 #pragma mark -
 
-//________________________________________________________________________________________________________vARIABLES
+/*________________________________________________________________________________________________________vARIABLES */
 
 #pragma mark =Variables=
 
@@ -43,7 +43,7 @@ static	DIR	*gSysFindDir;
 
 #pragma mark -
 
-//_________________________________________________________________________________________________________strlwr()
+/*_________________________________________________________________________________________________________strlwr() */
 
 char* strlwr (char *s)
 {
@@ -55,7 +55,7 @@ char* strlwr (char *s)
 	return origs;
 }
 
-//_____________________________________________________________________________________________________Hunk_Begin()
+/*_____________________________________________________________________________________________________Hunk_Begin() */
 
 void	*Hunk_Begin (int theMaxSize)
 {
@@ -72,7 +72,7 @@ void	*Hunk_Begin (int theMaxSize)
     return (membase + sizeof(int));
 }
 
-//_____________________________________________________________________________________________________Hunk_Alloc()
+/*_____________________________________________________________________________________________________Hunk_Alloc() */
 
 void *	Hunk_Alloc (int theSize)
 {
@@ -89,7 +89,7 @@ void *	Hunk_Alloc (int theSize)
     return (myMemory);
 }
 
-//______________________________________________________________________________________________________Hunk_Free()
+/*______________________________________________________________________________________________________Hunk_Free() */
 
 void	Hunk_Free (void *theBuffer)
 {
@@ -102,14 +102,14 @@ void	Hunk_Free (void *theBuffer)
     }
 }
 
-//_______________________________________________________________________________________________________Hunk_End()
+/*_______________________________________________________________________________________________________Hunk_End() */
 
 int	Hunk_End (void)
 {
     return (curhunksize);
 }
 
-//_______________________________________________________________________________________________Sys_Milliseconds()
+/*_______________________________________________________________________________________________Sys_Milliseconds() */
 
 int	Sys_Milliseconds (void)
 {
@@ -130,7 +130,7 @@ int	Sys_Milliseconds (void)
     return (curtime);
 }
 
-//______________________________________________________________________________________________________Sys_Mkdir()
+/*______________________________________________________________________________________________________Sys_Mkdir() */
 
 void	Sys_Mkdir (char *thePath)
 {
@@ -142,14 +142,14 @@ void	Sys_Mkdir (char *thePath)
     }
 }
 
-//__________________________________________________________________________________________Sys_CompareAttributes()
+/*__________________________________________________________________________________________Sys_CompareAttributes() */
 
 static qboolean Sys_CompareAttributes (char *thePath, char *theName, unsigned theMustHave, unsigned theCantHave)
 {
     struct stat myStat;
     char 	myFileName[MAX_OSPATH];
 
-    // . and .. never match
+    /* . and .. never match */
     if (strcmp (theName, ".") == 0 || strcmp (theName, "..") == 0)
     {
         return qfalse;
@@ -175,7 +175,7 @@ static qboolean Sys_CompareAttributes (char *thePath, char *theName, unsigned th
     return (qtrue);
 }
 
-//__________________________________________________________________________________________________Sys_FindFirst()
+/*__________________________________________________________________________________________________Sys_FindFirst() */
 
 char	*Sys_FindFirst (char *thePath, unsigned theMustHave, unsigned theCantHave)
 {
@@ -223,19 +223,19 @@ char	*Sys_FindFirst (char *thePath, unsigned theMustHave, unsigned theCantHave)
     return (NULL);
 }
 
-//___________________________________________________________________________________________________Sys_FindNext()
+/*___________________________________________________________________________________________________Sys_FindNext() */
 
 char *	Sys_FindNext (unsigned theMustHave, unsigned theCantHave)
 {
     struct dirent 	*myDirEnt;
 
-    // just security:
+    /* just security: */
     if (gSysFindDir == NULL)
     {
         return (NULL);
     }
     
-    // find next...
+    /* find next... */
     while ((myDirEnt = readdir (gSysFindDir)) != NULL)
     {
         if (!*gSysFindPattern || glob_match (gSysFindPattern, myDirEnt->d_name))
@@ -251,7 +251,7 @@ char *	Sys_FindNext (unsigned theMustHave, unsigned theCantHave)
     return (NULL);
 }
 
-//__________________________________________________________________________________________________Sys_FindClose()
+/*__________________________________________________________________________________________________Sys_FindClose() */
 
 void	Sys_FindClose (void)
 {
@@ -262,4 +262,4 @@ void	Sys_FindClose (void)
     gSysFindDir = NULL;
 }
 
-//______________________________________________________________________________________________________________eOF
+/*______________________________________________________________________________________________________________eOF */

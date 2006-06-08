@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// net_udp6.c
+/* net_udp6.c */
 
 #include "../qcommon/qcommon.h"
 
@@ -71,7 +71,7 @@ char *multicast_interface = NULL;
 int NET_Socket (char *net_interface, int port, netsrc_t type, int family);
 char *NET_ErrorString (void);
 
-//=============================================================================
+/*============================================================================= */
 
 void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 {
@@ -369,19 +369,19 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 	}
 
 	if ((err = getaddrinfo (addrs, ports, &hints, &resultp))) {
-		// Error
+		/* Error */
 		Com_Printf ("NET_StringToSockaddr: string %s:\n%s\n", s, gai_strerror(err));
 		return 0;
 	}
 
 	switch (resultp->ai_family) {
 		case AF_INET:
-			// convert to ipv4 addr
+			/* convert to ipv4 addr */
 			memset (sadr, 0, sizeof (struct sockaddr_storage));
 			memcpy (sadr, resultp->ai_addr, resultp->ai_addrlen);
 			break;
 		case AF_INET6:
-			// convert to ipv6 addr
+			/* convert to ipv6 addr */
 			memset (sadr, 0, sizeof (struct sockaddr_storage));
 			memcpy (sadr, resultp->ai_addr, resultp->ai_addrlen);
 			break;
@@ -477,7 +477,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	loop->msgs[i].datalen = length;
 }
 
-//=============================================================================
+/*============================================================================= */
 
 qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
@@ -533,7 +533,7 @@ qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 	return qfalse;
 }
 
-//=============================================================================
+/*============================================================================= */
 
 void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 {
@@ -644,7 +644,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 
 
-//=============================================================================
+/*============================================================================= */
 
 
 
@@ -693,7 +693,7 @@ void NET_Config (qboolean multiplayer)
 	int		i;
 
 	if (!multiplayer)
-	{	// shut down any existing sockets
+	{	/* shut down any existing sockets */
 		for (i=0 ; i<2 ; i++)
 		{
 			if (ip_sockets[i])
@@ -714,14 +714,14 @@ void NET_Config (qboolean multiplayer)
 		}
 	}
 	else
-	{	// open sockets
+	{	/* open sockets */
 		NET_OpenIP ();
 		NET_OpenIPX ();
 	}
 }
 
 
-//===================================================================
+/*=================================================================== */
 
 
 /*
@@ -781,7 +781,7 @@ int NET_Socket (char *net_interface, int port, netsrc_t type, int family)
 			Com_Printf("NET_Socket: socket: %s\n", strerror (errno));
 			continue;
 		}
-		// make it non-blocking
+		/* make it non-blocking */
 		if (ioctl (newsocket, FIONBIO, (char *) &_true) == -1) {
 			Com_Printf("NET_Socket: ioctl FIONBIO: %s\n", strerror (errno));
 			continue;
@@ -794,7 +794,7 @@ int NET_Socket (char *net_interface, int port, netsrc_t type, int family)
 			}
 #endif
 		if (family == AF_INET) {
-			// make it broadcast capable
+			/* make it broadcast capable */
 			if (setsockopt(newsocket, SOL_SOCKET, SO_BROADCAST, (char *)&i, sizeof(i)) == -1)
 			{
 				Com_Printf ("ERROR: NET_Socket: setsockopt SO_BROADCAST:%s\n", NET_ErrorString());
@@ -860,7 +860,7 @@ NET_Shutdown
 */
 void NET_Shutdown (void)
 {
-	NET_Config (qfalse);	// close sockets
+	NET_Config (qfalse);	/* close sockets */
 }
 
 
@@ -877,7 +877,7 @@ char *NET_ErrorString (void)
 	return strerror (code);
 }
 
-// sleeps msec or until net socket is ready
+/* sleeps msec or until net socket is ready */
 void NET_Sleep(int msec)
 {
 	struct timeval timeout;
@@ -886,13 +886,13 @@ void NET_Sleep(int msec)
 	extern qboolean stdin_active;
 
 	if ( (!ip_sockets[NS_SERVER] && !ip6_sockets[NS_SERVER]) || (dedicated && !dedicated->value))
-		return; // we're not a server, just run full speed
+		return; /* we're not a server, just run full speed */
 
 	FD_ZERO(&fdset);
 	if (stdin_active)
-		FD_SET(0, &fdset); // stdin is processed too
-	FD_SET(ip_sockets[NS_SERVER], &fdset); // IPv4 network socket
-	FD_SET(ip6_sockets[NS_SERVER], &fdset); // IPv6 network socket
+		FD_SET(0, &fdset); /* stdin is processed too */
+	FD_SET(ip_sockets[NS_SERVER], &fdset); /* IPv4 network socket */
+	FD_SET(ip6_sockets[NS_SERVER], &fdset); /* IPv6 network socket */
 	timeout.tv_sec = msec/1000;
 	timeout.tv_usec = (msec%1000)*1000;
 	select(MAX(ip_sockets[NS_SERVER],ip6_sockets[NS_SERVER])+1, &fdset, NULL, NULL, &timeout);

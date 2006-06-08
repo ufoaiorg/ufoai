@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// gl_mesh.c: triangle model functions
+/* gl_mesh.c: triangle model functions */
 
 #include "gl_local.h"
 
@@ -37,11 +37,11 @@ float	r_avertexnormals[NUMVERTEXNORMALS][3] = {
 
 static	vec4_t	s_lerped[MAX_VERTS];
 float	normalArray[MAX_VERTS*3];
-//static	vec3_t	lerped[MAX_VERTS];
+/*static	vec3_t	lerped[MAX_VERTS]; */
 
 vec3_t	shadevector;
 
-// precalculated dot products for quantized angles
+/* precalculated dot products for quantized angles */
 #define SHADEDOT_QUANT 16
 float	r_avertexnormal_dots[SHADEDOT_QUANT][256] =
 #include "anormtab.h"
@@ -71,19 +71,19 @@ FIXME: batch lerp all vertexes
 */
 void GL_DrawAliasFrameLerp (dmdl_t *paliashdr, float backlerp, int framenum, int oldframenum )
 {
-//	float 	l;
+/*	float 	l; */
 	daliasframe_t	*frame, *oldframe;
 	dtrivertx_t	*v, *ov, *verts;
 	int		*order;
 	int		count;
 	float	frontlerp;
 	vec3_t	move;
-//	vec3_t	delta;
+/*	vec3_t	delta; */
 	vec3_t	frontv, backv;
 	int		i;
 	float	*lerp;
 	float	*na;
-//	float	*matrix;
+/*	float	*matrix; */
 	float	*oldNormal, *newNormal;
 
 	frame = (daliasframe_t *)((byte *)paliashdr + paliashdr->ofs_frames
@@ -96,13 +96,13 @@ void GL_DrawAliasFrameLerp (dmdl_t *paliashdr, float backlerp, int framenum, int
 
 	order = (int *)((byte *)paliashdr + paliashdr->ofs_glcmds);
 
-//	glTranslatef (frame->translate[0], frame->translate[1], frame->translate[2]);
-//	glScalef (frame->scale[0], frame->scale[1], frame->scale[2]);
+/*	glTranslatef (frame->translate[0], frame->translate[1], frame->translate[2]); */
+/*	glScalef (frame->scale[0], frame->scale[1], frame->scale[2]); */
 
 	frontlerp = 1.0 - backlerp;
 
 #if 0
-	// move should be the delta back to the previous frame * backlerp
+	/* move should be the delta back to the previous frame * backlerp */
 	matrix = trafo[currententity - r_newrefdef.entities].matrix;
 	VectorSubtract (currententity->oldorigin, currententity->origin, delta);
 
@@ -127,11 +127,11 @@ void GL_DrawAliasFrameLerp (dmdl_t *paliashdr, float backlerp, int framenum, int
 
 	GL_LerpVerts( paliashdr->num_xyz, v, ov, verts, lerp, move, frontv, backv );
 
-	// setup vertex array
+	/* setup vertex array */
 	qglEnableClientState( GL_VERTEX_ARRAY );
-	qglVertexPointer( 3, GL_FLOAT, 16, s_lerped );	// padded for SIMD
+	qglVertexPointer( 3, GL_FLOAT, 16, s_lerped );	/* padded for SIMD */
 
-	// setup normal array
+	/* setup normal array */
 	qglEnableClientState( GL_NORMAL_ARRAY );
 	qglNormalPointer( GL_FLOAT, 0, normalArray );
 
@@ -139,7 +139,7 @@ void GL_DrawAliasFrameLerp (dmdl_t *paliashdr, float backlerp, int framenum, int
 	if ( backlerp == 0.0 )
 		for ( i = 0; i < paliashdr->num_xyz; v++, i++ )
 		{
-			// get current normals
+			/* get current normals */
 			newNormal = r_avertexnormals[v->lightnormalindex];
 
 			*na++ = newNormal[0];
@@ -149,8 +149,8 @@ void GL_DrawAliasFrameLerp (dmdl_t *paliashdr, float backlerp, int framenum, int
 	else
 		for ( i = 0; i < paliashdr->num_xyz; v++, ov++, i++ )
 		{
-			// normalize interpolated normals?
-			// no: probably too much to compute
+			/* normalize interpolated normals? */
+			/* no: probably too much to compute */
 			oldNormal = r_avertexnormals[ov->lightnormalindex];
 			newNormal = r_avertexnormals[ v->lightnormalindex];
 
@@ -164,10 +164,10 @@ void GL_DrawAliasFrameLerp (dmdl_t *paliashdr, float backlerp, int framenum, int
 
 	while (1)
 	{
-		// get the vertex count and primitive type
+		/* get the vertex count and primitive type */
 		count = *order++;
 		if (!count)
-			break; // done
+			break; /* done */
 		if (count < 0)
 		{
 			count = -count;
@@ -179,7 +179,7 @@ void GL_DrawAliasFrameLerp (dmdl_t *paliashdr, float backlerp, int framenum, int
 		}
 		do
 		{
-			// texture coordinates come from the draw list
+			/* texture coordinates come from the draw list */
 			qglTexCoord2f (((float *)order)[0], ((float *)order)[1]);
 			order += 2;
 
@@ -199,7 +199,7 @@ void GL_DrawAliasFrameLerp (dmdl_t *paliashdr, float backlerp, int framenum, int
 GL_DrawAliasShadow
 =============
 */
-//extern	vec3_t			lightspot;
+/*extern	vec3_t			lightspot; */
 #if 0
 void GL_DrawAliasShadow (dmdl_t *paliashdr, int posenum)
 {
@@ -210,7 +210,7 @@ void GL_DrawAliasShadow (dmdl_t *paliashdr, int posenum)
 	int		count;
 	daliasframe_t	*frame;
 
-	lheight = currententity->origin[2];// - lightspot[2];
+	lheight = currententity->origin[2];/* - lightspot[2]; */
 
 	frame = (daliasframe_t *)((byte *)paliashdr + paliashdr->ofs_frames
 		+ currententity->as.frame * paliashdr->framesize);
@@ -224,10 +224,10 @@ void GL_DrawAliasShadow (dmdl_t *paliashdr, int posenum)
 
 	while (1)
 	{
-		// get the vertex count and primitive type
+		/* get the vertex count and primitive type */
 		count = *order++;
 		if (!count)
-			break; // done
+			break; /* done */
 		if (count < 0)
 		{
 			count = -count;
@@ -238,7 +238,7 @@ void GL_DrawAliasShadow (dmdl_t *paliashdr, int posenum)
 
 		do
 		{
-			// normals and vertexes come from the frame list
+			/* normals and vertexes come from the frame list */
 /*
 			point[0] = verts[order[2]].v[0] * frame->scale[0] + frame->translate[0];
 			point[1] = verts[order[2]].v[1] * frame->scale[1] + frame->translate[1];
@@ -250,12 +250,12 @@ void GL_DrawAliasShadow (dmdl_t *paliashdr, int posenum)
 			point[0] -= shadevector[0]*(point[2]+lheight);
 			point[1] -= shadevector[1]*(point[2]+lheight);
 			point[2] = height;
-//			height -= 0.001;
+/*			height -= 0.001; */
 			qglVertex3fv (point);
 
 			order += 3;
 
-//			verts++;
+/*			verts++; */
 
 		} while (--count);
 
@@ -273,7 +273,7 @@ static qboolean R_CullAliasModel( entity_t *e )
 	dmdl_t		*paliashdr;
 	vec3_t		thismins, oldmins, thismaxs, oldmaxs;
 	daliasframe_t *pframe, *poldframe;
-// 	vec3_t		angles;
+/* 	vec3_t		angles; */
 	vec4_t		bbox[8];
 
 	if ( r_isometric->value )
@@ -399,21 +399,21 @@ void R_EnableLights( qboolean fixed, float *matrix, float *lightparam, float *li
 	dlight_t	*light;
 	vec3_t		delta;
 	float		bright, sumBright, lsqr, max;
-//	vec4_t		color;
+/*	vec4_t		color; */
 	vec4_t		sumColor, trorigin, sumDelta;
 	int			i, j, n;
 
-//	if ( !r_newrefdef.num_lights )
-//		return;
+/*	if ( !r_newrefdef.num_lights ) */
+/*		return; */
 
 	if ( fixed )
 	{
-		// add the fixed light
+		/* add the fixed light */
 		qglLightfv( GL_LIGHT0, GL_POSITION, lightparam );
 		qglLightfv( GL_LIGHT0, GL_DIFFUSE, matrix );
 		qglLightfv( GL_LIGHT0, GL_AMBIENT, lightambient );
 
-		// enable the lighting
+		/* enable the lighting */
 		qglEnable( GL_LIGHTING );
 		qglEnable( GL_LIGHT0 );
 		return;
@@ -453,11 +453,11 @@ void R_EnableLights( qboolean fixed, float *matrix, float *lightparam, float *li
 			VectorMA( sumColor, bright, light->color, sumColor );
 			VectorScale( delta, 1.0 / sqrt(lsqr), delta );
 			VectorMA( sumDelta, bright, delta, sumDelta );
-//			ri.Con_Printf( PRINT_ALL, "%f %f\n", bright, VectorLength( delta ) );
+/*			ri.Con_Printf( PRINT_ALL, "%f %f\n", bright, VectorLength( delta ) ); */
 		}
 	}
 
-	// normalize delta and color
+	/* normalize delta and color */
 	VectorNormalize( sumDelta );
 	VectorMA( trorigin, 512, sumDelta, sumDelta );
 	sumDelta[3] = 0.0;
@@ -469,12 +469,12 @@ void R_EnableLights( qboolean fixed, float *matrix, float *lightparam, float *li
 	if ( sumColor[2] > max ) max = sumColor[2];
 	if ( max > 2.0 ) VectorScale( sumColor, 2.0 / max, sumColor );
 
-	// add the light
+	/* add the light */
 	qglLightfv( GL_LIGHT0, GL_POSITION, sumDelta );
 	qglLightfv( GL_LIGHT0, GL_DIFFUSE, sumColor );
 	qglLightfv( GL_LIGHT0, GL_AMBIENT, r_newrefdef.sun->ambient );
 
-	// enable the lighting
+	/* enable the lighting */
 	qglEnable( GL_LIGHTING );
 	qglEnable( GL_LIGHT0 );
 }
@@ -488,14 +488,14 @@ R_DrawAliasModel
 void R_DrawAliasModel (entity_t *e)
 {
 	qboolean	lightfixed;
-// 	int			i;
+/* 	int			i; */
 	dmdl_t		*paliashdr;
-// 	float		an;
+/* 	float		an; */
 	image_t		*skin;
 
 	paliashdr = (dmdl_t *)currentmodel->extradata;
 
-	// check animations
+	/* check animations */
 	if ( ( e->as.frame >= paliashdr->num_frames ) || ( e->as.frame < 0 ) )
 	{
 		ri.Con_Printf (PRINT_ALL, "R_DrawAliasModel %s: no such frame %d\n",
@@ -512,13 +512,13 @@ void R_DrawAliasModel (entity_t *e)
 	if ( !r_lerpmodels->value )
 		e->as.backlerp = 0;
 
-	// check if model is out of fov
+	/* check if model is out of fov */
 	if ( R_CullAliasModel( e ) )
 		return;
 
-	// select skin
+	/* select skin */
 	if (e->skin)
-		skin = e->skin;	// custom player skin
+		skin = e->skin;	/* custom player skin */
 	else
 	{
 		if (e->skinnum >= MAX_MD2SKINS)
@@ -531,44 +531,44 @@ void R_DrawAliasModel (entity_t *e)
 		}
 	}
 	if (!skin)
-		skin = r_notexture;	// fallback...
+		skin = r_notexture;	/* fallback... */
 
 	if ( skin->has_alpha && !(e->flags & RF_TRANSLUCENT) )
 	{
-		// it will be drawn in the next entity render pass
-		// for the translucent entities
+		/* it will be drawn in the next entity render pass */
+		/* for the translucent entities */
 		e->flags |= RF_TRANSLUCENT;
 		if ( !e->alpha ) e->alpha = 1.0;
 		return;
 	}
 
-	//
-	// locate the proper data
-	//
+	/* */
+	/* locate the proper data */
+	/* */
 	c_alias_polys += paliashdr->num_tris;
 
-	//
-	// set-up lighting
-	//
+	/* */
+	/* set-up lighting */
+	/* */
 	lightfixed = e->flags & RF_LIGHTFIXED ? qtrue : qfalse;
 	if ( lightfixed )  R_EnableLights( lightfixed, e->lightcolor, e->lightparam, e->lightambient );
 	else R_EnableLights( lightfixed, trafo[e - r_newrefdef.entities].matrix, e->lightparam, NULL );
 
-	// IR goggles override color
+	/* IR goggles override color */
 	if ( r_newrefdef.rdflags & RDF_IRGOGGLES ) qglColor4f( 1.0, 0.0, 0.0, e->alpha );
 	else qglColor4f( 1.0, 1.0, 1.0, e->alpha );
 
-	//
-	// draw all the triangles
-	//
-	if (e->flags & RF_DEPTHHACK) // hack the depth range to prevent view model from poking into walls
+	/* */
+	/* draw all the triangles */
+	/* */
+	if (e->flags & RF_DEPTHHACK) /* hack the depth range to prevent view model from poking into walls */
 		qglDepthRange (gldepthmin, gldepthmin + 0.3*(gldepthmax-gldepthmin));
 
 	qglPushMatrix ();
 
 	qglMultMatrixf( trafo[e - r_newrefdef.entities].matrix );
 
-	// draw it
+	/* draw it */
 	GL_Bind(skin->texnum);
 
 	if ( !(e->flags & RF_NOSMOOTH ) ) qglShadeModel( GL_SMOOTH );
@@ -634,7 +634,7 @@ void R_DrawAliasModel (entity_t *e)
 
 	if ( gl_fog->value && r_newrefdef.fog ) qglDisable( GL_FOG );
 
-	// draw the circles for team-members and allied troops
+	/* draw the circles for team-members and allied troops */
 	if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER))
 	{
 		qglDisable( GL_TEXTURE_2D );
@@ -658,7 +658,7 @@ void R_DrawAliasModel (entity_t *e)
 
 		qglBegin( GL_LINE_STRIP );
 
-		// circle points
+		/* circle points */
 		qglVertex3f( 10.0,  0.0, -27.0 );
 		qglVertex3f(  7.0, -7.0, -27.0 );
 		qglVertex3f(  0.0,-10.0, -27.0 );
@@ -708,7 +708,7 @@ R_TransformModelDirect
 */
 void R_TransformModelDirect( modelInfo_t *mi )
 {
-	// translate and rotate
+	/* translate and rotate */
 	qglTranslatef( mi->origin[0], mi->origin[1], mi->origin[2] );
 
 	qglRotatef (mi->angles[0], 0, 0, 1);
@@ -717,13 +717,13 @@ void R_TransformModelDirect( modelInfo_t *mi )
 
 	if ( mi->scale )
 	{
-		// scale by parameters
+		/* scale by parameters */
 		qglScalef (mi->scale[0], mi->scale[1], mi->scale[2] );
 		if ( mi->center ) qglTranslatef( -mi->center[0], -mi->center[1], -mi->center[2] );
 	}
 	else if ( mi->center )
 	{
-		// autoscale
+		/* autoscale */
 		dmdl_t		*paliashdr;
 		daliasframe_t *pframe;
 
@@ -731,11 +731,11 @@ void R_TransformModelDirect( modelInfo_t *mi )
 		vec3_t	mins, maxs, center;
 		int		i;
 
-		// get model data
+		/* get model data */
 		paliashdr = (dmdl_t *)mi->model->extradata;
 		pframe = (daliasframe_t *) ( (byte *)paliashdr + paliashdr->ofs_frames);
 
-		// get center and scale
+		/* get center and scale */
 		for ( max = 1.0, i = 0; i < 3; i++ )
 		{
 			mins[i] = pframe->translate[i];
@@ -759,20 +759,20 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 {
 	int			i;
 	dmdl_t		*paliashdr;
-// 	float		an;
+/* 	float		an; */
 	image_t		*skin;
-// 	vec4_t		pos, color;
+/* 	vec4_t		pos, color; */
 
-	// register the model
+	/* register the model */
 	mi->model = R_RegisterModelShort( mi->name );
 
-	// check if the model exists
+	/* check if the model exists */
 	if ( !mi->model || mi->model->type != mod_alias )
 		return;
 
 	paliashdr = (dmdl_t *)mi->model->extradata;
 
-	// check animations
+	/* check animations */
 	if ( ( mi->frame >= paliashdr->num_frames ) || ( mi->frame < 0 ) )
 	{
 		ri.Con_Printf (PRINT_ALL, "R_DrawModelDirect %s: no such frame %d\n",
@@ -789,22 +789,22 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 	if ( !r_lerpmodels->value )
 		mi->backlerp = 0;
 
-	// select skin
+	/* select skin */
 	if ( mi->skin >= 0 && mi->skin < paliashdr->num_skins )
 		skin = mi->model->skins[mi->skin];
 	else
 		skin = mi->model->skins[0];
 
 	if (!skin)
-		skin = r_notexture;	// fallback...
+		skin = r_notexture;	/* fallback... */
 
-	//
-	// locate the proper data
-	//
+	/* */
+	/* locate the proper data */
+	/* */
 	c_alias_polys += paliashdr->num_tris;
 
 #if 0
-	// add a light
+	/* add a light */
 	VectorSet( pos, 100, 100, -500 );
 	pos[3] = 0.0;
 	color[3] = 1.0;
@@ -814,15 +814,15 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 	color[0] = color[1] = color[2] = 0.1;
 	qglLightfv( GL_LIGHT0, GL_AMBIENT, color );
 
-	// enable lighting
+	/* enable lighting */
 	qglEnable( GL_LIGHTING );
 	qglEnable( GL_LIGHT0 );
 #endif
-	//
-	// draw all the triangles
-	//
+	/* */
+	/* draw all the triangles */
+	/* */
 	qglPushMatrix ();
-//	qglLoadIdentity ();
+/*	qglLoadIdentity (); */
 	qglScalef( vid.rx, vid.ry, (vid.rx + vid.ry)/2 );
 
 	if ( mi->color[3] ) qglColor4fv( mi->color );
@@ -830,13 +830,13 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 
 	if ( pmi )
 	{
-		// register the parent model
+		/* register the parent model */
 		pmi->model = R_RegisterModelShort( pmi->name );
 
-		// transform
+		/* transform */
 		R_TransformModelDirect( pmi );
 
-		// tag trafo
+		/* tag trafo */
 		if ( tagname && pmi->model && pmi->model->tagdata )
 		{
 			animState_t as;
@@ -847,32 +847,32 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 
 			taghdr = (dtag_t *)pmi->model->tagdata;
 
-			// find the right tag
+			/* find the right tag */
 			name = (char *)taghdr + taghdr->ofs_names;
 			for ( i = 0; i < taghdr->num_tags; i++, name += MAX_TAGNAME )
 				if ( !strcmp( name, tagname ) )
 				{
-					// found the tag (matrix)
+					/* found the tag (matrix) */
 					tag = (float *)((byte *)taghdr + taghdr->ofs_tags);
 					tag += i * 16 * taghdr->num_frames;
 
-					// do interpolation
+					/* do interpolation */
 					as.frame = pmi->frame;
 					as.oldframe = pmi->oldframe;
 					as.backlerp = pmi->backlerp;
 					R_InterpolateTransform( &as, taghdr->num_frames, tag, interpolated );
 
-					// transform
+					/* transform */
 					qglMultMatrixf( interpolated );
 					break;
 				}
 		}
 	}
 
-	// transform
+	/* transform */
 	R_TransformModelDirect( mi );
 
-	// draw it
+	/* draw it */
 	GL_Bind(skin->texnum);
 
 	qglShadeModel (GL_SMOOTH);
@@ -894,14 +894,14 @@ void R_DrawModelDirect( modelInfo_t *mi, modelInfo_t *pmi, char *tagname )
 		qglEnable (GL_BLEND);
 	}
 
-	// draw the model
+	/* draw the model */
 	GL_DrawAliasFrameLerp (paliashdr, mi->backlerp, mi->frame, mi->oldframe);
 
 	GL_TexEnv( GL_MODULATE );
 	qglShadeModel( GL_FLAT );
 	qglDisable( GL_CULL_FACE );
 	qglDisable( GL_DEPTH_TEST );
-//	qglDisable( GL_LIGHTING );
+/*	qglDisable( GL_LIGHTING ); */
 
 	if ( (mi->color[3] && mi->color[3] < 1.0f) || ( skin && skin->has_alpha ) )
 	{
@@ -920,18 +920,18 @@ R_DrawModelParticle
 */
 void R_DrawModelParticle( modelInfo_t *mi )
 {
-// 	int			i;
+/* 	int			i; */
 	dmdl_t		*paliashdr;
-// 	float		an;
+/* 	float		an; */
 	image_t		*skin;
 
-	// check if the model exists
+	/* check if the model exists */
 	if ( !mi->model || mi->model->type != mod_alias )
 		return;
 
 	paliashdr = (dmdl_t *)mi->model->extradata;
 
-	// check animations
+	/* check animations */
 	if ( ( mi->frame >= paliashdr->num_frames ) || ( mi->frame < 0 ) )
 	{
 		ri.Con_Printf (PRINT_ALL, "R_DrawModelParticle %s: no such frame %d\n",
@@ -948,28 +948,28 @@ void R_DrawModelParticle( modelInfo_t *mi )
 	if ( !r_lerpmodels->value )
 		mi->backlerp = 0;
 
-	// select skin
+	/* select skin */
 	skin = mi->model->skins[0];
 	if (!skin)
-		skin = r_notexture;	// fallback...
+		skin = r_notexture;	/* fallback... */
 
-	//
-	// locate the proper data
-	//
+	/* */
+	/* locate the proper data */
+	/* */
 
 	c_alias_polys += paliashdr->num_tris;
 
-	//
-	// set-up lighting
-	//
+	/* */
+	/* set-up lighting */
+	/* */
 
-//	R_EnableLights( trafo[e - r_newrefdef.entities].matrix, e->sunfrac );
+/*	R_EnableLights( trafo[e - r_newrefdef.entities].matrix, e->sunfrac ); */
 	if ( mi->color[3] ) qglColor4fv( mi->color );
 	else qglColor4f( 1,1,1,1 );
 
-	//
-	// draw all the triangles
-	//
+	/* */
+	/* draw all the triangles */
+	/* */
 	qglPushMatrix ();
 
 	qglTranslatef( mi->origin[0], mi->origin[1], mi->origin[2] );
@@ -977,7 +977,7 @@ void R_DrawModelParticle( modelInfo_t *mi )
 	qglRotatef (-mi->angles[0], 0, 1, 0);
 	qglRotatef (-mi->angles[2], 1, 0, 0);
 
-	// draw it
+	/* draw it */
 	GL_Bind(skin->texnum);
 
 	qglShadeModel (GL_SMOOTH);
@@ -999,7 +999,7 @@ void R_DrawModelParticle( modelInfo_t *mi )
 		qglEnable (GL_BLEND);
 	}
 
-	// draw the model
+	/* draw the model */
 	GL_DrawAliasFrameLerp (paliashdr, mi->backlerp, mi->frame, mi->oldframe);
 
 	GL_TexEnv( GL_REPLACE );

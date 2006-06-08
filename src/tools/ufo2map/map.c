@@ -1,4 +1,4 @@
-// map.c
+/* map.c */
 
 #include "qbsp.h"
 
@@ -19,7 +19,7 @@ plane_t		*planehash[PLANE_HASHES];
 
 vec3_t		map_mins, map_maxs;
 
-// undefine to make plane finding use linear sort
+/* undefine to make plane finding use linear sort */
 #define	USE_HASHING
 
 void TestExpandBrushes (void);
@@ -49,7 +49,7 @@ int	PlaneTypeForNormal (vec3_t normal)
 {
 	vec_t	ax, ay, az;
 	
-// NOTE: should these have an epsilon around 1.0?		
+/* NOTE: should these have an epsilon around 1.0?		 */
 	if (normal[0] == 1.0 || normal[0] == -1.0)
 		return PLANE_X;
 	if (normal[1] == 1.0 || normal[1] == -1.0)
@@ -121,7 +121,7 @@ int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 
 	if (VectorLength(normal) < 0.5)
 		Error ("FloatPlane: bad normal");
-	// create a new plane
+	/* create a new plane */
 	if (nummapplanes+2 > MAX_MAP_PLANES)
 		Error ("MAX_MAP_PLANES");
 
@@ -135,12 +135,12 @@ int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 
 	nummapplanes += 2;
 
-	// allways put axial planes facing positive first
+	/* allways put axial planes facing positive first */
 	if (p->type < 3)
 	{
 		if (p->normal[0] < 0 || p->normal[1] < 0 || p->normal[2] < 0)
 		{
-			// flip order
+			/* flip order */
 			temp = *p;
 			*p = *(p+1);
 			*(p+1) = temp;
@@ -227,7 +227,7 @@ int		FindFloatPlane (vec3_t normal, vec_t dist)
 	hash = (int)fabs(dist) / 8;
 	hash &= (PLANE_HASHES-1);
 
-	// search the border bins as well
+	/* search the border bins as well */
 	for (i=-1 ; i<=1 ; i++)
 	{
 		h = (hash+i)&(PLANE_HASHES-1);
@@ -263,7 +263,7 @@ int PlaneFromPoints (int *p0, int *p1, int *p2)
 }
 
 
-//====================================================================
+/*==================================================================== */
 
 
 /*
@@ -293,8 +293,8 @@ int	BrushContents (mapbrush_t *b)
 		}
 	}
 
-	// if any side is translucent, mark the contents
-	// and change solid to window
+	/* if any side is translucent, mark the contents */
+	/* and change solid to window */
 	if ( trans & (SURF_TRANS33|SURF_TRANS66) )
 	{
 		contents |= CONTENTS_TRANSLUCENT;
@@ -309,7 +309,7 @@ int	BrushContents (mapbrush_t *b)
 }
 
 
-//============================================================================
+/*============================================================================ */
 
 /*
 =================
@@ -332,15 +332,15 @@ void AddBrushBevels (mapbrush_t *b)
 	vec3_t	vec, vec2;
 	float	d;
 
-	//
-	// add the axial planes
-	//
+	/* */
+	/* add the axial planes */
+	/* */
 	order = 0;
 	for (axis=0 ; axis <3 ; axis++)
 	{
 		for (dir=-1 ; dir <= 1 ; dir+=2, order++)
 		{
-			// see if the plane is allready present
+			/* see if the plane is allready present */
 			for (i=0, s=b->original_sides ; i<b->numsides ; i++,s++)
 			{
 				if (mapplanes[s->planenum].normal[axis] == dir)
@@ -348,7 +348,7 @@ void AddBrushBevels (mapbrush_t *b)
 			}
 
 			if (i == b->numsides)
-			{	// add a new side
+			{	/* add a new side */
 				if (nummapbrushsides == MAX_MAP_BRUSHSIDES)
 					Error ("MAX_MAP_BRUSHSIDES");
 				nummapbrushsides++;
@@ -366,7 +366,7 @@ void AddBrushBevels (mapbrush_t *b)
 				c_boxbevels++;
 			}
 
-			// if the plane is not in it canonical order, swap it
+			/* if the plane is not in it canonical order, swap it */
 			if (i != order)
 			{
 				sidetemp = b->original_sides[order];
@@ -381,13 +381,13 @@ void AddBrushBevels (mapbrush_t *b)
 		}
 	}
 
-	//
-	// add the edge bevels
-	//
+	/* */
+	/* add the edge bevels */
+	/* */
 	if (b->numsides == 6)
-		return;		// pure axial
+		return;		/* pure axial */
 
-	// test the non-axial plane edges
+	/* test the non-axial plane edges */
 	for (i=6 ; i<b->numsides ; i++)
 	{
 		s = b->original_sides + i;
@@ -403,16 +403,16 @@ void AddBrushBevels (mapbrush_t *b)
 			SnapVector (vec);
 			for (k=0 ; k<3 ; k++)
 				if ( vec[k] == -1 || vec[k] == 1)
-					break;	// axial
+					break;	/* axial */
 			if (k != 3)
-				continue;	// only test non-axial edges
+				continue;	/* only test non-axial edges */
 
-			// try the six possible slanted axials from this edge
+			/* try the six possible slanted axials from this edge */
 			for (axis=0 ; axis <3 ; axis++)
 			{
 				for (dir=-1 ; dir <= 1 ; dir+=2)
 				{
-					// construct a plane
+					/* construct a plane */
 					VectorClear (vec2);
 					vec2[axis] = dir;
 					CrossProduct (vec, vec2, normal);
@@ -420,11 +420,11 @@ void AddBrushBevels (mapbrush_t *b)
 						continue;
 					dist = DotProduct (w->p[j], normal);
 
-					// if all the points on all the sides are
-					// behind this plane, it is a proper edge bevel
+					/* if all the points on all the sides are */
+					/* behind this plane, it is a proper edge bevel */
 					for (k=0 ; k<b->numsides ; k++)
 					{
-						// if this plane has allready been used, skip it
+						/* if this plane has allready been used, skip it */
 						if (PlaneEqual (&mapplanes[b->original_sides[k].planenum]
 							, normal, dist) )
 							break;
@@ -436,15 +436,15 @@ void AddBrushBevels (mapbrush_t *b)
 						{
 							d = DotProduct (w2->p[l], normal) - dist;
 							if (d > 0.1)
-								break;	// point in front
+								break;	/* point in front */
 						}
 						if (l != w2->numpoints)
 							break;
 					}
 
 					if (k != b->numsides)
-						continue;	// wasn't part of the outer hull
-					// add this plane
+						continue;	/* wasn't part of the outer hull */
+					/* add this plane */
 					if (nummapbrushsides == MAX_MAP_BRUSHSIDES)
 						Error ("MAX_MAP_BRUSHSIDES");
 					nummapbrushsides++;
@@ -489,7 +489,7 @@ qboolean MakeBrushWindings (mapbrush_t *ob)
 			if (ob->original_sides[j].bevel)
 				continue;
 			plane = &mapplanes[ob->original_sides[j].planenum^1];
-			ChopWindingInPlace (&w, plane->normal, plane->dist, 0); //CLIP_EPSILON);
+			ChopWindingInPlace (&w, plane->normal, plane->dist, 0); /*CLIP_EPSILON); */
 		}
 
 		side = &ob->original_sides[i];
@@ -548,7 +548,7 @@ void ParseBrush (entity_t *mapent)
 			Error ("MAX_MAP_BRUSHSIDES");
 		side = &brushsides[nummapbrushsides];
 
-		// read the three point plane definition
+		/* read the three point plane definition */
 		for (i=0 ; i<3 ; i++)
 		{
 			if (i != 0)
@@ -569,9 +569,9 @@ void ParseBrush (entity_t *mapent)
 		}
 
 
-		//
-		// read the texturedef
-		//
+		/* */
+		/* read the texturedef */
+		/* */
 		GetToken (qfalse);
 		strcpy (td.name, token);
 
@@ -586,7 +586,7 @@ void ParseBrush (entity_t *mapent)
 		GetToken (qfalse);
 		td.scale[1] = atof(token);
 
-		// find default flags and values
+		/* find default flags and values */
 		mt = FindMiptex (td.name);
 		td.flags = textureref[mt].flags;
 		td.value = textureref[mt].value;
@@ -603,7 +603,7 @@ void ParseBrush (entity_t *mapent)
 			td.value = atoi(token);
 		}
 
-		// translucent objects are automatically classified as detail
+		/* translucent objects are automatically classified as detail */
 		if (side->surf & (SURF_TRANS33|SURF_TRANS66) )
 			side->contents |= CONTENTS_DETAIL;
 		if (fulldetail)
@@ -611,7 +611,7 @@ void ParseBrush (entity_t *mapent)
 		if (!(side->contents & (LAST_VISIBLE_CONTENTS-1) ) )
 			side->contents |= CONTENTS_SOLID;
 
-		// hints and skips are never detail, and have no content
+		/* hints and skips are never detail, and have no content */
 		if (side->surf & (SURF_HINT|SURF_SKIP) )
 		{
 			side->contents = 0;
@@ -619,9 +619,9 @@ void ParseBrush (entity_t *mapent)
 		}
 
 
-		//
-		// find the plane number
-		//
+		/* */
+		/* find the plane number */
+		/* */
 		planenum = PlaneFromPoints (planepts[0], planepts[1], planepts[2]);
 		if (planenum == -1)
 		{
@@ -630,9 +630,9 @@ void ParseBrush (entity_t *mapent)
 			continue;
 		}
 
-		//
-		// see if the plane has been used already
-		//
+		/* */
+		/* see if the plane has been used already */
+		/* */
 		for (k=0 ; k<b->numsides ; k++)
 		{
 			s2 = b->original_sides + k;
@@ -650,47 +650,47 @@ void ParseBrush (entity_t *mapent)
 			}
 		}
 		if (k != b->numsides)
-			continue;		// duplicated
+			continue;		/* duplicated */
 
-		//
-		// keep this side
-		//
+		/* */
+		/* keep this side */
+		/* */
 
 		side = b->original_sides + b->numsides;
 		side->planenum = planenum;
 		side->texinfo = TexinfoForBrushTexture (&mapplanes[planenum],
 			&td, vec3_origin);
 
-		// save the td off in case there is an origin brush and we
-		// have to recalculate the texinfo
+		/* save the td off in case there is an origin brush and we */
+		/* have to recalculate the texinfo */
 		side_brushtextures[nummapbrushsides] = td;
 
 		nummapbrushsides++;
 		b->numsides++;
 	} while (1);
 
-	// get the content for the entire brush
+	/* get the content for the entire brush */
 	b->contents = BrushContents (b);
 
-	// allow detail brushes to be removed 
+	/* allow detail brushes to be removed  */
 	if (nodetail && (b->contents & CONTENTS_DETAIL) )
 	{
 		b->numsides = 0;
 		return;
 	}
 
-	// allow water brushes to be removed
+	/* allow water brushes to be removed */
 	if (nowater && (b->contents & (CONTENTS_LAVA | CONTENTS_SLIME | CONTENTS_WATER)) )
 	{
 		b->numsides = 0;
 		return;
 	}
 
-	// create windings for sides and bounds for brush
+	/* create windings for sides and bounds for brush */
 	MakeBrushWindings (b);
 
-	// brushes that will not be visible at all will never be
-	// used as bsp splitters
+	/* brushes that will not be visible at all will never be */
+	/* used as bsp splitters */
 /*	if (b->contents & (CONTENTS_PLAYERCLIP|CONTENTS_MONSTERCLIP) )
 	{
 		c_clipbrushes++;
@@ -698,13 +698,13 @@ void ParseBrush (entity_t *mapent)
 			b->original_sides[i].texinfo = TEXINFO_NODE;
 	}*/
 
-	//
-	// origin brushes are removed, but they set
-	// the rotation origin for the rest of the brushes
-	// in the entity.  After the entire entity is parsed,
-	// the planenums and texinfos will be adjusted for
-	// the origin brush
-	//
+	/* */
+	/* origin brushes are removed, but they set */
+	/* the rotation origin for the rest of the brushes */
+	/* in the entity.  After the entire entity is parsed, */
+	/* the planenums and texinfos will be adjusted for */
+	/* the origin brush */
+	/* */
 	if (b->contents & CONTENTS_ORIGIN)
 	{
 		char	string[32];
@@ -725,7 +725,7 @@ void ParseBrush (entity_t *mapent)
 
 		VectorCopy (origin, entities[b->entitynum].origin);
 
-		// don't keep this brush
+		/* don't keep this brush */
 		b->numsides = 0;
 
 		return;
@@ -754,8 +754,8 @@ void MoveBrushesToWorld (entity_t *mapent)
 	mapbrush_t	*temp;
 	int			i;
 
-	// this is pretty gross, because the brushes are expected to be
-	// in linear order for each entity
+	/* this is pretty gross, because the brushes are expected to be */
+	/* in linear order for each entity */
 
 	newbrushes = mapent->numbrushes;
 	worldbrushes = entities[0].numbrushes;
@@ -763,20 +763,20 @@ void MoveBrushesToWorld (entity_t *mapent)
 	temp = malloc(newbrushes*sizeof(mapbrush_t));
 	memcpy (temp, mapbrushes + mapent->firstbrush, newbrushes*sizeof(mapbrush_t));
 
-#if	0		// let them keep their original brush numbers
+#if	0		/* let them keep their original brush numbers */
 	for (i=0 ; i<newbrushes ; i++)
 		temp[i].entitynum = 0;
 #endif
 
-	// make space to move the brushes (overlapped copy)
+	/* make space to move the brushes (overlapped copy) */
 	memmove (mapbrushes + worldbrushes + newbrushes,
 		mapbrushes + worldbrushes,
 		sizeof(mapbrush_t) * (nummapbrushes - worldbrushes - newbrushes) );
 
-	// copy the new brushes down
+	/* copy the new brushes down */
 	memcpy (mapbrushes + worldbrushes, temp, sizeof(mapbrush_t) * newbrushes);
 
-	// fix up indexes
+	/* fix up indexes */
 	entities[0].numbrushes += newbrushes;
 	for (i=1 ; i<num_entities ; i++)
 		entities[i].firstbrush += newbrushes;
@@ -817,8 +817,8 @@ qboolean	ParseMapEntity (void)
 	memset (mapent, 0, sizeof(*mapent));
 	mapent->firstbrush = nummapbrushes;
 	mapent->numbrushes = 0;
-//	mapent->portalareas[0] = -1;
-//	mapent->portalareas[1] = -1;
+/*	mapent->portalareas[0] = -1; */
+/*	mapent->portalareas[1] = -1; */
 
 	do
 	{
@@ -838,9 +838,9 @@ qboolean	ParseMapEntity (void)
 
 	GetVectorForKey (mapent, "origin", mapent->origin);
 
-	//
-	// if there was an origin brush, offset all of the planes and texinfo
-	//
+	/* */
+	/* if there was an origin brush, offset all of the planes and texinfo */
+	/* */
 	if (mapent->origin[0] || mapent->origin[1] || mapent->origin[2])
 	{
 		for (i=0 ; i<mapent->numbrushes ; i++)
@@ -859,8 +859,8 @@ qboolean	ParseMapEntity (void)
 		}
 	}
 
-	// group entities are just for editor convenience
-	// toss all brushes into the world entity
+	/* group entities are just for editor convenience */
+	/* toss all brushes into the world entity */
 	if (!strcmp ("func_group", ValueForKey (mapent, "classname")))
 	{
 		MoveBrushesToWorld (mapent);
@@ -869,8 +869,8 @@ qboolean	ParseMapEntity (void)
 		return qtrue;
 	}
 
-	// areaportal entities move their brushes, but don't eliminate
-	// the entity
+	/* areaportal entities move their brushes, but don't eliminate */
+	/* the entity */
 	if (!strcmp ("func_areaportal", ValueForKey (mapent, "classname")))
 	{
 		char	str[128];
@@ -882,7 +882,7 @@ qboolean	ParseMapEntity (void)
 		b->contents = CONTENTS_AREAPORTAL;
 		c_areaportals++;
 		mapent->areaportalnum = c_areaportals;
-		// set the portal number as "style"
+		/* set the portal number as "style" */
 		sprintf (str, "%i", c_areaportals);
 		SetKeyValue (mapent, "style", str);
 		MoveBrushesToWorld (mapent);
@@ -892,7 +892,7 @@ qboolean	ParseMapEntity (void)
 	return qtrue;
 }
 
-//===================================================================
+/*=================================================================== */
 
 /*
 ================
@@ -916,7 +916,7 @@ void LoadMapFile (char *filename)
 	for (i=0 ; i<entities[0].numbrushes ; i++)
 	{
 		if (mapbrushes[i].mins[0] > 4096)
-			continue;	// no valid points
+			continue;	/* no valid points */
 		AddPointToBounds (mapbrushes[i].mins, map_mins, map_maxs);
 		AddPointToBounds (mapbrushes[i].maxs, map_mins, map_maxs);
 	}
@@ -924,7 +924,7 @@ void LoadMapFile (char *filename)
 	for ( i = 0; i < nummapbrushes; i++ )
 		mapbrushes[i].finished = qfalse;
 
-	// save a copy of the brushes
+	/* save a copy of the brushes */
 	memcpy( mapbrushes + nummapbrushes, mapbrushes, sizeof(mapbrush_t)*nummapbrushes );
 
 	qprintf ("%5i brushes\n", nummapbrushes);
@@ -938,11 +938,11 @@ void LoadMapFile (char *filename)
 	qprintf ("size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n", map_mins[0],map_mins[1],map_mins[2],
 		map_maxs[0],map_maxs[1],map_maxs[2]);
 
-//	TestExpandBrushes ();
+/*	TestExpandBrushes (); */
 }
 
 
-//====================================================================
+/*==================================================================== */
 
 
 /*

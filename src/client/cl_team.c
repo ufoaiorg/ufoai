@@ -16,7 +16,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// cl_team.c -- team management, name generation and parsing
+/* cl_team.c -- team management, name generation and parsing */
 
 
 #include "client.h"
@@ -46,7 +46,7 @@ void CL_GiveNameCmd( void )
 		return;
 	}
 
-	// get gender
+	/* get gender */
 	for ( i = 0; i < NAME_LAST; i++ )
 		if ( !Q_strcmp( Cmd_Argv(1), name_strings[i] ) )
 			break;
@@ -66,7 +66,7 @@ void CL_GiveNameCmd( void )
 
 	for ( j = 0; j < num; j++ )
 	{
-		// get first name
+		/* get first name */
 		name = Com_GiveName( i, Cmd_Argv(2) );
 		if ( !name )
 		{
@@ -75,7 +75,7 @@ void CL_GiveNameCmd( void )
 		}
 		Com_Printf( name );
 
-		// get last name
+		/* get last name */
 		name = Com_GiveName( i + LASTNAME, Cmd_Argv(2) );
 		if ( !name )
 		{
@@ -83,15 +83,15 @@ void CL_GiveNameCmd( void )
 			return;
 		}
 
-		// print out name
+		/* print out name */
 		Com_Printf( " %s\n", name );
 	}
 }
 
-// initialized in CL_ResetTeams
-// defined in scripts.c
-extern rank_t ranks[MAX_RANKS];	// Global list of all ranks defined in medals.ufo.
-extern int numRanks;		// The number of entries in the list above.
+/* initialized in CL_ResetTeams */
+/* defined in scripts.c */
+extern rank_t ranks[MAX_RANKS];	/* Global list of all ranks defined in medals.ufo. */
+extern int numRanks;		/* The number of entries in the list above. */
 
 
 /*======================
@@ -101,25 +101,25 @@ void CL_GenerateCharacter( char *team, base_t* base )
 {
 	character_t *chr;
 
-	// check for too many characters
+	/* check for too many characters */
 	if ( base->numWholeTeam >= (int)cl_numnames->value )
 		return;
 
-	// reset character
+	/* reset character */
 	chr = &base->wholeTeam[base->numWholeTeam];
 	memset( chr, 0, sizeof( character_t ) );
 
-	// link inventory
+	/* link inventory */
 	chr->inv = &base->teamInv[base->numWholeTeam];
 	Com_DestroyInventory( chr->inv );
 
-	// get ucn
+	/* get ucn */
 	chr->ucn = base->nextUCN++;
 
-	// new attributes
+	/* new attributes */
 	Com_CharGenAbilitySkills (chr, 0, 75, 0, 75);
 
-	// get model and name
+	/* get model and name */
 	chr->skin = Com_GetModelAndName( team, chr->path, chr->body, chr->head, chr->name );
 	Cvar_ForceSet( va( "mn_name%i", base->numWholeTeam ), chr->name );
 
@@ -138,15 +138,15 @@ void CL_ResetCharacters( base_t* base )
 {
 	int	i;
 
-	// reset inventory data
+	/* reset inventory data */
 	for ( i = 0; i < MAX_WHOLETEAM; i++ )
 	{
 		Com_DestroyInventory( &base->teamInv[i] );
-//		base->teamInv[i].c[csi.idFloor] = base->equipment;
+/*		base->teamInv[i].c[csi.idFloor] = base->equipment; */
 		base->wholeTeam[i].inv = &base->teamInv[i];
 	}
 
-	// reset hire info
+	/* reset hire info */
 	Cvar_ForceSet( "cl_selected", "0" );
 	base->numWholeTeam = 0;
 	base->numHired = 0;
@@ -179,7 +179,7 @@ void CL_ChangeNameCmd( void )
 	int sel;
 	sel = cl_selected->value;
 
-	// maybe called without base initialized or active
+	/* maybe called without base initialized or active */
 	if ( !baseCurrent )
 		return;
 
@@ -228,7 +228,7 @@ void CL_TeamCommentsCmd( void )
 
 	for ( i = 0; i < 8; i++ )
 	{
-		// open file
+		/* open file */
 		f = fopen( va( "%s/save/team%i.mpt", FS_Gamedir(), i ), "rb" );
 		if ( !f )
 		{
@@ -236,7 +236,7 @@ void CL_TeamCommentsCmd( void )
 			continue;
 		}
 
-		// read data
+		/* read data */
 		fread( comment, 1, MAX_VAR, f );
 		Cvar_Set( va( "mn_slot%i", i ), comment );
 		fclose( f );
@@ -255,12 +255,12 @@ void CL_ItemDescription( int item )
 {
 	objDef_t	*od;
 
-	// select item
+	/* select item */
 	od = &csi.ods[item];
 	Cvar_Set( "mn_itemname", _(od->name) );
 
-	// set models
-//	if ( od->link == NONE )
+	/* set models */
+/*	if ( od->link == NONE ) */
 	{
 		Cvar_Set( "mn_item", od->kurz );
 		Cvar_Set( "mn_weapon", "" );
@@ -278,7 +278,7 @@ void CL_ItemDescription( int item )
 		Com_sprintf( itemText, MAX_MENUTEXTLEN, "Error - no tech assigned\n");
 		menuText[TEXT_STANDARD] = itemText;
 	}
-	// set description text
+	/* set description text */
 	else
 #endif
 	if ( RS_IsResearched_ptr(od->tech)  )
@@ -297,8 +297,8 @@ void CL_ItemDescription( int item )
 			Com_sprintf( itemText, MAX_MENUTEXTLEN, _("Ammo:\t%i\n"), (int)(od->ammo) );
 			Q_strcat( itemText, MAX_MENUTEXTLEN, va(_("Twohanded:\t%s"), (od->twohanded ? _("Yes") : _("No") ) ) );
 		}
-		// just an item
-		// only primary definition
+		/* just an item */
+		/* only primary definition */
 		else
 		{
 			Com_sprintf( itemText, MAX_MENUTEXTLEN, _("Action:\t%s\n"), od->fd[0].name );
@@ -341,7 +341,7 @@ item_t CL_AddWeaponAmmo( equipDef_t *ed, int type )
 
 	item.a = 0;
 	item.m = NONE;
-	// Search for any complete clips
+	/* Search for any complete clips */
 	for ( i = 0; i < csi.numODs; i++ )
 	{
 		if ( csi.ods[i].link == type )
@@ -355,23 +355,23 @@ item_t CL_AddWeaponAmmo( equipDef_t *ed, int type )
 			}
 		}
 	}
-	// Failed to find a complete clip - see if there's any loose ammo
+	/* Failed to find a complete clip - see if there's any loose ammo */
 	for ( i = 0; i < csi.numODs; i++ )
 	{
 		if ( csi.ods[i].link == type && ed->num_loose[i] > 0)
 		{
 			if ( item.m != NONE && ed->num_loose[i] > item.a )
 			{
-				// We previously found some ammo, but we've now found other
-				// loose ammo of a different (but appropriate) type with
-				// more bullets.  Put the previously found ammo back, so
-				// we'll take the new type.
+				/* We previously found some ammo, but we've now found other */
+				/* loose ammo of a different (but appropriate) type with */
+				/* more bullets.  Put the previously found ammo back, so */
+				/* we'll take the new type. */
 				ed->num_loose[item.m] = item.a;
 				item.m = NONE;
 			}
 			if ( item.m == NONE )
 			{
-				// Found some loose ammo to load the weapon with
+				/* Found some loose ammo to load the weapon with */
 				item.a = ed->num_loose[i];
 				ed->num_loose[i] = 0;
 				item.m = i;
@@ -394,14 +394,14 @@ void CL_CheckInventory( equipDef_t *equip )
 
 	assert(baseCurrent);
 
-	// Iterate through in container order (right hand, left hand, belt,
-	// armor, backpack) at the top level, i.e. each squad member fills
-	// their right hand, then each fills their left hand, etc.  The effect
-	// of this is that when things are tight, everyone has the opportunity
-	// to get their preferred weapon(s) loaded and in their hands before
-	// anyone fills their backpack with spares.  We don't want the first
-	// person in the squad filling their backpack with spare ammo leaving
-	// others with unloaded guns in their hands.
+	/* Iterate through in container order (right hand, left hand, belt, */
+	/* armor, backpack) at the top level, i.e. each squad member fills */
+	/* their right hand, then each fills their left hand, etc.  The effect */
+	/* of this is that when things are tight, everyone has the opportunity */
+	/* to get their preferred weapon(s) loaded and in their hands before */
+	/* anyone fills their backpack with spares.  We don't want the first */
+	/* person in the squad filling their backpack with spare ammo leaving */
+	/* others with unloaded guns in their hands. */
 	for ( container = 0; container < csi.numIDs; container++ )
 	{
 		for ( p = 0, cp = baseCurrent->curTeam; p < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; p++, cp++ )
@@ -458,13 +458,13 @@ void CL_GenerateEquipmentCmd( void )
 		return;
 	}
 
-	// clean equipment
+	/* clean equipment */
 	CL_CleanTempInventory();
 
-	// store hired names
+	/* store hired names */
 	Cvar_ForceSet( "cl_selected", "0" );
-// 	baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] = baseCurrent->numHired;
-// 	baseCurrent->teamMask[baseCurrent->aircraftCurrent] = baseCurrent->hiredMask;
+/* 	baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] = baseCurrent->numHired; */
+/* 	baseCurrent->teamMask[baseCurrent->aircraftCurrent] = baseCurrent->hiredMask; */
 	for ( i = 0, p = 0; i < baseCurrent->numWholeTeam; i++ )
 		if ( baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i) )
 		{
@@ -482,7 +482,7 @@ void CL_GenerateEquipmentCmd( void )
 	menuInventory = &baseCurrent->teamInv[0];
 	selActor = NULL;
 
-	// reset description
+	/* reset description */
 	Cvar_Set( "mn_itemname", "" );
 	Cvar_Set( "mn_item", "" );
 	Cvar_Set( "mn_weapon", "" );
@@ -491,7 +491,7 @@ void CL_GenerateEquipmentCmd( void )
 
 	if ( !curCampaign )
 	{
-		// search equipment definition
+		/* search equipment definition */
 		name = Cvar_VariableString( "equip" );
 		for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ )
 		{
@@ -507,13 +507,13 @@ void CL_GenerateEquipmentCmd( void )
 	}
 	else unused = ccs.eCampaign;
 
-	// manage inventory
+	/* manage inventory */
 	CL_CheckInventory( &unused );
 
 	for ( i = 0; i < csi.numODs; i++ )
 		while ( unused.num[i] )
 		{
-			// 'tiny hack' to add the equipment correctly into buy categories
+			/* 'tiny hack' to add the equipment correctly into buy categories */
 			baseCurrent->equipment.c[csi.idEquip] = baseCurrent->equipment.c[csi.ods[i].buytype];
 
 			Com_FindSpace( &baseCurrent->equipment, i, csi.idEquip, &x, &y );
@@ -542,12 +542,12 @@ void CL_EquipTypeCmd( void )
 		return;
 	}
 
-	// read and range check
+	/* read and range check */
 	num = atoi( Cmd_Argv( 1 ) );
 	if ( num < 0 && num >= NUM_BUYTYPES )
 		return;
 
-	// display new items
+	/* display new items */
 	baseCurrent->equipType = num;
 	if ( menuInventory ) menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[num];
 }
@@ -562,7 +562,7 @@ void CL_SelectCmd( void )
 	char *command;
 	int num;
 
-	// check syntax
+	/* check syntax */
 	if ( Cmd_Argc() < 2 )
 	{
 		Com_Printf( "Usage: team_select <num>\n" );
@@ -570,7 +570,7 @@ void CL_SelectCmd( void )
 	}
 	num = atoi( Cmd_Argv(1) );
 
-	// change highlights
+	/* change highlights */
 	command = Cmd_Argv(0);
 	*strchr( command, '_' ) = 0;
 
@@ -594,12 +594,12 @@ void CL_SelectCmd( void )
 		return;
 	}
 
-	// console commands
+	/* console commands */
 	Cbuf_AddText( va( "%sdeselect%i\n", command, (int)cl_selected->value ) );
 	Cbuf_AddText( va( "%sselect%i\n", command, num ) );
 	Cvar_ForceSet( "cl_selected", va( "%i", num ) );
 
-	// set info cvars
+	/* set info cvars */
 	if ( !Q_strncmp( command, "team", 4 ) ) CL_CharacterCvars( &baseCurrent->wholeTeam[num] );
 	else CL_CharacterCvars( &baseCurrent->curTeam[num] );
 }
@@ -652,8 +652,8 @@ void CL_MarkTeamCmd( void )
 {
 	int i;
 
-	// check if we are allowed to be here?
-	// we are only allowed to be here if we already set up a base
+	/* check if we are allowed to be here? */
+	/* we are only allowed to be here if we already set up a base */
 	if ( ! baseCurrent )
 	{
 		Com_Printf("No base set up\n");
@@ -688,7 +688,7 @@ void CL_HireActorCmd( void )
 	int num;
 	aircraft_t* air = NULL;
 
-	// check syntax
+	/* check syntax */
 	if ( Cmd_Argc() < 2 )
 	{
 		Com_Printf( "Usage: hire <num>\n" );
@@ -701,7 +701,7 @@ void CL_HireActorCmd( void )
 
 	if ( baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << num) )
 	{
-		// unhire
+		/* unhire */
 		Cbuf_AddText( va( "listdel%i\n", num ) );
 		baseCurrent->hiredMask &= ~(1 << num);
 		baseCurrent->teamMask[baseCurrent->aircraftCurrent] &= ~(1 << num);
@@ -712,7 +712,7 @@ void CL_HireActorCmd( void )
 	{
 		if ( baseCurrent && baseCurrent->aircraftCurrent >= 0 )
 			air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-		// hire
+		/* hire */
 		if ( !air || air->size > baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] )
 		{
 			Cbuf_AddText( va( "listadd%i\n", num ) );
@@ -723,7 +723,7 @@ void CL_HireActorCmd( void )
 		}
 	}
 
-	// select the desired one anyways
+	/* select the desired one anyways */
 	CL_UpdateHireVar();
 	Cbuf_AddText( va( "team_select %i\n", num ) );
 }
@@ -750,7 +750,7 @@ void CL_MessageMenuCmd( void )
 	msg = Cmd_Argv( 1 );
 	if ( msg[0] == '?'  )
 	{
-		// start
+		/* start */
 		Cbuf_AddText( "messagemenu\n" );
 		Q_strncpyz( cvarName, msg+1, MAX_VAR );
 		Q_strncpyz( nameBackup, Cvar_VariableString( cvarName ), MAX_VAR );
@@ -759,21 +759,21 @@ void CL_MessageMenuCmd( void )
 	}
 	else if ( msg[0] == '!' )
 	{
-		// cancel
+		/* cancel */
 		Cvar_ForceSet( cvarName, nameBackup );
 		Cvar_ForceSet( va( "%s%i", cvarName, (int)cl_selected->value ), nameBackup );
 		Cbuf_AddText( va( "%s_changed\n", cvarName ) );
 	}
 	else if ( msg[0] == ':' )
 	{
-		// end
+		/* end */
 		Cvar_ForceSet( cvarName, msg+1 );
 		Cvar_ForceSet( va( "%s%i", cvarName, (int)cl_selected->value ), msg+1 );
 		Cbuf_AddText( va( "%s_changed\n", cvarName ) );
 	}
 	else
 	{
-		// continue
+		/* continue */
 		Cvar_ForceSet( cvarName, msg );
 		Cvar_ForceSet( va( "%s%i", cvarName, (int)cl_selected->value ), msg );
 	}
@@ -794,9 +794,9 @@ void CL_SaveTeam( char *filename )
 
 	assert(baseCurrent);
 
-	// create the save dir - if needed
+	/* create the save dir - if needed */
 	FS_CreatePath( filename );
-	// open file
+	/* open file */
 	f = fopen( filename, "wb" );
 	if ( !f )
 	{
@@ -804,25 +804,25 @@ void CL_SaveTeam( char *filename )
 		return;
 	}
 
-	// create data
+	/* create data */
 	SZ_Init( &sb, buf, MAX_TEAMDATASIZE );
 
 	name = Cvar_VariableString( "mn_teamname" );
 	if ( !strlen(name) )
 		Cvar_Set( "mn_teamname", _("NewTeam") );
-	// store teamname
+	/* store teamname */
 	MSG_WriteString( &sb, name );
 
-	// store team
+	/* store team */
 	CL_SendTeamInfo( &sb, baseCurrent->wholeTeam, baseCurrent->numWholeTeam );
 
-	// store assignement
-	// get assignement
+	/* store assignement */
+	/* get assignement */
 	MSG_WriteFormat( &sb, "bl", baseCurrent->numHired, baseCurrent->hiredMask );
 	for ( i = 0; i < baseCurrent->numAircraftInBase; i++ )
 		MSG_WriteFormat( &sb, "bl", baseCurrent->numOnTeam[i], baseCurrent->teamMask[i] );
 
-	// write data
+	/* write data */
 	res = fwrite( buf, 1, sb.cursize, f );
 	fclose( f );
 
@@ -846,7 +846,7 @@ void CL_SaveTeamCmd( void )
 		return;
 	}
 
-	// save
+	/* save */
 	Com_sprintf( filename, MAX_QPATH, "%s/save/%s.mpt", FS_Gamedir(), Cmd_Argv( 1 ) );
 	CL_SaveTeam( filename );
 }
@@ -861,7 +861,7 @@ void CL_SaveTeamSlotCmd( void )
 {
 	char	filename[MAX_QPATH];
 
-	// save
+	/* save */
 	Com_sprintf( filename, MAX_QPATH, "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString( "mn_slot" ) );
 	CL_SaveTeam( filename );
 }
@@ -877,42 +877,42 @@ void CL_LoadTeamMember( sizebuf_t *sb, character_t *chr )
 	int container, x, y;
 	int i;
 
-	// unique character number
+	/* unique character number */
 	chr->ucn = MSG_ReadShort( sb );
 	if ( chr->ucn >= baseCurrent->nextUCN ) baseCurrent->nextUCN = chr->ucn + 1;
 
-	// name and model
+	/* name and model */
 	Q_strncpyz( chr->name, MSG_ReadString( sb ), MAX_VAR );
 	Q_strncpyz( chr->path, MSG_ReadString( sb ), MAX_VAR );
 	Q_strncpyz( chr->body, MSG_ReadString( sb ), MAX_VAR );
 	Q_strncpyz( chr->head, MSG_ReadString( sb ), MAX_VAR );
 	chr->skin = MSG_ReadByte( sb );
 
-	// new attributes
+	/* new attributes */
 	for (i = 0; i < SKILL_NUM_TYPES; i++)
 		chr->skills[i] = MSG_ReadByte( sb );
 
-	// load scores
+	/* load scores */
 	for (i = 0; i < KILLED_NUM_TYPES; i++)
 		chr->kills[i] = MSG_ReadShort( sb );
 	chr->assigned_missions = MSG_ReadShort( sb );
 
-	// inventory
+	/* inventory */
 	Com_DestroyInventory( chr->inv );
 	item.t = MSG_ReadByte( sb );
 	while ( item.t != NONE )
 	{
-		// read info
+		/* read info */
 		item.a = MSG_ReadByte( sb );
 		item.m = MSG_ReadByte( sb );
 		container = MSG_ReadByte( sb );
 		x = MSG_ReadByte( sb );
 		y = MSG_ReadByte( sb );
 
-		// check info and add item if ok
+		/* check info and add item if ok */
 		Com_AddToInventory( chr->inv, item, container, x, y );
 
-		// get next item
+		/* get next item */
 		item.t = MSG_ReadByte( sb );
 	}
 }
@@ -928,16 +928,16 @@ void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version )
 	character_t	*chr;
 	int i, p;
 
-	// reset data
+	/* reset data */
 	CL_ResetCharacters( base );
 
-	// read whole team list
+	/* read whole team list */
 	MSG_ReadByte( sb );
 	base->numWholeTeam = MSG_ReadByte( sb );
 	for ( i = 0, chr = base->wholeTeam; i < base->numWholeTeam; chr++, i++ )
 		CL_LoadTeamMember( sb, chr );
 
-	// get assignement
+	/* get assignement */
 	MSG_ReadFormat( sb, "bl", &base->numHired, &base->hiredMask );
 	for ( i = 0; i < base->numAircraftInBase; i++ )
 		MSG_ReadFormat( sb, "bl", &base->numOnTeam[i], &base->teamMask[i] );
@@ -964,18 +964,18 @@ void CL_LoadTeamMultiplayer( char *filename )
 
 	CL_ResetTeamInBase();
 
-	// return the base title
+	/* return the base title */
 	Q_strncpyz( title, gd.bases[0].name, MAX_VAR );
 	B_ClearBase( &gd.bases[0] );
 	Q_strncpyz( gd.bases[0].name, title, MAX_VAR );
 
-	// set base for multiplayer
+	/* set base for multiplayer */
 	baseCurrent = &gd.bases[0];
 	gd.numBases = 1;
 	baseCurrent->hiredMask = 0;
 	CL_NewAircraft( baseCurrent, "craft_dropship" );
 
-	// open file
+	/* open file */
 	f = fopen( filename, "rb" );
 	if ( !f )
 	{
@@ -983,15 +983,15 @@ void CL_LoadTeamMultiplayer( char *filename )
 		return;
 	}
 
-	// read data
+	/* read data */
 	SZ_Init( &sb, buf, MAX_TEAMDATASIZE );
 	sb.cursize = fread( buf, 1, MAX_TEAMDATASIZE, f );
 	fclose( f );
 
-	// load the teamname
+	/* load the teamname */
 	Cvar_Set( "mn_teamname", MSG_ReadString( &sb ) );
 
-	// load the team
+	/* load the team */
 	CL_LoadTeam( &sb, &gd.bases[0], SAVE_FILE_VERSION );
 }
 
@@ -1011,7 +1011,7 @@ void CL_LoadTeamCmd( void )
 		return;
 	}
 
-	// load
+	/* load */
 	Com_sprintf( filename, MAX_QPATH, "%s/save/%s.mpt", FS_Gamedir(), Cmd_Argv( 1 ) );
 	CL_LoadTeamMultiplayer( filename );
 
@@ -1028,7 +1028,7 @@ void CL_LoadTeamSlotCmd( void )
 {
 	char	filename[MAX_QPATH];
 
-	// load
+	/* load */
 	Com_sprintf( filename, MAX_QPATH, "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString( "mn_slot" ) );
 	CL_LoadTeamMultiplayer( filename );
 
@@ -1071,7 +1071,7 @@ void CL_SendItem( sizebuf_t *buf, item_t item, int container, int x, int y )
 {
 	if ( !csi.ods[item.t].reload )
 	{
-		// transfer with full free ammo
+		/* transfer with full free ammo */
 		item.m = item.t;
 		item.a = csi.ods[item.t].ammo;
 	}
@@ -1084,42 +1084,42 @@ void CL_SendTeamInfo( sizebuf_t *buf, character_t *team, int num )
 	invList_t	*ic;
 	int i, j;
 
-	// clean temp inventory
+	/* clean temp inventory */
 	CL_CleanTempInventory();
 
-	// header
+	/* header */
 	MSG_WriteByte( buf, clc_teaminfo );
 	MSG_WriteByte( buf, num );
 
 	for ( i = 0, chr = team; i < num; chr++, i++ )
 	{
-		// unique character number
+		/* unique character number */
 		MSG_WriteShort( buf, chr->ucn );
 
-		// name
+		/* name */
 		MSG_WriteString( buf, chr->name );
 
-		// model
+		/* model */
 		MSG_WriteString( buf, chr->path );
 		MSG_WriteString( buf, chr->body );
 		MSG_WriteString( buf, chr->head );
 		MSG_WriteByte( buf, chr->skin );
 
-		// even new attributes
+		/* even new attributes */
 		for ( j = 0; j < SKILL_NUM_TYPES; j++ )
 			MSG_WriteByte( buf, chr->skills[j] );
 
-		// scores
+		/* scores */
 		for ( j = 0; j < KILLED_NUM_TYPES; j++ )
 			MSG_WriteShort( buf, chr->kills[j] );
 		MSG_WriteShort( buf, chr->assigned_missions );
 
-		// equipment
+		/* equipment */
 		for ( j = 0; j < csi.numIDs; j++ )
 			for ( ic = chr->inv->c[j]; ic; ic = ic->next )
 				CL_SendItem( buf, ic->item, j, ic->x, ic->y );
 
-		// terminate list
+		/* terminate list */
 		MSG_WriteByte( buf, NONE );
 	}
 }
@@ -1140,37 +1140,37 @@ void CL_ParseResults( sizebuf_t *buf )
 	byte	winner, we;
 	int		i, j, num, res, kills;
 
-	// get number of teams
+	/* get number of teams */
 	num = MSG_ReadByte( buf );
 	if ( num > MAX_TEAMS )
 		Sys_Error( "Too many teams in result message\n");
 
-	// get winning team
+	/* get winning team */
 	winner = MSG_ReadByte( buf );
 	we = cls.team;
 
-	// get spawn and alive count
+	/* get spawn and alive count */
 	for ( i = 0; i < num; i++ )
 	{
 		num_spawned[i] = MSG_ReadByte( buf );
 		num_alive[i] = MSG_ReadByte( buf );
 	}
 
-	// get kills
+	/* get kills */
 	for ( i = 0; i < num; i++ )
 		for ( j = 0; j < num; j++ )
 			num_kills[i][j] = MSG_ReadByte( buf );
 
-	// read terminator
+	/* read terminator */
 	if ( MSG_ReadByte( buf ) != NONE )
 		Com_Printf( "WARNING: bad result message\n" );
 
-	// init result text
+	/* init result text */
 	menuText[TEXT_STANDARD] = resultText;
 
-	// alien stats
+	/* alien stats */
 	for ( i = 1, kills = 0; i < num; i++ ) kills += (i == we) ? 0 : num_kills[we][i];
-	// needs to be cleared and then append to it
+	/* needs to be cleared and then append to it */
 	if ( curCampaign )
 		Com_sprintf( resultText, MAX_MENUTEXTLEN, _("Aliens killed\t%i\n"), kills );
 	else
@@ -1181,19 +1181,19 @@ void CL_ParseResults( sizebuf_t *buf )
 	else
 		Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Enemy survivors\t%i\n\n"), res ) );
 
-	// team stats
+	/* team stats */
 	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Team losses\t%i\n"), num_spawned[we] - num_alive[we] ) );
 	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Friendly fire losses\t%i\n"), num_kills[we][we] ) );
 	Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Team survivors\t%i\n\n"), num_alive[we] ) );
 
-	// kill civilians on campaign, if not won
+	/* kill civilians on campaign, if not won */
 	if ( curCampaign && num_alive[TEAM_CIVILIAN] && winner != we )
 	{
 		num_kills[TEAM_ALIEN][TEAM_CIVILIAN] += num_alive[TEAM_CIVILIAN];
 		num_alive[TEAM_CIVILIAN] = 0;
 	}
 
-	// civilian stats
+	/* civilian stats */
 	for ( i = 1, res = 0; i < num; i++ ) res += (i == we) ? 0 : num_kills[i][TEAM_CIVILIAN];
 	if ( curCampaign )
 		Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians killed by the Aliens\t%i\n"), res ) );
@@ -1205,7 +1205,7 @@ void CL_ParseResults( sizebuf_t *buf )
 	MN_PopMenu( qtrue );
 	if ( !curCampaign )
 	{
-		// get correct menus
+		/* get correct menus */
 		Cvar_Set( "mn_main", "main" );
 		Cvar_Set( "mn_active", "" );
 		MN_PushMenu( "main" );
@@ -1214,12 +1214,12 @@ void CL_ParseResults( sizebuf_t *buf )
 	{
 		mission_t	*ms;
 
-		// get correct menus
+		/* get correct menus */
 		Cvar_Set( "mn_main", "singleplayer" );
 		Cvar_Set( "mn_active", "map" );
 		MN_PushMenu( "map" );
 
-		// show money stats
+		/* show money stats */
 		ms = selMis->def;
 		ccs.reward = 0;
 		if ( winner == we )
@@ -1239,24 +1239,24 @@ void CL_ParseResults( sizebuf_t *buf )
 		}
 		Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Total reward\t%i c\n\n\n"), ccs.reward ) );
 
-		// recruits
+		/* recruits */
 		if ( winner == we && ms->recruits )
 			Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("New Recruits\t%i\n"), ms->recruits ) );
 
-		// loot the battlefield
+		/* loot the battlefield */
 		CL_CollectItems( winner == we );
 
-		// check for stunned aliens
+		/* check for stunned aliens */
 		if ( winner == we )
 			CL_CollectAliens( ms );
 
-		// update stats
+		/* update stats */
 		CL_UpdateCharacterStats( winner == we );
 
 		ccs.eCampaign = ccs.eMission;
 	}
 
-	// disconnect and show win screen
+	/* disconnect and show win screen */
 	if ( winner == we )
 		MN_PushMenu( "won" );
 	else

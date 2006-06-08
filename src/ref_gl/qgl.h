@@ -32,12 +32,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifdef _WIN32
 #include "glext.h"
-#else // use standard glext
+#else /* use standard glext */
 #include <GL/glext.h>
 #endif
 
 #ifdef __linux__
-//#include <GL/fxmesa.h>
+/*#include <GL/fxmesa.h> */
 #include <GL/glx.h>
 #endif
 
@@ -398,7 +398,7 @@ extern	void ( APIENTRY * qglActiveTextureARB)( GLenum );
 extern	void ( APIENTRY * qglClientActiveTextureARB)( GLenum );
 
 #ifdef SHADERS
-// arb shader stuff
+/* arb shader stuff */
 extern void ( APIENTRY * qglProgramStringARB )(GLenum, GLenum, GLsizei, const GLvoid *);
 extern void ( APIENTRY * qglBindProgramARB )(GLenum, GLuint);
 extern void ( APIENTRY * qglDeleteProgramsARB )(GLsizei, const GLuint *);
@@ -469,22 +469,22 @@ extern BOOL ( WINAPI * qwglSetDeviceGammaRampEXT ) ( const unsigned char *pRed, 
 
 #ifdef __linux__
 
-// local function in dll
+/* local function in dll */
 extern void *qwglGetProcAddress(char *symbol);
 
 extern void (*qgl3DfxSetPaletteEXT)(GLuint *);
 
-/*
-//FX Mesa Functions
+#if 0
+/*FX Mesa Functions */
 extern fxMesaContext (*qfxMesaCreateContext)(GLuint win, GrScreenResolution_t, GrScreenRefresh_t, const GLint attribList[]);
 extern fxMesaContext (*qfxMesaCreateBestContext)(GLuint win, GLint width, GLint height, const GLint attribList[]);
 extern void (*qfxMesaDestroyContext)(fxMesaContext ctx);
 extern void (*qfxMesaMakeCurrent)(fxMesaContext ctx);
 extern fxMesaContext (*qfxMesaGetCurrentContext)(void);
 extern void (*qfxMesaSwapBuffers)(void);
-*/
+#endif
 
-//GLX Functions
+/*GLX Functions */
 extern XVisualInfo * (*qglXChooseVisual)( Display *dpy, int screen, int *attribList );
 extern GLXContext (*qglXCreateContext)( Display *dpy, XVisualInfo *vis, GLXContext shareList, Bool direct );
 extern void (*qglXDestroyContext)( Display *dpy, GLXContext ctx );
@@ -493,12 +493,12 @@ extern void (*qglXCopyContext)( Display *dpy, GLXContext src, GLXContext dst, GL
 extern void (*qglXSwapBuffers)( Display *dpy, GLXDrawable drawable );
 extern int (*qglXGetConfig) (Display *dpy, XVisualInfo *vis, int attrib, int *value);
 
-// 3dfxSetPaletteEXT shunt
+/* 3dfxSetPaletteEXT shunt */
 void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
                              GLsizei width, GLenum format, GLenum type,
                              const GLvoid *table );
 
-#endif // linux
+#endif /* linux */
 
 /*
 ** extension constants
@@ -507,7 +507,7 @@ void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
 extern int gl_texture0, gl_texture1, gl_texture2, gl_texture3;
 extern int gl_combine;
 
-// we use glext.h
+/* we use glext.h */
 #ifndef _WIN32
 #define GL_TEXTURE0_SGIS					0x835E
 #define GL_TEXTURE1_SGIS					0x835F

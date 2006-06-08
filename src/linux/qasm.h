@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 
-//#define GLQUAKE	1
+/*#define GLQUAKE	1 */
 
 #if defined(_WIN32) && !defined(WINDED)
 
@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define id386	0
 #endif
 
-// !!! must be kept the same as in d_iface.h !!!
+/* !!! must be kept the same as in d_iface.h !!! */
 #define TRANSPARENT_COLOR	255
 
 #ifndef GLQUAKE
@@ -282,15 +282,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	.extern C(vpn)
 	.extern C(BOPS_Error)
 
-//
-// !!! note that this file must match the corresponding C structures at all
-// times !!!
-//
+/* */
+/* !!! note that this file must match the corresponding C structures at all */
+/* times !!! */
+/* */
 
-// plane_t structure
-// !!! if this is changed, it must be changed in model.h too !!!
-// !!! if the size of this is changed, the array lookup in SV_HullPointContents
-//     must be changed too !!!
+/* plane_t structure */
+/* !!! if this is changed, it must be changed in model.h too !!! */
+/* !!! if the size of this is changed, the array lookup in SV_HullPointContents */
+/*     must be changed too !!! */
 #define pl_normal	0
 #define pl_dist		12
 #define pl_type		16
@@ -298,8 +298,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define pl_pad		18
 #define pl_size		20
 
-// hull_t structure
-// !!! if this is changed, it must be changed in model.h too !!!
+/* hull_t structure */
+/* !!! if this is changed, it must be changed in model.h too !!! */
 #define	hu_clipnodes		0
 #define	hu_planes			4
 #define	hu_firstclipnode	8
@@ -308,8 +308,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	hu_clip_maxs		28
 #define hu_size  			40
 
-// dnode_t structure
-// !!! if this is changed, it must be changed in bspfile.h too !!!
+/* dnode_t structure */
+/* !!! if this is changed, it must be changed in bspfile.h too !!! */
 #define	nd_planenum		0
 #define	nd_children		4
 #define	nd_mins			8
@@ -318,8 +318,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	nd_numfaces		36
 #define nd_size			40
 
-// sfxcache_t structure
-// !!! if this is changed, it much be changed in sound.h too !!!
+/* sfxcache_t structure */
+/* !!! if this is changed, it much be changed in sound.h too !!! */
 #define sfxc_length		0
 #define sfxc_loopstart	4
 #define sfxc_speed		8
@@ -327,8 +327,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define sfxc_stereo		16
 #define sfxc_data		20
 
-// channel_t structure
-// !!! if this is changed, it much be changed in sound.h too !!!
+/* channel_t structure */
+/* !!! if this is changed, it much be changed in sound.h too !!! */
 #define ch_sfx			0
 #define ch_leftvol		4
 #define ch_rightvol		8
@@ -342,41 +342,41 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ch_master_vol	48
 #define ch_size			52
 
-// portable_samplepair_t structure
-// !!! if this is changed, it much be changed in sound.h too !!!
+/* portable_samplepair_t structure */
+/* !!! if this is changed, it much be changed in sound.h too !!! */
 #define psp_left		0
 #define psp_right		4
 #define psp_size		8
 
 
-//
-// !!! note that this file must match the corresponding C structures at all
-// times !!!
-//
+/* */
+/* !!! note that this file must match the corresponding C structures at all */
+/* times !!! */
+/* */
 
-// !!! if this is changed, it must be changed in r_local.h too !!!
+/* !!! if this is changed, it must be changed in r_local.h too !!! */
 #define	NEAR_CLIP	0.01
 
-// !!! if this is changed, it must be changed in r_local.h too !!!
+/* !!! if this is changed, it must be changed in r_local.h too !!! */
 #define	CYCLE	128
 
-// espan_t structure
-// !!! if this is changed, it must be changed in r_shared.h too !!!
+/* espan_t structure */
+/* !!! if this is changed, it must be changed in r_shared.h too !!! */
 #define espan_t_u    	0
 #define espan_t_v	    4
 #define espan_t_count   8
 #define espan_t_pnext	12
 #define espan_t_size    16
 
-// sspan_t structure
-// !!! if this is changed, it must be changed in d_local.h too !!!
+/* sspan_t structure */
+/* !!! if this is changed, it must be changed in d_local.h too !!! */
 #define sspan_t_u    	0
 #define sspan_t_v	    4
 #define sspan_t_count   8
 #define sspan_t_size    12
 
-// spanpackage_t structure
-// !!! if this is changed, it must be changed in d_polyset.c too !!!
+/* spanpackage_t structure */
+/* !!! if this is changed, it must be changed in d_polyset.c too !!! */
 #define spanpackage_t_pdest				0
 #define spanpackage_t_pz				4
 #define spanpackage_t_count				8
@@ -387,8 +387,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define spanpackage_t_zi				28
 #define spanpackage_t_size				32 
 
-// edge_t structure
-// !!! if this is changed, it must be changed in r_shared.h too !!!
+/* edge_t structure */
+/* !!! if this is changed, it must be changed in r_shared.h too !!! */
 #define et_u			0
 #define et_u_step		4
 #define et_prev			8
@@ -399,8 +399,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define et_owner		28
 #define et_size			32
 
-// surf_t structure
-// !!! if this is changed, it must be changed in r_shared.h too !!!
+/* surf_t structure */
+/* !!! if this is changed, it must be changed in r_shared.h too !!! */
 #define SURF_T_SHIFT	6
 #define st_next			0
 #define st_prev			4
@@ -419,8 +419,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define st_pad			56
 #define st_size			64
 
-// clipplane_t structure
-// !!! if this is changed, it must be changed in r_local.h too !!!
+/* clipplane_t structure */
+/* !!! if this is changed, it must be changed in r_local.h too !!! */
 #define cp_normal		0
 #define cp_dist			12
 #define cp_next			16
@@ -429,19 +429,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define cp_reserved		22
 #define cp_size			24
 
-// medge_t structure
-// !!! if this is changed, it must be changed in model.h too !!!
+/* medge_t structure */
+/* !!! if this is changed, it must be changed in model.h too !!! */
 #define me_v				0
 #define me_cachededgeoffset	4
 #define me_size				8
 
-// mvertex_t structure
-// !!! if this is changed, it must be changed in model.h too !!!
+/* mvertex_t structure */
+/* !!! if this is changed, it must be changed in model.h too !!! */
 #define mv_position		0
 #define mv_size			12
 
-// refdef_t structure
-// !!! if this is changed, it must be changed in render.h too !!!
+/* refdef_t structure */
+/* !!! if this is changed, it must be changed in render.h too !!! */
 #define rd_vrect					0
 #define rd_aliasvrect				20
 #define rd_vrectright				40
@@ -467,12 +467,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define rd_ambientlight				136
 #define rd_size						140
 
-// mtriangle_t structure
-// !!! if this is changed, it must be changed in model.h too !!!
+/* mtriangle_t structure */
+/* !!! if this is changed, it must be changed in model.h too !!! */
 #define mtri_facesfront		0
 #define mtri_vertindex		4
-#define mtri_size			16	// !!! if this changes, array indexing in !!!
-								// !!! d_polysa.s must be changed to match !!!
+#define mtri_size			16	/* !!! if this changes, array indexing in !!! */
+								/* !!! d_polysa.s must be changed to match !!! */
 #define mtri_shift			4
 
 #endif

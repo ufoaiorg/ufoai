@@ -1,4 +1,4 @@
-// qdata.h
+/* qdata.h */
 
 
 #include <stdlib.h>
@@ -57,11 +57,11 @@ void ReleaseFile (char *filename);
 extern	byte		*byteimage, *lbmpalette;
 extern	int			byteimagewidth, byteimageheight;
 
-extern	qboolean	g_release;			// don't grab, copy output data to new tree
-extern	char		g_releasedir[1024];	// c:\quake2\baseq2, etc
-extern	qboolean	g_archive;			// don't grab, copy source data to new tree
+extern	qboolean	g_release;			/* don't grab, copy output data to new tree */
+extern	char		g_releasedir[1024];	/* c:\quake2\baseq2, etc */
+extern	qboolean	g_archive;			/* don't grab, copy source data to new tree */
 extern	qboolean	do3ds;
-extern	char		g_only[256];		// if set, only grab this cd
-extern	qboolean	g_skipmodel;		// set true when a cd is not g_only
+extern	char		g_only[256];		/* if set, only grab this cd */
+extern	qboolean	g_skipmodel;		/* set true when a cd is not g_only */
 
 extern	char		*trifileext;

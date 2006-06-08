@@ -1,6 +1,6 @@
 #include "qdata.h"
 
-char		mip_prefix[1024];		// directory to dump the textures in
+char		mip_prefix[1024];		/* directory to dump the textures in */
 
 qboolean	colormap_issued;
 byte		colormap_palette[768];
@@ -82,14 +82,14 @@ void Cmd_Grab (void)
 	if (xl<0 || yl<0 || w<0 || h<0 || xl+w>byteimagewidth || yl+h>byteimageheight)
 		Error ("GrabPic: Bad size: %i, %i, %i, %i",xl,yl,w,h);
 
-	// crop it to the proper size
+	/* crop it to the proper size */
 	cropped = malloc (w*h);
 	for (y=0 ; y<h ; y++)
 	{
 		memcpy (cropped+y*w, byteimage+(y+yl)*byteimagewidth+xl, w);
 	}
 
-	// save off the new image
+	/* save off the new image */
 	printf ("saving %s\n", savename);
 	CreatePath (savename);
 	WritePCXfile (savename, cropped, w,	h, lbmpalette);
@@ -134,14 +134,14 @@ void Cmd_Raw (void)
 	if (xl<0 || yl<0 || w<0 || h<0 || xl+w>byteimagewidth || yl+h>byteimageheight)
 		Error ("GrabPic: Bad size: %i, %i, %i, %i",xl,yl,w,h);
 
-	// crop it to the proper size
+	/* crop it to the proper size */
 	cropped = malloc (w*h);
 	for (y=0 ; y<h ; y++)
 	{
 		memcpy (cropped+y*w, byteimage+(y+yl)*byteimagewidth+xl, w);
 	}
 
-	// save off the new image
+	/* save off the new image */
 	printf ("saving %s\n", savename);
 	CreatePath (savename);
 
@@ -171,9 +171,9 @@ byte BestColor (int r, int g, int b, int start, int stop)
 	int	bestcolor;
 	byte	*pal;
 
-	//
-	// let any color go to 0 as a last resort
-	//
+	/* */
+	/* let any color go to 0 as a last resort */
+	/* */
 	bestdistortion = 256*256*4;
 	bestcolor = 0;
 
@@ -188,7 +188,7 @@ byte BestColor (int r, int g, int b, int start, int stop)
 		if (distortion < bestdistortion)
 		{
 			if (!distortion)
-				return i;		// perfect match
+				return i;		/* perfect match */
 
 			bestdistortion = distortion;
 			bestcolor = i;
@@ -226,7 +226,7 @@ void Cmd_Colormap (void)
 		memcpy (colormap_palette, lbmpalette, 768);
 
 	if (!TokenAvailable ())
-	{	// just setting colormap_issued
+	{	/* just setting colormap_issued */
 		return;
 	}
 
@@ -242,12 +242,12 @@ void Cmd_Colormap (void)
 
 	range = 2;
 	levels = 64;
-	brights = 1;	// ignore 255 (transparent)
+	brights = 1;	/* ignore 255 (transparent) */
 
 	cropped = malloc((levels+256)*256);
 	lump_p = cropped;
 
-        // shaded levels
+        /* shaded levels */
 	for (l=0;l<levels;l++)
 	{
 		frac = range - range*(float)l/(levels-1);
@@ -261,20 +261,20 @@ void Cmd_Colormap (void)
 			green = (int)(green*frac+0.5);
 			blue = (int)(blue*frac+0.5);
 			
-			//
-			// note: 254 instead of 255 because 255 is the transparent color, and we
-			// don't want anything remapping to that
-			// don't use color 0, because NT can't remap that (or 255)
-			//
+			/* */
+			/* note: 254 instead of 255 because 255 is the transparent color, and we */
+			/* don't want anything remapping to that */
+			/* don't use color 0, because NT can't remap that (or 255) */
+			/* */
 			*lump_p++ = BestColor(red,green,blue, 1, 254);
 		}
 
-		// fullbrights allways stay the same
+		/* fullbrights allways stay the same */
 		for ( ; c<256 ; c++)
 			*lump_p++ = c;
 	}
 	
-	// 66% transparancy table
+	/* 66% transparancy table */
 	for (l=0;l<255;l++)
 	{
 		for (c=0 ; c<255 ; c++)
@@ -290,7 +290,7 @@ void Cmd_Colormap (void)
 	for (c=0 ; c<256 ; c++)
 		*lump_p++ = 255;
 	
-	// save off the new image
+	/* save off the new image */
 	printf ("saving %s\n", savename);
 	CreatePath (savename);
 	WritePCXfile (savename, cropped, 256, levels+256, lbmpalette);
@@ -404,17 +404,17 @@ byte AveragePixels (int count)
 	g /= vis;
 	b /= vis;
 
-	// error diffusion
+	/* error diffusion */
 	r += d_red;
 	g += d_green;
 	b += d_blue;
 	
-//
-// find the best color
-//
+/* */
+/* find the best color */
+/* */
 	bestcolor = FindColor (r, g, b);
 
-	// error diffusion
+	/* error diffusion */
 	pal = colormap_palette + bestcolor*3;
 	d_red = r - (int)pal[0];
 	d_green = g - (int)pal[1];
@@ -441,33 +441,33 @@ typedef struct
 
 mipparm_t	mipparms[] =
 {
-	// utility content attributes
+	/* utility content attributes */
 	{"water",	CONTENTS_WATER, pt_contents},
-	{"slime",	CONTENTS_SLIME, pt_contents},		// mildly damaging
-	{"lava",	CONTENTS_LAVA, pt_contents},		// very damaging
-	{"window",	CONTENTS_WINDOW, pt_contents},	// solid, but doesn't eat internal textures
-	{"mist",	CONTENTS_MIST, pt_contents},	// non-solid window
-	{"origin",	CONTENTS_ORIGIN, pt_contents},	// center of rotating brushes
+	{"slime",	CONTENTS_SLIME, pt_contents},		/* mildly damaging */
+	{"lava",	CONTENTS_LAVA, pt_contents},		/* very damaging */
+	{"window",	CONTENTS_WINDOW, pt_contents},	/* solid, but doesn't eat internal textures */
+	{"mist",	CONTENTS_MIST, pt_contents},	/* non-solid window */
+	{"origin",	CONTENTS_ORIGIN, pt_contents},	/* center of rotating brushes */
 	{"playerclip",	CONTENTS_PLAYERCLIP, pt_contents},
 	{"monsterclip",	CONTENTS_MONSTERCLIP, pt_contents},
 
-	// utility surface attributes
+	/* utility surface attributes */
 	{"hint",	SURF_HINT, pt_flags},
 	{"skip",	SURF_SKIP, pt_flags},
-	{"light",	SURF_LIGHT, pt_flagvalue},		// value is the light quantity
+	{"light",	SURF_LIGHT, pt_flagvalue},		/* value is the light quantity */
 
-	// texture chaining
-	{"anim",	0,			pt_animvalue},		// value is the next animation
+	/* texture chaining */
+	{"anim",	0,			pt_animvalue},		/* value is the next animation */
 
-	// server attributes
+	/* server attributes */
 	{"slick",	SURF_SLICK, pt_flags},
 
-	// drawing attributes
-	{"warping",	SURF_WARP, pt_flags},		// only valid with 64x64 textures
-	{"trans33",	SURF_TRANS33, pt_flags},	// translucent should allso set fullbright
+	/* drawing attributes */
+	{"warping",	SURF_WARP, pt_flags},		/* only valid with 64x64 textures */
+	{"trans33",	SURF_TRANS33, pt_flags},	/* translucent should allso set fullbright */
 	{"trans66",	SURF_TRANS66, pt_flags},
-	{"flowing",	SURF_FLOWING, pt_flags},	// flow direction towards angle 0
-	{"nodraw",	SURF_NODRAW, pt_flags},	// for clip textures and trigger textures
+	{"flowing",	SURF_FLOWING, pt_flags},	/* flow direction towards angle 0 */
+	{"nodraw",	SURF_NODRAW, pt_flags},	/* for clip textures and trigger textures */
 
 	{NULL, 0, pt_contents}
 };
@@ -520,7 +520,7 @@ void Cmd_Mip (void)
 
 	animname[0] = 0;
 
-	// get optional flags and values
+	/* get optional flags and values */
 	while (TokenAvailable ())
 	{
 		GetToken (qfalse);
@@ -532,7 +532,7 @@ void Cmd_Mip (void)
 				switch (mp->type)
 				{
 				case pt_animvalue:
-					GetToken (qfalse);	// specify the next animation frame
+					GetToken (qfalse);	/* specify the next animation frame */
 					strcpy (animname, token);
 					break;
 				case pt_flags:
@@ -543,7 +543,7 @@ void Cmd_Mip (void)
 					break;
 				case pt_flagvalue:
 					flags |= mp->flags;
-					GetToken (qfalse);	// specify the light value
+					GetToken (qfalse);	/* specify the light value */
 					value = atoi(token);
 					break;
 				}
@@ -556,7 +556,7 @@ void Cmd_Mip (void)
 
 	sprintf (filename, "%stextures/%s/%s.wal", gamedir, mip_prefix, lumpname);
 	if (g_release)
-		return;	// textures are only released by $maps
+		return;	/* textures are only released by $maps */
 
 	xh = xl+w;
 	yh = yl+h;
@@ -587,16 +587,16 @@ void Cmd_Mip (void)
 		{
 			pix = *screen_p++;
 			if (pix == 255)
-				pix = 1;		// should never happen
+				pix = 1;		/* should never happen */
 			*lump_p++ = pix;
 		}
 		screen_p += linedelta;
 	}
 	
-//
-// subsample for greater mip levels
-//
-	d_red = d_green = d_blue = 0;	// no distortion yet
+/* */
+/* subsample for greater mip levels */
+/* */
+	d_red = d_green = d_blue = 0;	/* no distortion yet */
 
 	for (miplevel = 1 ; miplevel<4 ; miplevel++)
 	{
@@ -620,15 +620,15 @@ void Cmd_Mip (void)
 		}
 	}
 
-//
-// dword align the size
-//
+/* */
+/* dword align the size */
+/* */
 	while ((int)lump_p&3)
 		*lump_p++ = 0;
 
-//
-// write it out
-//
+/* */
+/* write it out */
+/* */
 	printf ("writing %s\n", filename);
 	SaveFile (filename, (byte *)qtex, lump_p - (byte *)qtex);
 
@@ -663,7 +663,7 @@ void Cmd_Mipdir (void)
 
 	GetToken (qfalse);
 	strcpy (mip_prefix, token);
-	// create the directory if needed
+	/* create the directory if needed */
 	sprintf (filename, "%stextures", gamedir, mip_prefix);
 	Q_mkdir (filename); 
 	sprintf (filename, "%stextures/%s", gamedir, mip_prefix);
@@ -681,7 +681,7 @@ also copies the tga files for GL rendering.
 =============================================================================
 */
 
-// 3dstudio environment map suffixes
+/* 3dstudio environment map suffixes */
 char	*suf[6] = {"rt", "ft", "lf", "bk", "up", "dn"};
 
 /*
@@ -709,13 +709,13 @@ void Cmd_Environment (void)
 		}
 		return;
 	}
-	// get the palette
+	/* get the palette */
 	BuildPalmap ();
 
 	sprintf (name, "%senv/", gamedir);
 	CreatePath (name);
 
-	// convert the images
+	/* convert the images */
 	for (i=0 ; i<6 ; i++)
 	{
 		sprintf (name, "%senv/%s%s.tga", gamedir, token, suf[i]);

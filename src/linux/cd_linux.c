@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// Quake is a trademark of Id Software, Inc., (c) 1996 Id Software, Inc. All
-// rights reserved.
+/* Quake is a trademark of Id Software, Inc., (c) 1996 Id Software, Inc. All */
+/* rights reserved. */
 
 #include <stdio.h>
 #include <unistd.h>
@@ -52,7 +52,7 @@ static byte		maxTrack;
 
 static int cdfile = -1;
 
-//static char cd_dev[64] = "/dev/cdrom";
+/*static char cd_dev[64] = "/dev/cdrom"; */
 
 cvar_t	*cd_volume;
 cvar_t	*cd_nocd;
@@ -63,7 +63,7 @@ void CDAudio_Pause(void);
 static void CDAudio_Eject(void)
 {
 	if (cdfile == -1 || !enabled)
-		return; // no cd init'd
+		return; /* no cd init'd */
 
 #if defined(__FreeBSD__)
 	if ( ioctl(cdfile, CDIOCEJECT) == -1 )
@@ -78,7 +78,7 @@ static void CDAudio_Eject(void)
 static void CDAudio_CloseDoor(void)
 {
 	if (cdfile == -1 || !enabled)
-		return; // no cd init'd
+		return; /* no cd init'd */
 
 #if defined(__FreeBSD__)
 	if ( ioctl(cdfile, CDIOCCLOSE) == -1 )
@@ -171,7 +171,7 @@ void CDAudio_Play(int track, qboolean looping)
 	bzero((char *)&toc_buffer, sizeof(toc_buffer));
 	entry.data_len = sizeof(toc_buffer);
 	entry.data = &toc_buffer;
-	// don't try to play a non-audio track
+	/* don't try to play a non-audio track */
 	entry.starting_track = track;
 	entry.address_format = CD_MSF_FORMAT;
 	if ( ioctl(cdfile, CDIOREADTOCENTRYS, &entry) == -1 )
@@ -182,7 +182,7 @@ void CDAudio_Play(int track, qboolean looping)
 	if (toc_buffer.control == CDROM_DATA_TRACK)
 #endif
 #if defined(__linux__)
-	// don't try to play a non-audio track
+	/* don't try to play a non-audio track */
 	entry.cdte_track = track;
 	entry.cdte_format = CDROM_MSF;
 	if ( ioctl(cdfile, CDROMREADTOCENTRY, &entry) == -1 )
@@ -266,7 +266,7 @@ void CDAudio_RandomPlay(void)
 	if (track_bools == 0)
 		return;
 
-	//create array of available audio tracknumbers
+	/*create array of available audio tracknumbers */
 	for (; i < maxTrack; i++)
 	{
 #if defined(__FreeBSD__)
@@ -304,7 +304,7 @@ void CDAudio_RandomPlay(void)
 		goto free_end;
 	}
 
-	//choose random audio track
+	/*choose random audio track */
 	do
 	{
 		do
@@ -572,7 +572,7 @@ void CDAudio_Update(void)
 	}
 
 	if (playing && lastchk < time(NULL)) {
-		lastchk = time(NULL) + 2; //two seconds between chks
+		lastchk = time(NULL) + 2; /*two seconds between chks */
 #if defined(__FreeBSD__)
 		subchnl.address_format = CD_MSF_FORMAT;
 		subchnl.data_format = CD_CURRENT_POSITION;

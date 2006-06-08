@@ -39,15 +39,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SHELL_BLUE_COLOR	0xF3
 
 #define SHELL_RG_COLOR		0xDC
-//#define SHELL_RB_COLOR		0x86
+/*#define SHELL_RB_COLOR		0x86 */
 #define SHELL_RB_COLOR		0x68
 #define SHELL_BG_COLOR		0x78
 
-//ROGUE
-#define SHELL_DOUBLE_COLOR	0xDF // 223
+/*ROGUE */
+#define SHELL_DOUBLE_COLOR	0xDF /* 223 */
 #define	SHELL_HALF_DAM_COLOR	0x90
 #define SHELL_CYAN_COLOR	0x72
-//ROGUE
+/*ROGUE */
 
 #define SHELL_WHITE_COLOR	0xD7
 
@@ -66,31 +66,31 @@ typedef struct animState_s
 
 typedef struct entity_s
 {
-	struct model_s		*model;			// opaque type outside refresh
+	struct model_s		*model;			/* opaque type outside refresh */
 	float				angles[3];
 
-	float				origin[3];		// also used as RF_BEAM's "from"
-	float				oldorigin[3];	// also used as RF_BEAM's "to"
+	float				origin[3];		/* also used as RF_BEAM's "from" */
+	float				oldorigin[3];	/* also used as RF_BEAM's "to" */
 
 	/*
 	** tag positioning
 	*/
-	struct entity_s		*tagent;	// pointer to the parent entity
-	char				*tagname;	// name of the tag
+	struct entity_s		*tagent;	/* pointer to the parent entity */
+	char				*tagname;	/* name of the tag */
 
 	/*
 	** misc
 	*/
-	int		skinnum;				// also used as RF_BEAM's palette index
+	int		skinnum;				/* also used as RF_BEAM's palette index */
 
-	float	*lightcolor;			// color for fixed light
-	float	*lightambient;			// ambient color for fixed light
-	float	*lightparam;			// fraction lit by the sun
+	float	*lightcolor;			/* color for fixed light */
+	float	*lightambient;			/* ambient color for fixed light */
+	float	*lightparam;			/* fraction lit by the sun */
 
-	int		lightstyle;				// for flashing entities
-	float	alpha;					// ignore if RF_TRANSLUCENT isn't set
+	int		lightstyle;				/* for flashing entities */
+	float	alpha;					/* ignore if RF_TRANSLUCENT isn't set */
 
-	struct	image_s	*skin;			// NULL for inline skin
+	struct	image_s	*skin;			/* NULL for inline skin */
 	int		flags;
 
 	animState_t	as;
@@ -98,24 +98,24 @@ typedef struct entity_s
 
 #define ENTITY_FLAGS  68
 
-//=============================================================================
+/*============================================================================= */
 
 #define MAX_SHADERS 255
 typedef struct shader_s
 {
-	// title is internal for finding the shader
+	/* title is internal for finding the shader */
 
-	// we should use this shader when loading the image
+	/* we should use this shader when loading the image */
 	char	title[MAX_VAR];
 
-	// filename is for an external filename to load the shader from
+	/* filename is for an external filename to load the shader from */
 	char	filename[MAX_VAR];
 
-	qboolean	frag; // fragment-shader
-	qboolean	vertex; // vertex-shader
-	// TODO:
+	qboolean	frag; /* fragment-shader */
+	qboolean	vertex; /* vertex-shader */
+	/* TODO: */
 
-	// vpid and fpid are vertexpid and fragmentpid for binding
+	/* vpid and fpid are vertexpid and fragmentpid for binding */
 	unsigned int vpid, fpid;
 } shader_t;
 
@@ -128,8 +128,8 @@ typedef struct
 
 typedef struct
 {
-	float		rgb[3];			// 0.0 - 2.0
-	float		white;			// highest of rgb
+	float		rgb[3];			/* 0.0 - 2.0 */
+	float		white;			/* highest of rgb */
 } lightstyle_t;
 
 typedef struct
@@ -166,7 +166,7 @@ typedef struct
 
 typedef struct ptl_s
 {
-	// used by ref
+	/* used by ref */
 	qboolean	inuse;
 	int			pic, model;
 	byte		blend;
@@ -178,7 +178,7 @@ typedef struct ptl_s
 	vec3_t		angles;
 	int			levelFlags;
 
-	// private
+	/* private */
 	struct ptlDef_s	*ctrl;
 	int			startTime;
 	int			frame, endFrame;
@@ -201,18 +201,18 @@ typedef struct ptlArt_s
 
 typedef struct
 {
-	int			x, y, width, height;// in virtual screen coordinates
+	int			x, y, width, height;/* in virtual screen coordinates */
 	float		fov_x, fov_y;
 	float		vieworg[3];
 	float		viewangles[3];
-	float		blend[4];			// rgba 0-1 full screen blend
-	float		time;				// time is used to auto animate
-	int			rdflags;			// RDF_UNDERWATER, etc
+	float		blend[4];			/* rgba 0-1 full screen blend */
+	float		time;				/* time is used to auto animate */
+	int			rdflags;			/* RDF_UNDERWATER, etc */
 	int			worldlevel;
 
-	byte		*areabits;			// if not NULL, only areas with set bits will be drawn
+	byte		*areabits;			/* if not NULL, only areas with set bits will be drawn */
 
-	lightstyle_t	*lightstyles;	// [MAX_LIGHTSTYLES]
+	lightstyle_t	*lightstyles;	/* [MAX_LIGHTSTYLES] */
 
 	int			num_entities;
 	entity_t	*entities;
@@ -242,33 +242,33 @@ typedef struct
 
 #define	API_VERSION		4
 
-//
-// these are the functions exported by the refresh module
-//
+/* */
+/* these are the functions exported by the refresh module */
+/* */
 typedef struct
 {
-	// if api_version is different, the dll cannot be used
+	/* if api_version is different, the dll cannot be used */
 	int		api_version;
 
-	// called when the library is loaded
+	/* called when the library is loaded */
 	qboolean	(*Init) ( void *hinstance, void *wndproc );
 
-	// called before the library is unloaded
+	/* called before the library is unloaded */
 	void	(*Shutdown) (void);
 
-	// All data that will be used in a level should be
-	// registered before rendering any frames to prevent disk hits,
-	// but they can still be registered at a later time
-	// if necessary.
-	//
-	// EndRegistration will free any remaining data that wasn't registered.
-	// Any model_s or skin_s pointers from before the BeginRegistration
-	// are no longer valid after EndRegistration.
-	//
-	// Skins and images need to be differentiated, because skins
-	// are flood filled to eliminate mip map edge errors, and pics have
-	// an implicit "pics/" prepended to the name. (a pic name that starts with a
-	// slash will not use the "pics/" prefix or the ".pcx" postfix)
+	/* All data that will be used in a level should be */
+	/* registered before rendering any frames to prevent disk hits, */
+	/* but they can still be registered at a later time */
+	/* if necessary. */
+	/* */
+	/* EndRegistration will free any remaining data that wasn't registered. */
+	/* Any model_s or skin_s pointers from before the BeginRegistration */
+	/* are no longer valid after EndRegistration. */
+	/* */
+	/* Skins and images need to be differentiated, because skins */
+	/* are flood filled to eliminate mip map edge errors, and pics have */
+	/* an implicit "pics/" prepended to the name. (a pic name that starts with a */
+	/* slash will not use the "pics/" prefix or the ".pcx" postfix) */
 	void	(*BeginRegistration) (char *tiles, char *pos);
 	struct model_s *(*RegisterModel) (char *name);
 	struct image_s *(*RegisterSkin) (char *name);
@@ -279,7 +279,7 @@ typedef struct
 	void	(*RenderFrame) (refdef_t *fd);
 
 	void	(*DrawModelDirect) (modelInfo_t *mi, modelInfo_t *pmi, char *tag);
-	void	(*DrawGetPicSize) (int *w, int *h, char *name);	// will return 0 0 if not found
+	void	(*DrawGetPicSize) (int *w, int *h, char *name);	/* will return 0 0 if not found */
 	void	(*DrawPic) (int x, int y, char *name);
 	void	(*DrawNormPic) (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
 	void	(*DrawStretchPic) (int x, int y, int w, int h, char *name);
@@ -304,7 +304,7 @@ typedef struct
 
 	void	(*LoadTGA)( char *name, byte **pic, int *width, int *height );
 
-	// Draw images for cinematic rendering (which can have a different palette). Note that calls
+	/* Draw images for cinematic rendering (which can have a different palette). Note that calls */
 	void	(*DrawStretchRaw) (int x, int y, int w, int h, int cols, int rows, byte *data);
 
 	/*
@@ -316,9 +316,9 @@ typedef struct
 	void	(*TakeVideoFrame)( int h, int w, byte* captureBuffer, byte *encodeBuffer, qboolean motionJpeg );
 } refexport_t;
 
-//
-// these are the functions imported by the refresh module
-//
+/* */
+/* these are the functions imported by the refresh module */
+/* */
 typedef struct
 {
 	void	(*Sys_Error) (int err_level, char *str, ...);
@@ -331,26 +331,26 @@ typedef struct
 
 	void	(*Con_Printf) (int print_level, char *str, ...);
 
-	// files will be memory mapped read only
-	// the returned buffer may be part of a larger pak file,
-	// or a discrete file from anywhere in the quake search path
-	// a -1 return means the file does not exist
-	// NULL can be passed for buf to just determine existance
+	/* files will be memory mapped read only */
+	/* the returned buffer may be part of a larger pak file, */
+	/* or a discrete file from anywhere in the quake search path */
+	/* a -1 return means the file does not exist */
+	/* NULL can be passed for buf to just determine existance */
 	int 	(*FS_WriteFile) ( const void *buffer, int len, const char* filename );
 	int		(*FS_LoadFile) (char *name, void **buf);
 	void	(*FS_FreeFile) (void *buf);
 	int		(*FS_CheckFile) (const char *name);
 	char 	**(*FS_ListFiles)( char *findname, int *numfiles, unsigned musthave, unsigned canthave );
 
-	// dynamic memory allocator for things that need to be freed
-//	void	*(*Malloc)( int bytes );
-//	void	(*Free)( void *buf );
+	/* dynamic memory allocator for things that need to be freed */
+/*	void	*(*Malloc)( int bytes ); */
+/*	void	(*Free)( void *buf ); */
 
-	// will return the size and the path for each font
+	/* will return the size and the path for each font */
 	void (*CL_GetFontData) (char *name, int *size, char *path);
 
-	// gamedir will be the current directory that generated
-	// files should be stored to, ie: "f:\quake\id1"
+	/* gamedir will be the current directory that generated */
+	/* files should be stored to, ie: "f:\quake\id1" */
 	char	*(*FS_Gamedir) (void);
 	char	*(*FS_NextPath) (char *prevpath);
 
@@ -364,7 +364,7 @@ typedef struct
 } refimport_t;
 
 
-// this is the only function actually exported at the linker level
+/* this is the only function actually exported at the linker level */
 typedef	refexport_t	(*GetRefAPI_t) (refimport_t);
 
-#endif // __REF_H
+#endif /* __REF_H */

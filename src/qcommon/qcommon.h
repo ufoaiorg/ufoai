@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-// qcommon.h -- definitions common between client and server, but not game.dll
+/* qcommon.h -- definitions common between client and server, but not game.dll */
 
 #ifndef QCOMMON_DEFINED
 #define QCOMMON_DEFINED
@@ -97,12 +97,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int dstrcmp( char *source, char *s1, char *s2 );
 
-//============================================================================
+/*============================================================================ */
 
 typedef struct sizebuf_s
 {
-	qboolean	allowoverflow;	// if false, do a Com_Error
-	qboolean	overflowed;		// set to true if the buffer size failed
+	qboolean	allowoverflow;	/* if false, do a Com_Error */
+	qboolean	overflowed;		/* set to true if the buffer size failed */
 	byte	*data;
 	int		maxsize;
 	int		cursize;
@@ -113,9 +113,9 @@ void SZ_Init (sizebuf_t *buf, byte *data, int length);
 void SZ_Clear (sizebuf_t *buf);
 void *SZ_GetSpace (sizebuf_t *buf, int length);
 void SZ_Write (sizebuf_t *buf, void *data, int length);
-void SZ_Print (sizebuf_t *buf, char *data);	// strcats onto the sizebuf
+void SZ_Print (sizebuf_t *buf, char *data);	/* strcats onto the sizebuf */
 
-//============================================================================
+/*============================================================================ */
 
 struct usercmd_s;
 struct entity_state_s;
@@ -157,7 +157,7 @@ void	MSG_ReadFormat( sizebuf_t *sb, char *format, ... );
 
 int		MSG_LengthFormat( sizebuf_t *sb, char *format );
 
-//============================================================================
+/*============================================================================ */
 
 extern	qboolean		bigendien;
 
@@ -168,11 +168,11 @@ extern	int		LittleLong (int l);
 extern	float	BigFloat (float l);
 extern	float	LittleFloat (float l);
 
-//============================================================================
+/*============================================================================ */
 
 
 int	COM_Argc (void);
-char *COM_Argv (int arg);	// range and null checked
+char *COM_Argv (int arg);	/* range and null checked */
 void COM_ClearArgv (int arg);
 int COM_CheckParm (char *parm);
 void COM_AddParm (char *parm);
@@ -182,7 +182,7 @@ void COM_InitArgv (int argc, char **argv);
 
 char *CopyString (char *in);
 
-//============================================================================
+/*============================================================================ */
 
 void Info_Print (char *s);
 
@@ -204,59 +204,59 @@ PROTOCOL
 ==============================================================
 */
 
-// protocol.h -- communications protocols
+/* protocol.h -- communications protocols */
 
 #define	PROTOCOL_VERSION	3
 
-//=========================================
+/*========================================= */
 
 #define	PORT_MASTER	27900
 #define	PORT_CLIENT	27901
 #define	PORT_SERVER	27910
 
-//=========================================
+/*========================================= */
 
-#define	UPDATE_BACKUP	16	// copies of entity_state_t to keep buffered
-							// must be power of two
+#define	UPDATE_BACKUP	16	/* copies of entity_state_t to keep buffered */
+							/* must be power of two */
 #define	UPDATE_MASK		(UPDATE_BACKUP-1)
 
 
 
-//==================
-// the svc_strings[] array in cl_parse.c should mirror this
-//==================
+/*================== */
+/* the svc_strings[] array in cl_parse.c should mirror this */
+/*================== */
 
-//
-// server to client
-//
+/* */
+/* server to client */
+/* */
 enum svc_ops_e
 {
 	svc_bad,
 
-	// these ops are known to the game dll
+	/* these ops are known to the game dll */
 	svc_layout,
 	svc_inventory,
 
-	// the rest are private to the client and server
+	/* the rest are private to the client and server */
 	svc_nop,
 	svc_disconnect,
 	svc_reconnect,
-	svc_sound,					// <see code>
-	svc_print,					// [byte] id [string] null terminated string
-	svc_stufftext,				// [string] stuffed into client's console buffer, should be \n terminated
-	svc_serverdata,				// [long] protocol ...
-	svc_configstring,			// [short] [string]
+	svc_sound,					/* <see code> */
+	svc_print,					/* [byte] id [string] null terminated string */
+	svc_stufftext,				/* [string] stuffed into client's console buffer, should be \n terminated */
+	svc_serverdata,				/* [long] protocol ... */
+	svc_configstring,			/* [short] [string] */
 	svc_spawnbaseline,
-	svc_centerprint,			// [string] to put in center of the screen
-	svc_playerinfo,				// variable
-	svc_event					// ...
+	svc_centerprint,			/* [string] to put in center of the screen */
+	svc_playerinfo,				/* variable */
+	svc_event					/* ... */
 };
 
-//==============================================
+/*============================================== */
 
-//
-// client to server
-//
+/* */
+/* client to server */
+/* */
 enum clc_ops_e
 {
 	clc_bad,
@@ -264,24 +264,24 @@ enum clc_ops_e
 	clc_endround,
 	clc_teaminfo,
 	clc_action,
-	clc_userinfo,			// [[userinfo string]
-	clc_stringcmd			// [string] message
+	clc_userinfo,			/* [[userinfo string] */
+	clc_stringcmd			/* [string] message */
 };
 
 
-//==============================================
+/*============================================== */
 
-// a sound without an ent or pos will be a local only sound
-#define	SND_VOLUME		(1<<0)		// a byte
-#define	SND_ATTENUATION	(1<<1)		// a byte
-#define	SND_POS			(1<<2)		// three coordinates
-#define	SND_ENT			(1<<3)		// a short 0-2: channel, 3-12: entity
-#define	SND_OFFSET		(1<<4)		// a byte, msec offset from frame start
+/* a sound without an ent or pos will be a local only sound */
+#define	SND_VOLUME		(1<<0)		/* a byte */
+#define	SND_ATTENUATION	(1<<1)		/* a byte */
+#define	SND_POS			(1<<2)		/* three coordinates */
+#define	SND_ENT			(1<<3)		/* a short 0-2: channel, 3-12: entity */
+#define	SND_OFFSET		(1<<4)		/* a byte, msec offset from frame start */
 
 #define DEFAULT_SOUND_PACKET_VOLUME	1.0
 #define DEFAULT_SOUND_PACKET_ATTENUATION 1.0
 
-//==============================================
+/*============================================== */
 
 
 /*
@@ -306,45 +306,45 @@ The game starts with a Cbuf_AddText ("exec quake.rc\n"); Cbuf_Execute ();
 
 */
 
-#define	EXEC_NOW	0		// don't return until completed
-#define	EXEC_INSERT	1		// insert at current position, but don't run yet
-#define	EXEC_APPEND	2		// add to end of the command buffer
+#define	EXEC_NOW	0		/* don't return until completed */
+#define	EXEC_INSERT	1		/* insert at current position, but don't run yet */
+#define	EXEC_APPEND	2		/* add to end of the command buffer */
 
 void Cbuf_Init (void);
-// allocates an initial text buffer that will grow as needed
+/* allocates an initial text buffer that will grow as needed */
 
 void Cbuf_AddText (char *text);
-// as new commands are generated from the console or keybindings,
-// the text is added to the end of the command buffer.
+/* as new commands are generated from the console or keybindings, */
+/* the text is added to the end of the command buffer. */
 
 void Cbuf_InsertText (char *text);
-// when a command wants to issue other commands immediately, the text is
-// inserted at the beginning of the buffer, before any remaining unexecuted
-// commands.
+/* when a command wants to issue other commands immediately, the text is */
+/* inserted at the beginning of the buffer, before any remaining unexecuted */
+/* commands. */
 
 void Cbuf_ExecuteText (int exec_when, char *text);
-// this can be used in place of either Cbuf_AddText or Cbuf_InsertText
+/* this can be used in place of either Cbuf_AddText or Cbuf_InsertText */
 
 void Cbuf_AddEarlyCommands (qboolean clear);
-// adds all the +set commands from the command line
+/* adds all the +set commands from the command line */
 
 qboolean Cbuf_AddLateCommands (void);
-// adds all the remaining + commands from the command line
-// Returns true if any late commands were added, which
-// will keep the demoloop from immediately starting
+/* adds all the remaining + commands from the command line */
+/* Returns true if any late commands were added, which */
+/* will keep the demoloop from immediately starting */
 
 void Cbuf_Execute (void);
-// Pulls off \n terminated lines of text from the command buffer and sends
-// them through Cmd_ExecuteString.  Stops when the buffer is empty.
-// Normally called once per frame, but may be explicitly invoked.
-// Do not call inside a command function!
+/* Pulls off \n terminated lines of text from the command buffer and sends */
+/* them through Cmd_ExecuteString.  Stops when the buffer is empty. */
+/* Normally called once per frame, but may be explicitly invoked. */
+/* Do not call inside a command function! */
 
 void Cbuf_CopyToDefer (void);
 void Cbuf_InsertFromDefer (void);
-// These two functions are used to defer any pending commands while a map
-// is being loaded
+/* These two functions are used to defer any pending commands while a map */
+/* is being loaded */
 
-//===========================================================================
+/*=========================================================================== */
 
 /*
 
@@ -364,39 +364,39 @@ typedef struct cmdList_s
 void	Cmd_Init (void);
 
 void	Cmd_AddCommand (char *cmd_name, xcommand_t function);
-// called by the init functions of other parts of the program to
-// register commands and functions to call for them.
-// The cmd_name is referenced later, so it should not be in temp memory
-// if function is NULL, the command will be forwarded to the server
-// as a clc_stringcmd instead of executed locally
+/* called by the init functions of other parts of the program to */
+/* register commands and functions to call for them. */
+/* The cmd_name is referenced later, so it should not be in temp memory */
+/* if function is NULL, the command will be forwarded to the server */
+/* as a clc_stringcmd instead of executed locally */
 void	Cmd_RemoveCommand (char *cmd_name);
 
 qboolean Cmd_Exists (char *cmd_name);
-// used by the cvar code to check for cvar / command name overlap
+/* used by the cvar code to check for cvar / command name overlap */
 
 char 	*Cmd_CompleteCommand (char *partial);
-// attempts to match a partial command for automatic command line completion
-// returns NULL if nothing fits
+/* attempts to match a partial command for automatic command line completion */
+/* returns NULL if nothing fits */
 
 int		Cmd_Argc (void);
 char	*Cmd_Argv (int arg);
 char	*Cmd_Args (void);
-// The functions that execute commands get their parameters with these
-// functions. Cmd_Argv () will return an empty string, not a NULL
-// if arg > argc, so string operations are always safe.
+/* The functions that execute commands get their parameters with these */
+/* functions. Cmd_Argv () will return an empty string, not a NULL */
+/* if arg > argc, so string operations are always safe. */
 
 void	Cmd_TokenizeString (char *text, qboolean macroExpand);
-// Takes a null terminated string.  Does not need to be /n terminated.
-// breaks the string up into arg tokens.
+/* Takes a null terminated string.  Does not need to be /n terminated. */
+/* breaks the string up into arg tokens. */
 
 void	Cmd_ExecuteString (char *text);
-// Parses a single line of text into arguments and tries to execute it
-// as if it was typed at the console
+/* Parses a single line of text into arguments and tries to execute it */
+/* as if it was typed at the console */
 
 void	Cmd_ForwardToServer (void);
-// adds the current command line as a clc_stringcmd to the client message.
-// things like godmode, noclip, etc, are commands directed to the server,
-// so when they are typed in at the console, they will need to be forwarded.
+/* adds the current command line as a clc_stringcmd to the client message. */
+/* things like godmode, noclip, etc, are commands directed to the server, */
+/* so when they are typed in at the console, they will need to be forwarded. */
 
 
 /*
@@ -423,54 +423,54 @@ interface from being ambiguous.
 extern	cvar_t	*cvar_vars;
 
 cvar_t *Cvar_Get (char *var_name, char *value, int flags);
-// creates the variable if it doesn't exist, or returns the existing one
-// if it exists, the value will not be changed, but flags will be ORed in
-// that allows variables to be unarchived without needing bitflags
+/* creates the variable if it doesn't exist, or returns the existing one */
+/* if it exists, the value will not be changed, but flags will be ORed in */
+/* that allows variables to be unarchived without needing bitflags */
 
 cvar_t 	*Cvar_Set (char *var_name, char *value);
-// will create the variable if it doesn't exist
+/* will create the variable if it doesn't exist */
 
 cvar_t *Cvar_ForceSet (char *var_name, char *value);
-// will set the variable even if NOSET or LATCH
+/* will set the variable even if NOSET or LATCH */
 
 cvar_t 	*Cvar_FullSet (char *var_name, char *value, int flags);
 
 void	Cvar_SetValue (char *var_name, float value);
-// expands value to a string and calls Cvar_Set
+/* expands value to a string and calls Cvar_Set */
 
 float	Cvar_VariableValue (char *var_name);
-// returns 0 if not defined or non numeric
+/* returns 0 if not defined or non numeric */
 
 char	*Cvar_VariableString (char *var_name);
-// returns an empty string if not defined
+/* returns an empty string if not defined */
 
 char 	*Cvar_CompleteVariable (char *partial);
-// attempts to match a partial variable name for command line completion
-// returns NULL if nothing fits
+/* attempts to match a partial variable name for command line completion */
+/* returns NULL if nothing fits */
 
 void	Cvar_GetLatchedVars (void);
-// any CVAR_LATCHED variables that have been set will now take effect
+/* any CVAR_LATCHED variables that have been set will now take effect */
 
 qboolean Cvar_Command (void);
-// called by Cmd_ExecuteString when Cmd_Argv(0) doesn't match a known
-// command.  Returns true if the command was a variable reference that
-// was handled. (print or change)
+/* called by Cmd_ExecuteString when Cmd_Argv(0) doesn't match a known */
+/* command.  Returns true if the command was a variable reference that */
+/* was handled. (print or change) */
 
 void 	Cvar_WriteVariables (char *path);
-// appends lines containing "set variable value" for all variables
-// with the archive flag set to true.
+/* appends lines containing "set variable value" for all variables */
+/* with the archive flag set to true. */
 
 void	Cvar_Init (void);
 
 char	*Cvar_Userinfo (void);
-// returns an info string containing all the CVAR_USERINFO cvars
+/* returns an info string containing all the CVAR_USERINFO cvars */
 
 char	*Cvar_Serverinfo (void);
-// returns an info string containing all the CVAR_SERVERINFO cvars
+/* returns an info string containing all the CVAR_SERVERINFO cvars */
 
 extern	qboolean	userinfo_modified;
-// this is set each time a CVAR_USERINFO variable is changed
-// so that the client knows to send it to the server
+/* this is set each time a CVAR_USERINFO variable is changed */
+/* so that the client knows to send it to the server */
 
 /*
 ==============================================================
@@ -480,12 +480,12 @@ NET
 ==============================================================
 */
 
-// net.h -- quake's interface to the networking layer
+/* net.h -- quake's interface to the networking layer */
 
 #define	PORT_ANY	-1
 
-#define	MAX_MSGLEN		1400		// max length of a message
-#define	PACKET_HEADER	10			// two ints and a short
+#define	MAX_MSGLEN		1400		/* max length of a message */
+#define	PACKET_HEADER	10			/* two ints and a short */
 
 #ifdef HAVE_IPV6
 typedef enum {NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX, NA_IPV6, NA_MULTICAST6} netadrtype_t;
@@ -525,9 +525,9 @@ char		*NET_AdrToString (netadr_t a);
 qboolean	NET_StringToAdr (char *s, netadr_t *a);
 void		NET_Sleep(int msec);
 
-//============================================================================
+/*============================================================================ */
 
-#define	OLD_AVG		0.99		// total = oldtotal*OLD_AVG + new*(1-OLD_AVG)
+#define	OLD_AVG		0.99		/* total = oldtotal*OLD_AVG + new*(1-OLD_AVG) */
 
 #define	MAX_LATENT	32
 
@@ -537,32 +537,32 @@ typedef struct
 
 	netsrc_t	sock;
 
-	int			dropped;			// between last packet and previous
+	int			dropped;			/* between last packet and previous */
 
-	int			last_received;		// for timeouts
-	int			last_sent;			// for retransmits
+	int			last_received;		/* for timeouts */
+	int			last_sent;			/* for retransmits */
 
 	netadr_t	remote_address;
-	int			qport;				// qport value to write when transmitting
+	int			qport;				/* qport value to write when transmitting */
 
-	// sequencing variables
+	/* sequencing variables */
 	int			incoming_sequence;
 	int			incoming_acknowledged;
-	int			incoming_reliable_acknowledged;	// single bit
+	int			incoming_reliable_acknowledged;	/* single bit */
 
-	int			incoming_reliable_sequence;		// single bit, maintained local
+	int			incoming_reliable_sequence;		/* single bit, maintained local */
 
 	int			outgoing_sequence;
-	int			reliable_sequence;			// single bit
-	int			last_reliable_sequence;		// sequence number of last send
+	int			reliable_sequence;			/* single bit */
+	int			last_reliable_sequence;		/* sequence number of last send */
 
-	// reliable staging and holding areas
-	sizebuf_t	message;		// writing buffer to send to server
-	byte		message_buf[MAX_MSGLEN-16];		// leave space for header
+	/* reliable staging and holding areas */
+	sizebuf_t	message;		/* writing buffer to send to server */
+	byte		message_buf[MAX_MSGLEN-16];		/* leave space for header */
 
-	// message is copied to this buffer when it is first transfered
+	/* message is copied to this buffer when it is first transfered */
 	int			reliable_length;
-	byte		reliable_buf[MAX_MSGLEN-16];	// unacked reliable message
+	byte		reliable_buf[MAX_MSGLEN-16];	/* unacked reliable message */
 } netchan_t;
 
 extern	netadr_t	net_from;
@@ -597,7 +597,7 @@ extern vec3_t	map_min, map_max;
 
 void CM_LoadMap (char *tiles, char *pos);
 int CheckBSPFile (char *filename);
-cmodel_t *CM_InlineModel (char *name);	// *0, *1, *2, etc
+cmodel_t *CM_InlineModel (char *name);	/* *0, *1, *2, etc */
 
 int			CM_NumClusters (void);
 int			CM_NumInlineModels (void);
@@ -611,17 +611,17 @@ CMODEL BOX TRACING
 ==============================================================
 */
 
-// WARNING: The functions, that are commented out,
-// possibly don't give the expected results, because of
-// the new map tiles, all the others should work
+/* WARNING: The functions, that are commented out, */
+/* possibly don't give the expected results, because of */
+/* the new map tiles, all the others should work */
 
-// creates a clipping hull for an arbitrary box
+/* creates a clipping hull for an arbitrary box */
 int			CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs);
 
 
-// returns an ORed contents mask
-//int			CM_PointContents (vec3_t p, int headnode);
-//int			CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, vec3_t angles);
+/* returns an ORed contents mask */
+/*int			CM_PointContents (vec3_t p, int headnode); */
+/*int			CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, vec3_t angles); */
 
 trace_t		CM_BoxTrace (vec3_t start, vec3_t end,
 						  vec3_t mins, vec3_t maxs,
@@ -713,14 +713,14 @@ void	FS_GetMaps ( void );
 
 int	FS_FOpenFile (const char *filename, FILE **file);
 void	FS_FCloseFile (FILE *f);
-// note: this can't be called from another DLL, due to MS libc issues
+/* note: this can't be called from another DLL, due to MS libc issues */
 
 int		FS_LoadFile (char *path, void **buffer);
-// a null buffer will just return the file length without loading
-// a -1 length is not present
+/* a null buffer will just return the file length without loading */
+/* a -1 length is not present */
 
 void	FS_Read (void *buffer, int len, FILE *f);
-// properly handles partial reads
+/* properly handles partial reads */
 
 void	FS_FreeFile (void *buffer);
 
@@ -786,16 +786,16 @@ MISC
 */
 
 
-#define	ERR_FATAL	0		// exit the entire game with a popup window
-#define	ERR_DROP	1		// print to console and disconnect from game
-#define	ERR_QUIT	2		// not an error, just a normal exit
+#define	ERR_FATAL	0		/* exit the entire game with a popup window */
+#define	ERR_DROP	1		/* print to console and disconnect from game */
+#define	ERR_QUIT	2		/* not an error, just a normal exit */
 
-#define	EXEC_NOW	0		// don't return until completed
-#define	EXEC_INSERT	1		// insert at current position, but don't run yet
-#define	EXEC_APPEND	2		// add to end of the command buffer
+#define	EXEC_NOW	0		/* don't return until completed */
+#define	EXEC_INSERT	1		/* insert at current position, but don't run yet */
+#define	EXEC_APPEND	2		/* add to end of the command buffer */
 
 #define	PRINT_ALL		0
-#define PRINT_DEVELOPER	1	// only print when "developer 1"
+#define PRINT_DEVELOPER	1	/* only print when "developer 1" */
 
 void		Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush));
 void		Com_EndRedirect (void);
@@ -805,7 +805,7 @@ void 		Com_Error (int code, char *fmt, ...);
 void		Com_Drop (void);
 void 		Com_Quit (void);
 
-int			Com_ServerState (void);		// this should have just been a cvar...
+int			Com_ServerState (void);		/* this should have just been a cvar... */
 void		Com_SetServerState (int state);
 
 unsigned	Com_BlockChecksum (void *buffer, int length);
@@ -819,13 +819,13 @@ extern	cvar_t	*sv_maxclients;
 
 extern	FILE *log_stats_file;
 
-// host_speeds times
+/* host_speeds times */
 extern	int		time_before_game;
 extern	int		time_after_game;
 extern	int		time_before_ref;
 extern	int		time_after_ref;
 
-// weapon definitions
+/* weapon definitions */
 #define FD_PRIMARY		0
 #define FD_SECONDARY		1
 
@@ -835,7 +835,7 @@ extern char map_entitystring[MAX_MAP_ENTSTRING];
 
 
 void Z_Free (void *ptr);
-void *Z_Malloc (int size);			// returns 0 filled memory
+void *Z_Malloc (int size);			/* returns 0 filled memory */
 void *Z_TagMalloc (int size, int tag);
 void Z_FreeTags (int tag);
 
@@ -847,7 +847,7 @@ void  Qcommon_Shutdown (void);
 #define NUMVERTEXNORMALS	162
 extern	vec3_t	bytedirs[NUMVERTEXNORMALS];
 
-// this is in the client code, but can be used for debugging from server
+/* this is in the client code, but can be used for debugging from server */
 void SCR_DebugGraph (float value, int color);
 
 /*
@@ -864,7 +864,7 @@ void	Sys_AppActivate (void);
 
 void	Sys_UnloadGame (void);
 void	*Sys_GetGameAPI (void *parms);
-// loads the game dll and calls the api init function
+/* loads the game dll and calls the api init function */
 
 char	*Sys_ConsoleInput (void);
 void	Sys_ConsoleOutput (char *string);

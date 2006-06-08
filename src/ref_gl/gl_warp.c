@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// gl_warp.c -- water polygons
+/* gl_warp.c -- water polygons */
 
 #include "gl_local.h"
 
@@ -26,7 +26,7 @@ extern	model_t	*loadmodel;
 msurface_t	*warpface;
 
 #define	SUBDIVIDE_SIZE	64
-//#define	SUBDIVIDE_SIZE	1024
+/*#define	SUBDIVIDE_SIZE	1024 */
 
 void BoundPoly (int numverts, float *verts, vec3_t mins, vec3_t maxs)
 {
@@ -75,12 +75,12 @@ void SubdividePolygon (int numverts, float *verts)
 		if (m - mins[i] < 8)
 			continue;
 
-		// cut it
+		/* cut it */
 		v = verts + i;
 		for (j=0 ; j<numverts ; j++, v+= 3)
 			dist[j] = *v - m;
 
-		// wrap cases
+		/* wrap cases */
 		dist[j] = dist[0];
 		v-=i;
 		VectorCopy (verts, v);
@@ -103,7 +103,7 @@ void SubdividePolygon (int numverts, float *verts)
 				continue;
 			if ( (dist[j] > 0) != (dist[j+1] > 0) )
 			{
-				// clip point
+				/* clip point */
 				frac = dist[j] / (dist[j] - dist[j+1]);
 				for (k=0 ; k<3 ; k++)
 					front[f][k] = back[b][k] = v[k] + frac*(v[3+k] - v[k]);
@@ -117,7 +117,7 @@ void SubdividePolygon (int numverts, float *verts)
 		return;
 	}
 
-	// add a point in the center to help keep warp valid
+	/* add a point in the center to help keep warp valid */
 	poly = Hunk_Alloc (sizeof(glpoly_t) + ((numverts-4)+2) * VERTEXSIZE*sizeof(float));
 	poly->next = warpface->polys;
 	warpface->polys = poly;
@@ -143,7 +143,7 @@ void SubdividePolygon (int numverts, float *verts)
 	poly->verts[0][3] = total_s/numverts;
 	poly->verts[0][4] = total_t/numverts;
 
-	// copy first vertex to last
+	/* copy first vertex to last */
 	memcpy (poly->verts[i+1], poly->verts[1], sizeof(poly->verts[0]));
 }
 
@@ -166,9 +166,9 @@ void GL_SubdivideSurface (msurface_t *fa)
 
 	warpface = fa;
 
-	//
-	// convert edges back to a normal polygon
-	//
+	/* */
+	/* convert edges back to a normal polygon */
+	/* */
 	numverts = 0;
 	for (i=0 ; i<fa->numedges ; i++)
 	{
@@ -185,11 +185,11 @@ void GL_SubdivideSurface (msurface_t *fa)
 	SubdividePolygon (numverts, verts[0]);
 }
 
-//=========================================================
+/*========================================================= */
 
 
 
-// speed up sin calculations - Ed
+/* speed up sin calculations - Ed */
 float	r_turbsin[] =
 {
 	#include "warpsin.h"

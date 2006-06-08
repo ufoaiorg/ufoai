@@ -9,7 +9,7 @@ extern	dmodel_t	dmodels[MAX_MAP_MODELS];
 
 extern	int			routedatasize;
 extern	byte		droutedata[MAX_MAP_ROUTING];
-//extern	dvis_t		*dvis;
+/*extern	dvis_t		*dvis; */
 
 extern	int			lightdatasize;
 extern	byte		dlightdata[MAX_MAP_LIGHTING];
@@ -65,11 +65,11 @@ void DecompressVis (byte *in, byte *decompressed);
 int CompressVis (byte *vis, byte *dest);
 
 void	LoadBSPFile (char *filename);
-void	LoadBSPFileTexinfo (char *filename);	// just for qdata
+void	LoadBSPFileTexinfo (char *filename);	/* just for qdata */
 void	WriteBSPFile (char *filename);
 void	PrintBSPFileSizes (void);
 
-//===============
+/*=============== */
 
 
 typedef struct epair_s
@@ -86,7 +86,7 @@ typedef struct
 	int			numbrushes;
 	epair_t		*epairs;
 
-// only valid for func_areaportals
+/* only valid for func_areaportals */
 	int			areaportalnum;
 	int			portalareas[2];
 } entity_t;
@@ -99,7 +99,7 @@ void	UnparseEntities (void);
 
 void 	SetKeyValue (entity_t *ent, char *key, char *value);
 char 	*ValueForKey (entity_t *ent, char *key);
-// will return "" if not present
+/* will return "" if not present */
 
 vec_t	FloatForKey (entity_t *ent, char *key);
 void 	GetVectorForKey (entity_t *ent, char *key, vec3_t vec);

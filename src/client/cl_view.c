@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// cl_view.c -- player rendering positioning
+/* cl_view.c -- player rendering positioning */
 
 #include "client.h"
 
@@ -248,7 +248,7 @@ void V_TestLights (void)
 	}
 }
 
-//===================================================================
+/*=================================================================== */
 
 /*
 =================
@@ -282,10 +282,10 @@ void CL_ParseEntitystring( char *es )
 	numLMs = 0;
 	numMPs = 0;
 
-	// parse ents
+	/* parse ents */
 	while (1)
 	{
-		// initialize
+		/* initialize */
 		VectorCopy( vec3_origin, ambient );
 		VectorCopy( vec3_origin, color );
 		VectorCopy( vec3_origin, origin );
@@ -299,20 +299,20 @@ void CL_ParseEntitystring( char *es )
 		skin = 0;
 		maxlevel = 8;
 
-		// parse the opening brace
+		/* parse the opening brace */
 		com_token = COM_Parse (&es);
 		if (!es)
 			break;
 		if (com_token[0] != '{')
 			Com_Error (ERR_DROP, "CL_ParseEntitystring: found %s when expecting {", com_token);
 
-		// memorize the start
+		/* memorize the start */
 		strstart = es;
 
-		// go through all the dictionary pairs
+		/* go through all the dictionary pairs */
 		while (1)
 		{
-			// parse key
+			/* parse key */
 			com_token = COM_Parse (&es);
 			if (com_token[0] == '}')
 				break;
@@ -321,7 +321,7 @@ void CL_ParseEntitystring( char *es )
 
 			Q_strncpyz(keyname, com_token, sizeof(keyname));
 
-			// parse value
+			/* parse value */
 			com_token = COM_Parse (&es);
 			if (!es)
 				Com_Error (ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
@@ -329,7 +329,7 @@ void CL_ParseEntitystring( char *es )
 			if (com_token[0] == '}')
 				Com_Error (ERR_DROP, "CL_ParseEntitystring: closing brace without data");
 
-			// filter interesting keys
+			/* filter interesting keys */
 			if ( !Q_strcmp( keyname, "classname" ) )
 				Q_strncpyz( classname, com_token, 64 );
 
@@ -379,10 +379,10 @@ void CL_ParseEntitystring( char *es )
 				skin = atoi( com_token );
 		}
 
-		// analyze values
+		/* analyze values */
 		if ( !Q_strcmp( classname, "worldspawn" ) )
 		{
-			// init sun
+			/* init sun */
 			angles[YAW] *= 3.14159/180;
 			angles[PITCH] *= 3.14159/180;
 			map_sun.dir[0] = cos( angles[YAW] ) * sin( angles[PITCH] );
@@ -393,18 +393,18 @@ void CL_ParseEntitystring( char *es )
 			VectorScale( color, light/100, map_sun.color );
 			map_sun.color[3] = 1.0;
 
-			// init ambient
+			/* init ambient */
 			VectorScale( ambient, 1.4, map_sun.ambient );
 			map_sun.ambient[3] = 1.0;
 
-			// maximum level
+			/* maximum level */
 			map_maxlevel = maxlevel;
 		}
 
 		if ( !Q_strcmp( classname, "light" ) && light )
 		{
 			dlight_t	*newlight;
-			// add light to list
+			/* add light to list */
 
 			if ( map_numlights >= MAX_MAP_LIGHTS )
 				Com_Error( ERR_DROP, "Too many lights...\n" );
@@ -425,10 +425,10 @@ void CL_ParseEntitystring( char *es )
 				continue;
 			}
 
-			// add it
+			/* add it */
 			lm = CL_AddLocalModel( model, particle, origin, angles, entnum, (spawnflags & 0xFF) );
 
-			// get light parameters
+			/* get light parameters */
 			if ( lm )
 			{
 				if ( light != 0.0 )
@@ -481,19 +481,19 @@ void CL_PrepRefresh (void)
 	char		name[MAX_QPATH];
 
 	if (!cl.configstrings[CS_TILES][0])
-		return;		// no map loaded
+		return;		/* no map loaded */
 
 	SCR_AddDirtyPoint (0, 0);
 	SCR_AddDirtyPoint (viddef.width-1, viddef.height-1);
 
-	// register models, pics, and skins
+	/* register models, pics, and skins */
 	Com_Printf ("Map: %s\n", cl.configstrings[CS_NAME]);
 	SCR_UpdateScreen ();
 	re.BeginRegistration( cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS] );
 	CL_ParseEntitystring( map_entitystring );
 	Com_Printf ("                                     \r");
 
-	// precache status bar pics
+	/* precache status bar pics */
 	Com_Printf ("pics\n");
 	SCR_UpdateScreen ();
 	SCR_TouchPics ();
@@ -508,15 +508,15 @@ void CL_PrepRefresh (void)
 	for (i=1 ; i<MAX_MODELS && cl.configstrings[CS_MODELS+i][0] ; i++)
 	{
 		Q_strncpyz (name, cl.configstrings[CS_MODELS+i], MAX_QPATH);
-		name[37] = 0;	// never go beyond one line
+		name[37] = 0;	/* never go beyond one line */
 		Com_Printf( name );
 		if (name[0] != '*')
 			Com_Printf ("%s\r", name);
 		SCR_UpdateScreen ();
-		Sys_SendKeyEvents ();	// pump message loop
+		Sys_SendKeyEvents ();	/* pump message loop */
 		if (name[0] == '#')
 		{
-			// special player weapon model
+			/* special player weapon model */
 			if (num_cl_weaponmodels < MAX_CLIENTWEAPONMODELS)
 			{
 				Q_strncpyz(cl_weaponmodels[num_cl_weaponmodels], cl.configstrings[CS_MODELS+i]+1,
@@ -536,7 +536,7 @@ void CL_PrepRefresh (void)
 			Com_Printf ("                                     \r");
 	}
 
-	// update le model references
+	/* update le model references */
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 		if ( le->inuse )
 		{
@@ -544,17 +544,17 @@ void CL_PrepRefresh (void)
 			if ( le->modelnum2 ) le->model2 = cl.model_draw[le->modelnum2];
 		}
 
-	// load weapons stuff
+	/* load weapons stuff */
 	for ( i = 0; i < csi.numODs; i++ )
 		cl.model_weapons[i] = re.RegisterModel( csi.ods[i].model );
 
-	// images
+	/* images */
 	Com_Printf ("images\n", i);
 	SCR_UpdateScreen ();
 	for (i=1 ; i<MAX_IMAGES && cl.configstrings[CS_IMAGES+i][0] ; i++)
 	{
 		cl.image_precache[i] = re.RegisterPic (cl.configstrings[CS_IMAGES+i]);
-		Sys_SendKeyEvents ();	// pump message loop
+		Sys_SendKeyEvents ();	/* pump message loop */
 	}
 
 	Com_Printf ("                                     \r");
@@ -564,23 +564,23 @@ void CL_PrepRefresh (void)
 			continue;
 		Com_Printf ("client %i\n", i);
 		SCR_UpdateScreen ();
-		Sys_SendKeyEvents ();	// pump message loop
-//		CL_ParseClientinfo (i);
+		Sys_SendKeyEvents ();	/* pump message loop */
+/*		CL_ParseClientinfo (i); */
 		Com_Printf ("                                     \r");
 	}
 
-	// the renderer can now free unneeded stuff
+	/* the renderer can now free unneeded stuff */
 	re.EndRegistration ();
 
-	// clear any lines of console text
+	/* clear any lines of console text */
 	Con_ClearNotify ();
 	SCR_EndLoadingPlaque ();
 
 	SCR_UpdateScreen ();
 	cl.refresh_prepped = qtrue;
-	cl.force_refdef = qtrue; // make sure we have a valid refdef
+	cl.force_refdef = qtrue; /* make sure we have a valid refdef */
 
-	// start the cd track
+	/* start the cd track */
 	CDAudio_Play (atoi(cl.configstrings[CS_CDTRACK]), qtrue);
 }
 
@@ -622,13 +622,13 @@ void CL_CalcRefdef ( void )
 
 	VectorSet( cl.refdef.blend, 0.0, 0.0, 0.0 );
 
-	// set field of view
+	/* set field of view */
 	if ( cl.cam.zoom < MIN_ZOOM ) zoom = MIN_ZOOM;
 	else if ( cl.cam.zoom > MAX_ZOOM ) zoom = MAX_ZOOM;
 	else zoom = cl.cam.zoom;
 	cl.refdef.fov_x = FOV / zoom;
 
-	// set dependant variables
+	/* set dependant variables */
 	cl.refdef.x = scr_vrect.x;
 	cl.refdef.y = scr_vrect.y;
 	cl.refdef.width = scr_vrect.width;
@@ -647,7 +647,7 @@ V_RenderView
 */
 void V_RenderView( float stereo_separation )
 {
-//	extern int entitycmpfnc( const entity_t *, const entity_t * );
+/*	extern int entitycmpfnc( const entity_t *, const entity_t * ); */
 
 	if (cls.state != ca_active && cls.state != ca_sequence)
 		return;
@@ -656,7 +656,7 @@ void V_RenderView( float stereo_separation )
 		return;
 
 	if (!cl.refresh_prepped)
-		return;			// still loading
+		return;			/* still loading */
 
 	if (cl_timedemo->value)
 	{
@@ -667,7 +667,7 @@ void V_RenderView( float stereo_separation )
 
 
 	V_ClearScene ();
-//	CL_RunLightStyles ();
+/*	CL_RunLightStyles (); */
 
 	if (cls.state == ca_sequence)
 	{
@@ -685,7 +685,7 @@ void V_RenderView( float stereo_separation )
 
 	CL_CalcRefdef ();
 
-	// offset vieworg appropriately if we're doing stereo separation
+	/* offset vieworg appropriately if we're doing stereo separation */
 	if ( stereo_separation != 0 )
 	{
 		vec3_t tmp;
@@ -694,7 +694,7 @@ void V_RenderView( float stereo_separation )
 		VectorAdd( cl.refdef.vieworg, tmp, cl.refdef.vieworg );
 	}
 
-	// setup refdef
+	/* setup refdef */
 	cl.refdef.worldlevel = cl_worldlevel->value;
 	cl.refdef.num_entities = r_numentities;
 	cl.refdef.entities = r_entities;
@@ -721,7 +721,7 @@ void V_RenderView( float stereo_separation )
 		cl.refdef.num_lights = map_numlights;
 	}
 
-	// render the frame
+	/* render the frame */
 	re.RenderFrame (&cl.refdef);
 	if (cl_stats->value)
 		Com_Printf ("ent:%i  lt:%i  part:%i\n", r_numentities, r_numdlights, r_numparticles);

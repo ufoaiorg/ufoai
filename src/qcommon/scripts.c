@@ -1,4 +1,4 @@
-// scripts.c -- ufo scripts used in client and server
+/* scripts.c -- ufo scripts used in client and server */
 #include "qcommon.h"
 
 /*==============================================================================
@@ -52,7 +52,7 @@ value_t od_vals[] =
 	{ NULL,			V_NULL,			0}
 };
 
-// ===========================================================
+/* =========================================================== */
 
 #define FD_PRIMARY		0
 #define FD_SECONDARY	1
@@ -92,7 +92,7 @@ value_t fdps[] =
 	{ NULL,	0, 0 }
 };
 
-// ===========================================================
+/* =========================================================== */
 
 
 /*======================
@@ -104,7 +104,7 @@ void Com_ParseFire( char *name, char **text, fireDef_t *fd )
 	char	*errhead = "Com_ParseFire: unexptected end of file";
 	char	*token;
 
-	// get its body
+	/* get its body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -121,7 +121,7 @@ void Com_ParseFire( char *name, char **text, fireDef_t *fd )
 		for ( fdp = fdps; fdp->string; fdp++ )
 			if ( !Q_stricmp( token, fdp->string ) )
 			{
-				// found a definition
+				/* found a definition */
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
 
@@ -161,7 +161,7 @@ void Com_ParseArmor( char *name, char **text, short *ad )
 	char	*token;
 	int		i;
 
-	// get its body
+	/* get its body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -202,7 +202,7 @@ void Com_ParseItem( char *name, char **text )
 	char		*token;
 	int			i;
 
-	// search for menus with same name
+	/* search for menus with same name */
 	for ( i = 0; i < csi.numODs; i++ )
 		if ( !Q_strncmp( name, csi.ods[i].name, MAX_VAR ) )
 			break;
@@ -213,13 +213,13 @@ void Com_ParseItem( char *name, char **text )
 		return;
 	}
 
-	// initialize the menu
+	/* initialize the menu */
 	od = &csi.ods[csi.numODs++];
 	memset( od, 0, sizeof(objDef_t) );
 
 	Q_strncpyz( od->kurz, name, MAX_VAR );
 
-	// get it's body
+	/* get it's body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -237,10 +237,10 @@ void Com_ParseItem( char *name, char **text )
 		for ( val = od_vals, i = 0; val->string; val++, i++ )
 			if ( !Q_stricmp( token, val->string ) )
 			{
-				// found a definition
+				/* found a definition */
 				if ( val->type != V_NULL )
 				{
-					// parse a value
+					/* parse a value */
 					token = COM_EParse( text, errhead, name );
 					if ( !*text ) break;
 
@@ -248,7 +248,7 @@ void Com_ParseItem( char *name, char **text )
 				}
 				else
 				{
-					// parse fire definitions
+					/* parse fire definitions */
 					if ( i == OD_PRIMARY ) Com_ParseFire( name, text, &od->fd[FD_PRIMARY] );
 					else if ( i == OD_SECONDARY ) Com_ParseFire( name, text, &od->fd[FD_SECONDARY] );
 					else if ( i == OD_PROTECTION ) Com_ParseArmor( name, text, od->protection );
@@ -262,7 +262,7 @@ void Com_ParseItem( char *name, char **text )
 
 	} while ( *text );
 
-	// get size
+	/* get size */
 	for ( i = 7; i >= 0; i-- )
 		if ( od->shape & (0x01010101 << i ) )
 			break;
@@ -307,7 +307,7 @@ void Com_ParseInventory( char *name, char **text )
 	char		*token;
 	int			i;
 
-	// search for containers with same name
+	/* search for containers with same name */
 	for ( i = 0; i < csi.numIDs; i++ )
 		if ( !Q_strncmp( name, csi.ids[i].name, MAX_VAR ) )
 			break;
@@ -318,13 +318,13 @@ void Com_ParseInventory( char *name, char **text )
 		return;
 	}
 
-	// initialize the menu
+	/* initialize the menu */
 	id = &csi.ids[csi.numIDs++];
 	memset( id, 0, sizeof(invDef_t) );
 
 	Q_strncpyz( id->name, name, MAX_VAR );
 
-	// get it's body
+	/* get it's body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -334,7 +334,7 @@ void Com_ParseInventory( char *name, char **text )
 		return;
 	}
 
-	// special IDs
+	/* special IDs */
 	if ( !Q_strncmp( name, "right", 5 ) ) csi.idRight = id - csi.ids;
 	else if ( !Q_strncmp( name, "left", 4 ) ) csi.idLeft = id - csi.ids;
 	else if ( !Q_strncmp( name, "belt", 4 ) ) csi.idBelt = id - csi.ids;
@@ -350,7 +350,7 @@ void Com_ParseInventory( char *name, char **text )
 		for ( idp = idps; idp->string; idp++ )
 			if ( !Q_stricmp( token, idp->string ) )
 			{
-				// found a definition
+				/* found a definition */
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
 
@@ -402,8 +402,8 @@ typedef struct teamDef_s
 
 teamDesc_t	teamDesc[MAX_TEAMDEFS];
 
-rank_t ranks[MAX_RANKS];	// Global list of all ranks defined in medals.ufo.
-int numRanks = 0;		// The number of entries in the list above.
+rank_t ranks[MAX_RANKS];	/* Global list of all ranks defined in medals.ufo. */
+int numRanks = 0;		/* The number of entries in the list above. */
 
 nameCategory_t	nameCat[MAX_NAMECATS];
 teamDef_t		teamDef[MAX_TEAMDEFS];
@@ -434,7 +434,7 @@ void Com_ParseEquipment( char *name, char **text )
 	char		*token;
 	int			i, n;
 
-	// search for containers with same name
+	/* search for containers with same name */
 	for ( i = 0; i < csi.numEDs; i++ )
 		if ( !Q_strncmp( name, csi.eds[i].name, MAX_VAR ) )
 			break;
@@ -445,13 +445,13 @@ void Com_ParseEquipment( char *name, char **text )
 		return;
 	}
 
-	// initialize the menu
+	/* initialize the menu */
 	ed = &csi.eds[csi.numEDs++];
 	memset( ed, 0, sizeof(equipDef_t) );
 
 	Q_strncpyz( ed->name, name, MAX_VAR );
 
-	// get it's body
+	/* get it's body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -502,57 +502,57 @@ char *Com_GiveName( int gender, char *category )
 	char	*pos;
 	int		i, j, name;
 
-	// search the name
+	/* search the name */
 	for ( i = 0, nc = nameCat; i < numNameCats; i++, nc++ )
 		if ( !Q_strncmp( category, nc->title, MAX_VAR ) )
 		{
-			// found category
+			/* found category */
 			if ( !nc->numNames[gender] ) return NULL;
 			name = nc->numNames[gender] * frand();
 
-			// skip names
+			/* skip names */
 			pos = nc->names[gender];
 			for ( j = 0; j < name; j++ )
 				pos += strlen( pos ) + 1;
 
-			// store the name
+			/* store the name */
 			Q_strncpyz( returnName, pos, MAX_VAR );
 			return returnName;
 		}
 
-	// nothing found
+	/* nothing found */
 	return NULL;
 }
 
 /*======================
 Com_GiveModel
 ======================*/
-//char returnModel[MAX_VAR];
+/*char returnModel[MAX_VAR]; */
 char *Com_GiveModel( int type, int gender, char *category )
 {
 	nameCategory_t	*nc;
 	char	*str;
 	int		i, j, num;
 
-	// search the name
+	/* search the name */
 	for ( i = 0, nc = nameCat; i < numNameCats; i++, nc++ )
 		if ( !Q_strncmp( category, nc->title, MAX_VAR ) )
 		{
-			// found category
+			/* found category */
 			if ( !nc->numModels[gender] ) return NULL;
 			num = (int)(nc->numModels[gender] * frand()) * 4;
 			num += type;
 
-			// skip models and unwanted info
+			/* skip models and unwanted info */
 			str = nc->models[gender];
 			for ( j = 0; j < num; j++ )
 				str += strlen( str ) + 1;
 
-			// return the value
+			/* return the value */
 			return str;
 		}
 
-	// nothing found
+	/* nothing found */
 	return NULL;
 }
 
@@ -565,34 +565,34 @@ int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *n
 	char		*str;
 	int		i, gender, category = 0;
 
-	// get team definition
+	/* get team definition */
 	for ( i = 0; i < numTeamDefs; i++ )
 		if ( !Q_strncmp( team, teamDef[i].title, MAX_VAR ) )
 			break;
 	if ( i < numTeamDefs ) td = &teamDef[i];
 	else
 	{
-		// search in name categories, if it isn't a team definition
+		/* search in name categories, if it isn't a team definition */
 		td = NULL;
 		for ( i = 0; i < numNameCats; i++ )
 			if ( !Q_strncmp( team, nameCat[i].title, MAX_VAR ) )
 				break;
 		if ( i == numNameCats )
 		{
-			// use default team
+			/* use default team */
 			if ( !numTeamDefs ) return 0;
 			else td = &teamDef[0];
 		}
 		else category = i;
 	}
 
-	// get the models
+	/* get the models */
 	while ( team )
 	{
 		gender = frand()*NAME_LAST;
 		if ( td ) category = (int)td->cats[(int)(frand()*td->num)];
 
-		// get name
+		/* get name */
 		if ( name )
 		{
 			str = Com_GiveName( gender, nameCat[category].title );
@@ -605,7 +605,7 @@ int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *n
 			Q_strcat( name, MAX_VAR, str );
 		}
 
-		// get model
+		/* get model */
 		if ( path )
 		{
 			str = Com_GiveModel( MODEL_PATH, gender, nameCat[category].title );
@@ -644,12 +644,12 @@ void Com_ParseNames( char *title, char **text )
 	char	*token;
 	int		i;
 
-	// check for additions to existing name categories
+	/* check for additions to existing name categories */
 	for ( i = 0, nc = nameCat; i < numNameCats; i++, nc++ )
 		if ( !Q_strncmp( nc->title, title, MAX_VAR ) )
 			break;
 
-	// reset new category
+	/* reset new category */
 	if ( i == numNameCats )
 	{
 		memset( nc, 0, sizeof( nameCategory_t ) );
@@ -657,7 +657,7 @@ void Com_ParseNames( char *title, char **text )
 	}
 	Q_strncpyz( nc->title, title, MAX_VAR );
 
-	// get name list body body
+	/* get name list body body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -668,7 +668,7 @@ void Com_ParseNames( char *title, char **text )
 	}
 
 	do {
-		// get the name type
+		/* get the name type */
 		token = COM_EParse( text, errhead, title );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
@@ -676,7 +676,7 @@ void Com_ParseNames( char *title, char **text )
 		for ( i = 0; i < NAME_NUM_TYPES; i++ )
 			if ( !Q_strcmp( token, name_strings[i] ) )
 			{
-				// initialize list
+				/* initialize list */
 				nc->names[i] = infoPos;
 				nc->numNames[i] = 0;
 
@@ -685,7 +685,7 @@ void Com_ParseNames( char *title, char **text )
 				if ( *token != '{' ) break;
 
 				do {
-					// get a name
+					/* get a name */
 					token = COM_EParse( text, errhead, title );
 					if ( !*text ) break;
 					if ( *token == '}' ) break;
@@ -696,7 +696,7 @@ void Com_ParseNames( char *title, char **text )
 				}
 				while ( *text );
 
-				// lastname is different
+				/* lastname is different */
 				if ( i == NAME_LAST )
 					for ( i = NAME_NUM_TYPES-1; i > NAME_LAST; i-- )
 					{
@@ -723,12 +723,12 @@ void Com_ParseActors( char *title, char **text )
 	char	*token;
 	int		i, j;
 
-	// check for additions to existing name categories
+	/* check for additions to existing name categories */
 	for ( i = 0, nc = nameCat; i < numNameCats; i++, nc++ )
 		if ( !Q_strncmp( nc->title, title, MAX_VAR ) )
 			break;
 
-	// reset new category
+	/* reset new category */
 	if ( i == numNameCats )
 	{
 		if ( numNameCats < MAX_NAMECATS )
@@ -742,7 +742,7 @@ void Com_ParseActors( char *title, char **text )
 	}
 	Q_strncpyz( nc->title, title, MAX_VAR );
 
-	// get name list body body
+	/* get name list body body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -753,7 +753,7 @@ void Com_ParseActors( char *title, char **text )
 	}
 
 	do {
-		// get the name type
+		/* get the name type */
 		token = COM_EParse( text, errhead, title );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
@@ -761,7 +761,7 @@ void Com_ParseActors( char *title, char **text )
 		for ( i = 0; i < NAME_NUM_TYPES; i++ )
 			if ( !Q_strcmp( token, name_strings[i] ) )
 			{
-				// initialize list
+				/* initialize list */
 				nc->models[i] = infoPos;
 				nc->numModels[i] = 0;
 
@@ -770,7 +770,7 @@ void Com_ParseActors( char *title, char **text )
 				if ( *token != '{' ) break;
 
 				do {
-					// get the path, body, head and skin
+					/* get the path, body, head and skin */
 					for ( j = 0; j < 4; j++ )
 					{
 						token = COM_EParse( text, errhead, title );
@@ -786,7 +786,7 @@ void Com_ParseActors( char *title, char **text )
 						}
 					}
 
-					// only add complete actor info
+					/* only add complete actor info */
 					if ( j == 4 ) nc->numModels[i]++;
 					else break;
 				}
@@ -827,12 +827,12 @@ void Com_ParseTeamDesc( char *title, char **text )
 	int	i;
 	value_t	*v;
 
-	// check for additions to existing team descriptions
+	/* check for additions to existing team descriptions */
 	for ( i = 0, td = teamDesc; i < numTeamDesc; i++, td++ )
 		if ( !Q_strncmp( td->id, title, MAX_VAR ) )
 			break;
 
-	// reset new category
+	/* reset new category */
 	if ( i >= MAX_TEAMDEFS )
 	{
 		Com_Printf( "Too many team descriptions, '%s' ignored.\n", title );
@@ -842,7 +842,7 @@ void Com_ParseTeamDesc( char *title, char **text )
 	numTeamDesc++;
 	Q_strncpyz( td->id, title, MAX_VAR );
 
-	// get name list body body
+	/* get name list body body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -854,7 +854,7 @@ void Com_ParseTeamDesc( char *title, char **text )
 	}
 
 	do {
-		// get the name type
+		/* get the name type */
 		token = COM_EParse( text, errhead, title );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
@@ -862,7 +862,7 @@ void Com_ParseTeamDesc( char *title, char **text )
 		for ( v = teamDescValues; v->string; v++ )
 			if ( !Q_strncmp( token, v->string, sizeof(v->string) ) )
 			{
-				// found a definition
+				/* found a definition */
 				token = COM_EParse( text, errhead, title );
 				if ( !*text ) return;
 
@@ -886,12 +886,12 @@ void Com_ParseTeam( char *title, char **text )
 	char	*token;
 	int		i;
 
-	// check for additions to existing name categories
+	/* check for additions to existing name categories */
 	for ( i = 0, td = teamDef; i < numTeamDefs; i++, td++ )
 		if ( !Q_strncmp( td->title, title, MAX_VAR ) )
 			break;
 
-	// reset new category
+	/* reset new category */
 	if ( i == numTeamDefs )
 	{
 		if ( numTeamDefs < MAX_TEAMDEFS )
@@ -905,7 +905,7 @@ void Com_ParseTeam( char *title, char **text )
 	}
 	Q_strncpyz( td->title, title, MAX_VAR );
 
-	// get name list body body
+	/* get name list body body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -915,12 +915,12 @@ void Com_ParseTeam( char *title, char **text )
 		return;
 	}
 
-	// initialize list
+	/* initialize list */
 	td->cats = infoPos;
 	td->num = 0;
 
 	do {
-		// get the name type
+		/* get the name type */
 		token = COM_EParse( text, errhead, title );
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
@@ -939,7 +939,7 @@ void Com_ParseTeam( char *title, char **text )
 	} while ( *text );
 }
 
-//#define	PARSEMEDALS(x)	(int)&(((xxx_t *)0)->x)
+/*#define	PARSEMEDALS(x)	(int)&(((xxx_t *)0)->x) */
 #define	PARSERANKS(x)	(int)&(((rank_t *)0)->x)
 
 value_t rankValues[] =
@@ -964,7 +964,7 @@ void Com_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 	char	*token;
 	value_t	*v;
 
-	// get name list body body
+	/* get name list body body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' ) {
@@ -984,14 +984,14 @@ void Com_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 		memset( rank, 0, sizeof( rank_t ) );
 
 		do {
-			// get the name type
+			/* get the name type */
 			token = COM_EParse( text, errhead, title );
 			if ( !*text ) break;
 			if ( *token == '}' ) break;
 			for ( v = rankValues; v->string; v++ )
 				if ( !Q_strncmp( token, v->string, sizeof(v->string) ) )
 				{
-					// found a definition
+					/* found a definition */
 					token = COM_EParse( text, errhead, title );
 					if ( !*text ) return;
 
@@ -1019,7 +1019,7 @@ void Com_ParseDamageTypes( char *name, char **text )
 	char		*token;
 	int			i;
 
-	// get it's body
+	/* get it's body */
 	token = COM_Parse( text );
 
 	if ( !*text || *token != '{' )
@@ -1034,7 +1034,7 @@ void Com_ParseDamageTypes( char *name, char **text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
-		// search for damage types with same name
+		/* search for damage types with same name */
 		for ( i = 0; i < csi.numDTs; i++ )
 			if ( !Q_strncmp( token, csi.dts[i], MAX_VAR ) )
 				break;
@@ -1044,7 +1044,7 @@ void Com_ParseDamageTypes( char *name, char **text )
 			if ( csi.numDTs >= MAX_DAMAGETYPES )
 				Sys_Error( "Com_ParseTypes: Too many damage types.\n" );
 
-			// gettext marker
+			/* gettext marker */
 			if ( *token == '_' ) token++;
 			Q_strncpyz( csi.dts[csi.numDTs], token, MAX_VAR );
 			csi.numDTs++;
@@ -1070,22 +1070,22 @@ void Com_AddObjectLinks( void )
 	char	*underline;
 	int		i, j;
 
-	// reset links
+	/* reset links */
 	for ( i = 0, od = csi.ods; i < csi.numODs; i++, od++ )
 		od->link = NONE;
 
-	// add weapon link to ammo
+	/* add weapon link to ammo */
 	for ( i = 0, od = csi.ods; i < csi.numODs; i++, od++ )
 	{
 		if ( !Q_strncmp( od->type, "ammo", 4 ) )
 		{
-			// check for the underline
+			/* check for the underline */
 			Q_strncpyz( kurz, od->kurz, MAX_VAR );
 			underline = strchr( kurz, '_' );
 			if ( !underline ) continue;
 			*underline = 0;
 
-			// search corresponding weapon
+			/* search corresponding weapon */
 			for ( j = 0; j < csi.numODs; j++ )
 				if ( !Q_strncmp( csi.ods[j].kurz, kurz, MAX_VAR ) )
 				{
@@ -1103,16 +1103,16 @@ void Com_ParseScripts( void )
 {
 	char		*type, *name, *text;
 
-	// reset csi basic info
+	/* reset csi basic info */
 	Com_InitCSI( &csi );
 	csi.idLeft = csi.idRight = csi.idFloor = csi.idEquip = NONE;
 
-	// reset name and team def counters
+	/* reset name and team def counters */
 	numNameCats = 0;
 	numTeamDefs = 0;
 	infoPos = infoStr;
 
-	// pre-stage parsing
+	/* pre-stage parsing */
 	FS_BuildFileList( "ufos/*.ufo" );
 	text = NULL;
 
@@ -1121,13 +1121,13 @@ void Com_ParseScripts( void )
 		if ( !Q_strncmp( type, "damagetypes", 11 ) ) Com_ParseDamageTypes( name, &text );
 	}
 
-	// stage one parsing
+	/* stage one parsing */
 	FS_NextScriptHeader( NULL, NULL, NULL );
 	text = NULL;
 
 	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
 	{
-		// server/client scripts
+		/* server/client scripts */
 		if ( !Q_strncmp( type, "item", 4 ) ) Com_ParseItem( name, &text );
 		else if ( !Q_strncmp( type, "inventory", 9 ) ) Com_ParseInventory( name, &text );
 		else if ( !Q_strncmp( type, "names", 5 ) ) Com_ParseNames( name, &text );
@@ -1135,20 +1135,20 @@ void Com_ParseScripts( void )
 		else if ( !dedicated->value ) CL_ParseScriptFirst( type, name, &text );
 	}
 
-	// add object links
+	/* add object links */
 	Com_AddObjectLinks();
 
-	// stage two parsing (weapon/inventory dependant stuff)
+	/* stage two parsing (weapon/inventory dependant stuff) */
 	FS_NextScriptHeader( NULL, NULL, NULL );
 	text = NULL;
 
 	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
 	{
-		// server/client scripts
+		/* server/client scripts */
 		if ( !Q_strncmp( type, "equipment", 9 ) ) Com_ParseEquipment( name, &text );
 		else if ( !Q_strncmp( type, "teamdesc", 8 ) ) Com_ParseTeamDesc( name, &text );
 		else if ( !Q_strncmp( type, "rank", 4 ) ) Com_ParseMedalsAndRanks( name, &text, qtrue );
-		//else if ( !Q_strncmp( type, "medal", 5 ) ) Com_ParseMedalsAndRanks( name, &text, qfalse );
+		/*else if ( !Q_strncmp( type, "medal", 5 ) ) Com_ParseMedalsAndRanks( name, &text, qfalse ); */
 		else if ( !Q_strncmp( type, "team", 4 ) ) Com_ParseTeam( name, &text );
 		else if ( !dedicated->value ) CL_ParseScriptSecond( type, name, &text );
 	}

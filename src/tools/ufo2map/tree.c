@@ -34,14 +34,14 @@ void FreeTreePortals_r (node_t *node)
 	portal_t	*p, *nextp;
 	int			s;
 
-	// free children
+	/* free children */
 	if (node->planenum != PLANENUM_LEAF)
 	{
 		FreeTreePortals_r (node->children[0]);
 		FreeTreePortals_r (node->children[1]);
 	}
 
-	// free portals
+	/* free portals */
 	for (p=node->portals ; p ; p=nextp)
 	{
 		s = (p->nodes[1] == node);
@@ -62,24 +62,24 @@ void FreeTree_r (node_t *node)
 {
 	face_t		*f, *nextf;
 
-	// free children
+	/* free children */
 	if (node->planenum != PLANENUM_LEAF)
 	{
 		FreeTree_r (node->children[0]);
 		FreeTree_r (node->children[1]);
 	}
 
-	// free bspbrushes
+	/* free bspbrushes */
 	FreeBrushList (node->brushlist);
 
-	// free faces
+	/* free faces */
 	for (f=node->faces ; f ; f=nextf)
 	{
 		nextf = f->next;
 		FreeFace (f);
 	}
 
-	// free the node
+	/* free the node */
 	if (node->volume)
 		FreeBrush (node->volume);
 
@@ -101,7 +101,7 @@ void FreeTree (tree_t *tree)
 	free (tree);
 }
 
-//===============================================================
+/*=============================================================== */
 
 void PrintTree_r (node_t *node, int depth)
 {
@@ -164,7 +164,7 @@ void PruneNodes_r (node_t *node)
 		if (node->children[0]->faces || node->children[1]->faces)
 			Error ("!node->faces with children");
 
-		// FIXME: free stuff
+		/* FIXME: free stuff */
 		node->planenum = PLANENUM_LEAF;
 		node->contents = CONTENTS_SOLID;
 		node->detail_seperator = qfalse;
@@ -172,7 +172,7 @@ void PruneNodes_r (node_t *node)
 		if (node->brushlist)
 			Error ("PruneNodes: node->brushlist");
 
-		// combine brush lists
+		/* combine brush lists */
 		node->brushlist = node->children[1]->brushlist;
 
 		for (b=node->children[0]->brushlist ; b ; b=next)
@@ -195,4 +195,4 @@ void PruneNodes (node_t *node)
 	qprintf ("%5i pruned nodes\n", c_pruned);
 }
 
-//===========================================================
+/*=========================================================== */

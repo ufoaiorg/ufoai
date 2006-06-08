@@ -18,12 +18,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 #include <sys/types.h>
-#include <sys/stat.h>
 #include <errno.h>
 #include <stdio.h>
 #include <dirent.h>
 #include <unistd.h>
 #include <sys/mman.h>
+#include <sys/stat.h>
 #include <sys/time.h>
 #include <ctype.h>
 
@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <machine/param.h>
 #endif
 
-//===============================================================================
+/*=============================================================================== */
 
 byte *membase;
 int maxhunksize;
@@ -42,7 +42,7 @@ int curhunksize;
 
 void *Hunk_Begin (int maxsize)
 {
-	// reserve a huge chunk of memory, but don't commit any yet
+	/* reserve a huge chunk of memory, but don't commit any yet */
 	maxhunksize = maxsize + sizeof(int);
 	curhunksize = 0;
 #if (defined __FreeBSD__)
@@ -64,7 +64,7 @@ void *Hunk_Alloc (int size)
 {
 	byte *buf;
 
-	// round to cacheline
+	/* round to cacheline */
 	size = (size+31)&~31;
 	if (curhunksize + size > maxhunksize)
 		Sys_Error("Hunk_Alloc overflow");
@@ -114,7 +114,7 @@ void Hunk_Free (void *base)
 	}
 }
 
-//===============================================================================
+/*=============================================================================== */
 
 
 /*
@@ -157,7 +157,7 @@ char *strlwr (char *s)
 	return origs;
 }
 
-//============================================
+/*============================================ */
 
 static	char	findbase[MAX_OSPATH];
 static	char	findpath[MAX_OSPATH];
@@ -170,14 +170,14 @@ static qboolean CompareAttributes(char *path, char *name,
 	struct stat st;
 	char fn[MAX_OSPATH];
 
-	// . and .. never match
+	/* . and .. never match */
 	if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0)
 		return qfalse;
 
 	return qtrue;
 
 	if (stat(fn, &st) == -1)
-		return qfalse; // shouldn't happen
+		return qfalse; /* shouldn't happen */
 
 	if ( ( st.st_mode & S_IFDIR ) && ( canthave & SFF_SUBDIR ) )
 		return qfalse;
@@ -196,7 +196,7 @@ char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)
 	if (fdir)
 		Sys_Error ("Sys_BeginFind without close");
 
-//	COM_FilePath (path, findbase);
+/*	COM_FilePath (path, findbase); */
 	strcpy(findbase, path);
 
 	if ((p = strrchr(findbase, '/')) != NULL)
@@ -217,8 +217,8 @@ char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)
 	{
 		if (!*findpattern || glob_match(findpattern, d->d_name))
 		{
-//			if (*findpattern)
-//				printf("%s matched %s\n", findpattern, d->d_name);
+/*			if (*findpattern) */
+/*				printf("%s matched %s\n", findpattern, d->d_name); */
 			if ( CompareAttributes(findbase, d->d_name, musthave, canhave) )
 			{
 				sprintf (findpath, "%s/%s", findbase, d->d_name);
@@ -239,8 +239,8 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 	{
 		if (!*findpattern || glob_match(findpattern, d->d_name))
 		{
-//			if (*findpattern)
-//				printf("%s matched %s\n", findpattern, d->d_name);
+/*			if (*findpattern) */
+/*				printf("%s matched %s\n", findpattern, d->d_name); */
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave))
 			{
 				sprintf (findpath, "%s/%s", findbase, d->d_name);
@@ -259,5 +259,5 @@ void Sys_FindClose (void)
 }
 
 
-//============================================
+/*============================================ */
 

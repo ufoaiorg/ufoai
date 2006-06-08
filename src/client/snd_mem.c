@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// snd_mem.c: sound caching
+/* snd_mem.c: sound caching */
 
 #include "client.h"
 #include "snd_loc.h"
@@ -44,7 +44,7 @@ void ResampleSfx (sfx_t *sfx, int inrate, int inwidth, byte *data)
 	if (!sc)
 		return;
 
-	stepscale = (float)inrate / dma.speed;	// this is usually 0.5, 1, or 2
+	stepscale = (float)inrate / dma.speed;	/* this is usually 0.5, 1, or 2 */
 
 	outcount = sc->length / stepscale;
 	sc->length = outcount;
@@ -58,18 +58,18 @@ void ResampleSfx (sfx_t *sfx, int inrate, int inwidth, byte *data)
 		sc->width = inwidth;
 	sc->stereo = 0;
 
-	// resample / decimate to the current source rate
+	/* resample / decimate to the current source rate */
 
 	if (stepscale == 1 && inwidth == 1 && sc->width == 1)
 	{
-	// fast special case
+	/* fast special case */
 		for (i=0 ; i<outcount ; i++)
 			((signed char *)sc->data)[i]
 			= (int)( (unsigned char)(data[i]) - 128);
 	}
 	else
 	{
-	// general case
+	/* general case */
 		samplefrac = 0;
 		fracstep = stepscale*256;
 		for (i=0 ; i<outcount ; i++)
@@ -88,7 +88,7 @@ void ResampleSfx (sfx_t *sfx, int inrate, int inwidth, byte *data)
 	}
 }
 
-//=============================================================================
+/*============================================================================= */
 
 /*
 ==============
@@ -109,13 +109,13 @@ sfxcache_t *S_LoadSound (sfx_t *s)
 	if (s->name[0] == '*')
 		return NULL;
 
-	// see if still in memory
+	/* see if still in memory */
 	sc = s->cache;
 	if (sc)
 		return sc;
 
-	//Com_Printf ("S_LoadSound: %x\n", (int)stackbuf);
-	// load it in
+	/*Com_Printf ("S_LoadSound: %x\n", (int)stackbuf); */
+	/* load it in */
 	if (s->truename)
 		name = s->truename;
 	else
@@ -126,7 +126,7 @@ sfxcache_t *S_LoadSound (sfx_t *s)
 	else
 		Com_sprintf (namebuffer, sizeof(namebuffer), "sound/%s", name);
 
-//	Com_Printf ("loading %s\n",namebuffer);
+/*	Com_Printf ("loading %s\n",namebuffer); */
 
 	size = FS_LoadFile (namebuffer, (void **)(char*)&data);
 
@@ -157,7 +157,7 @@ sfxcache_t *S_LoadSound (sfx_t *s)
 	}
 
 	sc->length = info.samples;
-	sc->loopstart = -1; //info.loopstart;
+	sc->loopstart = -1; /*info.loopstart; */
 	sc->speed = info.rate;
 	sc->width = info.width;
 	sc->stereo = info.channels;
@@ -214,7 +214,7 @@ void FindNextChunk(char *name)
 		data_p=last_chunk;
 
 		if (data_p >= iff_end)
-		{	// didn't find the chunk
+		{	/* didn't find the chunk */
 			data_p = NULL;
 			return;
 		}
@@ -226,8 +226,8 @@ void FindNextChunk(char *name)
 			data_p = NULL;
 			return;
 		}
-//		if (iff_chunk_len > 1024*1024)
-//			Sys_Error ("FindNextChunk: %i length is past the 1 meg sanity limit", iff_chunk_len);
+/*		if (iff_chunk_len > 1024*1024) */
+/*			Sys_Error ("FindNextChunk: %i length is past the 1 meg sanity limit", iff_chunk_len); */
 		data_p -= 8;
 		last_chunk = data_p + 8 + ( (iff_chunk_len + 1) & ~1 );
 		if (!strncmp((char *)data_p, name, 4))
@@ -278,7 +278,7 @@ wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 	iff_data = wav;
 	iff_end = wav + wavlength;
 
-	// find "RIFF" chunk
+	/* find "RIFF" chunk */
 	FindChunk("RIFF");
 	if (!(data_p && !strncmp((char *)data_p+8, "WAVE", 4)))
 	{
@@ -286,9 +286,9 @@ wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 		return info;
 	}
 
-	// get "fmt " chunk
+	/* get "fmt " chunk */
 	iff_data = data_p + 12;
-// 	DumpChunks ();
+/* 	DumpChunks (); */
 
 	FindChunk("fmt ");
 	if (!data_p)
@@ -309,31 +309,31 @@ wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 	data_p += 4+2;
 	info.width = GetLittleShort() / 8;
 
-	// get cue chunk
+	/* get cue chunk */
 	FindChunk("cue ");
 	if (data_p)
 	{
 		data_p += 32;
 		info.loopstart = GetLittleLong();
-//		Com_Printf("loopstart=%d\n", sfx->loopstart);
+/*		Com_Printf("loopstart=%d\n", sfx->loopstart); */
 
-		// if the next chunk is a LIST chunk, look for a cue length marker
+		/* if the next chunk is a LIST chunk, look for a cue length marker */
 		FindNextChunk ("LIST");
 		if (data_p)
 		{
 			if (!strncmp ((char *)data_p + 28, "mark", 4))
-			{	// this is not a proper parse, but it works with cooledit...
+			{	/* this is not a proper parse, but it works with cooledit... */
 				data_p += 24;
-				i = GetLittleLong ();	// samples in loop
+				i = GetLittleLong ();	/* samples in loop */
 				info.samples = info.loopstart + i;
-//				Com_Printf("looped length: %i\n", i);
+/*				Com_Printf("looped length: %i\n", i); */
 			}
 		}
 	}
 	else
 		info.loopstart = -1;
 
-	// find data chunk
+	/* find data chunk */
 	FindChunk("data");
 	if (!data_p)
 	{

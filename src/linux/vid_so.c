@@ -17,35 +17,36 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// Main windowed and fullscreen graphics interface module. This module
-// is used for both the software and OpenGL rendering versions of the
-// Quake refresh engine.
+/* Main windowed and fullscreen graphics interface module. This module */
+/* is used for both the software and OpenGL rendering versions of the */
+/* Quake refresh engine. */
 
 #include <assert.h>
-#include <dlfcn.h> // ELF dl loader
+#include <dlfcn.h> /* ELF dl loader */
 #include <sys/stat.h>
 #include <unistd.h>
 #include <errno.h>
 #include <string.h>
+/* #include <uuid/uuid.h> */
 
 #include "../client/client.h"
 
 #include "../linux/rw_linux.h"
 
-// Structure containing functions exported from refresh DLL
+/* Structure containing functions exported from refresh DLL */
 refexport_t	re;
 
-// Console variables that we need to access from this module
+/* Console variables that we need to access from this module */
 cvar_t		*vid_gamma;
-cvar_t		*vid_ref;			// Name of Refresh DLL loaded
-cvar_t		*vid_xpos;			// X coordinate of window position
-cvar_t		*vid_ypos;			// Y coordinate of window position
+cvar_t		*vid_ref;			/* Name of Refresh DLL loaded */
+cvar_t		*vid_xpos;			/* X coordinate of window position */
+cvar_t		*vid_ypos;			/* Y coordinate of window position */
 cvar_t		*vid_fullscreen;
 cvar_t		*vid_grabmouse;
 
-// Global variables used internally by this module
-viddef_t	viddef;				// global video state; used by other modules
-void		*reflib_library;		// Handle to refresh DLL
+/* Global variables used internally by this module */
+viddef_t	viddef;				/* global video state; used by other modules */
+void		*reflib_library;		/* Handle to refresh DLL */
 qboolean	reflib_active = qfalse;
 
 #define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[0] ) )
@@ -89,7 +90,7 @@ void VID_Printf (int print_level, char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
-//	static qboolean	inupdate;
+/*	static qboolean	inupdate; */
 
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
@@ -105,7 +106,7 @@ void VID_Error (int err_level, char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
-//	static qboolean	inupdate;
+/*	static qboolean	inupdate; */
 
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
@@ -114,7 +115,7 @@ void VID_Error (int err_level, char *fmt, ...)
 	Com_Error (err_level,"%s", msg);
 }
 
-//==========================================================================
+/*========================================================================== */
 
 /*
 ============
@@ -239,7 +240,7 @@ qboolean VID_LoadRefresh( char *name )
 
 	Com_Printf( "------- Loading %s -------\n", name );
 
-	//regain root
+	/*regain root */
 	seteuid(saved_euid);
 
 	if ((fp = fopen(so_file, "r")) == NULL) {
@@ -292,8 +293,8 @@ qboolean VID_LoadRefresh( char *name )
 	ri.Vid_NewWindow = VID_NewWindow;
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 	ri.CL_GetFontData = CL_GetFontData;
-//	ri.Malloc = Z_Malloc;
-//	ri.Free = Z_Free;
+/*	ri.Malloc = Z_Malloc; */
+/*	ri.Free = Z_Free; */
 
 	if ( ( GetRefAPI = (void *) dlsym( reflib_library, "GetRefAPI" ) ) == 0 )
 		Com_Error( ERR_FATAL, "dlsym failed on %s", name );
@@ -347,11 +348,11 @@ qboolean VID_LoadRefresh( char *name )
 #endif
 	KBD_Init_fp(Do_Key_Event);
 
-	// give up root now
+	/* give up root now */
 	setreuid(getuid(), getuid());
 	setegid(getgid());
 
-	// vid_restart
+	/* vid_restart */
 	if ( restart )
 		CL_InitFonts();
 
@@ -374,7 +375,7 @@ update the rendering DLL and/or video mode to match.
 void VID_CheckChanges (void)
 {
 	char name[100];
-//	cvar_t *sw_mode;
+/*	cvar_t *sw_mode; */
 
 	if ( vid_ref->modified )
 	{

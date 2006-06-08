@@ -1,4 +1,4 @@
-// mathlib.c -- math primitives
+/* mathlib.c -- math primitives */
 
 #include "cmdlib.h"
 #include "mathlib.h"
@@ -14,7 +14,7 @@ double VectorLength(vec3_t v)
 	length = 0;
 	for (i=0 ; i< 3 ; i++)
 		length += v[i]*v[i];
-	length = sqrt (length);		// FIXME
+	length = sqrt (length);		/* FIXME */
 
 	return length;
 }

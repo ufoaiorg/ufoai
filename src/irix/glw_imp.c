@@ -85,7 +85,7 @@ static int				RGBattributes[] =
 
 int current_framebuffer;
 static int				x_shmeventtype;
-//static XShmSegmentInfo	x_shminfo;
+/*static XShmSegmentInfo	x_shminfo; */
 
 static qboolean			oktodraw = qfalse;
 static qboolean			X11_active = qfalse;
@@ -116,13 +116,13 @@ int config_notify_height;
 						      
 typedef unsigned short PIXEL;
 
-// Console variables that we need to access from this module
+/* Console variables that we need to access from this module */
 
 /*****************************************************************************/
 /* MOUSE                                                                     */
 /*****************************************************************************/
 
-// this is inside the renderer shared lib, so these are called from vid_so
+/* this is inside the renderer shared lib, so these are called from vid_so */
 
 static qboolean        mouse_avail;
 static int     mouse_buttonstate;
@@ -138,7 +138,7 @@ static cvar_t	*in_mouse;
 
 static qboolean	mlooking;
 
-// state struct passed in Init
+/* state struct passed in Init */
 static in_state_t	*in_state;
 
 int XShmQueryExtension(Display *);
@@ -186,19 +186,19 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 
 	ri.Con_Printf( PRINT_ALL, " %d %d\n", width, height );
 
-	// destroy the existing window
+	/* destroy the existing window */
 	GLimp_Shutdown ();
 
 	*pwidth = width;
 	*pheight = height;
 
 	if ( !GLimp_InitGraphics( fullscreen ) ) {
-		// failed to set a valid mode in windowed mode
+		/* failed to set a valid mode in windowed mode */
 		return rserr_invalid_mode;
 	}
 /* 	gl_cx = glXCreateContext( x_disp, x_visinfo, 0, True ); */
 
-	// let the sound and input subsystems know about the new window
+	/* let the sound and input subsystems know about the new window */
 	ri.Vid_NewWindow (width, height);
 
 	return rserr_ok;
@@ -235,7 +235,7 @@ void GLimp_Shutdown( void )
 */
 int GLimp_Init( void *hinstance, void *wndproc )
 {
-	// catch signals so i can turn on auto-repeat and stuff
+	/* catch signals so i can turn on auto-repeat and stuff */
 	InitSig();
 
 	return qtrue;
@@ -268,9 +268,9 @@ void GLimp_AppActivate( qboolean active )
 {
 }
 
-// ========================================================================
-// makes a null cursor
-// ========================================================================
+/* ======================================================================== */
+/* makes a null cursor */
+/* ======================================================================== */
 
 static Cursor CreateNullCursor(Display *display, Window root)
 {
@@ -315,10 +315,10 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	srandom(getpid());
 
-	// let the sound and input subsystems know about the new window
+	/* let the sound and input subsystems know about the new window */
 	ri.Vid_NewWindow (vid.width, vid.height);
 
-	// open the display
+	/* open the display */
 	x_disp = XOpenDisplay(NULL);
 	if (!x_disp)
 	{
@@ -333,14 +333,14 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	XAutoRepeatOff(x_disp);
 
-	// for debugging only
+	/* for debugging only */
 	XSynchronize(x_disp, True);
 
-	// check for command-line window size
+	/* check for command-line window size */
 	template_mask = 0;
 
 #if 0
-	// specify a visual id
+	/* specify a visual id */
 	if ((pnum=COM_CheckParm("-visualid")))
 	{
 		if (pnum >= com_argc-1)
@@ -349,7 +349,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 		template_mask = VisualIDMask;
 	}
 
-	// If not specified, use default visual
+	/* If not specified, use default visual */
 	else
 #endif
 	{
@@ -360,7 +360,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 		template_mask = VisualIDMask;
 	}
 
-	// pick a visual- warn if more than one was available
+	/* pick a visual- warn if more than one was available */
 	x_visinfo = glXChooseVisual( x_disp, DefaultScreen( x_disp ),
 				     StudlyRGBattributes );
 	if (!x_visinfo)
@@ -388,7 +388,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	x_vis = x_visinfo->visual;
 
-	// setup attributes for main window
+	/* setup attributes for main window */
 	{
 	   int attribmask = CWEventMask  | CWColormap | CWBorderPixel;
 	   XSetWindowAttributes attribs;
@@ -403,12 +403,12 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	   attribs.border_pixel = 0;
 	   attribs.colormap = tmpcmap;
 
-		// create the main window
+		/* create the main window */
 		x_win = XCreateWindow(	x_disp,
 			root_win,		
-			0, 0,	// x, y
+			0, 0,	/* x, y */
 			vid.width, vid.height,
-			0, // borderwidth
+			0, /* borderwidth */
 			x_visinfo->depth,
 			InputOutput,
 			x_vis,
@@ -422,7 +422,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	if (x_visinfo->depth == 8)
 	{
-		// create and upload the palette
+		/* create and upload the palette */
 		if (x_visinfo->class == PseudoColor)
 		{
 			x_cmap = XCreateColormap(x_disp, x_win, x_vis, AllocAll);
@@ -431,10 +431,10 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	}
 
-	// inviso cursor
+	/* inviso cursor */
 	XDefineCursor(x_disp, x_win, CreateNullCursor(x_disp, x_win));
 
-	// create the GC
+	/* create the GC */
 	{
 		XGCValues xgcvalues;
 		int valuemask = GCGraphicsExposures;
@@ -442,7 +442,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 		x_gc = XCreateGC(x_disp, x_win, valuemask, &xgcvalues );
 	}
 
-	// set window properties for full screen
+	/* set window properties for full screen */
 	if (fullscreen) {
 	    MotifWmHints    wmhints;
 	    Atom aHints;
@@ -456,7 +456,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	    }
 	    else {
 		wmhints.flags = MWM_HINTS_DECORATIONS;
-		wmhints.decorations = 0; // Absolutely no decorations.
+		wmhints.decorations = 0; /* Absolutely no decorations. */
 		XChangeProperty(x_disp, x_win, aHints, aHints, 32,
 				PropModeReplace, (unsigned char *)&wmhints,
 				4 );
@@ -479,10 +479,10 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	    }
 	}
 
-	// map the window
+	/* map the window */
 	XMapWindow(x_disp, x_win);
 
-	// wait for first exposure event
+	/* wait for first exposure event */
 	{
 		XEvent event;
 		do
@@ -492,16 +492,16 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 				oktodraw = qtrue;
 		} while (!oktodraw);
 	}
-	// now safe to draw
+	/* now safe to draw */
 
         gl_cx = glXCreateContext( x_disp, x_visinfo, 0, True );
 	if (!glXMakeCurrent( x_disp, x_win, gl_cx ))
 		Sys_Error( "Can't make window current to context\n" );
 
-	// even if MITSHM is available, make sure it's a local connection
+	/* even if MITSHM is available, make sure it's a local connection */
 #if 0
-	// This is messing up the DISPLAY environment variable so can't close and
-	// reopen the window (it lops off the :0.0)...
+	/* This is messing up the DISPLAY environment variable so can't close and */
+	/* reopen the window (it lops off the :0.0)... */
 	if (XShmQueryExtension(x_disp))
 	{
 		char *displayname;
@@ -532,7 +532,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 /* 	vid.rowbytes = x_framebuffer[0]->bytes_per_line; */
 /* 	vid.buffer = x_framebuffer[0]->data; */
 
-//	XSynchronize(x_disp, False);
+/*	XSynchronize(x_disp, False); */
 
 	X11_active = qtrue;
 
@@ -773,7 +773,7 @@ void KBD_Init(Key_Event_fp_t fp)
 
 void KBD_Update(void)
 {
-// get events from x server
+/* get events from x server */
 	if (x_disp)
 	{
 		while (XPending(x_disp)) 
@@ -816,7 +816,7 @@ void RW_IN_Init(in_state_t *in_state_p)
 
 	in_state = in_state_p;
 
-	// mouse variables
+	/* mouse variables */
 	_windowed_mouse = ri.Cvar_Get ("_windowed_mouse", "0", CVAR_ARCHIVE);
 	m_filter = ri.Cvar_Get ("m_filter", "0", 0);
         in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
@@ -896,7 +896,7 @@ void RW_IN_Move (usercmd_t *cmd)
 	mouse_x *= sensitivity->value;
 	mouse_y *= sensitivity->value;
 
-	// add mouse X/Y movement to cmd
+	/* add mouse X/Y movement to cmd */
 	if ( (*in_state->in_strafe_state & 1) || 
 		(lookstrafe->value && mlooking ))
 		cmd->sidemove += m_side->value * mouse_x;
@@ -924,7 +924,7 @@ void RW_IN_Activate(void)
 }
 
 
-//===============================================================================
+/*=============================================================================== */
 
 /*
 ================
@@ -940,8 +940,8 @@ void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length)
 
 	addr = (startaddr & ~(psize-1)) - psize;
 
-//	fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr,
-//			addr, startaddr+length, length);
+/*	fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr, */
+/*			addr, startaddr+length, length); */
 
 	r = mprotect((char*)addr, length + startaddr - addr + psize, 7);
 

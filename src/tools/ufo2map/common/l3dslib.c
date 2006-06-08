@@ -1,6 +1,6 @@
-//
-// l3dslib.c: library for loading triangles from an Alias triangle file
-//
+/* */
+/* l3dslib.c: library for loading triangles from an Alias triangle file */
+/* */
 
 #include <stdio.h>
 #include "cmdlib.h"
@@ -9,7 +9,7 @@
 #include "l3dslib.h"
 
 #define MAIN3DS       0x4D4D
-#define EDIT3DS       0x3D3D  // this is the start of the editor config
+#define EDIT3DS       0x3D3D  /* this is the start of the editor config */
 #define EDIT_OBJECT   0x4000
 #define OBJ_TRIMESH   0x4100
 #define TRI_VERTEXL   0x4110
@@ -30,9 +30,9 @@ int	vertsfound, trisfound;
 triangle_t	*ptri;
 
 
-// Alias stores triangles as 3 explicit vertices in .tri files, so even though we
-// start out with a vertex pool and vertex indices for triangles, we have to convert
-// to raw, explicit triangles
+/* Alias stores triangles as 3 explicit vertices in .tri files, so even though we */
+/* start out with a vertex pool and vertex indices for triangles, we have to convert */
+/* to raw, explicit triangles */
 void StoreAliasTriangles (void)
 {
 	int		i, j, k;
@@ -150,14 +150,14 @@ int ParseChunk (FILE *input)
 	level++;
 	retval = 0;
 
-// chunk type
+/* chunk type */
 	if (feof(input))
 		Error ("Error: unexpected end of file");
 
 	fread(&type, sizeof(type), 1, input);
 	bytesread += sizeof(type);
 
-// chunk length
+/* chunk length */
 	if (feof(input))
 		Error ("Error: unexpected end of file");
 
@@ -165,7 +165,7 @@ int ParseChunk (FILE *input)
 	bytesread += sizeof(length);
 	w = length - 6;
 
-// process chunk if we care about it, otherwise skip it
+/* process chunk if we care about it, otherwise skip it */
 	switch (type)
 	{
 	case TRI_VERTEXL:
@@ -177,7 +177,7 @@ int ParseChunk (FILE *input)
 		goto ParseSubchunk;
 
 	case EDIT_OBJECT:
-	// read the name
+	/* read the name */
 		i = 0;
 
 		do
@@ -194,7 +194,7 @@ int ParseChunk (FILE *input)
 	case MAIN3DS:
 	case OBJ_TRIMESH:
 	case EDIT3DS:
-	// parse through subchunks
+	/* parse through subchunks */
 ParseSubchunk:
 		while (w > 0)
 		{
@@ -205,7 +205,7 @@ ParseSubchunk:
 		goto Done;
 
 	default:
-	// skip other chunks
+	/* skip other chunks */
 		while (w > 0)
 		{
 			t = w;
@@ -251,22 +251,22 @@ void Load3DSTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 
 	fread(&tshort, sizeof(tshort), 1, input);
 
-// should only be MAIN3DS, but some files seem to start with EDIT3DS, with
-// no MAIN3DS
+/* should only be MAIN3DS, but some files seem to start with EDIT3DS, with */
+/* no MAIN3DS */
 	if ((tshort != MAIN3DS) && (tshort != EDIT3DS)) {
 		fprintf(stderr,"File is not a 3DS file.\n");
 		exit(0);
 	}
 
-// back to top of file so we can parse the first chunk descriptor
+/* back to top of file so we can parse the first chunk descriptor */
 	fseek(input, 0, SEEK_SET);
 
 	ptri = malloc (MAXTRIANGLES * sizeof(triangle_t));
 
 	*pptri = ptri;
 
-// parse through looking for the relevant chunk tree (MAIN3DS | EDIT3DS | EDIT_OBJECT |
-// OBJ_TRIMESH | {TRI_VERTEXL, TRI_FACEL1}) and skipping other chunks
+/* parse through looking for the relevant chunk tree (MAIN3DS | EDIT3DS | EDIT_OBJECT | */
+/* OBJ_TRIMESH | {TRI_VERTEXL, TRI_FACEL1}) and skipping other chunks */
 	ParseChunk (input);
 
 	if (vertsfound || trisfound)

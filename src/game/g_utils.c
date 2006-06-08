@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// g_utils.c -- misc utility functions for game module
+/* g_utils.c -- misc utility functions for game module */
 
 #include "g_local.h"
 
@@ -38,7 +38,7 @@ Marks the edict as free
 */
 void G_FreeEdict (edict_t *ed)
 {
-	gi.unlinkentity (ed);		// unlink from world
+	gi.unlinkentity (ed);		/* unlink from world */
 
 	memset (ed, 0, sizeof(*ed));
 	ed->classname = "freed";
@@ -167,8 +167,8 @@ edict_t *G_PickTarget (char *targetname)
 
 void Think_Delay (edict_t *ent)
 {
-//	G_UseTargets (ent, ent->activator);
-//	G_FreeEdict (ent);
+/*	G_UseTargets (ent, ent->activator); */
+/*	G_FreeEdict (ent); */
 }
 
 /*
@@ -185,8 +185,8 @@ float	*tv (float x, float y, float z)
 	static	vec3_t	vecs[8];
 	float	*v;
 
-	// use an array so that multiple tempvectors won't collide
-	// for a while
+	/* use an array so that multiple tempvectors won't collide */
+	/* for a while */
 	v = vecs[index];
 	index = (index + 1)&7;
 
@@ -212,7 +212,7 @@ char	*vtos (vec3_t v)
 	static	char	str[8][32];
 	char	*s;
 
-	// use an array so that multiple vtos won't collide
+	/* use an array so that multiple vtos won't collide */
 	s = str[index];
 	index = (index + 1)&7;
 
@@ -331,15 +331,15 @@ void	G_TouchTriggers (edict_t *ent)
 	int			i, num;
 	edict_t		*touch[MAX_EDICTS], *hit;
 
-	// dead things don't activate triggers!
+	/* dead things don't activate triggers! */
 	if ((ent->player || (ent->svflags & SVF_MONSTER)) && (ent->health <= 0))
 		return;
 
 	num = gi.BoxEdicts (ent->absmin, ent->absmax, touch
 		, MAX_EDICTS, AREA_TRIGGERS);
 
-	// be careful, it is possible to have an entity in this
-	// list removed before we get to it (killtriggered)
+	/* be careful, it is possible to have an entity in this */
+	/* list removed before we get to it (killtriggered) */
 	for (i=0 ; i<num ; i++)
 	{
 		hit = touch[i];
@@ -369,8 +369,8 @@ void	G_TouchSolids (edict_t *ent)
 	num = gi.BoxEdicts (ent->absmin, ent->absmax, touch
 		, MAX_EDICTS, AREA_SOLID);
 
-	// be careful, it is possible to have an entity in this
-	// list removed before we get to it (killtriggered)
+	/* be careful, it is possible to have an entity in this */
+	/* list removed before we get to it (killtriggered) */
 	for (i=0 ; i<num ; i++)
 	{
 		hit = touch[i];
@@ -398,13 +398,13 @@ void G_RecalcRouting( edict_t *self )
 	int i;
 	edict_t *ent;
 
-	// generate entity list
+	/* generate entity list */
 	for ( i = 0, ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
 		if ( ent->inuse && ent->model && *ent->model == '*' )
 			entList[i++] = ent->model;
 	entList[i] = NULL;
 
-	// recalculate routing
+	/* recalculate routing */
 	gi.GridRecalcRouting( gi.map, self->model, entList );
 }
 
@@ -418,7 +418,7 @@ void G_CompleteRecalcRouting( void )
 	int i;
 	edict_t *ent;
 
-	// generate entity list
+	/* generate entity list */
 	for ( i = 0, ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
 		if ( ent->inuse && ent->model && *ent->model == '*' )
 			G_RecalcRouting( ent );

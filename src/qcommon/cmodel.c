@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// cmodel.c -- model loading
+/* cmodel.c -- model loading */
 
 #include "qcommon.h"
 
@@ -25,7 +25,7 @@ typedef struct
 {
 	cplane_t	*plane;
 	vec3_t		mins, maxs;
-	int			children[2];		// negative numbers are leafs
+	int			children[2];		/* negative numbers are leafs */
 } cnode_t;
 
 typedef struct
@@ -46,7 +46,7 @@ typedef struct
 	int			contents;
 	int			numsides;
 	int			firstbrushside;
-	int			checkcount;		// to avoid repeated testings
+	int			checkcount;		/* to avoid repeated testings */
 } cbrush_t;
 
 typedef struct tnode_s
@@ -98,13 +98,13 @@ typedef struct
 	int			numbrushes;
 	cbrush_t	*brushes;
 
-	// tracing box
+	/* tracing box */
 	cplane_t	*box_planes;
 	int			box_headnode;
 	cbrush_t	*box_brush;
 	cleaf_t		*box_leaf;
 
-	// line tracing
+	/* line tracing */
 	tnode_t		*tnodes;
 	int			numtheads;
 	int			thead[258];
@@ -122,7 +122,7 @@ typedef struct routing_s
 	byte area[HEIGHT][WIDTH][WIDTH];
 	byte areaStored[HEIGHT][WIDTH][WIDTH];
 
-	// forbidden list
+	/* forbidden list */
 	byte **fblist;
 	int  fblength;
 } routing_t;
@@ -155,9 +155,9 @@ char	**inlineList;
 void	CM_MakeTnodes( void );
 void	CM_InitBoxHull( void );
 
-//void	FloodAreaConnections (void);
+/*void	FloodAreaConnections (void); */
 
-// =====================================================================
+/* ===================================================================== */
 
 #define	ON_EPSILON	0.1
 
@@ -206,7 +206,7 @@ void CMod_LoadSubmodels (lump_t *l)
 		out = &curTile->cmodels[i];
 
 		for (j=0 ; j<3 ; j++)
-		{	// spread the mins / maxs by a pixel
+		{	/* spread the mins / maxs by a pixel */
 			out->mins[j] = LittleFloat (in->mins[j]) - 1 + shift[j];
 			out->maxs[j] = LittleFloat (in->maxs[j]) + 1 + shift[j];
 			out->origin[j] = LittleFloat (in->origin[j]);
@@ -276,7 +276,7 @@ void CMod_LoadNodes (lump_t *l)
 	if (count > MAX_MAP_NODES)
 		Com_Error (ERR_DROP, "Map has too many nodes");
 
-	// add some for the box
+	/* add some for the box */
 	out = Hunk_Alloc( (count + 6)*sizeof(*out) );
 
 	curTile->numnodes = count;
@@ -319,7 +319,7 @@ int CheckBSPFile (char *filename)
 	FILE	*file = NULL;
 	char	name[MAX_QPATH];
 
-	// load the file
+	/* load the file */
 	Com_sprintf( name, MAX_QPATH, "maps/%s.bsp", filename );
 
 	FS_FOpenFile( name, &file );
@@ -338,7 +338,7 @@ int CheckBSPFile (char *filename)
 	if (header[1] != BSPVERSION)
 		return 3;
 
-	// valid BSP-File
+	/* valid BSP-File */
 	return 0;
 }
 
@@ -362,7 +362,7 @@ void CMod_LoadBrushes (lump_t *l)
 	if (count > MAX_MAP_BRUSHES)
 		Com_Error (ERR_DROP, "Map has too many brushes");
 
-	// add some for the box
+	/* add some for the box */
 	out = Hunk_Alloc( (count + 1)*sizeof(*out) );
 
 	curTile->numbrushes = count;
@@ -395,11 +395,11 @@ void CMod_LoadLeafs (lump_t *l)
 
 	if (count < 1)
 		Com_Error (ERR_DROP, "Map with no leafs");
-	// need to save space for box planes
+	/* need to save space for box planes */
 	if (count > MAX_MAP_PLANES)
 		Com_Error (ERR_DROP, "Map has too many planes");
 
-	// add some for the box
+	/* add some for the box */
 	out = Hunk_Alloc( (count + 1)*sizeof(*out) );
 
 	curTile->numleafs = count;
@@ -448,11 +448,11 @@ void CMod_LoadPlanes (lump_t *l)
 
 	if (count < 1)
 		Com_Error (ERR_DROP, "Map with no planes");
-	// need to save space for box planes
+	/* need to save space for box planes */
 	if (count > MAX_MAP_PLANES)
 		Com_Error (ERR_DROP, "Map has too many planes");
 
-	// add some for the box
+	/* add some for the box */
 	out = Hunk_Alloc( (count + 12)*sizeof(*out) );
 
 	curTile->numplanes = count;
@@ -472,7 +472,7 @@ void CMod_LoadPlanes (lump_t *l)
 		out->type = LittleLong (in->type);
 		out->signbits = bits;
 
-		// shift
+		/* shift */
 		for ( j = 0; j < 3; j++ )
 			out->dist += out->normal[j] * shift[j];
 	}
@@ -495,12 +495,12 @@ void CMod_LoadLeafBrushes (lump_t *l)
 		Com_Error (ERR_DROP, "CMod_LoadLeafBrushes: funny lump size");
 	count = l->filelen / sizeof(*in);
 
-	// add some for the box
+	/* add some for the box */
 	out = Hunk_Alloc( (count + 1)*sizeof(*out) );
 
 	if (count < 1)
 		Com_Error (ERR_DROP, "Map with no planes");
-	// need to save space for box planes
+	/* need to save space for box planes */
 	if (count > MAX_MAP_LEAFBRUSHES)
 		Com_Error (ERR_DROP, "Map has too many leafbrushes");
 
@@ -529,11 +529,11 @@ void CMod_LoadBrushSides (lump_t *l)
 		Com_Error (ERR_DROP, "CMod_LoadBrushSides: funny lump size");
 	count = l->filelen / sizeof(*in);
 
-	// need to save space for box planes
+	/* need to save space for box planes */
 	if (count > MAX_MAP_BRUSHSIDES)
 		Com_Error (ERR_DROP, "Map has too many planes");
 
-	// add some for the box
+	/* add some for the box */
 	out = Hunk_Alloc( (count + 6)*sizeof(*out) );
 
 	curTile->numbrushsides = count;
@@ -570,14 +570,14 @@ int Cmod_DeCompressRouting( byte **source, byte *dataStart )
 	{
 		if ( *src & 0x80 )
 		{
-			// repetitions
+			/* repetitions */
 			c = *src++ & ~0x80;
 			for ( i = 0; i < c+1; i++ ) *data_p++ = *src;
 			src++;
 		}
 		else
 		{
-			// identities
+			/* identities */
 			c = *src++;
 			for ( i = 0; i < c; i++ ) *data_p++ = *src++;
 		}
@@ -600,7 +600,7 @@ int CM_EntTestLine( vec3_t start, vec3_t stop )
 	cmodel_t *model;
 	char **name;
 
-	// trace against world first
+	/* trace against world first */
 	if ( CM_TestLine( start, stop ) ) return 1;
 	if ( !inlineList ) return 0;
 
@@ -609,14 +609,14 @@ int CM_EntTestLine( vec3_t start, vec3_t stop )
 		if ( **name != '*' ) continue;
 		model = CM_InlineModel( *name );
 		if ( !model ) continue;
-//		Com_Printf("CM_EntTestLine call function\n");
+/*		Com_Printf("CM_EntTestLine call function\n"); */
 		trace = CM_TransformedBoxTrace( start, stop,
 			vec3_origin, vec3_origin, model->tile, model->headnode,
 			MASK_ALL, model->origin, vec3_origin);
 		if ( trace.startsolid || trace.fraction < 1.0 ) return 1;
 	}
 
-	// not blocked
+	/* not blocked */
 	return 0;
 }
 
@@ -633,7 +633,7 @@ int CM_EntTestLineDM( vec3_t start, vec3_t stop, vec3_t end )
 	char **name;
 	int blocked;
 
-	// trace against world first
+	/* trace against world first */
 	blocked = CM_TestLineDM( start, stop, end );
 	if ( !inlineList ) return blocked;
 
@@ -642,7 +642,7 @@ int CM_EntTestLineDM( vec3_t start, vec3_t stop, vec3_t end )
 		if ( **name != '*' ) continue;
 		model = CM_InlineModel( *name );
 		if ( !model ) continue;
-//		Com_Printf("CM_EntTestLineDM call function\n");
+/*		Com_Printf("CM_EntTestLineDM call function\n"); */
 		trace = CM_TransformedBoxTrace( start, end,
 			vec3_origin, vec3_origin, model->tile, model->headnode,
 			MASK_ALL, model->origin, vec3_origin);
@@ -658,7 +658,7 @@ int CM_EntTestLineDM( vec3_t start, vec3_t stop, vec3_t end )
 		}
 	}
 
-	// return result
+	/* return result */
 	return blocked;
 }
 
@@ -676,11 +676,11 @@ qboolean CM_TestConnection( routing_t *map, int x, int y, int z, int dir, qboole
 	pos3_t pos;
 	int h, sh, ax, ay, az;
 
-	// totally blocked unit
+	/* totally blocked unit */
 	if ( ( fill && (filled[y][x] & (1<<z)) ) || ( map->fall[y][x] == 0xFF ) )
 		return qfalse;
 
-	// get step height and trace vectors
+	/* get step height and trace vectors */
 	sh = (map->step[y][x] & (1<<z)) ? sh_big : sh_low;
 	h = map->route[z][y][x] & 0x0F;
 	VectorSet( pos, x, y, z );
@@ -693,23 +693,23 @@ qboolean CM_TestConnection( routing_t *map, int x, int y, int z, int dir, qboole
 	az = z + (h + sh) / 0x10;
 	h = ((map->route[z][y][x] & 0x0F) + sh) % 0x10;
 
-	// assume blocked
+	/* assume blocked */
 	map->route[z][y][x] &= ~(0x10 << dir);
 
-	// test filled
+	/* test filled */
 	if ( fill && (filled[ay][ax] & (1<<az)) ) return qfalse;
 
-	// test height
+	/* test height */
 	if ( (map->route[az][ay][ax] & 0x0F) > h ) return qfalse;
 
-	// center check
+	/* center check */
 	if ( CM_EntTestLine( start, end ) ) return qfalse;
 
-	// lower check
+	/* lower check */
 	start[2] = end[2] -= UH/2 - sh*4 - 2;
 	if ( CM_EntTestLine( start, end ) ) return qfalse;
 
-	// no wall
+	/* no wall */
 	map->route[z][y][x] |= 0x10 << dir;
 	return qtrue;
 }
@@ -734,18 +734,18 @@ void CM_CheckUnit( routing_t *map, int x, int y, int z )
 	float height;
 	int i;
 
-	// reset flags
+	/* reset flags */
 	filled[y][x] &= ~(1 << z);
 	map->fall[y][x] &= ~(1 << z);
 
-	// prepare fall down check
+	/* prepare fall down check */
 	VectorSet( pos, x, y, z );
 	PosToVec( pos, end );
 	VectorCopy( end, start );
 	start[2] -= UH/2-4;
 	end[2]   -= UH/2+4;
 
-	// test for fall down
+	/* test for fall down */
 	if ( CM_EntTestLine( start, end ) )
 	{
 		PosToVec( pos, end );
@@ -753,7 +753,7 @@ void CM_CheckUnit( routing_t *map, int x, int y, int z )
 		VectorAdd( end, v_dwn, end );
 		height = 0;
 
-		// test for ground with a "middled" height
+		/* test for ground with a "middled" height */
 		for ( i = 0; i < 5; i++ )
 		{
 			VectorAdd( start, testvec[i], tvs );
@@ -761,34 +761,34 @@ void CM_CheckUnit( routing_t *map, int x, int y, int z )
 			CM_EntTestLineDM( tvs, tve, tend );
 			height += tend[2];
 
-			// stop if it's totally blocked somewhere
-			// and try a higher starting point
+			/* stop if it's totally blocked somewhere */
+			/* and try a higher starting point */
 			if ( VectorCompare( tvs, tend ) ) break;
 		}
 
-		// tend[0] & [1] are correct (testvec[4])
+		/* tend[0] & [1] are correct (testvec[4]) */
 		height += tend[2];
 		tend[2] = height / 6.0;
 
 		if ( i == 5 && !VectorCompare( start, tend ) )
 		{
-			// found a possibly valid ground
+			/* found a possibly valid ground */
 			height = PH - (start[2]-tend[2]);
 			end[2] = start[2] + height;
 
 			if ( !CM_EntTestLineDM( start, end, tend ) )
 				map->route[z][y][x] = ((height+QUANT/2)/QUANT < 0) ? 0 : (height+QUANT/2)/QUANT;
 			else
-				filled[y][x] |= 1 << z; // don't enter
+				filled[y][x] |= 1 << z; /* don't enter */
 		}
 		else
 		{
-			// elevated a lot
+			/* elevated a lot */
 			end[2] = start[2];
 			start[2] += UH-PH;
 			height = 0;
 
-			// test for ground with a "middled" height
+			/* test for ground with a "middled" height */
 			for ( i = 0; i < 5; i++ )
 			{
 				VectorAdd( start, testvec[i], tvs );
@@ -796,32 +796,32 @@ void CM_CheckUnit( routing_t *map, int x, int y, int z )
 				CM_EntTestLineDM( tvs, tve, tend );
 				height += tend[2];
 			}
-			// tend[0] & [1] are correct (testvec[4])
+			/* tend[0] & [1] are correct (testvec[4]) */
 			height += tend[2];
 			tend[2] = height / 6.0;
 
 			if ( VectorCompare( start, tend ) )
 			{
-				filled[y][x] |= 1<<z; // don't enter
+				filled[y][x] |= 1<<z; /* don't enter */
 			}
 			else
 			{
-				// found a possibly valid elevated ground
+				/* found a possibly valid elevated ground */
 				end[2] = start[2] + PH - (start[2]-tend[2]);
 				height = UH - (start[2]-tend[2]);
 
-//				printf( "%i %i\n", (int)height, (int)(start[2]-tend[2]) );
+/*				printf( "%i %i\n", (int)height, (int)(start[2]-tend[2]) ); */
 
 				if ( !CM_EntTestLineDM( start, end, tend ) )
 					map->route[z][y][x] = ((height+QUANT/2)/QUANT < 0) ? 0 : (height+QUANT/2)/QUANT;
 				else
-					filled[y][x] |= 1 << z; // don't enter
+					filled[y][x] |= 1 << z; /* don't enter */
 			}
 		}
 	}
 	else
 	{
-		// fall down
+		/* fall down */
 		map->route[z][y][x] = 0;
 		map->fall[y][x] |= 1 << z;
 	}
@@ -842,7 +842,7 @@ void CMod_GetMapSize( routing_t *map )
 	VectorSet( min, 255, 255, 0 );
 	VectorSet( max, 0, 0, 0);
 
-	// get border
+	/* get border */
 	for ( y = 0; y < 256; y++ )
 		for ( x = 0; x < 256; x++ )
 			if ( map->fall[y][x] != 0xFF )
@@ -853,11 +853,11 @@ void CMod_GetMapSize( routing_t *map )
 				if ( y > max[1] ) max[1] = y;
 			}
 
-	// convert to vectors
+	/* convert to vectors */
 	PosToVec( min, map_min );
 	PosToVec( max, map_max );
 
-	// tiny offset
+	/* tiny offset */
 	VectorAdd( map_min, offset, map_min );
 	VectorSubtract( map_max, offset, map_max );
 }
@@ -894,7 +894,7 @@ void CMod_LoadRouting (lump_t *l, int sX, int sY, int sZ)
 	if ( length != 256*256*10 )
 		Com_Error (ERR_DROP, "Map has BAD routing lump");
 
-	// shift and merge the routing information
+	/* shift and merge the routing information */
 	maxX = sX > 0 ? 256 - sX : 256;
 	maxY = sY > 0 ? 256 - sY : 256;
 	sZ = 0;
@@ -903,23 +903,23 @@ void CMod_LoadRouting (lump_t *l, int sX, int sY, int sZ)
 		for ( x = sX<0 ? -sX : 0; x < maxX; x++ )
 			if ( temp_fall[y][x] != 0xFF )
 			{
-				// add new quant
+				/* add new quant */
 				clMap.fall[y+sY][x+sX] = temp_fall[y][x];
 				clMap.step[y+sY][x+sX] = temp_step[y][x];
 
-				// copy routing info
+				/* copy routing info */
 				for ( z = 0; z < 8; z++ )
 					clMap.route[z][y+sY][x+sX] = temp_route[z][y][x];
 
-				// check border connections
+				/* check border connections */
 				for ( i = 0; i < 8; i++ )
 				{
-					// test for border
+					/* test for border */
 					ax = x + dvecs[i][0];
 					ay = y + dvecs[i][1];
 					if ( temp_fall[ay][ax] != 0xFF ) continue;
 
-					// check for walls
+					/* check for walls */
 					for ( z = 0; z < 8; z++ )
 					{
 						CM_TestConnection( &clMap, x+sX, y+sY, z, i, qfalse );
@@ -928,11 +928,11 @@ void CMod_LoadRouting (lump_t *l, int sX, int sY, int sZ)
 				}
 			}
 
-	// calculate new border
+	/* calculate new border */
 	CMod_GetMapSize( &clMap );
 
-//	Com_Printf( "route: (%i %i) fall: %i step: %i\n",
-//		(int)map->route[0][0][0], (int)map->route[1][0][0], (int)map->fall[0][0], (int)map->step[0][0] );
+/*	Com_Printf( "route: (%i %i) fall: %i step: %i\n", */
+/*		(int)map->route[0][0][0], (int)map->route[1][0][0], (int)map->fall[0][0], (int)map->step[0][0] ); */
 }
 
 
@@ -952,24 +952,24 @@ void CMod_LoadEntityString (lump_t *l)
 	if (l->filelen + (map_entitystringpos - map_entitystring) > MAX_MAP_ENTSTRING)
 		Com_Error (ERR_DROP, "Map has too large entity lump");
 
-	// marge entitystring information
+	/* marge entitystring information */
 	es = (char *)(cmod_base + l->fileofs);
 	while (1)
 	{
-		// parse the opening brace
+		/* parse the opening brace */
 		com_token = COM_Parse (&es);
 		if (!es)
 			break;
 		if (com_token[0] != '{')
 			Com_Error (ERR_DROP, "CMod_LoadEntityString: found %s when expecting {",com_token);
 
-		// new entity
+		/* new entity */
 		stradd( &map_entitystringpos, "{ " );
 
-		// go through all the dictionary pairs
+		/* go through all the dictionary pairs */
 		while (1)
 		{
-			// parse key
+			/* parse key */
 			com_token = COM_Parse (&es);
 			if (com_token[0] == '}')
 				break;
@@ -978,7 +978,7 @@ void CMod_LoadEntityString (lump_t *l)
 
 			Q_strncpyz(keyname, com_token, sizeof(keyname));
 
-			// parse value
+			/* parse value */
 			com_token = COM_Parse (&es);
 			if (!es)
 				Com_Error (ERR_DROP, "CMod_LoadEntityString: EOF without closing brace");
@@ -986,37 +986,38 @@ void CMod_LoadEntityString (lump_t *l)
 			if (com_token[0] == '}')
 				Com_Error (ERR_DROP, "CMod_LoadEntityString: closing brace without data");
 
-			// alter value, if needed
+			/* alter value, if needed */
 			if ( !strcmp( keyname, "origin" ) )
 			{
-				// origins are shifted
+				/* origins are shifted */
 				sscanf( com_token, "%f %f %f", &(v[0]), &(v[1]), &(v[2]) );
 				VectorAdd( v, shift, v );
 				stradd( &map_entitystringpos, va( "%s \"%i %i %i\" ", keyname, (int)v[0], (int)v[1], (int)v[2] ) );
 			}
 			else if ( !strcmp( keyname, "model" ) && com_token[0] == '*' )
 			{
-				// adapt inline model number
+				/* adapt inline model number */
 				num = atoi( com_token + 1 );
 				num += numInline;
 				stradd( &map_entitystringpos, va( "%s *%i ", keyname, num ) );
 			}
 			else
 			{
-				// just store key and value
+				/* just store key and value */
 				stradd( &map_entitystringpos, va( "%s \"%s\" ", keyname, com_token ) );
 			}
 		}
 
-		// finish entity
+		/* finish entity */
 		stradd( &map_entitystringpos, "} " );
 	}
-
-/*	// copy new entitystring
+#if 0
+	/* copy new entitystring */
 	memcpy( map_entitystringpos, cmod_base + l->fileofs, l->filelen );
 
-	// update length
-	map_entitystringpos += l->filelen - 1;*/
+	/* update length */
+	map_entitystringpos += l->filelen - 1;
+#endif 
 }
 
 
@@ -1055,7 +1056,7 @@ unsigned CM_AddMapTile( char *name, int sX, int sY, int sZ )
 	int				length;
 	static unsigned	last_checksum;
 
-	// load the file
+	/* load the file */
 	Com_sprintf( filename, MAX_QPATH, "maps/%s.bsp", name );
 	length = FS_LoadFile( filename, (void **)&buf );
 	if (!buf)
@@ -1074,7 +1075,7 @@ unsigned CM_AddMapTile( char *name, int sX, int sY, int sZ )
 
 	cmod_base = (byte *)buf;
 
-	// init
+	/* init */
 	if ( numTiles >= MAX_MAPTILES )
 		Com_Error( ERR_FATAL, "Cmod_AddMapTile: too many tiles loaded\n" );
 
@@ -1085,7 +1086,7 @@ unsigned CM_AddMapTile( char *name, int sX, int sY, int sZ )
 
 	VectorSet( shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_SIZE );
 
-	// load into heap
+	/* load into heap */
 	CMod_LoadSurfaces (&header.lumps[LUMP_TEXINFO]);
 	CMod_LoadLeafs (&header.lumps[LUMP_LEAFS]);
 	CMod_LoadLeafBrushes (&header.lumps[LUMP_LEAFBRUSHES]);
@@ -1127,11 +1128,11 @@ void CM_LoadMap( char *tiles, char *pos )
 	int sh[3];
 	int i;
 
-	// free old stuff
+	/* free old stuff */
 	for ( i = 0; i < numTiles; i++ )
 		CM_FreeTile( &mapTiles[i] );
 
-	// init
+	/* init */
 	numTiles = 0;
 	numInline = 0;
 	map_entitystring[0] = 0;
@@ -1142,21 +1143,21 @@ void CM_LoadMap( char *tiles, char *pos )
 	memset( &(clMap.step[0][0]), 0, 256*256 );
 	memset( &(clMap.route[0][0][0]), 0, 256*256*8 );
 
-	// load tiles
+	/* load tiles */
 	while ( tiles )
 	{
-		// get tile name
+		/* get tile name */
 		token = COM_Parse( &tiles );
 		if ( !tiles ) return;
 
-		// get base path
+		/* get base path */
 		if ( token[0] == '-' )
 		{
 			Q_strncpyz( base, token+1, MAX_QPATH );
 			continue;
 		}
 
-		// get tile name
+		/* get tile name */
 		if ( token[0] == '+' )
 			Com_sprintf( name, MAX_VAR, "%s%s", base, token+1 );
 		else
@@ -1164,7 +1165,7 @@ void CM_LoadMap( char *tiles, char *pos )
 
 		if ( pos && pos[0] )
 		{
-			// get position and add a tile
+			/* get position and add a tile */
 			for ( i = 0; i < 2; i++ )
 			{
 				token = COM_Parse( &pos );
@@ -1175,7 +1176,7 @@ void CM_LoadMap( char *tiles, char *pos )
 		}
 		else
 		{
-			// load only a single tile, if no positions are specified
+			/* load only a single tile, if no positions are specified */
 			CM_AddMapTile( name, 0, 0, 0 );
 			return;
 		}
@@ -1268,12 +1269,12 @@ void CM_InitBoxHull (void)
 	{
 		side = i&1;
 
-		// brush sides
+		/* brush sides */
 		s = &curTile->brushsides[curTile->numbrushsides+i];
 		s->plane = 	curTile->planes + (curTile->numplanes+i*2+side);
 		s->surface = &nullsurface;
 
-		// nodes
+		/* nodes */
 		c = &curTile->nodes[curTile->box_headnode+i];
 		c->plane = curTile->planes + (curTile->numplanes+i*2);
 		c->children[side] = -1 - curTile->emptyleaf;
@@ -1282,7 +1283,7 @@ void CM_InitBoxHull (void)
 		else
 			c->children[side^1] = -1 - curTile->numleafs;
 
-		// planes
+		/* planes */
 		p = &curTile->box_planes[i*2];
 		p->type = i>>1;
 		p->signbits = 0;
@@ -1354,7 +1355,7 @@ int CM_PointLeafnum_r (vec3_t p, int num)
 			num = node->children[0];
 	}
 
-	c_pointcontents++;		// optimize counter
+	c_pointcontents++;		/* optimize counter */
 
 	return -1 - num;
 }
@@ -1362,7 +1363,7 @@ int CM_PointLeafnum_r (vec3_t p, int num)
 int CM_PointLeafnum (vec3_t p)
 {
 	if (!curTile->numplanes)
-		return 0;		// sound may call this without map loaded
+		return 0;		/* sound may call this without map loaded */
 	return CM_PointLeafnum_r (p, 0);
 }
 
@@ -1392,7 +1393,7 @@ void CM_BoxLeafnums_r (int nodenum)
 		{
 			if (leaf_count >= leaf_maxcount)
 			{
-//				Com_Printf ("CM_BoxLeafnums_r: overflow\n");
+/*				Com_Printf ("CM_BoxLeafnums_r: overflow\n"); */
 				return;
 			}
 			leaf_list[leaf_count++] = -1 - nodenum;
@@ -1401,14 +1402,14 @@ void CM_BoxLeafnums_r (int nodenum)
 
 		node = &curTile->nodes[nodenum];
 		plane = node->plane;
-//		s = BoxOnPlaneSide (leaf_mins, leaf_maxs, plane);
+/*		s = BoxOnPlaneSide (leaf_mins, leaf_maxs, plane); */
 		s = BOX_ON_PLANE_SIDE(leaf_mins, leaf_maxs, plane);
 		if (s == 1)
 			nodenum = node->children[0];
 		else if (s == 2)
 			nodenum = node->children[1];
 		else
-		{	// go down both
+		{	/* go down both */
 			if (leaf_topnode == -1)
 				leaf_topnode = nodenum;
 			CM_BoxLeafnums_r (node->children[0]);
@@ -1454,7 +1455,7 @@ int CM_PointContents (vec3_t p, int headnode)
 {
 	int		l;
 
-	if (!curTile || !curTile->numnodes)	// map not loaded
+	if (!curTile || !curTile->numnodes)	/* map not loaded */
 		return 0;
 
 	l = CM_PointLeafnum_r (p, headnode);
@@ -1477,10 +1478,10 @@ int	CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, vec3_t a
 	vec3_t		forward, right, up;
 	int			l;
 
-	// subtract origin offset
+	/* subtract origin offset */
 	VectorSubtract (p, origin, p_l);
 
-	// rotate start and end into the models frame of reference
+	/* rotate start and end into the models frame of reference */
 	if (headnode != curTile->box_headnode &&
 	(angles[0] || angles[1] || angles[2]) )
 	{
@@ -1498,10 +1499,10 @@ int	CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, vec3_t a
 }
 
 
-//=======================================================================
+/*======================================================================= */
 
 
-// 1/32 epsilon to keep floating point happy
+/* 1/32 epsilon to keep floating point happy */
 #define	DIST_EPSILON	(0.03125)
 
 vec3_t	trace_start, trace_end;
@@ -1510,7 +1511,7 @@ vec3_t	trace_extents;
 
 trace_t	trace_trace;
 int		trace_contents;
-qboolean	trace_ispoint;		// optimized case
+qboolean	trace_ispoint;		/* optimized case */
 
 /*
 ================
@@ -1548,14 +1549,14 @@ void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2,
 		side = &curTile->brushsides[brush->firstbrushside+i];
 		plane = side->plane;
 
-		// FIXME: special case for axial
+		/* FIXME: special case for axial */
 
 		if (!trace_ispoint)
-		{	// general box case
+		{	/* general box case */
 
-			// push the plane out apropriately for mins/maxs
+			/* push the plane out apropriately for mins/maxs */
 
-			// FIXME: use signbits into 8 way lookup for each mins/maxs
+			/* FIXME: use signbits into 8 way lookup for each mins/maxs */
 			for (j=0 ; j<3 ; j++)
 			{
 				if (plane->normal[j] < 0)
@@ -1567,7 +1568,7 @@ void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2,
 			dist = plane->dist - dist;
 		}
 		else
-		{	// special point case
+		{	/* special point case */
 			dist = plane->dist;
 		}
 
@@ -1575,20 +1576,20 @@ void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2,
 		d2 = DotProduct (p2, plane->normal) - dist;
 
 		if (d2 > 0)
-			getout = qtrue;	// endpoint is not in solid
+			getout = qtrue;	/* endpoint is not in solid */
 		if (d1 > 0)
 			startout = qtrue;
 
-		// if completely in front of face, no intersection
+		/* if completely in front of face, no intersection */
 		if (d1 > 0 && d2 >= d1)
 			return;
 
 		if (d1 <= 0 && d2 <= 0)
 			continue;
 
-		// crosses face
+		/* crosses face */
 		if (d1 > d2)
-		{	// enter
+		{	/* enter */
 			f = (d1-DIST_EPSILON) / (d1-d2);
 			if (f > enterfrac)
 			{
@@ -1598,7 +1599,7 @@ void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2,
 			}
 		}
 		else
-		{	// leave
+		{	/* leave */
 			f = (d1+DIST_EPSILON) / (d1-d2);
 			if (f < leavefrac)
 				leavefrac = f;
@@ -1606,7 +1607,7 @@ void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2,
 	}
 
 	if (!startout)
-	{	// original point was inside brush
+	{	/* original point was inside brush */
 		trace->startsolid = qtrue;
 		if (!getout)
 			trace->allsolid = qtrue;
@@ -1649,13 +1650,13 @@ void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1,
 		side = &curTile->brushsides[brush->firstbrushside+i];
 		plane = side->plane;
 
-		// FIXME: special case for axial
+		/* FIXME: special case for axial */
 
-		// general box case
+		/* general box case */
 
-		// push the plane out apropriately for mins/maxs
+		/* push the plane out apropriately for mins/maxs */
 
-		// FIXME: use signbits into 8 way lookup for each mins/maxs
+		/* FIXME: use signbits into 8 way lookup for each mins/maxs */
 		for (j=0 ; j<3 ; j++)
 		{
 			if (plane->normal[j] < 0)
@@ -1668,13 +1669,13 @@ void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1,
 
 		d1 = DotProduct (p1, plane->normal) - dist;
 
-		// if completely in front of face, no intersection
+		/* if completely in front of face, no intersection */
 		if (d1 > 0)
 			return;
 
 	}
 
-	// inside this brush
+	/* inside this brush */
 	trace->startsolid = trace->allsolid = qtrue;
 	trace->fraction = 0;
 	trace->contents = brush->contents;
@@ -1696,13 +1697,13 @@ void CM_TraceToLeaf (int leafnum)
 	leaf = &curTile->leafs[leafnum];
 	if ( !(leaf->contents & trace_contents))
 		return;
-	// trace line against all brushes in the leaf
+	/* trace line against all brushes in the leaf */
 	for (k=0 ; k<leaf->numleafbrushes ; k++)
 	{
 		brushnum = curTile->leafbrushes[leaf->firstleafbrush+k];
 		b = &curTile->brushes[brushnum];
 		if (b->checkcount == checkcount)
-			continue;	// already checked this brush in another leaf
+			continue;	/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
 		if ( !(b->contents & trace_contents))
@@ -1730,13 +1731,13 @@ void CM_TestInLeaf (int leafnum)
 	leaf = &curTile->leafs[leafnum];
 	if ( !(leaf->contents & trace_contents))
 		return;
-	// trace line against all brushes in the leaf
+	/* trace line against all brushes in the leaf */
 	for (k=0 ; k<leaf->numleafbrushes ; k++)
 	{
 		brushnum = curTile->leafbrushes[leaf->firstleafbrush+k];
 		b = &curTile->brushes[brushnum];
 		if (b->checkcount == checkcount)
-			continue;	// already checked this brush in another leaf
+			continue;	/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
 		if ( !(b->contents & trace_contents))
@@ -1768,19 +1769,19 @@ void CM_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
 	float		midf;
 
 	if (trace_trace.fraction <= p1f)
-		return;		// already hit something nearer
+		return;		/* already hit something nearer */
 
-	// if < 0, we are in a leaf node
+	/* if < 0, we are in a leaf node */
 	if (num < 0)
 	{
 		CM_TraceToLeaf (-1-num);
 		return;
 	}
 
-	//
-	// find the point distances to the seperating plane
-	// and the offset for the size of the box
-	//
+	/* */
+	/* find the point distances to the seperating plane */
+	/* and the offset for the size of the box */
+	/* */
 	node = curTile->nodes + num;
 	plane = node->plane;
 
@@ -1809,7 +1810,7 @@ CM_RecursiveHullCheck (node->children[1], p1f, p2f, p1, p2);
 return;
 #endif
 
-	// see which sides we need to consider
+	/* see which sides we need to consider */
 	if (t1 >= offset && t2 >= offset)
 	{
 		CM_RecursiveHullCheck (node->children[0], p1f, p2f, p1, p2);
@@ -1821,7 +1822,7 @@ return;
 		return;
 	}
 
-	// put the crosspoint DIST_EPSILON pixels on the near side
+	/* put the crosspoint DIST_EPSILON pixels on the near side */
 	if (t1 < t2)
 	{
 		idist = 1.0/(t1-t2);
@@ -1843,7 +1844,7 @@ return;
 		frac2 = 0;
 	}
 
-	// move up to the node
+	/* move up to the node */
 	if (frac < 0)
 		frac = 0;
 	if (frac > 1)
@@ -1856,7 +1857,7 @@ return;
 	CM_RecursiveHullCheck (node->children[side], p1f, midf, p1, mid);
 
 
-	// go past the node
+	/* go past the node */
 	if (frac2 < 0)
 		frac2 = 0;
 	if (frac2 > 1)
@@ -1871,7 +1872,7 @@ return;
 
 
 
-//======================================================================
+/*====================================================================== */
 
 /*
 ==================
@@ -1884,18 +1885,18 @@ trace_t		CM_BoxTrace (vec3_t start, vec3_t end,
 {
 	int		i;
 
-	checkcount++;		// for multi-check avoidance
-	c_traces++;			// for statistics, may be zeroed
+	checkcount++;		/* for multi-check avoidance */
+	c_traces++;			/* for statistics, may be zeroed */
 
-	// init
+	/* init */
 	curTile = &mapTiles[tile];
 
-	// fill in a default trace
+	/* fill in a default trace */
 	memset (&trace_trace, 0, sizeof(trace_trace));
 	trace_trace.fraction = 1;
 	trace_trace.surface = &(nullsurface.c);
 
-	if (!curTile->numnodes)	// map not loaded
+	if (!curTile->numnodes)	/* map not loaded */
 		return trace_trace;
 
 	trace_contents = brushmask;
@@ -1904,9 +1905,9 @@ trace_t		CM_BoxTrace (vec3_t start, vec3_t end,
 	VectorCopy (mins, trace_mins);
 	VectorCopy (maxs, trace_maxs);
 
-	//
-	// check for position test special case
-	//
+	/* */
+	/* check for position test special case */
+	/* */
 	if (start[0] == end[0] && start[1] == end[1] && start[2] == end[2])
 	{
 		int		leafs[1024];
@@ -1933,9 +1934,9 @@ trace_t		CM_BoxTrace (vec3_t start, vec3_t end,
 		return trace_trace;
 	}
 
-	//
-	// check for point special case
-	//
+	/* */
+	/* check for point special case */
+	/* */
 	if (mins[0] == 0 && mins[1] == 0 && mins[2] == 0
 		&& maxs[0] == 0 && maxs[1] == 0 && maxs[2] == 0)
 	{
@@ -1950,9 +1951,9 @@ trace_t		CM_BoxTrace (vec3_t start, vec3_t end,
 		trace_extents[2] = -mins[2] > maxs[2] ? -mins[2] : maxs[2];
 	}
 
-	//
-	// general sweeping through world
-	//
+	/* */
+	/* general sweeping through world */
+	/* */
 	CM_RecursiveHullCheck (headnode, 0, 1, start, end);
 
 	if (trace_trace.fraction == 1)
@@ -1999,14 +2000,14 @@ trace_t		CM_TransformedBoxTrace (vec3_t start, vec3_t end,
 		tile = 0;
 	}
 
-	// init
+	/* init */
 	curTile = &mapTiles[tile];
 
-	// subtract origin offset
+	/* subtract origin offset */
 	VectorSubtract (start, origin, start_l);
 	VectorSubtract (end, origin, end_l);
 
-	// rotate start and end into the models frame of reference
+	/* rotate start and end into the models frame of reference */
 	if (headnode != curTile->box_headnode &&
 	(angles[0] || angles[1] || angles[2]) )
 		rotated = qtrue;
@@ -2028,12 +2029,12 @@ trace_t		CM_TransformedBoxTrace (vec3_t start, vec3_t end,
 		end_l[2] = DotProduct (temp, up);
 	}
 
-	// sweep the box through the model
+	/* sweep the box through the model */
 	trace = CM_BoxTrace (start_l, end_l, mins, maxs, tile, headnode, brushmask);
 
 	if (rotated && trace.fraction != 1.0)
 	{
-		// FIXME: figure out how to do this with existing angles
+		/* FIXME: figure out how to do this with existing angles */
 		VectorNegate (angles, a);
 		AngleVectors (a, forward, right, up);
 
@@ -2083,7 +2084,7 @@ trace_t		CM_CompleteBoxTrace (vec3_t start, vec3_t end,
 
 			newtr = CM_BoxTrace( start, end, mins, maxs, tile, h->cnode, brushmask );
 
-			// memorize the trace with the minimal fraction
+			/* memorize the trace with the minimal fraction */
 			if ( newtr.fraction == 0.0 )
 				return newtr;
 			if ( newtr.fraction < tr.fraction )
@@ -2095,7 +2096,7 @@ trace_t		CM_CompleteBoxTrace (vec3_t start, vec3_t end,
 
 
 
-// =====================================================================
+/* ===================================================================== */
 
 tnode_t *tnode_p;
 
@@ -2156,7 +2157,7 @@ void BuildTnode_r( int node )
 
 		n = &curTile->nodes[node];
 
-		// alloc new node
+		/* alloc new node */
 		t = tnode_p++;
 
 		if ( n->children[0] < 0 || n->children[1] < 0 )
@@ -2165,14 +2166,14 @@ void BuildTnode_r( int node )
 		VectorCopy( curTile->nodes[n->children[0]].maxs, c0maxs );
 		VectorCopy( curTile->nodes[n->children[1]].mins, c1mins );
 
-	//	printf( "(%i %i : %i %i) (%i %i : %i %i)\n",
-	//		(int)dnodes[n->children[0]].mins[0], (int)dnodes[n->children[0]].mins[1], (int)dnodes[n->children[0]].maxs[0], (int)dnodes[n->children[0]].maxs[1],
-	//		(int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1] );
+	/*	printf( "(%i %i : %i %i) (%i %i : %i %i)\n", */
+	/*		(int)dnodes[n->children[0]].mins[0], (int)dnodes[n->children[0]].mins[1], (int)dnodes[n->children[0]].maxs[0], (int)dnodes[n->children[0]].maxs[1], */
+	/*		(int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1] ); */
 
 		for ( i = 0; i < 2; i++ )
 			if ( c0maxs[i] <= c1mins[i] )
 			{
-				// create a separation plane
+				/* create a separation plane */
 				t->type = i;
 				t->normal[0] = i;
 				t->normal[1] = i^1;
@@ -2186,7 +2187,7 @@ void BuildTnode_r( int node )
 				return;
 			}
 
-		// can't construct such a separation plane
+		/* can't construct such a separation plane */
 		t->type = PLANE_NONE;
 
 		for ( i = 0; i < 2; i++ )
@@ -2197,7 +2198,7 @@ void BuildTnode_r( int node )
 	}
 	else
 	{
-		// don't include weapon clip in standard tracing
+		/* don't include weapon clip in standard tracing */
 		if ( cur_level <= 256 )
 		{
 			curTile->cheads[curTile->numcheads].cnode = node;
@@ -2221,7 +2222,7 @@ void CM_MakeTnodes( void )
 {
 	int		i;
 
-	// 32 byte align the structs
+	/* 32 byte align the structs */
 	curTile->tnodes = Hunk_Alloc( (curTile->numnodes+1) * sizeof(tnode_t) );
 #ifndef __x86_64__
 	curTile->tnodes = (tnode_t *)(((int)curTile->tnodes + 31)&~31);
@@ -2244,12 +2245,12 @@ void CM_MakeTnodes( void )
 		cur_level = i;
 
 		BuildTnode_r( curTile->cmodels[i].headnode );
-//		MakeTnode (map_models[i].headnode);
+/*		MakeTnode (map_models[i].headnode); */
 	}
 }
 
 
-//==========================================================
+/*========================================================== */
 
 vec3_t tmpVec;
 int errorCount;
@@ -2267,13 +2268,12 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 	int		side;
 	int		r;
 
-	// leaf node
+	/* leaf node */
 	if (node & (1<<31))
 		return node & ~(1<<31);
 
 	tnode = &curTile->tnodes[node];
 	assert(tnode);
-
 	switch (tnode->type)
 	{
 	case PLANE_X:
@@ -2338,12 +2338,11 @@ int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 	{
 		r = node & ~(1<<31);
 		if ( r ) VectorCopy( start, tr_end );
-		return r;	// leaf node
+		return r;	/* leaf node */
 	}
 
 	tnode = &curTile->tnodes[node];
 	assert( tnode );
-
 	switch (tnode->type)
 	{
 	case PLANE_X:
@@ -2458,7 +2457,7 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 }
 
 
-//====================================================================================
+/*==================================================================================== */
 
 /*
 ==========================================================
@@ -2500,7 +2499,7 @@ void Grid_MoveMark( struct routing_s *map, int x, int y, int z, int dv, int h, i
 	int		nx, ny, sh, l;
 	int		dx, dy;
 
-	// range check
+	/* range check */
 	l = dv > 3 ? ol+3 : ol+2;
 	dx = dvecs[dv][0];
 	dy = dvecs[dv][1];
@@ -2508,7 +2507,7 @@ void Grid_MoveMark( struct routing_s *map, int x, int y, int z, int dv, int h, i
 	ny = y+dy;
 	if ( nx < 0 || nx >= WIDTH || ny < 0 || ny >= WIDTH ) return;
 
-	// connection checks
+	/* connection checks */
 	if ( dx > 0 && !(map->route[z][y][x] & 0x10) ) return;
 	if ( dx < 0 && !(map->route[z][y][x] & 0x20) ) return;
 	if ( dy > 0 && !(map->route[z][y][x] & 0x40) ) return;
@@ -2516,19 +2515,19 @@ void Grid_MoveMark( struct routing_s *map, int x, int y, int z, int dv, int h, i
 	if ( dv > 3 && !( (map->route[z][y+dy][x] & (dx>0 ? 0x10:0x20)) && (map->route[z][y][x+dx] & (dy>0 ? 0x40:0x80))
 		&& !Grid_CheckForbidden( map, x, y+dy, z ) && !Grid_CheckForbidden( map, x+dx, y, z ) ) ) return;
 
-	// height checks
+	/* height checks */
 	sh = (map->step[y][x] & (1<<z)) ? sh_big : sh_low;
 	z += (h + sh) / 0x10;
 	while ( map->fall[ny][nx] & (1<<z) ) z--;
 
-	// can it be better than ever?
+	/* can it be better than ever? */
 	if ( map->area[z][ny][nx] < l )
 		return;
 
-	// test for forbidden areas
+	/* test for forbidden areas */
 	if ( Grid_CheckForbidden( map, nx, ny, z ) ) return;
 
-	// store move
+	/* store move */
 	map->area[z][ny][nx] = l;
 	tfList[z][ny][nx] = stf;
 }
@@ -2549,21 +2548,21 @@ void Grid_MoveMarkRoute( struct routing_s *map, int xl, int yl, int xh, int yh )
 			for ( x = xl; x <= xh; x++ )
 				if ( tfList[z][y][x] == tf )
 				{
-					// reset test flags
+					/* reset test flags */
 					tfList[z][y][x] = 0;
 					l = map->area[z][y][x];
 					h = map->route[z][y][x] & 0xF;
 
-					// check for end
+					/* check for end */
 					if ( l+3 >= MAX_MOVELENGTH ) continue;
 
-					// test the next connections
+					/* test the next connections */
 					for ( dv = 0; dv < 8; dv++ )
 						Grid_MoveMark( map, x, y, z, dv, h, l );
 				}
 }
 
-// just to fix warnings
+/* just to fix warnings */
 void CL_ResetMouseLastPos( void );
 /*
 ============
@@ -2576,7 +2575,7 @@ void Grid_MoveCalc( struct routing_s *map, pos3_t from, int distance, byte **fb_
 	int xl, xh, yl, yh;
 	int i;
 
-	// reset move data
+	/* reset move data */
 	memset( map->area, 0xFF, WIDTH*WIDTH*HEIGHT );
 	memset( tfList, 0, WIDTH*WIDTH*HEIGHT );
 	map->fblist = fb_list;
@@ -2587,14 +2586,14 @@ void Grid_MoveCalc( struct routing_s *map, pos3_t from, int distance, byte **fb_
 
 	if ( distance > MAX_ROUTE ) distance = MAX_ROUTE;
 
-	// first step
+	/* first step */
 	tf = 1; stf = 2;
 	map->area[from[2]][yl][xl] = 0;
 	tfList[from[2]][yl][xl] = 1;
 
 	for ( i = 0; i < distance; i++ )
 	{
-		// go on checking
+		/* go on checking */
 		if ( xl > 0 ) xl--;
 		if ( yl > 0 ) yl--;
 		if ( xh < WIDTH-1 ) xh++;
@@ -2602,11 +2601,11 @@ void Grid_MoveCalc( struct routing_s *map, pos3_t from, int distance, byte **fb_
 
 		Grid_MoveMarkRoute( map, xl, yl, xh, yh );
 
-		// swap test flag
+		/* swap test flag */
 		stf = tf;
 		tf ^= 3;
 	}
-	// reset the mouse position, for the purposes of CL_ActorMouseTrace
+	/* reset the mouse position, for the purposes of CL_ActorMouseTrace */
 	CL_ResetMouseLastPos();
 #endif
 }
@@ -2655,36 +2654,36 @@ int Grid_MoveCheck( struct routing_s *map, pos3_t pos, int sz, int l )
 		dx = -dvecs[dv][0];
 		dy = -dvecs[dv][1];
 
-		// range check
+		/* range check */
 		if ( dx > 0 && pos[0] >= WIDTH-1 ) continue;
 		if ( dy > 0 && pos[1] >= WIDTH-1 ) continue;
 		if ( dx < 0 && pos[0] <= 0 ) continue;
 		if ( dy < 0 && pos[1] <= 0 ) continue;
 
-		// distance table check
+		/* distance table check */
 		x = pos[0]-dx;
 		y = pos[1]-dy;
 		z = sz;
 
 		if ( map->area[z][y][x] != (l-2) - (dv>3) ) continue;
 
-		// connection checks
+		/* connection checks */
 		if ( dx > 0 && !(map->route[z][y][x] & 0x10) ) continue;
 		if ( dx < 0 && !(map->route[z][y][x] & 0x20) ) continue;
 		if ( dy > 0 && !(map->route[z][y][x] & 0x40) ) continue;
 		if ( dy < 0 && !(map->route[z][y][x] & 0x80) ) continue;
 		if ( dv > 3 && !((map->route[z][y+dy][x] & (dx>0 ? 0x10:0x20)) && (map->route[z][y][x+dx] & (dy>0 ? 0x40:0x80))) ) continue;
 
-		// height checks
+		/* height checks */
 		sh = (map->step[y][x] & (1<<z)) ? sh_big : sh_low;
 		z += ((map->route[z][y][x] & 0xF) + sh) / 0x10;
 		while ( map->fall[pos[1]][pos[0]] & (1<<z) ) z--;
 
-		//	Com_Printf( "pos: (%i %i %i) (x,y,z): (%i %i %i)\n", pos[0], pos[1], pos[2], x, y, z );
+		/*	Com_Printf( "pos: (%i %i %i) (x,y,z): (%i %i %i)\n", pos[0], pos[1], pos[2], x, y, z ); */
 
-		if ( pos[2] == z ) break; // found it!
+		if ( pos[2] == z ) break; /* found it! */
 
-		// not found... try next dv
+		/* not found... try next dv */
 	}
 
 	return dv;
@@ -2703,21 +2702,21 @@ int Grid_MoveNext( struct routing_s *map, pos3_t from )
 
 	l = map->area[from[2]][from[1]][from[0]];
 
-	// finished
+	/* finished */
 	if ( !l ) return 0xFF;
 
-	// initialize tests
+	/* initialize tests */
 	x = from[0]; y = from[1];
 
-	// do tests
+	/* do tests */
 	for ( z=0; z<HEIGHT; z++)
 	{
-		// suppose it's possible at that height
+		/* suppose it's possible at that height */
 		dv = Grid_MoveCheck( map, from, z, l );
 		if ( dv < 8 ) return dv | (z<<3);
 	}
 
-	// shouldn't happen
+	/* shouldn't happen */
 	Com_Printf( "failed...\n" );
 	return 0xFF;
 }
@@ -2770,13 +2769,13 @@ void Grid_RecalcRouting( struct routing_s *map, char *name, char **list )
 	int x, y, z;
 	int i;
 
-	// get inline model, if it is one
+	/* get inline model, if it is one */
 	if ( *name != '*' ) return;
 	model = CM_InlineModel( name );
 	if ( !model ) return;
 	inlineList = list;
 
-	// get dimensions
+	/* get dimensions */
 	VecToPos( model->mins, min );
 	VecToPos( model->maxs, max );
 
@@ -2788,17 +2787,17 @@ void Grid_RecalcRouting( struct routing_s *map, char *name, char **list )
 	for ( i = 0; i < 3; i++ )
 		min[i] = min[i] > 2 ? min[i]-2 : 0;
 
-//	Com_Printf( "routing: (%i %i %i) (%i %i %i)\n",
-//		(int)min[0], (int)min[1], (int)min[2],
-//		(int)max[0], (int)max[1], (int)max[2] );
+/*	Com_Printf( "routing: (%i %i %i) (%i %i %i)\n", */
+/*		(int)min[0], (int)min[1], (int)min[2], */
+/*		(int)max[0], (int)max[1], (int)max[2] ); */
 
-	// check unit heights
+	/* check unit heights */
 	for ( z = min[2]; z < max[2]; z++ )
 		for ( y = min[1]; y < max[1]; y++ )
 			for ( x = min[0]; x < max[0]; x++ )
 				CM_CheckUnit( map, x, y, z );
 
-	// check connections
+	/* check connections */
 	for ( z = min[2]; z < max[2]; z++ )
 		for ( y = min[1]; y < max[1]; y++ )
 			for ( x = min[0]; x < max[0]; x++ )
@@ -2826,18 +2825,18 @@ float Com_GrenadeTarget( vec3_t from, vec3_t at, vec3_t v0 )
 	vec3_t	delta;
 	float	h, d, vx, alpha;
 
-	// get useful data
+	/* get useful data */
 	h = at[2] - from[2];
 	VectorSubtract( at, from, delta );
 	delta[2] = 0;
 	d = VectorLength( delta );
 
-	// get angle
+	/* get angle */
 	alpha = GRENADE_MINALPHA + GRENADE_ALPHAFAC * sqrt((h+20) / d);
 	if ( alpha < GRENADE_MINALPHA ) alpha = GRENADE_MINALPHA;
 	if ( alpha > GRENADE_MAXALPHA ) alpha = GRENADE_MAXALPHA;
 
-	// calc starting speed
+	/* calc starting speed */
 	if ( d*tan(alpha)*0.8 < h ) return 0.0;
 	vx = d * sqrt(GRAVITY/(2*(d*tan(alpha)-h)));
 
@@ -2845,6 +2844,6 @@ float Com_GrenadeTarget( vec3_t from, vec3_t at, vec3_t v0 )
 	VectorScale( delta, vx, v0 );
 	v0[2] = vx * tan(alpha);
 
-	// return time needed
+	/* return time needed */
 	return d / vx;
 }

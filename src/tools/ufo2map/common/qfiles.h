@@ -1,8 +1,8 @@
 
-//
-// qfiles.h: quake file formats
-// This file must be identical in the quake and utils directories
-//
+/* */
+/* qfiles.h: quake file formats */
+/* This file must be identical in the quake and utils directories */
+/* */
 
 /*
 ========================================================================
@@ -24,7 +24,7 @@ typedef struct
 
 typedef struct
 {
-	int		ident;		// == IDPAKHEADER
+	int		ident;		/* == IDPAKHEADER */
 	int		dirofs;
 	int		dirlen;
 } dpackheader_t;
@@ -54,7 +54,7 @@ typedef struct
     unsigned short	bytes_per_line;
     unsigned short	palette_type;
     char	filler[58];
-    unsigned char	data;			// unbounded
+    unsigned char	data;			/* unbounded */
 } pcx_t;
 
 
@@ -89,7 +89,7 @@ typedef struct
 
 typedef struct
 {
-	byte	v[3];			// scaled byte to fit in frame mins/maxs
+	byte	v[3];			/* scaled byte to fit in frame mins/maxs */
 	byte	lightnormalindex;
 } dtrivertx_t;
 
@@ -101,20 +101,20 @@ typedef struct
 
 typedef struct
 {
-	float		scale[3];	// multiply byte verts by this
-	float		translate[3];	// then add this
-	char		name[16];	// frame name from grabbing
-	dtrivertx_t	verts[1];	// variable sized
+	float		scale[3];	/* multiply byte verts by this */
+	float		translate[3];	/* then add this */
+	char		name[16];	/* frame name from grabbing */
+	dtrivertx_t	verts[1];	/* variable sized */
 } daliasframe_t;
 
 
-// the glcmd format:
-// a positive integer starts a tristrip command, followed by that many
-// vertex structures.
-// a negative integer starts a trifan command, followed by -x vertexes
-// a zero indicates the end of the command list.
-// a vertex consists of a floating point s, a floating point t,
-// and an integer vertex index.
+/* the glcmd format: */
+/* a positive integer starts a tristrip command, followed by that many */
+/* vertex structures. */
+/* a negative integer starts a trifan command, followed by -x vertexes */
+/* a zero indicates the end of the command list. */
+/* a vertex consists of a floating point s, a floating point t, */
+/* and an integer vertex index. */
 
 
 typedef struct
@@ -124,21 +124,21 @@ typedef struct
 
 	int			skinwidth;
 	int			skinheight;
-	int			framesize;		// byte size of each frame
+	int			framesize;		/* byte size of each frame */
 
 	int			num_skins;
 	int			num_xyz;
-	int			num_st;			// greater than num_xyz for seams
+	int			num_st;			/* greater than num_xyz for seams */
 	int			num_tris;
-	int			num_glcmds;		// dwords in strip/fan command list
+	int			num_glcmds;		/* dwords in strip/fan command list */
 	int			num_frames;
 
-	int			ofs_skins;		// each skin is a MAX_SKINNAME string
-	int			ofs_st;			// byte offset from start for stverts
-	int			ofs_tris;		// offset for dtriangles
-	int			ofs_frames;		// offset for first frame
+	int			ofs_skins;		/* each skin is a MAX_SKINNAME string */
+	int			ofs_st;			/* byte offset from start for stverts */
+	int			ofs_tris;		/* offset for dtriangles */
+	int			ofs_frames;		/* offset for first frame */
 	int			ofs_glcmds;	
-	int			ofs_end;		// end of file
+	int			ofs_end;		/* end of file */
 
 } dmdl_t;
 
@@ -151,21 +151,21 @@ typedef struct
 */
 
 #define IDSPRITEHEADER	(('2'<<24)+('S'<<16)+('D'<<8)+'I')
-		// little-endian "IDS2"
+		/* little-endian "IDS2" */
 #define SPRITE_VERSION	2
 
 typedef struct
 {
 	int		width, height;
-	int		origin_x, origin_y;		// raster coordinates inside pic
-	char	name[MAX_SKINNAME];		// name of pcx file
+	int		origin_x, origin_y;		/* raster coordinates inside pic */
+	char	name[MAX_SKINNAME];		/* name of pcx file */
 } dsprframe_t;
 
 typedef struct {
 	int			ident;
 	int			version;
 	int			numframes;
-	dsprframe_t	frames[1];			// variable sized
+	dsprframe_t	frames[1];			/* variable sized */
 } dsprite_t;
 
 /*
@@ -182,8 +182,8 @@ typedef struct miptex_s
 {
 	char		name[32];
 	unsigned	width, height;
-	unsigned	offsets[MIPLEVELS];		// four mip maps stored
-	char		animname[32];			// next frame in animation chain
+	unsigned	offsets[MIPLEVELS];		/* four mip maps stored */
+	char		animname[32];			/* next frame in animation chain */
 	int			flags;
 	int			contents;
 	int			value;
@@ -200,14 +200,14 @@ typedef struct miptex_s
 */
 
 #define IDBSPHEADER	(('P'<<24)+('S'<<16)+('B'<<8)+'I')
-		// little-endian "IBSP"
+		/* little-endian "IBSP" */
 
 #define BSPVERSION	71
 
 
-// upper design bounds
-// leaffaces, leafbrushes, planes, and verts are still bounded by
-// 16 bit short limits
+/* upper design bounds */
+/* leaffaces, leafbrushes, planes, and verts are still bounded by */
+/* 16 bit short limits */
 #define	MAX_MAP_MODELS		1024
 #define	MAX_MAP_BRUSHES		8192
 #define	MAX_MAP_ENTITIES	2048
@@ -230,12 +230,12 @@ typedef struct miptex_s
 #define	MAX_MAP_LIGHTING	0x1000000
 #define	MAX_MAP_ROUTING		0x40000
 
-// key / value pair sizes
+/* key / value pair sizes */
 
 #define	MAX_KEY		32
 #define	MAX_VALUE	1024
 
-//=============================================================================
+/*============================================================================= */
 
 typedef struct
 {
@@ -273,10 +273,10 @@ typedef struct
 typedef struct
 {
 	float		mins[3], maxs[3];
-	float		origin[3];		// for sounds or lights
+	float		origin[3];		/* for sounds or lights */
 	int			headnode;
-	int			firstface, numfaces;	// submodels just draw faces
-										// without walking the bsp tree
+	int			firstface, numfaces;	/* submodels just draw faces */
+										/* without walking the bsp tree */
 } dmodel_t;
 
 
@@ -286,37 +286,37 @@ typedef struct
 } dvertex_t;
 
 
-// 0-2 are axial planes
+/* 0-2 are axial planes */
 #define	PLANE_X			0
 #define	PLANE_Y			1
 #define	PLANE_Z			2
 
-// 3-5 are non-axial planes snapped to the nearest
+/* 3-5 are non-axial planes snapped to the nearest */
 #define	PLANE_ANYX		3
 #define	PLANE_ANYY		4
 #define	PLANE_ANYZ		5
 
 #define PLANE_NONE		6
 
-// planes (x&~1) and (x&~1)+1 are allways opposites
+/* planes (x&~1) and (x&~1)+1 are allways opposites */
 
 typedef struct
 {
 	float	normal[3];
 	float	dist;
-	int		type;		// PLANE_X - PLANE_ANYZ ?remove? trivial to regenerate
+	int		type;		/* PLANE_X - PLANE_ANYZ ?remove? trivial to regenerate */
 } dplane_t;
 
 
-// contents flags are seperate bits
-// a given brush can contribute multiple content bits
-// multiple brushes can be in a single leaf
+/* contents flags are seperate bits */
+/* a given brush can contribute multiple content bits */
+/* multiple brushes can be in a single leaf */
 
-// these definitions also need to be in q_shared.h!
+/* these definitions also need to be in q_shared.h! */
 
-// lower bits are stronger, and will eat weaker brushes completely
-#define	CONTENTS_SOLID			1		// an eye is never valid in a solid
-#define	CONTENTS_WINDOW			2		// translucent, but not watery
+/* lower bits are stronger, and will eat weaker brushes completely */
+#define	CONTENTS_SOLID			1		/* an eye is never valid in a solid */
+#define	CONTENTS_WINDOW			2		/* translucent, but not watery */
 #define	CONTENTS_AUX			4
 #define	CONTENTS_LAVA			8
 #define	CONTENTS_SLIME			16
@@ -324,14 +324,14 @@ typedef struct
 #define	CONTENTS_MIST			64
 #define	LAST_VISIBLE_CONTENTS	128
 
-// remaining contents are non-visible, and don't eat brushes
+/* remaining contents are non-visible, and don't eat brushes */
 
 #define	CONTENTS_AREAPORTAL		0x8000
 
 #define	CONTENTS_PLAYERCLIP		0x10000
 #define	CONTENTS_PASSABLE		0x20000
 
-// currents can be added to any other contents, and may be mixed
+/* currents can be added to any other contents, and may be mixed */
 #define	CONTENTS_CURRENT_0		0x40000
 #define	CONTENTS_CURRENT_90		0x80000
 #define	CONTENTS_CURRENT_180	0x100000
@@ -339,12 +339,12 @@ typedef struct
 #define	CONTENTS_CURRENT_UP		0x400000
 #define	CONTENTS_CURRENT_DOWN	0x800000
 
-#define	CONTENTS_ORIGIN			0x1000000	// removed before bsping an entity
+#define	CONTENTS_ORIGIN			0x1000000	/* removed before bsping an entity */
 
 #define	CONTENTS_WEAPONCLIP		0x2000000
 #define	CONTENTS_DEADMONSTER	0x4000000
-#define	CONTENTS_DETAIL			0x8000000	// brushes to be added after vis leafs
-#define	CONTENTS_TRANSLUCENT	0x10000000	// auto set if any surface has trans
+#define	CONTENTS_DETAIL			0x8000000	/* brushes to be added after vis leafs */
+#define	CONTENTS_TRANSLUCENT	0x10000000	/* auto set if any surface has trans */
 #define	CONTENTS_LADDER			0x20000000
 #define CONTENTS_STEPON			0x40000000
 
@@ -352,48 +352,48 @@ typedef struct
 
 
 
-#define	SURF_LIGHT		0x1		// value will hold the light strength
+#define	SURF_LIGHT		0x1		/* value will hold the light strength */
 
-#define	SURF_SLICK		0x2		// effects game physics
+#define	SURF_SLICK		0x2		/* effects game physics */
 
-#define	SURF_SKY		0x4		// sky
-#define	SURF_WARP		0x8		// turbulent water warp
+#define	SURF_SKY		0x4		/* sky */
+#define	SURF_WARP		0x8		/* turbulent water warp */
 #define	SURF_TRANS33	0x10
 #define	SURF_TRANS66	0x20
-#define	SURF_FLOWING	0x40	// scroll towards angle
-#define	SURF_NODRAW		0x80	// don't bother referencing the texture
+#define	SURF_FLOWING	0x40	/* scroll towards angle */
+#define	SURF_NODRAW		0x80	/* don't bother referencing the texture */
 
-#define	SURF_HINT		0x100	// make a primary bsp splitter
-#define	SURF_SKIP		0x200	// completely ignore, allowing non-closed brushes
+#define	SURF_HINT		0x100	/* make a primary bsp splitter */
+#define	SURF_SKIP		0x200	/* completely ignore, allowing non-closed brushes */
 
 
 
 typedef struct
 {
 	int			planenum;
-	int			children[2];	// negative numbers are -(leafs+1), not nodes
-	short		mins[3];		// for frustom culling
+	int			children[2];	/* negative numbers are -(leafs+1), not nodes */
+	short		mins[3];		/* for frustom culling */
 	short		maxs[3];
 	unsigned short	firstface;
-	unsigned short	numfaces;	// counting both sides
+	unsigned short	numfaces;	/* counting both sides */
 } dnode_t;
 
 
 typedef struct texinfo_s
 {
-	float		vecs[2][4];		// [s/t][xyz offset]
-	int			flags;			// miptex flags + overrides
-	int			value;			// light emission, etc
-	char		texture[32];	// texture name (textures/*.wal)
-	int			nexttexinfo;	// for animations, -1 = end of chain
+	float		vecs[2][4];		/* [s/t][xyz offset] */
+	int			flags;			/* miptex flags + overrides */
+	int			value;			/* light emission, etc */
+	char		texture[32];	/* texture name (textures\*.wal) */
+	int			nexttexinfo;	/* for animations, -1 = end of chain */
 } texinfo_t;
 
 
-// note that edge 0 is never used, because negative edge nums are used for
-// counterclockwise use of the edge in a face
+/* note that edge 0 is never used, because negative edge nums are used for */
+/* counterclockwise use of the edge in a face */
 typedef struct
 {
-	unsigned short	v[2];		// vertex numbers
+	unsigned short	v[2];		/* vertex numbers */
 } dedge_t;
 
 #define	MAXLIGHTMAPS	4
@@ -402,23 +402,23 @@ typedef struct
 	unsigned short	planenum;
 	short		side;
 
-	int			firstedge;		// we must support > 64k edges
+	int			firstedge;		/* we must support > 64k edges */
 	short		numedges;	
 	short		texinfo;
 
-// lighting info
+/* lighting info */
 	byte		styles[MAXLIGHTMAPS];
-	int			lightofs;		// start of [numstyles*surfsize] samples
+	int			lightofs;		/* start of [numstyles*surfsize] samples */
 } dface_t;
 
 typedef struct
 {
-	int				contents;			// OR of all brushes (not needed?)
+	int				contents;			/* OR of all brushes (not needed?) */
 
 	short			cluster;
 	short			area;
 
-	short			mins[3];			// for frustum culling
+	short			mins[3];			/* for frustum culling */
 	short			maxs[3];
 
 	unsigned short	firstleafface;
@@ -430,7 +430,7 @@ typedef struct
 
 typedef struct
 {
-	unsigned short	planenum;		// facing out of the leaf
+	unsigned short	planenum;		/* facing out of the leaf */
 	short	texinfo;
 } dbrushside_t;
 
@@ -445,20 +445,22 @@ typedef struct
 #define	ANGLE_DOWN	-2
 
 
-// the visibility lump consists of a header with a count, then
-// byte offsets for the PVS and PHS of each cluster, then the raw
-// compressed bit vectors
-/*#define	DVIS_PVS	0
+/* the visibility lump consists of a header with a count, then */
+/* byte offsets for the PVS and PHS of each cluster, then the raw */
+/* compressed bit vectors */
+#if 0
+#define	DVIS_PVS	0
 #define	DVIS_PHS	1
 typedef struct
 {
 	int			numclusters;
-	int			bitofs[8][2];	// bitofs[numclusters][2]
-} dvis_t;*/
+	int			bitofs[8][2];	/* bitofs[numclusters][2] */
+} dvis_t;
+#endif
 
-// each area has a list of portals that lead into other areas
-// when portals are closed, other areas may not be visible or
-// hearable even if the vis info says that it should be
+/* each area has a list of portals that lead into other areas */
+/* when portals are closed, other areas may not be visible or */
+/* hearable even if the vis info says that it should be */
 typedef struct
 {
 	int		portalnum;

@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// cl.input.c  -- builds an intended movement command to send to the server
+/* cl.input.c  -- builds an intended movement command to send to the server */
 
 #include "client.h"
 
@@ -77,10 +77,10 @@ void KeyDown (kbutton_t *b)
 	if (c[0])
 		k = atoi(c);
 	else
-		k = -1;		// typed manually at the console for continuous down
+		k = -1;		/* typed manually at the console for continuous down */
 
 	if (k == b->down[0] || k == b->down[1])
-		return;		// repeating key
+		return;		/* repeating key */
 
 	if (!b->down[0])
 		b->down[0] = k;
@@ -93,15 +93,15 @@ void KeyDown (kbutton_t *b)
 	}
 
 	if (b->state & 1)
-		return;		// still down
+		return;		/* still down */
 
-	// save timestamp
+	/* save timestamp */
 	c = Cmd_Argv(2);
 	b->downtime = atoi(c);
 	if (!b->downtime)
 		b->downtime = sys_frame_time - 100;
 
-	b->state |= 1 + 2;	// down + impulse down
+	b->state |= 1 + 2;	/* down + impulse down */
 }
 
 void KeyUp (kbutton_t *b)
@@ -114,9 +114,9 @@ void KeyUp (kbutton_t *b)
 	if (c[0])
 		k = atoi(c);
 	else
-	{ // typed manually at the console, assume for unsticking, so clear all
+	{ /* typed manually at the console, assume for unsticking, so clear all */
 		b->down[0] = b->down[1] = 0;
-		b->state = 4;	// impulse up
+		b->state = 4;	/* impulse up */
 		return;
 	}
 
@@ -125,14 +125,14 @@ void KeyUp (kbutton_t *b)
 	else if (b->down[1] == k)
 		b->down[1] = 0;
 	else
-		return;		// key up without coresponding down (menu pass through)
+		return;		/* key up without coresponding down (menu pass through) */
 	if (b->down[0] || b->down[1])
-		return;		// some other key is still holding it down
+		return;		/* some other key is still holding it down */
 
 	if (!(b->state & 1))
-		return;		// still up (this should not happen)
+		return;		/* still up (this should not happen) */
 
-	// save timestamp
+	/* save timestamp */
 	c = Cmd_Argv(2);
 	uptime = atoi(c);
 	if (uptime)
@@ -140,8 +140,8 @@ void KeyUp (kbutton_t *b)
 	else
 		b->msec += 10;
 
-	b->state &= ~1;		// now up
-	b->state |= 4; 		// impulse up
+	b->state &= ~1;		/* now up */
+	b->state |= 4; 		/* impulse up */
 }
 
 
@@ -198,11 +198,11 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 	static float  save_camzoom;
 	static int save_level;
 
-	// no camera change if this is not our round
+	/* no camera change if this is not our round */
 	if ( cls.team != cl.actTeam )
 		return;
 
-	// save remote camera position, angles, zoom
+	/* save remote camera position, angles, zoom */
 	if (camera_mode == CAMERA_MODE_REMOTE)
 	{
 		VectorCopy(cl.cam.camorg, save_camorg);
@@ -259,13 +259,13 @@ float CL_KeyState (kbutton_t *key)
 	float		val;
 	int			msec;
 
-	key->state &= 1;		// clear impulses
+	key->state &= 1;		/* clear impulses */
 
 	msec = key->msec;
 	key->msec = 0;
 
 	if (key->state)
-	{	// still down
+	{	/* still down */
 		msec += sys_frame_time - key->downtime;
 		key->downtime = sys_frame_time;
 	}
@@ -287,7 +287,7 @@ float CL_KeyState (kbutton_t *key)
 }
 
 
-//==========================================================================
+/*========================================================================== */
 
 float MIN_ZOOM = 0.5;
 float MAX_ZOOM = 3.0;
@@ -313,8 +313,8 @@ cvar_t	*cl_anglespeedkey;
 #define MAX_CAMMOVE_SPEED	3000
 #define MAX_CAMMOVE_ACCEL	3000
 #define ZOOM_SPEED			1.4
-//#define MIN_ZOOM            0.5
-//#define MAX_ZOOM			3.0
+/*#define MIN_ZOOM            0.5 */
+/*#define MAX_ZOOM			3.0 */
 #define MIN_CAMZOOM_QUANT	0.2
 #define MAX_CAMZOOM_QUANT	1.0
 #define LEVEL_SPEED			3.0
@@ -325,7 +325,7 @@ cvar_t	*cl_anglespeedkey;
 #define CAMERA_START_HEIGHT	0
 #define CAMERA_LEVEL_HEIGHT	64
 
-//==========================================================================
+/*========================================================================== */
 
 /*
 ============
@@ -359,19 +359,19 @@ void CL_ZoomInQuant( void )
 {
 	float	quant;
 
-	// no zooming in first person mode
+	/* no zooming in first person mode */
 	if ( camera_mode == CAMERA_MODE_FIRSTPERSON )
 		return;
 
-	// check zoom quant
+	/* check zoom quant */
 	if ( cl_camzoomquant->value < MIN_CAMZOOM_QUANT ) quant = 1 + MIN_CAMZOOM_QUANT;
 	else if ( cl_camzoomquant->value > MAX_CAMZOOM_QUANT ) quant = 1 + MAX_CAMZOOM_QUANT;
 	else quant = 1 + cl_camzoomquant->value;
 
-	// change zoom
+	/* change zoom */
 	cl.cam.zoom *= quant;
 
-	// test boundaris
+	/* test boundaris */
 	if ( cl.cam.zoom > MAX_ZOOM ) cl.cam.zoom = MAX_ZOOM;
 }
 
@@ -384,19 +384,19 @@ void CL_ZoomOutQuant( void )
 {
 	float	quant;
 
-	// no zooming in first person mode
+	/* no zooming in first person mode */
 	if ( camera_mode == CAMERA_MODE_FIRSTPERSON )
 		return;
 
-	// check zoom quant
+	/* check zoom quant */
 	if ( cl_camzoomquant->value < MIN_CAMZOOM_QUANT ) quant = 1 + MIN_CAMZOOM_QUANT;
 	else if ( cl_camzoomquant->value > MAX_CAMZOOM_QUANT ) quant = 1 + MAX_CAMZOOM_QUANT;
 	else quant = 1 + cl_camzoomquant->value;
 
-	// change zoom
+	/* change zoom */
 	cl.cam.zoom /= quant;
 
-	// test boundaries
+	/* test boundaries */
 	if ( cl.cam.zoom < MIN_ZOOM ) cl.cam.zoom = MIN_ZOOM;
 }
 
@@ -593,7 +593,7 @@ void CL_NextAlien( void )
 }
 
 
-//==========================================================================
+/*========================================================================== */
 
 #ifdef DEBUG
 void CL_CamPrintAngles ( void )
@@ -735,7 +735,7 @@ float CL_GetKeyMouseState ( int dir )
 }
 
 
-//==========================================================================
+/*========================================================================== */
 
 qboolean	cameraRoute = qfalse;
 vec3_t		routeFrom, routeDelta;
@@ -794,14 +794,14 @@ void CL_CameraMoveRemote (void)
 	float			movespeed, moveaccel;
 	int				i;
 
-	// get relevant variables
+	/* get relevant variables */
 	rotspeed = (cl_camrotspeed->value > MIN_CAMROT_SPEED) ? ( (cl_camrotspeed->value < MAX_CAMROT_SPEED) ? cl_camrotspeed->value : MAX_CAMROT_SPEED ) : MIN_CAMROT_SPEED;
 	rotaccel = (cl_camrotaccel->value > MIN_CAMROT_ACCEL) ? ( (cl_camrotaccel->value < MAX_CAMROT_ACCEL) ? cl_camrotaccel->value : MAX_CAMROT_ACCEL ) : MIN_CAMROT_ACCEL;
 	movespeed = (cl_cammovespeed->value > MIN_CAMMOVE_SPEED) ? ( (cl_cammovespeed->value < MAX_CAMMOVE_SPEED) ? cl_cammovespeed->value : MAX_CAMMOVE_SPEED ) : MIN_CAMMOVE_SPEED;
 	moveaccel = (cl_cammoveaccel->value > MIN_CAMMOVE_ACCEL) ? ( (cl_cammoveaccel->value < MAX_CAMMOVE_ACCEL) ? cl_cammoveaccel->value : MAX_CAMMOVE_ACCEL ) : MIN_CAMMOVE_ACCEL;
 
-	// calculate camera omega
-	// stop acceleration
+	/* calculate camera omega */
+	/* stop acceleration */
 	frac = cls.frametime * rotaccel;
 
 	for ( i = 0; i < 2; i++ )
@@ -813,7 +813,7 @@ void CL_CameraMoveRemote (void)
 		}
 		else cl.cam.omega[i] = 0;
 
-		// rotational acceleration
+		/* rotational acceleration */
 		if ( i == YAW ) cl.cam.omega[i] += CL_GetKeyMouseState(STATE_ROT) * frac * 2;
 		else cl.cam.omega[i] += CL_GetKeyMouseState(STATE_TILT) * frac * 2;
 
@@ -828,10 +828,10 @@ void CL_CameraMoveRemote (void)
 
 	AngleVectors( cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2] );
 
-	// camera route overrides user input
+	/* camera route overrides user input */
 	if ( cameraRoute )
 	{
-		// camera route
+		/* camera route */
 		frac = cls.frametime * moveaccel * 2;
 		if ( VectorDist( cl.cam.reforg, routeFrom ) > routeDist - 200 )
 		{
@@ -847,8 +847,8 @@ void CL_CameraMoveRemote (void)
 	}
 	else
 	{
-		// normal camera movement
-		// calculate ground-based movement vectors
+		/* normal camera movement */
+		/* calculate ground-based movement vectors */
 		angle = cl.cam.angles[YAW] * (M_PI*2 / 360);
 		sy = sin(angle);
 		cy = cos(angle);
@@ -857,8 +857,8 @@ void CL_CameraMoveRemote (void)
 		VectorSet( g_right, sy, -cy, 0.0 );
 		VectorSet( g_up, 0.0, 0.0, 1.0 );
 
-		// calculate camera speed
-		// stop acceleration
+		/* calculate camera speed */
+		/* stop acceleration */
 		frac = cls.frametime * moveaccel;
 		if ( VectorLength( cl.cam.speed ) > frac )
 		{
@@ -867,7 +867,7 @@ void CL_CameraMoveRemote (void)
 		}
 		else VectorClear( cl.cam.speed );
 
-		// acceleration
+		/* acceleration */
 		frac = cls.frametime * moveaccel * 2;
 		VectorClear( delta );
 		VectorScale( g_forward, CL_GetKeyMouseState(STATE_FORWARD), delta );
@@ -875,7 +875,7 @@ void CL_CameraMoveRemote (void)
 		VectorNormalize( delta );
 		VectorMA( cl.cam.speed, frac, delta, cl.cam.speed );
 
-		// lerp the level
+		/* lerp the level */
 		if ( cl.cam.lerplevel < cl_worldlevel->value )
 		{
 			cl.cam.lerplevel += LEVEL_SPEED * (cl_worldlevel->value - cl.cam.lerplevel + LEVEL_MIN) * cls.frametime;
@@ -888,12 +888,12 @@ void CL_CameraMoveRemote (void)
 		}
 	}
 
-	// clamp speed
+	/* clamp speed */
 	frac = VectorLength( cl.cam.speed ) / movespeed;
 	if ( frac > 1.0 )
 		VectorScale( cl.cam.speed, 1.0 / frac, cl.cam.speed );
 
-	// calc new camera reference origin
+	/* calc new camera reference origin */
 	VectorMA( cl.cam.reforg, cls.frametime, cl.cam.speed, cl.cam.reforg );
 	if ( cl.cam.reforg[0] < map_min[0] ) cl.cam.reforg[0] = map_min[0];
 	if ( cl.cam.reforg[1] < map_min[1] ) cl.cam.reforg[1] = map_min[1];
@@ -901,11 +901,11 @@ void CL_CameraMoveRemote (void)
 	if ( cl.cam.reforg[1] > map_max[1] ) cl.cam.reforg[1] = map_max[1];
 	cl.cam.reforg[2] = 0;
 
-	// calc real camera origin
+	/* calc real camera origin */
 	VectorMA( cl.cam.reforg, -CAMERA_START_DIST + cl.cam.lerplevel * CAMERA_LEVEL_DIST, cl.cam.axis[0], cl.cam.camorg );
 	cl.cam.camorg[2] += CAMERA_START_HEIGHT + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
 
-	// zoom change
+	/* zoom change */
 	frac = CL_GetKeyMouseState(STATE_ZOOM);
 	if ( frac > 0.1 ) cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
 	if ( frac <-0.1 ) cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
@@ -939,7 +939,7 @@ CL_CameraRoute
 */
 void CL_CameraRoute( pos3_t from, pos3_t target )
 {
-	// initialize the camera route variables
+	/* initialize the camera route variables */
 	PosToVec( from, routeFrom );
 	PosToVec( target, routeDelta );
 	VectorSubtract( routeDelta, routeFrom, routeDelta );
@@ -968,7 +968,7 @@ void CL_ParseInput (void)
 {
 	int i, oldx, oldy;
 
-	// get new position
+	/* get new position */
 	oldx = mx;
 	oldy = my;
 	IN_GetMousePos( &mx, &my );
@@ -976,7 +976,7 @@ void CL_ParseInput (void)
 	switch ( mouseSpace )
 	{
 	case MS_ROTATE:
-		// rotate a model
+		/* rotate a model */
 		rotateAngles[1] -= ROTATE_SPEED * (mx - oldx);
 		rotateAngles[2] += ROTATE_SPEED * (my - oldy);
 		while ( rotateAngles[1] > 360.0 ) rotateAngles[1] -= 360.0;
@@ -986,7 +986,7 @@ void CL_ParseInput (void)
 		return;
 
 	case MS_SHIFTMAP:
-		// shift the map
+		/* shift the map */
 		ccs.center[0] -= (float)(mx - oldx) / (1024 * ccs.zoom);
 		ccs.center[1] -= (float)(my - oldy) / (512 * ccs.zoom);
 		for ( i = 0; i < 2; i++ )
@@ -999,7 +999,7 @@ void CL_ParseInput (void)
 		return;
 
 	case MS_ZOOMMAP:
-		// zoom the map
+		/* zoom the map */
 		ccs.zoom *= pow( 0.995, my - oldy );
 		if ( ccs.zoom < 1.0 ) ccs.zoom = 1.0;
 		if ( ccs.zoom > 6.0 ) ccs.zoom = 6.0;
@@ -1009,11 +1009,11 @@ void CL_ParseInput (void)
 		return;
 
 	case MS_DRAG:
-		// do nothing
+		/* do nothing */
 		return;
 
 	default:
-		// standard menu and world mouse handling
+		/* standard menu and world mouse handling */
 		if ( MN_CursorOnMenu( mx, my ) )
 		{
 			mouseSpace = MS_MENU;

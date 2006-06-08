@@ -39,67 +39,67 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SCROLLSPEED		1000
 
-// this is not best - but better than hardcoded every time i used it
+/* this is not best - but better than hardcoded every time i used it */
 #define RELEVANT_X		187.0
 #define RELEVANT_Y		280.0
-// take the values from scriptfile
+/* take the values from scriptfile */
 #define BASEMAP_SIZE_X		778.0
 #define BASEMAP_SIZE_Y		672.0
 
 #define BASE_SIZE		5
 #define MAX_BASE_LEVELS		1
 
-// max values for employee-management
+/* max values for employee-management */
 #define MAX_EMPLOYEES 1024
 #define MAX_EMPLOYEES_IN_BUILDING 64
-// TODO:
-// MAX_EMPLOYEES_IN_BUILDING should be redefined by a config variable that is lab/workshop/quarters-specific
-// e.g.:
-// if ( !maxEmployeesInQuarter ) maxEmployeesInQuarter = MAX_EMPLOYEES_IN_BUILDING;
-// if ( !maxEmployeesWorkersInLab ) maxEmployeesWorkersInLab = MAX_EMPLOYEES_IN_BUILDING;
-// if ( !maxEmployeesInWorkshop ) maxEmployeesInWorkshop = MAX_EMPLOYEES_IN_BUILDING;
+/* TODO: */
+/* MAX_EMPLOYEES_IN_BUILDING should be redefined by a config variable that is lab/workshop/quarters-specific */
+/* e.g.: */
+/* if ( !maxEmployeesInQuarter ) maxEmployeesInQuarter = MAX_EMPLOYEES_IN_BUILDING; */
+/* if ( !maxEmployeesWorkersInLab ) maxEmployeesWorkersInLab = MAX_EMPLOYEES_IN_BUILDING; */
+/* if ( !maxEmployeesInWorkshop ) maxEmployeesInWorkshop = MAX_EMPLOYEES_IN_BUILDING; */
 
-// allocate memory for menuText[TEXT_STANDARD] contained the information about a building
+/* allocate memory for menuText[TEXT_STANDARD] contained the information about a building */
 char	buildingText[MAX_LIST_CHAR];
 
-// The types of employees
+/* The types of employees */
 typedef enum
 {
 	EMPL_UNDEF,
 	EMPL_SOLDIER,
 	EMPL_SCIENTIST,
-	EMPL_WORKER,		// unused right now
-	EMPL_MEDIC,		// unused right now
-	EMPL_ROBOT,		// unused right now
-	MAX_EMPL			// for counting over all available enums
+	EMPL_WORKER,		/* unused right now */
+	EMPL_MEDIC,		/* unused right now */
+	EMPL_ROBOT,		/* unused right now */
+	MAX_EMPL			/* for counting over all available enums */
 } employeeType_t;
 
-// The definition of an employee
+/* The definition of an employee */
 typedef struct employee_s
 {
-	int idx;				// self link in global employee-list.
-	employeeType_t type;		// What profession does this employee has.
+	int idx;				/* self link in global employee-list. */
+	employeeType_t type;		/* What profession does this employee has. */
 
-	char speed;			// Speed of this Worker/Scientist at research/construction.
+	char speed;			/* Speed of this Worker/Scientist at research/construction. */
 
-	int base_idx;	// what base this employee is in.
-	int quarters;	// The quarter this employee is assigned to. (all except EMPL_ROBOT)
-	int lab;		// The lab this scientist is working in. (only EMPL_SCIENTIST)
-	int workshop;	// The lab this worker is working in. (only EMPL_WORKER)
-	//int sickbay;	// The sickbay this employee is medicaly treated in. (all except EMPL_ROBOT ... since all can get injured.)
-	//int training_room;	// The room this soldier is training in in. (only EMPL_SOLDIER)
+	int base_idx;	/* what base this employee is in. */
+	int quarters;	/* The quarter this employee is assigned to. (all except EMPL_ROBOT) */
+	int lab;		/* The lab this scientist is working in. (only EMPL_SCIENTIST) */
+	int workshop;	/* The lab this worker is working in. (only EMPL_WORKER) */
+	/*int sickbay;	// The sickbay this employee is medicaly treated in. (all except EMPL_ROBOT ... since all can get injured.) */
+	/*int training_room;	// The room this soldier is training in in. (only EMPL_SOLDIER) */
 
-	struct character_s *combat_stats;	// Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked)
+	struct character_s *combat_stats;	/* Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
 } employee_t;
 
 
-// Struct to be used in building definition - List of employees.
+/* Struct to be used in building definition - List of employees. */
 typedef struct employees_s
 {
-	int assigned[MAX_EMPLOYEES_IN_BUILDING];	// List of employees (links to global list).
-	int numEmployees;					// Current number of employees.
-	int maxEmployees;					// Max. number of employees (from config file)
-	float cost_per_employee;				// Costs per employee that are added to toom-total-costs-
+	int assigned[MAX_EMPLOYEES_IN_BUILDING];	/* List of employees (links to global list). */
+	int numEmployees;					/* Current number of employees. */
+	int maxEmployees;					/* Max. number of employees (from config file) */
+	float cost_per_employee;				/* Costs per employee that are added to toom-total-costs- */
 } employees_t;
 
 typedef enum
@@ -111,12 +111,12 @@ typedef enum
 
 typedef enum
 {
-	B_STATUS_NOT_SET, // not build yet
-	B_STATUS_UNDER_CONSTRUCTION, // right now under construction
-	B_STATUS_CONSTRUCTION_FINISHED, // construction finished - no workers assigned
-				 // and building needs workers
-	B_STATUS_WORKING, // working normal (or workers assigned when needed)
-	B_STATUS_DOWN // totally damaged
+	B_STATUS_NOT_SET, /* not build yet */
+	B_STATUS_UNDER_CONSTRUCTION, /* right now under construction */
+	B_STATUS_CONSTRUCTION_FINISHED, /* construction finished - no workers assigned */
+				 /* and building needs workers */
+	B_STATUS_WORKING, /* working normal (or workers assigned when needed) */
+	B_STATUS_DOWN /* totally damaged */
 } buildingStatus_t;
 
 typedef enum
@@ -130,31 +130,31 @@ typedef enum
 
 typedef struct building_s
 {
-	int	idx;		// self link in "buildings" list.
-	int	type_idx;	// self link in "buildingTypes" list.
-	int	base_idx;	// Number/index of base this building is located in.
+	int	idx;		/* self link in "buildings" list. */
+	int	type_idx;	/* self link in "buildingTypes" list. */
+	int	base_idx;	/* Number/index of base this building is located in. */
 
 	char	id[MAX_VAR];
 	char	name[MAX_VAR];
-	// needs determines the second building part
+	/* needs determines the second building part */
 	char	*image, *mapPart, *pedia;
-	char *needs;	// if the buildign has a second part
+	char *needs;	/* if the buildign has a second part */
 	float	fixCosts, varCosts;
 
 	int	timeStart, buildTime;
 
-	// A list of employees assigned to this building.
+	/* A list of employees assigned to this building. */
 	struct employees_s assigned_employees;
 
-	//if we can build more than one building of the same type:
-	buildingStatus_t	buildingStatus; //[BASE_SIZE*BASE_SIZE];
+	/*if we can build more than one building of the same type: */
+	buildingStatus_t	buildingStatus; /*[BASE_SIZE*BASE_SIZE]; */
 
 	byte	visible;
-	// needed for baseassemble
-	// when there are two tiles (like hangar) - we only load the first tile
+	/* needed for baseassemble */
+	/* when there are two tiles (like hangar) - we only load the first tile */
 	int	used;
 
-	// event handler functions
+	/* event handler functions */
 	char	onConstruct[MAX_VAR];
 	char	onAttack[MAX_VAR];
 	char	onDestroy[MAX_VAR];
@@ -162,23 +162,23 @@ typedef struct building_s
 	char	onRepair[MAX_VAR];
 	char	onClick[MAX_VAR];
 
-	//more than one building of the same type allowed?
+	/*more than one building of the same type allowed? */
 	int	moreThanOne;
 
-	//position of autobuild
+	/*position of autobuild */
 	vec2_t	pos;
 
-	//autobuild when base is set up
+	/*autobuild when base is set up */
 	byte	autobuild;
 
-	//autobuild when base is set up
+	/*autobuild when base is set up */
 	byte	firstbase;
 
-	//this way we can rename the buildings without loosing the control
+	/*this way we can rename the buildings without loosing the control */
 	buildingType_t	buildingType;
 
-	int tech; // link to the building-technology
-	// if the building needs another one to work (= to be buildable) .. links to gd.buildingTypes
+	int tech; /* link to the building-technology */
+	/* if the building needs another one to work (= to be buildable) .. links to gd.buildingTypes */
 	int dependsBuilding;
 } building_t;
 
@@ -214,91 +214,91 @@ typedef struct craftupgrade_s
 	/* some of this informations defined here overwrite the ones in the aircraft_t struct if given. */
 
 	/* general */
-	char	id[MAX_VAR];		// Short (unique) id/name.
-	int	idx;				// Self-link in the global list
-	char	name[MAX_VAR];		// Full name of this upgrade
-	craftupgrade_type_t type;	// weapon/engine/armor
-	int	pedia;			// -pedia link
+	char	id[MAX_VAR];		/* Short (unique) id/name. */
+	int	idx;				/* Self-link in the global list */
+	char	name[MAX_VAR];		/* Full name of this upgrade */
+	craftupgrade_type_t type;	/* weapon/engine/armor */
+	int	pedia;			/* -pedia link */
 
 	/* armor related */
-	float armor_kinetic;		// maybe using (k)Newtons here?
-	float armor_shield;			// maybe using (k)Newtons here?
+	float armor_kinetic;		/* maybe using (k)Newtons here? */
+	float armor_shield;			/* maybe using (k)Newtons here? */
 
 	/* weapon related */
-	int ammo;				// index of the 'ammo' craftupgrade entry.
-	struct weapontype_s *weapontype;	// e.g beam/particle/missle ( do we already have something like that?)
+	int ammo;				/* index of the 'ammo' craftupgrade entry. */
+	struct weapontype_s *weapontype;	/* e.g beam/particle/missle ( do we already have something like that?) */
 	int num_ammo;
-	float    damage_kinetic;		// maybe using (k)Newtons here?
-	float    damage_shield;		// maybe using (k)Newtons here?
-	float    range;				// meters (only for non-beam weapons. i.e projectiles, missles, etc...)
+	float    damage_kinetic;		/* maybe using (k)Newtons here? */
+	float    damage_shield;		/* maybe using (k)Newtons here? */
+	float    range;				/* meters (only for non-beam weapons. i.e projectiles, missles, etc...) */
 
 	/* drive related */
-	int    speed;				// the maximum speed the craft can fly with this upgrade
-	int    fuelSize;				// the maximum fuel size
+	int    speed;				/* the maximum speed the craft can fly with this upgrade */
+	int    fuelSize;				/* the maximum fuel size */
 
 	/* representation/display */
-	char    model[MAX_QPATH];	// 3D model
-	char    image[MAX_VAR];		// image
+	char    model[MAX_QPATH];	/* 3D model */
+	char    image[MAX_VAR];		/* image */
 } craftupgrade_t;
 
 typedef struct aircraft_s
 {
-	int idx;			// Self-link in the global list
-	char	id[MAX_VAR];	// translateable name
-	char	name[MAX_VAR];	// internal id
-	char	image[MAX_VAR];	// image on geoscape
+	int idx;			/* Self-link in the global list */
+	char	id[MAX_VAR];	/* translateable name */
+	char	name[MAX_VAR];	/* internal id */
+	char	image[MAX_VAR];	/* image on geoscape */
 	aircraftType_t	type;
-	int		status;	// see aircraftStatus_t
+	int		status;	/* see aircraftStatus_t */
 	float		speed;
 	int	price;
-	int	fuel;	// actual fuel
-	int	fuelSize;	// max fuel
-	int	size;	// how many soldiers max
-	vec2_t	pos;	// actual pos on geoscape
+	int	fuel;	/* actual fuel */
+	int	fuelSize;	/* max fuel */
+	int	size;	/* how many soldiers max */
+	vec2_t	pos;	/* actual pos on geoscape */
 	int		point;
 	int		time;
-	int	idx_base;	// id in base
-	int	*teamSize;	// how many soldiers on board
-				// pointer to base->numOnTeam[AIRCRAFT_ID]
-	// TODO
-	// xxx teamShape;    // TODO: shape of the soldier-area onboard.
+	int	idx_base;	/* id in base */
+	int	*teamSize;	/* how many soldiers on board */
+				/* pointer to base->numOnTeam[AIRCRAFT_ID] */
+	/* TODO */
+	/* xxx teamShape;    // TODO: shape of the soldier-area onboard. */
 	char	model[MAX_QPATH];
 	char	weapon_string[MAX_VAR];
 	technology_t*	weapon;
 	char	shield_string[MAX_VAR];
 	technology_t*	shield;
 	mapline_t route;
-	void*	homebase;	// pointer to homebase
+	void*	homebase;	/* pointer to homebase */
 
-	char    building[MAX_VAR];	// id of the building needed as hangar
+	char    building[MAX_VAR];	/* id of the building needed as hangar */
 
-	craftupgrade_t    *upgrades[MAX_CRAFTUPGRADES];	// TODO replace armor/weapon/engine definitions from above with this.
+	craftupgrade_t    *upgrades[MAX_CRAFTUPGRADES];	/* TODO replace armor/weapon/engine definitions from above with this. */
 	int    numUpgrades;
-	struct aircraft_s *next; // just for linking purposes - not needed in general
+	struct aircraft_s *next; /* just for linking purposes - not needed in general */
 } aircraft_t;
 
 typedef struct base_s
 {
-	int	idx;	// self link
+	int	idx;	/* self link */
 	char	name[MAX_VAR];
 	int	map[BASE_SIZE][BASE_SIZE];
 
 	qboolean founded;
 	vec2_t pos;
 
-	// to decide which actions are available in the basemenu
+	/* to decide which actions are available in the basemenu */
 	byte	hasHangar;
-	byte	hasLab;	// TODO: still needed.
+	byte	hasLab;	/* TODO: still needed. */
 
-	//this is here to allocate the needed memory for the buildinglist
+	/*this is here to allocate the needed memory for the buildinglist */
 	char	allBuildingsList[MAX_LIST_CHAR];
 
-	//mapChar indicated which map to load (gras, desert, arctic,...)
-	//d=desert, a=arctic, g=gras
+	/*mapChar indicated which map to load (gras, desert, arctic,...) */
+	/*d=desert, a=arctic, g=gras */
 	char	mapChar;
 
-	// all aircraft in this base
-	// FIXME: make me a linked list (see cl_market.c aircraft selling)
+	/* all aircraft in this base */
+	/* FIXME: make me a linked list (see cl_market.c aircraft selling) */
 	aircraft_t	aircraft[MAX_AIRCRAFT];
 	int 	numAircraftInBase;
 	int	aircraftCurrent;
@@ -310,18 +310,18 @@ typedef struct base_s
 
 	baseStatus_t	baseStatus;
 
-	int		hiredMask; // hired mask for all soldiers in base
-	int		teamMask[MAX_AIRCRAFT]; // assigned to a specific aircraft
+	int		hiredMask; /* hired mask for all soldiers in base */
+	int		teamMask[MAX_AIRCRAFT]; /* assigned to a specific aircraft */
 	int		deathMask;
 
 	int		numHired;
 	int		numOnTeam[MAX_AIRCRAFT];
-	int		numWholeTeam; // available soldiers in this base
+	int		numWholeTeam; /* available soldiers in this base */
 
-	// the onconstruct value of the buliding
-	// building_radar increases the sensor width
-	int	sensorWidth; // radar radius
-	qboolean	drawSensor; // ufo in range?
+	/* the onconstruct value of the buliding */
+	/* building_radar increases the sensor width */
+	int	sensorWidth; /* radar radius */
+	qboolean	drawSensor; /* ufo in range? */
 
 	inventory_t	teamInv[MAX_WHOLETEAM];
 	inventory_t	equipment;
@@ -331,20 +331,20 @@ typedef struct base_s
 	character_t	*curChr;
 
 	int		equipType;
-	int		nextUCN; // unified character id (base dependent)
+	int		nextUCN; /* unified character id (base dependent) */
 
-	// needed if there is another buildingpart to build (link to gd.buildingTypes)
+	/* needed if there is another buildingpart to build (link to gd.buildingTypes) */
 	int buildingToBuild;
 
 	struct building_s *buildingCurrent;
 } base_t;
 
-// Currently displayed/accessed base.
+/* Currently displayed/accessed base. */
 extern	base_t	*baseCurrent;
 
-// This it the global list of all available craft-upgrades
+/* This it the global list of all available craft-upgrades */
 craftupgrade_t    *craftupgrades[MAX_CRAFTUPGRADES];
-// The global number of entries in the "craftupgrades" list.
+/* The global number of entries in the "craftupgrades" list. */
 int    numCraftUpgrades;
 
 void B_SetSensor( void );
@@ -376,7 +376,7 @@ typedef struct production_s
 {
 	char    id[MAX_VAR];
 	char    name[MAX_VAR];
-	char    text[MAX_VAR]; //short description
+	char    text[MAX_VAR]; /*short description */
 	int	amount;
 	char	menu[MAX_VAR];
 	technology_t* tech;

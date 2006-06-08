@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "q_shared.h"
 
 #ifdef Q2_MMX_ENABLED
-// used for mmx optimizations
+/* used for mmx optimizations */
 #include <xmmintrin.h>
 #endif
 
@@ -39,7 +39,7 @@ const float dangle[8] = { 0, 180.0f, 90.0f, 270.0f, 45.0f, 225.0f, 135.0f, 315.0
 const byte dvright[8] = { 7, 6, 4, 5, 0, 1, 2, 3 };
 const byte dvleft[8]  = { 4, 5, 6, 7, 2, 3, 1, 0 };
 
-//============================================================================
+/*============================================================================ */
 
 int AngleToDV( int angle )
 {
@@ -66,7 +66,7 @@ int AngleToDV( int angle )
 	return mini;
 }
 
-//============================================================================
+/*============================================================================ */
 
 #ifdef _MSC_VER
 #pragma optimize( "", off )
@@ -135,7 +135,7 @@ void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 {
 	float		angle;
 	static float		sr, sp, sy, cr, cp, cy;
-	// static to help MS compiler fp bugs
+	/* static to help MS compiler fp bugs */
 
 	angle = angles[YAW] * (M_PI*2 / 360);
 	sy = sin(angle);
@@ -196,7 +196,7 @@ void PerpendicularVector( vec3_t dst, const vec3_t src )
 	float minelem = 1.0F;
 	vec3_t tempvec;
 
-	// find the smallest magnitude axially aligned vector
+	/* find the smallest magnitude axially aligned vector */
 	for ( pos = 0, i = 0; i < 3; i++ )
 	{
 		if ( fabs( src[i] ) < minelem )
@@ -208,10 +208,10 @@ void PerpendicularVector( vec3_t dst, const vec3_t src )
 	tempvec[0] = tempvec[1] = tempvec[2] = 0.0F;
 	tempvec[pos] = 1.0F;
 
-	// project the point onto the plane defined by src
+	/* project the point onto the plane defined by src */
 	ProjectPointOnPlane( dst, tempvec, src );
 
-	// normalize the result
+	/* normalize the result */
 	VectorNormalize( dst );
 }
 
@@ -315,7 +315,7 @@ void VecToAngles (vec3_t value1, vec3_t angles)
 }
 
 
-//============================================================================
+/*============================================================================ */
 
 
 float Q_fabs (float f)
@@ -375,7 +375,7 @@ float	anglemod(float a)
 int	i;
 vec3_t	corners[2];
 
-// this is the slow, general version
+/* this is the slow, general version */
 int BoxOnPlaneSide2 (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 {
 	int		i;
@@ -420,7 +420,7 @@ int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 	float	dist1, dist2;
 	int		sides;
 
-	// fast axial cases
+	/* fast axial cases */
 	if (p->type < 3)
 	{
 		if (p->dist <= emins[p->type])
@@ -430,7 +430,7 @@ int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		return 3;
 	}
 
-	// general case
+	/* general case */
 	switch (p->signbits)
 	{
 	case 0:
@@ -466,7 +466,7 @@ int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		dist2 = p->normal[0]*emaxs[0] + p->normal[1]*emaxs[1] + p->normal[2]*emaxs[2];
 		break;
 	default:
-		dist1 = dist2 = 0;		// shut up compiler
+		dist1 = dist2 = 0;		/* shut up compiler */
 		assert( 0 );
 		break;
 	}
@@ -755,7 +755,7 @@ vec_t VectorNormalize (vec3_t v)
 	float	length, ilength;
 
 	length = v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
-	length = sqrt (length);		// FIXME
+	length = sqrt (length);		/* FIXME */
 
 	if (length)
 	{
@@ -774,7 +774,7 @@ vec_t VectorNormalize2 (vec3_t v, vec3_t out)
 	float	length, ilength;
 
 	length = v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
-	length = sqrt (length);		// FIXME
+	length = sqrt (length);		/* FIXME */
 
 	if (length)
 	{
@@ -801,12 +801,12 @@ void VectorClampMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
 	int i;
 	newScale = scale;
 
-	// clamp veca to bounds
+	/* clamp veca to bounds */
 	for ( i = 0; i < 3; i++ )
 		if ( veca[i] > 4094.0 ) veca[i] = 4094.0;
 		else if ( veca[i] < -4094.0 ) veca[i] = -4094.0;
 
-	// rescale to fit
+	/* rescale to fit */
 	for ( i = 0; i < 3; i++ )
 	{
 		test = veca[i] + scale*vecb[i];
@@ -822,7 +822,7 @@ void VectorClampMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
 		}
 	}
 
-	// use rescaled scale
+	/* use rescaled scale */
 	for ( i = 0; i < 3; i++ )
 		vecc[i] = veca[i] + scale*vecb[i];
 }
@@ -882,7 +882,7 @@ vec_t _DotProduct (vec3_t v1, vec3_t v2)
 void _VectorSubtract (vec3_t veca, vec3_t vecb, vec3_t out)
 {
 #if Q2_MMX_ENABLED
-	// raynorpat: msvc sse optimization
+	/* raynorpat: msvc sse optimization */
 	__m128 xmm_veca, xmm_vecb, xmm_out;
 
 	xmm_veca = _mm_load_ss(&veca[0]);
@@ -909,7 +909,7 @@ void _VectorSubtract (vec3_t veca, vec3_t vecb, vec3_t out)
 void _VectorAdd (vec3_t veca, vec3_t vecb, vec3_t out)
 {
 #if Q2_MMX_ENABLED
-	// raynorpat: msvc sse optimization
+	/* raynorpat: msvc sse optimization */
 	__m128 xmm_veca, xmm_vecb, xmm_out;
 
 	xmm_veca = _mm_load_ss(&veca[0]);
@@ -936,7 +936,7 @@ void _VectorAdd (vec3_t veca, vec3_t vecb, vec3_t out)
 void _VectorCopy (vec3_t in, vec3_t out)
 {
 #if Q2_MMX_ENABLED
-	// raynorpat: msvc sse optimization
+	/* raynorpat: msvc sse optimization */
 	__m128 xmm_in;
 
 	xmm_in = _mm_load_ss(&in[0]);
@@ -971,7 +971,7 @@ vec_t VectorLength(vec3_t v)
 	length = 0;
 	for (i=0 ; i< 3 ; i++)
 		length += v[i]*v[i];
-	length = sqrt (length);		// FIXME
+	length = sqrt (length);		/* FIXME */
 
 	return length;
 }
@@ -986,7 +986,7 @@ void VectorInverse (vec3_t v)
 void VectorScale (vec3_t in, vec_t scale, vec3_t out)
 {
 #if Q2_MMX_ENABLED
-	// raynorpat: msvc sse optimization
+	/* raynorpat: msvc sse optimization */
 	__m128 xmm_in, xmm_scale, xmm_out;
 
 	xmm_in = _mm_load_ss(&in[0]);
@@ -1032,7 +1032,7 @@ float	crand(void)
 }
 
 
-//====================================================================================
+/*==================================================================================== */
 
 /*
 ============
@@ -1220,16 +1220,16 @@ COM_DefaultExtension
 void COM_DefaultExtension (char *path, char *extension)
 {
 	char    *src;
-	//
-	// if path doesn't have a .EXT, append extension
-	// (extension should include the .)
-	//
+	/* */
+	/* if path doesn't have a .EXT, append extension */
+	/* (extension should include the .) */
+	/* */
 	src = path + strlen(path) - 1;
 
 	while (*src != '/' && src != path)
 	{
 		if (*src == '.')
-			return;                 // it has an extension
+			return;                 /* it has an extension */
 		src--;
 	}
 
@@ -1245,8 +1245,8 @@ BYTE ORDER FUNCTIONS
 
 qboolean	bigendien;
 
-// can't just use function pointers, or dll linkage can
-// mess up when qcommon is included in multiple places
+/* can't just use function pointers, or dll linkage can */
+/* mess up when qcommon is included in multiple places */
 short	(*_BigShort) (short l);
 short	(*_LittleShort) (short l);
 int	(*_BigLong) (int l);
@@ -1324,7 +1324,7 @@ void Swap_Init (void)
 {
 	byte	swaptest[2] = {1,0};
 
-	// set the byte swapping variables in a portable manner
+	/* set the byte swapping variables in a portable manner */
 	if ( *(short *)swaptest == 1)
 	{
 		bigendien = qfalse;
@@ -1399,7 +1399,7 @@ char *COM_Parse (char **data_p)
 		return "";
 	}
 
-	// skip whitespace
+	/* skip whitespace */
 skipwhite:
 	while ( (c = *data) <= ' ')
 	{
@@ -1411,7 +1411,7 @@ skipwhite:
 		data++;
 	}
 
-	// skip // comments
+	/* skip // comments */
 	if (c=='/' && data[1] == '/')
 	{
 		while (*data && *data != '\n')
@@ -1419,7 +1419,7 @@ skipwhite:
 		goto skipwhite;
 	}
 
-	// handle quoted strings specially
+	/* handle quoted strings specially */
 	if (c == '\"')
 	{
 		data++;
@@ -1440,7 +1440,7 @@ skipwhite:
 		}
 	}
 
-	// parse a regular word
+	/* parse a regular word */
 	do
 	{
 		if (len < MAX_TOKEN_CHARS)
@@ -1454,7 +1454,7 @@ skipwhite:
 
 	if (len == MAX_TOKEN_CHARS)
 	{
-// 		Com_Printf ("Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS);
+/* 		Com_Printf ("Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS); */
 		len = 0;
 	}
 	com_token[len] = 0;
@@ -1533,8 +1533,8 @@ int Q_stricmp (char *s1, char *s2)
         return strcasecmp(s1, s2);
 }
 
-#else // sun
-// FIXME: replace all Q_stricmp with Q_strcasecmp
+#else /* sun */
+/* FIXME: replace all Q_stricmp with Q_strcasecmp */
 int Q_stricmp (char *s1, char *s2)
 {
 #ifdef _WIN32
@@ -1554,7 +1554,7 @@ int Q_strncasecmp (char *s1, char *s2, int n)
 		c2 = *s2++;
 
 		if (!n--)
-			return 0;		// strings are equal until end point
+			return 0;		/* strings are equal until end point */
 
 		if (c1 != c2)
 		{
@@ -1563,13 +1563,13 @@ int Q_strncasecmp (char *s1, char *s2, int n)
 			if (c2 >= 'a' && c2 <= 'z')
 				c2 -= ('a' - 'A');
 			if (c1 != c2)
-				return -1;		// strings not equal
+				return -1;		/* strings not equal */
 		}
 	} while (c1);
 
-	return 0;		// strings are equal
+	return 0;		/* strings are equal */
 }
-#endif // sun
+#endif /* sun */
 
 /*
 =============
@@ -1596,7 +1596,7 @@ void Q_strncpyz( char *dest, const char *src, int destsize )
 	dest[destsize-1] = 0;
 }
 
-// never goes past bounds or leaves without a terminating 0
+/* never goes past bounds or leaves without a terminating 0 */
 void Q_strcat( char *dest, int size, const char *src )
 {
 	int	l1;
@@ -1650,8 +1650,8 @@ key and returns the associated value, or an empty string.
 char *Info_ValueForKey (char *s, char *key)
 {
 	char	pkey[512];
-	static	char value[2][512];	// use two buffers so compares
-								// work without stomping on each other
+	static	char value[2][512];	/* use two buffers so compares */
+								/* work without stomping on each other */
 	static	int	valueindex;
 	char	*o;
 
@@ -1694,7 +1694,7 @@ void Info_RemoveKey (char *s, const char *key)
 
 	if (strstr (key, "\\"))
 	{
-//		Com_Printf ("Can't use a key with a \\\n");
+/*		Com_Printf ("Can't use a key with a \\\n"); */
 		return;
 	}
 
@@ -1724,7 +1724,7 @@ void Info_RemoveKey (char *s, const char *key)
 
 		if (!Q_strncmp ((char*)key, pkey, 512) )
 		{
-			strcpy (start, s);	// remove this part
+			strcpy (start, s);	/* remove this part */
 			return;
 		}
 
@@ -1755,9 +1755,9 @@ qboolean Info_Validate (char *s)
 void Info_SetValueForKey (char *s, const char *key, const char *value)
 {
 	char	newi[MAX_INFO_STRING];
-// 	char	*v;
-// 	int	c;
-// 	int	maxsize = MAX_INFO_STRING;
+/* 	char	*v; */
+/* 	int	c; */
+/* 	int	maxsize = MAX_INFO_STRING; */
 
 	if (strstr (key, "\\") || strstr (value, "\\") )
 	{
@@ -1800,13 +1800,13 @@ void Info_SetValueForKey (char *s, const char *key, const char *value)
 	Q_strncpyz (s, newi, MAX_INFO_STRING );
 
 #if 0
-	// only copy ascii values
+	/* only copy ascii values */
 	s += strlen(s);
 	v = newi;
 	while (*v)
 	{
 		c = *v++;
-		c &= 127;		// strip high bits
+		c &= 127;		/* strip high bits */
 		if (c >= 32 && c < 127)
 			*s++ = c;
 	}
@@ -1868,14 +1868,14 @@ qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, i
 	int		j;
 
 	assert( i );
-	// armor vs item
+	/* armor vs item */
 	if ( !strcmp( CSI->ods[item].type, "armor" ) )
 	{
 		if ( !CSI->ids[container].armor && !CSI->ids[container].all ) return qfalse;
 	}
 	else if ( CSI->ids[container].armor ) return qfalse;
 
-	// special hand checks
+	/* special hand checks */
 	right = i->c[CSI->idRight];
 	left  = i->c[CSI->idLeft];
 
@@ -1891,32 +1891,32 @@ qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, i
 		else return qfalse;
 	}
 
-	// single item containers
+	/* single item containers */
 	if ( CSI->ids[container].single )
 	{
 		if ( i->c[container] ) return qfalse;
 		else return qtrue;
 	}
 
-	// check bounds
+	/* check bounds */
 	if ( x < 0 || y < 0 || x >= 32 || y >= 16 )
 		return qfalse;
 
-	// extract shape info
+	/* extract shape info */
 	for ( j = 0; j < 16; j++ )
 		mask[j] = ~CSI->ids[container].shape[j];
 
-	// add other items to mask
+	/* add other items to mask */
 	for ( ic = i->c[container]; ic; ic = ic->next )
 		for ( j = 0; j < 4 && ic->y+j < 16; j++ )
 			mask[ic->y+j] |= ((CSI->ods[ic->item.t].shape >> j*8) & 0xFF) << ic->x;
 
-	// test for collisions with newly generated mask
+	/* test for collisions with newly generated mask */
 	for ( j = 0; j < 4; j++ )
 		if ( (((CSI->ods[item].shape >> j*8) & 0xFF) << x) & mask[y+j] )
 			return qfalse;
 
-	// everything ok
+	/* everything ok */
 	return qtrue;
 }
 
@@ -1938,7 +1938,7 @@ invList_t *Com_SearchInInventory( inventory_t *i, int container, int x, int y )
 			((CSI->ods[ic->item.t].shape >> (x-ic->x) >> (y-ic->y)*8)) & 1 )
 			return ic;
 
-	// found nothing
+	/* found nothing */
 	return NULL;
 }
 
@@ -1960,14 +1960,14 @@ invList_t *Com_AddToInventory( inventory_t *i, item_t item, int container, int x
 	if ( item.t == NONE ) return NULL;
 
 	assert( i );
-	// allocate space
+	/* allocate space */
 	ic = i->c[container];
 	i->c[container] = invUnused;
 	invUnused = invUnused->next;
 	i->c[container]->next = ic;
 	ic = i->c[container];
 
-	// set the data
+	/* set the data */
 	ic->item = item;
 	ic->x = x;
 	ic->y = y;
@@ -1987,7 +1987,7 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 	ic = i->c[container];
 	if ( !ic )
 	{
-		//Com_DPrintf("Com_RemoveFromInventory - no container %i\n", container );
+		/*Com_DPrintf("Com_RemoveFromInventory - no container %i\n", container ); */
 		return qfalse;
 	}
 
@@ -2038,18 +2038,18 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 
 	assert( i );
 
-	if ( !Com_RemoveFromInventory( i, from, fx, fy ) ) return IA_NONE; // break if source item is not removeable
+	if ( !Com_RemoveFromInventory( i, from, fx, fy ) ) return IA_NONE; /* break if source item is not removeable */
 
-	// if weapon is twohanded and is moved from hand to hand do nothing.
+	/* if weapon is twohanded and is moved from hand to hand do nothing. */
 	if ( CSI->ods[cacheItem.t].twohanded
 	&& ( ( to == CSI->idLeft && from == CSI->idRight ) || ( to == CSI->idRight && from == CSI->idLeft ) ) )
 		return IA_NONE;
 
-	//check if the target is a blocked inv-armor and source!=dest
+	/*check if the target is a blocked inv-armor and source!=dest */
  	if ( CSI->ids[to].armor && !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) && from!=to ) {
- 		cacheItem2 = cacheItem;						// save/chache (source) item
- 		Com_MoveInInventory( i, to, tx, ty, from, fx, fy, TU, icp );	// move the destination item to the source
- 		cacheItem = cacheItem2;						// reset the cached item (source)
+ 		cacheItem2 = cacheItem;						/* save/chache (source) item */
+ 		Com_MoveInInventory( i, to, tx, ty, from, fx, fy, TU, icp );	/* move the destination item to the source */
+ 		cacheItem = cacheItem2;						/* reset the cached item (source) */
  	}
 	if ( !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) )
 	{
@@ -2059,7 +2059,7 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 		{
 			if ( ic->item.a >= CSI->ods[ic->item.t].ammo )
 			{
-				// weapon already loaded
+				/* weapon already loaded */
 				Com_AddToInventory( i, cacheItem, from, fx, fy );
 				return IA_NORELOAD;
 			}
@@ -2073,25 +2073,25 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 				if ( icp ) *icp = ic;
 				return IA_RELOAD;
 			}
-			// not enough time
+			/* not enough time */
 			Com_AddToInventory( i, cacheItem, from, fx, fy );
 			return IA_NOTIME;
 		}
 
-		// impossible move
+		/* impossible move */
 		Com_AddToInventory( i, cacheItem, from, fx, fy );
 		return IA_NONE;
 	}
 
-	// twohanded exception
+	/* twohanded exception */
 	if ( CSI->ods[cacheItem.t].twohanded && to == CSI->idLeft )
 		to = CSI->idRight;
 
-	// successful
+	/* successful */
 	if ( TU ) *TU -= time;
 	ic = Com_AddToInventory( i, cacheItem, to, tx, ty );
 
-	// return data
+	/* return data */
 	if ( icp ) *icp = ic;
 	if ( to == CSI->idArmor ) return IA_ARMOR;
 	else return IA_MOVE;
@@ -2184,7 +2184,7 @@ void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility,
 	assert( chr );
 	retry = MAX_GENCHARRETRIES;
 	do {
-		// Abilities
+		/* Abilities */
 		total = ABILITY_NUM_TYPES*(maxAbility-minAbility)/2;
 		max = 0;
 		min = 1;
@@ -2194,9 +2194,9 @@ void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility,
 			randomArray[i] = frand();
 			rand_avg += randomArray[i];
 			if (randomArray[i] > max)
-				max = randomArray[i]; // get max
+				max = randomArray[i]; /* get max */
 			if (randomArray[i] < min)
-				min = randomArray[i]; // and min
+				min = randomArray[i]; /* and min */
 		}
 
 		rand_avg /= ABILITY_NUM_TYPES;
@@ -2206,7 +2206,7 @@ void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility,
 			chr->skills[i] = ((randomArray[i]-rand_avg)/min*(maxAbility-minAbility) +
 				minAbility+maxAbility)/2 + frand()*3;
 
-		// Skills
+		/* Skills */
 		total = (SKILL_NUM_TYPES-ABILITY_NUM_TYPES)*(maxSkill-minSkill)/2;
 		max = 0;
 		min = 1;
@@ -2216,9 +2216,9 @@ void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility,
 			randomArray[i] = frand();
 			rand_avg += randomArray[i];
 			if (randomArray[i] > max)
-				max = randomArray[i]; // get max
+				max = randomArray[i]; /* get max */
 			if (randomArray[i] < min)
-				min = randomArray[i]; // or min
+				min = randomArray[i]; /* or min */
 		}
 		rand_avg /= SKILL_NUM_TYPES-ABILITY_NUM_TYPES;
 		if (max-rand_avg < rand_avg-min) min= rand_avg-min;
@@ -2227,7 +2227,7 @@ void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility,
 			chr->skills[ABILITY_NUM_TYPES+i] = ((randomArray[i]-rand_avg)/min*(maxSkill-minSkill) +
 				minSkill+maxSkill)/2 + frand()*3;
 
-		// Check if it makes sense
+		/* Check if it makes sense */
 		max = ((max-rand_avg)/min*(maxSkill-minSkill) + minSkill+maxSkill)/2;
 		min = (maxAbility+minAbility)/2.2;
 		if (
@@ -2235,7 +2235,7 @@ void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility,
 		 || (max-10 < chr->skills[SKILL_HEAVY]     && chr->skills[ABILITY_POWER]    < min)
 		 || (max-10 < chr->skills[SKILL_PRECISE]   && chr->skills[ABILITY_ACCURACY] < min)
 		 || (max-10 < chr->skills[SKILL_EXPLOSIVE] && chr->skills[ABILITY_MIND]     < min)
-		) retry--; // try again.
+		) retry--; /* try again. */
 		else retry = 0;
 	}
 	while ( retry > 0 );
@@ -2330,7 +2330,7 @@ char *fade_names[FADE_LAST] =
 	"none", "in", "out", "sin", "saw", "blend"
 };
 
-// this is here to let Com_ParseValue determine the right size
+/* this is here to let Com_ParseValue determine the right size */
 typedef struct menuDepends_s
 {
 	char var[MAX_VAR];
@@ -2418,9 +2418,9 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		if ( w > MAX_VAR ) w = MAX_VAR;
 		return w;
 
-	// FIXME: If we have an overlow here - it's damn hard to figure this out
-	//	every translator can put a too long string into his po file
-	//	maybe we should fill the buffer with something != 0 and then use Q_strncpyz
+	/* FIXME: If we have an overlow here - it's damn hard to figure this out */
+	/*	every translator can put a too long string into his po file */
+	/*	maybe we should fill the buffer with something != 0 and then use Q_strncpyz */
 	case V_TRANSLATION_STRING:
 		if ( *token == '_' )
 			token++;
@@ -2428,7 +2428,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 		strcpy( (char *)b, _(token) );
 		return strlen((char*)b)+1;
 
-	// just remove the _ but don't translate
+	/* just remove the _ but don't translate */
 	case V_TRANSLATION2_STRING:
 		if ( *token == '_' )
 			token++;

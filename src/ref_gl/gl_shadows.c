@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// shadows.c: shadow functions
+/* shadows.c: shadow functions */
 
 #include "gl_local.h"
 
@@ -52,7 +52,7 @@ void vectoangles (vec3_t value1, vec3_t angles)
 	}
 	else
 	{
-		// PMM - fixed to correct for pitch of 0
+		/* PMM - fixed to correct for pitch of 0 */
 		if (value1[0])
 			yaw = (atan2(value1[1], value1[0]) * 180 / M_PI);
 		else if (value1[1] > 0)
@@ -84,16 +84,16 @@ void R_ShadowLight (vec3_t pos, vec3_t lightAdd )
 	vec3_t dist;
 	vec3_t angle;
 	nolight = qfalse ;
-	VectorClear(lightAdd); // clear planar shadow vector
+	VectorClear(lightAdd); /* clear planar shadow vector */
 
 	if ( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) return;
 
-	// add dynamic light shadow angles
+	/* add dynamic light shadow angles */
 	dl = r_newrefdef.dlights;
 	for (i=0; i < r_newrefdef.num_dlights; i++, dl++)
 	{
-//		if (dl->spotlight) // spotlights
-//			continue;
+/*		if (dl->spotlight) // spotlights */
+/*			continue; */
 
 		VectorSubtract (dl->origin, pos , dist);
 		add = sqrt(dl->intensity - VectorLength(dist));
@@ -109,14 +109,14 @@ void R_ShadowLight (vec3_t pos, vec3_t lightAdd )
 	if (shadowdist > 1) shadowdist = 1;
 	if (shadowdist <= 0)
 	{
-		// old style static shadow
-		// scaled nolight shadow
+		/* old style static shadow */
+		/* scaled nolight shadow */
 		nolight = qtrue;
 		return;
 	}
 	else
 	{
-		// shadow from dynamic lights
+		/* shadow from dynamic lights */
 		vectoangles(lightAdd, angle);
 		angle[YAW] -= currententity->angles[YAW];
 	}
@@ -147,10 +147,10 @@ void GL_DrawAliasShadow (entity_t *e, dmdl_t *paliashdr, int posenum)
 
 	if ( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) return;
 
-        //calculate model lighting and setup shadow transparenty
-//	if(r_shading->value)
-//		R_LightPointDynamics (currententity->origin, shadelight, model_dlights, &model_dlights_num, 3);
-//	else
+        /*calculate model lighting and setup shadow transparenty */
+/*	if(r_shading->value) */
+/*		R_LightPointDynamics (currententity->origin, shadelight, model_dlights, &model_dlights_num, 3); */
+/*	else */
 		R_LightPoint(currententity->origin, shadelight);
 
 	alpha = 1- (shadelight[0]+shadelight[1]+shadelight[2]);
@@ -168,22 +168,22 @@ void GL_DrawAliasShadow (entity_t *e, dmdl_t *paliashdr, int posenum)
 	order = (int *)((byte *)paliashdr + paliashdr->ofs_glcmds);
 	height = -lheight;
 
-	if (nolight) qglScalef (1.1, 1.1, 1); // scale  nolight shadow by Kirk Barnes
+	if (nolight) qglScalef (1.1, 1.1, 1); /* scale  nolight shadow by Kirk Barnes */
 
 	qglColor4f (0,0,0,alpha);
-	qglPolygonOffset(-2.0, 1.0);	      // shadow on the floor c14
+	qglPolygonOffset(-2.0, 1.0);	      /* shadow on the floor c14 */
 	qglEnable(GL_POLYGON_OFFSET_FILL);
 
-	qglEnable(GL_STENCIL_TEST);         // stencil buffered shadow by MrG
+	qglEnable(GL_STENCIL_TEST);         /* stencil buffered shadow by MrG */
 	qglStencilFunc(GL_GREATER,2,2);
 	qglStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
 
 	while (1)
 	{
-		// get the vertex count and primitive type
+		/* get the vertex count and primitive type */
 		count = *order++;
 		if (!count)
-			break;		// done
+			break;		/* done */
 		if (count < 0)
 		{
 			count = -count;
@@ -194,7 +194,7 @@ void GL_DrawAliasShadow (entity_t *e, dmdl_t *paliashdr, int posenum)
 
 		do
 		{
-			// normals and vertexes come from the frame list
+			/* normals and vertexes come from the frame list */
 			memcpy( point, s_lerped[order[2]], sizeof( point )  );
 			point[0] -= shadevector[0]*(point[2]+lheight);
 			point[1] -= shadevector[1]*(point[2]+lheight);
@@ -298,7 +298,7 @@ void BuildShadowVolume(dmdl_t *hdr, vec3_t light, float projectdistance)
 	}
 	qglEnd();
 
-	// cap the volume
+	/* cap the volume */
 	qglBegin(GL_TRIANGLES);
 	for (i=0, tris=ot; i<hdr->num_tris; i++, tris++)
 	{
@@ -346,7 +346,7 @@ void GL_RenderVolumes(dmdl_t *paliashdr, vec3_t lightdir, int projdist)
 		BuildShadowVolume(paliashdr,lightdir, projdist);
 	}
 
-	if(gl_state.ati_separate_stencil) // ati separate stensil support for r300+ by Kirk Barnes
+	if(gl_state.ati_separate_stencil) /* ati separate stensil support for r300+ by Kirk Barnes */
 	{
 		qglDisable(GL_CULL_FACE);
 		qglStencilOpSeparateATI(GL_BACK, GL_KEEP, incr, GL_KEEP);
@@ -354,7 +354,7 @@ void GL_RenderVolumes(dmdl_t *paliashdr, vec3_t lightdir, int projdist)
 		BuildShadowVolume(paliashdr,lightdir, projdist);
 	}
 
-	if (gl_state.stencil_two_side) // two side stensil support for nv30+ by Kirk Barnes
+	if (gl_state.stencil_two_side) /* two side stensil support for nv30+ by Kirk Barnes */
 	{
 		qglDisable(GL_CULL_FACE);
 		qglActiveStencilFaceEXT(GL_BACK);
@@ -397,7 +397,7 @@ void GL_DrawAliasShadowVolume (dmdl_t *paliashdr, int posenumm)
 
 	cost = cos(-currententity->angles[1] / 180 * M_PI), sint = sin(-currententity->angles[1] / 180 * M_PI);
 
-//	if (!ri.IsVisible(r_newrefdef.vieworg, currententity->origin)) return;
+/*	if (!ri.IsVisible(r_newrefdef.vieworg, currententity->origin)) return; */
 
 	if (gl_shadow_debug_volume->value)
 		qglColor3f(1,0,0);
@@ -409,7 +409,7 @@ void GL_DrawAliasShadowVolume (dmdl_t *paliashdr, int posenumm)
 
 	qglEnable(GL_STENCIL_TEST);
 
-//	if (clamp) qglEnable(GL_DEPTH_CLAMP_NV);
+/*	if (clamp) qglEnable(GL_DEPTH_CLAMP_NV); */
 
 	qglDepthMask(qfalse);
 	qglStencilMask ( ~0 );
@@ -431,9 +431,9 @@ void GL_DrawAliasShadowVolume (dmdl_t *paliashdr, int posenumm)
 
 		if (dist > 200)
 			continue;
-//		if (!ri.IsVisible(currententity->origin, l->origin)) continue;
+/*		if (!ri.IsVisible(currententity->origin, l->origin)) continue; */
 
-		// lights origin in relation to the entity
+		/* lights origin in relation to the entity */
 		for (o=0; o<3; o++)
 			light[o] = -currententity->origin[o] + l->origin[o];
 
@@ -448,7 +448,7 @@ void GL_DrawAliasShadowVolume (dmdl_t *paliashdr, int posenumm)
 
 	if (!worldlight)
 	{
-		//old style static shadow vector
+		/*old style static shadow vector */
 		VectorSet(light, 130 ,0, 200);
 		is = light[0], it = light[1];
 		light[0] = (cost * (is - 0) + sint * (0 - it) + 0);
@@ -467,7 +467,7 @@ void GL_DrawAliasShadowVolume (dmdl_t *paliashdr, int posenumm)
 
 	qglDisable(GL_STENCIL_TEST);
 
-// 	if (clamp) qglDisable(GL_DEPTH_CLAMP_NV);
+/* 	if (clamp) qglDisable(GL_DEPTH_CLAMP_NV); */
 
 	if (gl_shadow_debug_volume->value)
 		qglColor3f(1,1,1);
@@ -509,13 +509,13 @@ void R_DrawShadow (entity_t *e)
 
 	frontlerp = 1.0 - currententity->as.backlerp;
 
-	// move should be the delta back to the previous frame * backlerp
+	/* move should be the delta back to the previous frame * backlerp */
 	VectorSubtract (currententity->oldorigin, currententity->origin, delta);
 	AngleVectors (currententity->angles, vectors[0], vectors[1], vectors[2]);
 
-	move[0] = DotProduct (delta, vectors[0]);	// forward
-	move[1] = -DotProduct (delta, vectors[1]);	// left
-	move[2] = DotProduct (delta, vectors[2]);	// up
+	move[0] = DotProduct (delta, vectors[0]);	/* forward */
+	move[1] = -DotProduct (delta, vectors[1]);	/* left */
+	move[2] = DotProduct (delta, vectors[2]);	/* up */
 
 	VectorAdd (move, oldframe->translate, move);
 
@@ -526,9 +526,9 @@ void R_DrawShadow (entity_t *e)
 		backv[i] = currententity->as.backlerp*oldframe->scale[i];
 	}
 
-//	GL_LerpVerts( paliashdr->num_xyz, v, ov, verts, s_lerped[0], move, frontv, backv,0);
+/*	GL_LerpVerts( paliashdr->num_xyz, v, ov, verts, s_lerped[0], move, frontv, backv,0); */
 
-	//|RF_NOSHADOW
+	/*|RF_NOSHADOW */
 	if (gl_shadows->value ==1 && !(currententity->flags & (RF_TRANSLUCENT|RF_WEAPONMODEL)))
 	{
 		qglPushMatrix ();
@@ -579,13 +579,13 @@ void R_DrawShadowVolume (entity_t *e)
 
 	frontlerp = 1.0 - currententity->as.backlerp;
 
-	// move should be the delta back to the previous frame * backlerp
+	/* move should be the delta back to the previous frame * backlerp */
 	VectorSubtract (currententity->oldorigin, currententity->origin, delta);
 	AngleVectors (currententity->angles, vectors[0], vectors[1], vectors[2]);
 
-	move[0] = DotProduct (delta, vectors[0]);	// forward
-	move[1] = -DotProduct (delta, vectors[1]);	// left
-	move[2] = DotProduct (delta, vectors[2]);	// up
+	move[0] = DotProduct (delta, vectors[0]);	/* forward */
+	move[1] = -DotProduct (delta, vectors[1]);	/* left */
+	move[2] = DotProduct (delta, vectors[2]);	/* up */
 
 	VectorAdd (move, oldframe->translate, move);
 
@@ -596,9 +596,9 @@ void R_DrawShadowVolume (entity_t *e)
 		backv[i] = currententity->as.backlerp*oldframe->scale[i];
 	}
 
-//	GL_LerpVerts( paliashdr->num_xyz, v, ov, verts, s_lerped[0], move, frontv, backv,0);
+/*	GL_LerpVerts( paliashdr->num_xyz, v, ov, verts, s_lerped[0], move, frontv, backv,0); */
 
-//	|RF_NOSHADOW|RF_NOSHADOW2
+/*	|RF_NOSHADOW|RF_NOSHADOW2 */
 	if (gl_shadows->value == 2 && !(currententity->flags & (RF_TRANSLUCENT|RF_WEAPONMODEL)))
 	{
 		qglPushMatrix ();
@@ -625,9 +625,9 @@ void R_ShadowBlend( void )
 
 	qglLoadIdentity ();
 
-	// FIXME: get rid of these
-	qglRotatef (-90,  1, 0, 0);	    // put Z going up
-	qglRotatef (90,  0, 0, 1);	    // put Z going up
+	/* FIXME: get rid of these */
+	qglRotatef (-90,  1, 0, 0);	    /* put Z going up */
+	qglRotatef (90,  0, 0, 1);	    /* put Z going up */
 
 	if (gl_shadow_debug_shade->value)
 		qglColor3f (0,0,1);

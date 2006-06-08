@@ -77,7 +77,7 @@ field_t fields[] = {
 	{"angles", FOFS(angles), F_VECTOR},
 	{"angle", FOFS(angle), F_FLOAT},
 
-	//need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves
+	/*need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves */
 	{"gravity", STOFS(gravity), F_LSTRING, FFL_SPAWNTEMP},
 	{"minyaw", STOFS(minyaw), F_FLOAT, FFL_SPAWNTEMP},
 	{"maxyaw", STOFS(maxyaw), F_FLOAT, FFL_SPAWNTEMP},
@@ -106,11 +106,11 @@ void ED_CallSpawn (edict_t *ent)
 		return;
 	}
 
-	// check normal spawn functions
+	/* check normal spawn functions */
 	for (s=spawns ; s->name ; s++)
 	{
 		if (!strcmp(s->name, ent->classname))
-		{	// found it
+		{	/* found it */
 			s->spawn (ent);
 			return;
 		}
@@ -171,7 +171,7 @@ void ED_ParseField (char *key, char *value, edict_t *ent)
 	for (f=fields ; f->name ; f++)
 	{
 		if (!(f->flags & FFL_NOSPAWN) && !Q_stricmp(f->name, key))
-		{	// found it
+		{	/* found it */
 			if (f->flags & FFL_SPAWNTEMP)
 				b = (byte *)&st;
 			else
@@ -214,7 +214,7 @@ void ED_ParseField (char *key, char *value, edict_t *ent)
 			return;
 		}
 	}
-//	gi.dprintf ("%s is not a field\n", key);
+/*	gi.dprintf ("%s is not a field\n", key); */
 }
 
 /*
@@ -234,10 +234,10 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 	init = qfalse;
 	memset (&st, 0, sizeof(st));
 
-	// go through all the dictionary pairs
+	/* go through all the dictionary pairs */
 	while (1)
 	{
-		// parse key
+		/* parse key */
 		com_token = COM_Parse (&data);
 		if (com_token[0] == '}')
 			break;
@@ -246,7 +246,7 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 
 		Q_strncpyz (keyname, com_token, sizeof(keyname));
 
-		// parse value
+		/* parse value */
 		com_token = COM_Parse (&data);
 		if (!data)
 			gi.error ("ED_ParseEntity: EOF without closing brace");
@@ -256,8 +256,8 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 
 		init = qtrue;
 
-		// keynames with a leading underscore are used for utility comments,
-		// and are immediately discarded by quake
+		/* keynames with a leading underscore are used for utility comments, */
+		/* and are immediately discarded by quake */
 		if (keyname[0] == '_')
 			continue;
 
@@ -294,11 +294,11 @@ void SpawnEntities (char *mapname, char *entities)
 	ent = NULL;
 	level.activeTeam = -1;
 
-	// parse ents
+	/* parse ents */
 	entnum = 0;
 	while (1)
 	{
-		// parse the opening brace
+		/* parse the opening brace */
 		com_token = COM_Parse (&entities);
 		if (!entities)
 			break;
@@ -318,7 +318,7 @@ void SpawnEntities (char *mapname, char *entities)
 		ED_CallSpawn (ent);
 	}
 
-	// spawn ai players, if needed
+	/* spawn ai players, if needed */
 	if ( level.num_spawnpoints[TEAM_CIVILIAN] )
 		AI_CreatePlayer( TEAM_CIVILIAN );
 	if ( (int)sv_maxclients->value == 1 && level.num_spawnpoints[TEAM_ALIEN] )
@@ -330,28 +330,28 @@ void SpawnEntities (char *mapname, char *entities)
 */
 void SP_light (edict_t *self)
 {
-	// lights aren't client-server communicated items
-	// they are completely client side
+	/* lights aren't client-server communicated items */
+	/* they are completely client side */
 	G_FreeEdict( self );
 }
 
 void G_ActorSpawn( edict_t *ent )
 {
-	// set properties
+	/* set properties */
 	level.num_spawnpoints[ent->team]++;
 	ent->classname = "actor";
 	ent->type = ET_ACTORSPAWN;
 	if ( ent->fieldSize < ACTOR_SIZE_NORMAL )
 		ent->fieldSize = ACTOR_SIZE_NORMAL;
 
-	// fall to ground
+	/* fall to ground */
 	ent->pos[2] = gi.GridFall( gi.map, ent->pos );
 	gi.GridPosToVec( gi.map, ent->pos, ent->origin );
 
-	// link it for collision detection
+	/* link it for collision detection */
 	ent->dir = AngleToDV( ent->angle );
 	ent->solid = SOLID_BBOX;
-	// maybe this is already set in one of the spawn functions
+	/* maybe this is already set in one of the spawn functions */
 	if ( ent->maxs[0] == 0 )
 		VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND );
 	if ( ent->mins[0] == 0 )
@@ -366,19 +366,19 @@ Starting point for a player.
 void SP_player_start (edict_t *ent)
 {
 	static int soldierCount = 0;
-	// only used in multi player
+	/* only used in multi player */
 	if ( sv_maxclients->value == 1 )
 	{
 		G_FreeEdict( ent );
 		return;
 	}
 
-	// mapchange?
+	/* mapchange? */
 	if ( ! level.num_spawnpoints[ent->team] )
 		soldierCount = 0;
 
-	// in teamplay mode check whether the player has reached
-	// the max allowed soldiers per player
+	/* in teamplay mode check whether the player has reached */
+	/* the max allowed soldiers per player */
 	if ( (int)maxsoldiersperplayer->value
 	  && soldierCount >= (int)maxsoldiersperplayer->value
 	  && (int)sv_teamplay->value )
@@ -388,7 +388,7 @@ void SP_player_start (edict_t *ent)
 		return;
 	}
 
-	// maybe there are already the max soldiers allowed per team connected
+	/* maybe there are already the max soldiers allowed per team connected */
 	if ( (int)(maxsoldiers->value) > level.num_spawnpoints[ent->team] )
 	{
 		ent->STUN = 100;
@@ -411,21 +411,21 @@ Starting point for a single player human.
 */
 void SP_human_start (edict_t *ent)
 {
-	// only used in single player
+	/* only used in single player */
 	if ( sv_maxclients->value > 1 )
 	{
 		G_FreeEdict( ent );
 		return;
 	}
 	ent->team = 1;
-	// only the first time
+	/* only the first time */
 	if ( !ent->chr.assigned_missions )
 	{
 		ent->STUN = 100;
 		ent->HP = 100;
 		ent->AP = 100;
 	}
-	// count mission
+	/* count mission */
 	ent->chr.assigned_missions++;
 	G_ActorSpawn( ent );
 }
@@ -437,17 +437,17 @@ Starting point for a ugv.
 void SP_ugv_start (edict_t *ent)
 {
 	ent->team = 1;
-	// set stats
+	/* set stats */
 	ent->STUN = 100;
 	ent->HP = 100;
 	ent->AP = 100;
 	ent->fieldSize = ACTOR_SIZE_UGV;
 
-	// these units are bigger
+	/* these units are bigger */
 	VectorSet( ent->maxs, PLAYER_WIDTH*2, PLAYER_WIDTH*2, PLAYER_STAND );
 	VectorSet( ent->mins,-(PLAYER_WIDTH*2),-(PLAYER_WIDTH*2), PLAYER_MIN );
 
-	// spawn multiplayer and/or singleplayer
+	/* spawn multiplayer and/or singleplayer */
 	if ( sv_maxclients->value > 1 ) SP_player_start( ent );
 	else G_ActorSpawn( ent );
 }
@@ -457,14 +457,14 @@ Starting point for a single player alien.
 */
 void SP_alien_start (edict_t *ent)
 {
-	// only used in single player
+	/* only used in single player */
 	if ( sv_maxclients->value > 1 )
 	{
 		G_FreeEdict( ent );
 		return;
 	}
 	ent->team = TEAM_ALIEN;
-	// set stats
+	/* set stats */
 	ent->STUN = 100;
 	ent->HP = 100;
 	ent->AP = 100;
@@ -479,7 +479,7 @@ Starting point for a civilian.
 void SP_civilian_start (edict_t *ent)
 {
 	ent->team = TEAM_CIVILIAN;
-	// set stats
+	/* set stats */
 	ent->STUN = 1;
 	ent->HP = 100;
 	ent->AP = 100;
@@ -492,8 +492,8 @@ a dummy to get rid of local entities
 */
 void SP_misc_dummy (edict_t *self)
 {
-	// models aren't client-server communicated items
-	// they are completely client side
+	/* models aren't client-server communicated items */
+	/* they are completely client side */
 	G_FreeEdict( self );
 }
 
@@ -508,9 +508,9 @@ void SP_func_breakable (edict_t *self)
 	VectorSet( self->origin, 0, 0, 0 );
 	gi.setmodel( self, self->model );
 
-//	Com_Printf( "model (%s) num: %i mins: %i %i %i maxs: %i %i %i\n",
-//		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
-//		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2] );
+/*	Com_Printf( "model (%s) num: %i mins: %i %i %i maxs: %i %i %i\n", */
+/*		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2], */
+/*		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2] ); */
 }
 
 
@@ -525,12 +525,12 @@ Only used for the world.
 void SP_worldspawn (edict_t *ent)
 {
 	ent->solid = SOLID_BSP;
-	ent->inuse = qtrue; // since the world doesn't use G_Spawn()
+	ent->inuse = qtrue; /* since the world doesn't use G_Spawn() */
 
 	if (st.nextmap)
 		Q_strncpyz (level.nextmap, st.nextmap, MAX_QPATH);
 
-	// make some data visible to the server
+	/* make some data visible to the server */
 	if (ent->message && ent->message[0])
 	{
 		gi.configstring (CS_NAME, ent->message);
@@ -543,63 +543,63 @@ void SP_worldspawn (edict_t *ent)
 
 	gi.configstring (CS_MAXCLIENTS, va("%i", (int)(maxplayers->value) ) );
 
-	// only used in multi player
+	/* only used in multi player */
 	if ( sv_maxclients->value >= 2 )
 	{
 		gi.configstring (CS_MAXSOLDIERS, va("%i", (int)(maxsoldiers->value) ) );
 		gi.configstring (CS_MAXSOLDIERSPERPLAYER, va("%i", (int)(maxsoldiersperplayer->value) ) );
 		gi.configstring (CS_ENABLEMORALE, va("%i", (int)(sv_enablemorale->value) ) );
 	}
-	//---------------
+	/*--------------- */
 
 	if (!st.gravity)
 		gi.cvar_set("sv_gravity", "800");
 	else
 		gi.cvar_set("sv_gravity", st.gravity);
 
-	//
-	// Setup light animation tables. 'a' is total darkness, 'z' is doublebright.
-	//
+	/* */
+	/* Setup light animation tables. 'a' is total darkness, 'z' is doublebright. */
+	/* */
 
-	// 0 normal
+	/* 0 normal */
 	gi.configstring(CS_LIGHTS+0, "m");
 
-	// 1 FLICKER (first variety)
+	/* 1 FLICKER (first variety) */
 	gi.configstring(CS_LIGHTS+1, "mmnmmommommnonmmonqnmmo");
 
-	// 2 SLOW STRONG PULSE
+	/* 2 SLOW STRONG PULSE */
 	gi.configstring(CS_LIGHTS+2, "abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba");
 
-	// 3 CANDLE (first variety)
+	/* 3 CANDLE (first variety) */
 	gi.configstring(CS_LIGHTS+3, "mmmmmaaaaammmmmaaaaaabcdefgabcdefg");
 
-	// 4 FAST STROBE
+	/* 4 FAST STROBE */
 	gi.configstring(CS_LIGHTS+4, "mamamamamama");
 
-	// 5 GENTLE PULSE 1
+	/* 5 GENTLE PULSE 1 */
 	gi.configstring(CS_LIGHTS+5,"jklmnopqrstuvwxyzyxwvutsrqponmlkj");
 
-	// 6 FLICKER (second variety)
+	/* 6 FLICKER (second variety) */
 	gi.configstring(CS_LIGHTS+6, "nmonqnmomnmomomno");
 
-	// 7 CANDLE (second variety)
+	/* 7 CANDLE (second variety) */
 	gi.configstring(CS_LIGHTS+7, "mmmaaaabcdefgmmmmaaaammmaamm");
 
-	// 8 CANDLE (third variety)
+	/* 8 CANDLE (third variety) */
 	gi.configstring(CS_LIGHTS+8, "mmmaaammmaaammmabcdefaaaammmmabcdefmmmaaaa");
 
-	// 9 SLOW STROBE (fourth variety)
+	/* 9 SLOW STROBE (fourth variety) */
 	gi.configstring(CS_LIGHTS+9, "aaaaaaaazzzzzzzz");
 
-	// 10 FLUORESCENT FLICKER
+	/* 10 FLUORESCENT FLICKER */
 	gi.configstring(CS_LIGHTS+10, "mmamammmmammamamaaamammma");
 
-	// 11 SLOW PULSE NOT FADE TO BLACK
+	/* 11 SLOW PULSE NOT FADE TO BLACK */
 	gi.configstring(CS_LIGHTS+11, "abcdefghijklmnopqrrqponmlkjihgfedcba");
 
-	// styles 32-62 are assigned by the light program for switchable lights
+	/* styles 32-62 are assigned by the light program for switchable lights */
 
-	// 63 testing
+	/* 63 testing */
 	gi.configstring(CS_LIGHTS+63, "a");
 }
 

@@ -1,4 +1,4 @@
-// gl_mesh.c: triangle model functions
+/* gl_mesh.c: triangle model functions */
 
 #include "gl_local.h"
 
@@ -20,7 +20,7 @@ void R_DrawSprite( ptl_t *p )
 	vec3_t	up, right;
 	vec3_t	pos;
 
-	// get transformation
+	/* get transformation */
 	switch ( p->style )
 	{
 	case STYLE_FACING:
@@ -43,17 +43,17 @@ void R_DrawSprite( ptl_t *p )
 		break;
 
 	default:
-		// shouldn't happen
+		/* shouldn't happen */
 		return;
 	}
 
-	// load texture set up coordinates
+	/* load texture set up coordinates */
 	GL_Bind( ((image_t *)r_newrefdef.ptl_art[p->pic].art)->texnum );
 	
 	VectorMA( p->s, -0.5, up, pos );
 	VectorMA( pos, -0.5, right, pos );
 
-	// draw it
+	/* draw it */
 	qglBegin( GL_TRIANGLE_FAN );
 
 	qglColor4fv( p->color );
@@ -86,14 +86,14 @@ void R_DrawPtlModel( ptl_t *p )
 {
 	modelInfo_t mi;
 
-	// initialize minfo
+	/* initialize minfo */
 	memset( &mi, 0, sizeof( modelInfo_t ) );
 	mi.color = p->color;
 	mi.origin = p->s;
 	mi.angles = p->angles;
 	mi.model = (model_t *)r_newrefdef.ptl_art[p->model].art;
 	
-	// draw it
+	/* draw it */
 	R_DrawModelParticle( &mi );
 }
 
@@ -108,7 +108,7 @@ void R_DrawPtlLine( ptl_t *p )
 	qglDisable( GL_TEXTURE_2D );
 	qglEnable( GL_LINE_SMOOTH );
 
-	// draw line from s to v
+	/* draw line from s to v */
 	qglBegin( GL_LINE_STRIP );
 	qglColor4fv( p->color );
 	qglVertex3fv( p->s );
@@ -180,7 +180,7 @@ void R_DrawPtls( void )
 	int		i;
 
 	if ( gl_fog->value && r_newrefdef.fog ) qglDisable( GL_FOG );
-	qglDepthMask( GL_FALSE );		// no z buffering
+	qglDepthMask( GL_FALSE );		/* no z buffering */
 	qglDisable( GL_CULL_FACE );
 	qglEnable( GL_BLEND );
 	blend_mode = BLEND_REPLACE;
@@ -188,11 +188,11 @@ void R_DrawPtls( void )
 	for ( i = 0, p = r_newrefdef.ptls; i < r_newrefdef.num_ptls; i++, p++ )
 		if ( p->inuse )
 		{
-			// test for visibility
+			/* test for visibility */
 			if ( p->levelFlags && !((1<<r_newrefdef.worldlevel) & p->levelFlags) )
 				continue;
 
-			// set blend mode and draw gfx
+			/* set blend mode and draw gfx */
 			GL_SetBlendMode( p->blend );
 			if ( p->style == STYLE_LINE ) R_DrawPtlLine( p );
 			if ( p->pic != -1 ) R_DrawSprite( p );

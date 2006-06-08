@@ -83,7 +83,7 @@ static Atom wmDeleteWindow;
 /* MOUSE                                                                     */
 /*****************************************************************************/
 
-// this is inside the renderer shared lib, so these are called from vid_so
+/* this is inside the renderer shared lib, so these are called from vid_so */
 
 static qboolean	mouse_avail;
 static int	mx, my;
@@ -104,15 +104,15 @@ static XF86VidModeGamma oldgamma;
 static qboolean vidmode_ext = qfalse;
 #endif /* HAVE_XF86_VIDMODE */
 
-// static int default_dotclock_vidmode;
+/* static int default_dotclock_vidmode; */
 static qboolean vidmode_active = qfalse;
 
-// static qboolean	mlooking;
+/* static qboolean	mlooking; */
 
 static qboolean mouse_active = qfalse;
 static qboolean dgamouse = qfalse;
 
-// state struct passed in Init
+/* state struct passed in Init */
 static in_state_t	*in_state;
 
 static cvar_t *sensitivity;
@@ -150,7 +150,7 @@ static Cursor CreateNullCursor(Display *display, Window root)
 
 static void install_grabs(void)
 {
-	// inviso cursor
+	/* inviso cursor */
 	XDefineCursor(dpy, win, CreateNullCursor(dpy, win));
 
 	if (vid_grabmouse->value && ! vid_fullscreen->value) {
@@ -173,7 +173,7 @@ static void install_grabs(void)
 		int MajorVersion, MinorVersion;
 
 		if (!XF86DGAQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
-			// unable to query, probalby not supported
+			/* unable to query, probalby not supported */
 			ri.Con_Printf( PRINT_ALL, "Failed to detect XF86DGA Mouse\n" );
 			ri.Cvar_Set( "in_dgamouse", "0" );
 		} else {
@@ -213,7 +213,7 @@ static void uninstall_grabs(void)
 	XUngrabPointer(dpy, CurrentTime);
 	XUngrabKeyboard(dpy, CurrentTime);
 
-	// inviso cursor
+	/* inviso cursor */
 	XUndefineCursor(dpy, win);
 
 	mouse_active = qfalse;
@@ -223,7 +223,7 @@ void RW_IN_Init(in_state_t *in_state_p)
 {
 	in_state = in_state_p;
 
-	// mouse variables
+	/* mouse variables */
 	m_filter = ri.Cvar_Get ("m_filter", "0", 0);
 	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
 #ifdef HAVE_XF86_DGA
@@ -272,7 +272,7 @@ void RW_IN_GetMousePos (int *x, int *y)
 {
 	if ( mx < 0 ) mx = 0;
 	if ( my < 0 ) my = 0;
-	// FIXME VID_NORM_WIDTH
+	/* FIXME VID_NORM_WIDTH */
 	if ( mx > 1024 ) mx = 1024;
 	if ( my > 768 ) my = 768;
 	*x = mx;
@@ -296,7 +296,7 @@ static void IN_ActivateMouse( void )
 		return;
 
 	if (!mouse_active) {
-		mx = my = 0; // don't spazz
+		mx = my = 0; /* don't spazz */
 		install_grabs();
 		mouse_active = qtrue;
 	}
@@ -519,10 +519,10 @@ static int XLateKey(XKeyEvent *ev)
 
 		case XK_space:
 		case XK_KP_Space: key = K_SPACE; break;
-		// weird french keyboards ..
-		// NOTE: console toggle is hardcoded in cl_keys.c, can't be unbound
-		//   cleaner would be .. using hardware key codes instead of the key syms
-		//   could also add a new K_KP_CONSOLE
+		/* weird french keyboards .. */
+		/* NOTE: console toggle is hardcoded in cl_keys.c, can't be unbound */
+		/*   cleaner would be .. using hardware key codes instead of the key syms */
+		/*   could also add a new K_KP_CONSOLE */
 		case XK_twosuperior: key = '~'; break;
 
 		case 0x05f: key = '-';break;/* [_] */
@@ -563,7 +563,7 @@ static void HandleEvents(void)
 
 	while (XPending(dpy)) {
 
-// 		mx = my = 0;
+/* 		mx = my = 0; */
 
 		XNextEvent(dpy, &event);
 
@@ -669,7 +669,7 @@ static void HandleEvents(void)
 				XUngrabPointer( dpy, CurrentTime);
 			break;
 		case VisibilityNotify:
-			// invisible -> visible
+			/* invisible -> visible */
 			break;
 		}
 	}
@@ -703,7 +703,7 @@ void KBD_Init(Key_Event_fp_t fp)
 
 void KBD_Update(void)
 {
-	// get events from x server
+	/* get events from x server */
 	HandleEvents();
 }
 
@@ -713,7 +713,7 @@ void KBD_Close(void)
 
 /*****************************************************************************/
 
-// static qboolean GLimp_SwitchFullscreen( int width, int height );
+/* static qboolean GLimp_SwitchFullscreen( int width, int height ); */
 
 qboolean GLimp_InitGL (void);
 
@@ -747,6 +747,11 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	XSetWindowAttributes attr;
 	unsigned long mask;
 
+#ifdef HAVE_XF86_VIDMODE
+	int MajorVersion, MinorVersion;
+	int i, best_fit, best_dist, dist, x, y;
+#endif /* HAVE_XF86_VIDMODE */
+
 	r_fakeFullscreen = ri.Cvar_Get( "r_fakeFullscreen", "0", CVAR_ARCHIVE);
 
 	ri.Con_Printf( PRINT_ALL, "Initializing OpenGL display\n");
@@ -764,10 +769,10 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 
 	ri.Con_Printf( PRINT_ALL, " %d %d\n", width, height );
 
-	// destroy the existing window
+	/* destroy the existing window */
 	GLimp_Shutdown ();
 
-	// Mesa VooDoo hacks
+	/* Mesa VooDoo hacks */
 	if (fullscreen)
 		putenv("MESA_GLX_FX=fullscreen");
 	else
@@ -782,8 +787,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	root = RootWindow(dpy, scrnum);
 
 #ifdef HAVE_XF86_VIDMODE
-	// Get video mode list
-	int MajorVersion, MinorVersion;
+	/* Get video mode list */
 	MajorVersion = MinorVersion = 0;
 	if (!XF86VidModeQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
 		vidmode_ext = qfalse;
@@ -842,14 +846,12 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	}
 
 #ifdef HAVE_XF86_VIDMODE
-	if (vidmode_ext) {	// Get video mode list
+	if (vidmode_ext) {	/* Get video mode list */
 		MajorVersion = MinorVersion = 0;
-
-		int i, best_fit, best_dist, dist, x, y;
 
 		XF86VidModeGetAllModeLines(dpy, scrnum, &num_vidmodes, &vidmodes);
 
-		// Are we going fullscreen?  If so, let's change video mode
+		/* Are we going fullscreen?  If so, let's change video mode */
 		if (fullscreen && !r_fakeFullscreen->value) {
 			best_dist = 9999999;
 			best_fit = -1;
@@ -869,7 +871,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 			}
 
 			if (best_fit != -1) {
-				// change to the mode
+				/* change to the mode */
 				XF86VidModeSwitchToMode(dpy, scrnum, vidmodes[best_fit]);
 				XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
 				width = vidmodes[best_fit]->hdisplay;
@@ -922,7 +924,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		XRaiseWindow(dpy, win);
 		XWarpPointer(dpy, None, win, 0, 0, 0, 0, 0, 0);
 		XFlush(dpy);
-		// Move the viewport to top left
+		/* Move the viewport to top left */
 		XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
 	}
 #endif /* HAVE_XF86_VIDMODE */
@@ -936,7 +938,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	*pwidth = width;
 	*pheight = height;
 
-	// let the sound and input subsystems know about the new window
+	/* let the sound and input subsystems know about the new window */
 	ri.Vid_NewWindow (width, height);
 
 	qglXMakeCurrent(dpy, win, ctx);
@@ -965,7 +967,7 @@ void GLimp_Shutdown( void )
 		if (win)
 			XDestroyWindow(dpy, win);
 #ifdef HAVE_XF86_VIDMODE
-		//revert to original gamma-settings
+		/*revert to original gamma-settings */
 		if ( gl_state.hwgamma )
 			XF86VidModeSetGamma(dpy, scrnum, &oldgamma);
 		if (vidmode_active)
@@ -1031,7 +1033,7 @@ qboolean GLimp_Init( void *hinstance, void *wndproc )
 {
 	InitSig();
 
-	// set up our custom error handler for X failures
+	/* set up our custom error handler for X failures */
 	XSetErrorHandler(&qXErrorHandler);
 
 	return qtrue;

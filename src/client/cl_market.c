@@ -14,14 +14,14 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
-// cl_market.c -- single player market stuff
+/* cl_market.c -- single player market stuff */
 
 #include "client.h"
 #include "cl_global.h"
 
 #define MAX_BUYLIST		32
 
-// ================================ ITEMS / WEAPONS ======================
+/* ================================ ITEMS / WEAPONS ====================== */
 
 byte	buyList[MAX_BUYLIST];
 int		buyListLength;
@@ -106,9 +106,9 @@ static void CL_BuyType( void )
 
 	CL_UpdateCredits( ccs.credits );
 
-	if ( num < NUM_BUYTYPES ) // 'normal' items
+	if ( num < NUM_BUYTYPES ) /* 'normal' items */
 	{
-		// get item list
+		/* get item list */
 		for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
 		{
 			tech = (technology_t*)od->tech;
@@ -130,10 +130,10 @@ static void CL_BuyType( void )
 					buyList[j] = i;
 					j++;
 				}
-			} // is researched OR collected
+			} /* is researched OR collected */
 		}
 	}
-	else if ( num == NUM_BUYTYPES ) // aircraft
+	else if ( num == NUM_BUYTYPES ) /* aircraft */
 	{
 		for ( i = 0, j = 0, air = aircraft; i < numAircraft; i++, air++ )
 		{
@@ -157,7 +157,7 @@ static void CL_BuyType( void )
 
 	buyListLength = j;
 
-	// FIXME: This list needs to be scrollable - so a hardcoded end is bad
+	/* FIXME: This list needs to be scrollable - so a hardcoded end is bad */
 	for ( i = 0; j < 28; j++ )
 	{
 		Cvar_Set( va( "mn_item%i", j ), "" );
@@ -166,13 +166,13 @@ static void CL_BuyType( void )
 		Cvar_Set( va( "mn_price%i", j ), "" );
 	}
 
-	// select first item
+	/* select first item */
 	if ( buyListLength )
 	{
 		Cbuf_AddText( "buyselect0\n" );
 		CL_ItemDescription( buyList[0] );
 	} else {
-		// reset description
+		/* reset description */
 		Cvar_Set( "mn_itemname", "" );
 		Cvar_Set( "mn_item", "" );
 		Cvar_Set( "mn_weapon", "" );
@@ -269,12 +269,12 @@ static void CL_BuyAircraft( void )
 	aircraftID = buyList[num];
 	Cbuf_AddText( va( "buyselect%i\n", num ) );
 
-// 	if ( ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item] )
-// 	{
-// 		Cvar_SetValue( va( "mn_storage%i", num ), ++ccs.eCampaign.num[item] );
-// 		Cvar_SetValue( va( "mn_supply%i", num ),  --ccs.eMarket.num[item] );
-// 		CL_UpdateCredits( ccs.credits-csi.ods[item].price );
-// 	}
+/* 	if ( ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item] ) */
+/* 	{ */
+/* 		Cvar_SetValue( va( "mn_storage%i", num ), ++ccs.eCampaign.num[item] ); */
+/* 		Cvar_SetValue( va( "mn_supply%i", num ),  --ccs.eMarket.num[item] ); */
+/* 		CL_UpdateCredits( ccs.credits-csi.ods[item].price ); */
+/* 	} */
 }
 
 
@@ -321,18 +321,18 @@ static void CL_SellAircraft( void )
 				break;
 			}
 		}
-		// ok, we've found an empty aircraft (no team) in a base
-		// so now we can sell it
+		/* ok, we've found an empty aircraft (no team) in a base */
+		/* so now we can sell it */
 		if ( found )
 		{
-			// FIXME: Do the selling here...
-			// reassign the aircraft-array in base_t
-			// maybe a linked list would be the best in base_t
+			/* FIXME: Do the selling here... */
+			/* reassign the aircraft-array in base_t */
+			/* maybe a linked list would be the best in base_t */
 
-			// delete this aircraft in base
+			/* delete this aircraft in base */
 			memset( &base->aircraft[j], 0, sizeof(aircraft_t) );
 
-			// last entry - we don't have to search for this anymore
+			/* last entry - we don't have to search for this anymore */
 			if ( j == base->numAircraftInBase-1 )
 				base->numAircraftInBase--;
 

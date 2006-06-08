@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// vid.h -- video driver defs
+/* vid.h -- video driver defs */
 
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
@@ -48,7 +48,7 @@ respectively. This allows the menu system to use a "normalized" coordinate syste
 
 typedef struct
 {
-	unsigned		width, height;			// coordinates from main game
+	unsigned		width, height;			/* coordinates from main game */
 	float			rx, ry;
 } viddef_t;
 
@@ -59,9 +59,9 @@ typedef struct vidmode_s
 } vidmode_t;
 
 extern	vidmode_t	vid_modes[];
-extern	viddef_t	viddef;				// global video state
+extern	viddef_t	viddef;				/* global video state */
 
-// Video module initialisation etc
+/* Video module initialisation etc */
 void	VID_Init (void);
 void	VID_Shutdown (void);
 void	VID_CheckChanges (void);

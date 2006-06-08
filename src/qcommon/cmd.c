@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// cmd.c -- Quake script command processing module
+/* cmd.c -- Quake script command processing module */
 
 #include "qcommon.h"
 
@@ -37,10 +37,10 @@ cmdalias_t	*cmd_alias;
 qboolean	cmd_wait, cmd_closed;
 
 #define	ALIAS_LOOP_COUNT	16
-int		alias_count;		// for detecting runaway loops
+int		alias_count;		/* for detecting runaway loops */
 
 
-//=============================================================================
+/*============================================================================= */
 
 /*
 ============
@@ -153,7 +153,7 @@ void Cbuf_InsertText (char *text)
 	char *temp;
 	int templen;
 
-	// copy off any commands still remaining in the exec buffer
+	/* copy off any commands still remaining in the exec buffer */
 	templen = cmd_text.cursize;
 	if (templen)
 	{
@@ -162,12 +162,12 @@ void Cbuf_InsertText (char *text)
 		SZ_Clear (&cmd_text);
 	}
 	else
-		temp = NULL;	// shut up compiler
+		temp = NULL;	/* shut up compiler */
 
-	// add the entire text of the file
+	/* add the entire text of the file */
 	Cbuf_AddText (text);
 
-	// add the copied off data
+	/* add the copied off data */
 	if (templen)
 	{
 		SZ_Write (&cmd_text, temp, templen);
@@ -235,11 +235,11 @@ void Cbuf_Execute (void)
 	char	line[1024];
 	int		quotes;
 
-	alias_count = 0;		// don't allow infinite alias loops
+	alias_count = 0;		/* don't allow infinite alias loops */
 
 	while (cmd_text.cursize)
 	{
-		// find a \n or ; line break
+		/* find a \n or ; line break */
 		text = (char *)cmd_text.data;
 
 		quotes = 0;
@@ -248,21 +248,21 @@ void Cbuf_Execute (void)
 			if (text[i] == '"')
 				quotes++;
 			if ( !(quotes&1) &&  text[i] == ';')
-				break;	// don't break if inside a quoted string
+				break;	/* don't break if inside a quoted string */
 			if (text[i] == '\n')
 				break;
 		}
 
-		// sku - removed potentional buffer overflow vulnerability
+		/* sku - removed potentional buffer overflow vulnerability */
 		if( i > sizeof( line ) - 1 )
 			i = sizeof( line ) - 1;
 
 		memcpy (line, text, i);
 		line[i] = 0;
 
-		// delete the text from the command buffer and move remaining commands down
-		// this is necessary because commands (exec, alias) can insert data at the
-		// beginning of the text buffer
+		/* delete the text from the command buffer and move remaining commands down */
+		/* this is necessary because commands (exec, alias) can insert data at the */
+		/* beginning of the text buffer */
 
 		if (i == cmd_text.cursize)
 			cmd_text.cursize = 0;
@@ -273,13 +273,13 @@ void Cbuf_Execute (void)
 			memmove (text, text+i, cmd_text.cursize);
 		}
 
-		// execute the command line
+		/* execute the command line */
 		Cmd_ExecuteString (line);
 
 		if (cmd_wait)
 		{
-			// skip out while text still remains in buffer, leaving it
-			// for next frame
+			/* skip out while text still remains in buffer, leaving it */
+			/* for next frame */
 			cmd_wait = qfalse;
 			break;
 		}
@@ -341,7 +341,7 @@ qboolean Cbuf_AddLateCommands (void)
 	int		argc;
 	qboolean	ret;
 
-	// build the combined string to parse from
+	/* build the combined string to parse from */
 	s = 0;
 	argc = COM_Argc();
 	for (i=1 ; i<argc ; i++)
@@ -360,7 +360,7 @@ qboolean Cbuf_AddLateCommands (void)
 			Q_strcat (text, s, " ");
 	}
 
-	// pull out the commands
+	/* pull out the commands */
 	build = Z_Malloc (s+1);
 	build[0] = 0;
 
@@ -424,7 +424,7 @@ void Cmd_Exec_f (void)
 	}
 	Com_Printf ("execing %s\n",Cmd_Argv(1));
 
-	// the file doesn't have a trailing 0, so we need to copy it off
+	/* the file doesn't have a trailing 0, so we need to copy it off */
 	f2 = Z_Malloc(len+1);
 	memcpy (f2, f, len);
 	f2[len] = 0;
@@ -481,7 +481,7 @@ void Cmd_Alias_f (void)
 		return;
 	}
 
-	// if the alias already exists, reuse it
+	/* if the alias already exists, reuse it */
 	for (a = cmd_alias ; a ; a=a->next)
 	{
 		if (!Q_strncmp(s, a->name, MAX_ALIAS_NAME))
@@ -499,8 +499,8 @@ void Cmd_Alias_f (void)
 	}
 	Q_strncpyz (a->name, s, MAX_ALIAS_NAME);
 
-	// copy the rest of the command line
-	cmd[0] = 0;		// start out with a null string
+	/* copy the rest of the command line */
+	cmd[0] = 0;		/* start out with a null string */
 	c = Cmd_Argc();
 	for (i=2 ; i< c ; i++)
 	{
@@ -533,7 +533,7 @@ static	char		*cmd_argv[MAX_STRING_TOKENS];
 static	char		*cmd_null_string = "";
 static	char		cmd_args[MAX_STRING_CHARS];
 
-static	cmd_function_t	*cmd_functions;		// possible commands to execute
+static	cmd_function_t	*cmd_functions;		/* possible commands to execute */
 
 /*
 ============
@@ -600,10 +600,10 @@ char *Cmd_MacroExpandString (char *text)
 		if (scan[i] == '"')
 			inquote ^= 1;
 		if (inquote)
-			continue;	// don't expand inside quotes
+			continue;	/* don't expand inside quotes */
 		if (scan[i] != '$')
 			continue;
-		// scan out the complete macro
+		/* scan out the complete macro */
 		start = scan+i+1;
 		token = COM_Parse (&start);
 		if (!start)
@@ -654,14 +654,14 @@ void Cmd_TokenizeString (char *text, qboolean macroExpand)
 	int		i;
 	char	*com_token;
 
-	// clear the args from the last string
+	/* clear the args from the last string */
 	for (i=0 ; i<cmd_argc ; i++)
 		Z_Free(cmd_argv[i]);
 
 	cmd_argc = 0;
 	cmd_args[0] = 0;
 
-	// macro expand the text
+	/* macro expand the text */
 	if (macroExpand)
 		text = Cmd_MacroExpandString (text);
 	if (!text)
@@ -669,14 +669,14 @@ void Cmd_TokenizeString (char *text, qboolean macroExpand)
 
 	while (1)
 	{
-		// skip whitespace up to a /n
+		/* skip whitespace up to a /n */
 		while (*text && *text <= ' ' && *text != '\n')
 		{
 			text++;
 		}
 
 		if (*text == '\n')
-		{	// a newline seperates commands in the buffer
+		{	/* a newline seperates commands in the buffer */
 			text++;
 			break;
 		}
@@ -684,15 +684,15 @@ void Cmd_TokenizeString (char *text, qboolean macroExpand)
 		if (!*text)
 			return;
 
-		// set cmd_args to everything after the first arg
+		/* set cmd_args to everything after the first arg */
 		if (cmd_argc == 1)
 		{
 			int		l;
 
-			// sku - removed potentional buffer overflow vulnerability
+			/* sku - removed potentional buffer overflow vulnerability */
 			Q_strncpyz( cmd_args, text, sizeof( cmd_args ) );
 
-			// strip off any trailing whitespace
+			/* strip off any trailing whitespace */
 			l = strlen(cmd_args) - 1;
 			for ( ; l >= 0 ; l--)
 				if (cmd_args[l] <= ' ')
@@ -707,7 +707,7 @@ void Cmd_TokenizeString (char *text, qboolean macroExpand)
 
 		if (cmd_argc < MAX_STRING_TOKENS)
 		{
-			// check first char of string if it is a variable
+			/* check first char of string if it is a variable */
 			if (*com_token == '*')
 			{
 				com_token++;
@@ -731,14 +731,14 @@ void Cmd_AddCommand (char *cmd_name, xcommand_t function)
 {
 	cmd_function_t	*cmd;
 
-	// fail if the command is a variable name
+	/* fail if the command is a variable name */
 	if (Cvar_VariableString(cmd_name)[0])
 	{
 		Com_Printf ("Cmd_AddCommand: %s already defined as a var\n", cmd_name);
 		return;
 	}
 
-	// fail if the command already exists
+	/* fail if the command already exists */
 	for (cmd=cmd_functions ; cmd ; cmd=cmd->next)
 	{
 		if (!Q_strcmp(cmd_name, cmd->name))
@@ -821,17 +821,17 @@ char *Cmd_CompleteCommand(char *partial)
 	if(!len)
 		return NULL;
 
-	// check for exact match in commands
+	/* check for exact match in commands */
 	for(cmd = cmd_functions; cmd; cmd = cmd->next)
 		if(!Q_strncmp(partial, cmd->name, len))
 			return cmd->name;
 
-	// and then aliases
+	/* and then aliases */
 	for(a = cmd_alias; a; a = a->next)
 		if(!Q_strncmp(partial, a->name, len))
 			return a->name;
 
-	// check for partial matches in commands
+	/* check for partial matches in commands */
 	for(cmd = cmd_functions; cmd; cmd = cmd->next)
 	{
 		if(!Q_strncmp(partial, cmd->name, len))
@@ -842,7 +842,7 @@ char *Cmd_CompleteCommand(char *partial)
 		}
 	}
 
-	// and then aliases
+	/* and then aliases */
 	for(a = cmd_alias; a; a = a->next)
 	{
 		if(strstr(a->name, partial))
@@ -872,17 +872,17 @@ void Cmd_ExecuteString (char *text)
 
 	Cmd_TokenizeString (text, qtrue);
 
-	// execute the command line
+	/* execute the command line */
 	if (!Cmd_Argc())
-		return;		// no tokens
+		return;		/* no tokens */
 
-	// check functions
+	/* check functions */
 	for (cmd=cmd_functions ; cmd ; cmd=cmd->next)
 	{
 		if (!Q_strcasecmp (cmd_argv[0],cmd->name))
 		{
 			if (!cmd->function)
-			{	// forward to server command
+			{	/* forward to server command */
 				Cmd_ExecuteString (va("cmd %s", text));
 			}
 			else
@@ -891,7 +891,7 @@ void Cmd_ExecuteString (char *text)
 		}
 	}
 
-	// check alias
+	/* check alias */
 	for (a=cmd_alias ; a ; a=a->next)
 	{
 		if (!Q_strcasecmp (cmd_argv[0], a->name))
@@ -906,11 +906,11 @@ void Cmd_ExecuteString (char *text)
 		}
 	}
 
-	// check cvars
+	/* check cvars */
 	if (Cvar_Command ())
 		return;
 
-	// send it as a server command if we are connected
+	/* send it as a server command if we are connected */
 	Cmd_ForwardToServer ();
 }
 
@@ -952,9 +952,9 @@ Cmd_Init
 */
 void Cmd_Init (void)
 {
-	//
-	// register our commands
-	//
+	/* */
+	/* register our commands */
+	/* */
 	Cmd_AddCommand ("cmdlist",Cmd_List_f);
 	Cmd_AddCommand ("exec",Cmd_Exec_f);
 	Cmd_AddCommand ("echo",Cmd_Echo_f);

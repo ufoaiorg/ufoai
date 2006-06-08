@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../qcommon/qcommon.h"
 
-//===============================================================================
+/*=============================================================================== */
 
 byte *membase;
 int maxhunksize;
@@ -56,7 +56,7 @@ void *Hunk_Alloc (int size)
 {
 	byte *buf;
 
-	// round to cacheline
+	/* round to cacheline */
 	size = (size+31)&~31;
 	if (curhunksize + size > maxhunksize)
 		Com_Error(ERR_FATAL, "Hunk_Alloc overflow");
@@ -80,7 +80,7 @@ void Hunk_Free (void *base)
 	}
 }
 
-//===============================================================================
+/*=============================================================================== */
 
 
 /*
@@ -123,7 +123,7 @@ char *strlwr (char *s)
 	return origs;
 }
 
-//============================================
+/*============================================ */
 
 static	char	findbase[MAX_OSPATH];
 static	char	findpath[MAX_OSPATH];
@@ -136,13 +136,13 @@ static qboolean CompareAttributes(char *path, char *name,
 	struct stat st;
 	char fn[MAX_OSPATH];
 
-	// . and .. never match
+	/* . and .. never match */
 	if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0)
 		return qfalse;
 
 	sprintf(fn, "%s/%s", path, name);
 	if (stat(fn, &st) == -1)
-		return qfalse; // shouldn't happen
+		return qfalse; /* shouldn't happen */
 
 	if ( ( st.st_mode & S_IFDIR ) && ( canthave & SFF_SUBDIR ) )
 		return qfalse;
@@ -161,7 +161,7 @@ char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)
 	if (fdir)
 		Sys_Error ("Sys_BeginFind without close");
 
-//	COM_FilePath (path, findbase);
+/*	COM_FilePath (path, findbase); */
 	strcpy(findbase, path);
 
 	if ((p = strrchr(findbase, '/')) != NULL) {
@@ -177,8 +177,8 @@ char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)
 		return NULL;
 	while ((d = readdir(fdir)) != NULL) {
 		if (!*findpattern || glob_match(findpattern, d->d_name)) {
-//			if (*findpattern)
-//				printf("%s matched %s\n", findpattern, d->d_name);
+/*			if (*findpattern) */
+/*				printf("%s matched %s\n", findpattern, d->d_name); */
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
 				sprintf (findpath, "%s/%s", findbase, d->d_name);
 				return findpath;
@@ -196,8 +196,8 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 		return NULL;
 	while ((d = readdir(fdir)) != NULL) {
 		if (!*findpattern || glob_match(findpattern, d->d_name)) {
-//			if (*findpattern)
-//				printf("%s matched %s\n", findpattern, d->d_name);
+/*			if (*findpattern) */
+/*				printf("%s matched %s\n", findpattern, d->d_name); */
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
 				sprintf (findpath, "%s/%s", findbase, d->d_name);
 				return findpath;
@@ -215,5 +215,5 @@ void Sys_FindClose (void)
 }
 
 
-//============================================
+/*============================================ */
 

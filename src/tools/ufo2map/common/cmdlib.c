@@ -1,4 +1,4 @@
-// cmdlib.c
+/* cmdlib.c */
 
 #include "cmdlib.h"
 #include <sys/types.h>
@@ -16,11 +16,11 @@
 #include <libc.h>
 #endif
 
-#define	BASEDIR_ID_FILE	".gamedir"	// This is the name of the "trunk" directory.
-#define	BASEDIR	"base"	// This is the directory the game-data is stored.
+#define	BASEDIR_ID_FILE	".gamedir"	/* This is the name of the "trunk" directory. */
+#define	BASEDIR	"base"	/* This is the directory the game-data is stored. */
 #define PATHSEPERATOR   '/'
 
-// set these before calling CheckParm
+/* set these before calling CheckParm */
 int myargc;
 char **myargv;
 
@@ -137,7 +137,7 @@ void Error (char *error, ...)
 }
 #endif
 
-// only printf if in verbose mode
+/* only printf if in verbose mode */
 qboolean verbose = qfalse;
 void qprintf (char *format, ...)
 {
@@ -173,13 +173,13 @@ void SetQdirFromPath (char *path)
 	int pathlength = 0;
 
 	if (!(path[0] == '/' || path[0] == '\\' || path[1] == ':'))
-	{	// path is partial
+	{	/* path is partial */
 		Q_getwd (temp);
 		strcat (temp, path);
 		path = temp;
 	}
 
-	// search for ".gamedir"-file in path
+	/* search for ".gamedir"-file in path */
 
 	strncpy (c, path, strlen(path)-1);
 	for (pathlength=strlen(c)-1; pathlength > 0 ; pathlength--) {
@@ -263,7 +263,7 @@ double I_FloatTime (void)
 
 	return t;
 #if 0
-// more precise, less portable
+/* more precise, less portable */
 	struct timeval tp;
 	struct timezone tzp;
 	static int		secbase;
@@ -342,19 +342,19 @@ char *COM_Parse (char *data)
 	if (!data)
 		return NULL;
 
-// skip whitespace
+/* skip whitespace */
 skipwhite:
 	while ( (c = *data) <= ' ')
 	{
 		if (c == 0)
 		{
 			com_eof = qtrue;
-			return NULL;			// end of file;
+			return NULL;			/* end of file; */
 		}
 		data++;
 	}
 
-// skip // comments
+/* skip // comments */
 	if (c=='/' && data[1] == '/')
 	{
 		while (*data && *data != '\n')
@@ -363,7 +363,7 @@ skipwhite:
 	}
 
 
-// handle quoted strings specially
+/* handle quoted strings specially */
 	if (c == '\"')
 	{
 		data++;
@@ -380,7 +380,7 @@ skipwhite:
 		} while (1);
 	}
 
-// parse single characters
+/* parse single characters */
 	if (c=='{' || c=='}'|| c==')'|| c=='(' || c=='\'' || c==':')
 	{
 		com_token[len] = c;
@@ -389,7 +389,7 @@ skipwhite:
 		return data+1;
 	}
 
-// parse a regular word
+/* parse a regular word */
 	do
 	{
 		com_token[len] = c;
@@ -415,7 +415,7 @@ int Q_strncasecmp (char *s1, char *s2, int n)
 		c2 = *s2++;
 
 		if (!n--)
-			return 0;		// strings are equal until end point
+			return 0;		/* strings are equal until end point */
 
 		if (c1 != c2)
 		{
@@ -424,11 +424,11 @@ int Q_strncasecmp (char *s1, char *s2, int n)
 			if (c2 >= 'a' && c2 <= 'z')
 				c2 -= ('a' - 'A');
 			if (c1 != c2)
-				return -1;		// strings not equal
+				return -1;		/* strings not equal */
 		}
 	} while (c1);
 
-	return 0;		// strings are equal
+	return 0;		/* strings are equal */
 }
 
 int Q_strcasecmp (char *s1, char *s2)
@@ -639,16 +639,16 @@ void    SaveFile (char *filename, void *buffer, int count)
 void DefaultExtension (char *path, char *extension)
 {
 	char    *src;
-//
-// if path doesnt have a .EXT, append extension
-// (extension should include the .)
-//
+/* */
+/* if path doesnt have a .EXT, append extension */
+/* (extension should include the .) */
+/* */
 	src = path + strlen(path) - 1;
 
 	while (*src != PATHSEPERATOR && src != path)
 	{
 		if (*src == '.')
-			return;                 // it has an extension
+			return;                 /* it has an extension */
 		src--;
 	}
 
@@ -661,7 +661,7 @@ void DefaultPath (char *path, char *basepath)
 	char    temp[128];
 
 	if (path[0] == PATHSEPERATOR)
-		return;                   // absolute path location
+		return;                   /* absolute path location */
 	strcpy (temp,path);
 	strcpy (path,basepath);
 	strcat (path,temp);
@@ -687,7 +687,7 @@ void    StripExtension (char *path)
 	{
 		length--;
 		if (path[length] == '/')
-			return;		// no extension
+			return;		/* no extension */
 	}
 	if (length)
 		path[length] = 0;
@@ -699,17 +699,17 @@ void    StripExtension (char *path)
 Extract file parts
 ====================
 */
-// FIXME: should include the slash, otherwise
-// backing to an empty path will be wrong when appending a slash
+/* FIXME: should include the slash, otherwise */
+/* backing to an empty path will be wrong when appending a slash */
 void ExtractFilePath (char *path, char *dest)
 {
 	char    *src;
 
 	src = path + strlen(path) - 1;
 
-//
-// back up until a \ or the start
-//
+/* */
+/* back up until a \ or the start */
+/* */
 	while (src != path && *(src-1) != '\\' && *(src-1) != '/')
 		src--;
 
@@ -723,9 +723,9 @@ void ExtractFileBase (char *path, char *dest)
 
 	src = path + strlen(path) - 1;
 
-//
-// back up until a \ or the start
-//
+/* */
+/* back up until a \ or the start */
+/* */
 	while (src != path && *(src-1) != PATHSEPERATOR)
 		src--;
 
@@ -742,14 +742,14 @@ void ExtractFileExtension (char *path, char *dest)
 
 	src = path + strlen(path) - 1;
 
-//
-// back up until a . or the start
-//
+/* */
+/* back up until a . or the start */
+/* */
 	while (src != path && *(src-1) != '.')
 		src--;
 	if (src == path)
 	{
-		*dest = 0;	// no extension
+		*dest = 0;	/* no extension */
 		return;
 	}
 
@@ -924,14 +924,14 @@ float	LittleFloat (float l)
 #endif
 
 
-//=======================================================
+/*======================================================= */
 
 
-// FIXME: byte swap?
+/* FIXME: byte swap? */
 
-// this is a 16 bit, non-reflected CRC using the polynomial 0x1021
-// and the initial and final xor values shown below...  in other words, the
-// CCITT standard CRC used by XMODEM
+/* this is a 16 bit, non-reflected CRC using the polynomial 0x1021 */
+/* and the initial and final xor values shown below...  in other words, the */
+/* CCITT standard CRC used by XMODEM */
 
 #define CRC_INIT_VALUE	0xffff
 #define CRC_XOR_VALUE	0x0000
@@ -986,7 +986,7 @@ unsigned short CRC_Value(unsigned short crcvalue)
 {
 	return crcvalue ^ CRC_XOR_VALUE;
 }
-//=============================================================================
+/*============================================================================= */
 
 /*
 ============
@@ -1004,7 +1004,7 @@ void	CreatePath (char *path)
 	{
 		c = *ofs;
 		if (c == '/' || c == '\\')
-		{	// create the directory
+		{	/* create the directory */
 			*ofs = 0;
 			Q_mkdir (path);
 			*ofs = c;

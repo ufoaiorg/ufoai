@@ -3063,7 +3063,7 @@ void QGL_Shutdown( void )
 */
 qboolean QGL_Init( const char *dllname )
 {
-	// update 3Dfx gamma irrespective of underlying DLL
+	/* update 3Dfx gamma irrespective of underlying DLL */
 	{
 		char envbuffer[1024];
 		float g;

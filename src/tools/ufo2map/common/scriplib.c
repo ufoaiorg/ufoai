@@ -1,4 +1,4 @@
-// scriplib.c
+/* scriplib.c */
 
 #include "cmdlib.h"
 #include "scriplib.h"
@@ -25,7 +25,7 @@ int			scriptline;
 
 char    token[MAXTOKEN];
 qboolean endofscript;
-qboolean tokenready;                     // only true if UnGetToken was just called
+qboolean tokenready;                     /* only true if UnGetToken was just called */
 
 /*
 ==============
@@ -142,7 +142,7 @@ qboolean GetToken (qboolean crossline)
 {
 	char    *token_p;
 
-	if (tokenready)                         // is a token allready waiting?
+	if (tokenready)                         /* is a token allready waiting? */
 	{
 		tokenready = qfalse;
 		return qtrue;
@@ -151,9 +151,9 @@ qboolean GetToken (qboolean crossline)
 	if (script->script_p >= script->end_p)
 		return EndOfScript (crossline);
 
-	//
-	// skip space
-	//
+	/* */
+	/* skip space */
+	/* */
 skipspace:
 	while (*script->script_p <= 32)
 	{
@@ -170,7 +170,7 @@ skipspace:
 	if (script->script_p >= script->end_p)
 		return EndOfScript (crossline);
 
-	// ; # // comments
+	/* ; # // comments */
 	if (*script->script_p == ';' || *script->script_p == '#'
 		|| ( script->script_p[0] == '/' && script->script_p[1] == '/') )
 	{
@@ -182,7 +182,7 @@ skipspace:
 		goto skipspace;
 	}
 
-	// /* */ comments
+	/* c-style comments */
 	if (script->script_p[0] == '/' && script->script_p[1] == '*')
 	{
 		if (!crossline)
@@ -198,14 +198,14 @@ skipspace:
 		goto skipspace;
 	}
 
-	//
-	// copy token
-	//
+	/* */
+	/* copy token */
+	/* */
 	token_p = token;
 
 	if (*script->script_p == '"')
 	{
-		// quoted token
+		/* quoted token */
 		script->script_p++;
 		while (*script->script_p != '"')
 		{
@@ -217,7 +217,7 @@ skipspace:
 		}
 		script->script_p++;
 	}
-	else	// regular token
+	else	/* regular token */
 	while ( *script->script_p > 32 && *script->script_p != ';')
 	{
 		*token_p++ = *script->script_p++;

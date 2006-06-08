@@ -79,9 +79,9 @@ void WG_CheckHardwareGamma( void )
 
 	if ( gl_state.hwgamma )
 	{
-		//
-		// do a sanity check on the gamma values
-		//
+		/* */
+		/* do a sanity check on the gamma values */
+		/* */
 		if ( ( HIBYTE( s_oldHardwareGamma[0][255] ) <= HIBYTE( s_oldHardwareGamma[0][0] ) ) ||
 				( HIBYTE( s_oldHardwareGamma[1][255] ) <= HIBYTE( s_oldHardwareGamma[1][0] ) ) ||
 				( HIBYTE( s_oldHardwareGamma[2][255] ) <= HIBYTE( s_oldHardwareGamma[2][0] ) ) )
@@ -90,10 +90,10 @@ void WG_CheckHardwareGamma( void )
 			ri.Con_Printf( PRINT_ALL, "WARNING: device has broken gamma support, generated gamma.dat\n" );
 		}
 
-		//
-		// make sure that we didn't have a prior crash in the game, and if so we need to
-		// restore the gamma values to at least a linear value
-		//
+		/* */
+		/* make sure that we didn't have a prior crash in the game, and if so we need to */
+		/* restore the gamma values to at least a linear value */
+		/* */
 		if ( ( HIBYTE( s_oldHardwareGamma[0][181] ) == 255 ) )
 		{
 			int g;
@@ -190,7 +190,7 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 	ShowWindow( glw_state.hWnd, SW_SHOW );
 	UpdateWindow( glw_state.hWnd );
 
-	// init all the gl stuff for the window
+	/* init all the gl stuff for the window */
 	if (!GLimp_InitGL ())
 	{
 		ri.Con_Printf( PRINT_ALL, "VID_CreateWindow() - GLimp_InitGL failed\n");
@@ -200,7 +200,7 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 	SetForegroundWindow( glw_state.hWnd );
 	SetFocus( glw_state.hWnd );
 
-	// let the sound and input subsystems know about the new window
+	/* let the sound and input subsystems know about the new window */
 	ri.Vid_NewWindow (width, height);
 
 	return qtrue;
@@ -227,13 +227,13 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 
 	ri.Con_Printf( PRINT_ALL, " %d %d %s\n", width, height, win_fs[fullscreen] );
 
-	// destroy the existing window
+	/* destroy the existing window */
 	if (glw_state.hWnd)
 	{
 		GLimp_Shutdown ();
 	}
 
-	// do a CDS if needed
+	/* do a CDS if needed */
 	if ( fullscreen )
 	{
 		DEVMODE dm;
@@ -471,24 +471,24 @@ qboolean GLimp_InitGL (void)
 {
 	PIXELFORMATDESCRIPTOR pfd =
 	{
-		sizeof(PIXELFORMATDESCRIPTOR),	// size of this pfd
-		1,								// version number
-		PFD_DRAW_TO_WINDOW |			// support window
-		PFD_SUPPORT_OPENGL |			// support OpenGL
-		PFD_DOUBLEBUFFER,				// double buffered
-		PFD_TYPE_RGBA,					// RGBA type
-		32,								// 32-bit color depth
-		0, 0, 0, 0, 0, 0,				// color bits ignored
-		0,								// no alpha buffer
-		0,								// shift bit ignored
-		0,								// no accumulation buffer
-		0, 0, 0, 0, 					// accum bits ignored
-		24,								// 24-bit z-buffer
-		0,								// no stencil buffer
-		0,								// no auxiliary buffer
-		PFD_MAIN_PLANE,					// main layer
-		0,								// reserved
-		0, 0, 0							// layer masks ignored
+		sizeof(PIXELFORMATDESCRIPTOR),	/* size of this pfd */
+		1,								/* version number */
+		PFD_DRAW_TO_WINDOW |			/* support window */
+		PFD_SUPPORT_OPENGL |			/* support OpenGL */
+		PFD_DOUBLEBUFFER,				/* double buffered */
+		PFD_TYPE_RGBA,					/* RGBA type */
+		32,								/* 32-bit color depth */
+		0, 0, 0, 0, 0, 0,				/* color bits ignored */
+		0,								/* no alpha buffer */
+		0,								/* shift bit ignored */
+		0,								/* no accumulation buffer */
+		0, 0, 0, 0, 					/* accum bits ignored */
+		24,								/* 24-bit z-buffer */
+		0,								/* no stencil buffer */
+		0,								/* no auxiliary buffer */
+		PFD_MAIN_PLANE,					/* main layer */
+		0,								/* reserved */
+		0, 0, 0							/* layer masks ignored */
 	};
 	int  pixelformat;
 	cvar_t *stereo;
@@ -713,7 +713,7 @@ void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned 
 		table[2][i] = ( ( ( unsigned short ) blue[i] ) << 8 ) | blue[i];
 	}
 
-	// Win2K puts this odd restriction on gamma ramps...
+	/* Win2K puts this odd restriction on gamma ramps... */
 	vinfo.dwOSVersionInfoSize = sizeof(vinfo);
 	GetVersionEx( &vinfo );
 	if ( vinfo.dwMajorVersion == 5 && vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT ) {
@@ -729,7 +729,7 @@ void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned 
 		}
 	}
 
-	// enforce constantly increasing
+	/* enforce constantly increasing */
 	for ( j = 0 ; j < 3 ; j++ ) {
 		for ( i = 1 ; i < 256 ; i++ ) {
 			if ( table[j][i] < table[j][i-1] ) {

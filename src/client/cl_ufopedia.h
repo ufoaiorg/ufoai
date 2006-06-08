@@ -17,7 +17,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-// cl_ufopedia.h
+/* cl_ufopedia.h */
 
 #ifndef UFOPEDIA_DEFINED
 #define UFOPEDIA_DEFINED 1
@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct pediaChapter_s
 {
-	int idx;				// self-link
+	int idx;				/* self-link */
 	char	id[MAX_VAR];
 	char	name[MAX_VAR];
 	int first;

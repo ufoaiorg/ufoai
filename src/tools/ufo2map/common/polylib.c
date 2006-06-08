@@ -6,8 +6,8 @@
 
 extern int numthreads;
 
-// counters are only bumped when running single threaded,
-// because they are an awefull coherence problem
+/* counters are only bumped when running single threaded, */
+/* because they are an awefull coherence problem */
 int	c_active_windings;
 int	c_peak_windings;
 int	c_winding_allocs;
@@ -187,7 +187,7 @@ winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
 	vec3_t	org, vright, vup;
 	winding_t	*w;
 
-// find the major axis
+/* find the major axis */
 
 	max = -BOGUS_RANGE;
 	x = -1;
@@ -226,7 +226,7 @@ winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
 	VectorScale (vup, 8192, vup);
 	VectorScale (vright, 8192, vright);
 
-// project a really big	axis aligned box onto the plane
+/* project a really big	axis aligned box onto the plane */
 	w = AllocWinding (4);
 
 	VectorSubtract (org, vright, w->p[0]);
@@ -293,7 +293,7 @@ void	ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
 	vec_t	dists[MAX_POINTS_ON_WINDING+4];
 	int		sides[MAX_POINTS_ON_WINDING+4];
 	int		counts[3];
-	static	vec_t	dot;		// VC 4.2 optimizer bug if not static
+	static	vec_t	dot;		/* VC 4.2 optimizer bug if not static */
 	int		i, j;
 	vec_t	*p1, *p2;
 	vec3_t	mid;
@@ -302,7 +302,7 @@ void	ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
 
 	counts[0] = counts[1] = counts[2] = 0;
 
-// determine sides for each point
+/* determine sides for each point */
 	for (i=0 ; i<in->numpoints ; i++)
 	{
 		dot = DotProduct (in->p[i], normal);
@@ -334,8 +334,8 @@ void	ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
 		return;
 	}
 
-	maxpts = in->numpoints+4;	// cant use counts[0]+2 because
-								// of fp grouping errors
+	maxpts = in->numpoints+4;	/* cant use counts[0]+2 because */
+								/* of fp grouping errors */
 
 	*front = f = AllocWinding (maxpts);
 	*back = b = AllocWinding (maxpts);
@@ -367,12 +367,12 @@ void	ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
 		if (sides[i+1] == SIDE_ON || sides[i+1] == sides[i])
 			continue;
 
-	// generate a split point
+	/* generate a split point */
 		p2 = in->p[(i+1)%in->numpoints];
 
 		dot = dists[i] / (dists[i]-dists[i+1]);
 		for (j=0 ; j<3 ; j++)
-		{	// avoid round off error when possible
+		{	/* avoid round off error when possible */
 			if (normal[j] == 1)
 				mid[j] = dist;
 			else if (normal[j] == -1)
@@ -405,7 +405,7 @@ void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, vec_t eps
 	vec_t	dists[MAX_POINTS_ON_WINDING+4];
 	int		sides[MAX_POINTS_ON_WINDING+4];
 	int		counts[3];
-	static	vec_t	dot;		// VC 4.2 optimizer bug if not static
+	static	vec_t	dot;		/* VC 4.2 optimizer bug if not static */
 	int		i, j;
 	vec_t	*p1, *p2;
 	vec3_t	mid;
@@ -417,7 +417,7 @@ void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, vec_t eps
 
 	if ( ! in ) return;
 
-	// determine sides for each point
+	/* determine sides for each point */
 	for (i=0 ; i<in->numpoints ; i++)
 	{
 		dot = DotProduct (in->p[i], normal);
@@ -443,10 +443,10 @@ void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, vec_t eps
 		return;
 	}
 	if (!counts[1])
-		return;		// inout stays the same
+		return;		/* inout stays the same */
 
-	maxpts = in->numpoints+4;	// cant use counts[0]+2 because
-								// of fp grouping errors
+	maxpts = in->numpoints+4;	/* cant use counts[0]+2 because */
+								/* of fp grouping errors */
 
 	f = AllocWinding (maxpts);
 
@@ -470,12 +470,12 @@ void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, vec_t eps
 		if (sides[i+1] == SIDE_ON || sides[i+1] == sides[i])
 			continue;
 
-	// generate a split point
+	/* generate a split point */
 		p2 = in->p[(i+1)%in->numpoints];
 
 		dot = dists[i] / (dists[i]-dists[i+1]);
 		for (j=0 ; j<3 ; j++)
-		{	// avoid round off error when possible
+		{	/* avoid round off error when possible */
 			if (normal[j] == 1)
 				mid[j] = dist;
 			else if (normal[j] == -1)
@@ -552,12 +552,12 @@ void CheckWinding (winding_t *w)
 
 		j = i+1 == w->numpoints ? 0 : i+1;
 
-		// check the point is on the face plane
+		/* check the point is on the face plane */
 		d = DotProduct (p1, facenormal) - facedist;
 		if (d < -ON_EPSILON || d > ON_EPSILON)
 			Error ("CheckWinding: point off plane");
 
-		// check the edge isnt degenerate
+		/* check the edge isnt degenerate */
 		p2 = w->p[j];
 		VectorSubtract (p2, p1, dir);
 
@@ -569,7 +569,7 @@ void CheckWinding (winding_t *w)
 		edgedist = DotProduct (p1, edgenormal);
 		edgedist += ON_EPSILON;
 
-		// all other points must be on front side
+		/* all other points must be on front side */
 		for (j=0 ; j<w->numpoints ; j++)
 		{
 			if (j == i)

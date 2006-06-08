@@ -58,7 +58,7 @@ qboolean have_stencil = qfalse;
 static cvar_t	*m_filter;
 static cvar_t	*in_mouse;
 
-// state struct passed in Init
+/* state struct passed in Init */
 static in_state_t	*in_state;
 
 static cvar_t *sensitivity;
@@ -87,7 +87,7 @@ int config_notify_height;
 glwstate_t glw_state;
 extern cvar_t *use_stencil;
 
-// Console variables that we need to access from this module
+/* Console variables that we need to access from this module */
 
 /*****************************************************************************/
 /* MOUSE                                                                     */
@@ -98,7 +98,7 @@ extern cvar_t *use_stencil;
 qboolean mouse_active;
 int mx, my, mouse_buttonstate;
 
-// this is inside the renderer shared lib, so these are called from vid_so
+/* this is inside the renderer shared lib, so these are called from vid_so */
 
 void RW_IN_PlatformInit( void )
 {
@@ -243,8 +243,8 @@ void GetEvent(SDL_Event *event)
 	case SDL_MOUSEMOTION:
 		if (mouse_active)
 		{
-			mx = event->motion.x * win_x; // * sensitivity->value
-			my = event->motion.y * win_y; // * sensitivity->value
+			mx = event->motion.x * win_x; /* * sensitivity->value */
+			my = event->motion.y * win_y; /* * sensitivity->value */
 		}
 		break;
 	case SDL_KEYDOWN:
@@ -411,11 +411,11 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	srandom(getpid());
 
-	// free resources in use
+	/* free resources in use */
 	if (surface)
 		SDL_FreeSurface(surface);
 
-	// let the sound and input subsystems know about the new window
+	/* let the sound and input subsystems know about the new window */
 	ri.Vid_NewWindow (vid.width, vid.height);
 
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
@@ -438,7 +438,7 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 		return qfalse;
 	}
 
-	// stencilbuffer shadows
+	/* stencilbuffer shadows */
  	if (use_stencil) {
 		int stencil_bits;
 
@@ -486,7 +486,7 @@ rserr_t GLimp_SetMode( unsigned int *pwidth, unsigned int *pheight, int mode, qb
 	ri.Con_Printf( PRINT_ALL, " %d %d %s\n", *pwidth, *pheight, (char *)qglGetString (GL_RENDERER) );
 
 	if ( !GLimp_InitGraphics( fullscreen ) ) {
-		// failed to set a valid mode in windowed mode
+		/* failed to set a valid mode in windowed mode */
 		return rserr_invalid_mode;
 	}
 
@@ -524,7 +524,7 @@ void GLimp_AppActivate( qboolean active )
 {
 }
 
-//===============================================================================
+/*=============================================================================== */
 
 /*****************************************************************************/
 /* KEYBOARD                                                                  */
@@ -555,7 +555,7 @@ void KBD_Update(void)
 
 	KBD_Update_Flag = 1;
 
-	// get events from x server
+	/* get events from x server */
 	if (X11_active)
 	{
 		while (SDL_PollEvent(&event))
@@ -617,7 +617,7 @@ void RW_IN_Init(in_state_t *in_state_p)
 {
 	in_state = in_state_p;
 
-	// mouse variables
+	/* mouse variables */
 	m_filter = ri.Cvar_Get ("m_filter", "0", 0);
 	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
 

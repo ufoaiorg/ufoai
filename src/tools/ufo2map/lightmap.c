@@ -63,7 +63,7 @@ void PairEdges (void)
 
 			if (e->faces[0] && e->faces[1])
 			{
-				// determine if coplanar
+				/* determine if coplanar */
 				if (e->faces[0]->planenum == e->faces[1]->planenum)
 					e->coplanar = qtrue;
 			}
@@ -124,7 +124,7 @@ triangulation_t	*AllocTriangulation (dplane_t *plane)
 
 	t->plane = plane;
 
-//	memset (t->edgematrix, 0, sizeof(t->edgematrix));
+/*	memset (t->edgematrix, 0, sizeof(t->edgematrix)); */
 
 	return t;
 }
@@ -206,18 +206,18 @@ void TriEdge_r (triangulation_t *trian, triedge_t *e)
 	triangle_t	*nt;
 
 	if (e->tri)
-		return;		// allready connected by someone
+		return;		/* allready connected by someone */
 
-	// find the point with the best angle
+	/* find the point with the best angle */
 	p0 = trian->points[e->p0]->origin;
 	p1 = trian->points[e->p1]->origin;
 	best = 1.1;
 	for (i=0 ; i< trian->numpoints ; i++)
 	{
 		p = trian->points[i]->origin;
-		// a 0 dist will form a degenerate triangle
+		/* a 0 dist will form a degenerate triangle */
 		if (DotProduct(p, e->normal) - e->dist < 0)
-			continue;	// behind edge
+			continue;	/* behind edge */
 		VectorSubtract (p0, p, v1);
 		VectorSubtract (p1, p, v2);
 		if (!VectorNormalize (v1,v1))
@@ -232,9 +232,9 @@ void TriEdge_r (triangulation_t *trian, triedge_t *e)
 		}
 	}
 	if (best >= 1)
-		return;		// edge doesn't match anything
+		return;		/* edge doesn't match anything */
 
-	// make a new triangle
+	/* make a new triangle */
 	nt = AllocTriangle (trian);
 	nt->edges[0] = e;
 	nt->edges[1] = FindEdge (trian, e->p1, bestp);
@@ -261,7 +261,7 @@ void TriangulatePoints (triangulation_t *trian)
 	if (trian->numpoints < 2)
 		return;
 
-	// find the two closest points
+	/* find the two closest points */
 	bestd = 9999;
 	for (i=0 ; i<trian->numpoints ; i++)
 	{
@@ -351,7 +351,7 @@ qboolean PointInTriangle (vec3_t point, triangle_t *t)
 		e = t->edges[i];
 		d = DotProduct (e->normal, point) - e->dist;
 		if (d < 0)
-			return qfalse;	// not inside
+			return qfalse;	/* not inside */
 	}
 
 	return qtrue;
@@ -382,26 +382,26 @@ void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
 		return;
 	}
 
-	// search for triangles
+	/* search for triangles */
 	for (t = trian->tris, j=0 ; j < trian->numtris ; t++, j++)
 	{
 		if (!PointInTriangle (point, t))
 			continue;
 
-		// this is it
+		/* this is it */
 		LerpTriangle (trian, t, point, color);
 		return;
 	}
 
-	// search for exterior edge
+	/* search for exterior edge */
 	for (e=trian->edges, j=0 ; j< trian->numedges ; e++, j++)
 	{
 		if (e->tri)
-			continue;		// not an exterior edge
+			continue;		/* not an exterior edge */
 
 		d = DotProduct (point, e->normal) - e->dist;
 		if (d < 0)
-			continue;	// not in front of edge
+			continue;	/* not in front of edge */
 
 		p0 = trian->points[e->p0];
 		p1 = trian->points[e->p1];
@@ -419,7 +419,7 @@ void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
 		return;
 	}
 
-	// search for nearest point
+	/* search for nearest point */
 	best = 99999;
 	p1 = NULL;
 	for (j=0 ; j<trian->numpoints ; j++)
@@ -459,11 +459,11 @@ typedef struct
 	int		numsurfpt;
 	vec3_t	surfpt[SINGLEMAP];
 
-	vec3_t	modelorg;		// for origined bmodels
+	vec3_t	modelorg;		/* for origined bmodels */
 
 	vec3_t	texorg;
-	vec3_t	worldtotex[2];	// s = (world - texorg) . worldtotex[0]
-	vec3_t	textoworld[2];	// world = texorg + s * textoworld[0]
+	vec3_t	worldtotex[2];	/* s = (world - texorg) . worldtotex[0] */
+	vec3_t	textoworld[2];	/* world = texorg + s * textoworld[0] */
 
 	vec_t	exactmins[2], exactmaxs[2];
 
@@ -505,7 +505,7 @@ void CalcFaceExtents (lightinfo_t *l)
 		else
 			v = dvertexes + dedges[-e].v[1];
 
-//		VectorAdd (v->point, l->modelorg, vt);
+/*		VectorAdd (v->point, l->modelorg, vt); */
 		VectorCopy (v->point, vt);
 
 		for (j=0 ; j<2 ; j++)
@@ -551,13 +551,13 @@ void CalcFaceVectors (lightinfo_t *l)
 
 	tex = &texinfo[l->face->texinfo];
 
-// convert from float to double
+/* convert from float to double */
 	for (i=0 ; i<2 ; i++)
 		for (j=0 ; j<3 ; j++)
 			l->worldtotex[i][j] = tex->vecs[i][j];
 
-// calculate a normal to the texture axis.  points can be moved along this
-// without changing their S/T
+/* calculate a normal to the texture axis.  points can be moved along this */
+/* without changing their S/T */
 	texnormal[0] = tex->vecs[1][1]*tex->vecs[0][2]
 		- tex->vecs[1][2]*tex->vecs[0][1];
 	texnormal[1] = tex->vecs[1][2]*tex->vecs[0][0]
@@ -566,7 +566,7 @@ void CalcFaceVectors (lightinfo_t *l)
 		- tex->vecs[1][1]*tex->vecs[0][0];
 	VectorNormalize (texnormal, texnormal);
 
-// flip it towards plane normal
+/* flip it towards plane normal */
 	distscale = DotProduct (texnormal, l->facenormal);
 	if (!distscale)
 	{
@@ -579,8 +579,8 @@ void CalcFaceVectors (lightinfo_t *l)
 		VectorSubtract (vec3_origin, texnormal, texnormal);
 	}
 
-// distscale is the ratio of the distance along the texture normal to
-// the distance along the plane normal
+/* distscale is the ratio of the distance along the texture normal to */
+/* the distance along the plane normal */
 	distscale = 1/distscale;
 
 	for (i=0 ; i<2 ; i++)
@@ -593,19 +593,19 @@ void CalcFaceVectors (lightinfo_t *l)
 	}
 
 
-// calculate texorg on the texture plane
+/* calculate texorg on the texture plane */
 	for (i=0 ; i<3 ; i++)
 		l->texorg[i] = -tex->vecs[0][3]* l->textoworld[0][i] - tex->vecs[1][3] * l->textoworld[1][i];
 
-// project back to the face plane
+/* project back to the face plane */
 	dist = DotProduct (l->texorg, l->facenormal) - l->facedist - 1;
 	dist *= distscale;
 	VectorMA (l->texorg, -dist, texnormal, l->texorg);
 
-	// compensate for org'd bmodels
+	/* compensate for org'd bmodels */
 	VectorAdd (l->texorg, l->modelorg, l->texorg);
 
-	// total sample count
+	/* total sample count */
 	h = l->texsize[1]+1;
 	w = l->texsize[0]+1;
 	l->numsurfpt = w * h;
@@ -654,10 +654,10 @@ void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 			ut = startt + (t+tofs)*step;
 
 
-		// if a line can be traced from surf to facemid, the point is good
+		/* if a line can be traced from surf to facemid, the point is good */
 			for (i=0 ; i<6 ; i++)
 			{
-			// calculate texture point
+			/* calculate texture point */
 				for (j=0 ; j<3 ; j++)
 					surf[j] = l->texorg[j] + l->textoworld[0][j]*us
 					+ l->textoworld[1][j]*ut;
@@ -666,10 +666,10 @@ void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 				if (leaf->contents != CONTENTS_SOLID)
 				{
 					if (!TestLine (facemid, surf))
-						break;	// got it
+						break;	/* got it */
 				}
 
-				// nudge it
+				/* nudge it */
 				if (i & 1)
 				{
 					if (us > mids)
@@ -707,7 +707,7 @@ void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 }
 
 
-//==============================================================
+/*============================================================== */
 
 
 
@@ -750,7 +750,7 @@ entity_t *FindTargetEntity (char *target)
 	return NULL;
 }
 
-//#define	DIRECT_LIGHT	3000
+/*#define	DIRECT_LIGHT	3000 */
 #define	DIRECT_LIGHT	3
 
 /*
@@ -772,9 +772,9 @@ void CreateDirectLights (void)
 	char	*_color;
 	float	intensity;
 
-	//
-	// surfaces
-	//
+	/* */
+	/* surfaces */
+	/* */
 	for (i=0, p=patches ; i<num_patches ; i++, p++)
 	{
 		if (p->totallight[0] < DIRECT_LIGHT
@@ -797,12 +797,12 @@ void CreateDirectLights (void)
 
 		dl->intensity = ColorNormalize (p->totallight, dl->color);
 		dl->intensity *= p->area * direct_scale;
-		VectorClear (p->totallight);	// all sent now
+		VectorClear (p->totallight);	/* all sent now */
 	}
 
-	//
-	// entities
-	//
+	/* */
+	/* entities */
+	/* */
 	for (i=0 ; i<num_entities ; i++)
 	{
 		e = &entities[i];
@@ -850,7 +850,7 @@ void CreateDirectLights (void)
 				dl->stopdot = 10;
 			dl->stopdot = cos(dl->stopdot/180*3.14159);
 			if (target[0])
-			{	// point towards target
+			{	/* point towards target */
 				e2 = FindTargetEntity (target);
 				if (!e2)
 					printf ("WARNING: light at (%i %i %i) has missing target\n",
@@ -863,7 +863,7 @@ void CreateDirectLights (void)
 				}
 			}
 			else
-			{	// point down angle
+			{	/* point down angle */
 				angle = FloatForKey (e, "angle");
 				if (angle == ANGLE_UP)
 				{
@@ -885,19 +885,19 @@ void CreateDirectLights (void)
 		}
 	}
 
-	//
-	// sun light (parameters in worldspawn)
-	//
+	/* */
+	/* sun light (parameters in worldspawn) */
+	/* */
 	e = &entities[0];
 
-	// get intensity
+	/* get intensity */
 	sun_intensity = FloatForKey (e, "light");
 	if ( sun_intensity )
 	{
-		// there is a sun
+		/* there is a sun */
 		char *angles;
 
-		// get color
+		/* get color */
 		_color = ValueForKey( e, "_color" );
 		if (_color && _color[1])
 		{
@@ -907,7 +907,7 @@ void CreateDirectLights (void)
 		else
 			sun_color[0] = sun_color[1] = sun_color[2] = 1.0;
 
-		// get angles
+		/* get angles */
 		angles = ValueForKey( e, "angles" );
 		sscanf( angles, "%f %f", &sun_pitch, &sun_yaw );
 
@@ -919,7 +919,7 @@ void CreateDirectLights (void)
 		sun_dir[2] = cos( sun_pitch );
 	}
 
-	// get ambient light
+	/* get ambient light */
 	_color = ValueForKey( e, "ambient" );
 	sscanf (_color, "%f %f %f", &ambient_red, &ambient_green, &ambient_blue );
 	ambient_red *= 128;
@@ -940,7 +940,7 @@ Lightscale is the normalizer for multisampling
 void GatherSampleLight (vec3_t pos, vec3_t normal,
 			float **styletable, int offset, int mapsize, float lightscale)
 {
-//	int				i;
+/*	int				i; */
 	directlight_t	*l;
 	vec3_t			delta;
 	float			dot, dot2;
@@ -954,27 +954,27 @@ void GatherSampleLight (vec3_t pos, vec3_t normal,
 		dist = VectorNormalize (delta, delta);
 		dot = DotProduct (delta, normal);
 		if (dot <= 0.001)
-			continue;	// behind sample surface
+			continue;	/* behind sample surface */
 
 		switch (l->type)
 		{
 		case emit_point:
-			// linear falloff
+			/* linear falloff */
 			scale = (l->intensity - dist) * dot;
 			break;
 
 		case emit_surface:
 			dot2 = -DotProduct (delta, l->normal);
 			if (dot2 <= 0.001)
-				goto skipadd;	// behind light surface
+				goto skipadd;	/* behind light surface */
 			scale = (l->intensity / (dist*dist) ) * dot * dot2;
 			break;
 
 		case emit_spotlight:
-			// linear falloff
+			/* linear falloff */
 			dot2 = -DotProduct (delta, l->normal);
 			if (dot2 <= l->stopdot)
-				goto skipadd;	// outside light cone
+				goto skipadd;	/* outside light cone */
 			scale = (l->intensity - dist) * dot;
 			break;
 		default:
@@ -985,9 +985,9 @@ void GatherSampleLight (vec3_t pos, vec3_t normal,
 			continue;
 
 		if (TestLine (pos, l->origin))
-			continue;	// occluded
+			continue;	/* occluded */
 
-		// if this style doesn't have a table yet, allocate one
+		/* if this style doesn't have a table yet, allocate one */
 		if (!styletable[l->style])
 		{
 			styletable[l->style] = malloc (mapsize);
@@ -995,26 +995,26 @@ void GatherSampleLight (vec3_t pos, vec3_t normal,
 		}
 
 		dest = styletable[l->style] + offset;
-		// add some light to it
+		/* add some light to it */
 		VectorMA (dest, scale*lightscale, l->color, dest);
 
 skipadd: ;
 	}
 
-	// add sun light
+	/* add sun light */
 	if ( !sun_intensity )
 		return;
 
 	dot = DotProduct( sun_dir, normal );
 
 	if ( dot <= 0.001 )
-		return; // wrong direction
+		return; /* wrong direction */
 
 	VectorMA( pos, 512, sun_dir, delta );
 	if ( TestLine( pos, delta ) )
-		return; // occluded
+		return; /* occluded */
 
-	// if this style doesn't have a table yet, allocate one
+	/* if this style doesn't have a table yet, allocate one */
 	if (!styletable[0])
 	{
 		styletable[0] = malloc (mapsize);
@@ -1023,7 +1023,7 @@ skipadd: ;
 
 	dest = styletable[0] + offset;
 
-	// add some light to it
+	/* add some light to it */
 	VectorMA (dest, sun_intensity * dot * lightscale, sun_color, dest);
 }
 
@@ -1053,7 +1053,7 @@ void AddSampleToPatch (vec3_t pos, vec3_t color, int facenum)
 
 	for (patch = face_patches[facenum] ; patch ; patch=patch->next)
 	{
-		// see if the point is in this patch (roughly)
+		/* see if the point is in this patch (roughly) */
 		WindingBounds (patch->winding, mins, maxs);
 		for (i=0 ; i<3 ; i++)
 		{
@@ -1063,7 +1063,7 @@ void AddSampleToPatch (vec3_t pos, vec3_t color, int facenum)
 				goto nextpatch;
 		}
 
-		// add the sample to the patch
+		/* add the sample to the patch */
 		patch->samples++;
 		VectorAdd (patch->samplelight, color, patch->samplelight);
 nextpatch:;
@@ -1091,18 +1091,18 @@ void BuildFacelights (int facenum)
 	int			numsamples;
 	int			tablesize;
 	facelight_t		*fl;
-// 	int			*se;
-// 	int			v, a, b;
-// 	vec3_t		delta;
-// 	vec3_t		normal;
-// 	vec3_t		tv[32], tn[32];
-// 	vec3_t		p, q, inv[2];
-// 	float		idet;
+/* 	int			*se; */
+/* 	int			v, a, b; */
+/* 	vec3_t		delta; */
+/* 	vec3_t		normal; */
+/* 	vec3_t		tv[32], tn[32]; */
+/* 	vec3_t		p, q, inv[2]; */
+/* 	float		idet; */
 
 	f = &dfaces[facenum];
 
 	if ( texinfo[f->texinfo].flags & (SURF_WARP|SURF_SKY) )
-		return;		// non-lit texture
+		return;		/* non-lit texture */
 
 	l = malloc( 5 * sizeof(lightinfo_t) );
 	memset (styletable,0, sizeof(styletable));
@@ -1124,7 +1124,7 @@ void BuildFacelights (int facenum)
 			l[i].facedist = -l[i].facedist;
 		}
 
-		// get the origin offset for rotating bmodels
+		/* get the origin offset for rotating bmodels */
 		VectorCopy (face_offset[facenum], l[i].modelorg);
 
 		CalcFaceVectors (&l[i]);
@@ -1141,18 +1141,18 @@ void BuildFacelights (int facenum)
 	fl->origins = malloc (tablesize);
 	memcpy (fl->origins, l[0].surfpt, tablesize);
 
-	// get the light samples
+	/* get the light samples */
 	for (i=0 ; i<l[0].numsurfpt ; i++)
 	{
 		for (j=0 ; j<numsamples ; j++)
 			GatherSampleLight (l[j].surfpt[i], l[0].facenormal, styletable,
 				i*3, tablesize, 1.0/numsamples);
 
-		// contribute the sample to one or more patches
+		/* contribute the sample to one or more patches */
 		AddSampleToPatch (l[0].surfpt[i], styletable[0]+i*3, facenum);
 	}
 
-	// average up the direct light on each patch for radiosity
+	/* average up the direct light on each patch for radiosity */
 	for (patch = face_patches[facenum] ; patch ; patch=patch->next)
 	{
 		if (patch->samples)
@@ -1161,7 +1161,7 @@ void BuildFacelights (int facenum)
 		}
 		else
 		{
-//			printf ("patch with no samples\n");
+/*			printf ("patch with no samples\n"); */
 		}
 	}
 
@@ -1176,8 +1176,8 @@ void BuildFacelights (int facenum)
 		fl->numstyles++;
 	}
 
-	// the light from DIRECT_LIGHTS is sent out, but the
-	// texture itself should still be full bright
+	/* the light from DIRECT_LIGHTS is sent out, but the */
+	/* texture itself should still be full bright */
 
 	if (face_patches[facenum]->baselight[0] >= DIRECT_LIGHT ||
 		face_patches[facenum]->baselight[1] >= DIRECT_LIGHT ||
@@ -1221,13 +1221,13 @@ void FinalLightFace (int facenum)
 	fl = &facelight[facenum];
 
 	if ( texinfo[f->texinfo].flags & (SURF_WARP|SURF_SKY) )
-		return;		// non-lit texture
+		return;		/* non-lit texture */
 
 	ThreadLock ();
 	f->lightofs = lightdatasize;
 	lightdatasize += fl->numstyles*(fl->numsamples*3);
 
-// add green sentinals between lightmaps
+/* add green sentinals between lightmaps */
 #if 0
 lightdatasize += 64*3;
 for (i=0 ; i<64 ; i++)
@@ -1241,9 +1241,9 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 	f->styles[0] = 0;
 	f->styles[1] = f->styles[2] = f->styles[3] = 0xff;
 
-	//
-	// set up the triangulation
-	//
+	/* */
+	/* set up the triangulation */
+	/* */
 	if (numbounce > 0)
 	{
 		ClearBounds (facemins, facemaxs);
@@ -1262,8 +1262,8 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 
 		trian = AllocTriangulation (&dplanes[f->planenum]);
 
-		// for all faces on the plane, add the nearby patches
-		// to the triangulation
+		/* for all faces on the plane, add the nearby patches */
+		/* to the triangulation */
 		for (pfacenum = planelinks[f->side][f->planenum]
 			; pfacenum ; pfacenum = facelinks[pfacenum])
 		{
@@ -1277,7 +1277,7 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 						break;
 				}
 				if (i != 3)
-					continue;	// not needed for this face
+					continue;	/* not needed for this face */
 				AddPointToTriangulation (patch, trian);
 			}
 		}
@@ -1286,14 +1286,14 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 		TriangulatePoints (trian);
 	}
 
-	//
-	// sample the triangulation
-	//
+	/* */
+	/* sample the triangulation */
+	/* */
 
-	// _minlight allows models that have faces that would not be
-	// illuminated to receive a mottled light pattern instead of
-	// black
-//	minlight = FloatForKey (face_entity[facenum], "_minlight") * 128;
+	/* _minlight allows models that have faces that would not be */
+	/* illuminated to receive a mottled light pattern instead of */
+	/* black */
+/*	minlight = FloatForKey (face_entity[facenum], "_minlight") * 128; */
 	minlight = 0;
 
 	dest = &dlightdata[f->lightofs];
@@ -1321,14 +1321,14 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 				SampleTriangulation (fl->origins + j*3, trian, add);
 				VectorAdd (lb, add, lb);
 			}
-			// add an ambient term if desired
+			/* add an ambient term if desired */
 			lb[0] += ambient_red;
 			lb[1] += ambient_green;
 			lb[2] += ambient_blue;
 
 			VectorScale (lb, lightscale, lb);
 
-			// we need to clamp without allowing hue to change
+			/* we need to clamp without allowing hue to change */
 			for (k=0 ; k<3 ; k++)
 				if (lb[k] < 1)
 					lb[k] = 1;
@@ -1339,7 +1339,7 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 				max = lb[2];
 			newmax = max;
 			if (newmax < 0)
-				newmax = 0;		// roundoff problems
+				newmax = 0;		/* roundoff problems */
 			if (newmax < minlight)
 			{
 				newmax = minlight + (rand()%48);

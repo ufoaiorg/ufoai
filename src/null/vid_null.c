@@ -17,12 +17,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// vid_null.c -- null video driver to aid porting efforts
-// this assumes that one of the refs is statically linked to the executable
+/* vid_null.c -- null video driver to aid porting efforts */
+/* this assumes that one of the refs is statically linked to the executable */
 
 #include "../client/client.h"
 
-viddef_t	viddef;				// global video state
+viddef_t	viddef;				/* global video state */
 
 refexport_t	re;
 
@@ -144,15 +144,15 @@ void	VID_Init (void)
         ri.Vid_GetModeInfo = VID_GetModeInfo;
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 	ri.CL_GetFontData = CL_GetFontData;
-//	ri.Malloc = Z_Malloc;
-//	ri.Free = Z_Free;
+/*	ri.Malloc = Z_Malloc; */
+/*	ri.Free = Z_Free; */
 
 	re = GetRefAPI(ri);
 
         if (re.api_version != API_VERSION)
 	        Com_Error (ERR_FATAL, "Re has incompatible api_version");
 
-        // call the init function
+        /* call the init function */
         if (re.Init (NULL, NULL) == -1)
 		Com_Error (ERR_FATAL, "Couldn't start refresh");
 }

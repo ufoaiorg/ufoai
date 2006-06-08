@@ -31,24 +31,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ref_gl/gl_local.h"
 #include "glw_linux.h"
 
-//#include <GL/fxmesa.h>
+/*#include <GL/fxmesa.h> */
 #include <GL/glx.h>
 
 #include <dlfcn.h>
 
 const char so_file[] = "/etc/ufo.conf";
 
-/*
-//FX Mesa Functions
+#if 0
+/*FX Mesa Functions */
 fxMesaContext (*qfxMesaCreateContext)(GLuint win, GrScreenResolution_t, GrScreenRefresh_t, const GLint attribList[]);
 fxMesaContext (*qfxMesaCreateBestContext)(GLuint win, GLint width, GLint height, const GLint attribList[]);
 void (*qfxMesaDestroyContext)(fxMesaContext ctx);
 void (*qfxMesaMakeCurrent)(fxMesaContext ctx);
 fxMesaContext (*qfxMesaGetCurrentContext)(void);
 void (*qfxMesaSwapBuffers)(void);
-*/
+#endif
 
-//GLX Functions
+/*GLX Functions */
 XVisualInfo * (*qglXChooseVisual)( Display *dpy, int screen, int *attribList );
 GLXContext (*qglXCreateContext)( Display *dpy, XVisualInfo *vis, GLXContext shareList, Bool direct );
 void (*qglXDestroyContext)( Display *dpy, GLXContext ctx );
@@ -3086,7 +3086,7 @@ void *qwglGetProcAddress(char *symbol)
 
 qboolean QGL_Init( const char *dllname )
 {
-	// update 3Dfx gamma irrespective of underlying DLL
+	/* update 3Dfx gamma irrespective of underlying DLL */
 	{
 		char envbuffer[1024];
 		float g;
@@ -3103,10 +3103,10 @@ qboolean QGL_Init( const char *dllname )
 		char	fn[MAX_OSPATH];
 		FILE *fp;
 
-//		ri.Con_Printf(PRINT_ALL, "QGL_Init: Can't load %s from /etc/ld.so.conf: %s\n",
-//				dllname, dlerror());
+/*		ri.Con_Printf(PRINT_ALL, "QGL_Init: Can't load %s from /etc/ld.so.conf: %s\n", */
+/*				dllname, dlerror()); */
 
-		// try path in /etc/ufo.conf
+		/* try path in /etc/ufo.conf */
 		if ((fp = fopen(so_file, "r")) == NULL) {
 			ri.Con_Printf(PRINT_ALL,  "QGL_Init(\"%s\"): can't open %s\n", dllname, so_file);
 			strcpy(fn, "." );

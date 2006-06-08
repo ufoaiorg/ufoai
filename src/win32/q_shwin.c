@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <io.h>
 #include <conio.h>
 
-//===============================================================================
+/*=============================================================================== */
 
 int		hunkcount;
 
@@ -40,7 +40,7 @@ int		cursize;
 
 void *Hunk_Begin (int maxsize)
 {
-	// reserve a huge chunk of memory, but don't commit any yet
+	/* reserve a huge chunk of memory, but don't commit any yet */
 	cursize = 0;
 	hunkmaxsize = maxsize;
 #ifdef VIRTUAL_ALLOC
@@ -58,12 +58,12 @@ void *Hunk_Alloc (int size)
 {
 	void	*buf;
 
-	// round to cacheline
+	/* round to cacheline */
 	size = (size+31)&~31;
 
 #ifdef VIRTUAL_ALLOC
-	// commit pages as needed
-//	buf = VirtualAlloc (membase+cursize, size, MEM_COMMIT, PAGE_READWRITE);
+	/* commit pages as needed */
+/*	buf = VirtualAlloc (membase+cursize, size, MEM_COMMIT, PAGE_READWRITE); */
 	buf = VirtualAlloc (membase, cursize+size, MEM_COMMIT, PAGE_READWRITE);
 	if (!buf)
 	{
@@ -81,18 +81,18 @@ void *Hunk_Alloc (int size)
 int Hunk_End (void)
 {
 
-	// free the remaining unused virtual memory
+	/* free the remaining unused virtual memory */
 #if 0
 	void	*buf;
 
-	// write protect it
+	/* write protect it */
 	buf = VirtualAlloc (membase, cursize, MEM_COMMIT, PAGE_READONLY);
 	if (!buf)
 		Sys_Error ("VirtualAlloc commit failed");
 #endif
 
 	hunkcount++;
-//Com_Printf ("hunkcount: %i\n", hunkcount);
+/*Com_Printf ("hunkcount: %i\n", hunkcount); */
 	return cursize;
 }
 
@@ -108,7 +108,7 @@ void Hunk_Free (void *base)
 	hunkcount--;
 }
 
-//===============================================================================
+/*=============================================================================== */
 
 
 /*
@@ -123,7 +123,7 @@ int Sys_Milliseconds (void)
 	static qboolean	initialized = qfalse;
 
 	if (!initialized)
-	{	// let base retain 16 bits of effectively random data
+	{	/* let base retain 16 bits of effectively random data */
 		base = timeGetTime() & 0xffff0000;
 		initialized = qtrue;
 	}
@@ -137,7 +137,7 @@ void Sys_Mkdir (char *path)
 	_mkdir (path);
 }
 
-//============================================
+/*============================================ */
 
 char	findbase[MAX_OSPATH];
 char	findpath[MAX_OSPATH];
@@ -211,5 +211,5 @@ void Sys_FindClose (void)
 }
 
 
-//============================================
+/*============================================ */
 

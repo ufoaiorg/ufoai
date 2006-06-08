@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// r_main.c
+/* r_main.c */
 #include "gl_local.h"
 #include <ctype.h>
 
@@ -35,28 +35,28 @@ float		gldepthmin, gldepthmax;
 glconfig_t gl_config;
 glstate_t  gl_state;
 
-image_t		*r_notexture;		// use for bad textures
-image_t		*r_particletexture;	// little dot for particles
+image_t		*r_notexture;		/* use for bad textures */
+image_t		*r_particletexture;	/* little dot for particles */
 
 entity_t	*currententity;
 model_t		*currentmodel;
 
 cplane_t	frustum[4];
 
-int			r_framecount;		// used for dlight push checking
+int			r_framecount;		/* used for dlight push checking */
 
 int			c_brush_polys, c_alias_polys;
 
-float		v_blend[4];			// final blending color
+float		v_blend[4];			/* final blending color */
 
 void GL_Strings_f( void );
 
-// entity transform
+/* entity transform */
 transform_t	trafo[MAX_ENTITIES];
 
-//
-// view origin
-//
+/* */
+/* view origin */
+/* */
 vec3_t	vup;
 vec3_t	vpn;
 vec3_t	vright;
@@ -65,9 +65,9 @@ vec3_t	r_origin;
 float	r_world_matrix[16];
 float	r_base_world_matrix[16];
 
-//
-// screen size info
-//
+/* */
+/* screen size info */
+/* */
 refdef_t	r_newrefdef;
 
 int		r_viewcluster, r_viewcluster2, r_oldviewcluster, r_oldviewcluster2;
@@ -85,7 +85,7 @@ cvar_t	*r_lefthand;
 cvar_t  *r_displayrefresh;
 cvar_t  *r_anisotropic;
 cvar_t  *r_ext_max_anisotropy;
-cvar_t  *r_texture_lod; // lod_bias
+cvar_t  *r_texture_lod; /* lod_bias */
 
 cvar_t	*gl_nosubimage;
 cvar_t	*gl_allow_software;
@@ -156,7 +156,7 @@ void R_CastShadow (void)
 {
 	int i;
 
-	// no shadows at all
+	/* no shadows at all */
 	if(!gl_shadows->value)
 		return;
 
@@ -229,8 +229,8 @@ void R_DrawSpriteModel (entity_t *e)
 	float		*up, *right;
 	dsprite_t		*psprite;
 
-	// don't even bother culling, because it's just a single
-	// polygon without a surface cache
+	/* don't even bother culling, because it's just a single */
+	/* polygon without a surface cache */
 
 	psprite = (dsprite_t *)currentmodel->extradata;
 
@@ -247,7 +247,7 @@ void R_DrawSpriteModel (entity_t *e)
 
 #if 0
 	if (psprite->type == SPR_ORIENTED)
-	{	// bullet marks on walls
+	{	/* bullet marks on walls */
 	vec3_t		v_forward, v_right, v_up;
 
 	AngleVectors (currententity->angles, v_forward, v_right, v_up);
@@ -256,7 +256,7 @@ void R_DrawSpriteModel (entity_t *e)
 	}
 	else
 #endif
-	{	// normal sprite
+	{	/* normal sprite */
 		up = vup;
 		right = vright;
 	}
@@ -311,7 +311,7 @@ void R_DrawSpriteModel (entity_t *e)
 	qglColor4f( 1, 1, 1, 1 );
 }
 
-//==================================================================================
+/*================================================================================== */
 
 /*
 =============
@@ -324,10 +324,10 @@ void R_DrawNullModel (void)
 	vec3_t	shadelight;
 	int		i;
 
-//	if ( currententity->flags & RF_FULLBRIGHT )
+/*	if ( currententity->flags & RF_FULLBRIGHT ) */
 		shadelight[0] = shadelight[1] = shadelight[2] = 1.0F;
-//	else
-//		R_LightPoint (currententity->origin, shadelight);
+/*	else */
+/*		R_LightPoint (currententity->origin, shadelight); */
 
 	qglPushMatrix ();
 
@@ -370,17 +370,17 @@ void R_InterpolateTransform( animState_t *as, int numframes, float *tag, float *
 	float	bl, fl;
 	int		i;
 
-	// range check
+	/* range check */
 	if ( as->frame >= numframes || as->frame < 0 ) as->frame = 0;
 	if ( as->oldframe >= numframes || as->oldframe < 0 ) as->oldframe = 0;
 
-	// calc relevant values
+	/* calc relevant values */
 	current = tag + as->frame*16;
 	old = tag + as->oldframe*16;
 	bl = as->backlerp;
 	fl = 1.0 - as->backlerp;
 
-	// right on a frame?
+	/* right on a frame? */
 	if ( bl == 0.0 )
 	{
 		memcpy( interpolated, current, sizeof(float)*16 );
@@ -392,11 +392,11 @@ void R_InterpolateTransform( animState_t *as, int numframes, float *tag, float *
 		return;
 	}
 
-	// interpolate
+	/* interpolate */
 	for ( i = 0; i < 16; i++ )
 		interpolated[i] = fl * current[i] + bl * old[i];
 
-	// normalize
+	/* normalize */
 	for ( i = 0; i < 3; i++ )
 		VectorNormalize( interpolated + i*4 );
 }
@@ -415,7 +415,7 @@ float *R_CalcTransform( entity_t *e )
 	float		mt[16], mc[16];
 	int			i;
 
-	// check if this entity is already transformed
+	/* check if this entity is already transformed */
 	t = &trafo[e - r_newrefdef.entities];
 
 	if ( t->processing )
@@ -424,17 +424,17 @@ float *R_CalcTransform( entity_t *e )
 	if ( t->done )
 		return t->matrix;
 
-	// process this matrix
+	/* process this matrix */
 	t->processing = qtrue;
 	mp = NULL;
 
-	// do parent object trafos first
+	/* do parent object trafos first */
 	if ( e->tagent )
 	{
-		// parent trafo
+		/* parent trafo */
 		mp = R_CalcTransform( e->tagent );
 
-		// tag trafo
+		/* tag trafo */
 		if ( e->tagent->model && e->tagent->model->tagdata )
 		{
 			dtag_t	*taghdr;
@@ -444,19 +444,19 @@ float *R_CalcTransform( entity_t *e )
 
 			taghdr = (dtag_t *)e->tagent->model->tagdata;
 
-			// find the right tag
+			/* find the right tag */
 			name = (char *)taghdr + taghdr->ofs_names;
 			for ( i = 0; i < taghdr->num_tags; i++, name += MAX_TAGNAME )
 				if ( !strcmp( name, e->tagname ) )
 				{
-					// found the tag (matrix)
+					/* found the tag (matrix) */
 					tag = (float *)((byte *)taghdr + taghdr->ofs_tags);
 					tag += i * 16 * taghdr->num_frames;
 
-					// do interpolation
+					/* do interpolation */
 					R_InterpolateTransform( &e->tagent->as, taghdr->num_frames, tag, interpolated );
 
-					// transform
+					/* transform */
 					GLMatrixMultiply( mp, interpolated, mt );
 					mp = mt;
 
@@ -465,31 +465,31 @@ float *R_CalcTransform( entity_t *e )
 		}
 	}
 
-	// fill in edge values
+	/* fill in edge values */
 	mc[3] = mc[7] = mc[11] = 0.0;
 	mc[15] = 1.0;
 
-	// add rotation
+	/* add rotation */
 	VectorCopy( e->angles, angles );
-//	angles[YAW] = -angles[YAW];
+/*	angles[YAW] = -angles[YAW]; */
 
 	AngleVectors( angles, &mc[0], &mc[4], &mc[8] );
 
-	// add translation
+	/* add translation */
 	mc[12] = e->origin[0];
 	mc[13] = e->origin[1];
 	mc[14] = e->origin[2];
 
-	// flip an axis
+	/* flip an axis */
 	VectorScale( &mc[4], -1, &mc[4] );
 
-	// combine trafos
+	/* combine trafos */
 	if ( mp )
 		GLMatrixMultiply( mp, mc, t->matrix );
 	else
 		memcpy( t->matrix, mc, sizeof(float)*16 );
 
-	// we're done
+	/* we're done */
 	t->done = qtrue;
 	t->processing = qfalse;
 
@@ -509,15 +509,15 @@ void R_TransformEntitiesOnList (void)
 	if (!r_drawentities->value)
 		return;
 
-	// clear flags
+	/* clear flags */
 	for (i=0 ; i<r_newrefdef.num_entities ; i++)
 	{
 		trafo[i].done = qfalse;
 		trafo[i].processing = qfalse;
 	}
 
-	// calculate all transformations
-	// possibly recursive
+	/* calculate all transformations */
+	/* possibly recursive */
 	for (i=0 ; i<r_newrefdef.num_entities ; i++)
 		R_CalcTransform( &r_newrefdef.entities[i] );
 }
@@ -535,15 +535,15 @@ void R_DrawEntitiesOnList (void)
 	if (!r_drawentities->value)
 		return;
 
-	// draw non-transparent first
+	/* draw non-transparent first */
 
 	for (i=0 ; i<r_newrefdef.num_entities ; i++)
 	{
 		currententity = &r_newrefdef.entities[i];
 
-		// find out if and how an entity should be drawn
+		/* find out if and how an entity should be drawn */
 		if ( currententity->flags & RF_TRANSLUCENT )
-			continue;	// solid
+			continue;	/* solid */
 
 		if ( currententity->flags & RF_BEAM )
 			R_DrawBeam( currententity );
@@ -575,14 +575,14 @@ void R_DrawEntitiesOnList (void)
 		}
 	}
 
-	// draw transparent entities
-	// we could sort these if it ever becomes a problem...
-	qglDepthMask (0);		// no z writes
+	/* draw transparent entities */
+	/* we could sort these if it ever becomes a problem... */
+	qglDepthMask (0);		/* no z writes */
 	for (i=0 ; i<r_newrefdef.num_entities ; i++)
 	{
 		currententity = &r_newrefdef.entities[i];
 		if ( !(currententity->flags & RF_TRANSLUCENT) )
-			continue;	// solid
+			continue;	/* solid */
 
 		if ( currententity->flags & RF_BEAM )
 			R_DrawBeam( currententity );
@@ -614,7 +614,7 @@ void R_DrawEntitiesOnList (void)
 			}
 		}
 	}
-	qglDepthMask (1);		// back to writing
+	qglDepthMask (1);		/* back to writing */
 
 }
 
@@ -631,7 +631,7 @@ void GL_DrawParticles( int num_particles, const particle_t particles[], const un
 	byte			color[4];
 
 	GL_Bind(r_particletexture->texnum);
-	qglDepthMask( GL_FALSE );		// no z buffering
+	qglDepthMask( GL_FALSE );		/* no z buffering */
 	qglEnable( GL_BLEND );
 	GL_TexEnv( GL_MODULATE );
 	qglBegin( GL_TRIANGLES );
@@ -641,7 +641,7 @@ void GL_DrawParticles( int num_particles, const particle_t particles[], const un
 
 	for ( p = particles, i=0 ; i < num_particles ; i++,p++)
 	{
-		// hack a scale up to keep particles from disapearing
+		/* hack a scale up to keep particles from disapearing */
 		scale = ( p->origin[0] - r_origin[0] ) * vpn[0] +
 			    ( p->origin[1] - r_origin[1] ) * vpn[1] +
 			    ( p->origin[2] - r_origin[2] ) * vpn[2];
@@ -673,7 +673,7 @@ void GL_DrawParticles( int num_particles, const particle_t particles[], const un
 	qglEnd ();
 	qglDisable( GL_BLEND );
 	qglColor4f( 1,1,1,1 );
-	qglDepthMask( 1 );		// back to normal Z buffering
+	qglDepthMask( 1 );		/* back to normal Z buffering */
 	GL_TexEnv( GL_REPLACE );
 }
 
@@ -740,9 +740,9 @@ void R_PolyBlend (void)
 
         qglLoadIdentity ();
 
-	// FIXME: get rid of these
-        qglRotatef (-90,  1, 0, 0);	    // put Z going up
-        qglRotatef (90,  0, 0, 1);	    // put Z going up
+	/* FIXME: get rid of these */
+        qglRotatef (-90,  1, 0, 0);	    /* put Z going up */
+        qglRotatef (90,  0, 0, 1);	    /* put Z going up */
 
 	qglColor4fv (v_blend);
 
@@ -761,13 +761,13 @@ void R_PolyBlend (void)
 	qglColor4f(1,1,1,1);
 }
 
-//=======================================================================
+/*======================================================================= */
 
 int SignbitsForPlane (cplane_t *out)
 {
 	int	bits, j;
 
-	// for fast box on planeside test
+	/* for fast box on planeside test */
 
 	bits = 0;
 	for (j=0 ; j<3 ; j++)
@@ -785,7 +785,7 @@ void R_SetFrustum (void)
 
 	if ( r_isometric->value )
 	{
-		// 4 planes of a cube
+		/* 4 planes of a cube */
 		VectorScale( vright, +1, frustum[0].normal );
 		VectorScale( vright, -1, frustum[1].normal );
 		VectorScale( vup, +1, frustum[2].normal );
@@ -800,13 +800,13 @@ void R_SetFrustum (void)
 	}
 	else
 	{
-		// rotate VPN right by FOV_X/2 degrees
+		/* rotate VPN right by FOV_X/2 degrees */
 		RotatePointAroundVector( frustum[0].normal, vup, vpn, -(90-r_newrefdef.fov_x / 2 ) );
-		// rotate VPN left by FOV_X/2 degrees
+		/* rotate VPN left by FOV_X/2 degrees */
 		RotatePointAroundVector( frustum[1].normal, vup, vpn, 90-r_newrefdef.fov_x / 2 );
-		// rotate VPN up by FOV_X/2 degrees
+		/* rotate VPN up by FOV_X/2 degrees */
 		RotatePointAroundVector( frustum[2].normal, vright, vpn, 90-r_newrefdef.fov_y / 2 );
-		// rotate VPN down by FOV_X/2 degrees
+		/* rotate VPN down by FOV_X/2 degrees */
 		RotatePointAroundVector( frustum[3].normal, vright, vpn, -( 90 - r_newrefdef.fov_y / 2 ) );
 
 		for (i=0 ; i<4 ; i++)
@@ -818,7 +818,7 @@ void R_SetFrustum (void)
 	}
 }
 
-//=======================================================================
+/*======================================================================= */
 
 /*
 ===============
@@ -828,26 +828,27 @@ R_SetupFrame
 void R_SetupFrame (void)
 {
 	int i;
-// 	mleaf_t	*leaf;
+/* 	mleaf_t	*leaf; */
 
 	r_framecount++;
 
-	// build the transformation matrix for the given view angles
+	/* build the transformation matrix for the given view angles */
 	VectorCopy (r_newrefdef.vieworg, r_origin);
 
 	AngleVectors (r_newrefdef.viewangles, vpn, vright, vup);
 
-	// current viewcluster
-/*	if ( !( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) )
+	/* current viewcluster */
+#if 0
+	if ( !( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) )
 	{
 		r_oldviewcluster = r_viewcluster;
 		r_oldviewcluster2 = r_viewcluster2;
 		leaf = Mod_PointInLeaf (r_origin, r_worldmodel);
 		r_viewcluster = r_viewcluster2 = leaf->cluster;
 
-		// check above and below so crossing solid water doesn't draw wrong
+		/* check above and below so crossing solid water doesn't draw wrong */
 		if (!leaf->contents)
-		{	// look down a bit
+		{	/* look down a bit */
 			vec3_t	temp;
 
 			VectorCopy (r_origin, temp);
@@ -858,7 +859,7 @@ void R_SetupFrame (void)
 				r_viewcluster2 = leaf->cluster;
 		}
 		else
-		{	// look up a bit
+		{	/* look up a bit */
 			vec3_t	temp;
 
 			VectorCopy (r_origin, temp);
@@ -868,15 +869,15 @@ void R_SetupFrame (void)
 				(leaf->cluster != r_viewcluster2) )
 				r_viewcluster2 = leaf->cluster;
 		}
-	}*/
-
+	}
+#endif
 	for (i=0 ; i<4 ; i++)
 		v_blend[i] = r_newrefdef.blend[i];
 
 	c_brush_polys = 0;
 	c_alias_polys = 0;
 
-	// clear out the portion of the screen that the NOWORLDMODEL defines
+	/* clear out the portion of the screen that the NOWORLDMODEL defines */
 	if ( r_newrefdef.rdflags & RDF_NOWORLDMODEL )
 	{
 		qglEnable( GL_SCISSOR_TEST );
@@ -914,29 +915,29 @@ R_SetupGL
 void R_SetupGL (void)
 {
 	float	screenaspect;
-//	float	yfov;
+/*	float	yfov; */
 	int		x, x2, y2, y, w, h;
 
-	//
-	// set up viewport
-	//
+	/* */
+	/* set up viewport */
+	/* */
 	x = floor(r_newrefdef.x * vid.width / vid.width);
 	x2 = ceil((r_newrefdef.x + r_newrefdef.width) * vid.width / vid.width);
 	y = floor(vid.height - r_newrefdef.y * vid.height / vid.height);
 	y2 = ceil(vid.height - (r_newrefdef.y + r_newrefdef.height) * vid.height / vid.height);
 
-//	ri.Con_Printf( "%i %i", vid.width, vid.height );
+/*	ri.Con_Printf( "%i %i", vid.width, vid.height ); */
 
 	w = x2 - x;
 	h = y - y2;
 
 	qglViewport (x, y2, w, h);
 
-	//
-	// set up projection matrix
-	//
+	/* */
+	/* set up projection matrix */
+	/* */
         screenaspect = (float)r_newrefdef.width/r_newrefdef.height;
-//	yfov = 2*atan((float)r_newrefdef.height/r_newrefdef.width)*180/M_PI;
+/*	yfov = 2*atan((float)r_newrefdef.height/r_newrefdef.width)*180/M_PI; */
 	qglMatrixMode(GL_PROJECTION);
         qglLoadIdentity ();
         MYgluPerspective (r_newrefdef.fov_y,  screenaspect,  4,  2048);
@@ -946,21 +947,21 @@ void R_SetupGL (void)
 	qglMatrixMode(GL_MODELVIEW);
         qglLoadIdentity ();
 
-        qglRotatef (-90,  1, 0, 0);	    // put Z going up
-        qglRotatef (90,  0, 0, 1);	    // put Z going up
+        qglRotatef (-90,  1, 0, 0);	    /* put Z going up */
+        qglRotatef (90,  0, 0, 1);	    /* put Z going up */
         qglRotatef (-r_newrefdef.viewangles[2],  1, 0, 0);
         qglRotatef (-r_newrefdef.viewangles[0],  0, 1, 0);
         qglRotatef (-r_newrefdef.viewangles[1],  0, 0, 1);
         qglTranslatef (-r_newrefdef.vieworg[0],  -r_newrefdef.vieworg[1],  -r_newrefdef.vieworg[2]);
 
-//	if ( gl_state.camera_separation != 0 && gl_state.stereo_enabled )
-//		qglTranslatef ( gl_state.camera_separation, 0, 0 );
+/*	if ( gl_state.camera_separation != 0 && gl_state.stereo_enabled ) */
+/*		qglTranslatef ( gl_state.camera_separation, 0, 0 ); */
 
 	qglGetFloatv (GL_MODELVIEW_MATRIX, r_world_matrix);
 
-	//
-	// set drawing parms
-	//
+	/* */
+	/* set drawing parms */
+	/* */
 	if (gl_cull->value)
 		qglEnable(GL_CULL_FACE);
 	else
@@ -976,7 +977,7 @@ void R_SetupGL (void)
 		qglFogi( GL_FOG_MODE, GL_LINEAR );
 		qglFogf( GL_FOG_START, 0.1 * r_newrefdef.fog );
 		qglFogf( GL_FOG_END, r_newrefdef.fog );
-//		qglFogDensity(GL_FOG_DENSITY, 0.ß1 * r_newrefdef.fog );
+/*		qglFogDensity( GL_FOG_DENSITY, 0.01 * r_newrefdef.fog ); */
 		qglFogfv( GL_FOG_COLOR, r_newrefdef.fogColor );
 	}
 }
@@ -1025,7 +1026,7 @@ void R_Clear (void)
 
 void R_Flash( void )
 {
-//         R_ShadowBlend();
+/*         R_ShadowBlend(); */
 	R_PolyBlend ();
 }
 
@@ -1044,8 +1045,8 @@ void R_RenderView (refdef_t *fd)
 
 	r_newrefdef = *fd;
 
-//	if (!r_worldmodel && !( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) )
-//		ri.Sys_Error (ERR_DROP, "R_RenderView: NULL worldmodel");
+/*	if (!r_worldmodel && !( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) ) */
+/*		ri.Sys_Error (ERR_DROP, "R_RenderView: NULL worldmodel"); */
 
 	if (r_speeds->value)
 	{
@@ -1053,7 +1054,7 @@ void R_RenderView (refdef_t *fd)
 		c_alias_polys = 0;
 	}
 
-//	R_PushDlights ();
+/*	R_PushDlights (); */
 
 	if (gl_finish->value)
 		qglFinish ();
@@ -1072,13 +1073,13 @@ void R_RenderView (refdef_t *fd)
 	R_TransformEntitiesOnList();
 	R_DrawEntitiesOnList();
 
-// 	if (gl_shadows->value == 2) R_CastShadow();
+/* 	if (gl_shadows->value == 2) R_CastShadow(); */
 
 	if (gl_wire->value) qglPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
 	R_DrawAlphaSurfaces ();
 
-// 	if (gl_shadows->value == 1) R_CastShadow();
+/* 	if (gl_shadows->value == 1) R_CastShadow(); */
 
 	R_DrawParticles ();
 	R_DrawPtls ();
@@ -1111,7 +1112,7 @@ void	R_LeaveGL2D (void)
 
 void	R_SetGL2D (void)
 {
-	// set 2D virtual screen size
+	/* set 2D virtual screen size */
 	qglViewport (0,0, vid.width, vid.height);
 	qglMatrixMode(GL_PROJECTION);
 	qglLoadIdentity ();
@@ -1185,12 +1186,12 @@ void R_SetLightLevel (void)
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
-	// save off light value for server to look at (BIG HACK!)
+	/* save off light value for server to look at (BIG HACK!) */
 
-//	R_LightPoint (r_newrefdef.vieworg, shadelight);
+/*	R_LightPoint (r_newrefdef.vieworg, shadelight); */
 
-	// pick the greatest component, which should be the same
-	// as the mono value returned by software
+	/* pick the greatest component, which should be the same */
+	/* as the mono value returned by software */
 /*	if (shadelight[0] > shadelight[1])
 	{
 		if (shadelight[0] > shadelight[2])
@@ -1205,7 +1206,7 @@ void R_SetLightLevel (void)
 		else
 			r_lightlevel->value = 150*shadelight[2];
 	}*/
-//	r_lightlevel->value = 0;
+/*	r_lightlevel->value = 0; */
 
 }
 
@@ -1218,7 +1219,7 @@ R_RenderFrame
 void R_RenderFrame (refdef_t *fd)
 {
 	R_RenderView( fd );
-//	R_SetLightLevel ();
+/*	R_SetLightLevel (); */
 	R_SetGL2D ();
 }
 
@@ -1239,9 +1240,9 @@ void R_Register( void )
 	r_anisotropic = ri.Cvar_Get( "r_anisotropic", "1", CVAR_ARCHIVE );
 	r_ext_max_anisotropy = ri.Cvar_Get( "r_ext_max_anisotropy", "0", 0 );
 	r_texture_lod = ri.Cvar_Get( "r_texture_lod", "0", CVAR_ARCHIVE );
-// 	r_arb_samples = ri.Cvar_Get ("r_arb_samples", "1", CVAR_ARCHIVE );
+/* 	r_arb_samples = ri.Cvar_Get ("r_arb_samples", "1", CVAR_ARCHIVE ); */
 
-//	r_lightlevel = ri.Cvar_Get ("r_lightlevel", "0", 0);
+/*	r_lightlevel = ri.Cvar_Get ("r_lightlevel", "0", 0); */
 
 	gl_nosubimage = ri.Cvar_Get( "gl_nosubimage", "0", 0 );
 	gl_allow_software = ri.Cvar_Get( "gl_allow_software", "0", 0 );
@@ -1366,7 +1367,7 @@ qboolean R_SetMode (void)
 			ri.Con_Printf( PRINT_ALL, "ref_gl::R_SetMode() - invalid mode\n" );
 		}
 
-		// try setting it back to something safe
+		/* try setting it back to something safe */
 		if ( ( err = GLimp_SetMode( &vid.width, &vid.height, gl_state.prev_mode, qfalse ) ) != rserr_ok )
 		{
 			ri.Con_Printf( PRINT_ALL, "ref_gl::R_SetMode() - could not revert to safe mode\n" );
@@ -1401,7 +1402,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 
 	R_Register();
 
-	// initialize our QGL dynamic bindings
+	/* initialize our QGL dynamic bindings */
 	if ( !QGL_Init( gl_driver->string ) )
 	{
 		QGL_Shutdown();
@@ -1409,17 +1410,17 @@ qboolean R_Init( void *hinstance, void *hWnd )
 		return qfalse;
 	}
 
-	// initialize OS-specific parts of OpenGL
+	/* initialize OS-specific parts of OpenGL */
 	if ( !GLimp_Init( hinstance, hWnd ) )
 	{
 		QGL_Shutdown();
 		return qfalse;
 	}
 
-	// set our "safe" modes
+	/* set our "safe" modes */
 	gl_state.prev_mode = 3;
 
-	// create the window and set up the context
+	/* create the window and set up the context */
 	if ( !R_SetMode () )
 	{
 		QGL_Shutdown();
@@ -1488,8 +1489,8 @@ qboolean R_Init( void *hinstance, void *hWnd )
 		}
 	}
 
-	// power vr can't have anything stay in the framebuffer, so
-	// the screen needs to redraw the tiled background every frame
+	/* power vr can't have anything stay in the framebuffer, so */
+	/* the screen needs to redraw the tiled background every frame */
 	if ( gl_config.renderer & GL_RENDERER_POWERVR )
 	{
 		ri.Cvar_Set( "scr_drawall", "1" );
@@ -1503,7 +1504,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	ri.Cvar_SetValue( "gl_finish", 1 );
 #endif
 
-	// MCD has buffering issues
+	/* MCD has buffering issues */
 	if ( gl_config.renderer == GL_RENDERER_MCD )
 	{
 		ri.Cvar_SetValue( "gl_finish", 1 );
@@ -1647,13 +1648,13 @@ qboolean R_Init( void *hinstance, void *hWnd )
 			ri.Con_Printf( PRINT_ALL, "...using GL_ARB_texture_compression\n" );
 			if ( gl_ext_s3tc_compression->value && strstr( gl_config.extensions_string, "GL_EXT_texture_compression_s3tc" ) )
 			{
-//				ri.Con_Printf( PRINT_ALL, "   with s3tc compression\n" );
+/*				ri.Con_Printf( PRINT_ALL, "   with s3tc compression\n" ); */
 				gl_compressed_solid_format = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
 				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
 			}
 			else
 			{
-//				ri.Con_Printf( PRINT_ALL, "   without s3tc compression\n" );
+/*				ri.Con_Printf( PRINT_ALL, "   without s3tc compression\n" ); */
 				gl_compressed_solid_format = GL_COMPRESSED_RGB_ARB;
 				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_ARB;
 			}
@@ -1672,7 +1673,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 		gl_compressed_alpha_format = 0;
 	}
 
-	// anisotropy
+	/* anisotropy */
 	gl_state.anisotropic = qfalse;
 
 	qglGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT,&max_aniso);
@@ -1774,8 +1775,8 @@ qboolean R_Init( void *hinstance, void *hWnd )
 
 		GL_ShaderInit();
 
-//		water_shader = LoadProgram_ARB_FP("arb_water");
-//		water_shader = CompileWaterShader();
+/*		water_shader = LoadProgram_ARB_FP("arb_water"); */
+/*		water_shader = CompileWaterShader(); */
 	} else {
 	        ri.Con_Printf(PRINT_ALL, "...GL_ARB_fragment_program not found\n");
 		gl_state.arb_fragment_program = qfalse;
@@ -1826,7 +1827,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	/*
 	** draw our stereo patterns
 	*/
-// 	GL_DrawStereoPattern();
+/* 	GL_DrawStereoPattern(); */
 
 	GL_InitImages ();
 	Mod_Init ();
@@ -1887,7 +1888,7 @@ void R_BeginFrame( float camera_separation )
 	** change modes if necessary
 	*/
 	if ( gl_mode->modified || vid_fullscreen->modified || gl_ext_texture_compression->modified )
-	{	// FIXME: only restart if CDS is required
+	{	/* FIXME: only restart if CDS is required */
 		cvar_t	*ref;
 
 		ref = ri.Cvar_Get ("vid_ref", "gl", 0);
@@ -1966,7 +1967,7 @@ void R_BeginFrame( float camera_separation )
 	/*
 	** texturemode stuff
 	*/
-	// Realtime set level of anisotropy filtering and change texture lod bias
+	/* Realtime set level of anisotropy filtering and change texture lod bias */
 	if ( gl_texturemode->modified )
 	{
 		GL_TextureMode( gl_texturemode->string );
@@ -1991,9 +1992,9 @@ void R_BeginFrame( float camera_separation )
 	*/
 	GL_UpdateSwapInterval();
 
-	//
-	// clear screen if desired
-	//
+	/* */
+	/* clear screen if desired */
+	/* */
 	R_Clear ();
 }
 
@@ -2030,11 +2031,11 @@ void R_SetPalette ( const unsigned char *palette)
 			rp[i*4+3] = 0xff;
 		}
 	}
-//	GL_SetTexturePalette( r_rawpalette );
+/*	GL_SetTexturePalette( r_rawpalette ); */
 
-//	qglClearColor (0,0,0,0);
+/*	qglClearColor (0,0,0,0); */
 	qglClear (GL_COLOR_BUFFER_BIT);
-//	qglClearColor (1,0, 0.5 , 0.5);
+/*	qglClearColor (1,0, 0.5 , 0.5); */
 }
 
 /*
@@ -2059,7 +2060,7 @@ void R_TakeVideoFrame( int h, int w, byte* captureBuffer, byte *encodeBuffer, qb
 	{
 		frameSize = w * h * 4;
 
-		// Vertically flip the image
+		/* Vertically flip the image */
 		for( i = 0; i < h; i++ )
 		{
 			memcpy( &encodeBuffer[ i * ( w * 4 ) ], &captureBuffer[ ( h - i - 1 ) * ( w * 4 ) ], w * 4 );
@@ -2070,7 +2071,7 @@ void R_TakeVideoFrame( int h, int w, byte* captureBuffer, byte *encodeBuffer, qb
 }
 
 
-//===================================================================
+/*=================================================================== */
 
 
 void	R_BeginRegistration (char *tiles, char *pos);
@@ -2153,7 +2154,7 @@ refexport_t GetRefAPI (refimport_t rimp )
 
 
 #ifndef REF_HARD_LINKED
-// this is only here so the functions in q_shared.c and q_shwin.c can link
+/* this is only here so the functions in q_shared.c and q_shwin.c can link */
 void Sys_Error (char *error, ...)
 {
 	va_list		argptr;

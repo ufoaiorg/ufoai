@@ -34,13 +34,13 @@ cvar_t *s_system;
 
 qboolean SNDDMA_Init(struct sndinfo *s)
 {
-	// alsa is default for linux
+	/* alsa is default for linux */
 	s_system = Cvar_Get("s_system", "2", CVAR_ARCHIVE);
 	s_system->modified = qfalse;
 
-	// when we select another soundsystem - we have to
-	// stop the current running - but we need to know
-	// which one runs...
+	/* when we select another soundsystem - we have to */
+	/* stop the current running - but we need to know */
+	/* which one runs... */
 	sound_system_id = (int)s_system->value;
 
 	switch ( sound_system_id )
@@ -64,7 +64,7 @@ qboolean SNDDMA_Init(struct sndinfo *s)
 		default:
 			Com_Printf("Unknown soundsystem '%i' (now using ALSA)\n", (int)s_system->value );
 			Cvar_Set("s_system", "2");
-			// we've nothing started
+			/* we've nothing started */
 			s_system->modified = qfalse;
 			return SNDDMA_Init(s);
 	}

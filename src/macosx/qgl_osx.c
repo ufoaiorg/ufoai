@@ -1,22 +1,22 @@
-//______________________________________________________________________________________________________________nFO
-// "qgl_osx.c" - This file implements the MacOS X system bindings of OpenGL to QGL function pointers.
-//
-// Notes: By default the ARB Extension will not be used, because of a performance issue.
-//        To enable it define "QGL_ENABLE_ARB_EXT" at the targets/GL Renderer Module compiler options.
-//
-// Written by:	awe				[mailto:awe@fruitz-of-dojo.de].
-//		©2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de].
-//
-// Quake IIª is copyrighted by id software	[http://www.idsoftware.com].
-//
-// Version History:
-// v1.0.6: OpenGL framework is now dynamically loaded.
-// v1.0.5: The multi-texture extension is now disabled [can be re-enabled by defining ENABLE_MULTI_TEXTURE_EX].
-//	   Support for anisotropic texture filtering.
-//	   Support for Truform.
-//         Support for FSAA.
-// v1.0.0: Initial release.
-//__________________________________________________________________________________________________________dEFINES
+/*______________________________________________________________________________________________________________nFO */
+/* "qgl_osx.c" - This file implements the MacOS X system bindings of OpenGL to QGL function pointers. */
+/* */
+/* Notes: By default the ARB Extension will not be used, because of a performance issue. */
+/*        To enable it define "QGL_ENABLE_ARB_EXT" at the targets/GL Renderer Module compiler options. */
+/* */
+/* Written by:	awe				[mailto:awe@fruitz-of-dojo.de]. */
+//		©2001-2002 Fruitz Of Dojo 	[http:/*www.fruitz-of-dojo.de]. */
+/* */
+// Quake IIª is copyrighted by id software	[http:/*www.idsoftware.com]. */
+/* */
+/* Version History: */
+/* v1.0.6: OpenGL framework is now dynamically loaded. */
+/* v1.0.5: The multi-texture extension is now disabled [can be re-enabled by defining ENABLE_MULTI_TEXTURE_EX]. */
+/*	   Support for anisotropic texture filtering. */
+/*	   Support for Truform. */
+/*         Support for FSAA. */
+/* v1.0.0: Initial release. */
+/*__________________________________________________________________________________________________________dEFINES */
 
 #pragma mark =Defines=
 
@@ -24,7 +24,7 @@
 
 #pragma mark -
 
-//_________________________________________________________________________________________________________iNCLUDES
+/*_________________________________________________________________________________________________________iNCLUDES */
 
 #pragma mark =Includes=
 
@@ -33,7 +33,7 @@
 
 #pragma mark -
 
-//___________________________________________________________________________________________________________mACROS
+/*___________________________________________________________________________________________________________mACROS */
 
 #pragma mark =Macros=
 
@@ -42,7 +42,7 @@
 
 #pragma mark -
 
-//____________________________________________________________________________________________________________eNUMS
+/*____________________________________________________________________________________________________________eNUMS */
 
 #pragma mark =Enums=
 
@@ -54,7 +54,7 @@ enum qglGetAdrMode
 
 #pragma mark -
 
-//________________________________________________________________________________________________________vARIABLES
+/*________________________________________________________________________________________________________vARIABLES */
 
 #pragma mark =Variables=
 
@@ -138,7 +138,7 @@ void ( APIENTRY * qglDrawBuffer )(GLenum mode);
 void ( APIENTRY * qglDrawElements )(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices);
 void ( APIENTRY * qglDrawPixels )(GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels);
 void ( APIENTRY * qglEdgeFlag )(GLboolean flag);
-//void ( APIENTRY * qglEdgeFlagPointer )(GLsizei stride, const GLboolean *pointer); // Matthijs FIXME
+/*void ( APIENTRY * qglEdgeFlagPointer )(GLsizei stride, const GLboolean *pointer); // Matthijs FIXME */
 void ( APIENTRY * qglEdgeFlagPointer )(GLsizei stride, const GLvoid *pointer);
 void ( APIENTRY * qglEdgeFlagv )(const GLboolean *flag);
 void ( APIENTRY * qglEnable )(GLenum cap);
@@ -435,7 +435,7 @@ void ( APIENTRY * qglClientActiveTextureARB) ( GLenum );
 void ( APIENTRY * qglPNTrianglesiATIX) (GLenum pname, GLint param);
 void ( APIENTRY * qglPNTrianglesfATIX) (GLenum pname, GLfloat param);
 
-// Matthijs FIXME (3x)
+/* Matthijs FIXME (3x) */
 void ( APIENTRY * qglActiveStencilFaceEXT )(GLenum face);
 void ( APIENTRY * qglStencilOpSeparateATI )(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
 void ( APIENTRY * qglStencilFuncSeparateATI )(GLenum frontfunc, GLenum backfunc, GLint red, GLuint mask);
@@ -805,7 +805,7 @@ static void ( APIENTRY * dllViewport )(GLint x, GLint y, GLsizei width, GLsizei 
 
 #pragma mark -
 
-//_______________________________________________________________________________________________________logAccum()
+/*_______________________________________________________________________________________________________logAccum() */
 
 static void APIENTRY logAccum(GLenum op, GLfloat value)
 {
@@ -813,7 +813,7 @@ static void APIENTRY logAccum(GLenum op, GLfloat value)
 	dllAccum( op, value );
 }
 
-//___________________________________________________________________________________________________logAlphaFunc()
+/*___________________________________________________________________________________________________logAlphaFunc() */
 
 static void APIENTRY logAlphaFunc(GLenum func, GLclampf ref)
 {
@@ -821,7 +821,7 @@ static void APIENTRY logAlphaFunc(GLenum func, GLclampf ref)
 	dllAlphaFunc( func, ref );
 }
 
-//_________________________________________________________________________________________logAreTexturesResident()
+/*_________________________________________________________________________________________logAreTexturesResident() */
 
 static GLboolean APIENTRY logAreTexturesResident(GLsizei n, const GLuint *textures, GLboolean *residences)
 {
@@ -829,7 +829,7 @@ static GLboolean APIENTRY logAreTexturesResident(GLsizei n, const GLuint *textur
 	return dllAreTexturesResident( n, textures, residences );
 }
 
-//________________________________________________________________________________________________logArrayElement()
+/*________________________________________________________________________________________________logArrayElement() */
 
 static void APIENTRY logArrayElement(GLint i)
 {
@@ -837,7 +837,7 @@ static void APIENTRY logArrayElement(GLint i)
 	dllArrayElement( i );
 }
 
-//_______________________________________________________________________________________________________logBegin()
+/*_______________________________________________________________________________________________________logBegin() */
 
 static void APIENTRY logBegin(GLenum mode)
 {
@@ -845,7 +845,7 @@ static void APIENTRY logBegin(GLenum mode)
 	dllBegin( mode );
 }
 
-//_________________________________________________________________________________________________logBindTexture()
+/*_________________________________________________________________________________________________logBindTexture() */
 
 static void APIENTRY logBindTexture(GLenum target, GLuint texture)
 {
@@ -853,7 +853,7 @@ static void APIENTRY logBindTexture(GLenum target, GLuint texture)
 	dllBindTexture( target, texture );
 }
 
-//______________________________________________________________________________________________________logBitmap()
+/*______________________________________________________________________________________________________logBitmap() */
 
 static void APIENTRY logBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove,
                                GLfloat ymove, const GLubyte *bitmap)
@@ -862,7 +862,7 @@ static void APIENTRY logBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLf
 	dllBitmap( width, height, xorig, yorig, xmove, ymove, bitmap );
 }
 
-//___________________________________________________________________________________________________logBlendFunc()
+/*___________________________________________________________________________________________________logBlendFunc() */
 
 static void APIENTRY logBlendFunc(GLenum sfactor, GLenum dfactor)
 {
@@ -870,7 +870,7 @@ static void APIENTRY logBlendFunc(GLenum sfactor, GLenum dfactor)
 	dllBlendFunc( sfactor, dfactor );
 }
 
-//____________________________________________________________________________________________________logCallList()
+/*____________________________________________________________________________________________________logCallList() */
 
 static void APIENTRY logCallList(GLuint list)
 {
@@ -878,7 +878,7 @@ static void APIENTRY logCallList(GLuint list)
 	dllCallList( list );
 }
 
-//___________________________________________________________________________________________________logCallLists()
+/*___________________________________________________________________________________________________logCallLists() */
 
 static void APIENTRY logCallLists(GLsizei n, GLenum type, const void *lists)
 {
@@ -886,7 +886,7 @@ static void APIENTRY logCallLists(GLsizei n, GLenum type, const void *lists)
 	dllCallLists( n, type, lists );
 }
 
-//_______________________________________________________________________________________________________logClear()
+/*_______________________________________________________________________________________________________logClear() */
 
 static void APIENTRY logClear(GLbitfield mask)
 {
@@ -894,7 +894,7 @@ static void APIENTRY logClear(GLbitfield mask)
 	dllClear( mask );
 }
 
-//__________________________________________________________________________________________________logClearAccum()
+/*__________________________________________________________________________________________________logClearAccum() */
 
 static void APIENTRY logClearAccum(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
@@ -902,7 +902,7 @@ static void APIENTRY logClearAccum(GLfloat red, GLfloat green, GLfloat blue, GLf
 	dllClearAccum( red, green, blue, alpha );
 }
 
-//__________________________________________________________________________________________________logClearClear()
+/*__________________________________________________________________________________________________logClearClear() */
 
 static void APIENTRY logClearColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha)
 {
@@ -910,7 +910,7 @@ static void APIENTRY logClearColor(GLclampf red, GLclampf green, GLclampf blue, 
 	dllClearColor( red, green, blue, alpha );
 }
 
-//__________________________________________________________________________________________________logClearDepth()
+/*__________________________________________________________________________________________________logClearDepth() */
 
 static void APIENTRY logClearDepth(GLclampd depth)
 {
@@ -918,7 +918,7 @@ static void APIENTRY logClearDepth(GLclampd depth)
 	dllClearDepth( depth );
 }
 
-//__________________________________________________________________________________________________logClearIndex()
+/*__________________________________________________________________________________________________logClearIndex() */
 
 static void APIENTRY logClearIndex(GLfloat c)
 {
@@ -926,7 +926,7 @@ static void APIENTRY logClearIndex(GLfloat c)
 	dllClearIndex( c );
 }
 
-//________________________________________________________________________________________________logClearStencil()
+/*________________________________________________________________________________________________logClearStencil() */
 
 static void APIENTRY logClearStencil(GLint s)
 {
@@ -934,7 +934,7 @@ static void APIENTRY logClearStencil(GLint s)
 	dllClearStencil( s );
 }
 
-//___________________________________________________________________________________________________logClipPlane()
+/*___________________________________________________________________________________________________logClipPlane() */
 
 static void APIENTRY logClipPlane(GLenum plane, const GLdouble *equation)
 {
@@ -942,7 +942,7 @@ static void APIENTRY logClipPlane(GLenum plane, const GLdouble *equation)
 	dllClipPlane( plane, equation );
 }
 
-//_____________________________________________________________________________________________________logColor3b()
+/*_____________________________________________________________________________________________________logColor3b() */
 
 static void APIENTRY logColor3b(GLbyte red, GLbyte green, GLbyte blue)
 {
@@ -950,7 +950,7 @@ static void APIENTRY logColor3b(GLbyte red, GLbyte green, GLbyte blue)
 	dllColor3b( red, green, blue );
 }
 
-//____________________________________________________________________________________________________logColor3bv()
+/*____________________________________________________________________________________________________logColor3bv() */
 
 static void APIENTRY logColor3bv(const GLbyte *v)
 {
@@ -958,7 +958,7 @@ static void APIENTRY logColor3bv(const GLbyte *v)
 	dllColor3bv( v );
 }
 
-//_____________________________________________________________________________________________________logColor3d()
+/*_____________________________________________________________________________________________________logColor3d() */
 
 static void APIENTRY logColor3d(GLdouble red, GLdouble green, GLdouble blue)
 {
@@ -966,7 +966,7 @@ static void APIENTRY logColor3d(GLdouble red, GLdouble green, GLdouble blue)
 	dllColor3d( red, green, blue );
 }
 
-//____________________________________________________________________________________________________logColor3dv()
+/*____________________________________________________________________________________________________logColor3dv() */
 
 static void APIENTRY logColor3dv(const GLdouble *v)
 {
@@ -974,7 +974,7 @@ static void APIENTRY logColor3dv(const GLdouble *v)
 	dllColor3dv( v );
 }
 
-//_____________________________________________________________________________________________________logColor3f()
+/*_____________________________________________________________________________________________________logColor3f() */
 
 static void APIENTRY logColor3f(GLfloat red, GLfloat green, GLfloat blue)
 {
@@ -982,7 +982,7 @@ static void APIENTRY logColor3f(GLfloat red, GLfloat green, GLfloat blue)
 	dllColor3f( red, green, blue );
 }
 
-//____________________________________________________________________________________________________logColor3fv()
+/*____________________________________________________________________________________________________logColor3fv() */
 
 static void APIENTRY logColor3fv(const GLfloat *v)
 {
@@ -990,7 +990,7 @@ static void APIENTRY logColor3fv(const GLfloat *v)
 	dllColor3fv( v );
 }
 
-//_____________________________________________________________________________________________________logColor3i()
+/*_____________________________________________________________________________________________________logColor3i() */
 
 static void APIENTRY logColor3i(GLint red, GLint green, GLint blue)
 {
@@ -998,7 +998,7 @@ static void APIENTRY logColor3i(GLint red, GLint green, GLint blue)
 	dllColor3i( red, green, blue );
 }
 
-//____________________________________________________________________________________________________logColor3iv()
+/*____________________________________________________________________________________________________logColor3iv() */
 
 static void APIENTRY logColor3iv(const GLint *v)
 {
@@ -1006,7 +1006,7 @@ static void APIENTRY logColor3iv(const GLint *v)
 	dllColor3iv( v );
 }
 
-//_____________________________________________________________________________________________________logColor3s()
+/*_____________________________________________________________________________________________________logColor3s() */
 
 static void APIENTRY logColor3s(GLshort red, GLshort green, GLshort blue)
 {
@@ -1014,7 +1014,7 @@ static void APIENTRY logColor3s(GLshort red, GLshort green, GLshort blue)
 	dllColor3s( red, green, blue );
 }
 
-//____________________________________________________________________________________________________logColor3sv()
+/*____________________________________________________________________________________________________logColor3sv() */
 
 static void APIENTRY logColor3sv(const GLshort *v)
 {
@@ -1022,7 +1022,7 @@ static void APIENTRY logColor3sv(const GLshort *v)
 	dllColor3sv( v );
 }
 
-//____________________________________________________________________________________________________logColor3ub()
+/*____________________________________________________________________________________________________logColor3ub() */
 
 static void APIENTRY logColor3ub(GLubyte red, GLubyte green, GLubyte blue)
 {
@@ -1030,7 +1030,7 @@ static void APIENTRY logColor3ub(GLubyte red, GLubyte green, GLubyte blue)
 	dllColor3ub( red, green, blue );
 }
 
-//___________________________________________________________________________________________________logColor3ubv()
+/*___________________________________________________________________________________________________logColor3ubv() */
 
 static void APIENTRY logColor3ubv(const GLubyte *v)
 {
@@ -1038,7 +1038,7 @@ static void APIENTRY logColor3ubv(const GLubyte *v)
 	dllColor3ubv( v );
 }
 
-//____________________________________________________________________________________________________logColor3ui()
+/*____________________________________________________________________________________________________logColor3ui() */
 
 static void APIENTRY logColor3ui(GLuint red, GLuint green, GLuint blue)
 {
@@ -1046,7 +1046,7 @@ static void APIENTRY logColor3ui(GLuint red, GLuint green, GLuint blue)
 	dllColor3ui( red, green, blue );
 }
 
-//___________________________________________________________________________________________________logColor3uiv()
+/*___________________________________________________________________________________________________logColor3uiv() */
 
 static void APIENTRY logColor3uiv(const GLuint *v)
 {
@@ -1054,7 +1054,7 @@ static void APIENTRY logColor3uiv(const GLuint *v)
 	dllColor3uiv( v );
 }
 
-//____________________________________________________________________________________________________logColor3us()
+/*____________________________________________________________________________________________________logColor3us() */
 
 static void APIENTRY logColor3us(GLushort red, GLushort green, GLushort blue)
 {
@@ -1062,7 +1062,7 @@ static void APIENTRY logColor3us(GLushort red, GLushort green, GLushort blue)
 	dllColor3us( red, green, blue );
 }
 
-//___________________________________________________________________________________________________logColor3usv()
+/*___________________________________________________________________________________________________logColor3usv() */
 
 static void APIENTRY logColor3usv(const GLushort *v)
 {
@@ -1070,7 +1070,7 @@ static void APIENTRY logColor3usv(const GLushort *v)
 	dllColor3usv( v );
 }
 
-//_____________________________________________________________________________________________________logColor4b()
+/*_____________________________________________________________________________________________________logColor4b() */
 
 static void APIENTRY logColor4b(GLbyte red, GLbyte green, GLbyte blue, GLbyte alpha)
 {
@@ -1078,7 +1078,7 @@ static void APIENTRY logColor4b(GLbyte red, GLbyte green, GLbyte blue, GLbyte al
 	dllColor4b( red, green, blue, alpha );
 }
 
-//____________________________________________________________________________________________________logColor4bv()
+/*____________________________________________________________________________________________________logColor4bv() */
 
 static void APIENTRY logColor4bv(const GLbyte *v)
 {
@@ -1086,14 +1086,14 @@ static void APIENTRY logColor4bv(const GLbyte *v)
 	dllColor4bv( v );
 }
 
-//_____________________________________________________________________________________________________logColor4d()
+/*_____________________________________________________________________________________________________logColor4d() */
 
 static void APIENTRY logColor4d(GLdouble red, GLdouble green, GLdouble blue, GLdouble alpha)
 {
 	SIG( "glColor4d" );
 	dllColor4d( red, green, blue, alpha );
 }
-//____________________________________________________________________________________________________logColor4dv()
+/*____________________________________________________________________________________________________logColor4dv() */
 
 static void APIENTRY logColor4dv(const GLdouble *v)
 {
@@ -1101,7 +1101,7 @@ static void APIENTRY logColor4dv(const GLdouble *v)
 	dllColor4dv( v );
 }
 
-//_____________________________________________________________________________________________________logColor4f()
+/*_____________________________________________________________________________________________________logColor4f() */
 
 static void APIENTRY logColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
@@ -1109,7 +1109,7 @@ static void APIENTRY logColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloa
 	dllColor4f( red, green, blue, alpha );
 }
 
-//____________________________________________________________________________________________________logColor4fv()
+/*____________________________________________________________________________________________________logColor4fv() */
 
 static void APIENTRY logColor4fv(const GLfloat *v)
 {
@@ -1117,7 +1117,7 @@ static void APIENTRY logColor4fv(const GLfloat *v)
 	dllColor4fv( v );
 }
 
-//_____________________________________________________________________________________________________logColor4i()
+/*_____________________________________________________________________________________________________logColor4i() */
 
 static void APIENTRY logColor4i(GLint red, GLint green, GLint blue, GLint alpha)
 {
@@ -1125,7 +1125,7 @@ static void APIENTRY logColor4i(GLint red, GLint green, GLint blue, GLint alpha)
 	dllColor4i( red, green, blue, alpha );
 }
 
-//____________________________________________________________________________________________________logColor4iv()
+/*____________________________________________________________________________________________________logColor4iv() */
 
 static void APIENTRY logColor4iv(const GLint *v)
 {
@@ -1133,7 +1133,7 @@ static void APIENTRY logColor4iv(const GLint *v)
 	dllColor4iv( v );
 }
 
-//_____________________________________________________________________________________________________logColor4s()
+/*_____________________________________________________________________________________________________logColor4s() */
 
 static void APIENTRY logColor4s(GLshort red, GLshort green, GLshort blue, GLshort alpha)
 {
@@ -1141,7 +1141,7 @@ static void APIENTRY logColor4s(GLshort red, GLshort green, GLshort blue, GLshor
 	dllColor4s( red, green, blue, alpha );
 }
 
-//____________________________________________________________________________________________________logColor4sv()
+/*____________________________________________________________________________________________________logColor4sv() */
 
 static void APIENTRY logColor4sv(const GLshort *v)
 {
@@ -1149,7 +1149,7 @@ static void APIENTRY logColor4sv(const GLshort *v)
 	dllColor4sv( v );
 }
 
-//____________________________________________________________________________________________________logColor4ub()
+/*____________________________________________________________________________________________________logColor4ub() */
 
 static void APIENTRY logColor4ub(GLubyte red, GLubyte green, GLubyte blue, GLubyte alpha)
 {
@@ -1157,7 +1157,7 @@ static void APIENTRY logColor4ub(GLubyte red, GLubyte green, GLubyte blue, GLuby
 	dllColor4b( red, green, blue, alpha );
 }
 
-//___________________________________________________________________________________________________logColor4ubv()
+/*___________________________________________________________________________________________________logColor4ubv() */
 
 static void APIENTRY logColor4ubv(const GLubyte *v)
 {
@@ -1165,7 +1165,7 @@ static void APIENTRY logColor4ubv(const GLubyte *v)
 	dllColor4ubv( v );
 }
 
-//____________________________________________________________________________________________________logColor4ui()
+/*____________________________________________________________________________________________________logColor4ui() */
 
 static void APIENTRY logColor4ui(GLuint red, GLuint green, GLuint blue, GLuint alpha)
 {
@@ -1173,7 +1173,7 @@ static void APIENTRY logColor4ui(GLuint red, GLuint green, GLuint blue, GLuint a
 	dllColor4ui( red, green, blue, alpha );
 }
 
-//___________________________________________________________________________________________________logColor4uiv()
+/*___________________________________________________________________________________________________logColor4uiv() */
 
 static void APIENTRY logColor4uiv(const GLuint *v)
 {
@@ -1181,7 +1181,7 @@ static void APIENTRY logColor4uiv(const GLuint *v)
 	dllColor4uiv( v );
 }
 
-//____________________________________________________________________________________________________logColor4us()
+/*____________________________________________________________________________________________________logColor4us() */
 
 static void APIENTRY logColor4us(GLushort red, GLushort green, GLushort blue, GLushort alpha)
 {
@@ -1189,7 +1189,7 @@ static void APIENTRY logColor4us(GLushort red, GLushort green, GLushort blue, GL
 	dllColor4us( red, green, blue, alpha );
 }
 
-//___________________________________________________________________________________________________logColor4usv()
+/*___________________________________________________________________________________________________logColor4usv() */
 
 static void APIENTRY logColor4usv(const GLushort *v)
 {
@@ -1197,7 +1197,7 @@ static void APIENTRY logColor4usv(const GLushort *v)
 	dllColor4usv( v );
 }
 
-//___________________________________________________________________________________________________logColorMask()
+/*___________________________________________________________________________________________________logColorMask() */
 
 static void APIENTRY logColorMask(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha)
 {
@@ -1205,7 +1205,7 @@ static void APIENTRY logColorMask(GLboolean red, GLboolean green, GLboolean blue
 	dllColorMask( red, green, blue, alpha );
 }
 
-//_______________________________________________________________________________________________logColorMaterial()
+/*_______________________________________________________________________________________________logColorMaterial() */
 
 static void APIENTRY logColorMaterial(GLenum face, GLenum mode)
 {
@@ -1213,7 +1213,7 @@ static void APIENTRY logColorMaterial(GLenum face, GLenum mode)
 	dllColorMaterial( face, mode );
 }
 
-//________________________________________________________________________________________________logColorPointer()
+/*________________________________________________________________________________________________logColorPointer() */
 
 static void APIENTRY logColorPointer(GLint size, GLenum type, GLsizei stride, const void *pointer)
 {
@@ -1221,7 +1221,7 @@ static void APIENTRY logColorPointer(GLint size, GLenum type, GLsizei stride, co
 	dllColorPointer( size, type, stride, pointer );
 }
 
-//__________________________________________________________________________________________________logCopyPixels()
+/*__________________________________________________________________________________________________logCopyPixels() */
 
 static void APIENTRY logCopyPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum type)
 {
@@ -1229,7 +1229,7 @@ static void APIENTRY logCopyPixels(GLint x, GLint y, GLsizei width, GLsizei heig
 	dllCopyPixels( x, y, width, height, type );
 }
 
-//______________________________________________________________________________________________logCopyTexImage1D()
+/*______________________________________________________________________________________________logCopyTexImage1D() */
 
 static void APIENTRY logCopyTexImage1D(GLenum target, GLint level, GLenum internalFormat, GLint x, GLint y,
                                        GLsizei width, GLint border)
@@ -1238,7 +1238,7 @@ static void APIENTRY logCopyTexImage1D(GLenum target, GLint level, GLenum intern
 	dllCopyTexImage1D( target, level, internalFormat, x, y, width, border );
 }
 
-//______________________________________________________________________________________________logCopyTexImage2D()
+/*______________________________________________________________________________________________logCopyTexImage2D() */
 
 static void APIENTRY logCopyTexImage2D(GLenum target, GLint level, GLenum internalFormat, GLint x, GLint y,
                                        GLsizei width, GLsizei height, GLint border)
@@ -1247,7 +1247,7 @@ static void APIENTRY logCopyTexImage2D(GLenum target, GLint level, GLenum intern
 	dllCopyTexImage2D( target, level, internalFormat, x, y, width, height, border );
 }
 
-//___________________________________________________________________________________________logCopyTexSubImage1D()
+/*___________________________________________________________________________________________logCopyTexSubImage1D() */
 
 static void APIENTRY logCopyTexSubImage1D(GLenum target, GLint level, GLint xoffset, GLint x, GLint y,
                                           GLsizei width)
@@ -1256,7 +1256,7 @@ static void APIENTRY logCopyTexSubImage1D(GLenum target, GLint level, GLint xoff
 	dllCopyTexSubImage1D( target, level, xoffset, x, y, width );
 }
 
-//___________________________________________________________________________________________logCopyTexSubImage2D()
+/*___________________________________________________________________________________________logCopyTexSubImage2D() */
 
 static void APIENTRY logCopyTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x,
                                           GLint y, GLsizei width, GLsizei height)
@@ -1265,7 +1265,7 @@ static void APIENTRY logCopyTexSubImage2D(GLenum target, GLint level, GLint xoff
 	dllCopyTexSubImage2D( target, level, xoffset, yoffset, x, y, width, height );
 }
 
-//____________________________________________________________________________________________________logCullFace()
+/*____________________________________________________________________________________________________logCullFace() */
 
 static void APIENTRY logCullFace(GLenum mode)
 {
@@ -1273,7 +1273,7 @@ static void APIENTRY logCullFace(GLenum mode)
 	dllCullFace( mode );
 }
 
-//_________________________________________________________________________________________________logDeleteLists()
+/*_________________________________________________________________________________________________logDeleteLists() */
 
 static void APIENTRY logDeleteLists(GLuint list, GLsizei range)
 {
@@ -1281,7 +1281,7 @@ static void APIENTRY logDeleteLists(GLuint list, GLsizei range)
 	dllDeleteLists( list, range );
 }
 
-//______________________________________________________________________________________________logDeleteTextures()
+/*______________________________________________________________________________________________logDeleteTextures() */
 
 static void APIENTRY logDeleteTextures(GLsizei n, const GLuint *textures)
 {
@@ -1289,7 +1289,7 @@ static void APIENTRY logDeleteTextures(GLsizei n, const GLuint *textures)
 	dllDeleteTextures( n, textures );
 }
 
-//___________________________________________________________________________________________________logDepthFunc()
+/*___________________________________________________________________________________________________logDepthFunc() */
 
 static void APIENTRY logDepthFunc(GLenum func)
 {
@@ -1297,7 +1297,7 @@ static void APIENTRY logDepthFunc(GLenum func)
 	dllDepthFunc( func );
 }
 
-//___________________________________________________________________________________________________logDepthMask()
+/*___________________________________________________________________________________________________logDepthMask() */
 
 static void APIENTRY logDepthMask(GLboolean flag)
 {
@@ -1305,7 +1305,7 @@ static void APIENTRY logDepthMask(GLboolean flag)
 	dllDepthMask( flag );
 }
 
-//__________________________________________________________________________________________________logDepthRange()
+/*__________________________________________________________________________________________________logDepthRange() */
 
 static void APIENTRY logDepthRange(GLclampd zNear, GLclampd zFar)
 {
@@ -1313,7 +1313,7 @@ static void APIENTRY logDepthRange(GLclampd zNear, GLclampd zFar)
 	dllDepthRange( zNear, zFar );
 }
 
-//_____________________________________________________________________________________________________logDisable()
+/*_____________________________________________________________________________________________________logDisable() */
 
 static void APIENTRY logDisable(GLenum cap)
 {
@@ -1321,7 +1321,7 @@ static void APIENTRY logDisable(GLenum cap)
 	dllDisable( cap );
 }
 
-//__________________________________________________________________________________________logDisableClientState()
+/*__________________________________________________________________________________________logDisableClientState() */
 
 static void APIENTRY logDisableClientState(GLenum array)
 {
@@ -1329,7 +1329,7 @@ static void APIENTRY logDisableClientState(GLenum array)
 	dllDisableClientState( array );
 }
 
-//__________________________________________________________________________________________________logDrawArrays()
+/*__________________________________________________________________________________________________logDrawArrays() */
 
 static void APIENTRY logDrawArrays(GLenum mode, GLint first, GLsizei count)
 {
@@ -1337,7 +1337,7 @@ static void APIENTRY logDrawArrays(GLenum mode, GLint first, GLsizei count)
 	dllDrawArrays( mode, first, count );
 }
 
-//__________________________________________________________________________________________________logDrawBuffer()
+/*__________________________________________________________________________________________________logDrawBuffer() */
 
 static void APIENTRY logDrawBuffer(GLenum mode)
 {
@@ -1345,7 +1345,7 @@ static void APIENTRY logDrawBuffer(GLenum mode)
 	dllDrawBuffer( mode );
 }
 
-//________________________________________________________________________________________________logDrawElements()
+/*________________________________________________________________________________________________logDrawElements() */
 
 static void APIENTRY logDrawElements(GLenum mode, GLsizei count, GLenum type, const void *indices)
 {
@@ -1353,7 +1353,7 @@ static void APIENTRY logDrawElements(GLenum mode, GLsizei count, GLenum type, co
 	dllDrawElements( mode, count, type, indices );
 }
 
-//__________________________________________________________________________________________________logDrawPixels()
+/*__________________________________________________________________________________________________logDrawPixels() */
 
 static void APIENTRY logDrawPixels(GLsizei width, GLsizei height, GLenum format, GLenum type, const void *pixels)
 {
@@ -1361,7 +1361,7 @@ static void APIENTRY logDrawPixels(GLsizei width, GLsizei height, GLenum format,
 	dllDrawPixels( width, height, format, type, pixels );
 }
 
-//________________________________________________________________________________________________logDrawEdgeFlag()
+/*________________________________________________________________________________________________logDrawEdgeFlag() */
 
 static void APIENTRY logEdgeFlag(GLboolean flag)
 {
@@ -1369,7 +1369,7 @@ static void APIENTRY logEdgeFlag(GLboolean flag)
 	dllEdgeFlag( flag );
 }
 
-//_____________________________________________________________________________________________logEdgeFlagPointer()
+/*_____________________________________________________________________________________________logEdgeFlagPointer() */
 
 static void APIENTRY logEdgeFlagPointer(GLsizei stride, const GLboolean *pointer)
 {
@@ -1377,7 +1377,7 @@ static void APIENTRY logEdgeFlagPointer(GLsizei stride, const GLboolean *pointer
 	dllEdgeFlagPointer( stride, pointer );
 }
 
-//___________________________________________________________________________________________________logEdgeFlagv()
+/*___________________________________________________________________________________________________logEdgeFlagv() */
 
 static void APIENTRY logEdgeFlagv(const GLboolean *flag)
 {
@@ -1385,7 +1385,7 @@ static void APIENTRY logEdgeFlagv(const GLboolean *flag)
 	dllEdgeFlagv( flag );
 }
 
-//______________________________________________________________________________________________________logEnable()
+/*______________________________________________________________________________________________________logEnable() */
 
 static void APIENTRY logEnable(GLenum cap)
 {
@@ -1393,7 +1393,7 @@ static void APIENTRY logEnable(GLenum cap)
 	dllEnable( cap );
 }
 
-//___________________________________________________________________________________________logEnableClientState()
+/*___________________________________________________________________________________________logEnableClientState() */
 
 static void APIENTRY logEnableClientState(GLenum array)
 {
@@ -1401,7 +1401,7 @@ static void APIENTRY logEnableClientState(GLenum array)
 	dllEnableClientState( array );
 }
 
-//_________________________________________________________________________________________________________logEnd()
+/*_________________________________________________________________________________________________________logEnd() */
 
 static void APIENTRY logEnd(void)
 {
@@ -1409,7 +1409,7 @@ static void APIENTRY logEnd(void)
 	dllEnd();
 }
 
-//_____________________________________________________________________________________________________logEndList()
+/*_____________________________________________________________________________________________________logEndList() */
 
 static void APIENTRY logEndList(void)
 {
@@ -1417,7 +1417,7 @@ static void APIENTRY logEndList(void)
 	dllEndList();
 }
 
-//_________________________________________________________________________________________________logEvalCoord1d()
+/*_________________________________________________________________________________________________logEvalCoord1d() */
 
 static void APIENTRY logEvalCoord1d(GLdouble u)
 {
@@ -1425,7 +1425,7 @@ static void APIENTRY logEvalCoord1d(GLdouble u)
 	dllEvalCoord1d( u );
 }
 
-//________________________________________________________________________________________________logEvalCoord1dv()
+/*________________________________________________________________________________________________logEvalCoord1dv() */
 
 static void APIENTRY logEvalCoord1dv(const GLdouble *u)
 {
@@ -1433,7 +1433,7 @@ static void APIENTRY logEvalCoord1dv(const GLdouble *u)
 	dllEvalCoord1dv( u );
 }
 
-//_________________________________________________________________________________________________logEvalCoord1f()
+/*_________________________________________________________________________________________________logEvalCoord1f() */
 
 static void APIENTRY logEvalCoord1f(GLfloat u)
 {
@@ -1441,7 +1441,7 @@ static void APIENTRY logEvalCoord1f(GLfloat u)
 	dllEvalCoord1f( u );
 }
 
-//________________________________________________________________________________________________logEvalCoord1fv()
+/*________________________________________________________________________________________________logEvalCoord1fv() */
 
 static void APIENTRY logEvalCoord1fv(const GLfloat *u)
 {
@@ -1449,7 +1449,7 @@ static void APIENTRY logEvalCoord1fv(const GLfloat *u)
 	dllEvalCoord1fv( u );
 }
 
-//_________________________________________________________________________________________________logEvalCoord2d()
+/*_________________________________________________________________________________________________logEvalCoord2d() */
 
 static void APIENTRY logEvalCoord2d(GLdouble u, GLdouble v)
 {
@@ -1457,7 +1457,7 @@ static void APIENTRY logEvalCoord2d(GLdouble u, GLdouble v)
 	dllEvalCoord2d( u, v );
 }
 
-//________________________________________________________________________________________________logEvalCoord2dv()
+/*________________________________________________________________________________________________logEvalCoord2dv() */
 
 static void APIENTRY logEvalCoord2dv(const GLdouble *u)
 {
@@ -1465,7 +1465,7 @@ static void APIENTRY logEvalCoord2dv(const GLdouble *u)
 	dllEvalCoord2dv( u );
 }
 
-//_________________________________________________________________________________________________logEvalCoord2f()
+/*_________________________________________________________________________________________________logEvalCoord2f() */
 
 static void APIENTRY logEvalCoord2f(GLfloat u, GLfloat v)
 {
@@ -1473,7 +1473,7 @@ static void APIENTRY logEvalCoord2f(GLfloat u, GLfloat v)
 	dllEvalCoord2f( u, v );
 }
 
-//_________________________________________________________________________________________________logEvalCoord2fv()
+/*_________________________________________________________________________________________________logEvalCoord2fv() */
 
 static void APIENTRY logEvalCoord2fv(const GLfloat *u)
 {
@@ -1481,7 +1481,7 @@ static void APIENTRY logEvalCoord2fv(const GLfloat *u)
 	dllEvalCoord2fv( u );
 }
 
-//___________________________________________________________________________________________________logEvalMesh1()
+/*___________________________________________________________________________________________________logEvalMesh1() */
 
 static void APIENTRY logEvalMesh1(GLenum mode, GLint i1, GLint i2)
 {
@@ -1489,7 +1489,7 @@ static void APIENTRY logEvalMesh1(GLenum mode, GLint i1, GLint i2)
 	dllEvalMesh1( mode, i1, i2 );
 }
 
-//___________________________________________________________________________________________________logEvalMesh2()
+/*___________________________________________________________________________________________________logEvalMesh2() */
 
 static void APIENTRY logEvalMesh2(GLenum mode, GLint i1, GLint i2, GLint j1, GLint j2)
 {
@@ -1497,7 +1497,7 @@ static void APIENTRY logEvalMesh2(GLenum mode, GLint i1, GLint i2, GLint j1, GLi
 	dllEvalMesh2( mode, i1, i2, j1, j2 );
 }
 
-//__________________________________________________________________________________________________logEvalPoint1()
+/*__________________________________________________________________________________________________logEvalPoint1() */
 
 static void APIENTRY logEvalPoint1(GLint i)
 {
@@ -1505,7 +1505,7 @@ static void APIENTRY logEvalPoint1(GLint i)
 	dllEvalPoint1( i );
 }
 
-//__________________________________________________________________________________________________logEvalPoint2()
+/*__________________________________________________________________________________________________logEvalPoint2() */
 
 static void APIENTRY logEvalPoint2(GLint i, GLint j)
 {
@@ -1513,7 +1513,7 @@ static void APIENTRY logEvalPoint2(GLint i, GLint j)
 	dllEvalPoint2( i, j );
 }
 
-//______________________________________________________________________________________________logFeedbackBuffer()
+/*______________________________________________________________________________________________logFeedbackBuffer() */
 
 static void APIENTRY logFeedbackBuffer(GLsizei size, GLenum type, GLfloat *buffer)
 {
@@ -1521,7 +1521,7 @@ static void APIENTRY logFeedbackBuffer(GLsizei size, GLenum type, GLfloat *buffe
 	dllFeedbackBuffer( size, type, buffer );
 }
 
-//______________________________________________________________________________________________________logFinish()
+/*______________________________________________________________________________________________________logFinish() */
 
 static void APIENTRY logFinish(void)
 {
@@ -1529,7 +1529,7 @@ static void APIENTRY logFinish(void)
 	dllFinish();
 }
 
-//_______________________________________________________________________________________________________logFlush()
+/*_______________________________________________________________________________________________________logFlush() */
 
 static void APIENTRY logFlush(void)
 {
@@ -1537,7 +1537,7 @@ static void APIENTRY logFlush(void)
 	dllFlush();
 }
 
-//________________________________________________________________________________________________________logFogf()
+/*________________________________________________________________________________________________________logFogf() */
 
 static void APIENTRY logFogf(GLenum pname, GLfloat param)
 {
@@ -1545,7 +1545,7 @@ static void APIENTRY logFogf(GLenum pname, GLfloat param)
 	dllFogf( pname, param );
 }
 
-//_______________________________________________________________________________________________________logFogfv()
+/*_______________________________________________________________________________________________________logFogfv() */
 
 static void APIENTRY logFogfv(GLenum pname, const GLfloat *params)
 {
@@ -1553,7 +1553,7 @@ static void APIENTRY logFogfv(GLenum pname, const GLfloat *params)
 	dllFogfv( pname, params );
 }
 
-//________________________________________________________________________________________________________logFogi()
+/*________________________________________________________________________________________________________logFogi() */
 
 static void APIENTRY logFogi(GLenum pname, GLint param)
 {
@@ -1561,7 +1561,7 @@ static void APIENTRY logFogi(GLenum pname, GLint param)
 	dllFogi( pname, param );
 }
 
-//_______________________________________________________________________________________________________logFogiv()
+/*_______________________________________________________________________________________________________logFogiv() */
 
 static void APIENTRY logFogiv(GLenum pname, const GLint *params)
 {
@@ -1569,7 +1569,7 @@ static void APIENTRY logFogiv(GLenum pname, const GLint *params)
 	dllFogiv( pname, params );
 }
 
-//___________________________________________________________________________________________________logFrontFace()
+/*___________________________________________________________________________________________________logFrontFace() */
 
 static void APIENTRY logFrontFace(GLenum mode)
 {
@@ -1577,7 +1577,7 @@ static void APIENTRY logFrontFace(GLenum mode)
 	dllFrontFace( mode );
 }
 
-//______________________________________________________________________________________________________loFrustum()
+/*______________________________________________________________________________________________________loFrustum() */
 
 static void APIENTRY logFrustum(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear,
                                 GLdouble zFar)
@@ -1586,7 +1586,7 @@ static void APIENTRY logFrustum(GLdouble left, GLdouble right, GLdouble bottom, 
 	dllFrustum( left, right, bottom, top, zNear, zFar );
 }
 
-//____________________________________________________________________________________________________logGenLists()
+/*____________________________________________________________________________________________________logGenLists() */
 
 static GLuint APIENTRY logGenLists(GLsizei range)
 {
@@ -1594,7 +1594,7 @@ static GLuint APIENTRY logGenLists(GLsizei range)
 	return dllGenLists( range );
 }
 
-//_________________________________________________________________________________________________logGenTextures()
+/*_________________________________________________________________________________________________logGenTextures() */
 
 static void APIENTRY logGenTextures(GLsizei n, GLuint *textures)
 {
@@ -1602,7 +1602,7 @@ static void APIENTRY logGenTextures(GLsizei n, GLuint *textures)
 	dllGenTextures( n, textures );
 }
 
-//_________________________________________________________________________________________________logGetBooleanv()
+/*_________________________________________________________________________________________________logGetBooleanv() */
 
 static void APIENTRY logGetBooleanv(GLenum pname, GLboolean *params)
 {
@@ -1610,7 +1610,7 @@ static void APIENTRY logGetBooleanv(GLenum pname, GLboolean *params)
 	dllGetBooleanv( pname, params );
 }
 
-//________________________________________________________________________________________________logGetClipPlane()
+/*________________________________________________________________________________________________logGetClipPlane() */
 
 static void APIENTRY logGetClipPlane(GLenum plane, GLdouble *equation)
 {
@@ -1618,7 +1618,7 @@ static void APIENTRY logGetClipPlane(GLenum plane, GLdouble *equation)
 	dllGetClipPlane( plane, equation );
 }
 
-//__________________________________________________________________________________________________logGetDoublev()
+/*__________________________________________________________________________________________________logGetDoublev() */
 
 static void APIENTRY logGetDoublev(GLenum pname, GLdouble *params)
 {
@@ -1626,7 +1626,7 @@ static void APIENTRY logGetDoublev(GLenum pname, GLdouble *params)
 	dllGetDoublev( pname, params );
 }
 
-//____________________________________________________________________________________________________logGetError()
+/*____________________________________________________________________________________________________logGetError() */
 
 static GLenum APIENTRY logGetError(void)
 {
@@ -1634,7 +1634,7 @@ static GLenum APIENTRY logGetError(void)
 	return dllGetError();
 }
 
-//___________________________________________________________________________________________________logGetFloatv()
+/*___________________________________________________________________________________________________logGetFloatv() */
 
 static void APIENTRY logGetFloatv(GLenum pname, GLfloat *params)
 {
@@ -1642,7 +1642,7 @@ static void APIENTRY logGetFloatv(GLenum pname, GLfloat *params)
 	dllGetFloatv( pname, params );
 }
 
-//_________________________________________________________________________________________________logGetIntegerv()
+/*_________________________________________________________________________________________________logGetIntegerv() */
 
 static void APIENTRY logGetIntegerv(GLenum pname, GLint *params)
 {
@@ -1650,7 +1650,7 @@ static void APIENTRY logGetIntegerv(GLenum pname, GLint *params)
 	dllGetIntegerv( pname, params );
 }
 
-//__________________________________________________________________________________________________logGetLightfv()
+/*__________________________________________________________________________________________________logGetLightfv() */
 
 static void APIENTRY logGetLightfv(GLenum light, GLenum pname, GLfloat *params)
 {
@@ -1658,7 +1658,7 @@ static void APIENTRY logGetLightfv(GLenum light, GLenum pname, GLfloat *params)
 	dllGetLightfv( light, pname, params );
 }
 
-//__________________________________________________________________________________________________logGetLightiv()
+/*__________________________________________________________________________________________________logGetLightiv() */
 
 static void APIENTRY logGetLightiv(GLenum light, GLenum pname, GLint *params)
 {
@@ -1666,7 +1666,7 @@ static void APIENTRY logGetLightiv(GLenum light, GLenum pname, GLint *params)
 	dllGetLightiv( light, pname, params );
 }
 
-//____________________________________________________________________________________________________logGetMapdv()
+/*____________________________________________________________________________________________________logGetMapdv() */
 
 static void APIENTRY logGetMapdv(GLenum target, GLenum query, GLdouble *v)
 {
@@ -1674,7 +1674,7 @@ static void APIENTRY logGetMapdv(GLenum target, GLenum query, GLdouble *v)
 	dllGetMapdv( target, query, v );
 }
 
-//____________________________________________________________________________________________________logGetMapfv()
+/*____________________________________________________________________________________________________logGetMapfv() */
 
 static void APIENTRY logGetMapfv(GLenum target, GLenum query, GLfloat *v)
 {
@@ -1682,7 +1682,7 @@ static void APIENTRY logGetMapfv(GLenum target, GLenum query, GLfloat *v)
 	dllGetMapfv( target, query, v );
 }
 
-//____________________________________________________________________________________________________logGetMapiv()
+/*____________________________________________________________________________________________________logGetMapiv() */
 
 static void APIENTRY logGetMapiv(GLenum target, GLenum query, GLint *v)
 {
@@ -1690,7 +1690,7 @@ static void APIENTRY logGetMapiv(GLenum target, GLenum query, GLint *v)
 	dllGetMapiv( target, query, v );
 }
 
-//_______________________________________________________________________________________________logGetMaterialfv()
+/*_______________________________________________________________________________________________logGetMaterialfv() */
 
 static void APIENTRY logGetMaterialfv(GLenum face, GLenum pname, GLfloat *params)
 {
@@ -1698,7 +1698,7 @@ static void APIENTRY logGetMaterialfv(GLenum face, GLenum pname, GLfloat *params
 	dllGetMaterialfv( face, pname, params );
 }
 
-//_______________________________________________________________________________________________logGetMaterialiv()
+/*_______________________________________________________________________________________________logGetMaterialiv() */
 
 static void APIENTRY logGetMaterialiv(GLenum face, GLenum pname, GLint *params)
 {
@@ -1706,7 +1706,7 @@ static void APIENTRY logGetMaterialiv(GLenum face, GLenum pname, GLint *params)
 	dllGetMaterialiv( face, pname, params );
 }
 
-//_______________________________________________________________________________________________logGetPixelMapfv()
+/*_______________________________________________________________________________________________logGetPixelMapfv() */
 
 static void APIENTRY logGetPixelMapfv(GLenum map, GLfloat *values)
 {
@@ -1714,7 +1714,7 @@ static void APIENTRY logGetPixelMapfv(GLenum map, GLfloat *values)
 	dllGetPixelMapfv( map, values );
 }
 
-//______________________________________________________________________________________________logGetPixelMapuiv()
+/*______________________________________________________________________________________________logGetPixelMapuiv() */
 
 static void APIENTRY logGetPixelMapuiv(GLenum map, GLuint *values)
 {
@@ -1722,7 +1722,7 @@ static void APIENTRY logGetPixelMapuiv(GLenum map, GLuint *values)
 	dllGetPixelMapuiv( map, values );
 }
 
-//______________________________________________________________________________________________logGetPixelMapusv()
+/*______________________________________________________________________________________________logGetPixelMapusv() */
 
 static void APIENTRY logGetPixelMapusv(GLenum map, GLushort *values)
 {
@@ -1730,7 +1730,7 @@ static void APIENTRY logGetPixelMapusv(GLenum map, GLushort *values)
 	dllGetPixelMapusv( map, values );
 }
 
-//_________________________________________________________________________________________________logGetPointerv()
+/*_________________________________________________________________________________________________logGetPointerv() */
 
 static void APIENTRY logGetPointerv(GLenum pname, GLvoid* *params)
 {
@@ -1738,7 +1738,7 @@ static void APIENTRY logGetPointerv(GLenum pname, GLvoid* *params)
 	dllGetPointerv( pname, params );
 }
 
-//___________________________________________________________________________________________logGetPolygonStipple()
+/*___________________________________________________________________________________________logGetPolygonStipple() */
 
 static void APIENTRY logGetPolygonStipple(GLubyte *mask)
 {
@@ -1746,7 +1746,7 @@ static void APIENTRY logGetPolygonStipple(GLubyte *mask)
 	dllGetPolygonStipple( mask );
 }
 
-//___________________________________________________________________________________________________logGetString()
+/*___________________________________________________________________________________________________logGetString() */
 
 static const GLubyte * APIENTRY logGetString(GLenum name)
 {
@@ -1754,7 +1754,7 @@ static const GLubyte * APIENTRY logGetString(GLenum name)
 	return dllGetString( name );
 }
 
-//_________________________________________________________________________________________________logGetTexEnvfv()
+/*_________________________________________________________________________________________________logGetTexEnvfv() */
 
 static void APIENTRY logGetTexEnvfv(GLenum target, GLenum pname, GLfloat *params)
 {
@@ -1762,7 +1762,7 @@ static void APIENTRY logGetTexEnvfv(GLenum target, GLenum pname, GLfloat *params
 	dllGetTexEnvfv( target, pname, params );
 }
 
-//_________________________________________________________________________________________________logGetTexEnviv()
+/*_________________________________________________________________________________________________logGetTexEnviv() */
 
 static void APIENTRY logGetTexEnviv(GLenum target, GLenum pname, GLint *params)
 {
@@ -1770,7 +1770,7 @@ static void APIENTRY logGetTexEnviv(GLenum target, GLenum pname, GLint *params)
 	dllGetTexEnviv( target, pname, params );
 }
 
-//_________________________________________________________________________________________________logGetTexGendv()
+/*_________________________________________________________________________________________________logGetTexGendv() */
 
 static void APIENTRY logGetTexGendv(GLenum coord, GLenum pname, GLdouble *params)
 {
@@ -1778,7 +1778,7 @@ static void APIENTRY logGetTexGendv(GLenum coord, GLenum pname, GLdouble *params
 	dllGetTexGendv( coord, pname, params );
 }
 
-//_________________________________________________________________________________________________logGetTexGenfv()
+/*_________________________________________________________________________________________________logGetTexGenfv() */
 
 static void APIENTRY logGetTexGenfv(GLenum coord, GLenum pname, GLfloat *params)
 {
@@ -1786,7 +1786,7 @@ static void APIENTRY logGetTexGenfv(GLenum coord, GLenum pname, GLfloat *params)
 	dllGetTexGenfv( coord, pname, params );
 }
 
-//_________________________________________________________________________________________________logGetTexGeniv()
+/*_________________________________________________________________________________________________logGetTexGeniv() */
 
 static void APIENTRY logGetTexGeniv(GLenum coord, GLenum pname, GLint *params)
 {
@@ -1794,7 +1794,7 @@ static void APIENTRY logGetTexGeniv(GLenum coord, GLenum pname, GLint *params)
 	dllGetTexGeniv( coord, pname, params );
 }
 
-//_________________________________________________________________________________________________logGetTexImage()
+/*_________________________________________________________________________________________________logGetTexImage() */
 
 static void APIENTRY logGetTexImage(GLenum target, GLint level, GLenum format, GLenum type, void *pixels)
 {
@@ -1802,7 +1802,7 @@ static void APIENTRY logGetTexImage(GLenum target, GLint level, GLenum format, G
 	dllGetTexImage( target, level, format, type, pixels );
 }
 
-//______________________________________________________________________________________logGetTexLevelParameterfv()
+/*______________________________________________________________________________________logGetTexLevelParameterfv() */
 
 static void APIENTRY logGetTexLevelParameterfv(GLenum target, GLint level, GLenum pname, GLfloat *params )
 {
@@ -1810,7 +1810,7 @@ static void APIENTRY logGetTexLevelParameterfv(GLenum target, GLint level, GLenu
 	dllGetTexLevelParameterfv( target, level, pname, params );
 }
 
-//______________________________________________________________________________________logGetTexLevelParameteriv()
+/*______________________________________________________________________________________logGetTexLevelParameteriv() */
 
 static void APIENTRY logGetTexLevelParameteriv(GLenum target, GLint level, GLenum pname, GLint *params)
 {
@@ -1818,7 +1818,7 @@ static void APIENTRY logGetTexLevelParameteriv(GLenum target, GLint level, GLenu
 	dllGetTexLevelParameteriv( target, level, pname, params );
 }
 
-//___________________________________________________________________________________________logGetTexParameterfv()
+/*___________________________________________________________________________________________logGetTexParameterfv() */
 
 static void APIENTRY logGetTexParameterfv(GLenum target, GLenum pname, GLfloat *params)
 {
@@ -1826,7 +1826,7 @@ static void APIENTRY logGetTexParameterfv(GLenum target, GLenum pname, GLfloat *
 	dllGetTexParameterfv( target, pname, params );
 }
 
-//___________________________________________________________________________________________logGetTexParameteriv()
+/*___________________________________________________________________________________________logGetTexParameteriv() */
 
 static void APIENTRY logGetTexParameteriv(GLenum target, GLenum pname, GLint *params)
 {
@@ -1834,7 +1834,7 @@ static void APIENTRY logGetTexParameteriv(GLenum target, GLenum pname, GLint *pa
 	dllGetTexParameteriv( target, pname, params );
 }
 
-//________________________________________________________________________________________________________logHint()
+/*________________________________________________________________________________________________________logHint() */
 
 static void APIENTRY logHint(GLenum target, GLenum mode)
 {
@@ -1842,7 +1842,7 @@ static void APIENTRY logHint(GLenum target, GLenum mode)
 	dllHint( target, mode );
 }
 
-//___________________________________________________________________________________________________logIndexMask()
+/*___________________________________________________________________________________________________logIndexMask() */
 
 static void APIENTRY logIndexMask(GLuint mask)
 {
@@ -1850,7 +1850,7 @@ static void APIENTRY logIndexMask(GLuint mask)
 	dllIndexMask( mask );
 }
 
-//________________________________________________________________________________________________logIndexPointer()
+/*________________________________________________________________________________________________logIndexPointer() */
 
 static void APIENTRY logIndexPointer(GLenum type, GLsizei stride, const void *pointer)
 {
@@ -1858,7 +1858,7 @@ static void APIENTRY logIndexPointer(GLenum type, GLsizei stride, const void *po
 	dllIndexPointer( type, stride, pointer );
 }
 
-//______________________________________________________________________________________________________logIndexd()
+/*______________________________________________________________________________________________________logIndexd() */
 
 static void APIENTRY logIndexd(GLdouble c)
 {
@@ -1866,7 +1866,7 @@ static void APIENTRY logIndexd(GLdouble c)
 	dllIndexd( c );
 }
 
-//_____________________________________________________________________________________________________logIndexdv()
+/*_____________________________________________________________________________________________________logIndexdv() */
 
 static void APIENTRY logIndexdv(const GLdouble *c)
 {
@@ -1874,7 +1874,7 @@ static void APIENTRY logIndexdv(const GLdouble *c)
 	dllIndexdv( c );
 }
 
-//______________________________________________________________________________________________________logIndexf()
+/*______________________________________________________________________________________________________logIndexf() */
 
 static void APIENTRY logIndexf(GLfloat c)
 {
@@ -1882,7 +1882,7 @@ static void APIENTRY logIndexf(GLfloat c)
 	dllIndexf( c );
 }
 
-//_____________________________________________________________________________________________________logIndexfv()
+/*_____________________________________________________________________________________________________logIndexfv() */
 
 static void APIENTRY logIndexfv(const GLfloat *c)
 {
@@ -1890,7 +1890,7 @@ static void APIENTRY logIndexfv(const GLfloat *c)
 	dllIndexfv( c );
 }
 
-//______________________________________________________________________________________________________logIndexi()
+/*______________________________________________________________________________________________________logIndexi() */
 
 static void APIENTRY logIndexi(GLint c)
 {
@@ -1898,7 +1898,7 @@ static void APIENTRY logIndexi(GLint c)
 	dllIndexi( c );
 }
 
-//_____________________________________________________________________________________________________logIndexiv()
+/*_____________________________________________________________________________________________________logIndexiv() */
 
 static void APIENTRY logIndexiv(const GLint *c)
 {
@@ -1906,7 +1906,7 @@ static void APIENTRY logIndexiv(const GLint *c)
 	dllIndexiv( c );
 }
 
-//______________________________________________________________________________________________________logIndexs()
+/*______________________________________________________________________________________________________logIndexs() */
 
 static void APIENTRY logIndexs(GLshort c)
 {
@@ -1914,7 +1914,7 @@ static void APIENTRY logIndexs(GLshort c)
 	dllIndexs( c );
 }
 
-//_____________________________________________________________________________________________________logIndexsv()
+/*_____________________________________________________________________________________________________logIndexsv() */
 
 static void APIENTRY logIndexsv(const GLshort *c)
 {
@@ -1922,14 +1922,14 @@ static void APIENTRY logIndexsv(const GLshort *c)
 	dllIndexsv( c );
 }
 
-//_____________________________________________________________________________________________________logIndexub()
+/*_____________________________________________________________________________________________________logIndexub() */
 
 static void APIENTRY logIndexub(GLubyte c)
 {
 	SIG( "glIndexub" );
 	dllIndexub( c );
 }
-//____________________________________________________________________________________________________logIndexubv()
+/*____________________________________________________________________________________________________logIndexubv() */
 
 static void APIENTRY logIndexubv(const GLubyte *c)
 {
@@ -1937,7 +1937,7 @@ static void APIENTRY logIndexubv(const GLubyte *c)
 	dllIndexubv( c );
 }
 
-//___________________________________________________________________________________________________logInitNames()
+/*___________________________________________________________________________________________________logInitNames() */
 
 static void APIENTRY logInitNames(void)
 {
@@ -1945,7 +1945,7 @@ static void APIENTRY logInitNames(void)
 	dllInitNames();
 }
 
-//___________________________________________________________________________________________logInterleavedArrays()
+/*___________________________________________________________________________________________logInterleavedArrays() */
 
 static void APIENTRY logInterleavedArrays(GLenum format, GLsizei stride, const void *pointer)
 {
@@ -1953,7 +1953,7 @@ static void APIENTRY logInterleavedArrays(GLenum format, GLsizei stride, const v
 	dllInterleavedArrays( format, stride, pointer );
 }
 
-//___________________________________________________________________________________________________logIsEnabled()
+/*___________________________________________________________________________________________________logIsEnabled() */
 
 static GLboolean APIENTRY logIsEnabled(GLenum cap)
 {
@@ -1961,7 +1961,7 @@ static GLboolean APIENTRY logIsEnabled(GLenum cap)
 	return dllIsEnabled( cap );
 }
 
-//______________________________________________________________________________________________________logIsList()
+/*______________________________________________________________________________________________________logIsList() */
 
 static GLboolean APIENTRY logIsList(GLuint list)
 {
@@ -1969,7 +1969,7 @@ static GLboolean APIENTRY logIsList(GLuint list)
 	return dllIsList( list );
 }
 
-//___________________________________________________________________________________________________logIsTexture()
+/*___________________________________________________________________________________________________logIsTexture() */
 
 static GLboolean APIENTRY logIsTexture(GLuint texture)
 {
@@ -1977,7 +1977,7 @@ static GLboolean APIENTRY logIsTexture(GLuint texture)
 	return dllIsTexture( texture );
 }
 
-//_________________________________________________________________________________________________logLightModelf()
+/*_________________________________________________________________________________________________logLightModelf() */
 
 static void APIENTRY logLightModelf(GLenum pname, GLfloat param)
 {
@@ -1985,7 +1985,7 @@ static void APIENTRY logLightModelf(GLenum pname, GLfloat param)
 	dllLightModelf( pname, param );
 }
 
-//________________________________________________________________________________________________logLightModelfv()
+/*________________________________________________________________________________________________logLightModelfv() */
 
 static void APIENTRY logLightModelfv(GLenum pname, const GLfloat *params)
 {
@@ -1993,7 +1993,7 @@ static void APIENTRY logLightModelfv(GLenum pname, const GLfloat *params)
 	dllLightModelfv( pname, params );
 }
 
-//_________________________________________________________________________________________________logLightModeli()
+/*_________________________________________________________________________________________________logLightModeli() */
 
 static void APIENTRY logLightModeli(GLenum pname, GLint param)
 {
@@ -2002,7 +2002,7 @@ static void APIENTRY logLightModeli(GLenum pname, GLint param)
 
 }
 
-//________________________________________________________________________________________________logLightModeliv()
+/*________________________________________________________________________________________________logLightModeliv() */
 
 static void APIENTRY logLightModeliv(GLenum pname, const GLint *params)
 {
@@ -2010,7 +2010,7 @@ static void APIENTRY logLightModeliv(GLenum pname, const GLint *params)
 	dllLightModeliv( pname, params );
 }
 
-//______________________________________________________________________________________________________logLightf()
+/*______________________________________________________________________________________________________logLightf() */
 
 static void APIENTRY logLightf(GLenum light, GLenum pname, GLfloat param)
 {
@@ -2018,7 +2018,7 @@ static void APIENTRY logLightf(GLenum light, GLenum pname, GLfloat param)
 	dllLightf( light, pname, param );
 }
 
-//_____________________________________________________________________________________________________logLightfv()
+/*_____________________________________________________________________________________________________logLightfv() */
 
 static void APIENTRY logLightfv(GLenum light, GLenum pname, const GLfloat *params)
 {
@@ -2026,7 +2026,7 @@ static void APIENTRY logLightfv(GLenum light, GLenum pname, const GLfloat *param
 	dllLightfv( light, pname, params );
 }
 
-//______________________________________________________________________________________________________logLighti()
+/*______________________________________________________________________________________________________logLighti() */
 
 static void APIENTRY logLighti(GLenum light, GLenum pname, GLint param)
 {
@@ -2034,7 +2034,7 @@ static void APIENTRY logLighti(GLenum light, GLenum pname, GLint param)
 	dllLighti( light, pname, param );
 }
 
-//_____________________________________________________________________________________________________logLightiv()
+/*_____________________________________________________________________________________________________logLightiv() */
 
 static void APIENTRY logLightiv(GLenum light, GLenum pname, const GLint *params)
 {
@@ -2042,7 +2042,7 @@ static void APIENTRY logLightiv(GLenum light, GLenum pname, const GLint *params)
 	dllLightiv( light, pname, params );
 }
 
-//_________________________________________________________________________________________________logLineStipple()
+/*_________________________________________________________________________________________________logLineStipple() */
 
 static void APIENTRY logLineStipple(GLint factor, GLushort pattern)
 {
@@ -2050,7 +2050,7 @@ static void APIENTRY logLineStipple(GLint factor, GLushort pattern)
 	dllLineStipple( factor, pattern );
 }
 
-//___________________________________________________________________________________________________logLineWidth()
+/*___________________________________________________________________________________________________logLineWidth() */
 
 static void APIENTRY logLineWidth(GLfloat width)
 {
@@ -2058,7 +2058,7 @@ static void APIENTRY logLineWidth(GLfloat width)
 	dllLineWidth( width );
 }
 
-//____________________________________________________________________________________________________logListBase()
+/*____________________________________________________________________________________________________logListBase() */
 
 static void APIENTRY logListBase(GLuint base)
 {
@@ -2066,7 +2066,7 @@ static void APIENTRY logListBase(GLuint base)
 	dllListBase( base );
 }
 
-//________________________________________________________________________________________________logLoadIdentity()
+/*________________________________________________________________________________________________logLoadIdentity() */
 
 static void APIENTRY logLoadIdentity(void)
 {
@@ -2074,7 +2074,7 @@ static void APIENTRY logLoadIdentity(void)
 	dllLoadIdentity();
 }
 
-//_________________________________________________________________________________________________logLoadMatrixd()
+/*_________________________________________________________________________________________________logLoadMatrixd() */
 
 static void APIENTRY logLoadMatrixd(const GLdouble *m)
 {
@@ -2082,7 +2082,7 @@ static void APIENTRY logLoadMatrixd(const GLdouble *m)
 	dllLoadMatrixd( m );
 }
 
-//_________________________________________________________________________________________________logLoadMatrixf()
+/*_________________________________________________________________________________________________logLoadMatrixf() */
 
 static void APIENTRY logLoadMatrixf(const GLfloat *m)
 {
@@ -2090,7 +2090,7 @@ static void APIENTRY logLoadMatrixf(const GLfloat *m)
 	dllLoadMatrixf( m );
 }
 
-//____________________________________________________________________________________________________logLoadName()
+/*____________________________________________________________________________________________________logLoadName() */
 
 static void APIENTRY logLoadName(GLuint name)
 {
@@ -2098,7 +2098,7 @@ static void APIENTRY logLoadName(GLuint name)
 	dllLoadName( name );
 }
 
-//_____________________________________________________________________________________________________logLogicOp()
+/*_____________________________________________________________________________________________________logLogicOp() */
 
 static void APIENTRY logLogicOp(GLenum opcode)
 {
@@ -2106,7 +2106,7 @@ static void APIENTRY logLogicOp(GLenum opcode)
 	dllLogicOp( opcode );
 }
 
-//_______________________________________________________________________________________________________logMap1d()
+/*_______________________________________________________________________________________________________logMap1d() */
 
 static void APIENTRY logMap1d(GLenum target, GLdouble u1, GLdouble u2, GLint stride, GLint order,
                               const GLdouble *points)
@@ -2115,7 +2115,7 @@ static void APIENTRY logMap1d(GLenum target, GLdouble u1, GLdouble u2, GLint str
 	dllMap1d( target, u1, u2, stride, order, points );
 }
 
-//_______________________________________________________________________________________________________logMap1f()
+/*_______________________________________________________________________________________________________logMap1f() */
 
 static void APIENTRY logMap1f(GLenum target, GLfloat u1, GLfloat u2, GLint stride, GLint order,
                               const GLfloat *points)
@@ -2124,7 +2124,7 @@ static void APIENTRY logMap1f(GLenum target, GLfloat u1, GLfloat u2, GLint strid
 	dllMap1f( target, u1, u2, stride, order, points );
 }
 
-//_______________________________________________________________________________________________________logMap2d()
+/*_______________________________________________________________________________________________________logMap2d() */
 
 static void APIENTRY logMap2d(GLenum target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, 
                               GLdouble v2, GLint vstride, GLint vorder, const GLdouble *points)
@@ -2133,7 +2133,7 @@ static void APIENTRY logMap2d(GLenum target, GLdouble u1, GLdouble u2, GLint ust
 	dllMap2d( target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points );
 }
 
-//_______________________________________________________________________________________________________logMap2f()
+/*_______________________________________________________________________________________________________logMap2f() */
 
 static void APIENTRY logMap2f(GLenum target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, 
                               GLfloat v2, GLint vstride, GLint vorder, const GLfloat *points)
@@ -2142,7 +2142,7 @@ static void APIENTRY logMap2f(GLenum target, GLfloat u1, GLfloat u2, GLint ustri
 	dllMap2f( target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points );
 }
 
-//___________________________________________________________________________________________________logMapGrid1d()
+/*___________________________________________________________________________________________________logMapGrid1d() */
 
 static void APIENTRY logMapGrid1d(GLint un, GLdouble u1, GLdouble u2)
 {
@@ -2150,14 +2150,14 @@ static void APIENTRY logMapGrid1d(GLint un, GLdouble u1, GLdouble u2)
 	dllMapGrid1d( un, u1, u2 );
 }
 
-//___________________________________________________________________________________________________logMapGrid1f()
+/*___________________________________________________________________________________________________logMapGrid1f() */
 
 static void APIENTRY logMapGrid1f(GLint un, GLfloat u1, GLfloat u2)
 {
 	SIG( "glMapGrid1f" );
 	dllMapGrid1f( un, u1, u2 );
 }
-//___________________________________________________________________________________________________logMapGrid2d()
+/*___________________________________________________________________________________________________logMapGrid2d() */
 
 static void APIENTRY logMapGrid2d(GLint un, GLdouble u1, GLdouble u2, GLint vn, GLdouble v1, GLdouble v2)
 {
@@ -2165,7 +2165,7 @@ static void APIENTRY logMapGrid2d(GLint un, GLdouble u1, GLdouble u2, GLint vn, 
 	dllMapGrid2d( un, u1, u2, vn, v1, v2 );
 }
 
-//___________________________________________________________________________________________________logMapGrid2f()
+/*___________________________________________________________________________________________________logMapGrid2f() */
 
 static void APIENTRY logMapGrid2f(GLint un, GLfloat u1, GLfloat u2, GLint vn, GLfloat v1, GLfloat v2)
 {
@@ -2173,7 +2173,7 @@ static void APIENTRY logMapGrid2f(GLint un, GLfloat u1, GLfloat u2, GLint vn, GL
 	dllMapGrid2f( un, u1, u2, vn, v1, v2 );
 }
 
-//___________________________________________________________________________________________________logMaterialf()
+/*___________________________________________________________________________________________________logMaterialf() */
 
 static void APIENTRY logMaterialf(GLenum face, GLenum pname, GLfloat param)
 {
@@ -2181,7 +2181,7 @@ static void APIENTRY logMaterialf(GLenum face, GLenum pname, GLfloat param)
 	dllMaterialf( face, pname, param );
 }
 
-//__________________________________________________________________________________________________logMaterialfv()
+/*__________________________________________________________________________________________________logMaterialfv() */
 
 static void APIENTRY logMaterialfv(GLenum face, GLenum pname, const GLfloat *params)
 {
@@ -2189,7 +2189,7 @@ static void APIENTRY logMaterialfv(GLenum face, GLenum pname, const GLfloat *par
 	dllMaterialfv( face, pname, params );
 }
 
-//___________________________________________________________________________________________________logMateriali()
+/*___________________________________________________________________________________________________logMateriali() */
 
 static void APIENTRY logMateriali(GLenum face, GLenum pname, GLint param)
 {
@@ -2197,7 +2197,7 @@ static void APIENTRY logMateriali(GLenum face, GLenum pname, GLint param)
 	dllMateriali( face, pname, param );
 }
 
-//__________________________________________________________________________________________________logMaterialiv()
+/*__________________________________________________________________________________________________logMaterialiv() */
 
 static void APIENTRY logMaterialiv(GLenum face, GLenum pname, const GLint *params)
 {
@@ -2205,7 +2205,7 @@ static void APIENTRY logMaterialiv(GLenum face, GLenum pname, const GLint *param
 	dllMaterialiv( face, pname, params );
 }
 
-//__________________________________________________________________________________________________logMatrixMode()
+/*__________________________________________________________________________________________________logMatrixMode() */
 
 static void APIENTRY logMatrixMode(GLenum mode)
 {
@@ -2213,7 +2213,7 @@ static void APIENTRY logMatrixMode(GLenum mode)
 	dllMatrixMode( mode );
 }
 
-//_________________________________________________________________________________________________logMultMatrixd()
+/*_________________________________________________________________________________________________logMultMatrixd() */
 
 static void APIENTRY logMultMatrixd(const GLdouble *m)
 {
@@ -2221,7 +2221,7 @@ static void APIENTRY logMultMatrixd(const GLdouble *m)
 	dllMultMatrixd( m );
 }
 
-//_________________________________________________________________________________________________logMultMatrixf()
+/*_________________________________________________________________________________________________logMultMatrixf() */
 
 static void APIENTRY logMultMatrixf(const GLfloat *m)
 {
@@ -2229,7 +2229,7 @@ static void APIENTRY logMultMatrixf(const GLfloat *m)
 	dllMultMatrixf( m );
 }
 
-//_____________________________________________________________________________________________________logNewList()
+/*_____________________________________________________________________________________________________logNewList() */
 
 static void APIENTRY logNewList(GLuint list, GLenum mode)
 {
@@ -2237,7 +2237,7 @@ static void APIENTRY logNewList(GLuint list, GLenum mode)
 	dllNewList( list, mode );
 }
 
-//____________________________________________________________________________________________________logNormal3b()
+/*____________________________________________________________________________________________________logNormal3b() */
 
 static void APIENTRY logNormal3b(GLbyte nx, GLbyte ny, GLbyte nz)
 {
@@ -2245,7 +2245,7 @@ static void APIENTRY logNormal3b(GLbyte nx, GLbyte ny, GLbyte nz)
 	dllNormal3b( nx, ny, nz );
 }
 
-//___________________________________________________________________________________________________logNormal3bv()
+/*___________________________________________________________________________________________________logNormal3bv() */
 
 static void APIENTRY logNormal3bv(const GLbyte *v)
 {
@@ -2253,7 +2253,7 @@ static void APIENTRY logNormal3bv(const GLbyte *v)
 	dllNormal3bv( v );
 }
 
-//____________________________________________________________________________________________________logNormal3d()
+/*____________________________________________________________________________________________________logNormal3d() */
 
 static void APIENTRY logNormal3d(GLdouble nx, GLdouble ny, GLdouble nz)
 {
@@ -2261,7 +2261,7 @@ static void APIENTRY logNormal3d(GLdouble nx, GLdouble ny, GLdouble nz)
 	dllNormal3d( nx, ny, nz );
 }
 
-//___________________________________________________________________________________________________logNormal3dv()
+/*___________________________________________________________________________________________________logNormal3dv() */
 
 static void APIENTRY logNormal3dv(const GLdouble *v)
 {
@@ -2269,7 +2269,7 @@ static void APIENTRY logNormal3dv(const GLdouble *v)
 	dllNormal3dv( v );
 }
 
-//____________________________________________________________________________________________________logNormal3f()
+/*____________________________________________________________________________________________________logNormal3f() */
 
 static void APIENTRY logNormal3f(GLfloat nx, GLfloat ny, GLfloat nz)
 {
@@ -2277,7 +2277,7 @@ static void APIENTRY logNormal3f(GLfloat nx, GLfloat ny, GLfloat nz)
 	dllNormal3f( nx, ny, nz );
 }
 
-//___________________________________________________________________________________________________logNormal3fv()
+/*___________________________________________________________________________________________________logNormal3fv() */
 
 static void APIENTRY logNormal3fv(const GLfloat *v)
 {
@@ -2285,7 +2285,7 @@ static void APIENTRY logNormal3fv(const GLfloat *v)
 	dllNormal3fv( v );
 }
 
-//____________________________________________________________________________________________________logNormal3i()
+/*____________________________________________________________________________________________________logNormal3i() */
 
 static void APIENTRY logNormal3i(GLint nx, GLint ny, GLint nz)
 {
@@ -2293,7 +2293,7 @@ static void APIENTRY logNormal3i(GLint nx, GLint ny, GLint nz)
 	dllNormal3i( nx, ny, nz );
 }
 
-//___________________________________________________________________________________________________logNormal3iv()
+/*___________________________________________________________________________________________________logNormal3iv() */
 
 static void APIENTRY logNormal3iv(const GLint *v)
 {
@@ -2301,7 +2301,7 @@ static void APIENTRY logNormal3iv(const GLint *v)
 	dllNormal3iv( v );
 }
 
-//____________________________________________________________________________________________________logNormal3s()
+/*____________________________________________________________________________________________________logNormal3s() */
 
 static void APIENTRY logNormal3s(GLshort nx, GLshort ny, GLshort nz)
 {
@@ -2309,7 +2309,7 @@ static void APIENTRY logNormal3s(GLshort nx, GLshort ny, GLshort nz)
 	dllNormal3s( nx, ny, nz );
 }
 
-//___________________________________________________________________________________________________logNormal3sv()
+/*___________________________________________________________________________________________________logNormal3sv() */
 
 static void APIENTRY logNormal3sv(const GLshort *v)
 {
@@ -2317,7 +2317,7 @@ static void APIENTRY logNormal3sv(const GLshort *v)
 	dllNormal3sv( v );
 }
 
-//_______________________________________________________________________________________________logNormalPointer()
+/*_______________________________________________________________________________________________logNormalPointer() */
 
 static void APIENTRY logNormalPointer(GLenum type, GLsizei stride, const void *pointer)
 {
@@ -2325,7 +2325,7 @@ static void APIENTRY logNormalPointer(GLenum type, GLsizei stride, const void *p
 	dllNormalPointer( type, stride, pointer );
 }
 
-//_______________________________________________________________________________________________________logOrtho()
+/*_______________________________________________________________________________________________________logOrtho() */
 
 static void APIENTRY logOrtho(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear,
                               GLdouble zFar)
@@ -2334,7 +2334,7 @@ static void APIENTRY logOrtho(GLdouble left, GLdouble right, GLdouble bottom, GL
 	dllOrtho( left, right, bottom, top, zNear, zFar );
 }
 
-//_________________________________________________________________________________________________logPassThrough()
+/*_________________________________________________________________________________________________logPassThrough() */
 
 static void APIENTRY logPassThrough(GLfloat token)
 {
@@ -2342,7 +2342,7 @@ static void APIENTRY logPassThrough(GLfloat token)
 	dllPassThrough( token );
 }
 
-//__________________________________________________________________________________________________logPixelMapfv()
+/*__________________________________________________________________________________________________logPixelMapfv() */
 
 static void APIENTRY logPixelMapfv(GLenum map, GLsizei mapsize, const GLfloat *values)
 {
@@ -2350,7 +2350,7 @@ static void APIENTRY logPixelMapfv(GLenum map, GLsizei mapsize, const GLfloat *v
 	dllPixelMapfv( map, mapsize, values );
 }
 
-//_________________________________________________________________________________________________logPixelMapuiv()
+/*_________________________________________________________________________________________________logPixelMapuiv() */
 
 static void APIENTRY logPixelMapuiv(GLenum map, GLsizei mapsize, const GLuint *values)
 {
@@ -2358,7 +2358,7 @@ static void APIENTRY logPixelMapuiv(GLenum map, GLsizei mapsize, const GLuint *v
 	dllPixelMapuiv( map, mapsize, values );
 }
 
-//_________________________________________________________________________________________________logPixelMapusv()
+/*_________________________________________________________________________________________________logPixelMapusv() */
 
 static void APIENTRY logPixelMapusv(GLenum map, GLsizei mapsize, const GLushort *values)
 {
@@ -2366,7 +2366,7 @@ static void APIENTRY logPixelMapusv(GLenum map, GLsizei mapsize, const GLushort 
 	dllPixelMapusv( map, mapsize, values );
 }
 
-//_________________________________________________________________________________________________logPixelStoref()
+/*_________________________________________________________________________________________________logPixelStoref() */
 
 static void APIENTRY logPixelStoref(GLenum pname, GLfloat param)
 {
@@ -2374,7 +2374,7 @@ static void APIENTRY logPixelStoref(GLenum pname, GLfloat param)
 	dllPixelStoref( pname, param );
 }
 
-//_________________________________________________________________________________________________logPixelStorei()
+/*_________________________________________________________________________________________________logPixelStorei() */
 
 static void APIENTRY logPixelStorei(GLenum pname, GLint param)
 {
@@ -2382,7 +2382,7 @@ static void APIENTRY logPixelStorei(GLenum pname, GLint param)
 	dllPixelStorei( pname, param );
 }
 
-//______________________________________________________________________________________________logPixelTransferf()
+/*______________________________________________________________________________________________logPixelTransferf() */
 
 static void APIENTRY logPixelTransferf(GLenum pname, GLfloat param)
 {
@@ -2390,7 +2390,7 @@ static void APIENTRY logPixelTransferf(GLenum pname, GLfloat param)
 	dllPixelTransferf( pname, param );
 }
 
-//______________________________________________________________________________________________logPixelTransferi()
+/*______________________________________________________________________________________________logPixelTransferi() */
 
 static void APIENTRY logPixelTransferi(GLenum pname, GLint param)
 {
@@ -2398,7 +2398,7 @@ static void APIENTRY logPixelTransferi(GLenum pname, GLint param)
 	dllPixelTransferi( pname, param );
 }
 
-//___________________________________________________________________________________________________logPixelZoom()
+/*___________________________________________________________________________________________________logPixelZoom() */
 
 static void APIENTRY logPixelZoom(GLfloat xfactor, GLfloat yfactor)
 {
@@ -2406,7 +2406,7 @@ static void APIENTRY logPixelZoom(GLfloat xfactor, GLfloat yfactor)
 	dllPixelZoom( xfactor, yfactor );
 }
 
-//___________________________________________________________________________________________________logPointSize()
+/*___________________________________________________________________________________________________logPointSize() */
 
 static void APIENTRY logPointSize(GLfloat size)
 {
@@ -2414,7 +2414,7 @@ static void APIENTRY logPointSize(GLfloat size)
 	dllPointSize( size );
 }
 
-//_________________________________________________________________________________________________logPolygonMode()
+/*_________________________________________________________________________________________________logPolygonMode() */
 
 static void APIENTRY logPolygonMode(GLenum face, GLenum mode)
 {
@@ -2422,7 +2422,7 @@ static void APIENTRY logPolygonMode(GLenum face, GLenum mode)
 	dllPolygonMode( face, mode );
 }
 
-//_______________________________________________________________________________________________logPolygonOffset()
+/*_______________________________________________________________________________________________logPolygonOffset() */
 
 static void APIENTRY logPolygonOffset(GLfloat factor, GLfloat units)
 {
@@ -2430,7 +2430,7 @@ static void APIENTRY logPolygonOffset(GLfloat factor, GLfloat units)
 	dllPolygonOffset( factor, units );
 }
 
-//_____________________________________________________________________________________________logPolygonStripple()
+/*_____________________________________________________________________________________________logPolygonStripple() */
 
 static void APIENTRY logPolygonStipple(const GLubyte *mask )
 {
@@ -2438,7 +2438,7 @@ static void APIENTRY logPolygonStipple(const GLubyte *mask )
 	dllPolygonStipple( mask );
 }
 
-//___________________________________________________________________________________________________logPopAttrib()
+/*___________________________________________________________________________________________________logPopAttrib() */
 
 static void APIENTRY logPopAttrib(void)
 {
@@ -2446,7 +2446,7 @@ static void APIENTRY logPopAttrib(void)
 	dllPopAttrib();
 }
 
-//_____________________________________________________________________________________________logPopClientAttrib()
+/*_____________________________________________________________________________________________logPopClientAttrib() */
 
 static void APIENTRY logPopClientAttrib(void)
 {
@@ -2454,7 +2454,7 @@ static void APIENTRY logPopClientAttrib(void)
 	dllPopClientAttrib();
 }
 
-//___________________________________________________________________________________________________logPopMatrix()
+/*___________________________________________________________________________________________________logPopMatrix() */
 
 static void APIENTRY logPopMatrix(void)
 {
@@ -2462,7 +2462,7 @@ static void APIENTRY logPopMatrix(void)
 	dllPopMatrix();
 }
 
-//_____________________________________________________________________________________________________logPopName()
+/*_____________________________________________________________________________________________________logPopName() */
 
 static void APIENTRY logPopName(void)
 {
@@ -2470,7 +2470,7 @@ static void APIENTRY logPopName(void)
 	dllPopName();
 }
 
-//__________________________________________________________________________________________logPrioritizeTextures()
+/*__________________________________________________________________________________________logPrioritizeTextures() */
 
 static void APIENTRY logPrioritizeTextures(GLsizei n, const GLuint *textures, const GLclampf *priorities)
 {
@@ -2478,7 +2478,7 @@ static void APIENTRY logPrioritizeTextures(GLsizei n, const GLuint *textures, co
 	dllPrioritizeTextures( n, textures, priorities );
 }
 
-//__________________________________________________________________________________________________logPushAttrib()
+/*__________________________________________________________________________________________________logPushAttrib() */
 
 static void APIENTRY logPushAttrib(GLbitfield mask)
 {
@@ -2486,7 +2486,7 @@ static void APIENTRY logPushAttrib(GLbitfield mask)
 	dllPushAttrib( mask );
 }
 
-//____________________________________________________________________________________________logPushClientAttrib()
+/*____________________________________________________________________________________________logPushClientAttrib() */
 
 static void APIENTRY logPushClientAttrib(GLbitfield mask)
 {
@@ -2494,7 +2494,7 @@ static void APIENTRY logPushClientAttrib(GLbitfield mask)
 	dllPushClientAttrib( mask );
 }
 
-//__________________________________________________________________________________________________logPushMatrix()
+/*__________________________________________________________________________________________________logPushMatrix() */
 
 static void APIENTRY logPushMatrix(void)
 {
@@ -2502,7 +2502,7 @@ static void APIENTRY logPushMatrix(void)
 	dllPushMatrix();
 }
 
-//____________________________________________________________________________________________________logPushName()
+/*____________________________________________________________________________________________________logPushName() */
 
 static void APIENTRY logPushName(GLuint name)
 {
@@ -2510,7 +2510,7 @@ static void APIENTRY logPushName(GLuint name)
 	dllPushName( name );
 }
 
-//_________________________________________________________________________________________________logRasterPos2d()
+/*_________________________________________________________________________________________________logRasterPos2d() */
 
 static void APIENTRY logRasterPos2d(GLdouble x, GLdouble y)
 {
@@ -2518,7 +2518,7 @@ static void APIENTRY logRasterPos2d(GLdouble x, GLdouble y)
 	dllRasterPos2d( x, y );
 }
 
-//________________________________________________________________________________________________logRasterPos2dv()
+/*________________________________________________________________________________________________logRasterPos2dv() */
 
 static void APIENTRY logRasterPos2dv(const GLdouble *v)
 {
@@ -2526,7 +2526,7 @@ static void APIENTRY logRasterPos2dv(const GLdouble *v)
 	dllRasterPos2dv( v );
 }
 
-//_________________________________________________________________________________________________logRasterPos2f()
+/*_________________________________________________________________________________________________logRasterPos2f() */
 
 static void APIENTRY logRasterPos2f(GLfloat x, GLfloat y)
 {
@@ -2534,7 +2534,7 @@ static void APIENTRY logRasterPos2f(GLfloat x, GLfloat y)
 	dllRasterPos2f( x, y );
 }
 
-//________________________________________________________________________________________________logRasterPos2fv()
+/*________________________________________________________________________________________________logRasterPos2fv() */
 
 static void APIENTRY logRasterPos2fv(const GLfloat *v)
 {
@@ -2542,7 +2542,7 @@ static void APIENTRY logRasterPos2fv(const GLfloat *v)
 	dllRasterPos2fv( v );
 }
 
-//_________________________________________________________________________________________________logRasterPos2i()
+/*_________________________________________________________________________________________________logRasterPos2i() */
 
 static void APIENTRY logRasterPos2i(GLint x, GLint y)
 {
@@ -2550,7 +2550,7 @@ static void APIENTRY logRasterPos2i(GLint x, GLint y)
 	dllRasterPos2i( x, y );
 }
 
-//________________________________________________________________________________________________logRasterPos2iv()
+/*________________________________________________________________________________________________logRasterPos2iv() */
 
 static void APIENTRY logRasterPos2iv(const GLint *v)
 {
@@ -2558,7 +2558,7 @@ static void APIENTRY logRasterPos2iv(const GLint *v)
 	dllRasterPos2iv( v );
 }
 
-//_________________________________________________________________________________________________logRasterPos2s()
+/*_________________________________________________________________________________________________logRasterPos2s() */
 
 static void APIENTRY logRasterPos2s(GLshort x, GLshort y)
 {
@@ -2566,7 +2566,7 @@ static void APIENTRY logRasterPos2s(GLshort x, GLshort y)
 	dllRasterPos2s( x, y );
 }
 
-//________________________________________________________________________________________________logRasterPos2sv()
+/*________________________________________________________________________________________________logRasterPos2sv() */
 
 static void APIENTRY logRasterPos2sv(const GLshort *v)
 {
@@ -2574,7 +2574,7 @@ static void APIENTRY logRasterPos2sv(const GLshort *v)
 	dllRasterPos2sv( v );
 }
 
-//_________________________________________________________________________________________________logRasterPos3d()
+/*_________________________________________________________________________________________________logRasterPos3d() */
 
 static void APIENTRY logRasterPos3d(GLdouble x, GLdouble y, GLdouble z)
 {
@@ -2582,7 +2582,7 @@ static void APIENTRY logRasterPos3d(GLdouble x, GLdouble y, GLdouble z)
 	dllRasterPos3d( x, y, z );
 }
 
-//________________________________________________________________________________________________logRasterPos3dv()
+/*________________________________________________________________________________________________logRasterPos3dv() */
 
 static void APIENTRY logRasterPos3dv(const GLdouble *v)
 {
@@ -2590,7 +2590,7 @@ static void APIENTRY logRasterPos3dv(const GLdouble *v)
 	dllRasterPos3dv( v );
 }
 
-//_________________________________________________________________________________________________logRasterPos3f()
+/*_________________________________________________________________________________________________logRasterPos3f() */
 
 static void APIENTRY logRasterPos3f(GLfloat x, GLfloat y, GLfloat z)
 {
@@ -2598,7 +2598,7 @@ static void APIENTRY logRasterPos3f(GLfloat x, GLfloat y, GLfloat z)
 	dllRasterPos3f( x, y, z );
 }
 
-//________________________________________________________________________________________________logRasterPos3fv()
+/*________________________________________________________________________________________________logRasterPos3fv() */
 
 static void APIENTRY logRasterPos3fv(const GLfloat *v)
 {
@@ -2606,14 +2606,14 @@ static void APIENTRY logRasterPos3fv(const GLfloat *v)
 	dllRasterPos3fv( v );
 }
 
-//_________________________________________________________________________________________________logRasterPos3i()
+/*_________________________________________________________________________________________________logRasterPos3i() */
 
 static void APIENTRY logRasterPos3i(GLint x, GLint y, GLint z)
 {
 	SIG( "glRasterPos3i" );
 	dllRasterPos3i( x, y, z );
 }
-//________________________________________________________________________________________________logRasterPos3iv()
+/*________________________________________________________________________________________________logRasterPos3iv() */
 
 static void APIENTRY logRasterPos3iv(const GLint *v)
 {
@@ -2621,7 +2621,7 @@ static void APIENTRY logRasterPos3iv(const GLint *v)
 	dllRasterPos3iv( v );
 }
 
-//_________________________________________________________________________________________________logRasterPos3s()
+/*_________________________________________________________________________________________________logRasterPos3s() */
 
 static void APIENTRY logRasterPos3s(GLshort x, GLshort y, GLshort z)
 {
@@ -2629,7 +2629,7 @@ static void APIENTRY logRasterPos3s(GLshort x, GLshort y, GLshort z)
 	dllRasterPos3s( x, y, z );
 }
 
-//________________________________________________________________________________________________logRasterPos3sv()
+/*________________________________________________________________________________________________logRasterPos3sv() */
 
 static void APIENTRY logRasterPos3sv(const GLshort *v)
 {
@@ -2637,7 +2637,7 @@ static void APIENTRY logRasterPos3sv(const GLshort *v)
 	dllRasterPos3sv( v );
 }
 
-//_________________________________________________________________________________________________logRasterPos4d()
+/*_________________________________________________________________________________________________logRasterPos4d() */
 
 static void APIENTRY logRasterPos4d(GLdouble x, GLdouble y, GLdouble z, GLdouble w)
 {
@@ -2645,7 +2645,7 @@ static void APIENTRY logRasterPos4d(GLdouble x, GLdouble y, GLdouble z, GLdouble
 	dllRasterPos4d( x, y, z, w );
 }
 
-//________________________________________________________________________________________________logRasterPos4dv()
+/*________________________________________________________________________________________________logRasterPos4dv() */
 
 static void APIENTRY logRasterPos4dv(const GLdouble *v)
 {
@@ -2653,7 +2653,7 @@ static void APIENTRY logRasterPos4dv(const GLdouble *v)
 	dllRasterPos4dv( v );
 }
 
-//_________________________________________________________________________________________________logRasterPos4f()
+/*_________________________________________________________________________________________________logRasterPos4f() */
 
 static void APIENTRY logRasterPos4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w)
 {
@@ -2661,7 +2661,7 @@ static void APIENTRY logRasterPos4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w)
 	dllRasterPos4f( x, y, z, w );
 }
 
-//________________________________________________________________________________________________logRasterPos4fv()
+/*________________________________________________________________________________________________logRasterPos4fv() */
 
 static void APIENTRY logRasterPos4fv(const GLfloat *v)
 {
@@ -2669,7 +2669,7 @@ static void APIENTRY logRasterPos4fv(const GLfloat *v)
 	dllRasterPos4fv( v );
 }
 
-//_________________________________________________________________________________________________logRasterPos4i()
+/*_________________________________________________________________________________________________logRasterPos4i() */
 
 static void APIENTRY logRasterPos4i(GLint x, GLint y, GLint z, GLint w)
 {
@@ -2677,7 +2677,7 @@ static void APIENTRY logRasterPos4i(GLint x, GLint y, GLint z, GLint w)
 	dllRasterPos4i( x, y, z, w );
 }
 
-//________________________________________________________________________________________________logRasterPos4iv()
+/*________________________________________________________________________________________________logRasterPos4iv() */
 
 static void APIENTRY logRasterPos4iv(const GLint *v)
 {
@@ -2685,7 +2685,7 @@ static void APIENTRY logRasterPos4iv(const GLint *v)
 	dllRasterPos4iv( v );
 }
 
-//_________________________________________________________________________________________________logRasterPos4s()
+/*_________________________________________________________________________________________________logRasterPos4s() */
 
 static void APIENTRY logRasterPos4s(GLshort x, GLshort y, GLshort z, GLshort w)
 {
@@ -2693,7 +2693,7 @@ static void APIENTRY logRasterPos4s(GLshort x, GLshort y, GLshort z, GLshort w)
 	dllRasterPos4s( x, y, z, w );
 }
 
-//________________________________________________________________________________________________logRasterPos4sv()
+/*________________________________________________________________________________________________logRasterPos4sv() */
 
 static void APIENTRY logRasterPos4sv(const GLshort *v)
 {
@@ -2701,7 +2701,7 @@ static void APIENTRY logRasterPos4sv(const GLshort *v)
 	dllRasterPos4sv( v );
 }
 
-//__________________________________________________________________________________________________logReadBuffer()
+/*__________________________________________________________________________________________________logReadBuffer() */
 
 static void APIENTRY logReadBuffer(GLenum mode)
 {
@@ -2709,7 +2709,7 @@ static void APIENTRY logReadBuffer(GLenum mode)
 	dllReadBuffer( mode );
 }
 
-//__________________________________________________________________________________________________logReadPixels()
+/*__________________________________________________________________________________________________logReadPixels() */
 
 static void APIENTRY logReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type,
                                    void *pixels)
@@ -2718,7 +2718,7 @@ static void APIENTRY logReadPixels(GLint x, GLint y, GLsizei width, GLsizei heig
 	dllReadPixels( x, y, width, height, format, type, pixels );
 }
 
-//_______________________________________________________________________________________________________logRectd()
+/*_______________________________________________________________________________________________________logRectd() */
 
 static void APIENTRY logRectd(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2)
 {
@@ -2726,7 +2726,7 @@ static void APIENTRY logRectd(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2
 	dllRectd( x1, y1, x2, y2 );
 }
 
-//______________________________________________________________________________________________________logRectdv()
+/*______________________________________________________________________________________________________logRectdv() */
 
 static void APIENTRY logRectdv(const GLdouble *v1, const GLdouble *v2)
 {
@@ -2734,7 +2734,7 @@ static void APIENTRY logRectdv(const GLdouble *v1, const GLdouble *v2)
 	dllRectdv( v1, v2 );
 }
 
-//_______________________________________________________________________________________________________logRectf()
+/*_______________________________________________________________________________________________________logRectf() */
 
 static void APIENTRY logRectf(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2)
 {
@@ -2742,7 +2742,7 @@ static void APIENTRY logRectf(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2)
 	dllRectf( x1, y1, x2, y2 );
 }
 
-//_______________________________________________________________________________________________________logRectfv()
+/*_______________________________________________________________________________________________________logRectfv() */
 
 static void APIENTRY logRectfv(const GLfloat *v1, const GLfloat *v2)
 {
@@ -2750,7 +2750,7 @@ static void APIENTRY logRectfv(const GLfloat *v1, const GLfloat *v2)
 	dllRectfv( v1, v2 );
 }
 
-//_______________________________________________________________________________________________________logRecti()
+/*_______________________________________________________________________________________________________logRecti() */
 
 static void APIENTRY logRecti(GLint x1, GLint y1, GLint x2, GLint y2)
 {
@@ -2758,7 +2758,7 @@ static void APIENTRY logRecti(GLint x1, GLint y1, GLint x2, GLint y2)
 	dllRecti( x1, y1, x2, y2 );
 }
 
-//______________________________________________________________________________________________________logRectiv()
+/*______________________________________________________________________________________________________logRectiv() */
 
 static void APIENTRY logRectiv(const GLint *v1, const GLint *v2)
 {
@@ -2766,7 +2766,7 @@ static void APIENTRY logRectiv(const GLint *v1, const GLint *v2)
 	dllRectiv( v1, v2 );
 }
 
-//_______________________________________________________________________________________________________logRects()
+/*_______________________________________________________________________________________________________logRects() */
 
 static void APIENTRY logRects(GLshort x1, GLshort y1, GLshort x2, GLshort y2)
 {
@@ -2774,7 +2774,7 @@ static void APIENTRY logRects(GLshort x1, GLshort y1, GLshort x2, GLshort y2)
 	dllRects( x1, y1, x2, y2 );
 }
 
-//______________________________________________________________________________________________________logRectsv()
+/*______________________________________________________________________________________________________logRectsv() */
 
 static void APIENTRY logRectsv(const GLshort *v1, const GLshort *v2)
 {
@@ -2782,14 +2782,14 @@ static void APIENTRY logRectsv(const GLshort *v1, const GLshort *v2)
 	dllRectsv( v1, v2 );
 }
 
-//__________________________________________________________________________________________________logRenderMode()
+/*__________________________________________________________________________________________________logRenderMode() */
 
 static GLint APIENTRY logRenderMode(GLenum mode)
 {
 	SIG( "glRenderMode" );
 	return dllRenderMode( mode );
 }
-//_____________________________________________________________________________________________________logRotated()
+/*_____________________________________________________________________________________________________logRotated() */
 
 static void APIENTRY logRotated(GLdouble angle, GLdouble x, GLdouble y, GLdouble z)
 {
@@ -2797,7 +2797,7 @@ static void APIENTRY logRotated(GLdouble angle, GLdouble x, GLdouble y, GLdouble
 	dllRotated( angle, x, y, z );
 }
 
-//____________________________________________________________________________________________________logRotatef()
+/*____________________________________________________________________________________________________logRotatef() */
 
 static void APIENTRY logRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
 {
@@ -2805,7 +2805,7 @@ static void APIENTRY logRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
 	dllRotatef( angle, x, y, z );
 }
 
-//______________________________________________________________________________________________________logScaled()
+/*______________________________________________________________________________________________________logScaled() */
 
 static void APIENTRY logScaled(GLdouble x, GLdouble y, GLdouble z)
 {
@@ -2813,7 +2813,7 @@ static void APIENTRY logScaled(GLdouble x, GLdouble y, GLdouble z)
 	dllScaled( x, y, z );
 }
 
-//______________________________________________________________________________________________________logScalef()
+/*______________________________________________________________________________________________________logScalef() */
 
 static void APIENTRY logScalef(GLfloat x, GLfloat y, GLfloat z)
 {
@@ -2821,7 +2821,7 @@ static void APIENTRY logScalef(GLfloat x, GLfloat y, GLfloat z)
 	dllScalef( x, y, z );
 }
 
-//_____________________________________________________________________________________________________logScissor()
+/*_____________________________________________________________________________________________________logScissor() */
 
 static void APIENTRY logScissor(GLint x, GLint y, GLsizei width, GLsizei height)
 {
@@ -2829,7 +2829,7 @@ static void APIENTRY logScissor(GLint x, GLint y, GLsizei width, GLsizei height)
 	dllScissor( x, y, width, height );
 }
 
-//________________________________________________________________________________________________logSelectBuffer()
+/*________________________________________________________________________________________________logSelectBuffer() */
 
 static void APIENTRY logSelectBuffer(GLsizei size, GLuint *buffer)
 {
@@ -2837,7 +2837,7 @@ static void APIENTRY logSelectBuffer(GLsizei size, GLuint *buffer)
 	dllSelectBuffer( size, buffer );
 }
 
-//__________________________________________________________________________________________________logShadeModel()
+/*__________________________________________________________________________________________________logShadeModel() */
 
 static void APIENTRY logShadeModel(GLenum mode)
 {
@@ -2845,7 +2845,7 @@ static void APIENTRY logShadeModel(GLenum mode)
 	dllShadeModel( mode );
 }
 
-//_________________________________________________________________________________________________logStencilFunc()
+/*_________________________________________________________________________________________________logStencilFunc() */
 
 static void APIENTRY logStencilFunc(GLenum func, GLint ref, GLuint mask)
 {
@@ -2853,7 +2853,7 @@ static void APIENTRY logStencilFunc(GLenum func, GLint ref, GLuint mask)
 	dllStencilFunc( func, ref, mask );
 }
 
-//_________________________________________________________________________________________________logStencilMask()
+/*_________________________________________________________________________________________________logStencilMask() */
 
 static void APIENTRY logStencilMask(GLuint mask)
 {
@@ -2861,7 +2861,7 @@ static void APIENTRY logStencilMask(GLuint mask)
 	dllStencilMask( mask );
 }
 
-//___________________________________________________________________________________________________logStencilOp()
+/*___________________________________________________________________________________________________logStencilOp() */
 
 static void APIENTRY logStencilOp(GLenum fail, GLenum zfail, GLenum zpass)
 {
@@ -2869,7 +2869,7 @@ static void APIENTRY logStencilOp(GLenum fail, GLenum zfail, GLenum zpass)
 	dllStencilOp( fail, zfail, zpass );
 }
 
-//__________________________________________________________________________________________________logTexCoord1d()
+/*__________________________________________________________________________________________________logTexCoord1d() */
 
 static void APIENTRY logTexCoord1d(GLdouble s)
 {
@@ -2877,7 +2877,7 @@ static void APIENTRY logTexCoord1d(GLdouble s)
 	dllTexCoord1d( s );
 }
 
-//_________________________________________________________________________________________________logTexCoord1dv()
+/*_________________________________________________________________________________________________logTexCoord1dv() */
 
 static void APIENTRY logTexCoord1dv(const GLdouble *v)
 {
@@ -2885,7 +2885,7 @@ static void APIENTRY logTexCoord1dv(const GLdouble *v)
 	dllTexCoord1dv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord1f()
+/*__________________________________________________________________________________________________logTexCoord1f() */
 
 static void APIENTRY logTexCoord1f(GLfloat s)
 {
@@ -2893,7 +2893,7 @@ static void APIENTRY logTexCoord1f(GLfloat s)
 	dllTexCoord1f( s );
 }
 
-//_________________________________________________________________________________________________logTexCoord1fv()
+/*_________________________________________________________________________________________________logTexCoord1fv() */
 
 static void APIENTRY logTexCoord1fv(const GLfloat *v)
 {
@@ -2901,7 +2901,7 @@ static void APIENTRY logTexCoord1fv(const GLfloat *v)
 	dllTexCoord1fv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord1i()
+/*__________________________________________________________________________________________________logTexCoord1i() */
 
 static void APIENTRY logTexCoord1i(GLint s)
 {
@@ -2909,7 +2909,7 @@ static void APIENTRY logTexCoord1i(GLint s)
 	dllTexCoord1i( s );
 }
 
-//_________________________________________________________________________________________________logTexCoord1iv()
+/*_________________________________________________________________________________________________logTexCoord1iv() */
 
 static void APIENTRY logTexCoord1iv(const GLint *v)
 {
@@ -2917,7 +2917,7 @@ static void APIENTRY logTexCoord1iv(const GLint *v)
 	dllTexCoord1iv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord1s()
+/*__________________________________________________________________________________________________logTexCoord1s() */
 
 static void APIENTRY logTexCoord1s(GLshort s)
 {
@@ -2925,7 +2925,7 @@ static void APIENTRY logTexCoord1s(GLshort s)
 	dllTexCoord1s( s );
 }
 
-//_________________________________________________________________________________________________logTexCoord1sv()
+/*_________________________________________________________________________________________________logTexCoord1sv() */
 
 static void APIENTRY logTexCoord1sv(const GLshort *v)
 {
@@ -2933,7 +2933,7 @@ static void APIENTRY logTexCoord1sv(const GLshort *v)
 	dllTexCoord1sv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord2d()
+/*__________________________________________________________________________________________________logTexCoord2d() */
 
 static void APIENTRY logTexCoord2d(GLdouble s, GLdouble t)
 {
@@ -2941,7 +2941,7 @@ static void APIENTRY logTexCoord2d(GLdouble s, GLdouble t)
 	dllTexCoord2d( s, t );
 }
 
-//_________________________________________________________________________________________________logTexCoord2dv()
+/*_________________________________________________________________________________________________logTexCoord2dv() */
 
 static void APIENTRY logTexCoord2dv(const GLdouble *v)
 {
@@ -2949,7 +2949,7 @@ static void APIENTRY logTexCoord2dv(const GLdouble *v)
 	dllTexCoord2dv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord2f()
+/*__________________________________________________________________________________________________logTexCoord2f() */
 
 static void APIENTRY logTexCoord2f(GLfloat s, GLfloat t)
 {
@@ -2957,7 +2957,7 @@ static void APIENTRY logTexCoord2f(GLfloat s, GLfloat t)
 	dllTexCoord2f( s, t );
 }
 
-//_________________________________________________________________________________________________logTexCoord2fv()
+/*_________________________________________________________________________________________________logTexCoord2fv() */
 
 static void APIENTRY logTexCoord2fv(const GLfloat *v)
 {
@@ -2965,7 +2965,7 @@ static void APIENTRY logTexCoord2fv(const GLfloat *v)
 	dllTexCoord2fv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord2i()
+/*__________________________________________________________________________________________________logTexCoord2i() */
 
 static void APIENTRY logTexCoord2i(GLint s, GLint t)
 {
@@ -2973,7 +2973,7 @@ static void APIENTRY logTexCoord2i(GLint s, GLint t)
 	dllTexCoord2i( s, t );
 }
 
-//_________________________________________________________________________________________________logTexCoord2iv()
+/*_________________________________________________________________________________________________logTexCoord2iv() */
 
 static void APIENTRY logTexCoord2iv(const GLint *v)
 {
@@ -2981,7 +2981,7 @@ static void APIENTRY logTexCoord2iv(const GLint *v)
 	dllTexCoord2iv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord2s()
+/*__________________________________________________________________________________________________logTexCoord2s() */
 
 static void APIENTRY logTexCoord2s(GLshort s, GLshort t)
 {
@@ -2989,7 +2989,7 @@ static void APIENTRY logTexCoord2s(GLshort s, GLshort t)
 	dllTexCoord2s( s, t );
 }
 
-//_________________________________________________________________________________________________logTexCoord2sv()
+/*_________________________________________________________________________________________________logTexCoord2sv() */
 
 static void APIENTRY logTexCoord2sv(const GLshort *v)
 {
@@ -2997,7 +2997,7 @@ static void APIENTRY logTexCoord2sv(const GLshort *v)
 	dllTexCoord2sv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord3d()
+/*__________________________________________________________________________________________________logTexCoord3d() */
 
 static void APIENTRY logTexCoord3d(GLdouble s, GLdouble t, GLdouble r)
 {
@@ -3005,7 +3005,7 @@ static void APIENTRY logTexCoord3d(GLdouble s, GLdouble t, GLdouble r)
 	dllTexCoord3d( s, t, r );
 }
 
-//_________________________________________________________________________________________________logTexCoord3dv()
+/*_________________________________________________________________________________________________logTexCoord3dv() */
 
 static void APIENTRY logTexCoord3dv(const GLdouble *v)
 {
@@ -3013,7 +3013,7 @@ static void APIENTRY logTexCoord3dv(const GLdouble *v)
 	dllTexCoord3dv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord3f()
+/*__________________________________________________________________________________________________logTexCoord3f() */
 
 static void APIENTRY logTexCoord3f(GLfloat s, GLfloat t, GLfloat r)
 {
@@ -3021,7 +3021,7 @@ static void APIENTRY logTexCoord3f(GLfloat s, GLfloat t, GLfloat r)
 	dllTexCoord3f( s, t, r );
 }
 
-//_________________________________________________________________________________________________logTexCoord3fv()
+/*_________________________________________________________________________________________________logTexCoord3fv() */
 
 static void APIENTRY logTexCoord3fv(const GLfloat *v)
 {
@@ -3029,7 +3029,7 @@ static void APIENTRY logTexCoord3fv(const GLfloat *v)
 	dllTexCoord3fv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord3i()
+/*__________________________________________________________________________________________________logTexCoord3i() */
 
 static void APIENTRY logTexCoord3i(GLint s, GLint t, GLint r)
 {
@@ -3037,7 +3037,7 @@ static void APIENTRY logTexCoord3i(GLint s, GLint t, GLint r)
 	dllTexCoord3i( s, t, r );
 }
 
-//_________________________________________________________________________________________________logTexCoord3iv()
+/*_________________________________________________________________________________________________logTexCoord3iv() */
 
 static void APIENTRY logTexCoord3iv(const GLint *v)
 {
@@ -3045,7 +3045,7 @@ static void APIENTRY logTexCoord3iv(const GLint *v)
 	dllTexCoord3iv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord3s()
+/*__________________________________________________________________________________________________logTexCoord3s() */
 
 static void APIENTRY logTexCoord3s(GLshort s, GLshort t, GLshort r)
 {
@@ -3053,7 +3053,7 @@ static void APIENTRY logTexCoord3s(GLshort s, GLshort t, GLshort r)
 	dllTexCoord3s( s, t, r );
 }
 
-//_________________________________________________________________________________________________logTexCoord3sv()
+/*_________________________________________________________________________________________________logTexCoord3sv() */
 
 static void APIENTRY logTexCoord3sv(const GLshort *v)
 {
@@ -3061,7 +3061,7 @@ static void APIENTRY logTexCoord3sv(const GLshort *v)
 	dllTexCoord3sv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord4d()
+/*__________________________________________________________________________________________________logTexCoord4d() */
 
 static void APIENTRY logTexCoord4d(GLdouble s, GLdouble t, GLdouble r, GLdouble q)
 {
@@ -3069,7 +3069,7 @@ static void APIENTRY logTexCoord4d(GLdouble s, GLdouble t, GLdouble r, GLdouble 
 	dllTexCoord4d( s, t, r, q );
 }
 
-//_________________________________________________________________________________________________logTexCoord4dv()
+/*_________________________________________________________________________________________________logTexCoord4dv() */
 
 static void APIENTRY logTexCoord4dv(const GLdouble *v)
 {
@@ -3077,7 +3077,7 @@ static void APIENTRY logTexCoord4dv(const GLdouble *v)
 	dllTexCoord4dv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord4f()
+/*__________________________________________________________________________________________________logTexCoord4f() */
 
 static void APIENTRY logTexCoord4f(GLfloat s, GLfloat t, GLfloat r, GLfloat q)
 {
@@ -3085,7 +3085,7 @@ static void APIENTRY logTexCoord4f(GLfloat s, GLfloat t, GLfloat r, GLfloat q)
 	dllTexCoord4f( s, t, r, q );
 }
 
-//_________________________________________________________________________________________________logTexCoord4fv()
+/*_________________________________________________________________________________________________logTexCoord4fv() */
 
 static void APIENTRY logTexCoord4fv(const GLfloat *v)
 {
@@ -3093,7 +3093,7 @@ static void APIENTRY logTexCoord4fv(const GLfloat *v)
 	dllTexCoord4fv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord4i()
+/*__________________________________________________________________________________________________logTexCoord4i() */
 
 static void APIENTRY logTexCoord4i(GLint s, GLint t, GLint r, GLint q)
 {
@@ -3101,7 +3101,7 @@ static void APIENTRY logTexCoord4i(GLint s, GLint t, GLint r, GLint q)
 	dllTexCoord4i( s, t, r, q );
 }
 
-//_________________________________________________________________________________________________logTexCoord4iv()
+/*_________________________________________________________________________________________________logTexCoord4iv() */
 
 static void APIENTRY logTexCoord4iv(const GLint *v)
 {
@@ -3109,7 +3109,7 @@ static void APIENTRY logTexCoord4iv(const GLint *v)
 	dllTexCoord4iv( v );
 }
 
-//__________________________________________________________________________________________________logTexCoord4s()
+/*__________________________________________________________________________________________________logTexCoord4s() */
 
 static void APIENTRY logTexCoord4s(GLshort s, GLshort t, GLshort r, GLshort q)
 {
@@ -3117,7 +3117,7 @@ static void APIENTRY logTexCoord4s(GLshort s, GLshort t, GLshort r, GLshort q)
 	dllTexCoord4s( s, t, r, q );
 }
 
-//_________________________________________________________________________________________________logTexCoord4sv()
+/*_________________________________________________________________________________________________logTexCoord4sv() */
 
 static void APIENTRY logTexCoord4sv(const GLshort *v)
 {
@@ -3125,7 +3125,7 @@ static void APIENTRY logTexCoord4sv(const GLshort *v)
 	dllTexCoord4sv( v );
 }
 
-//_____________________________________________________________________________________________logTexCoordPointer()
+/*_____________________________________________________________________________________________logTexCoordPointer() */
 
 static void APIENTRY logTexCoordPointer(GLint size, GLenum type, GLsizei stride, const void *pointer)
 {
@@ -3133,7 +3133,7 @@ static void APIENTRY logTexCoordPointer(GLint size, GLenum type, GLsizei stride,
 	dllTexCoordPointer( size, type, stride, pointer );
 }
 
-//_____________________________________________________________________________________________________logTexEnvf()
+/*_____________________________________________________________________________________________________logTexEnvf() */
 
 static void APIENTRY logTexEnvf(GLenum target, GLenum pname, GLfloat param)
 {
@@ -3141,7 +3141,7 @@ static void APIENTRY logTexEnvf(GLenum target, GLenum pname, GLfloat param)
 	dllTexEnvf( target, pname, param );
 }
 
-//____________________________________________________________________________________________________logTexEnvfv()
+/*____________________________________________________________________________________________________logTexEnvfv() */
 
 static void APIENTRY logTexEnvfv(GLenum target, GLenum pname, const GLfloat *params)
 {
@@ -3149,7 +3149,7 @@ static void APIENTRY logTexEnvfv(GLenum target, GLenum pname, const GLfloat *par
 	dllTexEnvfv( target, pname, params );
 }
 
-//_____________________________________________________________________________________________________logTexEnvi()
+/*_____________________________________________________________________________________________________logTexEnvi() */
 
 static void APIENTRY logTexEnvi(GLenum target, GLenum pname, GLint param)
 {
@@ -3158,7 +3158,7 @@ static void APIENTRY logTexEnvi(GLenum target, GLenum pname, GLint param)
 	dllTexEnvi( target, pname, param );
 }
 
-//____________________________________________________________________________________________________logTexEnviv()
+/*____________________________________________________________________________________________________logTexEnviv() */
 
 static void APIENTRY logTexEnviv(GLenum target, GLenum pname, const GLint *params)
 {
@@ -3166,7 +3166,7 @@ static void APIENTRY logTexEnviv(GLenum target, GLenum pname, const GLint *param
 	dllTexEnviv( target, pname, params );
 }
 
-//_____________________________________________________________________________________________________logTexGend()
+/*_____________________________________________________________________________________________________logTexGend() */
 
 static void APIENTRY logTexGend(GLenum coord, GLenum pname, GLdouble param)
 {
@@ -3174,7 +3174,7 @@ static void APIENTRY logTexGend(GLenum coord, GLenum pname, GLdouble param)
 	dllTexGend( coord, pname, param );
 }
 
-//_____________________________________________________________________________________________________logTexGenv()
+/*_____________________________________________________________________________________________________logTexGenv() */
 
 static void APIENTRY logTexGendv(GLenum coord, GLenum pname, const GLdouble *params)
 {
@@ -3182,7 +3182,7 @@ static void APIENTRY logTexGendv(GLenum coord, GLenum pname, const GLdouble *par
 	dllTexGendv( coord, pname, params );
 }
 
-//_____________________________________________________________________________________________________logTexGenf()
+/*_____________________________________________________________________________________________________logTexGenf() */
 
 static void APIENTRY logTexGenf(GLenum coord, GLenum pname, GLfloat param)
 {
@@ -3190,7 +3190,7 @@ static void APIENTRY logTexGenf(GLenum coord, GLenum pname, GLfloat param)
 	dllTexGenf( coord, pname, param );
 }
 
-//____________________________________________________________________________________________________logTexGenfv()
+/*____________________________________________________________________________________________________logTexGenfv() */
 
 static void APIENTRY logTexGenfv(GLenum coord, GLenum pname, const GLfloat *params)
 {
@@ -3198,7 +3198,7 @@ static void APIENTRY logTexGenfv(GLenum coord, GLenum pname, const GLfloat *para
 	dllTexGenfv( coord, pname, params );
 }
 
-//_____________________________________________________________________________________________________logTexGeni()
+/*_____________________________________________________________________________________________________logTexGeni() */
 
 static void APIENTRY logTexGeni(GLenum coord, GLenum pname, GLint param)
 {
@@ -3206,7 +3206,7 @@ static void APIENTRY logTexGeni(GLenum coord, GLenum pname, GLint param)
 	dllTexGeni( coord, pname, param );
 }
 
-//____________________________________________________________________________________________________logTexGeniv()
+/*____________________________________________________________________________________________________logTexGeniv() */
 
 static void APIENTRY logTexGeniv(GLenum coord, GLenum pname, const GLint *params)
 {
@@ -3214,7 +3214,7 @@ static void APIENTRY logTexGeniv(GLenum coord, GLenum pname, const GLint *params
 	dllTexGeniv( coord, pname, params );
 }
 
-//__________________________________________________________________________________________________logTexImage1D()
+/*__________________________________________________________________________________________________logTexImage1D() */
 
 static void APIENTRY logTexImage1D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLint border, 
                                    GLenum format, GLenum type, const void *pixels)
@@ -3224,7 +3224,7 @@ static void APIENTRY logTexImage1D(GLenum target, GLint level, GLenum internalfo
 	dllTexImage1D( target, level, internalformat, width, border, format, type, pixels );
 }
 
-//__________________________________________________________________________________________________logTexImage2D()
+/*__________________________________________________________________________________________________logTexImage2D() */
 
 static void APIENTRY logTexImage2D(GLenum target, GLint level, GLenum internalformat, GLsizei width,
                                    GLsizei height, GLint border, GLenum format, GLenum type, const void *pixels)
@@ -3233,7 +3233,7 @@ static void APIENTRY logTexImage2D(GLenum target, GLint level, GLenum internalfo
 	dllTexImage2D( target, level, internalformat, width, height, border, format, type, pixels );
 }
 
-//_______________________________________________________________________________________________logTexParameterf()
+/*_______________________________________________________________________________________________logTexParameterf() */
 
 static void APIENTRY logTexParameterf(GLenum target, GLenum pname, GLfloat param)
 {
@@ -3242,7 +3242,7 @@ static void APIENTRY logTexParameterf(GLenum target, GLenum pname, GLfloat param
 	dllTexParameterf( target, pname, param );
 }
 
-//______________________________________________________________________________________________logTexParameterfv()
+/*______________________________________________________________________________________________logTexParameterfv() */
 
 static void APIENTRY logTexParameterfv(GLenum target, GLenum pname, const GLfloat *params)
 {
@@ -3250,7 +3250,7 @@ static void APIENTRY logTexParameterfv(GLenum target, GLenum pname, const GLfloa
 	dllTexParameterfv( target, pname, params );
 }
 
-//_______________________________________________________________________________________________logTexParameteri()
+/*_______________________________________________________________________________________________logTexParameteri() */
 
 static void APIENTRY logTexParameteri(GLenum target, GLenum pname, GLint param)
 {
@@ -3259,7 +3259,7 @@ static void APIENTRY logTexParameteri(GLenum target, GLenum pname, GLint param)
 	dllTexParameteri( target, pname, param );
 }
 
-//______________________________________________________________________________________________logTexParameteriv()
+/*______________________________________________________________________________________________logTexParameteriv() */
 
 static void APIENTRY logTexParameteriv(GLenum target, GLenum pname, const GLint *params)
 {
@@ -3267,7 +3267,7 @@ static void APIENTRY logTexParameteriv(GLenum target, GLenum pname, const GLint 
 	dllTexParameteriv( target, pname, params );
 }
 
-//_______________________________________________________________________________________________logTexSubImage1D()
+/*_______________________________________________________________________________________________logTexSubImage1D() */
 
 static void APIENTRY logTexSubImage1D(GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format,
                                       GLenum type, const void *pixels)
@@ -3276,7 +3276,7 @@ static void APIENTRY logTexSubImage1D(GLenum target, GLint level, GLint xoffset,
 	dllTexSubImage1D( target, level, xoffset, width, format, type, pixels );
 }
 
-//_______________________________________________________________________________________________logTexSubImage2D()
+/*_______________________________________________________________________________________________logTexSubImage2D() */
 
 static void APIENTRY logTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width,
                                       GLsizei height, GLenum format, GLenum type, const void *pixels)
@@ -3285,7 +3285,7 @@ static void APIENTRY logTexSubImage2D(GLenum target, GLint level, GLint xoffset,
 	dllTexSubImage2D( target, level, xoffset, yoffset, width, height, format, type, pixels );
 }
 
-//__________________________________________________________________________________________________logTranslated()
+/*__________________________________________________________________________________________________logTranslated() */
 
 static void APIENTRY logTranslated(GLdouble x, GLdouble y, GLdouble z)
 {
@@ -3293,7 +3293,7 @@ static void APIENTRY logTranslated(GLdouble x, GLdouble y, GLdouble z)
 	dllTranslated( x, y, z );
 }
 
-//__________________________________________________________________________________________________logTranslatef()
+/*__________________________________________________________________________________________________logTranslatef() */
 
 static void APIENTRY logTranslatef(GLfloat x, GLfloat y, GLfloat z)
 {
@@ -3301,7 +3301,7 @@ static void APIENTRY logTranslatef(GLfloat x, GLfloat y, GLfloat z)
 	dllTranslatef( x, y, z );
 }
 
-//____________________________________________________________________________________________________logVertex2d()
+/*____________________________________________________________________________________________________logVertex2d() */
 
 static void APIENTRY logVertex2d(GLdouble x, GLdouble y)
 {
@@ -3309,7 +3309,7 @@ static void APIENTRY logVertex2d(GLdouble x, GLdouble y)
 	dllVertex2d( x, y );
 }
 
-//___________________________________________________________________________________________________logVertex2dv()
+/*___________________________________________________________________________________________________logVertex2dv() */
 
 static void APIENTRY logVertex2dv(const GLdouble *v)
 {
@@ -3317,7 +3317,7 @@ static void APIENTRY logVertex2dv(const GLdouble *v)
 	dllVertex2dv( v );
 }
 
-//____________________________________________________________________________________________________logVertex2f()
+/*____________________________________________________________________________________________________logVertex2f() */
 
 static void APIENTRY logVertex2f(GLfloat x, GLfloat y)
 {
@@ -3325,7 +3325,7 @@ static void APIENTRY logVertex2f(GLfloat x, GLfloat y)
 	dllVertex2f( x, y );
 }
 
-//___________________________________________________________________________________________________logVertex2fv()
+/*___________________________________________________________________________________________________logVertex2fv() */
 
 static void APIENTRY logVertex2fv(const GLfloat *v)
 {
@@ -3333,7 +3333,7 @@ static void APIENTRY logVertex2fv(const GLfloat *v)
 	dllVertex2fv( v );
 }
 
-//____________________________________________________________________________________________________logVertex2i()
+/*____________________________________________________________________________________________________logVertex2i() */
 
 static void APIENTRY logVertex2i(GLint x, GLint y)
 {
@@ -3341,7 +3341,7 @@ static void APIENTRY logVertex2i(GLint x, GLint y)
 	dllVertex2i( x, y );
 }
 
-//___________________________________________________________________________________________________logVertex2iv()
+/*___________________________________________________________________________________________________logVertex2iv() */
 
 static void APIENTRY logVertex2iv(const GLint *v)
 {
@@ -3349,7 +3349,7 @@ static void APIENTRY logVertex2iv(const GLint *v)
 	dllVertex2iv( v );
 }
 
-//____________________________________________________________________________________________________logVertex2s()
+/*____________________________________________________________________________________________________logVertex2s() */
 
 static void APIENTRY logVertex2s(GLshort x, GLshort y)
 {
@@ -3357,7 +3357,7 @@ static void APIENTRY logVertex2s(GLshort x, GLshort y)
 	dllVertex2s( x, y );
 }
 
-//___________________________________________________________________________________________________logVertex2sv()
+/*___________________________________________________________________________________________________logVertex2sv() */
 
 static void APIENTRY logVertex2sv(const GLshort *v)
 {
@@ -3365,7 +3365,7 @@ static void APIENTRY logVertex2sv(const GLshort *v)
 	dllVertex2sv( v );
 }
 
-//____________________________________________________________________________________________________logVertex3d()
+/*____________________________________________________________________________________________________logVertex3d() */
 
 static void APIENTRY logVertex3d(GLdouble x, GLdouble y, GLdouble z)
 {
@@ -3373,7 +3373,7 @@ static void APIENTRY logVertex3d(GLdouble x, GLdouble y, GLdouble z)
 	dllVertex3d( x, y, z );
 }
 
-//___________________________________________________________________________________________________logVertex3dv()
+/*___________________________________________________________________________________________________logVertex3dv() */
 
 static void APIENTRY logVertex3dv(const GLdouble *v)
 {
@@ -3381,7 +3381,7 @@ static void APIENTRY logVertex3dv(const GLdouble *v)
 	dllVertex3dv( v );
 }
 
-//____________________________________________________________________________________________________logVertex3f()
+/*____________________________________________________________________________________________________logVertex3f() */
 
 static void APIENTRY logVertex3f(GLfloat x, GLfloat y, GLfloat z)
 {
@@ -3389,7 +3389,7 @@ static void APIENTRY logVertex3f(GLfloat x, GLfloat y, GLfloat z)
 	dllVertex3f( x, y, z );
 }
 
-//___________________________________________________________________________________________________logVertex3fv()
+/*___________________________________________________________________________________________________logVertex3fv() */
 
 static void APIENTRY logVertex3fv(const GLfloat *v)
 {
@@ -3397,7 +3397,7 @@ static void APIENTRY logVertex3fv(const GLfloat *v)
 	dllVertex3fv( v );
 }
 
-//____________________________________________________________________________________________________logVertex3i()
+/*____________________________________________________________________________________________________logVertex3i() */
 
 static void APIENTRY logVertex3i(GLint x, GLint y, GLint z)
 {
@@ -3405,7 +3405,7 @@ static void APIENTRY logVertex3i(GLint x, GLint y, GLint z)
 	dllVertex3i( x, y, z );
 }
 
-//___________________________________________________________________________________________________logVertex3iv()
+/*___________________________________________________________________________________________________logVertex3iv() */
 
 static void APIENTRY logVertex3iv(const GLint *v)
 {
@@ -3413,7 +3413,7 @@ static void APIENTRY logVertex3iv(const GLint *v)
 	dllVertex3iv( v );
 }
 
-//____________________________________________________________________________________________________logVertex3s()
+/*____________________________________________________________________________________________________logVertex3s() */
 
 static void APIENTRY logVertex3s(GLshort x, GLshort y, GLshort z)
 {
@@ -3421,7 +3421,7 @@ static void APIENTRY logVertex3s(GLshort x, GLshort y, GLshort z)
 	dllVertex3s( x, y, z );
 }
 
-//___________________________________________________________________________________________________logVertex3sv()
+/*___________________________________________________________________________________________________logVertex3sv() */
 
 static void APIENTRY logVertex3sv(const GLshort *v)
 {
@@ -3429,7 +3429,7 @@ static void APIENTRY logVertex3sv(const GLshort *v)
 	dllVertex3sv( v );
 }
 
-//____________________________________________________________________________________________________logVertex4d()
+/*____________________________________________________________________________________________________logVertex4d() */
 
 static void APIENTRY logVertex4d(GLdouble x, GLdouble y, GLdouble z, GLdouble w)
 {
@@ -3437,7 +3437,7 @@ static void APIENTRY logVertex4d(GLdouble x, GLdouble y, GLdouble z, GLdouble w)
 	dllVertex4d( x, y, z, w );
 }
 
-//___________________________________________________________________________________________________logVertex4dv()
+/*___________________________________________________________________________________________________logVertex4dv() */
 
 static void APIENTRY logVertex4dv(const GLdouble *v)
 {
@@ -3445,7 +3445,7 @@ static void APIENTRY logVertex4dv(const GLdouble *v)
 	dllVertex4dv( v );
 }
 
-//____________________________________________________________________________________________________logVertex4f()
+/*____________________________________________________________________________________________________logVertex4f() */
 
 static void APIENTRY logVertex4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w)
 {
@@ -3453,7 +3453,7 @@ static void APIENTRY logVertex4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w)
 	dllVertex4f( x, y, z, w );
 }
 
-//____________________________________________________________________________________________________logVertex4fv()
+/*____________________________________________________________________________________________________logVertex4fv() */
 
 static void APIENTRY logVertex4fv(const GLfloat *v)
 {
@@ -3461,7 +3461,7 @@ static void APIENTRY logVertex4fv(const GLfloat *v)
 	dllVertex4fv( v );
 }
 
-//____________________________________________________________________________________________________logVertex4i()
+/*____________________________________________________________________________________________________logVertex4i() */
 
 static void APIENTRY logVertex4i(GLint x, GLint y, GLint z, GLint w)
 {
@@ -3469,7 +3469,7 @@ static void APIENTRY logVertex4i(GLint x, GLint y, GLint z, GLint w)
 	dllVertex4i( x, y, z, w );
 }
 
-//___________________________________________________________________________________________________logVertex4iv()
+/*___________________________________________________________________________________________________logVertex4iv() */
 
 static void APIENTRY logVertex4iv(const GLint *v)
 {
@@ -3477,7 +3477,7 @@ static void APIENTRY logVertex4iv(const GLint *v)
 	dllVertex4iv( v );
 }
 
-//____________________________________________________________________________________________________logVertex4s()
+/*____________________________________________________________________________________________________logVertex4s() */
 
 static void APIENTRY logVertex4s(GLshort x, GLshort y, GLshort z, GLshort w)
 {
@@ -3485,7 +3485,7 @@ static void APIENTRY logVertex4s(GLshort x, GLshort y, GLshort z, GLshort w)
 	dllVertex4s( x, y, z, w );
 }
 
-//___________________________________________________________________________________________________logVertex4sv()
+/*___________________________________________________________________________________________________logVertex4sv() */
 
 static void APIENTRY logVertex4sv(const GLshort *v)
 {
@@ -3493,7 +3493,7 @@ static void APIENTRY logVertex4sv(const GLshort *v)
 	dllVertex4sv( v );
 }
 
-//_______________________________________________________________________________________________logVertexPointer()
+/*_______________________________________________________________________________________________logVertexPointer() */
 
 static void APIENTRY logVertexPointer(GLint size, GLenum type, GLsizei stride, const void *pointer)
 {
@@ -3501,7 +3501,7 @@ static void APIENTRY logVertexPointer(GLint size, GLenum type, GLsizei stride, c
 	dllVertexPointer( size, type, stride, pointer );
 }
 
-//____________________________________________________________________________________________________logViewPort()
+/*____________________________________________________________________________________________________logViewPort() */
 
 static void APIENTRY logViewport(GLint x, GLint y, GLsizei width, GLsizei height)
 {
@@ -3509,7 +3509,7 @@ static void APIENTRY logViewport(GLint x, GLint y, GLsizei width, GLsizei height
 	dllViewport( x, y, width, height );
 }
 
-//______________________________________________________________________________________qglBindAnisotropicTexture()
+/*______________________________________________________________________________________qglBindAnisotropicTexture() */
 
 #if GL_EXT_texture_filter_anisotropic
 
@@ -3519,7 +3519,7 @@ static void APIENTRY qglBindAnisotropicTexture (GLenum theTarget, GLuint theText
         qglTexParameterfv (GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, &qglCurAnisotropyTextureLevel);
 }
 
-//____________________________________________________________________________________qglEnableAnisotropicTexture()
+/*____________________________________________________________________________________qglEnableAnisotropicTexture() */
 
 void	qglEnableAnisotropicTexture (qboolean theState)
 {
@@ -3540,7 +3540,7 @@ void	qglEnableAnisotropicTexture (qboolean theState)
 
 #endif /* GL_EXT_texture_filter_anisotropic */
 
-//______________________________________________________________________________________________qglGetProcAddress()
+/*______________________________________________________________________________________________qglGetProcAddress() */
 
 void *	qglGetProcAddress (const char *theName, enum qglGetAdrMode theMode)
 {
@@ -3567,14 +3567,14 @@ void *	qglGetProcAddress (const char *theName, enum qglGetAdrMode theMode)
     return ((mySymbol != NULL) ? NSAddressOfSymbol(mySymbol) : NULL);
 }
 
-//_____________________________________________________________________________________________qwglGetProcAddress()
+/*_____________________________________________________________________________________________qwglGetProcAddress() */
 
 void *	qwglGetProcAddress (char *theSymbol)
 {
     return (qglGetProcAddress (theSymbol, QGL_LAZY_SYMBOL));
 }
 
-//_______________________________________________________________________________________________QGL_SafeTexImage()
+/*_______________________________________________________________________________________________QGL_SafeTexImage() */
 
 qboolean	QGL_SafeTexImage (GLenum theTarget, GLint theLevel, GLenum theInternalFormat, GLsizei theWidth,
                                   GLsizei theHeight, GLsizei theDepth, GLint theBorder, GLenum theFormat,
@@ -3584,10 +3584,10 @@ qboolean	QGL_SafeTexImage (GLenum theTarget, GLint theLevel, GLenum theInternalF
     GLenum	myError,
                 myTarget;
     
-    // flush existing errors:
+    /* flush existing errors: */
     glGetError ();
 
-    // check our target texture type:
+    /* check our target texture type: */
     switch (theTarget)
     {
         case GL_TEXTURE_1D:
@@ -3602,22 +3602,22 @@ qboolean	QGL_SafeTexImage (GLenum theTarget, GLint theLevel, GLenum theInternalF
             qglTexImageProxy2D (myTarget, theLevel, theInternalFormat, theWidth, theHeight, theBorder, theFormat,
                                 theType, NULL); 
             break;
-//        case GL_TEXTURE_3D:
-//        case GL_PROXY_TEXTURE_3D:
-//            myTarget = GL_PROXY_TEXTURE_3D;
-//            qglTexImageProxy3D (myTarget, theLevel, theInternalFormat, theWidth, theHeight, theDepth, theBorder,
-//                                theFormat, theType, NULL); 
-//            break;
+/*        case GL_TEXTURE_3D: */
+/*        case GL_PROXY_TEXTURE_3D: */
+/*            myTarget = GL_PROXY_TEXTURE_3D; */
+/*            qglTexImageProxy3D (myTarget, theLevel, theInternalFormat, theWidth, theHeight, theDepth, theBorder, */
+/*                                theFormat, theType, NULL);  */
+/*            break; */
         default:
             return (qfalse);
     }
     
     myError = glGetError ();
 
-    // get the width of the texture [should be zero on failure]:
+    /* get the width of the texture [should be zero on failure]: */
     qglGetTexLevelParameteriv (myTarget, theLevel, GL_TEXTURE_WIDTH, &myWidth);
 
-    // now let's see if the width is equal to our requested value:
+    /* now let's see if the width is equal to our requested value: */
     if (myError != GL_NO_ERROR || theWidth != myWidth)
     {
         ri.Con_Printf (PRINT_ALL, "Error: Out of texture RAM!\n"
@@ -3630,7 +3630,7 @@ qboolean	QGL_SafeTexImage (GLenum theTarget, GLint theLevel, GLenum theInternalF
     return (qtrue);
 }
 
-//_____________________________________________________________________________________________QGL_SafeTexImage1D()
+/*_____________________________________________________________________________________________QGL_SafeTexImage1D() */
 
 void	QGL_SafeTexImage1D (GLenum theTarget, GLint theLevel, GLenum theInternalFormat, GLsizei theWidth,
                             GLint theBorder, GLenum theFormat, GLenum theType, const GLvoid *thePixels)
@@ -3645,7 +3645,7 @@ void	QGL_SafeTexImage1D (GLenum theTarget, GLint theLevel, GLenum theInternalFor
     }
 }
 
-//_____________________________________________________________________________________________QGL_SafeTexImage2D()
+/*_____________________________________________________________________________________________QGL_SafeTexImage2D() */
 
 void	QGL_SafeTexImage2D (GLenum theTarget, GLint theLevel, GLenum theInternalFormat, GLsizei theWidth,
                             GLsizei theHeight, GLint theBorder, GLenum theFormat, GLenum theType,
@@ -3661,7 +3661,7 @@ void	QGL_SafeTexImage2D (GLenum theTarget, GLint theLevel, GLenum theInternalFor
     }
 }
 
-//___________________________________________________________________________________________________QGL_Shutdown()
+/*___________________________________________________________________________________________________QGL_Shutdown() */
 
 void	QGL_Shutdown (void)
 {
@@ -4017,7 +4017,7 @@ void	QGL_Shutdown (void)
     qglPNTrianglesfATIX 	 = NULL;
 }
 
-//_______________________________________________________________________________________________________QGL_Init()
+/*_______________________________________________________________________________________________________QGL_Init() */
 
 qboolean QGL_Init (const char *dllname)
 {
@@ -4383,12 +4383,12 @@ qboolean QGL_Init (const char *dllname)
  * */
 void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] )
 {
-	// Let's see what happens if we do nothing >:)
-	// Matthijs FIXME
+	/* Let's see what happens if we do nothing >:) */
+	/* Matthijs FIXME */
 }
 
 
-//____________________________________________________________________________________________GLimp_EnableLogging()
+/*____________________________________________________________________________________________GLimp_EnableLogging() */
 
 void GLimp_EnableLogging (qboolean theEnable)
 {
@@ -4400,15 +4400,15 @@ void GLimp_EnableLogging (qboolean theEnable)
             time_t 	myClock;
             char 	myBuffer[MAX_OSPATH];
 
-            // get the time:
+            /* get the time: */
             time (&myClock);
             myNewTime = localtime (&myClock);
 
-            // open the log file:
+            /* open the log file: */
             snprintf (myBuffer, MAX_OSPATH, "%s/gl.log", ri.FS_Gamedir ()); 
             gQGLLogFile = fopen (myBuffer, "wt");
 
-            // write time to log file:
+            /* write time to log file: */
             fprintf (gQGLLogFile, "%s\n", asctime (myNewTime));
         }
 
@@ -5089,11 +5089,11 @@ void GLimp_EnableLogging (qboolean theEnable)
     }
 }
 
-//______________________________________________________________________________________________GLimp_LogNewFrame()
+/*______________________________________________________________________________________________GLimp_LogNewFrame() */
 
 void GLimp_LogNewFrame( void )
 {
     fprintf (gQGLLogFile, "*** R_BeginFrame ***\n");
 }
 
-//______________________________________________________________________________________________________________eOF
+/*______________________________________________________________________________________________________________eOF */

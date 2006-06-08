@@ -17,41 +17,41 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// Main windowed and fullscreen graphics interface module. This module
-// is used for both the software and OpenGL rendering versions of the
-// Quake refresh engine.
+/* Main windowed and fullscreen graphics interface module. This module */
+/* is used for both the software and OpenGL rendering versions of the */
+/* Quake refresh engine. */
 #include <assert.h>
 #include <float.h>
 
 #include "..\client\client.h"
 #include "winquake.h"
-//#include "zmouse.h"
+/*#include "zmouse.h" */
 
-// Structure containing functions exported from refresh DLL
+/* Structure containing functions exported from refresh DLL */
 refexport_t	re;
 
 cvar_t *win_noalttab;
 
 #ifndef WM_MOUSEWHEEL
-#define WM_MOUSEWHEEL (WM_MOUSELAST+1)  // message that will be supported by the OS
+#define WM_MOUSEWHEEL (WM_MOUSELAST+1)  /* message that will be supported by the OS */
 #endif
 
 static UINT MSH_MOUSEWHEEL;
 
-// Console variables that we need to access from this module
+/* Console variables that we need to access from this module */
 cvar_t		*vid_gamma;
-cvar_t		*vid_ref;			// Name of Refresh DLL loaded
-cvar_t		*vid_xpos;			// X coordinate of window position
-cvar_t		*vid_ypos;			// Y coordinate of window position
+cvar_t		*vid_ref;			/* Name of Refresh DLL loaded */
+cvar_t		*vid_xpos;			/* X coordinate of window position */
+cvar_t		*vid_ypos;			/* Y coordinate of window position */
 cvar_t		*vid_fullscreen;
 cvar_t		*vid_grabmouse;
 
-// Global variables used internally by this module
-viddef_t	viddef;				// global video state; used by other modules
-HINSTANCE	reflib_library;		// Handle to refresh DLL
+/* Global variables used internally by this module */
+viddef_t	viddef;				/* global video state; used by other modules */
+HINSTANCE	reflib_library;		/* Handle to refresh DLL */
 qboolean	reflib_active = 0;
 
-HWND        cl_hwnd;            // Main window handle for life of program
+HWND        cl_hwnd;            /* Main window handle for life of program */
 
 #define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[0] ) )
 
@@ -118,7 +118,7 @@ void VID_Printf (int print_level, char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
-//	static qboolean	inupdate;
+/*	static qboolean	inupdate; */
 
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
@@ -143,7 +143,7 @@ void VID_Error (int err_level, char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
-//	static qboolean	inupdate;
+/*	static qboolean	inupdate; */
 
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
@@ -152,28 +152,28 @@ void VID_Error (int err_level, char *fmt, ...)
 	Com_Error (err_level,"%s", msg);
 }
 
-//==========================================================================
+/*========================================================================== */
 
 byte        scantokey[128] =
 					{
-//  0           1       2       3       4       5       6       7
-//  8           9       A       B       C       D       E       F
+/*  0           1       2       3       4       5       6       7 */
+/*  8           9       A       B       C       D       E       F */
 	0  ,    27,     '1',    '2',    '3',    '4',    '5',    '6',
-	'7',    '8',    '9',    '0',    '-',    '=',    K_BACKSPACE, 9, // 0
+	'7',    '8',    '9',    '0',    '-',    '=',    K_BACKSPACE, 9, /* 0 */
 	'q',    'w',    'e',    'r',    't',    'y',    'u',    'i',
-	'o',    'p',    '[',    ']',    13 ,    K_CTRL,'a',  's',      // 1
+	'o',    'p',    '[',    ']',    13 ,    K_CTRL,'a',  's',      /* 1 */
 	'd',    'f',    'g',    'h',    'j',    'k',    'l',    ';',
-	'\'' ,    '`',    K_SHIFT,'\\',  'z',    'x',    'c',    'v',      // 2
+	'\'' ,    '`',    K_SHIFT,'\\',  'z',    'x',    'c',    'v',      /* 2 */
 	'b',    'n',    'm',    ',',    '.',    '/',    K_SHIFT,'*',
-	K_ALT,' ',   0  ,    K_F1, K_F2, K_F3, K_F4, K_F5,   // 3
+	K_ALT,' ',   0  ,    K_F1, K_F2, K_F3, K_F4, K_F5,   /* 3 */
 	K_F6, K_F7, K_F8, K_F9, K_F10,  K_PAUSE,    0  , K_HOME,
-	K_UPARROW,K_PGUP,K_KP_MINUS,K_LEFTARROW,K_KP_5,K_RIGHTARROW, K_KP_PLUS,K_END, //4
+	K_UPARROW,K_PGUP,K_KP_MINUS,K_LEFTARROW,K_KP_5,K_RIGHTARROW, K_KP_PLUS,K_END, /*4 */
 	K_DOWNARROW,K_PGDN,K_INS,K_DEL,0,0,             0,              K_F11,
-	K_F12,0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0,        // 5
+	K_F12,0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0,        /* 5 */
 	0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0,
-	0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0,        // 6
+	0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0,        /* 6 */
 	0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0,
-	0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0         // 7
+	0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0  ,    0         /* 7 */
 };
 
 /*
@@ -246,13 +246,13 @@ void AppActivate(BOOL fActive, BOOL minimize)
 
 	Key_ClearStates();
 
-	// we don't want to act like we're active if we're minimized
+	/* we don't want to act like we're active if we're minimized */
 	if (fActive && !Minimized)
 		ActiveApp = qtrue;
 	else
 		ActiveApp = qfalse;
 
-	// minimize/restore mouse-capture on demand
+	/* minimize/restore mouse-capture on demand */
 	if (!ActiveApp)
 	{
 		IN_Activate (qfalse);
@@ -335,11 +335,11 @@ LONG WINAPI MainWndProc (
         return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
 	case WM_PAINT:
-		SCR_DirtyScreen ();	// force entire screen to update next frame
+		SCR_DirtyScreen ();	/* force entire screen to update next frame */
         return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
 	case WM_DESTROY:
-		// let sound and input know about this?
+		/* let sound and input know about this? */
 		cl_hwnd = NULL;
         return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
@@ -347,7 +347,7 @@ LONG WINAPI MainWndProc (
 		{
 			int	fActive, fMinimized;
 
-			// KJB: Watch this for problems in fullscreen modes with Alt-tabbing.
+			/* KJB: Watch this for problems in fullscreen modes with Alt-tabbing. */
 			fActive = LOWORD(wParam);
 			fMinimized = (BOOL) HIWORD(wParam);
 
@@ -366,8 +366,8 @@ LONG WINAPI MainWndProc (
 
 			if (!vid_fullscreen->value)
 			{
-				xPos = (short) LOWORD(lParam);    // horizontal position
-				yPos = (short) HIWORD(lParam);    // vertical position
+				xPos = (short) LOWORD(lParam);    /* horizontal position */
+				yPos = (short) HIWORD(lParam);    /* vertical position */
 
 				r.left   = 0;
 				r.top    = 0;
@@ -387,8 +387,8 @@ LONG WINAPI MainWndProc (
 		}
         return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
-	// this is complicated because Win32 seems to pack multiple mouse events into
-	// one update sometimes, so we always check all states and look for events
+	/* this is complicated because Win32 seems to pack multiple mouse events into */
+	/* one update sometimes, so we always check all states and look for events */
 	case WM_LBUTTONDOWN:
 	case WM_LBUTTONUP:
 	case WM_RBUTTONDOWN:
@@ -427,7 +427,7 @@ LONG WINAPI MainWndProc (
 			}
 			return 0;
 		}
-		// fall through
+		/* fall through */
 	case WM_KEYDOWN:
 		Key_Event( MapKey( lParam ), qtrue, sys_msg_time);
 		break;
@@ -444,7 +444,7 @@ LONG WINAPI MainWndProc (
 		}
 		break;
 
-	default:	// pass all unhandled messages to DefWindowProc
+	default:	/* pass all unhandled messages to DefWindowProc */
         return DefWindowProc (hWnd, uMsg, wParam, lParam);
     }
 
@@ -544,7 +544,7 @@ void VID_NewWindow ( int width, int height)
 	viddef.rx = (float)width  / VID_NORM_WIDTH;
 	viddef.ry = (float)height / VID_NORM_HEIGHT;
 
-	cl.force_refdef = qtrue;		// can't use a paused refdef
+	cl.force_refdef = qtrue;		/* can't use a paused refdef */
 }
 
 void VID_FreeReflib (void)
@@ -604,8 +604,8 @@ qboolean VID_LoadRefresh( char *name )
 	ri.Vid_NewWindow = VID_NewWindow;
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 	ri.CL_GetFontData = CL_GetFontData;
-//	ri.Malloc = Z_Malloc;
-//	ri.Free = Z_Free;
+/*	ri.Malloc = Z_Malloc; */
+/*	ri.Free = Z_Free; */
 
 	if ( ( GetRefAPI = (void *) GetProcAddress( reflib_library, "GetRefAPI" ) ) == 0 )
 		Com_Error( ERR_FATAL, "GetProcAddress failed on %s", name );
@@ -625,7 +625,7 @@ qboolean VID_LoadRefresh( char *name )
 		return qfalse;
 	}
 
-	// vid_restart
+	/* vid_restart */
 	if ( restart )
 		CL_InitFonts();
 
@@ -663,7 +663,7 @@ void VID_CheckChanges (void)
 
 	if ( vid_ref->modified )
 	{
-		cl.force_refdef = qtrue;		// can't use a paused refdef
+		cl.force_refdef = qtrue;		/* can't use a paused refdef */
 		S_StopAllSounds();
 	}
 	while (vid_ref->modified)

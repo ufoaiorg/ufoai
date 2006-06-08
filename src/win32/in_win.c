@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-// in_win.c -- windows 95 mouse code
-// 02/21/97 JCB Added extended DirectInput code to support external controllers.
+/* in_win.c -- windows 95 mouse code */
+/* 02/21/97 JCB Added extended DirectInput code to support external controllers. */
 
 #include "../client/client.h"
 #include "winquake.h"
@@ -37,7 +37,7 @@ qboolean	in_appactive;
 ============================================================
 */
 
-// mouse variables
+/* mouse variables */
 cvar_t	*m_filter;
 
 int			mouse_buttons;
@@ -47,7 +47,7 @@ int			mouse_x, mouse_y, old_mouse_x, old_mouse_y, mx_accum, my_accum;
 
 int			old_x, old_y;
 
-qboolean	mouseactive;	// false when not focus app
+qboolean	mouseactive;	/* false when not focus app */
 
 qboolean	restore_spi;
 qboolean	mouseinitialized;
@@ -173,7 +173,7 @@ void IN_MouseEvent (int mstate)
 	if (!mouseinitialized)
 		return;
 
-	// perform button actions
+	/* perform button actions */
 	for (i=0 ; i<mouse_buttons ; i++)
 	{
 		if ( (mstate & (1<<i)) &&
@@ -231,11 +231,11 @@ IN_Init
 */
 void IN_Init (void)
 {
-	// mouse variables
+	/* mouse variables */
 	m_filter				= Cvar_Get ("m_filter",					"0",		0);
         in_mouse				= Cvar_Get ("in_mouse",					"1",		CVAR_ARCHIVE);
 
-	// centering
+	/* centering */
 	v_centermove			= Cvar_Get ("v_centermove",				"0.15",		0);
 	v_centerspeed			= Cvar_Get ("v_centerspeed",			"500",		0);
 
@@ -265,7 +265,7 @@ between a deactivate and an activate.
 void IN_Activate (qboolean active)
 {
 	in_appactive = active;
-	mouseactive = !active;		// force a new window check or turn off
+	mouseactive = !active;		/* force a new window check or turn off */
 }
 
 
@@ -290,7 +290,7 @@ void IN_Frame (void)
 /*	if ( !cl.refresh_prepped
 		|| cls.key_dest == key_console)
 	{
-		// temporarily deactivate if in fullscreen
+		/* temporarily deactivate if in fullscreen */
 		if (Cvar_VariableValue ("vid_fullscreen") == 0)
 		{
 			IN_DeactivateMouse ();
