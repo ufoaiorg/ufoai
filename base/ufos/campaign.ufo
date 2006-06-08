@@ -501,7 +501,7 @@ mission rocketsilo
 mission spedition
 {
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
-	map		spedition
+	map		spedition06
 	music		mission3
 	pos		"308 412"
 	aliens		4
