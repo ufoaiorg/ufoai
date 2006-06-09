@@ -303,7 +303,7 @@ ifeq ($(strip $(BUILD_COMPILETOOLS)),YES)
 	TARGETS += $(BUILDDIR)/ufo2map
 endif
 
-debug: build_debug
+debug: build_debug copy_debug
 all: build_debug build_release lang
 
 links:
@@ -314,6 +314,15 @@ links:
 	ln -s src/$(BUILD_DEBUG_DIR)/ref_sdl.so ../ref_glx.so
 	ln -s src/$(BUILD_DEBUG_DIR)/ref_glx.so ../ref_sdl.so
 	ln -s ../src/$(BUILD_DEBUG_DIR)/game.so ../base/game.so
+
+copy_debug:
+	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so ../ufoded
+	cp $(BUILD_DEBUG_DIR)/ufoded ../ufoded
+	cp $(BUILD_DEBUG_DIR)/ufo ../ufo
+	cp $(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
+	cp $(BUILD_DEBUG_DIR)/ref_sdl.so ../ref_glx.so
+	cp $(BUILD_DEBUG_DIR)/ref_glx.so ../ref_sdl.so
+	cp $(BUILD_DEBUG_DIR)/game.so ../base/game.so
 
 release: build_release
 
@@ -327,6 +336,7 @@ build_debug:
 		$(BUILD_DEBUG_DIR)/tools/ufo2map \
 		$(BUILD_DEBUG_DIR)/tools/ufo2map/common
 	@$(MAKE) $(MAKE_FLAGS) targets BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS) -DLINUX_VERSION='\"$(VERSION) Debug\"'"
+	
 	@echo
 	@echo "CFLAGS"
 	@echo "-----------------------"
