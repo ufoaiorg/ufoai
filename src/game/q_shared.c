@@ -1953,10 +1953,8 @@ invList_t *Com_AddToInventory( inventory_t *i, item_t item, int container, int x
 	invList_t	*ic;
 
 	if ( !invUnused )
-	{
-		Com_Printf( "No free inventory space!\n" );
-		return NULL;
-	}
+		Sys_Error( "No free inventory space!\n" );
+
 	if ( item.t == NONE ) return NULL;
 
 	assert( i );
@@ -1987,7 +1985,9 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 	ic = i->c[container];
 	if ( !ic )
 	{
-		/*Com_DPrintf("Com_RemoveFromInventory - no container %i\n", container ); */
+#ifdef DEBUG
+		Com_Printf("Com_RemoveFromInventory - no container %i\n", container );
+#endif
 		return qfalse;
 	}
 

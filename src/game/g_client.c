@@ -253,6 +253,8 @@ void G_AppearPerishEvent( int player_mask, int appear, edict_t *check )
 /*
 =================
 G_FrustomVis
+
+checks wheter a point is visible from the edicts position
 =================
 */
 qboolean G_FrustomVis( edict_t *from, vec3_t point )
@@ -1250,6 +1252,7 @@ void G_Morale( int type, edict_t *victim, edict_t *attacker, int param )
 			{
 			case ML_WOUND:
 			case ML_DEATH:
+				break;
 				/* morale damage is damage dependant */
 				mod = MOB_WOUND * param;
 				/* death hurts morale even more than just damage */
@@ -2083,50 +2086,66 @@ G_ReactionFire
 */
 qboolean G_ReactionFire( edict_t *target )
 {
-	qboolean	fired;
+	qboolean	fired, frustom;
 	player_t	*player;
 	edict_t		*ent;
 	int			i, team;
+	float		actorVis;
 
 	fired = qfalse;
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
-		if ( ent->inuse && !(ent->state & STATE_DEAD) && (ent->state & STATE_SHAKEN)
-			&& G_ActorVis( ent->origin, target, qtrue ) > 0.4 && G_FrustomVis( ent, target->origin ) )
+		if ( ent->inuse && !(ent->state & STATE_DEAD) && (ent->state & STATE_SHAKEN) )
 		{
-			if ( target->team == TEAM_CIVILIAN || target->team == ent->team )
-				if ( !(ent->state & (STATE_SHAKEN & ~STATE_REACTION)) || (float)ent->morale / MORALE_SHAKEN > frand()) continue;
+			actorVis = G_ActorVis( ent->origin, target, qtrue );
+			frustom = G_FrustomVis( ent, target->origin );
+			gi.dprintf("actorVis: %i - frustom: %.1f\n", actorVis, frustom);
+			if ( actorVis > 0.4 && frustom )
+			{
+				if ( target->team == TEAM_CIVILIAN || target->team == ent->team )
+				{
+					if ( !(ent->state & (STATE_SHAKEN & ~STATE_REACTION)) || (float)ent->morale / MORALE_SHAKEN > frand())
+					{
+						gi.dprintf("reaction fire: civ or teammember");
+						continue;
+					}
+				}
 				/*if reaction fire is triggered by a friendly unit and the shooter is still sane, don't shoot */
 				/*well, if the shooter isn't sane anymore... */
 
-			/* get player */
-			player = game.players + ent->pnum;
-			if ( !player ) continue;
+				/* get player */
+				player = game.players + ent->pnum;
+				if ( !player ) continue;
 
-			/* change active team for this shot only */
-			team = level.activeTeam;
-			level.activeTeam = ent->team;
+				/* change active team for this shot only */
+				team = level.activeTeam;
+				level.activeTeam = ent->team;
 
-			if ( RIGHT(ent) && RIGHT(ent)->item.a &&
-				gi.csi->ods[RIGHT(ent)->item.t].fd[0].range > VectorDist( ent->origin, target->origin ) )
-			{
-				G_ClientShoot( player, ent->number, target->pos, ST_RIGHT_PRIMARY );
-				ent->state &= ~STATE_SHAKEN;
-				fired = qtrue;
+				if ( RIGHT(ent) && RIGHT(ent)->item.a /*&&
+								 gi.csi->ods[RIGHT(ent)->item.t].fd[0].range > VectorDist( ent->origin, target->origin )*/ )
+				{
+					G_ClientShoot( player, ent->number, target->pos, ST_RIGHT_PRIMARY );
+					ent->state &= ~STATE_SHAKEN;
+					fired = qtrue;
+					gi.dprintf("range of right: %.2f", gi.csi->ods[RIGHT(ent)->item.t].fd[0].range );
+				}
+				else if ( LEFT(ent) && LEFT(ent)->item.a /*&&
+									  gi.csi->ods[LEFT(ent)->item.t].fd[0].range > VectorDist( ent->origin, target->origin )*/ )
+				{
+					gi.dprintf("range of left: %.2f", gi.csi->ods[LEFT(ent)->item.t].fd[0].range );
+					G_ClientShoot( player, ent->number, target->pos, ST_LEFT_PRIMARY );
+					ent->state &= ~STATE_SHAKEN; /* STATE_SHAKEN includes STATE_REACTION */
+					fired = qtrue;
+				}
+				else
+					gi.dprintf("no weapon or no weapon in range\n" );
+
+				/* revert active team */
+				level.activeTeam = team;
+
+				/* check for death of the target */
+				if ( target->state & STATE_DEAD )
+					return fired;
 			}
-			else if ( LEFT(ent) && LEFT(ent)->item.a &&
-				gi.csi->ods[LEFT(ent)->item.t].fd[0].range > VectorDist( ent->origin, target->origin ) )
-			{
-				G_ClientShoot( player, ent->number, target->pos, ST_LEFT_PRIMARY );
-				ent->state &= ~STATE_SHAKEN; /* STATE_SHAKEN includes STATE_REACTION */
-				fired = qtrue;
-			}
-
-			/* revert active team */
-			level.activeTeam = team;
-
-			/* check for death of the target */
-			if ( target->state & STATE_DEAD )
-				return fired;
 		}
 
 	return fired;
