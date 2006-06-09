@@ -287,7 +287,9 @@ void IN_Frame (void)
 		return;
 	}
 
-/*	if ( !cl.refresh_prepped
+#if 0
+	/* TODO: NEEDED? */
+	if ( !cl.refresh_prepped
 		|| cls.key_dest == key_console)
 	{
 		/* temporarily deactivate if in fullscreen */
@@ -296,8 +298,9 @@ void IN_Frame (void)
 			IN_DeactivateMouse ();
 			return;
 		}
-	}*/
-
+	}
+#endif
+	
 	IN_ActivateMouse ();
 }
 
