@@ -3284,7 +3284,7 @@ void CL_GameNew( void )
 	/* get campaign */
 	name = Cvar_VariableString( "campaign" );
 	for ( i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++ )
-		if ( !Q_strncmp( name, curCampaign->name, MAX_VAR ) )
+		if ( !Q_strncmp( name, curCampaign->id, MAX_VAR ) )
 			break;
 
 	if ( i == numCampaigns )
