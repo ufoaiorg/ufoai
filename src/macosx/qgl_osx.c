@@ -1,14 +1,14 @@
 /*______________________________________________________________________________________________________________nFO */
 /* "qgl_osx.c" - This file implements the MacOS X system bindings of OpenGL to QGL function pointers. */
-/* */
+
 /* Notes: By default the ARB Extension will not be used, because of a performance issue. */
 /*        To enable it define "QGL_ENABLE_ARB_EXT" at the targets/GL Renderer Module compiler options. */
-/* */
+
 /* Written by:	awe				[mailto:awe@fruitz-of-dojo.de]. */
-//		©2001-2002 Fruitz Of Dojo 	[http:/*www.fruitz-of-dojo.de]. */
-/* */
-// Quake IIª is copyrighted by id software	[http:/*www.idsoftware.com]. */
-/* */
+/*		©2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de]. */
+
+/* Quake IIª is copyrighted by id software	[http://www.idsoftware.com]. */
+
 /* Version History: */
 /* v1.0.6: OpenGL framework is now dynamically loaded. */
 /* v1.0.5: The multi-texture extension is now disabled [can be re-enabled by defining ENABLE_MULTI_TEXTURE_EX]. */
