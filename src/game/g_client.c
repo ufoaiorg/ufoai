@@ -754,11 +754,14 @@ void G_InventoryMove( player_t *player, int num, int from, int fx, int fy, int t
 				gi.WriteByte( from );
 				gi.WriteByte( fx );
 				gi.WriteByte( fy );
+				gi.dprintf("FLOOR(floor)\n");
 			} else {
 				gi.AddEvent( G_VisToPM( floor->visflags ), EV_ENT_PERISH );
 				gi.WriteShort( floor->number );
 				FLOOR(ent) = NULL;
+				G_GetFloorItems( ent );
 				G_FreeEdict( floor );
+				gi.dprintf("!FLOOR(floor)\n");
 			}
 		} else {
 			gi.AddEvent( G_TeamToPM(ent->team), EV_INV_DEL );
@@ -766,6 +769,7 @@ void G_InventoryMove( player_t *player, int num, int from, int fx, int fy, int t
 			gi.WriteByte( from );
 			gi.WriteByte( fx );
 			gi.WriteByte( fy );
+			gi.dprintf("no floor\n");
 		}
 
 		/* send tu's */
@@ -840,7 +844,6 @@ void G_InventoryMove( player_t *player, int num, int from, int fx, int fy, int t
 				gi.WriteByte( NONE );
 			}
 		}
-
 		gi.EndEvents();
 	}
 }
@@ -853,7 +856,7 @@ G_InventoryToFloor
 */
 void G_InventoryToFloor( edict_t *ent )
 {
-	invList_t	*ic, *next;
+	invList_t	*ic;
 	edict_t		*floor;
 	int			k;
 
@@ -866,8 +869,7 @@ void G_InventoryToFloor( edict_t *ent )
 
 	/* find the floor */
 	floor = G_GetFloorItems( ent );
-	if ( !floor )
-	{
+	if ( !floor ) {
 		floor = G_SpawnFloor( ent->pos );
 	} else {
 		gi.AddEvent( G_VisToPM( floor->visflags ), EV_ENT_PERISH );
@@ -876,21 +878,16 @@ void G_InventoryToFloor( edict_t *ent )
 	}
 
 	/* drop items */
-	for ( k = 0; k < gi.csi->numIDs; k++ )
-	{
+	for ( k = 0; k < gi.csi->numIDs; k++ ) {
 		if ( k == gi.csi->idFloor ) continue;
-		for ( ic = ent->i.c[k]; ic; ic = next )
-		{
-			next = ic->next;
-
+		for ( ic = ent->i.c[k]; ic; ic = ic->next ) {
 			Com_FindSpace( &floor->i, ic->item.t, gi.csi->idFloor, &ic->x, &ic->y );
-			if ( ic->x >= 32 || ic->y >= 16 )
-			{
+			if ( ic->x >= 32 || ic->y >= 16 ) {
 				/* Run out of space on the floor - destroy remaining inventory. */
 				/* TODO should really just spill into adjacent locations... */
 				ent->i.c[k] = ic;
 				Com_DestroyInventory( &ent->i );
-				Com_Printf( "\n" );
+				gi.dprintf( "G_InventoryToFloor: Destroy remaining inventory\n" );
 				/* send item info to the clients */
 				G_CheckVis( floor, qtrue );
 				return;
@@ -902,7 +899,6 @@ void G_InventoryToFloor( edict_t *ent )
 		ent->i.c[k] = NULL;
 	}
 
-	Com_Printf( "\n" );
 	/* send item info to the clients */
 	G_CheckVis( floor, qtrue );
 }
