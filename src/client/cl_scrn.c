@@ -391,7 +391,8 @@ void SCR_DrawPause (void)
 {
 	int		w, h;
 
-	if (!scr_showpause->value)		/* turn off for screenshots */
+	/* turn off for screenshots */
+	if (!scr_showpause->value)
 		return;
 
 	if (!cl_paused->value)

@@ -2457,23 +2457,32 @@ void CL_CollectItems( int won )
 	invList_t *item;
 	int container;
 
+	/* only call this when the match was won */
+	if ( ! won )
+		return;
+
 	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
 	{
 		/* Winner collects everything on the floor, and everything carried */
 		/* by surviving actors.  Loser only gets what their living team */
 		/* members carry. */
 		if ( !le->inuse )
-			;
-		else if ( le->type == ET_ITEM && won )
+			continue;
+		switch ( le->type )
 		{
-			for ( item = FLOOR(le); item; item = item->next )
-				CL_CollectItemAmmo( item, 0 );
-		}
-		else if ( le->type == ET_ACTOR && !(le->state & STATE_DEAD) && won )
-		{
-			for ( container = 0; container < csi.numIDs; container++ )
-				for ( item = le->i.c[container]; item; item = item->next )
-					CL_CollectItemAmmo( item, (container == csi.idLeft) );
+			case ET_ITEM:
+				for ( item = FLOOR(le); item; item = item->next )
+					CL_CollectItemAmmo( item, 0 );
+				break;
+			case ET_ACTOR:
+				if (le->state & STATE_DEAD)
+					break;
+				for ( container = 0; container < csi.numIDs; container++ )
+					for ( item = le->i.c[container]; item; item = item->next )
+						CL_CollectItemAmmo( item, (container == csi.idLeft) );
+				break;
+			default:
+				break;
 		}
 	}
 	RS_MarkCollected();
@@ -2498,8 +2507,11 @@ void CL_UpdateCharacterStats ( int won )
 	{
 		le = cl.teamList[i];
 
+		if ( ! le )
+			continue;
+
 		/* Check if a soldier died and report it to the message system. */
-		if ( le && (le->state & STATE_DEAD) ) {
+		if ( le->state & STATE_DEAD ) {
 			chr = &baseCurrent->wholeTeam[i];
 			assert( chr );
 
@@ -2507,9 +2519,9 @@ void CL_UpdateCharacterStats ( int won )
 			MN_AddNewMessage( _("Soldier died"), messageBuffer, qfalse, MSG_DEATH, NULL );
 		}
 
-		/* check if the soldier still lives */
-		/* and give him skills */
-		if ( le && !(le->state & STATE_DEAD) ) {
+		/* check if the soldier is still alive
+		   and give him skills */
+		if ( !(le->state & STATE_DEAD) ) {
 			/* TODO: Is the array of character_t the same */
 			/*      as the array of le_t?? */
 			chr = &baseCurrent->wholeTeam[i];
@@ -2538,8 +2550,6 @@ void CL_UpdateCharacterStats ( int won )
 				}
 			}
 		}
-
-
 	}
 }
 

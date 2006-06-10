@@ -140,8 +140,7 @@ void GL_ScreenShot_f (void)
 	{
 		ri.Con_Printf (PRINT_ALL, "SCR_ScreenShot_f: Couldn't create a file\n");
 		return;
- 	}
-
+	}
 
 	buffer = malloc(vid.width*vid.height*3 + 18);
 	memset (buffer, 0, 18);

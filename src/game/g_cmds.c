@@ -138,6 +138,10 @@ void Cmd_PlayerList_f( player_t* player )
 	gi.cprintf(player, PRINT_HIGH, "%s", text);
 }
 
+#ifdef DEBUG
+void G_KillTeam( void );
+#endif
+
 /*
 =================
 G_ClientCommand
@@ -160,6 +164,10 @@ void G_ClientCommand (player_t *player)
 		Cmd_Say_f (player, qfalse, qfalse);
 	else if (Q_stricmp (cmd, "say_team") == 0)
 		Cmd_Say_f (player, qfalse, qtrue);
+#ifdef DEBUG
+	else if (Q_stricmp (cmd, "killteam") == 0)
+		G_KillTeam();
+#endif
 	else
 		/* anything that doesn't match a command will be a chat */
 		Cmd_Say_f (player, qtrue, qfalse);

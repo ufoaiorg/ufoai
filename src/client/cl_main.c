@@ -492,8 +492,11 @@ void CL_Disconnect (void)
 	VectorClear (cl.refdef.blend);
 
 	/* go to main menu and bring up console */
-	MN_PopMenu( qtrue );
-	MN_PushMenu( mn_main->string );
+	if ( ! ccs.singleplayer )
+	{
+		MN_PopMenu( qtrue );
+		MN_PushMenu( mn_main->string );
+	}
 /* 	if ( ! ccs.singleplayer ) */
 /* 		cls.key_dest = key_console; */
 

@@ -2077,6 +2077,59 @@ void G_ClientShoot( player_t *player, int num, pos3_t at, int type )
 	G_ReactionFire( ent );
 }
 
+/*
+=================
+G_KillTeam
+
+This function does not add statistical values. Because there is no attacker.
+The same counts for morale states - they are not affected.
+NOTE: This is a debug function to let a hole team die
+=================
+*/
+void G_KillTeam( void )
+{
+	/* default is to kill all teams */
+	int teamToKill = -1, i;
+	edict_t		*ent;
+
+	/* with a parameter we will be able to kill a specific team */
+	if ( gi.argc() == 2 )
+		teamToKill = atoi( gi.argv(1) );
+
+	gi.dprintf("G_KillTeam: kill team %i\n", teamToKill );
+
+	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
+		if ( ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) )
+		{
+			if ( teamToKill >= 0 && ent->team != teamToKill )
+				continue;
+
+			/* die */
+			gi.dprintf("G_KillTeam: kill actor on team %i\n", ent->team );
+			ent->HP = 0;
+			ent->state |= (int)(1 + frand()*3);
+			VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD );
+			gi.linkentity( ent );
+			level.num_alive[ent->team]--;
+
+			/* send death */
+			gi.AddEvent( G_VisToPM( ent->visflags ), EV_ACTOR_DIE );
+			gi.WriteShort( ent->number );
+			gi.WriteShort( ent->state );
+
+			/* handle inventory */
+			G_InventoryToFloor( ent );
+
+			/* check if the player appears/perishes, seen from other teams */
+			G_CheckVis( ent, qtrue );
+
+			/* calc new vis for this player */
+			G_CheckVisTeam( ent->team, NULL, qfalse );
+		}
+
+	/* check for win conditions */
+	G_CheckEndGame();
+}
 
 /*
 =================
@@ -2093,7 +2146,7 @@ qboolean G_ReactionFire( edict_t *target )
 
 	fired = qfalse;
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
-		if ( ent->inuse && !(ent->state & STATE_DEAD) && (ent->state & STATE_SHAKEN) )
+		if ( ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && (ent->state & STATE_SHAKEN) )
 		{
 			actorVis = G_ActorVis( ent->origin, target, qtrue );
 			frustom = G_FrustomVis( ent, target->origin );

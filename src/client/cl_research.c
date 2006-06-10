@@ -57,7 +57,6 @@ void RS_MarkOneCollected ( char *id )
 	int i;
 	technology_t *t = NULL;
 
-
 	for ( i=0; i < gd.numTechnologies; i++ ) {
 		t = &gd.technologies[i];
 		if ( !Q_strncmp( t->provides, id, MAX_VAR ) ) {	/* provided item found */

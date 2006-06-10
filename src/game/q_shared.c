@@ -2024,7 +2024,7 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 {
 	invList_t	*ic;
 	int		time;
- 	item_t cacheItem2;
+ 	item_t	cacheItem2;
 
 	if ( icp ) *icp = NULL;
 
@@ -2038,7 +2038,8 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 
 	assert( i );
 
-	if ( !Com_RemoveFromInventory( i, from, fx, fy ) ) return IA_NONE; /* break if source item is not removeable */
+	/* break if source item is not removeable */
+	if ( !Com_RemoveFromInventory( i, from, fx, fy ) ) return IA_NONE;
 
 	/* if weapon is twohanded and is moved from hand to hand do nothing. */
 	if ( CSI->ods[cacheItem.t].twohanded
@@ -2047,9 +2048,12 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 
 	/*check if the target is a blocked inv-armor and source!=dest */
  	if ( CSI->ids[to].armor && !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) && from!=to ) {
- 		cacheItem2 = cacheItem;						/* save/chache (source) item */
- 		Com_MoveInInventory( i, to, tx, ty, from, fx, fy, TU, icp );	/* move the destination item to the source */
- 		cacheItem = cacheItem2;						/* reset the cached item (source) */
+ 		/* save/cache (source) item */
+ 		cacheItem2 = cacheItem;
+ 		/* move the destination item to the source */
+ 		Com_MoveInInventory( i, to, tx, ty, from, fx, fy, TU, icp );
+ 		/* reset the cached item (source) */
+ 		cacheItem = cacheItem2;
  	}
 	if ( !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) )
 	{
