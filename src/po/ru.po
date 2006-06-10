@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-05-22 19:42+0200\n"
-"PO-Revision-Date: 2006-06-09 23:28+0300\n"
+"PO-Revision-Date: 2006-06-10 21:35+0300\n"
 "Last-Translator: Virtul <virtul@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -509,7 +509,7 @@ msgstr "Кампании"
 
 #: ../base/ufos/menu_campaign.ufo:76
 msgid "Start campaign"
-msgstr "Начать кампанию"
+msgstr "Начать"
 
 #: ../base/ufos/menu_campaign.ufo:96
 #: ../base/ufos/menu_multiplayer.ufo:123
@@ -799,7 +799,7 @@ msgstr "Загразуть отряд из выбранного слота"
 #: ../base/ufos/menu_multiplayer.ufo:248
 #: ../base/ufos/menu_singleplayer.ufo:89
 msgid "Load"
-msgstr "Загрузка"
+msgstr "Загрузить"
 
 #: ../base/ufos/menu_multiplayer.ufo:257
 msgid "Save team to current selected slot"
@@ -808,7 +808,7 @@ msgstr "Сохранить отряд в выбранный слот"
 #: ../base/ufos/menu_multiplayer.ufo:268
 #: ../base/ufos/menu_singleplayer.ufo:109
 msgid "Save"
-msgstr "Сохранение"
+msgstr "Сохранить"
 
 #: ../base/ufos/menu_multiplayer.ufo:280
 msgid "Current Team"
@@ -820,7 +820,7 @@ msgstr "Отредактируйте отряд после загрузки"
 
 #: ../base/ufos/menu_multiplayer.ufo:303
 msgid "Edit"
-msgstr "Редактировать"
+msgstr "Редактор"
 
 #: ../base/ufos/menu_multiplayer.ufo:312
 msgid "Generate a new team"
@@ -829,7 +829,7 @@ msgstr "Генерация нового отряда"
 #: ../base/ufos/menu_multiplayer.ufo:326
 #: ../base/ufos/menu_singleplayer.ufo:129
 msgid "New"
-msgstr "Новая"
+msgstr "Новый"
 
 #: ../base/ufos/menu_multiplayer.ufo:333
 msgid "Race:"
@@ -1256,9 +1256,10 @@ msgstr "Пришельцы"
 msgid "UFOs"
 msgstr "НЛО"
 
+# автоматичекая боевая машина
 #: ../base/ufos/research.ufo:64
 msgid "UGVs"
-msgstr "UGV"
+msgstr "АБМ"
 
 #: ../base/ufos/research.ufo:73
 msgid "Advanced Laser Technology"
@@ -1711,7 +1712,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1290
 msgid "UGV Phoenix"
-msgstr "UGV Феникс"
+msgstr "АБМ Феникс"
 
 #: ../base/ufos/research.ufo:1291
 msgid "ugv_phoenix_txt"
@@ -1719,7 +1720,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1306
 msgid "UGV Triax"
-msgstr "UGV Триакс"
+msgstr "АБМ Триакс"
 
 #: ../base/ufos/research.ufo:1307
 msgid "ugv_triax_txt"
@@ -2071,7 +2072,7 @@ msgstr "Тахионная Снайперская Винтовка"
 
 #: ../base/ufos/weapons_tachyon.ufo:169
 msgid "Tachyon Sniper Charge"
-msgstr "Тахионная Снайперская Винтовка"
+msgstr "Заряды Тахионной Снайперской Винтовки"
 
 #: client/cl_actor.c:83
 #, c-format
@@ -2672,7 +2673,7 @@ msgstr "Урон:\t%i / %i\n"
 #: client/cl_team.c:291
 #, c-format
 msgid "Time units:\t%i / %i\n"
-msgstr "Затрата времени:\t%i / %i\n"
+msgstr "Времени:\t%i / %i\n"
 
 #: client/cl_team.c:292
 #, c-format
@@ -2710,7 +2711,7 @@ msgstr "Действие:\t%s\n"
 #: client/cl_team.c:305
 #, c-format
 msgid "Time units:\t%i\n"
-msgstr "Затрата времени:\t%i\n"
+msgstr "Времени:\t%i\n"
 
 #: client/cl_team.c:306
 #, c-format
@@ -2860,17 +2861,17 @@ msgstr "Зависит:\t%s\n"
 #: client/cl_ufopedia.c:101
 #, c-format
 msgid "Buildtime:\t%i day(s)\n"
-msgstr "Время постройки:\t%i day(s)\n"
+msgstr "Постройка:\t%i дней\n"
 
 #: client/cl_ufopedia.c:102
 #, c-format
 msgid "Fixcosts:\t%i c\n"
-msgstr "Цена:\t%i c\n"
+msgstr "Цена:\t%i кр\n"
 
 #: client/cl_ufopedia.c:103
 #, c-format
 msgid "Running costs:\t%i c\n"
-msgstr "Цена обслуживания:\t%i c\n"
+msgstr "Содержание:\t%i кр\n"
 
 #: client/cl_ufopedia.c:119
 msgid "Error - could not find aircraft"
