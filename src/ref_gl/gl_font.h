@@ -12,6 +12,7 @@ typedef struct font_s
 	TTF_Font *font;
 	int style;
 	int lineSkip; /* TTF_FontLineSkip */
+	int height;
 } font_t;
 
 /* font definitions */

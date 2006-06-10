@@ -101,6 +101,7 @@ font_t *Font_Analyze( char *name, char *path, int renderStyle, int size )
 
 	numFonts++;
 	f->lineSkip = TTF_FontLineSkip( f->font );
+	f->height = TTF_FontHeight( f->font );
 
 	/* return the font */
 	return f;
@@ -461,6 +462,13 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 	/* get the font */
 	f = Font_GetFont( fontID );
 	if ( !f ) ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", fontID );
+
+	openGLSurface = Font_GetFromCache( c );
+	if ( openGLSurface )
+	{
+		Font_GenerateGLSurface( openGLSurface, x, y );
+		return f->height;
+	}
 
 	Q_strncpyz( buffer, c, BUF_SIZE );
 
