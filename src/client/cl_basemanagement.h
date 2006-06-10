@@ -138,7 +138,7 @@ typedef struct building_s
 	char	name[MAX_VAR];
 	/* needs determines the second building part */
 	char	*image, *mapPart, *pedia;
-	char *needs;	/* if the buildign has a second part */
+	char	*needs;	/* if the buildign has a second part */
 	float	fixCosts, varCosts;
 
 	int	timeStart, buildTime;

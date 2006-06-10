@@ -1426,10 +1426,8 @@ void B_DrawBase( menuNode_t *node )
 
 	IN_GetMousePos( &mx, &my );
 
-	for ( row = 0; row < BASE_SIZE; row++ )
-	{
-		for ( col = 0; col < BASE_SIZE; col++ )
-		{
+	for ( row = 0; row < BASE_SIZE; row++ ) {
+		for ( col = 0; col < BASE_SIZE; col++ ) {
 			/* 20 is the height of the part where the images overlap */
 			x = node->pos[0] + col * width;
 			y = node->pos[1] + row * height - row * 20 ;
@@ -1437,15 +1435,14 @@ void B_DrawBase( menuNode_t *node )
 			baseCurrent->posX[row][col] = x;
 			baseCurrent->posY[row][col] = y;
 
-			if ( baseCurrent->map[row][col] >= 0 )
-			{
+			if ( baseCurrent->map[row][col] >= 0 ) {
 				building = B_GetBuildingByIdx(baseCurrent->map[row][col]);
+				secondBuilding = NULL;
 
 				if ( ! building )
 					Sys_Error("Error in DrawBase - no building with id %i\n", baseCurrent->map[row][col] );
 
-				if ( !building->used )
-				{
+				if ( !building->used ) {
 					if ( building->needs )
 						building->used = 1;
 					if (building->image) { /* TODO:DEBUG */
@@ -1453,39 +1450,31 @@ void B_DrawBase( menuNode_t *node )
 					} else {
 						/*Com_DPrintf( "B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx ); */
 					}
-				}
-				else
-				{
+				} else {
 					secondBuilding = B_GetBuildingType ( building->needs );
 					if ( ! secondBuilding )
 						Sys_Error( "Error in ufo-scriptfile - could not find the needed building\n" );
 					Q_strncpyz( image, secondBuilding->image, MAX_QPATH );
 					building->used = 0;
 				}
-			}
-			else
-			{
+			} else {
 				building = NULL;
 				Q_strncpyz( image, "base/grid", MAX_QPATH );
 			}
 
-			if ( mx > x && mx < x + width && my > y && my < y + height - 20 )
-			{
+			if ( mx > x && mx < x + width && my > y && my < y + height - 20 ) {
 				hover = qtrue;
 				if ( baseCurrent->map[row][col] >= 0 )
 					hoverBuilding = building;
-			} else {
+			} else
 				hover = qfalse;
-			}
 
-			if ( *image ) {
+			if ( *image )
 				re.DrawNormPic( x, y, width, height, 0, 0, 0, 0, 0, qfalse, image );
-			}
 
-			if ( building )
-			{
-				switch ( building->buildingStatus )
-				{
+			/* only draw for first part of building */
+			if ( building && !secondBuilding) {
+				switch ( building->buildingStatus ) {
 				case B_STATUS_DOWN:
 				case B_STATUS_CONSTRUCTION_FINISHED:
 					break;
@@ -1499,8 +1488,7 @@ void B_DrawBase( menuNode_t *node )
 			}
 		}
 	}
-	if ( hoverBuilding )
-	{
+	if ( hoverBuilding ) {
 		re.DrawColor( color );
 		re.FontDrawString( "f_small", 0, mx+3, my, node->size[0], hoverBuilding->name );
 		re.DrawColor( NULL );
