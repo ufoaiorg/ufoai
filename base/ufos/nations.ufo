@@ -79,7 +79,7 @@ nation au
 
 nation russia
 {
-	name "_Russia"
+	name "_Russian Federation"
 //	color TODO
 	names "russian"
 	funding	1400000

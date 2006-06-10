@@ -1,4 +1,4 @@
-﻿//========================================================================
+//========================================================================
 // NAME list (Humans/Aliens)
 //========================================================================
 // Used in
@@ -60,14 +60,14 @@ names german
 	Emil
 	Felix
 	Frank
-	Günter
+	Gunter
 	Hans
 	Hans-Peter
 	Henrik
 	Horst
 	Holger
 	Johann
-	Jürgen
+	Jurgen
 	Karl
 	Kai-Uwe
 	Klaus
@@ -209,8 +209,8 @@ names spanish_italian
 	Gustavo
 	Gulliano
 	Jesus
-	Joaquín
-	"Joaquín Sánchez"
+	Joaquin
+	"Joaquin Sanchez"
 	Jose
 	"Jose Guadalupe"
 	"Juan Martin"
@@ -230,14 +230,14 @@ names spanish_italian
 	{
 	"Al Capone"
 	Alejandro
-	Andújar
+	Andujar
 	Banderas
 	Balaguer
 	Campangolo
 	Campos
 	Cano
 	Checa
-	Cortés
+	Cortes
 	Cuevas
 	"De Cesare"
 	"De Francesco"
@@ -249,14 +249,14 @@ names spanish_italian
 	Esteban
 	Estevez
 	Espinoza
-	González
+	Gonzalez
 	Gonzalo
 	Guadalupe
-	Lavín
-	López
+	Lavin
+	Lopez
 	Mantovani
 	Martinez
-	Maurín
+	Maurin
 	Meazzi
 	Mendez
 	Padilla
@@ -264,7 +264,7 @@ names spanish_italian
 	Prieto
 	Ramos
 	Rivera
-	Rodríguez
+	Rodriguez
 	Russo
 	Sabina
 	Segura
@@ -712,8 +712,8 @@ names scandinavian
 	{
 	Anders
 	Andreas
-	Bjørn
-	Björn
+	Bjorn
+	Bjorn
 	Christian
 	Devoss
 	Godewyn
@@ -739,7 +739,7 @@ names scandinavian
 	Olav
 	Olaf
 	Ole-Gunnar 
-	Søren
+	Soren
 	Sven
 	Tor
 	Ragnar
@@ -877,7 +877,7 @@ names russian
 	Maksim
 	Mihail
 	Nikita
-	Nikolai
+	Nikolay
 	Oleg
 	Pavel
 	Piotr

@@ -204,7 +204,7 @@ menu hud
 	string actorname
 	{
 		string	"*cvar mn_name"
-		pos		"130 18"
+		pos		"130 14"
 	}
 
 	pic bt_nextround
@@ -228,7 +228,7 @@ menu hud
 	string numspotted
 	{
 		string	"*cvar mn_numaliensspotted"
-		pos		"840 30"
+		pos		"840 28"
 		align	cc
 		tooltip "_Click to cycle through the spotted enemies"
 	}
@@ -614,7 +614,14 @@ menu hud
 	string tus
 	{
 		string	"*cvar mn_tu"
-		pos		"397 673"
+		pos		"397 662"
+		align	uc
+	}
+
+	string hp
+	{
+		string	"*cvar mn_hp"
+		pos		"397 675"
 		align	uc
 	}
 
@@ -684,7 +691,7 @@ menu inventory
 	string actorname
 	{
 		string	"*cvar mn_name"
-		pos		"290 123"
+		pos		"290 120"
 	}
 
 	zone bt_physdata
@@ -776,7 +783,7 @@ menu physdata
 	string actorname
 	{
 		string	"*cvar mn_name"
-		pos		"290 123"
+		pos		"290 120"
 	}
 
 	zone bt_physdata

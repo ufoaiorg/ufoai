@@ -36,6 +36,6 @@ font f_menubig
 font f_menusmall
 {
 	font	"media/FreeSans.ttf"
-	size	22
+	size	20
 	style	TTF_STYLE_BOLD
 }
