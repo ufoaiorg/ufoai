@@ -2121,7 +2121,7 @@ void Com_EmptyContainer( inventory_t *i, int container )
 		invUnused = old;
 		if ( cnt >= MAX_INVLIST )
 		{
-			Com_Printf("Error: There are more than the allowed entries (Com_EmptyContainer)\n");
+			Com_Printf("Error: There are more than the allowed entries in container %i (Com_EmptyContainer)\n", container );
 			break;
 		}
 		cnt++;
