@@ -436,9 +436,7 @@ qboolean Com_CheckShape( int shape[16], int x, int y )
 */
 void MN_DrawFree (int posx, int posy, int sizex, int sizey)
 {
-	vec4_t color;
-	VectorSet( color, 0.0f, 1.0f, 0.0f );
-	color[3] = 0.7f;
+	static vec4_t color = {0.0f, 1.0f, 0.0f, 0.7f};
 	re.DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);
 	re.DrawColor( NULL );
 }
@@ -449,44 +447,44 @@ void MN_DrawFree (int posx, int posy, int sizex, int sizey)
 */
 void MN_InvDrawFree(inventory_t *inv, menuNode_t *node)
 {
-	int item = dragItem.t; /* get the 'type' of the draged item */
+	/* get the 'type' of the dragged item */
+	int item = dragItem.t;
 	int container = node->mousefx;
 	int itemshape;
-	int free[16];	/*The shapoe of the free positions. */
-	int j;
+	/* The shape of the free positions. */
+	int free[16];
 	int x, y;
 
-	if (mouseSpace == MS_DRAG) {/* && !(inv->c[csi.idEquip])) { // Draw only in dragging-mode (and not for the equip-'floor'?) */
+	/* Draw only in dragging-mode and not for the equip-floor */
+	if ( mouseSpace == MS_DRAG ) {
 		assert(inv);
-		for ( j=0; j<16; j++ ) free[j] = 0;
+		memset(free, 0, sizeof(free));
 #if 0
 		/* TODO: add armor support */
 		if (csi.ids[container].armor) {
-			if (	Com_CheckToInventory( inv, item, container, 0, 0 )		/*if container free OR.. */
-			||	(node->mousefx==dragFrom) ) {	/* ..OR the dragged-item is in it */
-				MN_DrawFree( node->pos[0], node->pos[1],  node->size[0], node->size[1] );
-			}
 		} else
 #endif
-		if (csi.ids[container].single) { /* if  single container (hands) */
-			if (	Com_CheckToInventory( inv, item, container, 0, 0 )	/*if container free OR.. */
-			||	(node->mousefx==dragFrom) ) {	/* ..OR the dragged-item is in it */
+		/* if  single container (hands) */
+		if (csi.ids[container].single) {
+			/* if container is free or the dragged-item is in it */
+			if ( node->mousefx == dragFrom || Com_CheckToInventory( inv, item, container, 0, 0 ) )
 				MN_DrawFree( node->pos[0], node->pos[1],  node->size[0], node->size[1] );
-			}
 		} else {
 			for ( y = 0; y < 16; y++ ) {
 				for ( x = 0; x < 32; x++ ) {
-					if ( Com_CheckToInventory( inv, item, container, x, y ))  { /*Check if the curretn position is useable (topleft of the item) */
+					/* Check if the current position is useable (topleft of the item) */
+					if ( Com_CheckToInventory( inv, item, container, x, y ) ) {
 						itemshape = csi.ods[dragItem.t].shape;
-						Com_MergeShapes(free, itemshape, x, y); /*add '1's to each position the item is 'blocking' */
+						/* add '1's to each position the item is 'blocking' */
+						Com_MergeShapes(free, itemshape, x, y);
 					}
-					if (Com_CheckShape(csi.ids[container].shape, x, y)) { /*Only draw on existing positions */
-						if (Com_CheckShape(free, x, y)) {
+					/* Only draw on existing positions */
+					if (Com_CheckShape(csi.ids[container].shape, x, y) ) {
+						if (Com_CheckShape(free, x, y))
 							MN_DrawFree( node->pos[0]+x*C_UNIT, node->pos[1]+y*C_UNIT, C_UNIT, C_UNIT );
-						}
 					}
 				} /* for x */
-			} /*for y */
+			} /* for y */
 		}
 	}
 }
@@ -908,11 +906,11 @@ qboolean MN_CursorOnMenu( int x, int y )
 }
 
 
-/*
-=================
+/*=================
 MN_Drag
-=================
-*/
+
+NOTE: node->mousefx is the container id
+=================*/
 void MN_Drag( menuNode_t *node, int x, int y )
 {
 	int		px, py;
@@ -920,8 +918,7 @@ void MN_Drag( menuNode_t *node, int x, int y )
 	if ( !menuInventory )
 		return;
 
-	if ( mouseSpace == MS_MENU )
-	{
+	if ( mouseSpace == MS_MENU ) {
 		invList_t *ic;
 
 		px = (int)(x - node->pos[0]) / C_UNIT;
@@ -929,8 +926,7 @@ void MN_Drag( menuNode_t *node, int x, int y )
 
 		/* start drag (mousefx represents container number) */
 		ic = Com_SearchInInventory( menuInventory, node->mousefx, px, py );
-		if ( ic )
-		{
+		if ( ic ) {
 			/* found item to drag */
 			mouseSpace = MS_DRAG;
 			dragItem = ic->item;
@@ -945,30 +941,25 @@ void MN_Drag( menuNode_t *node, int x, int y )
 		px = (int)((x - node->pos[0] - C_UNIT*((csi.ods[dragItem.t].sx-1)/2.0)) / C_UNIT);
 		py = (int)((y - node->pos[1] - C_UNIT*((csi.ods[dragItem.t].sy-1)/2.0)) / C_UNIT);
 
+		/* tactical mission */
 		if ( selActor )
 			MSG_WriteFormat( &cls.netchan.message, "bbsbbbbbb",
 				clc_action, PA_INVMOVE, selActor->entnum, dragFrom, dragFromX, dragFromY, node->mousefx, px, py );
-		else
-		{
-			invList_t *i;
-			int et, sel;
+		/* menu */
+		else {
+			invList_t *i = NULL;
+			int et = -1, sel;
 
 			/* sort equipment (tiny hack) */
-			i = NULL;
-			et = -1;
-			if ( node->mousefx == csi.idEquip )
-			{
+			if ( node->mousefx == csi.idEquip ) {
 				/* special item sorting for equipment */
 				i = Com_SearchInInventory( menuInventory, dragFrom, dragFromX, dragFromY );
-				if ( i )
-				{
+				if ( i ) {
 					et = csi.ods[i->item.t].buytype;
-					if ( et != baseCurrent->equipType )
-					{
+					if ( et != baseCurrent->equipType ) {
 						menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[et];
 						Com_FindSpace( menuInventory, i->item.t, csi.idEquip, &px, &py );
-						if ( px >= 32 && py >= 16 )
-						{
+						if ( px >= 32 && py >= 16 ) {
 							menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[baseCurrent->equipType];
 							return;
 						}
@@ -980,8 +971,7 @@ void MN_Drag( menuNode_t *node, int x, int y )
 			Com_MoveInInventory( menuInventory, dragFrom, dragFromX, dragFromY, node->mousefx, px, py, NULL, NULL );
 
 			/* end of hack */
-			if ( i && et != baseCurrent->equipType )
-			{
+			if ( i && et != baseCurrent->equipType ) {
 				baseCurrent->equipment.c[et] = menuInventory->c[csi.idEquip];
 				menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[baseCurrent->equipType];
 			}
@@ -1976,7 +1966,9 @@ void MN_DrawMenus( void )
 							for ( ic = menuInventory->c[node->mousefx]; ic; ic = ic->next )
 								MN_DrawItem( node->pos, ic->item, csi.ods[ic->item.t].sx, csi.ods[ic->item.t].sy, ic->x, ic->y, scale, color );
 						}
-						MN_InvDrawFree(menuInventory, node); /*draw free space if dragging */
+						/* draw free space if dragging - but not for idEquip */
+						if ( node->mousefx != csi.idEquip )
+							MN_InvDrawFree(menuInventory, node);
 					}
 					break;
 
