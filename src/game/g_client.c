@@ -754,14 +754,11 @@ void G_InventoryMove( player_t *player, int num, int from, int fx, int fy, int t
 				gi.WriteByte( from );
 				gi.WriteByte( fx );
 				gi.WriteByte( fy );
-				gi.dprintf("FLOOR(floor)\n");
 			} else {
 				gi.AddEvent( G_VisToPM( floor->visflags ), EV_ENT_PERISH );
 				gi.WriteShort( floor->number );
 				FLOOR(ent) = NULL;
-				G_GetFloorItems( ent );
 				G_FreeEdict( floor );
-				gi.dprintf("!FLOOR(floor)\n");
 			}
 		} else {
 			gi.AddEvent( G_TeamToPM(ent->team), EV_INV_DEL );
@@ -769,7 +766,6 @@ void G_InventoryMove( player_t *player, int num, int from, int fx, int fy, int t
 			gi.WriteByte( from );
 			gi.WriteByte( fx );
 			gi.WriteByte( fy );
-			gi.dprintf("no floor\n");
 		}
 
 		/* send tu's */
