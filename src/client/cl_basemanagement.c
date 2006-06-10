@@ -472,12 +472,12 @@ void B_DrawBuilding( void )
 	Com_sprintf( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va("%s\n", building->name) );
 
 	if ( building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts )
-		Com_sprintf( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.2f\n"), building->fixCosts );
+		Com_sprintf( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.0f c\n"), building->fixCosts );
 
 	Q_strcat( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("%i Day(s) to build\n"), building->buildTime ) );
 
 	if ( building->varCosts )
-		Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Running Costs:\t%1.2f\n"), building->varCosts ) );
+		Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Running Costs:\t%1.0f c\n"), building->varCosts ) );
 
 	if ( employees_in_building->numEmployees )
 		Q_strcat ( menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va ( _("Workers:\t%i\n"), employees_in_building->numEmployees ) );

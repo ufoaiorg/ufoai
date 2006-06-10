@@ -243,7 +243,7 @@ menu mp_team
 	}
 	string string_load
 	{
-		font	f_menubig
+		font	f_menusmall
 		color	"0 0.5 0 1"
 		string	"_Load"
 		pos	"844 140"
@@ -263,7 +263,7 @@ menu mp_team
 	}
 	string string_save
 	{
-		font	f_menubig
+		font	f_menusmall
 		color	"0 0.5 0 1"
 		string	"_Save"
 		pos	"844 210"
@@ -298,7 +298,7 @@ menu mp_team
 	}
 	string string_edit
 	{
-		font	f_menubig
+		font	f_menusmall
 		color	"0 0.5 0 1"
 		string	"_Edit"
 		pos	"564 500"
@@ -321,7 +321,7 @@ menu mp_team
 	}
 	string string_new
 	{
-		font	f_menubig
+		font	f_menusmall
 		color	"0 0.5 0 1"
 		string	"_New"
 		pos	"704 500"

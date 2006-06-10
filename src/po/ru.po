@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-05-22 19:42+0200\n"
-"PO-Revision-Date: 2006-06-10 21:35+0300\n"
+"PO-Revision-Date: 2006-06-11 00:08+0300\n"
 "Last-Translator: Virtul <virtul@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -351,7 +351,7 @@ msgstr "Исследования"
 #: ../base/ufos/menu_bases.ufo:195
 #: ../base/ufos/menu_geoscape.ufo:86
 msgid "Organisation capital"
-msgstr "Столица организации"
+msgstr "Средства на счету у организации"
 
 #: ../base/ufos/menu_bases.ufo:204
 msgid "Name of this base"
@@ -1720,7 +1720,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1306
 msgid "UGV Triax"
-msgstr "АБМ Триакс"
+msgstr "АБВ Триакс"
 
 #: ../base/ufos/research.ufo:1307
 msgid "ugv_triax_txt"
@@ -2055,7 +2055,7 @@ msgstr "Тахионная Винтовка"
 
 #: ../base/ufos/weapons_tachyon.ufo:94
 msgid "Tachyon Rifle Charge"
-msgstr "Заряды Тахионной Винтовки"
+msgstr "Заряды Тахионной Сн. Винтовки"
 
 #: ../base/ufos/weapons_tachyon.ufo:106
 #: ../base/ufos/weapons_tachyon.ufo:200
@@ -2072,7 +2072,7 @@ msgstr "Тахионная Снайперская Винтовка"
 
 #: ../base/ufos/weapons_tachyon.ufo:169
 msgid "Tachyon Sniper Charge"
-msgstr "Заряды Тахионной Снайперской Винтовки"
+msgstr "Заряды Тахионной Винтовки"
 
 #: client/cl_actor.c:83
 #, c-format
@@ -2106,8 +2106,8 @@ msgid ""
 "Health\t%i\n"
 "Move\t%i\n"
 msgstr ""
-"Здоровье\t%i\n"
-"Очков действий\t%i\n"
+"Здоровье: %i\n"
+"Очков действий: %i\n"
 
 #: client/cl_actor.c:356
 #, c-format
@@ -2146,7 +2146,7 @@ msgstr "Построено на базе: %i"
 #: client/cl_basemanagement.c:161
 #, c-format
 msgid "Constructing: %i day(s)"
-msgstr "Дней до завершения строительства: %i"
+msgstr "Дней на строительство: %i"
 
 #: client/cl_basemanagement.c:164
 msgid "Construction finished"
@@ -2193,17 +2193,17 @@ msgstr "Предупреждение"
 #: client/cl_basemanagement.c:475
 #, c-format
 msgid "Costs:\t%1.2f\n"
-msgstr "Стоимость:\t%1.2f\n"
+msgstr "Стоимость:\t%1.0f кр.\n"
 
 #: client/cl_basemanagement.c:477
 #, c-format
 msgid "%i Day(s) to build\n"
-msgstr "Дней на строительство: %i\n"
+msgstr "Постройка:\t%i (в днях)\n"
 
 #: client/cl_basemanagement.c:480
 #, c-format
 msgid "Running Costs:\t%1.2f\n"
-msgstr "Обслуживание:\t%1.2f\n"
+msgstr "Обслуживание:\t%1.0f кр.\n"
 
 #: client/cl_basemanagement.c:483
 #, c-format
@@ -2861,7 +2861,7 @@ msgstr "Зависит:\t%s\n"
 #: client/cl_ufopedia.c:101
 #, c-format
 msgid "Buildtime:\t%i day(s)\n"
-msgstr "Постройка:\t%i дней\n"
+msgstr "Постройка:\t%i (в днях)\n"
 
 #: client/cl_ufopedia.c:102
 #, c-format

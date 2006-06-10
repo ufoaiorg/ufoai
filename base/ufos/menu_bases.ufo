@@ -190,6 +190,14 @@ menu bases
 	// text and info
 	// ==================
 
+	string txt_credits_caption
+	{
+		string	"_CREDIT"
+		pos	"680 30"
+		font	f_big
+		align	ul
+	}
+
 	string txt_credits
 	{
 		tooltip	"_Organisation capital"
