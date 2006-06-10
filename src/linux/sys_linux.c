@@ -170,11 +170,7 @@ void Sys_Quit (void)
 	CL_Shutdown ();
 	Qcommon_Shutdown ();
 	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
-#ifndef PROFILING
-	_exit(0);
-#else
 	exit(0);
-#endif
 }
 
 void Sys_Init(void)
@@ -206,11 +202,7 @@ void Sys_Error (char *error, ...)
 	/* the segfault. Why is gettext() off limits here??? */
 	/* */
 	fprintf(stderr, "Error: %s\n", string);
-#ifndef PROFILING
-	_exit (1);
-#else
 	exit (1);
-#endif
 }
 
 void Sys_Warn (char *warning, ...)

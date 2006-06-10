@@ -1003,11 +1003,7 @@ static void signal_handler(int sig)
 {
 	printf("Received signal %d, exiting...\n", sig);
 	GLimp_Shutdown();
-#ifndef PROFILING
-	_exit(0);
-#else
 	exit(0);
-#endif
 }
 
 void InitSig(void)
