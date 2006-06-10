@@ -812,19 +812,6 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 				Com_Printf( "B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, id );
 
 		} while ( *text );
-
-		/* now copy all buildings to all bases */
-		/* this is needed because every building in every base */
-		/* can have altered parameters */
-	#if 0	
-		for ( i = 1; i < MAX_BASES; i++ )
-			for ( j = 0; j < numBuildings; j++ )
-			{
-				building = &bmBuildings[i][j];
-				memcpy( building, &bmBuildings[0][j], sizeof( building_t ) );
-				building->base = i;	/* link the building to the currently processed base. */
-			}
-	#endif
 	} else {
 		building = B_GetBuildingType( id );
 		if ( ! building ) /* i'm paranoid */
@@ -1286,10 +1273,10 @@ byte B_RemoveEmployee ( building_t *building )
 		/* unlink the employee from workshop (the current building). */
 		employee->workshop = NULL;
 		return qtrue;
-		break; 
+		break;
 	EMPL_MEDIC
 	EMPL_ROBOT
-#endif	
+#endif
 	default:
 		break;
 	}
@@ -1807,148 +1794,6 @@ B_AssembleRandomBase
 void B_AssembleRandomBase( void )
 {
 	Cbuf_AddText( va("base_assemble %i", rand() % gd.numBases ) );
-}
-
-/*======================
-B_SaveBases
-======================*/
-void B_SaveBases( sizebuf_t *sb )
-{
-	/* save bases */
-	base_t *base;
-	building_t* building;
-	employees_t *employees_in_building = NULL;
-
-	int i, n, j;
-
-	n = 0;
-	for ( i = 0, base = gd.bases; i < MAX_BASES; i++, base++ )
-		if ( base->founded ) n++;
-	MSG_WriteByte( sb, n );
-
-	for ( i = 0, base = gd.bases; i < MAX_BASES; i++, base++ )
-		if ( base->founded )
-		{
-			MSG_WriteLong( sb, base->idx );
-			MSG_WriteString( sb, base->name );
-			MSG_WriteFloat( sb, base->pos[0] );
-			MSG_WriteFloat( sb, base->pos[1] );
-			MSG_WriteByte( sb, base->hasHangar );
-			MSG_WriteByte( sb, base->hasLab );
-			MSG_WriteChar( sb, base->mapChar );
-			MSG_WriteLong( sb, base->baseStatus );
-			MSG_WriteByte( sb, base->condition );
-			SZ_Write( sb, &base->map[0][0], sizeof(base->map) );
-
-			/* maybe count of buildings change due to an update */
-			MSG_WriteLong( sb, gd.numBuildings[base->idx] );
-			for ( j = 0, building = &gd.buildings[base->idx][i]; j < gd.numBuildings[base->idx]; j++ )
-			{
-				employees_in_building = &building->assigned_employees;
-				SZ_Write( sb, &building->buildingStatus, sizeof(building->buildingStatus) );
-				MSG_WriteFloat( sb, building->pos[0] );
-				MSG_WriteFloat( sb, building->pos[1] );
-				/*maybe still constructing */
-				MSG_WriteLong( sb, building->timeStart );
-				MSG_WriteLong( sb, building->buildTime );
-				/* how many workers? */
-				MSG_WriteLong( sb, employees_in_building->numEmployees );
-				building++;
-			}
-			AIR_SaveAircraft( sb, base );
-
-			/* store team */
-			CL_SendTeamInfo( sb, base->wholeTeam, base->numWholeTeam );
-
-			/* store assignement */
-			MSG_WriteFormat( sb, "bl", base->numHired, base->hiredMask );
-			for ( n = 0; n < base->numAircraftInBase; n++ )
-				MSG_WriteFormat( sb, "bl", base->numOnTeam[n], base->teamMask[n] );
-		}
-}
-
-/*======================
-B_LoadBases
-
-This function is called by CL_GameLoad from cl_campaign.c
-It loads back the bases and the buildings
-You can use the buildinglist and baselist commands to verify
-the loading process
-======================*/
-void B_LoadBases( sizebuf_t *sb, int version )
-{
-	/* load bases */
-	base_t *base;
-	building_t* building;
-	employees_t *employees_in_building = NULL;
-
-	int i, j, num, tmp;
-
-	B_NewBases();
-	num = MSG_ReadByte( sb );
-	/*FIXME: This will align the bases */
-	/*     If a base was attacked and destroyed - a save followed */
-	/*     by a load will lead to the slot (where the base->found is */
-	/*     not true) being lost. Do you understand what I mean?? */
-	for ( i = 0, base = gd.bases; i < num; i++, base++ )
-	{
-		baseCurrent = base;
-		baseCurrent->allBuildingsList[0] = '\0';
-		baseCurrent->aircraftCurrent = 0;
-		base->founded = qtrue;
-		if ( version >= 2 )
-		{
-			base->idx = MSG_ReadLong( sb );
-			Q_strncpyz( base->name, MSG_ReadString( sb ), sizeof(base->name) );
-			base->pos[0] = MSG_ReadFloat( sb );
-			base->pos[1] = MSG_ReadFloat( sb );
-			base->hasHangar = MSG_ReadByte( sb );
-			base->hasLab = MSG_ReadByte( sb );
-			base->mapChar = MSG_ReadChar( sb );
-			base->baseStatus = MSG_ReadLong( sb );
-			base->condition = MSG_ReadByte( sb );
-		}
-		else
-		{
-			Q_strncpyz( base->name, MSG_ReadString( sb ), sizeof(base->name) );
-			base->pos[0] = MSG_ReadFloat( sb );
-			base->pos[1] = MSG_ReadFloat( sb );
-		}
-		memcpy( &base->map[0][0], sb->data + sb->readcount, sizeof(base->map) );
-		sb->readcount += sizeof(base->map);
-		if ( version >= 2 )
-		{
-			/* maybe count of buildings change due to an update */
-			tmp = MSG_ReadLong( sb );
-			if ( tmp != gd.numBuildings[base->idx] )
-				Com_Printf( "There was an update and there are new buildings available which aren't in your savegame. You may encounter problems. (%i:%i)\n", tmp, gd.numBuildings[base->idx]);
-
-			/* it seams to me that there are buildings deleted since last save game */
-			if ( tmp > gd.numBuildings[base->idx] )
-				tmp = gd.numBuildings[base->idx];
-
-			for ( j = 0, building = &gd.buildings[base->idx][i]; j < tmp; j++, building++ )
-			{
-				memcpy( &building->buildingStatus, sb->data + sb->readcount, sizeof(building->buildingStatus) );
-				employees_in_building = &building->assigned_employees;
-				sb->readcount += sizeof(building->buildingStatus);
-
-				building->pos[0] = MSG_ReadFloat( sb );
-				building->pos[1] = MSG_ReadFloat( sb );
-				/*maybe still constructing */
-				building->timeStart = MSG_ReadLong( sb );
-				building->buildTime = MSG_ReadLong( sb );
-				/* how many workers? */
-				employees_in_building->numEmployees = MSG_ReadLong( sb );
-			}
-			B_BuildingInit();	/*update the building-list */
-			AIR_LoadAircraft( sb, base, version );
-
-			/* read whole team list */
-			CL_LoadTeam( sb, base, version );
-		}
-	}
-	gd.numBases = num;
 }
 
 /*======================

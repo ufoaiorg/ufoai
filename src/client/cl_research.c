@@ -1501,44 +1501,6 @@ void RS_GetProvided( char *id, char *provided )
 #endif
 
 /*======================
-RS_SaveTech
-======================*/
-void RS_SaveTech( sizebuf_t *sb )
-{
-	int i;
-
-	MSG_WriteLong( sb, gd.numTechnologies );
-	Com_DPrintf("Saving %i technologies\n", gd.numTechnologies );
-	for ( i = 0; i < gd.numTechnologies; i++ )
-	{
-		MSG_WriteByte( sb, gd.technologies[i].statusResearch );
-		MSG_WriteLong( sb, gd.technologies[i].statusCollected );
-		MSG_WriteFloat( sb, gd.technologies[i].time);
-	}
-}
-
-/*======================
-RS_LoadTech
-======================*/
-void RS_LoadTech( sizebuf_t *sb, int version )
-{
-	int tmp, i;
-	if ( version >= 3 )
-	{
-		tmp = MSG_ReadLong( sb );
-		if ( tmp != gd.numTechnologies )
-			Com_Printf("There was an update and there are new technologies available which aren't in your savegame. You may encounter problems. (%i:%i)\n", tmp, gd.numTechnologies );
-		for ( i = 0; i < tmp; i++ )
-		{
-			gd.technologies[i].statusResearch = MSG_ReadByte( sb );
-			gd.technologies[i].statusCollected = MSG_ReadLong( sb );
-			gd.technologies[i].time = MSG_ReadFloat( sb );
-		}
-	}
-	RS_MarkResearchable ();
-}
-
-/*======================
 RS_GetTechByID
 
 return a pointer to the technology

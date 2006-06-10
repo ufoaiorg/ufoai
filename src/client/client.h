@@ -759,7 +759,7 @@ void CL_ItemDescription( int item );
 /* TODO: needs to be sorted (e.g what file is it defined?) */
 /* */
 #define MAX_TEAMDATASIZE	32768
-#define MAX_GAMESAVESIZE	MAX_TEAMDATASIZE + 16384
+#define MAX_GAMESAVESIZE	MAX_TEAMDATASIZE + 16384 + sizeof(globalData_t)
 #define MAX_COMMENTLENGTH	32
 
 void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version );

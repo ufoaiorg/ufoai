@@ -1617,31 +1617,6 @@ void CL_Stats_Update ( void )
 
 /*
 ======================
-CL_SaveAircraft
-======================
-*/
-void AIR_SaveAircraft( sizebuf_t *sb, base_t* base )
-{
-	int	i;
-	aircraft_t*	air;
-	MSG_WriteByte( sb, base->numAircraftInBase );
-	for ( i = 0, air = base->aircraft; i < base->numAircraftInBase; i++, air++ )
-	{
-		MSG_WriteString( sb, air->id );
-		MSG_WriteFloat( sb, air->pos[0] );
-		MSG_WriteFloat( sb, air->pos[1] );
-		MSG_WriteByte( sb, air->status );
-		MSG_WriteLong( sb, air->fuel );
-		MSG_WriteLong( sb, air->size );
-		MSG_WriteLong( sb, air->speed );
-		MSG_WriteLong( sb, air->point );
-		MSG_WriteLong( sb, air->time );
-		SZ_Write( sb, &air->route, sizeof(mapline_t) );
-	}
-}
-
-/*
-======================
 AIR_FindAircraft
 ======================
 */
@@ -1656,66 +1631,9 @@ aircraft_t* AIR_FindAircraft ( char* aircraftName )
 	return NULL;
 }
 
-/*
-======================
-CL_SaveAircraft
-======================
-*/
-void AIR_LoadAircraft ( sizebuf_t *sb, base_t* base, int version )
-{
-	int i, n;
-	aircraft_t* air;
-	if ( version >= 4 )
-	{
-		/* paranoid */
-		base->numAircraftInBase = 0;
-
-		n = MSG_ReadByte( sb );
-		for ( i = 0; i < n; i++ )
-		{
-			CL_NewAircraft( base, MSG_ReadString(sb) );
-			if ( base->numAircraftInBase )
-			{
-				air = &base->aircraft[base->numAircraftInBase-1];
-				air->pos[0] = MSG_ReadFloat( sb );
-				air->pos[1] = MSG_ReadFloat( sb );
-				air->status = MSG_ReadByte( sb );
-				air->fuel = MSG_ReadLong( sb );
-				air->size = MSG_ReadLong( sb );
-				air->speed = MSG_ReadLong( sb );
-				air->homebase = base;
-				air->point = MSG_ReadLong( sb );
-				air->time = MSG_ReadLong( sb );
-				air->idx_base = i;
-				memcpy( &air->route, sb->data + sb->readcount, sizeof(mapline_t) );
-				sb->readcount += sizeof(mapline_t);
-			}
-			else
-			{
-				Com_Printf("Savefile is corrupted or aircraft does not exists any longer\n");
-				/* try to read the values and continue with */
-				/* loader the other aircraft */
-				MSG_ReadFloat( sb );	/*pos[0] */
-				MSG_ReadFloat( sb );	/*pos[1] */
-				MSG_ReadByte( sb );	/*status */
-				MSG_ReadLong( sb );	/*fuel */
-				MSG_ReadLong( sb );	/*size */
-				MSG_ReadLong( sb );	/*speed */
-				MSG_ReadLong( sb );	/*point */
-				MSG_ReadLong( sb );	/*time */
-				sb->readcount += sizeof(mapline_t);	/*route */
-			}
-		}
-	}
-	CL_AircraftSelect();
-	CL_MapActionReset();
-}
-
-/*
-======================
+/*======================
 CL_GameSave
-======================
-*/
+======================*/
 void CL_GameSave( char *filename, char *comment )
 {
 	stageState_t	*state;
@@ -1761,11 +1679,8 @@ void CL_GameSave( char *filename, char *comment )
 	MSG_WriteFloat( &sb, ccs.center[1] );
 	MSG_WriteFloat( &sb, ccs.zoom );
 
-	/* store bases */
-	B_SaveBases( &sb );
-
-	/* store techs */
-	RS_SaveTech( &sb );
+	Com_DPrintf("CL_GameSave: sizeof globalData_t: %i max.gamedatasize: %i\n", sizeof(globalData_t), MAX_GAMESAVESIZE);
+	SZ_Write( &sb, &gd, sizeof(globalData_t) );
 
 	/* store credits */
 	MSG_WriteLong( &sb, ccs.credits );
@@ -1940,6 +1855,9 @@ void CL_GameLoad( char *filename )
 		return;
 	}
 
+	/* FIXME: Use an enum here */
+	ccs.singleplayer = qtrue;
+
 	re.LoadTGA( va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight );
 	if ( !maskPic ) Sys_Error( "Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map );
 
@@ -1960,12 +1878,8 @@ void CL_GameLoad( char *filename )
 	ccs.center[1] = MSG_ReadFloat( &sb );
 	ccs.zoom = MSG_ReadFloat( &sb );
 
-	/* load bases */
-	B_LoadBases( &sb, version );
-
-	/* load techs */
-	RS_CopyFromSkeleton ();
-	RS_LoadTech( &sb, version );
+	memcpy( &gd, sb.data + sb.readcount, sizeof(globalData_t) );
+	sb.readcount += sizeof(globalData_t);
 
 	/* read credits */
 	CL_UpdateCredits( MSG_ReadLong( &sb ) );
