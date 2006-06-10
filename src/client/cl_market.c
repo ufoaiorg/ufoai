@@ -13,8 +13,9 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+cl_market.c -- single player market stuff
 */
-/* cl_market.c -- single player market stuff */
 
 #include "client.h"
 #include "cl_global.h"
@@ -26,17 +27,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 byte	buyList[MAX_BUYLIST];
 int		buyListLength;
 
-/*
-======================
+/*======================
 CL_BuySelectCmd
-======================
-*/
+======================*/
 static void CL_BuySelectCmd( void )
 {
 	int num;
 
-	if ( Cmd_Argc() < 2 )
-	{
+	if ( Cmd_Argc() < 2 ) {
 		Com_Printf( "Usage: buy_select <num>\n" );
 		return;
 	}
@@ -50,15 +48,13 @@ static void CL_BuySelectCmd( void )
 }
 
 #define MAX_AIRCRAFT_STORAGE 8
-/*
-======================
+/*======================
 AIR_GetStorageSupplyCount
 
 set storage and supply to the values of aircraft
 in use - and the value of aircraft available for
 buying
-======================
-*/
+======================*/
 static void AIR_GetStorageSupplyCount( char *aircraft, int *storage, int *supply )
 {
 	base_t* base;
@@ -67,16 +63,11 @@ static void AIR_GetStorageSupplyCount( char *aircraft, int *storage, int *supply
 
 	*supply = MAX_AIRCRAFT_STORAGE;
 
-	for ( i = 0, base = gd.bases; i < gd.numBases; i++, base++ )
-	{
+	for ( i = 0, base = gd.bases; i < gd.numBases; i++, base++ ) {
 		if ( ! base->founded ) continue;
 		for ( j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++ )
-		{
 			if ( !Q_strncmp( air->id, aircraft, MAX_VAR ) )
-			{
 				*storage++;
-			}
-		}
 	}
 	if ( *storage < MAX_AIRCRAFT_STORAGE )
 		*supply -= *storage;
@@ -84,11 +75,9 @@ static void AIR_GetStorageSupplyCount( char *aircraft, int *storage, int *supply
 		*supply = 0;
 }
 
-/*
-======================
+/*======================
 CL_BuyType
-======================
-*/
+======================*/
 static void CL_BuyType( void )
 {
 	objDef_t	*od;
@@ -97,8 +86,7 @@ static void CL_BuyType( void )
 	int		i, j = 0, num, storage, supply;
 	char	str[MAX_VAR];
 
-	if ( Cmd_Argc() < 2 )
-	{
+	if ( Cmd_Argc() < 2 ) {
 		Com_Printf( "Usage: buy_type <category>\n" );
 		return;
 	}
@@ -106,15 +94,15 @@ static void CL_BuyType( void )
 
 	CL_UpdateCredits( ccs.credits );
 
-	if ( num < NUM_BUYTYPES ) /* 'normal' items */
-	{
+	/* 'normal' items */
+	if ( num < NUM_BUYTYPES ) {
 		/* get item list */
-		for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ )
-		{
+		for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ ) {
 			tech = (technology_t*)od->tech;
+			/* is researched OR collected */
 			if ( !tech || RS_Collected_(tech) || RS_IsResearched_ptr(tech) ) {
-				if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) )
-				{
+				// check primary, secondary, misc, armor and available amount
+				if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) ) {
 					Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );
 					Cvar_Set( str, _(od->name) );
 
@@ -130,13 +118,12 @@ static void CL_BuyType( void )
 					buyList[j] = i;
 					j++;
 				}
-			} /* is researched OR collected */
+			}
 		}
 	}
-	else if ( num == NUM_BUYTYPES ) /* aircraft */
-	{
-		for ( i = 0, j = 0, air = aircraft; i < numAircraft; i++, air++ )
-		{
+	/* aircraft */
+	else if ( num == NUM_BUYTYPES ) {
+		for ( i = 0, j = 0, air = aircraft; i < numAircraft; i++, air++ ) {
 			AIR_GetStorageSupplyCount( air->id, &storage, &supply );
 			Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );
 			Cvar_Set( str, _(air->name) );
@@ -158,8 +145,7 @@ static void CL_BuyType( void )
 	buyListLength = j;
 
 	/* FIXME: This list needs to be scrollable - so a hardcoded end is bad */
-	for ( i = 0; j < 28; j++ )
-	{
+	for ( i = 0; j < 28; j++ ) {
 		Cvar_Set( va( "mn_item%i", j ), "" );
 		Cvar_Set( va( "mn_storage%i", j ), "" );
 		Cvar_Set( va( "mn_supply%i", j ), "" );
@@ -167,8 +153,7 @@ static void CL_BuyType( void )
 	}
 
 	/* select first item */
-	if ( buyListLength )
-	{
+	if ( buyListLength ) {
 		Cbuf_AddText( "buyselect0\n" );
 		CL_ItemDescription( buyList[0] );
 	} else {
@@ -191,8 +176,7 @@ static void CL_BuyItem( void )
 {
 	int num, item;
 
-	if ( Cmd_Argc() < 2 )
-	{
+	if ( Cmd_Argc() < 2 ) {
 		Com_Printf( "Usage: mn_buy <num>\n" );
 		return;
 	}
@@ -206,8 +190,7 @@ static void CL_BuyItem( void )
 	CL_ItemDescription( item );
 	Com_DPrintf("item %i\n", item );
 
-	if ( ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item] )
-	{
+	if ( ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item] ) {
 		Cvar_SetValue( va( "mn_storage%i", num ), ++ccs.eCampaign.num[item] );
 		Cvar_SetValue( va( "mn_supply%i", num ),  --ccs.eMarket.num[item] );
 		CL_UpdateCredits( ccs.credits-csi.ods[item].price );
@@ -225,8 +208,7 @@ static void CL_SellItem( void )
 {
 	int num, item;
 
-	if ( Cmd_Argc() < 2 )
-	{
+	if ( Cmd_Argc() < 2 ) {
 		Com_Printf( "Usage: mn_sell <num>\n" );
 		return;
 	}
@@ -239,8 +221,7 @@ static void CL_SellItem( void )
 	Cbuf_AddText( va( "buyselect%i\n", num ) );
 	CL_ItemDescription( item );
 
-	if ( ccs.eCampaign.num[item] )
-	{
+	if ( ccs.eCampaign.num[item] ) {
 		Cvar_SetValue( va( "mn_storage%i", num ), --ccs.eCampaign.num[item] );
 		Cvar_SetValue( va( "mn_supply%i", num ),  ++ccs.eMarket.num[item] );
 		CL_UpdateCredits( ccs.credits+csi.ods[item].price );
@@ -256,8 +237,7 @@ static void CL_BuyAircraft( void )
 {
 	int num, aircraftID;
 
-	if ( Cmd_Argc() < 2 )
-	{
+	if ( Cmd_Argc() < 2 ) {
 		Com_Printf( "Usage: mn_buy_aircraft <num>\n" );
 		return;
 	}
@@ -269,12 +249,13 @@ static void CL_BuyAircraft( void )
 	aircraftID = buyList[num];
 	Cbuf_AddText( va( "buyselect%i\n", num ) );
 
-/* 	if ( ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item] ) */
-/* 	{ */
-/* 		Cvar_SetValue( va( "mn_storage%i", num ), ++ccs.eCampaign.num[item] ); */
-/* 		Cvar_SetValue( va( "mn_supply%i", num ),  --ccs.eMarket.num[item] ); */
-/* 		CL_UpdateCredits( ccs.credits-csi.ods[item].price ); */
-/* 	} */
+#if 0
+	if ( ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item] ) {
+		Cvar_SetValue( va( "mn_storage%i", num ), ++ccs.eCampaign.num[item] );
+		Cvar_SetValue( va( "mn_supply%i", num ),  --ccs.eMarket.num[item] );
+		CL_UpdateCredits( ccs.credits-csi.ods[item].price );
+	}
+#endif
 }
 
 
@@ -294,8 +275,7 @@ static void CL_SellAircraft( void )
 	aircraft_t*	air;
 	qboolean	found = qfalse;
 
-	if ( Cmd_Argc() < 2 )
-	{
+	if ( Cmd_Argc() < 2 ) {
 		Com_Printf( "Usage: mn_sell_aircraft <num>\n" );
 		return;
 	}
@@ -308,28 +288,24 @@ static void CL_SellAircraft( void )
 	if ( aircraftID > numAircraft )
 		return;
 
-	for ( i = 0, base = gd.bases; i < gd.numBases; i++, base++ )
-	{
+	for ( i = 0, base = gd.bases; i < gd.numBases; i++, base++ ) {
 		if ( ! base->founded ) continue;
-		for ( j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++ )
-		{
-			if ( !Q_strncmp( air->id, aircraft[aircraftID].id, MAX_VAR ) )
-			{
+		for ( j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++ ) {
+			if ( !Q_strncmp( air->id, aircraft[aircraftID].id, MAX_VAR ) ) {
 				if ( *air->teamSize )
 					continue;
 				found = qtrue;
 				break;
 			}
 		}
-		/* ok, we've found an empty aircraft (no team) in a base */
-		/* so now we can sell it */
-		if ( found )
-		{
-			/* FIXME: Do the selling here... */
-			/* reassign the aircraft-array in base_t */
-			/* maybe a linked list would be the best in base_t */
+		/* ok, we've found an empty aircraft (no team) in a base
+		   so now we can sell it */
+		if ( found ) {
+			/* FIXME: Do the selling here...
+			 reassign the aircraft-array in base_t
+			 maybe a linked list would be the best in base_t
+			 delete this aircraft in base */
 
-			/* delete this aircraft in base */
 			memset( &base->aircraft[j], 0, sizeof(aircraft_t) );
 
 			/* last entry - we don't have to search for this anymore */
