@@ -101,7 +101,7 @@ static void CL_BuyType( void )
 			tech = (technology_t*)od->tech;
 			/* is researched OR collected */
 			if ( !tech || RS_Collected_(tech) || RS_IsResearched_ptr(tech) ) {
-				// check primary, secondary, misc, armor and available amount
+				/* check primary, secondary, misc, armor and available amount */
 				if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) ) {
 					Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );
 					Cvar_Set( str, _(od->name) );
