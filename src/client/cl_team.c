@@ -459,6 +459,7 @@ void CL_GenerateEquipmentCmd( void )
 	if ( !curCampaign ) {
 		/* search equipment definition */
 		name = Cvar_VariableString( "equip" );
+		Com_DPrintf("CL_GenerateEquipmentCmd: no curCampaign - using cvar equip '%s'\n", name );
 		for ( i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++ ) {
 			if ( !Q_strncmp( name, ed->name, MAX_VAR ) )
 				break;

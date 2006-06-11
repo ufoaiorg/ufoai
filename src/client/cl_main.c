@@ -1603,6 +1603,8 @@ void CL_Frame (int msec)
 		{
 			ccs.singleplayer = qfalse;
 			Com_Printf("Changing to Multiplayer\n");
+			/* no campaign equipment but standard */
+			Cvar_Set("equip", "standard");
 		}
 		else
 		{
