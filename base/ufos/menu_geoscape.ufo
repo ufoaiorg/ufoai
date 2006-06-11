@@ -619,7 +619,7 @@ menu popup_alien_activity
 	}
 	pic aa_button1
 	{
-		image	menu/button_my
+		image	menu/button_menu_geo
 		pos	"290 450"
 		texl	"0 0"
 		texh	"128 32"
@@ -665,7 +665,7 @@ menu popup_mission_expired
 	}
 	pic aa_button1
 	{
-		image	menu/button_my
+		image	menu/button_menu_geo
 		pos	"290 450"
 		texl	"0 0"
 		texh	"128 32"
@@ -713,7 +713,7 @@ menu popup_research_finished
 	}
 	pic aa_button1
 	{
-		image	menu/button_my
+		image	menu/button_menu_geo
 		pos	"290 450"
 		texl	"0 0"
 		texh	"128 32"
