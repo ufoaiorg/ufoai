@@ -137,18 +137,18 @@ actors german
 {
 	female
 	{
-		soldiers/female light head01a 0
-		soldiers/female light head01b 0
-		soldiers/female light head03a 0
-		soldiers/female light head03b 0
+		soldiers/female body head01a 0
+		soldiers/female body head01b 0
+		soldiers/female body head03a 0
+		soldiers/female body head03b 0
 	}
 
 	male
 	{
-		soldiers/male light head01 0
-		soldiers/male light head02 0
-		soldiers/male light head03 0
-		soldiers/male light head04 0
+		soldiers/male body head01 0
+		soldiers/male body head02 0
+		soldiers/male body head03 0
+		soldiers/male body head04 0
 	}
 }
 
@@ -279,15 +279,15 @@ actors spanish_italian
 {
 	female
 	{
-		soldiers/female light head01a 0
-		soldiers/female light head01b 0
+		soldiers/female body head01a 0
+		soldiers/female body head01b 0
 	}
 
 	male
 	{
-		soldiers/male light head03 0
-		soldiers/male light head04 0
-		soldiers/male light head05 0
+		soldiers/male body head03 0
+		soldiers/male body head04 0
+		soldiers/male body head05 0
 	}
 }
 
@@ -418,17 +418,17 @@ actors french
 {
 	female
 	{
-		soldiers/female light head01a 0
-		soldiers/female light head01b 0
+		soldiers/female body head01a 0
+		soldiers/female body head01b 0
 	}
 
 	male
 	{
-		soldiers/male light head01 0
-		soldiers/male light head02 0
-		soldiers/male light head03 0
-		soldiers/male light head04 0
-		soldiers/male light head05 0
+		soldiers/male body head01 0
+		soldiers/male body head02 0
+		soldiers/male body head03 0
+		soldiers/male body head04 0
+		soldiers/male body head05 0
 	}
 }
 
@@ -544,20 +544,20 @@ actors english_american
 {
 	female
 	{
-		soldiers/female light head01a 0
-		soldiers/female light head01b 0
-		soldiers/female light head03a 0
-		soldiers/female light head03b 0
+		soldiers/female body head01a 0
+		soldiers/female body head01b 0
+		soldiers/female body head03a 0
+		soldiers/female body head03b 0
 	}
 
 	male
 	{
-		soldiers/male light head01 0
-		soldiers/male light head02 0
-		soldiers/male light head03 0
-		soldiers/male light head04 0
-		soldiers/male light head05 0
-		soldiers/male light head06 0
+		soldiers/male body head01 0
+		soldiers/male body head02 0
+		soldiers/male body head03 0
+		soldiers/male body head04 0
+		soldiers/male body head05 0
+		soldiers/male body head06 0
 	}
 }
 
@@ -659,13 +659,13 @@ actors arabic
 {
 	female
 	{
-		soldiers/female light head01a 0
-		soldiers/female light head01b 0
+		soldiers/female body head01a 0
+		soldiers/female body head01b 0
 	}
 
 	male
 	{
-		soldiers/male light head05 0
+		soldiers/male body head05 0
 	}
 }
 
@@ -785,16 +785,16 @@ actors scandinavian
 {
 	female
 	{
-		soldiers/female light head01a 0
-		soldiers/female light head01b 0
-		soldiers/female light head03a 0
-		soldiers/female light head03b 0
+		soldiers/female body head01a 0
+		soldiers/female body head01b 0
+		soldiers/female body head03a 0
+		soldiers/female body head03b 0
 	}
 
 	male
 	{
-		soldiers/male light head01 0
-		soldiers/male light head06 0
+		soldiers/male body head01 0
+		soldiers/male body head06 0
 	}
 }
 
@@ -984,14 +984,14 @@ actors russian
 {
 	female
 	{
-		soldiers/female light head03a 0
-		soldiers/female light head03b 0
+		soldiers/female body head03a 0
+		soldiers/female body head03b 0
 	}
 
 	male
 	{
-		soldiers/male light head01 0
-		soldiers/male light head06 0
+		soldiers/male body head01 0
+		soldiers/male body head06 0
 	}
 }
 
@@ -1083,15 +1083,15 @@ actors chinese
 {
 	female
 	{
-		soldiers/female light head02a 0
-		soldiers/female light head02b 0
+		soldiers/female body head02a 0
+		soldiers/female body head02b 0
 	}
 
 	male
 	{
-		soldiers/male light head07 0
-		soldiers/male light head08 0
-		soldiers/male light head09 0
+		soldiers/male body head07 0
+		soldiers/male body head08 0
+		soldiers/male body head09 0
 	}
 }
 
@@ -1182,15 +1182,15 @@ actors japanese
 {
 	female
 	{
-		soldiers/female light head02a 0
-		soldiers/female light head02b 0
+		soldiers/female body head02a 0
+		soldiers/female body head02b 0
 	}
 
 	male
 	{
-		soldiers/male light head07 0
-		soldiers/male light head08 0
-		soldiers/male light head09 0
+		soldiers/male body head07 0
+		soldiers/male body head08 0
+		soldiers/male body head09 0
 	}
 }
 
@@ -1266,15 +1266,15 @@ actors african
 {
 	female
 	{
-		soldiers/female light head04a 0
-		soldiers/female light head04b 0
+		soldiers/female body head04a 0
+		soldiers/female body head04b 0
 	}
 
 	male
 	{
-		soldiers/male light head10 0
-		soldiers/male light head11 0
-		soldiers/male light head12 0
+		soldiers/male body head10 0
+		soldiers/male body head11 0
+		soldiers/male body head12 0
 	}
 }
 
