@@ -1020,8 +1020,8 @@ item stunrod
 	type		melee
 	category	2
 	shape	"0 0 4 2"
-	center	"-1 0 3"
-	scale		1.0
+	center	"3 0 3"
+	scale		0.9
 	price		3000
 	buytype	2
 	ammo	1
