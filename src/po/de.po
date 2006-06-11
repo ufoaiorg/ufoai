@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-06-11 16:51+0200\n"
-"PO-Revision-Date: 2006-06-11 16:56+0100\n"
+"POT-Creation-Date: 2006-06-11 16:57+0200\n"
+"PO-Revision-Date: 2006-06-11 16:58+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -431,9 +431,8 @@ msgstr "Zurückrufen"
 
 #: ../base/ufos/menu_bases.ufo:519
 #: ../base/ufos/menu_team.ufo:640
-#, fuzzy
 msgid "Team Members:"
-msgstr "Teamwahl:"
+msgstr "Teamstärke:"
 
 #: ../base/ufos/menu_buy.ufo:255
 #: ../base/ufos/menu_buy.ufo:271
@@ -519,14 +518,12 @@ msgid "Back to baseview"
 msgstr "Zurück zur Basisübersicht"
 
 #: ../base/ufos/menu_campaign.ufo:53
-#, fuzzy
 msgid "Campaigns"
-msgstr "Hauptmann"
+msgstr "Kampagnen"
 
 #: ../base/ufos/menu_campaign.ufo:76
-#, fuzzy
 msgid "Start campaign"
-msgstr "Standardkampagne"
+msgstr "Starte Kampagne"
 
 #: ../base/ufos/menu_campaign.ufo:96
 #: ../base/ufos/menu_multiplayer.ufo:123
@@ -879,9 +876,8 @@ msgid "Team preference:"
 msgstr "Teamwahl:"
 
 #: ../base/ufos/menu_multiplayer.ufo:628
-#, fuzzy
 msgid "Refresh"
-msgstr "Auftanken"
+msgstr "Erneuern"
 
 #: ../base/ufos/menu_multiplayer.ufo:686
 msgid "Bookmarks"
@@ -1127,9 +1123,8 @@ msgid "Continue"
 msgstr "Fortfahren"
 
 #: ../base/ufos/menu_singleplayer.ufo:129
-#, fuzzy
 msgid "New game"
-msgstr "Neue Basis anlegen"
+msgstr "Neues Spiel"
 
 #: ../base/ufos/menu_singleplayer.ufo:245
 msgid "Abort"
