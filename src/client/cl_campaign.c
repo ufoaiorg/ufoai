@@ -1772,6 +1772,12 @@ void CL_GameSaveCmd( void )
 		return;
 	}
 
+	if ( !curCampaign )
+	{
+		Com_Printf( "No running game - no saving...\n" );
+		return;
+	}
+
 	/* get comment */
 	if ( Cmd_Argc() > 2 )
 	{
@@ -1790,7 +1796,7 @@ void CL_GameSaveCmd( void )
 CL_GameLoad
 ======================
 */
-void CL_GameLoad( char *filename )
+int CL_GameLoad( char *filename )
 {
 	actMis_t     *mis;
 	stageState_t *state;
@@ -1809,7 +1815,7 @@ void CL_GameLoad( char *filename )
 	if ( !f )
 	{
 		Com_Printf( "Couldn't open file '%s'.\n", filename );
-		return;
+		return 1;
 	}
 
 	/* read data */
@@ -1834,7 +1840,7 @@ void CL_GameLoad( char *filename )
 	if ( version > SAVE_FILE_VERSION )
 	{
 		Com_Printf( "File '%s' is a more recent version (%d) than is supported.\n", filename, version );
-		return;
+		return 1;
 	}
 	else if ( version < SAVE_FILE_VERSION )
 	{
@@ -1854,7 +1860,7 @@ void CL_GameLoad( char *filename )
 	if ( i == numCampaigns )
 	{
 		Com_Printf( "CL_GameLoad: Campaign \"%s\" doesn't exist.\n", name );
-		return;
+		return 1;
 	}
 
 	re.LoadTGA( va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight );
@@ -1917,7 +1923,7 @@ void CL_GameLoad( char *filename )
 			Com_Printf( "Unable to load campaign '%s', unknown stage '%'\n", filename, name );
 			curCampaign = NULL;
 			Cbuf_AddText( "mn_pop\n" );
-			return;
+			return 1;
 		}
 
 		state->start.day = MSG_ReadLong( &sb );
@@ -2001,6 +2007,7 @@ void CL_GameLoad( char *filename )
 
 	/* init research tree */
 	RS_InitTree();
+	return 0;
 }
 
 
@@ -2012,23 +2019,24 @@ CL_GameLoadCmd
 void CL_GameLoadCmd( void )
 {
 	/* get argument */
-	if ( Cmd_Argc() < 2 )
-	{
+	if ( Cmd_Argc() < 2 ) {
 		Com_Printf( "Usage: game_load <filename>\n" );
 		return;
 	}
 
-	Cbuf_AddText( "disconnect\n" );
+	Com_DPrintf("load file '%s'\n", Cmd_Argv( 1 ) );
+
 	/* load and go to map */
-	CL_GameLoad( Cmd_Argv( 1 ) );
+	if ( ! CL_GameLoad( Cmd_Argv( 1 ) ) ) {
+		Cbuf_AddText( "disconnect\n" );
+		Cvar_Set( "mn_main", "singleplayer" );
+		Cvar_Set( "mn_active", "map" );
+		/* FIXME: Use an enum here */
+		ccs.singleplayer = qtrue;
 
-	Cvar_Set( "mn_main", "singleplayer" );
-	Cvar_Set( "mn_active", "map" );
-	/* FIXME: Use an enum here */
-	ccs.singleplayer = qtrue;
-
-	MN_PopMenu( qtrue );
-	MN_PushMenu( "map" );
+		MN_PopMenu( qtrue );
+		MN_PushMenu( "map" );
+	}
 }
 
 
@@ -2044,27 +2052,30 @@ void CL_GameCommentsCmd( void )
 	int		i;
 	int		first_char;
 
-	for ( i = 0; i < 8; i++ )
-	{
+	if ( Cmd_Argc() == 2 ) {
+		/* checks whether we plan to save without a running game */
+		if ( !Q_strncmp( Cmd_Argv( 1 ), "save", 4 ) && !curCampaign ) {
+			Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
+			return;
+		}
+	}
+
+	for ( i = 0; i < 8; i++ ) {
 		/* open file */
 		f = fopen( va( "%s/save/slot%i.sav", FS_Gamedir(), i ), "rb" );
-		if ( !f )
-		{
+		if ( !f ) {
 			Cvar_Set( va( "mn_slot%i", i ), "" );
 			continue;
 		}
 
 		/* check if it's versioned */
 		first_char = fgetc( f );
-		if ( first_char == 0 )
-		{
+		if ( first_char == 0 ) {
 			/* skip the version number */
 			fread( comment, sizeof(int), 1, f );
 			/* read the comment */
 			fread( comment, 1, MAX_VAR, f );
-		}
-		else
-		{
+		} else {
 			/* not versioned - first_char is the first character of the comment */
 			comment[0] = first_char;
 			fread( comment + 1, 1, MAX_VAR - 1, f );
@@ -2082,14 +2093,12 @@ CL_GameContinue
 */
 void CL_GameContinue( void )
 {
-	if ( cls.state == ca_active )
-	{
+	if ( cls.state == ca_active ) {
 		MN_PopMenu( qfalse );
 		return;
 	}
 
-	if ( !curCampaign )
-	{
+	if ( !curCampaign ) {
 		/* try to load the current campaign */
 		CL_GameLoad( mn_lastsave->string );
 		if ( !curCampaign ) return;
@@ -2122,12 +2131,10 @@ void CL_GameGo( void )
 	mis = selMis->def;
 
 	/* multiplayer */
-	if ( B_GetNumOnTeam() == 0 && ! ccs.singleplayer )
-	{
+	if ( B_GetNumOnTeam() == 0 && ! ccs.singleplayer ) {
 		MN_Popup( _("Note"), _("Assemble or load a team") );
 		return;
-	}
-	else if ( ( ! mis->active || (interceptAircraft >= 0 && ! baseCurrent->numOnTeam[interceptAircraft] ) )
+	} else if ( ( ! mis->active || (interceptAircraft >= 0 && ! baseCurrent->numOnTeam[interceptAircraft] ) )
 		&& ccs.singleplayer )
 		/* dropship not near landingzone */
 		return;
@@ -2156,14 +2163,11 @@ void CL_GameGo( void )
 
 	/* base attack */
 	/* maps starts with a dot */
-	if ( mis->map[0] == '.' )
-	{
-		if ( B_GetCount() > 0 && baseCurrent && baseCurrent->baseStatus == BASE_UNDER_ATTACK )
-		{
+	if ( mis->map[0] == '.' ) {
+		if ( B_GetCount() > 0 && baseCurrent && baseCurrent->baseStatus == BASE_UNDER_ATTACK ) {
 			Cbuf_AddText( va("base_assemble %i", baseCurrent->idx ) );
 			return;
-		}
-		else
+		} else
 			return;
 	}
 
@@ -2192,14 +2196,12 @@ CL_GameAutoCheck
 ======================*/
 void CL_GameAutoCheck ( void )
 {
-	if ( !curCampaign || !selMis || interceptAircraft < 0 )
-	{
+	if ( !curCampaign || !selMis || interceptAircraft < 0 ) {
 		Com_DPrintf("No update after automission\n");
 		return;
 	}
 
-	switch ( selMis->def->storyRelated )
-	{
+	switch ( selMis->def->storyRelated ) {
 	case qtrue:
 		Com_DPrintf("story related - auto mission is disabled\n");
 		Cvar_Set("game_autogo", "0");
@@ -2219,21 +2221,17 @@ void CL_GameAutoGo( void )
 	mission_t	*mis;
 	int	won, i;
 
-	if ( !curCampaign || !selMis || interceptAircraft < 0 )
-	{
+	if ( !curCampaign || !selMis || interceptAircraft < 0 ) {
 		Com_DPrintf("No update after automission\n");
 		return;
 	}
 
 	/* start the map */
 	mis = selMis->def;
-	if ( ! mis->active )
-	{
+	if ( ! mis->active ) {
 		MN_AddNewMessage( _("Notice"), _("Your dropship is not near the landingzone"), qfalse, MSG_STANDARD, NULL );
 		return;
-	}
-	else if ( mis->storyRelated )
-	{
+	} else if ( mis->storyRelated ) {
 		Com_DPrintf("You have to play this mission, because it's story related\n");
 		return;
 	}
@@ -2302,13 +2300,11 @@ void CL_CollectAliens( mission_t* mission )
 	teamDesc_t *td = NULL;
 	technology_t *tech = NULL;
 
-	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
-	{
+	for ( i = 0, le = LEs; i < numLEs; i++, le++ ) {
 		if ( !le->inuse )
 			continue;
 
-		if ( le->type == ET_ACTOR && le->team == TEAM_ALIEN )
-		{
+		if ( le->type == ET_ACTOR && le->team == TEAM_ALIEN ) {
 			if ( le->state & STATE_STUN ) {
 				/* a stunned actor */
 				for ( j = 0, td = teamDesc ; j < numTeamDesc; j++ ) {
@@ -2350,8 +2346,7 @@ void CL_CollectItemAmmo( invList_t *weapon , int left_hand )
 	if ( !csi.ods[weapon->item.t].reload || weapon->item.m == NONE )
 		return;
 	ccs.eMission.num_loose[weapon->item.m] += weapon->item.a;
-	if (ccs.eMission.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo)
-	{
+	if (ccs.eMission.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
 		ccs.eMission.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
 		ccs.eMission.num[weapon->item.m]++;
 	}
@@ -2375,15 +2370,13 @@ void CL_CollectItems( int won )
 	if ( ! won )
 		return;
 
-	for ( i = 0, le = LEs; i < numLEs; i++, le++ )
-	{
+	for ( i = 0, le = LEs; i < numLEs; i++, le++ ) {
 		/* Winner collects everything on the floor, and everything carried */
 		/* by surviving actors.  Loser only gets what their living team */
 		/* members carry. */
 		if ( !le->inuse )
 			continue;
-		switch ( le->type )
-		{
+		switch ( le->type ) {
 			case ET_ITEM:
 				for ( item = FLOOR(le); item; item = item->next )
 					CL_CollectItemAmmo( item, 0 );
@@ -2417,8 +2410,7 @@ void CL_UpdateCharacterStats ( int won )
 	rank_t *rank = NULL;
 	int i, j;
 
-	for ( i = 0; i < cl.numTeamList; i++ )
-	{
+	for ( i = 0; i < cl.numTeamList; i++ ) {
 		le = cl.teamList[i];
 
 		if ( ! le )
@@ -2483,15 +2475,13 @@ void CL_GameResultsCmd( void )
 		return;
 
 	/* check for replay */
-	if ( (int)Cvar_VariableValue( "game_tryagain" ) )
-	{
+	if ( (int)Cvar_VariableValue( "game_tryagain" ) ) {
 		CL_GameGo();
 		return;
 	}
 
 	/* check for win */
-	if ( Cmd_Argc() < 2 )
-	{
+	if ( Cmd_Argc() < 2 ) {
 		Com_Printf( "Usage: game_results <won>\n" );
 		return;
 	}
@@ -2501,25 +2491,21 @@ void CL_GameResultsCmd( void )
 	CL_UpdateCredits( ccs.credits+ccs.reward );
 
 	/* remove the dead (and their item preference) */
-	for ( i = 0; i < baseCurrent->numWholeTeam; )
-	{
-		if ( baseCurrent->deathMask & (1<<i) )
-		{
+	for ( i = 0; i < baseCurrent->numWholeTeam; ) {
+		if ( baseCurrent->deathMask & (1<<i) ) {
 			baseCurrent->deathMask >>= 1;
 			tempMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent] >> 1;
 			baseCurrent->teamMask[baseCurrent->aircraftCurrent] = (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & ((1<<i)-1)) | (tempMask & ~((1<<i)-1));
 			baseCurrent->numWholeTeam--;
 			baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
 			Com_DestroyInventory( &baseCurrent->teamInv[i] );
-			for ( j = i; j < baseCurrent->numWholeTeam; j++ )
-			{
+			for ( j = i; j < baseCurrent->numWholeTeam; j++ ) {
 				baseCurrent->teamInv[j] = baseCurrent->teamInv[j+1];
 				baseCurrent->wholeTeam[j] = baseCurrent->wholeTeam[j+1];
 				baseCurrent->wholeTeam[j].inv = &baseCurrent->teamInv[j];
 			}
 			memset( &baseCurrent->teamInv[j], 0, sizeof(inventory_t) );
-		}
-		else i++;
+		} else i++;
 	}
 
 	/* add recruits */
@@ -2608,14 +2594,12 @@ void CL_ParseMission( char *name, char **text )
 		if ( !Q_strncmp( name, missions[i].name, MAX_VAR ) )
 			break;
 
-	if ( i < numMissions )
-	{
+	if ( i < numMissions ) {
 		Com_Printf( "Com_ParseMission: mission def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
 
-	if ( numMissions >= MAX_MISSIONS )
-	{
+	if ( numMissions >= MAX_MISSIONS ) {
 		Com_Printf("CL_ParseMission: Max missions reached\n");
 		return;
 	}
