@@ -137,8 +137,8 @@ typedef struct building_s
 	char	id[MAX_VAR];
 	char	name[MAX_VAR];
 	/* needs determines the second building part */
-	char	*image, *mapPart, *pedia;
-	char	*needs;	/* if the buildign has a second part */
+	char	image[MAX_VAR], mapPart[MAX_VAR], pedia[MAX_VAR];
+	char	needs[MAX_VAR];	/* if the buildign has a second part */
 	float	fixCosts, varCosts;
 
 	int	timeStart, buildTime;
@@ -264,6 +264,7 @@ typedef struct aircraft_s
 	/* xxx teamShape;    // TODO: shape of the soldier-area onboard. */
 	char	model[MAX_QPATH];
 	char	weapon_string[MAX_VAR];
+	/* FIXME: these pointers needs reinit after loading a saved game */
 	technology_t*	weapon;
 	char	shield_string[MAX_VAR];
 	technology_t*	shield;

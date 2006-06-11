@@ -41,9 +41,6 @@ int B_GetNumberOfBuildingsInBaseByType ( int base_idx, int type_idx );
 vec2_t	newBasePos;
 cvar_t*	mn_base_title;
 
-int bmDataSize = 0;
-char *bmData, *bmDataStart;
-
 int BuildingConstructionList[MAX_BUILDINGS];
 int numBuildingConstructionList;
 
@@ -57,14 +54,14 @@ value_t valid_vars[] =
 	{ "map_name",   V_NULL,	        BSFS( mapPart ) },	/* map_name for generating basemap */
 	{ "more_than_one",    V_BOOL,	BSFS( moreThanOne ) },	/* is the building allowed to be build more the one time? */
 	{ "name",	V_TRANSLATION_STRING,	BSFS( name ) },				/* displayed building name */
-	{ "pedia",	V_NULL,		BSFS( pedia ) },			/* the pedia-id string */
+	{ "pedia",	V_STRING,		BSFS( pedia ) },			/* the pedia-id string */
 	{ "status",	V_INT,		BSFS( buildingStatus ) },	/* the status of the building */
-	{ "image",	V_NULL,		BSFS( image ) },			/* the string to identify the image for the building */
+	{ "image",	V_STRING,		BSFS( image ) },			/* the string to identify the image for the building */
 
 	/*set first part of a building to 1 all others to 0 */
 	/*otherwise all building-parts will be on the list */
 	{ "visible",	V_BOOL,		BSFS( visible ) },
-	{ "needs",	V_NULL,		BSFS( needs ) },			/* for buildings with more than one part (dont forget to set the visibility of all non-main-parts to 0) */
+	{ "needs",	V_STRING,		BSFS( needs ) },			/* for buildings with more than one part (dont forget to set the visibility of all non-main-parts to 0) */
 	{ "fixcosts",	V_FLOAT,	BSFS( fixCosts ) },		/* buildcosts */
 	{ "varcosts",	V_FLOAT,	BSFS( varCosts ) },		/* costs that will come up by using the building */
 	{ "build_time",	V_INT,		BSFS( buildTime ) },	/* how much days will it take to construct the building? */
@@ -366,7 +363,7 @@ void B_SetBuildingByClick ( int row, int col )
 	{
 		if ( baseCurrent->map[row][col] < 0 )
 		{
-			if ( baseCurrent->buildingCurrent->needs && baseCurrent->buildingCurrent->visible )
+			if ( *baseCurrent->buildingCurrent->needs && baseCurrent->buildingCurrent->visible )
 				secondBuildingPart = B_GetBuildingType( baseCurrent->buildingCurrent->needs );
 			if ( secondBuildingPart )
 			{
@@ -798,13 +795,7 @@ void B_ParseBuildings( char *id, char **text, qboolean link )
 					token = COM_EParse( text, errhead, id );
 					if ( !*text ) return;
 
-					if ( edp->ofs && edp->type != V_NULL ) Com_ParseValue( building, token, edp->type, edp->ofs );
-					else if ( edp->type == V_NULL )
-					{
-						strcpy( bmData, token );
-						*(char **)((byte *)building + edp->ofs) = bmData;
-						bmData += strlen( token ) + 1;
-					}
+					Com_ParseValue( building, token, edp->type, edp->ofs );
 					break;
 				}
 
@@ -867,7 +858,8 @@ void B_InitEmployees ( void )
 		Com_DPrintf("B_InitEmployees: 1 type %i\n", i );
 		building = &gd.buildingTypes[i];
 		employees_in_building = &building->assigned_employees;
-		employees_in_building->cost_per_employee = 100;			/* TODO: fixed value right now, needs a configureable one. */
+		/* TODO: fixed value right now, needs a configureable one. */
+		employees_in_building->cost_per_employee = 100;
 		if ( employees_in_building->maxEmployees <= 0)
 			employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
 		for ( j = 0; j < employees_in_building->numEmployees; j++ ) {
@@ -1443,14 +1435,14 @@ void B_DrawBase( menuNode_t *node )
 					Sys_Error("Error in DrawBase - no building with id %i\n", baseCurrent->map[row][col] );
 
 				if ( !building->used ) {
-					if ( building->needs )
+					if ( *building->needs )
 						building->used = 1;
-					if (building->image) { /* TODO:DEBUG */
+					if ( *building->image ) { /* TODO:DEBUG */
 						Q_strncpyz( image, building->image, MAX_QPATH );
 					} else {
 						/*Com_DPrintf( "B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx ); */
 					}
-				} else {
+				} else if ( *building->needs ){
 					secondBuilding = B_GetBuildingType ( building->needs );
 					if ( ! secondBuilding )
 						Sys_Error( "Error in ufo-scriptfile - could not find the needed building\n" );
@@ -1736,9 +1728,9 @@ void B_AssembleMap ( void )
 					continue;
 				}
 
-				if ( !entry->used && entry->needs )
+				if ( !entry->used && *entry->needs )
 					entry->used = 1;
-				else if ( entry->needs )
+				else if ( *entry->needs )
 					continue;
 
 				if ( entry->mapPart )
@@ -1895,17 +1887,6 @@ B_ResetBaseManagement
 void B_ResetBaseManagement( void )
 {
 	Com_DPrintf("Reset basemanagement\n");
-
-	/* get data memory */
-	if ( bmDataSize )
-		memset( bmDataStart, 0, bmDataSize );
-	else
-	{
-		Hunk_Begin( 0x40000 );
-		bmDataStart = Hunk_Alloc( 0x40000 );
-		bmDataSize = Hunk_End();
-	}
-	bmData = bmDataStart;
 
 	/* add commands and cvars */
 	Cmd_AddCommand( "mn_prev_base", B_PrevBase );
