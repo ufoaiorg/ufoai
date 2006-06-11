@@ -126,7 +126,7 @@ menu singleplayer
 	{
 		font	f_menubig
 		color	"0 0.5 0 1"
-		string	"_New"
+		string	"_New game"
 		pos	"768 390"
 		align	uc
 	}
@@ -472,7 +472,7 @@ menu load
 
 	func init
 	{
-		cmd "game_comments load"
+		cmd game_comments
 	}
 }
 
@@ -648,7 +648,7 @@ menu save
 
 	func init
 	{
-		cmd "game_comments save"
+		cmd game_comments
 	}
 }
 

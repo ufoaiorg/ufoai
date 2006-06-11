@@ -468,14 +468,14 @@ menu hud
 	string ammoleft
 	{
 		string	"*cvar mn_ammoleft"
-		pos		"974 731"
+		pos		"974 728"
 		align	uc
 	}
 
 	string ammoright
 	{
 		string	"*cvar mn_ammoright"
-		pos		"52 731"
+		pos		"52 728"
 		align	uc
 	}
 
