@@ -420,12 +420,36 @@ tech rs_weapon_fraggren
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_fraggen_txt"
+	description	"_fraggren_txt"
 
 	requires	initial
 	provides	fraggrenade
 	time	0
 	researched	true
+}
+
+tech rs_weapon_flaregren
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_flaregren_txt"
+
+	requires	initial
+	provides	flaregrenade
+	time	10
+	researched	false
+}
+
+tech rs_weapon_stungren
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_stungren_txt"
+
+	requires	initial
+	provides	stungrenade
+	time	10
+	researched	false
 }
 
 tech rs_weapon_smokegren
