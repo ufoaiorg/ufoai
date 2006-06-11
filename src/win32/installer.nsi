@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "UFO:Alien Invasion"
-!define PRODUCT_VERSION "0.12"
+!define PRODUCT_VERSION "0.13"
 !define PRODUCT_PUBLISHER "UFO:AI Team"
 !define PRODUCT_WEB_SITE "http://www.ufoai.net"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\ufo.exe"
@@ -27,7 +27,7 @@ SetCompressor bzip2
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
 ; License page
-!insertmacro MUI_PAGE_LICENSE "..\docs\gnu.txt"
+!insertmacro MUI_PAGE_LICENSE "..\..\COPYING"
 ; Components page
 !insertmacro MUI_PAGE_COMPONENTS
 ; Directory page
@@ -69,34 +69,32 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base"
   File "..\..\base\*.cfg"
   File "..\..\base\*.dll"
-; maps
-  SetOutPath "$INSTDIR\base\maps"
-  File "..\..\base\maps\*.bsp"
-  File "..\..\base\maps\*.ump"
-  SetOutPath "$INSTDIR\base\maps\b"
-  SetOutPath "$INSTDIR\base\maps\b\a"
-  File "..\..\base\maps\b\a\*.bsp"
-  SetOutPath "$INSTDIR\base\maps\b\d"
-  File "..\..\base\maps\b\d\*.bsp"
-  SetOutPath "$INSTDIR\base\maps\b\g"
-  File "..\..\base\maps\b\g\*.bsp"
-  SetOutPath "$INSTDIR\base\maps\frozend"
-  File "..\..\base\maps\frozend\*.bsp"
-  SetOutPath "$INSTDIR\base\maps\ice"
-  File "..\..\base\maps\ice\*.bsp"
-  SetOutPath "$INSTDIR\base\maps\orientald"
-  File "..\..\base\maps\orientald\*.bsp"
-  SetOutPath "$INSTDIR\base\maps\tropicd"
-  File "..\..\base\maps\tropicd\*.bsp"
-  SetOutPath "$INSTDIR\base\maps\villaged"
-  File "..\..\base\maps\villaged\*.bsp"
-  SetOutPath "$INSTDIR\base\maps\villagen"
-  File "..\..\base\maps\villagen\*.bsp"
+
 ; models
   SetOutPath "$INSTDIR\base\models"
-  SetOutPath "$INSTDIR\base\models\aircrafts"
-  File "..\..\base\models\aircrafts\*.md2"
-  File "..\..\base\models\aircrafts\*.jpg"
+
+;======================================================================
+; models/aircraft
+;======================================================================
+  SetOutPath "$INSTDIR\base\models\aircraft"
+  SetOutPath "$INSTDIR\base\models\aircraft\dropship"
+  File "..\..\base\models\aircraft\dropship\*.md2"
+  File "..\..\base\models\aircraft\dropship\*.jpg"
+  SetOutPath "$INSTDIR\base\models\aircraft\interceptor"
+  File "..\..\base\models\aircraft\interceptor\*.md2"
+  File "..\..\base\models\aircraft\interceptor\*.jpg"
+  SetOutPath "$INSTDIR\base\models\aircraft\ufo_big"
+  File "..\..\base\models\aircraft\ufo_big\*.md2"
+  File "..\..\base\models\aircraft\ufo_big\*.jpg"
+  SetOutPath "$INSTDIR\base\models\aircraft\ufo_small"
+  File "..\..\base\models\aircraft\ufo_small\*.md2"
+  File "..\..\base\models\aircraft\ufo_small\*.jpg"
+
+;======================================================================
+; models/aliens
+;======================================================================
+; FIXME: Activate md2 and other
+;======================================================================
   SetOutPath "$INSTDIR\base\models\aliens"
   SetOutPath "$INSTDIR\base\models\aliens\blue"
   File "..\..\base\models\aliens\blue\*.md2"
@@ -108,11 +106,40 @@ Section "Game" SEC01
   File "..\..\base\models\aliens\ortnok\*.jpg"
   File "..\..\base\models\aliens\ortnok\*.tag"
   File "..\..\base\models\aliens\ortnok\*.anm"
+  SetOutPath "$INSTDIR\base\models\aliens\ortnok_light"
+  File "..\..\base\models\aliens\ortnok_light\*.md2"
+  File "..\..\base\models\aliens\ortnok_light\*.jpg"
+  File "..\..\base\models\aliens\ortnok_light\*.tag"
+  File "..\..\base\models\aliens\ortnok_light\*.anm"
+  SetOutPath "$INSTDIR\base\models\aliens\ortnok_medium"
+  File "..\..\base\models\aliens\ortnok_medium\*.md2"
+  File "..\..\base\models\aliens\ortnok_medium\*.jpg"
+  File "..\..\base\models\aliens\ortnok_medium\*.tag"
+  File "..\..\base\models\aliens\ortnok_medium\*.anm"
+  SetOutPath "$INSTDIR\base\models\aliens\hovernet"
+  ;File "..\..\base\models\aliens\hovernet\*.md2"
+  File "..\..\base\models\aliens\hovernet\*.jpg"
+  ;File "..\..\base\models\aliens\hovernet\*.tag"
+  ;File "..\..\base\models\aliens\hovernet\*.anm"
+
+;======================================================================
+; models/animals
+;======================================================================
   SetOutPath "$INSTDIR\base\models\animals"
-  File "..\..\base\models\animals\*.anm"
-  File "..\..\base\models\animals\*.tag"
-  File "..\..\base\models\animals\*.jpg"
-  File "..\..\base\models\animals\*.md2"
+  SetOutPath "$INSTDIR\base\models\animals\cow"
+  File "..\..\base\models\animals\cow\*.anm"
+  File "..\..\base\models\animals\cow\*.tag"
+  File "..\..\base\models\animals\cow\*.jpg"
+  File "..\..\base\models\animals\cow\*.md2"
+  SetOutPath "$INSTDIR\base\models\animals\penguin"
+  File "..\..\base\models\animals\penguin\*.anm"
+  File "..\..\base\models\animals\penguin\*.tag"
+  File "..\..\base\models\animals\penguin\*.jpg"
+  File "..\..\base\models\animals\penguin\*.md2"
+
+;======================================================================
+; models/civilians
+;======================================================================
   SetOutPath "$INSTDIR\base\models\civilians"
   SetOutPath "$INSTDIR\base\models\civilians\female"
   File "..\..\base\models\civilians\female\*.anm"
@@ -124,33 +151,181 @@ Section "Game" SEC01
   File "..\..\base\models\civilians\male\*.jpg"
   File "..\..\base\models\civilians\male\*.md2"
   File "..\..\base\models\civilians\male\*.tag"
+
+;======================================================================
+; models/objects
+;======================================================================
   SetOutPath "$INSTDIR\base\models\objects"
-;  File "..\..\base\models\objects\*.anm"
-  File "..\..\base\models\objects\*.jpg"
-  File "..\..\base\models\objects\*.md2"
-;  File "..\..\base\models\objects\*.tag"
-  File "..\..\base\models\objects\*.tga"
+
+;======================================================================
+; models/objects/alien
+;======================================================================
   SetOutPath "$INSTDIR\base\models\objects\alien"
-  File "..\..\base\models\objects\alien\*.jpg"
-  File "..\..\base\models\objects\alien\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\alien\battery"
+  File "..\..\base\models\objects\alien\battery\*.jpg"
+  File "..\..\base\models\objects\alien\battery\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\alien\ion_condenser"
+  File "..\..\base\models\objects\alien\ion_condenser\*.jpg"
+  File "..\..\base\models\objects\alien\ion_condenser\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\alien\panel"
+;======================================================================
+; missing texture
+;======================================================================
+;  File "..\..\base\models\objects\alien\panel\*.jpg"
+  File "..\..\base\models\objects\alien\panel\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\alien\pstation"
+  File "..\..\base\models\objects\alien\pstation\*.jpg"
+  File "..\..\base\models\objects\alien\pstation\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\alien\seat"
+  File "..\..\base\models\objects\alien\seat\*.jpg"
+  File "..\..\base\models\objects\alien\seat\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\alien\ufo_crashed"
+  File "..\..\base\models\objects\alien\ufo_crashed\*.jpg"
+  File "..\..\base\models\objects\alien\ufo_crashed\*.md2"
+
+;======================================================================
+; models/objects/base
+;======================================================================
   SetOutPath "$INSTDIR\base\models\objects\base"
-  File "..\..\base\models\objects\base\*.jpg"
-  File "..\..\base\models\objects\base\*.md2"
+
+;======================================================================
+; models/objects/base/radar
+;======================================================================
+  SetOutPath "$INSTDIR\base\models\objects\base\radar"
+  File "..\..\base\models\objects\base\radar\*.jpg"
+  File "..\..\base\models\objects\base\radar\*.md2"
+
+;======================================================================
+; models/objects/cars
+;======================================================================
   SetOutPath "$INSTDIR\base\models\objects\cars"
-  File "..\..\base\models\objects\cars\*.jpg"
-  File "..\..\base\models\objects\cars\*.md2"
-  File "..\..\base\models\objects\cars\*.tga"
+  SetOutPath "$INSTDIR\base\models\objects\cars\car2"
+  File "..\..\base\models\objects\cars\car2\*.jpg"
+  File "..\..\base\models\objects\cars\car2\*.md2"
+  File "..\..\base\models\objects\cars\car2\*.tga"
+  SetOutPath "$INSTDIR\base\models\objects\cars\golf"
+  File "..\..\base\models\objects\cars\golf\*.jpg"
+  File "..\..\base\models\objects\cars\golf\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\cars\van"
+  File "..\..\base\models\objects\cars\van\*.jpg"
+  File "..\..\base\models\objects\cars\van\*.md2"
+
+;======================================================================
+; models/objects/city
+;======================================================================
   SetOutPath "$INSTDIR\base\models\objects\city"
   File "..\..\base\models\objects\city\*.jpg"
   File "..\..\base\models\objects\city\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\city\light"
+  File "..\..\base\models\objects\city\light\*.jpg"
+  File "..\..\base\models\objects\city\light\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\city\signs"
+  File "..\..\base\models\objects\city\signs\*.jpg"
+  File "..\..\base\models\objects\city\signs\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\city\trash"
+  File "..\..\base\models\objects\city\trash\*.jpg"
+  File "..\..\base\models\objects\city\trash\*.md2"
+
+;======================================================================
+; models/objects/furniture
+;======================================================================
   SetOutPath "$INSTDIR\base\models\objects\furniture"
-  File "..\..\base\models\objects\furniture\*.jpg"
-  File "..\..\base\models\objects\furniture\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\furniture\bed"
+  File "..\..\base\models\objects\furniture\bed\*.jpg"
+  File "..\..\base\models\objects\furniture\bed\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\furniture\bookshelf"
+  File "..\..\base\models\objects\furniture\bookshelf\*.jpg"
+  File "..\..\base\models\objects\furniture\bookshelf\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\furniture\computer"
+  File "..\..\base\models\objects\furniture\computer\*.jpg"
+  File "..\..\base\models\objects\furniture\computer\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\furniture\cupboard"
+  File "..\..\base\models\objects\furniture\cupboard\*.jpg"
+  File "..\..\base\models\objects\furniture\cupboard\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\furniture\flowerpot"
+  File "..\..\base\models\objects\furniture\flowerpot\*.tga"
+  File "..\..\base\models\objects\furniture\flowerpot\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\furniture\laptop"
+  File "..\..\base\models\objects\furniture\laptop\*.jpg"
+  File "..\..\base\models\objects\furniture\laptop\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\furniture\locker"
+  File "..\..\base\models\objects\furniture\locker\*.jpg"
+  File "..\..\base\models\objects\furniture\locker\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\furniture\metalshelf"
+  File "..\..\base\models\objects\furniture\metalshelf\*.jpg"
+  File "..\..\base\models\objects\furniture\metalshelf\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\furniture\speaker"
+  File "..\..\base\models\objects\furniture\speaker\*.jpg"
+  File "..\..\base\models\objects\furniture\speaker\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\furniture\sunprot"
+  File "..\..\base\models\objects\furniture\sunprot\*.jpg"
+  File "..\..\base\models\objects\furniture\sunprot\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\furniture\trashcan"
+  File "..\..\base\models\objects\furniture\trashcan\*.jpg"
+  File "..\..\base\models\objects\furniture\trashcan\*.md2"
+
+;======================================================================
+; models/objects/vegi
+;======================================================================
   SetOutPath "$INSTDIR\base\models\objects\vegi"
-  File "..\..\base\models\objects\vegi\*.jpg"
-  File "..\..\base\models\objects\vegi\*.md2"
-  File "..\..\base\models\objects\vegi\*.tga"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\bush"
+  File "..\..\base\models\objects\vegi\bush\*.jpg"
+  File "..\..\base\models\objects\vegi\bush\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\cactus"
+  File "..\..\base\models\objects\vegi\cactus\*.jpg"
+  File "..\..\base\models\objects\vegi\cactus\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\chestnut"
+  File "..\..\base\models\objects\vegi\chestnut\*.jpg"
+  File "..\..\base\models\objects\vegi\chestnut\*.md2"
+  File "..\..\base\models\objects\vegi\chestnut\*.tga"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\corn"
+  File "..\..\base\models\objects\vegi\corn\*.tga"
+  File "..\..\base\models\objects\vegi\corn\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\palm1"
+  File "..\..\base\models\objects\vegi\palm1\*.jpg"
+  File "..\..\base\models\objects\vegi\palm1\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\palm2"
+  File "..\..\base\models\objects\vegi\palm2\*.tga"
+  File "..\..\base\models\objects\vegi\palm2\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\palm3"
+  File "..\..\base\models\objects\vegi\palm3\*.tga"
+  File "..\..\base\models\objects\vegi\palm3\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\palm4"
+  File "..\..\base\models\objects\vegi\palm4\*.jpg"
+  File "..\..\base\models\objects\vegi\palm4\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\palm5"
+  File "..\..\base\models\objects\vegi\palm5\*.jpg"
+  File "..\..\base\models\objects\vegi\palm5\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\palm6"
+  File "..\..\base\models\objects\vegi\palm6\*.jpg"
+  File "..\..\base\models\objects\vegi\palm6\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\palm7"
+  File "..\..\base\models\objects\vegi\palm7\*.jpg"
+  File "..\..\base\models\objects\vegi\palm7\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\tree01"
+  File "..\..\base\models\objects\vegi\tree01\*.tga"
+  File "..\..\base\models\objects\vegi\tree01\*.jpg"
+  File "..\..\base\models\objects\vegi\tree01\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\tree02"
+  File "..\..\base\models\objects\vegi\tree02\*.tga"
+  File "..\..\base\models\objects\vegi\tree02\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\tropic"
+  File "..\..\base\models\objects\vegi\tropic\*.tga"
+  File "..\..\base\models\objects\vegi\tropic\*.jpg"
+  File "..\..\base\models\objects\vegi\tropic\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\vegi\tropical1"
+  File "..\..\base\models\objects\vegi\tropical1\*.tga"
+  File "..\..\base\models\objects\vegi\tropical1\*.md2"
+
+;======================================================================
+; models/soldiers
+;======================================================================
   SetOutPath "$INSTDIR\base\models\soldiers"
+  SetOutPath "$INSTDIR\base\models\soldiers\female"
+  File "..\..\base\models\soldiers\female\*.anm"
+  File "..\..\base\models\soldiers\female\*.md2"
+  File "..\..\base\models\soldiers\female\*.tag"
+  File "..\..\base\models\soldiers\female\*.jpg"
   SetOutPath "$INSTDIR\base\models\soldiers\f"
   File "..\..\base\models\soldiers\f\*.anm"
   File "..\..\base\models\soldiers\f\*.md2"
@@ -166,6 +341,11 @@ Section "Game" SEC01
   File "..\..\base\models\soldiers\fmedium\*.md2"
   File "..\..\base\models\soldiers\fmedium\*.tag"
   File "..\..\base\models\soldiers\fmedium\*.jpg"
+  SetOutPath "$INSTDIR\base\models\soldiers\male"
+  File "..\..\base\models\soldiers\male\*.anm"
+  File "..\..\base\models\soldiers\male\*.md2"
+  File "..\..\base\models\soldiers\male\*.tag"
+  File "..\..\base\models\soldiers\male\*.jpg"
   SetOutPath "$INSTDIR\base\models\soldiers\m"
   File "..\..\base\models\soldiers\m\*.anm"
   File "..\..\base\models\soldiers\m\*.md2"
@@ -181,19 +361,47 @@ Section "Game" SEC01
   File "..\..\base\models\soldiers\mmedium\*.md2"
   File "..\..\base\models\soldiers\mmedium\*.tag"
   File "..\..\base\models\soldiers\mmedium\*.jpg"
+  SetOutPath "$INSTDIR\base\models\soldiers\ugv_phoenix"
+  File "..\..\base\models\soldiers\ugv_phoenix\*.md2"
+  File "..\..\base\models\soldiers\ugv_phoenix\*.jpg"
+  SetOutPath "$INSTDIR\base\models\soldiers\ugv_triax"
+  File "..\..\base\models\soldiers\ugv_triax\*.md2"
+  File "..\..\base\models\soldiers\ugv_triax\*.jpg"
+
+;======================================================================
+; models/weapons
+;======================================================================
   SetOutPath "$INSTDIR\base\models\weapons"
   SetOutPath "$INSTDIR\base\models\weapons\assault"
   File "..\..\base\models\weapons\assault\*.jpg"
   File "..\..\base\models\weapons\assault\*.md2"
+  SetOutPath "$INSTDIR\base\models\weapons\bolterrifle"
+  File "..\..\base\models\weapons\bolterrifle\*.jpg"
+  File "..\..\base\models\weapons\bolterrifle\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\flamer"
   File "..\..\base\models\weapons\flamer\*.jpg"
   File "..\..\base\models\weapons\flamer\*.md2"
+  SetOutPath "$INSTDIR\base\models\weapons\flare"
+  File "..\..\base\models\weapons\flare\*.tga"
+;======================================================================
+; missing file
+;======================================================================
+  ;File "..\..\base\models\weapons\flare\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\fraggren"
   File "..\..\base\models\weapons\fraggren\*.jpg"
   File "..\..\base\models\weapons\fraggren\*.md2"
+  SetOutPath "$INSTDIR\base\models\weapons\grenl"
+  File "..\..\base\models\weapons\grenl\*.jpg"
+  File "..\..\base\models\weapons\grenl\*.md2"
+  SetOutPath "$INSTDIR\base\models\weapons\incgren"
+  File "..\..\base\models\weapons\incgren\*.tga"
+  File "..\..\base\models\weapons\incgren\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\irgoggles"
   File "..\..\base\models\weapons\irgoggles\*.jpg"
   File "..\..\base\models\weapons\irgoggles\*.md2"
+  SetOutPath "$INSTDIR\base\models\weapons\kerrblade"
+  File "..\..\base\models\weapons\kerrblade\*.jpg"
+  File "..\..\base\models\weapons\kerrblade\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\knife"
   File "..\..\base\models\weapons\knife\*.jpg"
   File "..\..\base\models\weapons\knife\*.md2"
@@ -209,6 +417,9 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base\models\weapons\pistol"
   File "..\..\base\models\weapons\pistol\*.jpg"
   File "..\..\base\models\weapons\pistol\*.md2"
+  SetOutPath "$INSTDIR\base\models\weapons\plasblaster"
+  File "..\..\base\models\weapons\plasblaster\*.jpg"
+  File "..\..\base\models\weapons\plasblaster\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\plaspistol"
   File "..\..\base\models\weapons\plaspistol\*.jpg"
   File "..\..\base\models\weapons\plaspistol\*.md2"
@@ -227,17 +438,34 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base\models\weapons\sniper"
   File "..\..\base\models\weapons\sniper\*.jpg"
   File "..\..\base\models\weapons\sniper\*.md2"
+  SetOutPath "$INSTDIR\base\models\weapons\stungren"
+  File "..\..\base\models\weapons\stungren\*.tga"
+;======================================================================
+; missing file
+;======================================================================
+;  File "..\..\base\models\weapons\stungren\*.md2"
+  SetOutPath "$INSTDIR\base\models\weapons\stunrod"
+  File "..\..\base\models\weapons\stunrod\*.jpg"
+  File "..\..\base\models\weapons\stunrod\*.md2"
+  SetOutPath "$INSTDIR\base\models\weapons\tachyonpistol"
+  File "..\..\base\models\weapons\tachyonpistol\*.jpg"
+  File "..\..\base\models\weapons\tachyonpistol\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\tachyonrifle"
   File "..\..\base\models\weapons\tachyonrifle\*.jpg"
   File "..\..\base\models\weapons\tachyonrifle\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\tachyonsniper"
   File "..\..\base\models\weapons\tachyonsniper\*.jpg"
   File "..\..\base\models\weapons\tachyonsniper\*.md2"
+
+;======================================================================
 ; music
+;======================================================================
   SetOutPath "$INSTDIR\base\music"
-  File "..\..\base\music\*.ogg"
-  File "..\..\base\music\*.txt"
+  File "..\..\base\music\*.*"
+
+;======================================================================
 ; pics
+;======================================================================
   SetOutPath "$INSTDIR\base\pics"
   File "..\..\base\pics\*.jpg"
   File "..\..\base\pics\*.tga"
@@ -259,15 +487,24 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base\pics\sfx"
   File "..\..\base\pics\sfx\*.tga"
   File "..\..\base\pics\sfx\*.jpg"
+
+;======================================================================
 ; save
+;======================================================================
   SetOutPath "$INSTDIR\base\save"
+
+;======================================================================
 ; sounds
+;======================================================================
   SetOutPath "$INSTDIR\base\sound"
   SetOutPath "$INSTDIR\base\sound\misc"
   File "..\..\base\sound\misc\*.wav"
   SetOutPath "$INSTDIR\base\sound\weapons"
   File "..\..\base\sound\weapons\*.wav"
+
+;======================================================================
 ; textures
+;======================================================================
   SetOutPath "$INSTDIR\base\textures"
   SetOutPath "$INSTDIR\base\textures\exterior"
   File "..\..\base\textures\exterior\*.jpg"
@@ -307,10 +544,42 @@ Section "Game" SEC01
   File "..\..\base\textures\tex_ufo\*.jpg"
   SetOutPath "$INSTDIR\base\textures\tex_vehicles"
   File "..\..\base\textures\tex_vehicles\*.jpg"
+
+;======================================================================
 ; ufos
+;======================================================================
   SetOutPath "$INSTDIR\base\ufos"
   File "..\..\base\ufos\*.ufo"
+
+;======================================================================
+; maps
+;======================================================================
+  SetOutPath "$INSTDIR\base\maps"
+  File "..\..\base\maps\*.bsp"
+  File "..\..\base\maps\*.ump"
+  SetOutPath "$INSTDIR\base\maps\b"
+  SetOutPath "$INSTDIR\base\maps\b\a"
+  File "..\..\base\maps\b\a\*.bsp"
+  SetOutPath "$INSTDIR\base\maps\b\d"
+  File "..\..\base\maps\b\d\*.bsp"
+  SetOutPath "$INSTDIR\base\maps\b\g"
+  File "..\..\base\maps\b\g\*.bsp"
+  SetOutPath "$INSTDIR\base\maps\frozend"
+  File "..\..\base\maps\frozend\*.bsp"
+  SetOutPath "$INSTDIR\base\maps\ice"
+  File "..\..\base\maps\ice\*.bsp"
+  SetOutPath "$INSTDIR\base\maps\orientald"
+  File "..\..\base\maps\orientald\*.bsp"
+  SetOutPath "$INSTDIR\base\maps\tropicd"
+  File "..\..\base\maps\tropicd\*.bsp"
+  SetOutPath "$INSTDIR\base\maps\villaged"
+  File "..\..\base\maps\villaged\*.bsp"
+  SetOutPath "$INSTDIR\base\maps\villagen"
+  File "..\..\base\maps\villagen\*.bsp"
+
+;======================================================================
 ; to let the game start up
+;======================================================================
   SetOutPath "$INSTDIR"
 
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
@@ -321,12 +590,32 @@ SectionEnd
 Section "MappingTools" SEC02
   SetOutPath "$INSTDIR\base\maps"
   File "..\..\base\maps\*.map"
+  SetOutPath "$INSTDIR\base\maps\b"
+  SetOutPath "$INSTDIR\base\maps\b\a"
+  File "..\..\base\maps\b\a\*.map"
+  SetOutPath "$INSTDIR\base\maps\b\d"
+  File "..\..\base\maps\b\d\*.map"
+  SetOutPath "$INSTDIR\base\maps\b\g"
+  File "..\..\base\maps\b\g\*.map"
+  SetOutPath "$INSTDIR\base\maps\frozend"
+  File "..\..\base\maps\frozend\*.map"
+  SetOutPath "$INSTDIR\base\maps\ice"
+  File "..\..\base\maps\ice\*.map"
+  SetOutPath "$INSTDIR\base\maps\orientald"
+  File "..\..\base\maps\orientald\*.map"
+  SetOutPath "$INSTDIR\base\maps\tropicd"
+  File "..\..\base\maps\tropicd\*.map"
+  SetOutPath "$INSTDIR\base\maps\villaged"
+  File "..\..\base\maps\villaged\*.map"
+  SetOutPath "$INSTDIR\base\maps\villagen"
+  File "..\..\base\maps\villagen\*.map"
+  File "..\..\base\maps\Makefile"
+  File "..\..\base\maps\Makefile.win"
+  File "..\..\base\maps\compile.pl"
   SetOutPath "$INSTDIR\tools"
   File "..\tools\*.ms"
   File "..\tools\*.def"
-  File "..\tools\*.exe"
-  File "..\tools\*.qe4"
-  File "..\tools\*.doc"
+  File /nonfatal "..\tools\ufo2map\*.exe"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MAP-Editor.lnk" "$INSTDIR\tools\q3radiant.exe" "" "$INSTDIR\tools\q3radiant.exe" 0
 SectionEnd
 
@@ -337,7 +626,6 @@ Section "SourceCode" SEC03
   File "..\client\*.c"
   SetOutPath "$INSTDIR\src\docs"
   File "..\docs\*.txt"
-  File "..\docs\q3a_master_server_protocol.txt"
   File "..\docs\readme.linux"
   File "..\docs\readme.solaris"
   File "..\docs\TODO"
@@ -353,22 +641,28 @@ Section "SourceCode" SEC03
   SetOutPath "$INSTDIR\src\irix"
   File "..\irix\*.c"
   File "..\irix\Makefile.txt"
-  SetOutPath "$INSTDIR\src\jpeg-6"
-  File "..\jpeg-6\*.c"
-  File "..\jpeg-6\*.h"
-  File "..\jpeg-6\README"
+  SetOutPath "$INSTDIR\src\unix"
+  File "..\unix\*.h"
+  File "..\unix\*.c"
   SetOutPath "$INSTDIR\src\linux"
   File "..\linux\*.h"
   File "..\linux\*.c"
   File "..\linux\*.s"
-  File "..\linux\Makefile"
   File "..\linux\*.xbm"
   SetOutPath "$INSTDIR\src"
   File "..\makefile.mingw"
+  File "..\Makefile"
   SetOutPath "$INSTDIR\src\null"
   File "..\null\*.c"
   SetOutPath "$INSTDIR\src\po"
   File "..\po\*.po"
+  File "..\po\*.pot"
+  File "..\po\FINDUFOS"
+  File "..\po\Makefile"
+  File "..\po\Makevars"
+  File "..\po\POTFILES.in"
+  File "..\po\ufopo.pl"
+  File "..\po\remove-potcdate.sin"
   SetOutPath "$INSTDIR\src\qcommon"
   File "..\qcommon\*.c"
   File "..\qcommon\*.h"
@@ -390,43 +684,49 @@ Section "SourceCode" SEC03
   File "..\solaris\*.c"
   File "..\solaris\*.h"
   File "..\solaris\Makefile.Solaris"
-  SetOutPath "$INSTDIR\src\tools\bsp"
-  File "..\tools\bsp\*.dsp"
-  File "..\tools\bsp\*.dsw"
-  SetOutPath "$INSTDIR\src\tools\bsp\bspinfo3"
-  File "..\tools\bsp\bspinfo3\*.c"
-  File "..\tools\bsp\bspinfo3\*.dsp"
-  File "..\tools\bsp\bspinfo3\makefile"
-  SetOutPath "$INSTDIR\src\tools\bsp\qbsp3"
-  File "..\tools\bsp\qbsp3\*.c"
-  File "..\tools\bsp\qbsp3\*.h"
-  File "..\tools\bsp\qbsp3\*.dsp"
-  SetOutPath "$INSTDIR\src\tools\bsp\qrad3"
-  File "..\tools\bsp\qrad3\*.c"
-  File "..\tools\bsp\qrad3\makefile"
-  File "..\tools\bsp\qrad3\*.h"
-  File "..\tools\bsp\qrad3\*.dsp"
-  File "..\tools\bsp\qrad3\*.dsw"
-  SetOutPath "$INSTDIR\src\tools\common"
-  File "..\tools\common\*.c"
-  File "..\tools\common\*.h"
+
+;======================================================================
+; tools
+;======================================================================
   SetOutPath "$INSTDIR\src\tools"
-  File "..\tools\Makefile"
+  File "..\tools\*.pl"
   File "..\tools\*.ms"
+  SetOutPath "$INSTDIR\src\tools\blender"
+  File "..\tools\blender\*.py"
+  SetOutPath "$INSTDIR\src\tools\gtkradiant"
+  File "..\tools\gtkradiant\*.diff"
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\games"
+  File "..\tools\gtkradiant\games\*.game"
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\plugin"
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\plugin\ufoai"
+  File "..\tools\gtkradiant\plugin\ufoai\*.cpp"
+  File "..\tools\gtkradiant\plugin\ufoai\*.h"
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\ufo.game"
+  File "..\tools\gtkradiant\ufo.game\*.xml"
+  File "..\tools\gtkradiant\ufo.game\*.xlink"
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\ufo.game\base"
+  File "..\tools\gtkradiant\ufo.game\base\*.def"
   SetOutPath "$INSTDIR\src\tools\qdata"
-  File "..\tools\qdata\*.h"
   File "..\tools\qdata\*.c"
+  File "..\tools\qdata\*.h"
   File "..\tools\qdata\makefile"
   File "..\tools\qdata\*.dsp"
   File "..\tools\qdata\*.dsw"
+  SetOutPath "$INSTDIR\src\tools\ufo2map"
+  File "..\tools\ufo2map\*.h"
+  File "..\tools\ufo2map\*.c"
+  File "..\tools\ufo2map\*.dev"
+  File "..\tools\ufo2map\makefile"
+  SetOutPath "$INSTDIR\src\tools\ufo2map\common"
+  File "..\tools\ufo2map\common\*.h"
+  File "..\tools\ufo2map\common\*.c"
+
   SetOutPath "$INSTDIR\src"
   File "..\*.cbp"
   File "..\*.dev"
   File "..\*.dsp"
   File "..\*.dsw"
-  File "..\*.ncb"
   File "..\*.sln"
-  File "..\*.suo"
   File "..\*.vcproj"
   File "..\*.workspace"
   SetOutPath "$INSTDIR\src\win32"
@@ -436,7 +736,6 @@ Section "SourceCode" SEC03
   File "*.lib"
   File "*.aps"
   File "*.ico"
-  File "*.rc"
   File "*.rc"
 SectionEnd
 
@@ -467,17 +766,19 @@ SectionEnd
 
 Function un.onUninstSuccess
   HideWindow
-  MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) wurde erfolgreich deinstalliert."
+  MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) successfully deinstalled."
 FunctionEnd
 
 Function un.onInit
 !insertmacro MUI_UNGETLANGUAGE
-  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Möchten Sie $(^Name) und alle seinen Komponenten deinstallieren?" IDYES +2
+  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure that you want to remove $(^Name) and all its data?" IDYES +2
   Abort
 FunctionEnd
 
 Section Uninstall
+;==============================================================
 ; TODO: Delete all files from $INSTDIR, too
+;==============================================================
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\*.exe"
   Delete "$INSTDIR\*.dll"
