@@ -586,6 +586,142 @@ item fraggrenade
 }
 
 // =======================
+// FLARE GRENADE
+// =======================
+item flaregrenade
+{
+	name		"_Flare Grenade"
+	model		weapons/flare/flare
+	weapon		true
+	type		grenade
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.5
+	price		170
+	buytype		2
+	ammo		1
+	thrown		true
+
+	primary
+	{
+		name	"_Throw"
+		skill	explosive
+		projtl	smokegren
+		impact	smoke_explosion
+		hitbody smoke_explosion
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"7 7"
+		range	4.0
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"0 0"
+		splrad	120
+		dmgtype ""
+	}
+	secondary
+	{
+		name	"_Throw"
+		skill	explosive
+		projtl	smokegren
+		impact	smoke_explosion
+		hitbody smoke_explosion
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"7 7"
+		range	4.0
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"0 0"
+		splrad	120
+		dmgtype ""
+	}
+}
+
+// =======================
+// STUN GRENADE
+// =======================
+item stungrenade
+{
+	name		"_Stun Grenade"
+	model		weapons/stungren/stungren
+	weapon		true
+	type		grenade
+	category	0
+	shape		"0 0 1 1"
+	center		"-1 0 0"
+	scale		2.2
+	price		170
+	buytype		2
+	ammo		1
+	thrown		true
+
+	primary
+	{
+		name	"_Throw"
+		skill	explosive
+		projtl	smokegren
+		impact	smoke_explosion
+		hitbody smoke_explosion
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"7 7"
+		range	4.0
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"0 0"
+		splrad	120
+		dmgtype ""
+	}
+	secondary
+	{
+		name	"_Throw"
+		skill	explosive
+		projtl	smokegren
+		impact	smoke_explosion
+		hitbody smoke_explosion
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"7 7"
+		range	4.0
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"0 0"
+		splrad	120
+		dmgtype ""
+	}
+}
+
+// =======================
 // SMOKE GRENADE
 // =======================
 item smokegrenade
