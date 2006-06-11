@@ -1,5 +1,3 @@
-./linux/snd_alsa.c
-./linux/sys_linux.c
 ./qcommon/files.c
 ./game/g_ai.c
 ./game/g_svcmds.c
@@ -8,7 +6,6 @@
 ./client/cl_ufopedia.c
 ./client/console.c
 ./client/cl_team.c
-./client/keys.c
 ./client/cl_input.c
 ./client/cl_le.c
 ./client/cl_sequence.c
@@ -16,13 +13,10 @@
 ./client/cl_scrn.c
 ./client/cl_research.c
 ./client/cl_actor.c
-./client/cl_cin.c
 ./client/cl_view.c
 ./client/cl_parse.c
 ./client/cl_fx.c
 ./client/cl_main.c
-./client/snd_dma.c
 ./client/cl_basemanagement.c
 ./client/cl_particle.c
-./client/snd_mem.c
 ./client/cl_campaign.c
