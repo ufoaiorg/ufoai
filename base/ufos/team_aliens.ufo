@@ -271,3 +271,133 @@ teamdesc cyborg_ortnok
 	interrogation "rs_alien_ortnok_interrogation"
 	interrogation_com ""
 }
+
+//========================================================================
+// ALIENS
+//========================================================================
+
+
+//==================
+// ortnok
+//==================
+
+names ortnok
+{
+	neutral
+	{
+	Akrokk
+	Mkeek
+	Rniuk
+	Tranok
+	Kronuk
+	Trenakk
+	Zrokk
+	Kraerak
+	Mnookk
+	Zmolukk
+	Abtrenek
+	Uonak
+	Ktrukk
+	Onukark
+	Ebnuzuk
+	Krrnaak
+	Zmuknesk
+	}
+
+	lastname
+	{
+	"Uk Kronok"
+	"Np Zlrok"
+	"T Zruujk"
+	"Kr Zrrosk"
+	"Mt Trekluk"
+	"H Hrkakk"
+	"Pt Mrlkuk"
+	"Tsk Hrekk"
+	"Kkr Kraukk"
+	"Tkr Hruk"
+	"Ts Srulok"
+	"K Krokk"
+	"Zt Hrmokuk"
+	"H Nhrokekk"
+	"Tt Treknk"
+	"Ok Orokk"
+	"Sk Trevuk"
+	"Zr Znaztrk"
+	}
+}
+
+actors ortnok
+{
+	neutral
+	{
+		aliens/ortnok body01 head01 0
+		aliens/ortnok body01 head02 0
+		aliens/ortnok body01 head03 0
+		aliens/ortnok body01 head01 1
+		aliens/ortnok body01 head02 1
+		aliens/ortnok body01 head03 1
+		aliens/ortnok body01 head01 2
+		aliens/ortnok body01 head02 2
+		aliens/ortnok body01 head03 2
+	}
+}
+
+//==================
+// blue
+//==================
+
+names blue
+{
+	neutral
+	{
+	Akrokk
+	Mkeek
+	Rniuk
+	Tranok
+	Kronuk
+	Trenakk
+	Zrokk
+	Kraerak
+	Mnookk
+	Zmolukk
+	Abtrenek
+	Uonak
+	Ktrukk
+	Onukark
+	Ebnuzuk
+	Krrnaak
+	Zmuknesk
+	}
+
+	lastname
+	{
+	"Uk Kronok"
+	"Np Zlrok"
+	"T Zruujk"
+	"Kr Zrrosk"
+	"Mt Trekluk"
+	"H Hrkakk"
+	"Pt Mrlkuk"
+	"Tsk Hrekk"
+	"Kkr Kraukk"
+	"Tkr Hruk"
+	"Ts Srulok"
+	"K Krokk"
+	"Zt Hrmokuk"
+	"H Nhrokekk"
+	"Tt Treknk"
+	"Ok Orokk"
+	"Sk Trevuk"
+	"Zr Znaztrk"
+	}
+}
+
+actors blue
+{
+	neutral
+	{
+		aliens/blue body01 head01 0
+		aliens/blue body01 head01 1
+	}
+}
