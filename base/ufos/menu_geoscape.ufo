@@ -413,7 +413,7 @@ menu popup_newbase
 	}
 	string cost
 	{
-		string "100000 $"
+		string "_100000 c"
 		pos	"290 390"
 		font	f_big
 	}
@@ -588,6 +588,150 @@ menu popup_baseattack
 		cmd "aircraft_list"
 	}
 }
+
+// ==================
+// POPUP ALIEN ACTIVITY
+// ==================
+
+// TODO: cancel button; ok button should set time scale to 5 seconds and center screen on the mission
+
+menu popup_alien_activity
+{
+	zone popup
+	{
+		invis true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos		"256 256"
+	}
+	string title
+	{
+		string	"_Alien activity has been reported."
+		pos	"290 276"
+		font	f_big
+	}
+	string text
+	{
+		string	"TODO"
+		pos	"290 320"
+	}
+	pic aa_button1
+	{
+		image	menu/button_my
+		pos	"290 450"
+		texl	"0 0"
+		texh	"128 32"
+		out	{ *aa_button1 texl "0 0" *aa_button1 texh "128 32" }
+		in	{ *aa_button1 texl "128 0" *aa_button1 texh "256 32" }
+		click	{ cmd "mn_pop;" }
+	}
+	string aa_button1_text
+	{
+		string	"_OK"
+		pos		"354 445"
+		color	"0 0.5 0 1"
+		font		f_menubig
+		align	uc
+	}
+}
+
+// ==================
+// POPUP MISSION EXPIRED
+// ==================
+
+menu popup_mission_expired
+{
+	zone popup
+	{
+		invis true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos		"256 256"
+	}
+	string title
+	{
+		string	"_Civilians died."
+		pos	"290 276"
+		font	f_big
+	}
+	string text
+	{
+		string	"TODO"
+		pos	"290 320"
+	}
+	pic aa_button1
+	{
+		image	menu/button_my
+		pos	"290 450"
+		texl	"0 0"
+		texh	"128 32"
+		out	{ *aa_button1 texl "0 0" *aa_button1 texh "128 32" }
+		in	{ *aa_button1 texl "128 0" *aa_button1 texh "256 32" }
+		click	{ cmd "mn_pop;" }
+	}
+	string aa_button1_text
+	{
+		string	"_OK"
+		pos		"354 445"
+		color	"0 0.5 0 1"
+		font		f_menubig
+		align	uc
+	}
+}
+
+// ==================
+// POPUP RESEARCH FINISHED
+// ==================
+
+// TODO: report button - opens ufopedia, ok button opens research window
+
+menu popup_research_finished
+{
+	zone popup
+	{
+		invis true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos		"256 256"
+	}
+	string title
+	{
+		string	"_Research Finished."
+		pos	"290 276"
+		font	f_big
+	}
+	string text
+	{
+		string	"TODO"
+		pos	"290 320"
+	}
+	pic aa_button1
+	{
+		image	menu/button_my
+		pos	"290 450"
+		texl	"0 0"
+		texh	"128 32"
+		out	{ *aa_button1 texl "0 0" *aa_button1 texh "128 32" }
+		in	{ *aa_button1 texl "128 0" *aa_button1 texh "256 32" }
+		click	{ cmd "mn_pop;" }
+	}
+	string aa_button1_text
+	{
+		string	"_OK"
+		pos		"354 445"
+		color	"0 0.5 0 1"
+		font		f_menubig
+		align	uc
+	}
+}
+
+//////////////////////////////////
 
 menu popup
 {
