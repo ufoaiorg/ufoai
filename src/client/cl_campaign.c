@@ -1679,6 +1679,8 @@ void CL_GameSave( char *filename, char *comment )
 	MSG_WriteFloat( &sb, ccs.center[1] );
 	MSG_WriteFloat( &sb, ccs.zoom );
 
+	/* FIXME: We should remove the version stuff and include the sizeof(globalData_t) as info */
+	/* when size of globalData_t in savegame differs from actual size of globalData_t we won't even load the game */
 	Com_DPrintf("CL_GameSave: sizeof globalData_t: %i max.gamedatasize: %i\n", sizeof(globalData_t), MAX_GAMESAVESIZE);
 	SZ_Write( &sb, &gd, sizeof(globalData_t) );
 
@@ -1855,9 +1857,6 @@ void CL_GameLoad( char *filename )
 		return;
 	}
 
-	/* FIXME: Use an enum here */
-	ccs.singleplayer = qtrue;
-
 	re.LoadTGA( va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight );
 	if ( !maskPic ) Sys_Error( "Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map );
 
@@ -2019,12 +2018,13 @@ void CL_GameLoadCmd( void )
 		return;
 	}
 
+	Cbuf_AddText( "disconnect\n" );
 	/* load and go to map */
 	CL_GameLoad( Cmd_Argv( 1 ) );
 
 	Cvar_Set( "mn_main", "singleplayer" );
 	Cvar_Set( "mn_active", "map" );
-	Cbuf_AddText( "disconnect\n" );
+	/* FIXME: Use an enum here */
 	ccs.singleplayer = qtrue;
 
 	MN_PopMenu( qtrue );
