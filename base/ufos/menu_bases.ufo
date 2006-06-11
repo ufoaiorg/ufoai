@@ -516,7 +516,7 @@ menu aircraft
 
 	string team_members
 	{
-		string	"Team Members:"
+		string	"_Team Members:"
 		pos		"480 486"
 	}
 
