@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-06-11 16:57+0200\n"
-"PO-Revision-Date: 2006-06-11 16:58+0100\n"
+"PO-Revision-Date: 2006-06-11 17:00+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -384,7 +384,7 @@ msgstr "Wähle Besatzung aus"
 
 #: ../base/ufos/menu_bases.ufo:325
 msgid "Equip Aircraft"
-msgstr "Rüste Flugzeug aus"
+msgstr "Besatzung"
 
 #: ../base/ufos/menu_bases.ufo:337
 msgid "Buy/Sell aircraft"
