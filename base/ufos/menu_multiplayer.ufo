@@ -221,14 +221,14 @@ menu mp_team
 		click	{ teamslot7 }
 	}
 
-	string txt_slot0 { string "*cvar mn_slot0" pos "510 139" color "0 .78 0 1" }
-	string txt_slot1 { string "*cvar mn_slot1" pos "510 174" color "0 .78 0 1" }
-	string txt_slot2 { string "*cvar mn_slot2" pos "510 209" color "0 .78 0 1" }
-	string txt_slot3 { string "*cvar mn_slot3" pos "510 244" color "0 .78 0 1" }
-	string txt_slot4 { string "*cvar mn_slot4" pos "510 279" color "0 .78 0 1" }
-	string txt_slot5 { string "*cvar mn_slot5" pos "510 314" color "0 .78 0 1" }
-	string txt_slot6 { string "*cvar mn_slot6" pos "510 349" color "0 .78 0 1" }
-	string txt_slot7 { string "*cvar mn_slot7" pos "510 384" color "0 .78 0 1" }
+	string txt_slot0 { string "*cvar mn_slot0" pos "510 135" color "0 .78 0 1" }
+	string txt_slot1 { string "*cvar mn_slot1" pos "510 170" color "0 .78 0 1" }
+	string txt_slot2 { string "*cvar mn_slot2" pos "510 205" color "0 .78 0 1" }
+	string txt_slot3 { string "*cvar mn_slot3" pos "510 240" color "0 .78 0 1" }
+	string txt_slot4 { string "*cvar mn_slot4" pos "510 275" color "0 .78 0 1" }
+	string txt_slot5 { string "*cvar mn_slot5" pos "510 310" color "0 .78 0 1" }
+	string txt_slot6 { string "*cvar mn_slot6" pos "510 345" color "0 .78 0 1" }
+	string txt_slot7 { string "*cvar mn_slot7" pos "510 380" color "0 .78 0 1" }
 
 	pic button_load
 	{
@@ -246,7 +246,7 @@ menu mp_team
 		font	f_menusmall
 		color	"0 0.5 0 1"
 		string	"_Load"
-		pos	"844 140"
+		pos	"844 145"
 		align	uc
 	}
 
@@ -266,7 +266,7 @@ menu mp_team
 		font	f_menusmall
 		color	"0 0.5 0 1"
 		string	"_Save"
-		pos	"844 210"
+		pos	"844 215"
 		align	uc
 	}
 
@@ -301,7 +301,7 @@ menu mp_team
 		font	f_menusmall
 		color	"0 0.5 0 1"
 		string	"_Edit"
-		pos	"564 500"
+		pos	"564 505"
 		align	uc
 	}
 
@@ -324,7 +324,7 @@ menu mp_team
 		font	f_menusmall
 		color	"0 0.5 0 1"
 		string	"_New"
-		pos	"704 500"
+		pos	"704 505"
 		align	uc
 	}
 
@@ -342,7 +342,7 @@ menu mp_team
 	pic race_dec
 	{
 		image	menu/buttons_small
-		pos	"628 568"
+		pos	"628 572"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -351,7 +351,7 @@ menu mp_team
 	pic race_inc
 	{
 		image	menu/buttons_small
-		pos	"638 568"
+		pos	"638 572"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -373,7 +373,7 @@ menu mp_team
 	string txt_teamname
 	{
 		string	"*cvar mn_teamname"
-		pos	"510 649"
+		pos	"510 645"
 		color	"0 .78 0 1"
 	}
 	confunc mn_teamname_changed { *txt_teamname color "0 .78 0 1" *txt_teamname mousefx false }
@@ -554,7 +554,7 @@ menu mp_join_lan
 		font	f_menu
 		color	"1 1 1 1"
 		string	"_LAN"
-		pos	"590 130"
+		pos	"590 128"
 		align	uc
 	}
 	string string_inet
@@ -562,7 +562,7 @@ menu mp_join_lan
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Internet"
-		pos	"816 130"
+		pos	"816 128"
 		align	uc
 	}
 
@@ -595,7 +595,7 @@ menu mp_join_lan
 	pic lan_teamnum_dec
 	{
 		image	menu/buttons_small
-		pos	"668 658"
+		pos	"668 662"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -604,7 +604,7 @@ menu mp_join_lan
 	pic lan_teamnum_inc
 	{
 		image	menu/buttons_small
-		pos	"684 658"
+		pos	"684 662"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -649,7 +649,7 @@ menu mp_join_internet
 	{
 		image	menu/multi_buttons3
 		texh	"256 64"
-		texl	"0 32"
+		texl	"0 33"
 		pos	"500 130"
 		out	{ *string_lan color "0 0.5 0 1" *button_lan_lan image menu/multi_buttons3 }
 		in	{ *string_lan color "1 1 1 1" *button_lan_lan image menu/multi_buttons3a }
@@ -659,7 +659,7 @@ menu mp_join_internet
 	{
 		image	menu/multi_buttons3a
 		texh	"256 64"
-		texl	"0 32"
+		texl	"0 33"
 		pos	"726 130"
 	}
 	string string_lan
@@ -667,7 +667,7 @@ menu mp_join_internet
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_LAN"
-		pos	"590 130"
+		pos	"590 128"
 		align	uc
 	}
 	string string_inet
@@ -675,7 +675,7 @@ menu mp_join_internet
 		font	f_menu
 		color	"1 1 1 1"
 		string	"_Internet"
-		pos	"816 130"
+		pos	"816 128"
 		align	uc
 	}
 
@@ -702,6 +702,7 @@ menu mp_join_internet
 	// connect to ip button
 	// ====================
 	pic button_inet_connect_to_ip
+
 	{
 		image	menu/multi_buttons3
 		click	{ cmd "connect *mn_server_ip" }
@@ -738,7 +739,7 @@ menu mp_join_internet
 	string txt_inet_ip
 	{
 		string	"*cvar mn_server_ip"
-		pos	"510 589"
+		pos	"510 586"
 		color	"0 .78 0 1"
 	}
 	confunc mn_server_ip_changed { *txt_inet_ip color "0 .78 0 1" *txt_inet_ip mousefx false }
@@ -757,7 +758,7 @@ menu mp_join_internet
 	pic inet_teamnum_dec
 	{
 		image	menu/buttons_small
-		pos	"668 658"
+		pos	"668 662"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -766,7 +767,7 @@ menu mp_join_internet
 	pic inet_teamnum_inc
 	{
 		image	menu/buttons_small
-		pos	"684 658"
+		pos	"684 662"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -803,7 +804,7 @@ menu mp_create_server
 	pic morale_dec
 	{
 		image	menu/buttons_small
-		pos	"868 138"
+		pos	"868 142"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -816,7 +817,7 @@ menu mp_create_server
 	pic morale_inc
 	{
 		image	menu/buttons_small
-		pos	"884 138"
+		pos	"884 142"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -844,7 +845,7 @@ menu mp_create_server
 	pic dedicated_dec
 	{
 		image	menu/buttons_small
-		pos	"868 158"
+		pos	"868 162"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -857,7 +858,7 @@ menu mp_create_server
 	pic dedicated_inc
 	{
 		image	menu/buttons_small
-		pos	"884 158"
+		pos	"884 162"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -885,7 +886,7 @@ menu mp_create_server
 	pic server_teamplay_dec
 	{
 		image	menu/buttons_small
-		pos	"868 178"
+		pos	"868 182"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -898,7 +899,7 @@ menu mp_create_server
 	pic server_teamplay_inc
 	{
 		image	menu/buttons_small
-		pos	"884 178"
+		pos	"884 182"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -927,7 +928,7 @@ menu mp_create_server
 	pic maxclients_dec
 	{
 		image	menu/buttons_small
-		pos	"868 198"
+		pos	"868 202"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -936,7 +937,7 @@ menu mp_create_server
 	pic maxclients_inc
 	{
 		image	menu/buttons_small
-		pos	"884 198"
+		pos	"884 202"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -961,7 +962,7 @@ menu mp_create_server
 	pic maxperplayer_dec
 	{
 		image	menu/buttons_small
-		pos	"868 218"
+		pos	"868 222"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -970,7 +971,7 @@ menu mp_create_server
 	pic maxperplayer_inc
 	{
 		image	menu/buttons_small
-		pos	"884 218"
+		pos	"884 222"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -995,7 +996,7 @@ menu mp_create_server
 	pic maxsoldierperplayer_dec
 	{
 		image	menu/buttons_small
-		pos	"868 238"
+		pos	"868 242"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1004,7 +1005,7 @@ menu mp_create_server
 	pic maxsoldierperplayer_inc
 	{
 		image	menu/buttons_small
-		pos	"884 238"
+		pos	"884 242"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1029,7 +1030,7 @@ menu mp_create_server
 	pic server_teamnum_dec
 	{
 		image	menu/buttons_small
-		pos	"868 258"
+		pos	"868 262"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1038,7 +1039,7 @@ menu mp_create_server
 	pic server_teamnum_inc
 	{
 		image	menu/buttons_small
-		pos	"884 258"
+		pos	"884 262"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1063,7 +1064,7 @@ menu mp_create_server
 	pic server_maxplayerperteam_dec
 	{
 		image	menu/buttons_small
-		pos	"868 278"
+		pos	"868 282"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1072,7 +1073,7 @@ menu mp_create_server
 	pic server_maxplayerperteam_inc
 	{
 		image	menu/buttons_small
-		pos	"884 278"
+		pos	"884 282"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1097,7 +1098,7 @@ menu mp_create_server
 	pic ai_numactors_dec
 	{
 		image	menu/buttons_small
-		pos	"868 298"
+		pos	"868 302"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1106,7 +1107,7 @@ menu mp_create_server
 	pic ai_numactors_inc
 	{
 		image	menu/buttons_small
-		pos	"884 298"
+		pos	"884 302"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1131,7 +1132,7 @@ menu mp_create_server
 	string txt_server_pwd
 	{
 		string	"*cvar password"
-		pos	"510 359"
+		pos	"510 355"
 		color	"0 .78 0 1"
 	}
 	confunc password_changed { *txt_server_pwd color "0 .78 0 1" *txt_server_pwd mousefx false }
@@ -1154,7 +1155,7 @@ menu mp_create_server
 	string txt_rcon_pwd
 	{
 		string	"*cvar rcon_password"
-		pos	"510 419"
+		pos	"510 415"
 		color	"0 .78 0 1"
 	}
 	confunc rcon_password_changed { *txt_rcon_pwd color "0 .78 0 1" *txt_rcon_pwd mousefx false }
@@ -1177,7 +1178,7 @@ menu mp_create_server
 	string txt_hostname
 	{
 		string	"*cvar hostname"
-		pos	"510 479"
+		pos	"510 475"
 		color	"0 .78 0 1"
 	}
 	confunc hostname_changed { *txt_hostname color "0 .78 0 1" *txt_hostname mousefx false }
@@ -1199,7 +1200,7 @@ menu mp_create_server
 	string txt_mapname
 	{
 		string	"*cvar mapname"
-		pos	"510 539"
+		pos	"510 535"
 		color	"0 .78 0 1"
 	}
 	pic prev_map

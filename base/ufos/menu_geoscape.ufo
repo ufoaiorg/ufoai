@@ -137,7 +137,7 @@ menu map
 	string timelapse
 	{
 		string	"*cvar mn_timelapse"
-		pos	"565 53"
+		pos	"565 50"
 		color	"0 .78 0 1"
 	}
 
