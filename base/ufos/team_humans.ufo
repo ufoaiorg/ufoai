@@ -152,7 +152,6 @@ actors german
 	}
 }
 
-
 //==================
 // spanish_italian
 //==================
@@ -593,7 +592,7 @@ names arabic
 	Natara
 	Nurcan
 	Soraya
-	Rasha	
+	Rasha
 	Yasemine
 	}
 
@@ -660,6 +659,8 @@ actors arabic
 {
 	female
 	{
+		soldiers/female light head01a 0
+		soldiers/female light head01b 0
 	}
 
 	male
@@ -738,7 +739,7 @@ names scandinavian
 	Ottar
 	Olav
 	Olaf
-	Ole-Gunnar 
+	Ole-Gunnar
 	Soren
 	Sven
 	Tor
@@ -1098,7 +1099,7 @@ actors chinese
 //==================
 // japanese
 //==================
-// TODO: Japanese names are normally written as "Last name" "First name". It would be good to have a "lastnamefirst true" parameter. 
+// TODO: Japanese names are normally written as "Last name" "First name". It would be good to have a "lastnamefirst true" parameter.
 // See http://ufo.myexp.de/phpBB2/viewtopic.php?p=755#755
 //===================
 
@@ -1274,195 +1275,6 @@ actors african
 		soldiers/male light head10 0
 		soldiers/male light head11 0
 		soldiers/male light head12 0
-	}
-}
-
-
-//========================================================================
-// ALIENS
-//========================================================================
-
-
-//==================
-// ortnok
-//==================
-
-names ortnok
-{
-	neutral
-	{
-	Akrokk
-	Mkeek
-	Rniuk
-	Tranok
-	Kronuk
-	Trenakk
-	Zrokk
-	Kraerak
-	Mnookk
-	Zmolukk
-	Abtrenek
-	Uonak
-	Ktrukk
-	Onukark
-	Ebnuzuk
-	Krrnaak
-	Zmuknesk
-	}
-
-	lastname
-	{
-	"Uk Kronok"
-	"Np Zlrok"
-	"T Zruujk"
-	"Kr Zrrosk"
-	"Mt Trekluk"
-	"H Hrkakk"
-	"Pt Mrlkuk"
-	"Tsk Hrekk"
-	"Kkr Kraukk"
-	"Tkr Hruk"
-	"Ts Srulok"
-	"K Krokk"
-	"Zt Hrmokuk"
-	"H Nhrokekk"
-	"Tt Treknk"
-	"Ok Orokk"
-	"Sk Trevuk"
-	"Zr Znaztrk"
-	}
-}
-
-actors ortnok
-{
-	neutral
-	{
-		aliens/ortnok body01 head01 0
-		aliens/ortnok body01 head02 0
-		aliens/ortnok body01 head03 0
-		aliens/ortnok body01 head01 1
-		aliens/ortnok body01 head02 1
-		aliens/ortnok body01 head03 1
-		aliens/ortnok body01 head01 2
-		aliens/ortnok body01 head02 2
-		aliens/ortnok body01 head03 2
-	}
-}
-
-//==================
-// blue
-//==================
-
-names blue
-{
-	neutral
-	{
-	Akrokk
-	Mkeek
-	Rniuk
-	Tranok
-	Kronuk
-	Trenakk
-	Zrokk
-	Kraerak
-	Mnookk
-	Zmolukk
-	Abtrenek
-	Uonak
-	Ktrukk
-	Onukark
-	Ebnuzuk
-	Krrnaak
-	Zmuknesk
-	}
-
-	lastname
-	{
-	"Uk Kronok"
-	"Np Zlrok"
-	"T Zruujk"
-	"Kr Zrrosk"
-	"Mt Trekluk"
-	"H Hrkakk"
-	"Pt Mrlkuk"
-	"Tsk Hrekk"
-	"Kkr Kraukk"
-	"Tkr Hruk"
-	"Ts Srulok"
-	"K Krokk"
-	"Zt Hrmokuk"
-	"H Nhrokekk"
-	"Tt Treknk"
-	"Ok Orokk"
-	"Sk Trevuk"
-	"Zr Znaztrk"
-	}
-}
-
-actors blue
-{
-	neutral
-	{
-		aliens/blue body01 head01 0
-		aliens/blue body01 head01 1
-	}
-}
-
-//========================================================================
-// CIVILIANS
-//========================================================================
-
-
-//==================
-// civilian
-//==================
-
-names civilian
-{
-	female
-	{
-		a
-	}
-	male
-	{
-		b
-	}
-	lastname
-	{
-		c
-	}
-}
-
-actors civilian
-{
-	female
-	{
-		civilians/female body01 head01a 0
-		civilians/female body01 head01a 1
-		civilians/female body01 head01a 2
-		civilians/female body02 head01a 0
-		civilians/female body02 head01a 1
-		civilians/female body01 head01b 0
-		civilians/female body01 head01b 1
-		civilians/female body01 head01b 2
-		civilians/female body02 head01b 0
-		civilians/female body02 head01b 1
-		civilians/female body01 head02a 0
-		civilians/female body01 head02a 1
-		civilians/female body01 head02a 2
-		civilians/female body02 head02a 0
-		civilians/female body02 head02a 1
-		civilians/female body01 head02b 0
-		civilians/female body01 head02b 1
-		civilians/female body01 head02b 2
-		civilians/female body02 head02b 0
-		civilians/female body02 head02b 1
-	}
-	male
-	{
-		civilians/male body01 head01 0
-		civilians/male body01 head01 1
-		civilians/male body01 head01 2
 	}
 }
 
