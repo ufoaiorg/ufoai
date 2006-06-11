@@ -472,7 +472,7 @@ menu load
 
 	func init
 	{
-		cmd game_comments
+		cmd "game_comments load"
 	}
 }
 
@@ -648,7 +648,7 @@ menu save
 
 	func init
 	{
-		cmd game_comments
+		cmd "game_comments save"
 	}
 }
 
