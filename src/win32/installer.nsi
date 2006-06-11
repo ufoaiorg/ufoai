@@ -168,10 +168,7 @@ Section "Game" SEC01
   File "..\..\base\models\objects\alien\ion_condenser\*.jpg"
   File "..\..\base\models\objects\alien\ion_condenser\*.md2"
   SetOutPath "$INSTDIR\base\models\objects\alien\panel"
-;======================================================================
-; missing texture
-;======================================================================
-;  File "..\..\base\models\objects\alien\panel\*.jpg"
+  File "..\..\base\models\objects\alien\panel\*.jpg"
   File "..\..\base\models\objects\alien\panel\*.md2"
   SetOutPath "$INSTDIR\base\models\objects\alien\pstation"
   File "..\..\base\models\objects\alien\pstation\*.jpg"
@@ -326,11 +323,6 @@ Section "Game" SEC01
   File "..\..\base\models\soldiers\female\*.md2"
   File "..\..\base\models\soldiers\female\*.tag"
   File "..\..\base\models\soldiers\female\*.jpg"
-  SetOutPath "$INSTDIR\base\models\soldiers\f"
-  File "..\..\base\models\soldiers\f\*.anm"
-  File "..\..\base\models\soldiers\f\*.md2"
-  File "..\..\base\models\soldiers\f\*.tag"
-  File "..\..\base\models\soldiers\f\*.jpg"
   SetOutPath "$INSTDIR\base\models\soldiers\flight"
   File "..\..\base\models\soldiers\flight\*.anm"
   File "..\..\base\models\soldiers\flight\*.md2"
@@ -346,11 +338,6 @@ Section "Game" SEC01
   File "..\..\base\models\soldiers\male\*.md2"
   File "..\..\base\models\soldiers\male\*.tag"
   File "..\..\base\models\soldiers\male\*.jpg"
-  SetOutPath "$INSTDIR\base\models\soldiers\m"
-  File "..\..\base\models\soldiers\m\*.anm"
-  File "..\..\base\models\soldiers\m\*.md2"
-  File "..\..\base\models\soldiers\m\*.tag"
-  File "..\..\base\models\soldiers\m\*.jpg"
   SetOutPath "$INSTDIR\base\models\soldiers\mlight"
   File "..\..\base\models\soldiers\mlight\*.anm"
   File "..\..\base\models\soldiers\mlight\*.md2"
@@ -383,10 +370,7 @@ Section "Game" SEC01
   File "..\..\base\models\weapons\flamer\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\flare"
   File "..\..\base\models\weapons\flare\*.tga"
-;======================================================================
-; missing file
-;======================================================================
-  ;File "..\..\base\models\weapons\flare\*.md2"
+  File "..\..\base\models\weapons\flare\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\fraggren"
   File "..\..\base\models\weapons\fraggren\*.jpg"
   File "..\..\base\models\weapons\fraggren\*.md2"
@@ -440,10 +424,7 @@ Section "Game" SEC01
   File "..\..\base\models\weapons\sniper\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\stungren"
   File "..\..\base\models\weapons\stungren\*.tga"
-;======================================================================
-; missing file
-;======================================================================
-;  File "..\..\base\models\weapons\stungren\*.md2"
+  File "..\..\base\models\weapons\stungren\*.md2"
   SetOutPath "$INSTDIR\base\models\weapons\stunrod"
   File "..\..\base\models\weapons\stunrod\*.jpg"
   File "..\..\base\models\weapons\stunrod\*.md2"
