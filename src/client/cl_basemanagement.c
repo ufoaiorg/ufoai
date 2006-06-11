@@ -155,7 +155,7 @@ void B_BuildingStatus( void )
 				Cvar_Set("mn_building_status", va(_("Already %i in base"), NumberOfBuildings ));
 			break;
 		case B_STATUS_UNDER_CONSTRUCTION:
-			Cvar_Set("mn_building_status", va ( _("Constructing: %i day(s)"), daysLeft ) );
+			Cvar_Set("mn_building_status", "" );
 			break;
 		case B_STATUS_CONSTRUCTION_FINISHED:
 			Cvar_Set("mn_building_status", _("Construction finished") );
