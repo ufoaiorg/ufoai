@@ -139,7 +139,9 @@ void RS_MarkResearchable( void )
 				/* if needed/required techs are all researched, mark this as researchable. */
 				required = &t->requires;
 				required_are_researched = qtrue;
+				Com_DPrintf("RS_MarkResearchable: %i required entries\n", required->numEntries);
 				for ( j=0; j < required->numEntries; j++ ) {
+					Com_DPrintf("RS_MarkResearchable: entry: %s / %i\n", required->string[j], required->idx[j]);
 					if ( ( !RS_TechIsResearched(required->idx[j] ) )
 					  || ( !Q_strncmp( required->string[j], "nothing", 7 ) ) ) {
 						required_are_researched = qfalse;
@@ -149,8 +151,8 @@ void RS_MarkResearchable( void )
 
 				if ( required_are_researched											/* all required items are researched */
 				&& ( ( t->needsCollected && t->statusCollected ) || !t->needsCollected ) ){	/* AND ( all needed collected OR no collected needed ) */
+					Com_DPrintf("RS_MarkResearchable: %i - %i - %i\n", required_are_researched, t->needsCollected,  t->statusCollected );
 					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:required.\n", t->id );
-
 					t->statusResearchable = qtrue;
 				}
 
@@ -227,6 +229,8 @@ void RS_InitTree( void )
 {
 	int i, j, k;
 	technology_t *t = NULL;
+	technology_t *tech_required = NULL;
+	stringlist_t *required = NULL;
 	objDef_t *item = NULL;
 	objDef_t *item_ammo = NULL;
 	building_t	*building = NULL;
@@ -237,7 +241,19 @@ void RS_InitTree( void )
 		t = &gd.technologies[i];
 
 		t->overalltime = t->time;	/* set the overall reseach time (now fixed) to the one given in the ufo-file. */
-
+		
+		/* link idx entries to tech provided by id */
+		required = &t->requires;
+		for ( j=0; j < required->numEntries; j++ ) {
+			Com_DPrintf( "RS_InitTree: linking....\"%s\"\n",required->string[j] );
+			tech_required = RS_GetTechByID ( required->string[j] );
+			if (tech_required) {
+				required->idx[j] = tech_required->idx;
+			} else {
+				required->idx[j] = -1;
+			}
+		}
+		
 		/* Search in correct data/.ufo */
 		switch ( t->type )
 		{
@@ -1377,10 +1393,13 @@ qboolean RS_TechIsResearched( int tech_idx )
 {
 	if ( !( tech_idx >=0 ) ) return qfalse;
 
+	/* initial and nothing are always researched. as they are just starting "technologys" that are never used. */
+	/* DEBUG: still needed?
 	if ( !Q_strncmp( gd.technologies[tech_idx].id, "initial", 7 )
 	|| !Q_strncmp( gd.technologies[tech_idx].id, "nothing", 7 ) )
-		return qtrue;	/* initial and nothing are always researched. as they are just starting "technologys" that are never used. */
-
+		return qtrue;	
+	*/
+	
 	/* research item found */
 	if ( gd.technologies[tech_idx].statusResearch == RS_FINISH )
 		return qtrue;
@@ -1513,6 +1532,10 @@ technology_t* RS_GetTechByID ( const char* id )
 	int	i = 0;
 
 	if ( ! id )
+		return NULL;
+	
+	if ( !Q_strncmp( (char*)id, "nothing", 7 )
+	|| !Q_strncmp( i(char*)id, "initial", 7 ) )
 		return NULL;
 
 	for ( ; i < gd.numTechnologies; i++ )
