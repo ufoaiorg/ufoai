@@ -207,20 +207,22 @@ void CL_RegisterSounds (void)
 	S_BeginRegistration ();
 
 	/* load game sounds */
-	for (i=1 ; i<MAX_SOUNDS ; i++)
-	{
+	for (i=1 ; i<MAX_SOUNDS ; i++) {
 		if (!cl.configstrings[CS_SOUNDS+i][0])
 			break;
 		cl.sound_precache[i] = S_RegisterSound (cl.configstrings[CS_SOUNDS+i]);
-		Sys_SendKeyEvents ();	/* pump message loop */
+		/* pump message loop */
+		Sys_SendKeyEvents ();
 	}
 	/* load weapon sounds */
 	for ( i = 0; i < csi.numODs; i++ )
-		for ( j = 0; j < 2; j++ )
-		{
-			if ( csi.ods[i].fd[j].fireSound[0] )   S_RegisterSound( csi.ods[i].fd[j].fireSound );
-			if ( csi.ods[i].fd[j].impactSound[0] ) S_RegisterSound( csi.ods[i].fd[j].impactSound );
-			Sys_SendKeyEvents ();	/* pump message loop */
+		for ( j = 0; j < 2; j++ ) {
+			if ( csi.ods[i].fd[j].fireSound[0] )
+				S_RegisterSound( csi.ods[i].fd[j].fireSound );
+			if ( csi.ods[i].fd[j].impactSound[0] )
+				S_RegisterSound( csi.ods[i].fd[j].impactSound );
+			/* pump message loop */
+			Sys_SendKeyEvents ();
 		}
 
 	S_EndRegistration ();
@@ -248,9 +250,8 @@ void CL_ParseServerData (void)
 	int		i;
 
 	Com_DPrintf ("Serverdata packet received.\n");
-	/* */
+
 	/* wipe the client_state_t struct */
-	/* */
 	CL_ClearState ();
 	cls.state = ca_connected;
 
@@ -279,12 +280,10 @@ void CL_ParseServerData (void)
 	/* get the full level name */
 	str = MSG_ReadString (&net_message);
 
-	if (cl.pnum >= 0)
-	{
+	if (cl.pnum >= 0) {
 		/* seperate the printfs so the server message can have a color */
 		Com_Printf("\n\n\35\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\37\n\n");
 		Com_Printf ("%c%s\n", 2, str);
-
 		/* need to prep refresh at next oportunity */
 		cl.refresh_prepped = qfalse;
 	}
@@ -314,29 +313,21 @@ void CL_ParseConfigString (void)
 	/* do something apropriate */
 	if (i >= CS_LIGHTS && i < CS_LIGHTS+MAX_LIGHTSTYLES)
 		CL_SetLightstyle (i - CS_LIGHTS);
-	else if (i == CS_CDTRACK)
-	{
+	else if (i == CS_CDTRACK) {
 		if (cl.refresh_prepped)
 			CDAudio_Play (atoi(cl.configstrings[CS_CDTRACK]), qtrue);
-	}
-	else if (i >= CS_MODELS && i < CS_MODELS+MAX_MODELS)
-	{
-		if (cl.refresh_prepped)
-		{
+	} else if (i >= CS_MODELS && i < CS_MODELS+MAX_MODELS) {
+		if (cl.refresh_prepped) {
 			cl.model_draw[i-CS_MODELS] = re.RegisterModel (cl.configstrings[i]);
 			if (cl.configstrings[i][0] == '*')
 				cl.model_clip[i-CS_MODELS] = CM_InlineModel (cl.configstrings[i]);
 			else
 				cl.model_clip[i-CS_MODELS] = NULL;
 		}
-	}
-	else if (i >= CS_SOUNDS && i < CS_SOUNDS+MAX_MODELS)
-	{
+	} else if (i >= CS_SOUNDS && i < CS_SOUNDS+MAX_MODELS) {
 		if (cl.refresh_prepped)
 			cl.sound_precache[i-CS_SOUNDS] = S_RegisterSound (cl.configstrings[i]);
-	}
-	else if (i >= CS_IMAGES && i < CS_IMAGES+MAX_MODELS)
-	{
+	} else if (i >= CS_IMAGES && i < CS_IMAGES+MAX_MODELS) {
 		if (cl.refresh_prepped)
 			cl.image_precache[i-CS_IMAGES] = re.RegisterPic (cl.configstrings[i]);
 	}
@@ -385,29 +376,25 @@ void CL_ParseStartSoundPacket(void)
 	else
 		ofs = 0;
 
-	if (flags & SND_ENT)
-	{	/* entity reletive */
+	/* entity reletive */
+	if (flags & SND_ENT) {
 		channel = MSG_ReadShort(&net_message);
 		ent = channel>>3;
 		if (ent > MAX_EDICTS)
 			Com_Error (ERR_DROP,"CL_ParseStartSoundPacket: ent = %i", ent);
 
 		channel &= 7;
-	}
-
-	else
-	{
+	} else {
 		ent = 0;
 		channel = 0;
 	}
 
-	if (flags & SND_POS)
-	{	/* positioned in space */
+	/* positioned in space */
+	if (flags & SND_POS) {
 		MSG_ReadPos (&net_message, pos_v);
 
 		pos = pos_v;
-	}
-	else	/* use entity number */
+	} else /* use entity number */
 		pos = NULL;
 
 	if (!cl.sound_precache[sound_num])
@@ -434,8 +421,7 @@ void CL_Reset( sizebuf_t *sb )
 	Cbuf_AddText( "numonteam1\n" );
 
 	/* reset events */
-	for ( i = 0, et = evTimes; i < EV_TIMES-1; i++ )
-	{
+	for ( i = 0, et = evTimes; i < EV_TIMES-1; i++ ) {
 		last = et++;
 		et->next = last;
 	}
@@ -470,8 +456,7 @@ void CL_StartGame( sizebuf_t *sb )
 
 	/* center on first actor */
 	cl_worldlevel->modified = qtrue;
-	if ( cl.numTeamList )
-	{
+	if ( cl.numTeamList ) {
 		le_t	*le;
 		le = cl.teamList[0];
 		VectorCopy( le->origin, cl.cam.reforg );
@@ -495,7 +480,6 @@ CL_CenterView
 void CL_CenterView( sizebuf_t *sb )
 {
 	pos3_t	pos;
-/*	vec3_t	vec; */
 
 	MSG_ReadGPos( sb, pos );
 	V_CenterView( pos );
@@ -538,8 +522,7 @@ void CL_EntPerish( sizebuf_t *sb )
 
 	le = LE_Get( MSG_ReadShort( sb ) );
 
-	if ( !le )
-	{
+	if ( !le ) {
 		Com_Printf( "Delete request ignored... LE not found\n" );
 		return;
 	}
@@ -549,8 +532,7 @@ void CL_EntPerish( sizebuf_t *sb )
 		cl.numAliensSpotted--;
 
 	Com_DestroyInventory( &le->i );
-	if ( le->type == ET_ITEM )
-	{
+	if ( le->type == ET_ITEM ) {
 		le_t *actor;
 		actor = LE_Find( ET_ACTOR, le->pos );
 		if ( actor ) actor->i.c[csi.idFloor] = NULL;
@@ -594,8 +576,7 @@ void CL_ActorAppear( sizebuf_t *sb )
 	entnum = MSG_ReadShort( sb );
 	le = LE_Get( entnum );
 
-	if ( !le )
-	{
+	if ( !le ) {
 		le = LE_Add( entnum );
 		newActor = qtrue;
 	} else {
@@ -628,20 +609,16 @@ void CL_ActorAppear( sizebuf_t *sb )
 	if ( !(le->state & STATE_DEAD) && newActor && le->team != cls.team && le->team != TEAM_CIVILIAN )
 		cl.numAliensSpotted++;
 
-	if ( cls.state == ca_active && !(le->state & STATE_DEAD) )
-	{
+	if ( cls.state == ca_active && !(le->state & STATE_DEAD) ) {
 		/* center view (if wanted) */
-		if ( (int)cl_centerview->value > 1 || ((int)cl_centerview->value == 1 && cl.actTeam != cls.team) )
-		{
+		if ( (int)cl_centerview->value > 1 || ((int)cl_centerview->value == 1 && cl.actTeam != cls.team) ) {
 			VectorCopy( le->origin, cl.cam.reforg );
 			Cvar_SetValue( "cl_worldlevel", le->pos[2] );
 		}
 
 		/* draw line of sight */
-		if ( le->team != cls.team )
-		{
-			if ( cl.actTeam == cls.team && lastMoving )
-			{
+		if ( le->team != cls.team ) {
+			if ( cl.actTeam == cls.team && lastMoving ) {
 				ptl_t	*ptl;
 				ptl = CL_ParticleSpawn( "fadeTracer", 0, lastMoving->origin, le->origin, NULL );
 				if ( le->team == TEAM_CIVILIAN )
@@ -649,14 +626,12 @@ void CL_ActorAppear( sizebuf_t *sb )
 			}
 
 			/* message */
-			if ( le->team != TEAM_CIVILIAN )
-			{
+			if ( le->team != TEAM_CIVILIAN ) {
 				if ( curCampaign )
 					CL_DisplayHudMessage( _("Alien spotted!\n"), 2000 );
 				else
 					CL_DisplayHudMessage( _("Enemy spotted!\n"), 2000 );
-			}
-			else
+			} else
 				CL_DisplayHudMessage( _("Civilian spotted!\n"), 2000 );
 		}
 	}
@@ -682,8 +657,7 @@ void CL_ActorStats( sizebuf_t *sb )
 	number = MSG_ReadShort( sb );
 	le = LE_Get( number );
 
-	if ( !le )
-	{
+	if ( !le ) {
 		Com_Printf( "Stats message ignored... LE not found\n" );
 		return;
 	}
@@ -711,8 +685,7 @@ void CL_ActorStateChange( sizebuf_t *sb )
 	number = MSG_ReadShort( sb );
 	le = LE_Get( number );
 
-	if ( !le )
-	{
+	if ( !le ) {
 		Com_Printf( "StateChange message ignored... LE not found\n" );
 		return;
 	}
@@ -755,12 +728,10 @@ int CL_BiggestItem( invList_t *ic )
 	int shape, size, max, maxSize;
 
 	maxSize = 0;
-	for ( max = ic->item.t; ic; ic = ic->next )
-	{
+	for ( max = ic->item.t; ic; ic = ic->next ) {
 		shape = csi.ods[ic->item.t].shape;
 		size = (shape>>24 & 0xF) * (shape>>28 & 0xF);
-		if ( size > maxSize )
-		{
+		if ( size > maxSize ) {
 			max = ic->item.t;
 			maxSize = size;
 		}
@@ -786,8 +757,7 @@ void CL_PlaceItem( le_t *le )
 		actor = LE_Find( ET_ACTOR, le->pos );
 		if ( actor ) actor->i.c[csi.idFloor] = le->i.c[csi.idFloor];
 	}
-	if ( le->i.c[csi.idFloor] )
-	{
+	if ( le->i.c[csi.idFloor] ) {
 		biggest = CL_BiggestItem( le->i.c[csi.idFloor] );
 		le->model1 = cl.model_weapons[biggest];
 		Grid_PosToVec( &clMap, le->pos, le->origin );
@@ -813,14 +783,12 @@ void CL_InvAdd( sizebuf_t *sb )
 
 	number = MSG_ReadShort( sb );
 	le = LE_Get( number );
-	if ( !le )
-	{
+	if ( !le ) {
 		Com_Printf( "InvAdd message ignored... LE not found\n" );
 		return;
 	}
 
-	for ( item.t = MSG_ReadByte( sb ); item.t != NONE; item.t = MSG_ReadByte( sb ) )
-	{
+	for ( item.t = MSG_ReadByte( sb ); item.t != NONE; item.t = MSG_ReadByte( sb ) ) {
 		item.a = MSG_ReadByte( sb );
 		item.m = MSG_ReadByte( sb );
 		container = MSG_ReadByte( sb );
@@ -831,12 +799,10 @@ void CL_InvAdd( sizebuf_t *sb )
 		else if ( container == csi.idLeft ) le->left = item.t;
 	}
 
-	switch ( le->type )
-	{
+	switch ( le->type ) {
 	case ET_ACTOR:
 		le->think = LET_StartIdle;
 		break;
-
 	case ET_ITEM:
 		CL_PlaceItem( le );
 		break;
@@ -859,8 +825,7 @@ void CL_InvDel( sizebuf_t *sb )
 		&number, &container, &x, &y );
 
 	le = LE_Get( number );
-	if ( !le )
-	{
+	if ( !le ) {
 		Com_Printf( "InvDel message ignored... LE not found\n" );
 		return;
 	}
@@ -869,12 +834,10 @@ void CL_InvDel( sizebuf_t *sb )
 	if ( container == csi.idRight ) le->right = NONE;
 	else if ( container == csi.idLeft ) le->left = NONE;
 
-	switch ( le->type )
-	{
+	switch ( le->type ) {
 	case ET_ACTOR:
 		le->think = LET_StartIdle;
 		break;
-
 	case ET_ITEM:
 		CL_PlaceItem( le );
 		break;
@@ -898,8 +861,7 @@ void CL_InvAmmo( sizebuf_t *sb )
 		&number, &ammo, &container, &x, &y );
 
 	le = LE_Get( number );
-	if ( !le )
-	{
+	if ( !le ) {
 		Com_Printf( "InvAmmo message ignored... LE not found\n" );
 		return;
 	}
@@ -913,12 +875,10 @@ void CL_InvAmmo( sizebuf_t *sb )
 	/* if we're reloading and the displaced clip had any remaining */
 	/* bullets, store them as loose */
 	if ( curCampaign && le->team == cls.team &&
-			ammo == csi.ods[ic->item.t].ammo && ic->item.a > 0 )
-	{
+			ammo == csi.ods[ic->item.t].ammo && ic->item.a > 0 ) {
 		ccs.eMission.num_loose[ic->item.m] += ic->item.a;
 		/* Accumulate loose ammo into clips (only accessable post-mission) */
-		if (ccs.eMission.num_loose[ic->item.m] >= csi.ods[ic->item.t].ammo)
-		{
+		if (ccs.eMission.num_loose[ic->item.m] >= csi.ods[ic->item.t].ammo) {
 			ccs.eMission.num_loose[ic->item.m] -= csi.ods[ic->item.t].ammo;
 			ccs.eMission.num[ic->item.m]++;
 		}
@@ -963,17 +923,14 @@ void CL_ParseEvent( void )
 	int			next;
 	qboolean	now;
 
-	while ( ( eType = MSG_ReadByte( &net_message ) ) )
-	{
-		if (net_message.readcount > net_message.cursize)
-		{
+	while ( ( eType = MSG_ReadByte( &net_message ) ) ) {
+		if (net_message.readcount > net_message.cursize) {
 			Com_Error (ERR_DROP,"CL_ParseEvent: Bad event message");
 			break;
 		}
 
 		/* check instantly flag */
-		if ( eType & INSTANTLY )
-		{
+		if ( eType & INSTANTLY ) {
 			now = qtrue;
 			eType &= ~INSTANTLY;
 		}
@@ -986,8 +943,7 @@ void CL_ParseEvent( void )
 		if ( !ev_func[eType] )
 			Com_Error( ERR_DROP, "CL_ParseEvent: no handling function for event %i\n", eType );
 
-		if ( now )
-		{
+		if ( now ) {
 			/* check if eType is valid */
 			if ( eType < 0 || eType >= EV_NUM_EVENTS )
 				Com_Error( ERR_DROP, "CL_Events: invalid event %i\n", eType );
@@ -997,9 +953,7 @@ void CL_ParseEvent( void )
 			next = net_message.readcount + MSG_LengthFormat( &net_message, ev_format[eType] );
 			ev_func[eType]( &net_message );
 			net_message.readcount = next;
-		}
-		else
-		{
+		} else {
 			int		length;
 
 			/* store data */
@@ -1019,8 +973,7 @@ void CL_ParseEvent( void )
 			oldCount = net_message.readcount;
 
 			/* calculate next and shoot time */
-			switch ( eType )
-			{
+			switch ( eType ) {
 			case EV_ACTOR_APPEAR:
 				if ( cls.state == ca_active && cl.actTeam != cls.team )
 					nextTime += 600;
@@ -1031,17 +984,15 @@ void CL_ParseEvent( void )
 				break;
 			case EV_ACTOR_SHOOT_HIDDEN:
 				{
-				int flags;
-				flags = MSG_ReadByte( &net_message );
-				if ( !flags )
-				{
-					fireDef_t *fd;
-					fd = GET_FIREDEF( MSG_ReadByte( &net_message ) );
-					if ( fd->rof ) nextTime += 1000 / fd->rof;
-				}
-				else nextTime += 500;
-				shootTime = nextTime;
-				break;
+					int flags;
+					flags = MSG_ReadByte( &net_message );
+					if ( !flags ) {
+						fireDef_t *fd;
+						fd = GET_FIREDEF( MSG_ReadByte( &net_message ) );
+						if ( fd->rof ) nextTime += 1000 / fd->rof;
+					} else nextTime += 500;
+						shootTime = nextTime;
+					break;
 				}
 			case EV_ACTOR_SHOOT:
 				{
@@ -1057,8 +1008,7 @@ void CL_ParseEvent( void )
 					MSG_ReadPos( &net_message, impact );
 
 					fd = GET_FIREDEF( type );
-					if ( !(flags & SF_BOUNCED) )
-					{
+					if ( !(flags & SF_BOUNCED) ) {
 						/* shooting */
 						if ( fd->speed ) impactTime = shootTime + 1000 * VectorDist( muzzle, impact ) / fd->speed;
 						else impactTime = shootTime;
@@ -1080,8 +1030,7 @@ void CL_ParseEvent( void )
 
 			/* add to timetable */
 			last = NULL;
-			for ( et = etCurrent; et; et = et->next )
-			{
+			for ( et = etCurrent; et; et = et->next ) {
 				if ( et->start > time ) break;
 				last = et;
 			}
@@ -1120,8 +1069,7 @@ void CL_Events( void )
 	if ( cls.state < ca_connected )
 		return;
 
-	while ( !blockEvents && etCurrent && cl.eventTime >= etCurrent->start )
-	{
+	while ( !blockEvents && etCurrent && cl.eventTime >= etCurrent->start ) {
 		/* get event type */
 		evStorage.readcount = etCurrent->pos;
 		eType = MSG_ReadByte( &evStorage );
@@ -1175,36 +1123,27 @@ void CL_ParseServerMessage (void)
 	char		*s;
 	int			i;
 
-	/* */
 	/* if recording demos, copy the message out */
-	/* */
 	if (cl_shownet->value == 1)
 		Com_Printf ("%i ",net_message.cursize);
 	else if (cl_shownet->value >= 2)
 		Com_Printf ("------------------\n");
 
-
-	/* */
 	/* parse the message */
-	/* */
-	while (1)
-	{
-		if (net_message.readcount > net_message.cursize)
-		{
+	while (1) {
+		if (net_message.readcount > net_message.cursize) {
 			Com_Error (ERR_DROP,"CL_ParseServerMessage: Bad server message");
 			break;
 		}
 
 		cmd = MSG_ReadByte (&net_message);
 
-		if (cmd == -1)
-		{
+		if (cmd == -1) {
 			SHOWNET("END OF MESSAGE");
 			break;
 		}
 
-		if (cl_shownet->value>=2)
-		{
+		if (cl_shownet->value>=2) {
 			if (!svc_strings[cmd])
 				Com_Printf ("%3i:BAD CMD %i\n", net_message.readcount-1,cmd);
 			else
@@ -1212,8 +1151,7 @@ void CL_ParseServerMessage (void)
 		}
 
 		/* other commands */
-		switch (cmd)
-		{
+		switch (cmd) {
 		default:
 			Com_Error (ERR_DROP,"CL_ParseServerMessage: Illegible server message %d\n", cmd);
 			break;
@@ -1234,8 +1172,7 @@ void CL_ParseServerMessage (void)
 
 		case svc_print:
 			i = MSG_ReadByte (&net_message);
-			if (i == PRINT_CHAT)
-			{
+			if (i == PRINT_CHAT) {
 				S_StartLocalSound ("misc/talk.wav");
 				con.ormask = 128;
 			}
