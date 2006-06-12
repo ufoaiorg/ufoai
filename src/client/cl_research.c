@@ -1222,8 +1222,7 @@ void RS_ParseTechnologies ( char* id, char** text )
 			else Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token );
 		}
 		else
-		if ( !Q_strncmp( token, "requires", 8 ) )
-		{
+		if ( !Q_strncmp( token, "requires", 8 ) ) {
 			/* what other techs this one requires */
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
@@ -1242,17 +1241,12 @@ void RS_ParseTechnologies ( char* id, char** text )
 			}
 			while ( misp && required->numEntries < MAX_TECHLINKS );
 			continue;
-		}
-		else
-		if ( !Q_strncmp( token, "researched", 10 ) )
-		{
+		} else if ( !Q_strncmp( token, "researched", 10 ) ) {
 			/* tech alreadyy researched? */
 			token = COM_EParse( text, errhead, id );
 			if ( !Q_strncmp( token, "true", 4 ) || *token == '1' )
 				tech->statusResearch = RS_FINISH;
-		}
-		else
-		if ( !Q_strncmp( token, "up_chapter", 10 ) ) {
+		} else if ( !Q_strncmp( token, "up_chapter", 10 ) ) {
 			/* ufopedia chapter */
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
@@ -1268,7 +1262,6 @@ void RS_ParseTechnologies ( char* id, char** text )
 							gd.upChapters[i].last = tech->idx;
 							tech->prev = -1;
 							tech->next = -1;
-
 						} else {
 							/* get "last entry" in chapter */
 							tech_old = gd.upChapters[i].last;
@@ -1283,12 +1276,9 @@ void RS_ParseTechnologies ( char* id, char** text )
 						Com_Printf("RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n", id, token );
 				}
 			}
-		}
-		else
-		{
+		} else {
 			for ( var = valid_tech_vars; var->string; var++ )
-				if ( !Q_strncmp( token, var->string, sizeof(var->string) ) )
-				{
+				if ( !Q_strncmp( token, var->string, sizeof(var->string) ) ) {
 					/* found a definition */
 					token = COM_EParse( text, errhead, id );
 					if ( !*text ) return;
@@ -1326,9 +1316,8 @@ void RS_GetRequired( char *id, stringlist_t *required)
 	technology_t *tech = NULL;
 
 	tech = RS_GetTechByID( id );
-	if ( ! tech ) {
+	if ( ! tech )
 		return;
-	}
 
 	/* research item found */
 	required = &tech->requires;	/* is linking a good idea? */
@@ -1342,9 +1331,8 @@ call this function if you already hold a tech pointer
 ======================*/
 qboolean RS_IsResearched_idx ( int idx )
 {
-	if ( idx >= 0 && gd.technologies[idx].statusResearch == RS_FINISH ) {
+	if ( idx >= 0 && gd.technologies[idx].statusResearch == RS_FINISH )
 		return qtrue;
-	}
 	return qfalse;
 }
 
@@ -1393,9 +1381,8 @@ call this function if you already hold a tech pointer
 ======================*/
 int RS_Collected_ ( technology_t* tech )
 {
-	if ( tech ) {
+	if ( tech )
 		return tech->statusCollected;
-	}
 
 	Com_DPrintf("RS_Collected_: NULL technology given.\n" );
 	return -1;
@@ -1419,10 +1406,10 @@ qboolean RS_ItemCollected(char *id_provided )
 	if ( ! id_provided )
 		return qfalse;
 
-	for ( ; i < gd.numTechnologies; i++ ) {
+	for ( ; i < gd.numTechnologies; i++ )
 		if ( !Q_strncmp( (char*)id_provided, gd.technologies[i].provides, MAX_VAR ) )
 			return RS_Collected_( &gd.technologies[i] );
-	}
+
 	Com_DPrintf("RS_ItemCollected: \"%s\" <- research item that 'provides' this item not found.\n", id_provided );
 	return qfalse;
 }
@@ -1440,7 +1427,8 @@ OUT
 ======================*/
 qboolean RS_TechIsResearched( int tech_idx )
 {
-	if ( !( tech_idx >=0 ) ) return qfalse;
+	if ( tech_idx < 0 )
+		return qfalse;
 
 	/* initial and nothing are always researched. as they are just starting "technologys" that are never used. */
 	/* DEBUG: still needed?
@@ -1540,7 +1528,7 @@ void RS_GetFirstRequired2 ( int tech_idx, int first_tech_idx, stringlist_t *requ
 
 void RS_GetFirstRequired( int tech_idx, stringlist_t *required )
 {
-	 RS_GetFirstRequired2( tech_idx, tech_idx, required);
+	RS_GetFirstRequired2( tech_idx, tech_idx, required);
 }
 
 /*======================
@@ -1588,7 +1576,7 @@ technology_t* RS_GetTechByID ( const char* id )
 		return NULL;
 
 	if ( !Q_strncmp( (char*)id, "nothing", 7 )
-	|| !Q_strncmp( (char*)id, "initial", 7 ) )
+	  || !Q_strncmp( (char*)id, "initial", 7 ) )
 		return NULL;
 
 	for ( ; i < gd.numTechnologies; i++ ) {
@@ -1608,11 +1596,11 @@ returns a pointer to the item tech (as listed in "provides")
 technology_t* RS_GetTechByProvided( const char *id_provided )
 {
 	int i;
-	for ( i=0; i < gd.numTechnologies; i++ ) {
+	for ( i=0; i < gd.numTechnologies; i++ )
 		/* use technologies_skeleton for search but return technologies */
 		if ( !Q_strncmp( (char*)id_provided, gd.technologies[i].provides, MAX_VAR ) )
 			return &gd.technologies[i];
-	}
+
 	Com_DPrintf("RS_GetTechByProvided: Could not find a technology that provides \"%s\" (%i)\n", id_provided, gd.numTechnologies );
 	return NULL;
 }
