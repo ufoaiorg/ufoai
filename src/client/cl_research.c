@@ -39,9 +39,12 @@ TODO: comment on used globasl variables.
 void RS_GetFirstRequired( int tech_idx,  stringlist_t *required);
 qboolean RS_TechIsResearchable( technology_t* t );
 
-technology_t *researchList[MAX_RESEARCHLIST];	/* A (local) list of displayed technology-entries (the research list in the base) */
-int researchListLength;						/* The number of entries in the above list. */
-int researchListPos;						/* The currently selected entry in the above list. */
+/* A (local) list of displayed technology-entries (the research list in the base) */
+technology_t *researchList[MAX_RESEARCHLIST];
+/* The number of entries in the above list. */
+int researchListLength;
+/* The currently selected entry in the above list. */
+int researchListPos;
 
 
 /*======================
@@ -71,7 +74,8 @@ void RS_MarkOneCollected ( char *id )
 RS_MarkCollected
 
 Marks all techs if an item they 'provide' have been collected.
-Should be run after items have been collected/looted from the battlefield (cl_campaign.c -> "CL_CollectItems") and after techtree/inventory init (for all).
+Should be run after items have been collected/looted from the
+battlefield (cl_campaign.c -> "CL_CollectItems") and after techtree/inventory init (for all).
 ======================*/
 void RS_MarkCollected ( void )
 {
@@ -103,7 +107,8 @@ void RS_MarkOneResearchable ( int tech_idx )
 RS_MarkResearchable
 
 Marks all the techs that can be researched.
-Should be called when a new item is researched (RS_MarkResearched) and after the tree-initialisation (RS_InitTree)
+Should be called when a new item is researched (RS_MarkResearched) and after
+the tree-initialisation (RS_InitTree)
 ======================*/
 void RS_MarkResearchable( void )
 {
@@ -128,7 +133,8 @@ void RS_MarkResearchable( void )
 				firstrequired.numEntries = 0;
 				RS_GetFirstRequired( tech->idx,  &firstrequired );
 
-				/* If the tech has an collected item, mark the first-required techs as researchable //TODO doesn't work yet? */
+				/* TODO doesn't work yet? */
+				/* If the tech has an collected item, mark the first-required techs as researchable */
 				if ( tech->statusCollected ) {
 					for ( j=0; j < firstrequired.numEntries; j++ ) {
 						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:firstrequired of collected.\n", firstrequired.string[j] );
@@ -156,7 +162,6 @@ void RS_MarkResearchable( void )
 					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:required.\n", tech->id );
 					tech->statusResearchable = qtrue;
 				}
-
 
 				/* If the tech is an initial one,  mark it as as researchable. */
 				for ( j=0; j < required->numEntries; j++ ) {
@@ -196,8 +201,10 @@ RS_CopyFromSkeleton
 
 Copy the research-tree skeleton parsed on game-start to the global list.
 The skeleton has all the informations about already researched items etc..
+
+TODO: this function needs to be removed and replaced with a global one
+that handles the initial parsed "gd" struct.
 ======================*/
-/*TODO: this function needs to be removed and replaced with a global one that handles the initial parsed "gd" struct. */
 void RS_CopyFromSkeleton( void )
 {
 #if 0
@@ -210,7 +217,8 @@ void RS_CopyFromSkeleton( void )
 		memcpy( tech, &technologies_skeleton[i], sizeof( technology_t ) );
 
 		tech = &technologies_skeleton[i];
-		/*Q_strncpyz( tech->name, "Credits:", MAX_VAR ); // DEBUG: just to test if anything is point to the skeleton :) */
+		/* DEBUG: just to test if anything is point to the skeleton :) */
+		/*Q_strncpyz( tech->name, "Credits:", MAX_VAR );*/
 	}
 #endif
 	/* link in the tech pointers in the items. */
@@ -221,7 +229,8 @@ void RS_CopyFromSkeleton( void )
 RS_InitTree
 
 Gets all needed names/file-paths/etc... for each technology entry.
-Should be executed after the parsing of _all_ the ufo files and e.g. the research tree/inventory/etc... are initialised.
+Should be executed after the parsing of _all_ the ufo files and e.g. the
+research tree/inventory/etc... are initialised.
 
 TODO: add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
 ======================*/
@@ -352,7 +361,8 @@ void RS_InitTree( void )
 /*======================
 RS_GetName
 
-Return "name" if present, otherwise enter the correct .ufo file and get it from the definition there.
+Return "name" if present, otherwise enter the correct .ufo file and
+get it from the definition there.
 
 IN
 	id:	unique id of a technology_t
@@ -684,7 +694,6 @@ RS_ResearchStop
 Pauses the research of the selected research-list entry.
 
 TODO: Check if laboratory is available
-
 ======================*/
 void RS_ResearchStop ( void )
 {
@@ -723,7 +732,8 @@ void RS_ResearchStop ( void )
 /*======================
 RS_UpdateData
 
-Loops trough the research-list and updates the displayed text+color of each research-item according to it's status.
+Loops trough the research-list and updates the displayed text+color
+of each research-item according to it's status.
 See menu_research.ufo for the layout/called functions.
 ======================*/
 void RS_UpdateData ( void )
@@ -979,6 +989,7 @@ void CL_CheckResearchStatus ( void )
 	}
 }
 
+#ifdef DEBUG
 /*======================
 RS_TechnologyList_f
 
@@ -1008,7 +1019,7 @@ void RS_TechnologyList_f ( void )
 		Com_Printf("\n");
 
 		Com_Printf( "... type      -> ");
-		switch ( tech->type )	{
+		switch ( tech->type ) {
 			case RS_TECH:		Com_Printf("tech"); break;
 			case RS_WEAPON:	Com_Printf("weapon"); break;
 			case RS_CRAFT:		Com_Printf("craft"); break;
@@ -1041,6 +1052,7 @@ void RS_TechnologyList_f ( void )
 		Com_Printf("\n");
 	}
 }
+#endif
 
 /*======================
 MN_ResearchInit
@@ -1064,8 +1076,7 @@ call this function if you already hold a tech pointer
 void RS_DebugResearchAll ( void )
 {
 	int i;
-	for ( i=0; i < gd.numTechnologies; i++ )
-	{
+	for ( i=0; i < gd.numTechnologies; i++ ) {
 		Com_Printf("...mark %s as researched\n", gd.technologies[i].id );
 		gd.technologies[i].statusResearchable = qtrue;
 		gd.technologies[i].statusResearch = RS_FINISH;
@@ -1093,9 +1104,9 @@ void RS_ResetResearch( void )
 	Cmd_AddCommand( "mn_rs_add", RS_AssignScientist );
 	Cmd_AddCommand( "mn_rs_remove", RS_RemoveScientist );
 	Cmd_AddCommand( "research_update", RS_UpdateData );
+	Cmd_AddCommand( "invlist", Com_InventoryList_f );
 #ifdef DEBUG
 	Cmd_AddCommand( "techlist", RS_TechnologyList_f );
-	Cmd_AddCommand( "invlist", Com_InventoryList_f );
 	Cmd_AddCommand( "research_all", RS_DebugResearchAll );
 #endif
 }
