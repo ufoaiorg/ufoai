@@ -593,7 +593,7 @@ menu popup_baseattack
 // POPUP ALIEN ACTIVITY
 // ==================
 
-// TODO: cancel button; ok button should set time scale to 5 seconds and center screen on the mission
+// TODO: ok button should set time scale to 5 seconds and center screen on the mission
 
 menu popup_alien_activity
 {
@@ -623,16 +623,34 @@ menu popup_alien_activity
 		pos	"290 450"
 		texl	"0 0"
 		texh	"128 32"
-		out	{ *aa_button1 texl "0 0" *aa_button1 texh "128 32" }
-		in	{ *aa_button1 texl "128 0" *aa_button1 texh "256 32" }
+		out	{ *aa_button1_text color "0 0.5 0 1" *aa_button1 texl "0 0" *aa_button1 texh "128 32" }
+		in	{ *aa_button1_text color "1 1 1 1" *aa_button1 texl "128 0" *aa_button1 texh "256 32" }
 		click	{ cmd "mn_pop;" }
 	}
 	string aa_button1_text
 	{
 		string	"_OK"
-		pos		"354 445"
+		pos		"354 450"
 		color	"0 0.5 0 1"
-		font		f_menubig
+		font		f_menusmall
+		align	uc
+	}
+	pic aa_button2
+	{
+		image	menu/button_menu_geo
+		pos	"445 450"
+		texl	"0 32"
+		texh	"128 64"
+		out	{ *aa_button2_text color "0 0.5 0 1" *aa_button2 texl "0 32" *aa_button2 texh "128 64" }
+		in	{ *aa_button2_text color "1 1 1 1" *aa_button2 texl "128 32" *aa_button2 texh "256 64" }
+		click	{ cmd "mn_pop;" }
+	}
+	string aa_button2_text
+	{
+		string	"_Cancel"
+		pos		"509 450"
+		color	"0 0.5 0 1"
+		font		f_menusmall
 		align	uc
 	}
 }
@@ -663,22 +681,22 @@ menu popup_mission_expired
 		string	"TODO"
 		pos	"290 320"
 	}
-	pic aa_button1
+	pic me_button1
 	{
 		image	menu/button_menu_geo
 		pos	"290 450"
 		texl	"0 0"
 		texh	"128 32"
-		out	{ *aa_button1 texl "0 0" *aa_button1 texh "128 32" }
-		in	{ *aa_button1 texl "128 0" *aa_button1 texh "256 32" }
+		out	{ *me_button1_text color "0 0.5 0 1" *me_button1 texl "0 0" *me_button1 texh "128 32" }
+		in	{ *me_button1_text color "1 1 1 1" *me_button1 texl "128 0" *me_button1 texh "256 32" }
 		click	{ cmd "mn_pop;" }
 	}
-	string aa_button1_text
+	string me_button1_text
 	{
 		string	"_OK"
-		pos		"354 445"
+		pos		"354 450"
 		color	"0 0.5 0 1"
-		font		f_menubig
+		font		f_menusmall
 		align	uc
 	}
 }
@@ -687,7 +705,7 @@ menu popup_mission_expired
 // POPUP RESEARCH FINISHED
 // ==================
 
-// TODO: report button - opens ufopedia, ok button opens research window
+// TODO: report button should open ufopedia, then research window; ok button should open research window
 
 menu popup_research_finished
 {
@@ -711,22 +729,106 @@ menu popup_research_finished
 		string	"TODO"
 		pos	"290 320"
 	}
-	pic aa_button1
+	pic rf_button1
 	{
 		image	menu/button_menu_geo
 		pos	"290 450"
 		texl	"0 0"
 		texh	"128 32"
-		out	{ *aa_button1 texl "0 0" *aa_button1 texh "128 32" }
-		in	{ *aa_button1 texl "128 0" *aa_button1 texh "256 32" }
+		out	{ *rf_button1_text color "0 0.5 0 1" *rf_button1 texl "0 0" *rf_button1 texh "128 32" }
+		in	{ *rf_button1_text color "1 1 1 1" *rf_button1 texl "128 0" *rf_button1 texh "256 32" }
 		click	{ cmd "mn_pop;" }
 	}
-	string aa_button1_text
+	string rf_button1_text
+	{
+		string	"_Report"
+		pos		"354 450"
+		color	"0 0.5 0 1"
+		font		f_menusmall
+		align	uc
+	}
+	pic rf_button2
+	{
+		image	menu/button_menu_geo
+		pos	"445 450"
+		texl	"0 32"
+		texh	"128 64"
+		out	{ *rf_button2_text color "0 0.5 0 1" *rf_button2 texl "0 32" *rf_button2 texh "128 64" }
+		in	{ *rf_button2_text color "1 1 1 1" *rf_button2 texl "128 32" *rf_button2 texh "256 64" }
+		click	{ cmd "mn_pop;" }
+	}
+	string rf_button2_text
 	{
 		string	"_OK"
-		pos		"354 445"
+		pos		"509 450"
 		color	"0 0.5 0 1"
-		font		f_menubig
+		font		f_menusmall
+		align	uc
+	}
+}
+
+// ==================
+// POPUP BUILDING FINISHED
+// ==================
+
+// TODO: ok button should open the base screen
+
+menu popup_building_finished
+{
+	zone popup
+	{
+		invis true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos		"256 256"
+	}
+	string title
+	{
+		string	"_Construction of building finished."
+		pos	"290 276"
+		font	f_big
+	}
+	string text
+	{
+		string	"TODO"
+		pos	"290 320"
+	}
+	pic bf_button1
+	{
+		image	menu/button_menu_geo
+		pos	"290 450"
+		texl	"0 0"
+		texh	"128 32"
+		out	{ *bf_button1_text color "0 0.5 0 1" *bf_button1 texl "0 0" *bf_button1 texh "128 32" }
+		in	{ *bf_button1_text color "1 1 1 1" *bf_button1 texl "128 0" *bf_button1 texh "256 32" }
+		click	{ cmd "mn_pop;" }
+	}
+	string bf_button1_text
+	{
+		string	"_OK"
+		pos		"354 450"
+		color	"0 0.5 0 1"
+		font		f_menusmall
+		align	uc
+	}
+	pic bf_button2
+	{
+		image	menu/button_menu_geo
+		pos	"445 450"
+		texl	"0 32"
+		texh	"128 64"
+		out	{ *bf_button2_text color "0 0.5 0 1" *bf_button2 texl "0 32" *bf_button2 texh "128 64" }
+		in	{ *bf_button2_text color "1 1 1 1" *bf_button2 texl "128 32" *bf_button2 texh "256 64" }
+		click	{ cmd "mn_pop;" }
+	}
+	string bf_button2_text
+	{
+		string	"_Cancel"
+		pos		"509 450"
+		color	"0 0.5 0 1"
+		font		f_menusmall
 		align	uc
 	}
 }

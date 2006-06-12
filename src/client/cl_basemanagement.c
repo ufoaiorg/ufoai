@@ -1955,6 +1955,10 @@ void B_UpdateBaseData( void )
 			if ( new ) {
 				Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("Construction of %s building finished in base %s."), b->name, gd.bases[i].name);
 				MN_AddNewMessage(_("Building finished"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL );
+				/* Open info window. */
+				MN_PushMenu( "popup_building_finished" );
+				/* stop time */
+				CL_GameTimeStop();
 			}
 		}
 	}
