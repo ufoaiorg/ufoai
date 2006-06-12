@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-06-12 10:07+0200\n"
+"PO-Revision-Date: 2006-06-12 18:36+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
 "MIME-Version: 1.0\n"
@@ -77,7 +77,7 @@ msgstr "Hoiuruum(id)"
 
 #: ../base/ufos/basemanagement.ufo:84
 msgid "Interceptors"
-msgstr "Hävitajad"
+msgstr "Hävitajad F-48"
 
 #: ../base/ufos/basemanagement.ufo:98
 msgid "Quarters"
@@ -134,11 +134,11 @@ msgstr "Baas #8"
 
 #: ../base/ufos/basemanagement.ufo:196
 msgid "Dropship"
-msgstr "Transpordi laev"
+msgstr "Transpordi laev H-92"
 
 #: ../base/ufos/basemanagement.ufo:210
 msgid "Interceptor"
-msgstr "Hävitaja"
+msgstr "Hävitaja F-48"
 
 #: ../base/ufos/basemanagement.ufo:227
 msgid "UFO"
@@ -1302,7 +1302,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:159
 msgid "assault_txt"
-msgstr ""
+msgstr "AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja revulutsioonilist kuju, teeb see automaat palju rohkem kahju kui tavaline automaat. AR-80 salve kuju ja salve positsioon lubavad tal isegi täpsemini tulistada. Automaati on ka lihtne parandada, kuna see on erinevatest osadest kokku pandud. Tulistamise mehanismi saab parandad lahingus olles, lihtsalt tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult natuke üle minuti."
 
 #: ../base/ufos/research.ufo:171
 msgid "assault_ammo_txt"
@@ -1479,55 +1479,57 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:712
 msgid "b_entrance_txt"
-msgstr ""
+msgstr "See on personali sissekäik Phalanxi baasi. See on põhiliselt lift mis sõidab pinnalt maa alla.  Maa-alune koritoor viib liftist edasi baasi. Lifti sisse käik on varjatud ja maapinnalt/õhust raskesti märgatav, et välistada baasi avastamist tulnukate poolt. Lift suudab korraga tuu kaasa ainult 4 inimest - see on turvameede, hoidmaks vastseid baasi tungimist suurtes numbrites. Aga kuna see on üks väheseid kohti mis ühendab baasi maapinnaga jääb see ikkagi nõrgaks kohaks baasi kaitsel. Kui tulnukad peaksid baasi ründama sisenevad nad kinlasti siit."
 
 #: ../base/ufos/research.ufo:724
 msgid "b_commando_txt"
-msgstr ""
+msgstr "Juhtimis keskus on iga Phalanxi baasi süda. Kõik missioonid planeeritakse seal, radari ja muu info kogumine ja uurimine toimub ka seal. Ilma juhtimis keskuseta ei saa ükski baas töötada, kui sa ehitad uue baasi siis ehita kindlasti juhtimis keskus muidu baas ei saa töötada."
 
 #: ../base/ufos/research.ufo:736
 msgid "b_powerplant_txt"
-msgstr ""
+msgstr "Jõujaam varustab baasi energiaga. Ilma energiata enamus baasi ehitisi ei suuda töötada. Selle pärast on jõujaam eluliselt vajalik ja seda üritatakse kindlasti hävitada kui vastased peaksid baasi ründama"
 
 #: ../base/ufos/research.ufo:748
 msgid "b_storage_txt"
-msgstr ""
+msgstr "See ehitis on varustuse ja varuosade hoidmiseks. Iga hoidla suudab hoida 50 objekti. "
 
 #: ../base/ufos/research.ufo:760
 msgid "b_hangar_txt"
-msgstr ""
+msgstr "Hangaaris hoitakse Phalanxi lennumasinaid ja nende jaoks vajalike tööriistu, et hoida masinad korras. Enamus hangaarist on tohutu lift. Kui Lennumasin peab väljuma baasist viib lift ta maapinnale. Hangaari ukse ava on peidetud ja raskesti märgatav õhust/maapinnalt. Kuigi see on üks väheseid ehitisi mis ühedavad baasi maapinnaga., seega onsee nõrk koht baasi kaitses ja kõige tõenäolisemalt rünnatkse just sealt baasi baasi rünnaku ajal.  "
 
 #: ../base/ufos/research.ufo:772
 msgid "b_ufo_hangar_txt"
-msgstr ""
+msgstr "Ufo hangaaris hoitakse vallutatud UFOsid. Loogiliselt ei ole hea uurida vallutatud ufot kohapeal, see kutsuks tulnukaid seda tagsi vallutama. Seega pärast UFo vallutamist tuuakse see lähimasse UFO hangaari. Seda tehakse tavaliste sõdurite abiga seega pole see Phalanxi mure. UFO hangaari pakub kohat igale ufole kuni transpordi UFO klassini."
 
 #: ../base/ufos/research.ufo:784
 msgid "b_intercept_txt"
-msgstr ""
+msgstr "Iterceptor raketid on baasi kaitse mis kaitseb baasi UFOde maandumiste eets. Iga UFO mis üritab maanduda baasi lähedal tulistatakse all. Kuigi iterceptorid suudavad hakkam saad nõrgemate kallaletungidega ei saa nad suurtemate UFOde vastu."
 
 #: ../base/ufos/research.ufo:796
 msgid "b_quarters_txt"
-msgstr ""
+msgstr "Eluruumid on mõeldud Phalanxi töötajatel elamiseks. Nii sõdurid, teadlased kui tava töötajad kutsuvad seda kohta koduks. Igal töötjal on oma kuubiku kujuline tuba milles on voodi, väike laud ja tool ning pesemise koht.  Lisaks on eluruumid koht kus töötajad saavad suhelda ja puhata. Iga eluruum pakub elukohta 20le inimesele."
 
 #: ../base/ufos/research.ufo:808
 msgid "b_lab_txt"
-msgstr ""
+msgstr "Labor on koht kus katsetatakse, uuritakse nii relvi, tulnukaid ja nende tehnoloogjat. Lisaks arutatakse teooriaid, tehakse eksperimente, kasutatakse arvuti simulatsioone ja testitakse uut varustust. Kuigi teadlased ei vaja laborit, et baasis elada ei saa nad ilma laborita töötada. Iga labor annab töökoha 10 le teadlasele"
 
 #: ../base/ufos/research.ufo:820
 msgid "b_teamroom_txt"
-msgstr ""
+msgstr "<unknow> scrapped or renamed"
 
 #: ../base/ufos/research.ufo:832
 msgid "b_radar_txt"
-msgstr ""
+msgstr "Radar tähendab tegelikult ruumi koos erinevate UFO avastus seadmetega. Kasutades radari ruumis saadud infot on võimalik kindlaks teha kus asuvad ufod 25 sekundi täpsusega, lubades juhtimis keskusle saata välja UFOde ründe missioone või evakueerida baas Baasi rünnaku ohu korral."
 
 #: ../base/ufos/research.ufo:847
 msgid "dropship_txt"
 msgstr ""
+"Transpordi laeva tüüp koodnimega H-92 on üks põhilisi transpordi vahendeid Phalanxi järiest kasvavale armeele. Saades energiat nejast HM-5600 turbo mootorist, suudab H-92 arendad kiiruse mach 1.0. Mootorid asetsevad nii, et oleks võimalik ülestõusta ja maanduda nii vertikaalselt kui horisontaalselt. See tehnikaline omadus on vajalik sõdurite transpordiks pea igasse maailma nurka.\n"
+"H-92 suurimaks miinuseks on vähene relvastus. Sellepärast ongi välja töötatud hävitajad(F-48), mis katavad H-92 kui ta maandub, et rünnata UFOt"
 
 #: ../base/ufos/research.ufo:862
 msgid "interceptor_txt"
-msgstr ""
+msgstr "F-48 hävitaja on Phalanxi õhuväe au ja uhkus. Saades energiat kahest Volkot VO-36 turbo mootorist, suudab hävitaja jõuda isegi kiiruseni mach 1.4. Kuigi see kiirus on tunduvalt aeglasem paljude UFOde kiirusest, suudab F-48 võistelda manööverdamises ka parimate UFOdega. Nagu  ka H-92 suudab ka F-48 startidad ja maanduda nii vertikaalselt kui horisontaalselt. Sellest tulenevalt on kõikide Phalanxi baasides vertikaalsed sahtid mis viivad maaaluse maandumise ja stardi paigani. See on kõige kindlam viis kuidas varjata lennuvälja maapinnalt avastamise vastu. "
 
 #: ../base/ufos/research.ufo:893
 msgid "Small alien craft"
@@ -1551,7 +1553,7 @@ msgstr "Ortnok - Lahingu Tähelepanekud"
 
 #: ../base/ufos/research.ufo:934
 msgid "ortnok_notes_txt"
-msgstr ""
+msgstr "Üldiselt on rohelise nahaga Ortnokid väga sarnased inimrassile. Umbes 80% nende DNAst on sama mis inimestelgi. Kehaosad ja elundid mis on erinevad on arvatavasti geneetiliselt muutetud, sest neil puuduvad vähemadgi erinevused. Fakt, et nad on geneetiliselt muutetud ja, et neil puuduvad paljunemise organid on arvatavasti tulenenud sellest, et nad on tundmatu tulnukate liigi poolt valmistatud kloonid. Lisaks on Ortnokidel mitu kiipi mis asetsevad lihastes, silmades, ajus ja paljudes teistes kohtades üle keha. Tänu sellele on neil palju rohkem jõudu ja vastupidavust  inimestega võrreldes. Aju kiipide ülesanne ei ole veel teada aga meie teadlased usuvad, et need on käskude vastuvõtmiseks. Aga praegu on see vaid oletus, sest puuduvad tõendid ühegi sellise super-tulnuka rassi olemasolust."
 
 #: ../base/ufos/research.ufo:950
 msgid "Ortnok - Autopsy"
@@ -1559,7 +1561,7 @@ msgstr "Ortnuki - Kehaehitus"
 
 #: ../base/ufos/research.ufo:951
 msgid "ortnok_autopsy_txt"
-msgstr ""
+msgstr "Rohelin nahk on soomuseline ja tugev, rakuanalüüsid näitavad, et kehas on palju klorofülli - aine mis teeb lehed roheliseks. Seedimis elundkond on normaal suurusega seega elavad ortniokid keskkonnas kus võivad toidallikad ajutiselt otsa lõppeda. Sest klorofülli süsteem oleks ainuke variant sellistes olukordades.Paljunemis organid on sellel liigil väga aktiivsed, töötades isegi kuni 14 tundi pärast ortnoki surma.Sellepärast kasutavadgi Antareanid neid kauhrilihana kõikides kohtades mida nad tahavd valitseda."
 
 #: ../base/ufos/research.ufo:969
 msgid "Ortnok - Xenobiology"
@@ -1591,11 +1593,11 @@ msgstr "Ortnuki Sõdlane"
 
 #: ../base/ufos/research.ufo:1025
 msgid "ortnok_medium_txt"
-msgstr ""
+msgstr "Omades samasuguseid genetilis omadusi nagu ka tavline ortnok, on Ortnok Warriorid laialdaselt paigutatud ja paljude kiipidega. Kõik need lisa kiibid parandavad võitlustulemusi ja annavad tohutu kontrolli jõu üle. Sellepärast on käed ja jald peaaegu täielikult asendatud proteesidega mis tõstavad jõud veelgi. Tohutu küüne sarnased käed on loodud taluma tohutuid raskusi. Rindmik on kaetud paksu terasplaadiga millest tavlised püssikuulid vaevu läbi tungivad. Mask kaitseb  gaaside eest kuid tagab ka parema happniku varustuse. Selle massivse kiipidega sõdalase (warrior) ainus nõrkus on elektromagnet impulsid (EMP)"
 
 #: ../base/ufos/research.ufo:1043
 msgid "Antarean - Combat notes"
-msgstr "Antarean - Lahingu tähelepanekud"
+msgstr ""
 
 #: ../base/ufos/research.ufo:1044
 msgid "antarean_notes_txt"
@@ -1647,7 +1649,7 @@ msgstr "Shevaar - Kehaehitus"
 
 #: ../base/ufos/research.ufo:1148
 msgid "shevaar_autopsy_txt"
-msgstr ""
+msgstr "Tugev ja muskliline keha toetub suurele, sirgel skelettile andes sellel liigile tohtu kaitse. Kaks kihti hambaid toetuvad selle eluka õlagadele, tehes tema suu sama laiaks kui tema ise. Suur, märg nina on tegelikult aju mis on kaetud eriliste sensor rakkudega. Tänu neile rakkudel suudab Shevaar kergelt jahtida igat saaki, aga kuna tema aju pole kaitstud ei naha ega luude poolt on Shevaar nõrk nii psionic rünnakule kui ka lähivõitluses."
 
 #: ../base/ufos/research.ufo:1164
 msgid "Shevaar - Xenobiology"
@@ -1671,7 +1673,7 @@ msgstr "Hovernet - Jäänuste uurimine"
 
 #: ../base/ufos/research.ufo:1201
 msgid "hovernet_autopsy_txt"
-msgstr ""
+msgstr "Arutades lahti segipaisatud traadi Hoverneti kehal, tuleb välja tugev, mittepainduv tundmatu kontstruktsiooniga plokk. Relvade liitmis kohad on selgelt nähtavad, läbi märgistuste mida mei teadlased veel tõlgivad. Neist aru saamine oleks esimene samm    mõista tulnukate keelt.Ühtegi liitmiskohta pole näha traadi küljes mis ulatuvad plokkist välja, isegi mitte elektri mikroskoobi all. On võimalike, et traadid tehti korraga koos plokkiga, et jagad võrdselt hoverneti energiat ja panna ta hõljuma. Lahtiseid traate on raske lasta kuulide või energiarelvadega, kõige paremini mõjuksid plahvatus või tule relvad. "
 
 #: ../base/ufos/research.ufo:1217
 msgid "Hovernet - design"
@@ -1695,7 +1697,7 @@ msgstr "Cyborg Ortnok - Kehaehitus"
 
 #: ../base/ufos/research.ufo:1254
 msgid "cyborg_ortnok_autopsy_txt"
-msgstr ""
+msgstr "Eraldades cyborgi metall-luustiku eluka kehast lendab sädemeid ja väljub uimastav, vänge gaas. Sisikond on toetatud arvukatele kunst luudele ja toetustele. Paistab, et seedimise süsteem ja paljunemis organid on eemaldatud ja asendatud paljude masinatega.  Klorofülli poolt tekkitatud energjast piisab masinate käivitamiseks. Antareanide cyborgi programmi eesmärk on luua super ortnok, mis oleks vastupidavam ja tugevam kui tavaline ortnok ja mida saaks kasutada kõikjal"
 
 #: ../base/ufos/research.ufo:1270
 msgid "Cyborg Ortnok - Xenobiology"
@@ -1743,51 +1745,51 @@ msgstr ""
 
 #: ../base/ufos/seq_intro.ufo:62
 msgid "prolog_sentence1"
-msgstr ""
+msgstr "PROLOOG"
 
 #: ../base/ufos/seq_intro.ufo:72
 msgid "prolog_sentence2"
-msgstr ""
+msgstr "Tere tulemast, Komandöör. Teie käsutusse on PHALANXsi väed. Teie ülesanne on: kaitsta Maa elanikke ja hävitada tulnukate oht. Kuidas seda teha jääb Teie otsutada, aga Te peate teadma kaotada te ei tohi."
 
 #: ../base/ufos/seq_intro.ufo:81
 msgid "prolog_sentence3"
-msgstr ""
+msgstr "Teie esimene käsk on seada ülesse peakorter. Valige asukoht targalt sest see jääb mõjutama teie edu PHALANXi projektis"
 
 #: ../base/ufos/seq_intro.ufo:90
 msgid "prolog_sentence4"
-msgstr ""
+msgstr "Hiljutine analüüs Mumbai rünnaku kohta kinnitas fakti, et tulnukate aktiivsus on tõusnud tihedamalt asustatud aladel näiteks: Kesk ameerikas, Euroopas, Aasias, Aafrikas ja Austraalias. Te peaksite neid alasid kaitsma iga hinna eest!"
 
 #: ../base/ufos/seq_intro.ufo:99
 msgid "prolog_sentence5"
-msgstr ""
+msgstr "Kohe kui olete asutanud esimes baasi peate te ette valmistama oma sõdurid. Noored sõdurid kes on PHALANXi projectiga liitunud peavad olema määratud transpordi laevale ja lahinguks relvastatud."
 
 #: ../base/ufos/seq_intro.ufo:108
 msgid "prolog_sentence6"
-msgstr ""
+msgstr "Ja ärge unustage neid hästi kaitsta. Elus sõdur tapab rohkem tulnukaid kui surnud sõdur."
 
 #: ../base/ufos/seq_intro.ufo:117
 msgid "prolog_sentence7"
-msgstr ""
+msgstr "See on kõik, Komandöör. Head õnne - Teil läheb seda vaja !"
 
 #: ../base/ufos/team_aliens.ufo:227
 msgid "Ortnok"
-msgstr "Ortnok"
+msgstr "Ortnokid suudavad kasutada lihtsamaid tulnukate püsse, nad ei suuda kasutada ei raskerelvastust ega granaate, kuna see on nende piiratud mõistusele liiga raske.Rohelise nahaga esireasõdurid. Alistatud Antareanside poolt sajandeid tagasi, on nad nüüd Antareanide impeeriumi orjad. Inteligentsuselt on nad võrreldavad Maa ahvidega, isaseid  Ortnoke treenitakse sünnist peale tugevateks ja osavateks sõduriteks. Emased hoitakse nn. sünnitus hoidlates, kinnitamaks, et Antareansidel oleks alati värske varu \"kahuriliha\""
 
 #: ../base/ufos/team_aliens.ufo:237
 msgid "Antarean"
-msgstr "Antarean"
+msgstr "Olles karmi sõjaväelis juhtimise all on Antareanidel auastmed: Töölised, Sõdurid ja komandöörid. Väiksed UFOd on mehitatud töölistega kes koguvad infot Maastiku kohta, röövivad eluvorme ja muud sellist.  Sõjalaeva tüüpi UFOdel on ka sõdureid Komandöörid on ainult Juggernaut ja Bulwarki tüüpi UFOdes ja Antareanide baasides. Inimese sarnased, suurte silmade ja halli kehaga tulnukad kes domineerisid 20saj. õudus filmides. Nad sarnanevad inimestega nii keha ehituselt kui aju suuruselt, mis aitas nende madalal kogukonnal areneda  Kosmose vallutajateks."
 
 #: ../base/ufos/team_aliens.ufo:247
 msgid "Shevaar"
-msgstr "Shevaar"
+msgstr "Alguses tungivad Shevaarid vastasele otse kallale ja ründavad neid lähivõitluses. Hiljem olles harjunud Maa gravitsiooniga saavad nad endale kehakaitset ja tachyoni automaadi, et olla kasulik ka kaugelt. Shevaar võtab enda alla 2x2 ala.Ebatavaliselt laiad ja tugevad eluvormid keda võib ka kirjeldada kui \"looduse tanke\". Kuigi nad ei ole pikemad kui tavaline inimene, on nad palju laiemad, meenutades õudusfilmide koletisi. Oma kahe hambareaga suudab Shevaar kergesti ära rebida inimeste jäsemeid jm. Nende nahk on väga paks. Sellepärast kasutavad Antareanid neid sõjakoeradena. Sell ajal kui vastane tegeleb shevaaridega, tulistavad Antareanid neid kaugelt."
 
 #: ../base/ufos/team_aliens.ufo:257
 msgid "Hovernet"
-msgstr "Hovernet"
+msgstr "Hovernetid on kaugjuhitavad ja nad ilmuvad ainult UFO maandumis/vallutamise ja baasi rünnakute ajal. Kuigi hovernetidel on ka bioloogilisi osi on nad siiski masinad. Nende tulistamine hävitab enamus nende elutähtsaid osi. Et püüda hoverneti elusalt, peab hävitama Antareani kes hovernette kontrollib. Tavaliselt asub ta laeva kontroll ruumis.Need on väiksed, hõljuvad, mehaanilised, relvad kellel anti hüüdnimeks \"Hovernet\" nende poolt kes elasid üle esimese kokkupuute nendega. Nende nimi tuleneb 2 sõnast Hover - hõljuma ja Net - võrk. Nad hõljuvad maapinna kohal ja nad on väga ohtlikud, sest nad on relvastatud tachyoni snaiper püssiga. Arvatavasti on nad kaitsesüsteem mis aktiveerub kui UFO maandub või sunnitakse maanduma."
 
 #: ../base/ufos/team_aliens.ufo:267
 msgid "Cyborg Ortnok"
-msgstr "Cyborg Ortnok"
+msgstr "Erinevalt tavalistest Ortnokidest, on Cyborg Ortnoki relvad ehitatud tema käte kohapeale. Need käe-relvad võivad olla tachyoni automaatidest kuni granaadi heitjateni.Nad on Antareanide masinprogrammi tulemus, jäsemed ja enamus siseelundid on eemaldatud ja asendatud masinatega, pealuu on tugendatud metalliga mis on sulatatud kolju külge kinni. Cybork Ortnokid on väga agresiivsed lahingus."
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -1829,11 +1831,11 @@ msgstr "Viska"
 
 #: ../base/ufos/weapons_human.ufo:6
 msgid "Assault Rifle"
-msgstr "Ründeautomaat"
+msgstr "Automaat AR-80"
 
 #: ../base/ufos/weapons_human.ufo:23
 msgid "Assault Rifle Clip"
-msgstr "Ründeautomaadi salv"
+msgstr "AR-80 salv"
 
 #: ../base/ufos/weapons_human.ufo:35
 #: ../base/ufos/weapons_human.ufo:250
