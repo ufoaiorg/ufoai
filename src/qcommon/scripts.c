@@ -526,8 +526,10 @@ char *Com_GiveName( int gender, char *category )
 
 /*======================
 Com_GiveModel
+
+gender is 1 (female) or 2 (male)
+category are the country strings like: spanish_italian, german, russian and so on
 ======================*/
-/*char returnModel[MAX_VAR]; */
 char *Com_GiveModel( int type, int gender, char *category )
 {
 	nameCategory_t	*nc;
@@ -536,10 +538,13 @@ char *Com_GiveModel( int type, int gender, char *category )
 
 	/* search the name */
 	for ( i = 0, nc = nameCat; i < numNameCats; i++, nc++ )
-		if ( !Q_strncmp( category, nc->title, MAX_VAR ) )
-		{
+		if ( !Q_strncmp( category, nc->title, MAX_VAR ) ) {
 			/* found category */
-			if ( !nc->numModels[gender] ) return NULL;
+			if ( !nc->numModels[gender] )
+			{
+				Com_Printf("Com_GiveModel: no models defined for gender %i and category '%s'\n", gender, category);
+				return NULL;
+			}
 			num = (int)(nc->numModels[gender] * frand()) * 4;
 			num += type;
 
@@ -552,6 +557,7 @@ char *Com_GiveModel( int type, int gender, char *category )
 			return str;
 		}
 
+	Com_Printf("Com_GiveModel: no models for gender %i and category '%s'\n", gender, category);
 	/* nothing found */
 	return NULL;
 }
@@ -570,31 +576,26 @@ int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *n
 		if ( !Q_strncmp( team, teamDef[i].title, MAX_VAR ) )
 			break;
 	if ( i < numTeamDefs ) td = &teamDef[i];
-	else
-	{
+	else {
 		/* search in name categories, if it isn't a team definition */
 		td = NULL;
 		for ( i = 0; i < numNameCats; i++ )
 			if ( !Q_strncmp( team, nameCat[i].title, MAX_VAR ) )
 				break;
-		if ( i == numNameCats )
-		{
+		if ( i == numNameCats ) {
 			/* use default team */
 			if ( !numTeamDefs ) return 0;
 			else td = &teamDef[0];
-		}
-		else category = i;
+		} else category = i;
 	}
 
 	/* get the models */
-	while ( team )
-	{
+	while ( team ) {
 		gender = frand()*NAME_LAST;
 		if ( td ) category = (int)td->cats[(int)(frand()*td->num)];
 
 		/* get name */
-		if ( name )
-		{
+		if ( name ) {
 			str = Com_GiveName( gender, nameCat[category].title );
 			if ( !str ) continue;
 			Q_strncpyz( name, str, MAX_VAR );
@@ -606,22 +607,19 @@ int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *n
 		}
 
 		/* get model */
-		if ( path )
-		{
+		if ( path ) {
 			str = Com_GiveModel( MODEL_PATH, gender, nameCat[category].title );
 			if ( !str ) continue;
 			Q_strncpyz( path, str, MAX_VAR );
 		}
 
-		if ( body )
-		{
+		if ( body ) {
 			str = Com_GiveModel( MODEL_BODY, gender, nameCat[category].title );
 			if ( !str ) continue;
 			Q_strncpyz( body, str, MAX_VAR );
 		}
 
-		if ( head )
-		{
+		if ( head ) {
 			str = Com_GiveModel( MODEL_HEAD, gender, nameCat[category].title );
 			if ( !str ) continue;
 			Q_strncpyz( head, str, MAX_VAR );
@@ -650,8 +648,7 @@ void Com_ParseNames( char *title, char **text )
 			break;
 
 	/* reset new category */
-	if ( i == numNameCats )
-	{
+	if ( i == numNameCats ) {
 		memset( nc, 0, sizeof( nameCategory_t ) );
 		numNameCats++;
 	}

@@ -1211,32 +1211,6 @@ void COM_FilePath (char *in, char *out)
 	out[s-in] = 0;
 }
 
-#if 0
-/*
-==================
-COM_DefaultExtension
-==================
-*/
-void COM_DefaultExtension (char *path, char *extension)
-{
-	char    *src;
-	/* */
-	/* if path doesn't have a .EXT, append extension */
-	/* (extension should include the .) */
-	/* */
-	src = path + strlen(path) - 1;
-
-	while (*src != '/' && src != path)
-	{
-		if (*src == '.')
-			return;                 /* it has an extension */
-		src--;
-	}
-
-	strcat (path, extension);
-}
-#endif
-
 /*
 ============================================================================
 BYTE ORDER FUNCTIONS
@@ -2247,17 +2221,17 @@ void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility,
 
 
 char returnModel[MAX_VAR];
-
 /*
 ======================
 Com_CharGetBody
+
+returns the body model for the soldiers for armored and non armored soldiers
 ======================
 */
 char *Com_CharGetBody( character_t *chr )
 {
 	assert( chr );
 	assert( chr->inv );
-
 	if ( chr->inv->c[CSI->idArmor] )
 		Com_sprintf( returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->body );
 	else
@@ -2269,17 +2243,18 @@ char *Com_CharGetBody( character_t *chr )
 /*
 ======================
 Com_CharGetHead
+
+returns the head model for the soldiers for armored and non armored soldiers
 ======================
 */
 char *Com_CharGetHead( character_t *chr )
 {
 	assert( chr );
 	assert( chr->inv );
-
 	if ( chr->inv->c[CSI->idArmor] )
-		sprintf( returnModel, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->head );
+		Com_sprintf( returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->head );
 	else
-		sprintf( returnModel, "%s/%s", chr->path, chr->head );
+		Com_sprintf( returnModel, MAX_VAR, "%s/%s", chr->path, chr->head );
 	return returnModel;
 }
 
