@@ -55,12 +55,12 @@ IN
 void RS_MarkOneCollected ( char *id )
 {
 	int i;
-	technology_t *t = NULL;
+	technology_t *tech = NULL;
 
 	for ( i=0; i < gd.numTechnologies; i++ ) {
-		t = &gd.technologies[i];
-		if ( !Q_strncmp( t->provides, id, MAX_VAR ) ) {	/* provided item found */
-			t->statusCollected++;
+		tech = &gd.technologies[i];
+		if ( !Q_strncmp( tech->provides, id, MAX_VAR ) ) {	/* provided item found */
+			tech->statusCollected++;
 			return;
 		}
 	}
@@ -108,7 +108,7 @@ Should be called when a new item is researched (RS_MarkResearched) and after the
 void RS_MarkResearchable( void )
 {
 	int i, j;
-	technology_t *t = NULL;
+	technology_t *tech = NULL;
 	stringlist_t firstrequired;
 	stringlist_t *required = NULL;
 	byte required_are_researched;
@@ -116,20 +116,20 @@ void RS_MarkResearchable( void )
 
 	/* set all entries to initial value */
 	for ( i=0; i < gd.numTechnologies; i++ ) {
-		t = &gd.technologies[i];
-		t->statusResearchable = qfalse;
+		tech = &gd.technologies[i];
+		tech->statusResearchable = qfalse;
 	}
 
 	for ( i=0; i < gd.numTechnologies; i++ ) {
-		t = &gd.technologies[i];
-		if ( !t->statusResearchable ) {	/* Redundant, since we set them all to false, but you never know. */
-			if ( t->statusResearch != RS_FINISH) {
-				Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", t->id );
+		tech = &gd.technologies[i];
+		if ( !tech->statusResearchable ) {	/* Redundant, since we set them all to false, but you never know. */
+			if ( tech->statusResearch != RS_FINISH) {
+				Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", tech->id );
 				firstrequired.numEntries = 0;
-				RS_GetFirstRequired( t->idx,  &firstrequired );
+				RS_GetFirstRequired( tech->idx,  &firstrequired );
 
 				/* If the tech has an collected item, mark the first-required techs as researchable //TODO doesn't work yet? */
-				if ( t->statusCollected ) {
+				if ( tech->statusCollected ) {
 					for ( j=0; j < firstrequired.numEntries; j++ ) {
 						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:firstrequired of collected.\n", firstrequired.string[j] );
 						RS_MarkOneResearchable( firstrequired.idx[j] );
@@ -137,7 +137,7 @@ void RS_MarkResearchable( void )
 				}
 
 				/* if needed/required techs are all researched, mark this as researchable. */
-				required = &t->requires;
+				required = &tech->requires;
 				required_are_researched = qtrue;
 				Com_DPrintf("RS_MarkResearchable: %i required entries\n", required->numEntries);
 				for ( j=0; j < required->numEntries; j++ ) {
@@ -149,19 +149,19 @@ void RS_MarkResearchable( void )
 					}
 				}
 
-				if ( required_are_researched											/* all required items are researched */
-				&& ( ( t->needsCollected && t->statusCollected ) || !t->needsCollected ) ){	/* AND ( all needed collected OR no collected needed ) */
-					Com_DPrintf("RS_MarkResearchable: %i - %i - %i\n", required_are_researched, t->needsCollected,  t->statusCollected );
-					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:required.\n", t->id );
-					t->statusResearchable = qtrue;
+				if ( required_are_researched	/* all required items are researched */
+				&& ( ( tech->needsCollected && tech->statusCollected ) || !tech->needsCollected ) ) { /* AND ( all needed collected OR no collected needed ) */
+					Com_DPrintf("RS_MarkResearchable: %i - %i - %i\n", required_are_researched, tech->needsCollected,  tech->statusCollected );
+					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:required.\n", tech->id );
+					tech->statusResearchable = qtrue;
 				}
 
 
 				/* If the tech is an initial one,  mark it as as researchable. */
 				for ( j=0; j < required->numEntries; j++ ) {
 					if ( !Q_strncmp( required->string[j], "initial", 7 ) ) {
-						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable - reason:isinitial.\n", t->id );
-						t->statusResearchable = qtrue;
+						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable - reason:isinitial.\n", tech->id );
+						tech->statusResearchable = qtrue;
 						break;
 					}
 				}
@@ -228,7 +228,7 @@ TODO: add a function to reset ALL research-stati to RS_NONE; -> to be called aft
 void RS_InitTree( void )
 {
 	int i, j, k;
-	technology_t *t = NULL;
+	technology_t *tech = NULL;
 	technology_t *tech_required = NULL;
 	stringlist_t *required = NULL;
 	objDef_t *item = NULL;
@@ -238,12 +238,12 @@ void RS_InitTree( void )
 	byte	found;
 
 	for ( i=0; i < gd.numTechnologies; i++ ) {
-		t = &gd.technologies[i];
+		tech = &gd.technologies[i];
 
-		t->overalltime = t->time;	/* set the overall reseach time (now fixed) to the one given in the ufo-file. */
+		tech->overalltime = tech->time;	/* set the overall reseach time (now fixed) to the one given in the ufo-file. */
 		
 		/* link idx entries to tech provided by id */
-		required = &t->requires;
+		required = &tech->requires;
 		for ( j=0; j < required->numEntries; j++ ) {
 			Com_DPrintf( "RS_InitTree: linking....\"%s\"\n",required->string[j] );
 			tech_required = RS_GetTechByID ( required->string[j] );
@@ -255,33 +255,33 @@ void RS_InitTree( void )
 		}
 		
 		/* Search in correct data/.ufo */
-		switch ( t->type )
+		switch ( tech->type )
 		{
 		case RS_TECH:
-			if ( !*t->name )
-				Com_DPrintf( "RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", t->id );
+			if ( !*tech->name )
+				Com_DPrintf( "RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", tech->id );
 			break;
 		case RS_WEAPON:
 		case RS_ARMOR:
 			found = qfalse;
 			for ( j = 0; j < csi.numODs; j++ ) {
 				item = &csi.ods[j];
-				if ( !Q_strncmp( t->provides, item->kurz, MAX_VAR ) ) { /* This item has been 'provided', */
+				if ( !Q_strncmp( tech->provides, item->kurz, MAX_VAR ) ) { /* This item has been 'provided', */
 					found = qtrue;
-					if ( !*t->name )
-						Com_sprintf( t->name, MAX_VAR, item->name );
-					if ( !*t->mdl_top )
-						Com_sprintf( t->mdl_top, MAX_VAR, item->model );
-					if ( !*t->image_top )
-						Com_sprintf( t->image_top, MAX_VAR, item->image );
-					if ( !*t->mdl_bottom ) {
-						if  ( t->type == RS_WEAPON) {
+					if ( !*tech->name )
+						Com_sprintf( tech->name, MAX_VAR, item->name );
+					if ( !*tech->mdl_top )
+						Com_sprintf( tech->mdl_top, MAX_VAR, item->model );
+					if ( !*tech->image_top )
+						Com_sprintf( tech->image_top, MAX_VAR, item->image );
+					if ( !*tech->mdl_bottom ) {
+						if  ( tech->type == RS_WEAPON) {
 							/* find ammo */
 							for ( k = 0; k < csi.numODs; k++ ) {
 								item_ammo = &csi.ods[k];
 								if ( j == item_ammo->link ) {
 									Com_DPrintf("RS_InitTree: Ammo \"%s\" for \"%s\" found.\n", item_ammo->name,  item->name);
-									Com_sprintf( t->mdl_bottom, MAX_VAR, item_ammo->model );
+									Com_sprintf( tech->mdl_bottom, MAX_VAR, item_ammo->model );
 								}
 							}
 						}
@@ -292,46 +292,46 @@ void RS_InitTree( void )
 			}
 			/*no id found in csi.ods */
 			if ( !found ) {
-				Com_sprintf( t->name, MAX_VAR, t->id );
-				Com_DPrintf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found. Tech-id used as name.\n", t->id, t->provides );
+				Com_sprintf( tech->name, MAX_VAR, tech->id );
+				Com_DPrintf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides );
 			}
 			break;
 		case RS_BUILDING:
 			found = qfalse;
 			for ( j = 0; j < gd.numBuildingTypes; j++ ) {
 				building = &gd.buildingTypes[j];
-				if ( !Q_strncmp( t->provides, building->id, MAX_VAR ) ) { /* This building has been 'provided', */
+				if ( !Q_strncmp( tech->provides, building->id, MAX_VAR ) ) { /* This building has been 'provided', */
 					found = qtrue;
-					if ( !*t->name )
-						Com_sprintf( t->name, MAX_VAR, building->name );
-					if ( !*t->image_top )
-						Com_sprintf( t->image_top, MAX_VAR, building->image );
+					if ( !*tech->name )
+						Com_sprintf( tech->name, MAX_VAR, building->name );
+					if ( !*tech->image_top )
+						Com_sprintf( tech->image_top, MAX_VAR, building->image );
 
 					break;	/* Should return to CASE RS_xxx. */
 				}
 			}
 			if ( !found ){
-				Com_sprintf( t->name, MAX_VAR, t->id );
-				Com_DPrintf( "RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n", t->id, t->provides );
+				Com_sprintf( tech->name, MAX_VAR, tech->id );
+				Com_DPrintf( "RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides );
 			}
 			break;
 		case RS_CRAFT:
 			found = qfalse;
 			for ( j = 0; j < numAircraft; j++ ) {
 				ac = &aircraft[j];
-				if ( !Q_strncmp( t->provides, ac->id, MAX_VAR ) ) { /* This aircraft has been 'provided', */
+				if ( !Q_strncmp( tech->provides, ac->id, MAX_VAR ) ) { /* This aircraft has been 'provided', */
 					found = qtrue;
-					if ( !*t->name )
-						Com_sprintf( t->name, MAX_VAR, ac->name );
-					if ( !*t->mdl_top ) {			/* DEBUG testing */
-						Com_sprintf( t->mdl_top, MAX_VAR, ac->model );
+					if ( !*tech->name )
+						Com_sprintf( tech->name, MAX_VAR, ac->name );
+					if ( !*tech->mdl_top ) {			/* DEBUG testing */
+						Com_sprintf( tech->mdl_top, MAX_VAR, ac->model );
 						Com_DPrintf( "RS_InitTree: aircraft model \"%s\" \n",ac->model );
 					}
 					break;	/* Should return to CASE RS_xxx. */
 				}
 			}
 			if ( !found )
-				Com_DPrintf( "RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n", t->id, t->provides );
+				Com_DPrintf( "RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n", tech->id, tech->provides );
 			break;
 		case RS_ALIEN:
 			/* does nothing right now */
@@ -873,17 +873,17 @@ IN
 void RS_MarkResearched( char *id )
 {
 	int i;
-	technology_t *t = NULL;
+	technology_t *tech = NULL;
 
 	for ( i=0; i < gd.numTechnologies; i++ ) {
-		t = &gd.technologies[i];
-		if ( !Q_strncmp( id, t->id, MAX_VAR ) ) {
-			t->statusResearch = RS_FINISH;
-			Com_Printf("Research of \"%s\" finished.\n", t->id );
+		tech = &gd.technologies[i];
+		if ( !Q_strncmp( id, tech->id, MAX_VAR ) ) {
+			tech->statusResearch = RS_FINISH;
+			Com_Printf("Research of \"%s\" finished.\n", tech->id );
 		}
-		else if ( RS_DependsOn( t->id, id ) && (t->time <= 0) ) {
-			t->statusResearch = RS_FINISH;
-			Com_Printf("Depending tech \"%s\" has been researched as well.\n",  t->id );
+		else if ( RS_DependsOn( tech->id, id ) && ( tech->time <= 0 ) ) {
+			tech->statusResearch = RS_FINISH;
+			Com_Printf("Depending tech \"%s\" has been researched as well.\n",  tech->id );
 		}
 	}
 	RS_MarkResearchable();
@@ -964,54 +964,52 @@ Command to call this: techlist
 void RS_TechnologyList_f ( void )
 {
 	int i, j;
-	technology_t *t = NULL;
+	technology_t *tech = NULL;
 	stringlist_t *req = NULL;
 	stringlist_t req_temp;
 
 	for ( i = 0; i < gd.numTechnologies; i++ )
 	{
-		t = &gd.technologies[i];
-		req = &t->requires;
-		Com_Printf("Tech: %s\n", t->id );
-		Com_Printf("... time      -> %.2f\n", t->time );
-		Com_Printf("... name      -> %s\n", t->name );
+		tech = &gd.technologies[i];
+		req = &tech->requires;
+		Com_Printf("Tech: %s\n", tech->id );
+		Com_Printf("... time      -> %.2f\n", tech->time );
+		Com_Printf("... name      -> %s\n", tech->name );
 		Com_Printf("... requires  ->");
 		for ( j = 0; j < req->numEntries; j++ )
 			Com_Printf( " %s",req->string[j] );
 		Com_Printf("\n");
-		Com_Printf( "... provides  -> %s", t->provides );
+		Com_Printf( "... provides  -> %s", tech->provides );
 		Com_Printf("\n");
 
 		Com_Printf( "... type      -> ");
-		switch ( t->type )
-		{
-		case RS_TECH:	Com_Printf("tech"); break;
-		case RS_WEAPON:	Com_Printf("weapon"); break;
-		case RS_CRAFT:	Com_Printf("craft"); break;
-		case RS_ARMOR:	Com_Printf("armor"); break;
-		case RS_BUILDING:	Com_Printf("building"); break;
-		default:	break;
+		switch ( tech->type )	{
+			case RS_TECH:		Com_Printf("tech"); break;
+			case RS_WEAPON:	Com_Printf("weapon"); break;
+			case RS_CRAFT:		Com_Printf("craft"); break;
+			case RS_ARMOR:		Com_Printf("armor"); break;
+			case RS_BUILDING:	Com_Printf("building"); break;
+			default:	break;
 		}
 		Com_Printf("\n");
 
 		Com_Printf( "... research  -> ");
-		switch ( t->type )
-		{
-		case RS_NONE:	Com_Printf("unknown tech"); break;
-		case RS_RUNNING:	Com_Printf("running"); break;
-		case RS_PAUSED:	Com_Printf("paused"); break;
-		case RS_FINISH:	Com_Printf("done"); break;
-		default:	break;
+		switch ( tech->type ) {
+			case RS_NONE:		Com_Printf("unknown tech"); break;
+			case RS_RUNNING:	Com_Printf("running"); break;
+			case RS_PAUSED:	Com_Printf("paused"); break;
+			case RS_FINISH:		Com_Printf("done"); break;
+			default:	break;
 		}
 		Com_Printf("\n");
 
-		Com_Printf("... Res.able  -> %i\n", t->statusResearchable );
-		Com_Printf("... Collected -> %i\n", t->statusCollected );
+		Com_Printf("... Res.able  -> %i\n", tech->statusResearchable );
+		Com_Printf("... Collected -> %i\n", tech->statusCollected );
 
 
 		Com_Printf("... req_first ->");
 		req_temp.numEntries = 0;
-		RS_GetFirstRequired( t->idx, &req_temp );
+		RS_GetFirstRequired( tech->idx, &req_temp );
 		for ( j = 0; j < req_temp.numEntries; j++ )
 			Com_Printf( " %s", req_temp.string[j] );
 
@@ -1311,10 +1309,11 @@ RS_IsResearched_ptr
 
 call this function if you already hold a tech pointer
 ======================*/
-qboolean RS_IsResearched_ptr ( technology_t* t )
+qboolean RS_IsResearched_ptr ( technology_t* tech )
 {
-	if ( t && t->statusResearch == RS_FINISH )
-		return qtrue;
+	if ( tech )
+		if ( tech->statusResearch == RS_FINISH )
+			return qtrue;
 	return qfalse;
 }
 
@@ -1347,9 +1346,12 @@ RS_Collected_
 
 call this function if you already hold a tech pointer
 ======================*/
-qboolean RS_Collected_ ( technology_t* t )
+int RS_Collected_ ( technology_t* tech )
 {
-	return ( t && t->statusCollected );
+	if ( tech )
+		return tech->statusCollected;
+	
+	Com_DPrintf("RS_Collected_: NULL technology given.\n" );
 }
 
 /*======================
@@ -1467,7 +1469,8 @@ void RS_GetFirstRequired2 ( int tech_idx, int first_tech_idx, stringlist_t *requ
 		if ( required->numEntries < MAX_TECHLINKS ) {
 			/* TODO: check if the firstrequired tech has already been added (e.g indirectly from another tech) */
 			required->idx[required->numEntries] = tech_idx;
-			Q_strncpyz( required->string[required->numEntries++], gd.technologies[tech_idx].id, MAX_VAR );
+			Q_strncpyz( required->string[required->numEntries], gd.technologies[tech_idx].id, MAX_VAR );
+			required->numEntries++;
 			Com_DPrintf("RS_GetFirstRequired2: \"%s\" - requirement 'initial' or 'nothing' found.\n", gd.technologies[tech_idx].id );
 		}
 		return;
@@ -1477,7 +1480,8 @@ void RS_GetFirstRequired2 ( int tech_idx, int first_tech_idx, stringlist_t *requ
 		if ( RS_IsResearched_ptr(tech) ) {
 			if ( required->numEntries < MAX_TECHLINKS ) {
 				required->idx[required->numEntries] = tech->idx;
-				Q_strncpyz( required->string[required->numEntries++], tech->id, MAX_VAR );
+				Q_strncpyz( required->string[required->numEntries], tech->id, MAX_VAR );
+				required->numEntries++;
 				Com_DPrintf( "RS_GetFirstRequired2: \"%s\" - next item \"%s\" already researched.\n", gd.technologies[tech_idx].id, tech->id );
 			}
 		} else {
@@ -1502,15 +1506,16 @@ This list also incldues other items that "require" this one (id) and have a rese
 void RS_GetProvided( char *id, char *provided )
 {
 	int i, j;
-	technology_t *t = NULL;
+	technology_t *tech = NULL;
+	
 	for ( i=0; i < gd.numTechnologies; i++ ) {
-		t = &gd.technologies[i];
-		if ( !strcmp( id, t->id ) ) {
+		tech = &gd.technologies[i];
+		if ( !strcmp( id, tech->id ) ) {
 			for ( j=0; j < MAX_TECHLINKS; j++ )
-				Com_sprintf(provided[j], MAX_VAR, t->provides);
+				Com_sprintf(provided[j], MAX_VAR, tech->provides);
 			/*TODO: search for dependent items. */
 			for ( j=0; j < gd.numTechnologies; j++ ) {
-				if (RS_DependsOn( t->id, id ) ) {
+				if (RS_DependsOn( tech->id, id ) ) {
 					/* TODO: append researchtree[j]->provided to *provided */
 				}
 			}
@@ -1535,7 +1540,7 @@ technology_t* RS_GetTechByID ( const char* id )
 		return NULL;
 	
 	if ( !Q_strncmp( (char*)id, "nothing", 7 )
-	|| !Q_strncmp( i(char*)id, "initial", 7 ) )
+	|| !Q_strncmp( (char*)id, "initial", 7 ) )
 		return NULL;
 
 	for ( ; i < gd.numTechnologies; i++ )

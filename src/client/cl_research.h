@@ -104,7 +104,7 @@ qboolean RS_ItemIsResearched(char *id_provided );
 qboolean RS_TechIsResearched( int tech_idx );
 qboolean RS_IsResearched_idx ( int idx );
 qboolean RS_IsResearched_ptr ( technology_t* t );
-qboolean RS_Collected_ ( technology_t* t );
+int RS_Collected_ ( technology_t* t );
 qboolean RS_ItemCollected(char *id_provided );
 
 void RS_SaveTech( sizebuf_t *sb );
