@@ -726,10 +726,8 @@ void Com_ParseActors( char *title, char **text )
 			break;
 
 	/* reset new category */
-	if ( i == numNameCats )
-	{
-		if ( numNameCats < MAX_NAMECATS )
-		{
+	if ( i == numNameCats ) {
+		if ( numNameCats < MAX_NAMECATS ) {
 			memset( nc, 0, sizeof( nameCategory_t ) );
 			numNameCats++;
 		} else {
@@ -742,8 +740,7 @@ void Com_ParseActors( char *title, char **text )
 	/* get name list body body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseActors: actor def \"%s\" without body ignored\n", title );
 		if ( numNameCats - 1 == nc - nameCat ) numNameCats--;
 		return;
@@ -756,28 +753,24 @@ void Com_ParseActors( char *title, char **text )
 		if ( *token == '}' ) break;
 
 		for ( i = 0; i < NAME_NUM_TYPES; i++ )
-			if ( !Q_strcmp( token, name_strings[i] ) )
-			{
+			if ( !Q_strcmp( token, name_strings[i] ) ) {
 				/* initialize list */
 				nc->models[i] = infoPos;
 				nc->numModels[i] = 0;
-
 				token = COM_EParse( text, errhead, title );
 				if ( !*text ) break;
 				if ( *token != '{' ) break;
 
 				do {
 					/* get the path, body, head and skin */
-					for ( j = 0; j < 4; j++ )
-					{
+					for ( j = 0; j < 4; j++ ) {
 						token = COM_EParse( text, errhead, title );
 						if ( !*text ) break;
 						if ( *token == '}' ) break;
 
 						if ( j == 3 && *token == '*' )
 							*infoPos++ = 0;
-						else
-						{
+						else {
 							strcpy( infoPos, token );
 							infoPos += strlen( token ) + 1;
 						}
@@ -830,8 +823,7 @@ void Com_ParseTeamDesc( char *title, char **text )
 			break;
 
 	/* reset new category */
-	if ( i >= MAX_TEAMDEFS )
-	{
+	if ( i >= MAX_TEAMDEFS ) {
 		Com_Printf( "Too many team descriptions, '%s' ignored.\n", title );
 		return;
 	}
@@ -842,8 +834,7 @@ void Com_ParseTeamDesc( char *title, char **text )
 	/* get name list body body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseTeamDesc: team desc \"%s\" without body ignored\n", title );
 		if ( numTeamDesc - 1 == td - teamDesc )
 			numTeamDesc--;
@@ -857,8 +848,7 @@ void Com_ParseTeamDesc( char *title, char **text )
 		if ( *token == '}' ) break;
 
 		for ( v = teamDescValues; v->string; v++ )
-			if ( !Q_strncmp( token, v->string, sizeof(v->string) ) )
-			{
+			if ( !Q_strncmp( token, v->string, sizeof(v->string) ) ) {
 				/* found a definition */
 				token = COM_EParse( text, errhead, title );
 				if ( !*text ) return;
@@ -889,10 +879,8 @@ void Com_ParseTeam( char *title, char **text )
 			break;
 
 	/* reset new category */
-	if ( i == numTeamDefs )
-	{
-		if ( numTeamDefs < MAX_TEAMDEFS )
-		{
+	if ( i == numTeamDefs ) {
+		if ( numTeamDefs < MAX_TEAMDEFS ) {
 			memset( td, 0, sizeof( teamDef_t ) );
 			numTeamDefs++;
 		} else {
@@ -905,8 +893,7 @@ void Com_ParseTeam( char *title, char **text )
 	/* get name list body body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseTeam: team def \"%s\" without body ignored\n", title );
 		if ( numTeamDefs - 1 == td - teamDef ) numTeamDefs--;
 		return;
@@ -923,8 +910,7 @@ void Com_ParseTeam( char *title, char **text )
 		if ( *token == '}' ) break;
 
 		for ( i = 0, nc = nameCat; i < numNameCats; i++, nc++ )
-			if ( !Q_strncmp( token, nc->title, MAX_VAR ) )
-			{
+			if ( !Q_strncmp( token, nc->title, MAX_VAR ) ) {
 				*infoPos++ = (char)i;
 				td->num++;
 				break;
@@ -986,8 +972,7 @@ void Com_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 			if ( !*text ) break;
 			if ( *token == '}' ) break;
 			for ( v = rankValues; v->string; v++ )
-				if ( !Q_strncmp( token, v->string, sizeof(v->string) ) )
-				{
+				if ( !Q_strncmp( token, v->string, sizeof(v->string) ) ) {
 					/* found a definition */
 					token = COM_EParse( text, errhead, title );
 					if ( !*text ) return;
@@ -1019,8 +1004,7 @@ void Com_ParseDamageTypes( char *name, char **text )
 	/* get it's body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseTypes: damage type list \"%s\" without body ignored\n", name );
 		csi.numODs--;
 		return;
@@ -1036,8 +1020,7 @@ void Com_ParseDamageTypes( char *name, char **text )
 			if ( !Q_strncmp( token, csi.dts[i], MAX_VAR ) )
 				break;
 
-		if ( i >= csi.numDTs )
-		{
+		if ( i >= csi.numDTs ) {
 			if ( csi.numDTs >= MAX_DAMAGETYPES )
 				Sys_Error( "Com_ParseTypes: Too many damage types.\n" );
 
@@ -1072,10 +1055,8 @@ void Com_AddObjectLinks( void )
 		od->link = NONE;
 
 	/* add weapon link to ammo */
-	for ( i = 0, od = csi.ods; i < csi.numODs; i++, od++ )
-	{
-		if ( !Q_strncmp( od->type, "ammo", 4 ) )
-		{
+	for ( i = 0, od = csi.ods; i < csi.numODs; i++, od++ ) {
+		if ( !Q_strncmp( od->type, "ammo", 4 ) ) {
 			/* check for the underline */
 			Q_strncpyz( kurz, od->kurz, MAX_VAR );
 			underline = strchr( kurz, '_' );
@@ -1084,8 +1065,7 @@ void Com_AddObjectLinks( void )
 
 			/* search corresponding weapon */
 			for ( j = 0; j < csi.numODs; j++ )
-				if ( !Q_strncmp( csi.ods[j].kurz, kurz, MAX_VAR ) )
-				{
+				if ( !Q_strncmp( csi.ods[j].kurz, kurz, MAX_VAR ) ) {
 					csi.ods[i].link = j;
 					break;
 				}
@@ -1114,16 +1094,13 @@ void Com_ParseScripts( void )
 	text = NULL;
 
 	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
-	{
 		if ( !Q_strncmp( type, "damagetypes", 11 ) ) Com_ParseDamageTypes( name, &text );
-	}
 
 	/* stage one parsing */
 	FS_NextScriptHeader( NULL, NULL, NULL );
 	text = NULL;
 
-	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
-	{
+	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) ) {
 		/* server/client scripts */
 		if ( !Q_strncmp( type, "item", 4 ) ) Com_ParseItem( name, &text );
 		else if ( !Q_strncmp( type, "inventory", 9 ) ) Com_ParseInventory( name, &text );
@@ -1139,8 +1116,7 @@ void Com_ParseScripts( void )
 	FS_NextScriptHeader( NULL, NULL, NULL );
 	text = NULL;
 
-	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
-	{
+	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) ) {
 		/* server/client scripts */
 		if ( !Q_strncmp( type, "equipment", 9 ) ) Com_ParseEquipment( name, &text );
 		else if ( !Q_strncmp( type, "teamdesc", 8 ) ) Com_ParseTeamDesc( name, &text );
