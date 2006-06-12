@@ -954,8 +954,6 @@ void CL_CheckResearchStatus ( void )
 				else
 					Com_sprintf( messageBuffer, MAX_MESSAGE_TEXT, _("%i researches finished\n"), newResearch+1 );
 				MN_AddNewMessage( _("Research finished"), messageBuffer, qfalse, MSG_RESEARCH, tech );
-				/* Open info window. */
-				MN_PushMenu( "popup_research_finished" );
 
 				B_ClearBuilding( &gd.buildings[tech->base_idx][tech->lab] );
 				tech->base_idx = -1;

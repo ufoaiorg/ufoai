@@ -880,8 +880,6 @@ void CL_CampaignAddMission( setState_t *set )
 
 		/* Add message to message-system. */
 		MN_AddNewMessage( _("Alien activity"), _("Alien activity has been reported."), qfalse, MSG_TERRORSITE, NULL );
-		/* Open info window. */
-		MN_PushMenu( "popup_alien_activity" );
 	}
 
 	/* prepare next event (if any) */
@@ -1244,12 +1242,8 @@ void CL_CampaignCheckEvents( void )
 			CL_HandleNationData( qtrue, mis );
 			Q_strncpyz(messageBuffer, va(_("The mission expired and %i civilians died. You've lost %i credits."), mis->def->civilians, lose), MAX_MESSAGE_TEXT );
 			MN_AddNewMessage( _("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL );
-			/* Open info window. */
-			MN_PushMenu( "popup_mission_expired" );
 			/* Remove mission from the map. */
 			CL_CampaignRemoveMission( mis );
-			/* stop time */
-			CL_GameTimeStop();
 		}
 }
 
