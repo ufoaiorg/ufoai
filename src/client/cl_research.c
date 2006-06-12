@@ -1283,8 +1283,9 @@ void RS_GetRequired( char *id, stringlist_t *required)
 	technology_t *tech = NULL;
 
 	tech = RS_GetTechByID( id );
-	if ( ! tech )
+	if ( ! tech ) {
 		return;
+	}
 
 	/* research item found */
 	required = &tech->requires;	/* is linking a good idea? */
@@ -1298,9 +1299,11 @@ call this function if you already hold a tech pointer
 ======================*/
 qboolean RS_IsResearched_idx ( int idx )
 {
-	if ( idx >= 0)
-		if ( gd.technologies[idx].statusResearch == RS_FINISH )
+	if ( idx >= 0) {
+		if ( gd.technologies[idx].statusResearch == RS_FINISH ) {
 			return qtrue;
+		}
+	}
 	return qfalse;
 }
 
@@ -1311,9 +1314,11 @@ call this function if you already hold a tech pointer
 ======================*/
 qboolean RS_IsResearched_ptr ( technology_t* tech )
 {
-	if ( tech )
-		if ( tech->statusResearch == RS_FINISH )
+	if ( tech ) {
+		if ( tech->statusResearch == RS_FINISH ) {
 			return qtrue;
+		}
+	}
 	return qfalse;
 }
 
@@ -1328,7 +1333,7 @@ IN
 OUT
 	boolean	RS_ItemIsResearched
 ======================*/
-qboolean RS_ItemIsResearched(char *id_provided )
+qboolean RS_ItemIsResearched( char *id_provided )
 {
 	int i;
 	technology_t *tech = NULL;
@@ -1348,10 +1353,12 @@ call this function if you already hold a tech pointer
 ======================*/
 int RS_Collected_ ( technology_t* tech )
 {
-	if ( tech )
+	if ( tech ) {
 		return tech->statusCollected;
-	
+	}
+
 	Com_DPrintf("RS_Collected_: NULL technology given.\n" );
+	return -1;
 }
 
 /*======================
