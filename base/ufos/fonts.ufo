@@ -22,20 +22,20 @@ font f_big
 
 font f_menu
 {
-	font	"media/DejaVuSans.ttf"
+	font	"media/FreeSans.ttf"
 	size	22
 }
 
 font f_menubig
 {
-	font	"media/DejaVuSans.ttf"
+	font	"media/FreeSans.ttf"
 	size	28
 	style	TTF_STYLE_BOLD
 }
 
 font f_menusmall
 {
-	font	"media/DejaVuSans.ttf"
+	font	"media/FreeSans.ttf"
 	size	20
 	style	TTF_STYLE_BOLD
 }
