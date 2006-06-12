@@ -145,10 +145,10 @@ actors german
 
 	male
 	{
-		soldiers/male body head01 0
-		soldiers/male body head02 0
-		soldiers/male body head03 0
-		soldiers/male body head04 0
+		soldiers/male body head01a 0
+		soldiers/male body head01b 0
+		soldiers/male body head02a 0
+		soldiers/male body head02b 0
 	}
 }
 
@@ -285,9 +285,9 @@ actors spanish_italian
 
 	male
 	{
-		soldiers/male body head03 0
-		soldiers/male body head04 0
-		soldiers/male body head05 0
+		soldiers/male body head02a 0
+		soldiers/male body head02b 0
+		soldiers/male body head03a 0
 	}
 }
 
@@ -424,11 +424,11 @@ actors french
 
 	male
 	{
-		soldiers/male body head01 0
-		soldiers/male body head02 0
-		soldiers/male body head03 0
-		soldiers/male body head04 0
-		soldiers/male body head05 0
+		soldiers/male body head01a 0
+		soldiers/male body head01b 0
+		soldiers/male body head02a 0
+		soldiers/male body head02b 0
+		soldiers/male body head03a 0
 	}
 }
 
@@ -552,12 +552,12 @@ actors english_american
 
 	male
 	{
-		soldiers/male body head01 0
-		soldiers/male body head02 0
-		soldiers/male body head03 0
-		soldiers/male body head04 0
-		soldiers/male body head05 0
-		soldiers/male body head06 0
+		soldiers/male body head01a 0
+		soldiers/male body head01b 0
+		soldiers/male body head02a 0
+		soldiers/male body head02b 0
+		soldiers/male body head03a 0
+		soldiers/male body head03b 0
 	}
 }
 
@@ -665,7 +665,7 @@ actors arabic
 
 	male
 	{
-		soldiers/male body head05 0
+		soldiers/male body head03a 0
 	}
 }
 
@@ -793,8 +793,8 @@ actors scandinavian
 
 	male
 	{
-		soldiers/male body head01 0
-		soldiers/male body head06 0
+		soldiers/male body head01a 0
+		soldiers/male body head03b 0
 	}
 }
 
@@ -990,8 +990,8 @@ actors russian
 
 	male
 	{
-		soldiers/male body head01 0
-		soldiers/male body head06 0
+		soldiers/male body head01a 0
+		soldiers/male body head03b 0
 	}
 }
 
@@ -1089,9 +1089,9 @@ actors chinese
 
 	male
 	{
-		soldiers/male body head07 0
-		soldiers/male body head08 0
-		soldiers/male body head09 0
+		soldiers/male body head04a 0
+		soldiers/male body head04b 0
+		soldiers/male body head05a 0
 	}
 }
 
@@ -1188,9 +1188,9 @@ actors japanese
 
 	male
 	{
-		soldiers/male body head07 0
-		soldiers/male body head08 0
-		soldiers/male body head09 0
+		soldiers/male body head04a 0
+		soldiers/male body head04b 0
+		soldiers/male body head05a 0
 	}
 }
 
@@ -1272,9 +1272,9 @@ actors african
 
 	male
 	{
-		soldiers/male body head10 0
-		soldiers/male body head11 0
-		soldiers/male body head12 0
+		soldiers/male body head4b 0
+		soldiers/male body head5a 0
+		soldiers/male body head5b 0
 	}
 }
 
