@@ -1,4 +1,18 @@
+/**
+ * @file anorms.h
+ * @brief Contains vertex normals lookup table.
+ */
+
 /*
+All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
+
+Changes:
+11/06/06, Eddy Cullen (ScreamingWithNoSound): 
+          Added documentation comments and updated copyright notice.
+          Modified comment blocks to single C-Sytle comment.
+          
+Original file from Quake 2 v3.21: quake2-2.31/client/anorms.h
+
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
