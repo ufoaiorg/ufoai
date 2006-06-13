@@ -1834,13 +1834,10 @@ int CL_GameLoad( char *filename )
 	}
 
 	/* check current version */
-	if ( version > SAVE_FILE_VERSION )
-	{
+	if ( version > SAVE_FILE_VERSION ) {
 		Com_Printf( "File '%s' is a more recent version (%d) than is supported.\n", filename, version );
 		return 1;
-	}
-	else if ( version < SAVE_FILE_VERSION )
-	{
+	} else if ( version < SAVE_FILE_VERSION ) {
 		Com_Printf( "Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, version );
 	}
 
@@ -1854,8 +1851,7 @@ int CL_GameLoad( char *filename )
 		if ( !Q_strncmp( name, curCampaign->id, MAX_VAR ) )
 			break;
 
-	if ( i == numCampaigns )
-	{
+	if ( i == numCampaigns ) {
 		Com_Printf( "CL_GameLoad: Campaign \"%s\" doesn't exist.\n", name );
 		return 1;
 	}
@@ -2295,23 +2291,26 @@ void CL_CollectAliens( mission_t* mission )
 					if ( !Q_strncmp( td->id, selMis->def->alienTeam, MAX_VAR ) ) {
 						/* get interrogation tech */
 						tech = RS_GetTechByID(td->interrogation);
-						if ( tech ) { tech->statusCollected++; }
+						if ( tech )
+							tech->statusCollected++;
 						/* get interrogation_commander tech */
 						tech = RS_GetTechByID(td->interrogation_com);
-						if ( tech ) { tech->statusCollected++; }
+						if ( tech )
+							tech->statusCollected++;
 						/* TODO: get xenobiology tech */
 						tech = RS_GetTechByID(td->xenobiology);
-						if ( tech ) { tech->statusCollected++; }
+						if ( tech )
+							tech->statusCollected++;
 					}
 				}
-			} else
-			if ( le->HP <= 0 ) {
+			} else if ( le->HP <= 0 ) {
 				/* a death actor */
 				for ( j = 0, td = teamDesc ; j < numTeamDesc; j++ ) {
 					if ( !Q_strncmp( td->id, selMis->def->alienTeam, MAX_VAR ) ) {
 						/* get autopsy tech */
 						tech = RS_GetTechByID(td->autopsy);
-						if ( tech ) { tech->statusCollected++; }
+						if ( tech )
+							tech->statusCollected++;
 					}
 				}
 			}
@@ -2361,19 +2360,19 @@ void CL_CollectItems( int won )
 		if ( !le->inuse )
 			continue;
 		switch ( le->type ) {
-			case ET_ITEM:
-				for ( item = FLOOR(le); item; item = item->next )
-					CL_CollectItemAmmo( item, 0 );
+		case ET_ITEM:
+			for ( item = FLOOR(le); item; item = item->next )
+				CL_CollectItemAmmo( item, 0 );
+			break;
+		case ET_ACTOR:
+			if (le->state & STATE_DEAD)
 				break;
-			case ET_ACTOR:
-				if (le->state & STATE_DEAD)
-					break;
-				for ( container = 0; container < csi.numIDs; container++ )
-					for ( item = le->i.c[container]; item; item = item->next )
-						CL_CollectItemAmmo( item, (container == csi.idLeft) );
-				break;
-			default:
-				break;
+			for ( container = 0; container < csi.numIDs; container++ )
+				for ( item = le->i.c[container]; item; item = item->next )
+					CL_CollectItemAmmo( item, (container == csi.idLeft) );
+			break;
+		default:
+			break;
 		}
 	}
 	RS_MarkCollected();
@@ -2419,17 +2418,16 @@ void CL_UpdateCharacterStats ( int won )
 
 			/* FIXME: */
 			for ( j = 0; j < SKILL_NUM_TYPES; j++ )
-				if ( chr->skills[j] < MAX_SKILL ) {
+				if ( chr->skills[j] < MAX_SKILL )
 					chr->skills[j]++;
-				}
 
 			/* Check if the soldier meets the requirements for a higher rank -> Promotion */
 			if (numRanks >= 2 ) {
 				for ( j = numRanks-1; j > 0; j-- ) {
 					rank = &ranks[j];
 					if ( ( chr->skills[ABILITY_MIND] >= rank->mind )
-					&& ( chr->kills[KILLED_ALIENS] >= rank->killed_enemies )
-					&& ( ( chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM] ) <= rank->killed_others ) ) {
+					  && ( chr->kills[KILLED_ALIENS] >= rank->killed_enemies )
+					  && ( ( chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM] ) <= rank->killed_others ) ) {
 						if ( chr->rank != rank ) {
 							chr->rank = rank;
 							Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%s has been promoted to %s.\n"), chr->name, rank->name );
@@ -2597,8 +2595,7 @@ void CL_ParseMission( char *name, char **text )
 	/* get it's body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseMission: mission def \"%s\" without body ignored\n", name );
 		numMissions--;
 		return;
@@ -2610,16 +2607,14 @@ void CL_ParseMission( char *name, char **text )
 		if ( *token == '}' ) break;
 
 		for ( vp = mission_vals; vp->string; vp++ )
-			if ( !Q_strcmp( token, vp->string ) )
-			{
+			if ( !Q_strcmp( token, vp->string ) ) {
 				/* found a definition */
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
 
 				if ( vp->ofs )
 					Com_ParseValue( ms, token, vp->type, vp->ofs );
-				else
-				{
+				else {
 					if ( *token == '_' )
 						token++;
 					Q_strncpyz( mtp, _(token), 128 );
@@ -2674,8 +2669,7 @@ void CL_ParseStageSet( char *name, char **text )
 	char		*token, *misp;
 	int			j;
 
-	if ( numStageSets >= MAX_STAGESETS )
-	{
+	if ( numStageSets >= MAX_STAGESETS ) {
 		Com_Printf("CL_ParseStageSet: Max stagesets reached\n");
 		return;
 	}
@@ -2687,8 +2681,7 @@ void CL_ParseStageSet( char *name, char **text )
 
 	/* get it's body */
 	token = COM_Parse( text );
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseStageSets: stageset def \"%s\" without body ignored\n", name );
 		numStageSets--;
 		return;
@@ -2701,8 +2694,7 @@ void CL_ParseStageSet( char *name, char **text )
 
 		/* check for some standard values */
 		for ( vp = stageset_vals; vp->string; vp++ )
-			if ( !Q_strcmp( token, vp->string ) )
-			{
+			if ( !Q_strcmp( token, vp->string ) ) {
 				/* found a definition */
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
@@ -2714,8 +2706,7 @@ void CL_ParseStageSet( char *name, char **text )
 			continue;
 
 		/* get mission set */
-		if ( !Q_strncmp( token, "missions", 8 ) )
-		{
+		if ( !Q_strncmp( token, "missions", 8 ) ) {
 			token = COM_EParse( text, errhead, name );
 			if ( !*text ) return;
 			Q_strncpyz( missionstr, token, sizeof(missionstr) );
@@ -2728,8 +2719,7 @@ void CL_ParseStageSet( char *name, char **text )
 				if ( !misp ) break;
 
 				for ( j = 0; j < numMissions; j++ )
-					if ( !Q_strncmp( token, missions[j].name, MAX_VAR ) )
-					{
+					if ( !Q_strncmp( token, missions[j].name, MAX_VAR ) ) {
 						sp->missions[sp->numMissions++] = j;
 						break;
 					}
@@ -2763,22 +2753,18 @@ void CL_ParseStage( char *name, char **text )
 		if ( !Q_strncmp( name, stages[i].name, MAX_VAR ) )
 			break;
 
-	if ( i < numStages )
-	{
+	if ( i < numStages ) {
 		Com_Printf( "Com_ParseStage: stage def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
-
-	if ( numStages >= MAX_STAGES )
-	{
+	else if ( numStages >= MAX_STAGES ) {
 		Com_Printf("CL_ParseStages: Max stages reached\n");
 		return;
 	}
 
 	/* get it's body */
 	token = COM_Parse( text );
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseStages: stage def \"%s\" without body ignored\n", name );
 		return;
 	}
@@ -2796,8 +2782,7 @@ void CL_ParseStage( char *name, char **text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 
-		if ( !Q_strncmp( token, "set", 3 ) )
-		{
+		if ( !Q_strncmp( token, "set", 3 ) ) {
 			token = COM_EParse( text, errhead, name );
 			CL_ParseStageSet( token, text );
 		}
@@ -2846,14 +2831,12 @@ void CL_ParseCampaign( char *id, char **text )
 		if ( !Q_strncmp( id, campaigns[i].id, MAX_VAR ) )
 			break;
 
-	if ( i < numCampaigns )
-	{
+	if ( i < numCampaigns ) {
 		Com_Printf( "CL_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", id );
 		return;
 	}
 
-	if ( numCampaigns >= MAX_CAMPAIGNS )
-	{
+	if ( numCampaigns >= MAX_CAMPAIGNS ) {
 		Com_Printf( "CL_ParseCampaign: Max campaigns reached (%i)\n", MAX_CAMPAIGNS );
 		return;
 	}
@@ -2881,8 +2864,7 @@ void CL_ParseCampaign( char *id, char **text )
 
 		/* check for some standard values */
 		for ( vp = campaign_vals; vp->string; vp++ )
-			if ( !Q_strcmp( token, vp->string ) )
-			{
+			if ( !Q_strcmp( token, vp->string ) ) {
 				/* found a definition */
 				token = COM_EParse( text, errhead, id );
 				if ( !*text ) return;
@@ -2938,8 +2920,7 @@ void CL_ParseAircraft( char *name, char **text )
 	value_t		*vp;
 	char		*token;
 
-	if ( numAircraft >= MAX_AIRCRAFT )
-	{
+	if ( numAircraft >= MAX_AIRCRAFT ) {
 		Com_Printf( "CL_ParseAircraft: aircraft def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
@@ -2956,8 +2937,7 @@ void CL_ParseAircraft( char *name, char **text )
 	/* get it's body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "CL_ParseAircraft: aircraft def \"%s\" without body ignored\n", name );
 		numCampaigns--;
 		return;
@@ -2970,8 +2950,7 @@ void CL_ParseAircraft( char *name, char **text )
 
 		/* check for some standard values */
 		for ( vp = aircraft_vals; vp->string; vp++ )
-			if ( !Q_strcmp( token, vp->string ) )
-			{
+			if ( !Q_strcmp( token, vp->string ) ) {
 				/* found a definition */
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
@@ -2980,17 +2959,14 @@ void CL_ParseAircraft( char *name, char **text )
 				break;
 			}
 
-		if ( vp->string && !Q_strncmp(vp->string, "size", 4) )
-		{
-			if ( ac->size > MAX_ACTIVETEAM )
-			{
+		if ( vp->string && !Q_strncmp(vp->string, "size", 4) ) {
+			if ( ac->size > MAX_ACTIVETEAM ) {
 				Com_DPrintf("Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM );
 				ac->size = MAX_ACTIVETEAM;
 			}
 		}
 
-		if ( !Q_strncmp(token, "type", 4) )
-		{
+		if ( !Q_strncmp(token, "type", 4) ) {
 			token = COM_EParse( text, errhead, name );
 			if ( !*text ) return;
 			if ( !Q_strncmp( token, "transporter", 11) )
@@ -2999,9 +2975,7 @@ void CL_ParseAircraft( char *name, char **text )
 				ac->type = AIRCRAFT_INTERCEPTOR;
 			else if ( !Q_strncmp( token, "ufo", 3) )
 				ac->type = AIRCRAFT_UFO;
-		}
-		else if ( !vp->string )
-		{
+		} else if ( !vp->string ) {
 			Com_Printf( "CL_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name );
 			COM_EParse( text, errhead, name );
 		}
@@ -3036,8 +3010,7 @@ void CL_ParseNations( char *name, char **text )
 	value_t		*vp;
 	char		*token;
 
-	if ( numNations >= MAX_NATIONS )
-	{
+	if ( numNations >= MAX_NATIONS ) {
 		Com_Printf( "CL_ParseNations: nation def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
@@ -3052,8 +3025,7 @@ void CL_ParseNations( char *name, char **text )
 	/* get it's body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "CL_ParseNations: nation def \"%s\" without body ignored\n", name );
 		numNations--;
 		return;
@@ -3066,8 +3038,7 @@ void CL_ParseNations( char *name, char **text )
 
 		/* check for some standard values */
 		for ( vp = nation_vals; vp->string; vp++ )
-			if ( !Q_strcmp( token, vp->string ) )
-			{
+			if ( !Q_strcmp( token, vp->string ) ) {
 				/* found a definition */
 				token = COM_EParse( text, errhead, name );
 				if ( !*text ) return;
@@ -3076,8 +3047,7 @@ void CL_ParseNations( char *name, char **text )
 				break;
 			}
 
-		if ( !vp->string  )
-		{
+		if ( !vp->string  ) {
 			Com_Printf( "CL_ParseNations: unknown token \"%s\" ignored (nation %s)\n", token, name );
 			COM_EParse( text, errhead, name );
 		}
@@ -3179,8 +3149,7 @@ void CL_GameNew( void )
 		if ( !Q_strncmp( name, curCampaign->id, MAX_VAR ) )
 			break;
 
-	if ( i == numCampaigns )
-	{
+	if ( i == numCampaigns ) {
 		Com_Printf( "CL_GameNew: Campaign \"%s\" doesn't exist.\n", name );
 		return;
 	}
@@ -3265,8 +3234,7 @@ void CP_GetCampaigns_f ( void )
 
 	/* select main as default */
 	for ( i = 0; i < numCampaigns; i++ )
-		if ( !Q_strncmp( "main", campaigns[i].id, MAX_VAR ) )
-		{
+		if ( !Q_strncmp( "main", campaigns[i].id, MAX_VAR ) ) {
 			Com_sprintf( campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\n%s\n"), campaigns[i].team, _(campaigns[i].text) );
 			break;
 		}
