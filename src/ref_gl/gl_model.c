@@ -165,7 +165,7 @@ model_t *Mod_ForName (char *name, qboolean crash)
 	}
 
 	memset( mod, 0, sizeof( model_t ) );
-	strncpy( mod->name, name, MAX_QPATH );
+	Q_strncpyz( mod->name, name, MAX_QPATH );
 /*	Com_Printf( "name: %s\n", name ); */
 
 	/* */
@@ -464,8 +464,8 @@ void CalcSurfaceExtents (msurface_t *s)
 		s->texturemins[i] = bmins[i] << s->lquant;
 		s->extents[i] = (bmaxs[i] - bmins[i]) << s->lquant;
 #if 0
-		if ( !(tex->flags & TEX_SPECIAL) && s->extents[i] > 512 /* 256 */ ) 
-			ri.Sys_Error (ERR_DROP, "Bad surface extents"); 
+		if ( !(tex->flags & TEX_SPECIAL) && s->extents[i] > 512 /* 256 */ )
+			ri.Sys_Error (ERR_DROP, "Bad surface extents");
 #endif
 	}
 }
@@ -822,7 +822,7 @@ void R_AddMapTile( char *name, int sX, int sY, int sZ )
 	loadmodel = &mod_known[mod_numknown++];
 	rTiles[rNumTiles++] = loadmodel;
 	memset( loadmodel, 0, sizeof( model_t ) );
-	sprintf( loadmodel->name, "maps/%s.bsp", name );
+	Com_sprintf( loadmodel->name, sizeof(loadmodel->name), "maps/%s.bsp", name );
 
 	/* load the file */
 	modfilelen = ri.FS_LoadFile (loadmodel->name, (void**)&buffer);
@@ -990,7 +990,7 @@ void Mod_LoadAnims (model_t *mod, void *buffer)
 		/* get the name */
 		token = COM_Parse( &text );
 		if ( !text ) break;
-		strncpy( anim->name, token, MAX_ANIMNAME );
+		Q_strncpyz( anim->name, token, MAX_ANIMNAME );
 
 		/* get the start */
 		token = COM_Parse( &text );
@@ -1263,15 +1263,15 @@ void R_BeginRegistration ( char *tiles, char *pos )
 		/* get base path */
 		if ( token[0] == '-' )
 		{
-			strncpy( base, token+1, MAX_QPATH );
+			Q_strncpyz( base, token+1, MAX_QPATH );
 			continue;
 		}
 
 		/* get tile name */
 		if ( token[0] == '+' )
-			sprintf( name, "%s%s", base, token+1 );
+			Com_sprintf( name, MAX_VAR, "%s%s", base, token+1 );
 		else
-			strncpy( name, token, MAX_VAR );
+			Q_strncpyz( name, token, MAX_VAR );
 
 		if ( pos && pos[0] )
 		{
@@ -1378,7 +1378,7 @@ struct model_s *R_RegisterModel (char *name)
 					mod->skins[i] = GL_FindImage( skin, it_skin );
 				else
 				{
-					strncpy( path, mod->name, MAX_QPATH );
+					Q_strncpyz( path, mod->name, MAX_QPATH );
 					end = path;
 					while ( ( slash = strchr( end, '/' ) ) ) end = slash+1;
 					strcpy( end, skin+1 );
