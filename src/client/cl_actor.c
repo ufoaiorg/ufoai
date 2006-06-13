@@ -62,6 +62,11 @@ static char *skill_strings[10] =
 
 #define SKILL_TO_STRING(x)	_(skill_strings[x * 10/MAX_SKILL])
 
+/**
+ * @brief updates the character cvars for the selected character
+ *
+ *
+ */
 void CL_CharacterCvars( character_t *chr )
 {
 	rank_t *rank = NULL;
@@ -107,11 +112,11 @@ void CL_CharacterCvars( character_t *chr )
 }
 
 
-/*
-=================
-CL_ActorUpdateGlobalCVars
-=================
-*/
+/**
+ * @brief updates the global character cvars
+ *
+ *
+ */
 void CL_ActorGlobalCVars( void )
 {
 	le_t *le;
