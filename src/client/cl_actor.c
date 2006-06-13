@@ -662,7 +662,7 @@ void CL_BuildForbiddenList(void)
 			/* we don't need the height value because */
 			/* the unit is always on the same level */
 			for (j = 0; j < le->fieldSize; j++) {
-				for (k = 0; k < le->fieldSize; k++) }
+				for (k = 0; k < le->fieldSize; k++) {
 					/* FIXME: put all vec3_t's in here */
 					fb_list[fb_length++] = le->pos;
 				}
