@@ -1813,8 +1813,7 @@ int CL_GameLoad( char *filename )
 
 	/* open file */
 	f = fopen( va( "%s/save/%s.sav", FS_Gamedir(), filename ), "rb" );
-	if ( !f )
-	{
+	if ( !f ) {
 		Com_Printf( "Couldn't open file '%s'.\n", filename );
 		return 1;
 	}
@@ -1825,13 +1824,10 @@ int CL_GameLoad( char *filename )
 	fclose( f );
 
 	/* Check if save file is versioned */
-	if (MSG_ReadByte( &sb ) == 0)
-	{
+	if (MSG_ReadByte( &sb ) == 0) {
 		version = MSG_ReadLong( &sb );
 		Com_Printf("Savefile version %d detected\n", version );
-	}
-	else
-	{
+	} else {
 		/* no - reset position and take version as 0 */
 		MSG_BeginReading ( &sb );
 		version = 0;
@@ -1891,23 +1887,18 @@ int CL_GameLoad( char *filename )
 	CL_UpdateCredits( MSG_ReadLong( &sb ) );
 
 	/* read equipment */
-	for ( i = 0; i < MAX_OBJDEFS; i++ )
-	{
-		if (version == 0)
-		{
+	for ( i = 0; i < MAX_OBJDEFS; i++ ) {
+		if (version == 0) {
 			ccs.eCampaign.num[i] = MSG_ReadByte( &sb );
 			ccs.eCampaign.num_loose[i] = 0;
-		}
-		else if (version >= 1)
-		{
+		} else if (version >= 1) {
 			ccs.eCampaign.num[i] = MSG_ReadLong( &sb );
 			ccs.eCampaign.num_loose[i] = MSG_ReadByte( &sb );
 		}
 	}
 
 	/* read market */
-	for ( i = 0; i < MAX_OBJDEFS; i++ )
-	{
+	for ( i = 0; i < MAX_OBJDEFS; i++ ) {
 		if (version == 0)
 			ccs.eMarket.num[i] = MSG_ReadByte( &sb );
 		else if (version >= 1)
@@ -1916,11 +1907,9 @@ int CL_GameLoad( char *filename )
 
 	/* read campaign data */
 	name = MSG_ReadString( &sb );
-	while ( *name )
-	{
+	while ( *name ) {
 		state = CL_CampaignActivateStage( name );
-		if ( !state )
-		{
+		if ( !state ) {
 			Com_Printf( "Unable to load campaign '%s', unknown stage '%'\n", filename, name );
 			curCampaign = NULL;
 			Cbuf_AddText( "mn_pop\n" );
@@ -1930,15 +1919,13 @@ int CL_GameLoad( char *filename )
 		state->start.day = MSG_ReadLong( &sb );
 		state->start.sec = MSG_ReadLong( &sb );
 		num = MSG_ReadByte( &sb );
-		for ( i = 0; i < num; i++ )
-		{
+		for ( i = 0; i < num; i++ ) {
 			name = MSG_ReadString( &sb );
 			for ( j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++ )
 				if ( !Q_strncmp( name, set->def->name, MAX_VAR ) )
 					break;
 			/* write on dummy set, if it's unknown */
-			if ( j >= state->def->num )
-			{
+			if ( j >= state->def->num ) {
 				Com_Printf( "Warning: Set '%s' not found\n", name );
 				set = &dummy;
 			}
@@ -1958,13 +1945,11 @@ int CL_GameLoad( char *filename )
 
 	/* store active missions */
 	ccs.numMissions = MSG_ReadByte( &sb );
-	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ )
-	{
+	for ( i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++ ) {
 		/* get mission definition */
 		name = MSG_ReadString( &sb );
 		for ( j = 0; j < numMissions; j++ )
-			if ( !Q_strncmp( name, missions[j].name, MAX_VAR ) )
-			{
+			if ( !Q_strncmp( name, missions[j].name, MAX_VAR ) ) {
 				mis->def = &missions[j];
 				break;
 			}
@@ -1974,8 +1959,7 @@ int CL_GameLoad( char *filename )
 		/* get mission definition */
 		name = MSG_ReadString( &sb );
 		for ( j = 0; j < numStageSets; j++ )
-			if ( !Q_strncmp( name, stageSets[j].name, MAX_VAR ) )
-			{
+			if ( !Q_strncmp( name, stageSets[j].name, MAX_VAR ) ) {
 				mis->cause = &ccs.set[j];
 				break;
 			}
@@ -1989,8 +1973,7 @@ int CL_GameLoad( char *filename )
 		mis->expire.sec = MSG_ReadLong( &sb );
 
 		/* ignore incomplete info */
-		if ( !mis->def || !mis->cause )
-		{
+		if ( !mis->def || !mis->cause ) {
 			memset( mis, 0, sizeof(actMis_t) );
 			mis--; i--; ccs.numMissions--;
 		}
