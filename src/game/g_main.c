@@ -197,11 +197,6 @@ game_export_t *GetGameAPI (game_import_t *import)
 	globals.Shutdown = ShutdownGame;
 	globals.SpawnEntities = SpawnEntities;
 
-/*	globals.WriteGame = WriteGame;
-	globals.ReadGame = ReadGame;
-	globals.WriteLevel = WriteLevel;
-	globals.ReadLevel = ReadLevel;*/
-
 	globals.ClientConnect = G_ClientConnect;
 	globals.ClientUserinfoChanged = G_ClientUserinfoChanged;
 	globals.ClientDisconnect = G_ClientDisconnect;
@@ -262,8 +257,7 @@ void CheckNeedPass (void)
 
 	/* if password or spectator_password has changed, update needpass */
 	/* as needed */
-	if (password->modified || spectator_password->modified)
-	{
+	if (password->modified || spectator_password->modified) {
 		password->modified = spectator_password->modified = qfalse;
 
 		need = 0;
@@ -303,8 +297,7 @@ void G_EndGame( int team )
 
 	/* Make everything visible to anyone who can't already see it */
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-		if ( ent->inuse )
-		{
+		if ( ent->inuse ) {
 			G_AppearPerishEvent( G_VisToPM( ~ent->visflags ), 1, ent );
 			if ( ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) )
 				G_SendInventory( PM_ALL ^ G_TeamToPM( ent->team ), ent );
@@ -315,8 +308,7 @@ void G_EndGame( int team )
 	gi.WriteByte( MAX_TEAMS );
 	gi.WriteByte( team );
 
-	for ( i = 0; i < MAX_TEAMS; i++ )
-	{
+	for ( i = 0; i < MAX_TEAMS; i++ ) {
 		gi.WriteByte( level.num_spawned[i] );
 		gi.WriteByte( level.num_alive[i] );
 	}
@@ -340,15 +332,13 @@ void G_CheckEndGame( void )
 	int i, last;
 
 	for ( i = 1, activeTeams = 0, last = 0; i < MAX_TEAMS; i++ )
-		if ( level.num_alive[i] )
-		{
+		if ( level.num_alive[i] ) {
 			last = i;
 			activeTeams++;
 		}
 
 	/* prepare for sending results */
-	if ( activeTeams < 2 )
-	{
+	if ( activeTeams < 2 ) {
 		level.intermissionTime = level.time + 4.0;
 		if ( activeTeams == 0 ) level.winningTeam = 0;
 		else if ( activeTeams == 1 ) level.winningTeam = last;

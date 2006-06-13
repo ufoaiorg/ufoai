@@ -115,10 +115,9 @@ static font_t *Font_GetFont( char *name )
 	int	i;
 
 	for ( i = 0; i < numFonts; i++ )
-	{
 		if ( !Q_strncmp( name, fonts[i].name, MAX_FONTNAME ) )
 			return &fonts[i];
-	}
+
 	return NULL;
 }
 
@@ -173,17 +172,14 @@ void Font_ListCache_f ( void )
 	ri.Con_Printf(PRINT_ALL, "...font cache size: %i - used %i\n", MAX_FONT_CACHE, numInCache );
 
 	/* free the surfaces */
-	for ( ; i < numInCache; i++ )
-	{
+	for ( ; i < numInCache; i++ ) {
 		f = &fontCache[i];
-		if ( ! f )
-		{
+		if ( ! f ) {
 			ri.Con_Printf(PRINT_ALL, "...hashtable inconsistency at %i\n", i );
 			continue;
 		}
 		collCount = 0;
-		while ( f->next )
-		{
+		while ( f->next ) {
 			collCount++;
 			f = f->next;
 		}
@@ -203,9 +199,8 @@ static int Font_Hash( const char *string, int maxlen )
 
 	hashValue = 0;
 	for (i = 0; i < maxlen && string[i] != '\0'; i++)
-	{
 		hashValue += string[i] * (119 + i);
-	}
+
 	hashValue = (hashValue ^ (hashValue >> 10) ^ (hashValue >> 20));
 	return hashValue & (MAX_FONT_CACHE - 1);
 }
@@ -241,19 +236,16 @@ static void Font_AddToCache( const char* s, void* pixel, int w, int h )
 	if ( numInCache >= MAX_FONT_CACHE ) Font_CleanCache();
 
 	hashValue = Font_Hash( s, MAX_HASH_STRING );
-	if ( hash[hashValue] )
-	{
+	if ( hash[hashValue] ) {
 		font = hash[hashValue];
 		/* go to end of list */
 		while ( font->next )
 			font = font->next;
 		font->next = &fontCache[numInCache];
-	}
-	else
+	} else
 		hash[hashValue] = &fontCache[numInCache];
 
-	if ( numInCache < MAX_FONT_CACHE )
-	{
+	if ( numInCache < MAX_FONT_CACHE ) {
 		Q_strncpyz( fontCache[numInCache].string, s, MAX_HASH_STRING );
 		fontCache[numInCache].pixel = pixel;
 		fontCache[numInCache].size[0] = w;
@@ -276,8 +268,7 @@ static void* Font_GenerateCache ( const char* s, const char* fontString, font_t*
 	SDL_Rect rect = {0, 0, 0, 0};
 
 	textSurface = TTF_RenderUTF8_Blended(f->font, s, color);
-	if ( ! textSurface )
-	{
+	if ( ! textSurface ) {
 		ri.Con_Printf(PRINT_ALL, "%s (%s)\n", TTF_GetError(), fontString );
 		return NULL;
 	}
@@ -342,8 +333,7 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 
 	space = buffer;
 	newlineTest = strstr( space, "\n" );
-	if ( newlineTest )
-	{
+	if ( newlineTest ) {
 		*newlineTest = '\0';
 		TTF_SizeUTF8( f->font, buffer, &w, &h );
 		*width = w;
@@ -354,13 +344,11 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 
 	/* uh - this line is getting longer than allowed... */
 	newlineTest = space;
-	while ( ( space = strstr( space, " " ) ) != NULL )
-	{
+	while ( ( space = strstr( space, " " ) ) != NULL ) {
 		*space = '\0';
 		TTF_SizeUTF8( f->font, buffer, &w, &h );
 		*width = w;
-		if ( maxWidth - w < 0 )
-		{
+		if ( maxWidth - w < 0 ) {
 			*width = oldW;
 			*space = ' ';
 			*newlineTest = '\0';
@@ -386,16 +374,14 @@ static void Font_ConvertChars ( char* buffer )
 
 	/* convert all \\ to \n */
 	replace = strstr( buffer, "\\" );
-	while ( replace != NULL )
-	{
+	while ( replace != NULL ) {
 		*replace++ = '\n';
 		replace = strstr( replace, "\\" );
 	}
 
 	/* convert all tabs to spaces */
 	replace = strstr( buffer, "\t" );
-	while ( replace != NULL  )
-	{
+	while ( replace != NULL  ) {
 		*replace++ = ' ';
 		replace = strstr( replace, "\t" );
 	}
@@ -464,8 +450,7 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 	if ( !f ) ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", fontID );
 
 	openGLSurface = Font_GetFromCache( c );
-	if ( openGLSurface )
-	{
+	if ( openGLSurface ) {
 		Font_GenerateGLSurface( openGLSurface, x, y );
 		return f->height;
 	}
@@ -481,8 +466,7 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 	/* for linebreaks */
 	locX = x;
 
-	do
-	{
+	do {
 		if ( ! strlen(buffer) )
 			return returnHeight;
 		pos = Font_GetLineWrap( f, buffer, maxWidth, &w, &h );
@@ -491,8 +475,7 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 		if ( w > max )
 			max = w;
 
-		if ( align > 0 && align < ALIGN_LAST )
-		{
+		if ( align > 0 && align < ALIGN_LAST ) {
 			switch ( align % 3 )
 			{
 			case 1: x -= w / 2; break;

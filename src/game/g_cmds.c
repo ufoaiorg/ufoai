@@ -37,15 +37,15 @@ void Cmd_Players_f (player_t* player)
 	/* print information */
 	large[0] = 0;
 
-	for (i = 0 ; i < maxplayers->value; i++)
-	{
+	for (i = 0 ; i < maxplayers->value; i++) {
 		if ( ! game.players[i].pers.team )
 			continue;
 
 		Com_sprintf (small, sizeof(small), "Team %i %s\n",
 			game.players[i].pers.team, game.players[i].pers.netname);
-		if (strlen (small) + strlen(large) > sizeof(large) - 100 )
-		{	/* can't print all of them in one packet */
+
+		/* can't print all of them in one packet */
+		if (strlen (small) + strlen(large) > sizeof(large) - 100 ) {
 			Q_strcat (large, 1280, "...\n");
 			break;
 		}
@@ -74,18 +74,14 @@ void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 	else
 		Com_sprintf (text, sizeof(text), "%s (team): ", player->pers.netname);
 
-	if (arg0)
-	{
+	if (arg0) {
 		Q_strcat (text, sizeof(text), gi.argv(0));
 		Q_strcat (text, sizeof(text), " ");
 		Q_strcat (text, sizeof(text), gi.args());
-	}
-	else
-	{
+	} else {
 		p = gi.args();
 
-		if (*p == '"')
-		{
+		if (*p == '"') {
 			p++;
 			p[strlen(p)-1] = 0;
 		}
@@ -101,8 +97,7 @@ void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 	if (dedicated->value)
 		gi.cprintf(NULL, PRINT_CHAT, "%s", text);
 
-	for (j = 0; j < game.maxplayers; j++)
-	{
+	for (j = 0; j < game.maxplayers; j++) {
 		if (!game.players[j].inuse)
 			continue;
 		if (team && game.players[j].pers.team != player->pers.team)

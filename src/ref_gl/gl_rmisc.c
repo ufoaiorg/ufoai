@@ -55,13 +55,9 @@ void R_InitParticleTexture (void)
 	int		x,y;
 	byte	data[8][8][4];
 
-	/* */
 	/* particle texture */
-	/* */
-	for (x=0 ; x<8 ; x++)
-	{
-		for (y=0 ; y<8 ; y++)
-		{
+	for (x=0 ; x<8 ; x++) {
+		for (y=0 ; y<8 ; y++) {
 			data[y][x][0] = 255;
 			data[y][x][1] = 255;
 			data[y][x][2] = 255;
@@ -70,13 +66,9 @@ void R_InitParticleTexture (void)
 	}
 	r_particletexture = GL_LoadPic ("***particle***", (byte *)data, 8, 8, it_sprite, 32);
 
-	/* */
 	/* also use this for bad textures, but without alpha */
-	/* */
-	for (x=0 ; x<8 ; x++)
-	{
-		for (y=0 ; y<8 ; y++)
-		{
+	for (x=0 ; x<8 ; x++) {
+		for (y=0 ; y<8 ; y++) {
 			data[y][x][0] = gridtexture[x][y]*255;
 			data[y][x][1] = 0;
 			data[y][x][2] = 0;
@@ -126,8 +118,7 @@ void GL_ScreenShot_f (void)
 	/* */
 	Q_strncpyz(picname,"ufo00.tga", sizeof(checkname) );
 
-	for (i=0 ; i<=99 ; i++)
-	{
+	for (i=0 ; i<=99 ; i++) {
 		picname[3] = i/10 + '0';
 		picname[4] = i%10 + '0';
 		Com_sprintf (checkname, sizeof(checkname), "%s/scrnshot/%s", ri.FS_Gamedir(), picname);
@@ -136,8 +127,7 @@ void GL_ScreenShot_f (void)
 			break;	/* file doesn't exist */
 		fclose (f);
 	}
-	if (i==100)
-	{
+	if (i==100) {
 		ri.Con_Printf (PRINT_ALL, "SCR_ScreenShot_f: Couldn't create a file\n");
 		return;
 	}
@@ -155,16 +145,14 @@ void GL_ScreenShot_f (void)
 
 	/* swap rgb to bgr */
 	c = 18+vid.width*vid.height*3;
-	for (i=18 ; i<c ; i+=3)
-	{
+	for (i=18 ; i<c ; i+=3) {
 		temp = buffer[i];
 		buffer[i] = buffer[i+2];
 		buffer[i+2] = temp;
 	}
 
 	f = fopen (checkname, "wb");
-	if ( f )
-	{
+	if ( f ) {
 		fwrite (buffer, 1, c, f);
 		fclose (f);
 		ri.Con_Printf (PRINT_ALL, "Wrote %s\n", picname);
@@ -221,8 +209,7 @@ void GL_SetDefaultState( void )
 
 	GL_TexEnv( GL_REPLACE );
 
-	if ( qglPointParameterfEXT )
-	{
+	if ( qglPointParameterfEXT ) {
 		float attenuations[3];
 
 		attenuations[0] = gl_particle_att_a->value;
@@ -244,17 +231,15 @@ void GL_SetDefaultState( void )
 
 void GL_UpdateSwapInterval( void )
 {
-	if ( gl_swapinterval->modified )
-	{
+	if ( gl_swapinterval->modified ) {
 		gl_swapinterval->modified = qfalse;
 
-		if ( !gl_state.stereo_enabled )
-		{
 #ifdef _WIN32
+		if ( !gl_state.stereo_enabled ) {
 			if ( qwglSwapIntervalEXT )
 				qwglSwapIntervalEXT( gl_swapinterval->value );
-#endif
 		}
+#endif
 	}
 }
 
@@ -301,8 +286,7 @@ void R_DrawBeam( entity_t *e )
 	PerpendicularVector( perpvec, normalized_direction );
 	VectorScale( perpvec, e->as.frame / 2, perpvec );
 
-	for ( i = 0; i < 6; i++ )
-	{
+	for ( i = 0; i < 6; i++ ) {
 		RotatePointAroundVector( start_points[i], normalized_direction, perpvec, (360.0/NUM_BEAM_SEGS)*i );
 		VectorAdd( start_points[i], origin, start_points[i] );
 		VectorAdd( start_points[i], direction, end_points[i] );
@@ -323,8 +307,7 @@ void R_DrawBeam( entity_t *e )
 	qglColor4f( r, g, b, e->alpha );
 
 	qglBegin( GL_TRIANGLE_STRIP );
-	for ( i = 0; i < NUM_BEAM_SEGS; i++ )
-	{
+	for ( i = 0; i < NUM_BEAM_SEGS; i++ ) {
 		qglVertex3fv( start_points[i] );
 		qglVertex3fv( end_points[i] );
 		qglVertex3fv( start_points[(i+1)%NUM_BEAM_SEGS] );
