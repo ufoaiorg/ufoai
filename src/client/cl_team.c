@@ -143,10 +143,8 @@ void CL_ResetCharacters( base_t* base )
 	Cvar_ForceSet( "cl_selected", "0" );
 	base->numWholeTeam = 0;
 	base->numHired = 0;
-	for ( i = 0; i < base->numAircraftInBase; i++ ) {
-		base->numOnTeam[i] = 0;
-		base->teamMask[i] = 0;
-	}
+	for ( i = 0; i < base->numAircraftInBase; i++ )
+		base->teamMask[i] = base->numOnTeam[i] = 0;
 }
 
 
@@ -247,18 +245,9 @@ void CL_ItemDescription( int item )
 	od = &csi.ods[item];
 	Cvar_Set( "mn_itemname", _(od->name) );
 
-	/* set models */
-/*	if ( od->link == NONE ) */
-	{
-		Cvar_Set( "mn_item", od->kurz );
-		Cvar_Set( "mn_weapon", "" );
-		Cvar_Set( "mn_ammo", "" );
-	}
-	/*else {
-		Cvar_Set( "mn_weapon", od->kurz );
-		Cvar_Set( "mn_ammo", csi.ods[od->link].kurz );
-		Cvar_Set( "mn_item", "" );
-	}*/
+	Cvar_Set( "mn_item", od->kurz );
+	Cvar_Set( "mn_weapon", "" );
+	Cvar_Set( "mn_ammo", "" );
 
 #ifdef DEBUG
 	if (! od->tech ) {
@@ -268,7 +257,7 @@ void CL_ItemDescription( int item )
 	/* set description text */
 	else
 #endif
-	if ( RS_IsResearched_ptr(od->tech)  ) {
+	if ( RS_IsResearched_ptr(od->tech) ) {
 		if ( !Q_strncmp(od->type, "ammo", 4) ) {
 			Com_sprintf( itemText, MAX_MENUTEXTLEN, _("Primary:\t%s\n"), od->fd[0].name );
 			Q_strcat( itemText, MAX_MENUTEXTLEN, va(_("Secondary:\t%s\n"), od->fd[1].name ) );
@@ -1100,13 +1089,18 @@ void CL_ParseResults( sizebuf_t *buf )
 	menuText[TEXT_STANDARD] = resultText;
 
 	/* alien stats */
-	for ( i = 1, kills = 0; i < num; i++ ) kills += (i == we) ? 0 : num_kills[we][i];
+	for ( i = 1, kills = 0; i < num; i++ )
+		kills += (i == we) ? 0 : num_kills[we][i];
+
 	/* needs to be cleared and then append to it */
 	if ( curCampaign )
 		Com_sprintf( resultText, MAX_MENUTEXTLEN, _("Aliens killed\t%i\n"), kills );
 	else
 		Com_sprintf( resultText, MAX_MENUTEXTLEN, _("Enemies killed\t%i\n"), kills );
-	for ( i = 1, res = 0; i < num; i++ ) res += (i == we) ? 0 : num_alive[i];
+
+	for ( i = 1, res = 0; i < num; i++ )
+		res += (i == we) ? 0 : num_alive[i];
+
 	if ( curCampaign )
 		Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Alien survivors\t%i\n\n"), res ) );
 	else
@@ -1124,7 +1118,9 @@ void CL_ParseResults( sizebuf_t *buf )
 	}
 
 	/* civilian stats */
-	for ( i = 1, res = 0; i < num; i++ ) res += (i == we) ? 0 : num_kills[i][TEAM_CIVILIAN];
+	for ( i = 1, res = 0; i < num; i++ )
+		res += (i == we) ? 0 : num_kills[i][TEAM_CIVILIAN];
+
 	if ( curCampaign )
 		Q_strcat( resultText, MAX_MENUTEXTLEN, va( _("Civilians killed by the Aliens\t%i\n"), res ) );
 	else
