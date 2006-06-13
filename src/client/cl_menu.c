@@ -1051,8 +1051,7 @@ void MN_MapClick( menuNode_t *node, int x, int y )
 			if ( air->status > AIR_HOME && air->fuel > 0 ) {
 				MN_MapCalcLine( air->pos, pos, &air->route );
 				air->status = AIR_TRANSIT;
-				air->time = 0;
-				air->point = 0;
+				air->time = air->point = 0;
 			}
 		}
 	}
@@ -1078,8 +1077,7 @@ void MN_BaseMapClick( menuNode_t *node, int x, int y )
 				if ( baseCurrent->map[row][col] == -1 && x >= baseCurrent->posX[row][col]
 				  && x < baseCurrent->posX[row][col] + node->size[0] / BASE_SIZE
 				  && y >= baseCurrent->posY[row][col]
-				  && y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE
-				) {
+				  && y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE ) {
 					B_SetBuildingByClick( row, col );
 					return;
 				}
@@ -1090,8 +1088,7 @@ void MN_BaseMapClick( menuNode_t *node, int x, int y )
 			if ( baseCurrent->map[row][col] != -1 && x >= baseCurrent->posX[row][col]
 			  && x < baseCurrent->posX[row][col] + node->size[0] / BASE_SIZE
 			  && y >= baseCurrent->posY[row][col]
-			  && y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE
-			) {
+			  && y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE ) {
 				entry = B_GetBuildingByIdx( baseCurrent->map[row][col] );
 				if ( ! entry )
 					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y );
@@ -1155,22 +1152,42 @@ void MN_Click( int x, int y )
 		menu = menuStack[--sp];
 		for ( node = menu->firstNode; node; node = node->next ) {
 			if ( node->type != MN_CONTAINER && !node->click ) continue;
+
+			/* check whether mouse is over this node */
 			mouseOver = MN_CheckNodeZone( node, x, y );
 			if ( !mouseOver ) continue;
 
 			/* found a node -> do actions */
-			if ( node->type == MN_CONTAINER ) MN_Drag( node, x, y );
-			else if ( node->type == MN_BAR ) MN_BarClick( menu, node, x );
-			else if ( node->type == MN_BASEMAP ) MN_BaseMapClick( node, x, y );
-			else if ( node->type == MN_MAP ) MN_MapClick( node, x, y );
-			else if ( node->type == MN_3DMAP ) MN_3DMapClick( node, x, y );
-			else if ( node->type == MN_MODEL ) MN_ModelClick( node );
-			else if ( node->type == MN_TEXT ) MN_TextClick( node, mouseOver );
-			else MN_ExecuteActions( menu, node->click );
+			switch ( node->type ) {
+			case MN_CONTAINER:
+				MN_Drag( node, x, y );
+				break;
+			case MN_BAR:
+				MN_BarClick( menu, node, x );
+				break;
+			case MN_BASEMAP:
+				MN_BaseMapClick( node, x, y );
+				break;
+			case MN_MAP:
+				MN_MapClick( node, x, y );
+				break;
+			case MN_3DMAP:
+				MN_3DMapClick( node, x, y );
+				break;
+			case MN_MODEL:
+				MN_ModelClick( node );
+				break;
+			case MN_TEXT:
+				MN_TextClick( node, mouseOver );
+				break;
+			default:
+				MN_ExecuteActions( menu, node->click );
+				break;
+			}
 		}
 
+		/* don't care about non-rendered windows */
 		if ( menu->renderNode || menu->popupNode )
-			/* don't care about non-rendered windows */
 			return;
 	}
 }
@@ -1192,20 +1209,30 @@ void MN_RightClick( int x, int y )
 	while ( sp > 0 ) {
 		menu = menuStack[--sp];
 		for ( node = menu->firstNode; node; node = node->next ) {
+			/* no right click for this node defined */
 			if ( !node->rclick ) continue;
+
+			/* check whether mouse if over this node */
 			mouseOver = MN_CheckNodeZone( node, x, y );
 			if ( !mouseOver ) continue;
 
 			/* found a node -> do actions */
-			if ( node->type == MN_MAP || node->type == MN_3DMAP ) {
+			switch ( node->type ) {
+			case MN_MAP:
 				CL_MapActionReset();
-				if ( node->type == MN_MAP )
-					mouseSpace = MS_SHIFTMAP;
-				else
-					mouseSpace = MS_SHIFT3DMAP;
+				mouseSpace = MS_SHIFTMAP;
+				break;
+			case MN_3DMAP:
+				CL_MapActionReset();
+				mouseSpace = MS_SHIFT3DMAP;
+				break;
+			case MN_TEXT:
+				MN_TextRightClick( node, mouseOver );
+				break;
+			default:
+				MN_ExecuteActions( menu, node->rclick );
+				break;
 			}
-			else if ( node->type == MN_TEXT ) MN_TextRightClick( node, mouseOver );
-			else MN_ExecuteActions( menu, node->rclick );
 		}
 
 		if ( menu->renderNode || menu->popupNode )
@@ -1231,14 +1258,25 @@ void MN_MiddleClick( int x, int y )
 	while ( sp > 0 ) {
 		menu = menuStack[--sp];
 		for ( node = menu->firstNode; node; node = node->next ) {
+			/* no middle click for this node defined */
 			if ( !node->mclick ) continue;
+
+			/* check whether mouse if over this node */
 			mouseOver = MN_CheckNodeZone( node, x, y );
 			if ( !mouseOver ) continue;
 
 			/* found a node -> do actions */
-			if ( node->type == MN_MAP ) mouseSpace = MS_ZOOMMAP;
-			else if ( node->type == MN_3DMAP ) mouseSpace = MS_ZOOM3DMAP;
-			else MN_ExecuteActions( menu, node->mclick );
+			switch ( node->type ) {
+			case MN_MAP:
+				mouseSpace = MS_ZOOMMAP;
+				break;
+			case MN_3DMAP:
+				mouseSpace = MS_ZOOM3DMAP;
+				break;
+			default:
+				MN_ExecuteActions( menu, node->mclick );
+				break;
+			}
 		}
 
 		if ( menu->renderNode || menu->popupNode )
@@ -1280,8 +1318,7 @@ void MN_SetViewRect( void )
 
 	/* no menu in stack has a render node */
 	/* render the full screen */
-	scr_vrect.x = 0;
-	scr_vrect.y = 0;
+	scr_vrect.x = scr_vrect.y = 0;
 	scr_vrect.width  = viddef.width;
 	scr_vrect.height = viddef.height;
 }
@@ -1335,7 +1372,6 @@ void MN_DrawItem( vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 			origin[0] += C_UNIT / 2.0 * sx;
 			origin[1] += C_UNIT / 2.0 * sy;
 			origin[0] += C_UNIT * x;
-
 			origin[1] += C_UNIT * y;
 		}
 
@@ -1344,7 +1380,9 @@ void MN_DrawItem( vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 		mi.backlerp = 0;
 
 		Vector4Copy( color, col );
-		if ( od->weapon && od->ammo && !item.a ) { col[1] *= 0.5; col[2] *= 0.5; }
+		if ( od->weapon && od->ammo && !item.a )
+			col[1] *= 0.5; col[2] *= 0.5;
+
 		mi.color = col;
 
 		/* draw the model */
@@ -1379,8 +1417,8 @@ void MN_Draw3DMapMarkers( menuNode_t *node, float latitude, float longitude )
 			else
 				re.Draw3DMapMarkers( latitude, longitude, "circle" );
 
-/* 			if ( CL_3DMapIsNight( ms->realPos ) ) Cvar_Set( "mn_mapdaytime", _("Night") ); */
-/* 			else Cvar_Set( "mn_mapdaytime", _("Day") ); */
+/*			if ( CL_3DMapIsNight( ms->realPos ) ) Cvar_Set( "mn_mapdaytime", _("Night") );
+			else Cvar_Set( "mn_mapdaytime", _("Day") ); */
 		}
 	}
 
@@ -1568,7 +1606,6 @@ void MN_PrecacheMenus( void )
 			}
 		}
 	}
-/* int			numNodes; */
 }
 
 /*
@@ -2831,8 +2868,7 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 					/* check for special nodes */
 					switch ( node->type ) {
 					case MN_FUNC:
-						if ( !Q_strncmp( node->name, "init", 4 ) )
-						{
+						if ( !Q_strncmp( node->name, "init", 4 ) ) {
 							if ( !menu->initNode )
 								menu->initNode = node;
 							else
