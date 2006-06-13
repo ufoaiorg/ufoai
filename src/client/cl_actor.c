@@ -331,7 +331,7 @@ void CL_ActorUpdateCVars(void)
 			if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
 				/* If the mouse is outside the world, blank move */
 				if (mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE)
-					$actorMoveLength = 0xFF;
+					actorMoveLength = 0xFF;
 
 				if (actorMoveLength < 0xFF) {
 					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Health\t%i\nMove\t%i\n"), selActor->HP, actorMoveLength);
