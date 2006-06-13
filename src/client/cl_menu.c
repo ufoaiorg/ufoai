@@ -2842,7 +2842,10 @@ qboolean MN_ParseMenuBody( menu_t *menu, char **text )
 								menu->closeNode = node;
 							else
 								Com_Printf( "MN_ParseMenuBody: second close function ignored (menu \"%s\")\n", menu->name );
-						} else if ( !Q_strncmp( node->name, "render", 6 ) ) {
+						}
+						break;
+					case MN_ZONE:
+						if ( !Q_strncmp( node->name, "render", 6 ) ) {
 							if ( !menu->renderNode )
 								menu->renderNode = node;
 							else
