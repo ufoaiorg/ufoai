@@ -316,9 +316,7 @@ vec3_t	bytedirs[NUMVERTEXNORMALS] =
 #include "../client/anorms.h"
 };
 
-/* */
 /* writing functions */
-/* */
 
 void MSG_WriteChar (sizebuf_t *sb, int c)
 {
@@ -518,9 +516,7 @@ void MSG_WriteFormat( sizebuf_t *sb, char *format, ... )
 
 /*============================================================ */
 
-/* */
 /* reading functions */
-/* */
 
 void MSG_BeginReading (sizebuf_t *msg)
 {
@@ -764,6 +760,12 @@ void MSG_ReadFormat( sizebuf_t *msg_read, char *format, ... )
 }
 
 
+/**
+ * @brief returns the length of a sizebuf_t
+ *
+ * calculated the length of a sizebuf_t by summing up
+ * the size of each format char
+ */
 int MSG_LengthFormat( sizebuf_t *sb, char *format )
 {
 	char	typeID;
@@ -774,12 +776,10 @@ int MSG_LengthFormat( sizebuf_t *sb, char *format )
 	delta = 0;
 	oldCount = sb->readcount;
 
-	while ( *format )
-	{
+	while ( *format ) {
 		typeID = *format++;
 
-		switch ( typeID )
-		{
+		switch ( typeID ) {
 			case 'c': delta = 1; break;
 			case 'b': delta = 1; break;
 			case 's': delta = 2; break;
@@ -825,8 +825,7 @@ void *SZ_GetSpace (sizebuf_t *buf, int length)
 {
 	void	*data;
 
-	if (buf->cursize + length > buf->maxsize)
-	{
+	if (buf->cursize + length > buf->maxsize) {
 		if (!buf->allowoverflow)
 			Com_Error (ERR_FATAL, "SZ_GetSpace: overflow without allowoverflow set" );
 
@@ -855,14 +854,12 @@ void SZ_Print (sizebuf_t *buf, char *data)
 
 	len = strlen(data)+1;
 
-	if (buf->cursize)
-	{
+	if (buf->cursize) {
 		if (buf->data[buf->cursize-1])
 			memcpy ((byte *)SZ_GetSpace(buf, len),data,len); /* no trailing 0 */
 		else
 			memcpy ((byte *)SZ_GetSpace(buf, len-1)-1,data,len); /* write over trailing 0 */
-	}
-	else
+	} else
 		memcpy ((byte *)SZ_GetSpace(buf, len),data,len);
 }
 
@@ -882,8 +879,7 @@ int COM_CheckParm (char *parm)
 {
 	int		i;
 
-	for (i=1 ; i<com_argc ; i++)
-	{
+	for (i=1 ; i<com_argc ; i++) {
 		if (!strcmp (parm,com_argv[i]))
 			return i;
 	}
@@ -923,8 +919,7 @@ void COM_InitArgv (int argc, char **argv)
 	if (argc > MAX_NUM_ARGVS)
 		Com_Error (ERR_FATAL, "argc > MAX_NUM_ARGVS");
 	com_argc = argc;
-	for (i=0 ; i<argc ; i++)
-	{
+	for (i=0 ; i<argc ; i++) {
 		if (!argv[i] || strlen(argv[i]) >= MAX_TOKEN_CHARS )
 			com_argv[i] = "";
 		else
@@ -982,15 +977,13 @@ void Info_Print (char *s)
 
 	if (*s == '\\')
 		s++;
-	while (*s)
-	{
+	while (*s) {
 		o = key;
 		while (*s && *s != '\\')
 			*o++ = *s++;
 
 		l = o - key;
-		if (l < 20)
-		{
+		if (l < 20) {
 			memset (o, ' ', 20-l);
 			key[20] = 0;
 		}
@@ -998,8 +991,7 @@ void Info_Print (char *s)
 			*o = 0;
 		Com_Printf ("%s", key);
 
-		if (!*s)
-		{
+		if (!*s) {
 			Com_Printf ("MISSING VALUE\n");
 			return;
 		}
@@ -1087,8 +1079,7 @@ void Z_FreeTags (int tag)
 {
 	zhead_t	*z, *next;
 
-	for (z=z_chain.next ; z != &z_chain ; z=next)
-	{
+	for (z=z_chain.next ; z != &z_chain ; z=next) {
 		next = z->next;
 		if (z->tag == tag)
 			Z_Free ((void *)(z+1));
@@ -1307,18 +1298,14 @@ void Qcommon_LocaleInit ( void )
 	/* set to system default */
 	setlocale( LC_ALL, "C" );
 	locale = setlocale( LC_MESSAGES, s_language->string );
-	if ( ! locale )
-	{
+	if ( ! locale ) {
 		Com_Printf("...could not set to language: %s\n", s_language->string );
 		locale = setlocale( LC_MESSAGES, "" );
-		if ( !locale )
-		{
+		if ( !locale ) {
 			Com_Printf("...could not set to system language\n" );
 			return;
 		}
-	}
-	else
-	{
+	} else {
 		Com_Printf("...using language: %s\n", locale );
 		Cvar_Set("s_language", locale );
 	}
@@ -1372,9 +1359,7 @@ void Qcommon_Init (int argc, char **argv)
 	Cbuf_AddEarlyCommands (qtrue);
 	Cbuf_Execute ();
 
-	/* */
 	/* init commands and vars */
-	/* */
 	Cmd_AddCommand ("z_stats", Z_Stats_f);
 	Cmd_AddCommand ("error", Com_Error_f);
 
@@ -1426,16 +1411,15 @@ void Qcommon_Init (int argc, char **argv)
 	Com_ParseScripts ();
 
 	/* add + commands from command line */
-	if (!Cbuf_AddLateCommands ())
-	{	/* if the user didn't give any commands, run default action */
+	/* if the user didn't give any commands, run default action */
+	if (!Cbuf_AddLateCommands () ) {
 		if (!dedicated->value)
 			Cbuf_AddText ("init\n");
 		else
 			Cbuf_AddText ("dedicated_start\n");
 		Cbuf_Execute ();
-	}
-	else
-	{	/* the user asked for something explicit */
+	/* the user asked for something explicit */
+	} else {
 		/* so drop the loading plaque */
 		SCR_EndLoadingPlaque ();
 	}
@@ -1466,24 +1450,18 @@ float Qcommon_Frame (int msec)
 	else if ( timescale->value < 0.2 )
 		Cvar_SetValue( "timescale", 0.2 );
 
-	if ( log_stats->modified )
-	{
+	if ( log_stats->modified ) {
 		log_stats->modified = qfalse;
-		if ( log_stats->value )
-		{
-			if ( log_stats_file )
-			{
+		if ( log_stats->value ) {
+			if ( log_stats_file ) {
 				fclose( log_stats_file );
 				log_stats_file = 0;
 			}
 			log_stats_file = fopen( "stats.log", "w" );
 			if ( log_stats_file )
 				fprintf( log_stats_file, "entities,dlights,parts,frame time\n" );
-		}
-		else
-		{
-			if ( log_stats_file )
-			{
+		} else {
+			if ( log_stats_file ) {
 				fclose( log_stats_file );
 				log_stats_file = 0;
 			}
@@ -1493,8 +1471,7 @@ float Qcommon_Frame (int msec)
 /*	if (fixedtime->value) */
 /*		msec = fixedtime->value; */
 
-	if (showtrace->value)
-	{
+	if (showtrace->value) {
 		extern	int c_traces, c_brush_traces;
 		extern	int	c_pointcontents;
 
@@ -1504,8 +1481,7 @@ float Qcommon_Frame (int msec)
 		c_pointcontents = 0;
 	}
 
-	do
-	{
+	do {
 		s = Sys_ConsoleInput ();
 		if (s)
 			Cbuf_AddText (va("%s\n",s));
@@ -1526,8 +1502,7 @@ float Qcommon_Frame (int msec)
 		time_after = Sys_Milliseconds ();
 
 
-	if (host_speeds->value)
-	{
+	if (host_speeds->value) {
 		int			all, sv, gm, cl, rf;
 
 		all = time_after - time_before;
