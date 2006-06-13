@@ -371,8 +371,7 @@ void MSG_WriteLong (sizebuf_t *sb, int c)
 
 void MSG_WriteFloat (sizebuf_t *sb, float f)
 {
-	union
-	{
+	union {
 		float	f;
 		int	l;
 	} dat;
@@ -427,19 +426,16 @@ void MSG_WriteDir (sizebuf_t *sb, vec3_t dir)
 	int		i, best;
 	float	d, bestd;
 
-	if (!dir)
-	{
+	if (!dir) {
 		MSG_WriteByte (sb, 0);
 		return;
 	}
 
 	bestd = 0;
 	best = 0;
-	for (i=0 ; i<NUMVERTEXNORMALS ; i++)
-	{
+	for (i=0 ; i<NUMVERTEXNORMALS ; i++) {
 		d = DotProduct (dir, bytedirs[i]);
-		if (d > bestd)
-		{
+		if (d > bestd) {
 			bestd = d;
 			best = i;
 		}
@@ -456,12 +452,10 @@ void MSG_WriteFormat( sizebuf_t *sb, char *format, ... )
 	/* initialize ap */
 	va_start( ap, format );
 
-	while ( *format )
-	{
+	while ( *format ) {
 		typeID = *format++;
 
-		switch ( typeID )
-		{
+		switch ( typeID ) {
 		case 'c':
 			MSG_WriteChar( sb, va_arg( ap, int ) );
 			break;
@@ -558,7 +552,7 @@ int MSG_ReadShort (sizebuf_t *msg_read)
 		c = -1;
 	else
 		c = (short)(msg_read->data[msg_read->readcount]
-		+ (msg_read->data[msg_read->readcount+1]<<8));
+		  + (msg_read->data[msg_read->readcount+1]<<8));
 
 	msg_read->readcount += 2;
 
@@ -584,8 +578,7 @@ int MSG_ReadLong (sizebuf_t *msg_read)
 
 float MSG_ReadFloat (sizebuf_t *msg_read)
 {
-	union
-	{
+	union {
 		byte	b[4];
 		float	f;
 		int	l;
@@ -593,8 +586,7 @@ float MSG_ReadFloat (sizebuf_t *msg_read)
 
 	if (msg_read->readcount+4 > msg_read->cursize)
 		dat.f = -1;
-	else
-	{
+	else {
 		dat.b[0] =	msg_read->data[msg_read->readcount];
 		dat.b[1] =	msg_read->data[msg_read->readcount+1];
 		dat.b[2] =	msg_read->data[msg_read->readcount+2];
@@ -613,8 +605,7 @@ char *MSG_ReadString (sizebuf_t *msg_read)
 	int		l,c;
 
 	l = 0;
-	do
-	{
+	do {
 		c = MSG_ReadByte(msg_read);
 		if (c == -1 || c == 0)
 			break;
@@ -633,8 +624,7 @@ char *MSG_ReadStringLine (sizebuf_t *msg_read)
 	int		l,c;
 
 	l = 0;
-	do
-	{
+	do {
 		c = MSG_ReadByte(msg_read);
 		if (c == -1 || c == 0 || c == '\n')
 			break;
@@ -703,12 +693,10 @@ void MSG_ReadFormat( sizebuf_t *msg_read, char *format, ... )
 	/* initialize ap */
 	va_start( ap, format );
 
-	while ( *format )
-	{
+	while ( *format ) {
 		typeID = *format++;
 
-		switch ( typeID )
-		{
+		switch ( typeID ) {
 		case 'c':
 			*va_arg( ap, int* ) = MSG_ReadChar( msg_read );
 			break;
