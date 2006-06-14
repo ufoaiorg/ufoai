@@ -1843,33 +1843,35 @@ qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, i
 
 	assert( i );
 	/* armor vs item */
-	if ( !strcmp( CSI->ods[item].type, "armor" ) )
-	{
-		if ( !CSI->ids[container].armor && !CSI->ids[container].all ) return qfalse;
-	}
-	else if ( CSI->ids[container].armor ) return qfalse;
+	if ( !Q_strncmp( CSI->ods[item].type, "armor", MAX_VAR ) ) {
+		if ( !CSI->ids[container].armor && !CSI->ids[container].all )
+			return qfalse;
+	} else if ( CSI->ids[container].armor )
+		return qfalse;
 
 	/* special hand checks */
 	right = i->c[CSI->idRight];
 	left  = i->c[CSI->idLeft];
 
-	if ( container == CSI->idRight )
-	{
-		if ( !right && ( !CSI->ods[item].twohanded || !left ) ) return qtrue;
-		else return qfalse;
-	}
-	else if ( container == CSI->idLeft )
-	{
+	if ( container == CSI->idRight ) {
+		if ( !right && ( !CSI->ods[item].twohanded || !left ) )
+			return qtrue;
+		else
+			return qfalse;
+	} else if ( container == CSI->idLeft ) {
 		if ( !left && ((right && !CSI->ods[right->item.t].twohanded
-			&& !CSI->ods[item].twohanded) || !right) ) return qtrue;
-		else return qfalse;
+		  && !CSI->ods[item].twohanded) || !right) )
+			return qtrue;
+		else
+			return qfalse;
 	}
 
 	/* single item containers */
-	if ( CSI->ids[container].single )
-	{
-		if ( i->c[container] ) return qfalse;
-		else return qtrue;
+	if ( CSI->ids[container].single ) {
+		if ( i->c[container] )
+			return qfalse;
+		else
+			return qtrue;
 	}
 
 	/* check bounds */
@@ -1883,11 +1885,11 @@ qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, i
 	/* add other items to mask */
 	for ( ic = i->c[container]; ic; ic = ic->next )
 		for ( j = 0; j < 4 && ic->y+j < 16; j++ )
-			mask[ic->y+j] |= ((CSI->ods[ic->item.t].shape >> j*8) & 0xFF) << ic->x;
+			mask[ic->y+j] |= ((CSI->ods[ic->item.t].shape >> (j*8)) & 0xFF) << ic->x;
 
 	/* test for collisions with newly generated mask */
 	for ( j = 0; j < 4; j++ )
-		if ( (((CSI->ods[item].shape >> j*8) & 0xFF) << x) & mask[y+j] )
+		if ( (((CSI->ods[item].shape >> (j*8)) & 0xFF) << x) & mask[y+j] )
 			return qfalse;
 
 	/* everything ok */
@@ -1895,18 +1897,18 @@ qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, i
 }
 
 
-/*
-=================
-Com_SearchInInventory
-=================
-*/
+/**
+  * @brief Searches a suitable place in container of a given inventory
+  */
 invList_t *Com_SearchInInventory( inventory_t *i, int container, int x, int y )
 {
 	invList_t	*ic;
 
+	/* only a single item */
 	if ( CSI->ids[container].single )
 		return i->c[container];
 
+	/* more than one item - search for a suitable place in this container */
 	for ( ic = i->c[container]; ic; ic = ic->next )
 		if ( x >= ic->x && y >= ic->y && x < ic->x+8 && y < ic->y+4 &&
 			((CSI->ods[ic->item.t].shape >> (x-ic->x) >> (y-ic->y)*8)) & 1 )
@@ -1917,11 +1919,9 @@ invList_t *Com_SearchInInventory( inventory_t *i, int container, int x, int y )
 }
 
 
-/*
-=================
-Com_AddToInventory
-=================
-*/
+/**
+  * @brief Add an item to a specified container in a given inventory
+  */
 invList_t *Com_AddToInventory( inventory_t *i, item_t item, int container, int x, int y )
 {
 	invList_t	*ic;
@@ -1960,7 +1960,7 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 	if ( !ic )
 	{
 #ifdef DEBUG
-		Com_Printf("Com_RemoveFromInventory - no container %i\n", container );
+		Com_Printf("Com_RemoveFromInventory - empty container %i\n", container );
 #endif
 		return qfalse;
 	}
@@ -1971,6 +1971,10 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 		invUnused = ic;
 		cacheItem = ic->item;
 		i->c[container] = ic->next;
+#ifdef PARANOID
+		if ( CSI->ids[container].single && ic->next )
+			Com_Printf("Com_RemoveFromInventory: Error in line %i at file %s\n", __LINE__, __FILE__ );
+#endif
 		invUnused->next = old;
 		return qtrue;
 	}
@@ -2006,72 +2010,85 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 		return 0;
 
 	time = CSI->ids[from].out + CSI->ids[to].in;
-	if ( from == to ) time /= 2;
+	if ( from == to )
+		time /= 2;
 	if ( TU && *TU < time )
 		return IA_NOTIME;
 
 	assert( i );
 
-	/* break if source item is not removeable */
-	if ( !Com_RemoveFromInventory( i, from, fx, fy ) ) return IA_NONE;
-
 	/* if weapon is twohanded and is moved from hand to hand do nothing. */
-	if ( CSI->ods[cacheItem.t].twohanded
-	&& ( ( to == CSI->idLeft && from == CSI->idRight ) || ( to == CSI->idRight && from == CSI->idLeft ) ) )
+	/* twohanded weapon are only in CSI->idRight */
+	if ( CSI->ods[cacheItem.t].twohanded && to == CSI->idLeft && from == CSI->idRight )
+		return IA_NONE;
+
+	/* break if source item is not removeable */
+	if ( !Com_RemoveFromInventory( i, from, fx, fy ) )
 		return IA_NONE;
 
 	/*check if the target is a blocked inv-armor and source!=dest */
- 	if ( CSI->ids[to].armor && !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) && from!=to ) {
+ 	if ( CSI->ids[to].armor && from != to && !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) ) {
  		/* save/cache (source) item */
  		cacheItem2 = cacheItem;
  		/* move the destination item to the source */
  		Com_MoveInInventory( i, to, tx, ty, from, fx, fy, TU, icp );
  		/* reset the cached item (source) */
  		cacheItem = cacheItem2;
- 	}
-	if ( !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) )
-	{
+ 	} else if ( !Com_CheckToInventory( i, cacheItem.t, to, tx, ty ) ) {
 		ic = Com_SearchInInventory( i, to, tx, ty );
 
-		if ( ic && CSI->ods[cacheItem.t].link == ic->item.t )
-		{
-			if ( ic->item.a >= CSI->ods[ic->item.t].ammo )
-			{
-				/* weapon already loaded */
+		if ( ic && CSI->ods[cacheItem.t].link == ic->item.t ) {
+			if ( ic->item.a >= CSI->ods[ic->item.t].ammo ) {
+				/* weapon already loaded - back to source location */
 				Com_AddToInventory( i, cacheItem, from, fx, fy );
 				return IA_NORELOAD;
 			}
 
 			time += CSI->ods[ic->item.t].reload;
-			if ( !TU || *TU >= time )
-			{
-				if ( TU ) *TU -= time;
+			if ( !TU || *TU >= time ) {
+				if ( TU )
+					*TU -= time;
 				ic->item.a = CSI->ods[ic->item.t].ammo;
 				ic->item.m = cacheItem.t;
-				if ( icp ) *icp = ic;
+				if ( icp )
+					*icp = ic;
 				return IA_RELOAD;
 			}
-			/* not enough time */
+			/* not enough time - back to source location */
 			Com_AddToInventory( i, cacheItem, from, fx, fy );
 			return IA_NOTIME;
 		}
 
-		/* impossible move */
+		/* impossible move - back to source location */
 		Com_AddToInventory( i, cacheItem, from, fx, fy );
 		return IA_NONE;
 	}
 
-	/* twohanded exception */
+	/* twohanded exception - only CSI->idRight is allowed for twohanded weapons */
 	if ( CSI->ods[cacheItem.t].twohanded && to == CSI->idLeft )
+	{
+#ifdef DEBUG
+		Com_Printf("Com_MoveInInventory - don't move the item to CSI->idLeft it's twohanded\n");
+#endif
 		to = CSI->idRight;
+	}
+#ifdef PARANOID
+	else if ( CSI->ods[cacheItem.t].twohanded )
+		Com_Printf("Com_MoveInInventory: move twohanded item to container: %i\n", to );
+#endif
 
 	/* successful */
-	if ( TU ) *TU -= time;
+	if ( TU )
+		*TU -= time;
+
 	ic = Com_AddToInventory( i, cacheItem, to, tx, ty );
 
 	/* return data */
-	if ( icp ) *icp = ic;
-	if ( to == CSI->idArmor ) return IA_ARMOR;
+	if ( icp )
+		*icp = ic;
+
+	if ( to == CSI->idArmor )
+		return IA_ARMOR;
 	else return IA_MOVE;
 }
 
@@ -2093,8 +2110,7 @@ void Com_EmptyContainer( inventory_t *i, int container )
 		ic = ic->next;
 		old->next = invUnused;
 		invUnused = old;
-		if ( cnt >= MAX_INVLIST )
-		{
+		if ( cnt >= MAX_INVLIST ) {
 			Com_Printf("Error: There are more than the allowed entries in container %i (Com_EmptyContainer)\n", container );
 			break;
 		}
