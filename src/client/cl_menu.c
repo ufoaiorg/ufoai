@@ -3314,7 +3314,7 @@ font_t* fontSmall;
 
 value_t fontValues[] =
 {
-	{ "font",		V_STRING,	FONTFS(path) },
+	{ "font",		V_TRANSLATION2_STRING,	FONTFS(path) },
 	{ "size",		V_INT,		FONTFS(size) },
 	{ "style",		V_STRING,	FONTFS(style) },
 
@@ -3409,7 +3409,7 @@ void CL_ParseFont( char* name, char **text )
 	if ( FS_CheckFile( font->path ) == -1 )
 		Sys_Error("...font file %s does not exist (font %s)\n", font->path, font->name );
 
-	re.FontRegister( font->name, font->size, font->path, font->style );
+	re.FontRegister( font->name, font->size, _(font->path), font->style );
 }
 
 /*
