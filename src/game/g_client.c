@@ -714,8 +714,7 @@ void G_InventoryMove( player_t *player, int num, int from, int fx, int fy, int t
 
 	/* "get floor ready" */
 	floor = G_GetFloorItems( ent );
-	if ( to == gi.csi->idFloor && !floor )
-	{
+	if ( to == gi.csi->idFloor && !floor ) {
 		floor = G_SpawnFloor( ent->pos );
 		newFloor = qtrue;
 	}
@@ -725,30 +724,26 @@ void G_InventoryMove( player_t *player, int num, int from, int fx, int fy, int t
 	if ( tx == NONE || ty == NONE )
 	{
 		ic = Com_SearchInInventory(&ent->i, from, fx, fy);
-		if ( ic ) Com_FindSpace( &ent->i, ic->item.t, to, &tx, &ty );
+		if ( ic )
+			Com_FindSpace( &ent->i, ic->item.t, to, &tx, &ty );
 	}
 	if ( tx == NONE || ty == NONE )
 		return;
 
-	if ( ( ia = Com_MoveInInventory( &ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic ) ) )
-	{
-		if ( ia == IA_NOTIME )
-		{
+	if ( ( ia = Com_MoveInInventory( &ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic ) ) ) {
+		switch ( ia ) {
+		case IA_NOTIME:
 			gi.cprintf( player, PRINT_HIGH, _("Can't perform action - not enough TUs!\n") );
 			return;
-		}
-		if ( ia == IA_NORELOAD )
-		{
+		case IA_NORELOAD:
 			gi.cprintf( player, PRINT_HIGH, _("Can't perform action - weapon already loaded!\n") );
 			return;
 		}
 
 		/* successful inventory change */
-		if ( from == gi.csi->idFloor )
-		{
+		if ( from == gi.csi->idFloor ) {
 			FLOOR(floor) = FLOOR(ent);
-			if ( FLOOR(floor) )
-			{
+			if ( FLOOR(floor) ) {
 				gi.AddEvent( G_VisToPM( floor->visflags ), EV_INV_DEL );
 				gi.WriteShort( floor->number );
 				gi.WriteByte( from );
@@ -868,9 +863,14 @@ void G_InventoryToFloor( edict_t *ent )
 	}
 
 	/* drop items */
+
+	/* cycle through all containers */
 	for ( k = 0; k < gi.csi->numIDs; k++ ) {
+		/* skip floor - we want to drop to floor */
 		if ( k == gi.csi->idFloor ) continue;
+		/* now cycle through all items for the container of the character (or the entity) */
 		for ( ic = ent->i.c[k]; ic; ic = ic->next ) {
+			/* find the coordinates for the current item on floor */
 			Com_FindSpace( &floor->i, ic->item.t, gi.csi->idFloor, &ic->x, &ic->y );
 			if ( ic->x >= 32 || ic->y >= 16 ) {
 				/* Run out of space on the floor - destroy remaining inventory. */
