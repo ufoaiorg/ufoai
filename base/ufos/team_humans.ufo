@@ -1272,9 +1272,9 @@ actors african
 
 	male
 	{
-		soldiers/male body head4b 0
-		soldiers/male body head5a 0
-		soldiers/male body head5b 0
+		soldiers/male body head04b 0
+		soldiers/male body head05a 0
+		soldiers/male body head05b 0
 	}
 }
 
