@@ -1859,8 +1859,8 @@ qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, i
 		else
 			return qfalse;
 	} else if ( container == CSI->idLeft ) {
-		if ( !left && ((right && !CSI->ods[right->item.t].twohanded
-		  && !CSI->ods[item].twohanded) || !right) )
+		if ( !left && ((right && !CSI->ods[right->item.t].twohanded) || !right)
+		  && !CSI->ods[item].twohanded )
 			return qtrue;
 		else
 			return qfalse;
@@ -1868,8 +1868,10 @@ qboolean Com_CheckToInventory( inventory_t *i, int item, int container, int x, i
 
 	/* single item containers */
 	if ( CSI->ids[container].single ) {
+		/* there is already an item */
 		if ( i->c[container] )
 			return qfalse;
+		/* empty */
 		else
 			return qtrue;
 	}
@@ -2146,8 +2148,7 @@ void Com_FindSpace( inventory_t *inv, int item, int container, int *px, int *py 
 
 	for ( y = 0; y < 16; y++ )
 		for ( x = 0; x < 32; x++ )
-			if ( Com_CheckToInventory( inv, item, container, x, y ) )
-			{
+			if ( Com_CheckToInventory( inv, item, container, x, y ) ) {
 				*px = x; *py = y;
 				return;
 			}
@@ -2183,8 +2184,7 @@ void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility,
 		max = 0;
 		min = 1;
 		rand_avg = 0;
-		for (i = 0; i < ABILITY_NUM_TYPES; i++)
-		{
+		for (i = 0; i < ABILITY_NUM_TYPES; i++) {
 			randomArray[i] = frand();
 			rand_avg += randomArray[i];
 			if (randomArray[i] > max)
@@ -2205,8 +2205,7 @@ void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility,
 		max = 0;
 		min = 1;
 		rand_avg = 0;
-		for (i = 0; i < SKILL_NUM_TYPES-ABILITY_NUM_TYPES; i++)
-		{
+		for (i = 0; i < SKILL_NUM_TYPES-ABILITY_NUM_TYPES; i++) {
 			randomArray[i] = frand();
 			rand_avg += randomArray[i];
 			if (randomArray[i] > max)
