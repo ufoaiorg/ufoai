@@ -356,57 +356,56 @@ void CL_ActorUpdateCVars(void)
 		} else {
 			Cvar_Set("mn_ammoright", "");
 		}
-	}
-
-	if (LEFT(selActor)) {
-		Cvar_SetValue("mn_ammoleft", LEFT(selActor)->item.a);
-	} else {
-		Cvar_Set("mn_ammoleft", "");
-	}
-
-	if (!LEFT(selActor) && RIGHT(selActor)
-		&& csi.ods[RIGHT(selActor)->item.t].twohanded)
-		Cvar_Set("mn_ammoleft", Cvar_VariableString("mn_ammoright"));
-
-	/* change stand-crouch */
-	if (cl.oldstate != selActor->state || refresh) {
-		cl.oldstate = selActor->state;
-		if (selActor->state & STATE_CROUCHED) {
-			Cbuf_AddText("tocrouch\n");
+		if (LEFT(selActor)) {
+			Cvar_SetValue("mn_ammoleft", LEFT(selActor)->item.a);
 		} else {
-			Cbuf_AddText("tostand\n");
+			Cvar_Set("mn_ammoleft", "");
 		}
 
-		if (selActor->state & STATE_REACTION) {
-			Cbuf_AddText("startreaction\n");
-		} else {
-			Cbuf_AddText("stopreaction\n");
-		}
+		if (!LEFT(selActor) && RIGHT(selActor)
+			&& csi.ods[RIGHT(selActor)->item.t].twohanded)
+			Cvar_Set("mn_ammoleft", Cvar_VariableString("mn_ammoright"));
 
-		/* set info text */
-		menuText[TEXT_STANDARD] = infoText;
-	} else {
-		/* no actor selected, reset cvars */
-		Cvar_Set("mn_tu", "0");
-		Cvar_Set("mn_turemain", "0");
-		Cvar_Set("mn_tumax", "30");
-		Cvar_Set("mn_morale", "0");
-		Cvar_Set("mn_moralemax", "1");
-		Cvar_Set("mn_hp", "0");
-		Cvar_Set("mn_hpmax", "1");
-		Cvar_Set("mn_ammoright", "");
-		Cvar_Set("mn_ammoleft", "");
-		Cvar_Set("mn_stun", "0");
-		if (refresh)
-			Cbuf_AddText("tostand\n");
+		/* change stand-crouch */
+		if (cl.oldstate != selActor->state || refresh) {
+			cl.oldstate = selActor->state;
+			if (selActor->state & STATE_CROUCHED) {
+				Cbuf_AddText("tocrouch\n");
+			} else {
+				Cbuf_AddText("tostand\n");
+			}
 
-		/* this allows us to display messages even with no actor selected */
-		if (cl.time < cl.msgTime) {
-			/* special message */
-			Com_sprintf(infoText, MAX_MENUTEXTLEN, cl.msgText);
+			if (selActor->state & STATE_REACTION) {
+				Cbuf_AddText("startreaction\n");
+			} else {
+				Cbuf_AddText("stopreaction\n");
+			}
+
+			/* set info text */
 			menuText[TEXT_STANDARD] = infoText;
 		} else {
-			menuText[TEXT_STANDARD] = NULL;
+			/* no actor selected, reset cvars */
+			Cvar_Set("mn_tu", "0");
+			Cvar_Set("mn_turemain", "0");
+			Cvar_Set("mn_tumax", "30");
+			Cvar_Set("mn_morale", "0");
+			Cvar_Set("mn_moralemax", "1");
+			Cvar_Set("mn_hp", "0");
+			Cvar_Set("mn_hpmax", "1");
+			Cvar_Set("mn_ammoright", "");
+			Cvar_Set("mn_ammoleft", "");
+			Cvar_Set("mn_stun", "0");
+			if (refresh)
+				Cbuf_AddText("tostand\n");
+
+			/* this allows us to display messages even with no actor selected */
+			if (cl.time < cl.msgTime) {
+				/* special message */
+				Com_sprintf(infoText, MAX_MENUTEXTLEN, cl.msgText);
+				menuText[TEXT_STANDARD] = infoText;
+			} else {
+				menuText[TEXT_STANDARD] = NULL;
+			}
 		}
 	}
 
