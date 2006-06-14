@@ -65,8 +65,6 @@ value_t valid_vars[] = {
 	{"onupgrade", V_STRING, BSFS(onUpgrade)}, /**< Event handler. */
 	{"onrepair", V_STRING, BSFS(onRepair)}, /**< Event handler. */
 	{"onclick", V_STRING, BSFS(onClick)}, /**< Event handler. */
-	/*{ "max_workers",V_INT,    BSFS( maxWorkers ) }, /**< How many workers should there be max. */
-	/*{ "min_workers",V_INT,    BSFS( minWorkers ) }, /**< How many workers should there be min. */
 	{"pos", V_POS, BSFS(pos)}, /**< Place of a building. Needed for flag autobuild */
 	{"autobuild", V_BOOL, BSFS(autobuild)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
 	{"firstbase", V_BOOL, BSFS(firstbase)}, /**< Automatically construct this building for the first base you build. Must also set the pos-flag. */
@@ -76,7 +74,8 @@ value_t valid_vars[] = {
 /**
  * @brief Sets a sensor.
  *
- * TODO: I have no idea what this actually does.
+ * inc_sensor and dec_sensor are script commands that increase the amount
+ * of the radar width for a given base
  */
 void B_SetSensor(void)
 {
@@ -108,6 +107,9 @@ void B_SetSensor(void)
 
 /**
  * @brief Displays the status of a building for baseview.
+ *
+ * updates the cvar mn_building_status which is used in some menus to display
+ * the building status
  */
 void B_BuildingStatus(void)
 {
@@ -156,7 +158,8 @@ void B_SetUpBase(void)
 	building_t *building = NULL;
 
 	assert(baseCurrent);
-	B_BuildingInit();			/*update the building-list */
+	/* update the building-list */
+	B_BuildingInit();
 	Com_DPrintf("Set up for %i\n", baseCurrent->idx);
 
 	for (i = 0; i < gd.numBuildingTypes; i++) {
@@ -165,9 +168,11 @@ void B_SetUpBase(void)
 			/* TODO: implement check for moreThanOne */
 			building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 			memcpy(building, &gd.buildingTypes[i], sizeof(building_t));
-			building->idx = gd.numBuildings[baseCurrent->idx];	/* self-link to building-list in base */
+			/* self-link to building-list in base */
+			building->idx = gd.numBuildings[baseCurrent->idx];
 			gd.numBuildings[baseCurrent->idx]++;
-			building->base_idx = baseCurrent->idx;	/* Link to the base. */
+			/* Link to the base. */
+			building->base_idx = baseCurrent->idx;
 			Com_DPrintf("Base %i new building:%s (%i) at (%.0f:%.0f)\n", baseCurrent->idx, building->id, i, building->pos[0], building->pos[1]);
 			baseCurrent->buildingCurrent = building;
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
@@ -178,7 +183,8 @@ void B_SetUpBase(void)
 			   building->howManyOfThisType++;
 			 */
 
-			B_BuildingInit();	/*update the building-list */
+			/* update the building-list */
+			B_BuildingInit();
 		}
 	}
 }
@@ -187,7 +193,7 @@ void B_SetUpBase(void)
  * Returns the building in the global building-types list that has the unique name buildingID.
  *
  * @param[in] buildingName The unique id of the building (building_t->id).
- * 
+ *
  * @return building_t If a building was found it is returned, if no id was give the current building is returned, otherwise->NULL.
  */
 building_t *B_GetBuildingType(char *buildingName)
@@ -569,7 +575,7 @@ building_t *B_GetBuildingByIdx(int idx)
 
 /**
  * @brief Opens up the 'pedia if you right click on a building in the list.
- * 
+ *
  * TODO: really only do this on rightclick.
  * TODO: left click should show building-status.
  */
@@ -919,7 +925,7 @@ building_t *B_GetUnusedLab(int base_idx)
 	int i, j;
 	building_t *building = NULL;
 	technology_t *tech = NULL;
-	byte used = qfalse;
+	qboolean used = qfalse;
 
 	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
 		building = &gd.buildings[base_idx][i];
@@ -953,7 +959,7 @@ int B_GetUnusedLabs(int base_idx)
 	int i, j;
 	building_t *building = NULL;
 	technology_t *tech = NULL;
-	byte used = qfalse;
+	qboolean used = qfalse;
 
 	int numFreeLabs = 0;
 
@@ -982,7 +988,7 @@ int B_GetUnusedLabs(int base_idx)
 
 /**
  * @brief Removes all assigned scientists from a building.
- * 
+ *
  * TODO: If the building is of type "B_QUARTERS" before it's cleared all other buildings need to be checked if there is an employees there that also is in the qarter. These employees need to be removed from those buildings.
  */
 void B_ClearBuilding(building_t * building)
@@ -1025,7 +1031,7 @@ void B_ClearBuilding(building_t * building)
 /**
  * @brief Returns true if the employee is only assigned to quarters.
  */
-byte B_EmployeeIsFree(employee_t * employee)
+qboolean B_EmployeeIsFree(employee_t * employee)
 {
 	return ((employee->lab < 0) && (employee->workshop < 0));
 }
@@ -1041,7 +1047,7 @@ byte B_EmployeeIsFree(employee_t * employee)
  *
  * @return Returns true if adding was possible/sane otherwise false.
  */
-byte B_AssignEmployee(building_t * building_dest, employeeType_t employee_type)
+qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_type)
 {
 	int i, j;
 	employee_t *employee = NULL;
@@ -1103,7 +1109,7 @@ byte B_AssignEmployee(building_t * building_dest, employeeType_t employee_type)
  *
  * @return Returns true if adding was possible/sane otherwise false.
  */
-byte B_RemoveEmployee(building_t * building)
+qboolean B_RemoveEmployee(building_t * building)
 {
 	/* TODO
 	   int i;
@@ -1113,7 +1119,7 @@ byte B_RemoveEmployee(building_t * building)
 
 	/* TODO
 	   building_t *building_temp = NULL;
-	   byte found = qfalse;
+	   qboolean found = qfalse;
 	 */
 
 	employees_in_building = &building->assigned_employees;
@@ -1185,7 +1191,7 @@ byte B_RemoveEmployee(building_t * building)
  * You can choose (free_only) if you want the nubmer of free ones or the total number.
  * If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
  */
-int B_EmployeesInBase2(int base_idx, employeeType_t employee_type, byte free_only)
+int B_EmployeesInBase2(int base_idx, employeeType_t employee_type, qboolean free_only)
 {
 	int i, j;
 	int numEmployeesInBase = 0;
@@ -1425,7 +1431,7 @@ void B_RenameBase(void)
 		Q_strncpyz(baseCurrent->name, Cmd_Argv(1), MAX_VAR);
 }
 
-/** 
+/**
  * @brief Cycles to the next base.
  */
 void B_NextBase(void)
@@ -1705,7 +1711,7 @@ void B_BuildingList_f(void)
 
 /**
  * @brief TODO: No idea what this does.
- * 
+ *
  * TODO: To be extended for load/save purposes
  */
 void B_BaseList_f(void)
@@ -1814,7 +1820,7 @@ int B_GetCount(void)
 
 /**
  * @brief Updates base data?
- * 
+ *
  * Called from the running campaign
  */
 void B_UpdateBaseData(void)

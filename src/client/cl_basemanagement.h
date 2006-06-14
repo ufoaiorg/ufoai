@@ -149,7 +149,7 @@ typedef struct building_s
 	/*if we can build more than one building of the same type: */
 	buildingStatus_t	buildingStatus; /*[BASE_SIZE*BASE_SIZE]; */
 
-	byte	visible;
+	qboolean	visible;
 	/* needed for baseassemble */
 	/* when there are two tiles (like hangar) - we only load the first tile */
 	int	used;
@@ -169,10 +169,10 @@ typedef struct building_s
 	vec2_t	pos;
 
 	/*autobuild when base is set up */
-	byte	autobuild;
+	qboolean	autobuild;
 
 	/*autobuild when base is set up */
-	byte	firstbase;
+	qboolean	firstbase;
 
 	/*this way we can rename the buildings without loosing the control */
 	buildingType_t	buildingType;
@@ -288,8 +288,8 @@ typedef struct base_s
 	vec2_t pos;
 
 	/* to decide which actions are available in the basemenu */
-	byte	hasHangar;
-	byte	hasLab;	/* TODO: still needed. */
+	qboolean	hasHangar;
+	qboolean	hasLab;	/* TODO: still needed. */
 
 	/*this is here to allocate the needed memory for the buildinglist */
 	char	allBuildingsList[MAX_LIST_CHAR];
@@ -359,9 +359,9 @@ int B_GetNumOnTeam ( void );
 building_t * B_GetUnusedLab( int base_id );
 int B_GetUnusedLabs( int base_id );
 void B_ClearBuilding( building_t *building );
-int B_EmployeesInBase2 ( int base_id, employeeType_t employee_type, byte free_only );
-byte B_RemoveEmployee ( building_t *building );
-byte B_AssignEmployee ( building_t *building_dest, employeeType_t employee_type );
+int B_EmployeesInBase2 ( int base_id, employeeType_t employee_type, qboolean free_only );
+qboolean B_RemoveEmployee ( building_t *building );
+qboolean B_AssignEmployee ( building_t *building_dest, employeeType_t employee_type );
 void B_ParseBuildings( char *id, char **text, qboolean link );
 void B_ParseBases( char *title, char **text );
 void B_BuildingInit( void );
