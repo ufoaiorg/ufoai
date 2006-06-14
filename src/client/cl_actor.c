@@ -888,7 +888,7 @@ void CL_ActorDoMove(sizebuf_t * sb)
 
 
 /**
- * @brief Fuck knows what this does.
+ * @brief Turns the actor around without moving
  */
 void CL_ActorTurnMouse(void)
 {
