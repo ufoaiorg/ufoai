@@ -5,8 +5,7 @@
 
 /* ==================================================================== */
 
-typedef struct
-{
+typedef struct {
 	pos3_t	to, stop;
 	byte	mode, shots;
 	edict_t	*target;
@@ -34,12 +33,10 @@ qboolean AI_CheckFF( edict_t *ent, vec3_t target, float spread )
 
 	for ( i = 0, check = g_edicts; i < globals.num_edicts; i++, check++ )
 		if ( check->inuse && check->type == ET_ACTOR && ent != check &&
-			check->team == ent->team && !(check->state & STATE_DEAD) )
-		{
+			check->team == ent->team && !(check->state & STATE_DEAD) ) {
 			/* found ally */
 			VectorSubtract( check->origin, ent->origin, dcheck );
-			if ( DotProduct( dtarget, dcheck ) > 0.0 )
-			{
+			if ( DotProduct( dtarget, dcheck ) > 0.0 ) {
 				/* ally in front of player */
 				VectorAdd( dcheck, back, dcheck );
 				VectorNormalize( dcheck );
@@ -99,31 +96,29 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 	if ( tu < 0 ) return 0.0;
 
 	/* shooting */
-	if ( od )
-	{
+	if ( od ) {
 		maxDmg = 0.0;
-		for ( fm = 0; fm < 2; fm++ )
-		{
+		for ( fm = 0; fm < 2; fm++ ) {
 			fd = &od->fd[fm];
-			if ( !fd->time ) continue;
+			if ( !fd->time )
+				continue;
 
 			nspread = SPREAD_NORM( (fd->spread[0]+fd->spread[1])*GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill)/2 );
 			shots = tu / fd->time;
-			if ( shots )
-			{
+			if ( shots ) {
 				/* search best target */
 				for ( i = 0, check = g_edicts; i < globals.num_edicts; i++, check++ )
 					if ( check->inuse && check->type == ET_ACTOR && ent != check
 						&& (check->team != ent->team || ent->state & STATE_INSANE)
-						&& !(check->state & STATE_DEAD) )
-					{
+						&& !(check->state & STATE_DEAD) ) {
 						/* don't shoot civilians in mp */
 						if ( check->team == TEAM_CIVILIAN && (int)sv_maxclients->value > 1 && !(ent->state & STATE_INSANE) )
 							continue;
 
 						/* check range */
 						dist = VectorDist( ent->origin, check->origin );
-						if ( dist > fd->range ) continue;
+						if ( dist > fd->range )
+							continue;
 
 						/* check FF */
 						if ( AI_CheckFF( ent, check->origin, fd->spread[0] ) && !(ent->state & STATE_INSANE) )
@@ -131,22 +126,25 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 
 						/* calculate expected damage */
 						dmg = G_ActorVis( ent->origin, check, qtrue );
-						if ( dmg == 0.0 ) continue;
+						if ( dmg == 0.0 )
+							continue;
 
 						dmg *= fd->damage[0] * fd->shots * shots;
-						if ( nspread && dist > nspread ) dmg *= nspread / dist;
-						if ( dmg > 100.0 ) dmg = 100.0;
+						if ( nspread && dist > nspread )
+							dmg *= nspread / dist;
+						if ( dmg > 100.0 )
+							dmg = 100.0;
 
 						/* add kill bonus */
-						if ( dmg > check->HP ) dmg += GUETE_KILL;
+						if ( dmg > check->HP )
+							dmg += GUETE_KILL;
 
 						/* civilian malus */
 						if ( check->team == TEAM_CIVILIAN && !(ent->state & STATE_INSANE) )
 							dmg *= GUETE_CIV_FACTOR;
 
 						/* check if most damage can be done here */
-						if ( dmg > maxDmg )
-						{
+						if ( dmg > maxDmg ) {
 							maxDmg = dmg;
 							aia->mode = fm;
 							aia->shots = shots;
@@ -157,8 +155,7 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 		}
 
 		/* add damage to guete */
-		if ( aia->target )
-		{
+		if ( aia->target ) {
 			guete += maxDmg;
 			tu -= od->fd[aia->mode].time * aia->shots;
 		}
@@ -167,8 +164,7 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 	/* close in */
 	minDist = CLOSE_IN_DIST;
 	for ( i = 0, check = g_edicts; i < globals.num_edicts; i++, check++ )
-		if ( check->inuse && check->team != ent->team && !(check->state & STATE_DEAD) )
-		{
+		if ( check->inuse && check->team != ent->team && !(check->state & STATE_DEAD) ) {
 			dist = VectorDist( ent->origin, check->origin );
 			if ( dist < minDist ) minDist = dist;
 		}
@@ -177,16 +173,14 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 	/* add random effects */
 	guete += GUETE_RANDOM * frand();
 
-	if ( ent->state & STATE_RAGE ) return guete;
+	if ( ent->state & STATE_RAGE )
+		return guete;
 
 	/* hide */
-	if ( !(G_TestVis( -ent->team, ent, VT_PERISH|VT_NOFRUSTOM ) & VIS_YES) )
-	{
+	if ( !(G_TestVis( -ent->team, ent, VT_PERISH|VT_NOFRUSTOM ) & VIS_YES) ) {
 		/* is a hiding spot */
 		guete += GUETE_HIDE;
-	}
-	else if ( aia->target && tu >= 2 )
-	{
+	} else if ( aia->target && tu >= 2 ) {
 		/* search hiding spot after shooting */
 		byte	minX, maxX, minY, maxY;
 
@@ -197,25 +191,26 @@ float AI_FighterCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 		maxX = to[0] + HIDE_DIST < 254 ? to[0] + HIDE_DIST : 254;
 		maxY = to[1] + HIDE_DIST < 254 ? to[1] + HIDE_DIST : 254;
 
-		for ( ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++ )
-		{
-			for ( ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++ )
-			{
+		for ( ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++ ) {
+			for ( ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++ ) {
 				/* time */
 				delta = gi.MoveLength( gi.map, ent->pos, qfalse );
-				if ( delta > tu ) continue;
+				if ( delta > tu )
+					continue;
 				tu -= delta;
 
 				/* visibility */
 				gi.GridPosToVec( gi.map, ent->pos, ent->origin );
-				if ( G_TestVis( -ent->team, ent, VT_PERISH|VT_NOFRUSTOM ) & VIS_YES ) continue;
+				if ( G_TestVis( -ent->team, ent, VT_PERISH|VT_NOFRUSTOM ) & VIS_YES )
+					continue;
 
 				/* found a hiding spot */
 				VectorCopy( ent->pos, aia->stop );
 				guete += GUETE_SHOOT_HIDE;
 				break;
 			}
-			if ( ent->pos[0] <= maxX ) break;
+			if ( ent->pos[0] <= maxX )
+				break;
 		}
 	}
 
@@ -252,13 +247,13 @@ float AI_CivilianCalcGuete( edict_t *ent, pos3_t to, ai_action_t *aia )
 	tu = ent->TU - move;
 
 	/* test for time */
-	if ( tu < 0 ) return 0.0;
+	if ( tu < 0 )
+		return 0.0;
 
 	/* run away */
 	minDist = RUN_AWAY_DIST;
 	for ( i = 0, check = g_edicts; i < globals.num_edicts; i++, check++ )
-		if ( check->inuse && check->team != ent->team && !(check->state & STATE_DEAD) )
-		{
+		if ( check->inuse && check->team != ent->team && !(check->state & STATE_DEAD) ) {
 			dist = VectorDist( ent->origin, check->origin );
 			if ( dist < minDist ) minDist = dist;
 		}
@@ -310,15 +305,13 @@ void AI_ActorThink( player_t *player, edict_t *ent )
 	for ( to[2] = 0; to[2] < HEIGHT; to[2]++ )
 		for ( to[1] = yl; to[1] < yh; to[1]++ )
 			for ( to[0] = xl; to[0] < xh; to[0]++ )
-				if ( gi.MoveLength( gi.map, to, qtrue ) < 0xFF )
-				{
+				if ( gi.MoveLength( gi.map, to, qtrue ) < 0xFF ) {
 					if ( ent->team == TEAM_CIVILIAN || ent->state & STATE_PANIC )
 						guete = AI_CivilianCalcGuete( ent, to, &aia );
 					else
 						guete = AI_FighterCalcGuete( ent, to, &aia );
 
-					if ( guete > best )
-					{
+					if ( guete > best ) {
 						bestAia = aia;
 						best = guete;
 					}
@@ -327,8 +320,8 @@ void AI_ActorThink( player_t *player, edict_t *ent )
 	VectorCopy( oldPos, ent->pos );
 	VectorCopy( oldOrigin, ent->origin );
 
+	/* nothing found to do */
 	if ( best == 0.0 )
-		/* nothing found to do */
 		return;
 
 	/* do the first move */
@@ -339,8 +332,7 @@ void AI_ActorThink( player_t *player, edict_t *ent )
 /*		(int)bestAia.stop[0], (int)bestAia.stop[1], (int)bestAia.stop[2] ); */
 
 	/* shoot('n'hide) */
-	if ( bestAia.target )
-	{
+	if ( bestAia.target ) {
 		for ( i = 0; i < bestAia.shots; i++ )
 			G_ClientShoot( player, ent->number, bestAia.target->pos, bestAia.mode );
 		G_ClientMove( player, ent->team, ent->number, bestAia.stop, qfalse );
@@ -366,23 +358,22 @@ void AI_Run( void )
 		return;
 
 	for ( i = 0, player = game.players + game.maxplayers; i < game.maxplayers; i++, player++ )
-		if ( player->inuse && player->pers.ai && level.activeTeam == player->pers.team )
-		{
+		if ( player->inuse && player->pers.ai && level.activeTeam == player->pers.team ) {
 			/* find next actor to handle */
-			if ( !player->pers.last ) ent = g_edicts;
-			else ent = player->pers.last + 1;
+			if ( !player->pers.last )
+				ent = g_edicts;
+			else
+				ent = player->pers.last + 1;
 
 			for ( j = ent - g_edicts; j < globals.num_edicts; j++, ent++ )
-				if ( ent->inuse && ent->team == player->pers.team && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && ent->TU )
-				{
+				if ( ent->inuse && ent->team == player->pers.team && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && ent->TU ) {
 					AI_ActorThink( player, ent );
 					player->pers.last = ent;
 					return;
 				}
 
 			/* nothing left to do, request endround */
-			if ( j >= globals.num_edicts )
-			{
+			if ( j >= globals.num_edicts ) {
 				G_ClientEndRound( player );
 				player->pers.last = g_edicts + globals.num_edicts;
 			}
@@ -416,15 +407,13 @@ void G_SpawnAIPlayer( player_t *player, int numSpawn )
 			spawnPoints[numPoints++] = i;
 
 	/* check spawn point number */
-	if ( numPoints < numSpawn )
-	{
+	if ( numPoints < numSpawn ) {
 		Com_Printf( "Not enough spawn points for team %i\n", team );
 		numSpawn = numPoints;
 	}
 
 	/* prepare equipment */
-	if ( team != TEAM_CIVILIAN )
-	{
+	if ( team != TEAM_CIVILIAN ) {
 		equipDef_t	*ed;
 		char name[MAX_VAR];
 
@@ -432,22 +421,22 @@ void G_SpawnAIPlayer( player_t *player, int numSpawn )
 		for ( i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++ )
 			if ( !Q_strncmp( name, ed->name, MAX_VAR ) )
 				break;
-		if ( i == gi.csi->numEDs ) ed = &gi.csi->eds[0];
-		else ed = &gi.csi->eds[i];
+		if ( i == gi.csi->numEDs )
+			ed = &gi.csi->eds[0];
+		else
+			ed = &gi.csi->eds[i];
 
 		for ( i = 0; i < gi.csi->numODs; i++ )
 			equip[i] = ed->num[i];
 	}
 
 	/* spawn players */
-	for ( j = 0; j < numSpawn; j++ )
-	{
+	for ( j = 0; j < numSpawn; j++ ) {
 		/* select spawnpoint */
 		while ( ent->type != ET_ACTORSPAWN )
 			ent = &g_edicts[ spawnPoints[(int)(frand()*numPoints)] ];
 
-		if ( team != TEAM_CIVILIAN )
-		{
+		if ( team != TEAM_CIVILIAN ) {
 			/* spawn */
 			level.num_spawned[team]++;
 			level.num_alive[team]++;
@@ -460,13 +449,15 @@ void G_SpawnAIPlayer( player_t *player, int numSpawn )
 			/* skills */
 			Com_CharGenAbilitySkills( &ent->chr, 0, 100, 0, 100 );
 			ent->chr.skills[ABILITY_MIND] += 100;
-			if ( ent->chr.skills[ABILITY_MIND] >= MAX_SKILL ) ent->chr.skills[ABILITY_MIND] = MAX_SKILL;
+			if ( ent->chr.skills[ABILITY_MIND] >= MAX_SKILL )
+				ent->chr.skills[ABILITY_MIND] = MAX_SKILL;
 
 			ent->HP = GET_HP( ent->chr.skills[ABILITY_POWER] );
 			ent->AP = 100;
 			ent->STUN = 100;
 			ent->morale = GET_MORALE( ent->chr.skills[ABILITY_MIND] );
-			if ( ent->morale >= MAX_SKILL ) ent->morale = MAX_SKILL;
+			if ( ent->morale >= MAX_SKILL )
+				ent->morale = MAX_SKILL;
 
 			/* search for weapons */
 			num = 0;
@@ -474,41 +465,38 @@ void G_SpawnAIPlayer( player_t *player, int numSpawn )
 				if ( equip[i] && gi.csi->ods[i].weapon )
 					num++;
 
-			if ( num )
-			{
+			if ( num ) {
 				/* add weapon */
 				item_t item;
 				item.m = NONE;
 
 				num = (int)(frand()*num);
 				for ( i = 0; i < gi.csi->numODs; i++ )
-					if ( equip[i] && gi.csi->ods[i].weapon )
-					{
-						if ( num ) num--;
-						else break;
+					if ( equip[i] && gi.csi->ods[i].weapon ) {
+						if ( num )
+							num--;
+						else
+							break;
 					}
 				item.t = i;
 				equip[i]--;
 
-				if ( gi.csi->ods[i].reload )
-				{
+				if ( gi.csi->ods[i].reload ) {
 					for ( ammo = 0; ammo < gi.csi->numODs; ammo++ )
 						if ( equip[ammo] && gi.csi->ods[ammo].link == i )
 							break;
-					if ( ammo < gi.csi->numODs )
-					{
+					if ( ammo < gi.csi->numODs ) {
 						item.a = gi.csi->ods[i].ammo;
 						item.m = ammo;
 						equip[ammo]--;
-						if ( equip[ammo] > equip[i] )
-						{
+						if ( equip[ammo] > equip[i] ) {
 							item_t mun;
 							mun.t = ammo;
 							Com_AddToInventory( &ent->i, mun, gi.csi->idBelt, 0, 0 );
 							equip[ammo]--;
 						}
-					}
-					else item.a = 0;
+					} else
+						item.a = 0;
 					Com_AddToInventory( &ent->i, item, gi.csi->idRight, 0, 0 );
 				} else {
 					item.a = gi.csi->ods[i].ammo;
@@ -520,9 +508,7 @@ void G_SpawnAIPlayer( player_t *player, int numSpawn )
 				ent->body = gi.modelindex( Com_CharGetBody( &ent->chr ) );
 				ent->head = gi.modelindex( Com_CharGetHead( &ent->chr ) );
 				ent->skin = ent->chr.skin;
-			}
-			else
-			{
+			} else {
 				/* nothing left */
 				Com_Printf( "Not enough weapons in equipment '%s'\n", gi.cvar_string( "ai_equipment" ) );
 			}
@@ -571,17 +557,19 @@ player_t *AI_CreatePlayer( int team )
 		return NULL;
 
 	for ( i = 0, p = game.players + game.maxplayers; i < game.maxplayers; i++, p++ )
-		if ( !p->inuse )
-		{
+		if ( !p->inuse ) {
 			memset( p, 0, sizeof( player_t ) );
 			p->inuse = qtrue;
 			p->num = p - game.players;
 			p->ping = 0;
 			p->pers.team = team;
 			p->pers.ai = qtrue;
-			if ( team == TEAM_CIVILIAN ) G_SpawnAIPlayer( p, ai_numcivilians->value );
-			else if ( sv_maxclients->value == 1 ) G_SpawnAIPlayer( p, ai_numaliens->value );
-			else G_SpawnAIPlayer( p, ai_numactors->value );
+			if ( team == TEAM_CIVILIAN )
+				G_SpawnAIPlayer( p, ai_numcivilians->value );
+			else if ( sv_maxclients->value == 1 )
+				G_SpawnAIPlayer( p, ai_numaliens->value );
+			else
+				G_SpawnAIPlayer( p, ai_numactors->value );
 			Com_Printf( "Created AI player (team %i)\n", team );
 			return p;
 		}
