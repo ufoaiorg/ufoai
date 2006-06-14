@@ -1235,7 +1235,7 @@ int	LittleLong (int l) {return _LittleLong(l);}
 float	BigFloat (float l) {return _BigFloat(l);}
 float	LittleFloat (float l) {return _LittleFloat(l);}
 
-short   ShortSwap (short l)
+short ShortSwap (short l)
 {
 	byte    b1,b2;
 
@@ -1245,12 +1245,12 @@ short   ShortSwap (short l)
 	return (b1<<8) + b2;
 }
 
-short	ShortNoSwap (short l)
+short ShortNoSwap (short l)
 {
 	return l;
 }
 
-int    LongSwap (int l)
+int LongSwap (int l)
 {
 	byte    b1,b2,b3,b4;
 
@@ -1269,8 +1269,7 @@ int	LongNoSwap (int l)
 
 float FloatSwap (float f)
 {
-	union
-	{
+	union {
 		float	f;
 		byte	b[4];
 	} dat1, dat2;
@@ -1299,8 +1298,7 @@ void Swap_Init (void)
 	byte	swaptest[2] = {1,0};
 
 	/* set the byte swapping variables in a portable manner */
-	if ( *(short *)swaptest == 1)
-	{
+	if ( *(short *)swaptest == 1) {
 		bigendien = qfalse;
 		_BigShort = ShortSwap;
 		_LittleShort = ShortNoSwap;
@@ -1308,9 +1306,7 @@ void Swap_Init (void)
 		_LittleLong = LongNoSwap;
 		_BigFloat = FloatSwap;
 		_LittleFloat = FloatNoSwap;
-	}
-	else
-	{
+	} else {
 		bigendien = qtrue;
 		_BigShort = ShortNoSwap;
 		_LittleShort = ShortSwap;
@@ -1367,18 +1363,15 @@ char *COM_Parse (char **data_p)
 	len = 0;
 	com_token[0] = 0;
 
-	if (!data)
-	{
+	if (!data) {
 		*data_p = NULL;
 		return "";
 	}
 
 	/* skip whitespace */
 skipwhite:
-	while ( (c = *data) <= ' ')
-	{
-		if (c == 0)
-		{
+	while ( (c = *data) <= ' ') {
+		if (c == 0) {
 			*data_p = NULL;
 			return "";
 		}
@@ -1386,28 +1379,23 @@ skipwhite:
 	}
 
 	/* skip // comments */
-	if (c=='/' && data[1] == '/')
-	{
+	if (c=='/' && data[1] == '/') {
 		while (*data && *data != '\n')
 			data++;
 		goto skipwhite;
 	}
 
 	/* handle quoted strings specially */
-	if (c == '\"')
-	{
+	if (c == '\"') {
 		data++;
-		while (1)
-		{
+		while (1) {
 			c = *data++;
-			if (c=='\"' || !c)
-			{
+			if (c=='\"' || !c) {
 				com_token[len] = 0;
 				*data_p = data;
 				return com_token;
 			}
-			if (len < MAX_TOKEN_CHARS)
-			{
+			if (len < MAX_TOKEN_CHARS) {
 				com_token[len] = c;
 				len++;
 			}
@@ -1415,10 +1403,8 @@ skipwhite:
 	}
 
 	/* parse a regular word */
-	do
-	{
-		if (len < MAX_TOKEN_CHARS)
-		{
+	do {
+		if (len < MAX_TOKEN_CHARS) {
 			com_token[len] = c;
 			len++;
 		}
@@ -1426,9 +1412,8 @@ skipwhite:
 		c = *data;
 	} while (c>32);
 
-	if (len == MAX_TOKEN_CHARS)
-	{
-/* 		Com_Printf ("Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS); */
+	if (len == MAX_TOKEN_CHARS) {
+		Com_Printf ("Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS);
 		len = 0;
 	}
 	com_token[len] = 0;
@@ -1448,8 +1433,7 @@ char *COM_EParse( char **text, char *errhead, char *errinfo )
 	char *token;
 
 	token = COM_Parse( text );
-	if ( !*text )
-	{
+	if ( !*text ) {
 		if ( errinfo )
 			Com_Printf( "%s \"%s\")\n", errhead, errinfo );
 		else
@@ -1488,12 +1472,12 @@ LIBRARY REPLACEMENT FUNCTIONS
 
 int Q_strcmp (char *s1, char *s2)
 {
-        return strncmp(s1, s2, 99999);
+	return strncmp(s1, s2, 99999);
 }
 
 int Q_strncmp (char *s1, char *s2, int n)
 {
-        return strncmp(s1, s2, n);
+	return strncmp(s1, s2, n);
 }
 
 /* PATCH: matt */
@@ -1504,7 +1488,7 @@ int Q_strncmp (char *s1, char *s2, int n)
 
 int Q_stricmp (char *s1, char *s2)
 {
-        return strcasecmp(s1, s2);
+	return strcasecmp(s1, s2);
 }
 
 #else /* sun */
@@ -1522,16 +1506,14 @@ int Q_strncasecmp (char *s1, char *s2, int n)
 {
 	int		c1, c2;
 
-	do
-	{
+	do {
 		c1 = *s1++;
 		c2 = *s2++;
 
 		if (!n--)
 			return 0;		/* strings are equal until end point */
 
-		if (c1 != c2)
-		{
+		if (c1 != c2) {
 			if (c1 >= 'a' && c1 <= 'z')
 				c1 -= ('a' - 'A');
 			if (c2 >= 'a' && c2 <= 'z')
@@ -1632,11 +1614,9 @@ char *Info_ValueForKey (char *s, char *key)
 	valueindex ^= 1;
 	if (*s == '\\')
 		s++;
-	while (1)
-	{
+	while (1) {
 		o = pkey;
-		while (*s != '\\')
-		{
+		while (*s != '\\') {
 			if (!*s)
 				return "";
 			*o++ = *s++;
@@ -1666,20 +1646,17 @@ void Info_RemoveKey (char *s, const char *key)
 	char	value[512];
 	char	*o;
 
-	if (strstr (key, "\\"))
-	{
+	if (strstr (key, "\\")) {
 /*		Com_Printf ("Can't use a key with a \\\n"); */
 		return;
 	}
 
-	while (1)
-	{
+	while (1) {
 		start = s;
 		if (*s == '\\')
 			s++;
 		o = pkey;
-		while (*s != '\\')
-		{
+		while (*s != '\\') {
 			if (!*s)
 				return;
 			*o++ = *s++;
@@ -1688,16 +1665,14 @@ void Info_RemoveKey (char *s, const char *key)
 		s++;
 
 		o = value;
-		while (*s != '\\' && *s)
-		{
+		while (*s != '\\' && *s) {
 			if (!*s)
 				return;
 			*o++ = *s++;
 		}
 		*o = 0;
 
-		if (!Q_strncmp ((char*)key, pkey, 512) )
-		{
+		if (!Q_strncmp ((char*)key, pkey, 512) ) {
 			strcpy (start, s);	/* remove this part */
 			return;
 		}
@@ -1733,26 +1708,22 @@ void Info_SetValueForKey (char *s, const char *key, const char *value)
 /* 	int	c; */
 /* 	int	maxsize = MAX_INFO_STRING; */
 
-	if (strstr (key, "\\") || strstr (value, "\\") )
-	{
+	if (strstr (key, "\\") || strstr (value, "\\") ) {
 		Com_Printf ("Can't use keys or values with a \\\n");
 		return;
 	}
 
-	if (strstr (key, ";") )
-	{
+	if (strstr (key, ";") ) {
 		Com_Printf ("Can't use keys or values with a semicolon\n");
 		return;
 	}
 
-	if (strstr (key, "\"") || strstr (value, "\"") )
-	{
+	if (strstr (key, "\"") || strstr (value, "\"") ) {
 		Com_Printf ("Can't use keys or values with a \"\n");
 		return;
 	}
 
-	if (strlen(key) > MAX_INFO_KEY-1 || strlen(value) > MAX_INFO_KEY-1)
-	{
+	if (strlen(key) > MAX_INFO_KEY-1 || strlen(value) > MAX_INFO_KEY-1) {
 		Com_Printf ("Keys and values must be < 64 characters.\n");
 		return;
 	}
@@ -1823,8 +1794,7 @@ void Com_InitInventory( invList_t *invList )
 
 	invUnused = invList;
 	invUnused->next = NULL;
-	for ( i = 0; i < MAX_INVLIST-1; i++ )
-	{
+	for ( i = 0; i < MAX_INVLIST-1; i++ ) {
 		last = invUnused++;
 		invUnused->next = last;
 	}
