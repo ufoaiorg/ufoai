@@ -368,25 +368,6 @@ void CL_AircraftStart_f ( void )
 	air->status = AIR_IDLE;
 }
 
-/*======================
-CL_AircraftRefuel
-======================*/
-void CL_AircraftRefuel ( aircraft_t* air )
-{
-	assert ( air );
-	air->status = AIR_REFUEL;
-	Cvar_Set( "mn_aircraftstatus", CL_AircraftStatusToName( air ) );
-}
-
-/*======================
-CL_AircraftRefuel_f
-======================*/
-void CL_AircraftRefuel_f ( void )
-{
-	if ( baseCurrent->aircraftCurrent >= 0 )
-		CL_AircraftRefuel ( &baseCurrent->aircraft[baseCurrent->aircraftCurrent] );
-}
-
 /*
 ======================
 CL_AircraftInit
@@ -1335,7 +1316,7 @@ void CL_CampaignRunAircraft( int dt )
 						air->pos[1] = end[1];
 						if ( air->status == AIR_RETURNING )
 						{
-							air->status = AIR_HOME;
+							air->status = AIR_REFUEL;
 							if ( air->fuel < 0 )
 								air->fuel = 0;
 						}
@@ -1356,8 +1337,14 @@ void CL_CampaignRunAircraft( int dt )
 				}
 				else if ( air->status == AIR_IDLE )
 					air->fuel -= dt;
-				else if ( air->status == AIR_REFUEL )
-					air->fuel += dt;
+				else if ( air->status == AIR_REFUEL ) {
+					if ( air->fuel + dt < air->fuelSize )
+						air->fuel += dt;
+					else {
+						air->fuel = air->fuelSize;
+						air->status = AIR_HOME;
+					}
+				}
 
 				CL_CheckAircraft( air );
 			}
@@ -3083,7 +3070,6 @@ cmdList_t game_commands[] = {
 	{ "newaircraft", CL_NewAircraft_f },
 	{ "aircraft_return", CL_AircraftReturnToBase_f },
 	{ "aircraft_list", CL_BuildingAircraftList_f },
-	{ "refuel", CL_AircraftRefuel_f },
 	{ "stats_update", CL_Stats_Update },
 	{ "game_go", CL_GameGo },
 	{ "game_auto_check", CL_GameAutoCheck },
