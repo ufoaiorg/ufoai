@@ -22,7 +22,8 @@ HAVE_GETTEXT=YES	# Compile with multilanguage-support?
 BUILD_WITH_DGA=NO	# dga support compiled in
 BUILD_WITH_VIDMODE=YES	# vidmode support
 BUILD_WITH_MMX=NO	# MMX support
-BUILD_FOR_PROFILING=NO # build with -pg option for profiling via gprof
+BUILD_PARANOID=YES	# paranoid mode for debug
+BUILD_FOR_PROFILING=NO  # build with -pg option for profiling via gprof
 BUILD_COMPILETOOLS=YES	# build ufo2map bsp compile tool
 
 # (hopefully) end of configurable options
@@ -225,6 +226,10 @@ SDLLDFLAGS+=-ljpeg
 
 DEBUG_CFLAGS=$(BASE_CFLAGS) -g -O0 -D_FORTIFY_SOURCE=2 -DDEBUG $(PROFILER_CFLAGS) -fweb
 
+ifeq ($(strip $(BUILD_PARANOID)),YES)
+	DEBUG_CFLAGS+=-DPARANOID
+endif
+
 DO_CC=echo " * [UFO] $@"; $(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -o $@ -c $<
 DO_DED_CC=echo " * [DED] $@"; $(CC) $(CFLAGS) -DDEDICATED_ONLY -o $@ -c $<
 DO_TOOLS_CC=echo " * [MAP] $@"; $(CC) $(CFLAGS) -o $@ -c $<
@@ -336,7 +341,7 @@ build_debug:
 		$(BUILD_DEBUG_DIR)/tools/ufo2map \
 		$(BUILD_DEBUG_DIR)/tools/ufo2map/common
 	@$(MAKE) $(MAKE_FLAGS) targets BUILDDIR=$(BUILD_DEBUG_DIR) CFLAGS="$(DEBUG_CFLAGS) -DLINUX_VERSION='\"$(VERSION) Debug\"'"
-	
+
 	@echo
 	@echo "CFLAGS"
 	@echo "-----------------------"
@@ -360,6 +365,7 @@ build_debug:
 	@echo "BUILD_WITH_MMX = $(BUILD_WITH_MMX)"
 	@echo "BUILD_FOR_PROFILING = $(BUILD_FOR_PROFILING)"
 	@echo "BUILD_COMPILETOOLS = $(BUILD_COMPILETOOLS)"
+	@echo "BUILD_PARANOID = $(BUILD_PARANOID)"
 	@echo
 	@echo "Note"
 	@echo "-----------------------"
@@ -411,6 +417,7 @@ build_release:
 	@echo "BUILD_WITH_MMX = $(BUILD_WITH_MMX)"
 	@echo "BUILD_FOR_PROFILING = $(BUILD_FOR_PROFILING)"
 	@echo "BUILD_COMPILETOOLS = $(BUILD_COMPILETOOLS)"
+	@echo "BUILD_PARANOID = $(BUILD_PARANOID) (only in debug mode)"
 	@echo
 	@echo "Gettext"
 	@echo "-----------------------"
