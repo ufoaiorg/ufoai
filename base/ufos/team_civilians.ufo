@@ -77,6 +77,12 @@ actors scientist
 {
 	female
 	{
+		// FIXME: this is a male model
+		civilians/male scientist01 sci_head01 0
+		civilians/male scientist01 sci_head02a 0
+		civilians/male scientist01 sci_head02b 0
+		civilians/male scientist01 sci_head03a 0
+		civilians/male scientist01 sci_head03b 0
 	}
 	male
 	{
