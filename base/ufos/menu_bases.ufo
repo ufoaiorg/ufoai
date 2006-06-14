@@ -410,33 +410,6 @@ menu aircraft
 		align	uc
 	}
 
-	// ===============
-	// refuel
-	// ===============
-	pic refuel
-	{
-		tooltip	"_Refuel the selected aircraft"
-		image	menu/button
-		pos	"45 380"
-		texl	"0 0"
-		texh	"230 64"
-		mousefx true
-		click
-		{
-			cmd "refuel"
-		}
-		out		{ *txt_refuel color "0 0.8 0 1" *refuel texl "0 0" *refuel texh "230 64" }
-		in		{ *txt_refuel color "1 1 1 1" *refuel texl "230 0" *refuel texh "460 64" }
-	}
-	string txt_refuel
-	{
-		string	"_Refuel"
-		color	"0 0.8 0 1"
-		pos	"160 396"
-		font	f_menu
-		align	uc
-	}
-
 	// ==================
 	// aircraft
 	// ==================
