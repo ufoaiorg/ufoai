@@ -311,6 +311,8 @@ endif
 debug: build_debug copy_debug
 all: build_debug build_release lang
 installer: win32installer linuxinstaller
+mappack:
+	tar -cvjp --exclude-from=linux/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ../base/maps
 
 win32installer:
 	makensis win32/installer.nsi
