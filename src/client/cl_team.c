@@ -542,6 +542,8 @@ void CL_UpdateHireVar ( void )
 
 	air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	Cvar_Set( "mn_hired", va( _("%i of %i"), baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], air->size ) );
+	/* now update the mask for display the hired soldiers */
+	baseCurrent->hiredMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent];
 }
 
 /**
