@@ -294,9 +294,7 @@ void	G_CompleteRecalcRouting( void );
 void	G_RecalcRouting( edict_t *ent );
 
 
-/* */
 /* g_client.c */
-/* */
 #define VIS_CHANGE	1
 #define VIS_YES		2
 #define VIS_STOP	4
@@ -305,6 +303,7 @@ void	G_RecalcRouting( edict_t *ent );
 #define VT_NOFRUSTOM	2
 #define VT_FULL			4
 
+void G_ActorDie ( edict_t *ent, int state );
 void G_ClientAction( player_t *player );
 void G_ClientEndRound( player_t *player );
 void G_ClientTeamInfo( player_t *player );
@@ -331,24 +330,17 @@ int G_VisToPM( int vis_mask );
 void G_SendInventory( int player_mask, edict_t *ent );
 int G_TeamToPM( int team );
 
-/* */
 /* g_ai.c */
-/* */
 void AI_Run( void );
 void AI_ActorThink( player_t *player, edict_t *ent );
 player_t *AI_CreatePlayer( int team );
 
-/* */
 /* g_svcmds.c */
-/* */
 void	ServerCommand (void);
 qboolean SV_FilterPacket (char *from);
 
 
-/* */
-/* */
 /* g_main.c */
-/* */
 void SaveClientData (void);
 void FetchClientEntData (edict_t *ent);
 void G_EndGame( int team );
@@ -430,9 +422,7 @@ struct edict_s
 	char		*model;
 	float		freetime;			/* sv.time when the object was freed */
 
-	/* */
 	/* only used locally in game, not by server */
-	/* */
 
 	int			type;
 	int			visflags;

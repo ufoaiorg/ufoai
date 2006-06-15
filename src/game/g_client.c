@@ -1432,39 +1432,29 @@ void G_Damage( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 
 		ad = &gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t];
 
-/*		Com_Printf( "dmg: %3i ", damage ); */
 		if ( ad->protection[dmgtype] ) {
 			if ( ad->protection[dmgtype] > 0 )
 				damage *= 1.0 - ad->protection[dmgtype] * ent->AP * 0.0001;
 			else
 				damage *= 1.0 - ad->protection[dmgtype] * 0.01;
 		}
-/*		Com_Printf( "reddmg: %3i ap: %3i ", damage, ent->AP ); */
 
 		if ( ad->hardness[dmgtype] ) {
 			int armorDamage;
 			armorDamage = 100 * damage / ad->hardness[dmgtype];
 			ent->AP = armorDamage < ent->AP ? ent->AP - armorDamage : 0;
 		}
-/*		Com_Printf( "redap: %3i\n", ent->AP ); */
 	}
-/*	else Com_Printf( "dmg: %i\n", damage ); */
 
 	if ( ent->HP <= damage ) {
 		/* die */
-		ent->HP = 0;
-		ent->state |= (int)(1 + frand()*3);
-		VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD );
-		gi.linkentity( ent );
-		level.num_alive[ent->team]--;
-		level.num_kills[attacker->team][ent->team]++;
+		G_ActorDie( ent, STATE_DEAD );
 
-		/* send death */
-		gi.AddEvent( G_VisToPM( ent->visflags ), EV_ACTOR_DIE );
-		gi.WriteShort( ent->number );
-		gi.WriteShort( ent->state );
+		/* apply morale changes */
+		G_Morale( ML_DEATH, ent, attacker, damage );
 
 		/* count score */
+		level.num_kills[attacker->team][ent->team]++;
 		if ( ent->team == TEAM_CIVILIAN )
 			attacker->chr.kills[KILLED_CIVILIANS]++;
 		else if ( attacker->team == ent->team )
@@ -1472,24 +1462,13 @@ void G_Damage( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 		else
 			attacker->chr.kills[KILLED_ALIENS]++;
 
-		/* apply morale changes */
-		G_Morale( ML_DEATH, ent, attacker, damage );
-
-		/* handle inventory */
-		G_InventoryToFloor( ent );
-
-		/* check if the player appears/perishes, seen from other teams */
-		G_CheckVis( ent, qtrue );
-
-		/* calc new vis for this player */
-		G_CheckVisTeam( ent->team, NULL, qfalse );
-
 		/* check for win conditions */
 		G_CheckEndGame();
 	} else {
 		/* hit */
 		ent->HP -= damage;
-		if ( damage > 0 ) G_Morale( ML_WOUND, ent, attacker, damage );
+		if ( damage > 0 )
+			G_Morale( ML_WOUND, ent, attacker, damage );
 		else {
 			if ( ent->HP > GET_HP( ent->chr.skills[ABILITY_POWER] ) )
 				ent->HP = GET_HP( ent->chr.skills[ABILITY_POWER] );
@@ -1540,17 +1519,13 @@ void G_DamageStun( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 
 	if ( ent->STUN <= damage ) {
 		/* die */
-		ent->STUN = 0;
-		ent->state |= STATE_STUN;
-		VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD );
-		gi.linkentity( ent );
-		level.num_alive[ent->team]--;
-		level.num_kills[attacker->team][ent->team]++; /* count the stunned ones as killed ones */
+		G_ActorDie( ent, STATE_STUN );
 
-		/* send death */
-		gi.AddEvent( G_VisToPM( ent->visflags ), EV_ACTOR_DIE );
-		gi.WriteShort( ent->number );
-		gi.WriteShort( ent->state );
+		/* apply morale changes */
+		G_Morale( ML_DEATH, ent, attacker, damage );
+
+		/* count the stunned ones as killed ones */
+		level.num_kills[attacker->team][ent->team]++;
 
 		/* count score */
 		if ( ent->team == TEAM_CIVILIAN )
@@ -1559,18 +1534,6 @@ void G_DamageStun( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 			attacker->chr.kills[KILLED_TEAM]++;
 		else
 			attacker->chr.kills[KILLED_ALIENS]++;
-
-		/* apply morale changes */
-		G_Morale( ML_DEATH, ent, attacker, damage );
-
-		/* handle inventory */
-		G_InventoryToFloor( ent );
-
-		/* check if the player appears/perishes, seen from other teams */
-		G_CheckVis( ent, qtrue );
-
-		/* calc new vis for this player */
-		G_CheckVisTeam( ent->team, NULL, qfalse );
 
 		/* check for win conditions */
 		G_CheckEndGame();
@@ -2003,6 +1966,44 @@ void G_ClientShoot( player_t *player, int num, pos3_t at, int type )
 	G_ReactionFire( ent );
 }
 
+/**
+  * @brief Report and handle death of an actor
+  */
+void G_ActorDie ( edict_t *ent, int state )
+{
+	assert (ent);
+	gi.dprintf("G_ActorDie: kill actor on team %i\n", ent->team );
+	switch( state ) {
+	case STATE_DEAD:
+		ent->HP = 0;
+		ent->state |= (int)(1 + frand()*3);
+		break;
+	case STATE_STUN:
+		ent->STUN = 0;
+		ent->state = state;
+		break;
+	default:
+		gi.dprintf("G_ActorDie: unknown state %i\n", state );
+		break;
+	}
+	VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD );
+	gi.linkentity( ent );
+	level.num_alive[ent->team]--;
+	/* send death */
+	gi.AddEvent( G_VisToPM( ent->visflags ), EV_ACTOR_DIE );
+	gi.WriteShort( ent->number );
+	gi.WriteShort( ent->state );
+
+	/* handle inventory */
+	G_InventoryToFloor( ent );
+
+	/* check if the player appears/perishes, seen from other teams */
+	G_CheckVis( ent, qtrue );
+
+	/* calc new vis for this player */
+	G_CheckVisTeam( ent->team, NULL, qfalse );
+}
+
 /*
 =================
 G_KillTeam
@@ -2030,26 +2031,7 @@ void G_KillTeam( void )
 				continue;
 
 			/* die */
-			gi.dprintf("G_KillTeam: kill actor on team %i\n", ent->team );
-			ent->HP = 0;
-			ent->state |= (int)(1 + frand()*3);
-			VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD );
-			gi.linkentity( ent );
-			level.num_alive[ent->team]--;
-
-			/* send death */
-			gi.AddEvent( G_VisToPM( ent->visflags ), EV_ACTOR_DIE );
-			gi.WriteShort( ent->number );
-			gi.WriteShort( ent->state );
-
-			/* handle inventory */
-			G_InventoryToFloor( ent );
-
-			/* check if the player appears/perishes, seen from other teams */
-			G_CheckVis( ent, qtrue );
-
-			/* calc new vis for this player */
-			G_CheckVisTeam( ent->team, NULL, qfalse );
+			G_ActorDie(ent, STATE_DEAD);
 		}
 
 	/* check for win conditions */
