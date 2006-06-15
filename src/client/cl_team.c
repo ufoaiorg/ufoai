@@ -1,4 +1,10 @@
+/**
+ * @file cl_team.c
+ * @brief team management, name generation and parsing
+ */
+
 /*
+Copyright (C) 2002-2006 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* cl_team.c -- team management, name generation and parsing */
 
 
 #include "client.h"
@@ -30,11 +35,9 @@ char *teamSkinNames[NUM_TEAMSKINS] =
 	"Arctic"
 };
 
-/*
-======================
-CL_GiveNameCmd
-======================
-*/
+/**
+  * @brief
+  */
 void CL_GiveNameCmd( void )
 {
 	char	*name;
@@ -88,9 +91,9 @@ extern rank_t ranks[MAX_RANKS];	/* Global list of all ranks defined in medals.uf
 extern int numRanks;		/* The number of entries in the list above. */
 
 
-/*======================
-CL_GenerateCharacter
-======================*/
+/**
+  * @brief
+  */
 void CL_GenerateCharacter( char *team, base_t* base )
 {
 	character_t *chr;
@@ -123,11 +126,9 @@ void CL_GenerateCharacter( char *team, base_t* base )
 }
 
 
-/*
-======================
-CL_ResetCharacters
-======================
-*/
+/**
+  * @brief
+  */
 void CL_ResetCharacters( base_t* base )
 {
 	int	i;
@@ -148,22 +149,18 @@ void CL_ResetCharacters( base_t* base )
 }
 
 
-/*
-======================
-CL_GenerateNamesCmd
-======================
-*/
+/**
+  * @brief
+  */
 void CL_GenerateNamesCmd( void )
 {
 	Cbuf_AddText( "disconnect\ngame_exit\n" );
 }
 
 
-/*
-======================
-CL_ChangeNameCmd
-======================
-*/
+/**
+  * @brief Change the name of the selected actor
+  */
 void CL_ChangeNameCmd( void )
 {
 	int sel;
@@ -178,11 +175,9 @@ void CL_ChangeNameCmd( void )
 }
 
 
-/*
-======================
-CL_ChangeSkinCmd
-======================
-*/
+/**
+  * @brief Change the skin of the selected actor
+  */
 void CL_ChangeSkinCmd( void )
 {
 	int sel, newSkin, i;
@@ -203,11 +198,9 @@ void CL_ChangeSkinCmd( void )
 	}
 }
 
-/*
-======================
-CL_TeamCommentsCmd
-======================
-*/
+/**
+  * @brief Reads tha comments from team files
+  */
 void CL_TeamCommentsCmd( void )
 {
 	char	comment[MAX_VAR];
@@ -230,11 +223,9 @@ void CL_TeamCommentsCmd( void )
 }
 
 
-/*
-======================
-CL_ItemDescription
-======================
-*/
+/**
+  * @brief
+  */
 char	itemText[MAX_MENUTEXTLEN];
 
 void CL_ItemDescription( int item )
@@ -283,11 +274,9 @@ void CL_ItemDescription( int item )
 }
 
 
-/*
-======================
-CL_AddWeaponAmmo
-======================
-*/
+/**
+  * @brief
+  */
 item_t CL_AddWeaponAmmo( equipDef_t *ed, int type )
 {
 	item_t item;
@@ -343,11 +332,10 @@ item_t CL_AddWeaponAmmo( equipDef_t *ed, int type )
 	return item;
 }
 
-/*
-======================
-CL_CheckInventory
-======================
-*/
+
+/**
+  * @brief
+  */
 void CL_CheckInventory( equipDef_t *equip )
 {
 	character_t	*cp;
@@ -377,11 +365,9 @@ void CL_CheckInventory( equipDef_t *equip )
 	}
 }
 
-/*
-======================
-CL_CleanTempInventory
-======================
-*/
+/**
+  * @brief
+  */
 void CL_CleanTempInventory( void )
 {
 	int i, k;
@@ -396,11 +382,9 @@ void CL_CleanTempInventory( void )
 			else if ( csi.ids[k].temp ) Com_EmptyContainer( &baseCurrent->teamInv[i], k );
 }
 
-/*
-======================
-CL_GenerateEquipmentCmd
-======================
-*/
+/**
+  * @brief
+  */
 void CL_GenerateEquipmentCmd( void )
 {
 	equipDef_t	*ed;
@@ -480,11 +464,9 @@ void CL_GenerateEquipmentCmd( void )
 }
 
 
-/*
-======================
-CL_EquipTypeCmd
-======================
-*/
+/**
+  * @brief
+  */
 void CL_EquipTypeCmd( void )
 {
 	int		num;
@@ -504,11 +486,9 @@ void CL_EquipTypeCmd( void )
 	if ( menuInventory ) menuInventory->c[csi.idEquip] = baseCurrent->equipment.c[num];
 }
 
-/*
-======================
-CL_SelectCmd
-======================
-*/
+/**
+  * @brief
+  */
 void CL_SelectCmd( void )
 {
 	char *command;
@@ -549,11 +529,9 @@ void CL_SelectCmd( void )
 	else CL_CharacterCvars( &baseCurrent->curTeam[num] );
 }
 
-/*
-======================
-CL_UpdateHireVar
-======================
-*/
+/**
+  * @brief
+  */
 void CL_UpdateHireVar ( void )
 {
 	aircraft_t* air = NULL;
@@ -565,13 +543,11 @@ void CL_UpdateHireVar ( void )
 
 }
 
-/*
-======================
-CL_ResetTeamInBase
-
-only for multiplayer when setting up a new team
-======================
-*/
+/**
+  * @brief
+  *
+  * only for multiplayer when setting up a new team
+  */
 void CL_ResetTeamInBase( void )
 {
 	if ( ccs.singleplayer )
@@ -587,11 +563,9 @@ void CL_ResetTeamInBase( void )
 	baseCurrent->teamMask[0] = baseCurrent->hiredMask = baseCurrent->numOnTeam[0] = 0;
 }
 
-/*
-======================
-CL_MarkTeamCmd
-======================
-*/
+/**
+  * @brief Init the teamlist checkboxes
+  */
 void CL_MarkTeamCmd( void )
 {
 	int i;
@@ -619,11 +593,9 @@ void CL_MarkTeamCmd( void )
 }
 
 
-/*
-======================
-CL_HireActorCmd
-======================
-*/
+/**
+  * @brief Hires an actor or drop an actor
+  */
 void CL_HireActorCmd( void )
 {
 	int num;
@@ -658,6 +630,11 @@ void CL_HireActorCmd( void )
 			baseCurrent->teamMask[baseCurrent->aircraftCurrent] |= (1 << num);
 		}
 	}
+/*
+======================
+CL_ParseResults
+======================
+*/
 
 	/* select the desired one anyways */
 	CL_UpdateHireVar();
@@ -665,11 +642,15 @@ void CL_HireActorCmd( void )
 }
 
 
-/*
-======================
-CL_MessageMenuCmd
-======================
-*/
+/**
+  * @brief Calls script function on cvar change
+  *
+  * This is for inline editing of cvar values
+  * The cvarname_changed function are called,
+  * the editing is activated and ended here
+  *
+  * Done by the script command msgmenu [?|!|:][cvarname]
+  */
 char nameBackup[MAX_VAR];
 char cvarName[MAX_VAR];
 
@@ -707,11 +688,9 @@ void CL_MessageMenuCmd( void )
 	}
 }
 
-/*
-======================
-CL_SaveTeam
-======================
-*/
+/**
+  * @brief Saves a team
+  */
 void CL_SaveTeam( char *filename )
 {
 	sizebuf_t	sb;
@@ -758,11 +737,11 @@ void CL_SaveTeam( char *filename )
 }
 
 
-/*
-======================
-CL_SaveTeamCmd
-======================
-*/
+/**
+  * @brief Saves a team from commandline
+  *
+  * Call CL_SaveTeam to store the team to a given filename
+  */
 void CL_SaveTeamCmd( void )
 {
 	char	filename[MAX_QPATH];
@@ -778,11 +757,9 @@ void CL_SaveTeamCmd( void )
 }
 
 
-/*
-======================
-CL_SaveTeamSlotCmd
-======================
-*/
+/**
+  * @brief Stores a team in a specified teamslot
+  */
 void CL_SaveTeamSlotCmd( void )
 {
 	char	filename[MAX_QPATH];
@@ -792,11 +769,9 @@ void CL_SaveTeamSlotCmd( void )
 	CL_SaveTeam( filename );
 }
 
-/*
-======================
-CL_LoadTeamMember
-======================
-*/
+/**
+  * @brief Load team members
+  */
 void CL_LoadTeamMember( sizebuf_t *sb, character_t *chr )
 {
 	item_t item;
@@ -805,7 +780,8 @@ void CL_LoadTeamMember( sizebuf_t *sb, character_t *chr )
 
 	/* unique character number */
 	chr->ucn = MSG_ReadShort( sb );
-	if ( chr->ucn >= baseCurrent->nextUCN ) baseCurrent->nextUCN = chr->ucn + 1;
+	if ( chr->ucn >= baseCurrent->nextUCN )
+		baseCurrent->nextUCN = chr->ucn + 1;
 
 	/* name and model */
 	Q_strncpyz( chr->name, MSG_ReadString( sb ), MAX_VAR );
@@ -843,11 +819,12 @@ void CL_LoadTeamMember( sizebuf_t *sb, character_t *chr )
 }
 
 
-/*
-======================
-CL_LoadTeam
-======================
-*/
+/**
+  * @brief Loads a team
+  *
+  * for singleplayer loading the function is called directly
+  * for multiplayer this function is called by CL_LoadTeamMultiplayer
+  */
 void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version )
 {
 	character_t	*chr;
@@ -875,11 +852,9 @@ void CL_LoadTeam( sizebuf_t *sb, base_t* base, int version )
 }
 
 
-/*
-======================
-CL_LoadTeamMultiplayer
-======================
-*/
+/**
+  * @brief Load a multiplayer team
+  */
 void CL_LoadTeamMultiplayer( char *filename )
 {
 	sizebuf_t	sb;
@@ -920,11 +895,9 @@ void CL_LoadTeamMultiplayer( char *filename )
 }
 
 
-/*
-======================
-CL_LoadTeamCmd
-======================
-*/
+/**
+  * @brief Loads a team from commandline
+  */
 void CL_LoadTeamCmd( void )
 {
 	char	filename[MAX_QPATH];
@@ -942,11 +915,9 @@ void CL_LoadTeamCmd( void )
 }
 
 
-/*
-======================
-CL_LoadTeamSlotCmd
-======================
-*/
+/**
+  * @brief Loads the selected teamslot
+  */
 void CL_LoadTeamSlotCmd( void )
 {
 	char	filename[MAX_QPATH];
@@ -958,11 +929,9 @@ void CL_LoadTeamSlotCmd( void )
 	Com_Printf( "Team 'team%s' loaded.\n", Cvar_VariableString( "mn_slot" ) );
 }
 
-/*
-======================
-CL_ResetTeams
-======================
-*/
+/**
+  * @brief
+  */
 void CL_ResetTeams( void )
 {
 	Cmd_AddCommand( "givename", CL_GiveNameCmd );
@@ -985,11 +954,9 @@ void CL_ResetTeams( void )
 	Cmd_AddCommand( "msgmenu", CL_MessageMenuCmd );
 }
 
-/*
-======================
-CL_SendTeamInfo
-======================
-*/
+/**
+  * @brief
+  */
 void CL_SendItem( sizebuf_t *buf, item_t item, int container, int x, int y )
 {
 	if ( !csi.ods[item.t].reload ) {
@@ -1000,6 +967,9 @@ void CL_SendItem( sizebuf_t *buf, item_t item, int container, int x, int y )
 	MSG_WriteFormat( buf, "bbbbbb", item.t, item.a, item.m, container, x, y );
 }
 
+/**
+  * @brief
+  */
 void CL_SendTeamInfo( sizebuf_t *buf, character_t *team, int num )
 {
 	character_t	*chr;
@@ -1046,11 +1016,9 @@ void CL_SendTeamInfo( sizebuf_t *buf, character_t *team, int num )
 }
 
 
-/*
-======================
-CL_ParseResults
-======================
-*/
+/**
+  * @brief
+  */
 char	resultText[MAX_MENUTEXTLEN];
 
 void CL_ParseResults( sizebuf_t *buf )

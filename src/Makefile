@@ -579,6 +579,7 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/cl_scrn.o \
 	$(BUILDDIR)/client/cl_sequence.o \
 	$(BUILDDIR)/client/cl_team.o \
+	$(BUILDDIR)/client/cl_inventory.o \
 	$(BUILDDIR)/client/cl_ufopedia.o \
 	$(BUILDDIR)/client/cl_view.o \
 	$(BUILDDIR)/client/console.o \
@@ -695,6 +696,9 @@ $(BUILDDIR)/client/cl_sequence.o : $(CLIENT_DIR)/cl_sequence.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_team.o :     $(CLIENT_DIR)/cl_team.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cl_inventory.o :     $(CLIENT_DIR)/cl_inventory.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_ufopedia.o : $(CLIENT_DIR)/cl_ufopedia.c
