@@ -1,4 +1,11 @@
+/**
+ * @file cl_market.c
+ * @brief single player market stuff
+ */
+
 /*
+Copyright (C) 2002-2006 UFO: Alien Invasion team.
+
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
@@ -14,7 +21,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-cl_market.c -- single player market stuff
 */
 
 #include "client.h"
@@ -22,14 +28,12 @@ cl_market.c -- single player market stuff
 
 #define MAX_BUYLIST		32
 
-/* ================================ ITEMS / WEAPONS ====================== */
-
 byte	buyList[MAX_BUYLIST];
 int		buyListLength;
 
-/*======================
-CL_BuySelectCmd
-======================*/
+/**
+  * @brief
+  */
 static void CL_BuySelectCmd( void )
 {
 	int num;
@@ -48,13 +52,13 @@ static void CL_BuySelectCmd( void )
 }
 
 #define MAX_AIRCRAFT_STORAGE 8
-/*======================
-AIR_GetStorageSupplyCount
-
-set storage and supply to the values of aircraft
-in use - and the value of aircraft available for
-buying
-======================*/
+/**
+  * @brief
+  *
+  * set storage and supply to the values of aircraft
+  * in use - and the value of aircraft available for
+  * buying
+  */
 static void AIR_GetStorageSupplyCount( char *aircraft, int *storage, int *supply )
 {
 	base_t* base;
@@ -75,9 +79,9 @@ static void AIR_GetStorageSupplyCount( char *aircraft, int *storage, int *supply
 		*supply = 0;
 }
 
-/*======================
-CL_BuyType
-======================*/
+/**
+  * @brief
+  */
 static void CL_BuyType( void )
 {
 	objDef_t	*od;
@@ -167,11 +171,9 @@ static void CL_BuyType( void )
 }
 
 
-/*
-======================
-CL_BuyItem
-======================
-*/
+/**
+  * @brief
+  */
 static void CL_BuyItem( void )
 {
 	int num, item;
@@ -199,11 +201,9 @@ static void CL_BuyItem( void )
 	RS_MarkResearchable();
 }
 
-/*
-======================
-CL_SellItem
-======================
-*/
+/**
+  * @brief
+  */
 static void CL_SellItem( void )
 {
 	int num, item;
@@ -228,11 +228,9 @@ static void CL_SellItem( void )
 	}
 }
 
-/*
-======================
-CL_BuyAircraft
-======================
-*/
+/**
+  * @brief
+  */
 static void CL_BuyAircraft( void )
 {
 	int num, aircraftID;
@@ -259,15 +257,13 @@ static void CL_BuyAircraft( void )
 }
 
 
-/*
-======================
-CL_SellAircraft
-
-FIXME: This needs work in reassigning the base aircraft array
-       or the other functions need to check whether the aircraft
-       at current arraypos is valid
-======================
-*/
+/**
+  * @brief
+  *
+  * FIXME: This needs work in reassigning the base aircraft array
+  * or the other functions need to check whether the aircraft
+  * at current arraypos is valid
+  */
 static void CL_SellAircraft( void )
 {
 	int num, aircraftID, i, j;
@@ -320,11 +316,9 @@ static void CL_SellAircraft( void )
 		Com_Printf("...there are no aircraft available (with no team assigned) for selling\n");
 }
 
-/*
-======================
-CL_ResetMarket
-======================
-*/
+/**
+  * @brief
+  */
 void CL_ResetMarket( void )
 {
 	Cmd_AddCommand( "buy_type", CL_BuyType );
