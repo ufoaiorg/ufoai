@@ -1048,7 +1048,7 @@ void CL_ActorDoThrow(sizebuf_t * sb)
 	/* get the fire def */
 	fd = GET_FIREDEF(type);
 
-	/* add effect le */
+	/* add effect le (local entity) */
 	LE_AddGrenade(fd, flags, muzzle, v0, dtime);
 
 	/* start the sound */
