@@ -528,14 +528,12 @@ void CL_Packet_f (void)
 	NET_SendPacket (NS_CLIENT, out-send, send, adr);
 }
 
-/*
-=================
-CL_Changing_f
-
-Just sent as a hint to the client that they should
-drop to full console
-=================
-*/
+/**
+  * @brief
+  *
+  * Just sent as a hint to the client that they should
+  * drop to full console
+  */
 void CL_Changing_f (void)
 {
 	SCR_BeginLoadingPlaque ();
@@ -544,13 +542,11 @@ void CL_Changing_f (void)
 }
 
 
-/*
-=================
-CL_Reconnect_f
-
-The server is changing levels
-=================
-*/
+/**
+  * @brief
+  *
+  * The server is changing levels
+  */
 void CL_Reconnect_f (void)
 {
 	S_StopAllSounds ();
@@ -574,19 +570,15 @@ void CL_Reconnect_f (void)
 	}
 }
 
-/*
-=================
-CL_ParseStatusMessage
-
-Handle a reply from a ping
-=================
-*/
+/**
+  * @brief
+  *
+  * Handle a reply from a ping
+  */
 #define MAX_SERVERLIST 32
-
 char		serverText[1024];
 int			serverListLength;
 netadr_t	serverList[MAX_SERVERLIST];
-
 void CL_ParseStatusMessage (void)
 {
 	char *s = MSG_ReadString(&net_message);
@@ -601,6 +593,11 @@ void CL_ParseStatusMessage (void)
 	menuText[TEXT_LIST] = serverText;
 }
 
+/**
+  * @brief Serverbrowser text
+  *
+  * This function fills the network browser server information with text
+  */
 char serverInfoText[MAX_MESSAGE_TEXT];
 void CL_ParseServerInfoMessage ( void )
 {
@@ -619,8 +616,7 @@ void CL_ParseServerInfoMessage ( void )
 	Com_sprintf( serverInfoText, MAX_MESSAGE_TEXT, _("IP\t%s\n\n"), NET_AdrToString (net_from) );
 
 	s++; /* first char is slash */
-	do
-	{
+	do {
 		/* var */
 		var = s;
 		s = strstr(s, "\\");
@@ -633,25 +629,20 @@ void CL_ParseServerInfoMessage ( void )
 		if ( s )
 			*s++ = '\0';
 
-		if ( !Q_strncmp(var, "mapname", 7 ) )
-		{
+		if ( !Q_strncmp(var, "mapname", 7 ) ) {
 			if ( FS_CheckFile( va("pics/maps/shots/%s.jpg", value) ) != -1 )
 				Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value) );
 
 			Cvar_ForceSet("mapname", value );
 			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Map:\t%s\n"), value) );
-		}
-		else if ( !Q_strncmp(var, "version", 7 ) )
+		} else if ( !Q_strncmp(var, "version", 7 ) )
 			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Version:\t%s\n"), value) );
 		else if ( !Q_strncmp(var, "hostname", 8 ) )
 			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Servername:\t%s\n"), value) );
 		else if ( !Q_strncmp(var, "sv_enablemorale", 15 ) )
 			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Moralestates:\t%s\n"), value) );
 		else if ( !Q_strncmp(var, "sv_teamplay", 11 ) )
-		{
-
 			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Teamplay:\t%s\n"), value) );
-		}
 		else if ( !Q_strncmp(var, "maxplayers", 10 ) )
 			Q_strcat( serverInfoText, MAX_MESSAGE_TEXT, va(_("Max. players per team:\t%s\n"), value) );
 		else if ( !Q_strncmp(var, "maxclients", 10 ) )
@@ -669,33 +660,32 @@ void CL_ParseServerInfoMessage ( void )
 	MN_PushMenu("serverinfo");
 }
 
-/*=================
-CL_ServerConnect_f
-
-called via server_connect
-
-FIXME: Spectator needs no team
-=================*/
+/**
+  * @brief
+  *
+  * called via server_connect
+  * FIXME: Spectator needs no team
+  */
 void CL_ServerConnect_f( void )
 {
 	char* ip = Cvar_VariableString("mn_server_ip");
 
-	if ( ! B_GetNumOnTeam() )
-	{
+	if ( ! B_GetNumOnTeam() ) {
 		MN_Popup( _("Error"), _("Assemble a team first") );
 		return;
 	}
 
-	if ( ip )
-	{
+	if ( ip ) {
 		Com_DPrintf("CL_ServerConnect_f: connect to %s\n", ip);
 		Cbuf_AddText( va( "connect %s\n", ip ) );
 	}
 }
 
-/*=================
-CL_BookmarkPrint_f
-=================*/
+/**
+  * @brief Print all bookmarks
+  *
+  * bookmarks are saved in cvar adr[0-15]
+  */
 char bookmarkText[MAX_MESSAGE_TEXT];
 void CL_BookmarkPrint_f ( void )
 {
@@ -711,9 +701,11 @@ void CL_BookmarkPrint_f ( void )
 	menuText[TEXT_LIST] = bookmarkText;
 }
 
-/*=================
-CL_BookmarkAdd_f
-=================*/
+/**
+  * @brief Add a new bookmark
+  *
+  * bookmarks are saved in cvar adr[0-15]
+  */
 void CL_BookmarkAdd_f ( void )
 {
 	int	i;
@@ -721,29 +713,23 @@ void CL_BookmarkAdd_f ( void )
 	char	*newBookmark = NULL;
 	netadr_t	adr;
 
-	if ( Cmd_Argc() < 2 )
-	{
+	if ( Cmd_Argc() < 2 ) {
 		newBookmark = Cvar_VariableString("mn_server_ip");
-		if ( ! newBookmark )
-		{
+		if ( ! newBookmark ) {
 			Com_Printf( "usage: bookmark_add <ip>\n" );
 			return;
 		}
-	}
-	else
+	} else
 		newBookmark = Cmd_Argv( 1 );
 
-	if (!NET_StringToAdr (newBookmark, &adr))
-	{
+	if (!NET_StringToAdr (newBookmark, &adr)) {
 		Com_Printf("CL_BookmarkAdd_f: Invalid address %s\n", newBookmark );
 		return;
 	}
 
-	for ( i = 0; i < 16; i++ )
-	{
+	for ( i = 0; i < 16; i++ ) {
 		bookmark = Cvar_VariableString( va("adr%i", i) );
-		if ( !bookmark || !NET_StringToAdr (bookmark, &adr) )
-		{
+		if ( !bookmark || !NET_StringToAdr (bookmark, &adr) ) {
 			Cvar_Set( va("adr%i", i), newBookmark );
 			return;
 		}
@@ -752,27 +738,24 @@ void CL_BookmarkAdd_f ( void )
 	Cvar_Set( "adr0", newBookmark );
 }
 
-/*=================
-CL_BookmarkListClick_f
-=================*/
+/**
+  * @brief
+  */
 void CL_BookmarkListClick_f ( void )
 {
 	int	num;
 	char	*bookmark = NULL;
 	netadr_t	adr;
 
-	if ( Cmd_Argc() < 2 )
-	{
+	if ( Cmd_Argc() < 2 ) {
 		Com_Printf( "usage: bookmarks_click <num>\n" );
 		return;
 	}
 	num = atoi( Cmd_Argv( 1 ) );
 	bookmark = Cvar_VariableString( va("adr%i", num) );
 
-	if ( bookmark )
-	{
-		if (!NET_StringToAdr (bookmark, &adr))
-		{
+	if ( bookmark ) {
+		if (!NET_StringToAdr (bookmark, &adr)) {
 			Com_Printf ("Bad address: %s\n", bookmark);
 			return;
 		}
@@ -784,32 +767,30 @@ void CL_BookmarkListClick_f ( void )
 	}
 }
 
-/*=================
-CL_ServerListClick_f
-=================*/
+/**
+  * @brief
+  */
 char serverInfoText[MAX_MESSAGE_TEXT];
 void CL_ServerListClick_f (void)
 {
 	int num;
 
-	if ( Cmd_Argc() < 2 )
-	{
+	if ( Cmd_Argc() < 2 ) {
 		Com_Printf( "usage: servers_click <num>\n" );
 		return;
 	}
 	num = atoi( Cmd_Argv( 1 ) );
 
 	menuText[TEXT_STANDARD] = serverInfoText;
-	if ( num >= 0 && num < serverListLength )
-	{
+	if ( num >= 0 && num < serverListLength ) {
 		Netchan_OutOfBandPrint (NS_CLIENT, serverList[num], "status %i", PROTOCOL_VERSION );
 		Cvar_Set("mn_server_ip", NET_AdrToString( serverList[num] ) );
 	}
 }
 
-/*=================
-CL_PingServers_f
-=================*/
+/**
+  * @brief
+  */
 void CL_PingServers_f (void)
 {
 	netadr_t	adr;
@@ -826,16 +807,14 @@ void CL_PingServers_f (void)
 	serverListLength = 0;
 
 	noudp = Cvar_Get ("noudp", "0", CVAR_NOSET);
-	if (!noudp->value)
-	{
+	if (!noudp->value) {
 		adr.type = NA_BROADCAST;
 		adr.port = BigShort(PORT_SERVER);
 		Netchan_OutOfBandPrint (NS_CLIENT, adr, "info %i", PROTOCOL_VERSION );
 	}
 
 	noipx = Cvar_Get ("noipx", "0", CVAR_NOSET);
-	if (!noipx->value)
-	{
+	if (!noipx->value) {
 		adr.type = NA_BROADCAST_IPX;
 		adr.port = BigShort(PORT_SERVER);
 		Netchan_OutOfBandPrint (NS_CLIENT, adr, "info %i", PROTOCOL_VERSION );
@@ -843,13 +822,11 @@ void CL_PingServers_f (void)
 }
 
 
-/*
-=================
-CL_ConnectionlessPacket
-
-Responses to broadcasts, etc
-=================
-*/
+/**
+  * @brief
+  *
+  * Responses to broadcasts, etc
+  */
 void CL_ConnectionlessPacket (void)
 {
 	char	*s;
@@ -867,10 +844,8 @@ void CL_ConnectionlessPacket (void)
 	Com_Printf ("%s: %s\n", NET_AdrToString (net_from), c);
 
 	/* server connection */
-	if (!Q_strncmp(c, "client_connect", 13))
-	{
-		if (cls.state == ca_connected)
-		{
+	if (!Q_strncmp(c, "client_connect", 13)) {
+		if (cls.state == ca_connected) {
 			Com_Printf ("Dup connect received. Ignored.\n");
 			return;
 		}
@@ -882,17 +857,14 @@ void CL_ConnectionlessPacket (void)
 	}
 
 	/* server responding to a status broadcast */
-	if (!Q_strncmp(c, "info", 4))
-	{
+	if (!Q_strncmp(c, "info", 4)) {
 		CL_ParseStatusMessage ();
 		return;
 	}
 
 	/* remote command from gui front end */
-	if (!Q_strncmp(c, "cmd", 3))
-	{
-		if (!NET_IsLocalAddress(net_from))
-		{
+	if (!Q_strncmp(c, "cmd", 3)) {
+		if (!NET_IsLocalAddress(net_from)) {
 			Com_Printf ("Command packet from remote host. Ignored.\n");
 			return;
 		}
@@ -903,30 +875,26 @@ void CL_ConnectionlessPacket (void)
 		return;
 	}
 	/* print command from somewhere */
-	if (!Q_strncmp(c, "print", 5))
-	{
+	if (!Q_strncmp(c, "print", 5)) {
 		CL_ParseServerInfoMessage ();
 		return;
 	}
 
 	/* ping from somewhere */
-	if (!Q_strncmp(c, "ping", 4))
-	{
+	if (!Q_strncmp(c, "ping", 4)) {
 		Netchan_OutOfBandPrint (NS_CLIENT, net_from, "ack");
 		return;
 	}
 
 	/* challenge from the server we are connecting to */
-	if (!Q_strncmp(c, "challenge", 9))
-	{
+	if (!Q_strncmp(c, "challenge", 9)) {
 		cls.challenge = atoi(Cmd_Argv(1));
 		CL_SendConnectPacket ();
 		return;
 	}
 
 	/* echo request from server */
-	if (!Q_strncmp(c, "echo", 4))
-	{
+	if (!Q_strncmp(c, "echo", 4)) {
 		Netchan_OutOfBandPrint (NS_CLIENT, net_from, "%s", Cmd_Argv(1) );
 		return;
 	}
@@ -935,77 +903,60 @@ void CL_ConnectionlessPacket (void)
 }
 
 
-/*
-=================
-CL_DumpPackets
-
-A vain attempt to help bad TCP stacks that cause problems
-when they overflow
-=================
-*/
+/**
+  * @brief
+  *
+  * A vain attempt to help bad TCP stacks that cause problems
+  * when they overflow
+  */
 void CL_DumpPackets (void)
 {
 	while (NET_GetPacket (NS_CLIENT, &net_from, &net_message))
-	{
 		Com_Printf ("dumnping a packet\n");
-	}
 }
 
-/*
-=================
-CL_ReadPackets
-=================
-*/
+/**
+  * @brief
+  */
 void CL_ReadPackets (void)
 {
-	while (NET_GetPacket (NS_CLIENT, &net_from, &net_message))
-	{
-/*	Com_Printf ("packet\n"); */
-		/* */
+	while (NET_GetPacket (NS_CLIENT, &net_from, &net_message)) {
 		/* remote command packet */
-		/* */
-		if (*(int *)net_message.data == -1)
-		{
+		if (*(int *)net_message.data == -1) {
 			CL_ConnectionlessPacket ();
 			continue;
 		}
 
+		/* dump it if not connected */
 		if (cls.state == ca_disconnected || cls.state == ca_connecting)
-			continue;		/* dump it if not connected */
+			continue;
 
-		if (net_message.cursize < 8)
-		{
+		if (net_message.cursize < 8) {
 			Com_Printf ("%s: Runt packet\n",NET_AdrToString(net_from));
 			continue;
 		}
 
-		/* */
 		/* packet from server */
-		/* */
-		if (!NET_CompareAdr (net_from, cls.netchan.remote_address))
-		{
+		if (!NET_CompareAdr (net_from, cls.netchan.remote_address)) {
 			Com_DPrintf ("%s:sequenced packet without connection\n",NET_AdrToString(net_from));
 			continue;
 		}
+		/* wasn't accepted for some reason */
 		if (!Netchan_Process(&cls.netchan, &net_message))
-			continue;		/* wasn't accepted for some reason */
+			continue;
 		CL_ParseServerMessage ();
 	}
 
-	/* */
 	/* check timeout */
-	/* */
 	if (cls.state >= ca_connected
-	 && cls.realtime - cls.netchan.last_received > cl_timeout->value*1000)
-	{
-		if (++cl.timeoutcount > 5)	/* timeoutcount saves debugger */
-		{
+	 && cls.realtime - cls.netchan.last_received > cl_timeout->value*1000) {
+		/* timeoutcount saves debugger */
+		if (++cl.timeoutcount > 5) {
 			Com_Printf ("\nServer connection timed out.\n");
 			CL_Disconnect ();
 			return;
 		}
-	}
-	else
+	} else
 		cl.timeoutcount = 0;
 
 }
@@ -1013,25 +964,21 @@ void CL_ReadPackets (void)
 
 /*============================================================================= */
 
-/*
-==============
-CL_Userinfo_f
-==============
-*/
+/**
+  * @brief
+  */
 void CL_Userinfo_f (void)
 {
 	Com_Printf ("User info settings:\n");
 	Info_Print (Cvar_Userinfo());
 }
 
-/*
-=================
-CL_Snd_Restart_f
-
-Restart the sound subsystem so it can pick up
-new parameters and flush all sounds
-=================
-*/
+/**
+  * @brief
+  *
+  * Restart the sound subsystem so it can pick up
+  * new parameters and flush all sounds
+  */
 void CL_Snd_Restart_f (void)
 {
 	S_Shutdown ();
@@ -1039,14 +986,12 @@ void CL_Snd_Restart_f (void)
 	CL_RegisterSounds ();
 }
 
-/*
-=================
-CL_Precache_f
-
-The server will send this command right
-before allowing the client into the server
-=================
-*/
+/**
+  * @brief
+  *
+  * The server will send this command right
+  * before allowing the client into the server
+  */
 void CL_Precache_f (void)
 {
 	/* stop sound, back to the console */
@@ -1065,13 +1010,13 @@ void CL_Precache_f (void)
 }
 
 
-/*=================
-CL_ParseScriptFirst
-
-parsed if we are no dedicated server
-first stage parses all the main data into their struct
-see CL_ParseScriptSecond for more details about parsing stages
-=================*/
+/**
+  * @brief
+  *
+  * parsed if we are no dedicated server
+  * first stage parses all the main data into their struct
+  * see CL_ParseScriptSecond for more details about parsing stages
+  */
 void CL_ParseScriptFirst( char *type, char *name, char **text )
 {
 	/* check for client interpretable scripts */
@@ -1091,14 +1036,14 @@ void CL_ParseScriptFirst( char *type, char *name, char **text )
 	else if ( !Q_strncmp( type, "tutorial", 8 ) ) MN_ParseTutorials( name, text );
 }
 
-/*=================
-CL_ParseScriptSecond
-
-parsed if we are no dedicated server
-second stage links all the parsed data from first stage
-example: we need a techpointer in a building - in the second stage the buildings and the
-         techs are already parsed - so now we can link them
-=================*/
+/**
+  * @brief
+  *
+  * parsed if we are no dedicated server
+  * second stage links all the parsed data from first stage
+  * example: we need a techpointer in a building - in the second stage the buildings and the
+  * techs are already parsed - so now we can link them
+  */
 void CL_ParseScriptSecond( char *type, char *name, char **text )
 {
 	/* check for client interpretable scripts */
@@ -1107,12 +1052,9 @@ void CL_ParseScriptSecond( char *type, char *name, char **text )
 	else if ( !Q_strncmp( type, "building", 8 ) ) B_ParseBuildings( name, text, qtrue );
 }
 
-
-/*
-=================
-CL_InitLocal
-=================
-*/
+/**
+  * @brief
+  */
 void CL_InitLocal (void)
 {
 	cls.state = ca_disconnected;
@@ -1218,9 +1160,7 @@ void CL_InitLocal (void)
 	mn_hud = Cvar_Get ("mn_hud", "hud", CVAR_ARCHIVE);
 	mn_lastsave = Cvar_Get ("mn_lastsave", "", CVAR_ARCHIVE);
 
-	/* */
 	/* userinfo */
-	/* */
 	info_password = Cvar_Get ("password", "", CVAR_USERINFO);
 	info_spectator = Cvar_Get ("spectator", "0", CVAR_USERINFO);
 	name = Cvar_Get ("name", _("unnamed"), CVAR_USERINFO | CVAR_ARCHIVE);
@@ -1239,9 +1179,7 @@ void CL_InitLocal (void)
 
 	sv_maxclients = Cvar_Get ("maxclients", "1", CVAR_SERVERINFO );
 
-	/* */
 	/* register our commands */
-	/* */
 	Cmd_AddCommand ("cmd", CL_ForwardToServer_f);
 	Cmd_AddCommand ("pause", CL_Pause_f);
 	Cmd_AddCommand ("pingservers", CL_PingServers_f);
@@ -1282,9 +1220,7 @@ void CL_InitLocal (void)
 	Cmd_AddCommand ("video", CL_Video_f );
 	Cmd_AddCommand ("stopvideo", CL_StopVideo_f );
 
-	/* */
 	/* forward to server commands */
-	/* */
 	/* the only thing this does is allow command completion */
 	/* to work -- all unknown commands are automatically */
 	/* forwarded to the server */
@@ -1313,16 +1249,11 @@ void CL_InitLocal (void)
 
 
 
-/*
-===============
-CL_WriteConfiguration
-
-Writes key bindings and archived cvars to config.cfg
-===============
-*/
+/**
+  * @brief Writes key bindings and archived cvars to config.cfg
+  */
 void CL_WriteConfiguration (void)
 {
-/*	FILE	*f; */
 	char	path[MAX_QPATH];
 
 	if (cls.state == ca_uninitialized)
@@ -1333,13 +1264,9 @@ void CL_WriteConfiguration (void)
 }
 
 
-/*
-==================
-CL_FixCvarCheats
-
-==================
-*/
-
+/**
+  * @brief
+  */
 typedef struct
 {
 	char	*name;
@@ -1375,10 +1302,8 @@ void CL_FixCvarCheats (void)
 		return;		/* single player can cheat */
 
 	/* find all the cvars if we haven't done it yet */
-	if (!numcheatvars)
-	{
-		while (cheatvars[numcheatvars].name)
-		{
+	if (!numcheatvars) {
+		while (cheatvars[numcheatvars].name) {
 			cheatvars[numcheatvars].var = Cvar_Get (cheatvars[numcheatvars].name,
 					cheatvars[numcheatvars].value, 0);
 			numcheatvars++;
@@ -1386,32 +1311,20 @@ void CL_FixCvarCheats (void)
 	}
 
 	/* make sure they are all set to the proper values */
-	for (i=0, var = cheatvars ; i<numcheatvars ; i++, var++)
-	{
+	for (i=0, var = cheatvars ; i<numcheatvars ; i++, var++) {
 		if ( Q_strcmp (var->var->string, var->value) )
-		{
 			Cvar_Set (var->name, var->value);
-		}
 	}
 }
 
-/*============================================================================ */
-
-/*
-=================
-CL_SendCmd
-=================
-*/
+/**
+  * @brief
+  */
 void CL_SendCmd (void)
 {
-/*	sizebuf_t	buf; */
-/*	byte		data[128]; */
-
 	/* send a userinfo update if needed */
-	if ( cls.state >= ca_connected)
-	{
-		if (userinfo_modified)
-		{
+	if ( cls.state >= ca_connected) {
+		if (userinfo_modified) {
 			userinfo_modified = qfalse;
 			MSG_WriteByte (&cls.netchan.message, clc_userinfo);
 			MSG_WriteString (&cls.netchan.message, Cvar_Userinfo() );
@@ -1423,11 +1336,9 @@ void CL_SendCmd (void)
 }
 
 
-/*
-==================
-CL_SendCommand
-==================
-*/
+/**
+  * @brief
+  */
 void CL_SendCommand (void)
 {
 	/* get new key events */
@@ -1450,19 +1361,16 @@ void CL_SendCommand (void)
 }
 
 
-/*
-==================
-CL_AddMapParticle
-==================
-*/
+/**
+  * @brief
+  */
 void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info, int levelflags)
 {
 	mp_t	*mp;
 
 	mp = &MPs[numMPs++];
 
-	if ( numMPs >= MAX_MAPPARTICLES )
-	{
+	if ( numMPs >= MAX_MAPPARTICLES ) {
 		Sys_Error("Too many map particles\n");
 		return;
 	}
@@ -1490,34 +1398,36 @@ char *difficulty_names[] =
 	"Insane"
 };
 
-/*
-==================
-CL_CvarCheck
-==================
-*/
+/**
+  * @brief
+  */
 void CL_CvarCheck( void )
 {
 	int v;
 
 	/* worldlevel */
-	if ( cl_worldlevel->modified )
-	{
+	if ( cl_worldlevel->modified ) {
 		int i;
-		if ( (int)cl_worldlevel->value >= map_maxlevel-1 ) Cvar_SetValue( "cl_worldlevel", map_maxlevel-1 );
-		if ( (int)cl_worldlevel->value < 0 ) Cvar_Set( "cl_worldlevel", "0" );
-		for ( i = 0; i < map_maxlevel; i++ ) Cbuf_AddText( va( "deselfloor%i\n", i ) );
-		for ( ; i < 8; i++ ) Cbuf_AddText( va( "disfloor%i\n", i ) );
+		if ( (int)cl_worldlevel->value >= map_maxlevel-1 )
+			Cvar_SetValue( "cl_worldlevel", map_maxlevel-1 );
+		else if ( (int)cl_worldlevel->value < 0 )
+			Cvar_Set( "cl_worldlevel", "0" );
+		for ( i = 0; i < map_maxlevel; i++ )
+			Cbuf_AddText( va( "deselfloor%i\n", i ) );
+		for ( ; i < 8; i++ )
+			Cbuf_AddText( va( "disfloor%i\n", i ) );
 		Cbuf_AddText( va( "selfloor%i\n", (int)cl_worldlevel->value ) );
 		cl_worldlevel->modified = qfalse;
 	}
 
 	/* difficulty */
-	if ( difficulty->modified )
-	{
+	if ( difficulty->modified ) {
 		v = (int)difficulty->value;
 
-		if ( v < 0 ) v = 0;
-		else if ( v > 6 ) v = 6;
+		if ( v < 0 )
+			v = 0;
+		else if ( v > 6 )
+			v = 6;
 		Cvar_Set( "mn_difficulty", _(difficulty_names[v]) );
 	}
 #ifdef HAVE_GETTEXT
@@ -1533,13 +1443,10 @@ void CL_CvarCheck( void )
 }
 
 
-/*
-==================
-CL_Frame
-==================
-*/
+/**
+  * @brief
+  */
 #define NUM_DELTA_FRAMES	20
-
 void CL_Frame (int msec)
 {
 	static int	extratime;
@@ -1548,17 +1455,13 @@ void CL_Frame (int msec)
 	if (dedicated->value)
 		return;
 
-	if ( sv_maxclients->modified )
-	{
-		if ( (int)sv_maxclients->value > 1 )
-		{
+	if ( sv_maxclients->modified ) {
+		if ( (int)sv_maxclients->value > 1 ) {
 			ccs.singleplayer = qfalse;
 			Com_Printf("Changing to Multiplayer\n");
 			/* no campaign equipment but standard */
 			Cvar_Set("equip", "standard");
-		}
-		else
-		{
+		} else {
 			ccs.singleplayer = qtrue;
 			Com_Printf("Changing to Singleplayer\n");
 		}
@@ -1567,19 +1470,21 @@ void CL_Frame (int msec)
 
 	extratime += msec;
 
-	if (!cl_timedemo->value)
-	{
+	if (!cl_timedemo->value) {
+		/* don't flood packets out while connecting */
 		if (cls.state == ca_connected && extratime < 100)
-			return;			/* don't flood packets out while connecting */
+			return;
+		/* framerate is too high */
 		if (extratime < 1000/cl_maxfps->value)
-			return;			/* framerate is too high */
+			return;
 	}
 
 	/* decide the simulation time */
 	cls.frametime = extratime/1000.0;
 	cls.realtime = curtime;
 	cl.time += extratime;
-	if ( !blockEvents ) cl.eventTime += extratime;
+	if ( !blockEvents )
+		cl.eventTime += extratime;
 
 	/* let the mouse activate or deactivate */
 	IN_Frame ();
@@ -1587,8 +1492,7 @@ void CL_Frame (int msec)
 	/* if recording an avi, lock to a fixed fps */
 	if ( CL_VideoRecording() && cl_aviFrameRate->value && msec) {
 		/* save the current screen */
-		if ( cls.state == ca_active )
-		{
+		if ( cls.state == ca_active ) {
 			CL_TakeVideoFrame();
 
 			/* fixed time for next frame' */
@@ -1599,21 +1503,17 @@ void CL_Frame (int msec)
 	}
 
 	/* frame rate calculation */
-	if ( !(cls.framecount % NUM_DELTA_FRAMES) )
-	{
+	if ( !(cls.framecount % NUM_DELTA_FRAMES) ) {
 		cls.framerate = NUM_DELTA_FRAMES * 1000.0 / (cls.framedelta + extratime);
 		cls.framedelta = 0;
 	}
-	else cls.framedelta += extratime;
+	else
+		cls.framedelta += extratime;
 
 	extratime = 0;
-#if 0
-	if (cls.frametime > (1.0 / cl_minfps->value))
-		cls.frametime = (1.0 / cl_minfps->value);
-#else
+
 	if (cls.frametime > (1.0 / 5))
 		cls.frametime = (1.0 / 5);
-#endif
 
 	/* if in the debugger last frame, don't timeout */
 	if (msec > 5000)
@@ -1663,18 +1563,13 @@ void CL_Frame (int msec)
 
 	cls.framecount++;
 
-	if ( log_stats->value )
-	{
-		if ( cls.state == ca_active )
-		{
-			if ( !lasttimecalled )
-			{
+	if ( log_stats->value ) {
+		if ( cls.state == ca_active ) {
+			if ( !lasttimecalled ) {
 				lasttimecalled = Sys_Milliseconds();
 				if ( log_stats_file )
 					fprintf( log_stats_file, "0\n" );
-			}
-			else
-			{
+			} else {
 				int now = Sys_Milliseconds();
 
 				if ( log_stats_file )
@@ -1685,14 +1580,9 @@ void CL_Frame (int msec)
 	}
 }
 
-
-/*============================================================================ */
-
-/*
-====================
-CL_Init
-====================
-*/
+/**
+  * @brief
+  */
 void CL_Init (void)
 {
 	if (dedicated->value)
@@ -1728,20 +1618,17 @@ void CL_Init (void)
 }
 
 
-/*
-===============
-CL_Shutdown
-
-FIXME: this is a callback from Sys_Quit and Com_Error.  It would be better
-to run quit through here before the final handoff to the sys code.
-===============
-*/
+/**
+  * @brief
+  *
+  * FIXME: this is a callback from Sys_Quit and Com_Error.  It would be better
+  * to run quit through here before the final handoff to the sys code.
+  */
 void CL_Shutdown(void)
 {
 	static qboolean isdown = qfalse;
 
-	if (isdown)
-	{
+	if (isdown) {
 		printf ("recursive shutdown\n");
 		return;
 	}
