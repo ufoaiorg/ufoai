@@ -770,21 +770,21 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_shader.c -o cl_shader.o $(CFLAGS)
 
 [VersionInfo]
-Major=0
-Minor=1
-Release=2
-Build=0
+Major=2
+Minor=0
+Release=1
+Build=1
 LanguageID=1033
 CharsetID=1252
 CompanyName=
-FileVersion=0.12
+FileVersion=2.0-RC1
 FileDescription=UFO:Alien Invasion
 InternalName=
 LegalCopyright=
 LegalTrademarks=
 OriginalFilename=ufo.exe
 ProductName=ufo
-ProductVersion=0.12
+ProductVersion=2.0-RC1
 AutoIncBuildNr=0
 
 [Unit78]

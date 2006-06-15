@@ -1446,7 +1446,7 @@ void Qcommon_Init (int argc, char **argv)
 	dedicated = Cvar_Get ("dedicated", "0", CVAR_NOSET);
 #endif
 
-	s = va("%4.2f %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
+	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
 	Cvar_Get ("version", s, CVAR_SERVERINFO|CVAR_NOSET);
 	Cvar_Get ("ver", va("%4.2f", UFO_VERSION), CVAR_NOSET);
 
