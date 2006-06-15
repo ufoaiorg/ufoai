@@ -1,6 +1,6 @@
 /**
  * @file cl_market.c
- * @brief single player market stuff
+ * @brief Single player market stuff.
  */
 
 /*
@@ -28,27 +28,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_BUYLIST		32
 
-byte	buyList[MAX_BUYLIST];
-int		buyListLength;
+byte buyList[MAX_BUYLIST];
+int buyListLength;
 
 /**
   * @brief
   */
-static void CL_BuySelectCmd( void )
+static void CL_BuySelectCmd(void)
 {
 	int num;
 
-	if ( Cmd_Argc() < 2 ) {
-		Com_Printf( "Usage: buy_select <num>\n" );
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: buy_select <num>\n");
 		return;
 	}
 
-	num = atoi( Cmd_Argv( 1 ) );
-	if ( num >= buyListLength )
+	num = atoi(Cmd_Argv(1));
+	if (num >= buyListLength)
 		return;
 
-	Cbuf_AddText( va( "buyselect%i\n", num ) );
-	CL_ItemDescription( buyList[num] );
+	Cbuf_AddText(va("buyselect%i\n", num));
+	CL_ItemDescription(buyList[num]);
 }
 
 #define MAX_AIRCRAFT_STORAGE 8
@@ -59,21 +59,22 @@ static void CL_BuySelectCmd( void )
   * in use - and the value of aircraft available for
   * buying
   */
-static void AIR_GetStorageSupplyCount( char *aircraft, int *storage, int *supply )
+static void AIR_GetStorageSupplyCount(char *aircraft, int *storage, int *supply)
 {
-	base_t* base;
-	aircraft_t* air;
+	base_t *base;
+	aircraft_t *air;
 	int i, j;
 
 	*supply = MAX_AIRCRAFT_STORAGE;
 
-	for ( i = 0, base = gd.bases; i < gd.numBases; i++, base++ ) {
-		if ( ! base->founded ) continue;
-		for ( j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++ )
-			if ( !Q_strncmp( air->id, aircraft, MAX_VAR ) )
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
+		if (!base->founded)
+			continue;
+		for (j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++)
+			if (!Q_strncmp(air->id, aircraft, MAX_VAR))
 				*storage++;
 	}
-	if ( *storage < MAX_AIRCRAFT_STORAGE )
+	if (*storage < MAX_AIRCRAFT_STORAGE)
 		*supply -= *storage;
 	else
 		*supply = 0;
@@ -82,42 +83,42 @@ static void AIR_GetStorageSupplyCount( char *aircraft, int *storage, int *supply
 /**
   * @brief
   */
-static void CL_BuyType( void )
+static void CL_BuyType(void)
 {
-	objDef_t	*od;
-	aircraft_t	*air;
-	technology_t	*tech;
-	int		i, j = 0, num, storage, supply;
-	char	str[MAX_VAR];
+	objDef_t *od;
+	aircraft_t *air;
+	technology_t *tech;
+	int i, j = 0, num, storage, supply;
+	char str[MAX_VAR];
 
-	if ( Cmd_Argc() < 2 ) {
-		Com_Printf( "Usage: buy_type <category>\n" );
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: buy_type <category>\n");
 		return;
 	}
-	num = atoi( Cmd_Argv( 1 ) );
+	num = atoi(Cmd_Argv(1));
 
-	CL_UpdateCredits( ccs.credits );
+	CL_UpdateCredits(ccs.credits);
 
 	/* 'normal' items */
-	if ( num < NUM_BUYTYPES ) {
+	if (num < NUM_BUYTYPES) {
 		/* get item list */
-		for ( i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++ ) {
-			tech = (technology_t*)od->tech;
+		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+			tech = (technology_t *) od->tech;
 			/* is researched OR collected */
-			if ( !tech || RS_Collected_(tech) || RS_IsResearched_ptr(tech) ) {
+			if (!tech || RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
 				/* check primary, secondary, misc, armor and available amount */
-				if ( od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i]) ) {
-					Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );
-					Cvar_Set( str, _(od->name) );
+				if (od->buytype == num && (ccs.eCampaign.num[i] || ccs.eMarket.num[i])) {
+					Q_strncpyz(str, va("mn_item%i", j), MAX_VAR);
+					Cvar_Set(str, _(od->name));
 
-					Q_strncpyz( str, va("mn_storage%i", j), MAX_VAR );
-					Cvar_SetValue( str, ccs.eCampaign.num[i] );
+					Q_strncpyz(str, va("mn_storage%i", j), MAX_VAR);
+					Cvar_SetValue(str, ccs.eCampaign.num[i]);
 
-					Q_strncpyz( str, va("mn_supply%i", j), MAX_VAR );
-					Cvar_SetValue( str, ccs.eMarket.num[i] );
+					Q_strncpyz(str, va("mn_supply%i", j), MAX_VAR);
+					Cvar_SetValue(str, ccs.eMarket.num[i]);
 
-					Q_strncpyz( str, va("mn_price%i", j), MAX_VAR );
-					Cvar_Set( str, va( "%i c", od->price ) );
+					Q_strncpyz(str, va("mn_price%i", j), MAX_VAR);
+					Cvar_Set(str, va("%i c", od->price));
 
 					buyList[j] = i;
 					j++;
@@ -126,20 +127,20 @@ static void CL_BuyType( void )
 		}
 	}
 	/* aircraft */
-	else if ( num == NUM_BUYTYPES ) {
-		for ( i = 0, j = 0, air = aircraft; i < numAircraft; i++, air++ ) {
-			AIR_GetStorageSupplyCount( air->id, &storage, &supply );
-			Q_strncpyz( str, va("mn_item%i", j), MAX_VAR );
-			Cvar_Set( str, _(air->name) );
+	else if (num == NUM_BUYTYPES) {
+		for (i = 0, j = 0, air = aircraft; i < numAircraft; i++, air++) {
+			AIR_GetStorageSupplyCount(air->id, &storage, &supply);
+			Q_strncpyz(str, va("mn_item%i", j), MAX_VAR);
+			Cvar_Set(str, _(air->name));
 
-			Q_strncpyz( str, va("mn_storage%i", j), MAX_VAR );
-			Cvar_SetValue( str, storage );
+			Q_strncpyz(str, va("mn_storage%i", j), MAX_VAR);
+			Cvar_SetValue(str, storage);
 
-			Q_strncpyz( str, va("mn_supply%i", j), MAX_VAR );
-			Cvar_SetValue( str, supply );
+			Q_strncpyz(str, va("mn_supply%i", j), MAX_VAR);
+			Cvar_SetValue(str, supply);
 
-			Q_strncpyz( str, va("mn_price%i", j), MAX_VAR );
-			Cvar_Set( str, va( "%i c", air->price ) );
+			Q_strncpyz(str, va("mn_price%i", j), MAX_VAR);
+			Cvar_Set(str, va("%i c", air->price));
 
 			buyList[j] = i;
 			j++;
@@ -149,23 +150,23 @@ static void CL_BuyType( void )
 	buyListLength = j;
 
 	/* FIXME: This list needs to be scrollable - so a hardcoded end is bad */
-	for ( i = 0; j < 28; j++ ) {
-		Cvar_Set( va( "mn_item%i", j ), "" );
-		Cvar_Set( va( "mn_storage%i", j ), "" );
-		Cvar_Set( va( "mn_supply%i", j ), "" );
-		Cvar_Set( va( "mn_price%i", j ), "" );
+	for (i = 0; j < 28; j++) {
+		Cvar_Set(va("mn_item%i", j), "");
+		Cvar_Set(va("mn_storage%i", j), "");
+		Cvar_Set(va("mn_supply%i", j), "");
+		Cvar_Set(va("mn_price%i", j), "");
 	}
 
 	/* select first item */
-	if ( buyListLength ) {
-		Cbuf_AddText( "buyselect0\n" );
-		CL_ItemDescription( buyList[0] );
+	if (buyListLength) {
+		Cbuf_AddText("buyselect0\n");
+		CL_ItemDescription(buyList[0]);
 	} else {
 		/* reset description */
-		Cvar_Set( "mn_itemname", "" );
-		Cvar_Set( "mn_item", "" );
-		Cvar_Set( "mn_weapon", "" );
-		Cvar_Set( "mn_ammo", "" );
+		Cvar_Set("mn_itemname", "");
+		Cvar_Set("mn_item", "");
+		Cvar_Set("mn_weapon", "");
+		Cvar_Set("mn_ammo", "");
 		menuText[TEXT_STANDARD] = NULL;
 	}
 }
@@ -174,28 +175,28 @@ static void CL_BuyType( void )
 /**
   * @brief
   */
-static void CL_BuyItem( void )
+static void CL_BuyItem(void)
 {
 	int num, item;
 
-	if ( Cmd_Argc() < 2 ) {
-		Com_Printf( "Usage: mn_buy <num>\n" );
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: mn_buy <num>\n");
 		return;
 	}
 
-	num = atoi( Cmd_Argv( 1 ) );
-	if ( num < 0 || num >= buyListLength )
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= buyListLength)
 		return;
 
 	item = buyList[num];
-	Cbuf_AddText( va( "buyselect%i\n", num ) );
-	CL_ItemDescription( item );
-	Com_DPrintf("item %i\n", item );
+	Cbuf_AddText(va("buyselect%i\n", num));
+	CL_ItemDescription(item);
+	Com_DPrintf("item %i\n", item);
 
-	if ( ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item] ) {
-		Cvar_SetValue( va( "mn_storage%i", num ), ++ccs.eCampaign.num[item] );
-		Cvar_SetValue( va( "mn_supply%i", num ),  --ccs.eMarket.num[item] );
-		CL_UpdateCredits( ccs.credits-csi.ods[item].price );
+	if (ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item]) {
+		Cvar_SetValue(va("mn_storage%i", num), ++ccs.eCampaign.num[item]);
+		Cvar_SetValue(va("mn_supply%i", num), --ccs.eMarket.num[item]);
+		CL_UpdateCredits(ccs.credits - csi.ods[item].price);
 	}
 	RS_MarkCollected();
 	RS_MarkResearchable();
@@ -204,54 +205,54 @@ static void CL_BuyItem( void )
 /**
   * @brief
   */
-static void CL_SellItem( void )
+static void CL_SellItem(void)
 {
 	int num, item;
 
-	if ( Cmd_Argc() < 2 ) {
-		Com_Printf( "Usage: mn_sell <num>\n" );
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: mn_sell <num>\n");
 		return;
 	}
 
-	num = atoi( Cmd_Argv( 1 ) );
-	if ( num < 0 || num >= buyListLength )
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= buyListLength)
 		return;
 
 	item = buyList[num];
-	Cbuf_AddText( va( "buyselect%i\n", num ) );
-	CL_ItemDescription( item );
+	Cbuf_AddText(va("buyselect%i\n", num));
+	CL_ItemDescription(item);
 
-	if ( ccs.eCampaign.num[item] ) {
-		Cvar_SetValue( va( "mn_storage%i", num ), --ccs.eCampaign.num[item] );
-		Cvar_SetValue( va( "mn_supply%i", num ),  ++ccs.eMarket.num[item] );
-		CL_UpdateCredits( ccs.credits+csi.ods[item].price );
+	if (ccs.eCampaign.num[item]) {
+		Cvar_SetValue(va("mn_storage%i", num), --ccs.eCampaign.num[item]);
+		Cvar_SetValue(va("mn_supply%i", num), ++ccs.eMarket.num[item]);
+		CL_UpdateCredits(ccs.credits + csi.ods[item].price);
 	}
 }
 
 /**
   * @brief
   */
-static void CL_BuyAircraft( void )
+static void CL_BuyAircraft(void)
 {
 	int num, aircraftID;
 
-	if ( Cmd_Argc() < 2 ) {
-		Com_Printf( "Usage: mn_buy_aircraft <num>\n" );
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: mn_buy_aircraft <num>\n");
 		return;
 	}
 
-	num = atoi( Cmd_Argv( 1 ) );
-	if ( num < 0 || num >= buyListLength )
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= buyListLength)
 		return;
 
 	aircraftID = buyList[num];
-	Cbuf_AddText( va( "buyselect%i\n", num ) );
+	Cbuf_AddText(va("buyselect%i\n", num));
 
 #if 0
-	if ( ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item] ) {
-		Cvar_SetValue( va( "mn_storage%i", num ), ++ccs.eCampaign.num[item] );
-		Cvar_SetValue( va( "mn_supply%i", num ),  --ccs.eMarket.num[item] );
-		CL_UpdateCredits( ccs.credits-csi.ods[item].price );
+	if (ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item]) {
+		Cvar_SetValue(va("mn_storage%i", num), ++ccs.eCampaign.num[item]);
+		Cvar_SetValue(va("mn_supply%i", num), --ccs.eMarket.num[item]);
+		CL_UpdateCredits(ccs.credits - csi.ods[item].price);
 	}
 #endif
 }
@@ -264,31 +265,32 @@ static void CL_BuyAircraft( void )
   * or the other functions need to check whether the aircraft
   * at current arraypos is valid
   */
-static void CL_SellAircraft( void )
+static void CL_SellAircraft(void)
 {
 	int num, aircraftID, i, j;
-	base_t*	base;
-	aircraft_t*	air;
-	qboolean	found = qfalse;
+	base_t *base;
+	aircraft_t *air;
+	qboolean found = qfalse;
 
-	if ( Cmd_Argc() < 2 ) {
-		Com_Printf( "Usage: mn_sell_aircraft <num>\n" );
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: mn_sell_aircraft <num>\n");
 		return;
 	}
 
-	num = atoi( Cmd_Argv( 1 ) );
-	if ( num < 0 || num >= buyListLength )
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= buyListLength)
 		return;
 
 	aircraftID = buyList[num];
-	if ( aircraftID > numAircraft )
+	if (aircraftID > numAircraft)
 		return;
 
-	for ( i = 0, base = gd.bases; i < gd.numBases; i++, base++ ) {
-		if ( ! base->founded ) continue;
-		for ( j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++ ) {
-			if ( !Q_strncmp( air->id, aircraft[aircraftID].id, MAX_VAR ) ) {
-				if ( *air->teamSize )
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
+		if (!base->founded)
+			continue;
+		for (j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++) {
+			if (!Q_strncmp(air->id, aircraft[aircraftID].id, MAX_VAR)) {
+				if (*air->teamSize)
 					continue;
 				found = qtrue;
 				break;
@@ -296,36 +298,36 @@ static void CL_SellAircraft( void )
 		}
 		/* ok, we've found an empty aircraft (no team) in a base
 		   so now we can sell it */
-		if ( found ) {
+		if (found) {
 			/* FIXME: Do the selling here...
-			 reassign the aircraft-array in base_t
-			 maybe a linked list would be the best in base_t
-			 delete this aircraft in base */
+			   reassign the aircraft-array in base_t
+			   maybe a linked list would be the best in base_t
+			   delete this aircraft in base */
 
-			memset( &base->aircraft[j], 0, sizeof(aircraft_t) );
+			memset(&base->aircraft[j], 0, sizeof(aircraft_t));
 
 			/* last entry - we don't have to search for this anymore */
-			if ( j == base->numAircraftInBase-1 )
+			if (j == base->numAircraftInBase - 1)
 				base->numAircraftInBase--;
 
-			CL_UpdateCredits( ccs.credits + air->price );
+			CL_UpdateCredits(ccs.credits + air->price);
 			return;
 		}
 	}
-	if ( ! found )
+	if (!found)
 		Com_Printf("...there are no aircraft available (with no team assigned) for selling\n");
 }
 
 /**
   * @brief
   */
-void CL_ResetMarket( void )
+void CL_ResetMarket(void)
 {
-	Cmd_AddCommand( "buy_type", CL_BuyType );
-	Cmd_AddCommand( "buy_select", CL_BuySelectCmd );
-	Cmd_AddCommand( "mn_buy", CL_BuyItem );
-	Cmd_AddCommand( "mn_sell", CL_SellItem );
-	Cmd_AddCommand( "mn_buy_aircraft", CL_BuyAircraft );
-	Cmd_AddCommand( "mn_sell_aircraft", CL_SellAircraft );
+	Cmd_AddCommand("buy_type", CL_BuyType);
+	Cmd_AddCommand("buy_select", CL_BuySelectCmd);
+	Cmd_AddCommand("mn_buy", CL_BuyItem);
+	Cmd_AddCommand("mn_sell", CL_SellItem);
+	Cmd_AddCommand("mn_buy_aircraft", CL_BuyAircraft);
+	Cmd_AddCommand("mn_sell_aircraft", CL_SellAircraft);
 	buyListLength = -1;
 }

@@ -1,4 +1,11 @@
+/**
+ * @file cl_market.h
+ * @brief Header for single player market stuff.
+ */
+
 /*
+Copyright (C) 2002-2006 UFO: Alien Invasion team.
+
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
@@ -13,11 +20,12 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
 */
-/* cl_market.h -- primary header for market stuff */
-#ifndef MARKET_DEFINED
-#define MARKET_DEFINED 1
 
-void CL_ResetMarket( void );
+#ifndef CLIENT_CL_MARKET_H
+#define CLIENT_CL_MARKET_H
 
-#endif /* MARKET_DEFINED */
+void CL_ResetMarket(void);
+
+#endif /* CLIENT_CL_MARKET_H */
