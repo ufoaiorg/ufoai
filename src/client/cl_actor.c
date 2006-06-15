@@ -538,6 +538,10 @@ void CL_RemoveActorFromTeamList(le_t * le)
 					break;
 				}
 			}
+#ifdef DEBUG
+			if ( j == baseCurrent->numWholeTeam )
+				Com_Printf("CL_RemoveActorFromTeamList: could not mask as dead - ucn: %i\n", baseCurrent->curTeam[i].ucn);
+#endif
 			return;
 		}
 	}
