@@ -1,5 +1,11 @@
+/**
+ * @file cl_input.c
+ * @brief client input handling - bindable commands
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
+Copyright (C) 2002-2006 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,7 +23,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* cl.input.c  -- builds an intended movement command to send to the server */
 
 #include "client.h"
 
