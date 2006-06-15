@@ -138,14 +138,12 @@ edict_t *G_PickTarget (char *targetname)
 	int		num_choices = 0;
 	edict_t	*choice[MAXCHOICES];
 
-	if (!targetname)
-	{
+	if (!targetname) {
 		gi.dprintf("G_PickTarget called with NULL targetname\n");
 		return NULL;
 	}
 
-	while(1)
-	{
+	while(1) {
 		ent = G_Find (ent, FOFS(targetname), targetname);
 		if (!ent)
 			break;
@@ -154,8 +152,7 @@ edict_t *G_PickTarget (char *targetname)
 			break;
 	}
 
-	if (!num_choices)
-	{
+	if (!num_choices) {
 		gi.dprintf("G_PickTarget: target %s not found\n", targetname);
 		return NULL;
 	}
@@ -179,7 +176,7 @@ This is just a convenience function
 for making temporary vectors for function calls
 =============
 */
-float	*tv (float x, float y, float z)
+float *tv (float x, float y, float z)
 {
 	static	int	index;
 	static	vec3_t	vecs[8];
@@ -206,7 +203,7 @@ This is just a convenience function
 for printing vectors
 =============
 */
-char	*vtos (vec3_t v)
+char *vtos (vec3_t v)
 {
 	static	int		index;
 	static	char	str[8][32];
@@ -230,17 +227,11 @@ vec3_t MOVEDIR_DOWN	= {0, 0, -1};
 void G_SetMovedir (vec3_t angles, vec3_t movedir)
 {
 	if (VectorCompare (angles, VEC_UP))
-	{
 		VectorCopy (MOVEDIR_UP, movedir);
-	}
 	else if (VectorCompare (angles, VEC_DOWN))
-	{
 		VectorCopy (MOVEDIR_DOWN, movedir);
-	}
 	else
-	{
 		AngleVectors (angles, movedir, NULL, NULL);
-	}
 
 	VectorClear (angles);
 }
@@ -250,16 +241,13 @@ float vectoyaw (vec3_t vec)
 {
 	float	yaw;
 
-	if (/*vec[YAW] == 0 &&*/ vec[PITCH] == 0)
-	{
+	if (/*vec[YAW] == 0 &&*/ vec[PITCH] == 0) {
 		yaw = 0;
 		if (vec[YAW] > 0)
 			yaw = 90;
 		else if (vec[YAW] < 0)
 			yaw = -90;
-	}
-	else
-	{
+	} else {
 		yaw = (int) (atan2(vec[YAW], vec[PITCH]) * 180 / M_PI);
 		if (yaw < 0)
 			yaw += 360;
@@ -305,8 +293,7 @@ edict_t *G_Spawn (void)
 
 	e = &g_edicts[1];
 	for ( i=1 ; i<globals.num_edicts ; i++, e++)
-		if (!e->inuse )
-		{
+		if (!e->inuse ) {
 			G_InitEdict (e);
 			return e;
 		}
