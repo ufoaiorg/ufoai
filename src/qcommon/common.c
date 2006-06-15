@@ -81,6 +81,9 @@ static char	*rd_buffer;
 static int	rd_buffersize;
 static void	(*rd_flush)(int target, char *buffer);
 
+/**
+  * @brief
+  */
 void Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush))
 {
 	if (!target || !buffer || !buffersize || !flush)
@@ -93,6 +96,9 @@ void Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush))
 	*rd_buffer = 0;
 }
 
+/**
+  * @brief
+  */
 void Com_EndRedirect (void)
 {
 	rd_flush(rd_target, rd_buffer);
@@ -103,14 +109,12 @@ void Com_EndRedirect (void)
 	rd_flush = NULL;
 }
 
-/*
-=============
-Com_Printf
-
-Both client and server can use this, and it will output
-to the apropriate place.
-=============
-*/
+/**
+  * @brief
+  *
+  * Both client and server can use this, and it will output
+  * to the apropriate place.
+  */
 void Com_Printf (char *fmt, ...)
 {
 	va_list		argptr;
@@ -124,10 +128,8 @@ void Com_Printf (char *fmt, ...)
 #endif
 	va_end (argptr);
 
-	if (rd_target)
-	{
-		if ((strlen (msg) + strlen(rd_buffer)) > (rd_buffersize - 1))
-		{
+	if (rd_target) {
+		if ((strlen (msg) + strlen(rd_buffer)) > (rd_buffersize - 1)) {
 			rd_flush(rd_target, rd_buffer);
 			*rd_buffer = 0;
 		}
@@ -141,12 +143,10 @@ void Com_Printf (char *fmt, ...)
 	Sys_ConsoleOutput (msg);
 
 	/* logfile */
-	if (logfile_active && logfile_active->value)
-	{
+	if (logfile_active && logfile_active->value) {
 		char	name[MAX_QPATH];
 
-		if (!logfile)
-		{
+		if (!logfile) {
 			Com_sprintf (name, sizeof(name), "%s/ufoconsole.log", FS_Gamedir ());
 			if (logfile_active->value > 2)
 				logfile = fopen (name, "a");
@@ -161,20 +161,19 @@ void Com_Printf (char *fmt, ...)
 }
 
 
-/*
-================
-Com_DPrintf
-
-A Com_Printf that only shows up if the "developer" cvar is set
-================
-*/
+/**
+  * @brief
+  *
+  * A Com_Printf that only shows up if the "developer" cvar is set
+  */
 void Com_DPrintf (char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
+	/* don't confuse non-developers with techie stuff... */
 	if (!developer || !developer->value)
-		return;			/* don't confuse non-developers with techie stuff... */
+		return;
 
 	va_start (argptr,fmt);
 #ifndef _WIN32
@@ -188,14 +187,12 @@ void Com_DPrintf (char *fmt, ...)
 }
 
 
-/*
-=============
-Com_Error
-
-Both client and server can use this, and it will
-do the apropriate things.
-=============
-*/
+/**
+  * @brief
+  *
+  * Both client and server can use this, and it will
+  * do the apropriate things.
+  */
 void Com_Error (int code, char *fmt, ...)
 {
 	va_list		argptr;
@@ -214,28 +211,22 @@ void Com_Error (int code, char *fmt, ...)
 #endif
 	va_end (argptr);
 
-	if (code == ERR_DISCONNECT)
-	{
+	if (code == ERR_DISCONNECT) {
 		CL_Drop ();
 		recursive = qfalse;
 		longjmp (abortframe, -1);
-	}
-	else if (code == ERR_DROP)
-	{
+	} else if (code == ERR_DROP) {
 		Com_Printf ("********************\nERROR: %s\n********************\n", msg);
 		SV_Shutdown (va("Server crashed: %s\n", msg), qfalse);
 		CL_Drop ();
 		recursive = qfalse;
 		longjmp (abortframe, -1);
-	}
-	else
-	{
+	} else {
 		SV_Shutdown (va("Server fatal crashed: %s\n", msg), qfalse);
 		CL_Shutdown ();
 	}
 
-	if (logfile)
-	{
+	if (logfile) {
 		fclose (logfile);
 		logfile = NULL;
 	}
@@ -244,11 +235,9 @@ void Com_Error (int code, char *fmt, ...)
 }
 
 
-/*
-=============
-Com_Drop
-=============
-*/
+/**
+  * @brief
+  */
 void Com_Drop( void )
 {
 	SV_Shutdown ( "Server disconnected\n", qfalse);
@@ -257,22 +246,19 @@ void Com_Drop( void )
 }
 
 
-/*
-=============
-Com_Quit
-
-Both client and server can use this, and it will
-do the apropriate things.
-=============
-*/
+/**
+  * @brief
+  *
+  * Both client and server can use this, and it will
+  * do the apropriate things.
+  */
 void Com_Quit (void)
 {
 	SV_Shutdown ("Server quit\n", qfalse);
 #ifndef DEDICATED_ONLY
 	CL_Shutdown ();
 #endif
-	if (logfile)
-	{
+	if (logfile) {
 		fclose (logfile);
 		logfile = NULL;
 	}
@@ -281,21 +267,17 @@ void Com_Quit (void)
 }
 
 
-/*
-==================
-Com_ServerState
-==================
-*/
+/**
+  * @brief
+  */
 int Com_ServerState (void)
 {
 	return server_state;
 }
 
-/*
-==================
-Com_SetServerState
-==================
-*/
+/**
+  * @brief
+  */
 void Com_SetServerState (int state)
 {
 	server_state = state;
@@ -318,6 +300,9 @@ vec3_t	bytedirs[NUMVERTEXNORMALS] =
 
 /* writing functions */
 
+/**
+  * @brief
+  */
 void MSG_WriteChar (sizebuf_t *sb, int c)
 {
 	byte	*buf;
@@ -331,6 +316,9 @@ void MSG_WriteChar (sizebuf_t *sb, int c)
 	buf[0] = c;
 }
 
+/**
+  * @brief
+  */
 void MSG_WriteByte (sizebuf_t *sb, int c)
 {
 	byte	*buf;
@@ -344,6 +332,9 @@ void MSG_WriteByte (sizebuf_t *sb, int c)
 	buf[0] = c;
 }
 
+/**
+  * @brief
+  */
 void MSG_WriteShort (sizebuf_t *sb, int c)
 {
 	byte	*buf;
@@ -358,6 +349,9 @@ void MSG_WriteShort (sizebuf_t *sb, int c)
 	buf[1] = c>>8;
 }
 
+/**
+  * @brief
+  */
 void MSG_WriteLong (sizebuf_t *sb, int c)
 {
 	byte	*buf;
@@ -369,6 +363,9 @@ void MSG_WriteLong (sizebuf_t *sb, int c)
 	buf[3] = c>>24;
 }
 
+/**
+  * @brief
+  */
 void MSG_WriteFloat (sizebuf_t *sb, float f)
 {
 	union {
@@ -383,6 +380,9 @@ void MSG_WriteFloat (sizebuf_t *sb, float f)
 	SZ_Write (sb, &dat.l, 4);
 }
 
+/**
+  * @brief
+  */
 void MSG_WriteString (sizebuf_t *sb, char *s)
 {
 	if (!s)
@@ -391,11 +391,17 @@ void MSG_WriteString (sizebuf_t *sb, char *s)
 		SZ_Write (sb, s, strlen(s)+1);
 }
 
+/**
+  * @brief
+  */
 void MSG_WriteCoord (sizebuf_t *sb, float f)
 {
 	MSG_WriteLong (sb, (int)(f*32));
 }
 
+/**
+  * @brief
+  */
 void MSG_WritePos (sizebuf_t *sb, vec3_t pos)
 {
 	MSG_WriteShort (sb, (int)(pos[0]*8));
@@ -403,6 +409,9 @@ void MSG_WritePos (sizebuf_t *sb, vec3_t pos)
 	MSG_WriteShort (sb, (int)(pos[2]*8));
 }
 
+/**
+  * @brief
+  */
 void MSG_WriteGPos (sizebuf_t *sb, pos3_t pos)
 {
 	MSG_WriteByte (sb, pos[0]);
@@ -410,17 +419,26 @@ void MSG_WriteGPos (sizebuf_t *sb, pos3_t pos)
 	MSG_WriteByte (sb, pos[2]);
 }
 
+/**
+  * @brief
+  */
 void MSG_WriteAngle (sizebuf_t *sb, float f)
 {
 	MSG_WriteByte (sb, (int)(f*256/360) & 255);
 }
 
+/**
+  * @brief
+  */
 void MSG_WriteAngle16 (sizebuf_t *sb, float f)
 {
 	MSG_WriteShort (sb, ANGLE2SHORT(f));
 }
 
 
+/**
+  * @brief
+  */
 void MSG_WriteDir (sizebuf_t *sb, vec3_t dir)
 {
 	int		i, best;
@@ -444,6 +462,9 @@ void MSG_WriteDir (sizebuf_t *sb, vec3_t dir)
 }
 
 
+/**
+  * @brief
+  */
 void MSG_WriteFormat( sizebuf_t *sb, char *format, ... )
 {
 	va_list	ap;
@@ -512,12 +533,19 @@ void MSG_WriteFormat( sizebuf_t *sb, char *format, ... )
 
 /* reading functions */
 
+/**
+  * @brief
+  */
 void MSG_BeginReading (sizebuf_t *msg)
 {
 	msg->readcount = 0;
 }
 
-/* returns -1 if no more characters are available */
+/**
+  * @brief
+  *
+  * returns -1 if no more characters are available
+  */
 int MSG_ReadChar (sizebuf_t *msg_read)
 {
 	int	c;
@@ -531,6 +559,9 @@ int MSG_ReadChar (sizebuf_t *msg_read)
 	return c;
 }
 
+/**
+  * @brief
+  */
 int MSG_ReadByte (sizebuf_t *msg_read)
 {
 	int	c;
@@ -544,6 +575,9 @@ int MSG_ReadByte (sizebuf_t *msg_read)
 	return c;
 }
 
+/**
+  * @brief
+  */
 int MSG_ReadShort (sizebuf_t *msg_read)
 {
 	int	c;
@@ -559,6 +593,9 @@ int MSG_ReadShort (sizebuf_t *msg_read)
 	return c;
 }
 
+/**
+  * @brief
+  */
 int MSG_ReadLong (sizebuf_t *msg_read)
 {
 	int	c;
@@ -576,6 +613,9 @@ int MSG_ReadLong (sizebuf_t *msg_read)
 	return c;
 }
 
+/**
+  * @brief
+  */
 float MSG_ReadFloat (sizebuf_t *msg_read)
 {
 	union {
@@ -599,6 +639,9 @@ float MSG_ReadFloat (sizebuf_t *msg_read)
 	return dat.f;
 }
 
+/**
+  * @brief
+  */
 char *MSG_ReadString (sizebuf_t *msg_read)
 {
 	static char	string[2048];
@@ -618,6 +661,9 @@ char *MSG_ReadString (sizebuf_t *msg_read)
 	return string;
 }
 
+/**
+  * @brief
+  */
 char *MSG_ReadStringLine (sizebuf_t *msg_read)
 {
 	static char	string[2048];
@@ -637,11 +683,17 @@ char *MSG_ReadStringLine (sizebuf_t *msg_read)
 	return string;
 }
 
+/**
+  * @brief
+  */
 float MSG_ReadCoord (sizebuf_t *msg_read)
 {
 	return (float)MSG_ReadLong(msg_read) * (1.0/32);
 }
 
+/**
+  * @brief
+  */
 void MSG_ReadPos (sizebuf_t *msg_read, vec3_t pos)
 {
 	pos[0] = MSG_ReadShort(msg_read) * (1.0/8);
@@ -649,6 +701,9 @@ void MSG_ReadPos (sizebuf_t *msg_read, vec3_t pos)
 	pos[2] = MSG_ReadShort(msg_read) * (1.0/8);
 }
 
+/**
+  * @brief
+  */
 void MSG_ReadGPos (sizebuf_t *msg_read, pos3_t pos)
 {
 	pos[0] = MSG_ReadByte(msg_read);
@@ -656,16 +711,25 @@ void MSG_ReadGPos (sizebuf_t *msg_read, pos3_t pos)
 	pos[2] = MSG_ReadByte(msg_read);
 }
 
+/**
+  * @brief
+  */
 float MSG_ReadAngle (sizebuf_t *msg_read)
 {
 	return (float)MSG_ReadChar(msg_read) * (360.0/256);
 }
 
+/**
+  * @brief
+  */
 float MSG_ReadAngle16 (sizebuf_t *msg_read)
 {
 	return (float)SHORT2ANGLE(MSG_ReadShort(msg_read));
 }
 
+/**
+  * @brief
+  */
 void MSG_ReadData (sizebuf_t *msg_read, void *data, int len)
 {
 	int	i;
@@ -674,6 +738,9 @@ void MSG_ReadData (sizebuf_t *msg_read, void *data, int len)
 		((byte *)data)[i] = MSG_ReadByte (msg_read);
 }
 
+/**
+  * @brief
+  */
 void MSG_ReadDir (sizebuf_t *sb, vec3_t dir)
 {
 	int	b;
@@ -685,6 +752,9 @@ void MSG_ReadDir (sizebuf_t *sb, vec3_t dir)
 }
 
 
+/**
+  * @brief
+  */
 void MSG_ReadFormat( sizebuf_t *msg_read, char *format, ... )
 {
 	va_list	ap;
@@ -768,20 +838,20 @@ int MSG_LengthFormat( sizebuf_t *sb, char *format )
 		typeID = *format++;
 
 		switch ( typeID ) {
-			case 'c': delta = 1; break;
-			case 'b': delta = 1; break;
-			case 's': delta = 2; break;
-			case 'l': delta = 4; break;
-			case 'f': delta = 4; break;
-			case 'p': delta = 6; break;
-			case 'g': delta = 3; break;
-			case 'd': delta = 1; break;
-			case 'a': delta = 1; break;
-			case '!': break;
-			case '*': delta = MSG_ReadByte( sb ); length++; break;
-			case '&': delta = 1; while ( MSG_ReadByte( sb ) != NONE ) length++; break;
-			default:
-				Com_Error( ERR_DROP, "LengthFormat: Unknown type!\n" );
+		case 'c': delta = 1; break;
+		case 'b': delta = 1; break;
+		case 's': delta = 2; break;
+		case 'l': delta = 4; break;
+		case 'f': delta = 4; break;
+		case 'p': delta = 6; break;
+		case 'g': delta = 3; break;
+		case 'd': delta = 1; break;
+		case 'a': delta = 1; break;
+		case '!': break;
+		case '*': delta = MSG_ReadByte( sb ); length++; break;
+		case '&': delta = 1; while ( MSG_ReadByte( sb ) != NONE ) length++; break;
+		default:
+			Com_Error( ERR_DROP, "LengthFormat: Unknown type!\n" );
 		}
 
 		/* advance in buffer */
@@ -796,6 +866,9 @@ int MSG_LengthFormat( sizebuf_t *sb, char *format )
 
 /*=========================================================================== */
 
+/**
+  * @brief
+  */
 void SZ_Init (sizebuf_t *buf, byte *data, int length)
 {
 	memset (buf, 0, sizeof(*buf));
@@ -803,12 +876,18 @@ void SZ_Init (sizebuf_t *buf, byte *data, int length)
 	buf->maxsize = length;
 }
 
+/**
+  * @brief
+  */
 void SZ_Clear (sizebuf_t *buf)
 {
 	buf->cursize = 0;
 	buf->overflowed = qfalse;
 }
 
+/**
+  * @brief
+  */
 void *SZ_GetSpace (sizebuf_t *buf, int length)
 {
 	void	*data;
@@ -831,11 +910,17 @@ void *SZ_GetSpace (sizebuf_t *buf, int length)
 	return data;
 }
 
+/**
+  * @brief
+  */
 void SZ_Write (sizebuf_t *buf, void *data, int length)
 {
 	memcpy (SZ_GetSpace(buf,length),data,length);
 }
 
+/**
+  * @brief
+  */
 void SZ_Print (sizebuf_t *buf, char *data)
 {
 	int		len;
@@ -855,14 +940,12 @@ void SZ_Print (sizebuf_t *buf, char *data)
 /*============================================================================ */
 
 
-/*
-================
-COM_CheckParm
-
-Returns the position (1 to argc-1) in the program's argument list
-where the given parameter apears, or 0 if not present
-================
-*/
+/**
+  * @brief
+  *
+  * Returns the position (1 to argc-1) in the program's argument list
+  * where the given parameter apears, or 0 if not present
+  */
 int COM_CheckParm (char *parm)
 {
 	int		i;
@@ -875,11 +958,17 @@ int COM_CheckParm (char *parm)
 	return 0;
 }
 
+/**
+  * @brief Returns the script commandline argument count
+  */
 int COM_Argc (void)
 {
 	return com_argc;
 }
 
+/**
+  * @brief Returns an argument of script commandline
+  */
 char *COM_Argv (int arg)
 {
 	if (arg < 0 || arg >= com_argc || !com_argv[arg])
@@ -887,6 +976,9 @@ char *COM_Argv (int arg)
 	return com_argv[arg];
 }
 
+/**
+  * @brief
+  */
 void COM_ClearArgv (int arg)
 {
 	if (arg < 0 || arg >= com_argc || !com_argv[arg])
@@ -895,11 +987,9 @@ void COM_ClearArgv (int arg)
 }
 
 
-/*
-================
-COM_InitArgv
-================
-*/
+/**
+  * @brief
+  */
 void COM_InitArgv (int argc, char **argv)
 {
 	int		i;
@@ -915,13 +1005,9 @@ void COM_InitArgv (int argc, char **argv)
 	}
 }
 
-/*
-================
-COM_AddParm
-
-Adds the given string at the end of the current argument list
-================
-*/
+/**
+  * @brief Adds the given string at the end of the current argument list
+  */
 void COM_AddParm (char *parm)
 {
 	if (com_argc == MAX_NUM_ARGVS)
@@ -929,10 +1015,11 @@ void COM_AddParm (char *parm)
 	com_argv[com_argc++] = parm;
 }
 
-
-
-
-/*/ just for debugging */
+/**
+  * @brief
+  *
+  * just for debugging
+  */
 int	memsearch (byte *start, int count, int search)
 {
 	int		i;
@@ -944,6 +1031,9 @@ int	memsearch (byte *start, int count, int search)
 }
 
 
+/**
+  * @brief
+  */
 char *CopyString (char *in)
 {
 	char	*out;
@@ -955,7 +1045,9 @@ char *CopyString (char *in)
 }
 
 
-
+/**
+  * @brief
+  */
 void Info_Print (char *s)
 {
 	char	key[512];
@@ -1000,7 +1092,7 @@ void Info_Print (char *s)
 /*
 ==============================================================================
 
-						ZONE MEMORY ALLOCATION
+ZONE MEMORY ALLOCATION
 
 just cleared malloc with counters now...
 
@@ -1008,7 +1100,6 @@ just cleared malloc with counters now...
 */
 
 #define	Z_MAGIC		0x1d1d
-
 
 typedef struct zhead_s
 {
@@ -1021,11 +1112,11 @@ typedef struct zhead_s
 zhead_t		z_chain;
 int		z_count, z_bytes;
 
-/*
-========================
-Z_Free
-========================
-*/
+/**
+  * @brief
+  *
+  * Frees a Z_Malloc'ed pointer
+  */
 void Z_Free (void *ptr)
 {
 	zhead_t	*z;
@@ -1038,7 +1129,6 @@ void Z_Free (void *ptr)
 	if (z->magic != Z_MAGIC)
 		Com_Error (ERR_FATAL, "Z_Free: bad magic (%i)", z->magic );
 
-
 	z->prev->next = z->next;
 	z->next->prev = z->prev;
 
@@ -1048,21 +1138,21 @@ void Z_Free (void *ptr)
 }
 
 
-/*
-========================
-Z_Stats_f
-========================
-*/
+/**
+  * @brief
+  *
+  * Stats about the allocated bytes via Z_Malloc
+  */
 void Z_Stats_f (void)
 {
 	Com_Printf ("%i bytes in %i blocks\n", z_bytes, z_count);
 }
 
-/*
-========================
-Z_FreeTags
-========================
-*/
+/**
+  * @brief
+  *
+  * Frees a memory block with a given tag
+  */
 void Z_FreeTags (int tag)
 {
 	zhead_t	*z, *next;
@@ -1074,11 +1164,11 @@ void Z_FreeTags (int tag)
 	}
 }
 
-/*
-========================
-Z_TagMalloc
-========================
-*/
+/**
+  * @brief
+  *
+  * Allocates a memory block with a given tag
+  */
 void *Z_TagMalloc (int size, int tag)
 {
 	zhead_t	*z;
@@ -1102,11 +1192,11 @@ void *Z_TagMalloc (int size, int tag)
 	return (void *)(z+1);
 }
 
-/*
-========================
-Z_Malloc
-========================
-*/
+/**
+  * @brief
+  *
+  * Allocate a memory block with default tag
+  */
 void *Z_Malloc (int size)
 {
 	return Z_TagMalloc (size, 0);
@@ -1183,13 +1273,11 @@ static byte chktbl[1024] = {
 0x39, 0x4f, 0xdd, 0xe4, 0xb6, 0x19, 0x27, 0xfb, 0xb8, 0xf5, 0x32, 0x73, 0xe5, 0xcb, 0x32
 };
 
-/*
-====================
-COM_BlockSequenceCRCByte
-
-For proxy protecting
-====================
-*/
+/**
+  * @brief
+  *
+  * For proxy protecting
+  */
 byte	COM_BlockSequenceCRCByte (byte *base, int length, int sequence)
 {
 	int		n;
@@ -1230,35 +1318,31 @@ byte	COM_BlockSequenceCRCByte (byte *base, int length, int sequence)
 void Key_Init (void);
 void SCR_EndLoadingPlaque (void);
 
-/*
-=============
-Com_Error_f
-
-Just throw a fatal error to
-test error shutdown procedures
-=============
-*/
+/**
+  * @brief
+  *
+  * Just throw a fatal error to
+  * test error shutdown procedures
+  */
 void Com_Error_f (void)
 {
 	Com_Error (ERR_FATAL, "%s", Cmd_Argv(1));
 }
 
 #ifdef HAVE_GETTEXT
-/*
-=================
-Qcommon_LocaleInit
-
-Initialize the locale settings for gettext
-po files are searched in ./base/i18n
-You can override the language-settings in setting
-the cvar s_language to a valid language-string like
-e.g. de_DE, en or en_US
-
-This function is only build in and called when
-defining HAVE_GETTEXT
-Under Linux see Makefile options for this
-=================
-*/
+/**
+  * @brief Gettext init function
+  *
+  * Initialize the locale settings for gettext
+  * po files are searched in ./base/i18n
+  * You can override the language-settings in setting
+  * the cvar s_language to a valid language-string like
+  * e.g. de_DE, en or en_US
+  *
+  * This function is only build in and called when
+  * defining HAVE_GETTEXT
+  * Under Linux see Makefile options for this
+  */
 void Qcommon_LocaleInit ( void )
 {
 	char* locale;
@@ -1301,11 +1385,9 @@ void Qcommon_LocaleInit ( void )
 }
 #endif
 
-/*
-=================
-Qcommon_Init
-=================
-*/
+/**
+  * @brief Init function
+  */
 void Qcommon_Init (int argc, char **argv)
 {
 	char	*s;
@@ -1319,8 +1401,8 @@ void Qcommon_Init (int argc, char **argv)
 
 	z_chain.next = z_chain.prev = &z_chain;
 
-	/* prepare enough of the subsystems to handle */
-	/* cvar and command buffer management */
+	/* prepare enough of the subsystems to handle
+	   cvar and command buffer management */
 	COM_InitArgv (argc, argv);
 
 	Swap_Init ();
@@ -1331,10 +1413,10 @@ void Qcommon_Init (int argc, char **argv)
 
 	Key_Init ();
 
-	/* we need to add the early commands twice, because */
-	/* a basedir or cddir needs to be set before execing */
-	/* config files, but we want other parms to override */
-	/* the settings of the config files */
+	/* we need to add the early commands twice, because
+	   a basedir or cddir needs to be set before execing
+	   config files, but we want other parms to override
+	   the settings of the config files */
 	Cbuf_AddEarlyCommands (qfalse);
 	Cbuf_Execute ();
 
@@ -1398,8 +1480,8 @@ void Qcommon_Init (int argc, char **argv)
 
 	Com_ParseScripts ();
 
-	/* add + commands from command line */
-	/* if the user didn't give any commands, run default action */
+	/* add + commands from command line
+	   if the user didn't give any commands, run default action */
 	if (!Cbuf_AddLateCommands () ) {
 		if (!dedicated->value)
 			Cbuf_AddText ("init\n");
@@ -1420,18 +1502,17 @@ void Qcommon_Init (int argc, char **argv)
 	Com_Printf ("====== UFO Initialized ======\n\n");
 }
 
-/*
-=================
-Qcommon_Frame
-=================
-*/
+/**
+  * @brief
+  */
 float Qcommon_Frame (int msec)
 {
 	char	*s;
 	int		time_before = 0, time_between = 0, time_after = 0;
 
-	if (setjmp (abortframe) )
-		return 1.0;			/* an ERR_DROP was thrown */
+	/* an ERR_DROP was thrown */
+	if (setjmp (abortframe))
+		return 1.0;
 
 	if ( timescale->value > 5.0 )
 		Cvar_SetValue( "timescale", 5.0 );
@@ -1507,11 +1588,9 @@ float Qcommon_Frame (int msec)
 	return timescale->value;
 }
 
-/*
-=================
-Qcommon_Shutdown
-=================
-*/
+/**
+  * @brief
+  */
 void Qcommon_Shutdown (void)
 {
 }
