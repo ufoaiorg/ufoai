@@ -1,5 +1,11 @@
+/**
+ * @file cl_main.c
+ * @brief client main loop
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
+Copyright (C) 2002-2006 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,7 +23,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* cl_main.c  -- client main loop */
 
 #include "client.h"
 
@@ -97,9 +102,7 @@ cvar_t	*confirm_actions;
 
 cvar_t	*cl_precachemenus;
 
-/* */
 /* userinfo */
-/* */
 cvar_t	*info_password;
 cvar_t	*info_spectator;
 cvar_t	*name;
@@ -123,103 +126,87 @@ centity_t cl_entities[MAX_EDICTS];
 
 /*====================================================================== */
 
-/*
-===================
-Cmd_ForwardToServer
-
-adds the current command line as a clc_stringcmd to the client message.
-things like godmode, noclip, etc, are commands directed to the server,
-so when they are typed in at the console, they will need to be forwarded.
-===================
-*/
+/**
+  * @brief
+  *
+  * adds the current command line as a clc_stringcmd to the client message.
+  * things like godmode, noclip, etc, are commands directed to the server,
+  * so when they are typed in at the console, they will need to be forwarded.
+  */
 void Cmd_ForwardToServer (void)
 {
 	char	*cmd;
 
 	cmd = Cmd_Argv(0);
-	if (cls.state <= ca_connected || *cmd == '-' || *cmd == '+')
-	{
+	if (cls.state <= ca_connected || *cmd == '-' || *cmd == '+') {
 		Com_Printf ("Unknown command \"%s\"\n", cmd);
 		return;
 	}
 
 	MSG_WriteByte (&cls.netchan.message, clc_stringcmd);
 	SZ_Print (&cls.netchan.message, cmd);
-	if (Cmd_Argc() > 1)
-	{
+	if (Cmd_Argc() > 1) {
 		SZ_Print (&cls.netchan.message, " ");
 		SZ_Print (&cls.netchan.message, Cmd_Args());
 	}
 }
 
+/**
+  * @brief
+  */
 void CL_Setenv_f( void )
 {
 	int argc = Cmd_Argc();
 
-	if ( argc > 2 )
-	{
+	if ( argc > 2 ) {
 		char buffer[1000];
 		int i;
 
 		Q_strncpyz( buffer, Cmd_Argv(1), sizeof(buffer) );
 		Q_strcat( buffer, sizeof(buffer), "=" );
 
-		for ( i = 2; i < argc; i++ )
-		{
+		for ( i = 2; i < argc; i++ ) {
 			Q_strcat( buffer, sizeof(buffer), Cmd_Argv( i ) );
 			Q_strcat( buffer, sizeof(buffer), " " );
 		}
 
 		putenv( buffer );
-	}
-	else if ( argc == 2 )
-	{
+	} else if ( argc == 2 ) {
 		char *env = getenv( Cmd_Argv(1) );
 
 		if ( env )
-		{
 			Com_Printf( "%s=%s\n", Cmd_Argv(1), env );
-		}
 		else
-		{
 			Com_Printf( "%s undefined\n", Cmd_Argv(1), env );
-		}
 	}
 }
 
 
-/*
-==================
-CL_ForwardToServer_f
-==================
-*/
+/**
+  * @brief
+  */
 void CL_ForwardToServer_f (void)
 {
-	if (cls.state != ca_connected && cls.state != ca_active)
-	{
+	if (cls.state != ca_connected && cls.state != ca_active) {
 		Com_Printf ( "Can't \"%s\", not connected\n", Cmd_Argv(0));
 		return;
 	}
 
 	/* don't forward the first argument */
-	if (Cmd_Argc() > 1)
-	{
+	if (Cmd_Argc() > 1) {
 		MSG_WriteByte (&cls.netchan.message, clc_stringcmd);
 		SZ_Print (&cls.netchan.message, Cmd_Args());
 	}
 }
 
 
-/*
-==================
-CL_Pause_f
-==================
-*/
+/**
+  * @brief
+  */
 void CL_Pause_f (void)
 {
 	/* never pause in multiplayer */
-	if ( !ccs.singleplayer || !Com_ServerState () )
-	{
+	if ( !ccs.singleplayer || !Com_ServerState () ) {
 		Cvar_SetValue ("paused", 0);
 		return;
 	}
@@ -227,25 +214,20 @@ void CL_Pause_f (void)
 	Cvar_SetValue ("paused", !cl_paused->value);
 }
 
-/*
-==================
-CL_Quit_f
-==================
-*/
+/**
+  * @brief
+  */
 void CL_Quit_f (void)
 {
 	CL_Disconnect ();
 	Com_Quit ();
 }
 
-/*
-================
-CL_Drop
-
-Called after an ERR_DROP was thrown
-================
-*/
-
+/**
+  * @brief
+  *
+  * Called after an ERR_DROP was thrown
+  */
 void CL_Drop (void)
 {
 	if (cls.state == ca_uninitialized)
@@ -261,21 +243,18 @@ void CL_Drop (void)
 }
 
 
-/*
-=======================
-CL_SendConnectPacket
-
-We have gotten a challenge from the server, so try and
-connect.
-======================
-*/
+/**
+  * @brief
+  *
+  * We have gotten a challenge from the server, so try and
+  * connect.
+  */
 void CL_SendConnectPacket (void)
 {
 	netadr_t	adr;
 	int		port;
 
-	if (!NET_StringToAdr (cls.servername, &adr))
-	{
+	if (!NET_StringToAdr (cls.servername, &adr)) {
 		Com_Printf ( "Bad server address: %s\n", cls.servername );
 		cls.connect_time = 0;
 		return;
@@ -290,21 +269,18 @@ void CL_SendConnectPacket (void)
 		PROTOCOL_VERSION, port, cls.challenge, Cvar_Userinfo() );
 }
 
-/*
-=================
-CL_CheckForResend
-
-Resend a connect message if the last one has timed out
-=================
-*/
+/**
+  * @brief
+  *
+  * Resend a connect message if the last one has timed out
+  */
 void CL_CheckForResend (void)
 {
 	netadr_t	adr;
 
 	/* if the local server is running and we aren't */
 	/* then connect */
-	if (cls.state == ca_disconnected && Com_ServerState() )
-	{
+	if (cls.state == ca_disconnected && Com_ServerState() ) {
 		cls.state = ca_connecting;
 		Q_strncpyz(cls.servername, "localhost", sizeof(cls.servername));
 		/* we don't need a challenge on the localhost */
@@ -320,8 +296,7 @@ void CL_CheckForResend (void)
 	if (cls.realtime - cls.connect_time < 3000)
 		return;
 
-	if (!NET_StringToAdr (cls.servername, &adr))
-	{
+	if (!NET_StringToAdr (cls.servername, &adr)) {
 		Com_Printf ("Bad server address: %s\n", cls.servername);
 		cls.state = ca_disconnected;
 		return;
@@ -336,67 +311,58 @@ void CL_CheckForResend (void)
 	Netchan_OutOfBandPrint (NS_CLIENT, adr, "getchallenge\n");
 }
 
-
-/*
-================
-CL_Connect_f
-
-FIXME: Spectator needs no team
-================
-*/
+/**
+  * @brief
+  *
+  * FIXME: Spectator needs no team
+  */
 void CL_Connect_f (void)
 {
 	char	*server;
 
-	if (Cmd_Argc() != 2)
-	{
+	if (Cmd_Argc() != 2) {
 		Com_Printf ("usage: connect <server>\n");
 		return;
 	}
 
-	if ( ! B_GetNumOnTeam() )
-	{
+	if ( !B_GetNumOnTeam() ) {
 		MN_Popup( _("Error"), _("Assemble a team first") );
 		return;
 	}
 
-	if (Com_ServerState ())
-	{	/* if running a local server, kill it and reissue */
+	/* if running a local server, kill it and reissue */
+	if (Com_ServerState())
 		SV_Shutdown ( "Server quit\n", qfalse);
-	}
 	else
-	{
-		CL_Disconnect ();
-	}
+		CL_Disconnect();
 
 	server = Cmd_Argv (1);
 
-	NET_Config (qtrue); /* allow remote */
+	/* allow remote */
+	NET_Config (qtrue);
 
-	CL_Disconnect ();
+	CL_Disconnect();
 
 	cls.state = ca_connecting;
 	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
-	cls.connect_time = -99999;	/* CL_CheckForResend() will fire immediately */
+	/* CL_CheckForResend() will fire immediately */
+	cls.connect_time = -99999;
 }
 
 
-/*
-=====================
-CL_Rcon_f
-
-  Send the rest of the command line over as
-  an unconnected command.
-=====================
-*/
+/**
+  * @brief
+  *
+  * Send the rest of the command line over as
+  * an unconnected command.
+  */
 void CL_Rcon_f (void)
 {
 	char	message[1024];
 	int		i;
 	netadr_t	to;
 
-	if (!rcon_client_password->string)
-	{
+	if (!rcon_client_password->string) {
 		Com_Printf ("You must set 'rcon_password' before issuing an rcon command.\n");
 		return;
 	}
@@ -407,25 +373,23 @@ void CL_Rcon_f (void)
 	message[3] = (char)255;
 	message[4] = 0;
 
-	NET_Config (qtrue); /* allow remote */
+	/* allow remote */
+	NET_Config (qtrue);
 
 	Q_strcat (message, sizeof(message), "rcon ");
 
 	Q_strcat (message, sizeof(message), rcon_client_password->string);
 	Q_strcat (message, sizeof(message), " ");
 
-	for (i=1 ; i<Cmd_Argc() ; i++)
-	{
+	for (i=1 ; i<Cmd_Argc() ; i++) {
 		Q_strcat (message, sizeof(message), Cmd_Argv(i));
 		Q_strcat (message, sizeof(message), " ");
 	}
 
 	if (cls.state >= ca_connected)
 		to = cls.netchan.remote_address;
-	else
-	{
-		if (!strlen(rcon_address->string))
-		{
+	else {
+		if (!strlen(rcon_address->string)) {
 			Com_Printf ( "You must either be connected, or set the 'rcon_address' cvar\nto issue rcon commands\n" );
 			return;
 		}
@@ -438,17 +402,13 @@ void CL_Rcon_f (void)
 }
 
 
-/*
-=====================
-CL_ClearState
-
-=====================
-*/
+/**
+  * @brief
+  */
 void CL_ClearState (void)
 {
 	S_StopAllSounds ();
 	CL_ClearEffects ();
-/*	CL_ClearTEnts (); */
 	CL_InitEvents ();
 
 	/* wipe the entire cl structure */
@@ -463,15 +423,13 @@ void CL_ClearState (void)
 	SZ_Clear (&cls.netchan.message);
 }
 
-/*
-=====================
-CL_Disconnect
-
-Goes from a connected state to full screen console state
-Sends a disconnect message to the server
-This is also called on Com_Error, so it shouldn't cause any errors
-=====================
-*/
+/**
+  * @brief
+  *
+  * Goes from a connected state to full screen console state
+  * Sends a disconnect message to the server
+  * This is also called on Com_Error, so it shouldn't cause any errors
+  */
 void CL_Disconnect (void)
 {
 	byte	final[32];
@@ -479,8 +437,7 @@ void CL_Disconnect (void)
 	if (cls.state == ca_disconnected)
 		return;
 
-	if (cl_timedemo && cl_timedemo->value)
-	{
+	if (cl_timedemo && cl_timedemo->value) {
 		int	time;
 
 		time = Sys_Milliseconds () - cl.timedemo_start;
@@ -492,8 +449,7 @@ void CL_Disconnect (void)
 	VectorClear (cl.refdef.blend);
 
 	/* go to main menu and bring up console */
-	if ( ! ccs.singleplayer )
-	{
+	if ( ! ccs.singleplayer ) {
 		MN_PopMenu( qtrue );
 		MN_PushMenu( mn_main->string );
 	}
@@ -518,21 +474,21 @@ void CL_Disconnect (void)
 	cls.state = ca_disconnected;
 }
 
+/**
+  * @brief
+  */
 void CL_Disconnect_f (void)
 {
 	Com_Drop();
 }
 
 
-/*
-====================
-CL_Packet_f
-
-packet <destination> <contents>
-
-Contents allows \n escape character
-====================
-*/
+/**
+  * @brief
+  *
+  * packet <destination> <contents>
+  * Contents allows \n escape character
+  */
 void CL_Packet_f (void)
 {
 	char	send[2048];
@@ -541,16 +497,14 @@ void CL_Packet_f (void)
 	char	*in, *out;
 	netadr_t	adr;
 
-	if (Cmd_Argc() != 3)
-	{
+	if (Cmd_Argc() != 3) {
 		Com_Printf ("Usage: packet <destination> <contents>\n");
 		return;
 	}
 
 	NET_Config (qtrue);		/* allow remote */
 
-	if (!NET_StringToAdr (Cmd_Argv(1), &adr))
-	{
+	if (!NET_StringToAdr (Cmd_Argv(1), &adr)) {
 		Com_Printf ("Bad address\n");
 		return;
 	}
@@ -562,14 +516,11 @@ void CL_Packet_f (void)
 	send[0] = send[1] = send[2] = send[3] = (char)0xff;
 
 	l = strlen (in);
-	for (i=0 ; i<l ; i++)
-	{
-		if (in[i] == '\\' && in[i+1] == 'n')
-		{
+	for (i=0 ; i<l ; i++) {
+		if (in[i] == '\\' && in[i+1] == 'n') {
 			*out++ = '\n';
 			i++;
-		}
-		else
+		} else
 			*out++ = in[i];
 	}
 	*out = 0;
