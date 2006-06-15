@@ -832,11 +832,9 @@ void G_InventoryMove( player_t *player, int num, int from, int fx, int fy, int t
 }
 
 
-/*
-=================
-G_InventoryToFloor
-=================
-*/
+/**
+  * @brief Move the whole given inventory to the floor and destroy the items that do not fit there.
+  */
 void G_InventoryToFloor( edict_t *ent )
 {
 	invList_t	*ic, *next;
@@ -868,6 +866,7 @@ void G_InventoryToFloor( edict_t *ent )
 			continue;
 		/* now cycle through all items for the container of the character (or the entity) */
 		for ( ic = ent->i.c[k]; ic; ic = next ) {
+			/* Save the next inv-list before it gets overwritten below. Do not put this in the "for" statement, unless you want an endless loop. ;) */
 			next = ic->next;
 			/* find the coordinates for the current item on floor */
 			Com_FindSpace( &floor->i, ic->item.t, gi.csi->idFloor, &ic->x, &ic->y );
