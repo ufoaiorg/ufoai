@@ -1,5 +1,5 @@
 /**
- * @file console.c
+ * @file console.h
  * @brief Console header file.
  */
 

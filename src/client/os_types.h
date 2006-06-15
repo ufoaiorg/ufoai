@@ -1,3 +1,8 @@
+/**
+ * @file os_types.h
+ * @brief Types file imported from Ogg Vorbis codec.
+ */
+
 /*
 All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
 
