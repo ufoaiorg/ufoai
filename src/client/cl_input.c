@@ -68,6 +68,9 @@ kbutton_t	in_turnup, in_turndown;
 int			in_impulse;
 
 
+/**
+  * @brief
+  */
 void KeyDown (kbutton_t *b)
 {
 	int		k;
@@ -104,6 +107,9 @@ void KeyDown (kbutton_t *b)
 	b->state |= 1 + 2;	/* down + impulse down */
 }
 
+/**
+  * @brief
+  */
 void KeyUp (kbutton_t *b)
 {
 	int		k;
@@ -113,10 +119,11 @@ void KeyUp (kbutton_t *b)
 	c = Cmd_Argv(1);
 	if (c[0])
 		k = atoi(c);
-	else
-	{ /* typed manually at the console, assume for unsticking, so clear all */
+	/* typed manually at the console, assume for unsticking, so clear all */
+	else {
 		b->down[0] = b->down[1] = 0;
-		b->state = 4;	/* impulse up */
+		/* impulse up */
+		b->state = 4;
 		return;
 	}
 
@@ -124,13 +131,17 @@ void KeyUp (kbutton_t *b)
 		b->down[0] = 0;
 	else if (b->down[1] == k)
 		b->down[1] = 0;
+	/* key up without coresponding down (menu pass through) */
 	else
-		return;		/* key up without coresponding down (menu pass through) */
-	if (b->down[0] || b->down[1])
-		return;		/* some other key is still holding it down */
+		return;
 
+	/* some other key is still holding it down */
+	if (b->down[0] || b->down[1])
+		return;
+
+	/* still up (this should not happen) */
 	if (!(b->state & 1))
-		return;		/* still up (this should not happen) */
+		return;
 
 	/* save timestamp */
 	c = Cmd_Argv(2);
@@ -140,8 +151,10 @@ void KeyUp (kbutton_t *b)
 	else
 		b->msec += 10;
 
-	b->state &= ~1;		/* now up */
-	b->state |= 4; 		/* impulse up */
+	/* now up */
+	b->state &= ~1;
+	/* impulse up */
+	b->state |= 4;
 }
 
 
@@ -175,14 +188,11 @@ void IN_ZoomOutUp(void) {KeyUp(&in_zoomout);}
 
 void IN_Impulse (void) {in_impulse=atoi(Cmd_Argv(1));}
 
-/*
-===============
-CL_Camera_Mode
-
-Switches camera mode between remote and firstperson
-===============
-*/
-
+/**
+  * @brief
+  *
+  * Switches camera mode between remote and firstperson
+  */
 void CL_CameraMode (void)
 {
  	if ( !selActor ) return;
@@ -192,6 +202,9 @@ void CL_CameraMode (void)
 		CL_CameraModeChange (CAMERA_MODE_FIRSTPERSON);
 }
 
+/**
+  * @brief
+  */
 void CL_CameraModeChange (camera_mode_t new_camera_mode)
 {
 	static vec3_t save_camorg, save_camangles;
@@ -203,78 +216,70 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 		return;
 
 	/* save remote camera position, angles, zoom */
-	if (camera_mode == CAMERA_MODE_REMOTE)
-	{
+	if (camera_mode == CAMERA_MODE_REMOTE) {
 		VectorCopy(cl.cam.camorg, save_camorg);
 		VectorCopy(cl.cam.angles, save_camangles);
 		save_camzoom = cl.cam.zoom;
 		save_level = cl_worldlevel->value;
 	}
 
-	if (new_camera_mode == CAMERA_MODE_REMOTE) /* toggle camera mode */
-	{
+	/* toggle camera mode */
+	if (new_camera_mode == CAMERA_MODE_REMOTE) {
 		Com_Printf ( "Changed camera mode to remote.\n" );
 		camera_mode = CAMERA_MODE_REMOTE;
 		VectorCopy(save_camorg, cl.cam.camorg);
 		VectorCopy(save_camangles, cl.cam.angles);
 		cl.cam.zoom = save_camzoom;
 		Cvar_SetValue( "cl_worldlevel", save_level );
-	}
-	else
-	{
+	} else {
 		Com_Printf ( "Changed camera mode to first-person.\n" );
 		camera_mode = CAMERA_MODE_FIRSTPERSON;
 		VectorCopy(selActor->origin, cl.cam.camorg);
 		Cvar_SetValue( "cl_worldlevel", selActor->pos[2] );
 		if (!(selActor->state & STATE_CROUCHED))
-			cl.cam.camorg[2] += 10; /* raise from waist to head */
+			/* raise from waist to head */
+			cl.cam.camorg[2] += 10;
 		VectorCopy(selActor->angles, cl.cam.angles);
 		cl.cam.zoom = 1.1;
 		Cvar_SetValue( "cl_worldlevel", selActor->pos[2] );
 	}
 }
 
-/*
-===============
-CL_Time_f
-
-print the time long integer value
-===============
-*/
-
+/**
+  * @brief
+  *
+  * print the time long integer value
+  */
 void CL_Time_f (void)
 {
 	Com_Printf ("time: %d\n", cl.time);
 }
 
-/*
-===============
-CL_KeyState
-
-Returns the fraction of the frame that the key was down
-===============
-*/
+/**
+  * @brief
+  *
+  * Returns the fraction of the frame that the key was down
+  */
 float CL_KeyState (kbutton_t *key)
 {
 	float		val;
 	int			msec;
 
-	key->state &= 1;		/* clear impulses */
+	/* clear impulses */
+	key->state &= 1;
 
 	msec = key->msec;
 	key->msec = 0;
 
-	if (key->state)
-	{	/* still down */
+	/* still down */
+	if (key->state) {
 		msec += sys_frame_time - key->downtime;
 		key->downtime = sys_frame_time;
 	}
 
 #if 0
 	if (msec)
-	{
 		Com_Printf ("%i ", msec);
-	}
 #endif
 
 	val = (float)msec / frame_msec;
@@ -327,22 +332,18 @@ cvar_t	*cl_anglespeedkey;
 
 /*========================================================================== */
 
-/*
-============
-CL_LevelUp
-============
-*/
+/**
+  * @brief
+  */
 void CL_LevelUp( void )
 {
 	if (camera_mode != CAMERA_MODE_FIRSTPERSON)
 		Cvar_SetValue( "cl_worldlevel", (cl_worldlevel->value < 7) ? cl_worldlevel->value + 1 : 7 );
 }
 
-/*
-============
-CL_LevelDown
-============
-*/
+/**
+  * @brief
+  */
 void CL_LevelDown( void )
 {
 	if (camera_mode != CAMERA_MODE_FIRSTPERSON)
@@ -350,11 +351,9 @@ void CL_LevelDown( void )
 }
 
 
-/*
-============
-CL_ZoomInQuant
-============
-*/
+/**
+  * @brief
+  */
 void CL_ZoomInQuant( void )
 {
 	float	quant;
@@ -364,9 +363,12 @@ void CL_ZoomInQuant( void )
 		return;
 
 	/* check zoom quant */
-	if ( cl_camzoomquant->value < MIN_CAMZOOM_QUANT ) quant = 1 + MIN_CAMZOOM_QUANT;
-	else if ( cl_camzoomquant->value > MAX_CAMZOOM_QUANT ) quant = 1 + MAX_CAMZOOM_QUANT;
-	else quant = 1 + cl_camzoomquant->value;
+	if ( cl_camzoomquant->value < MIN_CAMZOOM_QUANT )
+		quant = 1 + MIN_CAMZOOM_QUANT;
+	else if ( cl_camzoomquant->value > MAX_CAMZOOM_QUANT )
+		quant = 1 + MAX_CAMZOOM_QUANT;
+	else
+		quant = 1 + cl_camzoomquant->value;
 
 	/* change zoom */
 	cl.cam.zoom *= quant;
@@ -375,11 +377,9 @@ void CL_ZoomInQuant( void )
 	if ( cl.cam.zoom > MAX_ZOOM ) cl.cam.zoom = MAX_ZOOM;
 }
 
-/*
-============
-CL_ZoomOutQuant
-============
-*/
+/**
+  * @brief
+  */
 void CL_ZoomOutQuant( void )
 {
 	float	quant;
@@ -389,9 +389,12 @@ void CL_ZoomOutQuant( void )
 		return;
 
 	/* check zoom quant */
-	if ( cl_camzoomquant->value < MIN_CAMZOOM_QUANT ) quant = 1 + MIN_CAMZOOM_QUANT;
-	else if ( cl_camzoomquant->value > MAX_CAMZOOM_QUANT ) quant = 1 + MAX_CAMZOOM_QUANT;
-	else quant = 1 + cl_camzoomquant->value;
+	if ( cl_camzoomquant->value < MIN_CAMZOOM_QUANT )
+		quant = 1 + MIN_CAMZOOM_QUANT;
+	else if ( cl_camzoomquant->value > MAX_CAMZOOM_QUANT )
+		quant = 1 + MAX_CAMZOOM_QUANT;
+	else
+		quant = 1 + cl_camzoomquant->value;
 
 	/* change zoom */
 	cl.cam.zoom /= quant;
@@ -400,100 +403,96 @@ void CL_ZoomOutQuant( void )
 	if ( cl.cam.zoom < MIN_ZOOM ) cl.cam.zoom = MIN_ZOOM;
 }
 
-/*
-============
-CL_FireRightPrimary
-============
-*/
+/**
+  * @brief
+  */
 void CL_FireRightPrimary( void )
 {
-	if ( !selActor ) return;
-	if ( cl.cmode == M_FIRE_PR ) cl.cmode = M_MOVE;
-	else cl.cmode = M_FIRE_PR;
+	if ( !selActor )
+		return;
+	if ( cl.cmode == M_FIRE_PR )
+		cl.cmode = M_MOVE;
+	else
+		cl.cmode = M_FIRE_PR;
 }
 
-/*
-============
-CL_FireRightSecondary
-============
-*/
+/**
+  * @brief
+  */
 void CL_FireRightSecondary( void )
 {
-	if ( !selActor ) return;
-	if ( cl.cmode == M_FIRE_SR ) cl.cmode = M_MOVE;
-	else cl.cmode = M_FIRE_SR;
+	if ( !selActor )
+		return;
+	if ( cl.cmode == M_FIRE_SR )
+		cl.cmode = M_MOVE;
+	else
+		cl.cmode = M_FIRE_SR;
 }
 
-/*
-============
-CL_FireLeftPrimary
-============
-*/
+/**
+  * @brief
+  */
 void CL_FireLeftPrimary( void )
 {
-	if ( !selActor ) return;
-	if ( cl.cmode == M_FIRE_PL ) cl.cmode = M_MOVE;
-	else cl.cmode = M_FIRE_PL;
+	if ( !selActor )
+		return;
+	if ( cl.cmode == M_FIRE_PL )
+		cl.cmode = M_MOVE;
+	else
+		cl.cmode = M_FIRE_PL;
 }
 
-/*
-============
-CL_FireLeftSecondary
-============
-*/
+/**
+  * @brief
+  */
 void CL_FireLeftSecondary( void )
 {
-	if ( !selActor ) return;
-	if ( cl.cmode == M_FIRE_SL ) cl.cmode = M_MOVE;
-	else cl.cmode = M_FIRE_SL;
+	if ( !selActor )
+		return;
+	if ( cl.cmode == M_FIRE_SL )
+		cl.cmode = M_MOVE;
+	else
+		cl.cmode = M_FIRE_SL;
 }
 
-/*
-============
-CL_ConfirmAction
-============
-*/
+/**
+  * @brief
+  */
 void CL_ConfirmAction( void )
 {
 	extern pos3_t	mousePos;
 
-	if ( !selActor ) return;
+	if ( !selActor )
+		return;
 	if ( cl.cmode == M_PEND_MOVE )
 		CL_ActorStartMove( selActor, mousePos );
-	else if ( cl.cmode > M_PEND_MOVE )
-	{
+	else if ( cl.cmode > M_PEND_MOVE ) {
 		CL_ActorShoot( selActor, mousePos );
 		cl.cmode = M_MOVE;
 	}
 }
 
 
-/*
-============
-CL_ReloadLeft
-============
-*/
+/**
+  * @brief
+  */
 void CL_ReloadLeft( void )
 {
 	CL_ActorReload( csi.idLeft );
 }
 
-/*
-============
-CL_ReloadRight
-============
-*/
+/**
+  * @brief
+  */
 void CL_ReloadRight( void )
 {
 	CL_ActorReload( csi.idRight );
 }
 
 
-/*
-============
-CL_SelectDown
-============
-*/
+/**
+  * @brief
+  */
 void CL_SelectDown( void )
 {
 	if ( mouseSpace == MS_WORLD )
@@ -502,11 +501,9 @@ void CL_SelectDown( void )
 		MN_Click( mx, my );
 }
 
-/*
-============
-CL_SelectUp
-============
-*/
+/**
+  * @brief
+  */
 void CL_SelectUp( void )
 {
 	if ( mouseSpace == MS_DRAG )
@@ -514,11 +511,9 @@ void CL_SelectUp( void )
 	mouseSpace = MS_NULL;
 }
 
-/*
-============
-CL_ActionDown
-============
-*/
+/**
+  * @brief
+  */
 void CL_ActionDown( void )
 {
 	if ( mouseSpace == MS_WORLD )
@@ -527,22 +522,18 @@ void CL_ActionDown( void )
 		MN_RightClick( mx, my );
 }
 
-/*
-============
-CL_ActionUp
-============
-*/
+/**
+  * @brief
+  */
 void CL_ActionUp( void )
 {
 	mouseSpace = MS_NULL;
 }
 
 
-/*
-============
-CL_TurnDown
-============
-*/
+/**
+  * @brief
+  */
 void CL_TurnDown( void )
 {
 	if ( mouseSpace == MS_WORLD )
@@ -551,22 +542,18 @@ void CL_TurnDown( void )
 		MN_MiddleClick( mx, my );
 }
 
-/*
-============
-CL_TurnUp
-============
-*/
+/**
+  * @brief
+  */
 void CL_TurnUp( void )
 {
 	mouseSpace = MS_NULL;
 }
 
 
-/*
-=================
-CL_NextAlien
-=================
-*/
+/**
+  * @brief Cycles between visible aliens
+  */
 int lastAlien = 0;
 
 void CL_NextAlien( void )
@@ -596,12 +583,18 @@ void CL_NextAlien( void )
 /*========================================================================== */
 
 #ifdef DEBUG
+/**
+  * @brief
+  */
 void CL_CamPrintAngles ( void )
 {
 	Com_Printf("camera angles %0.3f:%0.3f:%0.3f\n", cl.cam.angles[0], cl.cam.angles[1], cl.cam.angles[2] );
 }
 #endif /* DEBUG */
 
+/**
+  * @brief
+  */
 void CL_CamSetAngles ( void )
 {
 	int c = Cmd_Argc();
@@ -616,13 +609,13 @@ void CL_CamSetAngles ( void )
 	cl.cam.angles[2] = 0.0f;
 }
 
-/*==================
-CL_MakeBaseMapShot
-
-Execute basemapshot in console and load a basemap
-after this all you have to do is hit the screenshot button (F12)
-to make a new screenshot of the basetile
-==================*/
+/**
+  * @brief Makes a mapshop - called by basemapshot script command
+  *
+  * Execute basemapshot in console and load a basemap
+  * after this all you have to do is hit the screenshot button (F12)
+  * to make a new screenshot of the basetile
+  */
 void CL_MakeBaseMapShot ( void )
 {
 	if ( Cmd_Argc() > 1 )
@@ -635,11 +628,9 @@ void CL_MakeBaseMapShot ( void )
 	Cbuf_ExecuteText( EXEC_NOW, "screenshot" );
 }
 
-/*
-============
-CL_InitInput
-============
-*/
+/**
+  * @brief Init some bindable commands
+  */
 void CL_InitInput (void)
 {
 	Cmd_AddCommand( "+turnleft", IN_TurnLeftDown );
@@ -704,32 +695,34 @@ void CL_InitInput (void)
 #define STATE_ZOOM		3
 #define STATE_ROT		4
 #define STATE_TILT		5
-/*
-=================
-CL_GetKeyMouseState
-=================
-*/
+
+/**
+  * @brief
+  */
 float CL_GetKeyMouseState ( int dir )
 {
 	float	value;
 
-	if ( dir == STATE_FORWARD )
+	switch ( dir ){
+	case STATE_FORWARD:
 		value = (in_shiftup.state & 1) + (my <= 0) - (in_shiftdown.state & 1) - (my >= VID_NORM_HEIGHT-4);
-
-	else if ( dir == STATE_RIGHT )
+		break;
+	case STATE_RIGHT:
 		value = (in_shiftright.state & 1) + (mx >= VID_NORM_WIDTH-4) - (in_shiftleft.state & 1) - (mx <= 0);
-
-	else if ( dir == STATE_ZOOM )
+		break;
+	case STATE_ZOOM:
 		value = (in_zoomin.state & 1) - (in_zoomout.state & 1);
-
-	else if ( dir == STATE_ROT )
+		break;
+	case STATE_ROT:
 		value = (in_turnleft.state & 1) - (in_turnright.state & 1);
-
-	else if ( dir == STATE_TILT )
+		break;
+	case STATE_TILT:
 		value = (in_turnup.state & 1) - (in_turndown.state & 1);
-
-	else
-		return 0.0;
+		break;
+	default:
+		value = 0.0;
+		break;
+	}
 
 	return value;
 }
@@ -742,11 +735,9 @@ vec3_t		routeFrom, routeDelta;
 float		routeDist;
 int			routeLevelStart, routeLevelEnd;
 
-/*
-================
-CL_CameraMoveFirstPerson
-================
-*/
+/**
+  * @brief
+  */
 void CL_CameraMoveFirstPerson (void)
 {
 	float frac;
@@ -771,19 +762,21 @@ void CL_CameraMoveFirstPerson (void)
 
 	/* zoom */
 	frac = CL_GetKeyMouseState(STATE_ZOOM);
-	if ( frac > 0.1 ) cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
-	if ( frac <-0.1 ) cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
+	if ( frac > 0.1 )
+		cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
+	if ( frac <-0.1 )
+		cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
 
-	if (cl.cam.zoom > MAX_ZOOM) cl.cam.zoom = MAX_ZOOM;
-	if (cl.cam.zoom < MIN_ZOOM) cl.cam.zoom = MIN_ZOOM;
+	if (cl.cam.zoom > MAX_ZOOM)
+		cl.cam.zoom = MAX_ZOOM;
+	if (cl.cam.zoom < MIN_ZOOM)
+		cl.cam.zoom = MIN_ZOOM;
 }
 
 
-/*
-================
-CL_CameraMoveRemote
-================
-*/
+/**
+  * @brief
+  */
 void CL_CameraMoveRemote (void)
 {
 	float			angle, frac;
@@ -804,49 +797,50 @@ void CL_CameraMoveRemote (void)
 	/* stop acceleration */
 	frac = cls.frametime * rotaccel;
 
-	for ( i = 0; i < 2; i++ )
-	{
-		if ( fabs( cl.cam.omega[i] ) > frac )
-		{
-			if ( cl.cam.omega[i] > 0 ) cl.cam.omega[i] -= frac;
-			else cl.cam.omega[i] += frac;
-		}
-		else cl.cam.omega[i] = 0;
+	for ( i = 0; i < 2; i++ ) {
+		if ( fabs( cl.cam.omega[i] ) > frac ) {
+			if ( cl.cam.omega[i] > 0 )
+				cl.cam.omega[i] -= frac;
+			else
+				cl.cam.omega[i] += frac;
+		} else
+			cl.cam.omega[i] = 0;
 
 		/* rotational acceleration */
-		if ( i == YAW ) cl.cam.omega[i] += CL_GetKeyMouseState(STATE_ROT) * frac * 2;
-		else cl.cam.omega[i] += CL_GetKeyMouseState(STATE_TILT) * frac * 2;
+		if ( i == YAW )
+			cl.cam.omega[i] += CL_GetKeyMouseState(STATE_ROT) * frac * 2;
+		else
+			cl.cam.omega[i] += CL_GetKeyMouseState(STATE_TILT) * frac * 2;
 
-		if (  cl.cam.omega[i] > rotspeed ) cl.cam.omega[i] =  rotspeed;
-		if ( -cl.cam.omega[i] > rotspeed ) cl.cam.omega[i] = -rotspeed;
+		if ( cl.cam.omega[i] > rotspeed )
+			cl.cam.omega[i] =  rotspeed;
+		if ( -cl.cam.omega[i] > rotspeed )
+			cl.cam.omega[i] = -rotspeed;
 	}
 
 	cl.cam.omega[ROLL] = 0;
 	VectorMA( cl.cam.angles, cls.frametime, cl.cam.omega, cl.cam.angles );
-	if ( cl.cam.angles[PITCH] > 90.0 ) cl.cam.angles[PITCH] = 90.0;
-	if ( cl.cam.angles[PITCH] < 50.0 ) cl.cam.angles[PITCH] = 50.0;
+	if ( cl.cam.angles[PITCH] > 90.0 )
+		cl.cam.angles[PITCH] = 90.0;
+	if ( cl.cam.angles[PITCH] < 50.0 )
+		cl.cam.angles[PITCH] = 50.0;
 
 	AngleVectors( cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2] );
 
 	/* camera route overrides user input */
-	if ( cameraRoute )
-	{
+	if ( cameraRoute ) {
 		/* camera route */
 		frac = cls.frametime * moveaccel * 2;
-		if ( VectorDist( cl.cam.reforg, routeFrom ) > routeDist - 200 )
-		{
+		if ( VectorDist( cl.cam.reforg, routeFrom ) > routeDist - 200 ) {
 			VectorMA( cl.cam.speed, -frac, routeDelta, cl.cam.speed );
 			VectorNormalize2( cl.cam.speed, delta );
-			if ( DotProduct( delta, routeDelta ) < 0.05 )
-			{
+			if ( DotProduct( delta, routeDelta ) < 0.05 ) {
 				blockEvents = qfalse;
 				cameraRoute = qfalse;
 			}
-		}
-		else VectorMA( cl.cam.speed, frac, routeDelta, cl.cam.speed );
-	}
-	else
-	{
+		} else
+			VectorMA( cl.cam.speed, frac, routeDelta, cl.cam.speed );
+	} else {
 		/* normal camera movement */
 		/* calculate ground-based movement vectors */
 		angle = cl.cam.angles[YAW] * (M_PI*2 / 360);
@@ -860,12 +854,11 @@ void CL_CameraMoveRemote (void)
 		/* calculate camera speed */
 		/* stop acceleration */
 		frac = cls.frametime * moveaccel;
-		if ( VectorLength( cl.cam.speed ) > frac )
-		{
+		if ( VectorLength( cl.cam.speed ) > frac ) {
 			VectorNormalize2( cl.cam.speed, delta );
 			VectorMA( cl.cam.speed, -frac, delta, cl.cam.speed );
-		}
-		else VectorClear( cl.cam.speed );
+		} else
+			VectorClear( cl.cam.speed );
 
 		/* acceleration */
 		frac = cls.frametime * moveaccel * 2;
@@ -876,15 +869,14 @@ void CL_CameraMoveRemote (void)
 		VectorMA( cl.cam.speed, frac, delta, cl.cam.speed );
 
 		/* lerp the level */
-		if ( cl.cam.lerplevel < cl_worldlevel->value )
-		{
+		if ( cl.cam.lerplevel < cl_worldlevel->value ) {
 			cl.cam.lerplevel += LEVEL_SPEED * (cl_worldlevel->value - cl.cam.lerplevel + LEVEL_MIN) * cls.frametime;
-			if ( cl.cam.lerplevel > cl_worldlevel->value ) cl.cam.lerplevel = cl_worldlevel->value;
-		}
-		else if ( cl.cam.lerplevel > cl_worldlevel->value )
-		{
+			if ( cl.cam.lerplevel > cl_worldlevel->value )
+				cl.cam.lerplevel = cl_worldlevel->value;
+		} else if ( cl.cam.lerplevel > cl_worldlevel->value ) {
 			cl.cam.lerplevel -= LEVEL_SPEED * (cl.cam.lerplevel - cl_worldlevel->value + LEVEL_MIN) * cls.frametime;
-			if ( cl.cam.lerplevel < cl_worldlevel->value ) cl.cam.lerplevel = cl_worldlevel->value;
+			if ( cl.cam.lerplevel < cl_worldlevel->value )
+				cl.cam.lerplevel = cl_worldlevel->value;
 		}
 	}
 
@@ -895,10 +887,14 @@ void CL_CameraMoveRemote (void)
 
 	/* calc new camera reference origin */
 	VectorMA( cl.cam.reforg, cls.frametime, cl.cam.speed, cl.cam.reforg );
-	if ( cl.cam.reforg[0] < map_min[0] ) cl.cam.reforg[0] = map_min[0];
-	if ( cl.cam.reforg[1] < map_min[1] ) cl.cam.reforg[1] = map_min[1];
-	if ( cl.cam.reforg[0] > map_max[0] ) cl.cam.reforg[0] = map_max[0];
-	if ( cl.cam.reforg[1] > map_max[1] ) cl.cam.reforg[1] = map_max[1];
+	if ( cl.cam.reforg[0] < map_min[0] )
+		cl.cam.reforg[0] = map_min[0];
+	if ( cl.cam.reforg[1] < map_min[1] )
+		cl.cam.reforg[1] = map_min[1];
+	if ( cl.cam.reforg[0] > map_max[0] )
+		cl.cam.reforg[0] = map_max[0];
+	if ( cl.cam.reforg[1] > map_max[1] )
+		cl.cam.reforg[1] = map_max[1];
 	cl.cam.reforg[2] = 0;
 
 	/* calc real camera origin */
@@ -907,17 +903,19 @@ void CL_CameraMoveRemote (void)
 
 	/* zoom change */
 	frac = CL_GetKeyMouseState(STATE_ZOOM);
-	if ( frac > 0.1 ) cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
-	if ( frac <-0.1 ) cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
-	if ( cl.cam.zoom < MIN_ZOOM ) cl.cam.zoom = MIN_ZOOM;
-	else if ( cl.cam.zoom > MAX_ZOOM ) cl.cam.zoom = MAX_ZOOM;
+	if ( frac > 0.1 )
+		cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
+	else if ( frac <-0.1 )
+		cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
+	if ( cl.cam.zoom < MIN_ZOOM )
+		cl.cam.zoom = MIN_ZOOM;
+	else if ( cl.cam.zoom > MAX_ZOOM )
+		cl.cam.zoom = MAX_ZOOM;
 }
 
-/*
-=================
-CL_CameraMove
-=================
-*/
+/**
+  * @brief
+  */
 void CL_CameraMove (void)
 {
 	if ( cls.state != ca_active )
@@ -932,11 +930,9 @@ void CL_CameraMove (void)
 		CL_CameraMoveRemote();
 }
 
-/*
-=================
-CL_CameraRoute
-=================
-*/
+/**
+  * @brief
+  */
 void CL_CameraRoute( pos3_t from, pos3_t target )
 {
 	/* initialize the camera route variables */
@@ -957,13 +953,10 @@ void CL_CameraRoute( pos3_t from, pos3_t target )
 	blockEvents = qtrue;
 }
 
-/*
-=================
-CL_ParseInput
-=================
-*/
+/**
+  * @brief
+  */
 #define ROTATE_SPEED	0.5
-
 void CL_ParseInput (void)
 {
 	int i, oldx, oldy;
@@ -973,39 +966,50 @@ void CL_ParseInput (void)
 	oldy = my;
 	IN_GetMousePos( &mx, &my );
 
-	switch ( mouseSpace )
-	{
+	switch ( mouseSpace ) {
 	case MS_ROTATE:
 		/* rotate a model */
 		rotateAngles[1] -= ROTATE_SPEED * (mx - oldx);
 		rotateAngles[2] += ROTATE_SPEED * (my - oldy);
-		while ( rotateAngles[1] > 360.0 ) rotateAngles[1] -= 360.0;
-		while ( rotateAngles[1] < 0.0 ) rotateAngles[1] += 360.0;
-		if ( rotateAngles[2] < 0.0 ) rotateAngles[2] = 0.0;
-		if ( rotateAngles[2] > 180.0 ) rotateAngles[2] = 180.0;
+		while ( rotateAngles[1] > 360.0 )
+			rotateAngles[1] -= 360.0;
+		while ( rotateAngles[1] < 0.0 )
+			rotateAngles[1] += 360.0;
+
+		if ( rotateAngles[2] < 0.0 )
+			rotateAngles[2] = 0.0;
+		else if ( rotateAngles[2] > 180.0 )
+			rotateAngles[2] = 180.0;
 		return;
 
 	case MS_SHIFTMAP:
 		/* shift the map */
 		ccs.center[0] -= (float)(mx - oldx) / (1024 * ccs.zoom);
 		ccs.center[1] -= (float)(my - oldy) / (512 * ccs.zoom);
-		for ( i = 0; i < 2; i++ )
-		{
-			while ( ccs.center[i] < 0.0 ) ccs.center[i] += 1.0;
-			while ( ccs.center[i] > 1.0 ) ccs.center[i] -= 1.0;
+		for ( i = 0; i < 2; i++ ) {
+			while ( ccs.center[i] < 0.0 )
+				ccs.center[i] += 1.0;
+			while ( ccs.center[i] > 1.0 )
+				ccs.center[i] -= 1.0;
 		}
-		if ( ccs.center[1] < 0.5/ccs.zoom ) ccs.center[1] = 0.5/ccs.zoom;
-		if ( ccs.center[1] > 1.0 - 0.5/ccs.zoom ) ccs.center[1] = 1.0 - 0.5/ccs.zoom;
+		if ( ccs.center[1] < 0.5/ccs.zoom )
+			ccs.center[1] = 0.5/ccs.zoom;
+		if ( ccs.center[1] > 1.0 - 0.5/ccs.zoom )
+			ccs.center[1] = 1.0 - 0.5/ccs.zoom;
 		return;
 
 	case MS_ZOOMMAP:
 		/* zoom the map */
 		ccs.zoom *= pow( 0.995, my - oldy );
-		if ( ccs.zoom < 1.0 ) ccs.zoom = 1.0;
-		if ( ccs.zoom > 6.0 ) ccs.zoom = 6.0;
+		if ( ccs.zoom < 1.0 )
+			ccs.zoom = 1.0;
+		else if ( ccs.zoom > 6.0 )
+			ccs.zoom = 6.0;
 
-		if ( ccs.center[1] < 0.5/ccs.zoom ) ccs.center[1] = 0.5/ccs.zoom;
-		if ( ccs.center[1] > 1.0 - 0.5/ccs.zoom ) ccs.center[1] = 1.0 - 0.5/ccs.zoom;
+		if ( ccs.center[1] < 0.5/ccs.zoom )
+			ccs.center[1] = 0.5/ccs.zoom;
+		if ( ccs.center[1] > 1.0 - 0.5/ccs.zoom )
+			ccs.center[1] = 1.0 - 0.5/ccs.zoom;
 		return;
 
 	case MS_DRAG:
@@ -1014,8 +1018,7 @@ void CL_ParseInput (void)
 
 	default:
 		/* standard menu and world mouse handling */
-		if ( MN_CursorOnMenu( mx, my ) )
-		{
+		if ( MN_CursorOnMenu( mx, my ) ) {
 			mouseSpace = MS_MENU;
 			return;
 		}
