@@ -22,7 +22,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -98,8 +98,6 @@ extern int num_cl_weaponmodels;
 
 #define	CMD_BACKUP		64		/* allow a lot of command backups for very fast systems */
 
-/* */
-/* */
 #define FOV				60.0
 
 typedef struct {
@@ -133,10 +131,8 @@ typedef enum {
 	M_PEND_FIRE_SL
 } cmodes_t;
 
-/* */
 /* the client_state_t structure is wiped completely at every */
 /* server map change */
-/* */
 typedef struct {
 	int timeoutcount;
 
@@ -170,12 +166,9 @@ typedef struct {
 	int numTeamList;
 	int numAliensSpotted;
 
-	/* */
 	/* transient data from server */
-	/* */
 	char layout[1024];			/* general 2D overlay */
 
-	/* */
 	/* non-gameserver infornamtion */
 	/* FIXME: move this cinematic stuff into the cin_t structure */
 	FILE *cinematic_file;
@@ -184,9 +177,7 @@ typedef struct {
 	char cinematicpalette[768];
 	qboolean cinematicpalette_active;
 
-	/* */
 	/* server state information */
-	/* */
 	qboolean attractloop;		/* running the attract loop, any key will menu */
 	int servercount;			/* server identification for prespawns */
 	char gamedir[MAX_QPATH];
@@ -195,9 +186,7 @@ typedef struct {
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
-	/* */
 	/* locally derived information from server state */
-	/* */
 	struct model_s *model_draw[MAX_MODELS];
 	struct cmodel_s *model_clip[MAX_MODELS];
 	struct model_s *model_weapons[MAX_OBJDEFS];
@@ -273,9 +262,7 @@ extern client_static_t cls;
 
 /*============================================================================= */
 
-/* */
 /* cvars */
-/* */
 #ifdef HAVE_GETTEXT
 extern cvar_t *s_language;
 #endif
@@ -465,9 +452,7 @@ void IN_Accumulate(void);
 
 void CL_ParseLayout(void);
 
-/* */
 /* cl_sequence.c (avi stuff) */
-/* */
 qboolean CL_OpenAVIForWriting(char *filename);
 void CL_TakeVideoFrame(void);
 void CL_WriteAVIVideoFrame(const byte * imageBuffer, int size);
@@ -477,9 +462,7 @@ qboolean CL_VideoRecording(void);
 void CL_StopVideo_f(void);
 void CL_Video_f(void);
 
-/* */
 /* cl_main */
-/* */
 extern refexport_t re;			/* interface to refresh .dll */
 
 void CL_Init(void);
@@ -491,10 +474,7 @@ void CL_GetChallengePacket(void);
 void CL_PingServers_f(void);
 void CL_Snd_Restart_f(void);
 
-/* */
 /* cl_input */
-/* */
-
 typedef struct {
 	int down[2];				/* key nums holding it down */
 	unsigned downtime;			/* msec timestamp */
@@ -546,9 +526,7 @@ void CL_Sniper(void);
 void CL_SniperModeSet(void);
 void CL_SniperModeUnset(void);
 
-/* */
 /* cl_le.c */
-/* */
 typedef struct le_s {
 	qboolean inuse;
 	qboolean invis;
@@ -674,10 +652,7 @@ lm_t *CL_AddLocalModel(char *model, char *particle, vec3_t origin, vec3_t angles
 void CL_AddMapParticle(char *particle, vec3_t origin, vec2_t wait, char *info, int levelflags);
 void CL_ParticleCheckRounds(void);
 
-/* */
 /* cl_actor.c */
-/* */
-
 extern le_t *selActor;
 extern int actorMoveLength;
 extern invList_t invList[MAX_INVLIST];
@@ -722,9 +697,7 @@ qboolean CL_AddActor(le_t * le, entity_t * ent);
 
 void CL_AddTargeting(void);
 
-/* */
 /* cl_team.c */
-/* */
 #define MAX_ACTIVETEAM	8
 #define MAX_WHOLETEAM	32
 #define NUM_BUYTYPES	4
@@ -738,29 +711,21 @@ void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num);
 void CL_CheckInventory(equipDef_t * equip);
 void CL_ItemDescription(int item);
 
-/* */
 /* cl_research.c */
-/* */
 #include "cl_research.h"
 
-/* */
 /* SAVEGAMES */
-/* */
 #ifndef SAVE_FILE_VERSION
 #define SAVE_FILE_VERSION 4
 #endif							/* SAVE_FILE_VERSION */
 
-/* */
 /* cl_basemanagment.c */
-/* */
 /* needs the MAX_ACTIVETEAM definition from above. */
 #include "cl_basemanagement.h"
 
 
-/* */
 /* MISC */
 /* TODO: needs to be sorted (e.g what file is it defined?) */
-/* */
 #define MAX_TEAMDATASIZE	32768
 #define MAX_GAMESAVESIZE	MAX_TEAMDATASIZE + 16384 + sizeof(globalData_t)
 #define MAX_COMMENTLENGTH	32
@@ -780,9 +745,7 @@ void MN_PrevMap(void);
 
 /* END MISC */
 
-/* */
 /* stats */
-/* */
 
 /* beware - if you add new stuff to stats_t */
 /* the loading of an older savegame will not work */
@@ -805,10 +768,7 @@ typedef struct stats_s {
 
 extern stats_t stats;
 
-/* */
 /* message systems */
-/* */
-
 typedef enum {
 	MSG_STANDARD,
 	MSG_RESEARCH,
@@ -841,10 +801,7 @@ void CL_InitMessageSystem(void);
 
 #include "cl_campaign.h"
 
-/* */
 /* cl_menu.c */
-/* */
-
 #define	NOFS(x)		(int)&(((menuNode_t *)0)->x)
 #define	MENUMODELFS(x)		(int)&(((menuModel_t *)0)->x)
 
@@ -975,9 +932,7 @@ extern font_t *fontBig;
 /* will return the size and the path for each font */
 void CL_GetFontData(char *name, int *size, char *path);
 
-/* */
 /* cl_particle.c */
-/* */
 void CL_ParticleRegisterArt(void);
 void CL_ResetParticles(void);
 void CL_ParticleRun(void);
@@ -992,9 +947,7 @@ extern int numPtlArt;
 extern int numPtls;
 
 
-/* */
 /* cl_parse.c */
-/* */
 extern char *svc_strings[256];
 extern char *ev_format[128];
 extern void (*ev_func[128]) (sizebuf_t * sb);
@@ -1007,9 +960,7 @@ void CL_ParseClientinfo(int player);
 void CL_InitEvents(void);
 void CL_Events(void);
 
-/* */
 /* cl_view.c */
-/* */
 extern sun_t map_sun;
 extern int map_maxlevel;
 
@@ -1032,24 +983,7 @@ void CL_SequenceEnd_f(void);
 void CL_ResetSequences(void);
 void CL_ParseSequence(char *name, char **text);
 
-/* */
-/* cl_tent.c */
-/* */
-void CL_RegisterTEntSounds(void);
-void CL_RegisterTEntModels(void);
-void CL_SmokeAndFlash(vec3_t origin);
-
-
-/* */
-/* cl_pred.c */
-/* */
-void CL_InitPrediction(void);
-void CL_PredictMove(void);
-void CL_CheckPredictionError(void);
-
-/* */
 /* cl_fx.c */
-/* */
 cdlight_t *CL_AllocDlight(int key);
 void CL_BigTeleportParticles(vec3_t org);
 void CL_RocketTrail(vec3_t start, vec3_t end, centity_t * old);
