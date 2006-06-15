@@ -675,21 +675,21 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 				break;
 
 			/* get values */
-			if (!Q_strncmp(token, "type", 4)) {
+			if (!Q_strncmp(token, "type", MAX_VAR)) {
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
 
-				if (!Q_strncmp(token, "lab", 3)) {
+				if (!Q_strncmp(token, "lab", MAX_VAR)) {
 					building->buildingType = B_LAB;
-				} else if (!Q_strncmp(token, "hangar", 6)) {
+				} else if (!Q_strncmp(token, "hangar", MAX_VAR)) {
 					building->buildingType = B_HANGAR;
-				} else if (!Q_strncmp(token, "quarters", 7)) {
+				} else if (!Q_strncmp(token, "quarters", MAX_VAR)) {
 					building->buildingType = B_QUARTERS;
-				} else if (!Q_strncmp(token, "workshop", 8)) {
+				} else if (!Q_strncmp(token, "workshop", MAX_VAR)) {
 					building->buildingType = B_WORKSHOP;
 				}
-			} else if (!Q_strncmp(token, "max_employees", 13)) {
+			} else if (!Q_strncmp(token, "max_employees", MAX_VAR)) {
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
@@ -701,11 +701,11 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 				}
 			} else
 				/* no linking yet */
-			if (!Q_strncmp(token, "depends", 7)) {
+			if (!Q_strncmp(token, "depends", MAX_VAR)) {
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
-			} else if (!Q_strncmp(token, "employees_firstbase", 19)) {
+			} else if (!Q_strncmp(token, "employees_firstbase", MAX_VAR)) {
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
@@ -761,7 +761,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 			if (*token == '}')
 				break;
 			/* get values */
-			if (!Q_strncmp(token, "depends", 4)) {
+			if (!Q_strncmp(token, "depends", MAX_VAR)) {
 				dependsBuilding = B_GetBuildingType(COM_EParse(text, errhead, id));
 				if (!dependsBuilding)
 					Sys_Error("Could not find building depend of %s\n", building->id);

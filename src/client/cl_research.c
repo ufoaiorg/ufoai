@@ -149,7 +149,7 @@ void RS_MarkResearchable( void )
 				for ( j=0; j < required->numEntries; j++ ) {
 					Com_DPrintf("RS_MarkResearchable: entry: %s / %i\n", required->string[j], required->idx[j]);
 					if ( ( !RS_TechIsResearched(required->idx[j] ) )
-					  || ( !Q_strncmp( required->string[j], "nothing", 7 ) ) ) {
+					  || ( !Q_strncmp( required->string[j], "nothing", MAX_VAR ) ) ) {
 						required_are_researched = qfalse;
 						break;
 					}
@@ -165,7 +165,7 @@ void RS_MarkResearchable( void )
 
 				/* If the tech is an initial one,  mark it as as researchable. */
 				for ( j=0; j < required->numEntries; j++ ) {
-					if ( !Q_strncmp( required->string[j], "initial", 7 ) ) {
+					if ( !Q_strncmp( required->string[j], "initial", MAX_VAR ) ) {
 						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable - reason:isinitial.\n", tech->id );
 						tech->statusResearchable = qtrue;
 						break;
@@ -1205,27 +1205,27 @@ void RS_ParseTechnologies ( char* id, char** text )
 		if ( !*text ) break;
 		if ( *token == '}' ) break;
 		/* get values */
-		if (  !Q_strncmp( token, "type", 4 ) ) {
+		if (  !Q_strncmp( token, "type", MAX_VAR ) ) {
 			/* what type of tech this is */
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
 			/* redundant, but oh well. */
-			if ( !Q_strncmp( token, "tech", 4 ) )
+			if ( !Q_strncmp( token, "tech", MAX_VAR ) )
 				tech->type = RS_TECH;
-			else if ( !Q_strncmp( token, "weapon", 6 ) )
+			else if ( !Q_strncmp( token, "weapon", MAX_VAR ) )
 				tech->type = RS_WEAPON;
-			else if ( !Q_strncmp( token, "armor", 5 ) )
+			else if ( !Q_strncmp( token, "armor", MAX_VAR ) )
 				tech->type = RS_ARMOR;
-			else if ( !Q_strncmp( token, "craft", 5 ) )
+			else if ( !Q_strncmp( token, "craft", MAX_VAR ) )
 				tech->type = RS_CRAFT;
-			else if ( !Q_strncmp( token, "building", 8 ) )
+			else if ( !Q_strncmp( token, "building", MAX_VAR ) )
 				tech->type = RS_BUILDING;
-			else if ( !Q_strncmp( token, "alien", 5 ) )
+			else if ( !Q_strncmp( token, "alien", MAX_VAR ) )
 				tech->type = RS_ALIEN;
 			else Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token );
 		}
 		else
-		if ( !Q_strncmp( token, "requires", 8 ) ) {
+		if ( !Q_strncmp( token, "requires", MAX_VAR ) ) {
 			/* what other techs this one requires */
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
@@ -1244,12 +1244,12 @@ void RS_ParseTechnologies ( char* id, char** text )
 			}
 			while ( misp && required->numEntries < MAX_TECHLINKS );
 			continue;
-		} else if ( !Q_strncmp( token, "researched", 10 ) ) {
+		} else if ( !Q_strncmp( token, "researched", MAX_VAR ) ) {
 			/* tech alreadyy researched? */
 			token = COM_EParse( text, errhead, id );
-			if ( !Q_strncmp( token, "true", 4 ) || *token == '1' )
+			if ( !Q_strncmp( token, "true", MAX_VAR ) || *token == '1' )
 				tech->statusResearch = RS_FINISH;
-		} else if ( !Q_strncmp( token, "up_chapter", 10 ) ) {
+		} else if ( !Q_strncmp( token, "up_chapter", MAX_VAR ) ) {
 			/* ufopedia chapter */
 			token = COM_EParse( text, errhead, id );
 			if ( !*text ) return;
@@ -1436,8 +1436,8 @@ qboolean RS_TechIsResearched( int tech_idx )
 #if 0
 	/* DEBUG: still needed? */
 	/* initial and nothing are always researched. as they are just starting "technologys" that are never used. */
-	if ( !Q_strncmp( gd.technologies[tech_idx].id, "initial", 7 )
-	|| !Q_strncmp( gd.technologies[tech_idx].id, "nothing", 7 ) )
+	if ( !Q_strncmp( gd.technologies[tech_idx].id, "initial", MAX_VAR )
+	|| !Q_strncmp( gd.technologies[tech_idx].id, "nothing", MAX_VAR ) )
 		return qtrue;
 #endif
 
@@ -1471,8 +1471,8 @@ qboolean RS_TechIsResearchable( technology_t* tech )
 	if ( tech->statusResearch == RS_FINISH )
 		return qfalse;
 
-	if ( ( !Q_strncmp( tech->id, "initial", 7 ) )
-	  || ( !Q_strncmp( tech->id, "nothing", 7 ) ) )
+	if ( ( !Q_strncmp( tech->id, "initial", MAX_VAR ) )
+	  || ( !Q_strncmp( tech->id, "nothing", MAX_VAR ) ) )
 		return qtrue;
 
 	required = &tech->requires;
@@ -1503,7 +1503,7 @@ void RS_GetFirstRequired2 ( int tech_idx, int first_tech_idx, stringlist_t *requ
 
 	required_temp = &gd.technologies[tech_idx].requires;
 
-	if ( !Q_strncmp( required_temp->string[0] , "initial", 7 ) || !Q_strncmp( required_temp->string[0] , "nothing", 7 ) ) {
+	if ( !Q_strncmp( required_temp->string[0] , "initial", MAX_VAR ) || !Q_strncmp( required_temp->string[0] , "nothing", MAX_VAR ) ) {
 		if ( tech_idx == first_tech_idx )
 			return;
 		if ( required->numEntries < MAX_TECHLINKS ) {
@@ -1579,8 +1579,8 @@ technology_t* RS_GetTechByID ( const char* id )
 	if ( ! id )
 		return NULL;
 
-	if ( !Q_strncmp( (char*)id, "nothing", 7 )
-	  || !Q_strncmp( (char*)id, "initial", 7 ) )
+	if ( !Q_strncmp( (char*)id, "nothing", MAX_VAR )
+	  || !Q_strncmp( (char*)id, "initial", MAX_VAR ) )
 		return NULL;
 
 	for ( ; i < gd.numTechnologies; i++ ) {
