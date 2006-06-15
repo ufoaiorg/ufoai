@@ -116,7 +116,7 @@ ifeq ($(OSTYPE),Darwin)
 	BUILD_FOR_PROFILING=NO # build with -pg option for profiling via gprof
 	BUILD_COMPILETOOLS=NO	# build ufo2map bsp compile tool
 
-	LDFLAGS=-L/sw/lib -ldl -lm -lvorbisfile -lvorbis -lintl -framework IOKit -framework AppKit -framework QuickTime -framework CoreAudio
+	LDFLAGS=-L/sw/lib -ldl -lm -lvorbisfile -lvorbis -lintl -framework IOKit -framework AppKit -framework QuickTime -framework CoreAudio -lGL
 	BASE_CFLAGS+=-I/sw/include
 endif
 
@@ -251,7 +251,7 @@ POFILES = $(wildcard $(WORKSPACE)/po/*.po)
 # SETUP AND BUILD
 #############################################################################
 
-.PHONY : targets build_debug build_release clean clean-debug clean-release clean2
+.PHONY : targets build_debug build_release clean clean-debug clean-release clean2 docs
 
 TARGETS=$(BUILDDIR)/ufo $(BUILDDIR)/game.$(SHLIBEXT)
 
@@ -1168,3 +1168,6 @@ lang:
 	  mkdir -p ../base/i18n/$$dir/LC_MESSAGES; \
 	  msgfmt -v -o ../base/i18n/$$dir/LC_MESSAGES/ufoai.mo po/$$po; \
 	done
+
+docs: 
+	doxygen docs/doxyall
