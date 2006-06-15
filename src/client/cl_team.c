@@ -542,7 +542,6 @@ void CL_UpdateHireVar ( void )
 
 	air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	Cvar_Set( "mn_hired", va( _("%i of %i"), baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], air->size ) );
-
 }
 
 /**
@@ -632,12 +631,6 @@ void CL_HireActorCmd( void )
 			baseCurrent->teamMask[baseCurrent->aircraftCurrent] |= (1 << num);
 		}
 	}
-/*
-======================
-CL_ParseResults
-======================
-*/
-
 	/* select the desired one anyways */
 	CL_UpdateHireVar();
 	Cbuf_AddText( va( "team_select %i\n", num ) );
