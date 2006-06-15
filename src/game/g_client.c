@@ -841,7 +841,7 @@ G_InventoryToFloor
 */
 void G_InventoryToFloor( edict_t *ent )
 {
-	invList_t	*ic;
+	invList_t	*ic, *next;
 	edict_t		*floor;
 	int			k;
 
@@ -869,7 +869,8 @@ void G_InventoryToFloor( edict_t *ent )
 		/* skip floor - we want to drop to floor */
 		if ( k == gi.csi->idFloor ) continue;
 		/* now cycle through all items for the container of the character (or the entity) */
-		for ( ic = ent->i.c[k]; ic; ic = ic->next ) {
+		for ( ic = ent->i.c[k]; ic; ic = next ) {
+			next = ic->next;
 			/* find the coordinates for the current item on floor */
 			Com_FindSpace( &floor->i, ic->item.t, gi.csi->idFloor, &ic->x, &ic->y );
 			if ( ic->x >= 32 || ic->y >= 16 ) {
