@@ -6,13 +6,12 @@ sequence credits
 	precache models
 	{
 		models/civilians/male/body01.md2
-		models/civilians/male/head01.md2
-		models/soldiers/m/body.md2
-		models/soldiers/mlight/body.md2
-		models/soldiers/mmedium/body.md2
-		models/soldiers/m/head04.md2
-		models/soldiers/m/head05.md2
-		models/soldiers/mmedium/head01.md2
+		models/soldiers/male/body.md2
+		models/soldiers/malelight/body.md2
+		models/soldiers/male/head04a.md2
+		models/soldiers/male/head05a.md2
+		models/soldiers/malemedium/body.md2
+		models/soldiers/malemedium/head01a.md2
 		models/aliens/ortnok/body01.md2
 		models/aliens/ortnok/head02.md2
 		models/aircraft/ufo_small/alienship1_hull.md2
@@ -52,7 +51,7 @@ sequence credits
 
 	2dobj herby_text
 	{
-		text	"Code, Visual Effects"
+		text	"_Code, Visual Effects"
 		pos		"974 50"		align	ur
 		color	"0 1 0 0"		fade	"0 0 0 1"
 	}
@@ -72,7 +71,7 @@ sequence credits
 
 	model sparx_body
 	{
-		model	models/soldiers/m/body.md2
+		model	models/soldiers/male/body.md2
 		anim	walk0
 		origin	"0 -270 0"
 		speed	"0 60 0"
@@ -80,7 +79,7 @@ sequence credits
 	}
 	model sparx_head
 	{
-		model	models/soldiers/m/head03a.md2
+		model	models/soldiers/male/head03a.md2
 		parent	sparx_body
 		tag		tag_head
 	}
@@ -124,7 +123,7 @@ sequence credits
 
 	model rasta_body
 	{
-		model	models/soldiers/mmedium/body.md2
+		model	models/soldiers/malemedium/body.md2
 		skin	3
 		anim	walk2
 		origin	"-270 0 0"
@@ -132,7 +131,7 @@ sequence credits
 	}
 	model rasta_head
 	{
-		model	models/soldiers/mmedium/head01a.md2
+		model	models/soldiers/malemedium/head01a.md2
 		skin	3
 		parent	rasta_body
 		tag		tag_head
@@ -209,13 +208,13 @@ sequence credits
 
 	2dobj vanethian_text
 	{
-		text	"Music"
+		text	"_Music"
 		pos		"50 50"		align	ul
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj vanethian_name
 	{
-		text	"Vanethian"
+		text	"_Vanethian"
 		pos		"50 75"		align	ul
 		color	"1 1 1 0"	fade	"0 0 0 1"
 
@@ -229,7 +228,7 @@ sequence credits
 
 	model ww3_body
 	{
-		model	models/soldiers/mlight/body.md2
+		model	models/soldiers/malelight/body.md2
 		skin	2
 		anim	walk2
 		origin	"-270 0 0"
@@ -237,7 +236,7 @@ sequence credits
 	}
 	model ww3_head
 	{
-		model	models/soldiers/m/head02a.md2
+		model	models/soldiers/male/head02a.md2
 		parent	ww3_body
 		tag		tag_head
 	}
@@ -260,13 +259,13 @@ sequence credits
 
 	2dobj ww3_text
 	{
-		text	"Webdesign"
+		text	"_Webdesign"
 		pos		"974 50"	align	ur
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj ww3_name
 	{
-		text	"Ww 3"
+		text	"_Ww 3"
 		pos		"974 75"	align	ur
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
@@ -298,35 +297,35 @@ sequence credits
 
 	2dobj special_thx
 	{
-		text	"Special Thanks To"
+		text	"_Special Thanks To"
 		pos		"512 768"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -80"
 	}
 	2dobj id
 	{
-		text	"id Software"
+		text	"_id Software"
 		pos		"512 810"		align	uc
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
 	2dobj engine
 	{
-		text	"Quake 2 Engine"
+		text	"_Quake 2 Engine"
 		pos		"512 835"		align	uc
 		color	".7 .7 .7 1"
 		speed	"0 -80"
 	}
 	2dobj exp
 	{
-		text	"Extreme Players"
+		text	"_Extreme Players"
 		pos		"512 960"		align	uc
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
 	2dobj host
 	{
-		text	"Our Host"
+		text	"_Our Host"
 		pos		"512 985"		align	uc
 		color	".7 .7 .7 1"
 		speed	"0 -80"
@@ -334,35 +333,35 @@ sequence credits
 
 	2dobj additional_thx
 	{
-		text	"Additional Thanks To"
+		text	"_Additional Thanks To"
 		pos		"512 1300"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -80"
 	}
 	2dobj sacrusha
 	{
-		text	"Sacrusha"
+		text	"_Sacrusha"
 		pos		"512 1340"		align	uc
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
 	2dobj mattn
 	{
-		text	"Mattn"
+		text	"_Mattn"
 		pos		"512 1370"		align	uc
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
 	2dobj community
 	{
-		text	"The Community"
+		text	"_The Community"
 		pos		"512 1400"		align	uc
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
 	2dobj everyone
 	{
-		text	"Everyone who supported us"
+		text	"_Everyone who supported us"
 		pos		"512 1430"		align	uc
 		color	"1 1 1 1"
 		speed	"0 -80"
@@ -392,34 +391,26 @@ sequence credits
 	wait 3.5
 
 	2dobj ufoai { speed "0 0" }
-	2dobj demo
-	{
-		text	"Version 0.13"
-		pos		"512 416"		align	uc
-		color	"1 1 1 0"	fade	"0 0 0 1"
-	}
 	2dobj www
 	{
-		text	"http://www.ufoai.net"
+		text	"_http://www.ufoai.net"
 		pos		"512 710"	align	uc
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj copyright
 	{
-		text	"Copyright 2004 by UFO: AI Team"
+		text	"_Copyright 2004 by UFO: AI Team"
 		pos		"512 736"	align	uc
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
 	wait 8.0
 
 	2dobj ufoai { fade "0 0 0 -1" }
-	2dobj demo { fade "0 0 0 -1" }
 	2dobj www { fade "0 0 0 -1" }
 	2dobj copyright { fade "0 0 0 -1" }
 	wait 1.0
 
 	rem ufoai
-	rem demo
 	rem www
 	rem copyright
 
@@ -431,25 +422,25 @@ sequence credits
 	}
 	model ship_hull
 	{
-		model	models/objects/alienship1_hull.md2
+		model	models/aircraft/ufo_small/alienship1_hull.md2
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}
 	model ship_wings
 	{
-		model	models/objects/alienship1_wings.md2
+		model	models/aircraft/ufo_small/alienship1_wings.md2
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}
 	model ship_engine1
 	{
-		model	models/objects/alienship1_engines_1.md2
+		model	models/aircraft/ufo_small/alienship1_engines_1.md2
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}
 	model ship_engine2
 	{
-		model	models/objects/alienship1_engines_2.md2
+		model	models/aircraft/ufo_small/alienship1_engines_2.md2
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}
