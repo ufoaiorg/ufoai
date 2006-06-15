@@ -2,4 +2,15 @@
 ufoai-*
 *.map
 src
+*.bak
+*.old
+*.tmp
+*.dll
+*.exe
+*.max
+*.diff
+*.out
 *.blend
+debugi386
+debian
+Makefile*
