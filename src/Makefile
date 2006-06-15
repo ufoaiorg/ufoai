@@ -310,6 +310,13 @@ endif
 
 debug: build_debug copy_debug
 all: build_debug build_release lang
+installer: win32installer linuxinstaller
+
+win32installer:
+	makensis win32/installer.nsi
+
+linuxinstaller:
+	@echo TODO
 
 links:
 	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so ../ufoded
