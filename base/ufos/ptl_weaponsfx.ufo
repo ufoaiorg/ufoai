@@ -491,19 +491,20 @@ particle plasmaBall
 {
 	init
 	{
-		image  sfx/plasmaball
-		blend  add
-		style  facing
+		image	sfx/plasmaball
+		blend	add
+		style	facing
+		tps		40
 	}
 	run
 	{
-		push pos "3 3"
-		push *t
-		mul  float 4
-		sin  #
-		mul  #
-		add  pos "8 8"
-		pop  *size
+		push	pos	"3 3"
+		push	*t
+		mul	float	4
+		sin	#
+		mul	#
+		add	pos	"8 8"
+		pop	*size
 	}
 }
 
