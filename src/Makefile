@@ -316,7 +316,7 @@ win32installer:
 	makensis win32/installer.nsi
 
 linuxinstaller:
-	tar -cvjp --exclude-from=linux/tar.ex -f ufoai-$(VERSION)-linux.tar.gz ../
+	tar -cvjp --exclude-from=linux/tar.ex -f ufoai-$(VERSION)-linux.tar.bz2 ../
 
 links:
 	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so ../ufoded
