@@ -2415,6 +2415,7 @@ void CL_GameResultsCmd(void)
 	/* remove the dead (and their item preference) */
 	for (i = 0; i < baseCurrent->numWholeTeam;) {
 		if (baseCurrent->deathMask & (1 << i)) {
+			Com_DPrintf("CL_GameResultsCmd - remove player %i - he died\n", i );
 			baseCurrent->deathMask >>= 1;
 			tempMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent] >> 1;
 			baseCurrent->teamMask[baseCurrent->aircraftCurrent] =
