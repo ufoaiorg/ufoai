@@ -675,8 +675,7 @@ edict_t *G_GetFloorItems( edict_t *ent )
 {
 	edict_t *floor;
 
-	for ( floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++ )
-	{
+	for ( floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++ ) {
 		if ( !floor->inuse || floor->type != ET_ITEM )
 			continue;
 		if ( !VectorCompare( ent->pos, floor->pos ) )
@@ -721,8 +720,7 @@ void G_InventoryMove( player_t *player, int num, int from, int fx, int fy, int t
 	else newFloor = qfalse;
 
 	/* search for space */
-	if ( tx == NONE || ty == NONE )
-	{
+	if ( tx == NONE || ty == NONE ) {
 		ic = Com_SearchInInventory(&ent->i, from, fx, fy);
 		if ( ic )
 			Com_FindSpace( &ent->i, ic->item.t, to, &tx, &ty );
@@ -863,11 +861,11 @@ void G_InventoryToFloor( edict_t *ent )
 	}
 
 	/* drop items */
-
 	/* cycle through all containers */
 	for ( k = 0; k < gi.csi->numIDs; k++ ) {
 		/* skip floor - we want to drop to floor */
-		if ( k == gi.csi->idFloor ) continue;
+		if ( k == gi.csi->idFloor )
+			continue;
 		/* now cycle through all items for the container of the character (or the entity) */
 		for ( ic = ent->i.c[k]; ic; ic = next ) {
 			next = ic->next;
