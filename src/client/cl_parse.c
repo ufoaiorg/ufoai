@@ -1,4 +1,17 @@
+/**
+ * @file cl_parse.c
+ * @brief Parse a message received from the server.
+ */
+
 /*
+All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
+
+15/06/06, Eddy Cullen (ScreamingWithNoSound):
+	Reformatted to agreed style.
+	Added doxygen file comment.
+	Updated copyright notice.
+
+Original file from Quake 2 v3.21: quake2-2.31/client/
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -8,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 
 See the GNU General Public License for more details.
 
@@ -17,7 +30,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* cl_parse.c  -- parse a message received from the server */
 
 #include "client.h"
 
@@ -1217,5 +1229,3 @@ void CL_ParseServerMessage (void)
 
 	CL_AddNetgraph ();
 }
-
-

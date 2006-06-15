@@ -1,4 +1,18 @@
+/**
+ * @file screen.h
+ * @brief 
+ */
+
 /*
+All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
+
+15/06/06, Eddy Cullen (ScreamingWithNoSound):
+	Reformatted to agreed style.
+	Added doxygen file comment.
+	Updated copyright notice.
+	Added inclusion guard.
+
+Original file from Quake 2 v3.21: quake2-2.31/client/screen.h
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -17,35 +31,39 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* screen.h */
 
-void	SCR_Init (void);
+#ifndef CLIENT_SCREEN_H
+#define CLIENT_SCREEN_H
 
-void	SCR_UpdateScreen (void);
+void SCR_Init(void);
 
-void	SCR_SizeUp (void);
-void	SCR_SizeDown (void);
-void	SCR_CenterPrint (char *str);
-void	SCR_BeginLoadingPlaque (void);
-void	SCR_EndLoadingPlaque (void);
+void SCR_UpdateScreen(void);
 
-void	SCR_DebugGraph (float value, int color);
+void SCR_SizeUp(void);
+void SCR_SizeDown(void);
+void SCR_CenterPrint(char *str);
+void SCR_BeginLoadingPlaque(void);
+void SCR_EndLoadingPlaque(void);
 
-void	SCR_TouchPics (void);
+void SCR_DebugGraph(float value, int color);
 
-void	SCR_RunConsole (void);
+void SCR_TouchPics(void);
 
-extern	float		scr_con_current;
-extern	float		scr_conlines;		/* lines of console to display */
+void SCR_RunConsole(void);
 
-extern	int			sb_lines;
+extern float scr_con_current;
+extern float scr_conlines;		/* lines of console to display */
 
-extern	cvar_t		*scr_viewsize;
-extern	cvar_t		*cursor;
+extern int sb_lines;
 
-extern	vrect_t		scr_vrect;		/* position of render window */
+extern cvar_t *scr_viewsize;
+extern cvar_t *cursor;
 
-extern	char		cursor_pic[MAX_QPATH];
+extern vrect_t scr_vrect;		/* position of render window */
 
-void SCR_AddDirtyPoint (int x, int y);
-void SCR_DirtyScreen (void);
+extern char cursor_pic[MAX_QPATH];
+
+void SCR_AddDirtyPoint(int x, int y);
+void SCR_DirtyScreen(void);
+
+#endif /* CLIENT_SCREEN_H */

@@ -1,4 +1,18 @@
+/**
+ * @file input.h
+ * @brief Header file for keyboard handler.
+ */
+
 /*
+All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
+
+15/06/06, Eddy Cullen (ScreamingWithNoSound):
+	Reformatted to agreed style.
+	Added doxygen file comment.
+	Updated copyright notice.
+	Added inclusion guard.
+
+Original file from Quake 2 v3.21: quake2-2.31/client/keys.h
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -8,7 +22,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 
 See the GNU General Public License for more details.
 
@@ -17,6 +31,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
+
+#ifndef CLIENT_KEY_H
+#define CLIENT_KEY_H
 
 /* */
 /* these are the key numbers that should be passed to KeyEvent */
@@ -128,14 +145,13 @@ typedef enum {
 	K_AUX30,
 	K_AUX31,
 	K_AUX32,
-	
+
 	K_NUMLOCK,
 
-	K_LAST_KEY		/* this had better be <256! */
+	K_LAST_KEY					/* this had better be <256! */
 } keyNum_t;
 
-typedef enum
-{
+typedef enum {
 	MSG_SAY,
 	MSG_SAY_TEAM,
 	MSG_MENU
@@ -143,18 +159,19 @@ typedef enum
 
 #define		MAXCMDLINE	256
 
-extern char		*keybindings[256];
-extern	int		key_repeats[256];
+extern char *keybindings[256];
+extern int key_repeats[256];
 
-extern	int	anykeydown;
-extern	int msg_mode;
+extern int anykeydown;
+extern int msg_mode;
 extern char msg_buffer[MAXCMDLINE];
-extern	int msg_bufferlen;
+extern int msg_bufferlen;
 
-void Key_Event (int key, qboolean down, unsigned time);
-void Key_Init (void);
-void Key_WriteBindings (FILE *f);
-void Key_SetBinding (int keynum, char *binding);
-void Key_ClearStates (void);
-int Key_GetKey (void);
+void Key_Event(int key, qboolean down, unsigned time);
+void Key_Init(void);
+void Key_WriteBindings(FILE * f);
+void Key_SetBinding(int keynum, char *binding);
+void Key_ClearStates(void);
+int Key_GetKey(void);
 
+#endif /* CLIENT_KEY_H */

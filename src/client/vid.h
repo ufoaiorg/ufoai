@@ -1,4 +1,18 @@
+/**
+ * @file vid.h
+ * @brief Video driver defs.
+ */
+
 /*
+All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
+
+15/06/06, Eddy Cullen (ScreamingWithNoSound):
+	Reformatted to agreed style.
+	Added doxygen file comment.
+	Updated copyright notice.
+	Added inclusion guard.
+
+Original file from Quake 2 v3.21: quake2-2.31/client/vid.h
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -8,7 +22,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 
 See the GNU General Public License for more details.
 
@@ -17,7 +31,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* vid.h -- video driver defs */
+
+#ifndef CLIENT_VID_H
+#define CLIENT_VID_H
 
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
@@ -31,9 +47,8 @@ and the (x,y) offset from the bottom (?) left (?) corner.
 */
 
 
-typedef struct vrect_s
-{
-	int				x,y,width,height;
+typedef struct vrect_s {
+	int x, y, width, height;
 } vrect_t;
 
 /*    viddef_t
@@ -46,26 +61,26 @@ respectively. This allows the menu system to use a "normalized" coordinate syste
 
 */
 
-typedef struct
-{
-	unsigned		width, height;			/* coordinates from main game */
-	float			rx, ry;
+typedef struct {
+	unsigned width, height;		/* coordinates from main game */
+	float rx, ry;
 } viddef_t;
 
-typedef struct vidmode_s
-{
-	int         width, height;
-	int         mode;
+typedef struct vidmode_s {
+	int width, height;
+	int mode;
 } vidmode_t;
 
-extern	vidmode_t	vid_modes[];
-extern	viddef_t	viddef;				/* global video state */
+extern vidmode_t vid_modes[];
+extern viddef_t viddef;			/* global video state */
 
 /* Video module initialisation etc */
-void	VID_Init (void);
-void	VID_Shutdown (void);
-void	VID_CheckChanges (void);
+void VID_Init(void);
+void VID_Shutdown(void);
+void VID_CheckChanges(void);
 
-void	VID_MenuInit( void );
-void	VID_MenuDraw( void );
-const char *VID_MenuKey( int );
+void VID_MenuInit(void);
+void VID_MenuDraw(void);
+const char *VID_MenuKey(int);
+
+#endif /* CLIENT_VID_H */

@@ -1,4 +1,10 @@
+/**
+ * @file cl_ufopedia.c
+ * @brief Header file for Ufopedia script interpreter.
+ */
+
 /*
+Copyright (C) 2002-2006 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,10 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-/* cl_ufopedia.h */
+#ifndef CLIENT_CL_UFOPEDIA_H
+#define CLIENT_CL_UFOPEDIA_H
 
-#ifndef UFOPEDIA_DEFINED
-#define UFOPEDIA_DEFINED 1
 #include "client.h"
 
 #define MAX_PEDIACHAPTERS	16
@@ -38,5 +43,4 @@ void UP_ResetUfopedia( void );
 void UP_ParseUpChapters( char *title, char **text );
 void UP_OpenWith ( char *name );
 
-#endif
-
+#endif /* CLIENT_CL_UFOPEDIA_H */

@@ -1,4 +1,10 @@
+/**
+ * @file cl_ufopedia.c
+ * @brief Ufopedia script interpreter.
+ */
+
 /*
+Copyright (C) 2002-2006 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* cl_ufopedia.c -- ufopedia script interpreter */
 
 #include "cl_ufopedia.h"
 #include "cl_global.h"
