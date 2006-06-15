@@ -1364,8 +1364,10 @@ void MN_DrawItem( vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 		mi.center = od->center;
 		mi.scale = size;
 
-		if ( od->scale ) VectorScale( scale, od->scale, size );
-		else VectorCopy( scale, size );
+		if ( od->scale )
+			VectorScale( scale, od->scale, size );
+		else
+			VectorCopy( scale, size );
 
 		VectorCopy( org, origin );
 		if ( x || y || sx || sy ) {
@@ -1381,7 +1383,10 @@ void MN_DrawItem( vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 
 		Vector4Copy( color, col );
 		if ( od->weapon && od->ammo && !item.a )
-			col[1] *= 0.5; col[2] *= 0.5;
+		{
+			col[1] *= 0.5;
+			col[2] *= 0.5;
+		}
 
 		mi.color = col;
 
