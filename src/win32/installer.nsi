@@ -442,7 +442,8 @@ Section "Game" SEC01
 ; music
 ;======================================================================
   SetOutPath "$INSTDIR\base\music"
-  File "..\..\base\music\*.*"
+  File "..\..\base\music\*.txt"
+  File /nonfatal "..\..\base\music\*.ogg"
 
 ;======================================================================
 ; pics
@@ -595,7 +596,11 @@ Section "MappingTools" SEC02
   File "..\..\base\maps\compile.pl"
   SetOutPath "$INSTDIR\tools"
   File "..\tools\*.ms"
+  File "..\tools\*.qe4"
   File "..\tools\*.def"
+  ; EULA
+  File "..\tools\*.doc"
+  File /nonfatal "..\tools\*.exe"
   File /nonfatal "..\tools\ufo2map\*.exe"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MAP-Editor.lnk" "$INSTDIR\tools\q3radiant.exe" "" "$INSTDIR\tools\q3radiant.exe" 0
 SectionEnd
