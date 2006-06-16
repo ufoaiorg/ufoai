@@ -1027,7 +1027,9 @@ void CL_ParseClientData ( char *type, char *name, char **text )
 	else if ( !Q_strncmp( type, "menu", 4 ) ) MN_ParseMenu(name, text);
 	else if ( !Q_strncmp( type, "particle", 8 ) ) CL_ParseParticle(name, text);
 	else if ( !Q_strncmp( type, "sequence", 8 ) ) CL_ParseSequence(name, text);
-	else if (!Q_strncmp(type, "aircraft", 8)) CL_ParseAircraft(name, text);
+	else if ( !Q_strncmp(type, "aircraft", 8 ) ) CL_ParseAircraft(name, text);
+	else if ( !Q_strncmp(type, "campaign", 8 ) ) CL_ParseCampaign(name, text);
+
 }
 
 /**
@@ -1065,9 +1067,7 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
 void CL_ParseScriptSecond(char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
-	if (!Q_strncmp(type, "campaign", 8))
-		CL_ParseCampaign(name, text);
-	else if (!Q_strncmp(type, "stage", 5))
+	if (!Q_strncmp(type, "stage", 5))
 		CL_ParseStage(name, text);
 	else if (!Q_strncmp(type, "building", 8))
 		B_ParseBuildings(name, text, qtrue);
