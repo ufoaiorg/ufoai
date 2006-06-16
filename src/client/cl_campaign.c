@@ -1765,6 +1765,10 @@ int CL_GameLoad(char *filename)
 		Com_Printf("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, version);
 	}
 
+	Com_DPrintf("Build gd\n");
+	memset(&gd,0,sizeof(gd));
+	CL_ReadSinglePlayerData();
+
 	/* read comment */
 	MSG_ReadString(&sb);
 
