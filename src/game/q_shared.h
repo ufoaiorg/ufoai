@@ -230,6 +230,7 @@ extern long Q_ftol( float f );
 #define VectorMul(scalar,b,c)		(c[0]=scalar*b[0],c[1]=scalar*b[1],c[2]=scalar*b[2])
 #define Vector2Mul(scalar,b,c)		(c[0]=scalar*b[0],c[1]=scalar*b[1])
 #define VectorCopy(a,b)			(b[0]=a[0],b[1]=a[1],b[2]=a[2])
+#define Vector2Copy(a,b)			(b[0]=a[0],b[1]=a[1])
 #define Vector4Copy(a,b)		(b[0]=a[0],b[1]=a[1],b[2]=a[2],b[3]=a[3])
 #define VectorClear(a)			(a[0]=a[1]=a[2]=0)
 #define VectorNegate(a,b)		(b[0]=-a[0],b[1]=-a[1],b[2]=-a[2])

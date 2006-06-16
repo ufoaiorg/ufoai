@@ -10,14 +10,13 @@
 // color
 //	TODO: Defines the color used to seperate the nations in the geoscape (internally)
 // names
-//	TODO: Defines what "type" of names should be used. They are defined in names.ufo.
+//	TODO: Defines what "type" of names should be used. They are defined in team_human.ufo.
 // alien_friendly (percentage 0-100)
 //	TODO: Indicated the friendlyness (political and civilan) towards the aliens and influence the chance that this country stops it's funding after some time.
 //	TODO This value should be changed according to Phalanx' performance on it's territory and the terror missions of the aliens.
 // soldiers,scientists (number of people)
 //	TODO: The number of people (the best of the best ;)) you can hire (additionally) from this nation each month.
 //=================================================
-// TODO: Parsing
 // TODO: Update of these values each month.
 // TODO: Logging this data in a seperate list so a statistic can be calculated.
 //=================================================

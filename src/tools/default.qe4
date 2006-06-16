@@ -1,0 +1,15 @@
+{
+"mapspath" "c:\programme\ufoai\base\maps"
+"brush_primit" "0"
+"bsp_XCom 00" "! c:\programme\ufoai\ufo2map $"
+"bsp_XCom 32" "! c:\programme\ufoai\ufo2map -bounce 0 -chop 32 -extra $"
+"bsp_XCom 64" "! c:\programme\ufoai\qbsp3 -bounce 0 $"
+"bsp_XCom 128" "! c:\programme\ufoai\qbsp3 -bounce 0 -chop 128 $"
+"bsp_XCom 256" "! c:\programme\ufoai\qbsp3 -bounce 0 -chop 256 $"
+"autosave" "c:\programme\ufoai\base\maps\autosave.map"
+"texturepath" "c:\programme\ufoai\base\textures"
+"entitypath" "c:\programme\ufoai\tools\entities.def"
+"remotebasepath" "c:\programme\ufoai\base"
+"rshcmd" ""
+"basepath" "c:\programme\ufoai\base"
+}

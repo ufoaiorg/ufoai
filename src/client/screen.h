@@ -1,6 +1,8 @@
 /**
  * @file screen.h
- * @brief 
+ * @brief Header for certain screen operations.
+ *
+ * TODO: Work out what this is for.
  */
 
 /*
