@@ -46,7 +46,7 @@ int numBuildingConstructionList;
  * to the appropriate values in the corresponding struct
  */
 value_t valid_vars[] = {
-	{"map_name", V_NULL, BSFS(mapPart)},	/**< Name of the map file for generating basemap. */
+	{"map_name", V_STRING, BSFS(mapPart)},	/**< Name of the map file for generating basemap. */
 	{"more_than_one", V_BOOL, BSFS(moreThanOne)},	/**< Is the building allowed to be build more the one time? */
 	{"name", V_TRANSLATION_STRING, BSFS(name)},	/**< The displayed building name. */
 	{"pedia", V_STRING, BSFS(pedia)},	/**< The pedia-id string for the associated pedia entry. */
@@ -1590,7 +1590,7 @@ void B_BaseAttack(void)
 }
 
 /**
- * @brief Builds a map for tactivcal combat.
+ * @brief Builds a base map for tactical combat.
  *
  * NOTE: Do we need day and night maps here, too?
  * TODO: Search a empty fild and add a alien craft there.
@@ -1628,8 +1628,10 @@ void B_AssembleMap(void)
 				else if (*entry->needs)
 					continue;
 
-				if (entry->mapPart)
+				if (*entry->mapPart)
 					Q_strncpyz(baseMapPart, va("b/%c/%s", baseCurrent->mapChar, entry->mapPart), sizeof(baseMapPart));
+				else
+					Com_Printf("B_AssembleMap: Error - map has no mapPart set. Building '%s'\n'", entry->id);
 			} else
 				Q_strncpyz(baseMapPart, va("b/%c/empty", baseCurrent->mapChar), sizeof(baseMapPart));
 
