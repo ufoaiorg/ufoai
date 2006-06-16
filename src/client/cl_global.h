@@ -98,6 +98,7 @@ typedef struct globalData_s
 	int mapAction;
 
 	int gameTimeScale;
+	int interceptAircraft;
 
 	/* TODO
 		building_t   buildings[MAX_BASES][MAX_BUILDINGS];

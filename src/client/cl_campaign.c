@@ -50,7 +50,6 @@ base_t *baseCurrent;
 
 aircraft_t aircraft[MAX_AIRCRAFT];
 int numAircraft;
-int interceptAircraft;
 
 byte *maskPic;
 int maskWidth, maskHeight;
@@ -982,18 +981,18 @@ void CL_SelectAircraft_f(void)
 			num -= gd.bases[j].numAircraftInBase;
 			continue;
 		} else if (num >= 0 && num < gd.bases[j].numAircraftInBase) {
-			interceptAircraft = num;
-			Com_DPrintf("Selected aircraft: %s\n", gd.bases[j].aircraft[interceptAircraft].name);
+			gd.interceptAircraft = num;
+			Com_DPrintf("Selected aircraft: %s\n", gd.bases[j].aircraft[gd.interceptAircraft].name);
 
-			if (!*(gd.bases[j].aircraft[interceptAircraft].teamSize)) {
+			if (!*(gd.bases[j].aircraft[gd.interceptAircraft].teamSize)) {
 				MN_Popup(_("Notice"), _("Assign a team to aircraft"));
 				return;
 			}
-			MN_MapCalcLine(gd.bases[j].aircraft[interceptAircraft].pos, selMis->def->pos, &gd.bases[j].aircraft[interceptAircraft].route);
-			gd.bases[j].aircraft[interceptAircraft].status = AIR_TRANSIT;
-			gd.bases[j].aircraft[interceptAircraft].time = 0;
-			gd.bases[j].aircraft[interceptAircraft].point = 0;
-			baseCurrent = gd.bases[j].aircraft[interceptAircraft].homebase;
+			MN_MapCalcLine(gd.bases[j].aircraft[gd.interceptAircraft].pos, selMis->def->pos, &gd.bases[j].aircraft[gd.interceptAircraft].route);
+			gd.bases[j].aircraft[gd.interceptAircraft].status = AIR_TRANSIT;
+			gd.bases[j].aircraft[gd.interceptAircraft].time = 0;
+			gd.bases[j].aircraft[gd.interceptAircraft].point = 0;
+			baseCurrent = gd.bases[j].aircraft[gd.interceptAircraft].homebase;
 			baseCurrent->aircraftCurrent = num;
 			CL_AircraftSelect();
 			MN_PopMenu(qfalse);
@@ -1218,8 +1217,8 @@ void CL_CheckAircraft(aircraft_t * air)
 		mis->def->active = qtrue;
 		if (air->status != AIR_DROP && air->fuel > 0) {
 			air->status = AIR_DROP;
-			if (interceptAircraft < 0)
-				interceptAircraft = air->idx_base;
+			if (gd.interceptAircraft < 0)
+				gd.interceptAircraft = air->idx_base;
 			MN_PushMenu("popup_intercept_ready");
 		}
 	} else {
@@ -1790,7 +1789,7 @@ int CL_GameLoad(char *filename)
 
 	/* reset */
 	selMis = NULL;
-	interceptAircraft = -1;
+	gd.interceptAircraft = -1;
 	memset(&ccs, 0, sizeof(ccs_t));
 
 	/* read date */
@@ -2040,7 +2039,7 @@ void CL_GameGo(void)
 	if (B_GetNumOnTeam() == 0 && !ccs.singleplayer) {
 		MN_Popup(_("Note"), _("Assemble or load a team"));
 		return;
-	} else if ((!mis->active || (interceptAircraft >= 0 && !baseCurrent->numOnTeam[interceptAircraft]))
+	} else if ((!mis->active || (gd.interceptAircraft >= 0 && !baseCurrent->numOnTeam[gd.interceptAircraft]))
 			   && ccs.singleplayer)
 		/* dropship not near landingzone */
 		return;
@@ -2106,7 +2105,7 @@ CL_GameAutoCheck
 ======================*/
 void CL_GameAutoCheck(void)
 {
-	if (!curCampaign || !selMis || interceptAircraft < 0) {
+	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
 		Com_DPrintf("No update after automission\n");
 		return;
 	}
@@ -2131,7 +2130,7 @@ void CL_GameAutoGo(void)
 	mission_t *mis;
 	int won, i;
 
-	if (!curCampaign || !selMis || interceptAircraft < 0) {
+	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
 		Com_DPrintf("No update after automission\n");
 		return;
 	}
@@ -2149,9 +2148,9 @@ void CL_GameAutoGo(void)
 	MN_PopMenu(qfalse);
 
 	/* FIXME: This needs work */
-	won = mis->aliens * (int) difficulty->value > baseCurrent->numOnTeam[interceptAircraft] ? 0 : 1;
+	won = mis->aliens * (int) difficulty->value > baseCurrent->numOnTeam[gd.interceptAircraft] ? 0 : 1;
 
-	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int) difficulty->value, baseCurrent->numOnTeam[interceptAircraft]);
+	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int) difficulty->value, baseCurrent->numOnTeam[gd.interceptAircraft]);
 
 	/* give reward */
 	if (won)
@@ -2455,7 +2454,7 @@ void CL_MapActionReset(void)
 	if (gd.numBases)
 		gd.mapAction = MA_NONE;
 
-	interceptAircraft = -1;
+	gd.interceptAircraft = -1;
 	selMis = NULL;				/* reset selected mission */
 }
 
