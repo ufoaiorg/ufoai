@@ -64,6 +64,7 @@ FunctionEnd
 Section "Game" SEC01
   SetOverwrite ifnewer
   SetOutPath "$INSTDIR"
+  File "..\..\contrib\*.dll"
   File "..\..\*.dll"
   File "..\..\*.exe"
   SetOutPath "$INSTDIR\base"
@@ -626,9 +627,9 @@ Section "MappingTools" SEC02
   File "..\tools\*.qe4"
   File "..\tools\*.def"
   ; EULA
-  File "..\tools\*.doc"
-  File /nonfatal "..\tools\*.exe"
-  File /nonfatal "..\tools\ufo2map\*.exe"
+  File "..\..\contrib\*.doc"
+  File "..\..\contrib\*.exe"
+  File "..\tools\ufo2map\*.exe"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MAP-Editor.lnk" "$INSTDIR\tools\q3radiant.exe" "" "$INSTDIR\tools\q3radiant.exe" 0
 SectionEnd
 
