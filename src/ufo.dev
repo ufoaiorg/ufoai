@@ -772,12 +772,12 @@ BuildCmd=$(CC) -c cl_shader.c -o cl_shader.o $(CFLAGS)
 [VersionInfo]
 Major=2
 Minor=0
-Release=2
-Build=2
+Release=3
+Build=3
 LanguageID=1033
 CharsetID=1252
 CompanyName=
-FileVersion=2.0-RC2
+FileVersion=2.0-RC3
 FileDescription=UFO:Alien Invasion
 InternalName=
 LegalCopyright=
