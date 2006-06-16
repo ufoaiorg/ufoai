@@ -1027,6 +1027,7 @@ void CL_ParseClientData ( char *type, char *name, char **text )
 	else if ( !Q_strncmp( type, "menu", 4 ) ) MN_ParseMenu(name, text);
 	else if ( !Q_strncmp( type, "particle", 8 ) ) CL_ParseParticle(name, text);
 	else if ( !Q_strncmp( type, "sequence", 8 ) ) CL_ParseSequence(name, text);
+	else if (!Q_strncmp(type, "aircraft", 8)) CL_ParseAircraft(name, text);
 }
 
 /**
@@ -1047,8 +1048,6 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
 		B_ParseBuildings(name, text, qfalse);
 	else if (!Q_strncmp(type, "tech", 4))
 		RS_ParseTechnologies(name, text);
-	else if (!Q_strncmp(type, "aircraft", 8))
-		CL_ParseAircraft(name, text);
 	else if (!Q_strncmp(type, "base", 4))
 		B_ParseBases(name, text);
 	else if (!Q_strncmp(type, "nation", 6))
@@ -1189,6 +1188,7 @@ void CL_InitLocal(void)
 	cl_logevents = Cvar_Get("cl_logevents", "0", 0);
 
 	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0);
+	cl_worldlevel->modified = qfalse;
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET);
 
 /*	cl_lightlevel = Cvar_Get ("r_lightlevel", "0", 0); */
