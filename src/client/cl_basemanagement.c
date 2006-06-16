@@ -329,9 +329,18 @@ void B_SetBuildingByClick(int row, int col)
 			if (*baseCurrent->buildingCurrent->needs && baseCurrent->buildingCurrent->visible)
 				secondBuildingPart = B_GetBuildingType(baseCurrent->buildingCurrent->needs);
 			if (secondBuildingPart) {
-				if (baseCurrent->map[row][col + 1] >= 0) {
-					Com_Printf("Can't place this building here - the second part overlapped with another building\n");
-					return;
+				if (col + 1 == BASE_SIZE) {
+					if (baseCurrent->map[row][col-1] >= 0) {
+						Com_DPrintf("Can't place this building here - the second part overlapped with another building\n");
+						return;
+					}
+					col--;
+				} else if (baseCurrent->map[row][col+1] >= 0) {
+					if (baseCurrent->map[row][col-1] >= 0 || !col) {
+						Com_DPrintf("Can't place this building here - the second part overlapped with another building\n");
+						return;
+					}
+					col--;
 				}
 
 				baseCurrent->map[row][col + 1] = baseCurrent->buildingCurrent->idx;
@@ -357,11 +366,11 @@ void B_SetBuildingByClick(int row, int col)
 			B_ResetBuildingCurrent();
 			B_BuildingInit();	/* update the building-list */
 		} else {
-			Com_Printf("There is already a building\n");
+			Com_DPrintf("There is already a building\n");
 			Com_DPrintf("Building: %i at (row:%i, col:%i)\n", baseCurrent->map[row][col], row, col);
 		}
 	} else
-		Com_Printf("Invalid coordinates\n");
+		Com_DPrintf("Invalid coordinates\n");
 }
 
 /**
@@ -1040,7 +1049,7 @@ qboolean B_EmployeeIsFree(employee_t * employee)
  * @brief Add a free employee from the quarters to building_dest. (the employee will be linked to both of them)
  *
  * TODO: Add check for destination building vs. employee_type and abort if they do not match.
- * TODO: Possibility to add emoployees to quarters (from the global list)
+ * TODO: Possibility to add employees to quarters (from the global list)
  *
  * @param[in] building_dest Which building to assign the employee to.
  * @param[in] employee_type	What type of employee to assign to the building.
@@ -1054,7 +1063,6 @@ qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_ty
 	building_t *building_source = NULL;
 	employees_t *employees_in_building_dest = NULL;
 	employees_t *employees_in_building_source = NULL;
-
 
 	if (!baseCurrent) {
 		Com_DPrintf("B_AssignEmployee: No Base set\n");
