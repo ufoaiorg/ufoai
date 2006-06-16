@@ -1757,7 +1757,7 @@ void B_SetBaseTitle(void)
 {
 	Com_DPrintf("B_SetBaseTitle: #bases: %i\n", gd.numBases);
 	if (gd.numBases < MAX_BASES)
-		Cvar_Set("mn_base_title_new", gd.bases[gd.numBases].name);
+		Cvar_Set("mn_base_title", gd.bases[gd.numBases].name);
 	else {
 		MN_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
 		MN_PopMenu(qfalse);		/* remove the new base popup */
