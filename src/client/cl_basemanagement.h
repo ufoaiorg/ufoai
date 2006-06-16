@@ -320,12 +320,15 @@ typedef struct base_s {
 	inventory_t teamInv[MAX_WHOLETEAM];
 	inventory_t equipment;
 
+	/* FIXME: Replace this with employees */
 	character_t wholeTeam[MAX_WHOLETEAM];
+	/* FIXME: Replace this with employees */
 	character_t curTeam[MAX_ACTIVETEAM];
 	character_t *curChr;
 
 	int equipType;
-	int nextUCN;				/* unified character id (base dependent) */
+	/* unified character id (base dependent) */
+	int nextUCN;
 
 	/* needed if there is another buildingpart to build (link to gd.buildingTypes) */
 	int buildingToBuild;
