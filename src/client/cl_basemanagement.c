@@ -1501,7 +1501,7 @@ void B_SelectBase(void)
 	/* set up a new base */
 	/* called from *.ufo with -1 */
 	if (baseID < 0) {
-		mapAction = MA_NEWBASE;
+		gd.mapAction = MA_NEWBASE;
 		baseID = gd.numBases;
 		Com_DPrintf("B_SelectBase: new baseID is %i\n", baseID);
 		if (baseID < MAX_BASES) {
@@ -1517,11 +1517,11 @@ void B_SelectBase(void)
 		Com_DPrintf("B_SelectBase: select base with id %i\n", baseID);
 		baseCurrent = &gd.bases[baseID];
 		if (baseCurrent->founded) {
-			mapAction = MA_NONE;
+			gd.mapAction = MA_NONE;
 			MN_PushMenu("bases");
 			CL_AircraftSelect();
 		} else {
-			mapAction = MA_NEWBASE;
+			gd.mapAction = MA_NEWBASE;
 		}
 	} else
 		baseCurrent = &gd.bases[0];
@@ -1552,7 +1552,7 @@ void B_BuildBase(void)
 			baseCurrent->idx = gd.numBases - 1;
 			baseCurrent->founded = qtrue;
 			stats.basesBuild++;
-			mapAction = MA_NONE;
+			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - BASE_COSTS);
 			Q_strncpyz(baseCurrent->name, mn_base_title->string, sizeof(baseCurrent->name));
 			Cvar_SetValue("mn_base_id", baseCurrent->idx);
@@ -1588,7 +1588,7 @@ void B_BaseAttack(void)
 		/* TODO: New menu for: */
 		/*      defend -> call AssembleBase for this base */
 		/*      continue -> return to geoscape */
-		mapAction = MA_BASEATTACK;
+		gd.mapAction = MA_BASEATTACK;
 	}
 #if 0							/*TODO: run eventhandler for each building in base */
 	if (b->onAttack)

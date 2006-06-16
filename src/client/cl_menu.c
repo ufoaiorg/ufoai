@@ -1025,7 +1025,7 @@ void MN_MapClick(menuNode_t * node, int x, int y)
 	MN_ScreenToMap(node, x, y, pos);
 
 	/* new base construction */
-	if (mapAction == MA_NEWBASE) {
+	if (gd.mapAction == MA_NEWBASE) {
 		if (!MapIsWater(CL_GetmapColor(pos))) {
 			newBasePos[0] = pos[0];
 			newBasePos[1] = pos[1];
@@ -1034,11 +1034,11 @@ void MN_MapClick(menuNode_t * node, int x, int y)
 		} else {
 			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL);
 		}
-	} else if (mapAction == MA_INTERCEPT && selMis)
+	} else if (gd.mapAction == MA_INTERCEPT && selMis)
 		MN_PushMenu("popup_intercept");
-	else if (mapAction == MA_BASEATTACK && selMis)
+	else if (gd.mapAction == MA_BASEATTACK && selMis)
 		MN_PushMenu("popup_baseattack");
-	else if (mapAction == MA_UFORADAR) {
+	else if (gd.mapAction == MA_UFORADAR) {
 		MN_PushMenu("popup_intercept_ufo");
 		/* TODO: Select aircraft - follow ufo - fight */
 		/* if shoot down - we have a new crashsite mission if color != water */
@@ -1051,12 +1051,12 @@ void MN_MapClick(menuNode_t * node, int x, int y)
 		if (x >= msx - 8 && x <= msx + 8 && y >= msy - 8 && y <= msy + 8) {
 			selMis = ms;
 			if (!Q_strncmp(selMis->def->name, "baseattack", 10)) {
-				mapAction = MA_BASEATTACK;
+				gd.mapAction = MA_BASEATTACK;
 				/* we need no dropship in our base */
 				selMis->def->active = qtrue;
 			} else {
 				Com_DPrintf("Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
-				mapAction = MA_INTERCEPT;
+				gd.mapAction = MA_INTERCEPT;
 			}
 			return;
 		}
@@ -2129,7 +2129,7 @@ void MN_DrawMenus(void)
 						MN_Draw3DMapMarkers(node, 0.0, 0.0);
 
 						/* display text */
-						switch (mapAction) {
+						switch (gd.mapAction) {
 						case MA_NEWBASE:
 							menuText[TEXT_STANDARD] = _("Select the desired location of the\nnew base on the map.\n");
 							break;
@@ -2162,7 +2162,7 @@ void MN_DrawMenus(void)
 						MN_DrawMapMarkers(node);
 
 						/* display text */
-						switch (mapAction) {
+						switch (gd.mapAction) {
 						case MA_NEWBASE:
 							menuText[TEXT_STANDARD] = _("Select the desired location of the\nnew base on the map.\n");
 							break;

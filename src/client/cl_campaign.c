@@ -52,7 +52,6 @@ aircraft_t aircraft[MAX_AIRCRAFT];
 int numAircraft;
 int interceptAircraft;
 
-int mapAction;
 int gameTimeScale;
 
 byte *maskPic;
@@ -1143,8 +1142,8 @@ void CL_CampaignCheckEvents(void)
 				if (set->active && set->event.day && Date_LaterThan(ccs.date, set->event)) {
 					if (set->def->numMissions) {
 						CL_CampaignAddMission(set);
-						if (mapAction == MA_NONE) {
-							mapAction = MA_INTERCEPT;
+						if (gd.mapAction == MA_NONE) {
+							gd.mapAction = MA_INTERCEPT;
 							CL_BuildingAircraftList_f();
 						}
 					} else
@@ -1671,9 +1670,6 @@ void CL_GameSave(char *filename, char *comment)
 		MSG_WriteLong(&sb, mis->expire.sec);
 	}
 
-	/*write the actual mapaction to savefile */
-	MSG_WriteLong(&sb, mapAction);
-
 	/* save all the stats */
 	SZ_Write(&sb, &stats, sizeof(stats));
 
@@ -1908,9 +1904,6 @@ int CL_GameLoad(char *filename)
 			ccs.numMissions--;
 		}
 	}
-
-	if (version >= 2)
-		mapAction = MSG_ReadLong(&sb);
 
 	/* load the stats */
 	memcpy(&stats, sb.data + sb.readcount, sizeof(stats_t));
@@ -2462,7 +2455,7 @@ void CL_MapActionReset(void)
 {
 	/* don't allow a reset when no base is set up */
 	if (gd.numBases)
-		mapAction = MA_NONE;
+		gd.mapAction = MA_NONE;
 
 	interceptAircraft = -1;
 	selMis = NULL;				/* reset selected mission */
