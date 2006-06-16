@@ -3154,6 +3154,8 @@ void CL_GameExit(void)
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_active", "");
 	ccs.singleplayer = qfalse;
+	MN_ShutdownMessageSystem();
+	CL_InitMessageSystem();
 	/* singleplayer commands are no longer available */
 	if (curCampaign)
 		for (commands = game_commands; commands->name; commands++)
@@ -3180,6 +3182,10 @@ void CL_GameNew(void)
 	if (curCampaign)
 		CL_GameExit();
 	ccs.singleplayer = qtrue;
+
+	Com_DPrintf("Build gd\n");
+	memset(&gd,0,sizeof(gd));
+	CL_ReadSinglePlayerData();
 
 	/* get campaign */
 	name = Cvar_VariableString("campaign");

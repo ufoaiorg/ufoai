@@ -1013,6 +1013,21 @@ void CL_Precache_f(void)
 	MSG_WriteString(&cls.netchan.message, va("begin %i\n", atoi(Cmd_Argv(1))));
 }
 
+/**
+  * @brief Called at client startup
+  *
+  * parses all *.ufos that are needed for single- and multiplayer
+  */
+void CL_ParseClientData ( char *type, char *name, char **text )
+{
+	if ( !Q_strncmp( type, "shader", 6 ) ) CL_ParseShaders(name, text);
+	else if ( !Q_strncmp( type, "font", 4 ) ) CL_ParseFont(name, text);
+	else if ( !Q_strncmp( type, "tutorial", 8 ) ) MN_ParseTutorials(name, text);
+	else if ( !Q_strncmp( type, "menu_model", 10 ) ) MN_ParseMenuModel(name, text);
+	else if ( !Q_strncmp( type, "menu", 4 ) ) MN_ParseMenu(name, text);
+	else if ( !Q_strncmp( type, "particle", 8 ) ) CL_ParseParticle(name, text);
+	else if ( !Q_strncmp( type, "sequence", 8 ) ) CL_ParseSequence(name, text);
+}
 
 /**
   * @brief
@@ -1024,16 +1039,8 @@ void CL_Precache_f(void)
 void CL_ParseScriptFirst(char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
-	if (!Q_strncmp(type, "menu_model", 10))
-		MN_ParseMenuModel(name, text);
-	else if (!Q_strncmp(type, "menu", 4))
-		MN_ParseMenu(name, text);
-	else if (!Q_strncmp(type, "particle", 8))
-		CL_ParseParticle(name, text);
-	else if (!Q_strncmp(type, "mission", 7))
+	if (!Q_strncmp(type, "mission", 7))
 		CL_ParseMission(name, text);
-	else if (!Q_strncmp(type, "sequence", 8))
-		CL_ParseSequence(name, text);
 	else if (!Q_strncmp(type, "up_chapters", 11))
 		UP_ParseUpChapters(name, text);
 	else if (!Q_strncmp(type, "building", 8))
@@ -1046,12 +1053,6 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
 		B_ParseBases(name, text);
 	else if (!Q_strncmp(type, "nation", 6))
 		CL_ParseNations(name, text);
-	else if (!Q_strncmp(type, "shader", 6))
-		CL_ParseShaders(name, text);
-	else if (!Q_strncmp(type, "font", 4))
-		CL_ParseFont(name, text);
-	else if (!Q_strncmp(type, "tutorial", 8))
-		MN_ParseTutorials(name, text);
 }
 
 /**
@@ -1071,6 +1072,32 @@ void CL_ParseScriptSecond(char *type, char *name, char **text)
 		CL_ParseStage(name, text);
 	else if (!Q_strncmp(type, "building", 8))
 		B_ParseBuildings(name, text, qtrue);
+}
+
+/**
+  * @brief Read the data into gd for singleplayer campaigns
+  */
+void CL_ReadSinglePlayerData( void )
+{
+	char *type, *name, *text;
+
+	/* pre-stage parsing */
+	FS_BuildFileList( "ufos/*.ufo" );
+	FS_NextScriptHeader( NULL, NULL, NULL );
+	text = NULL;
+
+	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
+		CL_ParseScriptFirst( type, name, &text );
+
+	/* stage two parsing */
+	FS_NextScriptHeader( NULL, NULL, NULL );
+	text = NULL;
+
+	Com_DPrintf( "Second stage parsing started...\n" );
+	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
+		CL_ParseScriptSecond( type, name, &text );
+
+	Com_Printf( "Global data loaded\n" );
 }
 
 /**

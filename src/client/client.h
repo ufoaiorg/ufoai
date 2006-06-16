@@ -466,6 +466,7 @@ void CL_Video_f(void);
 extern refexport_t re;			/* interface to refresh .dll */
 
 void CL_Init(void);
+void CL_ReadSinglePlayerData( void );
 
 void CL_FixUpGender(void);
 void CL_Disconnect(void);
@@ -896,6 +897,7 @@ void MN_SetViewRect(void);
 void MN_Command(void);
 void MN_DrawMenus(void);
 void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color);
+void MN_ShutdownMessageSystem(void);
 
 void MN_ResetMenus(void);
 void MN_Shutdown(void);

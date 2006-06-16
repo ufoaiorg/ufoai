@@ -1106,7 +1106,7 @@ void Com_ParseScripts( void )
 		else if ( !Q_strncmp( type, "inventory", 9 ) ) Com_ParseInventory( name, &text );
 		else if ( !Q_strncmp( type, "names", 5 ) ) Com_ParseNames( name, &text );
 		else if ( !Q_strncmp( type, "actors", 6 ) ) Com_ParseActors( name, &text );
-		else if ( !dedicated->value ) CL_ParseScriptFirst( type, name, &text );
+		else if ( !dedicated->value ) CL_ParseClientData( type, name, &text );
 	}
 
 	/* add object links */
@@ -1123,9 +1123,7 @@ void Com_ParseScripts( void )
 		else if ( !Q_strncmp( type, "rank", 4 ) ) Com_ParseMedalsAndRanks( name, &text, qtrue );
 		/*else if ( !Q_strncmp( type, "medal", 5 ) ) Com_ParseMedalsAndRanks( name, &text, qfalse ); */
 		else if ( !Q_strncmp( type, "team", 4 ) ) Com_ParseTeam( name, &text );
-		else if ( !dedicated->value ) CL_ParseScriptSecond( type, name, &text );
 	}
 
 	Com_Printf( "Shared Client/Server Info loaded\n" );
 }
-

@@ -43,11 +43,7 @@ void CL_Frame (int msec)
 {
 }
 
-void CL_ParseScriptFirst (char *type, char *name, char **text)
-{
-}
-
-void CL_ParseScriptSecond (char *type, char *name, char **text)
+void CL_ParseClientData (char *type, char *name, char **text)
 {
 }
 
