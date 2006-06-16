@@ -48,13 +48,10 @@ static int	snd_buffer_count = 0;
 static int	sample16;
 static int	snd_sent, snd_completed;
 
-static struct sndinfo *si;
-
 /*
  * Global variables. Must be visible to window-procedure function
  *  so it can unlock and free the data block after it has been played.
  */
-
 
 HANDLE		hData;
 HPSTR		lpData, lpData2;
