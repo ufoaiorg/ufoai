@@ -770,14 +770,14 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_shader.c -o cl_shader.o $(CFLAGS)
 
 [VersionInfo]
-Major=3
+Major=2
 Minor=0
-Release=0
-Build=0
+Release=2
+Build=2
 LanguageID=1033
 CharsetID=1252
 CompanyName=
-FileVersion=3.0-dev
+FileVersion=2.0-RC2
 FileDescription=UFO:Alien Invasion
 InternalName=
 LegalCopyright=
