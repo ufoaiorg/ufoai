@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -547,7 +547,8 @@ void CL_EntPerish( sizebuf_t *sb )
 	if ( le->type == ET_ITEM ) {
 		le_t *actor;
 		actor = LE_Find( ET_ACTOR, le->pos );
-		if ( actor ) actor->i.c[csi.idFloor] = NULL;
+		if ( actor )
+			actor->i.c[csi.idFloor] = NULL;
 	}
 
 	if ( le->type == ET_ACTOR )
@@ -678,9 +679,12 @@ void CL_ActorStats( sizebuf_t *sb )
 	le->HP = MSG_ReadByte( sb );
 	le->STUN = MSG_ReadByte( sb );
 	le->morale = MSG_ReadByte( sb );
-	if ( le->TU > le->maxTU ) le->maxTU = le->TU;
-	if ( le->HP > le->maxHP ) le->maxHP = le->HP;
-	if ( le->morale > le->maxMorale ) le->maxMorale = le->morale;
+	if ( le->TU > le->maxTU )
+		le->maxTU = le->TU;
+	if ( le->HP > le->maxHP )
+		le->maxHP = le->HP;
+	if ( le->morale > le->maxMorale )
+		le->maxMorale = le->morale;
 }
 
 
@@ -807,8 +811,10 @@ void CL_InvAdd( sizebuf_t *sb )
 		x = MSG_ReadByte( sb );
 		y = MSG_ReadByte( sb );
 		Com_AddToInventory( &le->i, item, container, x, y );
-		if ( container == csi.idRight ) le->right = item.t;
-		else if ( container == csi.idLeft ) le->left = item.t;
+		if ( container == csi.idRight )
+			le->right = item.t;
+		else if ( container == csi.idLeft )
+			le->left = item.t;
 	}
 
 	switch ( le->type ) {
@@ -843,8 +849,10 @@ void CL_InvDel( sizebuf_t *sb )
 	}
 
 	Com_RemoveFromInventory( &le->i, container, x, y );
-	if ( container == csi.idRight ) le->right = NONE;
-	else if ( container == csi.idLeft ) le->left = NONE;
+	if ( container == csi.idRight )
+		le->right = NONE;
+	else if ( container == csi.idLeft )
+		le->left = NONE;
 
 	switch ( le->type ) {
 	case ET_ACTOR:

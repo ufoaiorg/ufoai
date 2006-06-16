@@ -766,8 +766,10 @@ void G_InventoryMove( player_t *player, int num, int from, int fx, int fy, int t
 
 		if ( ia == IA_RELOAD ) {
 			/* reload */
-			if ( to == gi.csi->idFloor ) mask = G_VisToPM( floor->visflags );
-			else mask = G_TeamToPM( ent->team );
+			if ( to == gi.csi->idFloor )
+				mask = G_VisToPM( floor->visflags );
+			else
+				mask = G_TeamToPM( ent->team );
 
 			/* send ammo */
 			gi.AddEvent( mask, EV_INV_AMMO );
@@ -828,6 +830,7 @@ void G_InventoryMove( player_t *player, int num, int from, int fx, int fy, int t
 			}
 		}
 		gi.EndEvents();
+		G_GetFloorItems( ent );
 	}
 }
 

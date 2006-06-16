@@ -30,6 +30,27 @@ sequence credits
 		dist	100
 	}
 
+	2dobj community_driven
+	{
+		text	"_This game is now community driven"
+		pos		"512 708"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -80"
+	}
+	2dobj original_team
+	{
+		text	"_To honor the original development team:"
+		pos		"512 768"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -80"
+	}
+	2dobj community_driven { fade "0 0 0 -0.1" }
+	2dobj original_team { fade "0 0 0 -0.1" }
+
+	wait 8.0
+	rem original_team
+	rem community_driven
+
 	model herby_body
 	{
 		model	models/civilians/male/body01.md2
@@ -103,13 +124,13 @@ sequence credits
 
 	2dobj sparx_text
 	{
-		text	"Maps, Textures, Art"
+		text	"_Maps, Textures, Art"
 		pos		"50 50"		align	ul
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj sparx_name
 	{
-		text	"SparX"
+		text	"_SparX"
 		pos		"50 75"		align	ul
 		color	"1 1 1 0"	fade	"0 0 0 1"
 
@@ -156,13 +177,13 @@ sequence credits
 
 	2dobj rasta_text
 	{
-		text	"Models, Animations"
+		text	"_Models, Animations"
 		pos		"974 50"	align	ur
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj rasta_name
 	{
-		text	"Rastaman"
+		text	"_Rastaman"
 		pos		"974 75"	align	ur
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
@@ -217,7 +238,6 @@ sequence credits
 		text	"_Vanethian"
 		pos		"50 75"		align	ul
 		color	"1 1 1 0"	fade	"0 0 0 1"
-
 	}
 	model vanethian_body { anim stand_still speed "0 0 0" }
 	model vanethian_head { omega "0 0 0" }
@@ -399,7 +419,7 @@ sequence credits
 	}
 	2dobj copyright
 	{
-		text	"_Copyright 2004 by UFO: AI Team"
+		text	"_Copyright 2004-2006 by UFO: AI Team"
 		pos		"512 736"	align	uc
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}

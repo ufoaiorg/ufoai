@@ -502,15 +502,13 @@ void MN_PrevAircraft_f(void)
 	}
 }
 
-/*
-======================
-CL_AircraftReturnToBase
-
-let the current aircraft return to base
-call this from baseview via "aircraft_return"
-======================
-*/
-void CL_AircraftReturnToBase(aircraft_t * air)
+/**
+  * @brief Returns the given aircraft back to homebase
+  *
+  * call this from baseview via "aircraft_return"
+  * calculates the way back to homebase
+  */
+void CL_AircraftReturnToBase(aircraft_t *air)
 {
 	base_t *base;
 
@@ -523,13 +521,12 @@ void CL_AircraftReturnToBase(aircraft_t * air)
 	}
 }
 
-/*
-======================
-CL_AircraftReturnToBase_f
-
-script function for CL_AircraftReturnToBase
-======================
-*/
+/**
+  * @brief Script function for CL_AircraftReturnToBase
+  *
+  * Sends the current aircraft back to homebase and updates
+  * the cvars
+  */
 void CL_AircraftReturnToBase_f(void)
 {
 	aircraft_t *air;
@@ -552,9 +549,11 @@ void CL_AircraftSelect(void)
 	int aircraftID = (int) Cvar_VariableValue("mn_aircraft_id");
 	static char aircraftInfo[256];
 
+	/* calling from console? with no baseCurrent? */
 	if (!baseCurrent)
 		return;
 
+	/* selecting the first aircraft in base (every base has at least one aircraft) */
 	if (aircraftID >= baseCurrent->numAircraftInBase)
 		aircraftID = 0;
 
@@ -570,6 +569,7 @@ void CL_AircraftSelect(void)
 	Cvar_Set("mn_aircraft_weapon", air->weapon ? air->weapon->name : "");
 	Cvar_Set("mn_aircraft_shield", air->shield ? air->shield->name : "");
 
+	/* generate aircraft info text */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\n"), air->speed);
 	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Fuel:\t%i/%i\n"), air->fuel / 1000, air->fuelSize / 1000));
 	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Weapon:\t%s\n"), air->weapon ? air->weapon->name : _("None")));
@@ -624,8 +624,7 @@ void CL_NewAircraft(base_t * base, char *name)
 			Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), air->name, base->name), MAX_MESSAGE_TEXT);
 			MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 			Com_DPrintf("Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
-			air->pos[0] = base->pos[0];
-			air->pos[1] = base->pos[1];
+			Vector2Copy(base->pos, air->pos);
 
 			base->numAircraftInBase++;
 			Com_DPrintf("Aircraft for base %s: %s\n", base->name, air->name);
@@ -2440,6 +2439,9 @@ void CL_GameResultsCmd(void)
 
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won);
+
+	/* send the dropship back to base */
+	CL_AircraftReturnToBase_f();
 
 	/* campaign effects */
 	selMis->cause->done++;
