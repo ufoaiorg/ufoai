@@ -52,8 +52,6 @@ aircraft_t aircraft[MAX_AIRCRAFT];
 int numAircraft;
 int interceptAircraft;
 
-int gameTimeScale;
-
 byte *maskPic;
 int maskWidth, maskHeight;
 
@@ -1414,7 +1412,7 @@ void CL_CampaignRun(void)
 	static qboolean fund = qtrue;
 
 	/* advance time */
-	ccs.timer += cls.frametime * gameTimeScale;
+	ccs.timer += cls.frametime * gd.gameTimeScale;
 	if (ccs.timer >= 1.0) {
 		/* calculate new date */
 		int dt, day, month;
@@ -1478,7 +1476,7 @@ void CL_GameTimeStop(void)
 {
 	gameLapse = 0;
 	Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
-	gameTimeScale = lapse[gameLapse].scale;
+	gd.gameTimeScale = lapse[gameLapse].scale;
 }
 
 
@@ -1496,7 +1494,7 @@ void CL_GameTimeSlow(void)
 		if (gameLapse > 0)
 			gameLapse--;
 		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
-		gameTimeScale = lapse[gameLapse].scale;
+		gd.gameTimeScale = lapse[gameLapse].scale;
 	}
 }
 
@@ -1526,7 +1524,7 @@ void CL_GameTimeFast(void)
 		if (gameLapse < NUM_TIMELAPSE - 1)
 			gameLapse++;
 		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
-		gameTimeScale = lapse[gameLapse].scale;
+		gd.gameTimeScale = lapse[gameLapse].scale;
 	}
 }
 

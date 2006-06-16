@@ -97,6 +97,8 @@ typedef struct globalData_s
 	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */
 	int mapAction;
 
+	int gameTimeScale;
+
 	/* TODO
 		building_t   buildings[MAX_BASES][MAX_BUILDINGS];
 		int numBuildings;
