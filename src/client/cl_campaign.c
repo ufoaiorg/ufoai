@@ -2048,6 +2048,8 @@ void CL_GameContinue(void)
 		CL_GameLoad(mn_lastsave->string);
 		if (!curCampaign)
 			return;
+	} else {
+		MN_PopMenu(qfalse);
 	}
 }
 
