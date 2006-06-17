@@ -1431,11 +1431,11 @@ void CL_CampaignRun(void)
 		/* set time cvars */
 		CL_DateConvert(&ccs.date, &day, &month);
 		/* every first day of a month */
-		if (day == 1 && gd.fund == qfalse) {
+		if (day == 1 && gd.fund != qfalse) {
 			CL_UpdateNationData();
-			gd.fund = qtrue;
-		} else if (day > 1)
 			gd.fund = qfalse;
+		} else if (day > 1)
+			gd.fund = qtrue;
 		Cvar_Set("mn_mapdate", va("%i %s %i", ccs.date.day / 365, CL_DateGetMonthName(month), day));	/* CL_DateGetMonthName is already "gettexted" */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%02i:%i%i"), ccs.date.sec / 3600, (ccs.date.sec % 3600) / 60 / 10,
 					(ccs.date.sec % 3600) / 60 % 10);
@@ -1500,9 +1500,12 @@ void CL_GameTimeSlow(void)
 CL_UpdateCredits
 ======================
 */
+#define MAX_CREDITS 10000000
 void CL_UpdateCredits(int credits)
 {
 	/* credits */
+	if ( credits > MAX_CREDITS )
+		credits = MAX_CREDITS;
 	ccs.credits = credits;
 	Cvar_Set("mn_credits", va("%i c", ccs.credits));
 }
@@ -1564,6 +1567,7 @@ aircraft_t *AIR_FindAircraft(char *aircraftName)
 	return NULL;
 }
 
+#define MAX_MESSAGES_FOR_SAVEGAME 20
 /*======================
 CL_GameSave
 ======================*/
@@ -1572,6 +1576,7 @@ void CL_GameSave(char *filename, char *comment)
 	stageState_t *state;
 	actMis_t *mis;
 	sizebuf_t sb;
+	message_t *message;
 	byte buf[MAX_GAMESAVESIZE];
 	FILE *f;
 	int res;
@@ -1614,6 +1619,25 @@ void CL_GameSave(char *filename, char *comment)
 	/* when size of globalData_t in savegame differs from actual size of globalData_t we won't even load the game */
 	Com_DPrintf("CL_GameSave: sizeof globalData_t: %i max.gamedatasize: %i\n", sizeof(globalData_t), MAX_GAMESAVESIZE);
 	SZ_Write(&sb, &gd, sizeof(globalData_t));
+
+#if 1
+	/* FIXME: Remove me */
+	MSG_WriteByte(&sb, 0);
+#else
+	/* FIXME: Wrong order */
+	/* store last 20 message system items */
+	for ( i = 0, message = messageStack; i < MAX_MESSAGES_FOR_SAVEGAME && message; i++, message = message->next );
+	/* how many messages */
+	if ( i > MAX_MESSAGES_FOR_SAVEGAME-1 )
+		MSG_WriteByte(&sb, MAX_MESSAGES_FOR_SAVEGAME-1);
+	else
+		MSG_WriteByte(&sb, i);
+
+	for ( i = 0, message = messageStack; i < MAX_MESSAGES_FOR_SAVEGAME && message; i++, message = message->next ) {
+		MSG_WriteString(&sb, message->title);
+		MSG_WriteString(&sb, message->text);
+	}
+#endif
 
 	/* store credits */
 	MSG_WriteLong(&sb, ccs.credits);
@@ -1763,7 +1787,6 @@ int CL_GameLoad(char *filename)
 		Com_Printf("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, version);
 	}
 
-	Com_DPrintf("Build gd\n");
 	memset(&gd,0,sizeof(gd));
 	CL_ReadSinglePlayerData();
 
@@ -1805,6 +1828,10 @@ int CL_GameLoad(char *filename)
 
 	memcpy(&gd, sb.data + sb.readcount, sizeof(globalData_t));
 	sb.readcount += sizeof(globalData_t);
+
+	i = MSG_ReadByte(&sb);
+	for ( ; i > 0; i-- )
+		MN_AddNewMessage(MSG_ReadString(&sb), MSG_ReadString(&sb), qfalse, MSG_STANDARD, NULL);
 
 	/* read credits */
 	CL_UpdateCredits(MSG_ReadLong(&sb));
@@ -3185,7 +3212,6 @@ void CL_GameNew(void)
 		CL_GameExit();
 	ccs.singleplayer = qtrue;
 
-	Com_DPrintf("Build gd\n");
 	memset(&gd,0,sizeof(gd));
 	CL_ReadSinglePlayerData();
 
