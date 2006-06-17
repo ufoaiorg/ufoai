@@ -544,7 +544,7 @@ menu options_sound
 
 	func init
 	{
-		cmd "mn_translate s_system mn_sndsystem 0:OSS,1:ALSA,2:SDL;"
+		cmd "mn_translate s_system mn_sndsystem 0:OSS,1:SDL,2:ALSA;"
 	}
 }
 
