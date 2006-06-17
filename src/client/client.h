@@ -975,9 +975,7 @@ void V_AddLightStyle(int style, float r, float g, float b);
 entity_t *V_GetEntity(void);
 void V_CenterView(pos3_t pos);
 
-/* */
 /* cl_sequence.c */
-/* */
 void CL_SequenceRender(void);
 void CL_Sequence2D(void);
 void CL_SequenceStart_f(void);
