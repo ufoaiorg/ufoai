@@ -3179,7 +3179,6 @@ void CL_GameExit(void)
 	cmdList_t *commands;
 
 	Cbuf_AddText("disconnect\n");
-	curCampaign = NULL;
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_active", "");
 	ccs.singleplayer = qfalse;
@@ -3189,6 +3188,7 @@ void CL_GameExit(void)
 	if (curCampaign)
 		for (commands = game_commands; commands->name; commands++)
 			Cmd_RemoveCommand(commands->name);
+	curCampaign = NULL;
 }
 
 /*
@@ -3335,6 +3335,18 @@ void CP_CampaignsClick_f(void)
 	/* FIXME: Translate the race to the name of a race */
 	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\n%s\n"), campaigns[num].team, _(campaigns[num].text));
 	menuText[TEXT_STANDARD] = campaignDesc;
+}
+
+/**
+  * @brief Will clear most of the parsed singleplayer data
+  */
+void CL_ResetSinglePlayerData ( void )
+{
+	numNations = numStageSets = numStages = numMissions = 0;
+	memset(missions, 0, sizeof(mission_t)*MAX_MISSIONS);
+	memset(nations, 0, sizeof(nation_t)*MAX_NATIONS);
+	memset(stageSets, 0, sizeof(stageSet_t)*MAX_STAGESETS);
+	memset(stages, 0, sizeof(stage_t)*MAX_STAGES);
 }
 
 /*
