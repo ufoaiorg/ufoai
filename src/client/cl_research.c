@@ -524,7 +524,12 @@ void RS_AssignScientist2(int num)
 	}
 
 	tech = researchList[num];
-
+	
+	if ( B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue) <= 0 ) {
+		/* no scientists are free in this base */
+		return;
+	}
+	
 	if (tech->statusResearchable) {
 		/* Check if the tech already has been assigned to a lab. */
 		if (tech->lab < 0) {

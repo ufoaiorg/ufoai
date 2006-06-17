@@ -1196,7 +1196,7 @@ qboolean B_RemoveEmployee(building_t * building)
 /**
  * @brief Returns the number of employees in the given base (in the quaters) of the given type.
  *
- * You can choose (free_only) if you want the nubmer of free ones or the total number.
+ * You can choose (free_only) if you want the number of free employees or the total number.
  * If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
  */
 int B_EmployeesInBase2(int base_idx, employeeType_t employee_type, qboolean free_only)
