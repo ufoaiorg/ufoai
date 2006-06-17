@@ -128,21 +128,22 @@ void CL_ActorGlobalCVars(void)
 	le_t *le;
 	char str[MAX_VAR];
 	int i;
-
+	
 	Cvar_SetValue("mn_numaliensspotted", cl.numAliensSpotted);
 	for (i = 0; i < MAX_TEAMLIST; i++) {
 		le = cl.teamList[i];
 		if (le && !(le->state & STATE_DEAD)) {
+			
 			Cvar_Set(va("mn_head%i", i), (char *) le->model2);
-			sprintf(str, "%i", le->HP);
+			Com_sprintf(str, MAX_VAR, "%i", le->HP);
 			Cvar_Set(va("mn_hp%i", i), str);
-			sprintf(str, "%i", le->maxHP);
+			Com_sprintf(str, MAX_VAR, "%i", le->maxHP);
 			Cvar_Set(va("mn_hpmax%i", i), str);
-			sprintf(str, "%i", le->TU);
+			Com_sprintf(str, MAX_VAR, "%i", le->TU);
 			Cvar_Set(va("mn_tu%i", i), str);
-			sprintf(str, "%i", le->maxTU);
+			Com_sprintf(str, MAX_VAR, "%i", le->maxTU);
 			Cvar_Set(va("mn_tumax%i", i), str);
-			sprintf(str, "%i", le->STUN);
+			Com_sprintf(str, MAX_VAR, "%i", le->STUN);
 			Cvar_Set(va("mn_stun%i", i), str);
 		} else {
 			Cvar_Set(va("mn_head%i", i), "");
@@ -385,6 +386,7 @@ void CL_ActorUpdateCVars(void)
 			menuText[TEXT_STANDARD] = infoText;
 		} else {
 			/* no actor selected, reset cvars */
+			/* TODO: this overwrites the correct values a bit to often.
 			Cvar_Set("mn_tu", "0");
 			Cvar_Set("mn_turemain", "0");
 			Cvar_Set("mn_tumax", "30");
@@ -395,6 +397,7 @@ void CL_ActorUpdateCVars(void)
 			Cvar_Set("mn_ammoright", "");
 			Cvar_Set("mn_ammoleft", "");
 			Cvar_Set("mn_stun", "0");
+			*/
 			if (refresh)
 				Cbuf_AddText("tostand\n");
 
