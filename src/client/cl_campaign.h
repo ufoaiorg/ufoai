@@ -225,6 +225,7 @@ aircraft_t *AIR_FindAircraft(char *aircraftName);
 char *CL_AircraftStatusToName(aircraft_t * air);
 qboolean CL_MapIsNight(vec2_t pos);
 void CL_ResetCampaign(void);
+void CL_ResetSinglePlayerData ( void );
 void CL_DateConvert(date_t * date, int *day, int *month);
 char *CL_DateGetMonthName(int month);
 void CL_CampaignRun(void);
