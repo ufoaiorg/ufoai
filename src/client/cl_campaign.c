@@ -1940,7 +1940,6 @@ int CL_GameLoad(char *filename)
 
 	/* init research tree */
 	RS_InitTree();
-	Com_Printf("menu- Map\n");
 	Cvar_Set("mn_main", "singleplayer");
 	Cvar_Set("mn_active", "map");
 	Cbuf_AddText("disconnect\n");
