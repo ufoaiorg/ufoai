@@ -1752,7 +1752,7 @@ int CL_GameLoad(char *filename)
 	setState_t *set;
 	setState_t dummy;
 	sizebuf_t sb;
-	byte buf[MAX_GAMESAVESIZE];
+	byte *buf;
 	char *name;
 	FILE *f;
 	int version;
@@ -1765,6 +1765,8 @@ int CL_GameLoad(char *filename)
 		Com_Printf("Couldn't open file '%s'.\n", filename);
 		return 1;
 	}
+
+	buf = (byte*)malloc(sizeof(byte)*MAX_GAMESAVESIZE);
 
 	/* read data */
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
@@ -1784,6 +1786,7 @@ int CL_GameLoad(char *filename)
 	/* check current version */
 	if (version > SAVE_FILE_VERSION) {
 		Com_Printf("File '%s' is a more recent version (%d) than is supported.\n", filename, version);
+		free(buf);
 		return 1;
 	} else if (version < SAVE_FILE_VERSION) {
 		Com_Printf("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, version);
@@ -1809,6 +1812,7 @@ int CL_GameLoad(char *filename)
 	if (i == numCampaigns) {
 		Com_Printf("CL_GameLoad: Campaign \"%s\" doesn't exist.\n", name);
 		curCampaign = NULL;
+		free(buf);
 		return 1;
 	}
 
@@ -1870,6 +1874,7 @@ int CL_GameLoad(char *filename)
 			Com_Printf("Unable to load campaign '%s', unknown stage '%'\n", filename, name);
 			curCampaign = NULL;
 			Cbuf_AddText("mn_pop\n");
+			free(buf);
 			return 1;
 		}
 
@@ -1954,6 +1959,8 @@ int CL_GameLoad(char *filename)
 	MN_PopMenu(qtrue);
 	MN_PushMenu("map");
 	CL_GameTimeStop();
+	free(buf);
+
 	return 0;
 }
 
