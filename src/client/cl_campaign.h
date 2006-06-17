@@ -247,5 +247,6 @@ void CL_UpdateCharacterStats(int won);
 void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
 void CL_GameExit(void);
+void CL_GameInit (void);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */

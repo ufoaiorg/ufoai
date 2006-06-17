@@ -403,6 +403,8 @@ void CL_AircraftInit(void)
 			air->shield = RS_GetTechByID(air->shield_string);
 		} else
 			air->shield = NULL;
+		air->homebase = &gd.bases[air->idxBase];
+		air->teamSize = &gd.bases[air->idxBase].numOnTeam[air->idxInBase];
 	}
 	Com_Printf("...aircraft inited\n");
 }
@@ -612,9 +614,11 @@ void CL_NewAircraft(base_t * base, char *name)
 			memcpy(&base->aircraft[base->numAircraftInBase], air, sizeof(aircraft_t));
 			air = &base->aircraft[base->numAircraftInBase];
 			air->homebase = base;
+			/* for saving and loading a base */
+			air->idxBase = base->idx;
 			/* this is the aircraft array id in current base */
 			/* NOTE: when we send the aircraft to another base this has to be changed, too */
-			air->idx_base = base->numAircraftInBase;
+			air->idxInBase = base->numAircraftInBase;
 			/* link the teamSize pointer in */
 			air->teamSize = &base->numOnTeam[base->numAircraftInBase];
 			Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), air->name, base->name), MAX_MESSAGE_TEXT);
@@ -1218,7 +1222,7 @@ void CL_CheckAircraft(aircraft_t * air)
 		if (air->status != AIR_DROP && air->fuel > 0) {
 			air->status = AIR_DROP;
 			if (gd.interceptAircraft < 0)
-				gd.interceptAircraft = air->idx_base;
+				gd.interceptAircraft = air->idxInBase;
 			MN_PushMenu("popup_intercept_ready");
 		}
 	} else {
@@ -1757,7 +1761,6 @@ int CL_GameLoad(char *filename)
 	FILE *f;
 	int version;
 	int i, j, num;
-	cmdList_t *commands;
 
 	/* open file */
 	f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
@@ -1819,9 +1822,6 @@ int CL_GameLoad(char *filename)
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
 	if (!maskPic)
 		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
-
-	for (commands = game_commands; commands->name; commands++)
-		Cmd_AddCommand(commands->name, commands->function);
 
 	/* reset */
 	selMis = NULL;
@@ -1949,9 +1949,7 @@ int CL_GameLoad(char *filename)
 
 	Com_Printf("Campaign '%s' loaded.\n", filename);
 
-	/* init research tree */
-	RS_AddObjectTechs();
-	RS_InitTree();
+	CL_GameInit();
 
 	Cvar_Set("mn_main", "singleplayer");
 	Cvar_Set("mn_active", "map");
@@ -1960,7 +1958,6 @@ int CL_GameLoad(char *filename)
 
 	MN_PopMenu(qtrue);
 	MN_PushMenu("map");
-	CL_GameTimeStop();
 	free(buf);
 
 	return 0;
@@ -3199,6 +3196,31 @@ void CL_GameExit(void)
 	curCampaign = NULL;
 }
 
+/**
+  * @brief Called at new game and load game
+  */
+void CL_GameInit ( void )
+{
+	cmdList_t *commands;
+
+	for (commands = game_commands; commands->name; commands++)
+		Cmd_AddCommand(commands->name, commands->function);
+
+	CL_GameTimeStop();
+
+	/* init research tree */
+	RS_AddObjectTechs();
+	RS_InitTree();
+
+	/* after inited the techtree */
+	/* we can assign the weapons */
+	/* and shields to aircrafts. */
+	CL_AircraftInit();
+
+	/* init employee list */
+	B_InitEmployees();
+}
+
 /*
 ======================
 CL_GameNew
@@ -3206,7 +3228,6 @@ CL_GameNew
 */
 void CL_GameNew(void)
 {
-	cmdList_t *commands;
 	equipDef_t *ed;
 	char *name;
 	int i;
@@ -3277,22 +3298,7 @@ void CL_GameNew(void)
 	/* create a base as first step */
 	Cbuf_ExecuteText(EXEC_NOW, "mn_select_base -1");
 
-	CL_GameTimeStop();
-
-	/* init research tree */
-	RS_AddObjectTechs();
-	RS_InitTree();
-
-	/* after inited the techtree */
-	/* we can assign the weapons */
-	/* and shields to aircrafts. */
-	CL_AircraftInit();
-
-	/* init employee list */
-	B_InitEmployees();
-
-	for (commands = game_commands; commands->name; commands++)
-		Cmd_AddCommand(commands->name, commands->function);
+	CL_GameInit();
 }
 
 /*======================

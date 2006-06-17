@@ -251,7 +251,8 @@ typedef struct aircraft_s {
 	vec2_t pos;					/* actual pos on geoscape */
 	int point;
 	int time;
-	int idx_base;				/* id in base */
+	int idxInBase;				/* id in base */
+	int idxBase;				/* id of base */
 	int *teamSize;				/* how many soldiers on board */
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	/* TODO */
