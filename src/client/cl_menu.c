@@ -3335,14 +3335,13 @@ void MN_AddNewMessage(const char *title, const char *text, qboolean popup, messa
 	Q_strncpyz(mess->title, title, MAX_VAR);
 	/* add date string to message */
 	Q_strncpyz(mess->text, va("%02i %s %04i, %02i:%02i:%02i:\t", mess->d, CL_DateGetMonthName(mess->m), mess->y, mess->h, mess->min, mess->s),
-			   MAX_MESSAGE_TEXT);
+		MAX_MESSAGE_TEXT);
 
 	Q_strcat(mess->text, MAX_MESSAGE_TEXT, text);
 
-	if (popup) {
-		/* they need to be translated already */
+	/* they need to be translated already */
+	if (popup)
 		MN_Popup(title, text);
-	}
 }
 
 /*

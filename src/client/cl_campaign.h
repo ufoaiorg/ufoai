@@ -246,4 +246,4 @@ void CL_UpdateCharacterStats(int won);
 void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
 
-#endif							/* CLIENT_CL_CAMPAIGN_H */
+#endif /* CLIENT_CL_CAMPAIGN_H */
