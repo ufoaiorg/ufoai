@@ -748,7 +748,7 @@ void CL_CampaignActivateStageSets(stage_t * stage)
 CL_CampaignActivateStage
 ======================
 */
-stageState_t *CL_CampaignActivateStage(char *name)
+stageState_t *CL_CampaignActivateStage(char *name, qboolean sequence)
 {
 	stage_t *stage;
 	stageState_t *state;
@@ -767,7 +767,7 @@ stageState_t *CL_CampaignActivateStage(char *name)
 				memset(&ccs.set[j], 0, sizeof(setState_t));
 				ccs.set[j].stage = &stage[j];
 				ccs.set[j].def = &stageSets[j];
-				if (*stageSets[j].sequence)
+				if (*stageSets[j].sequence && sequence)
 					Cbuf_ExecuteText(EXEC_APPEND, va("seq_start %s;\n", stageSets[j].sequence));
 			}
 
@@ -901,7 +901,7 @@ void CL_CampaignExecute(setState_t * set)
 {
 	/* handle stages, execute commands */
 	if (*set->def->nextstage)
-		CL_CampaignActivateStage(set->def->nextstage);
+		CL_CampaignActivateStage(set->def->nextstage, qtrue);
 
 	if (*set->def->endstage)
 		CL_CampaignEndStage(set->def->endstage);
@@ -1802,6 +1802,7 @@ int CL_GameLoad(char *filename)
 
 	if (i == numCampaigns) {
 		Com_Printf("CL_GameLoad: Campaign \"%s\" doesn't exist.\n", name);
+		curCampaign = NULL;
 		return 1;
 	}
 
@@ -1858,7 +1859,7 @@ int CL_GameLoad(char *filename)
 	/* read campaign data */
 	name = MSG_ReadString(&sb);
 	while (*name) {
-		state = CL_CampaignActivateStage(name);
+		state = CL_CampaignActivateStage(name, qfalse);
 		if (!state) {
 			Com_Printf("Unable to load campaign '%s', unknown stage '%'\n", filename, name);
 			curCampaign = NULL;
@@ -1936,10 +1937,18 @@ int CL_GameLoad(char *filename)
 	sb.readcount += sizeof(stats_t);
 
 	Com_Printf("Campaign '%s' loaded.\n", filename);
-	CL_GameTimeStop();
 
 	/* init research tree */
 	RS_InitTree();
+	Com_Printf("menu- Map\n");
+	Cvar_Set("mn_main", "singleplayer");
+	Cvar_Set("mn_active", "map");
+	Cbuf_AddText("disconnect\n");
+	ccs.singleplayer = qtrue;
+
+	MN_PopMenu(qtrue);
+	MN_PushMenu("map");
+	CL_GameTimeStop();
 	return 0;
 }
 
@@ -1960,16 +1969,7 @@ void CL_GameLoadCmd(void)
 	Com_DPrintf("load file '%s'\n", Cmd_Argv(1));
 
 	/* load and go to map */
-	if (!CL_GameLoad(Cmd_Argv(1))) {
-		Cbuf_AddText("disconnect\n");
-		Cvar_Set("mn_main", "singleplayer");
-		Cvar_Set("mn_active", "map");
-		/* FIXME: Use an enum here */
-		ccs.singleplayer = qtrue;
-
-		MN_PopMenu(qtrue);
-		MN_PushMenu("map");
-	}
+	CL_GameLoad(Cmd_Argv(1));
 }
 
 
@@ -2037,14 +2037,6 @@ void CL_GameContinue(void)
 		if (!curCampaign)
 			return;
 	}
-
-	Cvar_Set("mn_main", "singleplayer");
-	Cvar_Set("mn_active", "map");
-	Cbuf_AddText("disconnect\n");
-	ccs.singleplayer = qtrue;
-
-	MN_PopMenu(qtrue);
-	MN_PushMenu("map");
 }
 
 
@@ -3261,7 +3253,7 @@ void CL_GameNew(void)
 		ccs.eMarket = *ed;
 
 	/* stage setup */
-	CL_CampaignActivateStage(curCampaign->firststage);
+	CL_CampaignActivateStage(curCampaign->firststage, qtrue);
 
 	MN_PopMenu(qtrue);
 	MN_PushMenu("map");
