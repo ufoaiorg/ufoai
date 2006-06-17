@@ -775,7 +775,6 @@ char *Com_GiveName( int gender, char *category );
 char *Com_GiveModel( int type, int gender, char *category );
 int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *name );
 
-void Com_ParseMedalsAndRanks( char *title, char **text, byte parserank );
 void Com_ParseScripts( void );
 
 /*

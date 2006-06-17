@@ -1173,12 +1173,10 @@ value_t rankValues[] =
 	{ NULL,	0, 0 }
 };
 
-/*======================
-Com_ParseMedalsAndRanks
-
-Parse medals and ranks defined in the medals.ufo file.
-======================*/
-void Com_ParseMedalsAndRanks( char *title, char **text, byte parserank )
+/**
+  * @brief Parse medals and ranks defined in the medals.ufo file.
+  */
+void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 {
 	rank_t		*rank = NULL;
 	char	*errhead = "Com_ParseMedalsAndRanks: unexptected end of file (medal/rank ";

@@ -474,6 +474,7 @@ void CL_Disconnect_f(void);
 void CL_GetChallengePacket(void);
 void CL_PingServers_f(void);
 void CL_Snd_Restart_f(void);
+void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank );
 
 /* cl_input */
 typedef struct {
