@@ -107,12 +107,7 @@ qboolean RS_IsResearched_ptr(technology_t * tech);
 int RS_Collected_(technology_t * tech);
 qboolean RS_ItemCollected(char *id_provided);
 
-void RS_SaveTech(sizebuf_t * sb);
-void RS_LoadTech(sizebuf_t * sb, int version);
-
-void RS_InitTree(void);
-
-void RS_CopyFromSkeleton(void);
+void RS_AddObjectTechs(void);
 void RS_InitTree(void);
 void RS_MarkCollected(void);
 void RS_MarkResearchable(void);

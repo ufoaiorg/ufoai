@@ -194,35 +194,6 @@ void RS_AddObjectTechs(void)
 }
 
 /*======================
-RS_CopyFromSkeleton
-
-Copy the research-tree skeleton parsed on game-start to the global list.
-The skeleton has all the informations about already researched items etc..
-
-TODO: this function needs to be removed and replaced with a global one
-that handles the initial parsed "gd" struct.
-======================*/
-void RS_CopyFromSkeleton(void)
-{
-#if 0
-	int i;
-	technology_t *tech = NULL;
-
-	/* copy skeleton to 'working' copy */
-	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
-		memcpy(tech, &technologies_skeleton[i], sizeof(technology_t));
-
-		tech = &technologies_skeleton[i];
-		/* DEBUG: just to test if anything is point to the skeleton :) */
-		/*Q_strncpyz( tech->name, "Credits:", MAX_VAR ); */
-	}
-#endif
-	/* link in the tech pointers in the items. */
-	RS_AddObjectTechs();
-}
-
-/*======================
 RS_InitTree
 
 Gets all needed names/file-paths/etc... for each technology entry.
@@ -524,12 +495,12 @@ void RS_AssignScientist2(int num)
 	}
 
 	tech = researchList[num];
-	
+
 	if ( B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue) <= 0 ) {
 		/* no scientists are free in this base */
 		return;
 	}
-	
+
 	if (tech->statusResearchable) {
 		/* Check if the tech already has been assigned to a lab. */
 		if (tech->lab < 0) {

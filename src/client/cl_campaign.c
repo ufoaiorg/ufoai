@@ -1950,7 +1950,9 @@ int CL_GameLoad(char *filename)
 	Com_Printf("Campaign '%s' loaded.\n", filename);
 
 	/* init research tree */
+	RS_AddObjectTechs();
 	RS_InitTree();
+
 	Cvar_Set("mn_main", "singleplayer");
 	Cvar_Set("mn_active", "map");
 	Cbuf_AddText("disconnect\n");
@@ -3278,7 +3280,7 @@ void CL_GameNew(void)
 	CL_GameTimeStop();
 
 	/* init research tree */
-	RS_CopyFromSkeleton();
+	RS_AddObjectTechs();
 	RS_InitTree();
 
 	/* after inited the techtree */
