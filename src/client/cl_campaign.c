@@ -1787,6 +1787,10 @@ int CL_GameLoad(char *filename)
 		Com_Printf("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, version);
 	}
 
+	/* exit running game */
+	if (curCampaign)
+		CL_GameExit();
+
 	memset(&gd,0,sizeof(gd));
 	CL_ReadSinglePlayerData();
 
