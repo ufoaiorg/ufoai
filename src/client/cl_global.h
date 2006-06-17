@@ -97,8 +97,14 @@ typedef struct globalData_s
 	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */
 	int mapAction;
 
+	/* how fast the game is running */
 	int gameTimeScale;
+
+	/* selected aircraft for interceptions */
 	int interceptAircraft;
+
+	/* already paid in this month? */
+	qboolean fund;
 
 	/* TODO
 		building_t   buildings[MAX_BASES][MAX_BUILDINGS];

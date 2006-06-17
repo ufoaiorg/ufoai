@@ -1408,8 +1408,6 @@ CL_CampaignRun
 */
 void CL_CampaignRun(void)
 {
-	static qboolean fund = qtrue;
-
 	/* advance time */
 	ccs.timer += cls.frametime * gd.gameTimeScale;
 	if (ccs.timer >= 1.0) {
@@ -1433,11 +1431,11 @@ void CL_CampaignRun(void)
 		/* set time cvars */
 		CL_DateConvert(&ccs.date, &day, &month);
 		/* every first day of a month */
-		if (day == 1 && fund == qfalse) {
+		if (day == 1 && gd.fund == qfalse) {
 			CL_UpdateNationData();
-			fund = qtrue;
+			gd.fund = qtrue;
 		} else if (day > 1)
-			fund = qfalse;
+			gd.fund = qfalse;
 		Cvar_Set("mn_mapdate", va("%i %s %i", ccs.date.day / 365, CL_DateGetMonthName(month), day));	/* CL_DateGetMonthName is already "gettexted" */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%02i:%i%i"), ccs.date.sec / 3600, (ccs.date.sec % 3600) / 60 / 10,
 					(ccs.date.sec % 3600) / 60 % 10);
