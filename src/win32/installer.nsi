@@ -67,6 +67,7 @@ Section "Game" SEC01
   File "..\..\contrib\*.dll"
   File "..\..\*.dll"
   File "..\..\*.exe"
+  File "..\..\.gamedir"
   SetOutPath "$INSTDIR\base"
   File "..\..\base\*.cfg"
   File "..\..\base\*.dll"
