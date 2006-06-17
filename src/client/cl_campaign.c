@@ -1577,7 +1577,7 @@ void CL_GameSave(char *filename, char *comment)
 	actMis_t *mis;
 	sizebuf_t sb;
 	message_t *message;
-	byte buf[MAX_GAMESAVESIZE];
+	byte *buf;
 	FILE *f;
 	int res;
 	int i, j;
@@ -1593,6 +1593,7 @@ void CL_GameSave(char *filename, char *comment)
 		return;
 	}
 
+	buf = (byte*)malloc(sizeof(byte)*MAX_GAMESAVESIZE);
 	/* create data */
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
 
@@ -1695,6 +1696,7 @@ void CL_GameSave(char *filename, char *comment)
 	/* write data */
 	res = fwrite(buf, 1, sb.cursize, f);
 	fclose(f);
+	free(buf);
 
 	if (res == sb.cursize) {
 		Cvar_Set("mn_lastsave", filename);
