@@ -86,12 +86,6 @@ void CL_GiveNameCmd(void)
 	}
 }
 
-/* initialized in CL_ResetTeams */
-/* defined in scripts.c */
-extern rank_t ranks[MAX_RANKS];	/* Global list of all ranks defined in medals.ufo. */
-extern int numRanks;			/* The number of entries in the list above. */
-
-
 /**
   * @brief
   */
@@ -121,7 +115,7 @@ void CL_GenerateCharacter(char *team, base_t * base)
 	chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
 	Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);
 
-	chr->rank = &ranks[0];
+	chr->rank = &gd.ranks[0];
 
 	base->numWholeTeam++;
 }
@@ -1163,4 +1157,72 @@ void CL_ParseResults(sizebuf_t * buf)
 		MN_PushMenu("lost");
 	Cbuf_AddText("disconnect\n");
 	Cbuf_Execute();
+}
+
+/* ======= RANKS & MEDALS =========*/
+/*#define	PARSEMEDALS(x)	(int)&(((xxx_t *)0)->x) */
+#define	PARSERANKS(x)	(int)&(((rank_t *)0)->x)
+
+value_t rankValues[] =
+{
+	{ "name",	V_TRANSLATION_STRING,	PARSERANKS( name ) },
+	{ "image",	V_STRING,				PARSERANKS( image ) },
+	{ "mind",		V_INT,			PARSERANKS( mind ) },
+	{ "killed_enemies",	V_INT,			PARSERANKS( killed_enemies ) },
+	{ "killed_others",	V_INT,			PARSERANKS( killed_others ) },
+	{ NULL,	0, 0 }
+};
+
+/*======================
+Com_ParseMedalsAndRanks
+
+Parse medals and ranks defined in the medals.ufo file.
+======================*/
+void Com_ParseMedalsAndRanks( char *title, char **text, byte parserank )
+{
+	rank_t		*rank = NULL;
+	char	*errhead = "Com_ParseMedalsAndRanks: unexptected end of file (medal/rank ";
+	char	*token;
+	value_t	*v;
+
+	/* get name list body body */
+	token = COM_Parse( text );
+
+	if ( !*text || *token != '{' ) {
+		Com_Printf( "Com_ParseMedalsAndRanks: rank/medal \"%s\" without body ignored\n", title );
+		return;
+	}
+
+	if ( parserank) {
+		/* parse ranks */
+		if ( gd.numRanks >= MAX_RANKS ) {
+			Com_Printf( "Too many rank descriptions, '%s' ignored.\n", title );
+			gd.numRanks = MAX_RANKS;
+			return;
+		}
+
+		rank = &gd.ranks[gd.numRanks++];
+		memset( rank, 0, sizeof( rank_t ) );
+
+		do {
+			/* get the name type */
+			token = COM_EParse( text, errhead, title );
+			if ( !*text ) break;
+			if ( *token == '}' ) break;
+			for ( v = rankValues; v->string; v++ )
+				if ( !Q_strncmp( token, v->string, sizeof(v->string) ) ) {
+					/* found a definition */
+					token = COM_EParse( text, errhead, title );
+					if ( !*text ) return;
+
+					Com_ParseValue( rank, token, v->type, v->ofs );
+					break;
+				}
+
+			if ( !v->string )
+				Com_Printf( "Com_ParseMedalsAndRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, title );
+		} while ( *text );
+	} else {
+		/* parse medals */
+	}
 }

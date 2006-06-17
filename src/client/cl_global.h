@@ -87,13 +87,13 @@ typedef struct globalData_s
 
 	int numBuildingTypes;
 
-
 	/* TODO: A list of the building-list per base. (new buildings in a base get copied from buildingTypes) */
 	building_t buildings[MAX_BASES][MAX_BUILDINGS];
 
 	/* TODO: Total number of buildings per base. */
 	int numBuildings[MAX_BASES];
-
+	
+	/* == misc == */
 	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */
 	int mapAction;
 
@@ -105,11 +105,14 @@ typedef struct globalData_s
 
 	/* already paid in this month? */
 	qboolean fund;
+	
+	/* == Ranks == */
+	/* Global list of all ranks defined in medals.ufo. */
+	rank_t ranks[MAX_RANKS];
+	/* The number of entries in the list above. */
+	int numRanks;
 
 	/* TODO
-		building_t   buildings[MAX_BASES][MAX_BUILDINGS];
-		int numBuildings;
-
 		craftupgrade_t craftupgrades[MAX_CRAFTUPGRADES];
 		int    numCraftUpgrades;
 

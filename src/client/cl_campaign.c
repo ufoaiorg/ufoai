@@ -2385,9 +2385,9 @@ void CL_UpdateCharacterStats(int won)
 					chr->skills[j]++;
 
 			/* Check if the soldier meets the requirements for a higher rank -> Promotion */
-			if (numRanks >= 2) {
-				for (j = numRanks - 1; j > 0; j--) {
-					rank = &ranks[j];
+			if (gd.numRanks >= 2) {
+				for (j = gd.numRanks - 1; j > 0; j--) {
+					rank = &gd.ranks[j];
 					if ((chr->skills[ABILITY_MIND] >= rank->mind)
 						&& (chr->kills[KILLED_ALIENS] >= rank->killed_enemies)
 						&& ((chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM]) <= rank->killed_others)) {
