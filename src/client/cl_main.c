@@ -1129,9 +1129,7 @@ void CL_InitLocal(void)
 	adr7 = Cvar_Get("adr7", "", CVAR_ARCHIVE);
 	adr8 = Cvar_Get("adr8", "", CVAR_ARCHIVE);
 
-	/* */
 	/* register our variables */
-	/* */
 	cl_stereo_separation = Cvar_Get("cl_stereo_separation", "0.4", CVAR_ARCHIVE);
 	cl_stereo = Cvar_Get("cl_stereo", "0", 0);
 
