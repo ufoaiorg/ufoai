@@ -3409,12 +3409,13 @@ void CP_CampaignsClick_f(void)
   */
 void CL_ResetSinglePlayerData ( void )
 {
-	Com_InitInventory(invList);
 	numNations = numStageSets = numStages = numMissions = 0;
 	memset(missions, 0, sizeof(mission_t)*MAX_MISSIONS);
 	memset(nations, 0, sizeof(nation_t)*MAX_NATIONS);
 	memset(stageSets, 0, sizeof(stageSet_t)*MAX_STAGESETS);
 	memset(stages, 0, sizeof(stage_t)*MAX_STAGES);
+	memset(&invList,0,sizeof(invList));
+	Com_InitInventory(invList);
 }
 
 /*

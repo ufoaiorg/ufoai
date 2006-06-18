@@ -1600,7 +1600,9 @@ void MN_Tooltip(menuNode_t * node, int x, int y)
 {
 	char *tooltip;
 
-	/* tooltips */
+	/* tooltips
+	   data[5] is a char pointer to the tooltip text
+	   see value_t nps for more info */
 	if (node->data[5]) {
 		tooltip = (char *) node->data[5];
 		if (*tooltip == '_')

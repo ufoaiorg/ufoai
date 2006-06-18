@@ -1898,10 +1898,11 @@ invList_t *Com_AddToInventory( inventory_t *i, item_t item, int container, int x
 {
 	invList_t	*ic;
 
+	if ( item.t == NONE )
+		return NULL;
+
 	if ( !invUnused )
 		Sys_Error( "No free inventory space!\n" );
-
-	if ( item.t == NONE ) return NULL;
 
 	assert( i );
 	/* allocate space */
@@ -1943,7 +1944,7 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 		invUnused = ic;
 		cacheItem = ic->item;
 		i->c[container] = ic->next;
-#ifdef PARANOID
+#ifdef 0
 		if ( CSI->ids[container].single && ic->next )
 			Sys_Error("Com_RemoveFromInventory: Error in line %i at file %s (container: %i)\n", __LINE__, __FILE__, container );
 #endif
@@ -2072,7 +2073,9 @@ Com_EmptyContainer
 void Com_EmptyContainer( inventory_t *i, int container )
 {
 	invList_t	*ic, *old;
+#ifdef DEBUG
 	int cnt = 0;
+#endif
 
 	assert( i );
 	ic = i->c[container];
@@ -2082,11 +2085,13 @@ void Com_EmptyContainer( inventory_t *i, int container )
 		ic = ic->next;
 		old->next = invUnused;
 		invUnused = old;
+#ifdef DEBUG
 		if ( cnt >= MAX_INVLIST ) {
-			Com_Printf("Error: There are more than the allowed entries in container %i (Com_EmptyContainer)\n", container );
+			Com_Printf("Error: There are more than the allowed entries in container %i (cnt:%i, MAX_INVLIST:%i) (Com_EmptyContainer)\n", container, cnt, MAX_INVLIST );
 			break;
 		}
 		cnt++;
+#endif
 	}
 	i->c[container] = NULL;
 }
