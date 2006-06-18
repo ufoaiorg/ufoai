@@ -334,6 +334,7 @@ menu popup_intercept_ready
 
 	pic bt_cancel
 	{
+		tooltip	"_Close this dialog"
 		image	menu/multi_buttons3
 		texh	"180 64"
 		texl	"0 33"
@@ -353,6 +354,7 @@ menu popup_intercept_ready
 
 	pic bt_go
 	{
+		tooltip	"_Enter the battlefield"
 		image	menu/multi_buttons3
 		pos	"530 450"
 		texh	"180 64"
@@ -373,6 +375,7 @@ menu popup_intercept_ready
 	pic bt_auto_go
 	{
 		if	"game_autogo 1.0"
+		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
 		pos	"530 410"
 		texh	"180 64"
@@ -447,6 +450,7 @@ menu popup_newbase
 
 	pic bt_cancel
 	{
+		tooltip	"_Close this dialog"
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 33"
@@ -457,6 +461,7 @@ menu popup_newbase
 	}
 	pic bt_build
 	{
+		tooltip	"_Build the base"
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 33"
@@ -542,6 +547,7 @@ menu popup_intercept
 
 	pic bt_cancel
 	{
+		tooltip	"_Close this dialog"
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 33"
@@ -593,6 +599,7 @@ menu popup_baseattack
 	}
 	string string_cancel
 	{
+		tooltip	"_Close this dialog"
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
@@ -602,6 +609,7 @@ menu popup_baseattack
 
 	pic bt_go
 	{
+		tooltip	"_Enter the battlefield"
 		image	menu/multi_buttons3
 		pos	"530 450"
 		texh	"256 64"
@@ -621,7 +629,8 @@ menu popup_baseattack
 
 	pic bt_auto_go
 	{
-		if	"game_auto_go 1.0"
+		if	"game_autogo 1.0"
+		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
 		pos	"530 420"
 		texh	"256 64"
@@ -632,7 +641,7 @@ menu popup_baseattack
 	}
 	string string_auto_go
 	{
-		if	"game_auto_go 1.0"
+		if	"game_autogo 1.0"
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Auto"
