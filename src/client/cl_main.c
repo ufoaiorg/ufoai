@@ -121,8 +121,6 @@ cvar_t *campaign;
 cvar_t *rate;
 cvar_t *msg;
 
-cvar_t *cl_vwep;
-
 #ifndef _WIN32
 cvar_t *soundsystem;
 #endif
@@ -459,9 +457,6 @@ void CL_Disconnect(void)
 		MN_PopMenu(qtrue);
 		MN_PushMenu(mn_main->string);
 	}
-/* 	if ( ! ccs.singleplayer ) */
-/* 		cls.key_dest = key_console; */
-
 	cls.connect_time = 0;
 
 	/* send a disconnect message to the server */
@@ -508,7 +503,8 @@ void CL_Packet_f(void)
 		return;
 	}
 
-	NET_Config(qtrue);			/* allow remote */
+	/* allow remote */
+	NET_Config(qtrue);
 
 	if (!NET_StringToAdr(Cmd_Argv(1), &adr)) {
 		Com_Printf("Bad address\n");
@@ -621,7 +617,8 @@ void CL_ParseServerInfoMessage(void)
 
 	Com_sprintf(serverInfoText, MAX_MESSAGE_TEXT, _("IP\t%s\n\n"), NET_AdrToString(net_from));
 
-	s++;						/* first char is slash */
+	/* first char is slash */
+	s++;
 	do {
 		/* var */
 		var = s;
@@ -1115,7 +1112,6 @@ void CL_InitLocal(void)
 	cls.realtime = Sys_Milliseconds();
 
 	Con_CheckResize();
-	Com_InitInventory(invList);
 	CL_InitInput();
 	CL_InitMessageSystem();
 
@@ -1228,8 +1224,6 @@ void CL_InitLocal(void)
 	rate = Cvar_Get("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE);	/* FIXME */
 	msg = Cvar_Get("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE);
 
-	cl_vwep = Cvar_Get("cl_vwep", "1", CVAR_ARCHIVE);
-
 	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO);
 
 	/* register our commands */
@@ -1277,25 +1271,9 @@ void CL_InitLocal(void)
 	/* the only thing this does is allow command completion */
 	/* to work -- all unknown commands are automatically */
 	/* forwarded to the server */
-	Cmd_AddCommand("wave", NULL);
-	Cmd_AddCommand("inven", NULL);
-	Cmd_AddCommand("kill", NULL);
-	Cmd_AddCommand("use", NULL);
-	Cmd_AddCommand("drop", NULL);
 	Cmd_AddCommand("say", NULL);
 	Cmd_AddCommand("say_team", NULL);
 	Cmd_AddCommand("info", NULL);
-	Cmd_AddCommand("prog", NULL);
-	Cmd_AddCommand("give", NULL);
-	Cmd_AddCommand("god", NULL);
-	Cmd_AddCommand("notarget", NULL);
-	Cmd_AddCommand("noclip", NULL);
-	Cmd_AddCommand("invuse", NULL);
-	Cmd_AddCommand("invprev", NULL);
-	Cmd_AddCommand("invnext", NULL);
-	Cmd_AddCommand("invdrop", NULL);
-	Cmd_AddCommand("weapnext", NULL);
-	Cmd_AddCommand("weapprev", NULL);
 	Cmd_AddCommand("playerlist", NULL);
 	Cmd_AddCommand("players", NULL);
 }
