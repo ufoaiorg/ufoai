@@ -49,7 +49,177 @@ sequence tut_tacticalmission
 		align	ul
 		pos	"0 0"
 	}
+	2dobj text_bg
+	{
+		pos	"100 360"
+		align	lc
+		size	"824 50"
+		bgcolor	"0 0 0 0.7"
+		color	"1 1 1 1"
+	}
 	// ==============================================
+
+
+	// ==============================================
+	// primary attack
+	2dobj primary_attack_hover
+	{
+		pos	"175 650"
+		size	"75 50"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+	2dobj primary_attack_hover2
+	{
+		pos	"775 650"
+		size	"75 50"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+	2dobj primary_attack_text
+	{
+		text	"_Primary attack"
+		pos	"512 370"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem primary_attack_hover
+	rem primary_attack_hover2
+	rem primary_attack_text
+
+	// ==============================================
+	// secondary attack
+	2dobj secondary_attack_hover
+	{
+		pos	"175 710"
+		size	"75 50"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+	2dobj secondary_attack_hover2
+	{
+		pos	"775 710"
+		size	"75 50"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+	2dobj secondary_attack_text
+	{
+		text	"_Secondary attack"
+		pos	"512 370"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem secondary_attack_hover
+	rem secondary_attack_hover2
+	rem secondary_attack_text
+
+	// ==============================================
+	// secondary attack
+	2dobj reload_hover
+	{
+		pos	"100 720"
+		size	"65 33"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+	2dobj reload_hover2
+	{
+		pos	"855 720"
+		size	"65 33"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+	2dobj reload_text
+	{
+		text	"_Reload"
+		pos	"512 370"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem reload_hover
+	rem reload_hover2
+	rem reload_text
+
+	// ==============================================
+	// end round
+	2dobj end_round_hover
+	{
+		pos	"950 0"
+		size	"62 55"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+	2dobj switch_end_round_text
+	{
+		text	"_End round"
+		pos	"512 370"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem end_round_hover
+	rem switch_end_round_text
+
+	// ==============================================
+	// switch soldier
+	2dobj soldier_hover
+	{
+		pos	"415 0"
+		size	"265 55"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+	2dobj switch_soldier_text
+	{
+		text	"_Select soldiers via click"
+		pos	"512 370"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem soldier_hover
+	rem switch_soldier_text
+
+	2dobj switch_soldier_text2
+	{
+		text	"_Or via the keys 1-8"
+		pos	"512 370"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem switch_soldier_text2
+
+	// ==============================================
+	// visible aliens
+	2dobj visible_aliens_hover
+	{
+		pos	"807 0"
+		size	"57 55"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+	2dobj switch_visible_aliens_text
+	{
+		text	"_Cycle through visible enemies"
+		pos	"512 370"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem visible_aliens_hover
+	rem switch_visible_aliens_text
 
 	// ==============================================
 	// switch level
@@ -58,16 +228,15 @@ sequence tut_tacticalmission
 		pos	"0 125"
 		size	"40 340"
 		align	ul
-		bgcolor	"1 0 0 0.3"
+		bgcolor	"1 0 0 0.6"
 	}
 	2dobj switch_level_text
 	{
 		text	"_Switch view level via left mouseclick"
-		pos	"30 420"
-		align	ul
+		pos	"512 370"
+		align	uc
 		color	"1 1 1 1"
-		speed	"0 -60"
-		font	f_small
+		font	f_big
 	}
 	wait 5
 	rem level_hover
@@ -76,16 +245,16 @@ sequence tut_tacticalmission
 	2dobj switch_level_text2
 	{
 		text	"_You can also use the cursor keys to switch the levels"
-		pos	"30 320"
-		align	ul
+		pos	"512 370"
+		align	uc
 		color	"1 1 1 1"
-		font	f_small
+		font	f_big
 	}
 	wait 5
 	rem switch_level_text2
 	// ==============================================
 
-
 	// end of tutorial - remove background, too
 	rem tactical_bg
+	rem text_bg
 }
