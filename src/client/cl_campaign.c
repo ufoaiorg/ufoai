@@ -52,7 +52,7 @@ aircraft_t aircraft[MAX_AIRCRAFT];
 int numAircraft;
 
 byte *maskPic;
-int maskWidth, maskHeight;
+static int maskWidth, maskHeight;
 
 /* extern in client.h */
 stats_t stats;
@@ -1571,6 +1571,51 @@ aircraft_t *AIR_FindAircraft(char *aircraftName)
 	return NULL;
 }
 
+void CL_LoadEquipment ( sizebuf_t *buf, character_t *team, int num )
+{
+	item_t item;
+	int container, x, y;
+	int i;
+	character_t *chr;
+
+	/* inventory */
+	for (i = 0, chr = team; i < num; chr++, i++) {
+		Com_DestroyInventory(chr->inv);
+		item.t = MSG_ReadByte(buf);
+		while (item.t != NONE) {
+			/* read info */
+			MSG_ReadFormat(buf, "bbbbb", &item.a, &item.m, &container, &x, &y);
+
+			/* check info and add item if ok */
+			Com_AddToInventory(chr->inv, item, container, x, y);
+
+			/* get next item */
+			item.t = MSG_ReadByte(buf);
+		}
+	}
+}
+
+/**
+  * @brief Stores the equipment for a game
+  */
+void CL_SaveEquipment ( sizebuf_t *buf, character_t *team, int num )
+{
+	character_t *chr;
+	invList_t *ic;
+	int i, j;
+
+	for (i = 0, chr = team; i < num; chr++, i++) {
+		/* equipment */
+		for (j = 0; j < csi.numIDs; j++)
+			for (ic = chr->inv->c[j]; ic; ic = ic->next)
+				CL_SendItem(buf, ic->item, j, ic->x, ic->y);
+
+		/* terminate list */
+		MSG_WriteByte(buf, NONE);
+	}
+
+}
+
 #define MAX_MESSAGES_FOR_SAVEGAME 20
 /*======================
 CL_GameSave
@@ -1579,6 +1624,7 @@ void CL_GameSave(char *filename, char *comment)
 {
 	stageState_t *state;
 	actMis_t *mis;
+	base_t *base;
 	sizebuf_t sb;
 	message_t *message;
 	byte *buf;
@@ -1694,6 +1740,9 @@ void CL_GameSave(char *filename, char *comment)
 		MSG_WriteLong(&sb, mis->expire.sec);
 	}
 
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
+		CL_SaveEquipment( &sb, base->wholeTeam, base->numWholeTeam );
+
 	/* save all the stats */
 	SZ_Write(&sb, &stats, sizeof(stats));
 
@@ -1757,6 +1806,7 @@ int CL_GameLoad(char *filename)
 	setState_t dummy;
 	sizebuf_t sb;
 	byte *buf;
+	base_t *base;
 	char *name;
 	FILE *f;
 	int version;
@@ -1942,6 +1992,9 @@ int CL_GameLoad(char *filename)
 			ccs.numMissions--;
 		}
 	}
+
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
+		CL_LoadEquipment( &sb, base->wholeTeam, base->numWholeTeam );
 
 	/* load the stats */
 	memcpy(&stats, sb.data + sb.readcount, sizeof(stats_t));
@@ -3356,6 +3409,7 @@ void CP_CampaignsClick_f(void)
   */
 void CL_ResetSinglePlayerData ( void )
 {
+	Com_InitInventory(invList);
 	numNations = numStageSets = numStages = numMissions = 0;
 	memset(missions, 0, sizeof(mission_t)*MAX_MISSIONS);
 	memset(nations, 0, sizeof(nation_t)*MAX_NATIONS);

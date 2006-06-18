@@ -29,15 +29,13 @@ le_t *selActor;
 fireDef_t *selFD;
 character_t *selChr;
 int selToHit;
+pos3_t mousePos;
 
 int actorMoveLength;
 invList_t invList[MAX_INVLIST];
 
-/* private */
-/* TODO: Don't know what private means; should be static? */
-le_t *mouseActor;
-pos3_t mousePos;
-pos3_t mouseLastPos;
+static le_t *mouseActor;
+static pos3_t mouseLastPos;
 
 /*
 ==============================================================

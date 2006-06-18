@@ -1769,7 +1769,7 @@ INVENTORY MANAGEMENT
 csi_t		*CSI;
 invList_t	*invUnused;
 item_t		cacheItem;
-invList_t	cacheList;
+/*invList_t	cacheList;*/
 
 /*
 =================
@@ -1792,6 +1792,7 @@ void Com_InitInventory( invList_t *invList )
 	int	i;
 	assert( invList );
 
+	Com_DPrintf("Set invUnused to %p\n", invList);
 	invUnused = invList;
 	invUnused->next = NULL;
 	for ( i = 0; i < MAX_INVLIST-1; i++ ) {
@@ -1945,7 +1946,7 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 		i->c[container] = ic->next;
 #ifdef PARANOID
 		if ( CSI->ids[container].single && ic->next )
-			Com_Printf("Com_RemoveFromInventory: Error in line %i at file %s\n", __LINE__, __FILE__ );
+			Sys_Error("Com_RemoveFromInventory: Error in line %i at file %s (container: %i)\n", __LINE__, __FILE__, container );
 #endif
 		invUnused->next = old;
 		return qtrue;

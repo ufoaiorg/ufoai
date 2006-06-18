@@ -1111,6 +1111,7 @@ void CL_InitLocal(void)
 	cls.state = ca_disconnected;
 	cls.realtime = Sys_Milliseconds();
 
+	Com_InitInventory(invList);
 	Con_CheckResize();
 	CL_InitInput();
 	CL_InitMessageSystem();

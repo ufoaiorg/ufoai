@@ -112,10 +112,6 @@ typedef struct globalData_s
 	/* The number of entries in the list above. */
 	int numRanks;
 
-	/* inventory list linked via chr->i.c[container] */
-	/* call Com_InitInventory to link the next pointers after loading */
-	invList_t invList[MAX_INVLIST];
-
 	/* TODO
 		craftupgrade_t craftupgrades[MAX_CRAFTUPGRADES];
 		int    numCraftUpgrades;

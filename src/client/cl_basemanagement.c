@@ -35,8 +35,8 @@ int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx);
 vec2_t newBasePos;
 cvar_t *mn_base_title;
 
-int BuildingConstructionList[MAX_BUILDINGS];
-int numBuildingConstructionList;
+static int BuildingConstructionList[MAX_BUILDINGS];
+static int numBuildingConstructionList;
 
 /**
  * @brief Holds the names of valid entries in the basemanagement.ufo file.
