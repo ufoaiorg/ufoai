@@ -136,6 +136,7 @@ menu ufopedia
 		angles	"0 0 120"
 		color	"0.5 0.5 0.5 1"
 		origin	"770 250 0"
+		pos	"25 75"
 		size	"240 240"
 		mousefx	true
 		click
