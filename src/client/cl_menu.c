@@ -834,7 +834,6 @@ qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
 	if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->mouseIn && !node->mouseOut))
 		return qfalse;
 
-	/* get the rectangle size out of the pic if necessary */
 	if (!node->size[0] || !node->size[1]) {
 		if (node->type == MN_PIC && node->data[0]) {
 			if (node->texh[0] && node->texh[1]) {
@@ -849,9 +848,16 @@ qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
 		sy = node->size[1];
 	}
 
-	/* rectangle test */
 	tx = x - node->pos[0];
 	ty = y - node->pos[1];
+	if ( node->align > 0 && node->align < ALIGN_LAST ) {
+		switch ( node->align % 3 ) {
+		/* center */
+		case 1: tx = x - node->pos[0] + sx / 2; break;
+		/* right */
+		case 2: tx = x - node->pos[0] + sx; break;
+		}
+	}
 
 	if (tx < 0 || ty < 0 || tx > sx || ty > sy)
 		return qfalse;
