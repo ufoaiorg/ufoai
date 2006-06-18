@@ -92,7 +92,7 @@ typedef struct globalData_s
 
 	/* TODO: Total number of buildings per base. */
 	int numBuildings[MAX_BASES];
-	
+
 	/* == misc == */
 	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */
 	int mapAction;
@@ -105,12 +105,16 @@ typedef struct globalData_s
 
 	/* already paid in this month? */
 	qboolean fund;
-	
+
 	/* == Ranks == */
 	/* Global list of all ranks defined in medals.ufo. */
 	rank_t ranks[MAX_RANKS];
 	/* The number of entries in the list above. */
 	int numRanks;
+
+	/* inventory list linked via chr->i.c[container] */
+	/* call Com_InitInventory to link the next pointers after loading */
+	invList_t invList[MAX_INVLIST];
 
 	/* TODO
 		craftupgrade_t craftupgrades[MAX_CRAFTUPGRADES];
