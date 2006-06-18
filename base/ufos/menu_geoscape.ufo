@@ -386,7 +386,7 @@ menu popup_intercept_ready
 		if	"game_auto_go 1.0"
 		font	f_menu
 		color	"0 0.5 0 1"
-		string	"_Auto"
+		string	"_Auto mission"
 		pos	"620 408"
 		align	uc
 	}
