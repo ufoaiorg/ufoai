@@ -1944,7 +1944,7 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 		invUnused = ic;
 		cacheItem = ic->item;
 		i->c[container] = ic->next;
-#ifdef 0
+#if 0
 		if ( CSI->ids[container].single && ic->next )
 			Sys_Error("Com_RemoveFromInventory: Error in line %i at file %s (container: %i)\n", __LINE__, __FILE__, container );
 #endif
