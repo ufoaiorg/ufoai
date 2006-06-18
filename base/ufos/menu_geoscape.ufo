@@ -93,9 +93,11 @@ menu map
 	{
 		tooltip	"_Organisation capital"
 		string	"*cvar mn_credits"
+		size "230 40"
 		pos	"900 30"
 		font	f_big
 		align	ur
+		in
 	}
 
 	pic bt_timestop
