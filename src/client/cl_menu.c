@@ -1725,9 +1725,9 @@ void MN_DrawMenus(void)
 	while (sp < menuStackPos) {
 		menu = menuStack[sp++];
 		for (node = menu->firstNode; node; node = node->next) {
-			if (!node->invis && (node->data[0] ||
-								 node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP
-								 || node->type == MN_3DMAP)) {
+			if (!node->invis && (node->data[0] /* 0 are images, models and strings e.g. */
+					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP
+					|| node->type == MN_3DMAP)) {
 				/* if construct */
 				if (*node->depends.var && Q_stricmp(node->depends.value, (Cvar_Get(node->depends.var, node->depends.value, 0))->string))
 					continue;
