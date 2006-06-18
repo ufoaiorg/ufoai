@@ -2106,11 +2106,9 @@ void CL_GameContinue(void)
 }
 
 
-/*
-======================
+/*======================
 CL_GameGo
-======================
-*/
+======================*/
 void CL_GameGo(void)
 {
 	mission_t *mis;
@@ -2120,6 +2118,9 @@ void CL_GameGo(void)
 	if (!curCampaign || !selMis || !baseCurrent)
 		return;
 
+	/* update mission-status (active?) for the selected aircraft */
+	CL_CheckAircraft(&gd.bases[baseCurrent->idx].aircraft[gd.interceptAircraft]);
+	
 	mis = selMis->def;
 
 	/* multiplayer */
