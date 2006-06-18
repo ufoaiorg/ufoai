@@ -1792,7 +1792,6 @@ void Com_InitInventory( invList_t *invList )
 	int	i;
 	assert( invList );
 
-	Com_DPrintf("Set invUnused to %p\n", invList);
 	invUnused = invList;
 	invUnused->next = NULL;
 	for ( i = 0; i < MAX_INVLIST-1; i++ ) {
