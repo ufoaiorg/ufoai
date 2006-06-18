@@ -2184,8 +2184,10 @@ void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility,
 				min = randomArray[i]; /* or min */
 		}
 		rand_avg /= SKILL_NUM_TYPES-ABILITY_NUM_TYPES;
-		if (max-rand_avg < rand_avg-min) min= rand_avg-min;
-		else min = max-rand_avg;
+		if (max-rand_avg < rand_avg-min)
+			min = rand_avg-min;
+		else
+			min = max-rand_avg;
 		for (i = 0; i < SKILL_NUM_TYPES-ABILITY_NUM_TYPES; i++)
 			chr->skills[ABILITY_NUM_TYPES+i] = ((randomArray[i]-rand_avg)/min*(maxSkill-minSkill) +
 				minSkill+maxSkill)/2 + frand()*3;
@@ -2198,8 +2200,10 @@ void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility,
 		 || (max-10 < chr->skills[SKILL_HEAVY]     && chr->skills[ABILITY_POWER]    < min)
 		 || (max-10 < chr->skills[SKILL_PRECISE]   && chr->skills[ABILITY_ACCURACY] < min)
 		 || (max-10 < chr->skills[SKILL_EXPLOSIVE] && chr->skills[ABILITY_MIND]     < min)
-		) retry--; /* try again. */
-		else retry = 0;
+		)
+			retry--; /* try again. */
+		else
+			retry = 0;
 	}
 	while ( retry > 0 );
 }

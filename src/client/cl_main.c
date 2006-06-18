@@ -1054,12 +1054,12 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
 		B_ParseBases(name, text);
 	else if (!Q_strncmp(type, "nation", 6))
 		CL_ParseNations(name, text);
-	else if ( !Q_strncmp( type, "rank", 4 ) )
+	else if (!Q_strncmp(type, "rank", 4))
 		CL_ParseMedalsAndRanks( name, text, qtrue );
-	/*
-	else if ( !Q_strncmp( type, "medal", 5 ) )
-		CL_ParseMedalsAndRanks( name, text, qfalse );
-	*/
+#if 0
+	else if (!Q_strncmp(type, "medal", 5))
+		Com_ParseMedalsAndRanks( name, &text, qfalse );
+#endif
 }
 
 /**

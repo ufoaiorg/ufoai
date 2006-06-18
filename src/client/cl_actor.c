@@ -128,12 +128,11 @@ void CL_ActorGlobalCVars(void)
 	le_t *le;
 	char str[MAX_VAR];
 	int i;
-	
+
 	Cvar_SetValue("mn_numaliensspotted", cl.numAliensSpotted);
 	for (i = 0; i < MAX_TEAMLIST; i++) {
 		le = cl.teamList[i];
 		if (le && !(le->state & STATE_DEAD)) {
-			
 			Cvar_Set(va("mn_head%i", i), (char *) le->model2);
 			Com_sprintf(str, MAX_VAR, "%i", le->HP);
 			Cvar_Set(va("mn_hp%i", i), str);
