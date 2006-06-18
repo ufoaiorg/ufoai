@@ -823,7 +823,7 @@ qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
 			return qfalse;
 
 		/* check bounding box */
-		if (x < node->pos[0] || y < node->pos[1] || x > node->pos[0] + node->size[0] || y > node->pos[1] + node->size[1])
+		if (x < node->pos[0] || x > node->pos[0] + node->size[0] || y < node->pos[1] || y > node->pos[1] + node->size[1])
 			return qfalse;
 
 		/* found a container */
