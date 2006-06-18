@@ -121,7 +121,13 @@ struct usercmd_s;
 struct entity_state_s;
 
 void MSG_WriteChar (sizebuf_t *sb, int c);
-void MSG_WriteByte (sizebuf_t *sb, int c);
+
+#ifdef DEBUG
+#define MSG_WriteByte(buffer, char) MSG_WriteByteDebug( buffer, char, __FILE__, __LINE__ )
+void MSG_WriteByteDebug(sizebuf_t *sb, int c, char* file, int line );
+#else
+void MSG_WriteByte(sizebuf_t *sb, int c);
+#endif
 void MSG_WriteShort (sizebuf_t *sb, int c);
 void MSG_WriteLong (sizebuf_t *sb, int c);
 void MSG_WriteFloat (sizebuf_t *sb, float f);

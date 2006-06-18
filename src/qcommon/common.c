@@ -309,7 +309,7 @@ void MSG_WriteChar (sizebuf_t *sb, int c)
 
 #ifdef PARANOID
 	if (c < -128 || c > 127)
-		Com_Error (ERR_FATAL, "MSG_WriteChar: range error");
+		Com_Error (ERR_FATAL, "MSG_WriteChar: range error %c", c);
 #endif
 
 	buf = SZ_GetSpace (sb, 1);
@@ -319,13 +319,17 @@ void MSG_WriteChar (sizebuf_t *sb, int c)
 /**
   * @brief
   */
+#ifdef DEBUG
+void MSG_WriteByteDebug (sizebuf_t *sb, int c, char* file, int line)
+#else
 void MSG_WriteByte (sizebuf_t *sb, int c)
+#endif
 {
 	byte	*buf;
 
 #ifdef PARANOID
 	if (c < 0 || c > 255)
-		Com_Error (ERR_FATAL, "MSG_WriteByte: range error");
+		Com_Error (ERR_FATAL, "MSG_WriteByte: range error %c", c);
 #endif
 
 	buf = SZ_GetSpace (sb, 1);
