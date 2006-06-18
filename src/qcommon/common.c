@@ -327,9 +327,10 @@ void MSG_WriteByte (sizebuf_t *sb, int c)
 {
 	byte	*buf;
 
+	/* PARANOID is only possible in debug mode (when DEBUG was set, too) */
 #ifdef PARANOID
 	if (c < 0 || c > 255)
-		Com_Error (ERR_FATAL, "MSG_WriteByte: range error %c", c);
+		Com_Error (ERR_FATAL, "MSG_WriteByte: range error %c ('%s', line %i)", c, file, line);
 #endif
 
 	buf = SZ_GetSpace (sb, 1);
