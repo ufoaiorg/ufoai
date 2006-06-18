@@ -319,8 +319,6 @@ extern cvar_t *cl_lightlevel;	/* FIXME HACK */
 extern cvar_t *cl_paused;
 extern cvar_t *cl_timedemo;
 
-extern cvar_t *cl_vwep;
-
 extern cvar_t *cl_centerview;
 
 extern cvar_t *cl_worldlevel;
@@ -339,7 +337,7 @@ extern cvar_t *mn_lastsave;
 /*the new soundsystem cvar 0-3 by now */
 #ifndef _WIN32
 extern cvar_t *s_system;
-#endif							/* _WIN32 */
+#endif /* _WIN32 */
 
 extern cvar_t *confirm_actions;
 
