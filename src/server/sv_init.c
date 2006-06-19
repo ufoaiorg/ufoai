@@ -574,7 +574,8 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 			text = strchr( text, '}' ) + 1;
 			if ( !text )
 				break;
-		} else Com_Printf( "SV_AssembleMap: Unknown token '%s' (%s)\n", token, filename );
+		} else
+			Com_Printf( "SV_AssembleMap: Unknown token '%s' (%s)\n", token, filename );
 	} while ( text );
 
 	/* free the file */
@@ -595,7 +596,8 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 			Com_Printf( "SV_AssembleMap: Map assembly '%s' not found\n", assembly );
 			mAsm = NULL;
 		}
-	} else mAsm = NULL;
+	} else
+		mAsm = NULL;
 
 	/* use random assembly, if no valid one has been specified */
 	if ( !mAsm )
