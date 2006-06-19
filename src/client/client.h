@@ -965,6 +965,8 @@ void CL_Events(void);
 /* cl_view.c */
 extern sun_t map_sun;
 extern int map_maxlevel;
+extern cvar_t *map_dropship;
+extern vec3_t map_dropship_coord;
 
 void V_Init(void);
 void V_RenderView(float stereo_separation);

@@ -2140,6 +2140,7 @@ void CL_GameGo(void)
 	Cvar_Set("ai_equipment", mis->alienEquipment);
 	Cvar_Set("music", mis->music);
 	Cvar_Set("equip", curCampaign->equipment);
+	Cvar_Set("map_dropship", gd.bases[baseCurrent->idx].aircraft[gd.interceptAircraft].id);
 
 	/* check inventory */
 	ccs.eMission = ccs.eCampaign;

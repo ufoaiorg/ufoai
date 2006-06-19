@@ -56,6 +56,8 @@ lightstyle_t r_lightstyles[MAX_LIGHTSTYLES];
 char cl_weaponmodels[MAX_CLIENTWEAPONMODELS][MAX_QPATH];
 int num_cl_weaponmodels;
 
+cvar_t *map_dropship;
+vec3_t map_dropship_coord;
 int map_maxlevel;
 sun_t map_sun;
 dlight_t map_lights[MAX_MAP_LIGHTS];
@@ -271,13 +273,26 @@ void CL_ParseEntitystring(char *es)
 	char model[MAX_VAR];
 	char particle[MAX_VAR];
 	float light;
-	vec3_t color, ambient, origin, angles, lightangles;
+	vec3_t color, ambient, origin, angles, lightangles, dropship_coord;
 	vec2_t wait;
 	int spawnflags;
 	int maxlevel;
 	int entnum;
 	int nosmooth;
 	int skin;
+
+	/* dropship default values */
+	/* -1.0f means - don't use it */
+
+	/*
+	TODO: Implement me: use cvar map_dropship to get the current used dropship
+	this cvar is set at mission start and inited with craft_dropship
+	(e.g. for multiplayer missions)
+
+	This assemble step should be done in sv_init SV_Map (we need to check whether
+	this is syncs over network)
+	*/
+	VectorSet(dropship_coord, -1.0f, -1.0f, -1.0f);
 
 	VectorSet(map_fogColor, 0.5f, 0.5f, 0.5f);
 	map_fogColor[3] = 1.0f;
@@ -370,14 +385,8 @@ void CL_ParseEntitystring(char *es)
 			if (!Q_strcmp(keyname, "maxlevel"))
 				maxlevel = atoi(com_token);
 
-			/* TODO: Implement dropship placing for all maps */
-#if 0
-			if (!Q_strcmp(keyname, "dropship"))
-				Q_strncpyz(dropship, com_token, MAX_VAR);
-
 			if (!Q_strcmp(keyname, "dropship_coord"))
 				sscanf(com_token, "%f %f %f", &(dropship_coord[0]), &(dropship_coord[1]), &(dropship_coord[2]));
-#endif
 
 			if (!Q_strcmp(keyname, "fog"))
 				map_fog = atof(com_token);
@@ -411,6 +420,7 @@ void CL_ParseEntitystring(char *es)
 
 			/* maximum level */
 			map_maxlevel = maxlevel;
+			VectorCopy(map_dropship_coord, dropship_coord);
 		}
 
 		if (!Q_strcmp(classname, "light") && light) {

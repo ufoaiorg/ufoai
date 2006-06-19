@@ -1132,6 +1132,7 @@ void CL_InitLocal(void)
 	adr6 = Cvar_Get("adr6", "", CVAR_ARCHIVE);
 	adr7 = Cvar_Get("adr7", "", CVAR_ARCHIVE);
 	adr8 = Cvar_Get("adr8", "", CVAR_ARCHIVE);
+	map_dropship = Cvar_Get("map_dropship", "craft_dropship", 0);
 
 	/* register our variables */
 	cl_stereo_separation = Cvar_Get("cl_stereo_separation", "0.4", CVAR_ARCHIVE);
