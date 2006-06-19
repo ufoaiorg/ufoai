@@ -210,12 +210,23 @@ qboolean CheckBEP(char *expr, qboolean(*varFuncParam) (char *var))
 
 /* =========================================================== */
 
+/**
+  * @brief
+  */
+int CP_GetDistance(vec2_t pos1, vec2_t pos2)
+{
+	int a, b, c;
 
-/*
-=================
-CL_MapIsNight
-=================
-*/
+	a = abs(pos1[0] - pos2[0]);
+	b = abs(pos1[1] - pos2[1]);
+	c = (a * a) + (b * b);
+	return sqrt(c);
+}
+
+
+/**
+  * @brief
+  */
 qboolean CL_MapIsNight(vec2_t pos)
 {
 	float p, q, a, root, x;
@@ -230,11 +241,9 @@ qboolean CL_MapIsNight(vec2_t pos)
 }
 
 
-/*
-======================
-Date_LatherThan
-======================
-*/
+/**
+  * @brief
+  */
 qboolean Date_LaterThan(date_t now, date_t compare)
 {
 	if (now.day > compare.day)
@@ -247,11 +256,9 @@ qboolean Date_LaterThan(date_t now, date_t compare)
 }
 
 
-/*
-======================
-Date_Add
-======================
-*/
+/**
+  * @brief
+  */
 date_t Date_Add(date_t a, date_t b)
 {
 	a.sec += b.sec;
@@ -261,11 +268,9 @@ date_t Date_Add(date_t a, date_t b)
 }
 
 
-/*
-======================
-Date_Random
-======================
-*/
+/**
+  * @brief
+  */
 date_t Date_Random(date_t frame)
 {
 	frame.sec = (frame.day * 3600 * 24 + frame.sec) * frand();
@@ -278,11 +283,9 @@ date_t Date_Random(date_t frame)
 /* =========================================================== */
 
 
-/*
-======================
-CL_MapMaskFind
-======================
-*/
+/**
+  * @brief
+  */
 qboolean CL_MapMaskFind(byte * color, vec2_t polar)
 {
 	byte *c;
@@ -321,11 +324,9 @@ qboolean CL_MapMaskFind(byte * color, vec2_t polar)
 /* =========================================================== */
 #define DISTANCE 1
 
-/*
-======================
-CL_ListAircraft_f
-======================
-*/
+/**
+  * @brief
+  */
 void CL_ListAircraft_f(void)
 {
 	int i, j;
@@ -350,13 +351,9 @@ void CL_ListAircraft_f(void)
 	}
 }
 
-/*
-======================
-CL_AircraftStart_f
-
-Start a Aircraft or stops the current mission and let the aircraft idle around
-======================
-*/
+/**
+  * @brief Start an aircraft or stops the current mission and let the aircraft idle around
+  */
 void CL_AircraftStart_f(void)
 {
 	aircraft_t *air;
@@ -377,11 +374,9 @@ void CL_AircraftStart_f(void)
 	air->status = AIR_IDLE;
 }
 
-/*
-======================
-CL_AircraftInit
-======================
-*/
+/**
+  * @brief
+  */
 void CL_AircraftInit(void)
 {
 	aircraft_t *air;
@@ -409,11 +404,9 @@ void CL_AircraftInit(void)
 	Com_Printf("...aircraft inited\n");
 }
 
-/*
-======================
-CL_AircraftStatusToName
-======================
-*/
+/**
+  * @brief
+  */
 char *CL_AircraftStatusToName(aircraft_t * air)
 {
 	assert(air);
@@ -452,11 +445,9 @@ char *CL_AircraftStatusToName(aircraft_t * air)
 	return NULL;
 }
 
-/*
-======================
-CL_NewAircraft
-======================
-*/
+/**
+  * @brief
+  */
 void CL_NewAircraft_f(void)
 {
 	if (Cmd_Argc() < 2) {
@@ -470,11 +461,9 @@ void CL_NewAircraft_f(void)
 	CL_NewAircraft(baseCurrent, Cmd_Argv(1));
 }
 
-/*
-======================
-MN_NextAircraft_f
-======================
-*/
+/**
+  * @brief
+  */
 void MN_NextAircraft_f(void)
 {
 	if (!baseCurrent)
@@ -487,11 +476,9 @@ void MN_NextAircraft_f(void)
 		Com_DPrintf("mn_aircraft_id: %i - numAircraftInBase: %i\n", (int) Cvar_VariableValue("mn_aircraft_id"), baseCurrent->numAircraftInBase);
 }
 
-/*
-======================
-MN_PrevAircraft_f
-======================
-*/
+/**
+  * @brief
+  */
 void MN_PrevAircraft_f(void)
 {
 	if ((int) Cvar_VariableValue("mn_aircraft_id") > 0) {
@@ -536,11 +523,9 @@ void CL_AircraftReturnToBase_f(void)
 	}
 }
 
-/*
-======================
-CL_AircraftSelect
-======================
-*/
+/**
+  * @brief
+  */
 void CL_AircraftSelect(void)
 {
 	aircraft_t *air;
@@ -575,11 +560,9 @@ void CL_AircraftSelect(void)
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 
-/*
-======================
-CL_GetAircraft
-======================
-*/
+/**
+  * @brief
+  */
 aircraft_t *CL_GetAircraft(char *name)
 {
 	int i;
@@ -593,11 +576,9 @@ aircraft_t *CL_GetAircraft(char *name)
 	return NULL;
 }
 
-/*
-======================
-CL_NewAircraft
-======================
-*/
+/**
+  * @brief
+  */
 void CL_NewAircraft(base_t * base, char *name)
 {
 	aircraft_t *air;
@@ -634,9 +615,9 @@ void CL_NewAircraft(base_t * base, char *name)
 	Com_Printf("Aircraft %s not found\n", name);
 }
 
-/*======================
-CL_GetmapColor
-======================*/
+/**
+  * @brief
+  */
 byte *CL_GetmapColor(vec2_t pos)
 {
 	int x, y;
@@ -652,9 +633,9 @@ byte *CL_GetmapColor(vec2_t pos)
 	return maskPic + 4 * (x + y * maskWidth);
 }
 
-/*======================
-CL_NewBase
-======================*/
+/**
+  * @brief
+  */
 qboolean CL_NewBase(vec2_t pos)
 {
 	byte *color;
@@ -697,11 +678,9 @@ qboolean CL_NewBase(vec2_t pos)
 /* =========================================================== */
 
 
-/*
-======================
-CL_StageSetDone
-======================
-*/
+/**
+  * @brief
+  */
 stage_t *testStage;
 
 qboolean CL_StageSetDone(char *name)
@@ -722,11 +701,9 @@ qboolean CL_StageSetDone(char *name)
 }
 
 
-/*
-======================
-CL_CampaignActivateStageSets
-======================
-*/
+/**
+  * @brief
+  */
 void CL_CampaignActivateStageSets(stage_t * stage)
 {
 	setState_t *set;
@@ -747,11 +724,9 @@ void CL_CampaignActivateStageSets(stage_t * stage)
 }
 
 
-/*
-======================
-CL_CampaignActivateStage
-======================
-*/
+/**
+  * @brief
+  */
 stageState_t *CL_CampaignActivateStage(char *name, qboolean sequence)
 {
 	stage_t *stage;
@@ -789,11 +764,9 @@ stageState_t *CL_CampaignActivateStage(char *name, qboolean sequence)
 }
 
 
-/*
-======================
-CL_CampaignEndStage
-======================
-*/
+/**
+  * @brief
+  */
 void CL_CampaignEndStage(char *name)
 {
 	stageState_t *state;
@@ -809,14 +782,15 @@ void CL_CampaignEndStage(char *name)
 }
 
 
-/*
-======================
-CL_CampaignAddMission
-======================
-*/
+/**
+  * @brief
+  */
+#define DIST_MIN_BASE_MISSION 10
 void CL_CampaignAddMission(setState_t * set)
 {
 	actMis_t *mis;
+	int i;
+	float f;
 
 	/* add mission */
 	if (ccs.numMissions >= MAX_ACTMISSIONS) {
@@ -847,6 +821,16 @@ void CL_CampaignAddMission(setState_t * set)
 
 		Cbuf_ExecuteText(EXEC_NOW, va("base_attack %i", baseCurrent->idx));
 	} else {
+		/* A mission must not be very near a base */
+		for(i=0 ; i < gd.numBases ; i++) {
+			if (CP_GetDistance(mis->def->pos, gd.bases[i].pos) < DIST_MIN_BASE_MISSION) {
+				f = frand();
+				mis->def->pos[0] = gd.bases[i].pos[0] + (gd.bases[i].pos[0] < 0	? f * DIST_MIN_BASE_MISSION	: -f * DIST_MIN_BASE_MISSION);
+				f = sin(acos(f));
+				mis->def->pos[1] = gd.bases[i].pos[1] +	(gd.bases[i].pos[1] < 0 ? f* DIST_MIN_BASE_MISSION	: -f * DIST_MIN_BASE_MISSION);
+				continue;
+			}
+		}
 		/* get default position first, then try to find a corresponding mask color */
 		mis->realPos[0] = mis->def->pos[0];
 		mis->realPos[1] = mis->def->pos[1];
@@ -867,11 +851,9 @@ void CL_CampaignAddMission(setState_t * set)
 	CL_GameTimeStop();
 }
 
-/*
-======================
-CL_CampaignRemoveMission
-======================
-*/
+/**
+  * @brief
+  */
 void CL_CampaignRemoveMission(actMis_t * mis)
 {
 	int i, num;
@@ -896,11 +878,9 @@ void CL_CampaignRemoveMission(actMis_t * mis)
 }
 
 
-/*
-======================
-CL_CampaignExecute
-======================
-*/
+/**
+  * @brief
+  */
 void CL_CampaignExecute(setState_t * set)
 {
 	/* handle stages, execute commands */
@@ -919,12 +899,12 @@ void CL_CampaignExecute(setState_t * set)
 
 char aircraftListText[1024];
 
-/*======================
-CL_OpenAircraft_f
-
-opens up aircraft by rightclicking them
-(from the aircraft list after selecting a mission on geoscape)
-======================*/
+/**
+  * @brief
+  *
+  * opens up aircraft by rightclicking them
+  * (from the aircraft list after selecting a mission on geoscape)
+  */
 void CL_OpenAircraft_f(void)
 {
 	int num, j;
@@ -957,11 +937,11 @@ void CL_OpenAircraft_f(void)
 	}
 }
 
-/*======================
-CL_SelectAircraft_f
-
-sends the selected aircraft to selected mission (leftclick)
-======================*/
+/**
+  * @brief
+  *
+  * sends the selected aircraft to selected mission (leftclick)
+  */
 void CL_SelectAircraft_f(void)
 {
 	int num, j;
@@ -1005,13 +985,11 @@ void CL_SelectAircraft_f(void)
 	}
 }
 
-/*
-======================
-CL_BuildingAircraftList_f
-
-Builds the aircraft list for textfield with id
-======================
-*/
+/**
+  * @brief
+  *
+  * Builds the aircraft list for textfield with id
+  */
 void CL_BuildingAircraftList_f(void)
 {
 	char *s;
@@ -1034,12 +1012,12 @@ void CL_BuildingAircraftList_f(void)
 }
 
 
-/*======================
-CP_ListUfosOnGeoscape
-
-listufo
-only for debugging
-======================*/
+/**
+  * @brief
+  *
+  * listufo
+  * only for debugging
+  */
 void CP_ListUfosOnGeoscape(void)
 {
 	int i;
@@ -1052,10 +1030,11 @@ void CP_ListUfosOnGeoscape(void)
 	}
 }
 
-/*======================
-CP_NewUfoOnGeoscape
-NOTE: These ufos are not saved - and i don't think we need this
-======================*/
+/**
+  * @brief
+  *
+  * NOTE: These ufos are not saved - and i don't think we need this
+  */
 void CP_NewUfoOnGeoscape(void)
 {
 	int i;
@@ -1083,9 +1062,9 @@ void CP_NewUfoOnGeoscape(void)
 	}
 }
 
-/*======================
-CP_RemoveUfoFromGeoscape
-======================*/
+/**
+  * @brief
+  */
 void CP_RemoveUfoFromGeoscape(void)
 {
 	ccs.numUfoOnGeoscape--;
@@ -1095,39 +1074,23 @@ void CP_RemoveUfoFromGeoscape(void)
 }
 
 
-/*======================
-CL_HandleNationData
-
-if expires is true a mission expires without any reaction
-this will cost money and decrease nation support for this area
-TODO: Use mis->pos to determine the position on the geoscape and get the nation
-TODO: Use colors for nations
-======================*/
+/**
+  * @brief
+  *
+  * if expires is true a mission expires without any reaction
+  * this will cost money and decrease nation support for this area
+  * TODO: Use mis->pos to determine the position on the geoscape and get the nation
+  * TODO: Use colors for nations
+  */
 void CL_HandleNationData(qboolean expires, actMis_t * mis)
 {
 
 }
 
 
-
-/*======================
-CP_GetDistance
-======================*/
-int CP_GetDistance(vec2_t pos1, vec2_t pos2)
-{
-	int a, b, c;
-
-	a = abs(pos1[0] - pos2[0]);
-	b = abs(pos1[1] - pos2[1]);
-	c = (a * a) + (b * b);
-	return sqrt(c);
-}
-
-/*
-======================
-CL_CampaignCheckEvents
-======================
-*/
+/**
+  * @brief
+  */
 void CL_CampaignCheckEvents(void)
 {
 	stageState_t *stage;
@@ -1198,11 +1161,9 @@ void CL_CampaignCheckEvents(void)
 		}
 }
 
-/*
-======================
-CL_CheckAircraft
-======================
-*/
+/**
+  * @brief
+  */
 void CL_CheckAircraft(aircraft_t * air)
 {
 	actMis_t *mis;
@@ -1230,9 +1191,9 @@ void CL_CheckAircraft(aircraft_t * air)
 	}
 }
 
-/*========================
-CP_GetRandomPosForAircraft
-========================*/
+/**
+  * @brief
+  */
 void CP_GetRandomPosForAircraft(float *pos)
 {
 	pos[0] = (rand() % 180) - (rand() % 180);
@@ -1241,13 +1202,11 @@ void CP_GetRandomPosForAircraft(float *pos)
 }
 
 
-/*
-======================
-CL_CampaignRunAircraft
-
-TODO: Fuel
-======================
-*/
+/**
+  * @brief
+  *
+  * TODO: Fuel
+  */
 void CL_CampaignRunAircraft(int dt)
 {
 	aircraft_t *air;
@@ -1342,11 +1301,6 @@ void CL_CampaignRunAircraft(int dt)
 }
 
 
-/*
-=================
-CL_DateConvert
-=================
-*/
 char *monthNames[12] = {
 	"Jan",
 	"Feb",
@@ -1364,6 +1318,9 @@ char *monthNames[12] = {
 
 int monthLength[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
+/**
+  * @brief
+  */
 void CL_DateConvert(date_t * date, int *day, int *month)
 {
 	int i, d;
@@ -1378,19 +1335,22 @@ void CL_DateConvert(date_t * date, int *day, int *month)
 	*month = i;
 }
 
+/**
+  * @brief
+  */
 char *CL_DateGetMonthName(int month)
 {
 	return _(monthNames[month]);
 }
 
-/*======================
-CL_UpdateNationData
-
-Update the nation data from all parsed nation each month
-Called from CL_CampaignRun
-
-TODO: to be extended
-======================*/
+/**
+  * @brief
+  *
+  * Update the nation data from all parsed nation each month
+  * Called from CL_CampaignRun
+  *
+  * TODO: to be extended
+  */
 void CL_UpdateNationData(void)
 {
 	int i;
@@ -1405,11 +1365,9 @@ void CL_UpdateNationData(void)
 	}
 }
 
-/*
-======================
-CL_CampaignRun
-======================
-*/
+/**
+  * @brief
+  */
 void CL_CampaignRun(void)
 {
 	/* advance time */
@@ -1467,12 +1425,9 @@ gameLapse_t lapse[NUM_TIMELAPSE] = {
 };
 
 int gameLapse;
-
-/*
-======================
-CL_GameTimeStop
-======================
-*/
+/**
+  * @brief Stop game time speed
+  */
 void CL_GameTimeStop(void)
 {
 	gameLapse = 0;
@@ -1481,11 +1436,11 @@ void CL_GameTimeStop(void)
 }
 
 
-/*
-======================
-CL_GameTimeSlow
-======================
-*/
+/**
+  * @brief Decrease game time speed
+  *
+  * Decrease game time speed - only works when there is already a base available
+  */
 void CL_GameTimeSlow(void)
 {
 	/*first we have to set up a home base */
@@ -1499,11 +1454,9 @@ void CL_GameTimeSlow(void)
 	}
 }
 
-/*
-======================
-CL_UpdateCredits
-======================
-*/
+/**
+  * @brief
+  */
 #define MAX_CREDITS 10000000
 void CL_UpdateCredits(int credits)
 {
@@ -1514,11 +1467,11 @@ void CL_UpdateCredits(int credits)
 	Cvar_Set("mn_credits", va("%i c", ccs.credits));
 }
 
-/*
-======================
-CL_GameTimeFast
-======================
-*/
+/**
+  * @brief Increase game time speed
+  *
+  * Increase game time speed - only works when there is already a base available
+  */
 void CL_GameTimeFast(void)
 {
 	/*first we have to set up a home base */
@@ -1535,13 +1488,11 @@ void CL_GameTimeFast(void)
 /* =========================================================== */
 
 #define MAX_STATS_BUFFER 1024
-/*
-======================
-CL_Stats_Update
-
-Shows the current stats from stats_t stats
-======================
-*/
+/**
+  * @brief
+  *
+  * Shows the current stats from stats_t stats
+  */
 void CL_Stats_Update(void)
 {
 	static char statsBuffer[MAX_STATS_BUFFER];
@@ -1555,11 +1506,9 @@ void CL_Stats_Update(void)
 	menuText[TEXT_STANDARD] = statsBuffer;
 }
 
-/*
-======================
-AIR_FindAircraft
-======================
-*/
+/**
+  * @brief
+  */
 aircraft_t *AIR_FindAircraft(char *aircraftName)
 {
 	int i;
@@ -1571,6 +1520,9 @@ aircraft_t *AIR_FindAircraft(char *aircraftName)
 	return NULL;
 }
 
+/**
+  * @brief
+  */
 void CL_LoadEquipment ( sizebuf_t *buf, character_t *team, int num )
 {
 	item_t item;
@@ -1617,9 +1569,9 @@ void CL_SaveEquipment ( sizebuf_t *buf, character_t *team, int num )
 }
 
 #define MAX_MESSAGES_FOR_SAVEGAME 20
-/*======================
-CL_GameSave
-======================*/
+/**
+  * @brief
+  */
 void CL_GameSave(char *filename, char *comment)
 {
 	stageState_t *state;
@@ -1758,11 +1710,9 @@ void CL_GameSave(char *filename, char *comment)
 }
 
 
-/*
-======================
-CL_GameSaveCmd
-======================
-*/
+/**
+  * @brief
+  */
 void CL_GameSaveCmd(void)
 {
 	char comment[MAX_COMMENTLENGTH];
@@ -1793,11 +1743,9 @@ void CL_GameSaveCmd(void)
 	CL_GameSave(Cmd_Argv(1), comment);
 }
 
-/*
-======================
-CL_GameLoad
-======================
-*/
+/**
+  * @brief
+  */
 int CL_GameLoad(char *filename)
 {
 	actMis_t *mis;
@@ -2017,11 +1965,9 @@ int CL_GameLoad(char *filename)
 }
 
 
-/*
-======================
-CL_GameLoadCmd
-======================
-*/
+/**
+  * @brief
+  */
 void CL_GameLoadCmd(void)
 {
 	/* get argument */
@@ -2037,11 +1983,9 @@ void CL_GameLoadCmd(void)
 }
 
 
-/*
-======================
-CL_GameCommentsCmd
-======================
-*/
+/**
+  * @brief
+  */
 void CL_GameCommentsCmd(void)
 {
 	char comment[MAX_VAR];
@@ -2083,11 +2027,9 @@ void CL_GameCommentsCmd(void)
 }
 
 
-/*
-======================
-CL_GameContinue
-======================
-*/
+/**
+  * @brief
+  */
 void CL_GameContinue(void)
 {
 	if (cls.state == ca_active) {
@@ -2106,9 +2048,9 @@ void CL_GameContinue(void)
 }
 
 
-/*======================
-CL_GameGo
-======================*/
+/**
+  * @brief
+  */
 void CL_GameGo(void)
 {
 	mission_t *mis;
@@ -2178,9 +2120,9 @@ void CL_GameGo(void)
 		Cbuf_AddText(va("map %s %s\n", mis->map, mis->param));
 }
 
-/*======================
-CP_ExecuteMissionTrigger
-======================*/
+/**
+  * @brief
+  */
 void CP_ExecuteMissionTrigger(mission_t * m, int won)
 {
 	if (won && *m->onwin)
@@ -2189,9 +2131,9 @@ void CP_ExecuteMissionTrigger(mission_t * m, int won)
 		Cbuf_ExecuteText(EXEC_NOW, m->onlose);
 }
 
-/*======================
-CL_GameAutoCheck
-======================*/
+/**
+  * @brief
+  */
 void CL_GameAutoCheck(void)
 {
 	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
@@ -2211,9 +2153,9 @@ void CL_GameAutoCheck(void)
 	}
 }
 
-/*======================
-CL_GameAutoGo
-======================*/
+/**
+  * @brief
+  */
 void CL_GameAutoGo(void)
 {
 	mission_t *mis;
@@ -2270,11 +2212,9 @@ void CL_GameAutoGo(void)
 	CL_MapActionReset();
 }
 
-/*
-======================
-CL_GameAbort
-======================
-*/
+/**
+  * @brief
+  */
 void CL_GameAbort(void)
 {
 	/* aborting means letting the aliens win */
@@ -2283,14 +2223,13 @@ void CL_GameAbort(void)
 
 /* =========================================================== */
 
-/*======================
-CL_CollectAliens
-
-loop through all entities and put the ones that are stunned
-as living aliens into our labs
-
-TODO: put them into the labs
-======================*/
+/**
+  * @brief
+  *
+  * loop through all entities and put the ones that are stunned
+  * as living aliens into our labs
+  * TODO: put them into the labs
+  */
 void CL_CollectAliens(mission_t * mission)
 {
 	int i, j;
@@ -2336,9 +2275,9 @@ void CL_CollectAliens(mission_t * mission)
 	}
 }
 
-/*======================
-CL_CollectItemAmmo
-======================*/
+/**
+  * @brief
+  */
 void CL_CollectItemAmmo(invList_t * weapon, int left_hand)
 {
 	if (weapon->item.t == NONE || (left_hand && csi.ods[weapon->item.t].twohanded))
@@ -2353,13 +2292,13 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand)
 	}
 }
 
-/*======================
-CL_CollectItems
-
-collects all items from battlefield (if we've won the match)
-and put them back to inventory. Calls CL_CollectItemAmmo which
-does the real collecting
-======================*/
+/**
+  * @brief
+  *
+  * collects all items from battlefield (if we've won the match)
+  * and put them back to inventory. Calls CL_CollectItemAmmo which
+  * does the real collecting
+  */
 void CL_CollectItems(int won)
 {
 	int i;
@@ -2397,13 +2336,11 @@ void CL_CollectItems(int won)
 	RS_MarkResearchable();
 }
 
-/*
-======================
-CL_UpdateCharacterStats
-
-FIXME: See TODO and FIXME included
-======================
-*/
+/**
+  * @brief
+  *
+  * FIXME: See TODO and FIXME included
+  */
 void CL_UpdateCharacterStats(int won)
 {
 	le_t *le = NULL;
@@ -2459,11 +2396,9 @@ void CL_UpdateCharacterStats(int won)
 	}
 }
 
-/*
-======================
-CL_GameResultsCmd
-======================
-*/
+/**
+  * @brief
+  */
 void CL_GameResultsCmd(void)
 {
 	int won;
@@ -2532,11 +2467,9 @@ void CL_GameResultsCmd(void)
 }
 
 
-/*
-======================
-CL_MapActionReset
-======================
-*/
+/**
+  * @brief
+  */
 void CL_MapActionReset(void)
 {
 	/* don't allow a reset when no base is set up */
@@ -2602,11 +2535,9 @@ value_t mission_vals[] = {
 char missionTexts[MAX_MISSIONTEXTS];
 char *mtp = missionTexts;
 
-/*
-======================
-CL_ParseMission
-======================
-*/
+/**
+  * @brief
+  */
 void CL_ParseMission(char *name, char **text)
 {
 	char *errhead = "CL_ParseMission: unexptected end of file (mission ";
@@ -2713,11 +2644,9 @@ value_t stageset_vals[] = {
 	,
 };
 
-/*
-======================
-CL_ParseStageSet
-======================
-*/
+/**
+  * @brief
+  */
 void CL_ParseStageSet(char *name, char **text)
 {
 	char *errhead = "CL_ParseStageSet: unexptected end of file (stageset ";
@@ -2799,11 +2728,9 @@ void CL_ParseStageSet(char *name, char **text)
 }
 
 
-/*
-======================
-CL_ParseStage
-======================
-*/
+/**
+  * @brief
+  */
 void CL_ParseStage(char *name, char **text)
 {
 	char *errhead = "CL_ParseStage: unexptected end of file (stage ";
@@ -2888,11 +2815,9 @@ value_t campaign_vals[] = {
 	,
 };
 
-/*
-======================
-CL_ParseCampaign
-======================
-*/
+/**
+  * @brief
+  */
 void CL_ParseCampaign(char *id, char **text)
 {
 	char *errhead = "CL_ParseCampaign: unexptected end of file (campaign ";
@@ -2995,11 +2920,9 @@ value_t aircraft_vals[] = {
 	,
 };
 
-/*
-======================
-CL_ParseAircraft
-======================
-*/
+/**
+  * @brief
+  */
 void CL_ParseAircraft(char *name, char **text)
 {
 	char *errhead = "CL_ParseAircraft: unexptected end of file (aircraft ";
@@ -3097,11 +3020,9 @@ value_t nation_vals[] = {
 	,
 };
 
-/*
-======================
-CL_ParseNations
-======================
-*/
+/**
+  * @brief
+  */
 void CL_ParseNations(char *name, char **text)
 {
 	char *errhead = "CL_ParseNations: unexptected end of file (aircraft ";
@@ -3157,12 +3078,12 @@ void CL_ParseNations(char *name, char **text)
 }
 
 
-/*======================
-CL_OnBattlescape
-
-returns true when we are not in battlefield
-TODO: Check cvar mn_main for value
-======================*/
+/**
+  * @brief
+  *
+  * returns true when we are not in battlefield
+  * TODO: Check cvar mn_main for value
+  */
 qboolean CL_OnBattlescape(void)
 {
 	/* sv.state is set to zero on every battlefield shutdown */
@@ -3229,11 +3150,9 @@ cmdList_t game_commands[] = {
 	{NULL, NULL}
 };
 
-/*
-======================
-CL_GameExit
-======================
-*/
+/**
+  * @brief
+  */
 void CL_GameExit(void)
 {
 	cmdList_t *commands;
@@ -3276,11 +3195,9 @@ void CL_GameInit ( void )
 	B_InitEmployees();
 }
 
-/*
-======================
-CL_GameNew
-======================
-*/
+/**
+  * @brief
+  */
 void CL_GameNew(void)
 {
 	equipDef_t *ed;
@@ -3356,11 +3273,9 @@ void CL_GameNew(void)
 	CL_GameInit();
 }
 
-/*======================
-CP_GetCampaigns_f
-
-fill a list with available campaigns
-======================*/
+/**
+  * @brief fill a list with available campaigns
+  */
 #define MAXCAMPAIGNTEXT 1024
 static char campaignText[MAXCAMPAIGNTEXT];
 static char campaignDesc[MAXCAMPAIGNTEXT];
@@ -3384,9 +3299,9 @@ void CP_GetCampaigns_f(void)
 
 }
 
-/*======================
-CP_CampaignsClick_f
-======================*/
+/**
+  * @brief
+  */
 void CP_CampaignsClick_f(void)
 {
 	int num;
@@ -3420,11 +3335,9 @@ void CL_ResetSinglePlayerData ( void )
 	Com_InitInventory(invList);
 }
 
-/*
-======================
-CL_ResetCampaign
-======================
-*/
+/**
+  * @brief
+  */
 void CL_ResetCampaign(void)
 {
 	/* reset some vars */
