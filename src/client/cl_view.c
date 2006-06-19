@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -337,19 +337,19 @@ void CL_ParseEntitystring(char *es)
 			if (!Q_strcmp(keyname, "classname"))
 				Q_strncpyz(classname, com_token, 64);
 
-			if (!strcmp(keyname, "model"))
+			if (!Q_strcmp(keyname, "model"))
 				Q_strncpyz(model, com_token, MAX_VAR);
 
 			if (!Q_strcmp(keyname, "particle"))
 				Q_strncpyz(particle, com_token, MAX_VAR);
 
-			if (!Q_strcmp(keyname, "_color") || !strcmp(keyname, "lightcolor"))
+			if (!Q_strcmp(keyname, "_color") || !Q_strcmp(keyname, "lightcolor"))
 				sscanf(com_token, "%f %f %f", &(color[0]), &(color[1]), &(color[2]));
 
 			if (!Q_strcmp(keyname, "origin"))
 				sscanf(com_token, "%f %f %f", &(origin[0]), &(origin[1]), &(origin[2]));
 
-			if (!Q_strcmp(keyname, "ambient") || !strcmp(keyname, "lightambient"))
+			if (!Q_strcmp(keyname, "ambient") || !Q_strcmp(keyname, "lightambient"))
 				sscanf(com_token, "%f %f %f", &(ambient[0]), &(ambient[1]), &(ambient[2]));
 
 			if (!Q_strcmp(keyname, "angles"))
@@ -369,6 +369,15 @@ void CL_ParseEntitystring(char *es)
 
 			if (!Q_strcmp(keyname, "maxlevel"))
 				maxlevel = atoi(com_token);
+
+			/* TODO: Implement dropship placing for all maps */
+#if 0
+			if (!Q_strcmp(keyname, "dropship"))
+				Q_strncpyz(dropship, com_token, MAX_VAR);
+
+			if (!Q_strcmp(keyname, "dropship_coord"))
+				sscanf(com_token, "%f %f %f", &(dropship_coord[0]), &(dropship_coord[1]), &(dropship_coord[2]));
+#endif
 
 			if (!Q_strcmp(keyname, "fog"))
 				map_fog = atof(com_token);
