@@ -2120,7 +2120,7 @@ void CL_GameGo(void)
 
 	/* update mission-status (active?) for the selected aircraft */
 	CL_CheckAircraft(&gd.bases[baseCurrent->idx].aircraft[gd.interceptAircraft]);
-	
+
 	mis = selMis->def;
 
 	/* multiplayer */
