@@ -244,9 +244,9 @@ void SV_ParseAssembly( char *filename, char **text )
 
 	/* get assembly name */
 	token = COM_EParse( text, errhead, filename );
-	if ( !*text ) return;
-	if ( numAssemblies >= MAX_MAPASSEMBLIES )
-	{
+	if ( !*text )
+		return;
+	if ( numAssemblies >= MAX_MAPASSEMBLIES ) {
 		Com_Printf( "SV_ParseAssembly: Too many map assemblies (%s)\n", filename );
 		return;
 	}
@@ -260,35 +260,33 @@ void SV_ParseAssembly( char *filename, char **text )
 	do {
 		/* get tile name */
 		token = COM_EParse( text, errhead, filename );
-		if ( !text || *token == '}' ) break;
+		if ( !text || *token == '}' )
+			break;
 
-		if ( !strcmp( token, "size" ) )
-		{
+		if ( !strcmp( token, "size" ) ) {
 			/* get map size */
 			token = COM_EParse( text, errhead, filename );
-			if ( !text ) break;
+			if ( !text )
+				break;
 
 			sscanf( token, "%i %i", &a->w, &a->h );
 			continue;
-		}
-
-		if ( !strcmp( token, "fix" ) )
-		{
+		} else if ( !Q_strcmp( token, "fix" ) ) {
 			/* get tile */
 			token = COM_EParse( text, errhead, filename );
-			if ( !text ) break;
+			if ( !text )
+				break;
 
 			for ( i = 0; i < numTiles; i++ )
-				if ( !strcmp( token, mTile[i].name ) )
-				{
-					if ( a->numFixed >= MAX_FIXEDTILES )
-					{
+				if ( !strcmp( token, mTile[i].name ) ) {
+					if ( a->numFixed >= MAX_FIXEDTILES ) {
 						Com_Printf( "SV_ParseAssembly: Too many fixed tiles\n" );
 						break;
 					}
 					/* get coordinates */
 					token = COM_EParse( text, errhead, filename );
-					if ( !text ) break;
+					if ( !text )
+						break;
 
 					sscanf( token, "%i %i", &x, &y );
 					a->fX[a->numFixed] = x;
@@ -300,11 +298,11 @@ void SV_ParseAssembly( char *filename, char **text )
 		}
 
 		for ( i = 0; i < numTiles; i++ )
-			if ( !strcmp( token, mTile[i].name ) )
-			{
+			if ( !Q_strcmp( token, mTile[i].name ) ) {
 				/* get min and max tile number */
 				token = COM_EParse( text, errhead, filename );
-				if ( !text ) break;
+				if ( !text )
+					break;
 
 				sscanf( token, "%i %i", &x, &y );
 				a->min[i] = x;
@@ -329,27 +327,21 @@ void SV_AddTile( byte map[32][32][MAX_TILEALTS], mTile_t *tile, int x, int y, in
 
 	/* add the new tile */
 	for ( ty = 0; ty < tile->h; ty++ )
-		for ( tx = 0; tx < tile->w; tx++ )
-		{
-			if ( tile->spec[ty][tx][0] == SOLID || !map[y+ty][x+tx][0] )
-			{
+		for ( tx = 0; tx < tile->w; tx++ ) {
+			if ( tile->spec[ty][tx][0] == SOLID || !map[y+ty][x+tx][0] ) {
 				/* copy the solid info */
 				if ( tile->spec[ty][tx][0] == SOLID && toFill ) *toFill -= 1;
 				for ( a = 0; a < MAX_TILEALTS; a++ )
 					map[y+ty][x+tx][a] = tile->spec[ty][tx][a];
-			}
-			else if ( tile->spec[ty][tx][0] && map[y+ty][x+tx][0] != SOLID )
-			{
+			} else if ( tile->spec[ty][tx][0] && map[y+ty][x+tx][0] != SOLID ) {
 				/* calc remaining connection options */
-				for ( a = 0; map[y+ty][x+tx][a] && a < MAX_TILEALTS; a++ )
-				{
+				for ( a = 0; map[y+ty][x+tx][a] && a < MAX_TILEALTS; a++ ) {
 					bad = qtrue;
 					for ( b = 0; bad && tile->spec[ty][tx][b] && b < MAX_TILEALTS; b++ )
 						if ( tile->spec[ty][tx][b] == map[y+ty][x+tx][a] )
 							bad = qfalse;
 
-					if ( bad )
-					{
+					if ( bad ) {
 						/* not an option anymore */
 						for ( c = a+1; c < MAX_TILEALTS; c++ )
 							map[y+ty][x+tx][c-1] = map[y+ty][x+tx][c];
@@ -389,25 +381,23 @@ qboolean SV_FitTile( byte map[32][32][MAX_TILEALTS], mTile_t *tile, int x, int y
 		return qfalse;
 
 	/* require touching tiles */
-	if ( x == mapX ) touch = qtrue;
-	else touch = qfalse;
+	if ( x == mapX )
+		touch = qtrue;
+	else
+		touch = qfalse;
 
 	/* test for fit */
 	spec = &tile->spec[0][0][0];
 	m = &map[y][x][0];
-	for ( ty = 0; ty < tile->h; ty++ )
-	{
-		for ( tx = 0; tx < tile->w; tx++, spec += MAX_TILEALTS, m += MAX_TILEALTS )
-		{
-			if ( *spec == SOLID && *m == SOLID )
-			{
+	for ( ty = 0; ty < tile->h; ty++ ) {
+		for ( tx = 0; tx < tile->w; tx++, spec += MAX_TILEALTS, m += MAX_TILEALTS ) {
+			if ( *spec == SOLID && *m == SOLID ) {
 				/* already something there */
 				return qfalse;
-			}
-			else if ( *spec && *m )
-			{
+			} else if ( *spec && *m ) {
 				/* check connection, avoid contradictory connections */
-				if ( *m == SOLID ) touch = qtrue;
+				if ( *m == SOLID )
+					touch = qtrue;
 
 				for ( a = 0; spec[a] && a < MAX_TILEALTS; a++ )
 					for ( b = 0; m[b] && b < MAX_TILEALTS; b++ )
@@ -424,8 +414,10 @@ qboolean SV_FitTile( byte map[32][32][MAX_TILEALTS], mTile_t *tile, int x, int y
 	}
 
 	/* it fits, check for touch */
-	if ( touch || !force ) return qtrue;
-	else return qfalse;
+	if ( touch || !force )
+		return qtrue;
+	else
+		return qfalse;
 }
 
 
@@ -448,55 +440,54 @@ qboolean SV_AddRegion( byte map[32][32][MAX_TILEALTS], byte *num )
 	oldToFill = 0;
 	for ( y = mapY+1; y < mapY+mapH+1; y++ )
 		for ( x = mapX+1; x < mapX+mapW+1; x++ )
-			if ( map[y][x][0] != SOLID ) oldToFill++;
+			if ( map[y][x][0] != SOLID )
+				oldToFill++;
 
-	{
-		/* restore old values */
-		toFill = oldToFill;
-		numPlaced = oldNumPlaced;
+	/* restore old values */
+	toFill = oldToFill;
+	numPlaced = oldNumPlaced;
 
-		RandomList( mapSize, prList );
-		lastPos = mapSize-1;
-		pos = 0;
+	RandomList( mapSize, prList );
+	lastPos = mapSize-1;
+	pos = 0;
 
-		/* finishing condition */
-		while ( toFill > 0 )
-		{
-			/* refresh random lists */
-			RandomList( numTiles, trList );
+	/* finishing condition */
+	while ( toFill > 0 ) {
+		/* refresh random lists */
+		RandomList( numTiles, trList );
 
-			while ( pos != lastPos )
-			{
-				x = prList[pos] % mapW + mapX;
-				y = prList[pos] / mapW + mapY;
+		while ( pos != lastPos ) {
+			x = prList[pos] % mapW + mapX;
+			y = prList[pos] / mapW + mapY;
 
-				for ( i = 0; i < numTiles; i++ )
-				{
-					j = trList[i];
-					if ( num[j] >= mAsm->max[j] )
-						continue;
-					tile = &mTile[j];
+			for ( i = 0; i < numTiles; i++ ) {
+				j = trList[i];
+				if ( num[j] >= mAsm->max[j] )
+					continue;
+				tile = &mTile[j];
 
-					/* add the tile, if it fits */
-					if ( SV_FitTile( map, tile, x, y, qtrue ) )
-					{
-						/* mark as used and add the tile */
-						num[j]++;
-						SV_AddTile( map, tile, x, y, &toFill );
-						lastPos = pos;
-						break;
-					}
+				/* add the tile, if it fits */
+				if ( SV_FitTile( map, tile, x, y, qtrue ) ) {
+					/* mark as used and add the tile */
+					num[j]++;
+					SV_AddTile( map, tile, x, y, &toFill );
+					lastPos = pos;
+					break;
 				}
-				pos++;
-				if ( pos >= mapSize ) pos = 0;
-
-				if ( i < numTiles ) break;
 			}
-			if ( pos == lastPos ) break;
+			pos++;
+			if ( pos >= mapSize )
+				pos = 0;
+
+			if ( i < numTiles )
+				break;
 		}
-		/* check for success */
-		if ( toFill <= 0 ) return qtrue;
+		if ( pos == lastPos )
+			break;
 	}
+	/* check for success */
+	if ( toFill <= 0 )
+		return qtrue;
 
 	/* too many retries */
 	return qfalse;
@@ -513,17 +504,13 @@ qboolean SV_AddMandatoryParts( byte map[32][32][MAX_TILEALTS], byte *num )
 	mTile_t *tile;
 	int i, j, n, x, y;
 
-	for ( i = 0, tile = mTile; i < numTiles; i++, tile++ )
-	{
-		for ( j = 0; j < mAsm->min[i]; j++ )
-		{
+	for ( i = 0, tile = mTile; i < numTiles; i++, tile++ ) {
+		for ( j = 0; j < mAsm->min[i]; j++ ) {
 			RandomList( mapSize, prList );
-			for ( n = 0; n < mapSize; n++ )
-			{
+			for ( n = 0; n < mapSize; n++ ) {
 				x = prList[n] % mapW;
 				y = prList[n] / mapH;
-				if ( SV_FitTile( map, tile, x, y, qfalse ) )
-				{
+				if ( SV_FitTile( map, tile, x, y, qfalse ) ) {
 					/* add tile */
 					SV_AddTile( map, tile, x, y, NULL );
 					break;
@@ -560,7 +547,7 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 	qboolean ok;
 
 	/* load the map info */
-	sprintf( filename, "maps/%s.ump", name );
+	Com_sprintf( filename, MAX_QPATH, "maps/%s.ump", name );
 	FS_LoadFile( filename, (void **)&buf );
 	if ( !buf )
 		Com_Error( ERR_DROP, "SV_AssembleMap: Map assembly info '%s' not found\n", filename );
@@ -572,22 +559,22 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 	basePath[0] = 0;
 	do {
 		token = COM_Parse( &text );
-		if ( !text ) break;
+		if ( !text )
+			break;
 
-		if ( !strcmp( token, "base" ) )
-		{
+		if ( !Q_strcmp( token, "base" ) ) {
 			token = COM_Parse( &text );
 			Q_strncpyz( basePath, token, MAX_QPATH );
-		}
-		else if ( !strcmp( token, "tile" ) ) SV_ParseMapTile( filename, &text );
-		else if ( !strcmp( token, "assembly" ) ) SV_ParseAssembly( filename, &text );
-		else if ( !strcmp( token, "{" ) )
-		{
+		} else if ( !Q_strcmp( token, "tile" ) )
+			SV_ParseMapTile( filename, &text );
+		else if ( !Q_strcmp( token, "assembly" ) )
+			SV_ParseAssembly( filename, &text );
+		else if ( !Q_strcmp( token, "{" ) ) {
 			/* ignore unknown block */
 			text = strchr( text, '}' ) + 1;
-			if ( !text ) break;
-		}
-		else Com_Printf( "SV_AssembleMap: Unknown token '%s' (%s)\n", token, filename );
+			if ( !text )
+				break;
+		} else Com_Printf( "SV_AssembleMap: Unknown token '%s' (%s)\n", token, filename );
 	} while ( text );
 
 	/* free the file */
@@ -600,21 +587,19 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 		Com_Error( ERR_DROP, "No map assemblies defined (%s)!\n", filename );
 
 	/* get assembly */
-	if ( assembly && assembly[0] )
-	{
+	if ( assembly && assembly[0] ) {
 		for ( i = 0, mAsm = mAssembly; i < numAssemblies; i++, mAsm++ )
-			if ( !strcmp( assembly, mAsm->name ) )
+			if ( !Q_strcmp( assembly, mAsm->name ) )
 				break;
-		if ( i >= numAssemblies )
-		{
+		if ( i >= numAssemblies ) {
 			Com_Printf( "SV_AssembleMap: Map assembly '%s' not found\n", assembly );
 			mAsm = NULL;
 		}
-	}
-	else mAsm = NULL;
+	} else mAsm = NULL;
 
 	/* use random assembly, if no valid one has been specified */
-	if ( !mAsm ) mAsm = &mAssembly[(int)(frand()*numAssemblies)];
+	if ( !mAsm )
+		mAsm = &mAssembly[(int)(frand()*numAssemblies)];
 
 	/* calculate regions */
 	regNumX = mAsm->w / MAX_REGIONSIZE + 1;
@@ -622,8 +607,7 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 	regFracX = (float)mAsm->w / regNumX;
 	regFracY = (float)mAsm->h / regNumY;
 
-	for ( tries = 0; tries < MAX_ASSEMBLYRETRIES; tries++ )
-	{
+	for ( tries = 0; tries < MAX_ASSEMBLYRETRIES; tries++ ) {
 		int x, y;
 
 		/* assemble the map */
@@ -641,37 +625,36 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 		mapW = mAsm->w;
 		mapH = mAsm->h;
 		mapSize = mAsm->w * mAsm->h;
-		if ( !SV_AddMandatoryParts( curMap, curNum ) ) continue;
+		if ( !SV_AddMandatoryParts( curMap, curNum ) )
+			continue;
 
 		/* start region assembly */
 		ok = qtrue;
 		for ( y = 0; y < regNumY && ok; y++ )
-			for ( x = 0; x < regNumX && ok; x++ )
-			{
+			for ( x = 0; x < regNumX && ok; x++ ) {
 				mapX = x * regFracX;
 				mapY = y * regFracY;
 				mapW = (int)((x+1) * regFracX + 0.1) - (int)(x * regFracX);
 				mapH = (int)((y+1) * regFracY + 0.1) - (int)(y * regFracY);
 				mapSize = mapW * mapH;
-				if ( !SV_AddRegion( curMap, curNum ) ) ok = qfalse;
+				if ( !SV_AddRegion( curMap, curNum ) )
+					ok = qfalse;
 			}
 
 		/* break if everything seems to be ok */
-		if ( ok ) break;
+		if ( ok )
+			break;
 	}
 
 	if ( tries >= MAX_ASSEMBLYRETRIES )
 		Com_Error( ERR_DROP, "SV_AssembleMap: Failed to assemble map (%s)\n", filename );
 
 	/* prepare map and pos strings */
-	if ( basePath[0] )
-	{
+	if ( basePath[0] ) {
 		asmMap[0] = '-';
 		Q_strncpyz( &asmMap[1], basePath, MAX_QPATH );
 		*map = asmMap;
-	}
-	else
-	{
+	} else {
 		asmMap[0] = 0;
 		*map = asmMap+1;
 	}
@@ -679,14 +662,13 @@ void SV_AssembleMap( char *name, char *assembly, char **map, char **pos )
 	*pos = asmPos+1;
 
 	/* generate the strings */
-	for ( i = 0, pl = mPlaced; i < numPlaced; i++, pl++ )
-	{
+	for ( i = 0, pl = mPlaced; i < numPlaced; i++, pl++ ) {
 		Q_strcat( asmMap, MAX_TOKEN_CHARS*MAX_TILESTRINGS, va( " %s", pl->tile->name ) );
 		Q_strcat( asmPos, MAX_TOKEN_CHARS*MAX_TILESTRINGS, va( " %i %i", (pl->x - mAsm->w/2)*8, (pl->y - mAsm->h/2)*8 ) );
 	}
 
-/*	Com_DPrintf( "tiles: %s\n", *map ); */
-/*	Com_DPrintf( "pos: %s\n", *pos ); */
+	Com_DPrintf( "tiles: %s\n", *map );
+	Com_DPrintf( "pos: %s\n", *pos );
 	Com_DPrintf( "tiles: %i tries: %i\n", numPlaced, tries+1 );
 }
 
@@ -733,8 +715,7 @@ void SV_SpawnServer (char *server, char *param, server_state_t serverstate, qboo
 	Q_strncpyz (sv.name, server, MAX_QPATH);
 
 	/* leave slots at start for clients only */
-	for (i=0 ; i<sv_maxclients->value ; i++)
-	{
+	for (i=0 ; i<sv_maxclients->value ; i++) {
 		/* needs to reconnect */
 		if (svs.clients[i].state > cs_connected)
 			svs.clients[i].state = cs_connected;
@@ -746,35 +727,32 @@ void SV_SpawnServer (char *server, char *param, server_state_t serverstate, qboo
 	Q_strncpyz (sv.name, server, MAX_QPATH);
 	Q_strncpyz (sv.configstrings[CS_NAME], server, MAX_TOKEN_CHARS);
 
-	if ( serverstate == ss_game )
-	{
+	if ( serverstate == ss_game ) {
 		char *map, *pos;
 
 		/* assemble and load the map */
-		if ( server[0] == '+' ) SV_AssembleMap( server+1, param, &map, &pos );
-		else
-		{
+		if ( server[0] == '+' )
+			SV_AssembleMap( server+1, param, &map, &pos );
+		else {
 			map = server;
 			pos = param;
 		}
 
 		Q_strncpyz( sv.configstrings[CS_TILES], map, MAX_TOKEN_CHARS*MAX_TILESTRINGS );
-		if ( pos ) Q_strncpyz( sv.configstrings[CS_POSITIONS], pos, MAX_TOKEN_CHARS*MAX_TILESTRINGS );
-		else sv.configstrings[CS_POSITIONS][0] = 0;
+		if ( pos )
+			Q_strncpyz( sv.configstrings[CS_POSITIONS], pos, MAX_TOKEN_CHARS*MAX_TILESTRINGS );
+		else
+			sv.configstrings[CS_POSITIONS][0] = 0;
 
 		CM_LoadMap( map, pos );
-	}
-	else
-	{
+	} else {
 		/* fix this! what here? */
 	}
 
 	Com_sprintf (sv.configstrings[CS_MAPCHECKSUM],sizeof(sv.configstrings[CS_MAPCHECKSUM]),
 		"%i", checksum);
 
-	/* */
 	/* clear physics interaction links */
-	/* */
 	SV_ClearWorld ();
 
 	/* fix this! */
@@ -811,13 +789,10 @@ void SV_InitGame (void)
 /*	edict_t	*ent; */
 	char	idmaster[32];
 
-	if (svs.initialized)
-	{
+	if (svs.initialized) {
 		/* cause any connected clients to reconnect */
 		SV_Shutdown ("Server restarted\n", qtrue);
-	}
-	else
-	{
+	} else {
 		/* make sure the client is down */
 		CL_Drop ();
 		SCR_BeginLoadingPlaque ();
@@ -842,7 +817,7 @@ void SV_InitGame (void)
 
 	/* heartbeats will always be sent to the id master */
 	svs.last_heartbeat = -99999;		/* send immediately */
-	Com_sprintf(idmaster, sizeof(idmaster), "192.246.40.37:%i", PORT_MASTER);
+	Com_sprintf(idmaster, sizeof(idmaster), "%s:%i", IP_MASTER, PORT_MASTER);
 	NET_StringToAdr (idmaster, &master_adr[0]);
 
 	/* init game */
@@ -882,12 +857,10 @@ void SV_Map (qboolean attractloop, char *levelstring, qboolean loadgame)
 
 	/* if there is a + in the map, set nextserver to the remainder */
 	ch = strstr(level, "+");
-	if (ch)
-	{
+	if (ch) {
 		*ch = 0;
 		Cvar_Set ("nextserver", va("gamemap \"%s\"", ch+1));
-	}
-	else
+	} else
 		Cvar_Set ("nextserver", "");
 
 	/* skip the end-of-unit flag if necessary */
@@ -895,26 +868,19 @@ void SV_Map (qboolean attractloop, char *levelstring, qboolean loadgame)
 		Q_strncpyz (level, level+1, MAX_QPATH);
 
 	l = strlen(level);
-	if (l > 4 && !strcmp (level+l-4, ".cin") )
-	{
+	if (l > 4 && !Q_strcmp (level+l-4, ".cin") ) {
 		SCR_BeginLoadingPlaque ();			/* for local system */
 		SV_BroadcastCommand ("changing\n");
 		SV_SpawnServer (level, NULL, ss_cinematic, attractloop, loadgame);
-	}
-	else if (l > 4 && !strcmp (level+l-4, ".dm2") )
-	{
+	} else if (l > 4 && !Q_strcmp (level+l-4, ".dm2") ) {
 		SCR_BeginLoadingPlaque ();			/* for local system */
 		SV_BroadcastCommand ("changing\n");
 		SV_SpawnServer (level, NULL, ss_demo, attractloop, loadgame);
-	}
-	else if (l > 4 && !strcmp (level+l-4, ".pcx") )
-	{
+	} else if (l > 4 && !Q_strcmp (level+l-4, ".pcx") ) {
 		SCR_BeginLoadingPlaque ();			/* for local system */
 		SV_BroadcastCommand ("changing\n");
 		SV_SpawnServer (level, NULL, ss_pic, attractloop, loadgame);
-	}
-	else
-	{
+	} else {
 		SCR_BeginLoadingPlaque ();			/* for local system */
 		SV_BroadcastCommand ("changing\n");
 		SV_SendClientMessages ();
