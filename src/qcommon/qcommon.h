@@ -220,6 +220,9 @@ PROTOCOL
 #define	PORT_CLIENT	27901
 #define	PORT_SERVER	27910
 
+/* FIXME: this is the id master server */
+#define IP_MASTER "192.246.40.37"
+
 /*========================================= */
 
 #define	UPDATE_BACKUP	16	/* copies of entity_state_t to keep buffered */
