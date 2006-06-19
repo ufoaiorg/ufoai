@@ -1328,6 +1328,8 @@ call this function if you already hold a tech pointer
 ======================*/
 qboolean RS_IsResearched_idx(int idx)
 {
+	if (ccs.singleplayer == qfalse)
+		return qtrue;
 	if (idx >= 0 && gd.technologies[idx].statusResearch == RS_FINISH)
 		return qtrue;
 	return qfalse;
@@ -1340,6 +1342,8 @@ call this function if you already hold a tech pointer
 ======================*/
 qboolean RS_IsResearched_ptr(technology_t * tech)
 {
+	if (ccs.singleplayer == qfalse)
+		return qtrue;
 	if (tech && tech->statusResearch == RS_FINISH)
 		return qtrue;
 	return qfalse;
