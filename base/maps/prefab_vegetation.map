@@ -4731,7 +4731,7 @@
 // entity 1
 {
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -5736,7 +5736,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "light" "1"
-"model" "/models/objects/vegi/bush1/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 "angles" "0 30 0"
 "spawnflags" "255"
 }
@@ -5745,7 +5745,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "angles" "0 100 0"
-"model" "/models/objects/vegi/bush1/bush01.md2"
+"model" "models/objects/vegi/bush/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -5759,14 +5759,14 @@
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "light" "1"
-"model" "/models/objects/vegi/bush1/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 }
 // entity 101
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "angles" "0 30 0"
-"model" "/models/objects/vegi/bush1/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -5779,7 +5779,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "light" "1"
-"model" "/models/objects/vegi/bush1/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 "angles" "0 100 0"
 "spawnflags" "255"
 }
@@ -5790,7 +5790,7 @@
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "light" "1"
-"model" "/models/objects/vegi/bush1/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 "angles" "0 100 0"
 "spawnflags" "255"
 }
@@ -5799,7 +5799,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "angles" "0 300 0"
-"model" "/models/objects/vegi/bush1/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -5810,7 +5810,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "angles" "0 200 0"
-"model" "/models/objects/vegi/bush1/bush01.md2"
+"model" "/models/objects/vegi/bush/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
@@ -5822,4 +5822,26 @@
 "spawnflags" "255"
 "origin" "-816 176 8"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
+}
+// entity 107
+{
+"classname" "misc_model"
+"origin" "-724 -322 37"
+"model" "models/objects/vegi/palm7/palm7.md2"
+"spawnflags" "32"
+"angle" "-90"
+}
+// entity 108
+{
+"classname" "misc_model"
+"origin" "-864 -242 22"
+"model" "models/objects/vegi/tropical1/tropical1.md2"
+"spawnflags" "254"
+}
+// entity 109
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"model" "models/objects/vegi/tropical1/tropical1.md2"
+"origin" "-896 -242 22"
 }
