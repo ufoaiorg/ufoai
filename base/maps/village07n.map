@@ -6,6 +6,7 @@
 "angles" "20 110"
 "_color" "0.2 0.2 0.3"
 "ambient" "0.2 0.2 0.25"
+"maxlevel" "3"
 // brush 0
 {
 ( 1024 -256 0 ) ( 960 -256 0 ) ( 960 -1728 0 ) tex_material/c_orange 0 0 0 0.5 0.5 65536 0 0
@@ -18776,9 +18777,12 @@
 // entity 310
 {
 "classname" "misc_model"
-"origin" "100 -502 22"
-"model" "models/objects/vegi/tropical1/tropical1.md2"
-"spawnflags" "254"
+"spawnflags" "255"
+"model" "models/objects/vegi/bush/bush01.md2"
+"light" "1"
+"lightambient" "0.4 0.4 0.4"
+"lightcolor" "0.3 0.3 0.3"
+"origin" "206 -468 18"
 }
 // entity 311
 {
@@ -18788,7 +18792,7 @@
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
-"origin" "110 -452 18"
+"origin" "550 -1144 18"
 }
 // entity 312
 {
@@ -18798,5 +18802,15 @@
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
 "lightcolor" "0.3 0.3 0.3"
-"origin" "550 -1144 18"
+"origin" "110 -452 18"
+}
+// entity 313
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/bush/bush01.md2"
+"light" "1"
+"lightambient" "0.4 0.4 0.4"
+"lightcolor" "0.3 0.3 0.3"
+"origin" "110 -492 18"
 }
