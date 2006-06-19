@@ -1223,9 +1223,20 @@ void R_RenderFrame (refdef_t *fd)
 	R_SetGL2D ();
 }
 
+static cmdList_t r_commands[] = {
+	{"imagelist", GL_ImageList_f},
+	{"fontcachelist", Font_ListCache_f},
+	{"screenshot", GL_ScreenShot_f},
+	{"modellist", Mod_Modellist_f},
+	{"gl_strings", GL_Strings_f},
+
+	{NULL, NULL}
+};
 
 void R_Register( void )
 {
+	cmdList_t* commands;
+
 	r_lefthand = ri.Cvar_Get( "hand", "0", CVAR_USERINFO | CVAR_ARCHIVE );
 	r_norefresh = ri.Cvar_Get ("r_norefresh", "0", 0);
 	r_fullbright = ri.Cvar_Get ("r_fullbright", "0", 0);
@@ -1316,12 +1327,8 @@ void R_Register( void )
 	vid_grabmouse = ri.Cvar_Get( "vid_grabmouse", "1", CVAR_ARCHIVE );
 	vid_grabmouse->modified = qfalse;
 
-	/* NOTE: Every command here must be removed in R_Shutdown */
-	ri.Cmd_AddCommand( "imagelist", GL_ImageList_f );
-	ri.Cmd_AddCommand( "fontcachelist", Font_ListCache_f );
-	ri.Cmd_AddCommand( "screenshot", GL_ScreenShot_f );
-	ri.Cmd_AddCommand( "modellist", Mod_Modellist_f );
-	ri.Cmd_AddCommand( "gl_strings", GL_Strings_f );
+	for (commands = r_commands; commands->name; commands++)
+		ri.Cmd_AddCommand(commands->name, commands->function);
 }
 
 /*
@@ -1849,11 +1856,10 @@ R_Shutdown
 */
 void R_Shutdown (void)
 {
-	ri.Cmd_RemoveCommand ("modellist");
-	ri.Cmd_RemoveCommand ("screenshot");
-	ri.Cmd_RemoveCommand ("imagelist");
-	ri.Cmd_RemoveCommand ("gl_strings");
-	ri.Cmd_RemoveCommand ("fontcachelist");
+	cmdList_t *commands;
+
+	for (commands = r_commands; commands->name; commands++)
+		ri.Cmd_RemoveCommand(commands->name);
 
 	Mod_FreeAll ();
 
