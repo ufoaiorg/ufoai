@@ -59,8 +59,6 @@ typedef struct patch_s
 	vec3_t		origin;
 	dplane_t	*plane;
 
-	qboolean	sky;
-
 	vec3_t		totallight;			/* accumulated by radiosity */
 									/* does NOT include light */
 									/* accounted for by direct lighting */
