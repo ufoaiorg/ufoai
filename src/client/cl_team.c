@@ -239,7 +239,7 @@ void CL_ItemDescription(int item)
 	Cvar_Set("mn_ammo", "");
 
 #ifdef DEBUG
-	if (!od->tech) {
+	if (!od->tech && ccs.singleplayer) {
 		Com_sprintf(itemText, MAX_MENUTEXTLEN, "Error - no tech assigned\n");
 		menuText[TEXT_STANDARD] = itemText;
 	}
@@ -251,12 +251,12 @@ void CL_ItemDescription(int item)
 			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Primary:\t%s\n"), od->fd[0].name);
 			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Secondary:\t%s\n"), od->fd[1].name));
 			Q_strcat(itemText, MAX_MENUTEXTLEN,
-					 va(_("Damage:\t%i / %i\n"), (int) (od->fd[0].damage[0] * od->fd[0].shots + od->fd[0].spldmg[0]),
+					va(_("Damage:\t%i / %i\n"), (int) (od->fd[0].damage[0] * od->fd[0].shots + od->fd[0].spldmg[0]),
 						(int) (od->fd[1].damage[0] * od->fd[1].shots + od->fd[0].spldmg[0])));
 			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Time units:\t%i / %i\n"), od->fd[0].time, od->fd[1].time));
 			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Range:\t%1.1f / %1.1f\n"), od->fd[0].range / 32.0, od->fd[1].range / 32.0));
 			Q_strcat(itemText, MAX_MENUTEXTLEN,
-					 va(_("Spreads:\t%1.1f / %1.1f\n"), (od->fd[0].spread[0] + od->fd[0].spread[1]) / 2, (od->fd[1].spread[0] + od->fd[1].spread[1]) / 2));
+					va(_("Spreads:\t%1.1f / %1.1f\n"), (od->fd[0].spread[0] + od->fd[0].spread[1]) / 2, (od->fd[1].spread[0] + od->fd[1].spread[1]) / 2));
 		} else if (od->weapon) {
 			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Ammo:\t%i\n"), (int) (od->ammo));
 			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Twohanded:\t%s"), (od->twohanded ? _("Yes") : _("No"))));
