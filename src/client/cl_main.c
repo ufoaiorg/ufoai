@@ -1492,6 +1492,8 @@ void CL_Frame(int msec)
 			Com_Printf("Changing to Multiplayer\n");
 			/* no campaign equipment but standard */
 			Cvar_Set("equip", "standard");
+			Cvar_Set("map_dropship", "craft_dropship");
+
 		} else {
 			ccs.singleplayer = qtrue;
 			Com_Printf("Changing to Singleplayer\n");
