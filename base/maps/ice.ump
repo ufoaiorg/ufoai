@@ -1,0 +1,72 @@
+// *********************************
+// ICE THEME
+// *********************************
+
+base ice/ice_
+
+// ---------------------------------
+tile +r01
+{
+4 4
+
+0      abc     abc	0
+abc     +a     +a	abc
+abc     +a     +a	abc
+0      abc     abc	0
+}
+
+// ---------------------------------
+tile +r02
+{
+4 4
+
+0      abc     abc	0
+abc     +a     +a	abc
+abc     +a     +a	abc
+0      abc     abc	0
+}
+
+// ---------------------------------
+tile +r03
+{
+4 4
+
+0      abc     abc	0
+abc     +a     +a	abc
+abc     +a     +a	abc
+0      abc     abc	0
+}
+
+// ---------------------------------
+tile +r04
+{
+4 4
+
+0      abc     abc	0
+abc     +a     +a	abc
+abc     +a     +a	abc
+0      abc     abc	0
+}
+
+
+// ---------------------------------
+tile +drop
+{
+4 4
+
+0      abc     abc     0
+abc     +a     +a      abc
+abc     +a     +a      abc
+0      abc     abc     0
+}
+
+// *********************************
+assembly test
+{
+size "6 6"
++r01 "1 4"
++r02 "1 8"
++r03 "0 8"
++r04 "1 6"
++drop "1 1"
+}

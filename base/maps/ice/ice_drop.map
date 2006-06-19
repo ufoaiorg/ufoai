@@ -1473,3 +1473,43 @@
 "spawnflags" "255"
 "angles" "0 180 0"
 }
+// entity 4
+{
+"classname" "info_human_start"
+"origin" "336 48 40"
+}
+// entity 5
+{
+"classname" "info_human_start"
+"origin" "112 112 40"
+}
+// entity 6
+{
+"classname" "info_human_start"
+"origin" "240 112 40"
+}
+// entity 7
+{
+"classname" "info_human_start"
+"origin" "176 400 40"
+}
+// entity 8
+{
+"classname" "info_human_start"
+"origin" "432 400 40"
+}
+// entity 9
+{
+"classname" "info_human_start"
+"origin" "368 400 40"
+}
+// entity 10
+{
+"classname" "info_human_start"
+"origin" "368 144 40"
+}
+// entity 11
+{
+"classname" "info_human_start"
+"origin" "400 112 40"
+}
