@@ -1323,7 +1323,14 @@ void R_Register( void )
 
 	vid_fullscreen = ri.Cvar_Get( "vid_fullscreen", "0", CVAR_ARCHIVE );
 	vid_gamma = ri.Cvar_Get( "vid_gamma", "1.0", CVAR_ARCHIVE );
+#if defined(_WIN32)
+	vid_ref = ri.Cvar_Get( "vid_ref", "gl", CVAR_ARCHIVE );
+#elif defined(MACOS_X)
+	/* FIXME: Don't know the macosx driver, yet */'
 	vid_ref = ri.Cvar_Get( "vid_ref", "glx", CVAR_ARCHIVE );
+#else
+	vid_ref = ri.Cvar_Get( "vid_ref", "glx", CVAR_ARCHIVE );
+#endif
 	vid_grabmouse = ri.Cvar_Get( "vid_grabmouse", "1", CVAR_ARCHIVE );
 	vid_grabmouse->modified = qfalse;
 
