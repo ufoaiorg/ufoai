@@ -45,18 +45,20 @@ sub check
 		foreach ( <MAP> ) {
 			$line++;
 			unless ( $team ) {
-    				m/^\"classname\"\s+\"(info_\w+_start)\"/ig;
+				m/^\"classname\"\s+\"(info_\w+_start)\"/ig;
 				next unless ( $1 );
 				$entity = $1;
 			} else {
-				if ( $_ =~ /\}/ ) {
+				if ( m/^\}\n$/ ) {
 					$team = 0;
 					print "Error - no team for $entity (near line $line)\n";
+					next;
 				}
 				m/^\"team\"\s+\"(\d+)\"/ig;
 				next unless ( $1 );
 				$teamcount{$1}++;
 				$team = 0;
+				next;
 			}
 			$count{$entity}++;
 			if ( $entity eq "info_player_start" ) {
@@ -66,7 +68,7 @@ sub check
 			} else {
 				$team = 0;
 			}
-			
+
 		}
 		foreach ( keys %count ) {
 			print "... $_ => $count{$_}\n";
