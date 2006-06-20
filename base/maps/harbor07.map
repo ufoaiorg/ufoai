@@ -9444,7 +9444,8 @@
 // entity 1
 {
 "classname" "info_player_start"
-"origin" "-72 48 92"
+"origin" "-80 48 92"
+"team" "1"
 }
 // entity 2
 {
@@ -15738,6 +15739,265 @@
 }
 // entity 96
 {
+"classname" "info_player_start"
+"origin" "-176 -80 92"
+"team" "1"
+}
+// entity 97
+{
+"classname" "info_player_start"
+"origin" "-144 80 92"
+"team" "1"
+}
+// entity 98
+{
+"classname" "info_player_start"
+"origin" "-80 144 92"
+"team" "1"
+}
+// entity 99
+{
+"classname" "info_player_start"
+"origin" "-144 208 92"
+"team" "1"
+}
+// entity 100
+{
+"classname" "info_player_start"
+"origin" "-208 144 92"
+"team" "1"
+}
+// entity 101
+{
+"classname" "info_player_start"
+"origin" "-240 48 92"
+"team" "1"
+}
+// entity 102
+{
+"classname" "info_player_start"
+"origin" "-208 -16 92"
+"team" "1"
+}
+// entity 103
+{
+"classname" "info_player_start"
+"origin" "-144 16 92"
+"team" "1"
+}
+// entity 104
+{
+"classname" "info_player_start"
+"origin" "-272 144 92"
+"team" "1"
+}
+// entity 105
+{
+"classname" "info_player_start"
+"origin" "-240 240 92"
+"team" "1"
+}
+// entity 106
+{
+"classname" "info_player_start"
+"origin" "-176 272 92"
+"team" "1"
+}
+// entity 107
+{
+"classname" "info_player_start"
+"origin" "-272 -80 92"
+"team" "1"
+}
+// entity 108
+{
+"classname" "info_player_start"
+"origin" "848 240 96"
+"team" "2"
+"angle" "180"
+}
+// entity 109
+{
+"classname" "info_player_start"
+"origin" "848 -272 96"
+"team" "2"
+"angle" "180"
+}
+// entity 110
+{
+"classname" "info_player_start"
+"origin" "912 -240 96"
+"team" "2"
+"angle" "180"
+}
+// entity 111
+{
+"classname" "info_player_start"
+"origin" "912 -336 96"
+"team" "2"
+"angle" "180"
+}
+// entity 112
+{
+"classname" "info_player_start"
+"origin" "848 -368 96"
+"team" "2"
+"angle" "180"
+}
+// entity 113
+{
+"classname" "info_player_start"
+"origin" "784 -336 96"
+"team" "2"
+"angle" "180"
+}
+// entity 114
+{
+"classname" "info_player_start"
+"origin" "752 -272 96"
+"team" "2"
+"angle" "180"
+}
+// entity 115
+{
+"classname" "info_player_start"
+"origin" "784 -240 96"
+"team" "2"
+"angle" "180"
+}
+// entity 116
+{
+"classname" "info_player_start"
+"origin" "784 -400 96"
+"team" "2"
+"angle" "180"
+}
+// entity 117
+{
+"classname" "info_player_start"
+"origin" "912 -464 96"
+"team" "2"
+"angle" "180"
+}
+// entity 118
+{
+"classname" "info_player_start"
+"origin" "944 -80 96"
+"team" "2"
+"angle" "90"
+}
+// entity 119
+{
+"classname" "info_player_start"
+"origin" "912 48 96"
+"team" "2"
+"angle" "90"
+}
+// entity 120
+{
+"classname" "info_player_start"
+"origin" "880 176 96"
+"team" "2"
+"angle" "180"
+}
+// entity 121
+{
 "classname" "info_ugv_start"
 "origin" "-32 -32 104"
+"team" "1"
+}
+// entity 122
+{
+"classname" "info_alien_start"
+"origin" "-592 144 220"
+}
+// entity 123
+{
+"classname" "info_alien_start"
+"origin" "528 240 96"
+}
+// entity 124
+{
+"classname" "info_alien_start"
+"origin" "-1040 48 152"
+}
+// entity 125
+{
+"classname" "info_alien_start"
+"origin" "272 -944 160"
+}
+// entity 126
+{
+"classname" "info_alien_start"
+"origin" "48 -1008 96"
+}
+// entity 127
+{
+"classname" "info_alien_start"
+"origin" "-400 -1040 96"
+}
+// entity 128
+{
+"classname" "info_alien_start"
+"origin" "-112 912 220"
+"angle" "-90"
+}
+// entity 129
+{
+"classname" "info_alien_start"
+"origin" "-784 -368 96"
+}
+// entity 130
+{
+"classname" "info_human_start"
+"origin" "752 -720 96"
+"angle" "90"
+}
+// entity 131
+{
+"classname" "info_human_start"
+"origin" "720 -944 96"
+"angle" "-90"
+}
+// entity 132
+{
+"classname" "info_human_start"
+"origin" "720 -848 96"
+"angle" "180"
+}
+// entity 133
+{
+"classname" "info_human_start"
+"origin" "752 -784 96"
+"angle" "180"
+}
+// entity 134
+{
+"classname" "info_human_start"
+"origin" "688 -752 96"
+"angle" "90"
+}
+// entity 135
+{
+"classname" "info_human_start"
+"origin" "816 -752 96"
+"angle" "90"
+}
+// entity 136
+{
+"classname" "info_human_start"
+"origin" "848 -816 96"
+"angle" "90"
+}
+// entity 137
+{
+"classname" "info_human_start"
+"origin" "816 -880 96"
+"angle" "90"
+}
+// entity 138
+{
+"classname" "info_human_start"
+"origin" "880 -912 96"
+"angle" "90"
 }

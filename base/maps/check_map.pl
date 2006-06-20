@@ -14,7 +14,7 @@ sub readDir
  		return ();
 	}
 
-	@files = readdir ( DIR );
+	@files = sort readdir ( DIR );
 	closedir (DIR);
 	@files;
 }
@@ -26,6 +26,7 @@ sub check
 	my $found = 0;
 	my $entity = "";
 	my $line = 0;
+	my $teamfound = 0;
 	my $team = 0; # search for team id in info_player_start (multiplayer)
 	foreach ( readDir( $dir ) ) {
 		next if $_ =~ /^\.|(CVS)/;
@@ -37,7 +38,7 @@ sub check
 		next if $_ =~ /^(tutorial)|(prefab)|(autosave)/i;
 		next if ( $file && $_ !~ /$file/i );
 		print "==============================================\n";
-		print "map: $_\n";
+		print "map: $dir/$_\n";
 		open ( MAP, "<$dir/$_" ) || die "Could not open $dir/$_\n";
 		$team = $line = 0;
 		%count = ();
@@ -46,7 +47,13 @@ sub check
 			$line++;
 			unless ( $team ) {
 				m/^\"classname\"\s+\"(info_\w+_start)\"/ig;
-				next unless ( $1 );
+				if ( !$1 ) {
+					m/^\"team\"\s+\"(\d+)\"/ig;
+					next unless $1;
+					$teamcount{$1}++;
+					$teamfound = 1;
+					next;
+				}
 				$entity = $1;
 			} else {
 				if ( m/^\}\n$/ ) {
@@ -62,9 +69,15 @@ sub check
 			}
 			$count{$entity}++;
 			if ( $entity eq "info_player_start" ) {
-				$team = 1;
+				if ( ! $teamfound ) {
+					$team = 1;
+				}
+				$teamfound = 0;
 			} elsif ( $entity eq "info_ugv_start" ) {
-				$team = 1;
+				if ( ! $teamfound ) {
+					$team = 1;
+				}
+				$teamfound = 0;
 			} else {
 				$team = 0;
 			}
