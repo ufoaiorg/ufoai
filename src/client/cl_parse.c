@@ -1055,7 +1055,8 @@ void CL_ParseEvent( void )
 				last = et;
 			}
 
-			if ( !etUnused ) Com_Error( ERR_DROP, "CL_ParseEvent: timetable overflow\n" );
+			if ( !etUnused ) 
+				Com_Error( ERR_DROP, "CL_ParseEvent: timetable overflow\n" );
 			cur = etUnused;
 			etUnused = cur->next;
 

@@ -1532,9 +1532,8 @@ void CL_LoadEquipment ( sizebuf_t *buf, character_t *team, int num )
 
 	/* inventory */
 	for (i = 0, chr = team; i < num; chr++, i++) {
-    for (j = 0; j < MAX_CONTAINERS; j++)
-      chr->inv->c[j] = NULL;
-
+		for (j = 0; j < MAX_CONTAINERS; j++)
+			chr->inv->c[j] = NULL;
 		item.t = MSG_ReadByte(buf);
 		while (item.t != NONE) {
 			/* read info */
@@ -1837,7 +1836,7 @@ int CL_GameLoad(char *filename)
 	ccs.center[1] = MSG_ReadFloat(&sb);
 	ccs.zoom = MSG_ReadFloat(&sb);
 
-  /* Recently it was loaded from disk. Atention, bad pointers!!! */
+	/* Recently it was loaded from disk. Attention, bad pointers!!! */
 	memcpy(&gd, sb.data + sb.readcount, sizeof(globalData_t));
 	sb.readcount += sizeof(globalData_t);
 
