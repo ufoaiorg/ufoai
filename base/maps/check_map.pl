@@ -23,6 +23,7 @@ sub check
 {
 	my $dir = shift || die "No dir given in sub check\n";
 	my $file = shift || undef;
+	my $recursive = shift || 0;
 	my $found = 0;
 	my $entity = "";
 	my $line = 0;
@@ -30,7 +31,7 @@ sub check
 	my $team = 0; # search for team id in info_player_start (multiplayer)
 	foreach ( readDir( $dir ) ) {
 		next if $_ =~ /^\.|(CVS)/;
-		if ( -d "$dir/$_" ) {
+		if ( -d "$dir/$_" && $recursive ) {
 			$found += check("$dir/$_", $file);
 			next;
 		}
@@ -101,12 +102,20 @@ sub check
 
 #read the given dir
 my $file = $ARGV[0] || undef;
+my $rec = 0;
 print "=====================================================\n";
 print "Mapchecker for UFO:AI (http://sf.net/projects/ufoai)\n";
 print "Will search the maps for start positions\n";
+print "Options:\n";
+print "-r --recursive - go into directories\n";
+print "[filename] - only maps where filename is included in name\n";
 print "=====================================================\n";
 
-check(".", $file);
+if ( $file eq "--recursion" || $file eq "-r" ) {
+	$file = "";
+	$rec = 1;
+}
+check(".", $file, $rec);
 
 print "...finished\n"
 
