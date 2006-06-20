@@ -2,7 +2,7 @@
 	snd_sdl.c
 
 	Sound code taken from SDLQuake and modified to work with Quake2
-	Robert B�ml 2001-12-25
+	Robert Bml 2001-12-25
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
@@ -52,20 +52,20 @@ static void paint_audio (void *unused, Uint8 * stream, int len)
 		/* Check for samplepos overflow? */
 		S_PaintChannels (shm->samplepos);
 #else
-		tobufend = shm->dmasize - pos;  /* bytes to buffer's end. */
+		/* bytes to buffer's end. */
+		tobufend = shm->dmasize - pos;
 		len1 = len;
 		len2 = 0;
 
-		if (len1 > tobufend)
-		{
+		if (len1 > tobufend) {
 			len1 = tobufend;
 			len2 = len - len1;
 		}
 		memcpy(stream, shm->buffer + pos, len1);
 		if (len2 <= 0)
 			shm->dmapos += (len1 / (shm->samplebits/8));
-		else  /* wraparound? */
-		{
+		else {
+			/* wraparound? */
 			memcpy(stream+len1, shm->buffer, len2);
 			shm->dmapos = (len2 / (shm->samplebits/8));
 		}
@@ -89,13 +89,10 @@ qboolean SDL_SNDDMA_Init (void)
 	Com_Printf("Soundsystem: SDL.\n");
 
 	if (!SDL_WasInit(SDL_INIT_AUDIO))
-	{
-		if (SDL_Init(SDL_INIT_AUDIO) == -1)
-		{
+		if (SDL_Init(SDL_INIT_AUDIO) == -1) {
 			Com_Printf("Couldn't init SDL audio: %s\n", SDL_GetError () );
 			return qfalse;
 		}
-	}
 
 	if (SDL_AudioDriverName(drivername, sizeof (drivername)) == NULL)
 		strcpy(drivername, "(UNKNOWN)");
@@ -109,36 +106,34 @@ qboolean SDL_SNDDMA_Init (void)
 
 	/* Set up the desired format */
 	freq = (Cvar_Get("s_khz", "0", CVAR_ARCHIVE))->value;
-	if (freq == 44)
-	{
+	switch (freq) {
+	case 44:
 		desired.freq = 44100;
 		desired.samples = 1024;
-	}
-	else if (freq == 22)
-	{
+		break;
+	case 22:
 		desired.freq = 22050;
 		desired.samples = 512;
-	}
-	else
-	{
+		break;
+	default:
 		desired.freq = 11025;
 		desired.samples = 256;
+		break;
 	}
 
-	switch (desired_bits)
-	{
-		case 8:
-			desired.format = AUDIO_U8;
-			break;
-		case 16:
-			if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
-				desired.format = AUDIO_S16MSB;
-			else
-				desired.format = AUDIO_S16LSB;
-			break;
-		default:
-			Com_Printf("Unknown number of audio bits: %d\n", desired_bits);
-			return qfalse;
+	switch (desired_bits) {
+	case 8:
+		desired.format = AUDIO_U8;
+		break;
+	case 16:
+		if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+			desired.format = AUDIO_S16MSB;
+		else
+			desired.format = AUDIO_S16LSB;
+		break;
+	default:
+		Com_Printf("Unknown number of audio bits: %d\n", desired_bits);
+		return qfalse;
 	}
 	desired.channels = (Cvar_Get("sndchannels", "2", CVAR_ARCHIVE))->value;
 	desired.callback = paint_audio;
@@ -149,40 +144,37 @@ qboolean SDL_SNDDMA_Init (void)
 	Com_Printf ("Channels: %i\n", desired.channels );
 
 	/* Open the audio device */
-	if (SDL_OpenAudio (&desired, &obtained) == -1)
-	{
+	if (SDL_OpenAudio (&desired, &obtained) == -1) {
 		Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 		return qfalse;
 	}
 
 	/* Make sure we can support the audio format */
-	switch (obtained.format)
-	{
-		case AUDIO_U8:
+	switch (obtained.format) {
+	case AUDIO_U8:
+		/* Supported */
+		break;
+	case AUDIO_S16LSB:
+	case AUDIO_S16MSB:
+		if (((obtained.format == AUDIO_S16LSB) &&
+				(SDL_BYTEORDER == SDL_LIL_ENDIAN)) ||
+			((obtained.format == AUDIO_S16MSB) &&
+				(SDL_BYTEORDER == SDL_BIG_ENDIAN)))
+		{
 			/* Supported */
 			break;
-		case AUDIO_S16LSB:
-		case AUDIO_S16MSB:
-			if (((obtained.format == AUDIO_S16LSB) &&
-				 (SDL_BYTEORDER == SDL_LIL_ENDIAN)) ||
-				((obtained.format == AUDIO_S16MSB) &&
-				 (SDL_BYTEORDER == SDL_BIG_ENDIAN)))
-			{
-				/* Supported */
-				break;
-			}
-			/* Unsupported, fall through */ ;
-		default:
-			/* Not supported -- force SDL to do our bidding */
-			SDL_CloseAudio ();
-			if (SDL_OpenAudio (&desired, NULL) == -1)
-			{
-				Com_Printf ("Couldn't open SDL audio (format): %s\n", SDL_GetError ());
-				return qfalse;
-			}
-			memcpy (&obtained, &desired, sizeof (desired));
-			break;
+		}
+		/* Unsupported, fall through */ ;
+	default:
+		/* Not supported -- force SDL to do our bidding */
+		SDL_CloseAudio ();
+		if (SDL_OpenAudio (&desired, NULL) == -1) {
+			Com_Printf ("Couldn't open SDL audio (format): %s\n", SDL_GetError ());
+			return qfalse;
+		}
+		memcpy (&obtained, &desired, sizeof (desired));
+		break;
 	}
 
 	/* dma.samples needs to be big, or id's mixer will just refuse to */
@@ -196,8 +188,8 @@ qboolean SDL_SNDDMA_Init (void)
 	if (!tmp)
 		tmp = (obtained.samples * obtained.channels) * 10;
 
-	if (tmp & (tmp - 1))  /* not a power of two? Seems to confuse something. */
-	{
+	/* not a power of two? Seems to confuse something. */
+	if (tmp & (tmp - 1)) {
 		int val = 1;
 		while (val < tmp)
 			val <<= 1;
@@ -228,8 +220,7 @@ int SDL_SNDDMA_GetDMAPos (void)
 
 void SDL_SNDDMA_Shutdown (void)
 {
-	if (snd_inited)
-	{
+	if (snd_inited) {
 		SDL_PauseAudio(1);
 		SDL_CloseAudio ();
 		snd_inited = 0;
