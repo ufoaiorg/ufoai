@@ -16001,3 +16001,33 @@
 "origin" "880 -912 96"
 "angle" "90"
 }
+// entity 139
+{
+"classname" "info_civilian_start"
+"origin" "272 -432 96"
+}
+// entity 140
+{
+"classname" "info_civilian_start"
+"origin" "176 240 96"
+}
+// entity 141
+{
+"classname" "info_civilian_start"
+"origin" "304 400 96"
+}
+// entity 142
+{
+"classname" "info_civilian_start"
+"origin" "-48 464 96"
+}
+// entity 143
+{
+"classname" "info_civilian_start"
+"origin" "80 -240 96"
+}
+// entity 144
+{
+"classname" "info_civilian_start"
+"origin" "-80 -400 96"
+}
