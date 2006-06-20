@@ -10488,3 +10488,98 @@
 "origin" "460 -640 116"
 "particle" "corona"
 }
+// entity 174
+{
+"classname" "info_alien_start"
+"origin" "592 496 32"
+}
+// entity 175
+{
+"classname" "info_alien_start"
+"origin" "1008 112 32"
+}
+// entity 176
+{
+"classname" "info_alien_start"
+"origin" "1328 368 32"
+}
+// entity 177
+{
+"classname" "info_alien_start"
+"origin" "1232 240 32"
+}
+// entity 178
+{
+"classname" "info_civilian_start"
+"origin" "-80 -16 32"
+}
+// entity 179
+{
+"classname" "info_civilian_start"
+"origin" "240 -144 32"
+}
+// entity 180
+{
+"classname" "info_civilian_start"
+"origin" "144 176 32"
+}
+// entity 181
+{
+"classname" "info_civilian_start"
+"origin" "-368 48 32"
+}
+// entity 182
+{
+"classname" "info_civilian_start"
+"origin" "-496 112 32"
+}
+// entity 183
+{
+"classname" "info_civilian_start"
+"origin" "-496 -208 32"
+}
+// entity 184
+{
+"classname" "info_human_start"
+"origin" "-208 -400 32"
+}
+// entity 185
+{
+"classname" "info_human_start"
+"origin" "-560 -592 32"
+}
+// entity 186
+{
+"classname" "info_human_start"
+"origin" "-624 -592 32"
+}
+// entity 187
+{
+"classname" "info_human_start"
+"origin" "-432 -592 32"
+}
+// entity 188
+{
+"classname" "info_human_start"
+"origin" "-240 -592 32"
+}
+// entity 189
+{
+"classname" "info_human_start"
+"origin" "-208 -560 32"
+}
+// entity 190
+{
+"classname" "info_human_start"
+"origin" "-144 -528 32"
+}
+// entity 191
+{
+"classname" "info_human_start"
+"origin" "-496 -336 32"
+}
+// entity 192
+{
+"classname" "info_human_start"
+"origin" "-528 -368 32"
+}
