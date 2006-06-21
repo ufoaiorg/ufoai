@@ -100,17 +100,14 @@ void ED_CallSpawn (edict_t *ent)
 {
 	spawn_t	*s;
 
-	if (!ent->classname)
-	{
+	if (!ent->classname) {
 		gi.dprintf ("ED_CallSpawn: NULL classname\n");
 		return;
 	}
 
 	/* check normal spawn functions */
-	for (s=spawns ; s->name ; s++)
-	{
-		if (!strcmp(s->name, ent->classname))
-		{	/* found it */
+	for (s=spawns ; s->name ; s++) {
+		if (!strcmp(s->name, ent->classname)) {	/* found it */
 			s->spawn (ent);
 			return;
 		}
@@ -136,17 +133,14 @@ char *ED_NewString (char *string)
 
 	new_p = newb;
 
-	for (i=0 ; i< l ; i++)
-	{
-		if (string[i] == '\\' && i < l-1)
-		{
+	for (i=0 ; i< l ; i++) {
+		if (string[i] == '\\' && i < l-1) {
 			i++;
 			if (string[i] == 'n')
 				*new_p++ = '\n';
 			else
 				*new_p++ = '\\';
-		}
-		else
+		} else
 			*new_p++ = string[i];
 	}
 
@@ -168,17 +162,15 @@ void ED_ParseField (char *key, char *value, edict_t *ent)
 	float	v;
 	vec3_t	vec;
 
-	for (f=fields ; f->name ; f++)
-	{
-		if (!(f->flags & FFL_NOSPAWN) && !Q_stricmp(f->name, key))
-		{	/* found it */
+	for (f=fields ; f->name ; f++) {
+		if (!(f->flags & FFL_NOSPAWN) && !Q_stricmp(f->name, key)) {
+			/* found it */
 			if (f->flags & FFL_SPAWNTEMP)
 				b = (byte *)&st;
 			else
 				b = (byte *)ent;
 
-			switch (f->type)
-			{
+			switch (f->type) {
 			case F_LSTRING:
 				*(char **)(b+f->ofs) = ED_NewString (value);
 				break;
@@ -235,8 +227,7 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 	memset (&st, 0, sizeof(st));
 
 	/* go through all the dictionary pairs */
-	while (1)
-	{
+	while (1) {
 		/* parse key */
 		com_token = COM_Parse (&data);
 		if (com_token[0] == '}')
@@ -296,8 +287,7 @@ void SpawnEntities (char *mapname, char *entities)
 
 	/* parse ents */
 	entnum = 0;
-	while (1)
-	{
+	while (1) {
 		/* parse the opening brace */
 		com_token = COM_Parse (&entities);
 		if (!entities)
@@ -367,8 +357,7 @@ void SP_player_start (edict_t *ent)
 {
 	static int soldierCount = 0;
 	/* only used in multi player */
-	if ( sv_maxclients->value == 1 )
-	{
+	if ( sv_maxclients->value == 1 ) {
 		G_FreeEdict( ent );
 		return;
 	}
@@ -381,28 +370,23 @@ void SP_player_start (edict_t *ent)
 	/* the max allowed soldiers per player */
 	if ( (int)maxsoldiersperplayer->value
 	  && soldierCount >= (int)maxsoldiersperplayer->value
-	  && (int)sv_teamplay->value )
-	{
+	  && (int)sv_teamplay->value ) {
 		gi.dprintf ("Only %i/%i soldiers per player allowed\n", (int)maxsoldiersperplayer->value, soldierCount );
 		G_FreeEdict( ent );
 		return;
 	}
 
 	/* maybe there are already the max soldiers allowed per team connected */
-	if ( (int)(maxsoldiers->value) > level.num_spawnpoints[ent->team] )
-	{
+	if ( (int)(maxsoldiers->value) > level.num_spawnpoints[ent->team] ) {
 		ent->STUN = 100;
 		ent->HP = 100;
 		ent->AP = 100;
 		G_ActorSpawn( ent );
 		soldierCount++;
-	}
-	else if ( soldierCount <= 0 )
-	{
+	} else if ( soldierCount <= 0 ) {
 		gi.dprintf ("No free soldier slots available - please choose another team\n");
 		G_FreeEdict( ent );
-	}
-	else
+	} else
 		G_FreeEdict( ent );
 }
 
@@ -412,15 +396,13 @@ Starting point for a single player human.
 void SP_human_start (edict_t *ent)
 {
 	/* only used in single player */
-	if ( sv_maxclients->value > 1 )
-	{
+	if ( sv_maxclients->value > 1 ) {
 		G_FreeEdict( ent );
 		return;
 	}
 	ent->team = 1;
 	/* only the first time */
-	if ( !ent->chr.assigned_missions )
-	{
+	if ( !ent->chr.assigned_missions ) {
 		ent->STUN = 100;
 		ent->HP = 100;
 		ent->AP = 100;
@@ -458,8 +440,7 @@ Starting point for a single player alien.
 void SP_alien_start (edict_t *ent)
 {
 	/* only used in single player */
-	if ( sv_maxclients->value > 1 )
-	{
+	if ( sv_maxclients->value > 1 ) {
 		G_FreeEdict( ent );
 		return;
 	}
@@ -531,12 +512,10 @@ void SP_worldspawn (edict_t *ent)
 		Q_strncpyz (level.nextmap, st.nextmap, MAX_QPATH);
 
 	/* make some data visible to the server */
-	if (ent->message && ent->message[0])
-	{
+	if (ent->message && ent->message[0]) {
 		gi.configstring (CS_NAME, ent->message);
 		Q_strncpyz (level.level_name, ent->message, MAX_QPATH);
-	}
-	else
+	} else
 		Q_strncpyz (level.level_name, level.mapname, MAX_QPATH);
 
 	gi.configstring (CS_CDTRACK, va("%i", ent->sounds) );
@@ -544,8 +523,7 @@ void SP_worldspawn (edict_t *ent)
 	gi.configstring (CS_MAXCLIENTS, va("%i", (int)(maxplayers->value) ) );
 
 	/* only used in multi player */
-	if ( sv_maxclients->value >= 2 )
-	{
+	if ( sv_maxclients->value >= 2 ) {
 		gi.configstring (CS_MAXSOLDIERS, va("%i", (int)(maxsoldiers->value) ) );
 		gi.configstring (CS_MAXSOLDIERSPERPLAYER, va("%i", (int)(maxsoldiersperplayer->value) ) );
 		gi.configstring (CS_ENABLEMORALE, va("%i", (int)(sv_enablemorale->value) ) );
@@ -557,9 +535,7 @@ void SP_worldspawn (edict_t *ent)
 	else
 		gi.cvar_set("sv_gravity", st.gravity);
 
-	/* */
 	/* Setup light animation tables. 'a' is total darkness, 'z' is doublebright. */
-	/* */
 
 	/* 0 normal */
 	gi.configstring(CS_LIGHTS+0, "m");

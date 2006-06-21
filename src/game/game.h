@@ -99,9 +99,7 @@ struct edict_s
 /*=============================================================== */
 
 typedef struct routing_s routing_t;
-/* */
 /* functions provided by the main engine */
-/* */
 typedef struct
 {
 	/* client/server information */
@@ -211,9 +209,7 @@ typedef struct
 	void	(*DebugGraph) (float value, int color);
 } game_import_t;
 
-/* */
 /* functions exported by the game subsystem */
-/* */
 typedef struct
 {
 	int			apiversion;
@@ -257,13 +253,11 @@ typedef struct
 	/* of the parameters */
 	void		(*ServerCommand) (void);
 
-	/* */
 	/* global variables shared between game and server */
-	/* */
 
 	/* The edict array is allocated in the game dll so it */
 	/* can vary in size from one game to another. */
-	/* */
+
 	/* The size will be fixed when ge->Init() is called */
 	struct edict_s	*edicts;
 	int			edict_size;
