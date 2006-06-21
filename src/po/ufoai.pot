@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-06-21 12:11+0200\n"
+"POT-Creation-Date: 2006-06-21 12:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "#-#-#-#-#  ufoai.ufo.po (UFO Alien Invasion)  #-#-#-#-#\n"
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: http://www.sourceforge.net/projects/ufoai/\n"
-"POT-Creation-Date: 2006-06-21 12:11+0200\n"
+"POT-Creation-Date: 2006-06-21 12:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -760,47 +760,71 @@ msgstr ""
 msgid "Inventory"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:835 ../base/ufos/menu_team.ufo:561
+#: ../base/ufos/menu_hud.ufo:694 ../base/ufos/menu_team.ufo:715
+msgid "Backpack"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:703 ../base/ufos/menu_team.ufo:724
+msgid "Left Hand"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:712 ../base/ufos/menu_team.ufo:733
+msgid "Right Hand"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:721 ../base/ufos/menu_team.ufo:742
+msgid "Holster"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:730 ../base/ufos/menu_team.ufo:751
+msgid "Belt"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:739
+msgid "Floor"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:888 ../base/ufos/menu_team.ufo:561
 #: ../base/ufos/menu_team.ufo:1088
 msgid "Power:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:840 ../base/ufos/menu_team.ufo:566
+#: ../base/ufos/menu_hud.ufo:893 ../base/ufos/menu_team.ufo:566
 #: ../base/ufos/menu_team.ufo:1093
 msgid "Speed:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:845 ../base/ufos/menu_team.ufo:571
+#: ../base/ufos/menu_hud.ufo:898 ../base/ufos/menu_team.ufo:571
 #: ../base/ufos/menu_team.ufo:1098
 msgid "Accuracy:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:850 ../base/ufos/menu_team.ufo:576
+#: ../base/ufos/menu_hud.ufo:903 ../base/ufos/menu_team.ufo:576
 #: ../base/ufos/menu_team.ufo:1103
 msgid "Mind:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:855 ../base/ufos/menu_team.ufo:581
+#: ../base/ufos/menu_hud.ufo:908 ../base/ufos/menu_team.ufo:581
 #: ../base/ufos/menu_team.ufo:1108
 msgid "Close Combat:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:860 ../base/ufos/menu_team.ufo:586
+#: ../base/ufos/menu_hud.ufo:913 ../base/ufos/menu_team.ufo:586
 #: ../base/ufos/menu_team.ufo:1113
 msgid "Heavy Weapons:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:865 ../base/ufos/menu_team.ufo:591
+#: ../base/ufos/menu_hud.ufo:918 ../base/ufos/menu_team.ufo:591
 #: ../base/ufos/menu_team.ufo:1118
 msgid "Assault Guns:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:870 ../base/ufos/menu_team.ufo:596
+#: ../base/ufos/menu_hud.ufo:923 ../base/ufos/menu_team.ufo:596
 #: ../base/ufos/menu_team.ufo:1123
 msgid "Sniper Rifles:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:875 ../base/ufos/menu_team.ufo:601
+#: ../base/ufos/menu_hud.ufo:928 ../base/ufos/menu_team.ufo:601
 #: ../base/ufos/menu_team.ufo:1128
 msgid "High Explosives:"
 msgstr ""
@@ -1167,26 +1191,6 @@ msgstr ""
 
 #: ../base/ufos/menu_team.ufo:608
 msgid "Killed Enemies:"
-msgstr ""
-
-#: ../base/ufos/menu_team.ufo:715
-msgid "Backpack"
-msgstr ""
-
-#: ../base/ufos/menu_team.ufo:724
-msgid "Left Hand"
-msgstr ""
-
-#: ../base/ufos/menu_team.ufo:733
-msgid "Right Hand"
-msgstr ""
-
-#: ../base/ufos/menu_team.ufo:742
-msgid "Holster"
-msgstr ""
-
-#: ../base/ufos/menu_team.ufo:751
-msgid "Belt"
 msgstr ""
 
 #: ../base/ufos/menu_team.ufo:821 ../base/ufos/menu_team.ufo:830
