@@ -111,7 +111,7 @@ void B_SetSensor(void)
  * updates the cvar mn_building_status which is used in some menus to display
  * the building status
  */
-void B_BuildingStatus(void)
+static void B_BuildingStatus(void)
 {
 	int daysLeft;
 	int NumberOfBuildings = 0;
@@ -216,7 +216,7 @@ building_t *B_GetBuildingType(char *buildingName)
  *
  * This is only allowed if its still under construction. You will not get any money back.
  */
-void B_RemoveBuilding(void)
+static void B_RemoveBuilding(void)
 {
 	building_t *building = NULL;
 
@@ -241,7 +241,7 @@ void B_RemoveBuilding(void)
  *
  * Checks whether the player has enough credits to construct the current selected building before starting construction.
  */
-void B_ConstructBuilding(void)
+static void B_ConstructBuilding(void)
 {
 	building_t *building_to_build = NULL;
 
@@ -376,7 +376,7 @@ void B_SetBuildingByClick(int row, int col)
 /**
  * @brief Places the current building in the base (x/y give via console).
  */
-void B_SetBuilding(void)
+static void B_SetBuilding(void)
 {
 	int row, col;
 
@@ -399,7 +399,7 @@ void B_SetBuilding(void)
 /**
  * @brief Build building from the list of those available.
  */
-void B_NewBuildingFromList(void)
+static void B_NewBuildingFromList(void)
 {
 	/*maybe someone call this command before the buildings are parsed?? */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
@@ -414,7 +414,7 @@ void B_NewBuildingFromList(void)
 /**
  * @brief Draws a building.
  */
-void B_DrawBuilding(void)
+static void B_DrawBuilding(void)
 {
 	building_t *building = NULL;
 	employees_t *employees_in_building = NULL;
@@ -1601,7 +1601,7 @@ void B_BaseAttack(void)
  * @brief Builds a base map for tactical combat.
  *
  * NOTE: Do we need day and night maps here, too?
- * TODO: Search a empty fild and add a alien craft there.
+ * TODO: Search a empty field and add a alien craft there.
  * FIXME: We need to get rid of the tunnels to nivana.
  */
 void B_AssembleMap(void)
@@ -1615,7 +1615,22 @@ void B_AssembleMap(void)
 	*maps = '\0';
 	*coords = '\0';
 
-	assert(baseCurrent);
+	if (!baseCurrent) {
+		Com_Printf("B_AssembleMap: No base to assemble\n");
+		return;
+	}
+
+	/* reset menu text */
+	menuText[TEXT_STANDARD] = NULL;
+
+	/* reset the used flag */
+	for (row = 0; row < BASE_SIZE; row++)
+		for (col = 0; col < BASE_SIZE; col++) {
+			if (baseCurrent->map[row][col] != -1) {
+				entry = B_GetBuildingByIdx(baseCurrent->map[row][col]);
+				entry->used = 0;
+			}
+		}
 
 	/*TODO: If a building is still under construction, it will be assembled as a finished part */
 	/*otherwise we need mapparts for all the maps under construction */
@@ -1626,15 +1641,15 @@ void B_AssembleMap(void)
 			if (baseCurrent->map[row][col] != -1) {
 				entry = B_GetBuildingByIdx(baseCurrent->map[row][col]);
 
-				if (!entry->visible) {
-					Com_DPrintf("Building %s will not be taken for baseassemble - it's' invisible\n", entry->id);
+				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one */
+				/* this is why we check the used flag and continue if it was set already */
+				if (!entry->used && *entry->needs) {
+					entry->used = 1;
+				} else if (*entry->needs) {
+					Com_DPrintf("B_AssembleMap: '%s' needs '%s' (used: %i)\n", entry->id, entry->needs, entry->used );
+					entry->used = 0;
 					continue;
 				}
-
-				if (!entry->used && *entry->needs)
-					entry->used = 1;
-				else if (*entry->needs)
-					continue;
 
 				if (*entry->mapPart)
 					Q_strncpyz(baseMapPart, va("b/%c/%s", baseCurrent->mapChar, entry->mapPart), sizeof(baseMapPart));
@@ -1654,7 +1669,7 @@ void B_AssembleMap(void)
 }
 
 /**
- * @brief TODO: No idea what this does.
+ * @brief Cleans all bases but restart the base names
  */
 void B_NewBases(void)
 {
@@ -1670,19 +1685,22 @@ void B_NewBases(void)
 }
 
 /**
- * @brief TODO: Builds a random base?
+ * @brief Builds a random base
+ *
+ * call B_AssembleMap with a random base over script command 'base_assemble'
  */
-void B_AssembleRandomBase(void)
+static void B_AssembleRandomBase(void)
 {
 	Cbuf_AddText(va("base_assemble %i", rand() % gd.numBases));
 }
 
 /**
- * @param TODO: No idea what this does.
+ * @param Just lists all buildings with their data
  *
+ * Just for debugging purposes - not needed in game
  * TODO: To be extended for load/save purposes
  */
-void B_BuildingList_f(void)
+static void B_BuildingList_f(void)
 {
 	int i, j, k;
 	base_t *base;
@@ -1720,11 +1738,12 @@ void B_BuildingList_f(void)
 }
 
 /**
- * @brief TODO: No idea what this does.
+ * @brief Just lists all bases with their data
  *
+ * Just for debugging purposes - not needed in game
  * TODO: To be extended for load/save purposes
  */
-void B_BaseList_f(void)
+static void B_BaseList_f(void)
 {
 	int i, row, col, j;
 	base_t *base;
@@ -1753,7 +1772,7 @@ void B_BaseList_f(void)
 /**
  * @brief Sets the title of the base.
  */
-void B_SetBaseTitle(void)
+static void B_SetBaseTitle(void)
 {
 	Com_DPrintf("B_SetBaseTitle: #bases: %i\n", gd.numBases);
 	if (gd.numBases < MAX_BASES)
@@ -1767,7 +1786,7 @@ void B_SetBaseTitle(void)
 /**
  * @brief Creates console command to change the name of a base.
  */
-void B_ChangeBaseNameCmd(void)
+static void B_ChangeBaseNameCmd(void)
 {
 	/* maybe called without base initialized or active */
 	if (!baseCurrent)

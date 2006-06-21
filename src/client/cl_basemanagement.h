@@ -365,7 +365,6 @@ void B_ParseBases(char *title, char **text);
 void B_BuildingInit(void);
 void B_AssembleMap(void);
 void B_BaseAttack(void);
-void B_DrawBuilding(void);
 building_t *B_GetBuildingByIdx(int idx);
 building_t *B_GetBuildingType(char *buildingName);
 
