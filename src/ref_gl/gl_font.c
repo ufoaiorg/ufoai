@@ -30,6 +30,8 @@ static const	SDL_Color color = {255, 255, 255, 0}; /* The 4. value is unused */
 /* holds the gettext string */
 static char	buf[BUF_SIZE];
 static int	numInCache;
+static int	firstTextureCache = 0;
+static int	lastTextureCache = 0;
 fontRenderStyle_t fontStyle[] = {
 	{"TTF_STYLE_NORMAL", TTF_STYLE_NORMAL},
 	{"TTF_STYLE_BOLD", TTF_STYLE_BOLD},
@@ -39,7 +41,52 @@ fontRenderStyle_t fontStyle[] = {
 
 /*============================================================== */
 
-static void Font_ConvertChars ( char* buffer );
+/*================
+Font_TextureAddToCache
+================*/
+static GLuint Font_TextureAddToCache( SDL_Surface *s )
+{
+	int i;
+
+	for (i = firstTextureCache; i != lastTextureCache; i++, i %= MAX_TEXTURE_CACHE)
+		if (textureCache[i].surface == s)
+			break;
+
+	if (i == lastTextureCache) {
+		lastTextureCache++;
+		lastTextureCache %= MAX_TEXTURE_CACHE;
+
+		if (lastTextureCache == firstTextureCache) {
+			qglDeleteTextures(1, &textureCache[i].texture);
+			textureCache[i].surface = 0;
+			textureCache[i].texture = 0;
+    
+			firstTextureCache++;
+			firstTextureCache %= MAX_TEXTURE_CACHE;
+		}
+
+		textureCache[i].surface = s;
+		qglGenTextures(1, &textureCache[i].texture);
+	}
+
+	return textureCache[i].texture;
+}
+
+/*================
+Font_TextureCleanCache
+================*/
+static void Font_TextureCleanCache( void )
+{
+	int i;
+
+	for (i = firstTextureCache; i != lastTextureCache; i++, i %= MAX_TEXTURE_CACHE) {
+		qglDeleteTextures(1, &textureCache[i].texture);
+		textureCache[i].surface = 0;
+		textureCache[i].texture = 0;
+	}
+
+	firstTextureCache = lastTextureCache = 0;
+}
 
 /*===============
 Font_Shutdown
@@ -51,6 +98,7 @@ void Font_Shutdown ( void )
 	int i;
 
 	Font_CleanCache();
+	Font_TextureCleanCache();
 
 	for ( i = 0; i < numFonts; i++ )
 		if ( fonts[i].font )
@@ -369,31 +417,6 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 }
 
 /*================
-Font_ConvertChars
-================*/
-static void Font_ConvertChars ( char* buffer )
-{
-	char* replace = NULL;
-
-	/* convert all \\ to \n */
-	replace = strstr( buffer, "\\" );
-	while ( replace != NULL ) {
-		*replace++ = '\n';
-		replace = strstr( replace, "\\" );
-	}
-
-	/* convert all tabs to spaces */
-	replace = strstr( buffer, "\t" );
-	while ( replace != NULL  ) {
-		*replace++ = ' ';
-		replace = strstr( replace, "\t" );
-	}
-	replace = strstr( buffer, "\n\0" );
-	if ( replace )
-		*replace = '\0';
-}
-
-/*================
 Font_GenerateGLSurface
 
 generate the opengl texture out of the sdl-surface
@@ -401,12 +424,11 @@ bind it, and draw it
 ================*/
 static void Font_GenerateGLSurface ( SDL_Surface* s, int x, int y )
 {
-	unsigned int texture = 0;
+	GLuint texture = Font_TextureAddToCache(s);
 	int w = s->w;
 	int h = s->h;
 
 	/* Tell GL about our new texture */
-	qglGenTextures(1, &texture);
 	GL_Bind(texture);
 	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, s->pixels );
 
@@ -430,8 +452,31 @@ static void Font_GenerateGLSurface ( SDL_Surface* s, int x, int y )
 	qglDisable (GL_BLEND);
 
 	qglFinish();
-	/* Clean up */
-	qglDeleteTextures(1, &texture);
+}
+
+/*================
+Font_ConvertChars
+================*/
+static void Font_ConvertChars ( char* buffer )
+{
+	char* replace = NULL;
+
+	/* convert all \\ to \n */
+	replace = strstr( buffer, "\\" );
+	while ( replace != NULL ) {
+		*replace++ = '\n';
+		replace = strstr( replace, "\\" );
+	}
+
+	/* convert all tabs to spaces */
+	replace = strstr( buffer, "\t" );
+	while ( replace != NULL  ) {
+		*replace++ = ' ';
+		replace = strstr( replace, "\t" );
+	}
+	replace = strstr( buffer, "\n\0" );
+	if ( replace )
+		*replace = '\0';
 }
 
 /*================
