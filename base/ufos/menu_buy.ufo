@@ -725,20 +725,20 @@ menu buy
 
 	confunc buy_reset
 	{
-		*bt_primary		image menu/menu_buttons1
-		*bt_secondary	image menu/menu_buttons1
-		*bt_misc		image menu/menu_buttons1
-		*bt_armor		image menu/menu_buttons1
+		*s_primary		color "1 1 1 0.6"
+		*s_secondary	color "1 1 1 0.6"
+		*s_misc			color "1 1 1 0.6"
+		*s_armor		color "1 1 1 0.6"
 	}
-	confunc buy_primary		{ cmd "buy_type 0;" buy_reset *bt_primary	image menu/menu_buttons1a }
-	confunc buy_secondary	{ cmd "buy_type 1;" buy_reset *bt_secondary	image menu/menu_buttons1a }
-	confunc buy_misc		{ cmd "buy_type 2;" buy_reset *bt_misc		image menu/menu_buttons1a }
-	confunc buy_armor		{ cmd "buy_type 3;" buy_reset *bt_armor		image menu/menu_buttons1a }
+	confunc buy_primary		{ cmd "buy_type 0;" buy_reset *s_primary	color "1 1 1 1" }
+	confunc buy_secondary	{ cmd "buy_type 1;" buy_reset *s_secondary	color "1 1 1 1" }
+	confunc buy_misc		{ cmd "buy_type 2;" buy_reset *s_misc	color "1 1 1 1" }
+	confunc buy_armor		{ cmd "buy_type 3;" buy_reset *s_armor	color "1 1 1 1" }
 
 	pic bt_primary
 	{
 		tooltip	"_Show only primary weapons"
-		image	menu/menu_buttons1
+		image	menu/button_blue
 		mousefx	true
 		pos		"615 585"
 		texl	"0 0"
@@ -746,37 +746,73 @@ menu buy
 		click	{ buy_primary }
 	}
 
+	string s_primary
+	{
+		pos	"679 595"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Primary"
+	}
+
 	pic bt_secondary
 	{
 		tooltip	"_Show only secondary weapons"
-		image	menu/menu_buttons1
+		image	menu/button_blue
 		mousefx	true
 		pos		"615 655"
-		texl	"0 162"
-		texh	"128 214"
+		texl	"0 0"
+		texh	"128 52"
 		click	{ buy_secondary }
+	}
+
+	string s_secondary
+	{
+		pos	"679 665"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Secondary"
 	}
 
 	pic bt_misc
 	{
 		tooltip	"_Show other equipment"
-		image	menu/menu_buttons1
+		image	menu/button_blue
 		mousefx	true
 		pos		"765 585"
-		texl	"0 108"
-		texh	"128 160"
+		texl	"0 0"
+		texh	"128 52"
 		click	{ buy_misc }
+	}
+
+	string s_misc
+	{
+		pos	"829 595"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Misc"
 	}
 
 	pic bt_armor
 	{
 		tooltip	"_Show only armor"
-		image	menu/menu_buttons1
+		image	menu/button_blue
 		mousefx	true
 		pos		"765 655"
-		texl	"0 54"
-		texh	"128 106"
+		texl	"0 0"
+		texh	"128 52"
 		click	{ buy_armor }
+	}
+
+	string s_armor
+	{
+		pos	"829 665"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Armor"
 	}
 
 	pic bt_continue
