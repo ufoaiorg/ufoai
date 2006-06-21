@@ -367,7 +367,7 @@ RS_ResearchDisplayInfo
 Displays the informations of the current selected technology in the description-area.
 See menu_research.ufo for the layout/called functions.
 ======================*/
-void RS_ResearchDisplayInfo(void)
+static void RS_ResearchDisplayInfo(void)
 {
 	int i;
 	technology_t *tech = NULL;
@@ -446,8 +446,6 @@ void RS_ResearchDisplayInfo(void)
 		*dependencies = '\0';
 	}
 	Cvar_Set("mn_research_seldep", dependencies);
-
-
 }
 
 /*======================
@@ -456,7 +454,7 @@ CL_ResearchSelectCmd
 Changes the active research-list entry to the currently selected.
 See menu_research.ufo for the layout/called functions.
 ======================*/
-void CL_ResearchSelectCmd(void)
+static void CL_ResearchSelectCmd(void)
 {
 	int num;
 
@@ -484,7 +482,7 @@ RS_AssignScientist + RS_AssignScientist2
 
 Assigns scientist to the selected research-project.
 ======================*/
-void RS_AssignScientist2(int num)
+static void RS_AssignScientist2(int num)
 {
 	technology_t *tech = NULL;
 	building_t *building = NULL;
@@ -532,7 +530,7 @@ void RS_AssignScientist2(int num)
 	}
 }
 
-void RS_AssignScientist(void)
+static void RS_AssignScientist(void)
 {
 	int num;
 
@@ -553,7 +551,7 @@ RS_RemoveScientist + RS_RemoveScientist2
 
 Remove scientist from the selected research-project.
 ======================*/
-void RS_RemoveScientist2(int num)
+static void RS_RemoveScientist2(int num)
 {
 	technology_t *tech = NULL;
 	building_t *building = NULL;
@@ -591,7 +589,7 @@ void RS_RemoveScientist2(int num)
 	RS_UpdateData();
 }
 
-void RS_RemoveScientist(void)
+static void RS_RemoveScientist(void)
 {
 	int num;
 
@@ -612,7 +610,7 @@ Starts the research of the selected research-list entry.
 
 TODO: Check if laboratory is available
 ======================*/
-void RS_ResearchStart(void)
+static void RS_ResearchStart(void)
 {
 	technology_t *tech = NULL;
 	building_t *building = NULL;
@@ -673,7 +671,7 @@ Pauses the research of the selected research-list entry.
 
 TODO: Check if laboratory is available
 ======================*/
-void RS_ResearchStop(void)
+static void RS_ResearchStop(void)
 {
 	technology_t *tech = NULL;
 
@@ -851,7 +849,7 @@ IN
 OUT
 	boolean	RS_DependsOn
 ======================*/
-byte RS_DependsOn(char *id1, char *id2)
+static qboolean RS_DependsOn(char *id1, char *id2)
 {
 	int i;
 	technology_t *tech = NULL;
@@ -970,7 +968,7 @@ List all parsed technologies and their attributes in commandline/console.
 
 Command to call this: techlist
 ======================*/
-void RS_TechnologyList_f(void)
+static void RS_TechnologyList_f(void)
 {
 	int i, j;
 	technology_t *tech = NULL;
@@ -1065,7 +1063,7 @@ RS_DebugResearchAll
 
 call this function if you already hold a tech pointer
 ======================*/
-void RS_DebugResearchAll(void)
+static void RS_DebugResearchAll(void)
 {
 	int i;
 
@@ -1490,7 +1488,7 @@ RS_GetFirstRequired + RS_GetFirstRequired2
 Returns the first required (yet unresearched) technologies that are needed by "tech_idx".
 That means you need to research the result to be able to research (and maybe use) "id".
 ======================*/
-void RS_GetFirstRequired2(int tech_idx, int first_tech_idx, stringlist_t * required)
+static void RS_GetFirstRequired2(int tech_idx, int first_tech_idx, stringlist_t * required)
 {
 	int i;
 	stringlist_t *required_temp = NULL;
