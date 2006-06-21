@@ -213,7 +213,7 @@ qboolean CheckBEP(char *expr, qboolean(*varFuncParam) (char *var))
 /**
   * @brief
   */
-int CP_GetDistance(vec2_t pos1, vec2_t pos2)
+static int CP_GetDistance(vec2_t pos1, vec2_t pos2)
 {
 	int a, b, c;
 
@@ -727,7 +727,7 @@ void CL_CampaignActivateStageSets(stage_t * stage)
 /**
   * @brief
   */
-stageState_t *CL_CampaignActivateStage(char *name, qboolean sequence)
+static stageState_t *CL_CampaignActivateStage(char *name, qboolean sequence)
 {
 	stage_t *stage;
 	stageState_t *state;
@@ -767,7 +767,7 @@ stageState_t *CL_CampaignActivateStage(char *name, qboolean sequence)
 /**
   * @brief
   */
-void CL_CampaignEndStage(char *name)
+static void CL_CampaignEndStage(char *name)
 {
 	stageState_t *state;
 	int i;
@@ -786,7 +786,7 @@ void CL_CampaignEndStage(char *name)
   * @brief
   */
 #define DIST_MIN_BASE_MISSION 10
-void CL_CampaignAddMission(setState_t * set)
+static void CL_CampaignAddMission(setState_t * set)
 {
 	actMis_t *mis;
 	int i;
@@ -854,7 +854,7 @@ void CL_CampaignAddMission(setState_t * set)
 /**
   * @brief
   */
-void CL_CampaignRemoveMission(actMis_t * mis)
+static void CL_CampaignRemoveMission(actMis_t * mis)
 {
 	int i, num;
 
@@ -881,7 +881,7 @@ void CL_CampaignRemoveMission(actMis_t * mis)
 /**
   * @brief
   */
-void CL_CampaignExecute(setState_t * set)
+static void CL_CampaignExecute(setState_t * set)
 {
 	/* handle stages, execute commands */
 	if (*set->def->nextstage)
@@ -990,7 +990,7 @@ void CL_SelectAircraft_f(void)
   *
   * Builds the aircraft list for textfield with id
   */
-void CL_BuildingAircraftList_f(void)
+static void CL_BuildingAircraftList_f(void)
 {
 	char *s;
 	int i, j;
@@ -1018,7 +1018,7 @@ void CL_BuildingAircraftList_f(void)
   * listufo
   * only for debugging
   */
-void CP_ListUfosOnGeoscape(void)
+static void CP_ListUfosOnGeoscape(void)
 {
 	int i;
 	aircraft_t *a;
@@ -1082,7 +1082,7 @@ void CP_RemoveUfoFromGeoscape(void)
   * TODO: Use mis->pos to determine the position on the geoscape and get the nation
   * TODO: Use colors for nations
   */
-void CL_HandleNationData(qboolean expires, actMis_t * mis)
+static void CL_HandleNationData(qboolean expires, actMis_t * mis)
 {
 
 }
@@ -1351,7 +1351,7 @@ char *CL_DateGetMonthName(int month)
   *
   * TODO: to be extended
   */
-void CL_UpdateNationData(void)
+static void CL_UpdateNationData(void)
 {
 	int i;
 	char message[1024];
@@ -1455,19 +1455,6 @@ void CL_GameTimeSlow(void)
 }
 
 /**
-  * @brief
-  */
-#define MAX_CREDITS 10000000
-void CL_UpdateCredits(int credits)
-{
-	/* credits */
-	if ( credits > MAX_CREDITS )
-		credits = MAX_CREDITS;
-	ccs.credits = credits;
-	Cvar_Set("mn_credits", va("%i c", ccs.credits));
-}
-
-/**
   * @brief Increase game time speed
   *
   * Increase game time speed - only works when there is already a base available
@@ -1483,6 +1470,21 @@ void CL_GameTimeFast(void)
 		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
 		gd.gameTimeScale = lapse[gameLapse].scale;
 	}
+}
+
+/**
+  * @brief Sets credits and update mn_credits cvar
+  *
+  * Checks whether credits are bigger than MAX_CREDITS
+  */
+#define MAX_CREDITS 10000000
+void CL_UpdateCredits(int credits)
+{
+	/* credits */
+	if ( credits > MAX_CREDITS )
+		credits = MAX_CREDITS;
+	ccs.credits = credits;
+	Cvar_Set("mn_credits", va("%i c", ccs.credits));
 }
 
 /* =========================================================== */
@@ -1714,7 +1716,7 @@ void CL_GameSave(char *filename, char *comment)
 /**
   * @brief
   */
-void CL_GameSaveCmd(void)
+static void CL_GameSaveCmd(void)
 {
 	char comment[MAX_COMMENTLENGTH];
 	char *arg;
@@ -1970,7 +1972,7 @@ int CL_GameLoad(char *filename)
 /**
   * @brief
   */
-void CL_GameLoadCmd(void)
+static void CL_GameLoadCmd(void)
 {
 	/* get argument */
 	if (Cmd_Argc() < 2) {
@@ -1988,7 +1990,7 @@ void CL_GameLoadCmd(void)
 /**
   * @brief
   */
-void CL_GameCommentsCmd(void)
+static void CL_GameCommentsCmd(void)
 {
 	char comment[MAX_VAR];
 	FILE *f;
@@ -2032,7 +2034,7 @@ void CL_GameCommentsCmd(void)
 /**
   * @brief
   */
-void CL_GameContinue(void)
+static void CL_GameContinue(void)
 {
 	if (cls.state == ca_active) {
 		MN_PopMenu(qfalse);
@@ -2053,7 +2055,7 @@ void CL_GameContinue(void)
 /**
   * @brief
   */
-void CL_GameGo(void)
+static void CL_GameGo(void)
 {
 	mission_t *mis;
 	char expanded[MAX_QPATH];
@@ -2125,7 +2127,7 @@ void CL_GameGo(void)
 /**
   * @brief
   */
-void CP_ExecuteMissionTrigger(mission_t * m, int won)
+static void CP_ExecuteMissionTrigger(mission_t * m, int won)
 {
 	if (won && *m->onwin)
 		Cbuf_ExecuteText(EXEC_NOW, m->onwin);
@@ -2136,7 +2138,7 @@ void CP_ExecuteMissionTrigger(mission_t * m, int won)
 /**
   * @brief
   */
-void CL_GameAutoCheck(void)
+static void CL_GameAutoCheck(void)
 {
 	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
 		Com_DPrintf("No update after automission\n");

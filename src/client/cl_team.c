@@ -36,7 +36,7 @@ char *teamSkinNames[NUM_TEAMSKINS] = {
 /**
   * @brief
   */
-void CL_GiveNameCmd(void)
+static void CL_GiveNameCmd(void)
 {
 	char *name;
 	int i, j, num;
@@ -147,7 +147,7 @@ void CL_ResetCharacters(base_t * base)
 /**
   * @brief
   */
-void CL_GenerateNamesCmd(void)
+static void CL_GenerateNamesCmd(void)
 {
 	Cbuf_AddText("disconnect\ngame_exit\n");
 }
@@ -156,7 +156,7 @@ void CL_GenerateNamesCmd(void)
 /**
   * @brief Change the name of the selected actor
   */
-void CL_ChangeNameCmd(void)
+static void CL_ChangeNameCmd(void)
 {
 	int sel;
 
@@ -174,7 +174,7 @@ void CL_ChangeNameCmd(void)
 /**
   * @brief Change the skin of the selected actor
   */
-void CL_ChangeSkinCmd(void)
+static void CL_ChangeSkinCmd(void)
 {
 	int sel, newSkin, i;
 
@@ -199,7 +199,7 @@ void CL_ChangeSkinCmd(void)
 /**
   * @brief Reads tha comments from team files
   */
-void CL_TeamCommentsCmd(void)
+static void CL_TeamCommentsCmd(void)
 {
 	char comment[MAX_VAR];
 	FILE *f;
@@ -388,7 +388,7 @@ void CL_CleanTempInventory(void)
 /**
   * @brief
   */
-void CL_GenerateEquipmentCmd(void)
+static void CL_GenerateEquipmentCmd(void)
 {
 	equipDef_t *ed;
 	equipDef_t unused;
@@ -471,7 +471,7 @@ void CL_GenerateEquipmentCmd(void)
 /**
   * @brief
   */
-void CL_EquipTypeCmd(void)
+static void CL_EquipTypeCmd(void)
 {
 	int num;
 
@@ -494,7 +494,7 @@ void CL_EquipTypeCmd(void)
 /**
   * @brief
   */
-void CL_SelectCmd(void)
+static void CL_SelectCmd(void)
 {
 	char *command;
 	int num;
@@ -578,7 +578,7 @@ void CL_ResetTeamInBase(void)
 /**
   * @brief Init the teamlist checkboxes
   */
-void CL_MarkTeamCmd(void)
+static void CL_MarkTeamCmd(void)
 {
 	int i;
 
@@ -608,7 +608,7 @@ void CL_MarkTeamCmd(void)
 /**
   * @brief Hires an actor or drop an actor
   */
-void CL_HireActorCmd(void)
+static void CL_HireActorCmd(void)
 {
 	int num;
 	aircraft_t *air = NULL;
@@ -660,7 +660,7 @@ void CL_HireActorCmd(void)
 char nameBackup[MAX_VAR];
 char cvarName[MAX_VAR];
 
-void CL_MessageMenuCmd(void)
+static void CL_MessageMenuCmd(void)
 {
 	char *msg;
 
@@ -748,7 +748,7 @@ void CL_SaveTeam(char *filename)
   *
   * Call CL_SaveTeam to store the team to a given filename
   */
-void CL_SaveTeamCmd(void)
+static void CL_SaveTeamCmd(void)
 {
 	char filename[MAX_QPATH];
 
@@ -766,7 +766,7 @@ void CL_SaveTeamCmd(void)
 /**
   * @brief Stores a team in a specified teamslot
   */
-void CL_SaveTeamSlotCmd(void)
+static void CL_SaveTeamSlotCmd(void)
 {
 	char filename[MAX_QPATH];
 
@@ -904,7 +904,7 @@ void CL_LoadTeamMultiplayer(char *filename)
 /**
   * @brief Loads a team from commandline
   */
-void CL_LoadTeamCmd(void)
+static void CL_LoadTeamCmd(void)
 {
 	char filename[MAX_QPATH];
 
@@ -924,7 +924,7 @@ void CL_LoadTeamCmd(void)
 /**
   * @brief Loads the selected teamslot
   */
-void CL_LoadTeamSlotCmd(void)
+static void CL_LoadTeamSlotCmd(void)
 {
 	char filename[MAX_QPATH];
 
