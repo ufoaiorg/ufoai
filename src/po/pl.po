@@ -1,21 +1,15 @@
-# Polish translations for PACKAGE package.
-# Copyright (C) 2006 The UFO:AI team
-# This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2006.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-06-21 12:11+0200\n"
-"PO-Revision-Date: 2006-04-07 13:28+0100\n"
-"Last-Translator: Martin Gerhardy <tlh2000@gmx.net>\n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2006-06-21 13:14+0200\n"
+"PO-Revision-Date: 2006-06-20 20:48+0100\n"
+"Last-Translator: Piotr Borowiec <ursus250@o2.pl>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: ../base/ufos/armor.ufo:3
 msgid "normal"
@@ -749,47 +743,71 @@ msgstr ""
 msgid "Inventory"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:835 ../base/ufos/menu_team.ufo:561
+#: ../base/ufos/menu_hud.ufo:694 ../base/ufos/menu_team.ufo:715
+msgid "Backpack"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:703 ../base/ufos/menu_team.ufo:724
+msgid "Left Hand"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:712 ../base/ufos/menu_team.ufo:733
+msgid "Right Hand"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:721 ../base/ufos/menu_team.ufo:742
+msgid "Holster"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:730 ../base/ufos/menu_team.ufo:751
+msgid "Belt"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:739
+msgid "Floor"
+msgstr ""
+
+#: ../base/ufos/menu_hud.ufo:888 ../base/ufos/menu_team.ufo:561
 #: ../base/ufos/menu_team.ufo:1088
 msgid "Power:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:840 ../base/ufos/menu_team.ufo:566
+#: ../base/ufos/menu_hud.ufo:893 ../base/ufos/menu_team.ufo:566
 #: ../base/ufos/menu_team.ufo:1093
 msgid "Speed:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:845 ../base/ufos/menu_team.ufo:571
+#: ../base/ufos/menu_hud.ufo:898 ../base/ufos/menu_team.ufo:571
 #: ../base/ufos/menu_team.ufo:1098
 msgid "Accuracy:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:850 ../base/ufos/menu_team.ufo:576
+#: ../base/ufos/menu_hud.ufo:903 ../base/ufos/menu_team.ufo:576
 #: ../base/ufos/menu_team.ufo:1103
 msgid "Mind:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:855 ../base/ufos/menu_team.ufo:581
+#: ../base/ufos/menu_hud.ufo:908 ../base/ufos/menu_team.ufo:581
 #: ../base/ufos/menu_team.ufo:1108
 msgid "Close Combat:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:860 ../base/ufos/menu_team.ufo:586
+#: ../base/ufos/menu_hud.ufo:913 ../base/ufos/menu_team.ufo:586
 #: ../base/ufos/menu_team.ufo:1113
 msgid "Heavy Weapons:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:865 ../base/ufos/menu_team.ufo:591
+#: ../base/ufos/menu_hud.ufo:918 ../base/ufos/menu_team.ufo:591
 #: ../base/ufos/menu_team.ufo:1118
 msgid "Assault Guns:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:870 ../base/ufos/menu_team.ufo:596
+#: ../base/ufos/menu_hud.ufo:923 ../base/ufos/menu_team.ufo:596
 #: ../base/ufos/menu_team.ufo:1123
 msgid "Sniper Rifles:"
 msgstr ""
 
-#: ../base/ufos/menu_hud.ufo:875 ../base/ufos/menu_team.ufo:601
+#: ../base/ufos/menu_hud.ufo:928 ../base/ufos/menu_team.ufo:601
 #: ../base/ufos/menu_team.ufo:1128
 msgid "High Explosives:"
 msgstr ""
@@ -1156,26 +1174,6 @@ msgstr ""
 
 #: ../base/ufos/menu_team.ufo:608
 msgid "Killed Enemies:"
-msgstr ""
-
-#: ../base/ufos/menu_team.ufo:715
-msgid "Backpack"
-msgstr ""
-
-#: ../base/ufos/menu_team.ufo:724
-msgid "Left Hand"
-msgstr ""
-
-#: ../base/ufos/menu_team.ufo:733
-msgid "Right Hand"
-msgstr ""
-
-#: ../base/ufos/menu_team.ufo:742
-msgid "Holster"
-msgstr ""
-
-#: ../base/ufos/menu_team.ufo:751
-msgid "Belt"
 msgstr ""
 
 #: ../base/ufos/menu_team.ufo:821 ../base/ufos/menu_team.ufo:830
@@ -2225,9 +2223,9 @@ msgid "Tachyon Sniper Charge"
 msgstr ""
 
 #: client/cl_actor.c:93
-#, c-format
+#, fuzzy, c-format
 msgid "Rank: %s"
-msgstr ""
+msgstr "Ostrzeżenie: %s"
 
 #: client/cl_actor.c:308
 msgid "Currently panics!\n"
@@ -2638,8 +2636,9 @@ msgid "Select ufo or mission on map\n"
 msgstr ""
 
 #: client/cl_menu.c:2187
+#, fuzzy
 msgid "UFO in radar range\n"
-msgstr ""
+msgstr "%s wpada w szał!\n"
 
 #: client/cl_parse.c:644
 msgid "Alien spotted!\n"
@@ -2986,43 +2985,44 @@ msgstr ""
 
 #: game/g_ai.c:444
 msgid "Alien"
-msgstr ""
+msgstr "Obcy"
 
 #: game/g_client.c:599
 msgid "Can't perform action - this isn't your round!\n"
-msgstr ""
+msgstr "Nie można wykonać - to nie jest twoja tura!\n"
 
 #: game/g_client.c:605
 msgid "Can't perform action - object not present!\n"
-msgstr ""
+msgstr "Nie można wykonać - brak obiektu!\n"
 
 #: game/g_client.c:611
 msgid "Can't perform action - not an actor!\n"
-msgstr ""
+msgstr "Nie można wykonać - nie jestem aktorem!\n"
 
 #: game/g_client.c:617
+#, fuzzy
 msgid "Can't perform action - actor is stunned!\n"
-msgstr ""
+msgstr "Nie można wykonać - aktor nie żyje!\n"
 
 #: game/g_client.c:623
 msgid "Can't perform action - actor is dead!\n"
-msgstr ""
+msgstr "Nie można wykonać - aktor nie żyje!\n"
 
 #: game/g_client.c:629
 msgid "Can't perform action - not on same team!\n"
-msgstr ""
+msgstr "Nie można wykonać - nie w tej samej drużynie!\n"
 
 #: game/g_client.c:635
 msgid "Can't perform action - no control over allied actors!\n"
-msgstr ""
+msgstr "Nie można wykonać - brak kontroli nad sprzymierzonym aktorem!\n"
 
 #: game/g_client.c:641 game/g_client.c:734
 msgid "Can't perform action - not enough TUs!\n"
-msgstr ""
+msgstr "Nie można wykonać - za mało punktów akcji!\n"
 
 #: game/g_client.c:737
 msgid "Can't perform action - weapon already loaded!\n"
-msgstr ""
+msgstr "Nie można wykonać - broń już załadowana!\n"
 
 #: game/g_client.c:1159
 msgid "Currently shaken, won't let it's guard down.\n"
@@ -3031,7 +3031,7 @@ msgstr ""
 #: game/g_client.c:1287
 #, c-format
 msgid "%s panics!\n"
-msgstr ""
+msgstr "%s panikuje!\n"
 
 #: game/g_client.c:1329
 #, c-format
@@ -3041,7 +3041,7 @@ msgstr ""
 #: game/g_client.c:1330
 #, c-format
 msgid "%s is in mad rage!\n"
-msgstr ""
+msgstr "%s wpada w szał!\n"
 
 #: game/g_client.c:1371
 #, c-format
@@ -3050,12 +3050,127 @@ msgstr ""
 
 #: game/g_client.c:1634
 msgid "Can't perform action - impossible throw!\n"
-msgstr ""
+msgstr "Nie można wykonać - rzut niemożliwy!\n"
 
 #: game/g_client.c:1868
 msgid "Can't perform action - no ammo!\n"
-msgstr ""
+msgstr "Nie można wykonać - brak amunicji!\n"
 
 #: game/g_client.c:1881
 msgid "Can't perform action - not enough ammo!\n"
-msgstr ""
+msgstr "Nie można wykonać - zbyt mało amunicji!\n"
+
+#~ msgid ""
+#~ "Using sounddevice \"default\" - if you have problems with this try to set "
+#~ "the cvar snddevice to a appropriate alsa-device"
+#~ msgstr ""
+#~ "Używane urządzenie dźwiękowe  \"default\" - jeżeli wystąpią problemy "
+#~ "spróbuj ustawić cvar snddevice na właściwe urządzenie alsa."
+
+#~ msgid "ALSA: cannot open device %s(%s)\n"
+#~ msgstr "ALSA nie można otworzyć urządzenia %s(%s)\n"
+
+#~ msgid "ALSA: cannot allocate hw params(%s)\n"
+#~ msgstr "ALSA: nie można przypisać parametrów hw(%s)\n"
+
+#~ msgid "ALSA: cannot init hw params(%s)\n"
+#~ msgstr "ALSA: nie można zainicjować parametrów hw(%s)\n"
+
+#~ msgid "ALSA: cannot set access(%s)\n"
+#~ msgstr "ALSA: nie można ustawić dostępu(%s)\n"
+
+#~ msgid "ALSA: 16 bit not supported, trying 8\n"
+#~ msgstr "ALSA: brak obsługi 16 bitowej, próba 8 bit\n"
+
+#~ msgid "ALSA: cannot set format(%s)\n"
+#~ msgstr "ALSA: nie można ustawić formatu(%s)\n"
+
+#~ msgid "ALSA: cannot set rate %d (%s)\n"
+#~ msgstr "ALSA: nie można ustawić częstotliwości %d (%s)\n"
+
+#~ msgid "ALSA: rate %d not supported, using %d\n"
+#~ msgstr "ALSA: częstotliwość %d jest nie obsługiwana, zostanie użyte %d\n"
+
+#~ msgid "ALSA: cannot set rate %d(%s)\n"
+#~ msgstr "ALSA: nie można ustawić częstotliwości %d(%s)\n"
+
+#~ msgid "ALSA: cannot set rate\n"
+#~ msgstr "ALSA: nie można ustawić częstotliwości\n"
+
+#~ msgid "ALSA: cannot set channels %d(%s)\n"
+#~ msgstr "ALSA: nie można ustawić kanałów %d(%s)\n"
+
+#~ msgid "ALSA: cannot set period size (%s)\n"
+#~ msgstr "ALSA: nie można ustawić rozmiaru okresu (%s)\n"
+
+#~ msgid "ALSA: period %d not supported, using %d\n"
+#~ msgstr "ALSA: okres %d nie jest obsługiwany, zostanie użyty %d\n"
+
+#~ msgid "ALSA: cannot set params(%s)\n"
+#~ msgstr "ALSA: nie można ustawić parametrów(%s)\n"
+
+#~ msgid "Sound not inizialized\n"
+#~ msgstr "Dźwięk nie zainicjalizowany\n"
+
+#~ msgid "memory overwrite in Sys_Printf"
+#~ msgstr "nadpisanie pamięci w Sys_Printf"
+
+#~ msgid "Error: %s\n"
+#~ msgstr "Błąd: %s\n"
+
+#~ msgid "Sys_GetGameAPI without Sys_UnloadingGame"
+#~ msgstr "Sys_GetGameAPI bez Sys_UnloadingGame"
+
+#~ msgid "LoadLibrary (%s)\n"
+#~ msgstr "Biblioteka (%s)\n"
+
+#~ msgid "LoadLibrary failed (%s)\n"
+#~ msgstr "Nie udało się załadować biblioteki (%s)\n"
+
+#~ msgid "using %s for writing\n"
+#~ msgstr "zostanie użyte %s do zapisu\n"
+
+#~ msgid "USAGE: link <from> <to>\n"
+#~ msgstr "UŻYCIE: link <from> <to>\n"
+
+#~ msgid "Could not allocate memory in MN_GetMaps\n"
+#~ msgstr "Nie można przypisać pamięci w MN_GetMaps\n"
+
+#~ msgid "Not enough spawn points for team %i\n"
+#~ msgstr "Zbyt mało punktów odrodzenia dla drużyny %i\n"
+
+#~ msgid "Not enough weapons in equipment '%s'\n"
+#~ msgstr "Za mało broni na wyposażeniu '%s'\n"
+
+#~ msgid "Created AI player (team %i)\n"
+#~ msgstr "Utworzono gracza kontrolowanego przez komputer (drużyna %i)\n"
+
+#~ msgid "IP filter list is full\n"
+#~ msgstr "Lista filtracji IP jest pełna\n"
+
+#~ msgid "Removed.\n"
+#~ msgstr "Usunięto.\n"
+
+#~ msgid "Filter list:\n"
+#~ msgstr "Lista filtrowania:\n"
+
+#~ msgid "Undefined morale modifier type %i\n"
+#~ msgstr "Niezdefiniowany typ modyfikatora morali %i\n"
+
+#~ msgid "Banned."
+#~ msgstr "Zbanowany"
+
+#~ msgid "%s is connecting...\n"
+#~ msgstr "%s łączenie...\n"
+
+#~ msgid "%s disconnected.\n"
+#~ msgstr "%s rozłączony.\n"
+
+#~ msgid "ERROR: couldn't open.\n"
+#~ msgstr "BŁĄD: nie można otworzyć.\n"
+
+#~ msgid "say:"
+#~ msgstr "powiedz:"
+
+#~ msgid "say_team:"
+#~ msgstr "powiedz drużynie"
