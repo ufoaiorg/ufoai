@@ -107,8 +107,9 @@ void ED_CallSpawn (edict_t *ent)
 
 	/* check normal spawn functions */
 	for (s=spawns ; s->name ; s++) {
-		if (!strcmp(s->name, ent->classname)) {	/* found it */
-			s->spawn (ent);
+		/* found it */
+		if (!Q_strcmp(s->name, ent->classname)) {
+			s->spawn(ent);
 			return;
 		}
 	}
@@ -285,6 +286,7 @@ void SpawnEntities (char *mapname, char *entities)
 	ent = NULL;
 	level.activeTeam = -1;
 
+	gi.dprintf("SpawnEntities: %s\n", entities);
 	/* parse ents */
 	entnum = 0;
 	while (1) {
@@ -298,14 +300,14 @@ void SpawnEntities (char *mapname, char *entities)
 		if (!ent)
 			ent = g_edicts;
 		else
-			ent = G_Spawn ();
+			ent = G_Spawn();
 		entities = ED_ParseEdict (entities, ent);
 
 		VecToPos( ent->origin, ent->pos );
 		gi.GridPosToVec( gi.map, ent->pos, ent->origin );
 
 		ent->mapNum = entnum++;
-		ED_CallSpawn (ent);
+		ED_CallSpawn(ent);
 	}
 
 	/* spawn ai players, if needed */
@@ -331,6 +333,32 @@ void G_ActorSpawn( edict_t *ent )
 	level.num_spawnpoints[ent->team]++;
 	ent->classname = "actor";
 	ent->type = ET_ACTORSPAWN;
+	if ( ent->fieldSize < ACTOR_SIZE_NORMAL )
+		ent->fieldSize = ACTOR_SIZE_NORMAL;
+
+	/* fall to ground */
+	ent->pos[2] = gi.GridFall( gi.map, ent->pos );
+	gi.GridPosToVec( gi.map, ent->pos, ent->origin );
+
+	/* link it for collision detection */
+	ent->dir = AngleToDV( ent->angle );
+	ent->solid = SOLID_BBOX;
+	/* maybe this is already set in one of the spawn functions */
+	if ( ent->maxs[0] == 0 )
+		VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND );
+	if ( ent->mins[0] == 0 )
+		VectorSet( ent->mins,-PLAYER_WIDTH,-PLAYER_WIDTH, PLAYER_MIN );
+}
+
+/**
+  * @brief Spawn an singleplayer UGV
+  */
+void G_UGVSpawn( edict_t *ent )
+{
+	/* set properties */
+	level.num_ugvspawnpoints[ent->team]++;
+	ent->classname = "ugv";
+	ent->type = ET_UGVSPAWN;
 	if ( ent->fieldSize < ACTOR_SIZE_NORMAL )
 		ent->fieldSize = ACTOR_SIZE_NORMAL;
 
@@ -418,7 +446,11 @@ Starting point for a ugv.
 */
 void SP_ugv_start (edict_t *ent)
 {
-	ent->team = 1;
+	/* no ugv in multiplayer */
+	if ( sv_maxclients->value > 1 ) {
+		G_FreeEdict( ent );
+		return;
+	}
 	/* set stats */
 	ent->STUN = 100;
 	ent->HP = 100;
@@ -429,9 +461,8 @@ void SP_ugv_start (edict_t *ent)
 	VectorSet( ent->maxs, PLAYER_WIDTH*2, PLAYER_WIDTH*2, PLAYER_STAND );
 	VectorSet( ent->mins,-(PLAYER_WIDTH*2),-(PLAYER_WIDTH*2), PLAYER_MIN );
 
-	/* spawn multiplayer and/or singleplayer */
-	if ( sv_maxclients->value > 1 ) SP_player_start( ent );
-	else G_ActorSpawn( ent );
+	/* spawn singleplayer ugv */
+	G_UGVSpawn( ent );
 }
 
 /*QUAKED info_alien_start (1 0 0) (-16 -16 -24) (16 16 32)
@@ -506,7 +537,8 @@ Only used for the world.
 void SP_worldspawn (edict_t *ent)
 {
 	ent->solid = SOLID_BSP;
-	ent->inuse = qtrue; /* since the world doesn't use G_Spawn() */
+	/* since the world doesn't use G_Spawn() */
+	ent->inuse = qtrue;
 
 	if (st.nextmap)
 		Q_strncpyz (level.nextmap, st.nextmap, MAX_QPATH);

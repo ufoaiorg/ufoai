@@ -38,7 +38,8 @@ Marks the edict as free
 */
 void G_FreeEdict (edict_t *ed)
 {
-	gi.unlinkentity (ed);		/* unlink from world */
+	/* unlink from world */
+	gi.unlinkentity(ed);
 
 	memset (ed, 0, sizeof(*ed));
 	ed->classname = "freed";
@@ -68,8 +69,7 @@ edict_t *G_Find (edict_t *from, int fieldofs, char *match)
 	else
 		from++;
 
-	for ( ; from < &g_edicts[globals.num_edicts] ; from++)
-	{
+	for ( ; from < &g_edicts[globals.num_edicts] ; from++) {
 		if (!from->inuse)
 			continue;
 		s = *(char **) ((byte *)from + fieldofs);
@@ -101,8 +101,7 @@ edict_t *findradius (edict_t *from, vec3_t org, float rad)
 		from = g_edicts;
 	else
 		from++;
-	for ( ; from < &g_edicts[globals.num_edicts]; from++)
-	{
+	for ( ; from < &g_edicts[globals.num_edicts]; from++) {
 		if (!from->inuse)
 			continue;
 		if (from->solid == SOLID_NOT)
@@ -294,7 +293,7 @@ edict_t *G_Spawn (void)
 	e = &g_edicts[1];
 	for ( i=1 ; i<globals.num_edicts ; i++, e++)
 		if (!e->inuse ) {
-			G_InitEdict (e);
+			G_InitEdict(e);
 			return e;
 		}
 
@@ -302,74 +301,9 @@ edict_t *G_Spawn (void)
 		gi.error ("ED_Alloc: no free edicts");
 
 	globals.num_edicts++;
-	G_InitEdict (e);
+	G_InitEdict(e);
 	return e;
 }
-
-/*
-============
-G_TouchTriggers
-
-============
-*/
-#if 0
-void	G_TouchTriggers (edict_t *ent)
-{
-	int			i, num;
-	edict_t		*touch[MAX_EDICTS], *hit;
-
-	/* dead things don't activate triggers! */
-	if ((ent->player || (ent->svflags & SVF_MONSTER)) && (ent->health <= 0))
-		return;
-
-	num = gi.BoxEdicts (ent->absmin, ent->absmax, touch
-		, MAX_EDICTS, AREA_TRIGGERS);
-
-	/* be careful, it is possible to have an entity in this */
-	/* list removed before we get to it (killtriggered) */
-	for (i=0 ; i<num ; i++)
-	{
-		hit = touch[i];
-		if (!hit->inuse)
-			continue;
-		if (!hit->touch)
-			continue;
-		hit->touch (hit, ent, NULL, NULL);
-	}
-}
-#endif /* 0 */
-
-/*
-============
-G_TouchSolids
-
-Call after linking a new trigger in during gameplay
-to force all entities it covers to immediately touch it
-============
-*/
-#if 0
-void	G_TouchSolids (edict_t *ent)
-{
-	int			i, num;
-	edict_t		*touch[MAX_EDICTS], *hit;
-
-	num = gi.BoxEdicts (ent->absmin, ent->absmax, touch
-		, MAX_EDICTS, AREA_SOLID);
-
-	/* be careful, it is possible to have an entity in this */
-	/* list removed before we get to it (killtriggered) */
-	for (i=0 ; i<num ; i++)
-	{
-		hit = touch[i];
-		if (!hit->inuse)
-			continue;
-		if (ent->touch)
-			ent->touch (hit, ent, NULL, NULL);
-		if (!ent->inuse)
-			break;
-	}
-}
-#endif /* 0 */
 
 
 /*

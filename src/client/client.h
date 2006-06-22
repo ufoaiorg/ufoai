@@ -577,7 +577,7 @@ typedef struct le_s {
 	int fieldSize;				/* ACTOR_SIZE_* */
 
 	/* is called before adding a le to scene */
-	 qboolean(*addFunc) (struct le_s * le, entity_t * ent);
+	qboolean(*addFunc) (struct le_s * le, entity_t * ent);
 } le_t;							/* local entity */
 
 #define MAX_LOCALMODELS		512
@@ -694,6 +694,7 @@ void CL_ResetMouseLastPos(void);
 void CL_ActorMouseTrace(void);
 
 qboolean CL_AddActor(le_t * le, entity_t * ent);
+qboolean CL_AddUGV(le_t * le, entity_t * ent);
 
 void CL_AddTargeting(void);
 
@@ -731,11 +732,11 @@ void CL_ItemDescription(int item);
 #define MAX_GAMESAVESIZE	MAX_TEAMDATASIZE + 16384 + sizeof(globalData_t)
 #define MAX_COMMENTLENGTH	32
 
-void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version);
+void CL_LoadTeam(sizebuf_t *sb, base_t *base, int version);
 void CL_UpdateHireVar(void);
 
-void CL_ResetCharacters(base_t * base);
-void CL_GenerateCharacter(char *team, base_t * base);
+void CL_ResetCharacters(base_t *base);
+void CL_GenerateCharacter(char *team, base_t *base, int type);
 
 void MN_BuildNewBase(vec2_t pos);
 

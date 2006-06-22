@@ -572,7 +572,8 @@ int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *n
 	for ( i = 0; i < numTeamDefs; i++ )
 		if ( !Q_strncmp( team, teamDef[i].title, MAX_VAR ) )
 			break;
-	if ( i < numTeamDefs ) td = &teamDef[i];
+	if ( i < numTeamDefs ) 
+		td = &teamDef[i];
 	else {
 		/* search in name categories, if it isn't a team definition */
 		td = NULL;
@@ -581,49 +582,59 @@ int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *n
 				break;
 		if ( i == numNameCats ) {
 			/* use default team */
-			if ( !numTeamDefs ) return 0;
-			else td = &teamDef[0];
-		} else category = i;
+			if ( !numTeamDefs ) 
+				return 0;
+			else 
+				td = &teamDef[0];
+		} else 
+			category = i;
 	}
 
 	/* get the models */
 	while ( team ) {
 		gender = frand()*NAME_LAST;
-		if ( td ) category = (int)td->cats[(int)(frand()*td->num)];
+		if ( td ) 
+			category = (int)td->cats[(int)(frand()*td->num)];
 
 		/* get name */
 		if ( name ) {
 			str = Com_GiveName( gender, nameCat[category].title );
-			if ( !str ) continue;
+			if ( !str ) 
+				continue;
 			Q_strncpyz( name, str, MAX_VAR );
 			Q_strcat( name, MAX_VAR, " " );
 
 			str = Com_GiveName( gender + LASTNAME, nameCat[category].title );
-			if ( !str ) continue;
+			if ( !str ) 
+				continue;
 			Q_strcat( name, MAX_VAR, str );
 		}
 
 		/* get model */
 		if ( path ) {
 			str = Com_GiveModel( MODEL_PATH, gender, nameCat[category].title );
-			if ( !str ) continue;
+			if ( !str ) 
+				continue;
 			Q_strncpyz( path, str, MAX_VAR );
 		}
 
 		if ( body ) {
 			str = Com_GiveModel( MODEL_BODY, gender, nameCat[category].title );
-			if ( !str ) continue;
+			if ( !str ) 
+				continue;
 			Q_strncpyz( body, str, MAX_VAR );
 		}
 
 		if ( head ) {
 			str = Com_GiveModel( MODEL_HEAD, gender, nameCat[category].title );
-			if ( !str ) continue;
+			if ( !str ) 
+				continue;
 			Q_strncpyz( head, str, MAX_VAR );
 		}
 
 		str = Com_GiveModel( MODEL_SKIN, gender, nameCat[category].title );
-		if ( !str ) continue;
+		if ( !str ) 
+			continue;
 		return atoi( str );
 	}
 	return 0;

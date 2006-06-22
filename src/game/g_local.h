@@ -78,11 +78,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 
-/* */
 /* this structure is left intact through an entire game */
 /* it should be initialized at dll load time, and read/written to */
 /* the server.ssv file for savegames */
-/* */
 typedef struct
 {
 	char		helpmessage1[512];
@@ -105,10 +103,8 @@ typedef struct
 	qboolean	autosaved;
 } game_locals_t;
 
-/* */
 /* this structure is cleared as each map is entered */
 /* it is read/written to the level.sav file for savegames */
-/* */
 typedef struct
 {
 	int			framenum;
@@ -132,6 +128,7 @@ typedef struct
 	byte		num_alive[MAX_TEAMS];
 	byte		num_spawned[MAX_TEAMS];
 	byte		num_spawnpoints[MAX_TEAMS];
+	byte		num_ugvspawnpoints[MAX_TEAMS];
 	byte		num_kills[MAX_TEAMS][MAX_TEAMS];
 } level_locals_t;
 

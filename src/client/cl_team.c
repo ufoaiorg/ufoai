@@ -87,9 +87,11 @@ static void CL_GiveNameCmd(void)
 }
 
 /**
-  * @brief
+  * @brief Generates the skills and inventory for a character and for a UGV
+  *
+  * TODO: Generate UGV
   */
-void CL_GenerateCharacter(char *team, base_t * base)
+void CL_GenerateCharacter(char *team, base_t * base, int type)
 {
 	character_t *chr;
 
@@ -108,14 +110,27 @@ void CL_GenerateCharacter(char *team, base_t * base)
 	/* get ucn */
 	chr->ucn = base->nextUCN++;
 
+	/* set the actor size */
+	switch ( type ) {
+	case ET_ACTOR:
+		chr->fieldSize = ACTOR_SIZE_NORMAL;
+		chr->rank = &gd.ranks[0];
+		break;
+	case ET_UGV:
+		chr->fieldSize = ACTOR_SIZE_UGV;
+		/* UGV does not have a rank */
+		chr->rank = NULL;
+		break;
+	default:
+		Sys_Error("CL_GenerateCharacter: Unknown character type (%i)\n", type);
+	}
+
 	/* new attributes */
 	Com_CharGenAbilitySkills(chr, 0, 75, 0, 75);
 
 	/* get model and name */
 	chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
 	Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);
-
-	chr->rank = &gd.ranks[0];
 
 	base->numWholeTeam++;
 }
@@ -657,8 +672,8 @@ static void CL_HireActorCmd(void)
   *
   * Done by the script command msgmenu [?|!|:][cvarname]
   */
-char nameBackup[MAX_VAR];
-char cvarName[MAX_VAR];
+static char nameBackup[MAX_VAR];
+static char cvarName[MAX_VAR];
 
 static void CL_MessageMenuCmd(void)
 {
@@ -785,6 +800,7 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 	int i;
 
 	/* unique character number */
+	chr->fieldSize = MSG_ReadByte(sb);
 	chr->ucn = MSG_ReadShort(sb);
 	if (chr->ucn >= baseCurrent->nextUCN)
 		baseCurrent->nextUCN = chr->ucn + 1;
@@ -974,7 +990,10 @@ void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
 }
 
 /**
-  * @brief
+  * @brief Stores the team info to buffer (which might be a network buffer, too)
+  *
+  * Called in cl_main.c CL_Precache_f to send the team info to server
+  * Called by CL_SaveTeam to store the team info
   */
 void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
 {
@@ -990,6 +1009,9 @@ void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
 	MSG_WriteByte(buf, num);
 
 	for (i = 0, chr = team; i < num; chr++, i++) {
+		/* send the fieldSize ACTOR_SIZE_* */
+		MSG_WriteByte(buf, chr->fieldSize);
+
 		/* unique character number */
 		MSG_WriteShort(buf, chr->ucn);
 

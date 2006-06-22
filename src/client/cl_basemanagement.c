@@ -1252,13 +1252,14 @@ void B_ClearBase(base_t * base)
 	CL_ResetCharacters(base);
 
 	/* setup team */
-	if (!curCampaign) {			/* should be multiplayer */
+	if (!curCampaign) {
+		/* should be multiplayer */
 		while (base->numWholeTeam < cl_numnames->value)
-			CL_GenerateCharacter(Cvar_VariableString("team"), base);
-	} else {					/* should be multiplayer (campaignmode TODO) or singleplayer */
-
+			CL_GenerateCharacter(Cvar_VariableString("team"), base, ET_ACTOR);
+	} else {
+		/* should be multiplayer (campaignmode TODO) or singleplayer */
 		for (i = 0; i < curCampaign->soldiers; i++)
-			CL_GenerateCharacter(curCampaign->team, base);
+			CL_GenerateCharacter(curCampaign->team, base, ET_ACTOR);
 	}
 
 	for (row = BASE_SIZE - 1; row >= 0; row--)

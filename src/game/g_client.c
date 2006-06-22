@@ -99,7 +99,7 @@ void G_SendPlayerStats( player_t *player )
 	int		i;
 
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
-		if ( ent->inuse && ent->type == ET_ACTOR && ent->team == player->pers.team )
+		if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == player->pers.team )
 			G_SendStats( ent );
 }
 
@@ -115,8 +115,7 @@ void G_GiveTimeUnits( int team )
 	int		i;
 
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
-		if ( ent->inuse && !(ent->state & STATE_DEAD) && ent->type == ET_ACTOR && ent->team == team )
-		{
+		if ( ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == team ) {
 			ent->TU = GET_TU( ent->chr.skills[ABILITY_SPEED] );
 			G_SendStats( ent );
 		}
@@ -134,8 +133,7 @@ void G_ResetReactionFire( int team )
 	int		i;
 
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
-		if ( ent->inuse && !(ent->state & STATE_DEAD) && ent->type == ET_ACTOR && ent->team == team )
-		{
+		if ( ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == team ) {
 			ent->state &= ~STATE_SHAKEN; /* STATE_SHAKEN includes STATE_REACTION */
 			gi.AddEvent( G_TeamToPM( ent->team ), EV_ACTOR_STATECHANGE );
 			gi.WriteShort( ent->number );
@@ -172,14 +170,14 @@ void G_SendInventory( int player_mask, edict_t *ent )
 	int k;
 
 	/* test for pointless player mask */
-	if ( !player_mask ) return;
+	if ( !player_mask )
+		return;
 
 	gi.AddEvent( player_mask, EV_INV_ADD );
 	gi.WriteShort( ent->number );
 
 	for ( k = 0; k < gi.csi->numIDs; k++ )
-		for ( ic = ent->i.c[k]; ic; ic = ic->next )
-		{
+		for ( ic = ent->i.c[k]; ic; ic = ic->next ) {
 			/* send a single item */
 			G_WriteItem( &ic->item );
 			gi.WriteByte( k );
@@ -199,30 +197,35 @@ G_AppearPerishEvent
 */
 void G_AppearPerishEvent( int player_mask, int appear, edict_t *check )
 {
-	if ( appear )
-	{
+	if ( appear ) {
 		/* appear */
-		switch ( check->type )
-		{
+		switch ( check->type ) {
 		case ET_ACTOR:
+		case ET_UGV:
+			/* parsed in CL_ActorAppear */
 			gi.AddEvent( player_mask, EV_ACTOR_APPEAR );
 			gi.WriteShort( check->number );
 			gi.WriteByte( check->team );
 			gi.WriteByte( check->pnum );
 			gi.WriteGPos( check->pos );
 			gi.WriteByte( check->dir );
-			if ( RIGHT(check) ) gi.WriteByte( RIGHT(check)->item.t );
-			else gi.WriteByte( NONE );
-			if ( LEFT(check) ) gi.WriteByte( LEFT(check)->item.t );
-			else gi.WriteByte( NONE );
+			if ( RIGHT(check) )
+				gi.WriteByte( RIGHT(check)->item.t );
+			else
+				gi.WriteByte( NONE );
+
+			if ( LEFT(check) )
+				gi.WriteByte( LEFT(check)->item.t );
+			else
+				gi.WriteByte( NONE );
+
 			gi.WriteShort( check->body );
 			gi.WriteShort( check->head );
 			gi.WriteByte( check->skin );
 			gi.WriteShort( check->state & STATE_PUBLIC );
 			gi.WriteByte( check->fieldSize );
 
-			if ( player_mask & G_TeamToPM( check->team ) )
-			{
+			if ( player_mask & G_TeamToPM( check->team ) ) {
 				gi.AddEvent( player_mask &  G_TeamToPM( check->team ), EV_ACTOR_STATECHANGE );
 				gi.WriteShort( check->number );
 				gi.WriteShort( check->state );
@@ -238,9 +241,7 @@ void G_AppearPerishEvent( int player_mask, int appear, edict_t *check )
 			G_SendInventory( player_mask, check );
 			break;
 		}
-	}
-	else if ( check->type == ET_ACTOR || check->type == ET_ITEM )
-	{
+	} else if ( check->type == ET_ACTOR || check->type == ET_UGV || check->type == ET_ITEM ) {
 		/* disappear */
 		gi.AddEvent( player_mask, EV_ENT_PERISH );
 		gi.WriteShort( check->number );
@@ -288,9 +289,8 @@ qboolean G_TeamPointVis( int team, vec3_t point )
 
 	/* test if check is visible */
 	for ( i = 0, from = g_edicts; i < globals.num_edicts; i++, from++ )
-		if ( from->inuse && from->type == ET_ACTOR && !(from->state & STATE_DEAD) &&
-			from->team == team && G_FrustomVis( from, point ) )
-		{
+		if ( from->inuse && (from->type == ET_ACTOR || from->type == ET_UGV) && !(from->state & STATE_DEAD) &&
+			from->team == team && G_FrustomVis( from, point ) ) {
 			/* get viewers eye height */
 			VectorCopy( from->origin, eye );
 			if ( from->state & (STATE_CROUCHED|STATE_PANIC) ) eye[2] += EYE_CROUCH;
@@ -339,25 +339,36 @@ float G_ActorVis( vec3_t from, edict_t *check, qboolean full )
 
 	/* do 3 tests */
 	n = 0;
-	for ( i = 0; i < 3; i++ )
-	{
-		if ( !gi.TestLine( from, test ) )
-		{
-			if ( full ) n++;
-			else return 1.0;
+	for ( i = 0; i < 3; i++ ) {
+		if ( !gi.TestLine( from, test ) ) {
+			if ( full )
+				n++;
+			else
+				return 1.0;
 		}
 
 		/* look further down or stop */
-		if ( !delta ) { if ( n > 0 ) return 1.0; else return 0.0; }
+		if ( !delta ) {
+			if ( n > 0 )
+				return 1.0;
+			else
+				return 0.0;
+		}
 		VectorMA( test, 7, dir, test );
 		test[2] -= delta;
 	}
 
 	/* return factor */
-	if ( n == 0 ) return 0.0;
-	else if ( n == 1 ) return 0.1;
-	else if ( n == 2 ) return 0.5;
-	else return 1.0;
+	switch (n) {
+	case 0:
+		return 0.0;
+	case 1:
+		return 0.1;
+	case 2:
+		return 0.5;
+	default:
+		return 1.0;
+	}
 }
 
 
@@ -374,8 +385,8 @@ float G_Vis( int team, edict_t *from, edict_t *check, int flags )
 	if ( !from->inuse || !check->inuse  )
 		return 0.0;
 
-	/* only actors can see anything */
-	if ( from->type != ET_ACTOR || (from->state & STATE_DEAD) )
+	/* only actors and ugvs can see anything */
+	if ( (from->type != ET_ACTOR && from->type != ET_UGV) || (from->state & STATE_DEAD) )
 		return 0.0;
 
 	/* living team members are always visible */
@@ -404,18 +415,18 @@ float G_Vis( int team, edict_t *from, edict_t *check, int flags )
 
 	/* get viewers eye height */
 	VectorCopy( from->origin, eye );
-	if ( from->state & (STATE_CROUCHED|STATE_PANIC) ) eye[2] += EYE_CROUCH;
-	else eye[2] += EYE_STAND;
+	if ( from->state & (STATE_CROUCHED|STATE_PANIC) )
+		eye[2] += EYE_CROUCH;
+	else
+		eye[2] += EYE_STAND;
 
 	/* line trace check */
-	switch ( check->type )
-	{
+	switch ( check->type ) {
 	case ET_ACTOR:
+	case ET_UGV:
 		return G_ActorVis( eye, check, qfalse );
-
 	case ET_ITEM:
 		return !gi.TestLine( eye, check->origin );
-
 	default:
 		return 0.0;
 	}
@@ -434,7 +445,8 @@ int G_TestVis( int team, edict_t *check, int flags )
 
 	/* store old flag */
 	old = ( check->visflags & (1 << team) ) ? 1 : 0;
-	if ( !(flags & VT_PERISH) && old ) return VIS_YES;
+	if ( !(flags & VT_PERISH) && old )
+		return VIS_YES;
 
 	/* test if check is visible */
 	for ( i = 0, from = g_edicts; i < globals.num_edicts; i++, from++ )
@@ -464,26 +476,23 @@ int G_CheckVisTeam( int team, edict_t *check, qboolean perish )
 	{
 		check = g_edicts;
 		end = globals.num_edicts;
-	}
-	else end = 1;
+	} else
+		end = 1;
 
 
 	/* check visibility */
 	for ( i = 0; i < end; i++, check++ )
-		if ( check->inuse )
-		{
+		if ( check->inuse ) {
 			/* check if he's visible */
 			vis = G_TestVis( team, check, perish );
 
-			if ( vis & VIS_CHANGE )
-			{
+			if ( vis & VIS_CHANGE ) {
 				check->visflags ^= (1 << team);
 				G_AppearPerishEvent( G_TeamToPM( team ), vis & VIS_YES, check );
 
-				if ( vis & VIS_YES )
-				{
+				if ( vis & VIS_YES ) {
 					status |= VIS_APPEAR;
-					if ( check->type == ET_ACTOR && !(check->state & STATE_DEAD) && check->team != TEAM_CIVILIAN )
+					if ( (check->type == ET_ACTOR || check->type == ET_UGV) && !(check->state & STATE_DEAD) && check->team != TEAM_CIVILIAN )
 						status |= VIS_STOP;
 				}
 				else status |= VIS_PERISH;
@@ -554,8 +563,7 @@ int G_DoTurn( edict_t *ent, byte toDV )
 	if ( angleDiv < -180.0 ) angleDiv += 360.0;
 
 	/* prepare rotation */
-	if ( angleDiv > 0 )
-	{
+	if ( angleDiv > 0 ) {
 		rot = dvleft;
 		num = (+angleDiv + 22.5) / 45.0;
 	} else {
@@ -566,8 +574,7 @@ int G_DoTurn( edict_t *ent, byte toDV )
 	/* do rotation and vis checks */
 	status = 0;
 
-	for ( i = 0; i < num; i++ )
-	{
+	for ( i = 0; i < num; i++ ) {
 		ent->dir = rot[ent->dir];
 
 		status |= G_CheckVisTeam( ent->team, NULL, qfalse );
@@ -593,51 +600,42 @@ FIXME: Integrate into hud - don´t use cprintf
 qboolean G_ActionCheck( player_t *player, edict_t *ent, int TU )
 {
 	/* a generic tester if an action could be possible */
-
-	if ( level.activeTeam != player->pers.team )
-	{
+	if ( level.activeTeam != player->pers.team ) {
 		gi.cprintf( player, PRINT_HIGH, _("Can't perform action - this isn't your round!\n") );
 		return qfalse;
 	}
 
-	if ( !ent || !ent->inuse )
-	{
+	if ( !ent || !ent->inuse ) {
 		gi.cprintf( player, PRINT_HIGH, _("Can't perform action - object not present!\n") );
 		return qfalse;
 	}
 
-	if ( ent->type != ET_ACTOR )
-	{
+	if ( ent->type != ET_ACTOR && ent->type != ET_UGV ) {
 		gi.cprintf( player, PRINT_HIGH, _("Can't perform action - not an actor!\n") );
 		return qfalse;
 	}
 
-	if ( ent->state & STATE_STUN )
-	{
+	if ( ent->state & STATE_STUN ) {
 		gi.cprintf( player, PRINT_HIGH, _("Can't perform action - actor is stunned!\n") );
 		return qfalse;
 	}
 
-	if ( ent->state & STATE_DEAD )
-	{
+	if ( ent->state & STATE_DEAD ) {
 		gi.cprintf( player, PRINT_HIGH, _("Can't perform action - actor is dead!\n") );
 		return qfalse;
 	}
 
-	if ( ent->team != player->pers.team )
-	{
+	if ( ent->team != player->pers.team ) {
 		gi.cprintf( player, PRINT_HIGH, _("Can't perform action - not on same team!\n") );
 		return qfalse;
 	}
 
-	if ( ent->pnum != player->num )
-	{
+	if ( ent->pnum != player->num ) {
 		gi.cprintf( player, PRINT_HIGH, _("Can't perform action - no control over allied actors!\n") );
 		return qfalse;
 	}
 
-	if ( TU > ent->TU )
-	{
+	if ( TU > ent->TU ) {
 		gi.cprintf( player, PRINT_HIGH, _("Can't perform action - not enough TUs!\n") );
 		return qfalse;
 	}
@@ -910,11 +908,13 @@ void G_BuildForbiddenList( int team )
 	int		i;
 
 	fb_length = 0;
-	if ( team ) vis_mask = 1 << team;
-	else vis_mask = 0xFFFFFFFF;
+	if ( team )
+		vis_mask = 1 << team;
+	else
+		vis_mask = 0xFFFFFFFF;
 
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
-		if ( ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && (ent->visflags & vis_mask) )
+		if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && (ent->visflags & vis_mask) )
 			fb_list[fb_length++] = ent->pos;
 
 	if ( fb_length > MAX_FB_LIST )
@@ -951,7 +951,7 @@ qboolean G_CheckMoveBlock( pos3_t from, int dv )
 
 	/* search for blocker */
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
-		if ( ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && VectorCompare( pos, ent->pos ) )
+		if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && VectorCompare( pos, ent->pos ) )
 			return qtrue;
 
 	/* nothing found */
@@ -1018,8 +1018,10 @@ void G_ClientMove( player_t *player, int visTeam, int num, pos3_t to, qboolean s
 					gi.WriteShort( ent->number );
 					gi.WriteByte( ent->dir );
 				}
-				if ( stop && (status & VIS_STOP) ) break;
-				if ( status ) steps = 0;
+				if ( stop && (status & VIS_STOP) )
+					break;
+				if ( status )
+					steps = 0;
 
 				/* check for "blockers" */
 				if ( G_CheckMoveBlock( ent->pos, dvtab[numdv] ) )
@@ -1027,8 +1029,10 @@ void G_ClientMove( player_t *player, int visTeam, int num, pos3_t to, qboolean s
 
 				/* decrease TUs */
 				div = ((dvtab[numdv]&7) < 4) ? 2 : 3;
-				if ( ent->state & STATE_CROUCHED ) div *= 1.5;
-				if ( (int)(tu + div) > ent->TU ) break;
+				if ( ent->state & STATE_CROUCHED )
+					div *= 1.5;
+				if ( (int)(tu + div) > ent->TU )
+					break;
 				tu += div;
 
 				/* move */
@@ -1054,19 +1058,24 @@ void G_ClientMove( player_t *player, int visTeam, int num, pos3_t to, qboolean s
 
 				/* check if the player appears/perishes, seen from other teams */
 				status = G_CheckVis( ent, qtrue );
-				if ( status ) steps = 0;
+				if ( status )
+					steps = 0;
 
 				/* check for anything appearing, seen by "the moving one" */
 				status = G_CheckVisTeam( ent->team, NULL, qfalse );
-				if ( status ) steps = 0;
+				if ( status )
+					steps = 0;
 
 				/* check for reaction fire */
-				if ( G_ReactionFire( ent ) ) steps = 0;
+				if ( G_ReactionFire( ent ) )
+					steps = 0;
 
 				/* check for death */
-				if ( ent->state & STATE_DEAD ) return;
+				if ( ent->state & STATE_DEAD )
+					return;
 
-				if ( stop && (status & VIS_STOP) ) break;
+				if ( stop && (status & VIS_STOP) )
+					break;
 			}
 
 			/* submit the TUs / round down */
@@ -1148,8 +1157,10 @@ void G_ClientStateChange( player_t *player, int num, int newState )
 			ent->state ^= STATE_CROUCHED;
 			ent->TU -= 1;
 			/* link it */
-			if ( ent->state & STATE_CROUCHED ) VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH );
-			else VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND );
+			if ( ent->state & STATE_CROUCHED )
+				VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH );
+			else
+				VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND );
 			gi.linkentity( ent );
 		}
 
@@ -1222,6 +1233,7 @@ void G_Morale( int type, edict_t *victim, edict_t *attacker, int param )
 	float	mod;
 
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
+		/* this only applies to ET_ACTOR but not ET_UGV */
 		if ( ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && ent->team != TEAM_CIVILIAN ) {
 			switch ( type ) {
 			case ML_WOUND:
@@ -1231,23 +1243,29 @@ void G_Morale( int type, edict_t *victim, edict_t *attacker, int param )
 				/* death hurts morale even more than just damage */
 				if ( type == ML_DEATH ) mod += MOB_DEATH;
 				/* seeing how someone gets shot increases the morale change */
-				if ( ent == victim || (G_ActorVis(ent->origin, victim, qfalse) && G_FrustomVis(ent, victim->origin))) mod *= MOF_WATCHING;
+				if ( ent == victim || (G_ActorVis(ent->origin, victim, qfalse) && G_FrustomVis(ent, victim->origin)))
+					mod *= MOF_WATCHING;
 				if ( ent->team == attacker->team ) {
 					/* teamkills are considered to be bad form, but won't cause an increased morale boost for the enemy */
 					/* morale boost isn't equal to morale loss (it's lower, but morale gets regenerated) */
-					if ( victim->team == attacker->team ) mod *= MOF_TEAMKILL;
-					else mod *= MOF_ENEMY;
+					if ( victim->team == attacker->team )
+						mod *= MOF_TEAMKILL;
+					else
+						mod *= MOF_ENEMY;
 				}
 				/* seeing a civi die is more "acceptable" */
-				if ( victim->team == TEAM_CIVILIAN ) mod *= MOF_CIVILIAN;
+				if ( victim->team == TEAM_CIVILIAN )
+					mod *= MOF_CIVILIAN;
 				/* if an ally (or in singleplayermode, as human, a civilian) got shot, lower the morale, don't heighten it. */
-				if ( victim->team == ent->team || (victim->team == TEAM_CIVILIAN && ent->team != TEAM_ALIEN && (int)sv_maxclients->value == 1 )) mod *= -1;
+				if ( victim->team == ent->team || (victim->team == TEAM_CIVILIAN && ent->team != TEAM_ALIEN && (int)sv_maxclients->value == 1 ))
+					mod *= -1;
 				/* if you stand near to the attacker or the victim, the morale change is higher. */
 				mod *= MOR_DEFAULT + pow(0.5, VectorDist(ent->origin,victim->origin)/MOR_DISTANCE)*MOR_VICTIM + pow(0.5, VectorDist(ent->origin,attacker->origin)/MOR_DISTANCE)*MOR_ATTACKER;
 				/* morale damage is dependant on the number of living allies */
 				mod *= (1-MON_TEAMFACTOR) + MON_TEAMFACTOR*(level.num_spawned[victim->team]+1)/(level.num_alive[victim->team]+1);
 				/* being hit isn't fun */
-				if ( ent == victim ) mod *= MOR_PAIN;
+				if ( ent == victim )
+					mod *= MOR_PAIN;
 				break;
 			default:
 				Com_Printf( "Undefined morale modifier type %i\n", type );
@@ -1317,17 +1335,22 @@ void G_MoraleStopPanic ( edict_t *ent )
 {
 	if (((ent->morale)/MORALE_PANIC) > (M_PANIC_STOP*frand()))
 		ent->state &= ~STATE_PANIC;
-	else G_MoralePanic (ent, qtrue);
+	else
+		G_MoralePanic (ent, qtrue);
 }
 
 void G_MoraleRage ( edict_t *ent, qboolean sanity)
 {
-	if ( sanity ) ent->state |= STATE_RAGE;
-	else ent->state |= STATE_INSANE;
+	if ( sanity )
+		ent->state |= STATE_RAGE;
+	else
+		ent->state |= STATE_INSANE;
 	G_SendState( G_VisToPM( ent->visflags ), ent );
 
-	if ( sanity ) gi.bprintf( PRINT_HIGH, _("%s is on a rampage.\n"), ent->chr.name );
-	else gi.bprintf( PRINT_HIGH, _("%s is in mad rage!\n"), ent->chr.name );
+	if ( sanity )
+		gi.bprintf( PRINT_HIGH, _("%s is on a rampage.\n"), ent->chr.name );
+	else
+		gi.bprintf( PRINT_HIGH, _("%s is in mad rage!\n"), ent->chr.name );
 	AI_ActorThink( game.players + ent->pnum, ent );
 }
 
@@ -1347,6 +1370,7 @@ void G_MoraleBehaviour( int team )
 	qboolean sanity;
 
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
+		/* this only applies to ET_ACTOR but not to ET_UGV */
 		if ( ent->inuse && ent->type == ET_ACTOR && ent->team == team && !(ent->state & STATE_DEAD) ) {
 			/* civilians have a 1:1 chance to randomly run away, will be changed: */
 			if ( level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
@@ -1357,11 +1381,14 @@ void G_MoraleBehaviour( int team )
 			    || (int)sv_maxclients->value == 1 ) {
 				/* if panic, determine what kind of panic happens: */
 				if ( ent->morale <= MORALE_PANIC && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
-					if ( (float)ent->morale / MORALE_PANIC > (M_SANITY*frand())) sanity = qtrue;
-					else sanity = qfalse;
+					if ( (float)ent->morale / MORALE_PANIC > (M_SANITY*frand()))
+						sanity = qtrue;
+					else
+						sanity = qfalse;
 					if ( (float)ent->morale / MORALE_PANIC > (M_RAGE*frand()))
 						G_MoralePanic ( ent, sanity );
-					else G_MoraleRage( ent, sanity );
+					else
+						G_MoraleRage( ent, sanity );
 				/* if shaken, well .. be shaken; */
 				} else if  (ent->morale <= MORALE_SHAKEN && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
 					ent->TU -= TU_REACTION;
@@ -1370,14 +1397,18 @@ void G_MoraleBehaviour( int team )
 					G_SendState( G_VisToPM( ent->visflags ), ent );
 					gi.cprintf( game.players + ent->pnum, PRINT_HIGH, _("%s is currently shaken.\n"), ent->chr.name );
 				} else {
-					if (ent->state & STATE_PANIC) G_MoraleStopPanic ( ent );
-					else if (ent->state & STATE_RAGE) G_MoraleStopRage ( ent );
+					if (ent->state & STATE_PANIC)
+						G_MoraleStopPanic ( ent );
+					else if (ent->state & STATE_RAGE)
+						G_MoraleStopRage ( ent );
 				}
 			}
 
 			/* set correct bounding box */
-			if ( ent->state & (STATE_CROUCHED|STATE_PANIC) ) VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH );
-			else VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND );
+			if ( ent->state & (STATE_CROUCHED|STATE_PANIC) )
+				VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH );
+			else
+				VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND );
 
 			/* moraleregeneration, capped at max: */
 			newMorale = ent->morale + MORALE_RANDOM( MORALE_REGENERATION );
@@ -1410,8 +1441,8 @@ void G_Damage( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 			ent->inuse = qfalse;
 			G_RecalcRouting( ent );
 			G_FreeEdict( ent );
-		}
-		else ent->HP -= damage;
+		} else
+			ent->HP -= damage;
 		return;
 	}
 
@@ -1568,12 +1599,13 @@ void G_SplashDamage( edict_t *ent, fireDef_t *fd, vec3_t impact )
 		if ( !check->inuse )
 			continue;
 
-		if ( check->type == ET_ACTOR ) VectorCopy( check->origin, center );
+		if ( check->type == ET_ACTOR || check->type == ET_UGV )
+			VectorCopy( check->origin, center );
 		else if ( check->type == ET_BREAKABLE ) {
 			VectorAdd( check->absmin, check->absmax, center );
 			VectorScale( center, 0.5, center );
-		}
-		else continue;
+		} else
+			continue;
 
 		/* check for distance */
 		dist = VectorDist( impact, center );
@@ -1582,18 +1614,18 @@ void G_SplashDamage( edict_t *ent, fireDef_t *fd, vec3_t impact )
 			continue;
 
 		/* FIXME: don't make aliens in back visible */
-		if ( fd->irgoggles && check->type == ET_ACTOR ) {
+		if ( fd->irgoggles && (check->type == ET_ACTOR || check->type == ET_UGV)) {
 			G_AppearPerishEvent( G_VisToPM( ~check->visflags ), 1, check );
 			check->visflags |= ~check->visflags;
 			continue;
-		} else if ( fd->stun && check->type == ET_ACTOR ) {
+		} else if ( fd->stun && (check->type == ET_ACTOR || check->type == ET_UGV) ) {
 			damage = (fd->spldmg[0] + fd->spldmg[1] * crand()) * (1.0 - dist / fd->splrad);
 			G_DamageStun( check, fd->dmgtype, damage, ent );
 			continue;
 		}
 
 		/* check for walls */
-		if ( check->type == ET_ACTOR && !G_ActorVis( impact, check, qfalse ) )
+		if ( (check->type == ET_ACTOR || check->type == ET_UGV) && !G_ActorVis( impact, check, qfalse ) )
 			continue;
 
 		/* do damage */
@@ -1677,13 +1709,15 @@ void G_ShootGrenade( player_t *player, edict_t *ent, fireDef_t *fd, int type, ve
 					mask |= 1 << i;
 
 			if ( VectorLength( curV ) < GRENADE_STOPSPEED || time > fd->range || bounce > fd->bounce ||
-				( !fd->delay && tr.ent && tr.ent->type == ET_ACTOR ) ) {
+				( !fd->delay && tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV) ) ) {
 				/* explode */
 				gi.AddEvent( G_VisToPM( mask ), EV_ACTOR_THROW );
 				gi.WriteShort( dt*1000 );
 				gi.WriteByte( type );
-				if ( tr.ent && tr.ent->type == ET_ACTOR ) gi.WriteByte( SF_BODY );
-				else gi.WriteByte( SF_IMPACT );
+				if ( tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV) )
+					gi.WriteByte( SF_BODY );
+				else
+					gi.WriteByte( SF_IMPACT );
 				gi.WritePos( last );
 				gi.WritePos( startV );
 
@@ -1767,9 +1801,12 @@ void G_ShootSingle( edict_t *ent, fireDef_t *fd, int type, vec3_t from, pos3_t a
 
 		/* set flags */
 		if ( tr.fraction < 1.0 ) {
-			if ( tr.ent && tr.ent->type == ET_ACTOR && !fd->delay ) flags |= SF_BODY;
-			else if ( bounce < fd->bounce ) flags |= SF_BOUNCING;
-			else flags |= SF_IMPACT;
+			if ( tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV) && !fd->delay )
+				flags |= SF_BODY;
+			else if ( bounce < fd->bounce )
+				flags |= SF_BOUNCING;
+			else
+				flags |= SF_IMPACT;
 		}
 
 		/* calculate additional visibility */
@@ -1778,7 +1815,7 @@ void G_ShootSingle( edict_t *ent, fireDef_t *fd, int type, vec3_t from, pos3_t a
 				mask |= 1 << i;
 
 		/* victims see shots */
-		if ( tr.ent && tr.ent->type == ET_ACTOR )
+		if ( tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV) )
 			mask |= 1 << tr.ent->team;
 
 		/* send shot */
@@ -1805,7 +1842,7 @@ void G_ShootSingle( edict_t *ent, fireDef_t *fd, int type, vec3_t from, pos3_t a
 		damage = fd->damage[0] + fd->damage[1] * crand();
 
 		/* do damage */
-		if ( tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_BREAKABLE ) ) {
+		if ( tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV || tr.ent->type == ET_BREAKABLE ) ) {
 			G_Damage( tr.ent, fd->dmgtype, damage, ent );
 			break;
 		}
@@ -2027,7 +2064,7 @@ void G_KillTeam( void )
 	gi.dprintf("G_KillTeam: kill team %i\n", teamToKill );
 
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
-		if ( ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) ) {
+		if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) ) {
 			if ( teamToKill >= 0 && ent->team != teamToKill )
 				continue;
 
@@ -2054,7 +2091,7 @@ qboolean G_ReactionFire( edict_t *target )
 
 	fired = qfalse;
 	for ( i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++ )
-		if ( ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && (ent->state & STATE_SHAKEN) ) {
+		if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && (ent->state & STATE_SHAKEN) ) {
 			actorVis = G_ActorVis( ent->origin, target, qtrue );
 			frustom = G_FrustomVis( ent, target->origin );
 			if ( actorVis > 0.4 && frustom ) {
@@ -2066,7 +2103,8 @@ qboolean G_ReactionFire( edict_t *target )
 
 				/* get player */
 				player = game.players + ent->pnum;
-				if ( !player ) continue;
+				if ( !player )
+					continue;
 
 				/* change active team for this shot only */
 				team = level.activeTeam;
@@ -2186,8 +2224,10 @@ void G_GetTeam( player_t *player )
 		/* set the team specified in the userinfo */
 		gi.dprintf( "Get a team for teamplay\n" );
 		i = atoi( Info_ValueForKey( player->pers.userinfo, "teamnum" ) );
-		if ( i > 0 ) player->pers.team = i;
-		else player->pers.team = 1;
+		if ( i > 0 )
+			player->pers.team = i;
+		else
+			player->pers.team = 1;
 	} else {
 		/* search team */
 		gi.dprintf( "Get a team for multiplayer\n" );
@@ -2202,7 +2242,8 @@ void G_GetTeam( player_t *player )
 						/* team already in use */
 						break;
 					}
-				if ( j >= game.maxplayers ) break;
+				if ( j >= game.maxplayers )
+					break;
 			}
 
 		/* set the team */
@@ -2216,7 +2257,8 @@ void G_GetTeam( player_t *player )
 				}
 			player->pers.team = i;
 		}
-		else player->pers.team = -1;
+		else
+			player->pers.team = -1;
 	}
 }
 
@@ -2241,7 +2283,9 @@ void G_ClientTeamInfo( player_t *player )
 
 	/* find actors */
 	for ( j = 0, ent = g_edicts; j < globals.num_edicts; j++, ent++ )
-		if ( ent->type == ET_ACTORSPAWN && player->pers.team == ent->team )
+		if ( ((ent->fieldSize == ACTOR_SIZE_NORMAL && ent->type == ET_ACTORSPAWN)
+		  || (ent->fieldSize == ACTOR_SIZE_UGV && ent->type == ET_UGVSPAWN) )
+		  && player->pers.team == ent->team )
 			break;
 
 	memset( count, 0, sizeof( count ) );
@@ -2250,8 +2294,21 @@ void G_ClientTeamInfo( player_t *player )
 			/* here the actors actually spawn */
 			level.num_alive[ent->team]++;
 			level.num_spawned[ent->team]++;
-			ent->type = ET_ACTOR;
 			ent->pnum = player->num;
+			ent->chr.fieldSize = gi.ReadByte();
+			ent->fieldSize = ent->chr.fieldSize;
+			switch(ent->fieldSize) {
+			case ACTOR_SIZE_NORMAL:
+				ent->type = ET_ACTOR;
+				break;
+			case ACTOR_SIZE_UGV:
+				ent->type = ET_UGV;
+				ent->morale = 100;
+				break;
+			default:
+				gi.dprintf( "G_ClientTeamInfo: unknown edict fieldSize (%i)\n", ent->fieldSize );
+				break;
+			}
 			gi.linkentity( ent );
 
 			/* model */
@@ -2274,7 +2331,8 @@ void G_ClientTeamInfo( player_t *player )
 			ent->HP = GET_HP( ent->chr.skills[ABILITY_POWER] );
 			ent->AP = 100;
 			ent->STUN = 100;
-			ent->morale = GET_MORALE( ent->chr.skills[ABILITY_MIND] );
+			if ( ent->type == ET_ACTOR )
+				ent->morale = GET_MORALE( ent->chr.skills[ABILITY_MIND] );
 
 			/* inventory */
 			item.t = gi.ReadByte();
@@ -2300,10 +2358,13 @@ void G_ClientTeamInfo( player_t *player )
 		} else {
 			/* just do nothing with the info */
 			gi.ReadShort();
-			for ( k = 0; k < 4; k++ ) gi.ReadString();
+			for ( k = 0; k < 4; k++ )
+				gi.ReadString();
 			gi.ReadByte();
-			for (k = 0; k<SKILL_NUM_TYPES; k++) gi.ReadByte();
-			for (k = 0; k<KILLED_NUM_TYPES; k++) gi.ReadShort();
+			for (k = 0; k<SKILL_NUM_TYPES; k++)
+				gi.ReadByte();
+			for (k = 0; k<KILLED_NUM_TYPES; k++)
+				gi.ReadShort();
 			gi.ReadShort();
 			while ( gi.ReadByte() != NONE );
 		}

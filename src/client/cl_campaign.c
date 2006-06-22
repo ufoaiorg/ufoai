@@ -2196,7 +2196,7 @@ void CL_GameAutoGo(void)
 	/* add recruits */
 	if (won && mis->recruits)
 		for (i = 0; i < mis->recruits; i++)
-			CL_GenerateCharacter(curCampaign->team, baseCurrent);
+			CL_GenerateCharacter(curCampaign->team, baseCurrent, ET_ACTOR);
 
 	/* campaign effects */
 	selMis->cause->done++;
@@ -2245,7 +2245,7 @@ void CL_CollectAliens(mission_t * mission)
 		if (!le->inuse)
 			continue;
 
-		if (le->type == ET_ACTOR && le->team == TEAM_ALIEN) {
+		if ((le->type == ET_ACTOR || le->type == ET_UGV) && le->team == TEAM_ALIEN) {
 			if (le->state & STATE_STUN) {
 				/* a stunned actor */
 				for (j = 0, td = teamDesc; j < numTeamDesc; j++) {
@@ -2326,6 +2326,7 @@ void CL_CollectItems(int won)
 				CL_CollectItemAmmo(item, 0);
 			break;
 		case ET_ACTOR:
+		case ET_UGV:
 			if (le->state & STATE_DEAD)
 				break;
 			for (container = 0; container < csi.numIDs; container++)
@@ -2453,7 +2454,7 @@ void CL_GameResultsCmd(void)
 	/* add recruits */
 	if (won && selMis->def->recruits)
 		for (i = 0; i < selMis->def->recruits; i++)
-			CL_GenerateCharacter(curCampaign->team, baseCurrent);
+			CL_GenerateCharacter(curCampaign->team, baseCurrent, ET_ACTOR);
 
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won);

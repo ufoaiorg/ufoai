@@ -540,7 +540,7 @@ void CL_EntPerish( sizebuf_t *sb )
 	}
 
 	/* count spotted aliens */
-	if ( le->type == ET_ACTOR && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN )
+	if ( (le->type == ET_ACTOR || le->type == ET_UGV) && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN )
 		cl.numAliensSpotted--;
 
 	Com_DestroyInventory( &le->i );
@@ -551,7 +551,7 @@ void CL_EntPerish( sizebuf_t *sb )
 			actor->i.c[csi.idFloor] = NULL;
 	}
 
-	if ( le->type == ET_ACTOR )
+	if ( le->type == ET_ACTOR || le->type == ET_UGV )
 		CL_RemoveActorFromTeamList( le );
 
 	le->inuse = qfalse;
@@ -603,7 +603,13 @@ void CL_ActorAppear( sizebuf_t *sb )
 		&le->right, &le->left,
 		&modelnum1, &modelnum2, &le->skinnum, &le->state, &le->fieldSize );
 
-	le->type = ET_ACTOR;
+	if ( le->fieldSize == ACTOR_SIZE_NORMAL ) {
+		le->addFunc = CL_AddActor;
+		le->type = ET_ACTOR;
+	} else {
+		le->addFunc = CL_AddUGV;
+		le->type = ET_UGV;
+	}
 	le->modelnum1 = modelnum1;
 	le->modelnum2 = modelnum2;
 	le->model1 = cl.model_draw[ modelnum1 ];
@@ -615,7 +621,6 @@ void CL_ActorAppear( sizebuf_t *sb )
 	VectorCopy( player_mins, le->mins );
 	VectorCopy( player_maxs, le->maxs );
 
-	le->addFunc = CL_AddActor;
 	le->think = LET_StartIdle;
 
 	/* count spotted aliens */
@@ -771,7 +776,8 @@ void CL_PlaceItem( le_t *le )
 	{
 		/* search an owner */
 		actor = LE_Find( ET_ACTOR, le->pos );
-		if ( actor ) actor->i.c[csi.idFloor] = le->i.c[csi.idFloor];
+		if ( actor )
+			actor->i.c[csi.idFloor] = le->i.c[csi.idFloor];
 	}
 	if ( le->i.c[csi.idFloor] ) {
 		biggest = CL_BiggestItem( le->i.c[csi.idFloor] );
@@ -819,6 +825,7 @@ void CL_InvAdd( sizebuf_t *sb )
 
 	switch ( le->type ) {
 	case ET_ACTOR:
+	case ET_UGV:
 		le->think = LET_StartIdle;
 		break;
 	case ET_ITEM:
@@ -856,6 +863,7 @@ void CL_InvDel( sizebuf_t *sb )
 
 	switch ( le->type ) {
 	case ET_ACTOR:
+	case ET_UGV:
 		le->think = LET_StartIdle;
 		break;
 	case ET_ITEM:
@@ -890,7 +898,8 @@ void CL_InvAmmo( sizebuf_t *sb )
 		return;
 
 	ic = Com_SearchInInventory( &le->i, container, x, y );
-	if ( !ic ) return;
+	if ( !ic )
+		return;
 
 	/* if we're reloading and the displaced clip had any remaining */
 	/* bullets, store them as loose */
@@ -954,7 +963,8 @@ void CL_ParseEvent( void )
 			now = qtrue;
 			eType &= ~INSTANTLY;
 		}
-		else now = qfalse;
+		else
+			now = qfalse;
 
 		/* check if eType is valid */
 		if ( eType < 0 || eType >= EV_NUM_EVENTS )
@@ -974,7 +984,7 @@ void CL_ParseEvent( void )
 			ev_func[eType]( &net_message );
 			net_message.readcount = next;
 		} else {
-			int		length;
+			int length;
 
 			/* store data */
 			length = MSG_LengthFormat( &net_message, ev_format[eType] );
@@ -985,9 +995,12 @@ void CL_ParseEvent( void )
 			/* get event time */
 			if ( nextTime < cl.eventTime ) nextTime = cl.eventTime;
 
-			if ( eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE ) time = impactTime;
-			else if ( eType == EV_ACTOR_SHOOT ) time = shootTime;
-			else time = nextTime;
+			if ( eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE )
+				time = impactTime;
+			else if ( eType == EV_ACTOR_SHOOT )
+				time = shootTime;
+			else
+				time = nextTime;
 
 			/* store old readcount */
 			oldCount = net_message.readcount;
@@ -1009,7 +1022,8 @@ void CL_ParseEvent( void )
 					if ( !flags ) {
 						fireDef_t *fd;
 						fd = GET_FIREDEF( MSG_ReadByte( &net_message ) );
-						if ( fd->rof ) nextTime += 1000 / fd->rof;
+						if ( fd->rof )
+							nextTime += 1000 / fd->rof;
 					} else nextTime += 500;
 						shootTime = nextTime;
 					break;
@@ -1030,15 +1044,21 @@ void CL_ParseEvent( void )
 					fd = GET_FIREDEF( type );
 					if ( !(flags & SF_BOUNCED) ) {
 						/* shooting */
-						if ( fd->speed ) impactTime = shootTime + 1000 * VectorDist( muzzle, impact ) / fd->speed;
-						else impactTime = shootTime;
-						if ( cl.actTeam != cls.team ) nextTime = shootTime + 1400;
-						else nextTime = shootTime + 400;
-						if ( fd->rof ) shootTime += 1000 / fd->rof;
+						if ( fd->speed )
+							impactTime = shootTime + 1000 * VectorDist( muzzle, impact ) / fd->speed;
+						else
+							impactTime = shootTime;
+						if ( cl.actTeam != cls.team )
+							nextTime = shootTime + 1400;
+						else
+							nextTime = shootTime + 400;
+						if ( fd->rof )
+							shootTime += 1000 / fd->rof;
 					} else {
 						/* only a bounced shot */
 						time = impactTime;
-						if ( fd->speed ) impactTime += 1000 * VectorDist( muzzle, impact ) / fd->speed;
+						if ( fd->speed )
+							impactTime += 1000 * VectorDist( muzzle, impact ) / fd->speed;
 					}
 				}
 				break;
@@ -1051,11 +1071,12 @@ void CL_ParseEvent( void )
 			/* add to timetable */
 			last = NULL;
 			for ( et = etCurrent; et; et = et->next ) {
-				if ( et->start > time ) break;
+				if ( et->start > time )
+					break;
 				last = et;
 			}
 
-			if ( !etUnused ) 
+			if ( !etUnused )
 				Com_Error( ERR_DROP, "CL_ParseEvent: timetable overflow\n" );
 			cur = etUnused;
 			etUnused = cur->next;

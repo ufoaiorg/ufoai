@@ -121,9 +121,7 @@ typedef enum {qfalse, qtrue}	qboolean;
 #define	MAX_QPATH			64		/* max length of a quake game pathname */
 #define	MAX_OSPATH			128		/* max length of a filesystem pathname */
 
-/* */
 /* per-level limits */
-/* */
 #define MAX_TILESTRINGS		8
 #define MAX_TEAMS			8
 #define	MAX_CLIENTS			256		/* absolute limit */
@@ -352,9 +350,7 @@ char	*va(char *format, ...);
 
 /*============================================= */
 
-/* */
 /* key / value info strings */
-/* */
 #define	MAX_INFO_KEY		64
 #define	MAX_INFO_VALUE		64
 #define	MAX_INFO_STRING		512
@@ -794,7 +790,9 @@ typedef enum {
 	ET_ACTORSPAWN,
 	ET_ACTOR,
 	ET_ITEM,
-	ET_BREAKABLE
+	ET_BREAKABLE,
+	ET_UGVSPAWN,
+	ET_UGV
 } entity_type_t;
 
 
@@ -1050,6 +1048,7 @@ typedef struct character_s
 	/* *------------------** */
 	/* *------------------** */
 
+	int	fieldSize; /* ACTOR_SIZE_* */
 	inventory_t *inv;
 } character_t;
 
@@ -1106,8 +1105,6 @@ typedef enum {
 #define	ANGLE2SHORT(x)	((int)((x)*65536/360) & 65535)
 #define	SHORT2ANGLE(x)	((x)*(360.0/65536))
 
-/* */
-
 #define EYE_STAND		15
 #define EYE_CROUCH		3
 #define PLAYER_STAND	20
@@ -1121,15 +1118,11 @@ typedef enum {
 #define BOX_DELTA_LENGTH 11
 #define BOX_DELTA_HEIGHT 27
 
-/* */
-
 #define GRAVITY			500.0
 
-/* */
 /* config strings are a general means of communication from */
 /* the server to all connected clients. */
 /* Each config string can be at most MAX_QPATH characters. */
-/* */
 #define	CS_NAME				0
 #define	CS_CDTRACK			1
 #define	CS_STATUSBAR		2		/* display program string */
@@ -1153,9 +1146,7 @@ typedef enum {
 void Com_InventoryList_f ( void );
 /*============================================== */
 
-/* */
 /* g_spawn.c */
-/* */
 
 /* NOTE: this only allows quadratic units? */
 typedef enum {

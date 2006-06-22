@@ -117,6 +117,50 @@ void CL_CharacterCvars(character_t *chr)
 }
 
 /**
+ * @brief Updates the UGV cvars for the given "character".
+ *
+ *
+ */
+void CL_UGVCvars(character_t *chr)
+{
+	assert(chr);
+
+	Cvar_ForceSet("mn_name", chr->name);
+	Cvar_ForceSet("mn_body", Com_CharGetBody(chr));
+	Cvar_ForceSet("mn_head", Com_CharGetHead(chr));
+	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
+	Cvar_ForceSet("mn_skinname", _(teamSkinNames[chr->skin]));
+
+	Cvar_Set("mn_chrmis", va("%i", chr->assigned_missions));
+	Cvar_Set("mn_chrkillalien", va("%i", chr->kills[KILLED_ALIENS]));
+	Cvar_Set("mn_chrkillcivilian", va("%i", chr->kills[KILLED_CIVILIANS]));
+	Cvar_Set("mn_chrkillteam", va("%i", chr->kills[KILLED_TEAM]));
+	Cvar_Set("mn_chrrank_img", "");
+	Cvar_Set("mn_chrrank", "");
+	Cvar_Set("mn_chrrank_img", "");
+
+	Cvar_Set("mn_vpwr", va("%i", chr->skills[ABILITY_POWER]));
+	Cvar_Set("mn_vspd", va("%i", chr->skills[ABILITY_SPEED]));
+	Cvar_Set("mn_vacc", va("%i", chr->skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_vmnd", "0");
+	Cvar_Set("mn_vcls", va("%i", chr->skills[SKILL_CLOSE]));
+	Cvar_Set("mn_vhvy", va("%i", chr->skills[SKILL_HEAVY]));
+	Cvar_Set("mn_vass", va("%i", chr->skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_vprc", va("%i", chr->skills[SKILL_PRECISE]));
+	Cvar_Set("mn_vexp", va("%i", chr->skills[SKILL_EXPLOSIVE]));
+
+	Cvar_Set("mn_tpwr", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
+	Cvar_Set("mn_tspd", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_SPEED]), chr->skills[ABILITY_SPEED]));
+	Cvar_Set("mn_tacc", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_ACCURACY]), chr->skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_tmnd", va("%s (0)", SKILL_TO_STRING(chr->skills[ABILITY_MIND])));
+	Cvar_Set("mn_tcls", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_CLOSE]), chr->skills[SKILL_CLOSE]));
+	Cvar_Set("mn_thvy", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_HEAVY]), chr->skills[SKILL_HEAVY]));
+	Cvar_Set("mn_tass", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_tprc", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_PRECISE]), chr->skills[SKILL_PRECISE]));
+	Cvar_Set("mn_texp", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
+}
+
+/**
  * @brief Updates the global character cvars.
  *
  *
@@ -223,14 +267,11 @@ static void CL_RefreshWeaponButtons(int time)
 
 /**
  * @brief Used in CL_ActorUpdateCVars.
- *
- * TODO: Should this be static?
  */
-char infoText[MAX_MENUTEXTLEN];
+static char infoText[MAX_MENUTEXTLEN];
 
 /**
  * @brief Updates console vars for an actor.
- *
  */
 void CL_ActorUpdateCVars(void)
 {
@@ -571,8 +612,13 @@ qboolean CL_ActorSelect(le_t * le)
 		if (cl.teamList[i] == le) {
 			/* console commands, update cvars */
 			Cvar_ForceSet("cl_selected", va("%i", i));
-			selChr = &baseCurrent->curTeam[i];
-			CL_CharacterCvars(selChr);
+			if ( le->fieldSize == ACTOR_SIZE_NORMAL ) {
+				selChr = &baseCurrent->curTeam[i];
+				CL_CharacterCvars(selChr);
+			} else {
+				selChr = &baseCurrent->curTeam[i];
+				CL_UGVCvars(selChr);
+			}
 
 			/* calculate possible moves */
 			CL_BuildForbiddenList();
@@ -655,19 +701,19 @@ void CL_BuildForbiddenList(void)
 	fb_length = 0;
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && !(le->state & STATE_DEAD) && le->type == ET_ACTOR) {
-			if (le->fieldSize < 2) {
+		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_UGV) ) {
+			if (le->fieldSize == ACTOR_SIZE_NORMAL) {
 				fb_list[fb_length++] = le->pos;
 			} else {
 				/* FIXME: remove me after getting this stuff ready */
 				Com_DPrintf("...unit bigger that 1 field (%i)\n", le->fieldSize);
-			}
-			/* we don't need the height value because */
-			/* the unit is always on the same level */
-			for (j = 0; j < le->fieldSize; j++) {
-				for (k = 0; k < le->fieldSize; k++) {
-					/* FIXME: put all vec3_t's in here */
-					fb_list[fb_length++] = le->pos;
+				/* we don't need the height value because */
+				/* the unit is always on the same level */
+				for (j = 0; j < le->fieldSize; j++) {
+					for (k = 0; k < le->fieldSize; k++) {
+						/* FIXME: put all vec3_t's in here */
+						fb_list[fb_length++] = le->pos;
+					}
 				}
 			}
 		}
@@ -690,8 +736,7 @@ int CL_CheckAction(void)
 		return qfalse;
 	}
 
-/*	if ( blockEvents )
-	{
+/*	if ( blockEvents ) {
 		Com_Printf( "Can't do that right now.\n" );
 		return qfalse;
 	}
@@ -991,9 +1036,9 @@ void CL_ActorToggleReaction(void)
 /**
  * @brief Records if shot is first shot.
  *
- * TODO: This looks very out of place. Code probably needs reworking. Should probably atleast be static.
+ * TODO: This looks very out of place. Code probably needs reworking.
  */
-qboolean firstShot;
+static qboolean firstShot = qfalse;
 
 /**
  * @brief Shoot with weapon.
@@ -1344,7 +1389,7 @@ void CL_ActorMouseTrace(void)
 	/* search for an actor on this field */
 	mouseActor = NULL;
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && !(le->state & STATE_DEAD) && le->type == ET_ACTOR && VectorCompare(le->pos, mousePos)) {
+		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_UGV) && VectorCompare(le->pos, mousePos)) {
 			mouseActor = le;
 			break;
 		}
@@ -1421,6 +1466,8 @@ qboolean CL_AddActor(le_t * le, entity_t * ent)
 
 	/* add actor special effects */
 	ent->flags |= RF_SHADOW;
+	Com_DPrintf("CL_AddActor: FieldSize (le): %i\n", le->fieldSize);
+	le->fieldSize = ACTOR_SIZE_UGV;
 
 	if (!(le->state & STATE_DEAD)) {
 		if (le->selected)
@@ -1436,6 +1483,73 @@ qboolean CL_AddActor(le_t * le, entity_t * ent)
 	return qtrue;
 }
 
+/**
+ * @brief Adds an UGV.
+ */
+qboolean CL_AddUGV(le_t * le, entity_t * ent)
+{
+	entity_t add;
+
+	if (!(le->state & STATE_DEAD)) {
+		/* add weapon */
+		if (le->left != NONE) {
+			memset(&add, 0, sizeof(entity_t));
+
+			add.lightparam = &le->sunfrac;
+			add.model = cl.model_weapons[le->left];
+
+			add.tagent = V_GetEntity() + 2 + (le->right != NONE);
+			add.tagname = "tag_lweapon";
+
+			V_AddEntity(&add);
+		}
+
+		/* add weapon */
+		if (le->right != NONE) {
+			memset(&add, 0, sizeof(entity_t));
+
+			add.lightparam = &le->sunfrac;
+			add.alpha = le->alpha;
+			add.model = cl.model_weapons[le->right];
+
+			add.tagent = V_GetEntity() + 2;
+			add.tagname = "tag_rweapon";
+
+			V_AddEntity(&add);
+		}
+	}
+
+	/* add head */
+	memset(&add, 0, sizeof(entity_t));
+
+	add.lightparam = &le->sunfrac;
+	add.alpha = le->alpha;
+	add.model = le->model2;
+	add.skinnum = le->skinnum;
+
+	add.tagent = V_GetEntity() + 1;
+	add.tagname = "tag_head";
+
+	V_AddEntity(&add);
+
+	/* add actor special effects */
+	ent->flags |= RF_SHADOW;
+	Com_DPrintf("CL_AddUGV: FieldSize (le): %i\n", le->fieldSize);
+	le->fieldSize = ACTOR_SIZE_UGV;
+
+	if (!(le->state & STATE_DEAD)) {
+		if (le->selected)
+			ent->flags |= RF_SELECTED;
+		if (cl_markactors->value && le->team == cls.team) {
+			if (le->pnum == cl.pnum)
+				ent->flags |= RF_MEMBER;
+			if (le->pnum != cl.pnum)
+				ent->flags |= RF_ALLIED;
+		}
+	}
+
+	return qtrue;
+}
 
 /*
 ==============================================================
