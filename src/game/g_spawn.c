@@ -286,7 +286,6 @@ void SpawnEntities (char *mapname, char *entities)
 	ent = NULL;
 	level.activeTeam = -1;
 
-	gi.dprintf("SpawnEntities: %s\n", entities);
 	/* parse ents */
 	entnum = 0;
 	while (1) {
