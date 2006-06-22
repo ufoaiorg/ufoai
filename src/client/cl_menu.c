@@ -1988,7 +1988,6 @@ void MN_DrawMenus(void)
 					} else
 						menuModel = node->menuModel;
 
-
 					mi.name = source;
 
 					mi.origin = node->origin;

@@ -252,6 +252,7 @@ static void B_ConstructBuilding(void)
 	/*enough credits to build this? */
 	if (ccs.credits - baseCurrent->buildingCurrent->fixCosts < 0) {
 		MN_Popup(_("Notice"), _("Not enough credits to build this\n"));
+		Com_DPrintf("B_ConstructBuilding: Not enough credits to build: '%s'\n", baseCurrent->buildingCurrent->id);
 		return;
 	}
 

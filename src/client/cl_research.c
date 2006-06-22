@@ -222,7 +222,6 @@ void RS_InitTree(void)
 		/* link idx entries to tech provided by id */
 		required = &tech->requires;
 		for (j = 0; j < required->numEntries; j++) {
-			Com_DPrintf("RS_InitTree: linking....\"%s\"\n", required->string[j]);
 			tech_required = RS_GetTechByID(required->string[j]);
 			if (tech_required) {
 				required->idx[j] = tech_required->idx;
@@ -258,8 +257,8 @@ void RS_InitTree(void)
 							for (k = 0; k < csi.numODs; k++) {
 								item_ammo = &csi.ods[k];
 								if (j == item_ammo->link) {
-									Com_DPrintf("RS_InitTree: Ammo \"%s\" for \"%s\" found.\n", item_ammo->name, item->name);
 									Com_sprintf(tech->mdl_bottom, MAX_VAR, item_ammo->model);
+									break;
 								}
 							}
 						}
@@ -318,6 +317,9 @@ void RS_InitTree(void)
 			break;
 		case RS_ALIEN:
 			/* does nothing right now */
+			break;
+		case RS_UGV:
+			/* TODO: Implement me */
 			break;
 		}						/* switch */
 	}
@@ -1005,6 +1007,9 @@ static void RS_TechnologyList_f(void)
 		case RS_BUILDING:
 			Com_Printf("building");
 			break;
+		case RS_UGV:
+			Com_Printf("ugv");
+			break;
 		default:
 			break;
 		}
@@ -1209,6 +1214,8 @@ void RS_ParseTechnologies(char *id, char **text)
 				tech->type = RS_BUILDING;
 			else if (!Q_strncmp(token, "alien", MAX_VAR))
 				tech->type = RS_ALIEN;
+			else if (!Q_strncmp(token, "ugv", MAX_VAR))
+				tech->type = RS_UGV;
 			else
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token);
 		} else {
