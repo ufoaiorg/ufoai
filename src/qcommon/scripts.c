@@ -561,10 +561,9 @@ int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *n
 
 	/* get team definition */
 	for ( i = 0; i < numTeamDefs; i++ )
-		if ( !Q_strncmp( team, teamDef[i].title, MAX_VAR ) ) {
-			Com_DPrintf("Found teamDefinition %s\n", team);
+		if ( !Q_strncmp( team, teamDef[i].title, MAX_VAR ) )
 			break;
-		}
+
 	if ( i < numTeamDefs )
 		td = &teamDef[i];
 	else {
@@ -660,38 +659,46 @@ void Com_ParseNames( char *title, char **text )
 
 	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseNames: name def \"%s\" without body ignored\n", title );
-		if ( numNameCats - 1 == nc - nameCat ) numNameCats--;
+		if ( numNameCats - 1 == nc - nameCat )
+			numNameCats--;
 		return;
 	}
 
 	do {
 		/* get the name type */
 		token = COM_EParse( text, errhead, title );
-		if ( !*text ) break;
-		if ( *token == '}' ) break;
+		if ( !*text )
+			break;
+		if ( *token == '}' )
+			break;
 
 		for ( i = 0; i < NAME_NUM_TYPES; i++ )
-			if ( !Q_strcmp( token, name_strings[i] ) )
-			{
+			if ( !Q_strcmp( token, name_strings[i] ) ) {
 				/* initialize list */
 				nc->names[i] = infoPos;
 				nc->numNames[i] = 0;
 
 				token = COM_EParse( text, errhead, title );
-				if ( !*text ) break;
-				if ( *token != '{' ) break;
+				if ( !*text )
+					break;
+				if ( *token != '{' )
+					break;
 
 				do {
 					/* get a name */
 					token = COM_EParse( text, errhead, title );
-					if ( !*text ) break;
-					if ( *token == '}' ) break;
+					if ( !*text )
+						break;
+					if ( *token == '}' )
+						break;
 
+					/* some names can be translateable */
+					if ( *token == '_' )
+						token++;
 					strcpy( infoPos, token );
 					infoPos += strlen( token ) + 1;
 					nc->numNames[i]++;
-				}
-				while ( *text );
+				} while ( *text );
 
 				/* lastname is different */
 				if ( i == NAME_LAST )
