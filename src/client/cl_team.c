@@ -1227,14 +1227,16 @@ void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 		do {
 			/* get the name type */
 			token = COM_EParse( text, errhead, title );
-			if ( !*text ) break;
-			if ( *token == '}' ) break;
+			if ( !*text )
+				break;
+			if ( *token == '}' )
+				break;
 			for ( v = rankValues; v->string; v++ )
 				if ( !Q_strncmp( token, v->string, sizeof(v->string) ) ) {
 					/* found a definition */
 					token = COM_EParse( text, errhead, title );
-					if ( !*text ) return;
-
+					if ( !*text )
+						return;
 					Com_ParseValue( rank, token, v->type, v->ofs );
 					break;
 				}
@@ -1245,4 +1247,65 @@ void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 	} else {
 		/* parse medals */
 	}
+}
+
+#define	PARSEUGV(x)	(int)&(((ugv_t *)0)->x)
+
+value_t ugvValues[] =
+{
+	{ "tu",	V_INT,			PARSEUGV( tu ) },
+	{ "weapon",	V_STRING,	PARSEUGV( weapon ) },
+	{ "armor",	V_STRING,	PARSEUGV( armor ) },
+	{ "size",	V_INT,		PARSEUGV( size ) },
+
+	{ NULL,	0, 0 }
+};
+
+/**
+  * @brief Parse UGVs
+  */
+void CL_ParseUGVs(char *title, char **text)
+{
+	char	*errhead = "Com_ParseUGVs: unexptected end of file (ugv ";
+	char	*token;
+	value_t	*v;
+	ugv_t*	ugv;
+
+	/* get name list body body */
+	token = COM_Parse( text );
+
+	if ( !*text || *token != '{' ) {
+		Com_Printf( "Com_ParseUGVs: ugv \"%s\" without body ignored\n", title );
+		return;
+	}
+
+	/* parse ugv */
+	if ( gd.numUGV >= MAX_UGV ) {
+		Com_Printf( "Too many UGV descriptions, '%s' ignored.\n", title );
+		gd.numUGV = MAX_UGV;
+		return;
+	}
+
+	ugv = &gd.ugvs[gd.numUGV++];
+	memset( ugv, 0, sizeof( ugv_t ) );
+
+	do {
+		/* get the name type */
+		token = COM_EParse( text, errhead, title );
+		if ( !*text )
+			break;
+		if ( *token == '}' )
+			break;
+		for ( v = ugvValues; v->string; v++ )
+			if ( !Q_strncmp( token, v->string, sizeof(v->string) ) ) {
+				/* found a definition */
+				token = COM_EParse( text, errhead, title );
+				if ( !*text )
+					return;
+				Com_ParseValue( ugv, token, v->type, v->ofs );
+				break;
+			}
+			if ( !v->string )
+				Com_Printf( "Com_ParseUGVs: unknown token \"%s\" ignored (ugv %s)\n", token, title );
+	} while ( *text );
 }

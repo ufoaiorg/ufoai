@@ -112,6 +112,9 @@ typedef struct globalData_s
 	/* The number of entries in the list above. */
 	int numRanks;
 
+	ugv_t ugvs[MAX_UGV];
+	int numUGV;
+
 	/* TODO
 		craftupgrade_t craftupgrades[MAX_CRAFTUPGRADES];
 		int    numCraftUpgrades;

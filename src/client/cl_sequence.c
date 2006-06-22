@@ -847,6 +847,8 @@ void CL_Video_f(void)
 			return;
 		}
 	}
+	/* create path if it does not exists */
+	FS_CreatePath(filename);
 	CL_OpenAVIForWriting(filename);
 }
 

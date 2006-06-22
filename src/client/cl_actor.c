@@ -1782,12 +1782,22 @@ void CL_AddTargeting(void)
 			ent.alpha = 0.4 + 0.2 * sin((float) cl.time / 80);
 			/* paint the box red if the soldiers under the cursor is */
 			/* not in our team and no civilian, too */
-			if (mouseActor->team != cls.team && mouseActor->team != TEAM_CIVILIAN)
-				VectorSet(ent.angles, 1, 0, 0);
-			Vector2Mul(mouseActor->fieldSize, boxSize, realBoxSize);
-		} else {
-			if (selActor && selActor->fieldSize > 1)
+			if (mouseActor->team != cls.team)
+				switch (mouseActor->team) {
+				case TEAM_CIVILIAN:
+					VectorSet(ent.angles, 1, 1, 0);
+					break;
+				default:
+					VectorSet(ent.angles, 1, 0, 0);
+					break;
+				}
+			if (mouseActor && mouseActor->fieldSize > ACTOR_SIZE_NORMAL)
 				Vector2Mul(mouseActor->fieldSize, boxSize, realBoxSize);
+			else
+				VectorCopy(boxSize, realBoxSize);
+		} else {
+			if (selActor && selActor->fieldSize > ACTOR_SIZE_NORMAL)
+				Vector2Mul(selActor->fieldSize, boxSize, realBoxSize);
 			else
 				VectorCopy(boxSize, realBoxSize);
 			ent.alpha = 0.3;

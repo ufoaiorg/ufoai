@@ -986,6 +986,17 @@ typedef enum
 #define ABILITY_NUM_TYPES SKILL_CLOSE
 
 
+#define MAX_UGV			8
+typedef struct ugv_s
+{
+	char	id[MAX_VAR];
+	char	weapon[MAX_VAR];
+	char	armor[MAX_VAR];
+	int	size;
+	int	tu;
+} ugv_t;
+
+
 typedef enum
 {
 	MEDAL_CROSS,

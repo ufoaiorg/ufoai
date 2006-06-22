@@ -1026,7 +1026,7 @@ void CL_ParseClientData ( char *type, char *name, char **text )
 	else if ( !Q_strncmp( type, "sequence", 8 ) ) CL_ParseSequence(name, text);
 	else if ( !Q_strncmp(type, "aircraft", 8 ) ) CL_ParseAircraft(name, text);
 	else if ( !Q_strncmp(type, "campaign", 8 ) ) CL_ParseCampaign(name, text);
-
+	else if ( !Q_strncmp(type, "ugv", 3 ) ) CL_ParseUGVs(name, text);
 }
 
 /**
