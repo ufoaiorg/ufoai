@@ -1667,7 +1667,8 @@ void CL_Shutdown(void)
 	isdown = qtrue;
 
 	CL_WriteConfiguration();
-
+	if (CL_VideoRecording())
+		CL_CloseAVI();
 	CDAudio_Shutdown();
 	S_Shutdown();
 	IN_Shutdown();
