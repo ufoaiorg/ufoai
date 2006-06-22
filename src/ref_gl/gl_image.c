@@ -52,14 +52,11 @@ void GL_EnableMultitexture( qboolean enable )
 	if ( !qglSelectTextureSGIS && !qglActiveTextureARB )
 		return;
 
-	if ( enable )
-	{
+	if ( enable ) {
 		GL_SelectTexture( gl_texture1 );
 		qglEnable( GL_TEXTURE_2D );
 		GL_TexEnv( GL_REPLACE );
-	}
-	else
-	{
+	} else {
 		GL_SelectTexture( gl_texture1 );
 		qglDisable( GL_TEXTURE_2D );
 		GL_TexEnv( GL_REPLACE );
@@ -76,27 +73,18 @@ void GL_SelectTexture( GLenum texture )
 		return;
 
 	if ( texture == gl_texture0 )
-	{
 		tmu = 0;
-	}
 	else
-	{
 		tmu = 1;
-	}
 
 	if ( tmu == gl_state.currenttmu )
-	{
 		return;
-	}
 
 	gl_state.currenttmu = tmu;
 
-	if ( qglSelectTextureSGIS )
-	{
+	if ( qglSelectTextureSGIS ) {
 		qglSelectTextureSGIS( texture );
-	}
-	else if ( qglActiveTextureARB )
-	{
+	} else if ( qglActiveTextureARB ) {
 		qglActiveTextureARB( texture );
 		qglClientActiveTextureARB( texture );
 	}
@@ -106,8 +94,7 @@ void GL_TexEnv( GLenum mode )
 {
 	static int lastmodes[2] = { -1, -1 };
 
-	if ( mode != lastmodes[gl_state.currenttmu] )
-	{
+	if ( mode != lastmodes[gl_state.currenttmu] ) {
 		qglTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode );
 		lastmodes[gl_state.currenttmu] = mode;
 	}
@@ -127,13 +114,10 @@ void GL_Bind (int texnum)
 void GL_MBind( GLenum target, int texnum )
 {
 	GL_SelectTexture( target );
-	if ( target == gl_texture0 )
-	{
+	if ( target == gl_texture0 ) {
 		if ( gl_state.currenttextures[0] == texnum )
 			return;
-	}
-	else
-	{
+	} else {
 		if ( gl_state.currenttextures[1] == texnum )
 			return;
 	}
@@ -198,14 +182,12 @@ void GL_TextureMode( char *string )
 	int		i;
 	image_t	*glt;
 
-	for (i=0 ; i< NUM_GL_MODES ; i++)
-	{
+	for (i=0 ; i< NUM_GL_MODES ; i++) {
 		if ( !Q_stricmp( modes[i].name, string ) )
 			break;
 	}
 
-	if (i == NUM_GL_MODES)
-	{
+	if (i == NUM_GL_MODES) {
 		ri.Con_Printf (PRINT_ALL, "bad filter name\n");
 		return;
 	}
@@ -214,10 +196,8 @@ void GL_TextureMode( char *string )
 	gl_filter_max = modes[i].maximize;
 
 	/* change all the existing mipmap texture objects */
-	for (i=0, glt=gltextures ; i<numgltextures ; i++, glt++)
-	{
-		if ( glt->type != it_pic )
-		{
+	for (i=0, glt=gltextures ; i<numgltextures ; i++, glt++) {
+		if ( glt->type != it_pic ) {
 			GL_Bind (glt->texnum);
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
@@ -234,14 +214,12 @@ void GL_TextureAlphaMode( char *string )
 {
 	int		i;
 
-	for (i=0 ; i< NUM_GL_ALPHA_MODES ; i++)
-	{
+	for (i=0 ; i< NUM_GL_ALPHA_MODES ; i++) {
 		if ( !Q_stricmp( gl_alpha_modes[i].name, string ) )
 			break;
 	}
 
-	if (i == NUM_GL_ALPHA_MODES)
-	{
+	if (i == NUM_GL_ALPHA_MODES) {
 		ri.Con_Printf (PRINT_ALL, "bad alpha texture mode name\n");
 		return;
 	}
@@ -258,14 +236,12 @@ void GL_TextureSolidMode( char *string )
 {
 	int		i;
 
-	for (i=0 ; i< NUM_GL_SOLID_MODES ; i++)
-	{
+	for (i=0 ; i< NUM_GL_SOLID_MODES ; i++) {
 		if ( !Q_stricmp( gl_solid_modes[i].name, string ) )
 			break;
 	}
 
-	if (i == NUM_GL_SOLID_MODES)
-	{
+	if (i == NUM_GL_SOLID_MODES) {
 		ri.Con_Printf (PRINT_ALL, "bad solid texture mode name\n");
 		return;
 	}
@@ -283,8 +259,7 @@ void	GL_ImageList_f (void)
 	int		i;
 	image_t	*image;
 	int		texels;
-	const char *palstrings[2] =
-	{
+	const char *palstrings[2] = {
 		"RGB",
 		"PAL"
 	};
@@ -292,13 +267,11 @@ void	GL_ImageList_f (void)
 	ri.Con_Printf (PRINT_ALL, "------------------\n");
 	texels = 0;
 
-	for (i=0, image=gltextures ; i<numgltextures ; i++, image++)
-	{
+	for (i=0, image=gltextures ; i<numgltextures ; i++, image++) {
 		if (image->texnum <= 0)
 			continue;
 		texels += image->upload_width*image->upload_height;
-		switch (image->type)
-		{
+		switch (image->type) {
 		case it_skin:
 			ri.Con_Printf (PRINT_ALL, "M");
 			break;
@@ -349,23 +322,19 @@ int Scrap_AllocBlock (int w, int h, int *x, int *y)
 	int		best, best2;
 	int		texnum;
 
-	for (texnum=0 ; texnum<MAX_SCRAPS ; texnum++)
-	{
+	for (texnum=0 ; texnum<MAX_SCRAPS ; texnum++) {
 		best = BLOCK_HEIGHT;
 
-		for (i=0 ; i<BLOCK_WIDTH-w ; i++)
-		{
+		for (i=0 ; i<BLOCK_WIDTH-w ; i++) {
 			best2 = 0;
 
-			for (j=0 ; j<w ; j++)
-			{
+			for (j=0 ; j<w ; j++) {
 				if (scrap_allocated[texnum][i+j] >= best)
 					break;
 				if (scrap_allocated[texnum][i+j] > best2)
 					best2 = scrap_allocated[texnum][i+j];
 			}
-			if (j == w)
-			{	/* this is a valid spot */
+			if (j == w) {	/* this is a valid spot */
 				*x = i;
 				*y = best = best2;
 			}
@@ -420,19 +389,14 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 	*pic = NULL;
 	*palette = NULL;
 
-	/* */
 	/* load the file */
-	/* */
 	len = ri.FS_LoadFile ( filename, (void **)&raw);
-	if (!raw)
-	{
+	if (!raw) {
 		ri.Con_Printf (PRINT_DEVELOPER, "Bad pcx file %s\n", filename);
 		return;
 	}
 
-	/* */
 	/* parse the PCX file */
-	/* */
 	pcx = (pcx_t *)raw;
 
 	pcx->xmin = LittleShort(pcx->xmin);
@@ -451,8 +415,7 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 		|| pcx->encoding != 1
 		|| pcx->bits_per_pixel != 8
 		|| pcx->xmax >= 640
-		|| pcx->ymax >= 480)
-	{
+		|| pcx->ymax >= 480) {
 		ri.Con_Printf (PRINT_ALL, "Bad pcx file %s\n", filename);
 		ri.FS_FreeFile (raw);
 		return;
@@ -464,8 +427,7 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 
 	pix = out;
 
-	if (palette)
-	{
+	if (palette) {
 		*palette = malloc(768);
 		memcpy (*palette, (byte *)pcx + len - 768, 768);
 	}
@@ -475,10 +437,8 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 	if (height)
 		*height = pcx->ymax+1;
 
-	for (y=0 ; y<=pcx->ymax ; y++, pix += pcx->xmax+1)
-	{
-		for (x=0 ; x<=pcx->xmax ; )
-		{
+	for (y=0 ; y<=pcx->ymax ; y++, pix += pcx->xmax+1) {
+		for (x=0 ; x<=pcx->xmax ; ) {
 			dataByte = *raw++;
 
 			if((dataByte & 0xC0) == 0xC0)
@@ -495,8 +455,7 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 
 	}
 
-	if ( raw - (byte *)pcx > len)
-	{
+	if ( raw - (byte *)pcx > len) {
 		ri.Con_Printf (PRINT_DEVELOPER, "PCX file %s was malformed", filename);
 		free (*pic);
 		*pic = NULL;
@@ -544,8 +503,7 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 	/* load the file */
 	/* */
 	length = ri.FS_LoadFile ( name, (void **)&buffer);
-	if (!buffer)
-	{
+	if (!buffer) {
 		ri.Con_Printf (PRINT_DEVELOPER, "Bad tga file %s\n", name);
 		return;
 	}
@@ -631,8 +589,7 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 				}
 			}
 		}
-	}
-	else if (targa_header.image_type==10) {   /* Runlength encoded RGB images */
+	} else if (targa_header.image_type==10) {   /* Runlength encoded RGB images */
 		unsigned char red,green,blue,alphabyte,packetHeader,packetSize,j;
 		red=green=blue=alphabyte=0;
 		for(row=rows-1; row>=0; row--) {
@@ -673,8 +630,7 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 							pixbuf = targa_rgba + row*columns*4;
 						}
 					}
-				}
-				else {                            /* non run-length packet */
+				} else {                            /* non run-length packet */
 					for(j=0;j<packetSize;j++) {
 						switch (targa_header.pixel_size) {
 							case 24:
@@ -784,8 +740,7 @@ void LoadJPG (char *filename, byte **pic, int *width, int *height)
 	if (	rawdata[6] != 'J'
 		||	rawdata[7] != 'F'
 		||	rawdata[8] != 'I'
-		||	rawdata[9] != 'F')
-	{
+		||	rawdata[9] != 'F') {
 		ri.Con_Printf (PRINT_ALL, "Bad jpg file %s\n", filename);
 		ri.FS_FreeFile(rawdata);
 		return;
@@ -805,8 +760,7 @@ void LoadJPG (char *filename, byte **pic, int *width, int *height)
 	jpeg_start_decompress(&cinfo);
 
 	/* Check Colour Components */
-	if(cinfo.output_components != 3 && cinfo.output_components != 4)
-	{
+	if(cinfo.output_components != 3 && cinfo.output_components != 4) {
 		ri.Con_Printf(PRINT_ALL, "Invalid JPEG colour components\n");
 		jpeg_destroy_decompress(&cinfo);
 		ri.FS_FreeFile(rawdata);
@@ -815,8 +769,7 @@ void LoadJPG (char *filename, byte **pic, int *width, int *height)
 
 	/* Allocate Memory for decompressed image */
 	rgbadata = malloc(cinfo.output_width * cinfo.output_height * 4);
-	if(!rgbadata)
-	{
+	if(!rgbadata) {
 		ri.Con_Printf(PRINT_ALL, "Insufficient RAM for JPEG buffer\n");
 		jpeg_destroy_decompress(&cinfo);
 		ri.FS_FreeFile(rawdata);
@@ -828,8 +781,7 @@ void LoadJPG (char *filename, byte **pic, int *width, int *height)
 
 	/* Allocate Scanline buffer */
 	scanline = malloc(cinfo.output_width * 4);
-	if(!scanline)
-	{
+	if(!scanline) {
 		ri.Con_Printf(PRINT_ALL, "Insufficient RAM for JPEG scanline buffer\n");
 		free(rgbadata);
 		jpeg_destroy_decompress(&cinfo);
@@ -839,13 +791,11 @@ void LoadJPG (char *filename, byte **pic, int *width, int *height)
 
 	/* Read Scanlines, and expand from RGB to RGBA */
 	q = rgbadata;
-	while(cinfo.output_scanline < cinfo.output_height)
-	{
+	while(cinfo.output_scanline < cinfo.output_height) {
 		p = scanline;
 		jpeg_read_scanlines(&cinfo, &scanline, 1);
 
-		for(i=0; i<cinfo.output_width; i++)
-		{
+		for(i=0; i<cinfo.output_width; i++) {
 				q[0] = p[0];
 				q[1] = p[1];
 				q[2] = p[2];
@@ -1080,12 +1030,15 @@ int SaveJPGToBuffer( byte *buffer, int quality, int image_width, int image_heigh
 {
 	struct jpeg_compress_struct cinfo;
 	struct jpeg_error_mgr jerr;
-	JSAMPROW row_pointer[1];      /* pointer to JSAMPLE row[s] */
-	int row_stride;               /* physical row width in image buffer */
+	/* pointer to JSAMPLE row[s] */
+	JSAMPROW row_pointer[1];
+	/* physical row width in image buffer */
+	int row_stride;
 
 	/* Step 1: allocate and initialize JPEG compression object */
 	cinfo.err = jpeg_std_error(&jerr);
-	cinfo.jpeg_color_space = JCS_RGB;       /* colorspace of input image */
+	/* colorspace of input image */
+	cinfo.jpeg_color_space = JCS_RGB;
 
 	/* Now we can initialize the JPEG compression object. */
 	jpeg_create_compress(&cinfo);
@@ -1095,26 +1048,30 @@ int SaveJPGToBuffer( byte *buffer, int quality, int image_width, int image_heigh
 	jpegDest(&cinfo, buffer, image_width*image_height*4);
 
 	/* Step 3: set parameters for compression */
-	cinfo.image_width = image_width;      /* image width and height, in pixels */
+	/* image width and height, in pixels */
+	cinfo.image_width = image_width;
 	cinfo.image_height = image_height;
-	cinfo.input_components = 4;           /* # of color components per pixel */
-	cinfo.in_color_space = JCS_RGB;       /* colorspace of input image */
+	/* # of color components per pixel */
+	cinfo.input_components = 4;
+	/* colorspace of input image */
+	cinfo.in_color_space = JCS_RGB;
 
 	jpeg_set_defaults(&cinfo);
-	jpeg_set_quality(&cinfo, quality, TRUE /* limit to baseline-JPEG values */);
+	/* limit to baseline-JPEG values */
+	jpeg_set_quality(&cinfo, quality, TRUE);
 
 	/* Step 4: Start compressor */
 	jpeg_start_compress(&cinfo, TRUE);
 
 	/* Step 5: while (scan lines remain to be written) */
 	/*           jpeg_write_scanlines(...); */
-	row_stride = image_width * 4; /* JSAMPLEs per row in image_buffer */
+	/* JSAMPLEs per row in image_buffer */
+	row_stride = image_width * 4;
 
 	while (cinfo.next_scanline < cinfo.image_height) {
 		/* jpeg_write_scanlines expects an array of pointers to scanlines.
 		* Here the array is only one element long, but you could pass
-		* more than one scanline at a time if that's more convenient.
-		*/
+		* more than one scanline at a time if that's more convenient. */
 		row_pointer[0] = & image_buffer[((cinfo.image_height-1)*row_stride)-cinfo.next_scanline * row_stride];
 		(void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
 	}
@@ -1174,25 +1131,23 @@ void R_FloodFillSkin( byte *skin, int skinwidth, int skinheight )
 	int					filledcolor = -1;
 	int					i;
 
-	if (filledcolor == -1)
-	{
+	if (filledcolor == -1) {
 		filledcolor = 0;
 		/* attempt to find opaque black */
-		for (i = 0; i < 256; ++i)
+		for (i = 0; i < 256; ++i) {
 #if 0
 			if (d_8to24table[i] == (255 << 0)) /* alpha 1.0 */
 			/* Endian fix */
 #endif
-			if (LittleLong(d_8to24table[i]) == (255<<0))
-			{
+			if (LittleLong(d_8to24table[i]) == (255<<0)) {
 				filledcolor = i;
 				break;
 			}
+		}
 	}
 
 	/* can't fill to filled color or to transparent color (used as visited marker) */
-	if ((fillcolor == filledcolor) || (fillcolor == 255))
-	{
+	if ((fillcolor == filledcolor) || (fillcolor == 255)) {
 		/*printf( "not filling skin from %d to %d\n", fillcolor, filledcolor ); */
 		return;
 	}
@@ -1200,8 +1155,7 @@ void R_FloodFillSkin( byte *skin, int skinwidth, int skinheight )
 	fifo[inpt].x = 0, fifo[inpt].y = 0;
 	inpt = (inpt + 1) & FLOODFILL_FIFO_MASK;
 
-	while (outpt != inpt)
-	{
+	while (outpt != inpt) {
 		int			x = fifo[outpt].x, y = fifo[outpt].y;
 		int			fdc = filledcolor;
 		byte		*pos = &skin[x + skinwidth * y];
@@ -1235,25 +1189,21 @@ void GL_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned *out,
 	fracstep = inwidth*0x10000/outwidth;
 
 	frac = fracstep>>2;
-	for (i=0 ; i<outwidth ; i++)
-	{
+	for (i=0 ; i<outwidth ; i++) {
 		p1[i] = 4*(frac>>16);
 		frac += fracstep;
 	}
 	frac = 3*(fracstep>>2);
-	for (i=0 ; i<outwidth ; i++)
-	{
+	for (i=0 ; i<outwidth ; i++) {
 		p2[i] = 4*(frac>>16);
 		frac += fracstep;
 	}
 
-	for (i=0 ; i<outheight ; i++, out += outwidth)
-	{
+	for (i=0 ; i<outheight ; i++, out += outwidth) {
 		inrow = in + inwidth*(int)((i+0.25)*inheight/outheight);
 		inrow2 = in + inwidth*(int)((i+0.75)*inheight/outheight);
 		frac = fracstep >> 1;
-		for (j=0 ; j<outwidth ; j++)
-		{
+		for (j=0 ; j<outwidth ; j++) {
 			pix1 = (byte *)inrow + p1[j];
 			pix2 = (byte *)inrow + p2[j];
 			pix3 = (byte *)inrow2 + p1[j];
@@ -1289,23 +1239,19 @@ void GL_LightScaleTexture (unsigned *in, int inwidth, int inheight, qboolean onl
 		p = (byte *)in;
 
 		c = inwidth*inheight;
-		for (i=0 ; i<c ; i++, p+=4)
-		{
+		for (i=0 ; i<c ; i++, p+=4) {
 			p[0] = gammatable[p[0]];
 			p[1] = gammatable[p[1]];
 			p[2] = gammatable[p[2]];
 		}
-	}
-	else
-	{
+	} else {
 		int		i, c;
 		byte	*p;
 
 		p = (byte *)in;
 
 		c = inwidth*inheight;
-		for (i=0 ; i<c ; i++, p+=4)
-		{
+		for (i=0 ; i<c ; i++, p+=4) {
 			p[0] = gammatable[intensitytable[p[0]]];
 			p[1] = gammatable[intensitytable[p[1]]];
 			p[2] = gammatable[intensitytable[p[2]]];
@@ -1329,15 +1275,12 @@ void GL_MipMap (byte *in, int width, int height)
 	height >>= 1;
 	out = in;
 	for (i=0 ; i<height ; i++, in+=width)
-	{
-		for (j=0 ; j<width ; j+=8, out+=4, in+=8)
-		{
+		for (j=0 ; j<width ; j+=8, out+=4, in+=8) {
 			out[0] = (in[0] + in[4] + in[width+0] + in[width+4])>>2;
 			out[1] = (in[1] + in[5] + in[width+1] + in[width+5])>>2;
 			out[2] = (in[2] + in[6] + in[width+2] + in[width+6])>>2;
 			out[3] = (in[3] + in[7] + in[width+3] + in[width+7])>>2;
 		}
-	}
 }
 
 #define FILTER_SIZE	5
@@ -1406,63 +1349,55 @@ void R_FilterTexture (int filterindex, unsigned int *data, int width, int height
 	/* allocate a temp buffer */
 	temp = malloc (width * height * 4);
 
-	for (x = 0; x < width; x++)
-	{
-	for (y = 0; y < height; y++)
-	{
-		float rgbFloat[3] = {0, 0, 0};
+	for (x = 0; x < width; x++) {
+		for (y = 0; y < height; y++) {
+			float rgbFloat[3] = {0, 0, 0};
 
-		for (filterX = 0; filterX < FILTER_SIZE; filterX++)
-		{
-			for (filterY = 0; filterY < FILTER_SIZE; filterY++)
-			{
-				int imageX = (x - (FILTER_SIZE / 2) + filterX + width) % width;
-				int imageY = (y - (FILTER_SIZE / 2) + filterY + height) % height;
+			for (filterX = 0; filterX < FILTER_SIZE; filterX++) {
+				for (filterY = 0; filterY < FILTER_SIZE; filterY++) {
+					int imageX = (x - (FILTER_SIZE / 2) + filterX + width) % width;
+					int imageY = (y - (FILTER_SIZE / 2) + filterY + height) % height;
 
-				/* casting's a unary operation anyway, so the othermost set of brackets in the left part */
-				/* of the rvalue should not be necessary... but i'm paranoid when it comes to C... */
-				rgbFloat[0] += ((float) ((byte *) &data[imageY * width + imageX])[0]) * FilterMatrix[filterindex][filterX][filterY];
-				rgbFloat[1] += ((float) ((byte *) &data[imageY * width + imageX])[1]) * FilterMatrix[filterindex][filterX][filterY];
-				rgbFloat[2] += ((float) ((byte *) &data[imageY * width + imageX])[2]) * FilterMatrix[filterindex][filterX][filterY];
+					/* casting's a unary operation anyway, so the othermost set of brackets in the left part */
+					/* of the rvalue should not be necessary... but i'm paranoid when it comes to C... */
+					rgbFloat[0] += ((float) ((byte *) &data[imageY * width + imageX])[0]) * FilterMatrix[filterindex][filterX][filterY];
+					rgbFloat[1] += ((float) ((byte *) &data[imageY * width + imageX])[1]) * FilterMatrix[filterindex][filterX][filterY];
+					rgbFloat[2] += ((float) ((byte *) &data[imageY * width + imageX])[2]) * FilterMatrix[filterindex][filterX][filterY];
+				}
 			}
-		}
 
-		/* multiply by factor, add bias, and clamp */
-		for (i = 0; i < 3; i++)
-		{
-			rgbFloat[i] *= factor;
-			rgbFloat[i] += bias;
+			/* multiply by factor, add bias, and clamp */
+			for (i = 0; i < 3; i++) {
+				rgbFloat[i] *= factor;
+				rgbFloat[i] += bias;
 
-			if (rgbFloat[i] < 0) rgbFloat[i] = 0;
-			if (rgbFloat[i] > 255) rgbFloat[i] = 255;
-		}
+				if (rgbFloat[i] < 0) rgbFloat[i] = 0;
+				if (rgbFloat[i] > 255) rgbFloat[i] = 255;
+			}
 
-		if (greyscale)
-		{
-			/* NTSC greyscale conversion standard */
-			float avg = (rgbFloat[0] * 30 + rgbFloat[1] * 59 + rgbFloat[2] * 11) / 100;
+			if (greyscale) {
+				/* NTSC greyscale conversion standard */
+				float avg = (rgbFloat[0] * 30 + rgbFloat[1] * 59 + rgbFloat[2] * 11) / 100;
 
-			/* divide by 255 so GL operations work as expected */
-			rgbFloat[0] = avg / 255.0;
-			rgbFloat[1] = avg / 255.0;
-			rgbFloat[2] = avg / 255.0;
-		}
+				/* divide by 255 so GL operations work as expected */
+				rgbFloat[0] = avg / 255.0;
+				rgbFloat[1] = avg / 255.0;
+				rgbFloat[2] = avg / 255.0;
+			}
 
-		/* write to temp - first, write data in (to get the alpha channel quickly and */
-		/* easily, which will be left well alone by this particular operation...!) */
-		temp[y * width + x] = data[y * width + x];
+			/* write to temp - first, write data in (to get the alpha channel quickly and */
+			/* easily, which will be left well alone by this particular operation...!) */
+			temp[y * width + x] = data[y * width + x];
 
-		/* now write in each element, applying the blend operator.  blend */
-		/* operators are based on standard OpenGL TexEnv modes, and the */
-		/* formulae are derived from the OpenGL specs (http://www.opengl.org). */
-		for (i = 0; i < 3; i++)
-		{
-			/* divide by 255 so GL operations work as expected */
-			float TempTarget;
-			float SrcData = ((float) ((byte *) &data[y * width + x])[i]) / 255.0;
+			/* now write in each element, applying the blend operator.  blend */
+			/* operators are based on standard OpenGL TexEnv modes, and the */
+			/* formulae are derived from the OpenGL specs (http://www.opengl.org). */
+			for (i = 0; i < 3; i++) {
+				/* divide by 255 so GL operations work as expected */
+				float TempTarget;
+				float SrcData = ((float) ((byte *) &data[y * width + x])[i]) / 255.0;
 
-			switch (GLBlendOperator)
-			{
+				switch (GLBlendOperator) {
 				case GL_ADD:
 					TempTarget = rgbFloat[i] + SrcData;
 					break;
@@ -1495,8 +1430,10 @@ void R_FilterTexture (int filterindex, unsigned int *data, int width, int height
 				TempTarget *= 255.0;
 
 				/* bound the temp target again now, cos the operation may have thrown it out */
-				if (TempTarget < 0) TempTarget = 0;
-				if (TempTarget > 255) TempTarget = 255;
+				if (TempTarget < 0)
+					TempTarget = 0;
+				if (TempTarget > 255)
+					TempTarget = 255;
 
 				/* and copy it in */
 				((byte *) &temp[y * width + x])[i] = (byte) TempTarget;
@@ -1506,9 +1443,7 @@ void R_FilterTexture (int filterindex, unsigned int *data, int width, int height
 
 	/* copy temp back to data */
 	for (i = 0; i < (width * height); i++)
-	{
 		data[i] = temp[i];
-	}
 
 	/* release the temp buffer */
 	free (temp);
@@ -1542,18 +1477,18 @@ qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qb
 		scaled_height >>= 1;
 
 	/* let people sample down the world textures for speed */
-	if ( mipmap )
-	{
+	if ( mipmap ) {
 		scaled_width >>= (int)gl_picmip->value;
 		scaled_height >>= (int)gl_picmip->value;
 	}
 
 	/* don't ever bother with > 2048*2048 textures */
-	if ( scaled_width > 2048 ) scaled_width = 2048;
-	if ( scaled_height > 2048 ) scaled_height = 2048;
+	if ( scaled_width > 2048 )
+		scaled_width = 2048;
+	if ( scaled_height > 2048 )
+		scaled_height = 2048;
 
-	while ( scaled_width > gl_maxtexres->value || scaled_height > gl_maxtexres->value )
-	{
+	while ( scaled_width > gl_maxtexres->value || scaled_height > gl_maxtexres->value ) {
 		scaled_width >>= 1;
 		scaled_height >>= 1;
 	}
@@ -1570,37 +1505,31 @@ qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qb
 	c = width*height;
 	scan = ((byte *)data) + 3;
 	samples = gl_compressed_solid_format ? gl_compressed_solid_format : gl_solid_format;
-	for (i=0 ; i<c ; i++, scan += 4)
-	{
-		if ( *scan != 255 )
-		{
+	for (i=0 ; i<c ; i++, scan += 4) {
+		if ( *scan != 255 ) {
 			samples = gl_compressed_alpha_format ? gl_compressed_alpha_format : gl_alpha_format;
 			break;
 		}
 	}
 	/*emboss filter */
 	if (gl_embossfilter->value && type != it_skin)
-	{
 		R_FilterTexture (EMBOSS_FILTER, data, width, height, 1, 128, qtrue, GL_MODULATE);
-	}
 
-	if (scaled_width == width && scaled_height == height)
-	{
-		if (!mipmap)
-		{
+	if (scaled_width == width && scaled_height == height) {
+		if (!mipmap) {
 			qglTexImage2D (GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 			goto done;
 		}
 		/* directly use the incoming data */
 		scaled = data;
 		size = 0;
-	}
-	else
-	{
+	} else {
 		/* allocate memory for scaled texture */
 		scaled = scaled_buffer;
-		while ( scaled_width > 1024 ) scaled_width >>= 1;
-		while ( scaled_height > 1024 ) scaled_height >>= 1;
+		while ( scaled_width > 1024 )
+			scaled_width >>= 1;
+		while ( scaled_height > 1024 )
+			scaled_height >>= 1;
 
 		GL_ResampleTexture (data, width, height, scaled, scaled_width, scaled_height);
 	}
@@ -1609,13 +1538,11 @@ qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qb
 
 	qglTexImage2D( GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled );
 
-	if (mipmap)
-	{
+	if (mipmap) {
 		int		miplevel;
 
 		miplevel = 0;
-		while (scaled_width > 1 || scaled_height > 1)
-		{
+		while (scaled_width > 1 || scaled_height > 1) {
 			GL_MipMap ((byte *)scaled, scaled_width, scaled_height);
 			scaled_width >>= 1;
 			scaled_height >>= 1;
@@ -1632,8 +1559,7 @@ done: ;
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (mipmap) ? gl_filter_min : gl_filter_max);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 
-	if (clamp)
-	{
+	if (clamp) {
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	}
@@ -1664,13 +1590,12 @@ qboolean GL_Upload8 (byte *data, int width, int height, qboolean mipmap, imagety
 	if (s > sizeof(trans)/4)
 		ri.Sys_Error (ERR_DROP, "GL_Upload8: too large");
 
-	for (i=0 ; i<s ; i++)
-	{
+	for (i=0 ; i<s ; i++) {
 		p = data[i];
 		trans[i] = d_8to24table[p];
 
-		if (p == 255)
-		{	/* transparent, so scan around for another color */
+		if (p == 255) {
+			/* transparent, so scan around for another color */
 			/* to avoid alpha fringes */
 			/* FIXME: do a full flood fill so mips work... */
 			if (i > width && data[i-width] != 255)
@@ -1718,8 +1643,7 @@ void GL_CalcDayAndNight ( float q )
 	byte *px;
 
 	/* get image */
-	if ( !DaN )
-	{
+	if ( !DaN ) {
 		if (numgltextures >= MAX_GLTEXTURES)
 			ri.Sys_Error (ERR_DROP, "MAX_GLTEXTURES");
 		DaN = &gltextures[numgltextures++];
@@ -1737,8 +1661,7 @@ void GL_CalcDayAndNight ( float q )
 	/* precalculate trigonometric functions */
 	sin_q = sin(q);
 	cos_q = cos(q);
-	for ( x = 0; x < DAN_WIDTH; x++ )
-	{
+	for ( x = 0; x < DAN_WIDTH; x++ ) {
 		phi = x*dphi - q;
 		sin_phi[x] = sin(phi);
 		cos_phi[x] = cos(phi);
@@ -1746,12 +1669,10 @@ void GL_CalcDayAndNight ( float q )
 
 	/* calculate */
 	px = DaNalpha;
-	for ( y = 0; y < DAN_HEIGHT; y++ )
-	{
+	for ( y = 0; y < DAN_HEIGHT; y++ ) {
 		a = sin(M_PI/2*HIGH_LAT - y*da);
 		root = sqrt(1-a*a);
-		for ( x = 0; x < DAN_WIDTH; x++ )
-		{
+		for ( x = 0; x < DAN_WIDTH; x++ ) {
 			pos = sin_phi[x]*root*sin_q - (a*SIN_ALPHA + cos_phi[x]*root*COS_ALPHA)*cos_q;
 
 			if ( pos >= DAEMMERUNG ) *px++ = 255;
@@ -1782,12 +1703,10 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 
 	/* find a free image_t */
 	for (i=0, image=gltextures ; i<numgltextures ; i++,image++)
-	{
 		if (!image->texnum)
 			break;
-	}
-	if (i == numgltextures)
-	{
+
+	if (i == numgltextures) {
 		if (numgltextures == MAX_GLTEXTURES)
 			ri.Sys_Error (ERR_DROP, "MAX_GLTEXTURES");
 		numgltextures++;
@@ -1802,7 +1721,8 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 	Q_strncpyz (image->name, name, MAX_QPATH);
 	image->registration_sequence = registration_sequence;
 	/* drop extension */
-	if ( (*image).name[len-4] == '.' ) (*image).name[len-4] = '\0';
+	if ( (*image).name[len-4] == '.' )
+		(*image).name[len-4] = '\0';
 
 	image->width = width;
 	image->height = height;
@@ -1815,8 +1735,7 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 
 	/* load little pics into the scrap */
 	if (image->type == it_pic && bits == 8
-		&& image->width < 64 && image->height < 64)
-	{
+		&& image->width < 64 && image->height < 64) {
 		int		x, y;
 		int		i, j, k;
 		int		texnum;
@@ -1838,9 +1757,7 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 		image->sh = (x+image->width-0.01)/(float)BLOCK_WIDTH;
 		image->tl = (y+0.01)/(float)BLOCK_WIDTH;
 		image->th = (y+image->height-0.01)/(float)BLOCK_WIDTH;
-	}
-	else
-	{
+	} else {
 nonscrap:
 		image->scrap = qfalse;
 		image->texnum = TEXNUM_IMAGES + (image - gltextures);
@@ -1875,8 +1792,7 @@ image_t *GL_LoadWal (char *name)
 	image_t		*image;
 
 	ri.FS_LoadFile ( name, (void **)&mt);
-	if (!mt)
-	{
+	if (!mt) {
 		ri.Con_Printf (PRINT_ALL, "GL_LoadWal: can't load %s\n", name);
 		return r_notexture;
 	}
@@ -1906,10 +1822,8 @@ image_t *GL_FindImageForShader ( char *name )
 	image_t* image;
 	/* look for it */
 	for (i=0, image=gltextures ; i<numgltextures ; i++,image++)
-	{
 		if ( ! Q_strncmp(name, image->name, MAX_VAR) )
 			return image;
-	}
 	return NULL;
 }
 
@@ -1944,18 +1858,14 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 
 	/* look for it */
 	for (i=0, image=gltextures ; i<numgltextures ; i++,image++)
-	{
-		if (!Q_strncmp(lname, image->name, MAX_QPATH))
-		{
+		if (!Q_strncmp(lname, image->name, MAX_QPATH)) {
 			image->registration_sequence = registration_sequence;
 			return image;
 		}
-	}
 
 	/* look for it in the error list */
 	etex = glerrortex;
-	while ( ( l = strlen( etex ) ) )
-	{
+	while ( ( l = strlen( etex ) ) ) {
 		if ( !Q_strncmp( lname, etex, MAX_QPATH ) )
 			/* it's in the error list */
 			return r_notexture;
@@ -1963,9 +1873,7 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 		etex += l+1;
 	}
 
-	/* */
 	/* load the pic from disk */
-	/* */
 	image = NULL;
 	pic = NULL;
 	palette = NULL;
@@ -2004,8 +1912,7 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 	}
 
 	strcpy( ename, ".wal" );
-	if ( ri.FS_CheckFile ( lname ) != -1 )
-	{
+	if ( ri.FS_CheckFile ( lname ) != -1 ) {
 		image = GL_LoadWal( lname );
 		goto end;
 	}
@@ -2017,8 +1924,7 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 	*ename = 0;
 	ri.Con_Printf( PRINT_ALL, "Can't find %s\n", lname );
 
-	if ( (glerrortexend - glerrortex) + strlen(lname) < MAX_GLERRORTEX )
-	{
+	if ( (glerrortexend - glerrortex) + strlen(lname) < MAX_GLERRORTEX ) {
 		Q_strncpyz( glerrortexend, lname, MAX_QPATH );
 		glerrortexend += strlen(lname)+1;
 	} else {
@@ -2063,8 +1969,7 @@ void GL_FreeUnusedImages (void)
 	r_notexture->registration_sequence = registration_sequence;
 	r_particletexture->registration_sequence = registration_sequence;
 
-	for (i=0, image=gltextures ; i<numgltextures ; i++, image++)
-	{
+	for (i=0, image=gltextures ; i<numgltextures ; i++, image++) {
 		if (image->registration_sequence == registration_sequence)
 			continue;		/* used this sequence */
 		if (!image->registration_sequence)
@@ -2096,8 +2001,7 @@ int Draw_GetPalette (void)
 	if (!pal)
 		ri.Sys_Error (ERR_FATAL, "Couldn't load pics/colormap.pcx");
 
-	for (i=0 ; i<256 ; i++)
-	{
+	for (i=0 ; i<256 ; i++) {
 		r = pal[i*3+0];
 		g = pal[i*3+1];
 		b = pal[i*3+2];
@@ -2120,7 +2024,7 @@ int Draw_GetPalette (void)
 GL_InitImages
 ===============
 */
-void	GL_InitImages (void)
+void GL_InitImages (void)
 {
 	int		i, j;
 	float	g = vid_gamma->value;
@@ -2142,18 +2046,12 @@ void	GL_InitImages (void)
 	Draw_GetPalette ();
 
 	if ( gl_config.renderer & ( GL_RENDERER_VOODOO | GL_RENDERER_VOODOO2 ) )
-	{
 		g = 1.0F;
-	}
 
-	for ( i = 0; i < 256; i++ )
-	{
-		if ( g == 1 || gl_state.hwgamma )
-		{
+	for ( i = 0; i < 256; i++ ) {
+		if ( g == 1 || gl_state.hwgamma ) {
 			gammatable[i] = i;
-		}
-		else
-		{
+		} else {
 			float inf;
 
 			inf = 255 * pow ( (i+0.5)/255.5 , g ) + 0.5;
@@ -2165,8 +2063,7 @@ void	GL_InitImages (void)
 		}
 	}
 
-	for (i=0 ; i<256 ; i++)
-	{
+	for (i=0 ; i<256 ; i++) {
 		j = i * intensity->value;
 
 		if (j > 255)
@@ -2176,9 +2073,7 @@ void	GL_InitImages (void)
 	}
 
 	if ( gl_state.hwgamma )
-	{
 		GLimp_SetGamma( gammatable, gammatable, gammatable );
-	}
 }
 
 /*
@@ -2186,13 +2081,12 @@ void	GL_InitImages (void)
 GL_ShutdownImages
 ===============
 */
-void	GL_ShutdownImages (void)
+void GL_ShutdownImages (void)
 {
 	int		i;
 	image_t	*image;
 
-	for (i=0, image=gltextures ; i<numgltextures ; i++, image++)
-	{
+	for (i=0, image=gltextures ; i<numgltextures ; i++, image++) {
 		if (!image->registration_sequence)
 			continue;		/* free image_t slot */
 		/* free it */
