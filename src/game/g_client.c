@@ -2296,7 +2296,7 @@ void G_ClientTeamInfo( player_t *player )
 			ent->pnum = player->num;
 			ent->chr.fieldSize = gi.ReadByte();
 			ent->fieldSize = ent->chr.fieldSize;
-			switch(ent->type) {
+			switch(ent->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
 				ent->type = ET_ACTOR;
 				break;
