@@ -365,9 +365,9 @@ void R_InterpolateTransform( animState_t *as, int numframes, float *tag, float *
 	int		i;
 
 	/* range check */
-	if ( as->frame >= numframes || as->frame < 0 ) 
+	if ( as->frame >= numframes || as->frame < 0 )
 		as->frame = 0;
-	if ( as->oldframe >= numframes || as->oldframe < 0 ) 
+	if ( as->oldframe >= numframes || as->oldframe < 0 )
 		as->oldframe = 0;
 
 	/* calc relevant values */
@@ -867,9 +867,9 @@ void MYgluPerspective( GLdouble fovy, GLdouble aspect,
 	xmin += -( 2 * gl_state.camera_separation ) / zNear;
 	xmax += -( 2 * gl_state.camera_separation ) / zNear;
 
-	if ( !r_isometric->value ) 
+	if ( !r_isometric->value )
 	        qglFrustum( xmin, xmax, ymin, ymax, zNear, zFar );
-	else 
+	else
 		qglOrtho( -10*fovy*aspect, 10*fovy*aspect, -10*fovy, 10*fovy, zNear, zFar );
 }
 
@@ -1019,7 +1019,7 @@ void R_RenderView (refdef_t *fd)
 
 	R_SetupGL ();
 
-	if (gl_wire->value) 
+	if (gl_wire->value)
 		qglPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
 
 	R_DrawLevelBrushes ();
@@ -1030,7 +1030,7 @@ void R_RenderView (refdef_t *fd)
 
 /* 	if (gl_shadows->value == 2) R_CastShadow(); */
 
-	if (gl_wire->value) 
+	if (gl_wire->value)
 		qglPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
 	R_DrawAlphaSurfaces ();
@@ -1487,7 +1487,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 			qglPointParameterfEXT = ( void (APIENTRY *)( GLenum, GLfloat ) ) qwglGetProcAddress( "glPointParameterfEXT" );
 			qglPointParameterfvEXT = ( void (APIENTRY *)( GLenum, const GLfloat * ) ) qwglGetProcAddress( "glPointParameterfvEXT" );
 			ri.Con_Printf( PRINT_ALL, "...using GL_EXT_point_parameters\n" );
-		} else 
+		} else
 			ri.Con_Printf( PRINT_ALL, "...ignoring GL_EXT_point_parameters\n" );
 	} else
 		ri.Con_Printf( PRINT_ALL, "...GL_EXT_point_parameters not found\n" );
@@ -1754,7 +1754,7 @@ void R_BeginFrame( float camera_separation )
 
 	/* change modes if necessary */
 	/* FIXME: only restart if CDS is required */
-	if ( gl_mode->modified || vid_fullscreen->modified || gl_ext_texture_compression->modified ) {	
+	if ( gl_mode->modified || vid_fullscreen->modified || gl_ext_texture_compression->modified ) {
 		cvar_t	*ref;
 
 		ref = ri.Cvar_Get ("vid_ref", "gl", 0);
@@ -1879,7 +1879,7 @@ void R_SetPalette ( const unsigned char *palette)
 RB_TakeVideoFrameCmd
 ==================
 */
-void R_TakeVideoFrame( int h, int w, byte* captureBuffer, byte *encodeBuffer, qboolean motionJpeg  )
+void R_TakeVideoFrame( int w, int h, byte* captureBuffer, byte *encodeBuffer, qboolean motionJpeg  )
 {
 	int	frameSize;
 	int	i;
@@ -1887,9 +1887,7 @@ void R_TakeVideoFrame( int h, int w, byte* captureBuffer, byte *encodeBuffer, qb
 	qglReadPixels( 0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, captureBuffer );
 
 	if( motionJpeg ) {
-		ri.Con_Printf( PRINT_ALL, "test\n");
 		frameSize = SaveJPGToBuffer( encodeBuffer, 95, w, h, captureBuffer );
-		ri.Con_Printf( PRINT_ALL, "test2\n");
 	} else {
 		frameSize = w * h * 4;
 

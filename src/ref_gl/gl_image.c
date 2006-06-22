@@ -957,8 +957,8 @@ void SaveJPG(char * filename, int quality, int image_width, int image_height, un
 	* VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
 	* requires it in order to write binary files.
 	*/
-	out = (unsigned char*)malloc(image_width*image_height*4);
-	jpegDest(&cinfo, out, image_width*image_height*4);
+	out = (unsigned char*)malloc(image_width*image_height*RGB_PIXELSIZE);
+	jpegDest(&cinfo, out, image_width*image_height*RGB_PIXELSIZE);
 
 	/* Step 3: set parameters for compression */
 
@@ -967,7 +967,7 @@ void SaveJPG(char * filename, int quality, int image_width, int image_height, un
 	*/
 	cinfo.image_width = image_width; 	/* image width and height, in pixels */
 	cinfo.image_height = image_height;
-	cinfo.input_components = 4;		/* # of color components per pixel */
+	cinfo.input_components = RGB_PIXELSIZE;		/* # of color components per pixel */
 	cinfo.in_color_space = JCS_RGB; 	/* colorspace of input image */
 	/* Now use the library's routine to set default compression parameters.
 	* (You must set at least cinfo.in_color_space before calling this,
@@ -994,7 +994,7 @@ void SaveJPG(char * filename, int quality, int image_width, int image_height, un
 	* To keep things simple, we pass one scanline per call; you can pass
 	* more if you wish, though.
 	*/
-	row_stride = image_width * 4;	/* JSAMPLEs per row in image_buffer */
+	row_stride = image_width * RGB_PIXELSIZE;	/* JSAMPLEs per row in image_buffer */
 
 	while (cinfo.next_scanline < cinfo.image_height) {
 		/* jpeg_write_scanlines expects an array of pointers to scanlines.
@@ -1006,7 +1006,6 @@ void SaveJPG(char * filename, int quality, int image_width, int image_height, un
 	}
 
 	/* Step 6: Finish compression */
-
 	jpeg_finish_compress(&cinfo);
 	/* After finish_compress, we can close the output file. */
 	ri.FS_WriteFile( filename, hackSize, (char*)out );
@@ -1045,14 +1044,14 @@ int SaveJPGToBuffer( byte *buffer, int quality, int image_width, int image_heigh
 
 	/* Step 2: specify data destination (eg, a file) */
 	/* Note: steps 2 and 3 can be done in either order. */
-	jpegDest(&cinfo, buffer, image_width*image_height*4);
+	jpegDest(&cinfo, buffer, image_width*image_height*RGB_PIXELSIZE);
 
 	/* Step 3: set parameters for compression */
 	/* image width and height, in pixels */
 	cinfo.image_width = image_width;
 	cinfo.image_height = image_height;
 	/* # of color components per pixel */
-	cinfo.input_components = 4;
+	cinfo.input_components = RGB_PIXELSIZE;
 	/* colorspace of input image */
 	cinfo.in_color_space = JCS_RGB;
 
@@ -1066,7 +1065,7 @@ int SaveJPGToBuffer( byte *buffer, int quality, int image_width, int image_heigh
 	/* Step 5: while (scan lines remain to be written) */
 	/*           jpeg_write_scanlines(...); */
 	/* JSAMPLEs per row in image_buffer */
-	row_stride = image_width * 4;
+	row_stride = image_width * RGB_PIXELSIZE;
 
 	while (cinfo.next_scanline < cinfo.image_height) {
 		/* jpeg_write_scanlines expects an array of pointers to scanlines.

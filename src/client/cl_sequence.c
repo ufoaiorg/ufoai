@@ -1141,10 +1141,15 @@ qboolean CL_OpenAVIForWriting(char *fileName)
 	afd.width = viddef.width;
 	afd.height = viddef.height;
 
-	if (cl_aviMotionJpeg->value)
+	Com_DPrintf("Capturing avi with resolution %i:%i\n", afd.width, afd.height );
+
+	if (cl_aviMotionJpeg->value) {
+		Com_DPrintf("...MotionJPEG codec\n");
 		afd.motionJpeg = qtrue;
-	else
+	} else {
+		Com_DPrintf("...no MotionJPEG\n");
 		afd.motionJpeg = qfalse;
+	}
 
 	afd.cBuffer = Z_Malloc(afd.width * afd.height * 4);
 	afd.eBuffer = Z_Malloc(afd.width * afd.height * 4);

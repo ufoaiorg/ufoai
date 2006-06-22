@@ -38,9 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 #endif
 
-#ifdef BUILD_JPEG
-#include "../jpeg-6/jpeglib.h"
-#else
 #ifndef _WIN32
 #include <jpeglib.h>
 #else
@@ -50,8 +47,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../win32/jpeglib.h"
 #endif
 #endif
-#endif
 #include "../client/ref.h"
+/* this was taken from jmorecfg.h */
+#define RGB_PIXELSIZE 3
 
 #include "gl_arb_shader.h"
 

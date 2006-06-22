@@ -87,7 +87,6 @@ static Atom wmDeleteWindow;
 
 static qboolean	mouse_avail;
 static int	mx, my;
-static int	old_mouse_x, old_mouse_y;
 
 static int	win_x, win_y;
 
@@ -326,8 +325,7 @@ static int XLateKey(XKeyEvent *ev)
 
 	XLookupString(ev, buf, sizeof buf, &keysym, 0);
 
-	switch(keysym)
-	{
+	switch(keysym) {
 		case XK_KP_Page_Up:
 			key = K_KP_PGUP;
 			break;
@@ -553,13 +551,14 @@ static int XLateKey(XKeyEvent *ev)
 static void HandleEvents(void)
 {
 	XEvent event;
-	int b;
+	int b, middlex, middley;
 	qboolean dowarp = qfalse;
-	int mwx = vid_grabmouse->value ? vid.width/2  : old_mouse_x;
-	int mwy = vid_grabmouse->value ? vid.height/2 : old_mouse_y;
 
 	if (!dpy)
 		return;
+
+	middlex = vid.width / 2;
+	middley = vid.height / 2;
 
 	while (XPending(dpy)) {
 
@@ -584,28 +583,16 @@ static void HandleEvents(void)
 				else
 #endif /* HAVE_XF86_DGA */
 				{
-					if (vid_grabmouse->value) {
-						int xoffset = ((int)event.xmotion.x - (int)(vid.width / 2));
-						int yoffset = ((int)event.xmotion.y - (int)(vid.height / 2));
+					int xoffset = event.xmotion.x - middlex;
+					int yoffset = event.xmotion.y - middley;
 
-						if (xoffset != 0 || yoffset != 0) {
+					if (xoffset != 0 || yoffset != 0) {
+						mx += xoffset;
+						my += yoffset;
 
-							mx += xoffset;
-							my += yoffset;
-
-							XSelectInput(dpy, win, X_MASK & ~PointerMotionMask);
-							XWarpPointer(dpy, None, win, 0, 0, 0, 0,
-											(vid.width / 2),(vid.height / 2));
-							XSelectInput(dpy, win, X_MASK);
-						}
-					} else {
-						mx += ((int)event.xmotion.x - mwx) * sensitivity->value;
-						my += ((int)event.xmotion.y - mwy) * sensitivity->value;
-						old_mouse_x = mwx = event.xmotion.x;
-						old_mouse_y = mwy = event.xmotion.y;
-
-						if (mx || my)
-							dowarp = qtrue;
+						XSelectInput(dpy, win, X_MASK & ~PointerMotionMask);
+						XWarpPointer(dpy, None, win, 0, 0, 0, 0, middlex, middley);
+						XSelectInput(dpy, win, X_MASK);
 					}
 				}
 			}
@@ -653,10 +640,12 @@ static void HandleEvents(void)
 			win_x = event.xconfigure.x;
 			win_y = event.xconfigure.y;
 			break;
-	        case ClientMessage:
+
+        case ClientMessage:
 			if (event.xclient.data.l[0] == wmDeleteWindow)
 				ri.Cmd_ExecuteText(EXEC_NOW, "quit");
 			break;
+
 		case MapNotify:
 			if( vid_grabmouse->value ){
 				XGrabPointer( dpy, win, True, 0, GrabModeAsync,
@@ -668,6 +657,7 @@ static void HandleEvents(void)
 			if( vid_grabmouse->value )
 				XUngrabPointer( dpy, CurrentTime);
 			break;
+
 		case VisibilityNotify:
 			/* invisible -> visible */
 			break;
@@ -923,9 +913,6 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		XMoveWindow(dpy, win, 0, 0);
 		XRaiseWindow(dpy, win);
 		XWarpPointer(dpy, None, win, 0, 0, 0, 0, 0, 0);
-		XFlush(dpy);
-		/* Move the viewport to top left */
-		XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
 	}
 #endif /* HAVE_XF86_VIDMODE */
 
