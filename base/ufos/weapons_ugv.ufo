@@ -1,0 +1,19 @@
+// size:
+// 0: normal actor (1x1) (unsupported for ugv)
+// 1: ugv size (2x2)
+
+ugv ugv_triax
+{
+	tu "24"
+	weapon	triax_weapon
+	armor	medium
+	size	1
+}
+
+ugv ugv_phoenix
+{
+	tu "20"
+	weapon	phoenix_weapon
+	armor	medium
+	size	1
+}

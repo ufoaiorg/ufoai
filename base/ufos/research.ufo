@@ -1314,7 +1314,7 @@ tech rs_ugv_phoenix
 	description	"_ugv_phoenix_txt"
 
 	requires	nothing
-	provides	ugv_triax
+	provides	ugv_phoenix
 	time	0
 	researched	true
 	needscollected	false
