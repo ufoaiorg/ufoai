@@ -9,7 +9,7 @@ building building_entrance
 {
 	name		"_Entrance"
 	image		base/entrance
-	fixcosts	0
+	fixcosts	10000
 	build_time	1
 	autobuild	true
 	firstbase	true
@@ -23,7 +23,7 @@ building building_commando
 {
 	name		"_Commando central"
 	image		base/commando
-	fixcosts	1000
+	fixcosts	500000
 	depends		building_powerplant
 	build_time	4
 	varcosts	50
@@ -37,7 +37,7 @@ building building_powerplant
 {
 	name		"_Powerplant"
 	image		base/powerplant
-	fixcosts	300
+	fixcosts	90000
 	depends		building_entrance
 	build_time	2
 	varcosts	150
@@ -52,7 +52,7 @@ building building_lab
 	name		"_Laboratory"
 	image		base/lab
 	depends		building_commando
-	fixcosts	1500
+	fixcosts	1500000
 	max_employees	10
 	more_than_one	true
 	employees_firstbase	2
@@ -69,7 +69,7 @@ building building_storage
 {
 	name		"_Storage"
 	image		base/storage
-	fixcosts	500
+	fixcosts	75000
 	depends		building_commando
 	build_time	5
 	varcosts	10
@@ -97,7 +97,7 @@ building building_quarters
 {
 	name		"_Quarters"
 	image		base/quarters
-	fixcosts	300
+	fixcosts	80000
 	depends		building_commando
 	more_than_one	true
 	max_employees	20
@@ -114,7 +114,7 @@ building building_ufo_hangar
 {
 	name		"_UFO Hangar"
 	image		base/adrop
-	fixcosts	1000
+	fixcosts	1000000
 	depends		building_lab
 	more_than_one	true
 	build_time	6
@@ -128,7 +128,7 @@ building building_hangar
 {
 	name		"_Hangar"
 	image		base/drop2
-	fixcosts	1000
+	fixcosts	800000
 	needs		building_hangar2
 	depends		building_quarters
 	more_than_one	true
@@ -145,7 +145,7 @@ building building_hangar2
 {
 	name		"_Hangar"
 	image		base/drop1
-	fixcosts	1000
+	fixcosts	800000
 	more_than_one	true
 	depends		building_quarters
 	visible		false
@@ -158,7 +158,7 @@ building building_teamroom
 {
 	name		"_Team Room"
 	image		base/teamroom
-	fixcosts	300
+	fixcosts	30000
 	depends		building_quarters
 	build_time	3
 	map_name	"teamroom"
@@ -169,7 +169,7 @@ building building_radar
 {
 	name		"_Radar"
 	image		base/radar
-	fixcosts	3000
+	fixcosts	300000
 	depends		building_commando
 	build_time	10
 	map_name	"radar"

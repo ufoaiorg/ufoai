@@ -820,7 +820,7 @@ campaign main
 	soldiers	12
 	equipment	campaign_player
 	market		campaign_market
-	credits		500000
+	credits		4000000
 	map		map_earth
 	visible		true
 

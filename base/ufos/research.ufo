@@ -1308,32 +1308,32 @@ tech rs_alien_cyborg_ortnok_xenobiology
 
 tech rs_ugv_phoenix
 {
-	type	tech
+	type	ugv
 	up_chapter	ugv
 	name	"_UGV Phoenix"
 	description	"_ugv_phoenix_txt"
 
 	requires	nothing
-	provides	""
+	provides	ugv_triax
 	time	0
-	researched	false
-	needscollected	true
+	researched	true
+	needscollected	false
 
 	mdl_top	"soldiers/ugv_phoenix/phoenix"
 }
 
 tech rs_ugv_triax
 {
-	type	tech
+	type	ugv
 	up_chapter	ugv
 	name	"_UGV Triax"
 	description	"_ugv_triax_txt"
 
 	requires	nothing
-	provides	""
+	provides	ugv_triax
 	time	0
-	researched	false
-	needscollected	true
+	researched	true
+	needscollected	false
 
 	mdl_top	"soldiers/ugv_triax/triax"
 }
