@@ -976,8 +976,12 @@ void MN_Drag(menuNode_t * node, int x, int y)
 
 			/* update character info (for armor changes) */
 			sel = cl_selected->value;
-			if (sel >= 0 && sel < baseCurrent->numWholeTeam)
-				CL_CharacterCvars(&baseCurrent->curTeam[sel]);
+			if (sel >= 0 && sel < baseCurrent->numWholeTeam) {
+				if ( baseCurrent->curTeam[sel].fieldSize == ACTOR_SIZE_NORMAL )
+					CL_CharacterCvars(&baseCurrent->curTeam[sel]);
+				else
+					CL_UGVCvars(&baseCurrent->curTeam[sel]);
+			}
 		}
 	}
 

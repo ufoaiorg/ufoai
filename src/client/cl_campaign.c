@@ -2798,6 +2798,8 @@ value_t campaign_vals[] = {
 	,
 	{"soldiers", V_INT, CAMPAIGNOFS(soldiers)}
 	,
+	{"ugvs", V_INT, CAMPAIGNOFS(ugvs)}
+	,
 	{"equipment", V_STRING, CAMPAIGNOFS(equipment)}
 	,
 	{"market", V_STRING, CAMPAIGNOFS(market)}

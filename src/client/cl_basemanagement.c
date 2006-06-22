@@ -1261,6 +1261,8 @@ void B_ClearBase(base_t * base)
 		/* should be multiplayer (campaignmode TODO) or singleplayer */
 		for (i = 0; i < curCampaign->soldiers; i++)
 			CL_GenerateCharacter(curCampaign->team, base, ET_ACTOR);
+		for (i = 0; i < curCampaign->ugvs; i++)
+			CL_GenerateCharacter("ugv", base, ET_UGV);
 	}
 
 	for (row = BASE_SIZE - 1; row >= 0; row--)

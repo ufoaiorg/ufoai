@@ -662,6 +662,7 @@ extern byte *fb_list[MAX_FB_LIST];
 extern int fb_length;
 
 void CL_CharacterCvars(character_t * chr);
+void CL_UGVCvars(character_t *chr);
 void CL_ActorUpdateCVars(void);
 
 void CL_DisplayHudMessage(char *text, int time);

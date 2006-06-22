@@ -1042,7 +1042,8 @@ stradd
 void stradd( char **str, const char *addStr )
 {
 	const char *ch;
-	for ( ch = addStr; *ch; ch++, (*str)++ ) **str = *ch;
+	for ( ch = addStr; *ch; ch++, (*str)++ )
+		**str = *ch;
 	**str = 0;
 }
 
@@ -1055,8 +1056,7 @@ static qboolean Com_CharIsOneOfCharset( char c, char *set )
 {
 	int i;
 
-	for( i = 0; i < strlen( set ); i++ )
-	{
+	for( i = 0; i < strlen( set ); i++ ) {
 		if( set[ i ] == c )
 			return qtrue;
 	}
@@ -1073,8 +1073,7 @@ char *Com_SkipCharset( char *s, char *sep )
 {
 	char    *p = s;
 
-	while( p )
-	{
+	while( p ) {
 		if( Com_CharIsOneOfCharset( *p, sep ) )
 			p++;
 		else
@@ -1094,15 +1093,12 @@ char *Com_SkipTokens( char *s, int numTokens, char *sep )
 	int             sepCount = 0;
 	char    *p = s;
 
-	while( sepCount < numTokens )
-	{
-		if( Com_CharIsOneOfCharset( *p++, sep ) )
-		{
+	while( sepCount < numTokens ) {
+		if( Com_CharIsOneOfCharset( *p++, sep ) ) {
 			sepCount++;
 			while( Com_CharIsOneOfCharset( *p, sep ) )
 				p++;
-		}
-		else if( *p == '\0' )
+		} else if( *p == '\0' )
 			break;
 	}
 
@@ -1122,8 +1118,7 @@ char *COM_SkipPath (char *pathname)
 	char	*last;
 
 	last = pathname;
-	while (*pathname)
-	{
+	while (*pathname) {
 		if (*pathname=='/')
 			last = pathname+1;
 		pathname++;
@@ -1183,8 +1178,7 @@ void COM_FileBase (char *in, char *out)
 
 	if (s-s2 < 2)
 		out[0] = 0;
-	else
-	{
+	else {
 		s--;
 		strncpy (out,s2+1, s-s2);
 		out[s-s2] = 0;
@@ -1344,7 +1338,7 @@ char *va(char *format, ...)
 }
 
 
-char	com_token[MAX_TOKEN_CHARS];
+char com_token[MAX_TOKEN_CHARS];
 
 /*
 ==============
@@ -2169,8 +2163,10 @@ void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility,
 		}
 
 		rand_avg /= ABILITY_NUM_TYPES;
-		if (max-rand_avg < rand_avg-min) min = rand_avg-min;
-		else min = max-rand_avg;
+		if (max-rand_avg < rand_avg-min)
+			min = rand_avg-min;
+		else
+			min = max-rand_avg;
 		for (i = 0; i < ABILITY_NUM_TYPES; i++)
 			chr->skills[i] = ((randomArray[i]-rand_avg)/min*(maxAbility-minAbility) +
 				minAbility+maxAbility)/2 + frand()*3;
@@ -2214,7 +2210,7 @@ void Com_CharGenAbilitySkills( character_t *chr, int minAbility, int maxAbility,
 }
 
 
-char returnModel[MAX_VAR];
+static char returnModel[MAX_VAR];
 /*
 ======================
 Com_CharGetBody
@@ -2226,13 +2222,13 @@ char *Com_CharGetBody( character_t *chr )
 {
 	assert( chr );
 	assert( chr->inv );
-	if ( chr->inv->c[CSI->idArmor] )
+	/* models of UGVs don't change - because they are already armored */
+	if ( chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL )
 		Com_sprintf( returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->body );
 	else
 		Com_sprintf( returnModel, MAX_VAR, "%s/%s", chr->path, chr->body );
 	return returnModel;
 }
-
 
 /*
 ======================
@@ -2245,7 +2241,8 @@ char *Com_CharGetHead( character_t *chr )
 {
 	assert( chr );
 	assert( chr->inv );
-	if ( chr->inv->c[CSI->idArmor] )
+	/* models of UGVs don't change - because they are already armored */
+	if ( chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL )
 		Com_sprintf( returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->head );
 	else
 		Com_sprintf( returnModel, MAX_VAR, "%s/%s", chr->path, chr->head );

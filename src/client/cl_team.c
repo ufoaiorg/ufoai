@@ -91,7 +91,7 @@ static void CL_GiveNameCmd(void)
   *
   * TODO: Generate UGV
   */
-void CL_GenerateCharacter(char *team, base_t * base, int type)
+void CL_GenerateCharacter(char *team, base_t *base, int type)
 {
 	character_t *chr;
 
@@ -126,7 +126,7 @@ void CL_GenerateCharacter(char *team, base_t * base, int type)
 	}
 
 	/* new attributes */
-	Com_CharGenAbilitySkills(chr, 0, 75, 0, 75);
+	Com_CharGenAbilitySkills(chr, 15, 75, 15, 75);
 
 	/* get model and name */
 	chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
@@ -549,10 +549,17 @@ static void CL_SelectCmd(void)
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
 	/* set info cvars */
-	if (!Q_strncmp(command, "team", 4))
-		CL_CharacterCvars(&baseCurrent->wholeTeam[num]);
-	else
-		CL_CharacterCvars(&baseCurrent->curTeam[num]);
+	if (!Q_strncmp(command, "team", 4)) {
+		if ( baseCurrent->wholeTeam[num].fieldSize == ACTOR_SIZE_NORMAL )
+			CL_CharacterCvars(&baseCurrent->wholeTeam[num]);
+		else
+			CL_UGVCvars(&baseCurrent->wholeTeam[num]);
+	} else {
+		if ( baseCurrent->curTeam[num].fieldSize == ACTOR_SIZE_NORMAL )
+			CL_CharacterCvars(&baseCurrent->curTeam[num]);
+		else
+			CL_UGVCvars(&baseCurrent->curTeam[num]);
+	}
 }
 
 /**

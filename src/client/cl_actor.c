@@ -996,6 +996,8 @@ void CL_ActorStandCrouch(void)
 	if (!CL_CheckAction())
 		return;
 
+	if (selActor->fieldSize == ACTOR_SIZE_UGV )
+		return;
 	/* send message to server */
 	MSG_WriteFormat(&cls.netchan.message, "bbss", clc_action, PA_STATE, selActor->entnum, selActor->state ^ STATE_CROUCHED);
 }
