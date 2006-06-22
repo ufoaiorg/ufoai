@@ -2283,8 +2283,7 @@ void G_ClientTeamInfo( player_t *player )
 
 	/* find actors */
 	for ( j = 0, ent = g_edicts; j < globals.num_edicts; j++, ent++ )
-		if ( ((ent->fieldSize == ACTOR_SIZE_NORMAL && ent->type == ET_ACTORSPAWN)
-		  || (ent->fieldSize == ACTOR_SIZE_UGV && ent->type == ET_UGVSPAWN) )
+		if ( (ent->type == ET_ACTORSPAWN || ent->type == ET_UGVSPAWN )
 		  && player->pers.team == ent->team )
 			break;
 
@@ -2297,7 +2296,7 @@ void G_ClientTeamInfo( player_t *player )
 			ent->pnum = player->num;
 			ent->chr.fieldSize = gi.ReadByte();
 			ent->fieldSize = ent->chr.fieldSize;
-			switch(ent->fieldSize) {
+			switch(ent->type) {
 			case ACTOR_SIZE_NORMAL:
 				ent->type = ET_ACTOR;
 				break;

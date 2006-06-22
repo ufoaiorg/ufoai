@@ -332,8 +332,7 @@ void G_ActorSpawn( edict_t *ent )
 	level.num_spawnpoints[ent->team]++;
 	ent->classname = "actor";
 	ent->type = ET_ACTORSPAWN;
-	if ( ent->fieldSize < ACTOR_SIZE_NORMAL )
-		ent->fieldSize = ACTOR_SIZE_NORMAL;
+	ent->fieldSize = ACTOR_SIZE_NORMAL;
 
 	/* fall to ground */
 	ent->pos[2] = gi.GridFall( gi.map, ent->pos );
@@ -358,8 +357,7 @@ void G_UGVSpawn( edict_t *ent )
 	level.num_ugvspawnpoints[ent->team]++;
 	ent->classname = "ugv";
 	ent->type = ET_UGVSPAWN;
-	if ( ent->fieldSize < ACTOR_SIZE_NORMAL )
-		ent->fieldSize = ACTOR_SIZE_NORMAL;
+	ent->fieldSize = ACTOR_SIZE_UGV;
 
 	/* fall to ground */
 	ent->pos[2] = gi.GridFall( gi.map, ent->pos );
@@ -368,11 +366,6 @@ void G_UGVSpawn( edict_t *ent )
 	/* link it for collision detection */
 	ent->dir = AngleToDV( ent->angle );
 	ent->solid = SOLID_BBOX;
-	/* maybe this is already set in one of the spawn functions */
-	if ( ent->maxs[0] == 0 )
-		VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND );
-	if ( ent->mins[0] == 0 )
-		VectorSet( ent->mins,-PLAYER_WIDTH,-PLAYER_WIDTH, PLAYER_MIN );
 }
 
 /*QUAKED info_player_start (1 0 0) (-16 -16 -24) (16 16 32)
@@ -454,7 +447,6 @@ void SP_ugv_start (edict_t *ent)
 	ent->STUN = 100;
 	ent->HP = 100;
 	ent->AP = 100;
-	ent->fieldSize = ACTOR_SIZE_UGV;
 
 	/* these units are bigger */
 	VectorSet( ent->maxs, PLAYER_WIDTH*2, PLAYER_WIDTH*2, PLAYER_STAND );

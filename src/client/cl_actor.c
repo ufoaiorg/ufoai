@@ -1463,13 +1463,12 @@ qboolean CL_AddActor(le_t * le, entity_t * ent)
 
 	add.tagent = V_GetEntity() + 1;
 	add.tagname = "tag_head";
+	le->fieldSize = ACTOR_SIZE_NORMAL;
 
 	V_AddEntity(&add);
 
 	/* add actor special effects */
 	ent->flags |= RF_SHADOW;
-	Com_DPrintf("CL_AddActor: FieldSize (le): %i\n", le->fieldSize);
-	le->fieldSize = ACTOR_SIZE_UGV;
 
 	if (!(le->state & STATE_DEAD)) {
 		if (le->selected)
@@ -1536,7 +1535,6 @@ qboolean CL_AddUGV(le_t * le, entity_t * ent)
 
 	/* add actor special effects */
 	ent->flags |= RF_SHADOW;
-	Com_DPrintf("CL_AddUGV: FieldSize (le): %i\n", le->fieldSize);
 	le->fieldSize = ACTOR_SIZE_UGV;
 
 	if (!(le->state & STATE_DEAD)) {
@@ -1752,7 +1750,7 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
  * TODO: This looks out of place.
  */
 const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT };
-
+#define BoxSize(i,source,target) (target[0]=i*source[0],target[1]=i*source[1],target[2]=source[2])
 /**
  * @brief Adds a target.
 */
@@ -1779,6 +1777,7 @@ void CL_AddTargeting(void)
 		else
 			VectorSet(ent.angles, 0, 0, 1);
 
+		VectorAdd(ent.origin, boxSize, ent.oldorigin);
 		/* color */
 		if (mouseActor) {
 			ent.alpha = 0.4 + 0.2 * sin((float) cl.time / 80);
@@ -1793,19 +1792,17 @@ void CL_AddTargeting(void)
 					VectorSet(ent.angles, 1, 0, 0);
 					break;
 				}
-			if (mouseActor && mouseActor->fieldSize > ACTOR_SIZE_NORMAL)
-				Vector2Mul(mouseActor->fieldSize, boxSize, realBoxSize);
-			else
-				VectorCopy(boxSize, realBoxSize);
+			BoxSize(mouseActor->fieldSize, boxSize, realBoxSize);
+			VectorSubtract(ent.origin, realBoxSize, ent.origin);
 		} else {
-			if (selActor && selActor->fieldSize > ACTOR_SIZE_NORMAL)
-				Vector2Mul(selActor->fieldSize, boxSize, realBoxSize);
-			else
-				VectorCopy(boxSize, realBoxSize);
+			if (selActor) {
+				BoxSize(selActor->fieldSize, boxSize, realBoxSize);
+				VectorSubtract(ent.origin, realBoxSize, ent.origin);
+			} else {
+				VectorSubtract(ent.origin, boxSize, ent.origin);
+			}
 			ent.alpha = 0.3;
 		}
-		VectorAdd(ent.origin, boxSize, ent.oldorigin);
-		VectorSubtract(ent.origin, boxSize, ent.origin);
 /* 		V_AddLight( ent.origin, 256, 1.0, 0, 0 ); */
 
 		/* add it */

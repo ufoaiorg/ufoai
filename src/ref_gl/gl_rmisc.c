@@ -339,7 +339,8 @@ void R_DrawBox( entity_t *e )
 	qglEnable( GL_BLEND );
 	qglDisable( GL_CULL_FACE );
 	qglDisable( GL_TEXTURE_2D );
-	if ( !gl_wire->value ) qglPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
+	if ( !gl_wire->value )
+		qglPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
 	qglEnable( GL_LINE_SMOOTH );
 
 	qglColor4f( e->angles[0], e->angles[1], e->angles[2], e->alpha );
@@ -375,7 +376,8 @@ void R_DrawBox( entity_t *e )
 	qglEnd();
 
 	qglDisable( GL_LINE_SMOOTH );
-	if ( !gl_wire->value ) qglPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	if ( !gl_wire->value )
+		qglPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 	qglEnable( GL_TEXTURE_2D );
 	qglEnable( GL_CULL_FACE );
 	qglDisable( GL_BLEND );
