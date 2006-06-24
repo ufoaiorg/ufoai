@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-#define MAX_DATA_LENGTH 1024
+#define MAX_DATA_LENGTH 2048
 
 typedef struct seqCmd_s {
 	void (*handler) (char *name, char *data);
@@ -312,6 +312,11 @@ void CL_Sequence2D(void)
 				s2d->pos[j] += cls.frametime * s2d->speed[j];
 				s2d->size[j] += cls.frametime * s2d->enlarge[j];
 			}
+
+			/* outside the screen? */
+			/* TODO: does VID_NORM_HEIGHT work here? Check differnt resolutions */
+			if ( s2d->pos[1] >= VID_NORM_HEIGHT )
+				continue;
 
 			/* render */
 			re.DrawColor(s2d->color);

@@ -69,8 +69,7 @@ void SV_DropClient (client_t *drop)
 	/* add the disconnect */
 	MSG_WriteByte (&drop->netchan.message, svc_disconnect);
 
-	if (drop->state == cs_spawned)
-	{
+	if (drop->state == cs_spawned) {
 		/* call the prog function for removing a client */
 		/* this will remove the body, among other things */
 		ge->ClientDisconnect (drop->player);
@@ -111,11 +110,9 @@ char *SV_StatusString (void)
 	Q_strcat (status, MAX_MSGLEN - 16, "\n");
 	statusLength = strlen(status);
 
-	for (i=0 ; i<sv_maxclients->value ; i++)
-	{
+	for (i=0 ; i<sv_maxclients->value ; i++) {
 		cl = &svs.clients[i];
-		if (cl->state == cs_connected || cl->state == cs_spawned )
-		{
+		if (cl->state == cs_connected || cl->state == cs_spawned ) {
 			Com_sprintf (player, sizeof(player), "%i %i \"%s\"\n",
 				0, cl->ping, cl->name);
 			playerLength = strlen(player);
@@ -178,8 +175,7 @@ void SVC_Info (void)
 
 	if (version != PROTOCOL_VERSION)
 		Com_sprintf (string, sizeof(string), "%s: wrong version\n", hostname->string, sizeof(string));
-	else
-	{
+	else {
 		count = 0;
 		for (i=0 ; i<sv_maxclients->value ; i++)
 			if (svs.clients[i].state >= cs_connected)
@@ -225,19 +221,16 @@ void SVC_GetChallenge (void)
 	oldestTime = 0x7fffffff;
 
 	/* see if we already have a challenge for this ip */
-	for (i = 0 ; i < MAX_CHALLENGES ; i++)
-	{
+	for (i = 0 ; i < MAX_CHALLENGES ; i++) {
 		if (NET_CompareBaseAdr (net_from, svs.challenges[i].adr))
 			break;
-		if (svs.challenges[i].time < oldestTime)
-		{
+		if (svs.challenges[i].time < oldestTime) {
 			oldestTime = svs.challenges[i].time;
 			oldest = i;
 		}
 	}
 
-	if (i == MAX_CHALLENGES)
-	{
+	if (i == MAX_CHALLENGES) {
 		/* overwrite the oldest */
 		svs.challenges[oldest].challenge = rand() & 0x7fff;
 		svs.challenges[oldest].adr = net_from;
@@ -274,8 +267,7 @@ void SVC_DirectConnect (void)
 	Com_DPrintf ("SVC_DirectConnect ()\n");
 
 	version = atoi(Cmd_Argv(1));
-	if (version != PROTOCOL_VERSION)
-	{
+	if (version != PROTOCOL_VERSION) {
 		Netchan_OutOfBandPrint (NS_SERVER, adr, "print\nServer is version %4.2f.\n", UFO_VERSION);
 		Com_DPrintf ("    rejected connect from version %i\n", version);
 		return;
@@ -292,10 +284,8 @@ void SVC_DirectConnect (void)
 	Info_SetValueForKey (userinfo, "ip", NET_AdrToString(net_from));
 
 	/* attractloop servers are ONLY for local clients */
-	if (sv.attractloop)
-	{
-		if (!NET_IsLocalAddress (adr))
-		{
+	if (sv.attractloop) {
+		if (!NET_IsLocalAddress (adr)) {
 			Com_Printf ("Remote connect in attract loop.  Ignored.\n");
 			Netchan_OutOfBandPrint (NS_SERVER, adr, "print\nConnection refused.\n");
 			return;
@@ -303,20 +293,16 @@ void SVC_DirectConnect (void)
 	}
 
 	/* see if the challenge is valid */
-	if (!NET_IsLocalAddress (adr))
-	{
-		for (i=0 ; i<MAX_CHALLENGES ; i++)
-		{
-			if (NET_CompareBaseAdr (net_from, svs.challenges[i].adr))
-			{
+	if (!NET_IsLocalAddress (adr)) {
+		for (i=0 ; i<MAX_CHALLENGES ; i++) {
+			if (NET_CompareBaseAdr (net_from, svs.challenges[i].adr)) {
 				if (challenge == svs.challenges[i].challenge)
 					break;		/* good */
 				Netchan_OutOfBandPrint (NS_SERVER, adr, "print\nBad challenge.\n");
 				return;
 			}
 		}
-		if (i == MAX_CHALLENGES)
-		{
+		if (i == MAX_CHALLENGES) {
 			Netchan_OutOfBandPrint (NS_SERVER, adr, "print\nNo challenge for address.\n");
 			return;
 		}
@@ -326,16 +312,13 @@ void SVC_DirectConnect (void)
 	memset (newcl, 0, sizeof(client_t));
 
 	/* if there is already a slot for this ip, reuse it */
-	for (i=0,cl=svs.clients ; i<sv_maxclients->value ; i++,cl++)
-	{
+	for (i=0,cl=svs.clients ; i<sv_maxclients->value ; i++,cl++) {
 		if (cl->state == cs_free)
 			continue;
 		if (NET_CompareBaseAdr (adr, cl->netchan.remote_address)
 			&& ( cl->netchan.qport == qport
-			|| adr.port == cl->netchan.remote_address.port ) )
-		{
-			if (!NET_IsLocalAddress (adr) && (svs.realtime - cl->lastconnect) < ((int)sv_reconnect_limit->value * 1000))
-			{
+			|| adr.port == cl->netchan.remote_address.port ) ) {
+			if (!NET_IsLocalAddress (adr) && (svs.realtime - cl->lastconnect) < ((int)sv_reconnect_limit->value * 1000)) {
 				Com_DPrintf ("%s:reconnect rejected : too soon\n", NET_AdrToString (adr));
 				return;
 			}
@@ -348,16 +331,13 @@ void SVC_DirectConnect (void)
 
 	/* find a client slot */
 	newcl = NULL;
-	for (i=0,cl=svs.clients ; i<sv_maxclients->value ; i++,cl++)
-	{
-		if (cl->state == cs_free)
-		{
+	for (i=0,cl=svs.clients ; i<sv_maxclients->value ; i++,cl++) {
+		if (cl->state == cs_free) {
 			newcl = cl;
 			break;
 		}
 	}
-	if (!newcl)
-	{
+	if (!newcl) {
 		Netchan_OutOfBandPrint (NS_SERVER, adr, "print\nServer is full.\n");
 		Com_DPrintf ("Rejected a connection.\n");
 		return;
@@ -380,8 +360,7 @@ gotnewcl:
 	newcl->challenge = challenge; /* save challenge for checksumming */
 
 	/* get the game a chance to reject this connection or modify the userinfo */
-	if (!(ge->ClientConnect (player, userinfo)))
-	{
+	if (!(ge->ClientConnect (player, userinfo))) {
 		if (*Info_ValueForKey (userinfo, "rejmsg"))
 			Netchan_OutOfBandPrint (NS_SERVER, adr, "print\n%s\nConnection refused.\n",
 				Info_ValueForKey (userinfo, "rejmsg"));
@@ -446,15 +425,11 @@ void SVC_RemoteCommand (void)
 	Com_BeginRedirect (RD_PACKET, sv_outputbuf, SV_OUTPUTBUF_LENGTH, SV_FlushRedirect);
 
 	if (!Rcon_Validate ())
-	{
 		Com_Printf ("Bad rcon_password.\n");
-	}
-	else
-	{
+	else {
 		remaining[0] = 0;
 
-		for (i=2 ; i<Cmd_Argc() ; i++)
-		{
+		for (i=2 ; i<Cmd_Argc() ; i++) {
 			Q_strcat (remaining, 1024, Cmd_Argv(i) );
 			Q_strcat (remaining, 1024, " ");
 		}
@@ -525,8 +500,7 @@ void SV_CalcPings (void)
 	client_t	*cl;
 	int			total, count;
 
-	for (i=0 ; i<sv_maxclients->value ; i++)
-	{
+	for (i=0 ; i<sv_maxclients->value ; i++) {
 		cl = &svs.clients[i];
 		if (cl->state != cs_spawned )
 			continue;
@@ -540,10 +514,8 @@ void SV_CalcPings (void)
 
 		total = 0;
 		count = 0;
-		for (j=0 ; j<LATENCY_COUNTS ; j++)
-		{
-			if (cl->frame_latency[j] > 0)
-			{
+		for (j=0 ; j<LATENCY_COUNTS ; j++) {
+			if (cl->frame_latency[j] > 0) {
 				count++;
 				total += cl->frame_latency[j];
 			}
@@ -579,8 +551,7 @@ void SV_GiveMsec (void)
 	if (sv.framenum & 15)
 		return;
 
-	for (i=0 ; i<sv_maxclients->value ; i++)
-	{
+	for (i=0 ; i<sv_maxclients->value ; i++) {
 		cl = &svs.clients[i];
 		if (cl->state == cs_free )
 			continue;
@@ -601,11 +572,9 @@ void SV_ReadPackets (void)
 	client_t	*cl;
 	int			qport;
 
-	while (NET_GetPacket (NS_SERVER, &net_from, &net_message))
-	{
+	while (NET_GetPacket (NS_SERVER, &net_from, &net_message)) {
 		/* check for connectionless packet (0xffffffff) first */
-		if (*(int *)net_message.data == -1)
-		{
+		if (*(int *)net_message.data == -1) {
 			SV_ConnectionlessPacket ();
 			continue;
 		}
@@ -618,24 +587,20 @@ void SV_ReadPackets (void)
 		qport = MSG_ReadShort (&net_message) & 0xffff;
 
 		/* check for packets from connected clients */
-		for (i=0, cl=svs.clients ; i<sv_maxclients->value ; i++,cl++)
-		{
+		for (i=0, cl=svs.clients ; i<sv_maxclients->value ; i++,cl++) {
 			if (cl->state == cs_free)
 				continue;
 			if (!NET_CompareBaseAdr (net_from, cl->netchan.remote_address))
 				continue;
 			if (cl->netchan.qport != qport)
 				continue;
-			if (cl->netchan.remote_address.port != net_from.port)
-			{
+			if (cl->netchan.remote_address.port != net_from.port) {
 				Com_Printf ("SV_ReadPackets: fixing up a translated port\n");
 				cl->netchan.remote_address.port = net_from.port;
 			}
 
-			if (Netchan_Process(&cl->netchan, &net_message))
-			{	/* this is a valid, sequenced packet, so process it */
-				if (cl->state != cs_zombie)
-				{
+			if (Netchan_Process(&cl->netchan, &net_message)) {	/* this is a valid, sequenced packet, so process it */
+				if (cl->state != cs_zombie) {
 					cl->lastmessage = svs.realtime;	/* don't timeout */
 					SV_ExecuteClientMessage (cl);
 				}
@@ -671,21 +636,18 @@ void SV_CheckTimeouts (void)
 	droppoint = svs.realtime - 1000*timeout->value;
 	zombiepoint = svs.realtime - 1000*zombietime->value;
 
-	for (i=0,cl=svs.clients ; i<sv_maxclients->value ; i++,cl++)
-	{
+	for (i=0,cl=svs.clients ; i<sv_maxclients->value ; i++,cl++) {
 		/* message times may be wrong across a changelevel */
 		if (cl->lastmessage > svs.realtime)
 			cl->lastmessage = svs.realtime;
 
 		if (cl->state == cs_zombie
-		&& cl->lastmessage < zombiepoint)
-		{
+		 && cl->lastmessage < zombiepoint) {
 			cl->state = cs_free;	/* can now be reused */
 			continue;
 		}
 		if ( (cl->state == cs_connected || cl->state == cs_spawned)
-			&& cl->lastmessage < droppoint)
-		{
+			&& cl->lastmessage < droppoint) {
 			SV_BroadcastPrintf (PRINT_HIGH, "%s timed out\n", cl->name);
 			SV_DropClient (cl);
 			cl->state = cs_free;	/* don't bother with zombie state */
@@ -743,11 +705,9 @@ void SV_Frame (int msec)
 	SV_ReadPackets ();
 
 	/* move autonomous things around if enough time has passed */
-	if (!sv_timedemo->value && svs.realtime < sv.time)
-	{
+	if (!sv_timedemo->value && svs.realtime < sv.time) {
 		/* never let the time get too far off */
-		if (sv.time - svs.realtime > 100)
-		{
+		if (sv.time - svs.realtime > 100) {
 			if (sv_showclamp->value)
 				Com_Printf ("sv lowclamp\n");
 			svs.realtime = sv.time - 100;
@@ -817,8 +777,7 @@ void Master_Heartbeat (void)
 
 	/* send to group master */
 	for (i=0 ; i<MAX_MASTERS ; i++)
-		if (master_adr[i].port)
-		{
+		if (master_adr[i].port) {
 			Com_Printf ("Sending heartbeat to %s\n", NET_AdrToString (master_adr[i]));
 			Netchan_OutOfBandPrint (NS_SERVER, master_adr[i], "heartbeat\n%s", string);
 		}
@@ -845,8 +804,7 @@ void Master_Shutdown (void)
 
 	/* send to group master */
 	for (i=0 ; i<MAX_MASTERS ; i++)
-		if (master_adr[i].port)
-		{
+		if (master_adr[i].port) {
 			if (i > 0)
 				Com_Printf ("Sending heartbeat to %s\n", NET_AdrToString (master_adr[i]));
 			Netchan_OutOfBandPrint (NS_SERVER, master_adr[i], "shutdown");
@@ -880,25 +838,20 @@ void SV_UserinfoChanged (client_t *cl)
 
 	/* rate command */
 	val = Info_ValueForKey (cl->userinfo, "rate");
-	if (strlen(val))
-	{
+	if (strlen(val)) {
 		i = atoi(val);
 		cl->rate = i;
 		if (cl->rate < 100)
 			cl->rate = 100;
 		if (cl->rate > 15000)
 			cl->rate = 15000;
-	}
-	else
+	} else
 		cl->rate = 5000;
 
 	/* msg command */
 	val = Info_ValueForKey (cl->userinfo, "msg");
 	if (strlen(val))
-	{
 		cl->messagelevel = atoi(val);
-	}
-
 }
 
 
@@ -938,7 +891,8 @@ void SV_Init (void)
 	public_server = Cvar_Get ("public", "0", 0);
 	sv_reconnect_limit = Cvar_Get ("sv_reconnect_limit", "3", CVAR_ARCHIVE);
 
-	if ( dedicated->value ) Cvar_Set( "maxclients", "8" );
+	if ( dedicated->value ) 
+		Cvar_Set( "maxclients", "8" );
 
 	SZ_Init (&net_message, net_message_buffer, sizeof(net_message_buffer));
 }

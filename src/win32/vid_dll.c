@@ -567,8 +567,7 @@ qboolean VID_LoadRefresh( char *name )
 	GetRefAPI_t	GetRefAPI;
 	qboolean	restart = qfalse;
 
-	if ( reflib_active )
-	{
+	if ( reflib_active ) {
 		re.Shutdown();
 		VID_FreeReflib ();
 		restart = qtrue;
@@ -576,8 +575,7 @@ qboolean VID_LoadRefresh( char *name )
 
 	Com_Printf( "------- Loading %s -------\n", name );
 
-	if ( ( reflib_library = LoadLibrary( name ) ) == 0 )
-	{
+	if ( ( reflib_library = LoadLibrary( name ) ) == 0 ) {
 		Com_Printf( "LoadLibrary(\"%s\") failed\n", name );
 
 		return qfalse;
