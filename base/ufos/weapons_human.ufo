@@ -931,84 +931,72 @@ item grenl_ammo
 // =======================
 item bolterrifle
 {
-	name		"_Bolter Rifle"
-	model		weapons/bolterrifle/bolterrifle
-	weapon		true
-	type		biggun
-	category	3
-	twohanded	true
-	shape		"0 0 4 2"
-	center		"8 0 0"
-	scale		1.0
-	ammo		1
-	reload		6
-	price		2800
-	buytype		0
+	name            "_Bolter Rifle"
+	model           weapons/bolterrifle/bolterrifle
+	weapon          true
+	type            biggun
+	category        3
+	twohanded       true
+	shape           "0 0 4 2"
+	center          "8 0 0"
+	scale           1.0
+	ammo            15
+	reload          13
+	price           2800
+	buytype         0
 }
 
 item bolterrifle_ammo
 {
-	name		"_Bolter Rifle Clip"
-	model		weapons/bolterrifle/bolterrifle_clip
-	type		ammo
-	category	0
-	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		1.0
-	price		35
-	buytype		0
+	name            "_Bolter Rifle Clip"
+	model           weapons/bolterrifle/bolterrifle_clip
+	type            ammo
+	category        0
+	shape           "0 0 1 1"
+	center          "0 0 0"
+	scale           1.0
+	price           120
+	buytype         0
 
 	primary
 	{
-		name	"_Single Shot"
-		skill	heavy
-		projtl	grenl_ammo
-		impact	frag_explosion
-		hitbody frag_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	4.0
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"100 10"
-		splrad	120
-		dmgtype blast
+		name    "_Single Shot"
+		skill   heavy
+		projtl  bullet
+		impact  bulletImpact
+		hitbody blood
+		firesnd weapons/laser.wav
+		speed   0
+		spread  "3 3"
+		crouch  0.8
+		range   800
+		shots   1
+		ammo    1
+		time    14
+		damage  "80 20"
+		dmgtype normal
 	}
 
 	secondary
 	{
-		name	"_Single Shot"
-		skill	heavy
-		projtl	grenl_ammo
-		impact	frag_explosion
-		hitbody frag_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	4.0
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"100 10"
-		splrad	120
-		dmgtype blast
+		name    "_Burst"
+		skill   heavy
+		projtl  bullet
+		impact  bulletImpact
+		hitbody blood
+		firesnd weapons/laser.wav
+		speed   0
+		spread  "4 5"
+		crouch  0.6
+		range   800
+		shots   3
+		ammo    3
+		rof     2
+		time    22
+		damage  "80 20"
+		dmgtype normal
 	}
 }
-
 // =======================
 // STUN ROD
 // =======================
