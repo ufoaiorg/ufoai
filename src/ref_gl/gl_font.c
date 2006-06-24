@@ -60,7 +60,7 @@ static GLuint Font_TextureAddToCache( SDL_Surface *s )
 			qglDeleteTextures(1, &textureCache[i].texture);
 			textureCache[i].surface = 0;
 			textureCache[i].texture = 0;
-    
+
 			firstTextureCache++;
 			firstTextureCache %= MAX_TEXTURE_CACHE;
 		}
@@ -368,8 +368,12 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 	if ( buffer == NULL )
 		return NULL;
 
-	if ( ! maxWidth )
-		maxWidth = VID_NORM_WIDTH;
+	if ( ! maxWidth ) {
+#ifdef PARANOID
+		ri.Con_Printf (PRINT_DEVELOPER, "Font_GetLineWrap: maxWidth was %i and is now %i\n", maxWidth, VID_NORM_WIDTH );
+#endif
+		maxWidth = VID_NORM_WIDTH*vid.rx;
+	}
 
 	/* no line wrap needed? */
 	TTF_SizeUTF8( f->font, buffer, &w, &h );
@@ -403,9 +407,9 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 			*width = oldW;
 			*space = ' ';
 			*newlineTest = '\0';
-			return newlineTest + 1;
-		}
-		else if ( maxWidth - w == 0 )
+			return
+				newlineTest + 1;
+		} else if ( maxWidth - w == 0 )
 			return space + 1;
 		newlineTest = space;
 		oldW = w;
@@ -489,13 +493,14 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 	font_t	*f = NULL;
 	char* buffer = buf;
 	char* pos;
-	char searchString[MAX_FONTNAME+MAX_HASH_STRING];
+	static char searchString[MAX_FONTNAME+MAX_HASH_STRING];
 	SDL_Surface *openGLSurface = NULL;
 	int max = 0; /* calculated maxWidth */
 
 	/* get the font */
 	f = Font_GetFont( fontID );
-	if ( !f ) ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", fontID );
+	if ( !f )
+		ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", fontID );
 
 	openGLSurface = Font_GetFromCache( c );
 	if ( openGLSurface ) {
@@ -524,20 +529,20 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 			max = w;
 
 		if ( align > 0 && align < ALIGN_LAST ) {
-			switch ( align % 3 )
-			{
+			switch ( align % 3 ) {
 			case 1: x -= w / 2; break;
 			case 2: x -= w; break;
 			}
 
-			switch ( align / 3 )
-			{
+			switch ( align / 3 ) {
 			case 1: y -= h / 2; break;
 			case 2: y -= h; break;
 			}
 		}
 
 		if ( strlen(buffer) ) {
+			/* This will cut down the string to 160 chars */
+			/* NOTE: There can be a non critical overflow in Com_sprintf */
 			Com_sprintf( searchString, MAX_FONTNAME+MAX_HASH_STRING, "%s%s", fontID, buffer );
 
 			openGLSurface = Font_GetFromCache( searchString );
@@ -557,6 +562,9 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 		x = locX;
 	} while ( buffer );
 
+#ifdef PARANOID
+	ri.Con_Printf(PRINT_DEVELOPER, "Font_DrawString: returnHeight: %i\n", returnHeight);
+#endif
 	return returnHeight;
 }
 
@@ -585,8 +593,7 @@ void Font_Register( char *name, int size, char* path, char* style )
 
 	if ( style && *style )
 		for (i=0 ; i< NUM_FONT_STYLES ; i++)
-			if ( !Q_stricmp( fontStyle[i].name, style ) )
-			{
+			if ( !Q_stricmp( fontStyle[i].name, style ) ) {
 				renderstyle = fontStyle[i].renderStyle;
 				break;
 			}
