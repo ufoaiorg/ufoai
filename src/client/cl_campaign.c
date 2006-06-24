@@ -3300,7 +3300,7 @@ void CP_GetCampaigns_f(void)
 	/* select main as default */
 	for (i = 0; i < numCampaigns; i++)
 		if (!Q_strncmp("main", campaigns[i].id, MAX_VAR)) {
-			Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\n%s\n"), campaigns[i].team, _(campaigns[i].text));
+			Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i\nCredits: %ic\n%s\n"), campaigns[i].team, campaigns[i].soldiers, campaigns[i].credits, _(campaigns[i].text));
 			break;
 		}
 
@@ -3324,7 +3324,7 @@ void CP_CampaignsClick_f(void)
 
 	Cvar_Set("campaign", campaigns[num].id);
 	/* FIXME: Translate the race to the name of a race */
-	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\n%s\n"), campaigns[num].team, _(campaigns[num].text));
+	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i\nCredits: %ic\n%s\n"), campaigns[num].team, campaigns[num].soldiers, campaigns[num].credits, _(campaigns[num].text));
 	menuText[TEXT_STANDARD] = campaignDesc;
 }
 
