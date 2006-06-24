@@ -1031,22 +1031,6 @@ float	crand(void)
 	return (rand()&32767)* (2.0/32767) - 1;
 }
 
-
-/*==================================================================================== */
-
-/*
-============
-stradd
-============
-*/
-void stradd( char **str, const char *addStr )
-{
-	const char *ch;
-	for ( ch = addStr; *ch; ch++, (*str)++ )
-		**str = *ch;
-	**str = 0;
-}
-
 /*
 ==================
 Com_CharIsOneOfCharset
@@ -1576,7 +1560,7 @@ void Com_sprintf (char *dest, int size, char *fmt, ...)
 	len = vsprintf (bigbuffer,fmt,argptr);
 #endif
 	va_end (argptr);
-#ifdef DEBUG
+#ifdef PARANOID
 	if (len >= size)
 		Com_Printf ("Com_sprintf: overflow of %i in %i\n", len, size);
 #endif
