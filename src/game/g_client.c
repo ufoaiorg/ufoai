@@ -1208,24 +1208,11 @@ typedef enum
 
 #define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
 
-#define MOB_DEATH		10
-#define MOB_WOUND		0.1
-#define	MOF_WATCHING		1.7
-#define MOF_TEAMKILL		2.0
-#define MOF_CIVILIAN		0.3
-#define MOF_ENEMY		0.5
-#define MOR_PAIN		3.6
-/*everyone gets this times morale damage */
-#define MOR_DEFAULT		0.5
-/*at this distance the following two get halfed (exponential scale) */
-#define MOR_DISTANCE		160
-/*this times morale damage gets added to all around the victim */
-#define MOR_VICTIM		0.7
-/*this times morale damage gets added to all around the attacker */
-#define MOR_ATTACKER		0.3
-/*how much the morale depends on the size of the damaged team */
-#define MON_TEAMFACTOR		0.6
-
+/**
+  * @brief Applies morale changes to actors around a wounded or killed actor
+  *
+  * only called when mor_panic is not zero
+  */
 void G_Morale( int type, edict_t *victim, edict_t *attacker, int param )
 {
 	edict_t	*ent;
@@ -1239,33 +1226,41 @@ void G_Morale( int type, edict_t *victim, edict_t *attacker, int param )
 			case ML_WOUND:
 			case ML_DEATH:
 				/* morale damage is damage dependant */
-				mod = MOB_WOUND * param;
+				mod = mob_wound->value * param;
 				/* death hurts morale even more than just damage */
-				if ( type == ML_DEATH ) mod += MOB_DEATH;
+				if ( type == ML_DEATH )
+					mod += mob_death->value;
 				/* seeing how someone gets shot increases the morale change */
 				if ( ent == victim || (G_ActorVis(ent->origin, victim, qfalse) && G_FrustomVis(ent, victim->origin)))
-					mod *= MOF_WATCHING;
+					mod *= mof_watching->value;
 				if ( ent->team == attacker->team ) {
 					/* teamkills are considered to be bad form, but won't cause an increased morale boost for the enemy */
 					/* morale boost isn't equal to morale loss (it's lower, but morale gets regenerated) */
 					if ( victim->team == attacker->team )
-						mod *= MOF_TEAMKILL;
+						mod *= mof_teamkill->value;
 					else
-						mod *= MOF_ENEMY;
+						mod *= mof_enemy->value;
 				}
 				/* seeing a civi die is more "acceptable" */
 				if ( victim->team == TEAM_CIVILIAN )
-					mod *= MOF_CIVILIAN;
+					mod *= mof_civilian->value;
 				/* if an ally (or in singleplayermode, as human, a civilian) got shot, lower the morale, don't heighten it. */
 				if ( victim->team == ent->team || (victim->team == TEAM_CIVILIAN && ent->team != TEAM_ALIEN && (int)sv_maxclients->value == 1 ))
 					mod *= -1;
 				/* if you stand near to the attacker or the victim, the morale change is higher. */
-				mod *= MOR_DEFAULT + pow(0.5, VectorDist(ent->origin,victim->origin)/MOR_DISTANCE)*MOR_VICTIM + pow(0.5, VectorDist(ent->origin,attacker->origin)/MOR_DISTANCE)*MOR_ATTACKER;
+				mod *= mor_default->value
+					+ pow(0.5, VectorDist(ent->origin,victim->origin)/mor_distance->value)
+					* mor_victim->value
+					+ pow(0.5, VectorDist(ent->origin,attacker->origin)/mor_distance->value)
+					* mor_attacker->value;
 				/* morale damage is dependant on the number of living allies */
-				mod *= (1-MON_TEAMFACTOR) + MON_TEAMFACTOR*(level.num_spawned[victim->team]+1)/(level.num_alive[victim->team]+1);
+				mod *= (1-mon_teamfactor->value)
+				    + mon_teamfactor->value
+				    * (level.num_spawned[victim->team]+1)
+				    / (level.num_alive[victim->team]+1);
 				/* being hit isn't fun */
 				if ( ent == victim )
-					mod *= MOR_PAIN;
+					mod *= mor_pain->value;
 				break;
 			default:
 				Com_Printf( "Undefined morale modifier type %i\n", type );
@@ -1292,14 +1287,6 @@ void G_Morale( int type, edict_t *victim, edict_t *attacker, int param )
 G_MoraleBehaviour
 =================
 */
-#define MORALE_REGENERATION	15
-#define MORALE_SHAKEN		50
-#define MORALE_PANIC		30
-#define M_SANITY			1.0
-#define M_RAGE				0.6
-#define M_RAGE_STOP			2.0
-#define M_PANIC_STOP		1.0
-
 void G_MoralePanic( edict_t *ent, qboolean sanity)
 {
 	gi.cprintf( game.players + ent->pnum, PRINT_HIGH, _("%s panics!\n"), ent->chr.name );
@@ -1331,9 +1318,14 @@ void G_MoralePanic( edict_t *ent, qboolean sanity)
 	ent->TU = 0;
 }
 
+/**
+  * @brief Stops the panic state of an actor
+  *
+  * This is only called when cvar mor_panic is not zero
+  */
 void G_MoraleStopPanic ( edict_t *ent )
 {
-	if (((ent->morale)/MORALE_PANIC) > (M_PANIC_STOP*frand()))
+	if (((ent->morale)/mor_panic->value) > (m_panic_stop->value*frand()))
 		ent->state &= ~STATE_PANIC;
 	else
 		G_MoralePanic (ent, qtrue);
@@ -1354,15 +1346,26 @@ void G_MoraleRage ( edict_t *ent, qboolean sanity)
 	AI_ActorThink( game.players + ent->pnum, ent );
 }
 
+/**
+  * @brief Stops the rage state of an actor
+  *
+  * This is only called when cvar mor_panic is not zero
+  */
 void G_MoraleStopRage ( edict_t *ent )
 {
-	if (((ent->morale)/MORALE_PANIC) > (M_RAGE_STOP*frand())) {
+	if (((ent->morale)/mor_panic->value) > (m_rage_stop->value*frand())) {
 		ent->state &= ~STATE_INSANE;
 		G_SendState( G_VisToPM( ent->visflags ), ent );
 	}
-	else G_MoralePanic (ent, qtrue); /*regains sanity */
+	else
+		G_MoralePanic (ent, qtrue); /*regains sanity */
 }
 
+/**
+  * @brief Applies morale behaviour on actors
+  *
+  * only called when mor_panic is not zero
+  */
 void G_MoraleBehaviour( int team )
 {
 	edict_t	*ent;
@@ -1380,17 +1383,17 @@ void G_MoraleBehaviour( int team )
 			if ( ( (int)sv_maxclients->value >= 2 && (int)sv_enablemorale->value == 1 )
 			    || (int)sv_maxclients->value == 1 ) {
 				/* if panic, determine what kind of panic happens: */
-				if ( ent->morale <= MORALE_PANIC && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
-					if ( (float)ent->morale / MORALE_PANIC > (M_SANITY*frand()))
+				if ( ent->morale <= mor_panic->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
+					if ( (float)ent->morale / mor_panic->value > (m_sanity->value*frand()))
 						sanity = qtrue;
 					else
 						sanity = qfalse;
-					if ( (float)ent->morale / MORALE_PANIC > (M_RAGE*frand()))
+					if ( (float)ent->morale / mor_panic->value > (m_rage->value*frand()))
 						G_MoralePanic ( ent, sanity );
 					else
 						G_MoraleRage( ent, sanity );
 				/* if shaken, well .. be shaken; */
-				} else if  (ent->morale <= MORALE_SHAKEN && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
+				} else if  (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
 					ent->TU -= TU_REACTION;
 					/* shaken is later reset along with reaction fire */
 					ent->state |= STATE_SHAKEN;
@@ -1403,7 +1406,6 @@ void G_MoraleBehaviour( int team )
 						G_MoraleStopRage ( ent );
 				}
 			}
-
 			/* set correct bounding box */
 			if ( ent->state & (STATE_CROUCHED|STATE_PANIC) )
 				VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH );
@@ -1411,7 +1413,7 @@ void G_MoraleBehaviour( int team )
 				VectorSet( ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND );
 
 			/* moraleregeneration, capped at max: */
-			newMorale = ent->morale + MORALE_RANDOM( MORALE_REGENERATION );
+			newMorale = ent->morale + MORALE_RANDOM( mor_regeneration->value );
 			if (newMorale > GET_MORALE( ent->chr.skills[ABILITY_MIND]))
 				ent->morale = GET_MORALE( ent->chr.skills[ABILITY_MIND] );
 			else
@@ -1483,7 +1485,8 @@ void G_Damage( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 		G_ActorDie( ent, STATE_DEAD );
 
 		/* apply morale changes */
-		G_Morale( ML_DEATH, ent, attacker, damage );
+		if (mor_panic->value)
+			G_Morale( ML_DEATH, ent, attacker, damage );
 
 		/* count score */
 		level.num_kills[attacker->team][ent->team]++;
@@ -1499,7 +1502,7 @@ void G_Damage( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 	} else {
 		/* hit */
 		ent->HP -= damage;
-		if ( damage > 0 )
+		if (damage > 0 && mor_panic->value)
 			G_Morale( ML_WOUND, ent, attacker, damage );
 		else {
 			if ( ent->HP > GET_HP( ent->chr.skills[ABILITY_POWER] ) )
@@ -1554,7 +1557,8 @@ void G_DamageStun( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 		G_ActorDie( ent, STATE_STUN );
 
 		/* apply morale changes */
-		G_Morale( ML_DEATH, ent, attacker, damage );
+		if (mor_panic->value)
+			G_Morale( ML_DEATH, ent, attacker, damage );
 
 		/* count the stunned ones as killed ones */
 		level.num_kills[attacker->team][ent->team]++;
@@ -1572,7 +1576,8 @@ void G_DamageStun( edict_t *ent, int dmgtype, int damage, edict_t *attacker )
 	} else {
 		/* hit */
 		ent->STUN -= damage;
-		if ( damage > 0 ) G_Morale( ML_WOUND, ent, attacker, damage );
+		if (damage > 0 && mor_panic->value)
+			G_Morale( ML_WOUND, ent, attacker, damage );
 		G_SendStats( ent );
 	}
 }
@@ -2096,7 +2101,7 @@ qboolean G_ReactionFire( edict_t *target )
 			frustom = G_FrustomVis( ent, target->origin );
 			if ( actorVis > 0.4 && frustom ) {
 				if ( target->team == TEAM_CIVILIAN || target->team == ent->team )
-					if ( !(ent->state & (STATE_SHAKEN & ~STATE_REACTION)) || (float)ent->morale / MORALE_SHAKEN > frand())
+					if ( !(ent->state & (STATE_SHAKEN & ~STATE_REACTION)) || (float)ent->morale / mor_shaken->value > frand())
 						continue;
 				/*if reaction fire is triggered by a friendly unit and the shooter is still sane, don't shoot */
 				/*well, if the shooter isn't sane anymore... */
@@ -2454,7 +2459,8 @@ void G_ClientEndRound( player_t *player )
 
 	/* apply morale behaviour, reset reaction fire */
 	G_ResetReactionFire( level.activeTeam );
-	G_MoraleBehaviour( level.activeTeam );
+	if (mor_panic->value)
+		G_MoraleBehaviour( level.activeTeam );
 
 	/* start ai */
 	p->pers.last = NULL;

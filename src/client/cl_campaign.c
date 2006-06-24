@@ -1012,6 +1012,7 @@ static void CL_BuildingAircraftList_f(void)
 }
 
 
+#ifdef DEBUG
 /**
   * @brief
   *
@@ -1029,6 +1030,7 @@ static void CP_ListUfosOnGeoscape(void)
 		Com_Printf("ufo: %s - status: %i - pos: %.0f:%0.f\n", a->id, a->status, a->pos[0], a->pos[1]);
 	}
 }
+#endif
 
 /**
   * @brief

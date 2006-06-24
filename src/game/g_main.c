@@ -66,6 +66,34 @@ cvar_t	*ai_numcivilians;
 cvar_t	*ai_numactors;
 cvar_t	*ai_autojoin;
 
+/* morale cvars */
+cvar_t	*mob_death;
+cvar_t	*mob_wound;
+cvar_t	*mof_watching;
+cvar_t	*mof_teamkill;
+cvar_t	*mof_civilian;
+cvar_t	*mof_enemy;
+cvar_t	*mor_pain;
+/*everyone gets this times morale damage */
+cvar_t	*mor_default;
+/*at this distance the following two get halfed (exponential scale) */
+cvar_t	*mor_distance;
+/*at this distance the following two get halfed (exponential scale) */
+cvar_t	*mor_victim;
+/*at this distance the following two get halfed (exponential scale) */
+cvar_t	*mor_attacker;
+/* how much the morale depends on the size of the damaged team */
+cvar_t	*mon_teamfactor;
+
+cvar_t	*mor_regeneration;
+cvar_t	*mor_shaken;
+cvar_t	*mor_panic;
+
+cvar_t	*m_sanity;
+cvar_t	*m_rage;
+cvar_t	*m_rage_stop;
+cvar_t	*m_panic_stop;
+
 cvar_t	*difficulty;
 
 extern void SpawnEntities (char *mapname, char *entities);
@@ -130,6 +158,33 @@ void InitGame (void)
 	ai_numactors = gi.cvar ("ai_numactors", "8", CVAR_ARCHIVE );
 	/* autojoin aliens */
 	ai_autojoin = gi.cvar ("ai_autojoin", "0", 0 );
+
+	mob_death = gi.cvar ("mob_death", "10", CVAR_LATCH );
+	mob_wound = gi.cvar ("mob_wound", "0.1", CVAR_LATCH );
+	mof_watching = gi.cvar ("mof_watching", "1.7", CVAR_LATCH );
+	mof_teamkill = gi.cvar ("mof_watching", "2.0", CVAR_LATCH );
+	mof_civilian = gi.cvar ("mof_watching", "0.3", CVAR_LATCH );
+	mof_enemy = gi.cvar ("mof_watching", "0.5", CVAR_LATCH );
+	mor_pain = gi.cvar ("mof_watching", "3.6", CVAR_LATCH );
+	/*everyone gets this times morale damage */
+	mor_default = gi.cvar ("mof_watching", "0.3", CVAR_LATCH );
+	/*at this distance the following two get halfed (exponential scale) */
+	mor_distance = gi.cvar ("mof_watching", "120", CVAR_LATCH );
+	/*at this distance the following two get halfed (exponential scale) */
+	mor_victim = gi.cvar ("mof_watching", "0.7", CVAR_LATCH );
+	/*at this distance the following two get halfed (exponential scale) */
+	mor_attacker = gi.cvar ("mof_watching", "0.3", CVAR_LATCH );
+	/* how much the morale depends on the size of the damaged team */
+	mon_teamfactor = gi.cvar ("mof_watching", "0.6", CVAR_LATCH );
+
+	mor_regeneration = gi.cvar ("mor_regeneration", "15", CVAR_LATCH );
+	mor_shaken = gi.cvar ("mor_shaken", "50", CVAR_LATCH );
+	mor_panic = gi.cvar ("mor_panic", "30", CVAR_LATCH );
+
+	m_sanity = gi.cvar ("m_sanity", "1.0", CVAR_LATCH );
+	m_rage = gi.cvar ("m_rage", "0.6", CVAR_LATCH );
+	m_rage_stop = gi.cvar ("r_rage_stop", "2.0", CVAR_LATCH );
+	m_panic_stop = gi.cvar ("m_panic_stop", "1.0", CVAR_LATCH );
 
 	difficulty = gi.cvar ("difficulty", "-1", CVAR_ARCHIVE | CVAR_LATCH);
 

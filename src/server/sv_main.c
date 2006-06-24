@@ -891,7 +891,7 @@ void SV_Init (void)
 	public_server = Cvar_Get ("public", "0", 0);
 	sv_reconnect_limit = Cvar_Get ("sv_reconnect_limit", "3", CVAR_ARCHIVE);
 
-	if ( dedicated->value ) 
+	if ( dedicated->value )
 		Cvar_Set( "maxclients", "8" );
 
 	SZ_Init (&net_message, net_message_buffer, sizeof(net_message_buffer));
