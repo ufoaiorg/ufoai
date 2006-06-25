@@ -350,7 +350,7 @@ extern	int		registration_sequence;
 
 void V_AddBlend (float r, float g, float b, float a, float *v_blend);
 
-qboolean 	R_Init( void *hinstance, void *hWnd );
+qboolean 	R_Init( HINSTANCE hinstance, WNDPROC wndproc );
 void	R_Shutdown( void );
 
 struct model_s *R_RegisterModelShort( char *name );
@@ -574,7 +574,7 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 
 void		GLimp_BeginFrame( float camera_separation );
 void		GLimp_EndFrame( void );
-qboolean 	GLimp_Init( void *hinstance, void *hWnd );
+qboolean 	GLimp_Init( HINSTANCE hinstance, WNDPROC wndproc );
 void		GLimp_Shutdown( void );
 rserr_t     	GLimp_SetMode( unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen );
 void		GLimp_AppActivate( qboolean active );

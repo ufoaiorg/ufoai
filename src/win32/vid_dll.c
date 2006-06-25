@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "winquake.h"
 /*#include "zmouse.h" */
 
+LONG CDAudio_MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
 /* Structure containing functions exported from refresh DLL */
 refexport_t	re;
 
@@ -438,10 +440,7 @@ LONG WINAPI MainWndProc (
 		break;
 
 	case MM_MCINOTIFY:
-		{
-			LONG CDAudio_MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-			lRet = CDAudio_MessageHandler (hWnd, uMsg, wParam, lParam);
-		}
+		lRet = CDAudio_MessageHandler (hWnd, uMsg, wParam, lParam);
 		break;
 
 	default:	/* pass all unhandled messages to DefWindowProc */
@@ -605,7 +604,7 @@ qboolean VID_LoadRefresh( char *name )
 /*	ri.Malloc = Z_Malloc; */
 /*	ri.Free = Z_Free; */
 
-	if ( ( GetRefAPI = (void *) GetProcAddress( reflib_library, "GetRefAPI" ) ) == 0 )
+	if ( ( GetRefAPI = (GetRefAPI_t) GetProcAddress( reflib_library, "GetRefAPI" ) ) == 0 )
 		Com_Error( ERR_FATAL, "GetProcAddress failed on %s", name );
 
 	re = GetRefAPI( ri );

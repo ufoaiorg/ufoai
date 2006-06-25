@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define QCOMMON_DEFINED
 
 #include "../game/q_shared.h"
+#include "../game/game.h"
 
 #include <string.h>
 #include <ctype.h>
@@ -806,7 +807,7 @@ MISC
 #define	PRINT_ALL		0
 #define PRINT_DEVELOPER	1	/* only print when "developer 1" */
 
-void		Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush));
+void		Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush)(int, char *));
 void		Com_EndRedirect (void);
 void 		Com_Printf (char *fmt, ...);
 void 		Com_DPrintf (char *fmt, ...);
@@ -872,7 +873,7 @@ void	Sys_Init (void);
 void	Sys_AppActivate (void);
 
 void	Sys_UnloadGame (void);
-void	*Sys_GetGameAPI (void *parms);
+game_export_t *Sys_GetGameAPI (game_import_t *parms);
 /* loads the game dll and calls the api init function */
 
 char	*Sys_ConsoleInput (void);

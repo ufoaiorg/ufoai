@@ -357,7 +357,7 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 			continue;
 
 		fromlen = sizeof(from);
-		ret = recvfrom (net_socket, net_message->data, net_message->maxsize
+		ret = recvfrom (net_socket, (char *)(net_message->data), net_message->maxsize
 			, 0, (struct sockaddr *)&from, &fromlen);
 
 		SockadrToNetadr (&from, net_from);

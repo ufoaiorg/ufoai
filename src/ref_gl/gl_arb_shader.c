@@ -241,4 +241,10 @@ unsigned int SH_CompileWaterShader(unsigned int arb_water_id)
 /*	qglDeleteProgramsARB(1, &arb_water_id); */
 }
 
+#else
+
+static void SH_DummyFunction( void )
+{
+}
+
 #endif /* SHADERS */

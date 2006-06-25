@@ -398,7 +398,7 @@ void SV_InitGameProgs (void)
 	import.csi = &csi;
 	import.map = (void*)&svMap;
 
-	ge = (game_export_t *)Sys_GetGameAPI (&import);
+	ge = Sys_GetGameAPI (&import);
 
 	if (!ge)
 		Com_Error (ERR_DROP, "failed to load game library");

@@ -1343,7 +1343,7 @@ qboolean R_SetMode (void)
 R_Init
 ===============
 */
-qboolean R_Init( void *hinstance, void *hWnd )
+qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 {
 	char renderer_buffer[1000];
 	char vendor_buffer[1000];
@@ -1369,7 +1369,7 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	}
 
 	/* initialize OS-specific parts of OpenGL */
-	if ( !GLimp_Init( hinstance, hWnd ) ) {
+	if ( !GLimp_Init( hinstance, wndproc ) ) {
 		QGL_Shutdown();
 		return qfalse;
 	}
@@ -1469,8 +1469,8 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	if ( strstr( gl_config.extensions_string, "GL_EXT_compiled_vertex_array" ) ||
 		 strstr( gl_config.extensions_string, "GL_SGI_compiled_vertex_array" ) ) {
 		ri.Con_Printf( PRINT_ALL, "...enabling GL_EXT_compiled_vertex_array\n" );
-		qglLockArraysEXT = ( void * ) qwglGetProcAddress( "glLockArraysEXT" );
-		qglUnlockArraysEXT = ( void * ) qwglGetProcAddress( "glUnlockArraysEXT" );
+		qglLockArraysEXT = ( void ( APIENTRY *)( int, int ) ) qwglGetProcAddress( "glLockArraysEXT" );
+		qglUnlockArraysEXT = ( void ( APIENTRY *) ( void ) ) qwglGetProcAddress( "glUnlockArraysEXT" );
 	} else
 		ri.Con_Printf( PRINT_ALL, "...GL_EXT_compiled_vertex_array not found\n" );
 
@@ -1495,9 +1495,9 @@ qboolean R_Init( void *hinstance, void *hWnd )
 	if ( strstr( gl_config.extensions_string, "GL_ARB_multitexture" ) ) {
 		if ( gl_ext_multitexture->value ) {
 			ri.Con_Printf( PRINT_ALL, "...using GL_ARB_multitexture\n" );
-			qglMTexCoord2fSGIS = ( void * ) qwglGetProcAddress( "glMultiTexCoord2fARB" );
-			qglActiveTextureARB = ( void * ) qwglGetProcAddress( "glActiveTextureARB" );
-			qglClientActiveTextureARB = ( void * ) qwglGetProcAddress( "glClientActiveTextureARB" );
+			qglMTexCoord2fSGIS = ( void ( APIENTRY *)( GLenum, GLfloat, GLfloat ) ) qwglGetProcAddress( "glMultiTexCoord2fARB" );
+			qglActiveTextureARB = ( void ( APIENTRY *) ( GLenum ) ) qwglGetProcAddress( "glActiveTextureARB" );
+			qglClientActiveTextureARB = ( void ( APIENTRY *) ( GLenum ) ) qwglGetProcAddress( "glClientActiveTextureARB" );
 			gl_texture0 = GL_TEXTURE0_ARB;
 			gl_texture1 = GL_TEXTURE1_ARB;
 			gl_texture2 = GL_TEXTURE2_ARB;
@@ -1526,8 +1526,8 @@ qboolean R_Init( void *hinstance, void *hWnd )
 			ri.Con_Printf( PRINT_ALL, "...GL_SGIS_multitexture deprecated in favor of ARB_multitexture\n" );
 		else if ( gl_ext_multitexture->value ) {
 			ri.Con_Printf( PRINT_ALL, "...using GL_SGIS_multitexture\n" );
-			qglMTexCoord2fSGIS = ( void * ) qwglGetProcAddress( "glMTexCoord2fSGIS" );
-			qglSelectTextureSGIS = ( void * ) qwglGetProcAddress( "glSelectTextureSGIS" );
+			qglMTexCoord2fSGIS = ( void ( APIENTRY *)( GLenum, GLfloat, GLfloat ) ) qwglGetProcAddress( "glMTexCoord2fSGIS" );
+			qglSelectTextureSGIS = ( void ( APIENTRY *)( GLenum ) ) qwglGetProcAddress( "glSelectTextureSGIS" );
 			gl_texture0 = GL_TEXTURE0_SGIS;
 			gl_texture1 = GL_TEXTURE1_SGIS;
 			gl_texture2 = GL_TEXTURE2_SGIS;
@@ -1663,8 +1663,8 @@ qboolean R_Init( void *hinstance, void *hWnd )
 		} else {
 			ri.Con_Printf(PRINT_ALL, "...using GL_ATI_separate_stencil\n");
 			gl_state.ati_separate_stencil=qtrue;
-			qglStencilOpSeparateATI = ( void * ) qwglGetProcAddress("glStencilOpSeparateATI");
-			qglStencilFuncSeparateATI = ( void * ) qwglGetProcAddress("glStencilFuncSeparateATI");
+			qglStencilOpSeparateATI = ( void ( APIENTRY *)(GLenum, GLenum, GLenum, GLenum) ) qwglGetProcAddress("glStencilOpSeparateATI");
+			qglStencilFuncSeparateATI = ( void ( APIENTRY *)(GLenum, GLenum, GLint, GLuint) ) qwglGetProcAddress("glStencilFuncSeparateATI");
 		}
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_ATI_separate_stencil not found\n");
