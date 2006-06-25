@@ -176,7 +176,7 @@ void CL_Setenv_f(void)
 			Q_strcat(buffer, sizeof(buffer), " ");
 		}
 
-		putenv(buffer);
+		Q_putenv(buffer);
 	} else if (argc == 2) {
 		char *env = getenv(Cmd_Argv(1));
 

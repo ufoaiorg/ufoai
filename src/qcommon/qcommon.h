@@ -905,7 +905,4 @@ void SV_Init (void);
 void SV_Shutdown (char *finalmsg, qboolean reconnect);
 void SV_Frame (int msec);
 
-
-char *strlwr (char *s);
-
 #endif /* QCOMMON_DEFINED */

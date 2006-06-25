@@ -1359,7 +1359,7 @@ void Qcommon_LocaleInit ( void )
 
 #ifdef _WIN32
 	Com_sprintf( languageID, 32, "LANG=%s", s_language->string );
-	putenv( languageID );
+	Q_putenv( languageID );
 #else
 #ifndef SOLARIS
 	unsetenv("LANGUAGE");

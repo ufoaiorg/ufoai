@@ -1018,9 +1018,9 @@ char **FS_ListFiles( char *findname, int *numfiles, unsigned musthave, unsigned 
 	{
 		if ( s[strlen(s)-1] != '.' )
 		{
-			list[nfiles] = strdup( s );
+			list[nfiles] = Q_strdup( s );
 #ifdef _WIN32
-			strlwr( list[nfiles] );
+			Q_strlwr( list[nfiles] );
 #endif
 			nfiles++;
 		}
@@ -1610,7 +1610,7 @@ Return current working dir
 char* FS_GetCwd( void )
 {
 	static char buf[MAX_QPATH];
-	char* path = getcwd(buf,sizeof(buf));
+	char* path = Q_getcwd(buf,sizeof(buf));
 	if ( path != NULL )
 	{
 #ifdef _WIN32

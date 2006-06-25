@@ -129,6 +129,8 @@ typedef char JOCTET;
  * typedefs live at a different point on the speed/space tradeoff curve.)
  */
 
+#ifndef _MSC_VER
+
 /* UINT8 must hold at least the values 0..255. */
 
 #ifdef HAVE_UNSIGNED_CHAR
@@ -158,8 +160,11 @@ typedef short INT16;
 /* INT32 must hold at least signed 32-bit values. */
 
 #ifndef XMD_H			/* X11/xmd.h correctly defines INT32 */
-typedef long INT32;
+typedef long INT32;		/* TODO: why long? long int can have 64 bits on some platforms. */
 #endif
+
+#endif	/* #ifndef _MVC_VER */
+
 
 /* Datatype used for image dimensions.  The JPEG standard only supports
  * images up to 64K*64K due to 16-bit fields in SOF markers.  Therefore
@@ -209,10 +214,12 @@ typedef unsigned int JDIMENSION;
  * explicit coding is needed; see uses of the NEED_FAR_POINTERS symbol.
  */
 
+#ifndef _MSC_VER
 #ifdef NEED_FAR_POINTERS
 #define FAR  far
 #else
 #define FAR
+#endif
 #endif
 
 

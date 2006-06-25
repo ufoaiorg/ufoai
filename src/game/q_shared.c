@@ -1448,6 +1448,42 @@ LIBRARY REPLACEMENT FUNCTIONS
 ============================================================================
 */
 
+char *Q_strlwr( char *str )
+{
+#ifdef _MSC_VER
+	return _strlwr(str);
+#else
+	return strlwr(str);
+#endif
+}
+
+char *Q_strdup( const char *str )
+{
+#ifdef _MSC_VER
+	return _strdup(str);
+#else
+	return strdup(str);
+#endif
+}
+
+int Q_putenv( const char *str )
+{
+#ifdef _MSC_VER
+	return _putenv(str);
+#else
+	return putenv(str);
+#endif
+}
+
+char *Q_getcwd( char *dest, int size )
+{
+#ifdef _MSC_VER
+	return _getcwd(dest, size);
+#else
+	return getcwd(dest, size);
+#endif
+}
+
 int Q_strcmp (char *s1, char *s2)
 {
 	return strncmp(s1, s2, 99999);

@@ -723,7 +723,7 @@ void VID_Init (void)
 		cvar_t *gl_driver = Cvar_Get( "gl_driver", "opengl32", 0 );
 		cvar_t *gl_mode = Cvar_Get( "gl_mode", "3", 0 );
 
-		if ( stricmp( gl_driver->string, "3dfxgl" ) == 0 )
+		if ( Q_stricmp( gl_driver->string, "3dfxgl" ) == 0 )
 		{
 			Cvar_SetValue( "gl_mode", 3 );
 			viddef.width  = 640;
@@ -736,7 +736,7 @@ void VID_Init (void)
 #endif
 
 	/* Disable the 3Dfx splash screen */
-	putenv("FX_GLIDE_NO_SPLASH=0");
+	Q_putenv("FX_GLIDE_NO_SPLASH=0");
 
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();

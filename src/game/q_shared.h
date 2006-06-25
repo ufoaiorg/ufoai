@@ -335,6 +335,11 @@ void Q_strncpyz( char *dest, const char *src, int destsize );
 void Q_strncpyzDebug( char *dest, const char *src, int destsize, char* file, int line );
 #endif
 void Q_strcat( char *dest, int size, const char *src );
+char *Q_strlwr( char *str );
+char *Q_strdup( const char *str );
+int Q_putenv( const char *str );
+char *Q_getcwd( char *dest, int size );
+
 
 /*============================================= */
 
