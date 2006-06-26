@@ -196,11 +196,6 @@ void Sys_Error (char *error, ...)
 	vsnprintf (string,1024,error,argptr);
 	va_end (argptr);
 
-	/* BUG [ 1444732 ] game exits with error */
-	/* */
-	/* Removing the call to gettext(), fixes */
-	/* the segfault. Why is gettext() off limits here??? */
-	/* */
 	fprintf(stderr, "Error: %s\n", string);
 	exit (1);
 }
@@ -295,7 +290,7 @@ Sys_GetGameAPI
 Loads the game dll
 =================
 */
-void *Sys_GetGameAPI (void *parms)
+game_export_t *Sys_GetGameAPI (game_import_t *parms)
 {
 	void	*(*GetGameAPI) (void *);
 

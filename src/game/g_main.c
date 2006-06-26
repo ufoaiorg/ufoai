@@ -159,6 +159,7 @@ void InitGame (void)
 	/* autojoin aliens */
 	ai_autojoin = gi.cvar ("ai_autojoin", "0", 0 );
 
+	/* FIXME: Apply CVAR_NOSET after balancing */
 	mob_death = gi.cvar ("mob_death", "10", CVAR_LATCH );
 	mob_wound = gi.cvar ("mob_wound", "0.1", CVAR_LATCH );
 	mof_watching = gi.cvar ("mof_watching", "1.7", CVAR_LATCH );

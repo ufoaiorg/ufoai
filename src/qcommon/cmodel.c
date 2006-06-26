@@ -200,12 +200,11 @@ void CMod_LoadSubmodels (lump_t *l)
 	curTile->cmodels = out;
 	curTile->numcmodels = count;
 
-	for ( i=0 ; i<count ; i++, in++, out++)
-	{
+	for ( i=0 ; i<count ; i++, in++, out++) {
 		out = &curTile->cmodels[i];
 
-		for (j=0 ; j<3 ; j++)
-		{	/* spread the mins / maxs by a pixel */
+		/* spread the mins / maxs by a pixel */
+		for (j=0 ; j<3 ; j++) {
 			out->mins[j] = LittleFloat (in->mins[j]) - 1 + shift[j];
 			out->maxs[j] = LittleFloat (in->maxs[j]) + 1 + shift[j];
 			out->origin[j] = LittleFloat (in->origin[j]);
@@ -1144,6 +1143,9 @@ void CM_LoadMap( char *tiles, char *pos )
 		}
 
 		/* get tile name */
+#ifdef PARANOID
+		Com_Printf("CM_AddMapTile: token: %s\n", token);
+#endif
 		if ( token[0] == '+' )
 			Com_sprintf( name, MAX_VAR, "%s%s", base, token+1 );
 		else

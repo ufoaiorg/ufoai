@@ -271,8 +271,10 @@ qboolean G_FrustomVis( edict_t *from, vec3_t point )
 	dv = from->dir & 7;
 
 	/* test 120 frustom (cos 60 = 0.5) */
-	if ( (delta[0]*dvecsn[dv][0] + delta[1]*dvecsn[dv][1]) < 0.5 ) return qfalse;
-	else return qtrue;
+	if ( (delta[0]*dvecsn[dv][0] + delta[1]*dvecsn[dv][1]) < 0.5 )
+		return qfalse;
+	else
+		return qtrue;
 }
 
 
@@ -293,8 +295,10 @@ qboolean G_TeamPointVis( int team, vec3_t point )
 			from->team == team && G_FrustomVis( from, point ) ) {
 			/* get viewers eye height */
 			VectorCopy( from->origin, eye );
-			if ( from->state & (STATE_CROUCHED|STATE_PANIC) ) eye[2] += EYE_CROUCH;
-			else eye[2] += EYE_STAND;
+			if ( from->state & (STATE_CROUCHED|STATE_PANIC) )
+				eye[2] += EYE_CROUCH;
+			else
+				eye[2] += EYE_STAND;
 
 			/* line of sight */
 			if ( !gi.TestLine( eye, point ) )

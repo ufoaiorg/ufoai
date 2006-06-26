@@ -211,7 +211,7 @@ Sys_GetGameAPI
 Loads the game dll
 =================
 */
-void *Sys_GetGameAPI (void *parms)
+game_export_t *Sys_GetGameAPI (game_import_t *parms)
 {
 #ifndef REF_HARD_LINKED
 	void	*(*GetGameAPI) (void *);

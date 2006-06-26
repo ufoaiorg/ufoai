@@ -2,30 +2,30 @@
 // "sys_osx.c" - MacOS X system functions.
 //
 // Written by:	awe				[mailto:awe@fruitz-of-dojo.de].
-//		©2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de].
+//		2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de].
 //
-// Quake IIª is copyrighted by id software	[http://www.idsoftware.com].
+// Quake II is copyrighted by id software	[http://www.idsoftware.com].
 //
 // Version History:
-// v1.0.8: ¥ÊMission packs can now be dragged onto the application icon even if Quake II is already running.
-//	   ¥ Added startup dialog for command-line parameters.
-//	   ¥ Added support for AppleScript.
-//	   ¥ Added multi-threaded media-scan window.
-// v1.0.6: ¥ÊRemoved underscore from symbol name parameter at call to "dlsym ()" [because of new "dlopen.c"].
-//	   ¥ Fixed disabled mouse after CMD-TABing.
-//	   ¥ Added command "sys_hide" for mapping CMD_TAB to other keys.
-// v1.0.5: ¥ Improved keyboard handling.
-//         ¥ÊIf application is installed inside the same folder as the baseq2 folder, the baseq2 folder will be
+// v1.0.8: ï¿½ission packs can now be dragged onto the application icon even if Quake II is already running.
+//	    Added startup dialog for command-line parameters.
+//	    Added support for AppleScript.
+//	    Added multi-threaded media-scan window.
+// v1.0.6: ï¿½emoved underscore from symbol name parameter at call to "dlsym ()" [because of new "dlopen.c"].
+//	    Fixed disabled mouse after CMD-TABing.
+//	    Added command "sys_hide" for mapping CMD_TAB to other keys.
+// v1.0.5:  Improved keyboard handling.
+//         ï¿½f application is installed inside the same folder as the baseq2 folder, the baseq2 folder will be
 //           selected automagically.
-// v1.0.4: ¥ÊFixed invisible cursor on "baseq2" folder selection dialog.
-// v1.0.3: ¥ Fixed a keyboard handling issue, introduced with the keypad support.
-// v1.0.2: ¥ Fixed "Keyboard repeat" issue after application quit.
-//         ¥ÊMousewheel support should finally work.
-//         ¥ÊAdded support for up to 5 mousebuttons [K_JOY1 & K_JOY2 are used for binding button 4 and 5].
-//	   ¥ Paste works now via CMD-V instead of CTRL-V [beside of SHIFT-INSERT] and the "Edit" menu.
-//         ¥ Added "Connect To Server" service.
-//	   ¥ Added support for CMD-TAB, CMD-H, CMD-M and CMD-Q [CMD-M only in windowed mode].
-// v1.0.0: ¥ Initial release.
+// v1.0.4: ï¿½ixed invisible cursor on "baseq2" folder selection dialog.
+// v1.0.3:  Fixed a keyboard handling issue, introduced with the keypad support.
+// v1.0.2:  Fixed "Keyboard repeat" issue after application quit.
+//         ï¿½ousewheel support should finally work.
+//         ï¿½dded support for up to 5 mousebuttons [K_JOY1 & K_JOY2 are used for binding button 4 and 5].
+//	    Paste works now via CMD-V instead of CTRL-V [beside of SHIFT-INSERT] and the "Edit" menu.
+//          Added "Connect To Server" service.
+//	    Added support for CMD-TAB, CMD-H, CMD-M and CMD-Q [CMD-M only in windowed mode].
+// v1.0.0:  Initial release.
 //_________________________________________________________________________________________________________iNCLUDES
 
 #pragma mark =Includes=
@@ -66,7 +66,7 @@
                                             (in_mouse == NULL || (in_mouse != NULL && in_mouse->value == 0.0f))) \
                                         {									 \
                                             return;								 \
-                                        }	
+                                        }
 
 #define SYS_Q2_DURING			NS_DURING
 #define	SYS_Q2_HANDLER			NS_HANDLER								 \
@@ -175,7 +175,7 @@ UInt8				gSpecialKey[] = {
                                                             0, 		 0, 	  K_INS, 	    0
                                                 };
 
-static 	UInt8	gNumPadKey[] = 	{	
+static 	UInt8	gNumPadKey[] = 	{
                                             0,	          0,	       0, 	       0,
                                             0,	          0,	       0, 	       0,
                                             0,	          0,	       0, 	       0,
@@ -209,20 +209,20 @@ static 	UInt8	gNumPadKey[] = 	{
 #pragma mark =ObjC Interfaces=
 
 //_________________________________________________________________________________________________iNTERFACE_Quake2
-                         
+
 @interface Quake2 : NSObject
 {
     IBOutlet NSWindow			*mediascanWindow;
-    
+
     IBOutlet NSTextField		*mediascanText;
     IBOutlet NSProgressIndicator	*mediascanProgressIndicator;
-    
+
     IBOutlet NSWindow			*startupWindow;
-    
+
     IBOutlet NSButton			*mp3CheckBox;
     IBOutlet NSButton			*mp3Button;
     IBOutlet NSTextField		*mp3TextField;
-    
+
     IBOutlet NSButton			*optionCheckBox;
     IBOutlet NSButton			*parameterCheckBox;
     IBOutlet NSTextField		*parameterTextField;
@@ -322,7 +322,7 @@ void	Sys_Error (char *theError, ...)
     char        myString[SYS_STRING_SIZE];
 
     fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
-    
+
     va_start (myArgPtr, theError);
     vsnprintf (myString, SYS_STRING_SIZE, theError, myArgPtr);
     va_end (myArgPtr);
@@ -330,7 +330,7 @@ void	Sys_Error (char *theError, ...)
 #ifdef DEDICATED_ONLY
 
     fprintf (stderr, "Error: %s\n", myString);
-    
+
     exit (1);
 
 #else
@@ -343,10 +343,10 @@ void	Sys_Error (char *theError, ...)
 
     IN_SetKeyboardRepeatEnabled (YES);
     IN_SetF12EjectEnabled (YES);
-    
+
     NSRunCriticalAlertPanel (@"An error has occured:", [NSString stringWithCString: myString],
                              NULL, NULL, NULL);
-    
+
     exit (1);
 
 #endif /* DEDICATED_ONLY */
@@ -365,7 +365,7 @@ void Sys_Quit (void)
 
     IN_SetKeyboardRepeatEnabled (YES);
     IN_SetF12EjectEnabled (YES);
-    
+
 #endif /* DEDICATED_ONLY */
 
     exit (0);
@@ -375,7 +375,7 @@ void Sys_Quit (void)
 
 void	Sys_UnloadGame (void)
 {
-    if (gSysGameLibrary != NULL) 
+    if (gSysGameLibrary != NULL)
     {
         dlclose (gSysGameLibrary);
     }
@@ -387,7 +387,7 @@ void	Sys_UnloadGame (void)
 BOOL	Sys_OpenGameAPI (const char *theGameName, char *thePath, char *theCurPath)
 {
     char	myName[MAXPATHLEN];
-    
+
     snprintf (myName, MAXPATHLEN, "%s/%s/%s", theCurPath, thePath, theGameName);
     Com_Printf ("Trying to load library (%s)\n", myName);
 
@@ -402,7 +402,7 @@ BOOL	Sys_OpenGameAPI (const char *theGameName, char *thePath, char *theCurPath)
 
 //_________________________________________________________________________________________________Sys_GetGameAPI()
 
-void *	Sys_GetGameAPI (void *theParameters)
+game_export_t *Sys_GetGameAPI (game_import_t *theParameters)
 {
     void *	(*myGameAPI) (void *);
     char	myCurPath[MAXPATHLEN];
@@ -424,7 +424,7 @@ void *	Sys_GetGameAPI (void *theParameters)
         myPath = FS_NextPath (myPath);
         if (myPath == NULL)
             return (NULL);
-        
+
         // we try both extensions since we need to be compatible with the pre v1.0.6 ".bundle" extension:
         if (Sys_OpenGameAPI ("GamePPC.q2plug/Contents/MacOS/GamePPC", myPath, myCurPath) == YES)
             break;
@@ -435,7 +435,7 @@ void *	Sys_GetGameAPI (void *theParameters)
     myGameAPI = (void *) dlsym (gSysGameLibrary, "GetGameAPI");
     if (myGameAPI == NULL)
     {
-        Sys_UnloadGame ();		
+        Sys_UnloadGame ();
         return (NULL);
     }
 
@@ -450,17 +450,17 @@ char *Sys_ConsoleInput (void)
     int     		myLength;
     fd_set		myFDSet;
     struct timeval	myTimeOut;
-    
+
     if (!dedicated || !dedicated->value)
     {
         return NULL;
     }
-    
+
     if (!stdin_active)
     {
         return NULL;
     }
-    
+
     FD_ZERO (&myFDSet);
     FD_SET (0, &myFDSet);
     myTimeOut.tv_sec = 0;
@@ -469,20 +469,20 @@ char *Sys_ConsoleInput (void)
     {
         return (NULL);
     }
-    
+
     myLength = read (0, myText, sizeof (myText));
     if (myLength == 0)
     {
         stdin_active = false;
         return (NULL);
     }
-    
+
     if (myLength < 1)
     {
         return (NULL);
     }
     myText[myLength - 1] = 0x00;
-    
+
     return (myText);
 }
 
@@ -493,17 +493,17 @@ void	Sys_ConsoleOutput (char *theString)
 #ifdef DEDICATED_ONLY
 
     unsigned char	*myChar;
-    
+
     if (theString == NULL)
     {
         return;
     }
-    
+
     if (gSysNoStdOut != NULL && gSysNoStdOut->value != 0.0)
     {
         return;
     }
-    
+
     for (myChar = (unsigned char *) theString; *myChar != 0x00; myChar++)
     {
         *myChar &= 0x7f;
@@ -516,7 +516,7 @@ void	Sys_ConsoleOutput (char *theString)
             putc (*myChar, stdout);
         }
     }
-    
+
     fflush (stdout);
 
 #else
@@ -588,7 +588,7 @@ char *	Sys_GetClipboardData (void)
 void	Sys_HideApplication_f (void)
 {
     extern qboolean	keydown[];
-    
+
     keydown[K_COMMAND] = NO;
     keydown[K_TAB] = NO;
     keydown['H'] = NO;
@@ -609,9 +609,9 @@ int	Sys_CheckSpecialKeys (int theKey)
     {
         return (0);
     }
-    
+
     myKey = toupper (theKey);
-    
+
     // check the keys:
     switch (myKey)
     {
@@ -621,7 +621,7 @@ int	Sys_CheckSpecialKeys (int theKey)
             if (myKey == 'H' || (vid_fullscreen != NULL && vid_fullscreen->value != 0.0f))
             {
                 Sys_HideApplication_f ();
-                
+
                 return (1);
             }
             break;
@@ -630,13 +630,13 @@ int	Sys_CheckSpecialKeys (int theKey)
             if (vid_fullscreen != NULL && vid_fullscreen->value == 0.0f && gSysIsMinimized->value == 0.0f )
             {
                 NSWindow	*myWindow = NULL;
-                
+
                 myWindow = [NSApp keyWindow];
                 if (myWindow != NULL)
                 {
                     [myWindow miniaturize: NULL];
                 }
-    
+
                 return (1);
             }
             break;
@@ -649,7 +649,7 @@ int	Sys_CheckSpecialKeys (int theKey)
             if (vid_fullscreen != NULL && vid_fullscreen->value == 0.0f)
             {
                 [NSApp showHelp: NULL];
-                
+
                 return (1);
             }
             break;
@@ -667,7 +667,7 @@ void 	Sys_CheckForCDDirectory (void)
     NSString	*myCurrentPath;
     char	**myNewArgValues,
                 *myCDPath = NULL;
-    
+
     // cd command already issued?
     if (gSysArgCount >= 4)
     {
@@ -680,7 +680,7 @@ void 	Sys_CheckForCDDirectory (void)
             }
         }
     }
-    
+
     // is the cd mounted?
     for (i = 0; gSysCDPath[i] != NULL; i++)
     {
@@ -688,14 +688,14 @@ void 	Sys_CheckForCDDirectory (void)
         if ([[NSFileManager defaultManager] fileExistsAtPath: myCurrentPath])
         {
             myCDPath = gSysCDPath[i];
-            break;    
+            break;
         }
     }
     if (myCDPath == NULL)
     {
         return;
     }
-    
+
     // insert "+set cddir path" to the command line:
     gSysArgCount += 3;
     myNewArgValues = malloc (sizeof(char *) * gSysArgCount);
@@ -736,10 +736,10 @@ void	Sys_CheckForIDDirectory (void)
     [myOpenPanel setCanChooseFiles: NO];
     [myOpenPanel setCanChooseDirectories: YES];
     [myOpenPanel setTitle: @"Please locate the \"baseq2\" folder:"];
-    
+
     // get the "baseq2" path from the prefs:
     myBasePath = [myDefaults stringForKey: SYS_DEFAULT_BASE_PATH];
-    
+
     while (1)
     {
         if (myBasePath)
@@ -757,7 +757,7 @@ void	Sys_CheckForIDDirectory (void)
                 // get a POSIX version of the path:
                 myBaseDir = (char *) [myBasePath fileSystemRepresentation];
                 myPathLength = strlen (myBaseDir);
-                
+
                 // check if the last component was "baseq2":
                 if (myPathLength >= 6)
                 {
@@ -769,7 +769,7 @@ void	Sys_CheckForIDDirectory (void)
                     {
                         // remove "baseq2":
                         myBaseDir[myPathLength - 4] = 0x00;
-                        
+
                         // change working directory to the selected path:
                         if (!chdir (myBaseDir))
                         {
@@ -790,7 +790,7 @@ void	Sys_CheckForIDDirectory (void)
                 }
             }
         }
-        
+
         // if the path from the user defaults is bad, look if the baseq2 folder is located at the same folder
         // as our Quake 2 application:
         if (myDefaultPath == YES)
@@ -814,14 +814,14 @@ void	Sys_CheckForIDDirectory (void)
                 myFirstRun = NO;
             }
         }
-        
+
         // request the "baseq2" folder:
         myResult = [myOpenPanel runModalForDirectory: nil file: nil types: nil];
-        
+
         // if the user selected "Cancel", quit the game:
         if (myResult == NSCancelButton)
             [NSApp terminate: nil];
-        
+
         // get the selected path:
         myFolder = [myOpenPanel filenames];
         if (![myFolder count])
@@ -829,7 +829,7 @@ void	Sys_CheckForIDDirectory (void)
         myBasePath = [myFolder objectAtIndex: 0];
         myPathChanged = YES;
     }
-    
+
     // just check if the mod is located at the same folder as the id1 folder:
     if (gSysWasDragged == YES && strcmp (gSysModDir, myBaseDir) != 0)
     {
@@ -844,7 +844,7 @@ void	Sys_CheckForIDDirectory (void)
 void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 {
     extern cvar_t		*vid_fullscreen, *_windowed_mouse, *in_mouse;
-    
+
     static NSString		*myKeyboardBuffer;
     static unichar		myCharacter;
     static CGMouseDelta		myMouseDeltaX, myMouseDeltaY, myMouseWheel;
@@ -858,12 +858,12 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     {
         case NSSystemDefined:
             SYS_CHECK_MOUSE_ENABLED ();
-            
+
             if ([myEvent subtype] == 7)
             {
                 myMouseButtons = [myEvent data2];
                 myFilteredMouseButtons = myLastMouseButtons ^ myMouseButtons;
-                
+
                 for (i = 0; i < SYS_MOUSE_BUTTONS; i++)
                 {
                     if(myFilteredMouseButtons & (1 << i))
@@ -871,20 +871,20 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
                         Key_Event (K_MOUSE1 + i, (myMouseButtons & (1 << i)) ? 1 : 0, gSysMsgTime);
                     }
                 }
-                
+
                 myLastMouseButtons = myMouseButtons;
             }
             else
             {
                 [NSApp sendSuperEvent: myEvent];
             }
-            
+
             break;
-            
+
         // scroll wheel:
         case NSScrollWheel:
             SYS_CHECK_MOUSE_ENABLED ();
-            
+
             myMouseWheel = [myEvent deltaY];
 
             if(myMouseWheel > 0)
@@ -898,7 +898,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
                 Key_Event (K_MWHEELDOWN, false, gSysMsgTime);
             }
             break;
-            
+
         // mouse movement:
         case NSMouseMoved:
         case NSLeftMouseDragged:
@@ -920,7 +920,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
             for (i = 0; i < myKeyboardBufferSize; i++)
             {
                 myCharacter = [myKeyboardBuffer characterAtIndex: i];
-                
+
                 if ((myCharacter & 0xFF00) ==  0xF700)
                 {
                     myCharacter -= 0xF700;
@@ -936,16 +936,16 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 //                else
                 {
                     myFlags = [myEvent modifierFlags];
-                    
+
                     if (myFlags & NSNumericPadKeyMask)
                     {
                         myKeyPad = [myEvent keyCode];
-            
+
                         if (myKeyPad < 0x5D && gNumPadKey[myKeyPad] != 0x00)
                         {
                             Key_Event (gNumPadKey[myKeyPad], (myType == NSKeyDown), gSysMsgTime);
                             break;
-                        }                    
+                        }
                     }
                     if (myCharacter < 0x80)
                     {
@@ -955,36 +955,36 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
                     }
                 }
             }
-            
+
             break;
-        
+
         // special keys:
         case NSFlagsChanged:
             myFlags = [myEvent modifierFlags];
             myFilteredFlags = myFlags ^ myLastFlags;
-            
+
             if (myFilteredFlags & NSAlphaShiftKeyMask)
                 Key_Event (K_CAPSLOCK, (myFlags & NSAlphaShiftKeyMask) ? 1 : 0, gSysMsgTime);
-                
+
             if (myFilteredFlags & NSShiftKeyMask)
                 Key_Event (K_SHIFT, (myFlags & NSShiftKeyMask) ? 1 : 0, gSysMsgTime);
-                
+
             if (myFilteredFlags & NSControlKeyMask)
                 Key_Event (K_CTRL, (myFlags & NSControlKeyMask) ? 1 : 0, gSysMsgTime);
-                
+
             if (myFilteredFlags & NSAlternateKeyMask)
                 Key_Event (K_ALT, (myFlags & NSAlternateKeyMask) ? 1 : 0, gSysMsgTime);
-                
+
             if (myFilteredFlags & NSCommandKeyMask)
                 Key_Event (K_COMMAND, (myFlags & NSCommandKeyMask) ? 1 : 0, gSysMsgTime);
-                
+
             if (myFilteredFlags & NSNumericPadKeyMask)
                 Key_Event (K_NUMLOCK, (myFlags & NSNumericPadKeyMask) ? 1 : 0, gSysMsgTime);
-                
+
             myLastFlags = myFlags;
-            
+
             break;
-        
+
         // process other events:
         default:
             [NSApp sendSuperEvent: myEvent];
@@ -1007,7 +1007,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
                                                                 stringByAppendingPathComponent: SYS_BASEQ2_PATH];
 
     gSysRequestedCommand[0] = 0x0;
-                                                                
+
     // required for event handling:
     gSysDistantPast = [[NSDate distantPast] retain];
 
@@ -1020,7 +1020,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
                                                                                SYS_INITIAL_USE_PARAMETERS,
                                                                                SYS_INITIAL_PARAMETERS,
                                                                                nil]
-                                                forKeys: 
+                                                forKeys:
                                                     [NSArray arrayWithObjects: SYS_DEFAULT_BASE_PATH,
                                                                                SYS_DEFAULT_OPTION_KEY,
                                                                                SYS_DEFAULT_USE_MP3,
@@ -1050,7 +1050,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
         if (gSysHostInitialized == YES)
         {
             BOOL		myDirectory;
-            
+
             if (![[NSFileManager defaultManager] fileExistsAtPath: theFilePath isDirectory: &myDirectory])
             {
                 Com_Printf ("Error: The dragged item is not a valid file!\n");
@@ -1064,7 +1064,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
                 else
                 {
                     const char 	*myPath =[theFilePath fileSystemRepresentation];
-                    
+
                     if (myPath != NULL)
                     {
                         SInt32	myIndex = strlen (myPath) - 1;
@@ -1077,7 +1077,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
                                 return (YES);
                             }
                             myIndex--;
-                        }  
+                        }
                         Com_Printf ("Error: Can\'t extract path!\n");
                     }
                     else
@@ -1090,22 +1090,22 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
         return (NO);
     }
     gSysDenyDrag = YES;
-    
+
     if (gSysArgCount > 2)
     {
         return (NO);
     }
-    
+
     // we have received a filepath:
     if (theFilePath != NULL)
     {
-    
+
         char 		*myMod  = (char *) [[theFilePath lastPathComponent] fileSystemRepresentation];
         char 		*myPath = (char *) [theFilePath fileSystemRepresentation];
         char		**myNewArgValues;
         BOOL		myDirectory;
         SInt32		i;
-        
+
         // is the filepath a folder?
         if (![[NSFileManager defaultManager] fileExistsAtPath: theFilePath isDirectory: &myDirectory])
         {
@@ -1127,12 +1127,12 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
         gSysArgValues[3] = malloc (strlen (myPath) + 1);
         SYS_CHECK_MALLOC (gSysArgValues[3]);
         strcpy (gSysArgValues[3], myMod);
-        
+
         // get the path of the mod [compare it with the id1 path later]:
         gSysModDir = malloc (strlen (myPath) + 1);
         SYS_CHECK_MALLOC (gSysModDir);
         strcpy (gSysModDir, myPath);
-                
+
         // dispose the foldername of the mod:
         i = strlen (gSysModDir) - 1;
         while (i > 1)
@@ -1158,7 +1158,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     {
         return;
     }
-    
+
     IN_ShowCursor (YES);
     IN_SetKeyboardRepeatEnabled (YES);
     IN_SetF12EjectEnabled (YES);
@@ -1179,7 +1179,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     {
         return;
     }
-                        
+
     if ((vid_fullscreen != NULL && vid_fullscreen->value != 0.0f) ||
         ((in_mouse == NULL || ((in_mouse != NULL && in_mouse->value == 0.0f) &&
          (_windowed_mouse != NULL && _windowed_mouse->value != 0.0f)))))
@@ -1197,7 +1197,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     CDAudio_Enable (YES);
     // VID_SetPaused (NO);
     gSysHidden = NO;
-    
+
     CGPostKeyboardEvent ((CGCharCode) 0, (CGKeyCode) 55, NO);	// CMD
     CGPostKeyboardEvent ((CGCharCode) 0, (CGKeyCode) 48, NO);	// TAB
     CGPostKeyboardEvent ((CGCharCode) 0, (CGKeyCode) 4, NO);	// H
@@ -1239,23 +1239,23 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     SYS_Q2_DURING
     {
         NSTimer		*myTimer;
-        
+
         gSysDenyDrag = YES;
-    
+
         Sys_CheckForIDDirectory ();
-    
+
         Sys_CheckForCDDirectory ();
-    
+
         // check if the user has pressed the Option key on startup:
         [self checkForOptionKey];
-    
+
         // show the settings dialog after 0.5s (required to recognize the "run" AppleScript command):
         myTimer = [NSTimer scheduledTimerWithTimeInterval: 0.5f
                                                 target: self
                                                 selector: @selector (setupDialog:)
                                                 userInfo: NULL
                                                 repeats: NO];
-                                              
+
         if (myTimer == NULL)
         {
             [self setupDialog: NULL];
@@ -1271,25 +1271,25 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     if (gSysHostInitialized == YES)
     {
         extern cvar_t	*vid_fullscreen;
-        
+
         if ([NSApp isHidden] == YES || [NSApp isActive] == NO)
         {
             [NSApp activateIgnoringOtherApps: YES];
         }
-        
+
         if (vid_fullscreen != NULL && vid_fullscreen->value == 0.0f)
         {
             NSArray	*myWindowList = [NSApp windows];
-            
+
             if (myWindowList != NULL)
             {
                 int	myCount = [myWindowList count],
                         myIndex;
-                
+
                 for (myIndex = 0; myIndex < myCount; myIndex++)
                 {
                     NSWindow	*myWindow = [myWindowList objectAtIndex: myIndex];
-                    
+
                     if (myWindow != NULL)
                     {
                         if ([myWindow isMiniaturized] == YES)
@@ -1300,11 +1300,11 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
                 }
             }
         }
-        
+
         //M_Menu_Quit_f ();
         return (NSTerminateCancel);
     }
-    
+
     return (NSTerminateNow);
 }
 
@@ -1326,13 +1326,13 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
                                      untilDate: gSysDistantPast
                                         inMode: NSDefaultRunLoopMode
                                        dequeue: YES];
-        
+
         // we are finished when no events are left:
         if (!myEvent)
         {
             break;
         }
-        
+
         // see if our shift down event has the option/alt key flag set:
         if ([myEvent modifierFlags] & NSAlternateKeyMask)
         {
@@ -1362,7 +1362,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
         if (myParameters != NULL)
         {
             SInt	i;
-            
+
             for (i = 1; i < gSysArgCount; i++)
             {
                 // surround the string by ", if it contains spaces:
@@ -1374,7 +1374,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
                 {
                     myParameters = [myParameters stringByAppendingFormat: @"%s", gSysArgValues[i]];
                 }
-                
+
                 // add a space if this was not the last parameter:
                 if (i != gSysArgCount - 1)
                 {
@@ -1393,13 +1393,13 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     else
     {
         BOOL	myParametersEnabled;
-        
+
         // get the default command line parameters:
         myParametersEnabled = [theDefaults boolForKey: SYS_DEFAULT_USE_PARAMETERS];
         [parameterTextField setStringValue: [theDefaults stringForKey: SYS_DEFAULT_PARAMETERS]];
         [parameterCheckBox setState: myParametersEnabled];
         [parameterCheckBox setEnabled: YES];
-        [self toggleParameterTextField: NULL];        
+        [self toggleParameterTextField: NULL];
     }
 }
 
@@ -1410,23 +1410,23 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     SYS_Q2_DURING
     {
         NSUserDefaults 	*myDefaults = NULL;
-        
+
         // don't allow the "run" AppleScript command to be executed anymore:
         gSysAllowRunCommand = NO;
-    
+
         myDefaults = [NSUserDefaults standardUserDefaults];
-    
+
         // prepare the "option key" and the "use MP3" checkbox:
         [optionCheckBox setState: [myDefaults boolForKey: SYS_DEFAULT_OPTION_KEY]];
         [mp3CheckBox setState: [myDefaults boolForKey: SYS_DEFAULT_USE_MP3]];
         [self toggleMP3Playback: self];
-    
+
         // prepare the "MP3 path" textfield:
         [mp3TextField setStringValue: [myDefaults stringForKey: SYS_DEFAULT_MP3_PATH]];
-    
+
         // prepare the command-line parameter textfield and checkbox:
         [self setupParameterUI: myDefaults];
-        
+
         if ([optionCheckBox state] == NO || ([optionCheckBox state] == YES && gOptionPressed == YES))
         {
             // show the startup dialog:
@@ -1492,20 +1492,20 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     NSString		*myArgument;
     char		**myNewArgValues;
     SInt		i;
-    
+
     // get all parameters separated by a space:
     mySeparatedArguments = [theString componentsSeparatedByString: @" "];
-    
+
     // no parameters at all?
     if (mySeparatedArguments == NULL || [mySeparatedArguments count] == 0)
     {
         return;
     }
-    
+
     // concatenate parameters that start on " and end on ":
     myNewArguments = [NSMutableArray arrayWithCapacity: 0];
     myQuotationMarks = [NSCharacterSet characterSetWithCharactersInString: @"\""];
-    
+
     for (i = 0; i < [mySeparatedArguments count]; i++)
     {
         myArgument = [mySeparatedArguments objectAtIndex: i];
@@ -1544,12 +1544,12 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 
     myNewArgValues[0] = gSysArgValues[0];
     gSysArgValues = myNewArgValues;
-    
+
     // insert the new parameters:
     for (i = 0; i < [myNewArguments count]; i++)
     {
         char *	myCString = (char *) [[myNewArguments objectAtIndex: i] cString];
-        
+
         gSysArgValues[i+1] = (char *) malloc (strlen (myCString) + 1);
         SYS_CHECK_MALLOC (gSysArgValues[i+1]);
         strcpy (gSysArgValues[i+1], myCString);
@@ -1565,7 +1565,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     {
         return(YES);
     }
-    
+
     return(NO);
 }
 
@@ -1577,10 +1577,10 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     {
         // scan for media files:
         CDAudio_GetTrackList ();
-        
+
         // post a notification to the main thread:
         [[NSDistributedNotificationCenter defaultCenter] postNotificationName: @"Fire Frame Timer" object: NULL];
-        
+
         // job done, good bye!
         [NSThread exit];
     } SYS_Q2_HANDLER;
@@ -1603,40 +1603,40 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
         [mediascanProgressIndicator stopAnimation: self];
         [mediascanWindow close];
         [[NSNotificationCenter defaultCenter] removeObserver: self name: @"Fire Frame Timer" object: NULL];
-        
+
         // alias the action of the past menu item:
         [pasteMenuItem setTarget: self];
         [pasteMenuItem setAction: @selector (pasteString:)];
-    
+
         IN_SetKeyboardRepeatEnabled (NO);
         IN_SetF12EjectEnabled (NO);
-    
+
         [NSApp activateIgnoringOtherApps: YES];
-    
+
         Qcommon_Init (gSysArgCount, gSysArgValues);
-    
+
         if (gSysRequestedCommand[0] != 0x00)
         {
             Cbuf_ExecuteText (EXEC_APPEND, va("%s\n", gSysRequestedCommand));
         }
-    
+
         gSysHostInitialized = YES;
         gSysAbortMediaScan = NO;
-        
+
         [NSApp setServicesProvider: self];
-    
+
         fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
-    
+
         gSysNoStdOut = Cvar_Get("nostdout", "0", 0);
         if (gSysNoStdOut->value == 0.0)
         {
                 fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
         }
-    
+
         gSysLastFrameTime = Sys_Milliseconds ();
-        
+
         Qcommon_Frame (0.1);
-        
+
         // install our frame renderer to the default runloop:
         [self installFrameTimer];
     } SYS_Q2_HANDLER;
@@ -1664,7 +1664,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
         [self saveString: [mp3TextField stringValue] initial: SYS_INITIAL_MP3_PATH
                                                      default: SYS_DEFAULT_MP3_PATH
                                                 userDefaults: myDefaults];
-        
+
         // save the state of the "use command line parameters" checkbox:
         [self saveCheckBox: parameterCheckBox initial: SYS_INITIAL_USE_PARAMETERS
                                               default: SYS_DEFAULT_USE_PARAMETERS
@@ -1676,13 +1676,13 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
             [self saveString: [parameterTextField stringValue] initial: SYS_INITIAL_PARAMETERS
                                                                default: SYS_DEFAULT_PARAMETERS
                                                           userDefaults: myDefaults];
-    
+
             if ([parameterCheckBox state] == YES)
             {
                 [self stringToParameters: [parameterTextField stringValue]];
             }
         }
- 
+
         if ([mp3CheckBox state] == YES)
         {
             gSysMP3Folder = [mp3TextField stringValue];
@@ -1692,10 +1692,10 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
         {
             [mediascanText setStringValue: @"Scanning AudioCDs..."];
         }
- 
-        [myDefaults synchronize];       
+
+        [myDefaults synchronize];
         [startupWindow close];
-        
+
         // scan for medias, show a dialog since this can take a while:
 	SNDDMA_ReserveBufferSize ();
         [mediascanWindow center];
@@ -1720,7 +1720,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
                                                  selector: @selector (renderFrame:)
                                                  userInfo: NULL
                                                   repeats: YES];
-    
+
     if (gFrameTimer == NULL)
     {
         Sys_Error ("Failed to install the renderer loop!");
@@ -1744,7 +1744,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
         myFrameTime = myNewFrameTime - gSysLastFrameTime;
     } while (myFrameTime < 1);
     gSysLastFrameTime = myNewFrameTime;
-    
+
     Qcommon_Frame (myFrameTime);
 }
 
@@ -1760,7 +1760,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 - (IBAction) toggleMP3Playback: (id) theSender
 {
     BOOL	myState = [mp3CheckBox state];
-    
+
     [mp3Button setEnabled: myState];
     [mp3TextField setEnabled: myState];
 }
@@ -1780,7 +1780,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     [gMP3Panel setAccessoryView: mp3HelpView];
     [gMP3Panel setDirectory: [mp3TextField stringValue]];
     [gMP3Panel setTitle: @"Select the folder that holds the MP3s:"];
-    
+
     // show the sheet:
     [gMP3Panel beginSheetForDirectory: @""
                                  file: NULL
@@ -1817,7 +1817,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 {
     NSWorkspace		*myWorkspace;
     NSURL		*myURL;
-    
+
     myWorkspace = [NSWorkspace sharedWorkspace];
     if (myWorkspace == NULL)
     {
@@ -1924,11 +1924,11 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     if (gSysAllowRunCommand == YES)
     {
         NSDictionary	*myArguments = [theCommand evaluatedArguments];
-    
+
         if (myArguments != NULL)
         {
             NSString 		*myParameters = [myArguments objectForKey: @"Quake2Parameters"];
-        
+
             // Check if we got command line parameters:
             if (myParameters != NULL && [myParameters isEqualToString: @""] == NO)
             {
@@ -1952,7 +1952,7 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     if (myArguments != NULL)
     {
         NSString		*myCommandList= [myArguments objectForKey: @"Quake2Commandlist"];
-        
+
         // Send the console command only if we got commands:
         if (myCommandList != NULL && [myCommandList isEqualToString: @""] == NO)
         {
@@ -1983,7 +1983,7 @@ int	main (int theArgCount, const char **theArgValues)
 #ifdef DEDICATED_ONLY
 
     int		myTime, myOldTime, myNewTime;
-    
+
     gSysArgCount = theArgCount;
     gSysArgValues = (char **) theArgValues;
 
@@ -1998,7 +1998,7 @@ int	main (int theArgCount, const char **theArgValues)
     }
 
     myOldTime = Sys_Milliseconds ();
-    
+
     Qcommon_Frame (0.1);
 
     while (1)
@@ -2009,7 +2009,7 @@ int	main (int theArgCount, const char **theArgValues)
             myTime = myNewTime - myOldTime;
         } while (myTime < 1);
         myOldTime = myNewTime;
-        
+
         Qcommon_Frame (myTime);
     }
 
@@ -2027,7 +2027,7 @@ int	main (int theArgCount, const char **theArgValues)
         gSysArgCount = theArgCount;
     }
     gSysArgValues = (char **) theArgValues;
-    
+
     return (NSApplicationMain (theArgCount, theArgValues));
 
 #endif /* DEDICATED ONLY */

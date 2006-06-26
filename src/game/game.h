@@ -101,7 +101,7 @@ struct edict_s
 
 /*=============================================================== */
 
-typedef struct routing_s routing_t;
+/*typedef struct routing_s routing_t;*/
 /* functions provided by the main engine */
 typedef struct
 {

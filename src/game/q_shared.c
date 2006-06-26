@@ -1471,7 +1471,7 @@ int Q_putenv( const char *str )
 #ifdef _MSC_VER
 	return _putenv(str);
 #else
-	return putenv(str);
+	return putenv((char*)str);
 #endif
 }
 

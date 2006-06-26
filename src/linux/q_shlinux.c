@@ -86,8 +86,7 @@ int Hunk_End (void)
 	old_size = round_page(old_size);
 	if (new_size > old_size)
 		n = 0; /* error */
-	else if (new_size < old_size)
-	{
+	else if (new_size < old_size) {
 		unmap_base = (caddr_t)(membase + new_size);
 		unmap_len = old_size - new_size;
 		n = munmap(unmap_base, unmap_len) + membase;
@@ -131,8 +130,7 @@ int Sys_Milliseconds (void)
 
 	gettimeofday(&tp, &tzp);
 
-	if (!secbase)
-	{
+	if (!secbase) {
 		secbase = tp.tv_sec;
 		return tp.tv_usec/1000;
 	}
@@ -171,7 +169,7 @@ static qboolean CompareAttributes(char *path, char *name,
 	char fn[MAX_OSPATH];
 
 	/* . and .. never match */
-	if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0)
+	if (Q_strcmp(name, ".") == 0 || Q_strcmp(name, "..") == 0)
 		return qfalse;
 
 	return qtrue;
@@ -197,31 +195,26 @@ char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)
 		Sys_Error ("Sys_BeginFind without close");
 
 /*	COM_FilePath (path, findbase); */
-	strcpy(findbase, path);
+	Q_strncpyz(findbase, path, MAX_OSPATH);
 
-	if ((p = strrchr(findbase, '/')) != NULL)
-	{
+	if ((p = strrchr(findbase, '/')) != NULL) {
 		*p = 0;
-		strcpy(findpattern, p + 1);
-	}
-	else
-		strcpy(findpattern, "*");
+		Q_strncpyz(findpattern, p + 1, MAX_OSPATH);
+	} else
+		Q_strncpyz(findpattern, "*", MAX_OSPATH);
 
-	if (strcmp(findpattern, "*.*") == 0)
-		strcpy(findpattern, "*");
+	if (Q_strcmp(findpattern, "*.*") == 0)
+		Q_strncpyz(findpattern, "*", MAX_OSPATH);
 
 	if ((fdir = opendir(findbase)) == NULL)
 		return NULL;
 
-	while ((d = readdir(fdir)) != NULL)
-	{
-		if (!*findpattern || glob_match(findpattern, d->d_name))
-		{
+	while ((d = readdir(fdir)) != NULL) {
+		if (!*findpattern || glob_match(findpattern, d->d_name)) {
 /*			if (*findpattern) */
 /*				printf("%s matched %s\n", findpattern, d->d_name); */
-			if ( CompareAttributes(findbase, d->d_name, musthave, canhave) )
-			{
-				sprintf (findpath, "%s/%s", findbase, d->d_name);
+			if ( CompareAttributes(findbase, d->d_name, musthave, canhave) ) {
+				Com_sprintf (findpath, MAX_OSPATH, "%s/%s", findbase, d->d_name);
 				return findpath;
 			}
 		}
@@ -235,15 +228,12 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 
 	if (fdir == NULL)
 		return NULL;
-	while ((d = readdir(fdir)) != NULL)
-	{
-		if (!*findpattern || glob_match(findpattern, d->d_name))
-		{
+	while ((d = readdir(fdir)) != NULL) {
+		if (!*findpattern || glob_match(findpattern, d->d_name)) {
 /*			if (*findpattern) */
 /*				printf("%s matched %s\n", findpattern, d->d_name); */
-			if (CompareAttributes(findbase, d->d_name, musthave, canhave))
-			{
-				sprintf (findpath, "%s/%s", findbase, d->d_name);
+			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
+				Com_sprintf (findpath, MAX_OSPATH, "%s/%s", findbase, d->d_name);
 				return findpath;
 			}
 		}
@@ -257,7 +247,4 @@ void Sys_FindClose (void)
 		closedir(fdir);
 	fdir = NULL;
 }
-
-
-/*============================================ */
 
