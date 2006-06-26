@@ -11,7 +11,7 @@ Changes:
           Added documentation comments and updated copyright notice.
           Added inclusion guard.
 
-Original file from Quake 2 v3.21: quake2-2.31/client/asm_i386.h
+Original file from Quake 2 v3.21: quake2-2.31/client/cdaudio.h
 
 Copyright (C) 1997-2001 Id Software, Inc.
 
