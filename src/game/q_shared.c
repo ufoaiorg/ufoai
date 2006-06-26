@@ -1952,8 +1952,7 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 		return qfalse;
 	}
 
-	if ( CSI->ids[container].single || ( ic->x == x && ic->y == y ) )
-	{
+	if ( CSI->ids[container].single || ( ic->x == x && ic->y == y ) ) {
 		old = invUnused;
 		invUnused = ic;
 		cacheItem = ic->item;
@@ -1967,8 +1966,7 @@ qboolean Com_RemoveFromInventory( inventory_t *i, int container, int x, int y )
 	}
 
 	for ( ; ic->next; ic = ic->next )
-		if ( ic->next->x == x && ic->next->y == y )
-		{
+		if ( ic->next->x == x && ic->next->y == y ) {
 			old = invUnused;
 			invUnused = ic->next;
 			cacheItem = ic->next->item;
@@ -2052,8 +2050,7 @@ int Com_MoveInInventory( inventory_t *i, int from, int fx, int fy, int to, int t
 	}
 
 	/* twohanded exception - only CSI->idRight is allowed for twohanded weapons */
-	if ( CSI->ods[cacheItem.t].twohanded && to == CSI->idLeft )
-	{
+	if ( CSI->ods[cacheItem.t].twohanded && to == CSI->idLeft ) {
 #ifdef DEBUG
 		Com_Printf("Com_MoveInInventory - don't move the item to CSI->idLeft it's twohanded\n");
 #endif
@@ -2093,8 +2090,7 @@ void Com_EmptyContainer( inventory_t *i, int container )
 
 	assert( i );
 	ic = i->c[container];
-	while ( ic )
-	{
+	while ( ic ) {
 		old = ic;
 		ic = ic->next;
 		old->next = invUnused;
@@ -2348,8 +2344,7 @@ int Com_ParseValue( void *base, char *token, int type, int ofs )
 
 	b = (byte *)base + ofs;
 
-	switch (type)
-	{
+	switch (type) {
 	case V_NULL:
 		return 0;
 
@@ -2526,8 +2521,7 @@ int Com_SetValue( void *base, void *set, int type, int ofs )
 
 	b = (byte *)base + ofs;
 
-	switch (type)
-	{
+	switch (type) {
 	case V_NULL:
 		return 0;
 
@@ -2628,8 +2622,7 @@ char *Com_ValueToStr( void *base, int type, int ofs )
 
 	b = (byte *)base + ofs;
 
-	switch (type)
-	{
+	switch (type) {
 	case V_NULL:
 		return 0;
 

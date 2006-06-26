@@ -82,14 +82,12 @@ unsigned int SH_LoadProgram_ARB_FP(char *path)
 
 	size = ri.FS_LoadFile (path, (void **)&fbuf);
 
-	if (!fbuf)
-	{
+	if (!fbuf) {
 		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
 		return -1;
 	}
 
-	if (size < 16)
-	{
+	if (size < 16) {
 		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
 		ri.FS_FreeFile (fbuf);
 		return -1;
@@ -125,14 +123,12 @@ unsigned int SH_LoadProgram_ARB_VP(char *path)
 
 	size = ri.FS_LoadFile (path, (void **)&fbuf);
 
-	if (!fbuf)
-	{
+	if (!fbuf) {
 		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
 		return -1;
 	}
 
-	if (size < 16)
-	{
+	if (size < 16) {
 		ri.Con_Printf (PRINT_ALL, "Could not load shader %s\n", path);
 		ri.FS_FreeFile (fbuf);
 		return -1;
@@ -152,8 +148,7 @@ unsigned int SH_LoadProgram_ARB_VP(char *path)
 		int error_pos;
 
 		qglGetIntegerv(GL_PROGRAM_ERROR_POSITION_ARB, &error_pos);
-		if(error_pos != -1)
-		{
+		if(error_pos != -1) {
 			ri.Con_Printf(PRINT_DEVELOPER,"!! VP error at position %d in %s\n", error_pos, path);
 			ri.Con_Printf(PRINT_DEVELOPER,"!! Error: %s\n", (char *)errors);
 
@@ -175,8 +170,7 @@ Activate Shaders
 */
 void SH_UseProgram_ARB_FP(unsigned int fpid)
 {
-	if (fpid>0)
-	{
+	if (fpid>0) {
 		qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, fpid);
 		qglEnable(GL_FRAGMENT_PROGRAM_ARB);
 	} else {
@@ -186,8 +180,7 @@ void SH_UseProgram_ARB_FP(unsigned int fpid)
 
 void SH_UseProgram_ARB_VP(unsigned int vpid)
 {
-	if (vpid>0)
-	{
+	if (vpid>0) {
 		qglBindProgramARB(GL_VERTEX_PROGRAM_ARB, vpid);
 		qglEnable(GL_VERTEX_PROGRAM_ARB);
 	} else {
@@ -239,12 +232,6 @@ unsigned int SH_CompileWaterShader(unsigned int arb_water_id)
 	qglProgramStringARB ( GL_FRAGMENT_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, strlen ( arb_water ), arb_water );
 	return arb_water_id;
 /*	qglDeleteProgramsARB(1, &arb_water_id); */
-}
-
-#else
-
-static void SH_DummyFunction( void )
-{
 }
 
 #endif /* SHADERS */
