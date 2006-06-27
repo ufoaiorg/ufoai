@@ -1,0 +1,470 @@
+<?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
+<!DOCTYPE glade-interface SYSTEM "http://gazpacho.sicem.biz/gazpacho-0.1.dtd">
+<glade-interface>
+    <widget class="GtkUIManager" id="uimanager">
+        <child>
+            <widget class="GtkActionGroup" id="DefaultActions">
+                <child>
+                    <widget class="GtkAction" id="FileMenu">
+                        <property name="name">FileMenu</property>
+                        <property name="label" translatable="yes">_File</property>
+                    </widget>
+                </child>
+                <child>
+                    <widget class="GtkAction" id="Quit">
+                        <property name="name">Quit</property>
+                        <property name="tooltip" translatable="yes">Quit the program</property>
+                        <property name="stock_id">gtk-quit</property>
+                    </widget>
+                </child>
+            </widget>
+        </child>
+        <ui id="initial-state"><![CDATA[<ui>
+<menubar action="menubar1" name="menubar1">
+  <menu action="FileMenu" name="FileMenu">
+    
+    
+    
+    
+    
+    <menuitem action="Quit" name="Quit"/>
+  </menu>
+  
+</menubar>
+</ui>]]></ui>
+    </widget>
+    <widget class="GtkWindow" id="campaign_editor">
+        <property name="default_height">245</property>
+        <property name="default_width">440</property>
+        <property name="title" context="yes" translatable="yes">Campaign editor</property>
+        <child>
+            <widget class="GtkVBox" id="editor_vbox">
+                <property name="visible">True</property>
+                <child>
+                    <widget constructor="initial-state" class="GtkMenuBar" id="menubar1">
+                        <property name="visible">True</property>
+                    </widget>
+                    <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                    </packing>
+                </child>
+                <child>
+                    <widget class="GtkNotebook" id="geoscape_notebook">
+                        <property name="is_focus">True</property>
+                        <property name="visible">True</property>
+                        <child>
+                            <widget class="GtkScrolledWindow" id="geoscape_scrolledwindow">
+                                <property name="hscrollbar_policy">automatic</property>
+                                <property name="visible">True</property>
+                                <property name="vscrollbar_policy">automatic</property>
+                                <child>
+                                    <widget class="GtkViewport" id="geoscape_viewport">
+                                        <property name="visible">True</property>
+                                        <child>
+                                            <widget class="GtkImage" id="geoscape_image">
+                                                <property name="file">/home/mattn/dev/ufo/base/pics/menu/map_earth_day.jpg</property>
+                                                <property name="visible">True</property>
+                                            </widget>
+                                        </child>
+                                    </widget>
+                                </child>
+                            </widget>
+                            <packing>
+                                <property name="tab_label" context="yes" translatable="yes"></property>
+                            </packing>
+                        </child>
+                    </widget>
+                    <packing>
+                        <property name="position">1</property>
+                    </packing>
+                </child>
+            </widget>
+        </child>
+    </widget>
+    <widget class="GtkDialog" id="mission_dialog">
+        <property name="default_height">260</property>
+        <property name="default_width">320</property>
+        <property name="destroy_with_parent">True</property>
+        <property name="modal">True</property>
+        <property name="skip_pager_hint">True</property>
+        <property name="skip_taskbar_hint">True</property>
+        <property name="title" context="yes" translatable="yes">Mission</property>
+        <property name="type_hint">normal</property>
+        <property name="window_position">none</property>
+        <child internal-child="vbox">
+            <widget class="GtkVBox" id="mission_vbox">
+                <property name="visible">True</property>
+                <child>
+                    <widget class="GtkVBox" id="mission_variables_vbox">
+                        <property name="visible">True</property>
+                        <child>
+                            <widget class="GtkFrame" id="actors_frame">
+                                <property name="label" context="yes" translatable="yes">Actors</property>
+                                <property name="visible">True</property>
+                                <child>
+                                    <widget class="GtkTable" id="actors_table">
+                                        <property name="n_columns">2</property>
+                                        <property name="n_rows">3</property>
+                                        <property name="visible">True</property>
+                                        <child>
+                                            <widget class="GtkLabel" id="recruits">
+                                                <property name="label" context="yes" translatable="yes">Recruits</property>
+                                                <property name="use_markup">True</property>
+                                                <property name="visible">True</property>
+                                                <property name="xalign">0.0</property>
+                                            </widget>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkLabel" id="civilians">
+                                                <property name="label" context="yes" translatable="yes">Civilians</property>
+                                                <property name="visible">True</property>
+                                                <property name="xalign">0.0</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">2</property>
+                                                <property name="top_attach">1</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkLabel" id="aliens">
+                                                <property name="label" context="yes" translatable="yes">Aliens</property>
+                                                <property name="visible">True</property>
+                                                <property name="xalign">0.0</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">3</property>
+                                                <property name="top_attach">2</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkComboBox" id="combo_recruits">
+                                                <property name="items" context="yes" translatable="yes">1
+2
+3
+4
+5
+6
+7
+8</property>
+                                                <property name="visible">True</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="left_attach">1</property>
+                                                <property name="right_attach">2</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkComboBox" id="combo_civilians">
+                                                <property name="items" context="yes" translatable="yes">1
+2
+3
+4
+5
+6
+7
+8</property>
+                                                <property name="visible">True</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">2</property>
+                                                <property name="left_attach">1</property>
+                                                <property name="right_attach">2</property>
+                                                <property name="top_attach">1</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkComboBox" id="combo_aliens">
+                                                <property name="items" context="yes" translatable="yes">1
+2
+3
+4
+5
+6
+7
+8</property>
+                                                <property name="visible">True</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">3</property>
+                                                <property name="left_attach">1</property>
+                                                <property name="right_attach">2</property>
+                                                <property name="top_attach">2</property>
+                                            </packing>
+                                        </child>
+                                    </widget>
+                                </child>
+                            </widget>
+                        </child>
+                        <child>
+                            <widget class="GtkFrame" id="mission_frame">
+                                <property name="label" context="yes" translatable="yes">Mission</property>
+                                <property name="visible">True</property>
+                                <child>
+                                    <widget class="GtkTable" id="mission_table">
+                                        <property name="n_columns">2</property>
+                                        <property name="n_rows">3</property>
+                                        <property name="visible">True</property>
+                                        <child>
+                                            <widget class="GtkLabel" id="map_label">
+                                                <property name="label" context="yes" translatable="yes">Map</property>
+                                                <property name="visible">True</property>
+                                                <property name="xalign">0.0</property>
+                                            </widget>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkLabel" id="music_label">
+                                                <property name="label" context="yes" translatable="yes">Music</property>
+                                                <property name="visible">True</property>
+                                                <property name="xalign">0.0</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">2</property>
+                                                <property name="top_attach">1</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkLabel" id="text_label">
+                                                <property name="label" context="yes" translatable="yes">Text</property>
+                                                <property name="visible">True</property>
+                                                <property name="xalign">0.0</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">3</property>
+                                                <property name="top_attach">2</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkEntry" id="map_entry">
+                                                <property name="max_length">63</property>
+                                                <property name="visible">True</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="left_attach">1</property>
+                                                <property name="right_attach">2</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkEntry" id="music_entry">
+                                                <property name="max_length">63</property>
+                                                <property name="visible">True</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">2</property>
+                                                <property name="left_attach">1</property>
+                                                <property name="right_attach">2</property>
+                                                <property name="top_attach">1</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkTextView" id="text_mission">
+                                                <property name="visible">True</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">3</property>
+                                                <property name="left_attach">1</property>
+                                                <property name="right_attach">2</property>
+                                                <property name="top_attach">2</property>
+                                            </packing>
+                                        </child>
+                                    </widget>
+                                </child>
+                            </widget>
+                            <packing>
+                                <property name="position">1</property>
+                            </packing>
+                        </child>
+                        <child>
+                            <widget class="GtkFrame" id="other_frame">
+                                <property name="label" context="yes" translatable="yes">Other</property>
+                                <property name="visible">True</property>
+                                <child>
+                                    <widget class="GtkTable" id="other_table">
+                                        <property name="n_columns">2</property>
+                                        <property name="n_rows">6</property>
+                                        <property name="visible">True</property>
+                                        <child>
+                                            <widget class="GtkLabel" id="alienteam_label">
+                                                <property name="label" context="yes" translatable="yes">Alienteam</property>
+                                                <property name="visible">True</property>
+                                                <property name="xalign">0.0</property>
+                                            </widget>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkLabel" id="civteam_label">
+                                                <property name="label" context="yes" translatable="yes">Civilianteam</property>
+                                                <property name="visible">True</property>
+                                                <property name="xalign">0.0</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">2</property>
+                                                <property name="top_attach">1</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkLabel" id="alienequip_label">
+                                                <property name="label" context="yes" translatable="yes">Alienequipment</property>
+                                                <property name="visible">True</property>
+                                                <property name="xalign">0.0</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">3</property>
+                                                <property name="top_attach">2</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkLabel" id="win_label">
+                                                <property name="label" context="yes" translatable="yes">Credits on win</property>
+                                                <property name="visible">True</property>
+                                                <property name="xalign">0.0</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">4</property>
+                                                <property name="top_attach">3</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkLabel" id="credits_civ_label">
+                                                <property name="label" context="yes" translatable="yes">Credits for rescued civilians</property>
+                                                <property name="visible">True</property>
+                                                <property name="xalign">0.0</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">5</property>
+                                                <property name="top_attach">4</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkLabel" id="credits_aliens_label">
+                                                <property name="label" context="yes" translatable="yes">Credits for killed aliens</property>
+                                                <property name="visible">True</property>
+                                                <property name="xalign">0.0</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">6</property>
+                                                <property name="top_attach">5</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkEntry" id="alienteam_entry">
+                                                <property name="max_length">63</property>
+                                                <property name="visible">True</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="left_attach">1</property>
+                                                <property name="right_attach">2</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkEntry" id="civ_team_entry">
+                                                <property name="max_length">63</property>
+                                                <property name="visible">True</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">2</property>
+                                                <property name="left_attach">1</property>
+                                                <property name="right_attach">2</property>
+                                                <property name="top_attach">1</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkEntry" id="alien_equip_entry">
+                                                <property name="max_length">63</property>
+                                                <property name="visible">True</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">3</property>
+                                                <property name="left_attach">1</property>
+                                                <property name="right_attach">2</property>
+                                                <property name="top_attach">2</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkEntry" id="credits_win_entry">
+                                                <property name="max_length">63</property>
+                                                <property name="visible">True</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">4</property>
+                                                <property name="left_attach">1</property>
+                                                <property name="right_attach">2</property>
+                                                <property name="top_attach">3</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkEntry" id="credits_civ_entry">
+                                                <property name="max_length">63</property>
+                                                <property name="visible">True</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">5</property>
+                                                <property name="left_attach">1</property>
+                                                <property name="right_attach">2</property>
+                                                <property name="top_attach">4</property>
+                                            </packing>
+                                        </child>
+                                        <child>
+                                            <widget class="GtkEntry" id="credits_alien_entry">
+                                                <property name="max_length">63</property>
+                                                <property name="visible">True</property>
+                                            </widget>
+                                            <packing>
+                                                <property name="bottom_attach">6</property>
+                                                <property name="left_attach">1</property>
+                                                <property name="right_attach">2</property>
+                                                <property name="top_attach">5</property>
+                                            </packing>
+                                        </child>
+                                    </widget>
+                                </child>
+                            </widget>
+                            <packing>
+                                <property name="position">2</property>
+                            </packing>
+                        </child>
+                    </widget>
+                    <packing>
+                        <property name="position">2</property>
+                    </packing>
+                </child>
+                <child internal-child="action_area">
+                    <widget class="GtkHButtonBox" id="mission_action_area">
+                        <property name="layout_style">end</property>
+                        <property name="visible">True</property>
+                        <child>
+                            <widget class="GtkButton" id="cancel_button">
+                                <property name="label">gtk-cancel</property>
+                                <property name="use_stock">True</property>
+                                <property name="visible">True</property>
+                                <signal handler="gtk_widget_destroy" name="clicked"/>
+                                <signal handler="gtk_widget_destroy" name="pressed"/>
+                            </widget>
+                            <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                            </packing>
+                        </child>
+                        <child>
+                            <widget class="GtkButton" id="ok_button">
+                                <property name="label">gtk-apply</property>
+                                <property name="use_stock">True</property>
+                                <property name="visible">True</property>
+                                <signal handler="mission_save" name="clicked"/>
+                                <signal handler="mission_save" name="pressed"/>
+                            </widget>
+                            <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">1</property>
+                            </packing>
+                        </child>
+                    </widget>
+                    <packing>
+                        <property name="expand">False</property>
+                        <property name="pack_type">end</property>
+                    </packing>
+                </child>
+            </widget>
+        </child>
+    </widget>
+</glade-interface>
