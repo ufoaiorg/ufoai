@@ -573,7 +573,7 @@ GtkWidget* create_mis_txt (void)
   return mis_txt;
 }
 
-GtkWidget* create_about_box (void)
+void create_about_box (void)
 {
   const gchar *authors[] = {
     "Martin Gerhardy (mattn/tlh2000)",
@@ -596,7 +596,7 @@ GtkWidget* create_about_box (void)
   "write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,\n"
   "Boston, MA 02111-1307, USA.\n";
 
-  aboutdialog = gtk_about_dialog_new();
+  gtk_about_dialog_new();
 /* gtk_about_dialog_set_authors ((GtkAboutDialog*)aboutdialog, authors); */
 
   gtk_show_about_dialog ( NULL, // or the parent window
@@ -608,6 +608,4 @@ GtkWidget* create_about_box (void)
                        "comments", "Program to generate new campaigns",
                        "authors", authors,
                         NULL); // end on NULL, for end of list
-
-  return aboutdialog;
 }

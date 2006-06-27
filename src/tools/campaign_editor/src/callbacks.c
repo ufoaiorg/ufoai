@@ -17,7 +17,7 @@ void on_quit_activate (GtkMenuItem *menuitem, gpointer user_data)
 
 void on_info_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
-  aboutdialog = create_about_box();
+  create_about_box();
 }
 
 void mission_save (GtkButton *button, gpointer user_data)

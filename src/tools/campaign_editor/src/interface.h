@@ -4,10 +4,9 @@
 
 GtkWidget* create_campaign_editor (void);
 GtkWidget* create_mission_dialog (void);
-GtkWidget* create_about_box (void);
 GtkWidget* create_mis_txt (void);
+void create_about_box (void);
 
 GtkWidget *mis_txt;
 GtkWidget *campaign_editor;
 GtkWidget *mission_dialog;
-GtkWidget *aboutdialog;
