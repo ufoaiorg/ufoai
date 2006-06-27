@@ -26,10 +26,12 @@
 #define GLADE_HOOKUP_OBJECT_NO_REF(component,widget,name) \
   g_object_set_data (G_OBJECT (component), name, widget)
 
-GtkWidget*
-create_campaign_editor (void)
+GtkWidget *mis_txt;
+GtkWidget *campaign_editor;
+GtkWidget *mission_dialog;
+
+GtkWidget* create_campaign_editor (void)
 {
-  GtkWidget *campaign_editor;
   GtkWidget *editor_vbox;
   GtkWidget *menubar;
   AtkObject *atko;
@@ -43,14 +45,16 @@ create_campaign_editor (void)
   GtkWidget *geoscape_scrolledwindow;
   GtkWidget *geoscape_viewport;
   GtkWidget *geoscape_image;
-  GtkWidget *label4;
+  GtkWidget *geoscape_notebook_label;
   GtkAccelGroup *accel_group;
 
   accel_group = gtk_accel_group_new ();
 
   campaign_editor = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (campaign_editor), Q_("Campaign editor"));
-  gtk_window_set_default_size (GTK_WINDOW (campaign_editor), 440, 245);
+  gtk_window_set_default_size (GTK_WINDOW (campaign_editor), 800, 600);
+
+  gtk_signal_connect (GTK_OBJECT (campaign_editor), "destroy", GTK_SIGNAL_FUNC (gtk_exit), NULL);
 
   editor_vbox = gtk_vbox_new (FALSE, 0);
   gtk_widget_show (editor_vbox);
@@ -60,7 +64,7 @@ create_campaign_editor (void)
   gtk_widget_show (menubar);
   gtk_box_pack_start (GTK_BOX (editor_vbox), menubar, FALSE, FALSE, 0);
 
-  file = gtk_menu_item_new_with_mnemonic (_("_Datei"));
+  file = gtk_menu_item_new_with_mnemonic (_("_File"));
   gtk_widget_show (file);
   gtk_container_add (GTK_CONTAINER (menubar), file);
 
@@ -69,9 +73,10 @@ create_campaign_editor (void)
 
   menu_item_quit = gtk_image_menu_item_new_from_stock ("gtk-quit", accel_group);
   gtk_widget_show (menu_item_quit);
+  gtk_signal_connect (GTK_OBJECT (menu_item_quit), "activate", GTK_SIGNAL_FUNC (gtk_exit), NULL);
   gtk_container_add (GTK_CONTAINER (file_menu), menu_item_quit);
 
-  help = gtk_menu_item_new_with_mnemonic (_("_Hilfe"));
+  help = gtk_menu_item_new_with_mnemonic (_("_Help"));
   gtk_widget_show (help);
   gtk_container_add (GTK_CONTAINER (menubar), help);
 
@@ -81,6 +86,18 @@ create_campaign_editor (void)
   menu_item_info = gtk_menu_item_new_with_mnemonic (_("_Info"));
   gtk_widget_show (menu_item_info);
   gtk_container_add (GTK_CONTAINER (help_menu), menu_item_info);
+
+  atko = gtk_widget_get_accessible (menubar);
+  atk_object_set_name (atko, _("About"));
+
+  atko = gtk_widget_get_accessible (file);
+  atk_object_set_name (atko, _("File"));
+
+  atko = gtk_widget_get_accessible (menu_item_quit);
+  atk_object_set_name (atko, _("Quit"));
+
+  atko = gtk_widget_get_accessible (menu_item_info);
+  atk_object_set_name (atko, _("About"));
 
   geoscape_notebook = gtk_notebook_new ();
   gtk_widget_show (geoscape_notebook);
@@ -97,13 +114,24 @@ create_campaign_editor (void)
   gtk_widget_show (geoscape_viewport);
   gtk_container_add (GTK_CONTAINER (geoscape_scrolledwindow), geoscape_viewport);
 
-  geoscape_image = create_pixmap (campaign_editor, NULL);
+  geoscape_image = create_pixmap (campaign_editor, "map_earth_day.jpg");
   gtk_widget_show (geoscape_image);
   gtk_container_add (GTK_CONTAINER (geoscape_viewport), geoscape_image);
 
-  label4 = gtk_label_new ("");
-  gtk_widget_show (label4);
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (geoscape_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (geoscape_notebook), 0), label4);
+  gtk_signal_connect (GTK_OBJECT (geoscape_viewport), "motion_notify_event",
+                    (GtkSignalFunc) motion_notify_event, NULL);
+  gtk_signal_connect (GTK_OBJECT (geoscape_viewport), "button_press_event",
+                    (GtkSignalFunc) button_press_event, NULL);
+
+  gtk_widget_set_events (geoscape_viewport, GDK_EXPOSURE_MASK
+                    | GDK_LEAVE_NOTIFY_MASK
+                    | GDK_BUTTON_PRESS_MASK
+                    | GDK_POINTER_MOTION_MASK
+                    | GDK_POINTER_MOTION_HINT_MASK);
+
+  geoscape_notebook_label = gtk_label_new ("Geoscape");
+  gtk_widget_show (geoscape_notebook_label);
+  gtk_notebook_set_tab_label (GTK_NOTEBOOK (geoscape_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (geoscape_notebook), 0), geoscape_notebook_label);
 
   g_signal_connect ((gpointer) menu_item_quit, "activate",
                     G_CALLBACK (on_beenden1_activate),
@@ -111,19 +139,6 @@ create_campaign_editor (void)
   g_signal_connect ((gpointer) menu_item_info, "activate",
                     G_CALLBACK (on_info1_activate),
                     NULL);
-
-  atko = gtk_widget_get_accessible (menubar);
-  atk_object_set_name (atko, _("About"));
-
-  atko = gtk_widget_get_accessible (file);
-  atk_object_set_name (atko, _("File"));
-
-  atko = gtk_widget_get_accessible (menu_item_quit);
-  atk_object_set_name (atko, _("Quit"));
-
-  atko = gtk_widget_get_accessible (menu_item_info);
-  atk_object_set_name (atko, _("About"));
-
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (campaign_editor, campaign_editor, "campaign_editor");
@@ -139,17 +154,15 @@ create_campaign_editor (void)
   GLADE_HOOKUP_OBJECT (campaign_editor, geoscape_scrolledwindow, "geoscape_scrolledwindow");
   GLADE_HOOKUP_OBJECT (campaign_editor, geoscape_viewport, "geoscape_viewport");
   GLADE_HOOKUP_OBJECT (campaign_editor, geoscape_image, "geoscape_image");
-  GLADE_HOOKUP_OBJECT (campaign_editor, label4, "label4");
+  GLADE_HOOKUP_OBJECT (campaign_editor, geoscape_notebook_label, "geoscape_notebook_label");
 
   gtk_window_add_accel_group (GTK_WINDOW (campaign_editor), accel_group);
 
   return campaign_editor;
 }
 
-GtkWidget*
-create_mission_dialog (void)
+GtkWidget* create_mission_dialog (void)
 {
-  GtkWidget *mission_dialog;
   GtkWidget *mission_vbox;
   GtkWidget *mission_variables_vbox;
   GtkWidget *actors_frame;
@@ -184,7 +197,7 @@ create_mission_dialog (void)
   GtkWidget *credits_win_entry;
   GtkWidget *credits_civ_entry;
   GtkWidget *credits_alien_entry;
-  GtkWidget *label3;
+  GtkWidget *other_label;
   GtkWidget *mission_action_area;
   GtkWidget *cancel_button;
   GtkWidget *ok_button;
@@ -443,9 +456,9 @@ create_mission_dialog (void)
   gtk_entry_set_max_length (GTK_ENTRY (credits_alien_entry), 63);
   gtk_entry_set_invisible_char (GTK_ENTRY (credits_alien_entry), 9679);
 
-  label3 = gtk_label_new (_("Other"));
-  gtk_widget_show (label3);
-  gtk_frame_set_label_widget (GTK_FRAME (other_frame), label3);
+  other_label = gtk_label_new (_("Other"));
+  gtk_widget_show (other_label);
+  gtk_frame_set_label_widget (GTK_FRAME (other_frame), other_label);
 
   mission_action_area = GTK_DIALOG (mission_dialog)->action_area;
   gtk_widget_show (mission_action_area);
@@ -462,10 +475,10 @@ create_mission_dialog (void)
   GTK_WIDGET_UNSET_FLAGS (ok_button, GTK_CAN_FOCUS);
 
   g_signal_connect ((gpointer) cancel_button, "clicked",
-                    G_CALLBACK (gtk_widget_destroy),
+                    G_CALLBACK (button_mission_dialog_cancel),
                     NULL);
   g_signal_connect ((gpointer) cancel_button, "pressed",
-                    G_CALLBACK (gtk_widget_destroy),
+                    G_CALLBACK (button_mission_dialog_cancel),
                     NULL);
   g_signal_connect ((gpointer) ok_button, "clicked",
                     G_CALLBACK (mission_save),
@@ -510,7 +523,7 @@ create_mission_dialog (void)
   GLADE_HOOKUP_OBJECT (mission_dialog, credits_win_entry, "credits_win_entry");
   GLADE_HOOKUP_OBJECT (mission_dialog, credits_civ_entry, "credits_civ_entry");
   GLADE_HOOKUP_OBJECT (mission_dialog, credits_alien_entry, "credits_alien_entry");
-  GLADE_HOOKUP_OBJECT (mission_dialog, label3, "label3");
+  GLADE_HOOKUP_OBJECT (mission_dialog, other_label, "other_label");
   GLADE_HOOKUP_OBJECT_NO_REF (mission_dialog, mission_action_area, "mission_action_area");
   GLADE_HOOKUP_OBJECT (mission_dialog, cancel_button, "cancel_button");
   GLADE_HOOKUP_OBJECT (mission_dialog, ok_button, "ok_button");
@@ -518,3 +531,49 @@ create_mission_dialog (void)
   return mission_dialog;
 }
 
+GtkWidget* create_mis_txt (void)
+{
+  GtkWidget *mis_txt_vbox;
+  GtkWidget *mission_txt;
+  GtkWidget *mis_txt_action_area;
+  GtkWidget *mis_txt_close;
+
+  mis_txt = gtk_dialog_new ();
+  gtk_window_set_default_size (GTK_WINDOW (mis_txt), 640, 480);
+  gtk_window_set_type_hint (GTK_WINDOW (mis_txt), GDK_WINDOW_TYPE_HINT_DIALOG);
+
+  gtk_signal_connect (GTK_OBJECT (mis_txt), "destroy", GTK_SIGNAL_FUNC (button_mis_txt_cancel), NULL);
+
+  mis_txt_vbox = GTK_DIALOG (mis_txt)->vbox;
+  gtk_widget_show (mis_txt_vbox);
+
+  mission_txt = gtk_text_view_new ();
+  gtk_widget_show (mission_txt);
+  gtk_box_pack_start (GTK_BOX (mis_txt_vbox), mission_txt, TRUE, TRUE, 0);
+  GTK_WIDGET_UNSET_FLAGS (mission_txt, GTK_CAN_FOCUS);
+
+  mis_txt_action_area = GTK_DIALOG (mis_txt)->action_area;
+  gtk_widget_show (mis_txt_action_area);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (mis_txt_action_area), GTK_BUTTONBOX_END);
+
+  mis_txt_close = gtk_button_new_with_mnemonic (Q_("Close"));
+  gtk_dialog_add_action_widget (GTK_DIALOG (mis_txt), mis_txt_close, 0);
+  GTK_WIDGET_UNSET_FLAGS (mis_txt_close, GTK_CAN_FOCUS);
+  gtk_widget_show (mis_txt_close);
+
+  g_signal_connect_swapped ((gpointer) mis_txt_close, "clicked",
+                    G_CALLBACK (button_mis_txt_cancel),
+                    NULL);
+  g_signal_connect_swapped ((gpointer) mis_txt_close, "pressed",
+                    G_CALLBACK (button_mis_txt_cancel),
+                    NULL);
+
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (mis_txt, mis_txt, "mis_txt");
+  GLADE_HOOKUP_OBJECT_NO_REF (mis_txt, mis_txt_vbox, "mis_txt_vbox");
+  GLADE_HOOKUP_OBJECT (mis_txt, mission_txt, "mission_txt");
+  GLADE_HOOKUP_OBJECT_NO_REF (mis_txt, mis_txt_action_area, "mis_txt_action_area");
+  GLADE_HOOKUP_OBJECT (mis_txt, mis_txt_close, "mis_txt_close");
+
+  return mis_txt;
+}

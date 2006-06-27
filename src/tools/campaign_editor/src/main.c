@@ -15,9 +15,6 @@
 int
 main (int argc, char *argv[])
 {
-  GtkWidget *campaign_editor;
-  GtkWidget *mission_dialog;
-
 #ifdef ENABLE_NLS
   bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -27,6 +24,7 @@ main (int argc, char *argv[])
   gtk_set_locale ();
   gtk_init (&argc, &argv);
 
+  add_pixmap_directory ("base/pics/menu");
   add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
 
   /*
@@ -36,9 +34,7 @@ main (int argc, char *argv[])
    */
   campaign_editor = create_campaign_editor ();
   gtk_widget_show (campaign_editor);
-  mission_dialog = create_mission_dialog ();
-  gtk_widget_show (mission_dialog);
-
+  mis_txt = create_mis_txt();
   gtk_main ();
   return 0;
 }
