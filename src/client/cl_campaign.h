@@ -128,6 +128,7 @@ typedef struct campaign_s {
 	char map[MAX_VAR];			/* geoscape map */
 	char firststage[MAX_VAR];
 	int soldiers;
+	int ugvs;
 	int credits;
 	int num;
 	qboolean visible;
@@ -156,7 +157,6 @@ typedef struct nation_s {
 void MN_MapCalcLine(vec2_t start, vec2_t end, mapline_t * line);
 void CL_SelectAircraft_f(void);
 void CL_OpenAircraft_f(void);
-void CL_BuildingAircraftList_f(void);
 void CL_MapActionReset(void);
 aircraft_t *CL_GetAircraft(char *name);
 
@@ -225,6 +225,7 @@ aircraft_t *AIR_FindAircraft(char *aircraftName);
 char *CL_AircraftStatusToName(aircraft_t * air);
 qboolean CL_MapIsNight(vec2_t pos);
 void CL_ResetCampaign(void);
+void CL_ResetSinglePlayerData ( void );
 void CL_DateConvert(date_t * date, int *day, int *month);
 char *CL_DateGetMonthName(int month);
 void CL_CampaignRun(void);
@@ -245,5 +246,7 @@ void CL_CollectItems(int won);
 void CL_UpdateCharacterStats(int won);
 void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
+void CL_GameExit(void);
+void CL_GameInit (void);
 
-#endif							/* CLIENT_CL_CAMPAIGN_H */
+#endif /* CLIENT_CL_CAMPAIGN_H */

@@ -24,9 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "winquake.h"
 
 #ifndef USE_SDL_SOUND
-#define iDirectSoundCreate(a,b,c)	pDirectSoundCreate(a,b,c)
 
-HRESULT (WINAPI *pDirectSoundCreate)(GUID FAR *lpGUID, LPDIRECTSOUND FAR *lplpDS, IUnknown FAR *pUnkOuter);
+HRESULT (WINAPI *pDirectSoundCreate)(GUID FAR *, LPDIRECTSOUND FAR *, IUnknown FAR *);
 
 /* 64K is > 1 second at 16-bit, 22050 Hz */
 #define	WAV_BUFFERS				64
@@ -48,13 +47,10 @@ static int	snd_buffer_count = 0;
 static int	sample16;
 static int	snd_sent, snd_completed;
 
-static struct sndinfo *si;
-
 /*
  * Global variables. Must be visible to window-procedure function
  *  so it can unlock and free the data block after it has been played.
  */
-
 
 HANDLE		hData;
 HPSTR		lpData, lpData2;
@@ -379,7 +375,7 @@ sndinitstat SNDDMA_InitDirect (void)
 		}
 
 		Com_DPrintf ("ok\n");
-		pDirectSoundCreate = (void *)GetProcAddress(hInstDS,"DirectSoundCreate");
+		pDirectSoundCreate = ( HRESULT (WINAPI *)(GUID FAR *, LPDIRECTSOUND FAR *, IUnknown FAR *) )GetProcAddress(hInstDS,"DirectSoundCreate");
 
 		if (!pDirectSoundCreate)
 		{
@@ -389,7 +385,7 @@ sndinitstat SNDDMA_InitDirect (void)
 	}
 
 	Com_DPrintf( "...creating DS object: " );
-	while ( ( hresult = iDirectSoundCreate( NULL, &pDS, NULL ) ) != DS_OK )
+	while ( ( hresult = pDirectSoundCreate( NULL, &pDS, NULL ) ) != DS_OK )
 	{
 		if (hresult != DSERR_ALLOCATED)
 		{

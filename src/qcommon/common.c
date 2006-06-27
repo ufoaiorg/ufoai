@@ -84,7 +84,7 @@ static void	(*rd_flush)(int target, char *buffer);
 /**
   * @brief
   */
-void Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush))
+void Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush)(int, char *))
 {
 	if (!target || !buffer || !buffersize || !flush)
 		return;
@@ -309,7 +309,7 @@ void MSG_WriteChar (sizebuf_t *sb, int c)
 
 #ifdef PARANOID
 	if (c < -128 || c > 127)
-		Com_Error (ERR_FATAL, "MSG_WriteChar: range error");
+		Com_Error (ERR_FATAL, "MSG_WriteChar: range error %c", c);
 #endif
 
 	buf = SZ_GetSpace (sb, 1);
@@ -319,13 +319,18 @@ void MSG_WriteChar (sizebuf_t *sb, int c)
 /**
   * @brief
   */
+#ifdef DEBUG
+void MSG_WriteByteDebug (sizebuf_t *sb, int c, char* file, int line)
+#else
 void MSG_WriteByte (sizebuf_t *sb, int c)
+#endif
 {
 	byte	*buf;
 
+	/* PARANOID is only possible in debug mode (when DEBUG was set, too) */
 #ifdef PARANOID
 	if (c < 0 || c > 255)
-		Com_Error (ERR_FATAL, "MSG_WriteByte: range error");
+		Com_Error (ERR_FATAL, "MSG_WriteByte: range error %c ('%s', line %i)", c, file, line);
 #endif
 
 	buf = SZ_GetSpace (sb, 1);
@@ -1354,7 +1359,7 @@ void Qcommon_LocaleInit ( void )
 
 #ifdef _WIN32
 	Com_sprintf( languageID, 32, "LANG=%s", s_language->string );
-	putenv( languageID );
+	Q_putenv( languageID );
 #else
 #ifndef SOLARIS
 	unsetenv("LANGUAGE");

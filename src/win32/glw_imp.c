@@ -49,9 +49,9 @@ static qboolean VerifyDriver( void )
 {
 	char buffer[1024];
 
-	strcpy( buffer, qglGetString( GL_RENDERER ) );
-	strlwr( buffer );
-	if ( strcmp( buffer, "gdi generic" ) == 0 )
+	Q_strncpyz( buffer, (const char*)qglGetString( GL_RENDERER ), sizeof(buffer) );
+	Q_strlwr( buffer );
+	if ( Q_strcmp( buffer, "gdi generic" ) == 0 )
 		if ( !glw_state.mcd_accelerated )
 			return qfalse;
 	return qtrue;
@@ -126,7 +126,7 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 
 	/* Register the frame class */
 	wc.style         = 0;
-	wc.lpfnWndProc   = (WNDPROC)glw_state.wndproc;
+	wc.lpfnWndProc   = glw_state.wndproc;
 	wc.cbClsExtra    = 0;
 	wc.cbWndExtra    = 0;
 	wc.hInstance     = glw_state.hInstance;
@@ -422,7 +422,7 @@ void GLimp_Shutdown( void )
 ** of OpenGL.  Under Win32 this means dealing with the pixelformats and
 ** doing the wgl interface stuff.
 */
-qboolean GLimp_Init( void *hinstance, void *wndproc )
+qboolean GLimp_Init( HINSTANCE hinstance, WNDPROC wndproc )
 {
 #define OSR2_BUILD_NUMBER 1111
 
@@ -459,7 +459,7 @@ qboolean GLimp_Init( void *hinstance, void *wndproc )
 		return qfalse;
 	}
 
-	glw_state.hInstance = ( HINSTANCE ) hinstance;
+	glw_state.hInstance = hinstance;
 	glw_state.wndproc = wndproc;
 
 	WG_CheckHardwareGamma();
@@ -669,7 +669,7 @@ void GLimp_EndFrame (void)
 	err = qglGetError();
 	assert( err == GL_NO_ERROR );
 
-	if ( stricmp( gl_drawbuffer->string, "GL_BACK" ) == 0 )
+	if ( Q_stricmp( gl_drawbuffer->string, "GL_BACK" ) == 0 )
 	{
 		if ( !qwglSwapBuffers( glw_state.hDC ) )
 			ri.Sys_Error( ERR_FATAL, "GLimp_EndFrame() - SwapBuffers() failed!\n" );
@@ -757,4 +757,3 @@ void WG_RestoreGamma( void )
 		ReleaseDC( GetDesktopWindow(), hDC );
 	}
 }
-

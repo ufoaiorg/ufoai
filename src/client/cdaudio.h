@@ -42,4 +42,4 @@ void CDAudio_Update(void);
 void CDAudio_Activate (qboolean active);
 void CDAudio_RandomPlay(void);
 
-#endif /* #define CLIENT_CDAUDIO_H */
+#endif /* CLIENT_CDAUDIO_H */

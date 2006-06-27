@@ -107,39 +107,38 @@ void Com_ParseFire( char *name, char **text, fireDef_t *fd )
 	/* get its body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseFire: fire definition \"%s\" without body ignored\n", name );
 		return;
 	}
 
 	do {
 		token = COM_EParse( text, errhead, name );
-		if ( !*text ) return;
-		if ( *token == '}' ) return;
+		if ( !*text )
+			return;
+		if ( *token == '}' )
+			return;
 
 		for ( fdp = fdps; fdp->string; fdp++ )
-			if ( !Q_stricmp( token, fdp->string ) )
-			{
+			if ( !Q_stricmp( token, fdp->string ) ) {
 				/* found a definition */
 				token = COM_EParse( text, errhead, name );
-				if ( !*text ) return;
+				if ( !*text )
+					return;
 
 				Com_ParseValue( fd, token, fdp->type, fdp->ofs );
 				break;
 			}
 
-		if ( !fdp->string )
-		{
-			if ( !Q_strncmp( token, "skill", 5 ) )
-			{
+		if ( !fdp->string ) {
+			if ( !Q_strncmp( token, "skill", 5 ) ) {
 				int skill;
 				token = COM_EParse( text, errhead, name );
-				if ( !*text ) return;
+				if ( !*text )
+					return;
 
 				for ( skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++ )
-					if ( !Q_stricmp( skillNames[skill - ABILITY_NUM_TYPES], token ) )
-					{
+					if ( !Q_stricmp( skillNames[skill - ABILITY_NUM_TYPES], token ) ) {
 						fd->weaponSkill = skill;
 						break;
 					}
@@ -164,22 +163,23 @@ void Com_ParseArmor( char *name, char **text, short *ad )
 	/* get its body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseArmor: armor definition \"%s\" without body ignored\n", name );
 		return;
 	}
 
 	do {
 		token = COM_EParse( text, errhead, name );
-		if ( !*text ) return;
-		if ( *token == '}' ) return;
+		if ( !*text )
+			return;
+		if ( *token == '}' )
+			return;
 
 		for ( i = 0; i < csi.numDTs; i++ )
-			if ( !Q_strncmp( token, csi.dts[i], MAX_VAR ) )
-			{
+			if ( !Q_strncmp( token, csi.dts[i], MAX_VAR ) ) {
 				token = COM_EParse( text, errhead, name );
-				if ( !*text ) return;
+				if ( !*text )
+					return;
 
 				ad[i] = atoi( token );
 				break;
@@ -207,8 +207,7 @@ void Com_ParseItem( char *name, char **text )
 		if ( !Q_strncmp( name, csi.ods[i].name, MAX_VAR ) )
 			break;
 
-	if ( i < csi.numODs )
-	{
+	if ( i < csi.numODs ) {
 		Com_Printf( "Com_ParseItem: weapon def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
@@ -222,8 +221,7 @@ void Com_ParseItem( char *name, char **text )
 	/* get it's body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseItem: weapon def \"%s\" without body ignored\n", name );
 		csi.numODs--;
 		return;
@@ -231,23 +229,21 @@ void Com_ParseItem( char *name, char **text )
 
 	do {
 		token = COM_EParse( text, errhead, name );
-		if ( !*text ) break;
-		if ( *token == '}' ) break;
+		if ( !*text )
+			break;
+		if ( *token == '}' )
+			break;
 
 		for ( val = od_vals, i = 0; val->string; val++, i++ )
-			if ( !Q_stricmp( token, val->string ) )
-			{
+			if ( !Q_stricmp( token, val->string ) ) {
 				/* found a definition */
-				if ( val->type != V_NULL )
-				{
+				if ( val->type != V_NULL ) {
 					/* parse a value */
 					token = COM_EParse( text, errhead, name );
 					if ( !*text ) break;
 
 					Com_ParseValue( od, token, val->type, val->ofs );
-				}
-				else
-				{
+				} else {
 					/* parse fire definitions */
 					if ( i == OD_PRIMARY ) Com_ParseFire( name, text, &od->fd[FD_PRIMARY] );
 					else if ( i == OD_SECONDARY ) Com_ParseFire( name, text, &od->fd[FD_SECONDARY] );
@@ -312,8 +308,7 @@ void Com_ParseInventory( char *name, char **text )
 		if ( !Q_strncmp( name, csi.ids[i].name, MAX_VAR ) )
 			break;
 
-	if ( i < csi.numIDs )
-	{
+	if ( i < csi.numIDs ) {
 		Com_Printf( "Com_ParseInventory: inventory def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
@@ -327,8 +322,7 @@ void Com_ParseInventory( char *name, char **text )
 	/* get it's body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseInventory: inventory def \"%s\" without body ignored\n", name );
 		csi.numIDs--;
 		return;
@@ -344,15 +338,17 @@ void Com_ParseInventory( char *name, char **text )
 
 	do {
 		token = COM_EParse( text, errhead, name );
-		if ( !*text ) return;
-		if ( *token == '}' ) return;
+		if ( !*text )
+			return;
+		if ( *token == '}' )
+			return;
 
 		for ( idp = idps; idp->string; idp++ )
-			if ( !Q_stricmp( token, idp->string ) )
-			{
+			if ( !Q_stricmp( token, idp->string ) ) {
 				/* found a definition */
 				token = COM_EParse( text, errhead, name );
-				if ( !*text ) return;
+				if ( !*text )
+					return;
 
 				Com_ParseValue( id, token, idp->type, idp->ofs );
 				break;
@@ -402,9 +398,6 @@ typedef struct teamDef_s
 
 teamDesc_t	teamDesc[MAX_TEAMDEFS];
 
-rank_t ranks[MAX_RANKS];	/* Global list of all ranks defined in medals.ufo. */
-int numRanks = 0;		/* The number of entries in the list above. */
-
 nameCategory_t	nameCat[MAX_NAMECATS];
 teamDef_t		teamDef[MAX_TEAMDEFS];
 char	infoStr[MAX_INFOSTRING];
@@ -439,8 +432,7 @@ void Com_ParseEquipment( char *name, char **text )
 		if ( !Q_strncmp( name, csi.eds[i].name, MAX_VAR ) )
 			break;
 
-	if ( i < csi.numEDs )
-	{
+	if ( i < csi.numEDs ) {
 		Com_Printf( "Com_ParseEquipment: equipment def \"%s\" with same name found, second ignored\n", name );
 		return;
 	}
@@ -454,8 +446,7 @@ void Com_ParseEquipment( char *name, char **text )
 	/* get it's body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseEquipment: equipment def \"%s\" without body ignored\n", name );
 		csi.numEDs--;
 		return;
@@ -466,11 +457,9 @@ void Com_ParseEquipment( char *name, char **text )
 		if ( !*text || *token == '}' ) return;
 
 		for ( i = 0; i < csi.numODs; i++ )
-			if ( !Q_strncmp( token, csi.ods[i].kurz, MAX_VAR ) )
-			{
+			if ( !Q_strncmp( token, csi.ods[i].kurz, MAX_VAR ) ) {
 				token = COM_EParse( text, errhead, name );
-				if ( !*text || *token == '}' )
-				{
+				if ( !*text || *token == '}' ) {
 					Com_Printf( "Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name );
 					return;
 				}
@@ -495,19 +484,19 @@ void Com_ParseEquipment( char *name, char **text )
 /*======================
 Com_GiveName
 ======================*/
-char returnName[MAX_VAR];
 char *Com_GiveName( int gender, char *category )
 {
+	static char returnName[MAX_VAR];
 	nameCategory_t	*nc;
 	char	*pos;
 	int		i, j, name;
 
 	/* search the name */
 	for ( i = 0, nc = nameCat; i < numNameCats; i++, nc++ )
-		if ( !Q_strncmp( category, nc->title, MAX_VAR ) )
-		{
+		if ( !Q_strncmp( category, nc->title, MAX_VAR ) ) {
 			/* found category */
-			if ( !nc->numNames[gender] ) return NULL;
+			if ( !nc->numNames[gender] )
+				return NULL;
 			name = nc->numNames[gender] * frand();
 
 			/* skip names */
@@ -540,8 +529,7 @@ char *Com_GiveModel( int type, int gender, char *category )
 	for ( i = 0, nc = nameCat; i < numNameCats; i++, nc++ )
 		if ( !Q_strncmp( category, nc->title, MAX_VAR ) ) {
 			/* found category */
-			if ( !nc->numModels[gender] )
-			{
+			if ( !nc->numModels[gender] ) {
 				Com_Printf("Com_GiveModel: no models defined for gender %i and category '%s'\n", gender, category);
 				return NULL;
 			}
@@ -575,7 +563,9 @@ int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *n
 	for ( i = 0; i < numTeamDefs; i++ )
 		if ( !Q_strncmp( team, teamDef[i].title, MAX_VAR ) )
 			break;
-	if ( i < numTeamDefs ) td = &teamDef[i];
+
+	if ( i < numTeamDefs )
+		td = &teamDef[i];
 	else {
 		/* search in name categories, if it isn't a team definition */
 		td = NULL;
@@ -584,49 +574,59 @@ int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *n
 				break;
 		if ( i == numNameCats ) {
 			/* use default team */
-			if ( !numTeamDefs ) return 0;
-			else td = &teamDef[0];
-		} else category = i;
+			if ( !numTeamDefs )
+				return 0;
+			else
+				td = &teamDef[0];
+		} else
+			category = i;
 	}
 
 	/* get the models */
 	while ( team ) {
 		gender = frand()*NAME_LAST;
-		if ( td ) category = (int)td->cats[(int)(frand()*td->num)];
+		if ( td )
+			category = (int)td->cats[(int)(frand()*td->num)];
 
 		/* get name */
 		if ( name ) {
 			str = Com_GiveName( gender, nameCat[category].title );
-			if ( !str ) continue;
+			if ( !str )
+				continue;
 			Q_strncpyz( name, str, MAX_VAR );
 			Q_strcat( name, MAX_VAR, " " );
 
 			str = Com_GiveName( gender + LASTNAME, nameCat[category].title );
-			if ( !str ) continue;
+			if ( !str )
+				continue;
 			Q_strcat( name, MAX_VAR, str );
 		}
 
 		/* get model */
 		if ( path ) {
 			str = Com_GiveModel( MODEL_PATH, gender, nameCat[category].title );
-			if ( !str ) continue;
+			if ( !str )
+				continue;
 			Q_strncpyz( path, str, MAX_VAR );
 		}
 
 		if ( body ) {
 			str = Com_GiveModel( MODEL_BODY, gender, nameCat[category].title );
-			if ( !str ) continue;
+			if ( !str )
+				continue;
 			Q_strncpyz( body, str, MAX_VAR );
 		}
 
 		if ( head ) {
 			str = Com_GiveModel( MODEL_HEAD, gender, nameCat[category].title );
-			if ( !str ) continue;
+			if ( !str )
+				continue;
 			Q_strncpyz( head, str, MAX_VAR );
 		}
 
 		str = Com_GiveModel( MODEL_SKIN, gender, nameCat[category].title );
-		if ( !str ) continue;
+		if ( !str )
+			continue;
 		return atoi( str );
 	}
 	return 0;
@@ -657,46 +657,52 @@ void Com_ParseNames( char *title, char **text )
 	/* get name list body body */
 	token = COM_Parse( text );
 
-	if ( !*text || *token != '{' )
-	{
+	if ( !*text || *token != '{' ) {
 		Com_Printf( "Com_ParseNames: name def \"%s\" without body ignored\n", title );
-		if ( numNameCats - 1 == nc - nameCat ) numNameCats--;
+		if ( numNameCats - 1 == nc - nameCat )
+			numNameCats--;
 		return;
 	}
 
 	do {
 		/* get the name type */
 		token = COM_EParse( text, errhead, title );
-		if ( !*text ) break;
-		if ( *token == '}' ) break;
+		if ( !*text )
+			break;
+		if ( *token == '}' )
+			break;
 
 		for ( i = 0; i < NAME_NUM_TYPES; i++ )
-			if ( !Q_strcmp( token, name_strings[i] ) )
-			{
+			if ( !Q_strcmp( token, name_strings[i] ) ) {
 				/* initialize list */
 				nc->names[i] = infoPos;
 				nc->numNames[i] = 0;
 
 				token = COM_EParse( text, errhead, title );
-				if ( !*text ) break;
-				if ( *token != '{' ) break;
+				if ( !*text )
+					break;
+				if ( *token != '{' )
+					break;
 
 				do {
 					/* get a name */
 					token = COM_EParse( text, errhead, title );
-					if ( !*text ) break;
-					if ( *token == '}' ) break;
+					if ( !*text )
+						break;
+					if ( *token == '}' )
+						break;
 
+					/* some names can be translateable */
+					if ( *token == '_' )
+						token++;
 					strcpy( infoPos, token );
 					infoPos += strlen( token ) + 1;
 					nc->numNames[i]++;
-				}
-				while ( *text );
+				} while ( *text );
 
 				/* lastname is different */
 				if ( i == NAME_LAST )
-					for ( i = NAME_NUM_TYPES-1; i > NAME_LAST; i-- )
-					{
+					for ( i = NAME_NUM_TYPES-1; i > NAME_LAST; i-- ) {
 						nc->names[i] = nc->names[NAME_LAST];
 						nc->numNames[i] = nc->numNames[NAME_LAST];
 					}
@@ -749,8 +755,10 @@ void Com_ParseActors( char *title, char **text )
 	do {
 		/* get the name type */
 		token = COM_EParse( text, errhead, title );
-		if ( !*text ) break;
-		if ( *token == '}' ) break;
+		if ( !*text )
+			break;
+		if ( *token == '}' )
+			break;
 
 		for ( i = 0; i < NAME_NUM_TYPES; i++ )
 			if ( !Q_strcmp( token, name_strings[i] ) ) {
@@ -758,15 +766,19 @@ void Com_ParseActors( char *title, char **text )
 				nc->models[i] = infoPos;
 				nc->numModels[i] = 0;
 				token = COM_EParse( text, errhead, title );
-				if ( !*text ) break;
-				if ( *token != '{' ) break;
+				if ( !*text )
+					break;
+				if ( *token != '{' )
+					break;
 
 				do {
 					/* get the path, body, head and skin */
 					for ( j = 0; j < 4; j++ ) {
 						token = COM_EParse( text, errhead, title );
-						if ( !*text ) break;
-						if ( *token == '}' ) break;
+						if ( !*text )
+							break;
+						if ( *token == '}' )
+							break;
 
 						if ( j == 3 && *token == '*' )
 							*infoPos++ = 0;
@@ -777,8 +789,10 @@ void Com_ParseActors( char *title, char **text )
 					}
 
 					/* only add complete actor info */
-					if ( j == 4 ) nc->numModels[i]++;
-					else break;
+					if ( j == 4 )
+						nc->numModels[i]++;
+					else
+						break;
 				}
 				while ( *text );
 				break;
@@ -844,14 +858,17 @@ void Com_ParseTeamDesc( char *title, char **text )
 	do {
 		/* get the name type */
 		token = COM_EParse( text, errhead, title );
-		if ( !*text ) break;
-		if ( *token == '}' ) break;
+		if ( !*text )
+			break;
+		if ( *token == '}' )
+			break;
 
 		for ( v = teamDescValues; v->string; v++ )
 			if ( !Q_strncmp( token, v->string, sizeof(v->string) ) ) {
 				/* found a definition */
 				token = COM_EParse( text, errhead, title );
-				if ( !*text ) return;
+				if ( !*text )
+					return;
 
 				Com_ParseValue( td, token, v->type, v->ofs );
 				break;
@@ -906,8 +923,10 @@ void Com_ParseTeam( char *title, char **text )
 	do {
 		/* get the name type */
 		token = COM_EParse( text, errhead, title );
-		if ( !*text ) break;
-		if ( *token == '}' ) break;
+		if ( !*text )
+			break;
+		if ( *token == '}' )
+			break;
 
 		for ( i = 0, nc = nameCat; i < numNameCats; i++, nc++ )
 			if ( !Q_strncmp( token, nc->title, MAX_VAR ) ) {
@@ -920,73 +939,6 @@ void Com_ParseTeam( char *title, char **text )
 			Com_Printf( "Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, title );
 
 	} while ( *text );
-}
-
-/*#define	PARSEMEDALS(x)	(int)&(((xxx_t *)0)->x) */
-#define	PARSERANKS(x)	(int)&(((rank_t *)0)->x)
-
-value_t rankValues[] =
-{
-	{ "name",	V_TRANSLATION_STRING,	PARSERANKS( name ) },
-	{ "image",	V_STRING,				PARSERANKS( image ) },
-	{ "mind",		V_INT,			PARSERANKS( mind ) },
-	{ "killed_enemies",	V_INT,			PARSERANKS( killed_enemies ) },
-	{ "killed_others",	V_INT,			PARSERANKS( killed_others ) },
-	{ NULL,	0, 0 }
-};
-
-/*======================
-Com_ParseMedalsAndRanks
-
-Parse medals and ranks defined in the medals.ufo file.
-======================*/
-void Com_ParseMedalsAndRanks( char *title, char **text, byte parserank )
-{
-	rank_t		*rank = NULL;
-	char	*errhead = "Com_ParseMedalsAndRanks: unexptected end of file (medal/rank ";
-	char	*token;
-	value_t	*v;
-
-	/* get name list body body */
-	token = COM_Parse( text );
-
-	if ( !*text || *token != '{' ) {
-		Com_Printf( "Com_ParseMedalsAndRanks: rank/medal \"%s\" without body ignored\n", title );
-		return;
-	}
-
-	if ( parserank) {
-		/* parse ranks */
-		if ( numRanks >= MAX_RANKS ) {
-			Com_Printf( "Too many rank descriptions, '%s' ignored.\n", title );
-			numRanks = MAX_RANKS;
-			return;
-		}
-
-		rank = &ranks[numRanks++];
-		memset( rank, 0, sizeof( rank_t ) );
-
-		do {
-			/* get the name type */
-			token = COM_EParse( text, errhead, title );
-			if ( !*text ) break;
-			if ( *token == '}' ) break;
-			for ( v = rankValues; v->string; v++ )
-				if ( !Q_strncmp( token, v->string, sizeof(v->string) ) ) {
-					/* found a definition */
-					token = COM_EParse( text, errhead, title );
-					if ( !*text ) return;
-
-					Com_ParseValue( rank, token, v->type, v->ofs );
-					break;
-				}
-
-			if ( !v->string )
-				Com_Printf( "Com_ParseMedalsAndRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, title );
-		} while ( *text );
-	} else {
-		/* parse medals */
-	}
 }
 
 /*==============================================================================
@@ -1012,8 +964,10 @@ void Com_ParseDamageTypes( char *name, char **text )
 
 	do {
 		token = COM_EParse( text, errhead, name );
-		if ( !*text ) break;
-		if ( *token == '}' ) break;
+		if ( !*text )
+			break;
+		if ( *token == '}' )
+			break;
 
 		/* search for damage types with same name */
 		for ( i = 0; i < csi.numDTs; i++ )
@@ -1060,7 +1014,8 @@ void Com_AddObjectLinks( void )
 			/* check for the underline */
 			Q_strncpyz( kurz, od->kurz, MAX_VAR );
 			underline = strchr( kurz, '_' );
-			if ( !underline ) continue;
+			if ( !underline )
+				continue;
 			*underline = 0;
 
 			/* search corresponding weapon */
@@ -1094,7 +1049,8 @@ void Com_ParseScripts( void )
 	text = NULL;
 
 	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
-		if ( !Q_strncmp( type, "damagetypes", 11 ) ) Com_ParseDamageTypes( name, &text );
+		if ( !Q_strncmp( type, "damagetypes", 11 ) )
+			Com_ParseDamageTypes( name, &text );
 
 	/* stage one parsing */
 	FS_NextScriptHeader( NULL, NULL, NULL );
@@ -1106,7 +1062,7 @@ void Com_ParseScripts( void )
 		else if ( !Q_strncmp( type, "inventory", 9 ) ) Com_ParseInventory( name, &text );
 		else if ( !Q_strncmp( type, "names", 5 ) ) Com_ParseNames( name, &text );
 		else if ( !Q_strncmp( type, "actors", 6 ) ) Com_ParseActors( name, &text );
-		else if ( !dedicated->value ) CL_ParseScriptFirst( type, name, &text );
+		else if ( !dedicated->value ) CL_ParseClientData( type, name, &text );
 	}
 
 	/* add object links */
@@ -1120,12 +1076,8 @@ void Com_ParseScripts( void )
 		/* server/client scripts */
 		if ( !Q_strncmp( type, "equipment", 9 ) ) Com_ParseEquipment( name, &text );
 		else if ( !Q_strncmp( type, "teamdesc", 8 ) ) Com_ParseTeamDesc( name, &text );
-		else if ( !Q_strncmp( type, "rank", 4 ) ) Com_ParseMedalsAndRanks( name, &text, qtrue );
-		/*else if ( !Q_strncmp( type, "medal", 5 ) ) Com_ParseMedalsAndRanks( name, &text, qfalse ); */
 		else if ( !Q_strncmp( type, "team", 4 ) ) Com_ParseTeam( name, &text );
-		else if ( !dedicated->value ) CL_ParseScriptSecond( type, name, &text );
 	}
 
 	Com_Printf( "Shared Client/Server Info loaded\n" );
 }
-

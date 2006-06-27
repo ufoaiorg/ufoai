@@ -12,6 +12,7 @@ All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
 	Updated copyright notice.
 
 Original file from Quake 2 v3.21: quake2-2.31/server/sv_init.c
+
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -21,7 +22,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -286,9 +287,7 @@ void SV_ParseAssembly(char *filename, char **text)
 
 			sscanf(token, "%i %i", &a->w, &a->h);
 			continue;
-		}
-
-		if (!strcmp(token, "fix")) {
+		} else if (!Q_strcmp(token, "fix")) {
 			/* get tile */
 			token = COM_EParse(text, errhead, filename);
 			if (!text)
@@ -315,7 +314,7 @@ void SV_ParseAssembly(char *filename, char **text)
 		}
 
 		for (i = 0; i < numTiles; i++)
-			if (!strcmp(token, mTile[i].name)) {
+			if (!Q_strcmp(token, mTile[i].name)) {
 				/* get min and max tile number */
 				token = COM_EParse(text, errhead, filename);
 				if (!text)
@@ -461,53 +460,51 @@ qboolean SV_AddRegion(byte map[32][32][MAX_TILEALTS], byte * num)
 			if (map[y][x][0] != SOLID)
 				oldToFill++;
 
-	{
-		/* restore old values */
-		toFill = oldToFill;
-		numPlaced = oldNumPlaced;
+	/* restore old values */
+	toFill = oldToFill;
+	numPlaced = oldNumPlaced;
 
-		RandomList(mapSize, prList);
-		lastPos = mapSize - 1;
-		pos = 0;
+	RandomList(mapSize, prList);
+	lastPos = mapSize - 1;
+	pos = 0;
 
-		/* finishing condition */
-		while (toFill > 0) {
-			/* refresh random lists */
-			RandomList(numTiles, trList);
+	/* finishing condition */
+	while (toFill > 0) {
+		/* refresh random lists */
+		RandomList(numTiles, trList);
 
-			while (pos != lastPos) {
-				x = prList[pos] % mapW + mapX;
-				y = prList[pos] / mapW + mapY;
+		while (pos != lastPos) {
+			x = prList[pos] % mapW + mapX;
+			y = prList[pos] / mapW + mapY;
 
-				for (i = 0; i < numTiles; i++) {
-					j = trList[i];
-					if (num[j] >= mAsm->max[j])
-						continue;
-					tile = &mTile[j];
+			for (i = 0; i < numTiles; i++) {
+				j = trList[i];
+				if (num[j] >= mAsm->max[j])
+					continue;
+				tile = &mTile[j];
 
-					/* add the tile, if it fits */
-					if (SV_FitTile(map, tile, x, y, qtrue)) {
-						/* mark as used and add the tile */
-						num[j]++;
-						SV_AddTile(map, tile, x, y, &toFill);
-						lastPos = pos;
-						break;
-					}
-				}
-				pos++;
-				if (pos >= mapSize)
-					pos = 0;
-
-				if (i < numTiles)
+				/* add the tile, if it fits */
+				if (SV_FitTile(map, tile, x, y, qtrue)) {
+					/* mark as used and add the tile */
+					num[j]++;
+					SV_AddTile(map, tile, x, y, &toFill);
+					lastPos = pos;
 					break;
+				}
 			}
-			if (pos == lastPos)
+			pos++;
+			if (pos >= mapSize)
+				pos = 0;
+
+			if (i < numTiles)
 				break;
 		}
-		/* check for success */
-		if (toFill <= 0)
-			return qtrue;
+		if (pos == lastPos)
+			break;
 	}
+	/* check for success */
+	if (toFill <= 0)
+		return qtrue;
 
 	/* too many retries */
 	return qfalse;
@@ -568,7 +565,7 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 	qboolean ok;
 
 	/* load the map info */
-	sprintf(filename, "maps/%s.ump", name);
+	Com_sprintf(filename, MAX_QPATH, "maps/%s.ump", name);
 	FS_LoadFile(filename, (void **) &buf);
 	if (!buf)
 		Com_Error(ERR_DROP, "SV_AssembleMap: Map assembly info '%s' not found\n", filename);
@@ -583,14 +580,14 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 		if (!text)
 			break;
 
-		if (!strcmp(token, "base")) {
+		if (!Q_strcmp(token, "base")) {
 			token = COM_Parse(&text);
 			Q_strncpyz(basePath, token, MAX_QPATH);
-		} else if (!strcmp(token, "tile"))
+		} else if (!Q_strcmp(token, "tile"))
 			SV_ParseMapTile(filename, &text);
-		else if (!strcmp(token, "assembly"))
+		else if (!Q_strcmp(token, "assembly"))
 			SV_ParseAssembly(filename, &text);
-		else if (!strcmp(token, "{")) {
+		else if (!Q_strcmp(token, "{")) {
 			/* ignore unknown block */
 			text = strchr(text, '}') + 1;
 			if (!text)
@@ -611,7 +608,7 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 	/* get assembly */
 	if (assembly && assembly[0]) {
 		for (i = 0, mAsm = mAssembly; i < numAssemblies; i++, mAsm++)
-			if (!strcmp(assembly, mAsm->name))
+			if (!Q_strcmp(assembly, mAsm->name))
 				break;
 		if (i >= numAssemblies) {
 			Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", assembly);
@@ -690,8 +687,8 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 		Q_strcat(asmPos, MAX_TOKEN_CHARS * MAX_TILESTRINGS, va(" %i %i", (pl->x - mAsm->w / 2) * 8, (pl->y - mAsm->h / 2) * 8));
 	}
 
-/*	Com_DPrintf( "tiles: %s\n", *map ); */
-/*	Com_DPrintf( "pos: %s\n", *pos ); */
+	Com_DPrintf("tiles: %s\n", *map);
+	Com_DPrintf("pos: %s\n", *pos);
 	Com_DPrintf("tiles: %i tries: %i\n", numPlaced, tries + 1);
 }
 
@@ -774,9 +771,7 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 
 	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", checksum);
 
-	/* */
 	/* clear physics interaction links */
-	/* */
 	SV_ClearWorld();
 
 	/* fix this! */
@@ -841,7 +836,7 @@ void SV_InitGame(void)
 
 	/* heartbeats will always be sent to the id master */
 	svs.last_heartbeat = -99999;	/* send immediately */
-	Com_sprintf(idmaster, sizeof(idmaster), "192.246.40.37:%i", PORT_MASTER);
+	Com_sprintf(idmaster, sizeof(idmaster), "%s:%i", IP_MASTER, PORT_MASTER);
 	NET_StringToAdr(idmaster, &master_adr[0]);
 
 	/* init game */
@@ -892,15 +887,15 @@ void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame)
 		Q_strncpyz(level, level + 1, MAX_QPATH);
 
 	l = strlen(level);
-	if (l > 4 && !strcmp(level + l - 4, ".cin")) {
+	if (l > 4 && !Q_strcmp(level + l - 4, ".cin")) {
 		SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
 		SV_SpawnServer(level, NULL, ss_cinematic, attractloop, loadgame);
-	} else if (l > 4 && !strcmp(level + l - 4, ".dm2")) {
+	} else if (l > 4 && !Q_strcmp(level + l - 4, ".dm2")) {
 		SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
 		SV_SpawnServer(level, NULL, ss_demo, attractloop, loadgame);
-	} else if (l > 4 && !strcmp(level + l - 4, ".pcx")) {
+	} else if (l > 4 && !Q_strcmp(level + l - 4, ".pcx")) {
 		SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
 		SV_SpawnServer(level, NULL, ss_pic, attractloop, loadgame);

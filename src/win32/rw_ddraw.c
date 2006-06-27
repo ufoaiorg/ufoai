@@ -541,4 +541,3 @@ static const char *DDrawError (int code)
             return "UNKNOWN\0";
 	}
 }
-

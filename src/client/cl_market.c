@@ -30,6 +30,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 byte buyList[MAX_BUYLIST];
 int buyListLength;
+int buyCategory;
+
+
+/**
+  * @brief Prints general information about aircraft for buy/sell menu
+  */
+void CL_MarketAircraftDescription ( int aircraftID )
+{
+	menuText[TEXT_STANDARD] = NULL;
+}
 
 /**
   * @brief
@@ -48,7 +58,10 @@ static void CL_BuySelectCmd(void)
 		return;
 
 	Cbuf_AddText(va("buyselect%i\n", num));
-	CL_ItemDescription(buyList[num]);
+	if (buyCategory == NUM_BUYTYPES)
+		CL_MarketAircraftDescription(buyList[num]);
+	else
+		CL_ItemDescription(buyList[num]);
 }
 
 #define MAX_AIRCRAFT_STORAGE 8
@@ -96,11 +109,12 @@ static void CL_BuyType(void)
 		return;
 	}
 	num = atoi(Cmd_Argv(1));
+	buyCategory = num;
 
 	CL_UpdateCredits(ccs.credits);
 
 	/* 'normal' items */
-	if (num < NUM_BUYTYPES) {
+	if (buyCategory < NUM_BUYTYPES) {
 		/* get item list */
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			tech = (technology_t *) od->tech;
@@ -125,9 +139,16 @@ static void CL_BuyType(void)
 				}
 			}
 		}
+		buyListLength = j;
+		for (; j < 28; j++) {
+			Cvar_Set(va("mn_item%i", j), "");
+			Cvar_Set(va("mn_storage%i", j), "");
+			Cvar_Set(va("mn_supply%i", j), "");
+			Cvar_Set(va("mn_price%i", j), "");
+		}
 	}
 	/* aircraft */
-	else if (num == NUM_BUYTYPES) {
+	else if (buyCategory == NUM_BUYTYPES) {
 		for (i = 0, j = 0, air = aircraft; i < numAircraft; i++, air++) {
 			AIR_GetStorageSupplyCount(air->id, &storage, &supply);
 			Q_strncpyz(str, va("mn_item%i", j), MAX_VAR);
@@ -145,22 +166,22 @@ static void CL_BuyType(void)
 			buyList[j] = i;
 			j++;
 		}
-	}
-
-	buyListLength = j;
-
-	/* FIXME: This list needs to be scrollable - so a hardcoded end is bad */
-	for (i = 0; j < 28; j++) {
-		Cvar_Set(va("mn_item%i", j), "");
-		Cvar_Set(va("mn_storage%i", j), "");
-		Cvar_Set(va("mn_supply%i", j), "");
-		Cvar_Set(va("mn_price%i", j), "");
+		buyListLength = j;
+		for (; j < 10; j++) {
+			Cvar_Set(va("mn_item%i", j), "");
+			Cvar_Set(va("mn_storage%i", j), "");
+			Cvar_Set(va("mn_supply%i", j), "");
+			Cvar_Set(va("mn_price%i", j), "");
+		}
 	}
 
 	/* select first item */
 	if (buyListLength) {
 		Cbuf_AddText("buyselect0\n");
-		CL_ItemDescription(buyList[0]);
+		if (buyCategory == NUM_BUYTYPES)
+			CL_MarketAircraftDescription(buyList[0]);
+		else
+			CL_ItemDescription(buyList[0]);
 	} else {
 		/* reset description */
 		Cvar_Set("mn_itemname", "");
@@ -190,14 +211,20 @@ static void CL_BuyItem(void)
 
 	item = buyList[num];
 	Cbuf_AddText(va("buyselect%i\n", num));
-	CL_ItemDescription(item);
-	Com_DPrintf("item %i\n", item);
-
-	if (ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item]) {
-		Cvar_SetValue(va("mn_storage%i", num), ++ccs.eCampaign.num[item]);
-		Cvar_SetValue(va("mn_supply%i", num), --ccs.eMarket.num[item]);
-		CL_UpdateCredits(ccs.credits - csi.ods[item].price);
+	if (buyCategory == NUM_BUYTYPES) {
+		CL_MarketAircraftDescription(item);
+		Com_DPrintf("CL_BuyItem: aircraft %i\n", item);
+		/* TODO: Buy aircraft */
+	} else {
+		CL_ItemDescription(item);
+		Com_DPrintf("CL_BuyItem: item %i\n", item);
+		if (ccs.credits >= csi.ods[item].price && ccs.eMarket.num[item]) {
+			Cvar_SetValue(va("mn_storage%i", num), ++ccs.eCampaign.num[item]);
+			Cvar_SetValue(va("mn_supply%i", num), --ccs.eMarket.num[item]);
+			CL_UpdateCredits(ccs.credits - csi.ods[item].price);
+		}
 	}
+
 	RS_MarkCollected();
 	RS_MarkResearchable();
 }
@@ -220,12 +247,16 @@ static void CL_SellItem(void)
 
 	item = buyList[num];
 	Cbuf_AddText(va("buyselect%i\n", num));
-	CL_ItemDescription(item);
-
-	if (ccs.eCampaign.num[item]) {
-		Cvar_SetValue(va("mn_storage%i", num), --ccs.eCampaign.num[item]);
-		Cvar_SetValue(va("mn_supply%i", num), ++ccs.eMarket.num[item]);
-		CL_UpdateCredits(ccs.credits + csi.ods[item].price);
+	if (buyCategory == NUM_BUYTYPES) {
+		CL_MarketAircraftDescription(item);
+		/* TODO: Sell aircraft */
+	} else {
+		CL_ItemDescription(item);
+		if (ccs.eCampaign.num[item]) {
+			Cvar_SetValue(va("mn_storage%i", num), --ccs.eCampaign.num[item]);
+			Cvar_SetValue(va("mn_supply%i", num), ++ccs.eMarket.num[item]);
+			CL_UpdateCredits(ccs.credits + csi.ods[item].price);
+		}
 	}
 }
 

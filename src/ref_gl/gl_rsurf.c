@@ -1570,4 +1570,3 @@ void GL_EndBuildingLightmaps (void)
 	GL_EnableMultitexture( qfalse );
 /*	ri.Con_Printf( PRINT_ALL, "lightmaps: %i\n", gl_lms.current_lightmap_texture ); */
 }
-

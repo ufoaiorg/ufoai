@@ -1295,3 +1295,49 @@ team human
 	japanese
 	african
 }
+
+names ugv_phoenix
+{
+	neutral
+	{
+		"_UGV"
+	}
+	lastname
+	{
+		"_Phoenix"
+	}
+}
+
+actors ugv_phoenix
+{
+	neutral
+	{
+		soldiers/ugv_phoenix phoenix phoenix 0
+	}
+}
+
+names ugv_triax
+{
+	neutral
+	{
+		"_UGV"
+	}
+	lastname
+	{
+		"_Triax"
+	}
+}
+
+actors ugv_triax
+{
+	neutral
+	{
+		soldiers/ugv_triax triax triax 0
+	}
+}
+
+team ugv
+{
+	ugv_triax
+	ugv_phoenix
+}

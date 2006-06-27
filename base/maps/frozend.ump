@@ -24,7 +24,8 @@ a      +a     +a     a
 0      a      a      0
 }
 
-tile +n02
+
+tile +n03
 {
 3 4
 
@@ -33,7 +34,6 @@ a      +a     a
 a      +a     a     
 0      a      0      
 }
-
 
 
 tile +n04

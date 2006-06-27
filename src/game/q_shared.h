@@ -134,9 +134,7 @@ typedef enum { qfalse, qtrue } qboolean;
 #define	MAX_QPATH			64	/* max length of a quake game pathname */
 #define	MAX_OSPATH			128	/* max length of a filesystem pathname */
 
-/* */
 /* per-level limits */
-/* */
 #define MAX_TILESTRINGS		8
 #define MAX_TEAMS			8
 #define	MAX_CLIENTS			256	/* absolute limit */
@@ -352,6 +350,11 @@ void Q_strncpyz(char *dest, const char *src, int destsize);
 void Q_strncpyzDebug(char *dest, const char *src, int destsize, char *file, int line);
 #endif
 void Q_strcat(char *dest, int size, const char *src);
+char *Q_strlwr(char *str);
+char *Q_strdup(const char *str);
+int Q_putenv(const char *str);
+char *Q_getcwd(char *dest, int size);
+
 
 /*============================================= */
 
@@ -367,9 +370,7 @@ char *va(char *format, ...);
 
 /*============================================= */
 
-/* */
 /* key / value info strings */
-/* */
 #define	MAX_INFO_KEY		64
 #define	MAX_INFO_VALUE		64
 #define	MAX_INFO_STRING		512
@@ -393,6 +394,7 @@ extern int curtime;				/* time returned by last Sys_Milliseconds */
 
 int Sys_Milliseconds(void);
 void Sys_Mkdir(char *path);
+char *strlwr(char *s);			/* this is non ansi and is defined for some OSs */
 
 /* large block stack allocation routines */
 void *Hunk_Begin(int maxsize);
@@ -797,7 +799,9 @@ typedef enum {
 	ET_ACTORSPAWN,
 	ET_ACTOR,
 	ET_ITEM,
-	ET_BREAKABLE
+	ET_BREAKABLE,
+	ET_UGVSPAWN,
+	ET_UGV
 } entity_type_t;
 
 
@@ -982,6 +986,16 @@ typedef enum {
 #define ABILITY_NUM_TYPES SKILL_CLOSE
 
 
+#define MAX_UGV			8
+typedef struct ugv_s {
+	char id[MAX_VAR];
+	char weapon[MAX_VAR];
+	char armor[MAX_VAR];
+	int size;
+	int tu;
+} ugv_t;
+
+
 typedef enum {
 	MEDAL_CROSS,
 	MEDAL_COIN
@@ -1040,6 +1054,7 @@ typedef struct character_s {
 	/* *------------------** */
 	/* *------------------** */
 
+	int fieldSize;				/* ACTOR_SIZE_* */
 	inventory_t *inv;
 } character_t;
 
@@ -1096,8 +1111,6 @@ typedef enum {
 #define	ANGLE2SHORT(x)	((int)((x)*65536/360) & 65535)
 #define	SHORT2ANGLE(x)	((x)*(360.0/65536))
 
-/* */
-
 #define EYE_STAND		15
 #define EYE_CROUCH		3
 #define PLAYER_STAND	20
@@ -1111,15 +1124,11 @@ typedef enum {
 #define BOX_DELTA_LENGTH 11
 #define BOX_DELTA_HEIGHT 27
 
-/* */
-
 #define GRAVITY			500.0
 
-/* */
 /* config strings are a general means of communication from */
 /* the server to all connected clients. */
 /* Each config string can be at most MAX_QPATH characters. */
-/* */
 #define	CS_NAME				0
 #define	CS_CDTRACK			1
 #define	CS_STATUSBAR		2	/* display program string */
@@ -1144,9 +1153,7 @@ void Com_InventoryList_f(void);
 
 /*============================================== */
 
-/* */
 /* g_spawn.c */
-/* */
 
 /* NOTE: this only allows quadratic units? */
 typedef enum {
@@ -1154,4 +1161,4 @@ typedef enum {
 	ACTOR_SIZE_UGV
 } actorSizeEnum_t;
 
-#endif							/* GAME_Q_SHARED_H */
+#endif /* GAME_Q_SHARED_H */

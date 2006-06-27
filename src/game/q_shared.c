@@ -477,13 +477,13 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 			mov Ljmptab[3 * 4], offset Lcase3
 			mov Ljmptab[4 * 4], offset Lcase4
 			mov Ljmptab[5 * 4], offset Lcase5
-			mov Ljmptab[6 * 4], offset Lcase6 mov Ljmptab[7 * 4], offset Lcase7 initialized:mov edx, ds:dword ptr[4 + 12 + esp]
+			mov Ljmptab[6 * 4], offset Lcase6 mov Ljmptab[7 * 4], offset Lcase7 initialized: mov edx, ds:dword ptr[4 + 12 + esp]
 		mov ecx, ds:dword ptr[4 + 4 + esp]
 		xor eax, eax mov ebx, ds:dword ptr[4 + 8 + esp]
 		mov al, ds:byte ptr[17 + edx]
 		cmp al, 8 jge Lerror fld ds:dword ptr[0 + edx]
 		fld st(0)
-		jmp dword ptr[Ljmptab + eax * 4] Lcase0:fmul ds:dword ptr[ebx]
+		jmp dword ptr[Ljmptab + eax * 4] Lcase0: fmul ds:dword ptr[ebx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ecx]
@@ -503,7 +503,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase1:fmul ds:dword ptr[ecx]
+		jmp LSetSides Lcase1: fmul ds:dword ptr[ecx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ebx]
@@ -523,7 +523,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase2:fmul ds:dword ptr[ebx]
+		jmp LSetSides Lcase2: fmul ds:dword ptr[ebx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ecx]
@@ -543,7 +543,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase3:fmul ds:dword ptr[ecx]
+		jmp LSetSides Lcase3: fmul ds:dword ptr[ecx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ebx]
@@ -563,7 +563,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase4:fmul ds:dword ptr[ebx]
+		jmp LSetSides Lcase4: fmul ds:dword ptr[ebx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ecx]
@@ -583,7 +583,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase5:fmul ds:dword ptr[ecx]
+		jmp LSetSides Lcase5: fmul ds:dword ptr[ecx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ebx]
@@ -603,7 +603,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase6:fmul ds:dword ptr[ebx]
+		jmp LSetSides Lcase6: fmul ds:dword ptr[ebx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ecx]
@@ -623,7 +623,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		faddp st(3), st(0)
 		fxch st(3)
 		faddp st(2), st(0)
-		jmp LSetSides Lcase7:fmul ds:dword ptr[ecx]
+		jmp LSetSides Lcase7: fmul ds:dword ptr[ecx]
 		fld ds:dword ptr[0 + 4 + edx]
 		fxch st(2)
 		fmul ds:dword ptr[ebx]
@@ -642,10 +642,10 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 		fxch st(1)
 		faddp st(3), st(0)
 		fxch st(3)
-		faddp st(2), st(0) LSetSides:faddp st(2), st(0)
+		faddp st(2), st(0) LSetSides: faddp st(2), st(0)
 		fcomp ds:dword ptr[12 + edx]
 		xor ecx, ecx fnstsw ax fcomp ds:dword ptr[12 + edx]
-and ah, 1 xor ah, 1 add cl, ah fnstsw ax and ah, 1 add ah, ah add cl, ah pop ebx mov eax, ecx ret Lerror:int 3}}
+and ah, 1 xor ah, 1 add cl, ah fnstsw ax and ah, 1 add ah, ah add cl, ah pop ebx mov eax, ecx ret Lerror: int 3}}
 #pragma warning( default: 4035 )
 #endif
 void ClearBounds(vec3_t mins, vec3_t maxs)
@@ -959,23 +959,6 @@ float frand(void)
 float crand(void)
 {
 	return (rand() & 32767) * (2.0 / 32767) - 1;
-}
-
-
-/*==================================================================================== */
-
-/*
-============
-stradd
-============
-*/
-void stradd(char **str, const char *addStr)
-{
-	const char *ch;
-
-	for (ch = addStr; *ch; ch++, (*str)++)
-		**str = *ch;
-	**str = 0;
 }
 
 /*
@@ -1412,6 +1395,42 @@ LIBRARY REPLACEMENT FUNCTIONS
 ============================================================================
 */
 
+char *Q_strlwr(char *str)
+{
+#ifdef _MSC_VER
+	return _strlwr(str);
+#else
+	return strlwr(str);
+#endif
+}
+
+char *Q_strdup(const char *str)
+{
+#ifdef _MSC_VER
+	return _strdup(str);
+#else
+	return strdup(str);
+#endif
+}
+
+int Q_putenv(const char *str)
+{
+#ifdef _MSC_VER
+	return _putenv(str);
+#else
+	return putenv((char *) str);
+#endif
+}
+
+char *Q_getcwd(char *dest, int size)
+{
+#ifdef _MSC_VER
+	return _getcwd(dest, size);
+#else
+	return getcwd(dest, size);
+#endif
+}
+
 int Q_strcmp(char *s1, char *s2)
 {
 	return strncmp(s1, s2, 99999);
@@ -1524,7 +1543,7 @@ void Com_sprintf(char *dest, int size, char *fmt, ...)
 	len = vsprintf(bigbuffer, fmt, argptr);
 #endif
 	va_end(argptr);
-#ifdef DEBUG
+#ifdef PARANOID
 	if (len >= size)
 		Com_Printf("Com_sprintf: overflow of %i in %i\n", len, size);
 #endif
@@ -1711,7 +1730,8 @@ INVENTORY MANAGEMENT
 csi_t *CSI;
 invList_t *invUnused;
 item_t cacheItem;
-invList_t cacheList;
+
+/*invList_t	cacheList;*/
 
 /*
 =================
@@ -1840,11 +1860,11 @@ invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x
 {
 	invList_t *ic;
 
-	if (!invUnused)
-		Sys_Error("No free inventory space!\n");
-
 	if (item.t == NONE)
 		return NULL;
+
+	if (!invUnused)
+		Sys_Error("No free inventory space!\n");
 
 	assert(i);
 	/* allocate space */
@@ -1884,9 +1904,9 @@ qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
 		invUnused = ic;
 		cacheItem = ic->item;
 		i->c[container] = ic->next;
-#ifdef PARANOID
+#if 0
 		if (CSI->ids[container].single && ic->next)
-			Com_Printf("Com_RemoveFromInventory: Error in line %i at file %s\n", __LINE__, __FILE__);
+			Sys_Error("Com_RemoveFromInventory: Error in line %i at file %s (container: %i)\n", __LINE__, __FILE__, container);
 #endif
 		invUnused->next = old;
 		return qtrue;
@@ -2013,7 +2033,10 @@ Com_EmptyContainer
 void Com_EmptyContainer(inventory_t * i, int container)
 {
 	invList_t *ic, *old;
+
+#ifdef DEBUG
 	int cnt = 0;
+#endif
 
 	assert(i);
 	ic = i->c[container];
@@ -2022,11 +2045,14 @@ void Com_EmptyContainer(inventory_t * i, int container)
 		ic = ic->next;
 		old->next = invUnused;
 		invUnused = old;
+#ifdef DEBUG
 		if (cnt >= MAX_INVLIST) {
-			Com_Printf("Error: There are more than the allowed entries in container %i (Com_EmptyContainer)\n", container);
+			Com_Printf("Error: There are more than the allowed entries in container %i (cnt:%i, MAX_INVLIST:%i) (Com_EmptyContainer)\n", container, cnt,
+					   MAX_INVLIST);
 			break;
 		}
 		cnt++;
+#endif
 	}
 	i->c[container] = NULL;
 }
@@ -2151,7 +2177,7 @@ void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility,
 }
 
 
-char returnModel[MAX_VAR];
+static char returnModel[MAX_VAR];
 
 /*
 ======================
@@ -2164,13 +2190,13 @@ char *Com_CharGetBody(character_t * chr)
 {
 	assert(chr);
 	assert(chr->inv);
-	if (chr->inv->c[CSI->idArmor])
+	/* models of UGVs don't change - because they are already armored */
+	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL)
 		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->body);
 	else
 		Com_sprintf(returnModel, MAX_VAR, "%s/%s", chr->path, chr->body);
 	return returnModel;
 }
-
 
 /*
 ======================
@@ -2183,7 +2209,8 @@ char *Com_CharGetHead(character_t * chr)
 {
 	assert(chr);
 	assert(chr->inv);
-	if (chr->inv->c[CSI->idArmor])
+	/* models of UGVs don't change - because they are already armored */
+	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL)
 		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->head);
 	else
 		Com_sprintf(returnModel, MAX_VAR, "%s/%s", chr->path, chr->head);

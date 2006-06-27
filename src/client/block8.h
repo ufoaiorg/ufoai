@@ -121,4 +121,3 @@ LBPatch14:
 LBPatch15:
 	movb	%cl,1(%edi)
 	addl	$0x2,%edi
-

@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "winquake.h"
 /*#include "zmouse.h" */
 
+LONG CDAudio_MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
 /* Structure containing functions exported from refresh DLL */
 refexport_t	re;
 
@@ -438,10 +440,7 @@ LONG WINAPI MainWndProc (
 		break;
 
 	case MM_MCINOTIFY:
-		{
-			LONG CDAudio_MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-			lRet = CDAudio_MessageHandler (hWnd, uMsg, wParam, lParam);
-		}
+		lRet = CDAudio_MessageHandler (hWnd, uMsg, wParam, lParam);
 		break;
 
 	default:	/* pass all unhandled messages to DefWindowProc */
@@ -567,8 +566,7 @@ qboolean VID_LoadRefresh( char *name )
 	GetRefAPI_t	GetRefAPI;
 	qboolean	restart = qfalse;
 
-	if ( reflib_active )
-	{
+	if ( reflib_active ) {
 		re.Shutdown();
 		VID_FreeReflib ();
 		restart = qtrue;
@@ -576,8 +574,7 @@ qboolean VID_LoadRefresh( char *name )
 
 	Com_Printf( "------- Loading %s -------\n", name );
 
-	if ( ( reflib_library = LoadLibrary( name ) ) == 0 )
-	{
+	if ( ( reflib_library = LoadLibrary( name ) ) == 0 ) {
 		Com_Printf( "LoadLibrary(\"%s\") failed\n", name );
 
 		return qfalse;
@@ -607,7 +604,7 @@ qboolean VID_LoadRefresh( char *name )
 /*	ri.Malloc = Z_Malloc; */
 /*	ri.Free = Z_Free; */
 
-	if ( ( GetRefAPI = (void *) GetProcAddress( reflib_library, "GetRefAPI" ) ) == 0 )
+	if ( ( GetRefAPI = (GetRefAPI_t) GetProcAddress( reflib_library, "GetRefAPI" ) ) == 0 )
 		Com_Error( ERR_FATAL, "GetProcAddress failed on %s", name );
 
 	re = GetRefAPI( ri );
@@ -725,7 +722,7 @@ void VID_Init (void)
 		cvar_t *gl_driver = Cvar_Get( "gl_driver", "opengl32", 0 );
 		cvar_t *gl_mode = Cvar_Get( "gl_mode", "3", 0 );
 
-		if ( stricmp( gl_driver->string, "3dfxgl" ) == 0 )
+		if ( Q_stricmp( gl_driver->string, "3dfxgl" ) == 0 )
 		{
 			Cvar_SetValue( "gl_mode", 3 );
 			viddef.width  = 640;
@@ -738,7 +735,7 @@ void VID_Init (void)
 #endif
 
 	/* Disable the 3Dfx splash screen */
-	putenv("FX_GLIDE_NO_SPLASH=0");
+	Q_putenv("FX_GLIDE_NO_SPLASH=0");
 
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();

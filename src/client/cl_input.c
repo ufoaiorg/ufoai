@@ -664,7 +664,7 @@ void CL_NextAlien(void)
 		if (++i >= numLEs)
 			i = 0;
 		le = &LEs[i];
-		if (le->inuse && le->type == ET_ACTOR && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN) {
+		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_UGV) && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;
 			V_CenterView(le->pos);
 			return;

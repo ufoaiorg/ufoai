@@ -211,5 +211,3 @@ void R_DrawPtls( void )
 	qglDepthMask( GL_TRUE );
 	if ( gl_fog->value && r_newrefdef.fog ) qglEnable( GL_FOG );
 }
-
-

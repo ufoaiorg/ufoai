@@ -48,7 +48,8 @@ typedef enum researchType_s {
 	RS_ARMOR,
 	RS_CRAFT,
 	RS_BUILDING,
-	RS_ALIEN
+	RS_ALIEN,
+	RS_UGV
 } researchType_t;
 
 typedef struct stringlist_s {
@@ -107,16 +108,11 @@ qboolean RS_IsResearched_ptr(technology_t * tech);
 int RS_Collected_(technology_t * tech);
 qboolean RS_ItemCollected(char *id_provided);
 
-void RS_SaveTech(sizebuf_t * sb);
-void RS_LoadTech(sizebuf_t * sb, int version);
-
-void RS_InitTree(void);
-
-void RS_CopyFromSkeleton(void);
+void RS_AddObjectTechs(void);
 void RS_InitTree(void);
 void RS_MarkCollected(void);
 void RS_MarkResearchable(void);
 technology_t *RS_GetTechByID(const char *id);
 technology_t *RS_GetTechByProvided(const char *id_provided);
 
-#endif							/* CLIENT_CL_RESEARCH_H */
+#endif /* CLIENT_CL_RESEARCH_H */

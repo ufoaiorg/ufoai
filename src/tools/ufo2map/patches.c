@@ -1,4 +1,7 @@
-
+/**
+ * @file patches.c
+ * @brief
+ */
 #include "qrad.h"
 
 vec3_t	texture_reflectivity[MAX_MAP_TEXINFO];
@@ -11,11 +14,9 @@ vec3_t	texture_reflectivity[MAX_MAP_TEXINFO];
 ===================================================================
 */
 
-/*
-======================
-CalcTextureReflectivity
-======================
-*/
+/**
+  *	@brief
+  */
 void CalcTextureReflectivity (void)
 {
 	int				i, j;
@@ -33,17 +34,13 @@ void CalcTextureReflectivity (void)
 	texture_reflectivity[0][1] = 0.5;
 	texture_reflectivity[0][2] = 0.5;
 
-	for (i=0 ; i<numtexinfo ; i++)
-	{
+	for (i=0 ; i<numtexinfo ; i++) {
 		/* see if an earlier texinfo allready got the value */
 		for (j=0 ; j<i ; j++)
-		{
-			if (!strcmp (texinfo[i].texture, texinfo[j].texture))
-			{
+			if (!strcmp (texinfo[i].texture, texinfo[j].texture)) {
 				VectorCopy (texture_reflectivity[j], texture_reflectivity[i]);
 				break;
 			}
-		}
 		if (j != i)
 			continue;
 
@@ -61,11 +58,9 @@ MAKE FACES
 =======================================================================
 */
 
-/*
-=============
-WindingFromFace
-=============
-*/
+/**
+  *	@brief
+  */
 winding_t	*WindingFromFace (dface_t *f)
 {
 	int			i;
@@ -77,8 +72,7 @@ winding_t	*WindingFromFace (dface_t *f)
 	w = AllocWinding (f->numedges);
 	w->numpoints = f->numedges;
 
-	for (i=0 ; i<f->numedges ; i++)
-	{
+	for (i=0 ; i<f->numedges ; i++) {
 		se = dsurfedges[f->firstedge + i];
 		if (se < 0)
 			v = dedges[-se].v[1];
@@ -94,21 +88,16 @@ winding_t	*WindingFromFace (dface_t *f)
 	return w;
 }
 
-/*
-=============
-BaseLightForFace
-=============
-*/
+/**
+  *	@brief
+  */
 void BaseLightForFace (dface_t *f, vec3_t color)
 {
 	texinfo_t	*tx;
 
-	/* */
 	/* check for light emited by texture */
-	/* */
 	tx = &texinfo[f->texinfo];
-	if (!(tx->flags & SURF_LIGHT) || tx->value == 0)
-	{
+	if (!(tx->flags & SURF_LIGHT) || tx->value == 0) {
 		VectorClear (color);
 		return;
 	}
@@ -116,21 +105,9 @@ void BaseLightForFace (dface_t *f, vec3_t color)
 	VectorScale (texture_reflectivity[f->texinfo], tx->value, color);
 }
 
-qboolean IsSky (dface_t *f)
-{
-	texinfo_t	*tx;
-
-	tx = &texinfo[f->texinfo];
-	if (tx->flags & SURF_SKY)
-		return qtrue;
-	return qfalse;
-}
-
-/*
-=============
-MakePatchForFace
-=============
-*/
+/**
+  *	@brief
+  */
 float	totalarea;
 void MakePatchForFace (int fn, winding_t *w)
 {
@@ -159,8 +136,8 @@ void MakePatchForFace (int fn, winding_t *w)
 		patch->plane = &backplanes[f->planenum];
 	else
 		patch->plane = &dplanes[f->planenum];
-	if (face_offset[fn][0] || face_offset[fn][1] || face_offset[fn][2] )
-	{	/* origin offset faces must create new planes */
+	/* origin offset faces must create new planes */
+	if (face_offset[fn][0] || face_offset[fn][1] || face_offset[fn][2] ) {
 		if (numplanes + fakeplanes >= MAX_MAP_PLANES)
 			Error ("numplanes + fakeplanes >= MAX_MAP_PLANES");
 		pl = &dplanes[numplanes + fakeplanes];
@@ -181,13 +158,11 @@ void MakePatchForFace (int fn, winding_t *w)
 	patch->area = area;
 	if (patch->area <= 1)
 		patch->area = 1;
-	patch->sky = IsSky (f);
 
 	VectorCopy (texture_reflectivity[f->texinfo], patch->reflectivity);
 
 	/* non-bmodel patches can emit light */
-	if (fn < dmodels[0].numfaces)
-	{
+	if (fn < dmodels[0].numfaces) {
 		BaseLightForFace (f, patch->baselight);
 
 		ColorNormalize (patch->reflectivity, color);
@@ -201,6 +176,9 @@ void MakePatchForFace (int fn, winding_t *w)
 }
 
 
+/**
+  *	@brief
+  */
 entity_t *EntityForModel (int modnum)
 {
 	int		i;
@@ -209,8 +187,7 @@ entity_t *EntityForModel (int modnum)
 
 	sprintf (name, "*%i", modnum);
 	/* search the entities for one using modnum */
-	for (i=0 ; i<num_entities ; i++)
-	{
+	for (i=0 ; i<num_entities ; i++) {
 		s = ValueForKey (&entities[i], "model");
 		if (!strcmp (s, name))
 			return &entities[i];
@@ -219,11 +196,9 @@ entity_t *EntityForModel (int modnum)
 	return &entities[0];
 }
 
-/*
-=============
-MakePatches
-=============
-*/
+/**
+  *	@brief
+  */
 void MakePatches (void)
 {
 	int		i, j, k;
@@ -232,30 +207,20 @@ void MakePatches (void)
 	winding_t	*w;
 	dmodel_t	*mod;
 	vec3_t		origin;
-/*	entity_t	*ent; */
 
 	qprintf ("%i faces\n", numfaces);
 
-	for (i=0 ; i<nummodels ; i++)
-	{
+	for (i=0 ; i<nummodels ; i++) {
 		mod = &dmodels[i];
-/*		ent = EntityForModel (i); */
-		/* bmodels with origin brushes need to be offset into their */
-		/* in-use position */
-/*		GetVectorForKey (ent, "origin", origin); */
 		VectorCopy (vec3_origin, origin);
 
-		for (j=0 ; j<mod->numfaces ; j++)
-		{
+		for (j=0 ; j<mod->numfaces ; j++) {
 			fn = mod->firstface + j;
-/*			face_entity[fn] = ent; */
 			VectorCopy (origin, face_offset[fn]);
 			f = &dfaces[fn];
 			w = WindingFromFace (f);
 			for (k=0 ; k<w->numpoints ; k++)
-			{
 				VectorAdd (w->p[k], origin, w->p[k]);
-			}
 			MakePatchForFace (fn, w);
 		}
 	}
@@ -271,6 +236,9 @@ SUBDIVIDE
 =======================================================================
 */
 
+/**
+  *	@brief
+  */
 void FinishSplit (patch_t *patch, patch_t *newp)
 {
 	dleaf_t		*leaf;
@@ -279,7 +247,6 @@ void FinishSplit (patch_t *patch, patch_t *newp)
 	VectorCopy (patch->totallight, newp->totallight);
 	VectorCopy (patch->reflectivity, newp->reflectivity);
 	newp->plane = patch->plane;
-	newp->sky = patch->sky;
 
 	patch->area = WindingArea (patch->winding);
 	newp->area = WindingArea (newp->winding);
@@ -304,13 +271,11 @@ void FinishSplit (patch_t *patch, patch_t *newp)
 		qprintf ("patch->cluster == -1\n");
 }
 
-/*
-=============
-SubdividePatch
-
-Chops the patch only if its local bounds exceed the max size
-=============
-*/
+/**
+  *	@brief
+  *
+  * Chops the patch only if its local bounds exceed the max size
+  */
 void	SubdividePatch (patch_t *patch)
 {
 	winding_t *w, *o1, *o2;
@@ -325,37 +290,28 @@ void	SubdividePatch (patch_t *patch)
 	mins[0] = mins[1] = mins[2] = 99999;
 	maxs[0] = maxs[1] = maxs[2] = -99999;
 	for (i=0 ; i<w->numpoints ; i++)
-	{
-		for (j=0 ; j<3 ; j++)
-		{
+		for (j=0 ; j<3 ; j++) {
 			v = w->p[i][j];
 			if (v < mins[j])
 				mins[j] = v;
 			if (v > maxs[j])
 				maxs[j] = v;
 		}
-	}
 	VectorSubtract (maxs, mins, total);
 	for (i=0 ; i<3 ; i++)
 		if (total[i] > (subdiv+1) )
 			break;
+	/* no splitting needed */
 	if (i == 3)
-	{
-		/* no splitting needed */
 		return;
-	}
 
-	/* */
 	/* split the winding */
-	/* */
 	VectorCopy (vec3_origin, split);
 	split[i] = 1;
 	dist = (mins[i] + maxs[i])*0.5;
 	ClipWindingEpsilon (w, split, dist, ON_EPSILON, &o1, &o2);
 
-	/* */
 	/* create a new patch */
-	/* */
 	if (num_patches == MAX_PATCHES)
 		Error ("MAX_PATCHES");
 	newp = &patches[num_patches];
@@ -374,13 +330,11 @@ void	SubdividePatch (patch_t *patch)
 }
 
 
-/*
-=============
-DicePatch
-
-Chops the patch by a global grid
-=============
-*/
+/**
+  *	@brief
+  *
+  * Chops the patch by a global grid
+  */
 void	DicePatch (patch_t *patch)
 {
 	winding_t *w, *o1, *o2;
@@ -395,11 +349,9 @@ void	DicePatch (patch_t *patch)
 	for (i=0 ; i<3 ; i++)
 		if (floor((mins[i]+1)/subdiv) < floor((maxs[i]-1)/subdiv))
 			break;
+	/* no splitting needed */
 	if (i == 3)
-	{
-		/* no splitting needed */
 		return;
-	}
 
 	/* */
 	/* split the winding */
@@ -430,11 +382,9 @@ void	DicePatch (patch_t *patch)
 }
 
 
-/*
-=============
-SubdividePatches
-=============
-*/
+/**
+  *	@brief
+  */
 void SubdividePatches (void)
 {
 	int		i, num;
@@ -442,13 +392,9 @@ void SubdividePatches (void)
 	if (subdiv < 1)
 		return;
 
-	num = num_patches;	/* because the list will grow */
+	/* because the list will grow */
+	num = num_patches;
 	for (i=0 ; i<num ; i++)
-	{
-/*		SubdividePatch (&patches[i]); */
 		DicePatch (&patches[i]);
-	}
 	qprintf ("%i patches after subdivision\n", num_patches);
 }
-
-/*===================================================================== */

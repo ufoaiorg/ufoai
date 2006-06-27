@@ -225,8 +225,7 @@ qboolean VID_LoadRefresh( char *name )
 	extern uid_t saved_euid;
 	FILE *fp;
 
-	if ( reflib_active )
-	{
+	if ( reflib_active ) {
 		if (KBD_Close_fp)
 			KBD_Close_fp();
 		if (RW_IN_Shutdown_fp)
@@ -246,9 +245,7 @@ qboolean VID_LoadRefresh( char *name )
 	if ((fp = fopen(so_file, "r")) == NULL) {
 		Com_Printf( "LoadLibrary(\"%s\"): can't open %s - setting search path to .\n", name, so_file);
 		strcpy(fn, ".");
-	}
-	else
-	{
+	} else {
 		fgets(fn, sizeof(fn), fp);
 		fclose(fp);
 		while (*fn && isspace(fn[strlen(fn) - 1]))
@@ -258,14 +255,12 @@ qboolean VID_LoadRefresh( char *name )
 	Q_strcat(fn, MAX_OSPATH, "/");
 	Q_strcat(fn, MAX_OSPATH, name);
 
-	if (stat(fn, &st) == -1)
-	{
+	if (stat(fn, &st) == -1) {
 		Com_Printf( "LoadLibrary(\"%s\") failed: %s\n", name, strerror(errno));
 		return qfalse;
 	}
 
-	if ( ( reflib_library = dlopen( fn, RTLD_LAZY | RTLD_GLOBAL ) ) == 0 )
-	{
+	if ( ( reflib_library = dlopen( fn, RTLD_LAZY | RTLD_GLOBAL ) ) == 0 ) {
 		Com_Printf( "LoadLibrary(\"%s\") failed: %s\n", name , dlerror());
 		return qfalse;
 	}
@@ -301,8 +296,7 @@ qboolean VID_LoadRefresh( char *name )
 
 	re = GetRefAPI( ri );
 
-	if (re.api_version != API_VERSION)
-	{
+	if (re.api_version != API_VERSION) {
 		VID_FreeReflib ();
 		Com_Error (ERR_FATAL, "%s has incompatible api_version", name);
 	}
@@ -321,8 +315,7 @@ qboolean VID_LoadRefresh( char *name )
 
 	Real_IN_Init();
 
-	if ( re.Init( 0, 0 ) == -1 )
-	{
+	if ( re.Init( 0, 0 ) == -1 ) {
 		re.Shutdown();
 		VID_FreeReflib ();
 		return qfalse;
@@ -378,12 +371,9 @@ void VID_CheckChanges (void)
 /*	cvar_t *sw_mode; */
 
 	if ( vid_ref->modified )
-	{
 		S_StopAllSounds();
-	}
 
-	while (vid_ref->modified)
-	{
+	while (vid_ref->modified) {
 		/*
 		** refresh has changed
 		*/
@@ -393,8 +383,7 @@ void VID_CheckChanges (void)
 		cls.disable_screen = qtrue;
 
 		sprintf( name, "ref_%s.so", vid_ref->string );
-		if ( !VID_LoadRefresh( name ) )
-		{
+		if ( !VID_LoadRefresh( name ) ) {
 			Cmd_ExecuteString( "condump gl_debug" );
 
 			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
@@ -437,8 +426,7 @@ VID_Shutdown
 */
 void VID_Shutdown (void)
 {
-	if ( reflib_active )
-	{
+	if ( reflib_active ) {
 		if (KBD_Close_fp)
 			KBD_Close_fp();
 		if (RW_IN_Shutdown_fp)
@@ -485,8 +473,7 @@ void IN_GetMousePos (int *mx, int *my)
 
 void IN_Frame (void)
 {
-	if (RW_IN_Activate_fp)
-	{
+	if (RW_IN_Activate_fp) {
 		if ( cls.key_dest == key_console)
 			RW_IN_Activate_fp(qfalse);
 		else

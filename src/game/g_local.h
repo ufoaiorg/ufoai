@@ -94,11 +94,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 
-/* */
 /* this structure is left intact through an entire game */
 /* it should be initialized at dll load time, and read/written to */
 /* the server.ssv file for savegames */
-/* */
 typedef struct {
 	char helpmessage1[512];
 	char helpmessage2[512];
@@ -120,10 +118,8 @@ typedef struct {
 	qboolean autosaved;
 } game_locals_t;
 
-/* */
 /* this structure is cleared as each map is entered */
 /* it is read/written to the level.sav file for savegames */
-/* */
 typedef struct {
 	int framenum;
 	float time;
@@ -146,6 +142,7 @@ typedef struct {
 	byte num_alive[MAX_TEAMS];
 	byte num_spawned[MAX_TEAMS];
 	byte num_spawnpoints[MAX_TEAMS];
+	byte num_ugvspawnpoints[MAX_TEAMS];
 	byte num_kills[MAX_TEAMS][MAX_TEAMS];
 } level_locals_t;
 
@@ -223,6 +220,38 @@ extern cvar_t *ai_numcivilians;
 extern cvar_t *ai_numactors;
 extern cvar_t *ai_autojoin;
 
+extern cvar_t *mob_death;
+extern cvar_t *mob_wound;
+extern cvar_t *mof_watching;
+extern cvar_t *mof_teamkill;
+extern cvar_t *mof_civilian;
+extern cvar_t *mof_enemy;
+extern cvar_t *mor_pain;
+
+/*everyone gets this times morale damage */
+extern cvar_t *mor_default;
+
+/*at this distance the following two get halfed (exponential scale) */
+extern cvar_t *mor_distance;
+
+/*at this distance the following two get halfed (exponential scale) */
+extern cvar_t *mor_victim;
+
+/*at this distance the following two get halfed (exponential scale) */
+extern cvar_t *mor_attacker;
+
+/* how much the morale depends on the size of the damaged team */
+extern cvar_t *mon_teamfactor;
+
+extern cvar_t *mor_regeneration;
+extern cvar_t *mor_shaken;
+extern cvar_t *mor_panic;
+
+extern cvar_t *m_sanity;
+extern cvar_t *m_rage;
+extern cvar_t *m_rage_stop;
+extern cvar_t *m_panic_stop;
+
 extern cvar_t *difficulty;
 
 #define world	(&g_edicts[0])
@@ -236,10 +265,8 @@ extern cvar_t *difficulty;
 #define	DROPPED_PLAYER_ITEM		0x00020000
 #define ITEM_TARGETS_USED		0x00040000
 
-/* */
 /* fields are needed for spawning from the entity string */
 /* and saving / loading games */
-/* */
 #define FFL_SPAWNTEMP		1
 #define FFL_NOSPAWN			2
 

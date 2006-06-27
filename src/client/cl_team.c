@@ -36,7 +36,7 @@ char *teamSkinNames[NUM_TEAMSKINS] = {
 /**
   * @brief
   */
-void CL_GiveNameCmd(void)
+static void CL_GiveNameCmd(void)
 {
 	char *name;
 	int i, j, num;
@@ -86,16 +86,12 @@ void CL_GiveNameCmd(void)
 	}
 }
 
-/* initialized in CL_ResetTeams */
-/* defined in scripts.c */
-extern rank_t ranks[MAX_RANKS];	/* Global list of all ranks defined in medals.ufo. */
-extern int numRanks;			/* The number of entries in the list above. */
-
-
 /**
-  * @brief
+  * @brief Generates the skills and inventory for a character and for a UGV
+  *
+  * TODO: Generate UGV
   */
-void CL_GenerateCharacter(char *team, base_t * base)
+void CL_GenerateCharacter(char *team, base_t *base, int type)
 {
 	character_t *chr;
 
@@ -114,14 +110,27 @@ void CL_GenerateCharacter(char *team, base_t * base)
 	/* get ucn */
 	chr->ucn = base->nextUCN++;
 
+	/* set the actor size */
+	switch ( type ) {
+	case ET_ACTOR:
+		chr->fieldSize = ACTOR_SIZE_NORMAL;
+		chr->rank = &gd.ranks[0];
+		break;
+	case ET_UGV:
+		chr->fieldSize = ACTOR_SIZE_UGV;
+		/* UGV does not have a rank */
+		chr->rank = NULL;
+		break;
+	default:
+		Sys_Error("CL_GenerateCharacter: Unknown character type (%i)\n", type);
+	}
+
 	/* new attributes */
-	Com_CharGenAbilitySkills(chr, 0, 75, 0, 75);
+	Com_CharGenAbilitySkills(chr, 15, 75, 15, 75);
 
 	/* get model and name */
 	chr->skin = Com_GetModelAndName(team, chr->path, chr->body, chr->head, chr->name);
 	Cvar_ForceSet(va("mn_name%i", base->numWholeTeam), chr->name);
-
-	chr->rank = &ranks[0];
 
 	base->numWholeTeam++;
 }
@@ -153,7 +162,7 @@ void CL_ResetCharacters(base_t * base)
 /**
   * @brief
   */
-void CL_GenerateNamesCmd(void)
+static void CL_GenerateNamesCmd(void)
 {
 	Cbuf_AddText("disconnect\ngame_exit\n");
 }
@@ -162,7 +171,7 @@ void CL_GenerateNamesCmd(void)
 /**
   * @brief Change the name of the selected actor
   */
-void CL_ChangeNameCmd(void)
+static void CL_ChangeNameCmd(void)
 {
 	int sel;
 
@@ -180,7 +189,7 @@ void CL_ChangeNameCmd(void)
 /**
   * @brief Change the skin of the selected actor
   */
-void CL_ChangeSkinCmd(void)
+static void CL_ChangeSkinCmd(void)
 {
 	int sel, newSkin, i;
 
@@ -205,7 +214,7 @@ void CL_ChangeSkinCmd(void)
 /**
   * @brief Reads tha comments from team files
   */
-void CL_TeamCommentsCmd(void)
+static void CL_TeamCommentsCmd(void)
 {
 	char comment[MAX_VAR];
 	FILE *f;
@@ -245,7 +254,7 @@ void CL_ItemDescription(int item)
 	Cvar_Set("mn_ammo", "");
 
 #ifdef DEBUG
-	if (!od->tech) {
+	if (!od->tech && ccs.singleplayer) {
 		Com_sprintf(itemText, MAX_MENUTEXTLEN, "Error - no tech assigned\n");
 		menuText[TEXT_STANDARD] = itemText;
 	}
@@ -257,12 +266,12 @@ void CL_ItemDescription(int item)
 			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Primary:\t%s\n"), od->fd[0].name);
 			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Secondary:\t%s\n"), od->fd[1].name));
 			Q_strcat(itemText, MAX_MENUTEXTLEN,
-					 va(_("Damage:\t%i / %i\n"), (int) (od->fd[0].damage[0] * od->fd[0].shots + od->fd[0].spldmg[0]),
+					va(_("Damage:\t%i / %i\n"), (int) (od->fd[0].damage[0] * od->fd[0].shots + od->fd[0].spldmg[0]),
 						(int) (od->fd[1].damage[0] * od->fd[1].shots + od->fd[0].spldmg[0])));
 			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Time units:\t%i / %i\n"), od->fd[0].time, od->fd[1].time));
 			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Range:\t%1.1f / %1.1f\n"), od->fd[0].range / 32.0, od->fd[1].range / 32.0));
 			Q_strcat(itemText, MAX_MENUTEXTLEN,
-					 va(_("Spreads:\t%1.1f / %1.1f\n"), (od->fd[0].spread[0] + od->fd[0].spread[1]) / 2, (od->fd[1].spread[0] + od->fd[1].spread[1]) / 2));
+					va(_("Spreads:\t%1.1f / %1.1f\n"), (od->fd[0].spread[0] + od->fd[0].spread[1]) / 2, (od->fd[1].spread[0] + od->fd[1].spread[1]) / 2));
 		} else if (od->weapon) {
 			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Ammo:\t%i\n"), (int) (od->ammo));
 			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Twohanded:\t%s"), (od->twohanded ? _("Yes") : _("No"))));
@@ -394,7 +403,7 @@ void CL_CleanTempInventory(void)
 /**
   * @brief
   */
-void CL_GenerateEquipmentCmd(void)
+static void CL_GenerateEquipmentCmd(void)
 {
 	equipDef_t *ed;
 	equipDef_t unused;
@@ -477,7 +486,7 @@ void CL_GenerateEquipmentCmd(void)
 /**
   * @brief
   */
-void CL_EquipTypeCmd(void)
+static void CL_EquipTypeCmd(void)
 {
 	int num;
 
@@ -500,7 +509,7 @@ void CL_EquipTypeCmd(void)
 /**
   * @brief
   */
-void CL_SelectCmd(void)
+static void CL_SelectCmd(void)
 {
 	char *command;
 	int num;
@@ -540,10 +549,17 @@ void CL_SelectCmd(void)
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
 	/* set info cvars */
-	if (!Q_strncmp(command, "team", 4))
-		CL_CharacterCvars(&baseCurrent->wholeTeam[num]);
-	else
-		CL_CharacterCvars(&baseCurrent->curTeam[num]);
+	if (!Q_strncmp(command, "team", 4)) {
+		if ( baseCurrent->wholeTeam[num].fieldSize == ACTOR_SIZE_NORMAL )
+			CL_CharacterCvars(&baseCurrent->wholeTeam[num]);
+		else
+			CL_UGVCvars(&baseCurrent->wholeTeam[num]);
+	} else {
+		if ( baseCurrent->curTeam[num].fieldSize == ACTOR_SIZE_NORMAL )
+			CL_CharacterCvars(&baseCurrent->curTeam[num]);
+		else
+			CL_UGVCvars(&baseCurrent->curTeam[num]);
+	}
 }
 
 /**
@@ -584,7 +600,7 @@ void CL_ResetTeamInBase(void)
 /**
   * @brief Init the teamlist checkboxes
   */
-void CL_MarkTeamCmd(void)
+static void CL_MarkTeamCmd(void)
 {
 	int i;
 
@@ -614,7 +630,7 @@ void CL_MarkTeamCmd(void)
 /**
   * @brief Hires an actor or drop an actor
   */
-void CL_HireActorCmd(void)
+static void CL_HireActorCmd(void)
 {
 	int num;
 	aircraft_t *air = NULL;
@@ -663,10 +679,10 @@ void CL_HireActorCmd(void)
   *
   * Done by the script command msgmenu [?|!|:][cvarname]
   */
-char nameBackup[MAX_VAR];
-char cvarName[MAX_VAR];
+static char nameBackup[MAX_VAR];
+static char cvarName[MAX_VAR];
 
-void CL_MessageMenuCmd(void)
+static void CL_MessageMenuCmd(void)
 {
 	char *msg;
 
@@ -754,7 +770,7 @@ void CL_SaveTeam(char *filename)
   *
   * Call CL_SaveTeam to store the team to a given filename
   */
-void CL_SaveTeamCmd(void)
+static void CL_SaveTeamCmd(void)
 {
 	char filename[MAX_QPATH];
 
@@ -772,7 +788,7 @@ void CL_SaveTeamCmd(void)
 /**
   * @brief Stores a team in a specified teamslot
   */
-void CL_SaveTeamSlotCmd(void)
+static void CL_SaveTeamSlotCmd(void)
 {
 	char filename[MAX_QPATH];
 
@@ -791,6 +807,7 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 	int i;
 
 	/* unique character number */
+	chr->fieldSize = MSG_ReadByte(sb);
 	chr->ucn = MSG_ReadShort(sb);
 	if (chr->ucn >= baseCurrent->nextUCN)
 		baseCurrent->nextUCN = chr->ucn + 1;
@@ -910,7 +927,7 @@ void CL_LoadTeamMultiplayer(char *filename)
 /**
   * @brief Loads a team from commandline
   */
-void CL_LoadTeamCmd(void)
+static void CL_LoadTeamCmd(void)
 {
 	char filename[MAX_QPATH];
 
@@ -930,7 +947,7 @@ void CL_LoadTeamCmd(void)
 /**
   * @brief Loads the selected teamslot
   */
-void CL_LoadTeamSlotCmd(void)
+static void CL_LoadTeamSlotCmd(void)
 {
 	char filename[MAX_QPATH];
 
@@ -980,7 +997,10 @@ void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
 }
 
 /**
-  * @brief
+  * @brief Stores the team info to buffer (which might be a network buffer, too)
+  *
+  * Called in cl_main.c CL_Precache_f to send the team info to server
+  * Called by CL_SaveTeam to store the team info
   */
 void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
 {
@@ -996,6 +1016,9 @@ void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
 	MSG_WriteByte(buf, num);
 
 	for (i = 0, chr = team; i < num; chr++, i++) {
+		/* send the fieldSize ACTOR_SIZE_* */
+		MSG_WriteByte(buf, chr->fieldSize);
+
 		/* unique character number */
 		MSG_WriteShort(buf, chr->ucn);
 
@@ -1163,4 +1186,133 @@ void CL_ParseResults(sizebuf_t * buf)
 		MN_PushMenu("lost");
 	Cbuf_AddText("disconnect\n");
 	Cbuf_Execute();
+}
+
+/* ======= RANKS & MEDALS =========*/
+/*#define	PARSEMEDALS(x)	(int)&(((xxx_t *)0)->x) */
+#define	PARSERANKS(x)	(int)&(((rank_t *)0)->x)
+
+value_t rankValues[] =
+{
+	{ "name",	V_TRANSLATION_STRING,	PARSERANKS( name ) },
+	{ "image",	V_STRING,				PARSERANKS( image ) },
+	{ "mind",		V_INT,			PARSERANKS( mind ) },
+	{ "killed_enemies",	V_INT,			PARSERANKS( killed_enemies ) },
+	{ "killed_others",	V_INT,			PARSERANKS( killed_others ) },
+	{ NULL,	0, 0 }
+};
+
+/**
+  * @brief Parse medals and ranks defined in the medals.ufo file.
+  */
+void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
+{
+	rank_t		*rank = NULL;
+	char	*errhead = "Com_ParseMedalsAndRanks: unexptected end of file (medal/rank ";
+	char	*token;
+	value_t	*v;
+
+	/* get name list body body */
+	token = COM_Parse( text );
+
+	if ( !*text || *token != '{' ) {
+		Com_Printf( "Com_ParseMedalsAndRanks: rank/medal \"%s\" without body ignored\n", title );
+		return;
+	}
+
+	if ( parserank) {
+		/* parse ranks */
+		if ( gd.numRanks >= MAX_RANKS ) {
+			Com_Printf( "Too many rank descriptions, '%s' ignored.\n", title );
+			gd.numRanks = MAX_RANKS;
+			return;
+		}
+
+		rank = &gd.ranks[gd.numRanks++];
+		memset( rank, 0, sizeof( rank_t ) );
+
+		do {
+			/* get the name type */
+			token = COM_EParse( text, errhead, title );
+			if ( !*text )
+				break;
+			if ( *token == '}' )
+				break;
+			for ( v = rankValues; v->string; v++ )
+				if ( !Q_strncmp( token, v->string, sizeof(v->string) ) ) {
+					/* found a definition */
+					token = COM_EParse( text, errhead, title );
+					if ( !*text )
+						return;
+					Com_ParseValue( rank, token, v->type, v->ofs );
+					break;
+				}
+
+			if ( !v->string )
+				Com_Printf( "Com_ParseMedalsAndRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, title );
+		} while ( *text );
+	} else {
+		/* parse medals */
+	}
+}
+
+#define	PARSEUGV(x)	(int)&(((ugv_t *)0)->x)
+
+value_t ugvValues[] =
+{
+	{ "tu",	V_INT,			PARSEUGV( tu ) },
+	{ "weapon",	V_STRING,	PARSEUGV( weapon ) },
+	{ "armor",	V_STRING,	PARSEUGV( armor ) },
+	{ "size",	V_INT,		PARSEUGV( size ) },
+
+	{ NULL,	0, 0 }
+};
+
+/**
+  * @brief Parse UGVs
+  */
+void CL_ParseUGVs(char *title, char **text)
+{
+	char	*errhead = "Com_ParseUGVs: unexptected end of file (ugv ";
+	char	*token;
+	value_t	*v;
+	ugv_t*	ugv;
+
+	/* get name list body body */
+	token = COM_Parse( text );
+
+	if ( !*text || *token != '{' ) {
+		Com_Printf( "Com_ParseUGVs: ugv \"%s\" without body ignored\n", title );
+		return;
+	}
+
+	/* parse ugv */
+	if ( gd.numUGV >= MAX_UGV ) {
+		Com_Printf( "Too many UGV descriptions, '%s' ignored.\n", title );
+		gd.numUGV = MAX_UGV;
+		return;
+	}
+
+	ugv = &gd.ugvs[gd.numUGV++];
+	memset( ugv, 0, sizeof( ugv_t ) );
+
+	do {
+		/* get the name type */
+		token = COM_EParse( text, errhead, title );
+		if ( !*text )
+			break;
+		if ( *token == '}' )
+			break;
+		for ( v = ugvValues; v->string; v++ )
+			if ( !Q_strncmp( token, v->string, sizeof(v->string) ) ) {
+				/* found a definition */
+				token = COM_EParse( text, errhead, title );
+				if ( !*text )
+					return;
+				Com_ParseValue( ugv, token, v->type, v->ofs );
+				break;
+			}
+			if ( !v->string )
+				Com_Printf( "Com_ParseUGVs: unknown token \"%s\" ignored (ugv %s)\n", token, title );
+	} while ( *text );
 }

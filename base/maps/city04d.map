@@ -4756,21 +4756,21 @@
 }
 // brush 520
 {
-( 156 96 -4 ) ( 36 96 -4 ) ( 36 0 -4 ) tex_streets/street001 8 0 0 0.5 0.5 0 128 0
-( 36 0 0 ) ( 36 96 0 ) ( 156 96 0 ) tex_streets/street001 8 0 0 0.5 0.5 0 0 0
-( 36 0 4 ) ( 156 0 4 ) ( 156 0 -4 ) tex_streets/street001 8 0 0 0.5 0.5 0 128 0
-( 160 0 4 ) ( 160 96 4 ) ( 160 96 -4 ) tex_streets/street001 0 0 0 0.5 0.5 0 128 0
+( -392 0 -4 ) ( 256 0 -4 ) ( -392 96 -4 ) tex_streets/street001 8 0 0 0.5 0.5 0 128 0
+( -392 96 0 ) ( 256 0 0 ) ( -392 0 0 ) tex_streets/street001 8 0 0 0.5 0.5 0 0 0
+( -392 0 0 ) ( 256 0 0 ) ( 256 0 -4 ) tex_streets/street001 8 0 0 0.5 0.5 0 128 0
+( 160 96 0 ) ( 256 0 -4 ) ( 256 0 0 ) tex_streets/street001 0 0 0 0.5 0.5 0 128 0
 ( 160 96 4 ) ( 40 96 4 ) ( 40 96 -4 ) tex_streets/street001 8 0 0 0.5 0.5 0 128 0
 ( -392 92 4 ) ( -392 -4 4 ) ( -392 -4 -4 ) tex_streets/street001 8 0 0 0.5 0.5 0 128 0
 }
 // brush 521
 {
-( 256 384 -4 ) ( 160 384 -4 ) ( 160 244 -4 ) tex_streets/street001 0 0 0 0.5 0.5 0 128 0
-( 160 244 0 ) ( 160 384 0 ) ( 256 384 0 ) tex_streets/street001 0 0 0 0.5 0.5 0 0 0
-( 140 0 4 ) ( 236 0 4 ) ( 236 0 -4 ) tex_streets/street001 0 0 0 0.5 0.5 0 128 0
+( 256 448 -4 ) ( 160 96 -4 ) ( 256 0 -4 ) tex_streets/street001 0 0 0 0.5 0.5 0 128 0
+( 256 448 0 ) ( 160 96 0 ) ( 160 448 0 ) tex_streets/street001 0 0 90 0.5 0.5 0 0 0
+( 256 0 0 ) ( 160 96 -4 ) ( 160 96 0 ) tex_streets/street001 0 0 0 0.5 0.5 0 128 0
 ( 256 308 4 ) ( 256 448 4 ) ( 256 448 -4 ) tex_streets/street001 0 0 0 0.5 0.5 0 128 0
 ( 256 448 4 ) ( 160 448 4 ) ( 160 448 -4 ) tex_streets/street001 0 0 0 0.5 0.5 0 0 0
-( 160 448 4 ) ( 160 308 4 ) ( 160 308 -4 ) tex_streets/street001 0 0 0 0.5 0.5 0 128 0
+( 160 448 0 ) ( 160 96 0 ) ( 160 96 -4 ) tex_streets/street001 0 0 0 0.5 0.5 0 128 0
 }
 // brush 522
 {
@@ -10214,4 +10214,89 @@
 "_color" "1 1 0.95"
 "light" "160"
 "origin" "264 -96 52"
+}
+// entity 163
+{
+"classname" "info_alien_start"
+"origin" "592 -144 92"
+}
+// entity 164
+{
+"classname" "info_alien_start"
+"origin" "752 80 28"
+}
+// entity 165
+{
+"classname" "info_alien_start"
+"origin" "720 16 28"
+}
+// entity 166
+{
+"classname" "info_alien_start"
+"origin" "816 16 28"
+}
+// entity 167
+{
+"classname" "info_alien_start"
+"origin" "688 144 28"
+}
+// entity 168
+{
+"classname" "info_alien_start"
+"origin" "592 144 92"
+}
+// entity 169
+{
+"classname" "info_civilian_start"
+"origin" "-336 -208 32"
+}
+// entity 170
+{
+"classname" "info_civilian_start"
+"origin" "144 48 32"
+}
+// entity 171
+{
+"classname" "info_civilian_start"
+"origin" "240 400 32"
+}
+// entity 172
+{
+"classname" "info_human_start"
+"origin" "-240 -144 32"
+}
+// entity 173
+{
+"classname" "info_human_start"
+"origin" "-304 80 32"
+}
+// entity 174
+{
+"classname" "info_human_start"
+"origin" "-368 80 32"
+}
+// entity 175
+{
+"classname" "info_human_start"
+"origin" "-80 80 32"
+}
+// entity 176
+{
+"classname" "info_human_start"
+"origin" "16 80 32"
+}
+// entity 177
+{
+"classname" "info_human_start"
+"origin" "16 -144 32"
+}
+// entity 178
+{
+"classname" "info_human_start"
+"origin" "-48 -176 32"
+}
+// entity 179
+{
+"classname" "info_human_start"
+"origin" "-304 -176 32"
 }

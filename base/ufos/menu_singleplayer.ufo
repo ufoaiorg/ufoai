@@ -358,18 +358,17 @@ menu load
 		pos		"10 744"
 	}
 
+	string headline
+	{
+		string  "_Load"
+		pos             "758 170"
+		align	uc
+		font f_big
+	}
 
 	// ==================
 	// slots
 	// ==================
-
-	pic title
-	{
-		image	menu/save_title
-		pos		"640 170"
-		texl	"0 0"
-		texh	"256 16"
-	}
 
 	pic slot0
 	{
@@ -526,18 +525,17 @@ menu save
 		pos		"10 744"
 	}
 
+	string headline
+	{
+		string  "_Save"
+		pos             "758 170"
+		align	uc
+		font f_big
+	}
 
 	// ==================
 	// slots
 	// ==================
-
-	pic title
-	{
-		image	menu/save_title
-		pos		"640 170"
-		texl	"0 16"
-		texh	"256 32"
-	}
 
 	pic slot0
 	{

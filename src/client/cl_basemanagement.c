@@ -35,8 +35,8 @@ int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx);
 vec2_t newBasePos;
 cvar_t *mn_base_title;
 
-int BuildingConstructionList[MAX_BUILDINGS];
-int numBuildingConstructionList;
+static int BuildingConstructionList[MAX_BUILDINGS];
+static int numBuildingConstructionList;
 
 /**
  * @brief Holds the names of valid entries in the basemanagement.ufo file.
@@ -46,7 +46,7 @@ int numBuildingConstructionList;
  * to the appropriate values in the corresponding struct
  */
 value_t valid_vars[] = {
-	{"map_name", V_NULL, BSFS(mapPart)},	/**< Name of the map file for generating basemap. */
+	{"map_name", V_STRING, BSFS(mapPart)},	/**< Name of the map file for generating basemap. */
 	{"more_than_one", V_BOOL, BSFS(moreThanOne)},	/**< Is the building allowed to be build more the one time? */
 	{"name", V_TRANSLATION_STRING, BSFS(name)},	/**< The displayed building name. */
 	{"pedia", V_STRING, BSFS(pedia)},	/**< The pedia-id string for the associated pedia entry. */
@@ -111,7 +111,7 @@ void B_SetSensor(void)
  * updates the cvar mn_building_status which is used in some menus to display
  * the building status
  */
-void B_BuildingStatus(void)
+static void B_BuildingStatus(void)
 {
 	int daysLeft;
 	int NumberOfBuildings = 0;
@@ -216,7 +216,7 @@ building_t *B_GetBuildingType(char *buildingName)
  *
  * This is only allowed if its still under construction. You will not get any money back.
  */
-void B_RemoveBuilding(void)
+static void B_RemoveBuilding(void)
 {
 	building_t *building = NULL;
 
@@ -241,7 +241,7 @@ void B_RemoveBuilding(void)
  *
  * Checks whether the player has enough credits to construct the current selected building before starting construction.
  */
-void B_ConstructBuilding(void)
+static void B_ConstructBuilding(void)
 {
 	building_t *building_to_build = NULL;
 
@@ -252,6 +252,7 @@ void B_ConstructBuilding(void)
 	/*enough credits to build this? */
 	if (ccs.credits - baseCurrent->buildingCurrent->fixCosts < 0) {
 		MN_Popup(_("Notice"), _("Not enough credits to build this\n"));
+		Com_DPrintf("B_ConstructBuilding: Not enough credits to build: '%s'\n", baseCurrent->buildingCurrent->id);
 		return;
 	}
 
@@ -329,9 +330,18 @@ void B_SetBuildingByClick(int row, int col)
 			if (*baseCurrent->buildingCurrent->needs && baseCurrent->buildingCurrent->visible)
 				secondBuildingPart = B_GetBuildingType(baseCurrent->buildingCurrent->needs);
 			if (secondBuildingPart) {
-				if (baseCurrent->map[row][col + 1] >= 0) {
-					Com_Printf("Can't place this building here - the second part overlapped with another building\n");
-					return;
+				if (col + 1 == BASE_SIZE) {
+					if (baseCurrent->map[row][col-1] >= 0) {
+						Com_DPrintf("Can't place this building here - the second part overlapped with another building\n");
+						return;
+					}
+					col--;
+				} else if (baseCurrent->map[row][col+1] >= 0) {
+					if (baseCurrent->map[row][col-1] >= 0 || !col) {
+						Com_DPrintf("Can't place this building here - the second part overlapped with another building\n");
+						return;
+					}
+					col--;
 				}
 
 				baseCurrent->map[row][col + 1] = baseCurrent->buildingCurrent->idx;
@@ -357,17 +367,17 @@ void B_SetBuildingByClick(int row, int col)
 			B_ResetBuildingCurrent();
 			B_BuildingInit();	/* update the building-list */
 		} else {
-			Com_Printf("There is already a building\n");
+			Com_DPrintf("There is already a building\n");
 			Com_DPrintf("Building: %i at (row:%i, col:%i)\n", baseCurrent->map[row][col], row, col);
 		}
 	} else
-		Com_Printf("Invalid coordinates\n");
+		Com_DPrintf("Invalid coordinates\n");
 }
 
 /**
  * @brief Places the current building in the base (x/y give via console).
  */
-void B_SetBuilding(void)
+static void B_SetBuilding(void)
 {
 	int row, col;
 
@@ -390,7 +400,7 @@ void B_SetBuilding(void)
 /**
  * @brief Build building from the list of those available.
  */
-void B_NewBuildingFromList(void)
+static void B_NewBuildingFromList(void)
 {
 	/*maybe someone call this command before the buildings are parsed?? */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
@@ -405,7 +415,7 @@ void B_NewBuildingFromList(void)
 /**
  * @brief Draws a building.
  */
-void B_DrawBuilding(void)
+static void B_DrawBuilding(void)
 {
 	building_t *building = NULL;
 	employees_t *employees_in_building = NULL;
@@ -1040,7 +1050,7 @@ qboolean B_EmployeeIsFree(employee_t * employee)
  * @brief Add a free employee from the quarters to building_dest. (the employee will be linked to both of them)
  *
  * TODO: Add check for destination building vs. employee_type and abort if they do not match.
- * TODO: Possibility to add emoployees to quarters (from the global list)
+ * TODO: Possibility to add employees to quarters (from the global list)
  *
  * @param[in] building_dest Which building to assign the employee to.
  * @param[in] employee_type	What type of employee to assign to the building.
@@ -1054,7 +1064,6 @@ qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_ty
 	building_t *building_source = NULL;
 	employees_t *employees_in_building_dest = NULL;
 	employees_t *employees_in_building_source = NULL;
-
 
 	if (!baseCurrent) {
 		Com_DPrintf("B_AssignEmployee: No Base set\n");
@@ -1188,7 +1197,7 @@ qboolean B_RemoveEmployee(building_t * building)
 /**
  * @brief Returns the number of employees in the given base (in the quaters) of the given type.
  *
- * You can choose (free_only) if you want the nubmer of free ones or the total number.
+ * You can choose (free_only) if you want the number of free employees or the total number.
  * If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
  */
 int B_EmployeesInBase2(int base_idx, employeeType_t employee_type, qboolean free_only)
@@ -1244,13 +1253,16 @@ void B_ClearBase(base_t * base)
 	CL_ResetCharacters(base);
 
 	/* setup team */
-	if (!curCampaign) {			/* should be multiplayer */
+	if (!curCampaign) {
+		/* should be multiplayer */
 		while (base->numWholeTeam < cl_numnames->value)
-			CL_GenerateCharacter(Cvar_VariableString("team"), base);
-	} else {					/* should be multiplayer (campaignmode TODO) or singleplayer */
-
+			CL_GenerateCharacter(Cvar_VariableString("team"), base, ET_ACTOR);
+	} else {
+		/* should be multiplayer (campaignmode TODO) or singleplayer */
 		for (i = 0; i < curCampaign->soldiers; i++)
-			CL_GenerateCharacter(curCampaign->team, base);
+			CL_GenerateCharacter(curCampaign->team, base, ET_ACTOR);
+		for (i = 0; i < curCampaign->ugvs; i++)
+			CL_GenerateCharacter("ugv", base, ET_UGV);
 	}
 
 	for (row = BASE_SIZE - 1; row >= 0; row--)
@@ -1493,7 +1505,7 @@ void B_SelectBase(void)
 	/* set up a new base */
 	/* called from *.ufo with -1 */
 	if (baseID < 0) {
-		mapAction = MA_NEWBASE;
+		gd.mapAction = MA_NEWBASE;
 		baseID = gd.numBases;
 		Com_DPrintf("B_SelectBase: new baseID is %i\n", baseID);
 		if (baseID < MAX_BASES) {
@@ -1509,11 +1521,11 @@ void B_SelectBase(void)
 		Com_DPrintf("B_SelectBase: select base with id %i\n", baseID);
 		baseCurrent = &gd.bases[baseID];
 		if (baseCurrent->founded) {
-			mapAction = MA_NONE;
+			gd.mapAction = MA_NONE;
 			MN_PushMenu("bases");
 			CL_AircraftSelect();
 		} else {
-			mapAction = MA_NEWBASE;
+			gd.mapAction = MA_NEWBASE;
 		}
 	} else
 		baseCurrent = &gd.bases[0];
@@ -1544,7 +1556,7 @@ void B_BuildBase(void)
 			baseCurrent->idx = gd.numBases - 1;
 			baseCurrent->founded = qtrue;
 			stats.basesBuild++;
-			mapAction = MA_NONE;
+			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - BASE_COSTS);
 			Q_strncpyz(baseCurrent->name, mn_base_title->string, sizeof(baseCurrent->name));
 			Cvar_SetValue("mn_base_id", baseCurrent->idx);
@@ -1580,7 +1592,7 @@ void B_BaseAttack(void)
 		/* TODO: New menu for: */
 		/*      defend -> call AssembleBase for this base */
 		/*      continue -> return to geoscape */
-		mapAction = MA_BASEATTACK;
+		gd.mapAction = MA_BASEATTACK;
 	}
 #if 0							/*TODO: run eventhandler for each building in base */
 	if (b->onAttack)
@@ -1590,10 +1602,10 @@ void B_BaseAttack(void)
 }
 
 /**
- * @brief Builds a map for tactivcal combat.
+ * @brief Builds a base map for tactical combat.
  *
  * NOTE: Do we need day and night maps here, too?
- * TODO: Search a empty fild and add a alien craft there.
+ * TODO: Search a empty field and add a alien craft there.
  * FIXME: We need to get rid of the tunnels to nivana.
  */
 void B_AssembleMap(void)
@@ -1607,7 +1619,22 @@ void B_AssembleMap(void)
 	*maps = '\0';
 	*coords = '\0';
 
-	assert(baseCurrent);
+	if (!baseCurrent) {
+		Com_Printf("B_AssembleMap: No base to assemble\n");
+		return;
+	}
+
+	/* reset menu text */
+	menuText[TEXT_STANDARD] = NULL;
+
+	/* reset the used flag */
+	for (row = 0; row < BASE_SIZE; row++)
+		for (col = 0; col < BASE_SIZE; col++) {
+			if (baseCurrent->map[row][col] != -1) {
+				entry = B_GetBuildingByIdx(baseCurrent->map[row][col]);
+				entry->used = 0;
+			}
+		}
 
 	/*TODO: If a building is still under construction, it will be assembled as a finished part */
 	/*otherwise we need mapparts for all the maps under construction */
@@ -1618,18 +1645,20 @@ void B_AssembleMap(void)
 			if (baseCurrent->map[row][col] != -1) {
 				entry = B_GetBuildingByIdx(baseCurrent->map[row][col]);
 
-				if (!entry->visible) {
-					Com_DPrintf("Building %s will not be taken for baseassemble - it's' invisible\n", entry->id);
+				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one */
+				/* this is why we check the used flag and continue if it was set already */
+				if (!entry->used && *entry->needs) {
+					entry->used = 1;
+				} else if (*entry->needs) {
+					Com_DPrintf("B_AssembleMap: '%s' needs '%s' (used: %i)\n", entry->id, entry->needs, entry->used );
+					entry->used = 0;
 					continue;
 				}
 
-				if (!entry->used && *entry->needs)
-					entry->used = 1;
-				else if (*entry->needs)
-					continue;
-
-				if (entry->mapPart)
+				if (*entry->mapPart)
 					Q_strncpyz(baseMapPart, va("b/%c/%s", baseCurrent->mapChar, entry->mapPart), sizeof(baseMapPart));
+				else
+					Com_Printf("B_AssembleMap: Error - map has no mapPart set. Building '%s'\n'", entry->id);
 			} else
 				Q_strncpyz(baseMapPart, va("b/%c/empty", baseCurrent->mapChar), sizeof(baseMapPart));
 
@@ -1644,7 +1673,7 @@ void B_AssembleMap(void)
 }
 
 /**
- * @brief TODO: No idea what this does.
+ * @brief Cleans all bases but restart the base names
  */
 void B_NewBases(void)
 {
@@ -1660,19 +1689,22 @@ void B_NewBases(void)
 }
 
 /**
- * @brief TODO: Builds a random base?
+ * @brief Builds a random base
+ *
+ * call B_AssembleMap with a random base over script command 'base_assemble'
  */
-void B_AssembleRandomBase(void)
+static void B_AssembleRandomBase(void)
 {
 	Cbuf_AddText(va("base_assemble %i", rand() % gd.numBases));
 }
 
 /**
- * @param TODO: No idea what this does.
+ * @param Just lists all buildings with their data
  *
+ * Just for debugging purposes - not needed in game
  * TODO: To be extended for load/save purposes
  */
-void B_BuildingList_f(void)
+static void B_BuildingList_f(void)
 {
 	int i, j, k;
 	base_t *base;
@@ -1710,11 +1742,12 @@ void B_BuildingList_f(void)
 }
 
 /**
- * @brief TODO: No idea what this does.
+ * @brief Just lists all bases with their data
  *
+ * Just for debugging purposes - not needed in game
  * TODO: To be extended for load/save purposes
  */
-void B_BaseList_f(void)
+static void B_BaseList_f(void)
 {
 	int i, row, col, j;
 	base_t *base;
@@ -1743,11 +1776,11 @@ void B_BaseList_f(void)
 /**
  * @brief Sets the title of the base.
  */
-void B_SetBaseTitle(void)
+static void B_SetBaseTitle(void)
 {
 	Com_DPrintf("B_SetBaseTitle: #bases: %i\n", gd.numBases);
 	if (gd.numBases < MAX_BASES)
-		Cvar_Set("mn_base_title_new", gd.bases[gd.numBases].name);
+		Cvar_Set("mn_base_title", gd.bases[gd.numBases].name);
 	else {
 		MN_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
 		MN_PopMenu(qfalse);		/* remove the new base popup */
@@ -1757,7 +1790,7 @@ void B_SetBaseTitle(void)
 /**
  * @brief Creates console command to change the name of a base.
  */
-void B_ChangeBaseNameCmd(void)
+static void B_ChangeBaseNameCmd(void)
 {
 	/* maybe called without base initialized or active */
 	if (!baseCurrent)

@@ -251,7 +251,8 @@ typedef struct aircraft_s {
 	vec2_t pos;					/* actual pos on geoscape */
 	int point;
 	int time;
-	int idx_base;				/* id in base */
+	int idxInBase;				/* id in base */
+	int idxBase;				/* id of base */
 	int *teamSize;				/* how many soldiers on board */
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	/* TODO */
@@ -320,12 +321,15 @@ typedef struct base_s {
 	inventory_t teamInv[MAX_WHOLETEAM];
 	inventory_t equipment;
 
+	/* FIXME: Replace this with employees */
 	character_t wholeTeam[MAX_WHOLETEAM];
+	/* FIXME: Replace this with employees */
 	character_t curTeam[MAX_ACTIVETEAM];
 	character_t *curChr;
 
 	int equipType;
-	int nextUCN;				/* unified character id (base dependent) */
+	/* unified character id (base dependent) */
+	int nextUCN;
 
 	/* needed if there is another buildingpart to build (link to gd.buildingTypes) */
 	int buildingToBuild;
@@ -361,7 +365,6 @@ void B_ParseBases(char *title, char **text);
 void B_BuildingInit(void);
 void B_AssembleMap(void);
 void B_BaseAttack(void);
-void B_DrawBuilding(void);
 building_t *B_GetBuildingByIdx(int idx);
 building_t *B_GetBuildingType(char *buildingName);
 
@@ -386,4 +389,4 @@ void B_ResetBaseManagement(void);
 void B_ClearBase(base_t * base);
 void B_NewBases(void);
 
-#endif							/* CLIENT_CL_BASEMANGEMENT_H */
+#endif /* CLIENT_CL_BASEMANGEMENT_H */

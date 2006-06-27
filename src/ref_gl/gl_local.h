@@ -38,9 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 #endif
 
-#ifdef BUILD_JPEG
-#include "../jpeg-6/jpeglib.h"
-#else
 #ifndef _WIN32
 #include <jpeglib.h>
 #else
@@ -50,8 +47,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../win32/jpeglib.h"
 #endif
 #endif
-#endif
 #include "../client/ref.h"
+/* this was taken from jmorecfg.h */
+#define RGB_PIXELSIZE 3
 
 #include "gl_arb_shader.h"
 
@@ -352,7 +350,7 @@ extern	int		registration_sequence;
 
 void V_AddBlend (float r, float g, float b, float a, float *v_blend);
 
-qboolean 	R_Init( void *hinstance, void *hWnd );
+qboolean 	R_Init( HINSTANCE hinstance, WNDPROC wndproc );
 void	R_Shutdown( void );
 
 struct model_s *R_RegisterModelShort( char *name );
@@ -576,7 +574,7 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 
 void		GLimp_BeginFrame( float camera_separation );
 void		GLimp_EndFrame( void );
-qboolean 	GLimp_Init( void *hinstance, void *hWnd );
+qboolean 	GLimp_Init( HINSTANCE hinstance, WNDPROC wndproc );
 void		GLimp_Shutdown( void );
 rserr_t     	GLimp_SetMode( unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen );
 void		GLimp_AppActivate( qboolean active );
@@ -654,4 +652,3 @@ void Draw_3DMapMarkers ( float latitude, float longitude, char* image );
 
 
 #endif /* GL_LOCAL_H */
-

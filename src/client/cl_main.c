@@ -121,8 +121,6 @@ cvar_t *campaign;
 cvar_t *rate;
 cvar_t *msg;
 
-cvar_t *cl_vwep;
-
 #ifndef _WIN32
 cvar_t *soundsystem;
 #endif
@@ -178,7 +176,7 @@ void CL_Setenv_f(void)
 			Q_strcat(buffer, sizeof(buffer), " ");
 		}
 
-		putenv(buffer);
+		Q_putenv(buffer);
 	} else if (argc == 2) {
 		char *env = getenv(Cmd_Argv(1));
 
@@ -459,9 +457,6 @@ void CL_Disconnect(void)
 		MN_PopMenu(qtrue);
 		MN_PushMenu(mn_main->string);
 	}
-/* 	if ( ! ccs.singleplayer ) */
-/* 		cls.key_dest = key_console; */
-
 	cls.connect_time = 0;
 
 	/* send a disconnect message to the server */
@@ -508,7 +503,8 @@ void CL_Packet_f(void)
 		return;
 	}
 
-	NET_Config(qtrue);			/* allow remote */
+	/* allow remote */
+	NET_Config(qtrue);
 
 	if (!NET_StringToAdr(Cmd_Argv(1), &adr)) {
 		Com_Printf("Bad address\n");
@@ -621,7 +617,8 @@ void CL_ParseServerInfoMessage(void)
 
 	Com_sprintf(serverInfoText, MAX_MESSAGE_TEXT, _("IP\t%s\n\n"), NET_AdrToString(net_from));
 
-	s++;						/* first char is slash */
+	/* first char is slash */
+	s++;
 	do {
 		/* var */
 		var = s;
@@ -1013,6 +1010,24 @@ void CL_Precache_f(void)
 	MSG_WriteString(&cls.netchan.message, va("begin %i\n", atoi(Cmd_Argv(1))));
 }
 
+/**
+  * @brief Called at client startup
+  *
+  * parses all *.ufos that are needed for single- and multiplayer
+  */
+void CL_ParseClientData ( char *type, char *name, char **text )
+{
+	if ( !Q_strncmp( type, "shader", 6 ) ) CL_ParseShaders(name, text);
+	else if ( !Q_strncmp( type, "font", 4 ) ) CL_ParseFont(name, text);
+	else if ( !Q_strncmp( type, "tutorial", 8 ) ) MN_ParseTutorials(name, text);
+	else if ( !Q_strncmp( type, "menu_model", 10 ) ) MN_ParseMenuModel(name, text);
+	else if ( !Q_strncmp( type, "menu", 4 ) ) MN_ParseMenu(name, text);
+	else if ( !Q_strncmp( type, "particle", 8 ) ) CL_ParseParticle(name, text);
+	else if ( !Q_strncmp( type, "sequence", 8 ) ) CL_ParseSequence(name, text);
+	else if ( !Q_strncmp(type, "aircraft", 8 ) ) CL_ParseAircraft(name, text);
+	else if ( !Q_strncmp(type, "campaign", 8 ) ) CL_ParseCampaign(name, text);
+	else if ( !Q_strncmp(type, "ugv", 3 ) ) CL_ParseUGVs(name, text);
+}
 
 /**
   * @brief
@@ -1024,34 +1039,24 @@ void CL_Precache_f(void)
 void CL_ParseScriptFirst(char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
-	if (!Q_strncmp(type, "menu_model", 10))
-		MN_ParseMenuModel(name, text);
-	else if (!Q_strncmp(type, "menu", 4))
-		MN_ParseMenu(name, text);
-	else if (!Q_strncmp(type, "particle", 8))
-		CL_ParseParticle(name, text);
-	else if (!Q_strncmp(type, "mission", 7))
+	if (!Q_strncmp(type, "mission", 7))
 		CL_ParseMission(name, text);
-	else if (!Q_strncmp(type, "sequence", 8))
-		CL_ParseSequence(name, text);
 	else if (!Q_strncmp(type, "up_chapters", 11))
 		UP_ParseUpChapters(name, text);
 	else if (!Q_strncmp(type, "building", 8))
 		B_ParseBuildings(name, text, qfalse);
 	else if (!Q_strncmp(type, "tech", 4))
 		RS_ParseTechnologies(name, text);
-	else if (!Q_strncmp(type, "aircraft", 8))
-		CL_ParseAircraft(name, text);
 	else if (!Q_strncmp(type, "base", 4))
 		B_ParseBases(name, text);
 	else if (!Q_strncmp(type, "nation", 6))
 		CL_ParseNations(name, text);
-	else if (!Q_strncmp(type, "shader", 6))
-		CL_ParseShaders(name, text);
-	else if (!Q_strncmp(type, "font", 4))
-		CL_ParseFont(name, text);
-	else if (!Q_strncmp(type, "tutorial", 8))
-		MN_ParseTutorials(name, text);
+	else if (!Q_strncmp(type, "rank", 4))
+		CL_ParseMedalsAndRanks( name, text, qtrue );
+#if 0
+	else if (!Q_strncmp(type, "medal", 5))
+		Com_ParseMedalsAndRanks( name, &text, qfalse );
+#endif
 }
 
 /**
@@ -1065,12 +1070,37 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
 void CL_ParseScriptSecond(char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
-	if (!Q_strncmp(type, "campaign", 8))
-		CL_ParseCampaign(name, text);
-	else if (!Q_strncmp(type, "stage", 5))
+	if (!Q_strncmp(type, "stage", 5))
 		CL_ParseStage(name, text);
 	else if (!Q_strncmp(type, "building", 8))
 		B_ParseBuildings(name, text, qtrue);
+}
+
+/**
+  * @brief Read the data into gd for singleplayer campaigns
+  */
+void CL_ReadSinglePlayerData( void )
+{
+	char *type, *name, *text;
+
+	/* pre-stage parsing */
+	FS_BuildFileList( "ufos/*.ufo" );
+	FS_NextScriptHeader( NULL, NULL, NULL );
+	text = NULL;
+
+	CL_ResetSinglePlayerData();
+	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
+		CL_ParseScriptFirst( type, name, &text );
+
+	/* stage two parsing */
+	FS_NextScriptHeader( NULL, NULL, NULL );
+	text = NULL;
+
+	Com_DPrintf( "Second stage parsing started...\n" );
+	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
+		CL_ParseScriptSecond( type, name, &text );
+
+	Com_Printf( "Global data loaded\n" );
 }
 
 /**
@@ -1081,8 +1111,8 @@ void CL_InitLocal(void)
 	cls.state = ca_disconnected;
 	cls.realtime = Sys_Milliseconds();
 
-	Con_CheckResize();
 	Com_InitInventory(invList);
+	Con_CheckResize();
 	CL_InitInput();
 	CL_InitMessageSystem();
 
@@ -1102,10 +1132,9 @@ void CL_InitLocal(void)
 	adr6 = Cvar_Get("adr6", "", CVAR_ARCHIVE);
 	adr7 = Cvar_Get("adr7", "", CVAR_ARCHIVE);
 	adr8 = Cvar_Get("adr8", "", CVAR_ARCHIVE);
+	map_dropship = Cvar_Get("map_dropship", "craft_dropship", 0);
 
-	/* */
 	/* register our variables */
-	/* */
 	cl_stereo_separation = Cvar_Get("cl_stereo_separation", "0.4", CVAR_ARCHIVE);
 	cl_stereo = Cvar_Get("cl_stereo", "0", 0);
 
@@ -1162,6 +1191,7 @@ void CL_InitLocal(void)
 	cl_logevents = Cvar_Get("cl_logevents", "0", 0);
 
 	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0);
+	cl_worldlevel->modified = qfalse;
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET);
 
 /*	cl_lightlevel = Cvar_Get ("r_lightlevel", "0", 0); */
@@ -1195,8 +1225,6 @@ void CL_InitLocal(void)
 	campaign = Cvar_Get("campaign", "main", 0);
 	rate = Cvar_Get("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE);	/* FIXME */
 	msg = Cvar_Get("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE);
-
-	cl_vwep = Cvar_Get("cl_vwep", "1", CVAR_ARCHIVE);
 
 	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO);
 
@@ -1245,25 +1273,9 @@ void CL_InitLocal(void)
 	/* the only thing this does is allow command completion */
 	/* to work -- all unknown commands are automatically */
 	/* forwarded to the server */
-	Cmd_AddCommand("wave", NULL);
-	Cmd_AddCommand("inven", NULL);
-	Cmd_AddCommand("kill", NULL);
-	Cmd_AddCommand("use", NULL);
-	Cmd_AddCommand("drop", NULL);
 	Cmd_AddCommand("say", NULL);
 	Cmd_AddCommand("say_team", NULL);
 	Cmd_AddCommand("info", NULL);
-	Cmd_AddCommand("prog", NULL);
-	Cmd_AddCommand("give", NULL);
-	Cmd_AddCommand("god", NULL);
-	Cmd_AddCommand("notarget", NULL);
-	Cmd_AddCommand("noclip", NULL);
-	Cmd_AddCommand("invuse", NULL);
-	Cmd_AddCommand("invprev", NULL);
-	Cmd_AddCommand("invnext", NULL);
-	Cmd_AddCommand("invdrop", NULL);
-	Cmd_AddCommand("weapnext", NULL);
-	Cmd_AddCommand("weapprev", NULL);
 	Cmd_AddCommand("playerlist", NULL);
 	Cmd_AddCommand("players", NULL);
 }
@@ -1480,6 +1492,8 @@ void CL_Frame(int msec)
 			Com_Printf("Changing to Multiplayer\n");
 			/* no campaign equipment but standard */
 			Cvar_Set("equip", "standard");
+			Cvar_Set("map_dropship", "craft_dropship");
+
 		} else {
 			ccs.singleplayer = qtrue;
 			Com_Printf("Changing to Singleplayer\n");
@@ -1653,7 +1667,8 @@ void CL_Shutdown(void)
 	isdown = qtrue;
 
 	CL_WriteConfiguration();
-
+	if (CL_VideoRecording())
+		CL_CloseAVI();
 	CDAudio_Shutdown();
 	S_Shutdown();
 	IN_Shutdown();

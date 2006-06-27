@@ -224,7 +224,7 @@ void MN_FindEntry_f ( void )
 	Com_DPrintf("MN_FindEntry_f: id=\"%s\"\n", id); /*DEBUG */
 
 	tech = RS_GetTechByID( id );
-	
+
 	if (tech) {
 		upCurrent = tech;
 		MN_UpDrawEntry( upCurrent );
@@ -292,13 +292,15 @@ MN_UpPrev_f
 =================*/
 void MN_UpPrev_f( void )
 {
-	int upc;
-	
+	int upc = 0;
+
 	if ( !upCurrent ) return;
 
+	upc = upCurrent->up_chapter;
+
 	/* get previous chapter */
-	if (upc > 0)
-		upc = upCurrent->up_chapter - 1;
+	if (upCurrent->up_chapter > 0)
+		upc--;
 
 	/* get previous entry */
 	if ( upCurrent->prev ) {
@@ -468,7 +470,7 @@ void UP_ParseUpChapters( char *id, char **text )
 		memset( &gd.upChapters[gd.numChapters], 0, sizeof( pediaChapter_t ) );
 		Q_strncpyz( gd.upChapters[gd.numChapters].id, token, MAX_VAR );
 		gd.upChapters[gd.numChapters].idx = gd.numChapters;	/* set self-link */
-		
+
 		/* get the name */
 		token = COM_EParse( text, errhead, id );
 		if ( !*text ) break;

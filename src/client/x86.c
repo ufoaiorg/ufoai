@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -43,19 +43,44 @@ static unsigned long start, range;
 __declspec(naked)
 void x86_TimerStart(void)
 {
-__asm _emit 0f h __asm _emit 31 h __asm mov start, eax __asm ret} __declspec(naked)
+	__asm _emit 0fh
+	__asm _emit 31h
+	__asm mov start, eax
+	__asm ret
+}
+
+__declspec(naked)
 void x86_TimerStop(void)
 {
 	__asm push edi
-		__asm mov edi, histogram
-		__asm _emit 0f h
-		__asm _emit 31 h __asm sub eax, start __asm sub eax, bias __asm js discard __asm cmp eax, range __asm jge discard __asm lea edi,[edi + eax * 4]
-__asm inc dword ptr[edi] discard:__asm pop edi __asm ret}
+	__asm mov edi, histogram
+	__asm _emit 0fh
+	__asm _emit 31h
+	__asm sub eax, start
+	__asm sub eax, bias
+	__asm js discard
+	__asm cmp eax, range
+	__asm jge discard
+	__asm lea edi,[edi + eax * 4]
+	__asm inc dword ptr[edi]
+discard:
+	__asm pop edi
+	__asm ret
+}
+
 #pragma warning( disable: 4035 )
 static __declspec(naked)
 unsigned long x86_TimerStopBias(void)
 {
-__asm push edi __asm mov edi, histogram __asm _emit 0f h __asm _emit 31 h __asm sub eax, start __asm pop edi __asm ret}
+	__asm push edi
+	__asm mov edi, histogram
+	__asm _emit 0fh
+	__asm _emit 31h
+	__asm sub eax, start
+	__asm pop edi
+	__asm ret
+}
+
 #pragma warning( default:4035 )
 void x86_TimerInit(unsigned long smallest, unsigned length)
 {

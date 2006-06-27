@@ -5508,7 +5508,7 @@
 "spawnflags" "1"
 "origin" "308 472 24"
 "angles" "0 270 0"
-"model" "models/objects/locker.md2"
+"model" "models/objects/furniture/locker/locker.md2"
 "classname" "misc_model"
 }
 // entity 43

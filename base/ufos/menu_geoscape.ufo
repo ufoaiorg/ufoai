@@ -93,44 +93,46 @@ menu map
 	{
 		tooltip	"_Organisation capital"
 		string	"*cvar mn_credits"
+		size "230 40"
 		pos	"900 30"
 		font	f_big
 		align	ur
+		in
 	}
 
 	pic bt_timestop
 	{
 		tooltip	"_Reset time to 5 seconds"
-		image	menu/button_mapmen_bases
+		image	menu/buttons_time
 		pos	"565 28"
-		texl	"0 222"
-		texh	"20 242"
-		out	{ *bt_timestop texl "0 222" *bt_timestop texh "20 242" }
-		in	{ *bt_timestop texl "21 222" *bt_timestop texh "41 242" }
+		texl	"0 0"
+		texh	"20 20"
+		out	{ *bt_timestop texl "0 0" *bt_timestop texh "20 20" }
+		in	{ *bt_timestop texl "21 0" *bt_timestop texh "41 20" }
 		click	{ cmd "game_timestop;" }
 	}
 
 	pic bt_timeslow
 	{
 		tooltip	"_Slow down time"
-		image	menu/button_mapmen_bases
+		image	menu/buttons_time
 		pos	"596 28"
-		texl	"42 222"
-		texh	"52 242"
-		out	{ *bt_timeslow texl "42 222" *bt_timeslow texh "52 242" }
-		in	{ *bt_timeslow texl "64 222" *bt_timeslow texh "74 242" }
+		texl	"42 0"
+		texh	"52 20"
+		out	{ *bt_timeslow texl "42 0" *bt_timeslow texh "52 20" }
+		in	{ *bt_timeslow texl "64 0" *bt_timeslow texh "74 20" }
 		click	{ cmd "game_timeslow;" }
 	}
 
 	pic bt_timefast
 	{
 		tooltip	"_Speed up time"
-		image	menu/button_mapmen_bases
+		image	menu/buttons_time
 		pos	"616 28"
-		texl	"53 222"
-		texh	"63 242"
-		out	{ *bt_timefast texl "53 222" *bt_timefast texh "63 242" }
-		in	{ *bt_timefast texl "75 222" *bt_timefast texh "85 242" }
+		texl	"53 0"
+		texh	"63 20"
+		out	{ *bt_timefast texl "53 0" *bt_timefast texh "63 20" }
+		in	{ *bt_timefast texl "75 0" *bt_timefast texh "85 20" }
 		click	{ cmd "game_timefast;" }
 	}
 
@@ -332,36 +334,64 @@ menu popup_intercept_ready
 
 	pic bt_cancel
 	{
-		image	menu/button_mapmen_bases
-		pos	"290 450"
-		texl	"0 72"
-		texh	"127 104"
-		out	{ *bt_cancel texl "0 72" *bt_cancel texh "127 104" }
-		in	{ *bt_cancel texl "128 72" *bt_cancel texh "255 104" }
+		tooltip	"_Close this dialog"
+		image	menu/multi_buttons3
+		texh	"180 64"
+		texl	"0 33"
+		pos	"310 450"
+		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;mn_mapaction_reset;" }
+	}
+	string string_cancel
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Cancel"
+		pos	"400 448"
+		align	uc
 	}
 
 	pic bt_go
 	{
-		image	menu/button_mapmen_bases
-		pos	"445 450"
-		texl	"0 144"
-		texh	"127 176"
-		out	{ *bt_go texl "0 144" *bt_go texh "127 176" }
-		in	{ *bt_go texl "128 144" *bt_go texh "255 176" }
+		tooltip	"_Enter the battlefield"
+		image	menu/multi_buttons3
+		pos	"530 450"
+		texh	"180 64"
+		texl	"0 33"
+		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
+		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
 		click	{ cmd "game_go;" }
+	}
+	string string_go
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Enter"
+		pos	"620 448"
+		align	uc
 	}
 
 	pic bt_auto_go
 	{
 		if	"game_autogo 1.0"
-		image	menu/button_mapmen_bases
-		pos	"600 450"
-		texl	"0 180"
-		texh	"127 212"
-		out	{ *bt_auto_go texl "0 180" *bt_auto_go texh "127 212" }
-		in	{ *bt_auto_go texl "128 180" *bt_auto_go texh "255 212" }
+		tooltip	"_Automatically finish mission"
+		image	menu/multi_buttons3
+		pos	"530 410"
+		texh	"180 64"
+		texl	"0 33"
+		out	{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
+		in	{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
 		click	{ cmd "game_auto_go;" }
+	}
+	string string_auto_go
+	{
+		if	"game_autogo 1.0"
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Auto mission"
+		pos	"620 408"
+		align	uc
 	}
 
 	func init
@@ -400,7 +430,7 @@ menu popup_newbase
 	}
 	string name
 	{
-		string	"*cvar mn_base_title_new"
+		string	"*cvar mn_base_title"
 		pos	"290 330"
 		size	"440 32"
 		font	f_big
@@ -420,45 +450,43 @@ menu popup_newbase
 
 	pic bt_cancel
 	{
-		image	menu/button_mapmen_bases
+		tooltip	"_Close this dialog"
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 33"
 		pos	"290 450"
-		texl	"0 72"
-		texh	"127 104"
-		out	{ *bt_cancel texl "0 72" *bt_cancel texh "127 104" }
-		in	{ *bt_cancel texl "128 72" *bt_cancel texh "255 104" }
+		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
-
 	pic bt_build
 	{
-		image	menu/button_mapmen_bases
-		pos	"600 450"
-		texl	"0 36"
-		texh	"127 68"
-		out	{ *bt_build texl "0 36" *bt_build texh "127 68" }
-		in	{ *bt_build texl "128 36" *bt_build texh "255 68" }
+		tooltip	"_Build the base"
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 33"
+		pos	"560 450"
+		out	{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
+		in	{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;mn_build_base;" }
 	}
+	string string_cancel
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Cancel"
+		pos	"380 448"
+		align	uc
+	}
+	string string_build
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Build"
+		pos	"650 448"
+		align	uc
+	}
 
-	confunc mn_base_title_new_changed
-	{
-		*name mousefx false
-		cmd	"base_changename"
-	}
-	pic bt_edit
-	{
-		image	menu/button_mapmen_bases
-		pos	"445 450"
-		texl	"0 108"
-		texh	"127 140"
-		out	{ *bt_edit texl "0 108" *bt_edit texh "127 140" }
-		in	{ *bt_edit texl "128 108" *bt_edit texh "255 140" }
-		click
-		{
-			cmd "msgmenu ?mn_base_title_new"
-			*name mousefx true
-		}
-	}
 	func init
 	{
 		cmd "mn_setbasetitle"
@@ -519,13 +547,22 @@ menu popup_intercept
 
 	pic bt_cancel
 	{
-		image	menu/button_mapmen_bases
+		tooltip	"_Close this dialog"
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 33"
 		pos	"290 450"
-		texl	"0 72"
-		texh	"127 104"
-		out	{ *bt_cancel texl "0 72" *bt_cancel texh "127 104" }
-		in	{ *bt_cancel texl "128 72" *bt_cancel texh "255 104" }
+		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;mn_mapaction_reset;" }
+	}
+	string string_cancel
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Cancel"
+		pos	"380 448"
+		align	uc
 	}
 
 	func init
@@ -535,7 +572,7 @@ menu popup_intercept
 }
 
 // ==================
-// POPUP INTERCEPT
+// POPUP BASEATTACK
 // ==================
 
 menu popup_baseattack
@@ -552,35 +589,64 @@ menu popup_baseattack
 
 	pic bt_cancel
 	{
-		image	menu/button_mapmen_bases
-		pos	"290 450"
-		texl	"0 72"
-		texh	"127 104"
-		out	{ *bt_cancel texl "0 72" *bt_cancel texh "127 104" }
-		in	{ *bt_cancel texl "128 72" *bt_cancel texh "255 104" }
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 33"
+		pos	"310 450"
+		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;mn_mapaction_reset;" }
+	}
+	string string_cancel
+	{
+		tooltip	"_Close this dialog"
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Cancel"
+		pos	"400 448"
+		align	uc
 	}
 
 	pic bt_go
 	{
-		image	menu/button_mapmen_bases
-		pos	"445 450"
-		texl	"0 144"
-		texh	"127 176"
-		out	{ *bt_go texl "0 144" *bt_go texh "127 176" }
-		in	{ *bt_go texl "128 144" *bt_go texh "255 176" }
+		tooltip	"_Enter the battlefield"
+		image	menu/multi_buttons3
+		pos	"530 450"
+		texh	"256 64"
+		texl	"0 33"
+		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
+		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
 		click	{ cmd "game_go;" }
+	}
+	string string_go
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Enter"
+		pos	"620 448"
+		align	uc
 	}
 
 	pic bt_auto_go
 	{
-		image	menu/button_mapmen_bases
-		pos	"600 450"
-		texl	"0 180"
-		texh	"127 212"
-		out	{ *bt_auto_go texl "0 180" *bt_auto_go texh "127 212" }
-		in	{ *bt_auto_go texl "128 180" *bt_auto_go texh "255 212" }
+		if	"game_autogo 1.0"
+		tooltip	"_Automatically finish mission"
+		image	menu/multi_buttons3
+		pos	"530 420"
+		texh	"256 64"
+		texl	"0 33"
+		out	{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
+		in	{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
 		click	{ cmd "game_auto_go;" }
+	}
+	string string_auto_go
+	{
+		if	"game_autogo 1.0"
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Auto"
+		pos	"620 418"
+		align	uc
 	}
 
 	func init
@@ -601,20 +667,18 @@ menu popup
 		pos	"256 256"
 	}
 
-	pic bt_edit
+	pic bt_close
 	{
 		image	hud/close
 		pos	"722 284"
-		click
-		{
-			cmd "mn_pop"
-		}
+		click	{ cmd "mn_pop" }
 	}
 
 	text title
 	{
-		pos	"440 286"
-		align	cc
+		pos	"440 280"
+		align	uc
+		size	"38 256"
 		num	7
 	}
 

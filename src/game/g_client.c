@@ -124,7 +124,7 @@ void G_SendPlayerStats(player_t * player)
 	int i;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && ent->type == ET_ACTOR && ent->team == player->pers.team)
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == player->pers.team)
 			G_SendStats(ent);
 }
 
@@ -140,7 +140,7 @@ void G_GiveTimeUnits(int team)
 	int i;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && !(ent->state & STATE_DEAD) && ent->type == ET_ACTOR && ent->team == team) {
+		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == team) {
 			ent->TU = GET_TU(ent->chr.skills[ABILITY_SPEED]);
 			G_SendStats(ent);
 		}
@@ -158,7 +158,7 @@ void G_ResetReactionFire(int team)
 	int i;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && !(ent->state & STATE_DEAD) && ent->type == ET_ACTOR && ent->team == team) {
+		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == team) {
 			ent->state &= ~STATE_SHAKEN;	/* STATE_SHAKEN includes STATE_REACTION */
 			gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
 			gi.WriteShort(ent->number);
@@ -226,6 +226,8 @@ void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
 		/* appear */
 		switch (check->type) {
 		case ET_ACTOR:
+		case ET_UGV:
+			/* parsed in CL_ActorAppear */
 			gi.AddEvent(player_mask, EV_ACTOR_APPEAR);
 			gi.WriteShort(check->number);
 			gi.WriteByte(check->team);
@@ -236,10 +238,12 @@ void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
 				gi.WriteByte(RIGHT(check)->item.t);
 			else
 				gi.WriteByte(NONE);
+
 			if (LEFT(check))
 				gi.WriteByte(LEFT(check)->item.t);
 			else
 				gi.WriteByte(NONE);
+
 			gi.WriteShort(check->body);
 			gi.WriteShort(check->head);
 			gi.WriteByte(check->skin);
@@ -262,7 +266,7 @@ void G_AppearPerishEvent(int player_mask, int appear, edict_t * check)
 			G_SendInventory(player_mask, check);
 			break;
 		}
-	} else if (check->type == ET_ACTOR || check->type == ET_ITEM) {
+	} else if (check->type == ET_ACTOR || check->type == ET_UGV || check->type == ET_ITEM) {
 		/* disappear */
 		gi.AddEvent(player_mask, EV_ENT_PERISH);
 		gi.WriteShort(check->number);
@@ -312,7 +316,7 @@ qboolean G_TeamPointVis(int team, vec3_t point)
 
 	/* test if check is visible */
 	for (i = 0, from = g_edicts; i < globals.num_edicts; i++, from++)
-		if (from->inuse && from->type == ET_ACTOR && !(from->state & STATE_DEAD) && from->team == team && G_FrustomVis(from, point)) {
+		if (from->inuse && (from->type == ET_ACTOR || from->type == ET_UGV) && !(from->state & STATE_DEAD) && from->team == team && G_FrustomVis(from, point)) {
 			/* get viewers eye height */
 			VectorCopy(from->origin, eye);
 			if (from->state & (STATE_CROUCHED | STATE_PANIC))
@@ -383,14 +387,16 @@ float G_ActorVis(vec3_t from, edict_t * check, qboolean full)
 	}
 
 	/* return factor */
-	if (n == 0)
+	switch (n) {
+	case 0:
 		return 0.0;
-	else if (n == 1)
+	case 1:
 		return 0.1;
-	else if (n == 2)
+	case 2:
 		return 0.5;
-	else
+	default:
 		return 1.0;
+	}
 }
 
 
@@ -407,8 +413,8 @@ float G_Vis(int team, edict_t * from, edict_t * check, int flags)
 	if (!from->inuse || !check->inuse)
 		return 0.0;
 
-	/* only actors can see anything */
-	if (from->type != ET_ACTOR || (from->state & STATE_DEAD))
+	/* only actors and ugvs can see anything */
+	if ((from->type != ET_ACTOR && from->type != ET_UGV) || (from->state & STATE_DEAD))
 		return 0.0;
 
 	/* living team members are always visible */
@@ -445,11 +451,10 @@ float G_Vis(int team, edict_t * from, edict_t * check, int flags)
 	/* line trace check */
 	switch (check->type) {
 	case ET_ACTOR:
+	case ET_UGV:
 		return G_ActorVis(eye, check, qfalse);
-
 	case ET_ITEM:
 		return !gi.TestLine(eye, check->origin);
-
 	default:
 		return 0.0;
 	}
@@ -514,7 +519,7 @@ int G_CheckVisTeam(int team, edict_t * check, qboolean perish)
 
 				if (vis & VIS_YES) {
 					status |= VIS_APPEAR;
-					if (check->type == ET_ACTOR && !(check->state & STATE_DEAD) && check->team != TEAM_CIVILIAN)
+					if ((check->type == ET_ACTOR || check->type == ET_UGV) && !(check->state & STATE_DEAD) && check->team != TEAM_CIVILIAN)
 						status |= VIS_STOP;
 				} else
 					status |= VIS_PERISH;
@@ -625,7 +630,6 @@ FIXME: Integrate into hud - don´t use cprintf
 qboolean G_ActionCheck(player_t * player, edict_t * ent, int TU)
 {
 	/* a generic tester if an action could be possible */
-
 	if (level.activeTeam != player->pers.team) {
 		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - this isn't your round!\n"));
 		return qfalse;
@@ -636,7 +640,7 @@ qboolean G_ActionCheck(player_t * player, edict_t * ent, int TU)
 		return qfalse;
 	}
 
-	if (ent->type != ET_ACTOR) {
+	if (ent->type != ET_ACTOR && ent->type != ET_UGV) {
 		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not an actor!\n"));
 		return qfalse;
 	}
@@ -941,7 +945,7 @@ void G_BuildForbiddenList(int team)
 		vis_mask = 0xFFFFFFFF;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && (ent->visflags & vis_mask))
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && (ent->visflags & vis_mask))
 			fb_list[fb_length++] = ent->pos;
 
 	if (fb_length > MAX_FB_LIST)
@@ -978,7 +982,7 @@ qboolean G_CheckMoveBlock(pos3_t from, int dv)
 
 	/* search for blocker */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && VectorCompare(pos, ent->pos))
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && VectorCompare(pos, ent->pos))
 			return qtrue;
 
 	/* nothing found */
@@ -1234,24 +1238,11 @@ typedef enum {
 
 #define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
 
-#define MOB_DEATH		10
-#define MOB_WOUND		0.1
-#define	MOF_WATCHING		1.7
-#define MOF_TEAMKILL		2.0
-#define MOF_CIVILIAN		0.3
-#define MOF_ENEMY		0.5
-#define MOR_PAIN		3.6
-/*everyone gets this times morale damage */
-#define MOR_DEFAULT		0.5
-/*at this distance the following two get halfed (exponential scale) */
-#define MOR_DISTANCE		160
-/*this times morale damage gets added to all around the victim */
-#define MOR_VICTIM		0.7
-/*this times morale damage gets added to all around the attacker */
-#define MOR_ATTACKER		0.3
-/*how much the morale depends on the size of the damaged team */
-#define MON_TEAMFACTOR		0.6
-
+/**
+  * @brief Applies morale changes to actors around a wounded or killed actor
+  *
+  * only called when mor_panic is not zero
+  */
 void G_Morale(int type, edict_t * victim, edict_t * attacker, int param)
 {
 	edict_t *ent;
@@ -1259,43 +1250,44 @@ void G_Morale(int type, edict_t * victim, edict_t * attacker, int param)
 	float mod;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		/* this only applies to ET_ACTOR but not ET_UGV */
 		if (ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && ent->team != TEAM_CIVILIAN) {
 			switch (type) {
 			case ML_WOUND:
 			case ML_DEATH:
 				/* morale damage is damage dependant */
-				mod = MOB_WOUND * param;
+				mod = mob_wound->value * param;
 				/* death hurts morale even more than just damage */
 				if (type == ML_DEATH)
-					mod += MOB_DEATH;
+					mod += mob_death->value;
 				/* seeing how someone gets shot increases the morale change */
 				if (ent == victim || (G_ActorVis(ent->origin, victim, qfalse) && G_FrustomVis(ent, victim->origin)))
-					mod *= MOF_WATCHING;
+					mod *= mof_watching->value;
 				if (ent->team == attacker->team) {
 					/* teamkills are considered to be bad form, but won't cause an increased morale boost for the enemy */
 					/* morale boost isn't equal to morale loss (it's lower, but morale gets regenerated) */
 					if (victim->team == attacker->team)
-						mod *= MOF_TEAMKILL;
+						mod *= mof_teamkill->value;
 					else
-						mod *= MOF_ENEMY;
+						mod *= mof_enemy->value;
 				}
 				/* seeing a civi die is more "acceptable" */
 				if (victim->team == TEAM_CIVILIAN)
-					mod *= MOF_CIVILIAN;
+					mod *= mof_civilian->value;
 				/* if an ally (or in singleplayermode, as human, a civilian) got shot, lower the morale, don't heighten it. */
 				if (victim->team == ent->team || (victim->team == TEAM_CIVILIAN && ent->team != TEAM_ALIEN && (int) sv_maxclients->value == 1))
 					mod *= -1;
 				/* if you stand near to the attacker or the victim, the morale change is higher. */
-				mod *=
-					MOR_DEFAULT + pow(0.5, VectorDist(ent->origin, victim->origin) / MOR_DISTANCE) * MOR_VICTIM + pow(0.5,
-																													  VectorDist(ent->origin,
-																																 attacker->origin) /
-																													  MOR_DISTANCE) * MOR_ATTACKER;
+				mod *= mor_default->value + pow(0.5, VectorDist(ent->origin, victim->origin) / mor_distance->value)
+					* mor_victim->value + pow(0.5, VectorDist(ent->origin, attacker->origin) / mor_distance->value)
+					* mor_attacker->value;
 				/* morale damage is dependant on the number of living allies */
-				mod *= (1 - MON_TEAMFACTOR) + MON_TEAMFACTOR * (level.num_spawned[victim->team] + 1) / (level.num_alive[victim->team] + 1);
+				mod *= (1 - mon_teamfactor->value)
+					+ mon_teamfactor->value * (level.num_spawned[victim->team] + 1)
+					/ (level.num_alive[victim->team] + 1);
 				/* being hit isn't fun */
 				if (ent == victim)
-					mod *= MOR_PAIN;
+					mod *= mor_pain->value;
 				break;
 			default:
 				Com_Printf("Undefined morale modifier type %i\n", type);
@@ -1322,14 +1314,6 @@ void G_Morale(int type, edict_t * victim, edict_t * attacker, int param)
 G_MoraleBehaviour
 =================
 */
-#define MORALE_REGENERATION	15
-#define MORALE_SHAKEN		50
-#define MORALE_PANIC		30
-#define M_SANITY			1.0
-#define M_RAGE				0.6
-#define M_RAGE_STOP			2.0
-#define M_PANIC_STOP		1.0
-
 void G_MoralePanic(edict_t * ent, qboolean sanity)
 {
 	gi.cprintf(game.players + ent->pnum, PRINT_HIGH, _("%s panics!\n"), ent->chr.name);
@@ -1361,9 +1345,14 @@ void G_MoralePanic(edict_t * ent, qboolean sanity)
 	ent->TU = 0;
 }
 
+/**
+  * @brief Stops the panic state of an actor
+  *
+  * This is only called when cvar mor_panic is not zero
+  */
 void G_MoraleStopPanic(edict_t * ent)
 {
-	if (((ent->morale) / MORALE_PANIC) > (M_PANIC_STOP * frand()))
+	if (((ent->morale) / mor_panic->value) > (m_panic_stop->value * frand()))
 		ent->state &= ~STATE_PANIC;
 	else
 		G_MoralePanic(ent, qtrue);
@@ -1384,15 +1373,25 @@ void G_MoraleRage(edict_t * ent, qboolean sanity)
 	AI_ActorThink(game.players + ent->pnum, ent);
 }
 
+/**
+  * @brief Stops the rage state of an actor
+  *
+  * This is only called when cvar mor_panic is not zero
+  */
 void G_MoraleStopRage(edict_t * ent)
 {
-	if (((ent->morale) / MORALE_PANIC) > (M_RAGE_STOP * frand())) {
+	if (((ent->morale) / mor_panic->value) > (m_rage_stop->value * frand())) {
 		ent->state &= ~STATE_INSANE;
 		G_SendState(G_VisToPM(ent->visflags), ent);
 	} else
 		G_MoralePanic(ent, qtrue);	/*regains sanity */
 }
 
+/**
+  * @brief Applies morale behaviour on actors
+  *
+  * only called when mor_panic is not zero
+  */
 void G_MoraleBehaviour(int team)
 {
 	edict_t *ent;
@@ -1400,6 +1399,7 @@ void G_MoraleBehaviour(int team)
 	qboolean sanity;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		/* this only applies to ET_ACTOR but not to ET_UGV */
 		if (ent->inuse && ent->type == ET_ACTOR && ent->team == team && !(ent->state & STATE_DEAD)) {
 			/* civilians have a 1:1 chance to randomly run away, will be changed: */
 			if (level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
@@ -1409,17 +1409,17 @@ void G_MoraleBehaviour(int team)
 			if (((int) sv_maxclients->value >= 2 && (int) sv_enablemorale->value == 1)
 				|| (int) sv_maxclients->value == 1) {
 				/* if panic, determine what kind of panic happens: */
-				if (ent->morale <= MORALE_PANIC && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
-					if ((float) ent->morale / MORALE_PANIC > (M_SANITY * frand()))
+				if (ent->morale <= mor_panic->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
+					if ((float) ent->morale / mor_panic->value > (m_sanity->value * frand()))
 						sanity = qtrue;
 					else
 						sanity = qfalse;
-					if ((float) ent->morale / MORALE_PANIC > (M_RAGE * frand()))
+					if ((float) ent->morale / mor_panic->value > (m_rage->value * frand()))
 						G_MoralePanic(ent, sanity);
 					else
 						G_MoraleRage(ent, sanity);
 					/* if shaken, well .. be shaken; */
-				} else if (ent->morale <= MORALE_SHAKEN && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
+				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
 					ent->TU -= TU_REACTION;
 					/* shaken is later reset along with reaction fire */
 					ent->state |= STATE_SHAKEN;
@@ -1432,7 +1432,6 @@ void G_MoraleBehaviour(int team)
 						G_MoraleStopRage(ent);
 				}
 			}
-
 			/* set correct bounding box */
 			if (ent->state & (STATE_CROUCHED | STATE_PANIC))
 				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH);
@@ -1440,7 +1439,7 @@ void G_MoraleBehaviour(int team)
 				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
 
 			/* moraleregeneration, capped at max: */
-			newMorale = ent->morale + MORALE_RANDOM(MORALE_REGENERATION);
+			newMorale = ent->morale + MORALE_RANDOM(mor_regeneration->value);
 			if (newMorale > GET_MORALE(ent->chr.skills[ABILITY_MIND]))
 				ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 			else
@@ -1513,7 +1512,8 @@ void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 		G_ActorDie(ent, STATE_DEAD);
 
 		/* apply morale changes */
-		G_Morale(ML_DEATH, ent, attacker, damage);
+		if (mor_panic->value)
+			G_Morale(ML_DEATH, ent, attacker, damage);
 
 		/* count score */
 		level.num_kills[attacker->team][ent->team]++;
@@ -1529,7 +1529,7 @@ void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 	} else {
 		/* hit */
 		ent->HP -= damage;
-		if (damage > 0)
+		if (damage > 0 && mor_panic->value)
 			G_Morale(ML_WOUND, ent, attacker, damage);
 		else {
 			if (ent->HP > GET_HP(ent->chr.skills[ABILITY_POWER]))
@@ -1585,7 +1585,8 @@ void G_DamageStun(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 		G_ActorDie(ent, STATE_STUN);
 
 		/* apply morale changes */
-		G_Morale(ML_DEATH, ent, attacker, damage);
+		if (mor_panic->value)
+			G_Morale(ML_DEATH, ent, attacker, damage);
 
 		/* count the stunned ones as killed ones */
 		level.num_kills[attacker->team][ent->team]++;
@@ -1603,7 +1604,7 @@ void G_DamageStun(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 	} else {
 		/* hit */
 		ent->STUN -= damage;
-		if (damage > 0)
+		if (damage > 0 && mor_panic->value)
 			G_Morale(ML_WOUND, ent, attacker, damage);
 		G_SendStats(ent);
 	}
@@ -1631,7 +1632,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
 		if (!check->inuse)
 			continue;
 
-		if (check->type == ET_ACTOR)
+		if (check->type == ET_ACTOR || check->type == ET_UGV)
 			VectorCopy(check->origin, center);
 		else if (check->type == ET_BREAKABLE) {
 			VectorAdd(check->absmin, check->absmax, center);
@@ -1646,18 +1647,18 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
 			continue;
 
 		/* FIXME: don't make aliens in back visible */
-		if (fd->irgoggles && check->type == ET_ACTOR) {
+		if (fd->irgoggles && (check->type == ET_ACTOR || check->type == ET_UGV)) {
 			G_AppearPerishEvent(G_VisToPM(~check->visflags), 1, check);
 			check->visflags |= ~check->visflags;
 			continue;
-		} else if (fd->stun && check->type == ET_ACTOR) {
+		} else if (fd->stun && (check->type == ET_ACTOR || check->type == ET_UGV)) {
 			damage = (fd->spldmg[0] + fd->spldmg[1] * crand()) * (1.0 - dist / fd->splrad);
 			G_DamageStun(check, fd->dmgtype, damage, ent);
 			continue;
 		}
 
 		/* check for walls */
-		if (check->type == ET_ACTOR && !G_ActorVis(impact, check, qfalse))
+		if ((check->type == ET_ACTOR || check->type == ET_UGV) && !G_ActorVis(impact, check, qfalse))
 			continue;
 
 		/* do damage */
@@ -1741,12 +1742,13 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 				if (G_TeamPointVis(i, newPos))
 					mask |= 1 << i;
 
-			if (VectorLength(curV) < GRENADE_STOPSPEED || time > fd->range || bounce > fd->bounce || (!fd->delay && tr.ent && tr.ent->type == ET_ACTOR)) {
+			if (VectorLength(curV) < GRENADE_STOPSPEED || time > fd->range || bounce > fd->bounce ||
+				(!fd->delay && tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))) {
 				/* explode */
 				gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
 				gi.WriteShort(dt * 1000);
 				gi.WriteByte(type);
-				if (tr.ent && tr.ent->type == ET_ACTOR)
+				if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))
 					gi.WriteByte(SF_BODY);
 				else
 					gi.WriteByte(SF_IMPACT);
@@ -1833,7 +1835,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 
 		/* set flags */
 		if (tr.fraction < 1.0) {
-			if (tr.ent && tr.ent->type == ET_ACTOR && !fd->delay)
+			if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV) && !fd->delay)
 				flags |= SF_BODY;
 			else if (bounce < fd->bounce)
 				flags |= SF_BOUNCING;
@@ -1847,7 +1849,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 				mask |= 1 << i;
 
 		/* victims see shots */
-		if (tr.ent && tr.ent->type == ET_ACTOR)
+		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))
 			mask |= 1 << tr.ent->team;
 
 		/* send shot */
@@ -1874,7 +1876,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		damage = fd->damage[0] + fd->damage[1] * crand();
 
 		/* do damage */
-		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_BREAKABLE)) {
+		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV || tr.ent->type == ET_BREAKABLE)) {
 			G_Damage(tr.ent, fd->dmgtype, damage, ent);
 			break;
 		}
@@ -2103,7 +2105,7 @@ void G_KillTeam(void)
 	gi.dprintf("G_KillTeam: kill team %i\n", teamToKill);
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD)) {
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD)) {
 			if (teamToKill >= 0 && ent->team != teamToKill)
 				continue;
 
@@ -2130,12 +2132,12 @@ qboolean G_ReactionFire(edict_t * target)
 
 	fired = qfalse;
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && (ent->state & STATE_SHAKEN)) {
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && (ent->state & STATE_SHAKEN)) {
 			actorVis = G_ActorVis(ent->origin, target, qtrue);
 			frustom = G_FrustomVis(ent, target->origin);
 			if (actorVis > 0.4 && frustom) {
 				if (target->team == TEAM_CIVILIAN || target->team == ent->team)
-					if (!(ent->state & (STATE_SHAKEN & ~STATE_REACTION)) || (float) ent->morale / MORALE_SHAKEN > frand())
+					if (!(ent->state & (STATE_SHAKEN & ~STATE_REACTION)) || (float) ent->morale / mor_shaken->value > frand())
 						continue;
 				/*if reaction fire is triggered by a friendly unit and the shooter is still sane, don't shoot */
 				/*well, if the shooter isn't sane anymore... */
@@ -2319,7 +2321,8 @@ void G_ClientTeamInfo(player_t * player)
 
 	/* find actors */
 	for (j = 0, ent = g_edicts; j < globals.num_edicts; j++, ent++)
-		if (ent->type == ET_ACTORSPAWN && player->pers.team == ent->team)
+		if ((ent->type == ET_ACTORSPAWN || ent->type == ET_UGVSPAWN)
+			&& player->pers.team == ent->team)
 			break;
 
 	memset(count, 0, sizeof(count));
@@ -2328,8 +2331,21 @@ void G_ClientTeamInfo(player_t * player)
 			/* here the actors actually spawn */
 			level.num_alive[ent->team]++;
 			level.num_spawned[ent->team]++;
-			ent->type = ET_ACTOR;
 			ent->pnum = player->num;
+			ent->chr.fieldSize = gi.ReadByte();
+			ent->fieldSize = ent->chr.fieldSize;
+			switch (ent->fieldSize) {
+			case ACTOR_SIZE_NORMAL:
+				ent->type = ET_ACTOR;
+				break;
+			case ACTOR_SIZE_UGV:
+				ent->type = ET_UGV;
+				ent->morale = 100;
+				break;
+			default:
+				gi.dprintf("G_ClientTeamInfo: unknown edict fieldSize (%i)\n", ent->fieldSize);
+				break;
+			}
 			gi.linkentity(ent);
 
 			/* model */
@@ -2352,7 +2368,8 @@ void G_ClientTeamInfo(player_t * player)
 			ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
 			ent->AP = 100;
 			ent->STUN = 100;
-			ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
+			if (ent->type == ET_ACTOR)
+				ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 
 			/* inventory */
 			item.t = gi.ReadByte();
@@ -2476,7 +2493,8 @@ void G_ClientEndRound(player_t * player)
 
 	/* apply morale behaviour, reset reaction fire */
 	G_ResetReactionFire(level.activeTeam);
-	G_MoraleBehaviour(level.activeTeam);
+	if (mor_panic->value)
+		G_MoraleBehaviour(level.activeTeam);
 
 	/* start ai */
 	p->pers.last = NULL;

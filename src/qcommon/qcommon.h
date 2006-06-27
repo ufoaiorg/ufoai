@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define QCOMMON_DEFINED
 
 #include "../game/q_shared.h"
+#include "../game/game.h"
 
 #include <string.h>
 #include <ctype.h>
@@ -121,7 +122,13 @@ struct usercmd_s;
 struct entity_state_s;
 
 void MSG_WriteChar (sizebuf_t *sb, int c);
-void MSG_WriteByte (sizebuf_t *sb, int c);
+
+#ifdef DEBUG
+#define MSG_WriteByte(buffer, char) MSG_WriteByteDebug( buffer, char, __FILE__, __LINE__ )
+void MSG_WriteByteDebug(sizebuf_t *sb, int c, char* file, int line );
+#else
+void MSG_WriteByte(sizebuf_t *sb, int c);
+#endif
 void MSG_WriteShort (sizebuf_t *sb, int c);
 void MSG_WriteLong (sizebuf_t *sb, int c);
 void MSG_WriteFloat (sizebuf_t *sb, float f);
@@ -213,6 +220,9 @@ PROTOCOL
 #define	PORT_MASTER	27900
 #define	PORT_CLIENT	27901
 #define	PORT_SERVER	27910
+
+/* FIXME: this is the id master server */
+#define IP_MASTER "192.246.40.37"
 
 /*========================================= */
 
@@ -797,7 +807,7 @@ MISC
 #define	PRINT_ALL		0
 #define PRINT_DEVELOPER	1	/* only print when "developer 1" */
 
-void		Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush));
+void		Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush)(int, char *));
 void		Com_EndRedirect (void);
 void 		Com_Printf (char *fmt, ...);
 void 		Com_DPrintf (char *fmt, ...);
@@ -863,7 +873,7 @@ void	Sys_Init (void);
 void	Sys_AppActivate (void);
 
 void	Sys_UnloadGame (void);
-void	*Sys_GetGameAPI (void *parms);
+game_export_t *Sys_GetGameAPI (game_import_t *parms);
 /* loads the game dll and calls the api init function */
 
 char	*Sys_ConsoleInput (void);
@@ -886,8 +896,7 @@ void CL_Init (void);
 void CL_Drop (void);
 void CL_Shutdown (void);
 void CL_Frame (int msec);
-void CL_ParseScriptFirst (char *type, char *name, char **text);
-void CL_ParseScriptSecond (char *type, char *name, char **text);
+void CL_ParseClientData ( char *type, char *name, char **text );
 int  CL_GetModelInTeam ( char *team, char *body, char *head );
 void Con_Print (char *text);
 void SCR_BeginLoadingPlaque (void);
@@ -896,8 +905,5 @@ void MN_PrecacheMenus( void );
 void SV_Init (void);
 void SV_Shutdown (char *finalmsg, qboolean reconnect);
 void SV_Frame (int msec);
-
-
-char *strlwr (char *s);
 
 #endif /* QCOMMON_DEFINED */

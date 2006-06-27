@@ -1,3 +1,8 @@
+/**
+ * @file lightmap.c
+ * @brief
+ */
+
 #include "qrad.h"
 
 #define	MAX_LSTYLES	256
@@ -15,29 +20,24 @@ int			planelinks[2][MAX_MAP_PLANES];
 
 vec3_t		vnormals[MAX_MAP_VERTS];
 
-/*
-============
-LinkPlaneFaces
-============
-*/
+/**
+  *	@brief
+  */
 void LinkPlaneFaces (void)
 {
 	int		i;
 	dface_t	*f;
 
 	f = dfaces;
-	for (i=0 ; i<numfaces ; i++, f++)
-	{
+	for (i=0 ; i<numfaces ; i++, f++) {
 		facelinks[i] = planelinks[f->side][f->planenum];
 		planelinks[f->side][f->planenum] = i;
 	}
 }
 
-/*
-============
-PairEdges
-============
-*/
+/**
+  *	@brief
+  */
 void PairEdges (void)
 {
 	int		i, j, k;
@@ -45,24 +45,18 @@ void PairEdges (void)
 	edgeshare_t	*e;
 
 	f = dfaces;
-	for (i=0 ; i<numfaces ; i++, f++)
-	{
-		for (j=0 ; j<f->numedges ; j++)
-		{
+	for (i=0 ; i<numfaces ; i++, f++) {
+		for (j=0 ; j<f->numedges ; j++) {
 			k = dsurfedges[f->firstedge + j];
-			if (k < 0)
-			{
+			if (k < 0) {
 				e = &edgeshare[-k];
 				e->faces[1] = f;
-			}
-			else
-			{
+			} else {
 				e = &edgeshare[k];
 				e->faces[0] = f;
 			}
 
-			if (e->faces[0] && e->faces[1])
-			{
+			if (e->faces[0] && e->faces[1]) {
 				/* determine if coplanar */
 				if (e->faces[0]->planenum == e->faces[1]->planenum)
 					e->coplanar = qtrue;
@@ -108,11 +102,9 @@ typedef struct
 	triangle_t	tris[MAX_TRI_TRIS];
 } triangulation_t;
 
-/*
-===============
-AllocTriangulation
-===============
-*/
+/**
+  *	@brief
+  */
 triangulation_t	*AllocTriangulation (dplane_t *plane)
 {
 	triangulation_t	*t;
@@ -129,17 +121,18 @@ triangulation_t	*AllocTriangulation (dplane_t *plane)
 	return t;
 }
 
-/*
-===============
-FreeTriangulation
-===============
-*/
+/**
+  *	@brief
+  */
 void FreeTriangulation (triangulation_t *tr)
 {
 	free (tr);
 }
 
 
+/**
+  *	@brief
+  */
 triedge_t	*FindEdge (triangulation_t *trian, int p0, int p1)
 {
 	triedge_t	*e, *be;
@@ -179,6 +172,9 @@ triedge_t	*FindEdge (triangulation_t *trian, int p0, int p1)
 	return e;
 }
 
+/**
+  *	@brief
+  */
 triangle_t	*AllocTriangle (triangulation_t *trian)
 {
 	triangle_t	*t;
@@ -192,11 +188,9 @@ triangle_t	*AllocTriangle (triangulation_t *trian)
 	return t;
 }
 
-/*
-============
-TriEdge_r
-============
-*/
+/**
+  *	@brief
+  */
 void TriEdge_r (triangulation_t *trian, triedge_t *e)
 {
 	int		i, bestp = 0;
@@ -212,8 +206,7 @@ void TriEdge_r (triangulation_t *trian, triedge_t *e)
 	p0 = trian->points[e->p0]->origin;
 	p1 = trian->points[e->p1]->origin;
 	best = 1.1;
-	for (i=0 ; i< trian->numpoints ; i++)
-	{
+	for (i=0 ; i< trian->numpoints ; i++) {
 		p = trian->points[i]->origin;
 		/* a 0 dist will form a degenerate triangle */
 		if (DotProduct(p, e->normal) - e->dist < 0)
@@ -225,8 +218,7 @@ void TriEdge_r (triangulation_t *trian, triedge_t *e)
 		if (!VectorNormalize (v2,v2))
 			continue;
 		ang = DotProduct (v1, v2);
-		if (ang < best)
-		{
+		if (ang < best) {
 			best = ang;
 			bestp = i;
 		}
@@ -245,11 +237,9 @@ void TriEdge_r (triangulation_t *trian, triedge_t *e)
 	TriEdge_r (trian, FindEdge (trian, e->p0, bestp));
 }
 
-/*
-============
-TriangulatePoints
-============
-*/
+/**
+  *	@brief
+  */
 void TriangulatePoints (triangulation_t *trian)
 {
 	vec_t	d, bestd;
@@ -263,16 +253,13 @@ void TriangulatePoints (triangulation_t *trian)
 
 	/* find the two closest points */
 	bestd = 9999;
-	for (i=0 ; i<trian->numpoints ; i++)
-	{
+	for (i=0 ; i<trian->numpoints ; i++) {
 		p1 = trian->points[i]->origin;
-		for (j=i+1 ; j<trian->numpoints ; j++)
-		{
+		for (j=i+1 ; j<trian->numpoints ; j++) {
 			p2 = trian->points[j]->origin;
 			VectorSubtract (p2, p1, v1);
 			d = VectorLength (v1);
-			if (d < bestd)
-			{
+			if (d < bestd) {
 				bestd = d;
 				bp1 = i;
 				bp2 = j;
@@ -286,11 +273,9 @@ void TriangulatePoints (triangulation_t *trian)
 	TriEdge_r (trian, e2);
 }
 
-/*
-===============
-AddPointToTriangulation
-===============
-*/
+/**
+  *	@brief
+  */
 void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 {
 	int			pnum;
@@ -302,11 +287,9 @@ void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 	trian->numpoints++;
 }
 
-/*
-===============
-LerpTriangle
-===============
-*/
+/**
+  *	@brief
+  */
 void	LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t color)
 {
 	patch_t		*p1, *p2, *p3;
@@ -330,8 +313,7 @@ void	LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t c
 	x2 = DotProduct (p3->origin, t->edges[0]->normal) - t->edges[0]->dist;
 	y2 = 0;
 
-	if (fabs(y1)<ON_EPSILON || fabs(x2)<ON_EPSILON)
-	{
+	if (fabs(y1)<ON_EPSILON || fabs(x2)<ON_EPSILON) {
 		VectorCopy (base, color);
 		return;
 	}
@@ -340,14 +322,16 @@ void	LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t c
 	VectorMA (color, y/y1, d1, color);
 }
 
+/**
+  *	@brief
+  */
 qboolean PointInTriangle (vec3_t point, triangle_t *t)
 {
 	int		i;
 	triedge_t	*e;
 	vec_t	d;
 
-	for (i=0 ; i<3 ; i++)
-	{
+	for (i=0 ; i<3 ; i++) {
 		e = t->edges[i];
 		d = DotProduct (e->normal, point) - e->dist;
 		if (d < 0)
@@ -357,11 +341,9 @@ qboolean PointInTriangle (vec3_t point, triangle_t *t)
 	return qtrue;
 }
 
-/*
-===============
-SampleTriangulation
-===============
-*/
+/**
+  *	@brief
+  */
 void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
 {
 	triangle_t	*t;
@@ -371,20 +353,17 @@ void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
 	vec3_t		v1, v2;
 	int			i, j;
 
-	if (trian->numpoints == 0)
-	{
+	if (trian->numpoints == 0) {
 		VectorClear (color);
 		return;
 	}
-	if (trian->numpoints == 1)
-	{
+	if (trian->numpoints == 1) {
 		VectorCopy (trian->points[0]->totallight, color);
 		return;
 	}
 
 	/* search for triangles */
-	for (t = trian->tris, j=0 ; j < trian->numtris ; t++, j++)
-	{
+	for (t = trian->tris, j=0 ; j < trian->numtris ; t++, j++) {
 		if (!PointInTriangle (point, t))
 			continue;
 
@@ -394,8 +373,7 @@ void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
 	}
 
 	/* search for exterior edge */
-	for (e=trian->edges, j=0 ; j< trian->numedges ; e++, j++)
-	{
+	for (e=trian->edges, j=0 ; j< trian->numedges ; e++, j++) {
 		if (e->tri)
 			continue;		/* not an exterior edge */
 
@@ -422,8 +400,7 @@ void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
 	/* search for nearest point */
 	best = 99999;
 	p1 = NULL;
-	for (j=0 ; j<trian->numpoints ; j++)
-	{
+	for (j=0 ; j<trian->numpoints ; j++) {
 		p0 = trian->points[j];
 		VectorSubtract (point, p0->origin, v1);
 		d = VectorLength (v1);
@@ -473,14 +450,12 @@ typedef struct
 } lightinfo_t;
 
 
-/*
-================
-CalcFaceExtents
-
-Fills in s->texmins[] and s->texsize[]
-also sets exactmins[] and exactmaxs[]
-================
-*/
+/**
+  *	@brief
+  *
+  * Fills in s->texmins[] and s->texsize[]
+  * also sets exactmins[] and exactmaxs[]
+  */
 void CalcFaceExtents (lightinfo_t *l)
 {
 	dface_t *s;
@@ -497,8 +472,7 @@ void CalcFaceExtents (lightinfo_t *l)
 
 	tex = &texinfo[s->texinfo];
 
-	for (i=0 ; i<s->numedges ; i++)
-	{
+	for (i=0 ; i<s->numedges ; i++) {
 		e = dsurfedges[s->firstedge+i];
 		if (e >= 0)
 			v = dvertexes + dedges[e].v[0];
@@ -508,8 +482,7 @@ void CalcFaceExtents (lightinfo_t *l)
 /*		VectorAdd (v->point, l->modelorg, vt); */
 		VectorCopy (v->point, vt);
 
-		for (j=0 ; j<2 ; j++)
-		{
+		for (j=0 ; j<2 ; j++) {
 			val = DotProduct (vt, tex->vecs[j]) + tex->vecs[j][3];
 			if (val < mins[j])
 				mins[j] = val;
@@ -518,8 +491,7 @@ void CalcFaceExtents (lightinfo_t *l)
 		}
 	}
 
-	for (i=0 ; i<2 ; i++)
-	{
+	for (i=0 ; i<2 ; i++) {
 		l->exactmins[i] = mins[i];
 		l->exactmaxs[i] = maxs[i];
 
@@ -533,13 +505,11 @@ void CalcFaceExtents (lightinfo_t *l)
 	}
 }
 
-/*
-================
-CalcFaceVectors
-
-Fills in texorg, worldtotex. and textoworld
-================
-*/
+/**
+  *	@brief
+  *
+  * Fills in texorg, worldtotex. and textoworld
+  */
 void CalcFaceVectors (lightinfo_t *l)
 {
 	texinfo_t	*tex;
@@ -551,13 +521,13 @@ void CalcFaceVectors (lightinfo_t *l)
 
 	tex = &texinfo[l->face->texinfo];
 
-/* convert from float to double */
+	/* convert from float to double */
 	for (i=0 ; i<2 ; i++)
 		for (j=0 ; j<3 ; j++)
 			l->worldtotex[i][j] = tex->vecs[i][j];
 
-/* calculate a normal to the texture axis.  points can be moved along this */
-/* without changing their S/T */
+	/* calculate a normal to the texture axis.  points can be moved along this */
+	/* without changing their S/T */
 	texnormal[0] = tex->vecs[1][1]*tex->vecs[0][2]
 		- tex->vecs[1][2]*tex->vecs[0][1];
 	texnormal[1] = tex->vecs[1][2]*tex->vecs[0][0]
@@ -566,25 +536,22 @@ void CalcFaceVectors (lightinfo_t *l)
 		- tex->vecs[1][1]*tex->vecs[0][0];
 	VectorNormalize (texnormal, texnormal);
 
-/* flip it towards plane normal */
+	/* flip it towards plane normal */
 	distscale = DotProduct (texnormal, l->facenormal);
-	if (!distscale)
-	{
+	if (!distscale) {
 		qprintf ("WARNING: Texture axis perpendicular to face\n");
 		distscale = 1;
 	}
-	if (distscale < 0)
-	{
+	if (distscale < 0) {
 		distscale = -distscale;
 		VectorSubtract (vec3_origin, texnormal, texnormal);
 	}
 
-/* distscale is the ratio of the distance along the texture normal to */
-/* the distance along the plane normal */
+	/* distscale is the ratio of the distance along the texture normal to */
+	/* the distance along the plane normal */
 	distscale = 1/distscale;
 
-	for (i=0 ; i<2 ; i++)
-	{
+	for (i=0 ; i<2 ; i++) {
 		len = VectorLength (l->worldtotex[i]);
 		dist = DotProduct (l->worldtotex[i], l->facenormal);
 		dist *= distscale;
@@ -593,11 +560,11 @@ void CalcFaceVectors (lightinfo_t *l)
 	}
 
 
-/* calculate texorg on the texture plane */
+	/* calculate texorg on the texture plane */
 	for (i=0 ; i<3 ; i++)
 		l->texorg[i] = -tex->vecs[0][3]* l->textoworld[0][i] - tex->vecs[1][3] * l->textoworld[1][i];
 
-/* project back to the face plane */
+	/* project back to the face plane */
 	dist = DotProduct (l->texorg, l->facenormal) - l->facedist - 1;
 	dist *= distscale;
 	VectorMA (l->texorg, -dist, texnormal, l->texorg);
@@ -611,14 +578,12 @@ void CalcFaceVectors (lightinfo_t *l)
 	l->numsurfpt = w * h;
 }
 
-/*
-=================
-CalcPoints
-
-For each texture aligned grid point, back project onto the plane
-to get the world xyz value of the sample point
-=================
-*/
+/**
+  *	@brief
+  *
+  * For each texture aligned grid point, back project onto the plane
+  * to get the world xyz value of the sample point
+  */
 void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 {
 	int		i;
@@ -646,55 +611,42 @@ void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	startt = l->texmins[1]*step;
 
 
-	for (t=0 ; t<h ; t++)
-	{
-		for (s=0 ; s<w ; s++, surf+=3)
-		{
+	for (t=0 ; t<h ; t++) {
+		for (s=0 ; s<w ; s++, surf+=3) {
 			us = starts + (s+sofs)*step;
 			ut = startt + (t+tofs)*step;
 
 
-		/* if a line can be traced from surf to facemid, the point is good */
-			for (i=0 ; i<6 ; i++)
-			{
+			/* if a line can be traced from surf to facemid, the point is good */
+			for (i=0 ; i<6 ; i++) {
 			/* calculate texture point */
 				for (j=0 ; j<3 ; j++)
 					surf[j] = l->texorg[j] + l->textoworld[0][j]*us
 					+ l->textoworld[1][j]*ut;
 
 				leaf = PointInLeafRad (surf);
-				if (leaf->contents != CONTENTS_SOLID)
-				{
+				if (leaf->contents != CONTENTS_SOLID) {
 					if (!TestLine (facemid, surf))
 						break;	/* got it */
 				}
 
 				/* nudge it */
-				if (i & 1)
-				{
-					if (us > mids)
-					{
+				if (i & 1) {
+					if (us > mids) {
 						us -= 4;
 						if (us < mids)
 							us = mids;
-					}
-					else
-					{
+					} else {
 						us += 4;
 						if (us > mids)
 							us = mids;
 					}
-				}
-				else
-				{
-					if (ut > midt)
-					{
+				} else {
+					if (ut > midt) {
 						ut -= 4;
 						if (ut < midt)
 							ut = midt;
-					}
-					else
-					{
+					} else {
 						ut += 4;
 						if (ut > midt)
 							ut = midt;
@@ -730,18 +682,15 @@ float		sun_intensity;
 float		sun_pitch, sun_yaw;
 vec3_t		sun_dir;
 
-/*
-==================
-FindTargetEntity
-==================
-*/
+/**
+  *	@brief
+  */
 entity_t *FindTargetEntity (char *target)
 {
 	int		i;
 	char	*n;
 
-	for (i=0 ; i<num_entities ; i++)
-	{
+	for (i=0 ; i<num_entities ; i++) {
 		n = ValueForKey (&entities[i], "targetname");
 		if (!strcmp (n, target))
 			return &entities[i];
@@ -753,11 +702,9 @@ entity_t *FindTargetEntity (char *target)
 /*#define	DIRECT_LIGHT	3000 */
 #define	DIRECT_LIGHT	3
 
-/*
-=============
-CreateDirectLights
-=============
-*/
+/**
+  *	@brief
+  */
 void CreateDirectLights (void)
 {
 	int		i;
@@ -772,11 +719,8 @@ void CreateDirectLights (void)
 	char	*_color;
 	float	intensity;
 
-	/* */
 	/* surfaces */
-	/* */
-	for (i=0, p=patches ; i<num_patches ; i++, p++)
-	{
+	for (i=0, p=patches ; i<num_patches ; i++, p++) {
 		if (p->totallight[0] < DIRECT_LIGHT
 			&& p->totallight[1] < DIRECT_LIGHT
 			&& p->totallight[2] < DIRECT_LIGHT)
@@ -800,11 +744,8 @@ void CreateDirectLights (void)
 		VectorClear (p->totallight);	/* all sent now */
 	}
 
-	/* */
 	/* entities */
-	/* */
-	for (i=0 ; i<num_entities ; i++)
-	{
+	for (i=0 ; i<num_entities ; i++) {
 		e = &entities[i];
 		name = ValueForKey (e, "classname");
 		if (strncmp (name, "light", 5))
@@ -830,53 +771,41 @@ void CreateDirectLights (void)
 		if (!intensity)
 			intensity = 300;
 		_color = ValueForKey (e, "_color");
-		if (_color && _color[1])
-		{
+		if (_color && _color[1]) {
 			sscanf (_color, "%f %f %f", &dl->color[0],&dl->color[1],&dl->color[2]);
 			ColorNormalize (dl->color, dl->color);
-		}
-		else
+		} else
 			dl->color[0] = dl->color[1] = dl->color[2] = 1.0;
 		dl->intensity = intensity*entity_scale;
 		dl->type = emit_point;
 
 		target = ValueForKey (e, "target");
 
-		if (!strcmp (name, "light_spot") || target[0])
-		{
+		if (!strcmp (name, "light_spot") || target[0]) {
 			dl->type = emit_spotlight;
 			dl->stopdot = FloatForKey (e, "_cone");
 			if (!dl->stopdot)
 				dl->stopdot = 10;
 			dl->stopdot = cos(dl->stopdot/180*3.14159);
-			if (target[0])
-			{	/* point towards target */
+			if (target[0]) {	/* point towards target */
 				e2 = FindTargetEntity (target);
 				if (!e2)
 					printf ("WARNING: light at (%i %i %i) has missing target\n",
 					(int)dl->origin[0], (int)dl->origin[1], (int)dl->origin[2]);
-				else
-				{
+				else {
 					GetVectorForKey (e2, "origin", dest);
 					VectorSubtract (dest, dl->origin, dl->normal);
 					VectorNormalize (dl->normal, dl->normal);
 				}
-			}
-			else
-			{	/* point down angle */
+			} else {	/* point down angle */
 				angle = FloatForKey (e, "angle");
-				if (angle == ANGLE_UP)
-				{
+				if (angle == ANGLE_UP) {
 					dl->normal[0] = dl->normal[1] = 0;
 					dl->normal[2] = 1;
-				}
-				else if (angle == ANGLE_DOWN)
-				{
+				} else if (angle == ANGLE_DOWN) {
 					dl->normal[0] = dl->normal[1] = 0;
 					dl->normal[2] = -1;
-				}
-				else
-				{
+				} else {
 					dl->normal[2] = 0;
 					dl->normal[0] = cos (angle/180*3.14159);
 					dl->normal[1] = sin (angle/180*3.14159);
@@ -885,26 +814,21 @@ void CreateDirectLights (void)
 		}
 	}
 
-	/* */
 	/* sun light (parameters in worldspawn) */
-	/* */
 	e = &entities[0];
 
 	/* get intensity */
 	sun_intensity = FloatForKey (e, "light");
-	if ( sun_intensity )
-	{
+	if ( sun_intensity ) {
 		/* there is a sun */
 		char *angles;
 
 		/* get color */
 		_color = ValueForKey( e, "_color" );
-		if (_color && _color[1])
-		{
+		if (_color && _color[1]) {
 			sscanf (_color, "%f %f %f", &sun_color[0], &sun_color[1], &sun_color[2]);
 			ColorNormalize( sun_color, sun_color );
-		}
-		else
+		} else
 			sun_color[0] = sun_color[1] = sun_color[2] = 1.0;
 
 		/* get angles */
@@ -930,13 +854,11 @@ void CreateDirectLights (void)
 }
 
 
-/*
-=============
-GatherSampleLight
-
-Lightscale is the normalizer for multisampling
-=============
-*/
+/**
+  *	@brief
+  *
+  * Lightscale is the normalizer for multisampling
+  */
 void GatherSampleLight (vec3_t pos, vec3_t normal,
 			float **styletable, int offset, int mapsize, float lightscale)
 {
@@ -948,16 +870,14 @@ void GatherSampleLight (vec3_t pos, vec3_t normal,
 	float			scale = 0.0f;
 	float			*dest;
 
-	for (l=directlights ; l ; l=l->next)
-	{
+	for (l=directlights ; l ; l=l->next) {
 		VectorSubtract (l->origin, pos, delta);
 		dist = VectorNormalize (delta, delta);
 		dot = DotProduct (delta, normal);
 		if (dot <= 0.001)
 			continue;	/* behind sample surface */
 
-		switch (l->type)
-		{
+		switch (l->type) {
 		case emit_point:
 			/* linear falloff */
 			scale = (l->intensity - dist) * dot;
@@ -988,8 +908,7 @@ void GatherSampleLight (vec3_t pos, vec3_t normal,
 			continue;	/* occluded */
 
 		/* if this style doesn't have a table yet, allocate one */
-		if (!styletable[l->style])
-		{
+		if (!styletable[l->style]) {
 			styletable[l->style] = malloc (mapsize);
 			memset (styletable[l->style], 0, mapsize);
 		}
@@ -1015,8 +934,7 @@ skipadd: ;
 		return; /* occluded */
 
 	/* if this style doesn't have a table yet, allocate one */
-	if (!styletable[0])
-	{
+	if (!styletable[0]) {
 		styletable[0] = malloc (mapsize);
 		memset (styletable[0], 0, mapsize);
 	}
@@ -1027,19 +945,17 @@ skipadd: ;
 	VectorMA (dest, sun_intensity * dot * lightscale, sun_color, dest);
 }
 
-/*
-=============
-AddSampleToPatch
-
-Take the sample's collected light and
-add it back into the apropriate patch
-for the radiosity pass.
-
-The sample is added to all patches that might include
-any part of it.  They are counted and averaged, so it
-doesn't generate extra light.
-=============
-*/
+/**
+  *	@brief
+  *
+  * Take the sample's collected light and
+  * add it back into the apropriate patch
+  * for the radiosity pass.
+  *
+  * The sample is added to all patches that might include
+  * any part of it.  They are counted and averaged, so it
+  * doesn't generate extra light.
+  */
 void AddSampleToPatch (vec3_t pos, vec3_t color, int facenum)
 {
 	patch_t	*patch;
@@ -1051,12 +967,10 @@ void AddSampleToPatch (vec3_t pos, vec3_t color, int facenum)
 	if (color[0] + color[1] + color[2] < 3)
 		return;
 
-	for (patch = face_patches[facenum] ; patch ; patch=patch->next)
-	{
+	for (patch = face_patches[facenum] ; patch ; patch=patch->next) {
 		/* see if the point is in this patch (roughly) */
 		WindingBounds (patch->winding, mins, maxs);
-		for (i=0 ; i<3 ; i++)
-		{
+		for (i=0 ; i<3 ; i++) {
 			if (mins[i] > pos[i] + 8)
 				goto nextpatch;
 			if (maxs[i] < pos[i] - 8)
@@ -1071,15 +985,10 @@ nextpatch:;
 }
 
 
-/*
-=============
-BuildFacelights
-=============
-*/
-float	sampleofs[5][2] =
-{  {0,0}, {-0.4, -0.4}, {0.4, -0.4}, {0.4, 0.4}, {-0.4, 0.4} };
-
-
+/**
+  *	@brief
+  */
+float sampleofs[5][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4}, {0.4, 0.4}, {-0.4, 0.4} };
 void BuildFacelights (int facenum)
 {
 	dface_t	*f;
@@ -1091,17 +1000,10 @@ void BuildFacelights (int facenum)
 	int			numsamples;
 	int			tablesize;
 	facelight_t		*fl;
-/* 	int			*se; */
-/* 	int			v, a, b; */
-/* 	vec3_t		delta; */
-/* 	vec3_t		normal; */
-/* 	vec3_t		tv[32], tn[32]; */
-/* 	vec3_t		p, q, inv[2]; */
-/* 	float		idet; */
 
 	f = &dfaces[facenum];
 
-	if ( texinfo[f->texinfo].flags & (SURF_WARP|SURF_SKY) )
+	if ( texinfo[f->texinfo].flags & SURF_WARP )
 		return;		/* non-lit texture */
 
 	l = malloc( 5 * sizeof(lightinfo_t) );
@@ -1111,15 +1013,13 @@ void BuildFacelights (int facenum)
 		numsamples = 5;
 	else
 		numsamples = 1;
-	for (i=0 ; i<numsamples ; i++)
-	{
+	for (i=0 ; i<numsamples ; i++) {
 		memset (&l[i], 0, sizeof(l[i]));
 		l[i].surfnum = facenum;
 		l[i].face = f;
 		VectorCopy (dplanes[f->planenum].normal, l[i].facenormal);
 		l[i].facedist = dplanes[f->planenum].dist;
-		if (f->side)
-		{
+		if (f->side) {
 			VectorSubtract (vec3_origin, l[i].facenormal, l[i].facenormal);
 			l[i].facedist = -l[i].facedist;
 		}
@@ -1142,8 +1042,7 @@ void BuildFacelights (int facenum)
 	memcpy (fl->origins, l[0].surfpt, tablesize);
 
 	/* get the light samples */
-	for (i=0 ; i<l[0].numsurfpt ; i++)
-	{
+	for (i=0 ; i<l[0].numsurfpt ; i++) {
 		for (j=0 ; j<numsamples ; j++)
 			GatherSampleLight (l[j].surfpt[i], l[0].facenormal, styletable,
 				i*3, tablesize, 1.0/numsamples);
@@ -1154,19 +1053,10 @@ void BuildFacelights (int facenum)
 
 	/* average up the direct light on each patch for radiosity */
 	for (patch = face_patches[facenum] ; patch ; patch=patch->next)
-	{
 		if (patch->samples)
-		{
 			VectorScale (patch->samplelight, 1.0/patch->samples, patch->samplelight);
-		}
-		else
-		{
-/*			printf ("patch with no samples\n"); */
-		}
-	}
 
-	for (i=0 ; i<MAX_LSTYLES ; i++)
-	{
+	for (i=0 ; i<MAX_LSTYLES ; i++) {
 		if (!styletable[i])
 			continue;
 		if (fl->numstyles == MAX_STYLES)
@@ -1182,27 +1072,22 @@ void BuildFacelights (int facenum)
 	if (face_patches[facenum]->baselight[0] >= DIRECT_LIGHT ||
 		face_patches[facenum]->baselight[1] >= DIRECT_LIGHT ||
 		face_patches[facenum]->baselight[2] >= DIRECT_LIGHT
-		)
-	{
+		) {
 		spot = fl->samples[0];
 		for (i=0 ; i<l[0].numsurfpt ; i++, spot+=3)
-		{
 			VectorAdd (spot, face_patches[facenum]->baselight, spot);
-		}
 	}
 
 	free( l );
 }
 
 
-/*
-=============
-FinalLightFace
-
-Add the indirect lighting on top of the direct
-lighting and save into final map format
-=============
-*/
+/**
+  *	@brief
+  *
+  * Add the indirect lighting on top of the direct
+  * lighting and save into final map format
+  */
 void FinalLightFace (int facenum)
 {
 	dface_t		*f;
@@ -1220,8 +1105,9 @@ void FinalLightFace (int facenum)
 	f = &dfaces[facenum];
 	fl = &facelight[facenum];
 
-	if ( texinfo[f->texinfo].flags & (SURF_WARP|SURF_SKY) )
-		return;		/* non-lit texture */
+	/* non-lit texture */
+	if ( texinfo[f->texinfo].flags & SURF_WARP )
+		return;
 
 	ThreadLock ();
 	f->lightofs = lightdatasize;
@@ -1241,15 +1127,11 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 	f->styles[0] = 0;
 	f->styles[1] = f->styles[2] = f->styles[3] = 0xff;
 
-	/* */
 	/* set up the triangulation */
-	/* */
-	if (numbounce > 0)
-	{
+	if (numbounce > 0) {
 		ClearBounds (facemins, facemaxs);
-		for (i=0 ; i<f->numedges ; i++)
-		{
-			int		ednum;
+		for (i=0 ; i<f->numedges ; i++) {
+			int ednum;
 
 			ednum = dsurfedges[f->firstedge+i];
 			if (ednum >= 0)
@@ -1265,12 +1147,9 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 		/* for all faces on the plane, add the nearby patches */
 		/* to the triangulation */
 		for (pfacenum = planelinks[f->side][f->planenum]
-			; pfacenum ; pfacenum = facelinks[pfacenum])
-		{
-			for (patch = face_patches[pfacenum] ; patch ; patch=patch->next)
-			{
-				for (i=0 ; i < 3 ; i++)
-				{
+			; pfacenum ; pfacenum = facelinks[pfacenum]) {
+			for (patch = face_patches[pfacenum] ; patch ; patch=patch->next) {
+				for (i=0 ; i < 3 ; i++) {
 					if (facemins[i] - patch->origin[i] > subdiv*2)
 						break;
 					if (patch->origin[i] - facemaxs[i] > subdiv*2)
@@ -1286,9 +1165,7 @@ dlightdata[lightdatasize-(i+1)*3 + 1] = 255;
 		TriangulatePoints (trian);
 	}
 
-	/* */
 	/* sample the triangulation */
-	/* */
 
 	/* _minlight allows models that have faces that would not be */
 	/* illuminated to receive a mottled light pattern instead of */

@@ -468,4 +468,3 @@ void Sys_SetFPCW( void )
 	__asm mov fpu_sp24_ceil_cw, eax
 }
 #endif
-

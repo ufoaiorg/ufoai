@@ -22,7 +22,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -109,11 +109,8 @@ struct edict_s {
 
 /*=============================================================== */
 
-typedef struct routing_s routing_t;
-
-/* */
+/*typedef struct routing_s routing_t;*/
 /* functions provided by the main engine */
-/* */
 typedef struct {
 	/* client/server information */
 	int seed;
@@ -222,9 +219,7 @@ typedef struct {
 	void (*DebugGraph) (float value, int color);
 } game_import_t;
 
-/* */
 /* functions exported by the game subsystem */
-/* */
 typedef struct {
 	int apiversion;
 
@@ -267,13 +262,11 @@ typedef struct {
 	/* of the parameters */
 	void (*ServerCommand) (void);
 
-	/* */
 	/* global variables shared between game and server */
-	/* */
 
 	/* The edict array is allocated in the game dll so it */
 	/* can vary in size from one game to another. */
-	/* */
+
 	/* The size will be fixed when ge->Init() is called */
 	struct edict_s *edicts;
 	int edict_size;
@@ -285,6 +278,6 @@ typedef struct {
 	int max_players;
 } game_export_t;
 
-game_export_t *GetGameApi(game_import_t * import);
+typedef game_export_t *(*GetGameApi_t) (game_import_t * import);
 
-#endif							/* GAME_GAME_H */
+#endif /* GAME_GAME_H */

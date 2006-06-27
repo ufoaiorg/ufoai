@@ -325,8 +325,8 @@ links:
 	ln -s src/$(BUILD_DEBUG_DIR)/ufoded ../ufoded
 	ln -s src/$(BUILD_DEBUG_DIR)/ufo ../ufo
 	ln -s src/$(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
-	ln -s src/$(BUILD_DEBUG_DIR)/ref_sdl.so ../ref_glx.so
-	ln -s src/$(BUILD_DEBUG_DIR)/ref_glx.so ../ref_sdl.so
+	ln -s src/$(BUILD_DEBUG_DIR)/ref_sdl.so ../ref_sdl.so
+	ln -s src/$(BUILD_DEBUG_DIR)/ref_glx.so ../ref_glx.so
 	ln -s ../src/$(BUILD_DEBUG_DIR)/game.so ../base/game.so
 
 copy_debug:
@@ -334,8 +334,8 @@ copy_debug:
 	cp $(BUILD_DEBUG_DIR)/ufoded ../ufoded
 	cp $(BUILD_DEBUG_DIR)/ufo ../ufo
 	cp $(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
-	cp $(BUILD_DEBUG_DIR)/ref_sdl.so ../ref_glx.so
-	cp $(BUILD_DEBUG_DIR)/ref_glx.so ../ref_sdl.so
+	cp $(BUILD_DEBUG_DIR)/ref_sdl.so ../ref_sdl.so
+	cp $(BUILD_DEBUG_DIR)/ref_glx.so ../ref_glx.so
 	cp $(BUILD_DEBUG_DIR)/game.so ../base/game.so
 
 release: build_release

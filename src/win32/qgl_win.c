@@ -3070,9 +3070,9 @@ qboolean QGL_Init( const char *dllname )
 
 		g = 2.00 * ( 0.8 - ( vid_gamma->value - 0.5 ) ) + 1.0F;
 		Com_sprintf( envbuffer, sizeof(envbuffer), "SSTV2_GAMMA=%f", g );
-		putenv( envbuffer );
+		Q_putenv( envbuffer );
 		Com_sprintf( envbuffer, sizeof(envbuffer), "SST_GAMMA=%f", g );
-		putenv( envbuffer );
+		Q_putenv( envbuffer );
 	}
 
 	if ( ( glw_state.hinstOpenGL = LoadLibrary( dllname ) ) == 0 )
@@ -3183,12 +3183,12 @@ qboolean QGL_Init( const char *dllname )
 	qglFogiv                     = 	dllFogiv                     = GPA( "glFogiv" );
 	qglFrontFace                 = 	dllFrontFace                 = GPA( "glFrontFace" );
 	qglFrustum                   = 	dllFrustum                   = GPA( "glFrustum" );
-	qglGenLists                  = 	dllGenLists                  = GPA( "glGenLists" );
+	qglGenLists                  = 	dllGenLists                  = ( GLuint ( APIENTRY *)(GLsizei) )GPA( "glGenLists" );
 	qglGenTextures               = 	dllGenTextures               = GPA( "glGenTextures" );
 	qglGetBooleanv               = 	dllGetBooleanv               = GPA( "glGetBooleanv" );
 	qglGetClipPlane              = 	dllGetClipPlane              = GPA( "glGetClipPlane" );
 	qglGetDoublev                = 	dllGetDoublev                = GPA( "glGetDoublev" );
-	qglGetError                  = 	dllGetError                  = GPA( "glGetError" );
+	qglGetError                  = 	dllGetError                  = (GLenum ( APIENTRY *)(void) )GPA( "glGetError" );
 	qglGetFloatv                 = 	dllGetFloatv                 = GPA( "glGetFloatv" );
 	qglGetIntegerv               = 	dllGetIntegerv               = GPA( "glGetIntegerv" );
 	qglGetLightfv                = 	dllGetLightfv                = GPA( "glGetLightfv" );
@@ -4164,5 +4164,3 @@ void GLimp_LogNewFrame( void )
 #ifdef _MSC_VER
 #pragma warning (default : 4113 4133 4047 )
 #endif
-
-

@@ -39,6 +39,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../qcommon/qcommon.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#else
+typedef void* HINSTANCE;
+typedef void* WNDPROC;
+#endif
+
+
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
 
@@ -256,7 +264,7 @@ typedef struct {
 	int api_version;
 
 	/* called when the library is loaded */
-	 qboolean(*Init) (void *hinstance, void *wndproc);
+	 qboolean(*Init) (HINSTANCE hinstance, WNDPROC wndproc);
 
 	/* called before the library is unloaded */
 	void (*Shutdown) (void);
@@ -369,6 +377,6 @@ typedef struct {
 
 
 /* this is the only function actually exported at the linker level */
-typedef refexport_t(*GetRefAPI_t) (refimport_t);
+typedef refexport_t (*GetRefAPI_t) (refimport_t );
 
 #endif /* CLIENT_REF_H */

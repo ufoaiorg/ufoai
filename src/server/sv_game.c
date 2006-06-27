@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -482,10 +482,10 @@ void SV_InitGameProgs(void)
 	import.csi = &csi;
 	import.map = (void *) &svMap;
 
-	ge = (game_export_t *) Sys_GetGameAPI(&import);
+	ge = Sys_GetGameAPI(&import);
 
 	if (!ge)
-		Com_Error(ERR_DROP, "failed to load game DLL");
+		Com_Error(ERR_DROP, "failed to load game library");
 	if (ge->apiversion != GAME_API_VERSION)
 		Com_Error(ERR_DROP, "game is version %i, not %i", ge->apiversion, GAME_API_VERSION);
 

@@ -113,9 +113,7 @@ void GL_ScreenShot_f (void)
 	Com_sprintf (checkname, sizeof(checkname), "%s/scrnshot", ri.FS_Gamedir());
 	Sys_Mkdir (checkname);
 
-	/* */
 	/* find a file name to save it to */
-	/* */
 	Q_strncpyz(picname,"ufo00.tga", sizeof(checkname) );
 
 	for (i=0 ; i<=99 ; i++) {
@@ -123,8 +121,9 @@ void GL_ScreenShot_f (void)
 		picname[4] = i%10 + '0';
 		Com_sprintf (checkname, sizeof(checkname), "%s/scrnshot/%s", ri.FS_Gamedir(), picname);
 		f = fopen (checkname, "rb");
+		/* file doesn't exist */
 		if (!f)
-			break;	/* file doesn't exist */
+			break;
 		fclose (f);
 	}
 	if (i==100) {
@@ -134,12 +133,14 @@ void GL_ScreenShot_f (void)
 
 	buffer = malloc(vid.width*vid.height*3 + 18);
 	memset (buffer, 0, 18);
-	buffer[2] = 2;		/* uncompressed type */
+	/* uncompressed type */
+	buffer[2] = 2;
 	buffer[12] = vid.width&255;
 	buffer[13] = vid.width>>8;
 	buffer[14] = vid.height&255;
 	buffer[15] = vid.height>>8;
-	buffer[16] = 24;	/* pixel size */
+	/* pixel size */
+	buffer[16] = 24;
 
 	qglReadPixels (0, 0, vid.width, vid.height, GL_RGB, GL_UNSIGNED_BYTE, buffer+18 );
 
@@ -338,7 +339,8 @@ void R_DrawBox( entity_t *e )
 	qglEnable( GL_BLEND );
 	qglDisable( GL_CULL_FACE );
 	qglDisable( GL_TEXTURE_2D );
-	if ( !gl_wire->value ) qglPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
+	if ( !gl_wire->value )
+		qglPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
 	qglEnable( GL_LINE_SMOOTH );
 
 	qglColor4f( e->angles[0], e->angles[1], e->angles[2], e->alpha );
@@ -374,7 +376,8 @@ void R_DrawBox( entity_t *e )
 	qglEnd();
 
 	qglDisable( GL_LINE_SMOOTH );
-	if ( !gl_wire->value ) qglPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	if ( !gl_wire->value )
+		qglPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 	qglEnable( GL_TEXTURE_2D );
 	qglEnable( GL_CULL_FACE );
 	qglDisable( GL_BLEND );

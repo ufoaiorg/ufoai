@@ -30,6 +30,8 @@ static const	SDL_Color color = {255, 255, 255, 0}; /* The 4. value is unused */
 /* holds the gettext string */
 static char	buf[BUF_SIZE];
 static int	numInCache;
+static int	firstTextureCache = 0;
+static int	lastTextureCache = 0;
 fontRenderStyle_t fontStyle[] = {
 	{"TTF_STYLE_NORMAL", TTF_STYLE_NORMAL},
 	{"TTF_STYLE_BOLD", TTF_STYLE_BOLD},
@@ -39,7 +41,52 @@ fontRenderStyle_t fontStyle[] = {
 
 /*============================================================== */
 
-static void Font_ConvertChars ( char* buffer );
+/*================
+Font_TextureAddToCache
+================*/
+static GLuint Font_TextureAddToCache( SDL_Surface *s )
+{
+	int i;
+
+	for (i = firstTextureCache; i != lastTextureCache; i++, i %= MAX_TEXTURE_CACHE)
+		if (textureCache[i].surface == s)
+			break;
+
+	if (i == lastTextureCache) {
+		lastTextureCache++;
+		lastTextureCache %= MAX_TEXTURE_CACHE;
+
+		if (lastTextureCache == firstTextureCache) {
+			qglDeleteTextures(1, &textureCache[i].texture);
+			textureCache[i].surface = 0;
+			textureCache[i].texture = 0;
+
+			firstTextureCache++;
+			firstTextureCache %= MAX_TEXTURE_CACHE;
+		}
+
+		textureCache[i].surface = s;
+		qglGenTextures(1, &textureCache[i].texture);
+	}
+
+	return textureCache[i].texture;
+}
+
+/*================
+Font_TextureCleanCache
+================*/
+static void Font_TextureCleanCache( void )
+{
+	int i;
+
+	for (i = firstTextureCache; i != lastTextureCache; i++, i %= MAX_TEXTURE_CACHE) {
+		qglDeleteTextures(1, &textureCache[i].texture);
+		textureCache[i].surface = 0;
+		textureCache[i].texture = 0;
+	}
+
+	firstTextureCache = lastTextureCache = 0;
+}
 
 /*===============
 Font_Shutdown
@@ -51,6 +98,7 @@ void Font_Shutdown ( void )
 	int i;
 
 	Font_CleanCache();
+	Font_TextureCleanCache();
 
 	for ( i = 0; i < numFonts; i++ )
 		if ( fonts[i].font )
@@ -320,8 +368,12 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 	if ( buffer == NULL )
 		return NULL;
 
-	if ( ! maxWidth )
-		maxWidth = VID_NORM_WIDTH;
+	if ( ! maxWidth ) {
+#ifdef PARANOID
+		ri.Con_Printf (PRINT_DEVELOPER, "Font_GetLineWrap: maxWidth was %i and is now %i\n", maxWidth, VID_NORM_WIDTH );
+#endif
+		maxWidth = VID_NORM_WIDTH*vid.rx;
+	}
 
 	/* no line wrap needed? */
 	TTF_SizeUTF8( f->font, buffer, &w, &h );
@@ -355,9 +407,9 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 			*width = oldW;
 			*space = ' ';
 			*newlineTest = '\0';
-			return newlineTest + 1;
-		}
-		else if ( maxWidth - w == 0 )
+			return
+				newlineTest + 1;
+		} else if ( maxWidth - w == 0 )
 			return space + 1;
 		newlineTest = space;
 		oldW = w;
@@ -366,6 +418,44 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 	};
 
 	return NULL;
+}
+
+/*================
+Font_GenerateGLSurface
+
+generate the opengl texture out of the sdl-surface
+bind it, and draw it
+================*/
+static void Font_GenerateGLSurface ( SDL_Surface* s, int x, int y )
+{
+	GLuint texture = Font_TextureAddToCache(s);
+	int w = s->w;
+	int h = s->h;
+
+	/* Tell GL about our new texture */
+	GL_Bind(texture);
+	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, s->pixels );
+
+	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	/* draw it */
+	qglEnable (GL_BLEND);
+
+	qglBegin(GL_TRIANGLE_STRIP);
+	qglTexCoord2f(0.0f, 0.0f);
+	qglVertex2f(x, y);
+	qglTexCoord2f(1.0f, 0.0f);
+	qglVertex2f(x + w, y);
+	qglTexCoord2f(0.0f, 1.0f);
+	qglVertex2f(x, y + h);
+	qglTexCoord2f(1.0f, 1.0f);
+	qglVertex2f(x + w, y + h);
+	qglEnd();
+
+	qglDisable (GL_BLEND);
+
+	qglFinish();
 }
 
 /*================
@@ -394,47 +484,6 @@ static void Font_ConvertChars ( char* buffer )
 }
 
 /*================
-Font_GenerateGLSurface
-
-generate the opengl texture out of the sdl-surface
-bind it, and draw it
-================*/
-static void Font_GenerateGLSurface ( SDL_Surface* s, int x, int y )
-{
-	unsigned int texture = 0;
-	int w = s->w;
-	int h = s->h;
-
-	/* Tell GL about our new texture */
-	qglGenTextures(1, &texture);
-	GL_Bind(texture);
-	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, s->pixels );
-
-	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	/* draw it */
-	qglEnable (GL_BLEND);
-
-	qglBegin(GL_TRIANGLE_STRIP);
-	qglTexCoord2f(0.0f, 0.0f);
-	qglVertex2f(x, y);
-	qglTexCoord2f(1.0f, 0.0f);
-	qglVertex2f(x + w, y);
-	qglTexCoord2f(0.0f, 1.0f);
-	qglVertex2f(x, y + h);
-	qglTexCoord2f(1.0f, 1.0f);
-	qglVertex2f(x + w, y + h);
-	qglEnd();
-
-	qglDisable (GL_BLEND);
-
-	qglFinish();
-	/* Clean up */
-	qglDeleteTextures(1, &texture);
-}
-
-/*================
 Font_DrawString
 ================*/
 int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *c)
@@ -444,13 +493,14 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 	font_t	*f = NULL;
 	char* buffer = buf;
 	char* pos;
-	char searchString[MAX_FONTNAME+MAX_HASH_STRING];
+	static char searchString[MAX_FONTNAME+MAX_HASH_STRING];
 	SDL_Surface *openGLSurface = NULL;
 	int max = 0; /* calculated maxWidth */
 
 	/* get the font */
 	f = Font_GetFont( fontID );
-	if ( !f ) ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", fontID );
+	if ( !f )
+		ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", fontID );
 
 	openGLSurface = Font_GetFromCache( c );
 	if ( openGLSurface ) {
@@ -479,20 +529,20 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 			max = w;
 
 		if ( align > 0 && align < ALIGN_LAST ) {
-			switch ( align % 3 )
-			{
+			switch ( align % 3 ) {
 			case 1: x -= w / 2; break;
 			case 2: x -= w; break;
 			}
 
-			switch ( align / 3 )
-			{
+			switch ( align / 3 ) {
 			case 1: y -= h / 2; break;
 			case 2: y -= h; break;
 			}
 		}
 
 		if ( strlen(buffer) ) {
+			/* This will cut down the string to 160 chars */
+			/* NOTE: There can be a non critical overflow in Com_sprintf */
 			Com_sprintf( searchString, MAX_FONTNAME+MAX_HASH_STRING, "%s%s", fontID, buffer );
 
 			openGLSurface = Font_GetFromCache( searchString );
@@ -512,6 +562,9 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 		x = locX;
 	} while ( buffer );
 
+#ifdef PARANOID
+	ri.Con_Printf(PRINT_DEVELOPER, "Font_DrawString: returnHeight: %i\n", returnHeight);
+#endif
 	return returnHeight;
 }
 
@@ -540,12 +593,10 @@ void Font_Register( char *name, int size, char* path, char* style )
 
 	if ( style && *style )
 		for (i=0 ; i< NUM_FONT_STYLES ; i++)
-			if ( !Q_stricmp( fontStyle[i].name, style ) )
-			{
+			if ( !Q_stricmp( fontStyle[i].name, style ) ) {
 				renderstyle = fontStyle[i].renderStyle;
 				break;
 			}
 
 	Font_Analyze(name, path, renderstyle, size);
 }
-

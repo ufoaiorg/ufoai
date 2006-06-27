@@ -348,12 +348,10 @@ void WriteWorld (char *name)
 	if (!out)
 		Error ("Couldn't open %s", name);
 
-	for (j=0, patch=patches ; j<num_patches ; j++, patch++)
-	{
+	for (j=0, patch=patches ; j<num_patches ; j++, patch++) {
 		w = patch->winding;
 		fprintf (out, "%i\n", w->numpoints);
-		for (i=0 ; i<w->numpoints ; i++)
-		{
+		for (i=0 ; i<w->numpoints ; i++) {
 			fprintf (out, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n",
 				w->p[i][0],
 				w->p[i][1],
@@ -389,13 +387,11 @@ void WriteGlView (void)
 	if (!f)
 		Error ("Couldn't open %s", f);
 
-	for (j=0 ; j<num_patches ; j++)
-	{
+	for (j=0 ; j<num_patches ; j++) {
 		p = &patches[j];
 		w = p->winding;
 		fprintf (f, "%i\n", w->numpoints);
-		for (i=0 ; i<w->numpoints ; i++)
-		{
+		for (i=0 ; i<w->numpoints ; i++) {
 			fprintf (f, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n",
 				w->p[i][0],
 				w->p[i][1],
@@ -426,18 +422,8 @@ float CollectLight (void)
 
 	total = 0;
 
-	for (i=0, patch=patches ; i<num_patches ; i++, patch++)
-	{
-		/* skys never collect light, it is just dropped */
-		if (patch->sky)
-		{
-			VectorClear (radiosity[i]);
-			VectorClear (illumination[i]);
-			continue;
-		}
-
-		for (j=0 ; j<3 ; j++)
-		{
+	for (i=0, patch=patches ; i<num_patches ; i++, patch++) {
+		for (j=0 ; j<3 ; j++) {
 			patch->totallight[j] += illumination[i][j] / patch->area;
 			radiosity[i][j] = illumination[i][j] * patch->reflectivity[j];
 		}

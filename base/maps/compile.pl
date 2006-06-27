@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+use File::stat;
 use strict;
 
 # If you have a "make" program installed, you're likely to prefer the
@@ -16,8 +17,8 @@ sub readDir
 	my @files = ();
 	unless ( $status )
 	{
- 		print "Could not read $dir\n";
- 		return ();
+		print "Could not read $dir\n";
+		return ();
 	}
 
 	@files = readdir ( DIR );
@@ -29,6 +30,9 @@ sub compile
 {
 	my $dir = shift || die "No dir given in sub compile\n";
 	my $found = 0;
+	my $stat1;
+	my $stat2;
+
 	print "...entering $dir\n";
 	foreach ( readDir( $dir ) )
 	{
@@ -37,12 +41,24 @@ sub compile
 		{
 			print "...found dir $_\n";
 			$found += compile("$dir/$_");
- 			print "...dir $dir/$_ finished\n";
+			print "...dir $dir/$_ finished\n";
 			next;
 		}
 		next unless $_ =~ /\.map$/;
 		next if $_ =~ /^(tutorial)|(prefab)|(autosave)/i;
 		$_ =~ s/\.map$//;
+
+		if (-e "$dir/$_.bsp")
+		{
+			$stat1 = stat("$dir/$_.map");
+			$stat2 = stat("$dir/$_.bsp");
+
+			if ($stat1->mtime > $stat2->mtime)
+			{
+				unlink("$dir/$_.bsp");
+			}
+		}
+
 		unless ( -e "$dir/$_.bsp" )
 		{
 			print "..found $dir/$_\n";

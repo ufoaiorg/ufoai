@@ -823,7 +823,7 @@ qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
 			return qfalse;
 
 		/* check bounding box */
-		if (x < node->pos[0] || y < node->pos[1] || x > node->pos[0] + node->size[0] || y > node->pos[1] + node->size[1])
+		if (x < node->pos[0] || x > node->pos[0] + node->size[0] || y < node->pos[1] || y > node->pos[1] + node->size[1])
 			return qfalse;
 
 		/* found a container */
@@ -834,7 +834,6 @@ qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
 	if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->mouseIn && !node->mouseOut))
 		return qfalse;
 
-	/* get the rectangle size out of the pic if necessary */
 	if (!node->size[0] || !node->size[1]) {
 		if (node->type == MN_PIC && node->data[0]) {
 			if (node->texh[0] && node->texh[1]) {
@@ -849,9 +848,16 @@ qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
 		sy = node->size[1];
 	}
 
-	/* rectangle test */
 	tx = x - node->pos[0];
 	ty = y - node->pos[1];
+	if ( node->align > 0 && node->align < ALIGN_LAST ) {
+		switch ( node->align % 3 ) {
+		/* center */
+		case 1: tx = x - node->pos[0] + sx / 2; break;
+		/* right */
+		case 2: tx = x - node->pos[0] + sx; break;
+		}
+	}
 
 	if (tx < 0 || ty < 0 || tx > sx || ty > sy)
 		return qfalse;
@@ -970,8 +976,12 @@ void MN_Drag(menuNode_t * node, int x, int y)
 
 			/* update character info (for armor changes) */
 			sel = cl_selected->value;
-			if (sel >= 0 && sel < baseCurrent->numWholeTeam)
-				CL_CharacterCvars(&baseCurrent->curTeam[sel]);
+			if (sel >= 0 && sel < baseCurrent->numWholeTeam) {
+				if ( baseCurrent->curTeam[sel].fieldSize == ACTOR_SIZE_NORMAL )
+					CL_CharacterCvars(&baseCurrent->curTeam[sel]);
+				else
+					CL_UGVCvars(&baseCurrent->curTeam[sel]);
+			}
 		}
 	}
 
@@ -1025,7 +1035,7 @@ void MN_MapClick(menuNode_t * node, int x, int y)
 	MN_ScreenToMap(node, x, y, pos);
 
 	/* new base construction */
-	if (mapAction == MA_NEWBASE) {
+	if (gd.mapAction == MA_NEWBASE) {
 		if (!MapIsWater(CL_GetmapColor(pos))) {
 			newBasePos[0] = pos[0];
 			newBasePos[1] = pos[1];
@@ -1034,11 +1044,11 @@ void MN_MapClick(menuNode_t * node, int x, int y)
 		} else {
 			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL);
 		}
-	} else if (mapAction == MA_INTERCEPT && selMis)
+	} else if (gd.mapAction == MA_INTERCEPT && selMis)
 		MN_PushMenu("popup_intercept");
-	else if (mapAction == MA_BASEATTACK && selMis)
+	else if (gd.mapAction == MA_BASEATTACK && selMis)
 		MN_PushMenu("popup_baseattack");
-	else if (mapAction == MA_UFORADAR) {
+	else if (gd.mapAction == MA_UFORADAR) {
 		MN_PushMenu("popup_intercept_ufo");
 		/* TODO: Select aircraft - follow ufo - fight */
 		/* if shoot down - we have a new crashsite mission if color != water */
@@ -1051,12 +1061,12 @@ void MN_MapClick(menuNode_t * node, int x, int y)
 		if (x >= msx - 8 && x <= msx + 8 && y >= msy - 8 && y <= msy + 8) {
 			selMis = ms;
 			if (!Q_strncmp(selMis->def->name, "baseattack", 10)) {
-				mapAction = MA_BASEATTACK;
+				gd.mapAction = MA_BASEATTACK;
 				/* we need no dropship in our base */
 				selMis->def->active = qtrue;
 			} else {
 				Com_DPrintf("Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
-				mapAction = MA_INTERCEPT;
+				gd.mapAction = MA_INTERCEPT;
 			}
 			return;
 		}
@@ -1600,7 +1610,9 @@ void MN_Tooltip(menuNode_t * node, int x, int y)
 {
 	char *tooltip;
 
-	/* tooltips */
+	/* tooltips
+	   data[5] is a char pointer to the tooltip text
+	   see value_t nps for more info */
 	if (node->data[5]) {
 		tooltip = (char *) node->data[5];
 		if (*tooltip == '_')
@@ -1723,9 +1735,9 @@ void MN_DrawMenus(void)
 	while (sp < menuStackPos) {
 		menu = menuStack[sp++];
 		for (node = menu->firstNode; node; node = node->next) {
-			if (!node->invis && (node->data[0] ||
-								 node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP
-								 || node->type == MN_3DMAP)) {
+			if (!node->invis && (node->data[0] /* 0 are images, models and strings e.g. */
+					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP
+					|| node->type == MN_3DMAP)) {
 				/* if construct */
 				if (*node->depends.var && Q_stricmp(node->depends.value, (Cvar_Get(node->depends.var, node->depends.value, 0))->string))
 					continue;
@@ -1980,7 +1992,6 @@ void MN_DrawMenus(void)
 					} else
 						menuModel = node->menuModel;
 
-
 					mi.name = source;
 
 					mi.origin = node->origin;
@@ -2129,7 +2140,7 @@ void MN_DrawMenus(void)
 						MN_Draw3DMapMarkers(node, 0.0, 0.0);
 
 						/* display text */
-						switch (mapAction) {
+						switch (gd.mapAction) {
 						case MA_NEWBASE:
 							menuText[TEXT_STANDARD] = _("Select the desired location of the\nnew base on the map.\n");
 							break;
@@ -2162,7 +2173,7 @@ void MN_DrawMenus(void)
 						MN_DrawMapMarkers(node);
 
 						/* display text */
-						switch (mapAction) {
+						switch (gd.mapAction) {
 						case MA_NEWBASE:
 							menuText[TEXT_STANDARD] = _("Select the desired location of the\nnew base on the map.\n");
 							break;
@@ -3335,14 +3346,13 @@ void MN_AddNewMessage(const char *title, const char *text, qboolean popup, messa
 	Q_strncpyz(mess->title, title, MAX_VAR);
 	/* add date string to message */
 	Q_strncpyz(mess->text, va("%02i %s %04i, %02i:%02i:%02i:\t", mess->d, CL_DateGetMonthName(mess->m), mess->y, mess->h, mess->min, mess->s),
-			   MAX_MESSAGE_TEXT);
+		MAX_MESSAGE_TEXT);
 
 	Q_strcat(mess->text, MAX_MESSAGE_TEXT, text);
 
-	if (popup) {
-		/* they need to be translated already */
+	/* they need to be translated already */
+	if (popup)
 		MN_Popup(title, text);
-	}
 }
 
 /*

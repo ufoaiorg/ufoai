@@ -95,8 +95,7 @@ int Sys_Milliseconds (void)
 
 	gettimeofday(&tp, &tzp);
 	
-	if (!secbase)
-	{
+	if (!secbase) {
 		secbase = tp.tv_sec;
 		return tp.tv_usec/1000;
 	}

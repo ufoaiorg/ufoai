@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* sys_win.h */
 
 #include "../qcommon/qcommon.h"
+#include "../game/game.h"
 #include "winquake.h"
 #include "resource.h"
 #include <errno.h>
@@ -500,9 +501,9 @@ Sys_GetGameAPI
 Loads the game dll
 =================
 */
-void *Sys_GetGameAPI (void *parms)
+game_export_t *Sys_GetGameAPI (game_import_t *parms)
 {
-	void	*(*GetGameAPI) (void *);
+	GetGameApi_t GetGameAPI;
 	char	name[MAX_OSPATH];
 	char	*path;
 	char	cwd[MAX_OSPATH];
@@ -568,7 +569,7 @@ void *Sys_GetGameAPI (void *parms)
 		}
 	}
 
-	GetGameAPI = (void *)GetProcAddress (game_library, "GetGameAPI");
+	GetGameAPI = (GetGameApi_t)GetProcAddress (game_library, "GetGameAPI");
 	if (!GetGameAPI)
 	{
 		Sys_UnloadGame ();

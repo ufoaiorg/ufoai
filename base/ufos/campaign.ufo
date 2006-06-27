@@ -88,7 +88,7 @@ mission baseattack
 mission bunker
 {
 	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
-	map			bunker
+	map			bunker01
 	music		mission
 	pos			"-82 125"
 	aliens		5
@@ -102,7 +102,6 @@ mission bunker
 	$civilian	500
 }
 
-//no day and night
 mission city
 {
 	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
@@ -138,24 +137,6 @@ mission colon
 	$civilian	500
 }
 
-//no day and night
-mission condor
-{
-	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
-	map			condor04
-	music		mission
-	pos			"-82 125"
-	aliens		5
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		scientist
-	recruits	6
-	$win		1200
-	$alien		100
-	$civilian	500
-}
-
 mission construction
 {
 	text		"_Location: Uppsala\Type: Terror Attack\Objective: Protect inhabitants"
@@ -173,21 +154,6 @@ mission construction
 	$civilian	500
 }
 
-mission crash
-{
-	text		"_We are going put you in charge of a\mission of utmost importance. We've\shot down one of their crafts. Get\there before the E.T.'s do. (difficult)\"
-	map		crashsite05
-	music		mission4
-	pos		"195 205"
-	aliens		7
-	civilians	0
-	alienequip	alien_crash
-	recruits	0
-	$win		400
-	$alien		250
-	$civilian	200
-}
-
 mission excavation
 {
 	text		"_Some aliens have escaped from the\mine, and their tracks lead south,\towards a nearby excavation site.\Protect that site at all cost.\"
@@ -203,7 +169,6 @@ mission excavation
 	$civilian		100
 }
 
-//no day and night
 mission falconcrash
 {
 	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
@@ -238,10 +203,12 @@ mission farm
 	$civilian	500
 }
 
-mission frozen_ump
+// no day and night version
+mission frozen_small
 {
 	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
 	map			"+frozen"
+	param	small
 	music		mission
 	pos			"116 52"
 	aliens		7
@@ -255,7 +222,63 @@ mission frozen_ump
 	$civilian	500
 }
 
-//no day and night
+// no day and night version
+mission frozen_landingnature
+{
+	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
+	map			"+frozen"
+	param	alienlandingnature
+	music		mission
+	pos			"116 52"
+	aliens		7
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	3
+	civteam		european
+	recruits	3
+	$win		6000
+	$alien		100
+	$civilian	500
+}
+
+// no day and night version
+mission frozen_industrial
+{
+	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
+	map			"+frozen"
+	param	industrial
+	music		mission
+	pos			"116 52"
+	aliens		7
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	3
+	civteam		european
+	recruits	3
+	$win		6000
+	$alien		100
+	$civilian	500
+}
+
+// no day and night version
+mission frozen_alienlandingindustrial
+{
+	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
+	map			"+frozen"
+	param	alienlandingindustrial
+	music		mission
+	pos			"116 52"
+	aliens		7
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	3
+	civteam		european
+	recruits	3
+	$win		6000
+	$alien		100
+	$civilian	500
+}
+
 mission gasstation
 {
 	text		"_Location: Marina Serra\Type: Terror Attack\Objective: Protect inhabitants"
@@ -273,8 +296,6 @@ mission gasstation
 	$civilian	500
 }
 
-//no day and night
-//do not use - no water implemented
 mission harbour
 {
 	text		"_Location: Marina Serra\Type: Terror Attack\Objective: Protect inhabitants"
@@ -343,7 +364,6 @@ mission lake
 	$civilian	500
 }
 
-//no day and night
 mission mart
 {
 	text		"_Location: Gobabis\Type: Crash Site\Objective: Secure Area"
@@ -361,8 +381,7 @@ mission mart
 	$civilian	500
 }
 
-//no day and night
-mission mine
+mission mine_crash
 {
 	text		"_Location: Gobabis\Type: Crash Site\Objective: Secure Area"
 	map		mine_crash05
@@ -379,8 +398,7 @@ mission mine
 	$civilian	500
 }
 
-//no day and night
-mission mine2
+mission mine
 {
 	text		"_There are rumors of a mine being\overrun by aliens. Altough this\source of information is doubtful,\you'll need to investigate.\"
 	map		mine01
@@ -429,11 +447,10 @@ mission oriental
 	$civilian	500
 }
 
-//no day and night
 mission or_asyut
 {
 	text		"_Location: Asyut\Type: Terror Attack\Objective: Protect inhabitants"
-	map			"+orientald"
+	map			"+oriental"
 	music		mission2
 	pos			"-31 27"
 	aliens		7
@@ -447,11 +464,10 @@ mission or_asyut
 	$civilian	1200
 }
 
-//no day and night
 mission or_tabelbala
 {
 	text		"_Location: Tabelbala\Type: Terror Attack\Objective: Protect inhabitants"
-	map			"+orientald"
+	map			"+oriental"
 	music		mission
 	pos			"3 28"
 	aliens		7
@@ -465,7 +481,6 @@ mission or_tabelbala
 	$civilian	1200
 }
 
-//no day and night
 mission pdi
 {
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
@@ -481,11 +496,11 @@ mission pdi
 	$civilian	200
 }
 
-//no day and night
+// this map is not finished right now
 mission rocketsilo
 {
 	text		"_The Aliens have tacken over a rocket silo. Go and capture it again."
-	map		pdi08
+	map		rocketsilo06
 	music		mission3
 	pos		"308 412"
 	aliens		4
@@ -497,7 +512,6 @@ mission rocketsilo
 	$civilian	200
 }
 
-//no day and night
 mission spedition
 {
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
@@ -529,7 +543,6 @@ mission stadium
 	$civilian	200
 }
 
-//no day and night
 mission subway
 {
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
@@ -545,7 +558,6 @@ mission subway
 	$civilian	200
 }
 
-//no day and night
 mission terrain
 {
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
@@ -595,10 +607,28 @@ mission transport
 }
 
 //no day and night
-mission tropic_ump
+mission tropic_river
 {
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
-	map		"+tropicd"
+	map		"+tropic"
+	param	river
+	music		mission3
+	pos		"308 412"
+	aliens		4
+	civilians	2
+	alienequip	campaign_alien
+	recruits	4
+	$win		400
+	$alien		250
+	$civilian	200
+}
+
+//no day and night
+mission tropic_drug
+{
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
+	map		"+tropic"
+	param	drug
 	music		mission3
 	pos		"308 412"
 	aliens		4
@@ -637,8 +667,6 @@ mission vil_grenchen
 	aliens		3
 	alienteam	alien
 	alienequip	campaign_alien
-	// uncontrolled ground units (info_ugv_start)
-	maxugv		1
 	civilians	7
 	civteam		european
 	recruits	2
@@ -743,7 +771,7 @@ stage ufos_are_coming
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
-		missions	"transport mine construction farm office or_asyut"
+		missions	"transport mine_crash construction farm office or_asyut"
 		quota		4
 		nextstage	invasion
 	}
@@ -796,19 +824,35 @@ stage alienbase
 	}
 }
 
-campaign test
+campaign heavy
 {
-	name		"_Test Campaign"
-	text		"_txt_test_campaign"
-	team		alien
-	soldiers	12
+	name		"_Heavy Campaign"
+	text		"_txt_heavy_campaign"
+	team		human
+	soldiers	4
 	equipment	campaign_player
 	market		campaign_market
-	credits		500000
-	map		map_test
+	credits		3500000
+	map		map_earth
 	visible		true
 
-	date		"2000 0 7"
+	date		"2048 0 7"
+	firststage	intro
+}
+
+campaign easy
+{
+	name		"_Easy Campaign"
+	text		"_txt_easy_campaign"
+	team		human
+	soldiers	20
+	equipment	campaign_player
+	market		campaign_market
+	credits		6000000
+	map		map_earth
+	visible		true
+
+	date		"2048 0 7"
 	firststage	intro
 }
 
@@ -818,9 +862,10 @@ campaign main
 	text		"_txt_standard_campaign"
 	team		human
 	soldiers	12
+	ugvs	2
 	equipment	campaign_player
 	market		campaign_market
-	credits		500000
+	credits		4000000
 	map		map_earth
 	visible		true
 

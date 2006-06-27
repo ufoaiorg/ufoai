@@ -1,0 +1,31 @@
+// character animations
+// name				start	end		fps
+
+death1				0		0		1
+dead1				0		0		1
+death2				0		0		1
+dead2				0		0		1
+death3				0		0		1
+dead3				0		0		1
+
+stand0				0		0		1
+walk0				0		0		1
+cstand0				0		0		1
+cwalk0				0		0		1
+
+stand1				0		0		1
+walk1				0		0		1
+cstand1				0		0		1
+cwalk1				0		0		1
+
+stand2				0		0		1
+walk2				0		0		1
+cstand2				0		0		1
+cwalk2				0		0		1
+
+stand3				0		0		1
+walk3				0		0		1
+
+stand_menu			0		0		1
+
+stand_still			0		0		1

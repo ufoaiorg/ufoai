@@ -237,4 +237,3 @@ extern int      vorbis_synthesis_halfrate_p(vorbis_info *v);
 #endif /* __cplusplus */
 
 #endif
-

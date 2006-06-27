@@ -120,7 +120,8 @@ void ED_CallSpawn(edict_t * ent)
 
 	/* check normal spawn functions */
 	for (s = spawns; s->name; s++) {
-		if (!strcmp(s->name, ent->classname)) {	/* found it */
+		/* found it */
+		if (!Q_strcmp(s->name, ent->classname)) {
 			s->spawn(ent);
 			return;
 		}
@@ -176,7 +177,8 @@ void ED_ParseField(char *key, char *value, edict_t * ent)
 	vec3_t vec;
 
 	for (f = fields; f->name; f++) {
-		if (!(f->flags & FFL_NOSPAWN) && !Q_stricmp(f->name, key)) {	/* found it */
+		if (!(f->flags & FFL_NOSPAWN) && !Q_stricmp(f->name, key)) {
+			/* found it */
 			if (f->flags & FFL_SPAWNTEMP)
 				b = (byte *) & st;
 			else
@@ -343,8 +345,7 @@ void G_ActorSpawn(edict_t * ent)
 	level.num_spawnpoints[ent->team]++;
 	ent->classname = "actor";
 	ent->type = ET_ACTORSPAWN;
-	if (ent->fieldSize < ACTOR_SIZE_NORMAL)
-		ent->fieldSize = ACTOR_SIZE_NORMAL;
+	ent->fieldSize = ACTOR_SIZE_NORMAL;
 
 	/* fall to ground */
 	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
@@ -358,6 +359,26 @@ void G_ActorSpawn(edict_t * ent)
 		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
 	if (ent->mins[0] == 0)
 		VectorSet(ent->mins, -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN);
+}
+
+/**
+  * @brief Spawn an singleplayer UGV
+  */
+void G_UGVSpawn(edict_t * ent)
+{
+	/* set properties */
+	level.num_ugvspawnpoints[ent->team]++;
+	ent->classname = "ugv";
+	ent->type = ET_UGVSPAWN;
+	ent->fieldSize = ACTOR_SIZE_UGV;
+
+	/* fall to ground */
+	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
+	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
+
+	/* link it for collision detection */
+	ent->dir = AngleToDV(ent->angle);
+	ent->solid = SOLID_BBOX;
 }
 
 /*QUAKED info_player_start (1 0 0) (-16 -16 -24) (16 16 32)
@@ -429,22 +450,22 @@ Starting point for a ugv.
 */
 void SP_ugv_start(edict_t * ent)
 {
-	ent->team = 1;
+	/* no ugv in multiplayer */
+	if (sv_maxclients->value > 1) {
+		G_FreeEdict(ent);
+		return;
+	}
 	/* set stats */
 	ent->STUN = 100;
 	ent->HP = 100;
 	ent->AP = 100;
-	ent->fieldSize = ACTOR_SIZE_UGV;
 
 	/* these units are bigger */
 	VectorSet(ent->maxs, PLAYER_WIDTH * 2, PLAYER_WIDTH * 2, PLAYER_STAND);
 	VectorSet(ent->mins, -(PLAYER_WIDTH * 2), -(PLAYER_WIDTH * 2), PLAYER_MIN);
 
-	/* spawn multiplayer and/or singleplayer */
-	if (sv_maxclients->value > 1)
-		SP_player_start(ent);
-	else
-		G_ActorSpawn(ent);
+	/* spawn singleplayer ugv */
+	G_UGVSpawn(ent);
 }
 
 /*QUAKED info_alien_start (1 0 0) (-16 -16 -24) (16 16 32)
@@ -519,7 +540,8 @@ Only used for the world.
 void SP_worldspawn(edict_t * ent)
 {
 	ent->solid = SOLID_BSP;
-	ent->inuse = qtrue;			/* since the world doesn't use G_Spawn() */
+	/* since the world doesn't use G_Spawn() */
+	ent->inuse = qtrue;
 
 	if (st.nextmap)
 		Q_strncpyz(level.nextmap, st.nextmap, MAX_QPATH);
@@ -548,9 +570,7 @@ void SP_worldspawn(edict_t * ent)
 	else
 		gi.cvar_set("sv_gravity", st.gravity);
 
-	/* */
 	/* Setup light animation tables. 'a' is total darkness, 'z' is doublebright. */
-	/* */
 
 	/* 0 normal */
 	gi.configstring(CS_LIGHTS + 0, "m");

@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -434,9 +434,9 @@ void SVC_RemoteCommand(void)
 
 	Com_BeginRedirect(RD_PACKET, sv_outputbuf, SV_OUTPUTBUF_LENGTH, SV_FlushRedirect);
 
-	if (!Rcon_Validate()) {
+	if (!Rcon_Validate())
 		Com_Printf("Bad rcon_password.\n");
-	} else {
+	else {
 		remaining[0] = 0;
 
 		for (i = 2; i < Cmd_Argc(); i++) {
@@ -858,10 +858,8 @@ void SV_UserinfoChanged(client_t * cl)
 
 	/* msg command */
 	val = Info_ValueForKey(cl->userinfo, "msg");
-	if (strlen(val)) {
+	if (strlen(val))
 		cl->messagelevel = atoi(val);
-	}
-
 }
 
 

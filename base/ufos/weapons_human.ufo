@@ -11,7 +11,7 @@ item assault
 	twohanded	true
 	shape		"0 0 5 2"
 	center		"3 0 2"
-	scale		1.3
+	scale		1.25
 	ammo		30
 	reload		10
 	price		2100
@@ -26,7 +26,7 @@ item assault_ammo
 	category	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
-	scale		1.5
+	scale		1.25
 	price		60
 	buytype		0
 
@@ -99,7 +99,7 @@ item sniper_ammo
 	category	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
-	scale		1.3
+	scale		1.15
 	price		90
 	buytype		0
 
@@ -155,7 +155,7 @@ item pistol
 	twohanded	false
 	shape		"0 0 3 2"
 	center		"2 0 1"
-	scale		1.8
+	scale		1.6
 	ammo		12
 	reload		5
 	price		300
@@ -170,11 +170,29 @@ item pistol_ammo
 	category	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
-	scale		2.0
+	scale		1.9
 	price		40
 	buytype		1
 
 	primary
+	{
+		name	"_Single Shot"
+		skill	close
+		projtl	bullet
+		impact	bulletImpact
+		hitbody blood
+		firesnd	weapons/pistol.wav
+		speed	0
+		spread	"3 3"
+		crouch	0.9
+		range	380
+		shots	1
+		ammo	1
+		time	8
+		damage	"20 5"
+		dmgtype normal
+	}
+	secondary
 	{
 		name	"_Rapid Fire"
 		skill	close
@@ -190,24 +208,6 @@ item pistol_ammo
 		ammo	3
 		rof		10
 		time	12
-		damage	"20 5"
-		dmgtype normal
-	}
-	secondary
-	{
-		name	"_Aimed Shot"
-		skill	close
-		projtl	bullet
-		impact	bulletImpact
-		hitbody blood
-		firesnd	weapons/pistol.wav
-		speed	0
-		spread	"2.8 4"
-		crouch	0.9
-		range	380
-		shots	1
-		ammo	1
-		time	8
 		damage	"20 5"
 		dmgtype normal
 	}
@@ -241,7 +241,7 @@ item smg_ammo
 	category	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
-	scale		1.6
+	scale		1.4
 	price		50
 	buytype		1
 
@@ -298,8 +298,8 @@ item shotgun
 	category	1
 	twohanded	true
 	shape		"0 0 5 2"
-	center		"11 0 1"
-	scale		1.2
+	center		"10 0 1"
+	scale		1.15
 	ammo		8
 	reload		10
 	price		880
@@ -314,7 +314,7 @@ item shotgun_ammo
 	category	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
-	scale		1.6
+	scale		1.5
 	price		35
 	buytype		0
 
@@ -374,7 +374,7 @@ item flamer
 	category	1
 	twohanded	true
 	shape		"0 0 5 2"
-	center		"8 0 2"
+	center		"9 0 2"
 	scale		1.2
 	ammo		6
 	reload		10
@@ -390,7 +390,7 @@ item flamer_ammo
 	category	0
 	shape		"0 0 2 1"
 	center		"0 0 0"
-	scale		1.2
+	scale		1.1
 	price		200
 	buytype		0
 
@@ -449,7 +449,7 @@ item rpg
 	category	3
 	twohanded	true
 	shape		"0 0 5 2"
-	center		"-7 0 2"
+	center		"-6 0 2"
 	scale		0.85
 	ammo		1
 	reload		6
@@ -472,7 +472,7 @@ item rpg_ammo
 	primary
 	{
 		name	"_Snap Shot"
-		skill	explosive
+		skill	heavy
 		projtl	rocket
 		impact	explosion
 		hitbody explosion
@@ -495,7 +495,7 @@ item rpg_ammo
 	secondary
 	{
 		name	"_Aimed Shot"
-		skill	explosive
+		skill	heavy
 		projtl	rocket
 		impact	explosion
 		hitbody explosion
@@ -529,7 +529,7 @@ item fraggrenade
 	category	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
-	scale		1.5
+	scale		1.4
 	price		170
 	buytype		2
 	ammo		1
@@ -555,7 +555,7 @@ item fraggrenade
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"100 10"
+		spldmg	"100 30"
 		splrad	120
 		dmgtype blast
 	}
@@ -579,7 +579,7 @@ item fraggrenade
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"100 10"
+		spldmg	"100 30"
 		splrad	120
 		dmgtype blast
 	}
@@ -820,7 +820,7 @@ item knife
 		range	55
 		shots	1
 		time	8
-		damage	"35 7"
+		damage	"40 7"
 		dmgtype normal
 	}
 	secondary
@@ -838,7 +838,7 @@ item knife
 		shots	1
 		ammo	1
 		time	9
-		damage	"35 7"
+		damage	"30 7"
 		dmgtype normal
 	}
 }
@@ -871,7 +871,7 @@ item grenl_ammo
 	category	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
-	scale		0.9
+	scale		0.7
 	price		35
 	buytype		0
 
@@ -895,7 +895,7 @@ item grenl_ammo
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"100 10"
+		spldmg	"100 30"
 		splrad	120
 		dmgtype blast
 	}
@@ -920,7 +920,7 @@ item grenl_ammo
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"100 10"
+		spldmg	"100 30"
 		splrad	120
 		dmgtype blast
 	}
@@ -931,84 +931,72 @@ item grenl_ammo
 // =======================
 item bolterrifle
 {
-	name		"_Bolter Rifle"
-	model		weapons/bolterrifle/bolterrifle
-	weapon		true
-	type		biggun
-	category	3
-	twohanded	true
-	shape		"0 0 4 2"
-	center		"8 0 0"
-	scale		1.0
-	ammo		1
-	reload		6
-	price		2800
-	buytype		0
+	name            "_Bolter Rifle"
+	model           weapons/bolterrifle/bolterrifle
+	weapon          true
+	type            biggun
+	category        3
+	twohanded       true
+	shape           "0 0 5 2"
+	center          "7 0 1"
+	scale           1.2
+	ammo            50
+	reload          13
+	price           2800
+	buytype         0
 }
 
 item bolterrifle_ammo
 {
-	name		"_Bolter Rifle Clip"
-	model		weapons/bolterrifle/bolterrifle_clip
-	type		ammo
-	category	0
-	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		1.0
-	price		35
-	buytype		0
+	name            "_Bolter Rifle Clip"
+	model           weapons/bolterrifle/bolterrifle_clip
+	type            ammo
+	category        0
+	shape           "0 0 2 1"
+	center          "0 0 -1"
+	scale           1.2
+	price           230
+	buytype         0
 
 	primary
 	{
-		name	"_Single Shot"
-		skill	heavy
-		projtl	grenl_ammo
-		impact	frag_explosion
-		hitbody frag_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	4.0
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"100 10"
-		splrad	120
-		dmgtype blast
+		name    "_Single Shot"
+		skill   heavy
+		projtl  bullet
+		impact  bulletImpact
+		hitbody blood
+		firesnd weapons/tachyon.wav
+		speed   0
+		spread  "3 3"
+		crouch  0.8
+		range   1700
+		shots   1
+		ammo    1
+		time    16
+		damage  "80 5"
+		dmgtype normal
 	}
 
 	secondary
 	{
-		name	"_Single Shot"
-		skill	heavy
-		projtl	grenl_ammo
-		impact	frag_explosion
-		hitbody frag_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	4.0
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"100 10"
-		splrad	120
-		dmgtype blast
+		name    "_Burst"
+		skill   heavy
+		projtl  bullet
+		impact  bulletImpact
+		hitbody blood
+		firesnd weapons/tachyon.wav
+		speed   0
+		spread  "8 11"
+		crouch  0.5
+		range   1700
+		shots   3
+		ammo    3
+		rof     2
+		time    27
+		damage  "80 5"
+		dmgtype normal
 	}
 }
-
 // =======================
 // STUN ROD
 // =======================
@@ -1028,6 +1016,23 @@ item stunrod
 	thrown	false
 
 	primary
+	{
+		name	"_Stun"
+		skill	close
+		projtl	null
+		impact	null
+		hitbody	blood
+		firesnd	misc/klonk03.wav
+		speed	0
+		range	55
+		shots	1
+		time	20
+		damage	"75 7"
+		stun		true
+		dmgtype stun
+	}
+
+	secondary
 	{
 		name	"_Stun"
 		skill	close

@@ -724,4 +724,3 @@ void R_LightPoint (vec3_t p, vec3_t color)
 	}
 /*	VectorScale (color, r_modulate->value, color); */
 }
-

@@ -319,8 +319,6 @@ extern cvar_t *cl_lightlevel;	/* FIXME HACK */
 extern cvar_t *cl_paused;
 extern cvar_t *cl_timedemo;
 
-extern cvar_t *cl_vwep;
-
 extern cvar_t *cl_centerview;
 
 extern cvar_t *cl_worldlevel;
@@ -339,7 +337,7 @@ extern cvar_t *mn_lastsave;
 /*the new soundsystem cvar 0-3 by now */
 #ifndef _WIN32
 extern cvar_t *s_system;
-#endif							/* _WIN32 */
+#endif /* _WIN32 */
 
 extern cvar_t *confirm_actions;
 
@@ -466,6 +464,7 @@ void CL_Video_f(void);
 extern refexport_t re;			/* interface to refresh .dll */
 
 void CL_Init(void);
+void CL_ReadSinglePlayerData( void );
 
 void CL_FixUpGender(void);
 void CL_Disconnect(void);
@@ -473,6 +472,8 @@ void CL_Disconnect_f(void);
 void CL_GetChallengePacket(void);
 void CL_PingServers_f(void);
 void CL_Snd_Restart_f(void);
+void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank );
+void CL_ParseUGVs(char *title, char **text);
 
 /* cl_input */
 typedef struct {
@@ -577,7 +578,7 @@ typedef struct le_s {
 	int fieldSize;				/* ACTOR_SIZE_* */
 
 	/* is called before adding a le to scene */
-	 qboolean(*addFunc) (struct le_s * le, entity_t * ent);
+	qboolean(*addFunc) (struct le_s * le, entity_t * ent);
 } le_t;							/* local entity */
 
 #define MAX_LOCALMODELS		512
@@ -661,6 +662,7 @@ extern byte *fb_list[MAX_FB_LIST];
 extern int fb_length;
 
 void CL_CharacterCvars(character_t * chr);
+void CL_UGVCvars(character_t *chr);
 void CL_ActorUpdateCVars(void);
 
 void CL_DisplayHudMessage(char *text, int time);
@@ -694,6 +696,7 @@ void CL_ResetMouseLastPos(void);
 void CL_ActorMouseTrace(void);
 
 qboolean CL_AddActor(le_t * le, entity_t * ent);
+qboolean CL_AddUGV(le_t * le, entity_t * ent);
 
 void CL_AddTargeting(void);
 
@@ -705,6 +708,7 @@ void CL_AddTargeting(void);
 
 extern char *teamSkinNames[NUM_TEAMSKINS];
 
+void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y);
 void CL_ResetTeams(void);
 void CL_ParseResults(sizebuf_t * buf);
 void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num);
@@ -730,11 +734,11 @@ void CL_ItemDescription(int item);
 #define MAX_GAMESAVESIZE	MAX_TEAMDATASIZE + 16384 + sizeof(globalData_t)
 #define MAX_COMMENTLENGTH	32
 
-void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version);
+void CL_LoadTeam(sizebuf_t *sb, base_t *base, int version);
 void CL_UpdateHireVar(void);
 
-void CL_ResetCharacters(base_t * base);
-void CL_GenerateCharacter(char *team, base_t * base);
+void CL_ResetCharacters(base_t *base);
+void CL_GenerateCharacter(char *team, base_t *base, int type);
 
 void MN_BuildNewBase(vec2_t pos);
 
@@ -896,6 +900,7 @@ void MN_SetViewRect(void);
 void MN_Command(void);
 void MN_DrawMenus(void);
 void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color);
+void MN_ShutdownMessageSystem(void);
 
 void MN_ResetMenus(void);
 void MN_Shutdown(void);
@@ -963,6 +968,8 @@ void CL_Events(void);
 /* cl_view.c */
 extern sun_t map_sun;
 extern int map_maxlevel;
+extern cvar_t *map_dropship;
+extern vec3_t map_dropship_coord;
 
 void V_Init(void);
 void V_RenderView(float stereo_separation);
@@ -973,9 +980,7 @@ void V_AddLightStyle(int style, float r, float g, float b);
 entity_t *V_GetEntity(void);
 void V_CenterView(pos3_t pos);
 
-/* */
 /* cl_sequence.c */
-/* */
 void CL_SequenceRender(void);
 void CL_Sequence2D(void);
 void CL_SequenceStart_f(void);

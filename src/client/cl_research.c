@@ -194,35 +194,6 @@ void RS_AddObjectTechs(void)
 }
 
 /*======================
-RS_CopyFromSkeleton
-
-Copy the research-tree skeleton parsed on game-start to the global list.
-The skeleton has all the informations about already researched items etc..
-
-TODO: this function needs to be removed and replaced with a global one
-that handles the initial parsed "gd" struct.
-======================*/
-void RS_CopyFromSkeleton(void)
-{
-#if 0
-	int i;
-	technology_t *tech = NULL;
-
-	/* copy skeleton to 'working' copy */
-	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
-		memcpy(tech, &technologies_skeleton[i], sizeof(technology_t));
-
-		tech = &technologies_skeleton[i];
-		/* DEBUG: just to test if anything is point to the skeleton :) */
-		/*Q_strncpyz( tech->name, "Credits:", MAX_VAR ); */
-	}
-#endif
-	/* link in the tech pointers in the items. */
-	RS_AddObjectTechs();
-}
-
-/*======================
 RS_InitTree
 
 Gets all needed names/file-paths/etc... for each technology entry.
@@ -251,7 +222,6 @@ void RS_InitTree(void)
 		/* link idx entries to tech provided by id */
 		required = &tech->requires;
 		for (j = 0; j < required->numEntries; j++) {
-			Com_DPrintf("RS_InitTree: linking....\"%s\"\n", required->string[j]);
 			tech_required = RS_GetTechByID(required->string[j]);
 			if (tech_required) {
 				required->idx[j] = tech_required->idx;
@@ -287,8 +257,8 @@ void RS_InitTree(void)
 							for (k = 0; k < csi.numODs; k++) {
 								item_ammo = &csi.ods[k];
 								if (j == item_ammo->link) {
-									Com_DPrintf("RS_InitTree: Ammo \"%s\" for \"%s\" found.\n", item_ammo->name, item->name);
 									Com_sprintf(tech->mdl_bottom, MAX_VAR, item_ammo->model);
+									break;
 								}
 							}
 						}
@@ -348,6 +318,9 @@ void RS_InitTree(void)
 		case RS_ALIEN:
 			/* does nothing right now */
 			break;
+		case RS_UGV:
+			/* TODO: Implement me */
+			break;
 		}						/* switch */
 	}
 	RS_MarkCollected();
@@ -396,7 +369,7 @@ RS_ResearchDisplayInfo
 Displays the informations of the current selected technology in the description-area.
 See menu_research.ufo for the layout/called functions.
 ======================*/
-void RS_ResearchDisplayInfo(void)
+static void RS_ResearchDisplayInfo(void)
 {
 	int i;
 	technology_t *tech = NULL;
@@ -475,8 +448,6 @@ void RS_ResearchDisplayInfo(void)
 		*dependencies = '\0';
 	}
 	Cvar_Set("mn_research_seldep", dependencies);
-
-
 }
 
 /*======================
@@ -485,7 +456,7 @@ CL_ResearchSelectCmd
 Changes the active research-list entry to the currently selected.
 See menu_research.ufo for the layout/called functions.
 ======================*/
-void CL_ResearchSelectCmd(void)
+static void CL_ResearchSelectCmd(void)
 {
 	int num;
 
@@ -513,7 +484,7 @@ RS_AssignScientist + RS_AssignScientist2
 
 Assigns scientist to the selected research-project.
 ======================*/
-void RS_AssignScientist2(int num)
+static void RS_AssignScientist2(int num)
 {
 	technology_t *tech = NULL;
 	building_t *building = NULL;
@@ -524,6 +495,11 @@ void RS_AssignScientist2(int num)
 	}
 
 	tech = researchList[num];
+
+	if ( B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue) <= 0 ) {
+		/* no scientists are free in this base */
+		return;
+	}
 
 	if (tech->statusResearchable) {
 		/* Check if the tech already has been assigned to a lab. */
@@ -556,7 +532,7 @@ void RS_AssignScientist2(int num)
 	}
 }
 
-void RS_AssignScientist(void)
+static void RS_AssignScientist(void)
 {
 	int num;
 
@@ -577,7 +553,7 @@ RS_RemoveScientist + RS_RemoveScientist2
 
 Remove scientist from the selected research-project.
 ======================*/
-void RS_RemoveScientist2(int num)
+static void RS_RemoveScientist2(int num)
 {
 	technology_t *tech = NULL;
 	building_t *building = NULL;
@@ -615,7 +591,7 @@ void RS_RemoveScientist2(int num)
 	RS_UpdateData();
 }
 
-void RS_RemoveScientist(void)
+static void RS_RemoveScientist(void)
 {
 	int num;
 
@@ -636,7 +612,7 @@ Starts the research of the selected research-list entry.
 
 TODO: Check if laboratory is available
 ======================*/
-void RS_ResearchStart(void)
+static void RS_ResearchStart(void)
 {
 	technology_t *tech = NULL;
 	building_t *building = NULL;
@@ -697,7 +673,7 @@ Pauses the research of the selected research-list entry.
 
 TODO: Check if laboratory is available
 ======================*/
-void RS_ResearchStop(void)
+static void RS_ResearchStop(void)
 {
 	technology_t *tech = NULL;
 
@@ -875,7 +851,7 @@ IN
 OUT
 	boolean	RS_DependsOn
 ======================*/
-byte RS_DependsOn(char *id1, char *id2)
+static qboolean RS_DependsOn(char *id1, char *id2)
 {
 	int i;
 	technology_t *tech = NULL;
@@ -994,7 +970,7 @@ List all parsed technologies and their attributes in commandline/console.
 
 Command to call this: techlist
 ======================*/
-void RS_TechnologyList_f(void)
+static void RS_TechnologyList_f(void)
 {
 	int i, j;
 	technology_t *tech = NULL;
@@ -1030,6 +1006,9 @@ void RS_TechnologyList_f(void)
 			break;
 		case RS_BUILDING:
 			Com_Printf("building");
+			break;
+		case RS_UGV:
+			Com_Printf("ugv");
 			break;
 		default:
 			break;
@@ -1089,7 +1068,7 @@ RS_DebugResearchAll
 
 call this function if you already hold a tech pointer
 ======================*/
-void RS_DebugResearchAll(void)
+static void RS_DebugResearchAll(void)
 {
 	int i;
 
@@ -1235,6 +1214,8 @@ void RS_ParseTechnologies(char *id, char **text)
 				tech->type = RS_BUILDING;
 			else if (!Q_strncmp(token, "alien", MAX_VAR))
 				tech->type = RS_ALIEN;
+			else if (!Q_strncmp(token, "ugv", MAX_VAR))
+				tech->type = RS_UGV;
 			else
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token);
 		} else {
@@ -1352,6 +1333,8 @@ call this function if you already hold a tech pointer
 ======================*/
 qboolean RS_IsResearched_idx(int idx)
 {
+	if (ccs.singleplayer == qfalse)
+		return qtrue;
 	if (idx >= 0 && gd.technologies[idx].statusResearch == RS_FINISH)
 		return qtrue;
 	return qfalse;
@@ -1364,6 +1347,8 @@ call this function if you already hold a tech pointer
 ======================*/
 qboolean RS_IsResearched_ptr(technology_t * tech)
 {
+	if (ccs.singleplayer == qfalse)
+		return qtrue;
 	if (tech && tech->statusResearch == RS_FINISH)
 		return qtrue;
 	return qfalse;
@@ -1510,7 +1495,7 @@ RS_GetFirstRequired + RS_GetFirstRequired2
 Returns the first required (yet unresearched) technologies that are needed by "tech_idx".
 That means you need to research the result to be able to research (and maybe use) "id".
 ======================*/
-void RS_GetFirstRequired2(int tech_idx, int first_tech_idx, stringlist_t * required)
+static void RS_GetFirstRequired2(int tech_idx, int first_tech_idx, stringlist_t * required)
 {
 	int i;
 	stringlist_t *required_temp = NULL;

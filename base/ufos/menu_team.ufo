@@ -515,16 +515,24 @@ menu team
 	pic bt_editname
 	{
 		tooltip	"_Edit name of the soldier"
-		image	"menu/menu_buttons1"
+		image	"menu/button_blue"
 		pos		"920 10"
-		texl	"0 216"
-		texh	"71 253"
+		texl	"0 90"
+		texh	"94 125"
 		mousefx	true
 		click
 		{
 			cmd "msgmenu ?mn_name"
 			*txt_name mousefx true
 		}
+	}
+
+	string s_editname
+	{
+		pos	"967 15"
+		align	uc
+		string	"_Edit"
+		color "1 1 1 1"
 	}
 
 	model body
@@ -549,7 +557,7 @@ menu team
 
 	pic	rank_img { pos "475 370" image "*cvar mn_chrrank_img" }
 	string	rank_lbl { pos "475 75" string "*cvar mn_chrrank" }
-	
+
 	string pwr_lbl { pos "700 80"  string "_Power:" }
 	string pwr_val { pos "975 80"  string "*cvar mn_tpwr" align ur }
 	pic pwr_rahmen { pos "707 98"  image menu/bar_rahmen }
@@ -599,7 +607,7 @@ menu team
 	string	missions_val { pos "975 380" string "*cvar mn_chrmis" align ur }
 	string	kills_lbl { pos "700 400" string "_Killed Enemies:" }
 	string	kills_val { pos "975 400" string "*cvar mn_chrkillalien" align ur }
-	
+
 
 	//mn_chrkillcivilian
 	//mn_chrkillteam
@@ -698,6 +706,51 @@ menu equipment
 	{
 		image	menu/equipment_ur
 		pos		"512 0"
+	}
+
+	string s_backpack
+	{
+		pos "932 25"
+		align uc
+		string	"_Backpack"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_left
+	{
+		pos "932 150"
+		align uc
+		string	"_Left Hand"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_right
+	{
+		pos "610 150"
+		align uc
+		string	"_Right Hand"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_holster
+	{
+		pos "932 245"
+		align uc
+		string	"_Holster"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_belt
+	{
+		pos "610 245"
+		align uc
+		string	"_Belt"
+		color "0 0.6 0 1"
+		size "160 25"
 	}
 
 	pic back_ll
@@ -899,20 +952,20 @@ menu equipment
 
 	confunc equip_reset
 	{
-		*bt_primary		image menu/menu_buttons1
-		*bt_secondary	image menu/menu_buttons1
-		*bt_misc		image menu/menu_buttons1
-		*bt_armor		image menu/menu_buttons1
+		*s_primary		color "1 1 1 0.6"
+		*s_secondary	color "1 1 1 0.6"
+		*s_misc			color "1 1 1 0.6"
+		*s_armor		color "1 1 1 0.6"
 	}
-	confunc equip_primary	{ cmd "equip_type 0;" equip_reset *bt_primary	image menu/menu_buttons1a }
-	confunc equip_secondary	{ cmd "equip_type 1;" equip_reset *bt_secondary	image menu/menu_buttons1a }
-	confunc equip_misc		{ cmd "equip_type 2;" equip_reset *bt_misc		image menu/menu_buttons1a }
-	confunc equip_armor		{ cmd "equip_type 3;" equip_reset *bt_armor		image menu/menu_buttons1a }
+	confunc equip_primary	{ cmd "equip_type 0;" equip_reset *s_primary	color "1 1 1 1" }
+	confunc equip_secondary	{ cmd "equip_type 1;" equip_reset *s_secondary	color "1 1 1 1" }
+	confunc equip_misc		{ cmd "equip_type 2;" equip_reset *s_misc		color "1 1 1 1" }
+	confunc equip_armor		{ cmd "equip_type 3;" equip_reset *s_armor		color "1 1 1 1" }
 
 	pic bt_primary
 	{
 		tooltip	"_Show only primary weapons in store"
-		image	menu/menu_buttons1
+		image	menu/button_blue
 		mousefx	true
 		pos		"374 125"
 		texl	"0 0"
@@ -920,39 +973,74 @@ menu equipment
 		click	{ equip_primary }
 	}
 
+	string s_primary
+	{
+		pos	"438 135"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Primary"
+	}
+
 	pic bt_secondary
 	{
 		tooltip	"_Show only secondary weapons in store"
-		image	menu/menu_buttons1
+		image	menu/button_blue
 		mousefx	true
 		pos		"374 180"
-		texl	"0 162"
-		texh	"128 214"
+		texl	"0 0"
+		texh	"128 52"
 		click	{ equip_secondary }
+	}
+
+	string s_secondary
+	{
+		pos	"438 190"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Secondary"
 	}
 
 	pic bt_misc
 	{
 		tooltip	"_Show other equipment in store"
-		image	menu/menu_buttons1
+		image	menu/button_blue
 		mousefx	true
 		pos		"374 235"
-		texl	"0 108"
-		texh	"128 160"
+		texl	"0 0"
+		texh	"128 52"
 		click	{ equip_misc }
+	}
+
+	string s_misc
+	{
+		pos	"438 245"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Misc"
 	}
 
 	pic bt_armor
 	{
 		tooltip	"_Show only armor in store"
-		image	menu/menu_buttons1
+		image	menu/button_blue
 		mousefx	true
 		pos		"374 290"
-		texl	"0 54"
-		texh	"128 106"
+		texl	"0 0"
+		texh	"128 52"
 		click	{ equip_armor }
 	}
 
+	string s_armor
+	{
+		pos	"438 300"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Armor"
+	}
 
 	// ==================
 	// item description

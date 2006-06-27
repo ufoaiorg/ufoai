@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-#define MAX_DATA_LENGTH 1024
+#define MAX_DATA_LENGTH 2048
 
 typedef struct seqCmd_s {
 	void (*handler) (char *name, char *data);
@@ -312,6 +312,11 @@ void CL_Sequence2D(void)
 				s2d->pos[j] += cls.frametime * s2d->speed[j];
 				s2d->size[j] += cls.frametime * s2d->enlarge[j];
 			}
+
+			/* outside the screen? */
+			/* TODO: does VID_NORM_HEIGHT work here? Check differnt resolutions */
+			if ( s2d->pos[1] >= VID_NORM_HEIGHT )
+				continue;
 
 			/* render */
 			re.DrawColor(s2d->color);
@@ -847,6 +852,8 @@ void CL_Video_f(void)
 			return;
 		}
 	}
+	/* create path if it does not exists */
+	FS_CreatePath(filename);
 	CL_OpenAVIForWriting(filename);
 }
 
@@ -1139,10 +1146,15 @@ qboolean CL_OpenAVIForWriting(char *fileName)
 	afd.width = viddef.width;
 	afd.height = viddef.height;
 
-	if (cl_aviMotionJpeg->value)
+	Com_DPrintf("Capturing avi with resolution %i:%i\n", afd.width, afd.height );
+
+	if (cl_aviMotionJpeg->value) {
+		Com_DPrintf("...MotionJPEG codec\n");
 		afd.motionJpeg = qtrue;
-	else
+	} else {
+		Com_DPrintf("...no MotionJPEG\n");
 		afd.motionJpeg = qfalse;
+	}
 
 	afd.cBuffer = Z_Malloc(afd.width * afd.height * 4);
 	afd.eBuffer = Z_Malloc(afd.width * afd.height * 4);

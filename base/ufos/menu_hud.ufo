@@ -687,6 +687,59 @@ menu inventory
 		pos		"256 96"
 		click
 	}
+	string s_backpack
+	{
+		pos "676 121"
+		align uc
+		string	"_Backpack"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_left
+	{
+		pos "676 246"
+		align uc
+		string	"_Left Hand"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_right
+	{
+		pos "354 246"
+		align uc
+		string	"_Right Hand"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_holster
+	{
+		pos "676 341"
+		align uc
+		string	"_Holster"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_belt
+	{
+		pos "354 341"
+		align uc
+		string	"_Belt"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_floor
+	{
+		pos "318 456"
+		align uc
+		string	"_Floor"
+		color "0 0.6 0 1"
+		size "76 25"
+	}
 
 	string actorname
 	{
