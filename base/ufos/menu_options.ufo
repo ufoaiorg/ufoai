@@ -392,7 +392,7 @@ menu options_video
 		color	"0 .8 0 1"
 		current	"*cvar vid_gamma"
 		max		2.0
-		align	uc
+		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -441,7 +441,7 @@ menu options_sound
 		color	"0 .8 0 1"
 		current	"*cvar s_volume"
 		max		1.0
-		align	uc
+		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -462,7 +462,7 @@ menu options_sound
 		color	"0 .8 0 1"
 		current	"*cvar ov_volume"
 		max		1.0
-		align	uc
+		align	ul
 		mousefx true
 		click	{ }
 	}
@@ -710,7 +710,7 @@ menu options_game
 		current	"*cvar cl_cammovespeed"
 		min		150
 		max		1500
-		align	uc
+		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -732,7 +732,7 @@ menu options_game
 		current	"*cvar cl_camrotspeed"
 		min		50
 		max		500
-		align	uc
+		align	ul
 		mousefx	true
 		click	{ }
 	}
