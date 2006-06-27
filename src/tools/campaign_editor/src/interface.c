@@ -575,6 +575,11 @@ GtkWidget* create_mis_txt (void)
 
 GtkWidget* create_about_box (void)
 {
+  const gchar *authors[] = {
+    "Martin Gerhardy (mattn/tlh2000)",
+    NULL
+  };
+
   const gchar *license =
   "This library is free software; you can redistribute it and/or\n"
   "modify it under the terms of the GNU Library General Public License as\n"
@@ -592,12 +597,7 @@ GtkWidget* create_about_box (void)
   "Boston, MA 02111-1307, USA.\n";
 
   aboutdialog = gtk_about_dialog_new();
-  gtk_about_dialog_set_name((GtkAboutDialog*)aboutdialog,NAME);
-  gtk_about_dialog_set_version((GtkAboutDialog*)aboutdialog,VERSION);
-  gtk_about_dialog_set_website((GtkAboutDialog*)aboutdialog,WEBSITE);
-/*  gtk_about_dialog_set_copyright((GtkAboutDialog*)aboutdialog,copyright);
-  gtk_about_dialog_set_comments((GtkAboutDialog*)aboutdialog,comments);
-  gtk_about_dialog_set_authors ((GtkAboutDialog*)aboutdialog, authors);*/
+/* gtk_about_dialog_set_authors ((GtkAboutDialog*)aboutdialog, authors); */
 
   gtk_show_about_dialog ( NULL, // or the parent window
                        "name", NAME,
@@ -606,6 +606,7 @@ GtkWidget* create_about_box (void)
                        "license", license,
                        "copyright", "(C) 2002-2006 The UFO:AI Team",
                        "comments", "Program to generate new campaigns",
+                       "authors", authors,
                         NULL); // end on NULL, for end of list
 
   return aboutdialog;
