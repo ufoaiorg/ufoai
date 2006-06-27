@@ -693,7 +693,7 @@ item stungrenade
 		time	12
 		spldmg	"0 0"
 		splrad	120
-		dmgtype ""
+		dmgtype stun
 	}
 	secondary
 	{
@@ -717,7 +717,7 @@ item stungrenade
 		time	12
 		spldmg	"0 0"
 		splrad	120
-		dmgtype ""
+		dmgtype stun
 	}
 }
 
