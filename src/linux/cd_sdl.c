@@ -256,7 +256,7 @@ int CDAudio_Init( void )
 	if (cv->value)
 		return -1;
 
-	cd_nocd = Cvar_Get ("cd_nocd", "0", CVAR_ARCHIVE );
+	cd_nocd = Cvar_Get ("cd_nocd", "1", CVAR_ARCHIVE );
 	if (cd_nocd->value)
 		return -1;
 
