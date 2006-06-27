@@ -368,12 +368,8 @@ static char* Font_GetLineWrap ( font_t* f, char* buffer, int maxWidth, int *widt
 	if ( buffer == NULL )
 		return NULL;
 
-	if ( ! maxWidth ) {
-#ifdef PARANOID
-		ri.Con_Printf (PRINT_DEVELOPER, "Font_GetLineWrap: maxWidth was %i and is now %i\n", maxWidth, VID_NORM_WIDTH );
-#endif
+	if ( ! maxWidth )
 		maxWidth = VID_NORM_WIDTH*vid.rx;
-	}
 
 	/* no line wrap needed? */
 	TTF_SizeUTF8( f->font, buffer, &w, &h );
@@ -562,9 +558,6 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 		x = locX;
 	} while ( buffer );
 
-#ifdef PARANOID
-	ri.Con_Printf(PRINT_DEVELOPER, "Font_DrawString: returnHeight: %i\n", returnHeight);
-#endif
 	return returnHeight;
 }
 
