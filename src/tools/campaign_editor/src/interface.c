@@ -26,10 +26,6 @@
 #define GLADE_HOOKUP_OBJECT_NO_REF(component,widget,name) \
   g_object_set_data (G_OBJECT (component), name, widget)
 
-GtkWidget *mis_txt;
-GtkWidget *campaign_editor;
-GtkWidget *mission_dialog;
-
 GtkWidget* create_campaign_editor (void)
 {
   GtkWidget *editor_vbox;
@@ -73,7 +69,6 @@ GtkWidget* create_campaign_editor (void)
 
   menu_item_quit = gtk_image_menu_item_new_from_stock ("gtk-quit", accel_group);
   gtk_widget_show (menu_item_quit);
-  gtk_signal_connect (GTK_OBJECT (menu_item_quit), "activate", GTK_SIGNAL_FUNC (gtk_exit), NULL);
   gtk_container_add (GTK_CONTAINER (file_menu), menu_item_quit);
 
   help = gtk_menu_item_new_with_mnemonic (_("_Help"));
@@ -134,10 +129,10 @@ GtkWidget* create_campaign_editor (void)
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (geoscape_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (geoscape_notebook), 0), geoscape_notebook_label);
 
   g_signal_connect ((gpointer) menu_item_quit, "activate",
-                    G_CALLBACK (on_beenden1_activate),
+                    G_CALLBACK (on_quit_activate),
                     NULL);
   g_signal_connect ((gpointer) menu_item_info, "activate",
-                    G_CALLBACK (on_info1_activate),
+                    G_CALLBACK (on_info_activate),
                     NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
@@ -576,4 +571,42 @@ GtkWidget* create_mis_txt (void)
   GLADE_HOOKUP_OBJECT (mis_txt, mis_txt_close, "mis_txt_close");
 
   return mis_txt;
+}
+
+GtkWidget* create_about_box (void)
+{
+  const gchar *license =
+  "This library is free software; you can redistribute it and/or\n"
+  "modify it under the terms of the GNU Library General Public License as\n"
+  "published by the Free Software Foundation; either version 2 of the\n"
+  "License, or (at your option) any later version.\n"
+  "\n"
+  "This library is distributed in the hope that it will be useful,\n"
+  "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+  "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n"
+  "Library General Public License for more details.\n"
+  "\n"
+  "You should have received a copy of the GNU Library General Public\n"
+  "License along with the Gnome Library; see the file COPYING.LIB.  If not,\n"
+  "write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,\n"
+  "Boston, MA 02111-1307, USA.\n";
+
+  aboutdialog = gtk_about_dialog_new();
+  gtk_about_dialog_set_name((GtkAboutDialog*)aboutdialog,NAME);
+  gtk_about_dialog_set_version((GtkAboutDialog*)aboutdialog,VERSION);
+  gtk_about_dialog_set_website((GtkAboutDialog*)aboutdialog,WEBSITE);
+/*  gtk_about_dialog_set_copyright((GtkAboutDialog*)aboutdialog,copyright);
+  gtk_about_dialog_set_comments((GtkAboutDialog*)aboutdialog,comments);
+  gtk_about_dialog_set_authors ((GtkAboutDialog*)aboutdialog, authors);*/
+
+  gtk_show_about_dialog ( NULL, // or the parent window
+                       "name", NAME,
+                       "version", VERSION,
+                       "website", WEBSITE,
+                       "license", license,
+                       "copyright", "(C) 2002-2006 The UFO:AI Team",
+                       "comments", "Program to generate new campaigns",
+                        NULL); // end on NULL, for end of list
+
+  return aboutdialog;
 }
