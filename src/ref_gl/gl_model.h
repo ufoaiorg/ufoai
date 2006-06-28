@@ -34,9 +34,7 @@ BRUSH MODELS
 */
 
 
-/* */
 /* in memory representation */
-/* */
 /* !!! if this is changed, it must be changed in asm_draw.h too !!! */
 typedef struct
 {
@@ -87,7 +85,6 @@ typedef struct glpoly_s
 	struct	glpoly_s	*next;
 	struct	glpoly_s	*chain;
 	int		numverts;
-	int		flags;			/* for SURF_UNDERWATER (not needed anymore?) */
 	float	verts[4][VERTEXSIZE];	/* variable sized (xyz s1t1 s2t2) */
 } glpoly_t;
 
@@ -143,7 +140,7 @@ typedef struct mnode_s
 typedef struct mleaf_s
 {
 	/* common with node */
-	int			contents;		/* wil be a negative contents number */
+	int			contents;		/* will be a negative contents number */
 
 	float		minmaxs[6];		/* for bounding box culling */
 
@@ -170,9 +167,7 @@ typedef struct manim_s
 
 /*=================================================================== */
 
-/* */
 /* Whole model */
-/* */
 
 typedef enum {mod_bad, mod_brush, mod_sprite, mod_alias } modtype_t;
 
@@ -188,21 +183,15 @@ typedef struct model_s
 
 	int			flags;
 
-	/* */
 	/* volume occupied by the model graphics */
-	/* */
 	vec3_t		mins, maxs;
 	float		radius;
 
-	/* */
 	/* solid volume for clipping */
-	/* */
 	qboolean	clipbox;
 	vec3_t		clipmins, clipmaxs;
 
-	/* */
 	/* brush model */
-	/* */
 	int			firstmodelsurface, nummodelsurfaces;
 	int			lightmap;		/* only for submodels */
 

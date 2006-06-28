@@ -337,7 +337,6 @@ void GL_EnableMultitexture( qboolean enable );
 void GL_SelectTexture( GLenum );
 
 void R_LightPoint (vec3_t p, vec3_t color);
-void R_PushDlights (mnode_t *node);
 
 /*==================================================================== */
 
@@ -377,9 +376,6 @@ void GL_SubdivideSurface (msurface_t *fa);
 qboolean R_CullBox (vec3_t mins, vec3_t maxs);
 void R_RotateForEntity (entity_t *e);
 
-/*model_s *R_RegisterModelShort( char *name ); */
-
-glpoly_t *WaterWarpPolyVerts (glpoly_t *p);
 void EmitWaterPolys (msurface_t *fa);
 void R_DrawTriangleOutlines (void);
 void R_MarkLights (dlight_t *light, int bit, mnode_t *node);
