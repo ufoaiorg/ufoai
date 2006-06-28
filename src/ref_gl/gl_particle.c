@@ -21,8 +21,7 @@ void R_DrawSprite( ptl_t *p )
 	vec3_t	pos;
 
 	/* get transformation */
-	switch ( p->style )
-	{
+	switch ( p->style ) {
 	case STYLE_FACING:
 		VectorScale( vright, p->size[0], right );
 		VectorScale( vup, p->size[1], up );
@@ -49,7 +48,7 @@ void R_DrawSprite( ptl_t *p )
 
 	/* load texture set up coordinates */
 	GL_Bind( ((image_t *)r_newrefdef.ptl_art[p->pic].art)->texnum );
-	
+
 	VectorMA( p->s, -0.5, up, pos );
 	VectorMA( pos, -0.5, right, pos );
 
@@ -92,7 +91,7 @@ void R_DrawPtlModel( ptl_t *p )
 	mi.origin = p->s;
 	mi.angles = p->angles;
 	mi.model = (model_t *)r_newrefdef.ptl_art[p->model].art;
-	
+
 	/* draw it */
 	R_DrawModelParticle( &mi );
 }
@@ -133,15 +132,13 @@ void R_DrawPtlLine( ptl_t *p )
 GL_SetBlendMode
 ===============
 */
-int		blend_mode;
+static int blend_mode;
 
 void GL_SetBlendMode( int mode )
 {
-	if ( blend_mode != mode )
-	{
+	if ( blend_mode != mode ) {
 		blend_mode = mode;
-		switch ( mode )
-		{
+		switch ( mode ) {
 		case BLEND_REPLACE:
 			GL_TexEnv( GL_REPLACE );
 			break;
@@ -179,25 +176,27 @@ void R_DrawPtls( void )
 	ptl_t	*p;
 	int		i;
 
-	if ( gl_fog->value && r_newrefdef.fog ) qglDisable( GL_FOG );
-	qglDepthMask( GL_FALSE );		/* no z buffering */
+	if ( gl_fog->value && r_newrefdef.fog )
+		qglDisable( GL_FOG );
+	/* no z buffering */
+	qglDepthMask( GL_FALSE );
 	qglDisable( GL_CULL_FACE );
 	qglEnable( GL_BLEND );
 	blend_mode = BLEND_REPLACE;
 
 	for ( i = 0, p = r_newrefdef.ptls; i < r_newrefdef.num_ptls; i++, p++ )
-		if ( p->inuse )
-		{
+		if ( p->inuse ) {
 			/* test for visibility */
 			if ( p->levelFlags && !((1<<r_newrefdef.worldlevel) & p->levelFlags) )
 				continue;
 
 			/* set blend mode and draw gfx */
 			GL_SetBlendMode( p->blend );
-			if ( p->style == STYLE_LINE ) R_DrawPtlLine( p );
-			if ( p->pic != -1 ) R_DrawSprite( p );
-			if ( p->model != -1 )
-			{
+			if ( p->style == STYLE_LINE )
+				R_DrawPtlLine( p );
+			if ( p->pic != -1 )
+				R_DrawSprite( p );
+			if ( p->model != -1 ) {
 				qglEnable( GL_CULL_FACE );
 				R_DrawPtlModel( p );
 				qglDisable( GL_CULL_FACE );
@@ -209,5 +208,6 @@ void R_DrawPtls( void )
 	qglBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 	qglEnable( GL_CULL_FACE );
 	qglDepthMask( GL_TRUE );
-	if ( gl_fog->value && r_newrefdef.fog ) qglEnable( GL_FOG );
+	if ( gl_fog->value && r_newrefdef.fog )
+		qglEnable( GL_FOG );
 }
