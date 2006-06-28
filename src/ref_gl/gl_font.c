@@ -187,7 +187,8 @@ void Font_Length (char *font, char *c, int *width, int *height)
 
 	/* get the font */
 	f = Font_GetFont( font );
-	if ( !f ) return;
+	if ( !f )
+		return;
 	TTF_SizeUTF8( f->font, c, width, height );
 }
 
@@ -198,7 +199,8 @@ void Font_CleanCache ( void )
 {
 	int i = 0;
 
-	if ( numInCache < MAX_FONT_CACHE / 2 ) return;
+	if ( numInCache < MAX_FONT_CACHE / 2 )
+		return;
 
 	/* free the surfaces */
 	for ( ; i < numInCache; i++ )
@@ -301,8 +303,7 @@ static void Font_AddToCache( const char* s, void* pixel, int w, int h )
 		fontCache[numInCache].pixel = pixel;
 		fontCache[numInCache].size[0] = w;
 		fontCache[numInCache].size[1] = h;
-	}
-	else
+	} else
 		ri.Sys_Error( ERR_FATAL, "...font cache exceeded with %i\n", hashValue );
 
 	numInCache++;
@@ -493,6 +494,11 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 	SDL_Surface *openGLSurface = NULL;
 	int max = 0; /* calculated maxWidth */
 
+	/* transform from 1024x768 coordinates for drawing */
+	x = (float)x * vid.rx;
+	y = (float)y * vid.ry;
+	maxWidth = (float)maxWidth * vid.rx;
+
 	/* get the font */
 	f = Font_GetFont( fontID );
 	if ( !f )
@@ -505,11 +511,6 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 	}
 
 	Q_strncpyz( buffer, c, BUF_SIZE );
-
-	/* transform from 1024x768 coordinates for drawing */
-	x = (float)x * vid.rx;
-	y = (float)y * vid.ry;
-	maxWidth = (float)maxWidth * vid.rx;
 
 	Font_ConvertChars( buf );
 	/* for linebreaks */
@@ -558,7 +559,7 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 		x = locX;
 	} while ( buffer );
 
-	return returnHeight;
+	return returnHeight * (2.0-vid.ry);
 }
 
 /*================

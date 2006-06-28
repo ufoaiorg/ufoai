@@ -107,31 +107,39 @@ void SEQ_Remove(char *name, char *data);
 void SEQ_Command(char *name, char *data);
 
 void (*seqCmdFunc[SEQ_NUMCMDS]) (char *name, char *data) = {
-NULL, SEQ_Wait, SEQ_Precache, SEQ_Camera, SEQ_Model, SEQ_2Dobj, SEQ_Remove, SEQ_Command};
+	NULL,
+	SEQ_Wait,
+	SEQ_Precache,
+	SEQ_Camera,
+	SEQ_Model,
+	SEQ_2Dobj,
+	SEQ_Remove,
+	SEQ_Command
+};
 
 #define MAX_SEQCMDS		8192
 #define MAX_SEQUENCES	32
 #define MAX_SEQENTS		128
 #define MAX_SEQ2DS		128
 
-seqCmd_t seqCmds[MAX_SEQCMDS];
-int numSeqCmds;
+static seqCmd_t seqCmds[MAX_SEQCMDS];
+static int numSeqCmds;
 
-sequence_t sequences[MAX_SEQUENCES];
-int numSequences;
+static sequence_t sequences[MAX_SEQUENCES];
+static int numSequences;
 
-int seqTime;
-int seqCmd, seqEndCmd;
+static int seqTime;
+static int seqCmd, seqEndCmd;
 
-seqCamera_t seqCamera;
+static seqCamera_t seqCamera;
 
-seqEnt_t seqEnts[MAX_SEQENTS];
-int numSeqEnts;
+static seqEnt_t seqEnts[MAX_SEQENTS];
+static int numSeqEnts;
 
-seq2D_t seq2Ds[MAX_SEQ2DS];
-int numSeq2Ds;
+static seq2D_t seq2Ds[MAX_SEQ2DS];
+static int numSeq2Ds;
 
-cvar_t *seq_animspeed;
+static cvar_t *seq_animspeed;
 
 
 /*
@@ -314,9 +322,9 @@ void CL_Sequence2D(void)
 			}
 
 			/* outside the screen? */
-			/* TODO: does VID_NORM_HEIGHT work here? Check differnt resolutions */
-			if ( s2d->pos[1] >= VID_NORM_HEIGHT )
-				continue;
+			/* FIXME: We need this check - but this does not work */
+			/*if ( s2d->pos[1] >= VID_NORM_HEIGHT || s2d->pos[0] >= VID_NORM_WIDTH )
+				continue;*/
 
 			/* render */
 			re.DrawColor(s2d->color);
@@ -332,7 +340,8 @@ void CL_Sequence2D(void)
 			/* render */
 			re.DrawColor(s2d->color);
 
-			if (*s2d->text)		/* gettext placeholder */
+			/* gettext placeholder */
+			if (*s2d->text)
 				height += re.FontDrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], (int) s2d->size[0], _(s2d->text));
 		}
 	re.DrawColor(NULL);
@@ -400,7 +409,6 @@ void CL_ResetSequences(void)
 	numSeqCmds = 0;
 	numSeqEnts = 0;
 	numSeq2Ds = 0;
-
 }
 
 
@@ -693,7 +701,7 @@ void CL_ParseSequence(char *name, char **text)
 		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
-	  next_cmd:
+	next_cmd:
 		if (*token == '}')
 			break;
 
