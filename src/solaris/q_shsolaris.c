@@ -110,14 +110,6 @@ void Sys_Mkdir (char *path)
         mkdir (path, 0777);
 }
 
-char *strlwr (char *s)
-{
-	while (*s) {
-		*s = tolower(*s);
-		s++;
-	}
-}
-
 /*============================================ */
 
 static	char	findbase[MAX_OSPATH];
@@ -135,7 +127,7 @@ static qboolean CompareAttributes(char *path, char *name,
 	if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0)
 		return qfalse;
 
-	sprintf(fn, "%s/%s", path, name);
+	Com_sprintf(fn, MAX_OSPATH, "%s/%s", path, name);
 	if (stat(fn, &st) == -1)
 		return qfalse; /* shouldn't happen */
 

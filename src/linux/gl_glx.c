@@ -1067,6 +1067,7 @@ void GLimp_AppActivate( qboolean active )
 {
 }
 
+#if 0
 void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
                              GLsizei width, GLenum format, GLenum type,
                              const GLvoid *table )
@@ -1083,3 +1084,4 @@ void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
 	}
 	qgl3DfxSetPaletteEXT((GLuint *)temptable);
 }
+#endif

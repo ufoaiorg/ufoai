@@ -197,11 +197,11 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 
 void R_RotateForEntity (entity_t *e)
 {
-        qglTranslatef (e->origin[0],  e->origin[1],  e->origin[2]);
+	qglTranslatef (e->origin[0], e->origin[1], e->origin[2]);
 
-        qglRotatef (e->angles[1],  0, 0, 1);
-        qglRotatef (-e->angles[0],  0, 1, 0);
-        qglRotatef (-e->angles[2],  1, 0, 0);
+	qglRotatef (e->angles[1],  0, 0, 1);
+	qglRotatef (-e->angles[0],  0, 1, 0);
+	qglRotatef (-e->angles[2],  1, 0, 0);
 }
 
 
@@ -230,7 +230,6 @@ void R_DrawSpriteModel (entity_t *e)
 
 	/* don't even bother culling, because it's just a single */
 	/* polygon without a surface cache */
-
 	psprite = (dsprite_t *)currentmodel->extradata;
 
 #if 0
@@ -265,7 +264,7 @@ void R_DrawSpriteModel (entity_t *e)
 
 	qglColor4f( 1, 1, 1, alpha );
 
-        GL_Bind(currentmodel->skins[e->as.frame]->texnum);
+	GL_Bind(currentmodel->skins[e->as.frame]->texnum);
 
 	GL_TexEnv( GL_MODULATE );
 
@@ -624,8 +623,8 @@ void GL_DrawParticles( int num_particles, const particle_t particles[], const un
 	for ( p = particles, i=0 ; i < num_particles ; i++,p++) {
 		/* hack a scale up to keep particles from disapearing */
 		scale = ( p->origin[0] - r_origin[0] ) * vpn[0] +
-			    ( p->origin[1] - r_origin[1] ) * vpn[1] +
-			    ( p->origin[2] - r_origin[2] ) * vpn[2];
+				( p->origin[1] - r_origin[1] ) * vpn[1] +
+				( p->origin[2] - r_origin[2] ) * vpn[2];
 
 		if (scale < 20)
 			scale = 1;
@@ -642,13 +641,13 @@ void GL_DrawParticles( int num_particles, const particle_t particles[], const un
 
 		qglTexCoord2f( 1.0625, 0.0625 );
 		qglVertex3f( p->origin[0] + up[0]*scale,
-			         p->origin[1] + up[1]*scale,
-					 p->origin[2] + up[2]*scale);
+					p->origin[1] + up[1]*scale,
+					p->origin[2] + up[2]*scale);
 
 		qglTexCoord2f( 0.0625, 1.0625 );
 		qglVertex3f( p->origin[0] + right[0]*scale,
-			         p->origin[1] + right[1]*scale,
-					 p->origin[2] + right[2]*scale);
+					p->origin[1] + right[1]*scale,
+					p->origin[2] + right[2]*scale);
 	}
 
 	qglEnd ();
@@ -691,7 +690,6 @@ void R_DrawParticles (void)
 		qglColor4f( 1.0F, 1.0F, 1.0F, 1.0F );
 		qglDepthMask( GL_TRUE );
 		qglEnable( GL_TEXTURE_2D );
-
 	} else
 		GL_DrawParticles( r_newrefdef.num_particles, r_newrefdef.particles, d_8to24table );
 }
@@ -714,11 +712,11 @@ void R_PolyBlend (void)
 	qglDisable (GL_DEPTH_TEST);
 	qglDisable (GL_TEXTURE_2D);
 
-        qglLoadIdentity ();
+	qglLoadIdentity ();
 
 	/* FIXME: get rid of these */
-        qglRotatef (-90,  1, 0, 0);	    /* put Z going up */
-        qglRotatef (90,  0, 0, 1);	    /* put Z going up */
+	qglRotatef (-90, 1, 0, 0);	    /* put Z going up */
+	qglRotatef (90, 0, 0, 1);	    /* put Z going up */
 
 	qglColor4fv (v_blend);
 
@@ -744,7 +742,6 @@ int SignbitsForPlane (cplane_t *out)
 	int	bits, j;
 
 	/* for fast box on planeside test */
-
 	bits = 0;
 	for (j=0 ; j<3 ; j++) {
 		if (out->normal[j] < 0)
@@ -798,7 +795,6 @@ R_SetupFrame
 void R_SetupFrame (void)
 {
 	int i;
-/* 	mleaf_t	*leaf; */
 
 	r_framecount++;
 
@@ -807,36 +803,6 @@ void R_SetupFrame (void)
 
 	AngleVectors (r_newrefdef.viewangles, vpn, vright, vup);
 
-	/* current viewcluster */
-#if 0
-	if ( !( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) ) {
-		r_oldviewcluster = r_viewcluster;
-		r_oldviewcluster2 = r_viewcluster2;
-		leaf = Mod_PointInLeaf (r_origin, r_worldmodel);
-		r_viewcluster = r_viewcluster2 = leaf->cluster;
-
-		/* check above and below so crossing solid water doesn't draw wrong */
-		if (!leaf->contents) {	/* look down a bit */
-			vec3_t	temp;
-
-			VectorCopy (r_origin, temp);
-			temp[2] -= 16;
-			leaf = Mod_PointInLeaf (temp, r_worldmodel);
-			if ( !(leaf->contents & CONTENTS_SOLID) &&
-				(leaf->cluster != r_viewcluster2) )
-				r_viewcluster2 = leaf->cluster;
-		} else {	/* look up a bit */
-			vec3_t	temp;
-
-			VectorCopy (r_origin, temp);
-			temp[2] += 16;
-			leaf = Mod_PointInLeaf (temp, r_worldmodel);
-			if ( !(leaf->contents & CONTENTS_SOLID) &&
-				(leaf->cluster != r_viewcluster2) )
-				r_viewcluster2 = leaf->cluster;
-		}
-	}
-#endif
 	for (i=0 ; i<4 ; i++)
 		v_blend[i] = r_newrefdef.blend[i];
 
@@ -853,8 +819,7 @@ void R_SetupFrame (void)
 }
 
 
-void MYgluPerspective( GLdouble fovy, GLdouble aspect,
-		     GLdouble zNear, GLdouble zFar )
+void MYgluPerspective( GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar )
 {
 	GLdouble xmin, xmax, ymin, ymax;
 
@@ -868,7 +833,7 @@ void MYgluPerspective( GLdouble fovy, GLdouble aspect,
 	xmax += -( 2 * gl_state.camera_separation ) / zNear;
 
 	if ( !r_isometric->value )
-	        qglFrustum( xmin, xmax, ymin, ymax, zNear, zFar );
+		qglFrustum( xmin, xmax, ymin, ymax, zNear, zFar );
 	else
 		qglOrtho( -10*fovy*aspect, 10*fovy*aspect, -10*fovy, 10*fovy, zNear, zFar );
 }
@@ -882,7 +847,6 @@ R_SetupGL
 void R_SetupGL (void)
 {
 	float	screenaspect;
-/*	float	yfov; */
 	int		x, x2, y2, y, w, h;
 
 	/* set up viewport */
@@ -891,31 +855,28 @@ void R_SetupGL (void)
 	y = floor(vid.height - r_newrefdef.y * vid.height / vid.height);
 	y2 = ceil(vid.height - (r_newrefdef.y + r_newrefdef.height) * vid.height / vid.height);
 
-/*	ri.Con_Printf( "%i %i", vid.width, vid.height ); */
-
 	w = x2 - x;
 	h = y - y2;
 
 	qglViewport (x, y2, w, h);
 
 	/* set up projection matrix */
-        screenaspect = (float)r_newrefdef.width/r_newrefdef.height;
-/*	yfov = 2*atan((float)r_newrefdef.height/r_newrefdef.width)*180/M_PI; */
+	screenaspect = (float)r_newrefdef.width/r_newrefdef.height;
 	qglMatrixMode(GL_PROJECTION);
-        qglLoadIdentity ();
-        MYgluPerspective (r_newrefdef.fov_y,  screenaspect,  4,  2048);
+	qglLoadIdentity ();
+	MYgluPerspective (r_newrefdef.fov_y, screenaspect, 4, 2048);
 
 	qglCullFace(GL_FRONT);
 
 	qglMatrixMode(GL_MODELVIEW);
-        qglLoadIdentity ();
+	qglLoadIdentity ();
 
-        qglRotatef (-90,  1, 0, 0);	    /* put Z going up */
-        qglRotatef (90,  0, 0, 1);	    /* put Z going up */
-        qglRotatef (-r_newrefdef.viewangles[2],  1, 0, 0);
-        qglRotatef (-r_newrefdef.viewangles[0],  0, 1, 0);
-        qglRotatef (-r_newrefdef.viewangles[1],  0, 0, 1);
-        qglTranslatef (-r_newrefdef.vieworg[0],  -r_newrefdef.vieworg[1],  -r_newrefdef.vieworg[2]);
+	qglRotatef (-90, 1, 0, 0);	    /* put Z going up */
+	qglRotatef (90, 0, 0, 1);	    /* put Z going up */
+	qglRotatef (-r_newrefdef.viewangles[2], 1, 0, 0);
+	qglRotatef (-r_newrefdef.viewangles[0], 0, 1, 0);
+	qglRotatef (-r_newrefdef.viewangles[1], 0, 0, 1);
+	qglTranslatef (-r_newrefdef.vieworg[0], -r_newrefdef.vieworg[1],  -r_newrefdef.vieworg[2]);
 
 	qglGetFloatv (GL_MODELVIEW_MATRIX, r_world_matrix);
 
@@ -977,7 +938,7 @@ void R_Clear (void)
 
 void R_Flash( void )
 {
-/*         R_ShadowBlend(); */
+/*	R_ShadowBlend(); */
 	R_PolyBlend ();
 }
 
@@ -1048,7 +1009,7 @@ void R_RenderView (refdef_t *fd)
 }
 
 
-void	R_LeaveGL2D (void)
+void R_LeaveGL2D (void)
 {
 	qglMatrixMode(GL_MODELVIEW);
 	qglPopMatrix();
@@ -1059,7 +1020,7 @@ void	R_LeaveGL2D (void)
 	qglPopAttrib();
 }
 
-void	R_SetGL2D (void)
+void R_SetGL2D (void)
 {
 	/* set 2D virtual screen size */
 	qglViewport (0,0, vid.width, vid.height);
@@ -1116,9 +1077,6 @@ void R_Register( void )
 	r_anisotropic = ri.Cvar_Get( "r_anisotropic", "1", CVAR_ARCHIVE );
 	r_ext_max_anisotropy = ri.Cvar_Get( "r_ext_max_anisotropy", "0", 0 );
 	r_texture_lod = ri.Cvar_Get( "r_texture_lod", "0", CVAR_ARCHIVE );
-/* 	r_arb_samples = ri.Cvar_Get ("r_arb_samples", "1", CVAR_ARCHIVE ); */
-
-/*	r_lightlevel = ri.Cvar_Get ("r_lightlevel", "0", 0); */
 
 	gl_nosubimage = ri.Cvar_Get( "gl_nosubimage", "0", 0 );
 	gl_allow_software = ri.Cvar_Get( "gl_allow_software", "0", 0 );
@@ -1212,12 +1170,6 @@ qboolean R_SetMode (void)
 {
 	rserr_t err;
 	qboolean fullscreen;
-
-/*	if ( vid_fullscreen->modified && !gl_config.allow_cds ) {
-		ri.Con_Printf( PRINT_ALL, "R_SetMode() - CDS not allowed with this driver\n" );
-		ri.Cvar_SetValue( "vid_fullscreen", !vid_fullscreen->value );
-		vid_fullscreen->modified = qfalse;
-	}  */
 
 	fullscreen = vid_fullscreen->value;
 
@@ -1360,19 +1312,6 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	/* MCD has buffering issues */
 	if ( gl_config.renderer == GL_RENDERER_MCD )
 		ri.Cvar_SetValue( "gl_finish", 1 );
-
-	if ( gl_config.renderer & GL_RENDERER_3DLABS ) {
-		if ( gl_3dlabs_broken->value )
-			gl_config.allow_cds = qfalse;
-		else
-			gl_config.allow_cds = qtrue;
-	} else
-		gl_config.allow_cds = qtrue;
-
-	if ( gl_config.allow_cds )
-		ri.Con_Printf( PRINT_ALL, "...allowing CDS\n" );
-	else
-		ri.Con_Printf( PRINT_ALL, "...disabling CDS\n" );
 
 	/*
 	** grab extensions
@@ -1587,17 +1526,24 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 		int size;
 		GLenum err;
 
-		ri.Con_Printf( PRINT_ALL, "Max texture size supported\n" );
+		ri.Con_Printf( PRINT_ALL, "...max texture size:\n" );
+
 		qglGetIntegerv(GL_MAX_TEXTURE_SIZE, &size);
+		gl_config.maxTextureSize = size;
+
+		/* stubbed or broken drivers may have reported 0 */
+		if ( gl_config.maxTextureSize <= 0 )
+			gl_config.maxTextureSize = 0;
+
 		if (( err = qglGetError() )) {
-			ri.Con_Printf( PRINT_ALL, "...cannot detect !\n");
+			ri.Con_Printf( PRINT_ALL, "......cannot detect !\n");
 		} else {
-			ri.Con_Printf( PRINT_ALL, "...detected %d\n", size);
+			ri.Con_Printf( PRINT_ALL, "......detected %d\n", size);
 			if (gl_maxtexres->value > size) {
-				ri.Con_Printf( PRINT_ALL, "...downgrading from %.0f\n", gl_maxtexres->value);
+				ri.Con_Printf( PRINT_ALL, "......downgrading from %.0f\n", gl_maxtexres->value);
 				ri.Cvar_SetValue("gl_maxtexres", size);
 			} else if (gl_maxtexres->value < size) {
-				ri.Con_Printf( PRINT_ALL, "...but using %.0f as requested\n",
+				ri.Con_Printf( PRINT_ALL, "......but using %.0f as requested\n",
 					       gl_maxtexres->value);
 			}
 		}
@@ -1690,20 +1636,7 @@ void R_BeginFrame( float camera_separation )
 #ifndef _WIN32
 		if ( gl_state.hwgamma )
 			GLimp_SetGamma( NULL, NULL, NULL );
-		else
 #endif /* _WIN32 */
-		/* update 3Dfx gamma -- it is expected that a user will do a vid_restart
-		 after tweaking this value */
-		if ( gl_config.renderer & ( GL_RENDERER_VOODOO ) ) {
-			char envbuffer[1024];
-			float g;
-
-			g = 2.00 * ( 0.8 - ( vid_gamma->value - 0.5 ) ) + 1.0F;
-			Com_sprintf( envbuffer, sizeof(envbuffer), "SSTV2_GAMMA=%f", g );
-			Q_putenv( envbuffer );
-			Com_sprintf( envbuffer, sizeof(envbuffer), "SST_GAMMA=%f", g );
-			Q_putenv( envbuffer );
-		}
 	}
 
 	GLimp_BeginFrame( camera_separation );

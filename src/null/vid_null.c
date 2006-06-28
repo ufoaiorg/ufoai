@@ -144,8 +144,6 @@ void	VID_Init (void)
         ri.Vid_GetModeInfo = VID_GetModeInfo;
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 	ri.CL_GetFontData = CL_GetFontData;
-/*	ri.Malloc = Z_Malloc; */
-/*	ri.Free = Z_Free; */
 
 	re = GetRefAPI(ri);
 

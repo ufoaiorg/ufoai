@@ -104,22 +104,12 @@ GL_ScreenShot_f
 void GL_ScreenShot_f (void)
 {
 	byte		*buffer;
-	char		picname[80];
-	char		checkname[MAX_OSPATH];
 	int			i, c, temp;
 	FILE		*f;
-
-	/* create the scrnshots directory if it doesn't exist */
-	Com_sprintf (checkname, sizeof(checkname), "%s/scrnshot", ri.FS_Gamedir());
-	Sys_Mkdir (checkname);
-
-	/* find a file name to save it to */
-	Q_strncpyz(picname,"ufo00.tga", sizeof(checkname) );
+	char		checkname[MAX_OSPATH];
 
 	for (i=0 ; i<=99 ; i++) {
-		picname[3] = i/10 + '0';
-		picname[4] = i%10 + '0';
-		Com_sprintf (checkname, sizeof(checkname), "%s/scrnshot/%s", ri.FS_Gamedir(), picname);
+		Com_sprintf (checkname, MAX_QPATH, "%s/scrnshot/ufo%i%i.tga", ri.FS_Gamedir(), i/10, i%10);
 		f = fopen (checkname, "rb");
 		/* file doesn't exist */
 		if (!f)
@@ -127,7 +117,7 @@ void GL_ScreenShot_f (void)
 		fclose (f);
 	}
 	if (i==100) {
-		ri.Con_Printf (PRINT_ALL, "SCR_ScreenShot_f: Couldn't create a file\n");
+		ri.Con_Printf (PRINT_ALL, "GL_ScreenShot_f: Couldn't create a file\n");
 		return;
 	}
 
@@ -151,16 +141,8 @@ void GL_ScreenShot_f (void)
 		buffer[i] = buffer[i+2];
 		buffer[i+2] = temp;
 	}
-
-	f = fopen (checkname, "wb");
-	if ( f ) {
-		fwrite (buffer, 1, c, f);
-		fclose (f);
-		ri.Con_Printf (PRINT_ALL, "Wrote %s\n", picname);
-	} else {
-		ri.Con_Printf (PRINT_ALL, "Couldn't write %s\n", picname);
-	}
-
+	if ( ! ri.FS_WriteFile(buffer, c, checkname) )
+		ri.Con_Printf(PRINT_ALL, "Could not write screenshot file to %s\n", checkname);
 	free (buffer);
 }
 
@@ -172,7 +154,9 @@ void GL_Strings_f( void )
 	ri.Con_Printf (PRINT_ALL, "GL_VENDOR: %s\n", gl_config.vendor_string );
 	ri.Con_Printf (PRINT_ALL, "GL_RENDERER: %s\n", gl_config.renderer_string );
 	ri.Con_Printf (PRINT_ALL, "GL_VERSION: %s\n", gl_config.version_string );
+	ri.Con_Printf (PRINT_ALL, "MODE: %.0f, %d x %d FULLSCREEN: %.0f\n", gl_mode->value, vid.width, vid.height, vid_fullscreen->value );
 	ri.Con_Printf (PRINT_ALL, "GL_EXTENSIONS: %s\n", gl_config.extensions_string );
+	ri.Con_Printf (PRINT_ALL, "GL_MAX_TEXTURE_SIZE: %d\n", gl_config.maxTextureSize );
 }
 
 /*

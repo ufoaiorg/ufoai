@@ -4405,7 +4405,7 @@ void GLimp_EnableLogging (qboolean theEnable)
             myNewTime = localtime (&myClock);
 
             /* open the log file: */
-            snprintf (myBuffer, MAX_OSPATH, "%s/gl.log", ri.FS_Gamedir ()); 
+            Com_sprintf (myBuffer, MAX_OSPATH, "%s/gl.log", ri.FS_Gamedir ()); 
             gQGLLogFile = fopen (myBuffer, "wt");
 
             /* write time to log file: */

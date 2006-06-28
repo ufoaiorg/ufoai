@@ -601,22 +601,18 @@ qboolean VID_LoadRefresh( char *name )
 	ri.Vid_NewWindow = VID_NewWindow;
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 	ri.CL_GetFontData = CL_GetFontData;
-/*	ri.Malloc = Z_Malloc; */
-/*	ri.Free = Z_Free; */
 
 	if ( ( GetRefAPI = (GetRefAPI_t) GetProcAddress( reflib_library, "GetRefAPI" ) ) == 0 )
 		Com_Error( ERR_FATAL, "GetProcAddress failed on %s", name );
 
 	re = GetRefAPI( ri );
 
-	if (re.api_version != API_VERSION)
-	{
+	if (re.api_version != API_VERSION) {
 		VID_FreeReflib ();
 		Com_Error (ERR_FATAL, "%s has incompatible api_version", name);
 	}
 
-	if ( re.Init( global_hInstance, MainWndProc ) == -1 )
-	{
+	if ( re.Init( global_hInstance, MainWndProc ) == -1 ) {
 		re.Shutdown();
 		VID_FreeReflib ();
 		return qfalse;
@@ -645,26 +641,20 @@ void VID_CheckChanges (void)
 {
 	char name[100];
 
-	if ( win_noalttab->modified )
-	{
+	if ( win_noalttab->modified ) {
 		if ( win_noalttab->value )
-		{
 			WIN_DisableAltTab();
-		}
 		else
-		{
 			WIN_EnableAltTab();
-		}
 		win_noalttab->modified = qfalse;
 	}
 
-	if ( vid_ref->modified )
-	{
-		cl.force_refdef = qtrue;		/* can't use a paused refdef */
+	if ( vid_ref->modified ) {
+		/* can't use a paused refdef */
+		cl.force_refdef = qtrue;
 		S_StopAllSounds();
 	}
-	while (vid_ref->modified)
-	{
+	while (vid_ref->modified) {
 		/*
 		** refresh has changed
 		*/
@@ -674,8 +664,7 @@ void VID_CheckChanges (void)
 		cls.disable_screen = qtrue;
 
 		Com_sprintf( name, sizeof(name), "ref_%s.dll", vid_ref->string );
-		if ( !VID_LoadRefresh( name ) )
-		{
+		if ( !VID_LoadRefresh( name ) ) {
 			Cmd_ExecuteString( "condump gl_debug" );
 			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
 		}
@@ -685,8 +674,7 @@ void VID_CheckChanges (void)
 	/*
 	** update our window position
 	*/
-	if ( vid_xpos->modified || vid_ypos->modified )
-	{
+	if ( vid_xpos->modified || vid_ypos->modified ) {
 		if (!vid_fullscreen->value)
 			VID_UpdateWindowPosAndSize( vid_xpos->value, vid_ypos->value );
 
@@ -714,29 +702,6 @@ void VID_Init (void)
 	Cmd_AddCommand ("vid_restart", VID_Restart_f);
 	Cmd_AddCommand ("vid_front", VID_Front_f);
 
-	/*
-	** this is a gross hack but necessary to clamp the mode for 3Dfx
-	*/
-#if 0
-	{
-		cvar_t *gl_driver = Cvar_Get( "gl_driver", "opengl32", 0 );
-		cvar_t *gl_mode = Cvar_Get( "gl_mode", "3", 0 );
-
-		if ( Q_stricmp( gl_driver->string, "3dfxgl" ) == 0 )
-		{
-			Cvar_SetValue( "gl_mode", 3 );
-			viddef.width  = 640;
-			viddef.height = 480;
-
-			viddef.rx = (float)width  / VID_NORM_WIDTH;
-			viddef.ry = (float)height / VID_NORM_HEIGHT;
-		}
-	}
-#endif
-
-	/* Disable the 3Dfx splash screen */
-	Q_putenv("FX_GLIDE_NO_SPLASH=0");
-
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();
 }
@@ -748,8 +713,7 @@ VID_Shutdown
 */
 void VID_Shutdown (void)
 {
-	if ( reflib_active )
-	{
+	if ( reflib_active ) {
 		re.Shutdown ();
 		VID_FreeReflib ();
 	}

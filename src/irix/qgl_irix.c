@@ -3329,10 +3329,8 @@ qboolean QGL_Init( const char *dllname )
 
 void GLimp_EnableLogging( qboolean enable )
 {
-	if ( enable )
-	{
-		if ( !log_fp )
-		{
+	if ( enable ) {
+		if ( !log_fp ) {
 			struct tm *newtime;
 			time_t aclock;
 			char buffer[1024];
@@ -3342,7 +3340,7 @@ void GLimp_EnableLogging( qboolean enable )
 
 			asctime( newtime );
 
-			sprintf( buffer, "%s/gl.log", ri.FS_Gamedir() ); 
+			Com_sprintf( buffer, sizeof(buffer), "%s/gl.log", ri.FS_Gamedir() ); 
 			log_fp = fopen( buffer, "wt");
 
 			fprintf( log_fp, "%s\n", asctime( newtime ) );

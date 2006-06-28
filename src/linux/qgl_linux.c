@@ -401,7 +401,6 @@ void ( APIENTRY * qglUnlockArraysEXT) ( void );
 
 void ( APIENTRY * qglPointParameterfEXT)( GLenum param, GLfloat value );
 void ( APIENTRY * qglPointParameterfvEXT)( GLenum param, const GLfloat *value );
-void ( APIENTRY * qgl3DfxSetPaletteEXT)( GLuint * );
 void ( APIENTRY * qglSelectTextureSGIS)( GLenum );
 void ( APIENTRY * qglMTexCoord2fSGIS)( GLenum, GLfloat, GLfloat );
 void ( APIENTRY * qglActiveTextureARB) ( GLenum );
@@ -3033,7 +3032,6 @@ void QGL_Shutdown( void )
 	qglUnlockArraysEXT           = NULL;
 	qglPointParameterfEXT        = NULL;
 	qglPointParameterfvEXT       = NULL;
-	qgl3DfxSetPaletteEXT         = NULL;
 	qglSelectTextureSGIS         = NULL;
 	qglMTexCoord2fSGIS           = NULL;
 	qglActiveTextureARB          = NULL;
@@ -3086,33 +3084,14 @@ void *qwglGetProcAddress(char *symbol)
 
 qboolean QGL_Init( const char *dllname )
 {
-	/* update 3Dfx gamma irrespective of underlying DLL */
-	{
-		char envbuffer[1024];
-		float g;
-
-		g = 2.00 * ( 0.8 - ( vid_gamma->value - 0.5 ) ) + 1.0F;
-		Com_sprintf( envbuffer, sizeof(envbuffer), "SSTV2_GAMMA=%f", g );
-		putenv( envbuffer );
-		Com_sprintf( envbuffer, sizeof(envbuffer), "SST_GAMMA=%f", g );
-		putenv( envbuffer );
-	}
-
-	if ( ( glw_state.OpenGLLib = dlopen( dllname, RTLD_LAZY | RTLD_GLOBAL ) ) == 0 )
-	{
+	if ( ( glw_state.OpenGLLib = dlopen( dllname, RTLD_LAZY | RTLD_GLOBAL ) ) == 0 ) {
 		char	fn[MAX_OSPATH];
 		FILE *fp;
 
-/*		ri.Con_Printf(PRINT_ALL, "QGL_Init: Can't load %s from /etc/ld.so.conf: %s\n", */
-/*				dllname, dlerror()); */
-
 		/* try path in /etc/ufo.conf */
 		if ((fp = fopen(so_file, "r")) == NULL) {
-			ri.Con_Printf(PRINT_ALL,  "QGL_Init(\"%s\"): can't open %s\n", dllname, so_file);
 			strcpy(fn, "." );
-		}
-		else
-		{
+		} else {
 			fgets(fn, sizeof(fn), fp);
 			fclose(fp);
 			while (*fn && isspace(fn[strlen(fn) - 1]))
@@ -3483,7 +3462,6 @@ qboolean QGL_Init( const char *dllname )
 	qglUnlockArraysEXT = 0;
 	qglPointParameterfEXT = 0;
 	qglPointParameterfvEXT = 0;
-	qgl3DfxSetPaletteEXT = 0;
 	qglSelectTextureSGIS = 0;
 	qglMTexCoord2fSGIS = 0;
 	qglActiveTextureARB = 0;

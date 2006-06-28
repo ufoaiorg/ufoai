@@ -662,7 +662,6 @@ void CL_SaveTeam(char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
-	FILE *f;
 	char *name;
 	int res, i;
 
@@ -670,12 +669,6 @@ void CL_SaveTeam(char *filename)
 
 	/* create the save dir - if needed */
 	FS_CreatePath(filename);
-	/* open file */
-	f = fopen(filename, "wb");
-	if (!f) {
-		Com_Printf("Couldn't write file (%s).\n", filename);
-		return;
-	}
 
 	/* create data */
 	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
@@ -696,11 +689,12 @@ void CL_SaveTeam(char *filename)
 		MSG_WriteFormat(&sb, "bl", baseCurrent->numOnTeam[i], baseCurrent->teamMask[i]);
 
 	/* write data */
-	res = fwrite(buf, 1, sb.cursize, f);
-	fclose(f);
+	res = FS_WriteFile(buf, sb.cursize, filename);
 
 	if (res == sb.cursize)
 		Com_Printf("Team '%s' saved.\n", filename);
+	else if (!res)
+		Com_Printf("Team '%s' not saved.\n", filename);
 }
 
 
@@ -1019,7 +1013,7 @@ void CL_ParseCharacterData(sizebuf_t *buf)
 /**
   * @brief
   */
-char resultText[MAX_MENUTEXTLEN];
+static char resultText[MAX_MENUTEXTLEN];
 
 void CL_ParseResults(sizebuf_t * buf)
 {

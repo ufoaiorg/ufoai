@@ -21,9 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qcommon.h"
 
 
-/* */
 /* in memory */
-/* */
 
 typedef struct
 {
@@ -645,15 +643,10 @@ void FS_AddHomeAsGameDirectory (char *dir)
 #ifndef _WIN32
 	char gdir[MAX_OSPATH];
 	char *homedir=getenv("HOME");
-	int len;
 	if(homedir) {
-		len = snprintf(gdir,sizeof(gdir),"%s/.ufoai/%s/", homedir, dir);
+		Com_sprintf(gdir,MAX_OSPATH,"%s/.ufoai/%s", homedir, dir);
 		Com_Printf("using %s for writing\n",gdir);
 		FS_CreatePath (gdir);
-		FS_CreatePath (va("%s/save", gdir) );
-
-		if ((len > 0) && (len < sizeof(gdir)) && (gdir[len-1] == '/'))
-			gdir[len-1] = 0;
 
 		Q_strncpyz(fs_gamedir,gdir,MAX_QPATH);
 		fs_gamedir[sizeof(fs_gamedir)-1] = 0;
@@ -1285,53 +1278,22 @@ int FS_Write( const void *buffer, int len, FILE* f )
 /*
 =================
 FS_WriteFile
-
-Properly handles partial writes
 =================
 */
 int FS_WriteFile( const void *buffer, int len, const char* filename )
 {
-	int		block, remaining;
-	int		written;
-	byte	*buf;
-	int		tries;
-	FILE	*f;
+	FILE *f;
+	int	c;
 
-	if ( !fs_searchpaths ) {
-		Com_Error( ERR_FATAL, "Filesystem call made without initialization\n" );
+	FS_CreatePath((char*)filename);
+
+	f = fopen (filename, "wb");
+	if ( f ) {
+		c = fwrite (buffer, 1, len, f);
+		fclose (f);
+		return c;
 	}
-
-	/* FIXME: Do we need more for security reasons? */
-	if ( ( filename[0] == '.' && filename[1] == '.' ) || filename[0] == '/' )
-		return 0;
-
-	f = fopen( filename, "wb" );
-	buf = (byte *)buffer;
-
-	remaining = len;
-	tries = 0;
-	while (remaining) {
-		block = remaining;
-		written = fwrite (buf, 1, block, f);
-		if (written == 0) {
-			if (!tries) {
-				tries = 1;
-			} else {
-				Com_Printf( "FS_WriteFile: 0 bytes written\n" );
-				return 0;
-			}
-		}
-
-		if (written == -1) {
-			Com_Printf( "FS_WriteFile: -1 bytes written\n" );
-			return 0;
-		}
-
-		remaining -= written;
-		buf += written;
-	}
-	fclose( f );
-	return len;
+	return 0;
 }
 
 /*

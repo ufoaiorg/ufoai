@@ -139,39 +139,6 @@ qboolean SV_SetPlayer(void)
 }
 
 /*
-================
-CopyFile
-================
-*/
-void CopyFile(char *src, char *dst)
-{
-	FILE *f1, *f2;
-	int l;
-	byte buffer[65536];
-
-	Com_DPrintf("CopyFile (%s, %s)\n", src, dst);
-
-	f1 = fopen(src, "rb");
-	if (!f1)
-		return;
-	f2 = fopen(dst, "wb");
-	if (!f2) {
-		fclose(f1);
-		return;
-	}
-
-	while (1) {
-		l = fread(buffer, 1, sizeof(buffer), f1);
-		if (!l)
-			break;
-		fwrite(buffer, 1, l, f2);
-	}
-
-	fclose(f1);
-	fclose(f2);
-}
-
-/*
 ==================
 SV_DemoMap_f
 
@@ -405,9 +372,7 @@ void SV_ServerRecord_f(void)
 		return;
 	}
 
-	/* */
 	/* open the demo file */
-	/* */
 	Com_sprintf(name, sizeof(name), "%s/demos/%s.dm2", FS_Gamedir(), Cmd_Argv(1));
 
 	Com_Printf("recording to %s.\n", name);
@@ -421,15 +386,12 @@ void SV_ServerRecord_f(void)
 	/* setup a buffer to catch all multicasts */
 	SZ_Init(&svs.demo_multicast, svs.demo_multicast_buf, sizeof(svs.demo_multicast_buf));
 
-	/* */
 	/* write a single giant fake message with all the startup info */
-	/* */
 	SZ_Init(&buf, buf_data, sizeof(buf_data));
 
-	/* */
 	/* serverdata needs to go over for all types of servers */
 	/* to make sure the protocol is right, and to set the gamedir */
-	/* */
+
 	/* send the serverdata */
 	MSG_WriteByte(&buf, svc_serverdata);
 	MSG_WriteLong(&buf, PROTOCOL_VERSION);

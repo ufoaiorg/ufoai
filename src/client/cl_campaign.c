@@ -1583,9 +1583,9 @@ void CL_GameSave(char *filename, char *comment)
 	actMis_t *mis;
 	base_t *base;
 	sizebuf_t sb;
+	char savegame[MAX_OSPATH];
 	message_t *message;
 	byte *buf;
-	FILE *f;
 	int res;
 	int i, j;
 
@@ -1594,11 +1594,7 @@ void CL_GameSave(char *filename, char *comment)
 		return;
 	}
 
-	f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "wb");
-	if (!f) {
-		Com_Printf("Couldn't write file.\n");
-		return;
-	}
+	Com_sprintf(savegame, MAX_OSPATH, "%s/save/%s.sav", FS_Gamedir(), filename );
 
 	buf = (byte*)malloc(sizeof(byte)*MAX_GAMESAVESIZE);
 	/* create data */
@@ -1704,8 +1700,7 @@ void CL_GameSave(char *filename, char *comment)
 	SZ_Write(&sb, &stats, sizeof(stats));
 
 	/* write data */
-	res = fwrite(buf, 1, sb.cursize, f);
-	fclose(f);
+	res = FS_WriteFile(buf, sb.cursize, savegame);
 	free(buf);
 
 	if (res == sb.cursize) {

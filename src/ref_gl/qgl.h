@@ -472,18 +472,6 @@ extern BOOL ( WINAPI * qwglSetDeviceGammaRampEXT ) ( const unsigned char *pRed, 
 /* local function in dll */
 extern void *qwglGetProcAddress(char *symbol);
 
-extern void (*qgl3DfxSetPaletteEXT)(GLuint *);
-
-#if 0
-/*FX Mesa Functions */
-extern fxMesaContext (*qfxMesaCreateContext)(GLuint win, GrScreenResolution_t, GrScreenRefresh_t, const GLint attribList[]);
-extern fxMesaContext (*qfxMesaCreateBestContext)(GLuint win, GLint width, GLint height, const GLint attribList[]);
-extern void (*qfxMesaDestroyContext)(fxMesaContext ctx);
-extern void (*qfxMesaMakeCurrent)(fxMesaContext ctx);
-extern fxMesaContext (*qfxMesaGetCurrentContext)(void);
-extern void (*qfxMesaSwapBuffers)(void);
-#endif
-
 /*GLX Functions */
 extern XVisualInfo * (*qglXChooseVisual)( Display *dpy, int screen, int *attribList );
 extern GLXContext (*qglXCreateContext)( Display *dpy, XVisualInfo *vis, GLXContext shareList, Bool direct );
@@ -494,9 +482,9 @@ extern void (*qglXSwapBuffers)( Display *dpy, GLXDrawable drawable );
 extern int (*qglXGetConfig) (Display *dpy, XVisualInfo *vis, int attrib, int *value);
 
 /* 3dfxSetPaletteEXT shunt */
-void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
+/*void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
                              GLsizei width, GLenum format, GLenum type,
-                             const GLvoid *table );
+                             const GLvoid *table );*/
 
 #endif /* linux */
 

@@ -24,7 +24,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -256,9 +256,7 @@ typedef struct {
 
 #define	API_VERSION		4
 
-/* */
 /* these are the functions exported by the refresh module */
-/* */
 typedef struct {
 	/* if api_version is different, the dll cannot be used */
 	int api_version;
@@ -273,11 +271,11 @@ typedef struct {
 	/* registered before rendering any frames to prevent disk hits, */
 	/* but they can still be registered at a later time */
 	/* if necessary. */
-	/* */
+
 	/* EndRegistration will free any remaining data that wasn't registered. */
 	/* Any model_s or skin_s pointers from before the BeginRegistration */
 	/* are no longer valid after EndRegistration. */
-	/* */
+
 	/* Skins and images need to be differentiated, because skins */
 	/* are flood filled to eliminate mip map edge errors, and pics have */
 	/* an implicit "pics/" prepended to the name. (a pic name that starts with a */
@@ -329,9 +327,7 @@ typedef struct {
 	void (*TakeVideoFrame) (int h, int w, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg);
 } refexport_t;
 
-/* */
 /* these are the functions imported by the refresh module */
-/* */
 typedef struct {
 	void (*Sys_Error) (int err_level, char *str, ...);
 
@@ -353,10 +349,6 @@ typedef struct {
 	void (*FS_FreeFile) (void *buf);
 	int (*FS_CheckFile) (const char *name);
 	char **(*FS_ListFiles) (char *findname, int *numfiles, unsigned musthave, unsigned canthave);
-
-	/* dynamic memory allocator for things that need to be freed */
-/*	void	*(*Malloc)( int bytes ); */
-/*	void	(*Free)( void *buf ); */
 
 	/* will return the size and the path for each font */
 	void (*CL_GetFontData) (char *name, int *size, char *path);
