@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -37,8 +37,7 @@ void BoundPoly (int numverts, float *verts, vec3_t mins, vec3_t maxs)
 	maxs[0] = maxs[1] = maxs[2] = -9999;
 	v = verts;
 	for (i=0 ; i<numverts ; i++)
-		for (j=0 ; j<3 ; j++, v++)
-		{
+		for (j=0 ; j<3 ; j++, v++) {
 			if (*v < mins[j])
 				mins[j] = *v;
 			if (*v > maxs[j])
@@ -66,8 +65,7 @@ void SubdividePolygon (int numverts, float *verts)
 
 	BoundPoly (numverts, verts, mins, maxs);
 
-	for (i=0 ; i<3 ; i++)
-	{
+	for (i=0 ; i<3 ; i++) {
 		m = (mins[i] + maxs[i]) * 0.5;
 		m = SUBDIVIDE_SIZE * floor (m/SUBDIVIDE_SIZE + 0.5);
 		if (maxs[i] - m < 8)
@@ -87,22 +85,18 @@ void SubdividePolygon (int numverts, float *verts)
 
 		f = b = 0;
 		v = verts;
-		for (j=0 ; j<numverts ; j++, v+= 3)
-		{
-			if (dist[j] >= 0)
-			{
+		for (j=0 ; j<numverts ; j++, v+= 3) {
+			if (dist[j] >= 0) {
 				VectorCopy (v, front[f]);
 				f++;
 			}
-			if (dist[j] <= 0)
-			{
+			if (dist[j] <= 0) {
 				VectorCopy (v, back[b]);
 				b++;
 			}
 			if (dist[j] == 0 || dist[j+1] == 0)
 				continue;
-			if ( (dist[j] > 0) != (dist[j+1] > 0) )
-			{
+			if ( (dist[j] > 0) != (dist[j+1] > 0) ) {
 				/* clip point */
 				frac = dist[j] / (dist[j] - dist[j+1]);
 				for (k=0 ; k<3 ; k++)
@@ -125,8 +119,7 @@ void SubdividePolygon (int numverts, float *verts)
 	VectorClear (total);
 	total_s = 0;
 	total_t = 0;
-	for (i=0 ; i<numverts ; i++, verts+= 3)
-	{
+	for (i=0 ; i<numverts ; i++, verts+= 3) {
 		VectorCopy (verts, poly->verts[i+1]);
 		s = DotProduct (verts, warpface->texinfo->vecs[0]);
 		t = DotProduct (verts, warpface->texinfo->vecs[1]);
@@ -166,12 +159,9 @@ void GL_SubdivideSurface (msurface_t *fa)
 
 	warpface = fa;
 
-	/* */
 	/* convert edges back to a normal polygon */
-	/* */
 	numverts = 0;
-	for (i=0 ; i<fa->numedges ; i++)
-	{
+	for (i=0 ; i<fa->numedges ; i++) {
 		lindex = loadmodel->surfedges[fa->firstedge + i];
 
 		if (lindex > 0)
@@ -216,13 +206,11 @@ void EmitWaterPolys (msurface_t *fa)
 		scroll = -64 * ( (r_newrefdef.time*0.5) - (int)(r_newrefdef.time*0.5) );
 	else
 		scroll = 0;
-	for (bp=fa->polys ; bp ; bp=bp->next)
-	{
+	for (bp=fa->polys ; bp ; bp=bp->next) {
 		p = bp;
 
 		qglBegin (GL_TRIANGLE_FAN);
-		for (i=0,v=p->verts[0] ; i<p->numverts ; i++, v+=VERTEXSIZE)
-		{
+		for (i=0,v=p->verts[0] ; i<p->numverts ; i++, v+=VERTEXSIZE) {
 			os = v[3];
 			ot = v[4];
 
