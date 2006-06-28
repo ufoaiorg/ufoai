@@ -399,29 +399,29 @@ menu serverinfo
 	{
 		invis	true
 	}
-        pic back_ul
-        {
-                image	menu/options_ul
-                pos	"0 0"
-        }
+	pic back_ul
+	{
+		image	menu/options_ul
+		pos	"0 0"
+	}
 
-        pic back_ur
-        {
-                image	menu/options_ur
-                pos	"512 0"
-        }
+	pic back_ur
+	{
+		image	menu/options_ur
+		pos	"512 0"
+	}
 
-        pic back_ll
-        {
-                image	menu/options_ll
-                pos	"0 512"
-        }
+	pic back_ll
+	{
+		image	menu/options_ll
+		pos	"0 512"
+	}
 
-        pic back_lr
-        {
-                image	menu/options_lr
-                pos	"512 512"
-        }
+	pic back_lr
+	{
+		image	menu/options_lr
+		pos	"512 512"
+	}
 	text server_info
 	{
 		pos	"500 200"
@@ -702,7 +702,6 @@ menu mp_join_internet
 	// connect to ip button
 	// ====================
 	pic button_inet_connect_to_ip
-
 	{
 		image	menu/multi_buttons3
 		click	{ cmd "connect *mn_server_ip" }
@@ -917,7 +916,7 @@ menu mp_create_server
 	{
 		string	"_Max. clients:"
 		pos	"500 200"
-		tooltip	"Sets the max allowed clients to connect"
+		tooltip	"_Sets the max allowed clients to connect"
 	}
 	string maxclients_value
 	{
