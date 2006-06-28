@@ -75,10 +75,6 @@ void Sys_AppActivate (void)
 {
 }
 
-void Sys_CopyProtect (void)
-{
-}
-
 char *Sys_GetClipboardData( void )
 {
 	return NULL;
@@ -109,6 +105,10 @@ int		Sys_Milliseconds (void)
 }
 
 void	Sys_Mkdir (char *path)
+{
+}
+
+void Sys_NormPath(char* path)
 {
 }
 

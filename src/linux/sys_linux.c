@@ -73,6 +73,10 @@ char *Sys_Cwd( void )
 	return cwd;
 }
 
+void Sys_NormPath(char* path)
+{
+}
+
 /*
 =================
 Sys_BinName
@@ -389,9 +393,5 @@ int main (int argc, char **argv)
 		Qcommon_Frame (time);
 		oldtime = newtime;
 	}
-}
-
-void Sys_CopyProtect(void)
-{
 }
 

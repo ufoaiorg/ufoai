@@ -233,8 +233,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 
 	/* now run through the search paths */
 	path = NULL;
-	while (1)
-	{
+	while (1) {
 		path = FS_NextPath (path);
 		if (!path)
 			return NULL;		/* couldn't find one anywhere */
@@ -261,8 +260,6 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 #endif
 }
 
-/*****************************************************************************/
-
 void Sys_AppActivate (void)
 {
 }
@@ -276,7 +273,29 @@ void Sys_SendKeyEvents (void)
 	sys_frame_time = Sys_Milliseconds();
 }
 
-/*****************************************************************************/
+char *Sys_GetCurrentUser( void )
+{
+	struct passwd *p;
+
+	if ( (p = getpwuid( getuid() )) == NULL ) {
+		return "player";
+	}
+	return p->pw_name;
+}
+
+char *Sys_Cwd( void )
+{
+	static char cwd[MAX_OSPATH];
+
+	getcwd( cwd, sizeof( cwd ) - 1 );
+	cwd[MAX_OSPATH-1] = 0;
+
+	return cwd;
+}
+
+void Sys_NormPath(char* path)
+{
+}
 
 char *Sys_GetClipboardData(void)
 {
@@ -315,84 +334,3 @@ int main (int argc, char **argv)
 
 }
 
-void Sys_CopyProtect(void)
-{
-	FILE *mnt;
-	struct mntent *ent;
-	char path[MAX_OSPATH];
-	struct stat st;
-	qboolean found_cd = qfalse;
-
-	static qboolean checked = qfalse;
-
-	if (checked)
-		return;
-
-        Com_Printf("XXX - Sys_CopyProtect disabled\n");
-	checked = qtrue;
-	return;
-
-	if ((mnt = setmntent("/etc/mtab", "r")) == NULL)
-		Com_Error(ERR_FATAL, "Can't read mount table to determine mounted cd location.");
-
-	while ((ent = getmntent(mnt)) != NULL) {
-		if (strcmp(ent->mnt_type, "iso9660") == 0) {
-			/* found a cd file system */
-			found_cd = qtrue;
-			sprintf(path, "%s/%s", ent->mnt_dir, "install/data/quake2.exe");
-			if (stat(path, &st) == 0) {
-				/* found it */
-				checked = qtrue;
-				endmntent(mnt);
-				return;
-			}
-			sprintf(path, "%s/%s", ent->mnt_dir, "Install/Data/quake2.exe");
-			if (stat(path, &st) == 0) {
-				/* found it */
-				checked = qtrue;
-				endmntent(mnt);
-				return;
-			}
-			sprintf(path, "%s/%s", ent->mnt_dir, "quake2.exe");
-			if (stat(path, &st) == 0) {
-				/* found it */
-				checked = qtrue;
-				endmntent(mnt);
-				return;
-			}
-		}
-	}
-	endmntent(mnt);
-
-	if (found_cd)
-		Com_Error (ERR_FATAL, "Could not find a Quake2 CD in your CD drive.");
-	Com_Error (ERR_FATAL, "Unable to find a mounted iso9660 file system.\n"
-		"You must mount the Quake2 CD in a cdrom drive in order to play.");
-}
-
-#if 0
-/*
-================
-Sys_MakeCodeWriteable
-================
-*/
-void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length)
-{
-
-	int r;
-	unsigned long addr;
-	int psize = getpagesize();
-
-	addr = (startaddr & ~(psize-1)) - psize;
-
-/*	fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr, */
-/*			addr, startaddr+length, length); */
-
-	r = mprotect((char*)addr, length + startaddr - addr + psize, 7);
-
-	if (r < 0)
-    		Sys_Error("Protection change failed\n");
-
-}
-
-#endif

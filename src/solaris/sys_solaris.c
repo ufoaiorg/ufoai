@@ -225,15 +225,13 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 
 	/* now run through the search paths */
 	path = NULL;
-	while (1)
-	{
+	while (1) {
 		path = FS_NextPath (path);
 		if (!path)
 			return NULL;		/* couldn't find one anywhere */
 		sprintf (name, "%s/%s/%s", curpath, path, gamename);
 		game_library = dlopen (name, RTLD_NOW );
-		if (game_library)
-		{
+		if (game_library) {
 			Com_DPrintf ("LoadLibrary (%s)\n",name);
 			break;
 		} else
@@ -241,16 +239,13 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	}
 
 	GetGameAPI = (void *)dlsym (game_library, "GetGameAPI");
-	if (!GetGameAPI)
-	{
+	if (!GetGameAPI) {
 		Sys_UnloadGame ();
 		return NULL;
 	}
 
 	return GetGameAPI (parms);
 }
-
-/*****************************************************************************/
 
 void Sys_AppActivate (void)
 {
@@ -262,7 +257,29 @@ void Sys_SendKeyEvents (void)
 	sys_frame_time = Sys_Milliseconds();
 }
 
-/*****************************************************************************/
+char *Sys_GetCurrentUser( void )
+{
+	struct passwd *p;
+
+	if ( (p = getpwuid( getuid() )) == NULL ) {
+		return "player";
+	}
+	return p->pw_name;
+}
+
+char *Sys_Cwd( void )
+{
+	static char cwd[MAX_OSPATH];
+
+	getcwd( cwd, sizeof( cwd ) - 1 );
+	cwd[MAX_OSPATH-1] = 0;
+
+	return cwd;
+}
+
+void Sys_NormPath(char* path)
+{
+}
 
 char *Sys_GetClipboardData(void)
 {
@@ -317,34 +334,3 @@ int main (int argc, char **argv)
 
 }
 
-void Sys_CopyProtect(void)
-{
-	return;
-}
-
-#if 0
-/*
-================
-Sys_MakeCodeWriteable
-================
-*/
-void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length)
-{
-
-	int r;
-	unsigned long addr;
-	int psize = getpagesize();
-
-	addr = (startaddr & ~(psize-1)) - psize;
-
-/*	fprintf(stderr, "writable code %lx(%lx)-%lx, length=%lx\n", startaddr, */
-/*			addr, startaddr+length, length); */
-
-	r = mprotect((char*)addr, length + startaddr - addr + psize, 7);
-
-	if (r < 0)
-    		Sys_Error("Protection change failed\n");
-
-}
-
-#endif

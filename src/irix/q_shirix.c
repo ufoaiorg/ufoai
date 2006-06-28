@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -96,7 +96,7 @@ int Sys_Milliseconds (void)
 	static int		secbase;
 
 	gettimeofday(&tp, &tzp);
-	
+
 	if (!secbase)
 	{
 		secbase = tp.tv_sec;
@@ -104,7 +104,7 @@ int Sys_Milliseconds (void)
 	}
 
 	curtime = (tp.tv_sec - secbase)*1000 + tp.tv_usec/1000;
-	
+
 	return curtime;
 }
 
@@ -137,10 +137,10 @@ static qboolean CompareAttributes(char *path, char *name,
 	char fn[MAX_OSPATH];
 
 	/* . and .. never match */
-	if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0)
+	if (Q_strcmp(name, ".") == 0 || Q_strcmp(name, "..") == 0)
 		return qfalse;
 
-	sprintf(fn, "%s/%s", path, name);
+	Com_sprintf(fn, MAX_OSPATH, "%s/%s", path, name);
 	if (stat(fn, &st) == -1)
 		return qfalse; /* shouldn't happen */
 
@@ -162,17 +162,17 @@ char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)
 		Sys_Error ("Sys_BeginFind without close");
 
 /*	COM_FilePath (path, findbase); */
-	strcpy(findbase, path);
+	Q_strncpyz(findbase, path, MAX_OSPATH);
 
 	if ((p = strrchr(findbase, '/')) != NULL) {
 		*p = 0;
-		strcpy(findpattern, p + 1);
+		Q_strncpyz(findpattern, MAX_OSPATH, p + 1);
 	} else
-		strcpy(findpattern, "*");
+		Q_strncpyz(findpattern, MAX_OSPATH, "*");
 
-	if (strcmp(findpattern, "*.*") == 0)
-		strcpy(findpattern, "*");
-	
+	if (Q_strcmp(findpattern, "*.*") == 0)
+		Q_strncpyz(findpattern, MAX_OSPATH, "*");
+
 	if ((fdir = opendir(findbase)) == NULL)
 		return NULL;
 	while ((d = readdir(fdir)) != NULL) {
@@ -180,7 +180,7 @@ char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)
 /*			if (*findpattern) */
 /*				printf("%s matched %s\n", findpattern, d->d_name); */
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
-				sprintf (findpath, "%s/%s", findbase, d->d_name);
+				Com_sprintf (findpath, "%s/%s", findbase, d->d_name);
 				return findpath;
 			}
 		}
@@ -199,7 +199,7 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 /*			if (*findpattern) */
 /*				printf("%s matched %s\n", findpattern, d->d_name); */
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
-				sprintf (findpath, "%s/%s", findbase, d->d_name);
+				Com_sprintf (findpath, MAX_OSPATH, "%s/%s", findbase, d->d_name);
 				return findpath;
 			}
 		}

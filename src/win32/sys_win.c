@@ -35,8 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MINIMUM_WIN_MEMORY	0x0a00000
 #define MAXIMUM_WIN_MEMORY	0x1000000
 
-/*#define DEMO */
-
 qboolean s_win95;
 
 int			starttime;
@@ -126,90 +124,16 @@ void WinError (void)
 	LocalFree( lpMsgBuf );
 }
 
-/*================================================================ */
-
-
-/*
-================
-Sys_ScanForCD
-
-================
-*/
-char *Sys_ScanForCD (void)
-{
-	static char	cddir[MAX_OSPATH];
-#if 0
-	static qboolean	done;
-	char		drive[4];
-	FILE		*f;
-	char		test[MAX_QPATH];
-
-	if (done)		/* don't re-check */
-		return cddir;
-
-	/* no abort/retry/fail errors */
-	SetErrorMode (SEM_FAILCRITICALERRORS);
-
-	drive[0] = 'c';
-	drive[1] = ':';
-	drive[2] = '\\';
-	drive[3] = 0;
-
-	done = qtrue;
-
-	/* scan the drives */
-	for (drive[0] = 'c' ; drive[0] <= 'z' ; drive[0]++)
-	{
-		/* where activision put the stuff... */
-		sprintf (cddir, "%sinstall\\data", drive);
-		sprintf (test, "%sinstall\\data\\quake2.exe", drive);
-		f = fopen(test, "r");
-		if (f)
-		{
-			fclose (f);
-			if (GetDriveType (drive) == DRIVE_CDROM)
-				return cddir;
-		}
-	}
-#endif
-
-	cddir[0] = 0;
-
-	return NULL;
-}
-
-/*
-================
-Sys_CopyProtect
-
-================
-*/
-void	Sys_CopyProtect (void)
-{
-#ifndef DEMO
-	char	*cddir;
-
-	cddir = Sys_ScanForCD();
-	if (!cddir[0])
-		Com_Error (ERR_FATAL, "You must have the Quake2 CD in the drive to play.");
-#endif
-}
-
-
-/*================================================================ */
-
 char *Sys_GetCurrentUser( void )
 {
 	static char s_userName[1024];
 	unsigned long size = sizeof( s_userName );
 
 	if ( !GetUserName( s_userName, &size ) )
-		strcpy( s_userName, "player" );
+		Q_strncpyz( s_userName, "player", sizeof(s_userName) );
 
 	if ( !s_userName[0] )
-	{
-		strcpy( s_userName, "player" );
-	}
+		Q_strncpyz( s_userName, "player", sizeof(s_userName) );
 
 	return s_userName;
 }
@@ -219,13 +143,27 @@ char *Sys_GetCurrentUser( void )
 Sys_Cwd
 ==============
 */
-char *Sys_Cwd( void ) {
+char *Sys_Cwd( void )
+{
 	static char cwd[MAX_OSPATH];
 
 	_getcwd( cwd, sizeof( cwd ) - 1 );
 	cwd[MAX_OSPATH-1] = 0;
 
 	return cwd;
+}
+
+void Sys_NormPath(char* path)
+{
+	char *tmp = path;
+
+	while ( *tmp ) {
+		if ( *tmp == '\\' )
+			*tmp = '/';
+		else
+			*tmp = tolower(*tmp);
+		tmp++;
+	}
 }
 
 /*
@@ -273,8 +211,7 @@ void Sys_Init (void)
 
 	Cvar_Get("sys_os", "win", 0);
 
-	if (dedicated->value)
-	{
+	if (dedicated->value) {
 		if (!AllocConsole ())
 			Sys_Error ("Couldn't create dedicated server console");
 		hinput = GetStdHandle (STD_INPUT_HANDLE);
@@ -304,8 +241,7 @@ char *Sys_ConsoleInput (void)
 		return NULL;
 
 
-	for ( ;; )
-	{
+	for ( ;; ) {
 		if (!GetNumberOfConsoleInputEvents (hinput, &numevents))
 			Sys_Error ("Error getting # of console events");
 
@@ -318,19 +254,15 @@ char *Sys_ConsoleInput (void)
 		if (numread != 1)
 			Sys_Error ("Couldn't read console input");
 
-		if (recs[0].EventType == KEY_EVENT)
-		{
-			if (!recs[0].Event.KeyEvent.bKeyDown)
-			{
+		if (recs[0].EventType == KEY_EVENT) {
+			if (!recs[0].Event.KeyEvent.bKeyDown) {
 				ch = recs[0].Event.KeyEvent.uChar.AsciiChar;
 
-				switch (ch)
-				{
+				switch (ch) {
 					case '\r':
 						WriteFile(houtput, "\r\n", 2, &dummy, NULL);
 
-						if (console_textlen)
-						{
+						if (console_textlen) {
 							console_text[console_textlen] = 0;
 							console_textlen = 0;
 							return console_text;
@@ -338,26 +270,21 @@ char *Sys_ConsoleInput (void)
 						break;
 
 					case '\b':
-						if (console_textlen)
-						{
+						if (console_textlen) {
 							console_textlen--;
 							WriteFile(houtput, "\b \b", 3, &dummy, NULL);
 						}
 						break;
 
 					default:
-						if (ch >= ' ')
-						{
-							if (console_textlen < sizeof(console_text)-2)
-							{
+						if (ch >= ' ') {
+							if (console_textlen < sizeof(console_text)-2) {
 								WriteFile(houtput, &ch, 1, &dummy, NULL);
 								console_text[console_textlen] = ch;
 								console_textlen++;
 							}
 						}
-
 						break;
-
 				}
 			}
 		}
@@ -382,8 +309,7 @@ void Sys_ConsoleOutput (char *string)
 	if (!dedicated || !dedicated->value)
 		return;
 
-	if (console_textlen)
-	{
+	if (console_textlen) {
 		text[0] = '\r';
 		memset(&text[1], ' ', console_textlen);
 		text[console_textlen+1] = '\r';
@@ -409,8 +335,7 @@ void Sys_SendKeyEvents (void)
 {
 	MSG        msg;
 
-	while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE))
-	{
+	while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE)) {
 		if (!GetMessage (&msg, NULL, 0, 0))
 			Sys_Quit ();
 		sys_msg_time = msg.time;
@@ -435,14 +360,11 @@ char *Sys_GetClipboardData( void )
 	char *data = NULL;
 	char *cliptext;
 
-	if ( OpenClipboard( NULL ) != 0 )
-	{
+	if ( OpenClipboard( NULL ) != 0 ) {
 		HANDLE hClipboardData;
 
-		if ( ( hClipboardData = GetClipboardData( CF_TEXT ) ) != 0 )
-		{
-			if ( ( cliptext = GlobalLock( hClipboardData ) ) != 0 )
-			{
+		if ( ( hClipboardData = GetClipboardData( CF_TEXT ) ) != 0 ) {
+			if ( ( cliptext = GlobalLock( hClipboardData ) ) != 0 ) {
 				data = malloc( GlobalSize( hClipboardData ) + 1 );
 				strcpy( data, cliptext );
 				GlobalUnlock( hClipboardData );
@@ -535,33 +457,26 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	Com_sprintf (name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
 	game_library = LoadLibrary ( name );
 	if (game_library)
-	{
 		Com_DPrintf ("LoadLibrary (%s)\n", name);
-	}
-	else
-	{
+	else {
 #ifdef DEBUG
 		/* check the current directory for other development purposes */
 		Com_sprintf (name, sizeof(name), "%s/%s", cwd, gamename);
 		game_library = LoadLibrary ( name );
 		if (game_library)
-		{
 			Com_DPrintf ("LoadLibrary (%s)\n", name);
-		}
 		else
 #endif
 		{
 			/* now run through the search paths */
 			path = NULL;
-			while (1)
-			{
+			while (1) {
 				path = FS_NextPath (path);
 				if (!path)
 					return NULL;		/* couldn't find one anywhere */
 				Com_sprintf (name, sizeof(name), "%s/%s", path, gamename);
 				game_library = LoadLibrary (name);
-				if (game_library)
-				{
+				if (game_library) {
 					Com_DPrintf ("LoadLibrary (%s)\n",name);
 					break;
 				}
@@ -570,8 +485,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	}
 
 	GetGameAPI = (GetGameApi_t)GetProcAddress (game_library, "GetGameAPI");
-	if (!GetGameAPI)
-	{
+	if (!GetGameAPI) {
 		Sys_UnloadGame ();
 		return NULL;
 	}
@@ -598,16 +512,14 @@ void ParseCommandLine (LPSTR lpCmdLine)
 		while (*lpCmdLine && ((*lpCmdLine <= 32) || (*lpCmdLine > 126)))
 			lpCmdLine++;
 
-		if (*lpCmdLine)
-		{
+		if (*lpCmdLine) {
 			argv[argc] = lpCmdLine;
 			argc++;
 
 			while (*lpCmdLine && ((*lpCmdLine > 32) && (*lpCmdLine <= 126)))
 				lpCmdLine++;
 
-			if (*lpCmdLine)
-			{
+			if (*lpCmdLine) {
 				*lpCmdLine = 0;
 				lpCmdLine++;
 			}
@@ -630,7 +542,6 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	MSG			msg;
 	int			time, oldtime, newtime;
 	float		timescale;
-	char		*cddir;
 
 	/* previous instances do not exist in Win32 */
 	if (hPrevInstance)
@@ -640,42 +551,19 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 	ParseCommandLine (lpCmdLine);
 
-	/* if we find the CD, add a +set cddir xxx command line */
-	cddir = Sys_ScanForCD ();
-	if (cddir && argc < MAX_NUM_ARGVS - 3)
-	{
-		int		i;
-
-		/* don't override a cddir on the command line */
-		for (i=0 ; i<argc ; i++)
-			if (!strcmp(argv[i], "cddir"))
-				break;
-		if (i == argc)
-		{
-			argv[argc++] = "+set";
-			argv[argc++] = "cddir";
-			argv[argc++] = cddir;
-		}
-	}
-
 	Qcommon_Init (argc, argv);
 	timescale = 1.0;
 	oldtime = Sys_Milliseconds ();
 
-/* 	srand( getpid() ); */
 	srand( oldtime );
 
 	/* main window message loop */
-	while (1)
-	{
+	while (1) {
 		/* if at a full screen console, don't update unless needed */
 		if (Minimized || (dedicated && dedicated->value) )
-		{
 			Sleep (1);
-		}
 
-		while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE))
-		{
+		while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE)) {
 			if (!GetMessage (&msg, NULL, 0, 0))
 				Com_Quit ();
 			sys_msg_time = msg.time;
@@ -683,14 +571,11 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
    			DispatchMessage (&msg);
 		}
 
-		do
-		{
+		do {
 			newtime = Sys_Milliseconds ();
 			time = timescale * (newtime - oldtime);
 		} while (time < 1);
-/*			Con_Printf ("time:%5.2f - %5.2f = %5.2f\n", newtime, oldtime, time); */
 
-		/*	_controlfp( ~( _EM_ZERODIVIDE ), _MCW_EM ); */
 		_controlfp( _PC_24, _MCW_PC );
 
 		timescale = Qcommon_Frame (time);

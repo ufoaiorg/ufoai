@@ -706,39 +706,40 @@ typedef enum {
 	FS_SEEK_SET
 } fsOrigin_t;
 
-int	FS_FOpenFileWrite( const char *filename, FILE** f );
-int	FS_Seek( FILE* f, long offset, int origin );
-int	FS_WriteFile( const void *buffer, int len, const char* filename );
-int	FS_Write( const void *buffer, int len, FILE* f );
-void	FS_GetMaps ( void );
-void	FS_InitFilesystem (void);
-void	FS_SetGamedir (char *dir);
-char	*FS_Gamedir (void);
-char	*FS_NextPath (char *prevpath);
-void	FS_ExecAutoexec (void);
-char	*FS_GetCwd( void );
-qboolean	FS_FileExists (char *filename);
+int FS_FOpenFileWrite( const char *filename, FILE** f );
+int FS_Seek( FILE* f, long offset, int origin );
+int FS_WriteFile( const void *buffer, int len, const char* filename );
+int FS_Write( const void *buffer, int len, FILE* f );
+void FS_GetMaps ( void );
+void FS_InitFilesystem (void);
+void FS_SetGamedir (char *dir);
+char *FS_Gamedir (void);
+char *FS_NextPath (char *prevpath);
+void FS_ExecAutoexec (void);
+char *FS_GetCwd( void );
+void FS_NormPath(char* path);
+qboolean FS_FileExists (char *filename);
 
-void	FS_GetMaps ( void );
+void FS_GetMaps ( void );
 
-int	FS_FOpenFile (const char *filename, FILE **file);
-void	FS_FCloseFile (FILE *f);
+int FS_FOpenFile (const char *filename, FILE **file);
+void FS_FCloseFile (FILE *f);
 /* note: this can't be called from another DLL, due to MS libc issues */
 
-int		FS_LoadFile (char *path, void **buffer);
+int FS_LoadFile (char *path, void **buffer);
 /* a null buffer will just return the file length without loading */
 /* a -1 length is not present */
 
-void	FS_Read (void *buffer, int len, FILE *f);
+void FS_Read (void *buffer, int len, FILE *f);
 /* properly handles partial reads */
 
-void	FS_FreeFile (void *buffer);
+void FS_FreeFile (void *buffer);
 
-int		FS_CheckFile (const char *path);
+int FS_CheckFile (const char *path);
 
-void	FS_BuildFileList (char *files);
-char	*FS_NextScriptHeader( char *files, char **name, char **text );
-void	FS_CreatePath (char *path);
+void FS_BuildFileList (char *files);
+char *FS_NextScriptHeader( char *files, char **name, char **text );
+void FS_CreatePath (char *path);
 
 
 /*
@@ -869,6 +870,7 @@ NON-PORTABLE SYSTEM SERVICES
 */
 
 void	Sys_Init (void);
+void	Sys_NormPath (char* path);
 
 void	Sys_AppActivate (void);
 
@@ -882,7 +884,6 @@ void	Sys_SendKeyEvents (void);
 void	Sys_Error (char *error, ...);
 void	Sys_Quit (void);
 char	*Sys_GetClipboardData( void );
-void	Sys_CopyProtect (void);
 
 /*
 ==============================================================
