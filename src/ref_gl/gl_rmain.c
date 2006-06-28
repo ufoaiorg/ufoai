@@ -917,9 +917,6 @@ void R_SetupGL (void)
         qglRotatef (-r_newrefdef.viewangles[1],  0, 0, 1);
         qglTranslatef (-r_newrefdef.vieworg[0],  -r_newrefdef.vieworg[1],  -r_newrefdef.vieworg[2]);
 
-/*	if ( gl_state.camera_separation != 0 && gl_state.stereo_enabled ) */
-/*		qglTranslatef ( gl_state.camera_separation, 0, 0 ); */
-
 	qglGetFloatv (GL_MODELVIEW_MATRIX, r_world_matrix);
 
 	/* set drawing parms */
@@ -1083,97 +1080,14 @@ void	R_SetGL2D (void)
 	qglColor4f (1,1,1,1);
 }
 
-#if 0
-static void GL_DrawColoredStereoLinePair( float r, float g, float b, float y )
-{
-	qglColor3f( r, g, b );
-	qglVertex2f( 0, y );
-	qglVertex2f( vid.width, y );
-	qglColor3f( 0, 0, 0 );
-	qglVertex2f( 0, y + 1 );
-	qglVertex2f( vid.width, y + 1 );
-}
-
-static void GL_DrawStereoPattern( void )
-{
-	int i;
-
-	if ( !( gl_config.renderer & GL_RENDERER_INTERGRAPH ) )
-		return;
-
-	if ( !gl_state.stereo_enabled )
-		return;
-
-	R_SetGL2D();
-
-	qglDrawBuffer( GL_BACK_LEFT );
-
-	for ( i = 0; i < 20; i++ ) {
-		qglBegin( GL_LINES );
-			GL_DrawColoredStereoLinePair( 1, 0, 0, 0 );
-			GL_DrawColoredStereoLinePair( 1, 0, 0, 2 );
-			GL_DrawColoredStereoLinePair( 1, 0, 0, 4 );
-			GL_DrawColoredStereoLinePair( 1, 0, 0, 6 );
-			GL_DrawColoredStereoLinePair( 0, 1, 0, 8 );
-			GL_DrawColoredStereoLinePair( 1, 1, 0, 10);
-			GL_DrawColoredStereoLinePair( 1, 1, 0, 12);
-			GL_DrawColoredStereoLinePair( 0, 1, 0, 14);
-		qglEnd();
-
-		GLimp_EndFrame();
-	}
-}
-#endif
-
-/*
-====================
-R_SetLightLevel
-
-====================
-*/
-void R_SetLightLevel (void)
-{
-/*	vec3_t		shadelight;
-
-	shadelight[0] = shadelight[1] = shadelight[2] = 1.0F;*/
-
-	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
-		return;
-
-	/* save off light value for server to look at (BIG HACK!) */
-
-/*	R_LightPoint (r_newrefdef.vieworg, shadelight); */
-
-	/* pick the greatest component, which should be the same */
-	/* as the mono value returned by software */
-/*	if (shadelight[0] > shadelight[1])
-	{
-		if (shadelight[0] > shadelight[2])
-			r_lightlevel->value = 150*shadelight[0];
-		else
-			r_lightlevel->value = 150*shadelight[2];
-	}
-	else
-	{
-		if (shadelight[1] > shadelight[2])
-			r_lightlevel->value = 150*shadelight[1];
-		else
-			r_lightlevel->value = 150*shadelight[2];
-	}*/
-/*	r_lightlevel->value = 0; */
-
-}
-
 /*
 ====================
 R_RenderFrame
-
 ====================
 */
 void R_RenderFrame (refdef_t *fd)
 {
 	R_RenderView( fd );
-/*	R_SetLightLevel (); */
 	R_SetGL2D ();
 }
 
@@ -1650,9 +1564,9 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 /*		water_shader = LoadProgram_ARB_FP("arb_water"); */
 /*		water_shader = CompileWaterShader(); */
 	} else {
-	        ri.Con_Printf(PRINT_ALL, "...GL_ARB_fragment_program not found\n");
+		ri.Con_Printf(PRINT_ALL, "...GL_ARB_fragment_program not found\n");
 		gl_state.arb_fragment_program = qfalse;
-        }
+	}
 #endif /* SHADERS */
 
 	gl_state.ati_separate_stencil=qfalse;
@@ -1693,9 +1607,6 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	}
 
 	GL_SetDefaultState();
-
-	/* draw our stereo patterns */
-/* 	GL_DrawStereoPattern(); */
 
 	GL_InitImages ();
 	Mod_Init ();
@@ -1867,11 +1778,8 @@ void R_SetPalette ( const unsigned char *palette)
 			rp[i*4+3] = 0xff;
 		}
 	}
-/*	GL_SetTexturePalette( r_rawpalette ); */
 
-/*	qglClearColor (0,0,0,0); */
 	qglClear (GL_COLOR_BUFFER_BIT);
-/*	qglClearColor (1,0, 0.5 , 0.5); */
 }
 
 /*

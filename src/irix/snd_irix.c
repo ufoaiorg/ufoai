@@ -116,9 +116,7 @@ qboolean SNDDMA_Init(void)
 
     sgisnd_aport = alOpenPort( "Quake", "w", ac );
     if (!sgisnd_aport)
-    {
 	printf( "failed to open audio port!\n" );
-    }
 
     /* set desired sample rate */
     pvbuf[0].param = AL_MASTER_CLOCK;
@@ -155,12 +153,13 @@ how many sample are required to fill it up.
 int SNDDMA_GetDMAPos(void)
 {
     long long ustFuture, ustNow;
-    if (!sgisnd_aport) return( 0 );
+    if (!sgisnd_aport) 
+	return 0 ;
     alGetFrameTime( sgisnd_aport, &sgisnd_startframe, &ustFuture );
     dmGetUST( (unsigned long long *)&ustNow );
     sgisnd_startframe -= (long long)((ustFuture - ustNow) * sgisnd_frames_per_ns);
     sgisnd_startframe += 100;
-/*printf( "frame %ld pos %d\n", frame, UST_TO_BUFFPOS( sgisnd_startframe ) ); */
+    /*printf( "frame %ld pos %d\n", frame, UST_TO_BUFFPOS( sgisnd_startframe ) ); */
     return( UST_TO_BUFFPOS( sgisnd_startframe ) );
 }
 
@@ -173,7 +172,9 @@ Reset the sound device for exiting
 */
 void SNDDMA_Shutdown(void)
 {
-    if (sgisnd_aport) alClosePort( sgisnd_aport ), sgisnd_aport = NULL;
+    if (sgisnd_aport) 
+	alClosePort( sgisnd_aport );
+    sgisnd_aport = NULL;
     return;
 }
 
@@ -203,28 +204,26 @@ void SNDDMA_Submit(void)
     if (paintedtime - soundtime < nFrames)
 	nFrames = paintedtime - soundtime;
 
-    if (nFrames <= QSND_SKID) return;
+    if (nFrames <= QSND_SKID) 
+	return;
 
     nPos = UST_TO_BUFFPOS( sgisnd_startframe );
 
     /* dump re-written contents of the buffer */
-    if (sgisnd_lastframewritten > sgisnd_startframe)
-    {
+    if (sgisnd_lastframewritten > sgisnd_startframe) {
 	alDiscardFrames( sgisnd_aport, sgisnd_lastframewritten - sgisnd_startframe );
-    }
-    else if ((int)(sgisnd_startframe - sgisnd_lastframewritten) >= QSND_BUFFER_FRAMES)
-    {
+    } else if ((int)(sgisnd_startframe - sgisnd_lastframewritten) >= QSND_BUFFER_FRAMES) {
 	/* blow away everything if we've underflowed */
 	alDiscardFrames( sgisnd_aport, QSND_BUFFER_FRAMES );
     }
 
     /* don't block */
-    if (nFrames > nFillable) nFrames = nFillable;
+    if (nFrames > nFillable) 
+	nFrames = nFillable;
 
     /* account for stereo */
     nFramesLeft = nFrames;
-    if (nPos + nFrames * dma.channels > QSND_BUFFER_SIZE)
-    {
+    if (nPos + nFrames * dma.channels > QSND_BUFFER_SIZE) {
 	int nFramesAtEnd = (QSND_BUFFER_SIZE - nPos) >> (dma.channels - 1);
 	
 	alWriteFrames( sgisnd_aport, &dma_buffer[nPos], nFramesAtEnd );

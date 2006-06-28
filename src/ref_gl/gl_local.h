@@ -376,7 +376,6 @@ void Draw_InitLocal (void);
 void GL_SubdivideSurface (msurface_t *fa);
 qboolean R_CullBox (vec3_t mins, vec3_t maxs);
 void R_RotateForEntity (entity_t *e);
-void R_MarkLeaves (void);
 
 /*model_s *R_RegisterModelShort( char *name ); */
 
@@ -433,8 +432,6 @@ image_t *GL_FindImageForShader ( char *name );
 void	GL_TextureMode( char *string );
 void	GL_ImageList_f (void);
 void	GL_CalcDayAndNight ( float q );
-
-void	GL_SetTexturePalette( unsigned palette[256] );
 
 void	GL_InitImages (void);
 void	GL_ShutdownImages (void);

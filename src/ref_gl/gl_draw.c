@@ -276,8 +276,7 @@ void Draw_Pic (int x, int y, char *pic)
 	image_t *gl;
 
 	gl = Draw_FindPic (pic);
-	if (!gl)
-	{
+	if (!gl) {
 		ri.Con_Printf (PRINT_ALL, "Can't find pic: %s\n", pic);
 		return;
 	}
@@ -311,8 +310,7 @@ void Draw_TileClear (int x, int y, int w, int h, char *name)
 	image_t	*image;
 
 	image = Draw_FindPic (name);
-	if (!image)
-	{
+	if (!image) {
 		ri.Con_Printf (PRINT_ALL, "Can't find pic: %s\n", name);
 		return;
 	}
@@ -352,8 +350,7 @@ void Draw_Fill (int x, int y, int w, int h, int style, vec4_t color)
 	qglDisable (GL_TEXTURE_2D);
 	qglBegin (GL_QUADS);
 
-	switch ( style )
-	{
+	switch ( style ) {
 	case ALIGN_CL:
 		qglVertex2f (nx, ny);
 		qglVertex2f (nx+nh, ny);
@@ -435,20 +432,16 @@ void Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data
 
 	GL_Bind (0);
 
-	if (rows<=256)
-	{
+	if (rows<=256) {
 		hscale = 1;
 		trows = rows;
-	}
-	else
-	{
+	} else {
 		hscale = rows/256.0;
 		trows = 256;
 	}
 	t = rows*hscale / 256;
 
-	for (i=0 ; i<trows ; i++)
-	{
+	for (i=0 ; i<trows ; i++) {
 		row = (int)(i*hscale);
 		if (row > rows)
 			break;
@@ -456,8 +449,7 @@ void Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data
 		dest = &image32[i*256];
 		fracstep = cols*0x10000/256;
 		frac = fracstep >> 1;
-		for (j=0 ; j<256 ; j++)
-		{
+		for (j=0 ; j<256 ; j++) {
 			dest[j] = r_rawpalette[source[frac>>16]];
 			frac += fracstep;
 		}
@@ -492,7 +484,7 @@ void Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data
 Draw_DayAndNight
 ================
 */
-float	lastQ;
+static float	lastQ;
 
 void Draw_DayAndNight( int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char* map )
 {
@@ -533,8 +525,7 @@ void Draw_DayAndNight( int x, int y, int w, int h, float p, float q, float cx, f
 	GL_Bind( gl->texnum );
 
 	GL_SelectTexture( gl_texture1 );
-	if ( !DaN || lastQ != q )
-	{
+	if ( !DaN || lastQ != q ) {
 		GL_CalcDayAndNight( q );
 		lastQ = q;
 	}
@@ -575,13 +566,11 @@ void Draw_LineStrip( int points, int *verts )
 {
 	static int vs[MAX_LINEVERTS*2];
 	int i;
-/*	int *v; */
 
 	/* fit it on screen */
 	if ( points > MAX_LINEVERTS*2 ) points = MAX_LINEVERTS*2;
 
-	for ( i = 0; i < points*2; i += 2 )
-	{
+	for ( i = 0; i < points*2; i += 2 ) {
 		vs[i] = verts[i] * vid.rx;
 		vs[i+1] = verts[i+1] * vid.ry;
 	}
@@ -600,7 +589,7 @@ void Draw_LineStrip( int points, int *verts )
 }
 
 /* vertices of a unit icosahedron */
-static globe_triangle_t icosahedron[MAX_ICOSAHEDRON]= {
+static globe_triangle_t icosahedron[MAX_ICOSAHEDRON] = {
         /* "north" pole */
 
         { {Ip1, Ip0, Ip2}, },
@@ -690,8 +679,7 @@ unsigned long Globe_Distance( int site )
 	float angle;
 	vec3_t v1, v2;
 
-	for(i=1 ; i<=site ; i++)
-	{
+	for(i=1 ; i<=site ; i++) {
 		/* This is not really the way to do this. This assumes that
 			earth is round (it isn't!). I'm sure there's a good way to
 			compute the actual distance between two locations on earth. */
@@ -721,8 +709,7 @@ void Globe_Normalize(vec3_t r)
 	float mag;
 
 	mag = r[0] * r[0] + r[1] * r[1] + r[2] * r[2];
-	if (mag != 0.0f)
-	{
+	if (mag != 0.0f) {
 		mag = 1.0f / sqrt(mag);
 		r[0] *= mag;
 		r[1] *= mag;
@@ -763,15 +750,13 @@ void Globe_AddVertex(vec3_t v, double *lastlon)
 	a = Globe_ToLong(x);
 	b = Globe_ToLat(x);
 
-	if(a == 5000.0)	/* 5000 is the slightly unintuitive value tolon() */
-	{		/* returns when it finds a value on a pole. */
+	if(a == 5000.0) {	/* 5000 is the slightly unintuitive value tolon() */
+				/* returns when it finds a value on a pole. */
 		if(b > 0)	/* If it's the north pole */
 			a = *lastlon - 36.0;
 		else		/* South pole. */
 			a = *lastlon + 36.0;
-	}
-	else if(*lastlon != 4000.0)   /* Not the first vertex in a tstrip.*/
-	{
+	} else if(*lastlon != 4000.0) {  /* Not the first vertex in a tstrip.*/
 		/* This stuff is to get the wraparoud at the backside of the
 			sphere to work. (Or you'd get a weird zigzag line down the
 			back of the sphere.) */
@@ -875,11 +860,9 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 	/* iterate over the 20 sides of the icosahedron */
-	for(s = 0; s < MAX_ICOSAHEDRON; s++)
-	{
+	for(s = 0; s < MAX_ICOSAHEDRON; s++) {
 		t = &icosahedron[s];
-		for(i = 0; i < nrows; i++)
-		{
+		for(i = 0; i < nrows; i++) {
 			/* create a tstrip for each row */
 			/* number of triangles in this row is number in previous +2 */
 			/* strip the ith trapezoid block */
@@ -894,8 +877,7 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 			qglBegin(GL_TRIANGLE_STRIP);
 			Globe_AddVertex(v0, &last_lon);
 			Globe_AddVertex(v1, &last_lon);
-			for(j = 0; j < i; j++)
-			{
+			for(j = 0; j < i; j++) {
 				/* calculate 2 more vertices at a time */
 				Globe_Lerp(v0, v2, (float)(j+1)/(i+1), veca);
 				Globe_Lerp(v1, v3, (float)(j+1)/i, vecb);
@@ -908,8 +890,7 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 	}
 
 	/* test for multitexture and env_combine support */
-	if ( !qglSelectTextureSGIS && !qglActiveTextureARB )
-	{
+	if ( !qglSelectTextureSGIS && !qglActiveTextureARB ) {
 		qglPopMatrix();
 		return;
 	}
@@ -922,8 +903,7 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 	GL_Bind( gl->texnum );
 
 	GL_SelectTexture( gl_texture1 );
-	if ( !DaN || lastQ != q )
-	{
+	if ( !DaN || lastQ != q ) {
 		GL_CalcDayAndNight( q );
 		lastQ = q;
 	}
