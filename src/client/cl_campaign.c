@@ -2124,6 +2124,8 @@ static void CL_GameGo(void)
 		Cbuf_AddText(va("map %s%c %s\n", mis->map, timeChar, mis->param));
 	else
 		Cbuf_AddText(va("map %s %s\n", mis->map, mis->param));
+
+
 }
 
 /**
@@ -2350,33 +2352,16 @@ void CL_CollectItems(int won)
   */
 void CL_UpdateCharacterStats(int won)
 {
-	le_t *le = NULL;
 	character_t *chr = NULL;
 	rank_t *rank = NULL;
 	int i, j;
 
-	for (i = 0; i < cl.numTeamList; i++) {
-		le = cl.teamList[i];
-
-		if (!le)
-			continue;
-
-		/* Check if a soldier died and report it to the message system. */
-		if (le->state & STATE_DEAD) {
+	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
+	for (i=0; i<baseCurrent->numWholeTeam; i++)
+		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
 			chr = &baseCurrent->wholeTeam[i];
 			assert(chr);
-
-			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%s (%s) died on his last mission.\n"), chr->name, chr->rank->name);
-			MN_AddNewMessage(_("Soldier died"), messageBuffer, qfalse, MSG_DEATH, NULL);
-		}
-
-		/* check if the soldier is still alive
-		   and give him skills */
-		if (!(le->state & STATE_DEAD)) {
-			/* TODO: Is the array of character_t the same */
-			/*      as the array of le_t?? */
-			chr = &baseCurrent->wholeTeam[i];
-			assert(chr);
+			chr->assigned_missions++;
 
 			/* FIXME: */
 			for (j = 0; j < SKILL_NUM_TYPES; j++)
@@ -2400,7 +2385,6 @@ void CL_UpdateCharacterStats(int won)
 				}
 			}
 		}
-	}
 }
 
 /**

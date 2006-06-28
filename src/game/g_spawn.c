@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -433,14 +433,9 @@ void SP_human_start(edict_t * ent)
 		return;
 	}
 	ent->team = 1;
-	/* only the first time */
-	if (!ent->chr.assigned_missions) {
-		ent->STUN = 100;
-		ent->HP = 100;
-		ent->AP = 100;
-	}
-	/* count mission */
-	ent->chr.assigned_missions++;
+	ent->STUN = 100;
+	ent->HP = 100;
+	ent->AP = 100;
 	G_ActorSpawn(ent);
 }
 

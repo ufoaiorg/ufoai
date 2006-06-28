@@ -324,7 +324,8 @@ typedef struct base_s {
 	/* FIXME: Replace this with employees */
 	character_t wholeTeam[MAX_WHOLETEAM];
 	/* FIXME: Replace this with employees */
-	character_t curTeam[MAX_ACTIVETEAM];
+	/* set in CL_GenerateEquipmentCmd and CL_LoadTeam */
+	character_t *curTeam[MAX_ACTIVETEAM];
 	character_t *curChr;
 
 	int equipType;

@@ -191,7 +191,7 @@ static void CL_ChangeNameCmd(void)
   */
 static void CL_ChangeSkinCmd(void)
 {
-	int sel, newSkin, i;
+	int sel, newSkin;
 
 	sel = cl_selected->value;
 	if (sel >= 0 && sel < baseCurrent->numWholeTeam) {
@@ -199,12 +199,7 @@ static void CL_ChangeSkinCmd(void)
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
 			newSkin = 0;
 
-		baseCurrent->curTeam[sel].skin = newSkin;
-		for (i = 0; i < baseCurrent->numWholeTeam; i++)
-			if (baseCurrent->wholeTeam[i].ucn == baseCurrent->curTeam[sel].ucn) {
-				baseCurrent->wholeTeam[i].skin = newSkin;
-				break;
-			}
+		baseCurrent->curTeam[sel]->skin = newSkin;
 
 		Cvar_SetValue("mn_skin", newSkin);
 		Cvar_Set("mn_skinname", _(teamSkinNames[newSkin]));
@@ -314,7 +309,7 @@ void CL_CheckInventory(equipDef_t * equip)
 	/* person in the squad filling their backpack with spare ammo leaving */
 	/* others with unloaded guns in their hands. */
 	for (container = 0; container < csi.numIDs; container++) {
-		for (p = 0, cp = baseCurrent->curTeam; p < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; p++, cp++) {
+		for (p = 0, cp = baseCurrent->curTeam[0]; p < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; p++, cp++) {
 			for (ic = cp->inv->c[container]; ic; ic = next) {
 				next = ic->next;
 				if (equip->num[ic->item.t] > 0)
@@ -368,18 +363,17 @@ static void CL_GenerateEquipmentCmd(void)
 
 	/* store hired names */
 	Cvar_ForceSet("cl_selected", "0");
-/* 	baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] = baseCurrent->numHired; */
-/* 	baseCurrent->teamMask[baseCurrent->aircraftCurrent] = baseCurrent->hiredMask; */
 	for (i = 0, p = 0; i < baseCurrent->numWholeTeam; i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
-			baseCurrent->curTeam[p] = baseCurrent->wholeTeam[i];
-			Cvar_ForceSet(va("mn_name%i", p), baseCurrent->curTeam[p].name);
+			baseCurrent->curTeam[p] = &baseCurrent->wholeTeam[i];
+			Cvar_ForceSet(va("mn_name%i", p), baseCurrent->curTeam[p]->name);
 			p++;
 		}
 
 	for (; p < MAX_ACTIVETEAM; p++) {
 		Cvar_ForceSet(va("mn_name%i", p), "");
 		Cbuf_AddText(va("equipdisable%i\n", p));
+		baseCurrent->curTeam[p] = NULL;
 	}
 
 	menuInventory = &baseCurrent->teamInv[0];
@@ -475,11 +469,11 @@ static void CL_SelectCmd(void)
 			return;
 		if (!baseCurrent || baseCurrent->aircraftCurrent < 0 || num > baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
 			return;
-		if (menuInventory && menuInventory != baseCurrent->curTeam[num].inv) {
-			baseCurrent->curTeam[num].inv->c[csi.idEquip] = menuInventory->c[csi.idEquip];
+		if (menuInventory && menuInventory != baseCurrent->curTeam[num]->inv) {
+			baseCurrent->curTeam[num]->inv->c[csi.idEquip] = menuInventory->c[csi.idEquip];
 			menuInventory->c[csi.idEquip] = NULL;
 		}
-		menuInventory = baseCurrent->curTeam[num].inv;
+		menuInventory = baseCurrent->curTeam[num]->inv;
 	} else if (!Q_strncmp(command, "team", 4)) {
 		if (!baseCurrent || num >= baseCurrent->numWholeTeam)
 			return;
@@ -500,10 +494,10 @@ static void CL_SelectCmd(void)
 		else
 			CL_UGVCvars(&baseCurrent->wholeTeam[num]);
 	} else {
-		if ( baseCurrent->curTeam[num].fieldSize == ACTOR_SIZE_NORMAL )
-			CL_CharacterCvars(&baseCurrent->curTeam[num]);
+		if ( baseCurrent->curTeam[num]->fieldSize == ACTOR_SIZE_NORMAL )
+			CL_CharacterCvars(baseCurrent->curTeam[num]);
 		else
-			CL_UGVCvars(&baseCurrent->curTeam[num]);
+			CL_UGVCvars(baseCurrent->curTeam[num]);
 	}
 }
 
@@ -822,7 +816,10 @@ void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 
 	for (i = 0, p = 0; i < base->numWholeTeam; i++)
 		if (base->teamMask[base->aircraftCurrent] & (1 << i))
-			base->curTeam[p++] = base->wholeTeam[i];
+			base->curTeam[p++] = &base->wholeTeam[i];
+
+	for (;p<MAX_ACTIVETEAM;p++)
+		base->curTeam[p] = NULL;
 }
 
 
@@ -995,6 +992,29 @@ void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
 	}
 }
 
+/**
+  * @brief Parses the character data which was send by G_SendCharacterData
+  */
+void CL_ParseCharacterData(sizebuf_t *buf)
+{
+	int ucn, i, j;
+	int num = MSG_ReadShort(buf);
+	character_t* chr;
+	for (i=0; i<num; i++) {
+		chr = NULL;
+		ucn = MSG_ReadShort(buf);
+		for (j=0; j<baseCurrent->numWholeTeam; j++)
+			if (baseCurrent->wholeTeam[j].ucn == ucn) {
+				chr = &baseCurrent->wholeTeam[j];
+				break;
+			}
+		if (!chr)
+			Sys_Error("Could not get character with ucn: %i\n", ucn);
+		for (j=0; j<KILLED_NUM_TYPES; j++)
+			chr->kills[j] = MSG_ReadShort(buf);
+	}
+}
+
 
 /**
   * @brief
@@ -1028,6 +1048,8 @@ void CL_ParseResults(sizebuf_t * buf)
 	for (i = 0; i < num; i++)
 		for (j = 0; j < num; j++)
 			num_kills[i][j] = MSG_ReadByte(buf);
+
+	CL_ParseCharacterData(buf);
 
 	/* read terminator */
 	if (MSG_ReadByte(buf) != NONE)

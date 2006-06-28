@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -359,6 +359,24 @@ void ExitLevel(void)
 	level.changemap = NULL;
 }
 
+/**
+  * @brief Sends character stats like assigned missions and kills back to client
+  *
+  * first short is the ucn to allow the client to identify the character
+  * Parsed in CL_ParseCharacterData
+  */
+void G_SendCharacterData( edict_t* ent )
+{
+	int k;
+	assert(ent);
+
+	/* write character number */
+	gi.WriteShort(ent->chr.ucn);
+	/* scores */
+	for (k = 0; k < KILLED_NUM_TYPES; k++)
+		gi.WriteShort(ent->chr.kills[k]);
+}
+
 /*
 =================
 G_EndGame
@@ -368,6 +386,7 @@ void G_EndGame(int team)
 {
 	edict_t *ent;
 	int i, j;
+	player_t* player;
 
 	/* Make everything visible to anyone who can't already see it */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
@@ -390,6 +409,23 @@ void G_EndGame(int team)
 	for (i = 0; i < MAX_TEAMS; i++)
 		for (j = 0; j < MAX_TEAMS; j++)
 			gi.WriteByte(level.num_kills[i][j]);
+
+	player = game.players + ent->pnum;
+
+	for (j = 0, i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
+		  && !(ent->state & STATE_DEAD)
+		  && ent->team == player->pers.team)
+			j++;
+
+	/* how many */
+	gi.WriteShort(j);
+
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
+		  && !(ent->state & STATE_DEAD)
+		  && ent->team == player->pers.team)
+			G_SendCharacterData(ent);
 
 	gi.WriteByte(NONE);
 	gi.EndEvents();

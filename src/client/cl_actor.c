@@ -574,14 +574,14 @@ void CL_RemoveActorFromTeamList(le_t * le)
 				return;
 
 			for (j = 0; j < baseCurrent->numWholeTeam; j++) {
-				if (baseCurrent->curTeam[i].ucn == baseCurrent->wholeTeam[j].ucn) {
+				if (baseCurrent->curTeam[i]->ucn == baseCurrent->wholeTeam[j].ucn) {
 					baseCurrent->deathMask |= 1 << j;
 					break;
 				}
 			}
 #ifdef DEBUG
 			if ( j == baseCurrent->numWholeTeam )
-				Com_Printf("CL_RemoveActorFromTeamList: could not mask as dead - ucn: %i\n", baseCurrent->curTeam[i].ucn);
+				Com_Printf("CL_RemoveActorFromTeamList: could not mask as dead - ucn: %i\n", baseCurrent->curTeam[i]->ucn);
 #endif
 			return;
 		}
@@ -613,10 +613,10 @@ qboolean CL_ActorSelect(le_t * le)
 			/* console commands, update cvars */
 			Cvar_ForceSet("cl_selected", va("%i", i));
 			if ( le->fieldSize == ACTOR_SIZE_NORMAL ) {
-				selChr = &baseCurrent->curTeam[i];
+				selChr = baseCurrent->curTeam[i];
 				CL_CharacterCvars(selChr);
 			} else {
-				selChr = &baseCurrent->curTeam[i];
+				selChr = baseCurrent->curTeam[i];
 				CL_UGVCvars(selChr);
 			}
 
