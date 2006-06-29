@@ -225,6 +225,8 @@ GtkWidget* create_mission_dialog (void)
 	gtk_window_set_skip_pager_hint (GTK_WINDOW (mission_dialog), TRUE);
 	gtk_window_set_type_hint (GTK_WINDOW (mission_dialog), GDK_WINDOW_TYPE_HINT_DIALOG);
 
+	g_signal_connect (GTK_OBJECT (mission_dialog), "delete_event", G_CALLBACK (button_mission_dialog_cancel), NULL);
+
 	mission_vbox = GTK_DIALOG (mission_dialog)->vbox;
 	gtk_widget_show (mission_vbox);
 
@@ -275,6 +277,7 @@ GtkWidget* create_mission_dialog (void)
 	gtk_combo_box_append_text (GTK_COMBO_BOX (combo_recruits), _("6"));
 	gtk_combo_box_append_text (GTK_COMBO_BOX (combo_recruits), _("7"));
 	gtk_combo_box_append_text (GTK_COMBO_BOX (combo_recruits), _("8"));
+	gtk_combo_box_set_active( GTK_COMBO_BOX (combo_recruits), 5 );
 
 	combo_civilians = gtk_combo_box_new_text ();
 	gtk_widget_show (combo_civilians);
@@ -289,6 +292,7 @@ GtkWidget* create_mission_dialog (void)
 	gtk_combo_box_append_text (GTK_COMBO_BOX (combo_civilians), _("6"));
 	gtk_combo_box_append_text (GTK_COMBO_BOX (combo_civilians), _("7"));
 	gtk_combo_box_append_text (GTK_COMBO_BOX (combo_civilians), _("8"));
+	gtk_combo_box_set_active( GTK_COMBO_BOX (combo_civilians), 2 );
 
 	combo_aliens = gtk_combo_box_new_text ();
 	gtk_widget_show (combo_aliens);
@@ -303,6 +307,7 @@ GtkWidget* create_mission_dialog (void)
 	gtk_combo_box_append_text (GTK_COMBO_BOX (combo_aliens), _("6"));
 	gtk_combo_box_append_text (GTK_COMBO_BOX (combo_aliens), _("7"));
 	gtk_combo_box_append_text (GTK_COMBO_BOX (combo_aliens), _("8"));
+	gtk_combo_box_set_active( GTK_COMBO_BOX (combo_aliens), 5 );
 
 	label1 = gtk_label_new (_("Actors"));
 	gtk_widget_show (label1);
@@ -351,14 +356,12 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_entry_set_invisible_char (GTK_ENTRY (music_entry), 9679);
 
-	text_mission = gtk_text_view_new ();
+	text_mission = gtk_text_new (NULL, NULL);
 	gtk_widget_show (text_mission);
 	gtk_table_attach (GTK_TABLE (mission_table), text_mission, 1, 2, 2, 3,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	/* FIXME: Define height (should be more than one line) */
-	/* TODO: add default text */
-
+	gtk_text_insert (GTK_EDITABLE (text_mission), NULL, NULL, NULL, "Location: TYPE_LOCATION\\nType: Terror Attack\\nObjective: Protect inhabitants", -1);
 	label2 = gtk_label_new (_("Mission"));
 	gtk_widget_show (label2);
 	gtk_frame_set_label_widget (GTK_FRAME (mission_frame), label2);
@@ -538,7 +541,7 @@ GtkWidget* create_mis_txt (void)
 	gtk_window_set_default_size (GTK_WINDOW (mis_txt), 480, 300);
 	gtk_window_set_type_hint (GTK_WINDOW (mis_txt), GDK_WINDOW_TYPE_HINT_DIALOG);
 
-	gtk_signal_connect (GTK_OBJECT (mis_txt), "destroy", GTK_SIGNAL_FUNC (button_mis_txt_cancel), NULL);
+	g_signal_connect (GTK_OBJECT (mis_txt), "delete_event", G_CALLBACK (button_mis_txt_cancel), NULL);
 
 	mis_txt_vbox = GTK_DIALOG (mis_txt)->vbox;
 	gtk_widget_show (mis_txt_vbox);

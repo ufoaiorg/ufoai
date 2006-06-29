@@ -58,7 +58,7 @@ void mission_save (GtkButton *button, gpointer user_data)
 	snprintf(buffer, sizeof(buffer),
 		"mission GIVE_ME_A_NAME\n"
 		"{\n"
-		"\ttext\t\"%s\"\n"
+		"\ttext\t\"_%s\"\n"
 		"\tmap\t%s\n"
 		"\tmusic\t%s\n"
 		"\tpos\t\"%i %i\"\n"
