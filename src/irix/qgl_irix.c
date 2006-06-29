@@ -2980,8 +2980,6 @@ void QGL_Shutdown( void )
 */
 qboolean QGL_Init( const char *dllname )
 {
-	gl_config.allow_cds = qtrue;
-
 	qglAccum                     = dllAccum = glAccum;
 	qglAlphaFunc                 = dllAlphaFunc = glAlphaFunc;
 	qglAreTexturesResident       = dllAreTexturesResident = glAreTexturesResident;

@@ -3071,8 +3071,6 @@ qboolean QGL_Init( const char *dllname )
 		return qfalse;
 	}
 
-	gl_config.allow_cds = qtrue;
-
 	qglAccum                     = dllAccum = GPA( "glAccum" );
 	qglAlphaFunc                 = dllAlphaFunc = GPA( "glAlphaFunc" );
 	qglAreTexturesResident       = dllAreTexturesResident = GPA( "glAreTexturesResident" );

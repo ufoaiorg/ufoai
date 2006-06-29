@@ -4021,8 +4021,6 @@ void	QGL_Shutdown (void)
 
 qboolean QGL_Init (const char *dllname)
 {
-    gl_config.allow_cds = qtrue;
-
     qglAccum                     = dllAccum 			= GPA ("glAccum");
     qglAlphaFunc                 = dllAlphaFunc 		= GPA ("glAlphaFunc");
     qglAreTexturesResident       = dllAreTexturesResident 	= GPA ("glAreTexturesResident");
