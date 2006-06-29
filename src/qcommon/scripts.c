@@ -1048,7 +1048,7 @@ void Com_ParseScripts( void )
 	FS_BuildFileList( "ufos/*.ufo" );
 	text = NULL;
 
-	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
+	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) != 0 )
 		if ( !Q_strncmp( type, "damagetypes", 11 ) )
 			Com_ParseDamageTypes( name, &text );
 
@@ -1056,7 +1056,7 @@ void Com_ParseScripts( void )
 	FS_NextScriptHeader( NULL, NULL, NULL );
 	text = NULL;
 
-	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) ) {
+	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) != 0 ) {
 		/* server/client scripts */
 		if ( !Q_strncmp( type, "item", 4 ) ) Com_ParseItem( name, &text );
 		else if ( !Q_strncmp( type, "inventory", 9 ) ) Com_ParseInventory( name, &text );
@@ -1072,7 +1072,7 @@ void Com_ParseScripts( void )
 	FS_NextScriptHeader( NULL, NULL, NULL );
 	text = NULL;
 
-	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) ) {
+	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) != 0 ) {
 		/* server/client scripts */
 		if ( !Q_strncmp( type, "equipment", 9 ) ) Com_ParseEquipment( name, &text );
 		else if ( !Q_strncmp( type, "teamdesc", 8 ) ) Com_ParseTeamDesc( name, &text );

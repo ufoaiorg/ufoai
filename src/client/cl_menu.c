@@ -1703,7 +1703,8 @@ MN_DrawMenus
 */
 void MN_DrawMenus(void)
 {
-	modelInfo_t mi, pmi;
+	modelInfo_t mi = {0, };
+	modelInfo_t pmi;
 	menuNode_t *node;
 	menu_t *menu;
 	animState_t *as;

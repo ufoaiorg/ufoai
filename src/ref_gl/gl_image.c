@@ -92,7 +92,7 @@ void GL_SelectTexture( GLenum texture )
 
 void GL_TexEnv( GLenum mode )
 {
-	static int lastmodes[2] = { -1, -1 };
+	static GLenum lastmodes[2] = { (GLenum) -1, (GLenum) -1 };
 
 	if ( mode != lastmodes[gl_state.currenttmu] ) {
 		qglTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode );
@@ -1864,7 +1864,7 @@ image_t	*GL_FindImage (char *pname, imagetype_t type)
 
 	/* look for it in the error list */
 	etex = glerrortex;
-	while ( ( l = strlen( etex ) ) ) {
+	while ( ( l = strlen( etex ) ) != 0 ) {
 		if ( !Q_strncmp( lname, etex, MAX_QPATH ) )
 			/* it's in the error list */
 			return r_notexture;

@@ -1203,7 +1203,7 @@ void FS_GetMaps ( void )
 	Com_sprintf (name, sizeof(name), "maps/*.bsp");
 	len = strlen(name);
 	mapInstalledIndex = 0;
-	while ( ( path = FS_NextPath( path ) ) ) {
+	while ( ( path = FS_NextPath( path ) ) != 0 ) {
 		found = Sys_FindFirst( va("%s/%s", path, name) , 0, 0 );
 		while (found && anzInstalledMaps < MAX_MAPS ) {
 			baseMapName = COM_SkipPath ( found );

@@ -85,9 +85,9 @@ int CCheckParm (char *parm)
 void InitConProc (int argc, char **argv)
 {
 	unsigned	threadAddr;
-	HANDLE		hFile;
-	HANDLE		heventParent;
-	HANDLE		heventChild;
+	HANDLE		hFile = 0;
+	HANDLE		heventParent = 0;
+	HANDLE		heventChild = 0;
 	int			t;
 
 	ccom_argc = argc;
@@ -266,7 +266,7 @@ BOOL ReadText (LPTSTR pszText, int iBeginLine, int iEndLine)
 	BOOL	bRet;
 
 	coord.X = 0;
-	coord.Y = iBeginLine;
+	coord.Y = (SHORT) iBeginLine;
 
 	bRet = ReadConsoleOutputCharacter(
 		hStdout,
@@ -297,13 +297,13 @@ BOOL WriteText (LPCTSTR szText)
 		if (*sz == 10)
 			*sz = 13;
 
-		upper = toupper(*sz);
+		upper = (char) toupper(*sz);
 
 		rec.EventType = KEY_EVENT;
 		rec.Event.KeyEvent.bKeyDown = TRUE;
 		rec.Event.KeyEvent.wRepeatCount = 1;
 		rec.Event.KeyEvent.wVirtualKeyCode = upper;
-		rec.Event.KeyEvent.wVirtualScanCode = CharToCode (*sz);
+		rec.Event.KeyEvent.wVirtualScanCode = (WORD) CharToCode (*sz);
 		rec.Event.KeyEvent.uChar.AsciiChar = *sz;
 		rec.Event.KeyEvent.uChar.UnicodeChar = *sz;
 		rec.Event.KeyEvent.dwControlKeyState = isupper(*sz) ? 0x80 : 0x0; 
@@ -331,9 +331,7 @@ BOOL WriteText (LPCTSTR szText)
 
 int CharToCode (char c)
 {
-	char upper;
-		
-	upper = toupper(c);
+	char upper = (char) toupper(c);
 
 	switch (c)
 	{
@@ -374,21 +372,21 @@ BOOL SetConsoleCXCY(HANDLE hStdout, int cx, int cy)
     info.srWindow.Left = 0;         
     info.srWindow.Right = info.dwSize.X - 1;                
     info.srWindow.Top = 0;
-    info.srWindow.Bottom = cy - 1;          
+    info.srWindow.Bottom = (SHORT) (cy - 1);
  
 	if (cy < info.dwSize.Y)
 	{
 		if (!SetConsoleWindowInfo(hStdout, TRUE, &info.srWindow))
 			return FALSE;
  
-		info.dwSize.Y = cy;
+		info.dwSize.Y = (SHORT) cy;
  
 		if (!SetConsoleScreenBufferSize(hStdout, info.dwSize))
 			return FALSE;
     }
     else if (cy > info.dwSize.Y)
     {
-		info.dwSize.Y = cy;
+		info.dwSize.Y = (SHORT) cy;
  
 		if (!SetConsoleScreenBufferSize(hStdout, info.dwSize))
 			return FALSE;
@@ -402,7 +400,7 @@ BOOL SetConsoleCXCY(HANDLE hStdout, int cx, int cy)
  
 /* width */
 	info.srWindow.Left = 0;         
-	info.srWindow.Right = cx - 1;
+	info.srWindow.Right = (SHORT) (cx - 1);
 	info.srWindow.Top = 0;
 	info.srWindow.Bottom = info.dwSize.Y - 1;               
  
@@ -411,14 +409,14 @@ BOOL SetConsoleCXCY(HANDLE hStdout, int cx, int cy)
 		if (!SetConsoleWindowInfo(hStdout, TRUE, &info.srWindow))
 			return FALSE;
  
-		info.dwSize.X = cx;
+		info.dwSize.X = (SHORT) cx;
     
 		if (!SetConsoleScreenBufferSize(hStdout, info.dwSize))
 			return FALSE;
 	}
 	else if (cx > info.dwSize.X)
 	{
-		info.dwSize.X = cx;
+		info.dwSize.X = (SHORT) cx;
  
 		if (!SetConsoleScreenBufferSize(hStdout, info.dwSize))
 			return FALSE;

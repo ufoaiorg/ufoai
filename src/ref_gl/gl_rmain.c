@@ -27,8 +27,8 @@ viddef_t	vid;
 
 refimport_t	ri;
 
-int gl_texture0, gl_texture1, gl_texture2, gl_texture3;
-int gl_combine;
+GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
+GLenum gl_combine;
 
 float		gldepthmin, gldepthmax;
 
@@ -1535,7 +1535,7 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 		if ( gl_config.maxTextureSize <= 0 )
 			gl_config.maxTextureSize = 0;
 
-		if (( err = qglGetError() )) {
+		if ( ( err = qglGetError() ) != 0 ) {
 			ri.Con_Printf( PRINT_ALL, "......cannot detect !\n");
 		} else {
 			ri.Con_Printf( PRINT_ALL, "......detected %d\n", size);

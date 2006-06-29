@@ -134,22 +134,22 @@ static void PerformMD4(const unsigned char *buf, int length, uint32_t *digest)
 	DoMD4();
 
 #if 1
-	digest[ 0] = (A & 0x000000FF) >> 0;
-	digest[ 1] = (A & 0x0000FF00) >> 8;
-	digest[ 2] = (A & 0x00FF0000) >> 16;
-	digest[ 3] = (A & 0xFF000000) >> 24;
-	digest[ 4] = (B & 0x000000FF) >> 0;
-	digest[ 5] = (B & 0x0000FF00) >> 8;
-	digest[ 6] = (B & 0x00FF0000) >> 16;
-	digest[ 7] = (B & 0xFF000000) >> 24;
-	digest[ 8] = (C & 0x000000FF) >> 0;
-	digest[ 9] = (C & 0x0000FF00) >> 8;
-	digest[10] = (C & 0x00FF0000) >> 16;
-	digest[11] = (C & 0xFF000000) >> 24;
-	digest[12] = (D & 0x000000FF) >> 0;
-	digest[13] = (D & 0x0000FF00) >> 8;
-	digest[14] = (D & 0x00FF0000) >> 16;
-	digest[15] = (D & 0xFF000000) >> 24;
+	digest[ 0] = (unsigned char) ( (A & 0x000000FF) >> 0  );
+	digest[ 1] = (unsigned char) ( (A & 0x0000FF00) >> 8  );
+	digest[ 2] = (unsigned char) ( (A & 0x00FF0000) >> 16 );
+	digest[ 3] = (unsigned char) ( (A & 0xFF000000) >> 24 );
+	digest[ 4] = (unsigned char) ( (B & 0x000000FF) >> 0  );
+	digest[ 5] = (unsigned char) ( (B & 0x0000FF00) >> 8  );
+	digest[ 6] = (unsigned char) ( (B & 0x00FF0000) >> 16 );
+	digest[ 7] = (unsigned char) ( (B & 0xFF000000) >> 24 );
+	digest[ 8] = (unsigned char) ( (C & 0x000000FF) >> 0  );
+	digest[ 9] = (unsigned char) ( (C & 0x0000FF00) >> 8  );
+	digest[10] = (unsigned char) ( (C & 0x00FF0000) >> 16 );
+	digest[11] = (unsigned char) ( (C & 0xFF000000) >> 24 );
+	digest[12] = (unsigned char) ( (D & 0x000000FF) >> 0  );
+	digest[13] = (unsigned char) ( (D & 0x0000FF00) >> 8  );
+	digest[14] = (unsigned char) ( (D & 0x00FF0000) >> 16 );
+	digest[15] = (unsigned char) ( (D & 0xFF000000) >> 24 );
 #else
 	digest[0] = SWAPLSB(A);
 	digest[1] = SWAPLSB(B);

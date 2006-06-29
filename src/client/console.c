@@ -362,7 +362,7 @@ void Con_Print(char *txt)
 		mask = 0;
 
 
-	while ((c = *txt)) {
+	while ( ( c = *txt ) != 0 ) {
 		/* count word length */
 		for (l = 0; l < con.linewidth; l++)
 			if (txt[l] <= ' ')
@@ -566,7 +566,7 @@ void Con_DrawConsole(float frac)
 		lines = viddef.height;
 
 	/* draw the background */
-	re.DrawStretchPic(0, -(viddef.height) + lines, viddef.width, viddef.height, "conback");
+	re.DrawStretchPic(0, lines - (int) viddef.height, viddef.width, viddef.height, "conback");
 	SCR_AddDirtyPoint(0, 0);
 	SCR_AddDirtyPoint(viddef.width - 1, lines - 1);
 

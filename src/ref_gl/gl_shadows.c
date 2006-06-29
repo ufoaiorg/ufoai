@@ -412,13 +412,13 @@ void GL_DrawAliasShadowVolume (dmdl_t *paliashdr, int posenumm)
 /*	if (clamp) qglEnable(GL_DEPTH_CLAMP_NV); */
 
 	qglDepthMask(qfalse);
-	qglStencilMask ( ~0 );
+	qglStencilMask ( (GLuint) ~0 );
 	qglDepthFunc( GL_LESS );
 
 	if (gl_state.ati_separate_stencil)
-		qglStencilFuncSeparateATI(GL_ALWAYS, GL_ALWAYS, 0, ~0);
+		qglStencilFuncSeparateATI(GL_ALWAYS, GL_ALWAYS, 0, (GLuint) ~0);
 
-	qglStencilFunc( GL_ALWAYS, 0, ~0);
+	qglStencilFunc( GL_ALWAYS, 0, (GLuint) ~0);
 
 	for (i=0; i<r_newrefdef.num_dlights; i++, l++)
 	{
@@ -645,9 +645,9 @@ void R_ShadowBlend( void )
 	qglEnable(GL_STENCIL_TEST);
 
 	if(gl_state.ati_separate_stencil)
-		qglStencilFuncSeparateATI(GL_NOTEQUAL, GL_NOTEQUAL, 0, ~0);
+		qglStencilFuncSeparateATI(GL_NOTEQUAL, GL_NOTEQUAL, 0, (GLuint) ~0);
 
-	qglStencilFunc( GL_NOTEQUAL, 0, ~0);
+	qglStencilFunc( GL_NOTEQUAL, 0, (GLuint) ~0);
 	qglStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 	qglDisable (GL_TEXTURE_2D);
 	qglBegin (GL_QUADS);

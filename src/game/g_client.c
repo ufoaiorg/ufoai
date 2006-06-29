@@ -756,7 +756,7 @@ void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int t
 	if (tx == NONE || ty == NONE)
 		return;
 
-	if ((ia = Com_MoveInInventory(&ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic))) {
+	if ( ( ia = Com_MoveInInventory(&ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic) ) != 0 ) {
 		switch (ia) {
 		case IA_NOTIME:
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - not enough TUs!\n"));

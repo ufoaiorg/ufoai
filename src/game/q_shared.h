@@ -93,7 +93,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define _(String) String
 #endif
 
-#if (defined _M_IX86 || defined __i386__) && !defined C_ONLY && !defined __sun__
+#if (defined _M_IX86 || defined __i386__) && !defined C_ONLY && !defined __sun__ && !defined _MSC_VER
 #define id386	1
 #else
 #define id386	0

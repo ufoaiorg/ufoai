@@ -492,8 +492,8 @@ extern int (*qglXGetConfig) (Display *dpy, XVisualInfo *vis, int attrib, int *va
 ** extension constants
 */
 
-extern int gl_texture0, gl_texture1, gl_texture2, gl_texture3;
-extern int gl_combine;
+extern GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
+extern GLenum gl_combine;
 
 /* we use glext.h */
 #ifndef _WIN32

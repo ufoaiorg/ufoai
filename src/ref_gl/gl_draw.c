@@ -744,7 +744,7 @@ void Globe_AddVertex(vec3_t v, double *lastlon)
 	double a, b, dist;
 	vec3_t x;
 
-	VectorCopy( x, v );	/* TODO: 'x' is copied to 'v' or vice versa?!! */
+	VectorCopy( v, x );
 	Globe_Normalize(x);
 	qglNormal3fv(x);
 	a = Globe_ToLong(x);

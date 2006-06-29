@@ -952,7 +952,7 @@ void CL_ParseEvent( void )
 	int			next;
 	qboolean	now;
 
-	while ( ( eType = MSG_ReadByte( &net_message ) ) ) {
+	while ( ( eType = MSG_ReadByte( &net_message ) ) != 0 ) {
 		if (net_message.readcount > net_message.cursize) {
 			Com_Error (ERR_DROP,"CL_ParseEvent: Bad event message");
 			break;

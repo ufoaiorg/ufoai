@@ -1089,7 +1089,7 @@ void CL_ReadSinglePlayerData( void )
 	text = NULL;
 
 	CL_ResetSinglePlayerData();
-	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
+	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) != 0 )
 		CL_ParseScriptFirst( type, name, &text );
 
 	/* stage two parsing */
@@ -1097,7 +1097,7 @@ void CL_ReadSinglePlayerData( void )
 	text = NULL;
 
 	Com_DPrintf( "Second stage parsing started...\n" );
-	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) )
+	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) != 0 )
 		CL_ParseScriptSecond( type, name, &text );
 
 	Com_Printf( "Global data loaded\n" );

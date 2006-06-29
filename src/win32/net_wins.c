@@ -238,7 +238,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 		}
 		else
 		{
-			if (! (h = gethostbyname(copy)) )
+			if ( ( h = gethostbyname(copy) ) == 0 )
 				return 0;
 			*(int *)&((struct sockaddr_in *)sadr)->sin_addr = *(int *)h->h_addr_list[0];
 		}
@@ -402,40 +402,26 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 {
 	int		ret;
 	struct sockaddr	addr;
-	int		net_socket;
+	int		net_socket = 0;
 
-	if ( to.type == NA_LOOPBACK )
-	{
+	if ( to.type == NA_LOOPBACK ) {
 		NET_SendLoopPacket (sock, length, data, to);
 		return;
 	}
 
-	if (to.type == NA_BROADCAST)
-	{
+	if (to.type == NA_BROADCAST) {
 		net_socket = ip_sockets[sock];
-		if (!net_socket)
-			return;
-	}
-	else if (to.type == NA_IP)
-	{
+	} else if (to.type == NA_IP) {
 		net_socket = ip_sockets[sock];
-		if (!net_socket)
-			return;
-	}
-	else if (to.type == NA_IPX)
-	{
+	} else if (to.type == NA_IPX) {
 		net_socket = ipx_sockets[sock];
-		if (!net_socket)
-			return;
-	}
-	else if (to.type == NA_BROADCAST_IPX)
-	{
+	} else if (to.type == NA_BROADCAST_IPX) {
 		net_socket = ipx_sockets[sock];
-		if (!net_socket)
-			return;
-	}
-	else
+	} else
 		Com_Error (ERR_FATAL, "NET_SendPacket: bad address type");
+
+	if (!net_socket)
+		return;
 
 	NetadrToSockadr (&to, &addr);
 

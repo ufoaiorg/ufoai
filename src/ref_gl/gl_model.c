@@ -1274,7 +1274,7 @@ struct model_s *R_RegisterModel (char *name)
 				else {
 					Q_strncpyz( path, mod->name, MAX_QPATH );
 					end = path;
-					while ( ( slash = strchr( end, '/' ) ) )
+					while ( ( slash = strchr( end, '/' ) ) != 0 )
 						end = slash+1;
 					strcpy( end, skin+1 );
 					mod->skins[i] = GL_FindImage( path, it_skin );
