@@ -337,20 +337,18 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (text_label), 0, 0.5);
 
-	map_entry = gtk_entry_new ();
+	map_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (map_entry);
 	gtk_table_attach (GTK_TABLE (mission_table), map_entry, 1, 2, 0, 1,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	gtk_entry_set_max_length (GTK_ENTRY (map_entry), 63);
 	gtk_entry_set_invisible_char (GTK_ENTRY (map_entry), 9679);
 
-	music_entry = gtk_entry_new ();
+	music_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (music_entry);
 	gtk_table_attach (GTK_TABLE (mission_table), music_entry, 1, 2, 1, 2,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	gtk_entry_set_max_length (GTK_ENTRY (music_entry), 63);
 	gtk_entry_set_invisible_char (GTK_ENTRY (music_entry), 9679);
 
 	text_mission = gtk_text_view_new ();
@@ -415,52 +413,46 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (credits_aliens_label), 0, 0.5);
 
-	alienteam_entry = gtk_entry_new ();
+	alienteam_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (alienteam_entry);
 	gtk_table_attach (GTK_TABLE (other_table), alienteam_entry, 1, 2, 0, 1,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	gtk_entry_set_max_length (GTK_ENTRY (alienteam_entry), 63);
 	gtk_entry_set_invisible_char (GTK_ENTRY (alienteam_entry), 9679);
 
-	civ_team_entry = gtk_entry_new ();
+	civ_team_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (civ_team_entry);
 	gtk_table_attach (GTK_TABLE (other_table), civ_team_entry, 1, 2, 1, 2,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	gtk_entry_set_max_length (GTK_ENTRY (civ_team_entry), 63);
 	gtk_entry_set_invisible_char (GTK_ENTRY (civ_team_entry), 9679);
 
-	alien_equip_entry = gtk_entry_new ();
+	alien_equip_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (alien_equip_entry);
 	gtk_table_attach (GTK_TABLE (other_table), alien_equip_entry, 1, 2, 2, 3,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	gtk_entry_set_max_length (GTK_ENTRY (alien_equip_entry), 63);
 	gtk_entry_set_invisible_char (GTK_ENTRY (alien_equip_entry), 9679);
 
-	credits_win_entry = gtk_entry_new ();
+	credits_win_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (credits_win_entry);
 	gtk_table_attach (GTK_TABLE (other_table), credits_win_entry, 1, 2, 3, 4,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	gtk_entry_set_max_length (GTK_ENTRY (credits_win_entry), 63);
 	gtk_entry_set_invisible_char (GTK_ENTRY (credits_win_entry), 9679);
 
-	credits_civ_entry = gtk_entry_new ();
+	credits_civ_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (credits_civ_entry);
 	gtk_table_attach (GTK_TABLE (other_table), credits_civ_entry, 1, 2, 4, 5,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	gtk_entry_set_max_length (GTK_ENTRY (credits_civ_entry), 63);
 	gtk_entry_set_invisible_char (GTK_ENTRY (credits_civ_entry), 9679);
 
-	credits_alien_entry = gtk_entry_new ();
+	credits_alien_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (credits_alien_entry);
 	gtk_table_attach (GTK_TABLE (other_table), credits_alien_entry, 1, 2, 5, 6,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	gtk_entry_set_max_length (GTK_ENTRY (credits_alien_entry), 63);
 	gtk_entry_set_invisible_char (GTK_ENTRY (credits_alien_entry), 9679);
 
 	other_label = gtk_label_new (_("Other"));
@@ -539,12 +531,11 @@ GtkWidget* create_mission_dialog (void)
 GtkWidget* create_mis_txt (void)
 {
 	GtkWidget *mis_txt_vbox;
-	GtkWidget *mission_txt;
 	GtkWidget *mis_txt_action_area;
 	GtkWidget *mis_txt_close;
 
 	mis_txt = gtk_dialog_new ();
-	gtk_window_set_default_size (GTK_WINDOW (mis_txt), 640, 480);
+	gtk_window_set_default_size (GTK_WINDOW (mis_txt), 480, 300);
 	gtk_window_set_type_hint (GTK_WINDOW (mis_txt), GDK_WINDOW_TYPE_HINT_DIALOG);
 
 	gtk_signal_connect (GTK_OBJECT (mis_txt), "destroy", GTK_SIGNAL_FUNC (button_mis_txt_cancel), NULL);

@@ -35,3 +35,5 @@ void create_about_box (void);
 GtkWidget *mis_txt;
 GtkWidget *campaign_editor;
 GtkWidget *mission_dialog;
+
+GtkWidget *mission_txt;

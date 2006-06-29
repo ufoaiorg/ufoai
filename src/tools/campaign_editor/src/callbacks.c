@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 #include <gtk/gtk.h>
+#include <string.h>
 
 #include "callbacks.h"
 #include "interface.h"
@@ -45,11 +46,51 @@ void on_info_activate (GtkMenuItem *menuitem, gpointer user_data)
 	create_about_box();
 }
 
+#define get_entry_txt(x) (char*)gtk_entry_get_text( GTK_ENTRY(lookup_widget(GTK_WIDGET (button), (const gchar*)x)) )
+#define get_textfield_txt(x) (char*)gtk_editable_get_chars( GTK_EDITABLE (lookup_widget(GTK_WIDGET (button), (const gchar*)x)), 0, -1 )
+#define get_selectbox_txt(x) (char*)gtk_combo_box_get_active_text( GTK_COMBO_BOX (lookup_widget(GTK_WIDGET (button), (const gchar*)x)) )
+
 void mission_save (GtkButton *button, gpointer user_data)
 {
+	GtkTextBuffer *txtbuf;
+	char buffer[2048];
+
+	snprintf(buffer, sizeof(buffer),
+		"mission GIVE_ME_A_NAME\n"
+		"{\n"
+		"\ttext\t\"%s\"\n"
+		"\tmap\t%s\n"
+		"\tmusic\t%s\n"
+		"\tpos\t\"%i %i\"\n"
+		"\taliens\t%s\n"
+		"\tcivilians\t%s\n"
+		"\trecruits\t%s\n"
+		"\talienteam\t%s\n"
+		"\tcivteam\t%s\n"
+		"\talienequip\t%s\n"
+		"\t$win\t%s\n"
+		"\t$alien\t%s\n"
+		"\t$civilian\t%s\n"
+		"}\n",
+		get_textfield_txt("text_mission"),
+		get_entry_txt("map_entry"),
+		get_entry_txt("music_entry"),
+		x, y,
+		get_selectbox_txt("combo_aliens"),
+		get_selectbox_txt("combo_civilians"),
+		get_selectbox_txt("combo_recruits"),
+		get_entry_txt("alienteam_entry"),
+		get_entry_txt("civ_team_entry"),
+		get_entry_txt("alien_equip_entry"),
+		get_entry_txt("credits_win_entry"),
+		get_entry_txt("credits_alien_entry"),
+		get_entry_txt("credits_civ_entry")
+	);
 	gtk_widget_hide( mission_dialog );
 	gtk_widget_show( mis_txt );
-	/* TODO: put the mission text into the text field of mis_txt */
+	txtbuf = gtk_text_buffer_new(NULL);
+	gtk_text_buffer_insert_at_cursor(txtbuf, buffer, -1);
+	gtk_text_view_set_buffer(mission_txt, txtbuf);
 }
 
 void button_press_event (GtkWidget *widget, GdkEventButton *event)

@@ -29,6 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <gtk/gtk.h>
 
+/* is 64 in ufo but \0 */
+#define MAX_VAR 63
+
 /*
  * Standard gettext macros.
  */
