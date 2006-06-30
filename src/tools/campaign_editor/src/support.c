@@ -64,7 +64,7 @@ static GList *pixmaps_directories = NULL;
 /* Use this function to set the directory containing installed pixmaps. */
 void add_pixmap_directory (const gchar *directory)
 {
-  pixmaps_directories = g_list_prepend (pixmaps_directories, g_strdup (directory));
+	pixmaps_directories = g_list_prepend (pixmaps_directories, g_strdup (directory));
 }
 
 /* This is an internally used function to find pixmap files. */

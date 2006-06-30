@@ -3272,8 +3272,10 @@ void CP_GetCampaigns_f(void)
 	int i;
 
 	*campaignText = *campaignDesc = '\0';
-	for (i = 0; i < numCampaigns; i++)
-		Q_strcat(campaignText, MAXCAMPAIGNTEXT, va("%s\n", campaigns[i].name));
+	for (i = 0; i < numCampaigns; i++) {
+		if ( campaigns[i].visible )
+			Q_strcat(campaignText, MAXCAMPAIGNTEXT, va("%s\n", campaigns[i].name));
+	}
 	/* default campaign */
 	Cvar_Set("campaign", "main");
 	menuText[TEXT_STANDARD] = campaignDesc;
@@ -3299,6 +3301,13 @@ void CP_CampaignsClick_f(void)
 
 	/*which building? */
 	num = atoi(Cmd_Argv(1));
+
+	/* jump over all invisible campaigns */
+	while ( !campaigns[num].visible ) {
+		num++;
+		if ( num >= numCampaigns )
+			return;
+	}
 
 	if (num >= numCampaigns || num < 0)
 		return;
