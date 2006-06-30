@@ -774,7 +774,7 @@ void CL_InitInput(void)
 
 #ifdef DEBUG
 	Cmd_AddCommand("camangles", CL_CamPrintAngles);
-#endif							/* DEBUG */
+#endif /* DEBUG */
 	Cmd_AddCommand("camsetangles", CL_CamSetAngles);
 	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot);
 

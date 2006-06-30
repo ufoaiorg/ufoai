@@ -2476,7 +2476,11 @@ void CL_MapActionReset(void)
 #define	MISSIONOFS(x)	(int)&(((mission_t *)0)->x)
 
 value_t mission_vals[] = {
-	{"text", V_TRANSLATION_STRING, 0}
+	{"location", V_TRANSLATION_STRING, MISSIONOFS(location)}
+	,
+	{"type", V_TRANSLATION_STRING, MISSIONOFS(type)}
+	,
+	{"text", V_TRANSLATION_STRING, 0} /* max length is 128 */
 	,
 	{"map", V_STRING, MISSIONOFS(map)}
 	,

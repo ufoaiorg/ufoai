@@ -56,6 +56,8 @@ typedef struct mission_s {
 	char name[MAX_VAR];
 	char map[MAX_VAR];
 	char param[MAX_VAR];
+	char location[MAX_VAR];
+	char type[MAX_VAR];
 	char music[MAX_VAR];
 	char alienTeam[MAX_VAR];
 	char alienEquipment[MAX_VAR];
