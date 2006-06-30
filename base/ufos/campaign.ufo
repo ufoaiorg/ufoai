@@ -53,7 +53,9 @@
 //
 mission africa
 {
-	text		"_Location: Dongola\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_Dongola"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			africa04
 	music		mission
 	pos			"-30 -120"
@@ -70,6 +72,8 @@ mission africa
 
 mission baseattack
 {
+	location	"*cvar mn_base_attack_name"
+	type		"_Base Attack"
 	text		"_Aliens attacked one of our home bases"
 // 	. means that they attack a random base (only the first char counts)
 	map		".base"
@@ -87,7 +91,9 @@ mission baseattack
 
 mission bunker
 {
-	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_TODO"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			bunker01
 	music		mission
 	pos			"-82 125"
@@ -104,26 +110,10 @@ mission bunker
 
 mission city
 {
-	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_Gwandaf"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			city04
-	music		mission
-	pos			"-82 125"
-	aliens		5
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		scientist
-	recruits	6
-	$win		1200
-	$alien		100
-	$civilian	500
-}
-
-//no day and night
-mission colon
-{
-	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
-	map			colon04
 	music		mission
 	pos			"-82 125"
 	aliens		5
@@ -139,7 +129,9 @@ mission colon
 
 mission construction
 {
-	text		"_Location: Uppsala\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_Uppsala"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			const05
 	music		mission
 	pos			"-17 60"
@@ -156,6 +148,8 @@ mission construction
 
 mission excavation
 {
+	location	"_TODO"
+	type		"_Terror Attack"
 	text		"_Some aliens have escaped from the\mine, and their tracks lead south,\towards a nearby excavation site.\Protect that site at all cost.\"
 	map		excavation06
 	music		mission4
@@ -171,7 +165,9 @@ mission excavation
 
 mission falconcrash
 {
-	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
+	location	"_Revelstoke"
+	type		"_Crashed Alien Ship"
+	text		"_Secure Alien Ship"
 	map			falcon_crash04
 	music		mission
 	pos			"116 52"
@@ -188,7 +184,9 @@ mission falconcrash
 
 mission farm
 {
-	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
+	location	"_Revelstoke"
+	type		"_Landed Alien Ship"
+	text		"_Secure Alien Ship before Liftoff"
 	map			farm08
 	music		mission
 	pos			"116 52"
@@ -203,10 +201,11 @@ mission farm
 	$civilian	500
 }
 
-// no day and night version
 mission frozen_small
 {
-	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
+	location	"_Revelstoke"
+	type		"_Landed Alien Ship"
+	text		"_Secure Alien Ship before Liftoff"
 	map			"+frozen"
 	param	small
 	music		mission
@@ -222,10 +221,11 @@ mission frozen_small
 	$civilian	500
 }
 
-// no day and night version
 mission frozen_landingnature
 {
-	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
+	location	"_TODO"
+	type		"_Landed Alien Ship"
+	text		"_Secure Alien Ship before Liftoff"
 	map			"+frozen"
 	param	alienlandingnature
 	music		mission
@@ -241,10 +241,11 @@ mission frozen_landingnature
 	$civilian	500
 }
 
-// no day and night version
 mission frozen_industrial
 {
-	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
+	location	"_TODO"
+	type		"_Landed Alien Ship"
+	text		"_Secure Alien Ship before Liftoff"
 	map			"+frozen"
 	param	industrial
 	music		mission
@@ -260,10 +261,11 @@ mission frozen_industrial
 	$civilian	500
 }
 
-// no day and night version
 mission frozen_alienlandingindustrial
 {
-	text		"_Location: Revelstoke\Type: Landed Alien Ship\Objective: Secure Alien Ship before Liftoff"
+	location	"_TODO"
+	type		"_Landed Alien Ship"
+	text		"_Secure Alien Ship before Liftoff"
 	map			"+frozen"
 	param	alienlandingindustrial
 	music		mission
@@ -281,7 +283,9 @@ mission frozen_alienlandingindustrial
 
 mission gasstation
 {
-	text		"_Location: Marina Serra\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_TODO"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			gasstation05
 	music		mission2
 	pos			"-18 40"
@@ -298,7 +302,9 @@ mission gasstation
 
 mission harbour
 {
-	text		"_Location: Marina Serra\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_Tazovskij"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			harbour07
 	music		mission2
 	pos			"-18 40"
@@ -315,7 +321,9 @@ mission harbour
 
 mission italy
 {
-	text		"_Location: Marina Serra\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_Marina Serra"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			italy05
 	music		mission2
 	pos			"-18 40"
@@ -332,7 +340,9 @@ mission italy
 
 mission japan
 {
-	text		"_Location: Morioka\Type: Alien Hideout\Objective: Eliminate intruders"
+	location	"_Morioka"
+	type		"_Alien Hideout"
+	text		"_Eliminate intruders"
 	map			japan06
 	music		mission3
 	pos			"-140 129"
@@ -349,7 +359,9 @@ mission japan
 
 mission lake
 {
-	text		"_Location: Tazovskij\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_Tazovskij"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			lake03
 	music		mission2
 	pos			"-77 67"
@@ -366,7 +378,9 @@ mission lake
 
 mission mart
 {
-	text		"_Location: Gobabis\Type: Crash Site\Objective: Secure Area"
+	location	"_TODO"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map		mart05
 	music		mission
 	pos		"-20 -23"
@@ -383,7 +397,9 @@ mission mart
 
 mission mine_crash
 {
-	text		"_Location: Gobabis\Type: Crash Site\Objective: Secure Area"
+	location	"_Gobabis"
+	type		"_Crash Site"
+	text		"_Secure Area"
 	map		mine_crash05
 	music		mission
 	pos		"-20 -23"
@@ -400,6 +416,8 @@ mission mine_crash
 
 mission mine
 {
+	location	"_TODO"
+	type		"_Terror Attack"
 	text		"_There are rumors of a mine being\overrun by aliens. Altough this\source of information is doubtful,\you'll need to investigate.\"
 	map		mine01
 	music		mission4
@@ -415,7 +433,9 @@ mission mine
 
 mission office
 {
-	text		"_Location: Mackay\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_Mackay"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			office06
 	music		mission3
 	pos			"-149 -21"
@@ -432,7 +452,9 @@ mission office
 
 mission oriental
 {
-	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_Gwandaf"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			oriental06
 	music		mission
 	pos			"-62 25"
@@ -449,6 +471,8 @@ mission oriental
 
 mission or_asyut
 {
+	location	"_Tabelbala"
+	type		"_Terror Attack"
 	text		"_Location: Asyut\Type: Terror Attack\Objective: Protect inhabitants"
 	map			"+oriental"
 	music		mission2
@@ -466,7 +490,9 @@ mission or_asyut
 
 mission or_tabelbala
 {
-	text		"_Location: Tabelbala\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_Tabelbala"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			"+oriental"
 	music		mission
 	pos			"3 28"
@@ -483,6 +509,8 @@ mission or_tabelbala
 
 mission pdi
 {
+	location	"_TODO"
+	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		pdi08
 	music		mission3
@@ -499,6 +527,8 @@ mission pdi
 // this map is not finished right now
 mission rocketsilo
 {
+	location	"_TODO"
+	type		"_Terror Attack"
 	text		"_The Aliens have tacken over a rocket silo. Go and capture it again."
 	map		rocketsilo06
 	music		mission3
@@ -514,6 +544,8 @@ mission rocketsilo
 
 mission spedition
 {
+	location	"_TODO"
+	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		spedition06
 	music		mission3
@@ -527,9 +559,11 @@ mission spedition
 	$civilian	200
 }
 
-//no day and night
+//no night
 mission stadium
 {
+	location	"_TODO"
+	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		stadium06
 	music		mission3
@@ -545,6 +579,8 @@ mission stadium
 
 mission subway
 {
+	location	"_TODO"
+	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		subway07
 	music		mission3
@@ -560,6 +596,8 @@ mission subway
 
 mission terrain
 {
+	location	"_TODO"
+	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		terrain08
 	music		mission3
@@ -573,9 +611,11 @@ mission terrain
 	$civilian	200
 }
 
-//no day and night
+//no night
 mission tower
 {
+	location	"_TODO"
+	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		tower06
 	music		mission3
@@ -591,7 +631,9 @@ mission tower
 
 mission transport
 {
-	text		"_Location: Fargo\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_TODO"
+	type		"_Terror Attack"
+	text		"_Objective: Protect inhabitants"
 	map			transport06
 	music		mission
 	pos			"97 47"
@@ -609,6 +651,8 @@ mission transport
 //no day and night
 mission tropic_river
 {
+	location	"_TODO"
+	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		"+tropic"
 	param	river
@@ -626,6 +670,8 @@ mission tropic_river
 //no day and night
 mission tropic_drug
 {
+	location	"_TODO"
+	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
 	map		"+tropic"
 	param	drug
@@ -642,7 +688,9 @@ mission tropic_drug
 
 mission village
 {
-	text		"_Location: Fargo\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_Fargo"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			village07
 	music		mission
 	pos			"97 47"
@@ -659,7 +707,9 @@ mission village
 
 mission vil_grenchen
 {
-	text		"_Location: Grenchen\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_Grenchen"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			"+village"
 	param		residential
 	music		mission2
@@ -678,7 +728,9 @@ mission vil_grenchen
 
 mission vil_lille
 {
-	text		"_Location: Lille\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_Lille"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			"+village"
 	param		recreational
 	music		mission2
@@ -696,7 +748,9 @@ mission vil_lille
 
 mission vil_albany
 {
-	text		"_Location: Albany\Type: Terror Attack\Objective: Protect inhabitants"
+	location	"_Albany"
+	type		"_Terror Attack"
+	text		"_Objective: Protect inhabitants"
 	map			"+village"
 	param		commercial
 	music		mission
@@ -714,7 +768,9 @@ mission vil_albany
 
 mission vil_shannon
 {
-	text		"_Location: Shannon\Type: Major Alien Intrusion\Objective: Stop them"
+	location	"_Shannon"
+	type		"_Major Alien Intrusion"
+	text		"_Stop them"
 	map			"+village"
 	param		big
 	music		mission3
