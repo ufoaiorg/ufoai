@@ -495,7 +495,7 @@ void CL_PrepRefresh(void)
 {
 	le_t *le;
 	int i;
-	char name[MAX_QPATH];
+	char name[37];
 
 	if (!cl.configstrings[CS_TILES][0])
 		return;					/* no map loaded */
@@ -523,9 +523,7 @@ void CL_PrepRefresh(void)
 	Q_strncpyz(cl_weaponmodels[0], "weapon.md2", 10);
 
 	for (i = 1; i < MAX_MODELS && cl.configstrings[CS_MODELS + i][0]; i++) {
-		Q_strncpyz(name, cl.configstrings[CS_MODELS + i], MAX_QPATH);
-		name[37] = 0;			/* never go beyond one line */
-		Com_Printf(name);
+		Q_strncpyz(name, cl.configstrings[CS_MODELS + i], sizeof(name));
 		if (name[0] != '*')
 			Com_Printf("%s\r", name);
 		SCR_UpdateScreen();
