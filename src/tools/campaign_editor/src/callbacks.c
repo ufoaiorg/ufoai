@@ -58,6 +58,8 @@ void mission_save (GtkButton *button, gpointer user_data)
 	snprintf(buffer, sizeof(buffer),
 		"mission GIVE_ME_A_NAME\n"
 		"{\n"
+		"\tlocation\t\"_%s\"\n"
+		"\ttype\t\"_%s\"\n"
 		"\ttext\t\"_%s\"\n"
 		"\tmap\t%s\n"
 		"\tparam\t%s\n"
@@ -73,6 +75,8 @@ void mission_save (GtkButton *button, gpointer user_data)
 		"\t$alien\t%s\n"
 		"\t$civilian\t%s\n"
 		"}\n",
+		get_entry_txt("location_mission"),
+		get_entry_txt("type_mission"),
 		get_textfield_txt("text_mission"),
 		get_selectbox_txt("combo_map"),
 		get_entry_txt("map_assembly_param_entry"),

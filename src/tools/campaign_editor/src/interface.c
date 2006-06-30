@@ -219,6 +219,10 @@ GtkWidget* create_mission_dialog (void)
 	GtkWidget *ok_button;
 	GtkWidget *map_assembly_param_entry;
 	GtkWidget *map_assembly_param_label;
+	GtkWidget *location_mission;
+	GtkWidget *type_mission;
+	GtkWidget *type_label;
+	GtkWidget *location_label;
 	struct dirent *dir_info;
 	DIR *dir;
 	char dirname[128];
@@ -325,7 +329,7 @@ GtkWidget* create_mission_dialog (void)
 	gtk_widget_show (mission_frame);
 	gtk_box_pack_start (GTK_BOX (mission_variables_vbox), mission_frame, TRUE, TRUE, 0);
 
-	mission_table = gtk_table_new (4, 2, FALSE);
+	mission_table = gtk_table_new (6, 2, FALSE);
 	gtk_widget_show (mission_table);
 	gtk_container_add (GTK_CONTAINER (mission_frame), mission_table);
 
@@ -356,6 +360,20 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (text_label), 0, 0.5);
+
+	location_label = gtk_label_new (Q_("Location"));
+	gtk_widget_show (location_label);
+	gtk_table_attach (GTK_TABLE (mission_table), location_label, 0, 1, 4, 5,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+	gtk_misc_set_alignment (GTK_MISC (location_label), 0, 0.5);
+
+	type_label = gtk_label_new (Q_("Location"));
+	gtk_widget_show (type_label);
+	gtk_table_attach (GTK_TABLE (mission_table), type_label, 0, 1, 5, 6,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+	gtk_misc_set_alignment (GTK_MISC (type_label), 0, 0.5);
 
 	combo_map = gtk_combo_box_new_text();
 	gtk_widget_show (combo_map);
@@ -420,7 +438,21 @@ GtkWidget* create_mission_dialog (void)
 	gtk_table_attach (GTK_TABLE (mission_table), text_mission, 1, 2, 3, 4,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	gtk_text_insert (GTK_EDITABLE (text_mission), NULL, NULL, NULL, "Location: TYPE_LOCATION\\nType: Terror Attack\\nObjective: Protect inhabitants", -1);
+	gtk_text_insert (GTK_EDITABLE (text_mission), NULL, NULL, NULL, "Protect inhabitants", -1);
+
+	location_mission = gtk_entry_new_with_max_length (MAX_VAR);
+	gtk_widget_show (location_mission);
+	gtk_table_attach (GTK_TABLE (mission_table), location_mission, 1, 2, 4, 5,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+	gtk_entry_set_text (location_mission, "TYPE_LOCATION");
+
+	type_mission = gtk_entry_new_with_max_length (MAX_VAR);
+	gtk_widget_show (type_mission);
+	gtk_table_attach (GTK_TABLE (mission_table), type_mission, 1, 2, 5, 6,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+	gtk_entry_set_text (type_mission, "Terror Attack");
 
 	label2 = gtk_label_new (_("Mission"));
 	gtk_widget_show (label2);
@@ -561,6 +593,8 @@ GtkWidget* create_mission_dialog (void)
 	GLADE_HOOKUP_OBJECT (mission_dialog, credits_win_entry, "credits_win_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, credits_civ_entry, "credits_civ_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, credits_alien_entry, "credits_alien_entry");
+	GLADE_HOOKUP_OBJECT (mission_dialog, type_mission, "type_mission");
+	GLADE_HOOKUP_OBJECT (mission_dialog, location_mission, "location_mission");
 	GLADE_HOOKUP_OBJECT (mission_dialog, cancel_button, "cancel_button");
 	GLADE_HOOKUP_OBJECT (mission_dialog, ok_button, "ok_button");
 	GLADE_HOOKUP_OBJECT (mission_dialog, map_assembly_param_entry, "map_assembly_param_entry");
