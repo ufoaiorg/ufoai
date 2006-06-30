@@ -373,6 +373,9 @@ static void CL_GenerateEquipmentCmd(void)
 			p++;
 		}
 
+	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
+		Sys_Error("numOnTeam[%i]: %i, p: %i\n",baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p);
+
 	for (; p < MAX_ACTIVETEAM; p++) {
 		Cvar_ForceSet(va("mn_name%i", p), "");
 		Cbuf_AddText(va("equipdisable%i\n", p));
@@ -527,6 +530,9 @@ void CL_UpdateHireVar(void)
 			baseCurrent->curTeam[p] = &baseCurrent->wholeTeam[i];
 			p++;
 		}
+
+	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
+		Sys_Error("numOnTeam[%i]: %i, p: %i\n",baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p);
 }
 
 /**
