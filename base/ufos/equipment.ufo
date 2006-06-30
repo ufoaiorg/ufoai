@@ -152,3 +152,55 @@ equipment alien_crash
 	tachyonrifle_ammo		8
 }
 
+equipment testing_and_tweaking
+{
+	assault				2
+	assault_ammo			4
+	sniper				2
+	sniper_ammo			4
+	pistol				2
+	pistol_ammo			4
+	smg				2
+	smg_ammo			4
+	shotgun				2
+	shotgun_ammo			4
+	flamer				2
+	flamer_ammo			4
+	rpg				2
+	rpg_ammo			4
+	tachyonrifle			2
+	tachyonrifle_ammo		4
+	tachyonsniper			2
+	tachyonsniper_ammo		4
+	plasblaster			2
+	plasblaster_ammo		4	
+	laserpistol			2
+	laserpistol_ammo		4	
+	laserrifle			2
+	laserrifle_ammo			4
+	plaspistol			2
+	plaspistol_ammo			4
+	plasrifle			2
+	plasrifle_ammo			4
+	fraggrenade			6
+	knife				6
+	irgoggles			6
+	medikit				6
+	light				6
+	medium				6
+	smokegrenade			6
+	stunrod				6
+	stungrenade			6
+	flaregrenade			6
+	grenl				2
+	grenl_ammo			4
+	kerrblade                       6
+	bolterrifle			2
+	bolterrifle_ammo		4
+	plasblade			6
+	tachyonpistol			2
+	tachyonpistol_ammo		4
+	heavy				6
+}
+
+
