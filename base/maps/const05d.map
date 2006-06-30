@@ -4,7 +4,7 @@
 "ambient" "0.3 0.38 0.32"
 "angles" "30 45"
 "light" "120"
-"maxlevel" "4"
+"maxlevel" "5"
 // brush 0
 {
 ( -1088 -68 4 ) ( -1092 -68 4 ) ( -1092 -76 4 ) tex_buildings/concrete003 0 -16 0 0.500000 0.500000 0 0 0
