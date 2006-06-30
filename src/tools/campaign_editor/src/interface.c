@@ -445,14 +445,14 @@ GtkWidget* create_mission_dialog (void)
 	gtk_table_attach (GTK_TABLE (mission_table), location_mission, 1, 2, 4, 5,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	gtk_entry_set_text (location_mission, "TYPE_LOCATION");
+	gtk_entry_set_text (GTK_ENTRY(location_mission), "TYPE_LOCATION");
 
 	type_mission = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (type_mission);
 	gtk_table_attach (GTK_TABLE (mission_table), type_mission, 1, 2, 5, 6,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	gtk_entry_set_text (type_mission, "Terror Attack");
+	gtk_entry_set_text (GTK_ENTRY(type_mission), "Terror Attack");
 
 	label2 = gtk_label_new (_("Mission"));
 	gtk_widget_show (label2);
@@ -514,6 +514,7 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_entry_set_invisible_char (GTK_ENTRY (alienteam_entry), 9679);
+	gtk_entry_set_text(GTK_ENTRY(alienteam_entry), "ortnok");
 
 	civ_team_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (civ_team_entry);
@@ -521,6 +522,7 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_entry_set_invisible_char (GTK_ENTRY (civ_team_entry), 9679);
+	gtk_entry_set_text(GTK_ENTRY(civ_team_entry), "european");
 
 	alien_equip_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (alien_equip_entry);
@@ -528,6 +530,7 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_entry_set_invisible_char (GTK_ENTRY (alien_equip_entry), 9679);
+	gtk_entry_set_text(GTK_ENTRY(alien_equip_entry), "campaign_alien");
 
 	credits_win_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (credits_win_entry);
@@ -535,6 +538,7 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_entry_set_invisible_char (GTK_ENTRY (credits_win_entry), 9679);
+	gtk_entry_set_text(GTK_ENTRY(credits_win_entry), "1000");
 
 	credits_civ_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (credits_civ_entry);
@@ -542,6 +546,7 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_entry_set_invisible_char (GTK_ENTRY (credits_civ_entry), 9679);
+	gtk_entry_set_text(GTK_ENTRY(credits_civ_entry), "500");
 
 	credits_alien_entry = gtk_entry_new_with_max_length (MAX_VAR);
 	gtk_widget_show (credits_alien_entry);
@@ -549,6 +554,7 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_entry_set_invisible_char (GTK_ENTRY (credits_alien_entry), 9679);
+	gtk_entry_set_text(GTK_ENTRY(credits_alien_entry), "100");
 
 	other_label = gtk_label_new (_("Other"));
 	gtk_widget_show (other_label);
