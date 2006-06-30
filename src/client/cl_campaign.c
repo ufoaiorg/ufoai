@@ -2202,10 +2202,10 @@ void CL_GameAutoGo(void)
 	if (selMis->cause->done >= selMis->cause->def->quota)
 		CL_CampaignExecute(selMis->cause);
 
-	CL_CampaignRemoveMission(selMis);
-
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won);
+
+	CL_CampaignRemoveMission(selMis);
 
 	if (won)
 		MN_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
@@ -3333,6 +3333,34 @@ void CL_ResetSinglePlayerData ( void )
 }
 
 /**
+  * @brief Show campaign stats in console
+  *
+  * call this function via campaign_stats
+  */
+void CP_CampaignStats ( void )
+{
+	setState_t *set;
+	int i;
+
+	if ( !curCampaign ) {
+		Com_Printf("No campaign active\n");
+		return;
+	}
+
+	Com_Printf("Campaign id: %s\n", curCampaign->id);
+	Com_Printf("..equipment: %s\n", curCampaign->equipment);
+	Com_Printf("..team: %s\n", curCampaign->team);
+
+	Com_Printf("..active stage: %s\n", testStage->name );
+	for (i = 0, set = &ccs.set[testStage->first]; i < testStage->num; i++, set++) {
+		Com_Printf("....name: %s\n", set->def->name);
+		Com_Printf("......needed: %s\n", set->def->needed);
+		Com_Printf("......quote: %i\n", set->def->quota);
+		Com_Printf("......done: %i\n", set->done);
+	}
+}
+
+/**
   * @brief
   */
 void CL_ResetCampaign(void)
@@ -3342,6 +3370,7 @@ void CL_ResetCampaign(void)
 	baseCurrent = NULL;
 	menuText[TEXT_CAMPAIGN_LIST] = campaignText;
 
+	Cmd_AddCommand("campaign_stats", CP_CampaignStats );
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f);
 	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f);
 	Cmd_AddCommand("game_new", CL_GameNew);

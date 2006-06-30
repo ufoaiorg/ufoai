@@ -1740,8 +1740,10 @@ void MN_DrawMenus(void)
 					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP
 					|| node->type == MN_3DMAP)) {
 				/* if construct */
-				if (*node->depends.var && Q_stricmp(node->depends.value, (Cvar_Get(node->depends.var, node->depends.value, 0))->string))
+				if (*node->depends.var && Q_stricmp(node->depends.value, (Cvar_Get(node->depends.var, node->depends.value, 0))->string)) {
+					Com_DPrintf("if %s = %s (but it is %s)\n", node->depends.var, node->depends.value, Cvar_Get(node->depends.var, node->depends.value, 0)->string);
 					continue;
+				}
 
 				/* mouse effects */
 				if (sp > pp) {
