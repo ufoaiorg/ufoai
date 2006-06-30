@@ -21,6 +21,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "gl_local.h"
 #include <ctype.h>
 
+#if defined DEBUG && defined _MSC_VER
+#include <intrin.h>
+#endif
+
 void R_Clear (void);
 
 viddef_t	vid;
@@ -1826,6 +1830,10 @@ void Sys_Error (char *error, ...)
 {
 	va_list		argptr;
 	char		text[1024];
+
+#if defined DEBUG && defined _MSC_VER
+	__debugbreak();	/* break execution before game shutdown */
+#endif
 
 	va_start (argptr, error);
 	vsprintf (text, error, argptr);

@@ -25,7 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "..\client\client.h"
 #include "winquake.h"
-/*#include "zmouse.h" */
+
+#if defined DEBUG && defined _MSC_VER
+#include <intrin.h>
+#endif
 
 LONG CDAudio_MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -145,7 +148,10 @@ void VID_Error (int err_level, char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
-/*	static qboolean	inupdate; */
+
+#if defined DEBUG && defined _MSC_VER
+	__debugbreak();	/* break execution before game shutdown */
+#endif
 
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);

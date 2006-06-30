@@ -21,8 +21,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qcommon.h"
 #include <setjmp.h>
 #include <ctype.h>
-#define	MAXPRINTMSG	4096
 
+#if defined DEBUG && defined _MSC_VER
+#include <intrin.h>
+#endif
+
+#define	MAXPRINTMSG	4096
 #define MAX_NUM_ARGVS	50
 
 
@@ -198,6 +202,10 @@ void Com_Error (int code, char *fmt, ...)
 	va_list		argptr;
 	static char	msg[MAXPRINTMSG];
 	static qboolean	recursive = qfalse;
+
+#if defined DEBUG && defined _MSC_VER
+	__debugbreak();	/* break execution before game shutdown */
+#endif
 
 	if (recursive)
 		Sys_Error ("recursive error after: %s", msg);
