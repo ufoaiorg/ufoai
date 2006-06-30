@@ -887,6 +887,7 @@ typedef enum {
 	TEXT_AIRCRAFT_INFO,
 	TEXT_MESSAGESYSTEM,			/* just a dummy for messagesystem - we use the stack */
 	TEXT_CAMPAIGN_LIST,
+	TEXT_MULTISELECTION,
 
 	MAX_MENUTEXTS
 } texts_t;

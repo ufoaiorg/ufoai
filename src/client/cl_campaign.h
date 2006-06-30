@@ -160,6 +160,7 @@ void MN_MapCalcLine(vec2_t start, vec2_t end, mapline_t * line);
 void CL_SelectAircraft_f(void);
 void CL_OpenAircraft_f(void);
 void CL_MapActionReset(void);
+void CL_MultiSelect(void);
 aircraft_t *CL_GetAircraft(char *name);
 
 typedef struct ccs_s {

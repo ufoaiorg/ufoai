@@ -471,9 +471,9 @@ mission oriental
 
 mission or_asyut
 {
-	location	"_Tabelbala"
+	location	"_Asyut"
 	type		"_Terror Attack"
-	text		"_Location: Asyut\Type: Terror Attack\Objective: Protect inhabitants"
+	text		"_Protect inhabitants"
 	map			"+oriental"
 	music		mission2
 	pos			"-31 27"
@@ -633,7 +633,7 @@ mission transport
 {
 	location	"_TODO"
 	type		"_Terror Attack"
-	text		"_Objective: Protect inhabitants"
+	text		"_Protect inhabitants"
 	map			transport06
 	music		mission
 	pos			"97 47"
@@ -750,7 +750,7 @@ mission vil_albany
 {
 	location	"_Albany"
 	type		"_Terror Attack"
-	text		"_Objective: Protect inhabitants"
+	text		"_Protect inhabitants"
 	map			"+village"
 	param		commercial
 	music		mission

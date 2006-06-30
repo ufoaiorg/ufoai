@@ -785,7 +785,7 @@ static void CL_CampaignEndStage(char *name)
 /**
   * @brief
   */
-#define DIST_MIN_BASE_MISSION 10
+#define DIST_MIN_BASE_MISSION 4
 static void CL_CampaignAddMission(setState_t * set)
 {
 	actMis_t *mis;
@@ -823,12 +823,17 @@ static void CL_CampaignAddMission(setState_t * set)
 	} else {
 		/* A mission must not be very near a base */
 		for(i=0 ; i < gd.numBases ; i++) {
+#if (0)
+			/* To check multi selection */
+			{
+#else
 			if (CP_GetDistance(mis->def->pos, gd.bases[i].pos) < DIST_MIN_BASE_MISSION) {
+#endif
 				f = frand();
 				mis->def->pos[0] = gd.bases[i].pos[0] + (gd.bases[i].pos[0] < 0	? f * DIST_MIN_BASE_MISSION	: -f * DIST_MIN_BASE_MISSION);
 				f = sin(acos(f));
 				mis->def->pos[1] = gd.bases[i].pos[1] +	(gd.bases[i].pos[1] < 0 ? f* DIST_MIN_BASE_MISSION	: -f * DIST_MIN_BASE_MISSION);
-				continue;
+				break;
 			}
 		}
 		/* get default position first, then try to find a corresponding mask color */
@@ -2473,7 +2478,7 @@ void CL_MapActionReset(void)
 
 /* =========================================================== */
 
-#define	MISSIONOFS(x)	(int)&(((mission_t *)0)->x)
+ #define	MISSIONOFS(x)	(int)&(((mission_t *)0)->x)
 
 value_t mission_vals[] = {
 	{"location", V_TRANSLATION_STRING, MISSIONOFS(location)}

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-06-30 16:57+0200\n"
+"POT-Creation-Date: 2006-06-30 20:10+0200\n"
 "PO-Revision-Date: 2006-05-31 20:06+0100\n"
 "Last-Translator: Malick <gdebressy@gmail.com>\n"
 "Language-Team: \n"
@@ -722,11 +722,13 @@ msgstr "L'appareil a atteint sa destination - Quels sont les ordres"
 
 #: ../base/ufos/menu_geoscape.ufo:337 ../base/ufos/menu_geoscape.ufo:453
 #: ../base/ufos/menu_geoscape.ufo:550 ../base/ufos/menu_geoscape.ufo:602
+#: ../base/ufos/menu_geoscape.ufo:708
 msgid "Close this dialog"
 msgstr ""
 
 #: ../base/ufos/menu_geoscape.ufo:350 ../base/ufos/menu_geoscape.ufo:477
 #: ../base/ufos/menu_geoscape.ufo:563 ../base/ufos/menu_geoscape.ufo:605
+#: ../base/ufos/menu_geoscape.ufo:721
 msgid "Cancel"
 msgstr ""
 
@@ -754,7 +756,7 @@ msgid "New base"
 msgstr "Nouvelle base"
 
 #: ../base/ufos/menu_geoscape.ufo:428 ../base/ufos/menu_geoscape.ufo:521
-#: ../base/ufos/menu_options.ufo:745
+#: ../base/ufos/menu_geoscape.ufo:690 ../base/ufos/menu_options.ufo:745
 msgid "Name:"
 msgstr "Nom:"
 
@@ -791,6 +793,15 @@ msgstr "Base:"
 #: ../base/ufos/menu_geoscape.ufo:647 ../base/ufos/weapons_human.ufo:54
 msgid "Auto"
 msgstr "Auto"
+
+#: ../base/ufos/menu_geoscape.ufo:677
+#, fuzzy
+msgid "Select item"
+msgstr "Vendre l'objet"
+
+#: ../base/ufos/menu_geoscape.ufo:684
+msgid "Type:"
+msgstr ""
 
 #: ../base/ufos/menu_hud.ufo:62
 msgid "Level 1"
@@ -3046,11 +3057,11 @@ msgstr "Pas assez de crédits pour construire ceci\n"
 
 #: client/cl_basemanagement.c:254 client/cl_basemanagement.c:1785
 #: client/cl_campaign.c:373 client/cl_campaign.c:606 client/cl_campaign.c:653
-#: client/cl_campaign.c:973 client/cl_campaign.c:1138
-#: client/cl_campaign.c:1148 client/cl_campaign.c:1161
-#: client/cl_campaign.c:1175 client/cl_campaign.c:1366
-#: client/cl_campaign.c:2178 client/cl_campaign.c:2214
-#: client/cl_campaign.c:2216 client/cl_menu.c:1045 client/cl_research.c:515
+#: client/cl_campaign.c:978 client/cl_campaign.c:1143
+#: client/cl_campaign.c:1153 client/cl_campaign.c:1166
+#: client/cl_campaign.c:1180 client/cl_campaign.c:1371
+#: client/cl_campaign.c:2183 client/cl_campaign.c:2219
+#: client/cl_campaign.c:2221 client/cl_menu.c:1135 client/cl_research.c:515
 #: client/cl_research.c:637 client/cl_research.c:640 client/cl_research.c:644
 #: client/cl_research.c:664 client/cl_research.c:694 client/cl_research.c:698
 #: client/cl_research.c:839
@@ -3179,7 +3190,7 @@ msgstr "Bouclier:\t%s\n"
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Vous avez un nouvel appareil (a %s) à la base %s"
 
-#: client/cl_campaign.c:653 client/cl_menu.c:1045
+#: client/cl_campaign.c:653 client/cl_menu.c:1135
 msgid "Could not set up your base at this location"
 msgstr "Impossible d'établir votre base à cet endroit"
 
@@ -3192,48 +3203,48 @@ msgstr "La base %s est attaquée."
 msgid "Baseattack"
 msgstr "Attaque de Base"
 
-#: client/cl_campaign.c:840
+#: client/cl_campaign.c:845
 msgid "Alien activity"
 msgstr "Activité Alien"
 
-#: client/cl_campaign.c:840
+#: client/cl_campaign.c:845
 msgid "Alien activity has been reported."
 msgstr "On rapporte de l'activité Alien."
 
-#: client/cl_campaign.c:973
+#: client/cl_campaign.c:978
 msgid "Assign a team to aircraft"
 msgstr "Assigner une équipe à un appareil"
 
-#: client/cl_campaign.c:1138
+#: client/cl_campaign.c:1143
 msgid "UFO appears on our radar"
 msgstr ""
 
-#: client/cl_campaign.c:1148
+#: client/cl_campaign.c:1153
 msgid "UFO disappears on our radar"
 msgstr ""
 
-#: client/cl_campaign.c:1160
+#: client/cl_campaign.c:1165
 #, fuzzy, c-format
 msgid "The mission expired and %i civilians died. You've lost %i credits."
 msgstr ""
 "La mission s'est terminée et %i civils sont morts\\Vous avez perdu %i "
 "crédits."
 
-#: client/cl_campaign.c:1175
+#: client/cl_campaign.c:1180
 msgid "Your dropship has low fuel and returns to base"
 msgstr "Votre transporteur n'a presque plus de carburant et retourne à la base"
 
-#: client/cl_campaign.c:1365
+#: client/cl_campaign.c:1370
 #, c-format
 msgid "Gained %i credits from nation %s"
 msgstr "Vous avez gagné %i crédits de la nation %s"
 
-#: client/cl_campaign.c:1405
+#: client/cl_campaign.c:1410
 #, c-format
 msgid "%02i:%i%i"
 msgstr "%02i:%i%i"
 
-#: client/cl_campaign.c:1509
+#: client/cl_campaign.c:1514
 #, c-format
 msgid ""
 "Missions:\n"
@@ -3246,36 +3257,36 @@ msgstr ""
 "Bases:\n"
 "Construites:\t%i\tAttaquées:\t%i\n"
 
-#: client/cl_campaign.c:2072
+#: client/cl_campaign.c:2077
 msgid "Assemble or load a team"
 msgstr "Assembler ou charger une équipe"
 
-#: client/cl_campaign.c:2072
+#: client/cl_campaign.c:2077
 msgid "Note"
 msgstr "Note"
 
-#: client/cl_campaign.c:2178
+#: client/cl_campaign.c:2183
 msgid "Your dropship is not near the landingzone"
 msgstr "Votre Transporteur n'est pas près de la zone d'atterissage"
 
-#: client/cl_campaign.c:2214
+#: client/cl_campaign.c:2219
 msgid "You've won the battle"
 msgstr "Vous avez gagné la bataille"
 
-#: client/cl_campaign.c:2216
+#: client/cl_campaign.c:2221
 msgid "You've lost the battle"
 msgstr "Vous avez perdu la bataille"
 
-#: client/cl_campaign.c:2378
+#: client/cl_campaign.c:2383
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s a été promu au rang de %s.\n"
 
-#: client/cl_campaign.c:2379
+#: client/cl_campaign.c:2384
 msgid "Soldier promoted"
 msgstr "Soldat promu"
 
-#: client/cl_campaign.c:3293 client/cl_campaign.c:3324
+#: client/cl_campaign.c:3298 client/cl_campaign.c:3329
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -3284,11 +3295,11 @@ msgid ""
 "%s\n"
 msgstr ""
 
-#: client/cl_main.c:334 client/cl_main.c:677 client/cl_menu.c:374
+#: client/cl_main.c:334 client/cl_main.c:677 client/cl_menu.c:411
 msgid "Assemble a team first"
 msgstr "Assembler une équipe avant"
 
-#: client/cl_main.c:334 client/cl_main.c:677 client/cl_menu.c:374
+#: client/cl_main.c:334 client/cl_main.c:677 client/cl_menu.c:411
 msgid "Error"
 msgstr "Erreur"
 
@@ -3348,15 +3359,20 @@ msgstr "Max. soldats par équipe:"
 msgid "unnamed"
 msgstr "Pas de Nom"
 
-#: client/cl_menu.c:381
+#: client/cl_menu.c:418
 msgid "Set playersoldiers lower than teamsoldiers"
 msgstr "Fixer soldats par jouer inéfrieur aux soldat par équipe"
 
-#: client/cl_menu.c:381
+#: client/cl_menu.c:418
 msgid "Settings doesn't make sense"
 msgstr "Les réglages ne sont pas cohérents"
 
-#: client/cl_menu.c:1461 client/cl_menu.c:1521
+#: client/cl_menu.c:1165
+#, fuzzy, c-format
+msgid "Base\t%s\n"
+msgstr "Arme:\t%s\n"
+
+#: client/cl_menu.c:1553 client/cl_menu.c:1613
 #, fuzzy, c-format
 msgid ""
 "Location: %s\n"
@@ -3364,15 +3380,15 @@ msgid ""
 "Objective: %s\n"
 msgstr "Location: Gobabis\\Type: Lieu d'un Crash\\Objectif: Sécurisez la zone"
 
-#: client/cl_menu.c:1528
+#: client/cl_menu.c:1620
 msgid "Night"
 msgstr "Nuit"
 
-#: client/cl_menu.c:1530
+#: client/cl_menu.c:1622
 msgid "Day"
 msgstr "Jour"
 
-#: client/cl_menu.c:2148 client/cl_menu.c:2181
+#: client/cl_menu.c:2240 client/cl_menu.c:2273
 msgid ""
 "Select the desired location of the\n"
 "new base on the map.\n"
@@ -3380,7 +3396,7 @@ msgstr ""
 "Selectionnez l'emplacement\n"
 "de la nouvelle base sur la carte.\n"
 
-#: client/cl_menu.c:2152 client/cl_menu.c:2185
+#: client/cl_menu.c:2244 client/cl_menu.c:2277
 msgid ""
 "Aliens are attacking our base\n"
 "at this very moment.\n"
@@ -3388,11 +3404,11 @@ msgstr ""
 "Les aliens attaquent notre base\n"
 " cet instant même.\n"
 
-#: client/cl_menu.c:2156 client/cl_menu.c:2189
+#: client/cl_menu.c:2248 client/cl_menu.c:2281
 msgid "Select ufo or mission on map\n"
 msgstr "Choisir l'OVNI ou la mission sur la carte\n"
 
-#: client/cl_menu.c:2193
+#: client/cl_menu.c:2285
 #, fuzzy
 msgid "UFO in radar range\n"
 msgstr "%s est fou de rage!\n"

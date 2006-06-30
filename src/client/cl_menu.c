@@ -212,6 +212,43 @@ char *menuText[MAX_MENUTEXTS];
 
 cvar_t *mn_escpop;
 
+/* =========================================================== */
+
+/*
+======================
+Multi selection definitions
+======================
+*/
+
+/*
+ * @brief Maximal count of elements that can be selected
+ */
+#define MULTISELECT_MAXSELECT 10
+
+/*
+ *@brief Types of elements that can be selected
+ */
+typedef enum {
+	MULTISELECT_TYPE_BASE,
+	MULTISELECT_TYPE_MISSION
+/*	MULTISELECT_TYPE_AIRCRAFT */
+} multiSelectType_t;
+
+/*
+ *@brief Datas for selected elements
+ */
+typedef struct multiSelect_s {
+	int nbSelect;
+	multiSelectType_t selectType[MULTISELECT_MAXSELECT];
+	int selectId[MULTISELECT_MAXSELECT];
+} multiSelect_t;
+multiSelect_t multiSelect;
+
+/*
+ *@brief Text to display in popup_multi_selection menu
+*/
+char multiSelectionText[2048];
+
 /*
 ==============================================================
 
@@ -1019,17 +1056,70 @@ void MN_3DMapClick(menuNode_t * node, int x, int y)
 {
 }
 
+/**
+  * @brief Execute action for 1 element of the multi selection
+  * Param Cmd_Argv(1) is the element selected in the popup_multi_selection menu
+  */
+void CL_MultiSelect(void) {
+	int selected, id;
+
+	if (Cmd_Argc() < 2) {
+		/* Direct call from code, not from a popup menu */
+		selected = 0;
+	}
+	else {
+		/* Call from a geoscape popup menu (popup_multi_selection) */
+		MN_PopMenu(qfalse);
+		selected = atoi(Cmd_Argv(1));
+	}
+
+	if (selected < 0 || selected >= multiSelect.nbSelect)
+		return;
+	id = multiSelect.selectId[selected];
+
+	/* Execute action on element */
+	switch(multiSelect.selectType[selected]) {
+
+	case MULTISELECT_TYPE_BASE:	/* Select a base */
+		if (id >= gd.numBases)
+			break;
+		Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i", id));
+		MN_PushMenu("bases");
+		break;
+
+	case MULTISELECT_TYPE_MISSION: /* Select a mission */
+		if (id >= ccs.numMissions)
+			break;
+
+		selMis = ccs.mission + id;
+
+		if (!Q_strncmp(selMis->def->name, "baseattack", 10)) {
+			gd.mapAction = MA_BASEATTACK;
+			/* we need no dropship in our base */
+			selMis->def->active = qtrue;
+		}
+		else {
+			Com_DPrintf("Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
+			gd.mapAction = MA_INTERCEPT;
+		}
+		break;
+	}
+	multiSelect.nbSelect = 0;
+}
+
 /*
 ======================
 MN_MapClick
 ======================
 */
+#define MN_MAP_DIST_SELECTION 15
 void MN_MapClick(menuNode_t * node, int x, int y)
 {
 	aircraft_t *air;
 	actMis_t *ms;
 	int i, j, msx, msy;
 	vec2_t pos;
+	char *s;
 
 	/* get map position */
 	MN_ScreenToMap(node, x, y, pos);
@@ -1054,47 +1144,49 @@ void MN_MapClick(menuNode_t * node, int x, int y)
 		/* if shoot down - we have a new crashsite mission if color != water */
 	}
 
-	/* mission selection */
-	for (i = 0, ms = ccs.mission; i < ccs.numMissions; i++, ms++) {
-		if (!MN_MapToScreen(node, ms->realPos, &msx, &msy))
-			continue;
-		if (x >= msx - 8 && x <= msx + 8 && y >= msy - 8 && y <= msy + 8) {
-			selMis = ms;
-			if (!Q_strncmp(selMis->def->name, "baseattack", 10)) {
-				gd.mapAction = MA_BASEATTACK;
-				/* we need no dropship in our base */
-				selMis->def->active = qtrue;
-			} else {
-				Com_DPrintf("Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
-				gd.mapAction = MA_INTERCEPT;
-			}
-			return;
-		}
-	}
+	/* Init datas for multi selection */
+	multiSelect.nbSelect = 0;
+	memset(multiSelectionText, 0, sizeof(multiSelectionText));
 
-	/* base selection */
-	for (i = 0; i < gd.numBases; i++) {
-		if (!MN_MapToScreen(node, gd.bases[i].pos, &msx, &msy))
-			continue;
-		if (x >= msx - 8 && x <= msx + 8 && y >= msy - 8 && y <= msy + 8) {
-			Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i", i));
-			MN_PushMenu("bases");
-			return;
-		}
-	}
+	/* Get selected missions, and write message for popup_multi_selection menu */
+	for (i = 0, ms = ccs.mission; i < ccs.numMissions && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++, ms++)
+		if (MN_MapToScreen(node, ms->realPos, &msx, &msy))
+			if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION && y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION) {
+				s = va("%s\t%s\n", ms->def->type, ms->def->location);
+				Q_strcat(multiSelectionText, sizeof(multiSelectionText), s);
+				multiSelect.selectType[multiSelect.nbSelect] = MULTISELECT_TYPE_MISSION;
+				multiSelect.selectId[multiSelect.nbSelect++] = i;
+ 			}
 
-	/* draw aircraft */
-	for (i = 0; i < gd.numBases; i++) {
-		for (j = 0, air = gd.bases[i].aircraft; j < gd.bases[i].numAircraftInBase; j++, air++) {
-			if (air->status > AIR_HOME && air->fuel > 0) {
-				MN_MapCalcLine(air->pos, pos, &air->route);
-				air->status = AIR_TRANSIT;
-				air->time = air->point = 0;
+	/* Get selected bases, and write message for popup_multi_selection menu */
+	for (i = 0; i < gd.numBases && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++)
+		if (MN_MapToScreen(node, gd.bases[i].pos, &msx, &msy))
+			if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION && y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION) {
+				s = va(_("Base\t%s\n"), gd.bases[i].name);
+				Q_strcat(multiSelectionText, sizeof(multiSelectionText), s);
+				multiSelect.selectType[multiSelect.nbSelect] = MULTISELECT_TYPE_BASE;
+				multiSelect.selectId[multiSelect.nbSelect++] = i;
 			}
-		}
+
+	if (multiSelect.nbSelect == 1) {
+		/* Execute action for the only one element selected */
+		Cmd_ExecuteString("multi_select_click");
+ 	}
+	else if (multiSelect.nbSelect > 1) {
+		/* Display popup for multi selection */
+		menuText[TEXT_MULTISELECTION] = multiSelectionText;
+		MN_PushMenu("popup_multi_selection");
 	}
+	else
+		/* no element selected : draw aircraft */
+		for (i = 0; i < gd.numBases; i++)
+			for (j = 0, air = gd.bases[i].aircraft; j < gd.bases[i].numAircraftInBase; j++, air++)
+				if (air->status > AIR_HOME && air->fuel > 0) {
+					MN_MapCalcLine(air->pos, pos, &air->route);
+					air->status = AIR_TRANSIT;
+					air->time = air->point = 0;
+				}
 }
-
 
 /*
 ======================
