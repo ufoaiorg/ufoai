@@ -1,9 +1,9 @@
 {
 "angles" "20 45 0"
 "classname" "worldspawn"
-"light" "40"
-"_color" "0.9 0.95 1"
-"ambient" "0.65 0.65 0.65"
+"light" "20"
+"ambient" "0.65 0.65 0.75"
+"_color" "0.7 0.75 1"
 // brush 0
 {
 ( 64 280 4 ) ( 36 280 4 ) ( 36 256 4 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0

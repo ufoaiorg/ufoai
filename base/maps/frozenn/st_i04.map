@@ -1,9 +1,9 @@
 {
 "angles" "20 45 0"
 "classname" "worldspawn"
-"light" "40"
-"_color" "0.9 0.95 1"
-"ambient" "0.65 0.65 0.65"
+"light" "20"
+"ambient" "0.65 0.65 0.75"
+"_color" "0.7 0.75 1"
 // brush 0
 {
 ( 472 476 0 ) ( 384 476 0 ) ( 384 364 0 ) tex_buildings_snow/concrete001 0 0 0 0.375000 0.375000 0 0 0

@@ -1,9 +1,9 @@
 {
 "angles" "20 45 0"
 "classname" "worldspawn"
-"light" "40"
-"_color" "0.9 0.95 1"
-"ambient" "0.65 0.65 0.65"
+"light" "20"
+"ambient" "0.65 0.65 0.75"
+"_color" "0.7 0.75 1"
 // brush 0
 {
 ( 136 352 0 ) ( 0 352 0 ) ( 0 256 0 ) tex_nature/snow002 0 0 0 0.500000 0.500000 0 128 0
