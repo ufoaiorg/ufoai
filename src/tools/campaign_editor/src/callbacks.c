@@ -60,6 +60,7 @@ void mission_save (GtkButton *button, gpointer user_data)
 		"{\n"
 		"\ttext\t\"_%s\"\n"
 		"\tmap\t%s\n"
+		"\tparam\t%s\n"
 		"\tmusic\t%s\n"
 		"\tpos\t\"%i %i\"\n"
 		"\taliens\t%s\n"
@@ -73,8 +74,9 @@ void mission_save (GtkButton *button, gpointer user_data)
 		"\t$civilian\t%s\n"
 		"}\n",
 		get_textfield_txt("text_mission"),
-		get_entry_txt("map_entry"),
-		get_entry_txt("music_entry"),
+		get_selectbox_txt("combo_map"),
+		get_entry_txt("map_assembly_param_entry"),
+		get_selectbox_txt("combo_music"),
 		x, y,
 		get_selectbox_txt("combo_aliens"),
 		get_selectbox_txt("combo_civilians"),

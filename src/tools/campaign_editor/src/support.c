@@ -145,3 +145,37 @@ void glade_set_atk_action_description (AtkAction *action, const gchar *action_na
 	}
 }
 
+int file_exists (char *filename)
+{
+#ifdef _WIN32
+	return (_access(filename, 00) == 0);
+#else
+	return (access(filename, R_OK) == 0);
+#endif
+}
+
+int file_ext (char *filename, char *fileext)
+{
+	if ( strstr(filename, fileext))
+		return 1;
+	/* no match */
+	return 0;
+}
+
+void file_strip_ext (char *in, char *out)
+{
+	while (*in && *in != '.')
+		*out++ = *in++;
+	*out = 0;
+}
+
+char *va(char *format, ...)
+{
+	va_list argptr;
+	static char string[2048];
+	va_start(argptr, format);
+	vsprintf(string, format, argptr);
+	va_end(argptr);
+	return string;
+}
+

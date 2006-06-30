@@ -87,3 +87,7 @@ GdkPixbuf* create_pixbuf (const gchar *filename);
 /* This is used to set ATK action descriptions. */
 void glade_set_atk_action_description (AtkAction *action, const gchar *action_name, const gchar *description);
 
+int file_exists (char *filename);
+int file_ext (char *filename, char *fileext);
+void file_strip_ext (char *in, char *out);
+char *va(char *format, ...);

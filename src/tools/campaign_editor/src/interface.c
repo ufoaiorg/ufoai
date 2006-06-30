@@ -33,6 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 #include <stdio.h>
 
+#include <dirent.h>
+
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
@@ -193,8 +195,8 @@ GtkWidget* create_mission_dialog (void)
 	GtkWidget *map_label;
 	GtkWidget *music_label;
 	GtkWidget *text_label;
-	GtkWidget *map_entry;
-	GtkWidget *music_entry;
+	GtkWidget *combo_map;
+	GtkWidget *combo_music;
 	GtkWidget *text_mission;
 	GtkWidget *label2;
 	GtkWidget *other_frame;
@@ -215,6 +217,12 @@ GtkWidget* create_mission_dialog (void)
 	GtkWidget *mission_action_area;
 	GtkWidget *cancel_button;
 	GtkWidget *ok_button;
+	GtkWidget *map_assembly_param_entry;
+	GtkWidget *map_assembly_param_label;
+	struct dirent *dir_info;
+	DIR *dir;
+	char dirname[128];
+	char buffer[128];
 
 	mission_dialog = gtk_dialog_new ();
 	gtk_window_set_title (GTK_WINDOW (mission_dialog), Q_("Mission"));
@@ -317,7 +325,7 @@ GtkWidget* create_mission_dialog (void)
 	gtk_widget_show (mission_frame);
 	gtk_box_pack_start (GTK_BOX (mission_variables_vbox), mission_frame, TRUE, TRUE, 0);
 
-	mission_table = gtk_table_new (3, 2, FALSE);
+	mission_table = gtk_table_new (4, 2, FALSE);
 	gtk_widget_show (mission_table);
 	gtk_container_add (GTK_CONTAINER (mission_frame), mission_table);
 
@@ -328,40 +336,92 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (map_label), 0, 0.5);
 
+	map_assembly_param_label = gtk_label_new (Q_("Map Assembly Param"));
+	gtk_widget_show (map_assembly_param_label);
+	gtk_table_attach (GTK_TABLE (mission_table), map_assembly_param_label, 0, 1, 1, 2,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+	gtk_misc_set_alignment (GTK_MISC (map_assembly_param_label), 0, 0.5);
+
 	music_label = gtk_label_new (Q_("Music"));
 	gtk_widget_show (music_label);
-	gtk_table_attach (GTK_TABLE (mission_table), music_label, 0, 1, 1, 2,
+	gtk_table_attach (GTK_TABLE (mission_table), music_label, 0, 1, 2, 3,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (music_label), 0, 0.5);
 
 	text_label = gtk_label_new (Q_("Text"));
 	gtk_widget_show (text_label);
-	gtk_table_attach (GTK_TABLE (mission_table), text_label, 0, 1, 2, 3,
+	gtk_table_attach (GTK_TABLE (mission_table), text_label, 0, 1, 3, 4,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (text_label), 0, 0.5);
 
-	map_entry = gtk_entry_new_with_max_length (MAX_VAR);
-	gtk_widget_show (map_entry);
-	gtk_table_attach (GTK_TABLE (mission_table), map_entry, 1, 2, 0, 1,
+	combo_map = gtk_combo_box_new_text();
+	gtk_widget_show (combo_map);
+	gtk_table_attach (GTK_TABLE (mission_table), combo_map, 1, 2, 0, 1,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	gtk_entry_set_invisible_char (GTK_ENTRY (map_entry), 9679);
+	if ( (dir = opendir("base/maps")) == NULL )
+		fprintf(stderr, "Could not read base/maps\n");
+	if ( dir ) {
+		while ( (dir_info = readdir(dir)) != NULL ) {
+			/* only the day versions, otherwise we get the maps twice */
+			if ( !file_ext(dir_info->d_name, "d.bsp") )
+				continue;
+			file_strip_ext(dir_info->d_name, buffer);
+			buffer[strlen(buffer)-1] = 0;
+			/* check whether night version exists, too */
+			if ( !file_exists(va("base/maps/%sn.bsp", buffer)))
+				continue;
+			gtk_combo_box_append_text (GTK_COMBO_BOX (combo_map), buffer);
+		}
+		rewinddir(dir);
+		while ( (dir_info = readdir(dir)) != NULL ) {
+			/* only the day versions, otherwise we get the maps twice */
+			if ( !file_ext(dir_info->d_name, "d.ump") )
+				continue;
+			file_strip_ext(dir_info->d_name, buffer);
+			buffer[strlen(buffer)-1] = 0;
+			/* check whether night version exists, too */
+			if ( !file_exists(va("base/maps/%sn.ump", buffer)))
+				continue;
+			gtk_combo_box_append_text (GTK_COMBO_BOX (combo_map), va("+%s", buffer) );
+		}
+	}
 
-	music_entry = gtk_entry_new_with_max_length (MAX_VAR);
-	gtk_widget_show (music_entry);
-	gtk_table_attach (GTK_TABLE (mission_table), music_entry, 1, 2, 1, 2,
+	gtk_combo_box_set_active( GTK_COMBO_BOX (combo_map), 0 );
+
+	map_assembly_param_entry = gtk_entry_new_with_max_length (MAX_VAR);
+	gtk_widget_show (map_assembly_param_entry);
+	gtk_table_attach (GTK_TABLE (mission_table), map_assembly_param_entry, 1, 2, 1, 2,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	gtk_entry_set_invisible_char (GTK_ENTRY (music_entry), 9679);
+	gtk_entry_set_invisible_char (GTK_ENTRY (map_assembly_param_entry), 9679);
+
+	combo_music = gtk_combo_box_new_text();
+	gtk_widget_show (combo_music);
+	gtk_table_attach (GTK_TABLE (mission_table), combo_music, 1, 2, 2, 3,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+
+	if ( (dir = opendir("base/music")) == NULL )
+		fprintf(stderr, "Could not read base/music\n");
+	while ( dir && (dir_info = readdir(dir)) != NULL ) {
+		if ( !file_ext(dir_info->d_name, ".ogg") )
+			continue;
+		file_strip_ext(dir_info->d_name, buffer);
+		gtk_combo_box_append_text (GTK_COMBO_BOX (combo_music), buffer);
+	}
+	gtk_combo_box_set_active( GTK_COMBO_BOX (combo_music), 0 );
 
 	text_mission = gtk_text_new (NULL, NULL);
 	gtk_widget_show (text_mission);
-	gtk_table_attach (GTK_TABLE (mission_table), text_mission, 1, 2, 2, 3,
+	gtk_table_attach (GTK_TABLE (mission_table), text_mission, 1, 2, 3, 4,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_text_insert (GTK_EDITABLE (text_mission), NULL, NULL, NULL, "Location: TYPE_LOCATION\\nType: Terror Attack\\nObjective: Protect inhabitants", -1);
+
 	label2 = gtk_label_new (_("Mission"));
 	gtk_widget_show (label2);
 	gtk_frame_set_label_widget (GTK_FRAME (mission_frame), label2);
@@ -489,44 +549,21 @@ GtkWidget* create_mission_dialog (void)
 
 	/* Store pointers to all widgets, for use by lookup_widget(). */
 	GLADE_HOOKUP_OBJECT_NO_REF (mission_dialog, mission_dialog, "mission_dialog");
-	GLADE_HOOKUP_OBJECT_NO_REF (mission_dialog, mission_vbox, "mission_vbox");
-	GLADE_HOOKUP_OBJECT (mission_dialog, mission_variables_vbox, "mission_variables_vbox");
-	GLADE_HOOKUP_OBJECT (mission_dialog, actors_frame, "actors_frame");
-	GLADE_HOOKUP_OBJECT (mission_dialog, actors_table, "actors_table");
-	GLADE_HOOKUP_OBJECT (mission_dialog, recruits, "recruits");
-	GLADE_HOOKUP_OBJECT (mission_dialog, civilians, "civilians");
-	GLADE_HOOKUP_OBJECT (mission_dialog, aliens, "aliens");
 	GLADE_HOOKUP_OBJECT (mission_dialog, combo_recruits, "combo_recruits");
 	GLADE_HOOKUP_OBJECT (mission_dialog, combo_civilians, "combo_civilians");
 	GLADE_HOOKUP_OBJECT (mission_dialog, combo_aliens, "combo_aliens");
-	GLADE_HOOKUP_OBJECT (mission_dialog, label1, "label1");
-	GLADE_HOOKUP_OBJECT (mission_dialog, mission_frame, "mission_frame");
-	GLADE_HOOKUP_OBJECT (mission_dialog, mission_table, "mission_table");
-	GLADE_HOOKUP_OBJECT (mission_dialog, map_label, "map_label");
-	GLADE_HOOKUP_OBJECT (mission_dialog, music_label, "music_label");
-	GLADE_HOOKUP_OBJECT (mission_dialog, text_label, "text_label");
-	GLADE_HOOKUP_OBJECT (mission_dialog, map_entry, "map_entry");
-	GLADE_HOOKUP_OBJECT (mission_dialog, music_entry, "music_entry");
+	GLADE_HOOKUP_OBJECT (mission_dialog, combo_map, "combo_map");
+	GLADE_HOOKUP_OBJECT (mission_dialog, combo_music, "combo_music");
 	GLADE_HOOKUP_OBJECT (mission_dialog, text_mission, "text_mission");
-	GLADE_HOOKUP_OBJECT (mission_dialog, label2, "label2");
-	GLADE_HOOKUP_OBJECT (mission_dialog, other_frame, "other_frame");
-	GLADE_HOOKUP_OBJECT (mission_dialog, other_table, "other_table");
-	GLADE_HOOKUP_OBJECT (mission_dialog, alienteam_label, "alienteam_label");
-	GLADE_HOOKUP_OBJECT (mission_dialog, civteam_label, "civteam_label");
-	GLADE_HOOKUP_OBJECT (mission_dialog, alienequip_label, "alienequip_label");
-	GLADE_HOOKUP_OBJECT (mission_dialog, win_label, "win_label");
-	GLADE_HOOKUP_OBJECT (mission_dialog, credits_civ_label, "credits_civ_label");
-	GLADE_HOOKUP_OBJECT (mission_dialog, credits_aliens_label, "credits_aliens_label");
 	GLADE_HOOKUP_OBJECT (mission_dialog, alienteam_entry, "alienteam_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, civ_team_entry, "civ_team_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, alien_equip_entry, "alien_equip_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, credits_win_entry, "credits_win_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, credits_civ_entry, "credits_civ_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, credits_alien_entry, "credits_alien_entry");
-	GLADE_HOOKUP_OBJECT (mission_dialog, other_label, "other_label");
-	GLADE_HOOKUP_OBJECT_NO_REF (mission_dialog, mission_action_area, "mission_action_area");
 	GLADE_HOOKUP_OBJECT (mission_dialog, cancel_button, "cancel_button");
 	GLADE_HOOKUP_OBJECT (mission_dialog, ok_button, "ok_button");
+	GLADE_HOOKUP_OBJECT (mission_dialog, map_assembly_param_entry, "map_assembly_param_entry");
 
 	return mission_dialog;
 }
@@ -567,9 +604,7 @@ GtkWidget* create_mis_txt (void)
 
 	/* Store pointers to all widgets, for use by lookup_widget(). */
 	GLADE_HOOKUP_OBJECT_NO_REF (mis_txt, mis_txt, "mis_txt");
-	GLADE_HOOKUP_OBJECT_NO_REF (mis_txt, mis_txt_vbox, "mis_txt_vbox");
 	GLADE_HOOKUP_OBJECT (mis_txt, mission_txt, "mission_txt");
-	GLADE_HOOKUP_OBJECT_NO_REF (mis_txt, mis_txt_action_area, "mis_txt_action_area");
 	GLADE_HOOKUP_OBJECT (mis_txt, mis_txt_close, "mis_txt_close");
 
 	return mis_txt;
