@@ -697,11 +697,11 @@ boolean jpg_fill_input_buffer(j_decompress_ptr cinfo)
 
 void jpg_skip_input_data(j_decompress_ptr cinfo, long num_bytes)
 {
+	if (cinfo->src->bytes_in_buffer < (size_t) num_bytes)
+		ri.Con_Printf(PRINT_ALL, "Premature end of JPEG data\n");
+
 	cinfo->src->next_input_byte += (size_t) num_bytes;
 	cinfo->src->bytes_in_buffer -= (size_t) num_bytes;
-
-	if (cinfo->src->bytes_in_buffer < 0)
-		ri.Con_Printf(PRINT_ALL, "Premature end of JPEG data\n");
 }
 
 void jpeg_mem_src(j_decompress_ptr cinfo, byte *mem, int len)

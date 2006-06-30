@@ -22,7 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "gl_local.h"
 
 vec4_t s_lerped[MAX_VERTS];
-vec3_t lightdir;
 vec3_t shadevector;
 float shadelight[3];
 
