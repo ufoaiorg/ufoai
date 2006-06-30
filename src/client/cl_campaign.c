@@ -838,6 +838,7 @@ static void CL_CampaignAddMission(setState_t * set)
 
 		/* Add message to message-system. */
 		MN_AddNewMessage(_("Alien activity"), _("Alien activity has been reported."), qfalse, MSG_TERRORSITE, NULL);
+		Com_DPrintf("Alien activity at %.0f:%0.f\n", mis->realPos[0], mis->realPos[1]);
 	}
 
 	/* prepare next event (if any) */
@@ -2158,6 +2159,8 @@ static void CL_GameAutoCheck(void)
 
 /**
   * @brief
+  *
+  * TODO: Remove recruits when a mission was lost
   */
 void CL_GameAutoGo(void)
 {

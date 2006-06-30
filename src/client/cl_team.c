@@ -308,6 +308,7 @@ void CL_CheckInventory(equipDef_t * equip)
 	/* anyone fills their backpack with spares.  We don't want the first */
 	/* person in the squad filling their backpack with spare ammo leaving */
 	/* others with unloaded guns in their hands. */
+	Com_DPrintf("NumOnTeam in aircraft %i: %i\n", baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] );
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0, cp = baseCurrent->curTeam[0]; p < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; p++, cp++) {
 			for (ic = cp->inv->c[container]; ic; ic = next) {
@@ -365,7 +366,9 @@ static void CL_GenerateEquipmentCmd(void)
 	Cvar_ForceSet("cl_selected", "0");
 	for (i = 0, p = 0; i < baseCurrent->numWholeTeam; i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
+			/* maybe we already have soldiers in this base */
 			baseCurrent->curTeam[p] = &baseCurrent->wholeTeam[i];
+			Com_Printf("add %s to curTeam (pos: %i)\n", baseCurrent->curTeam[p]->name, p);
 			Cvar_ForceSet(va("mn_name%i", p), baseCurrent->curTeam[p]->name);
 			p++;
 		}
@@ -506,6 +509,7 @@ static void CL_SelectCmd(void)
   */
 void CL_UpdateHireVar(void)
 {
+	int i, p;
 	aircraft_t *air = NULL;
 
 	assert(baseCurrent);
@@ -514,6 +518,15 @@ void CL_UpdateHireVar(void)
 	Cvar_Set("mn_hired", va(_("%i of %i"), baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], air->size));
 	/* now update the mask for display the hired soldiers */
 	baseCurrent->hiredMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent];
+
+	memset(baseCurrent->curTeam, 0, sizeof(character_t*)*MAX_ACTIVETEAM);
+
+	/* update curTeam list */
+	for (i = 0, p = 0; i < baseCurrent->numWholeTeam; i++)
+		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
+			baseCurrent->curTeam[p] = &baseCurrent->wholeTeam[i];
+			p++;
+		}
 }
 
 /**
