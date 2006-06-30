@@ -368,7 +368,7 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (location_label), 0, 0.5);
 
-	type_label = gtk_label_new (Q_("Location"));
+	type_label = gtk_label_new (Q_("Type"));
 	gtk_widget_show (type_label);
 	gtk_table_attach (GTK_TABLE (mission_table), type_label, 0, 1, 5, 6,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
