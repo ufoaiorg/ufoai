@@ -26,7 +26,7 @@ item laserpistol_ammo
 	category	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
-	scale		1.5
+	scale		1.6
 	price		100
 	buytype		1
 
@@ -39,7 +39,7 @@ item laserpistol_ammo
 		hitbody	laserImpact
 		firesnd	weapons/laser.wav
 		speed	0
-		spread	"2.8 3.6"
+		spread	"3 3"
 		crouch	0.8
 		range	600
 		shots	1
@@ -82,8 +82,8 @@ item laserrifle
 	category	1
 	twohanded	true
 	shape		"0 0 5 2"
-	center		"5 0 1.5"
-	scale		1.2
+	center		"4.5 0 1.5"
+	scale		1.26
 	ammo		16
 	reload		8
 	price		3200
@@ -111,7 +111,7 @@ item laserrifle_ammo
 		hitbody	laserImpact
 		firesnd	weapons/laser.wav
 		speed	0
-		spread	"1.4 1.9"
+		spread	"1.5 1.5"
 		crouch	0.7
 		range	900
 		shots	1
@@ -129,7 +129,7 @@ item laserrifle_ammo
 		hitbody	laserImpact
 		firesnd	weapons/laser.wav
 		speed	0
-		spread	"2.4 3.5"
+		spread	"2.5 3.5"
 		crouch	1.0
 		range	900
 		shots	4

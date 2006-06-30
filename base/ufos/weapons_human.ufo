@@ -213,6 +213,7 @@ item pistol_ammo
 	}
 }
 
+
 // =======================
 // SMG
 // =======================
@@ -225,8 +226,8 @@ item smg
 	category	1
 	twohanded	true
 	shape		"0 0 3 2"
-	center		"6.5 0 1"
-	scale		1.2
+	center		"6.4 0 1"
+	scale		1.15
 	ammo		18
 	reload		8
 	price		1400
@@ -449,10 +450,10 @@ item rpg
 	category	3
 	twohanded	true
 	shape		"0 0 5 2"
-	center		"-6 0 2"
-	scale		0.85
+	center		"-5.7 0 2"
+	scale		0.87
 	ammo		1
-	reload		6
+	reload		12
 	price		2800
 	buytype		0
 }
@@ -472,7 +473,7 @@ item rpg_ammo
 	primary
 	{
 		name	"_Snap Shot"
-		skill	heavy
+		skill	explosive
 		projtl	rocket
 		impact	explosion
 		hitbody explosion
@@ -486,7 +487,7 @@ item rpg_ammo
 		range	1200
 		shots	1
 		ammo	1
-		time	14
+		time	12
 		damage	"45 10"
 		spldmg	"100 30"
 		splrad	120
@@ -495,7 +496,7 @@ item rpg_ammo
 	secondary
 	{
 		name	"_Aimed Shot"
-		skill	heavy
+		skill	explosive
 		projtl	rocket
 		impact	explosion
 		hitbody explosion
@@ -509,7 +510,7 @@ item rpg_ammo
 		range	1200
 		shots	1
 		ammo	1
-		time	20
+		time	18
 		damage	"45 10"
 		spldmg	"100 30"
 		splrad	120
@@ -517,285 +518,13 @@ item rpg_ammo
 	}
 }
 
-// =======================
-// FRAGMENTATION GRENADE
-// =======================
-item fraggrenade
-{
-	name		"_Frag Grenade"
-	model		weapons/fraggren/fraggren
-	weapon		true
-	type		grenade
-	category	0
-	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		1.4
-	price		170
-	buytype		2
-	ammo		1
-	thrown		true
-
-	primary
-	{
-		name	"_Throw"
-		skill	explosive
-		projtl	fraggren
-		impact	frag_explosion
-		hitbody frag_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	4.0
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"100 30"
-		splrad	120
-		dmgtype blast
-	}
-	secondary
-	{
-		name	"_Throw"
-		skill	explosive
-		projtl	fraggren
-		impact	fire_explosion
-		hitbody fire_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	4.0
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"100 30"
-		splrad	120
-		dmgtype blast
-	}
-}
 
 // =======================
-// FLARE GRENADE
-// =======================
-item flaregrenade
-{
-	name		"_Flare Grenade"
-	model		weapons/flare/flare
-	weapon		true
-	type		grenade
-	category	0
-	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		1.5
-	price		170
-	buytype		2
-	ammo		1
-	thrown		true
-
-	primary
-	{
-		name	"_Throw"
-		skill	explosive
-		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	4.0
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"0 0"
-		splrad	120
-		dmgtype ""
-	}
-	secondary
-	{
-		name	"_Throw"
-		skill	explosive
-		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	4.0
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"0 0"
-		splrad	120
-		dmgtype ""
-	}
-}
-
-// =======================
-// STUN GRENADE
-// =======================
-item stungrenade
-{
-	name		"_Stun Grenade"
-	model		weapons/stungren/stungren
-	weapon		true
-	type		grenade
-	category	0
-	shape		"0 0 1 1"
-	center		"-1 0 0"
-	scale		2.2
-	price		170
-	buytype		2
-	ammo		1
-	thrown		true
-
-	primary
-	{
-		name	"_Throw"
-		skill	explosive
-		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	4.0
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"0 0"
-		splrad	120
-		dmgtype stun
-	}
-	secondary
-	{
-		name	"_Throw"
-		skill	explosive
-		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	4.0
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"0 0"
-		splrad	120
-		dmgtype stun
-	}
-}
-
-// =======================
-// SMOKE GRENADE
-// =======================
-item smokegrenade
-{
-	name		"_Smoke Grenade"
-	model		weapons/smokegren/smokegren
-	weapon		true
-	type		grenade
-	category	0
-	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		1.5
-	price		170
-	buytype		2
-	ammo		1
-	thrown		true
-
-	primary
-	{
-		name	"_Throw"
-		skill	explosive
-		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	4.0
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"0 0"
-		splrad	120
-		dmgtype ""
-	}
-	secondary
-	{
-		name	"_Throw"
-		skill	explosive
-		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	4.0
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"0 0"
-		splrad	120
-		dmgtype ""
-	}
-}
-
-
-// =======================
-// KNIFE
+// COMBAT KNIFE
 // =======================
 item knife
 {
-	name		"_Knife"
+	name		"_Combat Knife"
 	model		weapons/knife/knife
 	weapon		true
 	type		melee
@@ -804,7 +533,7 @@ item knife
 	center		"-1 0 3"
 	scale		1.0
 	price		210
-	buytype		2
+	buytype		1
 	ammo		1
 	thrown		true
 
@@ -837,18 +566,19 @@ item knife
 		spread	"7 7"
 		shots	1
 		ammo	1
-		time	9
+		time	8
 		damage	"30 7"
 		dmgtype normal
 	}
 }
 
+
 // =======================
-// GRENADELAUNCHER
+// GRENADE LAUNCHER
 // =======================
 item grenl
 {
-	name		"_Grenadelauncher"
+	name		"_Grenade Launcher"
 	model		weapons/grenl/grenl
 	weapon		true
 	type		biggun
@@ -878,7 +608,7 @@ item grenl_ammo
 	primary
 	{
 		name	"_Single Shot"
-		skill	heavy
+		skill	explosive
 		projtl	grenl_ammo
 		impact	frag_explosion
 		hitbody frag_explosion
@@ -903,7 +633,7 @@ item grenl_ammo
 	secondary
 	{
 		name	"_Single Shot"
-		skill	heavy
+		skill	explosive
 		projtl	grenl_ammo
 		impact	frag_explosion
 		hitbody frag_explosion
@@ -926,8 +656,9 @@ item grenl_ammo
 	}
 }
 
+
 // =======================
-// BOLTERRIFLE
+// BOLTER RIFLE
 // =======================
 item bolterrifle
 {
@@ -941,7 +672,7 @@ item bolterrifle
 	center          "7 0 1"
 	scale           1.2
 	ammo            50
-	reload          13
+	reload          15
 	price           2800
 	buytype         0
 }
@@ -967,7 +698,7 @@ item bolterrifle_ammo
 		hitbody blood
 		firesnd weapons/tachyon.wav
 		speed   0
-		spread  "3 3"
+		spread  "3.5 3.5"
 		crouch  0.8
 		range   1700
 		shots   1
@@ -979,7 +710,7 @@ item bolterrifle_ammo
 
 	secondary
 	{
-		name    "_Burst"
+		name    "_Cannonade"
 		skill   heavy
 		projtl  bullet
 		impact  bulletImpact
@@ -997,21 +728,23 @@ item bolterrifle_ammo
 		dmgtype normal
 	}
 }
+
+
 // =======================
 // STUN ROD
 // =======================
 item stunrod
 {
-	name		"_Stunrod"
+	name		"_Stun Rod"
 	model	weapons/stunrod/stunrod
 	weapon	true
 	type		melee
 	category	2
 	shape	"0 0 4 2"
-	center	"3 0 3"
-	scale		0.9
+	center	"3 0 2"
+	scale		0.95
 	price		3000
-	buytype	2
+	buytype	1
 	ammo	1
 	thrown	false
 
@@ -1049,3 +782,58 @@ item stunrod
 		dmgtype stun
 	}
 }
+
+
+// =======================
+// KERRBLADE
+// =======================
+item kerrblade
+{
+	name		"_Kerrblade"
+	model		weapons/kerrblade/kerrblade
+	weapon		true
+	type		melee
+	category	2
+	shape		"0 0 5 2"
+	center		"6.3 0 3"
+	scale		1.0
+	price		1210
+	buytype		1
+	ammo		1
+	thrown		true
+
+	primary
+	{
+		name	"_Stab"
+		skill	close
+		projtl	null
+		impact	null
+		hitbody blood
+		firesnd	misc/klonk03.wav
+		speed	0
+		range	55
+		shots	1
+		time	12
+		damage	"80 20"
+		dmgtype normal
+	}
+	secondary
+	{
+		name	"_Throw"
+		skill	close
+		projtl	kerrblade
+		impact	null
+		hitbody blood
+		impsnd	misc/klonk03.wav
+		bodysnd misc/klonk01.wav
+		speed	320
+		range	500
+		spread	"7 7"
+		shots	1
+		ammo	1
+		time	12
+		damage	"100 20"
+		dmgtype normal
+	}
+}
+

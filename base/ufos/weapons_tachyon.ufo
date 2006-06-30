@@ -1,36 +1,54 @@
 // =======================
-// TACHYONPISTOL
+// TACHYON PISTOL
 // =======================
 item tachyonpistol
 {
-	name		"_Tachyonpistol"
+	name		"_Tachyon Pistol"
 	model		weapons/tachyonpistol/tachyonpistol
 	weapon		true
 	type		pistol
 	category	2
 	twohanded	false
 	shape		"0 0 3 2"
-	center		"2 0 1"
-	scale		1.2
-	ammo		12
+	center		"1.3 0 1.5"
+	scale		1.6
+	ammo		24
 	reload		4
-	price		300
+	price		3800
 	buytype		1
 }
 
 item tachyonpistol_ammo
 {
-	name		"_Tachyonpistol Clip"
+	name		"_Tachyon Pistol Clip"
 	model		weapons/tachyonpistol/tachyonpistol_clip
 	type		ammo
 	category	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
-	scale		1.0
-	price		40
+	scale		1.1
+	price		250
 	buytype		1
 
 	primary
+	{
+		name	"_Single Shot"
+		skill	close
+		projtl	tachyonBall
+		impact	tachyonImpact
+		hitbody	tachyonImpact
+		firesnd	weapons/tachyonpistol.wav
+		speed	0
+		spread	"2 2"
+		crouch	0.9
+		range	500
+		shots	1
+		ammo	1
+		time	8
+		damage	"50 5"
+		dmgtype tachyon
+	}
+	secondary
 	{
 		name	"_Rapid Fire"
 		skill	close
@@ -39,35 +57,18 @@ item tachyonpistol_ammo
 		hitbody	tachyonImpact
 		firesnd	weapons/tachyonpistol.wav
 		speed	0
-		spread	"7 9"
+		spread	"5 5"
 		crouch	0.9
-		range	250
+		range	350
 		shots	3
 		ammo	3
 		rof		10
 		time	12
-		damage	"20 5"
-		dmgtype normal
-	}
-	secondary
-	{
-		name	"_Aimed Shot"
-		skill	close
-		projtl	tachyonBall
-		impact	tachyonImpact
-		hitbody	tachyonImpact
-		firesnd	weapons/tachyonpistol.wav
-		speed	0
-		spread	"2.8 4"
-		crouch	0.9
-		range	380
-		shots	1
-		ammo	1
-		time	8
-		damage	"20 5"
-		dmgtype normal
+		damage	"50 5"
+		dmgtype tachyon
 	}
 }
+
 
 // =======================
 // TACHYON RIFLE
@@ -81,8 +82,8 @@ item tachyonrifle
 	category	1
 	twohanded	true
 	shape		"0 0 5 2"
-	center		"11 0 0.5"
-	scale		1.1
+	center		"11 0 0.3"
+	scale		1.07
 	ammo		24
 	reload		8
 	price		4400
@@ -96,8 +97,8 @@ item tachyonrifle_ammo
 	type		ammo
 	category	0
 	shape		"0 0 2 1"
-	center		"0 0 0"
-	scale		1.1
+	center		"0 0 -0.2"
+	scale		1.0
 	price		300
 	buytype		0
 
@@ -128,6 +129,7 @@ item tachyonrifle_ammo
 		impact	tachyonBigImpact
 		hitbody tachyonBigImpact
 		firesnd	weapons/tachyon.wav
+		selfdet true
 		speed	400
 		spread	"4.7 4.7"
 		crouch	0.8
@@ -172,7 +174,7 @@ item tachyonsniper_ammo
 	category	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
-	scale		1.1
+	scale		1.0
 	price		350
 	buytype		0
 
