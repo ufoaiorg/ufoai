@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-06-28 09:09+0200\n"
+"POT-Creation-Date: 2006-06-30 16:57+0200\n"
 "PO-Revision-Date: 2006-05-25 22:19+0200\n"
 "Last-Translator: Karel Volný <kavol@seznam.cz>\n"
 "Language-Team:  <cs@li.org>\n"
@@ -159,21 +159,71 @@ msgstr "UFO"
 msgid "UFO - Destroyer class"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:56 ../base/ufos/campaign.ufo:90
-#: ../base/ufos/campaign.ufo:107 ../base/ufos/campaign.ufo:125
-#: ../base/ufos/campaign.ufo:435
-msgid "Location: Gwandaf\\Type: Terror Attack\\Objective: Protect inhabitants"
-msgstr "Místo: Gwandaf\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+#: ../base/ufos/campaign.ufo:56
+msgid "Dongola"
+msgstr ""
 
-#: ../base/ufos/campaign.ufo:73
+#: ../base/ufos/campaign.ufo:57 ../base/ufos/campaign.ufo:95
+#: ../base/ufos/campaign.ufo:114 ../base/ufos/campaign.ufo:133
+#: ../base/ufos/campaign.ufo:152 ../base/ufos/campaign.ufo:287
+#: ../base/ufos/campaign.ufo:306 ../base/ufos/campaign.ufo:325
+#: ../base/ufos/campaign.ufo:363 ../base/ufos/campaign.ufo:382
+#: ../base/ufos/campaign.ufo:420 ../base/ufos/campaign.ufo:437
+#: ../base/ufos/campaign.ufo:456 ../base/ufos/campaign.ufo:475
+#: ../base/ufos/campaign.ufo:494 ../base/ufos/campaign.ufo:513
+#: ../base/ufos/campaign.ufo:531 ../base/ufos/campaign.ufo:548
+#: ../base/ufos/campaign.ufo:566 ../base/ufos/campaign.ufo:583
+#: ../base/ufos/campaign.ufo:600 ../base/ufos/campaign.ufo:618
+#: ../base/ufos/campaign.ufo:635 ../base/ufos/campaign.ufo:655
+#: ../base/ufos/campaign.ufo:674 ../base/ufos/campaign.ufo:692
+#: ../base/ufos/campaign.ufo:711 ../base/ufos/campaign.ufo:732
+#: ../base/ufos/campaign.ufo:752
+#, fuzzy
+msgid "Terror Attack"
+msgstr "Sekundární:\t%s\n"
+
+#: ../base/ufos/campaign.ufo:58 ../base/ufos/campaign.ufo:96
+#: ../base/ufos/campaign.ufo:115 ../base/ufos/campaign.ufo:134
+#: ../base/ufos/campaign.ufo:288 ../base/ufos/campaign.ufo:307
+#: ../base/ufos/campaign.ufo:326 ../base/ufos/campaign.ufo:364
+#: ../base/ufos/campaign.ufo:383 ../base/ufos/campaign.ufo:438
+#: ../base/ufos/campaign.ufo:457 ../base/ufos/campaign.ufo:476
+#: ../base/ufos/campaign.ufo:495 ../base/ufos/campaign.ufo:636
+#: ../base/ufos/campaign.ufo:693 ../base/ufos/campaign.ufo:712
+#: ../base/ufos/campaign.ufo:733 ../base/ufos/campaign.ufo:753
+msgid "Protect inhabitants"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:76
+#, fuzzy
+msgid "Base Attack"
+msgstr "Útok na základnu"
+
+#: ../base/ufos/campaign.ufo:77
 msgid "Aliens attacked one of our home bases"
 msgstr "Cizáci zaútočili na jednu z našich základen"
 
-#: ../base/ufos/campaign.ufo:142
-msgid "Location: Uppsala\\Type: Terror Attack\\Objective: Protect inhabitants"
-msgstr "Místo: Uppsala\\Typ: Cizácký terror\\Úkol: Ochránit obyvatelstvo"
+#: ../base/ufos/campaign.ufo:94 ../base/ufos/campaign.ufo:151
+#: ../base/ufos/campaign.ufo:226 ../base/ufos/campaign.ufo:246
+#: ../base/ufos/campaign.ufo:266 ../base/ufos/campaign.ufo:286
+#: ../base/ufos/campaign.ufo:381 ../base/ufos/campaign.ufo:419
+#: ../base/ufos/campaign.ufo:512 ../base/ufos/campaign.ufo:530
+#: ../base/ufos/campaign.ufo:547 ../base/ufos/campaign.ufo:565
+#: ../base/ufos/campaign.ufo:582 ../base/ufos/campaign.ufo:599
+#: ../base/ufos/campaign.ufo:617 ../base/ufos/campaign.ufo:634
+#: ../base/ufos/campaign.ufo:654 ../base/ufos/campaign.ufo:673
+msgid "TODO"
+msgstr ""
 
-#: ../base/ufos/campaign.ufo:159
+#: ../base/ufos/campaign.ufo:113 ../base/ufos/campaign.ufo:455
+msgid "Gwandaf"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:132
+msgid "Uppsala"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:153
 msgid ""
 "Some aliens have escaped from the\\mine, and their tracks lead south,"
 "\\towards a nearby excavation site.\\Protect that site at all cost.\\"
@@ -181,36 +231,66 @@ msgstr ""
 "Několika cizákům se podařilo z dolu\\uprchnout a jejich stopa míří na jih\\k "
 "nedalekým vykopávkám.\\Toto místo musíte za každou cenu ochránit.\\"
 
-#: ../base/ufos/campaign.ufo:174 ../base/ufos/campaign.ufo:191
-#: ../base/ufos/campaign.ufo:209 ../base/ufos/campaign.ufo:228
-#: ../base/ufos/campaign.ufo:247 ../base/ufos/campaign.ufo:266
-msgid ""
-"Location: Revelstoke\\Type: Landed Alien Ship\\Objective: Secure Alien Ship "
-"before Liftoff"
+#: ../base/ufos/campaign.ufo:168 ../base/ufos/campaign.ufo:187
+#: ../base/ufos/campaign.ufo:206
+msgid "Revelstoke"
 msgstr ""
-"Místo: Revelstoke\\Typ: Přistání cizácké lodi\\Úkol: Zajistit cizáckou loď "
-"než uletí"
 
-#: ../base/ufos/campaign.ufo:284 ../base/ufos/campaign.ufo:301
-#: ../base/ufos/campaign.ufo:318
-msgid ""
-"Location: Marina Serra\\Type: Terror Attack\\Objective: Protect inhabitants"
-msgstr "Místo: Marina Serra\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+#: ../base/ufos/campaign.ufo:169
+msgid "Crashed Alien Ship"
+msgstr ""
 
-#: ../base/ufos/campaign.ufo:335
-msgid "Location: Morioka\\Type: Alien Hideout\\Objective: Eliminate intruders"
-msgstr "Místo: Morioka\\Typ: Cizácký úkryt\\Úkol: Zlikvidovat vetřelce"
+#: ../base/ufos/campaign.ufo:170
+msgid "Secure Alien Ship"
+msgstr ""
 
-#: ../base/ufos/campaign.ufo:352
-msgid ""
-"Location: Tazovskij\\Type: Terror Attack\\Objective: Protect inhabitants"
-msgstr "Místo: Tazovsk\\Type: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+#: ../base/ufos/campaign.ufo:188 ../base/ufos/campaign.ufo:207
+#: ../base/ufos/campaign.ufo:227 ../base/ufos/campaign.ufo:247
+#: ../base/ufos/campaign.ufo:267
+msgid "Landed Alien Ship"
+msgstr ""
 
-#: ../base/ufos/campaign.ufo:369 ../base/ufos/campaign.ufo:386
-msgid "Location: Gobabis\\Type: Crash Site\\Objective: Secure Area"
-msgstr "Místo: Gobabis\\Typ: Místo havárie\\Úkol: Zajistit oblast"
+#: ../base/ufos/campaign.ufo:189 ../base/ufos/campaign.ufo:208
+#: ../base/ufos/campaign.ufo:228 ../base/ufos/campaign.ufo:248
+#: ../base/ufos/campaign.ufo:268
+msgid "Secure Alien Ship before Liftoff"
+msgstr ""
 
-#: ../base/ufos/campaign.ufo:403
+#: ../base/ufos/campaign.ufo:305 ../base/ufos/campaign.ufo:362
+msgid "Tazovskij"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:324
+msgid "Marina Serra"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:343
+msgid "Morioka"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:344
+#, fuzzy
+msgid "Alien Hideout"
+msgstr "Cizácké druhy"
+
+#: ../base/ufos/campaign.ufo:345
+msgid "Eliminate intruders"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:400
+msgid "Gobabis"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:401
+#, fuzzy
+msgid "Crash Site"
+msgstr "Založit hru"
+
+#: ../base/ufos/campaign.ufo:402
+msgid "Secure Area"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:421
 msgid ""
 "There are rumors of a mine being\\overrun by aliens. Altough this\\source of "
 "information is doubtful,\\you'll need to investigate.\\"
@@ -218,23 +298,23 @@ msgstr ""
 "Kolují skazky o dolu ovládaném\\cizáky. I když informace nepochází\\z "
 "důvěryhodného zdroje,\\je třeba abyste to prověřili.\\"
 
-#: ../base/ufos/campaign.ufo:418
-msgid "Location: Mackay\\Type: Terror Attack\\Objective: Protect inhabitants"
-msgstr "Místo: Mackay\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+#: ../base/ufos/campaign.ufo:436
+msgid "Mackay"
+msgstr ""
 
-#: ../base/ufos/campaign.ufo:452
-msgid "Location: Asyut\\Type: Terror Attack\\Objective: Protect inhabitants"
-msgstr "Místo: Asyut\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+#: ../base/ufos/campaign.ufo:474
+#, fuzzy
+msgid "Asyut"
+msgstr "Útočná puška"
 
-#: ../base/ufos/campaign.ufo:469
-msgid ""
-"Location: Tabelbala\\Type: Terror Attack\\Objective: Protect inhabitants"
-msgstr "Místo: Tabelbala\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+#: ../base/ufos/campaign.ufo:493
+msgid "Tabelbala"
+msgstr ""
 
-#: ../base/ufos/campaign.ufo:486 ../base/ufos/campaign.ufo:517
-#: ../base/ufos/campaign.ufo:533 ../base/ufos/campaign.ufo:548
-#: ../base/ufos/campaign.ufo:563 ../base/ufos/campaign.ufo:579
-#: ../base/ufos/campaign.ufo:612 ../base/ufos/campaign.ufo:629
+#: ../base/ufos/campaign.ufo:514 ../base/ufos/campaign.ufo:549
+#: ../base/ufos/campaign.ufo:567 ../base/ufos/campaign.ufo:584
+#: ../base/ufos/campaign.ufo:601 ../base/ufos/campaign.ufo:619
+#: ../base/ufos/campaign.ufo:656 ../base/ufos/campaign.ufo:675
 msgid ""
 "Damn it, you've let some of them get\\away again! Reequip your squad and"
 "\\get after them!\\"
@@ -242,56 +322,69 @@ msgstr ""
 "Zatraceně, zase jste nechali několik cizáků\\uniknout! Vybavte znovu vojáky"
 "\\a dejte se do stíhání!\\"
 
-#: ../base/ufos/campaign.ufo:502
+#: ../base/ufos/campaign.ufo:532
 msgid "The Aliens have tacken over a rocket silo. Go and capture it again."
 msgstr "Cizáci obsadili raketovou základnu. Dobijte ji zpět."
 
-#: ../base/ufos/campaign.ufo:594 ../base/ufos/campaign.ufo:645
-msgid "Location: Fargo\\Type: Terror Attack\\Objective: Protect inhabitants"
-msgstr "Místo: Fargo\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+#: ../base/ufos/campaign.ufo:691
+msgid "Fargo"
+msgstr ""
 
-#: ../base/ufos/campaign.ufo:662
-msgid "Location: Grenchen\\Type: Terror Attack\\Objective: Protect inhabitants"
-msgstr "Místo: Grenchen\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+#: ../base/ufos/campaign.ufo:710
+#, fuzzy
+msgid "Grenchen"
+msgstr "Granáty"
 
-#: ../base/ufos/campaign.ufo:681
-msgid "Location: Lille\\Type: Terror Attack\\Objective: Protect inhabitants"
-msgstr "Místo:Lille\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+#: ../base/ufos/campaign.ufo:731
+msgid "Lille"
+msgstr ""
 
-#: ../base/ufos/campaign.ufo:699
-msgid "Location: Albany\\Type: Terror Attack\\Objective: Protect inhabitants"
-msgstr "Místo: Albany\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+#: ../base/ufos/campaign.ufo:751
+msgid "Albany"
+msgstr ""
 
-#: ../base/ufos/campaign.ufo:717
-msgid "Location: Shannon\\Type: Major Alien Intrusion\\Objective: Stop them"
-msgstr "Místo: Shannon\\Typ: Velký cizácký průnik\\Úkol: Zastavit cizáky"
+#: ../base/ufos/campaign.ufo:771
+msgid "Shannon"
+msgstr ""
 
-#: ../base/ufos/campaign.ufo:829
+#: ../base/ufos/campaign.ufo:772
+msgid "Major Alien Intrusion"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:773
+msgid "Stop them"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:885
 #, fuzzy
 msgid "Heavy Campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:830
+#: ../base/ufos/campaign.ufo:886
 #, fuzzy
 msgid "txt_heavy_campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:845
+#: ../base/ufos/campaign.ufo:901
 #, fuzzy
 msgid "Easy Campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:846
+#: ../base/ufos/campaign.ufo:902
 #, fuzzy
 msgid "txt_easy_campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:861
+#: ../base/ufos/campaign.ufo:917
 msgid "Standard Campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:862
+#: ../base/ufos/campaign.ufo:918 ../base/ufos/campaign.ufo:935
 msgid "txt_standard_campaign"
+msgstr ""
+
+#: ../base/ufos/campaign.ufo:934
+msgid "Testing and Tweaking Campaign --- Please Ignore"
 msgstr ""
 
 #: ../base/ufos/events.ufo:21
@@ -942,7 +1035,7 @@ msgstr "Jméno"
 msgid "Bookmark"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:485 ../base/ufos/menu_multiplayer.ufo:717
+#: ../base/ufos/menu_multiplayer.ufo:485 ../base/ufos/menu_multiplayer.ufo:716
 #, fuzzy
 msgid "Connect"
 msgstr "Připojit se na IP"
@@ -956,8 +1049,8 @@ msgstr ""
 msgid "Internet"
 msgstr "Stíhačka"
 
-#: ../base/ufos/menu_multiplayer.ufo:586 ../base/ufos/menu_multiplayer.ufo:749
-#: ../base/ufos/menu_multiplayer.ufo:1020
+#: ../base/ufos/menu_multiplayer.ufo:586 ../base/ufos/menu_multiplayer.ufo:748
+#: ../base/ufos/menu_multiplayer.ufo:1019
 msgid "Team preference:"
 msgstr "Výběr týmu:"
 
@@ -970,77 +1063,82 @@ msgstr "Natankovat"
 msgid "Bookmarks"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:729
+#: ../base/ufos/menu_multiplayer.ufo:728
 msgid "Connect to IP"
 msgstr "Připojit se na IP"
 
-#: ../base/ufos/menu_multiplayer.ufo:795
+#: ../base/ufos/menu_multiplayer.ufo:794
 msgid "Enable morale states:"
 msgstr "Povolit morálku:"
 
-#: ../base/ufos/menu_multiplayer.ufo:836
+#: ../base/ufos/menu_multiplayer.ufo:835
 msgid "Dedicated server:"
 msgstr "Vyhrazený server:"
 
-#: ../base/ufos/menu_multiplayer.ufo:877
+#: ../base/ufos/menu_multiplayer.ufo:876
 msgid "Teamplay:"
 msgstr "Týmová hra:"
 
-#: ../base/ufos/menu_multiplayer.ufo:918
+#: ../base/ufos/menu_multiplayer.ufo:917
 msgid "Max. clients:"
 msgstr "Maximum klientů:"
 
-#: ../base/ufos/menu_multiplayer.ufo:952
+#: ../base/ufos/menu_multiplayer.ufo:919
+#, fuzzy
+msgid "Sets the max allowed clients to connect"
+msgstr "Nastaví nejvyšší povolený počet vojáků v jednom týmu"
+
+#: ../base/ufos/menu_multiplayer.ufo:951
 msgid "Max. soldiers per team:"
 msgstr "Maximum vojáků v týmu:"
 
-#: ../base/ufos/menu_multiplayer.ufo:954
+#: ../base/ufos/menu_multiplayer.ufo:953
 msgid "Sets the max allowed soldiers per team"
 msgstr "Nastaví nejvyšší povolený počet vojáků v jednom týmu"
 
-#: ../base/ufos/menu_multiplayer.ufo:986
+#: ../base/ufos/menu_multiplayer.ufo:985
 #, fuzzy
 msgid "Max. soldiers per player:"
 msgstr "Maximum vojáků na hráče:"
 
-#: ../base/ufos/menu_multiplayer.ufo:988
+#: ../base/ufos/menu_multiplayer.ufo:987
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "Nastaví nejvyšší povolený počet vojáků na jednoho hráče v týmové hře"
 
-#: ../base/ufos/menu_multiplayer.ufo:1022
+#: ../base/ufos/menu_multiplayer.ufo:1021
 msgid "Sets the prefered team"
 msgstr "Nastaví preferovaný tým"
 
-#: ../base/ufos/menu_multiplayer.ufo:1055
+#: ../base/ufos/menu_multiplayer.ufo:1054
 #, fuzzy
 msgid "Max. players per team:"
 msgstr "Maximum vojáků v týmu:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1088
+#: ../base/ufos/menu_multiplayer.ufo:1087
 msgid "Max. AI actors:"
 msgstr "Maximum hráčů řízených počítačem:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1090
+#: ../base/ufos/menu_multiplayer.ufo:1089
 msgid "Max AI actors for teamplay mode"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1122
+#: ../base/ufos/menu_multiplayer.ufo:1121
 msgid "Server-Password:"
 msgstr "Heslo serveru:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1145
+#: ../base/ufos/menu_multiplayer.ufo:1144
 msgid "RCON-Password:"
 msgstr "Heslo RCON:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1168
+#: ../base/ufos/menu_multiplayer.ufo:1167
 msgid "Hostname:"
 msgstr "Jméno počítače:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1191
+#: ../base/ufos/menu_multiplayer.ufo:1190
 msgid "Map"
 msgstr "Mapa"
 
-#: ../base/ufos/menu_multiplayer.ufo:1271
+#: ../base/ufos/menu_multiplayer.ufo:1270
 #, fuzzy
 msgid "Start server"
 msgstr "Začít výzkum"
@@ -2034,32 +2132,40 @@ msgstr "Lékárnička"
 msgid "Heal"
 msgstr "Ošetřit"
 
-#: ../base/ufos/weapons.ufo:53
+#: ../base/ufos/weapons.ufo:54
 msgid "IR Goggles"
 msgstr "Infravizor"
 
-#: ../base/ufos/weapons.ufo:66 ../base/ufos/weapons.ufo:76
-msgid "Activate"
-msgstr "Aktivovat"
+#: ../base/ufos/weapons.ufo:67 ../base/ufos/weapons.ufo:77
+msgid "Scan"
+msgstr ""
 
-#: ../base/ufos/weapons.ufo:91
-#, fuzzy
-msgid "Blade"
-msgstr "Ostří"
+#: ../base/ufos/weapons.ufo:93
+msgid "Frag Grenade"
+msgstr "Tříštivý granát"
 
-#: ../base/ufos/weapons.ufo:106 ../base/ufos/weapons_human.ufo:813
-#: ../base/ufos/weapons_plasma.ufo:167
-msgid "Stab"
-msgstr "Bodnout"
-
-#: ../base/ufos/weapons.ufo:121 ../base/ufos/weapons_human.ufo:540
-#: ../base/ufos/weapons_human.ufo:564 ../base/ufos/weapons_human.ufo:608
-#: ../base/ufos/weapons_human.ufo:632 ../base/ufos/weapons_human.ufo:676
-#: ../base/ufos/weapons_human.ufo:700 ../base/ufos/weapons_human.ufo:744
-#: ../base/ufos/weapons_human.ufo:768 ../base/ufos/weapons_human.ufo:828
-#: ../base/ufos/weapons_plasma.ufo:182
+#: ../base/ufos/weapons.ufo:108 ../base/ufos/weapons.ufo:132
+#: ../base/ufos/weapons.ufo:177 ../base/ufos/weapons.ufo:201
+#: ../base/ufos/weapons.ufo:246 ../base/ufos/weapons.ufo:270
+#: ../base/ufos/weapons.ufo:315 ../base/ufos/weapons.ufo:339
+#: ../base/ufos/weapons_human.ufo:557 ../base/ufos/weapons_human.ufo:822
+#: ../base/ufos/weapons_plasma.ufo:183
 msgid "Throw"
 msgstr "Hodit"
+
+#: ../base/ufos/weapons.ufo:162
+#, fuzzy
+msgid "Flare Grenade"
+msgstr "Tříštivý granát"
+
+#: ../base/ufos/weapons.ufo:231
+#, fuzzy
+msgid "Stun Grenade"
+msgstr "Dýmovnice"
+
+#: ../base/ufos/weapons.ufo:300
+msgid "Smoke Grenade"
+msgstr "Dýmovnice"
 
 #: ../base/ufos/weapons_human.ufo:6
 msgid "Assault Rifle"
@@ -2069,8 +2175,7 @@ msgstr "Útočná puška"
 msgid "Assault Rifle Clip"
 msgstr "Zásobník útočné pušky"
 
-#: ../base/ufos/weapons_human.ufo:35 ../base/ufos/weapons_human.ufo:250
-#: ../base/ufos/weapons_human.ufo:982
+#: ../base/ufos/weapons_human.ufo:35 ../base/ufos/weapons_human.ufo:251
 msgid "Burst"
 msgstr "Dávka"
 
@@ -2082,13 +2187,13 @@ msgstr "Ostřelovačská puška"
 msgid "Sniper Rifle Clip"
 msgstr "Zásobník ostřelovačské pušky"
 
-#: ../base/ufos/weapons_human.ufo:108 ../base/ufos/weapons_human.ufo:474
-#: ../base/ufos/weapons_plasma.ufo:234 ../base/ufos/weapons_tachyon.ufo:181
+#: ../base/ufos/weapons_human.ufo:108 ../base/ufos/weapons_human.ufo:475
+#: ../base/ufos/weapons_plasma.ufo:236 ../base/ufos/weapons_tachyon.ufo:183
 msgid "Snap Shot"
 msgstr "Výstřel od boku"
 
-#: ../base/ufos/weapons_human.ufo:126 ../base/ufos/weapons_human.ufo:497
-#: ../base/ufos/weapons_plasma.ufo:255 ../base/ufos/weapons_tachyon.ufo:54
+#: ../base/ufos/weapons_human.ufo:126 ../base/ufos/weapons_human.ufo:498
+#: ../base/ufos/weapons_plasma.ufo:257
 msgid "Aimed Shot"
 msgstr "Cílený výstřel"
 
@@ -2100,111 +2205,108 @@ msgstr "Pistole ráže 9 mm"
 msgid "Pistol Clip"
 msgstr "Zásobník pistole"
 
-#: ../base/ufos/weapons_human.ufo:179 ../base/ufos/weapons_human.ufo:323
-#: ../base/ufos/weapons_human.ufo:880 ../base/ufos/weapons_human.ufo:905
-#: ../base/ufos/weapons_human.ufo:963
+#: ../base/ufos/weapons_human.ufo:179 ../base/ufos/weapons_human.ufo:324
+#: ../base/ufos/weapons_human.ufo:610 ../base/ufos/weapons_human.ufo:635
+#: ../base/ufos/weapons_human.ufo:694 ../base/ufos/weapons_tachyon.ufo:35
 msgid "Single Shot"
 msgstr "Jeden výstřel"
 
-#: ../base/ufos/weapons_human.ufo:197 ../base/ufos/weapons_tachyon.ufo:35
+#: ../base/ufos/weapons_human.ufo:197 ../base/ufos/weapons_tachyon.ufo:53
 msgid "Rapid Fire"
 msgstr "Rychlá střelba"
 
-#: ../base/ufos/weapons_human.ufo:221
+#: ../base/ufos/weapons_human.ufo:222
 msgid "Submachine Gun"
 msgstr "Samopal"
 
-#: ../base/ufos/weapons_human.ufo:238
+#: ../base/ufos/weapons_human.ufo:239
 msgid "SMG Clip"
 msgstr "Zásobník samopalu"
 
-#: ../base/ufos/weapons_human.ufo:269
+#: ../base/ufos/weapons_human.ufo:270
 msgid "Full Auto"
 msgstr "Automat"
 
-#: ../base/ufos/weapons_human.ufo:294
+#: ../base/ufos/weapons_human.ufo:295
 msgid "Shotgun"
 msgstr "Brokovnice"
 
-#: ../base/ufos/weapons_human.ufo:311
+#: ../base/ufos/weapons_human.ufo:312
 msgid "Buckshots"
 msgstr "Náboje do brokovnice"
 
-#: ../base/ufos/weapons_human.ufo:344
+#: ../base/ufos/weapons_human.ufo:345
 msgid "Double Shot"
 msgstr "Dvojitý výstřel"
 
-#: ../base/ufos/weapons_human.ufo:370
+#: ../base/ufos/weapons_human.ufo:371
 msgid "Flamethrower"
 msgstr "Plamenomet"
 
-#: ../base/ufos/weapons_human.ufo:387
+#: ../base/ufos/weapons_human.ufo:388
 msgid "Napalm Tank"
 msgstr "Napalm"
 
-#: ../base/ufos/weapons_human.ufo:399
+#: ../base/ufos/weapons_human.ufo:400
 msgid "Candlelight"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:419
+#: ../base/ufos/weapons_human.ufo:420
 msgid "Inferno"
 msgstr "Peklo"
 
-#: ../base/ufos/weapons_human.ufo:445
+#: ../base/ufos/weapons_human.ufo:446
 msgid "Rocket Launcher"
 msgstr "Raketomet"
 
-#: ../base/ufos/weapons_human.ufo:462
+#: ../base/ufos/weapons_human.ufo:463
 msgid "High-Explosive Rocket"
 msgstr "Vysocevýbušná raketa"
 
-#: ../base/ufos/weapons_human.ufo:525
-msgid "Frag Grenade"
-msgstr "Tříštivý granát"
+#: ../base/ufos/weapons_human.ufo:527
+msgid "Combat Knife"
+msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:593
+#: ../base/ufos/weapons_human.ufo:542 ../base/ufos/weapons_human.ufo:807
+#: ../base/ufos/weapons_plasma.ufo:168
+msgid "Stab"
+msgstr "Bodnout"
+
+#: ../base/ufos/weapons_human.ufo:581
 #, fuzzy
-msgid "Flare Grenade"
-msgstr "Tříštivý granát"
-
-#: ../base/ufos/weapons_human.ufo:661
-#, fuzzy
-msgid "Stun Grenade"
-msgstr "Dýmovnice"
-
-#: ../base/ufos/weapons_human.ufo:729
-msgid "Smoke Grenade"
-msgstr "Dýmovnice"
-
-#: ../base/ufos/weapons_human.ufo:798
-msgid "Knife"
-msgstr "Nůž"
-
-#: ../base/ufos/weapons_human.ufo:851
-msgid "Grenadelauncher"
+msgid "Grenade Launcher"
 msgstr "Granátomet"
 
-#: ../base/ufos/weapons_human.ufo:868
+#: ../base/ufos/weapons_human.ufo:598
 msgid "Grenades"
 msgstr "Granáty"
 
-#: ../base/ufos/weapons_human.ufo:934
+#: ../base/ufos/weapons_human.ufo:665
 #, fuzzy
 msgid "Bolter Rifle"
 msgstr "Laserová puška"
 
-#: ../base/ufos/weapons_human.ufo:951
+#: ../base/ufos/weapons_human.ufo:682
 #, fuzzy
 msgid "Bolter Rifle Clip"
 msgstr "Zásobník pro ostřelovačské pušky"
 
-#: ../base/ufos/weapons_human.ufo:1005
-msgid "Stunrod"
+#: ../base/ufos/weapons_human.ufo:713
+msgid "Cannonade"
+msgstr ""
+
+#: ../base/ufos/weapons_human.ufo:738
+#, fuzzy
+msgid "Stun Rod"
 msgstr "Paralyzátor"
 
-#: ../base/ufos/weapons_human.ufo:1020 ../base/ufos/weapons_human.ufo:1037
+#: ../base/ufos/weapons_human.ufo:753 ../base/ufos/weapons_human.ufo:770
 msgid "Stun"
 msgstr "Omráčit"
+
+#: ../base/ufos/weapons_human.ufo:792
+msgid "Kerrblade"
+msgstr ""
 
 #: ../base/ufos/weapons_laser.ufo:6
 msgid "Laser Pistol"
@@ -2254,48 +2356,52 @@ msgstr "Plasmová puška"
 msgid "Plasma Rifle Charge"
 msgstr "Zásobník plasmové pušky"
 
-#: ../base/ufos/weapons_plasma.ufo:152
-msgid "Plasmablade"
+#: ../base/ufos/weapons_plasma.ufo:153
+#, fuzzy
+msgid "Plasma Blade"
 msgstr "Plasmové ostří"
 
-#: ../base/ufos/weapons_plasma.ufo:205
+#: ../base/ufos/weapons_plasma.ufo:207
 #, fuzzy
-msgid "Plasmablaster"
+msgid "Plasma Blaster"
 msgstr "Plasmová puška"
 
-#: ../base/ufos/weapons_plasma.ufo:222
-msgid "Plasmablaster Charge"
-msgstr ""
+#: ../base/ufos/weapons_plasma.ufo:224
+#, fuzzy
+msgid "Plasma Blaster Charge"
+msgstr "Zásobník plasmové pušky"
 
 #: ../base/ufos/weapons_tachyon.ufo:6
-msgid "Tachyonpistol"
+#, fuzzy
+msgid "Tachyon Pistol"
 msgstr "Tachyonová pistole"
 
 #: ../base/ufos/weapons_tachyon.ufo:23
-msgid "Tachyonpistol Clip"
+#, fuzzy
+msgid "Tachyon Pistol Clip"
 msgstr "Zásobník tachyonové pistole"
 
-#: ../base/ufos/weapons_tachyon.ufo:77
+#: ../base/ufos/weapons_tachyon.ufo:78
 msgid "Tachyon Rifle"
 msgstr "Tachyonová puška"
 
-#: ../base/ufos/weapons_tachyon.ufo:94
+#: ../base/ufos/weapons_tachyon.ufo:95
 msgid "Tachyon Rifle Charge"
 msgstr "Zásobník tachyonové pušky"
 
-#: ../base/ufos/weapons_tachyon.ufo:106 ../base/ufos/weapons_tachyon.ufo:200
+#: ../base/ufos/weapons_tachyon.ufo:107 ../base/ufos/weapons_tachyon.ufo:202
 msgid "Rapid Shots"
 msgstr "Dávka"
 
-#: ../base/ufos/weapons_tachyon.ufo:125
+#: ../base/ufos/weapons_tachyon.ufo:126
 msgid "Charged Blast"
 msgstr ""
 
-#: ../base/ufos/weapons_tachyon.ufo:152
+#: ../base/ufos/weapons_tachyon.ufo:154
 msgid "Tachyon Sniper Rifle"
 msgstr "Tachyonová ostřelovačská puška"
 
-#: ../base/ufos/weapons_tachyon.ufo:169
+#: ../base/ufos/weapons_tachyon.ufo:171
 msgid "Tachyon Sniper Charge"
 msgstr "Zásobník tachyonové ostřelovačské pušky"
 
@@ -2386,9 +2492,9 @@ msgstr "Na tuto stavbu není dostatek peněz\n"
 
 #: client/cl_basemanagement.c:254 client/cl_basemanagement.c:1785
 #: client/cl_campaign.c:373 client/cl_campaign.c:606 client/cl_campaign.c:653
-#: client/cl_campaign.c:972 client/cl_campaign.c:1137
-#: client/cl_campaign.c:1147 client/cl_campaign.c:1160
-#: client/cl_campaign.c:1174 client/cl_campaign.c:1365
+#: client/cl_campaign.c:973 client/cl_campaign.c:1138
+#: client/cl_campaign.c:1148 client/cl_campaign.c:1161
+#: client/cl_campaign.c:1175 client/cl_campaign.c:1366
 #: client/cl_campaign.c:2178 client/cl_campaign.c:2214
 #: client/cl_campaign.c:2216 client/cl_menu.c:1045 client/cl_research.c:515
 #: client/cl_research.c:637 client/cl_research.c:640 client/cl_research.c:644
@@ -2540,38 +2646,38 @@ msgstr "Cizácká činnost"
 msgid "Alien activity has been reported."
 msgstr "Byla hlášena cizácká aktivita."
 
-#: client/cl_campaign.c:972
+#: client/cl_campaign.c:973
 msgid "Assign a team to aircraft"
 msgstr "Přiděl k letounu tým"
 
-#: client/cl_campaign.c:1137
+#: client/cl_campaign.c:1138
 msgid "UFO appears on our radar"
 msgstr ""
 
-#: client/cl_campaign.c:1147
+#: client/cl_campaign.c:1148
 msgid "UFO disappears on our radar"
 msgstr ""
 
-#: client/cl_campaign.c:1159
+#: client/cl_campaign.c:1160
 #, c-format
 msgid "The mission expired and %i civilians died. You've lost %i credits."
 msgstr "Možnost zásahu vypršela a %i civilistů zemřel. Přišel jsi o %i c."
 
-#: client/cl_campaign.c:1174
+#: client/cl_campaign.c:1175
 msgid "Your dropship has low fuel and returns to base"
 msgstr "Transportér má málo paliva a vrací se na základnu"
 
-#: client/cl_campaign.c:1364
+#: client/cl_campaign.c:1365
 #, c-format
 msgid "Gained %i credits from nation %s"
 msgstr ""
 
-#: client/cl_campaign.c:1404
+#: client/cl_campaign.c:1405
 #, c-format
 msgid "%02i:%i%i"
 msgstr ""
 
-#: client/cl_campaign.c:1508
+#: client/cl_campaign.c:1509
 #, c-format
 msgid ""
 "Missions:\n"
@@ -2584,11 +2690,11 @@ msgstr ""
 "Základny:\n"
 "vybudované:\t%i\tnapadené:\t%i\n"
 
-#: client/cl_campaign.c:2076
+#: client/cl_campaign.c:2072
 msgid "Assemble or load a team"
 msgstr "Sestav nebo nahraj tým"
 
-#: client/cl_campaign.c:2076
+#: client/cl_campaign.c:2072
 msgid "Note"
 msgstr "Poznámka"
 
@@ -2604,25 +2710,16 @@ msgstr "Vyhrál jsi bitvu"
 msgid "You've lost the battle"
 msgstr "Prohrál jsi bitvu"
 
-#: client/cl_campaign.c:2369
-#, c-format
-msgid "%s (%s) died on his last mission.\n"
-msgstr "%s (%s) na své poslední misi zemřel.\n"
-
-#: client/cl_campaign.c:2370
-msgid "Soldier died"
-msgstr "Voják zemřel"
-
-#: client/cl_campaign.c:2395
+#: client/cl_campaign.c:2378
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s byl povýšen na %s.\n"
 
-#: client/cl_campaign.c:2396
+#: client/cl_campaign.c:2379
 msgid "Soldier promoted"
 msgstr "Voják povýšen"
 
-#: client/cl_campaign.c:3305 client/cl_campaign.c:3329
+#: client/cl_campaign.c:3293 client/cl_campaign.c:3324
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -2691,7 +2788,7 @@ msgstr "Maximum vojáků na hráče:"
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maximum vojáků v týmu:"
 
-#: client/cl_main.c:1217
+#: client/cl_main.c:1219
 msgid "unnamed"
 msgstr "bezejmenný"
 
@@ -2703,6 +2800,14 @@ msgstr ""
 msgid "Settings doesn't make sense"
 msgstr "Nastavení nedává smysl"
 
+#: client/cl_menu.c:1461 client/cl_menu.c:1521
+#, fuzzy, c-format
+msgid ""
+"Location: %s\n"
+"Type: %s\n"
+"Objective: %s\n"
+msgstr "Místo: Gobabis\\Typ: Místo havárie\\Úkol: Zajistit oblast"
+
 #: client/cl_menu.c:1528
 msgid "Night"
 msgstr "Noc"
@@ -2711,7 +2816,7 @@ msgstr "Noc"
 msgid "Day"
 msgstr "Den"
 
-#: client/cl_menu.c:2145 client/cl_menu.c:2178
+#: client/cl_menu.c:2148 client/cl_menu.c:2181
 msgid ""
 "Select the desired location of the\n"
 "new base on the map.\n"
@@ -2719,7 +2824,7 @@ msgstr ""
 "Vyber na mapě umístění\n"
 "nové základny.\n"
 
-#: client/cl_menu.c:2149 client/cl_menu.c:2182
+#: client/cl_menu.c:2152 client/cl_menu.c:2185
 msgid ""
 "Aliens are attacking our base\n"
 "at this very moment.\n"
@@ -2727,11 +2832,11 @@ msgstr ""
 "Cizáci právě teď útočí\n"
 "na naši základnu.\n"
 
-#: client/cl_menu.c:2153 client/cl_menu.c:2186
+#: client/cl_menu.c:2156 client/cl_menu.c:2189
 msgid "Select ufo or mission on map\n"
 msgstr "Vyber na mapě ufo nebo misi\n"
 
-#: client/cl_menu.c:2190
+#: client/cl_menu.c:2193
 #, fuzzy
 msgid "UFO in radar range\n"
 msgstr "%s má záchvat amoku!\n"
@@ -2859,26 +2964,26 @@ msgstr "Výzkum dokončen"
 msgid "No description available."
 msgstr "Popis není dostupný."
 
-#: client/cl_team.c:520
+#: client/cl_team.c:521
 #, c-format
 msgid "%i of %i"
 msgstr "%i z %i"
 
-#: client/cl_team.c:691
+#: client/cl_team.c:697
 msgid "NewTeam"
 msgstr "NovýTým"
 
-#: client/cl_team.c:1045
+#: client/cl_team.c:1080
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Cizáků zabito\t%i\n"
 
-#: client/cl_team.c:1047
+#: client/cl_team.c:1082
 #, fuzzy, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "%s zabil\t%i\n"
 
-#: client/cl_team.c:1053
+#: client/cl_team.c:1088
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -2887,7 +2992,7 @@ msgstr ""
 "Přeživší cizáci\t%i\n"
 "\n"
 
-#: client/cl_team.c:1055
+#: client/cl_team.c:1090
 #, fuzzy, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -2896,17 +3001,17 @@ msgstr ""
 "%s survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1058
+#: client/cl_team.c:1093
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Ztráty\t%i\n"
 
-#: client/cl_team.c:1059
+#: client/cl_team.c:1094
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1060
+#: client/cl_team.c:1095
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -2915,22 +3020,22 @@ msgstr ""
 "Přeživší vojáci\t%i\n"
 "\n"
 
-#: client/cl_team.c:1073
+#: client/cl_team.c:1108
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:1075
+#: client/cl_team.c:1110
 #, fuzzy, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:1076
+#: client/cl_team.c:1111
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civilistů zabitých tvým týmem\t%i\n"
 
-#: client/cl_team.c:1077
+#: client/cl_team.c:1112
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -2941,22 +3046,22 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1097
+#: client/cl_team.c:1132
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr "Získaná cizácká technologie\t%i c\n"
 
-#: client/cl_team.c:1101
+#: client/cl_team.c:1136
 #, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr "Cizáků zabito\t%i $\n"
 
-#: client/cl_team.c:1105
+#: client/cl_team.c:1140
 #, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr "Zachránění civilisté\t%i c\n"
 
-#: client/cl_team.c:1108
+#: client/cl_team.c:1143
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -2967,7 +3072,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1112
+#: client/cl_team.c:1147
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr "Noví rekruti\t%i\n"
@@ -3201,6 +3306,83 @@ msgstr "Nelze provést - není munice!\n"
 #: game/g_client.c:1954
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Nelze provést - nedostatek munice!\n"
+
+#~ msgid "Location: Asyut\\Type: Terror Attack\\Objective: Protect inhabitants"
+#~ msgstr "Místo: Asyut\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+
+#, fuzzy
+#~ msgid "Objective: Protect inhabitants"
+#~ msgstr "Místo: Asyut\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+
+#~ msgid ""
+#~ "Location: Gwandaf\\Type: Terror Attack\\Objective: Protect inhabitants"
+#~ msgstr "Místo: Gwandaf\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+
+#~ msgid ""
+#~ "Location: Uppsala\\Type: Terror Attack\\Objective: Protect inhabitants"
+#~ msgstr "Místo: Uppsala\\Typ: Cizácký terror\\Úkol: Ochránit obyvatelstvo"
+
+#~ msgid ""
+#~ "Location: Revelstoke\\Type: Landed Alien Ship\\Objective: Secure Alien "
+#~ "Ship before Liftoff"
+#~ msgstr ""
+#~ "Místo: Revelstoke\\Typ: Přistání cizácké lodi\\Úkol: Zajistit cizáckou "
+#~ "loď než uletí"
+
+#~ msgid ""
+#~ "Location: Marina Serra\\Type: Terror Attack\\Objective: Protect "
+#~ "inhabitants"
+#~ msgstr ""
+#~ "Místo: Marina Serra\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+
+#~ msgid ""
+#~ "Location: Morioka\\Type: Alien Hideout\\Objective: Eliminate intruders"
+#~ msgstr "Místo: Morioka\\Typ: Cizácký úkryt\\Úkol: Zlikvidovat vetřelce"
+
+#~ msgid ""
+#~ "Location: Tazovskij\\Type: Terror Attack\\Objective: Protect inhabitants"
+#~ msgstr "Místo: Tazovsk\\Type: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+
+#~ msgid ""
+#~ "Location: Mackay\\Type: Terror Attack\\Objective: Protect inhabitants"
+#~ msgstr "Místo: Mackay\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+
+#~ msgid ""
+#~ "Location: Tabelbala\\Type: Terror Attack\\Objective: Protect inhabitants"
+#~ msgstr "Místo: Tabelbala\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+
+#~ msgid "Location: Fargo\\Type: Terror Attack\\Objective: Protect inhabitants"
+#~ msgstr "Místo: Fargo\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+
+#~ msgid ""
+#~ "Location: Grenchen\\Type: Terror Attack\\Objective: Protect inhabitants"
+#~ msgstr "Místo: Grenchen\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+
+#~ msgid "Location: Lille\\Type: Terror Attack\\Objective: Protect inhabitants"
+#~ msgstr "Místo:Lille\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+
+#~ msgid ""
+#~ "Location: Albany\\Type: Terror Attack\\Objective: Protect inhabitants"
+#~ msgstr "Místo: Albany\\Typ: Cizácký teror\\Úkol: Ochránit obyvatelstvo"
+
+#~ msgid "Location: Shannon\\Type: Major Alien Intrusion\\Objective: Stop them"
+#~ msgstr "Místo: Shannon\\Typ: Velký cizácký průnik\\Úkol: Zastavit cizáky"
+
+#~ msgid "Activate"
+#~ msgstr "Aktivovat"
+
+#, fuzzy
+#~ msgid "Blade"
+#~ msgstr "Ostří"
+
+#~ msgid "Knife"
+#~ msgstr "Nůž"
+
+#~ msgid "%s (%s) died on his last mission.\n"
+#~ msgstr "%s (%s) na své poslední misi zemřel.\n"
+
+#~ msgid "Soldier died"
+#~ msgstr "Voják zemřel"
 
 #~ msgid ""
 #~ "We are going put you in charge of a\\mission of utmost importance. We've"
