@@ -1458,7 +1458,7 @@ void MN_Draw3DMapMarkers(menuNode_t * node, float latitude, float longitude)
 		re.Draw3DMapMarkers(latitude, longitude, "cross");
 
 		if (ms == selMis) {
-			menuText[TEXT_STANDARD] = ms->def->text;
+			menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s\n"), ms->def->location, ms->def->type, ms->def->text );
 			if (selMis->def->active)
 				re.Draw3DMapMarkers(latitude, longitude, "circleactive");
 			else
@@ -1518,7 +1518,7 @@ void MN_DrawMapMarkers(menuNode_t * node)
 			continue;
 		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
 		if (ms == selMis) {
-			menuText[TEXT_STANDARD] = ms->def->text;
+			menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s\n"), ms->def->location, ms->def->type, ms->def->text );
 			if (selMis->def->active) {
 				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circleactive");
 			} else
