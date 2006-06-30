@@ -1246,10 +1246,10 @@ menu equipment
 	// containers
 	// ==================
 
-	container right		{ pos "546 178" }
-	container left		{ pos "872 178" }
+	container right		{ pos "548 178" }
+	container left		{ pos "874 178" }
 	container armor		{ pos "700 100" invis true }
-	container backpack	{ pos "872 56" }
+	container backpack	{ pos "872 54" }
 	container belt		{ pos "569 273" }
 	container holster	{ pos "898 270" }
 	container equip		{ pos "397 370" }
