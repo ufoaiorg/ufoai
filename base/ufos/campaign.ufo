@@ -53,10 +53,10 @@
 //
 mission africa
 {
-	text		"_Location: Gwandaf\Type: Terror Attack\Objective: Protect inhabitants"
+	text		"_Location: Dongola\Type: Terror Attack\Objective: Protect inhabitants"
 	map			africa04
 	music		mission
-	pos			"-82 125"
+	pos			"-30 -120"
 	aliens		5
 	alienteam	alien
 	alienequip	campaign_alien
@@ -335,7 +335,7 @@ mission japan
 	text		"_Location: Morioka\Type: Alien Hideout\Objective: Eliminate intruders"
 	map			japan06
 	music		mission3
-	pos			"-141 40"
+	pos			"-140 129"
 	aliens		10
 	alienteam	alien
 	alienequip	campaign_alien
