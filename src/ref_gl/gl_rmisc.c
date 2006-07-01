@@ -125,7 +125,7 @@ void GL_ScreenShot_f (void)
 	buffer = malloc(c);
 	if (!buffer) {
 		ri.Sys_Error (ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", c);
-		return;	/* never riched. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 	}
 
 	memset (buffer, 0, 18);

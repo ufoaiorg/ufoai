@@ -424,7 +424,7 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 	out = malloc ( (pcx->ymax+1) * (pcx->xmax+1) );
 	if (!out) {
 		ri.Sys_Error (ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", (pcx->ymax+1) * (pcx->xmax+1));
-		return;	/* never riched. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 	}
 
 	*pic = out;
@@ -1354,7 +1354,7 @@ void R_FilterTexture (int filterindex, unsigned int *data, int width, int height
 	temp = malloc (temp_size);
 	if (!temp) {
 		ri.Sys_Error (ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", temp_size);
-		return;	/* never riched. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 	}
 
 	for (x = 0; x < width; x++) {
@@ -1598,7 +1598,7 @@ qboolean GL_Upload8 (byte *data, int width, int height, qboolean mipmap, imagety
 	trans = malloc (trans_size);
 	if (!trans) {
 		ri.Sys_Error (ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", trans_size);
-		return qfalse;	/* never riched. need for code analyst. */
+		return qfalse;	/* never reached. need for code analyst. */
 	}
 
 	if (s > trans_size/4)
@@ -2017,7 +2017,7 @@ int Draw_GetPalette (void)
 	LoadPCX ("pics/colormap.pcx", &pic, &pal, &width, &height);
 	if (!pal) {
 		ri.Sys_Error (ERR_FATAL, "Couldn't load pics/colormap.pcx");
-		return 0;	/* never riched. need for code analyst. */
+		return 0;	/* never reached. need for code analyst. */
 	}
 
 	for (i=0 ; i<256 ; i++) {

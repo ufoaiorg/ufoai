@@ -1540,11 +1540,11 @@ void Q_strncpyz(char *dest, const char *src, int destsize)
 #ifdef DEBUG
 	if (!dest) {
 		Sys_Error("Q_strncpyz: NULL dest (%s, %i)", file, line);
-		return;	/* never riched. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 	}
 	if (!src) {
 		Sys_Error("Q_strncpyz: NULL src (%s, %i)", file, line);
-		return;	/* never riched. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 	}
 	if (destsize < 1)
 		Sys_Error("Q_strncpyz: destsize < 1 (%s, %i)", file, line);
@@ -1796,7 +1796,7 @@ void Com_InitInventory(invList_t * invList)
 	assert(invList);
 #ifdef DEBUG
 	if (!invList)
-		return;	/* never riched. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 #endif
 
 	invUnused = invList;
@@ -1821,13 +1821,13 @@ qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, i
 	assert(i);
 #ifdef DEBUG
 	if (!i)
-		return qfalse;	/* never riched. need for code analyst. */
+		return qfalse;	/* never reached. need for code analyst. */
 #endif
 
 	assert((container >= 0) && (container < MAX_INVDEFS));
 #ifdef DEBUG
 	if ((container < 0) || (container >= MAX_INVDEFS))
-		return qfalse;	/* never riched. need for code analyst. */
+		return qfalse;	/* never reached. need for code analyst. */
 #endif
 
 	/* armor vs item */
@@ -1920,13 +1920,13 @@ invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x
 
 	if (!invUnused) {
 		Sys_Error("No free inventory space!\n");
-		return NULL;	/* never riched. need for code analyst. */
+		return NULL;	/* never reached. need for code analyst. */
 	}
 
 	assert(i);
 #ifdef DEBUG
 	if (!i)
-		return NULL;	/* never riched. need for code analyst. */
+		return NULL;	/* never reached. need for code analyst. */
 #endif
 
 	/* allocate space */
@@ -1955,7 +1955,7 @@ qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
 	assert(i);
 #ifdef DEBUG
 	if (!i)
-		return qfalse;	/* never riched. need for code analyst. */
+		return qfalse;	/* never reached. need for code analyst. */
 #endif
 
 	ic = i->c[container];
@@ -2006,7 +2006,7 @@ int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int t
 	assert((from >= 0) && (from < MAX_INVDEFS));
 #ifdef DEBUG
 	if ((from < 0) || (from >= MAX_INVDEFS))
-		return 0;	/* never riched. need for code analyst. */
+		return 0;	/* never reached. need for code analyst. */
 #endif
 
 	if (icp)
@@ -2114,7 +2114,7 @@ void Com_EmptyContainer(inventory_t * i, int container)
 	assert(i);
 #ifdef DEBUG
 	if (!i)
-		return;	/* never riched. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 #endif
 
 	ic = i->c[container];
@@ -2196,7 +2196,7 @@ void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility,
 	assert(chr);
 #ifdef DEBUG
 	if (!chr)
-		return;	/* never riched. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 #endif
 
 	retry = MAX_GENCHARRETRIES;
@@ -2274,13 +2274,13 @@ char *Com_CharGetBody(character_t * chr)
 	assert(chr);
 #ifdef DEBUG
 	if (!chr)
-		return NULL;	/* never riched. need for code analyst. */
+		return NULL;	/* never reached. need for code analyst. */
 #endif
 
 	assert(chr->inv);
 #ifdef DEBUG
 	if (!chr->inv)
-		return NULL;	/* never riched. need for code analyst. */
+		return NULL;	/* never reached. need for code analyst. */
 #endif
 
 	/* models of UGVs don't change - because they are already armored */
@@ -2303,13 +2303,13 @@ char *Com_CharGetHead(character_t * chr)
 	assert(chr);
 #ifdef DEBUG
 	if (!chr)
-		return NULL;	/* never riched. need for code analyst. */
+		return NULL;	/* never reached. need for code analyst. */
 #endif
 
 	assert(chr->inv);
 #ifdef DEBUG
 	if (!chr->inv)
-		return NULL;	/* never riched. need for code analyst. */
+		return NULL;	/* never reached. need for code analyst. */
 #endif
 
 	/* models of UGVs don't change - because they are already armored */

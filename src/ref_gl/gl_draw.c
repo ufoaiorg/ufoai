@@ -433,7 +433,7 @@ void Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data
 	image32 = malloc (img_size);
 	if (!image32) {
 		ri.Sys_Error (ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", img_size);
-		return;	/* never riched. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 	}
 
 	GL_Bind (0);
@@ -543,7 +543,7 @@ void Draw_DayAndNight( int x, int y, int w, int h, float p, float q, float cx, f
 	assert(DaN);
 #ifdef DEBUG
 	if (!DaN)
-		return;	/* never riched. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 #endif
 
 	GL_Bind( DaN->texnum );
@@ -927,7 +927,7 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 	assert(DaN);
 #ifdef DEBUG
 	if (!DaN)
-		return;	/* never riched. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 #endif
 
 	GL_Bind( DaN->texnum );

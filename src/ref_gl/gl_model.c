@@ -56,7 +56,7 @@ mleaf_t *Mod_PointInLeaf (vec3_t p, model_t *model)
 
 	if (!model || !model->nodes) {
 		ri.Sys_Error (ERR_DROP, "Mod_PointInLeaf: bad model");
-		return NULL;	/* never riched. need for code analyst. */
+		return NULL;	/* never reached. need for code analyst. */
 	}
 
 	node = model->nodes;
@@ -750,12 +750,12 @@ void R_AddMapTile( char *name, int sX, int sY, int sZ )
 	/* get new model */
 	if ((mod_numknown < 0) || (mod_numknown >= MAX_MOD_KNOWN)) {
 		ri.Sys_Error( ERR_DROP, "mod_numknown >= MAX_MOD_KNOWN" );
-		return; /* never riched. need for code analyst. */
+		return; /* never reached. need for code analyst. */
 	}
 
 	if ((rNumTiles < 0) || (rNumTiles >= MAX_MAPTILES)) {
 		ri.Sys_Error( ERR_DROP, "Too many map tiles" );
-		return; /* never riched. need for code analyst. */
+		return; /* never reached. need for code analyst. */
 	}
 
 	/* alloc model and tile */
@@ -768,7 +768,7 @@ void R_AddMapTile( char *name, int sX, int sY, int sZ )
 	modfilelen = ri.FS_LoadFile (loadmodel->name, (void**)&buffer);
 	if (!buffer) {
 		ri.Sys_Error (ERR_DROP, "Mod_LoadBrushModel: %s not found", loadmodel->name);
-		return;	/* never riched. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 	}
 
 	/* init */
