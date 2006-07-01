@@ -421,14 +421,20 @@ extern unsigned	r_rawpalette[256];
 
 void Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data)
 {
-	unsigned	image32[256*256];
+	unsigned	*image32;
+	size_t		img_size = 256*256 * sizeof(image32[0]);
 	int			i, j, trows;
 	byte		*source;
 	int			frac, fracstep;
 	float		hscale;
 	int			row;
 	float		t;
-	unsigned *dest;
+
+	image32 = malloc (img_size);
+	if (!image32) {
+		ri.Sys_Error (ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", img_size);
+		return;	/* never riched. need for code analyst. */
+	}
 
 	GL_Bind (0);
 
@@ -442,9 +448,12 @@ void Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data
 	t = rows*hscale / 256;
 
 	for (i=0 ; i<trows ; i++) {
+		unsigned *dest;
+
 		row = (int)(i*hscale);
 		if (row > rows)
 			break;
+
 		source = data + cols*row;
 		dest = &image32[i*256];
 		fracstep = cols*0x10000/256;
@@ -456,6 +465,7 @@ void Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data
 	}
 
 	qglTexImage2D (GL_TEXTURE_2D, 0, gl_solid_format, 256, 256, 0, GL_RGBA, GL_UNSIGNED_BYTE, image32);
+	free (image32);
 
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -529,6 +539,12 @@ void Draw_DayAndNight( int x, int y, int w, int h, float p, float q, float cx, f
 		GL_CalcDayAndNight( q );
 		lastQ = q;
 	}
+
+	assert(DaN);
+#ifdef DEBUG
+	if (!DaN)
+		return;	/* never riched. need for code analyst. */
+#endif
 
 	GL_Bind( DaN->texnum );
 	qglEnable( GL_TEXTURE_2D );
@@ -907,6 +923,12 @@ void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, floa
 		GL_CalcDayAndNight( q );
 		lastQ = q;
 	}
+
+	assert(DaN);
+#ifdef DEBUG
+	if (!DaN)
+		return;	/* never riched. need for code analyst. */
+#endif
 
 	GL_Bind( DaN->texnum );
 	qglEnable( GL_TEXTURE_2D );

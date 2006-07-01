@@ -422,6 +422,10 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 	}
 
 	out = malloc ( (pcx->ymax+1) * (pcx->xmax+1) );
+	if (!out) {
+		ri.Sys_Error (ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", (pcx->ymax+1) * (pcx->xmax+1));
+		return;	/* never riched. need for code analyst. */
+	}
 
 	*pic = out;
 
@@ -1344,9 +1348,14 @@ void R_FilterTexture (int filterindex, unsigned int *data, int width, int height
 	int filterX;
 	int filterY;
 	unsigned int *temp;
+	int temp_size = width * height * 4;
 
 	/* allocate a temp buffer */
-	temp = malloc (width * height * 4);
+	temp = malloc (temp_size);
+	if (!temp) {
+		ri.Sys_Error (ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", temp_size);
+		return;	/* never riched. need for code analyst. */
+	}
 
 	for (x = 0; x < width; x++) {
 		for (y = 0; y < height; y++) {
@@ -1580,13 +1589,19 @@ Returns has_alpha
 */
 qboolean GL_Upload8 (byte *data, int width, int height, qboolean mipmap, imagetype_t type )
 {
-	unsigned	trans[512*256];
-	int			i, s;
-	int			p;
+	unsigned	*trans;
+	size_t		trans_size = 512*256 * sizeof(trans[0]);
+	int			s = width*height;
+	int			i, p;
+	qboolean    ret;
 
-	s = width*height;
+	trans = malloc (trans_size);
+	if (!trans) {
+		ri.Sys_Error (ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", trans_size);
+		return qfalse;	/* never riched. need for code analyst. */
+	}
 
-	if (s > sizeof(trans)/4)
+	if (s > trans_size/4)
 		ri.Sys_Error (ERR_DROP, "GL_Upload8: too large");
 
 	for (i=0 ; i<s ; i++) {
@@ -1614,7 +1629,10 @@ qboolean GL_Upload8 (byte *data, int width, int height, qboolean mipmap, imagety
 		}
 	}
 
-	return GL_Upload32 (trans, width, height, mipmap, qtrue, type);
+	ret = GL_Upload32 (trans, width, height, mipmap, qtrue, type);
+	free (trans);
+
+	return ret; 
 }
 
 
@@ -1997,8 +2015,10 @@ int Draw_GetPalette (void)
 
 	/* get the palette */
 	LoadPCX ("pics/colormap.pcx", &pic, &pal, &width, &height);
-	if (!pal)
+	if (!pal) {
 		ri.Sys_Error (ERR_FATAL, "Couldn't load pics/colormap.pcx");
+		return 0;	/* never riched. need for code analyst. */
+	}
 
 	for (i=0 ; i<256 ; i++) {
 		r = pal[i*3+0];

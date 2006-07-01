@@ -121,21 +121,26 @@ void GL_ScreenShot_f (void)
 		return;
 	}
 
-	buffer = malloc(vid.width*vid.height*3 + 18);
+	c = vid.width*vid.height*3 + 18;
+	buffer = malloc(c);
+	if (!buffer) {
+		ri.Sys_Error (ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", c);
+		return;	/* never riched. need for code analyst. */
+	}
+
 	memset (buffer, 0, 18);
 	/* uncompressed type */
 	buffer[2] = 2;
-	buffer[12] = vid.width&255;
-	buffer[13] = vid.width>>8;
-	buffer[14] = vid.height&255;
-	buffer[15] = vid.height>>8;
+	buffer[12] = vid.width & 255;
+	buffer[13] = vid.width >> 8;
+	buffer[14] = vid.height & 255;
+	buffer[15] = vid.height >> 8;
 	/* pixel size */
 	buffer[16] = 24;
 
 	qglReadPixels (0, 0, vid.width, vid.height, GL_RGB, GL_UNSIGNED_BYTE, buffer+18 );
 
 	/* swap rgb to bgr */
-	c = 18+vid.width*vid.height*3;
 	for (i=18 ; i<c ; i+=3) {
 		temp = buffer[i];
 		buffer[i] = buffer[i+2];

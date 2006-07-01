@@ -34,6 +34,12 @@ void Anim_Append( animState_t *as, model_t *mod, char *name )
 {
 	manim_t	*anim;
 
+	assert(as->ladd < MAX_ANIMLIST);
+#ifdef DEBUG
+	if (as->ladd >= MAX_ANIMLIST)
+		return;	/* never riched. need for code analyst. */
+#endif
+
 	if ( !mod || mod->type != mod_alias ) return;
 
 	/* get animation */
@@ -72,6 +78,12 @@ Anim_Change
 void Anim_Change( animState_t *as, model_t *mod, char *name )
 {
 	manim_t	*anim;
+
+	assert(as->ladd < MAX_ANIMLIST);
+#ifdef DEBUG
+	if (as->ladd >= MAX_ANIMLIST)
+		return;	/* never riched. need for code analyst. */
+#endif
 
 	if ( !mod || mod->type != mod_alias ) return;
 
@@ -121,6 +133,12 @@ void Anim_Run( animState_t *as, model_t *mod, int msec )
 {
 	manim_t	*anim;
 
+	assert(as->lcur < MAX_ANIMLIST);
+#ifdef DEBUG
+	if (as->lcur >= MAX_ANIMLIST)
+		return;	/* never riched. need for code analyst. */
+#endif
+
 	if ( !mod || mod->type != mod_alias ) return;
 
 	if ( as->lcur == as->ladd )
@@ -169,6 +187,12 @@ Anim_GetName
 char *Anim_GetName( animState_t *as, model_t *mod )
 {
 	manim_t	*anim;
+
+	assert(as->lcur < MAX_ANIMLIST);
+#ifdef DEBUG
+	if (as->lcur >= MAX_ANIMLIST)
+		return NULL;	/* never riched. need for code analyst. */
+#endif
 
 	if ( !mod || mod->type != mod_alias ) return NULL;
 
