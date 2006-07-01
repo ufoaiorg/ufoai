@@ -291,13 +291,9 @@ MainWndProc
 main window procedure
 ====================
 */
-LONG WINAPI MainWndProc (
-    HWND    hWnd,
-    UINT    uMsg,
-    WPARAM  wParam,
-    LPARAM  lParam)
+LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 {
-	LONG			lRet = 0;
+	LRESULT lRet = 0;
 
 	if ( uMsg == MSH_MOUSEWHEEL )
 	{

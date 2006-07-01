@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_BASEMANGEMENT_H
 #define CLIENT_CL_BASEMANGEMENT_H
 
-#define	BSFS(x)	(int)&(((building_t *)0)->x)
+#define	BSFS(x)	(size_t)&(((building_t *)0)->x)
 
 #define	PRODFS(x)	(int)&(((production_t *)0)->x)
 

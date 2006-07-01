@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-#define	SHADERFS(x)	(int)&(((shader_t *)0)->x)
+#define	SHADERFS(x)	(size_t)&(((shader_t *)0)->x)
 
 int r_numshaders;
 

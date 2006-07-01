@@ -805,8 +805,8 @@ void CL_InitMessageSystem(void);
 #include "cl_campaign.h"
 
 /* cl_menu.c */
-#define	NOFS(x)		(int)&(((menuNode_t *)0)->x)
-#define	MENUMODELFS(x)		(int)&(((menuModel_t *)0)->x)
+#define	NOFS(x)				(size_t)&(((menuNode_t *)0)->x)
+#define	MENUMODELFS(x)		(size_t)&(((menuModel_t *)0)->x)
 
 #define MAX_MENUS			64
 #define MAX_MENUNODES		2048

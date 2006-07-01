@@ -1170,7 +1170,7 @@ void CL_ParseResults(sizebuf_t * buf)
 
 /* ======= RANKS & MEDALS =========*/
 /*#define	PARSEMEDALS(x)	(int)&(((xxx_t *)0)->x) */
-#define	PARSERANKS(x)	(int)&(((rank_t *)0)->x)
+#define	PARSERANKS(x)	(size_t)&(((rank_t *)0)->x)
 
 value_t rankValues[] =
 {
@@ -1236,7 +1236,7 @@ void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 	}
 }
 
-#define	PARSEUGV(x)	(int)&(((ugv_t *)0)->x)
+#define	PARSEUGV(x)	(size_t)&(((ugv_t *)0)->x)
 
 value_t ugvValues[] =
 {

@@ -82,7 +82,7 @@ char *ne_strings[NE_NUM_NODEEVENT] = {
 	"out"
 };
 
-int ne_values[NE_NUM_NODEEVENT] = {
+size_t ne_values[NE_NUM_NODEEVENT] = {
 	0,
 	NOFS(click),
 	NOFS(rclick),
@@ -3519,7 +3519,7 @@ font_t fonts[MAX_FONTS];
 font_t *fontBig;
 font_t *fontSmall;
 
-#define	FONTFS(x)		(int)&(((font_t *)0)->x)
+#define	FONTFS(x)		(size_t)&(((font_t *)0)->x)
 
 value_t fontValues[] = {
 	{"font", V_TRANSLATION2_STRING, FONTFS(path)},
@@ -3642,7 +3642,7 @@ void CL_InitFonts(void)
 
 /* ===================== USE_SDL_TTF stuff end ====================== */
 
-#define	PARSETUT(x)	(int)&(((tutorial_t *)0)->x)
+#define	PARSETUT(x)	(size_t)&(((tutorial_t *)0)->x)
 
 value_t tutValues[] = {
 	{"name", V_TRANSLATION_STRING, PARSETUT(name)}

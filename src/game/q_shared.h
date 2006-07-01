@@ -739,7 +739,7 @@ extern char *fade_names[FADE_LAST];
 typedef struct value_s {
 	char *string;
 	int type;
-	int ofs;
+	size_t ofs;
 } value_t;
 
 int Com_ParseValue(void *base, char *token, int type, int ofs);

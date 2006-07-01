@@ -91,7 +91,7 @@ typedef struct technology_s {
 	int next;					/* Next tech in pedia. */
 } technology_t;
 
-#define	TECHFS(x)	(int)&(((technology_t *)0)->x)
+#define	TECHFS(x)	(size_t)&(((technology_t *)0)->x)
 
 /* use this for saving and allocating */
 /*extern	technology_t	technologies[MAX_TECHNOLOGIES]; */

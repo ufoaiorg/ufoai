@@ -16,8 +16,8 @@ char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] =
 	"explosive"
 };
 
-#define	ODOFS(x)	(int)&(((objDef_t *)0)->x)
-#define	FDOFS(x)	(int)&(((fireDef_t *)0)->x)
+#define	ODOFS(x)	(size_t)&(((objDef_t *)0)->x)
+#define	FDOFS(x)	(size_t)&(((fireDef_t *)0)->x)
 
 typedef enum objdefs
 {
@@ -277,7 +277,7 @@ void Com_ParseItem( char *name, char **text )
 
 ==============================================================================*/
 
-#define	IDOFS(x)	(int)&(((invDef_t *)0)->x)
+#define	IDOFS(x)	(size_t)&(((invDef_t *)0)->x)
 
 value_t idps[] =
 {
@@ -804,7 +804,7 @@ void Com_ParseActors( char *title, char **text )
 	} while ( *text );
 }
 
-#define	PARSETEAMDESC(x)	(int)&(((teamDesc_t *)0)->x)
+#define	PARSETEAMDESC(x)	(size_t)&(((teamDesc_t *)0)->x)
 
 value_t teamDescValues[] =
 {

@@ -2485,7 +2485,7 @@ void CL_MapActionReset(void)
 
 /* =========================================================== */
 
- #define	MISSIONOFS(x)	(int)&(((mission_t *)0)->x)
+ #define	MISSIONOFS(x)	(size_t)&(((mission_t *)0)->x)
 
 value_t mission_vals[] = {
 	{"location", V_TRANSLATION_STRING, MISSIONOFS(location)}
@@ -2622,7 +2622,7 @@ void CL_ParseMission(char *name, char **text)
 /* =========================================================== */
 
 
-#define	STAGESETOFS(x)	(int)&(((stageSet_t *)0)->x)
+#define	STAGESETOFS(x)	(size_t)&(((stageSet_t *)0)->x)
 
 value_t stageset_vals[] = {
 	{"needed", V_STRING, STAGESETOFS(needed)}
@@ -2791,7 +2791,7 @@ void CL_ParseStage(char *name, char **text)
 
 /* =========================================================== */
 
-#define	CAMPAIGNOFS(x)	(int)&(((campaign_t *)0)->x)
+#define	CAMPAIGNOFS(x)	(size_t)&(((campaign_t *)0)->x)
 
 value_t campaign_vals[] = {
 	{"team", V_STRING, CAMPAIGNOFS(team)}
@@ -2891,7 +2891,7 @@ void CL_ParseCampaign(char *id, char **text)
 
 /* =========================================================== */
 
-#define	AIRFS(x)	(int)&(((aircraft_t *)0)->x)
+#define	AIRFS(x)	(size_t)&(((aircraft_t *)0)->x)
 
 value_t aircraft_vals[] = {
 	{"name", V_TRANSLATION_STRING, AIRFS(name)}
@@ -3005,7 +3005,7 @@ void CL_ParseAircraft(char *name, char **text)
 
 /* =========================================================== */
 
-#define	NATFS(x)	(int)&(((nation_t *)0)->x)
+#define	NATFS(x)	(size_t)&(((nation_t *)0)->x)
 
 value_t nation_vals[] = {
 	{"name", V_TRANSLATION_STRING, NATFS(name)}

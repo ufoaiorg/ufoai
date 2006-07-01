@@ -2147,11 +2147,7 @@ void CM_MakeTnodes( void )
 
 	/* 32 byte align the structs */
 	curTile->tnodes = Hunk_Alloc( (curTile->numnodes+1) * sizeof(tnode_t) );
-#ifndef __x86_64__
-	curTile->tnodes = (tnode_t *)(((int)curTile->tnodes + 31)&~31);
-#else
-	curTile->tnodes = (tnode_t *)(((ptrdiff_t)curTile->tnodes + 31)&~31);
-#endif
+	curTile->tnodes = (tnode_t *)(((size_t)curTile->tnodes + 31) & ~31);
 	tnode_p = curTile->tnodes;
 
 	curTile->numtheads = 0;

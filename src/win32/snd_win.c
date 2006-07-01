@@ -439,9 +439,9 @@ Crappy windows multimedia base
 */
 qboolean SNDDMA_InitWav (void)
 {
-	WAVEFORMATEX  format;
-	int				i;
-	HRESULT			hr;
+	WAVEFORMATEX format;
+	int i;
+	MMRESULT hr;
 
 	Com_Printf( "Initializing wave sound\n" );
 

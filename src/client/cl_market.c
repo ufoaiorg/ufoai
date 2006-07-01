@@ -85,7 +85,7 @@ static void AIR_GetStorageSupplyCount(char *aircraft, int *storage, int *supply)
 			continue;
 		for (j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++)
 			if (!Q_strncmp(air->id, aircraft, MAX_VAR))
-				*storage++;
+				(*storage)++;
 	}
 	if (*storage < MAX_AIRCRAFT_STORAGE)
 		*supply -= *storage;

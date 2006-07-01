@@ -33,8 +33,8 @@ int numMPs;
 
 /* */
 
-#define	PFOFS(x)	(int)&(((ptlDef_t *)0)->x)
-#define	PPOFS(x)	(int)&(((ptl_t *)0)->x)
+#define	PFOFS(x)	(size_t)&(((ptlDef_t *)0)->x)
+#define	PPOFS(x)	(size_t)&(((ptl_t *)0)->x)
 
 #define RADR(x)		((x < 0) ? (byte*)p-x : (byte*)pcmdData+x)
 #define RSTACK		-0xFFF0
@@ -67,7 +67,7 @@ char *pf_strings[PF_NUM_PTLFUNCS] = {
 	"think"
 };
 
-int pf_values[PF_NUM_PTLFUNCS] = {
+size_t pf_values[PF_NUM_PTLFUNCS] = {
 	PFOFS(init),
 	PFOFS(run),
 	PFOFS(think)

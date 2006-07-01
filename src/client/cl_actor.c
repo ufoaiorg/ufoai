@@ -319,9 +319,9 @@ void CL_ActorUpdateCVars(void)
 
 		/* get weapon */
 		if (cl.cmode > M_PEND_MOVE) {
-			selWeapon = (cl.cmode - M_PEND_FIRE_PR) / 2 ? LEFT(selActor) : RIGHT(selActor);
+			selWeapon = ((cl.cmode - M_PEND_FIRE_PR) / 2) ? LEFT(selActor) : RIGHT(selActor);
 		} else {
-			selWeapon = (cl.cmode - M_FIRE_PR) / 2 ? LEFT(selActor) : RIGHT(selActor);
+			selWeapon = ((cl.cmode - M_FIRE_PR) / 2) ? LEFT(selActor) : RIGHT(selActor);
 		}
 
 		if (!selWeapon && RIGHT(selActor) && csi.ods[RIGHT(selActor)->item.t].twohanded)

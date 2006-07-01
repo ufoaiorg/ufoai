@@ -414,7 +414,7 @@ void CL_ResetSequences(void)
 
 /* =========================================================== */
 
-#define	SEQCAMOFS(x)	(int)&(((seqCamera_t *)0)->x)
+#define	SEQCAMOFS(x)	(size_t)&(((seqCamera_t *)0)->x)
 
 value_t seqCamera_vals[] = {
 	{"origin", V_VECTOR, SEQCAMOFS(origin)},
@@ -428,7 +428,7 @@ value_t seqCamera_vals[] = {
 	{NULL, 0, 0},
 };
 
-#define	SEQENTOFS(x)	(int)&(((seqEnt_t *)0)->x)
+#define	SEQENTOFS(x)	(size_t)&(((seqEnt_t *)0)->x)
 
 value_t seqEnt_vals[] = {
 	{"name", V_STRING, SEQENTOFS(name)},
@@ -443,7 +443,7 @@ value_t seqEnt_vals[] = {
 	{NULL, 0, 0},
 };
 
-#define	SEQ2DOFS(x)	(int)&(((seq2D_t *)0)->x)
+#define	SEQ2DOFS(x)	(size_t)&(((seq2D_t *)0)->x)
 
 value_t seq2D_vals[] = {
 	{"name", V_STRING, SEQ2DOFS(name)},
