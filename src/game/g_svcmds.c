@@ -250,9 +250,9 @@ void SVCmd_WriteIP_f(void)
 	game = gi.cvar("game", "", 0);
 
 	if (!*game->string)
-		sprintf(name, "%s/listip.cfg", GAMEVERSION);
+		Com_sprintf(name, MAX_OSPATH, "%s/listip.cfg", GAMEVERSION);
 	else
-		sprintf(name, "%s/listip.cfg", game->string);
+		Com_sprintf(name, MAX_OSPATH, "%s/listip.cfg", game->string);
 
 	gi.cprintf(NULL, PRINT_HIGH, "Writing %s.\n", name);
 
@@ -361,8 +361,10 @@ void ServerCommand(void)
 		SVCmd_AI_Add_f();
 	else if (Q_stricmp(cmd, "win") == 0)
 		SVCmd_Win_f();
+#ifdef DEBUG
 	else if (Q_stricmp(cmd, "showall") == 0)
 		SVCmd_ShowAll_f();
+#endif
 	else
 		gi.cprintf(NULL, PRINT_HIGH, "Unknown server command \"%s\"\n", cmd);
 }

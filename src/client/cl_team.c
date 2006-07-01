@@ -1008,7 +1008,7 @@ void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
 /**
   * @brief Parses the character data which was send by G_SendCharacterData
   */
-void CL_ParseCharacterData(sizebuf_t *buf)
+void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 {
 	int ucn, i, j;
 	int num = MSG_ReadShort(buf);
@@ -1024,7 +1024,10 @@ void CL_ParseCharacterData(sizebuf_t *buf)
 		if (!chr)
 			Sys_Error("Could not get character with ucn: %i\n", ucn);
 		for (j=0; j<KILLED_NUM_TYPES; j++)
-			chr->kills[j] = MSG_ReadShort(buf);
+			if ( updateCharacter )
+				chr->kills[j] = MSG_ReadShort(buf);
+			else
+				MSG_ReadShort(buf);
 	}
 }
 
@@ -1061,8 +1064,6 @@ void CL_ParseResults(sizebuf_t * buf)
 	for (i = 0; i < num; i++)
 		for (j = 0; j < num; j++)
 			num_kills[i][j] = MSG_ReadByte(buf);
-
-	CL_ParseCharacterData(buf);
 
 	/* read terminator */
 	if (MSG_ReadByte(buf) != NONE)

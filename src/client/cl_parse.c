@@ -100,7 +100,7 @@ char *ev_format[] =
 	"sbbbb",			/* EV_INV_AMMO */
 
 	"s",				/* EV_MODEL_PERISH */
-	"s"					/* EV_MODEL_EXPLODE */
+	"s"				/* EV_MODEL_EXPLODE */
 };
 
 char *ev_names[] =

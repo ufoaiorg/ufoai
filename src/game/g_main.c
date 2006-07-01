@@ -434,6 +434,9 @@ void G_EndGame(int team)
 		  && ent->team == player->pers.team)
 			j++;
 
+	gi.WriteByte(NONE);
+	gi.EndEvents();
+
 	/* how many */
 	gi.WriteShort(j);
 
@@ -442,9 +445,6 @@ void G_EndGame(int team)
 		  && !(ent->state & STATE_DEAD)
 		  && ent->team == player->pers.team)
 			G_SendCharacterData(ent);
-
-	gi.WriteByte(NONE);
-	gi.EndEvents();
 }
 
 /*
