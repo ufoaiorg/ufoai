@@ -372,6 +372,7 @@ void ExitLevel(void)
   *
   * first short is the ucn to allow the client to identify the character
   * Parsed in CL_ParseCharacterData
+  * TODO: Handle retry missions
   */
 void G_SendCharacterData( edict_t* ent )
 {
@@ -380,7 +381,7 @@ void G_SendCharacterData( edict_t* ent )
 	assert(ent);
 #ifdef DEBUG
 	if (!ent)
-		return;	/* never riched. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 #endif
 
 	/* write character number */
@@ -390,11 +391,13 @@ void G_SendCharacterData( edict_t* ent )
 		gi.WriteShort(ent->chr.kills[k]);
 }
 
-/*
-=================
-G_EndGame
-=================
-*/
+/**
+  * @brief Handles the end of a game
+  *
+  * Called by game_abort command (or sv win [team])
+  * TODO: Handle mission retries (problem is that G_SendCharacterData
+  * will update the character stats regardless of a mission retry)
+  */
 void G_EndGame(int team)
 {
 	edict_t *ent;
