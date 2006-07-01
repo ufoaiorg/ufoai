@@ -501,8 +501,10 @@ int Font_DrawString (char *fontID, int align, int x, int y, int maxWidth, char *
 
 	/* get the font */
 	f = Font_GetFont( fontID );
-	if ( !f )
+	if ( !f ) {
 		ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", fontID );
+		return 0; /* never riched. need for code analyst. */
+	}
 
 	openGLSurface = Font_GetFromCache( c );
 	if ( openGLSurface ) {

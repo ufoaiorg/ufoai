@@ -581,6 +581,12 @@ int G_DoTurn(edict_t * ent, byte toDV)
 	int i, num;
 	int status;
 
+	assert(ent->dir <= 7);
+#ifdef DEBUG
+	if (ent->dir > 7)
+		return 0;	/* never riched. need for code analyst. */
+#endif
+
 	/* return if no rotation needs to be done */
 	if ((ent->dir) == (toDV & 7))
 		return 0;
@@ -765,6 +771,12 @@ void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int t
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - weapon already loaded!\n"));
 			return;
 		}
+
+		assert((gi.csi->idFloor >= 0) && (gi.csi->idFloor < MAX_CONTAINERS));
+#ifdef DEBUG
+		if ((gi.csi->idFloor < 0) || (gi.csi->idFloor >= MAX_CONTAINERS))
+			return;	/* never riched. need for code analyst. */
+#endif
 
 		/* successful inventory change */
 		if (from == gi.csi->idFloor) {
@@ -1507,6 +1519,15 @@ void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 		}
 	}
 
+	assert((attacker->team >= 0) && (attacker->team < MAX_TEAMS));
+	assert((ent->team >= 0) && (ent->team < MAX_TEAMS));
+#ifdef DEBUG
+	if ((attacker->team < 0) || (attacker->team >= MAX_TEAMS))
+		return;	/* never riched. need for code analyst. */
+	if ((ent->team < 0) || (ent->team >= MAX_TEAMS))
+		return;	/* never riched. need for code analyst. */
+#endif
+
 	if (ent->HP <= damage) {
 		/* die */
 		G_ActorDie(ent, STATE_DEAD);
@@ -1579,6 +1600,15 @@ void G_DamageStun(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 			ent->AP = armorDamage < ent->AP ? ent->AP - armorDamage : 0;
 		}
 	}
+
+	assert((attacker->team >= 0) && (attacker->team < MAX_TEAMS));
+	assert((ent->team >= 0) && (ent->team < MAX_TEAMS));
+#ifdef DEBUG
+	if ((attacker->team < 0) || (attacker->team >= MAX_TEAMS))
+		return;	/* never riched. need for code analyst. */
+	if ((ent->team < 0) || (ent->team >= MAX_TEAMS))
+		return;	/* never riched. need for code analyst. */
+#endif
 
 	if (ent->STUN <= damage) {
 		/* die */
@@ -2051,6 +2081,11 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 void G_ActorDie(edict_t * ent, int state)
 {
 	assert(ent);
+#ifdef DEBUG
+	if (!ent)
+		return;	/* never riched. need for code analyst. */
+#endif
+
 	gi.dprintf("G_ActorDie: kill actor on team %i\n", ent->team);
 	switch (state) {
 	case STATE_DEAD:

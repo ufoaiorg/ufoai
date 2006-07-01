@@ -32,6 +32,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <conio.h>
 #include "../win32/conproc.h"
 
+#if defined DEBUG && defined _MSC_VER
+#include <intrin.h>
+#endif
+
 #define MINIMUM_WIN_MEMORY	0x0a00000
 #define MAXIMUM_WIN_MEMORY	0x1000000
 
@@ -67,6 +71,10 @@ void Sys_Error (char *error, ...)
 {
 	va_list		argptr;
 	char		text[1024];
+
+#if defined DEBUG && defined _MSC_VER
+	__debugbreak();	/* break execution before game shutdown */
+#endif
 
 	CL_Shutdown ();
 	Qcommon_Shutdown ();

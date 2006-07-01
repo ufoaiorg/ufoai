@@ -33,6 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 
+#if defined DEBUG && defined _MSC_VER
+#include <intrin.h>
+#endif
+
 game_export_t *ge;
 
 
@@ -153,6 +157,10 @@ void PF_error(char *fmt, ...)
 {
 	char msg[1024];
 	va_list argptr;
+
+#if defined DEBUG && defined _MSC_VER
+	__debugbreak();	/* break execution before game shutdown */
+#endif
 
 	va_start(argptr, fmt);
 	vsprintf(msg, fmt, argptr);

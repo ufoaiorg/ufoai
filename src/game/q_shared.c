@@ -1230,7 +1230,7 @@ int LongNoSwap(int l)
 
 float FloatSwap(float f)
 {
-	union {
+	union float_u {
 		float f;
 		byte b[4];
 	} dat1, dat2;
@@ -1538,10 +1538,14 @@ void Q_strncpyz(char *dest, const char *src, int destsize)
 #endif
 {
 #ifdef DEBUG
-	if (!dest)
+	if (!dest) {
 		Sys_Error("Q_strncpyz: NULL dest (%s, %i)", file, line);
-	if (!src)
+		return;	/* never riched. need for code analyst. */
+	}
+	if (!src) {
 		Sys_Error("Q_strncpyz: NULL src (%s, %i)", file, line);
+		return;	/* never riched. need for code analyst. */
+	}
 	if (destsize < 1)
 		Sys_Error("Q_strncpyz: destsize < 1 (%s, %i)", file, line);
 #endif
@@ -1790,6 +1794,10 @@ void Com_InitInventory(invList_t * invList)
 	int i;
 
 	assert(invList);
+#ifdef DEBUG
+	if (!invList)
+		return;	/* never riched. need for code analyst. */
+#endif
 
 	invUnused = invList;
 	invUnused->next = NULL;
@@ -1811,6 +1819,17 @@ qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, i
 	int j;
 
 	assert(i);
+#ifdef DEBUG
+	if (!i)
+		return qfalse;	/* never riched. need for code analyst. */
+#endif
+
+	assert((container >= 0) && (container < MAX_INVDEFS));
+#ifdef DEBUG
+	if ((container < 0) || (container >= MAX_INVDEFS))
+		return qfalse;	/* never riched. need for code analyst. */
+#endif
+
 	/* armor vs item */
 	if (!Q_strncmp(CSI->ods[item].type, "armor", MAX_VAR)) {
 		if (!CSI->ids[container].armor && !CSI->ids[container].all)
@@ -1899,10 +1918,17 @@ invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x
 	if (item.t == NONE)
 		return NULL;
 
-	if (!invUnused)
+	if (!invUnused) {
 		Sys_Error("No free inventory space!\n");
+		return NULL;	/* never riched. need for code analyst. */
+	}
 
 	assert(i);
+#ifdef DEBUG
+	if (!i)
+		return NULL;	/* never riched. need for code analyst. */
+#endif
+
 	/* allocate space */
 	ic = i->c[container];
 	i->c[container] = invUnused;
@@ -1927,6 +1953,11 @@ qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
 	invList_t *ic, *old;
 
 	assert(i);
+#ifdef DEBUG
+	if (!i)
+		return qfalse;	/* never riched. need for code analyst. */
+#endif
+
 	ic = i->c[container];
 	if (!ic) {
 #ifdef DEBUG
@@ -1971,6 +2002,12 @@ int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int t
 	invList_t *ic;
 	int time;
 	item_t cacheItem2;
+
+	assert((from >= 0) && (from < MAX_INVDEFS));
+#ifdef DEBUG
+	if ((from < 0) || (from >= MAX_INVDEFS))
+		return 0;	/* never riched. need for code analyst. */
+#endif
 
 	if (icp)
 		*icp = NULL;
@@ -2075,6 +2112,11 @@ void Com_EmptyContainer(inventory_t * i, int container)
 #endif
 
 	assert(i);
+#ifdef DEBUG
+	if (!i)
+		return;	/* never riched. need for code analyst. */
+#endif
+
 	ic = i->c[container];
 	while (ic) {
 		old = ic;
@@ -2152,6 +2194,11 @@ void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility,
 	float max, min, rand_avg;
 
 	assert(chr);
+#ifdef DEBUG
+	if (!chr)
+		return;	/* never riched. need for code analyst. */
+#endif
+
 	retry = MAX_GENCHARRETRIES;
 	do {
 		/* Abilities */
@@ -2225,7 +2272,17 @@ returns the body model for the soldiers for armored and non armored soldiers
 char *Com_CharGetBody(character_t * chr)
 {
 	assert(chr);
+#ifdef DEBUG
+	if (!chr)
+		return NULL;	/* never riched. need for code analyst. */
+#endif
+
 	assert(chr->inv);
+#ifdef DEBUG
+	if (!chr->inv)
+		return NULL;	/* never riched. need for code analyst. */
+#endif
+
 	/* models of UGVs don't change - because they are already armored */
 	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL)
 		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->body);
@@ -2244,7 +2301,17 @@ returns the head model for the soldiers for armored and non armored soldiers
 char *Com_CharGetHead(character_t * chr)
 {
 	assert(chr);
+#ifdef DEBUG
+	if (!chr)
+		return NULL;	/* never riched. need for code analyst. */
+#endif
+
 	assert(chr->inv);
+#ifdef DEBUG
+	if (!chr->inv)
+		return NULL;	/* never riched. need for code analyst. */
+#endif
+
 	/* models of UGVs don't change - because they are already armored */
 	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL)
 		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].kurz, chr->head);

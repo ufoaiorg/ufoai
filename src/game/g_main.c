@@ -33,6 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+#if defined DEBUG && defined _MSC_VER
+#include <intrin.h>
+#endif
+
 game_locals_t game;
 level_locals_t level;
 game_import_t gi;
@@ -297,6 +301,10 @@ void Sys_Error(char *error, ...)
 	va_list argptr;
 	char text[1024];
 
+#if defined DEBUG && defined _MSC_VER
+	__debugbreak();	/* break execution before game shutdown */
+#endif
+
 	va_start(argptr, error);
 	vsprintf(text, error, argptr);
 	va_end(argptr);
@@ -368,7 +376,12 @@ void ExitLevel(void)
 void G_SendCharacterData( edict_t* ent )
 {
 	int k;
+
 	assert(ent);
+#ifdef DEBUG
+	if (!ent)
+		return;	/* never riched. need for code analyst. */
+#endif
 
 	/* write character number */
 	gi.WriteShort(ent->chr.ucn);
