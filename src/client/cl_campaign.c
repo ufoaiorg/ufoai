@@ -2130,7 +2130,10 @@ static void CL_GameGo(void)
 }
 
 /**
-  * @brief
+  * @brief Executes console commands after a mission
+  *
+  * Can execute console commands (triggers) on win and lose
+  * This can be used for story dependent missions
   */
 static void CP_ExecuteMissionTrigger(mission_t * m, int won)
 {
@@ -2141,7 +2144,11 @@ static void CP_ExecuteMissionTrigger(mission_t * m, int won)
 }
 
 /**
-  * @brief
+  * @brief Checks whether you have to play this mission
+  *
+  * You can mark a mission as story related.
+  * If a mission is story related the cvar game_autogo is set to 0
+  * If this cvar is 1 - the mission dialog will have a auto mission button
   */
 static void CL_GameAutoCheck(void)
 {
@@ -2400,7 +2407,7 @@ void CL_GameResultsCmd(void)
 	int tempMask;
 
 	/* multiplayer? */
-	if (!curCampaign)
+	if (!curCampaign || !selMis || !baseCurrent )
 		return;
 
 	/* check for replay */
@@ -2495,13 +2502,13 @@ value_t mission_vals[] = {
 	,
 	{"pos", V_POS, MISSIONOFS(pos)}
 	,
-	{"mask", V_RGBA, MISSIONOFS(mask)}
+	{"mask", V_RGBA, MISSIONOFS(mask)} /* color values from map mask this mission needs */
 	,
 	{"aliens", V_INT, MISSIONOFS(aliens)}
 	,
 	{"maxugv", V_INT, MISSIONOFS(ugv)}
 	,
-	{"commands", V_STRING, MISSIONOFS(cmds)}
+	{"commands", V_STRING, MISSIONOFS(cmds)} /* commands that are excuted when this mission gets active */
 	,
 	{"onwin", V_STRING, MISSIONOFS(onwin)}
 	,
