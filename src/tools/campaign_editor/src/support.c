@@ -179,3 +179,9 @@ char *va(char *format, ...)
 	return string;
 }
 
+char *bool_translate( int value )
+{
+	if ( value )
+		return "true";
+	return "false";
+}

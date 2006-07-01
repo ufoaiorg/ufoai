@@ -91,3 +91,4 @@ int file_exists (char *filename);
 int file_ext (char *filename, char *fileext);
 void file_strip_ext (char *in, char *out);
 char *va(char *format, ...);
+char *bool_translate( int value );

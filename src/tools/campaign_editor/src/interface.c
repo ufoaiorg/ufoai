@@ -60,11 +60,12 @@ GtkWidget* create_campaign_editor (void)
 	GtkWidget *help;
 	GtkWidget *help_menu;
 	GtkWidget *menu_item_info;
-	GtkWidget *geoscape_notebook;
+	GtkWidget *notebook;
 	GtkWidget *geoscape_scrolledwindow;
 	GtkWidget *geoscape_viewport;
 	GtkWidget *geoscape_image;
 	GtkWidget *geoscape_notebook_label;
+	GtkWidget *campaign_notebook_label;
 	GtkAccelGroup *accel_group;
 
 	accel_group = gtk_accel_group_new ();
@@ -117,19 +118,21 @@ GtkWidget* create_campaign_editor (void)
 	atko = gtk_widget_get_accessible (menu_item_info);
 	atk_object_set_name (atko, _("About"));
 
-	geoscape_notebook = gtk_notebook_new ();
-	gtk_widget_show (geoscape_notebook);
-	gtk_box_pack_start (GTK_BOX (editor_vbox), geoscape_notebook, TRUE, TRUE, 0);
+	notebook = gtk_notebook_new ();
+	gtk_widget_show (notebook);
+	gtk_box_pack_start (GTK_BOX (editor_vbox), notebook, TRUE, TRUE, 0);
 
 	geoscape_scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
 	gtk_widget_show (geoscape_scrolledwindow);
-	gtk_container_add (GTK_CONTAINER (geoscape_notebook), geoscape_scrolledwindow);
+	gtk_container_add (GTK_CONTAINER (notebook), geoscape_scrolledwindow);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (geoscape_scrolledwindow), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
 	geoscape_viewport = gtk_viewport_new (NULL, NULL);
 	gtk_widget_show (geoscape_viewport);
 	gtk_container_add (GTK_CONTAINER (geoscape_scrolledwindow), geoscape_viewport);
 
+	/* FIXME: First show a campaign selection dialog */
+	/* then load the given campaign map */
 	geoscape_image = create_pixmap (campaign_editor, "map_earth_day.jpg");
 	gtk_widget_show (geoscape_image);
 	gtk_container_add (GTK_CONTAINER (geoscape_viewport), geoscape_image);
@@ -145,9 +148,13 @@ GtkWidget* create_campaign_editor (void)
 						| GDK_POINTER_MOTION_MASK
 						| GDK_POINTER_MOTION_HINT_MASK);
 
-	geoscape_notebook_label = gtk_label_new ("Geoscape");
+	geoscape_notebook_label = gtk_label_new (_("Geoscape"));
 	gtk_widget_show (geoscape_notebook_label);
-	gtk_notebook_set_tab_label (GTK_NOTEBOOK (geoscape_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (geoscape_notebook), 0), geoscape_notebook_label);
+	gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 0), geoscape_notebook_label);
+
+/*	campaign_notebook_label = gtk_label_new (_("Campaign"));
+	gtk_widget_show (campaign_notebook_label);
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 0), campaign_notebook_label);*/
 
 	g_signal_connect ((gpointer) menu_item_quit, "activate",
 						G_CALLBACK (on_quit_activate),
@@ -166,11 +173,12 @@ GtkWidget* create_campaign_editor (void)
 	GLADE_HOOKUP_OBJECT (campaign_editor, help, "help");
 	GLADE_HOOKUP_OBJECT (campaign_editor, help_menu, "help_menu");
 	GLADE_HOOKUP_OBJECT (campaign_editor, menu_item_info, "menu_item_info");
-	GLADE_HOOKUP_OBJECT (campaign_editor, geoscape_notebook, "geoscape_notebook");
+	GLADE_HOOKUP_OBJECT (campaign_editor, notebook, "notebook");
 	GLADE_HOOKUP_OBJECT (campaign_editor, geoscape_scrolledwindow, "geoscape_scrolledwindow");
 	GLADE_HOOKUP_OBJECT (campaign_editor, geoscape_viewport, "geoscape_viewport");
 	GLADE_HOOKUP_OBJECT (campaign_editor, geoscape_image, "geoscape_image");
 	GLADE_HOOKUP_OBJECT (campaign_editor, geoscape_notebook_label, "geoscape_notebook_label");
+	GLADE_HOOKUP_OBJECT (campaign_editor, campaign_notebook_label, "geoscape_campaign_label");
 
 	gtk_window_add_accel_group (GTK_WINDOW (campaign_editor), accel_group);
 
@@ -205,10 +213,18 @@ GtkWidget* create_mission_dialog (void)
 	GtkWidget *civteam_label;
 	GtkWidget *alienequip_label;
 	GtkWidget *win_label;
+	GtkWidget *commands_label;
 	GtkWidget *credits_civ_label;
 	GtkWidget *credits_aliens_label;
+	GtkWidget *onwin_label;
+	GtkWidget *onlose_label;
+	GtkWidget *storyrelated_label;
+	GtkWidget *storyrelated_checkbutton;
+	GtkWidget *commands_entry;
 	GtkWidget *alienteam_entry;
 	GtkWidget *civ_team_entry;
+	GtkWidget *onwin_entry;
+	GtkWidget *onlose_entry;
 	GtkWidget *alien_equip_entry;
 	GtkWidget *credits_win_entry;
 	GtkWidget *credits_civ_entry;
@@ -329,7 +345,7 @@ GtkWidget* create_mission_dialog (void)
 	gtk_widget_show (mission_frame);
 	gtk_box_pack_start (GTK_BOX (mission_variables_vbox), mission_frame, TRUE, TRUE, 0);
 
-	mission_table = gtk_table_new (6, 2, FALSE);
+	mission_table = gtk_table_new (9, 2, FALSE);
 	gtk_widget_show (mission_table);
 	gtk_container_add (GTK_CONTAINER (mission_frame), mission_table);
 
@@ -374,6 +390,34 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (type_label), 0, 0.5);
+
+	storyrelated_label = gtk_label_new (Q_("Story related mission"));
+	gtk_widget_show (storyrelated_label);
+	gtk_table_attach (GTK_TABLE (mission_table), storyrelated_label, 0, 1, 6, 7,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+	gtk_misc_set_alignment (GTK_MISC (storyrelated_label), 0, 0.5);
+
+	commands_label = gtk_label_new (Q_("Activate Trigger"));
+	gtk_widget_show (commands_label);
+	gtk_table_attach (GTK_TABLE (mission_table), commands_label, 0, 1, 7, 8,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+	gtk_misc_set_alignment (GTK_MISC (commands_label), 0, 0.5);
+
+	onwin_label = gtk_label_new (Q_("OnWin Trigger"));
+	gtk_widget_show (onwin_label);
+	gtk_table_attach (GTK_TABLE (mission_table), onwin_label, 0, 1, 8, 9,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+	gtk_misc_set_alignment (GTK_MISC (onwin_label), 0, 0.5);
+
+	onlose_label = gtk_label_new (Q_("OnLose Trigger"));
+	gtk_widget_show (onlose_label);
+	gtk_table_attach (GTK_TABLE (mission_table), onlose_label, 0, 1, 9, 10,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+	gtk_misc_set_alignment (GTK_MISC (onlose_label), 0, 0.5);
 
 	combo_map = gtk_combo_box_new_text();
 	gtk_widget_show (combo_map);
@@ -453,6 +497,30 @@ GtkWidget* create_mission_dialog (void)
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	gtk_entry_set_text (GTK_ENTRY(type_mission), "Terror Attack");
+
+	storyrelated_checkbutton = gtk_check_button_new();
+	gtk_widget_show (storyrelated_checkbutton);
+	gtk_table_attach (GTK_TABLE (mission_table), storyrelated_checkbutton, 1, 2, 6, 7,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+
+	commands_entry = gtk_entry_new_with_max_length (MAX_VAR);
+	gtk_widget_show (commands_entry);
+	gtk_table_attach (GTK_TABLE (mission_table), commands_entry, 1, 2, 7, 8,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+
+	onwin_entry = gtk_entry_new_with_max_length (MAX_VAR);
+	gtk_widget_show (onwin_entry);
+	gtk_table_attach (GTK_TABLE (mission_table), onwin_entry, 1, 2, 8, 9,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+
+	onlose_entry = gtk_entry_new_with_max_length (MAX_VAR);
+	gtk_widget_show (onlose_entry);
+	gtk_table_attach (GTK_TABLE (mission_table), onlose_entry, 1, 2, 9, 10,
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 
 	label2 = gtk_label_new (_("Mission"));
 	gtk_widget_show (label2);
@@ -593,12 +661,16 @@ GtkWidget* create_mission_dialog (void)
 	GLADE_HOOKUP_OBJECT (mission_dialog, combo_map, "combo_map");
 	GLADE_HOOKUP_OBJECT (mission_dialog, combo_music, "combo_music");
 	GLADE_HOOKUP_OBJECT (mission_dialog, text_mission, "text_mission");
+	GLADE_HOOKUP_OBJECT (mission_dialog, commands_entry, "commands_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, alienteam_entry, "alienteam_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, civ_team_entry, "civ_team_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, alien_equip_entry, "alien_equip_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, credits_win_entry, "credits_win_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, credits_civ_entry, "credits_civ_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, credits_alien_entry, "credits_alien_entry");
+	GLADE_HOOKUP_OBJECT (mission_dialog, storyrelated_checkbutton, "storyrelated_checkbutton");
+	GLADE_HOOKUP_OBJECT (mission_dialog, onwin_entry, "onwin_entry");
+	GLADE_HOOKUP_OBJECT (mission_dialog, onlose_entry, "onlose_entry");
 	GLADE_HOOKUP_OBJECT (mission_dialog, type_mission, "type_mission");
 	GLADE_HOOKUP_OBJECT (mission_dialog, location_mission, "location_mission");
 	GLADE_HOOKUP_OBJECT (mission_dialog, cancel_button, "cancel_button");

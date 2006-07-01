@@ -49,7 +49,7 @@ void on_info_activate (GtkMenuItem *menuitem, gpointer user_data)
 #define get_entry_txt(x) (char*)gtk_entry_get_text( GTK_ENTRY(lookup_widget(GTK_WIDGET (button), (const gchar*)x)) )
 #define get_textfield_txt(x) (char*)gtk_editable_get_chars( GTK_EDITABLE (lookup_widget(GTK_WIDGET (button), (const gchar*)x)), 0, -1 )
 #define get_selectbox_txt(x) (char*)gtk_combo_box_get_active_text( GTK_COMBO_BOX (lookup_widget(GTK_WIDGET (button), (const gchar*)x)) )
-
+#define get_checkbutton_txt(x) (int)gtk_toggle_button_get_active(GTK_CHECK_BUTTON(lookup_widget(GTK_WIDGET (button), (const gchar*)x)) )
 void mission_save (GtkButton *button, gpointer user_data)
 {
 	GtkTextBuffer *txtbuf;
@@ -62,7 +62,11 @@ void mission_save (GtkButton *button, gpointer user_data)
 		"\ttype\t\"_%s\"\n"
 		"\ttext\t\"_%s\"\n"
 		"\tmap\t%s\n"
-		"\tparam\t%s\n"
+		"\tparam\t\"%s\"\n"
+		"\tstoryrelated\t%s\n"
+		"\tonwin\t\"%s\"\n"
+		"\tonlose\t\"%s\"\n"
+		"\tcommands\t\"%s\"\n"
 		"\tmusic\t%s\n"
 		"\tpos\t\"%i %i\"\n"
 		"\taliens\t%s\n"
@@ -80,6 +84,10 @@ void mission_save (GtkButton *button, gpointer user_data)
 		get_textfield_txt("text_mission"),
 		get_selectbox_txt("combo_map"),
 		get_entry_txt("map_assembly_param_entry"),
+		bool_translate(get_checkbutton_txt("storyrelated_checkbutton")),
+		get_entry_txt("onwin_entry"),
+		get_entry_txt("onlose_entry"),
+		get_entry_txt("commands_entry"),
 		get_selectbox_txt("combo_music"),
 		x, y,
 		get_selectbox_txt("combo_aliens"),
