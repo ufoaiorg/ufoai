@@ -1600,10 +1600,7 @@ void R_BeginFrame(float camera_separation)
 	/* change modes if necessary */
 	/* FIXME: only restart if CDS is required */
 	if (gl_mode->modified || vid_fullscreen->modified || gl_ext_texture_compression->modified) {
-		cvar_t *ref;
-
-		ref = ri.Cvar_Get("vid_ref", "gl", 0);
-		ref->modified = qtrue;
+		vid_ref->modified = qtrue;
 	}
 
 	if (gl_log->modified) {
