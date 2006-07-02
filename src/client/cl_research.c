@@ -1112,20 +1112,20 @@ The valid definition names in the research.ufo file.
 NOTE: the TECHFS macro assignes the values from scriptfile
 to the appropriate values in the corresponding struct
 ======================*/
-value_t valid_tech_vars[] = {
+static value_t valid_tech_vars[] = {
 	/*name of technology */
-	{"name", V_TRANSLATION2_STRING, TECHFS(name)},
-	{"description", V_TRANSLATION2_STRING, TECHFS(description)},
+	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name)},
+	{"description", V_TRANSLATION2_STRING, offsetof(technology_t, description)},
 	/*what does this research provide */
-	{"provides", V_STRING, TECHFS(provides)},
+	{"provides", V_STRING, offsetof(technology_t, provides)},
 	/* to be able to research this tech zou need all "required" and at least one collected "provides" item. */
-	{"needscollected", V_BOOL, TECHFS(needsCollected)},
+	{"needscollected", V_BOOL, offsetof(technology_t, needsCollected)},
 	/*how long will this research last */
-	{"time", V_FLOAT, TECHFS(time)},
-	{"image_top", V_STRING, TECHFS(image_top)},
-	{"image_bottom", V_STRING, TECHFS(image_bottom)},
-	{"mdl_top", V_STRING, TECHFS(mdl_top)},
-	{"mdl_bottom", V_STRING, TECHFS(mdl_bottom)},
+	{"time", V_FLOAT, offsetof(technology_t, time)},
+	{"image_top", V_STRING, offsetof(technology_t, image_top)},
+	{"image_bottom", V_STRING, offsetof(technology_t, image_bottom)},
+	{"mdl_top", V_STRING, offsetof(technology_t, mdl_top)},
+	{"mdl_bottom", V_STRING, offsetof(technology_t, mdl_bottom)},
 	{NULL, 0, 0}
 };
 

@@ -7,16 +7,13 @@
 
 ==============================================================================*/
 
-char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
+static char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
 	"close",
 	"heavy",
 	"assault",
 	"precise",
 	"explosive"
 };
-
-#define	ODOFS(x)	(size_t)&(((objDef_t *)0)->x)
-#define	FDOFS(x)	(size_t)&(((fireDef_t *)0)->x)
 
 typedef enum objdefs {
 	OD_PRIMARY,
@@ -25,27 +22,27 @@ typedef enum objdefs {
 	OD_HARDNESS
 } objdef_t;
 
-value_t od_vals[] = {
+static value_t od_vals[] = {
 	{"primary", V_NULL, 0},
 	{"secondary", V_NULL, 0},
 	{"protection", V_NULL, 0},
 	{"hardness", V_NULL, 0},
 
-	{"name", V_TRANSLATION_STRING, ODOFS(name)},
-	{"model", V_STRING, ODOFS(model)},
-	{"image", V_STRING, ODOFS(image)},
-	{"type", V_STRING, ODOFS(type)},
-	{"category", V_CHAR, ODOFS(category)},
-	{"shape", V_SHAPE_SMALL, ODOFS(shape)},
-	{"scale", V_FLOAT, ODOFS(scale)},
-	{"center", V_VECTOR, ODOFS(center)},
-	{"weapon", V_BOOL, ODOFS(weapon)},
-	{"twohanded", V_BOOL, ODOFS(twohanded)},
-	{"thrown", V_BOOL, ODOFS(thrown)},
-	{"ammo", V_INT, ODOFS(ammo)},
-	{"reload", V_INT, ODOFS(reload)},
-	{"price", V_INT, ODOFS(price)},
-	{"buytype", V_INT, ODOFS(buytype)},
+	{"name", V_TRANSLATION_STRING, offsetof(objDef_t, name)},
+	{"model", V_STRING, offsetof(objDef_t, model)},
+	{"image", V_STRING, offsetof(objDef_t, image)},
+	{"type", V_STRING, offsetof(objDef_t, type)},
+	{"category", V_CHAR, offsetof(objDef_t, category)},
+	{"shape", V_SHAPE_SMALL, offsetof(objDef_t, shape)},
+	{"scale", V_FLOAT, offsetof(objDef_t, scale)},
+	{"center", V_VECTOR, offsetof(objDef_t, center)},
+	{"weapon", V_BOOL, offsetof(objDef_t, weapon)},
+	{"twohanded", V_BOOL, offsetof(objDef_t, twohanded)},
+	{"thrown", V_BOOL, offsetof(objDef_t, thrown)},
+	{"ammo", V_INT, offsetof(objDef_t, ammo)},
+	{"reload", V_INT, offsetof(objDef_t, reload)},
+	{"price", V_INT, offsetof(objDef_t, price)},
+	{"buytype", V_INT, offsetof(objDef_t, buytype)},
 	{NULL, V_NULL, 0}
 };
 
@@ -54,36 +51,36 @@ value_t od_vals[] = {
 #define FD_PRIMARY		0
 #define FD_SECONDARY	1
 
-value_t fdps[] = {
-	{"name", V_TRANSLATION_STRING, FDOFS(name)},
-	{"shotorg", V_POS, FDOFS(shotOrg)},
-	{"projtl", V_STRING, FDOFS(projectile)},
-	{"impact", V_STRING, FDOFS(impact)},
-	{"hitbody", V_STRING, FDOFS(hitBody)},
-	{"firesnd", V_STRING, FDOFS(fireSound)},
-	{"impsnd", V_STRING, FDOFS(impactSound)},
-	{"bodysnd", V_STRING, FDOFS(hitBodySound)},
-	{"bncsnd", V_STRING, FDOFS(bounceSound)},
-	{"sndonce", V_BOOL, FDOFS(soundOnce)},
-	{"gravity", V_BOOL, FDOFS(gravity)},
-	{"selfdet", V_BOOL, FDOFS(selfDetonate)},
-	{"delay", V_INT, FDOFS(delay)},
-	{"bounce", V_INT, FDOFS(bounce)},
-	{"bncfac", V_FLOAT, FDOFS(bounceFac)},
-	{"speed", V_FLOAT, FDOFS(speed)},
-	{"spread", V_POS, FDOFS(spread)},
-	{"crouch", V_FLOAT, FDOFS(crouch)},
-	{"range", V_FLOAT, FDOFS(range)},
-	{"shots", V_INT, FDOFS(shots)},
-	{"ammo", V_INT, FDOFS(ammo)},
-	{"rof", V_FLOAT, FDOFS(rof)},
-	{"time", V_INT, FDOFS(time)},
-	{"damage", V_POS, FDOFS(damage)},
-	{"spldmg", V_POS, FDOFS(spldmg)},
-	{"splrad", V_FLOAT, FDOFS(splrad)},
-	{"dmgtype", V_DMGTYPE, FDOFS(dmgtype)},
-	{"irgoggles", V_BOOL, FDOFS(irgoggles)},
-	{"stun", V_BOOL, FDOFS(stun)},
+static value_t fdps[] = {
+	{"name", V_TRANSLATION_STRING, offsetof(fireDef_t, name)},
+	{"shotorg", V_POS, offsetof(fireDef_t, shotOrg)},
+	{"projtl", V_STRING, offsetof(fireDef_t, projectile)},
+	{"impact", V_STRING, offsetof(fireDef_t, impact)},
+	{"hitbody", V_STRING, offsetof(fireDef_t, hitBody)},
+	{"firesnd", V_STRING, offsetof(fireDef_t, fireSound)},
+	{"impsnd", V_STRING, offsetof(fireDef_t, impactSound)},
+	{"bodysnd", V_STRING, offsetof(fireDef_t, hitBodySound)},
+	{"bncsnd", V_STRING, offsetof(fireDef_t, bounceSound)},
+	{"sndonce", V_BOOL, offsetof(fireDef_t, soundOnce)},
+	{"gravity", V_BOOL, offsetof(fireDef_t, gravity)},
+	{"selfdet", V_BOOL, offsetof(fireDef_t, selfDetonate)},
+	{"delay", V_INT, offsetof(fireDef_t, delay)},
+	{"bounce", V_INT, offsetof(fireDef_t, bounce)},
+	{"bncfac", V_FLOAT, offsetof(fireDef_t, bounceFac)},
+	{"speed", V_FLOAT, offsetof(fireDef_t, speed)},
+	{"spread", V_POS, offsetof(fireDef_t, spread)},
+	{"crouch", V_FLOAT, offsetof(fireDef_t, crouch)},
+	{"range", V_FLOAT, offsetof(fireDef_t, range)},
+	{"shots", V_INT, offsetof(fireDef_t, shots)},
+	{"ammo", V_INT, offsetof(fireDef_t, ammo)},
+	{"rof", V_FLOAT, offsetof(fireDef_t, rof)},
+	{"time", V_INT, offsetof(fireDef_t, time)},
+	{"damage", V_POS, offsetof(fireDef_t, damage)},
+	{"spldmg", V_POS, offsetof(fireDef_t, spldmg)},
+	{"splrad", V_FLOAT, offsetof(fireDef_t, splrad)},
+	{"dmgtype", V_DMGTYPE, offsetof(fireDef_t, dmgtype)},
+	{"irgoggles", V_BOOL, offsetof(fireDef_t, irgoggles)},
+	{"stun", V_BOOL, offsetof(fireDef_t, stun)},
 
 	{NULL, 0, 0}
 };
@@ -191,7 +188,7 @@ void Com_ParseArmor(char *name, char **text, short *ad)
 /*======================
 Com_ParseItem
 ======================*/
-void Com_ParseItem(char *name, char **text)
+static void Com_ParseItem(char *name, char **text)
 {
 	char *errhead = "Com_ParseItem: unexptected end of file (weapon ";
 	value_t *val;
@@ -279,22 +276,20 @@ void Com_ParseItem(char *name, char **text)
 
 ==============================================================================*/
 
-#define	IDOFS(x)	(size_t)&(((invDef_t *)0)->x)
-
-value_t idps[] = {
-	{"shape", V_SHAPE_BIG, IDOFS(shape)}
+static value_t idps[] = {
+	{"shape", V_SHAPE_BIG, offsetof(invDef_t, shape)}
 	,
-	{"single", V_BOOL, IDOFS(single)}
+	{"single", V_BOOL, offsetof(invDef_t, single)}
 	,
-	{"armor", V_BOOL, IDOFS(armor)}
+	{"armor", V_BOOL, offsetof(invDef_t, armor)}
 	,
-	{"all", V_BOOL, IDOFS(all)}
+	{"all", V_BOOL, offsetof(invDef_t, all)}
 	,
-	{"temp", V_BOOL, IDOFS(temp)}
+	{"temp", V_BOOL, offsetof(invDef_t, temp)}
 	,
-	{"in", V_INT, IDOFS(in)}
+	{"in", V_INT, offsetof(invDef_t, in)}
 	,
-	{"out", V_INT, IDOFS(out)}
+	{"out", V_INT, offsetof(invDef_t, out)}
 	,
 
 	{NULL, 0, 0}
@@ -303,7 +298,7 @@ value_t idps[] = {
 /*======================
 Com_ParseInventory
 ======================*/
-void Com_ParseInventory(char *name, char **text)
+static void Com_ParseInventory(char *name, char **text)
 {
 	char *errhead = "Com_ParseInventory: unexptected end of file (inventory ";
 	invDef_t *id;
@@ -647,7 +642,7 @@ int Com_GetModelAndName(char *team, char *path, char *body, char *head, char *na
 /*======================
 Com_ParseNames
 ======================*/
-void Com_ParseNames(char *title, char **text)
+static void Com_ParseNames(char *title, char **text)
 {
 	nameCategory_t *nc;
 	char *errhead = "Com_ParseNames: unexptected end of file (names ";
@@ -731,7 +726,7 @@ void Com_ParseNames(char *title, char **text)
 /*======================
 Com_ParseActors
 ======================*/
-void Com_ParseActors(char *title, char **text)
+static void Com_ParseActors(char *title, char **text)
 {
 	nameCategory_t *nc;
 	char *errhead = "Com_ParseActors: unexptected end of file (actors ";
@@ -817,20 +812,18 @@ void Com_ParseActors(char *title, char **text)
 	} while (*text);
 }
 
-#define	PARSETEAMDESC(x)	(size_t)&(((teamDesc_t *)0)->x)
-
-value_t teamDescValues[] = {
-	{"name", V_TRANSLATION_STRING, PARSETEAMDESC(name)}
+static value_t teamDescValues[] = {
+	{"name", V_TRANSLATION_STRING, offsetof(teamDesc_t, name)}
 	,
-	{"combat_notes", V_TRANSLATION2_STRING, PARSETEAMDESC(combat_notes)}
+	{"combat_notes", V_TRANSLATION2_STRING, offsetof(teamDesc_t, combat_notes)}
 	,
-	{"autopsy", V_TRANSLATION2_STRING, PARSETEAMDESC(autopsy)}
+	{"autopsy", V_TRANSLATION2_STRING, offsetof(teamDesc_t, autopsy)}
 	,
-	{"xenobiology", V_TRANSLATION2_STRING, PARSETEAMDESC(xenobiology)}
+	{"xenobiology", V_TRANSLATION2_STRING, offsetof(teamDesc_t, xenobiology)}
 	,
-	{"interrogation", V_TRANSLATION2_STRING, PARSETEAMDESC(interrogation)}
+	{"interrogation", V_TRANSLATION2_STRING, offsetof(teamDesc_t, interrogation)}
 	,
-	{"interrogation_com", V_TRANSLATION2_STRING, PARSETEAMDESC(interrogation_com)}
+	{"interrogation_com", V_TRANSLATION2_STRING, offsetof(teamDesc_t, interrogation_com)}
 	,
 	{NULL, 0, 0}
 };

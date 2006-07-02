@@ -42,32 +42,31 @@ static int numBuildingConstructionList;
  * @brief Holds the names of valid entries in the basemanagement.ufo file.
  *
  * The valid definition names for BUILDINGS (building_t) in the basemagagement.ufo file.
- * NOTE: the BSFS macro (see cl_basemanagement.h) assignes the values from scriptfile
  * to the appropriate values in the corresponding struct
  */
-value_t valid_vars[] = {
-	{"map_name", V_STRING, BSFS(mapPart)},	/**< Name of the map file for generating basemap. */
-	{"more_than_one", V_BOOL, BSFS(moreThanOne)},	/**< Is the building allowed to be build more the one time? */
-	{"name", V_TRANSLATION_STRING, BSFS(name)},	/**< The displayed building name. */
-	{"pedia", V_STRING, BSFS(pedia)},	/**< The pedia-id string for the associated pedia entry. */
-	{"status", V_INT, BSFS(buildingStatus)},	/**< The current status of the building. */
-	{"image", V_STRING, BSFS(image)},	/**< Identifies the image for the building. */
-	{"visible", V_BOOL, BSFS(visible)}, /**< Determines whether a building should be listed in the construction list. Set the first part of a building to 1 all others to 0 otherwise all building-parts will be on the list */
-	{"needs", V_STRING, BSFS(needs)},	/**<  For buildings with more than one part; the other parts of the building needed.*/
-	{"fixcosts", V_FLOAT, BSFS(fixCosts)},	/**< Cost to build. */
-	{"varcosts", V_FLOAT, BSFS(varCosts)},	/**< Costs that will come up by using the building. */
-	{"build_time", V_INT, BSFS(buildTime)},	/**< How many days it takes to construct the building. */
+static value_t valid_vars[] = {
+	{"map_name", V_STRING, offsetof(building_t, mapPart)},	/**< Name of the map file for generating basemap. */
+	{"more_than_one", V_BOOL, offsetof(building_t, moreThanOne)},	/**< Is the building allowed to be build more the one time? */
+	{"name", V_TRANSLATION_STRING, offsetof(building_t, name)},	/**< The displayed building name. */
+	{"pedia", V_STRING, offsetof(building_t, pedia)},	/**< The pedia-id string for the associated pedia entry. */
+	{"status", V_INT, offsetof(building_t, buildingStatus)},	/**< The current status of the building. */
+	{"image", V_STRING, offsetof(building_t, image)},	/**< Identifies the image for the building. */
+	{"visible", V_BOOL, offsetof(building_t, visible)}, /**< Determines whether a building should be listed in the construction list. Set the first part of a building to 1 all others to 0 otherwise all building-parts will be on the list */
+	{"needs", V_STRING, offsetof(building_t, needs)},	/**<  For buildings with more than one part; the other parts of the building needed.*/
+	{"fixcosts", V_FLOAT, offsetof(building_t, fixCosts)},	/**< Cost to build. */
+	{"varcosts", V_FLOAT, offsetof(building_t, varCosts)},	/**< Costs that will come up by using the building. */
+	{"build_time", V_INT, offsetof(building_t, buildTime)},	/**< How many days it takes to construct the building. */
 
 	/*event handler functions */
-	{"onconstruct", V_STRING, BSFS(onConstruct)}, /**< Event handler. */
-	{"onattack", V_STRING, BSFS(onAttack)}, /**< Event handler. */
-	{"ondestroy", V_STRING, BSFS(onDestroy)}, /**< Event handler. */
-	{"onupgrade", V_STRING, BSFS(onUpgrade)}, /**< Event handler. */
-	{"onrepair", V_STRING, BSFS(onRepair)}, /**< Event handler. */
-	{"onclick", V_STRING, BSFS(onClick)}, /**< Event handler. */
-	{"pos", V_POS, BSFS(pos)}, /**< Place of a building. Needed for flag autobuild */
-	{"autobuild", V_BOOL, BSFS(autobuild)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
-	{"firstbase", V_BOOL, BSFS(firstbase)}, /**< Automatically construct this building for the first base you build. Must also set the pos-flag. */
+	{"onconstruct", V_STRING, offsetof(building_t, onConstruct)}, /**< Event handler. */
+	{"onattack", V_STRING, offsetof(building_t, onAttack)}, /**< Event handler. */
+	{"ondestroy", V_STRING, offsetof(building_t, onDestroy)}, /**< Event handler. */
+	{"onupgrade", V_STRING, offsetof(building_t, onUpgrade)}, /**< Event handler. */
+	{"onrepair", V_STRING, offsetof(building_t, onRepair)}, /**< Event handler. */
+	{"onclick", V_STRING, offsetof(building_t, onClick)}, /**< Event handler. */
+	{"pos", V_POS, offsetof(building_t, pos)}, /**< Place of a building. Needed for flag autobuild */
+	{"autobuild", V_BOOL, offsetof(building_t, autobuild)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
+	{"firstbase", V_BOOL, offsetof(building_t, firstbase)}, /**< Automatically construct this building for the first base you build. Must also set the pos-flag. */
 	{NULL, 0, 0}
 };
 

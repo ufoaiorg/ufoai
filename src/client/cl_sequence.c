@@ -414,51 +414,45 @@ void CL_ResetSequences(void)
 
 /* =========================================================== */
 
-#define	SEQCAMOFS(x)	(size_t)&(((seqCamera_t *)0)->x)
-
 value_t seqCamera_vals[] = {
-	{"origin", V_VECTOR, SEQCAMOFS(origin)},
-	{"speed", V_VECTOR, SEQCAMOFS(speed)},
-	{"angles", V_VECTOR, SEQCAMOFS(angles)},
-	{"omega", V_VECTOR, SEQCAMOFS(omega)},
-	{"dist", V_FLOAT, SEQCAMOFS(dist)},
-	{"ddist", V_FLOAT, SEQCAMOFS(dist)},
-	{"zoom", V_FLOAT, SEQCAMOFS(zoom)},
-	{"dzoom", V_FLOAT, SEQCAMOFS(dist)},
+	{"origin", V_VECTOR, offsetof(seqCamera_t, origin)},
+	{"speed", V_VECTOR, offsetof(seqCamera_t, speed)},
+	{"angles", V_VECTOR, offsetof(seqCamera_t, angles)},
+	{"omega", V_VECTOR, offsetof(seqCamera_t, omega)},
+	{"dist", V_FLOAT, offsetof(seqCamera_t, dist)},
+	{"ddist", V_FLOAT, offsetof(seqCamera_t, dist)},
+	{"zoom", V_FLOAT, offsetof(seqCamera_t, zoom)},
+	{"dzoom", V_FLOAT, offsetof(seqCamera_t, dist)},
 	{NULL, 0, 0},
 };
-
-#define	SEQENTOFS(x)	(size_t)&(((seqEnt_t *)0)->x)
 
 value_t seqEnt_vals[] = {
-	{"name", V_STRING, SEQENTOFS(name)},
-	{"skin", V_INT, SEQENTOFS(skin)},
-	{"alpha", V_FLOAT, SEQENTOFS(alpha)},
-	{"origin", V_VECTOR, SEQENTOFS(origin)},
-	{"speed", V_VECTOR, SEQENTOFS(speed)},
-	{"angles", V_VECTOR, SEQENTOFS(angles)},
-	{"omega", V_VECTOR, SEQENTOFS(omega)},
-	{"parent", V_STRING, SEQENTOFS(parent)},
-	{"tag", V_STRING, SEQENTOFS(tag)},
+	{"name", V_STRING, offsetof(seqEnt_t, name)},
+	{"skin", V_INT, offsetof(seqEnt_t, skin)},
+	{"alpha", V_FLOAT, offsetof(seqEnt_t, alpha)},
+	{"origin", V_VECTOR, offsetof(seqEnt_t, origin)},
+	{"speed", V_VECTOR, offsetof(seqEnt_t, speed)},
+	{"angles", V_VECTOR, offsetof(seqEnt_t, angles)},
+	{"omega", V_VECTOR, offsetof(seqEnt_t, omega)},
+	{"parent", V_STRING, offsetof(seqEnt_t, parent)},
+	{"tag", V_STRING, offsetof(seqEnt_t, tag)},
 	{NULL, 0, 0},
 };
 
-#define	SEQ2DOFS(x)	(size_t)&(((seq2D_t *)0)->x)
-
 value_t seq2D_vals[] = {
-	{"name", V_STRING, SEQ2DOFS(name)},
-	{"text", V_TRANSLATION2_STRING, SEQ2DOFS(text)},
-	{"font", V_STRING, SEQ2DOFS(font)},
-	{"image", V_STRING, SEQ2DOFS(image)},
-	{"pos", V_POS, SEQ2DOFS(pos)},
-	{"speed", V_POS, SEQ2DOFS(speed)},
-	{"size", V_POS, SEQ2DOFS(size)},
-	{"enlarge", V_POS, SEQ2DOFS(enlarge)},
-	{"bgcolor", V_COLOR, SEQ2DOFS(bgcolor)},
-	{"color", V_COLOR, SEQ2DOFS(color)},
-	{"fade", V_COLOR, SEQ2DOFS(fade)},
-	{"align", V_ALIGN, SEQ2DOFS(align)},
-	{"relative", V_BOOL, SEQ2DOFS(relativePos)},
+	{"name", V_STRING, offsetof(seq2D_t, name)},
+	{"text", V_TRANSLATION2_STRING, offsetof(seq2D_t, text)},
+	{"font", V_STRING, offsetof(seq2D_t, font)},
+	{"image", V_STRING, offsetof(seq2D_t, image)},
+	{"pos", V_POS, offsetof(seq2D_t, pos)},
+	{"speed", V_POS, offsetof(seq2D_t, speed)},
+	{"size", V_POS, offsetof(seq2D_t, size)},
+	{"enlarge", V_POS, offsetof(seq2D_t, enlarge)},
+	{"bgcolor", V_COLOR, offsetof(seq2D_t, bgcolor)},
+	{"color", V_COLOR, offsetof(seq2D_t, color)},
+	{"fade", V_COLOR, offsetof(seq2D_t, fade)},
+	{"align", V_ALIGN, offsetof(seq2D_t, align)},
+	{"relative", V_BOOL, offsetof(seq2D_t, relativePos)},
 	{NULL, 0, 0},
 };
 

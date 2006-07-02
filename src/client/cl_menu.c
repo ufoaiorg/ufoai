@@ -42,7 +42,7 @@ typedef enum ea_s {
 	EA_NUM_EVENTACTION
 } ea_t;
 
-char *ea_strings[EA_NUM_EVENTACTION] = {
+static char *ea_strings[EA_NUM_EVENTACTION] = {
 	"",
 	"cmd",
 
@@ -51,7 +51,7 @@ char *ea_strings[EA_NUM_EVENTACTION] = {
 	"&"
 };
 
-int ea_values[EA_NUM_EVENTACTION] = {
+static int ea_values[EA_NUM_EVENTACTION] = {
 	V_NULL,
 	V_LONGSTRING,
 
@@ -73,7 +73,7 @@ typedef enum ne_s {
 	NE_NUM_NODEEVENT
 } ne_t;
 
-char *ne_strings[NE_NUM_NODEEVENT] = {
+static char *ne_strings[NE_NUM_NODEEVENT] = {
 	"",
 	"click",
 	"rclick",
@@ -84,16 +84,16 @@ char *ne_strings[NE_NUM_NODEEVENT] = {
 
 size_t ne_values[NE_NUM_NODEEVENT] = {
 	0,
-	NOFS(click),
-	NOFS(rclick),
-	NOFS(mclick),
-	NOFS(mouseIn),
-	NOFS(mouseOut)
+	offsetof(menuNode_t, click),
+	offsetof(menuNode_t, rclick),
+	offsetof(menuNode_t, mclick),
+	offsetof(menuNode_t, mouseIn),
+	offsetof(menuNode_t, mouseOut)
 };
 
 /* =========================================================== */
 
-value_t nps[] = {
+static value_t nps[] = {
 	{"invis", V_BOOL, NOFS(invis)},
 	{"mousefx", V_BOOL, NOFS(mousefx)},
 	{"blend", V_BOOL, NOFS(blend)},
@@ -132,16 +132,16 @@ value_t nps[] = {
 	{NULL, V_NULL, 0},
 };
 
-value_t menuModelValues[] = {
-	{"model", V_STRING, MENUMODELFS(model)},
+static value_t menuModelValues[] = {
+	{"model", V_STRING, offsetof(menuModel_t, model)},
 	{"need", V_NULL, 0},
-	{"anim", V_STRING, MENUMODELFS(anim)},
-	{"skin", V_INT, MENUMODELFS(skin)},
-	{"origin", V_VECTOR, MENUMODELFS(origin)},
-	{"center", V_VECTOR, MENUMODELFS(center)},
-	{"scale", V_VECTOR, MENUMODELFS(scale)},
-	{"angles", V_VECTOR, MENUMODELFS(angles)},
-	{"color", V_COLOR, MENUMODELFS(color)},
+	{"anim", V_STRING, offsetof(menuModel_t, anim)},
+	{"skin", V_INT, offsetof(menuModel_t, skin)},
+	{"origin", V_VECTOR, offsetof(menuModel_t, origin)},
+	{"center", V_VECTOR, offsetof(menuModel_t, center)},
+	{"scale", V_VECTOR, offsetof(menuModel_t, scale)},
+	{"angles", V_VECTOR, offsetof(menuModel_t, angles)},
+	{"color", V_COLOR, offsetof(menuModel_t, color)},
 
 	{NULL, V_NULL, 0},
 };
@@ -168,7 +168,7 @@ typedef enum mn_s {
 	MN_NUM_NODETYPE
 } mn_t;
 
-char *nt_strings[MN_NUM_NODETYPE] = {
+static char *nt_strings[MN_NUM_NODETYPE] = {
 	"",
 	"confunc",
 	"cvarfunc",
@@ -3518,12 +3518,10 @@ font_t fonts[MAX_FONTS];
 font_t *fontBig;
 font_t *fontSmall;
 
-#define	FONTFS(x)		(size_t)&(((font_t *)0)->x)
-
 value_t fontValues[] = {
-	{"font", V_TRANSLATION2_STRING, FONTFS(path)},
-	{"size", V_INT, FONTFS(size)},
-	{"style", V_STRING, FONTFS(style)},
+	{"font", V_TRANSLATION2_STRING, offsetof(font_t, path)},
+	{"size", V_INT, offsetof(font_t, size)},
+	{"style", V_STRING, offsetof(font_t, style)},
 
 	{NULL, V_NULL, 0},
 };
@@ -3641,12 +3639,10 @@ void CL_InitFonts(void)
 
 /* ===================== USE_SDL_TTF stuff end ====================== */
 
-#define	PARSETUT(x)	(size_t)&(((tutorial_t *)0)->x)
-
 value_t tutValues[] = {
-	{"name", V_TRANSLATION_STRING, PARSETUT(name)}
+	{"name", V_TRANSLATION_STRING, offsetof(tutorial_t, name)}
 	,
-	{"sequence", V_STRING, PARSETUT(sequence)}
+	{"sequence", V_STRING, offsetof(tutorial_t, sequence)}
 	,
 	{NULL, 0, 0}
 };

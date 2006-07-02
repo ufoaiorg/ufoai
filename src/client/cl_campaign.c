@@ -2501,59 +2501,58 @@ void CL_MapActionReset(void)
 
 /* =========================================================== */
 
- #define	MISSIONOFS(x)	(size_t)&(((mission_t *)0)->x)
 
 value_t mission_vals[] = {
-	{"location", V_TRANSLATION_STRING, MISSIONOFS(location)}
+	{"location", V_TRANSLATION_STRING, offsetof(mission_t, location)}
 	,
-	{"type", V_TRANSLATION_STRING, MISSIONOFS(type)}
+	{"type", V_TRANSLATION_STRING, offsetof(mission_t, type)}
 	,
 	{"text", V_TRANSLATION_STRING, 0} /* max length is 128 */
 	,
-	{"map", V_STRING, MISSIONOFS(map)}
+	{"map", V_STRING, offsetof(mission_t, map)}
 	,
-	{"param", V_STRING, MISSIONOFS(param)}
+	{"param", V_STRING, offsetof(mission_t, param)}
 	,
-	{"music", V_STRING, MISSIONOFS(music)}
+	{"music", V_STRING, offsetof(mission_t, music)}
 	,
-	{"pos", V_POS, MISSIONOFS(pos)}
+	{"pos", V_POS, offsetof(mission_t, pos)}
 	,
-	{"mask", V_RGBA, MISSIONOFS(mask)} /* color values from map mask this mission needs */
+	{"mask", V_RGBA, offsetof(mission_t, mask)} /* color values from map mask this mission needs */
 	,
-	{"aliens", V_INT, MISSIONOFS(aliens)}
+	{"aliens", V_INT, offsetof(mission_t, aliens)}
 	,
-	{"maxugv", V_INT, MISSIONOFS(ugv)}
+	{"maxugv", V_INT, offsetof(mission_t, ugv)}
 	,
-	{"commands", V_STRING, MISSIONOFS(cmds)} /* commands that are excuted when this mission gets active */
+	{"commands", V_STRING, offsetof(mission_t, cmds)} /* commands that are excuted when this mission gets active */
 	,
-	{"onwin", V_STRING, MISSIONOFS(onwin)}
+	{"onwin", V_STRING, offsetof(mission_t, onwin)}
 	,
-	{"onlose", V_STRING, MISSIONOFS(onlose)}
+	{"onlose", V_STRING, offsetof(mission_t, onlose)}
 	,
-	{"alienteam", V_STRING, MISSIONOFS(alienTeam)}
+	{"alienteam", V_STRING, offsetof(mission_t, alienTeam)}
 	,
-	{"alienequip", V_STRING, MISSIONOFS(alienEquipment)}
+	{"alienequip", V_STRING, offsetof(mission_t, alienEquipment)}
 	,
-	{"civilians", V_INT, MISSIONOFS(civilians)}
+	{"civilians", V_INT, offsetof(mission_t, civilians)}
 	,
-	{"civteam", V_STRING, MISSIONOFS(civTeam)}
+	{"civteam", V_STRING, offsetof(mission_t, civTeam)}
 	,
-	{"recruits", V_INT, MISSIONOFS(recruits)}
+	{"recruits", V_INT, offsetof(mission_t, recruits)}
 	,
-	{"storyrelated", V_BOOL, MISSIONOFS(storyRelated)}
+	{"storyrelated", V_BOOL, offsetof(mission_t, storyRelated)}
 	,
-	{"$win", V_INT, MISSIONOFS(cr_win)}
+	{"$win", V_INT, offsetof(mission_t, cr_win)}
 	,
-	{"$alien", V_INT, MISSIONOFS(cr_alien)}
+	{"$alien", V_INT, offsetof(mission_t, cr_alien)}
 	,
-	{"$civilian", V_INT, MISSIONOFS(cr_civilian)}
+	{"$civilian", V_INT, offsetof(mission_t, cr_civilian)}
 	,
 	{NULL, 0, 0}
 	,
 };
 
 #define		MAX_MISSIONTEXTS	MAX_MISSIONS*128
-char missionTexts[MAX_MISSIONTEXTS];
+static char missionTexts[MAX_MISSIONTEXTS];
 char *mtp = missionTexts;
 
 /**
@@ -2638,28 +2637,26 @@ void CL_ParseMission(char *name, char **text)
 /* =========================================================== */
 
 
-#define	STAGESETOFS(x)	(size_t)&(((stageSet_t *)0)->x)
-
 value_t stageset_vals[] = {
-	{"needed", V_STRING, STAGESETOFS(needed)}
+	{"needed", V_STRING, offsetof(stageSet_t, needed)}
 	,
-	{"delay", V_DATE, STAGESETOFS(delay)}
+	{"delay", V_DATE, offsetof(stageSet_t, delay)}
 	,
-	{"frame", V_DATE, STAGESETOFS(frame)}
+	{"frame", V_DATE, offsetof(stageSet_t, frame)}
 	,
-	{"expire", V_DATE, STAGESETOFS(expire)}
+	{"expire", V_DATE, offsetof(stageSet_t, expire)}
 	,
-	{"number", V_INT, STAGESETOFS(number)}
+	{"number", V_INT, offsetof(stageSet_t, number)}
 	,
-	{"quota", V_INT, STAGESETOFS(quota)}
+	{"quota", V_INT, offsetof(stageSet_t, quota)}
 	,
-	{"seq", V_STRING, STAGESETOFS(sequence)}
+	{"seq", V_STRING, offsetof(stageSet_t, sequence)}
 	,
-	{"nextstage", V_STRING, STAGESETOFS(nextstage)}
+	{"nextstage", V_STRING, offsetof(stageSet_t, nextstage)}
 	,
-	{"endstage", V_STRING, STAGESETOFS(endstage)}
+	{"endstage", V_STRING, offsetof(stageSet_t, endstage)}
 	,
-	{"commands", V_STRING, STAGESETOFS(cmds)}
+	{"commands", V_STRING, offsetof(stageSet_t, cmds)}
 	,
 	{NULL, 0, 0}
 	,
@@ -2807,32 +2804,30 @@ void CL_ParseStage(char *name, char **text)
 
 /* =========================================================== */
 
-#define	CAMPAIGNOFS(x)	(size_t)&(((campaign_t *)0)->x)
-
 value_t campaign_vals[] = {
-	{"team", V_STRING, CAMPAIGNOFS(team)}
+	{"team", V_STRING, offsetof(campaign_t, team)}
 	,
-	{"soldiers", V_INT, CAMPAIGNOFS(soldiers)}
+	{"soldiers", V_INT, offsetof(campaign_t, soldiers)}
 	,
-	{"ugvs", V_INT, CAMPAIGNOFS(ugvs)}
+	{"ugvs", V_INT, offsetof(campaign_t, ugvs)}
 	,
-	{"equipment", V_STRING, CAMPAIGNOFS(equipment)}
+	{"equipment", V_STRING, offsetof(campaign_t, equipment)}
 	,
-	{"market", V_STRING, CAMPAIGNOFS(market)}
+	{"market", V_STRING, offsetof(campaign_t, market)}
 	,
-	{"firststage", V_STRING, CAMPAIGNOFS(firststage)}
+	{"firststage", V_STRING, offsetof(campaign_t, firststage)}
 	,
-	{"map", V_STRING, CAMPAIGNOFS(map)}
+	{"map", V_STRING, offsetof(campaign_t, map)}
 	,
-	{"credits", V_INT, CAMPAIGNOFS(credits)}
+	{"credits", V_INT, offsetof(campaign_t, credits)}
 	,
-	{"visible", V_BOOL, CAMPAIGNOFS(visible)}
+	{"visible", V_BOOL, offsetof(campaign_t, visible)}
 	,
-	{"text", V_TRANSLATION2_STRING, CAMPAIGNOFS(text)}
+	{"text", V_TRANSLATION2_STRING, offsetof(campaign_t, text)}
 	,							/* just a gettext placeholder */
-	{"name", V_TRANSLATION_STRING, CAMPAIGNOFS(name)}
+	{"name", V_TRANSLATION_STRING, offsetof(campaign_t, name)}
 	,
-	{"date", V_DATE, CAMPAIGNOFS(date)}
+	{"date", V_DATE, offsetof(campaign_t, date)}
 	,
 	{NULL, 0, 0}
 	,
@@ -2907,36 +2902,34 @@ void CL_ParseCampaign(char *id, char **text)
 
 /* =========================================================== */
 
-#define	AIRFS(x)	(size_t)&(((aircraft_t *)0)->x)
-
 value_t aircraft_vals[] = {
-	{"name", V_TRANSLATION_STRING, AIRFS(name)}
+	{"name", V_TRANSLATION_STRING, offsetof(aircraft_t, name)}
 	,
-	{"speed", V_FLOAT, AIRFS(speed)}
+	{"speed", V_FLOAT, offsetof(aircraft_t, speed)}
 	,
-	{"size", V_INT, AIRFS(size)}
+	{"size", V_INT, offsetof(aircraft_t, size)}
 	,
-	{"fuel", V_INT, AIRFS(fuel)}
+	{"fuel", V_INT, offsetof(aircraft_t, fuel)}
 	,
-	{"fuelsize", V_INT, AIRFS(fuelSize)}
+	{"fuelsize", V_INT, offsetof(aircraft_t, fuelSize)}
 	,
-	{"image", V_STRING, AIRFS(image)}
+	{"image", V_STRING, offsetof(aircraft_t, image)}
 	,
 
 	/* pointer to technology_t */
-	{"weapon", V_STRING, AIRFS(weapon_string)}
+	{"weapon", V_STRING, offsetof(aircraft_t, weapon_string)}
 	,
-	{"shield", V_STRING, AIRFS(shield_string)}
+	{"shield", V_STRING, offsetof(aircraft_t, shield_string)}
 	,
 
-	{"model", V_STRING, AIRFS(model)}
+	{"model", V_STRING, offsetof(aircraft_t, model)}
 	,
 	/* price for selling/buying */
-	{"price", V_INT, AIRFS(price)}
+	{"price", V_INT, offsetof(aircraft_t, price)}
 	,
 	/* this is needed to let the buy and sell screen look for the needed building */
 	/* to place the aircraft in */
-	{"building", V_STRING, AIRFS(building)}
+	{"building", V_STRING, offsetof(aircraft_t, building)}
 	,
 
 	{NULL, 0, 0}
@@ -3021,22 +3014,20 @@ void CL_ParseAircraft(char *name, char **text)
 
 /* =========================================================== */
 
-#define	NATFS(x)	(size_t)&(((nation_t *)0)->x)
-
 value_t nation_vals[] = {
-	{"name", V_TRANSLATION_STRING, NATFS(name)}
+	{"name", V_TRANSLATION_STRING, offsetof(nation_t, name)}
 	,
-	{"color", V_COLOR, NATFS(color)}
+	{"color", V_COLOR, offsetof(nation_t, color)}
 	,
-	{"funding", V_INT, NATFS(funding)}
+	{"funding", V_INT, offsetof(nation_t, funding)}
 	,
-	{"alien_friendly", V_FLOAT, NATFS(alienFriendly)}
+	{"alien_friendly", V_FLOAT, offsetof(nation_t, alienFriendly)}
 	,
-	{"soldiers", V_INT, NATFS(soldiers)}
+	{"soldiers", V_INT, offsetof(nation_t, soldiers)}
 	,
-	{"scientists", V_INT, NATFS(scientists)}
+	{"scientists", V_INT, offsetof(nation_t, scientists)}
 	,
-	{"names", V_INT, NATFS(names)}
+	{"names", V_INT, offsetof(nation_t, names)}
 	,
 
 	{NULL, 0, 0}

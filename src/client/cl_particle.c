@@ -27,14 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* =========================================================== */
 
-/* */
 mp_t MPs[MAX_MAPPARTICLES];
 int numMPs;
-
-/* */
-
-#define	PFOFS(x)	(size_t)&(((ptlDef_t *)0)->x)
-#define	PPOFS(x)	(size_t)&(((ptl_t *)0)->x)
 
 #define RADR(x)		((x < 0) ? (byte*)p-x : (byte*)pcmdData+x)
 #define RSTACK		-0xFFF0
@@ -68,9 +62,9 @@ char *pf_strings[PF_NUM_PTLFUNCS] = {
 };
 
 size_t pf_values[PF_NUM_PTLFUNCS] = {
-	PFOFS(init),
-	PFOFS(run),
-	PFOFS(think)
+	offsetof(ptlDef_t, init),
+	offsetof(ptlDef_t, run),
+	offsetof(ptlDef_t, think)
 };
 
 
@@ -123,36 +117,36 @@ int pc_types[PC_NUM_PTLCMDS] = {
 };
 
 value_t pps[] = {
-	{"image", V_STRING, PPOFS(pic)},
-	{"model", V_STRING, PPOFS(model)},
-	{"blend", V_BLEND, PPOFS(blend)},
-	{"style", V_STYLE, PPOFS(style)},
-	{"tfade", V_FADE, PPOFS(thinkFade)},
-	{"ffade", V_FADE, PPOFS(frameFade)},
-	{"size", V_POS, PPOFS(size)},
-	{"scale", V_VECTOR, PPOFS(scale)},
-	{"color", V_COLOR, PPOFS(color)},
-	{"a", V_VECTOR, PPOFS(a)},
-	{"v", V_VECTOR, PPOFS(v)},
-	{"s", V_VECTOR, PPOFS(s)},
+	{"image", V_STRING, offsetof(ptl_t, pic)},
+	{"model", V_STRING, offsetof(ptl_t, model)},
+	{"blend", V_BLEND, offsetof(ptl_t, blend)},
+	{"style", V_STYLE, offsetof(ptl_t, style)},
+	{"tfade", V_FADE, offsetof(ptl_t, thinkFade)},
+	{"ffade", V_FADE, offsetof(ptl_t, frameFade)},
+	{"size", V_POS, offsetof(ptl_t, size)},
+	{"scale", V_VECTOR, offsetof(ptl_t, scale)},
+	{"color", V_COLOR, offsetof(ptl_t, color)},
+	{"a", V_VECTOR, offsetof(ptl_t, a)},
+	{"v", V_VECTOR, offsetof(ptl_t, v)},
+	{"s", V_VECTOR, offsetof(ptl_t, s)},
 
 	/* t and dt are not specified in particle definitions */
 	/* but they can be used as references */
-	{"t", V_FLOAT, PPOFS(t)},
-	{"dt", V_FLOAT, PPOFS(dt)},
+	{"t", V_FLOAT, offsetof(ptl_t, t)},
+	{"dt", V_FLOAT, offsetof(ptl_t, dt)},
 
-	{"rounds", V_INT, PPOFS(rounds)},
-	{"angles", V_VECTOR, PPOFS(angles)},
-	{"omega", V_VECTOR, PPOFS(omega)},
-	{"life", V_FLOAT, PPOFS(life)},
-	{"tps", V_FLOAT, PPOFS(tps)},
-	{"lastthink", V_FLOAT, PPOFS(lastThink)},
-	{"frame", V_INT, PPOFS(frame)},
-	{"endframe", V_INT, PPOFS(endFrame)},
-	{"fps", V_FLOAT, PPOFS(fps)},
-	{"lastframe", V_FLOAT, PPOFS(lastFrame)},
-	{"levelflags", V_INT, PPOFS(levelFlags)},
-	{"light", V_BOOL, PPOFS(light)},
+	{"rounds", V_INT, offsetof(ptl_t, rounds)},
+	{"angles", V_VECTOR, offsetof(ptl_t, angles)},
+	{"omega", V_VECTOR, offsetof(ptl_t, omega)},
+	{"life", V_FLOAT, offsetof(ptl_t, life)},
+	{"tps", V_FLOAT, offsetof(ptl_t, tps)},
+	{"lastthink", V_FLOAT, offsetof(ptl_t, lastThink)},
+	{"frame", V_INT, offsetof(ptl_t, frame)},
+	{"endframe", V_INT, offsetof(ptl_t, endFrame)},
+	{"fps", V_FLOAT, offsetof(ptl_t, fps)},
+	{"lastframe", V_FLOAT, offsetof(ptl_t, lastFrame)},
+	{"levelflags", V_INT, offsetof(ptl_t, levelFlags)},
+	{"light", V_BOOL, offsetof(ptl_t, light)},
 
 	{NULL, 0, 0}
 };
@@ -350,14 +344,14 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 				Com_Error(ERR_FATAL, "CL_ParticleFunction: stack underflow\n");
 
 			/* get pics and models */
-			if (PPOFS(pic) == -cmd->ref) {
+			if (offsetof(ptl_t, pic) == -cmd->ref) {
 				if (stackType[--s] != V_STRING)
 					Sys_Error("Bad type '%s' for pic (particle %s)\n", vt_names[stackType[s - 1]], p->ctrl->name);
 				p->pic = CL_ParticleGetArt((char *) stackPtr[s], p->frame, ART_PIC);
 				e = (byte *) stackPtr[s] - cmdStack;
 				break;
 			}
-			if (PPOFS(model) == -cmd->ref) {
+			if (offsetof(ptl_t, model) == -cmd->ref) {
 				if (stackType[--s] != V_STRING)
 					Sys_Error("Bad type '%s' for model (particle %s)\n", vt_names[stackType[s - 1]], p->ctrl->name);
 				p->model = CL_ParticleGetArt((char *) stackPtr[s], 0, ART_MODEL);

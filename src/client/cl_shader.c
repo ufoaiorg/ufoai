@@ -34,8 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-#define	SHADERFS(x)	(size_t)&(((shader_t *)0)->x)
-
+/* extern in client.h */
 int r_numshaders;
 
 /* shader_t is in client/ref.h */
@@ -43,9 +42,9 @@ int r_numshaders;
 shader_t r_shaders[MAX_SHADERS];
 
 value_t shader_values[] = {
-	{"filename", V_STRING, SHADERFS(filename)},
-	{"frag", V_BOOL, SHADERFS(frag)},
-	{"vertex", V_BOOL, SHADERFS(vertex)},
+	{"filename",	V_STRING,	offsetof( shader_t, filename)},
+	{"frag",	V_BOOL,	offsetof( shader_t, frag)},
+	{"vertex",	V_BOOL,	offsetof( shader_t, vertex)},
 	{NULL, 0, 0}
 };
 

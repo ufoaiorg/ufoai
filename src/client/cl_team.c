@@ -1170,16 +1170,14 @@ void CL_ParseResults(sizebuf_t * buf)
 }
 
 /* ======= RANKS & MEDALS =========*/
-/*#define	PARSEMEDALS(x)	(int)&(((xxx_t *)0)->x) */
-#define	PARSERANKS(x)	(size_t)&(((rank_t *)0)->x)
 
 value_t rankValues[] =
 {
-	{ "name",	V_TRANSLATION_STRING,	PARSERANKS( name ) },
-	{ "image",	V_STRING,				PARSERANKS( image ) },
-	{ "mind",		V_INT,			PARSERANKS( mind ) },
-	{ "killed_enemies",	V_INT,			PARSERANKS( killed_enemies ) },
-	{ "killed_others",	V_INT,			PARSERANKS( killed_others ) },
+	{ "name",	V_TRANSLATION_STRING,	offsetof( rank_t, name ) },
+	{ "image",	V_STRING,				offsetof( rank_t, image ) },
+	{ "mind",		V_INT,			offsetof( rank_t, mind ) },
+	{ "killed_enemies",	V_INT,			offsetof( rank_t, killed_enemies ) },
+	{ "killed_others",	V_INT,			offsetof( rank_t, killed_others ) },
 	{ NULL,	0, 0 }
 };
 
@@ -1237,14 +1235,12 @@ void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 	}
 }
 
-#define	PARSEUGV(x)	(size_t)&(((ugv_t *)0)->x)
-
 value_t ugvValues[] =
 {
-	{ "tu",	V_INT,			PARSEUGV( tu ) },
-	{ "weapon",	V_STRING,	PARSEUGV( weapon ) },
-	{ "armor",	V_STRING,	PARSEUGV( armor ) },
-	{ "size",	V_INT,		PARSEUGV( size ) },
+	{ "tu",	V_INT,			offsetof( ugv_t, tu ) },
+	{ "weapon",	V_STRING,	offsetof( ugv_t, weapon ) },
+	{ "armor",	V_STRING,	offsetof( ugv_t, armor ) },
+	{ "size",	V_INT,		offsetof( ugv_t, size ) },
 
 	{ NULL,	0, 0 }
 };
