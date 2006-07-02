@@ -939,16 +939,20 @@ typedef struct equipDef_s {
 /* the csi structure is the client-server-information structure */
 /* which contains all the UFO info needed by the server and the client */
 typedef struct csi_s {
+	/* object definitions */
 	objDef_t ods[MAX_OBJDEFS];
 	int numODs;
 
+	/* inventory definitions */
 	invDef_t ids[MAX_INVDEFS];
 	int numIDs;
 	int idRight, idLeft, idBelt, idArmor, idFloor, idEquip;
 
+	/* equipment definitions */
 	equipDef_t eds[MAX_EQUIPDEFS];
 	int numEDs;
 
+	/* damage types */
 	char dts[MAX_DAMAGETYPES][MAX_VAR];
 	int numDTs;
 } csi_t;

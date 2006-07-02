@@ -1470,12 +1470,12 @@ MENU DRAWING
 /**
   * @brief Draws an item to the screen
   *
-  * @param[in] org Node position on the screen
+  * @param[in] org Node position on the screen (pixel)
   * @param[in] item The item to draw
-  * @param[in] sx Size in x direction
-  * @param[in] sy Size in y direction
-  * @param[in] x
-  * @param[in] y
+  * @param[in] sx Size in x direction (no pixel but container space)
+  * @param[in] sy Size in y direction (no pixel but container space)
+  * @param[in] x Position in container
+  * @param[in] y Position in container
   * @param[in] scale
   * @param[in] color
   *
@@ -2033,10 +2033,10 @@ void MN_DrawMenus(void)
 
 				case MN_CONTAINER:
 					if (menuInventory) {
-						vec3_t scale;
+						vec3_t scale = {3.5, 3.5, 3.5};
 						invList_t *ic;
+						int countItems = 0;
 
-						VectorSet(scale, 3.5, 3.5, 3.5);
 						color[0] = color[1] = color[2] = 0.5;
 						color[3] = 1;
 
@@ -2057,8 +2057,9 @@ void MN_DrawMenus(void)
 											color);
 						} else {
 							/* standard container */
-							for (ic = menuInventory->c[node->mousefx]; ic; ic = ic->next)
+							for (ic = menuInventory->c[node->mousefx]; ic; ic = ic->next) {
 								MN_DrawItem(node->pos, ic->item, csi.ods[ic->item.t].sx, csi.ods[ic->item.t].sy, ic->x, ic->y, scale, color);
+							}
 						}
 						/* draw free space if dragging - but not for idEquip */
 						if (node->mousefx != csi.idEquip)

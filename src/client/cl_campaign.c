@@ -2253,7 +2253,9 @@ void CL_GameAbort(void)
 /* =========================================================== */
 
 /**
-  * @brief
+  * @brief Collect aliens from battlefield (e.g. for autopsy)
+  *
+  * @param[in] mission
   *
   * loop through all entities and put the ones that are stunned
   * as living aliens into our labs
@@ -2305,24 +2307,34 @@ void CL_CollectAliens(mission_t * mission)
 }
 
 /**
-  * @brief
+  * @brief Do the real collection of the items
+  *
+  * @param[in] weapon Which weapon
+  * @param[in] left_hand Determines whether the container is the left hand container
+  *
+  * Called from CL_CollectItems.
+  * Put every item to the market inventory list
   */
 void CL_CollectItemAmmo(invList_t * weapon, int left_hand)
 {
+	/* twohanded weapons and container is left hand container */
+	/* item.t ?? */
 	if (weapon->item.t == NONE || (left_hand && csi.ods[weapon->item.t].twohanded))
 		return;
-	ccs.eMission.num[weapon->item.t]++;
+	ccs.eMarket.num[weapon->item.t]++;
 	if (!csi.ods[weapon->item.t].reload || weapon->item.m == NONE)
 		return;
-	ccs.eMission.num_loose[weapon->item.m] += weapon->item.a;
-	if (ccs.eMission.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
-		ccs.eMission.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
-		ccs.eMission.num[weapon->item.m]++;
+	ccs.eMarket.num_loose[weapon->item.m] += weapon->item.a;
+	if (ccs.eMarket.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
+		ccs.eMarket.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
+		ccs.eMarket.num[weapon->item.m]++;
 	}
 }
 
 /**
-  * @brief
+  * @brief Collect items from battlefield
+  *
+  * @param[in] won Determines whether we have won the match or not
   *
   * collects all items from battlefield (if we've won the match)
   * and put them back to inventory. Calls CL_CollectItemAmmo which
@@ -2352,8 +2364,12 @@ void CL_CollectItems(int won)
 			break;
 		case ET_ACTOR:
 		case ET_UGV:
+			/* the items are already dropped to floor and are available */
+			/* as ET_ITEM */
+			/* TODO: Does a stunned actor lose his inventory, too? */
 			if (le->state & STATE_DEAD)
 				break;
+			/* living actor */
 			for (container = 0; container < csi.numIDs; container++)
 				for (item = le->i.c[container]; item; item = item->next)
 					CL_CollectItemAmmo(item, (container == csi.idLeft));
