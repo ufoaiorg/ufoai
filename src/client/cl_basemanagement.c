@@ -300,6 +300,9 @@ void B_NewBuilding(void)
 
 /**
  * @brief Set the currently selected building.
+ *
+ * @param[in] row Set building (baseCurrent->buildingCurrent) to row
+ * @param[in] col Set building (baseCurrent->buildingCurrent) to col
  */
 void B_SetBuildingByClick(int row, int col)
 {
@@ -456,6 +459,7 @@ static void B_DrawBuilding(void)
 /**
  * @brief Handles the list of constructable buildings.
  *
+ * @param[in] building Add this building to the construction list
  * Called everytime a building was constructed and thus maybe other buildings get available.
  * menuText[TEXT_BUILDINGS] is a pointer to baseCurrent->allBuildingsList which will be displayed in the build-screen.
  * This way every base can hold its own building list.
@@ -472,6 +476,9 @@ void B_BuildingAddToList(building_t * building)
 
 /**
  * @brief Counts the number of buildings of a particular type in a base.
+ *
+ * @param[in] base_idx Which base
+ * @param[in] type_idx Which buildingtype
  */
 int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx)
 {
@@ -496,6 +503,9 @@ int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx)
  * @brief Get the maximum status of a building.
  *
  * TODO: I have no idea what this does or is for.
+ * @param[in] base_idx Which base
+ * @param[in] buildingType Which buildingtype
+ * @return
  */
 buildingStatus_t B_GetMaximumBuildingStatus(int base_idx, buildingType_t buildingType)
 {
@@ -571,6 +581,9 @@ void B_BuildingInit(void)
 
 /**
  * @brief Gets the type of building by its index.
+ *
+ * @param[in] idx The index of the building in gd.buildings[]
+ * @return buildings_t pointer to gd.buildings[idx]
  */
 building_t *B_GetBuildingByIdx(int idx)
 {
@@ -631,6 +644,7 @@ void B_BuildingClick_f(void)
  *
  * @param[in] id Unique test-id of a building_t. This is parsed from "building xxx" -> id=xxx.
  * @param[in] text TODO: document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
+ * @param[in] link Bool value that decides whether to link the tech pointer in or not
  */
 void B_ParseBuildings(char *id, char **text, qboolean link)
 {
@@ -902,6 +916,13 @@ building_t *B_GetFreeBuilding(int base_idx, buildingType_t type)
 }
 #endif
 
+/**
+ * @brief Gets a free (with no assigned workers) building of the given type.
+ *
+ * @param[in] type Which type of building to search for.
+ *
+ * @return The (empty) building.
+ */
 building_t *B_GetFreeBuildingType(buildingType_t type)
 {
 	int i;
@@ -997,9 +1018,10 @@ int B_GetUnusedLabs(int base_idx)
 }
 
 /**
- * @brief Removes all assigned scientists from a building.
+ * @brief Removes all assigned employees from a building.
  *
  * TODO: If the building is of type "B_QUARTERS" before it's cleared all other buildings need to be checked if there is an employees there that also is in the qarter. These employees need to be removed from those buildings.
+ * @param[in] building Building pointer of the building to be cleared
  */
 void B_ClearBuilding(building_t * building)
 {
@@ -1039,7 +1061,10 @@ void B_ClearBuilding(building_t * building)
 }
 
 /**
- * @brief Returns true if the employee is only assigned to quarters.
+ * @brief Returns true if the employee is only assigned to quarters but not to labs and workshops.
+ *
+ * @param[in] employee The employee_t pointer to check
+ * @return qboolean
  */
 qboolean B_EmployeeIsFree(employee_t * employee)
 {
@@ -1699,7 +1724,7 @@ static void B_AssembleRandomBase(void)
 }
 
 /**
- * @param Just lists all buildings with their data
+ * @brief Just lists all buildings with their data
  *
  * Just for debugging purposes - not needed in game
  * TODO: To be extended for load/save purposes

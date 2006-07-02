@@ -1275,8 +1275,8 @@ void CL_NextRound(void)
 /**
  * @brief Displays a message on the hud.
  *
- * @time is a ms values
- * @text is already translated here
+ * @param[in] time is a ms values
+ * @param[in] text text is already translated here
  */
 void CL_DisplayHudMessage(char *text, int time)
 {

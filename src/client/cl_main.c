@@ -487,7 +487,7 @@ void CL_Disconnect_f(void)
 /**
   * @brief
   *
-  * packet <destination> <contents>
+  * packet [destination] [contents]
   * Contents allows \n escape character
   */
 void CL_Packet_f(void)
@@ -1245,7 +1245,7 @@ void CL_InitLocal(void)
 	/* text id is ships in menu_geoscape.ufo */
 	Cmd_AddCommand("ships_click", CL_SelectAircraft_f);
 	Cmd_AddCommand("ships_rclick", CL_OpenAircraft_f);
-	
+
 	Cmd_AddCommand("multi_select_click", CL_MultiSelect);
 
 	Cmd_AddCommand("userinfo", CL_Userinfo_f);
