@@ -875,6 +875,7 @@ typedef struct objDef_s {
 	char image[MAX_VAR];
 	char type[MAX_VAR];
 	int shape;
+	/* size in x and y direction */
 	byte sx, sy;
 	float scale;
 	vec3_t center;

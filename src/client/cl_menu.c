@@ -1467,11 +1467,21 @@ MENU DRAWING
 ==============================================================
 */
 
-/*
-=================
-MN_DrawItem
-=================
-*/
+/**
+  * @brief Draws an item to the screen
+  *
+  * @param[in] org Node position on the screen
+  * @param[in] item The item to draw
+  * @param[in] sx Size in x direction
+  * @param[in] sy Size in y direction
+  * @param[in] x
+  * @param[in] y
+  * @param[in] scale
+  * @param[in] color
+  *
+  * Used to draw an item to the equipment containers. First look whether the objDef_t
+  * includes an image - if there is none then draw the model
+  */
 void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color)
 {
 	modelInfo_t mi;
@@ -1488,8 +1498,10 @@ void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t s
 
 	if (od->image[0]) {
 		/* draw the image */
-		/* fix fixed size */
-		re.DrawNormPic(org[0] + C_UNIT / 2.0 * sx + C_UNIT * x, org[1] + C_UNIT / 2.0 * sy + C_UNIT * y, 80, 80, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
+		re.DrawNormPic(
+			org[0] + C_UNIT / 2.0 * sx + C_UNIT * x,
+			org[1] + C_UNIT / 2.0 * sy + C_UNIT * y,
+			C_UNIT * sx, C_UNIT * sy, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
 	} else if (od->model[0]) {
 		/* draw model, if there is no image */
 		mi.name = od->model;

@@ -809,6 +809,7 @@ void CL_InitMessageSystem(void);
 #define MAX_MENU_COMMAND	32
 #define MAX_MENU_PICLINK	64
 
+/* one unit in the containers is 25x25 */
 #define C_UNIT				25
 #define C_UNDEFINED			0xFE
 
