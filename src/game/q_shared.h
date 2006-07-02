@@ -112,7 +112,8 @@ typedef enum { qfalse, qtrue } qboolean;
 #define NULL ((void *)0)
 #endif
 
-#ifndef offsetof
+/* TODO: place this macro after stddef.h inclusion. */
+#if !defined offsetof && !defined _MSC_VER
 #define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
 #endif
 
