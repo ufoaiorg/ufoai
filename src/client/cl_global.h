@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_GLOBAL_H
 
 #include "cl_research.h"
-#include "cl_ufopedia.h"
 #include "cl_basemanagement.h"
 
 

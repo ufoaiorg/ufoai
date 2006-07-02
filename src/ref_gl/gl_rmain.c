@@ -1281,7 +1281,7 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	else
 		gl_config.renderer = GL_RENDERER_OTHER;
 
-	if ( toupper( gl_monolightmap->string[1] ) != ' F ' ) {
+	if ( toupper( gl_monolightmap->string[1] ) != 'F' ) {
 		if ( gl_config.renderer == GL_RENDERER_PERMEDIA2 ) {
 			ri.Cvar_Set( "gl_monolightmap", "A" );
 			ri.Con_Printf( PRINT_ALL, "...using gl_monolightmap ' a '\n" );
@@ -1292,9 +1292,9 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 			ri.Cvar_Set( "gl_monolightmap", "0" );
 	}
 
-	/* power vr can' t have anything stay in the framebuffer, so * /
-		/* the screen needs to redraw the tiled background every frame */
-		if (gl_config.renderer & GL_RENDERER_POWERVR)
+	/* power vr can't have anything stay in the framebuffer, so */
+	/* the screen needs to redraw the tiled background every frame */
+	if (gl_config.renderer & GL_RENDERER_POWERVR)
 		ri.Cvar_Set("scr_drawall", "1");
 	else
 		ri.Cvar_Set("scr_drawall", "0");

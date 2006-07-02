@@ -35,14 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CLIENT_H
 #define CLIENT_CLIENT_H
 
-#include <math.h>
-#include <string.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <limits.h>
-
 #include "ref.h"
 #include "vid.h"
 #include "screen.h"
@@ -51,7 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "keys.h"
 #include "console.h"
 #include "cdaudio.h"
-#include "cl_ufopedia.h"
 #include "cl_market.h"
 
 /*============================================================================= */
