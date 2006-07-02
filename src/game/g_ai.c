@@ -311,6 +311,9 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 
 /*	Com_Printf( "AI_ActorThink (ent %i, frame %i)\n", ent->number, level.framenum ); */
 
+	aia.mode = 0;
+	aia.shots = 0;
+
 	/* calculate move table */
 	G_MoveCalc(0, ent->pos, MAX_ROUTE);
 	gi.MoveStore(gi.map);
