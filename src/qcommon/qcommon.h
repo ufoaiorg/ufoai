@@ -38,160 +38,159 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifdef NDEBUG
 #define BUILDSTRING "Win32 RELEASE"
-#else /* NDEBUG */
+#else							/* NDEBUG */
 #define BUILDSTRING "Win32 DEBUG"
-#endif /* NDEBUG */
+#endif							/* NDEBUG */
 
 #ifdef _M_IX86
 #define	CPUSTRING	"x86"
-#elif defined _M_ALPHA /* _M_IX86 */
+#elif defined _M_ALPHA			/* _M_IX86 */
 #define	CPUSTRING	"AXP"
-#else /* _M_IX86 */
+#else							/* _M_IX86 */
 #define	CPUSTRING	"Unknown"
-#endif /* _M_IX86 */
+#endif							/* _M_IX86 */
 
-#elif defined __linux__ /* _WIN32 */
+#elif defined __linux__			/* _WIN32 */
 
 #define BUILDSTRING "Linux"
 
 #ifdef __i386__
 #define CPUSTRING "i386"
-#elif defined __alpha__ /* __i386__ */
+#elif defined __alpha__			/* __i386__ */
 #define CPUSTRING "axp"
-#else /* __i386__ */
+#else							/* __i386__ */
 #define CPUSTRING "Unknown"
-#endif /* __i386__ */
+#endif							/* __i386__ */
 
-#elif defined __sun__ /* _WIN32 */
+#elif defined __sun__			/* _WIN32 */
 
 #define BUILDSTRING "Solaris"
 
 #ifdef __i386__
 #define CPUSTRING "i386"
-#else /* __i386__ */
+#else							/* __i386__ */
 #define CPUSTRING "sparc"
-#endif /* __i386__ */
+#endif							/* __i386__ */
 
-#elif defined MACOS_X /* _WIN32 */
+#elif defined MACOS_X			/* _WIN32 */
 
 #define BUILDSTRING "MacOSX"
 
 #ifdef __i386__
 #define CPUSTRING "i386"
-#else /* __i386__ */
+#else							/* __i386__ */
 #define CPUSTRING "sparc"
-#endif /* __i386__ */
+#endif							/* __i386__ */
 
-#else /* !_WIN32 */
+#else							/* !_WIN32 */
 
 #define BUILDSTRING "NON-WIN32"
 #define	CPUSTRING	"NON-WIN32"
 
-#endif /* _WIN32 */
+#endif							/* _WIN32 */
 
 #ifndef DEFAULT_BASEDIR
 # define DEFAULT_BASEDIR BASEDIRNAME
-#endif /* DEFAULT_BASEDIR */
+#endif							/* DEFAULT_BASEDIR */
 #ifndef DEFAULT_LIBDIR
 # define DEFAULT_LIBDIR DEFAULT_BASEDIR
-#endif /* DEFAULT_LIBDIR */
+#endif							/* DEFAULT_LIBDIR */
 
-int dstrcmp( char *source, char *s1, char *s2 );
+int dstrcmp(char *source, char *s1, char *s2);
 
 /*============================================================================ */
 
-typedef struct sizebuf_s
-{
-	qboolean	allowoverflow;	/* if false, do a Com_Error */
-	qboolean	overflowed;		/* set to true if the buffer size failed */
-	byte	*data;
-	int		maxsize;
-	int		cursize;
-	int		readcount;
+typedef struct sizebuf_s {
+	qboolean allowoverflow;		/* if false, do a Com_Error */
+	qboolean overflowed;		/* set to true if the buffer size failed */
+	byte *data;
+	int maxsize;
+	int cursize;
+	int readcount;
 } sizebuf_t;
 
-void SZ_Init (sizebuf_t *buf, byte *data, int length);
-void SZ_Clear (sizebuf_t *buf);
-void *SZ_GetSpace (sizebuf_t *buf, int length);
-void SZ_Write (sizebuf_t *buf, void *data, int length);
-void SZ_Print (sizebuf_t *buf, char *data);	/* strcats onto the sizebuf */
+void SZ_Init(sizebuf_t * buf, byte * data, int length);
+void SZ_Clear(sizebuf_t * buf);
+void *SZ_GetSpace(sizebuf_t * buf, int length);
+void SZ_Write(sizebuf_t * buf, void *data, int length);
+void SZ_Print(sizebuf_t * buf, char *data);	/* strcats onto the sizebuf */
 
 /*============================================================================ */
 
 struct usercmd_s;
 struct entity_state_s;
 
-void MSG_WriteChar (sizebuf_t *sb, int c);
+void MSG_WriteChar(sizebuf_t * sb, int c);
 
 #ifdef DEBUG
 #define MSG_WriteByte(buffer, char) MSG_WriteByteDebug( buffer, char, __FILE__, __LINE__ )
-void MSG_WriteByteDebug(sizebuf_t *sb, int c, char* file, int line );
+void MSG_WriteByteDebug(sizebuf_t * sb, int c, char *file, int line);
 #else
-void MSG_WriteByte(sizebuf_t *sb, int c);
+void MSG_WriteByte(sizebuf_t * sb, int c);
 #endif
-void MSG_WriteShort (sizebuf_t *sb, int c);
-void MSG_WriteLong (sizebuf_t *sb, int c);
-void MSG_WriteFloat (sizebuf_t *sb, float f);
-void MSG_WriteString (sizebuf_t *sb, char *s);
-void MSG_WriteCoord (sizebuf_t *sb, float f);
-void MSG_WritePos (sizebuf_t *sb, vec3_t pos);
-void MSG_WriteGPos (sizebuf_t *sb, pos3_t pos);
-void MSG_WriteAngle (sizebuf_t *sb, float f);
-void MSG_WriteAngle16 (sizebuf_t *sb, float f);
-void MSG_WriteDir (sizebuf_t *sb, vec3_t vector);
-void MSG_WriteFormat( sizebuf_t *sb, char *format, ... );
+void MSG_WriteShort(sizebuf_t * sb, int c);
+void MSG_WriteLong(sizebuf_t * sb, int c);
+void MSG_WriteFloat(sizebuf_t * sb, float f);
+void MSG_WriteString(sizebuf_t * sb, char *s);
+void MSG_WriteCoord(sizebuf_t * sb, float f);
+void MSG_WritePos(sizebuf_t * sb, vec3_t pos);
+void MSG_WriteGPos(sizebuf_t * sb, pos3_t pos);
+void MSG_WriteAngle(sizebuf_t * sb, float f);
+void MSG_WriteAngle16(sizebuf_t * sb, float f);
+void MSG_WriteDir(sizebuf_t * sb, vec3_t vector);
+void MSG_WriteFormat(sizebuf_t * sb, char *format, ...);
 
 
-void	MSG_BeginReading (sizebuf_t *sb);
+void MSG_BeginReading(sizebuf_t * sb);
 
-int		MSG_ReadChar (sizebuf_t *sb);
-int		MSG_ReadByte (sizebuf_t *sb);
-int		MSG_ReadShort (sizebuf_t *sb);
-int		MSG_ReadLong (sizebuf_t *sb);
-float	MSG_ReadFloat (sizebuf_t *sb);
-char	*MSG_ReadString (sizebuf_t *sb);
-char	*MSG_ReadStringLine (sizebuf_t *sb);
+int MSG_ReadChar(sizebuf_t * sb);
+int MSG_ReadByte(sizebuf_t * sb);
+int MSG_ReadShort(sizebuf_t * sb);
+int MSG_ReadLong(sizebuf_t * sb);
+float MSG_ReadFloat(sizebuf_t * sb);
+char *MSG_ReadString(sizebuf_t * sb);
+char *MSG_ReadStringLine(sizebuf_t * sb);
 
-float	MSG_ReadCoord (sizebuf_t *sb);
-void	MSG_ReadPos (sizebuf_t *sb, vec3_t pos);
-void	MSG_ReadGPos (sizebuf_t *sb, pos3_t pos);
-float	MSG_ReadAngle (sizebuf_t *sb);
-float	MSG_ReadAngle16 (sizebuf_t *sb);
-void	MSG_ReadDir (sizebuf_t *sb, vec3_t vector);
+float MSG_ReadCoord(sizebuf_t * sb);
+void MSG_ReadPos(sizebuf_t * sb, vec3_t pos);
+void MSG_ReadGPos(sizebuf_t * sb, pos3_t pos);
+float MSG_ReadAngle(sizebuf_t * sb);
+float MSG_ReadAngle16(sizebuf_t * sb);
+void MSG_ReadDir(sizebuf_t * sb, vec3_t vector);
 
-void	MSG_ReadData (sizebuf_t *sb, void *buffer, int size);
-void	MSG_ReadFormat( sizebuf_t *sb, char *format, ... );
+void MSG_ReadData(sizebuf_t * sb, void *buffer, int size);
+void MSG_ReadFormat(sizebuf_t * sb, char *format, ...);
 
-int		MSG_LengthFormat( sizebuf_t *sb, char *format );
-
-/*============================================================================ */
-
-extern	qboolean		bigendien;
-
-extern	short	BigShort (short l);
-extern	short	LittleShort (short l);
-extern	int		BigLong (int l);
-extern	int		LittleLong (int l);
-extern	float	BigFloat (float l);
-extern	float	LittleFloat (float l);
+int MSG_LengthFormat(sizebuf_t * sb, char *format);
 
 /*============================================================================ */
 
+extern qboolean bigendien;
 
-int	COM_Argc (void);
-char *COM_Argv (int arg);	/* range and null checked */
-void COM_ClearArgv (int arg);
-int COM_CheckParm (char *parm);
-void COM_AddParm (char *parm);
-
-void COM_Init (void);
-void COM_InitArgv (int argc, char **argv);
-
-char *CopyString (char *in);
+extern short BigShort(short l);
+extern short LittleShort(short l);
+extern int BigLong(int l);
+extern int LittleLong(int l);
+extern float BigFloat(float l);
+extern float LittleFloat(float l);
 
 /*============================================================================ */
 
-void Info_Print (char *s);
+
+int COM_Argc(void);
+char *COM_Argv(int arg);		/* range and null checked */
+void COM_ClearArgv(int arg);
+int COM_CheckParm(char *parm);
+void COM_AddParm(char *parm);
+
+void COM_Init(void);
+void COM_InitArgv(int argc, char **argv);
+
+char *CopyString(char *in);
+
+/*============================================================================ */
+
+void Info_Print(char *s);
 
 
 /* crc.h */
@@ -199,7 +198,7 @@ void Info_Print (char *s);
 void CRC_Init(unsigned short *crcvalue);
 void CRC_ProcessByte(unsigned short *crcvalue, byte data);
 unsigned short CRC_Value(unsigned short crcvalue);
-unsigned short CRC_Block (byte *start, int count);
+unsigned short CRC_Block(byte * start, int count);
 
 
 
@@ -226,7 +225,7 @@ PROTOCOL
 
 /*========================================= */
 
-#define	UPDATE_BACKUP	16	/* copies of entity_state_t to keep buffered */
+#define	UPDATE_BACKUP	16		/* copies of entity_state_t to keep buffered */
 							/* must be power of two */
 #define	UPDATE_MASK		(UPDATE_BACKUP-1)
 
@@ -239,8 +238,7 @@ PROTOCOL
 /* */
 /* server to client */
 /* */
-enum svc_ops_e
-{
+enum svc_ops_e {
 	svc_bad,
 
 	/* these ops are known to the game dll */
@@ -267,26 +265,25 @@ enum svc_ops_e
 /* */
 /* client to server */
 /* */
-enum clc_ops_e
-{
+enum clc_ops_e {
 	clc_bad,
 	clc_nop,
 	clc_endround,
 	clc_teaminfo,
 	clc_action,
-	clc_userinfo,			/* [[userinfo string] */
-	clc_stringcmd			/* [string] message */
+	clc_userinfo,				/* [[userinfo string] */
+	clc_stringcmd				/* [string] message */
 };
 
 
 /*============================================== */
 
 /* a sound without an ent or pos will be a local only sound */
-#define	SND_VOLUME		(1<<0)		/* a byte */
-#define	SND_ATTENUATION	(1<<1)		/* a byte */
-#define	SND_POS			(1<<2)		/* three coordinates */
-#define	SND_ENT			(1<<3)		/* a short 0-2: channel, 3-12: entity */
-#define	SND_OFFSET		(1<<4)		/* a byte, msec offset from frame start */
+#define	SND_VOLUME		(1<<0)	/* a byte */
+#define	SND_ATTENUATION	(1<<1)	/* a byte */
+#define	SND_POS			(1<<2)	/* three coordinates */
+#define	SND_ENT			(1<<3)	/* a short 0-2: channel, 3-12: entity */
+#define	SND_OFFSET		(1<<4)	/* a byte, msec offset from frame start */
 
 #define DEFAULT_SOUND_PACKET_VOLUME	1.0
 #define DEFAULT_SOUND_PACKET_ATTENUATION 1.0
@@ -316,41 +313,49 @@ The game starts with a Cbuf_AddText ("exec quake.rc\n"); Cbuf_Execute ();
 
 */
 
-#define	EXEC_NOW	0		/* don't return until completed */
-#define	EXEC_INSERT	1		/* insert at current position, but don't run yet */
-#define	EXEC_APPEND	2		/* add to end of the command buffer */
+#define	EXEC_NOW	0			/* don't return until completed */
+#define	EXEC_INSERT	1			/* insert at current position, but don't run yet */
+#define	EXEC_APPEND	2			/* add to end of the command buffer */
 
-void Cbuf_Init (void);
+void Cbuf_Init(void);
+
 /* allocates an initial text buffer that will grow as needed */
 
-void Cbuf_AddText (char *text);
+void Cbuf_AddText(char *text);
+
 /* as new commands are generated from the console or keybindings, */
 /* the text is added to the end of the command buffer. */
 
-void Cbuf_InsertText (char *text);
+void Cbuf_InsertText(char *text);
+
 /* when a command wants to issue other commands immediately, the text is */
 /* inserted at the beginning of the buffer, before any remaining unexecuted */
 /* commands. */
 
-void Cbuf_ExecuteText (int exec_when, char *text);
+void Cbuf_ExecuteText(int exec_when, char *text);
+
 /* this can be used in place of either Cbuf_AddText or Cbuf_InsertText */
 
-void Cbuf_AddEarlyCommands (qboolean clear);
+void Cbuf_AddEarlyCommands(qboolean clear);
+
 /* adds all the +set commands from the command line */
 
-qboolean Cbuf_AddLateCommands (void);
+qboolean Cbuf_AddLateCommands(void);
+
 /* adds all the remaining + commands from the command line */
 /* Returns true if any late commands were added, which */
 /* will keep the demoloop from immediately starting */
 
-void Cbuf_Execute (void);
+void Cbuf_Execute(void);
+
 /* Pulls off \n terminated lines of text from the command buffer and sends */
 /* them through Cmd_ExecuteString.  Stops when the buffer is empty. */
 /* Normally called once per frame, but may be explicitly invoked. */
 /* Do not call inside a command function! */
 
-void Cbuf_CopyToDefer (void);
-void Cbuf_InsertFromDefer (void);
+void Cbuf_CopyToDefer(void);
+void Cbuf_InsertFromDefer(void);
+
 /* These two functions are used to defer any pending commands while a map */
 /* is being loaded */
 
@@ -365,45 +370,51 @@ then searches for a command or variable that matches the first token.
 
 typedef void (*xcommand_t) (void);
 
-typedef struct cmdList_s
-{
-	char*	name;
-	xcommand_t	function;
+typedef struct cmdList_s {
+	char *name;
+	xcommand_t function;
 } cmdList_t;
 
-void	Cmd_Init (void);
+void Cmd_Init(void);
 
-void	Cmd_AddCommand (char *cmd_name, xcommand_t function);
+void Cmd_AddCommand(char *cmd_name, xcommand_t function);
+
 /* called by the init functions of other parts of the program to */
 /* register commands and functions to call for them. */
 /* The cmd_name is referenced later, so it should not be in temp memory */
 /* if function is NULL, the command will be forwarded to the server */
 /* as a clc_stringcmd instead of executed locally */
-void	Cmd_RemoveCommand (char *cmd_name);
+void Cmd_RemoveCommand(char *cmd_name);
 
-qboolean Cmd_Exists (char *cmd_name);
+qboolean Cmd_Exists(char *cmd_name);
+
 /* used by the cvar code to check for cvar / command name overlap */
 
-char 	*Cmd_CompleteCommand (char *partial);
+char *Cmd_CompleteCommand(char *partial);
+
 /* attempts to match a partial command for automatic command line completion */
 /* returns NULL if nothing fits */
 
-int		Cmd_Argc (void);
-char	*Cmd_Argv (int arg);
-char	*Cmd_Args (void);
+int Cmd_Argc(void);
+char *Cmd_Argv(int arg);
+char *Cmd_Args(void);
+
 /* The functions that execute commands get their parameters with these */
 /* functions. Cmd_Argv () will return an empty string, not a NULL */
 /* if arg > argc, so string operations are always safe. */
 
-void	Cmd_TokenizeString (char *text, qboolean macroExpand);
+void Cmd_TokenizeString(char *text, qboolean macroExpand);
+
 /* Takes a null terminated string.  Does not need to be /n terminated. */
 /* breaks the string up into arg tokens. */
 
-void	Cmd_ExecuteString (char *text);
+void Cmd_ExecuteString(char *text);
+
 /* Parses a single line of text into arguments and tries to execute it */
 /* as if it was typed at the console */
 
-void	Cmd_ForwardToServer (void);
+void Cmd_ForwardToServer(void);
+
 /* adds the current command line as a clc_stringcmd to the client message. */
 /* things like godmode, noclip, etc, are commands directed to the server, */
 /* so when they are typed in at the console, they will need to be forwarded. */
@@ -430,55 +441,68 @@ Cvars are restricted from having the same names as commands to keep this
 interface from being ambiguous.
 */
 
-extern	cvar_t	*cvar_vars;
+extern cvar_t *cvar_vars;
 
-cvar_t *Cvar_Get (char *var_name, char *value, int flags);
+cvar_t *Cvar_Get(char *var_name, char *value, int flags);
+
 /* creates the variable if it doesn't exist, or returns the existing one */
 /* if it exists, the value will not be changed, but flags will be ORed in */
 /* that allows variables to be unarchived without needing bitflags */
 
-cvar_t 	*Cvar_Set (char *var_name, char *value);
+cvar_t *Cvar_Set(char *var_name, char *value);
+
 /* will create the variable if it doesn't exist */
 
-cvar_t *Cvar_ForceSet (char *var_name, char *value);
+cvar_t *Cvar_ForceSet(char *var_name, char *value);
+
 /* will set the variable even if NOSET or LATCH */
 
-cvar_t 	*Cvar_FullSet (char *var_name, char *value, int flags);
+cvar_t *Cvar_FullSet(char *var_name, char *value, int flags);
 
-void	Cvar_SetValue (char *var_name, float value);
+void Cvar_SetValue(char *var_name, float value);
+
 /* expands value to a string and calls Cvar_Set */
 
-float	Cvar_VariableValue (char *var_name);
+float Cvar_VariableValue(char *var_name);
+
 /* returns 0 if not defined or non numeric */
 
-char	*Cvar_VariableString (char *var_name);
+char *Cvar_VariableString(char *var_name);
+
 /* returns an empty string if not defined */
 
-char 	*Cvar_CompleteVariable (char *partial);
+char *Cvar_CompleteVariable(char *partial);
+
 /* attempts to match a partial variable name for command line completion */
 /* returns NULL if nothing fits */
 
-void	Cvar_GetLatchedVars (void);
+void Cvar_GetLatchedVars(void);
+
 /* any CVAR_LATCHED variables that have been set will now take effect */
 
-qboolean Cvar_Command (void);
+qboolean Cvar_Command(void);
+
 /* called by Cmd_ExecuteString when Cmd_Argv(0) doesn't match a known */
 /* command.  Returns true if the command was a variable reference that */
 /* was handled. (print or change) */
 
-void 	Cvar_WriteVariables (char *path);
+void Cvar_WriteVariables(char *path);
+
 /* appends lines containing "set variable value" for all variables */
 /* with the archive flag set to true. */
 
-void	Cvar_Init (void);
+void Cvar_Init(void);
 
-char	*Cvar_Userinfo (void);
+char *Cvar_Userinfo(void);
+
 /* returns an info string containing all the CVAR_USERINFO cvars */
 
-char	*Cvar_Serverinfo (void);
+char *Cvar_Serverinfo(void);
+
 /* returns an info string containing all the CVAR_SERVERINFO cvars */
 
-extern	qboolean	userinfo_modified;
+extern qboolean userinfo_modified;
+
 /* this is set each time a CVAR_USERINFO variable is changed */
 /* so that the client knows to send it to the server */
 
@@ -494,46 +518,45 @@ NET
 
 #define	PORT_ANY	-1
 
-#define	MAX_MSGLEN		1400		/* max length of a message */
-#define	PACKET_HEADER	10			/* two ints and a short */
+#define	MAX_MSGLEN		1400	/* max length of a message */
+#define	PACKET_HEADER	10		/* two ints and a short */
 
 #ifdef HAVE_IPV6
-typedef enum {NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX, NA_IPV6, NA_MULTICAST6} netadrtype_t;
-#else /* HAVE_IPV6 */
-typedef enum {NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX} netadrtype_t;
-#endif /* HAVE_IPV6 */
+typedef enum { NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX, NA_IPV6, NA_MULTICAST6 } netadrtype_t;
+#else							/* HAVE_IPV6 */
+typedef enum { NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX } netadrtype_t;
+#endif							/* HAVE_IPV6 */
 
-typedef enum {NS_CLIENT, NS_SERVER} netsrc_t;
+typedef enum { NS_CLIENT, NS_SERVER } netsrc_t;
 
-typedef struct
-{
-	netadrtype_t	type;
+typedef struct {
+	netadrtype_t type;
 #ifdef HAVE_IPV6
 	/* TODO: Use sockaddr_storage instead */
-	byte	ip[16];
+	byte ip[16];
 	unsigned int scope_id;
-#else /* HAVE_IPV6 */
-	byte	ip[4];
-#endif /* HAVE_IPV6 */
-	byte	ipx[10];
+#else							/* HAVE_IPV6 */
+	byte ip[4];
+#endif							/* HAVE_IPV6 */
+	byte ipx[10];
 
-	unsigned short	port;
+	unsigned short port;
 } netadr_t;
 
-void		NET_Init (void);
-void		NET_Shutdown (void);
+void NET_Init(void);
+void NET_Shutdown(void);
 
-void		NET_Config (qboolean multiplayer);
+void NET_Config(qboolean multiplayer);
 
-qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message);
-void		NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to);
+qboolean NET_GetPacket(netsrc_t sock, netadr_t * net_from, sizebuf_t * net_message);
+void NET_SendPacket(netsrc_t sock, int length, void *data, netadr_t to);
 
-qboolean	NET_CompareAdr (netadr_t a, netadr_t b);
-qboolean	NET_CompareBaseAdr (netadr_t a, netadr_t b);
-qboolean	NET_IsLocalAddress (netadr_t adr);
-char		*NET_AdrToString (netadr_t a);
-qboolean	NET_StringToAdr (char *s, netadr_t *a);
-void		NET_Sleep(int msec);
+qboolean NET_CompareAdr(netadr_t a, netadr_t b);
+qboolean NET_CompareBaseAdr(netadr_t a, netadr_t b);
+qboolean NET_IsLocalAddress(netadr_t adr);
+char *NET_AdrToString(netadr_t a);
+qboolean NET_StringToAdr(char *s, netadr_t * a);
+void NET_Sleep(int msec);
 
 /*============================================================================ */
 
@@ -541,55 +564,54 @@ void		NET_Sleep(int msec);
 
 #define	MAX_LATENT	32
 
-typedef struct
-{
-	qboolean	fatal_error;
+typedef struct {
+	qboolean fatal_error;
 
-	netsrc_t	sock;
+	netsrc_t sock;
 
-	int			dropped;			/* between last packet and previous */
+	int dropped;				/* between last packet and previous */
 
-	int			last_received;		/* for timeouts */
-	int			last_sent;			/* for retransmits */
+	int last_received;			/* for timeouts */
+	int last_sent;				/* for retransmits */
 
-	netadr_t	remote_address;
-	int			qport;				/* qport value to write when transmitting */
+	netadr_t remote_address;
+	int qport;					/* qport value to write when transmitting */
 
 	/* sequencing variables */
-	int			incoming_sequence;
-	int			incoming_acknowledged;
-	int			incoming_reliable_acknowledged;	/* single bit */
+	int incoming_sequence;
+	int incoming_acknowledged;
+	int incoming_reliable_acknowledged;	/* single bit */
 
-	int			incoming_reliable_sequence;		/* single bit, maintained local */
+	int incoming_reliable_sequence;	/* single bit, maintained local */
 
-	int			outgoing_sequence;
-	int			reliable_sequence;			/* single bit */
-	int			last_reliable_sequence;		/* sequence number of last send */
+	int outgoing_sequence;
+	int reliable_sequence;		/* single bit */
+	int last_reliable_sequence;	/* sequence number of last send */
 
 	/* reliable staging and holding areas */
-	sizebuf_t	message;		/* writing buffer to send to server */
-	byte		message_buf[MAX_MSGLEN-16];		/* leave space for header */
+	sizebuf_t message;			/* writing buffer to send to server */
+	byte message_buf[MAX_MSGLEN - 16];	/* leave space for header */
 
 	/* message is copied to this buffer when it is first transfered */
-	int			reliable_length;
-	byte		reliable_buf[MAX_MSGLEN-16];	/* unacked reliable message */
+	int reliable_length;
+	byte reliable_buf[MAX_MSGLEN - 16];	/* unacked reliable message */
 } netchan_t;
 
-extern	netadr_t	net_from;
-extern	sizebuf_t	net_message;
-extern	byte		net_message_buffer[MAX_MSGLEN];
+extern netadr_t net_from;
+extern sizebuf_t net_message;
+extern byte net_message_buffer[MAX_MSGLEN];
 
 
-void Netchan_Init (void);
-void Netchan_Setup (netsrc_t sock, netchan_t *chan, netadr_t adr, int qport);
+void Netchan_Init(void);
+void Netchan_Setup(netsrc_t sock, netchan_t * chan, netadr_t adr, int qport);
 
-qboolean Netchan_NeedReliable (netchan_t *chan);
-void Netchan_Transmit (netchan_t *chan, int length, byte *data);
-void Netchan_OutOfBand (int net_socket, netadr_t adr, int length, byte *data);
-void Netchan_OutOfBandPrint (int net_socket, netadr_t adr, char *format, ...);
-qboolean Netchan_Process (netchan_t *chan, sizebuf_t *msg);
+qboolean Netchan_NeedReliable(netchan_t * chan);
+void Netchan_Transmit(netchan_t * chan, int length, byte * data);
+void Netchan_OutOfBand(int net_socket, netadr_t adr, int length, byte * data);
+void Netchan_OutOfBandPrint(int net_socket, netadr_t adr, char *format, ...);
+qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg);
 
-qboolean Netchan_CanReliable (netchan_t *chan);
+qboolean Netchan_CanReliable(netchan_t * chan);
 
 
 /*
@@ -603,15 +625,15 @@ CMODEL
 
 #define MAX_MAPTILES	512
 
-extern vec3_t	map_min, map_max;
+extern vec3_t map_min, map_max;
 
-void CM_LoadMap (char *tiles, char *pos);
-int CheckBSPFile (char *filename);
-cmodel_t *CM_InlineModel (char *name);	/* *0, *1, *2, etc */
+void CM_LoadMap(char *tiles, char *pos);
+int CheckBSPFile(char *filename);
+cmodel_t *CM_InlineModel(char *name);	/* *0, *1, *2, etc */
 
-int			CM_NumClusters (void);
-int			CM_NumInlineModels (void);
-char		*CM_EntityString (void);
+int CM_NumClusters(void);
+int CM_NumInlineModels(void);
+char *CM_EntityString(void);
 
 /*
 ==============================================================
@@ -626,28 +648,21 @@ CMODEL BOX TRACING
 /* the new map tiles, all the others should work */
 
 /* creates a clipping hull for an arbitrary box */
-int			CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs);
+int CM_HeadnodeForBox(int tile, vec3_t mins, vec3_t maxs);
 
 
 /* returns an ORed contents mask */
 /*int			CM_PointContents (vec3_t p, int headnode); */
 /*int			CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, vec3_t angles); */
 
-trace_t		CM_BoxTrace (vec3_t start, vec3_t end,
-						  vec3_t mins, vec3_t maxs,
-						  int tile, int headnode, int brushmask);
-trace_t		CM_TransformedBoxTrace (vec3_t start, vec3_t end,
-						  vec3_t mins, vec3_t maxs,
-						  int tile, int headnode, int brushmask,
-						  vec3_t origin, vec3_t angles);
-trace_t		CM_CompleteBoxTrace (vec3_t start, vec3_t end,
-						  vec3_t mins, vec3_t maxs,
-						  int levelmask, int brushmask);
+trace_t CM_BoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask);
+trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask, vec3_t origin, vec3_t angles);
+trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int levelmask, int brushmask);
 
-int CM_EntTestLine (vec3_t start, vec3_t stop);
-int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end);
-int CM_TestLine (vec3_t start, vec3_t stop);
-int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end);
+int CM_EntTestLine(vec3_t start, vec3_t stop);
+int CM_EntTestLineDM(vec3_t start, vec3_t stop, vec3_t end);
+int CM_TestLine(vec3_t start, vec3_t stop);
+int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end);
 
 
 /*
@@ -660,14 +675,14 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end);
 
 extern struct routing_s svMap, clMap;
 
-void	Grid_RecalcRouting( struct routing_s *map, char *name, char **list );
-void	Grid_MoveCalc( struct routing_s *map, pos3_t from, int distance, byte **fb_list, int fb_length );
-void	Grid_MoveStore( struct routing_s *map );
-int		Grid_MoveLength( struct routing_s *map, pos3_t to, qboolean stored );
-int		Grid_MoveNext( struct routing_s *map, pos3_t from );
-int		Grid_Height( struct routing_s *map, pos3_t pos );
-int		Grid_Fall( struct routing_s *map, pos3_t pos );
-void	Grid_PosToVec( struct routing_s *map, pos3_t pos, vec3_t vec );
+void Grid_RecalcRouting(struct routing_s *map, char *name, char **list);
+void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_list, int fb_length);
+void Grid_MoveStore(struct routing_s *map);
+int Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored);
+int Grid_MoveNext(struct routing_s *map, pos3_t from);
+int Grid_Height(struct routing_s *map, pos3_t pos);
+int Grid_Fall(struct routing_s *map, pos3_t pos);
+void Grid_PosToVec(struct routing_s *map, pos3_t pos, vec3_t vec);
 
 
 /*
@@ -678,7 +693,7 @@ void	Grid_PosToVec( struct routing_s *map, pos3_t pos, vec3_t vec );
 ==========================================================
 */
 
-float	Com_GrenadeTarget( vec3_t from, vec3_t at, vec3_t v0 );
+float Com_GrenadeTarget(vec3_t from, vec3_t at, vec3_t v0);
 
 /*
 ==============================================================
@@ -688,7 +703,7 @@ FILESYSTEM
 ==============================================================
 */
 #define MAX_MAPS 400
-extern char* maps[MAX_MAPS];
+extern char *maps[MAX_MAPS];
 extern int anzInstalledMaps;
 extern qboolean mapsInstalledInit;
 extern int mapInstalledIndex;
@@ -706,40 +721,43 @@ typedef enum {
 	FS_SEEK_SET
 } fsOrigin_t;
 
-int FS_FOpenFileWrite( const char *filename, FILE** f );
-int FS_Seek( FILE* f, long offset, int origin );
-int FS_WriteFile( const void *buffer, int len, const char* filename );
-int FS_Write( const void *buffer, int len, FILE* f );
-void FS_GetMaps ( void );
-void FS_InitFilesystem (void);
-void FS_SetGamedir (char *dir);
-char *FS_Gamedir (void);
-char *FS_NextPath (char *prevpath);
-void FS_ExecAutoexec (void);
-char *FS_GetCwd( void );
-void FS_NormPath(char* path);
-qboolean FS_FileExists (char *filename);
+int FS_FOpenFileWrite(const char *filename, FILE ** f);
+int FS_Seek(FILE * f, long offset, int origin);
+int FS_WriteFile(const void *buffer, int len, const char *filename);
+int FS_Write(const void *buffer, int len, FILE * f);
+void FS_GetMaps(void);
+void FS_InitFilesystem(void);
+void FS_SetGamedir(char *dir);
+char *FS_Gamedir(void);
+char *FS_NextPath(char *prevpath);
+void FS_ExecAutoexec(void);
+char *FS_GetCwd(void);
+void FS_NormPath(char *path);
+qboolean FS_FileExists(char *filename);
 
-void FS_GetMaps ( void );
+void FS_GetMaps(void);
 
-int FS_FOpenFile (const char *filename, FILE **file);
-void FS_FCloseFile (FILE *f);
+int FS_FOpenFile(const char *filename, FILE ** file);
+void FS_FCloseFile(FILE * f);
+
 /* note: this can't be called from another DLL, due to MS libc issues */
 
-int FS_LoadFile (char *path, void **buffer);
+int FS_LoadFile(char *path, void **buffer);
+
 /* a null buffer will just return the file length without loading */
 /* a -1 length is not present */
 
-void FS_Read (void *buffer, int len, FILE *f);
+void FS_Read(void *buffer, int len, FILE * f);
+
 /* properly handles partial reads */
 
-void FS_FreeFile (void *buffer);
+void FS_FreeFile(void *buffer);
 
-int FS_CheckFile (const char *path);
+int FS_CheckFile(const char *path);
 
-void FS_BuildFileList (char *files);
-char *FS_NextScriptHeader( char *files, char **name, char **text );
-void FS_CreatePath (char *path);
+void FS_BuildFileList(char *files);
+char *FS_NextScriptHeader(char *files, char **name, char **text);
+void FS_CreatePath(char *path);
 
 
 /*
@@ -753,8 +771,7 @@ SCRIPT PARSING
 #define MAX_TEAMDEFS	128
 
 #define LASTNAME	3
-typedef enum
-{
+typedef enum {
 	NAME_NEUTRAL,
 	NAME_FEMALE,
 	NAME_MALE,
@@ -766,8 +783,7 @@ typedef enum
 	NAME_NUM_TYPES
 } nametypes_t;
 
-typedef struct teamDesc_s
-{
+typedef struct teamDesc_s {
 	char id[MAX_VAR];
 	char name[MAX_VAR];
 	char combat_notes[MAX_VAR];
@@ -777,16 +793,16 @@ typedef struct teamDesc_s
 	char interrogation_com[MAX_VAR];
 } teamDesc_t;
 
-extern	teamDesc_t	teamDesc[MAX_TEAMDEFS];
-extern	int		numTeamDesc;
+extern teamDesc_t teamDesc[MAX_TEAMDEFS];
+extern int numTeamDesc;
 
-extern	char *name_strings[NAME_NUM_TYPES];
+extern char *name_strings[NAME_NUM_TYPES];
 
-char *Com_GiveName( int gender, char *category );
-char *Com_GiveModel( int type, int gender, char *category );
-int Com_GetModelAndName( char *team, char *path, char *body, char *head, char *name );
+char *Com_GiveName(int gender, char *category);
+char *Com_GiveModel(int type, int gender, char *category);
+int Com_GetModelAndName(char *team, char *path, char *body, char *head, char *name);
 
-void Com_ParseScripts( void );
+void Com_ParseScripts(void);
 
 /*
 ==============================================================
@@ -797,69 +813,69 @@ MISC
 */
 
 
-#define	ERR_FATAL	0		/* exit the entire game with a popup window */
-#define	ERR_DROP	1		/* print to console and disconnect from game */
-#define	ERR_QUIT	2		/* not an error, just a normal exit */
+#define	ERR_FATAL	0			/* exit the entire game with a popup window */
+#define	ERR_DROP	1			/* print to console and disconnect from game */
+#define	ERR_QUIT	2			/* not an error, just a normal exit */
 
-#define	EXEC_NOW	0		/* don't return until completed */
-#define	EXEC_INSERT	1		/* insert at current position, but don't run yet */
-#define	EXEC_APPEND	2		/* add to end of the command buffer */
+#define	EXEC_NOW	0			/* don't return until completed */
+#define	EXEC_INSERT	1			/* insert at current position, but don't run yet */
+#define	EXEC_APPEND	2			/* add to end of the command buffer */
 
 #define	PRINT_ALL		0
-#define PRINT_DEVELOPER	1	/* only print when "developer 1" */
+#define PRINT_DEVELOPER	1		/* only print when "developer 1" */
 
-void		Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush)(int, char *));
-void		Com_EndRedirect (void);
-void 		Com_Printf (char *fmt, ...);
-void 		Com_DPrintf (char *fmt, ...);
-void 		Com_Error (int code, char *fmt, ...);
-void		Com_Drop (void);
-void 		Com_Quit (void);
+void Com_BeginRedirect(int target, char *buffer, int buffersize, void (*flush) (int, char *));
+void Com_EndRedirect(void);
+void Com_Printf(char *fmt, ...);
+void Com_DPrintf(char *fmt, ...);
+void Com_Error(int code, char *fmt, ...);
+void Com_Drop(void);
+void Com_Quit(void);
 
-int			Com_ServerState (void);		/* this should have just been a cvar... */
-void		Com_SetServerState (int state);
+int Com_ServerState(void);		/* this should have just been a cvar... */
+void Com_SetServerState(int state);
 
-unsigned	Com_BlockChecksum (void *buffer, int length);
-byte		COM_BlockSequenceCRCByte (byte *base, int length, int sequence);
+unsigned Com_BlockChecksum(void *buffer, int length);
+byte COM_BlockSequenceCRCByte(byte * base, int length, int sequence);
 
-extern	cvar_t	*developer;
-extern	cvar_t	*dedicated;
-extern	cvar_t	*host_speeds;
-extern	cvar_t	*log_stats;
-extern	cvar_t	*sv_maxclients;
+extern cvar_t *developer;
+extern cvar_t *dedicated;
+extern cvar_t *host_speeds;
+extern cvar_t *log_stats;
+extern cvar_t *sv_maxclients;
 
-extern	FILE *log_stats_file;
+extern FILE *log_stats_file;
 
 /* host_speeds times */
-extern	int		time_before_game;
-extern	int		time_after_game;
-extern	int		time_before_ref;
-extern	int		time_after_ref;
+extern int time_before_game;
+extern int time_after_game;
+extern int time_before_ref;
+extern int time_after_ref;
 
 /* weapon definitions */
 #define FD_PRIMARY		0
 #define FD_SECONDARY		1
 
-extern csi_t	csi;
+extern csi_t csi;
 
 extern char map_entitystring[MAX_MAP_ENTSTRING];
 
 
-void Z_Free (void *ptr);
-void *Z_Malloc (int size);			/* returns 0 filled memory */
-void *Z_TagMalloc (int size, int tag);
-void Z_FreeTags (int tag);
+void Z_Free(void *ptr);
+void *Z_Malloc(int size);		/* returns 0 filled memory */
+void *Z_TagMalloc(int size, int tag);
+void Z_FreeTags(int tag);
 
-void Qcommon_LocaleInit ( void );
-void  Qcommon_Init (int argc, char **argv);
-float Qcommon_Frame (int msec);
-void  Qcommon_Shutdown (void);
+void Qcommon_LocaleInit(void);
+void Qcommon_Init(int argc, char **argv);
+float Qcommon_Frame(int msec);
+void Qcommon_Shutdown(void);
 
 #define NUMVERTEXNORMALS	162
-extern	vec3_t	bytedirs[NUMVERTEXNORMALS];
+extern vec3_t bytedirs[NUMVERTEXNORMALS];
 
 /* this is in the client code, but can be used for debugging from server */
-void SCR_DebugGraph (float value, int color);
+void SCR_DebugGraph(float value, int color);
 
 /*
 ==============================================================
@@ -869,21 +885,22 @@ NON-PORTABLE SYSTEM SERVICES
 ==============================================================
 */
 
-void	Sys_Init (void);
-void	Sys_NormPath (char* path);
+void Sys_Init(void);
+void Sys_NormPath(char *path);
 
-void	Sys_AppActivate (void);
+void Sys_AppActivate(void);
 
-void	Sys_UnloadGame (void);
-game_export_t *Sys_GetGameAPI (game_import_t *parms);
+void Sys_UnloadGame(void);
+game_export_t *Sys_GetGameAPI(game_import_t * parms);
+
 /* loads the game dll and calls the api init function */
 
-char	*Sys_ConsoleInput (void);
-void	Sys_ConsoleOutput (char *string);
-void	Sys_SendKeyEvents (void);
-void	Sys_Error (char *error, ...);
-void	Sys_Quit (void);
-char	*Sys_GetClipboardData( void );
+char *Sys_ConsoleInput(void);
+void Sys_ConsoleOutput(char *string);
+void Sys_SendKeyEvents(void);
+void Sys_Error(char *error, ...);
+void Sys_Quit(void);
+char *Sys_GetClipboardData(void);
 
 /*
 ==============================================================
@@ -893,18 +910,18 @@ CLIENT / SERVER SYSTEMS
 ==============================================================
 */
 
-void CL_Init (void);
-void CL_Drop (void);
-void CL_Shutdown (void);
-void CL_Frame (int msec);
-void CL_ParseClientData ( char *type, char *name, char **text );
-int  CL_GetModelInTeam ( char *team, char *body, char *head );
-void Con_Print (char *text);
-void SCR_BeginLoadingPlaque (void);
-void MN_PrecacheMenus( void );
+void CL_Init(void);
+void CL_Drop(void);
+void CL_Shutdown(void);
+void CL_Frame(int msec);
+void CL_ParseClientData(char *type, char *name, char **text);
+int CL_GetModelInTeam(char *team, char *body, char *head);
+void Con_Print(char *text);
+void SCR_BeginLoadingPlaque(void);
+void MN_PrecacheMenus(void);
 
-void SV_Init (void);
-void SV_Shutdown (char *finalmsg, qboolean reconnect);
-void SV_Frame (int msec);
+void SV_Init(void);
+void SV_Shutdown(char *finalmsg, qboolean reconnect);
+void SV_Frame(int msec);
 
-#endif /* QCOMMON_DEFINED */
+#endif							/* QCOMMON_DEFINED */

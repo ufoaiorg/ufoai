@@ -44,20 +44,56 @@ static void DoMD4()
 	CC = C;
 	DD = D;
 
-	S(A, B, C, D,  0,  3); S(D, A, B, C,  1,  7); S(C, D, A, B,  2, 11); S(B, C, D, A,  3, 19);
-	S(A, B, C, D,  4,  3); S(D, A, B, C,  5,  7); S(C, D, A, B,  6, 11); S(B, C, D, A,  7, 19);
-	S(A, B, C, D,  8,  3); S(D, A, B, C,  9,  7); S(C, D, A, B, 10, 11); S(B, C, D, A, 11, 19);
-	S(A, B, C, D, 12,  3); S(D, A, B, C, 13,  7); S(C, D, A, B, 14, 11); S(B, C, D, A, 15, 19);
+	S(A, B, C, D, 0, 3);
+	S(D, A, B, C, 1, 7);
+	S(C, D, A, B, 2, 11);
+	S(B, C, D, A, 3, 19);
+	S(A, B, C, D, 4, 3);
+	S(D, A, B, C, 5, 7);
+	S(C, D, A, B, 6, 11);
+	S(B, C, D, A, 7, 19);
+	S(A, B, C, D, 8, 3);
+	S(D, A, B, C, 9, 7);
+	S(C, D, A, B, 10, 11);
+	S(B, C, D, A, 11, 19);
+	S(A, B, C, D, 12, 3);
+	S(D, A, B, C, 13, 7);
+	S(C, D, A, B, 14, 11);
+	S(B, C, D, A, 15, 19);
 
-	T(A, B, C, D,  0,  3); T(D, A, B, C,  4,  5); T(C, D, A, B,  8,  9); T(B, C, D, A, 12, 13);
-	T(A, B, C, D,  1,  3); T(D, A, B, C,  5,  5); T(C, D, A, B,  9,  9); T(B, C, D, A, 13, 13);
-	T(A, B, C, D,  2,  3); T(D, A, B, C,  6,  5); T(C, D, A, B, 10,  9); T(B, C, D, A, 14, 13);
-	T(A, B, C, D,  3,  3); T(D, A, B, C,  7,  5); T(C, D, A, B, 11,  9); T(B, C, D, A, 15, 13);
+	T(A, B, C, D, 0, 3);
+	T(D, A, B, C, 4, 5);
+	T(C, D, A, B, 8, 9);
+	T(B, C, D, A, 12, 13);
+	T(A, B, C, D, 1, 3);
+	T(D, A, B, C, 5, 5);
+	T(C, D, A, B, 9, 9);
+	T(B, C, D, A, 13, 13);
+	T(A, B, C, D, 2, 3);
+	T(D, A, B, C, 6, 5);
+	T(C, D, A, B, 10, 9);
+	T(B, C, D, A, 14, 13);
+	T(A, B, C, D, 3, 3);
+	T(D, A, B, C, 7, 5);
+	T(C, D, A, B, 11, 9);
+	T(B, C, D, A, 15, 13);
 
-	U(A, B, C, D,  0,  3); U(D, A, B, C,  8,  9); U(C, D, A, B,  4, 11); U(B, C, D, A, 12, 15);
-	U(A, B, C, D,  2,  3); U(D, A, B, C, 10,  9); U(C, D, A, B,  6, 11); U(B, C, D, A, 14, 15);
-	U(A, B, C, D,  1,  3); U(D, A, B, C,  9,  9); U(C, D, A, B,  5, 11); U(B, C, D, A, 13, 15);
-	U(A, B, C, D,  3,  3); U(D, A, B, C, 11,  9); U(C, D, A, B,  7, 11); U(B, C, D, A, 15, 15);
+	U(A, B, C, D, 0, 3);
+	U(D, A, B, C, 8, 9);
+	U(C, D, A, B, 4, 11);
+	U(B, C, D, A, 12, 15);
+	U(A, B, C, D, 2, 3);
+	U(D, A, B, C, 10, 9);
+	U(C, D, A, B, 6, 11);
+	U(B, C, D, A, 14, 15);
+	U(A, B, C, D, 1, 3);
+	U(D, A, B, C, 9, 9);
+	U(C, D, A, B, 5, 11);
+	U(B, C, D, A, 13, 15);
+	U(A, B, C, D, 3, 3);
+	U(D, A, B, C, 11, 9);
+	U(C, D, A, B, 7, 11);
+	U(B, C, D, A, 15, 15);
 
 	A += AA;
 	B += BB;
@@ -68,7 +104,7 @@ static void DoMD4()
 #if 1
 static void PerformMD4(const unsigned char *buf, int length, unsigned char *digest)
 #else
-static void PerformMD4(const unsigned char *buf, int length, uint32_t *digest)
+static void PerformMD4(const unsigned char *buf, int length, uint32_t * digest)
 #endif
 {
 	int len = length / 64;		/* number of full blocks */
@@ -85,8 +121,7 @@ static void PerformMD4(const unsigned char *buf, int length, uint32_t *digest)
 
 	for (i = 0; i < len; i++) {
 		for (j = 0; j < 16; j++) {
-			X[j] = ((ptr[0]<< 0)|(ptr[1]<< 8)|
-				(ptr[2]<<16)|(ptr[3]<<24));
+			X[j] = ((ptr[0] << 0) | (ptr[1] << 8) | (ptr[2] << 16) | (ptr[3] << 24));
 
 			ptr += 4;
 		}
@@ -96,25 +131,24 @@ static void PerformMD4(const unsigned char *buf, int length, uint32_t *digest)
 
 	i = rem / 4;
 	for (j = 0; j < i; j++) {
-		X[j] = ((ptr[0]<< 0)|(ptr[1]<< 8)|
-			(ptr[2]<<16)|(ptr[3]<<24));
+		X[j] = ((ptr[0] << 0) | (ptr[1] << 8) | (ptr[2] << 16) | (ptr[3] << 24));
 
 		ptr += 4;
 	}
 
-	switch(rem % 4) {
-		case 0:
-			X[j] = 0x80U;
-			break;
-		case 1:
-			X[j] = ((ptr[0]<< 0)|((0x80U)<< 8));
-			break;
-		case 2:
-			X[j] = ((ptr[0]<< 0)|(ptr[1]<< 8)|((0x80U)<<16));
-			break;
-		case 3:
-			X[j] = ((ptr[0]<< 0)|(ptr[1]<< 8)|(ptr[2]<<16)|((0x80U)<<24));
-			break;
+	switch (rem % 4) {
+	case 0:
+		X[j] = 0x80U;
+		break;
+	case 1:
+		X[j] = ((ptr[0] << 0) | ((0x80U) << 8));
+		break;
+	case 2:
+		X[j] = ((ptr[0] << 0) | (ptr[1] << 8) | ((0x80U) << 16));
+		break;
+	case 3:
+		X[j] = ((ptr[0] << 0) | (ptr[1] << 8) | (ptr[2] << 16) | ((0x80U) << 24));
+		break;
 	}
 	j++;
 
@@ -128,28 +162,28 @@ static void PerformMD4(const unsigned char *buf, int length, uint32_t *digest)
 
 	for (; j < 14; j++)
 		X[j] = 0;
-	X[14] = (length &  0x1FFFFFFF) << 3;
+	X[14] = (length & 0x1FFFFFFF) << 3;
 	X[15] = (length & ~0x1FFFFFFF) >> 29;
 
 	DoMD4();
 
 #if 1
-	digest[ 0] = (unsigned char) ( (A & 0x000000FF) >> 0  );
-	digest[ 1] = (unsigned char) ( (A & 0x0000FF00) >> 8  );
-	digest[ 2] = (unsigned char) ( (A & 0x00FF0000) >> 16 );
-	digest[ 3] = (unsigned char) ( (A & 0xFF000000) >> 24 );
-	digest[ 4] = (unsigned char) ( (B & 0x000000FF) >> 0  );
-	digest[ 5] = (unsigned char) ( (B & 0x0000FF00) >> 8  );
-	digest[ 6] = (unsigned char) ( (B & 0x00FF0000) >> 16 );
-	digest[ 7] = (unsigned char) ( (B & 0xFF000000) >> 24 );
-	digest[ 8] = (unsigned char) ( (C & 0x000000FF) >> 0  );
-	digest[ 9] = (unsigned char) ( (C & 0x0000FF00) >> 8  );
-	digest[10] = (unsigned char) ( (C & 0x00FF0000) >> 16 );
-	digest[11] = (unsigned char) ( (C & 0xFF000000) >> 24 );
-	digest[12] = (unsigned char) ( (D & 0x000000FF) >> 0  );
-	digest[13] = (unsigned char) ( (D & 0x0000FF00) >> 8  );
-	digest[14] = (unsigned char) ( (D & 0x00FF0000) >> 16 );
-	digest[15] = (unsigned char) ( (D & 0xFF000000) >> 24 );
+	digest[0] = (unsigned char) ((A & 0x000000FF) >> 0);
+	digest[1] = (unsigned char) ((A & 0x0000FF00) >> 8);
+	digest[2] = (unsigned char) ((A & 0x00FF0000) >> 16);
+	digest[3] = (unsigned char) ((A & 0xFF000000) >> 24);
+	digest[4] = (unsigned char) ((B & 0x000000FF) >> 0);
+	digest[5] = (unsigned char) ((B & 0x0000FF00) >> 8);
+	digest[6] = (unsigned char) ((B & 0x00FF0000) >> 16);
+	digest[7] = (unsigned char) ((B & 0xFF000000) >> 24);
+	digest[8] = (unsigned char) ((C & 0x000000FF) >> 0);
+	digest[9] = (unsigned char) ((C & 0x0000FF00) >> 8);
+	digest[10] = (unsigned char) ((C & 0x00FF0000) >> 16);
+	digest[11] = (unsigned char) ((C & 0xFF000000) >> 24);
+	digest[12] = (unsigned char) ((D & 0x000000FF) >> 0);
+	digest[13] = (unsigned char) ((D & 0x0000FF00) >> 8);
+	digest[14] = (unsigned char) ((D & 0x00FF0000) >> 16);
+	digest[15] = (unsigned char) ((D & 0xFF000000) >> 24);
 #else
 	digest[0] = SWAPLSB(A);
 	digest[1] = SWAPLSB(B);
@@ -166,12 +200,12 @@ static void PerformMD4(const unsigned char *buf, int length, uint32_t *digest)
 }
 
 /* Quake2-specific function */
-unsigned Com_BlockChecksum (void *buffer, int length)
+unsigned Com_BlockChecksum(void *buffer, int length)
 {
 	uint32_t digest[4];
 	unsigned val;
 
-	PerformMD4((unsigned char *)buffer, length, (unsigned char *)digest);
+	PerformMD4((unsigned char *) buffer, length, (unsigned char *) digest);
 
 	val = digest[0] ^ digest[1] ^ digest[2] ^ digest[3];
 
