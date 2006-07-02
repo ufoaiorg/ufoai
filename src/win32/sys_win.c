@@ -437,25 +437,45 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	char	name[MAX_OSPATH];
 	char	*path;
 	char	cwd[MAX_OSPATH];
+
 #if defined _M_IX86
-	const char *gamename = "gamex86.dll";
 
 #ifdef NDEBUG
-	const char *debugdir = "release";
+const char *gamename = "game32.dll";
+const char *debugdir = "release\\win32";
 #else
-	const char *debugdir = "debug";
+const char *gamename = "game32d.dll";
+const char *debugdir = "debug\\win32";
+#endif
+
+#elif defined _M_X64
+
+#ifdef NDEBUG
+const char *gamename = "game64.dll";
+const char *debugdir = "release\\x64";
+#else
+const char *gamename = "game64d.dll";
+const char *debugdir = "debug\\x64";
 #endif
 
 #elif defined _M_ALPHA
-	const char *gamename = "gameaxp.dll";
+
+#error Update DEC ALPHA platform project configuration
 
 #ifdef NDEBUG
-	const char *debugdir = "releaseaxp";
+const char *gamename = "game???.dll";
+const char *debugdir = "release\\alpha";
 #else
-	const char *debugdir = "debugaxp";
+const char *gamename = "game???d.dll";
+const char *debugdir = "debug\\alpha";
 #endif
 
+#else
+
+#error Unsupported platform!
+
 #endif
+
 
 	if (game_library)
 		Com_Error (ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");

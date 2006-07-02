@@ -186,7 +186,7 @@ void ED_ParseField(char *key, char *value, edict_t * ent)
 
 			switch (f->type) {
 			case F_LSTRING:
-				*(char **) (b + (size_t)f->ofs) = ED_NewString(value);
+				*(char **) (b + f->ofs) = ED_NewString(value);
 				break;
 			case F_VECTOR:
 				sscanf(value, "%f %f %f", &vec[0], &vec[1], &vec[2]);
