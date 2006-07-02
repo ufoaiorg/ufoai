@@ -319,10 +319,11 @@ static char *MN_GetReferenceString(menu_t * menu, char *ref)
 				return NULL;
 
 			/* get the string */
-			if (val->ofs > 0)
+			/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
+			if ((val->ofs > 0) && (val->ofs < (size_t)-5))
 				return Com_ValueToStr(refNode, val->type, val->ofs);
 			else
-				return Com_ValueToStr(refNode->data[-val->ofs], val->type, 0);
+				return Com_ValueToStr(refNode->data[-(val->ofs)], val->type, 0);
 		}
 	} else if (*ref == '_') {
 		ref++;
@@ -379,10 +380,11 @@ static float MN_GetReferenceFloat(menu_t * menu, void *ref)
 				return 0.0;
 
 			/* get the string */
-			if (val->ofs > 0)
+			/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
+			if ((val->ofs > 0) && (val->ofs < (size_t)-5))
 				return *(float *) ((byte *) refNode + val->ofs);
 			else
-				return *(float *) refNode->data[-val->ofs];
+				return *(float *) refNode->data[-(val->ofs)];
 		}
 	} else {
 		/* just get the data */
@@ -569,7 +571,8 @@ static void MN_ExecuteActions(menu_t * menu, menuAction_t * first)
 					break;
 				}
 
-				if (nps[np].ofs > 0)
+				/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
+				if ((nps[np].ofs > 0) && (nps[np].ofs < (size_t)-5))
 					Com_SetValue(node, (char *) data, nps[np].type, nps[np].ofs);
 				else
 					node->data[-(nps[np].ofs)] = data;
