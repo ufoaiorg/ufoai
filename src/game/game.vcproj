@@ -123,6 +123,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy $(OutDir)\game* ..\..\base\game*"
 			/>
 		</Configuration>
 		<Configuration
@@ -231,6 +232,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy $(OutDir)\game* ..\..\base\game*"
 			/>
 		</Configuration>
 		<Configuration
@@ -348,6 +350,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy $(OutDir)\game* ..\..\base\game*"
 			/>
 		</Configuration>
 		<Configuration
@@ -465,6 +468,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy $(OutDir)\game* ..\..\base\game*"
 			/>
 		</Configuration>
 	</Configurations>

@@ -2934,7 +2934,8 @@ qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 /*						Com_Printf( " %s", *token ); */
 
 						/* get the value */
-						if (val->ofs > 0)
+						/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
+						if ((val->ofs > 0) && (val->ofs < (size_t)-5))
 							Com_ParseValue(node, *token, val->type, val->ofs);
 						else {
 							/* a reference to data is handled like this */

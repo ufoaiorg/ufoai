@@ -665,7 +665,20 @@ void VID_CheckChanges (void)
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
 
-		Com_sprintf( name, sizeof(name), "ref_%s.dll", vid_ref->string );
+#if defined _M_IX86
+#ifdef DEBUG
+		Com_sprintf( name, sizeof(name), "ref_%s32d.dll", vid_ref->string );
+#else
+		Com_sprintf( name, sizeof(name), "ref_%s32.dll", vid_ref->string );
+#endif
+#elif defined _M_X64
+#ifdef DEBUG
+		Com_sprintf( name, sizeof(name), "ref_%s64d.dll", vid_ref->string );
+#else
+		Com_sprintf( name, sizeof(name), "ref_%s64.dll", vid_ref->string );
+#endif
+#endif
+
 		if ( !VID_LoadRefresh( name ) ) {
 			Cmd_ExecuteString( "condump gl_debug" );
 			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");

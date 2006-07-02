@@ -124,6 +124,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy $(OutDir)\ref_gl* ..\..\ref_gl*"
 			/>
 		</Configuration>
 		<Configuration
@@ -233,6 +234,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy $(OutDir)\ref_gl* ..\..\ref_gl*"
 			/>
 		</Configuration>
 		<Configuration
@@ -351,6 +353,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy $(OutDir)\ref_gl* ..\..\ref_gl*"
 			/>
 		</Configuration>
 		<Configuration
@@ -468,6 +471,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy $(OutDir)\ref_gl* ..\..\ref_gl*"
 			/>
 		</Configuration>
 	</Configurations>
