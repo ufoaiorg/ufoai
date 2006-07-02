@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern model_t *loadmodel;
 
-msurface_t *warpface;
+static msurface_t *warpface;
 
 #define	SUBDIVIDE_SIZE	64
 /*#define	SUBDIVIDE_SIZE	1024 */

@@ -36,15 +36,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 spawn_temp_t st;
 
-void SP_light(edict_t * ent);
-void SP_misc_dummy(edict_t * ent);
-void SP_player_start(edict_t * ent);
-void SP_human_start(edict_t * ent);
-void SP_alien_start(edict_t * ent);
-void SP_civilian_start(edict_t * ent);
-void SP_func_breakable(edict_t * ent);
-void SP_worldspawn(edict_t * ent);
-void SP_ugv_start(edict_t * ent);
+static void SP_light(edict_t * ent);
+static void SP_misc_dummy(edict_t * ent);
+static void SP_player_start(edict_t * ent);
+static void SP_human_start(edict_t * ent);
+static void SP_alien_start(edict_t * ent);
+static void SP_civilian_start(edict_t * ent);
+static void SP_func_breakable(edict_t * ent);
+static void SP_worldspawn(edict_t * ent);
+static void SP_ugv_start(edict_t * ent);
 
 typedef struct {
 	char *name;
@@ -109,7 +109,7 @@ ED_CallSpawn
 Finds the spawn function for the entity and calls it
 ===============
 */
-void ED_CallSpawn(edict_t * ent)
+static void ED_CallSpawn(edict_t * ent)
 {
 	spawn_t *s;
 
@@ -136,7 +136,7 @@ void ED_CallSpawn(edict_t * ent)
 ED_NewString
 =============
 */
-char *ED_NewString(char *string)
+static char *ED_NewString(char *string)
 {
 	char *newb, *new_p;
 	int i, l;
@@ -169,7 +169,7 @@ Takes a key/value pair and sets the binary values
 in an edict
 ===============
 */
-void ED_ParseField(char *key, char *value, edict_t * ent)
+static void ED_ParseField(char *key, char *value, edict_t * ent)
 {
 	field_t *f;
 	byte *b;
@@ -231,7 +231,7 @@ Parses an edict out of the given string, returning the new position
 ed should be a properly initialized empty edict.
 ====================
 */
-char *ED_ParseEdict(char *data, edict_t * ent)
+static char *ED_ParseEdict(char *data, edict_t * ent)
 {
 	qboolean init;
 	char keyname[256];
@@ -332,14 +332,14 @@ void SpawnEntities(char *mapname, char *entities)
 
 /*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8)
 */
-void SP_light(edict_t * self)
+static void SP_light(edict_t * self)
 {
 	/* lights aren't client-server communicated items */
 	/* they are completely client side */
 	G_FreeEdict(self);
 }
 
-void G_ActorSpawn(edict_t * ent)
+static void G_ActorSpawn(edict_t * ent)
 {
 	/* set properties */
 	level.num_spawnpoints[ent->team]++;
@@ -364,7 +364,7 @@ void G_ActorSpawn(edict_t * ent)
 /**
   * @brief Spawn an singleplayer UGV
   */
-void G_UGVSpawn(edict_t * ent)
+static void G_UGVSpawn(edict_t * ent)
 {
 	/* set properties */
 	level.num_ugvspawnpoints[ent->team]++;
@@ -386,7 +386,7 @@ Starting point for a player.
 "team"	the number of the team for this player starting point
 "0" is reserved for civilians and critters (use info_civilian_start instead)
 */
-void SP_player_start(edict_t * ent)
+static void SP_player_start(edict_t * ent)
 {
 	static int soldierCount = 0;
 
@@ -425,7 +425,7 @@ void SP_player_start(edict_t * ent)
 /*QUAKED info_human_start (1 0 0) (-16 -16 -24) (16 16 32)
 Starting point for a single player human.
 */
-void SP_human_start(edict_t * ent)
+static void SP_human_start(edict_t * ent)
 {
 	/* only used in single player */
 	if (sv_maxclients->value > 1) {
@@ -443,7 +443,7 @@ void SP_human_start(edict_t * ent)
 /*QUAKED info_ugv_start (1 1 0) (-32 -32 -24) (32 32 32)
 Starting point for a ugv.
 */
-void SP_ugv_start(edict_t * ent)
+static void SP_ugv_start(edict_t * ent)
 {
 	/* no ugv in multiplayer */
 	if (sv_maxclients->value > 1) {
@@ -466,7 +466,7 @@ void SP_ugv_start(edict_t * ent)
 /*QUAKED info_alien_start (1 0 0) (-16 -16 -24) (16 16 32)
 Starting point for a single player alien.
 */
-void SP_alien_start(edict_t * ent)
+static void SP_alien_start(edict_t * ent)
 {
 	/* only used in single player */
 	if (sv_maxclients->value > 1) {
@@ -486,7 +486,7 @@ void SP_alien_start(edict_t * ent)
 /*QUAKED info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
 Starting point for a civilian.
 */
-void SP_civilian_start(edict_t * ent)
+static void SP_civilian_start(edict_t * ent)
 {
 	ent->team = TEAM_CIVILIAN;
 	/* set stats */
@@ -500,7 +500,7 @@ void SP_civilian_start(edict_t * ent)
 /*
 a dummy to get rid of local entities
 */
-void SP_misc_dummy(edict_t * self)
+static void SP_misc_dummy(edict_t * self)
 {
 	/* models aren't client-server communicated items */
 	/* they are completely client side */
@@ -511,7 +511,7 @@ void SP_misc_dummy(edict_t * self)
 /*QUAKED func_breakable (0.3 0.3 0.3) ?
 Used for breakable objects.
 */
-void SP_func_breakable(edict_t * self)
+static void SP_func_breakable(edict_t * self)
 {
 	self->type = ET_BREAKABLE;
 
@@ -532,7 +532,7 @@ Only used for the world.
 "message"	text to print at user logon
 "maxlevel"	max. level to use in the map
 */
-void SP_worldspawn(edict_t * ent)
+static void SP_worldspawn(edict_t * ent)
 {
 	ent->solid = SOLID_BSP;
 	/* since the world doesn't use G_Spawn() */

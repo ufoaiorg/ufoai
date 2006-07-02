@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 Cmd_Players_f
 =================
 */
-void Cmd_Players_f(player_t * player)
+static void Cmd_Players_f(player_t * player)
 {
 	int i;
 	int count;					/*TODO: why is this needed at all? */
@@ -73,7 +73,7 @@ void Cmd_Players_f(player_t * player)
 Cmd_Say_f
 ==================
 */
-void Cmd_Say_f(player_t * player, qboolean arg0, qboolean team)
+static void Cmd_Say_f(player_t * player, qboolean arg0, qboolean team)
 {
 	int j;
 	char *p;
@@ -119,7 +119,7 @@ void Cmd_Say_f(player_t * player, qboolean arg0, qboolean team)
 	}
 }
 
-void Cmd_PlayerList_f(player_t * player)
+static void Cmd_PlayerList_f(player_t * player)
 {
 	int i;
 	char st[80];

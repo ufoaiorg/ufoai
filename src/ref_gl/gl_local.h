@@ -375,8 +375,6 @@ void EmitWaterPolys(msurface_t * fa);
 void R_DrawTriangleOutlines(void);
 void R_MarkLights(dlight_t * light, int bit, mnode_t * node);
 
-void R_AddMapTile(char *name, int sX, int sY, int sZ);
-
 void R_SetGL2D(void);
 void R_LeaveGL2D(void);
 

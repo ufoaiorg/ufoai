@@ -38,7 +38,7 @@ typedef struct {
 AI_CheckFF
 =================
 */
-qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
+static qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 {
 	edict_t *check;
 	vec3_t dtarget, dcheck, back;
@@ -89,7 +89,7 @@ AI_FighterCalcGuete
 #define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*M_PI/180) : 0)
 #define HIDE_DIST			3
 
-float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
+static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 {
 	objDef_t *od;
 	fireDef_t *fd;
@@ -251,7 +251,7 @@ AI_CivilianCalcGuete
 #define GUETE_CIV_LAZINESS	5
 #define RUN_AWAY_DIST		160
 
-float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
+static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 {
 	edict_t *check;
 	int i, move, tu;
@@ -422,9 +422,9 @@ G_SpawnAIPlayer
 =================
 */
 #define MAX_SPAWNPOINTS		64
-int spawnPoints[MAX_SPAWNPOINTS];
+static int spawnPoints[MAX_SPAWNPOINTS];
 
-void G_SpawnAIPlayer(player_t * player, int numSpawn)
+static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 {
 	edict_t *ent;
 	byte equip[MAX_OBJDEFS];

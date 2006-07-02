@@ -173,6 +173,13 @@ qboolean CheckAND(char **s)
 	return result;
 }
 
+/**
+  * @brief
+  *
+  * @param[in] expr
+  * @param[in] varFuncParam Function pointer
+  * @return qboolean
+  */
 qboolean CheckBEP(char *expr, qboolean(*varFuncParam) (char *var))
 {
 	qboolean result;
@@ -512,7 +519,7 @@ void CL_AircraftReturnToBase(aircraft_t *air)
   * Sends the current aircraft back to homebase and updates
   * the cvars
   */
-void CL_AircraftReturnToBase_f(void)
+static void CL_AircraftReturnToBase_f(void)
 {
 	aircraft_t *air;
 
@@ -524,7 +531,9 @@ void CL_AircraftReturnToBase_f(void)
 }
 
 /**
-  * @brief
+  * @brief Sets aircraftCurrent and updates cvars
+  *
+  * uses cvar mn_aircraft_id to determine which aircraft to select
   */
 void CL_AircraftSelect(void)
 {
@@ -679,11 +688,13 @@ qboolean CL_NewBase(vec2_t pos)
 
 
 /**
-  * @brief
+  * @brief Checks wheter a stage set exceeded the quota
+  *
+  * @return qboolean
   */
-stage_t *testStage;
+static stage_t *testStage;
 
-qboolean CL_StageSetDone(char *name)
+static qboolean CL_StageSetDone(char *name)
 {
 	setState_t *set;
 	int i;
@@ -704,7 +715,7 @@ qboolean CL_StageSetDone(char *name)
 /**
   * @brief
   */
-void CL_CampaignActivateStageSets(stage_t * stage)
+static void CL_CampaignActivateStageSets(stage_t * stage)
 {
 	setState_t *set;
 	int i;
@@ -911,7 +922,7 @@ char aircraftListText[1024];
   * opens up aircraft by rightclicking them
   * (from the aircraft list after selecting a mission on geoscape)
   */
-void CL_OpenAircraft_f(void)
+static void CL_OpenAircraft_f(void)
 {
 	int num, j;
 
@@ -948,7 +959,7 @@ void CL_OpenAircraft_f(void)
   *
   * sends the selected aircraft to selected mission (leftclick)
   */
-void CL_SelectAircraft_f(void)
+static void CL_SelectAircraft_f(void)
 {
 	int num, j;
 
@@ -3393,6 +3404,10 @@ void CL_ResetCampaign(void)
 	curCampaign = NULL;
 	baseCurrent = NULL;
 	menuText[TEXT_CAMPAIGN_LIST] = campaignText;
+
+	/* text id is ships in menu_geoscape.ufo */
+	Cmd_AddCommand("ships_click", CL_SelectAircraft_f);
+	Cmd_AddCommand("ships_rclick", CL_OpenAircraft_f);
 
 	Cmd_AddCommand("campaign_stats", CP_CampaignStats );
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f);

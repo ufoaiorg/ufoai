@@ -713,7 +713,7 @@ void Mod_LoadPlanes(lump_t * l)
 Mod_ShiftTile
 =================
 */
-void Mod_ShiftTile(void)
+static void Mod_ShiftTile(void)
 {
 	mvertex_t *vert;
 	cplane_t *plane;
@@ -737,7 +737,7 @@ void Mod_ShiftTile(void)
 R_AddMapTile
 =================
 */
-void R_AddMapTile(char *name, int sX, int sY, int sZ)
+static void R_AddMapTile(char *name, int sX, int sY, int sZ)
 {
 	int i;
 	unsigned *buffer;

@@ -1242,12 +1242,6 @@ void CL_InitLocal(void)
 	Cmd_AddCommand("bookmarks_print", CL_BookmarkPrint_f);
 	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f);
 
-	/* text id is ships in menu_geoscape.ufo */
-	Cmd_AddCommand("ships_click", CL_SelectAircraft_f);
-	Cmd_AddCommand("ships_rclick", CL_OpenAircraft_f);
-
-	Cmd_AddCommand("multi_select_click", CL_MultiSelect);
-
 	Cmd_AddCommand("userinfo", CL_Userinfo_f);
 	Cmd_AddCommand("snd_restart", CL_Snd_Restart_f);
 

@@ -190,22 +190,22 @@ char *nt_strings[MN_NUM_NODETYPE] = {
 /* =========================================================== */
 
 
-menuModel_t menuModels[MAX_MENUMODELS];
-menuAction_t menuActions[MAX_MENUACTIONS];
-menuNode_t menuNodes[MAX_MENUNODES];
-menu_t menus[MAX_MENUS];
+static menuModel_t menuModels[MAX_MENUMODELS];
+static menuAction_t menuActions[MAX_MENUACTIONS];
+static menuNode_t menuNodes[MAX_MENUNODES];
+static menu_t menus[MAX_MENUS];
 
-int numActions;
-int numNodes;
-int numMenus;
-int numMenuModels;
-int numTutorials;
+static int numActions;
+static int numNodes;
+static int numMenus;
+static int numMenuModels;
+static int numTutorials;
 
-byte *adata, *curadata;
-int adataize = 0;
+static byte *adata, *curadata;
+static int adataize = 0;
 
-menu_t *menuStack[MAX_MENUSTACK];
-int menuStackPos;
+static menu_t *menuStack[MAX_MENUSTACK];
+static int menuStackPos;
 
 inventory_t *menuInventory = NULL;
 char *menuText[MAX_MENUTEXTS];
@@ -262,7 +262,7 @@ ACTION EXECUTION
 MN_GetNode
 =================
 */
-menuNode_t *MN_GetNode(menu_t * menu, char *name)
+static menuNode_t *MN_GetNode(menu_t * menu, char *name)
 {
 	menuNode_t *node;
 
@@ -279,7 +279,7 @@ menuNode_t *MN_GetNode(menu_t * menu, char *name)
 MN_GetReferenceString
 =================
 */
-char *MN_GetReferenceString(menu_t * menu, char *ref)
+static char *MN_GetReferenceString(menu_t * menu, char *ref)
 {
 	if (!ref)
 		return NULL;
@@ -339,7 +339,7 @@ char *MN_GetReferenceString(menu_t * menu, char *ref)
 MN_GetReferenceFloat
 =================
 */
-float MN_GetReferenceFloat(menu_t * menu, void *ref)
+static float MN_GetReferenceFloat(menu_t * menu, void *ref)
 {
 	if (!ref)
 		return 0.0;
@@ -397,7 +397,7 @@ starts a server and checks if the server
 loads a team unless he is a dedicated
 server admin
 =================*/
-void MN_StartServer(void)
+static void MN_StartServer(void)
 {
 	if (Cmd_Argc() <= 1) {
 		Com_Printf("Usage: mn_startserver <name>\n");
@@ -426,7 +426,7 @@ void MN_StartServer(void)
 * Com_MergeShapes
 * Will merge the second shape (=itemshape) into the first one on the position x/y
 */
-void Com_MergeShapes(int *shape, int itemshape, int x, int y)
+static void Com_MergeShapes(int *shape, int itemshape, int x, int y)
 {
 	/*TODO-security: needs some checks for max-values! */
 	int i;
@@ -439,7 +439,7 @@ void Com_MergeShapes(int *shape, int itemshape, int x, int y)
 * Com_CheckShape
 * Checks the shape if there is a 1-bit on the position x/y.
 */
-qboolean Com_CheckShape(int shape[16], int x, int y)
+static qboolean Com_CheckShape(int shape[16], int x, int y)
 {
 	int row = shape[y];
 	int position = pow(2, x);
@@ -454,7 +454,7 @@ qboolean Com_CheckShape(int shape[16], int x, int y)
 * MN_DrawFree
 * Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel).
 */
-void MN_DrawFree(int posx, int posy, int sizex, int sizey)
+static void MN_DrawFree(int posx, int posy, int sizex, int sizey)
 {
 	static vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
 	re.DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);
@@ -465,7 +465,7 @@ void MN_DrawFree(int posx, int posy, int sizex, int sizey)
 * MN_InvDrawFree
 * Draws the free and useable inventory positions when dragging an item.
 */
-void MN_InvDrawFree(inventory_t * inv, menuNode_t * node)
+static void MN_InvDrawFree(inventory_t * inv, menuNode_t * node)
 {
 	/* get the 'type' of the dragged item */
 	int item = dragItem.t;
@@ -529,7 +529,7 @@ void MN_Popup(const char *title, const char *text)
 MN_ExecuteActions
 =================
 */
-void MN_ExecuteActions(menu_t * menu, menuAction_t * first)
+static void MN_ExecuteActions(menu_t * menu, menuAction_t * first)
 {
 	menuAction_t *action;
 	byte *data;
@@ -587,7 +587,7 @@ void MN_ExecuteActions(menu_t * menu, menuAction_t * first)
 MN_Command
 =================
 */
-void MN_Command(void)
+static void MN_Command(void)
 {
 	menuNode_t *node;
 	char *name;
@@ -617,7 +617,7 @@ MENU ZONE DETECTION
 MN_MapToScreen
 =================
 */
-qboolean MN_MapToScreen(menuNode_t * node, vec2_t pos, int *x, int *y)
+static qboolean MN_MapToScreen(menuNode_t * node, vec2_t pos, int *x, int *y)
 {
 	float sx;
 
@@ -644,7 +644,7 @@ qboolean MN_MapToScreen(menuNode_t * node, vec2_t pos, int *x, int *y)
 MN_ScreenToMap
 =================
 */
-void MN_ScreenToMap(menuNode_t * node, int x, int y, vec2_t pos)
+static void MN_ScreenToMap(menuNode_t * node, int x, int y, vec2_t pos)
 {
 	pos[0] = (((node->pos[0] - x) / node->size[0] + 0.5) / ccs.zoom - (ccs.center[0] - 0.5)) * 360.0;
 	pos[1] = (((node->pos[1] - y) / node->size[1] + 0.5) / ccs.zoom - (ccs.center[1] - 0.5)) * 180.0;
@@ -661,7 +661,7 @@ void MN_ScreenToMap(menuNode_t * node, int x, int y, vec2_t pos)
 PolarToVec
 =================
 */
-void PolarToVec(vec2_t a, vec3_t v)
+static void PolarToVec(vec2_t a, vec3_t v)
 {
 	float p, t;
 
@@ -676,7 +676,7 @@ void PolarToVec(vec2_t a, vec3_t v)
 VecToPolar
 =================
 */
-void VecToPolar(vec3_t v, vec2_t a)
+static void VecToPolar(vec3_t v, vec2_t a)
 {
 	a[0] = 180 / M_PI * atan2(v[1], v[0]);
 	a[1] = 90 - 180 / M_PI * acos(v[2]);
@@ -764,7 +764,7 @@ void MN_MapCalcLine(vec2_t start, vec2_t end, mapline_t * line)
 MN_MapDrawLine
 =================
 */
-void MN_MapDrawLine(menuNode_t * node, mapline_t * line)
+static void MN_MapDrawLine(menuNode_t * node, mapline_t * line)
 {
 	vec4_t color;
 	int pts[LINE_MAXPTS * 2];
@@ -814,7 +814,7 @@ void MN_MapDrawLine(menuNode_t * node, mapline_t * line)
 MN_FindContainer
 =================
 */
-void MN_FindContainer(menuNode_t * node)
+static void MN_FindContainer(menuNode_t * node)
 {
 	invDef_t *id;
 	int i, j;
@@ -848,7 +848,7 @@ void MN_FindContainer(menuNode_t * node)
 MN_CheckNodeZone
 =================
 */
-qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
+static qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
 {
 	int sx, sy, tx, ty;
 
@@ -946,7 +946,7 @@ MN_Drag
 
 NOTE: node->mousefx is the container id
 =================*/
-void MN_Drag(menuNode_t * node, int x, int y)
+static void MN_Drag(menuNode_t * node, int x, int y)
 {
 	int px, py;
 
@@ -1030,7 +1030,7 @@ void MN_Drag(menuNode_t * node, int x, int y)
 MN_BarClick
 =================
 */
-void MN_BarClick(menu_t * menu, menuNode_t * node, int x)
+static void MN_BarClick(menu_t * menu, menuNode_t * node, int x)
 {
 	char var[MAX_VAR];
 	float frac, min;
@@ -1052,7 +1052,7 @@ void MN_BarClick(menu_t * menu, menuNode_t * node, int x)
 MN_3DMapClick
 ======================
 */
-void MN_3DMapClick(menuNode_t * node, int x, int y)
+static void MN_3DMapClick(menuNode_t * node, int x, int y)
 {
 }
 
@@ -1060,14 +1060,14 @@ void MN_3DMapClick(menuNode_t * node, int x, int y)
   * @brief Execute action for 1 element of the multi selection
   * Param Cmd_Argv(1) is the element selected in the popup_multi_selection menu
   */
-void CL_MultiSelect(void) {
+static void CL_MultiSelect(void)
+{
 	int selected, id;
 
 	if (Cmd_Argc() < 2) {
 		/* Direct call from code, not from a popup menu */
 		selected = 0;
-	}
-	else {
+	} else {
 		/* Call from a geoscape popup menu (popup_multi_selection) */
 		MN_PopMenu(qfalse);
 		selected = atoi(Cmd_Argv(1));
@@ -1097,8 +1097,7 @@ void CL_MultiSelect(void) {
 			gd.mapAction = MA_BASEATTACK;
 			/* we need no dropship in our base */
 			selMis->def->active = qtrue;
-		}
-		else {
+		} else {
 			Com_DPrintf("Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
 			gd.mapAction = MA_INTERCEPT;
 		}
@@ -1113,7 +1112,7 @@ MN_MapClick
 ======================
 */
 #define MN_MAP_DIST_SELECTION 15
-void MN_MapClick(menuNode_t * node, int x, int y)
+static void MN_MapClick(menuNode_t * node, int x, int y)
 {
 	aircraft_t *air;
 	actMis_t *ms;
@@ -1171,13 +1170,11 @@ void MN_MapClick(menuNode_t * node, int x, int y)
 	if (multiSelect.nbSelect == 1) {
 		/* Execute action for the only one element selected */
 		Cmd_ExecuteString("multi_select_click");
- 	}
-	else if (multiSelect.nbSelect > 1) {
+ 	} else if (multiSelect.nbSelect > 1) {
 		/* Display popup for multi selection */
 		menuText[TEXT_MULTISELECTION] = multiSelectionText;
 		MN_PushMenu("popup_multi_selection");
-	}
-	else
+	} else
 		/* no element selected : draw aircraft */
 		for (i = 0; i < gd.numBases; i++)
 			for (j = 0, air = gd.bases[i].aircraft; j < gd.bases[i].numAircraftInBase; j++, air++)
@@ -1193,7 +1190,7 @@ void MN_MapClick(menuNode_t * node, int x, int y)
 MN_BaseMapClick
 ======================
 */
-void MN_BaseMapClick(menuNode_t * node, int x, int y)
+static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 {
 	int row, col;
 	building_t *b, *entry;
@@ -1237,7 +1234,7 @@ void MN_BaseMapClick(menuNode_t * node, int x, int y)
 MN_ModelClick
 =================
 */
-void MN_ModelClick(menuNode_t * node)
+static void MN_ModelClick(menuNode_t * node)
 {
 	mouseSpace = MS_ROTATE;
 	rotateAngles = node->angles;
@@ -1249,7 +1246,7 @@ void MN_ModelClick(menuNode_t * node)
 MN_TextClick
 =================
 */
-void MN_TextClick(menuNode_t * node, int mouseOver)
+static void MN_TextClick(menuNode_t * node, int mouseOver)
 {
 	Cbuf_AddText(va("%s_click %i\n", node->name, mouseOver - 1));
 }
@@ -1259,7 +1256,7 @@ void MN_TextClick(menuNode_t * node, int mouseOver)
 MN_TextRightClick
 =================
 */
-void MN_TextRightClick(menuNode_t * node, int mouseOver)
+static void MN_TextRightClick(menuNode_t * node, int mouseOver)
 {
 	Cbuf_AddText(va("%s_rclick %i\n", node->name, mouseOver - 1));
 }
@@ -1534,7 +1531,7 @@ void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t s
 MN_Draw3DMapMarkers
 =================
 */
-void MN_Draw3DMapMarkers(menuNode_t * node, float latitude, float longitude)
+static void MN_Draw3DMapMarkers(menuNode_t * node, float latitude, float longitude)
 {
 	aircraft_t *air;
 	actMis_t *ms;
@@ -1595,7 +1592,7 @@ void MN_Draw3DMapMarkers(menuNode_t * node, float latitude, float longitude)
 MN_DrawMapMarkers
 =================
 */
-void MN_DrawMapMarkers(menuNode_t * node)
+static void MN_DrawMapMarkers(menuNode_t * node)
 {
 	aircraft_t *air;
 	actMis_t *ms;
@@ -1673,7 +1670,7 @@ MN_DrawTooltip
 
 generic tooltip function
 =================*/
-void MN_DrawTooltip(char *font, char *string, int x, int y)
+static void MN_DrawTooltip(char *font, char *string, int x, int y)
 {
 	int width = 0, height = 0;
 
@@ -1698,7 +1695,7 @@ MN_Tooltip
 Wrapper for menu tooltips
 =================
 */
-void MN_Tooltip(menuNode_t * node, int x, int y)
+static void MN_Tooltip(menuNode_t * node, int x, int y)
 {
 	char *tooltip;
 
@@ -1761,7 +1758,7 @@ MN_GetMenuModel
 returns pointer to menu model
 =================
 */
-menuModel_t *MN_GetMenuModel(char *menuModel)
+static menuModel_t *MN_GetMenuModel(char *menuModel)
 {
 	int i;
 	menuModel_t *m;
@@ -1781,7 +1778,7 @@ MN_GetFont
 Return the font for a specific node or default font
 =================
 */
-char *MN_GetFont(menu_t * m, menuNode_t * n)
+static char *MN_GetFont(menu_t * m, menuNode_t * n)
 {
 	if (n->data[1])
 		return MN_GetReferenceString(m, n->data[1]);
@@ -2320,7 +2317,7 @@ GENERIC MENU FUNCTIONS
 MN_DeleteMenu
 =================
 */
-void MN_DeleteMenu(menu_t * menu)
+static void MN_DeleteMenu(menu_t * menu)
 {
 	int i;
 
@@ -2364,7 +2361,7 @@ void MN_PushMenu(char *name)
 	Com_Printf("Didn't find menu \"%s\"\n", name);
 }
 
-void MN_PushMenu_f(void)
+static void MN_PushMenu_f(void)
 {
 	if (Cmd_Argc() > 1)
 		MN_PushMenu(Cmd_Argv(1));
@@ -2410,7 +2407,7 @@ void MN_PopMenu(qboolean all)
 	cls.key_dest = key_game;
 }
 
-void MN_PopMenu_f(void)
+static void MN_PopMenu_f(void)
 {
 	if (Cmd_Argc() < 2 || Q_strncmp(Cmd_Argv(1), "esc", 3))
 		MN_PopMenu(qfalse);
@@ -2429,7 +2426,7 @@ void MN_PopMenu_f(void)
 MN_Modify_f
 =================
 */
-void MN_Modify_f(void)
+static void MN_Modify_f(void)
 {
 	float value;
 
@@ -2452,7 +2449,7 @@ void MN_Modify_f(void)
 MN_ModifyWrap_f
 =================
 */
-void MN_ModifyWrap_f(void)
+static void MN_ModifyWrap_f(void)
 {
 	float value;
 
@@ -2475,7 +2472,7 @@ void MN_ModifyWrap_f(void)
 MN_ModifyString_f
 =================
 */
-void MN_ModifyString_f(void)
+static void MN_ModifyString_f(void)
 {
 	qboolean next;
 	char *current, *list, *tp;
@@ -2531,13 +2528,13 @@ void MN_ModifyString_f(void)
 }
 
 
-/*
- * MN_Translate_f
- *
- * Shows the corresponding strings in menu
- * Example: Optionsmenu - fullscreen: yes
-**/
-void MN_Translate_f(void)
+/**
+  * @brief
+  *
+  * Shows the corresponding strings in menu
+  * Example: Optionsmenu - fullscreen: yes
+  */
+static void MN_Translate_f(void)
 {
 	qboolean next;
 	char *current, *list, *orig, *trans;
@@ -2669,6 +2666,7 @@ void MN_ResetMenus(void)
 	Cmd_AddCommand("gettutorials", MN_GetTutorials_f);
 	Cmd_AddCommand("tutoriallist_click", MN_TutorialListClick_f);
 
+	Cmd_AddCommand("multi_select_click", CL_MultiSelect);
 	Cmd_AddCommand("getmaps", MN_GetMaps_f);
 	Cmd_AddCommand("mn_startserver", MN_StartServer);
 	Cmd_AddCommand("mn_nextmap", MN_NextMap);

@@ -353,20 +353,6 @@ void CheckNeedPass(void)
 	}
 }
 
-/*
-=============
-ExitLevel
-=============
-*/
-void ExitLevel(void)
-{
-	char command[256];
-
-	Com_sprintf(command, sizeof(command), "gamemap \"%s\"\n", level.changemap);
-	gi.AddCommandString(command);
-	level.changemap = NULL;
-}
-
 /**
   * @brief Sends character stats like assigned missions and kills back to client
   *
@@ -374,7 +360,7 @@ void ExitLevel(void)
   * Parsed in CL_ParseCharacterData
   * TODO: Handle retry missions
   */
-void G_SendCharacterData( edict_t* ent )
+static void G_SendCharacterData( edict_t* ent )
 {
 	int k;
 

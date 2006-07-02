@@ -322,8 +322,6 @@ void G_TouchSolids(edict_t * ent);
 
 char *G_CopyString(char *in);
 
-void G_SpawnAIPlayer(player_t * player, int numSpawn);
-
 float *tv(float x, float y, float z);
 char *vtos(vec3_t v);
 

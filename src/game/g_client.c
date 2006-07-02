@@ -982,7 +982,7 @@ void G_MoveCalc(int team, pos3_t from, int distance)
 G_CheckMoveBlock
 =================
 */
-qboolean G_CheckMoveBlock(pos3_t from, int dv)
+static qboolean G_CheckMoveBlock(pos3_t from, int dv)
 {
 	edict_t *ent;
 	pos3_t pos;
@@ -1139,7 +1139,7 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 G_ClientTurn
 =================
 */
-void G_ClientTurn(player_t * player, int num, int dv)
+static void G_ClientTurn(player_t * player, int num, int dv)
 {
 	edict_t *ent;
 
@@ -1179,7 +1179,7 @@ void G_ClientTurn(player_t * player, int num, int dv)
 G_ClientStateChange
 =================
 */
-void G_ClientStateChange(player_t * player, int num, int newState)
+static void G_ClientStateChange(player_t * player, int num, int newState)
 {
 	edict_t *ent;
 	int changeState;
@@ -1255,7 +1255,7 @@ typedef enum {
   *
   * only called when mor_panic is not zero
   */
-void G_Morale(int type, edict_t * victim, edict_t * attacker, int param)
+static void G_Morale(int type, edict_t * victim, edict_t * attacker, int param)
 {
 	edict_t *ent;
 	int i, newMorale;
@@ -1326,7 +1326,7 @@ void G_Morale(int type, edict_t * victim, edict_t * attacker, int param)
 G_MoraleBehaviour
 =================
 */
-void G_MoralePanic(edict_t * ent, qboolean sanity)
+static void G_MoralePanic(edict_t * ent, qboolean sanity)
 {
 	gi.cprintf(game.players + ent->pnum, PRINT_HIGH, _("%s panics!\n"), ent->chr.name);
 
@@ -1362,7 +1362,7 @@ void G_MoralePanic(edict_t * ent, qboolean sanity)
   *
   * This is only called when cvar mor_panic is not zero
   */
-void G_MoraleStopPanic(edict_t * ent)
+static void G_MoraleStopPanic(edict_t * ent)
 {
 	if (((ent->morale) / mor_panic->value) > (m_panic_stop->value * frand()))
 		ent->state &= ~STATE_PANIC;
@@ -1370,7 +1370,7 @@ void G_MoraleStopPanic(edict_t * ent)
 		G_MoralePanic(ent, qtrue);
 }
 
-void G_MoraleRage(edict_t * ent, qboolean sanity)
+static void G_MoraleRage(edict_t * ent, qboolean sanity)
 {
 	if (sanity)
 		ent->state |= STATE_RAGE;
@@ -1390,7 +1390,7 @@ void G_MoraleRage(edict_t * ent, qboolean sanity)
   *
   * This is only called when cvar mor_panic is not zero
   */
-void G_MoraleStopRage(edict_t * ent)
+static void G_MoraleStopRage(edict_t * ent)
 {
 	if (((ent->morale) / mor_panic->value) > (m_rage_stop->value * frand())) {
 		ent->state &= ~STATE_INSANE;
@@ -1404,7 +1404,7 @@ void G_MoraleStopRage(edict_t * ent)
   *
   * only called when mor_panic is not zero
   */
-void G_MoraleBehaviour(int team)
+static void G_MoraleBehaviour(int team)
 {
 	edict_t *ent;
 	int i, newMorale;
@@ -1469,7 +1469,7 @@ void G_MoraleBehaviour(int team)
 G_Damage
 =================
 */
-void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
+static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 {
 	/* breakables */
 	if (ent->type == ET_BREAKABLE) {
@@ -1566,7 +1566,7 @@ void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 G_DamageStun
 =================
 */
-void G_DamageStun(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
+static void G_DamageStun(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 {
 	/* actors don't die or don't get stunned again */
 	if (ent->state & STATE_DEAD)

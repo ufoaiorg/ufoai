@@ -889,7 +889,6 @@ void MN_Click(int x, int y);
 void MN_RightClick(int x, int y);
 void MN_MiddleClick(int x, int y);
 void MN_SetViewRect(void);
-void MN_Command(void);
 void MN_DrawMenus(void);
 void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color);
 void MN_ShutdownMessageSystem(void);
@@ -901,12 +900,10 @@ void MN_ParseMenuModel(char *name, char **text);
 void MN_PushMenu(char *name);
 void MN_PopMenu(qboolean all);
 void MN_Popup(const char *title, const char *text);
-void MN_DrawTooltip(char *font, char *string, int x, int y);
 void MN_ParseTutorials(char *title, char **text);
 
 void B_DrawBase(menuNode_t * node);
 
-extern int numMenus;
 extern inventory_t *menuInventory;
 extern char *menuText[MAX_MENUTEXTS];
 
