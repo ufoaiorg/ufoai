@@ -687,7 +687,7 @@ qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboole
 		return qfalse;
 
 	/* lower check */
-	start[2] = end[2] -= UH / 2 - sh * 4 - 2;
+	start[2] = end[2] -= UNIT_HEIGHT / 2 - sh * 4 - 2;
 	if (CM_EntTestLine(start, end))
 		return qfalse;
 
@@ -702,11 +702,12 @@ qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboole
 CM_CheckUnit
 =================
 */
-#define PH		(UH-12)
+/* TODO: What is PH? */
+#define PH		(UNIT_HEIGHT-12)
 #define QUANT	4
-const vec3_t v_dup = { 0, 0, PH - UH / 2 };
-const vec3_t v_dwn = { 0, 0, -UH / 2 };
-const vec3_t testvec[5] = { {-US / 2 + 5, -US / 2 + 5, 0}, {US / 2 - 5, US / 2 - 5, 0}, {-US / 2 + 5, US / 2 - 5, 0}, {US / 2 - 5, -US / 2 + 5, 0}, {0, 0, 0} };
+const vec3_t v_dup = { 0, 0, PH - UNIT_HEIGHT / 2 };
+const vec3_t v_dwn = { 0, 0, -UNIT_HEIGHT / 2 };
+const vec3_t testvec[5] = { {-UNIT_SIZE / 2 + 5, -UNIT_SIZE / 2 + 5, 0}, {UNIT_SIZE / 2 - 5, UNIT_SIZE / 2 - 5, 0}, {-UNIT_SIZE / 2 + 5, UNIT_SIZE / 2 - 5, 0}, {UNIT_SIZE / 2 - 5, -UNIT_SIZE / 2 + 5, 0}, {0, 0, 0} };
 
 void CM_CheckUnit(routing_t * map, int x, int y, int z)
 {
@@ -724,8 +725,8 @@ void CM_CheckUnit(routing_t * map, int x, int y, int z)
 	VectorSet(pos, x, y, z);
 	PosToVec(pos, end);
 	VectorCopy(end, start);
-	start[2] -= UH / 2 - 4;
-	end[2] -= UH / 2 + 4;
+	start[2] -= UNIT_HEIGHT / 2 - 4;
+	end[2] -= UNIT_HEIGHT / 2 + 4;
 
 	/* test for fall down */
 	if (CM_EntTestLine(start, end)) {
@@ -763,7 +764,7 @@ void CM_CheckUnit(routing_t * map, int x, int y, int z)
 		} else {
 			/* elevated a lot */
 			end[2] = start[2];
-			start[2] += UH - PH;
+			start[2] += UNIT_HEIGHT - PH;
 			height = 0;
 
 			/* test for ground with a "middled" height */
@@ -782,7 +783,7 @@ void CM_CheckUnit(routing_t * map, int x, int y, int z)
 			} else {
 				/* found a possibly valid elevated ground */
 				end[2] = start[2] + PH - (start[2] - tend[2]);
-				height = UH - (start[2] - tend[2]);
+				height = UNIT_HEIGHT - (start[2] - tend[2]);
 
 /*				printf( "%i %i\n", (int)height, (int)(start[2]-tend[2]) ); */
 

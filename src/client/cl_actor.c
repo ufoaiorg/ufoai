@@ -1377,11 +1377,11 @@ void CL_ActorMouseTrace(void)
 		return;
 
 	/* get position */
-	mousePos[2] = end[2] / UH;
+	mousePos[2] = end[2] / UNIT_HEIGHT;
 	if (mousePos[2] > cl_worldlevel->value)
 		mousePos[2] = cl_worldlevel->value;
 
-	stop[2] = (mousePos[2] + 0.5) * UH;
+	stop[2] = (mousePos[2] + 0.5) * UNIT_HEIGHT;
 	stop[0] = end[0] + forward[0] * (end[2] - stop[2]);
 	stop[1] = end[1] + forward[1] * (end[2] - stop[2]);
 

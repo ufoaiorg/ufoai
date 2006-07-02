@@ -1672,7 +1672,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
 
 		/* check for distance */
 		dist = VectorDist(impact, center);
-		dist = dist > US / 2 ? dist - US / 2 : 0;
+		dist = dist > UNIT_SIZE / 2 ? dist - UNIT_SIZE / 2 : 0;
 		if (dist > fd->splrad)
 			continue;
 

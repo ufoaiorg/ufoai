@@ -171,8 +171,6 @@ typedef enum { qfalse, qtrue } qboolean;
 /* important units */
 #define UNIT_SIZE			32
 #define UNIT_HEIGHT			64
-#define US					UNIT_SIZE
-#define UH					UNIT_HEIGHT
 
 /* earth map data */
 #define SIN_ALPHA	0.39875
@@ -236,8 +234,8 @@ extern long Q_ftol(float f);
 #define Q_ftol( f ) ( long ) (f)
 #endif
 
-#define VecToPos(v,p)		(p[0]=(((int)v[0]+4096)/US), p[1]=(((int)v[1]+4096)/US), p[2]=((int)v[2]/UH))
-#define PosToVec(p,v)		(v[0]=((int)p[0]-128)*US+US/2, v[1]=((int)p[1]-128)*US+US/2, v[2]=(int)p[2]*UH+UH/2)
+#define VecToPos(v,p)		(p[0]=(((int)v[0]+4096)/UNIT_SIZE), p[1]=(((int)v[1]+4096)/UNIT_SIZE), p[2]=((int)v[2]/UNIT_HEIGHT))
+#define PosToVec(p,v)		(v[0]=((int)p[0]-128)*UNIT_SIZE+UNIT_SIZE/2, v[1]=((int)p[1]-128)*UNIT_SIZE+UNIT_SIZE/2, v[2]=(int)p[2]*UNIT_HEIGHT+UNIT_HEIGHT/2)
 
 #define DotProduct(x,y)			(x[0]*y[0]+x[1]*y[1]+x[2]*y[2])
 #define VectorSubtract(a,b,c)	(c[0]=a[0]-b[0],c[1]=a[1]-b[1],c[2]=a[2]-b[2])
