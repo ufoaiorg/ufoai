@@ -55,7 +55,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
-void GL_ShutdownSDLFonts ( void ); /* gl_draw.c */
+void GL_ShutdownSDLFonts(void);	/* gl_draw.c */
 
 #include "qgl.h"
 
@@ -74,14 +74,13 @@ void GL_ShutdownSDLFonts ( void ); /* gl_draw.c */
 #ifndef __VIDDEF_T
 #define __VIDDEF_T
 
-typedef struct
-{
-	unsigned		width, height;			/* coordinates from main game */
-	float			rx, ry;
+typedef struct {
+	unsigned width, height;		/* coordinates from main game */
+	float rx, ry;
 } viddef_t;
 #endif
 
-extern	viddef_t	vid;
+extern viddef_t vid;
 
 
 /*
@@ -97,8 +96,7 @@ extern	viddef_t	vid;
 
 */
 
-typedef enum
-{
+typedef enum {
 	it_skin,
 	it_sprite,
 	it_wall,
@@ -106,19 +104,18 @@ typedef enum
 	it_wrappic
 } imagetype_t;
 
-typedef struct image_s
-{
-	char	name[MAX_QPATH];			/* game path, including extension, must be first */
-	imagetype_t	type;
-	int		width, height;				/* source image */
-	int		upload_width, upload_height;	/* after power of two and picmip */
-	int		registration_sequence;		/* 0 = free */
-	struct msurface_s	*texturechain;	/* for sort-by-texture world drawing */
-	int		texnum;						/* gl texture binding */
-	float	sl, tl, sh, th;				/* 0,0 - 1,1 unless part of the scrap */
-	qboolean	scrap;
-	qboolean	has_alpha;
-	shader_t	*shader;	/* pointer to shader from refdef_t */
+typedef struct image_s {
+	char name[MAX_QPATH];		/* game path, including extension, must be first */
+	imagetype_t type;
+	int width, height;			/* source image */
+	int upload_width, upload_height;	/* after power of two and picmip */
+	int registration_sequence;	/* 0 = free */
+	struct msurface_s *texturechain;	/* for sort-by-texture world drawing */
+	int texnum;					/* gl texture binding */
+	float sl, tl, sh, th;		/* 0,0 - 1,1 unless part of the scrap */
+	qboolean scrap;
+	qboolean has_alpha;
+	shader_t *shader;			/* pointer to shader from refdef_t */
 
 	qboolean paletted;
 } image_t;
@@ -133,21 +130,20 @@ typedef struct image_s
 /*=================================================================== */
 
 typedef struct {
-	int	width;
-	int	height;
-	byte	*captureBuffer;
-	byte	*encodeBuffer;
-	qboolean	motionJpeg;
+	int width;
+	int height;
+	byte *captureBuffer;
+	byte *encodeBuffer;
+	qboolean motionJpeg;
 } videoFrameCommand_t;
 
-int SaveJPGToBuffer( byte *buffer, int quality, int image_width, int image_height, byte *image_buffer );
-void RE_TakeVideoFrame( int width, int height, byte *captureBuffer, byte *encodeBuffer, qboolean motionJpeg );
-const void *RB_TakeVideoFrameCmd( const void *data );
+int SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_height, byte * image_buffer);
+void RE_TakeVideoFrame(int width, int height, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg);
+const void *RB_TakeVideoFrameCmd(const void *data);
 
 /*=================================================================== */
 
-typedef enum
-{
+typedef enum {
 	rserr_ok,
 
 
@@ -160,21 +156,20 @@ typedef enum
 #include "gl_model.h"
 
 #define MAX_MODEL_DLIGHTS 3
-int RecursiveLightPoint (mnode_t *node, vec3_t start, vec3_t end);
+int RecursiveLightPoint(mnode_t * node, vec3_t start, vec3_t end);
 
-void GL_BeginRendering (int *x, int *y, int *width, int *height);
-void GL_EndRendering (void);
+void GL_BeginRendering(int *x, int *y, int *width, int *height);
+void GL_EndRendering(void);
 
-void GL_SetDefaultState( void );
-void GL_UpdateSwapInterval( void );
+void GL_SetDefaultState(void);
+void GL_UpdateSwapInterval(void);
 
-extern	float	gldepthmin, gldepthmax;
+extern float gldepthmin, gldepthmax;
 
-typedef struct
-{
-	float	x, y, z;
-	float	s, t;
-	float	r, g, b;
+typedef struct {
+	float x, y, z;
+	float s, t;
+	float r, g, b;
 } glvert_t;
 
 
@@ -183,266 +178,267 @@ typedef struct
 #define BACKFACE_EPSILON	0.01
 
 #define	MAX_MOD_KNOWN	512
-extern model_t	mod_inline[MAX_MOD_KNOWN];
-extern int		numInline;
+extern model_t mod_inline[MAX_MOD_KNOWN];
+extern int numInline;
 
 /* entity transform */
-typedef struct
-{
-	qboolean	done;
-	qboolean	processing;
-	float		matrix[16];
+typedef struct {
+	qboolean done;
+	qboolean processing;
+	float matrix[16];
 } transform_t;
 
-extern transform_t	trafo[MAX_ENTITIES];
+extern transform_t trafo[MAX_ENTITIES];
 
 /*==================================================== */
 
-extern	image_t		*shadow;
+extern image_t *shadow;
 
-extern	char		glerrortex[MAX_GLERRORTEX];
-extern	char		*glerrortexend;
-extern	image_t		gltextures[MAX_GLTEXTURES];
-extern	int			numgltextures;
+extern char glerrortex[MAX_GLERRORTEX];
+extern char *glerrortexend;
+extern image_t gltextures[MAX_GLTEXTURES];
+extern int numgltextures;
 
 
-extern	image_t		*r_notexture;
-extern	image_t		*r_particletexture;
-extern	entity_t	*currententity;
-extern	model_t		*currentmodel;
-extern	int			r_framecount;
-extern	cplane_t	frustum[4];
-extern	int			c_brush_polys, c_alias_polys;
+extern image_t *r_notexture;
+extern image_t *r_particletexture;
+extern entity_t *currententity;
+extern model_t *currentmodel;
+extern int r_framecount;
+extern cplane_t frustum[4];
+extern int c_brush_polys, c_alias_polys;
 
-extern	int			gl_filter_min, gl_filter_max;
+extern int gl_filter_min, gl_filter_max;
 
-extern	image_t		*DaN;
+extern image_t *DaN;
 
 /* */
 /* view origin */
 /* */
-extern	vec3_t	vup;
-extern	vec3_t	vpn;
-extern	vec3_t	vright;
-extern	vec3_t	r_origin;
+extern vec3_t vup;
+extern vec3_t vpn;
+extern vec3_t vright;
+extern vec3_t r_origin;
 
 /* */
 /* screen size info */
 /* */
-extern	refdef_t	r_newrefdef;
+extern refdef_t r_newrefdef;
 
-extern	cvar_t	*r_norefresh;
-extern	cvar_t	*r_lefthand;
-extern	cvar_t	*r_drawentities;
-extern	cvar_t	*r_drawworld;
-extern	cvar_t	*r_speeds;
-extern	cvar_t	*r_fullbright;
-extern	cvar_t	*r_novis;
-extern	cvar_t	*r_nocull;
-extern	cvar_t	*r_isometric;
-extern	cvar_t	*r_lerpmodels;
+extern cvar_t *r_norefresh;
+extern cvar_t *r_lefthand;
+extern cvar_t *r_drawentities;
+extern cvar_t *r_drawworld;
+extern cvar_t *r_speeds;
+extern cvar_t *r_fullbright;
+extern cvar_t *r_novis;
+extern cvar_t *r_nocull;
+extern cvar_t *r_isometric;
+extern cvar_t *r_lerpmodels;
 
-extern	cvar_t	*r_lightlevel;	/* FIXME: This is a HACK to get the client's light level */
+extern cvar_t *r_lightlevel;	/* FIXME: This is a HACK to get the client's light level */
 
-extern  cvar_t  *r_anisotropic;
-extern  cvar_t  *r_ext_max_anisotropy;
-extern  cvar_t  *r_texture_lod; /* lod_bias */
-extern  cvar_t  *r_displayrefresh;
+extern cvar_t *r_anisotropic;
+extern cvar_t *r_ext_max_anisotropy;
+extern cvar_t *r_texture_lod;	/* lod_bias */
+extern cvar_t *r_displayrefresh;
 
-extern cvar_t	*gl_vertex_arrays;
+extern cvar_t *gl_vertex_arrays;
 
-extern cvar_t	*gl_ext_swapinterval;
-extern cvar_t	*gl_ext_multitexture;
-extern cvar_t	*gl_ext_combine;
-extern cvar_t	*gl_ext_pointparameters;
-extern cvar_t	*gl_ext_compiled_vertex_array;
-extern cvar_t	*gl_ext_texture_compression;
-extern cvar_t	*gl_ext_s3tc_compression;
+extern cvar_t *gl_ext_swapinterval;
+extern cvar_t *gl_ext_multitexture;
+extern cvar_t *gl_ext_combine;
+extern cvar_t *gl_ext_pointparameters;
+extern cvar_t *gl_ext_compiled_vertex_array;
+extern cvar_t *gl_ext_texture_compression;
+extern cvar_t *gl_ext_s3tc_compression;
 
-extern cvar_t	*gl_particle_min_size;
-extern cvar_t	*gl_particle_max_size;
-extern cvar_t	*gl_particle_size;
-extern cvar_t	*gl_particle_att_a;
-extern cvar_t	*gl_particle_att_b;
-extern cvar_t	*gl_particle_att_c;
+extern cvar_t *gl_particle_min_size;
+extern cvar_t *gl_particle_max_size;
+extern cvar_t *gl_particle_size;
+extern cvar_t *gl_particle_att_a;
+extern cvar_t *gl_particle_att_b;
+extern cvar_t *gl_particle_att_c;
 
-extern	cvar_t	*gl_nosubimage;
-extern	cvar_t	*gl_bitdepth;
-extern	cvar_t	*gl_mode;
-extern	cvar_t	*gl_log;
-extern	cvar_t	*gl_lightmap;
+extern cvar_t *gl_nosubimage;
+extern cvar_t *gl_bitdepth;
+extern cvar_t *gl_mode;
+extern cvar_t *gl_log;
+extern cvar_t *gl_lightmap;
+
 /* shadow stuff */
-void R_ShadowBlend( void );
-void R_DrawShadowVolume (entity_t *e);
-void GL_DrawAliasShadowVolume (dmdl_t *paliashdr, int posenumm);
-void R_DrawShadow (entity_t *e);
-extern	cvar_t	*gl_shadows;
-extern	cvar_t	*gl_shadow_debug_shade;
-extern	cvar_t	*gl_shadow_debug_volume;
-extern  cvar_t	*r_ati_separate_stencil;
-extern  cvar_t	*r_stencil_two_side;
+void R_ShadowBlend(void);
+void R_DrawShadowVolume(entity_t * e);
+void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm);
+void R_DrawShadow(entity_t * e);
+extern cvar_t *gl_shadows;
+extern cvar_t *gl_shadow_debug_shade;
+extern cvar_t *gl_shadow_debug_volume;
+extern cvar_t *r_ati_separate_stencil;
+extern cvar_t *r_stencil_two_side;
 
-extern	cvar_t	*gl_dynamic;
-extern  cvar_t	*gl_monolightmap;
-extern	cvar_t	*gl_nobind;
-extern	cvar_t	*gl_round_down;
-extern	cvar_t	*gl_picmip;
-extern	cvar_t	*gl_maxtexres;
-extern	cvar_t	*gl_showtris;
-extern	cvar_t	*gl_finish;
-extern	cvar_t	*gl_ztrick;
-extern	cvar_t	*gl_clear;
-extern	cvar_t	*gl_cull;
-extern	cvar_t	*gl_poly;
-extern	cvar_t	*gl_texsort;
-extern	cvar_t	*gl_polyblend;
-extern	cvar_t	*gl_flashblend;
-extern	cvar_t	*gl_lightmaptype;
-extern	cvar_t	*gl_modulate;
-extern	cvar_t	*gl_playermip;
-extern	cvar_t	*gl_drawbuffer;
-extern	cvar_t	*gl_3dlabs_broken;
-extern  cvar_t	*gl_driver;
-extern	cvar_t	*gl_swapinterval;
-extern	cvar_t	*gl_texturemode;
-extern	cvar_t	*gl_texturealphamode;
-extern	cvar_t	*gl_texturesolidmode;
-extern  cvar_t	*gl_saturatelighting;
-extern  cvar_t	*gl_lockpvs;
-extern	cvar_t	*gl_wire;
-extern	cvar_t	*gl_fog;
+extern cvar_t *gl_dynamic;
+extern cvar_t *gl_monolightmap;
+extern cvar_t *gl_nobind;
+extern cvar_t *gl_round_down;
+extern cvar_t *gl_picmip;
+extern cvar_t *gl_maxtexres;
+extern cvar_t *gl_showtris;
+extern cvar_t *gl_finish;
+extern cvar_t *gl_ztrick;
+extern cvar_t *gl_clear;
+extern cvar_t *gl_cull;
+extern cvar_t *gl_poly;
+extern cvar_t *gl_texsort;
+extern cvar_t *gl_polyblend;
+extern cvar_t *gl_flashblend;
+extern cvar_t *gl_lightmaptype;
+extern cvar_t *gl_modulate;
+extern cvar_t *gl_playermip;
+extern cvar_t *gl_drawbuffer;
+extern cvar_t *gl_3dlabs_broken;
+extern cvar_t *gl_driver;
+extern cvar_t *gl_swapinterval;
+extern cvar_t *gl_texturemode;
+extern cvar_t *gl_texturealphamode;
+extern cvar_t *gl_texturesolidmode;
+extern cvar_t *gl_saturatelighting;
+extern cvar_t *gl_lockpvs;
+extern cvar_t *gl_wire;
+extern cvar_t *gl_fog;
 
-extern	cvar_t	*vid_fullscreen;
-extern	cvar_t	*vid_gamma;
-extern	cvar_t	*vid_grabmouse;
+extern cvar_t *vid_fullscreen;
+extern cvar_t *vid_gamma;
+extern cvar_t *vid_grabmouse;
 
-extern	cvar_t	*intensity;
+extern cvar_t *intensity;
 
-extern	int		gl_lightmap_format;
-extern	int		gl_solid_format;
-extern	int		gl_alpha_format;
-extern	int		gl_compressed_solid_format;
-extern	int		gl_compressed_alpha_format;
+extern int gl_lightmap_format;
+extern int gl_solid_format;
+extern int gl_alpha_format;
+extern int gl_compressed_solid_format;
+extern int gl_compressed_alpha_format;
 
-extern	int		c_visible_lightmaps;
-extern	int		c_visible_textures;
+extern int c_visible_lightmaps;
+extern int c_visible_textures;
 
-extern	float	r_world_matrix[16];
+extern float r_world_matrix[16];
 
-void R_TranslatePlayerSkin (int playernum);
-void GL_Bind (int texnum);
-void GL_MBind( GLenum target, int texnum );
-void GL_TexEnv( GLenum value );
-void GL_EnableMultitexture( qboolean enable );
-void GL_SelectTexture( GLenum );
+void R_TranslatePlayerSkin(int playernum);
+void GL_Bind(int texnum);
+void GL_MBind(GLenum target, int texnum);
+void GL_TexEnv(GLenum value);
+void GL_EnableMultitexture(qboolean enable);
+void GL_SelectTexture(GLenum);
 
-void R_LightPoint (vec3_t p, vec3_t color);
+void R_LightPoint(vec3_t p, vec3_t color);
 
 /*==================================================================== */
 
-extern	model_t	*rTiles[MAX_MAPTILES];
-extern	int		rNumTiles;
+extern model_t *rTiles[MAX_MAPTILES];
+extern int rNumTiles;
 
-extern	unsigned	d_8to24table[256];
+extern unsigned d_8to24table[256];
 
-extern	int		registration_sequence;
+extern int registration_sequence;
 
-void V_AddBlend (float r, float g, float b, float a, float *v_blend);
+void V_AddBlend(float r, float g, float b, float a, float *v_blend);
 
-qboolean 	R_Init( HINSTANCE hinstance, WNDPROC wndproc );
-void	R_Shutdown( void );
+qboolean R_Init(HINSTANCE hinstance, WNDPROC wndproc);
+void R_Shutdown(void);
 
-struct model_s *R_RegisterModelShort( char *name );
+struct model_s *R_RegisterModelShort(char *name);
 
-void R_RenderView (refdef_t *fd);
-void GL_ScreenShot_f (void);
-void R_InterpolateTransform( animState_t *as, int numframes, float *tag, float *interpolated );
-void R_DrawModelDirect (modelInfo_t *mi, modelInfo_t *pmi, char *tag);
-void R_DrawModelParticle (modelInfo_t *mi);
-void R_DrawAliasModel (entity_t *e);
-void R_DrawBrushModel (entity_t *e);
-void R_DrawAllBrushModels (void);
-void R_DrawSpriteModel (entity_t *e);
-void R_DrawBeam( entity_t *e );
-void R_DrawBox( entity_t *e );
-void R_DrawWorld( mnode_t *nodes ) ;
-void R_DrawLevelBrushes (void);
-void R_RenderDlights (void);
-void R_DrawAlphaSurfaces (void);
-void R_RenderBrushPoly (msurface_t *fa);
-void R_InitParticleTexture (void);
-void Draw_InitLocal (void);
-void GL_SubdivideSurface (msurface_t *fa);
-qboolean R_CullBox (vec3_t mins, vec3_t maxs);
-void R_RotateForEntity (entity_t *e);
+void R_RenderView(refdef_t * fd);
+void GL_ScreenShot_f(void);
+void R_InterpolateTransform(animState_t * as, int numframes, float *tag, float *interpolated);
+void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, char *tag);
+void R_DrawModelParticle(modelInfo_t * mi);
+void R_DrawAliasModel(entity_t * e);
+void R_DrawBrushModel(entity_t * e);
+void R_DrawAllBrushModels(void);
+void R_DrawSpriteModel(entity_t * e);
+void R_DrawBeam(entity_t * e);
+void R_DrawBox(entity_t * e);
+void R_DrawWorld(mnode_t * nodes);
+void R_DrawLevelBrushes(void);
+void R_RenderDlights(void);
+void R_DrawAlphaSurfaces(void);
+void R_RenderBrushPoly(msurface_t * fa);
+void R_InitParticleTexture(void);
+void Draw_InitLocal(void);
+void GL_SubdivideSurface(msurface_t * fa);
+qboolean R_CullBox(vec3_t mins, vec3_t maxs);
+void R_RotateForEntity(entity_t * e);
 
-void EmitWaterPolys (msurface_t *fa);
-void R_DrawTriangleOutlines (void);
-void R_MarkLights (dlight_t *light, int bit, mnode_t *node);
+void EmitWaterPolys(msurface_t * fa);
+void R_DrawTriangleOutlines(void);
+void R_MarkLights(dlight_t * light, int bit, mnode_t * node);
 
-void R_AddMapTile( char *name, int sX, int sY, int sZ );
+void R_AddMapTile(char *name, int sX, int sY, int sZ);
 
-void	R_SetGL2D (void);
-void	R_LeaveGL2D (void);
+void R_SetGL2D(void);
+void R_LeaveGL2D(void);
 
 #include "gl_font.h"
 
-void	COM_StripExtension (char *in, char *out);
+void COM_StripExtension(char *in, char *out);
 
-void	Draw_GetPicSize (int *w, int *h, char *name);
-void	Draw_Pic (int x, int y, char *name);
-void	Draw_NormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
-void	Draw_StretchPic (int x, int y, int w, int h, char *name);
-void	Draw_Char (int x, int y, int c);
-void	Draw_TileClear (int x, int y, int w, int h, char *name);
-void	Draw_Fill (int x, int y, int w, int h, int style, vec4_t color);
-void	Draw_Color (float *rgba);
-void	Draw_FadeScreen (void);
-void	Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char* map );
-void	Draw_LineStrip( int points, int *verts );
+void Draw_GetPicSize(int *w, int *h, char *name);
+void Draw_Pic(int x, int y, char *name);
+void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
+void Draw_StretchPic(int x, int y, int w, int h, char *name);
+void Draw_Char(int x, int y, int c);
+void Draw_TileClear(int x, int y, int w, int h, char *name);
+void Draw_Fill(int x, int y, int w, int h, int style, vec4_t color);
+void Draw_Color(float *rgba);
+void Draw_FadeScreen(void);
+void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
+void Draw_LineStrip(int points, int *verts);
 
-void	Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data);
+void Draw_StretchRaw(int x, int y, int w, int h, int cols, int rows, byte * data);
+
 /*void	Draw_Model (int x, int y, ); */
 
-void	R_BeginFrame( float camera_separation );
-void	R_SwapBuffers( int );
-void	R_SetPalette ( const unsigned char *palette);
+void R_BeginFrame(float camera_separation);
+void R_SwapBuffers(int);
+void R_SetPalette(const unsigned char *palette);
 
-int	Draw_GetPalette (void);
+int Draw_GetPalette(void);
 
-void	Anim_Append( animState_t *as, model_t *mod, char *name );
-void	Anim_Change( animState_t *as, model_t *mod, char *name );
-void	Anim_Run( animState_t *as, model_t *mod, int msec );
-char	*Anim_GetName( animState_t *as, model_t *mod );
+void Anim_Append(animState_t * as, model_t * mod, char *name);
+void Anim_Change(animState_t * as, model_t * mod, char *name);
+void Anim_Run(animState_t * as, model_t * mod, int msec);
+char *Anim_GetName(animState_t * as, model_t * mod);
 
-void	GL_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned *out,  int outwidth, int outheight);
+void GL_ResampleTexture(unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight);
 
-struct image_s *R_RegisterSkin (char *name);
+struct image_s *R_RegisterSkin(char *name);
 
-void	WriteTGA (char *filename, byte *data, int width, int height);
+void WriteTGA(char *filename, byte * data, int width, int height);
 
-void	LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *height);
-image_t	*GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t type, int bits);
-image_t	*GL_FindImage (char *pname, imagetype_t type);
-image_t *GL_FindImageForShader ( char *name );
-void	GL_TextureMode( char *string );
-void	GL_ImageList_f (void);
-void	GL_CalcDayAndNight ( float q );
+void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, int *height);
+image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t type, int bits);
+image_t *GL_FindImage(char *pname, imagetype_t type);
+image_t *GL_FindImageForShader(char *name);
+void GL_TextureMode(char *string);
+void GL_ImageList_f(void);
+void GL_CalcDayAndNight(float q);
 
-void	GL_InitImages (void);
-void	GL_ShutdownImages (void);
+void GL_InitImages(void);
+void GL_ShutdownImages(void);
 
-void	GL_FreeUnusedImages (void);
+void GL_FreeUnusedImages(void);
 
-void	GL_TextureAlphaMode( char *string );
-void	GL_TextureSolidMode( char *string );
+void GL_TextureAlphaMode(char *string);
+void GL_TextureSolidMode(char *string);
 
-void	R_DrawPtls( void );
+void R_DrawPtls(void);
 
 /*
 ** GL extension emulation functions
 */
-void	GL_DrawParticles( int n, const particle_t particles[], const unsigned colortable[768] );
+void GL_DrawParticles(int n, const particle_t particles[], const unsigned colortable[768]);
 
 /*
 ** GL config stuff
@@ -487,8 +483,7 @@ void	GL_DrawParticles( int n, const particle_t particles[], const unsigned color
 #define GL_RENDERER_MCD			0x01000000
 #define GL_RENDERER_OTHER		0x80000000
 
-typedef struct
-{
+typedef struct {
 	int renderer;
 	const char *renderer_string;
 	const char *vendor_string;
@@ -497,19 +492,18 @@ typedef struct
 	int maxTextureSize;
 } glconfig_t;
 
-typedef struct
-{
+typedef struct {
 	float inverse_intensity;
 	int displayrefresh;
 	qboolean fullscreen;
 
-	int     prev_mode;
+	int prev_mode;
 
 	unsigned char *d_16to8table;
 
 	int lightmap_textures;
 
-	int	currenttextures[2];
+	int currenttextures[2];
 	int currenttmu;
 
 	qboolean hwgamma;
@@ -536,8 +530,8 @@ typedef struct
 	unsigned char originalBlueGammaTable[256];
 } glstate_t;
 
-extern glconfig_t  gl_config;
-extern glstate_t   gl_state;
+extern glconfig_t gl_config;
+extern glstate_t gl_state;
 
 #define GLSTATE_DISABLE_ALPHATEST	if (gl_state.alpha_test) { qglDisable(GL_ALPHA_TEST); gl_state.alpha_test=qfalse; }
 #define GLSTATE_ENABLE_ALPHATEST	if (!gl_state.alpha_test) { qglEnable(GL_ALPHA_TEST); gl_state.alpha_test=qtrue; }
@@ -553,7 +547,7 @@ IMPORTED FUNCTIONS
 ====================================================================
 */
 
-extern	refimport_t	ri;
+extern refimport_t ri;
 
 
 /*
@@ -564,18 +558,18 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 ====================================================================
 */
 
-void		GLimp_BeginFrame( float camera_separation );
-void		GLimp_EndFrame( void );
-qboolean 	GLimp_Init( HINSTANCE hinstance, WNDPROC wndproc );
-void		GLimp_Shutdown( void );
-rserr_t     	GLimp_SetMode( unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen );
-void		GLimp_AppActivate( qboolean active );
-void		GLimp_EnableLogging( qboolean enable );
-void		GLimp_LogNewFrame( void );
+void GLimp_BeginFrame(float camera_separation);
+void GLimp_EndFrame(void);
+qboolean GLimp_Init(HINSTANCE hinstance, WNDPROC wndproc);
+void GLimp_Shutdown(void);
+rserr_t GLimp_SetMode(unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen);
+void GLimp_AppActivate(qboolean active);
+void GLimp_EnableLogging(qboolean enable);
+void GLimp_LogNewFrame(void);
 
 /* NOTE TTimo linux works with float gamma value, not the gamma table */
 /*   the params won't be used, getting the r_gamma cvar directly */
-void		GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] );
+void GLimp_SetGamma(unsigned char red[256], unsigned char green[256], unsigned char blue[256]);
 
 
 /*
@@ -588,19 +582,18 @@ Note: This code was taken from xtraceroute and adopted
 ====================================================================
 */
 
-typedef struct globe_triangle_s
-{
+typedef struct globe_triangle_s {
 	vec3_t vec[3];
 } globe_triangle_t;
 
 
 /* for icosahedron */
-#define CZ (0.866025403)        /* cos(30) */
-#define SZ (0.5)                /* sin(30) */
-#define C1 (0.951056516)        /* cos(18) */
-#define S1 (0.309016994)        /* sin(18) */
-#define C2 (0.587785252)        /* cos(54) */
-#define S2 (0.809016994)        /* sin(54) */
+#define CZ (0.866025403)		/* cos(30) */
+#define SZ (0.5)				/* sin(30) */
+#define C1 (0.951056516)		/* cos(18) */
+#define S1 (0.309016994)		/* sin(18) */
+#define C2 (0.587785252)		/* cos(54) */
+#define S2 (0.809016994)		/* sin(54) */
 #define X1 (C1*CZ)
 #define Y1 (S1*CZ)
 #define X2 (C2*CZ)
@@ -625,22 +618,22 @@ typedef struct globe_triangle_s
 #define GLOBE_TORAD (M_PI/180.0f)
 #define GLOBE_TODEG (180.0f/M_PI)
 #define MAX_SITES  40
-#define Z_OF_EYE 4              /* s.g. distance between eye and object on z axis */
+#define Z_OF_EYE 4				/* s.g. distance between eye and object on z axis */
 #define SITE_MARKER_SIZE  0.03
 #define EARTH_SIZE 1.0
-#define PHYSICAL_EARTH_RADIUS 6378137  /* Earth's radius, in meters. (From RFC1876) */
-#define SPEED_OF_LIGHT 299792458       /* The big C, in meters/second. */
+#define PHYSICAL_EARTH_RADIUS 6378137	/* Earth's radius, in meters. (From RFC1876) */
+#define SPEED_OF_LIGHT 299792458	/* The big C, in meters/second. */
 #define MAXSELECT 100
 #define PHYSICAL_EARTH_CIRC (2.0 * M_PI * PHYSICAL_EARTH_RADIUS)
-#define GEOSYNC_SAT_ALT 36000000 /* Approx. altitude of geosynchronous */
-                                 /* satellites, in meters. */
-#define NOT_SELECTABLE ~0U       /* For picking reasons, see which_site() */
+#define GEOSYNC_SAT_ALT 36000000	/* Approx. altitude of geosynchronous */
+								 /* satellites, in meters. */
+#define NOT_SELECTABLE ~0U		/* For picking reasons, see which_site() */
 
-void Draw_3DGlobe ( int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char* map );
-void Draw_3DMapLine ( int n, float dist, vec2_t *path );
-void Draw_3DMapMarkers ( float latitude, float longitude, char* image );
+void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
+void Draw_3DMapLine(int n, float dist, vec2_t * path);
+void Draw_3DMapMarkers(float latitude, float longitude, char *image);
 
 /* end of 3d globe */
 
 
-#endif /* GL_LOCAL_H */
+#endif							/* GL_LOCAL_H */

@@ -9,18 +9,19 @@
 Anim_Get
 ===============
 */
-manim_t *Anim_Get( model_t *mod, char *name )
+manim_t *Anim_Get(model_t * mod, char *name)
 {
-	manim_t	*anim;
-	int		i;
+	manim_t *anim;
+	int i;
 
-	if ( !mod || mod->type != mod_alias ) return NULL;
+	if (!mod || mod->type != mod_alias)
+		return NULL;
 
-	for ( i = 0, anim = mod->animdata; i < mod->numanims; i++, anim++ )
-		if ( !strcmp( name, anim->name ) )
+	for (i = 0, anim = mod->animdata; i < mod->numanims; i++, anim++)
+		if (!strcmp(name, anim->name))
 			return anim;
 
-	ri.Con_Printf( PRINT_ALL, "model \"%s\" doesn't have animation \"%s\"\n", mod->name, name );
+	ri.Con_Printf(PRINT_ALL, "model \"%s\" doesn't have animation \"%s\"\n", mod->name, name);
 	return NULL;
 }
 
@@ -30,43 +31,44 @@ manim_t *Anim_Get( model_t *mod, char *name )
 Anim_Append
 ===============
 */
-void Anim_Append( animState_t *as, model_t *mod, char *name )
+void Anim_Append(animState_t * as, model_t * mod, char *name)
 {
-	manim_t	*anim;
+	manim_t *anim;
 
 	assert(as->ladd < MAX_ANIMLIST);
 #ifdef DEBUG
 	if (as->ladd >= MAX_ANIMLIST)
-		return;	/* never reached. need for code analyst. */
+		return;					/* never reached. need for code analyst. */
 #endif
 
-	if ( !mod || mod->type != mod_alias ) return;
+	if (!mod || mod->type != mod_alias)
+		return;
 
 	/* get animation */
-	anim = Anim_Get( mod, name );
-	if ( !anim ) return;
+	anim = Anim_Get(mod, name);
+	if (!anim)
+		return;
 
-	if ( as->lcur == as->ladd )
-	{
+	if (as->lcur == as->ladd) {
 		/* first animation */
 		as->oldframe = anim->from;
-		if ( anim->to > anim->from ) as->frame = anim->from+1;
-		else as->frame = anim->from;
+		if (anim->to > anim->from)
+			as->frame = anim->from + 1;
+		else
+			as->frame = anim->from;
 
 		as->backlerp = 0.0;
 		as->time = anim->time;
 		as->dt = 0;
 
 		as->list[as->ladd] = anim - mod->animdata;
-	}
-	else
-	{
+	} else {
 		/* next animation */
 		as->list[as->ladd] = anim - mod->animdata;
 	}
 
 	/* advance in list (no overflow protection!) */
-	as->ladd = LNEXT( as->ladd );
+	as->ladd = LNEXT(as->ladd);
 }
 
 
@@ -75,51 +77,52 @@ void Anim_Append( animState_t *as, model_t *mod, char *name )
 Anim_Change
 ===============
 */
-void Anim_Change( animState_t *as, model_t *mod, char *name )
+void Anim_Change(animState_t * as, model_t * mod, char *name)
 {
-	manim_t	*anim;
+	manim_t *anim;
 
 	assert(as->ladd < MAX_ANIMLIST);
 #ifdef DEBUG
 	if (as->ladd >= MAX_ANIMLIST)
-		return;	/* never reached. need for code analyst. */
+		return;					/* never reached. need for code analyst. */
 #endif
 
-	if ( !mod || mod->type != mod_alias ) return;
+	if (!mod || mod->type != mod_alias)
+		return;
 
 	/* get animation */
-	anim = Anim_Get( mod, name );
-	if ( !anim ) return;
+	anim = Anim_Get(mod, name);
+	if (!anim)
+		return;
 
-	if ( as->lcur == as->ladd )
-	{
+	if (as->lcur == as->ladd) {
 		/* first animation */
 		as->oldframe = anim->from;
-		if ( anim->to > anim->from ) as->frame = anim->from+1;
-		else as->frame = anim->from;
+		if (anim->to > anim->from)
+			as->frame = anim->from + 1;
+		else
+			as->frame = anim->from;
 
 		as->backlerp = 1.0;
 		as->time = anim->time;
 		as->dt = 0;
 
 		as->list[as->ladd] = anim - mod->animdata;
-	}
-	else
-	{
+	} else {
 		/* don't change to same animation */
 /*		if ( anim == mod->animdata + as->list[as->lcur] ) */
 /*			return; */
 
 		/* next animation */
-		as->ladd = LNEXT( as->lcur );
+		as->ladd = LNEXT(as->lcur);
 		as->list[as->ladd] = anim - mod->animdata;
 
-		if ( anim->time < as->time )
+		if (anim->time < as->time)
 			as->time = anim->time;
 	}
 
 	/* advance in list (no overflow protection!) */
-	as->ladd = LNEXT( as->ladd );
+	as->ladd = LNEXT(as->ladd);
 	as->change = qtrue;
 }
 
@@ -129,33 +132,32 @@ void Anim_Change( animState_t *as, model_t *mod, char *name )
 Anim_Run
 ===============
 */
-void Anim_Run( animState_t *as, model_t *mod, int msec )
+void Anim_Run(animState_t * as, model_t * mod, int msec)
 {
-	manim_t	*anim;
+	manim_t *anim;
 
 	assert(as->lcur < MAX_ANIMLIST);
 #ifdef DEBUG
 	if (as->lcur >= MAX_ANIMLIST)
-		return;	/* never reached. need for code analyst. */
+		return;					/* never reached. need for code analyst. */
 #endif
 
-	if ( !mod || mod->type != mod_alias ) return;
+	if (!mod || mod->type != mod_alias)
+		return;
 
-	if ( as->lcur == as->ladd )
+	if (as->lcur == as->ladd)
 		return;
 
 	as->dt += msec;
 
-	while ( as->dt > as->time ) 
-	{
+	while (as->dt > as->time) {
 		as->dt -= as->time;
 		anim = mod->animdata + as->list[as->lcur];
 
-		if ( as->change || as->frame >= anim->to )
-		{
+		if (as->change || as->frame >= anim->to) {
 			/* go to next animation if it isn't the last one */
-			if ( LNEXT( as->lcur ) != as->ladd ) 
-				as->lcur = LNEXT( as->lcur );
+			if (LNEXT(as->lcur) != as->ladd)
+				as->lcur = LNEXT(as->lcur);
 
 			anim = mod->animdata + as->list[as->lcur];
 
@@ -165,9 +167,7 @@ void Anim_Run( animState_t *as, model_t *mod, int msec )
 			as->oldframe = as->frame;
 			as->frame = anim->from;
 			as->change = qfalse;
-		}
-		else
-		{
+		} else {
 			/* next frame of the same animation */
 			as->time = anim->time;
 			as->oldframe = as->frame;
@@ -175,7 +175,7 @@ void Anim_Run( animState_t *as, model_t *mod, int msec )
 		}
 	}
 
-	as->backlerp = 1.0 - (float)as->dt / as->time;
+	as->backlerp = 1.0 - (float) as->dt / as->time;
 }
 
 
@@ -184,19 +184,20 @@ void Anim_Run( animState_t *as, model_t *mod, int msec )
 Anim_GetName
 ===============
 */
-char *Anim_GetName( animState_t *as, model_t *mod )
+char *Anim_GetName(animState_t * as, model_t * mod)
 {
-	manim_t	*anim;
+	manim_t *anim;
 
 	assert(as->lcur < MAX_ANIMLIST);
 #ifdef DEBUG
 	if (as->lcur >= MAX_ANIMLIST)
-		return NULL;	/* never reached. need for code analyst. */
+		return NULL;			/* never reached. need for code analyst. */
 #endif
 
-	if ( !mod || mod->type != mod_alias ) return NULL;
+	if (!mod || mod->type != mod_alias)
+		return NULL;
 
-	if ( as->lcur == as->ladd )
+	if (as->lcur == as->ladd)
 		return NULL;
 
 	anim = mod->animdata + as->list[as->lcur];
