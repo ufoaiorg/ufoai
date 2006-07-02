@@ -19,9 +19,9 @@ BUILD_ALSA=YES		# build with alsa-support
 BUILD_WITH_SHADER=NO	# build with shader support
 HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
-BUILD_WITH_DGA=NO	# dga support compiled in
+BUILD_WITH_DGA=YES	# dga support compiled in
 BUILD_WITH_VIDMODE=YES	# vidmode support
-BUILD_WITH_MMX=NO	# MMX support
+BUILD_WITH_MMX=YES	# MMX support
 BUILD_PARANOID=YES	# paranoid mode for debug
 BUILD_FOR_PROFILING=NO  # build with -pg option for profiling via gprof
 BUILD_COMPILETOOLS=YES	# build ufo2map bsp compile tool
@@ -135,7 +135,7 @@ ifeq ($(strip $(BUILD_WITH_DGA)),YES)
 endif
 
 ifeq ($(strip $(BUILD_WITH_MMX)),YES)
-	BASE_CFLAGS+=-DQ2_MMX_ENABLED
+	BASE_CFLAGS+=-DQ2_MMX_ENABLED -msse
 endif
 
 ifeq ($(strip $(BUILD_WITH_VIDMODE)),YES)
@@ -179,12 +179,12 @@ ifeq ($(ARCH),sparc)
 endif
 
 ifeq ($(ARCH),i386)
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -O3 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing -DNDEBUG -fweb
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -O3 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing -DNDEBUG
 endif
 
 ifeq ($(ARCH),x86_64)
 	_LIB := 64
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing -DNDEBUG -fweb
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing -DNDEBUG
 endif
 
 #ifeq ($(ARCH),mipsEE)
@@ -224,7 +224,7 @@ endif
 GLXLDFLAGS+=-ljpeg
 SDLLDFLAGS+=-ljpeg
 
-DEBUG_CFLAGS=$(BASE_CFLAGS) -g -O0 -D_FORTIFY_SOURCE=2 -DDEBUG $(PROFILER_CFLAGS) -fweb
+DEBUG_CFLAGS=$(BASE_CFLAGS) -g -O0 -D_FORTIFY_SOURCE=2 -DDEBUG $(PROFILER_CFLAGS)
 
 ifeq ($(strip $(BUILD_PARANOID)),YES)
 	DEBUG_CFLAGS+=-DPARANOID

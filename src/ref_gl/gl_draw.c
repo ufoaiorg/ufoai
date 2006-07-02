@@ -788,10 +788,11 @@ void Globe_AddVertex(vec3_t v, double *lastlon)
 		   back of the sphere.) */
 
 		dist = a - *lastlon;
-		if (dist > 100.0)
+		if (dist > 100.0) {
 			a -= 360.0;
-		else if (dist < -100.0)
+		} else if (dist < -100.0) {
 			a += 360.0;
+		}
 	}
 	*lastlon = a;
 	qglTexCoord2f(a / 360.0 + 0.5, -(b / 180.0 + 0.5));

@@ -49,15 +49,15 @@ ACTOR MENU UPDATING
  * @brief Array containing the descriptions of skill levels.
  */
 static char *skill_strings[10] = {
+	"Pathetic",
+	"Very Poor",
 	"Poor",
-	"Medicore",
-	"Fair",
+	"Mediocre",
 	"Good",
+	"Very Good",
 	"Excellent",
-	"Perfect",
+	"Amazing",
 	"Superhuman",
-	"Beyond Human",
-	"Immortal",
 	"Godlike"
 };
 
