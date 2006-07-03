@@ -2317,7 +2317,7 @@ void CL_CollectAliens(mission_t * mission)
   */
 void CL_CollectItemAmmo(invList_t * weapon, int left_hand)
 {
-/*	technology_t *tech = NULL;*/
+	technology_t *tech = NULL;
 
 	/* twohanded weapons and container is left hand container */
 	/* item.t ?? */
@@ -2325,7 +2325,10 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand)
 		return;
 	ccs.eMarket.num[weapon->item.t]++;
 
-/*	tech = RS_GetTechByID(csi.ods[weapon->item.t].name);*/
+	tech = csi.ods[weapon->item.t].tech;
+	if ( !tech )
+		Sys_Error("No tech for %s\n", csi.ods[weapon->item.t].name);
+	tech->statusCollected++;
 
 	if (!csi.ods[weapon->item.t].reload || weapon->item.m == NONE)
 		return;
@@ -2383,7 +2386,7 @@ void CL_CollectItems(int won)
 			break;
 		}
 	}
-	RS_MarkCollected();
+/*	RS_MarkCollected();*/
 	RS_MarkResearchable();
 }
 
