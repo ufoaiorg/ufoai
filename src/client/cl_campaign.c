@@ -2317,11 +2317,16 @@ void CL_CollectAliens(mission_t * mission)
   */
 void CL_CollectItemAmmo(invList_t * weapon, int left_hand)
 {
+/*	technology_t *tech = NULL;*/
+
 	/* twohanded weapons and container is left hand container */
 	/* item.t ?? */
 	if (weapon->item.t == NONE || (left_hand && csi.ods[weapon->item.t].twohanded))
 		return;
 	ccs.eMarket.num[weapon->item.t]++;
+
+/*	tech = RS_GetTechByID(csi.ods[weapon->item.t].name);*/
+
 	if (!csi.ods[weapon->item.t].reload || weapon->item.m == NONE)
 		return;
 	ccs.eMarket.num_loose[weapon->item.m] += weapon->item.a;

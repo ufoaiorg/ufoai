@@ -1,3 +1,10 @@
+/**
+ * @file cmodels.c
+ * @brief model loading and grid oriented movement and scanning
+ */
+
+/* TODO: Put the grid stuff to another file (grid.c) */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,9 +24,19 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* cmodel.c -- model loading */
 
 #include "qcommon.h"
+#define	ON_EPSILON	0.1
+/* TODO: What is PH? */
+#define PH		(UNIT_HEIGHT-12)
+#define QUANT	4
+#define GRENADE_ALPHAFAC	0.7
+#define GRENADE_MINALPHA	M_PI/6
+#define GRENADE_MAXALPHA	M_PI*7/16
+#define QUANT		4
+
+/* 1/32 epsilon to keep floating point happy */
+#define	DIST_EPSILON	(0.03125)
 
 typedef struct {
 	cplane_t *plane;
@@ -57,8 +74,6 @@ typedef struct chead_s {
 	int cnode;
 	int level;
 } chead_t;
-
-int checkcount;
 
 typedef struct {
 	char name[MAX_QPATH];
@@ -119,60 +134,72 @@ typedef struct routing_s {
 	int fblength;
 } routing_t;
 
+/* extern */
 mapTile_t mapTiles[MAX_MAPTILES];
 mapTile_t *curTile;
 int numTiles = 0;
-
-int numInline;
-
 cvar_t *map_noareas;
-
 int c_pointcontents;
 int c_traces, c_brush_traces;
-
+char map_entitystring[MAX_MAP_ENTSTRING];
+vec3_t map_min, map_max;
+struct routing_s svMap, clMap;
 mapsurface_t nullsurface;
 
-char map_entitystring[MAX_MAP_ENTSTRING];
+/* static */
+static int checkcount;
+static int numInline;
+static byte sh_low;
+static byte sh_big;
+static char **inlineList;
+static int cur_level;
+static vec3_t tr_end;
+static byte *cmod_base;
+static vec3_t shift;
+static byte filled[256][256];
 
-vec3_t map_min, map_max;
+static const vec3_t v_dup = { 0, 0, PH - UNIT_HEIGHT / 2 };
+static const vec3_t v_dwn = { 0, 0, -UNIT_HEIGHT / 2 };
+static const vec3_t testvec[5] = { {-UNIT_SIZE / 2 + 5, -UNIT_SIZE / 2 + 5, 0}, {UNIT_SIZE / 2 - 5, UNIT_SIZE / 2 - 5, 0}, {-UNIT_SIZE / 2 + 5, UNIT_SIZE / 2 - 5, 0}, {UNIT_SIZE / 2 - 5, -UNIT_SIZE / 2 + 5, 0}, {0, 0, 0} };
 
-byte sh_low;
-byte sh_big;
+static int leaf_count, leaf_maxcount;
+static int *leaf_list;
+static float *leaf_mins, *leaf_maxs;
+static int leaf_topnode;
 
-struct routing_s svMap, clMap;
+static vec3_t trace_start, trace_end;
+static vec3_t trace_mins, trace_maxs;
+static vec3_t trace_extents;
 
-char **inlineList;
+static trace_t trace_trace;
+static int trace_contents;
+static qboolean trace_ispoint;			/* optimized case */
+static tnode_t *tnode_p;
+static byte stf;
+static byte tfList[HEIGHT][WIDTH][WIDTH];
+#ifndef DEDICATED_ONLY
+static byte tf;
+#endif
 
+/* just to fix warnings */
+void CL_ResetMouseLastPos(void);
 void CM_MakeTnodes(void);
 void CM_InitBoxHull(void);
 
-/*void	FloodAreaConnections (void); */
-
-/* ===================================================================== */
-
-#define	ON_EPSILON	0.1
-
-int cur_level;
-
-vec3_t tr_end;
 
 /*
 ===============================================================================
-
-					MAP LOADING
-
+ MAP LOADING
 ===============================================================================
 */
 
-byte *cmod_base;
-vec3_t shift;
 
 /*
 =================
 CMod_LoadSubmodels
 =================
 */
-void CMod_LoadSubmodels(lump_t * l)
+static void CMod_LoadSubmodels(lump_t * l)
 {
 	dmodel_t *in;
 	cmodel_t *out;
@@ -212,7 +239,7 @@ void CMod_LoadSubmodels(lump_t * l)
 CMod_LoadSurfaces
 =================
 */
-void CMod_LoadSurfaces(lump_t * l)
+static void CMod_LoadSurfaces(lump_t * l)
 {
 	texinfo_t *in;
 	mapsurface_t *out;
@@ -248,7 +275,7 @@ CMod_LoadNodes
 
 =================
 */
-void CMod_LoadNodes(lump_t * l)
+static void CMod_LoadNodes(lump_t * l)
 {
 	dnode_t *in;
 	int child;
@@ -289,53 +316,12 @@ void CMod_LoadNodes(lump_t * l)
 }
 
 /*
-=============
-CheckBSPFile
-
-checks BSP-file
-return 0 if valid
-1 could not open file
-2 if magic number is bad
-3 if version of bsp-file is bad
-=============
-*/
-int CheckBSPFile(char *filename)
-{
-	int i;
-	int header[2];
-	FILE *file = NULL;
-	char name[MAX_QPATH];
-
-	/* load the file */
-	Com_sprintf(name, MAX_QPATH, "maps/%s.bsp", filename);
-
-	FS_FOpenFile(name, &file);
-	if (!file)
-		return 1;
-
-	FS_Read(header, sizeof(header), file);
-
-	FS_FCloseFile(file);
-
-	for (i = 0; i < 2; i++)
-		header[i] = LittleLong(header[i]);
-
-	if (header[0] != IDBSPHEADER)
-		return 2;
-	if (header[1] != BSPVERSION)
-		return 3;
-
-	/* valid BSP-File */
-	return 0;
-}
-
-/*
 =================
 CMod_LoadBrushes
 
 =================
 */
-void CMod_LoadBrushes(lump_t * l)
+static void CMod_LoadBrushes(lump_t * l)
 {
 	dbrush_t *in;
 	cbrush_t *out;
@@ -367,7 +353,7 @@ void CMod_LoadBrushes(lump_t * l)
 CMod_LoadLeafs
 =================
 */
-void CMod_LoadLeafs(lump_t * l)
+static void CMod_LoadLeafs(lump_t * l)
 {
 	int i;
 	cleaf_t *out;
@@ -416,7 +402,7 @@ void CMod_LoadLeafs(lump_t * l)
 CMod_LoadPlanes
 =================
 */
-void CMod_LoadPlanes(lump_t * l)
+static void CMod_LoadPlanes(lump_t * l)
 {
 	int i, j;
 	cplane_t *out;
@@ -464,7 +450,7 @@ void CMod_LoadPlanes(lump_t * l)
 CMod_LoadLeafBrushes
 =================
 */
-void CMod_LoadLeafBrushes(lump_t * l)
+static void CMod_LoadLeafBrushes(lump_t * l)
 {
 	int i;
 	unsigned short *out;
@@ -497,7 +483,7 @@ void CMod_LoadLeafBrushes(lump_t * l)
 CMod_LoadBrushSides
 =================
 */
-void CMod_LoadBrushSides(lump_t * l)
+static void CMod_LoadBrushSides(lump_t * l)
 {
 	int i, j;
 	cbrushside_t *out;
@@ -537,7 +523,7 @@ Cmod_DeCompressRouting
 source will be set to the end of the compressed data block!
 ===============
 */
-int Cmod_DeCompressRouting(byte ** source, byte * dataStart)
+static int Cmod_DeCompressRouting(byte ** source, byte * dataStart)
 {
 	int i, c;
 	byte *data_p;
@@ -565,6 +551,46 @@ int Cmod_DeCompressRouting(byte ** source, byte * dataStart)
 	*source = src;
 
 	return data_p - dataStart;
+}
+
+/**
+  * @brief Checks for valid BSP-file
+  *
+  * @param[in] filename BSP-file to check
+  *
+  * @return 0 if valid
+  * @return 1 could not open file
+  * @return 2 if magic number is bad
+  * @return 3 if version of bsp-file is bad
+  */
+int CheckBSPFile(char *filename)
+{
+	int i;
+	int header[2];
+	FILE *file = NULL;
+	char name[MAX_QPATH];
+
+	/* load the file */
+	Com_sprintf(name, MAX_QPATH, "maps/%s.bsp", filename);
+
+	FS_FOpenFile(name, &file);
+	if (!file)
+		return 1;
+
+	FS_Read(header, sizeof(header), file);
+
+	FS_FCloseFile(file);
+
+	for (i = 0; i < 2; i++)
+		header[i] = LittleLong(header[i]);
+
+	if (header[0] != IDBSPHEADER)
+		return 2;
+	if (header[1] != BSPVERSION)
+		return 3;
+
+	/* valid BSP-File */
+	return 0;
 }
 
 /*
@@ -646,8 +672,6 @@ int CM_EntTestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 CM_TestConnection
 =================
 */
-byte filled[256][256];
-
 qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboolean fill)
 {
 	vec3_t start, end;
@@ -702,13 +726,6 @@ qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboole
 CM_CheckUnit
 =================
 */
-/* TODO: What is PH? */
-#define PH		(UNIT_HEIGHT-12)
-#define QUANT	4
-const vec3_t v_dup = { 0, 0, PH - UNIT_HEIGHT / 2 };
-const vec3_t v_dwn = { 0, 0, -UNIT_HEIGHT / 2 };
-const vec3_t testvec[5] = { {-UNIT_SIZE / 2 + 5, -UNIT_SIZE / 2 + 5, 0}, {UNIT_SIZE / 2 - 5, UNIT_SIZE / 2 - 5, 0}, {-UNIT_SIZE / 2 + 5, UNIT_SIZE / 2 - 5, 0}, {UNIT_SIZE / 2 - 5, -UNIT_SIZE / 2 + 5, 0}, {0, 0, 0} };
-
 void CM_CheckUnit(routing_t * map, int x, int y, int z)
 {
 	vec3_t start, end;
@@ -1331,7 +1348,6 @@ int CM_PointLeafnum(vec3_t p)
 }
 
 
-
 /*
 =============
 CM_BoxLeafnums
@@ -1339,11 +1355,6 @@ CM_BoxLeafnums
 Fills in a list of all the leafs touched
 =============
 */
-int leaf_count, leaf_maxcount;
-int *leaf_list;
-float *leaf_mins, *leaf_maxs;
-int leaf_topnode;
-
 void CM_BoxLeafnums_r(int nodenum)
 {
 	cplane_t *plane;
@@ -1457,17 +1468,6 @@ int CM_TransformedPointContents(vec3_t p, int headnode, vec3_t origin, vec3_t an
 
 /*======================================================================= */
 
-
-/* 1/32 epsilon to keep floating point happy */
-#define	DIST_EPSILON	(0.03125)
-
-vec3_t trace_start, trace_end;
-vec3_t trace_mins, trace_maxs;
-vec3_t trace_extents;
-
-trace_t trace_trace;
-int trace_contents;
-qboolean trace_ispoint;			/* optimized case */
 
 /*
 ================
@@ -1996,8 +1996,6 @@ trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 
 /* ===================================================================== */
 
-tnode_t *tnode_p;
-
 /*
 ==============
 MakeTnode
@@ -2134,9 +2132,6 @@ void CM_MakeTnodes(void)
 
 
 /*========================================================== */
-
-vec3_t tmpVec;
-int errorCount;
 
 /*
 =============
@@ -2337,16 +2332,9 @@ int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 
 /*
 ==========================================================
-
   GRID ORIENTED MOVEMENT AND SCANNING
-
 ==========================================================
 */
-
-#define QUANT		4
-
-byte tf, stf;
-byte tfList[HEIGHT][WIDTH][WIDTH];
 
 /*
 ============
@@ -2417,12 +2405,13 @@ void Grid_MoveMark(struct routing_s *map, int x, int y, int z, int dv, int h, in
 }
 
 
+#ifndef DEDICATED_ONLY
 /*
 ============
 Grid_MoveMarkRoute
 ============
 */
-void Grid_MoveMarkRoute(struct routing_s *map, int xl, int yl, int xh, int yh)
+static void Grid_MoveMarkRoute(struct routing_s *map, int xl, int yl, int xh, int yh)
 {
 	int x, y, z, h;
 	int dv, l;
@@ -2445,9 +2434,7 @@ void Grid_MoveMarkRoute(struct routing_s *map, int xl, int yl, int xh, int yh)
 						Grid_MoveMark(map, x, y, z, dv, h, l);
 				}
 }
-
-/* just to fix warnings */
-void CL_ResetMouseLastPos(void);
+#endif
 
 /*
 ============
@@ -2593,7 +2580,6 @@ int Grid_MoveCheck(struct routing_s *map, pos3_t pos, int sz, int l)
 }
 
 
-
 /*
 ============
 Grid_MoveNext (Last?)
@@ -2663,7 +2649,6 @@ void Grid_PosToVec(struct routing_s *map, pos3_t pos, vec3_t vec)
 	vec[2] += Grid_Height(map, pos);
 }
 
-
 /*
 =================
 Grid_RecalcRouting
@@ -2724,10 +2709,6 @@ TARGETING FUNCTIONS
 
 ==============================================================================
 */
-
-#define GRENADE_ALPHAFAC	0.7
-#define GRENADE_MINALPHA	M_PI/6
-#define GRENADE_MAXALPHA	M_PI*7/16
 
 float Com_GrenadeTarget(vec3_t from, vec3_t at, vec3_t v0)
 {

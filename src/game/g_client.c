@@ -2278,23 +2278,32 @@ void G_ClientAction(player_t * player)
 }
 
 
-/*
-=================
-G_GetTeam
-=================
-*/
+/**
+  * @brief Sets the teanum var for this match
+  *
+  * @param[in] player Pointer to connected player
+  *
+  * TODO: Check whether there are enough free spawnpoints
+  *
+  */
 void G_GetTeam(player_t * player)
 {
 	player_t *p;
 	int i, j;
 
-	if (player->pers.team)
+	/* player has already a team */
+	if (player->pers.team) {
+		gi.dprintf("You are already on team %i\n", player->pers.team);
 		return;
+	}
 
 	/* find a team */
 	if (sv_maxclients->value == 1)
 		player->pers.team = 1;
-	else if (sv_teamplay->value) {
+	else if (atoi(Info_ValueForKey(player->pers.userinfo, "spectator"))) {
+		/* TODO: spectors get an in game menu to select the team */
+		player->pers.spectator = qtrue;
+	} else if (sv_teamplay->value) {
 		/* set the team specified in the userinfo */
 		gi.dprintf("Get a team for teamplay\n");
 		i = atoi(Info_ValueForKey(player->pers.userinfo, "teamnum"));
@@ -2316,8 +2325,11 @@ void G_GetTeam(player_t * player)
 						/* team already in use */
 						break;
 					}
-				if (j >= game.maxplayers)
+				/* TODO: disconnect the player or convert to spectator */
+				if (j >= game.maxplayers) {
+					player->pers.spectator = qtrue;
 					break;
+				}
 			}
 
 		/* set the team */

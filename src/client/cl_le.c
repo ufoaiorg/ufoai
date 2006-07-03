@@ -25,27 +25,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-/* */
 lm_t LMs[MAX_LOCALMODELS];
 int numLMs;
 
-/* */
+
 le_t LEs[MAX_EDICTS];
 int numLEs;
 
-/* */
 
-vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, -PLAYER_MIN };
-vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
+/*===========================================================================
+ LM handling
+=========================================================================== */
 
-
-/*=========================================================================== */
-/* */
-/* LM handling */
-/* */
-/*=========================================================================== */
-
-char *lmList[MAX_LOCALMODELS + 1];
+static char *lmList[MAX_LOCALMODELS + 1];
 
 
 /*

@@ -2035,7 +2035,6 @@ void MN_DrawMenus(void)
 					if (menuInventory) {
 						vec3_t scale = {3.5, 3.5, 3.5};
 						invList_t *ic;
-						int countItems = 0;
 
 						color[0] = color[1] = color[2] = 0.5;
 						color[3] = 1;

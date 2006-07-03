@@ -615,8 +615,10 @@ extern int numMPs;
 extern le_t LEs[MAX_EDICTS];
 extern int numLEs;
 
-extern vec3_t player_mins;
-extern vec3_t player_maxs;
+static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, -PLAYER_MIN };
+static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
+/*extern vec3_t player_mins;
+extern vec3_t player_maxs;*/
 
 void LE_Status(void);
 void LE_Think(void);
