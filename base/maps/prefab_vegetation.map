@@ -5845,3 +5845,31 @@
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "-896 -242 22"
 }
+// entity 110
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic04.md2"
+"origin" "-1056 104 12"
+}
+// entity 111
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "-1048 -200 12"
+}
+// entity 112
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"origin" "-1100 -172 12"
+}
+// entity 113
+{
+"classname" "misc_model"
+"origin" "-1090 -194 12"
+"model" "models/objects/vegi/tropic/tropic01.md2"
+"spawnflags" "255"
+}
