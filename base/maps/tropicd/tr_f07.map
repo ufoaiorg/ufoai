@@ -1,150 +1,134 @@
+
+// entity 0
 {
+"classname" "worldspawn"
 "_color" "1 1 0.9"
 "ambient" "0.4 0.4 0.4"
 "light" "130"
 "angles" "40 20 0"
-"classname" "worldspawn"
 // brush 0
 {
-( 160 200 132 ) ( 160 160 132 ) ( 160 160 4 ) tex_material/c_orange2 0 8 0 0.500000 0.500000 130816 0 0
-( 196 192 132 ) ( 160 192 132 ) ( 160 192 4 ) tex_material/c_orange2 0 8 0 0.500000 0.500000 130816 0 0
-( 192 160 132 ) ( 192 200 132 ) ( 192 200 4 ) tex_material/c_orange2 0 8 0 0.500000 0.500000 130816 0 0
-( 160 160 132 ) ( 196 160 132 ) ( 196 160 4 ) tex_material/c_orange2 0 8 0 0.500000 0.500000 130816 0 0
-( 157 160 35 ) ( 157 200 35 ) ( 193 200 35 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 130816 0 0
-( 196 200 4 ) ( 160 200 4 ) ( 160 160 4 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 130816 0 0
+( 160 200 132 ) ( 160 160 132 ) ( 160 160 4 ) tex_material/c_orange2 0 8 0 0.5 0.5 130816 0 0
+( 196 192 132 ) ( 160 192 132 ) ( 160 192 4 ) tex_material/c_orange2 0 8 0 0.5 0.5 130816 0 0
+( 192 160 132 ) ( 192 200 132 ) ( 192 200 4 ) tex_material/c_orange2 0 8 0 0.5 0.5 130816 0 0
+( 160 160 132 ) ( 196 160 132 ) ( 196 160 4 ) tex_material/c_orange2 0 8 0 0.5 0.5 130816 0 0
+( 157 160 35 ) ( 157 200 35 ) ( 193 200 35 ) tex_material/c_orange2 0 0 0 0.5 0.5 130816 0 0
+( 196 200 4 ) ( 160 200 4 ) ( 160 160 4 ) tex_material/c_orange2 0 0 0 0.5 0.5 130816 0 0
 }
 // brush 1
 {
-( 32 104 132 ) ( 32 64 132 ) ( 32 64 4 ) tex_material/c_orange2 0 8 0 0.500000 0.500000 130816 0 0
-( 68 96 132 ) ( 32 96 132 ) ( 32 96 4 ) tex_material/c_orange2 0 8 0 0.500000 0.500000 130816 0 0
-( 64 64 132 ) ( 64 104 132 ) ( 64 104 4 ) tex_material/c_orange2 0 8 0 0.500000 0.500000 130816 0 0
-( 32 64 132 ) ( 68 64 132 ) ( 68 64 4 ) tex_material/c_orange2 0 8 0 0.500000 0.500000 130816 0 0
-( 29 64 35 ) ( 29 104 35 ) ( 65 104 35 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 130816 0 0
-( 68 104 4 ) ( 32 104 4 ) ( 32 64 4 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 130816 0 0
+( 32 104 132 ) ( 32 64 132 ) ( 32 64 4 ) tex_material/c_orange2 0 8 0 0.5 0.5 130816 0 0
+( 68 96 132 ) ( 32 96 132 ) ( 32 96 4 ) tex_material/c_orange2 0 8 0 0.5 0.5 130816 0 0
+( 64 64 132 ) ( 64 104 132 ) ( 64 104 4 ) tex_material/c_orange2 0 8 0 0.5 0.5 130816 0 0
+( 32 64 132 ) ( 68 64 132 ) ( 68 64 4 ) tex_material/c_orange2 0 8 0 0.5 0.5 130816 0 0
+( 29 64 35 ) ( 29 104 35 ) ( 65 104 35 ) tex_material/c_orange2 0 0 0 0.5 0.5 130816 0 0
+( 68 104 4 ) ( 32 104 4 ) ( 32 64 4 ) tex_material/c_orange2 0 0 0 0.5 0.5 130816 0 0
 }
 // brush 2
 {
-( 224 40 132 ) ( 224 0 132 ) ( 224 0 4 ) tex_material/c_orange2 0 8 0 0.500000 0.500000 130816 0 0
-( 260 32 132 ) ( 224 32 132 ) ( 224 32 4 ) tex_material/c_orange2 0 8 0 0.500000 0.500000 130816 0 0
-( 256 0 132 ) ( 256 40 132 ) ( 256 40 4 ) tex_material/c_orange2 0 8 0 0.500000 0.500000 130816 0 0
-( 224 0 132 ) ( 260 0 132 ) ( 260 0 4 ) tex_material/c_orange2 0 8 0 0.500000 0.500000 130816 0 0
-( 229 0 59 ) ( 229 40 59 ) ( 265 40 59 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 130816 0 0
-( 260 40 4 ) ( 224 40 4 ) ( 224 0 4 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 130816 0 0
+( 224 40 132 ) ( 224 0 132 ) ( 224 0 4 ) tex_material/c_orange2 0 8 0 0.5 0.5 130816 0 0
+( 260 32 132 ) ( 224 32 132 ) ( 224 32 4 ) tex_material/c_orange2 0 8 0 0.5 0.5 130816 0 0
+( 256 0 132 ) ( 256 40 132 ) ( 256 40 4 ) tex_material/c_orange2 0 8 0 0.5 0.5 130816 0 0
+( 224 0 132 ) ( 260 0 132 ) ( 260 0 4 ) tex_material/c_orange2 0 8 0 0.5 0.5 130816 0 0
+( 229 0 59 ) ( 229 40 59 ) ( 265 40 59 ) tex_material/c_orange2 0 0 0 0.5 0.5 130816 0 0
+( 260 40 4 ) ( 224 40 4 ) ( 224 0 4 ) tex_material/c_orange2 0 0 0 0.5 0.5 130816 0 0
 }
 // brush 3
 {
-( 360 352 -16 ) ( 320 352 -16 ) ( 320 328 -16 ) tex_nature/jungle001 -192 224 0 0.500000 0.500000 0 128 0
-( 320 328 -8 ) ( 320 352 -8 ) ( 360 352 -8 ) tex_nature/jungle001 -192 224 0 0.500000 0.500000 0 128 0
-( 320 328 0 ) ( 360 328 0 ) ( 360 328 -8 ) tex_nature/jungle001 -192 0 0 0.500000 0.500000 0 128 0
-( 360 328 0 ) ( 360 352 0 ) ( 360 352 -8 ) tex_nature/jungle001 -224 0 0 0.500000 0.500000 0 128 0
-( 360 352 0 ) ( 320 352 0 ) ( 320 352 -8 ) tex_nature/jungle001 -192 0 0 0.500000 0.500000 0 128 0
-( 320 352 0 ) ( 320 328 0 ) ( 320 328 -8 ) tex_nature/jungle001 -224 0 0 0.500000 0.500000 0 128 0
-}
-// brush 4
-{
-( -120 -16 -16 ) ( -160 -16 -16 ) ( -160 -40 -16 ) tex_nature/jungle001 0 0 0 0.500000 0.500000 0 128 0
-( -160 -40 -8 ) ( -160 -16 -8 ) ( -120 -16 -8 ) tex_nature/jungle001 0 0 0 0.500000 0.500000 0 128 0
-( -160 -40 0 ) ( -120 -40 0 ) ( -120 -40 -8 ) tex_nature/jungle001 0 0 0 0.500000 0.500000 0 128 0
-( -120 -40 0 ) ( -120 -16 0 ) ( -120 -16 -8 ) tex_nature/jungle001 0 0 0 0.500000 0.500000 0 128 0
-( -120 -16 0 ) ( -160 -16 0 ) ( -160 -16 -8 ) tex_nature/jungle001 0 0 0 0.500000 0.500000 0 128 0
-( -160 -16 0 ) ( -160 -40 0 ) ( -160 -40 -8 ) tex_nature/jungle001 0 0 0 0.500000 0.500000 0 128 0
-}
-// brush 5
-{
-( 152 128 0 ) ( 0 128 0 ) ( 0 0 0 ) tex_nature/jungle002 0 0 0 0.500000 0.500000 0 0 0
-( 0 0 4 ) ( 0 128 4 ) ( 152 128 4 ) tex_nature/jungle002 0 0 0 0.500000 0.500000 0 0 0
-( 0 0 8 ) ( 152 0 8 ) ( 152 0 0 ) tex_nature/jungle002 0 0 0 0.500000 0.500000 0 0 0
-( 256 8 8 ) ( 256 136 8 ) ( 256 136 0 ) tex_nature/jungle002 0 0 0 0.500000 0.500000 0 0 0
-( 176 256 8 ) ( 24 256 8 ) ( 24 256 0 ) tex_nature/jungle002 0 0 0 0.500000 0.500000 0 0 0
-( 0 128 8 ) ( 0 0 8 ) ( 0 0 0 ) tex_nature/jungle002 0 0 0 0.500000 0.500000 0 0 0
+( 152 128 0 ) ( 0 128 0 ) ( 0 0 0 ) tex_nature/jungle002 0 0 0 0.5 0.5 0 0 0
+( 0 0 4 ) ( 0 128 4 ) ( 152 128 4 ) tex_nature/jungle002 0 0 0 0.5 0.5 0 0 0
+( 0 0 8 ) ( 152 0 8 ) ( 152 0 0 ) tex_nature/jungle002 0 0 0 0.5 0.5 0 0 0
+( 256 8 8 ) ( 256 136 8 ) ( 256 136 0 ) tex_nature/jungle002 0 0 0 0.5 0.5 0 0 0
+( 176 256 8 ) ( 24 256 8 ) ( 24 256 0 ) tex_nature/jungle002 0 0 0 0.5 0.5 0 0 0
+( 0 128 8 ) ( 0 0 8 ) ( 0 0 0 ) tex_nature/jungle002 0 0 0 0.5 0.5 0 0 0
 }
 }
 // entity 1
 {
+"classname" "misc_model"
 "angles" "0 0 0"
 "origin" "144 68 10"
 "model" "models/objects/vegi/tropic/tropic03.md2"
-"classname" "misc_model"
 "spawnflags" "255"
 }
 // entity 2
 {
-"spawnflags" "255"
 "classname" "misc_model"
+"spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "180 208 12"
 }
 // entity 3
 {
+"classname" "misc_model"
 "origin" "160 40 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"classname" "misc_model"
 "spawnflags" "255"
 }
 // entity 4
 {
+"classname" "misc_model"
 "angles" "0 30 0"
 "origin" "52 200 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"classname" "misc_model"
 "spawnflags" "255"
 }
 // entity 5
 {
-"spawnflags" "255"
 "classname" "misc_model"
+"spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "136 212 12"
 "angles" "0 70 0"
 }
 // entity 6
 {
-"spawnflags" "255"
 "classname" "misc_model"
+"spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "224 172 12"
 "angles" "0 70 0"
 }
 // entity 7
 {
+"classname" "misc_model"
 "angles" "0 170 0"
 "origin" "136 140 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"classname" "misc_model"
 "spawnflags" "255"
 }
 // entity 8
 {
+"classname" "misc_model"
 "angles" "0 170 0"
 "origin" "80 40 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"classname" "misc_model"
 "spawnflags" "255"
 }
 // entity 9
 {
-"spawnflags" "255"
 "classname" "misc_model"
+"spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "48 46 12"
 "angles" "0 50 0"
 }
 // entity 10
 {
+"classname" "misc_model"
 "origin" "174 176 18"
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "light" "1"
 "model" "/models/objects/vegi/bush/bush01.md2"
-"classname" "misc_model"
 "angles" "0 30 0"
 "spawnflags" "255"
 }
 // entity 11
 {
+"classname" "misc_model"
 "spawnflags" "255"
 "angles" "0 100 0"
-"classname" "misc_model"
 "model" "/models/objects/vegi/bush/bush01.md2"
 "light" "1"
 "lightambient" "0.4 0.4 0.4"
@@ -153,22 +137,22 @@
 }
 // entity 12
 {
+"classname" "misc_model"
 "spawnflags" "255"
 "origin" "238 16 18"
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "light" "1"
 "model" "/models/objects/vegi/bush/bush01.md2"
-"classname" "misc_model"
 }
 // entity 13
 {
+"classname" "misc_model"
 "origin" "238 16 42"
 "lightcolor" "0.3 0.3 0.3"
 "lightambient" "0.4 0.4 0.4"
 "light" "1"
 "model" "/models/objects/vegi/bush/bush01.md2"
-"classname" "misc_model"
 "angles" "0 100 0"
 "spawnflags" "255"
 }
