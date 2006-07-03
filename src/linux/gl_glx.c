@@ -1,3 +1,8 @@
+/**
+ * @file gl_glx.c
+ * @brief This file contains ALL Linux specific stuff having to do with the OpenGL refresh
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -16,18 +21,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-*/
-/*
-** This file contains ALL Linux specific stuff having to do with the
-** OpenGL refresh.  When a port is being made the following functions
-** must be implemented by the port:
-**
-** GLimp_EndFrame
-** GLimp_Init
-** GLimp_Shutdown
-** GLimp_SwitchFullscreen
-** GLimp_SetGamma
-**
 */
 
 #include <termios.h>

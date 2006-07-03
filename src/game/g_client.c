@@ -2307,6 +2307,7 @@ void G_GetTeam(player_t * player)
 		/* set the team specified in the userinfo */
 		gi.dprintf("Get a team for teamplay\n");
 		i = atoi(Info_ValueForKey(player->pers.userinfo, "teamnum"));
+		/* civilians are at team zero */
 		if (i > 0)
 			player->pers.team = i;
 		else
