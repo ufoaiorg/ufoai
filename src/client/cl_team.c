@@ -332,11 +332,19 @@ void CL_CleanTempInventory(void)
 	if (!baseCurrent)
 		return;
 
+	/* FIXME: Check this */
+#if 0
 	Com_DestroyInventory(&baseCurrent->equipment);
+#else
+	for (k = 0; k < csi.numIDs; k++)
+		if (csi.ids[k].temp)
+			Com_EmptyContainer(&baseCurrent->equipment, k);
+#endif
 	for (i = 0; i < MAX_WHOLETEAM; i++)
 		for (k = 0; k < csi.numIDs; k++)
 			if (k == csi.idEquip)
 				baseCurrent->teamInv[i].c[k] = NULL;
+			/* idFloor and idEquip are temp */
 			else if (csi.ids[k].temp)
 				Com_EmptyContainer(&baseCurrent->teamInv[i], k);
 }
@@ -473,10 +481,11 @@ static void CL_SelectCmd(void)
 	if (!Q_strncmp(command, "equip", 5)) {
 		if (baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] <= 0)
 			return;
-		if (!baseCurrent || baseCurrent->aircraftCurrent < 0 || num > baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
+		if (!baseCurrent || baseCurrent->aircraftCurrent < 0 || num >= baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
 			return;
 		if (menuInventory && menuInventory != baseCurrent->curTeam[num]->inv) {
 			baseCurrent->curTeam[num]->inv->c[csi.idEquip] = menuInventory->c[csi.idEquip];
+			/* set 'old' idEquip to NULL */
 			menuInventory->c[csi.idEquip] = NULL;
 		}
 		menuInventory = baseCurrent->curTeam[num]->inv;
