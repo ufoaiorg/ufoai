@@ -314,7 +314,9 @@ typedef struct base_s {
 	int sensorWidth;			/* radar radius */
 	qboolean drawSensor;		/* ufo in range? */
 
+	/* equipment that each team carries */
 	inventory_t teamInv[MAX_WHOLETEAM];
+	/* equipment in base */
 	inventory_t equipment;
 
 	/* FIXME: Replace this with employees */
