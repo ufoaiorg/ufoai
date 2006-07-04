@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -326,12 +326,13 @@ long Q_ftol(float f)
 __asm fistp tmp __asm mov eax, tmp __asm ret}
 #pragma warning (default:4035)
 #endif
+
 /*
 ===============
 LerpAngle
-
 ===============
-*/ float LerpAngle(float a2, float a1, float frac)
+*/
+float LerpAngle(float a2, float a1, float frac)
 {
 	if (a1 - a2 > 180)
 		a1 -= 360;
@@ -1160,7 +1161,7 @@ BYTE ORDER FUNCTIONS
 ============================================================================
 */
 
-qboolean bigendien;
+static qboolean bigendien;
 
 /* can't just use function pointers, or dll linkage can */
 /* mess up when qcommon is included in multiple places */
@@ -1305,7 +1306,7 @@ char *va(char *format, ...)
 }
 
 
-char com_token[MAX_TOKEN_CHARS];
+static char com_token[MAX_TOKEN_CHARS];
 
 /*
 ==============
@@ -1413,7 +1414,7 @@ Com_PageInMemory
 
 ===============
 */
-int paged_total;
+static int paged_total;
 
 void Com_PageInMemory(byte * buffer, int size)
 {
@@ -1767,9 +1768,9 @@ INVENTORY MANAGEMENT
 ==============================================================
 */
 
-csi_t *CSI;
-invList_t *invUnused;
-item_t cacheItem;
+static csi_t *CSI;
+static invList_t *invUnused;
+static item_t cacheItem;
 
 /*invList_t	cacheList;*/
 
@@ -1931,7 +1932,9 @@ invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x
 
 	/* allocate space */
 	ic = i->c[container];
+	/* set container to next free invUnused slot */
 	i->c[container] = invUnused;
+	/* ensure, that invUnused will be the next empty slot */
 	invUnused = invUnused->next;
 	i->c[container]->next = ic;
 	ic = i->c[container];
@@ -2147,6 +2150,9 @@ void Com_DestroyInventory(inventory_t * i)
 	if (!i)
 		return;
 
+#ifdef DEBUG
+	Com_Printf("Com_DestroyInventory: numIDS: %i\n", CSI->numIDs);
+#endif
 	for (k = 0; k < CSI->numIDs; k++)
 		Com_EmptyContainer(i, k);
 }
@@ -2250,8 +2256,7 @@ void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility,
 		if ((max - 10 < chr->skills[SKILL_CLOSE] && (chr->skills[ABILITY_SPEED] < min || chr->skills[ABILITY_POWER] < min))
 			|| (max - 10 < chr->skills[SKILL_HEAVY] && chr->skills[ABILITY_POWER] < min)
 			|| (max - 10 < chr->skills[SKILL_PRECISE] && chr->skills[ABILITY_ACCURACY] < min)
-			|| (max - 10 < chr->skills[SKILL_EXPLOSIVE] && chr->skills[ABILITY_MIND] < min)
-			)
+			|| (max - 10 < chr->skills[SKILL_EXPLOSIVE] && chr->skills[ABILITY_MIND] < min))
 			retry--;			/* try again. */
 		else
 			retry = 0;
@@ -2454,7 +2459,7 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 		Q_strncpyz((char *) b, _(token), MAX_VAR);
 		return strlen((char *) b) + 1;
 
-		/* just remove the _ but don't translate */
+	/* just remove the _ but don't translate */
 	case V_TRANSLATION2_STRING:
 		if (*token == '_')
 			token++;
@@ -2669,10 +2674,9 @@ int Com_SetValue(void *base, void *set, int type, int ofs)
 Com_ValueToStr
 =================
 */
-char valuestr[MAX_VAR];
-
 char *Com_ValueToStr(void *base, int type, int ofs)
 {
+	static char valuestr[MAX_VAR];
 	byte *b;
 
 	b = (byte *) base + ofs;
@@ -2692,27 +2696,27 @@ char *Com_ValueToStr(void *base, int type, int ofs)
 		break;
 
 	case V_INT:
-		sprintf(valuestr, "%i", *(int *) b);
+		Com_sprintf(valuestr, MAX_VAR, "%i", *(int *) b);
 		return valuestr;
 
 	case V_FLOAT:
-		sprintf(valuestr, "%f", *(float *) b);
+		Com_sprintf(valuestr, MAX_VAR, "%f", *(float *) b);
 		return valuestr;
 
 	case V_POS:
-		sprintf(valuestr, "%.2f %.2f", ((float *) b)[0], ((float *) b)[1]);
+		Com_sprintf(valuestr, MAX_VAR, "%.2f %.2f", ((float *) b)[0], ((float *) b)[1]);
 		return valuestr;
 
 	case V_VECTOR:
-		sprintf(valuestr, "%.2f %.2f %.2f", ((float *) b)[0], ((float *) b)[1], ((float *) b)[2]);
+		Com_sprintf(valuestr, MAX_VAR, "%.2f %.2f %.2f", ((float *) b)[0], ((float *) b)[1], ((float *) b)[2]);
 		return valuestr;
 
 	case V_COLOR:
-		sprintf(valuestr, "%.2f %.2f %.2f %.2f", ((float *) b)[0], ((float *) b)[1], ((float *) b)[2], ((float *) b)[3]);
+		Com_sprintf(valuestr, MAX_VAR, "%.2f %.2f %.2f %.2f", ((float *) b)[0], ((float *) b)[1], ((float *) b)[2], ((float *) b)[3]);
 		return valuestr;
 
 	case V_RGBA:
-		sprintf(valuestr, "%3i %3i %3i %3i", ((byte *) b)[0], ((byte *) b)[1], ((byte *) b)[2], ((byte *) b)[3]);
+		Com_sprintf(valuestr, MAX_VAR, "%3i %3i %3i %3i", ((byte *) b)[0], ((byte *) b)[1], ((byte *) b)[2], ((byte *) b)[3]);
 		return valuestr;
 
 	case V_TRANSLATION_STRING:
@@ -2741,7 +2745,7 @@ char *Com_ValueToStr(void *base, int type, int ofs)
 		return CSI->dts[*b];
 
 	case V_DATE:
-		sprintf(valuestr, "%i %i %i", ((date_t *) b)->day / 365, ((date_t *) b)->day % 365, ((date_t *) b)->sec);
+		Com_sprintf(valuestr, MAX_VAR, "%i %i %i", ((date_t *) b)->day / 365, ((date_t *) b)->day % 365, ((date_t *) b)->sec);
 		return valuestr;
 
 	default:
