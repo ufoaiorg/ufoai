@@ -1151,6 +1151,7 @@ void COM_FilePath(char *in, char *out)
 	while (s != in && *s != '/')
 		s--;
 
+	/* FIXME: Q_strncpyz */
 	strncpy(out, in, s - in);
 	out[s - in] = 0;
 }
@@ -2175,7 +2176,9 @@ void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py)
 				*py = y;
 				return;
 			}
-
+#ifdef PARANOID
+	Com_Printf("Com_FindSpace could not find space for itemtype: %s at container %i\n", CSI->ods[item].type, container );
+#endif
 	*px = *py = NONE;
 }
 
