@@ -731,7 +731,7 @@ edict_t *G_GetFloorItems(edict_t * ent)
 G_InventoryMove
 =================
 */
-void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty)
+void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction)
 {
 	edict_t *ent, *floor;
 	invList_t *ic;
@@ -742,7 +742,7 @@ void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int t
 	ent = g_edicts + num;
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, 1))
+	if (checkaction && !G_ActionCheck(player, ent, 1))
 		return;
 
 	/* "get floor ready" */
@@ -772,6 +772,7 @@ void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int t
 			return;
 		}
 
+		/* FIXME: This is impossible - if not we should check MAX_INVDEFS*/
 		assert((gi.csi->idFloor >= 0) && (gi.csi->idFloor < MAX_CONTAINERS));
 #ifdef DEBUG
 		if ((gi.csi->idFloor < 0) || (gi.csi->idFloor >= MAX_CONTAINERS))
@@ -914,16 +915,22 @@ void G_InventoryToFloor(edict_t * ent)
 			next = ic->next;
 			/* find the coordinates for the current item on floor */
 			Com_FindSpace(&floor->i, ic->item.t, gi.csi->idFloor, &ic->x, &ic->y);
-			if (ic->x >= 32 || ic->y >= 16) {
+			if (ic->x == NONE || ic->y == NONE) {
 				/* Run out of space on the floor - destroy remaining inventory. */
 				/* TODO should really just spill into adjacent locations... */
 				ent->i.c[k] = ic;
 				Com_DestroyInventory(&ent->i);
+				gi.dprintf("G_InventoryToFloor: Error: could not drop item to floor: %s\n", gi.csi->ods[ic->item.t].kurz);
 				gi.dprintf("G_InventoryToFloor: Destroy remaining inventory\n");
 				/* send item info to the clients */
 				G_CheckVis(floor, qtrue);
 				return;
+#ifdef PARANOID
+			} else {
+				gi.dprintf("G_InventoryToFloor: item to floor: %s\n", gi.csi->ods[ic->item.t].kurz);
+#endif
 			}
+
 			ic->next = FLOOR(floor);
 			FLOOR(floor) = ic;
 		}
@@ -1333,9 +1340,9 @@ static void G_MoralePanic(edict_t * ent, qboolean sanity)
 	/* drop items in hands */
 	if (!sanity) {
 		if (RIGHT(ent))
-			G_InventoryMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE);
+			G_InventoryMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
 		if (LEFT(ent))
-			G_InventoryMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE);
+			G_InventoryMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue);
 	}
 
 	/* get up */
@@ -2225,7 +2232,7 @@ void G_ClientInvMove(player_t * player, int num)
 	tx = gi.ReadByte();
 	ty = gi.ReadByte();
 
-	G_InventoryMove(player, num, from, fx, fy, to, tx, ty);
+	G_InventoryMove(player, num, from, fx, fy, to, tx, ty, qtrue);
 }
 
 
