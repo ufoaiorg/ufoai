@@ -909,7 +909,7 @@ typedef struct invDef_s {
 	int in, out;
 } invDef_t;
 
-#define MAX_CONTAINERS	32
+#define MAX_CONTAINERS	MAX_INVDEFS
 #define MAX_INVLIST		1024
 
 typedef struct item_s {
