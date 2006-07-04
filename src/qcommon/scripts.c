@@ -279,16 +279,21 @@ static void Com_ParseItem(char *name, char **text)
 static value_t idps[] = {
 	{"shape", V_SHAPE_BIG, offsetof(invDef_t, shape)}
 	,
+	/* only a single item */
 	{"single", V_BOOL, offsetof(invDef_t, single)}
 	,
+	/* this is the armor container */
 	{"armor", V_BOOL, offsetof(invDef_t, armor)}
 	,
+	/* allow everything to be stored in this container (e.g armor and weapons) */
 	{"all", V_BOOL, offsetof(invDef_t, all)}
 	,
 	{"temp", V_BOOL, offsetof(invDef_t, temp)}
 	,
+	/* time units for moving something in */
 	{"in", V_INT, offsetof(invDef_t, in)}
 	,
+	/* time units for moving something out */
 	{"out", V_INT, offsetof(invDef_t, out)}
 	,
 
