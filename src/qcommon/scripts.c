@@ -316,6 +316,11 @@ static void Com_ParseInventory(char *name, char **text)
 		return;
 	}
 
+	if (i >= MAX_INVDEFS) {
+		Sys_Error("Too many inventory definitions - max allowed: %i\n", MAX_INVDEFS);
+		return; /* never reached */
+	}
+
 	/* initialize the menu */
 	id = &csi.ids[csi.numIDs++];
 	memset(id, 0, sizeof(invDef_t));
