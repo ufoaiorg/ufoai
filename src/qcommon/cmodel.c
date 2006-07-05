@@ -1355,6 +1355,9 @@ int CM_PointLeafnum(vec3_t p)
 CM_BoxLeafnums
 
 Fills in a list of all the leafs touched
+
+call with topnode set to the headnode, returns with topnode
+set to the first node that splits the box
 =============
 */
 void CM_BoxLeafnums_r(int nodenum)

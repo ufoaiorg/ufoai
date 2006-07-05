@@ -1,5 +1,19 @@
+/**
+ * @file cvar.c
+ * @brief Manage cvars
+ *
+ * cvar_t variables are used to hold scalar or string variables that can be changed or displayed at the console or prog code as well as accessed directly
+ * in C code.
+ * The user can access cvars from the console in three ways:
+ * vid_fullscreen			prints the current value
+ * vid_fullscreen 0			sets the current value to 0
+ * set vid_fullscreen 0		as above, but creates the cvar if not present
+ * Cvars are restricted from having the same names as commands to keep this
+ * interface from being ambiguous.
+ */
+
 /*
-Copyright (C) 1997-2001 Id Software, Inc.
+Copyright (C) 2002-2006 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,10 +31,18 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* cvar.c -- dynamic variable tracking */
 
 #include "qcommon.h"
 
+/**
+  * @brief This is set each time a CVAR_USERINFO variable is changed
+  * so that the client knows to send it to the server
+  */
+qboolean userinfo_modified;
+
+/**
+  * @brief Cvar list
+  */
 static cvar_t *cvar_vars;
 
 /*
@@ -55,11 +77,11 @@ static cvar_t *Cvar_FindVar(char *var_name)
 	return NULL;
 }
 
-/*
-============
-Cvar_VariableValue
-============
-*/
+/**
+  * @brief Returns the float value of a cvar
+  *
+  * @return 0 if not defined
+  */
 float Cvar_VariableValue(char *var_name)
 {
 	cvar_t *var;
@@ -237,11 +259,9 @@ cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
 	return var;
 }
 
-/*
-============
-Cvar_ForceSet
-============
-*/
+/**
+  * @brief Will set the variable even if NOSET or LATCH
+  */
 cvar_t *Cvar_ForceSet(char *var_name, char *value)
 {
 	return Cvar_Set2(var_name, value, qtrue);
@@ -287,11 +307,9 @@ cvar_t *Cvar_FullSet(char *var_name, char *value, int flags)
 	return var;
 }
 
-/*
-============
-Cvar_SetValue
-============
-*/
+/**
+  * @brief Expands value to a string and calls Cvar_Set
+  */
 void Cvar_SetValue(char *var_name, float value)
 {
 	char val[32];
@@ -491,10 +509,6 @@ void Cvar_List_f(void)
 	}
 	Com_Printf("%i cvars\n", i);
 }
-
-
-qboolean userinfo_modified;
-
 
 char *Cvar_BitInfo(int bit)
 {

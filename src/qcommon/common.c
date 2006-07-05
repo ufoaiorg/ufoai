@@ -1168,9 +1168,7 @@ zhead_t z_chain;
 int z_count, z_bytes;
 
 /**
-  * @brief
-  *
-  * Frees a Z_Malloc'ed pointer
+  * @brief Frees a Z_Malloc'ed pointer
   */
 void Z_Free(void *ptr)
 {
@@ -1194,9 +1192,7 @@ void Z_Free(void *ptr)
 
 
 /**
-  * @brief
-  *
-  * Stats about the allocated bytes via Z_Malloc
+  * @brief Stats about the allocated bytes via Z_Malloc
   */
 void Z_Stats_f(void)
 {
@@ -1204,9 +1200,7 @@ void Z_Stats_f(void)
 }
 
 /**
-  * @brief
-  *
-  * Frees a memory block with a given tag
+  * @brief Frees a memory block with a given tag
   */
 void Z_FreeTags(int tag)
 {
@@ -1220,9 +1214,9 @@ void Z_FreeTags(int tag)
 }
 
 /**
-  * @brief
+  * @brief Allocates a memory block with a given tag
   *
-  * Allocates a memory block with a given tag
+  * and fills with 0
   */
 void *Z_TagMalloc(int size, int tag)
 {
@@ -1248,9 +1242,9 @@ void *Z_TagMalloc(int size, int tag)
 }
 
 /**
-  * @brief
+  * @brief Allocate a memory block with default tag
   *
-  * Allocate a memory block with default tag
+  * and fills with 0
   */
 void *Z_Malloc(int size)
 {

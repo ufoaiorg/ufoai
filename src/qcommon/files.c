@@ -403,6 +403,7 @@ FS_LoadFile
 
 Filename are reletive to the quake search path
 a null buffer will just return the file length without loading
+a -1 length means that the file is not present
 ============
 */
 int FS_LoadFile(char *path, void **buffer)
