@@ -1618,8 +1618,9 @@ void CL_GameSave(char *filename, char *comment)
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
 
 	/* write prefix and version */
-	MSG_WriteByte(&sb, 0);
 	MSG_WriteLong(&sb, SAVE_FILE_VERSION);
+
+	MSG_WriteLong(&sb, MAX_GAMESAVESIZE);
 
 	/* store comment */
 	MSG_WriteString(&sb, comment);
@@ -1774,7 +1775,7 @@ int CL_GameLoad(char *filename)
 	base_t *base;
 	char *name;
 	FILE *f;
-	int version;
+	int version, dataSize;
 	int i, j, num;
 
 	/* open file */
@@ -1791,14 +1792,14 @@ int CL_GameLoad(char *filename)
 	sb.cursize = fread(buf, 1, MAX_GAMESAVESIZE, f);
 	fclose(f);
 
-	/* Check if save file is versioned */
-	if (MSG_ReadByte(&sb) == 0) {
-		version = MSG_ReadLong(&sb);
-		Com_Printf("Savefile version %d detected\n", version);
-	} else {
-		/* no - reset position and take version as 0 */
-		MSG_BeginReading(&sb);
-		version = 0;
+	version = MSG_ReadLong(&sb);
+	Com_Printf("Savefile version %d detected\n", version);
+	dataSize = MSG_ReadLong(&sb);
+
+	if (dataSize != MAX_GAMESAVESIZE) {
+		Com_Printf("File '%s' is incompatible to current version\n", filename);
+		free(buf);
+		return 1;
 	}
 
 	/* check current version */

@@ -175,6 +175,17 @@ void Sys_NormPath(char* path)
 }
 
 /*
+=================
+Sys_GetHomeDirectory
+FIXME: Get windows home dir
+=================
+*/
+char *Sys_GetHomeDirectory (void)
+{
+	return NULL;
+}
+
+/*
 ================
 Sys_Init
 ================

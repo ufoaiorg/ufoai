@@ -642,21 +642,18 @@ TODO: Put this in each port dir
 */
 void FS_AddHomeAsGameDirectory(char *dir)
 {
-#ifndef _WIN32
 	char gdir[MAX_OSPATH];
-	char *homedir = getenv("HOME");
+	char *homedir = Sys_GetHomeDirectory();
 
 	if (homedir) {
 		Com_sprintf(gdir, MAX_OSPATH, "%s/.ufoai/%s", homedir, dir);
 		Com_Printf("using %s for writing\n", gdir);
-		FS_CreatePath(gdir);
+		FS_CreatePath(va("%s/", gdir));
 
 		Q_strncpyz(fs_gamedir, gdir, MAX_QPATH);
-		fs_gamedir[sizeof(fs_gamedir) - 1] = 0;
 
 		FS_AddGameDirectory(gdir);
 	}
-#endif
 }
 
 

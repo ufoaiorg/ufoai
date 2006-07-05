@@ -904,6 +904,7 @@ void Sys_SendKeyEvents(void);
 void Sys_Error(char *error, ...);
 void Sys_Quit(void);
 char *Sys_GetClipboardData(void);
+char *Sys_GetHomeDirectory(void);
 
 /*
 ==============================================================
