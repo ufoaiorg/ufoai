@@ -446,8 +446,6 @@ Cvars are restricted from having the same names as commands to keep this
 interface from being ambiguous.
 */
 
-extern cvar_t *cvar_vars;
-
 cvar_t *Cvar_Get(char *var_name, char *value, int flags);
 
 /* creates the variable if it doesn't exist, or returns the existing one */

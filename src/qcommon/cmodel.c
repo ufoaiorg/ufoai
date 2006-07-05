@@ -2384,7 +2384,7 @@ void Grid_MoveMark(struct routing_s *map, int x, int y, int z, int dv, int h, in
 	if (dy < 0 && !(map->route[z][y][x] & 0x80))
 		return;
 	if (dv > 3 && !((map->route[z][y + dy][x] & (dx > 0 ? 0x10 : 0x20)) && (map->route[z][y][x + dx] & (dy > 0 ? 0x40 : 0x80))
-					&& !Grid_CheckForbidden(map, x, y + dy, z) && !Grid_CheckForbidden(map, x + dx, y, z)))
+	  && !Grid_CheckForbidden(map, x, y + dy, z) && !Grid_CheckForbidden(map, x + dx, y, z)))
 		return;
 
 	/* height checks */
