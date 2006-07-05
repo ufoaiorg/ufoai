@@ -39,6 +39,8 @@ cvar_t *cl_testentities;
 cvar_t *cl_testlights;
 cvar_t *cl_testblend;
 
+cvar_t *cl_drawgrid;
+
 cvar_t *cl_stats;
 
 
@@ -649,6 +651,19 @@ void CL_CalcRefdef(void)
 	cl.refdef.areabits = 0;
 }
 
+/**
+ * @brief Function to draw the grid and the forbidden places
+ *
+ * TODO: Implement and extend this function
+ */
+static void CL_DrawGrid(void)
+{
+	int i;
+
+	Com_DPrintf("CL_DrawGrid: %i\n", fb_length);
+	for (i=0; i<fb_length; i++) {
+	}
+}
 
 /*
 ==================
@@ -658,8 +673,6 @@ V_RenderView
 */
 void V_RenderView(float stereo_separation)
 {
-/*	extern int entitycmpfnc( const entity_t *, const entity_t * ); */
-
 	if (cls.state != ca_active && cls.state != ca_sequence)
 		return;
 
@@ -732,7 +745,8 @@ void V_RenderView(float stereo_separation)
 		Com_Printf("ent:%i  lt:%i  part:%i\n", r_numentities, r_numdlights, r_numparticles);
 	if (log_stats->value && (log_stats_file != 0))
 		fprintf(log_stats_file, "%i,%i,%i,", r_numentities, r_numdlights, r_numparticles);
-
+	if (cl_drawgrid->value)
+		CL_DrawGrid();
 
 	SCR_AddDirtyPoint(scr_vrect.x, scr_vrect.y);
 	SCR_AddDirtyPoint(scr_vrect.x + scr_vrect.width - 1, scr_vrect.y + scr_vrect.height - 1);
@@ -783,6 +797,8 @@ void V_Init(void)
 	cl_testparticles = Cvar_Get("cl_testparticles", "0", 0);
 	cl_testentities = Cvar_Get("cl_testentities", "0", 0);
 	cl_testlights = Cvar_Get("cl_testlights", "0", 0);
+
+	cl_drawgrid = Cvar_Get("drawgrid", "0", 0);
 
 	cl_stats = Cvar_Get("cl_stats", "0", 0);
 }

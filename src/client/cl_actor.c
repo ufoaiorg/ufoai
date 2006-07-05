@@ -722,7 +722,6 @@ void CL_BuildForbiddenList(void)
 		Com_Error(ERR_DROP, "CL_BuildForbiddenList: list too long");
 }
 
-
 /**
  * @brief Checks that an action is valid.
  *

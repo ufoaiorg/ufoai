@@ -332,14 +332,7 @@ void CL_CleanTempInventory(void)
 	if (!baseCurrent)
 		return;
 
-	/* FIXME: Check this */
-#if 0
 	Com_DestroyInventory(&baseCurrent->equipment);
-#else
-	for (k = 0; k < csi.numIDs; k++)
-		if (csi.ids[k].temp)
-			Com_EmptyContainer(&baseCurrent->equipment, k);
-#endif
 	for (i = 0; i < MAX_WHOLETEAM; i++)
 		for (k = 0; k < csi.numIDs; k++)
 			if (k == csi.idEquip)
@@ -351,6 +344,9 @@ void CL_CleanTempInventory(void)
 
 /**
   * @brief
+  *
+  * This function is called everytime the equipment screen for the team pops up
+  * TODO: Make this faster
   */
 static void CL_GenerateEquipmentCmd(void)
 {
@@ -382,7 +378,11 @@ static void CL_GenerateEquipmentCmd(void)
 		}
 
 	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
+#if 0
 		Sys_Error("numOnTeam[%i]: %i, p: %i\n",baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p);
+#else
+		baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] = p;
+#endif
 
 	for (; p < MAX_ACTIVETEAM; p++) {
 		Cvar_ForceSet(va("mn_name%i", p), "");
@@ -541,7 +541,11 @@ void CL_UpdateHireVar(void)
 		}
 
 	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
+#if 0
 		Sys_Error("numOnTeam[%i]: %i, p: %i\n",baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p);
+#else
+		baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] = p;
+#endif
 }
 
 /**
