@@ -964,13 +964,17 @@ void G_BuildForbiddenList(int team)
 		vis_mask = 0xFFFFFFFF;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && (ent->visflags & vis_mask))
-			fb_list[fb_length++] = ent->pos;
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && (ent->visflags & vis_mask)) {
+			/* TODO: Implement fieldSize */
+			switch(ent->fieldSize) {
+			default:
+				fb_list[fb_length++] = ent->pos;
+			}
+		}
 
 	if (fb_length > MAX_FB_LIST)
 		gi.error("G_BuildForbiddenList: list too long\n");
 }
-
 
 /*
 =================
