@@ -2010,7 +2010,6 @@ static void CL_GameCommentsCmd(void)
 	char comment[MAX_VAR];
 	FILE *f;
 	int i;
-	int first_char;
 
 	if (Cmd_Argc() == 2) {
 		/* checks whether we plan to save without a running game */
@@ -2028,18 +2027,12 @@ static void CL_GameCommentsCmd(void)
 			continue;
 		}
 
-		/* check if it's versioned */
-		first_char = fgetc(f);
-		if (first_char == 0) {
-			/* skip the version number */
-			fread(comment, sizeof(int), 1, f);
-			/* read the comment */
-			fread(comment, 1, MAX_VAR, f);
-		} else {
-			/* not versioned - first_char is the first character of the comment */
-			comment[0] = first_char;
-			fread(comment + 1, 1, MAX_VAR - 1, f);
-		}
+		/* skip the version number */
+		fread(comment, sizeof(int), 1, f);
+		/* skip the globalData_t size */
+		fread(comment, sizeof(int), 1, f);
+		/* read the comment */
+		fread(comment, 1, MAX_VAR, f);
 		Cvar_Set(va("mn_slot%i", i), comment);
 		fclose(f);
 	}
