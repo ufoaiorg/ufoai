@@ -22,7 +22,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -35,9 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_KEY_H
 #define CLIENT_KEY_H
 
-/* */
 /* these are the key numbers that should be passed to KeyEvent */
-/* */
 
 /* normal keys should be passed as lowercased ascii */
 
@@ -159,10 +157,6 @@ typedef enum {
 
 #define		MAXCMDLINE	256
 
-extern char *keybindings[256];
-extern int key_repeats[256];
-
-extern int anykeydown;
 extern int msg_mode;
 extern char msg_buffer[MAXCMDLINE];
 extern int msg_bufferlen;

@@ -127,7 +127,7 @@ char *Cvar_CompleteVariable(char *partial)
 
 	/* check for exact match */
 	for (cvar = cvar_vars; cvar; cvar = cvar->next)
-		if (!Q_strncmp(partial, cvar->name, len))
+		if (!Q_strncmp(partial, cvar->name, sizeof(cvar->name)))
 			return cvar->name;
 
 	/* check for partial matches */

@@ -780,7 +780,7 @@ char *Cmd_CompleteCommand(char *partial)
 
 	/* check for exact match in commands */
 	for (cmd = cmd_functions; cmd; cmd = cmd->next)
-		if (!Q_strncmp(partial, cmd->name, len))
+		if (!Q_strncmp(partial, cmd->name, sizeof(cmd->name)))
 			return cmd->name;
 
 	/* and then aliases */
