@@ -1,3 +1,8 @@
+/**
+ * @file qcommon.h
+ * @brief definitions common between client and server, but not game lib
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,8 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-
-/* qcommon.h -- definitions common between client and server, but not game.dll */
 
 #ifndef QCOMMON_DEFINED
 #define QCOMMON_DEFINED
@@ -41,11 +44,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifdef _WIN32
 
-#ifdef NDEBUG
-#define BUILDSTRING "Win32 RELEASE"
-#else							/* NDEBUG */
+#ifdef DEBUG
 #define BUILDSTRING "Win32 DEBUG"
-#endif							/* NDEBUG */
+#else							/* DEBUG */
+#define BUILDSTRING "Win32 RELEASE"
+#endif							/* DEBUG */
 
 #ifdef _M_IX86
 #define	CPUSTRING	"x86"
@@ -234,15 +237,11 @@ PROTOCOL
 							/* must be power of two */
 #define	UPDATE_MASK		(UPDATE_BACKUP-1)
 
-
-
-/*================== */
-/* the svc_strings[] array in cl_parse.c should mirror this */
-/*================== */
-
-/* */
-/* server to client */
-/* */
+/**
+  * @brief server to client
+  *
+  * the svc_strings[] array in cl_parse.c should mirror this
+  */
 enum svc_ops_e {
 	svc_bad,
 
@@ -267,9 +266,9 @@ enum svc_ops_e {
 
 /*============================================== */
 
-/* */
-/* client to server */
-/* */
+/**
+  * @brief client to server
+  */
 enum clc_ops_e {
 	clc_bad,
 	clc_nop,
