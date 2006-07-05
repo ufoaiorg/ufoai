@@ -2040,7 +2040,9 @@ static void CL_GameCommentsCmd(void)
 
 
 /**
-  * @brief
+  * @brief Loads the last saved game
+  *
+  * At saving the archive cvar mn_lastsave was set to the latest savegame
   */
 static void CL_GameContinue(void)
 {
@@ -2061,7 +2063,9 @@ static void CL_GameContinue(void)
 
 
 /**
-  * @brief
+  * @brief Starts a selected mission
+  *
+  * Checks whether a dropship is near the landing zone and whether it has a team on board
   */
 static void CL_GameGo(void)
 {

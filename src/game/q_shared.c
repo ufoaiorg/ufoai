@@ -986,13 +986,18 @@ int Q_log2(int val)
 	return answer;
 }
 
-
+/**
+  * @brief Return random values between 0 and 1
+  */
 float frand(void)
 {
 	return (rand() & 32767) * (1.0 / 32767);
 }
 
 
+/**
+  * @brief Return random values between -1 and 1
+  */
 float crand(void)
 {
 	return (rand() & 32767) * (2.0 / 32767) - 1;
