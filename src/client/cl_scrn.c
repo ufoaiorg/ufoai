@@ -28,7 +28,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -181,11 +181,11 @@ CENTER PRINTING
 ===============================================================================
 */
 
-char scr_centerstring[1024];
-float scr_centertime_start;		/* for slow victory printing */
-float scr_centertime_off;
-int scr_center_lines;
-int scr_erase_center;
+static char scr_centerstring[1024];
+static float scr_centertime_start;		/* for slow victory printing */
+static float scr_centertime_off;
+static int scr_center_lines;
+static int scr_erase_center;
 
 /*
 ==============
@@ -255,7 +255,7 @@ void SCR_DrawCenterString(void)
 	int x, y;
 	int remaining;
 
-/* the finale prints the characters one at a time */
+	/* the finale prints the characters one at a time */
 	remaining = 9999;
 
 	scr_erase_center = 0;
@@ -352,9 +352,7 @@ void SCR_Init(void)
 	scr_graphshift = Cvar_Get("graphshift", "0", 0);
 	scr_drawall = Cvar_Get("scr_drawall", "0", 0);
 
-	/* */
 	/* register our commands */
-	/* */
 	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f);
 	Cmd_AddCommand("loading", SCR_Loading_f);
 	Cmd_AddCommand("sizeup", SCR_SizeUp_f);
@@ -656,7 +654,6 @@ void SCR_TouchPics(void)
 	}
 }
 
-
 /*
 ================
 SCR_DrawString
@@ -664,11 +661,15 @@ SCR_DrawString
 */
 void SCR_DrawString(int x, int y, char *string)
 {
+#if 1
 	while (*string) {
 		re.DrawChar(x, y, *string);
 		x += 8;
 		string++;
 	}
+#else
+	re.FontDrawString("f_small", 0, x, y, 0, string);
+#endif
 }
 
 /*======================================================= */
