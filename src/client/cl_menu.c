@@ -3149,7 +3149,7 @@ qboolean MN_ParseMenuBody(menu_t * menu, char **text)
 			return qtrue;
 		} else {
 			/* unknown token, print message and continue */
-			Com_Printf("MN_ParseMenuBody: unknown token \"%s\" ignored (menu \"%s\")\n", *token, menu->name);
+			Com_Printf("MN_ParseMenuBody: unknown token \"%s\" ignored (menu \"%s\")\n", token, menu->name);
 		}
 
 	} while (*text);
