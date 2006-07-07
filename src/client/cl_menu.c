@@ -257,12 +257,25 @@ ACTION EXECUTION
 ==============================================================
 */
 
-/*
-=================
-MN_GetNode
-=================
-*/
-static menuNode_t *MN_GetNode(menu_t * menu, char *name)
+/**
+  * @brief Searches all menus for the specified one
+  */
+menu_t *MN_GetMenu(char *name)
+{
+	int i;
+
+	for (i = 0; i < numMenus; i++)
+		if (!Q_strncmp(menus[i].name, name, MAX_VAR))
+			return &menus[i];
+
+	Sys_Error("Could not find menu '%s'\n", name);
+	return NULL;
+}
+
+/**
+  * @brief Searches all nodes in the given menu for a given nodename
+  */
+menuNode_t *MN_GetNode(menu_t * menu, char *name)
 {
 	menuNode_t *node;
 
@@ -273,7 +286,24 @@ static menuNode_t *MN_GetNode(menu_t * menu, char *name)
 	return node;
 }
 
+/**
+  * @brief Searches a given node in the current menu
+  */
+menuNode_t* MN_GetNodeFromCurrentMenu(char*name)
+{
+	return MN_GetNode(menuStack[menuStackPos-1], name);
+}
 
+/**
+  * @brief Sets new x and y coordinates for a given node
+  */
+void MN_SetNewNodePos (menuNode_t* node, int x, int y)
+{
+	if (node) {
+		node->pos[0] = x;
+		node->pos[1] = y;
+	}
+}
 /*
 =================
 MN_GetReferenceString
@@ -1208,6 +1238,7 @@ static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 				if (baseCurrent->map[row][col] == -1 && x >= baseCurrent->posX[row][col]
 					&& x < baseCurrent->posX[row][col] + node->size[0] / BASE_SIZE && y >= baseCurrent->posY[row][col]
 					&& y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE) {
+					/* Set position for a new building */
 					B_SetBuildingByClick(row, col);
 					return;
 				}
@@ -1224,9 +1255,17 @@ static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 
 				if (*entry->onClick)
 					Cbuf_ExecuteText(EXEC_NOW, entry->onClick);
+#if 0
+				else {
+					/* Click on building : display its properties in the building menu */
+					MN_PushMenu("buildings");
+					baseCurrent->buildingCurrent = entry;
+					B_BuildingStatus();
+				}
+#else
 				else
 					UP_OpenWith(entry->pedia);
-
+#endif
 				return;
 			}
 }
@@ -3019,6 +3058,27 @@ qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 	return qfalse;
 }
 
+/**
+  * @brief Hides a given menu node
+  *
+  * Sanity check whether node is null included
+  */
+void MN_HideNode ( menuNode_t* node )
+{
+	if ( node && node->invis == qtrue )
+		node->invis = qfalse;
+}
+
+/**
+  * @brief Unhides a given menu node
+  *
+  * Sanity check whether node is null included
+  */
+void MN_UnHideNode ( menuNode_t* node )
+{
+	if ( node && node->invis == qfalse )
+		node->invis = qtrue;
+}
 
 /*
 =================

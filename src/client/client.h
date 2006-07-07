@@ -895,6 +895,12 @@ void MN_SetViewRect(void);
 void MN_DrawMenus(void);
 void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color);
 void MN_ShutdownMessageSystem(void);
+void MN_UnHideNode ( menuNode_t* node );
+void MN_HideNode ( menuNode_t* node );
+menuNode_t* MN_GetNodeFromCurrentMenu(char*name);
+void MN_SetNewNodePos (menuNode_t* node, int x, int y);
+menuNode_t *MN_GetNode(menu_t * menu, char *name);
+menu_t *MN_GetMenu(char *name);
 
 void MN_ResetMenus(void);
 void MN_Shutdown(void);
