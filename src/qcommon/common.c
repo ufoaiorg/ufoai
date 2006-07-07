@@ -344,7 +344,7 @@ void MSG_WriteByte(sizebuf_t * sb, int c)
 #endif
 
 	buf = SZ_GetSpace(sb, 1);
-	buf[0] = c;
+	buf[0] = c & 0xFF;
 }
 
 /**

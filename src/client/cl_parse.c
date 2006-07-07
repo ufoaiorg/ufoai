@@ -70,6 +70,7 @@ char *svc_strings[256] =
 /* !	| do not read	| 1 */
 /* *	| read from va	| */
 /* &	| read bytes 	| 1 */
+/* n	| pascal string type - SIZE+DATA | 2 + sizeof(DATA) */
 /*	| until NONE	| */
 char *ev_format[] =
 {
@@ -77,6 +78,8 @@ char *ev_format[] =
 	"bb",				/* EV_RESET */
 	"",					/* EV_START */
 	"b",				/* EV_ENDROUND */
+
+	/* TODO: data for '&' MUST NOT have values == NONE (0xFF). */
 	"bb&",				/* EV_RESULTS */
 	"g",				/* EV_CENTERVIEW */
 
@@ -95,7 +98,7 @@ char *ev_format[] =
 	"!sbbbb",			/* EV_ACTOR_STATS */
 	"!ss",				/* EV_ACTOR_STATECHANGE */
 
-	"!s&",				/* EV_INV_ADD */
+	"n",				/* EV_INV_ADD */
 	"sbbb",				/* EV_INV_DEL */
 	"sbbbb",			/* EV_INV_AMMO */
 
@@ -801,16 +804,20 @@ void CL_InvAdd( sizebuf_t *sb )
 	item_t	item;
 	le_t	*le;
 	int		number;
+	int		size;
 	byte	container, x, y;
 
+	size = MSG_ReadShort( sb );
 	number = MSG_ReadShort( sb );
+
 	le = LE_Get( number );
 	if ( !le ) {
 		Com_Printf( "InvAdd message ignored... LE not found\n" );
 		return;
 	}
 
-	for ( item.t = MSG_ReadByte( sb ); item.t != NONE; item.t = MSG_ReadByte( sb ) ) {
+	for ( size -= 2; size > 0; size -= 6 ) {
+		item.t = MSG_ReadByte( sb );
 		item.a = MSG_ReadByte( sb );
 		item.m = MSG_ReadByte( sb );
 		container = MSG_ReadByte( sb );
@@ -946,11 +953,12 @@ CL_ParseEvent
 */
 void CL_ParseEvent( void )
 {
-	evTimes_t	*et, *last, *cur;
-	int			oldCount, eType;
-	int			time;
-	int			next;
-	qboolean	now;
+	evTimes_t *et, *last, *cur;
+	qboolean now;
+	int oldCount;
+	int length;
+	int eType;
+	int time;
 
 	while ( ( eType = MSG_ReadByte( &net_message ) ) != 0 ) {
 		if (net_message.readcount > net_message.cursize) {
@@ -973,22 +981,15 @@ void CL_ParseEvent( void )
 		if ( !ev_func[eType] )
 			Com_Error( ERR_DROP, "CL_ParseEvent: no handling function for event %i\n", eType );
 
-		if ( now ) {
-			/* check if eType is valid */
-			if ( eType < 0 || eType >= EV_NUM_EVENTS )
-				Com_Error( ERR_DROP, "CL_Events: invalid event %i\n", eType );
+		oldCount = net_message.readcount;
+		length = (ev_format[eType][0] == 'n') ? MSG_ReadShort( &net_message ) + 2 :
+												MSG_LengthFormat( &net_message, ev_format[eType] );
 
+		if ( now ) {
 			/* log and call function */
 			CL_LogEvent( eType );
-			next = net_message.readcount + MSG_LengthFormat( &net_message, ev_format[eType] );
 			ev_func[eType]( &net_message );
-			net_message.readcount = next;
 		} else {
-			int length;
-
-			/* store data */
-			length = MSG_LengthFormat( &net_message, ev_format[eType] );
-
 			if ( evWp-evBuf + length+2 >= EV_STORAGE_SIZE )
 				evWp = evBuf;
 
@@ -1001,9 +1002,6 @@ void CL_ParseEvent( void )
 				time = shootTime;
 			else
 				time = nextTime;
-
-			/* store old readcount */
-			oldCount = net_message.readcount;
 
 			/* calculate next and shoot time */
 			switch ( eType ) {
@@ -1092,8 +1090,9 @@ void CL_ParseEvent( void )
 			*evWp++ = eType;
 			memcpy( evWp, net_message.data + oldCount, length );
 			evWp += length;
-			net_message.readcount = oldCount + length;
 		}
+
+		net_message.readcount = oldCount + length;
 	}
 }
 
@@ -1194,10 +1193,6 @@ void CL_ParseServerMessage (void)
 
 		/* other commands */
 		switch (cmd) {
-		default:
-			Com_Error (ERR_DROP,"CL_ParseServerMessage: Illegible server message %d\n", cmd);
-			break;
-
 		case svc_nop:
 /*			Com_Printf ("svc_nop\n"); */
 			break;
@@ -1253,6 +1248,10 @@ void CL_ParseServerMessage (void)
 
 		case svc_event:
 			CL_ParseEvent ();
+			break;
+
+		default:
+			Com_Error (ERR_DROP,"CL_ParseServerMessage: Illegible server message %d\n", cmd);
 			break;
 		}
 	}

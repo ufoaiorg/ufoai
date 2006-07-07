@@ -192,6 +192,7 @@ G_SendInventory
 void G_SendInventory(int player_mask, edict_t * ent)
 {
 	invList_t *ic;
+	unsigned short nr = 0;
 	int k;
 
 	/* test for pointless player mask */
@@ -199,8 +200,15 @@ void G_SendInventory(int player_mask, edict_t * ent)
 		return;
 
 	gi.AddEvent(player_mask, EV_INV_ADD);
-	gi.WriteShort(ent->number);
 
+	for (k = 0; k < gi.csi->numIDs; k++)
+		for (ic = ent->i.c[k]; ic; ic = ic->next)
+			nr++;
+
+	/* size of inventory */
+	gi.WriteShort(2+nr*6);
+
+	gi.WriteShort(ent->number);
 	for (k = 0; k < gi.csi->numIDs; k++)
 		for (ic = ent->i.c[k]; ic; ic = ic->next) {
 			/* send a single item */
@@ -209,9 +217,6 @@ void G_SendInventory(int player_mask, edict_t * ent)
 			gi.WriteByte(ic->x);
 			gi.WriteByte(ic->y);
 		}
-
-	/* terminate list */
-	gi.WriteByte(NONE);
 }
 
 
@@ -833,21 +838,21 @@ void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int t
 			} else {
 				/* add the item */
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
+				gi.WriteShort(2+6);
 				gi.WriteShort(floor->number);
 				G_WriteItem(&ic->item);
 				gi.WriteByte(to);
 				gi.WriteByte(tx);
 				gi.WriteByte(ty);
-				gi.WriteByte(NONE);
 			}
 		} else {
 			gi.AddEvent(G_TeamToPM(ent->team), EV_INV_ADD);
+			gi.WriteShort(2+6);
 			gi.WriteShort(num);
 			G_WriteItem(&ic->item);
 			gi.WriteByte(to);
 			gi.WriteByte(tx);
 			gi.WriteByte(ty);
-			gi.WriteByte(NONE);
 		}
 
 		/* other players receive weapon info only */
@@ -862,12 +867,12 @@ void G_InventoryMove(player_t * player, int num, int from, int fx, int fy, int t
 			}
 			if (to == gi.csi->idRight || to == gi.csi->idLeft) {
 				gi.AddEvent(mask, EV_INV_ADD);
+				gi.WriteShort(2+6);
 				gi.WriteShort(num);
 				G_WriteItem(&ic->item);
 				gi.WriteByte(to);
 				gi.WriteByte(tx);
 				gi.WriteByte(ty);
-				gi.WriteByte(NONE);
 			}
 		}
 		gi.EndEvents();
