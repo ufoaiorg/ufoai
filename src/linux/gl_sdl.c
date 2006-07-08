@@ -23,22 +23,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include <unistd.h>
+#include "../ref_gl/gl_local.h"
+
 #include <signal.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 #include <sys/mman.h>
 
 #include <SDL.h>
-
-#include <SDL_opengl.h>
-
-#include "../ref_gl/gl_local.h"
-#include "glw_linux.h"
+/*#include <SDL_opengl.h>*/
 
 #include "../client/keys.h"
 #include "rw_linux.h"
+#include "glw_linux.h"
+
+glwstate_t glw_state;
 
 /*****************************************************************************/
 
@@ -75,7 +72,6 @@ int config_notify=0;
 int config_notify_width;
 int config_notify_height;
 
-glwstate_t glw_state;
 extern cvar_t *use_stencil;
 
 /* Console variables that we need to access from this module */

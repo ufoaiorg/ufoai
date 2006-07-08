@@ -23,18 +23,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../ref_gl/gl_local.h"
+
 #include <termios.h>
 #include <sys/ioctl.h>
 #include <sys/stat.h>
 #include <sys/vt.h>
-#include <stdarg.h>
-#include <stdio.h>
 #include <signal.h>
-#include <unistd.h>
 #include <dlfcn.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/keysym.h>
+#include <GL/glx.h>
 
 #ifdef HAVE_DGA /* makefile */
 #include <X11/extensions/xf86dga.h>
@@ -50,14 +50,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 #endif /* HAVE_VIDMODE */
 
-#include "../ref_gl/gl_local.h"
-
 #include "../client/keys.h"
 
-#include "../linux/rw_linux.h"
-#include "../linux/glw_linux.h"
-
-#include <GL/glx.h>
+#include "rw_linux.h"
+#include "glw_linux.h"
 
 glwstate_t glw_state;
 
