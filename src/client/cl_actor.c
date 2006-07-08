@@ -209,6 +209,9 @@ void CL_ActorGlobalCVars(void)
 
 /**
  * @brief Refreshes the buttons on the UI?
+ *
+ * @warning selActor may not be null in most cases
+ * @sa CL_ActorUpdateCVars
  */
 static void CL_RefreshWeaponButtons(int time)
 {
@@ -276,15 +279,18 @@ static void CL_RefreshWeaponButtons(int time)
 }
 
 /**
- * @brief Used in CL_ActorUpdateCVars.
- */
-static char infoText[MAX_MENUTEXTLEN];
-
-/**
  * @brief Updates console vars for an actor.
+ *
+ * This function updates the cvars for the hud (battlefield)
+ * unlike CL_CharacterCvars and CL_UGVCvars which updates them for
+ * diplaying the data in the menu system
+ *
+ * @sa CL_CharacterCvars
+ * @sa CL_UGVCvars
  */
 void CL_ActorUpdateCVars(void)
 {
+	static char infoText[MAX_MENUTEXTLEN];
 	qboolean refresh;
 	char *name;
 	int time;
@@ -516,6 +522,9 @@ ACTOR SELECTION AND TEAM LIST
 
 /**
  * @brief Adds the actor the the team list.
+ *
+ * @sa CL_RemoveActorFromTeamList
+ * @param le Pointer to local entity struct
  */
 void CL_AddActorToTeamList(le_t * le)
 {
@@ -549,7 +558,10 @@ void CL_AddActorToTeamList(le_t * le)
 
 /**
  * @brief Removes an actor from the team list.
-*/
+ *
+ * @sa CL_AddActorToTeamList
+ * @param le Pointer to local entity struct
+ */
 void CL_RemoveActorFromTeamList(le_t * le)
 {
 	int i, j;
@@ -601,6 +613,11 @@ void CL_RemoveActorFromTeamList(le_t * le)
 
 /**
  * @brief Selects an actor.
+ *
+ * @param le Pointer to local entity struct
+ *
+ * @sa CL_UGVCvars
+ * @sa CL_CharacterCvars
  */
 qboolean CL_ActorSelect(le_t * le)
 {
@@ -648,11 +665,17 @@ qboolean CL_ActorSelect(le_t * le)
 }
 
 
-/*
-=================
-CL_ActorSelectList
-=================
-*/
+/**
+ * @brief Selects an actor from a list.
+ *
+ * This function is used to select an actor from the lists that are
+ * used in equipment and team assemble screens
+ *
+ * @param num The index value from the list of actors
+ *
+ * @sa CL_ActorSelect
+ * @return qtrue if selection was possible otherwise qfalse
+ */
 qboolean CL_ActorSelectList(int num)
 {
 	le_t *le;
@@ -739,6 +762,8 @@ void CL_BuildForbiddenList(void)
  */
 int CL_CheckAction(void)
 {
+	static char infoText[MAX_MENUTEXTLEN];
+
 	if (!selActor) {
 		Com_Printf("Nobody selected.\n");
 		Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Nobody selected\n"));
