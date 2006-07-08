@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "cl_ufopedia.h"
+#include "client.h"
 #include "cl_global.h"
 
 static pediaChapter_t	*upChapters_displaylist[MAX_PEDIACHAPTERS];
@@ -41,6 +41,7 @@ static char	upBuffer[MAX_UPTEXT];
   * @brief Translate a weaponSkill int to a translated string
   *
   * The weaponSkills were defined in q_shared.h at abilityskills_t
+  * @sa abilityskills_t
   */
 char* CL_WeaponSkillToName(int weaponSkill)
 {
@@ -67,15 +68,20 @@ char* CL_WeaponSkillToName(int weaponSkill)
 }
 
 /**
-  * @brief Display information for items like weapons and ammo
-  *
+  * @brief Prints the (ufopedia and other) description for items (weapons, armor, ...)
+  * @param item Index in object definition array ods for the item
+  * @sa UP_DrawEntry
+  * @sa CL_BuySelectCmd
+  * @sa CL_BuyType
+  * @sa CL_BuyItem
+  * @sa CL_SellItem
+  * @sa MN_Drag
   * Not only called from Ufopedia but also from other places to display
   * weapon and ammo stats
   */
-static char itemText[MAX_MENUTEXTLEN];
-
 void CL_ItemDescription(int item)
 {
+	static char itemText[MAX_MENUTEXTLEN];
 	objDef_t *od;
 
 	/* select item */
@@ -122,12 +128,10 @@ void CL_ItemDescription(int item)
 }
 
 
-/*=================
-UP_ArmorDescription
-
-prints the ufopedia description for armors
-called from MN_UpDrawEntry when type of technology_t is RS_ARMOR
-=================*/
+/**
+  * @brief Prints the ufopedia description for armors
+  * @sa UP_DrawEntry
+  */
 void UP_ArmorDescription ( technology_t* t )
 {
 	objDef_t	*od = NULL;
@@ -160,23 +164,19 @@ void UP_ArmorDescription ( technology_t* t )
 	menuText[TEXT_STANDARD] = upBuffer;
 }
 
-/*=================
-UP_TechDescription
-
-prints the ufopedia description for technologies
-called from MN_UpDrawEntry when type of technology_t is RS_TECH
-=================*/
+/**
+  * @brief Prints the ufopedia description for technologies
+  * @sa UP_DrawEntry
+  */
 void UP_TechDescription ( technology_t* t )
 {
 
 }
 
-/*=================
-UP_BuildingDescription
-
-prints the ufopedia description for buildings
-called from MN_UpDrawEntry when type of technology_t is RS_BUILDING
-=================*/
+/**
+  * @brief Prints the ufopedia description for buildings
+  * @sa UP_DrawEntry
+  */
 void UP_BuildingDescription ( technology_t* t )
 {
 	building_t* b = B_GetBuildingType ( t->provides );
@@ -192,12 +192,10 @@ void UP_BuildingDescription ( technology_t* t )
 	menuText[TEXT_STANDARD] = upBuffer;
 }
 
-/*=================
-UP_AircraftDescription
-
-prints the ufopedia description for aircraft
-called from MN_UpDrawEntry when type of technology_t is RS_CRAFT
-=================*/
+/**
+  * @brief Prints the ufopedia description for aircraft
+  * @sa UP_DrawEntry
+  */
 void UP_AircraftDescription ( technology_t* t )
 {
 	aircraft_t* air = CL_GetAircraft ( t->provides );
@@ -212,10 +210,16 @@ void UP_AircraftDescription ( technology_t* t )
 	menuText[TEXT_STANDARD] = upBuffer;
 }
 
-/*=================
-MN_UpDrawEntry
-=================*/
-void MN_UpDrawEntry( technology_t* tech )
+/**
+ * @brief Displays the ufopedia information about a technology
+ * @param tech technology_t pointer for the tech to display the information about
+ * @sa UP_AircraftDescription
+ * @sa UP_BuildingDescription
+ * @sa UP_TechDescription
+ * @sa UP_ArmorDescription
+ * @sa CL_ItemDescription
+ */
+void UP_DrawEntry( technology_t* tech )
 {
 	int i;
 	if ( ! tech )
@@ -227,10 +231,14 @@ void MN_UpDrawEntry( technology_t* tech )
 	Cvar_Set( "mn_upmodel_bottom", "" );
 	Cvar_Set( "mn_upimage_top", "base/empty" );
 	Cvar_Set( "mn_upimage_bottom", "base/empty" );
-	if ( *tech->mdl_top ) Cvar_Set( "mn_upmodel_top", tech->mdl_top );
-	if ( *tech->mdl_bottom ) Cvar_Set( "mn_upmodel_bottom", tech->mdl_bottom );
-	if ( !*tech->mdl_top && *tech->image_top ) Cvar_Set( "mn_upimage_top", tech->image_top );
-	if ( !*tech->mdl_bottom && *tech->mdl_bottom ) Cvar_Set( "mn_upimage_bottom", tech->image_bottom );
+	if ( *tech->mdl_top )
+		Cvar_Set( "mn_upmodel_top", tech->mdl_top );
+	if ( *tech->mdl_bottom )
+		Cvar_Set( "mn_upmodel_bottom", tech->mdl_bottom );
+	if ( !*tech->mdl_top && *tech->image_top )
+		Cvar_Set( "mn_upimage_top", tech->image_top );
+	if ( !*tech->mdl_bottom && *tech->mdl_bottom )
+		Cvar_Set( "mn_upimage_bottom", tech->image_bottom );
 	Cbuf_AddText( "mn_upfsmall\n" );
 
 	if ( upCurrent) {
@@ -265,12 +273,11 @@ void MN_UpDrawEntry( technology_t* tech )
 	}
 }
 
-/*=================
-UP_OpenWith
-
-open the ufopedia from everywhere
-with the entry given through name
-=================*/
+/**
+  * @brief Opens the ufopedia from everywhere with the entry given through name
+  * @param name Ufopedia entry id
+  * @sa UP_FindEntry_f
+  */
 void UP_OpenWith ( char *name )
 {
 	Cbuf_AddText( "mn_push ufopedia\n" );
@@ -278,10 +285,13 @@ void UP_OpenWith ( char *name )
 	Cbuf_AddText( va( "ufopedia %s\n", name ) );
 }
 
-/*=================
-MN_FindEntry_f
-=================*/
-void MN_FindEntry_f ( void )
+/**
+ * @brief Search and open the ufopedia
+ *
+ * Usage: ufopedia <id>
+ * opens the ufopedia with entry id
+ */
+void UP_FindEntry_f ( void )
 {
 	char *id = NULL;
 	technology_t *tech = NULL;
@@ -297,28 +307,30 @@ void MN_FindEntry_f ( void )
 
 	/* maybe we get a call like ufopedia "" */
 	if ( !*id ) {
-		Com_Printf("MN_FindEntry_f: No PediaEntry given as parameter\n");
+		Com_Printf("UP_FindEntry_f: No PediaEntry given as parameter\n");
 		return;
 	}
 
-	Com_DPrintf("MN_FindEntry_f: id=\"%s\"\n", id); /*DEBUG */
+	Com_DPrintf("UP_FindEntry_f: id=\"%s\"\n", id); /*DEBUG */
 
 	tech = RS_GetTechByID( id );
 
 	if (tech) {
 		upCurrent = tech;
-		MN_UpDrawEntry( upCurrent );
+		UP_DrawEntry( upCurrent );
 		return;
 	}
 
 	/*if we can not find it */
-	Com_DPrintf("MN_FindEntry_f: No PediaEntry found for %s\n", id );
+	Com_DPrintf("UP_FindEntry_f: No PediaEntry found for %s\n", id );
 }
 
-/*=================
-MN_UpContent_f
-=================*/
-void MN_UpContent_f( void )
+/**
+ * @brief Displays the chapters in the ufopedia
+ * @sa UP_Next_f
+ * @sa UP_Prev_f
+ */
+void UP_Content_f( void )
 {
 	char *cp = NULL;
 	int i;
@@ -365,14 +377,16 @@ void MN_UpContent_f( void )
 }
 
 
-/*=================
-MN_UpPrev_f
-=================*/
-void MN_UpPrev_f( void )
+/**
+ * @brief Displays the previous entry in the ufopedia
+ * @sa UP_Next_f
+ */
+void UP_Prev_f( void )
 {
 	int upc = 0;
 
-	if ( !upCurrent ) return;
+	if ( !upCurrent )
+		return;
 
 	upc = upCurrent->up_chapter;
 
@@ -387,12 +401,12 @@ void MN_UpPrev_f( void )
 			if ( upCurrent->idx != upCurrent->prev && upCurrent->prev >= 0 ) {
 				upCurrent = &gd.technologies[upCurrent->prev];
 			} else {
-				Com_DPrintf("MN_UpPrev_f: There was a 'prev' entry for '%s' where there should not be one.\n",upCurrent->id);
+				Com_DPrintf("UP_Prev_f: There was a 'prev' entry for '%s' where there should not be one.\n",upCurrent->id);
 				upCurrent = NULL;
 			}
 		} while ( upCurrent && !RS_IsResearched_ptr(upCurrent) );
 		if ( upCurrent ) {
-			MN_UpDrawEntry( upCurrent );
+			UP_DrawEntry( upCurrent );
 			return;
 		}
 	}
@@ -402,26 +416,29 @@ void MN_UpPrev_f( void )
 		if ( gd.upChapters[upc].last >= 0 ) {
 			upCurrent = &gd.technologies[gd.upChapters[upc].last];
 			if ( RS_IsResearched_ptr(upCurrent) )
-				MN_UpDrawEntry( upCurrent );
+				UP_DrawEntry( upCurrent );
 			else
-				MN_UpPrev_f();
+				UP_Prev_f();
 			return;
 		}
 
 	/* Go to pedia-index if no more previous entries available. */
-	MN_UpContent_f();
+	UP_Content_f();
 }
 
-/*=================
-MN_UpNext_f
-=================*/
-void MN_UpNext_f( void )
+/**
+ * @brief Displays the next entry in the ufopedia
+ * @sa UP_Prev_f
+ */
+void UP_Next_f( void )
 {
 	int upc;
 
 	/* change chapter */
-	if ( !upCurrent ) upc = 0;
-	else upc = upCurrent->up_chapter + 1;
+	if ( !upCurrent )
+		upc = 0;
+	else
+		upc = upCurrent->up_chapter + 1;
 
 	/* get next entry */
 	if ( upCurrent && ( upCurrent->next >= 0) ) {
@@ -430,13 +447,13 @@ void MN_UpNext_f( void )
 			if ( upCurrent->idx != upCurrent->next && upCurrent->next >= 0 ) {
 				upCurrent = &gd.technologies[upCurrent->next];
 			} else {
-				Com_DPrintf("MN_UpNext_f: There was a 'next' entry for '%s' where there should not be one.\n",upCurrent->id);
+				Com_DPrintf("UP_Next_f: There was a 'next' entry for '%s' where there should not be one.\n",upCurrent->id);
 				upCurrent = NULL;
 			}
 		} while ( upCurrent && !RS_IsResearched_ptr(upCurrent) );
 
 		if ( upCurrent ) {
-			MN_UpDrawEntry( upCurrent );
+			UP_DrawEntry( upCurrent );
 			return;
 		}
 	}
@@ -448,9 +465,9 @@ void MN_UpNext_f( void )
 		if ( gd.upChapters[upc].first >= 0 ) {
 			upCurrent = &gd.technologies[gd.upChapters[upc].first];
 			if ( RS_IsResearched_ptr(upCurrent) )
-				MN_UpDrawEntry( upCurrent );
+				UP_DrawEntry( upCurrent );
 			else
-				MN_UpNext_f();
+				UP_Next_f();
 			return;
 		}
 
@@ -458,10 +475,12 @@ void MN_UpNext_f( void )
 }
 
 
-/*=================
-MN_UpClick_f
-=================*/
-void MN_UpClick_f( void )
+/**
+ * @brief
+ * @param
+ * @sa
+ */
+void UP_Click_f( void )
 {
 	int num;
 
@@ -469,14 +488,11 @@ void MN_UpClick_f( void )
 		return;
 	num = atoi( Cmd_Argv( 1 ) );
 
-	if ( num < numChapters_displaylist && upChapters_displaylist[num]->first )
-	{
+	if ( num < numChapters_displaylist && upChapters_displaylist[num]->first ) {
 		upCurrent = &gd.technologies[upChapters_displaylist[num]->first];
-		do
-		{
-			if ( RS_IsResearched_ptr(upCurrent) )
-			{
-				MN_UpDrawEntry( upCurrent );
+		do {
+			if ( RS_IsResearched_ptr(upCurrent) ) {
+				UP_DrawEntry( upCurrent );
 				return;
 			}
 			upCurrent = &gd.technologies[upCurrent->next];
@@ -484,22 +500,18 @@ void MN_UpClick_f( void )
 	}
 }
 
-
-/* =========================================================== */
-
-/*=================
-UP_List_f
-
-shows available ufopedia entries
-TODO: Implement me
-=================*/
+/**
+ * @brief Shows available ufopedia entries
+ * TODO: Implement me
+ */
 void UP_List_f ( void )
 {
 }
 
-/*=================
-UP_ResetUfopedia
-=================*/
+/**
+ * @brief
+ * @sa CL_ResetMenus
+ */
 void UP_ResetUfopedia( void )
 {
 	/* reset menu structures */
@@ -508,19 +520,19 @@ void UP_ResetUfopedia( void )
 
 	/* add commands and cvars */
 	Cmd_AddCommand( "ufopedialist", UP_List_f );
-	Cmd_AddCommand( "mn_upcontent", MN_UpContent_f );
-	Cmd_AddCommand( "mn_upprev", MN_UpPrev_f );
-	Cmd_AddCommand( "mn_upnext", MN_UpNext_f );
-	Cmd_AddCommand( "ufopedia", MN_FindEntry_f );
-	Cmd_AddCommand( "ufopedia_click", MN_UpClick_f );
+	Cmd_AddCommand( "mn_upcontent", UP_Content_f );
+	Cmd_AddCommand( "mn_upprev", UP_Prev_f );
+	Cmd_AddCommand( "mn_upnext", UP_Next_f );
+	Cmd_AddCommand( "ufopedia", UP_FindEntry_f );
+	Cmd_AddCommand( "ufopedia_click", UP_Click_f );
 }
 
-
-/* =========================================================== */
-
-/*======================
-UP_ParseUpChapters
-======================*/
+/**
+ * @brief Parse the ufopedia chapters from UFO-scriptfiles
+ * @param id Chapter ID
+ * @param text Text for chapter ID
+ * @sa CL_ParseFirstScript
+ */
 void UP_ParseUpChapters( char *id, char **text )
 {
 	char	*errhead = "UP_ParseUpChapters: unexptected end of file (names ";
@@ -551,9 +563,12 @@ void UP_ParseUpChapters( char *id, char **text )
 
 		/* get the name */
 		token = COM_EParse( text, errhead, id );
-		if ( !*text ) break;
-		if ( *token == '}' ) break;
-		if ( *token == '_' ) token++;
+		if ( !*text )
+			break;
+		if ( *token == '}' )
+			break;
+		if ( *token == '_' )
+			token++;
 		if ( !*token )
 			continue;
 		Q_strncpyz( gd.upChapters[gd.numChapters].name, _(token), MAX_VAR );
