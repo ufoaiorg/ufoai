@@ -59,6 +59,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
+#include <stddef.h>
+#include <limits.h>
 
 /* filesystem stuff */
 #ifdef _WIN32
