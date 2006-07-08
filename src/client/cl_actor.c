@@ -69,7 +69,12 @@ static char *skill_strings[10] = {
 /**
  * @brief Updates the character cvars for the given character.
  *
+ * The models and stats that are displayed in the menu are stored in cvars.
+ * These cvars are updated here when you select another character.
  *
+ * @param chr Pointer to character_t (may not be null)
+ * @sa CL_UGVCvars
+ * @sa CL_ActorSelect
  */
 void CL_CharacterCvars(character_t *chr)
 {
@@ -119,7 +124,12 @@ void CL_CharacterCvars(character_t *chr)
 /**
  * @brief Updates the UGV cvars for the given "character".
  *
+ * The models and stats that are displayed in the menu are stored in cvars.
+ * These cvars are updated here when you select another character.
  *
+ * @param chr Pointer to character_t (may not be null)
+ * @sa CL_CharacterCvars
+ * @sa CL_ActorSelect
  */
 void CL_UGVCvars(character_t *chr)
 {
