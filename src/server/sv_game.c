@@ -341,7 +341,7 @@ void PF_EndEvents(void)
 	if (!pfe_pending)
 		return;
 
-	PF_WriteByte(EV_NULL);
+	MSG_WriteByte(&sv.multicast, EV_NULL);
 	SV_Multicast(pfe_mask);
 /*	SV_SendClientMessages(); */
 	pfe_pending = qfalse;
@@ -358,11 +358,11 @@ void PF_AddEvent(int mask, int eType)
 		/* start the new event */
 		pfe_pending = qtrue;
 		pfe_mask = mask;
-		PF_WriteByte(svc_event);
+		MSG_WriteByte(&sv.multicast, svc_event);
 	}
 
 	/* write header */
-	PF_WriteByte(eType);
+	MSG_WriteByte(&sv.multicast, eType);
 }
 
 /*============================================== */

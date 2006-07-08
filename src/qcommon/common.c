@@ -1391,6 +1391,8 @@ void Com_Error_f(void)
   * This function is only build in and called when
   * defining HAVE_GETTEXT
   * Under Linux see Makefile options for this
+  *
+  * @sa Qcommon_LocaleInit
   */
 void Qcommon_LocaleInit(void)
 {
@@ -1437,6 +1439,13 @@ void Qcommon_LocaleInit(void)
 
 /**
   * @brief Init function
+  *
+  * @param[in] argc int
+  * @param[in] argv char**
+  * @sa Com_ParseScripts
+  * @sa Sys_Init
+  * @sa CL_Init
+  * @sa Qcommon_LocaleInit
   */
 void Qcommon_Init(int argc, char **argv)
 {

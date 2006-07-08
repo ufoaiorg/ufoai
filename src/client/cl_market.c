@@ -71,6 +71,17 @@ static void CL_BuySelectCmd(void)
   * set storage and supply to the values of aircraft
   * in use - and the value of aircraft available for
   * buying
+  *
+  * @param aircraft Aircraft ID from scriptfile
+  * @param storage Pointer to int value which will hold the amount of aircraft
+  *        given by aircraft parameter in all of your bases
+  * @param supply Pointer to int which will hold the amount of buyable aircraft
+  * @code
+  * for (i = 0, j = 0, air = aircraft; i < numAircraft; i++, air++)
+  *   AIR_GetStorageSupplyCount(air->id, &storage, &supply);
+  * @endcode
+  *
+  * @sa CL_BuyType
   */
 static void AIR_GetStorageSupplyCount(char *aircraft, int *storage, int *supply)
 {
