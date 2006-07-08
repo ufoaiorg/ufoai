@@ -1,5 +1,6 @@
 /* gl_anim.c -- animation parsing and playing */
 
+
 #include "gl_local.h"
 
 #define LNEXT(x)	((x+1 < MAX_ANIMLIST) ? x+1 : 0)

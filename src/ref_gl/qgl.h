@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 #include <GL/gl.h>
+#include <GL/glu.h>
 
 #ifdef _WIN32
 #include "glext.h"
@@ -37,7 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 #ifdef __linux__
-/*#include <GL/fxmesa.h> */
 #include <GL/glx.h>
 #endif
 

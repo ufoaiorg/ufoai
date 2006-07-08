@@ -21,16 +21,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GL_LOCAL_H
 #define GL_LOCAL_H
 
+#include "../client/ref.h"
+
 #ifdef _WIN32
 #  include <windows.h>
 #endif
-
-#include <stdio.h>
-
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <math.h>
-#include <ctype.h>
 
 #ifndef __linux__
 #ifndef GL_COLOR_INDEX8_EXT
@@ -47,7 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../win32/jpeglib.h"
 #endif
 #endif
-#include "../client/ref.h"
 /* this was taken from jmorecfg.h */
 #define RGB_PIXELSIZE 3
 
