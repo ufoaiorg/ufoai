@@ -1761,7 +1761,12 @@ static void CL_GameSaveCmd(void)
 }
 
 /**
-  * @brief
+  * @brief Loads a savegame from file
+  *
+  * @param filename Savegame to load (relative to writepath/save)
+  *
+  * @sa CL_GameLoadCmd
+  * @sa CL_GameSave
   */
 int CL_GameLoad(char *filename)
 {
@@ -1984,7 +1989,9 @@ int CL_GameLoad(char *filename)
 
 
 /**
-  * @brief
+  * @brief Console command to load a savegame
+  *
+  * @sa CL_GameLoad
   */
 static void CL_GameLoadCmd(void)
 {
@@ -2002,7 +2009,10 @@ static void CL_GameLoadCmd(void)
 
 
 /**
-  * @brief
+  * @brief Console commands to read the comments from savegames
+  *
+  * The comment is the part of the savegame that you type in at saving
+  * for reidentifying the savegame
   */
 static void CL_GameCommentsCmd(void)
 {
@@ -2140,6 +2150,8 @@ static void CL_GameGo(void)
 /**
   * @brief Executes console commands after a mission
   *
+  * @param m Pointer to mission_t
+  * @param won Int value that is one when you've won the game, and zero when the game was lost
   * Can execute console commands (triggers) on win and lose
   * This can be used for story dependent missions
   */

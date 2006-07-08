@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_UFOPEDIA_H
 #define CLIENT_CL_UFOPEDIA_H
 
-#include "client.h"
-
 #define MAX_PEDIACHAPTERS	16
 
 typedef struct pediaChapter_s
