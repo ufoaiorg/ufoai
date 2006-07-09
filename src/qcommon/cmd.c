@@ -1,3 +1,8 @@
+/**
+ * @file cmd.c
+ * @brief Script command processing module
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,7 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* cmd.c -- Quake script command processing module */
 
 #include "qcommon.h"
 
@@ -31,12 +35,12 @@ typedef struct cmdalias_s {
 	char *value;
 } cmdalias_t;
 
-cmdalias_t *cmd_alias;
+static cmdalias_t *cmd_alias;
 
-qboolean cmd_wait, cmd_closed;
+static qboolean cmd_wait, cmd_closed;
 
 #define	ALIAS_LOOP_COUNT	16
-int alias_count;				/* for detecting runaway loops */
+static int alias_count;				/* for detecting runaway loops */
 
 
 /*============================================================================= */
@@ -92,10 +96,10 @@ void Cmd_Wait_f(void)
 =============================================================================
 */
 
-sizebuf_t cmd_text;
-byte cmd_text_buf[8192];
+static sizebuf_t cmd_text;
+static byte cmd_text_buf[8192];
 
-char defer_text_buf[8192];
+static char defer_text_buf[8192];
 
 /*
 ============
@@ -125,7 +129,6 @@ void Cbuf_AddText(char *text)
 		Com_DPrintf("Cbuf_AddText: currently closed\n");
 		return;
 	}
-
 
 	l = strlen(text);
 
@@ -229,7 +232,8 @@ void Cbuf_Execute(void)
 	char line[1024];
 	int quotes;
 
-	alias_count = 0;			/* don't allow infinite alias loops */
+	/* don't allow infinite alias loops */
+	alias_count = 0;
 
 	while (cmd_text.cursize) {
 		/* find a \n or ; line break */
@@ -239,8 +243,9 @@ void Cbuf_Execute(void)
 		for (i = 0; i < cmd_text.cursize; i++) {
 			if (text[i] == '"')
 				quotes++;
+			/* don't break if inside a quoted string */
 			if (!(quotes & 1) && text[i] == ';')
-				break;			/* don't break if inside a quoted string */
+				break;
 			if (text[i] == '\n')
 				break;
 		}
@@ -760,11 +765,12 @@ qboolean Cmd_Exists(char *cmd_name)
 
 
 
-/*
-============
-Cmd_CompleteCommand
-============
-*/
+/**
+  * @brief Unix like tab completion for console commands
+  * @param partial The beginning of the command we try to complete
+  * @sa Cvar_CompleteVariable
+  * @sa Key_CompleteCommand
+  */
 char *Cmd_CompleteCommand(char *partial)
 {
 	cmd_function_t *cmd;
@@ -791,7 +797,7 @@ char *Cmd_CompleteCommand(char *partial)
 	/* check for partial matches in commands */
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
 		if (!Q_strncmp(partial, cmd->name, len)) {
-			Com_Printf("%s\n", cmd->name);
+			Com_Printf("[cmd] %s\n", cmd->name);
 			match = cmd->name;
 			matches++;
 		}
@@ -800,7 +806,7 @@ char *Cmd_CompleteCommand(char *partial)
 	/* and then aliases */
 	for (a = cmd_alias; a; a = a->next) {
 		if (strstr(a->name, partial)) {
-			Com_Printf("%s\n", a->name);
+			Com_Printf("[ali] %s\n", a->name);
 			match = a->name;
 			matches++;
 		}
@@ -827,7 +833,8 @@ void Cmd_ExecuteString(char *text)
 
 	/* execute the command line */
 	if (!Cmd_Argc())
-		return;					/* no tokens */
+		/* no tokens */
+		return;
 
 	/* check functions */
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
@@ -896,9 +903,7 @@ Cmd_Init
 */
 void Cmd_Init(void)
 {
-	/* */
 	/* register our commands */
-	/* */
 	Cmd_AddCommand("cmdlist", Cmd_List_f);
 	Cmd_AddCommand("exec", Cmd_Exec_f);
 	Cmd_AddCommand("echo", Cmd_Echo_f);

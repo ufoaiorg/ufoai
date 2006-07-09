@@ -361,7 +361,6 @@ char *Q_strdup(const char *str);
 int Q_putenv(const char *str);
 char *Q_getcwd(char *dest, int size);
 
-
 /*============================================= */
 
 short BigShort(short l);
@@ -385,7 +384,6 @@ char *Info_ValueForKey(char *s, char *key);
 void Info_RemoveKey(char *s, const char *key);
 void Info_SetValueForKey(char *s, const char *key, const char *value);
 
-/* void Info_SetValueForKey (char *s, char *key, char *value); */
 qboolean Info_Validate(char *s);
 
 /*

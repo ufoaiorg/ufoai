@@ -167,7 +167,11 @@ static keyname_t keynames[] = {
 ==============================================================================
 */
 
-static void CompleteCommand(void)
+/**
+  * @brief Console completion for command and variables
+  * @sa Key_Console
+  */
+static void Key_CompleteCommand(void)
 {
 	char *cmd, *s;
 
@@ -189,13 +193,10 @@ static void CompleteCommand(void)
 	}
 }
 
-/*
-====================
-Key_Console
-
-Interactive line editing and console scrollback
-====================
-*/
+/**
+  * @brief Interactive line editing and console scrollback
+  * @param key
+  */
 static void Key_Console(int key)
 {
 	switch (key) {
@@ -291,8 +292,9 @@ static void Key_Console(int key)
 		return;
 	}
 
-	if (key == K_TAB) {			/* command completion */
-		CompleteCommand();
+	/* command completion */
+	if (key == K_TAB) {
+		Key_CompleteCommand();
 		return;
 	}
 
@@ -637,9 +639,7 @@ void Key_Init(void)
 	}
 	key_linepos = 1;
 
-	/* */
 	/* init ascii characters in console mode */
-	/* */
 	for (i = 32; i < 128; i++)
 		consolekeys[i] = qtrue;
 	consolekeys[K_ENTER] = qtrue;

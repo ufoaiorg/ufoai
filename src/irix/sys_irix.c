@@ -321,8 +321,7 @@ int main (int argc, char **argv)
 	}
 
 	oldtime = Sys_Milliseconds ();
-	while (1)
-	{
+	while (1) {
 		/* find time spent rendering last frame */
 		do {
 			newtime = Sys_Milliseconds ();

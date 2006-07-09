@@ -1140,13 +1140,9 @@ void COM_FileBase(char *in, char *out)
 	}
 }
 
-/*
-============
-COM_FilePath
-
-Returns the path up to, but not including the last /
-============
-*/
+/**
+  * @brief Returns the path up to, but not including the last /
+  */
 void COM_FilePath(char *in, char *out)
 {
 	char *s;
@@ -1337,7 +1333,7 @@ char *COM_Parse(char **data_p)
 	}
 
 	/* skip whitespace */
-  skipwhite:
+skipwhite:
 	while ((c = *data) <= ' ') {
 		if (c == 0) {
 			*data_p = NULL;
@@ -1531,13 +1527,12 @@ int Q_strncasecmp(char *s1, char *s2, int n)
 }
 #endif							/* sun */
 
-/*
-=============
-Q_strncpyz
-
-Safe strncpy that ensures a trailing zero
-=============
-*/
+/**
+  * @brief Safe strncpy that ensures a trailing zero
+  * @param dest Destination pointer
+  * @param src Source pointer
+  * @param destsize Size of destination buffer (this should be a sizeof size due to portability)
+  */
 #ifdef DEBUG
 void Q_strncpyzDebug(char *dest, const char *src, int destsize, char *file, int line)
 #else

@@ -95,8 +95,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define DEFAULT_LIBDIR DEFAULT_BASEDIR
 #endif							/* DEFAULT_LIBDIR */
 
-int dstrcmp(char *source, char *s1, char *s2);
-
 /*============================================================================ */
 
 typedef struct sizebuf_s {

@@ -1,3 +1,8 @@
+/**
+ * @file common.c
+ * @brief Misc functions used in client and server
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,7 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* common.c -- misc functions used in client and server */
+
 #include "qcommon.h"
 #include <setjmp.h>
 #include <ctype.h>
@@ -52,28 +57,15 @@ cvar_t *logfile_active;			/* 1 = buffer log, 2 = flush after each print */
 cvar_t *showtrace;
 cvar_t *dedicated;
 
-FILE *logfile;
+static FILE *logfile;
 
-int server_state;
+static int server_state;
 
 /* host_speeds times */
 int time_before_game;
 int time_after_game;
 int time_before_ref;
 int time_after_ref;
-
-
-int dstrcmp(char *source, char *s1, char *s2)
-{
-	if (!s1 && !s2)
-		Sys_Error("strcmp %s * *\n", source, s2);
-	else if (!s1)
-		Sys_Error("strcmp %s * %s\n", source, s2);
-	else if (!s2)
-		Sys_Error("strcmp %s %s *\n", source, s1);
-	return strcmp(s1, s2);
-}
-
 
 /*
 ============================================================================
@@ -89,7 +81,10 @@ static int rd_buffersize;
 static void (*rd_flush) (int target, char *buffer);
 
 /**
-  * @brief
+  * @brief Redirect pakets/ouput from server to client
+  * @sa Com_EndRedirect
+  *
+  * This is used to redirect printf outputs for rcon commands
   */
 void Com_BeginRedirect(int target, char *buffer, int buffersize, void (*flush) (int, char *))
 {
@@ -104,7 +99,8 @@ void Com_BeginRedirect(int target, char *buffer, int buffersize, void (*flush) (
 }
 
 /**
-  * @brief
+  * @brief End the redirection of pakets/output
+  * @sa Com_BeginRedirect
   */
 void Com_EndRedirect(void)
 {
@@ -140,7 +136,7 @@ void Com_Printf(char *fmt, ...)
 			rd_flush(rd_target, rd_buffer);
 			*rd_buffer = 0;
 		}
-		strcat(rd_buffer, msg);
+		Q_strcat(rd_buffer, sizeof(rd_buffer), msg);
 		return;
 	}
 
@@ -1446,6 +1442,9 @@ void Qcommon_LocaleInit(void)
   * @sa Sys_Init
   * @sa CL_Init
   * @sa Qcommon_LocaleInit
+  *
+  * To compile language support into UFO:AI you need to activate the preprocessor variable
+  * HAVE_GETTEXT (for linux have a look at the makefile)
   */
 void Qcommon_Init(int argc, char **argv)
 {
@@ -1563,7 +1562,12 @@ void Qcommon_Init(int argc, char **argv)
 }
 
 /**
-  * @brief
+  * @brief This is the function that is called directly from main()
+  * @sa main
+  * @sa Qcommon_Init
+  * @sa Qcommon_Shutdown
+  * @sa SV_Frame
+  * @sa CL_Frame
   */
 float Qcommon_Frame(int msec)
 {

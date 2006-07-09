@@ -376,6 +376,10 @@ static void SetSDLIcon( void )
 	SDL_FreeSurface(icon);
 }
 
+/**
+ * @brief Init the SDL window
+ * @param fullscreen Start in fullscreen or not (bool value)
+ */
 static qboolean GLimp_InitGraphics( qboolean fullscreen )
 {
 	int flags;
