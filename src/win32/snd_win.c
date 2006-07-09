@@ -641,7 +641,7 @@ void SNDDMA_BeginPainting (void)
 {
 	int		reps;
 	DWORD	dwSize2;
-	LPVOID	*pbuf, *pbuf2;
+	LPVOID	pbuf, pbuf2;
 	HRESULT	hresult;
 	DWORD	dwStatus;
 
@@ -662,8 +662,8 @@ void SNDDMA_BeginPainting (void)
 	reps = 0;
 	dma.buffer = NULL;
 
-	while ((hresult = pDSBuf->lpVtbl->Lock(pDSBuf, 0, gSndBufSize, pbuf, &locksize,
-								pbuf2, &dwSize2, 0)) != DS_OK) {
+	while ((hresult = pDSBuf->lpVtbl->Lock(pDSBuf, 0, gSndBufSize, &pbuf, &locksize,
+								&pbuf2, &dwSize2, 0)) != DS_OK) {
 		if (hresult != DSERR_BUFFERLOST) {
 			Com_Printf( "S_TransferStereo16: Lock failed with error '%s'\n", DSoundError( hresult ) );
 			S_Shutdown ();
