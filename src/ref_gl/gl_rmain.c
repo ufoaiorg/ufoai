@@ -1447,10 +1447,10 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 
 	if (strstr(gl_config.extensions_string, "GL_EXT_stencil_wrap")) {
 		ri.Con_Printf(PRINT_ALL, "...using GL_EXT_stencil_wrap\n");
-		gl_state.stencil_warp = qtrue;
+		gl_state.stencil_wrap = qtrue;
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_EXT_stencil_wrap not found\n");
-		gl_state.stencil_warp = qfalse;
+		gl_state.stencil_wrap = qfalse;
 	}
 
 	if (strstr(gl_config.extensions_string, "GL_EXT_fog_coord")) {

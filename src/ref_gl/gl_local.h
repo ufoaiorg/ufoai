@@ -512,7 +512,7 @@ typedef struct {
 	qboolean alpha_test;
 	qboolean fog_coord;
 
-	qboolean stencil_warp;
+	qboolean stencil_wrap;
 	qboolean anisotropic;
 	qboolean lod_bias;
 	qboolean arb_fragment_program;

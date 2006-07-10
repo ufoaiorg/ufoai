@@ -309,8 +309,8 @@ void BuildShadowVolume(dmdl_t * hdr, vec3_t light, float projectdistance)
 
 void GL_RenderVolumes(dmdl_t * paliashdr, vec3_t lightdir, int projdist)
 {
-	int incr = gl_state.stencil_warp ? GL_INCR_WRAP_EXT : GL_INCR;
-	int decr = gl_state.stencil_warp ? GL_DECR_WRAP_EXT : GL_DECR;
+	int incr = gl_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR;
+	int decr = gl_state.stencil_wrap ? GL_DECR_WRAP_EXT : GL_DECR;
 
 	if (!gl_state.ati_separate_stencil && !gl_state.stencil_two_side) {
 		qglCullFace(GL_BACK);
