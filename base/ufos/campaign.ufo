@@ -201,11 +201,31 @@ mission farm
 	$civilian	500
 }
 
+mission frozen_groenland
+{
+	location	"_Nuuk"
+	type	"_Terror Attack"
+	text	"_Protect inhabitants"
+	map	"+frozen"
+	param	small
+	music	mission
+	pos	"47 -42"
+	aliens	6
+	civilians	3
+	recruits	6
+	alienteam	alien
+	civteam	european
+	alienequip	campaign_alien
+	$win	1000
+	$alien	100
+	$civilian	500
+}
+
 mission frozen_small
 {
 	location	"_Revelstoke"
-	type		"_Landed Alien Ship"
-	text		"_Secure Alien Ship before Liftoff"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			"+frozen"
 	param	small
 	music		mission
@@ -223,13 +243,13 @@ mission frozen_small
 
 mission frozen_landingnature
 {
-	location	"_TODO"
+	location	"_Antarctic"
 	type		"_Landed Alien Ship"
 	text		"_Secure Alien Ship before Liftoff"
 	map			"+frozen"
 	param	alienlandingnature
 	music		mission
-	pos			"116 52"
+	pos			"32 -57"
 	aliens		7
 	alienteam	alien
 	alienequip	campaign_alien
@@ -243,13 +263,13 @@ mission frozen_landingnature
 
 mission frozen_industrial
 {
-	location	"_TODO"
-	type		"_Landed Alien Ship"
-	text		"_Secure Alien Ship before Liftoff"
+	location	"_Antarctic"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
 	map			"+frozen"
 	param	industrial
 	music		mission
-	pos			"116 52"
+	pos			"-141 128"
 	aliens		7
 	alienteam	alien
 	alienequip	campaign_alien
@@ -263,13 +283,13 @@ mission frozen_industrial
 
 mission frozen_alienlandingindustrial
 {
-	location	"_TODO"
+	location	"_Dunholm"
 	type		"_Landed Alien Ship"
 	text		"_Secure Alien Ship before Liftoff"
 	map			"+frozen"
 	param	alienlandingindustrial
 	music		mission
-	pos			"116 52"
+	pos			"25 -64"
 	aliens		7
 	alienteam	alien
 	alienequip	campaign_alien
@@ -283,12 +303,12 @@ mission frozen_alienlandingindustrial
 
 mission gasstation
 {
-	location	"_TODO"
+	location	"_La Paz"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			gasstation05
 	music		mission2
-	pos			"-18 40"
+	pos			"-111 21"
 	aliens		8
 	alienteam	alien
 	alienequip	campaign_alien
@@ -302,12 +322,12 @@ mission gasstation
 
 mission harbour
 {
-	location	"_Tazovskij"
+	location	"_Cam Pha"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			harbour07
 	music		mission2
-	pos			"-18 40"
+	pos			"-106 163"
 	aliens		8
 	alienteam	alien
 	alienequip	campaign_alien
@@ -648,7 +668,6 @@ mission transport
 	$civilian	500
 }
 
-//no day and night
 mission tropic_river
 {
 	location	"_TODO"
@@ -667,7 +686,6 @@ mission tropic_river
 	$civilian	200
 }
 
-//no day and night
 mission tropic_drug
 {
 	location	"_TODO"
@@ -803,7 +821,7 @@ stage intro
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
-		missions	"or_tabelbala italy japan oriental vil_lille vil_albany"
+		missions	"or_tabelbala italy japan oriental vil_lille vil_albany tropic_river tropic_drug"
 		quota		4
 		nextstage	ufos_are_coming
 	}
@@ -827,8 +845,8 @@ stage ufos_are_coming
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
-		missions	"transport mine_crash construction farm office or_asyut"
-		quota		4
+		missions	"transport mine_crash construction farm office or_asyut frozen_landingnature frozen_alienlandingindustrial"
+		quota		5
 		nextstage	invasion
 	}
 	set stop
@@ -850,8 +868,8 @@ stage invasion
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
-		missions	"baseattack"
-		quota		4
+		missions	"terrain subway baseattack office mart lake"
+		quota		5
 		nextstage	alienbase
 	}
 	set stop
