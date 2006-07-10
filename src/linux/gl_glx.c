@@ -37,6 +37,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <GL/glx.h>
 
 #ifdef HAVE_DGA /* makefile */
+#ifdef __x86_64__
+#ifndef XMD_H
+#define XMD_H
+#endif
+#endif
 #include <X11/extensions/xf86dga.h>
 #ifdef _XF86DGA_H_
 #define HAVE_XF86_DGA
