@@ -64,7 +64,7 @@ void G_FreeEdict(edict_t * ed)
 G_Find
 
 Searches all active entities for the next one that holds
-the matching string at fieldofs (use the FOFS() macro) in the structure.
+the matching string at fieldofs (use the offsetof() macro) in the structure.
 
 Searches beginning at the edict after from, or the beginning if NULL
 NULL will be returned if the end of the list is reached.
@@ -133,7 +133,7 @@ edict_t *findradius(edict_t * from, vec3_t org, float rad)
 G_PickTarget
 
 Searches all active entities for the next one that holds
-the matching string at fieldofs (use the FOFS() macro) in the structure.
+the matching string at fieldofs (use the offsetof() macro) in the structure.
 
 Searches beginning at the edict after from, or the beginning if NULL
 NULL will be returned if the end of the list is reached.
@@ -154,7 +154,7 @@ edict_t *G_PickTarget(char *targetname)
 	}
 
 	while (1) {
-		ent = G_Find(ent, FOFS(targetname), targetname);
+		ent = G_Find(ent, offsetof(edict_t, targetname), targetname);
 		if (!ent)
 			break;
 		choice[num_choices++] = ent;

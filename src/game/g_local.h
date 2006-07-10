@@ -175,11 +175,6 @@ extern game_export_t globals;
 
 extern edict_t *g_edicts;
 
-#define	FOFS(x) (size_t)&(((edict_t *)0)->x)
-#define	STOFS(x) (size_t)&(((spawn_temp_t *)0)->x)
-#define	LLOFS(x) (size_t)&(((level_locals_t *)0)->x)
-#define	CLOFS(x) (size_t)&(((player_t *)0)->x)
-
 #define random()	((rand () & 0x7fff) / ((float)0x7fff))
 #define crandom()	(2.0 * (random() - 0.5))
 
