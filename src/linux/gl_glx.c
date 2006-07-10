@@ -247,6 +247,14 @@ IN_GetMousePos
 */
 void RW_IN_GetMousePos (int *x, int *y)
 {
+	if ( mx < 1 )
+		mx = 1;
+	if ( my < 1 )
+		my = 1;
+	if ( mx >= vid.width )
+		mx = vid.width - 1;
+	if ( my >= vid.height )
+		my = vid.height - 1;
 	*x = mx;
 	*y = my;
 }
@@ -268,7 +276,8 @@ static void IN_ActivateMouse( void )
 		return;
 
 	if (!mouse_active) {
-		mx = my = 0; /* don't spazz */
+		mx = vid.width / 2;
+		my = vid.height / 2;
 		install_grabs();
 		mouse_active = qtrue;
 	}

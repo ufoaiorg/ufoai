@@ -31,8 +31,6 @@ void RW_IN_Activate();
 #define MOUSE_MAX 3000
 #define MOUSE_MIN 40
 
-void getMouse(int *x, int *y, int *state);
-
 typedef struct in_state {
 	/* Pointers to functions back in client, set by vid_so */
 	void (*IN_CenterView_fp)(void);

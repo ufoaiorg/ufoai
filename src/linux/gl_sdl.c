@@ -566,13 +566,6 @@ void GLimp_AppActivate( qboolean active )
 
 Key_Event_fp_t Key_Event_fp;
 
-void getMouse(int *x, int *y, int *state)
-{
-	*x = mx;
-	*y = my;
-	*state = mouse_buttonstate;
-}
-
 void KBD_Init(Key_Event_fp_t fp)
 {
 	Key_Event_fp = fp;
