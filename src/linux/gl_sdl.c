@@ -92,6 +92,9 @@ void RW_IN_Activate(qboolean active)
 
 /*****************************************************************************/
 
+/**
+  * @brief Translate the keys to ufo keys
+  */
 int XLateKey(unsigned int keysym)
 {
 	int key = 0;
@@ -254,11 +257,10 @@ int XLateKey(unsigned int keysym)
 	return key;
 }
 
-static unsigned char KeyStates[SDLK_LAST];
-
 void GetEvent(SDL_Event *event)
 {
 	unsigned int key;
+	static unsigned char KeyStates[SDLK_LAST];
 
 	switch(event->type) {
 	case SDL_MOUSEBUTTONDOWN:
@@ -411,13 +413,10 @@ static void SetSDLIcon( void )
 		return; /* oh well... */
 	SDL_SetColorKey(icon, SDL_SRCCOLORKEY, 0);
 
-	color.r = 255;
-	color.g = 255;
-	color.b = 255;
+	color.r = color.g = color.b = 255;
 	SDL_SetColors(icon, &color, 0, 1); /* just in case */
-	color.r = 0;
+	color.r = color.b = 0;
 	color.g = 16;
-	color.b = 0;
 	SDL_SetColors(icon, &color, 1, 1);
 
 	ptr = (Uint8 *)icon->pixels;
@@ -583,7 +582,7 @@ void KBD_Init(Key_Event_fp_t fp)
 void KBD_Update(void)
 {
 	SDL_Event event;
-	static int KBD_Update_Flag;
+	static int KBD_Update_Flag = 0;
 
 	if (KBD_Update_Flag == 1)
 		return;
@@ -614,7 +613,7 @@ void KBD_Update(void)
 			keyq_tail = (keyq_tail + 1) & 63;
 		}
 	} else
-		ri.Con_Printf( PRINT_ALL, "X11 not active right now\n" );
+		ri.Con_Printf( PRINT_ALL, "SDL not active right now\n" );
 	KBD_Update_Flag = 0;
 }
 
@@ -671,14 +670,6 @@ IN_GetMousePos
 */
 void RW_IN_GetMousePos (int *x, int *y)
 {
-	if ( mx < 0 )
-		mx = 0;
-	if ( my < 0 )
-		my = 0;
-	if ( mx > 1024 )
-		mx = 1024;
-	if ( my > 768 )
-		my = 768;
 	*x = mx;
 	*y = my;
 }
