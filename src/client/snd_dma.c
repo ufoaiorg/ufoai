@@ -1125,9 +1125,9 @@ void S_Update_(void)
 */
 
 char ovPlaying[MAX_QPATH];
-OggVorbis_File ovFile;
-char ovBuf[4096];
-int ovSection;
+static OggVorbis_File ovFile;
+static char ovBuf[4096];
+static int ovSection;
 
 
 /*
