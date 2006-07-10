@@ -39,7 +39,7 @@ glwstate_t glw_state;
 
 /*****************************************************************************/
 
-static qboolean                 X11_active = qfalse;
+static qboolean SDL_active = qfalse;
 
 qboolean have_stencil = qfalse;
 
@@ -47,7 +47,7 @@ static cvar_t	*m_filter;
 static cvar_t	*in_mouse;
 
 /* state struct passed in Init */
-static in_state_t	*in_state;
+static in_state_t *in_state;
 
 static cvar_t *sensitivity;
 static cvar_t *lookstrafe;
@@ -56,7 +56,7 @@ static cvar_t *m_yaw;
 static cvar_t *m_pitch;
 static cvar_t *m_forward;
 static cvar_t *freelook;
-static qboolean        mouse_avail;
+static qboolean mouse_avail;
 
 static SDL_Surface *surface;
 
@@ -65,14 +65,8 @@ struct
 	unsigned char key;
 	int down;
 } keyq[64];
-int keyq_head=0;
-int keyq_tail=0;
-
-int config_notify=0;
-int config_notify_width;
-int config_notify_height;
-
-extern cvar_t *use_stencil;
+static int keyq_head=0;
+static int keyq_tail=0;
 
 /* Console variables that we need to access from this module */
 
@@ -103,80 +97,153 @@ int XLateKey(unsigned int keysym)
 	int key = 0;
 
 	switch(keysym) {
-	case SDLK_KP9:			key = K_KP_PGUP; break;
-	case SDLK_PAGEUP:		key = K_PGUP; break;
-
-	case SDLK_KP3:			key = K_KP_PGDN; break;
-	case SDLK_PAGEDOWN:		key = K_PGDN; break;
-
-	case SDLK_KP7:			key = K_KP_HOME; break;
-	case SDLK_HOME:			key = K_HOME; break;
-
-	case SDLK_KP1:			key = K_KP_END; break;
-	case SDLK_END:			key = K_END; break;
-
-	case SDLK_KP4:			key = K_KP_LEFTARROW; break;
-	case SDLK_LEFT:			key = K_LEFTARROW; break;
-
-	case SDLK_KP6:			key = K_KP_RIGHTARROW; break;
-	case SDLK_RIGHT:		key = K_RIGHTARROW; break;
-
-	case SDLK_KP2:			key = K_KP_DOWNARROW; break;
-	case SDLK_DOWN:			key = K_DOWNARROW; break;
-
-	case SDLK_KP8:			key = K_KP_UPARROW; break;
-	case SDLK_UP:			key = K_UPARROW; break;
-
-	case SDLK_ESCAPE:		key = K_ESCAPE; break;
-
-	case SDLK_KP_ENTER:		key = K_KP_ENTER; break;
-	case SDLK_RETURN:		key = K_ENTER; break;
-
-	case SDLK_TAB:			key = K_TAB; break;
-
-	case SDLK_F1:			key = K_F1; break;
-	case SDLK_F2:			key = K_F2; break;
-	case SDLK_F3:			key = K_F3; break;
-	case SDLK_F4:			key = K_F4; break;
-	case SDLK_F5:			key = K_F5; break;
-	case SDLK_F6:			key = K_F6; break;
-	case SDLK_F7:			key = K_F7; break;
-	case SDLK_F8:			key = K_F8; break;
-	case SDLK_F9:			key = K_F9; break;
-	case SDLK_F10:			key = K_F10; break;
-	case SDLK_F11:			key = K_F11; break;
-	case SDLK_F12:			key = K_F12; break;
-
-	case SDLK_BACKSPACE:		key = K_BACKSPACE; break;
-
-	case SDLK_KP_PERIOD:		key = K_KP_DEL; break;
-	case SDLK_DELETE:		key = K_DEL; break;
-
-	case SDLK_PAUSE:		key = K_PAUSE; break;
-
+	case SDLK_KP9:
+		key = K_KP_PGUP;
+		break;
+	case SDLK_PAGEUP:
+		key = K_PGUP;
+		break;
+	case SDLK_KP3:
+		key = K_KP_PGDN;
+		break;
+	case SDLK_PAGEDOWN:
+		key = K_PGDN;
+		break;
+	case SDLK_KP7:
+		key = K_KP_HOME;
+		break;
+	case SDLK_HOME:
+		key = K_HOME;
+		break;
+	case SDLK_KP1:
+		key = K_KP_END;
+		break;
+	case SDLK_END:
+		key = K_END;
+		break;
+	case SDLK_KP4:
+		key = K_KP_LEFTARROW;
+		break;
+	case SDLK_LEFT:
+		key = K_LEFTARROW;
+		break;
+	case SDLK_KP6:
+		key = K_KP_RIGHTARROW;
+		break;
+	case SDLK_RIGHT:
+		key = K_RIGHTARROW;
+		break;
+	case SDLK_KP2:
+		key = K_KP_DOWNARROW;
+		break;
+	case SDLK_DOWN:
+		key = K_DOWNARROW;
+		break;
+	case SDLK_KP8:
+		key = K_KP_UPARROW;
+		break;
+	case SDLK_UP:
+		key = K_UPARROW;
+		break;
+	case SDLK_ESCAPE:
+		key = K_ESCAPE;
+		break;
+	case SDLK_KP_ENTER:
+		key = K_KP_ENTER;
+		break;
+	case SDLK_RETURN:
+		key = K_ENTER;
+		break;
+	case SDLK_TAB:
+		key = K_TAB;
+		break;
+	case SDLK_F1:
+		key = K_F1;
+		break;
+	case SDLK_F2:
+		key = K_F2;
+		break;
+	case SDLK_F3:
+		key = K_F3;
+		break;
+	case SDLK_F4:
+		key = K_F4;
+		break;
+	case SDLK_F5:
+		key = K_F5;
+		break;
+	case SDLK_F6:
+		key = K_F6;
+		break;
+	case SDLK_F7:
+		key = K_F7;
+		break;
+	case SDLK_F8:
+		key = K_F8;
+		break;
+	case SDLK_F9:
+		key = K_F9;
+		break;
+	case SDLK_F10:
+		key = K_F10;
+		break;
+	case SDLK_F11:
+		key = K_F11;
+		break;
+	case SDLK_F12:
+		key = K_F12;
+		break;
+	case SDLK_BACKSPACE:
+		key = K_BACKSPACE;
+		break;
+	case SDLK_KP_PERIOD:
+		key = K_KP_DEL;
+		break;
+	case SDLK_DELETE:
+		key = K_DEL;
+		break;
+	case SDLK_PAUSE:
+		key = K_PAUSE;
+		break;
 	case SDLK_LSHIFT:
-	case SDLK_RSHIFT:		key = K_SHIFT; break;
-
+	case SDLK_RSHIFT:
+		key = K_SHIFT;
+		break;
 	case SDLK_LCTRL:
-	case SDLK_RCTRL:		key = K_CTRL; break;
-
+	case SDLK_RCTRL:
+		key = K_CTRL;
+		break;
 	case SDLK_LMETA:
 	case SDLK_RMETA:
 	case SDLK_LALT:
-	case SDLK_RALT:			key = K_ALT; break;
-
-	case SDLK_KP5:			key = K_KP_5; break;
-
-	case SDLK_INSERT:		key = K_INS; break;
-	case SDLK_KP0:			key = K_KP_INS; break;
-
-	case SDLK_KP_MULTIPLY:		key = '*'; break;
-	case SDLK_KP_PLUS:		key = K_KP_PLUS; break;
-	case SDLK_KP_MINUS:		key = K_KP_MINUS; break;
-	case SDLK_KP_DIVIDE:		key = K_KP_SLASH; break;
-
+	case SDLK_RALT:
+		key = K_ALT;
+		break;
+	case SDLK_KP5:
+		key = K_KP_5;
+		break;
+	case SDLK_INSERT:
+		key = K_INS;
+		break;
+	case SDLK_KP0:
+		key = K_KP_INS;
+		break;
+	case SDLK_KP_MULTIPLY:
+		key = '*';
+		break;
+	case SDLK_KP_PLUS:
+		key = K_KP_PLUS;
+		break;
+	case SDLK_KP_MINUS:
+		key = K_KP_MINUS;
+		break;
+	case SDLK_KP_DIVIDE:
+		key = K_KP_SLASH;
+		break;
 	/* suggestions on how to handle this better would be appreciated */
-	case SDLK_WORLD_7:		key = '`'; break;
+	case SDLK_WORLD_7:
+		key = '`';
+		break;
 
 	default: /* assuming that the other sdl keys are mapped to ascii */
 		if(keysym < 128)
@@ -192,14 +259,11 @@ static unsigned char KeyStates[SDLK_LAST];
 void GetEvent(SDL_Event *event)
 {
 	unsigned int key;
-	float win_x = ( 1.0 + vid.rx );
-	float win_y = ( 1.0 + vid.ry );
 
 	switch(event->type) {
 	case SDL_MOUSEBUTTONDOWN:
 	case SDL_MOUSEBUTTONUP:
-		switch (event->button.button)
-		{
+		switch (event->button.button) {
 			case  1:
 				mouse_buttonstate = K_MOUSE1;
 				break;
@@ -228,10 +292,9 @@ void GetEvent(SDL_Event *event)
 		keyq_head = (keyq_head + 1) & 63;
 		break;
 	case SDL_MOUSEMOTION:
-		if (mouse_active)
-		{
-			mx = event->motion.x * win_x; /* * sensitivity->value */
-			my = event->motion.y * win_y; /* * sensitivity->value */
+		if (mouse_active) {
+			mx = event->motion.x * vid.rx;
+			my = event->motion.y * vid.ry;
 		}
 		break;
 	case SDL_KEYDOWN:
@@ -245,21 +308,14 @@ void GetEvent(SDL_Event *event)
 			} else {
 				ri.Cvar_SetValue( "vid_fullscreen", 0 );
 			}
-
 			vid_fullscreen->modified = qfalse; /* we just changed it with SDL. */
-
 			break; /* ignore this key */
 		}
 
 		if ( (KeyStates[SDLK_LCTRL] || KeyStates[SDLK_RCTRL]) &&
 			(event->key.keysym.sym == SDLK_g) ) {
 			SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
-			/*
-			SDL_WM_GrabInput((gm == SDL_GRAB_ON) ? SDL_GRAB_OFF : SDL_GRAB_ON);
-			gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
-			*/
-			ri.Cvar_SetValue( "vid_grabmouse", (gm == SDL_GRAB_ON) ? /*1*/ 0 : /*0*/ 1 );
-
+			ri.Cvar_SetValue( "vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1 );
 			break; /* ignore this key */
 		}
 
@@ -293,12 +349,12 @@ void GetEvent(SDL_Event *event)
 
 }
 
-/*****************************************************************************/
-
+#if 0
 void *GLimp_GetProcAddress(const char *func)
 {
 	return SDL_GL_GetProcAddress(func);
 }
+#endif
 
 static void signal_handler(int sig)
 {
@@ -383,7 +439,9 @@ static void SetSDLIcon( void )
 static qboolean GLimp_InitGraphics( qboolean fullscreen )
 {
 	int flags;
-	cvar_t* use_stencil = NULL;
+	int stencil_bits;
+
+	have_stencil = qfalse;
 
 	/* Just toggle fullscreen if that's all that has been changed */
 	if (surface && (surface->w == vid.width) && (surface->h == vid.height)) {
@@ -410,9 +468,7 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-	if (use_stencil)
-		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
+	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
 
 	flags = SDL_OPENGL;
 	if (fullscreen)
@@ -425,25 +481,18 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 		return qfalse;
 	}
 
-	/* stencilbuffer shadows */
- 	if (use_stencil) {
-		int stencil_bits;
-
-		have_stencil = qfalse;
-
-		if (!SDL_GL_GetAttribute(SDL_GL_STENCIL_SIZE, &stencil_bits))
-		{
-			ri.Con_Printf(PRINT_ALL, "I: got %d bits of stencil\n", stencil_bits);
-			if (stencil_bits >= 1)
-				have_stencil = qtrue;
-		}
-	}
-
 	SDL_WM_SetCaption("UFO:AI", "UFO:Alien Invasion");
 
 	SDL_ShowCursor( SDL_DISABLE );
 
-	X11_active = qtrue;
+	if (!SDL_GL_GetAttribute(SDL_GL_STENCIL_SIZE, &stencil_bits)) {
+		ri.Con_Printf(PRINT_ALL, "I: got %d bits of stencil\n", stencil_bits);
+		if (stencil_bits >= 1) {
+			have_stencil = qtrue;
+		}
+	}
+
+	SDL_active = qtrue;
 
 	return qtrue;
 }
@@ -464,8 +513,7 @@ rserr_t GLimp_SetMode( unsigned int *pwidth, unsigned int *pheight, int mode, qb
 {
 	ri.Con_Printf (PRINT_ALL, "setting mode %d:", mode );
 
-	if ( !ri.Vid_GetModeInfo( (int*)pwidth, (int*)pheight, mode ) )
-	{
+	if ( !ri.Vid_GetModeInfo( (int*)pwidth, (int*)pheight, mode ) ) {
 		ri.Con_Printf( PRINT_ALL, " invalid mode\n" );
 		return rserr_invalid_mode;
 	}
@@ -504,7 +552,7 @@ void GLimp_Shutdown( void )
 	else
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 
-	X11_active = qfalse;
+	SDL_active = qfalse;
 }
 
 void GLimp_AppActivate( qboolean active )
@@ -543,8 +591,7 @@ void KBD_Update(void)
 	KBD_Update_Flag = 1;
 
 	/* get events from x server */
-	if (X11_active)
-	{
+	if (SDL_active) {
 		while (SDL_PollEvent(&event))
 			GetEvent(&event);
 
@@ -562,13 +609,11 @@ void KBD_Update(void)
 				SDL_WM_GrabInput(SDL_GRAB_ON);
 			}
 		}
-		while (keyq_head != keyq_tail)
-		{
+		while (keyq_head != keyq_tail) {
 			in_state->Key_Event_fp(keyq[keyq_tail].key, keyq[keyq_tail].down);
 			keyq_tail = (keyq_tail + 1) & 63;
 		}
-	}
-	else
+	} else
 		ri.Con_Printf( PRINT_ALL, "X11 not active right now\n" );
 	KBD_Update_Flag = 0;
 }
@@ -607,9 +652,7 @@ void RW_IN_Shutdown(void)
 	RW_IN_Activate (qfalse);
 
 	if (mouse_avail)
-	{
 		mouse_avail = qfalse;
-	}
 }
 
 /*
@@ -628,10 +671,14 @@ IN_GetMousePos
 */
 void RW_IN_GetMousePos (int *x, int *y)
 {
-	if ( mx < 0 ) mx = 0;
-	if ( my < 0 ) my = 0;
-	if ( mx > 1024 ) mx = 1024;
-	if ( my > 768 ) my = 768;
+	if ( mx < 0 )
+		mx = 0;
+	if ( my < 0 )
+		my = 0;
+	if ( mx > 1024 )
+		mx = 1024;
+	if ( my > 768 )
+		my = 768;
 	*x = mx;
 	*y = my;
 }

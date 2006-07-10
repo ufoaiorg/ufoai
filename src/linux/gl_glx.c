@@ -778,8 +778,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 #endif /* HAVE_XF86_VIDMODE */
 
 	visinfo = qglXChooseVisual(dpy, scrnum, attrib);
-	if (!visinfo)
-	{
+	if (!visinfo) {
 		fprintf(stderr, "Error couldn't get an RGB, Double-buffered, Stencil, Depth visual\n");
 		visinfo = qglXChooseVisual(dpy, scrnum, attrib_nostencil);
 	}
@@ -792,8 +791,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	gl_state.hwgamma = qfalse;
 
 	/* do some pantsness */
-	if ( qglXGetConfig )
-	{
+	if ( qglXGetConfig ) {
 		int red_bits, blue_bits, green_bits, depth_bits, alpha_bits;
 
 		qglXGetConfig(dpy, visinfo, GLX_RED_SIZE, &red_bits);
@@ -810,8 +808,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	}
 
 	/* stencilbuffer shadows */
-	if ( qglXGetConfig )
-	{
+	if ( qglXGetConfig ) {
 		int stencil_bits;
 
 		if (!qglXGetConfig(dpy, visinfo, GLX_STENCIL_SIZE, &stencil_bits)) {
