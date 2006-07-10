@@ -104,7 +104,7 @@ equipment campaign_market
 	medium				4
 }
 
-equipment campaign_alien
+equipment campaign_alien_heavy
 {
 	plasblaster		1
 	plasblaster_ammo	12
@@ -114,10 +114,30 @@ equipment campaign_alien
 	plaspistol_ammo	18
 }
 
+equipment campaign_alien
+{
+	plaspistol		12
+	plaspistol_ammo	18
+	tachyonpistol			12
+	tachyonpistol_ammo		18
+}
+
+equipment campaign_alien_easy
+{
+	plaspistol		12
+	plaspistol_ammo	18
+	tachyonpistol			12
+	tachyonpistol_ammo		18
+}
+
 equipment alien_mine
 {
 	plaspistol			2
 	plaspistol_ammo		4
+	tachyonrifle			2
+	tachyonrifle_ammo		4
+	tachyonsniper			2
+	tachyonsniper_ammo		4
 	laserrifle			1
 	laserrifle_ammo		2
 }
@@ -126,20 +146,20 @@ equipment alien_excavation
 {
 	plaspistol			2
 	plaspistol_ammo		4
+	tachyonrifle			2
+	tachyonrifle_ammo		4
 	laserrifle			3
 	laserrifle_ammo		6
-	rpg			1
-	rpg_ammo		3
 }
 
 equipment alien_spedition
 {
 	plaspistol			2
 	plaspistol_ammo		4
-	laserrifle			2
-	laserrifle_ammo		8
 	tachyonrifle		2
 	tachyonrifle_ammo		8
+	tachyonsniper			2
+	tachyonsniper_ammo		4
 }
 
 equipment alien_crash
@@ -173,9 +193,9 @@ equipment testing_and_tweaking
 	tachyonsniper			2
 	tachyonsniper_ammo		4
 	plasblaster			2
-	plasblaster_ammo		4	
+	plasblaster_ammo		4
 	laserpistol			2
-	laserpistol_ammo		4	
+	laserpistol_ammo		4
 	laserrifle			2
 	laserrifle_ammo			4
 	plaspistol			2
