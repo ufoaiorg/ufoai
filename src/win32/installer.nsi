@@ -465,7 +465,7 @@ Section "Game" SEC01
 ;======================================================================
   SetOutPath "$INSTDIR\base\music"
   File "..\..\base\music\*.txt"
-  File /nonfatal "..\..\base\music\*.ogg"
+  File "..\..\base\music\*.ogg"
 
 ;======================================================================
 ; media
@@ -806,17 +806,9 @@ Section Uninstall
 ;==============================================================
 ; TODO: Delete all files from $INSTDIR, too
 ;==============================================================
-  Delete "$INSTDIR\${PRODUCT_NAME}.url"
-  Delete "$INSTDIR\*.exe"
-  Delete "$INSTDIR\*.dll"
-
-  Delete "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk"
-  Delete "$SMPROGRAMS\${PRODUCT_NAME}\Website.lnk"
+  RMDIR /r $INSTDIR
+  RMDir /r "$SMPROGRAMS\${PRODUCT_NAME}"
   Delete "$DESKTOP\${PRODUCT_NAME}.lnk"
-  Delete "$SMPROGRAMS\${PRODUCT_NAME}\UFO:Alien Invasion.lnk"
-
-  RMDir "$SMPROGRAMS\${PRODUCT_NAME}"
-  RMDir "$INSTDIR"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
