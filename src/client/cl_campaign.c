@@ -1844,8 +1844,8 @@ int CL_GameLoad(char *filename)
 		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
 
 	/* reset */
-	selMis = NULL;
-	gd.interceptAircraft = -1;
+	CL_MapActionReset();
+
 	memset(&ccs, 0, sizeof(ccs_t));
 
 	/* read date */
