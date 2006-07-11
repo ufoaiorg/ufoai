@@ -2435,8 +2435,8 @@ void CL_UpdateCharacterStats(int won)
 					if ((chr->skills[ABILITY_MIND] >= rank->mind)
 						&& (chr->kills[KILLED_ALIENS] >= rank->killed_enemies)
 						&& ((chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM]) <= rank->killed_others)) {
-						if (chr->rank != rank) {
-							chr->rank = rank;
+						if (chr->rank != j) {
+							chr->rank = j;
 							Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%s has been promoted to %s.\n"), chr->name, rank->name);
 							MN_AddNewMessage(_("Soldier promoted"), messageBuffer, qfalse, MSG_PROMOTION, NULL);
 						}

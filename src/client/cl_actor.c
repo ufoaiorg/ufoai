@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 #include "client.h"
+#include "cl_global.h"
 
 /* public */
 le_t *selActor;
@@ -78,10 +79,7 @@ static char *skill_strings[10] = {
  */
 void CL_CharacterCvars(character_t *chr)
 {
-	rank_t *rank = NULL;
-
 	assert(chr);
-	rank = chr->rank;
 
 	Cvar_ForceSet("mn_name", chr->name);
 	Cvar_ForceSet("mn_body", Com_CharGetBody(chr));
@@ -93,11 +91,10 @@ void CL_CharacterCvars(character_t *chr)
 	Cvar_Set("mn_chrkillalien", va("%i", chr->kills[KILLED_ALIENS]));
 	Cvar_Set("mn_chrkillcivilian", va("%i", chr->kills[KILLED_CIVILIANS]));
 	Cvar_Set("mn_chrkillteam", va("%i", chr->kills[KILLED_TEAM]));
-	Cvar_Set("mn_chrrank_img", "");
 	/*TODO: Doesn't work yet */
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Rank: %s"), rank->name);
+	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Rank: %s"), gd.ranks[chr->rank].name);
 	Cvar_Set("mn_chrrank", messageBuffer);
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), "%s", rank->image);
+	Com_sprintf(messageBuffer, sizeof(messageBuffer), "%s", gd.ranks[chr->rank].image);
 	Cvar_Set("mn_chrrank_img", messageBuffer);
 
 	Cvar_Set("mn_vpwr", va("%i", chr->skills[ABILITY_POWER]));

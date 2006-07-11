@@ -3748,7 +3748,7 @@ void MN_ParseTutorials(char *title, char **text)
 		return;
 	}
 
-	/* parse ranks */
+	/* parse tutorials */
 	if (numTutorials >= MAX_TUTORIALS) {
 		Com_Printf("Too many tutorials, '%s' ignored.\n", title);
 		numTutorials = MAX_TUTORIALS;

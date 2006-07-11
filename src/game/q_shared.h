@@ -1057,7 +1057,7 @@ typedef struct character_s {
 /* 	int		crossed_distance; */
 	/* date     joined_edc; */
 	/* date     died; */
-	rank_t *rank;
+	int	rank; /* index in gd.ranks */
 	medals_t *medals;
 	/* TODO: */
 	/* *------------------** */

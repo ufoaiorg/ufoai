@@ -124,12 +124,12 @@ void CL_GenerateCharacter(char *team, base_t *base, int type)
 	switch ( type ) {
 	case ET_ACTOR:
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
-		chr->rank = &gd.ranks[0];
+		chr->rank = 0;
 		break;
 	case ET_UGV:
 		chr->fieldSize = ACTOR_SIZE_UGV;
 		/* UGV does not have a rank */
-		chr->rank = NULL;
+		chr->rank = -1;
 		break;
 	default:
 		Sys_Error("CL_GenerateCharacter: Unknown character type (%i)\n", type);
@@ -388,7 +388,7 @@ static void CL_GenerateEquipmentCmd(void)
 		}
 
 	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
-		Sys_Error("numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",baseCurrent->numWholeTeam, baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p, baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
+		Sys_Error("CL_GenerateEquipmentCmd: numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",baseCurrent->numWholeTeam, baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p, baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
 
 	for (; p < MAX_ACTIVETEAM; p++) {
 		Cvar_ForceSet(va("mn_name%i", p), "");
@@ -545,7 +545,7 @@ void CL_UpdateHireVar(void)
 		}
 
 	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
-		Sys_Error("numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",baseCurrent->numWholeTeam, baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p, baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
+		Sys_Error("CL_UpdateHireVar: numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",baseCurrent->numWholeTeam, baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p, baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
 
 	for (; p<MAX_ACTIVETEAM; p++)
 		baseCurrent->curTeam[p] = NULL;
