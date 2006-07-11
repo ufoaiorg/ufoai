@@ -1543,15 +1543,21 @@ aircraft_t *AIR_FindAircraft(char *aircraftName)
 /**
   * @brief
   */
-void CL_LoadEquipment ( sizebuf_t *buf, character_t *team, int num )
+void CL_LoadEquipment ( sizebuf_t *buf, base_t* base )
 {
 	item_t item;
 	int container, x, y;
 	int i, j;
-	character_t *chr;
+	character_t *chr = base->wholeTeam;
+
+	assert(base);
+
+	/* link the inventory in after load */
+	for (i=0; j<base->numWholeTeam; i++)
+		base->wholeTeam[i].inv = &base->teamInv[i];
 
 	/* inventory */
-	for (i = 0, chr = team; i < num; chr++, i++) {
+	for (i = 0; i < base->numWholeTeam; chr++, i++) {
 		for (j = 0; j < MAX_CONTAINERS; j++)
 			chr->inv->c[j] = NULL;
 		item.t = MSG_ReadByte(buf);
@@ -1571,13 +1577,13 @@ void CL_LoadEquipment ( sizebuf_t *buf, character_t *team, int num )
 /**
   * @brief Stores the equipment for a game
   */
-void CL_SaveEquipment ( sizebuf_t *buf, character_t *team, int num )
+void CL_SaveEquipment ( sizebuf_t *buf, character_t *team, const int num )
 {
-	character_t *chr;
 	invList_t *ic;
 	int i, j;
+	character_t *chr = team;
 
-	for (i = 0, chr = team; i < num; chr++, i++) {
+	for (i = 0; i < num; chr++, i++) {
 		/* equipment */
 		for (j = 0; j < csi.numIDs; j++)
 			for (ic = chr->inv->c[j]; ic; ic = ic->next)
@@ -1965,7 +1971,7 @@ int CL_GameLoad(char *filename)
 	}
 
 	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
-		CL_LoadEquipment( &sb, base->wholeTeam, base->numWholeTeam );
+		CL_LoadEquipment( &sb, base );
 
 	/* load the stats */
 	memcpy(&stats, sb.data + sb.readcount, sizeof(stats_t));
@@ -3385,6 +3391,7 @@ void CP_CampaignsClick_f(void)
 
 /**
   * @brief Will clear most of the parsed singleplayer data
+  * @sa Com_InitInventory
   */
 void CL_ResetSinglePlayerData ( void )
 {

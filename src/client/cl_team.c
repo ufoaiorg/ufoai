@@ -34,7 +34,11 @@ char *teamSkinNames[NUM_TEAMSKINS] = {
 };
 
 /**
-  * @brief
+  * @brief Test the names in team_*.ufo
+  *
+  * This is a console command to test the names that were defined in team_*.ufo
+  * Usage: givename <gender> <category> [num]
+  * valid genders are male, female, neutral
   */
 static void CL_GiveNameCmd(void)
 {
@@ -98,14 +102,12 @@ void CL_GenerateCharacter(char *team, base_t *base, int type)
 	/* check for too many characters */
 	if (base->numWholeTeam >= (int) cl_numnames->value)
 		return;
+#ifdef DEBUG
 	if (base->numWholeTeam >= MAX_WHOLETEAM) {
-#if DEBUG
 		Sys_Error("numWholeTeam (%i) is bigger than the allowed maximum (%i) - this is a prospectiv overflow\n", base->numWholeTeam, MAX_WHOLETEAM);
-#else
-		base->numWholeTeam >= MAX_WHOLETEAM;
-#endif
 		return; /* for code analysts - never reached */
 	}
+#endif
 
 	/* reset character */
 	chr = &base->wholeTeam[base->numWholeTeam];
@@ -386,11 +388,7 @@ static void CL_GenerateEquipmentCmd(void)
 		}
 
 	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
-#if 0
-		Sys_Error("numOnTeam[%i]: %i, p: %i\n",baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p);
-#else
-		baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] = p;
-#endif
+		Sys_Error("numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",baseCurrent->numWholeTeam, baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p, baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
 
 	for (; p < MAX_ACTIVETEAM; p++) {
 		Cvar_ForceSet(va("mn_name%i", p), "");
@@ -545,15 +543,12 @@ void CL_UpdateHireVar(void)
 			baseCurrent->curTeam[p] = &baseCurrent->wholeTeam[i];
 			p++;
 		}
-	for (; p<MAX_ACTIVETEAM; p++ )
-		baseCurrent->curTeam[p] = NULL;
 
 	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
-#if 0
-		Sys_Error("numOnTeam[%i]: %i, p: %i\n",baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p);
-#else
-		baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] = p;
-#endif
+		Sys_Error("numWholeTeam: %i, numOnTeam[%i]: %i, p: %i, mask %i\n",baseCurrent->numWholeTeam, baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], p, baseCurrent->teamMask[baseCurrent->aircraftCurrent]);
+
+	for (; p<MAX_ACTIVETEAM; p++)
+		baseCurrent->curTeam[p] = NULL;
 }
 
 /**
