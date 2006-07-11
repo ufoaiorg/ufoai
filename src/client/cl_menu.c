@@ -1124,6 +1124,16 @@ static void CL_MultiSelect(void)
 		if (id >= ccs.numMissions)
 			break;
 
+		if (gd.mapAction == MA_INTERCEPT && selMis && selMis == ccs.mission + id) {
+			MN_PushMenu("popup_intercept");
+			return;
+		}
+		else if (gd.mapAction == MA_BASEATTACK && selMis && selMis == ccs.mission + id) {
+			MN_PushMenu("popup_baseattack");
+			return;
+		}
+
+		CL_MapActionReset();
 		selMis = ccs.mission + id;
 
 		if (!Q_strncmp(selMis->def->name, "baseattack", 10)) {
@@ -1166,11 +1176,7 @@ static void MN_MapClick(menuNode_t * node, int x, int y)
 		} else {
 			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL);
 		}
-	} else if (gd.mapAction == MA_INTERCEPT && selMis)
-		MN_PushMenu("popup_intercept");
-	else if (gd.mapAction == MA_BASEATTACK && selMis)
-		MN_PushMenu("popup_baseattack");
-	else if (gd.mapAction == MA_UFORADAR) {
+	} else if (gd.mapAction == MA_UFORADAR) {
 		MN_PushMenu("popup_intercept_ufo");
 		/* TODO: Select aircraft - follow ufo - fight */
 		/* if shoot down - we have a new crashsite mission if color != water */
