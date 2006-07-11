@@ -545,7 +545,7 @@ void CL_AircraftSelect(void)
 		return;
 
 	/* selecting the first aircraft in base (every base has at least one aircraft) */
-	if (aircraftID >= baseCurrent->numAircraftInBase)
+	if (aircraftID >= baseCurrent->numAircraftInBase || aircraftID < 0)
 		aircraftID = 0;
 
 	air = &baseCurrent->aircraft[aircraftID];
