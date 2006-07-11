@@ -98,6 +98,14 @@ void CL_GenerateCharacter(char *team, base_t *base, int type)
 	/* check for too many characters */
 	if (base->numWholeTeam >= (int) cl_numnames->value)
 		return;
+	if (base->numWholeTeam >= MAX_WHOLETEAM) {
+#if DEBUG
+		Sys_Error("numWholeTeam (%i) is bigger than the allowed maximum (%i) - this is a prospectiv overflow\n", base->numWholeTeam, MAX_WHOLETEAM);
+#else
+		base->numWholeTeam >= MAX_WHOLETEAM;
+#endif
+		return; /* for code analysts - never reached */
+	}
 
 	/* reset character */
 	chr = &base->wholeTeam[base->numWholeTeam];
@@ -531,14 +539,14 @@ void CL_UpdateHireVar(void)
 	/* now update the mask for display the hired soldiers */
 	baseCurrent->hiredMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent];
 
-	memset(baseCurrent->curTeam, 0, sizeof(character_t*)*MAX_ACTIVETEAM);
-
 	/* update curTeam list */
 	for (i = 0, p = 0; i < baseCurrent->numWholeTeam; i++)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
 			baseCurrent->curTeam[p] = &baseCurrent->wholeTeam[i];
 			p++;
 		}
+	for (; p<MAX_ACTIVETEAM; p++ )
+		baseCurrent->curTeam[p] = NULL;
 
 	if ( p != baseCurrent->numOnTeam[baseCurrent->aircraftCurrent])
 #if 0
