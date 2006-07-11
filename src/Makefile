@@ -323,6 +323,9 @@ linuxinstaller:
 sourcearchive:
 	tar -cvjp --exclude-from=linux/tar.ex -f ufoai-$(VERSION)-source.tar.bz2 ./
 
+deb:
+	debuild binary
+
 links:
 	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so ../ufoded
 	ln -s src/$(BUILD_DEBUG_DIR)/ufoded ../ufoded
