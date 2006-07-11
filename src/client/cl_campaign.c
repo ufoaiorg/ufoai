@@ -2664,6 +2664,12 @@ void CL_ParseMission(char *name, char **text)
 			Com_Printf("Com_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, name);
 
 	} while (*text);
+#ifdef DEBUG
+	if ( abs(ms->pos[0]) > 180 )
+		Com_Printf("Longitude for mission '%s' is bigger than 180 EW (%.0f)\n", ms->name, ms->pos[0]);
+	if ( abs(ms->pos[1]) > 180 )
+		Com_Printf("Latitude for mission '%s' is bigger than 90 NS (%.0f)\n", ms->name, ms->pos[1]);
+#endif
 }
 
 
