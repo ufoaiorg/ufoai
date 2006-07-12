@@ -676,7 +676,8 @@ mission tropic_river
 	map		"+tropic"
 	param	river
 	music		mission3
-	pos		"308 412"
+//	alienarmor	light
+	pos		"90 10"
 	aliens		4
 	civilians	2
 	alienequip	campaign_alien
@@ -694,7 +695,7 @@ mission tropic_drug
 	map		"+tropic"
 	param	drug
 	music		mission3
-	pos		"308 412"
+	pos		"77 18"
 	aliens		4
 	civilians	2
 	alienequip	campaign_alien

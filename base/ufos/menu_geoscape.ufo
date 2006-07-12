@@ -149,7 +149,7 @@ menu map
 
 	text description
 	{
-		pos		"34 658"
+		pos		"34 632"
 		size	"400 100"
 		format	"20 0"
 		height	"8"
