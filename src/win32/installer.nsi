@@ -495,6 +495,7 @@ Section "Game" SEC01
   File "..\..\base\pics\base\*.tga"
   SetOutPath "$INSTDIR\base\pics\hud"
   File "..\..\base\pics\hud\*.tga"
+  File "..\..\base\pics\hud\*.jpg"
   SetOutPath "$INSTDIR\base\pics\maps"
   SetOutPath "$INSTDIR\base\pics\maps\shots"
   File "..\..\base\pics\maps\shots\*.jpg"
