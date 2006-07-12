@@ -451,7 +451,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 
 #if defined _M_IX86
 
-#ifdef NDEBUG
+#ifndef DEBUG
 const char *gamename = "game32.dll";
 const char *debugdir = "release\\win32";
 #else
@@ -461,7 +461,7 @@ const char *debugdir = "debug\\win32";
 
 #elif defined _M_X64
 
-#ifdef NDEBUG
+#ifndef DEBUG
 const char *gamename = "game64.dll";
 const char *debugdir = "release\\x64";
 #else
@@ -473,7 +473,7 @@ const char *debugdir = "debug\\x64";
 
 #error Update DEC ALPHA platform project configuration
 
-#ifdef NDEBUG
+#ifndef DEBUG
 const char *gamename = "game???.dll";
 const char *debugdir = "release\\alpha";
 #else
@@ -486,7 +486,6 @@ const char *debugdir = "debug\\alpha";
 #error Unsupported platform!
 
 #endif
-
 
 	if (game_library)
 		Com_Error (ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
@@ -526,6 +525,7 @@ const char *debugdir = "debug\\alpha";
 	GetGameAPI = (GetGameApi_t)GetProcAddress (game_library, "GetGameAPI");
 	if (!GetGameAPI) {
 		Sys_UnloadGame ();
+		Com_Printf("Could not load game lib '%s'\n", name);
 		return NULL;
 	}
 
