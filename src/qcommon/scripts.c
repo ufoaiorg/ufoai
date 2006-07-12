@@ -77,7 +77,7 @@ static value_t fdps[] = {
 	{"time", V_INT, offsetof(fireDef_t, time)},
 	{"damage", V_POS, offsetof(fireDef_t, damage)},
 	{"spldmg", V_POS, offsetof(fireDef_t, spldmg)},
-	{"splrad", V_FLOAT, offsetof(fireDef_t, splrad)},
+/*	{"splrad", V_FLOAT, offsetof(fireDef_t, splrad)},*/
 	{"dmgtype", V_DMGTYPE, offsetof(fireDef_t, dmgtype)},
 	{"irgoggles", V_BOOL, offsetof(fireDef_t, irgoggles)},
 	{"stun", V_BOOL, offsetof(fireDef_t, stun)},
@@ -143,6 +143,11 @@ void Com_ParseFire(char *name, char **text, fireDef_t * fd)
 				if (!*text)
 					return;
 				fd->range = atof(token) * 32.0f;
+			} else if (!Q_strncmp(token, "splrad", 6)) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				fd->splrad = atof(token) * 32.0f;
 			} else
 				Com_Printf("Com_ParseFire: unknown token \"%s\" ignored (weapon %s)\n", token, name);
 		}
