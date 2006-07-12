@@ -709,7 +709,7 @@ Section "SourceCode" SEC03
   File "..\server\*.c"
   SetOutPath "$INSTDIR\src\solaris"
   File "..\solaris\*.c"
-  File "..\solaris\*.h"
+;  File "..\solaris\*.h"
   File "..\solaris\Makefile.Solaris"
 
 ;======================================================================
