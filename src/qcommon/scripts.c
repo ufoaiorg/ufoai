@@ -70,7 +70,7 @@ static value_t fdps[] = {
 	{"speed", V_FLOAT, offsetof(fireDef_t, speed)},
 	{"spread", V_POS, offsetof(fireDef_t, spread)},
 	{"crouch", V_FLOAT, offsetof(fireDef_t, crouch)},
-	{"range", V_FLOAT, offsetof(fireDef_t, range)},
+/*	{"range", V_FLOAT, offsetof(fireDef_t, range)},*/
 	{"shots", V_INT, offsetof(fireDef_t, shots)},
 	{"ammo", V_INT, offsetof(fireDef_t, ammo)},
 	{"rof", V_FLOAT, offsetof(fireDef_t, rof)},
@@ -138,6 +138,11 @@ void Com_ParseFire(char *name, char **text, fireDef_t * fd)
 					}
 				if (skill >= SKILL_NUM_TYPES)
 					Com_Printf("Com_ParseFire: unknown weapon skill \"%s\" ignored (weapon %s)\n", token, name);
+			} else if (!Q_strncmp(token, "range", 5)) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				fd->range = atof(token) * 32.0f;
 			} else
 				Com_Printf("Com_ParseFire: unknown token \"%s\" ignored (weapon %s)\n", token, name);
 		}

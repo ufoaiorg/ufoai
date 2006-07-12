@@ -160,7 +160,11 @@ typedef struct {
 	void (*multicast) (int mask);
 	void (*unicast) (player_t * player);
 	void (*WriteChar) (int c);
+#ifdef DEBUG
+	void (*WriteByte) (int c, char* file, int line);
+#else
 	void (*WriteByte) (int c);
+#endif
 	void (*WriteShort) (int c);
 	void (*WriteLong) (int c);
 	void (*WriteFloat) (float f);

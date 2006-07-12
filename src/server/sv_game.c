@@ -230,10 +230,19 @@ void PF_WriteChar(int c)
 {
 	MSG_WriteChar(&sv.multicast, c);
 }
+
+#ifdef DEBUG
+void PF_WriteByte(int c, char* file, int line)
+{
+	Com_Printf("Interface call from '%s' line %i\n", file, line);
+	MSG_WriteByte(&sv.multicast, c);
+}
+#else
 void PF_WriteByte(int c)
 {
 	MSG_WriteByte(&sv.multicast, c);
 }
+#endif
 void PF_WriteShort(int c)
 {
 	MSG_WriteShort(&sv.multicast, c);
