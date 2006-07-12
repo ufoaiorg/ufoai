@@ -501,28 +501,40 @@ const char *debugdir = "debug\\alpha";
 		if (game_library) {
 			Com_DPrintf ("LoadLibrary (%s)\n",name);
 			break;
+		} else {
+			Com_DPrintf ("LoadLibrary (%s) failed\n",name);
 		}
 	}
 
-	/* check the current debug directory first for development purposes */
-	_getcwd (cwd, sizeof(cwd));
-	Com_sprintf (name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
-	game_library = LoadLibrary ( name );
-	if (game_library)
-		Com_DPrintf ("LoadLibrary (%s)\n", name);
-#ifdef DEBUG
-	else {
-		/* check the current directory for other development purposes */
-		Com_sprintf (name, sizeof(name), "%s/%s", cwd, gamename);
+	/* check the current debug directory for development purposes */
+	if (!game_library) {
+		_getcwd (cwd, sizeof(cwd));
+		Com_sprintf (name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
 		game_library = LoadLibrary ( name );
 		if (game_library)
 			Com_DPrintf ("LoadLibrary (%s)\n", name);
-	}
+#ifdef DEBUG
+		else {
+			Com_DPrintf ("LoadLibrary (%s) failed\n",name);
+			/* check the current directory for other development purposes */
+			Com_sprintf (name, sizeof(name), "%s/%s", cwd, gamename);
+			game_library = LoadLibrary ( name );
+			if (game_library)
+				Com_DPrintf ("LoadLibrary (%s)\n", name);
+			else
+				Com_DPrintf ("LoadLibrary (%s) failed\n",name);
+		}
 #endif
+	}
+
+	if (!game_library) {
+		Com_Printf("Could not find any valid game lib\n");
+		return NULL;
+	}
 
 	GetGameAPI = (GetGameApi_t)GetProcAddress (game_library, "GetGameAPI");
 	if (!GetGameAPI) {
-		Sys_UnloadGame ();
+			Sys_UnloadGame ();
 		Com_Printf("Could not load game lib '%s'\n", name);
 		return NULL;
 	}
