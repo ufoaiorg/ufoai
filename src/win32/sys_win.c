@@ -490,37 +490,35 @@ const char *debugdir = "debug\\alpha";
 	if (game_library)
 		Com_Error (ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
 
+	/* run through the search paths */
+	path = NULL;
+	while (1) {
+		path = FS_NextPath (path);
+		if (!path)
+			break;		/* couldn't find one anywhere */
+		Com_sprintf (name, sizeof(name), "%s/game.dll", path);
+		game_library = LoadLibrary (name);
+		if (game_library) {
+			Com_DPrintf ("LoadLibrary (%s)\n",name);
+			break;
+		}
+	}
+
 	/* check the current debug directory first for development purposes */
 	_getcwd (cwd, sizeof(cwd));
 	Com_sprintf (name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
 	game_library = LoadLibrary ( name );
 	if (game_library)
 		Com_DPrintf ("LoadLibrary (%s)\n", name);
-	else {
 #ifdef DEBUG
+	else {
 		/* check the current directory for other development purposes */
 		Com_sprintf (name, sizeof(name), "%s/%s", cwd, gamename);
 		game_library = LoadLibrary ( name );
 		if (game_library)
 			Com_DPrintf ("LoadLibrary (%s)\n", name);
-		else
-#endif
-		{
-			/* now run through the search paths */
-			path = NULL;
-			while (1) {
-				path = FS_NextPath (path);
-				if (!path)
-					return NULL;		/* couldn't find one anywhere */
-				Com_sprintf (name, sizeof(name), "%s/%s", path, gamename);
-				game_library = LoadLibrary (name);
-				if (game_library) {
-					Com_DPrintf ("LoadLibrary (%s)\n",name);
-					break;
-				}
-			}
-		}
 	}
+#endif
 
 	GetGameAPI = (GetGameApi_t)GetProcAddress (game_library, "GetGameAPI");
 	if (!GetGameAPI) {
