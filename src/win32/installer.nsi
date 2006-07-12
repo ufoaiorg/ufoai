@@ -808,6 +808,8 @@ FunctionEnd
 
 Section Uninstall
   RMDIR /r $INSTDIR
+; TODO: Check whether this will remove the dir, too
+  RMDIR $INSTDIR
   RMDir /r "$SMPROGRAMS\${PRODUCT_NAME}"
   Delete "$DESKTOP\${PRODUCT_NAME}.lnk"
 
