@@ -91,6 +91,8 @@ Section "Game" SEC01
   File "..\..\base\i18n\it\LC_MESSAGES\*.mo"
   SetOutPath "$INSTDIR\base\i18n\pl\LC_MESSAGES"
   File "..\..\base\i18n\pl\LC_MESSAGES\*.mo"
+  SetOutPath "$INSTDIR\base\i18n\slo\LC_MESSAGES"
+  File "..\..\base\i18n\slo\LC_MESSAGES\*.mo"
 
 ; models
   SetOutPath "$INSTDIR\base\models"
