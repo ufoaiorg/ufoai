@@ -463,7 +463,6 @@ void SV_InitGameProgs(void)
 	import.error = PF_error;
 
 	import.trace = SV_Trace;
-	import.pointcontents = SV_PointContents;
 	import.linkentity = SV_LinkEdict;
 	import.unlinkentity = SV_UnlinkEdict;
 

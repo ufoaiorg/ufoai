@@ -295,45 +295,7 @@ int SV_AreaEdicts(vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int a
 	return area_count;
 }
 
-
 /*=========================================================================== */
-
-/*
-=============
-SV_PointContents
-=============
-*/
-int SV_PointContents(vec3_t p)
-{
-#if 0
-	edict_t *touch[MAX_EDICTS], *hit;
-	int i, num;
-	int contents, c2;
-	int headnode;
-
-	/* get base contents from world */
-	contents = CM_PointContents(p, sv.models[1]->headnode);
-
-	/* or in contents from all the other entities */
-	num = SV_AreaEdicts(p, p, touch, MAX_EDICTS, AREA_SOLID);
-
-	for (i = 0; i < num; i++) {
-		hit = touch[i];
-
-		/* might intersect, so do an exact clip */
-		headnode = SV_HullForEntity(hit);
-
-		c2 = CM_TransformedPointContents(p, headnode, hit->origin, vec3_origin);
-
-		contents |= c2;
-	}
-
-	return contents;
-#endif
-	return 0;
-}
-
-
 
 typedef struct {
 	vec3_t boxmins, boxmaxs;	/* enclose the test object along entire move */

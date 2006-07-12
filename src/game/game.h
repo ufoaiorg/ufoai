@@ -109,7 +109,6 @@ struct edict_s {
 
 /*=============================================================== */
 
-/*typedef struct routing_s routing_t;*/
 /* functions provided by the main engine */
 typedef struct {
 	/* client/server information */
@@ -139,8 +138,7 @@ typedef struct {
 	void (*setmodel) (edict_t * ent, char *name);
 
 	/* collision detection */
-	 trace_t(*trace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
-	int (*pointcontents) (vec3_t point);
+	trace_t(*trace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
 	void (*linkentity) (edict_t * ent);
 	void (*unlinkentity) (edict_t * ent);	/* call before removing an interactive edict */
 
@@ -236,19 +234,7 @@ typedef struct {
 	/* each new level entered will cause a call to SpawnEntities */
 	void (*SpawnEntities) (char *mapname, char *entstring);
 
-	/* Read/Write Game is for storing persistant cross level information */
-	/* about the world state and the clients. */
-	/* WriteGame is called every time a level is exited. */
-	/* ReadGame is called on a loadgame. */
-	/*void      (*WriteGame) (char *filename, qboolean autosave); */
-	/*void      (*ReadGame) (char *filename); */
-
-	/* ReadLevel is called after the default map information has been */
-	/* loaded with SpawnEntities */
-	/*void      (*WriteLevel) (char *filename); */
-	/*void      (*ReadLevel) (char *filename); */
-
-	 qboolean(*ClientConnect) (player_t * client, char *userinfo);
+	qboolean(*ClientConnect) (player_t * client, char *userinfo);
 	void (*ClientBegin) (player_t * client);
 	void (*ClientUserinfoChanged) (player_t * client, char *userinfo);
 	void (*ClientDisconnect) (player_t * client);

@@ -201,9 +201,7 @@ extern player_t *sv_player;
 
 /*=========================================================== */
 
-/* */
 /* sv_main.c */
-/* */
 void SV_FinalMessage(char *message, qboolean reconnect);
 void SV_DropClient(client_t * drop);
 
@@ -224,21 +222,15 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 void Master_Heartbeat(void);
 void Master_Packet(void);
 
-/* */
 /* sv_init.c */
-/* */
 void SV_InitGame(void);
 void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame);
 
 
-/* */
 /* sv_phys.c */
-/* */
 void SV_PrepWorldFrame(void);
 
-/* */
 /* sv_send.c */
-/* */
 typedef enum { RD_NONE, RD_CLIENT, RD_PACKET } redirect_t;
 
 #define	SV_OUTPUTBUF_LENGTH	(MAX_MSGLEN - 16)
@@ -256,21 +248,15 @@ void SV_ClientPrintf(client_t * cl, int level, char *fmt, ...);
 void SV_BroadcastPrintf(int level, char *fmt, ...);
 void SV_BroadcastCommand(char *fmt, ...);
 
-/* */
 /* sv_user.c */
-/* */
 void SV_Nextserver(void);
 void SV_ExecuteClientMessage(client_t * cl);
 
-/* */
 /* sv_ccmds.c */
-/* */
 void SV_ReadLevelFile(void);
 void SV_Status_f(void);
 
-/* */
 /* sv_ents.c */
-/* */
 void SV_WriteFrameToClient(client_t * client, sizebuf_t * msg);
 void SV_RecordDemoMessage(void);
 void SV_BuildClientFrame(client_t * client);
@@ -278,9 +264,7 @@ void SV_BuildClientFrame(client_t * client);
 
 void SV_Error(char *error, ...);
 
-/* */
 /* sv_game.c */
-/* */
 extern game_export_t *ge;
 
 void SV_InitGameProgs(void);
@@ -291,9 +275,7 @@ void SV_InitEdict(edict_t * e);
 
 /*============================================================ */
 
-/* */
 /* high level object sorting to reduce interaction tests */
-/* */
 
 void SV_ClearWorld(void);
 
@@ -323,14 +305,8 @@ int SV_AreaEdicts(vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int a
 
 /*=================================================================== */
 
-/* */
-/* functions that interact with everything apropriate */
-/* */
-int SV_PointContents(vec3_t p);
-
 /* returns the CONTENTS_* value from the world at the given point. */
 /* Quake 2 extends this to also check entities, to allow moving liquids */
-
 
 trace_t SV_Trace(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passedict, int contentmask);
 
