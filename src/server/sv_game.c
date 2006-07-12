@@ -210,8 +210,7 @@ static void PF_WriteChar(int c)
 #ifdef DEBUG
 static void PF_WriteByte(int c, char* file, int line)
 {
-	Com_Printf("Interface call from '%s' line %i\n", file, line);
-	MSG_WriteByte(&sv.multicast, c);
+	MSG_WriteByteDebug(&sv.multicast, c, file, line);
 }
 #else
 static void PF_WriteByte(int c)
