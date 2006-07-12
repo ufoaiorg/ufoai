@@ -362,8 +362,8 @@ void CL_ActorUpdateCVars(void)
 			Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Currently panics!\n"));
 		} else {
 			/* in multiplayer we should be able to use the aliens weapons */
-			if (ccs.singleplayer && cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE && selWeapon && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].kurz)
-				) {
+			if (ccs.singleplayer && cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE && selWeapon
+			&& !RS_ItemIsResearched(csi.ods[selWeapon->item.t].kurz) ) {
 				CL_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
 				cl.cmode = M_MOVE;
 			}
@@ -433,8 +433,6 @@ void CL_ActorUpdateCVars(void)
 				Cbuf_AddText("stopreaction\n");
 			}
 
-			/* set info text */
-			menuText[TEXT_STANDARD] = infoText;
 		} else {
 			/* no actor selected, reset cvars */
 			/* TODO: this overwrites the correct values a bit to often.
@@ -456,11 +454,9 @@ void CL_ActorUpdateCVars(void)
 			if (cl.time < cl.msgTime) {
 				/* special message */
 				Com_sprintf(infoText, MAX_MENUTEXTLEN, cl.msgText);
-				menuText[TEXT_STANDARD] = infoText;
-			} else {
-				menuText[TEXT_STANDARD] = NULL;
 			}
 		}
+		menuText[TEXT_STANDARD] = infoText;
 	}
 
 	/* mode */
@@ -1616,7 +1612,7 @@ float CL_TargetingToHit(pos3_t toPos)
 	VectorCopy(selActor->origin, shooter);
 	VectorCopy(le->origin, target);
 
-	/*Calculate HitZone: */
+	/* Calculate HitZone: */
 	distx = fabs(shooter[0] - target[0]);
 	disty = fabs(shooter[1] - target[1]);
 	distance = sqrt(distx * distx + disty * disty);
@@ -1627,8 +1623,11 @@ float CL_TargetingToHit(pos3_t toPos)
 	width = 2 * PLAYER_WIDTH * pseudosin;
 	height = ((le->state & STATE_CROUCHED) ? PLAYER_CROUCH : PLAYER_STAND) - PLAYER_MIN;
 
-	acc = M_PI / 180 * GET_ACC(selChr->skills[ABILITY_ACCURACY], selFD->weaponSkill ? selChr->skills[selFD->weaponSkill]
-							   : 0);
+	acc = M_PI / 180
+		* GET_ACC(selChr->skills[ABILITY_ACCURACY],
+			selFD->weaponSkill
+			? selChr->skills[selFD->weaponSkill]
+			: 0);
 
 	if ((selActor->state & STATE_CROUCHED) && selFD->crouch)
 		acc *= selFD->crouch;
@@ -1783,8 +1782,10 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT };
 #define BoxSize(i,source,target) (target[0]=i*source[0],target[1]=i*source[1],target[2]=source[2])
 /**
- * @brief Adds a target.
-*/
+  * @brief Adds a target.
+  *
+  * Draws the tracer (red, yellow, green box) on the grid
+  */
 void CL_AddTargeting(void)
 {
 	vec3_t realBoxSize;
@@ -1817,9 +1818,11 @@ void CL_AddTargeting(void)
 			if (mouseActor->team != cls.team)
 				switch (mouseActor->team) {
 				case TEAM_CIVILIAN:
+					/* civilians are yellow */
 					VectorSet(ent.angles, 1, 1, 0);
 					break;
 				default:
+					/* aliens (and players not in our team [multiplayer]) are red */
 					VectorSet(ent.angles, 1, 0, 0);
 					break;
 				}
