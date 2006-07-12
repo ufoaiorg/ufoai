@@ -743,7 +743,6 @@ Section "SourceCode" SEC03
   File "..\tools\ufo2map\*.h"
   File "..\tools\ufo2map\*.c"
   File "..\tools\ufo2map\*.dev"
-  File "..\tools\ufo2map\makefile"
   SetOutPath "$INSTDIR\src\tools\ufo2map\common"
   File "..\tools\ufo2map\common\*.h"
   File "..\tools\ufo2map\common\*.c"
