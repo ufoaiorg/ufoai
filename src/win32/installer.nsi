@@ -806,9 +806,6 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
-;==============================================================
-; TODO: Delete all files from $INSTDIR, too
-;==============================================================
   RMDIR /r $INSTDIR
   RMDir /r "$SMPROGRAMS\${PRODUCT_NAME}"
   Delete "$DESKTOP\${PRODUCT_NAME}.lnk"
