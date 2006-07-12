@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "UFO:Alien Invasion"
-!define PRODUCT_VERSION "2.0-RC2"
+!define PRODUCT_VERSION "2.0-RC3"
 !define PRODUCT_PUBLISHER "UFO:AI Team"
 !define PRODUCT_WEB_SITE "http://www.ufoai.net"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\ufo.exe"
@@ -52,7 +52,7 @@ SetCompressor bzip2
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile "ufoai-${PRODUCT_VERSION}-win32.exe"
-InstallDir "$PROGRAMFILES\UFOAI"
+InstallDir "$PROGRAMFILES\UFOAI-${PRODUCT_VERSION}"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
 ShowUnInstDetails show
