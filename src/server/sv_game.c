@@ -453,7 +453,6 @@ void SV_InitGameProgs(void)
 	if (ge)
 		SV_ShutdownGameProgs();
 
-
 	/* load a new game dll */
 	import.multicast = SV_Multicast;
 	import.unicast = PF_Unicast;

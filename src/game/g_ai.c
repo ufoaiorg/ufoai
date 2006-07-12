@@ -427,12 +427,19 @@ G_SpawnAIPlayer
 #define MAX_SPAWNPOINTS		64
 static int spawnPoints[MAX_SPAWNPOINTS];
 
+/**
+ * @brief Spawn civilians and aliens
+ * @param
+ * @sa
+ */
 static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 {
 	edict_t *ent;
 	byte equip[MAX_OBJDEFS];
 	int i, j, numPoints, team;
 	int ammo, num;
+	item_t item;
+	char *ref;
 
 	/* search spawn points */
 	team = player->pers.team;
@@ -471,11 +478,31 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 		while (ent->type != ET_ACTORSPAWN)
 			ent = &g_edicts[spawnPoints[(int) (frand() * numPoints)]];
 
+		/* spawn */
+		level.num_spawned[team]++;
+		level.num_alive[team]++;
 		if (team != TEAM_CIVILIAN) {
-			/* spawn */
-			level.num_spawned[team]++;
-			level.num_alive[team]++;
 			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_alien"), ent->chr.path, ent->chr.body, ent->chr.head, ent->chr.name);
+
+			/* search the armor definition */
+			ref = gi.cvar_string("ai_armor");
+			for (item.t = 0; item.t < gi.csi->numODs; item.t++)
+				if (!Q_strncmp(ref, gi.csi->ods[item.t].kurz, MAX_VAR))
+					break;
+
+			/* found */
+			if (item.t < gi.csi->numODs && item.t != NONE) {
+				if (!Q_strncmp(gi.csi->ods[item.t].type, "armor", MAX_VAR)) {
+					item.a = 1;
+					Com_AddToInventory(&ent->i, item, gi.csi->idArmor, 0, 0);
+					Com_Printf("Add alien armor '%s'\n", ref);
+					Com_Printf("armor in inv: '%s'\n", gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t].kurz );
+				} else
+					Com_Printf("No valid alien armor '%s'\n", ref);
+			} else
+				Com_Printf("Could not find alien armor '%s'\n", ref);
+
+			/* FIXME: chr.name should be Alien: Ortnok e.g. */
 			Q_strncpyz(ent->chr.name, _("Alien"), MAX_VAR);
 			ent->type = ET_ACTOR;
 			ent->pnum = player->num;
@@ -502,8 +529,6 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 			if (num) {
 				/* add weapon */
-				item_t item;
-
 				item.m = NONE;
 
 				num = (int) (frand() * num);
@@ -542,6 +567,8 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 				/* set model */
 				ent->chr.inv = &ent->i;
+
+/*				ent->chr.inv->c[gi.csi->idArmor]*/
 				ent->body = gi.modelindex(Com_CharGetBody(&ent->chr));
 				ent->head = gi.modelindex(Com_CharGetHead(&ent->chr));
 				ent->skin = ent->chr.skin;
@@ -550,10 +577,6 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 				Com_Printf("Not enough weapons in equipment '%s'\n", gi.cvar_string("ai_equipment"));
 			}
 		} else {
-			/* spawn */
-			level.num_spawned[TEAM_CIVILIAN]++;
-			level.num_alive[TEAM_CIVILIAN]++;
-
 			Com_CharGenAbilitySkills(&ent->chr, 0, 20, 0, 20);
 			ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]) / 2;
 			ent->AP = 100;
@@ -562,6 +585,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_civilian"), ent->chr.path, ent->chr.body, ent->chr.head, ent->chr.name);
 			ent->chr.inv = &ent->i;
+			/* FIXME: Maybe we have civilians with armor, too - police and so on */
 			ent->body = gi.modelindex(Com_CharGetBody(&ent->chr));
 			ent->head = gi.modelindex(Com_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;

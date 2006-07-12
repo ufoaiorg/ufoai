@@ -2111,6 +2111,7 @@ static void CL_GameGo(void)
 	Cvar_Set("ai_alien", mis->alienTeam);
 	Cvar_Set("ai_civilian", mis->civTeam);
 	Cvar_Set("ai_equipment", mis->alienEquipment);
+	Cvar_Set("ai_armor", mis->alienArmor);
 	Cvar_Set("music", mis->music);
 	Cvar_Set("equip", curCampaign->equipment);
 	Cvar_Set("map_dropship", gd.bases[baseCurrent->idx].aircraft[gd.interceptAircraft].id);
@@ -2569,6 +2570,8 @@ value_t mission_vals[] = {
 	{"onlose", V_STRING, offsetof(mission_t, onlose)}
 	,
 	{"alienteam", V_STRING, offsetof(mission_t, alienTeam)}
+	,
+	{"alienarmor", V_STRING, offsetof(mission_t, alienArmor)}
 	,
 	{"alienequip", V_STRING, offsetof(mission_t, alienEquipment)}
 	,
