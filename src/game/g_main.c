@@ -187,20 +187,20 @@ void InitGame(void)
 	mob_death = gi.cvar("mob_death", "10", CVAR_LATCH);
 	mob_wound = gi.cvar("mob_wound", "0.1", CVAR_LATCH);
 	mof_watching = gi.cvar("mof_watching", "1.7", CVAR_LATCH);
-	mof_teamkill = gi.cvar("mof_watching", "2.0", CVAR_LATCH);
-	mof_civilian = gi.cvar("mof_watching", "0.3", CVAR_LATCH);
-	mof_enemy = gi.cvar("mof_watching", "0.5", CVAR_LATCH);
-	mor_pain = gi.cvar("mof_watching", "3.6", CVAR_LATCH);
+	mof_teamkill = gi.cvar("mof_teamkill", "2.0", CVAR_LATCH);
+	mof_civilian = gi.cvar("mof_civilian", "0.3", CVAR_LATCH);
+	mof_enemy = gi.cvar("mof_ememy", "0.5", CVAR_LATCH);
+	mor_pain = gi.cvar("mof_pain", "3.6", CVAR_LATCH);
 	/*everyone gets this times morale damage */
-	mor_default = gi.cvar("mof_watching", "0.3", CVAR_LATCH);
+	mor_default = gi.cvar("mor_default", "0.3", CVAR_LATCH);
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_distance = gi.cvar("mof_watching", "120", CVAR_LATCH);
+	mor_distance = gi.cvar("mor_distance", "120", CVAR_LATCH);
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_victim = gi.cvar("mof_watching", "0.7", CVAR_LATCH);
+	mor_victim = gi.cvar("mor_victim", "0.7", CVAR_LATCH);
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_attacker = gi.cvar("mof_watching", "0.3", CVAR_LATCH);
+	mor_attacker = gi.cvar("mor_attacker", "0.3", CVAR_LATCH);
 	/* how much the morale depends on the size of the damaged team */
-	mon_teamfactor = gi.cvar("mof_watching", "0.6", CVAR_LATCH);
+	mon_teamfactor = gi.cvar("mon_teamfactor", "0.6", CVAR_LATCH);
 
 	mor_regeneration = gi.cvar("mor_regeneration", "15", CVAR_LATCH);
 	mor_shaken = gi.cvar("mor_shaken", "50", CVAR_LATCH);
