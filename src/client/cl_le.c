@@ -376,60 +376,6 @@ void LET_StartIdle(le_t * le)
 
 /*
 ==============
-LET_DoAppear
-==============
-*/
-/*#define APPEAR_TIME		1000
-
-void LET_DoAppear( le_t *le )
-{
-	if ( cl.time > le->startTime + APPEAR_TIME )
-	{
-		le->alpha = 1.0;
-		le->think = NULL;
-		return;
-	}
-
-	le->alpha = (float)(cl.time - le->startTime) / APPEAR_TIME;
-}*/
-
-
-/*
-==============
-LET_Appear
-==============
-*/
-/*void LET_Appear( le_t *le )
-{
-	LET_StartIdle( le );
-
-	le->startTime = cl.time;
-	le->think = LET_DoAppear;
-	le->think( le );
-}*/
-
-
-/*
-==============
-LET_Perish
-==============
-*/
-/*#define PERISH_TIME		1000
-
-void LET_Perish( le_t *le )
-{
-	if ( cl.time > le->startTime + PERISH_TIME )
-	{
-		le->inuse = qfalse;
-		return;
-	}
-
-	le->alpha = 1.0 - (float)(cl.time - le->startTime) / PERISH_TIME;
-}*/
-
-
-/*
-==============
 LET_PathMove
 ==============
 */

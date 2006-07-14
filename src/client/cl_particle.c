@@ -55,13 +55,13 @@ typedef enum pf_s {
 	PF_NUM_PTLFUNCS
 } pf_t;
 
-char *pf_strings[PF_NUM_PTLFUNCS] = {
+static char *pf_strings[PF_NUM_PTLFUNCS] = {
 	"init",
 	"run",
 	"think"
 };
 
-size_t pf_values[PF_NUM_PTLFUNCS] = {
+static size_t pf_values[PF_NUM_PTLFUNCS] = {
 	offsetof(ptlDef_t, init),
 	offsetof(ptlDef_t, run),
 	offsetof(ptlDef_t, think)
@@ -84,7 +84,7 @@ typedef enum pc_s {
 	PC_NUM_PTLCMDS
 } pc_t;
 
-char *pc_strings[PC_NUM_PTLCMDS] = {
+static char *pc_strings[PC_NUM_PTLCMDS] = {
 	"end",
 
 	"push", "pop", "kpop",
@@ -102,7 +102,7 @@ char *pc_strings[PC_NUM_PTLCMDS] = {
 #define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
 #define ONLY		(1<<31)
 
-int pc_types[PC_NUM_PTLCMDS] = {
+static int pc_types[PC_NUM_PTLCMDS] = {
 	0,
 
 	V_UNTYPED, V_UNTYPED, V_UNTYPED,
@@ -116,7 +116,7 @@ int pc_types[PC_NUM_PTLCMDS] = {
 	ONLY | V_STRING, ONLY | V_STRING
 };
 
-value_t pps[] = {
+static value_t pps[] = {
 	{"image", V_STRING, offsetof(ptl_t, pic)},
 	{"model", V_STRING, offsetof(ptl_t, model)},
 	{"blend", V_BLEND, offsetof(ptl_t, blend)},
@@ -162,23 +162,23 @@ typedef enum art_s {
 #define		MAX_PTLDEFS		256
 #define		MAX_PTLCMDS		(MAX_PTLDEFS*32)
 
-ptlDef_t ptlDef[MAX_PTLDEFS];
-ptlCmd_t ptlCmd[MAX_PTLCMDS];
+static ptlDef_t ptlDef[MAX_PTLDEFS];
+static ptlCmd_t ptlCmd[MAX_PTLCMDS];
 
-int numPtlDefs;
-int numPtlCmds;
+static int numPtlDefs;
+static int numPtlCmds;
 
 #define		MAX_PCMD_DATA	(MAX_PTLCMDS*8)
 
-byte pcmdData[MAX_PCMD_DATA];
-int pcmdPos;
+static byte pcmdData[MAX_PCMD_DATA];
+static int pcmdPos;
 
 #define		MAX_STACK_DEPTH	8
 #define		MAX_STACK_DATA	512
 
-byte cmdStack[MAX_STACK_DATA];
-void *stackPtr[MAX_STACK_DEPTH];
-byte stackType[MAX_STACK_DEPTH];
+static byte cmdStack[MAX_STACK_DATA];
+static void *stackPtr[MAX_STACK_DEPTH];
+static byte stackType[MAX_STACK_DEPTH];
 
 ptlArt_t ptlArt[MAX_PTL_ART];
 ptl_t ptl[MAX_PTLS];
@@ -212,7 +212,7 @@ void CL_ParticleRegisterArt(void)
 			a->art = (char *) re.RegisterModel(a->name);
 			break;
 		default:
-			Sys_Error("CL_ParticleGetArt: Unknown art type\n");
+			Sys_Error("CL_ParticleRegisterArt: Unknown art type\n");
 		}
 	}
 }
@@ -223,7 +223,7 @@ void CL_ParticleRegisterArt(void)
 CL_ParticleGetArt
 ======================
 */
-int CL_ParticleGetArt(char *name, int frame, char type)
+static int CL_ParticleGetArt(char *name, int frame, char type)
 {
 	ptlArt_t *a;
 	int i;
