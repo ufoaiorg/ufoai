@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qcommon.h"
 #include <setjmp.h>
 #include <ctype.h>
+#include <limits.h>
 
 #if defined DEBUG && defined _MSC_VER
 #include <intrin.h>
@@ -314,8 +315,8 @@ void MSG_WriteChar(sizebuf_t * sb, int c)
 	byte *buf;
 
 #ifdef PARANOID
-	if (c < -128 || c > 127)
-		Com_Error(ERR_FATAL, "MSG_WriteChar: range error %c", c);
+	if (c < SCHAR_MIN || c > SCHAR_MAX)
+		Com_Error(ERR_FATAL, "MSG_WriteChar: range error %i", c);
 #endif
 
 	buf = SZ_GetSpace(sb, 1);
@@ -335,8 +336,8 @@ void MSG_WriteByte(sizebuf_t * sb, int c)
 
 	/* PARANOID is only possible in debug mode (when DEBUG was set, too) */
 #ifdef PARANOID
-	if (c < 0 || c > 255)
-		Com_Error(ERR_FATAL, "MSG_WriteByte: range error %c ('%s', line %i)", c, file, line);
+	if (c < 0 || c > UCHAR_MAX)
+		Com_Error(ERR_FATAL, "MSG_WriteByte: range error %i ('%s', line %i)", c, file, line);
 #endif
 
 	buf = SZ_GetSpace(sb, 1);
@@ -346,13 +347,17 @@ void MSG_WriteByte(sizebuf_t * sb, int c)
 /**
   * @brief
   */
+#ifdef DEBUG
+void MSG_WriteShortDebug(sizebuf_t * sb, int c, char* file, int line)
+#else
 void MSG_WriteShort(sizebuf_t * sb, int c)
+#endif
 {
 	byte *buf;
 
 #ifdef PARANOID
-	if (c < ((short) 0x8000) || c > (short) 0x7fff)
-		Com_Error(ERR_FATAL, "MSG_WriteShort: range error");
+	if (c < SHRT_MIN || c > SHRT_MAX)
+		Com_Error(ERR_FATAL, "MSG_WriteShort: range error %i ('%s', line %i)", c, file, line);
 #endif
 
 	buf = SZ_GetSpace(sb, 2);
@@ -606,7 +611,7 @@ int MSG_ReadShort(sizebuf_t * msg_read)
 		c = -1;
 	else
 		c = (short) (msg_read->data[msg_read->readcount]
-					 + (msg_read->data[msg_read->readcount + 1] << 8));
+					+ (msg_read->data[msg_read->readcount + 1] << 8));
 
 	msg_read->readcount += 2;
 
