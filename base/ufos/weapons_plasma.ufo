@@ -1,15 +1,15 @@
 
-// =======================
-// PLASMA PISTOL
-// =======================
+// ================
+// PLASMA ATOMIZER
+// ================
 item plaspistol
 {
-	name		"_Plasma Pistol"
+	name		"_Plasma Atomizer"
 	model		weapons/plaspistol/plaspistol
 	weapon		true
 	type		pistol
 	category	2
-	twohanded	false
+	twohanded	true
 	shape		"0 0 3 2"
 	center		"1 0 0.3"
 	scale		1.5
@@ -21,7 +21,7 @@ item plaspistol
 
 item plaspistol_ammo
 {
-	name		"_Plasma Pistol Charge"
+	name		"_Plasma Atomizer Charge"
 	model		weapons/plaspistol/plaspistol_clip
 	type		ammo
 	category	0
@@ -34,7 +34,7 @@ item plaspistol_ammo
 	primary
 	{
 		name	"_Charged Pulse"
-		skill 	close
+		skill 	assault
 		projtl	plasmaChargedPulse
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
@@ -42,31 +42,32 @@ item plaspistol_ammo
 		speed	0
 		spread	"4 4"
 		crouch	0.8
-		range	500
-		shots	1
+		range	15
+		shots	3
 		ammo	1
-		time	12
-		damage	"50 10"
+		rof		10
+		time	11
+		damage	"19 10"
 		dmgtype plasma
 	}
 	secondary
 	{
 		name	"_Continuous Beam"
-		skill 	close
+		skill 	heavy
 		projtl	plasmaContinuous
 		impact	plasmaImpact
 		hitbody	plasmaImpact
 		firesnd	weapons/plasma_c.wav
 		sndonce true
 		speed	0
-		spread	"14 5"
+		spread	"15 5"
 		crouch	1.0
-		range	350
-		shots	35
+		range	10
+		shots	48
 		ammo	2
-		rof		25
-		time	22
-		damage	"7 2"
+		rof		50
+		time	15
+		damage	"6 2"
 		dmgtype plasma
 	}
 }
@@ -115,7 +116,7 @@ item plasrifle_ammo
 		speed	0
 		spread	"3 3"
 		crouch	0.7
-		range	700
+		range	22
 		shots	1
 		ammo	1
 		time	13
@@ -134,11 +135,11 @@ item plasrifle_ammo
 		speed	0
 		spread	"9 5"
 		crouch	1.0
-		range	500
+		range	18
 		shots	35
 		ammo	3
 		rof		25
-		time	24
+		time	22
 		damage	"9 2"
 		dmgtype plasma
 	}
@@ -172,11 +173,11 @@ item plasblade
 		hitbody	plasmaImpactCharged
 		firesnd	misc/klonk03.wav
 		speed	0
-		range	55
+		range	1.5
 		shots	1
-		time	10
+		time	4
 		damage	"100 10"
-		dmgtype normal
+		dmgtype plasma
 	}
 	secondary
 	{
@@ -188,13 +189,13 @@ item plasblade
 		impsnd	misc/klonk03.wav
 		bodysnd misc/klonk01.wav
 		speed	320
-		range	500
+		range	10
 		spread	"7 7"
 		shots	1
 		ammo	1
 		time	10
-		damage	"70 10"
-		dmgtype normal
+		damage	"100 10"
+		dmgtype plasma
 	}
 }
 
@@ -207,13 +208,13 @@ item plasblaster
 	name		"_Plasma Blaster"
 	model		weapons/plasblaster/plasblaster
 	weapon		true
-	type		rpg
-	category	3
+	type		biggun
+	category	1
 	twohanded	true
 	shape		"0 0 5 2"
 	center		"7 0 1.4"
 	scale		1.06
-	ammo		4
+	ammo		12
 	reload		10
 	price		5800
 	buytype		0
@@ -233,44 +234,112 @@ item plasblaster_ammo
 
 	primary
 	{
-		name	"_Snap Shot"
+		name	"_Charged Ball"
 		skill 	explosive
 		projtl	plasmaBall
-		impact	plasmaImpact
-		hitbody	plasmaImpact
-		firesnd	weapons/plasma_s.wav
+		impact	plasmaImpactCharged
+		hitbody	plasmaImpactCharged
+		firesnd	weapons/plasma_c.wav
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
 		selfdet true
-		speed	800
-		spread	"5 5"
-		crouch	0.8
-		range	1200
+		gravity	true
+		spread	"4 4"
+		range	20
 		shots	1
-		ammo	1
-		time	14
-		damage	"45 10"
-		spldmg	"100 30"
-		splrad	120
+		ammo	4
+		rof		1
+		time	16
+		damage	"60 10"
+		spldmg	"120 20"
+		splrad	5
 		dmgtype plasma
 	}
 	secondary
 	{
-		name	"_Aimed Shot"
-		skill 	explosive
-		projtl	plasmaBall
+		name	"_Continuous Beam"
+		skill 	heavy
+		projtl	plasmaContinuous
 		impact	plasmaImpact
 		hitbody	plasmaImpact
 		firesnd	weapons/plasma_c.wav
-		selfdet true
-		speed	800
-		spread	"2.6 2.6"
-		crouch	0.6
-		range	1200
+		sndonce true
+		speed	0
+		spread	"11 5"
+		crouch	1.0
+		range	15
+		shots	35
+		ammo	3
+		rof		25
+		time	26
+		damage	"13 3"
+		dmgtype plasma
+	}
+}
+
+// =======================
+// PLASMA GRENADE SHELLS
+// =======================
+
+item grenl_plasma_ammo
+{
+	name		"_Plasma Grenade Shells"
+	model		weapons/grenl/grenl_plasma_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		0.7
+	price		140
+	buytype		0
+
+	primary
+	{
+		name	"_Single Shot"
+		skill	explosive
+		projtl	grenl_ammo
+		impact	plasmaImpactCharged
+		hitbody plasmaImpactCharged
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"5 5"
+		range	15
 		shots	1
 		ammo	1
-		time	20
-		damage	"45 10"
-		spldmg	"100 30"
-		splrad	120
+		rof		1
+		time	8
+		spldmg	"100 20"
+		splrad	5
+		dmgtype plasma
+	}
+
+	secondary
+	{
+		name	"_Single Shot"
+		skill	explosive
+		projtl	grenl_ammo
+		impact	plasmaImpactCharged
+		hitbody plasmaImpactCharged
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"5 5"
+		range	15
+		shots	1
+		ammo	1
+		rof		1
+		time	8
+		spldmg	"100 20"
+		splrad	5
 		dmgtype plasma
 	}
 }

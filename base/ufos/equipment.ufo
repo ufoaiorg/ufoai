@@ -58,14 +58,10 @@ equipment campaign_player
 	flamer_ammo		2
 	rpg				1
 	rpg_ammo		4
-	grenl			1
-	grenl_ammo		4
 	fraggrenade		3
 	smokegrenade	1
 	knife			2
-	medikit			1
 	light			3
-	irgoggles		1
 }
 
 equipment campaign_market
@@ -84,24 +80,45 @@ equipment campaign_market
 	flamer_ammo		12
 	rpg				1
 	rpg_ammo		50
+	rpg_incendiary_ammo		50
+	rpg_tachyon_ammo		50
+	grenl			2
+	grenl_ammo		8
+	grenl_plasma_ammo		8
+	bolterrifle			2
+	bolterrifle_ammo	16
+	laserpistol			2
+	laserpistol_ammo	16
+	laserrifle			2
+	laserrifle_ammo		20
+	heavylaser			2
+	heavylaser_ammo			30
+	plaspistol			1
+	plaspistol_ammo			14
+	plasrifle			1
+	plasrifle_ammo			14
+	plasblaster			1
+	plasblaster_ammo		14
+	tachyonpistol			1
+	tachyonpistol_ammo		12
 	tachyonrifle		1
 	tachyonrifle_ammo	12
 	tachyonsniper		1
 	tachyonsniper_ammo	12
-	laserrifle			2
-	laserrifle_ammo		20
-	laserpistol			2
-	laserpistol_ammo	16
-	bolterrifle			1
-	bolterrifle_ammo	16
-	fraggrenade			14
-	smokegrenade		14
-	stunrod			1
+	fraggrenade			24
 	knife				8
-	irgoggles		2
-	medikit				5
-	light				6
-	medium				4
+	irgoggles		3
+	medikit				6
+	smokegrenade		24
+	stunrod			5
+	stungrenade			20
+	incgrenade			20
+	plasmagrenade			20
+	kerrblade                       5
+	plasblade			10
+	light				5
+	medium				6
+//	heavy				6
 }
 
 equipment campaign_alien_heavy
@@ -188,39 +205,43 @@ equipment testing_and_tweaking
 	flamer_ammo			4
 	rpg				2
 	rpg_ammo			4
-	tachyonrifle			2
-	tachyonrifle_ammo		4
-	tachyonsniper			2
-	tachyonsniper_ammo		4
-	plasblaster			2
-	plasblaster_ammo		4
+	rpg_incendiary_ammo		4
+	rpg_tachyon_ammo		4
+	grenl				2
+	grenl_ammo			4
+	grenl_plasma_ammo		4
+	bolterrifle			2
+	bolterrifle_ammo		4
 	laserpistol			2
 	laserpistol_ammo		4
 	laserrifle			2
 	laserrifle_ammo			4
+	heavylaser			2
+	heavylaser_ammo			4
 	plaspistol			2
 	plaspistol_ammo			4
 	plasrifle			2
 	plasrifle_ammo			4
+	plasblaster			2
+	plasblaster_ammo		4
+	tachyonpistol			2
+	tachyonpistol_ammo		4
+	tachyonrifle			2
+	tachyonrifle_ammo		4
+	tachyonsniper			2
+	tachyonsniper_ammo		4
 	fraggrenade			6
 	knife				6
 	irgoggles			6
 	medikit				6
-	light				6
-	medium				6
 	smokegrenade			6
 	stunrod				6
 	stungrenade			6
-	flaregrenade			6
-	grenl				2
-	grenl_ammo			4
+	incgrenade			6
+	plasmagrenade			6
 	kerrblade                       6
-	bolterrifle			2
-	bolterrifle_ammo		4
 	plasblade			6
-	tachyonpistol			2
-	tachyonpistol_ammo		4
+	light				6
+	medium				6
 	heavy				6
 }
-
-

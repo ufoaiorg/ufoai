@@ -67,6 +67,7 @@ up_chapters main
 //========================
 // Basic Technologies
 //========================
+
 tech rs_laser
 {
 	type	tech
@@ -80,20 +81,6 @@ tech rs_laser
 	image_top	techs/laser
 }
 
-tech rs_tachyon
-{
-	type	tech
-	name	"_Tachyon Control"
-	up_chapter	tech
-
-	requires	nothing
-	description	"_tachyon_txt"
-	time	1
-	researched	false
-
-	//image_top  xxxxx
-}
-
 tech rs_plasma
 {
 	type	tech
@@ -103,8 +90,22 @@ tech rs_plasma
 
 	requires	nothing
 
-	time	1
+	time	30
 	researched	false
+}
+
+tech rs_tachyon
+{
+	type	tech
+	name	"_Tachyon Control"
+	up_chapter	tech
+
+	requires	nothing
+	description	"_tachyon_txt"
+	time	50
+	researched	false
+
+	//image_top  xxxxx
 }
 
 tech rs_nano
@@ -114,8 +115,8 @@ tech rs_nano
 	up_chapter	tech
 	description	"_nano_txt"
 
-	requires	initial
-	time	1
+	requires	rs_laser
+	time	40
 	researched	false
 }
 
@@ -125,7 +126,7 @@ tech rs_advanced_armor
 	name	"_Advanced Armor Fabrics"
 
 	requires	"rs_nano rs_plasma"
-	time	1
+	time	120
 	researched	false
 }
 
@@ -147,9 +148,9 @@ tech rs_craft_ufo_tech
 	//image_top  xxxxx
 }
 
-//====================
-// Weapons researched
-//====================
+//=====================================
+// Weapons & Misc Equipment Researched
+//=====================================
 
 tech rs_weapon_assault
 {
@@ -295,54 +296,6 @@ tech rs_weapon_pistol_ammo
 	researched	true
 }
 
-tech rs_weapon_grenl
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_grenl_txt"
-
-	requires	initial
-	provides	grenl
-	time	0
-	researched	true
-}
-
-tech rs_weapon_grenl_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_grenl_ammo_txt"
-
-	requires	initial
-	provides	grenl_ammo
-	time	0
-	researched	true
-}
-
-tech rs_weapon_bolterrifle
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_bolterrifle_txt"
-
-	requires	initial
-	provides	bolterrifle
-	time	0
-	researched	true
-}
-
-tech rs_weapon_bolterrifle_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_bolterrifle_ammo_txt"
-
-	requires	initial
-	provides	bolterrifle_ammo
-	time	0
-	researched	true
-}
-
 tech rs_weapon_rpg
 {
 	type	weapon
@@ -365,6 +318,215 @@ tech rs_weapon_rpg_ammo
 	provides	rpg_ammo
 	time	0
 	researched	true
+}
+
+tech rs_weapon_fraggren
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_fraggren_txt"
+
+	requires	initial
+	provides	fraggrenade
+	time	0
+	researched	true
+}
+
+tech rs_weapon_smokegren
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_smokegren_txt"
+
+	requires	initial
+	provides	smokegrenade
+	time	0
+	researched	true
+}
+
+tech rs_weapon_knife
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_knife_txt"
+
+	requires	initial
+	provides	knife
+	time	0
+	researched	true
+}
+
+//=======================================
+// Weapons & Misc Equipment Unresearched
+//=======================================
+
+tech rs_weapon_stunrod
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_stunrod_txt"
+
+	requires	initial
+	provides	stunrod
+	time	5
+	researched	false
+}
+
+tech rs_medikit
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_medikit_txt"
+
+	requires	initial
+	provides	medikit
+	time	7
+	researched	false
+}
+
+tech rs_irgoggles
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_irgoggles_txt"
+
+	requires	initial
+	provides	irgoggles
+	time	10
+	researched	false
+}
+
+tech rs_weapon_incgrenade
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_incgrenade_txt"
+
+	requires	initial
+	provides	incgrenade
+	time	10
+	researched	false
+}
+
+tech rs_weapon_stungren
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_stungren_txt"
+
+	requires	initial
+	provides	stungrenade
+	time	20
+	researched	false
+}
+
+tech rs_weapon_plasmagren
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasmagren_txt"
+
+	requires	rs_plasma
+	provides	plasmagrenade
+	time	30
+	researched	false
+	needscollected	false
+}
+
+tech rs_weapon_rpg_incendiary_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_rpg_incendiary_ammo_txt"
+
+	requires	rs_weapon_incgrenade
+	provides	rpg_incendiary_ammo
+	time	10
+	researched	false
+}
+
+tech rs_weapon_rpg_tachyon_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_rpg_tachyon_ammo_txt"
+
+	requires	rs_tachyon
+	provides	rpg_tachyon_ammo
+	time	40
+	researched	false
+}
+
+tech rs_weapon_kerrblade
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_kerrblade_txt"
+
+	requires	initial
+	provides	kerrblade
+	time	10
+	researched	false
+}
+
+tech rs_weapon_bolterrifle
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_bolterrifle_txt"
+
+	requires	initial
+	provides	bolterrifle
+	time	10
+	researched	false
+}
+
+tech rs_weapon_bolterrifle_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_bolterrifle_ammo_txt"
+
+	requires	rs_weapon_bolterrifle
+	provides	bolterrifle_ammo
+	time	0
+	researched	false
+}
+
+tech rs_weapon_grenl
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_grenl_txt"
+
+	requires	initial
+	provides	grenl
+	time	10
+	researched	false
+}
+
+tech rs_weapon_grenl_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_grenl_ammo_txt"
+
+	requires	rs_weapon_grenl
+	provides	grenl_ammo
+	time	0
+	researched	false
+}
+
+tech rs_weapon_grenl_plasma_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_grenl_plasma_ammo_txt"
+
+	requires	"rs_weapon_grenl rs_plasma"
+	provides	grenl_plasma_ammo
+	time	20
+	researched	false
 }
 
 tech rs_weapon_laserpistol
@@ -415,152 +577,26 @@ tech rs_weapon_laserrifle_ammo
 	researched	false
 }
 
-tech rs_weapon_fraggren
+tech rs_weapon_heavylaser
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_fraggren_txt"
+	description	"_heavylaser_txt"
 
-	requires	initial
-	provides	fraggrenade
-	time	0
-	researched	true
-}
-
-tech rs_weapon_flaregren
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_flaregren_txt"
-
-	requires	initial
-	provides	flaregrenade
-	time	10
+	requires	rs_weapon_laserrifle
+	provides	heavylaser
+	time	20
 	researched	false
 }
 
-tech rs_weapon_stungren
+tech rs_weapon_heavylaser_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_stungren_txt"
+	description	"_heavylaser_txt"
 
-	requires	initial
-	provides	stungrenade
-	time	10
-	researched	false
-}
-
-tech rs_weapon_smokegren
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_smokegren_txt"
-
-	requires	initial
-	provides	smokegrenade
-	time	0
-	researched	true
-}
-
-tech rs_weapon_knife
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_knife_txt"
-
-	requires	initial
-	provides	knife
-	time	0
-	researched	true
-}
-
-tech rs_weapon_stunrod
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_stunrod_txt"
-
-	requires	initial
-	provides	stunrod
-	time	0
-	researched	true
-}
-
-//========================
-// Weapons unresearched
-//========================
-
-tech rs_weapon_tachyonpistol
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_tachyonpistol_txt"
-
-	requires	rs_tachyon
-	provides	tachyonpistol
-	time	1
-	researched	false
-}
-
-tech rs_weapon_tachyonpistol_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_tachyonpistol_ammo_txt"
-
-	requires	rs_weapon_tachyonpistol
-	provides	tachyonpistol_ammo
-	time	0
-	researched	false
-}
-
-tech rs_weapon_tachyonrifle
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_tachyonrifle_txt"
-
-	requires	rs_tachyon
-	provides	tachyonrifle
-	time	1
-	researched	false
-	needscollected	true
-}
-
-tech rs_weapon_tachyonrifle_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_tachyonrifle_ammo_txt"
-
-	requires	rs_weapon_tachyonrifle
-	provides	tachyonrifle_ammo
-	time	0
-	researched	false
-}
-
-tech rs_weapon_tachyonsniper
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_tachyonsniper_txt"
-
-	requires	rs_tachyon
-	provides	tachyonsniper
-	time	1
-	researched	false
-	needscollected	true
-}
-
-tech rs_weapon_tachyonsniper_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_tachyonsniper_ammo_txt"
-
-	requires	rs_weapon_tachyonsniper
-	provides	tachyonsniper_ammo
+	requires	rs_weapon_heavylaser
+	provides	heavylaser_ammo
 	time	0
 	researched	false
 }
@@ -573,32 +609,9 @@ tech rs_weapon_plasblade
 
 	requires	rs_plasma
 	provides	plasblade
-	time	1
+	time	10
 	researched	false
-}
-
-tech rs_weapon_plasblaster
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_plasblaster_txt"
-
-	requires	rs_plasma
-	provides	plasblaster
-	time	1
-	researched	false
-}
-
-tech rs_weapon_plasblaster_ammo
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_plasblaster_ammo_txt"
-
-	requires	rs_plasma
-	provides	plasblaster_ammo
-	time	1
-	researched	false
+	needscollected	true
 }
 
 tech rs_weapon_plaspistol
@@ -609,7 +622,7 @@ tech rs_weapon_plaspistol
 
 	requires	rs_plasma
 	provides	plaspistol
-	time	1
+	time	40
 	researched	false
 	needscollected	true
 }
@@ -634,7 +647,7 @@ tech rs_weapon_plasrifle
 
 	requires	rs_plasma
 	provides	plasrifle
-	time	1
+	time	50
 	researched	false
 	needscollected	true
 }
@@ -651,44 +664,109 @@ tech rs_weapon_plasrifle_ammo
 	researched	false
 }
 
-tech rs_weapon_kerrblade
+tech rs_weapon_plasblaster
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_kerrblade_txt"
+	description	"_plasblaster_txt"
 
-	requires	initial
-	provides	kerrblade
-	time	1
+	requires	rs_plasma
+	provides	plasblaster
+	time	70
+	researched	false
+	needscollected	true
+}
+
+tech rs_weapon_plasblaster_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_plasblaster_ammo_txt"
+
+	requires	rs_plasma
+	provides	plasblaster_ammo
+	time	0
+	researched	false
+}
+
+tech rs_weapon_tachyonpistol
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_tachyonpistol_txt"
+
+	requires	rs_tachyon
+	provides	tachyonpistol
+	time	50
+	researched	false
+	needscollected	true
+}
+
+tech rs_weapon_tachyonpistol_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_tachyonpistol_ammo_txt"
+
+	requires	rs_weapon_tachyonpistol
+	provides	tachyonpistol_ammo
+	time	0
+	researched	false
+}
+
+tech rs_weapon_tachyonrifle
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_tachyonrifle_txt"
+
+	requires	rs_tachyon
+	provides	tachyonrifle
+	time	70
+	researched	false
+	needscollected	true
+}
+
+tech rs_weapon_tachyonrifle_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_tachyonrifle_ammo_txt"
+
+	requires	rs_weapon_tachyonrifle
+	provides	tachyonrifle_ammo
+	time	0
+	researched	false
+}
+
+tech rs_weapon_tachyonsniper
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_tachyonsniper_txt"
+
+	requires	rs_tachyon
+	provides	tachyonsniper
+	time	80
+	researched	false
+	needscollected	true
+}
+
+tech rs_weapon_tachyonsniper_ammo
+{
+	type	weapon
+	up_chapter	weapons
+	description	"_tachyonsniper_ammo_txt"
+
+	requires	rs_weapon_tachyonsniper
+	provides	tachyonsniper_ammo
+	time	0
 	researched	false
 }
 
 //========================
-// Armor & Misc Equipment
+// Armor
 //========================
-tech rs_irgoggles
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_irgoggles_txt"
-
-	requires	initial
-	provides	irgoggles
-	time	1
-	researched	false
-}
-
-tech rs_medikit
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_medikit_txt"
-
-	requires	initial
-	provides	medikit
-	time	1
-	researched	false
-}
 
 tech rs_kevlar_armor
 {
@@ -710,7 +788,7 @@ tech rs_nano_armor
 
 	requires	rs_nano
 	provides	medium
-	time	1
+	time	40
 	researched	false
 }
 
@@ -722,7 +800,7 @@ tech rs_heavy_nano_armor
 
 	requires	rs_advanced_armor
 	provides	heavy
-	time	1
+	time	120
 	researched	false
 }
 

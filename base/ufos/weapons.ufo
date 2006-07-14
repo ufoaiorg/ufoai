@@ -23,7 +23,7 @@ item medikit
 		hitbody null
 		firesnd	misc/klonk01.wav
 		speed	0
-		range	55
+		range	1.5
 		shots	1
 		ammo	1
 		time	20
@@ -37,7 +37,7 @@ item medikit
 		hitbody null
 		firesnd	misc/klonk01.wav
 		speed	0
-		range	55
+		range	1.5
 		shots	1
 		ammo	1
 		time	20
@@ -66,8 +66,8 @@ item irgoggles
 	{
 		name	"_Scan"
 		firesnd	misc/irgoggles01.wav
-		splrad	200
-		range	55
+		splrad	5
+		range	1.5
 		time	20
 		shots	1
 		irgoggles	true
@@ -76,8 +76,8 @@ item irgoggles
 	{
 		name	"_Scan"
 		firesnd	misc/irgoggles01.wav
-		splrad	400
-		range	55
+		splrad	10
+		range	1.5
 		time	25
 		shots	1
 		irgoggles	true
@@ -118,13 +118,13 @@ item fraggrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	4.0
+		range	10
 		shots	1
 		ammo	1
 		rof		1
 		time	12
 		spldmg	"100 30"
-		splrad	120
+		splrad	4
 		dmgtype blast
 	}
 	secondary
@@ -142,32 +142,62 @@ item fraggrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	4.0
+		range	10
 		shots	1
 		ammo	1
 		rof		1
 		time	12
 		spldmg	"100 30"
-		splrad	120
+		splrad	4
 		dmgtype blast
 	}
 }
 
 
 // =======================
-// FLARE GRENADE
+// SMOKE GRENADE
 // =======================
-item flaregrenade
+//item smokegrenade
+//{
+//	name		"_Smoke Grenade"
+//	model		weapons/smokegren/smokegren
+//	weapon		true
+//	type		grenade
+//	category	0
+//	shape		"0 0 1 1"
+//	center		"0 0 -0.25"
+//	scale		1.5
+//	price		150
+//	buytype		2
+//	ammo		1
+//	thrown		true
+//
+//	primary
+//	{
+//		name	"_Throw"
+//		skill	explosive
+//		projtl	smokegren
+//		impact	smoke_explosion
+//		hitbody smoke_explosion
+//		impsnd	misc/big_boom.wav
+//		bodysnd	misc/big_boom.wav
+//		bncsnd	misc/klonk03.wav
+
+	
+// =======================
+// INCENDIARY GRENADE
+// =======================
+item incgrenade
 {
-	name		"_Flare Grenade"
-	model		weapons/flare/flare
+	name		"_Incendiary Grenade"
+	model		weapons/incgren/incgren
 	weapon		true
 	type		grenade
 	category	0
 	shape		"0 0 1 1"
 	center		"0 0 -0.3"
 	scale		1.4
-	price		170
+	price		190
 	buytype		2
 	ammo		1
 	thrown		true
@@ -177,8 +207,8 @@ item flaregrenade
 		name	"_Throw"
 		skill	explosive
 		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
+		impact	fire_impact
+		hitbody fire_explosion
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
@@ -187,22 +217,22 @@ item flaregrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	4.0
+		range	10
 		shots	1
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"0 0"
-		splrad	120
-		dmgtype ""
+		spldmg	"50 20"
+		splrad	2
+		dmgtype "fire"
 	}
 	secondary
 	{
 		name	"_Throw"
 		skill	explosive
 		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
+		impact	fire_impact
+		hitbody fire_explosion
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
@@ -211,14 +241,14 @@ item flaregrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	4.0
+		range	10
 		shots	1
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"0 0"
-		splrad	120
-		dmgtype ""
+		spldmg	"50 20"
+		splrad	2
+		dmgtype "fire"
 	}
 }
 
@@ -256,13 +286,13 @@ item stungrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	4.0
+		range	10
 		shots	1
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"0 0"
-		splrad	120
+		spldmg	"50 20"
+		splrad	4
 		dmgtype stun
 	}
 	secondary
@@ -280,32 +310,32 @@ item stungrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	4.0
+		range	10
 		shots	1
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"0 0"
-		splrad	120
+		spldmg	"50 20"
+		splrad	4
 		dmgtype stun
 	}
 }
 
 
-// =======================
-// SMOKE GRENADE
-// =======================
-item smokegrenade
+// ================
+// PLASMA GRENADE
+// ================
+item plasmagrenade
 {
-	name		"_Smoke Grenade"
-	model		weapons/smokegren/smokegren
+	name		"_Plasma Grenade"
+	model		weapons/plasmagren/plasmagren
 	weapon		true
 	type		grenade
 	category	0
 	shape		"0 0 1 1"
-	center		"0 0 -0.25"
-	scale		1.5
-	price		170
+	center		"0 0 -0.3"
+	scale		1.4
+	price		350
 	buytype		2
 	ammo		1
 	thrown		true
@@ -314,9 +344,9 @@ item smokegrenade
 	{
 		name	"_Throw"
 		skill	explosive
-		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
+		projtl	fraggren
+		impact	plasmaImpactCharged
+		hitbody plasmaImpactCharged
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
@@ -325,22 +355,22 @@ item smokegrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	4.0
+		range	10
 		shots	1
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"0 0"
-		splrad	120
-		dmgtype ""
+		spldmg	"140 20"
+		splrad	5
+		dmgtype "plasma"
 	}
 	secondary
 	{
 		name	"_Throw"
 		skill	explosive
-		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
+		projtl	fraggren
+		impact	plasmaImpactCharged
+		hitbody plasmaImpactCharged
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
@@ -349,14 +379,14 @@ item smokegrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	4.0
+		range	10
 		shots	1
 		ammo	1
 		rof		1
 		time	12
-		spldmg	"0 0"
-		splrad	120
-		dmgtype ""
+		spldmg	"140 20"
+		splrad	5
+		dmgtype "plasma"
 	}
 }
 

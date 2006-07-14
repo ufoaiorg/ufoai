@@ -39,9 +39,9 @@ item assault_ammo
 		hitbody blood
 		firesnd	weapons/assault.wav
 		speed	0
-		spread	"3.1 5"
+		spread	"3 5"
 		crouch	0.7
-		range	600
+		range	20
 		shots	3
 		ammo	3
 		rof		5
@@ -58,9 +58,9 @@ item assault_ammo
 		hitbody blood
 		firesnd	weapons/assault.wav
 		speed	0
-		spread	"4.8 7.7"
+		spread	"5 7"
 		crouch	0.6
-		range	600
+		range	20
 		shots	10
 		ammo	10
 		rof		10
@@ -112,9 +112,9 @@ item sniper_ammo
 		hitbody blood
 		firesnd	weapons/sniper.wav
 		speed	0
-		spread	"3.1 3.1"
+		spread	"3 3"
 		crouch	0.8
-		range	1000
+		range	30
 		shots	1
 		ammo	1
 		time	13
@@ -132,7 +132,7 @@ item sniper_ammo
 		speed	0
 		spread	"1 1"
 		crouch	0.7
-		range	1200
+		range	40
 		shots	1
 		ammo	1
 		time	18
@@ -185,10 +185,10 @@ item pistol_ammo
 		speed	0
 		spread	"3 3"
 		crouch	0.9
-		range	380
+		range	10
 		shots	1
 		ammo	1
-		time	8
+		time	7
 		damage	"20 5"
 		dmgtype normal
 	}
@@ -201,9 +201,9 @@ item pistol_ammo
 		hitbody blood
 		firesnd	weapons/pistol.wav
 		speed	0
-		spread	"7 9"
+		spread	"5 7"
 		crouch	0.9
-		range	250
+		range	7
 		shots	3
 		ammo	3
 		rof		10
@@ -255,9 +255,9 @@ item smg_ammo
 		hitbody blood
 		firesnd	weapons/smg.wav
 		speed	0
-		spread	"4 7"
+		spread	"5 7"
 		crouch	0.7
-		range	550
+		range	18
 		shots	6
 		ammo	6
 		rof		10
@@ -274,9 +274,9 @@ item smg_ammo
 		hitbody blood
 		firesnd	weapons/smg.wav
 		speed	0
-		spread	"6 9"
+		spread	"5 9"
 		crouch	0.7
-		range	450
+		range	15
 		shots	18
 		ammo	18
 		rof		15
@@ -298,13 +298,13 @@ item shotgun
 	type		biggun
 	category	1
 	twohanded	true
-	shape		"0 0 5 2"
-	center		"10 0 1"
-	scale		1.15
+	shape		"0 0 3 2"
+	center		"10.4 0 1"
+	scale		0.81
 	ammo		8
 	reload		10
 	price		880
-	buytype		0
+	buytype		1
 }
 
 item shotgun_ammo
@@ -317,25 +317,25 @@ item shotgun_ammo
 	center		"0 0 0"
 	scale		1.5
 	price		35
-	buytype		0
+	buytype		1
 
 	primary
 	{
 		name	"_Single Shot"
-		skill	close
+		skill	heavy
 		projtl	null
 		impact	bulletImpact
 		hitbody blood
 		firesnd	weapons/shotgun.wav
 		sndonce true
 		speed	0
-		spread	"4.5 4.5"
+		spread	"5 5"
 		crouch	1.0
-		range	350
+		range	10
 		shots	8
 		ammo	1
 		rof		0
-		time	8
+		time	7
 		damage	"7 2"
 		dmgtype blast
 	}
@@ -343,7 +343,7 @@ item shotgun_ammo
 	secondary
 	{
 		name	"_Double Shot"
-		skill	close
+		skill	heavy
 		projtl	null
 		impact	bulletImpact
 		hitbody blood
@@ -352,11 +352,11 @@ item shotgun_ammo
 		speed	0
 		spread	"8 8"
 		crouch	1.0
-		range	300
+		range	8
 		shots	16
 		ammo	2
 		rof		0
-		time	12
+		time	11
 		damage	"7 2"
 		dmgtype blast
 	}
@@ -407,7 +407,7 @@ item flamer_ammo
 		speed	200
 		spread	"7 7"
 		crouch  1.0
-		range	120
+		range	3
 		shots	15
 		ammo	1
 		rof		15
@@ -427,7 +427,7 @@ item flamer_ammo
 		speed	200
 		spread	"7 7"
 		crouch  1.0
-		range	140
+		range	5
 		shots	30
 		ammo	2
 		rof		20
@@ -484,13 +484,13 @@ item rpg_ammo
 		speed	250
 		spread	"5 5"
 		crouch	0.8
-		range	1200
+		range	40
 		shots	1
 		ammo	1
 		time	12
-		damage	"45 10"
-		spldmg	"100 30"
-		splrad	120
+		damage	"40 10"
+		spldmg	"80 30"
+		splrad	4
 		dmgtype blast
 	}
 	secondary
@@ -505,16 +505,76 @@ item rpg_ammo
 		bodysnd	misc/big_boom.wav
 		selfdet true
 		speed	250
-		spread	"2.6 2.6"
+		spread	"2.5 2.5"
 		crouch	0.6
-		range	1200
+		range	40
 		shots	1
 		ammo	1
 		time	18
-		damage	"45 10"
-		spldmg	"100 30"
-		splrad	120
+		damage	"40 10"
+		spldmg	"80 30"
+		splrad	4
 		dmgtype blast
+	}
+}
+
+item rpg_incendiary_ammo
+{
+	name		"_Incendiary Rocket"
+	model		weapons/rpg/rpg_inc_ammo
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.1
+	price		210
+	buytype		0
+
+	primary
+	{
+		name	"_Snap Shot"
+		skill	explosive
+		projtl	rocket
+		impact	explosion
+		hitbody explosion
+		firesnd	weapons/rpg.wav
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		selfdet true
+		speed	250
+		spread	"5 5"
+		crouch	0.8
+		range	40
+		shots	1
+		ammo	1
+		time	12
+		damage	"20 10"
+		spldmg	"40 10"
+		splrad	2
+		dmgtype fire
+	}
+	secondary
+	{
+		name	"_Aimed Shot"
+		skill	explosive
+		projtl	rocket
+		impact	explosion
+		hitbody explosion
+		firesnd	weapons/rpg.wav
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		selfdet true
+		speed	250
+		spread	"2.5 2.5"
+		crouch	0.6
+		range	40
+		shots	1
+		ammo	1
+		time	18
+		damage	"20 10"
+		spldmg	"40 10"
+		splrad	2
+		dmgtype fire
 	}
 }
 
@@ -546,9 +606,9 @@ item knife
 		hitbody blood
 		firesnd	misc/klonk03.wav
 		speed	0
-		range	55
+		range	1.5
 		shots	1
-		time	8
+		time	4
 		damage	"40 7"
 		dmgtype normal
 	}
@@ -562,12 +622,12 @@ item knife
 		impsnd	misc/klonk03.wav
 		bodysnd misc/klonk01.wav
 		speed	320
-		range	200
+		range	7
 		spread	"7 7"
 		shots	1
 		ammo	1
 		time	8
-		damage	"30 7"
+		damage	"40 7"
 		dmgtype normal
 	}
 }
@@ -588,14 +648,14 @@ item grenl
 	center		"7 0 2"
 	scale		1.1
 	ammo		6
-	reload		10
+	reload		14
 	price		2050
 	buytype		0
 }
 
 item grenl_ammo
 {
-	name		"_Grenades"
+	name		"_Frag Grenade Shells"
 	model		weapons/grenl/grenl_clip
 	type		ammo
 	category	0
@@ -619,14 +679,14 @@ item grenl_ammo
 		delay	1
 		bounce	10
 		bncfac	0.5
-		spread	"7 7"
-		range	4.0
+		spread	"5 5"
+		range	15
 		shots	1
 		ammo	1
 		rof		1
-		time	12
-		spldmg	"100 30"
-		splrad	120
+		time	8
+		spldmg	"70 20"
+		splrad	4
 		dmgtype blast
 	}
 
@@ -644,14 +704,14 @@ item grenl_ammo
 		delay	1
 		bounce	10
 		bncfac	0.5
-		spread	"7 7"
-		range	4.0
+		spread	"5 5"
+		range	15
 		shots	1
 		ammo	1
 		rof		1
-		time	12
-		spldmg	"100 30"
-		splrad	120
+		time	8
+		spldmg	"70 20"
+		splrad	4
 		dmgtype blast
 	}
 }
@@ -700,7 +760,7 @@ item bolterrifle_ammo
 		speed   0
 		spread  "3.5 3.5"
 		crouch  0.8
-		range   1700
+		range   50
 		shots   1
 		ammo    1
 		time    16
@@ -717,13 +777,13 @@ item bolterrifle_ammo
 		hitbody blood
 		firesnd weapons/tachyon.wav
 		speed   0
-		spread  "8 11"
+		spread  "7 11"
 		crouch  0.5
-		range   1700
+		range   50
 		shots   3
 		ammo    3
 		rof     2
-		time    27
+		time    23
 		damage  "80 5"
 		dmgtype normal
 	}
@@ -740,9 +800,9 @@ item stunrod
 	weapon	true
 	type		melee
 	category	2
-	shape	"0 0 4 2"
-	center	"3 0 2"
-	scale		0.95
+	shape	"0 0 5 2"
+	center	"3.2 0 2"
+	scale		1.22
 	price		3000
 	buytype	1
 	ammo	1
@@ -757,10 +817,10 @@ item stunrod
 		hitbody	blood
 		firesnd	misc/klonk03.wav
 		speed	0
-		range	55
+		range	1.5
 		shots	1
-		time	20
-		damage	"75 7"
+		time	8
+		damage	"60 20"
 		stun		true
 		dmgtype stun
 	}
@@ -774,10 +834,10 @@ item stunrod
 		hitbody	blood
 		firesnd	misc/klonk03.wav
 		speed	0
-		range	55
+		range	1.5
 		shots	1
-		time	20
-		damage	"75 7"
+		time	8
+		damage	"60 20"
 		stun		true
 		dmgtype stun
 	}
@@ -811,10 +871,10 @@ item kerrblade
 		hitbody blood
 		firesnd	misc/klonk03.wav
 		speed	0
-		range	55
+		range	1.5
 		shots	1
-		time	12
-		damage	"80 20"
+		time	8
+		damage	"120 30"
 		dmgtype normal
 	}
 	secondary
@@ -827,12 +887,12 @@ item kerrblade
 		impsnd	misc/klonk03.wav
 		bodysnd misc/klonk01.wav
 		speed	320
-		range	500
-		spread	"7 7"
+		range	10
+		spread	"5 5"
 		shots	1
 		ammo	1
 		time	12
-		damage	"100 20"
+		damage	"170 50"
 		dmgtype normal
 	}
 }

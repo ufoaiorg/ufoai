@@ -43,7 +43,7 @@ item light
 		laser	120
 		plasma	50
 		tachyon	800
-		stun	40
+		stun	800
 	}
 }
 
@@ -78,9 +78,9 @@ item medium
 		fire	100
 		shock	110
 		laser	160
-		plasma	60
+		plasma	45
 		tachyon	1200
-		stun	60
+		stun	1200
 	}
 }
 
@@ -94,29 +94,29 @@ item heavy
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7
-	price		7500
+	price		18000
 	buytype		3
 
 	protection
 	{
-		normal	35
-		blast	55
-		fire	30
-		shock	5
-		laser	20
-		plasma	50
-		tachyon	1
-		stun	35
+		normal	50
+		blast	70
+		fire	75
+		shock	25
+		laser	35
+		plasma	70
+		tachyon	3
+		stun	97
 	}
 	hardness
 	{
-		normal	60
-		blast	90
-		fire	100
-		shock	110
-		laser	160
-		plasma	60
-		tachyon	1200
-		stun	60
+		normal	80
+		blast	120
+		fire	170
+		shock	140
+		laser	200
+		plasma	50
+		tachyon	1600
+		stun	1600
 	}
 }

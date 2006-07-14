@@ -12,7 +12,7 @@ item tachyonpistol
 	shape		"0 0 3 2"
 	center		"1.3 0 1.5"
 	scale		1.6
-	ammo		24
+	ammo		20
 	reload		4
 	price		3800
 	buytype		1
@@ -32,39 +32,40 @@ item tachyonpistol_ammo
 
 	primary
 	{
-		name	"_Single Shot"
+		name	"_Snap Shot"
 		skill	close
 		projtl	tachyonBall
 		impact	tachyonImpact
 		hitbody	tachyonImpact
 		firesnd	weapons/tachyonpistol.wav
-		speed	0
-		spread	"2 2"
+		speed	800
+		spread	"4 4"
 		crouch	0.9
-		range	500
+		range	15
 		shots	1
 		ammo	1
+		rof		5
 		time	8
-		damage	"50 5"
+		damage	"45 5"
 		dmgtype tachyon
 	}
 	secondary
 	{
-		name	"_Rapid Fire"
+		name	"_Rapid Shots"
 		skill	close
 		projtl	tachyonMiniBall
 		impact	tachyonImpact
 		hitbody	tachyonImpact
 		firesnd	weapons/tachyonpistol.wav
-		speed	0
-		spread	"5 5"
+		speed	800
+		spread	"4 4"
 		crouch	0.9
-		range	350
-		shots	3
-		ammo	3
-		rof		10
-		time	12
-		damage	"50 5"
+		range	15
+		shots	4
+		ammo	4
+		rof		5
+		time	15
+		damage	"28 3"
 		dmgtype tachyon
 	}
 }
@@ -111,14 +112,14 @@ item tachyonrifle_ammo
 		hitbody tachyonImpact
 		firesnd	weapons/tachyon.wav
 		speed	800
-		spread	"4 4"
+		spread	"3 3"
 		crouch	0.6
-		range	600
+		range	25
 		shots	4
 		ammo	4
 		rof		5
-		time	16
-		damage	"25 10"
+		time	17
+		damage	"38 10"
 		dmgtype tachyon
 	}
 	secondary
@@ -131,16 +132,16 @@ item tachyonrifle_ammo
 		firesnd	weapons/tachyon.wav
 		selfdet true
 		speed	400
-		spread	"4.7 4.7"
+		spread	"4 4"
 		crouch	0.8
-		range	600
+		range	25
 		shots	1
 		ammo	8
 		rof		8
-		time	24
-		damage	"80 30"
-		spldmg	"60 20"
-		splrad	80
+		time	20
+		damage	"100 20"
+		spldmg	"100 20"
+		splrad	3
 		dmgtype tachyon
 	}
 }
@@ -187,14 +188,14 @@ item tachyonsniper_ammo
 		hitbody tachyonImpact
 		firesnd	weapons/tachyonsniper.wav
 		speed	800
-		spread	"2.4 2.4"
+		spread	"2.5 2.5"
 		crouch	0.6
-		range	900
+		range	35
 		shots	1
 		ammo	1
 		rof		5
 		time	14
-		damage	"65 10"
+		damage	"70 10"
 		dmgtype tachyon
 	}
 	secondary
@@ -206,15 +207,80 @@ item tachyonsniper_ammo
 		hitbody tachyonImpact
 		firesnd	weapons/tachyonsniper.wav
 		speed	800
-		spread	"1.4 1.4"
+		spread	"1.5 1.5"
 		crouch	0.8
-		range	900
+		range	35
 		shots	4
 		ammo	4
 		rof		5
 		time	25
-		damage	"26 4"
+		damage	"35 4"
 		dmgtype tachyon
+	}
+}
+
+
+// ============================
+// TACHYON-BEAM WARHEAD ROCKET
+// ============================
+
+item rpg_tachyon_ammo
+{
+	name		"_Tachyon-Beam Rocket"
+	model	weapons/rpg/rpg_tachyon_ammo
+	type	ammo
+	category	0
+	shape	"0 0 1 2"
+	center	"0 0 0"
+	scale	1.1
+	price	1400
+	buytype	0
+
+	primary
+	{
+		name	"_Snap Shot"
+		skill	explosive
+		projtl	rocket
+		impact	tachyonBigImpact
+		hitbody	tachyonBigImpact
+		firesnd	weapons/rpg.wav
+		impsnd	weapons/tachyonpistol.wav
+		bodysnd	weapons/tachyonpistol.wav
+		selfdet	true
+		speed	250
+		spread	"5 5"
+		crouch	0.8
+		range	40
+		shots	1
+		ammo	1
+		time	12
+		damage	"20 20"
+		spldmg	"140 10"
+		splrad	3
+		dmgtype	tachyon
+	}
+	secondary
+	{
+		name	"_Aimed Shot"
+		skill	explosive
+		projtl	rocket
+		impact	tachyonBigImpact
+		hitbody	tachyonBigImpact
+		firesnd	weapons/rpg.wav
+		impsnd	weapons/tachyonpistol.wav
+		bodysnd	weapons/tachyonpistol.wav
+		selfdet	true
+		speed	250
+		spread	"2.5 2.5"
+		crouch	0.6
+		range   40
+		shots	1
+		ammo	1
+		time	18
+		damage	"20 20"
+		spldmg	"140 10"
+		splrad	3
+		dmgtype	tachyon
 	}
 }
 
