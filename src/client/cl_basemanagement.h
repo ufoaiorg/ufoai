@@ -139,7 +139,7 @@ typedef struct building_s {
 	int timeStart, buildTime;
 
 	/* A list of employees assigned to this building. */
-	struct employees_s assigned_employees;
+	employees_t assigned_employees;
 
 	/*if we can build more than one building of the same type: */
 	buildingStatus_t buildingStatus;	/*[BASE_SIZE*BASE_SIZE]; */

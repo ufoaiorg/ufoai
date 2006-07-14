@@ -712,11 +712,6 @@ void RS_UpdateData(void)
 			/* counting the numbers of display-list entries. */
 			j++;
 		} else if ((tech->statusResearch != RS_FINISH) && (tech->statusResearchable)) {
-			/*TODO: */
-			Cvar_Set(va("mn_researchassigned%i", j), "as.");
-			Cvar_Set(va("mn_researchavailable%i", j), "av.");
-			Cvar_Set(va("mn_researchmax%i", j), "mx.");
-
 			if (tech->lab >= 0) {
 				/* Display the assigned/free/max numbers of scientists for this tech. */
 				building = &gd.buildings[tech->base_idx][tech->lab];
@@ -727,10 +722,13 @@ void RS_UpdateData(void)
 				Com_sprintf(tempstring, MAX_VAR, "%i\n", employees_in_building->numEmployees);
 				/* Assigned employees to the technology. */
 				Cvar_Set(va("mn_researchassigned%i", j), tempstring);
-				Com_sprintf(tempstring, MAX_VAR, "%i\n", B_EmployeesInBase2(building->base_idx, EMPL_SCIENTIST, qtrue));
-				/* Maximal available scientists in the base the tech is reseearched. */
-				Cvar_Set(va("mn_researchavailable%i", j), tempstring);
+			} else {
+				Cvar_Set(va("mn_researchassigned%i", j), "0");
+				Cvar_Set(va("mn_researchmax%i", j), "mx.");
 			}
+			Com_sprintf(tempstring, MAX_VAR, "%i\n", B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue));
+			/* Maximal available scientists in the base the tech is reseearched. */
+			Cvar_Set(va("mn_researchavailable%i", j), tempstring);
 
 			/* Set the text of the research items and mark them if they are currently researched. */
 			switch (tech->statusResearch) {

@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 building_t *B_GetFreeBuildingType(buildingType_t type);
 int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx);
+static int B_BuildingAddEmployees(building_t* b, employeeType_t type, int amount);
 
 vec2_t newBasePos;
 cvar_t *mn_base_title;
@@ -115,6 +116,29 @@ void B_SetSensor(void)
 			gd.bases[i].sensorWidth = 0;
 			gd.bases[i].drawSensor = qfalse;
 		}
+	}
+}
+
+/**
+ * @brief Convert string to employeeType_t
+ * @param type Pointer to employee type string
+ */
+static employeeType_t B_GetEmployeeType(char* type)
+{
+	assert(type);
+	if ( Q_strncmp(type, "EMPL_SCIENTIST", 7 ) )
+		return EMPL_SCIENTIST;
+	else if ( Q_strncmp(type, "EMPL_SOLDIER", 7 ) )
+		return EMPL_SOLDIER;
+	else if ( Q_strncmp(type, "EMPL_WORKER", 5 ) )
+		return EMPL_WORKER;
+	else if ( Q_strncmp(type, "EMPL_MEDIC", 5 ) )
+		return EMPL_MEDIC;
+	else if ( Q_strncmp(type, "EMPL_ROBOT", 5 ) )
+		return EMPL_ROBOT;
+	else {
+		Com_Printf("Unknown employee type '%s'\n", type);
+		return MAX_EMPL;
 	}
 }
 
@@ -682,11 +706,9 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 	building_t *dependsBuilding = NULL;
 	employees_t *employees_in_building = NULL;
 	technology_t *tech_link = NULL;
-	employee_t *employee = NULL;
 	value_t *edp = NULL;
 	char *errhead = "B_ParseBuildings: unexptected end of file (names ";
 	char *token = NULL;
-	int numEmployees_temp = 0;
 
 	/* get id list body */
 	token = COM_Parse(text);
@@ -748,8 +770,10 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 
 				if (*token)
 					employees_in_building->maxEmployees = atoi(token);
-				else
+				else {
 					employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
+					Com_Printf("Set max employees to %i for building '%s'\n", MAX_EMPLOYEES_IN_BUILDING, building->id);
+				}
 			} else
 			/* no linking yet */
 			if (!Q_strncmp(token, "depends", MAX_VAR)) {
@@ -760,21 +784,9 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
-				if (*token) {
-					employees_in_building = &building->assigned_employees;
-					if (employees_in_building->maxEmployees <= 0)
-						employees_in_building->maxEmployees = atoi(token);
-					numEmployees_temp = atoi(token);
-					for (employees_in_building->numEmployees = 0; employees_in_building->numEmployees < numEmployees_temp;) {
-						/* assign random employee infos. */
-						employees_in_building->assigned[employees_in_building->numEmployees] = gd.numEmployees;	/* link this employee in the building to the global employee-list. */
-						employee = &gd.employees[gd.numEmployees];
-						memset(employee, 0, sizeof(employee_t));
-						employee->idx = gd.numEmployees;
-						employees_in_building->numEmployees++;
-						gd.numEmployees++;
-					}
-				}
+				if (*token)
+					/* FIXME: EMPL_SCIENTIST */
+					B_BuildingAddEmployees(building, EMPL_SCIENTIST, atoi(token));
 			} else
 				for (edp = valid_vars; edp->string; edp++)
 					if (!Q_strncmp(token, edp->string, sizeof(edp->string))) {
@@ -1839,6 +1851,8 @@ static void B_SetBaseTitle(void)
 
 /**
  * @brief Creates console command to change the name of a base.
+ * Copies the value of the cvar mn_base_title over as the name of the
+ * current selected base
  */
 static void B_ChangeBaseNameCmd(void)
 {
@@ -1847,6 +1861,114 @@ static void B_ChangeBaseNameCmd(void)
 		return;
 
 	Q_strncpyz(baseCurrent->name, Cvar_VariableString("mn_base_title"), MAX_VAR);
+}
+
+/**
+ * @brief Function that does the real employee adding
+ * @param[in] b Pointer to building
+ * @param[in] amount Amount of employees to assign
+ * @sa B_BuildingAddEmployees
+ * @sa B_BuildingRemoveEmployees
+ * @sa B_BuildingAddEmployees_f
+ */
+static int B_BuildingAddEmployees(building_t *b, employeeType_t type, int amount)
+{
+	employees_t *employees_in_building = NULL;
+	employee_t *employee = NULL;
+
+	if ( gd.numEmployees >= MAX_EMPLOYEES ) {
+		Com_Printf("Employee limit hit\n");
+		return 0;
+	}
+
+	if ( type >= MAX_EMPL )
+		return 0;
+
+	employees_in_building = &b->assigned_employees;
+	if (employees_in_building->maxEmployees <= 0) {
+		Com_Printf("No employees for this building: '%s'\n", b->id);
+		return 0;
+	}
+
+	for (employees_in_building->numEmployees = 0; employees_in_building->numEmployees < amount;) {
+		/* assign random employee infos. */
+		/* link this employee in the building to the global employee-list. */
+		employees_in_building->assigned[employees_in_building->numEmployees] = gd.numEmployees;
+		employee = &gd.employees[gd.numEmployees];
+		memset(employee, 0, sizeof(employee_t));
+		employee->idx = gd.numEmployees;
+		employee->type = type;
+
+		employees_in_building->numEmployees++;
+		gd.numEmployees++;
+	}
+	return 0;
+}
+
+/**
+ * @brief
+ * @sa B_BuildingAddEmployees
+ * Script function for adding new employees to a building
+ */
+void B_BuildingAddEmployees_f ( void )
+{
+	employeeType_t type;
+
+	/* can be called from everywhere - so make a sanity check here */
+	if (!baseCurrent || !baseCurrent->buildingCurrent)
+		return;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: building_add_employee <type> <amount>\n");
+		return;
+	}
+
+	type = B_GetEmployeeType(Cmd_Argv(1));
+	if (type == MAX_EMPL)
+		return;
+
+	if (!B_BuildingAddEmployees(baseCurrent->buildingCurrent, type, atoi(Cmd_Argv(2))))
+		Com_DPrintf("Employees not added - at least not all\n");
+}
+
+/**
+ * @brief Remove some employees from the current building
+ * @param amount[in] Amount of employees you would like to remove from the current building
+ * @sa B_BuildingAddEmployees
+ * @sa B_BuildingRemoveEmployees_f
+ *
+ * @note baseCurrent and baseCurrent->buildingCurrent may not be NULL
+ */
+static int B_BuildingRemoveEmployees (building_t *b, employeeType_t type, int amount)
+{
+	if ( type >= MAX_EMPL )
+		return 0;
+	return 0;
+}
+
+/**
+ * @brief
+ * @sa B_BuildingRemoveEmployees
+ * Script function for removing employees from a building
+ */
+void B_BuildingRemoveEmployees_f ( void )
+{
+	employeeType_t type;
+	/* can be called from everywhere - so make a sanity check here */
+	if (!baseCurrent || !baseCurrent->buildingCurrent)
+		return;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: building_remove_employee <type> <amount>\n");
+		return;
+	}
+
+	type = B_GetEmployeeType(Cmd_Argv(1));
+	if (type == MAX_EMPL)
+		return;
+
+	if (!B_BuildingRemoveEmployees(baseCurrent->buildingCurrent, type, atoi(Cmd_Argv(2))))
+		Com_DPrintf("Employees not removed - at least not all\n");
 }
 
 /**
@@ -1864,10 +1986,8 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("new_building", B_NewBuildingFromList);
 	Cmd_AddCommand("set_building", B_SetBuilding);
 	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle);
-	/* TODO: change to employee-list
-	   Cmd_AddCommand( "add_workers", B_BuildingAddWorkers_f );
-	   Cmd_AddCommand( "remove_workers", B_BuildingRemoveWorkers );
-	 */
+	Cmd_AddCommand("building_add_employee", B_BuildingAddEmployees_f );
+	Cmd_AddCommand("building_remove_employee", B_BuildingRemoveEmployees_f );
 	Cmd_AddCommand("rename_base", B_RenameBase);
 	Cmd_AddCommand("base_attack", B_BaseAttack);
 	Cmd_AddCommand("base_changename", B_ChangeBaseNameCmd);
@@ -1946,20 +2066,12 @@ int B_CheckBuildingConstruction(building_t * building, int base_idx)
 			if (building->onConstruct)
 				Cbuf_AddText(va("%s %i", building->onConstruct, base_idx));
 
-			/*
-			   if ( building->minWorkers )
-			   B_BuildingAddWorkers( building, building->minWorkers );
-			 */
-
 			newBuilding++;
 		}
 	}
-#if 0
-	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION && building->timeStart + building->buildTime < ccs.date.day)
-		building->buildingStatus = B_STATUS_CONSTRUCTION_FINISHED;
-#endif
 	if (newBuilding)
-		B_BuildingInit();		/*update the building-list */
+		/*update the building-list */
+		B_BuildingInit();
 
 	return newBuilding;
 }
