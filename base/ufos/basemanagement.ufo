@@ -55,13 +55,13 @@ building building_lab
 	fixcosts	1500000
 	max_employees	10
 	more_than_one	true
-	employees_firstbase	2
 	build_time	12
 	varcosts	300
 	map_name	"lab"
 	pos		"2 1"
 	firstbase	true
 	type	lab
+	employees_firstbase	2
 	pedia		rs_building_lab
 }
 
@@ -102,6 +102,7 @@ building building_quarters
 	more_than_one	true
 	max_employees	20
 	build_time	4
+	onconstruct	"building_add_employees scientists 6"
 	varcosts	10
 	map_name	"quarters"
 	pos		"1 2"

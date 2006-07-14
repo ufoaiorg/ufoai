@@ -328,13 +328,14 @@ item stungrenade
 item plasmagrenade
 {
 	name		"_Plasma Grenade"
-	model		weapons/plasmagren/plasmagren
+	model		weapons/smokegren/smokegren
+//	model		weapons/plasmagren/plasmagren
 	weapon		true
 	type		grenade
 	category	0
 	shape		"0 0 1 1"
-	center		"0 0 -0.3"
-	scale		1.4
+	center		"0 0 -0.25"
+	scale		1.5
 	price		350
 	buytype		2
 	ammo		1

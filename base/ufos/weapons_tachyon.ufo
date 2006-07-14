@@ -227,7 +227,8 @@ item tachyonsniper_ammo
 item rpg_tachyon_ammo
 {
 	name		"_Tachyon-Beam Rocket"
-	model	weapons/rpg/rpg_tachyon_ammo
+	model		weapons/rpg/rpg_ammo
+//	model	weapons/rpg/rpg_tachyon_ammo
 	type	ammo
 	category	0
 	shape	"0 0 1 2"

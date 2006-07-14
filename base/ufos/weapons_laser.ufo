@@ -148,7 +148,8 @@ item laserrifle_ammo
 item heavylaser
 {
 	name		"_Heavy Laser"
-	model		weapons/heavylaser/heavylaser
+	model		weapons/laserrifle/laserrifle
+//	model		weapons/heavylaser/heavylaser
 	weapon		true
 	type		biggun
 	category	3
@@ -165,7 +166,8 @@ item heavylaser
 item heavylaser_ammo
 {
 	name		"_Heavy Laser Charge"
-	model		weapons/heavylaser/heavylaser_clip
+	model		weapons/laserrifle/laserrifle_clip
+//	model		weapons/heavylaser/heavylaser_clip
 	type		ammo
 	category	0
 	shape		"0 0 1 2"

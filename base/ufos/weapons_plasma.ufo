@@ -284,7 +284,8 @@ item plasblaster_ammo
 item grenl_plasma_ammo
 {
 	name		"_Plasma Grenade Shells"
-	model		weapons/grenl/grenl_plasma_clip
+	model		weapons/grenl/grenl_clip
+//	model		weapons/grenl/grenl_plasma_clip
 	type		ammo
 	category	0
 	shape		"0 0 1 1"

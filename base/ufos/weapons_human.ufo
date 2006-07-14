@@ -521,7 +521,8 @@ item rpg_ammo
 item rpg_incendiary_ammo
 {
 	name		"_Incendiary Rocket"
-	model		weapons/rpg/rpg_inc_ammo
+	model		weapons/rpg/rpg_ammo
+//	model		weapons/rpg/rpg_inc_ammo
 	type		ammo
 	category	0
 	shape		"0 0 1 2"

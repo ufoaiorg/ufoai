@@ -76,7 +76,7 @@ tech rs_laser
 	description	"_laser_txt"
 
 	requires	initial
-	time	30
+	time	30 // 60-from the techtree.txt file
 	researched	false
 	image_top	techs/laser
 }
@@ -90,7 +90,7 @@ tech rs_plasma
 
 	requires	nothing
 
-	time	30
+	time	30 // 90
 	researched	false
 }
 
@@ -102,7 +102,7 @@ tech rs_tachyon
 
 	requires	nothing
 	description	"_tachyon_txt"
-	time	50
+	time	50 // 120
 	researched	false
 
 	//image_top  xxxxx
@@ -116,7 +116,7 @@ tech rs_nano
 	description	"_nano_txt"
 
 	requires	rs_laser
-	time	40
+	time	40 // 80
 	researched	false
 }
 
@@ -126,7 +126,7 @@ tech rs_advanced_armor
 	name	"_Advanced Armor Fabrics"
 
 	requires	"rs_nano rs_plasma"
-	time	120
+	time	120 // 300
 	researched	false
 }
 
@@ -332,17 +332,17 @@ tech rs_weapon_fraggren
 	researched	true
 }
 
-tech rs_weapon_smokegren
-{
-	type	weapon
-	up_chapter	weapons
-	description	"_smokegren_txt"
-
-	requires	initial
-	provides	smokegrenade
-	time	0
-	researched	true
-}
+//tech rs_weapon_smokegren
+//{
+//	type	weapon
+//	up_chapter	weapons
+//	description	"_smokegren_txt"
+//
+//	requires	initial
+//	provides	smokegrenade
+//	time	0
+//	researched	true
+//}
 
 tech rs_weapon_knife
 {

@@ -87,8 +87,10 @@ item medium
 item heavy
 {
 	name		"_Heavy Nano Armor"
-	image		armor/heavy
-	model		soldiers/mheavy/body
+	image		armor/medium
+	model		soldiers/mmedium/body
+//	image		armor/heavy
+//	model		soldiers/mheavy/body
 	type		armor
 	category	3
 	shape		"0 0 3 4"
