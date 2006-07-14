@@ -376,7 +376,7 @@ void MSG_WriteLong(sizebuf_t * sb, int c)
 	buf[0] = c & UCHAR_MAX;
 	buf[1] = (c >> 8) & UCHAR_MAX;
 	buf[2] = (c >> 16) & UCHAR_MAX;
-	buf[3] = c >> 24;
+	buf[3] = (c >> 24) & UCHAR_MAX;
 }
 
 /**
