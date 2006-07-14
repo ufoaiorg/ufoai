@@ -1143,7 +1143,7 @@ void R_Register(void)
 #if defined(_WIN32)
 	vid_ref = ri.Cvar_Get("vid_ref", "gl", CVAR_ARCHIVE);
 #elif defined(MACOS_X)
-	/* FIXME: Don't know the macosx driver, yet */ '
+	/* FIXME: Don't know the macosx driver, yet */
 	vid_ref = ri.Cvar_Get( "vid_ref", "glx", CVAR_ARCHIVE );
 #else
 	vid_ref = ri.Cvar_Get( "vid_ref", "glx", CVAR_ARCHIVE );

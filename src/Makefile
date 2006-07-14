@@ -398,6 +398,7 @@ build_debug:
 	@echo "-----------------------"
 	@echo "Type 'make' in base/maps to compile the maps"
 	@echo
+	@echo Build for $(ARCH)
 
 build_release:
 	@-mkdir -p $(BUILD_RELEASE_DIR) \
