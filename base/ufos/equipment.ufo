@@ -34,10 +34,10 @@ equipment standard
 	medikit				3
 	light				2
 	medium				1
-	smokegrenade		2
+//	smokegrenade		2
 	stunrod				1
 	stungrenade			1
-	flaregrenade		1
+//	flaregrenade		1
 	grenl				1
 	grenl_ammo			4
 }
@@ -59,7 +59,7 @@ equipment campaign_player
 	rpg				1
 	rpg_ammo		4
 	fraggrenade		3
-	smokegrenade	1
+//	smokegrenade	1
 	knife			2
 	light			3
 }
@@ -109,7 +109,7 @@ equipment campaign_market
 	knife				8
 	irgoggles		3
 	medikit				6
-	smokegrenade		24
+//	smokegrenade		24
 	stunrod			5
 	stungrenade			20
 	incgrenade			20
@@ -234,7 +234,7 @@ equipment testing_and_tweaking
 	knife				6
 	irgoggles			6
 	medikit				6
-	smokegrenade			6
+//	smokegrenade			6
 	stunrod				6
 	stungrenade			6
 	incgrenade			6
