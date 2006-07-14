@@ -337,11 +337,11 @@ void MSG_WriteByte(sizebuf_t * sb, int c)
 	/* PARANOID is only possible in debug mode (when DEBUG was set, too) */
 #ifdef PARANOID
 	if (c < 0 || c > UCHAR_MAX)
-		Com_Error(ERR_FATAL, "MSG_WriteByte: range error %i ('%s', line %i)", c, file, line);
+		Com_Printf("MSG_WriteByte: range error %i ('%s', line %i)", c, file, line);
 #endif
 
 	buf = SZ_GetSpace(sb, 1);
-	buf[0] = c & 0xFF;
+	buf[0] = c & UCHAR_MAX;
 }
 
 /**
@@ -357,12 +357,12 @@ void MSG_WriteShort(sizebuf_t * sb, int c)
 
 #ifdef PARANOID
 	if (c < SHRT_MIN || c > SHRT_MAX)
-		Com_Error(ERR_FATAL, "MSG_WriteShort: range error %i ('%s', line %i)", c, file, line);
+		Com_Printf("MSG_WriteShort: range error %i ('%s', line %i)", c, file, line);
 #endif
 
 	buf = SZ_GetSpace(sb, 2);
-	buf[0] = c & 0xff;
-	buf[1] = (c >> 8) & 0xff;
+	buf[0] = c & UCHAR_MAX;
+	buf[1] = (c >> 8) & UCHAR_MAX;
 }
 
 /**
@@ -373,9 +373,9 @@ void MSG_WriteLong(sizebuf_t * sb, int c)
 	byte *buf;
 
 	buf = SZ_GetSpace(sb, 4);
-	buf[0] = c & 0xff;
-	buf[1] = (c >> 8) & 0xff;
-	buf[2] = (c >> 16) & 0xff;
+	buf[0] = c & UCHAR_MAX;
+	buf[1] = (c >> 8) & UCHAR_MAX;
+	buf[2] = (c >> 16) & UCHAR_MAX;
 	buf[3] = c >> 24;
 }
 
