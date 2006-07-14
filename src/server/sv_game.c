@@ -222,10 +222,17 @@ static void PF_WriteByte(int c)
 /**
   * @brief
   */
+#ifdef DEBUG
+static void PF_WriteShort(int c, char* file, int line)
+{
+	MSG_WriteShortDebug(&sv.multicast, c, file, line);
+}
+#else
 static void PF_WriteShort(int c)
 {
 	MSG_WriteShort(&sv.multicast, c);
 }
+#endif
 
 /**
   * @brief
