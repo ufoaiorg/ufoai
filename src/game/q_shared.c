@@ -2151,7 +2151,7 @@ void Com_DestroyInventory(inventory_t * i)
 	if (!i)
 		return;
 
-#ifdef DEBUG
+#if 0
 	Com_Printf("Com_DestroyInventory: numIDS: %i\n", CSI->numIDs);
 #endif
 	for (k = 0; k < CSI->numIDs; k++)

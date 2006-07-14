@@ -746,10 +746,10 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 					return;
 				employees_in_building = &building->assigned_employees;
 
-				employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
-				if (*token) {
+				if (*token)
 					employees_in_building->maxEmployees = atoi(token);
-				}
+				else
+					employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
 			} else
 			/* no linking yet */
 			if (!Q_strncmp(token, "depends", MAX_VAR)) {

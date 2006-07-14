@@ -94,6 +94,7 @@ static void CL_GiveNameCmd(void)
   * @brief Generates the skills and inventory for a character and for a UGV
   *
   * TODO: Generate UGV
+  * @sa CL_ResetCharacters
   */
 void CL_GenerateCharacter(char *team, base_t *base, int type)
 {
@@ -148,6 +149,7 @@ void CL_GenerateCharacter(char *team, base_t *base, int type)
 
 /**
   * @brief
+  * @sa CL_GenerateCharacter
   */
 void CL_ResetCharacters(base_t * base)
 {
@@ -382,7 +384,7 @@ static void CL_GenerateEquipmentCmd(void)
 		if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << i)) {
 			/* maybe we already have soldiers in this base */
 			baseCurrent->curTeam[p] = &baseCurrent->wholeTeam[i];
-			Com_Printf("add %s to curTeam (pos: %i)\n", baseCurrent->curTeam[p]->name, p);
+			Com_DPrintf("add %s to curTeam (pos: %i)\n", baseCurrent->curTeam[p]->name, p);
 			Cvar_ForceSet(va("mn_name%i", p), baseCurrent->curTeam[p]->name);
 			p++;
 		}
