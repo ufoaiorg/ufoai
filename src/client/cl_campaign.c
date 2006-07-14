@@ -1365,10 +1365,14 @@ char *CL_DateGetMonthName(int month)
   * @brief
   *
   * Update the nation data from all parsed nation each month
+  * give us nation support by:
+  * * credits
+  * * new soldiers
+  * * new scientists
   * Called from CL_CampaignRun
-  *
-  * TODO: to be extended
+  * @sa CL_CampaignRun
   */
+#define NATION_PROBABILITY 0.3
 static void CL_UpdateNationData(void)
 {
 	int i;
@@ -1376,15 +1380,30 @@ static void CL_UpdateNationData(void)
 	nation_t *nation;
 
 	for (i = 0; i < numNations; i++) {
+		/* maybe we don't get fund of this nation */
+		if ( frand() <= NATION_PROBABILITY )
+			continue;
 		nation = &nations[i];
-		Com_sprintf(message, 1024, _("Gained %i credits from nation %s"), nation->funding, _(nation->name));
+		Com_sprintf(message, sizeof(message), _("Gained %i credits from nation %s"), nation->funding, _(nation->name));
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 		CL_UpdateCredits(ccs.credits + nation->funding);
+		/* maybe we don't get scientists of this nation */
+		if ( frand() <= NATION_PROBABILITY )
+			continue;
+		/* TODO: Scientists and soldiers */
 	}
 }
 
 /**
-  * @brief
+  * @brief Called every frame when we are in geoscape view
+  *
+  * Called for node types MN_MAP and MN_3DMAP
+  *
+  * @sa MN_DrawMenus
+  * @sa CL_UpdateNationData
+  * @sa B_UpdateBaseData
+  * @sa CL_CampaignRunAircraft
+  * @sa CL_CampaignCheckEvents
   */
 void CL_CampaignRun(void)
 {

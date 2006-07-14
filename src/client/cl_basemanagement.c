@@ -38,6 +38,20 @@ cvar_t *mn_base_title;
 static int BuildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
 
+
+/**
+ * @brief Resets the currently selected building.
+ *
+ * Is called e.g. when leaving the build-menu but also several times from cl_basemanagement.c.
+ */
+void B_ResetBuildingCurrent(void)
+{
+	if (baseCurrent) {
+		baseCurrent->buildingCurrent = NULL;
+		baseCurrent->buildingToBuild = -1;
+	}
+}
+
 /**
  * @brief Holds the names of valid entries in the basemanagement.ufo file.
  *
@@ -236,23 +250,45 @@ static void B_RemoveBuilding(void)
 }
 
 /**
+ * @brief Checks whether you have enough credits to build this building
+ * @param costs buildcosts of the building
+ * @return qboolean true - enough credits
+ * @return qboolean false - not enough credits
+ *
+ * @sa B_ConstructBuilding
+ * @sa B_NewBuilding
+ * Checks whether the given costs are bigger than the current available credits
+ */
+static qboolean B_CheckCredits( int costs )
+{
+	if (costs > ccs.credits)
+		return qfalse;
+	return qtrue;
+}
+
+/**
  * @brief Builds new building.
  *
- * Checks whether the player has enough credits to construct the current selected building before starting construction.
+ * @sa B_CheckCredits
+ * @sa CL_UpdateCredits
+ * @return qboolean
+ *
+ * Checks whether the player has enough credits to construct the current selected
+ * building before starting construction.
  */
-static void B_ConstructBuilding(void)
+static qboolean B_ConstructBuilding(void)
 {
 	building_t *building_to_build = NULL;
 
 	/*maybe someone call this command before the buildings are parsed?? */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
-		return;
+		return qfalse;
 
 	/*enough credits to build this? */
-	if (ccs.credits - baseCurrent->buildingCurrent->fixCosts < 0) {
-		MN_Popup(_("Notice"), _("Not enough credits to build this\n"));
+	if ( !B_CheckCredits(baseCurrent->buildingCurrent->fixCosts) ) {
 		Com_DPrintf("B_ConstructBuilding: Not enough credits to build: '%s'\n", baseCurrent->buildingCurrent->id);
-		return;
+		B_ResetBuildingCurrent();
+		return qfalse;
 	}
 
 	Com_DPrintf("Construction of %s is starting\n", baseCurrent->buildingCurrent->id);
@@ -268,17 +304,7 @@ static void B_ConstructBuilding(void)
 	baseCurrent->buildingCurrent->timeStart = ccs.date.day;
 
 	CL_UpdateCredits(ccs.credits - baseCurrent->buildingCurrent->fixCosts);
-}
-
-/**
- * @brief Resets the currently selected building.
- *
- * Is called e.g. when leaving the build-menu but also several times from cl_basemanagement.c.
- */
-void B_ResetBuildingCurrent(void)
-{
-	if (baseCurrent)
-		baseCurrent->buildingCurrent = NULL;
+	return qtrue;
 }
 
 /**
@@ -291,10 +317,10 @@ void B_NewBuilding(void)
 		return;
 
 	if (baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
-		B_ConstructBuilding();
-
-	B_BuildingStatus();
-	Com_DPrintf("B_NewBuilding: buildingCurrent->buildingStatus = %i\n", baseCurrent->buildingCurrent->buildingStatus);
+		if ( B_ConstructBuilding() ) {
+			B_BuildingStatus();
+			Com_DPrintf("B_NewBuilding: buildingCurrent->buildingStatus = %i\n", baseCurrent->buildingCurrent->buildingStatus);
+		}
 }
 
 /**
@@ -308,10 +334,16 @@ void B_SetBuildingByClick(int row, int col)
 	building_t *building = NULL;
 	building_t *secondBuildingPart = NULL;
 
+#ifdef DEBUG
 	if (!baseCurrent)
 		Sys_Error("no current base\n");
 	if (!baseCurrent->buildingCurrent)
 		Sys_Error("no current building\n");
+#endif
+	if (!B_CheckCredits(baseCurrent->buildingCurrent->fixCosts)) {
+		MN_Popup(_("Notice"), _("Not enough credits to build this\n"));
+		return;
+	}
 
 	/*TODO: this is bad style (baseCurrent->buildingCurrent shouldn't link to gd.buildingTypes at all ... it's just not logical) */
 	/* if the building is in gd.buildingTypes[] */
@@ -351,8 +383,7 @@ void B_SetBuildingByClick(int row, int col)
 			} else {
 				baseCurrent->buildingToBuild = -1;
 			}
-			if (baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
-				B_NewBuilding();
+			B_NewBuilding();
 
 			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->idx;
 
@@ -655,9 +686,6 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 	value_t *edp = NULL;
 	char *errhead = "B_ParseBuildings: unexptected end of file (names ";
 	char *token = NULL;
-
-	/*int   i = 0; */
-	/*int   j = 0; */
 	int numEmployees_temp = 0;
 
 	/* get id list body */
@@ -723,7 +751,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 					employees_in_building->maxEmployees = atoi(token);
 				}
 			} else
-				/* no linking yet */
+			/* no linking yet */
 			if (!Q_strncmp(token, "depends", MAX_VAR)) {
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
@@ -792,9 +820,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 				if (!*text)
 					return;
 			}
-
 		} while (*text);
-
 	}
 }
 
@@ -803,6 +829,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
  *
  * This should be called after setting up the first base.
  * TODO: This right now assumes that there are not more employees than free quarter space ... but it will not puke if there are.
+ * @sa CL_GameInit
  */
 void B_InitEmployees(void)
 {
@@ -813,7 +840,6 @@ void B_InitEmployees(void)
 
 	/* Loop trough the buildings to assign the type of employee. */
 	/* TODO: this right now assumes that there are not more employees than free quarter space ... but it will not puke if there are. */
-
 	for (i = 0; i < gd.numBuildingTypes; i++) {
 		Com_DPrintf("B_InitEmployees: 1 type %i\n", i);
 		building = &gd.buildingTypes[i];
@@ -1078,7 +1104,7 @@ qboolean B_EmployeeIsFree(employee_t * employee)
  *
  * @param[in] building_dest Which building to assign the employee to.
  * @param[in] employee_type	What type of employee to assign to the building.
- *
+ * @sa B_RemoveEmployee
  * @return Returns true if adding was possible/sane otherwise false.
  */
 qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_type)
@@ -1137,7 +1163,7 @@ qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_ty
  * @brief Remove one employee from building.
  *
  * TODO: Add check for destination building vs. employee_type and abort if they do not match.
- *
+ * @sa B_AssignEmployee
  * @param[in] building Which building to remove the employee from. Can be any type of building that has employees in it. If quarters are given the employee will be removed from every other building as well.
  *
  * @return Returns true if adding was possible/sane otherwise false.
@@ -1145,15 +1171,15 @@ qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_ty
 qboolean B_RemoveEmployee(building_t * building)
 {
 	/* TODO
-	   int i;
-	 */
+	int i;
+	*/
 	employee_t *employee = NULL;
 	employees_t *employees_in_building = NULL;
 
 	/* TODO
-	   building_t *building_temp = NULL;
-	   qboolean found = qfalse;
-	 */
+	building_t *building_temp = NULL;
+	qboolean found = qfalse;
+	*/
 
 	employees_in_building = &building->assigned_employees;
 
@@ -1220,7 +1246,7 @@ qboolean B_RemoveEmployee(building_t * building)
 
 /**
  * @brief Returns the number of employees in the given base (in the quaters) of the given type.
- *
+ * @sa B_EmployeesInBase
  * You can choose (free_only) if you want the number of free employees or the total number.
  * If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
  */
@@ -1257,7 +1283,7 @@ int B_EmployeesInBase2(int base_idx, employeeType_t employee_type, qboolean free
 
 /**
  * @brief Returns the number of employees in the given base (in the quaters) of the given type.
- *
+ * @sa B_EmployeesInBase2
  * If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
  */
 int B_EmployeesInBase(int base_idx, employeeType_t employee_type)
