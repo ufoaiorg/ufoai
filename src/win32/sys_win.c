@@ -453,20 +453,20 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 
 #ifndef DEBUG
 const char *gamename = "game32.dll";
-const char *debugdir = "release\\win32";
+const char *debugdir = "src/release/bin/win32";
 #else
 const char *gamename = "game32d.dll";
-const char *debugdir = "debug\\win32";
+const char *debugdir = "src/debug/bin/win32";
 #endif
 
 #elif defined _M_X64
 
 #ifndef DEBUG
 const char *gamename = "game64.dll";
-const char *debugdir = "release\\x64";
+const char *debugdir = "src/release/bin/x64";
 #else
 const char *gamename = "game64d.dll";
-const char *debugdir = "debug\\x64";
+const char *debugdir = "src/debug/bin/x64";
 #endif
 
 #elif defined _M_ALPHA
@@ -475,10 +475,10 @@ const char *debugdir = "debug\\x64";
 
 #ifndef DEBUG
 const char *gamename = "game???.dll";
-const char *debugdir = "release\\alpha";
+const char *debugdir = "src/release/bin/alpha";
 #else
 const char *gamename = "game???d.dll";
-const char *debugdir = "debug\\alpha";
+const char *debugdir = "src/debug/bin/alpha";
 #endif
 
 #else

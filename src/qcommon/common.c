@@ -362,7 +362,7 @@ void MSG_WriteShort(sizebuf_t * sb, int c)
 
 	buf = SZ_GetSpace(sb, 2);
 	buf[0] = c & 0xff;
-	buf[1] = c >> 8;
+	buf[1] = (c >> 8) & 0xff;
 }
 
 /**

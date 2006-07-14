@@ -1553,7 +1553,7 @@ void CL_LoadEquipment ( sizebuf_t *buf, base_t* base )
 	assert(base);
 
 	/* link the inventory in after load */
-	for (i=0; j<base->numWholeTeam; i++)
+	for (i = 0; i < base->numWholeTeam; i++)
 		base->wholeTeam[i].inv = &base->teamInv[i];
 
 	/* inventory */
