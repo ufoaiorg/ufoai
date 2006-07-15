@@ -54,16 +54,17 @@
 mission africa
 {
 	location	"_Dongola"
-	type		"_Terror Attack"
-	text		"_Protect inhabitants"
+	type		"_Crashed Alien Ship"
+	text		"_Secure area"
 	map			africa04
 	music		mission
-	pos			"-30 -120"
+	pos			"-19 30"
 	aliens		5
 	alienteam	alien
 	alienequip	campaign_alien
 	civilians	6
 	civteam		oriental
+	onwin		""
 	recruits	3
 	$win		1200
 	$alien		100
@@ -846,7 +847,7 @@ stage ufos_are_coming
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
-		missions	"transport mine_crash construction farm office or_asyut frozen_landingnature frozen_alienlandingindustrial"
+		missions	"africa transport mine_crash construction farm office or_asyut frozen_landingnature frozen_alienlandingindustrial"
 		quota		5
 		nextstage	invasion
 	}
