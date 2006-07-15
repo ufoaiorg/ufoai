@@ -854,7 +854,7 @@ static void CL_CampaignAddMission(setState_t * set)
 		/* Add message to message-system. */
 		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Alien activity has been reported: '%s'"), mis->def->location );
 		MN_AddNewMessage(_("Alien activity"), messageBuffer, qfalse, MSG_TERRORSITE, NULL);
-		Com_DPrintf("Alien activity at %.0f:%0.f\n", mis->realPos[0], mis->realPos[1]);
+		Com_DPrintf("Alien activity at long: %.0f lat: %0.f\n", mis->realPos[0], mis->realPos[1]);
 	}
 
 	/* prepare next event (if any) */
