@@ -2693,9 +2693,9 @@ void CL_ParseMission(char *name, char **text)
 
 	} while (*text);
 #ifdef DEBUG
-	if ( abs(ms->pos[0]) > 180 )
+	if ( abs(ms->pos[0]) > 180.0f )
 		Com_Printf("Longitude for mission '%s' is bigger than 180 EW (%.0f)\n", ms->name, ms->pos[0]);
-	if ( abs(ms->pos[1]) > 180 )
+	if ( abs(ms->pos[1]) > 90.0f )
 		Com_Printf("Latitude for mission '%s' is bigger than 90 NS (%.0f)\n", ms->name, ms->pos[1]);
 #endif
 }
