@@ -826,7 +826,7 @@ static void CL_CampaignAddMission(setState_t * set)
 		mis->realPos[0] = baseCurrent->pos[0];
 		mis->realPos[1] = baseCurrent->pos[1];
 		/* Add message to message-system. */
-		Q_strncpyz(messageBuffer, va(_("Your base %s is under attack."), baseCurrent->name), MAX_MESSAGE_TEXT);
+		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base %s is under attack."), baseCurrent->name );
 		MN_AddNewMessage(_("Baseattack"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
 
 		Cbuf_ExecuteText(EXEC_NOW, va("base_attack %i", baseCurrent->idx));
@@ -852,7 +852,8 @@ static void CL_CampaignAddMission(setState_t * set)
 		CL_MapMaskFind(mis->def->mask, mis->realPos);
 
 		/* Add message to message-system. */
-		MN_AddNewMessage(_("Alien activity"), _("Alien activity has been reported."), qfalse, MSG_TERRORSITE, NULL);
+		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Alien activity has been reported: '%s'"), mis->def->location );
+		MN_AddNewMessage(_("Alien activity"), messageBuffer, qfalse, MSG_TERRORSITE, NULL);
 		Com_DPrintf("Alien activity at %.0f:%0.f\n", mis->realPos[0], mis->realPos[1]);
 	}
 

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 static vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
+static cvar_t* cl_showCoords;
 
 /* =========================================================== */
 
@@ -1162,9 +1163,15 @@ static void MN_MapClick(menuNode_t * node, int x, int y)
 	int i, j, msx, msy;
 	vec2_t pos;
 	char *s;
+	char clickBuffer[30];
 
 	/* get map position */
 	MN_ScreenToMap(node, x, y, pos);
+	if (cl_showCoords->value) {
+		Com_sprintf(clickBuffer, sizeof(clickBuffer), "Long: %.1f Lat: %.1f", pos[0], pos[1]);
+		MN_AddNewMessage(_("Click"), clickBuffer, qfalse, MSG_DEBUG, NULL);
+		Com_Printf("Clicked at %.1f %.1f\n", pos[0], pos[1]);
+	}
 
 	/* new base construction */
 	if (gd.mapAction == MA_NEWBASE) {
@@ -2721,6 +2728,7 @@ void MN_ResetMenus(void)
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_sequence", "sequence");
 
+	cl_showCoords = Cvar_Get("cl_showcoords", "0", CVAR_ARCHIVE);
 	/* tutorial stuff */
 	Cmd_AddCommand("listtutorials", MN_ListTutorials_f);
 	Cmd_AddCommand("gettutorials", MN_GetTutorials_f);
