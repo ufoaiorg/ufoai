@@ -440,6 +440,7 @@ static void MN_StartServer(void)
 
 	if (Cvar_VariableValue("dedicated") > 0)
 		Com_DPrintf("Dedicated server needs no team\n");
+	/* FIXME: Spectator */
 	else if (!B_GetNumOnTeam()) {
 		MN_Popup(_("Error"), _("Assemble a team first"));
 		return;

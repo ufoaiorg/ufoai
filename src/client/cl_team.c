@@ -856,6 +856,8 @@ void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 
 /**
   * @brief Load a multiplayer team
+  * @sa CL_LoadTeam
+  * @sa CL_SaveTeam
   */
 void CL_LoadTeamMultiplayer(char *filename)
 {
