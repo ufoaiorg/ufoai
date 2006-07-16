@@ -196,9 +196,10 @@ void ProjectPointOnPlane(vec3_t dst, const vec3_t p, const vec3_t normal)
 	dst[2] = p[2] - d * n[2];
 }
 
-/*
-** assumes "src" is normalized
-*/
+/**
+ * @brief
+ * assumes "src" is normalized
+ */
 void PerpendicularVector(vec3_t dst, const vec3_t src)
 {
 	int pos;
@@ -224,12 +225,11 @@ void PerpendicularVector(vec3_t dst, const vec3_t src)
 }
 
 
-
-/*
-================
-R_ConcatRotations
-================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void R_ConcatRotations(float in1[3][3], float in2[3][3], float out[3][3])
 {
 	out[0][0] = in1[0][0] * in2[0][0] + in1[0][1] * in2[1][0] + in1[0][2] * in2[2][0];
@@ -244,11 +244,11 @@ void R_ConcatRotations(float in1[3][3], float in2[3][3], float out[3][3])
 }
 
 
-/*
-================
-R_ConcatTransforms
-================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void R_ConcatTransforms(float in1[3][4], float in2[3][4], float out[3][4])
 {
 	out[0][0] = in1[0][0] * in2[0][0] + in1[0][1] * in2[1][0] + in1[0][2] * in2[2][0];
@@ -266,6 +266,11 @@ void R_ConcatTransforms(float in1[3][4], float in2[3][4], float out[3][4])
 }
 
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void VecToAngles(vec3_t value1, vec3_t angles)
 {
 	float forward;
@@ -302,6 +307,11 @@ void VecToAngles(vec3_t value1, vec3_t angles)
 /*============================================================================ */
 
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 float Q_fabs(float f)
 {
 #if 0
@@ -327,11 +337,11 @@ __asm fistp tmp __asm mov eax, tmp __asm ret}
 #pragma warning (default:4035)
 #endif
 
-/*
-===============
-LerpAngle
-===============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 float LerpAngle(float a2, float a1, float frac)
 {
 	if (a1 - a2 > 180)
@@ -342,6 +352,11 @@ float LerpAngle(float a2, float a1, float frac)
 }
 
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 float anglemod(float a)
 {
 #if 0
@@ -354,6 +369,11 @@ float anglemod(float a)
 	return a;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 /* this is the slow, general version */
 int BoxOnPlaneSide2(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 {
@@ -685,12 +705,22 @@ Lerror:
 
 #pragma warning( default: 4035 )
 #endif
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void ClearBounds(vec3_t mins, vec3_t maxs)
 {
 	mins[0] = mins[1] = mins[2] = 99999;
 	maxs[0] = maxs[1] = maxs[2] = -99999;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void AddPointToBounds(vec3_t v, vec3_t mins, vec3_t maxs)
 {
 	int i;
@@ -705,7 +735,11 @@ void AddPointToBounds(vec3_t v, vec3_t mins, vec3_t maxs)
 	}
 }
 
-
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 qboolean VectorNearer(vec3_t v1, vec3_t v2, vec3_t comp)
 {
 	int i;
@@ -718,6 +752,11 @@ qboolean VectorNearer(vec3_t v1, vec3_t v2, vec3_t comp)
 }
 
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 vec_t VectorNormalize(vec3_t v)
 {
 	float length, ilength;
@@ -733,9 +772,14 @@ vec_t VectorNormalize(vec3_t v)
 	}
 
 	return length;
-
 }
 
+
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 vec_t VectorNormalize2(vec3_t v, vec3_t out)
 {
 	float length, ilength;
@@ -754,6 +798,11 @@ vec_t VectorNormalize2(vec3_t v, vec3_t out)
 
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void VectorMA(vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
 {
 	vecc[0] = veca[0] + scale * vecb[0];
@@ -761,6 +810,11 @@ void VectorMA(vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
 	vecc[2] = veca[2] + scale * vecb[2];
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void VectorClampMA(vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
 {
 	float test, newScale;
@@ -794,7 +848,33 @@ void VectorClampMA(vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
 		vecc[i] = veca[i] + scale * vecb[i];
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
+void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
+{
+	float		d;
 
+	/* this rotate and negat guarantees a vector */
+	/* not colinear with the original */
+	right[1] = -forward[0];
+	right[2] = forward[1];
+	right[0] = forward[2];
+
+	d = DotProduct (right, forward);
+	VectorMA (right, -d, forward, right);
+	VectorNormalize (right);
+	CrossProduct (right, forward, up);
+}
+
+
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void MatrixMultiply(vec3_t a[3], vec3_t b[3], vec3_t c[3])
 {
 	c[0][0] = a[0][0] * b[0][0] + a[1][0] * b[0][1] + a[2][0] * b[0][2];
@@ -811,6 +891,11 @@ void MatrixMultiply(vec3_t a[3], vec3_t b[3], vec3_t c[3])
 }
 
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void GLMatrixMultiply(float a[16], float b[16], float c[16])
 {
 	int i, j, k;
@@ -823,6 +908,11 @@ void GLMatrixMultiply(float a[16], float b[16], float c[16])
 }
 
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void GLVectorTransform(float m[16], vec4_t in, vec4_t out)
 {
 	int i;
@@ -832,6 +922,11 @@ void GLVectorTransform(float m[16], vec4_t in, vec4_t out)
 }
 
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void VectorRotate(vec3_t m[3], vec3_t va, vec3_t vb)
 {
 	vb[0] = m[0][0] * va[0] + m[1][0] * va[1] + m[2][0] * va[2];
@@ -840,11 +935,21 @@ void VectorRotate(vec3_t m[3], vec3_t va, vec3_t vb)
 }
 
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 vec_t _DotProduct(vec3_t v1, vec3_t v2)
 {
 	return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void _VectorSubtract(vec3_t veca, vec3_t vecb, vec3_t out)
 {
 #if Q2_MMX_ENABLED
@@ -872,6 +977,11 @@ void _VectorSubtract(vec3_t veca, vec3_t vecb, vec3_t out)
 #endif
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void _VectorAdd(vec3_t veca, vec3_t vecb, vec3_t out)
 {
 #if Q2_MMX_ENABLED
@@ -899,6 +1009,11 @@ void _VectorAdd(vec3_t veca, vec3_t vecb, vec3_t out)
 #endif
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void _VectorCopy(vec3_t in, vec3_t out)
 {
 #if Q2_MMX_ENABLED
@@ -920,6 +1035,11 @@ void _VectorCopy(vec3_t in, vec3_t out)
 #endif
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void CrossProduct(vec3_t v1, vec3_t v2, vec3_t cross)
 {
 	cross[0] = v1[1] * v2[2] - v1[2] * v2[1];
@@ -929,6 +1049,11 @@ void CrossProduct(vec3_t v1, vec3_t v2, vec3_t cross)
 
 double sqrt(double x);
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 vec_t VectorLength(vec3_t v)
 {
 	int i;
@@ -942,6 +1067,11 @@ vec_t VectorLength(vec3_t v)
 	return length;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void VectorInverse(vec3_t v)
 {
 	v[0] = -v[0];
@@ -949,6 +1079,11 @@ void VectorInverse(vec3_t v)
 	v[2] = -v[2];
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void VectorScale(vec3_t in, vec_t scale, vec3_t out)
 {
 #if Q2_MMX_ENABLED
@@ -977,6 +1112,11 @@ void VectorScale(vec3_t in, vec_t scale, vec3_t out)
 }
 
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int Q_log2(int val)
 {
 	int answer = 0;
@@ -1003,11 +1143,11 @@ float crand(void)
 	return (rand() & 32767) * (2.0 / 32767) - 1;
 }
 
-/*
-==================
-Com_CharIsOneOfCharset
-==================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 static qboolean Com_CharIsOneOfCharset(char c, char *set)
 {
 	int i;
@@ -1020,11 +1160,11 @@ static qboolean Com_CharIsOneOfCharset(char c, char *set)
 	return qfalse;
 }
 
-/*
-==================
-Com_SkipCharset
-==================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 char *Com_SkipCharset(char *s, char *sep)
 {
 	char *p = s;
@@ -1039,11 +1179,11 @@ char *Com_SkipCharset(char *s, char *sep)
 	return p;
 }
 
-/*
-==================
-Com_SkipTokens
-==================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 char *Com_SkipTokens(char *s, int numTokens, char *sep)
 {
 	int sepCount = 0;
@@ -1064,11 +1204,11 @@ char *Com_SkipTokens(char *s, int numTokens, char *sep)
 		return s;
 }
 
-/*
-============
-COM_SkipPath
-============
-*/
+/**
+ * @brief Returns just the filename from a given path
+ * @param
+ * @sa COM_StripExtension
+ */
 char *COM_SkipPath(char *pathname)
 {
 	char *last;
@@ -1082,11 +1222,11 @@ char *COM_SkipPath(char *pathname)
 	return last;
 }
 
-/*
-============
-COM_StripExtension
-============
-*/
+/**
+ * @brief Removed the file extension from a filename
+ * @param
+ * @sa COM_SkipPath
+ */
 void COM_StripExtension(char *in, char *out)
 {
 	while (*in && *in != '.')
@@ -1094,11 +1234,11 @@ void COM_StripExtension(char *in, char *out)
 	*out = 0;
 }
 
-/*
-============
-COM_FileExtension
-============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 char *COM_FileExtension(char *in)
 {
 	static char exten[8];
@@ -1115,11 +1255,11 @@ char *COM_FileExtension(char *in)
 	return exten;
 }
 
-/*
-============
-COM_FileBase
-============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void COM_FileBase(char *in, char *out)
 {
 	char *s, *s2;
@@ -1199,6 +1339,11 @@ float LittleFloat(float l)
 	return _LittleFloat(l);
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 short ShortSwap(short l)
 {
 	byte b1, b2;
@@ -1209,11 +1354,21 @@ short ShortSwap(short l)
 	return (b1 << 8) + b2;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 short ShortNoSwap(short l)
 {
 	return l;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int LongSwap(int l)
 {
 	byte b1, b2, b3, b4;
@@ -1226,11 +1381,21 @@ int LongSwap(int l)
 	return ((int) b1 << 24) + ((int) b2 << 16) + ((int) b3 << 8) + b4;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int LongNoSwap(int l)
 {
 	return l;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 float FloatSwap(float f)
 {
 	union float_u {
@@ -1247,16 +1412,21 @@ float FloatSwap(float f)
 	return dat2.f;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 float FloatNoSwap(float f)
 {
 	return f;
 }
 
-/*
-================
-Swap_Init
-================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void Swap_Init(void)
 {
 	byte swaptest[2] = { 1, 0 };
@@ -1282,15 +1452,14 @@ void Swap_Init(void)
 
 }
 
-/*
-============
-va
-
-does a varargs printf into a temp buffer, so I don't need to have
-varargs versions of all text functions.
-FIXME: make this buffer size safe someday
-============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ * does a varargs printf into a temp buffer, so I don't need to have
+ * varargs versions of all text functions.
+ * FIXME: make this buffer size safe someday
+ */
 char *va(char *format, ...)
 {
 	va_list argptr;
@@ -1308,17 +1477,14 @@ char *va(char *format, ...)
 }
 
 
-static char com_token[MAX_TOKEN_CHARS];
-
-/*
-==============
-COM_Parse
-
-Parse a token out of a string
-==============
-*/
+/**
+ * @brief Parse a token out of a string
+ * @param
+ * @sa
+ */
 char *COM_Parse(char **data_p)
 {
+	static char com_token[MAX_TOKEN_CHARS];
 	int c;
 	int len;
 	char *data;
@@ -1387,11 +1553,11 @@ skipwhite:
 }
 
 
-/*
-=================
-COM_EParse
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 char *COM_EParse(char **text, char *errhead, char *errinfo)
 {
 	char *token;
@@ -1410,14 +1576,12 @@ char *COM_EParse(char **text, char *errhead, char *errinfo)
 }
 
 
-/*
-===============
-Com_PageInMemory
-
-===============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 static int paged_total;
-
 void Com_PageInMemory(byte * buffer, int size)
 {
 	int i;
@@ -1427,13 +1591,17 @@ void Com_PageInMemory(byte * buffer, int size)
 }
 
 
-
 /*
 ============================================================================
 LIBRARY REPLACEMENT FUNCTIONS
 ============================================================================
 */
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 char *Q_strlwr(char *str)
 {
 #ifdef _MSC_VER
@@ -1443,6 +1611,11 @@ char *Q_strlwr(char *str)
 #endif
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 char *Q_strdup(const char *str)
 {
 #ifdef _MSC_VER
@@ -1452,6 +1625,11 @@ char *Q_strdup(const char *str)
 #endif
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int Q_putenv(const char *str)
 {
 #ifdef _MSC_VER
@@ -1461,6 +1639,11 @@ int Q_putenv(const char *str)
 #endif
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 char *Q_getcwd(char *dest, int size)
 {
 #ifdef _MSC_VER
@@ -1470,11 +1653,21 @@ char *Q_getcwd(char *dest, int size)
 #endif
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int Q_strcmp(char *s1, char *s2)
 {
 	return strncmp(s1, s2, 99999);
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int Q_strncmp(char *s1, char *s2, int n)
 {
 	return strncmp(s1, s2, n);
@@ -1486,6 +1679,11 @@ int Q_strncmp(char *s1, char *s2, int n)
 
 #define Q_strncasecmp(s1, s2, n) (strncasecmp(s1, s2, n))
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int Q_stricmp(char *s1, char *s2)
 {
 	return strcasecmp(s1, s2);
@@ -1502,6 +1700,11 @@ int Q_stricmp(char *s1, char *s2)
 #endif
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int Q_strncasecmp(char *s1, char *s2, int n)
 {
 	int c1, c2;
@@ -1555,7 +1758,12 @@ void Q_strncpyz(char *dest, const char *src, int destsize)
 	dest[destsize - 1] = 0;
 }
 
-/* never goes past bounds or leaves without a terminating 0 */
+/**
+ * @brief
+ * @param
+ * @sa
+ * never goes past bounds or leaves without a terminating 0
+ */
 void Q_strcat(char *dest, int size, const char *src)
 {
 	int l1;
@@ -1567,11 +1775,21 @@ void Q_strcat(char *dest, int size, const char *src)
 	Q_strncpyz(dest + l1, src, size - l1);
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int Q_strcasecmp(char *s1, char *s2)
 {
 	return Q_strncasecmp(s1, s2, 99999);
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void Com_sprintf(char *dest, int size, char *fmt, ...)
 {
 	int len;
@@ -1598,18 +1816,16 @@ INFO STRINGS
 =====================================================================
 */
 
-/*
-===============
-Info_ValueForKey
-
-Searches the string for the given
-key and returns the associated value, or an empty string.
-===============
-*/
+/**
+ * @brief Searches the string for the given key and returns the associated value, or an empty string.
+ * @param
+ * @sa
+ */
 char *Info_ValueForKey(char *s, char *key)
 {
 	char pkey[512];
-	static char value[2][512];	/* use two buffers so compares */
+	/* use two buffers so compares */
+	static char value[2][512];
 
 	/* work without stomping on each other */
 	static int valueindex;
@@ -1643,6 +1859,11 @@ char *Info_ValueForKey(char *s, char *key)
 	}
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void Info_RemoveKey(char *s, const char *key)
 {
 	char *start;
@@ -1688,14 +1909,11 @@ void Info_RemoveKey(char *s, const char *key)
 }
 
 
-/*
-==================
-Info_Validate
-
-Some characters are illegal in info strings because they
-can mess up the server's parsing
-==================
-*/
+/**
+ * @brief Some characters are illegal in info strings because they can mess up the server's parsing
+ * @param
+ * @sa
+ */
 qboolean Info_Validate(char *s)
 {
 	if (strstr(s, "\""))
@@ -1705,13 +1923,14 @@ qboolean Info_Validate(char *s)
 	return qtrue;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void Info_SetValueForKey(char *s, const char *key, const char *value)
 {
 	char newi[MAX_INFO_STRING];
-
-/* 	char	*v; */
-/* 	int	c; */
-/* 	int	maxsize = MAX_INFO_STRING; */
 
 	if (strstr(key, "\\") || strstr(value, "\\")) {
 		Com_Printf("Can't use keys or values with a \\\n");
@@ -1738,28 +1957,8 @@ void Info_SetValueForKey(char *s, const char *key, const char *value)
 
 	Com_sprintf(newi, sizeof(newi), "\\%s\\%s", key, value);
 
-#if 0
-	if (strlen(newi) + strlen(s) > maxsize) {
-		Com_Printf("Info string length exceeded\n");
-		return;
-	}
-#endif
-
 	Q_strcat(newi, MAX_INFO_STRING, s);
 	Q_strncpyz(s, newi, MAX_INFO_STRING);
-
-#if 0
-	/* only copy ascii values */
-	s += strlen(s);
-	v = newi;
-	while (*v) {
-		c = *v++;
-		c &= 127;				/* strip high bits */
-		if (c >= 32 && c < 127)
-			*s++ = c;
-	}
-	*s = 0;
-#endif
 }
 
 
@@ -1773,23 +1972,21 @@ static csi_t *CSI;
 static invList_t *invUnused;
 static item_t cacheItem;
 
-/*invList_t	cacheList;*/
-
-/*
-=================
-Com_InitCSI
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void Com_InitCSI(csi_t * import)
 {
 	CSI = import;
 }
 
-/*
-=================
-Com_InitInventory
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void Com_InitInventory(invList_t * invList)
 {
 	invList_t *last;
@@ -1809,11 +2006,11 @@ void Com_InitInventory(invList_t * invList)
 	}
 }
 
-/*
-=================
-Com_CheckToInventory
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, int y)
 {
 	invList_t *ic, *right, *left;
@@ -1947,11 +2144,11 @@ invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x
 	return ic;
 }
 
-/*
-=================
-Com_RemoveFromInventory
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
 {
 	invList_t *ic, *old;
@@ -1996,11 +2193,11 @@ qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
 	return qfalse;
 }
 
-/*
-=================
-Com_MoveInInventory
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp)
 {
 	invList_t *ic;
@@ -2102,11 +2299,11 @@ int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int t
 		return IA_MOVE;
 }
 
-/*
-=================
-Com_EmptyContainer
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void Com_EmptyContainer(inventory_t * i, int container)
 {
 	invList_t *ic, *old;
@@ -2139,11 +2336,11 @@ void Com_EmptyContainer(inventory_t * i, int container)
 	i->c[container] = NULL;
 }
 
-/*
-=================
-Com_DestroyInventory
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void Com_DestroyInventory(inventory_t * i)
 {
 	int k;
@@ -2158,11 +2355,11 @@ void Com_DestroyInventory(inventory_t * i)
 		Com_EmptyContainer(i, k);
 }
 
-/*
-=================
-Com_FindSpace
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py)
 {
 	int x, y;
@@ -2188,13 +2385,12 @@ CHARACTER GENERATION AND HANDLING
 ==============================================================================
 */
 
-/*
-======================
-Com_CharGenAbilitySkills
-======================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 #define MAX_GENCHARRETRIES	20
-
 void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility, int minSkill, int maxSkill)
 {
 	float randomArray[SKILL_NUM_TYPES];
@@ -2270,13 +2466,11 @@ void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility,
 
 static char returnModel[MAX_VAR];
 
-/*
-======================
-Com_CharGetBody
-
-returns the body model for the soldiers for armored and non armored soldiers
-======================
-*/
+/**
+ * @brief Returns the body model for the soldiers for armored and non armored soldiers
+ * @param chr Pointer to character struct
+ * @sa Com_CharGetBody
+ */
 char *Com_CharGetBody(character_t * chr)
 {
 	assert(chr);
@@ -2299,13 +2493,11 @@ char *Com_CharGetBody(character_t * chr)
 	return returnModel;
 }
 
-/*
-======================
-Com_CharGetHead
-
-returns the head model for the soldiers for armored and non armored soldiers
-======================
-*/
+/**
+ * @brief Returns the head model for the soldiers for armored and non armored soldiers
+ * @param chr Pointer to character struct
+ * @sa Com_CharGetBody
+ */
 char *Com_CharGetHead(character_t * chr)
 {
 	assert(chr);
@@ -2380,18 +2572,15 @@ typedef struct menuDepends_s {
 	char value[MAX_VAR];
 } menuDepends_t;
 
-/*
-=================
-Com_ParseValue
-
-translateable string are marked with _ at the beginning
-example:
-menu example
-{
- string "_this is translatable"
-}
-=================
-*/
+/**
+ * @brief
+ * @note translateable string are marked with _ at the beginning
+ * @code menu exampleName
+ * {
+ *   string "_this is translatable"
+ * }
+ * @endcode
+ */
 int Com_ParseValue(void *base, char *token, int type, int ofs)
 {
 	byte *b;
@@ -2570,12 +2759,11 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 }
 
 
-
-/*
-=================
-Com_SetValue
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int Com_SetValue(void *base, void *set, int type, int ofs)
 {
 	byte *b;
@@ -2672,11 +2860,11 @@ int Com_SetValue(void *base, void *set, int type, int ofs)
 	}
 }
 
-/*
-=================
-Com_ValueToStr
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 char *Com_ValueToStr(void *base, int type, int ofs)
 {
 	static char valuestr[MAX_VAR];
@@ -2757,6 +2945,11 @@ char *Com_ValueToStr(void *base, int type, int ofs)
 	}
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void Com_InventoryList_f(void)
 {
 	int i;
