@@ -1587,7 +1587,7 @@ void CL_Frame(int msec)
 	CDAudio_Update();
 
 	/* advance local effects for next frame */
-	CL_RunDLights();
+/*	CL_RunDLights();*/
 	CL_RunLightStyles();
 	SCR_RunConsole();
 

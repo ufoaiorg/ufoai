@@ -358,12 +358,6 @@ void DrawAltString(int x, int y, char *s);	/* toggle high bit */
 
 void CL_AddNetgraph(void);
 
-void CL_ParticleEffect(vec3_t org, vec3_t dir, int color, int count);
-void CL_ParticleEffect2(vec3_t org, vec3_t dir, int color, int count);
-
-/* RAFAEL */
-void CL_ParticleEffect3(vec3_t org, vec3_t dir, int color, int count);
-
 /*================================================= */
 /* shader stuff */
 /* ================================================= */
@@ -395,39 +389,21 @@ typedef struct particle_s {
 
 #define	PARTICLE_GRAVITY	40
 #define BLASTER_PARTICLE_COLOR		0xe0
-/* PMM */
-#define INSTANT_PARTICLE	-10000.0
-/* PGM */
-/* ======== */
 
 void CL_ClearEffects(void);
 void CL_ClearTEnts(void);
-void CL_BlasterTrail(vec3_t start, vec3_t end);
-void CL_QuadTrail(vec3_t start, vec3_t end);
-void CL_RailTrail(vec3_t start, vec3_t end);
-void CL_BubbleTrail(vec3_t start, vec3_t end);
-void CL_FlagTrail(vec3_t start, vec3_t end, float color);
-
-/* RAFAEL */
-void CL_IonripperTrail(vec3_t start, vec3_t end);
 
 int CL_ParseEntityBits(unsigned *bits);
 
 void CL_ParseTEnt(void);
 void CL_ParseConfigString(void);
-void CL_ParseMuzzleFlash(void);
-void CL_ParseMuzzleFlash2(void);
-void SmokeAndFlash(vec3_t origin);
 
 void CL_SetLightstyle(int i);
-
-void CL_RunDLights(void);
 void CL_RunLightStyles(void);
+void CL_AddLightStyles(void);
 
 void CL_AddEntities(void);
-void CL_AddDLights(void);
 void CL_AddTEnts(void);
-void CL_AddLightStyles(void);
 
 /*================================================= */
 
@@ -452,7 +428,8 @@ void CL_StopVideo_f(void);
 void CL_Video_f(void);
 
 /* cl_main */
-extern refexport_t re;			/* interface to refresh .dll */
+/* interface to refresh lib */
+extern refexport_t re;
 
 void CL_Init(void);
 void CL_ReadSinglePlayerData( void );
@@ -989,15 +966,7 @@ void CL_ParseSequence(char *name, char **text);
 
 /* cl_fx.c */
 cdlight_t *CL_AllocDlight(int key);
-void CL_BigTeleportParticles(vec3_t org);
-void CL_RocketTrail(vec3_t start, vec3_t end, centity_t * old);
-void CL_DiminishingTrail(vec3_t start, vec3_t end, centity_t * old, int flags);
-void CL_FlyEffect(centity_t * ent, vec3_t origin);
-void CL_BfgParticles(entity_t * ent);
 void CL_AddParticles(void);
-
-/* RAFAEL */
-void CL_TrapParticles(entity_t * ent);
 
 
 #if id386

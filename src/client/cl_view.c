@@ -699,7 +699,6 @@ void V_RenderView(float stereo_separation)
 		LM_AddToScene();
 		LE_AddToScene();
 		CL_AddTargeting();
-		CL_AddParticles();
 		CL_AddLightStyles();
 	}
 
