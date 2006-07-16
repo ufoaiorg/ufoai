@@ -779,8 +779,13 @@ void CL_PlaceItem( le_t *le )
 	{
 		/* search an owner */
 		actor = LE_Find( ET_ACTOR, le->pos );
-		if ( actor )
+		if ( actor ) {
+			/* TODO: This is the source of inventory bug, but i don't know how to fix it!
+					 The inventory is destroyed twice later!!!
+			*/
+			Com_Error (ERR_DROP, "CL_PlaceItem: Fix me!!!");
 			actor->i.c[csi.idFloor] = le->i.c[csi.idFloor];
+		}
 	}
 	if ( le->i.c[csi.idFloor] ) {
 		biggest = CL_BiggestItem( le->i.c[csi.idFloor] );
