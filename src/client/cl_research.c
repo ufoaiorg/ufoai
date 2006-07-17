@@ -362,7 +362,7 @@ static void RS_ResearchDisplayInfo(void)
 
 	/* Display total number of free labs in current base. */
 	Cvar_Set("mn_research_labs", va(_("Free labs in this base: %i"), B_GetUnusedLabs(baseCurrent->idx)));
-	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue)));
+	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qfalse)));
 	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
 
 	/* Display the base this tech is researched in. */
@@ -685,16 +685,18 @@ static void RS_ResearchStop(void)
 void RS_UpdateData(void)
 {
 	char name[MAX_VAR];
-	int i, j;
+	int i, j, available;
 	technology_t *tech = NULL;
 	building_t *building = NULL;
 	employees_t *employees_in_building = NULL;
 	char tempstring[MAX_VAR];
 
-	*name = '\0';				/* init temp-name */
+	*name = '\0'; /* init temp-name */
 
 	/* Make everything the same (predefined in the ufo-file) color. */
 	Cbuf_AddText("research_clear\n");
+
+	available = B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue);
 
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
@@ -723,12 +725,11 @@ void RS_UpdateData(void)
 				/* Assigned employees to the technology. */
 				Cvar_Set(va("mn_researchassigned%i", j), tempstring);
 			} else {
-				Cvar_Set(va("mn_researchassigned%i", j), "0");
+				Cvar_SetValue(va("mn_researchassigned%i", j), 0);
 				Cvar_Set(va("mn_researchmax%i", j), "mx.");
 			}
-			Com_sprintf(tempstring, MAX_VAR, "%i\n", B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue));
 			/* Maximal available scientists in the base the tech is reseearched. */
-			Cvar_Set(va("mn_researchavailable%i", j), tempstring);
+			Cvar_SetValue(va("mn_researchavailable%i", j), available);
 
 			/* Set the text of the research items and mark them if they are currently researched. */
 			switch (tech->statusResearch) {
