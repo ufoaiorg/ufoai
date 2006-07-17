@@ -33,48 +33,46 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
+/* global vars */
 cvar_t *cursor;
-cvar_t *cl_testparticles;
-cvar_t *cl_testentities;
-cvar_t *cl_testlights;
-cvar_t *cl_testblend;
-
-cvar_t *cl_drawgrid;
-
-cvar_t *cl_stats;
-
-
-int r_numdlights;
-dlight_t r_dlights[MAX_DLIGHTS];
-
-int r_numentities;
-entity_t r_entities[MAX_ENTITIES];
-
-int r_numparticles;
-particle_t r_particles[MAX_PARTICLES];
-
-lightstyle_t r_lightstyles[MAX_LIGHTSTYLES];
-
-char cl_weaponmodels[MAX_CLIENTWEAPONMODELS][MAX_QPATH];
-int num_cl_weaponmodels;
 
 cvar_t *map_dropship;
 vec3_t map_dropship_coord;
 int map_maxlevel;
 sun_t map_sun;
-dlight_t map_lights[MAX_MAP_LIGHTS];
-int map_numlights;
 
-float map_fog;
-vec4_t map_fogColor;
+char cl_weaponmodels[MAX_CLIENTWEAPONMODELS][MAX_QPATH];
+int num_cl_weaponmodels;
 
-/*
-====================
-V_ClearScene
+/* static vars */
+static cvar_t *cl_testparticles;
+static cvar_t *cl_testentities;
+static cvar_t *cl_testlights;
+static cvar_t *cl_drawgrid;
+static cvar_t *cl_stats;
 
-Specifies the model that will be used as the world
-====================
-*/
+static int r_numdlights;
+static dlight_t r_dlights[MAX_DLIGHTS];
+
+static int r_numentities;
+static entity_t r_entities[MAX_ENTITIES];
+
+static int r_numparticles;
+static particle_t r_particles[MAX_PARTICLES];
+
+static lightstyle_t r_lightstyles[MAX_LIGHTSTYLES];
+
+static dlight_t map_lights[MAX_MAP_LIGHTS];
+static int map_numlights;
+
+static float map_fog;
+static vec4_t map_fogColor;
+
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void V_ClearScene(void)
 {
 	r_numdlights = 0;
@@ -83,24 +81,22 @@ void V_ClearScene(void)
 }
 
 
-/*
-=====================
-V_GetEntity
-
-=====================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 entity_t *V_GetEntity(void)
 {
 	return r_entities + r_numentities;
 }
 
 
-/*
-=====================
-V_AddEntity
-
-=====================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void V_AddEntity(entity_t * ent)
 {
 	if (r_numentities >= MAX_ENTITIES)
@@ -110,30 +106,11 @@ void V_AddEntity(entity_t * ent)
 }
 
 
-/*
-=====================
-V_AddParticle
-
-=====================
-*/
-void V_AddParticle(vec3_t org, int color, float alpha)
-{
-	particle_t *p;
-
-	if (r_numparticles >= MAX_PARTICLES)
-		return;
-	p = &r_particles[r_numparticles++];
-	VectorCopy(org, p->origin);
-	p->color = color;
-	p->alpha = alpha;
-}
-
-/*
-=====================
-V_AddLight
-
-=====================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void V_AddLight(vec3_t org, float intensity, float r, float g, float b)
 {
 	dlight_t *dl;
@@ -149,12 +126,11 @@ void V_AddLight(vec3_t org, float intensity, float r, float g, float b)
 }
 
 
-/*
-=====================
-V_AddLightStyle
-
-=====================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void V_AddLightStyle(int style, float r, float g, float b)
 {
 	lightstyle_t *ls;
@@ -169,13 +145,9 @@ void V_AddLightStyle(int style, float r, float g, float b)
 	ls->rgb[2] = b;
 }
 
-/*
-================
-V_TestParticles
-
-If cl_testparticles is set, create 4096 particles in the view
-================
-*/
+/**
+ * @brief If cl_testparticles is set, create 4096 particles in the view
+ */
 void V_TestParticles(void)
 {
 	particle_t *p;
@@ -197,13 +169,9 @@ void V_TestParticles(void)
 	}
 }
 
-/*
-================
-V_TestEntities
-
-If cl_testentities is set, create 32 player models
-================
-*/
+/**
+ * @brief If cl_testentities is set, create 32 player models
+ */
 void V_TestEntities(void)
 {
 	int i, j;
@@ -227,13 +195,9 @@ void V_TestEntities(void)
 	}
 }
 
-/*
-================
-V_TestLights
-
-If cl_testlights is set, create 32 lights models
-================
-*/
+/**
+ * @brief If cl_testlights is set, create 32 lights models
+ */
 void V_TestLights(void)
 {
 	int i, j;
@@ -258,13 +222,11 @@ void V_TestLights(void)
 	}
 }
 
-/*=================================================================== */
-
-/*
-=================
-CL_ParseEntitystring
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void CL_ParseEntitystring(char *es)
 {
 	char *strstart;
@@ -486,13 +448,9 @@ void CL_ParseEntitystring(char *es)
 }
 
 
-/*
-=================
-CL_PrepRefresh
-
-Call before entering a new level, or after changing dlls
-=================
-*/
+/**
+ * @brief Call before entering a new level, or after changing dlls
+ */
 void CL_PrepRefresh(void)
 {
 	le_t *le;
@@ -594,35 +552,31 @@ void CL_PrepRefresh(void)
 	CDAudio_Play(atoi(cl.configstrings[CS_CDTRACK]), qtrue);
 }
 
-/*
-====================
-CalcFov
-====================
-*/
-float CalcFov(float fov_x, float width, float height)
+/**
+ * @brief
+ * @param
+ * @sa
+ */
+static float CalcFov(float fov_x, float width, float height)
 {
-	float a;
-	float x;
+	float a, x;
 
 	if (fov_x < 1 || fov_x > 179)
 		Com_Error(ERR_DROP, "Bad fov: %f", fov_x);
 
 	x = width / tan(fov_x / 360 * M_PI);
-
 	a = atan(height / x);
-
 	a = a * 360 / M_PI;
 
 	return a;
 }
 
 
-
-/*
-===================
-CL_CalcRefdef
-===================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void CL_CalcRefdef(void)
 {
 	float zoom;
@@ -665,12 +619,11 @@ static void CL_DrawGrid(void)
 	}
 }
 
-/*
-==================
-V_RenderView
-
-==================
-*/
+/**
+ * @brief
+ * @param stereo_separation
+ * @sa SCR_UpdateScreen
+ */
 void V_RenderView(float stereo_separation)
 {
 	if (cls.state != ca_active && cls.state != ca_sequence)
@@ -679,8 +632,9 @@ void V_RenderView(float stereo_separation)
 	if (!scr_vrect.width || !scr_vrect.height)
 		return;
 
+	/* still loading */
 	if (!cl.refresh_prepped)
-		return;					/* still loading */
+		return;
 
 	if (cl_timedemo->value) {
 		if (!cl.timedemo_start)
@@ -755,11 +709,11 @@ void V_RenderView(float stereo_separation)
 }
 
 
-/*
-=============
-V_CenterView
-=============
-*/
+/**
+ * @brief
+ * @param pos
+ * @sa
+ */
 void V_CenterView(pos3_t pos)
 {
 	vec3_t vec;
@@ -770,21 +724,19 @@ void V_CenterView(pos3_t pos)
 }
 
 
-/*
-=============
-V_Viewpos_f
-=============
-*/
+/**
+ * @brief Just prints the vieworg vector to console
+ */
 void V_Viewpos_f(void)
 {
 	Com_Printf("(%i %i %i) : %i\n", (int) cl.refdef.vieworg[0], (int) cl.refdef.vieworg[1], (int) cl.refdef.vieworg[2], (int) cl.refdef.viewangles[YAW]);
 }
 
-/*
-=============
-V_Init
-=============
-*/
+/**
+ * @brief
+ * @param
+ * @sa CL_Init
+ */
 void V_Init(void)
 {
 	Cmd_AddCommand("viewpos", V_Viewpos_f);
@@ -792,7 +744,6 @@ void V_Init(void)
 
 	cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE);
 
-	cl_testblend = Cvar_Get("cl_testblend", "0", 0);
 	cl_testparticles = Cvar_Get("cl_testparticles", "0", 0);
 	cl_testentities = Cvar_Get("cl_testentities", "0", 0);
 	cl_testlights = Cvar_Get("cl_testlights", "0", 0);
