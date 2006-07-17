@@ -765,11 +765,9 @@ int CL_BiggestItem( invList_t *ic )
 }
 
 
-/*
-=====================
-CL_PlaceItem
-=====================
-*/
+/**
+ * @brief
+ */
 void CL_PlaceItem( le_t *le )
 {
 	le_t *actor;
@@ -975,8 +973,7 @@ void CL_ParseEvent( void )
 		if ( eType & INSTANTLY ) {
 			now = qtrue;
 			eType &= ~INSTANTLY;
-		}
-		else
+		} else
 			now = qfalse;
 
 		/* check if eType is valid */
@@ -999,7 +996,8 @@ void CL_ParseEvent( void )
 				evWp = evBuf;
 
 			/* get event time */
-			if ( nextTime < cl.eventTime ) nextTime = cl.eventTime;
+			if ( nextTime < cl.eventTime )
+				nextTime = cl.eventTime;
 
 			if ( eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE )
 				time = impactTime;
@@ -1087,8 +1085,10 @@ void CL_ParseEvent( void )
 			cur->start = time;
 			cur->pos = evWp - evBuf;
 
-			if ( last ) last->next = cur;
-			else etCurrent = cur;
+			if ( last )
+				last->next = cur;
+			else
+				etCurrent = cur;
 			cur->next = et;
 
 			/* copy data */

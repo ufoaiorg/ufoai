@@ -2057,6 +2057,7 @@ void G_ClientShoot(player_t * player, int num, pos3_t at, int type)
 			gi.WriteByte(container);
 			Com_EmptyContainer(&ent->i, container);
 		}
+		/* x and y value */
 		gi.WriteByte(0);
 		gi.WriteByte(0);
 	}
@@ -2232,11 +2233,10 @@ qboolean G_ReactionFire(edict_t * target)
 }
 
 
-/*
-=================
-G_ClientInvMove
-=================
-*/
+/**
+ * @brief
+ * see event PA_INVMOVE
+ */
 void G_ClientInvMove(player_t * player, int num)
 {
 	int from, fx, fy, to, tx, ty;
