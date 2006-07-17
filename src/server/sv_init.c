@@ -43,7 +43,7 @@ SV_FindIndex
 
 ================
 */
-int SV_FindIndex(char *name, int start, int max, qboolean create)
+static int SV_FindIndex(char *name, int start, int max, qboolean create)
 {
 	int i;
 
@@ -127,28 +127,26 @@ typedef struct mPlaced_s {
 	int x, y;
 } mPlaced_t;
 
-mTile_t mTile[MAX_TILETYPES];
-mAssembly_t mAssembly[MAX_MAPASSEMBLIES];
+static mTile_t mTile[MAX_TILETYPES];
+static mAssembly_t mAssembly[MAX_MAPASSEMBLIES];
 
-int numTiles;
-int numAssemblies;
+static int numTiles;
+static int numAssemblies;
 
-mPlaced_t mPlaced[MAX_MAPTILES];
-int numPlaced;
+static mPlaced_t mPlaced[MAX_MAPTILES];
+static int numPlaced;
 
-short prList[32 * 32];
-short trList[MAX_TILETYPES];
+static short prList[32 * 32];
+static short trList[MAX_TILETYPES];
 
-mAssembly_t *mAsm;
-int mapSize;
-int mapX, mapY, mapW, mapH;
+static mAssembly_t *mAsm;
+static int mapSize;
+static int mapX, mapY, mapW, mapH;
 
-/*
-================
-RandomList
-================
-*/
-void RandomList(int n, short *list)
+/**
+ * @brief
+ */
+static void RandomList(int n, short *list)
 {
 	short i, r, t;
 
@@ -164,14 +162,12 @@ void RandomList(int n, short *list)
 }
 
 
-/*
-================
-SV_ParseMapTile
-================
-*/
 #define SOLID 255
 
-byte tileChar(char chr)
+/**
+ * @brief
+ */
+static byte tileChar(char chr)
 {
 	if (chr == '+')
 		return SOLID;
@@ -184,7 +180,12 @@ byte tileChar(char chr)
 	return 0;
 }
 
-void SV_ParseMapTile(char *filename, char **text)
+/**
+ * @brief Parsed a tile definition out of the ump-files
+ * @sa SV_ParseAssembly
+ * @sa SV_AssembleMap
+ */
+static void SV_ParseMapTile(char *filename, char **text)
 {
 	char *errhead = "SV_ParseMapTile: Unexpected end of file (";
 	char *token, *chr;
@@ -245,12 +246,15 @@ void SV_ParseMapTile(char *filename, char **text)
 }
 
 
-/*
-================
-SV_ParseAssembly
-================
-*/
-void SV_ParseAssembly(char *filename, char **text)
+/**
+ * @brief Parses an assembly block
+ * @sa SV_AssembleMap
+ *
+ * @note: format of size: "size x y"
+ * @note: format of fix: "fix [tilename] x y"
+ * @note: format of tile: "[tilename] min max"
+ */
+static void SV_ParseAssembly(char *filename, char **text)
 {
 	char *errhead = "SV_ParseAssembly: Unexpected end of file (";
 	char *token;
@@ -279,7 +283,7 @@ void SV_ParseAssembly(char *filename, char **text)
 		if (!text || *token == '}')
 			break;
 
-		if (!strcmp(token, "size")) {
+		if (!Q_strncmp(token, "size", 4)) {
 			/* get map size */
 			token = COM_EParse(text, errhead, filename);
 			if (!text)
@@ -287,14 +291,14 @@ void SV_ParseAssembly(char *filename, char **text)
 
 			sscanf(token, "%i %i", &a->w, &a->h);
 			continue;
-		} else if (!Q_strcmp(token, "fix")) {
+		} else if (!Q_strncmp(token, "fix", 3)) {
 			/* get tile */
 			token = COM_EParse(text, errhead, filename);
 			if (!text)
 				break;
 
 			for (i = 0; i < numTiles; i++)
-				if (!strcmp(token, mTile[i].name)) {
+				if (!Q_strncmp(token, mTile[i].name, MAX_VAR)) {
 					if (a->numFixed >= MAX_FIXEDTILES) {
 						Com_Printf("SV_ParseAssembly: Too many fixed tiles\n");
 						break;
@@ -314,7 +318,7 @@ void SV_ParseAssembly(char *filename, char **text)
 		}
 
 		for (i = 0; i < numTiles; i++)
-			if (!Q_strcmp(token, mTile[i].name)) {
+			if (!Q_strncmp(token, mTile[i].name, MAX_VAR)) {
 				/* get min and max tile number */
 				token = COM_EParse(text, errhead, filename);
 				if (!text)
@@ -330,12 +334,11 @@ void SV_ParseAssembly(char *filename, char **text)
 }
 
 
-/*
-================
-SV_AddTile
-================
-*/
-void SV_AddTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, int *toFill)
+/**
+ * @bief
+ * @sa SV_AssembleMap
+ */
+static void SV_AddTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, int *toFill)
 {
 	qboolean bad;
 	int tx, ty;
@@ -380,12 +383,12 @@ void SV_AddTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, in
 }
 
 
-/*
-================
-SV_FitTile
-================
-*/
-qboolean SV_FitTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, qboolean force)
+/**
+ * @brief
+ * @sa SV_AddMandatoryParts
+ * @sa SV_AddRegion
+ */
+static qboolean SV_FitTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, qboolean force)
 {
 	qboolean touch;
 	int tx, ty;
@@ -438,12 +441,11 @@ qboolean SV_FitTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y
 }
 
 
-/*
-================
-SV_AddRegion
-================
-*/
-qboolean SV_AddRegion(byte map[32][32][MAX_TILEALTS], byte * num)
+/**
+ * @brief
+ * @sa SV_FitTile
+ */
+static qboolean SV_AddRegion(byte map[32][32][MAX_TILEALTS], byte * num)
 {
 	mTile_t *tile;
 	int i, j, x, y;
@@ -511,12 +513,11 @@ qboolean SV_AddRegion(byte map[32][32][MAX_TILEALTS], byte * num)
 }
 
 
-/*
-================
-SV_AddMandatoryParts
-================
-*/
-qboolean SV_AddMandatoryParts(byte map[32][32][MAX_TILEALTS], byte * num)
+/**
+ * @brief
+ * @sa SV_FitTile
+ */
+static qboolean SV_AddMandatoryParts(byte map[32][32][MAX_TILEALTS], byte * num)
 {
 	mTile_t *tile;
 	int i, j, n, x, y;
@@ -543,11 +544,15 @@ qboolean SV_AddMandatoryParts(byte map[32][32][MAX_TILEALTS], byte * num)
 }
 
 
-/*
-================
-SV_AssembleMap
-================
-*/
+/**
+ * @brief Assembles a "random" map
+ * parses the *.ump files for assembling the "random" maps
+ * @sa B_AssembleMap
+ * @sa SV_AddTile
+ * @sa SV_AddMandatoryParts
+ * @sa SV_ParseAssembly
+ * @sa SV_ParseMapTile
+ */
 void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 {
 	mPlaced_t *pl;
@@ -693,15 +698,11 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 }
 
 
-/*
-================
-SV_SpawnServer
-
-Change the server to a new map, taking all connected
-clients along with it.
-
-================
-*/
+/**
+ * @brief Change the server to a new map, taking all connected clients along with it.
+ * @sa SV_AssembleMap
+ * @sa CM_LoadMap
+ */
 void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qboolean attractloop, qboolean loadgame)
 {
 	int i;
@@ -716,8 +717,8 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 	if (sv.demofile)
 		fclose(sv.demofile);
 
-	svs.spawncount++;			/* any partially connected client will be */
-	/* restarted */
+	svs.spawncount++;
+	/* any partially connected client will be restarted */
 	sv.state = ss_dead;
 	Com_SetServerState(sv.state);
 
@@ -796,13 +797,9 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 	Com_Printf("-------------------------------------\n");
 }
 
-/*
-==============
-SV_InitGame
-
-A brand new game has been started
-==============
-*/
+/**
+ * @brief A brand new game has been started
+ */
 void SV_InitGame(void)
 {
 /*	edict_t	*ent; */
@@ -844,22 +841,17 @@ void SV_InitGame(void)
 }
 
 
-/*
-======================
-SV_Map
-
-  the full syntax is:
-
-  map [*]<map>$<startspot>+<nextserver>
-
-command from the console or progs.
-Map can also be a.cin, .pcx, or .dm2 file
-Nextserver is used to allow a cinematic to play, then proceed to
-another level:
-
-	map tram.cin+jail_e3
-======================
-*/
+/**
+ * @brief
+ * @note the full syntax is:
+ * @note map [*]<map>$<startspot>+<nextserver>
+ * command from the console or progs.
+ * Map can also be a.cin, .pcx, or .dm2 file
+ * Nextserver is used to allow a cinematic to play, then proceed to
+ * another level:
+ * map tram.cin+jail_e3
+ * @sa SV_SpawnServer
+ */
 void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame)
 {
 	char level[MAX_QPATH];
