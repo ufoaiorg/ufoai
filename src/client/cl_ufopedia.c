@@ -105,7 +105,7 @@ void CL_ItemDescription(int item)
 			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Secondary:\t%s\t(%s)\n"), od->fd[1].name, CL_WeaponSkillToName(od->fd[1].weaponSkill)));
 			Q_strcat(itemText, MAX_MENUTEXTLEN,
 					va(_("Damage:\t%i / %i\n"), (int) (od->fd[0].damage[0] * od->fd[0].shots + od->fd[0].spldmg[0]),
-						(int) (od->fd[1].damage[0] * od->fd[1].shots + od->fd[0].spldmg[0])));
+						(int) (od->fd[1].damage[0] * od->fd[1].shots + od->fd[1].spldmg[0])));
 			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Time units:\t%i / %i\n"), od->fd[0].time, od->fd[1].time));
 			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Range:\t%1.1f / %1.1f\n"), od->fd[0].range / 32.0, od->fd[1].range / 32.0));
 			Q_strcat(itemText, MAX_MENUTEXTLEN,
