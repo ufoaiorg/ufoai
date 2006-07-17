@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-cvar_t *cl_nodelta;
+static cvar_t *cl_nodelta;
 
 extern unsigned sys_frame_time;
 unsigned frame_msec;
@@ -44,6 +44,11 @@ int mx, my;
 int dragFrom, dragFromX, dragFromY;
 item_t dragItem;
 float *rotateAngles;
+
+static qboolean cameraRoute = qfalse;
+static vec3_t routeFrom, routeDelta;
+static float routeDist;
+static int routeLevelStart, routeLevelEnd;
 
 /*
 ===============================================================================
@@ -71,19 +76,18 @@ Key_Event (int key, qboolean down, unsigned time);
 ===============================================================================
 */
 
-kbutton_t in_turnleft, in_turnright, in_shiftleft, in_shiftright;
-kbutton_t in_shiftup, in_shiftdown;
-kbutton_t in_zoomin, in_zoomout;
-kbutton_t in_select, in_action, in_turn;
-kbutton_t in_turnup, in_turndown;
+static kbutton_t in_turnleft, in_turnright, in_shiftleft, in_shiftright;
+static kbutton_t in_shiftup, in_shiftdown;
+static kbutton_t in_zoomin, in_zoomout;
+static kbutton_t in_turnup, in_turndown;
 
-int in_impulse;
+static int in_impulse;
 
 
 /**
   * @brief
   */
-void KeyDown(kbutton_t * b)
+static void KeyDown(kbutton_t * b)
 {
 	int k;
 	char *c;
@@ -92,10 +96,12 @@ void KeyDown(kbutton_t * b)
 	if (c[0])
 		k = atoi(c);
 	else
-		k = -1;					/* typed manually at the console for continuous down */
+		/* typed manually at the console for continuous down */
+		k = -1;
 
+	/* repeating key */
 	if (k == b->down[0] || k == b->down[1])
-		return;					/* repeating key */
+		return;
 
 	if (!b->down[0])
 		b->down[0] = k;
@@ -106,8 +112,9 @@ void KeyDown(kbutton_t * b)
 		return;
 	}
 
+	/* still down */
 	if (b->state & 1)
-		return;					/* still down */
+		return;
 
 	/* save timestamp */
 	c = Cmd_Argv(2);
@@ -115,7 +122,8 @@ void KeyDown(kbutton_t * b)
 	if (!b->downtime)
 		b->downtime = sys_frame_time - 100;
 
-	b->state |= 1 + 2;			/* down + impulse down */
+	/* down + impulse down */
+	b->state |= 1 + 2;
 }
 
 /**
@@ -168,122 +176,94 @@ void KeyUp(kbutton_t * b)
 	b->state |= 4;
 }
 
-
-void IN_SelectDown(void)
-{
-	KeyDown(&in_select);
-}
-void IN_SelectUp(void)
-{
-	KeyUp(&in_select);
-}
-void IN_ActionDown(void)
-{
-	KeyDown(&in_action);
-}
-void IN_ActionUp(void)
-{
-	KeyUp(&in_action);
-}
-void IN_TurnDown(void)
-{
-	KeyDown(&in_turn);
-}
-void IN_TurnUp(void)
-{
-	KeyUp(&in_turn);
-}
-
-void IN_TurnLeftDown(void)
+static void IN_TurnLeftDown(void)
 {
 	KeyDown(&in_turnleft);
 }
-void IN_TurnLeftUp(void)
+static void IN_TurnLeftUp(void)
 {
 	KeyUp(&in_turnleft);
 }
-void IN_TurnRightDown(void)
+static void IN_TurnRightDown(void)
 {
 	KeyDown(&in_turnright);
 }
-void IN_TurnRightUp(void)
+static void IN_TurnRightUp(void)
 {
 	KeyUp(&in_turnright);
 }
-void IN_TurnUpDown(void)
+static void IN_TurnUpDown(void)
 {
 	KeyDown(&in_turnup);
 }
-void IN_TurnUpUp(void)
+static void IN_TurnUpUp(void)
 {
 	KeyUp(&in_turnup);
 }
-void IN_TurnDownDown(void)
+static void IN_TurnDownDown(void)
 {
 	KeyDown(&in_turndown);
 }
-void IN_TurnDownUp(void)
+static void IN_TurnDownUp(void)
 {
 	KeyUp(&in_turndown);
 }
-void IN_ShiftLeftDown(void)
+static void IN_ShiftLeftDown(void)
 {
 	KeyDown(&in_shiftleft);
 }
-void IN_ShiftLeftUp(void)
+static void IN_ShiftLeftUp(void)
 {
 	KeyUp(&in_shiftleft);
 }
-void IN_ShiftRightDown(void)
+static void IN_ShiftRightDown(void)
 {
 	KeyDown(&in_shiftright);
 }
-void IN_ShiftRightUp(void)
+static void IN_ShiftRightUp(void)
 {
 	KeyUp(&in_shiftright);
 }
-void IN_ShiftUpDown(void)
+static void IN_ShiftUpDown(void)
 {
 	KeyDown(&in_shiftup);
 }
-void IN_ShiftUpUp(void)
+static void IN_ShiftUpUp(void)
 {
 	KeyUp(&in_shiftup);
 }
-void IN_ShiftDownDown(void)
+static void IN_ShiftDownDown(void)
 {
 	KeyDown(&in_shiftdown);
 }
-void IN_ShiftDownUp(void)
+static void IN_ShiftDownUp(void)
 {
 	KeyUp(&in_shiftdown);
 }
-void IN_ZoomInDown(void)
+static void IN_ZoomInDown(void)
 {
 	KeyDown(&in_zoomin);
 }
-void IN_ZoomInUp(void)
+static void IN_ZoomInUp(void)
 {
 	KeyUp(&in_zoomin);
 }
-void IN_ZoomOutDown(void)
+static void IN_ZoomOutDown(void)
 {
 	KeyDown(&in_zoomout);
 }
-void IN_ZoomOutUp(void)
+static void IN_ZoomOutUp(void)
 {
 	KeyUp(&in_zoomout);
 }
 
-void IN_Impulse(void)
+static void IN_Impulse(void)
 {
 	in_impulse = atoi(Cmd_Argv(1));
 }
 
 /**
-  * @brief
-  *
-  * Switches camera mode between remote and firstperson
+  * @brief Switches camera mode between remote and firstperson
   */
 void CL_CameraMode(void)
 {
@@ -678,13 +658,15 @@ void CL_NextAlien(void)
 
 #ifdef DEBUG
 /**
-  * @brief
+  * @brief Prints the current camera angles
+  * @note Only available in debug mode
+  * Accessable via console command camangles
   */
 void CL_CamPrintAngles(void)
 {
 	Com_Printf("camera angles %0.3f:%0.3f:%0.3f\n", cl.cam.angles[0], cl.cam.angles[1], cl.cam.angles[2]);
 }
-#endif							/* DEBUG */
+#endif /* DEBUG */
 
 /**
   * @brief
@@ -790,8 +772,11 @@ void CL_InitInput(void)
 #define STATE_ROT		4
 #define STATE_TILT		5
 
+#define SCROLL_BORDER	4
+
 /**
   * @brief
+  * @note see SCROLL_BORDER define
   */
 float CL_GetKeyMouseState(int dir)
 {
@@ -799,10 +784,10 @@ float CL_GetKeyMouseState(int dir)
 
 	switch (dir) {
 	case STATE_FORWARD:
-		value = (in_shiftup.state & 1) + (my <= 0) - (in_shiftdown.state & 1) - (my >= VID_NORM_HEIGHT - 4);
+		value = (in_shiftup.state & 1) + (my <= SCROLL_BORDER) - (in_shiftdown.state & 1) - (my >= VID_NORM_HEIGHT - SCROLL_BORDER);
 		break;
 	case STATE_RIGHT:
-		value = (in_shiftright.state & 1) + (mx >= VID_NORM_WIDTH - 4) - (in_shiftleft.state & 1) - (mx <= 0);
+		value = (in_shiftright.state & 1) + (mx >= VID_NORM_WIDTH - SCROLL_BORDER) - (in_shiftleft.state & 1) - (mx <= SCROLL_BORDER);
 		break;
 	case STATE_ZOOM:
 		value = (in_zoomin.state & 1) - (in_zoomout.state & 1);
@@ -821,13 +806,6 @@ float CL_GetKeyMouseState(int dir)
 	return value;
 }
 
-
-/*========================================================================== */
-
-qboolean cameraRoute = qfalse;
-vec3_t routeFrom, routeDelta;
-float routeDist;
-int routeLevelStart, routeLevelEnd;
 
 /**
   * @brief
@@ -889,10 +867,10 @@ void CL_CameraMoveRemote(void)
 		(cl_camrotaccel->value > MIN_CAMROT_ACCEL) ? ((cl_camrotaccel->value < MAX_CAMROT_ACCEL) ? cl_camrotaccel->value : MAX_CAMROT_ACCEL) : MIN_CAMROT_ACCEL;
 	movespeed =
 		(cl_cammovespeed->value >
-		 MIN_CAMMOVE_SPEED) ? ((cl_cammovespeed->value < MAX_CAMMOVE_SPEED) ? cl_cammovespeed->value : MAX_CAMMOVE_SPEED) : MIN_CAMMOVE_SPEED;
+		MIN_CAMMOVE_SPEED) ? ((cl_cammovespeed->value < MAX_CAMMOVE_SPEED) ? cl_cammovespeed->value : MAX_CAMMOVE_SPEED) : MIN_CAMMOVE_SPEED;
 	moveaccel =
 		(cl_cammoveaccel->value >
-		 MIN_CAMMOVE_ACCEL) ? ((cl_cammoveaccel->value < MAX_CAMMOVE_ACCEL) ? cl_cammoveaccel->value : MAX_CAMMOVE_ACCEL) : MIN_CAMMOVE_ACCEL;
+		MIN_CAMMOVE_ACCEL) ? ((cl_cammoveaccel->value < MAX_CAMMOVE_ACCEL) ? cl_cammoveaccel->value : MAX_CAMMOVE_ACCEL) : MIN_CAMMOVE_ACCEL;
 
 	/* calculate camera omega */
 	/* stop acceleration */
