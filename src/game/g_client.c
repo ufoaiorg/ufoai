@@ -1519,8 +1519,11 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 	/* apply armor effects */
 	if (damage > 0 && ent->i.c[gi.csi->idArmor]) {
 		objDef_t *ad;
+		int totalDamage;
 
 		ad = &gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t];
+
+		totalDamage = damage;
 
 		if (ad->protection[dmgtype]) {
 			if (ad->protection[dmgtype] > 0)
@@ -1532,7 +1535,7 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 		if (ad->hardness[dmgtype]) {
 			int armorDamage;
 
-			armorDamage = 100 * damage / ad->hardness[dmgtype];
+			armorDamage = (totalDamage - damage) / ad->hardness[dmgtype];
 			ent->AP = armorDamage < ent->AP ? ent->AP - armorDamage : 0;
 		}
 	}
@@ -1601,8 +1604,11 @@ static void G_DamageStun(edict_t * ent, int dmgtype, int damage, edict_t * attac
 	/* apply armor effects */
 	if (damage > 0 && ent->i.c[gi.csi->idArmor]) {
 		objDef_t *ad;
+		int totalDamage;
 
 		ad = &gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t];
+
+		totalDamage = damage;
 
 		if (ad->protection[dmgtype]) {
 			if (ad->protection[dmgtype] > 0)
@@ -1614,7 +1620,7 @@ static void G_DamageStun(edict_t * ent, int dmgtype, int damage, edict_t * attac
 		if (ad->hardness[dmgtype]) {
 			int armorDamage;
 
-			armorDamage = 100 * damage / ad->hardness[dmgtype];
+			armorDamage = (totalDamage - damage) / ad->hardness[dmgtype];
 			ent->AP = armorDamage < ent->AP ? ent->AP - armorDamage : 0;
 		}
 	}
@@ -1721,7 +1727,6 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
 G_ShootGrenade
 =================
 */
-#define GRENADE_THROWSPEED	420.0
 #define GRENADE_DT			0.1
 #define GRENADE_STOPSPEED	60.0
 
@@ -1750,8 +1755,8 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 
 	/* cap start speed */
 	speed = VectorLength(startV);
-	if (speed > GRENADE_THROWSPEED)
-		speed = GRENADE_THROWSPEED;
+	if (speed > fd->range)
+		speed = fd->range;
 
 	/* add random effects and get new dir */
 	acc = GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.skills[fd->weaponSkill] : 0);
@@ -1777,7 +1782,7 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 
 		/* trace */
 		tr = gi.trace(oldPos, NULL, NULL, newPos, ent, MASK_SHOT);
-		if (tr.fraction < 1.0 || time + dt > fd->range) {
+		if (tr.fraction < 1.0 || time + dt > 4.0) {
 			/* advance time */
 			dt += tr.fraction * GRENADE_DT;
 			time += dt;
@@ -1790,7 +1795,7 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 				if (G_TeamPointVis(i, newPos))
 					mask |= 1 << i;
 
-			if (VectorLength(curV) < GRENADE_STOPSPEED || time > fd->range || bounce > fd->bounce ||
+			if (VectorLength(curV) < GRENADE_STOPSPEED || time > 4.0 || bounce > fd->bounce ||
 				(!fd->delay && tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))) {
 				/* explode */
 				gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);

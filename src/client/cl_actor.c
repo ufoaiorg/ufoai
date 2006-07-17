@@ -1723,7 +1723,6 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
 }
 
 
-#define GRENADE_THROWSPEED	420.0
 #define GRENADE_PARTITIONS	20
 
 /**
@@ -1752,7 +1751,7 @@ void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
 		CL_ParticleSpawn("cross_no", 0, at, NULL, NULL);
 		return;
 	}
-	if (VectorLength(v0) > GRENADE_THROWSPEED)
+	if (VectorLength(v0) > selFD->range)
 		CL_ParticleSpawn("cross_no", 0, at, NULL, NULL);
 	else
 		CL_ParticleSpawn("cross", 0, at, NULL, NULL);
