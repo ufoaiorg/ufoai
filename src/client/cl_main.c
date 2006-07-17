@@ -1200,7 +1200,7 @@ void CL_InitLocal(void)
 
 	cl_numnames = Cvar_Get("cl_numnames", "19", CVAR_NOSET);
 
-	difficulty = Cvar_Get("difficulty", "3", CVAR_ARCHIVE | CVAR_LATCH);
+	difficulty = Cvar_Get("difficulty", "-3", CVAR_ARCHIVE | CVAR_LATCH);
 	difficulty->modified = qfalse;
 
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE);
