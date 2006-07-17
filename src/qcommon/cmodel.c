@@ -135,18 +135,17 @@ typedef struct routing_s {
 } routing_t;
 
 /* extern */
-mapTile_t mapTiles[MAX_MAPTILES];
-mapTile_t *curTile;
-int numTiles = 0;
-cvar_t *map_noareas;
 int c_pointcontents;
 int c_traces, c_brush_traces;
 char map_entitystring[MAX_MAP_ENTSTRING];
 vec3_t map_min, map_max;
 struct routing_s svMap, clMap;
-mapsurface_t nullsurface;
 
 /* static */
+static mapsurface_t nullsurface;
+static mapTile_t mapTiles[MAX_MAPTILES];
+static int numTiles = 0;
+static mapTile_t *curTile;
 static int checkcount;
 static int numInline;
 static byte sh_low;
@@ -182,7 +181,7 @@ static byte tf;
 #endif
 
 /* just to fix warnings */
-void CL_ResetMouseLastPos(void);
+/*void CL_ResetMouseLastPos(void);*/ /* FIXME: Don't belong here */
 void CM_MakeTnodes(void);
 void CM_InitBoxHull(void);
 
@@ -194,11 +193,11 @@ void CM_InitBoxHull(void);
 */
 
 
-/*
-=================
-CMod_LoadSubmodels
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa CM_AddMapTile
+ */
 static void CMod_LoadSubmodels(lump_t * l)
 {
 	dmodel_t *in;
@@ -206,16 +205,16 @@ static void CMod_LoadSubmodels(lump_t * l)
 	int i, j, count;
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size");
-	count = l->filelen / sizeof(*in);
+	if (l->filelen % sizeof(dmodel_t))
+		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => %i", l->filelen, sizeof(dmodel_t));
+	count = l->filelen / sizeof(dmodel_t);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no models");
 	if (count > MAX_MAP_MODELS)
 		Com_Error(ERR_DROP, "Map has too many models");
 
-	out = Hunk_Alloc(count * sizeof(*out));
+	out = Hunk_Alloc(count * sizeof(cmodel_t));
 	curTile->cmodels = out;
 	curTile->numcmodels = count;
 
@@ -234,11 +233,11 @@ static void CMod_LoadSubmodels(lump_t * l)
 }
 
 
-/*
-=================
-CMod_LoadSurfaces
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa CM_AddMapTile
+ */
 static void CMod_LoadSurfaces(lump_t * l)
 {
 	texinfo_t *in;
@@ -246,16 +245,16 @@ static void CMod_LoadSurfaces(lump_t * l)
 	int i, count;
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size");
-	count = l->filelen / sizeof(*in);
+	if (l->filelen % sizeof(texinfo_t))
+		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
+	count = l->filelen / sizeof(texinfo_t);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no surfaces");
 	if (count > MAX_MAP_TEXINFO)
 		Com_Error(ERR_DROP, "Map has too many surfaces");
 
-	out = Hunk_Alloc(count * sizeof(*out));
+	out = Hunk_Alloc(count * sizeof(mapsurface_t));
 
 	curTile->surfaces = out;
 	curTile->numtexinfo = count;
@@ -269,12 +268,11 @@ static void CMod_LoadSurfaces(lump_t * l)
 }
 
 
-/*
-=================
-CMod_LoadNodes
-
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa CM_AddMapTile
+ */
 static void CMod_LoadNodes(lump_t * l)
 {
 	dnode_t *in;
@@ -283,9 +281,9 @@ static void CMod_LoadNodes(lump_t * l)
 	int i, j, count;
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size");
-	count = l->filelen / sizeof(*in);
+	if (l->filelen % sizeof(dnode_t))
+		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", l->filelen);
+	count = l->filelen / sizeof(dnode_t);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map has no nodes");
@@ -293,7 +291,7 @@ static void CMod_LoadNodes(lump_t * l)
 		Com_Error(ERR_DROP, "Map has too many nodes");
 
 	/* add some for the box */
-	out = Hunk_Alloc((count + 6) * sizeof(*out));
+	out = Hunk_Alloc((count + 6) * sizeof(cnode_t));
 
 	curTile->numnodes = count;
 	curTile->nodes = out;
@@ -315,12 +313,11 @@ static void CMod_LoadNodes(lump_t * l)
 
 }
 
-/*
-=================
-CMod_LoadBrushes
-
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa CM_AddMapTile
+ */
 static void CMod_LoadBrushes(lump_t * l)
 {
 	dbrush_t *in;
@@ -328,15 +325,15 @@ static void CMod_LoadBrushes(lump_t * l)
 	int i, count;
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size");
-	count = l->filelen / sizeof(*in);
+	if (l->filelen % sizeof(dbrush_t))
+		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
+	count = l->filelen / sizeof(dbrush_t);
 
 	if (count > MAX_MAP_BRUSHES)
 		Com_Error(ERR_DROP, "Map has too many brushes");
 
 	/* add some for the box */
-	out = Hunk_Alloc((count + 1) * sizeof(*out));
+	out = Hunk_Alloc((count + 1) * sizeof(cbrush_t));
 
 	curTile->numbrushes = count;
 	curTile->brushes = out;
@@ -348,11 +345,11 @@ static void CMod_LoadBrushes(lump_t * l)
 	}
 }
 
-/*
-=================
-CMod_LoadLeafs
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa CM_AddMapTile
+ */
 static void CMod_LoadLeafs(lump_t * l)
 {
 	int i;
@@ -361,9 +358,9 @@ static void CMod_LoadLeafs(lump_t * l)
 	int count;
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size");
-	count = l->filelen / sizeof(*in);
+	if (l->filelen % sizeof(dleaf_t))
+		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size: %i", l->filelen);
+	count = l->filelen / sizeof(dleaf_t);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no leafs");
@@ -372,7 +369,7 @@ static void CMod_LoadLeafs(lump_t * l)
 		Com_Error(ERR_DROP, "Map has too many planes");
 
 	/* add some for the box */
-	out = Hunk_Alloc((count + 1) * sizeof(*out));
+	out = Hunk_Alloc((count + 1) * sizeof(cleaf_t));
 
 	curTile->numleafs = count;
 	curTile->leafs = out;
@@ -397,11 +394,11 @@ static void CMod_LoadLeafs(lump_t * l)
 		Com_Error(ERR_DROP, "Map does not have an empty leaf");
 }
 
-/*
-=================
-CMod_LoadPlanes
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa CM_AddMapTile
+ */
 static void CMod_LoadPlanes(lump_t * l)
 {
 	int i, j;
@@ -411,9 +408,9 @@ static void CMod_LoadPlanes(lump_t * l)
 	int bits;
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size");
-	count = l->filelen / sizeof(*in);
+	if (l->filelen % sizeof(dplane_t))
+		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
+	count = l->filelen / sizeof(dplane_t);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no planes");
@@ -422,7 +419,7 @@ static void CMod_LoadPlanes(lump_t * l)
 		Com_Error(ERR_DROP, "Map has too many planes");
 
 	/* add some for the box */
-	out = Hunk_Alloc((count + 12) * sizeof(*out));
+	out = Hunk_Alloc((count + 12) * sizeof(cplane_t));
 
 	curTile->numplanes = count;
 	curTile->planes = out;
@@ -445,11 +442,11 @@ static void CMod_LoadPlanes(lump_t * l)
 	}
 }
 
-/*
-=================
-CMod_LoadLeafBrushes
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa CM_AddMapTile
+ */
 static void CMod_LoadLeafBrushes(lump_t * l)
 {
 	int i;
@@ -458,12 +455,12 @@ static void CMod_LoadLeafBrushes(lump_t * l)
 	int count;
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: funny lump size");
-	count = l->filelen / sizeof(*in);
+	if (l->filelen % sizeof(unsigned short))
+		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: funny lump size: %i", l->filelen);
+	count = l->filelen / sizeof(unsigned short);
 
 	/* add some for the box */
-	out = Hunk_Alloc((count + 1) * sizeof(*out));
+	out = Hunk_Alloc((count + 1) * sizeof(unsigned short));
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no planes");
@@ -478,11 +475,11 @@ static void CMod_LoadLeafBrushes(lump_t * l)
 		*out = LittleShort(*in);
 }
 
-/*
-=================
-CMod_LoadBrushSides
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa CM_AddMapTile
+ */
 static void CMod_LoadBrushSides(lump_t * l)
 {
 	int i, j;
@@ -492,16 +489,16 @@ static void CMod_LoadBrushSides(lump_t * l)
 	int num;
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadBrushSides: funny lump size");
-	count = l->filelen / sizeof(*in);
+	if (l->filelen % sizeof(dbrushside_t))
+		Com_Error(ERR_DROP, "CMod_LoadBrushSides: funny lump size: %i", l->filelen);
+	count = l->filelen / sizeof(dbrushside_t);
 
 	/* need to save space for box planes */
 	if (count > MAX_MAP_BRUSHSIDES)
 		Com_Error(ERR_DROP, "Map has too many planes");
 
 	/* add some for the box */
-	out = Hunk_Alloc((count + 6) * sizeof(*out));
+	out = Hunk_Alloc((count + 6) * sizeof(cbrushside_t));
 
 	curTile->numbrushsides = count;
 	curTile->brushsides = out;
@@ -516,13 +513,9 @@ static void CMod_LoadBrushSides(lump_t * l)
 	}
 }
 
-/*
-===============
-Cmod_DeCompressRouting
-
-source will be set to the end of the compressed data block!
-===============
-*/
+/**
+ * @brief Source will be set to the end of the compressed data block!
+ */
 static int Cmod_DeCompressRouting(byte ** source, byte * dataStart)
 {
 	int i, c;
@@ -593,11 +586,11 @@ int CheckBSPFile(char *filename)
 	return 0;
 }
 
-/*
-=================
-CM_EntTestLine
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int CM_EntTestLine(vec3_t start, vec3_t stop)
 {
 	trace_t trace;
@@ -627,11 +620,11 @@ int CM_EntTestLine(vec3_t start, vec3_t stop)
 }
 
 
-/*
-=================
-CM_EntTestLineDM
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int CM_EntTestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 {
 	trace_t trace;
@@ -667,11 +660,11 @@ int CM_EntTestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 }
 
 
-/*
-=================
-CM_TestConnection
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboolean fill)
 {
 	vec3_t start, end;
@@ -723,11 +716,11 @@ qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboole
 }
 
 
-/*
-=================
-CM_CheckUnit
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void CM_CheckUnit(routing_t * map, int x, int y, int z)
 {
 	vec3_t start, end;
@@ -820,11 +813,11 @@ void CM_CheckUnit(routing_t * map, int x, int y, int z)
 }
 
 
-/*
-=================
-CMod_GetMapSize
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void CMod_GetMapSize(routing_t * map)
 {
 	vec3_t offset = { 100, 100, 100 };
@@ -858,11 +851,11 @@ void CMod_GetMapSize(routing_t * map)
 }
 
 
-/*
-=================
-CMod_LoadRouting
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa CM_AddMapTile
+ */
 void CMod_LoadRouting(lump_t * l, int sX, int sY, int sZ)
 {
 	static byte temp_route[8][256][256];
@@ -929,11 +922,11 @@ void CMod_LoadRouting(lump_t * l, int sX, int sY, int sZ)
 }
 
 
-/*
-=================
-CMod_LoadEntityString
-=================
-*/
+/**
+ * @brief
+ * @param
+ * @sa CM_AddMapTile
+ */
 void CMod_LoadEntityString(lump_t * l)
 {
 	char *com_token;
@@ -1008,13 +1001,11 @@ void CMod_LoadEntityString(lump_t * l)
 
 
 
-/*
-==================
-CM_FreeTile
-
-Frees a map tile
-==================
-*/
+/**
+ * @brief Frees a map tile
+ * @param
+ * @sa
+ */
 void CM_FreeTile(mapTile_t * tile)
 {
 	if (tile->extraData) {
@@ -1024,22 +1015,18 @@ void CM_FreeTile(mapTile_t * tile)
 }
 
 
-/*
-==================
-CM_AddMapTile
-
-Adds in a single map tile
-==================
-*/
-unsigned CM_AddMapTile(char *name, int sX, int sY, int sZ)
+/**
+ * @brief Adds in a single map tile
+ * @sa CM_LoadMap
+ * FIXME: here might be the map memory leak - every new map eats more and more memory
+ */
+static unsigned CM_AddMapTile(char *name, int sX, int sY, int sZ)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
 	unsigned *buf;
-	int i;
+	int i, length;
 	dheader_t header;
-	int length;
-	static unsigned last_checksum;
 
 	/* load the file */
 	Com_sprintf(filename, MAX_QPATH, "maps/%s.bsp", name);
@@ -1047,21 +1034,20 @@ unsigned CM_AddMapTile(char *name, int sX, int sY, int sZ)
 	if (!buf)
 		Com_Error(ERR_DROP, "Couldn't load %s", filename);
 
-	last_checksum = LittleLong(Com_BlockChecksum(buf, length));
-	checksum = last_checksum;
+	checksum = LittleLong(Com_BlockChecksum(buf, length));
 
 	header = *(dheader_t *) buf;
 	for (i = 0; i < sizeof(dheader_t) / 4; i++)
 		((int *) &header)[i] = LittleLong(((int *) &header)[i]);
 
 	if (header.version != BSPVERSION)
-		Com_Error(ERR_DROP, "CMod_AddMapTile: %s has wrong version number (%i should be %i)", name, header.version, BSPVERSION);
+		Com_Error(ERR_DROP, "CM_AddMapTile: %s has wrong version number (%i should be %i)", name, header.version, BSPVERSION);
 
 	cmod_base = (byte *) buf;
 
 	/* init */
 	if (numTiles >= MAX_MAPTILES)
-		Com_Error(ERR_FATAL, "Cmod_AddMapTile: too many tiles loaded\n");
+		Com_Error(ERR_FATAL, "CM_AddMapTile: too many tiles loaded\n");
 
 	curTile = &mapTiles[numTiles++];
 	memset(curTile, 0, sizeof(mapTile_t));
@@ -1097,13 +1083,10 @@ unsigned CM_AddMapTile(char *name, int sX, int sY, int sZ)
 }
 
 
-/*
-==================
-CM_LoadMap
-
-Loads in the map and all submodels
-==================
-*/
+/**
+ * @brief Loads in the map and all submodels
+ * @sa CM_AddMapTile
+ */
 void CM_LoadMap(char *tiles, char *pos)
 {
 	char *token;
@@ -1117,10 +1100,8 @@ void CM_LoadMap(char *tiles, char *pos)
 		CM_FreeTile(&mapTiles[i]);
 
 	/* init */
-	numTiles = 0;
-	numInline = 0;
-	map_entitystring[0] = 0;
-	base[0] = 0;
+	c_pointcontents = c_traces = c_brush_traces = numInline = numTiles = 0;
+	map_entitystring[0] = base[0] = 0;
 
 	memset(&(clMap.fall[0][0]), 0xFF, 256 * 256);
 	memset(&(clMap.step[0][0]), 0, 256 * 256);
@@ -1167,11 +1148,11 @@ void CM_LoadMap(char *tiles, char *pos)
 	Com_Error(ERR_DROP, "CM_LoadMap: invalid tile names\n");
 }
 
-/*
-==================
-CM_InlineModel
-==================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 cmodel_t *CM_InlineModel(char *name)
 {
 	int i, num;
@@ -1192,16 +1173,31 @@ cmodel_t *CM_InlineModel(char *name)
 	return NULL;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int CM_NumInlineModels(void)
 {
 	return numInline;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 char *CM_EntityString(void)
 {
 	return map_entitystring;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int CM_LeafContents(int leafnum)
 {
 	if (leafnum < 0 || leafnum >= curTile->numleafs)
@@ -1218,14 +1214,10 @@ BOX TRACING
 ===============================================================================
 */
 
-/*
-===================
-CM_InitBoxHull
-
-Set up the planes and nodes so that the six floats of a bounding box
-can just be stored out and get a proper clipping hull structure.
-===================
-*/
+/**
+ * @brief Set up the planes and nodes so that the six floats of a bounding
+ * box can just be stored out and get a proper clipping hull structure.
+ */
 void CM_InitBoxHull(void)
 {
 	int i;
@@ -1282,14 +1274,11 @@ void CM_InitBoxHull(void)
 }
 
 
-/*
-===================
-CM_HeadnodeForBox
-
-To keep everything totally uniform, bounding boxes are turned into small
-BSP trees instead of being compared directly.
-===================
-*/
+/**
+ * @brief
+ * To keep everything totally uniform, bounding boxes are turned into small
+ * BSP trees instead of being compared directly.
+ */
 int CM_HeadnodeForBox(int tile, vec3_t mins, vec3_t maxs)
 {
 	curTile = &mapTiles[tile];
@@ -1311,12 +1300,11 @@ int CM_HeadnodeForBox(int tile, vec3_t mins, vec3_t maxs)
 }
 
 
-/*
-==================
-CM_PointLeafnum_r
-
-==================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int CM_PointLeafnum_r(vec3_t p, int num)
 {
 	float d;
@@ -1342,6 +1330,11 @@ int CM_PointLeafnum_r(vec3_t p, int num)
 	return -1 - num;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int CM_PointLeafnum(vec3_t p)
 {
 	if (!curTile->numplanes)
@@ -1350,16 +1343,11 @@ int CM_PointLeafnum(vec3_t p)
 }
 
 
-/*
-=============
-CM_BoxLeafnums
-
-Fills in a list of all the leafs touched
-
-call with topnode set to the headnode, returns with topnode
-set to the first node that splits the box
-=============
-*/
+/**
+ * @brief Fills in a list of all the leafs touched
+ * call with topnode set to the headnode, returns with topnode
+ * set to the first node that splits the box
+ */
 void CM_BoxLeafnums_r(int nodenum)
 {
 	cplane_t *plane;
@@ -1394,6 +1382,11 @@ void CM_BoxLeafnums_r(int nodenum)
 	}
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int CM_BoxLeafnums_headnode(vec3_t mins, vec3_t maxs, int *list, int listsize, int headnode, int *topnode)
 {
 	leaf_list = list;
@@ -1412,19 +1405,21 @@ int CM_BoxLeafnums_headnode(vec3_t mins, vec3_t maxs, int *list, int listsize, i
 	return leaf_count;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int CM_BoxLeafnums(vec3_t mins, vec3_t maxs, int *list, int listsize, int *topnode)
 {
 	return CM_BoxLeafnums_headnode(mins, maxs, list, listsize, curTile->cmodels[0].headnode, topnode);
 }
 
-
-
-/*
-==================
-CM_PointContents
-
-==================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int CM_PointContents(vec3_t p, int headnode)
 {
 	int l;
@@ -1437,14 +1432,9 @@ int CM_PointContents(vec3_t p, int headnode)
 	return curTile->leafs[l].contents;
 }
 
-/*
-==================
-CM_TransformedPointContents
-
-Handles offseting and rotation of the end points for moving and
-rotating entities
-==================
-*/
+/**
+ * @brief Handles offseting and rotation of the end points for moving and rotating entities
+ */
 int CM_TransformedPointContents(vec3_t p, int headnode, vec3_t origin, vec3_t angles)
 {
 	vec3_t p_l;
@@ -1474,11 +1464,11 @@ int CM_TransformedPointContents(vec3_t p, int headnode, vec3_t origin, vec3_t an
 /*======================================================================= */
 
 
-/*
-================
-CM_ClipBoxToBrush
-================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void CM_ClipBoxToBrush(vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t * trace, cbrush_t * brush)
 {
 	int i, j;
@@ -1509,11 +1499,8 @@ void CM_ClipBoxToBrush(vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t *
 		plane = side->plane;
 
 		/* FIXME: special case for axial */
-
 		if (!trace_ispoint) {	/* general box case */
-
 			/* push the plane out apropriately for mins/maxs */
-
 			/* FIXME: use signbits into 8 way lookup for each mins/maxs */
 			for (j = 0; j < 3; j++) {
 				if (plane->normal[j] < 0)
@@ -1575,11 +1562,11 @@ void CM_ClipBoxToBrush(vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t *
 	}
 }
 
-/*
-================
-CM_TestBoxInBrush
-================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void CM_TestBoxInBrush(vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cbrush_t * brush)
 {
 	int i, j;
@@ -1597,11 +1584,8 @@ void CM_TestBoxInBrush(vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cbr
 		plane = side->plane;
 
 		/* FIXME: special case for axial */
-
 		/* general box case */
-
 		/* push the plane out apropriately for mins/maxs */
-
 		/* FIXME: use signbits into 8 way lookup for each mins/maxs */
 		for (j = 0; j < 3; j++) {
 			if (plane->normal[j] < 0)
@@ -1627,11 +1611,11 @@ void CM_TestBoxInBrush(vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cbr
 }
 
 
-/*
-================
-CM_TraceToLeaf
-================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void CM_TraceToLeaf(int leafnum)
 {
 	int k;
@@ -1660,11 +1644,11 @@ void CM_TraceToLeaf(int leafnum)
 }
 
 
-/*
-================
-CM_TestInLeaf
-================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void CM_TestInLeaf(int leafnum)
 {
 	int k;
@@ -1693,12 +1677,11 @@ void CM_TestInLeaf(int leafnum)
 }
 
 
-/*
-==================
-CM_RecursiveHullCheck
-
-==================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void CM_RecursiveHullCheck(int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
 {
 	cnode_t *node;
@@ -1720,10 +1703,8 @@ void CM_RecursiveHullCheck(int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
 		return;
 	}
 
-	/* */
 	/* find the point distances to the seperating plane */
 	/* and the offset for the size of the box */
-	/* */
 	node = curTile->nodes + num;
 	plane = node->plane;
 
@@ -1804,11 +1785,11 @@ void CM_RecursiveHullCheck(int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
 
 /*====================================================================== */
 
-/*
-==================
-CM_BoxTrace
-==================
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 trace_t CM_BoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask)
 {
 	int i;
@@ -1833,9 +1814,7 @@ trace_t CM_BoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile
 	VectorCopy(mins, trace_mins);
 	VectorCopy(maxs, trace_maxs);
 
-	/* */
 	/* check for position test special case */
-	/* */
 	if (start[0] == end[0] && start[1] == end[1] && start[2] == end[2]) {
 		int leafs[1024];
 		int i, numleafs;
@@ -1882,20 +1861,14 @@ trace_t CM_BoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile
 	return trace_trace;
 }
 
-
-/*
-==================
-CM_TransformedBoxTrace
-
-Handles offseting and rotation of the end points for moving and
-rotating entities
-==================
-*/
 #ifdef _MSC_VER
 #pragma optimize( "", off )
 #endif
 
-
+/**
+ * @brief Handles offseting and rotation of the end points for moving and rotating entities
+ * @sa
+ */
 trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask, vec3_t origin, vec3_t angles)
 {
 	trace_t trace;
@@ -1964,13 +1937,9 @@ trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t max
 
 
 
-/*
-==================
-CM_CompleteBoxTrace
-
-Handles all 255 level specific submodels too
-==================
-*/
+/**
+ * @brief Handles all 255 level specific submodels too
+ */
 trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int levelmask, int brushmask)
 {
 	trace_t newtr, tr;
@@ -2001,13 +1970,9 @@ trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 
 /* ===================================================================== */
 
-/*
-==============
-MakeTnode
-
-Converts the disk node structure into the efficient tracing structure
-==============
-*/
+/**
+ * @brief Converts the disk node structure into the efficient tracing structure
+ */
 void MakeTnode(int nodenum)
 {
 	tnode_t *t;
@@ -2038,11 +2003,11 @@ void MakeTnode(int nodenum)
 }
 
 
-/*
-=============
-BuildTnode_r
-=============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void BuildTnode_r(int node)
 {
 	if (!curTile->nodes[node].plane) {
@@ -2102,13 +2067,9 @@ void BuildTnode_r(int node)
 }
 
 
-/*
-=============
-CM_MakeTnodes
-
-Loads the node structure out of a .bsp file to be used for light occlusion
-=============
-*/
+/**
+ * @brief Loads the node structure out of a .bsp file to be used for light occlusion
+ */
 void CM_MakeTnodes(void)
 {
 	int i;
@@ -2138,11 +2099,11 @@ void CM_MakeTnodes(void)
 
 /*========================================================== */
 
-/*
-=============
-TestLine_r
-=============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int TestLine_r(int node, vec3_t start, vec3_t stop)
 {
 	tnode_t *tnode;
@@ -2203,11 +2164,11 @@ int TestLine_r(int node, vec3_t start, vec3_t stop)
 	return TestLine_r(tnode->children[!side], mid, stop);
 }
 
-/*
-=============
-TestLineDist_r
-=============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int TestLineDist_r(int node, vec3_t start, vec3_t stop)
 {
 	tnode_t *tnode;
@@ -2287,11 +2248,11 @@ int TestLineDist_r(int node, vec3_t start, vec3_t stop)
 	return TestLineDist_r(tnode->children[!side], mid, stop);
 }
 
-/*
-=============
-CM_TestLine
-=============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int CM_TestLine(vec3_t start, vec3_t stop)
 {
 	int tile, i;
@@ -2306,11 +2267,11 @@ int CM_TestLine(vec3_t start, vec3_t stop)
 	return 0;
 }
 
-/*
-=============
-CM_TestLineDM
-=============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 {
 	int tile, i;
@@ -2341,11 +2302,11 @@ int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end)
 ==========================================================
 */
 
-/*
-============
-Grid_CheckForbidden
-============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 qboolean Grid_CheckForbidden(struct routing_s * map, int x, int y, int z)
 {
 	byte **p;
@@ -2358,11 +2319,11 @@ qboolean Grid_CheckForbidden(struct routing_s * map, int x, int y, int z)
 }
 
 
-/*
-============
-Grid_MoveMark
-============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void Grid_MoveMark(struct routing_s *map, int x, int y, int z, int dv, int h, int ol)
 {
 	int nx, ny, sh, l;
@@ -2411,11 +2372,11 @@ void Grid_MoveMark(struct routing_s *map, int x, int y, int z, int dv, int h, in
 
 
 #ifndef DEDICATED_ONLY
-/*
-============
-Grid_MoveMarkRoute
-============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 static void Grid_MoveMarkRoute(struct routing_s *map, int xl, int yl, int xh, int yh)
 {
 	int x, y, z, h;
@@ -2441,11 +2402,11 @@ static void Grid_MoveMarkRoute(struct routing_s *map, int xl, int yl, int xh, in
 }
 #endif
 
-/*
-============
-Grid_MoveCalc
-============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_list, int fb_length)
 {
 #ifndef DEDICATED_ONLY
@@ -2487,32 +2448,31 @@ void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_
 		stf = tf;
 		tf ^= 3;
 	}
+	/* FIXME: This does not belong here */
 	/* reset the mouse position, for the purposes of CL_ActorMouseTrace */
-	CL_ResetMouseLastPos();
+	/*CL_ResetMouseLastPos();*/
 #endif
 }
 
 
-/*
-============
-Grid_MoveStore
-============
-*/
+/**
+ * @brief Caches the calculated move
+ * @param
+ * @sa
+ */
 void Grid_MoveStore(struct routing_s *map)
 {
 	memcpy(map->areaStored, map->area, WIDTH * WIDTH * HEIGHT);
 }
 
 
-/*
-============
-Grid_MoveLength
-
-returns:
-0xFF if the move isn't possible
-length of move otherwise
-============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ * @return 0xFF if the move isn't possible
+ * @return length of move otherwise
+ */
 int Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored)
 {
 	if (!stored)
@@ -2522,11 +2482,11 @@ int Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored)
 }
 
 
-/*
-============
-Grid_MoveCheck
-============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int Grid_MoveCheck(struct routing_s *map, pos3_t pos, int sz, int l)
 {
 	int x, y, sh;
@@ -2585,11 +2545,11 @@ int Grid_MoveCheck(struct routing_s *map, pos3_t pos, int sz, int l)
 }
 
 
-/*
-============
-Grid_MoveNext (Last?)
-============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int Grid_MoveNext(struct routing_s *map, pos3_t from)
 {
 	int l, x, y, z, dv;
@@ -2618,22 +2578,22 @@ int Grid_MoveNext(struct routing_s *map, pos3_t from)
 }
 
 
-/*
-============
-Grid_Height
-============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int Grid_Height(struct routing_s *map, pos3_t pos)
 {
 	return (map->route[pos[2]][pos[1]][pos[0]] & 0x0F) * QUANT;
 }
 
 
-/*
-============
-Grid_Fall
-============
-*/
+/**
+ * @brief
+ * @param
+ * @sa
+ */
 int Grid_Fall(struct routing_s *map, pos3_t pos)
 {
 	int z = pos[2];
