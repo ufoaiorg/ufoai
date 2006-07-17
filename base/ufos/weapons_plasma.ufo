@@ -239,13 +239,13 @@ item plasblaster_ammo
 		projtl	plasmaBall
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
-		firesnd	weapons/plasma_c.wav
+		firesnd	weapons/plasma_s.wav
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		selfdet true
 		gravity	true
 		spread	"4 4"
-		range	20
+		range	17
 		shots	1
 		ammo	4
 		rof		1

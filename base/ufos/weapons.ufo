@@ -118,7 +118,7 @@ item fraggrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	10
+		range	12
 		shots	1
 		ammo	1
 		rof		1
@@ -132,8 +132,8 @@ item fraggrenade
 		name	"_Throw"
 		skill	explosive
 		projtl	fraggren
-		impact	fire_explosion
-		hitbody fire_explosion
+		impact	frag_explosion
+		hitbody frag_explosion
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
@@ -142,7 +142,7 @@ item fraggrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	10
+		range	12
 		shots	1
 		ammo	1
 		rof		1
@@ -207,17 +207,17 @@ item incgrenade
 		name	"_Throw"
 		skill	explosive
 		projtl	smokegren
-		impact	fire_impact
+		impact	fireImpact
 		hitbody fire_explosion
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
-		bounce	10
+		bounce	17
 		bncfac	0.5
 		spread	"7 7"
-		range	10
+		range	12
 		shots	1
 		ammo	1
 		rof		1
@@ -231,7 +231,7 @@ item incgrenade
 		name	"_Throw"
 		skill	explosive
 		projtl	smokegren
-		impact	fire_impact
+		impact	fireImpact
 		hitbody fire_explosion
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
@@ -241,7 +241,7 @@ item incgrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	10
+		range	12
 		shots	1
 		ammo	1
 		rof		1
@@ -286,7 +286,7 @@ item stungrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	10
+		range	12
 		shots	1
 		ammo	1
 		rof		1
@@ -310,7 +310,7 @@ item stungrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	10
+		range	12
 		shots	1
 		ammo	1
 		rof		1
@@ -356,7 +356,7 @@ item plasmagrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	10
+		range	12
 		shots	1
 		ammo	1
 		rof		1
@@ -380,7 +380,7 @@ item plasmagrenade
 		bounce	10
 		bncfac	0.5
 		spread	"7 7"
-		range	10
+		range	12
 		shots	1
 		ammo	1
 		rof		1
