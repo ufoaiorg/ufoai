@@ -689,8 +689,7 @@ qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboole
 	h = ((map->route[z][y][x] & 0x0F) + sh) % 0x10;
 
 	/* assume blocked */
-/*	map->route[z][y][x] &= ~(0x10 << dir);*/
-	map->route[z][y][x] &= ~(1 << dir);
+	map->route[z][y][x] &= ~((0x10 << dir) & UCHAR_MAX);
 
 	/* test filled */
 	if (fill && (filled[ay][ax] & (1 << az)))
@@ -710,8 +709,7 @@ qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboole
 		return qfalse;
 
 	/* no wall */
-/*	map->route[z][y][x] |= 0x10 << dir;*/
-	map->route[z][y][x] |= 1 << dir;
+	map->route[z][y][x] |= (0x10 << dir) & UCHAR_MAX;
 	return qtrue;
 }
 
