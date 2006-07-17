@@ -1665,7 +1665,8 @@ void B_BaseAttack(void)
 
 /**
  * @brief Builds a base map for tactical combat.
- *
+ * @sa SV_AssembleMap
+ * @sa B_BaseAttack
  * NOTE: Do we need day and night maps here, too?
  * TODO: Search a empty field and add a alien craft there.
  * FIXME: We need to get rid of the tunnels to nivana.
