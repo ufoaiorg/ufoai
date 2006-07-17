@@ -178,3 +178,10 @@
 ( 56 120 4 ) ( 56 120 20 ) ( 48 128 20 ) tex_material/metall002 56 -7 -180 0.5 -0.4999960065 134283008 0 0
 }
 }
+// entity 4
+{
+"classname" "misc_particle"
+"origin" "63 112 108"
+"particle" "corona"
+"spawnflags" "254"
+}

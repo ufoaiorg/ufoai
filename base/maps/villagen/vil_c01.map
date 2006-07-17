@@ -4367,3 +4367,17 @@
 "angle" "270"
 "origin" "80 272 28"
 }
+// entity 65
+{
+"classname" "misc_particle"
+"origin" "145 64 112"
+"particle" "corona"
+"spawnflags" "254"
+}
+// entity 66
+{
+"classname" "misc_particle"
+"origin" "337 64 112"
+"particle" "corona"
+"spawnflags" "254"
+}
