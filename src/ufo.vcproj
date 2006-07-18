@@ -287,7 +287,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;DEBUG;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF"
+				PreprocessorDefinitions="PARANOID;WIN32;DEBUG;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -322,7 +322,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
-				AdditionalDependencies="winmm.lib wsock32.lib $(IntDir)\q_shared.obj $(IntDir)\q_shwin.obj"
+				AdditionalDependencies="winmm.lib wsock32.lib $(IntDir)\q_shared.obj $(IntDir)\q_shwin.obj $(IntDir)\mem.obj"
 				OutputFile="$(OutDir)\ufo32d.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"

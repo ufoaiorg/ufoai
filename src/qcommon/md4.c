@@ -1,8 +1,5 @@
-#ifndef _WIN32
-#include <inttypes.h>
-#else
-#include "../win32/inttypes.h"
-#endif
+
+#include "../common/ufotypes.h"
 
 /*
 Public Domain C source implementation of RFC 1320:

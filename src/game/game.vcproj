@@ -50,7 +50,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;DEBUG;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF"
+				AdditionalIncludeDirectories=""
+				PreprocessorDefinitions="PARANOID;WIN32;DEBUG;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="true"
@@ -505,6 +506,10 @@
 			</File>
 			<File
 				RelativePath=".\g_utils.c"
+				>
+			</File>
+			<File
+				RelativePath="..\common\mem.c"
 				>
 			</File>
 			<File
