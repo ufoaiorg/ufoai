@@ -546,7 +546,10 @@ void CL_EntPerish( sizebuf_t *sb )
 	if ( (le->type == ET_ACTOR || le->type == ET_UGV) && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN )
 		cl.numAliensSpotted--;
 
+	if (le->type == ET_ACTOR)
+		le->i.c[csi.idFloor] = NULL;
 	Com_DestroyInventory( &le->i );
+
 	if ( le->type == ET_ITEM ) {
 		le_t *actor;
 		actor = LE_Find( ET_ACTOR, le->pos );
@@ -778,10 +781,11 @@ void CL_PlaceItem( le_t *le )
 		/* search an owner */
 		actor = LE_Find( ET_ACTOR, le->pos );
 		if ( actor ) {
-			/* TODO: This is the source of inventory bug, but i don't know how to fix it!
-					 The inventory is destroyed twice later!!!
-			*/
-			Com_Error (ERR_DROP, "CL_PlaceItem: Fix me!!!");
+
+#if PARANOID
+			Com_Printf("CL_PlaceItem: shared container: '%p'\n", le->i.c[csi.idFloor] );
+#endif
+
 			actor->i.c[csi.idFloor] = le->i.c[csi.idFloor];
 		}
 	}

@@ -414,6 +414,9 @@ void G_EndGame(int team)
 		for (j = 0; j < MAX_TEAMS; j++)
 			gi.WriteByte(level.num_kills[i][j]);
 
+/*	gi.WriteByte(NONE);*/
+	gi.EndEvents();
+
 	player = game.players + ent->pnum;
 
 	for (j = 0, i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
@@ -421,9 +424,6 @@ void G_EndGame(int team)
 		  && !(ent->state & STATE_DEAD)
 		  && ent->team == player->pers.team)
 			j++;
-
-	gi.WriteByte(NONE);
-	gi.EndEvents();
 
 	/* how many */
 	gi.WriteShort(j);

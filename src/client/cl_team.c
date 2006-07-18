@@ -157,6 +157,7 @@ void CL_ResetCharacters(base_t * base)
 
 	/* reset inventory data */
 	for (i = 0; i < MAX_WHOLETEAM; i++) {
+		(base->teamInv[i]).c[csi.idFloor] = NULL;
 		Com_DestroyInventory(&base->teamInv[i]);
 /*		base->teamInv[i].c[csi.idFloor] = base->equipment; */
 		base->wholeTeam[i].inv = &base->teamInv[i];
@@ -1086,8 +1087,8 @@ void CL_ParseResults(sizebuf_t * buf)
 			num_kills[i][j] = MSG_ReadByte(buf);
 
 	/* read terminator */
-	if (MSG_ReadByte(buf) != NONE)
-		Com_Printf("WARNING: bad result message\n");
+/*	if (MSG_ReadByte(buf) != NONE)
+		Com_Printf("WARNING: bad result message\n");*/
 
 	/* init result text */
 	menuText[TEXT_STANDARD] = resultText;

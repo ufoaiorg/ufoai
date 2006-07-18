@@ -1196,6 +1196,7 @@ void CL_ActorDie(sizebuf_t * sb)
 		cl.numAliensSpotted--;
 
 	/* set relevant vars */
+	le->i.c[csi.idFloor] = NULL;
 	le->HP = 0;
 	le->STUN = 0;
 	le->state = MSG_ReadShort(sb);

@@ -2161,7 +2161,7 @@ qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
 
 	ic = i->c[container];
 	if (!ic) {
-#ifdef DEBUG
+#ifdef PARANOID
 		Com_Printf("Com_RemoveFromInventory - empty container %i\n", container);
 #endif
 		return qfalse;
@@ -2319,6 +2319,12 @@ void Com_EmptyContainer(inventory_t * i, int container)
 #endif
 
 	ic = i->c[container];
+
+#if PARANOID
+	if (ic)
+		Com_Printf("Com_EmptyContainer: '%p'\n", ic );
+#endif
+
 	while (ic) {
 		old = ic;
 		ic = ic->next;
@@ -2348,9 +2354,10 @@ void Com_DestroyInventory(inventory_t * i)
 	if (!i)
 		return;
 
-#if 0
-	Com_Printf("Com_DestroyInventory: numIDS: %i\n", CSI->numIDs);
+#if PARANOID
+	Com_Printf("Com_DestroyInventory: '%p'\n", i );
 #endif
+
 	for (k = 0; k < CSI->numIDs; k++)
 		Com_EmptyContainer(i, k);
 }

@@ -923,6 +923,7 @@ void G_InventoryToFloor(edict_t * ent)
 			if (ic->x == NONE || ic->y == NONE) {
 				/* Run out of space on the floor - destroy remaining inventory. */
 				/* TODO should really just spill into adjacent locations... */
+				/* seems like a bug: we also destroy the floor container! */
 				ent->i.c[k] = ic;
 				Com_DestroyInventory(&ent->i);
 				gi.dprintf("G_InventoryToFloor: Error: could not drop item to floor: %s\n", gi.csi->ods[ic->item.t].kurz);

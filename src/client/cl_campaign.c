@@ -2512,6 +2512,7 @@ void CL_GameResultsCmd(void)
 				(baseCurrent->teamMask[baseCurrent->aircraftCurrent] & ((1 << i) - 1)) | (tempMask & ~((1 << i) - 1));
 			baseCurrent->numWholeTeam--;
 			baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
+			(baseCurrent->teamInv[i]).c[csi.idFloor] = NULL;
 			Com_DestroyInventory(&baseCurrent->teamInv[i]);
 			for (j = i; j < baseCurrent->numWholeTeam; j++) {
 				baseCurrent->teamInv[j] = baseCurrent->teamInv[j + 1];
