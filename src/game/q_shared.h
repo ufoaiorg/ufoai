@@ -43,6 +43,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define WriteShort(x) WriteShort( x, __FILE__, __LINE__ )
 #endif
 
+#include "../common/debug.h"
+#include "../common/ufotypes.h"
+#include "../common/mem.h"
+
 #ifdef _MSC_VER
 /* unknown pragmas are SUPPOSED to be ignored, but.... */
 #pragma warning(disable : 4244)	/* MIPS */

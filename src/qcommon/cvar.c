@@ -28,10 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "common/debug.h"
-#include "common/ufotypes.h"
+/*#include "common/debug.h"
+#include "common/ufotypes.h"*/
 #include "qcommon.h"
-#include "common/mem.h"
+/*#include "common/mem.h"*/
 
 
 /**
