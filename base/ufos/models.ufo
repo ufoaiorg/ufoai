@@ -16,22 +16,22 @@ menu_model alien_ortnok
 
 menu_model alien_ortnok_medium_head
 {
-	model	"models/aliens/ortnok_medium/head01.md2"
+	model	"models/aliens/ortnokmedium/head01.md2"
 }
 menu_model alien_ortnok_medium
 {
-	model	"models/aliens/ortnok_medium/body01.md2"
+	model	"models/aliens/ortnokmedium/body01.md2"
 	need	"alien_ortnok_medium_head"
 	anim	stand_still
 }
 
 menu_model alien_ortnok_light_head
 {
-	model	"models/aliens/ortnok_light/head01.md2"
+	model	"models/aliens/ortnoklight/head01.md2"
 }
 menu_model alien_ortnok_light
 {
-	model	"models/aliens/ortnok_light/body01.md2"
+	model	"models/aliens/ortnoklight/body01.md2"
 	need	"alien_ortnok_light_head"
 	anim	stand_still
 }
