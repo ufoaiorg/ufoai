@@ -417,7 +417,7 @@ void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, int *heig
 
 	out = malloc((pcx->ymax + 1) * (pcx->xmax + 1));
 	if (!out) {
-		ri.Sys_Error(ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", (pcx->ymax + 1) * (pcx->xmax + 1));
+		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of %i bytes", (pcx->ymax + 1) * (pcx->xmax + 1));
 		return;					/* never reached. need for code analyst. */
 	}
 
@@ -1350,7 +1350,7 @@ void R_FilterTexture(int filterindex, unsigned int *data, int width, int height,
 	/* allocate a temp buffer */
 	temp = malloc(temp_size);
 	if (!temp) {
-		ri.Sys_Error(ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", temp_size);
+		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of %i bytes", temp_size);
 		return;					/* never reached. need for code analyst. */
 	}
 
@@ -1595,7 +1595,7 @@ qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagety
 
 	trans = malloc(trans_size);
 	if (!trans) {
-		ri.Sys_Error(ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", trans_size);
+		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of %i bytes", trans_size);
 		return qfalse;			/* never reached. need for code analyst. */
 	}
 

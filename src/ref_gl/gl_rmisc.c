@@ -122,7 +122,7 @@ void GL_ScreenShot_f(void)
 	c = vid.width * vid.height * 3 + 18;
 	buffer = malloc(c);
 	if (!buffer) {
-		ri.Sys_Error(ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", c);
+		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of %i bytes", c);
 		return;					/* never reached. need for code analyst. */
 	}
 

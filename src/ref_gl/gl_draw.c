@@ -435,7 +435,7 @@ void Draw_StretchRaw(int x, int y, int w, int h, int cols, int rows, byte * data
 
 	image32 = malloc(img_size);
 	if (!image32) {
-		ri.Sys_Error(ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", img_size);
+		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of %i bytes", img_size);
 		return;					/* never reached. need for code analyst. */
 	}
 
