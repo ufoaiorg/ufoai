@@ -494,13 +494,13 @@ static void B_DrawBuilding(void)
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts)
 		Com_sprintf(menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.0f c\n"), building->fixCosts);
 
-	Q_strcat(menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("%i Day(s) to build\n"), building->buildTime));
+	Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("%i Day(s) to build\n"), building->buildTime), MAX_LIST_CHAR );
 
 	if (building->varCosts)
-		Q_strcat(menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("Running Costs:\t%1.0f c\n"), building->varCosts));
+		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Running Costs:\t%1.0f c\n"), building->varCosts), MAX_LIST_CHAR);
 
 	if (employees_in_building->numEmployees)
-		Q_strcat(menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va(_("Workers:\t%i\n"), employees_in_building->numEmployees));
+		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Workers:\t%i\n"), employees_in_building->numEmployees), MAX_LIST_CHAR);
 
 	/* FIXME: Rename mn_building_name and mn_building_title */
 	if (building->id)
@@ -523,7 +523,7 @@ void B_BuildingAddToList(building_t * building)
 {
 	assert(baseCurrent);
 
-	Q_strcat(menuText[TEXT_BUILDINGS], MAX_LIST_CHAR, va("%s\n", _(building->name)));
+	Q_strcat(menuText[TEXT_BUILDINGS], va("%s\n", _(building->name)), MAX_LIST_CHAR);
 	BuildingConstructionList[numBuildingConstructionList] = building->type_idx;
 	numBuildingConstructionList++;
 }
@@ -1726,10 +1726,10 @@ void B_AssembleMap(void)
 				Q_strncpyz(baseMapPart, va("b/%c/empty", baseCurrent->mapChar), sizeof(baseMapPart));
 
 			if (*baseMapPart) {
-				Q_strcat(maps, sizeof(maps), baseMapPart);
-				Q_strcat(maps, sizeof(maps), " ");
+				Q_strcat(maps, baseMapPart, sizeof(maps));
+				Q_strcat(maps, " ", sizeof(maps));
 				/* basetiles are 16 units in each direction */
-				Q_strcat(coords, sizeof(coords), va("%i %i ", col * 16, row * 16));
+				Q_strcat(coords, va("%i %i ", col * 16, row * 16), sizeof(coords));
 			}
 		}
 	Cbuf_AddText(va("map \"%s\" \"%s\"\n", maps, coords));

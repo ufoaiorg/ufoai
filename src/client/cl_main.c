@@ -167,11 +167,11 @@ void CL_Setenv_f(void)
 		int i;
 
 		Q_strncpyz(buffer, Cmd_Argv(1), sizeof(buffer));
-		Q_strcat(buffer, sizeof(buffer), "=");
+		Q_strcat(buffer, "=", sizeof(buffer));
 
 		for (i = 2; i < argc; i++) {
-			Q_strcat(buffer, sizeof(buffer), Cmd_Argv(i));
-			Q_strcat(buffer, sizeof(buffer), " ");
+			Q_strcat(buffer, Cmd_Argv(i), sizeof(buffer));
+			Q_strcat(buffer, " ", sizeof(buffer));
 		}
 
 		Q_putenv(buffer);
@@ -379,14 +379,14 @@ void CL_Rcon_f(void)
 	/* allow remote */
 	NET_Config(qtrue);
 
-	Q_strcat(message, sizeof(message), "rcon ");
+	Q_strcat(message, "rcon ", sizeof(message));
 
-	Q_strcat(message, sizeof(message), rcon_client_password->string);
-	Q_strcat(message, sizeof(message), " ");
+	Q_strcat(message, rcon_client_password->string, sizeof(message));
+	Q_strcat(message, " ", sizeof(message));
 
 	for (i = 1; i < Cmd_Argc(); i++) {
-		Q_strcat(message, sizeof(message), Cmd_Argv(i));
-		Q_strcat(message, sizeof(message), " ");
+		Q_strcat(message, Cmd_Argv(i), sizeof(message));
+		Q_strcat(message, " ", sizeof(message));
 	}
 
 	if (cls.state >= ca_connected)
@@ -589,7 +589,7 @@ void CL_ParseStatusMessage(void)
 		return;
 
 	serverList[serverListLength++] = net_from;
-	Q_strcat(serverText, sizeof(serverText), s);
+	Q_strcat(serverText, s, sizeof(serverText));
 	menuText[TEXT_LIST] = serverText;
 }
 
@@ -598,7 +598,7 @@ void CL_ParseStatusMessage(void)
   *
   * This function fills the network browser server information with text
   */
-char serverInfoText[MAX_MESSAGE_TEXT];
+static char serverInfoText[MAX_MESSAGE_TEXT];
 void CL_ParseServerInfoMessage(void)
 {
 	char *s = MSG_ReadString(&net_message);
@@ -635,26 +635,26 @@ void CL_ParseServerInfoMessage(void)
 				Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value));
 
 			Cvar_ForceSet("mapname", value);
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Map:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Map:\t%s\n"), value), sizeof(serverInfoText));
 		} else if (!Q_strncmp(var, "version", 7))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Version:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Version:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "hostname", 8))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Servername:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Servername:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "sv_enablemorale", 15))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Moralestates:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Moralestates:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "sv_teamplay", 11))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Teamplay:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Teamplay:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "maxplayers", 10))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Max. players per team:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Max. players per team:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "maxclients", 10))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Max. clients:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Max. clients:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "maxsoldiersperplayer", 20))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Max. soldiers per player:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Max. soldiers per player:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "maxsoldiers", 11))
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va(_("Max. soldiers per team:\t%s\n"), value));
+			Q_strcat(serverInfoText, va(_("Max. soldiers per team:\t%s\n"), value), sizeof(serverInfoText));
 #ifdef DEBUG
 		else
-			Q_strcat(serverInfoText, MAX_MESSAGE_TEXT, va("%s\t%s\n", var, value));
+			Q_strcat(serverInfoText, va("%s\t%s\n", var, value), sizeof(serverInfoText));
 #endif
 	} while (s != NULL);
 	menuText[TEXT_STANDARD] = serverInfoText;
@@ -667,7 +667,7 @@ void CL_ParseServerInfoMessage(void)
   * called via server_connect
   * FIXME: Spectator needs no team
   */
-void CL_ServerConnect_f(void)
+static void CL_ServerConnect_f(void)
 {
 	char *ip = Cvar_VariableString("mn_server_ip");
 
@@ -687,8 +687,8 @@ void CL_ServerConnect_f(void)
   *
   * bookmarks are saved in cvar adr[0-15]
   */
-char bookmarkText[MAX_MESSAGE_TEXT];
-void CL_BookmarkPrint_f(void)
+static char bookmarkText[MAX_MESSAGE_TEXT];
+static void CL_BookmarkPrint_f(void)
 {
 	int i;
 
@@ -696,7 +696,7 @@ void CL_BookmarkPrint_f(void)
 	bookmarkText[0] = '\0';
 
 	for (i = 0; i < 16; i++) {
-		Q_strcat(bookmarkText, MAX_MESSAGE_TEXT, va("%s\n", Cvar_VariableString(va("adr%i", i))));
+		Q_strcat(bookmarkText, va("%s\n", Cvar_VariableString(va("adr%i", i))), sizeof(bookmarkText));
 	}
 	menuText[TEXT_LIST] = bookmarkText;
 }
@@ -706,7 +706,7 @@ void CL_BookmarkPrint_f(void)
   *
   * bookmarks are saved in cvar adr[0-15]
   */
-void CL_BookmarkAdd_f(void)
+static void CL_BookmarkAdd_f(void)
 {
 	int i;
 	char *bookmark = NULL;
@@ -770,7 +770,6 @@ void CL_BookmarkListClick_f(void)
 /**
   * @brief
   */
-char serverInfoText[MAX_MESSAGE_TEXT];
 void CL_ServerListClick_f(void)
 {
 	int num;

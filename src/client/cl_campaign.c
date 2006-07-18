@@ -562,9 +562,9 @@ void CL_AircraftSelect(void)
 
 	/* generate aircraft info text */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\n"), air->speed);
-	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Fuel:\t%i/%i\n"), air->fuel / 1000, air->fuelSize / 1000));
-	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Weapon:\t%s\n"), air->weapon ? air->weapon->name : _("None")));
-	Q_strcat(aircraftInfo, sizeof(aircraftInfo), va(_("Shield:\t%s"), air->shield ? air->shield->name : _("None")));
+	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), air->fuel / 1000, air->fuelSize / 1000), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), air->weapon ? air->weapon->name : _("None")), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Shield:\t%s"), air->shield ? air->shield->name : _("None")), sizeof(aircraftInfo));
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 
@@ -1021,7 +1021,7 @@ static void CL_BuildingAircraftList_f(void)
 		for (i = 0; i < gd.bases[j].numAircraftInBase; i++) {
 			air = &gd.bases[j].aircraft[i];
 			s = va("%s (%i/%i)\t%s\t%s\n", air->name, *air->teamSize, air->size, CL_AircraftStatusToName(air), gd.bases[j].name);
-			Q_strcat(aircraftListText, sizeof(aircraftListText), s);
+			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 		}
 	}
 
@@ -3369,7 +3369,7 @@ void CP_GetCampaigns_f(void)
 	*campaignText = *campaignDesc = '\0';
 	for (i = 0; i < numCampaigns; i++) {
 		if ( campaigns[i].visible )
-			Q_strcat(campaignText, MAXCAMPAIGNTEXT, va("%s\n", campaigns[i].name));
+			Q_strcat(campaignText, va("%s\n", campaigns[i].name), MAXCAMPAIGNTEXT);
 	}
 	/* default campaign */
 	Cvar_Set("campaign", "main");

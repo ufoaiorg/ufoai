@@ -346,10 +346,10 @@ char *LE_GetAnim(char *anim, int right, int left, int state)
 		*mod++ = 0;
 	} else {
 		Q_strncpyz(mod, anim, MAX_VAR);
-		Q_strcat(mod, MAX_VAR, "_");
-		Q_strcat(mod, MAX_VAR, type);
+		Q_strcat(mod, "_", MAX_VAR);
+		Q_strcat(mod, type, MAX_VAR);
 		if (akimbo)
-			Q_strcat(mod, MAX_VAR, "_d");
+			Q_strcat(mod, "_d", MAX_VAR);
 	}
 
 	return retAnim;

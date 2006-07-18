@@ -412,10 +412,10 @@ static void RS_ResearchDisplayInfo(void)
 		for (i = 0; i < req_temp.numEntries; i++) {
 			/* name_temp gets initialised in getname. */
 			RS_GetName(req_temp.string[i], tempstring);
-			Q_strcat(dependencies, MAX_VAR, tempstring);
+			Q_strcat(dependencies, tempstring, MAX_VAR);
 
 			if (i < req_temp.numEntries - 1)
-				Q_strcat(dependencies, MAX_VAR, ", ");
+				Q_strcat(dependencies, ", ", MAX_VAR);
 		}
 	} else {
 		*dependencies = '\0';
@@ -704,7 +704,7 @@ void RS_UpdateData(void)
 
 		/* An unresearched collected item that cannot yet be researched. */
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
-			Q_strcat(name, MAX_VAR, _(" [not yet researchable]"));
+			Q_strcat(name, _(" [not yet researchable]"), MAX_VAR);
 			/* Color the item 'unresearchable' */
 			Cbuf_AddText(va("researchunresearchable%i\n", j));
 			/* Display the concated text in the correct list-entry. */
