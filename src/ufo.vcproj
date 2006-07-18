@@ -322,7 +322,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
-				AdditionalDependencies="winmm.lib wsock32.lib $(IntDir)\q_shared.obj $(IntDir)\q_shwin.obj $(IntDir)\mem.obj"
+				AdditionalDependencies="winmm.lib wsock32.lib $(IntDir)\q_shared.obj $(IntDir)\q_shwin.obj"
 				OutputFile="$(OutDir)\ufo32d.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -781,11 +781,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\client\os_types.h"
+				RelativePath=".\win32\os_types.h"
 				>
 			</File>
 			<File
-				RelativePath=".\win32\os_types.h"
+				RelativePath=".\client\os_types.h"
 				>
 			</File>
 			<File
