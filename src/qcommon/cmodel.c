@@ -947,7 +947,7 @@ void CMod_LoadEntityString(lump_t * l)
 			Com_Error(ERR_DROP, "CMod_LoadEntityString: found %s when expecting {", com_token);
 
 		/* new entity */
-		Q_strcat(map_entitystring, MAX_MAP_ENTSTRING, "{ ");
+		Q_strcat(map_entitystring, "{ ", MAX_MAP_ENTSTRING);
 
 		/* go through all the dictionary pairs */
 		while (1) {
@@ -973,20 +973,20 @@ void CMod_LoadEntityString(lump_t * l)
 				/* origins are shifted */
 				sscanf(com_token, "%f %f %f", &(v[0]), &(v[1]), &(v[2]));
 				VectorAdd(v, shift, v);
-				Q_strcat(map_entitystring, MAX_MAP_ENTSTRING, va("%s \"%i %i %i\" ", keyname, (int) v[0], (int) v[1], (int) v[2]));
+				Q_strcat(map_entitystring, va("%s \"%i %i %i\" ", keyname, (int) v[0], (int) v[1], (int) v[2]), MAX_MAP_ENTSTRING);
 			} else if (!Q_strncmp(keyname, "model", sizeof(keyname)) && com_token[0] == '*') {
 				/* adapt inline model number */
 				num = atoi(com_token + 1);
 				num += numInline;
-				Q_strcat(map_entitystring, MAX_MAP_ENTSTRING, va("%s *%i ", keyname, num));
+				Q_strcat(map_entitystring, va("%s *%i ", keyname, num), MAX_MAP_ENTSTRING);
 			} else {
 				/* just store key and value */
-				Q_strcat(map_entitystring, MAX_MAP_ENTSTRING, va("%s \"%s\" ", keyname, com_token));
+				Q_strcat(map_entitystring, va("%s \"%s\" ", keyname, com_token), MAX_MAP_ENTSTRING);
 			}
 		}
 
 		/* finish entity */
-		Q_strcat(map_entitystring, MAX_MAP_ENTSTRING, "} ");
+		Q_strcat(map_entitystring, "} ", MAX_MAP_ENTSTRING);
 	}
 #if 0
 	/* copy new entitystring */

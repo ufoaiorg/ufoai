@@ -621,12 +621,12 @@ int Com_GetModelAndName(char *team, char *path, char *body, char *head, char *na
 			if (!str)
 				continue;
 			Q_strncpyz(name, str, MAX_VAR);
-			Q_strcat(name, MAX_VAR, " ");
+			Q_strcat(name, " ", MAX_VAR);
 
 			str = Com_GiveName(gender + LASTNAME, nameCat[category].title);
 			if (!str)
 				continue;
-			Q_strcat(name, MAX_VAR, str);
+			Q_strcat(name, str, MAX_VAR);
 		}
 
 		/* get model */

@@ -347,9 +347,9 @@ qboolean Cbuf_AddLateCommands(void)
 	UFO_Malloc(text, s + 1);
 	text[0] = 0;
 	for (i = 1; i < argc; i++) {
-		Q_strcat(text, s, COM_Argv(i));
+		Q_strcat(text, COM_Argv(i), s);
 		if (i != argc - 1)
-			Q_strcat(text, s, " ");
+			Q_strcat(text, " ", s);
 	}
 
 	/* pull out the commands */
@@ -365,8 +365,8 @@ qboolean Cbuf_AddLateCommands(void)
 			c = text[j];
 			text[j] = 0;
 
-			Q_strcat(build, s, text + i);
-			Q_strcat(build, s, "\n");
+			Q_strcat(build, text + i, s);
+			Q_strcat(build, "\n", s);
 			text[j] = c;
 			i = j - 1;
 		}
@@ -486,11 +486,11 @@ void Cmd_Alias_f(void)
 	cmd[0] = 0;					/* start out with a null string */
 	c = Cmd_Argc();
 	for (i = 2; i < c; i++) {
-		Q_strcat(cmd, sizeof(cmd), Cmd_Argv(i));
+		Q_strcat(cmd, Cmd_Argv(i), sizeof(cmd));
 		if (i != (c - 1))
-			Q_strcat(cmd, 1024, " ");
+			Q_strcat(cmd, " ", sizeof(cmd));
 	}
-	Q_strcat(cmd, sizeof(cmd), "\n");
+	Q_strcat(cmd, "\n", sizeof(cmd));
 
 	a->value = CopyString(cmd);
 }
