@@ -38,12 +38,34 @@ menu_model alien_ortnok_light
 
 menu_model alien_antarean_head
 {
-	model	"models/aliens/antarean/head01.md2"
+	model	"models/aliens/blue/head01.md2"
 }
 menu_model alien_antarean
 {
-	model	"models/aliens/antarean/body01.md2"
+	model	"models/aliens/blue/body01.md2"
 	need	"alien_antarean_head"
+	anim	stand_still
+}
+
+menu_model alien_antarean_light_head
+{
+	model	"models/aliens/bluelight/head01.md2"
+}
+menu_model alien_antarean_light
+{
+	model	"models/aliens/bluelight/body01.md2"
+	need	"alien_antarean_light_head"
+	anim	stand_still
+}
+
+menu_model alien_antarean_medium_head
+{
+	model	"models/aliens/bluemedium/head01.md2"
+}
+menu_model alien_antarean_medium
+{
+	model	"models/aliens/bluemedium/body01.md2"
+	need	"alien_antarean_medium_head"
 	anim	stand_still
 }
 
