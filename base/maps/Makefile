@@ -9,5 +9,8 @@ QRAD3FLAGS = -bounce 0 -chop 32 -extra
 
 all: $(BSPS)
 
+clean: 
+	find $(MAPSDIR) -name '*.bsp' | xargs --no-run-if-empty rm
+
 $(BSPS): %.bsp: %.map
 	$(UFO2MAP) $(QRAD3FLAGS) $<
