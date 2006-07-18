@@ -1162,7 +1162,7 @@ typedef struct zhead_s {
 	struct zhead_s *prev, *next;
 	short magic;
 	short tag;					/* for group free */
-	int size;
+	size_t size;
 } zhead_t;
 
 zhead_t z_chain;
