@@ -82,7 +82,7 @@ mission office
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			office06
-	music		mission3
+	music		dawn
 	pos			"-149 -21"
 	aliens		8
 	alienteam	alien
@@ -164,7 +164,7 @@ mission construction
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			const05
-	music		mission
+	music		dawn
 	pos			"-17 60"
 	aliens		6
 	alienteam	alien
