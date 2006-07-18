@@ -28,10 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-/*#include "common/debug.h"
-#include "common/ufotypes.h"*/
 #include "qcommon.h"
-/*#include "common/mem.h"*/
+#define MEM_SUBSYS MEM_SCRIPT
+#include "common/mem.h"
 
 
 /**

@@ -17,7 +17,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#define MEM_SUBSYS MEM_SOUND
 #include "common/mem.h"
 #include "client.h"
 #include "snd_loc.h"
@@ -149,7 +150,7 @@ sfxcache_t *S_LoadSound(sfx_t * s)
 	len = info.samples / stepscale;
 
 	len = len * info.width * info.channels;
-	
+
 	UFO_Malloc(s->cache, len + sizeof(sfxcache_t));
 	sc = s->cache;
 

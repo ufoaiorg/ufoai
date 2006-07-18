@@ -33,6 +33,7 @@
  */
 
 #include "qcommon.h"
+#define MEM_SUBSYS MEM_COMMON
 #include "common/mem.h"
 #include <setjmp.h>
 #include <ctype.h>

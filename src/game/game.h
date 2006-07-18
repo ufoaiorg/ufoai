@@ -207,9 +207,9 @@ typedef struct {
 	int (*GetModelAndName) (char *team, char *path, char *body, char *head, char *name);
 
 	/* managed memory allocation */
-	void *(*TagMalloc) (int size, int tag);
+	void *(*TagMalloc) (size_t size, uint16_t tag);
 	void (*TagFree) (void *block);
-	void (*FreeTags) (int tag);
+	void (*FreeTags) (uint16_t tag);
 
 	/* console variable interaction */
 	cvar_t *(*cvar) (char *var_name, char *value, int flags);

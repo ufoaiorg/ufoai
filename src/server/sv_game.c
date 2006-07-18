@@ -31,8 +31,7 @@
  *
  */
 
-#include "common/debug.h"
-#include "common/ufotypes.h"
+#define MEM_SUBSYS MEM_SERVER
 #include "common/mem.h"
 #include "server.h"
 

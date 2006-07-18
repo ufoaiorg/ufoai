@@ -30,6 +30,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#define MEM_SUBSYS MEM_UNSPEC
 #include "common/mem.h"
 
 #define Z_MAGIC 0x1d1d
@@ -67,7 +68,7 @@ void *Z_TagMalloc(size_t size, uint16_t tag)
 
 	size = size + sizeof(zhead_t);
 	z = calloc(size, 1);
-	if (z) {	
+	if (z) {
 		z_count++;
 		z_bytes += size;
 		z->magic = Z_MAGIC;
@@ -79,9 +80,9 @@ void *Z_TagMalloc(size_t size, uint16_t tag)
 		z_chain.next = z;
 		z += sizeof(zhead_t);
 	} else {
-		fprintf(stderr, "Z_Malloc: failed on allocation of %i bytes", size);
+		fprintf(stderr, "Z_Malloc: failed on allocation of %Zu bytes", size);
 	}
-	
+
 	return (void *)z;
 }
 
@@ -111,7 +112,7 @@ void Z_Free(void *ptr)
 /**
  * @brief Returns stats about the allocated bytes via Z_Malloc.
  *
- * 
+ *
  */
 zmemstats_t *Z_MemStats(zmemstats_t *stats)
 {
@@ -123,7 +124,7 @@ zmemstats_t *Z_MemStats(zmemstats_t *stats)
 /**
  * @brief Frees a memory block with a given tag
  *
- * 
+ *
  */
 void Z_FreeTags(uint16_t tag)
 {

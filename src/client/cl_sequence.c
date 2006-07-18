@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#define MEM_SUBSYS MEM_CLIENT
 #include "common/mem.h"
 
 #define MAX_DATA_LENGTH 2048
