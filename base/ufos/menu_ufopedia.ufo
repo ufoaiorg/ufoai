@@ -122,6 +122,16 @@ menu ufopedia
 		format	"20 0"
 	}
 
+	// TODO: this will be the place where we print the techtree
+	// as clickable list of course
+	text techtree
+	{
+		pos		"380 500"
+		size	"264 200"
+		format	"20 0"
+		num	1
+	}
+
 	string title
 	{
 		string	"*cvar mn_uptitle"
