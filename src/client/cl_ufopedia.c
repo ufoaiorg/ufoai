@@ -102,23 +102,23 @@ void CL_ItemDescription(int item)
 	if (RS_IsResearched_ptr(od->tech)) {
 		if (!Q_strncmp(od->type, "ammo", 4)) {
 			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Primary:\t%s\t(%s)\n"), od->fd[0].name, CL_WeaponSkillToName(od->fd[0].weaponSkill) );
-			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Secondary:\t%s\t(%s)\n"), od->fd[1].name, CL_WeaponSkillToName(od->fd[1].weaponSkill)));
-			Q_strcat(itemText, MAX_MENUTEXTLEN,
+			Q_strcat(itemText, va(_("Secondary:\t%s\t(%s)\n"), od->fd[1].name, CL_WeaponSkillToName(od->fd[1].weaponSkill)), sizeof(itemText));
+			Q_strcat(itemText,
 					va(_("Damage:\t%i / %i\n"), (int) (od->fd[0].damage[0] * od->fd[0].shots + od->fd[0].spldmg[0]),
-						(int) (od->fd[1].damage[0] * od->fd[1].shots + od->fd[1].spldmg[0])));
-			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Time units:\t%i / %i\n"), od->fd[0].time, od->fd[1].time));
-			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Range:\t%1.1f / %1.1f\n"), od->fd[0].range / 32.0, od->fd[1].range / 32.0));
-			Q_strcat(itemText, MAX_MENUTEXTLEN,
-					va(_("Spreads:\t%1.1f / %1.1f\n"), (od->fd[0].spread[0] + od->fd[0].spread[1]) / 2, (od->fd[1].spread[0] + od->fd[1].spread[1]) / 2));
+						(int) (od->fd[1].damage[0] * od->fd[1].shots + od->fd[1].spldmg[0])), sizeof(itemText));
+			Q_strcat(itemText, va(_("Time units:\t%i / %i\n"), od->fd[0].time, od->fd[1].time), sizeof(itemText));
+			Q_strcat(itemText, va(_("Range:\t%1.1f / %1.1f\n"), od->fd[0].range / 32.0, od->fd[1].range / 32.0), sizeof(itemText));
+			Q_strcat(itemText,
+					va(_("Spreads:\t%1.1f / %1.1f\n"), (od->fd[0].spread[0] + od->fd[0].spread[1]) / 2, (od->fd[1].spread[0] + od->fd[1].spread[1]) / 2), sizeof(itemText));
 		} else if (od->weapon) {
 			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Ammo:\t%i\n"), (int) (od->ammo));
-			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Twohanded:\t%s"), (od->twohanded ? _("Yes") : _("No"))));
+			Q_strcat(itemText, va(_("Twohanded:\t%s"), (od->twohanded ? _("Yes") : _("No"))), sizeof(itemText));
 		} else {
 			/* just an item */
 			/* only primary definition */
 			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Action:\t%s\n"), od->fd[0].name);
-			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Time units:\t%i\n"), od->fd[0].time));
-			Q_strcat(itemText, MAX_MENUTEXTLEN, va(_("Range:\t%1.1f\n"), od->fd[0].range / 32.0));
+			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0].time), sizeof(itemText));
+			Q_strcat(itemText, va(_("Range:\t%1.1f\n"), od->fd[0].range / 32.0), sizeof(itemText));
 		}
 		menuText[TEXT_STANDARD] = itemText;
 	} else {
@@ -159,7 +159,7 @@ void UP_ArmorDescription ( technology_t* t )
 		Cvar_Set( "mn_upimage_top", t->image_top );
 		upBuffer[0] = '\0';
 		for ( i = 0; i < csi.numDTs; i++ )
-			Q_strcat( upBuffer, MAX_UPTEXT, va ( _("%s:\tProtection: %i\tHardness: %i\n"), _(csi.dts[i]), od->protection[i], od->hardness[i] ) );
+			Q_strcat(upBuffer, va ( _("%s:\tProtection: %i\tHardness: %i\n"), _(csi.dts[i]), od->protection[i], od->hardness[i] ), sizeof(upBuffer));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
 }
@@ -185,9 +185,9 @@ void UP_BuildingDescription ( technology_t* t )
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find building") );
 	} else {
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Depends:\t%s\n"), b->dependsBuilding >= 0 ? gd.buildingTypes[b->dependsBuilding].name : _("None") );
-		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Buildtime:\t%i day(s)\n"), (int)b->buildTime ) );
-		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Fixcosts:\t%i c\n"), (int)b->fixCosts ) );
-		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Running costs:\t%i c\n"), (int)b->varCosts ) );
+		Q_strcat(upBuffer, va(_("Buildtime:\t%i day(s)\n"), (int)b->buildTime ), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(_("Fixcosts:\t%i c\n"), (int)b->fixCosts ), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(_("Running costs:\t%i c\n"), (int)b->varCosts ), sizeof(upBuffer));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
 }
@@ -203,9 +203,9 @@ void UP_AircraftDescription ( technology_t* t )
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find aircraft") );
 	} else {
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Speed:\t%.0f\n"), air->speed );
-		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Fuel:\t%i\n"), air->fuelSize ) );
-		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Weapon:\t%s\n"), air->weapon ? air->weapon->name : _("None") ) );
-		Q_strcat(upBuffer, MAX_UPTEXT, va(_("Shield:\t%s\n"), air->shield ? air->shield->name : _("None") ) );
+		Q_strcat(upBuffer, va(_("Fuel:\t%i\n"), air->fuelSize ), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), air->weapon ? air->weapon->name : _("None") ), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(_("Shield:\t%s\n"), air->shield ? air->shield->name : _("None") ), sizeof(upBuffer));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
 }
@@ -296,8 +296,7 @@ void UP_FindEntry_f ( void )
 	char *id = NULL;
 	technology_t *tech = NULL;
 
-	if ( Cmd_Argc() < 2 )
-	{
+	if ( Cmd_Argc() < 2 ) {
 		Com_Printf("Usage: ufopedia <id>\n");
 		return;
 	}
@@ -359,8 +358,8 @@ void UP_Content_f( void )
 		/* .. and if so add them to the displaylist of chapters. */
 		if ( researched_entries ) {
 			upChapters_displaylist[numChapters_displaylist++] = &gd.upChapters[i];
-			Q_strcat( cp, MAX_UPTEXT, gd.upChapters[i].name );
-			Q_strcat( cp, MAX_UPTEXT, "\n" );
+			Q_strcat( cp, gd.upChapters[i].name, MAX_UPTEXT);
+			Q_strcat( cp, "\n", MAX_UPTEXT);
 		}
 	}
 

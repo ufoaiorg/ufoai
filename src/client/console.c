@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -425,8 +425,8 @@ void Con_CenteredPrint(char *text)
 	if (l < 0)
 		l = 0;
 	memset(buffer, ' ', l);
-	Q_strcat(buffer, MAX_STRING_CHARS, text);
-	Q_strcat(buffer, MAX_STRING_CHARS, "\n");
+	Q_strcat(buffer, text, sizeof(buffer));
+	Q_strcat(buffer, "\n", sizeof(buffer));
 	Con_Print(buffer);
 }
 

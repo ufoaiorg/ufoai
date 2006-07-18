@@ -1199,7 +1199,7 @@ static void MN_MapClick(menuNode_t * node, int x, int y)
 		if (MN_MapToScreen(node, ms->realPos, &msx, &msy))
 			if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION && y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION) {
 				s = va("%s\t%s\n", ms->def->type, ms->def->location);
-				Q_strcat(multiSelectionText, sizeof(multiSelectionText), s);
+				Q_strcat(multiSelectionText, s, sizeof(multiSelectionText));
 				multiSelect.selectType[multiSelect.nbSelect] = MULTISELECT_TYPE_MISSION;
 				multiSelect.selectId[multiSelect.nbSelect++] = i;
  			}
@@ -1209,7 +1209,7 @@ static void MN_MapClick(menuNode_t * node, int x, int y)
 		if (MN_MapToScreen(node, gd.bases[i].pos, &msx, &msy))
 			if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION && y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION) {
 				s = va(_("Base\t%s\n"), gd.bases[i].name);
-				Q_strcat(multiSelectionText, sizeof(multiSelectionText), s);
+				Q_strcat(multiSelectionText, s, sizeof(multiSelectionText));
 				multiSelect.selectType[multiSelect.nbSelect] = MULTISELECT_TYPE_BASE;
 				multiSelect.selectId[multiSelect.nbSelect++] = i;
 			}
@@ -2652,7 +2652,7 @@ static void MN_GetTutorials_f(void)
 	tutorialList[0] = 0;
 	for (i = 0; i < numTutorials; i++) {
 		t = &tutorials[i];
-		Q_strcat(tutorialList, MAX_TUTORIALLIST, va("%s\n", t->name));
+		Q_strcat(tutorialList, va("%s\n", t->name), sizeof(tutorialList));
 	}
 }
 
@@ -3532,7 +3532,7 @@ void MN_AddNewMessage(const char *title, const char *text, qboolean popup, messa
 	Q_strncpyz(mess->text, va("%02i %s %04i, %02i:%02i:%02i:\t", mess->d, CL_DateGetMonthName(mess->m), mess->y, mess->h, mess->min, mess->s),
 		MAX_MESSAGE_TEXT);
 
-	Q_strcat(mess->text, MAX_MESSAGE_TEXT, text);
+	Q_strcat(mess->text, text, sizeof(mess->text));
 
 	/* they need to be translated already */
 	if (popup)
