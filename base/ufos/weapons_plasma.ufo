@@ -43,11 +43,11 @@ item plaspistol_ammo
 		spread	"4 4"
 		crouch	0.8
 		range	15
-		shots	3
+		shots	5
 		ammo	1
 		rof		10
 		time	11
-		damage	"19 10"
+		damage	"12 10"
 		dmgtype plasma
 	}
 	secondary
