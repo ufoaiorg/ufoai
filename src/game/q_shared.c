@@ -1809,7 +1809,7 @@ int Q_strcasecmp(char *s1, char *s2)
  * @param
  * @sa
  */
-void Com_sprintf(char *dest, int size, char *fmt, ...)
+void Com_sprintf(char *dest, size_t size, char *fmt, ...)
 {
 	int len;
 	va_list argptr;
@@ -1824,7 +1824,7 @@ void Com_sprintf(char *dest, int size, char *fmt, ...)
 	va_end(argptr);
 #ifdef PARANOID
 	if (len >= size)
-		Com_Printf("Com_sprintf: overflow of %i in %i\n", len, size);
+		Com_Printf("Com_sprintf: overflow of %i in %Zu\n", len, size);
 #endif
 	Q_strncpyz(dest, bigbuffer, size);
 }
