@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_win32/libjpeg.lib_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=80
+UnitCount=76
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -788,14 +788,13 @@ ProductVersion=3.0-dev
 AutoIncBuildNr=0
 
 [Unit78]
-FileName=common\mem.h
-Folder=Header Files
-Compile=1
-Link=1
+FileName=win32\vorbis.lib
+Folder=Resource Files
+Compile=0
+Link=0
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
-CompileCpp=1
 
 [Unit75]
 FileName=client\cl_market.c
@@ -818,27 +817,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit77]
-FileName=common\mem.c
-CompileCpp=1
-Folder=ufo/Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit79]
-FileName=common\ufotypes.h
-CompileCpp=1
-Folder=Header Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit80]
-FileName=common\debug.h
+FileName=client\cl_market.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
