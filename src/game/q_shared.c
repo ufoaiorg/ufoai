@@ -1770,6 +1770,12 @@ char *Q_strncpyz(char *dest, const char *src, size_t destsize)
 char *Q_strcat(char *dest, const char *src, size_t destsize)
 {
 	size_t dest_length;
+#if 0
+	dest_length = strlen(dest);
+	if (dest_length >= destsize)
+		Sys_Error("Q_strcat: already overflowed");
+	Q_strncpyz(dest + dest_length, src, destsize - dest_length);
+#else
 	size_t src_length;
 	size_t copy_length;
 
@@ -1784,6 +1790,7 @@ char *Q_strcat(char *dest, const char *src, size_t destsize)
 
 	memcpy(dest + dest_length, src, copy_length);
 	dest[dest_length + copy_length] = '\0';
+#endif
 	return dest;
 }
 

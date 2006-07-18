@@ -60,7 +60,7 @@ void Z_InitMem(void)
 /**
  * @brief Allocates a block of memory with the given size and tag.
  *
- *
+ * @note See TAG_LEVEL and TAG_GAME
  */
 void *Z_TagMalloc(size_t size, uint16_t tag)
 {
@@ -80,7 +80,7 @@ void *Z_TagMalloc(size_t size, uint16_t tag)
 		z_chain.next = z;
 		z += sizeof(zhead_t);
 	} else {
-		fprintf(stderr, "Z_Malloc: failed on allocation of %Zu bytes", size);
+		fprintf(stderr, "Z_TagMalloc: failed on allocation of %Zu bytes", size);
 	}
 
 	return (void *)z;
