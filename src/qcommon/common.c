@@ -1,40 +1,29 @@
 /**
  * @file common.c
- * @brief Misc functions used in client and server.
+ * @brief Misc functions used in client and server
  */
 
 /*
- * All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
- *
- * Changes:
- * 28/06/06, Eddy Cullen (ScreamingWithNoSound):
- *	Updated copyright notice.
- *	Formatted to agreed style.
- *	Added file documentation comment.
- *
- * Original file from Quake 2 v3.21: quake2-2.31/qcommon/common.c
- * Copyright (C) 1997-2001 Id Software, Inc.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- */
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
 
 #include "qcommon.h"
-#define MEM_SUBSYS MEM_COMMON
-#include "common/mem.h"
 #include <setjmp.h>
 #include <ctype.h>
 #include <limits.h>
@@ -43,8 +32,8 @@
 #include <intrin.h>
 #endif
 
-#define MAXPRINTMSG 4096
-#define MAX_NUM_ARGVS 50
+#define	MAXPRINTMSG	4096
+#define MAX_NUM_ARGVS	50
 
 
 csi_t csi;
@@ -93,11 +82,11 @@ static int rd_buffersize;
 static void (*rd_flush) (int target, char *buffer);
 
 /**
- * @brief Redirect pakets/ouput from server to client
- * @sa Com_EndRedirect
- *
- * This is used to redirect printf outputs for rcon commands
- */
+  * @brief Redirect pakets/ouput from server to client
+  * @sa Com_EndRedirect
+  *
+  * This is used to redirect printf outputs for rcon commands
+  */
 void Com_BeginRedirect(int target, char *buffer, int buffersize, void (*flush) (int, char *))
 {
 	if (!target || !buffer || !buffersize || !flush)
@@ -111,9 +100,9 @@ void Com_BeginRedirect(int target, char *buffer, int buffersize, void (*flush) (
 }
 
 /**
- * @brief End the redirection of pakets/output
- * @sa Com_BeginRedirect
- */
+  * @brief End the redirection of pakets/output
+  * @sa Com_BeginRedirect
+  */
 void Com_EndRedirect(void)
 {
 	rd_flush(rd_target, rd_buffer);
@@ -125,11 +114,11 @@ void Com_EndRedirect(void)
 }
 
 /**
- * @brief
- *
- * Both client and server can use this, and it will output
- * to the apropriate place.
- */
+  * @brief
+  *
+  * Both client and server can use this, and it will output
+  * to the apropriate place.
+  */
 void Com_Printf(char *fmt, ...)
 {
 	va_list argptr;
@@ -177,10 +166,10 @@ void Com_Printf(char *fmt, ...)
 
 
 /**
- * @brief
- *
- * A Com_Printf that only shows up if the "developer" cvar is set
- */
+  * @brief
+  *
+  * A Com_Printf that only shows up if the "developer" cvar is set
+  */
 void Com_DPrintf(char *fmt, ...)
 {
 	va_list argptr;
@@ -203,11 +192,11 @@ void Com_DPrintf(char *fmt, ...)
 
 
 /**
- * @brief
- *
- * Both client and server can use this, and it will
- * do the apropriate things.
- */
+  * @brief
+  *
+  * Both client and server can use this, and it will
+  * do the apropriate things.
+  */
 void Com_Error(int code, char *fmt, ...)
 {
 	va_list argptr;
@@ -255,8 +244,8 @@ void Com_Error(int code, char *fmt, ...)
 
 
 /**
- * @brief
- */
+  * @brief
+  */
 void Com_Drop(void)
 {
 	SV_Shutdown("Server disconnected\n", qfalse);
@@ -266,11 +255,11 @@ void Com_Drop(void)
 
 
 /**
- * @brief
- *
- * Both client and server can use this, and it will
- * do the apropriate things.
- */
+  * @brief
+  *
+  * Both client and server can use this, and it will
+  * do the apropriate things.
+  */
 void Com_Quit(void)
 {
 	SV_Shutdown("Server quit\n", qfalse);
@@ -287,16 +276,16 @@ void Com_Quit(void)
 
 
 /**
- * @brief
- */
+  * @brief
+  */
 int Com_ServerState(void)
 {
 	return server_state;
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void Com_SetServerState(int state)
 {
 	server_state = state;
@@ -319,8 +308,8 @@ vec3_t bytedirs[NUMVERTEXNORMALS] = {
 /* writing functions */
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_WriteChar(sizebuf_t * sb, int c)
 {
 	byte *buf;
@@ -335,8 +324,8 @@ void MSG_WriteChar(sizebuf_t * sb, int c)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 #ifdef DEBUG
 void MSG_WriteByteDebug(sizebuf_t * sb, int c, char *file, int line)
 #else
@@ -356,8 +345,8 @@ void MSG_WriteByte(sizebuf_t * sb, int c)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 #ifdef DEBUG
 void MSG_WriteShortDebug(sizebuf_t * sb, int c, char* file, int line)
 #else
@@ -377,8 +366,8 @@ void MSG_WriteShort(sizebuf_t * sb, int c)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_WriteLong(sizebuf_t * sb, int c)
 {
 	byte *buf;
@@ -391,8 +380,8 @@ void MSG_WriteLong(sizebuf_t * sb, int c)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_WriteFloat(sizebuf_t * sb, float f)
 {
 	union {
@@ -408,8 +397,8 @@ void MSG_WriteFloat(sizebuf_t * sb, float f)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_WriteString(sizebuf_t * sb, char *s)
 {
 	if (!s)
@@ -419,16 +408,16 @@ void MSG_WriteString(sizebuf_t * sb, char *s)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_WriteCoord(sizebuf_t * sb, float f)
 {
 	MSG_WriteLong(sb, (int) (f * 32));
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_WritePos(sizebuf_t * sb, vec3_t pos)
 {
 	MSG_WriteShort(sb, (int) (pos[0] * 8));
@@ -437,8 +426,8 @@ void MSG_WritePos(sizebuf_t * sb, vec3_t pos)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_WriteGPos(sizebuf_t * sb, pos3_t pos)
 {
 	MSG_WriteByte(sb, pos[0]);
@@ -447,16 +436,16 @@ void MSG_WriteGPos(sizebuf_t * sb, pos3_t pos)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_WriteAngle(sizebuf_t * sb, float f)
 {
 	MSG_WriteByte(sb, (int) (f * 256 / 360) & 255);
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_WriteAngle16(sizebuf_t * sb, float f)
 {
 	MSG_WriteShort(sb, ANGLE2SHORT(f));
@@ -464,8 +453,8 @@ void MSG_WriteAngle16(sizebuf_t * sb, float f)
 
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_WriteDir(sizebuf_t * sb, vec3_t dir)
 {
 	int i, best;
@@ -490,8 +479,8 @@ void MSG_WriteDir(sizebuf_t * sb, vec3_t dir)
 
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_WriteFormat(sizebuf_t * sb, char *format, ...)
 {
 	va_list ap;
@@ -570,18 +559,18 @@ void MSG_WriteFormat(sizebuf_t * sb, char *format, ...)
 /* reading functions */
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_BeginReading(sizebuf_t * msg)
 {
 	msg->readcount = 0;
 }
 
 /**
- * @brief
- *
- * returns -1 if no more characters are available
- */
+  * @brief
+  *
+  * returns -1 if no more characters are available
+  */
 int MSG_ReadChar(sizebuf_t * msg_read)
 {
 	int c;
@@ -596,8 +585,8 @@ int MSG_ReadChar(sizebuf_t * msg_read)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 int MSG_ReadByte(sizebuf_t * msg_read)
 {
 	int c;
@@ -612,8 +601,8 @@ int MSG_ReadByte(sizebuf_t * msg_read)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 int MSG_ReadShort(sizebuf_t * msg_read)
 {
 	int c;
@@ -630,8 +619,8 @@ int MSG_ReadShort(sizebuf_t * msg_read)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 int MSG_ReadLong(sizebuf_t * msg_read)
 {
 	int c;
@@ -650,8 +639,8 @@ int MSG_ReadLong(sizebuf_t * msg_read)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 float MSG_ReadFloat(sizebuf_t * msg_read)
 {
 	union {
@@ -676,8 +665,8 @@ float MSG_ReadFloat(sizebuf_t * msg_read)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 char *MSG_ReadString(sizebuf_t * msg_read)
 {
 	static char string[2048];
@@ -698,8 +687,8 @@ char *MSG_ReadString(sizebuf_t * msg_read)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 char *MSG_ReadStringLine(sizebuf_t * msg_read)
 {
 	static char string[2048];
@@ -720,16 +709,16 @@ char *MSG_ReadStringLine(sizebuf_t * msg_read)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 float MSG_ReadCoord(sizebuf_t * msg_read)
 {
 	return (float) MSG_ReadLong(msg_read) * (1.0 / 32);
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_ReadPos(sizebuf_t * msg_read, vec3_t pos)
 {
 	pos[0] = MSG_ReadShort(msg_read) * (1.0 / 8);
@@ -738,8 +727,8 @@ void MSG_ReadPos(sizebuf_t * msg_read, vec3_t pos)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_ReadGPos(sizebuf_t * msg_read, pos3_t pos)
 {
 	pos[0] = MSG_ReadByte(msg_read);
@@ -748,24 +737,24 @@ void MSG_ReadGPos(sizebuf_t * msg_read, pos3_t pos)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 float MSG_ReadAngle(sizebuf_t * msg_read)
 {
 	return (float) MSG_ReadChar(msg_read) * (360.0 / 256);
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 float MSG_ReadAngle16(sizebuf_t * msg_read)
 {
 	return (float) SHORT2ANGLE(MSG_ReadShort(msg_read));
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_ReadData(sizebuf_t * msg_read, void *data, int len)
 {
 	int i;
@@ -775,8 +764,8 @@ void MSG_ReadData(sizebuf_t * msg_read, void *data, int len)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_ReadDir(sizebuf_t * sb, vec3_t dir)
 {
 	int b;
@@ -789,8 +778,8 @@ void MSG_ReadDir(sizebuf_t * sb, vec3_t dir)
 
 
 /**
- * @brief
- */
+  * @brief
+  */
 void MSG_ReadFormat(sizebuf_t * msg_read, char *format, ...)
 {
 	va_list ap;
@@ -936,8 +925,8 @@ int MSG_LengthFormat(sizebuf_t * sb, char *format)
 /*=========================================================================== */
 
 /**
- * @brief
- */
+  * @brief
+  */
 void SZ_Init(sizebuf_t * buf, byte * data, int length)
 {
 	memset(buf, 0, sizeof(*buf));
@@ -946,8 +935,8 @@ void SZ_Init(sizebuf_t * buf, byte * data, int length)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void SZ_Clear(sizebuf_t * buf)
 {
 	buf->cursize = 0;
@@ -955,8 +944,8 @@ void SZ_Clear(sizebuf_t * buf)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void *SZ_GetSpace(sizebuf_t * buf, int length)
 {
 	void *data;
@@ -980,16 +969,16 @@ void *SZ_GetSpace(sizebuf_t * buf, int length)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void SZ_Write(sizebuf_t * buf, void *data, int length)
 {
 	memcpy(SZ_GetSpace(buf, length), data, length);
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void SZ_Print(sizebuf_t * buf, char *data)
 {
 	int len;
@@ -1010,11 +999,11 @@ void SZ_Print(sizebuf_t * buf, char *data)
 
 
 /**
- * @brief
- *
- * Returns the position (1 to argc-1) in the program's argument list
- * where the given parameter apears, or 0 if not present
- */
+  * @brief
+  *
+  * Returns the position (1 to argc-1) in the program's argument list
+  * where the given parameter apears, or 0 if not present
+  */
 int COM_CheckParm(char *parm)
 {
 	int i;
@@ -1028,16 +1017,16 @@ int COM_CheckParm(char *parm)
 }
 
 /**
- * @brief Returns the script commandline argument count.
- */
+  * @brief Returns the script commandline argument count
+  */
 int COM_Argc(void)
 {
 	return com_argc;
 }
 
 /**
- * @brief Returns an argument of script commandline
- */
+  * @brief Returns an argument of script commandline
+  */
 char *COM_Argv(int arg)
 {
 	if (arg < 0 || arg >= com_argc || !com_argv[arg])
@@ -1046,8 +1035,8 @@ char *COM_Argv(int arg)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void COM_ClearArgv(int arg)
 {
 	if (arg < 0 || arg >= com_argc || !com_argv[arg])
@@ -1057,8 +1046,8 @@ void COM_ClearArgv(int arg)
 
 
 /**
- * @brief
- */
+  * @brief
+  */
 void COM_InitArgv(int argc, char **argv)
 {
 	int i;
@@ -1075,8 +1064,8 @@ void COM_InitArgv(int argc, char **argv)
 }
 
 /**
- * @brief Adds the given string at the end of the current argument list
- */
+  * @brief Adds the given string at the end of the current argument list
+  */
 void COM_AddParm(char *parm)
 {
 	if (com_argc == MAX_NUM_ARGVS)
@@ -1085,10 +1074,10 @@ void COM_AddParm(char *parm)
 }
 
 /**
- * @brief
- *
- * just for debugging
- */
+  * @brief
+  *
+  * just for debugging
+  */
 int memsearch(byte * start, int count, int search)
 {
 	int i;
@@ -1101,22 +1090,22 @@ int memsearch(byte * start, int count, int search)
 
 
 /**
- * @brief
- */
+  * @brief
+  */
 char *CopyString(char *in)
 {
 	char *out;
 	int l = strlen(in);
 
-	UFO_Malloc(out, l + 1);
+	out = Z_Malloc(l + 1);
 	Q_strncpyz(out, in, l + 1);
 	return out;
 }
 
 
 /**
- * @brief
- */
+  * @brief
+  */
 void Info_Print(char *s)
 {
 	char key[512];
@@ -1157,6 +1146,111 @@ void Info_Print(char *s)
 }
 
 
+/*
+==============================================================================
+
+ZONE MEMORY ALLOCATION
+
+just cleared malloc with counters now...
+
+==============================================================================
+*/
+
+#define	Z_MAGIC		0x1d1d
+
+typedef struct zhead_s {
+	struct zhead_s *prev, *next;
+	short magic;
+	short tag;					/* for group free */
+	int size;
+} zhead_t;
+
+zhead_t z_chain;
+int z_count, z_bytes;
+
+/**
+  * @brief Frees a Z_Malloc'ed pointer
+  */
+void Z_Free(void *ptr)
+{
+	zhead_t *z;
+
+	if (!ptr)
+		return;
+
+	z = ((zhead_t *) ptr) - 1;
+
+	if (z->magic != Z_MAGIC)
+		Com_Error(ERR_FATAL, "Z_Free: bad magic (%i)", z->magic);
+
+	z->prev->next = z->next;
+	z->next->prev = z->prev;
+
+	z_count--;
+	z_bytes -= z->size;
+	free(z);
+}
+
+
+/**
+  * @brief Stats about the allocated bytes via Z_Malloc
+  */
+void Z_Stats_f(void)
+{
+	Com_Printf("%i bytes in %i blocks\n", z_bytes, z_count);
+}
+
+/**
+  * @brief Frees a memory block with a given tag
+  */
+void Z_FreeTags(int tag)
+{
+	zhead_t *z, *next;
+
+	for (z = z_chain.next; z != &z_chain; z = next) {
+		next = z->next;
+		if (z->tag == tag)
+			Z_Free((void *) (z + 1));
+	}
+}
+
+/**
+  * @brief Allocates a memory block with a given tag
+  *
+  * and fills with 0
+  */
+void *Z_TagMalloc(size_t size, int tag)
+{
+	zhead_t *z;
+
+	size = size + sizeof(zhead_t);
+	z = malloc(size);
+	if (!z)
+		Com_Error(ERR_FATAL, "Z_Malloc: failed on allocation of %i bytes", size);
+	memset(z, 0, size);
+	z_count++;
+	z_bytes += size;
+	z->magic = Z_MAGIC;
+	z->tag = tag;
+	z->size = size;
+
+	z->next = z_chain.next;
+	z->prev = &z_chain;
+	z_chain.next->prev = z;
+	z_chain.next = z;
+
+	return (void *) (z + 1);
+}
+
+/**
+  * @brief Allocate a memory block with default tag
+  *
+  * and fills with 0
+  */
+void *Z_Malloc(size_t size)
+{
+	return Z_TagMalloc(size, 0);
+}
 
 
 /*============================================================================ */
@@ -1230,10 +1324,10 @@ static byte chktbl[1024] = {
 };
 
 /**
- * @brief
- *
- * For proxy protecting
- */
+  * @brief
+  *
+  * For proxy protecting
+  */
 byte COM_BlockSequenceCRCByte(byte * base, int length, int sequence)
 {
 	int n;
@@ -1275,11 +1369,11 @@ void Key_Init(void);
 void SCR_EndLoadingPlaque(void);
 
 /**
- * @brief Just throw a fatal error to test error shutdown procedures.
- *
- * TODO: Move me to debug code?
- *
- */
+  * @brief
+  *
+  * Just throw a fatal error to
+  * test error shutdown procedures
+  */
 void Com_Error_f(void)
 {
 	Com_Error(ERR_FATAL, "%s", Cmd_Argv(1));
@@ -1287,20 +1381,20 @@ void Com_Error_f(void)
 
 #ifdef HAVE_GETTEXT
 /**
- * @brief Gettext init function
- *
- * Initialize the locale settings for gettext
- * po files are searched in ./base/i18n
- * You can override the language-settings in setting
- * the cvar s_language to a valid language-string like
- * e.g. de_DE, en or en_US
- *
- * This function is only build in and called when
- * defining HAVE_GETTEXT
- * Under Linux see Makefile options for this
- *
- * @sa Qcommon_LocaleInit
- */
+  * @brief Gettext init function
+  *
+  * Initialize the locale settings for gettext
+  * po files are searched in ./base/i18n
+  * You can override the language-settings in setting
+  * the cvar s_language to a valid language-string like
+  * e.g. de_DE, en or en_US
+  *
+  * This function is only build in and called when
+  * defining HAVE_GETTEXT
+  * Under Linux see Makefile options for this
+  *
+  * @sa Qcommon_LocaleInit
+  */
 void Qcommon_LocaleInit(void)
 {
 	char *locale;
@@ -1345,18 +1439,18 @@ void Qcommon_LocaleInit(void)
 #endif
 
 /**
- * @brief Init function
- *
- * @param[in] argc int
- * @param[in] argv char**
- * @sa Com_ParseScripts
- * @sa Sys_Init
- * @sa CL_Init
- * @sa Qcommon_LocaleInit
- *
- * To compile language support into UFO:AI you need to activate the preprocessor variable
- * HAVE_GETTEXT (for linux have a look at the makefile)
- */
+  * @brief Init function
+  *
+  * @param[in] argc int
+  * @param[in] argv char**
+  * @sa Com_ParseScripts
+  * @sa Sys_Init
+  * @sa CL_Init
+  * @sa Qcommon_LocaleInit
+  *
+  * To compile language support into UFO:AI you need to activate the preprocessor variable
+  * HAVE_GETTEXT (for linux have a look at the makefile)
+  */
 void Qcommon_Init(int argc, char **argv)
 {
 	char *s;
@@ -1369,9 +1463,7 @@ void Qcommon_Init(int argc, char **argv)
 	if (setjmp(abortframe))
 		Sys_Error("Error during initialization");
 
-#ifdef MEMDEBUG
-	Z_InitMem();
-#endif /* MEMDEBUG */
+	z_chain.next = z_chain.prev = &z_chain;
 
 	/* prepare enough of the subsystems to handle
 	   cvar and command buffer management */
@@ -1402,7 +1494,7 @@ void Qcommon_Init(int argc, char **argv)
 	Cbuf_Execute();
 
 	/* init commands and vars */
-/*	Cmd_AddCommand("z_stats", Z_MemStats); */
+	Cmd_AddCommand("z_stats", Z_Stats_f);
 	Cmd_AddCommand("error", Com_Error_f);
 
 	host_speeds = Cvar_Get("host_speeds", "0", 0);
@@ -1475,13 +1567,13 @@ void Qcommon_Init(int argc, char **argv)
 }
 
 /**
- * @brief This is the function that is called directly from main()
- * @sa main
- * @sa Qcommon_Init
- * @sa Qcommon_Shutdown
- * @sa SV_Frame
- * @sa CL_Frame
- */
+  * @brief This is the function that is called directly from main()
+  * @sa main
+  * @sa Qcommon_Init
+  * @sa Qcommon_Shutdown
+  * @sa SV_Frame
+  * @sa CL_Frame
+  */
 float Qcommon_Frame(int msec)
 {
 	char *s;
@@ -1565,8 +1657,8 @@ float Qcommon_Frame(int msec)
 }
 
 /**
- * @brief
- */
+  * @brief
+  */
 void Qcommon_Shutdown(void)
 {
 }

@@ -4,6 +4,7 @@
  */
 
 /*
+All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
 
 15/06/06, Eddy Cullen (ScreamingWithNoSound):
 	Reformatted to agreed style.
@@ -11,6 +12,7 @@
 	Updated copyright notice.
 
 Original file from Quake 2 v3.21: quake2-2.31/client/snd_mix.c
+Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -38,6 +40,9 @@ static int snd_scaletable[32][256];
 static int *snd_p, snd_linear_count, snd_vol;
 static short *snd_out;
 
+/**
+ * @brief
+ */
 void S_WriteLinearBlastStereo16(void)
 {
 	int i;
@@ -62,6 +67,9 @@ void S_WriteLinearBlastStereo16(void)
 	}
 }
 
+/**
+ * @brief
+ */
 void S_TransferStereo16(unsigned long *pbuf, int endtime)
 {
 	int lpos;
@@ -93,12 +101,9 @@ void S_TransferStereo16(unsigned long *pbuf, int endtime)
 	}
 }
 
-/*
-===================
-S_TransferPaintBuffer
-
-===================
-*/
+/**
+ * @brief
+ */
 void S_TransferPaintBuffer(int endtime)
 {
 	int out_idx;
@@ -171,21 +176,9 @@ CHANNEL MIXING
 */
 
 
-
-void S_InitScaletable(void)
-{
-	int i, j;
-	int scale;
-
-	s_volume->modified = qfalse;
-	for (i = 0; i < 32; i++) {
-		scale = i * 8 * 256 * s_volume->value;
-		for (j = 0; j < 256; j++)
-			snd_scaletable[i][j] = ((signed char) j) * scale;
-	}
-}
-
-
+/**
+ * @brief
+ */
 void S_PaintChannelFrom8(channel_t * ch, sfxcache_t * sc, int count, int offset)
 {
 	int data;
@@ -216,6 +209,9 @@ void S_PaintChannelFrom8(channel_t * ch, sfxcache_t * sc, int count, int offset)
 	ch->pos += count;
 }
 
+/**
+ * @brief
+ */
 void S_PaintChannelFrom16(channel_t * ch, sfxcache_t * sc, int count, int offset)
 {
 	int data;
@@ -241,6 +237,9 @@ void S_PaintChannelFrom16(channel_t * ch, sfxcache_t * sc, int count, int offset
 	ch->pos += count;
 }
 
+/**
+ * @brief
+ */
 void S_PaintChannels(int endtime)
 {
 	int i = 0;
@@ -299,7 +298,6 @@ void S_PaintChannels(int endtime)
 			}
 		}
 
-
 		/* paint in the channels. */
 		ch = channels;
 		for (i = 0; i < MAX_CHANNELS; i++, ch++) {
@@ -348,5 +346,21 @@ void S_PaintChannels(int endtime)
 		/* transfer out according to DMA format */
 		S_TransferPaintBuffer(end);
 		paintedtime = end;
+	}
+}
+
+/**
+ * @brief
+ */
+void S_InitScaletable(void)
+{
+	int i, j;
+	int scale;
+
+	s_volume->modified = qfalse;
+	for (i = 0; i < 32; i++) {
+		scale = i * 8 * 256 * s_volume->value;
+		for (j = 0; j < 256; j++)
+			snd_scaletable[i][j] = ((signed char) j) * scale;
 	}
 }

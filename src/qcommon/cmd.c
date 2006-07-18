@@ -23,8 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#define MEM_SUBSYS MEM_SCRIPT
-#include "common/mem.h"
 #include "qcommon.h"
 
 void Cmd_ForwardToServer(void);
@@ -159,7 +157,7 @@ void Cbuf_InsertText(char *text)
 	/* copy off any commands still remaining in the exec buffer */
 	templen = cmd_text.cursize;
 	if (templen) {
-		UFO_Malloc(temp, templen);
+		temp = Z_Malloc(templen);
 		memcpy(temp, cmd_text.data, templen);
 		SZ_Clear(&cmd_text);
 	} else
@@ -171,7 +169,7 @@ void Cbuf_InsertText(char *text)
 	/* add the copied off data */
 	if (templen) {
 		SZ_Write(&cmd_text, temp, templen);
-		UFO_Free(temp);
+		Z_Free(temp);
 	}
 }
 
@@ -345,7 +343,7 @@ qboolean Cbuf_AddLateCommands(void)
 	if (!s)
 		return qfalse;
 
-	UFO_Malloc(text, s + 1);
+	text = Z_Malloc(s + 1);
 	text[0] = 0;
 	for (i = 1; i < argc; i++) {
 		Q_strcat(text, COM_Argv(i), s);
@@ -354,7 +352,7 @@ qboolean Cbuf_AddLateCommands(void)
 	}
 
 	/* pull out the commands */
-	UFO_Malloc(build, s + 1);
+	build = Z_Malloc(s + 1);
 	build[0] = 0;
 
 	for (i = 0; i < s - 1; i++) {
@@ -377,8 +375,8 @@ qboolean Cbuf_AddLateCommands(void)
 	if (ret)
 		Cbuf_AddText(build);
 
-	UFO_Free(text);
-	UFO_Free(build);
+	Z_Free(text);
+	Z_Free(build);
 
 	return ret;
 }
@@ -414,13 +412,13 @@ void Cmd_Exec_f(void)
 	Com_Printf("execing %s\n", Cmd_Argv(1));
 
 	/* the file doesn't have a trailing 0, so we need to copy it off */
-	UFO_Malloc(f2, len + 1);
+	f2 = Z_Malloc(len + 1);
 	memcpy(f2, f, len);
 	f2[len] = 0;
 
 	Cbuf_InsertText(f2);
 
-	UFO_Free(f2);
+	Z_Free(f2);
 	FS_FreeFile(f);
 }
 
@@ -471,13 +469,13 @@ void Cmd_Alias_f(void)
 	/* if the alias already exists, reuse it */
 	for (a = cmd_alias; a; a = a->next) {
 		if (!Q_strncmp(s, a->name, MAX_ALIAS_NAME)) {
-			UFO_Free(a->value);
+			Z_Free(a->value);
 			break;
 		}
 	}
 
 	if (!a) {
-		UFO_Malloc(a, sizeof(cmdalias_t));
+		a = Z_Malloc(sizeof(cmdalias_t));
 		a->next = cmd_alias;
 		cmd_alias = a;
 	}
@@ -633,7 +631,7 @@ void Cmd_TokenizeString(char *text, qboolean macroExpand)
 
 	/* clear the args from the last string */
 	for (i = 0; i < cmd_argc; i++)
-		UFO_Free(cmd_argv[i]);
+		Z_Free(cmd_argv[i]);
 
 	cmd_argc = 0;
 	cmd_args[0] = 0;
@@ -684,7 +682,7 @@ void Cmd_TokenizeString(char *text, qboolean macroExpand)
 				com_token++;
 				com_token = Cvar_VariableString(com_token);
 			}
-			UFO_Malloc(cmd_argv[cmd_argc], strlen(com_token) + 1);
+			cmd_argv[cmd_argc] = Z_Malloc(strlen(com_token) + 1);
 			Q_strncpyz(cmd_argv[cmd_argc], com_token, strlen(com_token) + 1);
 			cmd_argc++;
 		}
@@ -716,7 +714,7 @@ void Cmd_AddCommand(char *cmd_name, xcommand_t function)
 		}
 	}
 
-	UFO_Malloc(cmd, sizeof(cmd_function_t));
+	cmd = Z_Malloc(sizeof(cmd_function_t));
 	cmd->name = cmd_name;
 	cmd->function = function;
 	cmd->next = cmd_functions;
@@ -741,7 +739,7 @@ void Cmd_RemoveCommand(char *cmd_name)
 		}
 		if (!Q_strcmp(cmd_name, cmd->name)) {
 			*back = cmd->next;
-			UFO_Free(cmd);
+			Z_Free(cmd);
 			return;
 		}
 		back = &cmd->next;

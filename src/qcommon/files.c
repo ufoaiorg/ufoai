@@ -18,9 +18,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#define MEM_SUBSYS MEM_SYS
-#include "common/mem.h"
 #include "qcommon.h"
+
 
 /* in memory */
 
@@ -428,7 +427,7 @@ int FS_LoadFile(char *path, void **buffer)
 		return len;
 	}
 
-	UFO_Malloc(buf, len + 1);
+	buf = Z_Malloc(len + 1);
 	*buffer = buf;
 
 	FS_Read(buf, len, h);
@@ -446,7 +445,7 @@ FS_FreeFile
 */
 void FS_FreeFile(void *buffer)
 {
-	UFO_Free(buffer);
+	Z_Free(buffer);
 }
 
 /*
@@ -504,7 +503,7 @@ pack_t *FS_LoadPackFile(char *packfile)
 			fseek(packhandle, (info[i].filelen + info[i].filepos), SEEK_SET);
 		}
 		/*-- Allocate space for array of packfile structures (filename, offset, length) */
-		UFO_Malloc(newfiles, i * sizeof(packfile_t));
+		newfiles = Z_Malloc(i * sizeof(packfile_t));
 
 		/*-- The save the number of items collected from the zip file. */
 		numpackfiles = i;
@@ -519,7 +518,7 @@ pack_t *FS_LoadPackFile(char *packfile)
 		Com_Printf("Pack file type %s unrecognized\n", packfile + len - 4);
 		return NULL;
 	}
-	UFO_Malloc(pack, sizeof(pack_t));
+	pack = Z_Malloc(sizeof(pack_t));
 	Q_strncpyz(pack->filename, packfile, MAX_QPATH);
 	pack->handle = packhandle;
 	pack->numfiles = numpackfiles;
@@ -548,7 +547,7 @@ void FS_AddGameDirectory(char *dir)
 	Com_Printf("Adding game dir: %s\n", fs_gamedir);
 
 	/* add the directory to the search path */
-	UFO_Malloc(search, sizeof(searchpath_t));
+	search = Z_Malloc(sizeof(searchpath_t));
 	Q_strncpyz(search->filename, dir, sizeof(search->filename) - 1);
 	search->filename[sizeof(search->filename) - 1] = 0;
 	search->next = fs_searchpaths;
@@ -560,7 +559,7 @@ void FS_AddGameDirectory(char *dir)
 		pak = FS_LoadPackFile(pakfile);
 		if (!pak)
 			continue;
-		UFO_Malloc(search, sizeof(searchpath_t));
+		search = Z_Malloc(sizeof(searchpath_t));
 		search->pack = pak;
 		search->next = fs_searchpaths;
 		fs_searchpaths = search;
@@ -571,7 +570,7 @@ void FS_AddGameDirectory(char *dir)
 		pak = FS_LoadPackFile(pakfile);
 		if (!pak)
 			continue;
-		UFO_Malloc(search, sizeof(searchpath_t));
+		search = Z_Malloc(sizeof(searchpath_t));
 		search->pack = pak;
 		search->next = fs_searchpaths;
 		fs_searchpaths = search;
@@ -606,7 +605,7 @@ void FS_AddGameDirectory(char *dir)
 					pak = FS_LoadPackFile(dirnames[i]);
 					if (!pak)
 						continue;
-					UFO_Malloc(search, sizeof(searchpath_t));
+					search = Z_Malloc(sizeof(searchpath_t));
 					search->pack = pak;
 					search->next = fs_searchpaths;
 					fs_searchpaths = search;
@@ -702,11 +701,11 @@ void FS_SetGamedir(char *dir)
 	while (fs_searchpaths != fs_base_searchpaths) {
 		if (fs_searchpaths->pack) {
 			fclose(fs_searchpaths->pack->handle);
-			UFO_Free(fs_searchpaths->pack->files);
-			UFO_Free(fs_searchpaths->pack);
+			Z_Free(fs_searchpaths->pack->files);
+			Z_Free(fs_searchpaths->pack);
 		}
 		next = fs_searchpaths->next;
-		UFO_Free(fs_searchpaths);
+		Z_Free(fs_searchpaths);
 		fs_searchpaths = next;
 	}
 
@@ -747,11 +746,11 @@ void FS_Link_f(void)
 	prev = &fs_links;
 	for (l = fs_links; l; l = l->next) {
 		if (!Q_strcmp(l->from, Cmd_Argv(1))) {
-			UFO_Free(l->to);
+			Z_Free(l->to);
 			if (!strlen(Cmd_Argv(2))) {	/* delete it */
 				*prev = l->next;
-				UFO_Free(l->from);
-				UFO_Free(l);
+				Z_Free(l->from);
+				Z_Free(l);
 				return;
 			}
 			l->to = CopyString(Cmd_Argv(2));
@@ -761,7 +760,7 @@ void FS_Link_f(void)
 	}
 
 	/* create a new link */
-	UFO_Malloc(l, sizeof(*l));
+	l = Z_Malloc(sizeof(*l));
 	l->next = fs_links;
 	fs_links = l;
 	l->from = CopyString(Cmd_Argv(1));
@@ -975,7 +974,7 @@ void FS_BuildFileList(char *fileList)
 			else
 				fs_blocklist = block->next;
 
-			UFO_Free(block);
+			Z_Free(block);
 
 			if (tblock)
 				block = tblock->next;
@@ -989,7 +988,7 @@ void FS_BuildFileList(char *fileList)
 	}
 
 	/* allocate a new block and link it into the list */
-	UFO_Malloc(block, sizeof(listBlock_t));
+	block = Z_Malloc(sizeof(listBlock_t));
 	block->next = fs_blocklist;
 	fs_blocklist = block;
 
@@ -1037,7 +1036,7 @@ void FS_BuildFileList(char *fileList)
 						*fl = 0;
 
 						/* allocate a new block */
-						UFO_Malloc(tblock, sizeof(listBlock_t));
+						tblock = Z_Malloc(sizeof(listBlock_t));
 						tblock->next = block->next;
 						block->next = tblock;
 

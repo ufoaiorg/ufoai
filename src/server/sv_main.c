@@ -31,8 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#define MEM_SUBSYS MEM_SERVER
-#include "common/mem.h"
 #include "server.h"
 
 netadr_t master_adr[MAX_MASTERS];	/* address of group servers */
@@ -970,7 +968,7 @@ void SV_Shutdown(char *finalmsg, qboolean reconnect)
 
 	/* free server static data */
 	if (svs.clients)
-		UFO_Free(svs.clients);
+		Z_Free(svs.clients);
 	if (svs.demofile)
 		fclose(svs.demofile);
 	memset(&svs, 0, sizeof(svs));

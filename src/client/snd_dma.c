@@ -4,6 +4,7 @@
  */
 
 /*
+All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
 
 15/06/06, Eddy Cullen (ScreamingWithNoSound):
 	Reformatted to agreed style.
@@ -11,6 +12,7 @@
 	Updated copyright notice.
 
 Original file from Quake 2 v3.21: quake2-2.31/client/snd_dma.c
+Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -29,8 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#define MEM_SUBSYS MEM_SOUND
-#include "common/mem.h"
 #include "client.h"
 #include "snd_loc.h"
 
@@ -328,7 +328,7 @@ sfx_t *S_AliasName(char *aliasname, char *truename)
 
 	int i;
 
-	UFO_Malloc(s, MAX_QPATH);
+	s = Z_Malloc(MAX_QPATH);
 	Q_strncpyz(s, truename, MAX_QPATH);
 
 	/* find a free sfx */

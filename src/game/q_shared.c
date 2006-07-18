@@ -1644,7 +1644,7 @@ int Q_putenv(const char *str)
  * @param
  * @sa
  */
-char *Q_getcwd(char *dest, int size)
+char *Q_getcwd(char *dest, size_t size)
 {
 #ifdef _MSC_VER
 	return _getcwd(dest, size);
@@ -1668,7 +1668,7 @@ int Q_strcmp(char *s1, char *s2)
  * @param
  * @sa
  */
-int Q_strncmp(char *s1, char *s2, int n)
+int Q_strncmp(char *s1, char *s2, size_t n)
 {
 	return strncmp(s1, s2, n);
 }
@@ -1705,7 +1705,7 @@ int Q_stricmp(char *s1, char *s2)
  * @param
  * @sa
  */
-int Q_strncasecmp(char *s1, char *s2, int n)
+int Q_strncasecmp(char *s1, char *s2, size_t n)
 {
 	int c1, c2;
 
@@ -1732,32 +1732,30 @@ int Q_strncasecmp(char *s1, char *s2, int n)
 
 /**
  * @brief Safe strncpy that ensures a trailing zero
- * @param[in] dest Destination pointer
- * @param[in] src Source pointer
- * @param[in] destsize Size of destination buffers.
- * @return pointer to destination string.
+ * @param dest Destination pointer
+ * @param src Source pointer
+ * @param destsize Size of destination buffer (this should be a sizeof size due to portability)
  */
 #ifdef DEBUG
-char *Q_strncpyzDebug(char *dest, const char *src, size_t destsize, char *file, int line)
+void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, char *file, int line)
 #else
-char *Q_strncpyz(char *dest, const char *src, size_t destsize)
+void Q_strncpyz(char *dest, const char *src, size_t destsize)
 #endif
 {
 #ifdef DEBUG
 	if (!dest) {
 		Sys_Error("Q_strncpyz: NULL dest (%s, %i)", file, line);
-		return NULL;	/* never reached. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 	}
 	if (!src) {
 		Sys_Error("Q_strncpyz: NULL src (%s, %i)", file, line);
-		return NULL;	/* never reached. need for code analyst. */
+		return;	/* never reached. need for code analyst. */
 	}
 	if (destsize < 1)
 		Sys_Error("Q_strncpyz: destsize < 1 (%s, %i)", file, line);
 #endif
 	strncpy(dest, src, destsize - 1);
 	dest[destsize - 1] = 0;
-	return dest;
 }
 
 /**
@@ -1766,32 +1764,15 @@ char *Q_strncpyz(char *dest, const char *src, size_t destsize)
  * @param[in] src the source string.
  * @param[in] destsize the total size of the destination buffer.
  * @return pointer destination string.
+ * never goes past bounds or leaves without a terminating 0
  */
-char *Q_strcat(char *dest, const char *src, size_t destsize)
+void Q_strcat(char *dest, const char *src, size_t destsize)
 {
 	size_t dest_length;
-#if 0
 	dest_length = strlen(dest);
 	if (dest_length >= destsize)
 		Sys_Error("Q_strcat: already overflowed");
 	Q_strncpyz(dest + dest_length, src, destsize - dest_length);
-#else
-	size_t src_length;
-	size_t copy_length;
-
-	dest_length = strlen(dest);
-	src_length = strlen(src);
-	/* The +1 / -1 is to make sure there is room for the NULL character. */
-	if (dest_length + src_length + 1 > destsize) {
-		copy_length = destsize - dest_length - 1;
-	} else {
-		copy_length = src_length;
-	}
-
-	memcpy(dest + dest_length, src, copy_length);
-	dest[dest_length + copy_length] = '\0';
-#endif
-	return dest;
 }
 
 /**

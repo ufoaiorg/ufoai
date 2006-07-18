@@ -43,9 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define WriteShort(x) WriteShort( x, __FILE__, __LINE__ )
 #endif
 
-#include "../common/debug.h"
-#include "../common/ufotypes.h"
-
 #ifdef _MSC_VER
 /* unknown pragmas are SUPPOSED to be ignored, but.... */
 #pragma warning(disable : 4244)	/* MIPS */
@@ -349,22 +346,22 @@ void Com_PageInMemory(byte * buffer, int size);
 /*============================================= */
 
 /* portable case insensitive compare */
-int Q_strncmp(char *s1, char *s2, int n);
+int Q_strncmp(char *s1, char *s2, size_t n);
 int Q_strcmp(char *s1, char *s2);
 int Q_stricmp(char *s1, char *s2);
 int Q_strcasecmp(char *s1, char *s2);
-int Q_strncasecmp(char *s1, char *s2, int n);
+int Q_strncasecmp(char *s1, char *s2, size_t n);
 
 #ifndef DEBUG
-char *Q_strncpyz(char *dest, const char *src, size_t destsize);
+void Q_strncpyz(char *dest, const char *src, size_t destsize);
 #else
-char *Q_strncpyzDebug(char *dest, const char *src, size_t destsize, char *file, int line);
+void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, char *file, int line);
 #endif
-char *Q_strcat(char *dest, const char *src, size_t destsize);
+void Q_strcat(char *dest, const char *src, size_t size );
 char *Q_strlwr(char *str);
 char *Q_strdup(const char *str);
 int Q_putenv(const char *str);
-char *Q_getcwd(char *dest, int size);
+char *Q_getcwd(char *dest, size_t size);
 
 /*============================================= */
 

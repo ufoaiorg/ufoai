@@ -29,19 +29,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "qcommon.h"
-#define MEM_SUBSYS MEM_SCRIPT
-#include "common/mem.h"
-
 
 /**
-  * @brief This is set each time a CVAR_USERINFO variable is changed
-  * so that the client knows to send it to the server
-  */
+ * @brief This is set each time a CVAR_USERINFO variable is changed
+ * so that the client knows to send it to the server
+ */
 qboolean userinfo_modified;
 
 /**
-  * @brief Cvar list
-  */
+ * @brief Cvar list
+ */
 static cvar_t *cvar_vars;
 
 /*
@@ -61,12 +58,12 @@ static qboolean Cvar_InfoValidate(char *s)
 }
 
 /**
-  * @brief Searches for a cvar given by parameter
-  * @param var_name The cvar name as string
-  * @return Pointer to cvar_t struct
-  * @sa Cvar_VariableString
-  * @sa Cvar_SetValue
-  */
+ * @brief Searches for a cvar given by parameter
+ * @param var_name The cvar name as string
+ * @return Pointer to cvar_t struct
+ * @sa Cvar_VariableString
+ * @sa Cvar_SetValue
+ */
 static cvar_t *Cvar_FindVar(char *var_name)
 {
 	cvar_t *var;
@@ -79,11 +76,11 @@ static cvar_t *Cvar_FindVar(char *var_name)
 }
 
 /**
-  * @brief Returns the float value of a cvar
-  * @sa Cvar_VariableString
-  * @sa Cvar_FindVar
-  * @return 0 if not defined
-  */
+ * @brief Returns the float value of a cvar
+ * @sa Cvar_VariableString
+ * @sa Cvar_FindVar
+ * @return 0 if not defined
+ */
 float Cvar_VariableValue(char *var_name)
 {
 	cvar_t *var;
@@ -96,13 +93,13 @@ float Cvar_VariableValue(char *var_name)
 
 
 /**
-  * @brief Returns the value of cvar as string
-  * @sa Cvar_VariableValue
-  * @sa Cvar_FindVar
-  *
-  * Even if the cvar does not exist this function will not return a null pointer
-  * but an empty string
-  */
+ * @brief Returns the value of cvar as string
+ * @sa Cvar_VariableValue
+ * @sa Cvar_FindVar
+ *
+ * Even if the cvar does not exist this function will not return a null pointer
+ * but an empty string
+ */
 char *Cvar_VariableString(char *var_name)
 {
 	cvar_t *var;
@@ -115,11 +112,11 @@ char *Cvar_VariableString(char *var_name)
 
 
 /**
-  * @brief Unix like tab completion for console variables
-  * @param partial The beginning of the variable we try to complete
-  * @sa Cmd_CompleteCommand
-  * @sa Key_CompleteCommand
-  */
+ * @brief Unix like tab completion for console variables
+ * @param partial The beginning of the variable we try to complete
+ * @sa Cmd_CompleteCommand
+ * @sa Key_CompleteCommand
+ */
 char *Cvar_CompleteVariable(char *partial)
 {
 	cvar_t *cvar;
@@ -148,11 +145,11 @@ char *Cvar_CompleteVariable(char *partial)
 }
 
 /**
-  * @brief Init or return a cvar
-  *
-  * If the variable already exists, the value will not be set
-  * The flags will be or'ed in if the variable exists.
-  */
+ * @brief Init or return a cvar
+ *
+ * If the variable already exists, the value will not be set
+ * The flags will be or'ed in if the variable exists.
+ */
 cvar_t *Cvar_Get(char *var_name, char *var_value, int flags)
 {
 	cvar_t *var;
@@ -178,7 +175,7 @@ cvar_t *Cvar_Get(char *var_name, char *var_value, int flags)
 			return NULL;
 		}
 
-	UFO_Malloc(var, sizeof(*var));
+	var = Z_Malloc(sizeof(*var));
 	var->name = CopyString(var_name);
 	var->string = CopyString(var_value);
 	var->modified = qtrue;
@@ -194,12 +191,12 @@ cvar_t *Cvar_Get(char *var_name, char *var_value, int flags)
 }
 
 /**
-  * @brief Sets a cvar values
-  * Handles writeprotection and latched cvars as expected
-  * @param var_name Which cvar
-  * @param value Set the cvar to the value specified by 'value'
-  * @param force Force the update of the cvar
-  */
+ * @brief Sets a cvar values
+ * Handles writeprotection and latched cvars as expected
+ * @param var_name Which cvar
+ * @param value Set the cvar to the value specified by 'value'
+ * @param force Force the update of the cvar
+ */
 cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
 {
 	cvar_t *var;
@@ -225,7 +222,7 @@ cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
 			if (var->latched_string) {
 				if (Q_strcmp(value, var->latched_string) == 0)
 					return var;
-				UFO_Free(var->latched_string);
+				Z_Free(var->latched_string);
 			} else {
 				if (Q_strcmp(value, var->string) == 0)
 					return var;
@@ -246,7 +243,7 @@ cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
 		}
 	} else {
 		if (var->latched_string) {
-			UFO_Free(var->latched_string);
+			Z_Free(var->latched_string);
 			var->latched_string = NULL;
 		}
 	}
@@ -259,7 +256,7 @@ cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
 	if (var->flags & CVAR_USERINFO)
 		userinfo_modified = qtrue;	/* transmit at next oportunity */
 
-	UFO_Free(var->string);		/* free the old value string */
+	Z_Free(var->string);		/* free the old value string */
 
 	var->string = CopyString(value);
 	var->value = atof(var->string);
@@ -268,38 +265,38 @@ cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
 }
 
 /**
-  * @brief Will set the variable even if NOSET or LATCH
-  */
+ * @brief Will set the variable even if NOSET or LATCH
+ */
 cvar_t *Cvar_ForceSet(char *var_name, char *value)
 {
 	return Cvar_Set2(var_name, value, qtrue);
 }
 
 /**
-  * @brief Sets a cvar value
-  * @param var_name Which cvar should be set
-  * @param value Which value should the cvar get
-  * @note Look after the CVAR_LATCH stuff and check for write protected cvars
-  */
+ * @brief Sets a cvar value
+ * @param var_name Which cvar should be set
+ * @param value Which value should the cvar get
+ * @note Look after the CVAR_LATCH stuff and check for write protected cvars
+ */
 cvar_t *Cvar_Set(char *var_name, char *value)
 {
 	return Cvar_Set2(var_name, value, qfalse);
 }
 
 /**
-  * @brief Sets a cvar from console with the given flags
-  * @note flags are:
-  * CVAR_ARCHIVE These cvars will be saved.
-  * CVAR_USERINFO Added to userinfo  when changed.
-  * CVAR_SERVERINFO Added to serverinfo when changed.
-  * CVAR_NOSET Don't allow change from console at all but can be set from the command line.
-  * CVAR_LATCH Save changes until server restart.
-  *
-  * @param var_name Which cvar
-  * @param value Which value for the cvar
-  * @param flags which flags
-  * @sa Cvar_Set_f
-  */
+ * @brief Sets a cvar from console with the given flags
+ * @note flags are:
+ * CVAR_ARCHIVE These cvars will be saved.
+ * CVAR_USERINFO Added to userinfo  when changed.
+ * CVAR_SERVERINFO Added to serverinfo when changed.
+ * CVAR_NOSET Don't allow change from console at all but can be set from the command line.
+ * CVAR_LATCH Save changes until server restart.
+ *
+ * @param var_name Which cvar
+ * @param value Which value for the cvar
+ * @param flags which flags
+ * @sa Cvar_Set_f
+ */
 cvar_t *Cvar_FullSet(char *var_name, char *value, int flags)
 {
 	cvar_t *var;
@@ -316,7 +313,7 @@ cvar_t *Cvar_FullSet(char *var_name, char *value, int flags)
 		userinfo_modified = qtrue;
 
 	/* free the old value string */
-	UFO_Free(var->string);
+	Z_Free(var->string);
 
 	var->string = CopyString(value);
 	var->value = atof(var->string);
@@ -326,8 +323,8 @@ cvar_t *Cvar_FullSet(char *var_name, char *value, int flags)
 }
 
 /**
-  * @brief Expands value to a string and calls Cvar_Set
-  */
+ * @brief Expands value to a string and calls Cvar_Set
+ */
 void Cvar_SetValue(char *var_name, float value)
 {
 	char val[32];
@@ -341,9 +338,9 @@ void Cvar_SetValue(char *var_name, float value)
 
 
 /**
-  * @brief Any variables with latched values will now be updated
-  * @note CVAR_LATCH cvars are not updated during a game (tactical mission)
-  */
+ * @brief Any variables with latched values will now be updated
+ * @note CVAR_LATCH cvars are not updated during a game (tactical mission)
+ */
 void Cvar_GetLatchedVars(void)
 {
 	cvar_t *var;
@@ -351,7 +348,7 @@ void Cvar_GetLatchedVars(void)
 	for (var = cvar_vars; var; var = var->next) {
 		if (!var->latched_string)
 			continue;
-		UFO_Free(var->string);
+		Z_Free(var->string);
 		var->string = var->latched_string;
 		var->latched_string = NULL;
 		var->value = atof(var->string);
@@ -363,17 +360,17 @@ void Cvar_GetLatchedVars(void)
 }
 
 /**
-  * @brief Handles variable inspection and changing from the console
-  * @return qboolean True if cvar exists - false otherwise
-  *
-  * You can print the current value or set a new value with this function
-  * To set a new value for a cvar from within the console just type the cvar name
-  * followed by the value. To print the current cvar's value just type the cvar name
-  * and hit enter
-  * @sa Cvar_Set_f
-  * @sa Cvar_SetValue
-  * @sa Cvar_Set
-  */
+ * @brief Handles variable inspection and changing from the console
+ * @return qboolean True if cvar exists - false otherwise
+ *
+ * You can print the current value or set a new value with this function
+ * To set a new value for a cvar from within the console just type the cvar name
+ * followed by the value. To print the current cvar's value just type the cvar name
+ * and hit enter
+ * @sa Cvar_Set_f
+ * @sa Cvar_SetValue
+ * @sa Cvar_Set
+ */
 qboolean Cvar_Command(void)
 {
 	cvar_t *v;
@@ -395,8 +392,8 @@ qboolean Cvar_Command(void)
 
 
 /**
-  * @brief Allows setting and defining of arbitrary cvars from console
-  */
+ * @brief Allows setting and defining of arbitrary cvars from console
+ */
 void Cvar_Set_f(void)
 {
 	int c;
@@ -424,9 +421,9 @@ void Cvar_Set_f(void)
 
 
 /**
-  * @brief Allows copying variables
-  * Available via console command copy
-  */
+ * @brief Allows copying variables
+ * Available via console command copy
+ */
 void Cvar_Copy_f(void)
 {
 	int c;
@@ -442,9 +439,9 @@ void Cvar_Copy_f(void)
 
 
 /**
-  * @brief Stores the archive cvars
-  * @param path Config file where we will save all cvars with the archive flag set
-  */
+ * @brief Stores the archive cvars
+ * @param path Config file where we will save all cvars with the archive flag set
+ */
 void Cvar_WriteVariables(char *path)
 {
 	cvar_t *var;
@@ -468,8 +465,8 @@ void Cvar_WriteVariables(char *path)
 }
 
 /**
-  * @brief List all cvars via console command 'cvarlist'
-  */
+ * @brief List all cvars via console command 'cvarlist'
+ */
 void Cvar_List_f(void)
 {
 	cvar_t *var;
@@ -517,9 +514,9 @@ void Cvar_List_f(void)
 }
 
 /**
-  * @brief Return a string with all cvars with bitflag given by parameter set
-  * @param bit The bitflag we search the global cvar array for
-  */
+ * @brief Return a string with all cvars with bitflag given by parameter set
+ * @param bit The bitflag we search the global cvar array for
+ */
 char *Cvar_BitInfo(int bit)
 {
 	static char info[MAX_INFO_STRING];
@@ -534,24 +531,24 @@ char *Cvar_BitInfo(int bit)
 }
 
 /**
-  * @brief Returns an info string containing all the CVAR_USERINFO cvars
-  */
+ * @brief Returns an info string containing all the CVAR_USERINFO cvars
+ */
 char *Cvar_Userinfo(void)
 {
 	return Cvar_BitInfo(CVAR_USERINFO);
 }
 
 /**
-  * @brief Returns an info string containing all the CVAR_SERVERINFO cvars
-  */
+ * @brief Returns an info string containing all the CVAR_SERVERINFO cvars
+ */
 char *Cvar_Serverinfo(void)
 {
 	return Cvar_BitInfo(CVAR_SERVERINFO);
 }
 
 /**
-  * @brief Reads in all archived cvars
-  */
+ * @brief Reads in all archived cvars
+ */
 void Cvar_Init(void)
 {
 	Cmd_AddCommand("set", Cvar_Set_f);
