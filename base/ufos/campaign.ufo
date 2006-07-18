@@ -779,9 +779,9 @@ stage intro
 		seq	intro
 		delay		"0 1 0"
 		frame		"0 3 0"
-		missions	"vil_grenchen"
+		missions	"farm"
 		number		1
-		quota		0
+		quota		1
 	}
 	set terror_only
 	{
@@ -789,8 +789,8 @@ stage intro
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
-		missions	"transport mine_crash construction farm office or_asyut frozen_landingnature frozen_alienlandingindustrial africa_excavation africa bunker mine mart or_tabelbala italy japan oriental vil_lille vil_albany tropic_river tropic_drug"
-		quota		4
+		missions	"africa_excavation bunker mine mart italy japan oriental"
+		quota		6
 		nextstage	ufos_are_coming
 	}
 	set stop
@@ -813,8 +813,8 @@ stage ufos_are_coming
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
-		missions	"transport mine_crash construction farm office or_asyut frozen_landingnature frozen_alienlandingindustrial"
-		quota		7
+		missions	"transport mine_crash construction farm office"
+		quota		4
 		nextstage	invasion
 	}
 	set stop
@@ -836,8 +836,8 @@ stage invasion
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
-		missions	"terrain subway baseattack office mart lake mine"
-		quota		7
+		missions	"africa terrain subway baseattack lake"
+		quota		4
 		nextstage	alienbase
 	}
 	set stop
