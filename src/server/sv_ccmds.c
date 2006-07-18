@@ -23,7 +23,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -282,7 +282,7 @@ void SV_ConSay_f(void)
 		p[strlen(p) - 1] = 0;
 	}
 
-	Q_strcat(text, 1024, p);
+	Q_strcat(text, p, sizeof(text));
 
 	for (j = 0, client = svs.clients; j < sv_maxclients->value; j++, client++) {
 		if (client->state != cs_spawned)

@@ -1746,11 +1746,11 @@ char *Q_strncpyz(char *dest, const char *src, size_t destsize)
 #ifdef DEBUG
 	if (!dest) {
 		Sys_Error("Q_strncpyz: NULL dest (%s, %i)", file, line);
-		return;	/* never reached. need for code analyst. */
+		return NULL;	/* never reached. need for code analyst. */
 	}
 	if (!src) {
 		Sys_Error("Q_strncpyz: NULL src (%s, %i)", file, line);
-		return;	/* never reached. need for code analyst. */
+		return NULL;	/* never reached. need for code analyst. */
 	}
 	if (destsize < 1)
 		Sys_Error("Q_strncpyz: destsize < 1 (%s, %i)", file, line);
@@ -1761,7 +1761,7 @@ char *Q_strncpyz(char *dest, const char *src, size_t destsize)
 }
 
 /**
- * @brief Safely (without overflowing the destination buffer) concatenates two strings. 
+ * @brief Safely (without overflowing the destination buffer) concatenates two strings.
  * @param[in] dest the destination string.
  * @param[in] src the source string.
  * @param[in] destsize the total size of the destination buffer.
@@ -1781,7 +1781,7 @@ char *Q_strcat(char *dest, const char *src, size_t destsize)
 	} else {
 		copy_length = src_length;
 	}
-	
+
 	memcpy(dest + dest_length, src, copy_length);
 	dest[dest_length + copy_length] = '\0';
 	return dest;
@@ -1969,7 +1969,7 @@ void Info_SetValueForKey(char *s, const char *key, const char *value)
 
 	Com_sprintf(newi, sizeof(newi), "\\%s\\%s", key, value);
 
-	Q_strcat(newi, MAX_INFO_STRING, s);
+	Q_strcat(newi, s, sizeof(newi));
 	Q_strncpyz(s, newi, MAX_INFO_STRING);
 }
 

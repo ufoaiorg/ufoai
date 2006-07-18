@@ -19,7 +19,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -1254,7 +1254,7 @@ void S_Play(void)
 	while (i < Cmd_Argc()) {
 		if (!strrchr(Cmd_Argv(i), '.')) {
 			Q_strncpyz(name, Cmd_Argv(i), 256);
-			Q_strcat(name, 256, ".wav");
+			Q_strcat(name, ".wav", sizeof(name));
 		} else
 			Q_strncpyz(name, Cmd_Argv(i), 256);
 		sfx = S_RegisterSound(name);

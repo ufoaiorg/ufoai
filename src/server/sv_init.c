@@ -689,8 +689,8 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 
 	/* generate the strings */
 	for (i = 0, pl = mPlaced; i < numPlaced; i++, pl++) {
-		Q_strcat(asmMap, MAX_TOKEN_CHARS * MAX_TILESTRINGS, va(" %s", pl->tile->name));
-		Q_strcat(asmPos, MAX_TOKEN_CHARS * MAX_TILESTRINGS, va(" %i %i", (pl->x - mAsm->w / 2) * 8, (pl->y - mAsm->h / 2) * 8));
+		Q_strcat(asmMap, va(" %s", pl->tile->name), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		Q_strcat(asmPos, va(" %i %i", (pl->x - mAsm->w / 2) * 8, (pl->y - mAsm->h / 2) * 8), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 	}
 
 	Com_DPrintf("tiles: %s\n", *map);

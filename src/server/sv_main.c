@@ -120,7 +120,7 @@ char *SV_StatusString(void)
 	int playerLength;
 
 	Q_strncpyz(status, Cvar_Serverinfo(), MAX_MSGLEN - 16);
-	Q_strcat(status, MAX_MSGLEN - 16, "\n");
+	Q_strcat(status, "\n", sizeof(status));
 	statusLength = strlen(status);
 
 	for (i = 0; i < sv_maxclients->value; i++) {
@@ -130,7 +130,7 @@ char *SV_StatusString(void)
 			playerLength = strlen(player);
 			if (statusLength + playerLength >= sizeof(status))
 				break;			/* can't hold any more */
-			Q_strcat(status, MAX_MSGLEN - 16, player);
+			Q_strcat(status, player, sizeof(status));
 			statusLength += playerLength;
 		}
 	}
@@ -440,8 +440,8 @@ void SVC_RemoteCommand(void)
 		remaining[0] = 0;
 
 		for (i = 2; i < Cmd_Argc(); i++) {
-			Q_strcat(remaining, sizeof(remaining), Cmd_Argv(i));
-			Q_strcat(remaining, sizeof(remaining), " ");
+			Q_strcat(remaining, Cmd_Argv(i), sizeof(remaining));
+			Q_strcat(remaining, " ", sizeof(remaining));
 		}
 
 		Cmd_ExecuteString(remaining);

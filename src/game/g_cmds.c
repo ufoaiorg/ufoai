@@ -59,10 +59,10 @@ static void Cmd_Players_f(player_t * player)
 
 		/* can't print all of them in one packet */
 		if (strlen(small) + strlen(large) > sizeof(large) - 100) {
-			Q_strcat(large, 1280, "...\n");
+			Q_strcat(large, "...\n", sizeof(large));
 			break;
 		}
-		Q_strcat(large, 1280, small);
+		Q_strcat(large, small, sizeof(large));
 	}
 
 	gi.cprintf(player, PRINT_HIGH, "%s\n%i players\n", large, count);
@@ -88,9 +88,9 @@ static void Cmd_Say_f(player_t * player, qboolean arg0, qboolean team)
 		Com_sprintf(text, sizeof(text), "%s (team): ", player->pers.netname);
 
 	if (arg0) {
-		Q_strcat(text, sizeof(text), gi.argv(0));
-		Q_strcat(text, sizeof(text), " ");
-		Q_strcat(text, sizeof(text), gi.args());
+		Q_strcat(text, gi.argv(0), sizeof(text));
+		Q_strcat(text, " ", sizeof(text));
+		Q_strcat(text, gi.args(), sizeof(text));
 	} else {
 		p = gi.args();
 
@@ -98,14 +98,14 @@ static void Cmd_Say_f(player_t * player, qboolean arg0, qboolean team)
 			p++;
 			p[strlen(p) - 1] = 0;
 		}
-		Q_strcat(text, sizeof(text), p);
+		Q_strcat(text, p, sizeof(text));
 	}
 
 	/* don't let text be too long for malicious reasons */
 	if (strlen(text) > 150)
 		text[150] = 0;
 
-	Q_strcat(text, sizeof(text), "\n");
+	Q_strcat(text, "\n", sizeof(text));
 
 	if (dedicated->value)
 		gi.cprintf(NULL, PRINT_CHAT, "%s", text);
@@ -134,11 +134,11 @@ static void Cmd_PlayerList_f(player_t * player)
 
 		Com_sprintf(st, sizeof(st), "Team %i %4d %s\n", e2->pers.team, e2->ping, e2->pers.netname);
 		if (strlen(text) + strlen(st) > sizeof(text) - 50) {
-			Q_strcat(text, sizeof(text), "And more...\n");
+			Q_strcat(text, "And more...\n", sizeof(text));
 			gi.cprintf(player, PRINT_HIGH, "%s", text);
 			return;
 		}
-		Q_strcat(text, sizeof(text), st);
+		Q_strcat(text, st, sizeof(text));
 	}
 	gi.cprintf(player, PRINT_HIGH, "%s", text);
 }

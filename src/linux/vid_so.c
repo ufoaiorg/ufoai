@@ -252,8 +252,8 @@ qboolean VID_LoadRefresh( char *name )
 			fn[strlen(fn) - 1] = 0;
 	}
 
-	Q_strcat(fn, MAX_OSPATH, "/");
-	Q_strcat(fn, MAX_OSPATH, name);
+	Q_strcat(fn, "/", sizeof(fn));
+	Q_strcat(fn, name, sizeof(fn));
 
 	if (stat(fn, &st) == -1) {
 		Com_Printf( "LoadLibrary(\"%s\") failed: %s\n", name, strerror(errno));
