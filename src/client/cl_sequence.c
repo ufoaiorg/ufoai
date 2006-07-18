@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#include "common/mem.h"
 
 #define MAX_DATA_LENGTH 2048
 
@@ -1158,8 +1159,8 @@ qboolean CL_OpenAVIForWriting(char *fileName)
 		afd.motionJpeg = qfalse;
 	}
 
-	afd.cBuffer = Z_Malloc(afd.width * afd.height * 4);
-	afd.eBuffer = Z_Malloc(afd.width * afd.height * 4);
+	UFO_Malloc(afd.cBuffer, afd.width * afd.height * 4);
+	UFO_Malloc(afd.eBuffer, afd.width * afd.height * 4);
 
 	afd.a.rate = dma.speed;
 	afd.a.format = 1;

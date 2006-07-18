@@ -28,7 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "common/debug.h"
+#include "common/ufotypes.h"
 #include "qcommon.h"
+#include "common/mem.h"
+
 
 /**
   * @brief This is set each time a CVAR_USERINFO variable is changed
@@ -175,7 +179,7 @@ cvar_t *Cvar_Get(char *var_name, char *var_value, int flags)
 			return NULL;
 		}
 
-	var = Z_Malloc(sizeof(*var));
+	UFO_Malloc(var, sizeof(*var));
 	var->name = CopyString(var_name);
 	var->string = CopyString(var_value);
 	var->modified = qtrue;
@@ -222,7 +226,7 @@ cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
 			if (var->latched_string) {
 				if (Q_strcmp(value, var->latched_string) == 0)
 					return var;
-				Z_Free(var->latched_string);
+				UFO_Free(var->latched_string);
 			} else {
 				if (Q_strcmp(value, var->string) == 0)
 					return var;
@@ -243,7 +247,7 @@ cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
 		}
 	} else {
 		if (var->latched_string) {
-			Z_Free(var->latched_string);
+			UFO_Free(var->latched_string);
 			var->latched_string = NULL;
 		}
 	}
@@ -256,7 +260,7 @@ cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
 	if (var->flags & CVAR_USERINFO)
 		userinfo_modified = qtrue;	/* transmit at next oportunity */
 
-	Z_Free(var->string);		/* free the old value string */
+	UFO_Free(var->string);		/* free the old value string */
 
 	var->string = CopyString(value);
 	var->value = atof(var->string);
@@ -313,7 +317,7 @@ cvar_t *Cvar_FullSet(char *var_name, char *value, int flags)
 		userinfo_modified = qtrue;
 
 	/* free the old value string */
-	Z_Free(var->string);
+	UFO_Free(var->string);
 
 	var->string = CopyString(value);
 	var->value = atof(var->string);
@@ -348,7 +352,7 @@ void Cvar_GetLatchedVars(void)
 	for (var = cvar_vars; var; var = var->next) {
 		if (!var->latched_string)
 			continue;
-		Z_Free(var->string);
+		UFO_Free(var->string);
 		var->string = var->latched_string;
 		var->latched_string = NULL;
 		var->value = atof(var->string);

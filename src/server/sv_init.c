@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "common/mem.h"
 #include "server.h"
 
 server_static_t svs;			/* persistant server info */
@@ -825,7 +826,7 @@ void SV_InitGame(void)
 /*	Cvar_FullSet ("maxclients", "8", CVAR_SERVERINFO | CVAR_LATCH); */
 
 	svs.spawncount = rand();
-	svs.clients = Z_Malloc(sizeof(client_t) * sv_maxclients->value);
+	UFO_Malloc(svs.clients, sizeof(client_t) * sv_maxclients->value);
 	svs.num_client_entities = sv_maxclients->value * UPDATE_BACKUP * 64;
 
 	/* init network stuff */

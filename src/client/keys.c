@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "common/mem.h"
 #include "client.h"
 
 #define		MAXCMDLINE	256
@@ -498,7 +499,7 @@ Key_SetBinding
 */
 void Key_SetBinding(int keynum, char *binding)
 {
-	char *new;
+	char *new_binding;
 	int l;
 
 	if (keynum == -1)
@@ -506,15 +507,15 @@ void Key_SetBinding(int keynum, char *binding)
 
 	/* free old bindings */
 	if (keybindings[keynum]) {
-		Z_Free(keybindings[keynum]);
+		UFO_Free(keybindings[keynum]);
 		keybindings[keynum] = NULL;
 	}
 
 	/* allocate memory for new binding */
 	l = strlen(binding);
-	new = Z_Malloc(l + 1);
-	Q_strncpyz(new, binding, l + 1);
-	keybindings[keynum] = new;
+	UFO_Malloc(new_binding, l + 1);
+	Q_strncpyz(new_binding, binding, l + 1);
+	keybindings[keynum] = new_binding;
 }
 
 /*

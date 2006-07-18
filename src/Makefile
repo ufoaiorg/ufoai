@@ -74,13 +74,14 @@ CLIENT_DIR=$(MOUNT_DIR)/client
 SERVER_DIR=$(MOUNT_DIR)/server
 REF_GL_DIR=$(MOUNT_DIR)/ref_gl
 COMMON_DIR=$(MOUNT_DIR)/qcommon
+COMMON2_DIR=$(MOUNT_DIR)/common
 LINUX_DIR=$(MOUNT_DIR)/linux
 MACOSX_DIR=$(MOUNT_DIR)/macosx
 UNIX_DIR=$(MOUNT_DIR)/unix
 GAME_DIR=$(MOUNT_DIR)/game
 NULL_DIR=$(MOUNT_DIR)/null
 
-BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
+BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89 -I$(shell pwd)
 # Put this in when it is fixed
 # -ansi -pedantic
 TOOLSCFLAGS=
@@ -579,6 +580,7 @@ $(BUILDDIR)/tools/ufo2map/common/trilib.o :    $(TOOLS_DIR)/ufo2map/common/trili
 #############################################################################
 
 QUAKE2_OBJS = \
+	$(BUILDDIR)/client/mem.o \
 	$(BUILDDIR)/client/cl_actor.o \
 	$(BUILDDIR)/client/cl_basemanagement.o \
 	$(BUILDDIR)/client/cl_research.o \
@@ -762,6 +764,9 @@ $(BUILDDIR)/client/files.o :       $(COMMON_DIR)/files.c
 $(BUILDDIR)/client/md4.o :         $(COMMON_DIR)/md4.c
 	$(DO_CC)
 
+$(BUILDDIR)/client/mem.o :         $(COMMON2_DIR)/mem.c
+	$(DO_CC)
+
 $(BUILDDIR)/client/net_chan.o :    $(COMMON_DIR)/net_chan.c
 	$(DO_CC)
 
@@ -852,6 +857,7 @@ $(BUILDDIR)/client/q_shosx.o :    $(MACOSX_DIR)/q_shosx.c
 
 Q2DED_OBJS = \
 	\
+	$(BUILDDIR)/ded/mem.o \
 	$(BUILDDIR)/ded/cmd.o \
 	$(BUILDDIR)/ded/cmodel.o \
 	$(BUILDDIR)/ded/common.o \
@@ -914,6 +920,9 @@ $(BUILDDIR)/ded/files.o :      $(COMMON_DIR)/files.c
 	$(DO_DED_CC)
 
 $(BUILDDIR)/ded/md4.o :	 $(COMMON_DIR)/md4.c
+	$(DO_DED_CC)
+
+$(BUILDDIR)/ded/mem.o : $(COMMON2_DIR)/mem.c
 	$(DO_DED_CC)
 
 $(BUILDDIR)/ded/net_chan.o :   $(COMMON_DIR)/net_chan.c

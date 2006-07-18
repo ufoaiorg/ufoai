@@ -353,11 +353,11 @@ int Q_strcasecmp(char *s1, char *s2);
 int Q_strncasecmp(char *s1, char *s2, int n);
 
 #ifndef DEBUG
-void Q_strncpyz(char *dest, const char *src, int destsize);
+char *Q_strncpyz(char *dest, const char *src, size_t destsize);
 #else
-void Q_strncpyzDebug(char *dest, const char *src, int destsize, char *file, int line);
+char *Q_strncpyzDebug(char *dest, const char *src, size_t destsize, char *file, int line);
 #endif
-void Q_strcat(char *dest, int size, const char *src);
+char *Q_strcat(char *dest, const char *src, size_t destsize);
 char *Q_strlwr(char *str);
 char *Q_strdup(const char *str);
 int Q_putenv(const char *str);

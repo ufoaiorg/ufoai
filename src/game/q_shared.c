@@ -1731,15 +1731,16 @@ int Q_strncasecmp(char *s1, char *s2, int n)
 #endif							/* sun */
 
 /**
-  * @brief Safe strncpy that ensures a trailing zero
-  * @param dest Destination pointer
-  * @param src Source pointer
-  * @param destsize Size of destination buffer (this should be a sizeof size due to portability)
-  */
+ * @brief Safe strncpy that ensures a trailing zero
+ * @param[in] dest Destination pointer
+ * @param[in] src Source pointer
+ * @param[in] destsize Size of destination buffers.
+ * @return pointer to destination string.
+ */
 #ifdef DEBUG
-void Q_strncpyzDebug(char *dest, const char *src, int destsize, char *file, int line)
+char *Q_strncpyzDebug(char *dest, const char *src, size_t destsize, char *file, int line)
 #else
-void Q_strncpyz(char *dest, const char *src, int destsize)
+char *Q_strncpyz(char *dest, const char *src, size_t destsize)
 #endif
 {
 #ifdef DEBUG
@@ -1756,23 +1757,34 @@ void Q_strncpyz(char *dest, const char *src, int destsize)
 #endif
 	strncpy(dest, src, destsize - 1);
 	dest[destsize - 1] = 0;
+	return dest;
 }
 
 /**
- * @brief
- * @param
- * @sa
- * never goes past bounds or leaves without a terminating 0
+ * @brief Safely (without overflowing the destination buffer) concatenates two strings. 
+ * @param[in] dest the destination string.
+ * @param[in] src the source string.
+ * @param[in] destsize the total size of the destination buffer.
+ * @return pointer destination string.
  */
-void Q_strcat(char *dest, int size, const char *src)
+char *Q_strcat(char *dest, const char *src, size_t destsize)
 {
-	int l1;
+	size_t dest_length;
+	size_t src_length;
+	size_t copy_length;
 
-	l1 = strlen(dest);
-	if (l1 >= size) {
-		Sys_Error("Q_strcat: already overflowed");
+	dest_length = strlen(dest);
+	src_length = strlen(src);
+	/* The +1 / -1 is to make sure there is room for the NULL character. */
+	if (dest_length + src_length + 1 > destsize) {
+		copy_length = destsize - dest_length - 1;
+	} else {
+		copy_length = src_length;
 	}
-	Q_strncpyz(dest + l1, src, size - l1);
+	
+	memcpy(dest + dest_length, src, copy_length);
+	dest[dest_length + copy_length] = '\0';
+	return dest;
 }
 
 /**

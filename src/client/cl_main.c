@@ -4,7 +4,6 @@
  */
 
 /*
-All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
 
 Changes:
 15/06/06, Eddy Cullen (ScreamingWithNoSound):
@@ -12,7 +11,6 @@ Changes:
 	Updated copyright notice.
 
 Original file from Quake 2 v3.21: quake2-2.31/client/cl_main.c
-Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
