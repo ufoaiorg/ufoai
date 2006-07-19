@@ -80,6 +80,7 @@ void *Z_TagMalloc(size_t size, uint16_t tag)
 		z_chain.next = z;
 	} else {
 		fprintf(stderr, "Z_TagMalloc: failed on allocation of %Zu bytes", size);
+		return NULL;
 	}
 
 	return (void *)(z + 1);
@@ -97,8 +98,10 @@ void Z_Free(void *ptr)
 
 	z = ((zhead_t *)ptr) - 1;
 
-	if (z->magic != Z_MAGIC)
+	if (!z || z->magic != Z_MAGIC) {
 		fprintf(stderr, "Z_Free: bad magic (%i)", z->magic);
+		return;
+	}
 
 	z->prev->next = z->next;
 	z->next->prev = z->prev;
