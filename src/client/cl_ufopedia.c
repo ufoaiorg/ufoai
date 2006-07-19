@@ -257,6 +257,7 @@ void UP_DrawEntry( technology_t* tech )
 	if ( ! tech )
 		return;
 
+	menuText[TEXT_LIST] = NULL;
 	Cvar_Set( "mn_uptitle", _(tech->name) );
 	menuText[TEXT_UFOPEDIA] = _(tech->description);
 	Cvar_Set( "mn_upmodel_top", "" );
