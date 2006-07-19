@@ -68,17 +68,46 @@ char* CL_WeaponSkillToName(int weaponSkill)
 }
 
 /**
-  * @brief Prints the (ufopedia and other) description for items (weapons, armor, ...)
-  * @param item Index in object definition array ods for the item
-  * @sa UP_DrawEntry
-  * @sa CL_BuySelectCmd
-  * @sa CL_BuyType
-  * @sa CL_BuyItem
-  * @sa CL_SellItem
-  * @sa MN_Drag
-  * Not only called from Ufopedia but also from other places to display
-  * weapon and ammo stats
-  */
+ * @brief Diplays the tech tree dependencies in the ufopedia
+ * @sa UP_DrawEntry
+ */
+void UP_DisplayTechTree (technology_t* t)
+{
+	int i = 0;
+	static char up_techtree[1024];
+	stringlist_t *required = NULL;
+	technology_t *techRequired = NULL;
+	required = &t->requires;
+	up_techtree[0] = '\0';
+	for (; i<required->numEntries; i++) {
+		if (!Q_strncmp(required->string[i], "nothing", MAX_VAR)
+		|| !Q_strncmp(required->string[i], "initial", MAX_VAR)) {
+			continue;
+			Q_strcat(up_techtree, _("No requirements"), sizeof(up_techtree));
+		} else {
+			techRequired = RS_GetTechByID(required->string[i]);
+			if (!techRequired)
+				Sys_Error("Could not find the tech for '%s'\n", required->string[i]);
+			Q_strcat(up_techtree, techRequired->name, sizeof(up_techtree));
+		}
+		Q_strcat(up_techtree, "\n", sizeof(up_techtree));
+	}
+	/* and now set the buffer to the right menuText */
+	menuText[TEXT_LIST] = up_techtree;
+}
+
+/**
+ * @brief Prints the (ufopedia and other) description for items (weapons, armor, ...)
+ * @param item Index in object definition array ods for the item
+ * @sa UP_DrawEntry
+ * @sa CL_BuySelectCmd
+ * @sa CL_BuyType
+ * @sa CL_BuyItem
+ * @sa CL_SellItem
+ * @sa MN_Drag
+ * Not only called from Ufopedia but also from other places to display
+ * weapon and ammo stats
+ */
 void CL_ItemDescription(int item)
 {
 	static char itemText[MAX_MENUTEXTLEN];
@@ -129,9 +158,9 @@ void CL_ItemDescription(int item)
 
 
 /**
-  * @brief Prints the ufopedia description for armors
-  * @sa UP_DrawEntry
-  */
+ * @brief Prints the ufopedia description for armors
+ * @sa UP_DrawEntry
+ */
 void UP_ArmorDescription ( technology_t* t )
 {
 	objDef_t	*od = NULL;
@@ -162,21 +191,22 @@ void UP_ArmorDescription ( technology_t* t )
 			Q_strcat(upBuffer, va ( _("%s:\tProtection: %i\tHardness: %i\n"), _(csi.dts[i]), od->protection[i], od->hardness[i] ), sizeof(upBuffer));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
+	UP_DisplayTechTree(t);
 }
 
 /**
-  * @brief Prints the ufopedia description for technologies
-  * @sa UP_DrawEntry
-  */
+ * @brief Prints the ufopedia description for technologies
+ * @sa UP_DrawEntry
+ */
 void UP_TechDescription ( technology_t* t )
 {
-
+	UP_DisplayTechTree(t);
 }
 
 /**
-  * @brief Prints the ufopedia description for buildings
-  * @sa UP_DrawEntry
-  */
+ * @brief Prints the ufopedia description for buildings
+ * @sa UP_DrawEntry
+ */
 void UP_BuildingDescription ( technology_t* t )
 {
 	building_t* b = B_GetBuildingType ( t->provides );
@@ -190,6 +220,7 @@ void UP_BuildingDescription ( technology_t* t )
 		Q_strcat(upBuffer, va(_("Running costs:\t%i c\n"), (int)b->varCosts ), sizeof(upBuffer));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
+	UP_DisplayTechTree(t);
 }
 
 /**
@@ -208,6 +239,7 @@ void UP_AircraftDescription ( technology_t* t )
 		Q_strcat(upBuffer, va(_("Shield:\t%s\n"), air->shield ? air->shield->name : _("None") ), sizeof(upBuffer));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
+	UP_DisplayTechTree(t);
 }
 
 /**
@@ -251,6 +283,7 @@ void UP_DrawEntry( technology_t* tech )
 			for ( i = 0; i < csi.numODs; i++ ) {
 				if ( !Q_strncmp( tech->provides, csi.ods[i].kurz, MAX_VAR ) ) {
 					CL_ItemDescription( i );
+					UP_DisplayTechTree(tech);
 					break;
 				}
 			}
@@ -274,10 +307,10 @@ void UP_DrawEntry( technology_t* tech )
 }
 
 /**
-  * @brief Opens the ufopedia from everywhere with the entry given through name
-  * @param name Ufopedia entry id
-  * @sa UP_FindEntry_f
-  */
+ * @brief Opens the ufopedia from everywhere with the entry given through name
+ * @param name Ufopedia entry id
+ * @sa UP_FindEntry_f
+ */
 void UP_OpenWith ( char *name )
 {
 	Cbuf_AddText( "mn_push ufopedia\n" );

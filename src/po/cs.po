@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-07-17 10:35+0200\n"
+"POT-Creation-Date: 2006-07-19 09:47+0200\n"
 "PO-Revision-Date: 2006-05-25 22:19+0200\n"
 "Last-Translator: Karel Volný <kavol@seznam.cz>\n"
 "Language-Team:  <cs@li.org>\n"
@@ -2578,7 +2578,7 @@ msgstr ""
 "Tento neznámý předmět nelze nabít.\n"
 "Nejprve je třeba jej zkoumat.\n"
 
-#: client/cl_actor.c:1334
+#: client/cl_actor.c:1335
 msgid "Your round started!\n"
 msgstr "Začalo tvoje kolo!\n"
 
@@ -2837,7 +2837,7 @@ msgstr "%s byl povýšen na %s.\n"
 msgid "Soldier promoted"
 msgstr "Voják povýšen"
 
-#: client/cl_campaign.c:3380 client/cl_campaign.c:3411
+#: client/cl_campaign.c:3381 client/cl_campaign.c:3412
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -2906,7 +2906,7 @@ msgstr "Maximum vojáků na hráče:"
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maximum vojáků v týmu:"
 
-#: client/cl_main.c:1219
+#: client/cl_main.c:1218
 msgid "unnamed"
 msgstr "bezejmenný"
 
@@ -2968,15 +2968,15 @@ msgstr "Vyber na mapě ufo nebo misi\n"
 msgid "UFO in radar range\n"
 msgstr "%s má záchvat amoku!\n"
 
-#: client/cl_parse.c:652
+#: client/cl_parse.c:655
 msgid "Alien spotted!\n"
 msgstr "Spatřen cizák!\n"
 
-#: client/cl_parse.c:654
+#: client/cl_parse.c:657
 msgid "Enemy spotted!\n"
 msgstr "Spatřen nepřítel!\n"
 
-#: client/cl_parse.c:656
+#: client/cl_parse.c:659
 msgid "Civilian spotted!\n"
 msgstr "Spatřen civilista!\n"
 
@@ -3086,26 +3086,26 @@ msgstr "Výzkum dokončen"
 msgid "No description available."
 msgstr "Popis není dostupný."
 
-#: client/cl_team.c:538
+#: client/cl_team.c:539
 #, c-format
 msgid "%i of %i"
 msgstr "%i z %i"
 
-#: client/cl_team.c:715
+#: client/cl_team.c:716
 msgid "NewTeam"
 msgstr "NovýTým"
 
-#: client/cl_team.c:1101
+#: client/cl_team.c:1102
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Cizáků zabito\t%i\n"
 
-#: client/cl_team.c:1103
+#: client/cl_team.c:1104
 #, fuzzy, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "%s zabil\t%i\n"
 
-#: client/cl_team.c:1109
+#: client/cl_team.c:1110
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -3114,7 +3114,7 @@ msgstr ""
 "Přeživší cizáci\t%i\n"
 "\n"
 
-#: client/cl_team.c:1111
+#: client/cl_team.c:1112
 #, fuzzy, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -3123,17 +3123,17 @@ msgstr ""
 "%s survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1114
+#: client/cl_team.c:1115
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Ztráty\t%i\n"
 
-#: client/cl_team.c:1115
+#: client/cl_team.c:1116
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1116
+#: client/cl_team.c:1117
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -3142,22 +3142,22 @@ msgstr ""
 "Přeživší vojáci\t%i\n"
 "\n"
 
-#: client/cl_team.c:1129
+#: client/cl_team.c:1130
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:1131
+#: client/cl_team.c:1132
 #, fuzzy, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:1132
+#: client/cl_team.c:1133
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civilistů zabitých tvým týmem\t%i\n"
 
-#: client/cl_team.c:1133
+#: client/cl_team.c:1134
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -3168,22 +3168,22 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1153
+#: client/cl_team.c:1154
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr "Získaná cizácká technologie\t%i c\n"
 
-#: client/cl_team.c:1157
+#: client/cl_team.c:1158
 #, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr "Cizáků zabito\t%i $\n"
 
-#: client/cl_team.c:1161
+#: client/cl_team.c:1162
 #, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr "Zachránění civilisté\t%i c\n"
 
-#: client/cl_team.c:1164
+#: client/cl_team.c:1165
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -3194,7 +3194,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1168
+#: client/cl_team.c:1169
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr "Noví rekruti\t%i\n"
@@ -3348,7 +3348,7 @@ msgstr "Palivo:\t%i\n"
 msgid "Shield:\t%s\n"
 msgstr "Štít:\t%s\n"
 
-#: client/cl_ufopedia.c:375
+#: client/cl_ufopedia.c:374
 msgid "Ufopedia Content"
 msgstr "Obsah ufopedie"
 
@@ -3393,39 +3393,39 @@ msgstr "Nelze provést - nedostatek času!\n"
 msgid "Can't perform action - weapon already loaded!\n"
 msgstr "Nelze provést - zbraň je již nabita!\n"
 
-#: game/g_client.c:1229
+#: game/g_client.c:1230
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr ""
 
-#: game/g_client.c:1349
+#: game/g_client.c:1350
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s zpanikařil!\n"
 
-#: game/g_client.c:1400
+#: game/g_client.c:1401
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr ""
 
-#: game/g_client.c:1402
+#: game/g_client.c:1403
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s má záchvat amoku!\n"
 
-#: game/g_client.c:1457
+#: game/g_client.c:1458
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s je právě v šoku.\n"
 
-#: game/g_client.c:1747
+#: game/g_client.c:1753
 msgid "Can't perform action - impossible throw!\n"
 msgstr "Nelze provést - nemožný hod!\n"
 
-#: game/g_client.c:1989
+#: game/g_client.c:1995
 msgid "Can't perform action - no ammo!\n"
 msgstr "Nelze provést - není munice!\n"
 
-#: game/g_client.c:2002
+#: game/g_client.c:2008
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Nelze provést - nedostatek munice!\n"
 

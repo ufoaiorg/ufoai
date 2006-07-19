@@ -65,7 +65,6 @@ typedef struct technology_s {
 	char description[MAX_VAR];	/* Just a short text-id to get this via gettext. */
 	researchType_t type;
 
-
 	stringlist_t requires;
 	char provides[MAX_VAR];		/* The item that this technology enables. */
 	float overalltime, time;	/* The time that is needed to research this tech. (in days) */
@@ -74,7 +73,6 @@ typedef struct technology_s {
 	int base_idx;				/* The base this tech is researched in. */
 	int lab;					/* Where this techology is currently researched. */
 	/*int workshop; // Where the 'provided' item is currently produced. */
-
 
 	char image_top[MAX_VAR];
 	char image_bottom[MAX_VAR];

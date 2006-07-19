@@ -1178,7 +1178,6 @@ void RS_ParseTechnologies(char *id, char **text)
 
 				}
 				while (misp && required->numEntries < MAX_TECHLINKS);
-				continue;
 			} else if (!Q_strncmp(token, "researched", MAX_VAR)) {
 				/* tech alreadyy researched? */
 				token = COM_EParse(text, errhead, id);

@@ -58,6 +58,8 @@ up_chapters main
 	tech		"_Technologies & Discoveries"
 	weapons	"_Weapons"
 	armors	"_Armors"
+	damage	"_Damage Types"
+	skill	"_Soldier Skills"
 	buildings	"_Buildings"
 	aliens	"_Alien Species"
 	ufos		"_UFOs"
@@ -149,7 +151,7 @@ tech rs_craft_ufo_tech
 }
 
 //=====================================
-// Weapons & Misc Equipment Researched
+// Weapons & Misc Equipment Initial
 //=====================================
 
 tech rs_weapon_assault
@@ -158,7 +160,7 @@ tech rs_weapon_assault
 	up_chapter	weapons
 	description	"_assault_txt"
 
-	requires	initial
+	requires	rs_skill_assault
 	provides	assault
 	time	0
 	researched	true
@@ -168,9 +170,9 @@ tech rs_weapon_assault_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_assault_ammo_txt"
+	description	"_assault_txt"
 
-	requires	rs_weapon_assault
+	requires	"rs_damage_normal rs_weapon_assault"
 	provides	assault_ammo
 	time	0
 	researched	true
@@ -182,7 +184,7 @@ tech rs_weapon_sniper
 	up_chapter	weapons
 	description	"_sniper_txt"
 
-	requires	initial
+	requires	rs_skill_precise
 	provides	sniper
 	time	0
 	researched	true
@@ -192,9 +194,9 @@ tech rs_weapon_sniper_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_sniper_ammo_txt"
+	description	"_sniper_txt"
 
-	requires	rs_weapon_sniper
+	requires	"rs_damage_normal rs_weapon_sniper"
 	provides	sniper_ammo
 	time	0
 	researched	true
@@ -206,7 +208,7 @@ tech rs_weapon_smg
 	up_chapter	weapons
 	description	"_smg_txt"
 
-	requires	initial
+	requires	rs_skill_assault
 	provides	smg
 	time	0
 	researched	true
@@ -216,9 +218,9 @@ tech rs_weapon_smg_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_smg_ammo_txt"
+	description	"_smg_txt"
 
-	requires	rs_weapon_smg
+	requires	"rs_damage_normal rs_weapon_smg"
 	provides	smg_ammo
 	time	0
 	researched	true
@@ -230,7 +232,7 @@ tech rs_weapon_shotgun
 	up_chapter	weapons
 	description	"_shotgun_txt"
 
-	requires	initial
+	requires	rs_skill_heavy
 	provides	shotgun
 	time	0
 	researched	true
@@ -240,9 +242,9 @@ tech rs_weapon_shotgun_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_shotgun_ammo_txt"
+	description	"_shotgun_txt"
 
-	requires	rs_weapon_shotgun
+	requires	"rs_damage_blast rs_weapon_shotgun"
 	provides	shotgun_ammo
 	time	0
 	researched	true
@@ -254,7 +256,7 @@ tech rs_weapon_flamer
 	up_chapter	weapons
 	description	"_flamer_txt"
 
-	requires	initial
+	requires	rs_skill_heavy
 	provides	flamer
 	time	0
 	researched	true
@@ -264,9 +266,9 @@ tech rs_weapon_flamer_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_flamer_ammo_txt"
+	description	"_flamer_txt"
 
-	requires	rs_weapon_flamer
+	requires	"rs_damage_fire rs_weapon_flamer"
 	provides	flamer_ammo
 	time	0
 	researched	true
@@ -278,7 +280,7 @@ tech rs_weapon_pistol
 	up_chapter	weapons
 	description	"_pistol_txt"
 
-	requires	initial
+	requires	rs_skill_close
 	provides	pistol
 	time	0
 	researched	true
@@ -288,9 +290,9 @@ tech rs_weapon_pistol_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_pistol_ammo_txt"
+	description	"_pistol_txt"
 
-	requires	rs_weapon_pistol
+	requires	"rs_damage_normal rs_weapon_pistol"
 	provides	pistol_ammo
 	time	0
 	researched	true
@@ -302,7 +304,7 @@ tech rs_weapon_rpg
 	up_chapter	weapons
 	description	"_rpg_txt"
 
-	requires	initial
+	requires	rs_skill_explosive
 	provides	rpg
 	time	0
 	researched	true
@@ -314,7 +316,7 @@ tech rs_weapon_rpg_ammo
 	up_chapter	weapons
 	description	"_rpg_ammo_txt"
 
-	requires	rs_weapon_rpg
+	requires	"rs_damage_blast rs_weapon_rpg"
 	provides	rpg_ammo
 	time	0
 	researched	true
@@ -326,7 +328,7 @@ tech rs_weapon_fraggren
 	up_chapter	weapons
 	description	"_fraggren_txt"
 
-	requires	initial
+	requires	"rs_skill_explosive rs_damage_blast"
 	provides	fraggrenade
 	time	0
 	researched	true
@@ -338,7 +340,7 @@ tech rs_weapon_fraggren
 //	up_chapter	weapons
 //	description	"_smokegren_txt"
 //
-//	requires	initial
+//	requires	rs_skill_explosive
 //	provides	smokegrenade
 //	time	0
 //	researched	true
@@ -350,7 +352,7 @@ tech rs_weapon_knife
 	up_chapter	weapons
 	description	"_knife_txt"
 
-	requires	initial
+	requires	"rs_skill_close rs_damage_normal"
 	provides	knife
 	time	0
 	researched	true
@@ -366,7 +368,7 @@ tech rs_weapon_stunrod
 	up_chapter	weapons
 	description	"_stunrod_txt"
 
-	requires	initial
+	requires	"rs_skill_close rs_damage_stun"
 	provides	stunrod
 	time	5
 	researched	false
@@ -378,7 +380,7 @@ tech rs_medikit
 	up_chapter	weapons
 	description	"_medikit_txt"
 
-	requires	initial
+	requires	rs_skill_mind
 	provides	medikit
 	time	7
 	researched	false
@@ -390,7 +392,7 @@ tech rs_irgoggles
 	up_chapter	weapons
 	description	"_irgoggles_txt"
 
-	requires	initial
+	requires	rs_skill_mind
 	provides	irgoggles
 	time	10
 	researched	false
@@ -402,7 +404,7 @@ tech rs_weapon_incgrenade
 	up_chapter	weapons
 	description	"_incgrenade_txt"
 
-	requires	initial
+	requires	"rs_skill_explosive rs_damage_fire"
 	provides	incgrenade
 	time	10
 	researched	false
@@ -414,7 +416,7 @@ tech rs_weapon_stungren
 	up_chapter	weapons
 	description	"_stungren_txt"
 
-	requires	initial
+	requires	"rs_skill_explosive rs_damage_stun"
 	provides	stungrenade
 	time	20
 	researched	false
@@ -426,7 +428,7 @@ tech rs_weapon_plasmagren
 	up_chapter	weapons
 	description	"_plasmagren_txt"
 
-	requires	rs_plasma
+	requires	"rs_skill_explosive rs_damage_plasma"
 	provides	plasmagrenade
 	time	30
 	researched	false
@@ -439,7 +441,7 @@ tech rs_weapon_rpg_incendiary_ammo
 	up_chapter	weapons
 	description	"_rpg_incendiary_ammo_txt"
 
-	requires	rs_weapon_incgrenade
+	requires	"rs_damage_fire rs_weapon_rpg"
 	provides	rpg_incendiary_ammo
 	time	10
 	researched	false
@@ -451,7 +453,7 @@ tech rs_weapon_rpg_tachyon_ammo
 	up_chapter	weapons
 	description	"_rpg_tachyon_ammo_txt"
 
-	requires	rs_tachyon
+	requires	"rs_damage_tachyon rs_weapon_rpg"
 	provides	rpg_tachyon_ammo
 	time	40
 	researched	false
@@ -463,10 +465,11 @@ tech rs_weapon_kerrblade
 	up_chapter	weapons
 	description	"_kerrblade_txt"
 
-	requires	initial
+	requires	"rs_skill_close rs_damage_normal"
 	provides	kerrblade
 	time	10
 	researched	false
+	needscollected	true
 }
 
 tech rs_weapon_bolterrifle
@@ -475,7 +478,7 @@ tech rs_weapon_bolterrifle
 	up_chapter	weapons
 	description	"_bolterrifle_txt"
 
-	requires	initial
+	requires	rs_skill_heavy
 	provides	bolterrifle
 	time	10
 	researched	false
@@ -485,9 +488,9 @@ tech rs_weapon_bolterrifle_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_bolterrifle_ammo_txt"
+	description	"_bolterrifle_txt"
 
-	requires	rs_weapon_bolterrifle
+	requires	"rs_damage_normal rs_weapon_bolterrifle"
 	provides	bolterrifle_ammo
 	time	0
 	researched	false
@@ -499,7 +502,7 @@ tech rs_weapon_grenl
 	up_chapter	weapons
 	description	"_grenl_txt"
 
-	requires	initial
+	requires	rs_skill_explosive
 	provides	grenl
 	time	10
 	researched	false
@@ -511,7 +514,7 @@ tech rs_weapon_grenl_ammo
 	up_chapter	weapons
 	description	"_grenl_ammo_txt"
 
-	requires	rs_weapon_grenl
+	requires	"rs_damage_blast rs_weapon_grenl"
 	provides	grenl_ammo
 	time	0
 	researched	false
@@ -523,7 +526,7 @@ tech rs_weapon_grenl_plasma_ammo
 	up_chapter	weapons
 	description	"_grenl_plasma_ammo_txt"
 
-	requires	"rs_weapon_grenl rs_plasma"
+	requires	"rs_damage_plasma rs_weapon_grenl"
 	provides	grenl_plasma_ammo
 	time	20
 	researched	false
@@ -535,7 +538,7 @@ tech rs_weapon_laserpistol
 	up_chapter	weapons
 	description	"_laserpistol_txt"
 
-	requires	rs_laser
+	requires	"rs_skill_close rs_laser"
 	provides	laserpistol
 	time	20
 	researched	false
@@ -545,9 +548,9 @@ tech rs_weapon_laserpistol_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_laserpistol_ammo_txt"
+	description	"_laserpistol_txt"
 
-	requires	rs_weapon_laserpistol
+	requires	"rs_damage_laser rs_weapon_laserpistol"
 	provides	laserpistol_ammo
 	time	0
 	researched	false
@@ -559,7 +562,7 @@ tech rs_weapon_laserrifle
 	up_chapter	weapons
 	description	"_laserrifle_txt"
 
-	requires	rs_weapon_laserpistol
+	requires	"rs_skill_precise rs_skill_assault rs_weapon_laserpistol"
 	provides	laserrifle
 	time	30
 	researched	false
@@ -571,7 +574,7 @@ tech rs_weapon_laserrifle_ammo
 	up_chapter	weapons
 	description	"_laserrifle_txt"
 
-	requires	rs_weapon_laserrifle
+	requires	"rs_damage_laser rs_weapon_laserrifle"
 	provides	laserrifle_ammo
 	time	0
 	researched	false
@@ -583,7 +586,7 @@ tech rs_weapon_heavylaser
 	up_chapter	weapons
 	description	"_heavylaser_txt"
 
-	requires	rs_weapon_laserrifle
+	requires	"rs_skill_heavy rs_weapon_laserrifle"
 	provides	heavylaser
 	time	20
 	researched	false
@@ -595,7 +598,7 @@ tech rs_weapon_heavylaser_ammo
 	up_chapter	weapons
 	description	"_heavylaser_txt"
 
-	requires	rs_weapon_heavylaser
+	requires	"rs_damage_laser rs_weapon_heavylaser"
 	provides	heavylaser_ammo
 	time	0
 	researched	false
@@ -607,7 +610,7 @@ tech rs_weapon_plasblade
 	up_chapter	weapons
 	description	"_plasblade_txt"
 
-	requires	rs_plasma
+	requires	"rs_skill_close rs_damage_plasma"
 	provides	plasblade
 	time	10
 	researched	false
@@ -620,7 +623,7 @@ tech rs_weapon_plaspistol
 	up_chapter	weapons
 	description	"_plaspistol_txt"
 
-	requires	rs_plasma
+	requires	"rs_skill_assault rs_skill_heavy rs_plasma"
 	provides	plaspistol
 	time	40
 	researched	false
@@ -631,9 +634,9 @@ tech rs_weapon_plaspistol_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_plaspistol_ammo_txt"
+	description	"_plaspistol_txt"
 
-	requires	rs_weapon_plaspistol
+	requires	"rs_damage_plasma rs_weapon_plaspistol"
 	provides	plaspistol_ammo
 	time	0
 	researched	false
@@ -645,7 +648,7 @@ tech rs_weapon_plasrifle
 	up_chapter	weapons
 	description	"_plasrifle_txt"
 
-	requires	rs_plasma
+	requires	"rs_skill_assault rs_skill_heavy rs_plasma"
 	provides	plasrifle
 	time	50
 	researched	false
@@ -656,9 +659,9 @@ tech rs_weapon_plasrifle_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_plasrifle_ammo_txt"
+	description	"_plasrifle_txt"
 
-	requires	rs_weapon_plasrifle
+	requires	"rs_damage_plasma rs_weapon_plasrifle"
 	provides	plasrifle_ammo
 	time	0
 	researched	false
@@ -670,7 +673,7 @@ tech rs_weapon_plasblaster
 	up_chapter	weapons
 	description	"_plasblaster_txt"
 
-	requires	rs_plasma
+	requires	"rs_skill_explosive rs_skill_heavy rs_plasma"
 	provides	plasblaster
 	time	70
 	researched	false
@@ -681,9 +684,9 @@ tech rs_weapon_plasblaster_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_plasblaster_ammo_txt"
+	description	"_plasblaster_txt"
 
-	requires	rs_plasma
+	requires	"rs_damage_plasma rs_weapon_plasblaster"
 	provides	plasblaster_ammo
 	time	0
 	researched	false
@@ -695,7 +698,7 @@ tech rs_weapon_tachyonpistol
 	up_chapter	weapons
 	description	"_tachyonpistol_txt"
 
-	requires	rs_tachyon
+	requires	"rs_skill_close rs_tachyon"
 	provides	tachyonpistol
 	time	50
 	researched	false
@@ -706,9 +709,9 @@ tech rs_weapon_tachyonpistol_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_tachyonpistol_ammo_txt"
+	description	"_tachyonpistol_txt"
 
-	requires	rs_weapon_tachyonpistol
+	requires	"rs_damage_tachyon rs_weapon_tachyonpistol"
 	provides	tachyonpistol_ammo
 	time	0
 	researched	false
@@ -720,7 +723,7 @@ tech rs_weapon_tachyonrifle
 	up_chapter	weapons
 	description	"_tachyonrifle_txt"
 
-	requires	rs_tachyon
+	requires	"rs_skill_assault rs_skill_explosive rs_tachyon"
 	provides	tachyonrifle
 	time	70
 	researched	false
@@ -731,9 +734,9 @@ tech rs_weapon_tachyonrifle_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_tachyonrifle_ammo_txt"
+	description	"_tachyonrifle_txt"
 
-	requires	rs_weapon_tachyonrifle
+	requires	"rs_damage_tachyon rs_weapon_tachyonrifle"
 	provides	tachyonrifle_ammo
 	time	0
 	researched	false
@@ -745,7 +748,7 @@ tech rs_weapon_tachyonsniper
 	up_chapter	weapons
 	description	"_tachyonsniper_txt"
 
-	requires	rs_tachyon
+	requires	"rs_skill_precise rs_tachyon"
 	provides	tachyonsniper
 	time	80
 	researched	false
@@ -756,9 +759,9 @@ tech rs_weapon_tachyonsniper_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_tachyonsniper_ammo_txt"
+	description	"_tachyonsniper_txt"
 
-	requires	rs_weapon_tachyonsniper
+	requires	"rs_damage_tachyon rs_weapon_tachyonsniper"
 	provides	tachyonsniper_ammo
 	time	0
 	researched	false
@@ -802,6 +805,235 @@ tech rs_heavy_nano_armor
 	provides	heavy
 	time	120
 	researched	false
+}
+
+//========================
+// Damage Types
+//========================
+
+tech rs_damage_normal
+{
+	type	tech
+	name "_Normal Damage Type"
+	up_chapter	damage
+	description	"_normal_damage_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/normal_damage
+}
+
+tech rs_damage_blast
+{
+	type	tech
+	name "_Blast Damage Type"
+	up_chapter	damage
+	description	"_blast_damage_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/blast_damage
+}
+
+tech rs_damage_fire
+{
+	type	tech
+	name "_Fire Damage Type"
+	up_chapter	damage
+	description	"_fire_damage_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/fire_damage
+}
+
+tech rs_damage_shock
+{
+	type	tech
+	name "_Shock Damage Type"
+	up_chapter	damage
+	description	"_shock_damage_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/shock_damage
+}
+
+tech rs_damage_laser
+{
+	type	tech
+	name "_Laser Damage Type"
+	up_chapter	damage
+	description	"_laser_damage_txt"
+
+	requires	rs_laser
+	time	0
+	researched	false
+//	image_top	techs/laser_damage
+}
+
+tech rs_damage_plasma
+{
+	type	tech
+	name "_Plasma Damage Type"
+	up_chapter	damage
+	description	"_plasma_damage_txt"
+
+	requires	rs_plasma
+	time	0
+	researched	false
+//	image_top	techs/plasma_damage
+}
+
+tech rs_damage_tachyon
+{
+	type	tech
+	name "_Tachyon Damage Type"
+	up_chapter	damage
+	description	"_tachyon_damage_txt"
+
+	requires	rs_tachyon
+	time	0
+	researched	false
+//	image_top	techs/tachyon_damage
+}
+
+tech rs_damage_stun
+{
+	type	tech
+	name "_Stun Damage Type"
+	up_chapter	damage
+	description	"_stun_damage_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/stun_damage
+}
+
+//========================
+// Soldier Skills
+//========================
+
+tech rs_skill_power
+{
+	type	tech
+	name "_Power Attribute"
+	up_chapter	skill
+	description	"_power_skill_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/power_skill
+}
+
+tech rs_skill_speed
+{
+	type	tech
+	name "_Speed Attribute"
+	up_chapter	skill
+	description	"_speed_skill_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/speed_skill
+}
+
+tech rs_skill_accuracy
+{
+	type	tech
+	name "_Accuracy Attribute"
+	up_chapter	skill
+	description	"_accuracy_skill_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/accuracy_skill
+}
+
+tech rs_skill_mind
+{
+	type	tech
+	name "_Mind Attribute"
+	up_chapter	skill
+	description	"_mind_skill_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/mind_skill
+}
+
+tech rs_skill_close
+{
+	type	tech
+	name "_Close Combat Proficiency"
+	up_chapter	skill
+	description	"_close_skill_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/close_skill
+}
+
+tech rs_skill_heavy
+{
+	type	tech
+	name "_Heavy Weapons Proficiency"
+	up_chapter	skill
+	description	"_heavy_skill_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/heavy_skill
+}
+
+tech rs_skill_assault
+{
+	type	tech
+	name "_Assault Guns Proficiency"
+	up_chapter	skill
+	description	"_assault_skill_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/assault_skill
+}
+
+tech rs_skill_precise
+{
+	type	tech
+	name "_Sniper Rifles Proficiency"
+	up_chapter	skill
+	description	"_precise_skill_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/precise_skill
+}
+
+tech rs_skill_explosive
+{
+	type	tech
+	name "_High-Explosives Proficiency"
+	up_chapter	skill
+	description	"_explosive_skill_txt"
+
+	requires	initial
+	time	0
+	researched	true
+//	image_top	techs/explosive_skill
 }
 
 //========================
@@ -1391,7 +1623,7 @@ tech rs_ugv_phoenix
 	name	"_UGV Phoenix"
 	description	"_ugv_phoenix_txt"
 
-	requires	nothing
+	requires	initial
 	provides	ugv_phoenix
 	time	0
 	researched	true
@@ -1407,7 +1639,7 @@ tech rs_ugv_triax
 	name	"_UGV Triax"
 	description	"_ugv_triax_txt"
 
-	requires	nothing
+	requires	initial
 	provides	ugv_triax
 	time	0
 	researched	true

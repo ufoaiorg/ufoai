@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-07-17 10:35+0200\n"
+"POT-Creation-Date: 2006-07-19 09:47+0200\n"
 "PO-Revision-Date: 2006-05-31 20:06+0100\n"
 "Last-Translator: Malick <gdebressy@gmail.com>\n"
 "Language-Team: \n"
@@ -3158,7 +3158,7 @@ msgstr ""
 "Vous ne pouvez pas charger cet objet inconnu.\n"
 "Vous devez le rechercher d'abord.\n"
 
-#: client/cl_actor.c:1334
+#: client/cl_actor.c:1335
 msgid "Your round started!\n"
 msgstr "Votre Tour a commencé !\n"
 
@@ -3419,7 +3419,7 @@ msgstr "%s a été promu au rang de %s.\n"
 msgid "Soldier promoted"
 msgstr "Soldat promu"
 
-#: client/cl_campaign.c:3380 client/cl_campaign.c:3411
+#: client/cl_campaign.c:3381 client/cl_campaign.c:3412
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -3488,7 +3488,7 @@ msgstr "Max soldats par joueur:"
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. soldats par équipe:"
 
-#: client/cl_main.c:1219
+#: client/cl_main.c:1218
 msgid "unnamed"
 msgstr "Pas de Nom"
 
@@ -3550,15 +3550,15 @@ msgstr "Choisir l'OVNI ou la mission sur la carte\n"
 msgid "UFO in radar range\n"
 msgstr "%s est fou de rage!\n"
 
-#: client/cl_parse.c:652
+#: client/cl_parse.c:655
 msgid "Alien spotted!\n"
 msgstr "Alien en vue !\n"
 
-#: client/cl_parse.c:654
+#: client/cl_parse.c:657
 msgid "Enemy spotted!\n"
 msgstr "Ennemi en vue !\n"
 
-#: client/cl_parse.c:656
+#: client/cl_parse.c:659
 msgid "Civilian spotted!\n"
 msgstr "Civil en vue !\n"
 
@@ -3673,26 +3673,26 @@ msgstr "Recherche Terminée"
 msgid "No description available."
 msgstr "Pas de description disponible."
 
-#: client/cl_team.c:538
+#: client/cl_team.c:539
 #, c-format
 msgid "%i of %i"
 msgstr ""
 
-#: client/cl_team.c:715
+#: client/cl_team.c:716
 msgid "NewTeam"
 msgstr "Nouvelle Equipe"
 
-#: client/cl_team.c:1101
+#: client/cl_team.c:1102
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens tués\t%i\n"
 
-#: client/cl_team.c:1103
+#: client/cl_team.c:1104
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Ennemis tués\t%i\n"
 
-#: client/cl_team.c:1109
+#: client/cl_team.c:1110
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -3701,7 +3701,7 @@ msgstr ""
 "Aliens survivants\t%i\n"
 "\n"
 
-#: client/cl_team.c:1111
+#: client/cl_team.c:1112
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -3710,17 +3710,17 @@ msgstr ""
 "Ennemis survivants\t%i\n"
 "\n"
 
-#: client/cl_team.c:1114
+#: client/cl_team.c:1115
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Pertes de l'équipe\t%i\n"
 
-#: client/cl_team.c:1115
+#: client/cl_team.c:1116
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Pertes des tirs amis\t%i\n"
 
-#: client/cl_team.c:1116
+#: client/cl_team.c:1117
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -3729,22 +3729,22 @@ msgstr ""
 "Survivants de l'équipe\t%i\n"
 "\n"
 
-#: client/cl_team.c:1129
+#: client/cl_team.c:1130
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civils tués par les Aliens\t%i\n"
 
-#: client/cl_team.c:1131
+#: client/cl_team.c:1132
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civils tués par l'Ennemi\t%i\n"
 
-#: client/cl_team.c:1132
+#: client/cl_team.c:1133
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civils tués par votre équipe\t%i\n"
 
-#: client/cl_team.c:1133
+#: client/cl_team.c:1134
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -3755,22 +3755,22 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1153
+#: client/cl_team.c:1154
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr "Technologie alienne récupérée\t%i c\n"
 
-#: client/cl_team.c:1157
+#: client/cl_team.c:1158
 #, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr "Aliens tués\t%i c\n"
 
-#: client/cl_team.c:1161
+#: client/cl_team.c:1162
 #, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr "Civils sauvés\t%i c\n"
 
-#: client/cl_team.c:1164
+#: client/cl_team.c:1165
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -3781,7 +3781,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1168
+#: client/cl_team.c:1169
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr "Nouvelles Recrues\t%i\n"
@@ -3934,7 +3934,7 @@ msgstr "Carburant:\t%i\n"
 msgid "Shield:\t%s\n"
 msgstr "Bouclier:\t%s\n"
 
-#: client/cl_ufopedia.c:375
+#: client/cl_ufopedia.c:374
 msgid "Ufopedia Content"
 msgstr "Contenu Ufopedia"
 
@@ -3978,39 +3978,39 @@ msgstr "Ne peut faire l'action - pas assez d'UT!\n"
 msgid "Can't perform action - weapon already loaded!\n"
 msgstr "Ne peut faire l'action - arme déjà chargée!\n"
 
-#: game/g_client.c:1229
+#: game/g_client.c:1230
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "Secoué, ne baissera pas sa garde.\n"
 
-#: game/g_client.c:1349
+#: game/g_client.c:1350
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s Panique!\n"
 
-#: game/g_client.c:1400
+#: game/g_client.c:1401
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s fait un massacre.\n"
 
-#: game/g_client.c:1402
+#: game/g_client.c:1403
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s est fou de rage!\n"
 
-#: game/g_client.c:1457
+#: game/g_client.c:1458
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s est secoué.\n"
 
-#: game/g_client.c:1747
+#: game/g_client.c:1753
 msgid "Can't perform action - impossible throw!\n"
 msgstr "Ne peut faire l'action - lancé impossible!\n"
 
-#: game/g_client.c:1989
+#: game/g_client.c:1995
 msgid "Can't perform action - no ammo!\n"
 msgstr "Ne peut faire l'action - pas de munitions!\n"
 
-#: game/g_client.c:2002
+#: game/g_client.c:2008
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Ne peut faire l'action - pas assez de munitions!\n"
 

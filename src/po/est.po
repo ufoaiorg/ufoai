@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-07-17 10:35+0200\n"
+"POT-Creation-Date: 2006-07-19 09:47+0200\n"
 "PO-Revision-Date: 2006-06-18 15:47+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -3002,7 +3002,7 @@ msgstr ""
 "Sa ei saa seda tundmatut eset kasutatda.\n"
 "Sa pead selle enne uurima.\n"
 
-#: client/cl_actor.c:1334
+#: client/cl_actor.c:1335
 msgid "Your round started!\n"
 msgstr "Sinu käik algas!\n"
 
@@ -3260,7 +3260,7 @@ msgstr "%s on ülendatud %s.\n"
 msgid "Soldier promoted"
 msgstr "Sõdur sai ametikõrgendust"
 
-#: client/cl_campaign.c:3380 client/cl_campaign.c:3411
+#: client/cl_campaign.c:3381 client/cl_campaign.c:3412
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -3331,7 +3331,7 @@ msgstr "Maksimum sõdureid mängija kohta:\t%s\n"
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maks. Sõdureid ühe tiimi kohta:\t%s\n"
 
-#: client/cl_main.c:1219
+#: client/cl_main.c:1218
 msgid "unnamed"
 msgstr "Nimetu"
 
@@ -3392,15 +3392,15 @@ msgstr "Vali ufo või selle kaarti missioon\n"
 msgid "UFO in radar range\n"
 msgstr "Ufo on radari ulatuses\n"
 
-#: client/cl_parse.c:652
+#: client/cl_parse.c:655
 msgid "Alien spotted!\n"
 msgstr "Tulnukat on märgatud\n"
 
-#: client/cl_parse.c:654
+#: client/cl_parse.c:657
 msgid "Enemy spotted!\n"
 msgstr "Vastast on märgatudl\n"
 
-#: client/cl_parse.c:656
+#: client/cl_parse.c:659
 msgid "Civilian spotted!\n"
 msgstr "Inimest on märgatud!\n"
 
@@ -3510,26 +3510,26 @@ msgstr "Uurimustöö lõpetatud"
 msgid "No description available."
 msgstr "Ei ole infot selle asja kohta"
 
-#: client/cl_team.c:538
+#: client/cl_team.c:539
 #, c-format
 msgid "%i of %i"
 msgstr "%i  %i"
 
-#: client/cl_team.c:715
+#: client/cl_team.c:716
 msgid "NewTeam"
 msgstr "Uus tiim"
 
-#: client/cl_team.c:1101
+#: client/cl_team.c:1102
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Tulnukaid tapetud\t%i\n"
 
-#: client/cl_team.c:1103
+#: client/cl_team.c:1104
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Vastaseid tapetud\t%i\n"
 
-#: client/cl_team.c:1109
+#: client/cl_team.c:1110
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -3538,7 +3538,7 @@ msgstr ""
 "Tulnukate ellujäänuid\t%i\n"
 "\n"
 
-#: client/cl_team.c:1111
+#: client/cl_team.c:1112
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -3547,17 +3547,17 @@ msgstr ""
 "Vastase ellujäänuid\t%i\n"
 "\n"
 
-#: client/cl_team.c:1114
+#: client/cl_team.c:1115
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Tiimi kaotusi\t%i\n"
 
-#: client/cl_team.c:1115
+#: client/cl_team.c:1116
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Enda poolt tapetud tiimikaaslasi\t%i\n"
 
-#: client/cl_team.c:1116
+#: client/cl_team.c:1117
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -3566,22 +3566,22 @@ msgstr ""
 "Tiimis ellujäänuid?t%i\n"
 "\n"
 
-#: client/cl_team.c:1129
+#: client/cl_team.c:1130
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Tulnukate poolt tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:1131
+#: client/cl_team.c:1132
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Vastaste poolt tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:1132
+#: client/cl_team.c:1133
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Sinu poolt mõrvatud inimesi\t%i\n"
 
-#: client/cl_team.c:1133
+#: client/cl_team.c:1134
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -3592,22 +3592,22 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1153
+#: client/cl_team.c:1154
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr "Kogutud tulnukate tehnoloogjat\t%i c\n"
 
-#: client/cl_team.c:1157
+#: client/cl_team.c:1158
 #, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr "Tulnukaid tapetud\t%i c\n"
 
-#: client/cl_team.c:1161
+#: client/cl_team.c:1162
 #, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr "Inimesi päästetud\t%i c\n"
 
-#: client/cl_team.c:1164
+#: client/cl_team.c:1165
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -3618,7 +3618,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1168
+#: client/cl_team.c:1169
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr "Uued sõdurid\t%i\n"
@@ -3777,7 +3777,7 @@ msgstr "Kütus:\t%i\n"
 msgid "Shield:\t%s\n"
 msgstr "Kilp:\t%s\n"
 
-#: client/cl_ufopedia.c:375
+#: client/cl_ufopedia.c:374
 msgid "Ufopedia Content"
 msgstr "Ufopedia sisu"
 
@@ -3821,39 +3821,39 @@ msgstr "Sa ei saa seda teha - pole piisavalt TUse\n"
 msgid "Can't perform action - weapon already loaded!\n"
 msgstr "Sa ei saa relva uuesti laadida - Relv on juba laetud\n"
 
-#: game/g_client.c:1229
+#: game/g_client.c:1230
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "On halvas vaimses seisundis aga saab hakkama\n"
 
-#: game/g_client.c:1349
+#: game/g_client.c:1350
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s on paanikas\n"
 
-#: game/g_client.c:1400
+#: game/g_client.c:1401
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s Keeb vihast\n"
 
-#: game/g_client.c:1402
+#: game/g_client.c:1403
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s on hullumeelsuse piiri ületanud!\n"
 
-#: game/g_client.c:1457
+#: game/g_client.c:1458
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s on vaimselt raputatud.\n"
 
-#: game/g_client.c:1747
+#: game/g_client.c:1753
 msgid "Can't perform action - impossible throw!\n"
 msgstr "Sa ei saa seda teha - Seda on võimatu visata\n"
 
-#: game/g_client.c:1989
+#: game/g_client.c:1995
 msgid "Can't perform action - no ammo!\n"
 msgstr "Sa ei saa seda teha - Pole kuule\n"
 
-#: game/g_client.c:2002
+#: game/g_client.c:2008
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Sa ei saa seda teha - Pole piisavalt kuule\n"
 

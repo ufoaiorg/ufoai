@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-07-17 10:35+0200\n"
+"POT-Creation-Date: 2006-07-19 09:47+0200\n"
 "PO-Revision-Date: 2006-02-15 23:32+0100\n"
 "Last-Translator: Anders K. Madsen <madsen@lillesvin.net>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -2525,7 +2525,7 @@ msgid ""
 msgstr ""
 
 # # in-game (hud)
-#: client/cl_actor.c:1334
+#: client/cl_actor.c:1335
 msgid "Your round started!\n"
 msgstr "Din tur er begyndt!\n"
 
@@ -2781,7 +2781,7 @@ msgstr "%s har taget kommandoen over hold %i.\n"
 msgid "Soldier promoted"
 msgstr ""
 
-#: client/cl_campaign.c:3380 client/cl_campaign.c:3411
+#: client/cl_campaign.c:3381 client/cl_campaign.c:3412
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -2850,7 +2850,7 @@ msgstr ""
 msgid "Max. soldiers per team:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:1219
+#: client/cl_main.c:1218
 msgid "unnamed"
 msgstr ""
 
@@ -2909,17 +2909,17 @@ msgstr ""
 msgid "UFO in radar range\n"
 msgstr "%s er gået berserk!\n"
 
-#: client/cl_parse.c:652
+#: client/cl_parse.c:655
 #, fuzzy
 msgid "Alien spotted!\n"
 msgstr "Rumvæsen set"
 
-#: client/cl_parse.c:654
+#: client/cl_parse.c:657
 #, fuzzy
 msgid "Enemy spotted!\n"
 msgstr "Rumvæsen set"
 
-#: client/cl_parse.c:656
+#: client/cl_parse.c:659
 #, fuzzy
 msgid "Civilian spotted!\n"
 msgstr "Civil set"
@@ -3026,72 +3026,72 @@ msgstr ""
 msgid "No description available."
 msgstr ""
 
-#: client/cl_team.c:538
+#: client/cl_team.c:539
 #, c-format
 msgid "%i of %i"
 msgstr ""
 
-#: client/cl_team.c:715
+#: client/cl_team.c:716
 msgid "NewTeam"
 msgstr ""
 
-#: client/cl_team.c:1101
+#: client/cl_team.c:1102
 #, fuzzy, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Civil set"
 
-#: client/cl_team.c:1103
+#: client/cl_team.c:1104
 #, fuzzy, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Civil set"
 
-#: client/cl_team.c:1109
+#: client/cl_team.c:1110
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1111
+#: client/cl_team.c:1112
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1114
+#: client/cl_team.c:1115
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1115
+#: client/cl_team.c:1116
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1116
+#: client/cl_team.c:1117
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1129
+#: client/cl_team.c:1130
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1131
+#: client/cl_team.c:1132
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1132
+#: client/cl_team.c:1133
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:1133
+#: client/cl_team.c:1134
 #, fuzzy, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -3099,22 +3099,22 @@ msgid ""
 "\n"
 msgstr "Civil set"
 
-#: client/cl_team.c:1153
+#: client/cl_team.c:1154
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr ""
 
-#: client/cl_team.c:1157
+#: client/cl_team.c:1158
 #, fuzzy, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr "Civil set"
 
-#: client/cl_team.c:1161
+#: client/cl_team.c:1162
 #, fuzzy, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr "Civil set"
 
-#: client/cl_team.c:1164
+#: client/cl_team.c:1165
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -3122,7 +3122,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: client/cl_team.c:1168
+#: client/cl_team.c:1169
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr ""
@@ -3272,7 +3272,7 @@ msgid "Shield:\t%s\n"
 msgstr ""
 
 # #ufopedia
-#: client/cl_ufopedia.c:375
+#: client/cl_ufopedia.c:374
 msgid "Ufopedia Content"
 msgstr "Ufopædi Indhold"
 
@@ -3317,39 +3317,39 @@ msgstr "Ikke nok tidsenheder!\n"
 msgid "Can't perform action - weapon already loaded!\n"
 msgstr "Våbnet er allerede ladt!\n"
 
-#: game/g_client.c:1229
+#: game/g_client.c:1230
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr ""
 
-#: game/g_client.c:1349
+#: game/g_client.c:1350
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s går i panik!\n"
 
-#: game/g_client.c:1400
+#: game/g_client.c:1401
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s er gået amok.\n"
 
-#: game/g_client.c:1402
+#: game/g_client.c:1403
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s er gået berserk!\n"
 
-#: game/g_client.c:1457
+#: game/g_client.c:1458
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s er rystet.\n"
 
-#: game/g_client.c:1747
+#: game/g_client.c:1753
 msgid "Can't perform action - impossible throw!\n"
 msgstr "Umuligt kast!\n"
 
-#: game/g_client.c:1989
+#: game/g_client.c:1995
 msgid "Can't perform action - no ammo!\n"
 msgstr "Ingen amunition!\n"
 
-#: game/g_client.c:2002
+#: game/g_client.c:2008
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Ikke nok amunition!\n"
 
