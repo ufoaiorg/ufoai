@@ -2347,11 +2347,12 @@ void CL_CollectAliens(mission_t * mission)
   *
   * @param[in] weapon Which weapon
   * @param[in] left_hand Determines whether the container is the left hand container
+  * @param[in] market Add it to market or mission equipment
   *
   * Called from CL_CollectItems.
   * Put every item to the market inventory list
   */
-void CL_CollectItemAmmo(invList_t * weapon, int left_hand)
+void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
 {
 	technology_t *tech = NULL;
 
@@ -2359,7 +2360,10 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand)
 	/* item.t ?? */
 	if (weapon->item.t == NONE || (left_hand && csi.ods[weapon->item.t].twohanded))
 		return;
-	ccs.eMarket.num[weapon->item.t]++;
+	if (market)
+		ccs.eMarket.num[weapon->item.t]++;
+	else
+		ccs.eMission.num[weapon->item.t]++;
 
 	tech = csi.ods[weapon->item.t].tech;
 	if ( !tech )
@@ -2368,10 +2372,18 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand)
 
 	if (!csi.ods[weapon->item.t].reload || weapon->item.m == NONE)
 		return;
-	ccs.eMarket.num_loose[weapon->item.m] += weapon->item.a;
-	if (ccs.eMarket.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
-		ccs.eMarket.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
-		ccs.eMarket.num[weapon->item.m]++;
+	if (market) {
+		ccs.eMarket.num_loose[weapon->item.m] += weapon->item.a;
+		if (ccs.eMarket.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
+			ccs.eMarket.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
+			ccs.eMarket.num[weapon->item.m]++;
+		}
+	} else {
+		ccs.eMission.num_loose[weapon->item.m] += weapon->item.a;
+		if (ccs.eMission.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
+			ccs.eMission.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
+			ccs.eMission.num[weapon->item.m]++;
+		}
 	}
 }
 
@@ -2404,7 +2416,7 @@ void CL_CollectItems(int won)
 		switch (le->type) {
 		case ET_ITEM:
 			for (item = FLOOR(le); item; item = item->next)
-				CL_CollectItemAmmo(item, 0);
+				CL_CollectItemAmmo(item, 0, qtrue);
 			break;
 		case ET_ACTOR:
 		case ET_UGV:
@@ -2416,7 +2428,7 @@ void CL_CollectItems(int won)
 			/* living actor */
 			for (container = 0; container < csi.numIDs; container++)
 				for (item = le->i.c[container]; item; item = item->next)
-					CL_CollectItemAmmo(item, (container == csi.idLeft));
+					CL_CollectItemAmmo(item, (container == csi.idLeft), qfalse);
 			break;
 		default:
 			break;
