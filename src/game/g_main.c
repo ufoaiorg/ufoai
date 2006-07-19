@@ -414,7 +414,7 @@ void G_EndGame(int team)
 		for (j = 0; j < MAX_TEAMS; j++)
 			gi.WriteByte(level.num_kills[i][j]);
 
-/*	gi.WriteByte(NONE);*/
+	gi.WriteByte(NONE);
 	gi.EndEvents();
 
 	player = game.players + ent->pnum;
