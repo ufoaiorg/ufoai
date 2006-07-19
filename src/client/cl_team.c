@@ -1055,11 +1055,13 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 
 /**
   * @brief
+  * See EV_RESULTS
+  * @sa G_EndGame
+  * @sa CL_GameResultsCmd
   */
-static char resultText[MAX_MENUTEXTLEN];
-
 void CL_ParseResults(sizebuf_t * buf)
 {
+	static char resultText[MAX_MENUTEXTLEN];
 	byte num_spawned[MAX_TEAMS];
 	byte num_alive[MAX_TEAMS];
 	byte num_kills[MAX_TEAMS][MAX_TEAMS];
@@ -1087,8 +1089,8 @@ void CL_ParseResults(sizebuf_t * buf)
 			num_kills[i][j] = MSG_ReadByte(buf);
 
 	/* read terminator */
-/*	if (MSG_ReadByte(buf) != NONE)
-		Com_Printf("WARNING: bad result message\n");*/
+	if (MSG_ReadByte(buf) != NONE)
+		Com_Printf("WARNING: bad result message\n");
 
 	/* init result text */
 	menuText[TEXT_STANDARD] = resultText;
