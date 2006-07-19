@@ -426,6 +426,7 @@ void G_EndGame(int team)
 			j++;
 
 	/* how many */
+	/* This is only read after a click to continue - not on retry */
 	gi.WriteShort(j);
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
