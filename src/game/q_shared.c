@@ -952,7 +952,7 @@ vec_t _DotProduct(vec3_t v1, vec3_t v2)
  */
 void _VectorSubtract(vec3_t veca, vec3_t vecb, vec3_t out)
 {
-#if Q2_MMX_ENABLED
+#ifdef Q2_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
 	__m128 xmm_veca, xmm_vecb, xmm_out;
 
@@ -984,7 +984,7 @@ void _VectorSubtract(vec3_t veca, vec3_t vecb, vec3_t out)
  */
 void _VectorAdd(vec3_t veca, vec3_t vecb, vec3_t out)
 {
-#if Q2_MMX_ENABLED
+#ifdef Q2_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
 	__m128 xmm_veca, xmm_vecb, xmm_out;
 
@@ -1016,7 +1016,7 @@ void _VectorAdd(vec3_t veca, vec3_t vecb, vec3_t out)
  */
 void _VectorCopy(vec3_t in, vec3_t out)
 {
-#if Q2_MMX_ENABLED
+#ifdef Q2_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
 	__m128 xmm_in;
 
@@ -1086,7 +1086,7 @@ void VectorInverse(vec3_t v)
  */
 void VectorScale(vec3_t in, vec_t scale, vec3_t out)
 {
-#if Q2_MMX_ENABLED
+#ifdef Q2_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
 	__m128 xmm_in, xmm_scale, xmm_out;
 
@@ -2320,9 +2320,11 @@ void Com_EmptyContainer(inventory_t * i, int container)
 
 	ic = i->c[container];
 
-#if PARANOID
+#ifdef PARANOID
 	if (ic)
-		Com_Printf("Com_EmptyContainer: '%p'\n", ic );
+		Com_Printf("Com_EmptyContainer: '%p', container ID: %i\n", ic, container );
+	else
+		Com_Printf("Com_EmptyContainer: i->c[%i] is null\n", container);
 #endif
 
 	while (ic) {
@@ -2354,8 +2356,8 @@ void Com_DestroyInventory(inventory_t * i)
 	if (!i)
 		return;
 
-#if PARANOID
-	Com_Printf("Com_DestroyInventory: '%p'\n", i );
+#ifdef PARANOID
+	Com_Printf("Com_DestroyInventory: '%p' Containers: %i\n", i, CSI->numIDs );
 #endif
 
 	for (k = 0; k < CSI->numIDs; k++)
