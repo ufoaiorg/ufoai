@@ -914,7 +914,6 @@ static void CL_CampaignExecute(setState_t * set)
 	CL_CampaignActivateStageSets(set->stage);
 }
 
-char aircraftListText[1024];
 
 /**
   * @brief
@@ -1012,6 +1011,7 @@ static void CL_BuildingAircraftList_f(void)
 	char *s;
 	int i, j;
 	aircraft_t *air;
+	static char aircraftListText[1024];
 
 	memset(aircraftListText, 0, sizeof(aircraftListText));
 	for (j = 0; j < gd.numBases; j++) {
@@ -2470,6 +2470,7 @@ void CL_UpdateCharacterStats(int won)
 
 /**
   * @brief
+  * @sa CL_ParseResults
   */
 void CL_GameResultsCmd(void)
 {
@@ -2554,6 +2555,7 @@ void CL_MapActionReset(void)
 	if (gd.numBases)
 		gd.mapAction = MA_NONE;
 
+	/* FIXME: Don't reset the selMis when we are in tactical mission and enter the geoscape via mn_push map */
 	gd.interceptAircraft = -1;
 	selMis = NULL;				/* reset selected mission */
 }

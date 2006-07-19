@@ -526,11 +526,9 @@ void CL_EntAppear( sizebuf_t *sb )
 }
 
 
-/*
-=====================
-CL_EntPerish
-=====================
-*/
+/**
+ * @brief Called whenever an entity dies
+ */
 void CL_EntPerish( sizebuf_t *sb )
 {
 	le_t	*le;
