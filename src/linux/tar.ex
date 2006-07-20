@@ -13,4 +13,6 @@ src
 *.blend
 debugi386
 debian
+docs
+scrnshots
 Makefile*

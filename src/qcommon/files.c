@@ -191,16 +191,13 @@ Used for streaming data out of either a pak file or
 a seperate file.
 ===========
 */
-int file_from_pak = 0;
 int FS_FOpenFileSingle(const char *filename, FILE ** file)
 {
 	searchpath_t *search;
 	char netpath[MAX_OSPATH];
 	pack_t *pak;
-	int i;
+	int i, file_from_pak = 0;;
 	filelink_t *link;
-
-	file_from_pak = 0;
 
 	/* check for links first */
 	for (link = fs_links; link; link = link->next)
@@ -947,7 +944,7 @@ typedef struct listBlock_s {
 	struct listBlock_s *next;
 } listBlock_t;
 
-listBlock_t *fs_blocklist = NULL;
+static listBlock_t *fs_blocklist = NULL;
 
 void FS_BuildFileList(char *fileList)
 {
