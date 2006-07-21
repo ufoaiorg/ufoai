@@ -946,7 +946,7 @@ void CL_ActorDoMove(sizebuf_t * sb)
 	}
 
 	/* get length */
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_MOVE], &le->pathLength, le->path);
+	MSG_ReadFormat(sb, NULL, ev_format[EV_ACTOR_MOVE], &le->pathLength, le->path);
 
 	/* activate PathMove function */
 	le->i.c[csi.idFloor] = NULL;
@@ -1084,7 +1084,7 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 	le = LE_Get(MSG_ReadShort(sb, NULL));
 
 	/* read data */
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &type, &flags, &muzzle, &impact, &normal);
+	MSG_ReadFormat(sb, NULL, ev_format[EV_ACTOR_SHOOT], &type, &flags, &muzzle, &impact, &normal);
 
 	/* get the fire def */
 	fd = GET_FIREDEF(type);
@@ -1126,7 +1126,7 @@ void CL_ActorDoThrow(sizebuf_t * sb)
 	int dtime;
 
 	/* read data */
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_THROW], &dtime, &type, &flags, &muzzle, &v0);
+	MSG_ReadFormat(sb, NULL, ev_format[EV_ACTOR_THROW], &dtime, &type, &flags, &muzzle, &v0);
 
 	/* get the fire def */
 	fd = GET_FIREDEF(type);
@@ -1158,8 +1158,8 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 	type = MSG_ReadByte(sb, NULL);
 	fd = GET_FIREDEF(type);
 	le = LE_Get(number);
-	MSG_ReadGPos(sb, from);
-	MSG_ReadGPos(sb, target);
+	MSG_ReadGPos(sb, NULL, from);
+	MSG_ReadGPos(sb, NULL, target);
 
 	/* center view (if wanted) */
 	if ((int) cl_centerview->value && cl.actTeam != cls.team)

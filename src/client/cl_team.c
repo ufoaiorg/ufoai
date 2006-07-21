@@ -784,10 +784,10 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 		baseCurrent->nextUCN = chr->ucn + 1;
 
 	/* name and model */
-	Q_strncpyz(chr->name, MSG_ReadString(sb), MAX_VAR);
-	Q_strncpyz(chr->path, MSG_ReadString(sb), MAX_VAR);
-	Q_strncpyz(chr->body, MSG_ReadString(sb), MAX_VAR);
-	Q_strncpyz(chr->head, MSG_ReadString(sb), MAX_VAR);
+	Q_strncpyz(chr->name, MSG_ReadString(sb, NULL), MAX_VAR);
+	Q_strncpyz(chr->path, MSG_ReadString(sb, NULL), MAX_VAR);
+	Q_strncpyz(chr->body, MSG_ReadString(sb, NULL), MAX_VAR);
+	Q_strncpyz(chr->head, MSG_ReadString(sb, NULL), MAX_VAR);
 	chr->skin = MSG_ReadByte(sb, NULL);
 
 	/* new attributes */
@@ -840,9 +840,9 @@ void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 		CL_LoadTeamMember(sb, chr);
 
 	/* get assignement */
-	MSG_ReadFormat(sb, "bl", &base->numHired, &base->hiredMask);
+	MSG_ReadFormat(sb, NULL, "bl", &base->numHired, &base->hiredMask);
 	for (i = 0; i < base->numAircraftInBase; i++)
-		MSG_ReadFormat(sb, "bl", &base->numOnTeam[i], &base->teamMask[i]);
+		MSG_ReadFormat(sb, NULL, "bl", &base->numOnTeam[i], &base->teamMask[i]);
 
 	Com_DPrintf("Load team with %i members and %i slots\n", base->numHired, base->numWholeTeam);
 
@@ -893,7 +893,7 @@ void CL_LoadTeamMultiplayer(char *filename)
 	fclose(f);
 
 	/* load the teamname */
-	Cvar_Set("mn_teamname", MSG_ReadString(&sb));
+	Cvar_Set("mn_teamname", MSG_ReadString(&sb, NULL));
 
 	/* load the team */
 	CL_LoadTeam(&sb, &gd.bases[0], SAVE_FILE_VERSION);

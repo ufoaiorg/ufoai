@@ -1584,7 +1584,7 @@ void CL_LoadEquipment ( sizebuf_t *buf, base_t* base )
 		item.t = MSG_ReadByte(buf, NULL);
 		while (item.t != NONE) {
 			/* read info */
-			MSG_ReadFormat(buf, "bbbbb", &item.a, &item.m, &container, &x, &y);
+			MSG_ReadFormat(buf, NULL, "bbbbb", &item.a, &item.m, &container, &x, &y);
 
 			/* check info and add item if ok */
 			Com_AddToInventory(chr->inv, item, container, x, y);
@@ -1850,10 +1850,10 @@ int CL_GameLoad(char *filename)
 	CL_ReadSinglePlayerData();
 
 	/* read comment */
-	MSG_ReadString(&sb);
+	MSG_ReadString(&sb, NULL);
 
 	/* read campaign name */
-	name = MSG_ReadString(&sb);
+	name = MSG_ReadString(&sb, NULL);
 
 	for (i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++)
 		if (!Q_strncmp(name, curCampaign->id, MAX_VAR))
@@ -1891,7 +1891,7 @@ int CL_GameLoad(char *filename)
 	/* FIXME: This is not uint8_t value - we should write long value */
 	i = MSG_ReadByte(&sb, NULL);
 	for ( ; i > 0; i-- )
-		MN_AddNewMessage(MSG_ReadString(&sb), MSG_ReadString(&sb), qfalse, MSG_STANDARD, NULL);
+		MN_AddNewMessage(MSG_ReadString(&sb, NULL), MSG_ReadString(&sb, NULL), false, MSG_STANDARD, NULL);
 
 	/* read credits */
 	CL_UpdateCredits(MSG_ReadLong(&sb, NULL));
@@ -1916,7 +1916,7 @@ int CL_GameLoad(char *filename)
 	}
 
 	/* read campaign data */
-	name = MSG_ReadString(&sb);
+	name = MSG_ReadString(&sb, NULL);
 	while (*name) {
 		state = CL_CampaignActivateStage(name, qfalse);
 		if (!state) {
@@ -1931,7 +1931,7 @@ int CL_GameLoad(char *filename)
 		state->start.sec = MSG_ReadLong(&sb, NULL);
 		num = MSG_ReadByte(&sb, NULL);
 		for (i = 0; i < num; i++) {
-			name = MSG_ReadString(&sb);
+			name = MSG_ReadString(&sb, NULL);
 			for (j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++)
 				if (!Q_strncmp(name, set->def->name, MAX_VAR))
 					break;
@@ -1951,14 +1951,14 @@ int CL_GameLoad(char *filename)
 		}
 
 		/* read next stage name */
-		name = MSG_ReadString(&sb);
+		name = MSG_ReadString(&sb, NULL);
 	}
 
 	/* store active missions */
 	ccs.numMissions = MSG_ReadByte(&sb, NULL);
 	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++) {
 		/* get mission definition */
-		name = MSG_ReadString(&sb);
+		name = MSG_ReadString(&sb, NULL);
 		for (j = 0; j < numMissions; j++)
 			if (!Q_strncmp(name, missions[j].name, MAX_VAR)) {
 				mis->def = &missions[j];
@@ -1968,7 +1968,7 @@ int CL_GameLoad(char *filename)
 			Com_Printf("Warning: Mission '%s' not found\n", name);
 
 		/* get mission definition */
-		name = MSG_ReadString(&sb);
+		name = MSG_ReadString(&sb, NULL);
 		for (j = 0; j < numStageSets; j++)
 			if (!Q_strncmp(name, stageSets[j].name, MAX_VAR)) {
 				mis->cause = &ccs.set[j];

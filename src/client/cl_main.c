@@ -583,7 +583,7 @@ int serverListLength;
 netadr_t serverList[MAX_SERVERLIST];
 void CL_ParseStatusMessage(void)
 {
-	char *s = MSG_ReadString(&net_message);
+	char *s = MSG_ReadString(&net_message, NULL);
 
 	Com_DPrintf("CL_ParseStatusMessage: %s\n", s);
 
@@ -603,7 +603,7 @@ void CL_ParseStatusMessage(void)
 static char serverInfoText[MAX_MESSAGE_TEXT];
 void CL_ParseServerInfoMessage(void)
 {
-	char *s = MSG_ReadString(&net_message);
+	char *s = MSG_ReadString(&net_message, NULL);
 	char *var = NULL;
 	char *value = NULL;
 
@@ -836,7 +836,7 @@ void CL_ConnectionlessPacket(void)
 	MSG_BeginReading(&net_message);
 	MSG_ReadLong(&net_message, NULL);	/* skip the -1 */
 
-	s = MSG_ReadStringLine(&net_message);
+	s = MSG_ReadStringLine(&net_message, NULL);
 
 	Cmd_TokenizeString(s, qfalse);
 
@@ -870,7 +870,7 @@ void CL_ConnectionlessPacket(void)
 			return;
 		}
 		Sys_AppActivate();
-		s = MSG_ReadString(&net_message);
+		s = MSG_ReadString(&net_message, NULL);
 		Cbuf_AddText(s);
 		Cbuf_AddText("\n");
 		return;
