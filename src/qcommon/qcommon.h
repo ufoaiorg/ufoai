@@ -231,7 +231,7 @@ int Com_ServerState(void);		/* this should have just been a cvar... */
 void Com_SetServerState(int state);
 
 unsigned Com_BlockChecksum(void *buffer, int length);
-uint8_t COM_BlockSequenceCRCByte(byte * base, int length, int sequence);
+uint8_t COM_BlockSequenceCRCByte(uint8_t *base, int length, int sequence);
 
 extern cvar_t *developer;
 extern cvar_t *dedicated;

@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 void RS_GetFirstRequired(int tech_idx, stringlist_t * required);
-qboolean RS_TechIsResearchable(technology_t * t);
+bool_t RS_TechIsResearchable(technology_t * t);
 
 /* A (local) list of displayed technology-entries (the research list in the base) */
 technology_t *researchList[MAX_RESEARCHLIST];
@@ -88,7 +88,7 @@ void RS_MarkCollected(void)
 void RS_MarkOneResearchable(int tech_idx)
 {
 	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", gd.technologies[tech_idx].id);
-	gd.technologies[tech_idx].statusResearchable = qtrue;
+	gd.technologies[tech_idx].statusResearchable = true;
 }
 
 /**
@@ -102,12 +102,12 @@ void RS_MarkResearchable(void)
 	technology_t *tech = NULL;
 	stringlist_t firstrequired;
 	stringlist_t *required = NULL;
-	byte required_are_researched;
+	bool_t required_are_researched;
 
 	/* set all entries to initial value */
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
-		tech->statusResearchable = qfalse;
+		tech->statusResearchable = false;
 	}
 
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -129,13 +129,13 @@ void RS_MarkResearchable(void)
 
 				/* if needed/required techs are all researched, mark this as researchable. */
 				required = &tech->requires;
-				required_are_researched = qtrue;
+				required_are_researched = true;
 				Com_DPrintf("RS_MarkResearchable: %i required entries\n", required->numEntries);
 				for (j = 0; j < required->numEntries; j++) {
 					Com_DPrintf("RS_MarkResearchable: entry: %s / %i\n", required->string[j], required->idx[j]);
 					if ((!RS_TechIsResearched(required->idx[j]))
 						|| (!Q_strncmp(required->string[j], "nothing", MAX_VAR))) {
-						required_are_researched = qfalse;
+						required_are_researched = false;
 						break;
 					}
 				}
@@ -144,14 +144,14 @@ void RS_MarkResearchable(void)
 				if (required_are_researched && ((tech->needsCollected && tech->statusCollected) || !tech->needsCollected)) {	/* AND ( all needed collected OR no collected needed ) */
 					Com_DPrintf("RS_MarkResearchable: %i - %i - %i\n", required_are_researched, tech->needsCollected, tech->statusCollected);
 					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:required.\n", tech->id);
-					tech->statusResearchable = qtrue;
+					tech->statusResearchable = true;
 				}
 
 				/* If the tech is an initial one,  mark it as as researchable. */
 				for (j = 0; j < required->numEntries; j++) {
 					if (!Q_strncmp(required->string[j], "initial", MAX_VAR)) {
 						Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable - reason:isinitial.\n", tech->id);
-						tech->statusResearchable = qtrue;
+						tech->statusResearchable = true;
 						break;
 					}
 				}
@@ -195,7 +195,7 @@ void RS_InitTree(void)
 	objDef_t *item_ammo = NULL;
 	building_t *building = NULL;
 	aircraft_t *ac = NULL;
-	byte found;
+	bool_t found;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
@@ -221,13 +221,13 @@ void RS_InitTree(void)
 			break;
 		case RS_WEAPON:
 		case RS_ARMOR:
-			found = qfalse;
+			found = false;
 			for (j = 0; j < csi.numODs; j++) {
 				item = &csi.ods[j];
 
 				/* This item has been 'provided' -> get the correct data. */
 				if (!Q_strncmp(tech->provides, item->kurz, MAX_VAR)) {
-					found = qtrue;
+					found = true;
 					if (!*tech->name)
 						Com_sprintf(tech->name, MAX_VAR, item->name);
 					if (!*tech->mdl_top)
@@ -258,12 +258,12 @@ void RS_InitTree(void)
 			}
 			break;
 		case RS_BUILDING:
-			found = qfalse;
+			found = false;
 			for (j = 0; j < gd.numBuildingTypes; j++) {
 				building = &gd.buildingTypes[j];
 				/* This building has been 'provided'  -> get the correct data. */
 				if (!Q_strncmp(tech->provides, building->id, MAX_VAR)) {
-					found = qtrue;
+					found = true;
 					if (!*tech->name)
 						Com_sprintf(tech->name, MAX_VAR, building->name);
 					if (!*tech->image_top)
@@ -279,12 +279,12 @@ void RS_InitTree(void)
 			}
 			break;
 		case RS_CRAFT:
-			found = qfalse;
+			found = false;
 			for (j = 0; j < numAircraft; j++) {
 				ac = &aircraft[j];
 				/* This aircraft has been 'provided'  -> get the correct data. */
 				if (!Q_strncmp(tech->provides, ac->id, MAX_VAR)) {
-					found = qtrue;
+					found = true;
 					if (!*tech->name)
 						Com_sprintf(tech->name, MAX_VAR, ac->name);
 					if (!*tech->mdl_top) {	/* DEBUG testing */
@@ -362,7 +362,7 @@ static void RS_ResearchDisplayInfo(void)
 
 	/* Display total number of free labs in current base. */
 	Cvar_Set("mn_research_labs", va(_("Free labs in this base: %i"), B_GetUnusedLabs(baseCurrent->idx)));
-	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qfalse)));
+	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, false)));
 	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
 
 	/* Display the base this tech is researched in. */
@@ -467,7 +467,7 @@ static void RS_AssignScientist2(int num)
 
 	tech = researchList[num];
 
-	if ( B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue) <= 0 ) {
+	if ( B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, true) <= 0 ) {
 		/* no scientists are free in this base */
 		return;
 	}
@@ -696,7 +696,7 @@ void RS_UpdateData(void)
 	/* Make everything the same (predefined in the ufo-file) color. */
 	Cbuf_AddText("research_clear\n");
 
-	available = B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, qtrue);
+	available = B_EmployeesInBase2(baseCurrent->idx, EMPL_SCIENTIST, true);
 
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
@@ -810,9 +810,9 @@ void CL_ResearchType(void)
   * @brief Checks if the research item id1 depends on (requires) id2
   * @param[in] id1 Unique id of a technology_t that may or may not depend on id2.
   * @param[in] id2 Unique id of a technology_t
-  * @return qboolean
+  * @return bool_t
   */
-static qboolean RS_DependsOn(char *id1, char *id2)
+static bool_t RS_DependsOn(char *id1, char *id2)
 {
 	int i;
 	technology_t *tech = NULL;
@@ -820,16 +820,16 @@ static qboolean RS_DependsOn(char *id1, char *id2)
 
 	tech = RS_GetTechByID(id1);
 	if (!tech)
-		return qfalse;
+		return false;
 
 	/* research item found */
 	required = tech->requires;
 	for (i = 0; i < required.numEntries; i++) {
 		/* Current item (=id1) depends on id2. */
 		if (!Q_strncmp(required.string[i], id2, MAX_VAR))
-			return qtrue;
+			return true;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -873,7 +873,7 @@ void CL_CheckResearchStatus(void)
 		if (tech->statusResearch == RS_RUNNING) {
 			if (tech->time <= 0) {
 				Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Research of %s finished\n"), tech->name);
-				MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH, tech);
+				MN_AddNewMessage(_("Research finished"), messageBuffer, false, MSG_RESEARCH, tech);
 
 				B_ClearBuilding(&gd.buildings[tech->base_idx][tech->lab]);
 				tech->base_idx = -1;
@@ -1022,9 +1022,9 @@ static void RS_DebugResearchAll(void)
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		Com_Printf("...mark %s as researched\n", gd.technologies[i].id);
-		gd.technologies[i].statusResearchable = qtrue;
+		gd.technologies[i].statusResearchable = true;
 		gd.technologies[i].statusResearch = RS_FINISH;
-		gd.technologies[i].needsCollected = qfalse;
+		gd.technologies[i].needsCollected = false;
 	}
 }
 #endif
@@ -1119,7 +1119,7 @@ void RS_ParseTechnologies(char *id, char **text)
 	*tech->mdl_bottom = '\0';
 	tech->type = RS_TECH;
 	tech->statusResearch = RS_NONE;
-	tech->statusResearchable = qfalse;
+	tech->statusResearchable = false;
 	tech->statusCollected = 0;
 	tech->time = 0;
 	tech->overalltime = 0;
@@ -1261,13 +1261,13 @@ void RS_GetRequired(char *id, stringlist_t * required)
   * @brief Checks whether an item is already researched
   * @sa RS_IsResearched_ptr
   */
-qboolean RS_IsResearched_idx(int idx)
+bool_t RS_IsResearched_idx(int idx)
 {
-	if (ccs.singleplayer == qfalse)
-		return qtrue;
+	if (ccs.singleplayer == false)
+		return true;
 	if (idx >= 0 && gd.technologies[idx].statusResearch == RS_FINISH)
-		return qtrue;
-	return qfalse;
+		return true;
+	return false;
 }
 
 /**
@@ -1275,22 +1275,22 @@ qboolean RS_IsResearched_idx(int idx)
   * @sa RS_IsResearched_idx
   * Call this function if you already hold a tech pointer
   */
-qboolean RS_IsResearched_ptr(technology_t * tech)
+bool_t RS_IsResearched_ptr(technology_t * tech)
 {
-	if (ccs.singleplayer == qfalse)
-		return qtrue;
+	if (ccs.singleplayer == false)
+		return true;
 	if (tech && tech->statusResearch == RS_FINISH)
-		return qtrue;
-	return qfalse;
+		return true;
+	return false;
 }
 
 /**
   * @brief Checks if the item (as listed in "provides") has been researched
   * @param[in] id_provided Unique id of an item/building/etc.. that is provided by a technology_t
-  * @return qboolean
+  * @return bool_t
   * @sa RS_IsResearched_ptr
   */
-qboolean RS_ItemIsResearched(char *id_provided)
+bool_t RS_ItemIsResearched(char *id_provided)
 {
 	int i;
 	technology_t *tech = NULL;
@@ -1302,7 +1302,7 @@ qboolean RS_ItemIsResearched(char *id_provided)
 			return RS_IsResearched_ptr(tech);
 	}
 	/* no research needed */
-	return qtrue;
+	return true;
 }
 
 /**
@@ -1322,80 +1322,80 @@ int RS_Collected_(technology_t * tech)
 /**
   * @brief Returns the number of collected ("provided") items.
   * @param[in] id_provided Unique id of an item/building/etc.. that is provided by a technology_t
-  * @return qboolean
+  * @return bool_t
   * @sa RS_TechIsResearched
   * @sa RS_TechIsResearchable
   */
-qboolean RS_ItemCollected(char *id_provided)
+bool_t RS_ItemCollected(char *id_provided)
 {
 	int i = 0;
 
 	if (!id_provided)
-		return qfalse;
+		return false;
 
 	for (; i < gd.numTechnologies; i++)
 		if (!Q_strncmp((char *) id_provided, gd.technologies[i].provides, MAX_VAR))
 			return RS_Collected_(&gd.technologies[i]);
 
 	Com_DPrintf("RS_ItemCollected: \"%s\" <- research item that 'provides' this item not found.\n", id_provided);
-	return qfalse;
+	return false;
 }
 
 /**
   * @brief Checks if the technology (tech-id) has been researched.
   * @param[in] tech_idx index of the technology.
-  * @return qboolean
+  * @return bool_t
   */
-qboolean RS_TechIsResearched(int tech_idx)
+bool_t RS_TechIsResearched(int tech_idx)
 {
 	if (tech_idx < 0)
-		return qfalse;
+		return false;
 
 #if 0
 	/* DEBUG: still needed? */
 	/* initial and nothing are always researched. as they are just starting "technologys" that are never used. */
 	if (!Q_strncmp(gd.technologies[tech_idx].id, "initial", MAX_VAR)
 		|| !Q_strncmp(gd.technologies[tech_idx].id, "nothing", MAX_VAR))
-		return qtrue;
+		return true;
 #endif
 
 	/* research item found */
 	if (gd.technologies[tech_idx].statusResearch == RS_FINISH)
-		return qtrue;
+		return true;
 
-	return qfalse;
+	return false;
 }
 
 /**
   * @brief Checks if the technology (tech-id) is researchable.
   * @param[in] tech pointer to technology_t.
-  * @return qboolean
+  * @return bool_t
   * @sa RS_TechIsResearched
   */
-qboolean RS_TechIsResearchable(technology_t * tech)
+bool_t RS_TechIsResearchable(technology_t * tech)
 {
 	int i;
 	stringlist_t *required = NULL;
 
 	if (!tech)
-		return qfalse;
+		return false;
 
 	/* research item found */
 	if (tech->statusResearch == RS_FINISH)
-		return qfalse;
+		return false;
 
 	if ((!Q_strncmp(tech->id, "initial", MAX_VAR))
 		|| (!Q_strncmp(tech->id, "nothing", MAX_VAR)))
-		return qtrue;
+		return true;
 
 	required = &tech->requires;
 
 	for (i = 0; i < required->numEntries; i++)
 		/* Research of "id" not finished (RS_FINISH) at this point. */
 		if (!RS_TechIsResearched(required->idx[i]))
-			return qfalse;
+			return false;
 
-	return qtrue;
+	return true;
 
 }
 

@@ -115,7 +115,7 @@ typedef struct {
 	/* items */
 	int num_items;
 
-	qboolean autosaved;
+	bool_t autosaved;
 } game_locals_t;
 
 /* this structure is cleared as each map is entered */
@@ -127,7 +127,7 @@ typedef struct {
 	char level_name[MAX_QPATH];	/* the descriptive name (Outer Base, etc) */
 	char mapname[MAX_QPATH];	/* the server name (base1, etc) */
 	char nextmap[MAX_QPATH];	/* go here when fraglimit is hit */
-	qboolean routed;
+	bool_t routed;
 
 	/* intermission state */
 	char *changemap;
@@ -139,11 +139,11 @@ typedef struct {
 	int activeTeam;
 	int nextEndRound;
 
-	byte num_alive[MAX_TEAMS];
-	byte num_spawned[MAX_TEAMS];
-	byte num_spawnpoints[MAX_TEAMS];
-	byte num_ugvspawnpoints[MAX_TEAMS];
-	byte num_kills[MAX_TEAMS][MAX_TEAMS];
+	uint8_t num_alive[MAX_TEAMS];
+	uint8_t num_spawned[MAX_TEAMS];
+	uint8_t num_spawnpoints[MAX_TEAMS];
+	uint8_t num_ugvspawnpoints[MAX_TEAMS];
+	uint8_t num_kills[MAX_TEAMS][MAX_TEAMS];
 } level_locals_t;
 
 
@@ -345,13 +345,13 @@ void G_ClientDisconnect(player_t * player);
 
 int G_TestVis(int team, edict_t * check, int flags);
 void G_ClientShoot(player_t * player, int num, pos3_t at, int type);
-void G_ClientMove(player_t * player, int team, int num, pos3_t to, qboolean stop);
+void G_ClientMove(player_t * player, int team, int num, pos3_t to, bool_t stop);
 void G_MoveCalc(int team, pos3_t from, int distance);
 qboolean G_ReactionFire(edict_t * target);
 
-float G_ActorVis(vec3_t from, edict_t * check, qboolean full);
+float G_ActorVis(vec3_t from, edict_t *check, qboolean full);
 void G_ClearVisFlags(int team);
-int G_CheckVis(edict_t * check, qboolean perish);
+int G_CheckVis(edict_t * check, bool_t perish);
 void G_GiveTimeUnits(int team);
 
 void G_AppearPerishEvent(int player_mask, int appear, edict_t * check);
@@ -394,8 +394,8 @@ typedef struct {
 	/* the number of the team for this player */
 	/* 0 is reserved for civilians and critters */
 	int team;
-	qboolean spectator;			/* client is a spectator */
-	qboolean ai;				/* client controlled by ai */
+	bool_t spectator;			/* client is a spectator */
+	bool_t ai;				/* client controlled by ai */
 
 	/* ai specific data */
 	edict_t *last;
@@ -410,14 +410,14 @@ struct player_s {
 	int ping;
 
 	/* private to game */
-	qboolean spawned;
-	qboolean ready;
+	bool_t spawned;
+	bool_t ready;
 	client_persistant_t pers;
 };
 
 
 struct edict_s {
-	qboolean inuse;
+	bool_t inuse;
 	int linkcount;
 
 	int number;
@@ -450,22 +450,22 @@ struct edict_s {
 
 	/* only used locally in game, not by server */
 
-	int type;
+	uint8_t type;
 	int visflags;
 
 	pos3_t pos;
-	byte dir;					/* direction the player looks at */
+	uint8_t dir;					/* direction the player looks at */
 
-	int TU;						/* remaining timeunits */
-	int HP;						/* remaining healthpoints */
-	int AP;						/* remaining armor protection */
-	int STUN;
-	int morale;					/* the current morale value */
+	uint8_t TU;						/* remaining timeunits */
+	uint8_t HP;						/* remaining healthpoints */
+	uint8_t AP;						/* remaining armor protection */
+	uint8_t STUN;
+	uint8_t morale;					/* the current morale value */
 
-	int state;					/* the player state - dead, shaken.... */
+	int16_t state;					/* the player state - dead, shaken.... */
 
-	int team;					/* player of which team? */
-	int pnum;					/* the actual player slot */
+	uint8_t team;					/* player of which team? */
+	uint8_t pnum;					/* the actual player slot */
 	/* the models (hud) */
 	int body;
 	int head;

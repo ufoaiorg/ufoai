@@ -80,8 +80,8 @@ typedef struct technology_s {
 	char mdl_bottom[MAX_QPATH];
 
 	int statusCollected;		/* Did we loot this item (and how mach of it -> aliens/corpses) ? */
-	byte needsCollected;		/* Is a collected item neccessary to research this item? */
-	byte statusResearchable;	/* Is this item researchable? */
+	bool_t needsCollected;		/* Is a collected item neccessary to research this item? */
+	bool_t statusResearchable;	/* Is this item researchable? */
 
 	/* Pedia info */
 	int up_chapter;				/* pedia chapter as stored in research.ufo. */
@@ -97,12 +97,12 @@ void RS_ResetResearch(void);
 void CL_CheckResearchStatus(void);
 void RS_UpdateData(void);
 void RS_ParseTechnologies(char *title, char **text);
-qboolean RS_ItemIsResearched(char *id_provided);
-qboolean RS_TechIsResearched(int tech_idx);
-qboolean RS_IsResearched_idx(int idx);
-qboolean RS_IsResearched_ptr(technology_t * tech);
+bool_t RS_ItemIsResearched(char *id_provided);
+bool_t RS_TechIsResearched(int tech_idx);
+bool_t RS_IsResearched_idx(int idx);
+bool_t RS_IsResearched_ptr(technology_t * tech);
 int RS_Collected_(technology_t * tech);
-qboolean RS_ItemCollected(char *id_provided);
+bool_t RS_ItemCollected(char *id_provided);
 
 void RS_AddObjectTechs(void);
 void RS_InitTree(void);

@@ -73,7 +73,7 @@ typedef struct playsound_s {
 	float attenuation;
 	int entnum;
 	int entchannel;
-	qboolean fixed_origin;		/* use origin field instead of entnum's origin */
+	bool_t fixed_origin;		/* use origin field instead of entnum's origin */
 	vec3_t origin;
 	unsigned begin;				/* begin on this sample */
 } playsound_t;
@@ -85,7 +85,7 @@ typedef struct {
 	int samplepos;				/* in mono samples */
 	int samplebits;
 	int speed;
-	byte *buffer;
+	uint8_t *buffer;
 	int dmapos;
 	int dmasize;
 } dma_t;
@@ -103,8 +103,8 @@ typedef struct {
 	vec3_t origin;				/* only use if fixed_origin is set */
 	vec_t dist_mult;			/* distance multiplier (attenuation/clipK) */
 	int master_vol;				/* 0-255 master volume */
-	qboolean fixed_origin;		/* use origin instead of fetching entnum's origin */
-	qboolean autosound;			/* from an entity->sound, cleared each frame */
+	bool_t fixed_origin;		/* use origin instead of fetching entnum's origin */
+	bool_t autosound;			/* from an entity->sound, cleared each frame */
 } channel_t;
 
 typedef struct {
@@ -182,7 +182,7 @@ extern cvar_t *s_primary;
 extern cvar_t *ov_volume;
 extern cvar_t *ov_loop;
 
-wavinfo_t GetWavinfo(char *name, byte * wav, int wavlength);
+wavinfo_t GetWavinfo(char *name, uint8_t *wav, int wavlength);
 
 void S_InitScaletable(void);
 
