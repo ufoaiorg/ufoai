@@ -471,6 +471,7 @@ void R_DrawAliasModel(entity_t * e)
 	if ((e->flags & RF_TRANSLUCENT) || (skin && skin->has_alpha))
 		qglDisable(GL_BLEND);
 
+	/* TODO: Add blood if entity is dead - but not stunned */
 	if (gl_shadows->value == 1 && (e->flags & RF_SHADOW)) {
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(0);

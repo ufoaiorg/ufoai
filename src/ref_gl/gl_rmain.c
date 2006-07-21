@@ -1003,6 +1003,10 @@ void R_RenderView(refdef_t * fd)
 }
 
 
+/**
+ * @brief
+ * @sa R_SetGL2D
+ */
 void R_LeaveGL2D(void)
 {
 	qglMatrixMode(GL_MODELVIEW);
@@ -1014,6 +1018,10 @@ void R_LeaveGL2D(void)
 	qglPopAttrib();
 }
 
+/**
+ * @brief
+ * @sa R_LeaveGL2D
+ */
 void R_SetGL2D(void)
 {
 	/* set 2D virtual screen size */
@@ -1037,6 +1045,7 @@ void R_SetGL2D(void)
  * @sa R_RenderView
  * @sa V_RenderView
  * @sa SCR_TimeRefresh_f
+ * @sa R_SetGL2D
  */
 void R_RenderFrame(refdef_t * fd)
 {
