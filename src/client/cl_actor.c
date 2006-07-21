@@ -232,21 +232,21 @@ static void CL_RefreshWeaponButtons(int time)
 
 	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time) {
 		if (primary_right != 0) {
-			Cbuf_AddText("dispr\n");
+			Cbuf_ExecuteText("dispr\n", EXEC_APPEND);
 			primary_right = 0;
 		}
 	} else if (primary_right != 1) {
-		Cbuf_AddText("deselpr\n");
+		Cbuf_ExecuteText("deselpr\n", EXEC_APPEND);
 		primary_right = 1;
 	}
 
 	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time) {
 		if (secondary_right != 0) {
-			Cbuf_AddText("dissr\n");
+			Cbuf_ExecuteText("dissr\n", EXEC_APPEND);
 			secondary_right = 0;
 		}
 	} else if (secondary_right != 1) {
-		Cbuf_AddText("deselsr\n");
+		Cbuf_ExecuteText("deselsr\n", EXEC_APPEND);
 		secondary_right = 1;
 	}
 
@@ -256,21 +256,21 @@ static void CL_RefreshWeaponButtons(int time)
 
 	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_PRIMARY].time) {
 		if (primary_left != 0) {
-			Cbuf_AddText("displ\n");
+			Cbuf_ExecuteText("displ\n", EXEC_APPEND);
 			primary_left = 0;
 		}
 	} else if (primary_left != 1) {
-		Cbuf_AddText("deselpl\n");
+		Cbuf_ExecuteText("deselpl\n", EXEC_APPEND);
 		primary_left = 1;
 	}
 
 	if (!weapon || weapon->item.m == NONE || time < csi.ods[weapon->item.m].fd[FD_SECONDARY].time) {
 		if (secondary_left != 0) {
-			Cbuf_AddText("dissl\n");
+			Cbuf_ExecuteText("dissl\n", EXEC_APPEND);
 			secondary_left = 0;
 		}
 	} else if (secondary_left != 1) {
-		Cbuf_AddText("deselsl\n");
+		Cbuf_ExecuteText("deselsl\n", EXEC_APPEND);
 		secondary_left = 1;
 	}
 }
@@ -422,15 +422,15 @@ void CL_ActorUpdateCVars(void)
 		if (cl.oldstate != selActor->state || refresh) {
 			cl.oldstate = selActor->state;
 			if (selActor->state & STATE_CROUCHED) {
-				Cbuf_AddText("tocrouch\n");
+				Cbuf_ExecuteText("tocrouch\n", EXEC_APPEND);
 			} else {
-				Cbuf_AddText("tostand\n");
+				Cbuf_ExecuteText("tostand\n", EXEC_APPEND);
 			}
 
 			if (selActor->state & STATE_REACTION) {
-				Cbuf_AddText("startreaction\n");
+				Cbuf_ExecuteText("startreaction\n", EXEC_APPEND);
 			} else {
-				Cbuf_AddText("stopreaction\n");
+				Cbuf_ExecuteText("stopreaction\n", EXEC_APPEND);
 			}
 
 		} else {
@@ -448,7 +448,7 @@ void CL_ActorUpdateCVars(void)
 			Cvar_Set("mn_stun", "0");
 			*/
 			if (refresh)
-				Cbuf_AddText("tostand\n");
+				Cbuf_ExecuteText("tostand\n", EXEC_APPEND);
 
 			/* this allows us to display messages even with no actor selected */
 			if (cl.time < cl.msgTime) {
@@ -464,24 +464,24 @@ void CL_ActorUpdateCVars(void)
 		switch (cl.cmode) {
 		case M_FIRE_PL:
 		case M_PEND_FIRE_PL:
-			Cbuf_AddText("towpl\n");
+			Cbuf_ExecuteText("towpl\n", EXEC_APPEND);
 			break;
 		case M_FIRE_SL:
 		case M_PEND_FIRE_SL:
-			Cbuf_AddText("towsl\n");
+			Cbuf_ExecuteText("towsl\n", EXEC_APPEND);
 			break;
 		case M_FIRE_PR:
 		case M_PEND_FIRE_PR:
-			Cbuf_AddText("towpr\n");
+			Cbuf_ExecuteText("towpr\n", EXEC_APPEND);
 			break;
 		case M_FIRE_SR:
 		case M_PEND_FIRE_SR:
-			Cbuf_AddText("towsr\n");
+			Cbuf_ExecuteText("towsr\n", EXEC_APPEND);
 			break;
 		default:
 			/* If we've just changing between move modes, don't reset */
 			if (cl.oldcmode != M_MOVE && cl.oldcmode != M_PEND_MOVE)
-				Cbuf_AddText("tomov\n");
+				Cbuf_ExecuteText("tomov\n", EXEC_APPEND);
 			break;
 		}
 		cl.oldcmode = cl.cmode;
@@ -493,14 +493,14 @@ void CL_ActorUpdateCVars(void)
 
 		for (i = 0; i < MAX_TEAMLIST; i++) {
 			if (!cl.teamList[i] || cl.teamList[i]->state & STATE_DEAD) {
-				Cbuf_AddText(va("huddisable%i\n", i));
+				Cbuf_ExecuteText(va("huddisable%i\n", i), EXEC_APPEND);
 			} else if (i == (int) cl_selected->value) {
-				Cbuf_AddText(va("hudselect%i\n", i));
+				Cbuf_ExecuteText(va("hudselect%i\n", i), EXEC_APPEND);
 			} else {
-				Cbuf_AddText(va("huddeselect%i\n", i));
+				Cbuf_ExecuteText(va("huddeselect%i\n", i), EXEC_APPEND);
 			}
 		}
-		cl_selected->modified = qfalse;
+		cl_selected->modified = false;
 	}
 }
 
@@ -541,8 +541,8 @@ void CL_AddActorToTeamList(le_t * le)
 	/* add it */
 	if (i == cl.numTeamList) {
 		cl.teamList[cl.numTeamList++] = le;
-		Cbuf_AddText(va("numonteam%i\n", cl.numTeamList));
-		Cbuf_AddText(va("huddeselect%i\n", i));
+		Cbuf_ExecuteText(va("numonteam%i\n", cl.numTeamList), EXEC_APPEND);
+		Cbuf_ExecuteText(va("huddeselect%i\n", i), EXEC_APPEND);
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
 	}
@@ -579,7 +579,7 @@ void CL_RemoveActorFromTeamList(le_t * le)
 	for (i = 0; i < cl.numTeamList; i++) {
 		if (cl.teamList[i] == le) {
 			/* disable hud button */
-			Cbuf_AddText(va("huddisable%i\n", i));
+			Cbuf_ExecuteText(va("huddisable%i\n", i), EXEC_APPEND);
 
 			/* remove from list */
 			cl.teamList[i] = NULL;
@@ -1327,7 +1327,7 @@ void CL_DoEndRound(sizebuf_t * sb)
 {
 	/* hud changes */
 	if (cls.team == cl.actTeam)
-		Cbuf_AddText("endround\n");
+		Cbuf_ExecuteText("endround\n", EXEC_APPEND);
 
 	/* change active player */
 	Com_Printf("Team %i ended round", cl.actTeam);
@@ -1339,7 +1339,7 @@ void CL_DoEndRound(sizebuf_t * sb)
 
 	/* hud changes */
 	if (cls.team == cl.actTeam) {
-		Cbuf_AddText("startround\n");
+		Cbuf_ExecuteText("startround\n", EXEC_APPEND);
 		CL_DisplayHudMessage(_("Your round started!\n"), 2000);
 		S_StartLocalSound("misc/roundstart.wav");
 		if (selActor) {
@@ -1348,7 +1348,6 @@ void CL_DoEndRound(sizebuf_t * sb)
 		}
 	}
 }
-
 
 /*
 ==============================================================

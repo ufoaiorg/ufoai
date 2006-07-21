@@ -1400,7 +1400,7 @@ void B_DrawBase(menuNode_t * node)
 	building_t *building = NULL, *secondBuilding = NULL, *hoverBuilding = NULL;
 
 	if (!baseCurrent)
-		Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
+		Cbuf_ExecuteText("mn_pop", EXEC_NOW);
 
 	width = node->size[0] / BASE_SIZE;
 	height = (node->size[1] + BASE_SIZE * 20) / BASE_SIZE;

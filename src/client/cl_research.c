@@ -799,10 +799,11 @@ void CL_ResearchType(void)
 	RS_UpdateData();
 
 	/* Nothing to research here. */
-	if (!researchListLength || !gd.numBases)
-		Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
-	else if (baseCurrent && !baseCurrent->hasLab)
+	if (!researchListLength || !gd.numBases) {
+		Cbuf_ExecuteText("mn_pop", EXEC_NOW);
+	} else if (baseCurrent && !baseCurrent->hasLab) {
 		MN_Popup(_("Notice"), _("Build a laboratory first"));
+	}
 }
 
 /**

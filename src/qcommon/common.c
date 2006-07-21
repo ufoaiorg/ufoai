@@ -23,6 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "common.h"
+
 #include "qcommon.h"
 #include <setjmp.h>
 #include <ctype.h>
@@ -308,15 +310,18 @@ vec3_t bytedirs[NUMVERTEXNORMALS] = {
 /* writing functions */
 
 /**
- * @brief
+ * @brief Write a character into a buffer.
+ *
+ * NOTE: This used to take an int as a parameter, which just doesn't make sense.
  */
-void MSG_WriteChar(sizebuf_t * sb, int c)
+void MSG_WriteChar(sizebuf_t *sb, char c)
 {
 	byte *buf;
-
+#if 0
 #ifdef PARANOID
 	if (c < SCHAR_MIN || c > SCHAR_MAX)
 		Com_Error(ERR_FATAL, "MSG_WriteChar: range error %i", c);
+#endif
 #endif
 
 	buf = SZ_GetSpace(sb, 1);
@@ -326,49 +331,30 @@ void MSG_WriteChar(sizebuf_t * sb, int c)
 /**
  * @brief
  */
-#ifdef DEBUG
-void MSG_WriteByteDebug(sizebuf_t * sb, int c, char *file, int line)
-#else
-void MSG_WriteByte(sizebuf_t * sb, int c)
-#endif
+void MSG_WriteByte(sizebuf_t *sb, uint8_t c)
 {
-	byte *buf;
-
-	/* PARANOID is only possible in debug mode (when DEBUG was set, too) */
-#ifdef PARANOID
-	if (c < 0 || c > UCHAR_MAX)
-		Com_Printf("MSG_WriteByte: range error %i ('%s', line %i)\n", c, file, line);
-#endif
+	uint8_t *buf;
 
 	buf = SZ_GetSpace(sb, 1);
-	buf[0] = c & UCHAR_MAX;
+	buf[0] = c;
 }
 
 /**
  * @brief
  */
-#ifdef DEBUG
-void MSG_WriteShortDebug(sizebuf_t * sb, int c, char* file, int line)
-#else
-void MSG_WriteShort(sizebuf_t * sb, int c)
-#endif
+void MSG_WriteShort(sizebuf_t *sb, int16_t c)
 {
-	byte *buf;
-
-#ifdef PARANOID
-	if (c < SHRT_MIN || c > USHRT_MAX)
-		Com_Printf("MSG_WriteShort: range error %i ('%s', line %i)\n", c, file, line);
-#endif
+	uint8_t *buf;
 
 	buf = SZ_GetSpace(sb, 2);
-	buf[0] = c & UCHAR_MAX;
-	buf[1] = (c >> 8) & UCHAR_MAX;
+	buf[0] = c & UINT8_MAX;
+	buf[1] = (c >> 8) & UINT8_MAX;
 }
 
 /**
  * @brief
  */
-void MSG_WriteLong(sizebuf_t * sb, int c)
+void MSG_WriteLong(sizebuf_t *sb, int c)
 {
 	byte *buf;
 
@@ -382,7 +368,7 @@ void MSG_WriteLong(sizebuf_t * sb, int c)
 /**
  * @brief
  */
-void MSG_WriteFloat(sizebuf_t * sb, float f)
+void MSG_WriteFloat(sizebuf_t *sb, float f)
 {
 	union {
 		float f;
@@ -399,7 +385,7 @@ void MSG_WriteFloat(sizebuf_t * sb, float f)
 /**
  * @brief
  */
-void MSG_WriteString(sizebuf_t * sb, char *s)
+void MSG_WriteString(sizebuf_t *sb, char *s)
 {
 	if (!s)
 		SZ_Write(sb, "", 1);
@@ -410,7 +396,7 @@ void MSG_WriteString(sizebuf_t * sb, char *s)
 /**
  * @brief
  */
-void MSG_WriteCoord(sizebuf_t * sb, float f)
+void MSG_WriteCoord(sizebuf_t *sb, float f)
 {
 	MSG_WriteLong(sb, (int) (f * 32));
 }
@@ -418,7 +404,7 @@ void MSG_WriteCoord(sizebuf_t * sb, float f)
 /**
  * @brief
  */
-void MSG_WritePos(sizebuf_t * sb, vec3_t pos)
+void MSG_WritePos(sizebuf_t *sb, vec3_t pos)
 {
 	MSG_WriteShort(sb, (int) (pos[0] * 8));
 	MSG_WriteShort(sb, (int) (pos[1] * 8));
@@ -428,7 +414,7 @@ void MSG_WritePos(sizebuf_t * sb, vec3_t pos)
 /**
   * @brief
   */
-void MSG_WriteGPos(sizebuf_t * sb, pos3_t pos)
+void MSG_WriteGPos(sizebuf_t *sb, pos3_t pos)
 {
 	MSG_WriteByte(sb, pos[0]);
 	MSG_WriteByte(sb, pos[1]);
@@ -438,7 +424,7 @@ void MSG_WriteGPos(sizebuf_t * sb, pos3_t pos)
 /**
  * @brief
  */
-void MSG_WriteAngle(sizebuf_t * sb, float f)
+void MSG_WriteAngle(sizebuf_t *sb, float f)
 {
 	MSG_WriteByte(sb, (int) (f * 256 / 360) & 255);
 }
@@ -446,7 +432,7 @@ void MSG_WriteAngle(sizebuf_t * sb, float f)
 /**
  * @brief
  */
-void MSG_WriteAngle16(sizebuf_t * sb, float f)
+void MSG_WriteAngle16(sizebuf_t *sb, float f)
 {
 	MSG_WriteShort(sb, ANGLE2SHORT(f));
 }
@@ -455,7 +441,7 @@ void MSG_WriteAngle16(sizebuf_t * sb, float f)
 /**
  * @brief
  */
-void MSG_WriteDir(sizebuf_t * sb, vec3_t dir)
+void MSG_WriteDir(sizebuf_t *sb, vec3_t dir)
 {
 	int i, best;
 	float d, bestd;
@@ -481,7 +467,7 @@ void MSG_WriteDir(sizebuf_t * sb, vec3_t dir)
 /**
  * @brief
  */
-void MSG_WriteFormat(sizebuf_t * sb, char *format, ...)
+void MSG_WriteFormat(sizebuf_t *sb, char *format, ...)
 {
 	va_list ap;
 	char typeID;
@@ -561,7 +547,7 @@ void MSG_WriteFormat(sizebuf_t * sb, char *format, ...)
 /**
  * @brief
  */
-void MSG_BeginReading(sizebuf_t * msg)
+void MSG_BeginReading(sizebuf_t *msg)
 {
 	msg->readcount = 0;
 }
@@ -571,14 +557,14 @@ void MSG_BeginReading(sizebuf_t * msg)
  *
  * returns -1 if no more characters are available
  */
-int MSG_ReadChar(sizebuf_t * msg_read)
+int MSG_ReadChar(sizebuf_t *msg_read)
 {
-	int c;
+	char c;
 
 	if (msg_read->readcount + 1 > msg_read->cursize)
 		c = -1;
 	else
-		c = (signed char) msg_read->data[msg_read->readcount];
+		c = ((char *)msg_read->data)[msg_read->readcount];
 	msg_read->readcount++;
 
 	return c;
@@ -587,14 +573,15 @@ int MSG_ReadChar(sizebuf_t * msg_read)
 /**
  * @brief
  */
-int MSG_ReadByte(sizebuf_t * msg_read)
+int MSG_ReadByte(sizebuf_t *msg_read)
 {
-	int c;
+	uint8_t c;
 
-	if (msg_read->readcount + 1 > msg_read->cursize)
+	if (msg_read->readcount + 1 > msg_read->cursize) {
 		c = -1;
-	else
-		c = (unsigned char) msg_read->data[msg_read->readcount];
+	} else {
+		c = ((uint8_t *)msg_read->data)[msg_read->readcount];
+	}
 	msg_read->readcount++;
 
 	return c;
@@ -603,16 +590,17 @@ int MSG_ReadByte(sizebuf_t * msg_read)
 /**
  * @brief
  */
-int MSG_ReadShort(sizebuf_t * msg_read)
+int MSG_ReadShort(sizebuf_t *msg_read)
 {
-	int c;
+	int16_t c;
 
-	if (msg_read->readcount + 2 > msg_read->cursize)
+	if (msg_read->readcount + 2 > msg_read->cursize) {
 		c = -1;
-	else
-		c = (short) (msg_read->data[msg_read->readcount]
-					+ (msg_read->data[msg_read->readcount + 1] << 8));
-
+	} else {
+		c = (int16_t)(((uint8_t *)msg_read->data)[msg_read->readcount])
+			+ (int16_t)(((uint8_t *)msg_read->data)[msg_read->readcount + 1] << 8);
+	}
+	
 	msg_read->readcount += 2;
 
 	return c;
@@ -621,18 +609,19 @@ int MSG_ReadShort(sizebuf_t * msg_read)
 /**
  * @brief
  */
-int MSG_ReadLong(sizebuf_t * msg_read)
+int32_t MSG_ReadLong(sizebuf_t *msg_read)
 {
-	int c;
+	int32_t c;
 
-	if (msg_read->readcount + 4 > msg_read->cursize)
+	if (msg_read->readcount + 4 > msg_read->cursize) {
 		c = -1;
-	else
-		c = msg_read->data[msg_read->readcount]
-			+ (msg_read->data[msg_read->readcount + 1] << 8)
-			+ (msg_read->data[msg_read->readcount + 2] << 16)
-			+ (msg_read->data[msg_read->readcount + 3] << 24);
-
+	} else {
+		c =  (int32_t)((int8_t *)msg_read->data)[msg_read->readcount]
+			+ ((int32_t)((int8_t *)msg_read->data)[msg_read->readcount + 1] << 8)
+			+ ((int32_t)((int8_t *)msg_read->data)[msg_read->readcount + 2] << 16)
+			+ ((int32_t)((int8_t *)msg_read->data)[msg_read->readcount + 3] << 24);
+	}
+	
 	msg_read->readcount += 4;
 
 	return c;
@@ -641,23 +630,22 @@ int MSG_ReadLong(sizebuf_t * msg_read)
 /**
  * @brief
  */
-float MSG_ReadFloat(sizebuf_t * msg_read)
+float MSG_ReadFloat(sizebuf_t *msg_read)
 {
 	union {
-		byte b[4];
+		uint8_t b[4];
 		float f;
 		int l;
 	} dat;
 
-	if (msg_read->readcount + 4 > msg_read->cursize)
+	if (msg_read->readcount + 4 > msg_read->cursize) {
 		dat.f = -1;
-	else {
-		dat.b[0] = msg_read->data[msg_read->readcount];
-		dat.b[1] = msg_read->data[msg_read->readcount + 1];
-		dat.b[2] = msg_read->data[msg_read->readcount + 2];
-		dat.b[3] = msg_read->data[msg_read->readcount + 3];
+	} else {
+		dat.b[0] = ((uint8_t *)msg_read->data)[msg_read->readcount++];
+		dat.b[1] = ((uint8_t *)msg_read->data)[msg_read->readcount++];
+		dat.b[2] = ((uint8_t *)msg_read->data)[msg_read->readcount++];
+		dat.b[3] = ((uint8_t *)msg_read->data)[msg_read->readcount++];
 	}
-	msg_read->readcount += 4;
 
 	dat.l = LittleLong(dat.l);
 
@@ -667,7 +655,7 @@ float MSG_ReadFloat(sizebuf_t * msg_read)
 /**
  * @brief
  */
-char *MSG_ReadString(sizebuf_t * msg_read)
+char *MSG_ReadString(sizebuf_t *msg_read)
 {
 	static char string[2048];
 	int l, c;
@@ -689,7 +677,7 @@ char *MSG_ReadString(sizebuf_t * msg_read)
 /**
  * @brief
  */
-char *MSG_ReadStringLine(sizebuf_t * msg_read)
+char *MSG_ReadStringLine(sizebuf_t *msg_read)
 {
 	static char string[2048];
 	int l, c;
@@ -711,7 +699,7 @@ char *MSG_ReadStringLine(sizebuf_t * msg_read)
 /**
  * @brief
  */
-float MSG_ReadCoord(sizebuf_t * msg_read)
+float MSG_ReadCoord(sizebuf_t *msg_read)
 {
 	return (float) MSG_ReadLong(msg_read) * (1.0 / 32);
 }
@@ -719,7 +707,7 @@ float MSG_ReadCoord(sizebuf_t * msg_read)
 /**
  * @brief
  */
-void MSG_ReadPos(sizebuf_t * msg_read, vec3_t pos)
+void MSG_ReadPos(sizebuf_t *msg_read, vec3_t pos)
 {
 	pos[0] = MSG_ReadShort(msg_read) * (1.0 / 8);
 	pos[1] = MSG_ReadShort(msg_read) * (1.0 / 8);
@@ -729,7 +717,7 @@ void MSG_ReadPos(sizebuf_t * msg_read, vec3_t pos)
 /**
  * @brief
  */
-void MSG_ReadGPos(sizebuf_t * msg_read, pos3_t pos)
+void MSG_ReadGPos(sizebuf_t *msg_read, pos3_t pos)
 {
 	pos[0] = MSG_ReadByte(msg_read);
 	pos[1] = MSG_ReadByte(msg_read);
@@ -739,7 +727,7 @@ void MSG_ReadGPos(sizebuf_t * msg_read, pos3_t pos)
 /**
  * @brief
  */
-float MSG_ReadAngle(sizebuf_t * msg_read)
+float MSG_ReadAngle(sizebuf_t *msg_read)
 {
 	return (float) MSG_ReadChar(msg_read) * (360.0 / 256);
 }
@@ -747,7 +735,7 @@ float MSG_ReadAngle(sizebuf_t * msg_read)
 /**
  * @brief
  */
-float MSG_ReadAngle16(sizebuf_t * msg_read)
+float MSG_ReadAngle16(sizebuf_t *msg_read)
 {
 	return (float) SHORT2ANGLE(MSG_ReadShort(msg_read));
 }
@@ -755,7 +743,7 @@ float MSG_ReadAngle16(sizebuf_t * msg_read)
 /**
  * @brief
  */
-void MSG_ReadData(sizebuf_t * msg_read, void *data, int len)
+void MSG_ReadData(sizebuf_t *msg_read, void *data, int len)
 {
 	int i;
 
@@ -766,7 +754,7 @@ void MSG_ReadData(sizebuf_t * msg_read, void *data, int len)
 /**
  * @brief
  */
-void MSG_ReadDir(sizebuf_t * sb, vec3_t dir)
+void MSG_ReadDir(sizebuf_t *sb, vec3_t dir)
 {
 	int b;
 
@@ -780,7 +768,7 @@ void MSG_ReadDir(sizebuf_t * sb, vec3_t dir)
 /**
  * @brief
  */
-void MSG_ReadFormat(sizebuf_t * msg_read, char *format, ...)
+void MSG_ReadFormat(sizebuf_t *msg_read, char *format, ...)
 {
 	va_list ap;
 	char typeID;
@@ -856,7 +844,7 @@ void MSG_ReadFormat(sizebuf_t * msg_read, char *format, ...)
  * calculated the length of a sizebuf_t by summing up
  * the size of each format char
  */
-int MSG_LengthFormat(sizebuf_t * sb, char *format)
+int MSG_LengthFormat(sizebuf_t *sb, char *format)
 {
 	char typeID;
 	int length, delta;
@@ -927,26 +915,32 @@ int MSG_LengthFormat(sizebuf_t * sb, char *format)
 /**
  * @brief
  */
-void SZ_Init(sizebuf_t * buf, byte * data, int length)
+void SZ_Init(sizebuf_t *buf, void *data, int length)
 {
-	memset(buf, 0, sizeof(*buf));
+	/* Don't like this - how do you KNOW everything should be initialised to 0?
+	 * It's just lazy and unmaintainable.
+	memset(buf, 0, sizeof(*buf)); */
+	buf->allowoverflow = false;
+	buf->overflowed = false;
 	buf->data = data;
 	buf->maxsize = length;
+	buf->cursize = 0;
+	buf->readcount = 0;
 }
 
 /**
  * @brief
  */
-void SZ_Clear(sizebuf_t * buf)
+void SZ_Clear(sizebuf_t *buf)
 {
 	buf->cursize = 0;
-	buf->overflowed = qfalse;
+	buf->overflowed = false;
 }
 
 /**
  * @brief
  */
-void *SZ_GetSpace(sizebuf_t * buf, int length)
+void *SZ_GetSpace(sizebuf_t *buf, int length)
 {
 	void *data;
 
@@ -971,7 +965,7 @@ void *SZ_GetSpace(sizebuf_t * buf, int length)
 /**
  * @brief
  */
-void SZ_Write(sizebuf_t * buf, void *data, int length)
+void SZ_Write(sizebuf_t *buf, void *data, int length)
 {
 	memcpy(SZ_GetSpace(buf, length), data, length);
 }
@@ -979,19 +973,21 @@ void SZ_Write(sizebuf_t * buf, void *data, int length)
 /**
  * @brief
  */
-void SZ_Print(sizebuf_t * buf, char *data)
+void SZ_WriteString(sizebuf_t *buf, char *data)
 {
 	int len;
 
 	len = strlen(data) + 1;
 
 	if (buf->cursize) {
-		if (buf->data[buf->cursize - 1])
-			memcpy((byte *) SZ_GetSpace(buf, len), data, len);	/* no trailing 0 */
-		else
-			memcpy((byte *) SZ_GetSpace(buf, len - 1) - 1, data, len);	/* write over trailing 0 */
-	} else
-		memcpy((byte *) SZ_GetSpace(buf, len), data, len);
+		if (((uint8_t *)buf->data)[buf->cursize - 1]) {
+			memcpy((uint8_t *) SZ_GetSpace(buf, len), data, len);	/* no trailing 0 */
+		} else {
+			memcpy((uint8_t *) SZ_GetSpace(buf, len - 1) - 1, data, len);	/* write over trailing 0 */
+		}
+	} else {
+		memcpy((uint8_t *) SZ_GetSpace(buf, len), data, len);
+	}
 }
 
 
@@ -1375,9 +1371,9 @@ void Qcommon_Init(int argc, char **argv)
 
 	FS_InitFilesystem();
 
-	Cbuf_AddText("exec default.cfg\n");
-	Cbuf_AddText("exec config.cfg\n");
-	Cbuf_AddText("exec keys.cfg\n");
+	Cbuf_ExecuteText("exec default.cfg\n", EXEC_APPEND);
+	Cbuf_ExecuteText("exec config.cfg\n", EXEC_APPEND);
+	Cbuf_ExecuteText("exec keys.cfg\n", EXEC_APPEND);
 
 	Cbuf_AddEarlyCommands(qtrue);
 	Cbuf_Execute();

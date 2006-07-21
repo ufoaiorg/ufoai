@@ -150,10 +150,10 @@ void Cmd_ForwardToServer(void)
 	}
 
 	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-	SZ_Print(&cls.netchan.message, cmd);
+	SZ_WriteString(&cls.netchan.message, cmd);
 	if (Cmd_Argc() > 1) {
-		SZ_Print(&cls.netchan.message, " ");
-		SZ_Print(&cls.netchan.message, Cmd_Args());
+		SZ_WriteString(&cls.netchan.message, " ");
+		SZ_WriteString(&cls.netchan.message, Cmd_Args());
 	}
 }
 
@@ -201,7 +201,7 @@ void CL_ForwardToServer_f(void)
 	/* don't forward the first argument */
 	if (Cmd_Argc() > 1) {
 		MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-		SZ_Print(&cls.netchan.message, Cmd_Args());
+		SZ_WriteString(&cls.netchan.message, Cmd_Args());
 	}
 }
 

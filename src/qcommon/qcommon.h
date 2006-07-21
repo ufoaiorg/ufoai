@@ -185,6 +185,8 @@ enum clc_ops_e {
 
 /*============================================== */
 
+#include "cbuf.h"
+
 #include "cmd.h"
 
 #include "cvar.h"

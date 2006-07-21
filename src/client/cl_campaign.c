@@ -756,8 +756,9 @@ static stageState_t *CL_CampaignActivateStage(char *name, qboolean sequence)
 				memset(&ccs.set[j], 0, sizeof(setState_t));
 				ccs.set[j].stage = &stage[j];
 				ccs.set[j].def = &stageSets[j];
-				if (*stageSets[j].sequence && sequence)
-					Cbuf_ExecuteText(EXEC_APPEND, va("seq_start %s;\n", stageSets[j].sequence));
+				if (*stageSets[j].sequence && sequence) {
+					Cbuf_ExecuteText(va("seq_start %s;\n", stageSets[j].sequence), EXEC_APPEND);
+				}
 			}
 
 			/* activate stage sets */
@@ -816,7 +817,7 @@ static void CL_CampaignAddMission(setState_t * set)
 
 	/* execute mission commands */
 	if (*mis->def->cmds)
-		Cbuf_ExecuteText(EXEC_NOW, mis->def->cmds);
+		Cbuf_ExecuteText(mis->def->cmds, EXEC_NOW);
 
 	if (set->def->expire.day)
 		mis->expire = Date_Add(ccs.date, set->def->expire);
@@ -829,7 +830,7 @@ static void CL_CampaignAddMission(setState_t * set)
 		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base %s is under attack."), baseCurrent->name );
 		MN_AddNewMessage(_("Baseattack"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
 
-		Cbuf_ExecuteText(EXEC_NOW, va("base_attack %i", baseCurrent->idx));
+		Cbuf_ExecuteText(va("base_attack %i", baseCurrent->idx), EXEC_NOW);
 	} else {
 		/* A mission must not be very near a base */
 		for(i=0 ; i < gd.numBases ; i++) {
@@ -946,7 +947,7 @@ static void CL_OpenAircraft_f(void)
 			CL_AircraftSelect();
 			MN_PopMenu(qfalse);
 			CL_MapActionReset();
-			Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i\n", baseCurrent->idx));
+			Cbuf_ExecuteText(va("mn_select_base %i\n", baseCurrent->idx), EXEC_NOW);
 			MN_PushMenu("aircraft");
 			return;
 		}
@@ -2049,7 +2050,7 @@ static void CL_GameCommentsCmd(void)
 	if (Cmd_Argc() == 2) {
 		/* checks whether we plan to save without a running game */
 		if (!Q_strncmp(Cmd_Argv(1), "save", 4) && !curCampaign) {
-			Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
+			Cbuf_ExecuteText("mn_pop", EXEC_NOW);
 			return;
 		}
 	}
@@ -2184,10 +2185,11 @@ static void CL_GameGo(void)
   */
 static void CP_ExecuteMissionTrigger(mission_t * m, int won)
 {
-	if (won && *m->onwin)
-		Cbuf_ExecuteText(EXEC_NOW, m->onwin);
-	else if (!won && *m->onlose)
-		Cbuf_ExecuteText(EXEC_NOW, m->onlose);
+	if (won && *m->onwin) {
+		Cbuf_ExecuteText(m->onwin, EXEC_NOW);
+	} else if (!won && *m->onlose) {
+		Cbuf_ExecuteText(m->onlose, EXEC_NOW);
+	}
 }
 
 /**
@@ -3365,7 +3367,7 @@ void CL_GameNew(void)
 	MN_PushMenu("map");
 
 	/* create a base as first step */
-	Cbuf_ExecuteText(EXEC_NOW, "mn_select_base -1");
+	Cbuf_ExecuteText("mn_select_base -1", EXEC_NOW);
 
 	CL_GameInit();
 }

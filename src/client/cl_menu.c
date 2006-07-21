@@ -453,7 +453,7 @@ static void MN_StartServer(void)
 		return;
 	}
 
-	Cbuf_ExecuteText(EXEC_NOW, va("map %s\n", Cmd_Argv(1)));
+	Cbuf_ExecuteText(va("map %s\n", Cmd_Argv(1)), EXEC_NOW);
 }
 
 /*
@@ -554,7 +554,7 @@ void MN_Popup(const char *title, const char *text)
 {
 	menuText[TEXT_POPUP] = (char *) title;
 	menuText[TEXT_POPUP_INFO] = (char *) text;
-	Cbuf_ExecuteText(EXEC_NOW, "game_timestop");
+	Cbuf_ExecuteText("game_timestop", EXEC_NOW);
 	MN_PushMenu("popup");
 }
 
@@ -1118,7 +1118,7 @@ static void CL_MultiSelect(void)
 	case MULTISELECT_TYPE_BASE:	/* Select a base */
 		if (id >= gd.numBases)
 			break;
-		Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i", id));
+		Cbuf_ExecuteText(va("mn_select_base %i", id), EXEC_NOW);
 		MN_PushMenu("bases");
 		break;
 
@@ -1268,7 +1268,7 @@ static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y);
 
 				if (*entry->onClick)
-					Cbuf_ExecuteText(EXEC_NOW, entry->onClick);
+					Cbuf_ExecuteText(entry->onClick, EXEC_NOW);
 #if 0
 				else {
 					/* Click on building : display its properties in the building menu */
@@ -2689,7 +2689,7 @@ static void MN_TutorialListClick_f(void)
 	if (num < 0 || num >= numTutorials)
 		return;
 
-	Cbuf_ExecuteText(EXEC_NOW, va("seq_start %s", tutorials[num].sequence));
+	Cbuf_ExecuteText(va("seq_start %s", tutorials[num].sequence), EXEC_NOW);
 }
 
 /*

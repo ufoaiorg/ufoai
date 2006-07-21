@@ -7,6 +7,10 @@ NET
 */
 
 /* net.h -- quake's interface to the networking layer */
+#ifndef COMMON_NET_CHAN_H
+#define COMMON_NET_CHAN_H
+
+#include "common.h"
 
 #define	PORT_ANY	-1
 
@@ -105,5 +109,4 @@ qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg);
 
 qboolean Netchan_CanReliable(netchan_t * chan);
 
-
-
+#endif /* COMMON_NET_CHAN_H */

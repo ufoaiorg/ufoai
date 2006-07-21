@@ -695,13 +695,13 @@ void CL_CamSetAngles(void)
 void CL_MakeBaseMapShot(void)
 {
 	if (Cmd_Argc() > 1)
-		Cbuf_ExecuteText(EXEC_NOW, va("map %s", Cmd_Argv(1)));
+		Cbuf_ExecuteText(va("map %s", Cmd_Argv(1)), EXEC_NOW);
 	cl.cam.angles[0] = 60.0f;
 	cl.cam.angles[1] = 90.0f;
 	Cvar_SetValue("r_isometric", 1);
 	MN_PushMenu("nohud");
-	Cbuf_ExecuteText(EXEC_NOW, "toggleconsole");
-	Cbuf_ExecuteText(EXEC_NOW, "screenshot");
+	Cbuf_ExecuteText("toggleconsole", EXEC_NOW);
+	Cbuf_ExecuteText("screenshot", EXEC_NOW);
 }
 
 /**
