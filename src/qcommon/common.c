@@ -341,7 +341,7 @@ void MSG_WriteShort(sizebuf_t *sb, int16_t c)
 	int16_t *buf;
 
 	buf = SZ_GetSpace(sb, 2);
-	buf* = c;
+	*buf = c;
 }
 
 /**
@@ -352,7 +352,7 @@ void MSG_WriteLong(sizebuf_t *sb, int32_t c)
 	int32_t *buf;
 
 	buf = SZ_GetSpace(sb, 4);
-	buf* = c;
+	*buf = c;
 }
 
 /**
