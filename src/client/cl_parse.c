@@ -260,9 +260,9 @@ Written by SV_New_f in sv_user.c
 */
 void CL_ParseServerData (void)
 {
-	extern cvar_t	*fs_gamedirvar;
-	char	*str;
-	int		i;
+	extern cvar_t *fs_gamedirvar;
+	char *str;
+	int i;
 
 	Com_DPrintf ("Serverdata packet received.\n");
 

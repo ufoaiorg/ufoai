@@ -305,9 +305,9 @@ typedef struct base_s {
 	int teamMask[MAX_AIRCRAFT];	/* assigned to a specific aircraft */
 	int deathMask;
 
-	int numHired;
-	int numOnTeam[MAX_AIRCRAFT];
-	int numWholeTeam;			/* available soldiers in this base */
+	uint8_t numHired;
+	uint8_t numOnTeam[MAX_AIRCRAFT];
+	uint8_t numWholeTeam;			/* available soldiers in this base */
 
 	/* the onconstruct value of the buliding */
 	/* building_radar increases the sensor width */

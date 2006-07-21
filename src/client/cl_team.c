@@ -774,7 +774,7 @@ static void CL_SaveTeamSlotCmd(void)
 void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 {
 	item_t item;
-	int container, x, y;
+	uint8_t container, x, y;
 	int i;
 
 	/* unique character number */
@@ -1062,11 +1062,12 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 void CL_ParseResults(sizebuf_t * buf)
 {
 	static char resultText[MAX_MENUTEXTLEN];
-	byte num_spawned[MAX_TEAMS];
-	byte num_alive[MAX_TEAMS];
-	byte num_kills[MAX_TEAMS][MAX_TEAMS];
-	byte winner, we;
-	int i, j, num, res, kills;
+	uint8_t num_spawned[MAX_TEAMS];
+	uint8_t num_alive[MAX_TEAMS];
+	uint8_t num_kills[MAX_TEAMS][MAX_TEAMS];
+	uint8_t winner, we;
+	int i, j, res, kills;
+	uint8_t num;
 
 	/* get number of teams */
 	num = MSG_ReadByte(buf);

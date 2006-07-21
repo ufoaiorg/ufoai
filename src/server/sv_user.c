@@ -320,16 +320,12 @@ void SV_ExecuteUserCommand(char *s)
 
 
 #define	MAX_STRINGCMDS	8
-/*
-===================
-SV_ExecuteClientMessage
-
-The current net_message is parsed for the given client
-===================
-*/
+/**
+ * @brief The current net_message is parsed for the given client
+ */
 void SV_ExecuteClientMessage(client_t * cl)
 {
-	int c;
+	uint8_t c;
 	char *s;
 
 	int stringCmdCount;

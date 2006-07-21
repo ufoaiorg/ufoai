@@ -37,6 +37,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GAME_Q_SHARED_H
 #define GAME_Q_SHARED_H
 
+/* FIXME: Put me in the right headers - for now this is here to let us compile the game */
+#include "common/ufotypes.h"
+
 #ifdef DEBUG
 #define Q_strncpyz(string1,string2,length) Q_strncpyzDebug( string1, string2, length, __FILE__, __LINE__ )
 #endif
@@ -911,9 +914,9 @@ typedef struct invDef_s {
 #define MAX_INVLIST		1024
 
 typedef struct item_s {
-	int t;						/* twohanded */
-	int a;						/* ammo */
-	int m;						/* model */
+	uint8_t t;						/* twohanded */
+	uint8_t a;						/* ammo */
+	uint8_t m;						/* model */
 } item_t;
 
 typedef struct invList_s {
@@ -1033,15 +1036,15 @@ extern rank_t ranks[MAX_RANKS];	/* Global list of all ranks defined in medals.uf
 extern int numRanks;			/* The number of entries in the list above. */
 
 typedef struct character_s {
-	int ucn;
+	int16_t ucn;
 	char name[MAX_VAR];
 	char path[MAX_VAR];
 	char body[MAX_VAR];
 	char head[MAX_VAR];
-	int skin;
+	uint8_t skin;
 
 	/* new abilities and skills: */
-	int skills[SKILL_NUM_TYPES];
+	uint8_t skills[SKILL_NUM_TYPES];
 
 	/* score */
 	killtypes_t kills[KILLED_NUM_TYPES];
@@ -1049,7 +1052,7 @@ typedef struct character_s {
 /* 	int		hit_ratio; */
 /* 	int		inflicted_damage; */
 /* 	int		damage_taken; */
-	int assigned_missions;
+	int16_t assigned_missions;
 /* 	int		crossed_distance; */
 	/* date     joined_edc; */
 	/* date     died; */
@@ -1059,7 +1062,7 @@ typedef struct character_s {
 	/* *------------------** */
 	/* *------------------** */
 
-	int fieldSize;				/* ACTOR_SIZE_* */
+	uint8_t fieldSize;				/* ACTOR_SIZE_* */
 	inventory_t *inv;
 } character_t;
 

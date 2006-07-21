@@ -130,9 +130,9 @@ typedef struct {
 	int timedemo_frames;
 	int timedemo_start;
 
-	qboolean refresh_prepped;	/* false if on new level or new ref dll */
-	qboolean sound_prepped;		/* ambient sounds can start */
-	qboolean force_refdef;		/* vid has changed, so we can't use a paused refdef */
+	bool_t refresh_prepped;	/* false if on new level or new ref dll */
+	bool_t sound_prepped;		/* ambient sounds can start */
+	bool_t force_refdef;		/* vid has changed, so we can't use a paused refdef */
 
 	int surpressCount;			/* number of messages rate supressed */
 
@@ -166,14 +166,14 @@ typedef struct {
 	int cinematictime;			/* cls.realtime for first cinematic frame */
 	int cinematicframe;
 	char cinematicpalette[768];
-	qboolean cinematicpalette_active;
+	bool_t cinematicpalette_active;
 
 	/* server state information */
-	qboolean attractloop;		/* running the attract loop, any key will menu */
+	bool_t attractloop;		/* running the attract loop, any key will menu */
 	int servercount;			/* server identification for prespawns */
 	char gamedir[MAX_QPATH];
-	int pnum;
-	int actTeam;
+	int16_t pnum;
+	uint8_t actTeam;
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
@@ -505,7 +505,7 @@ typedef struct le_s {
 
 	vec3_t origin, oldOrigin;
 	pos3_t pos, oldPos;
-	int dir;
+	uint8_t dir;
 
 	int TU, maxTU;
 	int morale, maxMorale;

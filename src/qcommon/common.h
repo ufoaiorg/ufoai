@@ -30,7 +30,6 @@
 #ifndef COMMON_COMMON_H
 #define COMMON_COMMON_H
 
-#include "common/ufotypes.h"
 #include "game/q_shared.h"
 
 /*============================================================================ */

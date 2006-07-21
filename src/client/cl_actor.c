@@ -1151,7 +1151,8 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 	fireDef_t *fd;
 	le_t *le;
 	pos3_t from, target;
-	int number, type;
+	int16_t number;
+	uint8_t type;
 
 	number = MSG_ReadShort(sb);
 	type = MSG_ReadByte(sb);
