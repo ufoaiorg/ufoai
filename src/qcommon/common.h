@@ -77,20 +77,20 @@ uint8_t MSG_ReadByte(sizebuf_t *sb, uint8_t *error);
 uint16_t MSG_ReadShort(sizebuf_t *sb, uint8_t *error);
 int32_t MSG_ReadLong(sizebuf_t *sb, uint8_t *error);
 float32_t MSG_ReadFloat(sizebuf_t *sb, uint8_t *error);
-char *MSG_ReadString(sizebuf_t *sb);
-char *MSG_ReadStringLine(sizebuf_t *sb);
+char *MSG_ReadString(sizebuf_t *sb, uint8_t *error);
+char *MSG_ReadStringLine(sizebuf_t *sb, uint8_t *error);
 
-float MSG_ReadCoord(sizebuf_t *sb);
-void MSG_ReadPos(sizebuf_t *sb, vec3_t pos);
-void MSG_ReadGPos(sizebuf_t *sb, pos3_t pos);
-float MSG_ReadAngle(sizebuf_t *sb);
-float MSG_ReadAngle16(sizebuf_t *sb);
-void MSG_ReadDir(sizebuf_t *sb, vec3_t vector);
+float MSG_ReadCoord(sizebuf_t *sb, uint8_t *error);
+void MSG_ReadPos(sizebuf_t *sb, uint8_t *error, vec3_t pos);
+void MSG_ReadGPos(sizebuf_t *sb, uint8_t *error, pos3_t pos);
+float MSG_ReadAngle(sizebuf_t *sb, uint8_t *error);
+float MSG_ReadAngle16(sizebuf_t *sb, uint8_t *error);
+void MSG_ReadDir(sizebuf_t *sb, uint8_t *error, vec3_t vector);
 
-void MSG_ReadData(sizebuf_t *sb, void *buffer, int size);
-void MSG_ReadFormat(sizebuf_t *sb, char *format, ...);
+void MSG_ReadData(sizebuf_t *sb, uint8_t *error, void *buffer, int size);
+void MSG_ReadFormat(sizebuf_t *sb, uint8_t *error, char *format, ...);
 
-int MSG_LengthFormat(sizebuf_t *sb, char *format);
+int MSG_LengthFormat(sizebuf_t *sb, uint8_t *error, char *format);
 
 /*============================================================================ */
 
