@@ -311,8 +311,8 @@ CL_ParseConfigString
 */
 void CL_ParseConfigString (void)
 {
-	int		i;
-	char	*s;
+	int16_t i;
+	char *s;
 
 	/* which configstring? */
 	i = MSG_ReadShort (&net_message);
@@ -323,7 +323,7 @@ void CL_ParseConfigString (void)
 
 	/* there may be overflows in i==CS_TILES - but thats ok */
 	/* see definition of configstrings and MAX_TILESTRINGS */
-	strcpy (cl.configstrings[i], s);
+	Q_strncpyz (cl.configstrings[i], s, MAX_TOKEN_CHARS);
 
 	/* do something apropriate */
 	if (i >= CS_LIGHTS && i < CS_LIGHTS+MAX_LIGHTSTYLES)
