@@ -259,12 +259,12 @@ R_BuildLightMap
 Combine and scale multiple lightmaps into the floating format in blocklights
 ===============
 */
-void R_BuildLightMap(msurface_t * surf, byte * dest, int stride)
+void R_BuildLightMap(msurface_t * surf, uint8_t *dest, int stride)
 {
 	int smax, tmax;
 	int r, g, b, a, max;
 	int i, j, size;
-	byte *lightmap;
+	uint8_t *lightmap;
 	float scale[4];
 	int nummaps;
 	float *bl;
@@ -512,7 +512,7 @@ int RecursiveLightPoint(mnode_t * node, vec3_t start, vec3_t end)
 	int s, t, ds, dt;
 	int i;
 	mtexinfo_t *tex;
-	byte *lightmap;
+	uint8_t *lightmap;
 	int maps;
 	int r;
 

@@ -108,9 +108,9 @@ typedef struct msurface_s {
 	int dlightbits;
 
 	int lightmaptexturenum;
-	byte styles[MAXLIGHTMAPS];
+	uint8_t styles[MAXLIGHTMAPS];
 	float cached_light[MAXLIGHTMAPS];	/* values currently used in lightmap */
-	byte *samples;				/* [numstyles*surfsize] */
+	uint8_t *samples;				/* [numstyles*surfsize] */
 } msurface_t;
 
 typedef struct mnode_s {
@@ -178,7 +178,7 @@ typedef struct model_s {
 	float radius;
 
 	/* solid volume for clipping */
-	qboolean clipbox;
+	bool_t clipbox;
 	vec3_t clipmins, clipmaxs;
 
 	/* brush model */
@@ -217,7 +217,7 @@ typedef struct model_s {
 	msurface_t **marksurfaces;
 
 	int lightquant;
-	byte *lightdata;
+	uint8_t *lightdata;
 
 	/* for alias models and skins */
 	image_t *skins[MAX_MD2SKINS];
@@ -230,7 +230,7 @@ typedef struct model_s {
 	void *tagdata;
 
 	signed int edge_tri[MAX_TRIANGLES][3];
-	qboolean noshadow;
+	bool_t noshadow;
 	/* animation data */
 	char animname[MAX_QPATH];
 	int numanims;
@@ -241,9 +241,9 @@ typedef struct model_s {
 
 void Mod_Init(void);
 void Mod_ClearAll(void);
-model_t *Mod_ForName(char *name, qboolean crash);
+model_t *Mod_ForName(char *name, bool_t crash);
 mleaf_t *Mod_PointInLeaf(float *p, model_t * model);
-byte *Mod_ClusterPVS(int cluster, model_t * model);
+uint8_t *Mod_ClusterPVS(int cluster, model_t * model);
 
 void Mod_Modellist_f(void);
 

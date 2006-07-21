@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct {
 	pos3_t to, stop;
-	byte mode, shots;
+	uint8_t mode, shots;
 	edict_t *target;
 } ai_action_t;
 
@@ -38,7 +38,7 @@ typedef struct {
 AI_CheckFF
 =================
 */
-static qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
+static bool_t AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 {
 	edict_t *check;
 	vec3_t dtarget, dcheck, back;
@@ -63,12 +63,12 @@ static qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 				VectorAdd(dcheck, back, dcheck);
 				VectorNormalize(dcheck);
 				if (DotProduct(dtarget, dcheck) > cosSpread)
-					return qtrue;
+					return true;
 			}
 		}
 
 	/* no ally in danger */
-	return qfalse;
+	return false;
 }
 
 
@@ -107,7 +107,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	VectorCopy(to, aia->stop);
 	gi.GridPosToVec(gi.map, to, ent->origin);
 
-	move = gi.MoveLength(gi.map, to, qtrue);
+	move = gi.MoveLength(gi.map, to, true);
 	tu = ent->TU - move;
 	if (ent->i.c[gi.csi->idRight] && ent->i.c[gi.csi->idRight]->item.m != NONE)
 		od = &gi.csi->ods[ent->i.c[gi.csi->idRight]->item.m];
@@ -147,7 +147,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 							continue;
 
 						/* calculate expected damage */
-						dmg = G_ActorVis(ent->origin, check, qtrue);
+						dmg = G_ActorVis(ent->origin, check, true);
 						if (dmg == 0.0)
 							continue;
 
@@ -205,7 +205,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		guete += GUETE_HIDE;
 	} else if (aia->target && tu >= 2) {
 		/* search hiding spot after shooting */
-		byte minX, maxX, minY, maxY;
+		uint8_t minX, maxX, minY, maxY;
 
 		G_MoveCalc(0, to, HIDE_DIST);
 		ent->pos[2] = to[2];
@@ -217,7 +217,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 			for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 				/* time */
-				delta = gi.MoveLength(gi.map, ent->pos, qfalse);
+				delta = gi.MoveLength(gi.map, ent->pos, false);
 				if (delta > tu)
 					continue;
 				tu -= delta;
@@ -266,7 +266,7 @@ static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	VectorCopy(to, aia->stop);
 	gi.GridPosToVec(gi.map, to, ent->origin);
 
-	move = gi.MoveLength(gi.map, to, qtrue);
+	move = gi.MoveLength(gi.map, to, true);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -340,7 +340,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	for (to[2] = 0; to[2] < HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++)
-				if (gi.MoveLength(gi.map, to, qtrue) < 0xFF) {
+				if (gi.MoveLength(gi.map, to, true) < 0xFF) {
 					if (ent->team == TEAM_CIVILIAN || ent->state & STATE_PANIC)
 						guete = AI_CivilianCalcGuete(ent, to, &aia);
 					else
@@ -360,7 +360,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 		return;
 
 	/* do the first move */
-	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse);
+	G_ClientMove(player, 0, ent->number, bestAia.to, false);
 
 /*	Com_Printf( "(%i %i %i) (%i %i %i)\n", */
 /*		(int)bestAia.to[0], (int)bestAia.to[1], (int)bestAia.to[2], */
@@ -370,7 +370,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 	if (bestAia.target) {
 		for (i = 0; i < bestAia.shots; i++)
 			G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode);
-		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse);
+		G_ClientMove(player, ent->team, ent->number, bestAia.stop, false);
 	}
 }
 
@@ -432,10 +432,10 @@ static int spawnPoints[MAX_SPAWNPOINTS];
  * @param
  * @sa
  */
-static void G_SpawnAIPlayer(player_t * player, int numSpawn)
+static void G_SpawnAIPlayer(player_t *player, int numSpawn)
 {
 	edict_t *ent;
-	byte equip[MAX_OBJDEFS];
+	uint8_t equip[MAX_OBJDEFS];
 	int i, j, numPoints, team;
 	int ammo, num;
 	item_t item;
@@ -598,7 +598,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 	/* show visible actors */
 	G_ClearVisFlags(team);
-	G_CheckVis(NULL, qfalse);
+	G_CheckVis(NULL, false);
 
 	/* give time */
 	G_GiveTimeUnits(team);
@@ -621,11 +621,11 @@ player_t *AI_CreatePlayer(int team)
 	for (i = 0, p = game.players + game.maxplayers; i < game.maxplayers; i++, p++)
 		if (!p->inuse) {
 			memset(p, 0, sizeof(player_t));
-			p->inuse = qtrue;
+			p->inuse = true;
 			p->num = p - game.players;
 			p->ping = 0;
 			p->pers.team = team;
-			p->pers.ai = qtrue;
+			p->pers.ai = true;
 			if (team == TEAM_CIVILIAN)
 				G_SpawnAIPlayer(p, ai_numcivilians->value);
 			else if (sv_maxclients->value == 1)

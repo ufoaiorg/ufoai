@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <GL/glx.h>
 #endif
 
-qboolean QGL_Init(const char *dllname);
+bool_t QGL_Init(const char *dllname);
 void QGL_Shutdown(void);
 
 #ifndef APIENTRY

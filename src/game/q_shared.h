@@ -1075,7 +1075,7 @@ bool_t Com_CheckToInventory(inventory_t * i, int item, int container, int x, int
 invList_t *Com_SearchInInventory(inventory_t * i, int container, int x, int y);
 invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x, int y);
 bool_t Com_RemoveFromInventory(inventory_t * i, int container, int x, int y);
-int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp);
+int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int tx, int ty, uint8_t *TU, invList_t ** icp);
 void Com_EmptyContainer(inventory_t * i, int container);
 void Com_DestroyInventory(inventory_t * i);
 void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py);

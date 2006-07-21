@@ -107,11 +107,11 @@ typedef struct image_s {
 	struct msurface_s *texturechain;	/* for sort-by-texture world drawing */
 	int texnum;					/* gl texture binding */
 	float sl, tl, sh, th;		/* 0,0 - 1,1 unless part of the scrap */
-	qboolean scrap;
-	qboolean has_alpha;
+	bool_t scrap;
+	bool_t has_alpha;
 	shader_t *shader;			/* pointer to shader from refdef_t */
 
-	qboolean paletted;
+	bool_t paletted;
 } image_t;
 
 #define	TEXNUM_LIGHTMAPS	1024
@@ -126,13 +126,13 @@ typedef struct image_s {
 typedef struct {
 	int width;
 	int height;
-	byte *captureBuffer;
-	byte *encodeBuffer;
-	qboolean motionJpeg;
+	uint8_t *captureBuffer;
+	uint8_t *encodeBuffer;
+	bool_t motionJpeg;
 } videoFrameCommand_t;
 
-int SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_height, byte * image_buffer);
-void RE_TakeVideoFrame(int width, int height, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg);
+int SaveJPGToBuffer(uint8_t *buffer, int quality, int image_width, int image_height, uint8_t *image_buffer);
+void RE_TakeVideoFrame(int width, int height, uint8_t *captureBuffer, uint8_t *encodeBuffer, bool_t motionJpeg);
 const void *RB_TakeVideoFrameCmd(const void *data);
 
 /*=================================================================== */
@@ -177,8 +177,8 @@ extern int numInline;
 
 /* entity transform */
 typedef struct {
-	qboolean done;
-	qboolean processing;
+	bool_t done;
+	bool_t processing;
 	float matrix[16];
 } transform_t;
 
@@ -322,7 +322,7 @@ void R_TranslatePlayerSkin(int playernum);
 void GL_Bind(int texnum);
 void GL_MBind(GLenum target, int texnum);
 void GL_TexEnv(GLenum value);
-void GL_EnableMultitexture(qboolean enable);
+void GL_EnableMultitexture(bool_t enable);
 void GL_SelectTexture(GLenum);
 
 void R_LightPoint(vec3_t p, vec3_t color);
@@ -338,7 +338,7 @@ extern int registration_sequence;
 
 void V_AddBlend(float r, float g, float b, float a, float *v_blend);
 
-qboolean R_Init(HINSTANCE hinstance, WNDPROC wndproc);
+bool_t R_Init(HINSTANCE hinstance, WNDPROC wndproc);
 void R_Shutdown(void);
 
 struct model_s *R_RegisterModelShort(char *name);
@@ -362,7 +362,7 @@ void R_RenderBrushPoly(msurface_t * fa);
 void R_InitParticleTexture(void);
 void Draw_InitLocal(void);
 void GL_SubdivideSurface(msurface_t * fa);
-qboolean R_CullBox(vec3_t mins, vec3_t maxs);
+bool_t R_CullBox(vec3_t mins, vec3_t maxs);
 void R_RotateForEntity(entity_t * e);
 
 void EmitWaterPolys(msurface_t * fa);
@@ -378,7 +378,7 @@ void COM_StripExtension(char *in, char *out);
 
 void Draw_GetPicSize(int *w, int *h, char *name);
 void Draw_Pic(int x, int y, char *name);
-void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
+void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, bool_t blend, char *name);
 void Draw_StretchPic(int x, int y, int w, int h, char *name);
 void Draw_Char(int x, int y, int c);
 void Draw_TileClear(int x, int y, int w, int h, char *name);
@@ -388,7 +388,7 @@ void Draw_FadeScreen(void);
 void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
 void Draw_LineStrip(int points, int *verts);
 
-void Draw_StretchRaw(int x, int y, int w, int h, int cols, int rows, byte * data);
+void Draw_StretchRaw(int x, int y, int w, int h, int cols, int rows, uint8_t *data);
 
 /*void	Draw_Model (int x, int y, ); */
 
@@ -407,10 +407,10 @@ void GL_ResampleTexture(unsigned *in, int inwidth, int inheight, unsigned *out, 
 
 struct image_s *R_RegisterSkin(char *name);
 
-void WriteTGA(char *filename, byte * data, int width, int height);
+void WriteTGA(char *filename, uint8_t *data, int width, int height);
 
-void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, int *height);
-image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t type, int bits);
+void LoadPCX(char *filename, uint8_t **pic, uint8_t **palette, int *width, int *height);
+image_t *GL_LoadPic(char *name, uint8_t *pic, int width, int height, imagetype_t type, int bits);
 image_t *GL_FindImage(char *pname, imagetype_t type);
 image_t *GL_FindImageForShader(char *name);
 void GL_TextureMode(char *string);
@@ -487,7 +487,7 @@ typedef struct {
 typedef struct {
 	float inverse_intensity;
 	int displayrefresh;
-	qboolean fullscreen;
+	bool_t fullscreen;
 
 	int prev_mode;
 
@@ -498,24 +498,24 @@ typedef struct {
 	int currenttextures[2];
 	int currenttmu;
 
-	qboolean hwgamma;
+	bool_t hwgamma;
 
 	float camera_separation;
-	qboolean stereo_enabled;
+	bool_t stereo_enabled;
 
-	qboolean stencil_two_side;
-	qboolean ati_separate_stencil;
+	bool_t stencil_two_side;
+	bool_t ati_separate_stencil;
 
 	int max_lod;
 
-	qboolean blend;
-	qboolean alpha_test;
-	qboolean fog_coord;
+	bool_t blend;
+	bool_t alpha_test;
+	bool_t fog_coord;
 
-	qboolean stencil_wrap;
-	qboolean anisotropic;
-	qboolean lod_bias;
-	qboolean arb_fragment_program;
+	bool_t stencil_wrap;
+	bool_t anisotropic;
+	bool_t lod_bias;
+	bool_t arb_fragment_program;
 
 	unsigned char originalRedGammaTable[256];
 	unsigned char originalGreenGammaTable[256];
@@ -552,11 +552,11 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 
 void GLimp_BeginFrame(float camera_separation);
 void GLimp_EndFrame(void);
-qboolean GLimp_Init(HINSTANCE hinstance, WNDPROC wndproc);
+bool_t GLimp_Init(HINSTANCE hinstance, WNDPROC wndproc);
 void GLimp_Shutdown(void);
-rserr_t GLimp_SetMode(unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen);
-void GLimp_AppActivate(qboolean active);
-void GLimp_EnableLogging(qboolean enable);
+rserr_t GLimp_SetMode(unsigned int *pwidth, unsigned int *pheight, int mode, bool_t fullscreen);
+void GLimp_AppActivate(bool_t active);
+void GLimp_EnableLogging(bool_t enable);
 void GLimp_LogNewFrame(void);
 
 /* NOTE TTimo linux works with float gamma value, not the gamma table */

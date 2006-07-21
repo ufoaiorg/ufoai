@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -86,12 +86,12 @@ int numipfilters;
 StringToFilter
 =================
 */
-static qboolean StringToFilter(char *s, ipfilter_t * f)
+static bool_t StringToFilter(char *s, ipfilter_t * f)
 {
 	char num[128];
 	int i, j;
-	byte b[4];
-	byte m[4];
+	uint8_t b[4];
+	uint8_t m[4];
 
 	for (i = 0; i < 4; i++) {
 		b[i] = 0;
@@ -101,7 +101,7 @@ static qboolean StringToFilter(char *s, ipfilter_t * f)
 	for (i = 0; i < 4; i++) {
 		if (*s < '0' || *s > '9') {
 			gi.cprintf(NULL, PRINT_HIGH, "Bad filter address: %s\n", s);
-			return qfalse;
+			return false;
 		}
 
 		j = 0;
@@ -121,7 +121,7 @@ static qboolean StringToFilter(char *s, ipfilter_t * f)
 	f->mask = *(unsigned *) m;
 	f->compare = *(unsigned *) b;
 
-	return qtrue;
+	return true;
 }
 
 /*
@@ -129,11 +129,11 @@ static qboolean StringToFilter(char *s, ipfilter_t * f)
 SV_FilterPacket
 =================
 */
-qboolean SV_FilterPacket(char *from)
+bool_t SV_FilterPacket(char *from)
 {
 	int i;
 	unsigned in;
-	byte m[4];
+	uint8_t m[4];
 	char *p;
 
 	i = 0;
@@ -225,7 +225,7 @@ SV_ListIP_f
 void SVCmd_ListIP_f(void)
 {
 	int i;
-	byte b[4];
+	uint8_t b[4];
 
 	gi.cprintf(NULL, PRINT_HIGH, "Filter list:\n");
 	for (i = 0; i < numipfilters; i++) {
@@ -243,7 +243,7 @@ void SVCmd_WriteIP_f(void)
 {
 	FILE *f;
 	char name[MAX_OSPATH];
-	byte b[4];
+	uint8_t b[4];
 	int i;
 	cvar_t *game;
 

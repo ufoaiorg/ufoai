@@ -128,7 +128,7 @@ static void ED_CallSpawn(edict_t * ent)
 	}
 
 	gi.dprintf("%s doesn't have a spawn function\n", ent->classname);
-	ent->inuse = qfalse;
+	ent->inuse = false;
 }
 
 /*
@@ -172,7 +172,7 @@ in an edict
 static void ED_ParseField(char *key, char *value, edict_t * ent)
 {
 	field_t *f;
-	byte *b;
+	uint8_t *b;
 	float v;
 	vec3_t vec;
 
@@ -180,9 +180,9 @@ static void ED_ParseField(char *key, char *value, edict_t * ent)
 		if (!(f->flags & FFL_NOSPAWN) && !Q_stricmp(f->name, key)) {
 			/* found it */
 			if (f->flags & FFL_SPAWNTEMP)
-				b = (byte *) & st;
+				b = (uint8_t*) & st;
 			else
-				b = (byte *) ent;
+				b = (uint8_t*) ent;
 
 			switch (f->type) {
 			case F_LSTRING:
@@ -233,11 +233,11 @@ ed should be a properly initialized empty edict.
 */
 static char *ED_ParseEdict(char *data, edict_t * ent)
 {
-	qboolean init;
+	bool_t init;
 	char keyname[256];
 	char *com_token;
 
-	init = qfalse;
+	init = false;
 	memset(&st, 0, sizeof(st));
 
 	/* go through all the dictionary pairs */
@@ -259,7 +259,7 @@ static char *ED_ParseEdict(char *data, edict_t * ent)
 		if (com_token[0] == '}')
 			gi.error("ED_ParseEntity: closing brace without data");
 
-		init = qtrue;
+		init = true;
 
 		/* keynames with a leading underscore are used for utility comments, */
 		/* and are immediately discarded by quake */
@@ -536,7 +536,7 @@ static void SP_worldspawn(edict_t * ent)
 {
 	ent->solid = SOLID_BSP;
 	/* since the world doesn't use G_Spawn() */
-	ent->inuse = qtrue;
+	ent->inuse = true;
 
 	if (st.nextmap)
 		Q_strncpyz(level.nextmap, st.nextmap, MAX_QPATH);

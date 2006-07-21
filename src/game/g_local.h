@@ -22,7 +22,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -45,14 +45,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* the "gameversion" client command will print this plus compile date */
 #define	GAMEVERSION	"baseufo"
-
-/* protocol bytes that can be directly added to messages */
-/*#define	svc_muzzleflash		1
-#define	svc_muzzleflash2	2
-#define	svc_temp_entity		3
-#define	svc_layout			4
-#define	svc_inventory		5
-#define	svc_stufftext		11*/
 
 /*================================================================== */
 
@@ -297,7 +289,7 @@ void Cmd_Score_f(edict_t * ent);
 
 
 /* g_utils.c */
-qboolean KillBox(edict_t * ent);
+bool_t KillBox(edict_t * ent);
 void G_ProjectSource(vec3_t point, vec3_t distance, vec3_t forward, vec3_t right, vec3_t result);
 edict_t *G_Find(edict_t * from, int fieldofs, char *match);
 edict_t *findradius(edict_t * from, vec3_t org, float rad);
@@ -340,16 +332,16 @@ void G_ClientTeamInfo(player_t * player);
 void G_ClientCommand(player_t * player);
 void G_ClientUserinfoChanged(player_t * player, char *userinfo);
 void G_ClientBegin(player_t * player);
-qboolean G_ClientConnect(player_t * player, char *userinfo);
+bool_t G_ClientConnect(player_t * player, char *userinfo);
 void G_ClientDisconnect(player_t * player);
 
 int G_TestVis(int team, edict_t * check, int flags);
 void G_ClientShoot(player_t * player, int num, pos3_t at, int type);
 void G_ClientMove(player_t * player, int team, int num, pos3_t to, bool_t stop);
 void G_MoveCalc(int team, pos3_t from, int distance);
-qboolean G_ReactionFire(edict_t * target);
+bool_t G_ReactionFire(edict_t * target);
 
-float G_ActorVis(vec3_t from, edict_t *check, qboolean full);
+float G_ActorVis(vec3_t from, edict_t *check, bool_t full);
 void G_ClearVisFlags(int team);
 int G_CheckVis(edict_t * check, bool_t perish);
 void G_GiveTimeUnits(int team);
@@ -366,7 +358,7 @@ player_t *AI_CreatePlayer(int team);
 
 /* g_svcmds.c */
 void ServerCommand(void);
-qboolean SV_FilterPacket(char *from);
+bool_t SV_FilterPacket(char *from);
 
 
 /* g_main.c */
@@ -405,7 +397,7 @@ typedef struct {
 /* except for 'client->pers' */
 struct player_s {
 	/* known to server */
-	qboolean inuse;
+	bool_t inuse;
 	int num;
 	int ping;
 

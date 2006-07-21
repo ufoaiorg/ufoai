@@ -124,7 +124,7 @@ void Anim_Change(animState_t * as, model_t * mod, char *name)
 
 	/* advance in list (no overflow protection!) */
 	as->ladd = LNEXT(as->ladd);
-	as->change = qtrue;
+	as->change = true;
 }
 
 
@@ -167,7 +167,7 @@ void Anim_Run(animState_t * as, model_t * mod, int msec)
 			as->time = anim->time;
 			as->oldframe = as->frame;
 			as->frame = anim->from;
-			as->change = qfalse;
+			as->change = false;
 		} else {
 			/* next frame of the same animation */
 			as->time = anim->time;
