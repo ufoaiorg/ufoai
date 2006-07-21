@@ -45,7 +45,7 @@ int dragFrom, dragFromX, dragFromY;
 item_t dragItem;
 float *rotateAngles;
 
-static qboolean cameraRoute = qfalse;
+static bool_t cameraRoute = false;
 static vec3_t routeFrom, routeDelta;
 static float routeDist;
 static int routeLevelStart, routeLevelEnd;
@@ -69,7 +69,7 @@ state bit 1 is edge triggered on the up to down transition
 state bit 2 is edge triggered on the down to up transition
 
 
-Key_Event (int key, qboolean down, unsigned time);
+Key_Event (int key, bool_t down, unsigned time);
 
   +mlook src time
 
@@ -914,8 +914,8 @@ void CL_CameraMoveRemote(void)
 			VectorMA(cl.cam.speed, -frac, routeDelta, cl.cam.speed);
 			VectorNormalize2(cl.cam.speed, delta);
 			if (DotProduct(delta, routeDelta) < 0.05) {
-				blockEvents = qfalse;
-				cameraRoute = qfalse;
+				blockEvents = false;
+				cameraRoute = false;
 			}
 		} else
 			VectorMA(cl.cam.speed, frac, routeDelta, cl.cam.speed);
@@ -1028,8 +1028,8 @@ void CL_CameraRoute(pos3_t from, pos3_t target)
 	Cvar_SetValue("cl_worldlevel", target[2]);
 
 	VectorClear(cl.cam.speed);
-	cameraRoute = qtrue;
-	blockEvents = qtrue;
+	cameraRoute = true;
+	blockEvents = true;
 }
 
 /**

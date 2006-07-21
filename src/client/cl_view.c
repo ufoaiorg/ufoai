@@ -545,11 +545,11 @@ void CL_PrepRefresh(void)
 	SCR_EndLoadingPlaque();
 
 	SCR_UpdateScreen();
-	cl.refresh_prepped = qtrue;
-	cl.force_refdef = qtrue;	/* make sure we have a valid refdef */
+	cl.refresh_prepped = true;
+	cl.force_refdef = true;	/* make sure we have a valid refdef */
 
 	/* start the cd track */
-	CDAudio_Play(atoi(cl.configstrings[CS_CDTRACK]), qtrue);
+	CDAudio_Play(atoi(cl.configstrings[CS_CDTRACK]), true);
 }
 
 /**

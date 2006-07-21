@@ -375,11 +375,11 @@ void UP_Content_f( void )
 
 	for ( i = 0; i < gd.numChapters; i++ ) {
 		/* Check if there are any researched items in this chapter ... */
-		researched_entries = qfalse;
+		researched_entries = false;
 		upCurrent = &gd.technologies[gd.upChapters[i].first];
 		do {
 			if ( RS_IsResearched_ptr(upCurrent) ) {
-				researched_entries = qtrue;
+				researched_entries = true;
 				break;
 			}
 			if (upCurrent->idx != upCurrent->next && upCurrent->next >= 0 )

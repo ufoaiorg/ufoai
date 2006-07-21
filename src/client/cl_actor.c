@@ -288,7 +288,7 @@ static void CL_RefreshWeaponButtons(int time)
 void CL_ActorUpdateCVars(void)
 {
 	static char infoText[MAX_MENUTEXTLEN];
-	qboolean refresh;
+	bool_t refresh;
 	char *name;
 	int time;
 
@@ -571,7 +571,7 @@ void CL_RemoveActorFromTeamList(le_t * le)
 		}
 
 		if (i == cl.numTeamList) {
-			selActor->selected = qfalse;
+			selActor->selected = false;
 			selActor = NULL;
 		}
 	}
@@ -612,19 +612,19 @@ void CL_RemoveActorFromTeamList(le_t * le)
  * @sa CL_UGVCvars
  * @sa CL_CharacterCvars
  */
-qboolean CL_ActorSelect(le_t * le)
+bool_t CL_ActorSelect(le_t * le)
 {
 	int i;
 
 	/* test team */
 	if (!le || le->team != cls.team || (le->state & STATE_DEAD))
-		return qfalse;
+		return false;
 
 	/* select him */
 	if (selActor)
-		selActor->selected = qfalse;
+		selActor->selected = false;
 	if (le)
-		le->selected = qtrue;
+		le->selected = true;
 	selActor = le;
 	menuInventory = &selActor->i;
 
@@ -650,11 +650,11 @@ qboolean CL_ActorSelect(le_t * le)
 
 			cl.cmode = M_MOVE;
 
-			return qtrue;
+			return true;
 		}
 	}
 
-	return qfalse;
+	return false;
 }
 
 
@@ -667,27 +667,27 @@ qboolean CL_ActorSelect(le_t * le)
  * @param num The index value from the list of actors
  *
  * @sa CL_ActorSelect
- * @return qtrue if selection was possible otherwise qfalse
+ * @return true if selection was possible otherwise false
  */
-qboolean CL_ActorSelectList(int num)
+bool_t CL_ActorSelectList(int num)
 {
 	le_t *le;
 
 	/* check if actor exists */
 	if (num >= cl.numTeamList)
-		return qfalse;
+		return false;
 
 	/* select actor */
 	le = cl.teamList[num];
 	if (!CL_ActorSelect(le))
-		return qfalse;
+		return false;
 
 	/* center view */
 	VectorCopy(le->origin, cl.cam.reforg);
 	/* change to worldlevel were actor is right now */
 	Cvar_SetValue("cl_worldlevel", le->pos[2]);
 
-	return qtrue;
+	return true;
 }
 
 
@@ -704,7 +704,7 @@ ACTOR MOVEMENT AND SHOOTING
  *
  * @see CL_BuildForbiddenList(void)
  */
-byte *fb_list[MAX_FB_LIST];
+uint8_t *fb_list[MAX_FB_LIST];
 /**
  * @brief Current length of fb_list.
  *
@@ -760,21 +760,21 @@ int CL_CheckAction(void)
 	if (!selActor) {
 		Com_Printf("Nobody selected.\n");
 		Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Nobody selected\n"));
-		return qfalse;
+		return false;
 	}
 
 /*	if ( blockEvents ) {
 		Com_Printf( "Can't do that right now.\n" );
-		return qfalse;
+		return false;
 	}
 */
 	if (cls.team != cl.actTeam) {
 		Com_Printf("This isn't your round.\n");
 		Com_sprintf(infoText, MAX_MENUTEXTLEN, _("This isn't your round\n"));
-		return qfalse;
+		return false;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -788,7 +788,7 @@ int CL_TraceMove(pos3_t to)
 	pos3_t pos;
 	int dv;
 
-	length = Grid_MoveLength(&clMap, to, qfalse);
+	length = Grid_MoveLength(&clMap, to, false);
 
 	if (!selActor || !length || length >= 0x3F)
 		return 0;
@@ -797,7 +797,7 @@ int CL_TraceMove(pos3_t to)
 	VectorCopy(to, pos);
 
 	while ((dv = Grid_MoveNext(&clMap, pos)) < 0xFF) {
-		length = Grid_MoveLength(&clMap, pos, qfalse);
+		length = Grid_MoveLength(&clMap, pos, false);
 		PosAddDV(pos, dv);
 		Grid_PosToVec(&clMap, pos, vec);
 		if (length > selActor->TU)
@@ -823,7 +823,7 @@ void CL_ActorStartMove(le_t * le, pos3_t to)
 	if (!CL_CheckAction())
 		return;
 
-	length = Grid_MoveLength(&clMap, to, qfalse);
+	length = Grid_MoveLength(&clMap, to, false);
 
 	if (!length || length >= 0xFF) {
 		/* move not valid, don't even care to send */
@@ -959,7 +959,7 @@ void CL_ActorDoMove(sizebuf_t * sb)
 		le->speed = 50;
 	else
 		le->speed = 100;
-	blockEvents = qtrue;
+	blockEvents = true;
 }
 
 
@@ -969,7 +969,7 @@ void CL_ActorDoMove(sizebuf_t * sb)
 void CL_ActorTurnMouse(void)
 {
 	vec3_t div;
-	byte dv;
+	uint8_t dv;
 
 	if (mouseSpace != MS_WORLD)
 		return;
@@ -1067,7 +1067,7 @@ void CL_ActorToggleReaction(void)
  *
  * TODO: This looks very out of place. Code probably needs reworking.
  */
-static qboolean firstShot = qfalse;
+static bool_t firstShot = false;
 
 /**
  * @brief Shoot with weapon.
@@ -1096,7 +1096,7 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0]
 		&& !(flags & SF_BOUNCED))
 		S_StartLocalSound(fd->fireSound);
-	firstShot = qfalse;
+	firstShot = false;
 
 	if (fd->irgoggles) {
 		Com_DPrintf("Set rdflags for irgoggles\n");
@@ -1137,7 +1137,7 @@ void CL_ActorDoThrow(sizebuf_t * sb)
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0])
 		S_StartLocalSound(fd->fireSound);
-	firstShot = qfalse;
+	firstShot = false;
 }
 
 
@@ -1166,7 +1166,7 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 		CL_CameraRoute(from, target);
 
 	/* first shot */
-	firstShot = qtrue;
+	firstShot = true;
 
 	/* actor dependant stuff following */
 	if (!le)
@@ -1435,7 +1435,7 @@ void CL_ActorMouseTrace(void)
 	/* calculate move length */
 	if (selActor && !VectorCompare(mousePos, mouseLastPos)) {
 		VectorCopy(mousePos, mouseLastPos);
-		actorMoveLength = Grid_MoveLength(&clMap, mousePos, qfalse);
+		actorMoveLength = Grid_MoveLength(&clMap, mousePos, false);
 		if (selActor->state & STATE_CROUCHED)
 			actorMoveLength *= 1.5;
 	}
@@ -1456,7 +1456,7 @@ ACTOR GRAPHICS
 /**
  * @brief Adds an actor.
  */
-qboolean CL_AddActor(le_t * le, entity_t * ent)
+bool_t CL_AddActor(le_t * le, entity_t * ent)
 {
 	entity_t add;
 
@@ -1517,13 +1517,13 @@ qboolean CL_AddActor(le_t * le, entity_t * ent)
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Adds an UGV.
  */
-qboolean CL_AddUGV(le_t * le, entity_t * ent)
+bool_t CL_AddUGV(le_t * le, entity_t * ent)
 {
 	entity_t add;
 
@@ -1584,7 +1584,7 @@ qboolean CL_AddUGV(le_t * le, entity_t * ent)
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 /*

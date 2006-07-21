@@ -170,8 +170,8 @@ NULL,
 #define EV_TIMES			4096
 
 sizebuf_t evStorage;
-byte evBuf[EV_STORAGE_SIZE];
-byte *evWp;
+uint8_t evBuf[EV_STORAGE_SIZE];
+uint8_t *evWp;
 
 typedef struct evTimes_s {
 	int start;
@@ -182,7 +182,7 @@ typedef struct evTimes_s {
 evTimes_t evTimes[EV_TIMES];
 evTimes_t *etUnused, *etCurrent;
 
-qboolean blockEvents;
+bool_t blockEvents;
 
 int nextTime;
 int shootTime;
@@ -281,7 +281,7 @@ void CL_ParseServerData(void)
 		Com_Printf("\n\n\35\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\36\37\n\n");
 		Com_Printf("%c%s\n", 2, str);
 		/* need to prep refresh at next oportunity */
-		cl.refresh_prepped = qfalse;
+		cl.refresh_prepped = false;
 	}
 }
 
@@ -311,7 +311,7 @@ void CL_ParseConfigString(void)
 		CL_SetLightstyle(i - CS_LIGHTS);
 	else if (i == CS_CDTRACK) {
 		if (cl.refresh_prepped)
-			CDAudio_Play(atoi(cl.configstrings[CS_CDTRACK]), qtrue);
+			CDAudio_Play(atoi(cl.configstrings[CS_CDTRACK]), true);
 	} else if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
 		if (cl.refresh_prepped) {
 			cl.model_draw[i - CS_MODELS] = re.RegisterModel(cl.configstrings[i]);
@@ -425,7 +425,7 @@ void CL_Reset(sizebuf_t * sb)
 	nextTime = 0;
 	shootTime = 0;
 	impactTime = 0;
-	blockEvents = qfalse;
+	blockEvents = false;
 
 	/* set the active player */
 	cls.team = MSG_ReadByte(sb, NULL);
@@ -449,7 +449,7 @@ void CL_StartGame(sizebuf_t * sb)
 	camera_mode = CAMERA_MODE_REMOTE;
 
 	/* center on first actor */
-	cl_worldlevel->modified = qtrue;
+	cl_worldlevel->modified = true;
 	if (cl.numTeamList) {
 		le_t *le;
 
@@ -539,7 +539,7 @@ void CL_EntPerish(sizebuf_t * sb)
 	if (le->type == ET_ACTOR || le->type == ET_UGV)
 		CL_RemoveActorFromTeamList(le);
 
-	le->inuse = qfalse;
+	le->inuse = false;
 
 /*	le->startTime = cl.time; */
 /*	le->think = LET_Perish; */
@@ -566,7 +566,7 @@ CL_ActorAppear
 */
 void CL_ActorAppear(sizebuf_t * sb)
 {
-	qboolean newActor;
+	bool_t newActor;
 	le_t *le;
 	int16_t entnum, modelnum1, modelnum2;
 
@@ -576,10 +576,10 @@ void CL_ActorAppear(sizebuf_t * sb)
 
 	if (!le) {
 		le = LE_Add(entnum);
-		newActor = qtrue;
+		newActor = true;
 	} else {
 /*		Com_Printf( "Actor appearing already visible... overwriting the old one\n" ); */
-		newActor = qfalse;
+		newActor = false;
 	}
 
 	/* get the info */
@@ -948,10 +948,10 @@ void CL_ParseEvent(void)
 
 		/* check instantly flag */
 		if (eType & INSTANTLY) {
-			now = qtrue;
+			now = true;
 			eType &= ~INSTANTLY;
 		} else
-			now = qfalse;
+			now = false;
 
 		/* check if eType is valid */
 		if (eType >= EV_NUM_EVENTS)

@@ -372,7 +372,7 @@ static void CL_GenerateEquipmentCmd(void)
 	assert(baseCurrent);
 
 	if (!baseCurrent->numHired) {
-		MN_PopMenu(qfalse);
+		MN_PopMenu(false);
 		return;
 	}
 
@@ -585,7 +585,7 @@ static void CL_MarkTeamCmd(void)
 	/* we are only allowed to be here if we already set up a base */
 	if (!baseCurrent) {
 		Com_Printf("No base set up\n");
-		MN_PopMenu(qfalse);
+		MN_PopMenu(false);
 		return;
 	}
 
@@ -699,7 +699,7 @@ static void CL_MessageMenuCmd(void)
 void CL_SaveTeam(char *filename)
 {
 	sizebuf_t sb;
-	byte buf[MAX_TEAMDATASIZE];
+	uint8_t buf[MAX_TEAMDATASIZE];
 	char *name;
 	int res, i;
 
@@ -863,7 +863,7 @@ void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 void CL_LoadTeamMultiplayer(char *filename)
 {
 	sizebuf_t sb;
-	byte buf[MAX_TEAMDATASIZE];
+	uint8_t buf[MAX_TEAMDATASIZE];
 	FILE *f;
 	char title[MAX_VAR];
 
@@ -1029,7 +1029,7 @@ void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
 /**
   * @brief Parses the character data which was send by G_SendCharacterData
   */
-void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
+void CL_ParseCharacterData(sizebuf_t *buf, bool_t updateCharacter)
 {
 	int ucn, i, j;
 	int num = MSG_ReadShort(buf, NULL);
@@ -1136,7 +1136,7 @@ void CL_ParseResults(sizebuf_t * buf)
 	Q_strcat(resultText, va(_("Civilians killed by your Team\t%i\n"), num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
 	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n\n"), num_alive[TEAM_CIVILIAN]), sizeof(resultText));
 
-	MN_PopMenu(qtrue);
+	MN_PopMenu(true);
 	if (!curCampaign) {
 		/* get correct menus */
 		Cvar_Set("mn_main", "main");
@@ -1208,7 +1208,7 @@ value_t rankValues[] =
 /**
   * @brief Parse medals and ranks defined in the medals.ufo file.
   */
-void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
+void CL_ParseMedalsAndRanks( char *title, char **text, uint8_t parserank )
 {
 	rank_t		*rank = NULL;
 	char	*errhead = "Com_ParseMedalsAndRanks: unexptected end of file (medal/rank ";

@@ -30,12 +30,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 mp_t MPs[MAX_MAPPARTICLES];
 int numMPs;
 
-#define RADR(x)		((x < 0) ? (byte*)p-x : (byte*)pcmdData+x)
+#define RADR(x)		((x < 0) ? (uint8_t*)p-x : (uint8_t*)pcmdData+x)
 #define RSTACK		-0xFFF0
 
 typedef struct ptlCmd_s {
-	byte cmd;
-	byte type;
+	uint8_t cmd;
+	uint8_t type;
 	int ref;
 } ptlCmd_t;
 
@@ -170,15 +170,15 @@ static int numPtlCmds;
 
 #define		MAX_PCMD_DATA	(MAX_PTLCMDS*8)
 
-static byte pcmdData[MAX_PCMD_DATA];
+static uint8_t pcmdData[MAX_PCMD_DATA];
 static int pcmdPos;
 
 #define		MAX_STACK_DEPTH	8
 #define		MAX_STACK_DATA	512
 
-static byte cmdStack[MAX_STACK_DATA];
+static uint8_t cmdStack[MAX_STACK_DATA];
 static void *stackPtr[MAX_STACK_DEPTH];
-static byte stackType[MAX_STACK_DEPTH];
+static uint8_t stackType[MAX_STACK_DEPTH];
 
 ptlArt_t ptlArt[MAX_PTL_ART];
 ptl_t ptl[MAX_PTLS];
@@ -306,7 +306,7 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 				Com_Error(ERR_FATAL, "CL_ParticleFunction: stack underflow\n");
 
 			/* pop an element off the stack */
-			e = (byte *) stackPtr[--s] - cmdStack;
+			e = (uint8_t*) stackPtr[--s] - cmdStack;
 
 			i = RSTACK - cmd->ref;
 			if (!i) {
@@ -348,14 +348,14 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 				if (stackType[--s] != V_STRING)
 					Sys_Error("Bad type '%s' for pic (particle %s)\n", vt_names[stackType[s - 1]], p->ctrl->name);
 				p->pic = CL_ParticleGetArt((char *) stackPtr[s], p->frame, ART_PIC);
-				e = (byte *) stackPtr[s] - cmdStack;
+				e = (uint8_t*) stackPtr[s] - cmdStack;
 				break;
 			}
 			if (offsetof(ptl_t, model) == -cmd->ref) {
 				if (stackType[--s] != V_STRING)
 					Sys_Error("Bad type '%s' for model (particle %s)\n", vt_names[stackType[s - 1]], p->ctrl->name);
 				p->model = CL_ParticleGetArt((char *) stackPtr[s], 0, ART_MODEL);
-				e = (byte *) stackPtr[s] - cmdStack;
+				e = (uint8_t*) stackPtr[s] - cmdStack;
 				break;
 			}
 
@@ -498,7 +498,7 @@ void CL_ParticleFunction(ptl_t * p, ptlCmd_t * cmd)
 			break;
 
 		case PC_KILL:
-			p->inuse = qfalse;
+			p->inuse = false;
 			return;
 
 		case PC_SPAWN:
@@ -571,7 +571,7 @@ ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a
 	memset(p, 0, sizeof(ptl_t));
 
 	/* set basic values */
-	p->inuse = qtrue;
+	p->inuse = true;
 	p->startTime = cl.time;
 	p->ctrl = pd;
 	p->color[0] = p->color[1] = p->color[2] = p->color[3] = 1.0f;
@@ -601,7 +601,7 @@ ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a
 CL_Fading
 ======================
 */
-void CL_Fading(vec4_t color, byte fade, float frac, qboolean onlyAlpha)
+void CL_Fading(vec4_t color, uint8_t fade, float frac, bool_t onlyAlpha)
 {
 	int i;
 
@@ -648,7 +648,7 @@ void CL_ParticleCheckRounds(void)
 		if (p->inuse && p->rounds) {
 			p->roundsCnt--;
 			if (p->roundsCnt <= 0) {
-				p->inuse = qfalse;
+				p->inuse = false;
 			}
 		}
 }
@@ -661,7 +661,7 @@ CL_ParticleRun
 */
 void CL_ParticleRun(void)
 {
-	qboolean onlyAlpha;
+	bool_t onlyAlpha;
 	ptl_t *p;
 	int i;
 
@@ -678,7 +678,7 @@ void CL_ParticleRun(void)
 
 			/* test for end of life */
 			if (p->life && p->t >= p->life) {
-				p->inuse = qfalse;
+				p->inuse = false;
 				continue;
 			}
 
@@ -736,7 +736,7 @@ void CL_ParticleRun(void)
 CL_ParseMapParticle
 ==============
 */
-void CL_ParseMapParticle(ptl_t * ptl, char *es, qboolean afterwards)
+void CL_ParseMapParticle(ptl_t * ptl, char *es, bool_t afterwards)
 {
 	char keyname[MAX_QPATH];
 	char *key, *token;
@@ -807,9 +807,9 @@ void CL_RunMapParticles(void)
 			}
 
 			/* init the particle */
-			CL_ParseMapParticle(ptl, mp->info, qfalse);
+			CL_ParseMapParticle(ptl, mp->info, false);
 			CL_ParticleFunction(ptl, ptl->ctrl->init);
-			CL_ParseMapParticle(ptl, mp->info, qtrue);
+			CL_ParseMapParticle(ptl, mp->info, true);
 
 			/* prepare next spawning */
 			if (mp->wait[0] || mp->wait[1])
@@ -1035,7 +1035,7 @@ void CL_ParseParticle(char *name, char **text)
 				/* allocate the first particle command */
 				ptlCmd_t **pc;
 
-				pc = (ptlCmd_t **) ((byte *) pd + pf_values[i]);
+				pc = (ptlCmd_t **) ((uint8_t*) pd + pf_values[i]);
 				*pc = &ptlCmd[numPtlCmds];
 
 				/* parse the commands */
