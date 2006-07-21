@@ -37,7 +37,7 @@
 typedef struct sizebuf_s {
 	bool_t allowoverflow;		/* if false, do a Com_Error */
 	bool_t overflowed;		/* set to true if the buffer size failed */
-	void *data;
+	uint8_t *data;
 	size_t maxsize;
 	size_t cursize;
 	int readcount;
@@ -58,7 +58,7 @@ void MSG_WriteChar(sizebuf_t *sb, char c);
 void MSG_WriteByte(sizebuf_t *sb, uint8_t c);
 void MSG_WriteShort(sizebuf_t *sb, int16_t c);
 
-void MSG_WriteLong(sizebuf_t *sb, int c);
+void MSG_WriteLong(sizebuf_t *sb, int32_t c);
 void MSG_WriteFloat(sizebuf_t *sb, float f);
 void MSG_WriteString(sizebuf_t *sb, char *s);
 void MSG_WriteCoord(sizebuf_t *sb, float f);
@@ -75,7 +75,7 @@ void MSG_BeginReading(sizebuf_t *sb);
 char MSG_ReadChar(sizebuf_t *sb);
 uint8_t MSG_ReadByte(sizebuf_t *sb);
 uint16_t MSG_ReadShort(sizebuf_t *sb);
-int MSG_ReadLong(sizebuf_t *sb);
+int32_t MSG_ReadLong(sizebuf_t *sb);
 float MSG_ReadFloat(sizebuf_t *sb);
 char *MSG_ReadString(sizebuf_t *sb);
 char *MSG_ReadStringLine(sizebuf_t *sb);

@@ -544,15 +544,16 @@ void MSG_BeginReading(sizebuf_t *msg)
  */
 char MSG_ReadChar(sizebuf_t *msg_read)
 {
-	char c;
+	/* We need -1 */
+	int c;
 
 	if (msg_read->readcount + 1 > msg_read->cursize)
 		c = -1;
 	else
-		c = ((char *)msg_read->data)[msg_read->readcount];
+		c = msg_read->data[msg_read->readcount];
 	msg_read->readcount++;
 
-	return c;
+	return (char)c;
 }
 
 /**
@@ -560,12 +561,13 @@ char MSG_ReadChar(sizebuf_t *msg_read)
  */
 uint8_t MSG_ReadByte(sizebuf_t *msg_read)
 {
-	uint8_t c;
+	/* We need -1 in CL_ParseServerMessage */
+	int c;
 
 	if (msg_read->readcount + 1 > msg_read->cursize) {
 		c = -1;
 	} else {
-		c = ((uint8_t *)msg_read->data)[msg_read->readcount];
+		c = msg_read->data[msg_read->readcount];
 	}
 	msg_read->readcount++;
 

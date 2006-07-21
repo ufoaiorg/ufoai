@@ -497,9 +497,9 @@ void CL_SniperModeUnset(void);
 
 /* cl_le.c */
 typedef struct le_s {
-	qboolean inuse;
-	qboolean invis;
-	qboolean selected;
+	bool_t inuse;
+	bool_t invis;
+	bool_t selected;
 	uint8_t type;
 	int entnum;
 
@@ -518,12 +518,13 @@ typedef struct le_s {
 	float alpha;
 
 	uint8_t team;
-	int pnum;
+	uint8_t pnum;
 
 	int contents;
 	vec3_t mins, maxs;
 
-	int modelnum1, modelnum2, skinnum;
+	int16_t modelnum1, modelnum2;
+	uint8_t skinnum;
 	struct model_s *model1, *model2;
 
 /* 	character_t	*chr; */
@@ -542,7 +543,7 @@ typedef struct le_s {
 	ptl_t *ptl;
 	char *ref1, *ref2;
 	inventory_t i;
-	int left, right;
+	uint8_t left, right;
 	uint8_t fieldSize;				/* ACTOR_SIZE_* */
 
 	/* is called before adding a le to scene */

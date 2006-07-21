@@ -223,7 +223,7 @@ static void PF_WriteShort(int16_t c)
 /**
   * @brief
   */
-static void PF_WriteLong(int c)
+static void PF_WriteLong(int32_t c)
 {
 	MSG_WriteLong(&sv.multicast, c);
 }
@@ -321,7 +321,7 @@ static int16_t PF_ReadShort(void)
 /**
   * @brief
   */
-static int PF_ReadLong(void)
+static int32_t PF_ReadLong(void)
 {
 	return MSG_ReadLong(&net_message);
 }

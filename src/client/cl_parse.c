@@ -366,7 +366,8 @@ void CL_ParseStartSoundPacket(void)
 {
 	vec3_t pos_v;
 	float *pos;
-	int channel, ent;
+	int ent;
+	int16_t channel;
 	float volume, attenuation, ofs;
 	uint8_t flags, sound_num;
 
@@ -505,8 +506,8 @@ CL_EntAppear
 */
 void CL_EntAppear( sizebuf_t *sb )
 {
-	le_t	*le;
-	int		entnum;
+	le_t *le;
+	int16_t entnum;
 
 	/* check if the ent is already visible */
 	entnum = MSG_ReadShort( sb );
@@ -583,8 +584,8 @@ CL_ActorAppear
 void CL_ActorAppear( sizebuf_t *sb )
 {
 	qboolean newActor;
-	le_t	*le;
-	int		entnum, modelnum1, modelnum2;
+	le_t *le;
+	int16_t entnum, modelnum1, modelnum2;
 
 	/* check if the actor is already visible */
 	entnum = MSG_ReadShort( sb );
@@ -670,8 +671,8 @@ CL_ActorStats
 */
 void CL_ActorStats( sizebuf_t *sb )
 {
-	le_t	*le;
-	int		number;
+	le_t *le;
+	int16_t number;
 
 	number = MSG_ReadShort( sb );
 	le = LE_Get( number );
@@ -702,7 +703,7 @@ CL_ActorStateChange
 void CL_ActorStateChange( sizebuf_t *sb )
 {
 	le_t *le;
-	uint8_t number;
+	int16_t number;
 
 	number = MSG_ReadShort( sb );
 	le = LE_Get( number );
@@ -850,9 +851,9 @@ CL_InvDel
 */
 void CL_InvDel( sizebuf_t *sb )
 {
-	le_t	*le;
-	int		number;
-	int 	container, x, y;
+	le_t *le;
+	int16_t number;
+	int8_t container, x, y;
 
 	MSG_ReadFormat( sb, ev_format[EV_INV_DEL],
 		&number, &container, &x, &y );
@@ -888,10 +889,10 @@ CL_InvAmmo
 */
 void CL_InvAmmo( sizebuf_t *sb )
 {
-	invList_t	*ic;
-	le_t	*le;
-	int		number;
-	int		ammo, container, x, y;
+	invList_t *ic;
+	le_t *le;
+	int16_t number;
+	int8_t ammo, container, x, y;
 
 	MSG_ReadFormat( sb, ev_format[EV_INV_AMMO],
 		&number, &ammo, &container, &x, &y );
@@ -956,7 +957,8 @@ void CL_ParseEvent( void )
 {
 	evTimes_t *et, *last, *cur;
 	bool_t now;
-	int length, time, oldCount;
+	int16_t length;
+	int time, oldCount;
 	uint8_t eType;
 
 	while ( ( eType = MSG_ReadByte( &net_message ) ) != 0 ) {
@@ -973,13 +975,14 @@ void CL_ParseEvent( void )
 			now = qfalse;
 
 		/* check if eType is valid */
-		if ( eType < 0 || eType >= EV_NUM_EVENTS )
+		if ( eType >= EV_NUM_EVENTS )
 			Com_Error( ERR_DROP, "CL_ParseEvent: invalid event %i\n", eType );
 
 		if ( !ev_func[eType] )
 			Com_Error( ERR_DROP, "CL_ParseEvent: no handling function for event %i\n", eType );
 
 		oldCount = net_message.readcount;
+		/* FIXME: MSG_LengthFormat will return an int, length is a short */
 		length = (ev_format[eType][0] == 'n') ? MSG_ReadShort( &net_message ) + 2 :
 												MSG_LengthFormat( &net_message, ev_format[eType] );
 
@@ -1014,7 +1017,7 @@ void CL_ParseEvent( void )
 				break;
 			case EV_ACTOR_SHOOT_HIDDEN:
 				{
-					int flags;
+					uint8_t flags;
 					flags = MSG_ReadByte( &net_message );
 					if ( !flags ) {
 						fireDef_t *fd;
@@ -1161,7 +1164,8 @@ CL_ParseServerMessage
 */
 void CL_ParseServerMessage (void)
 {
-	uint8_t cmd, i;
+	int cmd; /* can be -1 */
+	uint8_t i;
 	char *s;
 
 	/* if recording demos, copy the message out */
