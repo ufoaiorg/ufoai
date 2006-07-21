@@ -1,3 +1,8 @@
+/**
+ * @file gl_rmain.c
+ * @brief
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,7 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* r_main.c */
+
 #include "gl_local.h"
 #include <ctype.h>
 

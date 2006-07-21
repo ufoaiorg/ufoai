@@ -1,3 +1,8 @@
+/**
+ * @file gl_model.c
+ * @brief Model loading and caching
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,7 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* models.c -- model loading and caching */
 
 #include "gl_local.h"
 
@@ -99,11 +103,9 @@ void Mod_Modellist_f(void)
 	ri.Con_Printf(PRINT_ALL, "Total resident: %i\n", total);
 }
 
-/*
-===============
-Mod_Init
-===============
-*/
+/**
+ * @brief
+ */
 void Mod_Init(void)
 {
 	memset(mod_novis, 0xff, sizeof(mod_novis));
@@ -111,13 +113,9 @@ void Mod_Init(void)
 
 
 
-/*
-==================
-Mod_ForName
-
-Loads in a model for the given name
-==================
-*/
+/**
+ * @brief Loads in a model for the given name
+ */
 model_t *Mod_ForName(char *name, qboolean crash)
 {
 	model_t *mod;
@@ -953,11 +951,10 @@ void Mod_LoadAnims(model_t * mod, void *buffer)
 }
 
 
-/*
-=================
-Mod_LoadAliasModel
-=================
-*/
+/**
+ * @brief
+ * @sa Mod_ForName
+ */
 void Mod_LoadAliasModel(model_t * mod, void *buffer)
 {
 	int i, j;
@@ -1239,12 +1236,10 @@ void Mod_FindSharedEdges(model_t * mod)
 }
 
 
-/*
-@@@@@@@@@@@@@@@@@@@@@
-R_RegisterModel
-
-@@@@@@@@@@@@@@@@@@@@@
-*/
+/**
+ * @brief Loads and register a model
+ * @param name The name of the model relative to basedir
+ */
 struct model_s *R_RegisterModel(char *name)
 {
 	model_t *mod;
