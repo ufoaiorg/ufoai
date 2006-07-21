@@ -797,16 +797,14 @@ static void paint_audio (void *unused, Uint8 * stream, int len)
 		int len1 = len;
 		int len2 = 0;
 
-		if (len1 > tobufend)
-		{
+		if (len1 > tobufend) {
 			len1 = tobufend;
 			len2 = len - len1;
 		}
 		memcpy(stream, shm->buffer + pos, len1);
 		if (len2 <= 0)
 			shm->dmapos += (len1 / (shm->samplebits/8));
-		else  /* wraparound? */
-		{
+		else { /* wraparound? */
 			memcpy(stream+len1, shm->buffer, len2);
 			shm->dmapos = (len2 / (shm->samplebits/8));
 		}

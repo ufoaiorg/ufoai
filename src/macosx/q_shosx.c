@@ -31,7 +31,7 @@
 
 #pragma mark =Variables=
 
-byte 		*membase;
+uint8_t 		*membase;
 int 		maxhunksize,
                 curhunksize,
                 curtime;

@@ -101,30 +101,26 @@ void CDAudio_RandomPlay(void)
 	if (!cd_id || !enabled)
 		return;
 
-	track_bools = (byte*)malloc(cd_id->numtracks* sizeof(byte));
+	track_bools = (uint8_t*)malloc(cd_id->numtracks* sizeof(uint8_t));
 
 	if (track_bools == 0)
 		return;
 
 	/*create array of available audio tracknumbers */
 
-	for (; i < cd_id->numtracks; i++)
-	{
+	for (; i < cd_id->numtracks; i++) {
 		track_bools[i] = cd_id->track[i].type == SDL_AUDIO_TRACK;
 		free_tracks += track_bools[i];
 	}
 
-	if (!free_tracks)
-	{
+	if (!free_tracks) {
 		Com_DPrintf("CDAudio_RandomPlay: Unable to find and play a random audio track, insert an audio cd please");
 		goto free_end;
 	}
 
 	/*choose random audio track */
-	do
-	{
-		do
-		{
+	do {
+		do {
 			f = ((float)rand()) / ((float)RAND_MAX + 1.0);
 			track = (int)(cd_id->numtracks  * f);
 		}
@@ -134,37 +130,26 @@ void CDAudio_RandomPlay(void)
 
 		cd_stat=SDL_CDStatus(cd_id);
 
-		if (!cdValid)
-		{
+		if (!cdValid) {
 			if (!CD_INDRIVE(cd_stat) ||(!cd_id->numtracks))
-			{
 				goto free_end;
-			}
 			cdValid = true;
 		}
 
-		if (cd_stat == CD_PLAYING)
-		{
+		if (cd_stat == CD_PLAYING) {
 			if (cd_id->cur_track == track + 1)
-			{
 				goto free_end;
-			}
 			CDAudio_Stop();
 		}
 
-		if (SDL_CDPlay(cd_id,cd_id->track[track].offset,
-				cd_id->track[track].length))
-		{
+		if (SDL_CDPlay(cd_id,cd_id->track[track].offset,cd_id->track[track].length)) {
 			track_bools[track] = 0;
 			free_tracks--;
-		}
-		else
-		{
+		} else {
 			playLooping = true;
 			break;
 		}
-	}
-	while (free_tracks > 0);
+	} while (free_tracks > 0);
 
 	free_end:
 	free((void*)track_bools);
@@ -339,11 +324,11 @@ static void CD_f( void )
 		return;
 	}
 	if (!Q_strcasecmp(command,"play")) {
-		CDAudio_Play((byte)atoi(Cmd_Argv(2)),false);
+		CDAudio_Play((uint8_t)atoi(Cmd_Argv(2)),false);
 		return;
 	}
 	if (!Q_strcasecmp(command,"loop")) {
-		CDAudio_Play((byte)atoi(Cmd_Argv(2)),true);
+		CDAudio_Play((uint8_t)atoi(Cmd_Argv(2)),true);
 		return;
 	}
 	if (!Q_strcasecmp(command,"stop")) {
@@ -368,8 +353,7 @@ static void CD_f( void )
 
 		cdstate = SDL_CDStatus(cd_id);
 		Com_Printf("%d tracks\n",cd_id->numtracks);
-		switch ( cdstate )
-		{
+		switch ( cdstate ) {
 		case CD_PLAYING:
 			Com_Printf("Currently %s track %d\n",
 				playLooping ? "looping" : "playing",

@@ -32,9 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 int		hunkcount;
 
 
-byte	*membase;
-int		hunkmaxsize;
-int		cursize;
+uint8_t *membase;
+int hunkmaxsize;
+int cursize;
 
 #define	VIRTUAL_ALLOC
 
@@ -65,8 +65,7 @@ void *Hunk_Alloc (int size)
 	/* commit pages as needed */
 /*	buf = VirtualAlloc (membase+cursize, size, MEM_COMMIT, PAGE_READWRITE); */
 	buf = VirtualAlloc (membase, cursize+size, MEM_COMMIT, PAGE_READWRITE);
-	if (!buf)
-	{
+	if (!buf) {
 		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) &buf, 0, NULL);
 		Sys_Error ("VirtualAlloc commit failed.\n%s", buf);
 	}
@@ -138,9 +137,9 @@ void Sys_Mkdir (char *path)
 
 /*============================================ */
 
-char	findbase[MAX_OSPATH];
-char	findpath[MAX_OSPATH];
-int		findhandle;
+char findbase[MAX_OSPATH];
+char findpath[MAX_OSPATH];
+int findhandle;
 
 static bool_t CompareAttributes( unsigned found, unsigned musthave, unsigned canthave )
 {
@@ -208,6 +207,3 @@ void Sys_FindClose (void)
 		_findclose (findhandle);
 	findhandle = 0;
 }
-
-
-/*============================================ */
