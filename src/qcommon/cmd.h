@@ -40,7 +40,7 @@
 #ifndef COMMON_CMD_H
 #define COMMON_CMD_H
 
-#include "common/ufotypes.h"
+#include "../common/ufotypes.h"
 
 typedef void (*xcommand_t) (void);
 

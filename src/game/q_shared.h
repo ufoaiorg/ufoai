@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GAME_Q_SHARED_H
 
 /* FIXME: Put me in the right headers - for now this is here to let us compile the game */
-#include "common/ufotypes.h"
+#include "../common/ufotypes.h"
 
 #ifdef DEBUG
 #define Q_strncpyz(string1,string2,length) Q_strncpyzDebug( string1, string2, length, __FILE__, __LINE__ )

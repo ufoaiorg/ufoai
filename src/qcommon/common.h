@@ -30,7 +30,7 @@
 #ifndef COMMON_COMMON_H
 #define COMMON_COMMON_H
 
-#include "game/q_shared.h"
+#include "../game/q_shared.h"
 
 /*============================================================================ */
 

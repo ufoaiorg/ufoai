@@ -40,7 +40,7 @@
 #ifndef COMMON_CBUF_H
 #define COMMON_CBUF_H
 
-#include "common/ufotypes.h"
+#include "../common/ufotypes.h"
 
 #define	EXEC_NOW	0			/* don't return until completed */
 #define	EXEC_INSERT	1			/* insert at current position, but don't run yet */
