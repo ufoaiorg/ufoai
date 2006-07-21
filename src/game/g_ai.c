@@ -510,6 +510,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 			/* skills */
 			Com_CharGenAbilitySkills(&ent->chr, 0, 100, 0, 100);
+			/* FIXME: This will overlow */
 			ent->chr.skills[ABILITY_MIND] += 100;
 			if (ent->chr.skills[ABILITY_MIND] >= MAX_SKILL)
 				ent->chr.skills[ABILITY_MIND] = MAX_SKILL;
