@@ -1581,7 +1581,7 @@ void CL_LoadEquipment ( sizebuf_t *buf, base_t* base )
 	for (i = 0; i < base->numWholeTeam; chr++, i++) {
 		for (j = 0; j < MAX_CONTAINERS; j++)
 			chr->inv->c[j] = NULL;
-		item.t = MSG_ReadByte(buf);
+		item.t = MSG_ReadByte(buf, NULL);
 		while (item.t != NONE) {
 			/* read info */
 			MSG_ReadFormat(buf, "bbbbb", &item.a, &item.m, &container, &x, &y);
@@ -1590,7 +1590,7 @@ void CL_LoadEquipment ( sizebuf_t *buf, base_t* base )
 			Com_AddToInventory(chr->inv, item, container, x, y);
 
 			/* get next item */
-			item.t = MSG_ReadByte(buf);
+			item.t = MSG_ReadByte(buf, NULL);
 		}
 	}
 }
@@ -1823,9 +1823,9 @@ int CL_GameLoad(char *filename)
 	sb.cursize = fread(buf, 1, MAX_GAMESAVESIZE, f);
 	fclose(f);
 
-	version = MSG_ReadLong(&sb);
+	version = MSG_ReadLong(&sb, NULL);
 	Com_Printf("Savefile version %d detected\n", version);
-	dataSize = MSG_ReadLong(&sb);
+	dataSize = MSG_ReadLong(&sb, NULL);
 
 	if (dataSize != MAX_GAMESAVESIZE) {
 		Com_Printf("File '%s' is incompatible to current version\n", filename);
@@ -1876,42 +1876,43 @@ int CL_GameLoad(char *filename)
 	memset(&ccs, 0, sizeof(ccs_t));
 
 	/* read date */
-	ccs.date.day = MSG_ReadLong(&sb);
-	ccs.date.sec = MSG_ReadLong(&sb);
+	ccs.date.day = MSG_ReadLong(&sb, NULL);
+	ccs.date.sec = MSG_ReadLong(&sb, NULL);
 
 	/* read map view */
-	ccs.center[0] = MSG_ReadFloat(&sb);
-	ccs.center[1] = MSG_ReadFloat(&sb);
-	ccs.zoom = MSG_ReadFloat(&sb);
+	ccs.center[0] = MSG_ReadFloat(&sb, NULL);
+	ccs.center[1] = MSG_ReadFloat(&sb, NULL);
+	ccs.zoom = MSG_ReadFloat(&sb, NULL);
 
 	/* Recently it was loaded from disk. Attention, bad pointers!!! */
 	memcpy(&gd, sb.data + sb.readcount, sizeof(globalData_t));
 	sb.readcount += sizeof(globalData_t);
 
-	i = MSG_ReadByte(&sb);
+	/* FIXME: This is not uint8_t value - we should write long value */
+	i = MSG_ReadByte(&sb, NULL);
 	for ( ; i > 0; i-- )
 		MN_AddNewMessage(MSG_ReadString(&sb), MSG_ReadString(&sb), qfalse, MSG_STANDARD, NULL);
 
 	/* read credits */
-	CL_UpdateCredits(MSG_ReadLong(&sb));
+	CL_UpdateCredits(MSG_ReadLong(&sb, NULL));
 
 	/* read equipment */
 	for (i = 0; i < MAX_OBJDEFS; i++) {
 		if (version == 0) {
-			ccs.eCampaign.num[i] = MSG_ReadByte(&sb);
+			ccs.eCampaign.num[i] = MSG_ReadByte(&sb, NULL);
 			ccs.eCampaign.num_loose[i] = 0;
 		} else if (version >= 1) {
-			ccs.eCampaign.num[i] = MSG_ReadLong(&sb);
-			ccs.eCampaign.num_loose[i] = MSG_ReadByte(&sb);
+			ccs.eCampaign.num[i] = MSG_ReadLong(&sb, NULL);
+			ccs.eCampaign.num_loose[i] = MSG_ReadByte(&sb, NULL);
 		}
 	}
 
 	/* read market */
 	for (i = 0; i < MAX_OBJDEFS; i++) {
 		if (version == 0)
-			ccs.eMarket.num[i] = MSG_ReadByte(&sb);
+			ccs.eMarket.num[i] = MSG_ReadByte(&sb, NULL);
 		else if (version >= 1)
-			ccs.eMarket.num[i] = MSG_ReadLong(&sb);
+			ccs.eMarket.num[i] = MSG_ReadLong(&sb, NULL);
 	}
 
 	/* read campaign data */
@@ -1926,9 +1927,9 @@ int CL_GameLoad(char *filename)
 			return 1;
 		}
 
-		state->start.day = MSG_ReadLong(&sb);
-		state->start.sec = MSG_ReadLong(&sb);
-		num = MSG_ReadByte(&sb);
+		state->start.day = MSG_ReadLong(&sb, NULL);
+		state->start.sec = MSG_ReadLong(&sb, NULL);
+		num = MSG_ReadByte(&sb, NULL);
 		for (i = 0; i < num; i++) {
 			name = MSG_ReadString(&sb);
 			for (j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++)
@@ -1940,13 +1941,13 @@ int CL_GameLoad(char *filename)
 				set = &dummy;
 			}
 
-			set->active = MSG_ReadByte(&sb);
-			set->num = MSG_ReadShort(&sb);
-			set->done = MSG_ReadShort(&sb);
-			set->start.day = MSG_ReadLong(&sb);
-			set->start.sec = MSG_ReadLong(&sb);
-			set->event.day = MSG_ReadLong(&sb);
-			set->event.sec = MSG_ReadLong(&sb);
+			set->active = MSG_ReadByte(&sb, NULL);
+			set->num = MSG_ReadShort(&sb, NULL);
+			set->done = MSG_ReadShort(&sb, NULL);
+			set->start.day = MSG_ReadLong(&sb, NULL);
+			set->start.sec = MSG_ReadLong(&sb, NULL);
+			set->event.day = MSG_ReadLong(&sb, NULL);
+			set->event.sec = MSG_ReadLong(&sb, NULL);
 		}
 
 		/* read next stage name */
@@ -1954,7 +1955,7 @@ int CL_GameLoad(char *filename)
 	}
 
 	/* store active missions */
-	ccs.numMissions = MSG_ReadByte(&sb);
+	ccs.numMissions = MSG_ReadByte(&sb, NULL);
 	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++) {
 		/* get mission definition */
 		name = MSG_ReadString(&sb);
@@ -1977,10 +1978,10 @@ int CL_GameLoad(char *filename)
 			Com_Printf("Warning: Stage set '%s' not found\n", name);
 
 		/* read position and time */
-		mis->realPos[0] = MSG_ReadFloat(&sb);
-		mis->realPos[1] = MSG_ReadFloat(&sb);
-		mis->expire.day = MSG_ReadLong(&sb);
-		mis->expire.sec = MSG_ReadLong(&sb);
+		mis->realPos[0] = MSG_ReadFloat(&sb, NULL);
+		mis->realPos[1] = MSG_ReadFloat(&sb, NULL);
+		mis->expire.day = MSG_ReadLong(&sb, NULL);
+		mis->expire.sec = MSG_ReadLong(&sb, NULL);
 
 		/* ignore incomplete info */
 		if (!mis->def || !mis->cause) {
@@ -2460,7 +2461,7 @@ void CL_UpdateCharacterStats(int won)
 
 			/* FIXME: */
 			for (j = 0; j < SKILL_NUM_TYPES; j++)
-				if (chr->skills[j] < MAX_SKILL)
+				if (chr->skills[j] + 1 < MAX_SKILL)
 					chr->skills[j]++;
 
 			/* Check if the soldier meets the requirements for a higher rank -> Promotion */

@@ -778,8 +778,8 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 	int i;
 
 	/* unique character number */
-	chr->fieldSize = MSG_ReadByte(sb);
-	chr->ucn = MSG_ReadShort(sb);
+	chr->fieldSize = MSG_ReadByte(sb, NULL);
+	chr->ucn = MSG_ReadShort(sb, NULL);
 	if (chr->ucn >= baseCurrent->nextUCN)
 		baseCurrent->nextUCN = chr->ucn + 1;
 
@@ -788,33 +788,33 @@ void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 	Q_strncpyz(chr->path, MSG_ReadString(sb), MAX_VAR);
 	Q_strncpyz(chr->body, MSG_ReadString(sb), MAX_VAR);
 	Q_strncpyz(chr->head, MSG_ReadString(sb), MAX_VAR);
-	chr->skin = MSG_ReadByte(sb);
+	chr->skin = MSG_ReadByte(sb, NULL);
 
 	/* new attributes */
 	for (i = 0; i < SKILL_NUM_TYPES; i++)
-		chr->skills[i] = MSG_ReadByte(sb);
+		chr->skills[i] = MSG_ReadByte(sb, NULL);
 
 	/* load scores */
 	for (i = 0; i < KILLED_NUM_TYPES; i++)
-		chr->kills[i] = MSG_ReadShort(sb);
-	chr->assigned_missions = MSG_ReadShort(sb);
+		chr->kills[i] = MSG_ReadShort(sb, NULL);
+	chr->assigned_missions = MSG_ReadShort(sb, NULL);
 
 	/* inventory */
 	Com_DestroyInventory(chr->inv);
-	item.t = MSG_ReadByte(sb);
+	item.t = MSG_ReadByte(sb, NULL);
 	while (item.t != NONE) {
 		/* read info */
-		item.a = MSG_ReadByte(sb);
-		item.m = MSG_ReadByte(sb);
-		container = MSG_ReadByte(sb);
-		x = MSG_ReadByte(sb);
-		y = MSG_ReadByte(sb);
+		item.a = MSG_ReadByte(sb, NULL);
+		item.m = MSG_ReadByte(sb, NULL);
+		container = MSG_ReadByte(sb, NULL);
+		x = MSG_ReadByte(sb, NULL);
+		y = MSG_ReadByte(sb, NULL);
 
 		/* check info and add item if ok */
 		Com_AddToInventory(chr->inv, item, container, x, y);
 
 		/* get next item */
-		item.t = MSG_ReadByte(sb);
+		item.t = MSG_ReadByte(sb, NULL);
 	}
 }
 
@@ -834,8 +834,8 @@ void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 	CL_ResetCharacters(base);
 
 	/* read whole team list */
-	MSG_ReadByte(sb);
-	base->numWholeTeam = MSG_ReadByte(sb);
+	MSG_ReadByte(sb, NULL);
+	base->numWholeTeam = MSG_ReadByte(sb, NULL);
 	for (i = 0, chr = base->wholeTeam; i < base->numWholeTeam; chr++, i++)
 		CL_LoadTeamMember(sb, chr);
 
@@ -1032,11 +1032,11 @@ void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
 void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 {
 	int ucn, i, j;
-	int num = MSG_ReadShort(buf);
+	int num = MSG_ReadShort(buf, NULL);
 	character_t* chr;
 	for (i=0; i<num; i++) {
 		chr = NULL;
-		ucn = MSG_ReadShort(buf);
+		ucn = MSG_ReadShort(buf, NULL);
 		for (j=0; j<baseCurrent->numWholeTeam; j++)
 			if (baseCurrent->wholeTeam[j].ucn == ucn) {
 				chr = &baseCurrent->wholeTeam[j];
@@ -1046,9 +1046,9 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 			Sys_Error("Could not get character with ucn: %i\n", ucn);
 		for (j=0; j<KILLED_NUM_TYPES; j++)
 			if ( updateCharacter )
-				chr->kills[j] = MSG_ReadShort(buf);
+				chr->kills[j] = MSG_ReadShort(buf, NULL);
 			else
-				MSG_ReadShort(buf);
+				MSG_ReadShort(buf, NULL);
 	}
 }
 
@@ -1070,27 +1070,27 @@ void CL_ParseResults(sizebuf_t * buf)
 	uint8_t num;
 
 	/* get number of teams */
-	num = MSG_ReadByte(buf);
+	num = MSG_ReadByte(buf, NULL);
 	if (num > MAX_TEAMS)
 		Sys_Error("Too many teams in result message\n");
 
 	/* get winning team */
-	winner = MSG_ReadByte(buf);
+	winner = MSG_ReadByte(buf, NULL);
 	we = cls.team;
 
 	/* get spawn and alive count */
 	for (i = 0; i < num; i++) {
-		num_spawned[i] = MSG_ReadByte(buf);
-		num_alive[i] = MSG_ReadByte(buf);
+		num_spawned[i] = MSG_ReadByte(buf, NULL);
+		num_alive[i] = MSG_ReadByte(buf, NULL);
 	}
 
 	/* get kills */
 	for (i = 0; i < num; i++)
 		for (j = 0; j < num; j++)
-			num_kills[i][j] = MSG_ReadByte(buf);
+			num_kills[i][j] = MSG_ReadByte(buf, NULL);
 
 	/* read terminator */
-	if (MSG_ReadByte(buf) != NONE)
+	if (MSG_ReadByte(buf, NULL) != NONE)
 		Com_Printf("WARNING: bad result message\n");
 
 	/* init result text */

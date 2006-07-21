@@ -939,7 +939,7 @@ void CL_ActorDoMove(sizebuf_t * sb)
 /*	int		i; */
 
 	/* get le */
-	le = LE_Get(MSG_ReadShort(sb));
+	le = LE_Get(MSG_ReadShort(sb, NULL));
 	if (!le) {
 		Com_Printf("Can't move, LE doesn't exist\n");
 		return;
@@ -996,13 +996,13 @@ void CL_ActorDoTurn(sizebuf_t *sb)
 	le_t *le;
 
 	/* get le */
-	le = LE_Get(MSG_ReadShort(sb));
+	le = LE_Get(MSG_ReadShort(sb, NULL));
 	if (!le) {
 		Com_Printf("Can't turn, LE doesn't exist\n");
 		return;
 	}
 
-	le->dir = MSG_ReadByte(sb);
+	le->dir = MSG_ReadByte(sb, NULL);
 	le->angles[YAW] = dangle[le->dir];
 
 /* 	cl.cmode = M_MOVE; */
@@ -1081,7 +1081,7 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 	int flags, normal;
 
 	/* get le */
-	le = LE_Get(MSG_ReadShort(sb));
+	le = LE_Get(MSG_ReadShort(sb, NULL));
 
 	/* read data */
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &type, &flags, &muzzle, &impact, &normal);
@@ -1154,8 +1154,8 @@ void CL_ActorStartShoot(sizebuf_t * sb)
 	int16_t number;
 	uint8_t type;
 
-	number = MSG_ReadShort(sb);
-	type = MSG_ReadByte(sb);
+	number = MSG_ReadShort(sb, NULL);
+	type = MSG_ReadByte(sb, NULL);
 	fd = GET_FIREDEF(type);
 	le = LE_Get(number);
 	MSG_ReadGPos(sb, from);
@@ -1193,7 +1193,7 @@ void CL_ActorDie(sizebuf_t * sb)
 	le_t *le;
 
 	/* get le */
-	le = LE_Get(MSG_ReadShort(sb));
+	le = LE_Get(MSG_ReadShort(sb, NULL));
 	if (!le)
 		return;
 
@@ -1205,7 +1205,7 @@ void CL_ActorDie(sizebuf_t * sb)
 	le->i.c[csi.idFloor] = NULL;
 	le->HP = 0;
 	le->STUN = 0;
-	le->state = MSG_ReadShort(sb);
+	le->state = MSG_ReadShort(sb, NULL);
 
 	/* play animation */
 	le->think = NULL;
@@ -1332,7 +1332,7 @@ void CL_DoEndRound(sizebuf_t * sb)
 
 	/* change active player */
 	Com_Printf("Team %i ended round", cl.actTeam);
-	cl.actTeam = MSG_ReadByte(sb);
+	cl.actTeam = MSG_ReadByte(sb, NULL);
 	Com_Printf(", team %i's round started!\n", cl.actTeam);
 
 	/* check whether a particle has to go */

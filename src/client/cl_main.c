@@ -834,7 +834,7 @@ void CL_ConnectionlessPacket(void)
 	char *c;
 
 	MSG_BeginReading(&net_message);
-	MSG_ReadLong(&net_message);	/* skip the -1 */
+	MSG_ReadLong(&net_message, NULL);	/* skip the -1 */
 
 	s = MSG_ReadStringLine(&net_message);
 

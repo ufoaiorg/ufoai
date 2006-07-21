@@ -249,7 +249,7 @@ typedef struct aircraft_s {
 	int time;
 	int idxInBase;				/* id in base */
 	int idxBase;				/* id of base */
-	int *teamSize;				/* how many soldiers on board */
+	uint8_t *teamSize;				/* how many soldiers on board */
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	/* TODO */
 	/* xxx teamShape;    // TODO: shape of the soldier-area onboard. */

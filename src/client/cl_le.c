@@ -145,7 +145,7 @@ void LM_Perish(sizebuf_t * sb)
 {
 	lm_t *lm;
 
-	lm = LM_Find(MSG_ReadShort(sb));
+	lm = LM_Find(MSG_ReadShort(sb, NULL));
 	if (!lm)
 		return;
 
@@ -162,7 +162,7 @@ void LM_Explode(sizebuf_t * sb)
 {
 	lm_t *lm;
 
-	lm = LM_Find(MSG_ReadShort(sb));
+	lm = LM_Find(MSG_ReadShort(sb, NULL));
 	if (!lm)
 		return;
 
