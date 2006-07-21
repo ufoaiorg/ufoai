@@ -51,7 +51,7 @@ cvar_t *nostdout;
 unsigned	sys_frame_time;
 
 uid_t saved_euid;
-qboolean stdin_active = qtrue;
+bool_t stdin_active = true;
 
 char *Sys_GetCurrentUser( void )
 {
@@ -94,7 +94,7 @@ char *Sys_BinName( const char *arg0 )
 	int	n;
 	char	src[MAX_OSPATH];
 	char	dir[MAX_OSPATH];
-	qboolean	links = qfalse;
+	bool_t	links = false;
 #endif
 
 	static char	dst[MAX_OSPATH];
@@ -107,7 +107,7 @@ char *Sys_BinName( const char *arg0 )
 		Com_sprintf(dst, MAX_OSPATH, dir);
 		Q_strcat(dst, "/", MAX_OSPATH);
 		Q_strcat(dst, src, MAX_OSPATH);
-		links = qtrue;
+		links = true;
 	}
 
 	if ( links ) {
@@ -260,7 +260,7 @@ char *Sys_ConsoleInput(void)
 
 	len = read (0, text, sizeof(text));
 	if (len == 0) { /* eof! */
-		stdin_active = qfalse;
+		stdin_active = false;
 		return NULL;
 	}
 

@@ -17,7 +17,7 @@
 #include "../client/client.h"
 #include "../client/snd_loc.h"
 
-qboolean OSS_SNDDMA_Init (void);
+bool_t OSS_SNDDMA_Init (void);
 int OSS_SNDDMA_GetDMAPos (void);
 void OSS_SNDDMA_Shutdown (void);
 void OSS_SNDDMA_Submit (void);

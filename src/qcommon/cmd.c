@@ -75,7 +75,7 @@ void Cmd_Open_f(void)
 Cmd_Close_f
 
 Will no longer add any command to command buffer
-...until cmd_close is qfalse again
+...until cmd_close is false again
 Does not affect EXEC_NOW
 ============
 */
@@ -278,12 +278,12 @@ Cmd_MacroExpandString
 char *Cmd_MacroExpandString(char *text)
 {
 	int i, j, count, len;
-	qboolean inquote;
+	bool_t inquote;
 	char *scan;
 	static char expanded[MAX_STRING_CHARS];
 	char *token, *start;
 
-	inquote = qfalse;
+	inquote = false;
 	scan = text;
 
 	len = strlen(scan);
@@ -556,7 +556,7 @@ void Cmd_ExecuteString(char *text)
 	cmdalias_t *a;
 	int alias_count = 0;
 
-	Cmd_TokenizeString(text, qtrue);
+	Cmd_TokenizeString(text, true);
 
 	/* execute the command line */
 	if (!Cmd_Argc())

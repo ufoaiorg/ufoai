@@ -33,10 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-
 #include "server.h"
-
-
 
 /*
 ====================
@@ -94,7 +91,7 @@ SV_SetPlayer
 Sets sv_client and sv_player to the player with idnum Cmd_Argv(1)
 ==================
 */
-qboolean SV_SetPlayer(void)
+bool_t SV_SetPlayer(void)
 {
 	client_t *cl;
 	int i;
@@ -102,7 +99,7 @@ qboolean SV_SetPlayer(void)
 	char *s;
 
 	if (Cmd_Argc() < 2)
-		return qfalse;
+		return false;
 
 	s = Cmd_Argv(1);
 
@@ -111,16 +108,16 @@ qboolean SV_SetPlayer(void)
 		idnum = atoi(Cmd_Argv(1));
 		if (idnum < 0 || idnum >= sv_maxclients->value) {
 			Com_Printf("Bad client slot: %i\n", idnum);
-			return qfalse;
+			return false;
 		}
 
 		sv_client = &svs.clients[idnum];
 		sv_player = sv_client->player;
 		if (!sv_client->state) {
 			Com_Printf("Client %i is not active\n", idnum);
-			return qfalse;
+			return false;
 		}
-		return qtrue;
+		return true;
 	}
 
 	/* check for a name match */
@@ -130,12 +127,12 @@ qboolean SV_SetPlayer(void)
 		if (!strcmp(cl->name, s)) {
 			sv_client = cl;
 			sv_player = sv_client->player;
-			return qtrue;
+			return true;
 		}
 	}
 
 	Com_Printf("Userid %s is not on the server\n", s);
-	return qfalse;
+	return false;
 }
 
 /*
@@ -147,7 +144,7 @@ Puts the server in demo mode on a specific map/cinematic
 */
 void SV_DemoMap_f(void)
 {
-	SV_Map(qtrue, Cmd_Argv(1), qfalse);
+	SV_Map(true, Cmd_Argv(1), false);
 }
 
 /*
@@ -161,14 +158,14 @@ void SV_Map_f(void)
 {
 	/* change */
 	sv.state = ss_dead;
-	sv.loadgame = qfalse;
-	sv.attractloop = qfalse;
-	svs.initialized = qfalse;
+	sv.loadgame = false;
+	sv.attractloop = false;
+	svs.initialized = false;
 	SV_InitGame();
 
 	SV_BroadcastCommand("changing\n");
 	SV_SendClientMessages();
-	SV_SpawnServer(Cmd_Argv(1), Cmd_Argv(2), ss_game, qfalse, qfalse);
+	SV_SpawnServer(Cmd_Argv(1), Cmd_Argv(2), ss_game, false, false);
 	Cbuf_CopyToDefer();
 
 	SV_BroadcastCommand("reconnect\n");
@@ -352,7 +349,7 @@ recorded, but no playerinfo will be stored.  Primarily for demo merging.
 void SV_ServerRecord_f(void)
 {
 	char name[MAX_OSPATH];
-	byte buf_data[32768];
+	uint8_t buf_data[32768];
 	sizebuf_t buf;
 	int len;
 	int i;
@@ -451,8 +448,8 @@ void SV_KillServer_f(void)
 {
 	if (!svs.initialized)
 		return;
-	SV_Shutdown("Server was killed.\n", qfalse);
-	NET_Config(qfalse);			/* close network sockets */
+	SV_Shutdown("Server was killed.\n", false);
+	NET_Config(false);			/* close network sockets */
 }
 
 /*

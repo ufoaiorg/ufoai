@@ -72,20 +72,20 @@ The "game directory" is the first tree on the search path and directory that all
 /*
 ** wildcard string comparing
 */
-qboolean strwildcomp(const char *string, const char *pattern)
+bool_t strwildcomp(const char *string, const char *pattern)
 {
 	const char *s = 0;
 	char c = '\0';
 
 	s = string;
 
-	while (qtrue) {
+	while (true) {
 		switch (c = *pattern++) {
 		case 0:
-			return !*s ? qtrue : qfalse;
+			return !*s ? true : false;
 		case '?':
 			if (*s == '\0')
-				return qfalse;
+				return false;
 			s++;
 			break;
 		case '*':
@@ -94,17 +94,17 @@ qboolean strwildcomp(const char *string, const char *pattern)
 				c = *++pattern;
 
 			if (!c)
-				return qtrue;
+				return true;
 
 			while (*s) {
 				if (strwildcomp(s, pattern))
-					return qtrue;
+					return true;
 				s++;
 			}
-			return qfalse;
+			return false;
 		default:
 			if (c != *s)
-				return qfalse;
+				return false;
 			++s;
 			break;
 		}
@@ -362,10 +362,10 @@ void FS_Read(void *buffer, int len, FILE * f)
 {
 	int block, remaining;
 	int read;
-	byte *buf;
+	uint8_t *buf;
 	int tries;
 
-	buf = (byte *) buffer;
+	buf = (uint8_t*) buffer;
 
 	/* read in chunks for progress bar */
 	remaining = len;
@@ -406,7 +406,7 @@ a -1 length means that the file is not present
 int FS_LoadFile(char *path, void **buffer)
 {
 	FILE *h;
-	byte *buf;
+	uint8_t *buf;
 	int len;
 
 	buf = NULL;					/* quiet compiler warning */
@@ -1180,7 +1180,7 @@ char *FS_NextScriptHeader(char *files, char **name, char **text)
 /* global vars for maplisting */
 char *maps[MAX_MAPS];
 int anzInstalledMaps = 0;
-qboolean mapsInstalledInit = qfalse;
+bool_t mapsInstalledInit = false;
 int mapInstalledIndex = 0;
 
 /*
@@ -1224,7 +1224,7 @@ void FS_GetMaps(void)
 		}
 	}
 
-	mapsInstalledInit = qtrue;
+	mapsInstalledInit = true;
 
 	Sys_FindClose();
 }
@@ -1240,13 +1240,13 @@ int FS_Write(const void *buffer, int len, FILE * f)
 {
 	int block, remaining;
 	int written;
-	byte *buf;
+	uint8_t *buf;
 	int tries;
 
 	if (!f)
 		return 0;
 
-	buf = (byte *) buffer;
+	buf = (uint8_t*) buffer;
 
 	remaining = len;
 	tries = 0;
@@ -1321,7 +1321,7 @@ char *FS_GetCwd(void)
 FS_FileExists
 ==============
 */
-qboolean FS_FileExists(char *filename)
+bool_t FS_FileExists(char *filename)
 {
 #ifdef _WIN32
 	return (_access(filename, 00) == 0);

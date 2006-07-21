@@ -1,28 +1,28 @@
 /*
-	snd_sdl.c
+snd_sdl.c
 
-	Sound code taken from SDLQuake and modified to work with Quake2
-	Robert Bml 2001-12-25
+Sound code taken from SDLQuake and modified to work with Quake2
+Robert Bml 2001-12-25
 
-	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
-	of the License, or (at your option) any later version.
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-	See the GNU General Public License for more details.
+See the GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to:
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to:
 
-		Free Software Foundation, Inc.
-		59 Temple Place - Suite 330
-		Boston, MA  02111-1307, USA
+Free Software Foundation, Inc.
+59 Temple Place - Suite 330
+Boston, MA  02111-1307, USA
 
-	$Id$
+$Id$
 */
 
 #include "snd_sdl.h"
@@ -34,7 +34,7 @@ static int  snd_inited;
 static dma_t *shm;
 cvar_t* sdlMixSamples;
 
-static void paint_audio (void *unused, Uint8 * stream, int len)
+static void paint_audio (void *unused, Uint8 *stream, int len)
 {
 	int pos;
 	int tobufend;
@@ -75,14 +75,14 @@ static void paint_audio (void *unused, Uint8 * stream, int len)
 	}
 }
 
-qboolean SDL_SNDDMA_Init (void)
+bool_t SDL_SNDDMA_Init (void)
 {
 	SDL_AudioSpec desired, obtained;
 	int desired_bits, freq, tmp;
 	char drivername[128];
 
 	if (snd_inited)
-		return qtrue;
+		return true;
 
 	snd_inited = 0;
 
@@ -91,7 +91,7 @@ qboolean SDL_SNDDMA_Init (void)
 	if (!SDL_WasInit(SDL_INIT_AUDIO))
 		if (SDL_Init(SDL_INIT_AUDIO) == -1) {
 			Com_Printf("Couldn't init SDL audio: %s\n", SDL_GetError () );
-			return qfalse;
+			return false;
 		}
 
 	if (SDL_AudioDriverName(drivername, sizeof (drivername)) == NULL)
@@ -133,7 +133,7 @@ qboolean SDL_SNDDMA_Init (void)
 		break;
 	default:
 		Com_Printf("Unknown number of audio bits: %d\n", desired_bits);
-		return qfalse;
+		return false;
 	}
 	desired.channels = (Cvar_Get("sndchannels", "2", CVAR_ARCHIVE))->value;
 	desired.callback = paint_audio;
@@ -147,7 +147,7 @@ qboolean SDL_SNDDMA_Init (void)
 	if (SDL_OpenAudio (&desired, &obtained) == -1) {
 		Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
-		return qfalse;
+		return false;
 	}
 
 	/* Make sure we can support the audio format */
@@ -171,7 +171,7 @@ qboolean SDL_SNDDMA_Init (void)
 		SDL_CloseAudio ();
 		if (SDL_OpenAudio (&desired, NULL) == -1) {
 			Com_Printf ("Couldn't open SDL audio (format): %s\n", SDL_GetError ());
-			return qfalse;
+			return false;
 		}
 		memcpy (&obtained, &desired, sizeof (desired));
 		break;
@@ -210,7 +210,7 @@ qboolean SDL_SNDDMA_Init (void)
 
 	SDL_PauseAudio (0);
 	snd_inited = 1;
-	return qtrue;
+	return true;
 }
 
 int SDL_SNDDMA_GetDMAPos (void)

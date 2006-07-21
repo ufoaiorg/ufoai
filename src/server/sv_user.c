@@ -300,7 +300,7 @@ void SV_ExecuteUserCommand(char *s)
 {
 	ucmd_t *u;
 
-	Cmd_TokenizeString(s, qfalse);
+	Cmd_TokenizeString(s, false);
 	sv_player = sv_client->player;
 
 /*	SV_BeginRedirect (RD_CLIENT); */

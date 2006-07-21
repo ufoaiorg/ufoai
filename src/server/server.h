@@ -56,8 +56,8 @@ typedef enum {
 typedef struct {
 	server_state_t state;		/* precache commands are only valid during load */
 
-	qboolean attractloop;		/* running cinematics and demos for the local system only */
-	qboolean loadgame;			/* client begins should reuse existing entity */
+	bool_t attractloop;		/* running cinematics and demos for the local system only */
+	bool_t loadgame;			/* client begins should reuse existing entity */
 
 	unsigned time;				/* always sv.framenum * 100 msec */
 	int framenum;
@@ -70,18 +70,18 @@ typedef struct {
 	/* the multicast buffer is used to send a message to a set of clients */
 	/* it is only used to marshall data until SV_Multicast is called */
 	sizebuf_t multicast;
-	byte multicast_buf[MAX_MSGLEN];
+	uint8_t multicast_buf[MAX_MSGLEN];
 
 	/* demo server information */
 	FILE *demofile;
-	qboolean timedemo;			/* don't time sync */
+	bool_t timedemo;			/* don't time sync */
 } server_t;
 
-#define EDICT_NUM(n) ((edict_t *)((byte *)ge->edicts + ge->edict_size*(n)))
-#define NUM_FOR_EDICT(e) ( ((byte *)(e)-(byte *)ge->edicts ) / ge->edict_size)
+#define EDICT_NUM(n) ((edict_t *)((uint8_t*)ge->edicts + ge->edict_size*(n)))
+#define NUM_FOR_EDICT(e) ( ((uint8_t*)(e)-(uint8_t*)ge->edicts ) / ge->edict_size)
 
-#define PLAYER_NUM(n) ((player_t *)((byte *)ge->players + ge->player_size*(n)))
-#define NUM_FOR_PLAYER(e) ( ((byte *)(e)-(byte *)ge->players ) / ge->player_size)
+#define PLAYER_NUM(n) ((player_t *)((uint8_t*)ge->players + ge->player_size*(n)))
+#define NUM_FOR_PLAYER(e) ( ((uint8_t*)(e)-(uint8_t*)ge->players ) / ge->player_size)
 
 typedef enum {
 	cs_free,					/* can be reused for a new connection */
@@ -120,7 +120,7 @@ typedef struct client_s {
 	/* The datagram is written to by sound calls, prints, temp ents, etc. */
 	/* It can be harmlessly overflowed. */
 	sizebuf_t datagram;
-	byte datagram_buf[MAX_MSGLEN];
+	uint8_t datagram_buf[MAX_MSGLEN];
 
 	int lastmessage;			/* sv.framenum when packet was last received */
 	int lastconnect;
@@ -130,7 +130,7 @@ typedef struct client_s {
 	int curMsg;
 	int addMsg;
 	sizebuf_t reliable[RELIABLEBUFFERS];
-	byte reliable_buf[RELIABLEBUFFERS * MAX_MSGLEN];
+	uint8_t reliable_buf[RELIABLEBUFFERS * MAX_MSGLEN];
 
 	netchan_t netchan;
 } client_t;
@@ -156,7 +156,7 @@ typedef struct {
 
 
 typedef struct {
-	qboolean initialized;		/* sv_init has completed */
+	bool_t initialized;		/* sv_init has completed */
 	int realtime;				/* always increasing, no clamping, etc */
 
 	char mapcmd[MAX_TOKEN_CHARS];	/* ie: *intro.cin+base  */
@@ -175,7 +175,7 @@ typedef struct {
 	/* serverrecord values */
 	FILE *demofile;
 	sizebuf_t demo_multicast;
-	byte demo_multicast_buf[MAX_MSGLEN];
+	uint8_t demo_multicast_buf[MAX_MSGLEN];
 } server_static_t;
 
 /*============================================================================= */
@@ -202,7 +202,7 @@ extern player_t *sv_player;
 /*=========================================================== */
 
 /* sv_main.c */
-void SV_FinalMessage(char *message, qboolean reconnect);
+void SV_FinalMessage(char *message, bool_t reconnect);
 void SV_DropClient(client_t * drop);
 
 int SV_ModelIndex(char *name);
@@ -217,14 +217,14 @@ void SV_InitOperatorCommands(void);
 void SV_SendServerinfo(client_t * client);
 void SV_UserinfoChanged(client_t * cl);
 
-void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qboolean attractloop, qboolean loadgame);
+void SV_SpawnServer(char *server, char *param, server_state_t serverstate, bool_t attractloop, bool_t loadgame);
 
 void Master_Heartbeat(void);
 void Master_Packet(void);
 
 /* sv_init.c */
 void SV_InitGame(void);
-void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame);
+void SV_Map(bool_t attractloop, char *levelstring, bool_t loadgame);
 
 
 /* sv_phys.c */

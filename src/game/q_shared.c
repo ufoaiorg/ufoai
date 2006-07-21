@@ -49,8 +49,8 @@ const int dvecs[8][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {-
 const float dvecsn[8][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {RT2, RT2}, {-RT2, -RT2}, {-RT2, RT2}, {RT2, -RT2} };
 const float dangle[8] = { 0, 180.0f, 90.0f, 270.0f, 45.0f, 225.0f, 135.0f, 315.0f };
 
-const byte dvright[8] = { 7, 6, 4, 5, 0, 1, 2, 3 };
-const byte dvleft[8] = { 4, 5, 6, 7, 2, 3, 1, 0 };
+const uint8_t dvright[8] = { 7, 6, 4, 5, 0, 1, 2, 3 };
+const uint8_t dvleft[8] = { 4, 5, 6, 7, 2, 3, 1, 0 };
 
 /*============================================================================ */
 
@@ -740,15 +740,15 @@ void AddPointToBounds(vec3_t v, vec3_t mins, vec3_t maxs)
  * @param
  * @sa
  */
-qboolean VectorNearer(vec3_t v1, vec3_t v2, vec3_t comp)
+bool_t VectorNearer(vec3_t v1, vec3_t v2, vec3_t comp)
 {
 	int i;
 
 	for (i = 0; i < 3; i++)
 		if (fabs(v1[i] - comp[i]) < fabs(v2[i] - comp[i]))
-			return qtrue;
+			return true;
 
-	return qfalse;
+	return false;
 }
 
 
@@ -1148,16 +1148,16 @@ float crand(void)
  * @param
  * @sa
  */
-static qboolean Com_CharIsOneOfCharset(char c, char *set)
+static bool_t Com_CharIsOneOfCharset(char c, char *set)
 {
 	int i;
 
 	for (i = 0; i < strlen(set); i++) {
 		if (set[i] == c)
-			return qtrue;
+			return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -1303,7 +1303,7 @@ BYTE ORDER FUNCTIONS
 ============================================================================
 */
 
-static qboolean bigendien;
+static bool_t bigendien;
 
 /* can't just use function pointers, or dll linkage can */
 /* mess up when qcommon is included in multiple places */
@@ -1346,7 +1346,7 @@ float LittleFloat(float l)
  */
 short ShortSwap(short l)
 {
-	byte b1, b2;
+	uint8_t b1, b2;
 
 	b1 = l & 255;
 	b2 = (l >> 8) & 255;
@@ -1371,7 +1371,7 @@ short ShortNoSwap(short l)
  */
 int LongSwap(int l)
 {
-	byte b1, b2, b3, b4;
+	uint8_t b1, b2, b3, b4;
 
 	b1 = l & 255;
 	b2 = (l >> 8) & 255;
@@ -1400,7 +1400,7 @@ float FloatSwap(float f)
 {
 	union float_u {
 		float f;
-		byte b[4];
+		uint8_t b[4];
 	} dat1, dat2;
 
 
@@ -1429,11 +1429,11 @@ float FloatNoSwap(float f)
  */
 void Swap_Init(void)
 {
-	byte swaptest[2] = { 1, 0 };
+	uint8_t swaptest[2] = { 1, 0 };
 
 	/* set the byte swapping variables in a portable manner */
 	if (*(short *) swaptest == 1) {
-		bigendien = qfalse;
+		bigendien = false;
 		_BigShort = ShortSwap;
 		_LittleShort = ShortNoSwap;
 		_BigLong = LongSwap;
@@ -1441,7 +1441,7 @@ void Swap_Init(void)
 		_BigFloat = FloatSwap;
 		_LittleFloat = FloatNoSwap;
 	} else {
-		bigendien = qtrue;
+		bigendien = true;
 		_BigShort = ShortNoSwap;
 		_LittleShort = ShortSwap;
 		_BigLong = LongNoSwap;
@@ -1582,7 +1582,7 @@ char *COM_EParse(char **text, char *errhead, char *errinfo)
  * @sa
  */
 static int paged_total;
-void Com_PageInMemory(byte * buffer, int size)
+void Com_PageInMemory(uint8_t *buffer, int size)
 {
 	int i;
 
@@ -1914,13 +1914,13 @@ void Info_RemoveKey(char *s, const char *key)
  * @param
  * @sa
  */
-qboolean Info_Validate(char *s)
+bool_t Info_Validate(char *s)
 {
 	if (strstr(s, "\""))
-		return qfalse;
+		return false;
 	if (strstr(s, ";"))
-		return qfalse;
-	return qtrue;
+		return false;
+	return true;
 }
 
 /**
@@ -2011,7 +2011,7 @@ void Com_InitInventory(invList_t * invList)
  * @param
  * @sa
  */
-qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, int y)
+bool_t Com_CheckToInventory(inventory_t * i, int item, int container, int x, int y)
 {
 	invList_t *ic, *right, *left;
 	int mask[16];
@@ -2020,21 +2020,21 @@ qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, i
 	assert(i);
 #ifdef DEBUG
 	if (!i)
-		return qfalse;	/* never reached. need for code analyst. */
+		return false;	/* never reached. need for code analyst. */
 #endif
 
 	assert((container >= 0) && (container < MAX_INVDEFS));
 #ifdef DEBUG
 	if ((container < 0) || (container >= MAX_INVDEFS))
-		return qfalse;	/* never reached. need for code analyst. */
+		return false;	/* never reached. need for code analyst. */
 #endif
 
 	/* armor vs item */
 	if (!Q_strncmp(CSI->ods[item].type, "armor", MAX_VAR)) {
 		if (!CSI->ids[container].armor && !CSI->ids[container].all)
-			return qfalse;
+			return false;
 	} else if (CSI->ids[container].armor)
-		return qfalse;
+		return false;
 
 	/* special hand checks */
 	right = i->c[CSI->idRight];
@@ -2042,30 +2042,30 @@ qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, i
 
 	if (container == CSI->idRight) {
 		if (!right && (!CSI->ods[item].twohanded || !left))
-			return qtrue;
+			return true;
 		else
-			return qfalse;
+			return false;
 	} else if (container == CSI->idLeft) {
 		if (!left && ((right && !CSI->ods[right->item.t].twohanded) || !right)
 			&& !CSI->ods[item].twohanded)
-			return qtrue;
+			return true;
 		else
-			return qfalse;
+			return false;
 	}
 
 	/* single item containers */
 	if (CSI->ids[container].single) {
 		/* there is already an item */
 		if (i->c[container])
-			return qfalse;
+			return false;
 		/* empty */
 		else
-			return qtrue;
+			return true;
 	}
 
 	/* check bounds */
 	if (x < 0 || y < 0 || x >= 32 || y >= 16)
-		return qfalse;
+		return false;
 
 	/* extract shape info */
 	for (j = 0; j < 16; j++)
@@ -2079,10 +2079,10 @@ qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, i
 	/* test for collisions with newly generated mask */
 	for (j = 0; j < 4; j++)
 		if ((((CSI->ods[item].shape >> (j * 8)) & 0xFF) << x) & mask[y + j])
-			return qfalse;
+			return false;
 
 	/* everything ok */
-	return qtrue;
+	return true;
 }
 
 
@@ -2149,14 +2149,14 @@ invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x
  * @param
  * @sa
  */
-qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
+bool_t Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
 {
 	invList_t *ic, *old;
 
 	assert(i);
 #ifdef DEBUG
 	if (!i)
-		return qfalse;	/* never reached. need for code analyst. */
+		return false;	/* never reached. need for code analyst. */
 #endif
 
 	ic = i->c[container];
@@ -2164,7 +2164,7 @@ qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
 #ifdef PARANOID
 		Com_Printf("Com_RemoveFromInventory - empty container %i\n", container);
 #endif
-		return qfalse;
+		return false;
 	}
 
 	if (CSI->ids[container].single || (ic->x == x && ic->y == y)) {
@@ -2177,7 +2177,7 @@ qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
 			Sys_Error("Com_RemoveFromInventory: Error in line %i at file %s (container: %i)\n", __LINE__, __FILE__, container);
 #endif
 		invUnused->next = old;
-		return qtrue;
+		return true;
 	}
 
 	for (; ic->next; ic = ic->next)
@@ -2187,10 +2187,10 @@ qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
 			cacheItem = ic->next->item;
 			ic->next = ic->next->next;
 			invUnused->next = old;
-			return qtrue;
+			return true;
 		}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -2592,12 +2592,12 @@ typedef struct menuDepends_s {
  */
 int Com_ParseValue(void *base, char *token, int type, int ofs)
 {
-	byte *b;
+	uint8_t *b;
 	char string[MAX_VAR];
 	char string2[MAX_VAR];
 	int x, y, w, h;
 
-	b = (byte *) base + ofs;
+	b = (uint8_t*) base + ofs;
 
 	switch (type) {
 	case V_NULL:
@@ -2605,10 +2605,10 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 
 	case V_BOOL:
 		if (!Q_strncmp(token, "true", 4) || *token == '1')
-			*b = qtrue;
+			*b = true;
 		else
-			*b = qfalse;
-		return sizeof(byte);
+			*b = false;
+		return sizeof(uint8_t);
 
 	case V_CHAR:
 		*(char *) b = *token;
@@ -2775,21 +2775,21 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
  */
 int Com_SetValue(void *base, void *set, int type, int ofs)
 {
-	byte *b;
+	uint8_t *b;
 	int len;
 
-	b = (byte *) base + ofs;
+	b = (uint8_t*) base + ofs;
 
 	switch (type) {
 	case V_NULL:
 		return 0;
 
 	case V_BOOL:
-		if (*(byte *) set)
-			*b = qtrue;
+		if (*(uint8_t*) set)
+			*b = true;
 		else
-			*b = qfalse;
-		return sizeof(byte);
+			*b = false;
+		return sizeof(uint8_t);
 
 	case V_CHAR:
 		*(char *) b = *(char *) set;
@@ -2822,10 +2822,10 @@ int Com_SetValue(void *base, void *set, int type, int ofs)
 		return 4 * sizeof(float);
 
 	case V_RGBA:
-		((byte *) b)[0] = ((byte *) set)[0];
-		((byte *) b)[1] = ((byte *) set)[1];
-		((byte *) b)[2] = ((byte *) set)[2];
-		((byte *) b)[3] = ((byte *) set)[3];
+		((uint8_t*) b)[0] = ((uint8_t*) set)[0];
+		((uint8_t*) b)[1] = ((uint8_t*) set)[1];
+		((uint8_t*) b)[2] = ((uint8_t*) set)[2];
+		((uint8_t*) b)[3] = ((uint8_t*) set)[3];
 		return 4;
 
 	case V_STRING:
@@ -2844,7 +2844,7 @@ int Com_SetValue(void *base, void *set, int type, int ofs)
 	case V_BLEND:
 	case V_STYLE:
 	case V_FADE:
-		*b = *(byte *) set;
+		*b = *(uint8_t*) set;
 		return 1;
 
 	case V_SHAPE_SMALL:
@@ -2856,7 +2856,7 @@ int Com_SetValue(void *base, void *set, int type, int ofs)
 		return 64;
 
 	case V_DMGTYPE:
-		*b = *(byte *) set;
+		*b = *(uint8_t*) set;
 		return 1;
 
 	case V_DATE:
@@ -2877,9 +2877,9 @@ int Com_SetValue(void *base, void *set, int type, int ofs)
 char *Com_ValueToStr(void *base, int type, int ofs)
 {
 	static char valuestr[MAX_VAR];
-	byte *b;
+	uint8_t *b;
 
-	b = (byte *) base + ofs;
+	b = (uint8_t*) base + ofs;
 
 	switch (type) {
 	case V_NULL:
@@ -2916,7 +2916,7 @@ char *Com_ValueToStr(void *base, int type, int ofs)
 		return valuestr;
 
 	case V_RGBA:
-		Com_sprintf(valuestr, MAX_VAR, "%3i %3i %3i %3i", ((byte *) b)[0], ((byte *) b)[1], ((byte *) b)[2], ((byte *) b)[3]);
+		Com_sprintf(valuestr, MAX_VAR, "%3i %3i %3i %3i", ((uint8_t*) b)[0], ((uint8_t*) b)[1], ((uint8_t*) b)[2], ((uint8_t*) b)[3]);
 		return valuestr;
 
 	case V_TRANSLATION_STRING:

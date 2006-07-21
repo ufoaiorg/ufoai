@@ -122,15 +122,15 @@ typedef struct {
 } mapTile_t;
 
 typedef struct routing_s {
-	byte route[8][256][256];
-	byte fall[256][256];
-	byte step[256][256];
+	uint8_t route[8][256][256];
+	uint8_t fall[256][256];
+	uint8_t step[256][256];
 
-	byte area[HEIGHT][WIDTH][WIDTH];
-	byte areaStored[HEIGHT][WIDTH][WIDTH];
+	uint8_t area[HEIGHT][WIDTH][WIDTH];
+	uint8_t areaStored[HEIGHT][WIDTH][WIDTH];
 
 	/* forbidden list */
-	byte **fblist;
+	uint8_t **fblist;
 	int fblength;
 } routing_t;
 
@@ -148,14 +148,14 @@ static int numTiles = 0;
 static mapTile_t *curTile;
 static int checkcount;
 static int numInline;
-static byte sh_low;
-static byte sh_big;
+static uint8_t sh_low;
+static uint8_t sh_big;
 static char **inlineList;
 static int cur_level;
 static vec3_t tr_end;
-static byte *cmod_base;
+static uint8_t *cmod_base;
 static vec3_t shift;
-static byte filled[256][256];
+static uint8_t filled[256][256];
 
 static const vec3_t v_dup = { 0, 0, PH - UNIT_HEIGHT / 2 };
 static const vec3_t v_dwn = { 0, 0, -UNIT_HEIGHT / 2 };
@@ -172,12 +172,12 @@ static vec3_t trace_extents;
 
 static trace_t trace_trace;
 static int trace_contents;
-static qboolean trace_ispoint;			/* optimized case */
+static bool_t trace_ispoint;			/* optimized case */
 static tnode_t *tnode_p;
-static byte stf;
-static byte tfList[HEIGHT][WIDTH][WIDTH];
+static uint8_t stf;
+static uint8_t tfList[HEIGHT][WIDTH][WIDTH];
 #ifndef DEDICATED_ONLY
-static byte tf;
+static uint8_t tf;
 #endif
 
 /* just to fix warnings */
@@ -516,11 +516,11 @@ static void CMod_LoadBrushSides(lump_t * l)
 /**
  * @brief Source will be set to the end of the compressed data block!
  */
-static int Cmod_DeCompressRouting(byte ** source, byte * dataStart)
+static int Cmod_DeCompressRouting(uint8_t **source, uint8_t *dataStart)
 {
 	int i, c;
-	byte *data_p;
-	byte *src;
+	uint8_t *data_p;
+	uint8_t *src;
 
 	data_p = dataStart;
 	src = *source;
@@ -665,7 +665,7 @@ int CM_EntTestLineDM(vec3_t start, vec3_t stop, vec3_t end)
  * @param
  * @sa
  */
-qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboolean fill)
+bool_t CM_TestConnection(routing_t * map, int x, int y, int z, int dir, bool_t fill)
 {
 	vec3_t start, end;
 	pos3_t pos;
@@ -673,7 +673,7 @@ qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboole
 
 	/* totally blocked unit */
 	if ((fill && (filled[y][x] & (1 << z))) || (map->fall[y][x] == 0xFF))
-		return qfalse;
+		return false;
 
 	/* get step height and trace vectors */
 	sh = (map->step[y][x] & (1 << z)) ? sh_big : sh_low;
@@ -693,24 +693,24 @@ qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboole
 
 	/* test filled */
 	if (fill && (filled[ay][ax] & (1 << az)))
-		return qfalse;
+		return false;
 
 	/* test height */
 	if ((map->route[az][ay][ax] & 0x0F) > h)
-		return qfalse;
+		return false;
 
 	/* center check */
 	if (CM_EntTestLine(start, end))
-		return qfalse;
+		return false;
 
 	/* lower check */
 	start[2] = end[2] -= UNIT_HEIGHT / 2 - sh * 4 - 2;
 	if (CM_EntTestLine(start, end))
-		return qfalse;
+		return false;
 
 	/* no wall */
 	map->route[z][y][x] |= (0x10 << dir) & UCHAR_MAX;
-	return qtrue;
+	return true;
 }
 
 
@@ -856,10 +856,10 @@ void CMod_GetMapSize(routing_t * map)
  */
 void CMod_LoadRouting(lump_t * l, int sX, int sY, int sZ)
 {
-	static byte temp_route[8][256][256];
-	static byte temp_fall[256][256];
-	static byte temp_step[256][256];
-	byte *source;
+	static uint8_t temp_route[8][256][256];
+	static uint8_t temp_fall[256][256];
+	static uint8_t temp_step[256][256];
+	uint8_t *source;
 	int length;
 	int x, y, z;
 	int maxX, maxY;
@@ -906,8 +906,8 @@ void CMod_LoadRouting(lump_t * l, int sX, int sY, int sZ)
 
 					/* check for walls */
 					for (z = 0; z < 8; z++) {
-						CM_TestConnection(&clMap, x + sX, y + sY, z, i, qfalse);
-						CM_TestConnection(&clMap, ax + sX, ay + sY, z, i ^ 1, qfalse);
+						CM_TestConnection(&clMap, x + sX, y + sY, z, i, false);
+						CM_TestConnection(&clMap, ax + sX, ay + sY, z, i ^ 1, false);
 					}
 				}
 			}
@@ -1041,7 +1041,7 @@ static unsigned CM_AddMapTile(char *name, int sX, int sY, int sZ)
 	if (header.version != BSPVERSION)
 		Com_Error(ERR_DROP, "CM_AddMapTile: %s has wrong version number (%i should be %i)", name, header.version, BSPVERSION);
 
-	cmod_base = (byte *) buf;
+	cmod_base = (uint8_t*) buf;
 
 	/* init */
 	if (numTiles >= MAX_MAPTILES)
@@ -1475,7 +1475,7 @@ void CM_ClipBoxToBrush(vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t *
 	float enterfrac, leavefrac;
 	vec3_t ofs;
 	float d1, d2;
-	qboolean getout, startout;
+	bool_t getout, startout;
 	float f;
 	cbrushside_t *side, *leadside;
 
@@ -1488,8 +1488,8 @@ void CM_ClipBoxToBrush(vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t *
 
 	c_brush_traces++;
 
-	getout = qfalse;
-	startout = qfalse;
+	getout = false;
+	startout = false;
 	leadside = NULL;
 
 	for (i = 0; i < brush->numsides; i++) {
@@ -1516,9 +1516,9 @@ void CM_ClipBoxToBrush(vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t *
 		d2 = DotProduct(p2, plane->normal) - dist;
 
 		if (d2 > 0)
-			getout = qtrue;		/* endpoint is not in solid */
+			getout = true;		/* endpoint is not in solid */
 		if (d1 > 0)
-			startout = qtrue;
+			startout = true;
 
 		/* if completely in front of face, no intersection */
 		if (d1 > 0 && d2 >= d1)
@@ -1543,9 +1543,9 @@ void CM_ClipBoxToBrush(vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t *
 	}
 
 	if (!startout) {			/* original point was inside brush */
-		trace->startsolid = qtrue;
+		trace->startsolid = true;
 		if (!getout)
-			trace->allsolid = qtrue;
+			trace->allsolid = true;
 		return;
 	}
 	if (enterfrac < leavefrac) {
@@ -1603,7 +1603,7 @@ void CM_TestBoxInBrush(vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cbr
 	}
 
 	/* inside this brush */
-	trace->startsolid = trace->allsolid = qtrue;
+	trace->startsolid = trace->allsolid = true;
 	trace->fraction = 0;
 	trace->contents = brush->contents;
 }
@@ -1838,10 +1838,10 @@ trace_t CM_BoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile
 
 	/* check for point special case */
 	if (mins[0] == 0 && mins[1] == 0 && mins[2] == 0 && maxs[0] == 0 && maxs[1] == 0 && maxs[2] == 0) {
-		trace_ispoint = qtrue;
+		trace_ispoint = true;
 		VectorClear(trace_extents);
 	} else {
-		trace_ispoint = qfalse;
+		trace_ispoint = false;
 		trace_extents[0] = -mins[0] > maxs[0] ? -mins[0] : maxs[0];
 		trace_extents[1] = -mins[1] > maxs[1] ? -mins[1] : maxs[1];
 		trace_extents[2] = -mins[2] > maxs[2] ? -mins[2] : maxs[2];
@@ -1874,7 +1874,7 @@ trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t max
 	vec3_t a;
 	vec3_t forward, right, up;
 	vec3_t temp;
-	qboolean rotated;
+	bool_t rotated;
 
 	if (tile >= MAX_MAPTILES) {
 		Com_Printf("CM_TransformedBoxTrace: too many tiles loaded\n");
@@ -1890,9 +1890,9 @@ trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t max
 
 	/* rotate start and end into the models frame of reference */
 	if (headnode != curTile->box_headnode && (angles[0] || angles[1] || angles[2]))
-		rotated = qtrue;
+		rotated = true;
 	else
-		rotated = qfalse;
+		rotated = false;
 
 	if (rotated) {
 		AngleVectors(angles, forward, right, up);
@@ -2305,15 +2305,15 @@ int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end)
  * @param
  * @sa
  */
-qboolean Grid_CheckForbidden(struct routing_s * map, int x, int y, int z)
+bool_t Grid_CheckForbidden(struct routing_s * map, int x, int y, int z)
 {
-	byte **p;
+	uint8_t **p;
 	int i;
 
 	for (i = 0, p = map->fblist; i < map->fblength; i++, p++)
 		if (x == (*p)[0] && y == (*p)[1] && z == (*p)[2])
-			return qtrue;
-	return qfalse;
+			return true;
+	return false;
 }
 
 
@@ -2405,7 +2405,7 @@ static void Grid_MoveMarkRoute(struct routing_s *map, int xl, int yl, int xh, in
  * @param
  * @sa
  */
-void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_list, int fb_length)
+void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, uint8_t **fb_list, int fb_length)
 {
 #ifndef DEDICATED_ONLY
 	int xl, xh, yl, yh;
@@ -2471,7 +2471,7 @@ void Grid_MoveStore(struct routing_s *map)
  * @return 0xFF if the move isn't possible
  * @return length of move otherwise
  */
-int Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored)
+int Grid_MoveLength(struct routing_s *map, pos3_t to, bool_t stored)
 {
 	if (!stored)
 		return map->area[to[2]][to[1]][to[0]];
@@ -2659,7 +2659,7 @@ void Grid_RecalcRouting(struct routing_s *map, char *name, char **list)
 		for (y = min[1]; y < max[1]; y++)
 			for (x = min[0]; x < max[0]; x++)
 				for (i = 0; i < 4; i++)
-					CM_TestConnection(map, x, y, z, i, qtrue);
+					CM_TestConnection(map, x, y, z, i, true);
 
 	inlineList = NULL;
 }

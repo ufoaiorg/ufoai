@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -45,7 +45,7 @@ FIXME: this use of "area" is different from the bsp file use
 /* (type *)STRUCT_FROM_LINK(link_t *link, type, member) */
 /* ent = STRUCT_FROM_LINK(link,entity_t,order) */
 /* FIXME: remove this mess! */
-#define	STRUCT_FROM_LINK(l,t,m) ((t *)((byte *)l - (size_t)&(((t *)0)->m)))
+#define	STRUCT_FROM_LINK(l,t,m) ((t *)((uint8_t*)l - offsetof(t, m)))
 
 #define	EDICT_FROM_AREA(l) STRUCT_FROM_LINK(l,edict_t,area)
 
@@ -381,20 +381,20 @@ void SV_ClipMoveToEntities(moveclip_t * clip)
 
 		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, touch->origin, vec3_origin);
 
-/*		Com_Printf( "%i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex, 
+/*		Com_Printf( "%i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex,
 			(int)touch->mins[0], (int)touch->mins[1], (int)touch->mins[2],
-			(int)touch->maxs[0], (int)touch->maxs[1], (int)touch->maxs[2], 
+			(int)touch->maxs[0], (int)touch->maxs[1], (int)touch->maxs[2],
 			(int)touch->origin[0], (int)touch->origin[1], (int)touch->origin[2] );
 */
 		if (trace.allsolid || trace.startsolid || trace.fraction < clip->trace.fraction) {
 			trace.ent = touch;
 			if (clip->trace.startsolid) {
 				clip->trace = trace;
-				clip->trace.startsolid = qtrue;
+				clip->trace.startsolid = true;
 			} else
 				clip->trace = trace;
 		} else if (trace.startsolid)
-			clip->trace.startsolid = qtrue;
+			clip->trace.startsolid = true;
 	}
 }
 

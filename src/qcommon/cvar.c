@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief This is set each time a CVAR_USERINFO variable is changed
  * so that the client knows to send it to the server
  */
-qboolean userinfo_modified;
+bool_t userinfo_modified;
 
 /**
  * @brief Cvar list
@@ -46,15 +46,15 @@ static cvar_t *cvar_vars;
 Cvar_InfoValidate
 ============
 */
-static qboolean Cvar_InfoValidate(char *s)
+static bool_t Cvar_InfoValidate(char *s)
 {
 	if (strstr(s, "\\"))
-		return qfalse;
+		return false;
 	if (strstr(s, "\""))
-		return qfalse;
+		return false;
 	if (strstr(s, ";"))
-		return qfalse;
-	return qtrue;
+		return false;
+	return true;
 }
 
 /**
@@ -178,7 +178,7 @@ cvar_t *Cvar_Get(char *var_name, char *var_value, int flags)
 	var = Z_Malloc(sizeof(*var));
 	var->name = CopyString(var_name);
 	var->string = CopyString(var_value);
-	var->modified = qtrue;
+	var->modified = true;
 	var->value = atof(var->string);
 
 	/* link the variable in */
@@ -197,7 +197,7 @@ cvar_t *Cvar_Get(char *var_name, char *var_value, int flags)
  * @param value Set the cvar to the value specified by 'value'
  * @param force Force the update of the cvar
  */
-cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
+cvar_t *Cvar_Set2(char *var_name, char *value, bool_t force)
 {
 	cvar_t *var;
 
@@ -251,10 +251,10 @@ cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
 	if (!Q_strcmp(value, var->string))
 		return var;				/* not changed */
 
-	var->modified = qtrue;
+	var->modified = true;
 
 	if (var->flags & CVAR_USERINFO)
-		userinfo_modified = qtrue;	/* transmit at next oportunity */
+		userinfo_modified = true;	/* transmit at next oportunity */
 
 	Z_Free(var->string);		/* free the old value string */
 
@@ -269,7 +269,7 @@ cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
  */
 cvar_t *Cvar_ForceSet(char *var_name, char *value)
 {
-	return Cvar_Set2(var_name, value, qtrue);
+	return Cvar_Set2(var_name, value, true);
 }
 
 /**
@@ -280,7 +280,7 @@ cvar_t *Cvar_ForceSet(char *var_name, char *value)
  */
 cvar_t *Cvar_Set(char *var_name, char *value)
 {
-	return Cvar_Set2(var_name, value, qfalse);
+	return Cvar_Set2(var_name, value, false);
 }
 
 /**
@@ -306,11 +306,11 @@ cvar_t *Cvar_FullSet(char *var_name, char *value, int flags)
 	if (!var)
 		return Cvar_Get(var_name, value, flags);
 
-	var->modified = qtrue;
+	var->modified = true;
 
 	/* transmit at next oportunity */
 	if (var->flags & CVAR_USERINFO)
-		userinfo_modified = qtrue;
+		userinfo_modified = true;
 
 	/* free the old value string */
 	Z_Free(var->string);
@@ -361,7 +361,7 @@ void Cvar_GetLatchedVars(void)
 
 /**
  * @brief Handles variable inspection and changing from the console
- * @return qboolean True if cvar exists - false otherwise
+ * @return bool_t True if cvar exists - false otherwise
  *
  * You can print the current value or set a new value with this function
  * To set a new value for a cvar from within the console just type the cvar name
@@ -371,23 +371,23 @@ void Cvar_GetLatchedVars(void)
  * @sa Cvar_SetValue
  * @sa Cvar_Set
  */
-qboolean Cvar_Command(void)
+bool_t Cvar_Command(void)
 {
 	cvar_t *v;
 
 	/* check variables */
 	v = Cvar_FindVar(Cmd_Argv(0));
 	if (!v)
-		return qfalse;
+		return false;
 
 	/* perform a variable print or set */
 	if (Cmd_Argc() == 1) {
 		Com_Printf("\"%s\" is \"%s\"\n", v->name, v->string);
-		return qtrue;
+		return true;
 	}
 
 	Cvar_Set(v->name, Cmd_Argv(1));
-	return qtrue;
+	return true;
 }
 
 

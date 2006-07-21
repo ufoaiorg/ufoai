@@ -276,7 +276,7 @@ static void PF_WriteAngle(float f)
 	MSG_WriteAngle(&sv.multicast, f);
 }
 
-static byte *pf_save;
+static uint8_t *pf_save;
 /**
   * @brief
   */

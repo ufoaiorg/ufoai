@@ -203,7 +203,7 @@ void Com_Error(int code, char *fmt, ...)
 {
 	va_list argptr;
 	static char msg[MAXPRINTMSG];
-	static qboolean recursive = qfalse;
+	static bool_t recursive = false;
 
 #if defined DEBUG && defined _MSC_VER
 	__debugbreak();				/* break execution before game shutdown */
@@ -211,7 +211,7 @@ void Com_Error(int code, char *fmt, ...)
 
 	if (recursive)
 		Sys_Error("recursive error after: %s", msg);
-	recursive = qtrue;
+	recursive = true;
 
 	va_start(argptr, fmt);
 #ifndef _WIN32
@@ -223,16 +223,16 @@ void Com_Error(int code, char *fmt, ...)
 
 	if (code == ERR_DISCONNECT) {
 		CL_Drop();
-		recursive = qfalse;
+		recursive = false;
 		longjmp(abortframe, -1);
 	} else if (code == ERR_DROP) {
 		Com_Printf("********************\nERROR: %s\n********************\n", msg);
-		SV_Shutdown(va("Server crashed: %s\n", msg), qfalse);
+		SV_Shutdown(va("Server crashed: %s\n", msg), false);
 		CL_Drop();
-		recursive = qfalse;
+		recursive = false;
 		longjmp(abortframe, -1);
 	} else {
-		SV_Shutdown(va("Server fatal crashed: %s\n", msg), qfalse);
+		SV_Shutdown(va("Server fatal crashed: %s\n", msg), false);
 		CL_Shutdown();
 	}
 
@@ -250,7 +250,7 @@ void Com_Error(int code, char *fmt, ...)
  */
 void Com_Drop(void)
 {
-	SV_Shutdown("Server disconnected\n", qfalse);
+	SV_Shutdown("Server disconnected\n", false);
 	CL_Drop();
 	longjmp(abortframe, -1);
 }
@@ -264,7 +264,7 @@ void Com_Drop(void)
  */
 void Com_Quit(void)
 {
-	SV_Shutdown("Server quit\n", qfalse);
+	SV_Shutdown("Server quit\n", false);
 #ifndef DEDICATED_ONLY
 	CL_Shutdown();
 #endif
@@ -486,14 +486,14 @@ void MSG_WriteFormat(sizebuf_t *sb, char *format, ...)
 
 			break;
 		case 'p':
-			MSG_WritePos(sb, va_arg(ap, float *));
+			MSG_WritePos(sb, va_arg(ap, float*));
 
 			break;
 		case 'g':
-			MSG_WriteGPos(sb, va_arg(ap, byte *));
+			MSG_WriteGPos(sb, va_arg(ap, uint8_t*));
 			break;
 		case 'd':
-			MSG_WriteDir(sb, va_arg(ap, float *));
+			MSG_WriteDir(sb, va_arg(ap, float*));
 
 			break;
 		case 'a':
@@ -506,11 +506,11 @@ void MSG_WriteFormat(sizebuf_t *sb, char *format, ...)
 		case '*':
 			{
 				int i, n;
-				byte *p;
+				uint8_t *p;
 
 				n = va_arg(ap, int);
 
-				p = va_arg(ap, byte *);
+				p = va_arg(ap, uint8_t*);
 				MSG_WriteByte(sb, n);
 				for (i = 0; i < n; i++)
 					MSG_WriteByte(sb, *p++);
@@ -820,7 +820,7 @@ void MSG_ReadFormat(sizebuf_t *msg_read, uint8_t *error, char *format, ...)
 		case '*':
 			{
 				int i, n;
-				byte *p;
+				uint8_t *p;
 
 				n = MSG_ReadByte(msg_read, error);
 				*va_arg(ap, int *) = n;
@@ -954,7 +954,7 @@ void *SZ_GetSpace(sizebuf_t *buf, int length)
 
 		Com_Printf("SZ_GetSpace: overflow\n");
 		SZ_Clear(buf);
-		buf->overflowed = qtrue;
+		buf->overflowed = true;
 	}
 
 	data = buf->data + buf->cursize;
@@ -1075,7 +1075,7 @@ void COM_AddParm(char *parm)
  *
  * just for debugging
  */
-int memsearch(byte * start, int count, int search)
+int memsearch(uint8_t *start, int count, int search)
 {
 	int i;
 
@@ -1289,7 +1289,7 @@ void Qcommon_LocaleInit(void)
 	char languageID[32];
 #endif
 	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE);
-	s_language->modified = qfalse;
+	s_language->modified = false;
 
 #ifdef _WIN32
 	Com_sprintf(languageID, 32, "LANG=%s", s_language->string);
@@ -1320,7 +1320,7 @@ void Qcommon_LocaleInit(void)
 		Com_Printf("...using language: %s\n", locale);
 		Cvar_Set("s_language", locale);
 	}
-	s_language->modified = qfalse;
+	s_language->modified = false;
 }
 #endif
 
@@ -1367,7 +1367,7 @@ void Qcommon_Init(int argc, char **argv)
 	   a basedir needs to be set before execing
 	   config files, but we want other parms to override
 	   the settings of the config files */
-	Cbuf_AddEarlyCommands(qfalse);
+	Cbuf_AddEarlyCommands(false);
 	Cbuf_Execute();
 
 	FS_InitFilesystem();
@@ -1376,7 +1376,7 @@ void Qcommon_Init(int argc, char **argv)
 	Cbuf_ExecuteText("exec config.cfg\n", EXEC_APPEND);
 	Cbuf_ExecuteText("exec keys.cfg\n", EXEC_APPEND);
 
-	Cbuf_AddEarlyCommands(qtrue);
+	Cbuf_AddEarlyCommands(true);
 	Cbuf_Execute();
 
 	/* init commands and vars */
@@ -1475,7 +1475,7 @@ float Qcommon_Frame(int msec)
 		Cvar_SetValue("timescale", 0.2);
 
 	if (log_stats->modified) {
-		log_stats->modified = qfalse;
+		log_stats->modified = false;
 		if (log_stats->value) {
 			if (log_stats_file) {
 				fclose(log_stats_file);

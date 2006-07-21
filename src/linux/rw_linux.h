@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-typedef void (*Key_Event_fp_t)(int key, qboolean down);
+typedef void (*Key_Event_fp_t)(int key, bool_t down);
 
 extern void (*KBD_Update_fp)(void);
 extern void (*KBD_Init_fp)(Key_Event_fp_t fp);

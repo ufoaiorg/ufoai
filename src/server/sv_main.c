@@ -88,7 +88,7 @@ void SV_DropClient(client_t * drop)
 		ge->ClientDisconnect(drop->player);
 	}
 
-	drop->player->inuse = qfalse;
+	drop->player->inuse = false;
 	drop->state = cs_zombie;	/* become free in a few seconds */
 	drop->name[0] = 0;
 }
@@ -366,7 +366,7 @@ void SVC_DirectConnect(void)
 	playernum = newcl - svs.clients;
 	player = PLAYER_NUM(playernum);
 	newcl->player = player;
-	newcl->player->inuse = qtrue;
+	newcl->player->inuse = true;
 	newcl->player->num = playernum;
 	newcl->challenge = challenge;	/* save challenge for checksumming */
 
@@ -395,7 +395,7 @@ void SVC_DirectConnect(void)
 	newcl->state = cs_connected;
 
 	SZ_Init(&newcl->datagram, newcl->datagram_buf, sizeof(newcl->datagram_buf));
-	newcl->datagram.allowoverflow = qtrue;
+	newcl->datagram.allowoverflow = true;
 	newcl->lastmessage = svs.realtime;	/* don't timeout */
 	newcl->lastconnect = svs.realtime;
 }
@@ -470,7 +470,7 @@ void SV_ConnectionlessPacket(void)
 
 	s = MSG_ReadStringLine(&net_message, NULL);
 
-	Cmd_TokenizeString(s, qfalse);
+	Cmd_TokenizeString(s, false);
 
 	c = Cmd_Argv(0);
 	Com_DPrintf("Packet %s : %s\n", NET_AdrToString(net_from), c);
@@ -915,7 +915,7 @@ not just stuck on the outgoing message list, because the server is going
 to totally exit after returning from this function.
 ==================
 */
-void SV_FinalMessage(char *message, qboolean reconnect)
+void SV_FinalMessage(char *message, bool_t reconnect)
 {
 	int i;
 	client_t *cl;
@@ -952,7 +952,7 @@ Called when each game quits,
 before Sys_Quit or Sys_Error
 ================
 */
-void SV_Shutdown(char *finalmsg, qboolean reconnect)
+void SV_Shutdown(char *finalmsg, bool_t reconnect)
 {
 	if (svs.clients)
 		SV_FinalMessage(finalmsg, reconnect);
