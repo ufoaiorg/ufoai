@@ -97,7 +97,7 @@ void S_TransferStereo16(unsigned long *pbuf, int endtime)
 		lpaintedtime += (snd_linear_count >> 1);
 
 		if (CL_VideoRecording())
-			CL_WriteAVIAudioFrame((byte *) snd_out, snd_linear_count << 1);
+			CL_WriteAVIAudioFrame((uint8_t*) snd_out, snd_linear_count << 1);
 	}
 }
 
@@ -183,7 +183,7 @@ void S_PaintChannelFrom8(channel_t * ch, sfxcache_t * sc, int count, int offset)
 {
 	int data;
 	int *lscale, *rscale;
-	byte *sfx;
+	uint8_t *sfx;
 	int i;
 	portable_samplepair_t *samp;
 
@@ -196,7 +196,7 @@ void S_PaintChannelFrom8(channel_t * ch, sfxcache_t * sc, int count, int offset)
 	/*as it would always be zero. */
 	lscale = snd_scaletable[ch->leftvol >> 3];
 	rscale = snd_scaletable[ch->rightvol >> 3];
-	sfx = (byte *) sc->data + ch->pos;
+	sfx = (uint8_t*) sc->data + ch->pos;
 
 	samp = &paintbuffer[offset];
 
@@ -357,7 +357,7 @@ void S_InitScaletable(void)
 	int i, j;
 	int scale;
 
-	s_volume->modified = qfalse;
+	s_volume->modified = false;
 	for (i = 0; i < 32; i++) {
 		scale = i * 8 * 256 * s_volume->value;
 		for (j = 0; j < 256; j++)

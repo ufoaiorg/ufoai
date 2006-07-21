@@ -55,7 +55,7 @@ int s_registration_sequence;
 
 channel_t channels[MAX_CHANNELS];
 
-qboolean snd_initialized = qfalse;
+bool_t snd_initialized = false;
 int sound_started = 0;
 
 dma_t dma;
@@ -65,7 +65,7 @@ vec3_t listener_forward;
 vec3_t listener_right;
 vec3_t listener_up;
 
-qboolean s_registering;
+bool_t s_registering;
 
 int soundtime;					/* sample PAIRS */
 int paintedtime;				/* sample PAIRS */
@@ -272,7 +272,7 @@ S_FindName
 
 ==================
 */
-sfx_t *S_FindName(char *name, qboolean create)
+sfx_t *S_FindName(char *name, bool_t create)
 {
 	int i;
 	sfx_t *sfx;
@@ -361,7 +361,7 @@ S_BeginRegistration
 void S_BeginRegistration(void)
 {
 	s_registration_sequence++;
-	s_registering = qtrue;
+	s_registering = true;
 }
 
 /*
@@ -377,7 +377,7 @@ sfx_t *S_RegisterSound(char *name)
 	if (!sound_started)
 		return NULL;
 
-	sfx = S_FindName(name, qtrue);
+	sfx = S_FindName(name, true);
 	sfx->registration_sequence = s_registration_sequence;
 
 	if (!s_registering)
@@ -410,7 +410,7 @@ void S_EndRegistration(void)
 		} else {				/* make sure it is paged in */
 			if (sfx->cache) {
 				size = sfx->cache->length * sfx->cache->width;
-				Com_PageInMemory((byte *) sfx->cache, size);
+				Com_PageInMemory((uint8_t*) sfx->cache, size);
 			}
 		}
 
@@ -423,7 +423,7 @@ void S_EndRegistration(void)
 		S_LoadSound(sfx);
 	}
 
-	s_registering = qfalse;
+	s_registering = false;
 }
 
 
@@ -675,9 +675,9 @@ void S_StartSound(vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float 
 
 	if (origin) {
 		VectorCopy(origin, ps->origin);
-		ps->fixed_origin = qtrue;
+		ps->fixed_origin = true;
 	} else
-		ps->fixed_origin = qfalse;
+		ps->fixed_origin = false;
 
 	ps->entnum = entnum;
 	ps->entchannel = entchannel;
@@ -872,7 +872,7 @@ void S_AddLoopSounds(void)
 			right_total = 255;
 		ch->leftvol = left_total;
 		ch->rightvol = right_total;
-		ch->autosound = qtrue;	/* remove next frame */
+		ch->autosound = true;	/* remove next frame */
 		ch->sfx = sfx;
 		/* sometimes, the sc->length argument can become 0, and in that
 		 * case we get a SIGFPE in the next modulo.  The workaround checks
@@ -896,7 +896,7 @@ S_RawSamples
 Cinematic streaming and voice over network
 ============
 */
-void S_RawSamples(int samples, int rate, int width, int channels, byte * data, float volume)
+void S_RawSamples(int samples, int rate, int width, int channels, uint8_t *data, float volume)
 {
 	int i;
 	int src, dst;
@@ -957,8 +957,8 @@ void S_RawSamples(int samples, int rate, int width, int channels, byte * data, f
 				break;
 			dst = s_rawend & (MAX_RAW_SAMPLES - 1);
 			s_rawend++;
-			s_rawsamples[dst].left = (int) (volume * (((byte *) data)[src] - 128)) << 16;
-			s_rawsamples[dst].right = (int) (volume * (((byte *) data)[src] - 128)) << 16;
+			s_rawsamples[dst].left = (int) (volume * (((uint8_t*) data)[src] - 128)) << 16;
+			s_rawsamples[dst].right = (int) (volume * (((uint8_t*) data)[src] - 128)) << 16;
 		}
 	}
 }
@@ -997,7 +997,7 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 
 #ifdef __linux__
 	if (s_system->modified) {
-		s_system->modified = qfalse;
+		s_system->modified = false;
 		CL_Snd_Restart_f();
 	}
 #endif
@@ -1135,19 +1135,19 @@ static int ovSection;
 OGG_Open
 ==========
 */
-qboolean OGG_Open(char *filename)
+bool_t OGG_Open(char *filename)
 {
 	FILE *f;
 	int res, length;
 	vorbis_info *vi;
 
 	if (ov_volume->value <= 0)
-		return qfalse;
+		return false;
 
 	/* check running music */
 	if (ovPlaying[0]) {
 		if (!strcmp(ovPlaying, filename))
-			return qtrue;
+			return true;
 		else
 			OGG_Stop();
 	}
@@ -1156,7 +1156,7 @@ qboolean OGG_Open(char *filename)
 	length = FS_FOpenFile(va("music/%s.ogg", filename), &f);
 	if (!f) {
 		Com_Printf("Couldn't open 'music/%s.ogg'\n", filename);
-		return qfalse;
+		return false;
 	}
 
 	/* open ogg vorbis file */
@@ -1164,20 +1164,20 @@ qboolean OGG_Open(char *filename)
 	if (res < 0) {
 		Com_Printf("'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n", filename, res);
 		fclose(f);
-		return qfalse;
+		return false;
 	}
 
 	vi = ov_info(&ovFile, -1);
 	if ((vi->channels != 1) && (vi->channels != 2)) {
 		Com_Printf("%s has an unsupported number of channels: %i\n", filename, vi->channels);
 		fclose(f);
-		return qfalse;
+		return false;
 	}
 
 /*	Com_Printf( "Playing '%s'\n", filename ); */
 	Q_strncpyz(ovPlaying, filename, MAX_QPATH);
 	ovSection = 0;
-	return qtrue;
+	return true;
 }
 
 /*
@@ -1207,7 +1207,7 @@ int OGG_Read(void)
 
 	/* read and resample */
 	res = ov_read(&ovFile, ovBuf, sizeof(ovBuf), 0, 2, 1, &ovSection);
-	S_RawSamples(res >> 2, 44100, 2, 2, (byte *) ovBuf, ov_volume->value);
+	S_RawSamples(res >> 2, 44100, 2, 2, (uint8_t*) ovBuf, ov_volume->value);
 
 	/* end of file? */
 	if (!res) {
