@@ -509,18 +509,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\common\mem.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\q_shared.c"
 				>
 			</File>
@@ -539,10 +527,6 @@
 			</File>
 			<File
 				RelativePath=".\game.h"
-				>
-			</File>
-			<File
-				RelativePath="..\common\mem.h"
 				>
 			</File>
 			<File
