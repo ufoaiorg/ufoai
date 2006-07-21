@@ -100,7 +100,7 @@ void Cbuf_InsertText(char *text)
 	/* copy off any commands still remaining in the exec buffer */
 	templen = cmd_text.cursize;
 	if (templen) {
-		temp = Z_Malloc(templen);
+		temp = (char*)Z_Malloc(templen);
 		memcpy(temp, cmd_text.data, templen);
 		SZ_Clear(&cmd_text);
 	} else {
@@ -193,7 +193,7 @@ bool_t Cbuf_AddLateCommands(void)
 	if (!s)
 		return false;
 
-	text = Z_Malloc(s + 1);
+	text = (char*)Z_Malloc(s + 1);
 	text[0] = 0;
 	for (i = 1; i < argc; i++) {
 		Q_strcat(text, COM_Argv(i), s);
@@ -202,7 +202,7 @@ bool_t Cbuf_AddLateCommands(void)
 	}
 
 	/* pull out the commands */
-	build = Z_Malloc(s + 1);
+	build = (char*)Z_Malloc(s + 1);
 	build[0] = 0;
 
 	for (i = 0; i < s - 1; i++) {
