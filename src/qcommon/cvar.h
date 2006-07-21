@@ -56,7 +56,7 @@ void Cvar_GetLatchedVars(void);
 
 /* any CVAR_LATCHED variables that have been set will now take effect */
 
-qboolean Cvar_Command(void);
+bool_t Cvar_Command(void);
 
 /* called by Cmd_ExecuteString when Cmd_Argv(0) doesn't match a known */
 /* command.  Returns true if the command was a variable reference that */
@@ -77,7 +77,7 @@ char *Cvar_Serverinfo(void);
 
 /* returns an info string containing all the CVAR_SERVERINFO cvars */
 
-extern qboolean userinfo_modified;
+extern bool_t userinfo_modified;
 
 /* this is set each time a CVAR_USERINFO variable is changed */
 /* so that the client knows to send it to the server */

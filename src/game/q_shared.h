@@ -191,8 +191,8 @@ extern const int dvecs[8][2];
 extern const float dvecsn[8][2];
 extern const float dangle[8];
 
-extern const byte dvright[8];
-extern const byte dvleft[8];
+extern const uint8_t dvright[8];
+extern const uint8_t dvleft[8];
 
 /*
 ==============================================================
@@ -208,7 +208,7 @@ typedef vec_t vec3_t[3];
 typedef vec_t vec4_t[4];
 typedef vec_t vec5_t[5];
 
-typedef byte pos_t;
+typedef uint8_t pos_t;
 typedef pos_t pos3_t[3];
 
 typedef int fixed4_t;
@@ -280,7 +280,7 @@ void _VectorCopy(vec3_t in, vec3_t out);
 void ClearBounds(vec3_t mins, vec3_t maxs);
 void AddPointToBounds(vec3_t v, vec3_t mins, vec3_t maxs);
 int VectorCompareEps(vec3_t v1, vec3_t v2);
-qboolean VectorNearer(vec3_t v1, vec3_t v2, vec3_t comp);
+bool_t VectorNearer(vec3_t v1, vec3_t v2, vec3_t comp);
 vec_t VectorLength(vec3_t v);
 void CrossProduct(vec3_t v1, vec3_t v2, vec3_t cross);
 vec_t VectorNormalize(vec3_t v);	/* returns vector length */
@@ -339,7 +339,7 @@ char *COM_EParse(char **text, char *errhead, char *errinfo);
 
 void Com_sprintf(char *dest, size_t size, char *fmt, ...);
 
-void Com_PageInMemory(byte * buffer, int size);
+void Com_PageInMemory(uint8_t *buffer, int size);
 
 /*============================================= */
 
@@ -384,7 +384,7 @@ char *Info_ValueForKey(char *s, char *key);
 void Info_RemoveKey(char *s, const char *key);
 void Info_SetValueForKey(char *s, const char *key, const char *value);
 
-qboolean Info_Validate(char *s);
+bool_t Info_Validate(char *s);
 
 /*
 ==============================================================
@@ -451,7 +451,7 @@ typedef struct cvar_s {
 	char *string;
 	char *latched_string;		/* for CVAR_LATCH vars */
 	int flags;
-	qboolean modified;			/* set each time the cvar is changed */
+	bool_t modified;			/* set each time the cvar is changed */
 	float value;
 	struct cvar_s *next;
 } cvar_t;
@@ -540,9 +540,9 @@ COLLISION DETECTION
 typedef struct cplane_s {
 	vec3_t normal;
 	float dist;
-	byte type;					/* for fast side tests */
-	byte signbits;				/* signx + (signy<<1) + (signz<<1) */
-	byte pad[2];
+	uint8_t type;					/* for fast side tests */
+	uint8_t signbits;				/* signx + (signy<<1) + (signz<<1) */
+	uint8_t pad[2];
 } cplane_t;
 
 /* structure offset for asm code */
@@ -578,8 +578,8 @@ typedef struct mapsurface_s {	/* used internally due to name len probs //ZOID */
 
 /* a trace is returned when a box is swept through the world */
 typedef struct {
-	qboolean allsolid;			/* if true, plane is not valid */
-	qboolean startsolid;		/* if true, the initial point was in a solid area */
+	bool_t allsolid;			/* if true, plane is not valid */
+	bool_t startsolid;		/* if true, the initial point was in a solid area */
 	float fraction;				/* time completed, 1.0 = didn't hit anything */
 	vec3_t endpos;				/* final position */
 	cplane_t plane;				/* surface normal at impact */
@@ -842,10 +842,10 @@ typedef struct fireDef_s {
 	char impactSound[MAX_VAR];
 	char hitBodySound[MAX_VAR];
 	char bounceSound[MAX_VAR];
-	byte soundOnce;
-	byte gravity;
-	byte selfDetonate;
-	byte dmgtype;
+	uint8_t soundOnce;
+	uint8_t gravity;
+	uint8_t selfDetonate;
+	uint8_t dmgtype;
 	float speed;
 	vec2_t shotOrg;
 	vec2_t spread;
@@ -874,13 +874,13 @@ typedef struct objDef_s {
 	char type[MAX_VAR];
 	int shape;
 	/* size in x and y direction */
-	byte sx, sy;
+	uint8_t sx, sy;
 	float scale;
 	vec3_t center;
 	char category;
-	byte weapon;
-	byte twohanded;
-	byte thrown;
+	uint8_t weapon;
+	uint8_t twohanded;
+	uint8_t thrown;
 	int price;
 	int buytype;
 	int link;
@@ -902,7 +902,7 @@ typedef struct objDef_s {
 
 typedef struct invDef_s {
 	char name[MAX_VAR];
-	byte single, armor, all, temp;
+	uint8_t single, armor, all, temp;
 	int shape[16];
 	int in, out;
 } invDef_t;
@@ -931,7 +931,7 @@ typedef struct inventory_s {
 typedef struct equipDef_s {
 	char name[MAX_VAR];
 	int num[MAX_OBJDEFS];
-	byte num_loose[MAX_OBJDEFS];
+	uint8_t num_loose[MAX_OBJDEFS];
 } equipDef_t;
 
 /* the csi structure is the client-server-information structure */
@@ -1071,10 +1071,10 @@ char *Com_CharGetHead(character_t * chr);
 
 void Com_InitCSI(csi_t * import);
 void Com_InitInventory(invList_t * invChain);
-qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, int y);
+bool_t Com_CheckToInventory(inventory_t * i, int item, int container, int x, int y);
 invList_t *Com_SearchInInventory(inventory_t * i, int container, int x, int y);
 invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x, int y);
-qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y);
+bool_t Com_RemoveFromInventory(inventory_t * i, int container, int x, int y);
 int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp);
 void Com_EmptyContainer(inventory_t * i, int container);
 void Com_DestroyInventory(inventory_t * i);

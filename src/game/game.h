@@ -71,7 +71,7 @@ typedef struct player_s player_t;
 #ifndef GAME_INCLUDE
 
 struct player_s {
-	qboolean inuse;
+	bool_t inuse;
 	int num;					/* communicated by server to clients */
 	int ping;
 
@@ -81,7 +81,7 @@ struct player_s {
 
 
 struct edict_s {
-	qboolean inuse;
+	bool_t inuse;
 	int linkcount;
 
 	int number;
@@ -147,9 +147,9 @@ typedef struct {
 	int (*TestLine) (vec3_t start, vec3_t stop);
 	float (*GrenadeTarget) (vec3_t from, vec3_t at, vec3_t v0);
 
-	void (*MoveCalc) (struct routing_s * map, pos3_t from, int distance, byte ** fb_list, int fb_length);
+	void (*MoveCalc) (struct routing_s * map, pos3_t from, int distance, uint8_t **fb_list, int fb_length);
 	void (*MoveStore) (struct routing_s * map);
-	int (*MoveLength) (struct routing_s * map, pos3_t to, qboolean stored);
+	int (*MoveLength) (struct routing_s * map, pos3_t to, bool_t stored);
 	int (*MoveNext) (struct routing_s * map, pos3_t from);
 	int (*GridHeight) (struct routing_s * map, pos3_t pos);
 	int (*GridFall) (struct routing_s * map, pos3_t pos);
@@ -233,7 +233,7 @@ typedef struct {
 	/* each new level entered will cause a call to SpawnEntities */
 	void (*SpawnEntities) (char *mapname, char *entstring);
 
-	qboolean(*ClientConnect) (player_t * client, char *userinfo);
+	bool_t (*ClientConnect) (player_t * client, char *userinfo);
 	void (*ClientBegin) (player_t * client);
 	void (*ClientUserinfoChanged) (player_t * client, char *userinfo);
 	void (*ClientDisconnect) (player_t * client);

@@ -60,9 +60,9 @@ int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end);
 extern struct routing_s svMap, clMap;
 
 void Grid_RecalcRouting(struct routing_s *map, char *name, char **list);
-void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_list, int fb_length);
+void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, uint8_t **fb_list, int fb_length);
 void Grid_MoveStore(struct routing_s *map);
-int Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored);
+int Grid_MoveLength(struct routing_s *map, pos3_t to, bool_t stored);
 int Grid_MoveNext(struct routing_s *map, pos3_t from);
 int Grid_Height(struct routing_s *map, pos3_t pos);
 int Grid_Fall(struct routing_s *map, pos3_t pos);

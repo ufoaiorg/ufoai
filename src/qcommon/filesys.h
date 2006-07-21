@@ -8,7 +8,7 @@ FILESYSTEM
 #define MAX_MAPS 400
 extern char *maps[MAX_MAPS];
 extern int anzInstalledMaps;
-extern qboolean mapsInstalledInit;
+extern bool_t mapsInstalledInit;
 extern int mapInstalledIndex;
 
 typedef enum {
@@ -24,10 +24,10 @@ typedef enum {
 	FS_SEEK_SET
 } fsOrigin_t;
 
-int FS_FOpenFileWrite(const char *filename, FILE ** f);
+int FS_FOpenFileWrite(const char *filename, FILE **f);
 int FS_Seek(FILE * f, long offset, int origin);
 int FS_WriteFile(const void *buffer, int len, const char *filename);
-int FS_Write(const void *buffer, int len, FILE * f);
+int FS_Write(const void *buffer, int len, FILE *f);
 void FS_GetMaps(void);
 void FS_InitFilesystem(void);
 void FS_SetGamedir(char *dir);
@@ -36,11 +36,11 @@ char *FS_NextPath(char *prevpath);
 void FS_ExecAutoexec(void);
 char *FS_GetCwd(void);
 void FS_NormPath(char *path);
-qboolean FS_FileExists(char *filename);
+bool_t FS_FileExists(char *filename);
 
 void FS_GetMaps(void);
 
-int FS_FOpenFile(const char *filename, FILE ** file);
+int FS_FOpenFile(const char *filename, FILE **file);
 void FS_FCloseFile(FILE * f);
 
 /* note: this can't be called from another DLL, due to MS libc issues */
