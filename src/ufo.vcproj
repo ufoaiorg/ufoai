@@ -612,10 +612,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\common\mem.c"
-				>
-			</File>
-			<File
 				RelativePath=".\qcommon\net_chan.c"
 				>
 			</File>
@@ -825,11 +821,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\win32\os_types.h"
+				RelativePath=".\client\os_types.h"
 				>
 			</File>
 			<File
-				RelativePath=".\client\os_types.h"
+				RelativePath=".\win32\os_types.h"
 				>
 			</File>
 			<File

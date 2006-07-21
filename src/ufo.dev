@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_win32/libjpeg.lib_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=91
+UnitCount=90
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -809,13 +809,13 @@ BuildCmd=
 
 [Unit77]
 FileName=qcommon\cbuf.c
-CompileCpp=1
+CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c cbuf.c -o cbuf.o $(CFLAGS)
 
 [Unit78]
 FileName=qcommon\cbuf.h
@@ -931,16 +931,6 @@ BuildCmd=
 FileName=common\ufotypes.h
 CompileCpp=1
 Folder=Header Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit91]
-FileName=common\mem.c
-CompileCpp=1
-Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
