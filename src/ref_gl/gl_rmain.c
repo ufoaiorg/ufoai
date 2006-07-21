@@ -190,17 +190,17 @@ R_CullBox
 Returns true if the box is completely outside the frustom
 =================
 */
-qboolean R_CullBox(vec3_t mins, vec3_t maxs)
+bool_t R_CullBox(vec3_t mins, vec3_t maxs)
 {
 	int i;
 
 	if (r_nocull->value || r_isometric->value)
-		return qfalse;
+		return false;
 
 	for (i = 0; i < 4; i++)
 		if (BOX_ON_PLANE_SIDE(mins, maxs, &frustum[i]) == 2)
-			return qtrue;
-	return qfalse;
+			return true;
+	return false;
 }
 
 
@@ -427,7 +427,7 @@ float *R_CalcTransform(entity_t * e)
 		return t->matrix;
 
 	/* process this matrix */
-	t->processing = qtrue;
+	t->processing = true;
 	mp = NULL;
 
 	/* do parent object trafos first */
@@ -449,7 +449,7 @@ float *R_CalcTransform(entity_t * e)
 			for (i = 0; i < taghdr->num_tags; i++, name += MAX_TAGNAME)
 				if (!strcmp(name, e->tagname)) {
 					/* found the tag (matrix) */
-					tag = (float *) ((byte *) taghdr + taghdr->ofs_tags);
+					tag = (float *) ((uint8_t*) taghdr + taghdr->ofs_tags);
 					tag += i * 16 * taghdr->num_frames;
 
 					/* do interpolation */
@@ -489,8 +489,8 @@ float *R_CalcTransform(entity_t * e)
 		memcpy(t->matrix, mc, sizeof(float) * 16);
 
 	/* we're done */
-	t->done = qtrue;
-	t->processing = qfalse;
+	t->done = true;
+	t->processing = false;
 
 	return t->matrix;
 }
@@ -510,8 +510,8 @@ void R_TransformEntitiesOnList(void)
 
 	/* clear flags */
 	for (i = 0; i < r_newrefdef.num_entities; i++) {
-		trafo[i].done = qfalse;
-		trafo[i].processing = qfalse;
+		trafo[i].done = false;
+		trafo[i].processing = false;
 	}
 
 	/* calculate all transformations */
@@ -618,7 +618,7 @@ void GL_DrawParticles(int num_particles, const particle_t particles[], const uns
 	int i;
 	vec3_t up, right;
 	float scale;
-	byte color[4];
+	uint8_t color[4];
 
 	GL_Bind(r_particletexture->texnum);
 	qglDepthMask(GL_FALSE);		/* no z buffering */
@@ -1164,7 +1164,7 @@ void R_Register(void)
 	vid_ref = ri.Cvar_Get( "vid_ref", "glx", CVAR_ARCHIVE );
 #endif
 	vid_grabmouse = ri.Cvar_Get( "vid_grabmouse", "1", CVAR_ARCHIVE );
-	vid_grabmouse->modified = qfalse;
+	vid_grabmouse->modified = false;
 
 	for (commands = r_commands; commands->name; commands++)
 		ri.Cmd_AddCommand(commands->name, commands->function);
@@ -1175,39 +1175,39 @@ void R_Register(void)
 R_SetMode
 ==================
 */
-qboolean R_SetMode (void)
+bool_t R_SetMode (void)
 {
 	rserr_t err;
-	qboolean fullscreen;
+	bool_t fullscreen;
 
 	fullscreen = vid_fullscreen->value;
 
-	vid_fullscreen->modified = qfalse;
-	gl_mode->modified = qfalse;
-	gl_ext_texture_compression->modified = qfalse;
+	vid_fullscreen->modified = false;
+	gl_mode->modified = false;
+	gl_ext_texture_compression->modified = false;
 
 	if ( ( err = GLimp_SetMode( &vid.width, &vid.height, gl_mode->value, fullscreen ) ) == rserr_ok )
 		gl_state.prev_mode = gl_mode->value;
 	else {
 		if ( err == rserr_invalid_fullscreen ) {
 			ri.Cvar_SetValue( "vid_fullscreen", 0);
-			vid_fullscreen->modified = qfalse;
+			vid_fullscreen->modified = false;
 			ri.Con_Printf( PRINT_ALL, "ref_gl::R_SetMode() - fullscreen unavailable in this mode\n" );
-			if ( ( err = GLimp_SetMode( &vid.width, &vid.height, gl_mode->value, qfalse ) ) == rserr_ok )
-				return qtrue;
+			if ( ( err = GLimp_SetMode( &vid.width, &vid.height, gl_mode->value, false ) ) == rserr_ok )
+				return true;
 		} else if ( err == rserr_invalid_mode ) {
 			ri.Cvar_SetValue( "gl_mode", gl_state.prev_mode );
-			gl_mode->modified = qfalse;
+			gl_mode->modified = false;
 			ri.Con_Printf( PRINT_ALL, "ref_gl::R_SetMode() - invalid mode\n" );
 		}
 
 		/* try setting it back to something safe */
-		if ( ( err = GLimp_SetMode( &vid.width, &vid.height, gl_state.prev_mode, qfalse ) ) != rserr_ok ) {
+		if ( ( err = GLimp_SetMode( &vid.width, &vid.height, gl_state.prev_mode, false ) ) != rserr_ok ) {
 			ri.Con_Printf( PRINT_ALL, "ref_gl::R_SetMode() - could not revert to safe mode\n" );
-			return qfalse;
+			return false;
 		}
 	}
-	return qtrue;
+	return true;
 }
 
 /*
@@ -1215,7 +1215,7 @@ qboolean R_SetMode (void)
 R_Init
 ===============
 */
-qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
+bool_t R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 {
 	char renderer_buffer[1000];
 	char vendor_buffer[1000];
@@ -1237,13 +1237,13 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	if ( !QGL_Init( gl_driver->string ) ) {
 		QGL_Shutdown();
 		ri.Con_Printf (PRINT_ALL, "ref_gl::R_Init() - could not load \"%s\"\n", gl_driver->string );
-		return qfalse;
+		return false;
 	}
 
 	/* initialize OS-specific parts of OpenGL */
 	if ( !GLimp_Init( hinstance, wndproc ) ) {
 		QGL_Shutdown();
-		return qfalse;
+		return false;
 	}
 
 	/* set our "safe" modes */
@@ -1253,7 +1253,7 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	if ( !R_SetMode () ) {
 		QGL_Shutdown();
 		ri.Con_Printf (PRINT_ALL, "ref_gl::R_Init() - could not R_SetMode()\n" );
-		return qfalse;
+		return false;
 	}
 
 	/* get our various GL strings */
@@ -1418,7 +1418,7 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	}
 
 	/* anisotropy */
-	gl_state.anisotropic = qfalse;
+	gl_state.anisotropic = false;
 
 	qglGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &max_aniso);
 	ri.Cvar_SetValue("r_ext_max_anisotropy", max_aniso);
@@ -1433,7 +1433,7 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 			ri.Con_Printf(PRINT_ALL, "...ignoring GL_EXT_texture_filter_anisotropic\n");
 		else {
 			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_texture_filter_anisotropic [%2i max] [%2i selected]\n", max_aniso, aniso_level);
-			gl_state.anisotropic = qtrue;
+			gl_state.anisotropic = true;
 		}
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_EXT_texture_filter_anisotropic not found\n");
@@ -1443,44 +1443,44 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 
 	if (strstr(gl_config.extensions_string, "GL_EXT_texture_lod_bias")) {
 		ri.Con_Printf(PRINT_ALL, "...using GL_EXT_texture_lod_bias\n");
-		gl_state.lod_bias = qtrue;
+		gl_state.lod_bias = true;
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_EXT_texture_lod_bias not found\n");
-		gl_state.lod_bias = qfalse;
+		gl_state.lod_bias = false;
 	}
 
 #if 0
 	if (strstr(gl_config.extensions_string, "GL_SGIS_generate_mipmap")) {
 		ri.Con_Printf(PRINT_ALL, "...using GL_SGIS_generate_mipmap\n");
-		gl_state.sgis_mipmap = qtrue;
+		gl_state.sgis_mipmap = true;
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_SGIS_generate_mipmap not found\n");
 		ri.Sys_Error(ERR_FATAL, "GL_SGIS_generate_mipmap not found!");
-		gl_state.sgis_mipmap = qfalse;
+		gl_state.sgis_mipmap = false;
 	}
 #endif
 
 	if (strstr(gl_config.extensions_string, "GL_EXT_stencil_wrap")) {
 		ri.Con_Printf(PRINT_ALL, "...using GL_EXT_stencil_wrap\n");
-		gl_state.stencil_wrap = qtrue;
+		gl_state.stencil_wrap = true;
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_EXT_stencil_wrap not found\n");
-		gl_state.stencil_wrap = qfalse;
+		gl_state.stencil_wrap = false;
 	}
 
 	if (strstr(gl_config.extensions_string, "GL_EXT_fog_coord")) {
 		ri.Con_Printf(PRINT_ALL, "...using GL_EXT_fog_coord\n");
-		gl_state.fog_coord = qtrue;
+		gl_state.fog_coord = true;
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_EXT_fog_coord not found\n");
-		gl_state.fog_coord = qfalse;
+		gl_state.fog_coord = false;
 	}
 
-	gl_state.arb_fragment_program = qfalse;
+	gl_state.arb_fragment_program = false;
 #ifdef SHADERS
 	if (strstr(gl_config.extensions_string, "GL_ARB_fragment_program")) {
 		ri.Con_Printf(PRINT_ALL, "...using GL_ARB_fragment_program\n");
-		gl_state.arb_fragment_program = qtrue;
+		gl_state.arb_fragment_program = true;
 
 		qglProgramStringARB = (void *) qwglGetProcAddress("glProgramStringARB");
 		qglBindProgramARB = (void *) qwglGetProcAddress("glBindProgramARB");
@@ -1508,24 +1508,24 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 /*		water_shader = CompileWaterShader(); */
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_ARB_fragment_program not found\n");
-		gl_state.arb_fragment_program = qfalse;
+		gl_state.arb_fragment_program = false;
 	}
 #endif							/* SHADERS */
 
-	gl_state.ati_separate_stencil = qfalse;
+	gl_state.ati_separate_stencil = false;
 	if (strstr(gl_config.extensions_string, "GL_ATI_separate_stencil")) {
 		if (!r_ati_separate_stencil->value) {
 			ri.Con_Printf(PRINT_ALL, "...ignoring GL_ATI_separate_stencil\n");
-			gl_state.ati_separate_stencil = qfalse;
+			gl_state.ati_separate_stencil = false;
 		} else {
 			ri.Con_Printf(PRINT_ALL, "...using GL_ATI_separate_stencil\n");
-			gl_state.ati_separate_stencil = qtrue;
+			gl_state.ati_separate_stencil = true;
 			qglStencilOpSeparateATI = (void (APIENTRY *) (GLenum, GLenum, GLenum, GLenum)) qwglGetProcAddress("glStencilOpSeparateATI");
 			qglStencilFuncSeparateATI = (void (APIENTRY *) (GLenum, GLenum, GLint, GLuint)) qwglGetProcAddress("glStencilFuncSeparateATI");
 		}
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_ATI_separate_stencil not found\n");
-		gl_state.ati_separate_stencil = qfalse;
+		gl_state.ati_separate_stencil = false;
 		ri.Cvar_Set("r_ati_separate_stencil", "0");
 	}
 
@@ -1566,7 +1566,7 @@ qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	if (err != GL_NO_ERROR)
 		ri.Con_Printf(PRINT_ALL, "glGetError() = 0x%x\n", err);
 
-	return qfalse;
+	return false;
 }
 
 /*
@@ -1615,12 +1615,12 @@ void R_BeginFrame(float camera_separation)
 	/* change modes if necessary */
 	/* FIXME: only restart if CDS is required */
 	if (gl_mode->modified || vid_fullscreen->modified || gl_ext_texture_compression->modified) {
-		vid_ref->modified = qtrue;
+		vid_ref->modified = true;
 	}
 
 	if (gl_log->modified) {
 		GLimp_EnableLogging(gl_log->value);
-		gl_log->modified = qfalse;
+		gl_log->modified = false;
 	}
 
 	if (r_anisotropic->modified) {
@@ -1628,14 +1628,14 @@ void R_BeginFrame(float camera_separation)
 			ri.Con_Printf(PRINT_ALL, "...max GL_EXT_texture_filter_anisotropic value is %i\n", r_ext_max_anisotropy->value);
 			ri.Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->value);
 		}
-		r_anisotropic->modified = qfalse;
+		r_anisotropic->modified = false;
 	}
 
 	if (gl_log->value)
 		GLimp_LogNewFrame();
 
 	if (vid_gamma->modified) {
-		vid_gamma->modified = qfalse;
+		vid_gamma->modified = false;
 #ifndef _WIN32
 		if (gl_state.hwgamma)
 			GLimp_SetGamma(NULL, NULL, NULL);
@@ -1649,7 +1649,7 @@ void R_BeginFrame(float camera_separation)
 
 	/* draw buffer stuff */
 	if (gl_drawbuffer->modified) {
-		gl_drawbuffer->modified = qfalse;
+		gl_drawbuffer->modified = false;
 
 		if (gl_state.camera_separation == 0 || !gl_state.stereo_enabled) {
 			if (Q_stricmp(gl_drawbuffer->string, "GL_FRONT") == 0)
@@ -1663,17 +1663,17 @@ void R_BeginFrame(float camera_separation)
 	/* Realtime set level of anisotropy filtering and change texture lod bias */
 	if (gl_texturemode->modified) {
 		GL_TextureMode(gl_texturemode->string);
-		gl_texturemode->modified = qfalse;
+		gl_texturemode->modified = false;
 	}
 
 	if (gl_texturealphamode->modified) {
 		GL_TextureAlphaMode(gl_texturealphamode->string);
-		gl_texturealphamode->modified = qfalse;
+		gl_texturealphamode->modified = false;
 	}
 
 	if (gl_texturesolidmode->modified) {
 		GL_TextureSolidMode(gl_texturesolidmode->string);
-		gl_texturesolidmode->modified = qfalse;
+		gl_texturesolidmode->modified = false;
 	}
 
 	/* swapinterval stuff */
@@ -1694,7 +1694,7 @@ void R_SetPalette(const unsigned char *palette)
 {
 	int i;
 
-	byte *rp = (byte *) r_rawpalette;
+	uint8_t *rp = (uint8_t*) r_rawpalette;
 
 	if (palette) {
 		for (i = 0; i < 256; i++) {
@@ -1720,7 +1720,7 @@ void R_SetPalette(const unsigned char *palette)
 RB_TakeVideoFrameCmd
 ==================
 */
-void R_TakeVideoFrame(int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
+void R_TakeVideoFrame(int w, int h, uint8_t *captureBuffer, uint8_t *encodeBuffer, bool_t motionJpeg)
 {
 	int frameSize;
 	int i;
@@ -1757,7 +1757,7 @@ void Draw_Char(int x, int y, int c);
 void Draw_TileClear(int x, int y, int w, int h, char *name);
 void Draw_FadeScreen(void);
 
-void LoadTGA(char *name, byte ** pic, int *width, int *height);
+void LoadTGA(char *name, uint8_t **pic, int *width, int *height);
 
 /*
 ====================

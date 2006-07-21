@@ -30,9 +30,9 @@ int modfilelen;
 
 void Mod_LoadSpriteModel(model_t * mod, void *buffer);
 void Mod_LoadAliasModel(model_t * mod, void *buffer);
-model_t *Mod_LoadModel(model_t * mod, qboolean crash);
+model_t *Mod_LoadModel(model_t * mod, bool_t crash);
 
-byte mod_novis[MAX_MAP_LEAFS / 8];
+uint8_t mod_novis[MAX_MAP_LEAFS / 8];
 
 /*#define	MAX_MOD_KNOWN	512 */
 model_t mod_known[MAX_MOD_KNOWN];
@@ -116,7 +116,7 @@ void Mod_Init(void)
 /**
  * @brief Loads in a model for the given name
  */
-model_t *Mod_ForName(char *name, qboolean crash)
+model_t *Mod_ForName(char *name, bool_t crash)
 {
 	model_t *mod;
 	unsigned *buf;
@@ -210,7 +210,7 @@ model_t *Mod_ForName(char *name, qboolean crash)
 ===============================================================================
 */
 
-byte *mod_base;
+uint8_t *mod_base;
 static int shift[3];
 
 /*
@@ -225,7 +225,7 @@ void Mod_LoadLighting(lump_t * l)
 		return;
 	}
 	loadmodel->lightdata = Hunk_Alloc(l->filelen);
-	loadmodel->lightquant = *(byte *) (mod_base + l->fileofs);
+	loadmodel->lightquant = *(uint8_t*) (mod_base + l->fileofs);
 	memcpy(loadmodel->lightdata, mod_base + l->fileofs, l->filelen);
 }
 
@@ -781,7 +781,7 @@ static void R_AddMapTile(char *name, int sX, int sY, int sZ)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadBrushModel: %s has wrong version number (%i should be %i)", loadmodel->name, i, BSPVERSION);
 
 	/* swap all the lumps */
-	mod_base = (byte *) header;
+	mod_base = (uint8_t*) header;
 
 	for (i = 0; i < sizeof(dheader_t) / 4; i++)
 		((int *) header)[i] = LittleLong(((int *) header)[i]);
@@ -877,8 +877,8 @@ void Mod_LoadTags(model_t * mod, void *buffer)
 	memcpy((char *) pheader + pheader->ofs_names, (char *) pintag + pheader->ofs_names, pheader->num_tags * MAX_SKINNAME);
 
 	/* load tag matrices */
-	inmat = (float *) ((byte *) pintag + pheader->ofs_tags);
-	outmat = (float *) ((byte *) pheader + pheader->ofs_tags);
+	inmat = (float *) ((uint8_t*) pintag + pheader->ofs_tags);
+	outmat = (float *) ((uint8_t*) pheader + pheader->ofs_tags);
 
 	for (i = 0; i < pheader->num_tags * pheader->num_frames; i++) {
 		for (j = 0; j < 4; j++) {
@@ -891,7 +891,7 @@ void Mod_LoadTags(model_t * mod, void *buffer)
 		*outmat++ = 1.0;
 	}
 
-/*	ri.Sys_Error( ERR_DROP, "TAGS: read: %i expected: %i ", (byte *)outmat - (byte *)pheader, pheader->ofs_extractend ); */
+/*	ri.Sys_Error( ERR_DROP, "TAGS: read: %i expected: %i ", (uint8_t*)outmat - (uint8_t*)pheader, pheader->ofs_extractend ); */
 }
 
 
@@ -965,7 +965,7 @@ void Mod_LoadAliasModel(model_t * mod, void *buffer)
 	int *pincmd, *poutcmd;
 	int version;
 
-	byte *tagbuf, *animbuf;
+	uint8_t *tagbuf, *animbuf;
 
 	pinmodel = (dmdl_t *) buffer;
 
@@ -998,8 +998,8 @@ void Mod_LoadAliasModel(model_t * mod, void *buffer)
 		ri.Sys_Error(ERR_DROP, "model %s has no frames", mod->name);
 
 	/* load base s and t vertices (not used in gl version) */
-	pinst = (dstvert_t *) ((byte *) pinmodel + pheader->ofs_st);
-	poutst = (dstvert_t *) ((byte *) pheader + pheader->ofs_st);
+	pinst = (dstvert_t *) ((uint8_t*) pinmodel + pheader->ofs_st);
+	poutst = (dstvert_t *) ((uint8_t*) pheader + pheader->ofs_st);
 
 	for (i = 0; i < pheader->num_st; i++) {
 		poutst[i].s = LittleShort(pinst[i].s);
@@ -1007,8 +1007,8 @@ void Mod_LoadAliasModel(model_t * mod, void *buffer)
 	}
 
 	/* load triangle lists */
-	pintri = (dtriangle_t *) ((byte *) pinmodel + pheader->ofs_tris);
-	pouttri = (dtriangle_t *) ((byte *) pheader + pheader->ofs_tris);
+	pintri = (dtriangle_t *) ((uint8_t*) pinmodel + pheader->ofs_tris);
+	pouttri = (dtriangle_t *) ((uint8_t*) pheader + pheader->ofs_tris);
 
 	for (i = 0; i < pheader->num_tris; i++) {
 		for (j = 0; j < 3; j++) {
@@ -1019,8 +1019,8 @@ void Mod_LoadAliasModel(model_t * mod, void *buffer)
 
 	/* load the frames */
 	for (i = 0; i < pheader->num_frames; i++) {
-		pinframe = (daliasframe_t *) ((byte *) pinmodel + pheader->ofs_frames + i * pheader->framesize);
-		poutframe = (daliasframe_t *) ((byte *) pheader + pheader->ofs_frames + i * pheader->framesize);
+		pinframe = (daliasframe_t *) ((uint8_t*) pinmodel + pheader->ofs_frames + i * pheader->framesize);
+		poutframe = (daliasframe_t *) ((uint8_t*) pheader + pheader->ofs_frames + i * pheader->framesize);
 
 		memcpy(poutframe->name, pinframe->name, sizeof(poutframe->name));
 		for (j = 0; j < 3; j++) {
@@ -1035,8 +1035,8 @@ void Mod_LoadAliasModel(model_t * mod, void *buffer)
 	mod->type = mod_alias;
 
 	/* load the glcmds */
-	pincmd = (int *) ((byte *) pinmodel + pheader->ofs_glcmds);
-	poutcmd = (int *) ((byte *) pheader + pheader->ofs_glcmds);
+	pincmd = (int *) ((uint8_t*) pinmodel + pheader->ofs_glcmds);
+	poutcmd = (int *) ((uint8_t*) pheader + pheader->ofs_glcmds);
 	for (i = 0; i < pheader->num_glcmds; i++)
 		poutcmd[i] = LittleLong(pincmd[i]);
 
@@ -1220,7 +1220,7 @@ void Mod_FindSharedEdges(model_t * mod)
 	dtriangle_t *tris = (dtriangle_t *) ((unsigned char *) hdr + hdr->ofs_tris);
 	int i, o;
 
-	mod->noshadow = qfalse;
+	mod->noshadow = false;
 
 	for (i = 0; i < hdr->num_tris; i++) {
 		mod->edge_tri[i][0] = Mod_GetTris(tris->index_xyz[0], tris->index_xyz[1], tris, hdr);
@@ -1229,7 +1229,7 @@ void Mod_FindSharedEdges(model_t * mod)
 
 		for (o = 0; o < 3; o++)
 			if (mod->edge_tri[i][o] == -1)
-				mod->noshadow = qtrue;
+				mod->noshadow = true;
 
 		tris++;
 	}
@@ -1247,7 +1247,7 @@ struct model_s *R_RegisterModel(char *name)
 	dsprite_t *sprout;
 	dmdl_t *pheader;
 
-	mod = Mod_ForName(name, qfalse);
+	mod = Mod_ForName(name, false);
 	if (mod) {
 		/* register any images used by the models */
 		if (mod->type == mod_sprite) {

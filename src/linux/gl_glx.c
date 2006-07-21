@@ -80,7 +80,7 @@ static Atom wmDeleteWindow;
 
 /* this is inside the renderer shared lib, so these are called from vid_so */
 
-static qboolean	mouse_avail;
+static bool_t	mouse_avail;
 static int	mx, my;
 
 static int	win_x, win_y;
@@ -95,16 +95,16 @@ static cvar_t	*r_fakeFullscreen;
 static XF86VidModeModeInfo **vidmodes;
 static int num_vidmodes;
 static XF86VidModeGamma oldgamma;
-static qboolean vidmode_ext = qfalse;
+static bool_t vidmode_ext = false;
 #endif /* HAVE_XF86_VIDMODE */
 
 /* static int default_dotclock_vidmode; */
-static qboolean vidmode_active = qfalse;
+static bool_t vidmode_active = false;
 
-/* static qboolean	mlooking; */
+/* static bool_t	mlooking; */
 
-static qboolean mouse_active = qfalse;
-static qboolean dgamouse = qfalse;
+static bool_t mouse_active = false;
+static bool_t dgamouse = false;
 
 /* state struct passed in Init */
 static in_state_t	*in_state;
@@ -118,7 +118,7 @@ static cvar_t *m_forward;
 static cvar_t *freelook;
 
 /* stencilbuffer shadows */
-qboolean have_stencil = qfalse;
+bool_t have_stencil = false;
 
 /**
  * @brief
@@ -170,7 +170,7 @@ static void install_grabs(void)
 			ri.Con_Printf( PRINT_ALL, "Failed to detect XF86DGA Mouse\n" );
 			ri.Cvar_Set( "in_dgamouse", "0" );
 		} else {
-			dgamouse = qtrue;
+			dgamouse = true;
 			ri.Con_Printf( PRINT_DEVELOPER, "...using XF86DGA Mouse\n" );
 			XF86DGADirectVideo(dpy, DefaultScreen(dpy), XF86DGADirectMouse);
 			XWarpPointer(dpy, None, win, 0, 0, 0, 0, 0, 0);
@@ -186,7 +186,7 @@ static void install_grabs(void)
 	if (vid_grabmouse->value || vid_fullscreen->value)
 		XGrabKeyboard(dpy, win, False, GrabModeAsync, GrabModeAsync, CurrentTime);
 
-	mouse_active = qtrue;
+	mouse_active = true;
 
 	XSync(dpy, True);
 }
@@ -202,7 +202,7 @@ static void uninstall_grabs(void)
 
 #ifdef HAVE_XF86_DGA
 	if (dgamouse) {
-		dgamouse = qfalse;
+		dgamouse = false;
 		XF86DGADirectVideo(dpy, DefaultScreen(dpy), 0);
 	}
 #endif /* HAVE_XF86_DGA */
@@ -213,7 +213,7 @@ static void uninstall_grabs(void)
 	/* inviso cursor */
 	XUndefineCursor(dpy, win);
 
-	mouse_active = qfalse;
+	mouse_active = false;
 }
 
 /**
@@ -243,7 +243,7 @@ void RW_IN_Init(in_state_t *in_state_p)
 	m_side = ri.Cvar_Get ("m_side", "0.8", 0);
 
 	mx = my = 0.0;
-	mouse_avail = qtrue;
+	mouse_avail = true;
 }
 
 /**
@@ -252,10 +252,10 @@ void RW_IN_Init(in_state_t *in_state_p)
  */
 void RW_IN_Shutdown(void)
 {
-	RW_IN_Activate (qfalse);
+	RW_IN_Activate (false);
 
 	if (mouse_avail)
-		mouse_avail = qfalse;
+		mouse_avail = false;
 }
 
 /**
@@ -297,7 +297,7 @@ static void IN_DeactivateMouse( void )
 
 	if (mouse_active) {
 		uninstall_grabs();
-		mouse_active = qfalse;
+		mouse_active = false;
 	}
 }
 
@@ -314,7 +314,7 @@ static void IN_ActivateMouse( void )
 		mx = vid.width / 2;
 		my = vid.height / 2;
 		install_grabs();
-		mouse_active = qtrue;
+		mouse_active = true;
 	}
 }
 
@@ -332,7 +332,7 @@ void RW_IN_Frame (void)
  * @sa IN_ActivateMouse
  * @sa IN_DeactivateMouse
  */
-void RW_IN_Activate(qboolean active)
+void RW_IN_Activate(bool_t active)
 {
 	if (active || vidmode_active)
 		IN_ActivateMouse();
@@ -555,7 +555,7 @@ static void HandleEvents(void)
 {
 	XEvent event;
 	int b, middlex, middley;
-	qboolean dowarp = qfalse;
+	bool_t dowarp = false;
 
 	if (!dpy)
 		return;
@@ -608,11 +608,11 @@ static void HandleEvents(void)
 			else if (event.xbutton.button == 3)
 				b = 1;
 			else if (event.xbutton.button == 4)
-				in_state->Key_Event_fp (K_MWHEELUP, qtrue);
+				in_state->Key_Event_fp (K_MWHEELUP, true);
 			else if (event.xbutton.button == 5)
-				in_state->Key_Event_fp (K_MWHEELDOWN, qtrue);
+				in_state->Key_Event_fp (K_MWHEELDOWN, true);
 			if (b>=0 && in_state && in_state->Key_Event_fp)
-				in_state->Key_Event_fp (K_MOUSE1 + b, qtrue);
+				in_state->Key_Event_fp (K_MOUSE1 + b, true);
 			break;
 
 		case ButtonRelease:
@@ -624,11 +624,11 @@ static void HandleEvents(void)
 			else if (event.xbutton.button == 3)
 				b = 1;
 			else if (event.xbutton.button == 4)
-				in_state->Key_Event_fp (K_MWHEELUP, qfalse);
+				in_state->Key_Event_fp (K_MWHEELUP, false);
 			else if (event.xbutton.button == 5)
-				in_state->Key_Event_fp (K_MWHEELDOWN, qfalse);
+				in_state->Key_Event_fp (K_MWHEELDOWN, false);
 			if (b>=0 && in_state && in_state->Key_Event_fp)
-				in_state->Key_Event_fp (K_MOUSE1 + b, qfalse);
+				in_state->Key_Event_fp (K_MOUSE1 + b, false);
 			break;
 
 		case CreateNotify :
@@ -666,7 +666,7 @@ static void HandleEvents(void)
 
 	if (vid_grabmouse->modified)
 	{
-		vid_grabmouse->modified = qfalse;
+		vid_grabmouse->modified = false;
 		if ( ! vid_grabmouse->value )
 		{
 			XUngrabPointer(dpy, CurrentTime);
@@ -713,13 +713,13 @@ void KBD_Close(void)
 {
 }
 
-qboolean GLimp_InitGL (void);
+bool_t GLimp_InitGL (void);
 
 /**
  * @brief
  * @sa
  */
-rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen )
+rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, bool_t fullscreen )
 {
 	int width, height;
 	int attrib[] = {
@@ -789,11 +789,11 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	/* Get video mode list */
 	MajorVersion = MinorVersion = 0;
 	if (!XF86VidModeQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
-		vidmode_ext = qfalse;
+		vidmode_ext = false;
 	} else {
 		ri.Con_Printf(PRINT_ALL, "Using XFree86-VidModeExtension Version %d.%d\n",
 			MajorVersion, MinorVersion);
-		vidmode_ext = qtrue;
+		vidmode_ext = true;
 	}
 #endif /* HAVE_XF86_VIDMODE */
 
@@ -808,7 +808,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		return rserr_invalid_mode;
 	}
 
-	gl_state.hwgamma = qfalse;
+	gl_state.hwgamma = false;
 
 	/* do some pantsness */
 	if ( qglXGetConfig ) {
@@ -834,11 +834,11 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		if (!qglXGetConfig(dpy, visinfo, GLX_STENCIL_SIZE, &stencil_bits)) {
 			ri.Con_Printf(PRINT_ALL, "I: got %d bits of stencil\n", stencil_bits);
 			if (stencil_bits >= 1) {
-				have_stencil = qtrue;
+				have_stencil = true;
 			}
 		}
 	} else {
-		have_stencil = qtrue;
+		have_stencil = true;
 	}
 
 #ifdef HAVE_XF86_VIDMODE
@@ -872,19 +872,19 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 				XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
 				width = vidmodes[best_fit]->hdisplay;
 				height = vidmodes[best_fit]->vdisplay;
-				vidmode_active = qtrue;
+				vidmode_active = true;
 
 				if (XF86VidModeGetGamma(dpy, scrnum, &oldgamma)) {
-					gl_state.hwgamma = qtrue;
+					gl_state.hwgamma = true;
 					/* We can not reliably detect hardware gamma
 					   changes across software gamma calls, which
 					   can reset the flag, so change it anyway */
-					vid_gamma->modified = qtrue;
+					vid_gamma->modified = true;
 					ri.Con_Printf( PRINT_ALL, "Using hardware gamma\n");
 				}
 			} else {
-				fullscreen = qfalse;
-				vidmode_active = qfalse;
+				fullscreen = false;
+				vidmode_active = false;
 			}
 		}
 	}
@@ -951,8 +951,8 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 void GLimp_Shutdown( void )
 {
 	uninstall_grabs();
-	mouse_active = qfalse;
-	dgamouse = qfalse;
+	mouse_active = false;
+	dgamouse = false;
 
 	if (dpy) {
 		if (ctx)
@@ -1028,14 +1028,14 @@ void InitSig(void)
  * This routine is responsible for initializing the OS specific portions
  * of OpenGL.
  */
-qboolean GLimp_Init( void *hinstance, void *wndproc )
+bool_t GLimp_Init( void *hinstance, void *wndproc )
 {
 	InitSig();
 
 	/* set up our custom error handler for X failures */
 	XSetErrorHandler(&qXErrorHandler);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -1082,6 +1082,6 @@ void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned 
  * @brief
  * @sa
  */
-void GLimp_AppActivate( qboolean active )
+void GLimp_AppActivate( bool_t active )
 {
 }
