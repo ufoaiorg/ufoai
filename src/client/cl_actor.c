@@ -1098,6 +1098,11 @@ void CL_ActorDoShoot(sizebuf_t * sb)
 		S_StartLocalSound(fd->fireSound);
 	firstShot = qfalse;
 
+	if (fd->irgoggles) {
+		Com_DPrintf("Set rdflags for irgoggles\n");
+		cl.refdef.rdflags |= RDF_IRGOGGLES;
+	}
+
 	/* do actor related stuff */
 	if (!le)
 		return;
@@ -1294,6 +1299,9 @@ void CL_NextRound(void)
 
 	/* send endround */
 	MSG_WriteByte(&cls.netchan.message, clc_endround);
+
+	/* reset irgoggles flag */
+	cl.refdef.rdflags &= ~RDF_IRGOGGLES;
 
 	/* change back to remote view */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
