@@ -50,7 +50,7 @@ long long sgisnd_startframe;
 double sgisnd_frames_per_ns;
 long long sgisnd_lastframewritten = 0;
 
-qboolean SNDDMA_Init(void)
+bool_t SNDDMA_Init(void)
 {
     ALconfig	ac = NULL;
     ALpv	pvbuf[2];
@@ -65,7 +65,7 @@ qboolean SNDDMA_Init(void)
 	Com_Printf("Don't currently support %i-bit data.  Forcing 16-bit.\n",
 		   dma.samplebits);
 	dma.samplebits = 16;
-	Cvar_SetValue( "s_loadas8bit", qfalse );
+	Cvar_SetValue( "s_loadas8bit", false );
     }
 
     s_khz = Cvar_Get("s_khz", "0", CVAR_ARCHIVE);
@@ -137,7 +137,7 @@ qboolean SNDDMA_Init(void)
     dma.samplepos = 0;
 
     alFreeConfig( ac );
-    return qtrue;
+    return true;
 }
 
 

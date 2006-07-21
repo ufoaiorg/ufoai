@@ -38,13 +38,13 @@ typedef struct
 } loopback_t;
 
 
-cvar_t		*net_shownet;
-static cvar_t	*noudp;
-static cvar_t	*noipx;
+cvar_t *net_shownet;
+static cvar_t *noudp;
+static cvar_t *noipx;
 
-loopback_t	loopbacks[2];
-int			ip_sockets[2];
-int			ipx_sockets[2];
+loopback_t loopbacks[2];
+int ip_sockets[2];
+int ipx_sockets[2];
 
 char *NET_ErrorString (void);
 
@@ -84,14 +84,11 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr *s)
 
 void SockadrToNetadr (struct sockaddr *s, netadr_t *a)
 {
-	if (s->sa_family == AF_INET)
-	{
+	if (s->sa_family == AF_INET) {
 		a->type = NA_IP;
 		*(int *)&a->ip = ((struct sockaddr_in *)s)->sin_addr.s_addr;
 		a->port = ((struct sockaddr_in *)s)->sin_port;
-	}
-	else if (s->sa_family == AF_IPX)
-	{
+	} else if (s->sa_family == AF_IPX) {
 		a->type = NA_IPX;
 		memcpy(&a->ipx[0], ((struct sockaddr_ipx *)s)->sa_netnum, 4);
 		memcpy(&a->ipx[4], ((struct sockaddr_ipx *)s)->sa_nodenum, 6);
@@ -100,30 +97,29 @@ void SockadrToNetadr (struct sockaddr *s, netadr_t *a)
 }
 
 
-qboolean NET_CompareAdr (netadr_t a, netadr_t b)
+bool_t NET_CompareAdr (netadr_t a, netadr_t b)
 {
 	if (a.type != b.type)
-		return qfalse;
+		return false;
 
 	if (a.type == NA_LOOPBACK)
-		return qtrue;
+		return true;
 
-	if (a.type == NA_IP)
-	{
+	if (a.type == NA_IP) {
 		if (a.ip[0] == b.ip[0] && a.ip[1] == b.ip[1] && a.ip[2] == b.ip[2] && a.ip[3] == b.ip[3] && a.port == b.port)
-			return qtrue;
-		return qfalse;
+			return true;
+		return false;
 	}
 
 	if (a.type == NA_IPX)
 	{
 		if ((memcmp(a.ipx, b.ipx, 10) == 0) && a.port == b.port)
-			return qtrue;
-		return qfalse;
+			return true;
+		return false;
 	}
 	
 	/* no case matched, defaulting to false */
-	return qfalse;
+	return false;
 }
 
 /*
@@ -133,30 +129,30 @@ NET_CompareBaseAdr
 Compares without the port
 ===================
 */
-qboolean NET_CompareBaseAdr (netadr_t a, netadr_t b)
+bool_t NET_CompareBaseAdr (netadr_t a, netadr_t b)
 {
 	if (a.type != b.type)
-		return qfalse;
+		return false;
 
 	if (a.type == NA_LOOPBACK)
-		return qtrue;
+		return true;
 
 	if (a.type == NA_IP)
 	{
 		if (a.ip[0] == b.ip[0] && a.ip[1] == b.ip[1] && a.ip[2] == b.ip[2] && a.ip[3] == b.ip[3])
-			return qtrue;
-		return qfalse;
+			return true;
+		return false;
 	}
 
 	if (a.type == NA_IPX)
 	{
 		if ((memcmp(a.ipx, b.ipx, 10) == 0))
-			return qtrue;
-		return qfalse;
+			return true;
+		return false;
 	}
 
 	/* no case matched, defaulting to false */
-	return qfalse;
+	return false;
 }
 
 char *NET_AdrToString (netadr_t a)
@@ -191,7 +187,7 @@ idnewt:28000
 	sscanf (copy, "%x", &val);	\
 	((struct sockaddr_ipx *)sadr)->dest = val
 
-qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
+bool_t NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 {
 	struct hostent	*h;
 	char	*colon;
@@ -244,7 +240,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 		}
 	}
 	
-	return qtrue;
+	return true;
 }
 
 #undef DO
@@ -260,7 +256,7 @@ idnewt:28000
 192.246.40.70:28000
 =============
 */
-qboolean NET_StringToAdr (char *s, netadr_t *a)
+bool_t NET_StringToAdr (char *s, netadr_t *a)
 {
 	struct sockaddr sadr;
 	
@@ -268,19 +264,19 @@ qboolean NET_StringToAdr (char *s, netadr_t *a)
 	{
 		memset (a, 0, sizeof(*a));
 		a->type = NA_LOOPBACK;
-		return qtrue;
+		return true;
 	}
 
 	if (!NET_StringToSockaddr (s, &sadr))
-		return qfalse;
+		return false;
 	
 	SockadrToNetadr (&sadr, a);
 
-	return qtrue;
+	return true;
 }
 
 
-qboolean NET_IsLocalAddress (netadr_t adr)
+bool_t NET_IsLocalAddress (netadr_t adr)
 {
 	return adr.type == NA_LOOPBACK;
 }
@@ -293,7 +289,7 @@ LOOPBACK BUFFERS FOR LOCAL PLAYER
 =============================================================================
 */
 
-qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
+bool_t NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int		i;
 	loopback_t	*loop;
@@ -304,7 +300,7 @@ qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_me
 		loop->get = loop->send - MAX_LOOPBACK;
 
 	if (loop->get >= loop->send)
-		return qfalse;
+		return false;
 
 	i = loop->get & (MAX_LOOPBACK-1);
 	loop->get++;
@@ -313,7 +309,7 @@ qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_me
 	net_message->cursize = loop->msgs[i].datalen;
 	memset (net_from, 0, sizeof(*net_from));
 	net_from->type = NA_LOOPBACK;
-	return qtrue;
+	return true;
 
 }
 
@@ -334,7 +330,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 /*============================================================================= */
 
-qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
+bool_t NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int 	ret;
 	struct sockaddr from;
@@ -344,7 +340,7 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 	int		err;
 
 	if (NET_GetLoopPacket (sock, net_from, net_message))
-		return qtrue;
+		return true;
 
 	for (protocol = 0 ; protocol < 2 ; protocol++)
 	{
@@ -390,10 +386,10 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 		}
 
 		net_message->cursize = ret;
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /*============================================================================= */
@@ -472,7 +468,7 @@ int NET_IPSocket (char *net_interface, int port)
 {
 	int					newsocket;
 	struct sockaddr_in	address;
-	u_long			_true = qtrue;
+	u_long			_true = true;
 	int					i = 1;
 	int					err;
 
@@ -580,13 +576,12 @@ IPX_Socket
 */
 int NET_IPXSocket (int port)
 {
-	int					newsocket;
-	struct sockaddr_ipx	address;
-	u_long				_true = qtrue;
-	int					err;
+	int newsocket;
+	struct sockaddr_ipx address;
+	u_long _true = true;
+	int err;
 
-	if ((newsocket = socket (PF_IPX, SOCK_DGRAM, NSPROTO_IPX)) == -1)
-	{
+	if ((newsocket = socket (PF_IPX, SOCK_DGRAM, NSPROTO_IPX)) == -1) {
 		err = WSAGetLastError();
 		if (err != WSAEAFNOSUPPORT)
 			Com_Printf ("WARNING: IPX_Socket: socket: %s\n", NET_ErrorString());
@@ -679,10 +674,10 @@ NET_Config
 A single player game will only use the loopback code
 ====================
 */
-void	NET_Config (qboolean multiplayer)
+void	NET_Config (bool_t multiplayer)
 {
 	int		i;
-	static	qboolean	old_config;
+	static	bool_t	old_config;
 
 	if (old_config == multiplayer)
 		return;
@@ -779,7 +774,7 @@ NET_Shutdown
 */
 void	NET_Shutdown (void)
 {
-	NET_Config (qfalse);	/* close sockets */
+	NET_Config (false);	/* close sockets */
 
 	WSACleanup ();
 }

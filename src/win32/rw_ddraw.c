@@ -39,7 +39,7 @@ static const char *DDrawError( int code );
 **
 ** Builds our DDRAW stuff
 */
-qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
+bool_t DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
 {
 	HRESULT ddrval;
 	DDSURFACEDESC ddsd;
@@ -53,29 +53,25 @@ qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
 	ri.Con_Printf( PRINT_ALL, "Initializing DirectDraw\n");
 
 
-	for ( i = 0; i < 256; i++ )
-	{
-		palentries[i].peRed		= ( d_8to24table[i] >> 0  ) & 0xff;
-		palentries[i].peGreen	= ( d_8to24table[i] >> 8  ) & 0xff;
-		palentries[i].peBlue	= ( d_8to24table[i] >> 16 ) & 0xff;
+	for ( i = 0; i < 256; i++ ) {
+		palentries[i].peRed  = ( d_8to24table[i] >> 0  ) & 0xff;
+		palentries[i].peGreen= ( d_8to24table[i] >> 8  ) & 0xff;
+		palentries[i].peBlue = ( d_8to24table[i] >> 16 ) & 0xff;
 	}
 
 	/*
 	** load DLL and fetch pointer to entry point
 	*/
-	if ( !sww_state.hinstDDRAW )
-	{
+	if ( !sww_state.hinstDDRAW ) {
 		ri.Con_Printf( PRINT_ALL, "...loading DDRAW.DLL: ");
-		if ( ( sww_state.hinstDDRAW = LoadLibrary( "ddraw.dll" ) ) == NULL )
-		{
+		if ( ( sww_state.hinstDDRAW = LoadLibrary( "ddraw.dll" ) ) == NULL ) {
 			ri.Con_Printf( PRINT_ALL, "failed\n" );
 			goto fail;
 		}
 		ri.Con_Printf( PRINT_ALL, "ok\n" );
 	}
 
-	if ( ( QDirectDrawCreate = ( HRESULT (WINAPI *)( GUID FAR *, LPDIRECTDRAW FAR *, IUnknown FAR * ) ) GetProcAddress( sww_state.hinstDDRAW, "DirectDrawCreate" ) ) == NULL )
-	{
+	if ( ( QDirectDrawCreate = ( HRESULT (WINAPI *)( GUID FAR *, LPDIRECTDRAW FAR *, IUnknown FAR * ) ) GetProcAddress( sww_state.hinstDDRAW, "DirectDrawCreate" ) ) == NULL ) {
 		ri.Con_Printf( PRINT_ALL, "*** DirectDrawCreate == NULL ***\n" );
 		goto fail;
 	}
@@ -84,8 +80,7 @@ qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
 	** create the direct draw object
 	*/
 	ri.Con_Printf( PRINT_ALL, "...creating DirectDraw object: ");
-	if ( ( ddrval = QDirectDrawCreate( NULL, &sww_state.lpDirectDraw, NULL ) ) != DD_OK )
-	{
+	if ( ( ddrval = QDirectDrawCreate( NULL, &sww_state.lpDirectDraw, NULL ) ) != DD_OK ) {
 		ri.Con_Printf( PRINT_ALL, "failed - %s\n", DDrawError( ddrval ) );
 		goto fail;
 	}
@@ -94,12 +89,11 @@ qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
 	/*
 	** see if linear modes exist first
 	*/
-	sww_state.modex = qfalse;
+	sww_state.modex = false;
 
 	ri.Con_Printf( PRINT_ALL, "...setting exclusive mode: ");
 	if ( ( ddrval = sww_state.lpDirectDraw->lpVtbl->SetCooperativeLevel( sww_state.lpDirectDraw, sww_state.hWnd,
-		DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN ) ) != DD_OK )
-	{
+		DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN ) ) != DD_OK ) {
 		ri.Con_Printf( PRINT_ALL, "failed - %s\n",DDrawError (ddrval) );
 		goto fail;
 	}
@@ -111,14 +105,11 @@ qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
 	ri.Con_Printf( PRINT_ALL, "...finding display mode\n" );
 	ri.Con_Printf( PRINT_ALL, "...setting linear mode: " );
 	if ( ( ddrval = sww_state.lpDirectDraw->lpVtbl->SetDisplayMode( sww_state.lpDirectDraw, vid.width, vid.height, 8 ) ) == DD_OK )
-	{
 		ri.Con_Printf( PRINT_ALL, "ok\n" );
-	}
 	/*
 	** if no linear mode found, go for modex if we're trying 320x240
 	*/
-	else if ( ( sw_mode->value == 0 ) && sw_allow_modex->value )
-	{
+	else if ( ( sw_mode->value == 0 ) && sw_allow_modex->value ) {
 		ri.Con_Printf( PRINT_ALL, "failed\n" );
 		ri.Con_Printf( PRINT_ALL, "...attempting ModeX 320x240: ");
 
@@ -131,8 +122,7 @@ qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
 		** set exclusive mode
 		*/
 		if ( ( ddrval = sww_state.lpDirectDraw->lpVtbl->SetCooperativeLevel( sww_state.lpDirectDraw, sww_state.hWnd,
-			DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN | DDSCL_NOWINDOWCHANGES | DDSCL_ALLOWMODEX ) ) != DD_OK )
-		{
+			DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN | DDSCL_NOWINDOWCHANGES | DDSCL_ALLOWMODEX ) ) != DD_OK ) {
 			ri.Con_Printf( PRINT_ALL, "failed SCL - %s\n",DDrawError (ddrval) );
 			goto fail;
 		}
@@ -140,17 +130,14 @@ qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
 		/*
 		** change our display mode
 		*/
-		if ( ( ddrval = sww_state.lpDirectDraw->lpVtbl->SetDisplayMode( sww_state.lpDirectDraw, vid.width, vid.height, 8 ) ) != DD_OK )
-		{
+		if ( ( ddrval = sww_state.lpDirectDraw->lpVtbl->SetDisplayMode( sww_state.lpDirectDraw, vid.width, vid.height, 8 ) ) != DD_OK ) {
 			ri.Con_Printf( PRINT_ALL, "failed SDM - %s\n", DDrawError( ddrval ) );
 			goto fail;
 		}
 		ri.Con_Printf( PRINT_ALL, "ok\n" );
 
-		sww_state.modex = qtrue;
-	}
-	else
-	{
+		sww_state.modex = true;
+	} else {
 		ri.Con_Printf( PRINT_ALL, "failed\n" );
 		goto fail;
 	}
@@ -165,8 +152,7 @@ qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
 	ddsd.dwBackBufferCount = 1;
 
 	ri.Con_Printf( PRINT_ALL, "...creating front buffer: ");
-	if ( ( ddrval = sww_state.lpDirectDraw->lpVtbl->CreateSurface( sww_state.lpDirectDraw, &ddsd, &sww_state.lpddsFrontBuffer, NULL ) ) != DD_OK )
-	{
+	if ( ( ddrval = sww_state.lpDirectDraw->lpVtbl->CreateSurface( sww_state.lpDirectDraw, &ddsd, &sww_state.lpddsFrontBuffer, NULL ) ) != DD_OK ) {
 		ri.Con_Printf( PRINT_ALL, "failed - %s\n", DDrawError( ddrval ) );
 		goto fail;
 	}
@@ -185,8 +171,7 @@ qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
 	ddsd.ddsCaps.dwCaps = DDSCAPS_BACKBUFFER;
 
 	ri.Con_Printf( PRINT_ALL, "...creating back buffer: " );
-	if ( ( ddrval = sww_state.lpddsFrontBuffer->lpVtbl->GetAttachedSurface( sww_state.lpddsFrontBuffer, &ddsd.ddsCaps, &sww_state.lpddsBackBuffer ) ) != DD_OK )
-	{
+	if ( ( ddrval = sww_state.lpddsFrontBuffer->lpVtbl->GetAttachedSurface( sww_state.lpddsFrontBuffer, &ddsd.ddsCaps, &sww_state.lpddsBackBuffer ) ) != DD_OK ) {
 		ri.Con_Printf( PRINT_ALL, "failed - %s\n", DDrawError( ddrval ) );
 		goto fail;
 	}
@@ -203,8 +188,7 @@ qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
 	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
 
 	ri.Con_Printf( PRINT_ALL, "...creating offscreen buffer: " );
-	if ( ( ddrval = sww_state.lpDirectDraw->lpVtbl->CreateSurface( sww_state.lpDirectDraw, &ddsd, &sww_state.lpddsOffScreenBuffer, NULL ) ) != DD_OK )
-	{
+	if ( ( ddrval = sww_state.lpDirectDraw->lpVtbl->CreateSurface( sww_state.lpDirectDraw, &ddsd, &sww_state.lpddsOffScreenBuffer, NULL ) ) != DD_OK ) {
 		ri.Con_Printf( PRINT_ALL, "failed - %s\n", DDrawError( ddrval ) );
 		goto fail;
 	}
@@ -215,16 +199,14 @@ qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
 	*/
 	ri.Con_Printf( PRINT_ALL, "...creating palette: " );
 	if ( ( ddrval = sww_state.lpDirectDraw->lpVtbl->CreatePalette( sww_state.lpDirectDraw, DDPCAPS_8BIT | DDPCAPS_ALLOW256, palentries,
-		&sww_state.lpddpPalette, NULL ) ) != DD_OK )
-	{
+		&sww_state.lpddpPalette, NULL ) ) != DD_OK ) {
 		ri.Con_Printf( PRINT_ALL, "failed - %s\n", DDrawError( ddrval ) );
 		goto fail;
 	}
 	ri.Con_Printf( PRINT_ALL, "ok\n" );
 
 	ri.Con_Printf( PRINT_ALL, "...setting palette: " );
-	if ( ( ddrval = sww_state.lpddsFrontBuffer->lpVtbl->SetPalette( sww_state.lpddsFrontBuffer, sww_state.lpddpPalette ) ) != DD_OK )
-	{
+	if ( ( ddrval = sww_state.lpddsFrontBuffer->lpVtbl->SetPalette( sww_state.lpddsFrontBuffer, sww_state.lpddpPalette ) ) != DD_OK ) {
 		ri.Con_Printf( PRINT_ALL, "failed - %s\n", DDrawError( ddrval ) );
 		goto fail;
 	}
@@ -239,8 +221,7 @@ qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
 	ddsd.dwSize = sizeof( ddsd );
 	
 	ri.Con_Printf( PRINT_ALL, "...locking backbuffer: " );
-	if ( ( ddrval = sww_state.lpddsOffScreenBuffer->lpVtbl->Lock( sww_state.lpddsOffScreenBuffer, NULL, &ddsd, DDLOCK_WAIT, NULL ) ) != DD_OK )
-	{
+	if ( ( ddrval = sww_state.lpddsOffScreenBuffer->lpVtbl->Lock( sww_state.lpddsOffScreenBuffer, NULL, &ddsd, DDLOCK_WAIT, NULL ) ) != DD_OK ) {
 		ri.Con_Printf( PRINT_ALL, "failed - %s\n", DDrawError( ddrval ) );
 		goto fail;
 	}
@@ -250,18 +231,16 @@ qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch )
 	*ppitch   = ddsd.lPitch;
 
 	for ( i = 0; i < vid.height; i++ )
-	{
 		memset( *ppbuffer + i * *ppitch, 0, *ppitch );
-	}
 
-	sww_state.palettized = qtrue;
+	sww_state.palettized = true;
 
-	return qtrue;
+	return true;
 fail:
 	ri.Con_Printf( PRINT_ALL, "*** DDraw init failure ***\n" );
 
 	DDRAW_Shutdown();
-	return qfalse;
+	return false;
 }
 
 /*

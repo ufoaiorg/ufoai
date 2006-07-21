@@ -124,32 +124,31 @@ char *strlwr (char *s)
 
 /*============================================ */
 
-static	char	findbase[MAX_OSPATH];
-static	char	findpath[MAX_OSPATH];
-static	char	findpattern[MAX_OSPATH];
-static	DIR		*fdir;
+static	char findbase[MAX_OSPATH];
+static	char findpath[MAX_OSPATH];
+static	char findpattern[MAX_OSPATH];
+static	DIR *fdir;
 
-static qboolean CompareAttributes(char *path, char *name,
-	unsigned musthave, unsigned canthave )
+static bool_t CompareAttributes(char *path, char *name, unsigned musthave, unsigned canthave )
 {
 	struct stat st;
 	char fn[MAX_OSPATH];
 
 	/* . and .. never match */
 	if (Q_strcmp(name, ".") == 0 || Q_strcmp(name, "..") == 0)
-		return qfalse;
+		return false;
 
 	Com_sprintf(fn, MAX_OSPATH, "%s/%s", path, name);
 	if (stat(fn, &st) == -1)
-		return qfalse; /* shouldn't happen */
+		return false; /* shouldn't happen */
 
 	if ( ( st.st_mode & S_IFDIR ) && ( canthave & SFF_SUBDIR ) )
-		return qfalse;
+		return false;
 
 	if ( ( musthave & SFF_SUBDIR ) && !( st.st_mode & S_IFDIR ) )
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)

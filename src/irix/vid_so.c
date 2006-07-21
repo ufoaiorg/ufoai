@@ -51,13 +51,13 @@ cvar_t		*vid_grabmouse;
 /* Global variables used internally by this module */
 viddef_t	viddef;				/* global video state; used by other modules */
 void		*reflib_library;		/* Handle to refresh DLL */
-qboolean	reflib_active = 0;
+bool_t reflib_active = 0;
 
 #define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[0] ) )
 
 /** KEYBOARD **************************************************************/
 
-void Do_Key_Event(int key, qboolean down);
+void Do_Key_Event(int key, bool_t down);
 
 void (*KBD_Update_fp)(void);
 void (*KBD_Init_fp)(Key_Event_fp_t fp);
@@ -69,7 +69,7 @@ in_state_t in_state;
 
 void (*RW_IN_Init_fp)(in_state_t *in_state_p);
 void (*RW_IN_Shutdown_fp)(void);
-void (*RW_IN_Activate_fp)(qboolean active);
+void (*RW_IN_Activate_fp)(bool_t active);
 void (*RW_IN_Commands_fp)(void);
 void (*RW_IN_Move_fp)(usercmd_t *cmd);
 void (*RW_IN_Frame_fp)(void);
@@ -89,7 +89,7 @@ void VID_Printf (int print_level, char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
-	static qboolean	inupdate;
+	static bool_t inupdate;
 
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
@@ -105,7 +105,7 @@ void VID_Error (int err_level, char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
-	static qboolean	inupdate;
+	static bool_t inupdate;
 
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
@@ -127,7 +127,7 @@ cause the entire video mode and refresh DLL to be reset on the next frame.
 */
 void VID_Restart_f (void)
 {
-	vid_ref->modified = qtrue;
+	vid_ref->modified = true;
 }
 
 /*
@@ -158,15 +158,15 @@ vidmode_t vid_modes[] =
 	{ 1400, 1050, 20 }
 };
 
-qboolean VID_GetModeInfo( int *width, int *height, int mode )
+bool_t VID_GetModeInfo( int *width, int *height, int mode )
 {
 	if ( mode < 0 || mode >= VID_NUM_MODES )
-		return qfalse;
+		return false;
 
 	*width  = vid_modes[mode].width;
 	*height = vid_modes[mode].height;
 
-	return qtrue;
+	return true;
 }
 
 /*
@@ -205,7 +205,7 @@ void VID_FreeReflib (void)
 
 	memset (&re, 0, sizeof(re));
 	reflib_library = NULL;
-	reflib_active  = qfalse;
+	reflib_active  = false;
 }
 
 /*
@@ -213,7 +213,7 @@ void VID_FreeReflib (void)
 VID_LoadRefresh
 ==============
 */
-qboolean VID_LoadRefresh( char *name )
+bool_t VID_LoadRefresh( char *name )
 {
 	refimport_t	ri;
 #ifndef REF_HARD_LINKED
@@ -225,10 +225,9 @@ qboolean VID_LoadRefresh( char *name )
 	FILE *fp;
 	char	*path;
 	char	curpath[MAX_OSPATH];
-	qboolean	restart = qfalse;
+	bool_t	restart = false;
 
-	if ( reflib_active )
-	{
+	if ( reflib_active ) {
 		if (KBD_Close_fp)
 			KBD_Close_fp();
 		if (RW_IN_Shutdown_fp)
@@ -237,7 +236,7 @@ qboolean VID_LoadRefresh( char *name )
 		RW_IN_Shutdown_fp = NULL;
 		re.Shutdown();
 		VID_FreeReflib ();
-		restart = qtrue;
+		restart = true;
 	}
 
 #ifndef REF_HARD_LINKED
@@ -247,8 +246,7 @@ qboolean VID_LoadRefresh( char *name )
 
 	/* now run through the search paths */
 	path = NULL;
-	while (1)
-	{
+	while (1) {
 		path = FS_NextPath (path);
 		if (!path)
 			return NULL;		/* couldn't find one anywhere */
@@ -256,8 +254,7 @@ qboolean VID_LoadRefresh( char *name )
 		Com_Printf ("Trying to load library (%s)\n", fn);
 
 		reflib_library = dlopen( fn, RTLD_NOW );
-		if (reflib_library)
-		{
+		if (reflib_library) {
 			Com_DPrintf ("LoadLibrary (%s)\n",name);
 			break;
 		}
@@ -293,8 +290,7 @@ qboolean VID_LoadRefresh( char *name )
 #endif
 	re = GetRefAPI( ri );
 
-	if (re.api_version != API_VERSION)
-	{
+	if (re.api_version != API_VERSION) {
 		VID_FreeReflib ();
 		Com_Error (ERR_FATAL, "%s has incompatible api_version", name);
 	}
@@ -334,7 +330,7 @@ qboolean VID_LoadRefresh( char *name )
 	{
 		re.Shutdown();
 		VID_FreeReflib ();
-		return qfalse;
+		return false;
 	}
 
 	/* give up root now */
@@ -366,8 +362,8 @@ qboolean VID_LoadRefresh( char *name )
 		CL_InitFonts();
 
 	Com_Printf( "------------------------------------\n");
-	reflib_active = qtrue;
-	return qtrue;
+	reflib_active = true;
+	return true;
 }
 
 /*
@@ -385,27 +381,23 @@ void VID_CheckChanges (void)
 	cvar_t *sw_mode;
 
 	if ( vid_ref->modified )
-	{
 		S_StopAllSounds();
-	}
 
-	while (vid_ref->modified)
-	{
+	while (vid_ref->modified) {
 		/*
 		** refresh has changed
 		*/
-		vid_ref->modified = qfalse;
-		vid_fullscreen->modified = qtrue;
-		cl.refresh_prepped = qfalse;
-		cls.disable_screen = qtrue;
+		vid_ref->modified = false;
+		vid_fullscreen->modified = true;
+		cl.refresh_prepped = false;
+		cls.disable_screen = true;
 
 		sprintf( name, "ref_%s.so", vid_ref->string );
-		if ( !VID_LoadRefresh( name ) )
-		{
+		if ( !VID_LoadRefresh( name ) ) {
 			Cmd_ExecuteString( "condump gl_debug" );
 			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
 		}
-		cls.disable_screen = qfalse;
+		cls.disable_screen = false;
 	}
 
 }
@@ -489,13 +481,13 @@ void IN_Frame (void)
 		RW_IN_Frame_fp();
 }
 
-void IN_Activate (qboolean active)
+void IN_Activate (bool_t active)
 {
 	if (RW_IN_Activate_fp)
 		RW_IN_Activate_fp(active);
 }
 
-void Do_Key_Event(int key, qboolean down)
+void Do_Key_Event(int key, bool_t down)
 {
 	Key_Event(key, down, Sys_Milliseconds());
 }

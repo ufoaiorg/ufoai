@@ -2978,7 +2978,7 @@ void QGL_Shutdown( void )
 ** might be.
 ** 
 */
-qboolean QGL_Init( const char *dllname )
+bool_t QGL_Init( const char *dllname )
 {
 	qglAccum                     = dllAccum = glAccum;
 	qglAlphaFunc                 = dllAlphaFunc = glAlphaFunc;
@@ -3322,10 +3322,10 @@ qboolean QGL_Init( const char *dllname )
 	qglSelectTextureSGIS = 0;
 	qglMTexCoord2fSGIS = 0;
 
-	return qtrue;
+	return true;
 }
 
-void GLimp_EnableLogging( qboolean enable )
+void GLimp_EnableLogging( bool_t enable )
 {
 	if ( enable ) {
 		if ( !log_fp ) {

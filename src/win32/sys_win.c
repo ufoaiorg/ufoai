@@ -39,23 +39,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MINIMUM_WIN_MEMORY	0x0a00000
 #define MAXIMUM_WIN_MEMORY	0x1000000
 
-qboolean s_win95;
+bool_t s_win95;
 
-int			starttime;
-qboolean	ActiveApp;
-qboolean	Minimized;
+int starttime;
+bool_t ActiveApp;
+bool_t Minimized;
 
-static HANDLE		hinput, houtput;
+static HANDLE hinput, houtput;
 
-unsigned	sys_msg_time;
-unsigned	sys_frame_time;
+unsigned sys_msg_time;
+unsigned sys_frame_time;
 
 
-static HANDLE		qwclsemaphore;
+static HANDLE qwclsemaphore;
 
 #define	MAX_NUM_ARGVS	128
-int			argc;
-char		*argv[MAX_NUM_ARGVS];
+int argc;
+char *argv[MAX_NUM_ARGVS];
 
 
 /*
@@ -199,7 +199,7 @@ void Sys_Init (void)
 	/* front end can tell if it is alive */
 
 	/* mutex will fail if semephore already exists */
-    qwclsemaphore = CreateMutex(
+	qwclsemaphore = CreateMutex(
         NULL,         /* Security attributes */
         0,            /* owner       */
         "qwcl"); /* Semaphore name      */
@@ -207,7 +207,7 @@ void Sys_Init (void)
 		Sys_Error ("QWCL is already running on this system");
 	CloseHandle (qwclsemaphore);
 
-    qwclsemaphore = CreateSemaphore(
+	qwclsemaphore = CreateSemaphore(
         NULL,         /* Security attributes */
         0,            /* Initial count       */
         1,            /* Maximum count       */
@@ -226,7 +226,7 @@ void Sys_Init (void)
 	if (vinfo.dwPlatformId == VER_PLATFORM_WIN32s) /* win3.x with win32 extensions */
 		Sys_Error ("UFO: AI doesn't run on Win32s");
 	else if ( vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS ) /* win95, 98, me */
-		s_win95 = qtrue;
+		s_win95 = true;
 
 	Cvar_Get("sys_os", "win", 0);
 
@@ -556,8 +556,7 @@ void ParseCommandLine (LPSTR lpCmdLine)
 	argc = 1;
 	argv[0] = "exe";
 
-	while (*lpCmdLine && (argc < MAX_NUM_ARGVS))
-	{
+	while (*lpCmdLine && (argc < MAX_NUM_ARGVS)) {
 		while (*lpCmdLine && ((*lpCmdLine <= 32) || (*lpCmdLine > 126)))
 			lpCmdLine++;
 
@@ -588,9 +587,9 @@ HINSTANCE	global_hInstance;
 
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	MSG			msg;
-	int			time, oldtime, newtime;
-	float		timescale;
+	MSG msg;
+	int time, oldtime, newtime;
+	float timescale;
 
 	/* previous instances do not exist in Win32 */
 	if (hPrevInstance)

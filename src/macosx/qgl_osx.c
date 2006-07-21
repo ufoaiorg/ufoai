@@ -3521,7 +3521,7 @@ static void APIENTRY qglBindAnisotropicTexture (GLenum theTarget, GLuint theText
 
 /*____________________________________________________________________________________qglEnableAnisotropicTexture() */
 
-void	qglEnableAnisotropicTexture (qboolean theState)
+void	qglEnableAnisotropicTexture (bool_t theState)
 {
     if (theState)
     {
@@ -3576,7 +3576,7 @@ void *	qwglGetProcAddress (char *theSymbol)
 
 /*_______________________________________________________________________________________________QGL_SafeTexImage() */
 
-qboolean	QGL_SafeTexImage (GLenum theTarget, GLint theLevel, GLenum theInternalFormat, GLsizei theWidth,
+bool_t	QGL_SafeTexImage (GLenum theTarget, GLint theLevel, GLenum theInternalFormat, GLsizei theWidth,
                                   GLsizei theHeight, GLsizei theDepth, GLint theBorder, GLenum theFormat,
                                   GLenum theType)
 {
@@ -3609,7 +3609,7 @@ qboolean	QGL_SafeTexImage (GLenum theTarget, GLint theLevel, GLenum theInternalF
 /*                                theFormat, theType, NULL);  */
 /*            break; */
         default:
-            return (qfalse);
+            return (false);
     }
     
     myError = glGetError ();
@@ -3624,10 +3624,10 @@ qboolean	QGL_SafeTexImage (GLenum theTarget, GLint theLevel, GLenum theInternalF
                                   "Please choose a lower resolution and/or depth.\n"
                                   "Reverting to the software refresh lib!\n");
         ri.Cvar_Set ("vid_ref", "soft");
-        return (qfalse);
+        return (false);
     }
     
-    return (qtrue);
+    return (true);
 }
 
 /*_____________________________________________________________________________________________QGL_SafeTexImage1D() */
@@ -3635,7 +3635,7 @@ qboolean	QGL_SafeTexImage (GLenum theTarget, GLint theLevel, GLenum theInternalF
 void	QGL_SafeTexImage1D (GLenum theTarget, GLint theLevel, GLenum theInternalFormat, GLsizei theWidth,
                             GLint theBorder, GLenum theFormat, GLenum theType, const GLvoid *thePixels)
 {
-    qboolean	mySuccess = QGL_SafeTexImage (theTarget, theLevel, theInternalFormat, theWidth, 0, 0, theBorder,
+    bool_t	mySuccess = QGL_SafeTexImage (theTarget, theLevel, theInternalFormat, theWidth, 0, 0, theBorder,
                                               theFormat, theType);
                                   
     if (mySuccess)
@@ -3651,7 +3651,7 @@ void	QGL_SafeTexImage2D (GLenum theTarget, GLint theLevel, GLenum theInternalFor
                             GLsizei theHeight, GLint theBorder, GLenum theFormat, GLenum theType,
                             const GLvoid *thePixels)
 {
-    qboolean	mySuccess = QGL_SafeTexImage (theTarget, theLevel, theInternalFormat, theWidth, theHeight, 0,
+    bool_t	mySuccess = QGL_SafeTexImage (theTarget, theLevel, theInternalFormat, theWidth, theHeight, 0,
                                               theBorder, theFormat, theType);
                                   
     if (mySuccess)
@@ -4019,7 +4019,7 @@ void	QGL_Shutdown (void)
 
 /*_______________________________________________________________________________________________________QGL_Init() */
 
-qboolean QGL_Init (const char *dllname)
+bool_t QGL_Init (const char *dllname)
 {
     qglAccum                     = dllAccum 			= GPA ("glAccum");
     qglAlphaFunc                 = dllAlphaFunc 		= GPA ("glAlphaFunc");
@@ -4373,7 +4373,7 @@ qboolean QGL_Init (const char *dllname)
     qglPNTrianglesiATIX 	 = NULL;
     qglPNTrianglesfATIX 	 = NULL;
     
-    return (qtrue);
+    return (true);
 }
 
 /*
@@ -4388,7 +4388,7 @@ void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned 
 
 /*____________________________________________________________________________________________GLimp_EnableLogging() */
 
-void GLimp_EnableLogging (qboolean theEnable)
+void GLimp_EnableLogging (bool_t theEnable)
 {
     if (theEnable)
     {

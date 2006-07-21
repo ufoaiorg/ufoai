@@ -137,27 +137,27 @@ void Sys_Mkdir (char *thePath)
 
 /*__________________________________________________________________________________________Sys_CompareAttributes() */
 
-static qboolean Sys_CompareAttributes (char *thePath, char *theName, unsigned theMustHave, unsigned theCantHave)
+static bool_t Sys_CompareAttributes (char *thePath, char *theName, unsigned theMustHave, unsigned theCantHave)
 {
     struct stat myStat;
     char 	myFileName[MAX_OSPATH];
 
     /* . and .. never match */
     if (Q_strcmp (theName, ".") == 0 || Q_strcmp (theName, "..") == 0)
-        return qfalse;
+        return false;
 
     Com_sprintf(myFileName, MAX_OSPATH, "%s/%s", thePath, theName);
     
     if (stat (myFileName, &myStat) == -1)
-        return (qfalse);
+        return (false);
     
     if ((myStat.st_mode & S_IFDIR) && (theCantHave & SFF_SUBDIR))
-        return (qfalse);
+        return (false);
 
     if ((theMustHave & SFF_SUBDIR) && !(myStat.st_mode & S_IFDIR))
-        return (qfalse);
+        return (false);
 
-    return (qtrue);
+    return (true);
 }
 
 /*__________________________________________________________________________________________________Sys_FindFirst() */

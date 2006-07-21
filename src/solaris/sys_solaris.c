@@ -45,7 +45,7 @@ cvar_t *nostdout;
 
 unsigned	sys_frame_time;
 
-qboolean stdin_active = qtrue;
+bool_t stdin_active = true;
 
 /* ======================================================================= */
 /* General routines */
@@ -174,7 +174,7 @@ char *Sys_ConsoleInput(void)
 
 	len = read (0, text, sizeof(text));
 	if (len == 0) { /* eof! */
-		stdin_active = qfalse;
+		stdin_active = false;
 		return NULL;
 	}
 	if (len < 1)

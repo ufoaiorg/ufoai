@@ -45,10 +45,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t *nostdout;
 
-unsigned	sys_frame_time;
+unsigned sys_frame_time;
 
 uid_t saved_euid;
-qboolean stdin_active = qtrue;
+bool_t stdin_active = true;
 
 /* ======================================================================= */
 /* General routines */
@@ -177,7 +177,7 @@ char *Sys_ConsoleInput(void)
 
 	len = read (0, text, sizeof(text));
 	if (len == 0) { /* eof! */
-		stdin_active = qfalse;
+		stdin_active = false;
 		return NULL;
 	}
 

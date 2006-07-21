@@ -27,7 +27,7 @@ extern	unsigned	sys_msg_time;
 
 cvar_t	*in_mouse;
 
-qboolean	in_appactive;
+bool_t	in_appactive;
 
 /*
 ============================================================
@@ -40,22 +40,21 @@ qboolean	in_appactive;
 /* mouse variables */
 cvar_t	*m_filter;
 
-int			mouse_buttons;
-int			mouse_oldbuttonstate;
-POINT		current_pos;
-int			mouse_x, mouse_y, old_mouse_x, old_mouse_y, mx_accum, my_accum;
+int mouse_buttons;
+int mouse_oldbuttonstate;
+POINT current_pos;
+int mouse_x, mouse_y, old_mouse_x, old_mouse_y, mx_accum, my_accum;
+int old_x, old_y;
 
-int			old_x, old_y;
+bool_t mouseactive;	/* false when not focus app */
 
-qboolean	mouseactive;	/* false when not focus app */
+bool_t restore_spi;
+bool_t mouseinitialized;
+int originalmouseparms[3], newmouseparms[3] = {0, 0, 1};
+bool_t mouseparmsvalid;
 
-qboolean	restore_spi;
-qboolean	mouseinitialized;
-int		originalmouseparms[3], newmouseparms[3] = {0, 0, 1};
-qboolean	mouseparmsvalid;
-
-int			window_center_x, window_center_y;
-RECT		window_rect;
+int window_center_x, window_center_y;
+RECT window_rect;
 
 
 /*
@@ -67,19 +66,18 @@ Called when the window gains focus or changes in some way
 */
 void IN_ActivateMouse (void)
 {
-	int		width, height;
+	int width, height;
 
 	if (!mouseinitialized)
 		return;
-	if (!in_mouse->value)
-	{
-		mouseactive = qfalse;
+	if (!in_mouse->value) {
+		mouseactive = false;
 		return;
 	}
 	if (mouseactive)
 		return;
 
-	mouseactive = qtrue;
+	mouseactive = true;
 
 	if (mouseparmsvalid)
 		restore_spi = SystemParametersInfo (SPI_SETMOUSE, 0, newmouseparms, 0);
@@ -131,7 +129,7 @@ void IN_DeactivateMouse (void)
 	if (restore_spi)
 		SystemParametersInfo (SPI_SETMOUSE, 0, originalmouseparms, 0);
 
-	mouseactive = qfalse;
+	mouseactive = false;
 
 	ClipCursor (NULL);
 #if 0
@@ -156,7 +154,7 @@ void IN_StartupMouse (void)
 	if ( !cv->value )
 		return;
 
-	mouseinitialized = qtrue;
+	mouseinitialized = true;
 	mouseparmsvalid = SystemParametersInfo (SPI_GETMOUSE, 0, originalmouseparms, 0);
 	mouse_buttons = 3;
 }
@@ -174,19 +172,12 @@ void IN_MouseEvent (int mstate)
 		return;
 
 	/* perform button actions */
-	for (i=0 ; i<mouse_buttons ; i++)
-	{
-		if ( (mstate & (1<<i)) &&
-			!(mouse_oldbuttonstate & (1<<i)) )
-		{
-			Key_Event (K_MOUSE1 + i, qtrue, sys_msg_time);
-		}
+	for (i=0 ; i<mouse_buttons ; i++) {
+		if ( (mstate & (1<<i)) && !(mouse_oldbuttonstate & (1<<i)) )
+			Key_Event (K_MOUSE1 + i, true, sys_msg_time);
 
-		if ( !(mstate & (1<<i)) &&
-			(mouse_oldbuttonstate & (1<<i)) )
-		{
-				Key_Event (K_MOUSE1 + i, qfalse, sys_msg_time);
-		}
+		if ( !(mstate & (1<<i)) && (mouse_oldbuttonstate & (1<<i)) )
+			Key_Event (K_MOUSE1 + i, false, sys_msg_time);
 	}
 
 	mouse_oldbuttonstate = mstate;
@@ -232,12 +223,12 @@ IN_Init
 void IN_Init (void)
 {
 	/* mouse variables */
-	m_filter				= Cvar_Get ("m_filter",					"0",		0);
-        in_mouse				= Cvar_Get ("in_mouse",					"1",		CVAR_ARCHIVE);
+	m_filter = Cvar_Get ("m_filter", "0", 0);
+        in_mouse = Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
 
 	/* centering */
-	v_centermove			= Cvar_Get ("v_centermove",				"0.15",		0);
-	v_centerspeed			= Cvar_Get ("v_centerspeed",			"500",		0);
+	v_centermove = Cvar_Get ("v_centermove", "0.15", 0);
+	v_centerspeed = Cvar_Get ("v_centerspeed", "500", 0);
 
 	IN_StartupMouse ();
 }
@@ -262,7 +253,7 @@ The window may have been destroyed and recreated
 between a deactivate and an activate.
 ===========
 */
-void IN_Activate (qboolean active)
+void IN_Activate (bool_t active)
 {
 	in_appactive = active;
 	mouseactive = !active;		/* force a new window check or turn off */
@@ -281,20 +272,16 @@ void IN_Frame (void)
 	if (!mouseinitialized)
 		return;
 
-	if (!in_mouse || !in_appactive)
-	{
+	if (!in_mouse || !in_appactive) {
 		IN_DeactivateMouse ();
 		return;
 	}
 
 #if 0
 	/* TODO: NEEDED? */
-	if ( !cl.refresh_prepped
-		|| cls.key_dest == key_console)
-	{
+	if ( !cl.refresh_prepped || cls.key_dest == key_console) {
 		/* temporarily deactivate if in fullscreen */
-		if (Cvar_VariableValue ("vid_fullscreen") == 0)
-		{
+		if (Cvar_VariableValue ("vid_fullscreen") == 0) {
 			IN_DeactivateMouse ();
 			return;
 		}

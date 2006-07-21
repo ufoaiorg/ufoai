@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  error You should not be trying to compile this file on this platform
 #endif
 
-static qboolean s_systemcolors_saved;
+static bool_t s_systemcolors_saved;
 
 static HGDIOBJ previously_selected_GDI_obj;
 
@@ -85,7 +85,7 @@ static void DIB_RestoreSystemColors( void );
 **
 ** Builds our DIB section
 */
-qboolean DIB_Init( unsigned char **ppbuffer, int *ppitch )
+bool_t DIB_Init( unsigned char **ppbuffer, int *ppitch )
 {
 	dibinfo_t   dibheader;
 	BITMAPINFO *pbmiDIB = ( BITMAPINFO * ) &dibheader;
@@ -96,30 +96,24 @@ qboolean DIB_Init( unsigned char **ppbuffer, int *ppitch )
 	/*
 	** grab a DC
 	*/
-	if ( !sww_state.hDC )
-	{
+	if ( !sww_state.hDC ) {
 		if ( ( sww_state.hDC = GetDC( sww_state.hWnd ) ) == NULL )
-			return qfalse;
+			return false;
 	}
 
 	/*
 	** figure out if we're running in an 8-bit display mode
 	*/
- 	if ( GetDeviceCaps( sww_state.hDC, RASTERCAPS ) & RC_PALETTE )
-	{
-		sww_state.palettized = qtrue;
+ 	if ( GetDeviceCaps( sww_state.hDC, RASTERCAPS ) & RC_PALETTE ) {
+		sww_state.palettized = true;
 
 		/* save system colors */
-		if ( !s_systemcolors_saved )
-		{
+		if ( !s_systemcolors_saved ) {
 			DIB_SaveSystemColors();
-			s_systemcolors_saved = qtrue;
+			s_systemcolors_saved = true;
 		}
-	}
-	else
-	{
-		sww_state.palettized = qfalse;
-	}
+	} else
+		sww_state.palettized = false;
 
 	/*
 	** fill in the BITMAPINFO struct
@@ -139,8 +133,7 @@ qboolean DIB_Init( unsigned char **ppbuffer, int *ppitch )
 	/*
 	** fill in the palette
 	*/
-	for ( i = 0; i < 256; i++ )
-	{
+	for ( i = 0; i < 256; i++ ) {
 		dibheader.acolors[i].rgbRed   = ( d_8to24table[i] >> 0 )  & 0xff;
 		dibheader.acolors[i].rgbGreen = ( d_8to24table[i] >> 8 )  & 0xff;
 		dibheader.acolors[i].rgbBlue  = ( d_8to24table[i] >> 16 ) & 0xff;
@@ -151,20 +144,16 @@ qboolean DIB_Init( unsigned char **ppbuffer, int *ppitch )
 	*/
 	sww_state.hDIBSection = CreateDIBSection( sww_state.hDC, pbmiDIB, DIB_RGB_COLORS, &sww_state.pDIBBase, NULL, 0 );
 
-	if ( sww_state.hDIBSection == NULL )
-	{
+	if ( sww_state.hDIBSection == NULL ) {
 		ri.Con_Printf( PRINT_ALL, "DIB_Init() - CreateDIBSection failed\n" );
 		goto fail;
 	}
 
-	if ( pbmiDIB->bmiHeader.biHeight > 0 )
-        {
+	if ( pbmiDIB->bmiHeader.biHeight > 0 ) {
 		/* bottom up */
 		*ppbuffer	= sww_state.pDIBBase + ( vid.height - 1 ) * vid.width;
 		*ppitch		= -vid.width;
-        }
-        else
-        {
+        } else {
 		/* top down */
 		*ppbuffer	= sww_state.pDIBBase;
 		*ppitch		= vid.width;
@@ -175,22 +164,20 @@ qboolean DIB_Init( unsigned char **ppbuffer, int *ppitch )
 	*/
 	memset( sww_state.pDIBBase, 0xff, vid.width * vid.height );
 
-	if ( ( sww_state.hdcDIBSection = CreateCompatibleDC( sww_state.hDC ) ) == NULL )
-	{
+	if ( ( sww_state.hdcDIBSection = CreateCompatibleDC( sww_state.hDC ) ) == NULL ) {
 		ri.Con_Printf( PRINT_ALL, "DIB_Init() - CreateCompatibleDC failed\n" );
 		goto fail;
 	}
-	if ( ( previously_selected_GDI_obj = SelectObject( sww_state.hdcDIBSection, sww_state.hDIBSection ) ) == NULL )
-	{
+	if ( ( previously_selected_GDI_obj = SelectObject( sww_state.hdcDIBSection, sww_state.hDIBSection ) ) == NULL ) {
 		ri.Con_Printf( PRINT_ALL, "DIB_Init() - SelectObject failed\n" );
 		goto fail;
 	}
 
-	return qtrue;
+	return true;
 
 fail:
 	DIB_Shutdown();
-	return qfalse;
+	return false;
 	
 }
 

@@ -46,10 +46,10 @@ typedef struct
 	LPDIRECTDRAWSURFACE lpddsOffScreenBuffer;	/* system memory backbuffer */
 	LPDIRECTDRAWPALETTE	lpddpPalette;		/* DirectDraw palette */
 
-	qboolean		palettized;			/* true if desktop is paletted */
-	qboolean		modex;
+	bool_t		palettized;			/* true if desktop is paletted */
+	bool_t		modex;
 
-	qboolean		initializing;
+	bool_t		initializing;
 } swwstate_t;
 
 extern swwstate_t sww_state;
@@ -57,11 +57,11 @@ extern swwstate_t sww_state;
 /*
 ** DIB code
 */
-qboolean DIB_Init( unsigned char **ppbuffer, int *ppitch );
+bool_t DIB_Init( unsigned char **ppbuffer, int *ppitch );
 void     DIB_Shutdown( void );
 void     DIB_SetPalette( const unsigned char *palette );
 
-qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch );
+bool_t DDRAW_Init( unsigned char **ppbuffer, int *ppitch );
 void     DDRAW_Shutdown( void );
 void     DDRAW_SetPalette( const unsigned char *palette );
 

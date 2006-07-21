@@ -120,7 +120,7 @@ int SWimp_Init( void *hInstance, void *wndProc )
 	sww_state.hInstance = ( HINSTANCE ) hInstance;
 	sww_state.wndproc = wndProc;
 
-	return qtrue;
+	return true;
 }
 
 /*
@@ -133,7 +133,7 @@ int SWimp_Init( void *hInstance, void *wndProc )
 ** The necessary width and height parameters are grabbed from
 ** vid.width and vid.height.
 */
-static qboolean SWimp_InitGraphics( qboolean fullscreen )
+static bool_t SWimp_InitGraphics( bool_t fullscreen )
 {
 	/* free resources in use */
 	SWimp_Shutdown ();
@@ -142,28 +142,23 @@ static qboolean SWimp_InitGraphics( qboolean fullscreen )
 	VID_CreateWindow (vid.width, vid.height, WINDOW_STYLE);
 
 	/* initialize the appropriate subsystem */
-	if ( !fullscreen )
-	{
-		if ( !DIB_Init( &vid.buffer, &vid.rowbytes ) )
-		{
+	if ( !fullscreen ) {
+		if ( !DIB_Init( &vid.buffer, &vid.rowbytes ) ) {
 			vid.buffer = 0;
 			vid.rowbytes = 0;
 
-			return qfalse;
+			return false;
 		}
-	}
-	else
-	{
-		if ( !DDRAW_Init( &vid.buffer, &vid.rowbytes ) )
-		{
+	} else {
+		if ( !DDRAW_Init( &vid.buffer, &vid.rowbytes ) ) {
 			vid.buffer = 0;
 			vid.rowbytes = 0;
 
-			return qfalse;
+			return false;
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 /*
@@ -175,14 +170,13 @@ static qboolean SWimp_InitGraphics( qboolean fullscreen )
 */
 void SWimp_EndFrame (void)
 {
-	if ( !sw_state.fullscreen )
-	{
-		if ( sww_state.palettized )
-		{
-/*			holdpal = SelectPalette(hdcScreen, hpalDIB, FALSE); */
-/*			RealizePalette(hdcScreen); */
+	if ( !sw_state.fullscreen ) {
+#if 0
+		if ( sww_state.palettized ) {
+			holdpal = SelectPalette(hdcScreen, hpalDIB, FALSE); 
+			RealizePalette(hdcScreen); 
 		}
-
+#endif
 	    
 		BitBlt( sww_state.hDC,
 			    0, 0,
@@ -192,13 +186,11 @@ void SWimp_EndFrame (void)
 				0, 0,
 				SRCCOPY );
 
+#if 0
 		if ( sww_state.palettized )
-		{
-/*			SelectPalette(hdcScreen, holdpal, FALSE); */
-		}
-	}
-	else
-	{
+			SelectPalette(hdcScreen, holdpal, FALSE); 
+#endif
+	} else {
 		RECT r;
 		HRESULT rval;
 		DDSURFACEDESC ddsd;
@@ -210,43 +202,31 @@ void SWimp_EndFrame (void)
 
 		sww_state.lpddsOffScreenBuffer->lpVtbl->Unlock( sww_state.lpddsOffScreenBuffer, vid.buffer );
 
-		if ( sww_state.modex )
-		{
+		if ( sww_state.modex ) {
 			if ( ( rval = sww_state.lpddsBackBuffer->lpVtbl->BltFast( sww_state.lpddsBackBuffer,
-																	0, 0,
-																	sww_state.lpddsOffScreenBuffer, 
-																	&r, 
-																	DDBLTFAST_WAIT ) ) == DDERR_SURFACELOST )
-			{
+				0, 0,
+				sww_state.lpddsOffScreenBuffer, 
+				&r, 
+				DDBLTFAST_WAIT ) ) == DDERR_SURFACELOST ) {
 				sww_state.lpddsBackBuffer->lpVtbl->Restore( sww_state.lpddsBackBuffer );
 				sww_state.lpddsBackBuffer->lpVtbl->BltFast( sww_state.lpddsBackBuffer,
-															0, 0,
-															sww_state.lpddsOffScreenBuffer, 
-															&r, 
-															DDBLTFAST_WAIT );
+					0, 0,
+					sww_state.lpddsOffScreenBuffer, 
+					&r, 
+					DDBLTFAST_WAIT );
 			}
 
 			if ( ( rval = sww_state.lpddsFrontBuffer->lpVtbl->Flip( sww_state.lpddsFrontBuffer,
-															 NULL, DDFLIP_WAIT ) ) == DDERR_SURFACELOST )
-			{
+				 NULL, DDFLIP_WAIT ) ) == DDERR_SURFACELOST ) {
 				sww_state.lpddsFrontBuffer->lpVtbl->Restore( sww_state.lpddsFrontBuffer );
 				sww_state.lpddsFrontBuffer->lpVtbl->Flip( sww_state.lpddsFrontBuffer, NULL, DDFLIP_WAIT );
 			}
-		}
-		else
-		{
+		} else {
 			if ( ( rval = sww_state.lpddsBackBuffer->lpVtbl->BltFast( sww_state.lpddsFrontBuffer,
-																	0, 0,
-																	sww_state.lpddsOffScreenBuffer, 
-																	&r, 
-																	DDBLTFAST_WAIT ) ) == DDERR_SURFACELOST )
-			{
+					0, 0, sww_state.lpddsOffScreenBuffer,  &r, DDBLTFAST_WAIT ) ) == DDERR_SURFACELOST ) {
 				sww_state.lpddsBackBuffer->lpVtbl->Restore( sww_state.lpddsFrontBuffer );
-				sww_state.lpddsBackBuffer->lpVtbl->BltFast( sww_state.lpddsFrontBuffer,
-															0, 0,
-															sww_state.lpddsOffScreenBuffer, 
-															&r, 
-															DDBLTFAST_WAIT );
+				sww_state.lpddsBackBuffer->lpVtbl->BltFast( sww_state.lpddsFrontBuffer, 0, 0,
+					sww_state.lpddsOffScreenBuffer, &r, DDBLTFAST_WAIT );
 			}
 		}
 
@@ -263,62 +243,50 @@ void SWimp_EndFrame (void)
 /*
 ** SWimp_SetMode
 */
-rserr_t SWimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
+rserr_t SWimp_SetMode( int *pwidth, int *pheight, int mode, bool_t fullscreen )
 {
 	const char *win_fs[] = { "W", "FS" };
 	rserr_t retval = rserr_ok;
 
 	ri.Con_Printf (PRINT_ALL, "setting mode %d:", mode );
 
-	if ( !ri.Vid_GetModeInfo( pwidth, pheight, mode ) )
-	{
+	if ( !ri.Vid_GetModeInfo( pwidth, pheight, mode ) ) {
 		ri.Con_Printf( PRINT_ALL, " invalid mode\n" );
 		return rserr_invalid_mode;
 	}
 
 	ri.Con_Printf( PRINT_ALL, " %d %d %s\n", *pwidth, *pheight, win_fs[fullscreen] );
 
-	sww_state.initializing = qtrue;
-	if ( fullscreen )
-	{
-		if ( !SWimp_InitGraphics( 1 ) )
-		{
-			if ( SWimp_InitGraphics( 0 ) )
-			{
+	sww_state.initializing = true;
+	if ( fullscreen ) {
+		if ( !SWimp_InitGraphics( 1 ) ) {
+			if ( SWimp_InitGraphics( 0 ) ) {
 				/* mode is legal but not as fullscreen */
 				fullscreen = 0;
 				retval = rserr_invalid_fullscreen;
-			}
-			else
-			{
+			} else {
 				/* failed to set a valid mode in windowed mode */
 				retval = rserr_unknown;
 			}
 		}
-	}
-	else
-	{
+	} else {
 		/* failure to set a valid mode in windowed mode */
-		if ( !SWimp_InitGraphics( fullscreen ) )
-		{
-			sww_state.initializing = qtrue;
+		if ( !SWimp_InitGraphics( fullscreen ) ) {
+			sww_state.initializing = true;
 			return rserr_unknown;
 		}
 	}
 
 	sw_state.fullscreen = fullscreen;
 #if 0
-	if ( retval != rserr_unknown )
-	{
-		if ( retval == rserr_invalid_fullscreen ||
-			 ( retval == rserr_ok && !fullscreen ) )
-		{
+	if ( retval != rserr_unknown ) {
+		if ( retval == rserr_invalid_fullscreen || ( retval == rserr_ok && !fullscreen ) ) {
 			SetWindowLong( sww_state.hWnd, GWL_STYLE, WINDOW_STYLE );
 		}
 	}
 #endif
 	R_GammaCorrectAndSetPalette( ( const unsigned char * ) d_8to24table );
-	sww_state.initializing = qtrue;
+	sww_state.initializing = true;
 
 	return retval;
 }
@@ -341,13 +309,9 @@ void SWimp_SetPalette( const unsigned char *palette )
 		palette = ( const unsigned char * ) sw_state.currentpalette;
 
 	if ( !sw_state.fullscreen )
-	{
 		DIB_SetPalette( ( const unsigned char * ) palette );
-	}
 	else
-	{
 		DDRAW_SetPalette( ( const unsigned char * ) palette );
-	}
 }
 
 /*
@@ -362,8 +326,7 @@ void SWimp_Shutdown( void )
 	DIB_Shutdown();
 	DDRAW_Shutdown();
 
-	if ( sww_state.hWnd )
-	{
+	if ( sww_state.hWnd ) {
 		ri.Con_Printf( PRINT_ALL, "...destroying window\n" );
 		ShowWindow( sww_state.hWnd, SW_SHOWNORMAL );	/* prevents leaving empty slots in the taskbar */
 		DestroyWindow (sww_state.hWnd);
@@ -375,20 +338,15 @@ void SWimp_Shutdown( void )
 /*
 ** SWimp_AppActivate
 */
-void SWimp_AppActivate( qboolean active )
+void SWimp_AppActivate( bool_t active )
 {
-	if ( active )
-	{
-		if ( sww_state.hWnd )
-		{
+	if ( active ) {	
+		if ( sww_state.hWnd ) {
 			SetForegroundWindow( sww_state.hWnd );
 			ShowWindow( sww_state.hWnd, SW_RESTORE );
 		}
-	}
-	else
-	{
-		if ( sww_state.hWnd )
-		{
+	} else {
+		if ( sww_state.hWnd ) {
 			if ( sww_state.initializing )
 				return;
 			if ( vid_fullscreen->value )

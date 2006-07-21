@@ -48,7 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 GLXContext				gl_cx;
 
-static qboolean			doShm;
+static bool_t			doShm;
 static Display			*x_disp;
 static Colormap			x_cmap;
 static Window			x_win;
@@ -87,8 +87,8 @@ int current_framebuffer;
 static int				x_shmeventtype;
 /*static XShmSegmentInfo	x_shminfo; */
 
-static qboolean			oktodraw = qfalse;
-static qboolean			X11_active = qfalse;
+static bool_t			oktodraw = false;
+static bool_t			X11_active = false;
 
 struct
 {
@@ -124,19 +124,19 @@ typedef unsigned short PIXEL;
 
 /* this is inside the renderer shared lib, so these are called from vid_so */
 
-static qboolean        mouse_avail;
-static int     mouse_buttonstate;
-static int     mouse_oldbuttonstate;
-static int   mouse_x, mouse_y;
-static int	old_mouse_x, old_mouse_y;
+static bool_t mouse_avail;
+static int mouse_buttonstate;
+static int mouse_oldbuttonstate;
+static int mouse_x, mouse_y;
+static int old_mouse_x, old_mouse_y;
 static float old_windowed_mouse;
 static int p_mouse_x, p_mouse_y;
 
-static cvar_t	*_windowed_mouse;
-static cvar_t	*m_filter;
-static cvar_t	*in_mouse;
+static cvar_t *_windowed_mouse;
+static cvar_t *m_filter;
+static cvar_t *in_mouse;
 
-static qboolean	mlooking;
+static bool_t mlooking;
 
 /* state struct passed in Init */
 static in_state_t	*in_state;
@@ -163,7 +163,7 @@ static void InitSig(void)
 /*
 ** GLimp_SetMode
 */
-int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
+int GLimp_SetMode( int *pwidth, int *pheight, int mode, bool_t fullscreen )
 {
 	int width, height;
 	GLint attribs[32];
@@ -234,7 +234,7 @@ int GLimp_Init( void *hinstance, void *wndproc )
 	/* catch signals so i can turn on auto-repeat and stuff */
 	InitSig();
 
-	return qtrue;
+	return true;
 }
 
 /*
@@ -260,7 +260,7 @@ void GLimp_EndFrame (void)
 /*
 ** GLimp_AppActivate
 */
-void GLimp_AppActivate( qboolean active )
+void GLimp_AppActivate( bool_t active )
 {
 }
 
@@ -300,7 +300,7 @@ static Cursor CreateNullCursor(Display *display, Window root)
 ** The necessary width and height parameters are grabbed from
 ** vid.width and vid.height.
 */
-qboolean GLimp_InitGraphics( qboolean fullscreen )
+bool_t GLimp_InitGraphics( bool_t fullscreen )
 {
 	int pnum, i;
 	XVisualInfo template;
@@ -481,11 +481,10 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	/* wait for first exposure event */
 	{
 		XEvent event;
-		do
-		{
+		do {
 			XNextEvent(x_disp, &event);
 			if (event.type == Expose && !event.xexpose.count)
-				oktodraw = qtrue;
+				oktodraw = true;
 		} while (!oktodraw);
 	}
 	/* now safe to draw */
@@ -498,29 +497,25 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 #if 0
 	/* This is messing up the DISPLAY environment variable so can't close and */
 	/* reopen the window (it lops off the :0.0)... */
-	if (XShmQueryExtension(x_disp))
-	{
+	if (XShmQueryExtension(x_disp)) {
 		char *displayname;
-		doShm = qtrue;
+		doShm = true;
 		displayname = (char *) getenv("DISPLAY");
-		if (displayname)
-		{
+		if (displayname) {
 			char *d = displayname;
 			while (*d && (*d != ':')) d++;
 			if (*d) *d = 0;
 			if (!(!strcasecmp(displayname, "unix") || !*displayname))
-				doShm = qfalse;
+				doShm = false;
 		}
 	}
 #endif
 
 #if 0
-	if (doShm)
-	{
+	if (doShm) {
 		x_shmeventtype = XShmGetEventBase(x_disp) + ShmCompletion;
 		ResetSharedFrameBuffers();
-	}
-	else
+	} else
 		ResetFrameBuffer();
 #endif
 
@@ -530,9 +525,9 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 /*	XSynchronize(x_disp, False); */
 
-	X11_active = qtrue;
+	X11_active = true;
 
-	return qtrue;
+	return true;
 }
 
 /*****************************************************************************/
@@ -548,8 +543,7 @@ int XLateKey(XKeyEvent *ev)
 
 	XLookupString(ev, buf, sizeof buf, &keysym, 0);
 
-	switch(keysym)
-	{
+	switch(keysym) {
 		case XK_KP_Page_Up:	 key = K_KP_PGUP; break;
 		case XK_Page_Up:	 key = K_PGUP; break;
 
@@ -677,12 +671,12 @@ void GetEvent(void)
 	switch(x_event.type) {
 	case KeyPress:
 		keyq[keyq_head].key = XLateKey(&x_event.xkey);
-		keyq[keyq_head].down = qtrue;
+		keyq[keyq_head].down = true;
 		keyq_head = (keyq_head + 1) & 63;
 		break;
 	case KeyRelease:
 		keyq[keyq_head].key = XLateKey(&x_event.xkey);
-		keyq[keyq_head].down = qfalse;
+		keyq[keyq_head].down = false;
 		keyq_head = (keyq_head + 1) & 63;
 		break;
 
@@ -736,7 +730,7 @@ void GetEvent(void)
 
 	default:
 		if (doShm && x_event.type == x_shmeventtype)
-			oktodraw = qtrue;
+			oktodraw = true;
 	}
    
 	if (old_windowed_mouse != _windowed_mouse->value) {
@@ -794,12 +788,12 @@ static void Force_CenterView_f (void)
 
 static void RW_IN_MLookDown (void) 
 { 
-	mlooking = qtrue; 
+	mlooking = true; 
 }
 
 static void RW_IN_MLookUp (void) 
 {
-	mlooking = qfalse;
+	mlooking = false;
 	in_state->IN_CenterView_fp ();
 }
 
@@ -830,12 +824,12 @@ void RW_IN_Init(in_state_t *in_state_p)
 	ri.Cmd_AddCommand ("force_centerview", Force_CenterView_f);
 
 	mouse_x = mouse_y = 0.0;
-	mouse_avail = qtrue;
+	mouse_avail = true;
 }
 
 void RW_IN_Shutdown(void)
 {
-	mouse_avail = qfalse;
+	mouse_avail = false;
 
 	ri.Cmd_RemoveCommand ("force_centerview");
 	ri.Cmd_RemoveCommand ("+mlook");
@@ -856,10 +850,10 @@ void RW_IN_Commands (void)
    
 	for (i=0 ; i<3 ; i++) {
 		if ( (mouse_buttonstate & (1<<i)) && !(mouse_oldbuttonstate & (1<<i)) )
-			in_state->Key_Event_fp (K_MOUSE1 + i, qtrue);
+			in_state->Key_Event_fp (K_MOUSE1 + i, true);
 
 		if ( !(mouse_buttonstate & (1<<i)) && (mouse_oldbuttonstate & (1<<i)) )
-			in_state->Key_Event_fp (K_MOUSE1 + i, qfalse);
+			in_state->Key_Event_fp (K_MOUSE1 + i, false);
 	}
 	mouse_oldbuttonstate = mouse_buttonstate;
 }
