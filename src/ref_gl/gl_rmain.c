@@ -944,6 +944,8 @@ void R_Flash(void)
 /**
  * @brief
  * @sa R_RenderFrame
+ * @sa R_SetupFrame
+ * @sa R_SetupGL
  * @note r_newrefdef must be set before the first call
  */
 void R_RenderView(refdef_t * fd)

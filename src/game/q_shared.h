@@ -619,12 +619,8 @@ typedef struct {
 /* player_state_t->refdef flags */
 #define	RDF_UNDERWATER		1	/* warp the screen as apropriate */
 #define RDF_NOWORLDMODEL	2	/* used for player configuration screen */
-
-/*ROGUE */
 #define	RDF_IRGOGGLES		4
 #define RDF_UVGOGGLES		8
-/*ROGUE */
-
 
 
 /* sound channels */
