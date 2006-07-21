@@ -966,7 +966,7 @@ void *SZ_GetSpace(sizebuf_t *buf, int length)
 /**
  * @brief
  */
-void SZ_Write(sizebuf_t *buf, void *data, int length)
+void SZ_Write(sizebuf_t *buf, void *data, size_t length)
 {
 	memcpy(SZ_GetSpace(buf, length), data, length);
 }

@@ -82,8 +82,8 @@ void UP_DisplayTechTree (technology_t* t)
 	for (; i<required->numEntries; i++) {
 		if (!Q_strncmp(required->string[i], "nothing", MAX_VAR)
 		|| !Q_strncmp(required->string[i], "initial", MAX_VAR)) {
-			continue;
 			Q_strcat(up_techtree, _("No requirements"), sizeof(up_techtree));
+			continue;
 		} else {
 			techRequired = RS_GetTechByID(required->string[i]);
 			if (!techRequired)
