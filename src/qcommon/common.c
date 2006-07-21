@@ -358,18 +358,12 @@ void MSG_WriteLong(sizebuf_t *sb, int32_t c)
 /**
  * @brief
  */
-void MSG_WriteFloat(sizebuf_t *sb, float f)
+void MSG_WriteFloat(sizebuf_t *sb, float32_t f)
 {
-	union {
-		float f;
-		int l;
-	} dat;
+	float32_t *buf;
 
-
-	dat.f = f;
-	dat.l = LittleLong(dat.l);
-
-	SZ_Write(sb, &dat.l, 4);
+	buf = SZ_GetSpace(sb, 4);
+	*buf = f;
 }
 
 /**
@@ -618,24 +612,17 @@ int32_t MSG_ReadLong(sizebuf_t *msg_read)
  */
 float MSG_ReadFloat(sizebuf_t *msg_read)
 {
-	union {
-		uint8_t b[4];
-		float f;
-		int l;
-	} dat;
-
+	float32_t f;
+	
 	if (msg_read->readcount + 4 > msg_read->cursize) {
-		dat.f = -1;
+		f = -1;
 	} else {
-		dat.b[0] = ((uint8_t *)msg_read->data)[msg_read->readcount++];
-		dat.b[1] = ((uint8_t *)msg_read->data)[msg_read->readcount++];
-		dat.b[2] = ((uint8_t *)msg_read->data)[msg_read->readcount++];
-		dat.b[3] = ((uint8_t *)msg_read->data)[msg_read->readcount++];
+		f = ((float32_t *)msg_read->data)[msg_read->readcount];
 	}
+	
+	msg_read->readcount += 4;
 
-	dat.l = LittleLong(dat.l);
-
-	return dat.f;
+	return f;
 }
 
 /**
