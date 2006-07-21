@@ -623,6 +623,7 @@ static void CL_DrawGrid(void)
  * @brief
  * @param stereo_separation
  * @sa SCR_UpdateScreen
+ * @sa R_RenderFrame
  */
 void V_RenderView(float stereo_separation)
 {

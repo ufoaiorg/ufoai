@@ -570,11 +570,10 @@ void SCR_Loading_f(void)
 	SCR_BeginLoadingPlaque();
 }
 
-/*
-================
-SCR_TimeRefresh_f
-================
-*/
+/**
+ * @brief
+ * @sa R_RenderFrame
+ */
 void SCR_TimeRefresh_f(void)
 {
 	int i;
