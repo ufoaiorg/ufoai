@@ -703,58 +703,63 @@ float MSG_ReadCoord(sizebuf_t *msg_read, uint8_t *error)
 /**
  * @brief
  */
-void MSG_ReadPos(sizebuf_t *msg_read, vec3_t pos)
+void MSG_ReadPos(sizebuf_t *msg_read, uint8_t *error, vec3_t pos)
 {
-	pos[0] = MSG_ReadShort(msg_read, NULL) * (1.0 / 8);
-	pos[1] = MSG_ReadShort(msg_read, NULL) * (1.0 / 8);
-	pos[2] = MSG_ReadShort(msg_read, NULL) * (1.0 / 8);
+	int i = 0;
+	
+	while (i < 3 && !(error && *error)) {
+		pos[i++] = MSG_ReadShort(msg_read, error) * (1.0 / 8);
+	}
 }
 
 /**
  * @brief
  */
-void MSG_ReadGPos(sizebuf_t *msg_read, pos3_t pos)
+void MSG_ReadGPos(sizebuf_t *msg_read, uint8_t *error, pos3_t pos)
 {
-	pos[0] = MSG_ReadByte(msg_read, NULL);
-	pos[1] = MSG_ReadByte(msg_read, NULL);
-	pos[2] = MSG_ReadByte(msg_read, NULL);
+	int i = 0;
+	
+	while (i < 3 && !(error && *error)) {
+		pos[i++] = MSG_ReadByte(msg_read, error);
+	}
 }
 
 /**
  * @brief
  */
-float MSG_ReadAngle(sizebuf_t *msg_read)
+float MSG_ReadAngle(sizebuf_t *msg_read, uint8_t *error)
 {
-	return (float) MSG_ReadChar(msg_read, NULL) * (360.0 / 256);
+	return (float) MSG_ReadChar(msg_read, error) * (360.0 / 256);
 }
 
 /**
  * @brief
  */
-float MSG_ReadAngle16(sizebuf_t *msg_read)
+float MSG_ReadAngle16(sizebuf_t *msg_read, uint8_t *error)
 {
-	return (float) SHORT2ANGLE(MSG_ReadShort(msg_read, NULL));
+	return (float) SHORT2ANGLE(MSG_ReadShort(msg_read, error));
 }
 
 /**
  * @brief
  */
-void MSG_ReadData(sizebuf_t *msg_read, void *data, int len)
+void MSG_ReadData(sizebuf_t *msg_read, uint8_t *error, void *data, int len)
 {
-	int i;
+	int i = 0;
 
-	for (i = 0; i < len; i++)
-		((byte *) data)[i] = MSG_ReadByte(msg_read, NULL);
+	while (i < len && !(error && *error)) {
+		((uint8_t *)data)[i++] = MSG_ReadByte(msg_read, error);
+	}
 }
 
 /**
  * @brief
  */
-void MSG_ReadDir(sizebuf_t *sb, vec3_t dir)
+void MSG_ReadDir(sizebuf_t *sb, uint8_t *error, vec3_t dir)
 {
 	int b;
 
-	b = MSG_ReadByte(sb, NULL);
+	b = MSG_ReadByte(sb, error);
 	if (b >= NUMVERTEXNORMALS)
 		Com_Error(ERR_DROP, "MSG_ReadDir: out of range");
 	VectorCopy(bytedirs[b], dir);
@@ -764,7 +769,7 @@ void MSG_ReadDir(sizebuf_t *sb, vec3_t dir)
 /**
  * @brief
  */
-void MSG_ReadFormat(sizebuf_t *msg_read, char *format, ...)
+void MSG_ReadFormat(sizebuf_t *msg_read, uint8_t *error, char *format, ...)
 {
 	va_list ap;
 	char typeID;
@@ -777,36 +782,36 @@ void MSG_ReadFormat(sizebuf_t *msg_read, char *format, ...)
 
 		switch (typeID) {
 		case 'c':
-			*va_arg(ap, int *) = MSG_ReadChar(msg_read, NULL);
+			*va_arg(ap, int *) = MSG_ReadChar(msg_read, error);
 
 			break;
 		case 'b':
-			*va_arg(ap, int *) = MSG_ReadByte(msg_read, NULL);
+			*va_arg(ap, int *) = MSG_ReadByte(msg_read, error);
 
 			break;
 		case 's':
-			*va_arg(ap, int *) = MSG_ReadShort(msg_read, NULL);
+			*va_arg(ap, int *) = MSG_ReadShort(msg_read, error);
 
 			break;
 		case 'l':
-			*va_arg(ap, int *) = MSG_ReadLong(msg_read, NULL);
+			*va_arg(ap, int *) = MSG_ReadLong(msg_read, error);
 
 			break;
 		case 'f':
-			*va_arg(ap, float *) = MSG_ReadFloat(msg_read, NULL);
+			*va_arg(ap, float *) = MSG_ReadFloat(msg_read, error);
 
 			break;
 		case 'p':
-			MSG_ReadPos(msg_read, *va_arg(ap, vec3_t *));
+			MSG_ReadPos(msg_read, error, *va_arg(ap, vec3_t *));
 			break;
 		case 'g':
-			MSG_ReadGPos(msg_read, *va_arg(ap, pos3_t *));
+			MSG_ReadGPos(msg_read, error, *va_arg(ap, pos3_t *));
 			break;
 		case 'd':
-			MSG_ReadDir(msg_read, *va_arg(ap, vec3_t *));
+			MSG_ReadDir(msg_read, error, *va_arg(ap, vec3_t *));
 			break;
 		case 'a':
-			*va_arg(ap, float *) = MSG_ReadAngle(msg_read);
+			*va_arg(ap, float *) = MSG_ReadAngle(msg_read, error);
 
 			break;
 		case '!':
@@ -817,12 +822,12 @@ void MSG_ReadFormat(sizebuf_t *msg_read, char *format, ...)
 				int i, n;
 				byte *p;
 
-				n = MSG_ReadByte(msg_read, NULL);
+				n = MSG_ReadByte(msg_read, error);
 				*va_arg(ap, int *) = n;
 				p = va_arg(ap, void *);
 
 				for (i = 0; i < n; i++)
-					*p++ = MSG_ReadByte(msg_read, NULL);
+					*p++ = MSG_ReadByte(msg_read, error);
 			}
 			break;
 		default:
@@ -840,7 +845,7 @@ void MSG_ReadFormat(sizebuf_t *msg_read, char *format, ...)
  * calculated the length of a sizebuf_t by summing up
  * the size of each format char
  */
-int MSG_LengthFormat(sizebuf_t *sb, char *format)
+int MSG_LengthFormat(sizebuf_t *sb, uint8_t *error, char *format)
 {
 	char typeID;
 	int length, delta;
@@ -884,12 +889,12 @@ int MSG_LengthFormat(sizebuf_t *sb, char *format)
 		case '!':
 			break;
 		case '*':
-			delta = MSG_ReadByte(sb, NULL);
+			delta = MSG_ReadByte(sb, error);
 			length++;
 			break;
 		case '&':
 			delta = 1;
-			while (MSG_ReadByte(sb, NULL) != NONE)
+			while (MSG_ReadByte(sb, error) != NONE)
 				length++;
 			break;
 		default:
