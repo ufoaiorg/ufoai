@@ -297,41 +297,41 @@ static void PF_WriteToSave(int c)
 /**
   * @brief
   */
-static char PF_ReadChar(void)
+static char PF_ReadChar(uint8_t* error)
 {
-	return MSG_ReadChar(&net_message);
+	return MSG_ReadChar(&net_message, error);
 }
 
 /**
   * @brief
   */
-static uint8_t PF_ReadByte(void)
+static uint8_t PF_ReadByte(uint8_t* error)
 {
-	return MSG_ReadByte(&net_message);
+	return MSG_ReadByte(&net_message, error);
 }
 
 /**
   * @brief
   */
-static int16_t PF_ReadShort(void)
+static int16_t PF_ReadShort(uint8_t* error)
 {
-	return MSG_ReadShort(&net_message);
+	return MSG_ReadShort(&net_message, error);
 }
 
 /**
   * @brief
   */
-static int32_t PF_ReadLong(void)
+static int32_t PF_ReadLong(uint8_t* error)
 {
-	return MSG_ReadLong(&net_message);
+	return MSG_ReadLong(&net_message, error);
 }
 
 /**
   * @brief
   */
-static float PF_ReadFloat(void)
+static float PF_ReadFloat(uint8_t* error)
 {
-	return MSG_ReadFloat(&net_message);
+	return MSG_ReadFloat(&net_message, error);
 }
 
 /**

@@ -325,9 +325,8 @@ void SV_ExecuteUserCommand(char *s)
  */
 void SV_ExecuteClientMessage(client_t * cl)
 {
-	uint8_t c;
+	uint8_t c, end = 0;
 	char *s;
-
 	int stringCmdCount;
 
 	sv_client = cl;
@@ -343,8 +342,8 @@ void SV_ExecuteClientMessage(client_t * cl)
 			return;
 		}
 
-		c = MSG_ReadByte(&net_message);
-		if (c == -1)
+		c = MSG_ReadByte(&net_message, &end);
+		if (end)
 			break;
 
 		switch (c) {

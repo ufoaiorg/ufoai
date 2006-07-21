@@ -291,16 +291,16 @@ qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 {
 	unsigned sequence, sequence_ack;
 	unsigned reliable_ack, reliable_message;
-	int qport;
+	int16_t qport;
 
 	/* get sequence numbers */
 	MSG_BeginReading(msg);
-	sequence = MSG_ReadLong(msg);
-	sequence_ack = MSG_ReadLong(msg);
+	sequence = MSG_ReadLong(msg, NULL);
+	sequence_ack = MSG_ReadLong(msg, NULL);
 
 	/* read the qport if we are a server */
 	if (chan->sock == NS_SERVER)
-		qport = MSG_ReadShort(msg);
+		qport = MSG_ReadShort(msg, NULL);
 
 	reliable_message = sequence >> 31;
 	reliable_ack = sequence_ack >> 31;
@@ -316,9 +316,7 @@ qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 			Com_Printf("recv %4i : s=%i ack=%i rack=%i\n", msg->cursize, sequence, sequence_ack, reliable_ack);
 	}
 
-	/* */
 	/* discard stale or duplicated packets */
-	/* */
 	if (sequence <= chan->incoming_sequence) {
 		if (showdrop->value)
 			Com_Printf("%s:Out of order packet %i at %i\n", NET_AdrToString(chan->remote_address)
@@ -326,9 +324,7 @@ qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 		return qfalse;
 	}
 
-	/* */
 	/* dropped packets don't keep the message from being used */
-	/* */
 	chan->dropped = sequence - (chan->incoming_sequence + 1);
 	if (chan->dropped > 0) {
 		if (showdrop->value)
@@ -336,16 +332,12 @@ qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 					   , chan->dropped, sequence);
 	}
 
-/* */
-/* if the current outgoing reliable message has been acknowledged */
-/* clear the buffer to make way for the next */
-/* */
+	/* if the current outgoing reliable message has been acknowledged */
+	/* clear the buffer to make way for the next */
 	if (reliable_ack == chan->reliable_sequence)
 		chan->reliable_length = 0;	/* it has been received */
 
-/* */
-/* if this message contains a reliable message, bump incoming_reliable_sequence */
-/* */
+	/* if this message contains a reliable message, bump incoming_reliable_sequence */
 	chan->incoming_sequence = sequence;
 	chan->incoming_acknowledged = sequence_ack;
 	chan->incoming_reliable_acknowledged = reliable_ack;
@@ -353,10 +345,8 @@ qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 		chan->incoming_reliable_sequence ^= 1;
 	}
 
-/* */
-/* the message can now be read from the current message pointer */
-/* */
+	/* the message can now be read from the current message pointer */
 	chan->last_received = curtime;
 
-	return qtrue;
+	return true;
 }

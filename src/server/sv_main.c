@@ -466,7 +466,7 @@ void SV_ConnectionlessPacket(void)
 	char *c;
 
 	MSG_BeginReading(&net_message);
-	MSG_ReadLong(&net_message);	/* skip the -1 marker */
+	MSG_ReadLong(&net_message, NULL);	/* skip the -1 marker */
 
 	s = MSG_ReadStringLine(&net_message);
 
@@ -579,7 +579,7 @@ void SV_ReadPackets(void)
 {
 	int i;
 	client_t *cl;
-	int qport;
+	int16_t qport;
 
 	while (NET_GetPacket(NS_SERVER, &net_from, &net_message)) {
 		/* check for connectionless packet (0xffffffff) first */
@@ -591,9 +591,9 @@ void SV_ReadPackets(void)
 		/* read the qport out of the message so we can fix up */
 		/* stupid address translating routers */
 		MSG_BeginReading(&net_message);
-		MSG_ReadLong(&net_message);	/* sequence number */
-		MSG_ReadLong(&net_message);	/* sequence number */
-		qport = MSG_ReadShort(&net_message) & 0xffff;
+		MSG_ReadLong(&net_message, NULL);	/* sequence number */
+		MSG_ReadLong(&net_message, NULL);	/* sequence number */
+		qport = MSG_ReadShort(&net_message, NULL) & 0xffff;
 
 		/* check for packets from connected clients */
 		for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++) {

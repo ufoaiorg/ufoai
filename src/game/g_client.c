@@ -2242,12 +2242,12 @@ void G_ClientInvMove(player_t * player, int num)
 {
 	int from, fx, fy, to, tx, ty;
 
-	from = gi.ReadByte();
-	fx = gi.ReadByte();
-	fy = gi.ReadByte();
-	to = gi.ReadByte();
-	tx = gi.ReadByte();
-	ty = gi.ReadByte();
+	from = gi.ReadByte(NULL);
+	fx = gi.ReadByte(NULL);
+	fy = gi.ReadByte(NULL);
+	to = gi.ReadByte(NULL);
+	tx = gi.ReadByte(NULL);
+	ty = gi.ReadByte(NULL);
 
 	G_InventoryMove(player, num, from, fx, fy, to, tx, ty, qtrue);
 }
@@ -2265,8 +2265,8 @@ void G_ClientAction(player_t * player)
 	pos3_t pos;
 
 	/* read the header */
-	action = gi.ReadByte();
-	num = gi.ReadShort();
+	action = gi.ReadByte(NULL);
+	num = gi.ReadShort(NULL);
 
 	switch (action) {
 	case PA_NULL:
@@ -2274,7 +2274,7 @@ void G_ClientAction(player_t * player)
 		break;
 
 	case PA_TURN:
-		G_ClientTurn(player, num, gi.ReadByte());
+		G_ClientTurn(player, num, gi.ReadByte(NULL));
 		break;
 
 	case PA_MOVE:
@@ -2283,12 +2283,12 @@ void G_ClientAction(player_t * player)
 		break;
 
 	case PA_STATE:
-		G_ClientStateChange(player, num, gi.ReadShort());
+		G_ClientStateChange(player, num, gi.ReadShort(NULL));
 		break;
 
 	case PA_SHOOT:
 		gi.ReadGPos(pos);
-		G_ClientShoot(player, num, pos, gi.ReadByte());
+		G_ClientShoot(player, num, pos, gi.ReadByte(NULL));
 		break;
 
 	case PA_INVMOVE:
@@ -2385,11 +2385,11 @@ void G_ClientTeamInfo(player_t * player)
 	int i, j, k, length;
 	int container, x, y;
 	item_t item;
-	byte count[MAX_OBJDEFS];
+	uint8_t count[MAX_OBJDEFS], end;
 
 	/* find a team */
 	G_GetTeam(player);
-	length = gi.ReadByte();
+	length = gi.ReadByte(NULL);
 
 	/* find actors */
 	for (j = 0, ent = g_edicts; j < globals.num_edicts; j++, ent++)
@@ -2404,7 +2404,7 @@ void G_ClientTeamInfo(player_t * player)
 			level.num_alive[ent->team]++;
 			level.num_spawned[ent->team]++;
 			ent->pnum = player->num;
-			ent->chr.fieldSize = gi.ReadByte();
+			ent->chr.fieldSize = gi.ReadByte(NULL);
 			ent->fieldSize = ent->chr.fieldSize;
 			switch (ent->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
@@ -2421,21 +2421,21 @@ void G_ClientTeamInfo(player_t * player)
 			gi.linkentity(ent);
 
 			/* model */
-			ent->chr.ucn = gi.ReadShort();
+			ent->chr.ucn = gi.ReadShort(NULL);
 			Q_strncpyz(ent->chr.name, gi.ReadString(), MAX_VAR);
 			Q_strncpyz(ent->chr.path, gi.ReadString(), MAX_VAR);
 			Q_strncpyz(ent->chr.body, gi.ReadString(), MAX_VAR);
 			Q_strncpyz(ent->chr.head, gi.ReadString(), MAX_VAR);
-			ent->chr.skin = gi.ReadByte();
+			ent->chr.skin = gi.ReadByte(NULL);
 
 			/* new attributes */
 			for (k = 0; k < SKILL_NUM_TYPES; k++)
-				ent->chr.skills[k] = gi.ReadByte();
+				ent->chr.skills[k] = gi.ReadByte(NULL);
 
 			/* scores */
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
-				ent->chr.kills[k] = gi.ReadShort();
-			ent->chr.assigned_missions = gi.ReadShort();
+				ent->chr.kills[k] = gi.ReadShort(NULL);
+			ent->chr.assigned_missions = gi.ReadShort(NULL);
 
 			ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
 			ent->AP = 100;
@@ -2444,19 +2444,19 @@ void G_ClientTeamInfo(player_t * player)
 				ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 
 			/* inventory */
-			item.t = gi.ReadByte();
-			while (item.t != NONE && item.t != -1) {
+			item.t = gi.ReadByte(&end);
+			while (item.t != NONE && ! end) {
 				/* read info */
-				item.a = gi.ReadByte();
-				item.m = gi.ReadByte();
-				container = gi.ReadByte();
-				x = gi.ReadByte();
-				y = gi.ReadByte();
+				item.a = gi.ReadByte(NULL);
+				item.m = gi.ReadByte(NULL);
+				container = gi.ReadByte(NULL);
+				x = gi.ReadByte(NULL);
+				y = gi.ReadByte(NULL);
 
 				Com_AddToInventory(&ent->i, item, container, x, y);
 
 				/* get next item */
-				item.t = gi.ReadByte();
+				item.t = gi.ReadByte(NULL);
 			}
 
 			/* set models */
@@ -2466,16 +2466,16 @@ void G_ClientTeamInfo(player_t * player)
 			ent->skin = ent->chr.skin;
 		} else {
 			/* just do nothing with the info */
-			gi.ReadShort();
+			gi.ReadShort(NULL);
 			for (k = 0; k < 4; k++)
 				gi.ReadString();
-			gi.ReadByte();
+			gi.ReadByte(NULL);
 			for (k = 0; k < SKILL_NUM_TYPES; k++)
-				gi.ReadByte();
+				gi.ReadByte(NULL);
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
-				gi.ReadShort();
-			gi.ReadShort();
-			while (gi.ReadByte() != NONE);
+				gi.ReadShort(NULL);
+			gi.ReadShort(NULL);
+			while (gi.ReadByte(NULL) != NONE);
 		}
 
 		/* find actors */

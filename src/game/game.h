@@ -183,11 +183,11 @@ typedef struct {
 	/* ClientAction */
 	/* (more to come?) */
 
-	char (*ReadChar) (void);
-	uint8_t (*ReadByte) (void);
-	int16_t (*ReadShort) (void);
-	int32_t (*ReadLong) (void);
-	float32_t (*ReadFloat) (void);
+	char (*ReadChar) (uint8_t* error);
+	uint8_t (*ReadByte) (uint8_t* error);
+	int16_t (*ReadShort) (uint8_t* error);
+	int32_t (*ReadLong) (uint8_t* erroroid);
+	float32_t (*ReadFloat) (uint8_t* error);
 	char *(*ReadString) (void);
 	void (*ReadPos) (vec3_t pos);
 	void (*ReadGPos) (pos3_t pos);
