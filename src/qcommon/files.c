@@ -356,10 +356,10 @@ Properly handles partial reads
 void CDAudio_Stop(void);
 
 #define	MAX_READ	0x10000		/* read in blocks of 64k */
-void FS_Read(void *buffer, int len, FILE * f)
+void FS_Read(void *buffer, size_t len, FILE * f)
 {
-	int block, remaining;
-	int read;
+	int block;
+	size_t remaining, read;
 	uint8_t *buf;
 	int tries;
 
@@ -1190,7 +1190,7 @@ FS_GetMaps
 void FS_GetMaps(void)
 {
 	char name[MAX_OSPATH];
-	int len, status;
+	int status;
 	char *found;
 	char *path = NULL;
 	char *baseMapName = NULL;
@@ -1199,7 +1199,6 @@ void FS_GetMaps(void)
 		return;
 
 	Com_sprintf(name, sizeof(name), "maps/*.bsp");
-	len = strlen(name);
 	mapInstalledIndex = 0;
 	while ((path = FS_NextPath(path)) != 0) {
 		found = Sys_FindFirst(va("%s/%s", path, name), 0, 0);
@@ -1234,10 +1233,10 @@ FS_Write
 Properly handles partial writes
 =================
 */
-int FS_Write(const void *buffer, int len, FILE * f)
+int FS_Write(const void *buffer, size_t len, FILE * f)
 {
-	int block, remaining;
-	int written;
+	int block;
+	size_t remaining, written;
 	uint8_t *buf;
 	int tries;
 
@@ -1278,10 +1277,10 @@ int FS_Write(const void *buffer, int len, FILE * f)
 FS_WriteFile
 =================
 */
-int FS_WriteFile(const void *buffer, int len, const char *filename)
+int FS_WriteFile(const void *buffer, size_t len, const char *filename)
 {
 	FILE *f;
-	int c;
+	size_t c;
 
 	FS_CreatePath((char *) filename);
 

@@ -26,8 +26,8 @@ typedef enum {
 
 int FS_FOpenFileWrite(const char *filename, FILE **f);
 int FS_Seek(FILE * f, long offset, int origin);
-int FS_WriteFile(const void *buffer, int len, const char *filename);
-int FS_Write(const void *buffer, int len, FILE *f);
+int FS_WriteFile(const void *buffer, size_t len, const char *filename);
+int FS_Write(const void *buffer, size_t len, FILE *f);
 void FS_GetMaps(void);
 void FS_InitFilesystem(void);
 void FS_SetGamedir(char *dir);
@@ -50,7 +50,7 @@ int FS_LoadFile(char *path, void **buffer);
 /* a null buffer will just return the file length without loading */
 /* a -1 length is not present */
 
-void FS_Read(void *buffer, int len, FILE * f);
+void FS_Read(void *buffer, size_t len, FILE * f);
 
 /* properly handles partial reads */
 
