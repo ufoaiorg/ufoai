@@ -65,7 +65,7 @@ void *Z_TagMalloc(size_t size, uint16_t tag)
 	zhead_t *z;
 
 	size = size + sizeof(zhead_t);
-	z = calloc(size, 1);
+	z = (zhead_t*)calloc(size, 1);
 	if (z) {
 		z_count++;
 		z_bytes += size;
