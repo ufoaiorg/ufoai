@@ -164,7 +164,7 @@ typedef struct {
 	void (*WriteShort) (int16_t c);
 
 	void (*WriteLong) (int32_t c);
-	void (*WriteFloat) (float f);
+	void (*WriteFloat) (float32_t f);
 	void (*WriteString) (char *s);
 	void (*WritePos) (vec3_t pos);	/* some fractional bits */
 	void (*WriteGPos) (pos3_t pos);
@@ -187,7 +187,7 @@ typedef struct {
 	uint8_t (*ReadByte) (void);
 	int16_t (*ReadShort) (void);
 	int32_t (*ReadLong) (void);
-	float (*ReadFloat) (void);
+	float32_t (*ReadFloat) (void);
 	char *(*ReadString) (void);
 	void (*ReadPos) (vec3_t pos);
 	void (*ReadGPos) (pos3_t pos);

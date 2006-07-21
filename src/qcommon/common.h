@@ -59,7 +59,7 @@ void MSG_WriteByte(sizebuf_t *sb, uint8_t c);
 void MSG_WriteShort(sizebuf_t *sb, int16_t c);
 
 void MSG_WriteLong(sizebuf_t *sb, int32_t c);
-void MSG_WriteFloat(sizebuf_t *sb, float f);
+void MSG_WriteFloat(sizebuf_t *sb, float32_t f);
 void MSG_WriteString(sizebuf_t *sb, char *s);
 void MSG_WriteCoord(sizebuf_t *sb, float f);
 void MSG_WritePos(sizebuf_t *sb, vec3_t pos);
@@ -72,11 +72,11 @@ void MSG_WriteFormat(sizebuf_t *sb, char *format, ...);
 
 void MSG_BeginReading(sizebuf_t *sb);
 
-char MSG_ReadChar(sizebuf_t *sb);
-uint8_t MSG_ReadByte(sizebuf_t *sb);
-uint16_t MSG_ReadShort(sizebuf_t *sb);
-int32_t MSG_ReadLong(sizebuf_t *sb);
-float MSG_ReadFloat(sizebuf_t *sb);
+char MSG_ReadChar(sizebuf_t *sb, uint8_t *error);
+uint8_t MSG_ReadByte(sizebuf_t *sb, uint8_t *error);
+uint16_t MSG_ReadShort(sizebuf_t *sb, uint8_t *error);
+int32_t MSG_ReadLong(sizebuf_t *sb, uint8_t *error);
+float32_t MSG_ReadFloat(sizebuf_t *sb, uint8_t *error);
 char *MSG_ReadString(sizebuf_t *sb);
 char *MSG_ReadStringLine(sizebuf_t *sb);
 

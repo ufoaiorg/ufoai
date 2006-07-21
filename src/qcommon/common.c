@@ -317,7 +317,7 @@ vec3_t bytedirs[NUMVERTEXNORMALS] = {
 void MSG_WriteChar(sizebuf_t *sb, char c)
 {
 	char *buf;
-	
+
 	buf = SZ_GetSpace(sb, 1);
 	*buf = c;
 }
@@ -542,13 +542,14 @@ void MSG_BeginReading(sizebuf_t *msg)
  *
  * returns -1 if no more characters are available
  */
-char MSG_ReadChar(sizebuf_t *msg_read)
+char MSG_ReadChar(sizebuf_t *msg_read, uint8_t *error)
 {
-	/* We need -1 */
-	int c;
+	char c;
 
 	if (msg_read->readcount + 1 > msg_read->cursize)
-		c = -1;
+		if (error)
+			error = 1;
+		return 0;
 	else
 		c = msg_read->data[msg_read->readcount];
 	msg_read->readcount++;
@@ -559,13 +560,14 @@ char MSG_ReadChar(sizebuf_t *msg_read)
 /**
  * @brief
  */
-uint8_t MSG_ReadByte(sizebuf_t *msg_read)
+uint8_t MSG_ReadByte(sizebuf_t *msg_read, uint8_t *error)
 {
-	/* We need -1 in CL_ParseServerMessage */
-	int c;
+	uint8_t c;
 
 	if (msg_read->readcount + 1 > msg_read->cursize) {
-		c = -1;
+		if (error)
+			error = 1;
+		return 0;
 	} else {
 		c = msg_read->data[msg_read->readcount];
 	}
@@ -577,12 +579,14 @@ uint8_t MSG_ReadByte(sizebuf_t *msg_read)
 /**
  * @brief
  */
-uint16_t MSG_ReadShort(sizebuf_t *msg_read)
+uint16_t MSG_ReadShort(sizebuf_t *msg_read, uint8_t *error)
 {
 	int16_t c;
 
 	if (msg_read->readcount + 2 > msg_read->cursize) {
-		c = -1;
+		if (error)
+			error = 1;
+		return 0;
 	} else {
 		c = ((int16_t *)msg_read->data)[msg_read->readcount];
 	}
@@ -595,12 +599,14 @@ uint16_t MSG_ReadShort(sizebuf_t *msg_read)
 /**
  * @brief
  */
-int32_t MSG_ReadLong(sizebuf_t *msg_read)
+int32_t MSG_ReadLong(sizebuf_t *msg_read, uint8_t *error)
 {
 	int32_t c;
 
 	if (msg_read->readcount + 4 > msg_read->cursize) {
-		c = -1;
+		if (error)
+			error = 1;
+		return 0;
 	} else {
 		c =  ((int32_t *)msg_read->data)[msg_read->readcount];
 	}
@@ -612,16 +618,18 @@ int32_t MSG_ReadLong(sizebuf_t *msg_read)
 /**
  * @brief
  */
-float MSG_ReadFloat(sizebuf_t *msg_read)
+float32_t MSG_ReadFloat(sizebuf_t *msg_read, uint8_t *error)
 {
 	float32_t f;
-	
+
 	if (msg_read->readcount + 4 > msg_read->cursize) {
-		f = -1;
+		if (error)
+			error = 1;
+		return 0;
 	} else {
 		f = ((float32_t *)msg_read->data)[msg_read->readcount];
 	}
-	
+
 	msg_read->readcount += 4;
 
 	return f;
