@@ -576,7 +576,7 @@ uint8_t MSG_ReadByte(sizebuf_t *msg_read, uint8_t *error)
 	} else {
 		c = msg_read->data[msg_read->readcount];
 		if (error) {
-			*error = 1;
+			*error = 0;
 		}
 	}
 	msg_read->readcount++;
@@ -603,7 +603,7 @@ uint16_t MSG_ReadShort(sizebuf_t *msg_read, uint8_t *error)
 		}
 	}
 	msg_read->readcount += 2;
-	
+
 	return c;
 }
 
@@ -626,7 +626,7 @@ int32_t MSG_ReadLong(sizebuf_t *msg_read, uint8_t *error)
 		}
 	}
 	msg_read->readcount += 4;
-	
+
 	return c;
 }
 
@@ -649,7 +649,7 @@ float32_t MSG_ReadFloat(sizebuf_t *msg_read, uint8_t *error)
 		}
 	}
 	msg_read->readcount += 4;
-	
+
 	return f;
 }
 
@@ -706,7 +706,7 @@ float MSG_ReadCoord(sizebuf_t *msg_read, uint8_t *error)
 void MSG_ReadPos(sizebuf_t *msg_read, uint8_t *error, vec3_t pos)
 {
 	int i = 0;
-	
+
 	while (i < 3 && !(error && *error)) {
 		pos[i++] = MSG_ReadShort(msg_read, error) * (1.0 / 8);
 	}
@@ -718,7 +718,7 @@ void MSG_ReadPos(sizebuf_t *msg_read, uint8_t *error, vec3_t pos)
 void MSG_ReadGPos(sizebuf_t *msg_read, uint8_t *error, pos3_t pos)
 {
 	int i = 0;
-	
+
 	while (i < 3 && !(error && *error)) {
 		pos[i++] = MSG_ReadByte(msg_read, error);
 	}

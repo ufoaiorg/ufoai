@@ -96,7 +96,7 @@ static void CL_GiveNameCmd(void)
   * TODO: Generate UGV
   * @sa CL_ResetCharacters
   */
-void CL_GenerateCharacter(char *team, base_t *base, int type)
+void CL_GenerateCharacter(char *team, base_t *base, uint8_t type)
 {
 	character_t *chr;
 

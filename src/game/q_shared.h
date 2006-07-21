@@ -1016,9 +1016,9 @@ typedef struct medals_s {
 	char id[MAX_MEDALTITLE];
 	char name[MAX_MEDALTITLE];
 	medalType_t type;
-	int band;
+	uint8_t band;
 	abilityskills_t affectedSkill;
-	int skillIncrease;
+	int16_t skillIncrease;
 	/*date  date; */
 	char text[MAX_MEDALTEXT];
 	struct medals_s *next_medal;
@@ -1027,9 +1027,9 @@ typedef struct medals_s {
 typedef struct rank_s {
 	char name[MAX_MEDALTITLE];
 	char image[MAX_VAR];
-	int mind;
-	int killed_enemies;
-	int killed_others;
+	int16_t mind;
+	int16_t killed_enemies;
+	int16_t killed_others;
 } rank_t;
 
 extern rank_t ranks[MAX_RANKS];	/* Global list of all ranks defined in medals.ufo. */
@@ -1047,7 +1047,7 @@ typedef struct character_s {
 	uint8_t skills[SKILL_NUM_TYPES];
 
 	/* score */
-	killtypes_t kills[KILLED_NUM_TYPES];
+	int16_t kills[KILLED_NUM_TYPES];
 /* 	int		destroyed_objects; */
 /* 	int		hit_ratio; */
 /* 	int		inflicted_damage; */

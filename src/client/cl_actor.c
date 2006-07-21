@@ -1632,6 +1632,7 @@ float CL_TargetingToHit(pos3_t toPos)
 	width = 2 * PLAYER_WIDTH * pseudosin;
 	height = ((le->state & STATE_CROUCHED) ? PLAYER_CROUCH : PLAYER_STAND) - PLAYER_MIN;
 
+	/* TODO: Check whether weaponSkill is checked to not be bigger the SKILL_NUM_TYPES */
 	acc = M_PI / 180
 		* GET_ACC(selChr->skills[ABILITY_ACCURACY],
 			selFD->weaponSkill

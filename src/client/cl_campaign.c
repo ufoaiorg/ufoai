@@ -2461,7 +2461,7 @@ void CL_UpdateCharacterStats(int won)
 
 			/* FIXME: */
 			for (j = 0; j < SKILL_NUM_TYPES; j++)
-				if (chr->skills[j] + 1 < MAX_SKILL)
+				if (chr->skills[j] < MAX_SKILL)
 					chr->skills[j]++;
 
 			/* Check if the soldier meets the requirements for a higher rank -> Promotion */
