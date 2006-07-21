@@ -56,10 +56,6 @@ struct usercmd_s;
 struct entity_state_s;
 
 void MSG_WriteChar(sizebuf_t *sb, char c);
-
-void MSG_WriteByteDebug(sizebuf_t *sb, uint8_t c, char *file, int line);
-void MSG_WriteShortDebug(sizebuf_t *sb, int16_t c, char* file, int line);
-
 void MSG_WriteByte(sizebuf_t *sb, uint8_t c);
 void MSG_WriteShort(sizebuf_t *sb, int16_t c);
 
@@ -77,9 +73,9 @@ void MSG_WriteFormat(sizebuf_t *sb, char *format, ...);
 
 void MSG_BeginReading(sizebuf_t *sb);
 
-int MSG_ReadChar(sizebuf_t *sb);
-int MSG_ReadByte(sizebuf_t *sb);
-int MSG_ReadShort(sizebuf_t *sb);
+char MSG_ReadChar(sizebuf_t *sb);
+uint8_t MSG_ReadByte(sizebuf_t *sb);
+uint16_t MSG_ReadShort(sizebuf_t *sb);
 int MSG_ReadLong(sizebuf_t *sb);
 float MSG_ReadFloat(sizebuf_t *sb);
 char *MSG_ReadString(sizebuf_t *sb);

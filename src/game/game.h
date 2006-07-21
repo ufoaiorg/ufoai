@@ -35,6 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GAME_GAME_H
 #define GAME_GAME_H
 
+#include "../common/ufotypes.h"
+
 #define	GAME_API_VERSION	4
 
 /* edict->svflags */
@@ -157,19 +159,9 @@ typedef struct {
 	/* network messaging (writing) */
 	void (*multicast) (int mask);
 	void (*unicast) (player_t * player);
-	void (*WriteChar) (int c);
-
-#ifdef DEBUG
-	void (*WriteByte) (int c, char* file, int line);
-#else
-	void (*WriteByte) (int c);
-#endif
-
-#ifdef DEBUG
-	void (*WriteShort) (int c, char* file, int line);
-#else
-	void (*WriteShort) (int c);
-#endif
+	void (*WriteChar) (char c);
+	void (*WriteByte) (uint8_t c);
+	void (*WriteShort) (int16_t c);
 
 	void (*WriteLong) (int c);
 	void (*WriteFloat) (float f);
@@ -191,9 +183,9 @@ typedef struct {
 	/* ClientAction */
 	/* (more to come?) */
 
-	int (*ReadChar) (void);
-	int (*ReadByte) (void);
-	int (*ReadShort) (void);
+	char (*ReadChar) (void);
+	uint8_t (*ReadByte) (void);
+	int16_t (*ReadShort) (void);
 	int (*ReadLong) (void);
 	float (*ReadFloat) (void);
 	char *(*ReadString) (void);

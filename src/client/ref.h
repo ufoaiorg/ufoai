@@ -331,11 +331,11 @@ typedef struct {
 typedef struct {
 	void (*Sys_Error) (int err_level, char *str, ...);
 
-	void (*Cmd_AddCommand) (char *name, void (*cmd) (void));
-	void (*Cmd_RemoveCommand) (char *name);
+	bool_t (*Cmd_AddCommand) (char *name, void (*cmd) (void));
+	bool_t (*Cmd_RemoveCommand) (char *name);
 	int (*Cmd_Argc) (void);
 	char *(*Cmd_Argv) (int i);
-	void (*Cmd_ExecuteText) (int exec_when, char *text);
+	void (*Cmd_ExecuteText) (char *text, int exec_when);
 
 	void (*Con_Printf) (int print_level, char *str, ...);
 

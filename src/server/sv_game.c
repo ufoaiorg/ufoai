@@ -199,7 +199,7 @@ static void PF_Configstring(int index, char *val)
 /**
   * @brief
   */
-static void PF_WriteChar(int c)
+static void PF_WriteChar(char c)
 {
 	MSG_WriteChar(&sv.multicast, c);
 }
@@ -207,32 +207,18 @@ static void PF_WriteChar(int c)
 /**
   * @brief
   */
-#if 0
-static void PF_WriteByte(int c, char* file, int line)
-{
-	MSG_WriteByteDebug(&sv.multicast, c, file, line);
-}
-#else
-static void PF_WriteByte(int c)
+static void PF_WriteByte(uint8_t c)
 {
 	MSG_WriteByte(&sv.multicast, c);
 }
-#endif
 
 /**
   * @brief
   */
-#if 0
-static void PF_WriteShort(int c, char* file, int line)
-{
-	MSG_WriteShortDebug(&sv.multicast, c, file, line);
-}
-#else
-static void PF_WriteShort(int c)
+static void PF_WriteShort(int16_t c)
 {
 	MSG_WriteShort(&sv.multicast, c);
 }
-#endif
 
 /**
   * @brief
@@ -311,7 +297,7 @@ static void PF_WriteToSave(int c)
 /**
   * @brief
   */
-static int PF_ReadChar(void)
+static char PF_ReadChar(void)
 {
 	return MSG_ReadChar(&net_message);
 }
@@ -319,7 +305,7 @@ static int PF_ReadChar(void)
 /**
   * @brief
   */
-static int PF_ReadByte(void)
+static uint8_t PF_ReadByte(void)
 {
 	return MSG_ReadByte(&net_message);
 }
@@ -327,7 +313,7 @@ static int PF_ReadByte(void)
 /**
   * @brief
   */
-static int PF_ReadShort(void)
+static int16_t PF_ReadShort(void)
 {
 	return MSG_ReadShort(&net_message);
 }

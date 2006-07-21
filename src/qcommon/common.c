@@ -557,7 +557,7 @@ void MSG_BeginReading(sizebuf_t *msg)
  *
  * returns -1 if no more characters are available
  */
-int MSG_ReadChar(sizebuf_t *msg_read)
+char MSG_ReadChar(sizebuf_t *msg_read)
 {
 	char c;
 
@@ -573,7 +573,7 @@ int MSG_ReadChar(sizebuf_t *msg_read)
 /**
  * @brief
  */
-int MSG_ReadByte(sizebuf_t *msg_read)
+uint8_t MSG_ReadByte(sizebuf_t *msg_read)
 {
 	uint8_t c;
 
@@ -590,7 +590,7 @@ int MSG_ReadByte(sizebuf_t *msg_read)
 /**
  * @brief
  */
-int MSG_ReadShort(sizebuf_t *msg_read)
+uint16_t MSG_ReadShort(sizebuf_t *msg_read)
 {
 	int16_t c;
 
@@ -600,7 +600,7 @@ int MSG_ReadShort(sizebuf_t *msg_read)
 		c = (int16_t)(((uint8_t *)msg_read->data)[msg_read->readcount])
 			+ (int16_t)(((uint8_t *)msg_read->data)[msg_read->readcount + 1] << 8);
 	}
-	
+
 	msg_read->readcount += 2;
 
 	return c;
@@ -621,7 +621,7 @@ int32_t MSG_ReadLong(sizebuf_t *msg_read)
 			+ ((int32_t)((int8_t *)msg_read->data)[msg_read->readcount + 2] << 16)
 			+ ((int32_t)((int8_t *)msg_read->data)[msg_read->readcount + 3] << 24);
 	}
-	
+
 	msg_read->readcount += 4;
 
 	return c;
