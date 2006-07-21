@@ -120,6 +120,10 @@ static cvar_t *freelook;
 /* stencilbuffer shadows */
 qboolean have_stencil = qfalse;
 
+/**
+ * @brief
+ * @sa
+ */
 static Cursor CreateNullCursor(Display *display, Window root)
 {
 	Pixmap cursormask;
@@ -142,6 +146,10 @@ static Cursor CreateNullCursor(Display *display, Window root)
 	return cursor;
 }
 
+/**
+ * @brief
+ * @sa uninstall_grabs
+ */
 static void install_grabs(void)
 {
 	/* inviso cursor */
@@ -183,6 +191,10 @@ static void install_grabs(void)
 	XSync(dpy, True);
 }
 
+/**
+ * @brief
+ * @sa install_grabs
+ */
 static void uninstall_grabs(void)
 {
 	if (!dpy || !win)
@@ -204,6 +216,11 @@ static void uninstall_grabs(void)
 	mouse_active = qfalse;
 }
 
+/**
+ * @brief
+ * @param in_state_p
+ * @sa RW_IN_Shutdown
+ */
 void RW_IN_Init(in_state_t *in_state_p)
 {
 	in_state = in_state_p;
@@ -229,6 +246,10 @@ void RW_IN_Init(in_state_t *in_state_p)
 	mouse_avail = qtrue;
 }
 
+/**
+ * @brief
+ * @sa RW_IN_Activate
+ */
 void RW_IN_Shutdown(void)
 {
 	RW_IN_Activate (qfalse);
@@ -237,20 +258,20 @@ void RW_IN_Shutdown(void)
 		mouse_avail = qfalse;
 }
 
-/*
-===========
-IN_Commands
-===========
-*/
+/**
+ * @brief
+ * @sa
+ */
 void RW_IN_Commands (void)
 {
 }
 
-/*
-===========
-IN_GetMousePos
-===========
-*/
+/**
+ * @brief
+ * @param x pointer to x coordinate
+ * @param y pointer to y coordinate
+ * @sa
+ */
 void RW_IN_GetMousePos (int *x, int *y)
 {
 	if ( mx < 1 )
@@ -265,6 +286,10 @@ void RW_IN_GetMousePos (int *x, int *y)
 	*y = my;
 }
 
+/**
+ * @brief
+ * @sa IN_ActivateMouse
+ */
 static void IN_DeactivateMouse( void )
 {
 	if (!mouse_avail || !dpy || !win)
@@ -276,6 +301,10 @@ static void IN_DeactivateMouse( void )
 	}
 }
 
+/**
+ * @brief
+ * @sa IN_DeactivateMouse
+ */
 static void IN_ActivateMouse( void )
 {
 	if (!mouse_avail || !dpy || !win)
@@ -289,10 +318,20 @@ static void IN_ActivateMouse( void )
 	}
 }
 
+/**
+ * @brief
+ * @sa
+ */
 void RW_IN_Frame (void)
 {
 }
 
+/**
+ * @brief
+ * @sa RW_IN_Shutdown
+ * @sa IN_ActivateMouse
+ * @sa IN_DeactivateMouse
+ */
 void RW_IN_Activate(qboolean active)
 {
 	if (active || vidmode_active)
@@ -305,6 +344,10 @@ void RW_IN_Activate(qboolean active)
 /* KEYBOARD                                                                  */
 /*****************************************************************************/
 
+/**
+ * @brief
+ * @sa
+ */
 static int XLateKey(XKeyEvent *ev)
 {
 	int key = 0;
@@ -504,6 +547,10 @@ static int XLateKey(XKeyEvent *ev)
 }
 
 
+/**
+ * @brief
+ * @sa
+ */
 static void HandleEvents(void)
 {
 	XEvent event;
@@ -639,30 +686,39 @@ static void HandleEvents(void)
 
 Key_Event_fp_t Key_Event_fp;
 
+/**
+ * @brief
+ * @sa
+ */
 void KBD_Init(Key_Event_fp_t fp)
 {
 	Key_Event_fp = fp;
 }
 
+/**
+ * @brief
+ * @sa
+ */
 void KBD_Update(void)
 {
 	/* get events from x server */
 	HandleEvents();
 }
 
+/**
+ * @brief
+ * @sa
+ */
 void KBD_Close(void)
 {
 }
 
-/*****************************************************************************/
-
-/* static qboolean GLimp_SwitchFullscreen( int width, int height ); */
-
 qboolean GLimp_InitGL (void);
 
-/*
-** GLimp_SetMode
-*/
+/**
+ * @brief
+ * @sa
+ */
 rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen )
 {
 	int width, height;
@@ -883,15 +939,15 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	return rserr_ok;
 }
 
-/*
-** GLimp_Shutdown
-**
-** This routine does all OS specific shutdown procedures for the OpenGL
-** subsystem.  Under OpenGL this means NULLing out the current DC and
-** HGLRC, deleting the rendering context, and releasing the DC acquired
-** for the window.  The state structure is also nulled out.
-**
-*/
+/**
+ * @brief
+ * @sa GLimp_Init
+ *
+ * This routine does all OS specific shutdown procedures for the OpenGL
+ * subsystem.  Under OpenGL this means NULLing out the current DC and
+ * HGLRC, deleting the rendering context, and releasing the DC acquired
+ * for the window.  The state structure is also nulled out.
+ */
 void GLimp_Shutdown( void )
 {
 	uninstall_grabs();
@@ -918,13 +974,14 @@ void GLimp_Shutdown( void )
 	ctx = NULL;
 }
 
-/*
-** XErrorHandler (ioq3)
-**   the default X error handler exits the application
-**   I found out that on some hosts some operations would raise X errors (GLXUnsupportedPrivateRequest)
-**   but those don't seem to be fatal .. so the default would be to just ignore them
-**   our implementation mimics the default handler behaviour (not completely cause I'm lazy)
-*/
+/**
+ * @brief
+ * @sa GLimp_Init
+ * the default X error handler exits the application
+ * I found out that on some hosts some operations would raise X errors (GLXUnsupportedPrivateRequest)
+ * but those don't seem to be fatal .. so the default would be to just ignore them
+ * our implementation mimics the default handler behaviour (not completely cause I'm lazy)
+ */
 int qXErrorHandler(Display *dpy, XErrorEvent *ev)
 {
 	static char buf[1024];
@@ -936,6 +993,11 @@ int qXErrorHandler(Display *dpy, XErrorEvent *ev)
 	return 0;
 }
 
+/**
+ * @brief
+ * @sa GLimp_Shutdown
+ * @sa InitSig
+ */
 static void signal_handler(int sig)
 {
 	printf("Received signal %d, exiting...\n", sig);
@@ -943,6 +1005,10 @@ static void signal_handler(int sig)
 	exit(0);
 }
 
+/**
+ * @brief
+ * @sa signal_handler
+ */
 void InitSig(void)
 {
 	signal(SIGHUP, signal_handler);
@@ -956,12 +1022,12 @@ void InitSig(void)
 	signal(SIGTERM, signal_handler);
 }
 
-/*
-** GLimp_Init
-**
-** This routine is responsible for initializing the OS specific portions
-** of OpenGL.
-*/
+/**
+ * @brief
+ * @sa GLimp_Shutdown
+ * This routine is responsible for initializing the OS specific portions
+ * of OpenGL.
+ */
 qboolean GLimp_Init( void *hinstance, void *wndproc )
 {
 	InitSig();
@@ -972,29 +1038,31 @@ qboolean GLimp_Init( void *hinstance, void *wndproc )
 	return qtrue;
 }
 
-/*
-** GLimp_BeginFrame
-*/
+/**
+ * @brief
+ * @sa GLimp_EndFrame
+ */
 void GLimp_BeginFrame( float camera_seperation )
 {
 }
 
-/*
-** GLimp_EndFrame
-**
-** Responsible for doing a swapbuffers and possibly for other stuff
-** as yet to be determined.  Probably better not to make this a GLimp
-** function and instead do a call to GLimp_SwapBuffers.
-*/
+/**
+ * @brief
+ * @sa GLimp_BeginFrame
+ * Responsible for doing a swapbuffers and possibly for other stuff
+ * as yet to be determined.  Probably better not to make this a GLimp
+ * function and instead do a call to GLimp_SwapBuffers.
+ */
 void GLimp_EndFrame (void)
 {
 	qglFlush();
 	qglXSwapBuffers(dpy, win);
 }
 
-/*
-** GLimp_SetGamma
-*/
+/**
+ * @brief
+ * @sa
+ */
 void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] )
 {
 #ifdef HAVE_XF86_VIDMODE
@@ -1010,9 +1078,10 @@ void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned 
 #endif /* HAVE_XF86_VIDMODE */
 }
 
-/*
-** GLimp_AppActivate
-*/
+/**
+ * @brief
+ * @sa
+ */
 void GLimp_AppActivate( qboolean active )
 {
 }
