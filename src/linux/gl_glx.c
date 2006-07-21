@@ -643,7 +643,7 @@ static void HandleEvents(void)
 
         case ClientMessage:
 			if (event.xclient.data.l[0] == wmDeleteWindow)
-				ri.Cmd_ExecuteText(EXEC_NOW, "quit");
+				ri.Cmd_ExecuteText("quit", EXEC_NOW);
 			break;
 
 		case MapNotify:

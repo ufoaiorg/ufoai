@@ -316,16 +316,10 @@ vec3_t bytedirs[NUMVERTEXNORMALS] = {
  */
 void MSG_WriteChar(sizebuf_t *sb, char c)
 {
-	byte *buf;
-#if 0
-#ifdef PARANOID
-	if (c < SCHAR_MIN || c > SCHAR_MAX)
-		Com_Error(ERR_FATAL, "MSG_WriteChar: range error %i", c);
-#endif
-#endif
-
+	char *buf;
+	
 	buf = SZ_GetSpace(sb, 1);
-	buf[0] = c;
+	*buf = c;
 }
 
 /**
@@ -336,7 +330,7 @@ void MSG_WriteByte(sizebuf_t *sb, uint8_t c)
 	uint8_t *buf;
 
 	buf = SZ_GetSpace(sb, 1);
-	buf[0] = c;
+	*buf = c;
 }
 
 /**
@@ -344,25 +338,21 @@ void MSG_WriteByte(sizebuf_t *sb, uint8_t c)
  */
 void MSG_WriteShort(sizebuf_t *sb, int16_t c)
 {
-	uint8_t *buf;
+	int16_t *buf;
 
 	buf = SZ_GetSpace(sb, 2);
-	buf[0] = c & UINT8_MAX;
-	buf[1] = (c >> 8) & UINT8_MAX;
+	buf* = c;
 }
 
 /**
  * @brief
  */
-void MSG_WriteLong(sizebuf_t *sb, int c)
+void MSG_WriteLong(sizebuf_t *sb, int32_t c)
 {
-	byte *buf;
+	int32_t *buf;
 
 	buf = SZ_GetSpace(sb, 4);
-	buf[0] = c & UCHAR_MAX;
-	buf[1] = (c >> 8) & UCHAR_MAX;
-	buf[2] = (c >> 16) & UCHAR_MAX;
-	buf[3] = (c >> 24) & UCHAR_MAX;
+	buf* = c;
 }
 
 /**
@@ -387,10 +377,11 @@ void MSG_WriteFloat(sizebuf_t *sb, float f)
  */
 void MSG_WriteString(sizebuf_t *sb, char *s)
 {
-	if (!s)
+	if (!s) {
 		SZ_Write(sb, "", 1);
-	else
+	} else {
 		SZ_Write(sb, s, strlen(s) + 1);
+	}
 }
 
 /**
@@ -597,8 +588,7 @@ uint16_t MSG_ReadShort(sizebuf_t *msg_read)
 	if (msg_read->readcount + 2 > msg_read->cursize) {
 		c = -1;
 	} else {
-		c = (int16_t)(((uint8_t *)msg_read->data)[msg_read->readcount])
-			+ (int16_t)(((uint8_t *)msg_read->data)[msg_read->readcount + 1] << 8);
+		c = ((int16_t *)msg_read->data)[msg_read->readcount];
 	}
 
 	msg_read->readcount += 2;
@@ -616,12 +606,8 @@ int32_t MSG_ReadLong(sizebuf_t *msg_read)
 	if (msg_read->readcount + 4 > msg_read->cursize) {
 		c = -1;
 	} else {
-		c =  (int32_t)((int8_t *)msg_read->data)[msg_read->readcount]
-			+ ((int32_t)((int8_t *)msg_read->data)[msg_read->readcount + 1] << 8)
-			+ ((int32_t)((int8_t *)msg_read->data)[msg_read->readcount + 2] << 16)
-			+ ((int32_t)((int8_t *)msg_read->data)[msg_read->readcount + 3] << 24);
+		c =  ((int32_t *)msg_read->data)[msg_read->readcount];
 	}
-
 	msg_read->readcount += 4;
 
 	return c;

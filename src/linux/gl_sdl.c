@@ -345,7 +345,7 @@ void GetEvent(SDL_Event *event)
 		}
 		break;
 	case SDL_QUIT:
-		ri.Cmd_ExecuteText(EXEC_NOW, "quit");
+		ri.Cmd_ExecuteText("quit", EXEC_NOW);
 		break;
 	}
 
