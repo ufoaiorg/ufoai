@@ -468,7 +468,7 @@ void SV_ConnectionlessPacket(void)
 	MSG_BeginReading(&net_message);
 	MSG_ReadLong(&net_message, NULL);	/* skip the -1 marker */
 
-	s = MSG_ReadStringLine(&net_message);
+	s = MSG_ReadStringLine(&net_message, NULL);
 
 	Cmd_TokenizeString(s, qfalse);
 

@@ -339,7 +339,7 @@ static float PF_ReadFloat(uint8_t* error)
   */
 static char *PF_ReadString(void)
 {
-	return MSG_ReadString(&net_message);
+	return MSG_ReadString(&net_message, NULL);
 }
 
 /**
@@ -347,7 +347,7 @@ static char *PF_ReadString(void)
   */
 static void PF_ReadPos(vec3_t pos)
 {
-	MSG_ReadPos(&net_message, pos);
+	MSG_ReadPos(&net_message, NULL, pos);
 }
 
 /**
@@ -355,7 +355,7 @@ static void PF_ReadPos(vec3_t pos)
   */
 static void PF_ReadGPos(pos3_t pos)
 {
-	MSG_ReadGPos(&net_message, pos);
+	MSG_ReadGPos(&net_message, NULL, pos);
 }
 
 /**
@@ -363,7 +363,7 @@ static void PF_ReadGPos(pos3_t pos)
   */
 static void PF_ReadDir(vec3_t vector)
 {
-	MSG_ReadDir(&net_message, vector);
+	MSG_ReadDir(&net_message, NULL, vector);
 }
 
 /**
@@ -371,7 +371,7 @@ static void PF_ReadDir(vec3_t vector)
   */
 static float PF_ReadAngle(void)
 {
-	return MSG_ReadAngle(&net_message);
+	return MSG_ReadAngle(&net_message, NULL);
 }
 
 /**
@@ -379,11 +379,11 @@ static float PF_ReadAngle(void)
   */
 static void PF_ReadData(void *buffer, int size)
 {
-	MSG_ReadData(&net_message, buffer, size);
+	MSG_ReadData(&net_message, NULL, buffer, size);
 }
 
 
-static qboolean pfe_pending = qfalse;
+static bool_t pfe_pending = false;
 static int pfe_mask = 0;
 
 /**
@@ -397,7 +397,7 @@ static void PF_EndEvents(void)
 	MSG_WriteByte(&sv.multicast, EV_NULL);
 	SV_Multicast(pfe_mask);
 /*	SV_SendClientMessages(); */
-	pfe_pending = qfalse;
+	pfe_pending = false;
 }
 
 /**
@@ -412,7 +412,7 @@ static void PF_AddEvent(int mask, int eType)
 			PF_EndEvents();
 
 		/* start the new event */
-		pfe_pending = qtrue;
+		pfe_pending = true;
 		pfe_mask = mask;
 		MSG_WriteByte(&sv.multicast, svc_event);
 	}

@@ -356,12 +356,12 @@ void SV_ExecuteClientMessage(client_t * cl)
 			break;
 
 		case clc_userinfo:
-			Q_strncpyz(cl->userinfo, MSG_ReadString(&net_message), sizeof(cl->userinfo));
+			Q_strncpyz(cl->userinfo, MSG_ReadString(&net_message, NULL), sizeof(cl->userinfo));
 			SV_UserinfoChanged(cl);
 			break;
 
 		case clc_stringcmd:
-			s = MSG_ReadString(&net_message);
+			s = MSG_ReadString(&net_message, NULL);
 
 			/* malicious users may try using too many string commands */
 			if (++stringCmdCount < MAX_STRINGCMDS)
