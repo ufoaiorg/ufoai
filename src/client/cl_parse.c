@@ -323,7 +323,7 @@ void CL_ParseConfigString (void)
 
 	/* there may be overflows in i==CS_TILES - but thats ok */
 	/* see definition of configstrings and MAX_TILESTRINGS */
-	Q_strncpyz (cl.configstrings[i], s, MAX_TOKEN_CHARS);
+	strcpy (cl.configstrings[i], s);
 
 	/* do something apropriate */
 	if (i >= CS_LIGHTS && i < CS_LIGHTS+MAX_LIGHTSTYLES)
