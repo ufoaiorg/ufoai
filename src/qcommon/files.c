@@ -196,7 +196,7 @@ int FS_FOpenFileSingle(const char *filename, FILE ** file)
 	searchpath_t *search;
 	char netpath[MAX_OSPATH];
 	pack_t *pak;
-	int i, file_from_pak = 0;;
+	int i, file_from_pak = 0;
 	filelink_t *link;
 
 	/* check for links first */
@@ -274,11 +274,9 @@ int FS_Seek(FILE * f, long offset, int origin)
 	return fseek(f, offset, _origin);
 }
 
-int FS_FOpenFile(const char *filename, FILE ** file)
+int FS_FOpenFile(const char *filename, FILE **file)
 {
-	int result, len;
-
-	len = strlen(filename);
+	int result;
 
 	/* open file */
 	result = FS_FOpenFileSingle(filename, file);
