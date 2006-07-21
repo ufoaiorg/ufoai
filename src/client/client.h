@@ -246,7 +246,7 @@ typedef struct {
 	FILE *demofile;
 
 	/* needs to be here, because server can be shutdown, before we see the ending screen */
-	int team;
+	uint8_t team;
 } client_static_t;
 
 extern client_static_t cls;
@@ -500,24 +500,24 @@ typedef struct le_s {
 	qboolean inuse;
 	qboolean invis;
 	qboolean selected;
-	int type;
+	uint8_t type;
 	int entnum;
 
 	vec3_t origin, oldOrigin;
 	pos3_t pos, oldPos;
 	uint8_t dir;
 
-	int TU, maxTU;
-	int morale, maxMorale;
-	int HP, maxHP;
-	int STUN;					/* 0 stunned - state STATE_STUN */
-	int state;
+	uint8_t TU, maxTU;
+	uint8_t morale, maxMorale;
+	uint8_t HP, maxHP;
+	uint8_t STUN;					/* 0 stunned - state STATE_STUN */
+	int16_t state;
 
 	float angles[3];
 	float sunfrac;
 	float alpha;
 
-	int team;
+	uint8_t team;
 	int pnum;
 
 	int contents;
@@ -543,7 +543,7 @@ typedef struct le_s {
 	char *ref1, *ref2;
 	inventory_t i;
 	int left, right;
-	int fieldSize;				/* ACTOR_SIZE_* */
+	uint8_t fieldSize;				/* ACTOR_SIZE_* */
 
 	/* is called before adding a le to scene */
 	qboolean(*addFunc) (struct le_s * le, entity_t * ent);

@@ -364,32 +364,29 @@ CL_ParseStartSoundPacket
 */
 void CL_ParseStartSoundPacket(void)
 {
-	vec3_t  pos_v;
-	float	*pos;
-	int 	channel, ent;
-	int 	sound_num;
-	float 	volume;
-	float 	attenuation;
-	int		flags;
-	float	ofs;
+	vec3_t pos_v;
+	float *pos;
+	int channel, ent;
+	float volume, attenuation, ofs;
+	uint8_t flags, sound_num;
 
 	flags = MSG_ReadByte (&net_message);
 	sound_num = MSG_ReadByte (&net_message);
 
 	if (flags & SND_VOLUME)
-		volume = MSG_ReadByte (&net_message) / 255.0;
+		volume = MSG_ReadByte (&net_message) / 255.0f;
 	else
 		volume = DEFAULT_SOUND_PACKET_VOLUME;
 
 	if (flags & SND_ATTENUATION)
-		attenuation = MSG_ReadByte (&net_message) / 64.0;
+		attenuation = MSG_ReadByte (&net_message) / 64.0f;
 	else
 		attenuation = DEFAULT_SOUND_PACKET_ATTENUATION;
 
 	if (flags & SND_OFFSET)
-		ofs = MSG_ReadByte (&net_message) / 1000.0;
+		ofs = MSG_ReadByte (&net_message) / 1000.0f;
 	else
-		ofs = 0;
+		ofs = 0.0f;
 
 	/* entity reletive */
 	if (flags & SND_ENT) {
@@ -704,8 +701,8 @@ CL_ActorStateChange
 */
 void CL_ActorStateChange( sizebuf_t *sb )
 {
-	le_t	*le;
-	int		number;
+	le_t *le;
+	uint8_t number;
 
 	number = MSG_ReadShort( sb );
 	le = LE_Get( number );
@@ -727,9 +724,9 @@ CL_ActorShootHidden
 */
 void CL_ActorShootHidden( sizebuf_t *sb )
 {
-	fireDef_t	*fd;
-	qboolean	first;
-	int		type;
+	fireDef_t *fd;
+	bool_t first;
+	uint8_t type;
 
 	first = MSG_ReadByte( sb );
 	type = MSG_ReadByte( sb );
@@ -808,9 +805,8 @@ void CL_InvAdd( sizebuf_t *sb )
 {
 	item_t	item;
 	le_t	*le;
-	int		number;
-	int		size;
-	byte	container, x, y;
+	int16_t number, size;
+	uint8_t container, x, y;
 
 	size = MSG_ReadShort( sb );
 	number = MSG_ReadShort( sb );
@@ -959,11 +955,9 @@ CL_ParseEvent
 void CL_ParseEvent( void )
 {
 	evTimes_t *et, *last, *cur;
-	qboolean now;
-	int oldCount;
-	int length;
-	int eType;
-	int time;
+	bool_t now;
+	int length, time, oldCount;
+	uint8_t eType;
 
 	while ( ( eType = MSG_ReadByte( &net_message ) ) != 0 ) {
 		if (net_message.readcount > net_message.cursize) {
@@ -1033,9 +1027,9 @@ void CL_ParseEvent( void )
 				}
 			case EV_ACTOR_SHOOT:
 				{
-					fireDef_t	*fd;
-					int		type, flags;
-					vec3_t	muzzle, impact;
+					fireDef_t *fd;
+					uint8_t type, flags;
+					vec3_t muzzle, impact;
 
 					/* read data */
 					MSG_ReadShort( &net_message );
@@ -1111,8 +1105,8 @@ CL_Events
 */
 void CL_Events( void )
 {
-	evTimes_t	*last;
-	byte		eType;
+	evTimes_t *last;
+	uint8_t eType;
 
 	if ( cls.state < ca_connected )
 		return;
@@ -1122,9 +1116,9 @@ void CL_Events( void )
 		evStorage.readcount = etCurrent->pos;
 		eType = MSG_ReadByte( &evStorage );
 
-#if 0
+#if PARANOID
 		/* check if eType is valid */
-		if ( eType < 0 || eType >= EV_NUM_EVENTS )
+		if ( eType >= EV_NUM_EVENTS )
 			Com_Error( ERR_DROP, "CL_Events: invalid event %i\n", eType );
 #endif
 
@@ -1167,9 +1161,8 @@ CL_ParseServerMessage
 */
 void CL_ParseServerMessage (void)
 {
-	int			cmd;
-	char		*s;
-	int			i;
+	uint8_t cmd, i;
+	char *s;
 
 	/* if recording demos, copy the message out */
 	if (cl_shownet->value == 1)
