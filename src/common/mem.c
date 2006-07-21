@@ -43,11 +43,9 @@ typedef struct zhead_s {
 	size_t size; /**< @brief The size of the block allocated. */
 } zhead_t;
 
-#ifdef MEMDEBUG
 static zhead_t z_chain;
 static int32_t z_count = 0;
 static int32_t z_bytes = 0;
-#endif /* MEMDEBUG */
 
 /**
  * @brief Initialises the memory sub-system.
