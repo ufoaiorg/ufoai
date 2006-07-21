@@ -916,7 +916,7 @@ int MSG_LengthFormat(sizebuf_t *sb, uint8_t *error, char *format)
 /**
  * @brief
  */
-void SZ_Init(sizebuf_t *buf, void *data, int length)
+void SZ_Init(sizebuf_t *buf, void *data, size_t length)
 {
 	/* Don't like this - how do you KNOW everything should be initialised to 0?
 	 * It's just lazy and unmaintainable.
@@ -941,7 +941,7 @@ void SZ_Clear(sizebuf_t *buf)
 /**
  * @brief
  */
-void *SZ_GetSpace(sizebuf_t *buf, int length)
+void *SZ_GetSpace(sizebuf_t *buf, size_t length)
 {
 	void *data;
 

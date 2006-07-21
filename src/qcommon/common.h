@@ -43,10 +43,10 @@ typedef struct sizebuf_s {
 	int readcount;
 } sizebuf_t;
 
-void SZ_Init(sizebuf_t *buf, void *data, int length);
+void SZ_Init(sizebuf_t *buf, void *data, size_t length);
 void SZ_Clear(sizebuf_t *buf);
-void *SZ_GetSpace(sizebuf_t *buf, int length);
-void SZ_Write(sizebuf_t *buf, void *data, int length);
+void *SZ_GetSpace(sizebuf_t *buf, size_t length);
+void SZ_Write(sizebuf_t *buf, void *data, size_t length);
 void SZ_WriteString(sizebuf_t *buf, char *data);	/* strcats onto the sizebuf */
 
 /*============================================================================ */
