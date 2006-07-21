@@ -941,13 +941,11 @@ void R_Flash(void)
 }
 
 
-/*
-================
-R_RenderView
-
-r_newrefdef must be set before the first call
-================
-*/
+/**
+ * @brief
+ * @sa R_RenderFrame
+ * @note r_newrefdef must be set before the first call
+ */
 void R_RenderView(refdef_t * fd)
 {
 	if (r_norefresh->value)
@@ -1032,11 +1030,12 @@ void R_SetGL2D(void)
 	qglColor4f(1, 1, 1, 1);
 }
 
-/*
-====================
-R_RenderFrame
-====================
-*/
+/**
+ * @brief
+ * @sa R_RenderView
+ * @sa V_RenderView
+ * @sa SCR_TimeRefresh_f
+ */
 void R_RenderFrame(refdef_t * fd)
 {
 	R_RenderView(fd);
