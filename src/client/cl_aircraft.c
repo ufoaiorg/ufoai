@@ -261,8 +261,8 @@ void CL_AircraftSelect(void)
 	Cvar_Set("mn_aircraft_model", air->model);
 	Cvar_Set("mn_aircraft_weapon", air->weapon ? air->weapon->name : "");
 	Cvar_Set("mn_aircraft_shield", air->shield ? air->shield->name : "");
-	Cvar_Set("mn_aircraft_weapon_img", air->weapon ? air->weapon->image_top : "menu/airequip_no_weapon.jpg");
-	Cvar_Set("mn_aircraft_shield_img", air->shield ? air->shield->image_top : "menu/airequip_no_shield.jpg");
+	Cvar_Set("mn_aircraft_weapon_img", air->weapon ? air->weapon->image_top : "menu/airequip_no_weapon");
+	Cvar_Set("mn_aircraft_shield_img", air->shield ? air->shield->image_top : "menu/airequip_no_shield");
 
 	/* generate aircraft info text */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\n"), air->speed);
@@ -478,6 +478,8 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 	menuText[TEXT_LIST] = bufferShields;
 	/* weapons */
 	menuText[TEXT_AIRCRAFT_LIST] = bufferWeapons;
+	/* shield / weapon description */
+	menuText[TEXT_STANDARD] = NULL;
 }
 
 /**
@@ -487,6 +489,7 @@ void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 {
 	aircraft_t *air;
 	int num;
+	static char weaponDesc[512];
 
 	if ( baseCurrent->aircraftCurrent < 0 )
 		return;
@@ -501,7 +504,11 @@ void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 	if ( num <= 1 ) {
 		Com_DPrintf("Reset the aircraft weapon\n");
 		air->weapon = NULL;
+		Com_sprintf(weaponDesc, sizeof(weaponDesc), _("No weapon assigned"));
+	} else {
+		/*Com_sprintf(weaponDesc, sizeof(weaponDesc), _(""));*/
 	}
+	menuText[TEXT_STANDARD] = weaponDesc;
 }
 
 /**
@@ -511,6 +518,7 @@ void CL_AircraftEquipmenuMenuShieldsClick_f(void)
 {
 	aircraft_t *air;
 	int num;
+	static char shieldDesc[512];
 
 	if ( baseCurrent->aircraftCurrent < 0 )
 		return;
@@ -526,6 +534,10 @@ void CL_AircraftEquipmenuMenuShieldsClick_f(void)
 	if ( num <= 1 ) {
 		Com_DPrintf("Reset the aircraft shield\n");
 		air->shield = NULL;
+		Com_sprintf(shieldDesc, sizeof(shieldDesc), _("No shield assigned"));
+	} else {
+		/*Com_sprintf(shieldDesc, sizeof(shieldDesc), _(""));*/
 	}
+	menuText[TEXT_STANDARD] = shieldDesc;
 }
 
