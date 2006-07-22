@@ -2323,8 +2323,6 @@ void Com_EmptyContainer(inventory_t * i, int container)
 #ifdef PARANOID
 	if (ic)
 		Com_Printf("Com_EmptyContainer: '%p', container ID: %i\n", ic, container );
-	else
-		Com_Printf("Com_EmptyContainer: i->c[%i] is null\n", container);
 #endif
 
 	while (ic) {
