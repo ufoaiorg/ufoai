@@ -1,7 +1,7 @@
 // ==================
 // ALTERNATIVE HUD MAIN
 // ==================
-	
+
 menu althud
 {
 	// ==================
@@ -12,11 +12,11 @@ menu althud
 		pos		"0 0"
 		size	"1024 768"
 	}
-	
+
 	// ==================
 	// background
 	// ==================
-	
+
 	pic bar_top
 	{
 		image	althud/bar_top
@@ -28,7 +28,7 @@ menu althud
 		size	"192 56"
 		click { }
 	}
-	
+
 	pic bar_right
 	{
 		image	althud/bar_right
@@ -42,19 +42,20 @@ menu althud
 	}
 	zone zone_clickright
 	{
+		tooltip	"_Inventory and physical stats"
 		pos		"878 84"
 		size	"130 265"
 		click	{ cmd "mn_push inventory;" }
 		rclick	{ cmd "mn_push physdata;" }
 	}
-	
+
 	pic bar_floor
 	{
 		image	althud/bar_floor
 		pos		"960 600"
 		click { }
 	}
-	
+
 	pic bar_teamright
 	{
 		image	althud/bar_teamright
@@ -68,7 +69,7 @@ menu althud
 		pos		"856 640"
 		click	{ cmd "hud_select 0;" }
 	}
-		
+
 	pic bar_teamsep1
 	{
 		image	althud/bar_teamsep
@@ -80,7 +81,7 @@ menu althud
 		image	althud/bar_teambox
 		pos		"776 640"
 		click	{ cmd "hud_select 1;" }
-	}	
+	}
 
 	pic bar_teamsep2
 	{
@@ -93,7 +94,7 @@ menu althud
 		image	althud/bar_teambox
 		pos		"696 640"
 		click	{ cmd "hud_select 2;" }
-	}	
+	}
 
 	pic bar_teamsep3
 	{
@@ -106,7 +107,7 @@ menu althud
 		image	althud/bar_teambox
 		pos		"616 640"
 		click	{ cmd "hud_select 3;" }
-	}	
+	}
 
 	pic bar_teamsep4
 	{
@@ -119,7 +120,7 @@ menu althud
 		image	althud/bar_teambox
 		pos		"536 640"
 		click	{ cmd "hud_select 4;" }
-	}	
+	}
 
 	pic bar_teamsep5
 	{
@@ -132,7 +133,7 @@ menu althud
 		image	althud/bar_teambox
 		pos		"456 640"
 		click	{ cmd "hud_select 5;" }
-	}	
+	}
 
 	pic bar_teamsep6
 	{
@@ -145,7 +146,7 @@ menu althud
 		image	althud/bar_teambox
 		pos		"376 640"
 		click	{ cmd "hud_select 6;" }
-	}	
+	}
 
 	pic bar_teamsep7
 	{
@@ -158,7 +159,7 @@ menu althud
 		image	althud/bar_teambox
 		pos		"296 640"
 		click	{ cmd "hud_select 7;" }
-	}	
+	}
 
 	pic bar_teamleft
 	{
@@ -166,38 +167,38 @@ menu althud
 		pos		"264 640"
 		click { }
 	}
-	
+
 	confunc numonteam1
 	{
-		*bar_teambox1 invis true  *bar_teamsep1 invis true  *head1 invis true 
-		*bar_teambox2 invis true  *bar_teamsep2 invis true  *head2 invis true 
-		*bar_teambox3 invis true  *bar_teamsep3 invis true  *head3 invis true 
-		*bar_teambox4 invis true  *bar_teamsep4 invis true  *head4 invis true 
-		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true 
-		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true 
-		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true 
+		*bar_teambox1 invis true  *bar_teamsep1 invis true  *head1 invis true
+		*bar_teambox2 invis true  *bar_teamsep2 invis true  *head2 invis true
+		*bar_teambox3 invis true  *bar_teamsep3 invis true  *head3 invis true
+		*bar_teambox4 invis true  *bar_teamsep4 invis true  *head4 invis true
+		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true
+		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
 		*bar_teamleft pos "824 640"
 	}
 	confunc numonteam2
 	{
 		*bar_teambox1 invis false *bar_teamsep1 invis false *head1 invis false
-		*bar_teambox2 invis true  *bar_teamsep2 invis true  *head2 invis true 
-		*bar_teambox3 invis true  *bar_teamsep3 invis true  *head3 invis true 
-		*bar_teambox4 invis true  *bar_teamsep4 invis true  *head4 invis true 
-		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true 
-		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true 
-		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true 
+		*bar_teambox2 invis true  *bar_teamsep2 invis true  *head2 invis true
+		*bar_teambox3 invis true  *bar_teamsep3 invis true  *head3 invis true
+		*bar_teambox4 invis true  *bar_teamsep4 invis true  *head4 invis true
+		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true
+		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
 		*bar_teamleft pos "744 640"
 	}
 	confunc numonteam3
 	{
 		*bar_teambox1 invis false *bar_teamsep1 invis false *head1 invis false
 		*bar_teambox2 invis false *bar_teamsep2 invis false *head2 invis false
-		*bar_teambox3 invis true  *bar_teamsep3 invis true  *head3 invis true 
-		*bar_teambox4 invis true  *bar_teamsep4 invis true  *head4 invis true 
-		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true 
-		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true 
-		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true 
+		*bar_teambox3 invis true  *bar_teamsep3 invis true  *head3 invis true
+		*bar_teambox4 invis true  *bar_teamsep4 invis true  *head4 invis true
+		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true
+		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
 		*bar_teamleft pos "664 640"
 	}
 	confunc numonteam4
@@ -205,10 +206,10 @@ menu althud
 		*bar_teambox1 invis false *bar_teamsep1 invis false *head1 invis false
 		*bar_teambox2 invis false *bar_teamsep2 invis false *head2 invis false
 		*bar_teambox3 invis false *bar_teamsep3 invis false *head3 invis false
-		*bar_teambox4 invis true  *bar_teamsep4 invis true  *head4 invis true 
-		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true 
-		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true 
-		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true 
+		*bar_teambox4 invis true  *bar_teamsep4 invis true  *head4 invis true
+		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true
+		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
 		*bar_teamleft pos "584 640"
 	}
 	confunc numonteam5
@@ -217,9 +218,9 @@ menu althud
 		*bar_teambox2 invis false *bar_teamsep2 invis false *head2 invis false
 		*bar_teambox3 invis false *bar_teamsep3 invis false *head3 invis false
 		*bar_teambox4 invis false *bar_teamsep4 invis false *head4 invis false
-		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true 
-		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true 
-		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true 
+		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true
+		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
 		*bar_teamleft pos "504 640"
 	}
 	confunc numonteam6
@@ -229,8 +230,8 @@ menu althud
 		*bar_teambox3 invis false *bar_teamsep3 invis false *head3 invis false
 		*bar_teambox4 invis false *bar_teamsep4 invis false *head4 invis false
 		*bar_teambox5 invis false *bar_teamsep5 invis false *head5 invis false
-		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true 
-		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true 
+		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
 		*bar_teamleft pos "424 640"
 	}
 	confunc numonteam7
@@ -241,7 +242,7 @@ menu althud
 		*bar_teambox4 invis false *bar_teamsep4 invis false *head4 invis false
 		*bar_teambox5 invis false *bar_teamsep5 invis false *head5 invis false
 		*bar_teambox6 invis false *bar_teamsep6 invis false *head6 invis false
-		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true 
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
 		*bar_teamleft pos "344 640"
 	}
 	confunc numonteam8
@@ -255,13 +256,13 @@ menu althud
 		*bar_teambox7 invis false *bar_teamsep7 invis false *head7 invis false
 		*bar_teamleft pos "264 640"
 	}
-	
+
 	pic bar_selbox
 	{
 		image	althud/bar_selbox
 		pos		"849 628"
 	}
-	
+
 	confunc hudselecta0 { *bar_selbox pos "849 628" }
 	confunc hudselecta1 { *bar_selbox pos "769 628" }
 	confunc hudselecta2 { *bar_selbox pos "689 628" }
@@ -270,12 +271,12 @@ menu althud
 	confunc hudselecta5 { *bar_selbox pos "449 628" }
 	confunc hudselecta6 { *bar_selbox pos "369 628" }
 	confunc hudselecta7 { *bar_selbox pos "289 628" }
-	
+
 
 	// ==================
 	// models
 	// ==================
-	
+
 	model right_actor
 	{
 		md2		"*cvar mn_body"
@@ -285,8 +286,8 @@ menu althud
 		angles	"0 80 90"
 		scale	"4 4 4"
 		color	"0.5 0.5 0.5 1"
-	}	
-	
+	}
+
 	model right_head
 	{
 		md2		"*cvar mn_head"
@@ -294,25 +295,25 @@ menu althud
 		tag		"right_actor tag_head"
 		color	"0.5 0.5 0.5 1"
 		scale	"1.0 1.0 1.0"
-	}	
-	
+	}
+
 	model right_rweapon
 	{
 		md2		"*cvar mn_rweapon"
 		tag		"right_actor tag_rweapon"
 		color	"0.5 0.5 0.5 1"
 		scale	"1.0 1.0 1.0"
-	}	
-	
+	}
+
 	model right_lweapon
 	{
 		md2		"*cvar mn_lweapon"
 		tag		"right_actor tag_lweapon"
 		color	"0.5 0.5 0.5 1"
 		scale	"1.0 1.0 1.0"
-	}	
+	}
 
-	
+
 	model head0
 	{
 		md2		"*cvar mn_head0"
@@ -320,7 +321,7 @@ menu althud
 		angles	"15 60 100"
 		scale	"7 7 7"
 		color	"0.5 0.5 0.5 1"
-	}	
+	}
 	model head1
 	{
 		md2		"*cvar mn_head1"
@@ -328,7 +329,7 @@ menu althud
 		angles	"15 60 100"
 		scale	"7 7 7"
 		color	"0.5 0.5 0.5 1"
-	}	
+	}
 	model head2
 	{
 		md2		"*cvar mn_head2"
@@ -336,7 +337,7 @@ menu althud
 		angles	"15 60 100"
 		scale	"7 7 7"
 		color	"0.5 0.5 0.5 1"
-	}	
+	}
 	model head3
 	{
 		md2		"*cvar mn_head3"
@@ -344,7 +345,7 @@ menu althud
 		angles	"15 60 100"
 		scale	"7 7 7"
 		color	"0.5 0.5 0.5 1"
-	}	
+	}
 	model head4
 	{
 		md2		"*cvar mn_head4"
@@ -352,7 +353,7 @@ menu althud
 		angles	"15 60 100"
 		scale	"7 7 7"
 		color	"0.5 0.5 0.5 1"
-	}	
+	}
 	model head5
 	{
 		md2		"*cvar mn_head5"
@@ -360,7 +361,7 @@ menu althud
 		angles	"15 60 100"
 		scale	"7 7 7"
 		color	"0.5 0.5 0.5 1"
-	}	
+	}
 	model head6
 	{
 		md2		"*cvar mn_head6"
@@ -368,7 +369,7 @@ menu althud
 		angles	"15 60 100"
 		scale	"7 7 7"
 		color	"0.5 0.5 0.5 1"
-	}	
+	}
 	model head7
 	{
 		md2		"*cvar mn_head7"
@@ -376,26 +377,29 @@ menu althud
 		angles	"15 60 100"
 		scale	"7 7 7"
 		color	"0.5 0.5 0.5 1"
-	}	
-	
+	}
+
 	// ==================
 	// buttons
 	// ==================
-	
+
 	zone spotted
-	{	
+	{
+		tooltip	"_Enemy spotted"
 		pos		"841 12"
 		size	"48 34"
 		click	{ cmd nextalien; }
 	}
 	string numspotted
 	{
+		tooltip "_Click to cycle through the spotted enemies"
 		string	"*cvar mn_numaliensspotted"
 		pos		"865 30"
 		align	cc
 	}
 	pic nextround
 	{
+		tooltip	"_Finish round"
 		image	althud/buttons_althud1
 		pos		"888 11"
 		texl	"0 0"
@@ -429,8 +433,8 @@ menu althud
 		*bt_primaryright   image althud/buttons_althud1
 		*bt_secondaryright image althud/buttons_althud1
 	}
-	
-	confunc tomova { bt_weapon_clear }		
+
+	confunc tomova { bt_weapon_clear }
 	confunc towpla { bt_weapon_clear *bt_primaryleft    image althud/buttons_althud1a }
 	confunc towpra { bt_weapon_clear *bt_primaryright   image althud/buttons_althud1a }
 	confunc towsla { bt_weapon_clear *bt_secondaryleft  image althud/buttons_althud1a }
@@ -438,6 +442,7 @@ menu althud
 
 	pic bt_primaryright
 	{
+		tooltip	"_Primary fire mode"
 		image	althud/buttons_althud1
 		pos		"871 497"
 		texl	"0 74"
@@ -447,6 +452,7 @@ menu althud
 	}
 	pic bt_secondaryright
 	{
+		tooltip	"_Secondary fire mode"
 		image	althud/buttons_althud1
 		pos		"900 497"
 		texl	"27 74"
@@ -456,6 +462,7 @@ menu althud
 	}
 	pic bt_primaryleft
 	{
+		tooltip	"_Primary fire mode"
 		image	althud/buttons_althud1
 		pos		"871 497"
 		texl	"0 74"
@@ -465,6 +472,7 @@ menu althud
 	}
 	pic bt_secondaryleft
 	{
+		tooltip	"_Secondary fire mode"
 		image	althud/buttons_althud1
 		pos		"900 497"
 		texl	"27 74"
@@ -472,22 +480,25 @@ menu althud
 		mousefx	true
 		click	{ cmd firels; }
 	}
-	
+
 	confunc startreactiona { *bt_reaction image althud/buttons_althud1a }
 	confunc stopreactiona  { *bt_reaction image althud/buttons_althud1 }
 
 	pic bt_reaction
 	{
+		tooltip	"_Toggle reaction-fire"
 		image	althud/buttons_althud1
 		mousefx true
 		pos		"929 497"
 		texl	"81 37"
 		texh	"106 70"
 		click	{ cmd togglereaction; }
-	}		
+	}
 
+	// FIXME: No reload left
 	pic reload
 	{
+		tooltip	"_Reload weapon"
 		image	althud/buttons_althud1
 		pos		"991 497"
 		texl	"0 37"
@@ -501,6 +512,7 @@ menu althud
 
 	pic bt_duck
 	{
+		tooltip	"_Crouch/Stand up"
 		image	althud/buttons_althud1
 		mousefx true
 		pos		"991 536"
@@ -508,9 +520,10 @@ menu althud
 		texh	"52 70"
 		click	{ cmd standcrouch; }
 	}
-	
+
 	pic bt_floorup
 	{
+		tooltip	"_Level up"
 		image	althud/buttons_althud1
 		mousefx true
 		pos		"991 618"
@@ -520,6 +533,7 @@ menu althud
 	}
 	pic bt_floordown
 	{
+		tooltip	"_Level down"
 		image	althud/buttons_althud1
 		mousefx true
 		pos		"991 693"
@@ -527,8 +541,8 @@ menu althud
 		texh	"106 107"
 		click	{ cmd "mn_modify cl_worldlevel -1 0 7;" }
 	}
-	
-	container right 
+
+	container right
 	{
 		pos "882 404"
 	}
@@ -538,15 +552,15 @@ menu althud
 	}
 	string ammoright
 	{
-		string	"*cvar mn_ammoright"		
+		string	"*cvar mn_ammoright"
 		pos		"885 470"
 	}
 	string ammoleft
 	{
-		string	"*cvar mn_ammoleft"		
+		string	"*cvar mn_ammoleft"
 		pos		"885 470"
 	}
-	
+
 	func show_rightweapon
 	{
 		*right invis false *ammoright invis false
@@ -561,9 +575,10 @@ menu althud
 		*bt_primaryright invis true  *bt_secondaryright invis true
 		*bt_primaryleft  invis false *bt_secondaryleft  invis false
 	}
-	
+
 	pic teamnum_dec
 	{
+		tooltip	"_Switch to right hand weapon"
 		image	menu/buttons_small
 		pos		"964 464"
 		texl	"0 0"		texh	"16 16"
@@ -572,23 +587,24 @@ menu althud
 	}
 	pic teamnum_inc
 	{
+		tooltip	"_Switch to left hand weapon"
 		image	menu/buttons_small
 		pos		"980 464"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
 		click	{ show_leftweapon }
 	}
-	
+
 	// ==================
 	// strings
 	// ==================
-	
+
 	string str_name
 	{
 		string	"*cvar mn_name"
 		pos		"883 84"
 	}
-	
+
 	string str_hp
 	{
 		string	"*cvar mn_hp"
@@ -607,18 +623,18 @@ menu althud
 		pos		"959 369"
 		align	uc
 	}
-	
+
 	string str_floor
 	{
 		string	"*cvar cl_worldlevel"
 		pos		"1005 664"
 		align	uc
 	}
-	
+
 	// ==================
 	// status bars
 	// ==================
-	
+
 	bar health
 	{
 		pos		"886 324"
@@ -627,7 +643,7 @@ menu althud
 		current	"*cvar mn_hp"
 		max		"*cvar mn_hpmax"
 		align	uc
-	}	
+	}
 
 	bar timeall
 	{
@@ -637,7 +653,7 @@ menu althud
 		current	"*cvar mn_tu"
 		max		"*cvar mn_tumax"
 		align	uc
-	}	
+	}
 	bar timeremain
 	{
 		pos		"886 332"
@@ -647,7 +663,7 @@ menu althud
 		max		"*cvar mn_tumax"
 		align	uc
 	}
-	
+
 	bar morale
 	{
 		pos		"886 340"
@@ -656,7 +672,7 @@ menu althud
 		current	"*cvar mn_morale"
 		max		"*cvar mn_moralemax"
 		align	uc
-	}	
+	}
 
 	bar health0
 	{
@@ -666,7 +682,7 @@ menu althud
 		current	"*cvar mn_hp0"
 		max		"*cvar mn_hpmax0"
 		align	cc
-	}	
+	}
 	bar time0
 	{
 		pos		"919 753"
@@ -675,7 +691,7 @@ menu althud
 		current	"*cvar mn_tu0"
 		max		"*cvar mn_tumax0"
 		align	cc
-	}	
+	}
 	bar health1
 	{
 		pos		"833 753"
@@ -684,7 +700,7 @@ menu althud
 		current	"*cvar mn_hp1"
 		max		"*cvar mn_hpmax1"
 		align	cc
-	}	
+	}
 	bar time1
 	{
 		pos		"839 753"
@@ -693,7 +709,7 @@ menu althud
 		current	"*cvar mn_tu1"
 		max		"*cvar mn_tumax1"
 		align	cc
-	}	
+	}
 	bar health2
 	{
 		pos		"753 753"
@@ -702,7 +718,7 @@ menu althud
 		current	"*cvar mn_hp2"
 		max		"*cvar mn_hpmax2"
 		align	cc
-	}	
+	}
 	bar time2
 	{
 		pos		"759 753"
@@ -711,7 +727,7 @@ menu althud
 		current	"*cvar mn_tu2"
 		max		"*cvar mn_tumax2"
 		align	cc
-	}	
+	}
 	bar health3
 	{
 		pos		"673 753"
@@ -720,7 +736,7 @@ menu althud
 		current	"*cvar mn_hp3"
 		max		"*cvar mn_hpmax3"
 		align	cc
-	}	
+	}
 	bar time3
 	{
 		pos		"679 753"
@@ -729,7 +745,7 @@ menu althud
 		current	"*cvar mn_tu3"
 		max		"*cvar mn_tumax3"
 		align	cc
-	}	
+	}
 	bar health4
 	{
 		pos		"593 753"
@@ -738,7 +754,7 @@ menu althud
 		current	"*cvar mn_hp4"
 		max		"*cvar mn_hpmax4"
 		align	cc
-	}	
+	}
 	bar time4
 	{
 		pos		"599 753"
@@ -747,7 +763,7 @@ menu althud
 		current	"*cvar mn_tu4"
 		max		"*cvar mn_tumax4"
 		align	cc
-	}	
+	}
 	bar health5
 	{
 		pos		"513 753"
@@ -756,7 +772,7 @@ menu althud
 		current	"*cvar mn_hp5"
 		max		"*cvar mn_hpmax5"
 		align	cc
-	}	
+	}
 	bar time5
 	{
 		pos		"519 753"
@@ -765,7 +781,7 @@ menu althud
 		current	"*cvar mn_tu5"
 		max		"*cvar mn_tumax5"
 		align	cc
-	}	
+	}
 	bar health6
 	{
 		pos		"433 753"
@@ -774,7 +790,7 @@ menu althud
 		current	"*cvar mn_hp6"
 		max		"*cvar mn_hpmax6"
 		align	cc
-	}	
+	}
 	bar time6
 	{
 		pos		"439 753"
@@ -783,7 +799,7 @@ menu althud
 		current	"*cvar mn_tu6"
 		max		"*cvar mn_tumax6"
 		align	cc
-	}	
+	}
 	bar health7
 	{
 		pos		"353 753"
@@ -792,7 +808,7 @@ menu althud
 		current	"*cvar mn_hp7"
 		max		"*cvar mn_hpmax7"
 		align	cc
-	}	
+	}
 	bar time7
 	{
 		pos		"359 753"
@@ -801,8 +817,8 @@ menu althud
 		current	"*cvar mn_tu7"
 		max		"*cvar mn_tumax7"
 		align	cc
-	}	
-		
+	}
+
 	text infoscreen
 	{
 		pos		"20 722"
@@ -814,11 +830,11 @@ menu althud
 	// ==================
 	// init function
 	// ==================
-	
+
 	func init
 	{
 		cmd "set hud_refresh 1;"
 		cmd "ov_start;"
 		show_rightweapon
-	}	
+	}
 }
