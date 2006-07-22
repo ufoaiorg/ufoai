@@ -334,15 +334,19 @@ menu aircraft_equip
 	}
 	pic aircraftshield
 	{
+		tooltip	"_Shield"
 		pos	"40 40"
 		size	"128 128"
 		image "*cvar mn_aircraft_shield_img"
+		click
 	}
 	pic aircraftweapon
 	{
+		tooltip	"_Weapon"
 		pos	"267 40"
 		size	"128 128"
 		image "*cvar mn_aircraft_weapon_img"
+		click
 	}
 	string airequip_available
 	{
@@ -365,6 +369,7 @@ menu aircraft_equip
 //		bgcolor	"1 1 1 0.5"
 		format	"20 0"
 		num	1
+		mousefx	true
 		click
 	}
 	text airequip_weapons
@@ -374,6 +379,7 @@ menu aircraft_equip
 //		bgcolor	"1 1 1 0.5"
 		format	"20 0"
 		num	9
+		mousefx	true
 		click
 	}
 	pic airequip_button_leave
@@ -386,7 +392,7 @@ menu aircraft_equip
 		texh	"64 37"
 		click	{ cmd "mn_pop"  }
 	}
-	text airequip_selected_description
+	text aircraft_description
 	{
 		pos	"474 665"
 		size	"530 85"
