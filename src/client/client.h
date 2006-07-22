@@ -689,6 +689,8 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter);
 #define SAVE_FILE_VERSION 4
 #endif							/* SAVE_FILE_VERSION */
 
+#include "cl_aircraft.h"
+
 /* cl_basemanagment.c */
 /* needs the MAX_ACTIVETEAM definition from above. */
 #include "cl_basemanagement.h"

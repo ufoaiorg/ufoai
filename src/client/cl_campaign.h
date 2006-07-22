@@ -49,8 +49,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* blue (not water) 128, 128, 255 */
 /* blue (not water, too) 0, 0, 255 */
 
-#define MAX_UFOONGEOSCAPE 8
-
 typedef struct mission_s {
 	char *text;
 	char name[MAX_VAR];
@@ -139,11 +137,6 @@ typedef struct campaign_s {
 	qboolean finished;
 } campaign_t;
 
-extern aircraft_t aircraft[MAX_AIRCRAFT];
-extern int numAircraft;
-extern int interceptAircraft;
-extern aircraft_t *ufoOnGeoscape[MAX_UFOONGEOSCAPE];
-
 typedef struct nation_s {
 	char id[MAX_VAR];
 	char name[MAX_VAR];
@@ -159,7 +152,6 @@ typedef struct nation_s {
 
 void MN_MapCalcLine(vec2_t start, vec2_t end, mapline_t * line);
 void CL_MapActionReset(void);
-aircraft_t *CL_GetAircraft(char *name);
 
 typedef struct ccs_s {
 	equipDef_t eCampaign, eMission, eMarket;
