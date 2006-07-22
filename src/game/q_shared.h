@@ -115,11 +115,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define NULL ((void *)0)
 #endif
 
-/* NOTE: place this macro after stddef.h inclusion. */
-/*#if !defined offsetof*/
-/*#define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)*/
-/*#endif*/
-
 #define NONE				0xFF
 #define FULL				0xFFFFFF00
 
@@ -1041,7 +1036,7 @@ typedef struct character_s {
 	uint8_t skin;
 
 	/* new abilities and skills: */
-	uint8_t skills[SKILL_NUM_TYPES];
+	int16_t skills[SKILL_NUM_TYPES];
 
 	/* score */
 	int16_t kills[KILLED_NUM_TYPES];

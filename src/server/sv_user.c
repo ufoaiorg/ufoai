@@ -59,15 +59,11 @@ void SV_BeginDemoserver(void)
 		Com_Error(ERR_DROP, "Couldn't open %s\n", name);
 }
 
-/*
-================
-SV_New_f
-
-Sends the first message from the server to a connected client.
-This will be sent on the initial connection and upon each server load.
-Client reads via CL_ParseServerData in cl_parse.c
-================
-*/
+/**
+ * @brief Sends the first message from the server to a connected client.
+ * This will be sent on the initial connection and upon each server load.
+ * Client reads via CL_ParseServerData in cl_parse.c
+ */
 void SV_New_f(void)
 {
 	char *gamedir;
@@ -88,10 +84,8 @@ void SV_New_f(void)
 		return;
 	}
 
-	/* */
 	/* serverdata needs to go over for all types of servers */
 	/* to make sure the protocol is right, and to set the gamedir */
-	/* */
 	gamedir = Cvar_VariableString("gamedir");
 
 	/* send the serverdata */
@@ -109,11 +103,11 @@ void SV_New_f(void)
 
 	/* send full levelname */
 	MSG_WriteString(&sv_client->netchan.message, sv.configstrings[CS_NAME]);
+	Com_DPrintf("CS_NAME: %s\n", sv.configstrings[CS_NAME]);
 
-	/* */
 	/* game server */
-	/* */
 	if (sv.state == ss_game) {
+		Com_DPrintf("fetchting configstring\n");
 		/* begin fetching configstrings */
 		MSG_WriteByte(&sv_client->netchan.message, svc_stufftext);
 		MSG_WriteString(&sv_client->netchan.message, va("cmd configstrings %i 0\n", svs.spawncount));

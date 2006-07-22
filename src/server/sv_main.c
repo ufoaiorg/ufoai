@@ -254,13 +254,9 @@ void SVC_GetChallenge(void)
 	Netchan_OutOfBandPrint(NS_SERVER, net_from, "challenge %i", svs.challenges[i].challenge);
 }
 
-/*
-==================
-SVC_DirectConnect
-
-A connection request that did not come from the master
-==================
-*/
+/**
+ * @brief A connection request that did not come from the master
+ */
 void SVC_DirectConnect(void)
 {
 	char userinfo[MAX_INFO_STRING];
@@ -289,11 +285,13 @@ void SVC_DirectConnect(void)
 
 	challenge = atoi(Cmd_Argv(3));
 
-	strncpy(userinfo, Cmd_Argv(4), sizeof(userinfo) - 1);
-	userinfo[sizeof(userinfo) - 1] = 0;
+	Q_strncpyz(userinfo, Cmd_Argv(4), sizeof(userinfo));
 
 	/* force the IP key/value pair so the game can filter based on ip */
 	Info_SetValueForKey(userinfo, "ip", NET_AdrToString(net_from));
+
+	Com_DPrintf("port: %i, challenge: %i\n", qport, challenge);
+	Com_DPrintf("userinfo: %s\n", userinfo);
 
 	/* attractloop servers are ONLY for local clients */
 	if (sv.attractloop) {
@@ -357,7 +355,7 @@ void SVC_DirectConnect(void)
 	/* TODO: Check if the teamnum preference has already reached maxsoldiers */
 	/*       and reject connection if so */
 
-  gotnewcl:
+gotnewcl:
 	/* build a new connection */
 	/* accept the new client */
 	/* this is the only place a client_t is ever initialized */
@@ -398,6 +396,7 @@ void SVC_DirectConnect(void)
 	newcl->datagram.allowoverflow = true;
 	newcl->lastmessage = svs.realtime;	/* don't timeout */
 	newcl->lastconnect = svs.realtime;
+	Com_DPrintf("Connected\n");
 }
 
 int Rcon_Validate(void)
@@ -475,19 +474,19 @@ void SV_ConnectionlessPacket(void)
 	c = Cmd_Argv(0);
 	Com_DPrintf("Packet %s : %s\n", NET_AdrToString(net_from), c);
 
-	if (!strcmp(c, "ping"))
+	if (!Q_strcmp(c, "ping"))
 		SVC_Ping();
-	else if (!strcmp(c, "ack"))
+	else if (!Q_strcmp(c, "ack"))
 		SVC_Ack();
-	else if (!strcmp(c, "status"))
+	else if (!Q_strcmp(c, "status"))
 		SVC_Status();
-	else if (!strcmp(c, "info"))
+	else if (!Q_strcmp(c, "info"))
 		SVC_Info();
-	else if (!strcmp(c, "getchallenge"))
+	else if (!Q_strcmp(c, "getchallenge"))
 		SVC_GetChallenge();
-	else if (!strcmp(c, "connect"))
+	else if (!Q_strcmp(c, "connect"))
 		SVC_DirectConnect();
-	else if (!strcmp(c, "rcon"))
+	else if (!Q_strcmp(c, "rcon"))
 		SVC_RemoteCommand();
 	else
 		Com_Printf("bad connectionless packet from %s:\n%s\n", NET_AdrToString(net_from), s);

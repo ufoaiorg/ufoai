@@ -313,9 +313,9 @@ bool_t VID_LoadRefresh( char *name )
 
 	Real_IN_Init();
 
-	if ( re.Init( 0, 0 ) == -1 ) {
+	if ( re.Init( 0, 0 ) == false ) {
 		re.Shutdown();
-		VID_FreeReflib ();
+		VID_FreeReflib();
 		return false;
 	}
 

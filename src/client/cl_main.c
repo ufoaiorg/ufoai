@@ -1218,7 +1218,7 @@ void CL_InitLocal(void)
 	name = Cvar_Get("name", _("unnamed"), CVAR_USERINFO | CVAR_ARCHIVE);
 #ifndef _WIN32
 	/* set alsa as default */
-	s_system = Cvar_Get("s_system", "2", CVAR_USERINFO | CVAR_ARCHIVE);
+	s_system = Cvar_Get("s_system", "2", CVAR_ARCHIVE);
 #endif
 	team = Cvar_Get("team", "human", CVAR_USERINFO | CVAR_ARCHIVE);
 	equip = Cvar_Get("equip", "standard", CVAR_USERINFO | CVAR_ARCHIVE);

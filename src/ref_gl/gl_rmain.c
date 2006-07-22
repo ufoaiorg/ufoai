@@ -1566,7 +1566,7 @@ bool_t R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	if (err != GL_NO_ERROR)
 		ri.Con_Printf(PRINT_ALL, "glGetError() = 0x%x\n", err);
 
-	return false;
+	return true;
 }
 
 /*

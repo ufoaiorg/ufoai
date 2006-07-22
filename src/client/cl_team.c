@@ -1009,7 +1009,7 @@ void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
 
 		/* even new attributes */
 		for (j = 0; j < SKILL_NUM_TYPES; j++)
-			MSG_WriteByte(buf, chr->skills[j]);
+			MSG_WriteShort(buf, chr->skills[j]);
 
 		/* scores */
 		for (j = 0; j < KILLED_NUM_TYPES; j++)

@@ -2430,7 +2430,7 @@ void G_ClientTeamInfo(player_t * player)
 
 			/* new attributes */
 			for (k = 0; k < SKILL_NUM_TYPES; k++)
-				ent->chr.skills[k] = gi.ReadByte(NULL);
+				ent->chr.skills[k] = gi.ReadShort(NULL);
 
 			/* scores */
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
@@ -2471,7 +2471,7 @@ void G_ClientTeamInfo(player_t * player)
 				gi.ReadString();
 			gi.ReadByte(NULL);
 			for (k = 0; k < SKILL_NUM_TYPES; k++)
-				gi.ReadByte(NULL);
+				gi.ReadShort(NULL);
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
 				gi.ReadShort(NULL);
 			gi.ReadShort(NULL);

@@ -84,7 +84,7 @@ struct edict_s {
 	bool_t inuse;
 	int linkcount;
 
-	int number;
+	int16_t number;
 
 	vec3_t origin;
 	vec3_t angles;

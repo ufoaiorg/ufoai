@@ -344,7 +344,7 @@ typedef struct {
 	/* or a discrete file from anywhere in the quake search path */
 	/* a -1 return means the file does not exist */
 	/* NULL can be passed for buf to just determine existance */
-	int (*FS_WriteFile) (const void *buffer, int len, const char *filename);
+	int (*FS_WriteFile) (const void *buffer, size_t len, const char *filename);
 	int (*FS_LoadFile) (char *name, void **buf);
 	void (*FS_FreeFile) (void *buf);
 	int (*FS_CheckFile) (const char *name);

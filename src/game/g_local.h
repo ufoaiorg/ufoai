@@ -412,7 +412,7 @@ struct edict_s {
 	bool_t inuse;
 	int linkcount;
 
-	int number;
+	int16_t number;
 
 	vec3_t origin;
 	vec3_t angles;
@@ -452,7 +452,7 @@ struct edict_s {
 	uint8_t HP;						/* remaining healthpoints */
 	uint8_t AP;						/* remaining armor protection */
 	uint8_t STUN;
-	uint8_t morale;					/* the current morale value */
+	int16_t morale;					/* the current morale value */
 
 	int16_t state;					/* the player state - dead, shaken.... */
 
