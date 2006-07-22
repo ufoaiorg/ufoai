@@ -47,8 +47,6 @@ cvar_t *zombietime;				/* seconds to sink messages after disconnect */
 
 cvar_t *rcon_password;			/* password for remote server commands */
 
-cvar_t *sv_airaccelerate;
-
 cvar_t *sv_noreload;			/* don't reload level state when reentering */
 
 cvar_t *sv_maxclients;
@@ -894,7 +892,6 @@ void SV_Init(void)
 	maxsoldiersperplayer = Cvar_Get("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO);
 
 	sv_noreload = Cvar_Get("sv_noreload", "0", 0);
-	sv_airaccelerate = Cvar_Get("sv_airaccelerate", "0", CVAR_LATCH);
 	public_server = Cvar_Get("public", "0", 0);
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE);
 

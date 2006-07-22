@@ -67,8 +67,6 @@ cvar_t *cl_add_blend;
 
 cvar_t *cl_fps;
 cvar_t *cl_shownet;
-cvar_t *cl_showmiss;
-cvar_t *cl_showclamp;
 cvar_t *cl_show_tooltips;
 
 cvar_t *cl_paused;
@@ -1176,8 +1174,6 @@ void CL_InitLocal(void)
 
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE);
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE);
-	cl_showmiss = Cvar_Get("cl_showmiss", "0", 0);
-	cl_showclamp = Cvar_Get("showclamp", "0", 0);
 	cl_timeout = Cvar_Get("cl_timeout", "120", 0);
 	cl_paused = Cvar_Get("paused", "0", 0);
 	cl_timedemo = Cvar_Get("timedemo", "0", 0);

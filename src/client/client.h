@@ -286,8 +286,6 @@ extern cvar_t *cl_anglespeedkey;
 
 extern cvar_t *cl_fps;
 extern cvar_t *cl_shownet;
-extern cvar_t *cl_showmiss;
-extern cvar_t *cl_showclamp;
 extern cvar_t *cl_show_tooltips;
 
 extern cvar_t *lookspring;

@@ -33,8 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-static cvar_t *cl_nodelta;
-
 extern unsigned sys_frame_time;
 unsigned frame_msec;
 unsigned old_sys_frame_time;
@@ -761,8 +759,6 @@ void CL_InitInput(void)
 	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot);
 
 	Cmd_AddCommand("cameramode", CL_CameraMode);
-
-	cl_nodelta = Cvar_Get("cl_nodelta", "0", 0);
 }
 
 
