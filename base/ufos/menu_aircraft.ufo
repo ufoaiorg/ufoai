@@ -318,15 +318,68 @@ menu aircraft_equip
 	}
 
 	// ==================
-	// dropship model
+	// aircraft model
 	// ==================
 
-	model dropshipequip
+	model aircraftequip
 	{
 		md2		"*cvar mn_aircraft_model"
-		origin	"690 640 0"
-		angles	"-20 -40 120"
+		origin	"228 384 0"
+		angles	"90 0 180"
 		scale	"1.1 1.1 1.1"
 		color	"0.5 0.5 0.5 1"
+		pos	"20 20"
+		size	"415 728"
+//		bgcolor	"1 1 1 0.5"
+	}
+	pic aircraftshield
+	{
+		pos	"40 40"
+		size	"128 128"
+		image "*cvar mn_aircraft_shield"
+	}
+	pic aircraftweapon
+	{
+		pos	"267 40"
+		size	"128 128"
+		image "*cvar mn_aircraft_weapon"
+	}
+	string airequip_available
+	{
+		string	"_Available equipment:"
+		pos		"740 86"
+		font	f_big
+		align	uc
+	}
+	text airequip_selected_description
+	{
+		pos	"474 474"
+		size	"530 150"
+//		bgcolor	"1 1 1 0.5"
+		num	1
+	}
+	text airequip_shields
+	{
+		pos	"474 134"
+		size	"256 300"
+//		bgcolor	"1 1 1 0.5"
+		num	1
+	}
+	text airequip_weapons
+	{
+		pos	"742 134"
+		size	"260 300"
+//		bgcolor	"1 1 1 0.5"
+		num	2
+	}
+	pic button_leave
+	{
+		tooltip	"_Done"
+		image	hud/buttons2
+		mousefx	true
+		pos		"940 600"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd "mn_pop"  }
 	}
 }
