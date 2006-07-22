@@ -976,18 +976,18 @@ void SZ_Write(sizebuf_t *buf, void *data, size_t length)
  */
 void SZ_WriteString(sizebuf_t *buf, char *data)
 {
-	int len;
+	size_t len;
 
 	len = strlen(data) + 1;
 
 	if (buf->cursize) {
-		if (((uint8_t *)buf->data)[buf->cursize - 1]) {
-			memcpy((uint8_t *) SZ_GetSpace(buf, len), data, len);	/* no trailing 0 */
+		if (buf->data[buf->cursize - 1]) {
+			memcpy(SZ_GetSpace(buf, len), data, len);	/* no trailing 0 */
 		} else {
-			memcpy((uint8_t *) SZ_GetSpace(buf, len - 1) - 1, data, len);	/* write over trailing 0 */
+			memcpy(SZ_GetSpace(buf, len - 1) - 1, data, len);	/* write over trailing 0 */
 		}
 	} else {
-		memcpy((uint8_t *) SZ_GetSpace(buf, len), data, len);
+		memcpy(SZ_GetSpace(buf, len), data, len);
 	}
 }
 

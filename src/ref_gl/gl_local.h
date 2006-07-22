@@ -220,7 +220,7 @@ extern vec3_t r_origin;
 extern refdef_t r_newrefdef;
 
 extern cvar_t *r_norefresh;
-extern cvar_t *r_lefthand;
+/*extern cvar_t *r_lefthand;*/
 extern cvar_t *r_drawentities;
 extern cvar_t *r_drawworld;
 extern cvar_t *r_speeds;

@@ -336,9 +336,12 @@ void SV_ExecuteClientMessage(client_t * cl)
 			return;
 		}
 
+		Com_DPrintf("SV_ExecuteClientMessage: %d > %d\n", net_message.readcount, net_message.cursize);
 		c = MSG_ReadByte(&net_message, &end);
-		if (end)
+		if (end) {
+			Com_DPrintf("End byte received\n");
 			break;
+		}
 
 		switch (c) {
 		default:
@@ -381,5 +384,6 @@ void SV_ExecuteClientMessage(client_t * cl)
 			ge->ClientTeamInfo(sv_player);
 			break;
 		}
+		Com_DPrintf("SV_ExecuteClientMessage: %d > %d\n\n", net_message.readcount, net_message.cursize);
 	}
 }

@@ -465,12 +465,12 @@ void R_DrawAliasModel(entity_t * e)
 	if (!(e->flags & RF_NOSMOOTH))
 		qglShadeModel(GL_FLAT);
 
-	if ((e->flags & RF_WEAPONMODEL) && (r_lefthand->value == 1.0F)) {
+/*	if ((e->flags & RF_WEAPONMODEL) && (r_lefthand->value == 1.0F)) {
 		qglMatrixMode(GL_PROJECTION);
 		qglPopMatrix();
 		qglMatrixMode(GL_MODELVIEW);
 		qglCullFace(GL_FRONT);
-	}
+	}*/
 
 	if ((e->flags & RF_TRANSLUCENT) || (skin && skin->has_alpha))
 		qglDisable(GL_BLEND);

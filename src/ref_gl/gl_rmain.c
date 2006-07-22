@@ -90,7 +90,7 @@ cvar_t *r_novis;
 cvar_t *r_nocull;
 cvar_t *r_isometric;
 cvar_t *r_lerpmodels;
-cvar_t *r_lefthand;
+/*cvar_t *r_lefthand;*/
 cvar_t *r_displayrefresh;
 cvar_t *r_anisotropic;
 cvar_t *r_ext_max_anisotropy;
@@ -1072,7 +1072,7 @@ void R_Register(void)
 {
 	cmdList_t *commands;
 
-	r_lefthand = ri.Cvar_Get("hand", "0", CVAR_USERINFO | CVAR_ARCHIVE);
+/*	r_lefthand = ri.Cvar_Get("hand", "0", CVAR_USERINFO | CVAR_ARCHIVE);*/
 	r_norefresh = ri.Cvar_Get("r_norefresh", "0", 0);
 	r_fullbright = ri.Cvar_Get("r_fullbright", "0", 0);
 	r_drawentities = ri.Cvar_Get("r_drawentities", "1", 0);
