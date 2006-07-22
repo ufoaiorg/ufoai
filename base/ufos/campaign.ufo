@@ -868,8 +868,8 @@ stage alienbase
 
 campaign heavy
 {
-	name		"_Heavy Campaign"
-	text		"_txt_heavy_campaign"
+	name		"_Hard Campaign"
+	text		"_txt_hard_campaign"
 	team		human
 	soldiers	4
 	equipment	campaign_player
