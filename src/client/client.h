@@ -263,13 +263,11 @@ extern cvar_t *cl_stereo;
 extern cvar_t *cl_aviFrameRate;
 extern cvar_t *cl_aviMotionJpeg;
 
-extern cvar_t *cl_gun;
 extern cvar_t *cl_add_blend;
 extern cvar_t *cl_add_lights;
 extern cvar_t *cl_add_particles;
 extern cvar_t *cl_add_entities;
 extern cvar_t *cl_predict;
-extern cvar_t *cl_footsteps;
 extern cvar_t *cl_noskins;
 extern cvar_t *cl_autoskins;
 extern cvar_t *cl_markactors;
