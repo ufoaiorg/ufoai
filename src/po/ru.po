@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-07-19 16:22+0200\n"
+"POT-Creation-Date: 2006-07-23 00:12+0200\n"
 "PO-Revision-Date: 2006-06-11 22:44+0300\n"
 "Last-Translator: Virtul <virtul@gmail.com>\n"
 "Language-Team: \n"
@@ -394,12 +394,12 @@ msgstr "Пришельцы атаковали одну из наших баз"
 
 #: ../base/ufos/campaign.ufo:871
 #, fuzzy
-msgid "Heavy Campaign"
+msgid "Hard Campaign"
 msgstr "Тестовая Кампания"
 
 #: ../base/ufos/campaign.ufo:872
 #, fuzzy
-msgid "txt_heavy_campaign"
+msgid "txt_hard_campaign"
 msgstr "Начать"
 
 #: ../base/ufos/campaign.ufo:887
@@ -465,6 +465,141 @@ msgstr "Сержант"
 msgid "Captain"
 msgstr "Капитан"
 
+#: ../base/ufos/menu_aircraft.ufo:48
+msgid "Assign your squad"
+msgstr "Формирование отряда на перехватчик"
+
+#: ../base/ufos/menu_aircraft.ufo:63
+msgid "Equip Aircraft"
+msgstr "Снарядить"
+
+#: ../base/ufos/menu_aircraft.ufo:75
+msgid "Buy/Sell aircraft"
+msgstr "Купля-продажа перехватчиков"
+
+#: ../base/ufos/menu_aircraft.ufo:90
+msgid "Buy/Sell Aircraft"
+msgstr "Купить/Продать"
+
+#: ../base/ufos/menu_aircraft.ufo:102
+msgid "Start your aircraft"
+msgstr "Запуск выбранного перехватчика"
+
+#: ../base/ufos/menu_aircraft.ufo:117
+msgid "Start Aircraft"
+msgstr "Запустить"
+
+#: ../base/ufos/menu_aircraft.ufo:129 ../base/ufos/menu_bases.ufo:143
+msgid "Transfer equipment or personnel"
+msgstr "Транспортировка снаряжения и персонала"
+
+#: ../base/ufos/menu_aircraft.ufo:144 ../base/ufos/menu_bases.ufo:158
+msgid "Transfer"
+msgstr "Транспорт"
+
+#: ../base/ufos/menu_aircraft.ufo:156
+msgid "Equip weapons and shields"
+msgstr ""
+
+#: ../base/ufos/menu_aircraft.ufo:171
+msgid "Equip"
+msgstr ""
+
+#: ../base/ufos/menu_aircraft.ufo:211 ../base/ufos/menu_aircraft.ufo:387
+#: ../base/ufos/menu_team.ufo:664 ../base/ufos/menu_team.ufo:1263
+msgid "Done"
+msgstr "Готово"
+
+#: ../base/ufos/menu_aircraft.ufo:222
+msgid "Switch to the previous aircraft"
+msgstr "Перейти к предыдущему перехватчику"
+
+#: ../base/ufos/menu_aircraft.ufo:233
+msgid "Switch to the next aircraft"
+msgstr "Перейти к следующему перехватчику"
+
+#: ../base/ufos/menu_aircraft.ufo:244
+msgid "Call back"
+msgstr "Отозвать"
+
+#: ../base/ufos/menu_aircraft.ufo:257 ../base/ufos/menu_team.ufo:648
+msgid "Team Members:"
+msgstr "Назначено Солдат:"
+
+#: ../base/ufos/menu_aircraft.ufo:337
+#, fuzzy
+msgid "Shield"
+msgstr "Щит:\t%s"
+
+#: ../base/ufos/menu_aircraft.ufo:345
+#, fuzzy
+msgid "Weapon"
+msgstr "Оружие"
+
+#: ../base/ufos/menu_aircraft.ufo:353
+#, fuzzy
+msgid "Available equipment:"
+msgstr "Купля-продажа снаряжения"
+
+#: ../base/ufos/menu_althud.ufo:45
+msgid "Inventory and physical stats"
+msgstr ""
+
+#: ../base/ufos/menu_althud.ufo:388 ../base/ufos/menu_hud.ufo:223
+msgid "Enemy spotted"
+msgstr "Замечен противник"
+
+#: ../base/ufos/menu_althud.ufo:395 ../base/ufos/menu_hud.ufo:233
+msgid "Click to cycle through the spotted enemies"
+msgstr "Перейти к следующему обнаруженному врагу"
+
+#: ../base/ufos/menu_althud.ufo:402 ../base/ufos/menu_hud.ufo:212
+msgid "Finish round"
+msgstr "Закончить ход"
+
+#: ../base/ufos/menu_althud.ufo:445 ../base/ufos/menu_althud.ufo:465
+#: ../base/ufos/menu_hud.ufo:408 ../base/ufos/menu_hud.ufo:418
+msgid "Primary fire mode"
+msgstr "Первичный режим стрельбы"
+
+#: ../base/ufos/menu_althud.ufo:455 ../base/ufos/menu_althud.ufo:475
+#: ../base/ufos/menu_hud.ufo:428 ../base/ufos/menu_hud.ufo:438
+msgid "Secondary fire mode"
+msgstr "Вторичный режим стрельбы"
+
+#: ../base/ufos/menu_althud.ufo:489 ../base/ufos/menu_hud.ufo:517
+msgid "Toggle reaction-fire"
+msgstr "Активация ответного огня"
+
+#: ../base/ufos/menu_althud.ufo:501 ../base/ufos/menu_hud.ufo:448
+#: ../base/ufos/menu_hud.ufo:459
+msgid "Reload weapon"
+msgstr "Перезарядить оружие"
+
+#: ../base/ufos/menu_althud.ufo:515 ../base/ufos/menu_hud.ufo:504
+msgid "Crouch/Stand up"
+msgstr "Присесть/Встать"
+
+#: ../base/ufos/menu_althud.ufo:526
+#, fuzzy
+msgid "Level up"
+msgstr "Уровень 1"
+
+#: ../base/ufos/menu_althud.ufo:536
+#, fuzzy
+msgid "Level down"
+msgstr "Уровень 1"
+
+#: ../base/ufos/menu_althud.ufo:581
+#, fuzzy
+msgid "Switch to right hand weapon"
+msgstr "Перейти к следующей базе"
+
+#: ../base/ufos/menu_althud.ufo:590
+#, fuzzy
+msgid "Switch to left hand weapon"
+msgstr "Перейти к следующей базе"
+
 #: ../base/ufos/menu_bases.ufo:48
 msgid "Back to worldview"
 msgstr "Обратно к обзору планеты"
@@ -492,14 +627,6 @@ msgstr "Купля-продажа снаряжения"
 #: ../base/ufos/menu_bases.ufo:134
 msgid "Buy/Sell Equipment"
 msgstr "Снаряжение"
-
-#: ../base/ufos/menu_bases.ufo:143 ../base/ufos/menu_bases.ufo:391
-msgid "Transfer equipment or personnel"
-msgstr "Транспортировка снаряжения и персонала"
-
-#: ../base/ufos/menu_bases.ufo:158 ../base/ufos/menu_bases.ufo:406
-msgid "Transfer"
-msgstr "Транспорт"
 
 #: ../base/ufos/menu_bases.ufo:167
 msgid "Research new technology"
@@ -534,51 +661,6 @@ msgstr "Перейти к предыдущей базе"
 #: ../base/ufos/menu_bases.ufo:251
 msgid "Switch to the next base"
 msgstr "Перейти к следующей базе"
-
-#: ../base/ufos/menu_bases.ufo:310
-msgid "Assign your squad"
-msgstr "Формирование отряда на перехватчик"
-
-#: ../base/ufos/menu_bases.ufo:325
-msgid "Equip Aircraft"
-msgstr "Снарядить"
-
-#: ../base/ufos/menu_bases.ufo:337
-msgid "Buy/Sell aircraft"
-msgstr "Купля-продажа перехватчиков"
-
-#: ../base/ufos/menu_bases.ufo:352
-msgid "Buy/Sell Aircraft"
-msgstr "Купить/Продать"
-
-#: ../base/ufos/menu_bases.ufo:364
-msgid "Start your aircraft"
-msgstr "Запуск выбранного перехватчика"
-
-#: ../base/ufos/menu_bases.ufo:379
-msgid "Start Aircraft"
-msgstr "Запустить"
-
-#: ../base/ufos/menu_bases.ufo:446 ../base/ufos/menu_team.ufo:664
-#: ../base/ufos/menu_team.ufo:1263
-msgid "Done"
-msgstr "Готово"
-
-#: ../base/ufos/menu_bases.ufo:457
-msgid "Switch to the previous aircraft"
-msgstr "Перейти к предыдущему перехватчику"
-
-#: ../base/ufos/menu_bases.ufo:468
-msgid "Switch to the next aircraft"
-msgstr "Перейти к следующему перехватчику"
-
-#: ../base/ufos/menu_bases.ufo:479
-msgid "Call back"
-msgstr "Отозвать"
-
-#: ../base/ufos/menu_bases.ufo:492 ../base/ufos/menu_team.ufo:648
-msgid "Team Members:"
-msgstr "Назначено Солдат:"
 
 #: ../base/ufos/menu_buildings.ufo:58 ../base/ufos/menu_buy.ufo:820
 #: ../base/ufos/menu_research.ufo:933
@@ -850,18 +932,6 @@ msgstr "Уровень 7"
 msgid "Level 8"
 msgstr "Уровень 8"
 
-#: ../base/ufos/menu_hud.ufo:212
-msgid "Finish round"
-msgstr "Закончить ход"
-
-#: ../base/ufos/menu_hud.ufo:223
-msgid "Enemy spotted"
-msgstr "Замечен противник"
-
-#: ../base/ufos/menu_hud.ufo:233
-msgid "Click to cycle through the spotted enemies"
-msgstr "Перейти к следующему обнаруженному врагу"
-
 #: ../base/ufos/menu_hud.ufo:265
 msgid "Soldier 1"
 msgstr "Солдат 1"
@@ -893,26 +963,6 @@ msgstr "Солдат 7"
 #: ../base/ufos/menu_hud.ufo:328
 msgid "Soldier 8"
 msgstr "Солдат 8"
-
-#: ../base/ufos/menu_hud.ufo:408 ../base/ufos/menu_hud.ufo:418
-msgid "Primary fire mode"
-msgstr "Первичный режим стрельбы"
-
-#: ../base/ufos/menu_hud.ufo:428 ../base/ufos/menu_hud.ufo:438
-msgid "Secondary fire mode"
-msgstr "Вторичный режим стрельбы"
-
-#: ../base/ufos/menu_hud.ufo:448 ../base/ufos/menu_hud.ufo:459
-msgid "Reload weapon"
-msgstr "Перезарядить оружие"
-
-#: ../base/ufos/menu_hud.ufo:504
-msgid "Crouch/Stand up"
-msgstr "Присесть/Встать"
-
-#: ../base/ufos/menu_hud.ufo:517
-msgid "Toggle reaction-fire"
-msgstr "Активация ответного огня"
 
 #: ../base/ufos/menu_hud.ufo:566
 msgid "Physical stats of this soldier"
@@ -2975,12 +3025,10 @@ msgid "Not enough credits to build this\n"
 msgstr "Недостаточно средств для постройки.\n"
 
 #: client/cl_basemanagement.c:368 client/cl_basemanagement.c:1848
-#: client/cl_campaign.c:379 client/cl_campaign.c:614 client/cl_campaign.c:661
-#: client/cl_campaign.c:989 client/cl_campaign.c:1154
-#: client/cl_campaign.c:1164 client/cl_campaign.c:1177
-#: client/cl_campaign.c:1191 client/cl_campaign.c:1389
-#: client/cl_campaign.c:2237 client/cl_campaign.c:2273
-#: client/cl_campaign.c:2275 client/cl_menu.c:1185 client/cl_research.c:486
+#: client/cl_campaign.c:361 client/cl_campaign.c:688 client/cl_campaign.c:854
+#: client/cl_campaign.c:864 client/cl_campaign.c:877 client/cl_campaign.c:949
+#: client/cl_campaign.c:1797 client/cl_campaign.c:1833
+#: client/cl_campaign.c:1835 client/cl_menu.c:1185 client/cl_research.c:486
 #: client/cl_research.c:613 client/cl_research.c:616 client/cl_research.c:620
 #: client/cl_research.c:640 client/cl_research.c:666 client/cl_research.c:670
 #: client/cl_research.c:805
@@ -3038,132 +3086,58 @@ msgstr "Завершено строительство: %s на базе: %s."
 msgid "Building finished"
 msgstr "Завершено строительство"
 
-#: client/cl_campaign.c:379
-msgid "Aircraft started"
-msgstr "Истребитель запущен"
-
-#: client/cl_campaign.c:421
-msgid "Nothing - should not be displayed"
-msgstr ""
-
-#: client/cl_campaign.c:424
-msgid "At homebase"
-msgstr "На базе"
-
-#: client/cl_campaign.c:427
-msgid "Refuel"
-msgstr "Заправить"
-
-#: client/cl_campaign.c:430
-msgid "Idle"
-msgstr "Без задания"
-
-#: client/cl_campaign.c:433
-msgid "On transit"
-msgstr "В пути"
-
-#: client/cl_campaign.c:436
-msgid "Ready for drop down"
-msgstr "Готов к высадке"
-
-#: client/cl_campaign.c:439
-msgid "On interception"
-msgstr "На перехвате"
-
-#: client/cl_campaign.c:442
-msgid "Transportmission"
-msgstr "Перевозит груз"
-
-#: client/cl_campaign.c:445
-msgid "Returning to homebase"
-msgstr "Возвращается на базу"
-
-#: client/cl_campaign.c:564 client/cl_ufopedia.c:236
-#, c-format
-msgid "Speed:\t%.0f\n"
-msgstr "Скорость:\t%.0f\n"
-
-#: client/cl_campaign.c:565
-#, c-format
-msgid "Fuel:\t%i/%i\n"
-msgstr "Топливо:\t%i/%i\n"
-
-#: client/cl_campaign.c:566 client/cl_campaign.c:567 client/cl_ufopedia.c:217
-#: client/cl_ufopedia.c:238 client/cl_ufopedia.c:239
-msgid "None"
-msgstr "Нет"
-
-#: client/cl_campaign.c:566 client/cl_ufopedia.c:238
-#, c-format
-msgid "Weapon:\t%s\n"
-msgstr "Оружие:\t%s\n"
-
-#: client/cl_campaign.c:567
-#, c-format
-msgid "Shield:\t%s"
-msgstr "Щит:\t%s"
-
-#: client/cl_campaign.c:613
-#, c-format
-msgid "You've got a new aircraft (a %s) in base %s"
-msgstr "Прибыл новый истребитель: %s на базу: %s"
-
-#: client/cl_campaign.c:661 client/cl_menu.c:1185
+#: client/cl_campaign.c:361 client/cl_menu.c:1185
 msgid "Could not set up your base at this location"
 msgstr "В этом месте невозможно построить базу."
 
-#: client/cl_campaign.c:829
+#: client/cl_campaign.c:529
 #, c-format
 msgid "Your base %s is under attack."
 msgstr "База %s атакована."
 
-#: client/cl_campaign.c:830
+#: client/cl_campaign.c:530
 msgid "Baseattack"
 msgstr "Атака базы"
 
-#: client/cl_campaign.c:855
+#: client/cl_campaign.c:555
 #, fuzzy, c-format
 msgid "Alien activity has been reported: '%s'"
 msgstr "Обнаружена активность пришельцев."
 
-#: client/cl_campaign.c:856
+#: client/cl_campaign.c:556
 msgid "Alien activity"
 msgstr "Активность пришельцев"
 
-#: client/cl_campaign.c:989
+#: client/cl_campaign.c:688
 msgid "Assign a team to aircraft"
 msgstr "Назначить отряд на перехватчик"
 
-#: client/cl_campaign.c:1154
+#: client/cl_campaign.c:854
 msgid "UFO appears on our radar"
 msgstr "НЛО появилось на радаре"
 
-#: client/cl_campaign.c:1164
+#: client/cl_campaign.c:864
 msgid "UFO disappears on our radar"
 msgstr "НЛО исчезло с радара"
 
-#: client/cl_campaign.c:1176
+#: client/cl_campaign.c:876
 #, c-format
 msgid "The mission expired and %i civilians died. You've lost %i credits."
 msgstr ""
 "Миссия не была во время выполнена, погибло гражданских: %i Вы потеряли %i "
 "кредитов."
 
-#: client/cl_campaign.c:1191
-msgid "Your dropship has low fuel and returns to base"
-msgstr "У транспорта заканчивается топливо, и он возвращается на базу"
-
-#: client/cl_campaign.c:1388
+#: client/cl_campaign.c:948
 #, c-format
 msgid "Gained %i credits from nation %s"
 msgstr "Получено %i кредитов от нации: %s"
 
-#: client/cl_campaign.c:1440
+#: client/cl_campaign.c:1000
 #, c-format
 msgid "%02i:%i%i"
 msgstr ""
 
-#: client/cl_campaign.c:1544
+#: client/cl_campaign.c:1104
 #, c-format
 msgid ""
 "Missions:\n"
@@ -3176,36 +3150,36 @@ msgstr ""
 "Баз:\n"
 "построено:\t%i\tатаковано:\t%i\n"
 
-#: client/cl_campaign.c:2121
+#: client/cl_campaign.c:1681
 msgid "Assemble or load a team"
 msgstr "Создайте или загрузите отряд"
 
-#: client/cl_campaign.c:2121
+#: client/cl_campaign.c:1681
 msgid "Note"
 msgstr "Замечание"
 
-#: client/cl_campaign.c:2237
+#: client/cl_campaign.c:1797
 msgid "Your dropship is not near the landingzone"
 msgstr "Ваш транспорт далеко от зоны высадки"
 
-#: client/cl_campaign.c:2273
+#: client/cl_campaign.c:1833
 msgid "You've won the battle"
 msgstr "Вы победили"
 
-#: client/cl_campaign.c:2275
+#: client/cl_campaign.c:1835
 msgid "You've lost the battle"
 msgstr "Вы проиграли"
 
-#: client/cl_campaign.c:2461
+#: client/cl_campaign.c:2033
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s был повышел до ранга %s.\n"
 
-#: client/cl_campaign.c:2462
+#: client/cl_campaign.c:2034
 msgid "Soldier promoted"
 msgstr "Солдат повышен"
 
-#: client/cl_campaign.c:3381 client/cl_campaign.c:3412
+#: client/cl_campaign.c:2961 client/cl_campaign.c:2992
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -3214,15 +3188,15 @@ msgid ""
 "%s\n"
 msgstr ""
 
-#: client/cl_main.c:334 client/cl_main.c:677 client/cl_menu.c:445
+#: client/cl_main.c:330 client/cl_main.c:673 client/cl_menu.c:445
 msgid "Assemble a team first"
 msgstr "Сначала создайте отряд"
 
-#: client/cl_main.c:334 client/cl_main.c:677 client/cl_menu.c:445
+#: client/cl_main.c:330 client/cl_main.c:673 client/cl_menu.c:445
 msgid "Error"
 msgstr "Ошибка"
 
-#: client/cl_main.c:618
+#: client/cl_main.c:614
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -3231,52 +3205,52 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:640
+#: client/cl_main.c:636
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Карта:\t%s\n"
 
-#: client/cl_main.c:642
+#: client/cl_main.c:638
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Версия:\t%s\n"
 
-#: client/cl_main.c:644
+#: client/cl_main.c:640
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Имя сервера:\t%s\n"
 
-#: client/cl_main.c:646
+#: client/cl_main.c:642
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Мораль:\t%s\n"
 
-#: client/cl_main.c:648
+#: client/cl_main.c:644
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Командная игра:\t%s\n"
 
-#: client/cl_main.c:650
+#: client/cl_main.c:646
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Максимум игроков в команде:\t%s\n"
 
-#: client/cl_main.c:652
+#: client/cl_main.c:648
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Максимум игроков:\t%s\n"
 
-#: client/cl_main.c:654
+#: client/cl_main.c:650
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Максимум солдат у игрока:\t%s\n"
 
-#: client/cl_main.c:656
+#: client/cl_main.c:652
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Максимум солдат в отряде:\t%s\n"
 
-#: client/cl_main.c:1218
+#: client/cl_main.c:1212
 msgid "unnamed"
 msgstr "без имени"
 
@@ -3337,15 +3311,15 @@ msgstr "Выберете НЛО или миссию на карте\n"
 msgid "UFO in radar range\n"
 msgstr "НЛО в пределе радара\n"
 
-#: client/cl_parse.c:655
+#: client/cl_parse.c:653
 msgid "Alien spotted!\n"
 msgstr "Обнаружен пришелец!\n"
 
-#: client/cl_parse.c:657
+#: client/cl_parse.c:655
 msgid "Enemy spotted!\n"
 msgstr "Обнаружен противник!\n"
 
-#: client/cl_parse.c:659
+#: client/cl_parse.c:657
 msgid "Civilian spotted!\n"
 msgstr "Обнаружен гражданский!\n"
 
@@ -3464,17 +3438,17 @@ msgstr "%i из %i"
 msgid "NewTeam"
 msgstr "НовыйОтряд"
 
-#: client/cl_team.c:1102
+#: client/cl_team.c:1104
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Пришельцев убито\t%i\n"
 
-#: client/cl_team.c:1104
+#: client/cl_team.c:1106
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Противников убито\t%i\n"
 
-#: client/cl_team.c:1110
+#: client/cl_team.c:1112
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -3483,7 +3457,7 @@ msgstr ""
 "Выживших Пришельцев\t%i\n"
 "\n"
 
-#: client/cl_team.c:1112
+#: client/cl_team.c:1114
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -3492,17 +3466,17 @@ msgstr ""
 "Выживших Противников\t%i\n"
 "\n"
 
-#: client/cl_team.c:1115
+#: client/cl_team.c:1117
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Убито в отряде\t%i\n"
 
-#: client/cl_team.c:1116
+#: client/cl_team.c:1118
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Убито в отряде своими\t%i\n"
 
-#: client/cl_team.c:1117
+#: client/cl_team.c:1119
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -3511,22 +3485,22 @@ msgstr ""
 "Выживших в отряде\t%i\n"
 "\n"
 
-#: client/cl_team.c:1130
+#: client/cl_team.c:1132
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Гражданских убито Пришельцами\t%i\n"
 
-#: client/cl_team.c:1132
+#: client/cl_team.c:1134
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Гражданских убито Противниками\t%i\n"
 
-#: client/cl_team.c:1133
+#: client/cl_team.c:1135
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Гражданских убито Отрядом\t%i\n"
 
-#: client/cl_team.c:1134
+#: client/cl_team.c:1136
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -3537,22 +3511,22 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1154
+#: client/cl_team.c:1156
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr "Собрано технологии пришельцев\t%i кр.\n"
 
-#: client/cl_team.c:1158
+#: client/cl_team.c:1160
 #, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr "Пришельцев убито\t%i кр.\n"
 
-#: client/cl_team.c:1162
+#: client/cl_team.c:1164
 #, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr "Гражданских спасено\t%i кр.\n"
 
-#: client/cl_team.c:1165
+#: client/cl_team.c:1167
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -3563,7 +3537,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1169
+#: client/cl_team.c:1171
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr "Новых рекрутов\t%i\n"
@@ -3596,7 +3570,7 @@ msgstr "Взрывчатка:"
 msgid "Unknown weapon skill"
 msgstr ""
 
-#: client/cl_ufopedia.c:86
+#: client/cl_ufopedia.c:85
 #, fuzzy
 msgid "No requirements"
 msgstr "Показать только снаряжение"
@@ -3691,6 +3665,10 @@ msgstr ""
 msgid "Depends:\t%s\n"
 msgstr "Зависит:\t%s\n"
 
+#: client/cl_ufopedia.c:217 client/cl_ufopedia.c:238 client/cl_ufopedia.c:239
+msgid "None"
+msgstr "Нет"
+
 #: client/cl_ufopedia.c:218
 #, c-format
 msgid "Buildtime:\t%i day(s)\n"
@@ -3710,10 +3688,20 @@ msgstr "Содержание:\t%i кр\n"
 msgid "Error - could not find aircraft"
 msgstr ""
 
+#: client/cl_ufopedia.c:236
+#, c-format
+msgid "Speed:\t%.0f\n"
+msgstr "Скорость:\t%.0f\n"
+
 #: client/cl_ufopedia.c:237
 #, c-format
 msgid "Fuel:\t%i\n"
 msgstr "Топливо:\t%i\n"
+
+#: client/cl_ufopedia.c:238
+#, c-format
+msgid "Weapon:\t%s\n"
+msgstr "Оружие:\t%s\n"
 
 #: client/cl_ufopedia.c:239
 #, c-format
@@ -3801,6 +3789,42 @@ msgstr "Невозможно выполнить действие - нет аму
 #: game/g_client.c:2008
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Невозможно выполнить действие - не хватает амуниции!\n"
+
+#~ msgid "Aircraft started"
+#~ msgstr "Истребитель запущен"
+
+#~ msgid "At homebase"
+#~ msgstr "На базе"
+
+#~ msgid "Refuel"
+#~ msgstr "Заправить"
+
+#~ msgid "Idle"
+#~ msgstr "Без задания"
+
+#~ msgid "On transit"
+#~ msgstr "В пути"
+
+#~ msgid "Ready for drop down"
+#~ msgstr "Готов к высадке"
+
+#~ msgid "On interception"
+#~ msgstr "На перехвате"
+
+#~ msgid "Transportmission"
+#~ msgstr "Перевозит груз"
+
+#~ msgid "Returning to homebase"
+#~ msgstr "Возвращается на базу"
+
+#~ msgid "Fuel:\t%i/%i\n"
+#~ msgstr "Топливо:\t%i/%i\n"
+
+#~ msgid "You've got a new aircraft (a %s) in base %s"
+#~ msgstr "Прибыл новый истребитель: %s на базу: %s"
+
+#~ msgid "Your dropship has low fuel and returns to base"
+#~ msgstr "У транспорта заканчивается топливо, и он возвращается на базу"
 
 #~ msgid "Smoke Grenade"
 #~ msgstr "Дымовая Граната"

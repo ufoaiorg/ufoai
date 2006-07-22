@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-07-19 16:22+0200\n"
+"POT-Creation-Date: 2006-07-23 00:12+0200\n"
 "PO-Revision-Date: 2006-07-19 16:30+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -89,8 +89,7 @@ msgstr "Quartier"
 msgid "UFO Hangar"
 msgstr "UFO Hangar"
 
-#: ../base/ufos/basemanagement.ufo:130
-#: ../base/ufos/basemanagement.ufo:147
+#: ../base/ufos/basemanagement.ufo:130 ../base/ufos/basemanagement.ufo:147
 msgid "Hangar"
 msgstr "Hangar"
 
@@ -154,75 +153,48 @@ msgstr "UFO -  Zerstörerklasse"
 msgid "Antalya"
 msgstr "Antalya"
 
-#: ../base/ufos/campaign.ufo:5
-#: ../base/ufos/campaign.ufo:24
-#: ../base/ufos/campaign.ufo:64
-#: ../base/ufos/campaign.ufo:82
-#: ../base/ufos/campaign.ufo:123
-#: ../base/ufos/campaign.ufo:144
-#: ../base/ufos/campaign.ufo:164
-#: ../base/ufos/campaign.ufo:184
-#: ../base/ufos/campaign.ufo:203
-#: ../base/ufos/campaign.ufo:223
-#: ../base/ufos/campaign.ufo:242
-#: ../base/ufos/campaign.ufo:302
-#: ../base/ufos/campaign.ufo:322
-#: ../base/ufos/campaign.ufo:362
-#: ../base/ufos/campaign.ufo:402
-#: ../base/ufos/campaign.ufo:421
-#: ../base/ufos/campaign.ufo:459
-#: ../base/ufos/campaign.ufo:478
-#: ../base/ufos/campaign.ufo:497
-#: ../base/ufos/campaign.ufo:516
-#: ../base/ufos/campaign.ufo:536
-#: ../base/ufos/campaign.ufo:553
-#: ../base/ufos/campaign.ufo:571
-#: ../base/ufos/campaign.ufo:588
-#: ../base/ufos/campaign.ufo:606
-#: ../base/ufos/campaign.ufo:623
-#: ../base/ufos/campaign.ufo:642
-#: ../base/ufos/campaign.ufo:661
-#: ../base/ufos/campaign.ufo:679
-#: ../base/ufos/campaign.ufo:698
+#: ../base/ufos/campaign.ufo:5 ../base/ufos/campaign.ufo:24
+#: ../base/ufos/campaign.ufo:64 ../base/ufos/campaign.ufo:82
+#: ../base/ufos/campaign.ufo:123 ../base/ufos/campaign.ufo:144
+#: ../base/ufos/campaign.ufo:164 ../base/ufos/campaign.ufo:184
+#: ../base/ufos/campaign.ufo:203 ../base/ufos/campaign.ufo:223
+#: ../base/ufos/campaign.ufo:242 ../base/ufos/campaign.ufo:302
+#: ../base/ufos/campaign.ufo:322 ../base/ufos/campaign.ufo:362
+#: ../base/ufos/campaign.ufo:402 ../base/ufos/campaign.ufo:421
+#: ../base/ufos/campaign.ufo:459 ../base/ufos/campaign.ufo:478
+#: ../base/ufos/campaign.ufo:497 ../base/ufos/campaign.ufo:516
+#: ../base/ufos/campaign.ufo:536 ../base/ufos/campaign.ufo:553
+#: ../base/ufos/campaign.ufo:571 ../base/ufos/campaign.ufo:588
+#: ../base/ufos/campaign.ufo:606 ../base/ufos/campaign.ufo:623
+#: ../base/ufos/campaign.ufo:642 ../base/ufos/campaign.ufo:661
+#: ../base/ufos/campaign.ufo:679 ../base/ufos/campaign.ufo:698
 #: ../base/ufos/campaign.ufo:719
 msgid "Terror Attack"
 msgstr "Terrorattacke"
 
-#: ../base/ufos/campaign.ufo:6
-#: ../base/ufos/campaign.ufo:224
-#: ../base/ufos/campaign.ufo:554
-#: ../base/ufos/campaign.ufo:572
-#: ../base/ufos/campaign.ufo:589
-#: ../base/ufos/campaign.ufo:607
-#: ../base/ufos/campaign.ufo:643
-#: ../base/ufos/campaign.ufo:662
-msgid "Damn it, you've let some of them get\\away again! Reequip your squad and\\get after them!\\"
+#: ../base/ufos/campaign.ufo:6 ../base/ufos/campaign.ufo:224
+#: ../base/ufos/campaign.ufo:554 ../base/ufos/campaign.ufo:572
+#: ../base/ufos/campaign.ufo:589 ../base/ufos/campaign.ufo:607
+#: ../base/ufos/campaign.ufo:643 ../base/ufos/campaign.ufo:662
+msgid ""
+"Damn it, you've let some of them get\\away again! Reequip your squad and"
+"\\get after them!\\"
 msgstr ""
 
 #: ../base/ufos/campaign.ufo:23
 msgid "Berlin"
 msgstr "Berlin"
 
-#: ../base/ufos/campaign.ufo:25
-#: ../base/ufos/campaign.ufo:83
-#: ../base/ufos/campaign.ufo:124
-#: ../base/ufos/campaign.ufo:145
-#: ../base/ufos/campaign.ufo:165
-#: ../base/ufos/campaign.ufo:204
-#: ../base/ufos/campaign.ufo:243
-#: ../base/ufos/campaign.ufo:303
-#: ../base/ufos/campaign.ufo:323
-#: ../base/ufos/campaign.ufo:363
-#: ../base/ufos/campaign.ufo:403
-#: ../base/ufos/campaign.ufo:422
-#: ../base/ufos/campaign.ufo:460
-#: ../base/ufos/campaign.ufo:479
-#: ../base/ufos/campaign.ufo:498
-#: ../base/ufos/campaign.ufo:517
-#: ../base/ufos/campaign.ufo:624
-#: ../base/ufos/campaign.ufo:680
-#: ../base/ufos/campaign.ufo:699
-#: ../base/ufos/campaign.ufo:720
+#: ../base/ufos/campaign.ufo:25 ../base/ufos/campaign.ufo:83
+#: ../base/ufos/campaign.ufo:124 ../base/ufos/campaign.ufo:145
+#: ../base/ufos/campaign.ufo:165 ../base/ufos/campaign.ufo:204
+#: ../base/ufos/campaign.ufo:243 ../base/ufos/campaign.ufo:303
+#: ../base/ufos/campaign.ufo:323 ../base/ufos/campaign.ufo:363
+#: ../base/ufos/campaign.ufo:403 ../base/ufos/campaign.ufo:422
+#: ../base/ufos/campaign.ufo:460 ../base/ufos/campaign.ufo:479
+#: ../base/ufos/campaign.ufo:498 ../base/ufos/campaign.ufo:517
+#: ../base/ufos/campaign.ufo:624 ../base/ufos/campaign.ufo:680
+#: ../base/ufos/campaign.ufo:699 ../base/ufos/campaign.ufo:720
 msgid "Protect inhabitants"
 msgstr "Beschütze die Einwohner"
 
@@ -243,7 +215,9 @@ msgid "Wellington"
 msgstr "Wellington"
 
 #: ../base/ufos/campaign.ufo:65
-msgid "There are rumors of a mine being\\overrun by aliens. Altough this\\source of information is doubtful,\\you'll need to investigate.\\"
+msgid ""
+"There are rumors of a mine being\\overrun by aliens. Altough this\\source of "
+"information is doubtful,\\you'll need to investigate.\\"
 msgstr ""
 
 #: ../base/ufos/campaign.ufo:81
@@ -254,8 +228,7 @@ msgstr "Mackay"
 msgid "Dongola"
 msgstr "Dongola"
 
-#: ../base/ufos/campaign.ufo:102
-#: ../base/ufos/campaign.ufo:264
+#: ../base/ufos/campaign.ufo:102 ../base/ufos/campaign.ufo:264
 msgid "Crashed Alien Ship"
 msgstr "UFO-Absturzstelle"
 
@@ -275,13 +248,14 @@ msgstr "Veracruz"
 msgid "Uppsala"
 msgstr "Uppsala"
 
-#: ../base/ufos/campaign.ufo:183
-#: ../base/ufos/campaign.ufo:477
+#: ../base/ufos/campaign.ufo:183 ../base/ufos/campaign.ufo:477
 msgid "Gwanda"
 msgstr "Gwanda"
 
 #: ../base/ufos/campaign.ufo:185
-msgid "Some aliens have escaped from the\\mine, and their tracks lead south,\\towards a nearby excavation site.\\Protect that site at all cost.\\"
+msgid ""
+"Some aliens have escaped from the\\mine, and their tracks lead south,"
+"\\towards a nearby excavation site.\\Protect that site at all cost.\\"
 msgstr ""
 
 #: ../base/ufos/campaign.ufo:202
@@ -296,8 +270,7 @@ msgstr "New York"
 msgid "Lille"
 msgstr "Lille"
 
-#: ../base/ufos/campaign.ufo:263
-#: ../base/ufos/campaign.ufo:282
+#: ../base/ufos/campaign.ufo:263 ../base/ufos/campaign.ufo:282
 #: ../base/ufos/campaign.ufo:321
 msgid "Revelstoke"
 msgstr "Revelstoke"
@@ -306,14 +279,12 @@ msgstr "Revelstoke"
 msgid "Secure Alien Ship"
 msgstr "Sichere das UFO"
 
-#: ../base/ufos/campaign.ufo:283
-#: ../base/ufos/campaign.ufo:342
+#: ../base/ufos/campaign.ufo:283 ../base/ufos/campaign.ufo:342
 #: ../base/ufos/campaign.ufo:382
 msgid "Landed Alien Ship"
 msgstr "Gelandetes UFO"
 
-#: ../base/ufos/campaign.ufo:284
-#: ../base/ufos/campaign.ufo:343
+#: ../base/ufos/campaign.ufo:284 ../base/ufos/campaign.ufo:343
 #: ../base/ufos/campaign.ufo:383
 msgid "Secure Alien Ship before Liftoff"
 msgstr "SIchere das UFO bevor es abhebt"
@@ -322,8 +293,7 @@ msgstr "SIchere das UFO bevor es abhebt"
 msgid "Nuuk"
 msgstr "Nuuk"
 
-#: ../base/ufos/campaign.ufo:341
-#: ../base/ufos/campaign.ufo:361
+#: ../base/ufos/campaign.ufo:341 ../base/ufos/campaign.ufo:361
 msgid "Antarctic"
 msgstr "Antarktis"
 
@@ -363,14 +333,10 @@ msgstr "Asyut"
 msgid "Tabelbala"
 msgstr "Tabelbala"
 
-#: ../base/ufos/campaign.ufo:535
-#: ../base/ufos/campaign.ufo:552
-#: ../base/ufos/campaign.ufo:570
-#: ../base/ufos/campaign.ufo:587
-#: ../base/ufos/campaign.ufo:605
-#: ../base/ufos/campaign.ufo:622
-#: ../base/ufos/campaign.ufo:641
-#: ../base/ufos/campaign.ufo:660
+#: ../base/ufos/campaign.ufo:535 ../base/ufos/campaign.ufo:552
+#: ../base/ufos/campaign.ufo:570 ../base/ufos/campaign.ufo:587
+#: ../base/ufos/campaign.ufo:605 ../base/ufos/campaign.ufo:622
+#: ../base/ufos/campaign.ufo:641 ../base/ufos/campaign.ufo:660
 msgid "TODO"
 msgstr ""
 
@@ -411,12 +377,16 @@ msgid "Aliens attacked one of our home bases"
 msgstr "Aliens greifen eine unserer Basen an"
 
 #: ../base/ufos/campaign.ufo:871
-msgid "Heavy Campaign"
+#, fuzzy
+msgid "Hard Campaign"
 msgstr "Schwere Kampagne"
 
 #: ../base/ufos/campaign.ufo:872
-msgid "txt_heavy_campaign"
-msgstr "Das gleiche wie bei der Standardkampagne nur mit weniger Rekruten und weniger Credits"
+#, fuzzy
+msgid "txt_hard_campaign"
+msgstr ""
+"Das gleiche wie bei der Standardkampagne nur mit weniger Rekruten und "
+"weniger Credits"
 
 #: ../base/ufos/campaign.ufo:887
 msgid "Easy Campaign"
@@ -424,14 +394,15 @@ msgstr "Einfache Kampagne"
 
 #: ../base/ufos/campaign.ufo:888
 msgid "txt_easy_campaign"
-msgstr "Das gleiche wie bei der Standardkampagne nur mit mehr Rekruten und mehr Credits"
+msgstr ""
+"Das gleiche wie bei der Standardkampagne nur mit mehr Rekruten und mehr "
+"Credits"
 
 #: ../base/ufos/campaign.ufo:903
 msgid "Standard Campaign"
 msgstr "Standardkampagne"
 
-#: ../base/ufos/campaign.ufo:904
-#: ../base/ufos/campaign.ufo:921
+#: ../base/ufos/campaign.ufo:904 ../base/ufos/campaign.ufo:921
 msgid "txt_standard_campaign"
 msgstr ""
 
@@ -448,13 +419,11 @@ msgstr ""
 msgid "Alien stealth aircraft sighted"
 msgstr "Weise dem Flugzeug zuerst ein Team zu"
 
-#: ../base/ufos/fonts.ufo:15
-#: ../base/ufos/fonts.ufo:21
+#: ../base/ufos/fonts.ufo:15 ../base/ufos/fonts.ufo:21
 msgid "media/DejaVuSans.ttf"
 msgstr "media/DejaVuSans.ttf"
 
-#: ../base/ufos/fonts.ufo:27
-#: ../base/ufos/fonts.ufo:33
+#: ../base/ufos/fonts.ufo:27 ../base/ufos/fonts.ufo:33
 #: ../base/ufos/fonts.ufo:40
 msgid "media/FreeSans.ttf"
 msgstr "media/FreeSans.ttf"
@@ -483,6 +452,141 @@ msgstr "Sergeant"
 msgid "Captain"
 msgstr "Hauptmann"
 
+#: ../base/ufos/menu_aircraft.ufo:48
+msgid "Assign your squad"
+msgstr "Wähle Besatzung aus"
+
+#: ../base/ufos/menu_aircraft.ufo:63
+msgid "Equip Aircraft"
+msgstr "Besatzung"
+
+#: ../base/ufos/menu_aircraft.ufo:75
+msgid "Buy/Sell aircraft"
+msgstr "Kaufe/Verkaufe Flugzeuge"
+
+#: ../base/ufos/menu_aircraft.ufo:90
+msgid "Buy/Sell Aircraft"
+msgstr "Kaufe/Verkaufe"
+
+#: ../base/ufos/menu_aircraft.ufo:102
+msgid "Start your aircraft"
+msgstr "Starte Flugzeug"
+
+#: ../base/ufos/menu_aircraft.ufo:117
+msgid "Start Aircraft"
+msgstr "Starte Flugzeug"
+
+#: ../base/ufos/menu_aircraft.ufo:129 ../base/ufos/menu_bases.ufo:143
+msgid "Transfer equipment or personnel"
+msgstr "Transferiere Ausrüstung oder Personal"
+
+#: ../base/ufos/menu_aircraft.ufo:144 ../base/ufos/menu_bases.ufo:158
+msgid "Transfer"
+msgstr "Transfer"
+
+#: ../base/ufos/menu_aircraft.ufo:156
+msgid "Equip weapons and shields"
+msgstr ""
+
+#: ../base/ufos/menu_aircraft.ufo:171
+msgid "Equip"
+msgstr ""
+
+#: ../base/ufos/menu_aircraft.ufo:211 ../base/ufos/menu_aircraft.ufo:387
+#: ../base/ufos/menu_team.ufo:664 ../base/ufos/menu_team.ufo:1263
+msgid "Done"
+msgstr "Fertig"
+
+#: ../base/ufos/menu_aircraft.ufo:222
+msgid "Switch to the previous aircraft"
+msgstr "Gehe zu vorherigem Flugzeug"
+
+#: ../base/ufos/menu_aircraft.ufo:233
+msgid "Switch to the next aircraft"
+msgstr "Wähle nächstes Flugzeug aus"
+
+#: ../base/ufos/menu_aircraft.ufo:244
+msgid "Call back"
+msgstr "Zurückrufen"
+
+#: ../base/ufos/menu_aircraft.ufo:257 ../base/ufos/menu_team.ufo:648
+msgid "Team Members:"
+msgstr "Teamstärke:"
+
+#: ../base/ufos/menu_aircraft.ufo:337
+#, fuzzy
+msgid "Shield"
+msgstr "Schild:\t%s"
+
+#: ../base/ufos/menu_aircraft.ufo:345
+#, fuzzy
+msgid "Weapon"
+msgstr "Waffen"
+
+#: ../base/ufos/menu_aircraft.ufo:353
+#, fuzzy
+msgid "Available equipment:"
+msgstr "Kaufe/Verkauf Ausrüstung"
+
+#: ../base/ufos/menu_althud.ufo:45
+msgid "Inventory and physical stats"
+msgstr ""
+
+#: ../base/ufos/menu_althud.ufo:388 ../base/ufos/menu_hud.ufo:223
+msgid "Enemy spotted"
+msgstr "Gegner gesichtet"
+
+#: ../base/ufos/menu_althud.ufo:395 ../base/ufos/menu_hud.ufo:233
+msgid "Click to cycle through the spotted enemies"
+msgstr "Wechsele zum nächsten gesichteten Alien"
+
+#: ../base/ufos/menu_althud.ufo:402 ../base/ufos/menu_hud.ufo:212
+msgid "Finish round"
+msgstr "Beende Runde"
+
+#: ../base/ufos/menu_althud.ufo:445 ../base/ufos/menu_althud.ufo:465
+#: ../base/ufos/menu_hud.ufo:408 ../base/ufos/menu_hud.ufo:418
+msgid "Primary fire mode"
+msgstr "Primärer Feuermodus"
+
+#: ../base/ufos/menu_althud.ufo:455 ../base/ufos/menu_althud.ufo:475
+#: ../base/ufos/menu_hud.ufo:428 ../base/ufos/menu_hud.ufo:438
+msgid "Secondary fire mode"
+msgstr "Sekundärer Feuermodus"
+
+#: ../base/ufos/menu_althud.ufo:489 ../base/ufos/menu_hud.ufo:517
+msgid "Toggle reaction-fire"
+msgstr "Schalte Reactionfire ein/aus"
+
+#: ../base/ufos/menu_althud.ufo:501 ../base/ufos/menu_hud.ufo:448
+#: ../base/ufos/menu_hud.ufo:459
+msgid "Reload weapon"
+msgstr "Waffen nachladen"
+
+#: ../base/ufos/menu_althud.ufo:515 ../base/ufos/menu_hud.ufo:504
+msgid "Crouch/Stand up"
+msgstr "Ducken/Ausstehen"
+
+#: ../base/ufos/menu_althud.ufo:526
+#, fuzzy
+msgid "Level up"
+msgstr "Level 1"
+
+#: ../base/ufos/menu_althud.ufo:536
+#, fuzzy
+msgid "Level down"
+msgstr "Level 1"
+
+#: ../base/ufos/menu_althud.ufo:581
+#, fuzzy
+msgid "Switch to right hand weapon"
+msgstr "Gehe zu nächster Basis"
+
+#: ../base/ufos/menu_althud.ufo:590
+#, fuzzy
+msgid "Switch to left hand weapon"
+msgstr "Gehe zu nächster Basis"
+
 #: ../base/ufos/menu_bases.ufo:48
 msgid "Back to worldview"
 msgstr "Zurück zur Weltkarte"
@@ -491,8 +595,7 @@ msgstr "Zurück zur Weltkarte"
 msgid "Build base-facilities"
 msgstr "Baue Gebäude"
 
-#: ../base/ufos/menu_bases.ufo:86
-#: ../base/ufos/research.ufo:63
+#: ../base/ufos/menu_bases.ufo:86 ../base/ufos/research.ufo:63
 msgid "Buildings"
 msgstr "Gebäude"
 
@@ -500,8 +603,7 @@ msgstr "Gebäude"
 msgid "Manage your aircraft"
 msgstr "Verwalte deine Flugzeuge"
 
-#: ../base/ufos/menu_bases.ufo:110
-#: ../base/ufos/research.ufo:57
+#: ../base/ufos/menu_bases.ufo:110 ../base/ufos/research.ufo:57
 msgid "Aircraft"
 msgstr "Flugzeuge"
 
@@ -513,16 +615,6 @@ msgstr "Kaufe/Verkauf Ausrüstung"
 msgid "Buy/Sell Equipment"
 msgstr "Kaufe/Verkaufe"
 
-#: ../base/ufos/menu_bases.ufo:143
-#: ../base/ufos/menu_bases.ufo:391
-msgid "Transfer equipment or personnel"
-msgstr "Transferiere Ausrüstung oder Personal"
-
-#: ../base/ufos/menu_bases.ufo:158
-#: ../base/ufos/menu_bases.ufo:406
-msgid "Transfer"
-msgstr "Transfer"
-
 #: ../base/ufos/menu_bases.ufo:167
 msgid "Research new technology"
 msgstr "Erforsche neue Techologien"
@@ -531,17 +623,13 @@ msgstr "Erforsche neue Techologien"
 msgid "Research"
 msgstr "Forschung"
 
-#: ../base/ufos/menu_bases.ufo:195
-#: ../base/ufos/menu_buildings.ufo:76
-#: ../base/ufos/menu_buy.ufo:708
-#: ../base/ufos/menu_buy.ufo:1142
-#: ../base/ufos/menu_geoscape.ufo:86
-#: ../base/ufos/menu_research.ufo:888
+#: ../base/ufos/menu_bases.ufo:195 ../base/ufos/menu_buildings.ufo:76
+#: ../base/ufos/menu_buy.ufo:708 ../base/ufos/menu_buy.ufo:1142
+#: ../base/ufos/menu_geoscape.ufo:86 ../base/ufos/menu_research.ufo:888
 msgid "CREDIT"
 msgstr "Guthaben"
 
-#: ../base/ufos/menu_bases.ufo:203
-#: ../base/ufos/menu_geoscape.ufo:94
+#: ../base/ufos/menu_bases.ufo:203 ../base/ufos/menu_geoscape.ufo:94
 msgid "Organisation capital"
 msgstr "Kapital"
 
@@ -561,118 +649,42 @@ msgstr "Gehe zu vorheriger Basis"
 msgid "Switch to the next base"
 msgstr "Gehe zu nächster Basis"
 
-#: ../base/ufos/menu_bases.ufo:310
-msgid "Assign your squad"
-msgstr "Wähle Besatzung aus"
-
-#: ../base/ufos/menu_bases.ufo:325
-msgid "Equip Aircraft"
-msgstr "Besatzung"
-
-#: ../base/ufos/menu_bases.ufo:337
-msgid "Buy/Sell aircraft"
-msgstr "Kaufe/Verkaufe Flugzeuge"
-
-#: ../base/ufos/menu_bases.ufo:352
-msgid "Buy/Sell Aircraft"
-msgstr "Kaufe/Verkaufe"
-
-#: ../base/ufos/menu_bases.ufo:364
-msgid "Start your aircraft"
-msgstr "Starte Flugzeug"
-
-#: ../base/ufos/menu_bases.ufo:379
-msgid "Start Aircraft"
-msgstr "Starte Flugzeug"
-
-#: ../base/ufos/menu_bases.ufo:446
-#: ../base/ufos/menu_team.ufo:664
-#: ../base/ufos/menu_team.ufo:1263
-msgid "Done"
-msgstr "Fertig"
-
-#: ../base/ufos/menu_bases.ufo:457
-msgid "Switch to the previous aircraft"
-msgstr "Gehe zu vorherigem Flugzeug"
-
-#: ../base/ufos/menu_bases.ufo:468
-msgid "Switch to the next aircraft"
-msgstr "Wähle nächstes Flugzeug aus"
-
-#: ../base/ufos/menu_bases.ufo:479
-msgid "Call back"
-msgstr "Zurückrufen"
-
-#: ../base/ufos/menu_bases.ufo:492
-#: ../base/ufos/menu_team.ufo:648
-msgid "Team Members:"
-msgstr "Teamstärke:"
-
-#: ../base/ufos/menu_buildings.ufo:58
-#: ../base/ufos/menu_buy.ufo:820
+#: ../base/ufos/menu_buildings.ufo:58 ../base/ufos/menu_buy.ufo:820
 #: ../base/ufos/menu_research.ufo:933
 msgid "Back to baseview"
 msgstr "Zurück zur Basisübersicht"
 
-#: ../base/ufos/menu_buy.ufo:255
-#: ../base/ufos/menu_buy.ufo:271
-#: ../base/ufos/menu_buy.ufo:287
-#: ../base/ufos/menu_buy.ufo:303
-#: ../base/ufos/menu_buy.ufo:319
-#: ../base/ufos/menu_buy.ufo:335
-#: ../base/ufos/menu_buy.ufo:351
-#: ../base/ufos/menu_buy.ufo:367
-#: ../base/ufos/menu_buy.ufo:383
-#: ../base/ufos/menu_buy.ufo:399
-#: ../base/ufos/menu_buy.ufo:415
-#: ../base/ufos/menu_buy.ufo:431
-#: ../base/ufos/menu_buy.ufo:447
-#: ../base/ufos/menu_buy.ufo:463
-#: ../base/ufos/menu_buy.ufo:479
-#: ../base/ufos/menu_buy.ufo:495
-#: ../base/ufos/menu_buy.ufo:511
-#: ../base/ufos/menu_buy.ufo:527
-#: ../base/ufos/menu_buy.ufo:543
-#: ../base/ufos/menu_buy.ufo:559
-#: ../base/ufos/menu_buy.ufo:575
-#: ../base/ufos/menu_buy.ufo:591
-#: ../base/ufos/menu_buy.ufo:607
-#: ../base/ufos/menu_buy.ufo:623
-#: ../base/ufos/menu_buy.ufo:639
-#: ../base/ufos/menu_buy.ufo:655
-#: ../base/ufos/menu_buy.ufo:671
-#: ../base/ufos/menu_buy.ufo:687
+#: ../base/ufos/menu_buy.ufo:255 ../base/ufos/menu_buy.ufo:271
+#: ../base/ufos/menu_buy.ufo:287 ../base/ufos/menu_buy.ufo:303
+#: ../base/ufos/menu_buy.ufo:319 ../base/ufos/menu_buy.ufo:335
+#: ../base/ufos/menu_buy.ufo:351 ../base/ufos/menu_buy.ufo:367
+#: ../base/ufos/menu_buy.ufo:383 ../base/ufos/menu_buy.ufo:399
+#: ../base/ufos/menu_buy.ufo:415 ../base/ufos/menu_buy.ufo:431
+#: ../base/ufos/menu_buy.ufo:447 ../base/ufos/menu_buy.ufo:463
+#: ../base/ufos/menu_buy.ufo:479 ../base/ufos/menu_buy.ufo:495
+#: ../base/ufos/menu_buy.ufo:511 ../base/ufos/menu_buy.ufo:527
+#: ../base/ufos/menu_buy.ufo:543 ../base/ufos/menu_buy.ufo:559
+#: ../base/ufos/menu_buy.ufo:575 ../base/ufos/menu_buy.ufo:591
+#: ../base/ufos/menu_buy.ufo:607 ../base/ufos/menu_buy.ufo:623
+#: ../base/ufos/menu_buy.ufo:639 ../base/ufos/menu_buy.ufo:655
+#: ../base/ufos/menu_buy.ufo:671 ../base/ufos/menu_buy.ufo:687
 msgid "Buy item"
 msgstr "Kaufen"
 
-#: ../base/ufos/menu_buy.ufo:263
-#: ../base/ufos/menu_buy.ufo:279
-#: ../base/ufos/menu_buy.ufo:295
-#: ../base/ufos/menu_buy.ufo:311
-#: ../base/ufos/menu_buy.ufo:327
-#: ../base/ufos/menu_buy.ufo:343
-#: ../base/ufos/menu_buy.ufo:359
-#: ../base/ufos/menu_buy.ufo:375
-#: ../base/ufos/menu_buy.ufo:391
-#: ../base/ufos/menu_buy.ufo:407
-#: ../base/ufos/menu_buy.ufo:423
-#: ../base/ufos/menu_buy.ufo:439
-#: ../base/ufos/menu_buy.ufo:455
-#: ../base/ufos/menu_buy.ufo:471
-#: ../base/ufos/menu_buy.ufo:487
-#: ../base/ufos/menu_buy.ufo:503
-#: ../base/ufos/menu_buy.ufo:519
-#: ../base/ufos/menu_buy.ufo:535
-#: ../base/ufos/menu_buy.ufo:551
-#: ../base/ufos/menu_buy.ufo:567
-#: ../base/ufos/menu_buy.ufo:583
-#: ../base/ufos/menu_buy.ufo:599
-#: ../base/ufos/menu_buy.ufo:615
-#: ../base/ufos/menu_buy.ufo:631
-#: ../base/ufos/menu_buy.ufo:647
-#: ../base/ufos/menu_buy.ufo:663
-#: ../base/ufos/menu_buy.ufo:679
-#: ../base/ufos/menu_buy.ufo:695
+#: ../base/ufos/menu_buy.ufo:263 ../base/ufos/menu_buy.ufo:279
+#: ../base/ufos/menu_buy.ufo:295 ../base/ufos/menu_buy.ufo:311
+#: ../base/ufos/menu_buy.ufo:327 ../base/ufos/menu_buy.ufo:343
+#: ../base/ufos/menu_buy.ufo:359 ../base/ufos/menu_buy.ufo:375
+#: ../base/ufos/menu_buy.ufo:391 ../base/ufos/menu_buy.ufo:407
+#: ../base/ufos/menu_buy.ufo:423 ../base/ufos/menu_buy.ufo:439
+#: ../base/ufos/menu_buy.ufo:455 ../base/ufos/menu_buy.ufo:471
+#: ../base/ufos/menu_buy.ufo:487 ../base/ufos/menu_buy.ufo:503
+#: ../base/ufos/menu_buy.ufo:519 ../base/ufos/menu_buy.ufo:535
+#: ../base/ufos/menu_buy.ufo:551 ../base/ufos/menu_buy.ufo:567
+#: ../base/ufos/menu_buy.ufo:583 ../base/ufos/menu_buy.ufo:599
+#: ../base/ufos/menu_buy.ufo:615 ../base/ufos/menu_buy.ufo:631
+#: ../base/ufos/menu_buy.ufo:647 ../base/ufos/menu_buy.ufo:663
+#: ../base/ufos/menu_buy.ufo:679 ../base/ufos/menu_buy.ufo:695
 msgid "Sell item"
 msgstr "Verkaufen"
 
@@ -680,8 +692,7 @@ msgstr "Verkaufen"
 msgid "Show only primary weapons"
 msgstr "Zeige nur Primärwaffen"
 
-#: ../base/ufos/menu_buy.ufo:755
-#: ../base/ufos/menu_team.ufo:982
+#: ../base/ufos/menu_buy.ufo:755 ../base/ufos/menu_team.ufo:982
 msgid "Primary"
 msgstr "Primär"
 
@@ -689,8 +700,7 @@ msgstr "Primär"
 msgid "Show only secondary weapons"
 msgstr "Zeige nur Sekundärwaffen"
 
-#: ../base/ufos/menu_buy.ufo:775
-#: ../base/ufos/menu_team.ufo:1002
+#: ../base/ufos/menu_buy.ufo:775 ../base/ufos/menu_team.ufo:1002
 msgid "Secondary"
 msgstr "Sekundär"
 
@@ -698,8 +708,7 @@ msgstr "Sekundär"
 msgid "Show other equipment"
 msgstr "Zeige nur Ausrüstungsgegenstände"
 
-#: ../base/ufos/menu_buy.ufo:795
-#: ../base/ufos/menu_team.ufo:1022
+#: ../base/ufos/menu_buy.ufo:795 ../base/ufos/menu_team.ufo:1022
 msgid "Misc"
 msgstr "Ausrüstung"
 
@@ -707,34 +716,23 @@ msgstr "Ausrüstung"
 msgid "Show only armor"
 msgstr "Zeige nur Rüstungen"
 
-#: ../base/ufos/menu_buy.ufo:815
-#: ../base/ufos/menu_team.ufo:1042
+#: ../base/ufos/menu_buy.ufo:815 ../base/ufos/menu_team.ufo:1042
 msgid "Armor"
 msgstr "Rüstungen"
 
-#: ../base/ufos/menu_buy.ufo:977
-#: ../base/ufos/menu_buy.ufo:993
-#: ../base/ufos/menu_buy.ufo:1009
-#: ../base/ufos/menu_buy.ufo:1025
-#: ../base/ufos/menu_buy.ufo:1041
-#: ../base/ufos/menu_buy.ufo:1057
-#: ../base/ufos/menu_buy.ufo:1073
-#: ../base/ufos/menu_buy.ufo:1089
-#: ../base/ufos/menu_buy.ufo:1105
-#: ../base/ufos/menu_buy.ufo:1121
+#: ../base/ufos/menu_buy.ufo:977 ../base/ufos/menu_buy.ufo:993
+#: ../base/ufos/menu_buy.ufo:1009 ../base/ufos/menu_buy.ufo:1025
+#: ../base/ufos/menu_buy.ufo:1041 ../base/ufos/menu_buy.ufo:1057
+#: ../base/ufos/menu_buy.ufo:1073 ../base/ufos/menu_buy.ufo:1089
+#: ../base/ufos/menu_buy.ufo:1105 ../base/ufos/menu_buy.ufo:1121
 msgid "Buy aircraft"
 msgstr "Kaufe Flugzeug"
 
-#: ../base/ufos/menu_buy.ufo:985
-#: ../base/ufos/menu_buy.ufo:1001
-#: ../base/ufos/menu_buy.ufo:1017
-#: ../base/ufos/menu_buy.ufo:1033
-#: ../base/ufos/menu_buy.ufo:1049
-#: ../base/ufos/menu_buy.ufo:1065
-#: ../base/ufos/menu_buy.ufo:1081
-#: ../base/ufos/menu_buy.ufo:1097
-#: ../base/ufos/menu_buy.ufo:1113
-#: ../base/ufos/menu_buy.ufo:1129
+#: ../base/ufos/menu_buy.ufo:985 ../base/ufos/menu_buy.ufo:1001
+#: ../base/ufos/menu_buy.ufo:1017 ../base/ufos/menu_buy.ufo:1033
+#: ../base/ufos/menu_buy.ufo:1049 ../base/ufos/menu_buy.ufo:1065
+#: ../base/ufos/menu_buy.ufo:1081 ../base/ufos/menu_buy.ufo:1097
+#: ../base/ufos/menu_buy.ufo:1113 ../base/ufos/menu_buy.ufo:1129
 msgid "Sell aircraft"
 msgstr "Verkaufe Flugzeug"
 
@@ -750,8 +748,7 @@ msgstr "Kampagnen"
 msgid "Start campaign"
 msgstr "Starte Kampagne"
 
-#: ../base/ufos/menu_campaign.ufo:96
-#: ../base/ufos/menu_multiplayer.ufo:123
+#: ../base/ufos/menu_campaign.ufo:96 ../base/ufos/menu_multiplayer.ufo:123
 #: ../base/ufos/menu_multiplayer.ufo:505
 msgid "Back"
 msgstr "Zurück"
@@ -784,10 +781,8 @@ msgstr "Ufopedia"
 msgid "Create base"
 msgstr "Basis anlegen"
 
-#: ../base/ufos/menu_geoscape.ufo:242
-#: ../base/ufos/menu_hud.ufo:555
-#: ../base/ufos/menu_main.ufo:110
-#: ../base/ufos/menu_singleplayer.ufo:285
+#: ../base/ufos/menu_geoscape.ufo:242 ../base/ufos/menu_hud.ufo:555
+#: ../base/ufos/menu_main.ufo:110 ../base/ufos/menu_singleplayer.ufo:285
 msgid "Options"
 msgstr "Optionen"
 
@@ -803,34 +798,27 @@ msgstr "Bereit"
 msgid "Aircraft reached desired location - what to do?"
 msgstr "Flugzeug hat gewünschte Position erreicht - was nun?"
 
-#: ../base/ufos/menu_geoscape.ufo:337
-#: ../base/ufos/menu_geoscape.ufo:453
-#: ../base/ufos/menu_geoscape.ufo:550
-#: ../base/ufos/menu_geoscape.ufo:602
+#: ../base/ufos/menu_geoscape.ufo:337 ../base/ufos/menu_geoscape.ufo:453
+#: ../base/ufos/menu_geoscape.ufo:550 ../base/ufos/menu_geoscape.ufo:602
 #: ../base/ufos/menu_geoscape.ufo:708
 msgid "Close this dialog"
 msgstr "Schließe diesen Dialog"
 
-#: ../base/ufos/menu_geoscape.ufo:350
-#: ../base/ufos/menu_geoscape.ufo:477
-#: ../base/ufos/menu_geoscape.ufo:563
-#: ../base/ufos/menu_geoscape.ufo:605
+#: ../base/ufos/menu_geoscape.ufo:350 ../base/ufos/menu_geoscape.ufo:477
+#: ../base/ufos/menu_geoscape.ufo:563 ../base/ufos/menu_geoscape.ufo:605
 #: ../base/ufos/menu_geoscape.ufo:721
 msgid "Cancel"
 msgstr "Abbruch"
 
-#: ../base/ufos/menu_geoscape.ufo:357
-#: ../base/ufos/menu_geoscape.ufo:612
+#: ../base/ufos/menu_geoscape.ufo:357 ../base/ufos/menu_geoscape.ufo:612
 msgid "Enter the battlefield"
 msgstr "Betritt das Schlachtfeld"
 
-#: ../base/ufos/menu_geoscape.ufo:370
-#: ../base/ufos/menu_geoscape.ufo:625
+#: ../base/ufos/menu_geoscape.ufo:370 ../base/ufos/menu_geoscape.ufo:625
 msgid "Enter"
 msgstr "Starten"
 
-#: ../base/ufos/menu_geoscape.ufo:378
-#: ../base/ufos/menu_geoscape.ufo:633
+#: ../base/ufos/menu_geoscape.ufo:378 ../base/ufos/menu_geoscape.ufo:633
 msgid "Automatically finish mission"
 msgstr "Spiele dir Mission automatisch"
 
@@ -842,10 +830,8 @@ msgstr "Automatisch"
 msgid "New base"
 msgstr "Neue Basis anlegen"
 
-#: ../base/ufos/menu_geoscape.ufo:428
-#: ../base/ufos/menu_geoscape.ufo:521
-#: ../base/ufos/menu_geoscape.ufo:690
-#: ../base/ufos/menu_options.ufo:745
+#: ../base/ufos/menu_geoscape.ufo:428 ../base/ufos/menu_geoscape.ufo:521
+#: ../base/ufos/menu_geoscape.ufo:690 ../base/ufos/menu_options.ufo:745
 msgid "Name:"
 msgstr "Name:"
 
@@ -877,8 +863,7 @@ msgstr "Status:"
 msgid "Base:"
 msgstr "Basis:"
 
-#: ../base/ufos/menu_geoscape.ufo:647
-#: ../base/ufos/weapons_human.ufo:54
+#: ../base/ufos/menu_geoscape.ufo:647 ../base/ufos/weapons_human.ufo:54
 msgid "Auto"
 msgstr "Automatisch"
 
@@ -922,18 +907,6 @@ msgstr "Level 7"
 msgid "Level 8"
 msgstr "Level 8"
 
-#: ../base/ufos/menu_hud.ufo:212
-msgid "Finish round"
-msgstr "Beende Runde"
-
-#: ../base/ufos/menu_hud.ufo:223
-msgid "Enemy spotted"
-msgstr "Gegner gesichtet"
-
-#: ../base/ufos/menu_hud.ufo:233
-msgid "Click to cycle through the spotted enemies"
-msgstr "Wechsele zum nächsten gesichteten Alien"
-
 #: ../base/ufos/menu_hud.ufo:265
 msgid "Soldier 1"
 msgstr "Soldat 1"
@@ -966,29 +939,6 @@ msgstr "Soldat 7"
 msgid "Soldier 8"
 msgstr "Soldat 8"
 
-#: ../base/ufos/menu_hud.ufo:408
-#: ../base/ufos/menu_hud.ufo:418
-msgid "Primary fire mode"
-msgstr "Primärer Feuermodus"
-
-#: ../base/ufos/menu_hud.ufo:428
-#: ../base/ufos/menu_hud.ufo:438
-msgid "Secondary fire mode"
-msgstr "Sekundärer Feuermodus"
-
-#: ../base/ufos/menu_hud.ufo:448
-#: ../base/ufos/menu_hud.ufo:459
-msgid "Reload weapon"
-msgstr "Waffen nachladen"
-
-#: ../base/ufos/menu_hud.ufo:504
-msgid "Crouch/Stand up"
-msgstr "Ducken/Ausstehen"
-
-#: ../base/ufos/menu_hud.ufo:517
-msgid "Toggle reaction-fire"
-msgstr "Schalte Reactionfire ein/aus"
-
 #: ../base/ufos/menu_hud.ufo:566
 msgid "Physical stats of this soldier"
 msgstr "Biosignale des Soldaten"
@@ -997,28 +947,23 @@ msgstr "Biosignale des Soldaten"
 msgid "Inventory"
 msgstr "Inventar"
 
-#: ../base/ufos/menu_hud.ufo:694
-#: ../base/ufos/menu_team.ufo:715
+#: ../base/ufos/menu_hud.ufo:694 ../base/ufos/menu_team.ufo:715
 msgid "Backpack"
 msgstr "Rucksack"
 
-#: ../base/ufos/menu_hud.ufo:703
-#: ../base/ufos/menu_team.ufo:724
+#: ../base/ufos/menu_hud.ufo:703 ../base/ufos/menu_team.ufo:724
 msgid "Left Hand"
 msgstr "Linke Hand"
 
-#: ../base/ufos/menu_hud.ufo:712
-#: ../base/ufos/menu_team.ufo:733
+#: ../base/ufos/menu_hud.ufo:712 ../base/ufos/menu_team.ufo:733
 msgid "Right Hand"
 msgstr "Rechte Hand"
 
-#: ../base/ufos/menu_hud.ufo:721
-#: ../base/ufos/menu_team.ufo:742
+#: ../base/ufos/menu_hud.ufo:721 ../base/ufos/menu_team.ufo:742
 msgid "Holster"
 msgstr "Holster"
 
-#: ../base/ufos/menu_hud.ufo:730
-#: ../base/ufos/menu_team.ufo:751
+#: ../base/ufos/menu_hud.ufo:730 ../base/ufos/menu_team.ufo:751
 msgid "Belt"
 msgstr "Gürtel"
 
@@ -1026,56 +971,47 @@ msgstr "Gürtel"
 msgid "Floor"
 msgstr "Boden"
 
-#: ../base/ufos/menu_hud.ufo:888
-#: ../base/ufos/menu_team.ufo:561
+#: ../base/ufos/menu_hud.ufo:888 ../base/ufos/menu_team.ufo:561
 #: ../base/ufos/menu_team.ufo:1088
 msgid "Power:"
 msgstr "Kraft:"
 
-#: ../base/ufos/menu_hud.ufo:893
-#: ../base/ufos/menu_team.ufo:566
+#: ../base/ufos/menu_hud.ufo:893 ../base/ufos/menu_team.ufo:566
 #: ../base/ufos/menu_team.ufo:1093
 msgid "Speed:"
 msgstr "Geschwindigkeit:"
 
-#: ../base/ufos/menu_hud.ufo:898
-#: ../base/ufos/menu_team.ufo:571
+#: ../base/ufos/menu_hud.ufo:898 ../base/ufos/menu_team.ufo:571
 #: ../base/ufos/menu_team.ufo:1098
 msgid "Accuracy:"
 msgstr "Genauigkeit:"
 
-#: ../base/ufos/menu_hud.ufo:903
-#: ../base/ufos/menu_team.ufo:576
+#: ../base/ufos/menu_hud.ufo:903 ../base/ufos/menu_team.ufo:576
 #: ../base/ufos/menu_team.ufo:1103
 msgid "Mind:"
 msgstr "Verstand:"
 
-#: ../base/ufos/menu_hud.ufo:908
-#: ../base/ufos/menu_team.ufo:581
+#: ../base/ufos/menu_hud.ufo:908 ../base/ufos/menu_team.ufo:581
 #: ../base/ufos/menu_team.ufo:1108
 msgid "Close Combat:"
 msgstr "Nahkampf"
 
-#: ../base/ufos/menu_hud.ufo:913
-#: ../base/ufos/menu_team.ufo:586
+#: ../base/ufos/menu_hud.ufo:913 ../base/ufos/menu_team.ufo:586
 #: ../base/ufos/menu_team.ufo:1113
 msgid "Heavy Weapons:"
 msgstr "Schwere Waffen:"
 
-#: ../base/ufos/menu_hud.ufo:918
-#: ../base/ufos/menu_team.ufo:591
+#: ../base/ufos/menu_hud.ufo:918 ../base/ufos/menu_team.ufo:591
 #: ../base/ufos/menu_team.ufo:1118
 msgid "Assault Guns:"
 msgstr "Sturmgewehre:"
 
-#: ../base/ufos/menu_hud.ufo:923
-#: ../base/ufos/menu_team.ufo:596
+#: ../base/ufos/menu_hud.ufo:923 ../base/ufos/menu_team.ufo:596
 #: ../base/ufos/menu_team.ufo:1123
 msgid "Sniper Rifles:"
 msgstr "Scharfschützengewehre:"
 
-#: ../base/ufos/menu_hud.ufo:928
-#: ../base/ufos/menu_team.ufo:601
+#: ../base/ufos/menu_hud.ufo:928 ../base/ufos/menu_team.ufo:601
 #: ../base/ufos/menu_team.ufo:1128
 msgid "High Explosives:"
 msgstr "Granaten:"
@@ -1088,8 +1024,7 @@ msgstr "Einzelspieler"
 msgid "Multiplayer"
 msgstr "Netzwerk"
 
-#: ../base/ufos/menu_main.ufo:130
-#: ../base/ufos/menu_tutorials.ufo:46
+#: ../base/ufos/menu_main.ufo:130 ../base/ufos/menu_tutorials.ufo:46
 msgid "Tutorials"
 msgstr "Tutorials"
 
@@ -1097,13 +1032,11 @@ msgstr "Tutorials"
 msgid "Credits"
 msgstr "Mitwirkende"
 
-#: ../base/ufos/menu_main.ufo:170
-#: ../base/ufos/menu_options.ufo:123
+#: ../base/ufos/menu_main.ufo:170 ../base/ufos/menu_options.ufo:123
 #: ../base/ufos/menu_singleplayer.ufo:149
 #: ../base/ufos/menu_singleplayer.ufo:305
 #: ../base/ufos/menu_singleplayer.ufo:467
-#: ../base/ufos/menu_singleplayer.ufo:642
-#: ../base/ufos/menu_tutorials.ufo:66
+#: ../base/ufos/menu_singleplayer.ufo:642 ../base/ufos/menu_tutorials.ufo:66
 msgid "Exit"
 msgstr "Beenden"
 
@@ -1123,8 +1056,7 @@ msgstr "Team"
 msgid "Load team from current selected slot"
 msgstr "Lade das markierte Team"
 
-#: ../base/ufos/menu_multiplayer.ufo:248
-#: ../base/ufos/menu_singleplayer.ufo:89
+#: ../base/ufos/menu_multiplayer.ufo:248 ../base/ufos/menu_singleplayer.ufo:89
 #: ../base/ufos/menu_singleplayer.ufo:363
 msgid "Load"
 msgstr "Laden"
@@ -1147,8 +1079,7 @@ msgstr "Aktuelles Team"
 msgid "Edit your team after loading"
 msgstr "Bearbeite Team nach dem Laden"
 
-#: ../base/ufos/menu_multiplayer.ufo:303
-#: ../base/ufos/menu_team.ufo:534
+#: ../base/ufos/menu_multiplayer.ufo:303 ../base/ufos/menu_team.ufo:534
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -1172,23 +1103,19 @@ msgstr "Name"
 msgid "Bookmark"
 msgstr "Bookmark"
 
-#: ../base/ufos/menu_multiplayer.ufo:485
-#: ../base/ufos/menu_multiplayer.ufo:716
+#: ../base/ufos/menu_multiplayer.ufo:485 ../base/ufos/menu_multiplayer.ufo:716
 msgid "Connect"
 msgstr "Verbinde"
 
-#: ../base/ufos/menu_multiplayer.ufo:556
-#: ../base/ufos/menu_multiplayer.ufo:669
+#: ../base/ufos/menu_multiplayer.ufo:556 ../base/ufos/menu_multiplayer.ufo:669
 msgid "LAN"
 msgstr "LAN"
 
-#: ../base/ufos/menu_multiplayer.ufo:564
-#: ../base/ufos/menu_multiplayer.ufo:677
+#: ../base/ufos/menu_multiplayer.ufo:564 ../base/ufos/menu_multiplayer.ufo:677
 msgid "Internet"
 msgstr "Internet"
 
-#: ../base/ufos/menu_multiplayer.ufo:586
-#: ../base/ufos/menu_multiplayer.ufo:748
+#: ../base/ufos/menu_multiplayer.ufo:586 ../base/ufos/menu_multiplayer.ufo:748
 #: ../base/ufos/menu_multiplayer.ufo:1019
 msgid "Team preference:"
 msgstr "Teamwahl:"
@@ -1365,65 +1292,37 @@ msgstr "Kamerabewegung:"
 msgid "Camera Rotation:"
 msgstr "Kamerarotation:"
 
-#: ../base/ufos/menu_research.ufo:373
-#: ../base/ufos/menu_research.ufo:389
-#: ../base/ufos/menu_research.ufo:405
-#: ../base/ufos/menu_research.ufo:421
-#: ../base/ufos/menu_research.ufo:437
-#: ../base/ufos/menu_research.ufo:453
-#: ../base/ufos/menu_research.ufo:469
-#: ../base/ufos/menu_research.ufo:485
-#: ../base/ufos/menu_research.ufo:501
-#: ../base/ufos/menu_research.ufo:517
-#: ../base/ufos/menu_research.ufo:533
-#: ../base/ufos/menu_research.ufo:549
-#: ../base/ufos/menu_research.ufo:565
-#: ../base/ufos/menu_research.ufo:581
-#: ../base/ufos/menu_research.ufo:597
-#: ../base/ufos/menu_research.ufo:613
-#: ../base/ufos/menu_research.ufo:629
-#: ../base/ufos/menu_research.ufo:645
-#: ../base/ufos/menu_research.ufo:661
-#: ../base/ufos/menu_research.ufo:677
-#: ../base/ufos/menu_research.ufo:693
-#: ../base/ufos/menu_research.ufo:709
-#: ../base/ufos/menu_research.ufo:725
-#: ../base/ufos/menu_research.ufo:741
-#: ../base/ufos/menu_research.ufo:757
-#: ../base/ufos/menu_research.ufo:773
-#: ../base/ufos/menu_research.ufo:789
-#: ../base/ufos/menu_research.ufo:805
+#: ../base/ufos/menu_research.ufo:373 ../base/ufos/menu_research.ufo:389
+#: ../base/ufos/menu_research.ufo:405 ../base/ufos/menu_research.ufo:421
+#: ../base/ufos/menu_research.ufo:437 ../base/ufos/menu_research.ufo:453
+#: ../base/ufos/menu_research.ufo:469 ../base/ufos/menu_research.ufo:485
+#: ../base/ufos/menu_research.ufo:501 ../base/ufos/menu_research.ufo:517
+#: ../base/ufos/menu_research.ufo:533 ../base/ufos/menu_research.ufo:549
+#: ../base/ufos/menu_research.ufo:565 ../base/ufos/menu_research.ufo:581
+#: ../base/ufos/menu_research.ufo:597 ../base/ufos/menu_research.ufo:613
+#: ../base/ufos/menu_research.ufo:629 ../base/ufos/menu_research.ufo:645
+#: ../base/ufos/menu_research.ufo:661 ../base/ufos/menu_research.ufo:677
+#: ../base/ufos/menu_research.ufo:693 ../base/ufos/menu_research.ufo:709
+#: ../base/ufos/menu_research.ufo:725 ../base/ufos/menu_research.ufo:741
+#: ../base/ufos/menu_research.ufo:757 ../base/ufos/menu_research.ufo:773
+#: ../base/ufos/menu_research.ufo:789 ../base/ufos/menu_research.ufo:805
 msgid "Add scientist"
 msgstr "Wissenschafter hinzufügen"
 
-#: ../base/ufos/menu_research.ufo:381
-#: ../base/ufos/menu_research.ufo:397
-#: ../base/ufos/menu_research.ufo:413
-#: ../base/ufos/menu_research.ufo:429
-#: ../base/ufos/menu_research.ufo:445
-#: ../base/ufos/menu_research.ufo:461
-#: ../base/ufos/menu_research.ufo:477
-#: ../base/ufos/menu_research.ufo:493
-#: ../base/ufos/menu_research.ufo:509
-#: ../base/ufos/menu_research.ufo:525
-#: ../base/ufos/menu_research.ufo:541
-#: ../base/ufos/menu_research.ufo:557
-#: ../base/ufos/menu_research.ufo:573
-#: ../base/ufos/menu_research.ufo:589
-#: ../base/ufos/menu_research.ufo:605
-#: ../base/ufos/menu_research.ufo:621
-#: ../base/ufos/menu_research.ufo:637
-#: ../base/ufos/menu_research.ufo:653
-#: ../base/ufos/menu_research.ufo:669
-#: ../base/ufos/menu_research.ufo:685
-#: ../base/ufos/menu_research.ufo:701
-#: ../base/ufos/menu_research.ufo:717
-#: ../base/ufos/menu_research.ufo:733
-#: ../base/ufos/menu_research.ufo:749
-#: ../base/ufos/menu_research.ufo:765
-#: ../base/ufos/menu_research.ufo:781
-#: ../base/ufos/menu_research.ufo:797
-#: ../base/ufos/menu_research.ufo:813
+#: ../base/ufos/menu_research.ufo:381 ../base/ufos/menu_research.ufo:397
+#: ../base/ufos/menu_research.ufo:413 ../base/ufos/menu_research.ufo:429
+#: ../base/ufos/menu_research.ufo:445 ../base/ufos/menu_research.ufo:461
+#: ../base/ufos/menu_research.ufo:477 ../base/ufos/menu_research.ufo:493
+#: ../base/ufos/menu_research.ufo:509 ../base/ufos/menu_research.ufo:525
+#: ../base/ufos/menu_research.ufo:541 ../base/ufos/menu_research.ufo:557
+#: ../base/ufos/menu_research.ufo:573 ../base/ufos/menu_research.ufo:589
+#: ../base/ufos/menu_research.ufo:605 ../base/ufos/menu_research.ufo:621
+#: ../base/ufos/menu_research.ufo:637 ../base/ufos/menu_research.ufo:653
+#: ../base/ufos/menu_research.ufo:669 ../base/ufos/menu_research.ufo:685
+#: ../base/ufos/menu_research.ufo:701 ../base/ufos/menu_research.ufo:717
+#: ../base/ufos/menu_research.ufo:733 ../base/ufos/menu_research.ufo:749
+#: ../base/ufos/menu_research.ufo:765 ../base/ufos/menu_research.ufo:781
+#: ../base/ufos/menu_research.ufo:797 ../base/ufos/menu_research.ufo:813
 msgid "Remove scientist"
 msgstr "Wissenschaftler entfernen"
 
@@ -1460,24 +1359,15 @@ msgstr "Wiederholen"
 msgid "Statistics"
 msgstr "Statistiken"
 
-#: ../base/ufos/menu_team.ufo:194
-#: ../base/ufos/menu_team.ufo:203
-#: ../base/ufos/menu_team.ufo:212
-#: ../base/ufos/menu_team.ufo:221
-#: ../base/ufos/menu_team.ufo:230
-#: ../base/ufos/menu_team.ufo:239
-#: ../base/ufos/menu_team.ufo:248
-#: ../base/ufos/menu_team.ufo:257
-#: ../base/ufos/menu_team.ufo:266
-#: ../base/ufos/menu_team.ufo:275
-#: ../base/ufos/menu_team.ufo:284
-#: ../base/ufos/menu_team.ufo:293
-#: ../base/ufos/menu_team.ufo:302
-#: ../base/ufos/menu_team.ufo:311
-#: ../base/ufos/menu_team.ufo:320
-#: ../base/ufos/menu_team.ufo:329
-#: ../base/ufos/menu_team.ufo:338
-#: ../base/ufos/menu_team.ufo:347
+#: ../base/ufos/menu_team.ufo:194 ../base/ufos/menu_team.ufo:203
+#: ../base/ufos/menu_team.ufo:212 ../base/ufos/menu_team.ufo:221
+#: ../base/ufos/menu_team.ufo:230 ../base/ufos/menu_team.ufo:239
+#: ../base/ufos/menu_team.ufo:248 ../base/ufos/menu_team.ufo:257
+#: ../base/ufos/menu_team.ufo:266 ../base/ufos/menu_team.ufo:275
+#: ../base/ufos/menu_team.ufo:284 ../base/ufos/menu_team.ufo:293
+#: ../base/ufos/menu_team.ufo:302 ../base/ufos/menu_team.ufo:311
+#: ../base/ufos/menu_team.ufo:320 ../base/ufos/menu_team.ufo:329
+#: ../base/ufos/menu_team.ufo:338 ../base/ufos/menu_team.ufo:347
 #: ../base/ufos/menu_team.ufo:356
 msgid "Add/remove this soldier"
 msgstr "Füge hinzu/Entferne diesen Soldaten"
@@ -1494,14 +1384,10 @@ msgstr "Einsätze:"
 msgid "Killed Enemies:"
 msgstr "Getötete Aliens:"
 
-#: ../base/ufos/menu_team.ufo:821
-#: ../base/ufos/menu_team.ufo:830
-#: ../base/ufos/menu_team.ufo:839
-#: ../base/ufos/menu_team.ufo:848
-#: ../base/ufos/menu_team.ufo:857
-#: ../base/ufos/menu_team.ufo:866
-#: ../base/ufos/menu_team.ufo:875
-#: ../base/ufos/menu_team.ufo:884
+#: ../base/ufos/menu_team.ufo:821 ../base/ufos/menu_team.ufo:830
+#: ../base/ufos/menu_team.ufo:839 ../base/ufos/menu_team.ufo:848
+#: ../base/ufos/menu_team.ufo:857 ../base/ufos/menu_team.ufo:866
+#: ../base/ufos/menu_team.ufo:875 ../base/ufos/menu_team.ufo:884
 msgid "Equip this soldier"
 msgstr "Rüste diesen Soldaten aus"
 
@@ -1621,9 +1507,12 @@ msgstr "Fortgeschrittene Plasmatechnologie"
 #, fuzzy
 msgid "plasma_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
 #: ../base/ufos/research.ufo:102
@@ -1634,12 +1523,18 @@ msgstr "Tachyonenlenkung"
 #, fuzzy
 msgid "tachyon_txt"
 msgstr ""
-"Although our engineers not fully understand the principles of altering the tachyons on a\n"
-"subatomic level, they were able to reproduce the tachyon accelerator technology. Apparently the\n"
-"tachyons are given a defined spin inside the accelerator so they are able to interact with any\n"
-"material. They still tend to infiltrate easily through any known armor and lose their particle\n"
-"energy not before a penetrating distance of about 10 cm. Therefore a soldier hit by a tachyon\n"
-"charge suffers only minor superficial injury but is heavily wounded in his viscera."
+"Although our engineers not fully understand the principles of altering the "
+"tachyons on a\n"
+"subatomic level, they were able to reproduce the tachyon accelerator "
+"technology. Apparently the\n"
+"tachyons are given a defined spin inside the accelerator so they are able to "
+"interact with any\n"
+"material. They still tend to infiltrate easily through any known armor and "
+"lose their particle\n"
+"energy not before a penetrating distance of about 10 cm. Therefore a soldier "
+"hit by a tachyon\n"
+"charge suffers only minor superficial injury but is heavily wounded in his "
+"viscera."
 
 #: ../base/ufos/research.ufo:116
 msgid "Nano Technology"
@@ -1647,7 +1542,14 @@ msgstr "Nano Techologie"
 
 #: ../base/ufos/research.ufo:118
 msgid "nano_txt"
-msgstr "Nanotechnolgoy opens up a wide field of new production methods especially in the design and production of armor and fabric.By using nanotechnology it will be possible to create materials nearly completely made of fullerenes (geodesic domes at an atomic level) and use them fabricate armor that is more robust and has higher heat resistance than any known material before. Not also that, but these materials would also be lighter than comperable conventional ones."
+msgstr ""
+"Nanotechnolgoy opens up a wide field of new production methods especially in "
+"the design and production of armor and fabric.By using nanotechnology it "
+"will be possible to create materials nearly completely made of fullerenes "
+"(geodesic domes at an atomic level) and use them fabricate armor that is "
+"more robust and has higher heat resistance than any known material before. "
+"Not also that, but these materials would also be lighter than comperable "
+"conventional ones."
 
 #: ../base/ufos/research.ufo:128
 msgid "Advanced Armor Fabrics"
@@ -1661,91 +1563,149 @@ msgstr "Allgemeine UFO Technologie"
 #, fuzzy
 msgid "ufo_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
-#: ../base/ufos/research.ufo:161
-#: ../base/ufos/research.ufo:173
+#: ../base/ufos/research.ufo:161 ../base/ufos/research.ufo:173
 msgid "assault_txt"
-msgstr "Das AR-80 ist die Standardwaffe der Phalanx. Durch die verbesserte Munition und ein revolutionäres Design richtet diese Waffe mehr Schaden als alle vergleichbaren Sturmgewehre an. Das rückwärtig abgebrachte Magazin erhöht die Genauigkeit der Waffe indem die Kugel einen längeren Weg bis zur Mündung zurücklegen muss. Darüber hinaus kann sie einfacher repariert werden, denn sie ist in Modulen zusammengebaut. Zum Beispiel kann der Feuermechanismus direkt im Einsatz ausgetauscht werden, indem man einfach das defekte hintere Ende aus der Waffe herauszieht und austauscht. Dieser Vorgang dauert nur Minuten."
+msgstr ""
+"Das AR-80 ist die Standardwaffe der Phalanx. Durch die verbesserte Munition "
+"und ein revolutionäres Design richtet diese Waffe mehr Schaden als alle "
+"vergleichbaren Sturmgewehre an. Das rückwärtig abgebrachte Magazin erhöht "
+"die Genauigkeit der Waffe indem die Kugel einen längeren Weg bis zur Mündung "
+"zurücklegen muss. Darüber hinaus kann sie einfacher repariert werden, denn "
+"sie ist in Modulen zusammengebaut. Zum Beispiel kann der Feuermechanismus "
+"direkt im Einsatz ausgetauscht werden, indem man einfach das defekte hintere "
+"Ende aus der Waffe herauszieht und austauscht. Dieser Vorgang dauert nur "
+"Minuten."
 
-#: ../base/ufos/research.ufo:185
-#: ../base/ufos/research.ufo:197
+#: ../base/ufos/research.ufo:185 ../base/ufos/research.ufo:197
 msgid "sniper_txt"
-msgstr "Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of the most deadly weapons employed by Phalanx forces. Powered by a advanced version of the 0.5 cartridge, it is capable to easily penetrate the engine block of a vehicle at 150 meters. However, the weapon is very bulky and requires many precious seconds to aim, therefore the WE-78 is definitly not suitable for close combat."
+msgstr ""
+"Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of the "
+"most deadly weapons employed by Phalanx forces. Powered by a advanced "
+"version of the 0.5 cartridge, it is capable to easily penetrate the engine "
+"block of a vehicle at 150 meters. However, the weapon is very bulky and "
+"requires many precious seconds to aim, therefore the WE-78 is definitly not "
+"suitable for close combat."
 
-#: ../base/ufos/research.ufo:209
-#: ../base/ufos/research.ufo:221
+#: ../base/ufos/research.ufo:209 ../base/ufos/research.ufo:221
 msgid "smg_txt"
-msgstr "Verglichen mit dem AR-80 Sturmgewehr bietet das SMG-68 eine höhere Feuerrate - allerdings auf Kosten der Genauigkeit und Durchschlagskraft. Diese Charakteristika machen das SMG-68 zur idealen Wahl bei Nahkämpfen. Deshalb setzt die Phalanx es hauptsächlich in Stadtgebieten ein. Um die Feuerrate zu optimieren hat diese Waffe zwei Läufe, durch die die Kugeln abwechselt geleitet werden. Um den beträchtlichen Rückstoß zu dämpfen wird ein Ausgleichssystem eingesetzt, dass vom Explosionsdruck genährt wird. Das SMG-68 ist extrem ungenau auf mittlere Reichweite - aber sehr gut geeignet für Nahkämpfe."
+msgstr ""
+"Verglichen mit dem AR-80 Sturmgewehr bietet das SMG-68 eine höhere Feuerrate "
+"- allerdings auf Kosten der Genauigkeit und Durchschlagskraft. Diese "
+"Charakteristika machen das SMG-68 zur idealen Wahl bei Nahkämpfen. Deshalb "
+"setzt die Phalanx es hauptsächlich in Stadtgebieten ein. Um die Feuerrate zu "
+"optimieren hat diese Waffe zwei Läufe, durch die die Kugeln abwechselt "
+"geleitet werden. Um den beträchtlichen Rückstoß zu dämpfen wird ein "
+"Ausgleichssystem eingesetzt, dass vom Explosionsdruck genährt wird. Das SMG-"
+"68 ist extrem ungenau auf mittlere Reichweite - aber sehr gut geeignet für "
+"Nahkämpfe."
 
-#: ../base/ufos/research.ufo:233
-#: ../base/ufos/research.ufo:245
+#: ../base/ufos/research.ufo:233 ../base/ufos/research.ufo:245
 msgid "shotgun_txt"
-msgstr "Das SG-260 wird seit einiger Zeit mit großen Erfolg eingesetzt. Verglichen mit anderen Schrotflinten bietet das SG-260 eine bessere Bündelung der Kugeln die durch das Schrot verschossen werden. Dadurch wird die effektive Reichweite der Waffe erhöht - sie ist also nicht nur für Nahkämpfe, sondern auch für mittlere Entfernungen gut geeingnet. Das SG-260 ist ein gute Wahl für Stadtkämpfe - speziell um Gebäude zu \"reinigen\". Der Vorteil gegenüber dem SMG-68 ist, dass das SG_260 mehr Durchschlagskraft hat. Deshalb ist diese Waffe besonders bei gepanzerten Einheiten effektiver."
+msgstr ""
+"Das SG-260 wird seit einiger Zeit mit großen Erfolg eingesetzt. Verglichen "
+"mit anderen Schrotflinten bietet das SG-260 eine bessere Bündelung der "
+"Kugeln die durch das Schrot verschossen werden. Dadurch wird die effektive "
+"Reichweite der Waffe erhöht - sie ist also nicht nur für Nahkämpfe, sondern "
+"auch für mittlere Entfernungen gut geeingnet. Das SG-260 ist ein gute Wahl "
+"für Stadtkämpfe - speziell um Gebäude zu \"reinigen\". Der Vorteil gegenüber "
+"dem SMG-68 ist, dass das SG_260 mehr Durchschlagskraft hat. Deshalb ist "
+"diese Waffe besonders bei gepanzerten Einheiten effektiver."
 
-#: ../base/ufos/research.ufo:257
-#: ../base/ufos/research.ufo:269
+#: ../base/ufos/research.ufo:257 ../base/ufos/research.ufo:269
 msgid "flamer_txt"
-msgstr "Das FT-207 ist eine der neusten Errungenschaften für taktische Einsätze. Vorgänger dieser Waffe waren nicht gegen das Risiko gewappnet auch angrenzende Objekte zu beschädigen. Diese Version hingegen reduziert dieses Risiko auf ein Minimum durch den Einsatz der so genannten FHAS Technologie - einem Hitzefokusierungssystem. Dieses System zeigt einen sehr geringen Anstieg der Temperaturen nahe dem Feuerkegel."
+msgstr ""
+"Das FT-207 ist eine der neusten Errungenschaften für taktische Einsätze. "
+"Vorgänger dieser Waffe waren nicht gegen das Risiko gewappnet auch "
+"angrenzende Objekte zu beschädigen. Diese Version hingegen reduziert dieses "
+"Risiko auf ein Minimum durch den Einsatz der so genannten FHAS Technologie - "
+"einem Hitzefokusierungssystem. Dieses System zeigt einen sehr geringen "
+"Anstieg der Temperaturen nahe dem Feuerkegel."
 
-#: ../base/ufos/research.ufo:281
-#: ../base/ufos/research.ufo:293
+#: ../base/ufos/research.ufo:281 ../base/ufos/research.ufo:293
 msgid "pistol_txt"
 msgstr ""
-"The P-95 is the standard Phalanx sidearm. The simple design of this handgun makes it a very reliable\n"
-"addition to every soldier's equipment. Because of the weapon's low weight a experienced gunner\n"
-"can also use two pistols at the same time with the considerable drawback of a massivly reduced\n"
-"accuracy. The P-95 is especially appreciated by snipers for having a valuable sidearm when it\n"
+"The P-95 is the standard Phalanx sidearm. The simple design of this handgun "
+"makes it a very reliable\n"
+"addition to every soldier's equipment. Because of the weapon's low weight a "
+"experienced gunner\n"
+"can also use two pistols at the same time with the considerable drawback of "
+"a massivly reduced\n"
+"accuracy. The P-95 is especially appreciated by snipers for having a "
+"valuable sidearm when it\n"
 "comes to close combat."
 
 #: ../base/ufos/research.ufo:305
 msgid "rpg_txt"
 msgstr ""
-"The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. Phalanx weapon scientists and\n"
-"engineers developed a new tracking system not only capable to fight airborne but also ground\n"
-"targets. The RL-1056's rockets use a combination of laser guidance and high speed cameras to\n"
-"identify the target. Despite a good accuracy when the tracking system had enough time to\n"
-"correctly lock on the target, this rocket launcher is of limited value if it has to be used in\n"
+"The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. Phalanx "
+"weapon scientists and\n"
+"engineers developed a new tracking system not only capable to fight airborne "
+"but also ground\n"
+"targets. The RL-1056's rockets use a combination of laser guidance and high "
+"speed cameras to\n"
+"identify the target. Despite a good accuracy when the tracking system had "
+"enough time to\n"
+"correctly lock on the target, this rocket launcher is of limited value if it "
+"has to be used in\n"
 "snapshot mode."
 
 #: ../base/ufos/research.ufo:317
 #, fuzzy
 msgid "rpg_ammo_txt"
 msgstr ""
-"The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. Phalanx weapon scientists and\n"
-"engineers developed a new tracking system not only capable to fight airborne but also ground\n"
-"targets. The RL-1056's rockets use a combination of laser guidance and high speed cameras to\n"
-"identify the target. Despite a good accuracy when the tracking system had enough time to\n"
-"correctly lock on the target, this rocket launcher is of limited value if it has to be used in\n"
+"The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. Phalanx "
+"weapon scientists and\n"
+"engineers developed a new tracking system not only capable to fight airborne "
+"but also ground\n"
+"targets. The RL-1056's rockets use a combination of laser guidance and high "
+"speed cameras to\n"
+"identify the target. Despite a good accuracy when the tracking system had "
+"enough time to\n"
+"correctly lock on the target, this rocket launcher is of limited value if it "
+"has to be used in\n"
 "snapshot mode."
 
 #: ../base/ufos/research.ufo:329
 #, fuzzy
 msgid "fraggren_txt"
 msgstr ""
-"The fragmentation grenade is little more than an explosive core surrounded by metal. When the\n"
-"core is detonates, the surrounding metal is broken into sharp, deadly fragments which fly from\n"
+"The fragmentation grenade is little more than an explosive core surrounded "
+"by metal. When the\n"
+"core is detonates, the surrounding metal is broken into sharp, deadly "
+"fragments which fly from\n"
 "the weapon at great speeds. The detonation is controlled by a built in timer."
 
 #: ../base/ufos/research.ufo:353
 msgid "knife_txt"
 msgstr ""
-"Almost every Phalanx soldier has his own Combat Knife as a last choice when it comes to hand to hand\n"
-"combat. But a simple Combat Knife should not be underestimated in the hands of a stealth\n"
-"warefare specialist as it can kill absolutely noiseless. Its blade is made of a special titanium\n"
+"Almost every Phalanx soldier has his own Combat Knife as a last choice when "
+"it comes to hand to hand\n"
+"combat. But a simple Combat Knife should not be underestimated in the hands "
+"of a stealth\n"
+"warefare specialist as it can kill absolutely noiseless. Its blade is made "
+"of a special titanium\n"
 "alloy which makes it very resistant."
 
 #: ../base/ufos/research.ufo:369
 #, fuzzy
 msgid "stunrod_txt"
 msgstr ""
-"The Phalanx forces are using the SG-260 with great success for quite some time now. Compared with\n"
-"the shotguns traditionally used by mainy SWAT teams, the SG-260 is capable to better channel the\n"
-"bullets fired off from the buckshots. Therefore the effective range of this weapon is increased\n"
-"so it can be used not only at close but also at medium range. The SG-260 is a good choice for\n"
+"The Phalanx forces are using the SG-260 with great success for quite some "
+"time now. Compared with\n"
+"the shotguns traditionally used by mainy SWAT teams, the SG-260 is capable "
+"to better channel the\n"
+"bullets fired off from the buckshots. Therefore the effective range of this "
+"weapon is increased\n"
+"so it can be used not only at close but also at medium range. The SG-260 is "
+"a good choice for\n"
 "urban combat, especially for clearing a building."
 
 #: ../base/ufos/research.ufo:381
@@ -1756,218 +1716,297 @@ msgstr "Erste-Hilfe-Kasten"
 #, fuzzy
 msgid "irgoggles_txt"
 msgstr ""
-"The fragmentation grenade is little more than an explosive core surrounded by metal. When the\n"
-"core is detonates, the surrounding metal is broken into sharp, deadly fragments which fly from\n"
+"The fragmentation grenade is little more than an explosive core surrounded "
+"by metal. When the\n"
+"core is detonates, the surrounding metal is broken into sharp, deadly "
+"fragments which fly from\n"
 "the weapon at great speeds. The detonation is controlled by a built in timer."
 
 #: ../base/ufos/research.ufo:405
 #, fuzzy
 msgid "incgrenade_txt"
 msgstr ""
-"The fragmentation grenade is little more than an explosive core surrounded by metal. When the\n"
-"core is detonates, the surrounding metal is broken into sharp, deadly fragments which fly from\n"
+"The fragmentation grenade is little more than an explosive core surrounded "
+"by metal. When the\n"
+"core is detonates, the surrounding metal is broken into sharp, deadly "
+"fragments which fly from\n"
 "the weapon at great speeds. The detonation is controlled by a built in timer."
 
 #: ../base/ufos/research.ufo:417
 #, fuzzy
 msgid "stungren_txt"
 msgstr ""
-"The Phalanx forces are using the SG-260 with great success for quite some time now. Compared with\n"
-"the shotguns traditionally used by mainy SWAT teams, the SG-260 is capable to better channel the\n"
-"bullets fired off from the buckshots. Therefore the effective range of this weapon is increased\n"
-"so it can be used not only at close but also at medium range. The SG-260 is a good choice for\n"
+"The Phalanx forces are using the SG-260 with great success for quite some "
+"time now. Compared with\n"
+"the shotguns traditionally used by mainy SWAT teams, the SG-260 is capable "
+"to better channel the\n"
+"bullets fired off from the buckshots. Therefore the effective range of this "
+"weapon is increased\n"
+"so it can be used not only at close but also at medium range. The SG-260 is "
+"a good choice for\n"
 "urban combat, especially for clearing a building."
 
 #: ../base/ufos/research.ufo:429
 #, fuzzy
 msgid "plasmagren_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
 #: ../base/ufos/research.ufo:442
 #, fuzzy
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
-"The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. Phalanx weapon scientists and\n"
-"engineers developed a new tracking system not only capable to fight airborne but also ground\n"
-"targets. The RL-1056's rockets use a combination of laser guidance and high speed cameras to\n"
-"identify the target. Despite a good accuracy when the tracking system had enough time to\n"
-"correctly lock on the target, this rocket launcher is of limited value if it has to be used in\n"
+"The predecessor of the RL-1056 was the Stinger AA Rocket Launcher. Phalanx "
+"weapon scientists and\n"
+"engineers developed a new tracking system not only capable to fight airborne "
+"but also ground\n"
+"targets. The RL-1056's rockets use a combination of laser guidance and high "
+"speed cameras to\n"
+"identify the target. Despite a good accuracy when the tracking system had "
+"enough time to\n"
+"correctly lock on the target, this rocket launcher is of limited value if it "
+"has to be used in\n"
 "snapshot mode."
 
 #: ../base/ufos/research.ufo:454
 #, fuzzy
 msgid "rpg_tachyon_ammo_txt"
 msgstr ""
-"Although our engineers not fully understand the principles of altering the tachyons on a\n"
-"subatomic level, they were able to reproduce the tachyon accelerator technology. Apparently the\n"
-"tachyons are given a defined spin inside the accelerator so they are able to interact with any\n"
-"material. They still tend to infiltrate easily through any known armor and lose their particle\n"
-"energy not before a penetrating distance of about 10 cm. Therefore a soldier hit by a tachyon\n"
-"charge suffers only minor superficial injury but is heavily wounded in his viscera."
+"Although our engineers not fully understand the principles of altering the "
+"tachyons on a\n"
+"subatomic level, they were able to reproduce the tachyon accelerator "
+"technology. Apparently the\n"
+"tachyons are given a defined spin inside the accelerator so they are able to "
+"interact with any\n"
+"material. They still tend to infiltrate easily through any known armor and "
+"lose their particle\n"
+"energy not before a penetrating distance of about 10 cm. Therefore a soldier "
+"hit by a tachyon\n"
+"charge suffers only minor superficial injury but is heavily wounded in his "
+"viscera."
 
 #: ../base/ufos/research.ufo:466
 #, fuzzy
 msgid "kerrblade_txt"
 msgstr ""
-"Thanks to the recent advances in the laser technology Phalanx scientist were able to implement a\n"
-"really powerful 'laser reactor' into a hand held weapon. The laser beam is generated with a\n"
-"newly developed type of the common YAG laser technology. A advanced opical lense system is used\n"
-"to focus the beam very densely so it has the power to easily penetrate most known armors."
+"Thanks to the recent advances in the laser technology Phalanx scientist were "
+"able to implement a\n"
+"really powerful 'laser reactor' into a hand held weapon. The laser beam is "
+"generated with a\n"
+"newly developed type of the common YAG laser technology. A advanced opical "
+"lense system is used\n"
+"to focus the beam very densely so it has the power to easily penetrate most "
+"known armors."
 
-#: ../base/ufos/research.ufo:479
-#: ../base/ufos/research.ufo:491
+#: ../base/ufos/research.ufo:479 ../base/ufos/research.ufo:491
 #, fuzzy
 msgid "bolterrifle_txt"
 msgstr ""
-"Thanks to the recent advances in the laser technology Phalanx scientist were able to implement a\n"
-"really powerful 'laser reactor' into a hand held weapon. The laser beam is generated with a\n"
-"newly developed type of the common YAG laser technology. A advanced opical lense system is used\n"
-"to focus the beam very densely so it has the power to easily penetrate most known armors."
+"Thanks to the recent advances in the laser technology Phalanx scientist were "
+"able to implement a\n"
+"really powerful 'laser reactor' into a hand held weapon. The laser beam is "
+"generated with a\n"
+"newly developed type of the common YAG laser technology. A advanced opical "
+"lense system is used\n"
+"to focus the beam very densely so it has the power to easily penetrate most "
+"known armors."
 
 #: ../base/ufos/research.ufo:503
 #, fuzzy
 msgid "grenl_txt"
 msgstr ""
-"The fragmentation grenade is little more than an explosive core surrounded by metal. When the\n"
-"core is detonates, the surrounding metal is broken into sharp, deadly fragments which fly from\n"
+"The fragmentation grenade is little more than an explosive core surrounded "
+"by metal. When the\n"
+"core is detonates, the surrounding metal is broken into sharp, deadly "
+"fragments which fly from\n"
 "the weapon at great speeds. The detonation is controlled by a built in timer."
 
 #: ../base/ufos/research.ufo:515
 #, fuzzy
 msgid "grenl_ammo_txt"
 msgstr ""
-"Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at the cost of less\n"
-"accuracy and penetrating power. These characteristics make the SMG-68 a ideal choice for close\n"
-"combat. Therefore Phalanx soldiers use the SMG-68 mainly in urban areas. To optimize the rate of\n"
-"fire, this weapon has two barrels through which the bullets are fired off alternating. To damp\n"
-"the considerable recoil, a advanced counter-balance system is used powered by the explosion\n"
+"Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at "
+"the cost of less\n"
+"accuracy and penetrating power. These characteristics make the SMG-68 a "
+"ideal choice for close\n"
+"combat. Therefore Phalanx soldiers use the SMG-68 mainly in urban areas. To "
+"optimize the rate of\n"
+"fire, this weapon has two barrels through which the bullets are fired off "
+"alternating. To damp\n"
+"the considerable recoil, a advanced counter-balance system is used powered "
+"by the explosion\n"
 "gases originating from the cartridges."
 
 #: ../base/ufos/research.ufo:527
 #, fuzzy
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
-"Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at the cost of less\n"
-"accuracy and penetrating power. These characteristics make the SMG-68 a ideal choice for close\n"
-"combat. Therefore Phalanx soldiers use the SMG-68 mainly in urban areas. To optimize the rate of\n"
-"fire, this weapon has two barrels through which the bullets are fired off alternating. To damp\n"
-"the considerable recoil, a advanced counter-balance system is used powered by the explosion\n"
+"Compared to the AR-80 Assault Rifle, the SMG-68 has a higher rate of fire at "
+"the cost of less\n"
+"accuracy and penetrating power. These characteristics make the SMG-68 a "
+"ideal choice for close\n"
+"combat. Therefore Phalanx soldiers use the SMG-68 mainly in urban areas. To "
+"optimize the rate of\n"
+"fire, this weapon has two barrels through which the bullets are fired off "
+"alternating. To damp\n"
+"the considerable recoil, a advanced counter-balance system is used powered "
+"by the explosion\n"
 "gases originating from the cartridges."
 
-#: ../base/ufos/research.ufo:539
-#: ../base/ufos/research.ufo:551
+#: ../base/ufos/research.ufo:539 ../base/ufos/research.ufo:551
 msgid "laserpistol_txt"
-msgstr "Das LAS-10 benutzt wie das LAS-24 Lasergewehr ebenfalls einen YAG-Laser - nur einen kleineren und damit weniger kraftvollen. Dadurch haben die Photonen weniger kinetische Energie und demzufolge weniger Durchschlagskraft."
+msgstr ""
+"Das LAS-10 benutzt wie das LAS-24 Lasergewehr ebenfalls einen YAG-Laser - "
+"nur einen kleineren und damit weniger kraftvollen. Dadurch haben die "
+"Photonen weniger kinetische Energie und demzufolge weniger Durchschlagskraft."
 
-#: ../base/ufos/research.ufo:563
-#: ../base/ufos/research.ufo:575
+#: ../base/ufos/research.ufo:563 ../base/ufos/research.ufo:575
 msgid "laserrifle_txt"
-msgstr "Das LAS-24 hat einen starken YAG-Laser mit dem es in der Lage ist die Photon mit kinetischer Energie anzureichern die den meisten uns bekannten Panzerungen und Einheiten Schaden zufügen kann."
+msgstr ""
+"Das LAS-24 hat einen starken YAG-Laser mit dem es in der Lage ist die Photon "
+"mit kinetischer Energie anzureichern die den meisten uns bekannten "
+"Panzerungen und Einheiten Schaden zufügen kann."
 
-#: ../base/ufos/research.ufo:587
-#: ../base/ufos/research.ufo:599
+#: ../base/ufos/research.ufo:587 ../base/ufos/research.ufo:599
 #, fuzzy
 msgid "heavylaser_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
 #: ../base/ufos/research.ufo:611
 #, fuzzy
 msgid "plasblade_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
-#: ../base/ufos/research.ufo:624
-#: ../base/ufos/research.ufo:637
+#: ../base/ufos/research.ufo:624 ../base/ufos/research.ufo:637
 msgid "plaspistol_txt"
 msgstr ""
-"Using the same technology as the Plasma Rifle, the Plasma Pistol can also do considerable damage\n"
-"to its target. The overheated xenon plasma is also contained inside a strong magnetic field\n"
-"implemented in the pistol's clip. Because of the smaller dimensions of this one-handed weapon,\n"
-"the magnetic field generators are not that capable as the ones used in the Plasma Rifle.\n"
+"Using the same technology as the Plasma Rifle, the Plasma Pistol can also do "
+"considerable damage\n"
+"to its target. The overheated xenon plasma is also contained inside a strong "
+"magnetic field\n"
+"implemented in the pistol's clip. Because of the smaller dimensions of this "
+"one-handed weapon,\n"
+"the magnetic field generators are not that capable as the ones used in the "
+"Plasma Rifle.\n"
 "Therefore the cinetic energy given to the plasma beam is lessened."
 
-#: ../base/ufos/research.ufo:649
-#: ../base/ufos/research.ufo:662
+#: ../base/ufos/research.ufo:649 ../base/ufos/research.ufo:662
 msgid "plasrifle_txt"
 msgstr ""
-"The Plasma Rifle is the weapon most often used by ... warriors. The plasma fired by this weapon\n"
-"easly cuts through almost every known material. Therefore the standard Phalanx kevlar vest only\n"
-"provides minor protection. Soldiers wounded by a Plasma Rifle's beam suffer of extensive burns\n"
-"which are in many cases instantly lethal. The overheated highly energetic xenon gas plasma is\n"
-"stored inside a intense magnetic field integrated in the weapon's clip. If the trigger is used,\n"
-"the magnetic field is reconfigured so that a continuous plasma beam is formed. This beam is\n"
-"focused by a second magnetic field and finally propelled to the front end of the Plasma Rifle."
+"The Plasma Rifle is the weapon most often used by ... warriors. The plasma "
+"fired by this weapon\n"
+"easly cuts through almost every known material. Therefore the standard "
+"Phalanx kevlar vest only\n"
+"provides minor protection. Soldiers wounded by a Plasma Rifle's beam suffer "
+"of extensive burns\n"
+"which are in many cases instantly lethal. The overheated highly energetic "
+"xenon gas plasma is\n"
+"stored inside a intense magnetic field integrated in the weapon's clip. If "
+"the trigger is used,\n"
+"the magnetic field is reconfigured so that a continuous plasma beam is "
+"formed. This beam is\n"
+"focused by a second magnetic field and finally propelled to the front end of "
+"the Plasma Rifle."
 
-#: ../base/ufos/research.ufo:674
-#: ../base/ufos/research.ufo:687
+#: ../base/ufos/research.ufo:674 ../base/ufos/research.ufo:687
 #, fuzzy
 msgid "plasblaster_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
-#: ../base/ufos/research.ufo:699
-#: ../base/ufos/research.ufo:712
+#: ../base/ufos/research.ufo:699 ../base/ufos/research.ufo:712
 msgid "tachyonpistol_txt"
 msgstr ""
-"This weapon is powered by a miniaturized version of the tachyon accelerator. Therefore the\n"
-"Tachyon Pistol has a lower rate of fire as well as a diminished accuracy compared to the other\n"
-"two tachyon weapons. The major advantage of the Tachyon Pistol is its low weight and its small\n"
+"This weapon is powered by a miniaturized version of the tachyon accelerator. "
+"Therefore the\n"
+"Tachyon Pistol has a lower rate of fire as well as a diminished accuracy "
+"compared to the other\n"
+"two tachyon weapons. The major advantage of the Tachyon Pistol is its low "
+"weight and its small\n"
 "dimensions which makes it a valuable sidearm."
 
-#: ../base/ufos/research.ufo:724
-#: ../base/ufos/research.ufo:737
+#: ../base/ufos/research.ufo:724 ../base/ufos/research.ufo:737
 msgid "tachyonrifle_txt"
 msgstr ""
-"Although our engineers not fully understand the principles of altering the tachyons on a\n"
-"subatomic level, they were able to reproduce the tachyon accelerator technology. Apparently the\n"
-"tachyons are given a defined spin inside the accelerator so they are able to interact with any\n"
-"material. They still tend to infiltrate easily through any known armor and lose their particle\n"
-"energy not before a penetrating distance of about 10 cm. Therefore a soldier hit by a tachyon\n"
-"charge suffers only minor superficial injury but is heavily wounded in his viscera."
+"Although our engineers not fully understand the principles of altering the "
+"tachyons on a\n"
+"subatomic level, they were able to reproduce the tachyon accelerator "
+"technology. Apparently the\n"
+"tachyons are given a defined spin inside the accelerator so they are able to "
+"interact with any\n"
+"material. They still tend to infiltrate easily through any known armor and "
+"lose their particle\n"
+"energy not before a penetrating distance of about 10 cm. Therefore a soldier "
+"hit by a tachyon\n"
+"charge suffers only minor superficial injury but is heavily wounded in his "
+"viscera."
 
-#: ../base/ufos/research.ufo:749
-#: ../base/ufos/research.ufo:762
+#: ../base/ufos/research.ufo:749 ../base/ufos/research.ufo:762
 msgid "tachyonsniper_txt"
 msgstr ""
-"The Tachyon Sniper Rifle uses also the newly discovered tachyon accelerator technology, first\n"
-"found in a Ortnok scout spaceship. Unlike the Tachyon Rifle, this weapon has a low rate of fire\n"
-"because the tachyon particles are intensely charged before they are fired. This means that the\n"
-"shots fired by the Tachyon Sniper Rifle are more focused and hence have a greater accuracy as\n"
+"The Tachyon Sniper Rifle uses also the newly discovered tachyon accelerator "
+"technology, first\n"
+"found in a Ortnok scout spaceship. Unlike the Tachyon Rifle, this weapon has "
+"a low rate of fire\n"
+"because the tachyon particles are intensely charged before they are fired. "
+"This means that the\n"
+"shots fired by the Tachyon Sniper Rifle are more focused and hence have a "
+"greater accuracy as\n"
 "well as a bigger penetrating power."
 
 #: ../base/ufos/research.ufo:778
 #, fuzzy
 msgid "kevlar_armor_txt"
 msgstr ""
-"The FT-207 is one of the most recent additions to tactical combat. Prior versions of this weapon\n"
-"were not employed do to the risk of accidentally igniting surrounding objects. This version,\n"
-"however, greatly reduces this risk by employing FHAS, or, Focused Heat Attack System, which\n"
-"restricts the 'hot zone' created by the flamethrower to a very defined region. The area\n"
+"The FT-207 is one of the most recent additions to tactical combat. Prior "
+"versions of this weapon\n"
+"were not employed do to the risk of accidentally igniting surrounding "
+"objects. This version,\n"
+"however, greatly reduces this risk by employing FHAS, or, Focused Heat "
+"Attack System, which\n"
+"restricts the 'hot zone' created by the flamethrower to a very defined "
+"region. The area\n"
 "centimeters outside the 'hot zone' show no noticeable temperature increase."
 
 #: ../base/ufos/research.ufo:789
 #, fuzzy
 msgid "nano_armor_txt"
-msgstr "Das H-92 Transporter ist der Haupttruppentransporter der Phalanx-Eingreiftruppe"
+msgstr ""
+"Das H-92 Transporter ist der Haupttruppentransporter der Phalanx-"
+"Eingreiftruppe"
 
 #: ../base/ufos/research.ufo:801
 #, fuzzy
 msgid "nano_heavy_armor_txt"
-msgstr "Das H-92 Transporter ist der Haupttruppentransporter der Phalanx-Eingreiftruppe"
+msgstr ""
+"Das H-92 Transporter ist der Haupttruppentransporter der Phalanx-"
+"Eingreiftruppe"
 
 #: ../base/ufos/research.ufo:817
 msgid "Normal Damage Type"
@@ -1977,9 +2016,12 @@ msgstr ""
 #, fuzzy
 msgid "normal_damage_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
 #: ../base/ufos/research.ufo:830
@@ -1990,9 +2032,12 @@ msgstr ""
 #, fuzzy
 msgid "blast_damage_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
 #: ../base/ufos/research.ufo:843
@@ -2003,8 +2048,10 @@ msgstr ""
 #, fuzzy
 msgid "fire_damage_txt"
 msgstr ""
-"The fragmentation grenade is little more than an explosive core surrounded by metal. When the\n"
-"core is detonates, the surrounding metal is broken into sharp, deadly fragments which fly from\n"
+"The fragmentation grenade is little more than an explosive core surrounded "
+"by metal. When the\n"
+"core is detonates, the surrounding metal is broken into sharp, deadly "
+"fragments which fly from\n"
 "the weapon at great speeds. The detonation is controlled by a built in timer."
 
 #: ../base/ufos/research.ufo:856
@@ -2015,10 +2062,14 @@ msgstr ""
 #, fuzzy
 msgid "shock_damage_txt"
 msgstr ""
-"The Phalanx forces are using the SG-260 with great success for quite some time now. Compared with\n"
-"the shotguns traditionally used by mainy SWAT teams, the SG-260 is capable to better channel the\n"
-"bullets fired off from the buckshots. Therefore the effective range of this weapon is increased\n"
-"so it can be used not only at close but also at medium range. The SG-260 is a good choice for\n"
+"The Phalanx forces are using the SG-260 with great success for quite some "
+"time now. Compared with\n"
+"the shotguns traditionally used by mainy SWAT teams, the SG-260 is capable "
+"to better channel the\n"
+"bullets fired off from the buckshots. Therefore the effective range of this "
+"weapon is increased\n"
+"so it can be used not only at close but also at medium range. The SG-260 is "
+"a good choice for\n"
 "urban combat, especially for clearing a building."
 
 #: ../base/ufos/research.ufo:869
@@ -2029,9 +2080,12 @@ msgstr ""
 #, fuzzy
 msgid "laser_damage_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
 #: ../base/ufos/research.ufo:882
@@ -2043,9 +2097,12 @@ msgstr "Plasmaklinge"
 #, fuzzy
 msgid "plasma_damage_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
 #: ../base/ufos/research.ufo:895
@@ -2056,12 +2113,18 @@ msgstr ""
 #, fuzzy
 msgid "tachyon_damage_txt"
 msgstr ""
-"Although our engineers not fully understand the principles of altering the tachyons on a\n"
-"subatomic level, they were able to reproduce the tachyon accelerator technology. Apparently the\n"
-"tachyons are given a defined spin inside the accelerator so they are able to interact with any\n"
-"material. They still tend to infiltrate easily through any known armor and lose their particle\n"
-"energy not before a penetrating distance of about 10 cm. Therefore a soldier hit by a tachyon\n"
-"charge suffers only minor superficial injury but is heavily wounded in his viscera."
+"Although our engineers not fully understand the principles of altering the "
+"tachyons on a\n"
+"subatomic level, they were able to reproduce the tachyon accelerator "
+"technology. Apparently the\n"
+"tachyons are given a defined spin inside the accelerator so they are able to "
+"interact with any\n"
+"material. They still tend to infiltrate easily through any known armor and "
+"lose their particle\n"
+"energy not before a penetrating distance of about 10 cm. Therefore a soldier "
+"hit by a tachyon\n"
+"charge suffers only minor superficial injury but is heavily wounded in his "
+"viscera."
 
 #: ../base/ufos/research.ufo:908
 msgid "Stun Damage Type"
@@ -2071,10 +2134,14 @@ msgstr ""
 #, fuzzy
 msgid "stun_damage_txt"
 msgstr ""
-"The Phalanx forces are using the SG-260 with great success for quite some time now. Compared with\n"
-"the shotguns traditionally used by mainy SWAT teams, the SG-260 is capable to better channel the\n"
-"bullets fired off from the buckshots. Therefore the effective range of this weapon is increased\n"
-"so it can be used not only at close but also at medium range. The SG-260 is a good choice for\n"
+"The Phalanx forces are using the SG-260 with great success for quite some "
+"time now. Compared with\n"
+"the shotguns traditionally used by mainy SWAT teams, the SG-260 is capable "
+"to better channel the\n"
+"bullets fired off from the buckshots. Therefore the effective range of this "
+"weapon is increased\n"
+"so it can be used not only at close but also at medium range. The SG-260 is "
+"a good choice for\n"
 "urban combat, especially for clearing a building."
 
 #: ../base/ufos/research.ufo:925
@@ -2122,9 +2189,12 @@ msgstr "Nahkampf"
 #, fuzzy
 msgid "close_skill_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
 #: ../base/ufos/research.ufo:990
@@ -2136,9 +2206,12 @@ msgstr "Schwere Waffen:"
 #, fuzzy
 msgid "heavy_skill_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
 #: ../base/ufos/research.ufo:1003
@@ -2149,7 +2222,16 @@ msgstr "Sturmgewehre:"
 #: ../base/ufos/research.ufo:1005
 #, fuzzy
 msgid "assault_skill_txt"
-msgstr "Das AR-80 ist die Standardwaffe der Phalanx. Durch die verbesserte Munition und ein revolutionäres Design richtet diese Waffe mehr Schaden als alle vergleichbaren Sturmgewehre an. Das rückwärtig abgebrachte Magazin erhöht die Genauigkeit der Waffe indem die Kugel einen längeren Weg bis zur Mündung zurücklegen muss. Darüber hinaus kann sie einfacher repariert werden, denn sie ist in Modulen zusammengebaut. Zum Beispiel kann der Feuermechanismus direkt im Einsatz ausgetauscht werden, indem man einfach das defekte hintere Ende aus der Waffe herauszieht und austauscht. Dieser Vorgang dauert nur Minuten."
+msgstr ""
+"Das AR-80 ist die Standardwaffe der Phalanx. Durch die verbesserte Munition "
+"und ein revolutionäres Design richtet diese Waffe mehr Schaden als alle "
+"vergleichbaren Sturmgewehre an. Das rückwärtig abgebrachte Magazin erhöht "
+"die Genauigkeit der Waffe indem die Kugel einen längeren Weg bis zur Mündung "
+"zurücklegen muss. Darüber hinaus kann sie einfacher repariert werden, denn "
+"sie ist in Modulen zusammengebaut. Zum Beispiel kann der Feuermechanismus "
+"direkt im Einsatz ausgetauscht werden, indem man einfach das defekte hintere "
+"Ende aus der Waffe herauszieht und austauscht. Dieser Vorgang dauert nur "
+"Minuten."
 
 #: ../base/ufos/research.ufo:1016
 #, fuzzy
@@ -2169,10 +2251,14 @@ msgstr "Rakete"
 #, fuzzy
 msgid "explosive_skill_txt"
 msgstr ""
-"Using the same technology as the Plasma Rifle, the Plasma Pistol can also do considerable damage\n"
-"to its target. The overheated xenon plasma is also contained inside a strong magnetic field\n"
-"implemented in the pistol's clip. Because of the smaller dimensions of this one-handed weapon,\n"
-"the magnetic field generators are not that capable as the ones used in the Plasma Rifle.\n"
+"Using the same technology as the Plasma Rifle, the Plasma Pistol can also do "
+"considerable damage\n"
+"to its target. The overheated xenon plasma is also contained inside a strong "
+"magnetic field\n"
+"implemented in the pistol's clip. Because of the smaller dimensions of this "
+"one-handed weapon,\n"
+"the magnetic field generators are not that capable as the ones used in the "
+"Plasma Rifle.\n"
 "Therefore the cinetic energy given to the plasma beam is lessened."
 
 #: ../base/ufos/research.ufo:1045
@@ -2192,8 +2278,10 @@ msgstr "TEXT"
 #, fuzzy
 msgid "b_storage_txt"
 msgstr ""
-"The fragmentation grenade is little more than an explosive core surrounded by metal. When the\n"
-"core is detonates, the surrounding metal is broken into sharp, deadly fragments which fly from\n"
+"The fragmentation grenade is little more than an explosive core surrounded "
+"by metal. When the\n"
+"core is detonates, the surrounding metal is broken into sharp, deadly "
+"fragments which fly from\n"
 "the weapon at great speeds. The detonation is controlled by a built in timer."
 
 #: ../base/ufos/research.ufo:1093
@@ -2230,22 +2318,32 @@ msgstr "Dieses Gebäude ermöglicht es, UFOs in der Nähe der Basis zu orten."
 #, fuzzy
 msgid "dropship_txt"
 msgstr ""
-"Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of the most deadly weapons\n"
-"employed by Phalanx forces. Powered by a advanced version of the 0.5 cartridge, it is capable to\n"
-"easily penetrate the engine block of a vehicle at 150 meters. However, the weapon is very bulky\n"
-"and requires many precious seconds to aim, therefore the WE-78 is definitly not suitable for\n"
+"Using a powerful scope and a bipod for accuracy, the Sniper Rifle is of the "
+"most deadly weapons\n"
+"employed by Phalanx forces. Powered by a advanced version of the 0.5 "
+"cartridge, it is capable to\n"
+"easily penetrate the engine block of a vehicle at 150 meters. However, the "
+"weapon is very bulky\n"
+"and requires many precious seconds to aim, therefore the WE-78 is definitly "
+"not suitable for\n"
 "close combat."
 
 #: ../base/ufos/research.ufo:1195
 #, fuzzy
 msgid "interceptor_txt"
 msgstr ""
-"The F-48 is the backbone of the Phalanx air superiority force. Powered by two Volkot VO-36 jet\n"
-"engines, this aircraft reaches a maximum speed of mach 1.4. This is significantly slower than \n"
-"many of the alien UFOs, but regarding the maneuverability the F-48 can easily compete with\n"
-"almost all of its adversaries. Like the H-92 Troop transport, the F-48 has the ability to take\n"
-"off and land vertically. Therefore many Phalanx bases have vertical shafts leading form the surface\n"
-"to the subterranean flight hangars. This has been proven to be safest way to make a airfield\n"
+"The F-48 is the backbone of the Phalanx air superiority force. Powered by "
+"two Volkot VO-36 jet\n"
+"engines, this aircraft reaches a maximum speed of mach 1.4. This is "
+"significantly slower than \n"
+"many of the alien UFOs, but regarding the maneuverability the F-48 can "
+"easily compete with\n"
+"almost all of its adversaries. Like the H-92 Troop transport, the F-48 has "
+"the ability to take\n"
+"off and land vertically. Therefore many Phalanx bases have vertical shafts "
+"leading form the surface\n"
+"to the subterranean flight hangars. This has been proven to be safest way to "
+"make a airfield\n"
 "almost completely undetectable."
 
 #: ../base/ufos/research.ufo:1226
@@ -2256,9 +2354,12 @@ msgstr "Kleines UFO"
 #, fuzzy
 msgid "ufo_small_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
 #: ../base/ufos/research.ufo:1243
@@ -2269,9 +2370,12 @@ msgstr "Großes UFO"
 #, fuzzy
 msgid "ufo_big_txt"
 msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
+"This melee weapon has proven to be of great value in hand to hand combat "
+"because of the\n"
+"devestating burns it can inflict when someone touches its blade. Generally "
+"the enemy is unable\n"
+"to fight onward just after one strike. On the downside the range of this "
+"weapon is utterly\n"
 "limited."
 
 #: ../base/ufos/research.ufo:1266
@@ -2282,16 +2386,26 @@ msgstr "Ortnok - Kampfverhalten"
 #, fuzzy
 msgid "ortnok_notes_txt"
 msgstr ""
-"Genetically the green skinned Ortnoks seem to be related very closely to the human race. About\n"
-"80% of their DNA is identical compared to the human's. The parts that are different are most\n"
-"likely genetically engineered because they do not show any individual variability. The fact that\n"
-"they are genetically altered and that they do not seem to have any functional reproduction\n"
-"organs suggests that they are clones made by some as yet unknown alien species. Additionally the\n"
-"Ortnoks have several cybernetic implants which involve mainly the cardiovascular system, the\n"
-"muscles, the eyes and the brain. They enhance the physical strenght and stamnia as well as the\n"
-"senses to a level superior to any human. The purpose of the brain implants is mostly unclear but\n"
-"it is believed that they serve as receivers for commands. But currently this is only a\n"
-"assumption because there is no evidence proving the existence of such a master-species."
+"Genetically the green skinned Ortnoks seem to be related very closely to the "
+"human race. About\n"
+"80% of their DNA is identical compared to the human's. The parts that are "
+"different are most\n"
+"likely genetically engineered because they do not show any individual "
+"variability. The fact that\n"
+"they are genetically altered and that they do not seem to have any "
+"functional reproduction\n"
+"organs suggests that they are clones made by some as yet unknown alien "
+"species. Additionally the\n"
+"Ortnoks have several cybernetic implants which involve mainly the "
+"cardiovascular system, the\n"
+"muscles, the eyes and the brain. They enhance the physical strenght and "
+"stamnia as well as the\n"
+"senses to a level superior to any human. The purpose of the brain implants "
+"is mostly unclear but\n"
+"it is believed that they serve as receivers for commands. But currently this "
+"is only a\n"
+"assumption because there is no evidence proving the existence of such a "
+"master-species."
 
 #: ../base/ufos/research.ufo:1283
 msgid "Ortnok - Autopsy"
@@ -2301,16 +2415,26 @@ msgstr "Ortnok - Autopsie"
 #, fuzzy
 msgid "ortnok_autopsy_txt"
 msgstr ""
-"Genetically the green skinned Ortnoks seem to be related very closely to the human race. About\n"
-"80% of their DNA is identical compared to the human's. The parts that are different are most\n"
-"likely genetically engineered because they do not show any individual variability. The fact that\n"
-"they are genetically altered and that they do not seem to have any functional reproduction\n"
-"organs suggests that they are clones made by some as yet unknown alien species. Additionally the\n"
-"Ortnoks have several cybernetic implants which involve mainly the cardiovascular system, the\n"
-"muscles, the eyes and the brain. They enhance the physical strenght and stamnia as well as the\n"
-"senses to a level superior to any human. The purpose of the brain implants is mostly unclear but\n"
-"it is believed that they serve as receivers for commands. But currently this is only a\n"
-"assumption because there is no evidence proving the existence of such a master-species."
+"Genetically the green skinned Ortnoks seem to be related very closely to the "
+"human race. About\n"
+"80% of their DNA is identical compared to the human's. The parts that are "
+"different are most\n"
+"likely genetically engineered because they do not show any individual "
+"variability. The fact that\n"
+"they are genetically altered and that they do not seem to have any "
+"functional reproduction\n"
+"organs suggests that they are clones made by some as yet unknown alien "
+"species. Additionally the\n"
+"Ortnoks have several cybernetic implants which involve mainly the "
+"cardiovascular system, the\n"
+"muscles, the eyes and the brain. They enhance the physical strenght and "
+"stamnia as well as the\n"
+"senses to a level superior to any human. The purpose of the brain implants "
+"is mostly unclear but\n"
+"it is believed that they serve as receivers for commands. But currently this "
+"is only a\n"
+"assumption because there is no evidence proving the existence of such a "
+"master-species."
 
 #: ../base/ufos/research.ufo:1302
 msgid "Ortnok - Xenobiology"
@@ -2320,14 +2444,22 @@ msgstr "Ortnok - Xenobiologie"
 #, fuzzy
 msgid "ortnok_xenobiology_txt"
 msgstr ""
-"Having the same genetical features as the regular Ortnoks, the Ortnok Warriors have been\n"
-"extensively modified with cybernetic implants. All these additional implants obviously aim to\n"
-"achieve a better performance in combat. Therefore the legs and arms have been almost completely\n"
-"replaced by cybernetic prostheses which allow a physical strength far beyond the potential of a\n"
-"human beeing. The claw shaped hands are designed to handle extreme weights. The chest area is\n"
-"covered with a thick steel plating which is almost impenetrable for regular rifle ammunition.\n"
-"The face mask serves as a protection against hazardous gases as well as a augmentation of the\n"
-"upper airways to allow a better lung function. The disadvantage of this massive cybernetic\n"
+"Having the same genetical features as the regular Ortnoks, the Ortnok "
+"Warriors have been\n"
+"extensively modified with cybernetic implants. All these additional implants "
+"obviously aim to\n"
+"achieve a better performance in combat. Therefore the legs and arms have "
+"been almost completely\n"
+"replaced by cybernetic prostheses which allow a physical strength far beyond "
+"the potential of a\n"
+"human beeing. The claw shaped hands are designed to handle extreme weights. "
+"The chest area is\n"
+"covered with a thick steel plating which is almost impenetrable for regular "
+"rifle ammunition.\n"
+"The face mask serves as a protection against hazardous gases as well as a "
+"augmentation of the\n"
+"upper airways to allow a better lung function. The disadvantage of this "
+"massive cybernetic\n"
 "augmentation is the increased vulnerability to electromagnetic pulses (EMP)."
 
 #: ../base/ufos/research.ufo:1319
@@ -2338,14 +2470,22 @@ msgstr "Ortnok - Verhör"
 #, fuzzy
 msgid "ortnok_interrogation_txt"
 msgstr ""
-"Having the same genetical features as the regular Ortnoks, the Ortnok Warriors have been\n"
-"extensively modified with cybernetic implants. All these additional implants obviously aim to\n"
-"achieve a better performance in combat. Therefore the legs and arms have been almost completely\n"
-"replaced by cybernetic prostheses which allow a physical strength far beyond the potential of a\n"
-"human beeing. The claw shaped hands are designed to handle extreme weights. The chest area is\n"
-"covered with a thick steel plating which is almost impenetrable for regular rifle ammunition.\n"
-"The face mask serves as a protection against hazardous gases as well as a augmentation of the\n"
-"upper airways to allow a better lung function. The disadvantage of this massive cybernetic\n"
+"Having the same genetical features as the regular Ortnoks, the Ortnok "
+"Warriors have been\n"
+"extensively modified with cybernetic implants. All these additional implants "
+"obviously aim to\n"
+"achieve a better performance in combat. Therefore the legs and arms have "
+"been almost completely\n"
+"replaced by cybernetic prostheses which allow a physical strength far beyond "
+"the potential of a\n"
+"human beeing. The claw shaped hands are designed to handle extreme weights. "
+"The chest area is\n"
+"covered with a thick steel plating which is almost impenetrable for regular "
+"rifle ammunition.\n"
+"The face mask serves as a protection against hazardous gases as well as a "
+"augmentation of the\n"
+"upper airways to allow a better lung function. The disadvantage of this "
+"massive cybernetic\n"
 "augmentation is the increased vulnerability to electromagnetic pulses (EMP)."
 
 #: ../base/ufos/research.ufo:1338
@@ -2356,16 +2496,26 @@ msgstr ""
 #, fuzzy
 msgid "ortnok_light_txt"
 msgstr ""
-"Genetically the green skinned Ortnoks seem to be related very closely to the human race. About\n"
-"80% of their DNA is identical compared to the human's. The parts that are different are most\n"
-"likely genetically engineered because they do not show any individual variability. The fact that\n"
-"they are genetically altered and that they do not seem to have any functional reproduction\n"
-"organs suggests that they are clones made by some as yet unknown alien species. Additionally the\n"
-"Ortnoks have several cybernetic implants which involve mainly the cardiovascular system, the\n"
-"muscles, the eyes and the brain. They enhance the physical strenght and stamnia as well as the\n"
-"senses to a level superior to any human. The purpose of the brain implants is mostly unclear but\n"
-"it is believed that they serve as receivers for commands. But currently this is only a\n"
-"assumption because there is no evidence proving the existence of such a master-species."
+"Genetically the green skinned Ortnoks seem to be related very closely to the "
+"human race. About\n"
+"80% of their DNA is identical compared to the human's. The parts that are "
+"different are most\n"
+"likely genetically engineered because they do not show any individual "
+"variability. The fact that\n"
+"they are genetically altered and that they do not seem to have any "
+"functional reproduction\n"
+"organs suggests that they are clones made by some as yet unknown alien "
+"species. Additionally the\n"
+"Ortnoks have several cybernetic implants which involve mainly the "
+"cardiovascular system, the\n"
+"muscles, the eyes and the brain. They enhance the physical strenght and "
+"stamnia as well as the\n"
+"senses to a level superior to any human. The purpose of the brain implants "
+"is mostly unclear but\n"
+"it is believed that they serve as receivers for commands. But currently this "
+"is only a\n"
+"assumption because there is no evidence proving the existence of such a "
+"master-species."
 
 #: ../base/ufos/research.ufo:1357
 msgid "Ortnok Warrior"
@@ -2374,14 +2524,22 @@ msgstr "Ortnok Krieger"
 #: ../base/ufos/research.ufo:1358
 msgid "ortnok_medium_txt"
 msgstr ""
-"Having the same genetical features as the regular Ortnoks, the Ortnok Warriors have been\n"
-"extensively modified with cybernetic implants. All these additional implants obviously aim to\n"
-"achieve a better performance in combat. Therefore the legs and arms have been almost completely\n"
-"replaced by cybernetic prostheses which allow a physical strength far beyond the potential of a\n"
-"human beeing. The claw shaped hands are designed to handle extreme weights. The chest area is\n"
-"covered with a thick steel plating which is almost impenetrable for regular rifle ammunition.\n"
-"The face mask serves as a protection against hazardous gases as well as a augmentation of the\n"
-"upper airways to allow a better lung function. The disadvantage of this massive cybernetic\n"
+"Having the same genetical features as the regular Ortnoks, the Ortnok "
+"Warriors have been\n"
+"extensively modified with cybernetic implants. All these additional implants "
+"obviously aim to\n"
+"achieve a better performance in combat. Therefore the legs and arms have "
+"been almost completely\n"
+"replaced by cybernetic prostheses which allow a physical strength far beyond "
+"the potential of a\n"
+"human beeing. The claw shaped hands are designed to handle extreme weights. "
+"The chest area is\n"
+"covered with a thick steel plating which is almost impenetrable for regular "
+"rifle ammunition.\n"
+"The face mask serves as a protection against hazardous gases as well as a "
+"augmentation of the\n"
+"upper airways to allow a better lung function. The disadvantage of this "
+"massive cybernetic\n"
 "augmentation is the increased vulnerability to electromagnetic pulses (EMP)."
 
 #: ../base/ufos/research.ufo:1376
@@ -2490,16 +2648,26 @@ msgstr "Cyborg Ortnok - Kampfverhalten"
 #, fuzzy
 msgid "cyborg_ortnok_notes_txt"
 msgstr ""
-"Genetically the green skinned Ortnoks seem to be related very closely to the human race. About\n"
-"80% of their DNA is identical compared to the human's. The parts that are different are most\n"
-"likely genetically engineered because they do not show any individual variability. The fact that\n"
-"they are genetically altered and that they do not seem to have any functional reproduction\n"
-"organs suggests that they are clones made by some as yet unknown alien species. Additionally the\n"
-"Ortnoks have several cybernetic implants which involve mainly the cardiovascular system, the\n"
-"muscles, the eyes and the brain. They enhance the physical strenght and stamnia as well as the\n"
-"senses to a level superior to any human. The purpose of the brain implants is mostly unclear but\n"
-"it is believed that they serve as receivers for commands. But currently this is only a\n"
-"assumption because there is no evidence proving the existence of such a master-species."
+"Genetically the green skinned Ortnoks seem to be related very closely to the "
+"human race. About\n"
+"80% of their DNA is identical compared to the human's. The parts that are "
+"different are most\n"
+"likely genetically engineered because they do not show any individual "
+"variability. The fact that\n"
+"they are genetically altered and that they do not seem to have any "
+"functional reproduction\n"
+"organs suggests that they are clones made by some as yet unknown alien "
+"species. Additionally the\n"
+"Ortnoks have several cybernetic implants which involve mainly the "
+"cardiovascular system, the\n"
+"muscles, the eyes and the brain. They enhance the physical strenght and "
+"stamnia as well as the\n"
+"senses to a level superior to any human. The purpose of the brain implants "
+"is mostly unclear but\n"
+"it is believed that they serve as receivers for commands. But currently this "
+"is only a\n"
+"assumption because there is no evidence proving the existence of such a "
+"master-species."
 
 #: ../base/ufos/research.ufo:1586
 msgid "Cyborg Ortnok - Autopsy"
@@ -2509,16 +2677,26 @@ msgstr "Cyborg Ortnok - Autopsie"
 #, fuzzy
 msgid "cyborg_ortnok_autopsy_txt"
 msgstr ""
-"Genetically the green skinned Ortnoks seem to be related very closely to the human race. About\n"
-"80% of their DNA is identical compared to the human's. The parts that are different are most\n"
-"likely genetically engineered because they do not show any individual variability. The fact that\n"
-"they are genetically altered and that they do not seem to have any functional reproduction\n"
-"organs suggests that they are clones made by some as yet unknown alien species. Additionally the\n"
-"Ortnoks have several cybernetic implants which involve mainly the cardiovascular system, the\n"
-"muscles, the eyes and the brain. They enhance the physical strenght and stamnia as well as the\n"
-"senses to a level superior to any human. The purpose of the brain implants is mostly unclear but\n"
-"it is believed that they serve as receivers for commands. But currently this is only a\n"
-"assumption because there is no evidence proving the existence of such a master-species."
+"Genetically the green skinned Ortnoks seem to be related very closely to the "
+"human race. About\n"
+"80% of their DNA is identical compared to the human's. The parts that are "
+"different are most\n"
+"likely genetically engineered because they do not show any individual "
+"variability. The fact that\n"
+"they are genetically altered and that they do not seem to have any "
+"functional reproduction\n"
+"organs suggests that they are clones made by some as yet unknown alien "
+"species. Additionally the\n"
+"Ortnoks have several cybernetic implants which involve mainly the "
+"cardiovascular system, the\n"
+"muscles, the eyes and the brain. They enhance the physical strenght and "
+"stamnia as well as the\n"
+"senses to a level superior to any human. The purpose of the brain implants "
+"is mostly unclear but\n"
+"it is believed that they serve as receivers for commands. But currently this "
+"is only a\n"
+"assumption because there is no evidence proving the existence of such a "
+"master-species."
 
 #: ../base/ufos/research.ufo:1603
 msgid "Cyborg Ortnok - Xenobiology"
@@ -2528,16 +2706,26 @@ msgstr "Cyborg Ortnok - Xenobiologie"
 #, fuzzy
 msgid "cyborg_ortnok_xenobiology_txt"
 msgstr ""
-"Genetically the green skinned Ortnoks seem to be related very closely to the human race. About\n"
-"80% of their DNA is identical compared to the human's. The parts that are different are most\n"
-"likely genetically engineered because they do not show any individual variability. The fact that\n"
-"they are genetically altered and that they do not seem to have any functional reproduction\n"
-"organs suggests that they are clones made by some as yet unknown alien species. Additionally the\n"
-"Ortnoks have several cybernetic implants which involve mainly the cardiovascular system, the\n"
-"muscles, the eyes and the brain. They enhance the physical strenght and stamnia as well as the\n"
-"senses to a level superior to any human. The purpose of the brain implants is mostly unclear but\n"
-"it is believed that they serve as receivers for commands. But currently this is only a\n"
-"assumption because there is no evidence proving the existence of such a master-species."
+"Genetically the green skinned Ortnoks seem to be related very closely to the "
+"human race. About\n"
+"80% of their DNA is identical compared to the human's. The parts that are "
+"different are most\n"
+"likely genetically engineered because they do not show any individual "
+"variability. The fact that\n"
+"they are genetically altered and that they do not seem to have any "
+"functional reproduction\n"
+"organs suggests that they are clones made by some as yet unknown alien "
+"species. Additionally the\n"
+"Ortnoks have several cybernetic implants which involve mainly the "
+"cardiovascular system, the\n"
+"muscles, the eyes and the brain. They enhance the physical strenght and "
+"stamnia as well as the\n"
+"senses to a level superior to any human. The purpose of the brain implants "
+"is mostly unclear but\n"
+"it is believed that they serve as receivers for commands. But currently this "
+"is only a\n"
+"assumption because there is no evidence proving the existence of such a "
+"master-species."
 
 #: ../base/ufos/research.ufo:1623
 msgid "UGV Phoenix"
@@ -2555,8 +2743,10 @@ msgstr "UGV Triax"
 #, fuzzy
 msgid "ugv_triax_txt"
 msgstr ""
-"The fragmentation grenade is little more than an explosive core surrounded by metal. When the\n"
-"core is detonates, the surrounding metal is broken into sharp, deadly fragments which fly from\n"
+"The fragmentation grenade is little more than an explosive core surrounded "
+"by metal. When the\n"
+"core is detonates, the surrounding metal is broken into sharp, deadly "
+"fragments which fly from\n"
 "the weapon at great speeds. The detonation is controlled by a built in timer."
 
 #: ../base/ufos/seq_credits.ufo:35
@@ -2653,7 +2843,14 @@ msgstr "Copyright 2004-2006 by UFO: AI Team"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "2084 - Es herscht weltweiter Frieden, alte Kriege wurden beendet, sämtliche Regierungen kooperieren, alte Grenzen wurden aufgehoben und neue gezogen. Die großen Nationen haben sich zu einer Supermacht zusammengeschlossen - die verbleibenden kleineren Nationen arbeiten eng zusammen. Reichtum ist kein Fremdwort mehr für viele der Erdbewohner - sie vertrauen auf die Führer der Nationen, die die Balance aufrecht erhalten und sie in das 22ste. Jahrhundert leiten sollen."
+msgstr ""
+"2084 - Es herscht weltweiter Frieden, alte Kriege wurden beendet, sämtliche "
+"Regierungen kooperieren, alte Grenzen wurden aufgehoben und neue gezogen. "
+"Die großen Nationen haben sich zu einer Supermacht zusammengeschlossen - die "
+"verbleibenden kleineren Nationen arbeiten eng zusammen. Reichtum ist kein "
+"Fremdwort mehr für viele der Erdbewohner - sie vertrauen auf die Führer der "
+"Nationen, die die Balance aufrecht erhalten und sie in das 22ste. "
+"Jahrhundert leiten sollen."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
@@ -2661,15 +2858,30 @@ msgstr "... Die Invasion beginnt ..."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "In dieser Zeit greifen Aliens die Erde an. Sie führen eine gnadenlose Attacke gegen die Stadt Mumbai - der am dichtesten bevölkerte Flecken Erde auf diesem Planeten. Hunderttausende sterben bevor die Aliens durch die gemeinsamen Kräfte der Nationen vertrieben werden."
+msgstr ""
+"In dieser Zeit greifen Aliens die Erde an. Sie führen eine gnadenlose "
+"Attacke gegen die Stadt Mumbai - der am dichtesten bevölkerte Flecken Erde "
+"auf diesem Planeten. Hunderttausende sterben bevor die Aliens durch die "
+"gemeinsamen Kräfte der Nationen vertrieben werden."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "Niemand weiß genau woher sie kommen - der Versuch zu verhandeln wurde ignoriert. 48 Stunden nach der ersten Attacke, haben alle politischen Mächte den Ausnahmezustand ausgerufen. Für zwei Wochen versuchen alle Armeen der Welt die Alienattacken abzuwehren - aber sie haben verhältnismäßig wenige Erfolg zu verzeichnen. Daraufhin beschließen alle Staaten der Erde die Gründung einer Spezialtruppe - der PHALANX."
+msgstr ""
+"Niemand weiß genau woher sie kommen - der Versuch zu verhandeln wurde "
+"ignoriert. 48 Stunden nach der ersten Attacke, haben alle politischen Mächte "
+"den Ausnahmezustand ausgerufen. Für zwei Wochen versuchen alle Armeen der "
+"Welt die Alienattacken abzuwehren - aber sie haben verhältnismäßig wenige "
+"Erfolg zu verzeichnen. Daraufhin beschließen alle Staaten der Erde die "
+"Gründung einer Spezialtruppe - der PHALANX."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Mit dem Hintergrund der Alienattacke entgegen zu wirken, wird die Eingreiftruppe von alles Staaten unterstützt. Sie erhält große Mengen Geld und bezieht ihre Soldaten aus den Elitetruppen der jeweiligen Armeen. Ob die PHALANX die drohende Übernahme der Erde durch die Aliens abwehren kann, bleibt abzuwarten..."
+msgstr ""
+"Mit dem Hintergrund der Alienattacke entgegen zu wirken, wird die "
+"Eingreiftruppe von alles Staaten unterstützt. Sie erhält große Mengen Geld "
+"und bezieht ihre Soldaten aus den Elitetruppen der jeweiligen Armeen. Ob die "
+"PHALANX die drohende Übernahme der Erde durch die Aliens abwehren kann, "
+"bleibt abzuwarten..."
 
 #: ../base/ufos/seq_intro.ufo:62
 msgid "prolog_sentence1"
@@ -2679,23 +2891,37 @@ msgstr "Prolog"
 msgid "prolog_sentence2"
 msgstr ""
 "Willkommen Kommander.\n"
-"Sie haben das Kommando über PHALANX erhalten. Ihre Mission: Beschützen sie die Bewohner dieses Planeten. Wie Sie das bewerkstelligen ist Ihnen überlassen - aber bedenken Sie: Scheitern ist keine Option."
+"Sie haben das Kommando über PHALANX erhalten. Ihre Mission: Beschützen sie "
+"die Bewohner dieses Planeten. Wie Sie das bewerkstelligen ist Ihnen "
+"überlassen - aber bedenken Sie: Scheitern ist keine Option."
 
 #: ../base/ufos/seq_intro.ufo:81
 msgid "prolog_sentence3"
-msgstr "Ihr erster Auftrag lautet ein Hauptquartier einzurichten. Wählen Sie die geographische Position sorgfältig, sie könnte großen Einfluss auf den Erfolg oder Misserfolg des PHALANX Projektes haben."
+msgstr ""
+"Ihr erster Auftrag lautet ein Hauptquartier einzurichten. Wählen Sie die "
+"geographische Position sorgfältig, sie könnte großen Einfluss auf den Erfolg "
+"oder Misserfolg des PHALANX Projektes haben."
 
 #: ../base/ufos/seq_intro.ufo:90
 msgid "prolog_sentence4"
-msgstr "Eine kürzlich erstellte Analyse der Mumbaiattacke ergab, dass zu dieser Zeit eine erhöhte Aliensichtung in allen dicht besiedelten Gegenden der Erde gemeldet wurde. Sie sollten in Erwägung ziehen Ihre Einzugsgebiete diesbezgl. zu wählen."
+msgstr ""
+"Eine kürzlich erstellte Analyse der Mumbaiattacke ergab, dass zu dieser Zeit "
+"eine erhöhte Aliensichtung in allen dicht besiedelten Gegenden der Erde "
+"gemeldet wurde. Sie sollten in Erwägung ziehen Ihre Einzugsgebiete "
+"diesbezgl. zu wählen."
 
 #: ../base/ufos/seq_intro.ufo:99
 msgid "prolog_sentence5"
-msgstr "Haben Sie erstmal Ihre erste Basis errichtet, müssen Sie Ihre Soldaten vorbereiten. Die Rekruten die für PHALANX abgestellt wurden, müssen einem Einsatzschiff zugeteilt werden."
+msgstr ""
+"Haben Sie erstmal Ihre erste Basis errichtet, müssen Sie Ihre Soldaten "
+"vorbereiten. Die Rekruten die für PHALANX abgestellt wurden, müssen einem "
+"Einsatzschiff zugeteilt werden."
 
 #: ../base/ufos/seq_intro.ufo:108
 msgid "prolog_sentence6"
-msgstr "Vergessen Sie nicht gut auf die Soldaten aufzupassen - ein lebender Soldat kann mehr Aliens töten als ein toter Soldat."
+msgstr ""
+"Vergessen Sie nicht gut auf die Soldaten aufzupassen - ein lebender Soldat "
+"kann mehr Aliens töten als ein toter Soldat."
 
 #: ../base/ufos/seq_intro.ufo:117
 msgid "prolog_sentence7"
@@ -2747,7 +2973,8 @@ msgstr "Linksklick um Level zu ändern"
 
 #: ../base/ufos/seq_tutorials.ufo:247
 msgid "You can also use the cursor keys to switch the levels"
-msgstr "Du kannst du auch die Cursortasten benutzen um zwischen den Leveln zu wecheln"
+msgstr ""
+"Du kannst du auch die Cursortasten benutzen um zwischen den Leveln zu wecheln"
 
 #: ../base/ufos/team_aliens.ufo:227
 msgid "Ortnok"
@@ -2769,8 +2996,7 @@ msgstr "Hovernet"
 msgid "Cyborg Ortnok"
 msgstr "Cyborg Ortnok"
 
-#: ../base/ufos/team_humans.ufo:1303
-#: ../base/ufos/team_humans.ufo:1323
+#: ../base/ufos/team_humans.ufo:1303 ../base/ufos/team_humans.ufo:1323
 msgid "UGV"
 msgstr "UGV"
 
@@ -2786,8 +3012,7 @@ msgstr "Triax"
 msgid "Medikit"
 msgstr "Erste-Hilfe-Kasten"
 
-#: ../base/ufos/weapons.ufo:20
-#: ../base/ufos/weapons.ufo:34
+#: ../base/ufos/weapons.ufo:20 ../base/ufos/weapons.ufo:34
 msgid "Heal"
 msgstr "Heilen"
 
@@ -2795,8 +3020,7 @@ msgstr "Heilen"
 msgid "IR Goggles"
 msgstr "Infrarot Fernglas"
 
-#: ../base/ufos/weapons.ufo:67
-#: ../base/ufos/weapons.ufo:77
+#: ../base/ufos/weapons.ufo:67 ../base/ufos/weapons.ufo:77
 msgid "Scan"
 msgstr "Scanne"
 
@@ -2804,16 +3028,11 @@ msgstr "Scanne"
 msgid "Frag Grenade"
 msgstr "Splittergranate"
 
-#: ../base/ufos/weapons.ufo:108
-#: ../base/ufos/weapons.ufo:132
-#: ../base/ufos/weapons.ufo:207
-#: ../base/ufos/weapons.ufo:231
-#: ../base/ufos/weapons.ufo:276
-#: ../base/ufos/weapons.ufo:300
-#: ../base/ufos/weapons.ufo:346
-#: ../base/ufos/weapons.ufo:370
-#: ../base/ufos/weapons_human.ufo:618
-#: ../base/ufos/weapons_human.ufo:883
+#: ../base/ufos/weapons.ufo:108 ../base/ufos/weapons.ufo:132
+#: ../base/ufos/weapons.ufo:207 ../base/ufos/weapons.ufo:231
+#: ../base/ufos/weapons.ufo:276 ../base/ufos/weapons.ufo:300
+#: ../base/ufos/weapons.ufo:346 ../base/ufos/weapons.ufo:370
+#: ../base/ufos/weapons_human.ufo:618 ../base/ufos/weapons_human.ufo:883
 #: ../base/ufos/weapons_plasma.ufo:184
 msgid "Throw"
 msgstr "Wurf"
@@ -2839,8 +3058,7 @@ msgstr "Sturmgewehr"
 msgid "Assault Rifle Clip"
 msgstr "Sturmgewehrmunition"
 
-#: ../base/ufos/weapons_human.ufo:35
-#: ../base/ufos/weapons_human.ufo:251
+#: ../base/ufos/weapons_human.ufo:35 ../base/ufos/weapons_human.ufo:251
 msgid "Burst"
 msgstr "Feuerstoß"
 
@@ -2852,19 +3070,14 @@ msgstr "Scharfschützengewehr"
 msgid "Sniper Rifle Clip"
 msgstr "Scharfschützengewehr Munition"
 
-#: ../base/ufos/weapons_human.ufo:108
-#: ../base/ufos/weapons_human.ufo:475
-#: ../base/ufos/weapons_human.ufo:536
-#: ../base/ufos/weapons_tachyon.ufo:35
-#: ../base/ufos/weapons_tachyon.ufo:184
-#: ../base/ufos/weapons_tachyon.ufo:242
+#: ../base/ufos/weapons_human.ufo:108 ../base/ufos/weapons_human.ufo:475
+#: ../base/ufos/weapons_human.ufo:536 ../base/ufos/weapons_tachyon.ufo:35
+#: ../base/ufos/weapons_tachyon.ufo:184 ../base/ufos/weapons_tachyon.ufo:242
 msgid "Snap Shot"
 msgstr "Hueftschuss"
 
-#: ../base/ufos/weapons_human.ufo:126
-#: ../base/ufos/weapons_human.ufo:498
-#: ../base/ufos/weapons_human.ufo:559
-#: ../base/ufos/weapons_tachyon.ufo:265
+#: ../base/ufos/weapons_human.ufo:126 ../base/ufos/weapons_human.ufo:498
+#: ../base/ufos/weapons_human.ufo:559 ../base/ufos/weapons_tachyon.ufo:265
 msgid "Aimed Shot"
 msgstr "Gezielter Schuss"
 
@@ -2876,12 +3089,9 @@ msgstr "9mm Pistole"
 msgid "Pistol Clip"
 msgstr "9mm Munition"
 
-#: ../base/ufos/weapons_human.ufo:179
-#: ../base/ufos/weapons_human.ufo:324
-#: ../base/ufos/weapons_human.ufo:671
-#: ../base/ufos/weapons_human.ufo:696
-#: ../base/ufos/weapons_human.ufo:755
-#: ../base/ufos/weapons_plasma.ufo:299
+#: ../base/ufos/weapons_human.ufo:179 ../base/ufos/weapons_human.ufo:324
+#: ../base/ufos/weapons_human.ufo:671 ../base/ufos/weapons_human.ufo:696
+#: ../base/ufos/weapons_human.ufo:755 ../base/ufos/weapons_plasma.ufo:299
 #: ../base/ufos/weapons_plasma.ufo:324
 msgid "Single Shot"
 msgstr "Einfachschuss"
@@ -2946,8 +3156,7 @@ msgstr ""
 msgid "Combat Knife"
 msgstr "Kampfmesser"
 
-#: ../base/ufos/weapons_human.ufo:603
-#: ../base/ufos/weapons_human.ufo:868
+#: ../base/ufos/weapons_human.ufo:603 ../base/ufos/weapons_human.ufo:868
 #: ../base/ufos/weapons_plasma.ufo:169
 msgid "Stab"
 msgstr "Stich"
@@ -2977,8 +3186,7 @@ msgstr ""
 msgid "Stun Rod"
 msgstr "Betäubungsgerät"
 
-#: ../base/ufos/weapons_human.ufo:814
-#: ../base/ufos/weapons_human.ufo:831
+#: ../base/ufos/weapons_human.ufo:814 ../base/ufos/weapons_human.ufo:831
 msgid "Stun"
 msgstr "Betäuben"
 
@@ -2986,10 +3194,14 @@ msgstr "Betäuben"
 #, fuzzy
 msgid "Kerrblade"
 msgstr ""
-"Thanks to the recent advances in the laser technology Phalanx scientist were able to implement a\n"
-"really powerful 'laser reactor' into a hand held weapon. The laser beam is generated with a\n"
-"newly developed type of the common YAG laser technology. A advanced opical lense system is used\n"
-"to focus the beam very densely so it has the power to easily penetrate most known armors."
+"Thanks to the recent advances in the laser technology Phalanx scientist were "
+"able to implement a\n"
+"really powerful 'laser reactor' into a hand held weapon. The laser beam is "
+"generated with a\n"
+"newly developed type of the common YAG laser technology. A advanced opical "
+"lense system is used\n"
+"to focus the beam very densely so it has the power to easily penetrate most "
+"known armors."
 
 #: ../base/ufos/weapons_laser.ufo:6
 msgid "Laser Pistol"
@@ -2999,14 +3211,12 @@ msgstr "Laserpistole"
 msgid "Laser Pistol Charge"
 msgstr "Laserpistolenmunition"
 
-#: ../base/ufos/weapons_laser.ufo:35
-#: ../base/ufos/weapons_laser.ufo:107
+#: ../base/ufos/weapons_laser.ufo:35 ../base/ufos/weapons_laser.ufo:107
 #: ../base/ufos/weapons_laser.ufo:181
 msgid "Single Pulse"
 msgstr "Einzelpuls"
 
-#: ../base/ufos/weapons_laser.ufo:53
-#: ../base/ufos/weapons_laser.ufo:125
+#: ../base/ufos/weapons_laser.ufo:53 ../base/ufos/weapons_laser.ufo:125
 msgid "Multiple Pulses"
 msgstr "Mehrfachpuls"
 
@@ -3042,13 +3252,11 @@ msgstr "Plasmawerfer"
 msgid "Plasma Atomizer Charge"
 msgstr "Plasmawerfermunition"
 
-#: ../base/ufos/weapons_plasma.ufo:36
-#: ../base/ufos/weapons_plasma.ufo:110
+#: ../base/ufos/weapons_plasma.ufo:36 ../base/ufos/weapons_plasma.ufo:110
 msgid "Charged Pulse"
 msgstr "Geladener Impuls"
 
-#: ../base/ufos/weapons_plasma.ufo:55
-#: ../base/ufos/weapons_plasma.ufo:128
+#: ../base/ufos/weapons_plasma.ufo:55 ../base/ufos/weapons_plasma.ufo:128
 #: ../base/ufos/weapons_plasma.ufo:260
 msgid "Continuous Beam"
 msgstr "Strahlenmodus"
@@ -3091,8 +3299,7 @@ msgstr "Tachyonenpistole"
 msgid "Tachyon Pistol Clip"
 msgstr "Tachyonenpistolenmunition"
 
-#: ../base/ufos/weapons_tachyon.ufo:54
-#: ../base/ufos/weapons_tachyon.ufo:108
+#: ../base/ufos/weapons_tachyon.ufo:54 ../base/ufos/weapons_tachyon.ufo:108
 #: ../base/ufos/weapons_tachyon.ufo:203
 msgid "Rapid Shots"
 msgstr "Schnellschuss"
@@ -3207,28 +3414,13 @@ msgstr "Erledigt"
 msgid "Not enough credits to build this\n"
 msgstr "Nicht genug Kapital um das Gebäude zu bauen\n"
 
-#: client/cl_basemanagement.c:368
-#: client/cl_basemanagement.c:1848
-#: client/cl_campaign.c:379
-#: client/cl_campaign.c:614
-#: client/cl_campaign.c:661
-#: client/cl_campaign.c:989
-#: client/cl_campaign.c:1154
-#: client/cl_campaign.c:1164
-#: client/cl_campaign.c:1177
-#: client/cl_campaign.c:1191
-#: client/cl_campaign.c:1389
-#: client/cl_campaign.c:2237
-#: client/cl_campaign.c:2273
-#: client/cl_campaign.c:2275
-#: client/cl_menu.c:1185
-#: client/cl_research.c:486
-#: client/cl_research.c:613
-#: client/cl_research.c:616
-#: client/cl_research.c:620
-#: client/cl_research.c:640
-#: client/cl_research.c:666
-#: client/cl_research.c:670
+#: client/cl_basemanagement.c:368 client/cl_basemanagement.c:1848
+#: client/cl_campaign.c:361 client/cl_campaign.c:688 client/cl_campaign.c:854
+#: client/cl_campaign.c:864 client/cl_campaign.c:877 client/cl_campaign.c:949
+#: client/cl_campaign.c:1797 client/cl_campaign.c:1833
+#: client/cl_campaign.c:1835 client/cl_menu.c:1185 client/cl_research.c:486
+#: client/cl_research.c:613 client/cl_research.c:616 client/cl_research.c:620
+#: client/cl_research.c:640 client/cl_research.c:666 client/cl_research.c:670
 #: client/cl_research.c:805
 msgid "Notice"
 msgstr "Hinweis"
@@ -3263,8 +3455,7 @@ msgstr "%i Tage übrig"
 msgid "A new base has been built: %s."
 msgstr "Eine neue Basis wurde gebaut: %s."
 
-#: client/cl_basemanagement.c:1628
-#: client/cl_basemanagement.c:1633
+#: client/cl_basemanagement.c:1628 client/cl_basemanagement.c:1633
 msgid "Base built"
 msgstr "Basis gebaut"
 
@@ -3285,136 +3476,56 @@ msgstr "Konstruktion von %s in Basis %s abgeschlossen."
 msgid "Building finished"
 msgstr "Konstruktion abgeschlossen"
 
-#: client/cl_campaign.c:379
-msgid "Aircraft started"
-msgstr "Flugzeug gestartet"
-
-#: client/cl_campaign.c:421
-msgid "Nothing - should not be displayed"
-msgstr "Nichts - sollte nicht dargestellt werden"
-
-#: client/cl_campaign.c:424
-msgid "At homebase"
-msgstr "In der Heimatbasis"
-
-#: client/cl_campaign.c:427
-msgid "Refuel"
-msgstr "Auftanken"
-
-#: client/cl_campaign.c:430
-msgid "Idle"
-msgstr "Idle"
-
-#: client/cl_campaign.c:433
-msgid "On transit"
-msgstr "Transportmission"
-
-#: client/cl_campaign.c:436
-msgid "Ready for drop down"
-msgstr "Warte auf Einsatz"
-
-#: client/cl_campaign.c:439
-msgid "On interception"
-msgstr "Auf Abfangkurs"
-
-#: client/cl_campaign.c:442
-msgid "Transportmission"
-msgstr "Transportmission"
-
-#: client/cl_campaign.c:445
-msgid "Returning to homebase"
-msgstr "Rückkehr zur Heimatbasis"
-
-#: client/cl_campaign.c:564
-#: client/cl_ufopedia.c:236
-#, c-format
-msgid "Speed:\t%.0f\n"
-msgstr "Geschwindigkeit:\t%.0f\n"
-
-#: client/cl_campaign.c:565
-#, c-format
-msgid "Fuel:\t%i/%i\n"
-msgstr "Treibstoff:\t%i/%i\n"
-
-#: client/cl_campaign.c:566
-#: client/cl_campaign.c:567
-#: client/cl_ufopedia.c:217
-#: client/cl_ufopedia.c:238
-#: client/cl_ufopedia.c:239
-msgid "None"
-msgstr "Keine"
-
-#: client/cl_campaign.c:566
-#: client/cl_ufopedia.c:238
-#, c-format
-msgid "Weapon:\t%s\n"
-msgstr "Bewaffnung:\t%s\n"
-
-#: client/cl_campaign.c:567
-#, c-format
-msgid "Shield:\t%s"
-msgstr "Schild:\t%s"
-
-#: client/cl_campaign.c:613
-#, c-format
-msgid "You've got a new aircraft (a %s) in base %s"
-msgstr "Du hast ein neues Flugzeug (%s) in Basis %s"
-
-#: client/cl_campaign.c:661
-#: client/cl_menu.c:1185
+#: client/cl_campaign.c:361 client/cl_menu.c:1185
 msgid "Could not set up your base at this location"
 msgstr "Die Basis kann an dieser Position nicht gebaut werden"
 
-#: client/cl_campaign.c:829
+#: client/cl_campaign.c:529
 #, c-format
 msgid "Your base %s is under attack."
 msgstr "Deine Basis %s wird angegriffen."
 
-#: client/cl_campaign.c:830
+#: client/cl_campaign.c:530
 msgid "Baseattack"
 msgstr "Basenangriff"
 
-#: client/cl_campaign.c:855
+#: client/cl_campaign.c:555
 #, c-format
 msgid "Alien activity has been reported: '%s'"
 msgstr "Alien Aktivitäten wurden gemeldet: '%s'"
 
-#: client/cl_campaign.c:856
+#: client/cl_campaign.c:556
 msgid "Alien activity"
 msgstr "Alien Aktivitäten"
 
-#: client/cl_campaign.c:989
+#: client/cl_campaign.c:688
 msgid "Assign a team to aircraft"
 msgstr "Weise dem Flugzeug zuerst ein Team zu"
 
-#: client/cl_campaign.c:1154
+#: client/cl_campaign.c:854
 msgid "UFO appears on our radar"
 msgstr "UFO-Sichtung durch Radar"
 
-#: client/cl_campaign.c:1164
+#: client/cl_campaign.c:864
 msgid "UFO disappears on our radar"
 msgstr "UFO ist nicht mehr in Reichweite unseres Radars"
 
-#: client/cl_campaign.c:1176
+#: client/cl_campaign.c:876
 #, c-format
 msgid "The mission expired and %i civilians died. You've lost %i credits."
 msgstr "Die Aliens haben %i Zivilisten getötet\\Dir wurden %i $ abgezogen"
 
-#: client/cl_campaign.c:1191
-msgid "Your dropship has low fuel and returns to base"
-msgstr "Flugzeug hat wenig Treibstoff und kehrt deshalb zur Basis zurück"
-
-#: client/cl_campaign.c:1388
+#: client/cl_campaign.c:948
 #, c-format
 msgid "Gained %i credits from nation %s"
 msgstr "%i Credits von Nation %s erhalten"
 
-#: client/cl_campaign.c:1440
+#: client/cl_campaign.c:1000
 #, c-format
 msgid "%02i:%i%i"
 msgstr "%02i:%i%i"
 
-#: client/cl_campaign.c:1544
+#: client/cl_campaign.c:1104
 #, c-format
 msgid ""
 "Missions:\n"
@@ -3423,37 +3534,36 @@ msgid ""
 "build:\t%i\tattacked:\t%i\n"
 msgstr ""
 
-#: client/cl_campaign.c:2121
+#: client/cl_campaign.c:1681
 msgid "Assemble or load a team"
 msgstr "Rüste ein Team aus oder lade ein gespeichertes Team."
 
-#: client/cl_campaign.c:2121
+#: client/cl_campaign.c:1681
 msgid "Note"
 msgstr "Hinweis"
 
-#: client/cl_campaign.c:2237
+#: client/cl_campaign.c:1797
 msgid "Your dropship is not near the landingzone"
 msgstr "Das Einsatzschiff ist nicht nahe einer Landungszone"
 
-#: client/cl_campaign.c:2273
+#: client/cl_campaign.c:1833
 msgid "You've won the battle"
 msgstr "Du hast die Schlacht gewonnen"
 
-#: client/cl_campaign.c:2275
+#: client/cl_campaign.c:1835
 msgid "You've lost the battle"
 msgstr "Du hast die Schlacht verloren"
 
-#: client/cl_campaign.c:2461
+#: client/cl_campaign.c:2033
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s wurde zum %s befördert\n"
 
-#: client/cl_campaign.c:2462
+#: client/cl_campaign.c:2034
 msgid "Soldier promoted"
 msgstr "Soldat wurde befördert"
 
-#: client/cl_campaign.c:3381
-#: client/cl_campaign.c:3412
+#: client/cl_campaign.c:2961 client/cl_campaign.c:2992
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -3466,19 +3576,15 @@ msgstr ""
 "Credits: %ic\n"
 "%s\n"
 
-#: client/cl_main.c:334
-#: client/cl_main.c:677
-#: client/cl_menu.c:445
+#: client/cl_main.c:330 client/cl_main.c:673 client/cl_menu.c:445
 msgid "Assemble a team first"
 msgstr "Erstelle erst ein Team"
 
-#: client/cl_main.c:334
-#: client/cl_main.c:677
-#: client/cl_menu.c:445
+#: client/cl_main.c:330 client/cl_main.c:673 client/cl_menu.c:445
 msgid "Error"
 msgstr "Fehler"
 
-#: client/cl_main.c:618
+#: client/cl_main.c:614
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -3487,52 +3593,52 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:640
+#: client/cl_main.c:636
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Map:\t%s\n"
 
-#: client/cl_main.c:642
+#: client/cl_main.c:638
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Version:\t%s\n"
 
-#: client/cl_main.c:644
+#: client/cl_main.c:640
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Servername:\t%s\n"
 
-#: client/cl_main.c:646
+#: client/cl_main.c:642
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Moralschwankungen:\t%s\n"
 
-#: client/cl_main.c:648
+#: client/cl_main.c:644
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Teamspiel:\t%s\n"
 
-#: client/cl_main.c:650
+#: client/cl_main.c:646
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Max. Soldaten pro Team:\t%s\n"
 
-#: client/cl_main.c:652
+#: client/cl_main.c:648
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Max. Clients:\t%s\n"
 
-#: client/cl_main.c:654
+#: client/cl_main.c:650
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Max. Soldaten pro Spieler:\t%s\n"
 
-#: client/cl_main.c:656
+#: client/cl_main.c:652
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. Soldaten pro Team:\t%s\n"
 
-#: client/cl_main.c:1218
+#: client/cl_main.c:1212
 msgid "unnamed"
 msgstr "Unbekannt"
 
@@ -3553,8 +3659,7 @@ msgstr "Klick"
 msgid "Base\t%s\n"
 msgstr "Basis\t%s\n"
 
-#: client/cl_menu.c:1618
-#: client/cl_menu.c:1678
+#: client/cl_menu.c:1618 client/cl_menu.c:1678
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -3573,8 +3678,7 @@ msgstr "Nacht"
 msgid "Day"
 msgstr "Tag"
 
-#: client/cl_menu.c:2305
-#: client/cl_menu.c:2338
+#: client/cl_menu.c:2305 client/cl_menu.c:2338
 msgid ""
 "Select the desired location of the\n"
 "new base on the map.\n"
@@ -3582,8 +3686,7 @@ msgstr ""
 "Wähle die gewünschte Position der\n"
 "neuen Basis auf der Karte.\n"
 
-#: client/cl_menu.c:2309
-#: client/cl_menu.c:2342
+#: client/cl_menu.c:2309 client/cl_menu.c:2342
 msgid ""
 "Aliens are attacking our base\n"
 "at this very moment.\n"
@@ -3591,8 +3694,7 @@ msgstr ""
 "Aliens greifen gerade eine unserer\n"
 "Basen an.\n"
 
-#: client/cl_menu.c:2313
-#: client/cl_menu.c:2346
+#: client/cl_menu.c:2313 client/cl_menu.c:2346
 msgid "Select ufo or mission on map\n"
 msgstr ""
 "Wähle UFO oder Bodenmission\n"
@@ -3602,15 +3704,15 @@ msgstr ""
 msgid "UFO in radar range\n"
 msgstr "UFO in Radar Reichweite\n"
 
-#: client/cl_parse.c:655
+#: client/cl_parse.c:653
 msgid "Alien spotted!\n"
 msgstr "Alien gesichtet!\n"
 
-#: client/cl_parse.c:657
+#: client/cl_parse.c:655
 msgid "Enemy spotted!\n"
 msgstr "Gegner gesichtet!\n"
 
-#: client/cl_parse.c:659
+#: client/cl_parse.c:657
 msgid "Civilian spotted!\n"
 msgstr "Zivilist gesichtet!\n"
 
@@ -3667,20 +3769,22 @@ msgid "Dependencies: "
 msgstr "Abhängigkeiten:"
 
 #: client/cl_research.c:487
-msgid "There is no free lab available.\\You need to build one or free another\\in order to assign scientists to research this technology.\n"
-msgstr "Es ist kein freie Labor verfügbar.\\Du musst er eines bauen oder ein anderes freigeben\\um Wissenschaftler an dieser Technologie arbeiten zu lassen.\n"
+msgid ""
+"There is no free lab available.\\You need to build one or free another\\in "
+"order to assign scientists to research this technology.\n"
+msgstr ""
+"Es ist kein freie Labor verfügbar.\\Du musst er eines bauen oder ein anderes "
+"freigeben\\um Wissenschaftler an dieser Technologie arbeiten zu lassen.\n"
 
 #: client/cl_research.c:613
 msgid "This item is already under research by your scientists."
 msgstr "Forschung bereits im Gange."
 
-#: client/cl_research.c:616
-#: client/cl_research.c:666
+#: client/cl_research.c:616 client/cl_research.c:666
 msgid "The research on this item continues."
 msgstr "Forschung wird fortgesetzt."
 
-#: client/cl_research.c:620
-#: client/cl_research.c:670
+#: client/cl_research.c:620 client/cl_research.c:670
 msgid "The research on this item is complete."
 msgstr "Forschung abgeschlossen."
 
@@ -3727,17 +3831,17 @@ msgstr "%i von %i"
 msgid "NewTeam"
 msgstr "Neues Team"
 
-#: client/cl_team.c:1102
+#: client/cl_team.c:1104
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens getötet\t%i\n"
 
-#: client/cl_team.c:1104
+#: client/cl_team.c:1106
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Gegner getötet\t%i\n"
 
-#: client/cl_team.c:1110
+#: client/cl_team.c:1112
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -3746,7 +3850,7 @@ msgstr ""
 "Aliens überlebt\t%i\n"
 "\n"
 
-#: client/cl_team.c:1112
+#: client/cl_team.c:1114
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -3755,17 +3859,17 @@ msgstr ""
 "Gegner überlebt\t%i\n"
 "\n"
 
-#: client/cl_team.c:1115
+#: client/cl_team.c:1117
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Eigene Verluste\t%i\n"
 
-#: client/cl_team.c:1116
+#: client/cl_team.c:1118
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Verluste durch Friendlyfire\t%i\n"
 
-#: client/cl_team.c:1117
+#: client/cl_team.c:1119
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -3774,22 +3878,22 @@ msgstr ""
 "Überlebende\t%i\n"
 "\n"
 
-#: client/cl_team.c:1130
+#: client/cl_team.c:1132
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Durch Aliens getötete Zivilisten\t%i\n"
 
-#: client/cl_team.c:1132
+#: client/cl_team.c:1134
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Durch Gegner getötete Zivilisten\t%i\n"
 
-#: client/cl_team.c:1133
+#: client/cl_team.c:1135
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Durch eigenes Team getötete Zivilisten\t%i\n"
 
-#: client/cl_team.c:1134
+#: client/cl_team.c:1136
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -3800,22 +3904,22 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1154
+#: client/cl_team.c:1156
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr "Gesammelte Alientechnology\t%i c\n"
 
-#: client/cl_team.c:1158
+#: client/cl_team.c:1160
 #, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr "Aliens getötet\t%i c\n"
 
-#: client/cl_team.c:1162
+#: client/cl_team.c:1164
 #, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr "Zivilisten gerettet\t%i c\n"
 
-#: client/cl_team.c:1165
+#: client/cl_team.c:1167
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -3826,7 +3930,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1169
+#: client/cl_team.c:1171
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr "Neue Rekruten\t%i\n"
@@ -3855,7 +3959,7 @@ msgstr "Granaten"
 msgid "Unknown weapon skill"
 msgstr "Unbekannter Waffengeschick"
 
-#: client/cl_ufopedia.c:86
+#: client/cl_ufopedia.c:85
 msgid "No requirements"
 msgstr "Keine Abhängigkeiten"
 
@@ -3949,6 +4053,10 @@ msgstr "Fehler: Konnte Gebäude nicht finden"
 msgid "Depends:\t%s\n"
 msgstr "Benötigt:\t%s\n"
 
+#: client/cl_ufopedia.c:217 client/cl_ufopedia.c:238 client/cl_ufopedia.c:239
+msgid "None"
+msgstr "Keine"
+
 #: client/cl_ufopedia.c:218
 #, c-format
 msgid "Buildtime:\t%i day(s)\n"
@@ -3968,10 +4076,20 @@ msgstr "Variable Kosten:\t%i c\n"
 msgid "Error - could not find aircraft"
 msgstr "Fehler: Konnte Flugzeug nicht finden"
 
+#: client/cl_ufopedia.c:236
+#, c-format
+msgid "Speed:\t%.0f\n"
+msgstr "Geschwindigkeit:\t%.0f\n"
+
 #: client/cl_ufopedia.c:237
 #, c-format
 msgid "Fuel:\t%i\n"
 msgstr "Treibstoffl:\t%i\n"
+
+#: client/cl_ufopedia.c:238
+#, c-format
+msgid "Weapon:\t%s\n"
+msgstr "Bewaffnung:\t%s\n"
 
 #: client/cl_ufopedia.c:239
 #, c-format
@@ -4014,8 +4132,7 @@ msgstr "Nicht im gleichen Team\n"
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Keine Kontrolle über verbündete Spieler\n"
 
-#: game/g_client.c:680
-#: game/g_client.c:773
+#: game/g_client.c:680 game/g_client.c:773
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Nicht genug Zeiteinheiten\n"
 
@@ -4058,6 +4175,45 @@ msgstr "Keine Munition\n"
 #: game/g_client.c:2008
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Nicht genug Munition\n"
+
+#~ msgid "Aircraft started"
+#~ msgstr "Flugzeug gestartet"
+
+#~ msgid "Nothing - should not be displayed"
+#~ msgstr "Nichts - sollte nicht dargestellt werden"
+
+#~ msgid "At homebase"
+#~ msgstr "In der Heimatbasis"
+
+#~ msgid "Refuel"
+#~ msgstr "Auftanken"
+
+#~ msgid "Idle"
+#~ msgstr "Idle"
+
+#~ msgid "On transit"
+#~ msgstr "Transportmission"
+
+#~ msgid "Ready for drop down"
+#~ msgstr "Warte auf Einsatz"
+
+#~ msgid "On interception"
+#~ msgstr "Auf Abfangkurs"
+
+#~ msgid "Transportmission"
+#~ msgstr "Transportmission"
+
+#~ msgid "Returning to homebase"
+#~ msgstr "Rückkehr zur Heimatbasis"
+
+#~ msgid "Fuel:\t%i/%i\n"
+#~ msgstr "Treibstoff:\t%i/%i\n"
+
+#~ msgid "You've got a new aircraft (a %s) in base %s"
+#~ msgstr "Du hast ein neues Flugzeug (%s) in Basis %s"
+
+#~ msgid "Your dropship has low fuel and returns to base"
+#~ msgstr "Flugzeug hat wenig Treibstoff und kehrt deshalb zur Basis zurück"
 
 #~ msgid "assault_ammo_txt"
 #~ msgstr ""
@@ -4268,84 +4424,120 @@ msgstr "Nicht genug Munition\n"
 #~ "the considerable recoil, a advanced counter-balance system is used "
 #~ "powered by the explosion\n"
 #~ "gases originating from the cartridges."
+
 #~ msgid "Smoke Grenade"
 #~ msgstr "Rauchgranate"
+
 #~ msgid "Grenades"
 #~ msgstr "Granaten"
+
 #~ msgid "Plasma Pistol"
 #~ msgstr "Plasmapistole"
+
 #~ msgid "Plasma Pistol Charge"
 #~ msgstr "Plasmapistolenmunition"
+
 #~ msgid "%i researches finished\n"
 #~ msgstr "%i Forschungen abgeschlossen\n"
+
 #~ msgid "Activate"
 #~ msgstr "Aktivieren"
+
 #~ msgid "Blade"
 #~ msgstr "Klinge"
+
 #~ msgid "Knife"
 #~ msgstr "Messer"
+
 #~ msgid "%s (%s) died on his last mission.\n"
 #~ msgstr "%s (%s) starb bei seinem letzten Einsatz.\n"
+
 #~ msgid "Soldier died"
 #~ msgstr "Soldat ist gestorben"
+
 #~ msgid ""
 #~ "Race: %s\n"
 #~ "%s\n"
 #~ msgstr ""
 #~ "Rasse: %s\n"
 #~ "%s\n"
+
 #~ msgid "Refuel the selected aircraft"
 #~ msgstr "Auftanken"
+
 #~ msgid "Russia"
 #~ msgstr "Russland"
+
 #~ msgid "Constructing: %i day(s)"
 #~ msgstr "Konstruktion: %i Tag(e)"
+
 #~ msgid "Equip your personnel"
 #~ msgstr "Rüste Personal aus"
+
 #~ msgid "Equip Soldiers"
 #~ msgstr "Rüste Soldaten aus"
+
 #~ msgid "Allow Download:"
 #~ msgstr "Erlaube Download:"
+
 #~ msgid "Upgrade: %i day(s)"
 #~ msgstr "Aufrüsten: %i Tag(e)"
+
 #~ msgid "Working 120%"
 #~ msgstr "Arbeitet: 120%"
+
 #~ msgid "Working 50%"
 #~ msgstr "Arbeitet: 50%"
+
 #~ msgid "Maintenance"
 #~ msgstr "Wartung"
+
 #~ msgid "Repairing"
 #~ msgstr "Reparieren"
+
 #~ msgid "Workercosts:\t%1.2f\n"
 #~ msgstr "Arbeiterkosten:\t%1.2f\n"
+
 #~ msgid "Energy:\t%1.0f\n"
 #~ msgstr "Erergie:\t%1.0f\n"
+
 #~ msgid "Production:\t%s (%i/day)\n"
 #~ msgstr "Produktion:\t%s (%i/Tag)\n"
+
 #~ msgid "Level:\t%i\n"
 #~ msgstr "Level\t%i\n"
+
 #~ msgid "Condition"
 #~ msgstr "Zustand"
+
 #~ msgid "Construction of building %s finished."
 #~ msgstr "Konstruktion abgeschlossen: %s."
+
 #~ msgid "There is at least one finished construction\\at base %s\n"
 #~ msgstr "Mindestens ein Gebäudebau wurde in der Basis\\%s abgeschlossen\n"
+
 #~ msgid " [under research]"
 #~ msgstr " [wird erforscht]"
+
 #~ msgid " [finished]"
 #~ msgstr " [abgeschlossen]"
+
 #~ msgid " [paused]"
 #~ msgstr " [angehalten]"
+
 #~ msgid " [unknown]"
 #~ msgstr " [unbekannt]"
+
 #~ msgid "Energy:\t%i\n"
 #~ msgstr "Energie:\t%i\n"
+
 #~ msgid "Workercosts:\t%i c\n"
 #~ msgstr "Arbeiterkosten:\t%i c\n"
 
 #, fuzzy
 #~ msgid "Speed:\t%.0f"
 #~ msgstr "Geschwindigkeit:\t%.0f\n"
+
 #~ msgid ""
 #~ "Speed:\t%.0f\n"
 #~ "Fuel:\t%i/%i\n"
@@ -4360,8 +4552,10 @@ msgstr "Nicht genug Munition\n"
 #, fuzzy
 #~ msgid "%s:\t%i/%i\n"
 #~ msgstr "%02i:%i%i"
+
 #~ msgid "Medium Armor"
 #~ msgstr "Mittlere Panzerung"
+
 #~ msgid ""
 #~ "Speed:\t%.0f\n"
 #~ "Fuel:\t%i\n"
@@ -4372,6 +4566,7 @@ msgstr "Nicht genug Munition\n"
 #~ "Treibstoff:\t%i\n"
 #~ "Waffe:\t%s\n"
 #~ "Schild:\t%s\n"
+
 #~ msgid ""
 #~ "Primary:\t%s\n"
 #~ "Secondary:\t%s\n"
@@ -4388,6 +4583,7 @@ msgstr "Nicht genug Munition\n"
 #~ "Reichweite:\t%1.1f / %1.1f\n"
 #~ "Streuung:\t%1.1f / %1.1f\n"
 #~ "Munition:\t%i\n"
+
 #~ msgid ""
 #~ "Damage:\t%i / %i\n"
 #~ "Time units:\t%i / %i\n"
@@ -4400,6 +4596,7 @@ msgstr "Nicht genug Munition\n"
 #~ "Reichweite:\t%1.1f / %1.1f\n"
 #~ "Streuung:\t%1.1f / %1.1f\n"
 #~ "Munition:\t%i\n"
+
 #~ msgid ""
 #~ "Action:\t%s\n"
 #~ "Time units:\t%i\n"
@@ -4408,16 +4605,19 @@ msgstr "Nicht genug Munition\n"
 #~ "Aktion:\t%s\n"
 #~ "Zeiteinheiten:\t%i\n"
 #~ "Reichweite:\t%1.1f\n"
+
 #~ msgid "Enemy"
 #~ msgstr "Gegner"
+
 #~ msgid "Aliens"
 #~ msgstr "Aliens"
+
 #~ msgid "Enemies"
 #~ msgstr "Gegner"
+
 #~ msgid ""
 #~ "%s survivors\t%i\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Überlebende %s\t%i\n"
 #~ "\n"
-
