@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define WriteShort(x) WriteShort( x, __FILE__, __LINE__ )
 #endif
 
-#include "../common/ufotypes.h"
+#include "../qcommon/ufotypes.h"
 
 #ifdef _MSC_VER
 /* unknown pragmas are SUPPOSED to be ignored, but.... */

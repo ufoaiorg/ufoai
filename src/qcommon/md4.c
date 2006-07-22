@@ -1,5 +1,5 @@
 
-#include "../common/ufotypes.h"
+#include "../qcommon/ufotypes.h"
 
 /*
 Public Domain C source implementation of RFC 1320:
