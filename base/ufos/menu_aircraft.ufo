@@ -148,6 +148,33 @@ menu aircraft
 		align	uc
 	}
 
+	// ===============
+	// transfer
+	// ===============
+	pic button_equip
+	{
+		tooltip	"_Equip weapons and shields"
+		image	menu/button
+		pos	"45 380"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "mn_push aircraft_equip"
+		}
+		out		{ *txt_equip color "0 0.8 0 1" *button_equip texl "0 0" *button_equip texh "230 64" }
+		in		{ *txt_equip color "1 1 1 1" *button_equip texl "230 0" *button_equip texh "460 64" }
+	}
+	string txt_equip
+	{
+		string	"_Equip"
+		color	"0 0.8 0 1"
+		pos	"160 396"
+		font	f_menu
+		align	uc
+	}
+
 	// ==================
 	// aircraft
 	// ==================
@@ -266,35 +293,35 @@ menu aircraft_equip
 	// background
 	// ==================
 
-	pic back_ul
+	pic equipback_ul
 	{
-		image	menu/air_ul
+		image	menu/airequip_ul
 		pos		"0 0"
 	}
 
-	pic back_ur
+	pic equipback_ur
 	{
-		image	menu/air_ur
+		image	menu/airequip_ur
 		pos		"512 0"
 	}
 
-	pic back_ll
+	pic equipback_ll
 	{
-		image	menu/air_ll
+		image	menu/airequip_ll
 		pos		"0 512"
 	}
 
-	pic back_lr
+	pic equipback_lr
 	{
-		image	menu/air_lr
+		image	menu/airequip_lr
 		pos		"512 512"
 	}
 
 	// ==================
-	// don't render
+	// dropship model
 	// ==================
 
-	model dropship
+	model dropshipequip
 	{
 		md2		"*cvar mn_aircraft_model"
 		origin	"690 640 0"
