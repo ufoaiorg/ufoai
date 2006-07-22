@@ -73,7 +73,7 @@ static void Cmd_Players_f(player_t * player)
 Cmd_Say_f
 ==================
 */
-static void Cmd_Say_f(player_t * player, bool_t arg0, bool_t team)
+static void Cmd_Say_f(player_t * player, qboolean arg0, qboolean team)
 {
 	int j;
 	char *p;
@@ -166,14 +166,14 @@ void G_ClientCommand(player_t * player)
 	else if (Q_stricmp(cmd, "playerlist") == 0)
 		Cmd_PlayerList_f(player);
 	else if (Q_stricmp(cmd, "say") == 0)
-		Cmd_Say_f(player, false, false);
+		Cmd_Say_f(player, qfalse, qfalse);
 	else if (Q_stricmp(cmd, "say_team") == 0)
-		Cmd_Say_f(player, false, true);
+		Cmd_Say_f(player, qfalse, qtrue);
 #ifdef DEBUG
 	else if (Q_stricmp(cmd, "killteam") == 0)
 		G_KillTeam();
 #endif
 	else
 		/* anything that doesn't match a command will be a chat */
-		Cmd_Say_f(player, true, false);
+		Cmd_Say_f(player, qtrue, qfalse);
 }

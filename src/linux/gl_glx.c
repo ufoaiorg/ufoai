@@ -80,7 +80,7 @@ static Atom wmDeleteWindow;
 
 /* this is inside the renderer shared lib, so these are called from vid_so */
 
-static bool_t	mouse_avail;
+static qboolean	mouse_avail;
 static int	mx, my;
 
 static int	win_x, win_y;
@@ -95,16 +95,16 @@ static cvar_t	*r_fakeFullscreen;
 static XF86VidModeModeInfo **vidmodes;
 static int num_vidmodes;
 static XF86VidModeGamma oldgamma;
-static bool_t vidmode_ext = false;
+static qboolean vidmode_ext = qfalse;
 #endif /* HAVE_XF86_VIDMODE */
 
 /* static int default_dotclock_vidmode; */
-static bool_t vidmode_active = false;
+static qboolean vidmode_active = qfalse;
 
-/* static bool_t	mlooking; */
+/* static qboolean	mlooking; */
 
-static bool_t mouse_active = false;
-static bool_t dgamouse = false;
+static qboolean mouse_active = qfalse;
+static qboolean dgamouse = qfalse;
 
 /* state struct passed in Init */
 static in_state_t	*in_state;
@@ -118,12 +118,8 @@ static cvar_t *m_forward;
 static cvar_t *freelook;
 
 /* stencilbuffer shadows */
-bool_t have_stencil = false;
+qboolean have_stencil = qfalse;
 
-/**
- * @brief
- * @sa
- */
 static Cursor CreateNullCursor(Display *display, Window root)
 {
 	Pixmap cursormask;
@@ -146,10 +142,6 @@ static Cursor CreateNullCursor(Display *display, Window root)
 	return cursor;
 }
 
-/**
- * @brief
- * @sa uninstall_grabs
- */
 static void install_grabs(void)
 {
 	/* inviso cursor */
@@ -170,7 +162,7 @@ static void install_grabs(void)
 			ri.Con_Printf( PRINT_ALL, "Failed to detect XF86DGA Mouse\n" );
 			ri.Cvar_Set( "in_dgamouse", "0" );
 		} else {
-			dgamouse = true;
+			dgamouse = qtrue;
 			ri.Con_Printf( PRINT_DEVELOPER, "...using XF86DGA Mouse\n" );
 			XF86DGADirectVideo(dpy, DefaultScreen(dpy), XF86DGADirectMouse);
 			XWarpPointer(dpy, None, win, 0, 0, 0, 0, 0, 0);
@@ -186,15 +178,11 @@ static void install_grabs(void)
 	if (vid_grabmouse->value || vid_fullscreen->value)
 		XGrabKeyboard(dpy, win, False, GrabModeAsync, GrabModeAsync, CurrentTime);
 
-	mouse_active = true;
+	mouse_active = qtrue;
 
 	XSync(dpy, True);
 }
 
-/**
- * @brief
- * @sa install_grabs
- */
 static void uninstall_grabs(void)
 {
 	if (!dpy || !win)
@@ -202,7 +190,7 @@ static void uninstall_grabs(void)
 
 #ifdef HAVE_XF86_DGA
 	if (dgamouse) {
-		dgamouse = false;
+		dgamouse = qfalse;
 		XF86DGADirectVideo(dpy, DefaultScreen(dpy), 0);
 	}
 #endif /* HAVE_XF86_DGA */
@@ -213,14 +201,9 @@ static void uninstall_grabs(void)
 	/* inviso cursor */
 	XUndefineCursor(dpy, win);
 
-	mouse_active = false;
+	mouse_active = qfalse;
 }
 
-/**
- * @brief
- * @param in_state_p
- * @sa RW_IN_Shutdown
- */
 void RW_IN_Init(in_state_t *in_state_p)
 {
 	in_state = in_state_p;
@@ -243,35 +226,31 @@ void RW_IN_Init(in_state_t *in_state_p)
 	m_side = ri.Cvar_Get ("m_side", "0.8", 0);
 
 	mx = my = 0.0;
-	mouse_avail = true;
+	mouse_avail = qtrue;
 }
 
-/**
- * @brief
- * @sa RW_IN_Activate
- */
 void RW_IN_Shutdown(void)
 {
-	RW_IN_Activate (false);
+	RW_IN_Activate (qfalse);
 
 	if (mouse_avail)
-		mouse_avail = false;
+		mouse_avail = qfalse;
 }
 
-/**
- * @brief
- * @sa
- */
+/*
+===========
+IN_Commands
+===========
+*/
 void RW_IN_Commands (void)
 {
 }
 
-/**
- * @brief
- * @param x pointer to x coordinate
- * @param y pointer to y coordinate
- * @sa
- */
+/*
+===========
+IN_GetMousePos
+===========
+*/
 void RW_IN_GetMousePos (int *x, int *y)
 {
 	if ( mx < 1 )
@@ -286,10 +265,6 @@ void RW_IN_GetMousePos (int *x, int *y)
 	*y = my;
 }
 
-/**
- * @brief
- * @sa IN_ActivateMouse
- */
 static void IN_DeactivateMouse( void )
 {
 	if (!mouse_avail || !dpy || !win)
@@ -297,14 +272,10 @@ static void IN_DeactivateMouse( void )
 
 	if (mouse_active) {
 		uninstall_grabs();
-		mouse_active = false;
+		mouse_active = qfalse;
 	}
 }
 
-/**
- * @brief
- * @sa IN_DeactivateMouse
- */
 static void IN_ActivateMouse( void )
 {
 	if (!mouse_avail || !dpy || !win)
@@ -314,25 +285,15 @@ static void IN_ActivateMouse( void )
 		mx = vid.width / 2;
 		my = vid.height / 2;
 		install_grabs();
-		mouse_active = true;
+		mouse_active = qtrue;
 	}
 }
 
-/**
- * @brief
- * @sa
- */
 void RW_IN_Frame (void)
 {
 }
 
-/**
- * @brief
- * @sa RW_IN_Shutdown
- * @sa IN_ActivateMouse
- * @sa IN_DeactivateMouse
- */
-void RW_IN_Activate(bool_t active)
+void RW_IN_Activate(qboolean active)
 {
 	if (active || vidmode_active)
 		IN_ActivateMouse();
@@ -344,10 +305,6 @@ void RW_IN_Activate(bool_t active)
 /* KEYBOARD                                                                  */
 /*****************************************************************************/
 
-/**
- * @brief
- * @sa
- */
 static int XLateKey(XKeyEvent *ev)
 {
 	int key = 0;
@@ -547,15 +504,11 @@ static int XLateKey(XKeyEvent *ev)
 }
 
 
-/**
- * @brief
- * @sa
- */
 static void HandleEvents(void)
 {
 	XEvent event;
 	int b, middlex, middley;
-	bool_t dowarp = false;
+	qboolean dowarp = qfalse;
 
 	if (!dpy)
 		return;
@@ -608,11 +561,11 @@ static void HandleEvents(void)
 			else if (event.xbutton.button == 3)
 				b = 1;
 			else if (event.xbutton.button == 4)
-				in_state->Key_Event_fp (K_MWHEELUP, true);
+				in_state->Key_Event_fp (K_MWHEELUP, qtrue);
 			else if (event.xbutton.button == 5)
-				in_state->Key_Event_fp (K_MWHEELDOWN, true);
+				in_state->Key_Event_fp (K_MWHEELDOWN, qtrue);
 			if (b>=0 && in_state && in_state->Key_Event_fp)
-				in_state->Key_Event_fp (K_MOUSE1 + b, true);
+				in_state->Key_Event_fp (K_MOUSE1 + b, qtrue);
 			break;
 
 		case ButtonRelease:
@@ -624,11 +577,11 @@ static void HandleEvents(void)
 			else if (event.xbutton.button == 3)
 				b = 1;
 			else if (event.xbutton.button == 4)
-				in_state->Key_Event_fp (K_MWHEELUP, false);
+				in_state->Key_Event_fp (K_MWHEELUP, qfalse);
 			else if (event.xbutton.button == 5)
-				in_state->Key_Event_fp (K_MWHEELDOWN, false);
+				in_state->Key_Event_fp (K_MWHEELDOWN, qfalse);
 			if (b>=0 && in_state && in_state->Key_Event_fp)
-				in_state->Key_Event_fp (K_MOUSE1 + b, false);
+				in_state->Key_Event_fp (K_MOUSE1 + b, qfalse);
 			break;
 
 		case CreateNotify :
@@ -643,7 +596,7 @@ static void HandleEvents(void)
 
         case ClientMessage:
 			if (event.xclient.data.l[0] == wmDeleteWindow)
-				ri.Cmd_ExecuteText("quit", EXEC_NOW);
+				ri.Cmd_ExecuteText(EXEC_NOW, "quit");
 			break;
 
 		case MapNotify:
@@ -666,7 +619,7 @@ static void HandleEvents(void)
 
 	if (vid_grabmouse->modified)
 	{
-		vid_grabmouse->modified = false;
+		vid_grabmouse->modified = qfalse;
 		if ( ! vid_grabmouse->value )
 		{
 			XUngrabPointer(dpy, CurrentTime);
@@ -686,40 +639,31 @@ static void HandleEvents(void)
 
 Key_Event_fp_t Key_Event_fp;
 
-/**
- * @brief
- * @sa
- */
 void KBD_Init(Key_Event_fp_t fp)
 {
 	Key_Event_fp = fp;
 }
 
-/**
- * @brief
- * @sa
- */
 void KBD_Update(void)
 {
 	/* get events from x server */
 	HandleEvents();
 }
 
-/**
- * @brief
- * @sa
- */
 void KBD_Close(void)
 {
 }
 
-bool_t GLimp_InitGL (void);
+/*****************************************************************************/
 
-/**
- * @brief
- * @sa
- */
-rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, bool_t fullscreen )
+/* static qboolean GLimp_SwitchFullscreen( int width, int height ); */
+
+qboolean GLimp_InitGL (void);
+
+/*
+** GLimp_SetMode
+*/
+rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen )
 {
 	int width, height;
 	int attrib[] = {
@@ -789,11 +733,11 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, bool_t ful
 	/* Get video mode list */
 	MajorVersion = MinorVersion = 0;
 	if (!XF86VidModeQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
-		vidmode_ext = false;
+		vidmode_ext = qfalse;
 	} else {
 		ri.Con_Printf(PRINT_ALL, "Using XFree86-VidModeExtension Version %d.%d\n",
 			MajorVersion, MinorVersion);
-		vidmode_ext = true;
+		vidmode_ext = qtrue;
 	}
 #endif /* HAVE_XF86_VIDMODE */
 
@@ -808,7 +752,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, bool_t ful
 		return rserr_invalid_mode;
 	}
 
-	gl_state.hwgamma = false;
+	gl_state.hwgamma = qfalse;
 
 	/* do some pantsness */
 	if ( qglXGetConfig ) {
@@ -834,11 +778,11 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, bool_t ful
 		if (!qglXGetConfig(dpy, visinfo, GLX_STENCIL_SIZE, &stencil_bits)) {
 			ri.Con_Printf(PRINT_ALL, "I: got %d bits of stencil\n", stencil_bits);
 			if (stencil_bits >= 1) {
-				have_stencil = true;
+				have_stencil = qtrue;
 			}
 		}
 	} else {
-		have_stencil = true;
+		have_stencil = qtrue;
 	}
 
 #ifdef HAVE_XF86_VIDMODE
@@ -872,19 +816,19 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, bool_t ful
 				XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
 				width = vidmodes[best_fit]->hdisplay;
 				height = vidmodes[best_fit]->vdisplay;
-				vidmode_active = true;
+				vidmode_active = qtrue;
 
 				if (XF86VidModeGetGamma(dpy, scrnum, &oldgamma)) {
-					gl_state.hwgamma = true;
+					gl_state.hwgamma = qtrue;
 					/* We can not reliably detect hardware gamma
 					   changes across software gamma calls, which
 					   can reset the flag, so change it anyway */
-					vid_gamma->modified = true;
+					vid_gamma->modified = qtrue;
 					ri.Con_Printf( PRINT_ALL, "Using hardware gamma\n");
 				}
 			} else {
-				fullscreen = false;
-				vidmode_active = false;
+				fullscreen = qfalse;
+				vidmode_active = qfalse;
 			}
 		}
 	}
@@ -939,20 +883,20 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, bool_t ful
 	return rserr_ok;
 }
 
-/**
- * @brief
- * @sa GLimp_Init
- *
- * This routine does all OS specific shutdown procedures for the OpenGL
- * subsystem.  Under OpenGL this means NULLing out the current DC and
- * HGLRC, deleting the rendering context, and releasing the DC acquired
- * for the window.  The state structure is also nulled out.
- */
+/*
+** GLimp_Shutdown
+**
+** This routine does all OS specific shutdown procedures for the OpenGL
+** subsystem.  Under OpenGL this means NULLing out the current DC and
+** HGLRC, deleting the rendering context, and releasing the DC acquired
+** for the window.  The state structure is also nulled out.
+**
+*/
 void GLimp_Shutdown( void )
 {
 	uninstall_grabs();
-	mouse_active = false;
-	dgamouse = false;
+	mouse_active = qfalse;
+	dgamouse = qfalse;
 
 	if (dpy) {
 		if (ctx)
@@ -974,14 +918,13 @@ void GLimp_Shutdown( void )
 	ctx = NULL;
 }
 
-/**
- * @brief
- * @sa GLimp_Init
- * the default X error handler exits the application
- * I found out that on some hosts some operations would raise X errors (GLXUnsupportedPrivateRequest)
- * but those don't seem to be fatal .. so the default would be to just ignore them
- * our implementation mimics the default handler behaviour (not completely cause I'm lazy)
- */
+/*
+** XErrorHandler (ioq3)
+**   the default X error handler exits the application
+**   I found out that on some hosts some operations would raise X errors (GLXUnsupportedPrivateRequest)
+**   but those don't seem to be fatal .. so the default would be to just ignore them
+**   our implementation mimics the default handler behaviour (not completely cause I'm lazy)
+*/
 int qXErrorHandler(Display *dpy, XErrorEvent *ev)
 {
 	static char buf[1024];
@@ -993,11 +936,6 @@ int qXErrorHandler(Display *dpy, XErrorEvent *ev)
 	return 0;
 }
 
-/**
- * @brief
- * @sa GLimp_Shutdown
- * @sa InitSig
- */
 static void signal_handler(int sig)
 {
 	printf("Received signal %d, exiting...\n", sig);
@@ -1005,10 +943,6 @@ static void signal_handler(int sig)
 	exit(0);
 }
 
-/**
- * @brief
- * @sa signal_handler
- */
 void InitSig(void)
 {
 	signal(SIGHUP, signal_handler);
@@ -1022,47 +956,45 @@ void InitSig(void)
 	signal(SIGTERM, signal_handler);
 }
 
-/**
- * @brief
- * @sa GLimp_Shutdown
- * This routine is responsible for initializing the OS specific portions
- * of OpenGL.
- */
-bool_t GLimp_Init( void *hinstance, void *wndproc )
+/*
+** GLimp_Init
+**
+** This routine is responsible for initializing the OS specific portions
+** of OpenGL.
+*/
+qboolean GLimp_Init( void *hinstance, void *wndproc )
 {
 	InitSig();
 
 	/* set up our custom error handler for X failures */
 	XSetErrorHandler(&qXErrorHandler);
 
-	return true;
+	return qtrue;
 }
 
-/**
- * @brief
- * @sa GLimp_EndFrame
- */
+/*
+** GLimp_BeginFrame
+*/
 void GLimp_BeginFrame( float camera_seperation )
 {
 }
 
-/**
- * @brief
- * @sa GLimp_BeginFrame
- * Responsible for doing a swapbuffers and possibly for other stuff
- * as yet to be determined.  Probably better not to make this a GLimp
- * function and instead do a call to GLimp_SwapBuffers.
- */
+/*
+** GLimp_EndFrame
+**
+** Responsible for doing a swapbuffers and possibly for other stuff
+** as yet to be determined.  Probably better not to make this a GLimp
+** function and instead do a call to GLimp_SwapBuffers.
+*/
 void GLimp_EndFrame (void)
 {
 	qglFlush();
 	qglXSwapBuffers(dpy, win);
 }
 
-/**
- * @brief
- * @sa
- */
+/*
+** GLimp_SetGamma
+*/
 void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] )
 {
 #ifdef HAVE_XF86_VIDMODE
@@ -1078,10 +1010,9 @@ void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned 
 #endif /* HAVE_XF86_VIDMODE */
 }
 
-/**
- * @brief
- * @sa
- */
-void GLimp_AppActivate( bool_t active )
+/*
+** GLimp_AppActivate
+*/
+void GLimp_AppActivate( qboolean active )
 {
 }

@@ -22,7 +22,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 
 See the GNU General Public License for more details.
 
@@ -45,6 +45,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* the "gameversion" client command will print this plus compile date */
 #define	GAMEVERSION	"baseufo"
+
+/* protocol bytes that can be directly added to messages */
+/*#define	svc_muzzleflash		1
+#define	svc_muzzleflash2	2
+#define	svc_temp_entity		3
+#define	svc_layout			4
+#define	svc_inventory		5
+#define	svc_stufftext		11*/
 
 /*================================================================== */
 
@@ -107,7 +115,7 @@ typedef struct {
 	/* items */
 	int num_items;
 
-	bool_t autosaved;
+	qboolean autosaved;
 } game_locals_t;
 
 /* this structure is cleared as each map is entered */
@@ -119,7 +127,7 @@ typedef struct {
 	char level_name[MAX_QPATH];	/* the descriptive name (Outer Base, etc) */
 	char mapname[MAX_QPATH];	/* the server name (base1, etc) */
 	char nextmap[MAX_QPATH];	/* go here when fraglimit is hit */
-	bool_t routed;
+	qboolean routed;
 
 	/* intermission state */
 	char *changemap;
@@ -131,11 +139,11 @@ typedef struct {
 	int activeTeam;
 	int nextEndRound;
 
-	uint8_t num_alive[MAX_TEAMS];
-	uint8_t num_spawned[MAX_TEAMS];
-	uint8_t num_spawnpoints[MAX_TEAMS];
-	uint8_t num_ugvspawnpoints[MAX_TEAMS];
-	uint8_t num_kills[MAX_TEAMS][MAX_TEAMS];
+	byte num_alive[MAX_TEAMS];
+	byte num_spawned[MAX_TEAMS];
+	byte num_spawnpoints[MAX_TEAMS];
+	byte num_ugvspawnpoints[MAX_TEAMS];
+	byte num_kills[MAX_TEAMS][MAX_TEAMS];
 } level_locals_t;
 
 
@@ -289,7 +297,7 @@ void Cmd_Score_f(edict_t * ent);
 
 
 /* g_utils.c */
-bool_t KillBox(edict_t * ent);
+qboolean KillBox(edict_t * ent);
 void G_ProjectSource(vec3_t point, vec3_t distance, vec3_t forward, vec3_t right, vec3_t result);
 edict_t *G_Find(edict_t * from, int fieldofs, char *match);
 edict_t *findradius(edict_t * from, vec3_t org, float rad);
@@ -332,18 +340,18 @@ void G_ClientTeamInfo(player_t * player);
 void G_ClientCommand(player_t * player);
 void G_ClientUserinfoChanged(player_t * player, char *userinfo);
 void G_ClientBegin(player_t * player);
-bool_t G_ClientConnect(player_t * player, char *userinfo);
+qboolean G_ClientConnect(player_t * player, char *userinfo);
 void G_ClientDisconnect(player_t * player);
 
 int G_TestVis(int team, edict_t * check, int flags);
 void G_ClientShoot(player_t * player, int num, pos3_t at, int type);
-void G_ClientMove(player_t * player, int team, int num, pos3_t to, bool_t stop);
+void G_ClientMove(player_t * player, int team, int num, pos3_t to, qboolean stop);
 void G_MoveCalc(int team, pos3_t from, int distance);
-bool_t G_ReactionFire(edict_t * target);
+qboolean G_ReactionFire(edict_t * target);
 
-float G_ActorVis(vec3_t from, edict_t *check, bool_t full);
+float G_ActorVis(vec3_t from, edict_t * check, qboolean full);
 void G_ClearVisFlags(int team);
-int G_CheckVis(edict_t * check, bool_t perish);
+int G_CheckVis(edict_t * check, qboolean perish);
 void G_GiveTimeUnits(int team);
 
 void G_AppearPerishEvent(int player_mask, int appear, edict_t * check);
@@ -358,7 +366,7 @@ player_t *AI_CreatePlayer(int team);
 
 /* g_svcmds.c */
 void ServerCommand(void);
-bool_t SV_FilterPacket(char *from);
+qboolean SV_FilterPacket(char *from);
 
 
 /* g_main.c */
@@ -386,8 +394,8 @@ typedef struct {
 	/* the number of the team for this player */
 	/* 0 is reserved for civilians and critters */
 	int team;
-	bool_t spectator;			/* client is a spectator */
-	bool_t ai;				/* client controlled by ai */
+	qboolean spectator;			/* client is a spectator */
+	qboolean ai;				/* client controlled by ai */
 
 	/* ai specific data */
 	edict_t *last;
@@ -397,19 +405,19 @@ typedef struct {
 /* except for 'client->pers' */
 struct player_s {
 	/* known to server */
-	bool_t inuse;
+	qboolean inuse;
 	int num;
 	int ping;
 
 	/* private to game */
-	bool_t spawned;
-	bool_t ready;
+	qboolean spawned;
+	qboolean ready;
 	client_persistant_t pers;
 };
 
 
 struct edict_s {
-	bool_t inuse;
+	qboolean inuse;
 	int linkcount;
 
 	int number;
@@ -446,7 +454,7 @@ struct edict_s {
 	int visflags;
 
 	pos3_t pos;
-	int dir;					/* direction the player looks at */
+	byte dir;					/* direction the player looks at */
 
 	int TU;						/* remaining timeunits */
 	int HP;						/* remaining healthpoints */

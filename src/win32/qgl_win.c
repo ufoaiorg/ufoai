@@ -3061,14 +3061,14 @@ void QGL_Shutdown( void )
 ** might be.
 **
 */
-bool_t QGL_Init( const char *dllname )
+qboolean QGL_Init( const char *dllname )
 {
 	if ( ( glw_state.hinstOpenGL = LoadLibrary( dllname ) ) == 0 ) {
 		char *buf = NULL;
 
 		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) &buf, 0, NULL);
 		ri.Con_Printf( PRINT_ALL, "%s\n", buf );
-		return false;
+		return qfalse;
 	}
 
 	qglAccum                     = dllAccum = GPA( "glAccum" );
@@ -3437,13 +3437,15 @@ bool_t QGL_Init( const char *dllname )
 	qglSelectTextureSGIS = 0;
 	qglMTexCoord2fSGIS = 0;
 
-	return true;
+	return qtrue;
 }
 
-void GLimp_EnableLogging( bool_t enable )
+void GLimp_EnableLogging( qboolean enable )
 {
-	if ( enable ) {
-		if ( !glw_state.log_fp ) {
+	if ( enable )
+	{
+		if ( !glw_state.log_fp )
+		{
 			struct tm *newtime;
 			time_t aclock;
 			char buffer[1024];
@@ -3795,7 +3797,9 @@ void GLimp_EnableLogging( bool_t enable )
 		qglVertex4sv                 = 	logVertex4sv                 ;
 		qglVertexPointer             = 	logVertexPointer             ;
 		qglViewport                  = 	logViewport                  ;
-	} else {
+	}
+	else
+	{
 		qglAccum                     = dllAccum;
 		qglAlphaFunc                 = dllAlphaFunc;
 		qglAreTexturesResident       = dllAreTexturesResident;

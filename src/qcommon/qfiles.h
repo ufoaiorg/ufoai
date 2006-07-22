@@ -18,8 +18,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-/**
- * @file qfiles.h: quake file formats
+/** 
+ * qfiles.h: quake file formats
  * This file must be identical in the quake and utils directories
  */
 
@@ -139,8 +139,8 @@ typedef struct {
 } dtriangle_t;
 
 typedef struct {
-	uint8_t v[3];					/* scaled byte to fit in frame mins/maxs */
-	uint8_t lightnormalindex;
+	byte v[3];					/* scaled byte to fit in frame mins/maxs */
+	byte lightnormalindex;
 } dtrivertx_t;
 
 #define DTRIVERTX_V0   0
@@ -158,12 +158,12 @@ typedef struct {
 
 
 /* the glcmd format:
- * a positive integer starts a tristrip command, followed by that many
- * vertex structures.
- * a negative integer starts a trifan command, followed by -x vertexes
- * a zero indicates the end of the command list.
- * a vertex consists of a floating point s, a floating point t,
- * and an integer vertex index.
+ * a positive integer starts a tristrip command, followed by that many 
+ * vertex structures. 
+ * a negative integer starts a trifan command, followed by -x vertexes 
+ * a zero indicates the end of the command list. 
+ * a vertex consists of a floating point s, a floating point t, 
+ * and an integer vertex index. 
  */
 
 
@@ -370,7 +370,7 @@ typedef struct {
 
 /* contents flags are seperate bits
  * a given brush can contribute multiple content bits
- * multiple brushes can be in a single leaf
+ * multiple brushes can be in a single leaf 
  */
 
 /* these definitions also need to be in q_shared.h! */
@@ -458,7 +458,7 @@ typedef struct {
 	short texinfo;
 
 /* lighting info */
-	uint8_t styles[MAXLIGHTMAPS];
+	byte styles[MAXLIGHTMAPS];
 	int lightofs;				/* start of [numstyles*surfsize] samples */
 } dface_t;
 

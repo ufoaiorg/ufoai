@@ -114,7 +114,7 @@ void B_SetSensor(void)
 		gd.bases[i].sensorWidth -= amount;
 		if (gd.bases[i].sensorWidth < 0) {
 			gd.bases[i].sensorWidth = 0;
-			gd.bases[i].drawSensor = false;
+			gd.bases[i].drawSensor = qfalse;
 		}
 	}
 }
@@ -276,18 +276,18 @@ static void B_RemoveBuilding(void)
 /**
  * @brief Checks whether you have enough credits to build this building
  * @param costs buildcosts of the building
- * @return bool_t true - enough credits
- * @return bool_t false - not enough credits
+ * @return qboolean true - enough credits
+ * @return qboolean false - not enough credits
  *
  * @sa B_ConstructBuilding
  * @sa B_NewBuilding
  * Checks whether the given costs are bigger than the current available credits
  */
-static bool_t B_CheckCredits( int costs )
+static qboolean B_CheckCredits( int costs )
 {
 	if (costs > ccs.credits)
-		return false;
-	return true;
+		return qfalse;
+	return qtrue;
 }
 
 /**
@@ -295,24 +295,24 @@ static bool_t B_CheckCredits( int costs )
  *
  * @sa B_CheckCredits
  * @sa CL_UpdateCredits
- * @return bool_t
+ * @return qboolean
  *
  * Checks whether the player has enough credits to construct the current selected
  * building before starting construction.
  */
-static bool_t B_ConstructBuilding(void)
+static qboolean B_ConstructBuilding(void)
 {
 	building_t *building_to_build = NULL;
 
 	/*maybe someone call this command before the buildings are parsed?? */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
-		return false;
+		return qfalse;
 
 	/*enough credits to build this? */
 	if ( !B_CheckCredits(baseCurrent->buildingCurrent->fixCosts) ) {
 		Com_DPrintf("B_ConstructBuilding: Not enough credits to build: '%s'\n", baseCurrent->buildingCurrent->id);
 		B_ResetBuildingCurrent();
-		return false;
+		return qfalse;
 	}
 
 	Com_DPrintf("Construction of %s is starting\n", baseCurrent->buildingCurrent->id);
@@ -328,7 +328,7 @@ static bool_t B_ConstructBuilding(void)
 	baseCurrent->buildingCurrent->timeStart = ccs.date.day;
 
 	CL_UpdateCredits(ccs.credits - baseCurrent->buildingCurrent->fixCosts);
-	return true;
+	return qtrue;
 }
 
 /**
@@ -700,7 +700,7 @@ void B_BuildingClick_f(void)
  * @param[in] text TODO: document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
  * @param[in] link Bool value that decides whether to link the tech pointer in or not
  */
-void B_ParseBuildings(char *id, char **text, bool_t link)
+void B_ParseBuildings(char *id, char **text, qboolean link)
 {
 	building_t *building = NULL;
 	building_t *dependsBuilding = NULL;
@@ -736,7 +736,7 @@ void B_ParseBuildings(char *id, char **text, bool_t link)
 		building->base_idx = -1;
 		building->tech = -1;
 		building->dependsBuilding = -1;
-		building->visible = true;
+		building->visible = qtrue;
 
 		gd.numBuildingTypes++;
 		do {
@@ -993,17 +993,17 @@ building_t *B_GetUnusedLab(int base_idx)
 	int i, j;
 	building_t *building = NULL;
 	technology_t *tech = NULL;
-	bool_t used = false;
+	qboolean used = qfalse;
 
 	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
 		building = &gd.buildings[base_idx][i];
 		if (building->buildingType == B_LAB) {
-			used = false;
+			used = qfalse;
 			/* check in research tree if the lab is used */
 			for (j = 0; j < gd.numTechnologies; j++) {
 				tech = &gd.technologies[j];
 				if (tech->lab == building->idx) {
-					used = true;
+					used = qtrue;
 					break;
 				}
 			}
@@ -1027,19 +1027,19 @@ int B_GetUnusedLabs(int base_idx)
 	int i, j;
 	building_t *building = NULL;
 	technology_t *tech = NULL;
-	bool_t used = false;
+	qboolean used = qfalse;
 
 	int numFreeLabs = 0;
 
 	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
 		building = &gd.buildings[base_idx][i];
 		if (building->buildingType == B_LAB) {
-			used = false;
+			used = qfalse;
 			/* check in research tree if the lab is used */
 			for (j = 0; j < gd.numTechnologies; j++) {
 				tech = &gd.technologies[j];
 				if (tech->lab == building->idx) {
-					used = true;
+					used = qtrue;
 					break;
 				}
 			}
@@ -1101,9 +1101,9 @@ void B_ClearBuilding(building_t * building)
  * @brief Returns true if the employee is only assigned to quarters but not to labs and workshops.
  *
  * @param[in] employee The employee_t pointer to check
- * @return bool_t
+ * @return qboolean
  */
-bool_t B_EmployeeIsFree(employee_t * employee)
+qboolean B_EmployeeIsFree(employee_t * employee)
 {
 	return ((employee->lab < 0) && (employee->workshop < 0));
 }
@@ -1119,7 +1119,7 @@ bool_t B_EmployeeIsFree(employee_t * employee)
  * @sa B_RemoveEmployee
  * @return Returns true if adding was possible/sane otherwise false.
  */
-bool_t B_AssignEmployee(building_t * building_dest, employeeType_t employee_type)
+qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_type)
 {
 	int i, j;
 	employee_t *employee = NULL;
@@ -1129,12 +1129,12 @@ bool_t B_AssignEmployee(building_t * building_dest, employeeType_t employee_type
 
 	if (!baseCurrent) {
 		Com_DPrintf("B_AssignEmployee: No Base set\n");
-		return false;
+		return qfalse;
 	}
 
 	if (building_dest->buildingType == B_QUARTERS) {
 		Com_DPrintf("B_AssignEmployee: No need to move from quarters to quarters.\n");
-		return false;
+		return qfalse;
 	}
 
 	employees_in_building_dest = &building_dest->assigned_employees;
@@ -1161,14 +1161,14 @@ bool_t B_AssignEmployee(building_t * building_dest, employeeType_t employee_type
 		if (employee) {
 			employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee->idx;
 			employee->lab = building_dest->idx;
-			return true;
+			return qtrue;
 		} else {
 			Com_Printf("No employee available in this base.\n");
 		}
 	} else {
 		Com_Printf("No free room in destination building \"%s\".\n", building_dest->id);
 	}
-	return false;
+	return qfalse;
 }
 
 /**
@@ -1180,7 +1180,7 @@ bool_t B_AssignEmployee(building_t * building_dest, employeeType_t employee_type
  *
  * @return Returns true if adding was possible/sane otherwise false.
  */
-bool_t B_RemoveEmployee(building_t * building)
+qboolean B_RemoveEmployee(building_t * building)
 {
 	/* TODO
 	int i;
@@ -1190,14 +1190,14 @@ bool_t B_RemoveEmployee(building_t * building)
 
 	/* TODO
 	building_t *building_temp = NULL;
-	bool_t found = false;
+	qboolean found = qfalse;
 	*/
 
 	employees_in_building = &building->assigned_employees;
 
 	if (employees_in_building->numEmployees <= 0) {
 		Com_DPrintf("B_RemoveEmployee: No employees in building. Can't remove one. %s\n", building->id);
-		return false;
+		return qfalse;
 	}
 
 	/* Check where else (which buildings) the employee needs to be removed. */
@@ -1212,11 +1212,11 @@ bool_t B_RemoveEmployee(building_t * building)
 		if (employee->lab) {
 			building_temp = employee->lab;
 			employees_in_building = &building_temp->assigned_employees;
-			found = false;
+			found = qfalse;
 			for (i = 0; i < (employees_in_building->numEmployees - 1); i++) {
 				if ((employees_in_building->assigned[i] == employee) || found) {
 					employees_in_building->assigned[i] = employees_in_building->assigned[i + 1];
-					found = true;
+					found = qtrue;
 				}
 			}
 			if (found)
@@ -1228,7 +1228,7 @@ bool_t B_RemoveEmployee(building_t * building)
 		/*  if ( employee->workshop ) { */
 		/*  } */
 
-		return true;
+		return qtrue;
 		/*break; */
 #endif
 	case B_LAB:
@@ -1238,14 +1238,14 @@ bool_t B_RemoveEmployee(building_t * building)
 		/* unlink the employee from lab (the current building). */
 		employee->lab = -1;
 		Com_DPrintf("B_RemoveEmployee: %s 2\n", building->id);
-		return true;
+		return qtrue;
 		/* break; */
 #if 0
 		/* TODO */
 	case B_WORKSHOP:
 		/* unlink the employee from workshop (the current building). */
 		employee->workshop = NULL;
-		return true;
+		return qtrue;
 		break;
 		EMPL_MEDIC EMPL_ROBOT
 #endif
@@ -1253,7 +1253,7 @@ bool_t B_RemoveEmployee(building_t * building)
 		break;
 	}
 
-	return false;
+	return qfalse;
 }
 
 /**
@@ -1262,7 +1262,7 @@ bool_t B_RemoveEmployee(building_t * building)
  * You can choose (free_only) if you want the number of free employees or the total number.
  * If you call the function with employee_type set to MAX_EMPL it will return every type of employees.
  */
-int B_EmployeesInBase2(int base_idx, employeeType_t employee_type, bool_t free_only)
+int B_EmployeesInBase2(int base_idx, employeeType_t employee_type, qboolean free_only)
 {
 	int i, j;
 	int numEmployeesInBase = 0;
@@ -1300,7 +1300,7 @@ int B_EmployeesInBase2(int base_idx, employeeType_t employee_type, bool_t free_o
  */
 int B_EmployeesInBase(int base_idx, employeeType_t employee_type)
 {
-	return B_EmployeesInBase2(base_idx, employee_type, false);
+	return B_EmployeesInBase2(base_idx, employee_type, qfalse);
 }
 
 /**
@@ -1394,13 +1394,13 @@ void B_DrawBase(menuNode_t * node)
 {
 	float x, y;
 	int mx, my, width, height, row, col, time;
-	bool_t hover = false;
+	qboolean hover = qfalse;
 	static vec4_t color = { 0.5f, 1.0f, 0.5f, 1.0 };
 	char image[MAX_QPATH];
 	building_t *building = NULL, *secondBuilding = NULL, *hoverBuilding = NULL;
 
 	if (!baseCurrent)
-		Cbuf_ExecuteText("mn_pop", EXEC_NOW);
+		Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
 
 	width = node->size[0] / BASE_SIZE;
 	height = (node->size[1] + BASE_SIZE * 20) / BASE_SIZE;
@@ -1444,14 +1444,14 @@ void B_DrawBase(menuNode_t * node)
 			}
 
 			if (mx > x && mx < x + width && my > y && my < y + height - 20) {
-				hover = true;
+				hover = qtrue;
 				if (baseCurrent->map[row][col] >= 0)
 					hoverBuilding = building;
 			} else
-				hover = false;
+				hover = qfalse;
 
 			if (*image)
-				re.DrawNormPic(x, y, width, height, 0, 0, 0, 0, 0, false, image);
+				re.DrawNormPic(x, y, width, height, 0, 0, 0, 0, 0, qfalse, image);
 
 			/* only draw for first part of building */
 			if (building && !secondBuilding) {
@@ -1610,13 +1610,13 @@ void B_BuildBase(void)
 	assert(baseCurrent);
 
 	/* FIXME: This should not be here - but we only build bases in singleplayer */
-	ccs.singleplayer = true;
+	ccs.singleplayer = qtrue;
 
 	if (ccs.credits - BASE_COSTS > 0) {
 		if (CL_NewBase(newBasePos)) {
 			Com_DPrintf("B_BuildBase: numBases: %i\n", gd.numBases);
 			baseCurrent->idx = gd.numBases - 1;
-			baseCurrent->founded = true;
+			baseCurrent->founded = qtrue;
 			stats.basesBuild++;
 			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - BASE_COSTS);
@@ -1625,12 +1625,12 @@ void B_BuildBase(void)
 			Cvar_Set("mn_base_title", baseCurrent->name);
 			Cbuf_AddText("mn_push bases\n");
 			Q_strncpyz(messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string), MAX_MESSAGE_TEXT);
-			MN_AddNewMessage(_("Base built"), messageBuffer, false, MSG_CONSTRUCTION, NULL);
+			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			return;
 		}
 	} else {
 		Q_strncpyz(messageBuffer, _("Not enough credits to set up a new base."), MAX_MESSAGE_TEXT);
-		MN_AddNewMessage(_("Base built"), messageBuffer, false, MSG_CONSTRUCTION, NULL);
+		MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 	}
 }
 
@@ -1780,7 +1780,7 @@ static void B_BuildingList_f(void)
 	}
 
 	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-		if (base->founded == false)
+		if (base->founded == qfalse)
 			continue;
 
 		building = &gd.buildings[base->idx][i];
@@ -1845,8 +1845,8 @@ static void B_SetBaseTitle(void)
 	if (gd.numBases < MAX_BASES)
 		Cvar_Set("mn_base_title", gd.bases[gd.numBases].name);
 	else {
-		MN_AddNewMessage(_("Notice"), _("You've reached the base limit."), false, MSG_STANDARD, NULL);
-		MN_PopMenu(false);		/* remove the new base popup */
+		MN_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
+		MN_PopMenu(qfalse);		/* remove the new base popup */
 	}
 }
 
@@ -2044,7 +2044,7 @@ void B_UpdateBaseData(void)
 			newBuilding += new;
 			if (new) {
 				Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Construction of %s building finished in base %s."), b->name, gd.bases[i].name);
-				MN_AddNewMessage(_("Building finished"), messageBuffer, false, MSG_CONSTRUCTION, NULL);
+				MN_AddNewMessage(_("Building finished"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			}
 		}
 	}

@@ -26,7 +26,7 @@
 /*
 *  Initialize ALSA pcm device, and bind it to sndinfo.
 */
-bool_t ALSA_SNDDMA_Init(struct sndinfo *si);
+qboolean ALSA_SNDDMA_Init(struct sndinfo *si);
 
 /*
 *  Returns the current sample position, if sound is running.

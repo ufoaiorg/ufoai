@@ -67,10 +67,10 @@ typedef struct mission_s {
 	char onwin[MAX_VAR];
 	char onlose[MAX_VAR];
 	int ugv;					/* uncontrolled ground units (entity: info_ugv_start) */
-	bool_t active;			/* aircraft at place? */
-	bool_t storyRelated;		/* auto mission play disabled when true */
+	qboolean active;			/* aircraft at place? */
+	qboolean storyRelated;		/* auto mission play disabled when true */
 	vec2_t pos;
-	uint8_t mask[4];
+	byte mask[4];
 	int aliens, civilians;
 	int recruits;
 	int cr_win, cr_alien, cr_civilian;
@@ -89,7 +89,7 @@ typedef struct stageSet_s {
 	date_t expire;
 	int number;
 	int quota;
-	uint8_t numMissions;
+	byte numMissions;
 	int missions[MAX_SETMISSIONS];
 } stageSet_t;
 
@@ -101,7 +101,7 @@ typedef struct stage_s {
 typedef struct setState_s {
 	stageSet_t *def;
 	stage_t *stage;
-	uint8_t active;
+	byte active;
 	date_t start;
 	date_t event;
 	int num;
@@ -110,7 +110,7 @@ typedef struct setState_s {
 
 typedef struct stageState_s {
 	stage_t *def;
-	uint8_t active;
+	byte active;
 	date_t start;
 } stageState_t;
 
@@ -134,9 +134,9 @@ typedef struct campaign_s {
 	int ugvs;
 	int credits;
 	int num;
-	bool_t visible;
+	qboolean visible;
 	date_t date;
-	bool_t finished;
+	qboolean finished;
 } campaign_t;
 
 extern aircraft_t aircraft[MAX_AIRCRAFT];
@@ -170,7 +170,7 @@ typedef struct ccs_s {
 	int numMissions;
 	int numUfoOnGeoscape;
 
-	bool_t singleplayer;
+	qboolean singleplayer;
 
 	int credits;
 	int reward;
@@ -224,15 +224,15 @@ void AIR_LoadAircraft(sizebuf_t * sb, base_t * base, int version);
 aircraft_t *AIR_FindAircraft(char *aircraftName);
 
 char *CL_AircraftStatusToName(aircraft_t * air);
-bool_t CL_MapIsNight(vec2_t pos);
+qboolean CL_MapIsNight(vec2_t pos);
 void CL_ResetCampaign(void);
 void CL_ResetSinglePlayerData ( void );
 void CL_DateConvert(date_t * date, int *day, int *month);
 char *CL_DateGetMonthName(int month);
 void CL_CampaignRun(void);
 void CL_GameTimeStop(void);
-uint8_t *CL_GetmapColor(vec2_t pos);
-bool_t CL_NewBase(vec2_t pos);
+byte *CL_GetmapColor(vec2_t pos);
+qboolean CL_NewBase(vec2_t pos);
 void CL_ParseMission(char *name, char **text);
 void CL_ParseStage(char *name, char **text);
 void CL_ParseCampaign(char *name, char **text);
@@ -246,7 +246,7 @@ void CL_CollectAliens(mission_t * mission);
 void CL_CollectItems(int won);
 void CL_UpdateCharacterStats(int won);
 void CL_UpdateCredits(int credits);
-bool_t CL_OnBattlescape(void);
+qboolean CL_OnBattlescape(void);
 void CL_GameExit(void);
 void CL_GameInit (void);
 

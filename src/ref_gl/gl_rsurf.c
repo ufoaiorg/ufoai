@@ -51,18 +51,18 @@ typedef struct {
 
 	/* the lightmap texture data needs to be kept in */
 	/* main memory so texsubimage can update properly */
-	uint8_t lightmap_buffer[4 * BLOCK_WIDTH * BLOCK_HEIGHT];
+	byte lightmap_buffer[4 * BLOCK_WIDTH * BLOCK_HEIGHT];
 } gllightmapstate_t;
 
 static gllightmapstate_t gl_lms;
 
 
 static void LM_InitBlock(void);
-static void LM_UploadBlock(bool_t dynamic);
-static bool_t LM_AllocBlock(int w, int h, int *x, int *y);
+static void LM_UploadBlock(qboolean dynamic);
+static qboolean LM_AllocBlock(int w, int h, int *x, int *y);
 
 extern void R_SetCacheState(msurface_t * surf);
-extern void R_BuildLightMap(msurface_t * surf, uint8_t *dest, int stride);
+extern void R_BuildLightMap(msurface_t * surf, byte * dest, int stride);
 
 /*
 =============================================================
@@ -298,7 +298,7 @@ void R_BlendLightmaps(void)
 
 		for (surf = gl_lms.lightmap_surfaces[0]; surf != 0; surf = surf->lightmapchain) {
 			int smax, tmax;
-			uint8_t *base;
+			byte *base;
 
 			smax = (surf->extents[0] >> surf->lquant) + 1;
 			tmax = (surf->extents[1] >> surf->lquant) + 1;
@@ -312,7 +312,7 @@ void R_BlendLightmaps(void)
 				msurface_t *drawsurf;
 
 				/* upload what we have so far */
-				LM_UploadBlock(true);
+				LM_UploadBlock(qtrue);
 
 				/* draw all surfaces that use this lightmap */
 				for (drawsurf = newdrawsurf; drawsurf != surf; drawsurf = drawsurf->lightmapchain) {
@@ -342,7 +342,7 @@ void R_BlendLightmaps(void)
 		 ** draw remainder of dynamic lightmaps that haven't been uploaded yet
 		 */
 		if (newdrawsurf)
-			LM_UploadBlock(true);
+			LM_UploadBlock(qtrue);
 
 		for (surf = newdrawsurf; surf != 0; surf = surf->lightmapchain) {
 			if (surf->polys)
@@ -367,7 +367,7 @@ void R_RenderBrushPoly(msurface_t * fa)
 {
 	int maps;
 	image_t *image;
-	bool_t is_dynamic = false;
+	qboolean is_dynamic = qfalse;
 
 	c_brush_polys++;
 
@@ -407,7 +407,7 @@ void R_RenderBrushPoly(msurface_t * fa)
 	  dynamic:
 		if (gl_dynamic->value) {
 			if (!(fa->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66 | SURF_WARP)))
-				is_dynamic = true;
+				is_dynamic = qtrue;
 		}
 	}
 
@@ -528,7 +528,7 @@ void DrawTextureChains(void)
 			}
 		}
 
-		GL_EnableMultitexture(false);
+		GL_EnableMultitexture(qfalse);
 		for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
 			if (!image->registration_sequence)
 				continue;
@@ -555,7 +555,7 @@ static void GL_RenderLightmappedPoly(msurface_t * surf)
 	int map;
 	float *v;
 	image_t *image = R_TextureAnimation(surf->texinfo);
-	bool_t is_dynamic = false;
+	qboolean is_dynamic = qfalse;
 	unsigned lmtex = surf->lightmaptexturenum;
 	glpoly_t *p;
 
@@ -569,7 +569,7 @@ static void GL_RenderLightmappedPoly(msurface_t * surf)
 	  dynamic:
 		if (gl_dynamic->value) {
 			if (!(surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66 | SURF_WARP)))
-				is_dynamic = true;
+				is_dynamic = qtrue;
 		}
 	}
 
@@ -720,9 +720,9 @@ void R_DrawInlineBModel(void)
 			} else if (qglMTexCoord2fSGIS && !(psurf->flags & SURF_DRAWTURB)) {
 				GL_RenderLightmappedPoly(psurf);
 			} else {
-				GL_EnableMultitexture(false);
+				GL_EnableMultitexture(qfalse);
 				R_RenderBrushPoly(psurf);
-				GL_EnableMultitexture(true);
+				GL_EnableMultitexture(qtrue);
 			}
 		}
 	}
@@ -746,7 +746,7 @@ void R_DrawBrushModel(entity_t * e)
 {
 	vec3_t mins, maxs;
 	int i;
-	bool_t rotated;
+	qboolean rotated;
 
 /*	Com_Printf( "Brush model %i!\n", currentmodel->nummodelsurfaces ); */
 
@@ -757,13 +757,13 @@ void R_DrawBrushModel(entity_t * e)
 	gl_state.currenttextures[0] = gl_state.currenttextures[1] = -1;
 
 	if (e->angles[0] || e->angles[1] || e->angles[2]) {
-		rotated = true;
+		rotated = qtrue;
 		for (i = 0; i < 3; i++) {
 			mins[i] = e->origin[i] - currentmodel->radius;
 			maxs[i] = e->origin[i] + currentmodel->radius;
 		}
 	} else {
-		rotated = false;
+		rotated = qfalse;
 		VectorAdd(e->origin, currentmodel->mins, mins);
 		VectorAdd(e->origin, currentmodel->maxs, maxs);
 	}
@@ -793,14 +793,14 @@ void R_DrawBrushModel(entity_t * e)
 	e->angles[0] = -e->angles[0];	/* stupid quake bug */
 	e->angles[2] = -e->angles[2];	/* stupid quake bug */
 
-	GL_EnableMultitexture(true);
+	GL_EnableMultitexture(qtrue);
 	GL_SelectTexture(gl_texture0);
 	GL_TexEnv(GL_REPLACE);
 	GL_SelectTexture(gl_texture1);
 	GL_TexEnv(GL_MODULATE);
 
 	R_DrawInlineBModel();
-	GL_EnableMultitexture(false);
+	GL_EnableMultitexture(qfalse);
 
 	qglPopMatrix();
 }
@@ -926,7 +926,7 @@ void R_DrawWorld(mnode_t * nodes)
 	memset(gl_lms.lightmap_surfaces, 0, sizeof(gl_lms.lightmap_surfaces));
 
 	if (qglMTexCoord2fSGIS) {
-		GL_EnableMultitexture(true);
+		GL_EnableMultitexture(qtrue);
 
 		GL_SelectTexture(gl_texture0);
 		GL_TexEnv(GL_REPLACE);
@@ -941,7 +941,7 @@ void R_DrawWorld(mnode_t * nodes)
 
 		R_RecursiveWorldNode(nodes);
 
-		GL_EnableMultitexture(false);
+		GL_EnableMultitexture(qfalse);
 	} else {
 		R_RecursiveWorldNode(nodes);
 	}
@@ -1012,7 +1012,7 @@ static void LM_InitBlock(void)
 	memset(gl_lms.allocated, 0, sizeof(gl_lms.allocated));
 }
 
-static void LM_UploadBlock(bool_t dynamic)
+static void LM_UploadBlock(qboolean dynamic)
 {
 	int texture;
 	int height = 0;
@@ -1043,7 +1043,7 @@ static void LM_UploadBlock(bool_t dynamic)
 }
 
 /* returns a texture number and the position inside it */
-static bool_t LM_AllocBlock(int w, int h, int *x, int *y)
+static qboolean LM_AllocBlock(int w, int h, int *x, int *y)
 {
 	int i, j;
 	int best, best2;
@@ -1067,12 +1067,12 @@ static bool_t LM_AllocBlock(int w, int h, int *x, int *y)
 	}
 
 	if (best + h > BLOCK_HEIGHT)
-		return false;
+		return qfalse;
 
 	for (i = 0; i < w; i++)
 		gl_lms.allocated[*x + i] = best + h;
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -1153,7 +1153,7 @@ GL_CreateSurfaceLightmap
 void GL_CreateSurfaceLightmap(msurface_t * surf)
 {
 	int smax, tmax;
-	uint8_t *base;
+	byte *base;
 
 	if (surf->flags & SURF_DRAWTURB)
 		return;
@@ -1162,7 +1162,7 @@ void GL_CreateSurfaceLightmap(msurface_t * surf)
 	tmax = (surf->extents[1] >> surf->lquant) + 1;
 
 	if (!LM_AllocBlock(smax, tmax, &surf->light_s, &surf->light_t)) {
-		LM_UploadBlock(false);
+		LM_UploadBlock(qfalse);
 		LM_InitBlock();
 		if (!LM_AllocBlock(smax, tmax, &surf->light_s, &surf->light_t))
 			ri.Sys_Error(ERR_FATAL, "Consecutive calls to LM_AllocBlock(%d,%d) failed\n", smax, tmax);
@@ -1194,7 +1194,7 @@ void GL_BeginBuildingLightmaps(void)
 
 	r_framecount = 1;			/* no dlightcache */
 
-	GL_EnableMultitexture(true);
+	GL_EnableMultitexture(qtrue);
 	GL_SelectTexture(gl_texture1);
 
 	/*
@@ -1256,7 +1256,7 @@ GL_EndBuildingLightmaps
 */
 void GL_EndBuildingLightmaps(void)
 {
-	LM_UploadBlock(false);
-	GL_EnableMultitexture(false);
+	LM_UploadBlock(qfalse);
+	GL_EnableMultitexture(qfalse);
 /*	ri.Con_Printf( PRINT_ALL, "lightmaps: %i\n", gl_lms.current_lightmap_texture ); */
 }

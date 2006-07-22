@@ -87,7 +87,7 @@
 #define UFO_Calloc(v, s) if (!(v = z_calloc(s))) Com_Error(ERR_FATAL, "calloc() failed allocation of %i bytes in __FILE__ at line __LINE__", s)
 #else
 #define UFO_Malloc(v, s) (v = z_malloc(s))
-#define UFO_Calloc(v, s) (v = z_calloc(s))
+#define UFO_Malloc(v, s) (v = z_calloc(s))
 #endif /* DEBUG */
 
 #define UFO_Free(p) (z_free(p))

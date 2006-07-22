@@ -59,11 +59,15 @@ void SV_BeginDemoserver(void)
 		Com_Error(ERR_DROP, "Couldn't open %s\n", name);
 }
 
-/**
- * @brief Sends the first message from the server to a connected client.
- * This will be sent on the initial connection and upon each server load.
- * Client reads via CL_ParseServerData in cl_parse.c
- */
+/*
+================
+SV_New_f
+
+Sends the first message from the server to a connected client.
+This will be sent on the initial connection and upon each server load.
+Client reads via CL_ParseServerData in cl_parse.c
+================
+*/
 void SV_New_f(void)
 {
 	char *gamedir;
@@ -84,8 +88,10 @@ void SV_New_f(void)
 		return;
 	}
 
+	/* */
 	/* serverdata needs to go over for all types of servers */
 	/* to make sure the protocol is right, and to set the gamedir */
+	/* */
 	gamedir = Cvar_VariableString("gamedir");
 
 	/* send the serverdata */
@@ -103,11 +109,11 @@ void SV_New_f(void)
 
 	/* send full levelname */
 	MSG_WriteString(&sv_client->netchan.message, sv.configstrings[CS_NAME]);
-	Com_DPrintf("CS_NAME: %s\n", sv.configstrings[CS_NAME]);
 
+	/* */
 	/* game server */
+	/* */
 	if (sv.state == ss_game) {
-		Com_DPrintf("fetchting configstring\n");
 		/* begin fetching configstrings */
 		MSG_WriteByte(&sv_client->netchan.message, svc_stufftext);
 		MSG_WriteString(&sv_client->netchan.message, va("cmd configstrings %i 0\n", svs.spawncount));
@@ -294,7 +300,7 @@ void SV_ExecuteUserCommand(char *s)
 {
 	ucmd_t *u;
 
-	Cmd_TokenizeString(s, false);
+	Cmd_TokenizeString(s, qfalse);
 	sv_player = sv_client->player;
 
 /*	SV_BeginRedirect (RD_CLIENT); */
@@ -314,13 +320,18 @@ void SV_ExecuteUserCommand(char *s)
 
 
 #define	MAX_STRINGCMDS	8
-/**
- * @brief The current net_message is parsed for the given client
- */
+/*
+===================
+SV_ExecuteClientMessage
+
+The current net_message is parsed for the given client
+===================
+*/
 void SV_ExecuteClientMessage(client_t * cl)
 {
 	int c;
 	char *s;
+
 	int stringCmdCount;
 
 	sv_client = cl;
@@ -331,17 +342,14 @@ void SV_ExecuteClientMessage(client_t * cl)
 
 	while (1) {
 		if (net_message.readcount > net_message.cursize) {
-			Com_Printf("SV_ExecuteClientMessage: badread, %Zu > %Zu\n", net_message.readcount, net_message.cursize);
+			Com_Printf("SV_ExecuteClientMessage: badread, %d > %d\n", net_message.readcount, net_message.cursize);
 			SV_DropClient(cl);
 			return;
 		}
 
-		Com_DPrintf("SV_ExecuteClientMessage: %Zu > %Zu\n", net_message.readcount, net_message.cursize);
-		c = MSG_ReadByte(&net_message, NULL);
-		if (c == -1) {
-			Com_DPrintf("End byte received\n");
+		c = MSG_ReadByte(&net_message);
+		if (c == -1)
 			break;
-		}
 
 		switch (c) {
 		default:
@@ -353,12 +361,12 @@ void SV_ExecuteClientMessage(client_t * cl)
 			break;
 
 		case clc_userinfo:
-			Q_strncpyz(cl->userinfo, MSG_ReadString(&net_message, NULL), sizeof(cl->userinfo));
+			Q_strncpyz(cl->userinfo, MSG_ReadString(&net_message), sizeof(cl->userinfo));
 			SV_UserinfoChanged(cl);
 			break;
 
 		case clc_stringcmd:
-			s = MSG_ReadString(&net_message, NULL);
+			s = MSG_ReadString(&net_message);
 
 			/* malicious users may try using too many string commands */
 			if (++stringCmdCount < MAX_STRINGCMDS)
@@ -384,6 +392,5 @@ void SV_ExecuteClientMessage(client_t * cl)
 			ge->ClientTeamInfo(sv_player);
 			break;
 		}
-		Com_DPrintf("SV_ExecuteClientMessage: %Zu > %Zu\n\n", net_message.readcount, net_message.cursize);
 	}
 }

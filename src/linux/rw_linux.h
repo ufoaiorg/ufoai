@@ -19,14 +19,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-typedef void (*Key_Event_fp_t)(int key, bool_t down);
+typedef void (*Key_Event_fp_t)(int key, qboolean down);
 
 extern void (*KBD_Update_fp)(void);
 extern void (*KBD_Init_fp)(Key_Event_fp_t fp);
 extern void (*KBD_Close_fp)(void);
 
-void RW_IN_PlatformInit(void);
-void RW_IN_Activate(bool_t active);
+void RW_IN_PlatformInit();
+void RW_IN_Activate();
 
 #define MOUSE_MAX 3000
 #define MOUSE_MIN 40

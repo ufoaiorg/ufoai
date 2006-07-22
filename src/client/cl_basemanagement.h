@@ -144,7 +144,7 @@ typedef struct building_s {
 	/*if we can build more than one building of the same type: */
 	buildingStatus_t buildingStatus;	/*[BASE_SIZE*BASE_SIZE]; */
 
-	bool_t visible;
+	qboolean visible;
 	/* needed for baseassemble */
 	/* when there are two tiles (like hangar) - we only load the first tile */
 	int used;
@@ -164,10 +164,10 @@ typedef struct building_s {
 	vec2_t pos;
 
 	/*autobuild when base is set up */
-	bool_t autobuild;
+	qboolean autobuild;
 
 	/*autobuild when base is set up */
-	bool_t firstbase;
+	qboolean firstbase;
 
 	/*this way we can rename the buildings without loosing the control */
 	buildingType_t buildingType;
@@ -249,7 +249,7 @@ typedef struct aircraft_s {
 	int time;
 	int idxInBase;				/* id in base */
 	int idxBase;				/* id of base */
-	uint8_t *teamSize;				/* how many soldiers on board */
+	int *teamSize;				/* how many soldiers on board */
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	/* TODO */
 	/* xxx teamShape;    // TODO: shape of the soldier-area onboard. */
@@ -274,12 +274,12 @@ typedef struct base_s {
 	char name[MAX_VAR];
 	int map[BASE_SIZE][BASE_SIZE];
 
-	bool_t founded;
+	qboolean founded;
 	vec2_t pos;
 
 	/* to decide which actions are available in the basemenu */
-	bool_t hasHangar;
-	bool_t hasLab;			/* TODO: still needed. */
+	qboolean hasHangar;
+	qboolean hasLab;			/* TODO: still needed. */
 
 	/*this is here to allocate the needed memory for the buildinglist */
 	char allBuildingsList[MAX_LIST_CHAR];
@@ -305,14 +305,14 @@ typedef struct base_s {
 	int teamMask[MAX_AIRCRAFT];	/* assigned to a specific aircraft */
 	int deathMask;
 
-	uint8_t numHired;
-	uint8_t numOnTeam[MAX_AIRCRAFT];
-	uint8_t numWholeTeam;			/* available soldiers in this base */
+	int numHired;
+	int numOnTeam[MAX_AIRCRAFT];
+	int numWholeTeam;			/* available soldiers in this base */
 
 	/* the onconstruct value of the buliding */
 	/* building_radar increases the sensor width */
 	int sensorWidth;			/* radar radius */
-	bool_t drawSensor;		/* ufo in range? */
+	qboolean drawSensor;		/* ufo in range? */
 
 	/* equipment that each team carries */
 	inventory_t teamInv[MAX_WHOLETEAM];
@@ -328,7 +328,7 @@ typedef struct base_s {
 
 	int equipType;
 	/* unified character id (base dependent) */
-	uint8_t nextUCN;
+	int nextUCN;
 
 	/* needed if there is another buildingpart to build (link to gd.buildingTypes) */
 	int buildingToBuild;
@@ -356,10 +356,10 @@ int B_GetNumOnTeam(void);
 building_t *B_GetUnusedLab(int base_id);
 int B_GetUnusedLabs(int base_id);
 void B_ClearBuilding(building_t * building);
-int B_EmployeesInBase2(int base_id, employeeType_t employee_type, bool_t free_only);
-bool_t B_RemoveEmployee(building_t * building);
-bool_t B_AssignEmployee(building_t * building_dest, employeeType_t employee_type);
-void B_ParseBuildings(char *id, char **text, bool_t link);
+int B_EmployeesInBase2(int base_id, employeeType_t employee_type, qboolean free_only);
+qboolean B_RemoveEmployee(building_t * building);
+qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_type);
+void B_ParseBuildings(char *id, char **text, qboolean link);
 void B_ParseBases(char *title, char **text);
 void B_BuildingInit(void);
 void B_AssembleMap(void);

@@ -49,6 +49,6 @@ void IN_GetMousePos(int *mx, int *my);
 
 /* add additional movement on top of the keyboard move cmd */
 
-void IN_Activate(bool_t active);
+void IN_Activate(qboolean active);
 
 #endif /* CLIENT_INPUT_H */

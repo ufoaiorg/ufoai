@@ -86,7 +86,7 @@ void SV_DropClient(client_t * drop)
 		ge->ClientDisconnect(drop->player);
 	}
 
-	drop->player->inuse = false;
+	drop->player->inuse = qfalse;
 	drop->state = cs_zombie;	/* become free in a few seconds */
 	drop->name[0] = 0;
 }
@@ -252,9 +252,13 @@ void SVC_GetChallenge(void)
 	Netchan_OutOfBandPrint(NS_SERVER, net_from, "challenge %i", svs.challenges[i].challenge);
 }
 
-/**
- * @brief A connection request that did not come from the master
- */
+/*
+==================
+SVC_DirectConnect
+
+A connection request that did not come from the master
+==================
+*/
 void SVC_DirectConnect(void)
 {
 	char userinfo[MAX_INFO_STRING];
@@ -283,13 +287,11 @@ void SVC_DirectConnect(void)
 
 	challenge = atoi(Cmd_Argv(3));
 
-	Q_strncpyz(userinfo, Cmd_Argv(4), sizeof(userinfo));
+	strncpy(userinfo, Cmd_Argv(4), sizeof(userinfo) - 1);
+	userinfo[sizeof(userinfo) - 1] = 0;
 
 	/* force the IP key/value pair so the game can filter based on ip */
 	Info_SetValueForKey(userinfo, "ip", NET_AdrToString(net_from));
-
-	Com_DPrintf("port: %i, challenge: %i\n", qport, challenge);
-	Com_DPrintf("userinfo: %s\n", userinfo);
 
 	/* attractloop servers are ONLY for local clients */
 	if (sv.attractloop) {
@@ -353,7 +355,7 @@ void SVC_DirectConnect(void)
 	/* TODO: Check if the teamnum preference has already reached maxsoldiers */
 	/*       and reject connection if so */
 
-gotnewcl:
+  gotnewcl:
 	/* build a new connection */
 	/* accept the new client */
 	/* this is the only place a client_t is ever initialized */
@@ -362,7 +364,7 @@ gotnewcl:
 	playernum = newcl - svs.clients;
 	player = PLAYER_NUM(playernum);
 	newcl->player = player;
-	newcl->player->inuse = true;
+	newcl->player->inuse = qtrue;
 	newcl->player->num = playernum;
 	newcl->challenge = challenge;	/* save challenge for checksumming */
 
@@ -391,10 +393,9 @@ gotnewcl:
 	newcl->state = cs_connected;
 
 	SZ_Init(&newcl->datagram, newcl->datagram_buf, sizeof(newcl->datagram_buf));
-	newcl->datagram.allowoverflow = true;
+	newcl->datagram.allowoverflow = qtrue;
 	newcl->lastmessage = svs.realtime;	/* don't timeout */
 	newcl->lastconnect = svs.realtime;
-	Com_DPrintf("Connected\n");
 }
 
 int Rcon_Validate(void)
@@ -463,28 +464,28 @@ void SV_ConnectionlessPacket(void)
 	char *c;
 
 	MSG_BeginReading(&net_message);
-	MSG_ReadLong(&net_message, NULL);	/* skip the -1 marker */
+	MSG_ReadLong(&net_message);	/* skip the -1 marker */
 
-	s = MSG_ReadStringLine(&net_message, NULL);
+	s = MSG_ReadStringLine(&net_message);
 
-	Cmd_TokenizeString(s, false);
+	Cmd_TokenizeString(s, qfalse);
 
 	c = Cmd_Argv(0);
 	Com_DPrintf("Packet %s : %s\n", NET_AdrToString(net_from), c);
 
-	if (!Q_strcmp(c, "ping"))
+	if (!strcmp(c, "ping"))
 		SVC_Ping();
-	else if (!Q_strcmp(c, "ack"))
+	else if (!strcmp(c, "ack"))
 		SVC_Ack();
-	else if (!Q_strcmp(c, "status"))
+	else if (!strcmp(c, "status"))
 		SVC_Status();
-	else if (!Q_strcmp(c, "info"))
+	else if (!strcmp(c, "info"))
 		SVC_Info();
-	else if (!Q_strcmp(c, "getchallenge"))
+	else if (!strcmp(c, "getchallenge"))
 		SVC_GetChallenge();
-	else if (!Q_strcmp(c, "connect"))
+	else if (!strcmp(c, "connect"))
 		SVC_DirectConnect();
-	else if (!Q_strcmp(c, "rcon"))
+	else if (!strcmp(c, "rcon"))
 		SVC_RemoteCommand();
 	else
 		Com_Printf("bad connectionless packet from %s:\n%s\n", NET_AdrToString(net_from), s);
@@ -576,7 +577,7 @@ void SV_ReadPackets(void)
 {
 	int i;
 	client_t *cl;
-	int16_t qport;
+	int qport;
 
 	while (NET_GetPacket(NS_SERVER, &net_from, &net_message)) {
 		/* check for connectionless packet (0xffffffff) first */
@@ -588,9 +589,9 @@ void SV_ReadPackets(void)
 		/* read the qport out of the message so we can fix up */
 		/* stupid address translating routers */
 		MSG_BeginReading(&net_message);
-		MSG_ReadLong(&net_message, NULL);	/* sequence number */
-		MSG_ReadLong(&net_message, NULL);	/* sequence number */
-		qport = MSG_ReadShort(&net_message, NULL) & 0xffff;
+		MSG_ReadLong(&net_message);	/* sequence number */
+		MSG_ReadLong(&net_message);	/* sequence number */
+		qport = MSG_ReadShort(&net_message) & 0xffff;
 
 		/* check for packets from connected clients */
 		for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++) {
@@ -911,7 +912,7 @@ not just stuck on the outgoing message list, because the server is going
 to totally exit after returning from this function.
 ==================
 */
-void SV_FinalMessage(char *message, bool_t reconnect)
+void SV_FinalMessage(char *message, qboolean reconnect)
 {
 	int i;
 	client_t *cl;
@@ -948,7 +949,7 @@ Called when each game quits,
 before Sys_Quit or Sys_Error
 ================
 */
-void SV_Shutdown(char *finalmsg, bool_t reconnect)
+void SV_Shutdown(char *finalmsg, qboolean reconnect)
 {
 	if (svs.clients)
 		SV_FinalMessage(finalmsg, reconnect);

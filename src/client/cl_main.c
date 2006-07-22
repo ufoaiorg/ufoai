@@ -146,10 +146,10 @@ void Cmd_ForwardToServer(void)
 	}
 
 	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-	SZ_WriteString(&cls.netchan.message, cmd);
+	SZ_Print(&cls.netchan.message, cmd);
 	if (Cmd_Argc() > 1) {
-		SZ_WriteString(&cls.netchan.message, " ");
-		SZ_WriteString(&cls.netchan.message, Cmd_Args());
+		SZ_Print(&cls.netchan.message, " ");
+		SZ_Print(&cls.netchan.message, Cmd_Args());
 	}
 }
 
@@ -197,7 +197,7 @@ void CL_ForwardToServer_f(void)
 	/* don't forward the first argument */
 	if (Cmd_Argc() > 1) {
 		MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-		SZ_WriteString(&cls.netchan.message, Cmd_Args());
+		SZ_Print(&cls.netchan.message, Cmd_Args());
 	}
 }
 
@@ -265,7 +265,7 @@ void CL_SendConnectPacket(void)
 		adr.port = BigShort(PORT_SERVER);
 
 	port = Cvar_VariableValue("qport");
-	userinfo_modified = false;
+	userinfo_modified = qfalse;
 
 	Netchan_OutOfBandPrint(NS_CLIENT, adr, "connect %i %i %i \"%s\"\n", PROTOCOL_VERSION, port, cls.challenge, Cvar_Userinfo());
 }
@@ -333,14 +333,14 @@ void CL_Connect_f(void)
 
 	/* if running a local server, kill it and reissue */
 	if (Com_ServerState())
-		SV_Shutdown("Server quit\n", false);
+		SV_Shutdown("Server quit\n", qfalse);
 	else
 		CL_Disconnect();
 
 	server = Cmd_Argv(1);
 
 	/* allow remote */
-	NET_Config(true);
+	NET_Config(qtrue);
 
 	CL_Disconnect();
 
@@ -375,7 +375,7 @@ void CL_Rcon_f(void)
 	message[4] = 0;
 
 	/* allow remote */
-	NET_Config(true);
+	NET_Config(qtrue);
 
 	Q_strcat(message, "rcon ", sizeof(message));
 
@@ -433,7 +433,7 @@ void CL_ClearState(void)
   */
 void CL_Disconnect(void)
 {
-	uint8_t final[32];
+	byte final[32];
 
 	if (cls.state == ca_disconnected)
 		return;
@@ -450,7 +450,7 @@ void CL_Disconnect(void)
 
 	/* go to main menu and bring up console */
 	if (!ccs.singleplayer) {
-		MN_PopMenu(true);
+		MN_PopMenu(qtrue);
 		MN_PushMenu(mn_main->string);
 	}
 	cls.connect_time = 0;
@@ -500,7 +500,7 @@ void CL_Packet_f(void)
 	}
 
 	/* allow remote */
-	NET_Config(true);
+	NET_Config(qtrue);
 
 	if (!NET_StringToAdr(Cmd_Argv(1), &adr)) {
 		Com_Printf("Bad address\n");
@@ -579,7 +579,7 @@ int serverListLength;
 netadr_t serverList[MAX_SERVERLIST];
 void CL_ParseStatusMessage(void)
 {
-	char *s = MSG_ReadString(&net_message, NULL);
+	char *s = MSG_ReadString(&net_message);
 
 	Com_DPrintf("CL_ParseStatusMessage: %s\n", s);
 
@@ -599,7 +599,7 @@ void CL_ParseStatusMessage(void)
 static char serverInfoText[MAX_MESSAGE_TEXT];
 void CL_ParseServerInfoMessage(void)
 {
-	char *s = MSG_ReadString(&net_message, NULL);
+	char *s = MSG_ReadString(&net_message);
 	char *var = NULL;
 	char *value = NULL;
 
@@ -796,7 +796,7 @@ void CL_PingServers_f(void)
 
 	menuText[TEXT_LIST] = NULL;
 
-	NET_Config(true);			/* allow remote */
+	NET_Config(qtrue);			/* allow remote */
 
 	/* send a broadcast packet */
 	Com_DPrintf("pinging broadcast...\n");
@@ -830,11 +830,11 @@ void CL_ConnectionlessPacket(void)
 	char *c;
 
 	MSG_BeginReading(&net_message);
-	MSG_ReadLong(&net_message, NULL);	/* skip the -1 */
+	MSG_ReadLong(&net_message);	/* skip the -1 */
 
-	s = MSG_ReadStringLine(&net_message, NULL);
+	s = MSG_ReadStringLine(&net_message);
 
-	Cmd_TokenizeString(s, false);
+	Cmd_TokenizeString(s, qfalse);
 
 	c = Cmd_Argv(0);
 
@@ -866,7 +866,7 @@ void CL_ConnectionlessPacket(void)
 			return;
 		}
 		Sys_AppActivate();
-		s = MSG_ReadString(&net_message, NULL);
+		s = MSG_ReadString(&net_message);
 		Cbuf_AddText(s);
 		Cbuf_AddText("\n");
 		return;
@@ -992,7 +992,7 @@ void CL_Precache_f(void)
 {
 	/* stop sound, back to the console */
 	S_StopAllSounds();
-	MN_PopMenu(true);
+	MN_PopMenu(qtrue);
 
 	CL_RegisterSounds();
 	CL_PrepRefresh();
@@ -1041,7 +1041,7 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
 	else if (!Q_strncmp(type, "up_chapters", 11))
 		UP_ParseUpChapters(name, text);
 	else if (!Q_strncmp(type, "building", 8))
-		B_ParseBuildings(name, text, false);
+		B_ParseBuildings(name, text, qfalse);
 	else if (!Q_strncmp(type, "tech", 4))
 		RS_ParseTechnologies(name, text);
 	else if (!Q_strncmp(type, "base", 4))
@@ -1049,10 +1049,10 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
 	else if (!Q_strncmp(type, "nation", 6))
 		CL_ParseNations(name, text);
 	else if (!Q_strncmp(type, "rank", 4))
-		CL_ParseMedalsAndRanks( name, text, true );
+		CL_ParseMedalsAndRanks( name, text, qtrue );
 #if 0
 	else if (!Q_strncmp(type, "medal", 5))
-		Com_ParseMedalsAndRanks( name, &text, false );
+		Com_ParseMedalsAndRanks( name, &text, qfalse );
 #endif
 }
 
@@ -1070,7 +1070,7 @@ void CL_ParseScriptSecond(char *type, char *name, char **text)
 	if (!Q_strncmp(type, "stage", 5))
 		CL_ParseStage(name, text);
 	else if (!Q_strncmp(type, "building", 8))
-		B_ParseBuildings(name, text, true);
+		B_ParseBuildings(name, text, qtrue);
 }
 
 /**
@@ -1184,7 +1184,7 @@ void CL_InitLocal(void)
 	cl_logevents = Cvar_Get("cl_logevents", "0", 0);
 
 	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0);
-	cl_worldlevel->modified = false;
+	cl_worldlevel->modified = qfalse;
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET);
 
 /*	cl_lightlevel = Cvar_Get ("r_lightlevel", "0", 0); */
@@ -1192,7 +1192,7 @@ void CL_InitLocal(void)
 	cl_numnames = Cvar_Get("cl_numnames", "19", CVAR_NOSET);
 
 	difficulty = Cvar_Get("difficulty", "-3", CVAR_ARCHIVE | CVAR_LATCH);
-	difficulty->modified = false;
+	difficulty->modified = qfalse;
 
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE);
 
@@ -1345,7 +1345,7 @@ void CL_SendCmd(void)
 	/* send a userinfo update if needed */
 	if (cls.state >= ca_connected) {
 		if (userinfo_modified) {
-			userinfo_modified = false;
+			userinfo_modified = qfalse;
 			MSG_WriteByte(&cls.netchan.message, clc_userinfo);
 			MSG_WriteString(&cls.netchan.message, Cvar_Userinfo());
 		}
@@ -1437,7 +1437,7 @@ void CL_CvarCheck(void)
 		for (; i < 8; i++)
 			Cbuf_AddText(va("disfloor%i\n", i));
 		Cbuf_AddText(va("selfloor%i\n", (int) cl_worldlevel->value));
-		cl_worldlevel->modified = false;
+		cl_worldlevel->modified = qfalse;
 	}
 
 	/* difficulty */
@@ -1477,17 +1477,17 @@ void CL_Frame(int msec)
 
 	if (sv_maxclients->modified) {
 		if ((int) sv_maxclients->value > 1) {
-			ccs.singleplayer = false;
+			ccs.singleplayer = qfalse;
 			Com_Printf("Changing to Multiplayer\n");
 			/* no campaign equipment but standard */
 			Cvar_Set("equip", "standard");
 			Cvar_Set("map_dropship", "craft_dropship");
 
 		} else {
-			ccs.singleplayer = true;
+			ccs.singleplayer = qtrue;
 			Com_Printf("Changing to Singleplayer\n");
 		}
-		sv_maxclients->modified = false;
+		sv_maxclients->modified = qfalse;
 	}
 
 	extratime += msec;
@@ -1647,13 +1647,13 @@ void CL_Init(void)
   */
 void CL_Shutdown(void)
 {
-	static bool_t isdown = false;
+	static qboolean isdown = qfalse;
 
 	if (isdown) {
 		printf("recursive shutdown\n");
 		return;
 	}
-	isdown = true;
+	isdown = qtrue;
 
 	CL_WriteConfiguration();
 	if (CL_VideoRecording())

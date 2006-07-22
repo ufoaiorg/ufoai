@@ -1,8 +1,3 @@
-/**
- * @file gl_mesh.c
- * @brief Triangle model functions
- */
-
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -22,6 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
+/* gl_mesh.c: triangle model functions */
 
 #include "gl_local.h"
 
@@ -87,13 +83,13 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp, int framenum, int
 	float *na;
 	float *oldNormal, *newNormal;
 
-	frame = (daliasframe_t *) ((uint8_t*) paliashdr + paliashdr->ofs_frames + framenum * paliashdr->framesize);
+	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + framenum * paliashdr->framesize);
 	verts = v = frame->verts;
 
-	oldframe = (daliasframe_t *) ((uint8_t*) paliashdr + paliashdr->ofs_frames + oldframenum * paliashdr->framesize);
+	oldframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + oldframenum * paliashdr->framesize);
 	ov = oldframe->verts;
 
-	order = (int *) ((uint8_t*) paliashdr + paliashdr->ofs_glcmds);
+	order = (int *) ((byte *) paliashdr + paliashdr->ofs_glcmds);
 
 	frontlerp = 1.0 - backlerp;
 
@@ -171,7 +167,7 @@ void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp, int framenum, int
 /*
 ** R_CullAliasModel
 */
-static bool_t R_CullAliasModel(entity_t * e)
+static qboolean R_CullAliasModel(entity_t * e)
 {
 	int i;
 	vec3_t mins, maxs;
@@ -181,13 +177,13 @@ static bool_t R_CullAliasModel(entity_t * e)
 	vec4_t bbox[8];
 
 	if (r_isometric->value)
-		return false;
+		return qfalse;
 
 	paliashdr = (dmdl_t *) currentmodel->extradata;
 
-	pframe = (daliasframe_t *) ((uint8_t*) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
+	pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
 
-	poldframe = (daliasframe_t *) ((uint8_t*) paliashdr + paliashdr->ofs_frames + e->as.oldframe * paliashdr->framesize);
+	poldframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.oldframe * paliashdr->framesize);
 
 	/*
 	 ** compute axially aligned mins and maxs
@@ -269,9 +265,9 @@ static bool_t R_CullAliasModel(entity_t * e)
 		}
 
 		if (aggregatemask)
-			return true;
+			return qtrue;
 
-		return false;
+		return qfalse;
 	}
 }
 
@@ -281,7 +277,7 @@ R_EnableLights
 
 =================
 */
-void R_EnableLights(bool_t fixed, float *matrix, float *lightparam, float *lightambient)
+void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lightambient)
 {
 	dlight_t *light;
 	vec3_t delta;
@@ -369,7 +365,7 @@ R_DrawAliasModel
 */
 void R_DrawAliasModel(entity_t * e)
 {
-	bool_t lightfixed;
+	qboolean lightfixed;
 	dmdl_t *paliashdr;
 	image_t *skin;
 
@@ -420,7 +416,7 @@ void R_DrawAliasModel(entity_t * e)
 	c_alias_polys += paliashdr->num_tris;
 
 	/* set-up lighting */
-	lightfixed = e->flags & RF_LIGHTFIXED ? true : false;
+	lightfixed = e->flags & RF_LIGHTFIXED ? qtrue : qfalse;
 	if (lightfixed)
 		R_EnableLights(lightfixed, e->lightcolor, e->lightparam, e->lightambient);
 	else
@@ -475,7 +471,6 @@ void R_DrawAliasModel(entity_t * e)
 	if ((e->flags & RF_TRANSLUCENT) || (skin && skin->has_alpha))
 		qglDisable(GL_BLEND);
 
-	/* TODO: Add blood if entity is dead - but not stunned */
 	if (gl_shadows->value == 1 && (e->flags & RF_SHADOW)) {
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(0);
@@ -586,7 +581,7 @@ void R_TransformModelDirect(modelInfo_t * mi)
 
 		/* get model data */
 		paliashdr = (dmdl_t *) mi->model->extradata;
-		pframe = (daliasframe_t *) ((uint8_t*) paliashdr + paliashdr->ofs_frames);
+		pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames);
 
 		/* get center and scale */
 		for (max = 1.0, i = 0; i < 3; i++) {
@@ -679,7 +674,7 @@ void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, char *tagname)
 			for (i = 0; i < taghdr->num_tags; i++, name += MAX_TAGNAME)
 				if (!Q_strcmp(name, tagname)) {
 					/* found the tag (matrix) */
-					tag = (float *) ((uint8_t*) taghdr + taghdr->ofs_tags);
+					tag = (float *) ((byte *) taghdr + taghdr->ofs_tags);
 					tag += i * 16 * taghdr->num_frames;
 
 					/* do interpolation */

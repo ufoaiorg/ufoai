@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 float scr_con_current;			/* aproaches scr_conlines at scr_conspeed */
 float scr_conlines;				/* 0.0 to 1.0 lines of console to display */
 
-bool_t scr_initialized;		/* ready to draw */
+qboolean scr_initialized;		/* ready to draw */
 
 int scr_draw_loading;
 
@@ -356,7 +356,7 @@ void SCR_Init(void)
 
 	SCR_TouchPics();
 
-	scr_initialized = true;
+	scr_initialized = qtrue;
 }
 
 
@@ -405,7 +405,7 @@ void SCR_DrawLoading(void)
 	if (!scr_draw_loading)
 		return;
 
-	scr_draw_loading = false;
+	scr_draw_loading = qfalse;
 	re.DrawGetPicSize(&w, &h, "loading");
 	re.DrawPic((viddef.width - w) / 2, (viddef.height - h) / 2, "loading");
 }
@@ -422,7 +422,7 @@ void SCR_DrawCursor(void)
 		return;
 
 	if (cursor->modified) {
-		cursor->modified = false;
+		cursor->modified = qfalse;
 		SCR_TouchPics();
 	}
 
@@ -430,13 +430,13 @@ void SCR_DrawCursor(void)
 		return;
 
 	if (mouseSpace != MS_DRAG) {
-		re.DrawNormPic(mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, cursor_pic);
+		re.DrawNormPic(mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
 
 		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
 			if (cls.team != cl.actTeam)
-				re.DrawNormPic(mx + 16, my + 16, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "wait");
+				re.DrawNormPic(mx + 16, my + 16, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait");
 			else if (selActor && selActor->state & STATE_CROUCHED)
-				re.DrawNormPic(mx + 16, my + 16, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "ducked");
+				re.DrawNormPic(mx + 16, my + 16, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
 		}
 	} else {
 		vec3_t scale = { 3.5, 3.5, 3.5 };
@@ -529,7 +529,7 @@ SCR_BeginLoadingPlaque
 void SCR_BeginLoadingPlaque(void)
 {
 	S_StopAllSounds();
-	cl.sound_prepped = false;	/* don't play ambients */
+	cl.sound_prepped = qfalse;	/* don't play ambients */
 	CDAudio_Stop();
 	if (developer->value)
 		return;
@@ -566,10 +566,11 @@ void SCR_Loading_f(void)
 	SCR_BeginLoadingPlaque();
 }
 
-/**
- * @brief
- * @sa R_RenderFrame
- */
+/*
+================
+SCR_TimeRefresh_f
+================
+*/
 void SCR_TimeRefresh_f(void)
 {
 	int i;

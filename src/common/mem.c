@@ -43,9 +43,11 @@ typedef struct zhead_s {
 	size_t size; /**< @brief The size of the block allocated. */
 } zhead_t;
 
+#ifdef MEMDEBUG
 static zhead_t z_chain;
 static int32_t z_count = 0;
 static int32_t z_bytes = 0;
+#endif /* MEMDEBUG */
 
 /**
  * @brief Initialises the memory sub-system.
@@ -65,7 +67,7 @@ void *Z_TagMalloc(size_t size, uint16_t tag)
 	zhead_t *z;
 
 	size = size + sizeof(zhead_t);
-	z = (zhead_t*)calloc(size, 1);
+	z = calloc(size, 1);
 	if (z) {
 		z_count++;
 		z_bytes += size;

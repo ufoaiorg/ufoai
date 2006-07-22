@@ -25,7 +25,7 @@ vec4_t s_lerped[MAX_VERTS];
 vec3_t shadevector;
 float shadelight[3];
 
-extern bool_t nolight;
+extern qboolean nolight;
 int c_shadow_volumes = 0;
 int worldlight = 0;
 
@@ -70,7 +70,7 @@ void vectoangles(vec3_t value1, vec3_t angles)
 	angles[ROLL] = 0;
 }
 
-bool_t nolight;
+qboolean nolight;
 void R_ShadowLight(vec3_t pos, vec3_t lightAdd)
 {
 	int i;
@@ -80,7 +80,7 @@ void R_ShadowLight(vec3_t pos, vec3_t lightAdd)
 	vec3_t dist;
 	vec3_t angle;
 
-	nolight = false;
+	nolight = qfalse;
 	VectorClear(lightAdd);		/* clear planar shadow vector */
 
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
@@ -107,7 +107,7 @@ void R_ShadowLight(vec3_t pos, vec3_t lightAdd)
 	if (shadowdist <= 0) {
 		/* old style static shadow */
 		/* scaled nolight shadow */
-		nolight = true;
+		nolight = qtrue;
 		return;
 	} else {
 		/* shadow from dynamic lights */
@@ -155,11 +155,11 @@ void GL_DrawAliasShadow(entity_t * e, dmdl_t * paliashdr, int posenum)
 
 	lheight = currententity->origin[2];
 
-	frame = (daliasframe_t *) ((uint8_t*) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
+	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
 
 	verts = frame->verts;
 	height = 0;
-	order = (int *) ((uint8_t*) paliashdr + paliashdr->ofs_glcmds);
+	order = (int *) ((byte *) paliashdr + paliashdr->ofs_glcmds);
 	height = -lheight;
 
 	if (nolight)
@@ -210,13 +210,13 @@ void BuildShadowVolume(dmdl_t * hdr, vec3_t light, float projectdistance)
 {
 	dtriangle_t *ot, *tris;
 	int i, j;
-	bool_t trianglefacinglight[MAX_TRIANGLES];
+	qboolean trianglefacinglight[MAX_TRIANGLES];
 	vec3_t v0, v1, v2, v3;
 
 	daliasframe_t *frame;
 	dtrivertx_t *verts;
 
-	frame = (daliasframe_t *) ((uint8_t*) hdr + hdr->ofs_frames + currententity->as.frame * hdr->framesize);
+	frame = (daliasframe_t *) ((byte *) hdr + hdr->ofs_frames + currententity->as.frame * hdr->framesize);
 	verts = frame->verts;
 
 	ot = tris = (dtriangle_t *) ((unsigned char *) hdr + hdr->ofs_tris);
@@ -363,13 +363,13 @@ void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm)
 
 	t = tris = (dtriangle_t *) ((unsigned char *) paliashdr + paliashdr->ofs_tris);
 
-	frame = (daliasframe_t *) ((uint8_t*) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
+	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
 	verts = frame->verts;
 
-	oldframe = (daliasframe_t *) ((uint8_t*) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
+	oldframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
 	ov = oldframe->verts;
 
-	order = (int *) ((uint8_t*) paliashdr + paliashdr->ofs_glcmds);
+	order = (int *) ((byte *) paliashdr + paliashdr->ofs_glcmds);
 
 	cost = cos(-currententity->angles[1] / 180 * M_PI), sint = sin(-currententity->angles[1] / 180 * M_PI);
 
@@ -387,7 +387,7 @@ void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm)
 
 /*	if (clamp) qglEnable(GL_DEPTH_CLAMP_NV); */
 
-	qglDepthMask(false);
+	qglDepthMask(qfalse);
 	qglStencilMask((GLuint) ~ 0);
 	qglDepthFunc(GL_LESS);
 
@@ -445,7 +445,7 @@ void GL_DrawAliasShadowVolume(dmdl_t * paliashdr, int posenumm)
 	else
 		qglColorMask(1, 1, 1, 1);
 
-	qglDepthMask(true);
+	qglDepthMask(qtrue);
 	qglDepthFunc(GL_LEQUAL);
 }
 
@@ -469,13 +469,13 @@ void R_DrawShadow(entity_t * e)
 
 	paliashdr = (dmdl_t *) currentmodel->extradata;
 
-	frame = (daliasframe_t *) ((uint8_t*) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
+	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
 	verts = v = frame->verts;
 
-	oldframe = (daliasframe_t *) ((uint8_t*) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
+	oldframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
 	ov = oldframe->verts;
 
-	order = (int *) ((uint8_t*) paliashdr + paliashdr->ofs_glcmds);
+	order = (int *) ((byte *) paliashdr + paliashdr->ofs_glcmds);
 
 	frontlerp = 1.0 - currententity->as.backlerp;
 
@@ -538,13 +538,13 @@ void R_DrawShadowVolume(entity_t * e)
 
 	paliashdr = (dmdl_t *) currentmodel->extradata;
 
-	frame = (daliasframe_t *) ((uint8_t*) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
+	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
 	verts = v = frame->verts;
 
-	oldframe = (daliasframe_t *) ((uint8_t*) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
+	oldframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
 	ov = oldframe->verts;
 
-	order = (int *) ((uint8_t*) paliashdr + paliashdr->ofs_glcmds);
+	order = (int *) ((byte *) paliashdr + paliashdr->ofs_glcmds);
 
 	frontlerp = 1.0 - currententity->as.backlerp;
 
@@ -605,7 +605,7 @@ void R_ShadowBlend(void)
 
 	qglDisable(GL_DEPTH_TEST);
 
-	qglDepthMask(false);
+	qglDepthMask(qfalse);
 
 	qglEnable(GL_STENCIL_TEST);
 
@@ -624,7 +624,7 @@ void R_ShadowBlend(void)
 
 	GLSTATE_DISABLE_BLEND qglEnable(GL_TEXTURE_2D);
 	GLSTATE_ENABLE_ALPHATEST qglDisable(GL_STENCIL_TEST);
-	qglDepthMask(true);
+	qglDepthMask(qtrue);
 
 	if (gl_shadow_debug_shade->value)
 		qglColor3f(1, 1, 1);

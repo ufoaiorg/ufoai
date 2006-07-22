@@ -33,10 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*=============================================================================== */
 
 byte *membase;
-size_t maxhunksize;
-size_t curhunksize;
+int maxhunksize;
+int curhunksize;
 
-void *Hunk_Begin (size_t maxsize)
+void *Hunk_Begin (int maxsize)
 {
 	/* reserve a huge chunk of memory, but don't commit any yet */
 	maxhunksize = maxsize;
@@ -48,7 +48,7 @@ void *Hunk_Begin (size_t maxsize)
 	return membase;
 }
 
-void *Hunk_Alloc (size_t size)
+void *Hunk_Alloc (int size)
 {
 	byte *buf;
 
@@ -117,7 +117,7 @@ static	char	findpath[MAX_OSPATH];
 static	char	findpattern[MAX_OSPATH];
 static	DIR		*fdir;
 
-static bool_t CompareAttributes(char *path, char *name,
+static qboolean CompareAttributes(char *path, char *name,
 	unsigned musthave, unsigned canthave )
 {
 	struct stat st;
@@ -125,19 +125,19 @@ static bool_t CompareAttributes(char *path, char *name,
 
 	/* . and .. never match */
 	if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0)
-		return false;
+		return qfalse;
 
 	Com_sprintf(fn, MAX_OSPATH, "%s/%s", path, name);
 	if (stat(fn, &st) == -1)
-		return false; /* shouldn't happen */
+		return qfalse; /* shouldn't happen */
 
 	if ( ( st.st_mode & S_IFDIR ) && ( canthave & SFF_SUBDIR ) )
-		return false;
+		return qfalse;
 
 	if ( ( musthave & SFF_SUBDIR ) && !( st.st_mode & S_IFDIR ) )
-		return false;
+		return qfalse;
 
-	return true;
+	return qtrue;
 }
 
 char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)

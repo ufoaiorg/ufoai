@@ -207,23 +207,37 @@ static void PF_WriteChar(int c)
 /**
   * @brief
   */
+#ifdef DEBUG
+static void PF_WriteByte(int c, char* file, int line)
+{
+	MSG_WriteByteDebug(&sv.multicast, c, file, line);
+}
+#else
 static void PF_WriteByte(int c)
 {
 	MSG_WriteByte(&sv.multicast, c);
 }
+#endif
 
 /**
   * @brief
   */
+#ifdef DEBUG
+static void PF_WriteShort(int c, char* file, int line)
+{
+	MSG_WriteShortDebug(&sv.multicast, c, file, line);
+}
+#else
 static void PF_WriteShort(int c)
 {
 	MSG_WriteShort(&sv.multicast, c);
 }
+#endif
 
 /**
   * @brief
   */
-static void PF_WriteLong(int32_t c)
+static void PF_WriteLong(int c)
 {
 	MSG_WriteLong(&sv.multicast, c);
 }
@@ -231,7 +245,7 @@ static void PF_WriteLong(int32_t c)
 /**
   * @brief
   */
-static void PF_WriteFloat(float32_t f)
+static void PF_WriteFloat(float f)
 {
 	MSG_WriteFloat(&sv.multicast, f);
 }
@@ -276,7 +290,7 @@ static void PF_WriteAngle(float f)
 	MSG_WriteAngle(&sv.multicast, f);
 }
 
-static uint8_t *pf_save;
+static byte *pf_save;
 /**
   * @brief
   */
@@ -297,41 +311,41 @@ static void PF_WriteToSave(int c)
 /**
   * @brief
   */
-static int PF_ReadChar(uint8_t* error)
+static int PF_ReadChar(void)
 {
-	return MSG_ReadChar(&net_message, error);
+	return MSG_ReadChar(&net_message);
 }
 
 /**
   * @brief
   */
-static int PF_ReadByte(uint8_t* error)
+static int PF_ReadByte(void)
 {
-	return MSG_ReadByte(&net_message, error);
+	return MSG_ReadByte(&net_message);
 }
 
 /**
   * @brief
   */
-static int PF_ReadShort(uint8_t* error)
+static int PF_ReadShort(void)
 {
-	return MSG_ReadShort(&net_message, error);
+	return MSG_ReadShort(&net_message);
 }
 
 /**
   * @brief
   */
-static int PF_ReadLong(uint8_t* error)
+static int PF_ReadLong(void)
 {
-	return MSG_ReadLong(&net_message, error);
+	return MSG_ReadLong(&net_message);
 }
 
 /**
   * @brief
   */
-static float PF_ReadFloat(uint8_t* error)
+static float PF_ReadFloat(void)
 {
-	return MSG_ReadFloat(&net_message, error);
+	return MSG_ReadFloat(&net_message);
 }
 
 /**
@@ -339,7 +353,7 @@ static float PF_ReadFloat(uint8_t* error)
   */
 static char *PF_ReadString(void)
 {
-	return MSG_ReadString(&net_message, NULL);
+	return MSG_ReadString(&net_message);
 }
 
 /**
@@ -347,7 +361,7 @@ static char *PF_ReadString(void)
   */
 static void PF_ReadPos(vec3_t pos)
 {
-	MSG_ReadPos(&net_message, NULL, pos);
+	MSG_ReadPos(&net_message, pos);
 }
 
 /**
@@ -355,7 +369,7 @@ static void PF_ReadPos(vec3_t pos)
   */
 static void PF_ReadGPos(pos3_t pos)
 {
-	MSG_ReadGPos(&net_message, NULL, pos);
+	MSG_ReadGPos(&net_message, pos);
 }
 
 /**
@@ -363,7 +377,7 @@ static void PF_ReadGPos(pos3_t pos)
   */
 static void PF_ReadDir(vec3_t vector)
 {
-	MSG_ReadDir(&net_message, NULL, vector);
+	MSG_ReadDir(&net_message, vector);
 }
 
 /**
@@ -371,7 +385,7 @@ static void PF_ReadDir(vec3_t vector)
   */
 static float PF_ReadAngle(void)
 {
-	return MSG_ReadAngle(&net_message, NULL);
+	return MSG_ReadAngle(&net_message);
 }
 
 /**
@@ -379,11 +393,11 @@ static float PF_ReadAngle(void)
   */
 static void PF_ReadData(void *buffer, int size)
 {
-	MSG_ReadData(&net_message, NULL, buffer, size);
+	MSG_ReadData(&net_message, buffer, size);
 }
 
 
-static bool_t pfe_pending = false;
+static qboolean pfe_pending = qfalse;
 static int pfe_mask = 0;
 
 /**
@@ -397,7 +411,7 @@ static void PF_EndEvents(void)
 	MSG_WriteByte(&sv.multicast, EV_NULL);
 	SV_Multicast(pfe_mask);
 /*	SV_SendClientMessages(); */
-	pfe_pending = false;
+	pfe_pending = qfalse;
 }
 
 /**
@@ -412,7 +426,7 @@ static void PF_AddEvent(int mask, int eType)
 			PF_EndEvents();
 
 		/* start the new event */
-		pfe_pending = true;
+		pfe_pending = qtrue;
 		pfe_mask = mask;
 		MSG_WriteByte(&sv.multicast, svc_event);
 	}

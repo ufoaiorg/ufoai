@@ -35,8 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GAME_GAME_H
 #define GAME_GAME_H
 
-#include "../common/ufotypes.h"
-
 #define	GAME_API_VERSION	4
 
 /* edict->svflags */
@@ -71,7 +69,7 @@ typedef struct player_s player_t;
 #ifndef GAME_INCLUDE
 
 struct player_s {
-	bool_t inuse;
+	qboolean inuse;
 	int num;					/* communicated by server to clients */
 	int ping;
 
@@ -81,7 +79,7 @@ struct player_s {
 
 
 struct edict_s {
-	bool_t inuse;
+	qboolean inuse;
 	int linkcount;
 
 	int number;
@@ -147,9 +145,9 @@ typedef struct {
 	int (*TestLine) (vec3_t start, vec3_t stop);
 	float (*GrenadeTarget) (vec3_t from, vec3_t at, vec3_t v0);
 
-	void (*MoveCalc) (struct routing_s * map, pos3_t from, int distance, uint8_t **fb_list, int fb_length);
+	void (*MoveCalc) (struct routing_s * map, pos3_t from, int distance, byte ** fb_list, int fb_length);
 	void (*MoveStore) (struct routing_s * map);
-	int (*MoveLength) (struct routing_s * map, pos3_t to, bool_t stored);
+	int (*MoveLength) (struct routing_s * map, pos3_t to, qboolean stored);
 	int (*MoveNext) (struct routing_s * map, pos3_t from);
 	int (*GridHeight) (struct routing_s * map, pos3_t pos);
 	int (*GridFall) (struct routing_s * map, pos3_t pos);
@@ -160,11 +158,21 @@ typedef struct {
 	void (*multicast) (int mask);
 	void (*unicast) (player_t * player);
 	void (*WriteChar) (int c);
-	void (*WriteByte) (int c);
-	void (*WriteShort) (int c);
 
-	void (*WriteLong) (int32_t c);
-	void (*WriteFloat) (float32_t f);
+#ifdef DEBUG
+	void (*WriteByte) (int c, char* file, int line);
+#else
+	void (*WriteByte) (int c);
+#endif
+
+#ifdef DEBUG
+	void (*WriteShort) (int c, char* file, int line);
+#else
+	void (*WriteShort) (int c);
+#endif
+
+	void (*WriteLong) (int c);
+	void (*WriteFloat) (float f);
 	void (*WriteString) (char *s);
 	void (*WritePos) (vec3_t pos);	/* some fractional bits */
 	void (*WriteGPos) (pos3_t pos);
@@ -183,11 +191,11 @@ typedef struct {
 	/* ClientAction */
 	/* (more to come?) */
 
-	int (*ReadChar) (uint8_t* error);
-	int (*ReadByte) (uint8_t* error);
-	int (*ReadShort) (uint8_t* error);
-	int (*ReadLong) (uint8_t* error);
-	float32_t (*ReadFloat) (uint8_t* error);
+	int (*ReadChar) (void);
+	int (*ReadByte) (void);
+	int (*ReadShort) (void);
+	int (*ReadLong) (void);
+	float (*ReadFloat) (void);
 	char *(*ReadString) (void);
 	void (*ReadPos) (vec3_t pos);
 	void (*ReadGPos) (pos3_t pos);
@@ -233,7 +241,7 @@ typedef struct {
 	/* each new level entered will cause a call to SpawnEntities */
 	void (*SpawnEntities) (char *mapname, char *entstring);
 
-	bool_t (*ClientConnect) (player_t * client, char *userinfo);
+	qboolean(*ClientConnect) (player_t * client, char *userinfo);
 	void (*ClientBegin) (player_t * client);
 	void (*ClientUserinfoChanged) (player_t * client, char *userinfo);
 	void (*ClientDisconnect) (player_t * client);

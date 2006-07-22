@@ -26,7 +26,7 @@ image_t gltextures[MAX_GLTEXTURES];
 int numgltextures;
 int base_textureid;				/* gltextures[i] = base_textureid+i */
 
-static uint8_t intensitytable[256];
+static byte intensitytable[256];
 static unsigned char gammatable[256];
 
 cvar_t *intensity;
@@ -34,8 +34,8 @@ extern cvar_t *gl_embossfilter;
 
 unsigned d_8to24table[256];
 
-bool_t GL_Upload8(uint8_t *data, int width, int height, bool_t mipmap, imagetype_t type);
-bool_t GL_Upload32(unsigned *data, int width, int height, bool_t mipmap, bool_t clamp, imagetype_t type);
+qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type);
+qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type);
 
 
 int gl_solid_format = GL_RGB;
@@ -47,7 +47,7 @@ int gl_compressed_alpha_format = 0;
 int gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
 int gl_filter_max = GL_LINEAR;
 
-void GL_EnableMultitexture(bool_t enable)
+void GL_EnableMultitexture(qboolean enable)
 {
 	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
 		return;
@@ -311,8 +311,8 @@ void GL_ImageList_f(void)
 #define	BLOCK_HEIGHT	256
 
 int scrap_allocated[MAX_SCRAPS][BLOCK_WIDTH];
-uint8_t scrap_texels[MAX_SCRAPS][BLOCK_WIDTH * BLOCK_HEIGHT];
-bool_t scrap_dirty;
+byte scrap_texels[MAX_SCRAPS][BLOCK_WIDTH * BLOCK_HEIGHT];
+qboolean scrap_dirty;
 
 /* returns a texture number and the position inside it */
 int Scrap_AllocBlock(int w, int h, int *x, int *y)
@@ -358,8 +358,8 @@ void Scrap_Upload(void)
 {
 	scrap_uploads++;
 	GL_Bind(TEXNUM_SCRAPS);
-	GL_Upload8(scrap_texels[0], BLOCK_WIDTH, BLOCK_HEIGHT, false, it_pic);
-	scrap_dirty = false;
+	GL_Upload8(scrap_texels[0], BLOCK_WIDTH, BLOCK_HEIGHT, qfalse, it_pic);
+	scrap_dirty = qfalse;
 }
 
 /*
@@ -376,14 +376,14 @@ PCX LOADING
 LoadPCX
 ==============
 */
-void LoadPCX(char *filename, uint8_t **pic, uint8_t **palette, int *width, int *height)
+void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, int *height)
 {
-	uint8_t *raw;
+	byte *raw;
 	pcx_t *pcx;
 	int x, y;
 	int len;
 	int dataByte, runLength;
-	uint8_t *out, *pix;
+	byte *out, *pix;
 
 	*pic = NULL;
 	*palette = NULL;
@@ -427,7 +427,7 @@ void LoadPCX(char *filename, uint8_t **pic, uint8_t **palette, int *width, int *
 
 	if (palette) {
 		*palette = malloc(768);
-		memcpy(*palette, (uint8_t*) pcx + len - 768, 768);
+		memcpy(*palette, (byte *) pcx + len - 768, 768);
 	}
 
 	if (width)
@@ -451,7 +451,7 @@ void LoadPCX(char *filename, uint8_t **pic, uint8_t **palette, int *width, int *
 
 	}
 
-	if (raw - (uint8_t*) pcx > len) {
+	if (raw - (byte *) pcx > len) {
 		ri.Con_Printf(PRINT_DEVELOPER, "PCX file %s was malformed", filename);
 		free(*pic);
 		*pic = NULL;
@@ -481,17 +481,17 @@ typedef struct _TargaHeader {
 LoadTGA
 =============
 */
-void LoadTGA(char *name, uint8_t **pic, int *width, int *height)
+void LoadTGA(char *name, byte ** pic, int *width, int *height)
 {
 	int columns, rows, numPixels;
-	uint8_t *pixbuf;
+	byte *pixbuf;
 	int row, column;
-	uint8_t *buf_p;
-	uint8_t *buffer;
+	byte *buf_p;
+	byte *buffer;
 	int length;
 	TargaHeader targa_header;
-	uint8_t *targa_rgba;
-	uint8_t tmp[2];
+	byte *targa_rgba;
+	byte tmp[2];
 
 	*pic = NULL;
 
@@ -700,7 +700,7 @@ void jpg_skip_input_data(j_decompress_ptr cinfo, long num_bytes)
 	cinfo->src->bytes_in_buffer -= (size_t) num_bytes;
 }
 
-void jpeg_mem_src(j_decompress_ptr cinfo, uint8_t *mem, int len)
+void jpeg_mem_src(j_decompress_ptr cinfo, byte * mem, int len)
 {
 	cinfo->src = (struct jpeg_source_mgr *) (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT, sizeof(struct jpeg_source_mgr));
 	cinfo->src->init_source = jpg_null;
@@ -717,11 +717,11 @@ void jpeg_mem_src(j_decompress_ptr cinfo, uint8_t *mem, int len)
 LoadJPG
 ==============
 */
-void LoadJPG(char *filename, uint8_t **pic, int *width, int *height)
+void LoadJPG(char *filename, byte ** pic, int *width, int *height)
 {
 	struct jpeg_decompress_struct cinfo;
 	struct jpeg_error_mgr jerr;
-	uint8_t *rawdata, *rgbadata, *scanline, *p, *q;
+	byte *rawdata, *rgbadata, *scanline, *p, *q;
 	int rawsize, i;
 
 	*pic = NULL;
@@ -747,7 +747,7 @@ void LoadJPG(char *filename, uint8_t **pic, int *width, int *height)
 	jpeg_mem_src(&cinfo, rawdata, rawsize);
 
 	/* Process JPEG header */
-	jpeg_read_header(&cinfo, true);
+	jpeg_read_header(&cinfo, qtrue);
 
 	/* Start Decompression */
 	jpeg_start_decompress(&cinfo);
@@ -817,7 +817,8 @@ void LoadJPG(char *filename, uint8_t **pic, int *width, int *height)
 /* Expanded data destination object for stdio output */
 typedef struct {
 	struct jpeg_destination_mgr pub;	/* public fields */
-	uint8_t *outfile;				/* target stream */
+
+	byte *outfile;				/* target stream */
 	int size;
 } my_destination_mgr;
 
@@ -886,7 +887,7 @@ boolean empty_output_buffer(j_compress_ptr cinfo)
  * The caller must have already opened the stream, and is responsible
  * for closing it after finishing compression.
  */
-void jpegDest(j_compress_ptr cinfo, uint8_t *outfile, int size)
+void jpegDest(j_compress_ptr cinfo, byte * outfile, int size)
 {
 	my_dest_ptr dest;
 
@@ -1021,7 +1022,7 @@ void SaveJPG(char *filename, int quality, int image_width, int image_height, uns
 SaveJPGToBuffer
 =================
 */
-int SaveJPGToBuffer(uint8_t *buffer, int quality, int image_width, int image_height, uint8_t *image_buffer)
+int SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_height, byte * image_buffer)
 {
 	struct jpeg_compress_struct cinfo;
 	struct jpeg_error_mgr jerr;
@@ -1119,9 +1120,9 @@ typedef struct {
 	else if (pos[off] != 255) fdc = pos[off]; \
 }
 
-void R_FloodFillSkin(uint8_t *skin, int skinwidth, int skinheight)
+void R_FloodFillSkin(byte * skin, int skinwidth, int skinheight)
 {
-	uint8_t fillcolor = *skin;		/* assume this is the pixel to fill */
+	byte fillcolor = *skin;		/* assume this is the pixel to fill */
 	floodfill_t fifo[FLOODFILL_FIFO_SIZE];
 	int inpt = 0, outpt = 0;
 	int filledcolor = -1;
@@ -1155,7 +1156,7 @@ void R_FloodFillSkin(uint8_t *skin, int skinwidth, int skinheight)
 	while (outpt != inpt) {
 		int x = fifo[outpt].x, y = fifo[outpt].y;
 		int fdc = filledcolor;
-		uint8_t *pos = &skin[x + skinwidth * y];
+		byte *pos = &skin[x + skinwidth * y];
 
 		outpt = (outpt + 1) & FLOODFILL_FIFO_MASK;
 
@@ -1185,7 +1186,7 @@ void GL_ResampleTexture(unsigned *in, int inwidth, int inheight, unsigned *out, 
 	unsigned *inrow, *inrow2;
 	unsigned frac, fracstep;
 	unsigned p1[1024], p2[1024];
-	uint8_t *pix1, *pix2, *pix3, *pix4;
+	byte *pix1, *pix2, *pix3, *pix4;
 
 	fracstep = inwidth * 0x10000 / outwidth;
 
@@ -1205,14 +1206,14 @@ void GL_ResampleTexture(unsigned *in, int inwidth, int inheight, unsigned *out, 
 		inrow2 = in + inwidth * (int) ((i + 0.75) * inheight / outheight);
 		frac = fracstep >> 1;
 		for (j = 0; j < outwidth; j++) {
-			pix1 = (uint8_t*) inrow + p1[j];
-			pix2 = (uint8_t*) inrow + p2[j];
-			pix3 = (uint8_t*) inrow2 + p1[j];
-			pix4 = (uint8_t*) inrow2 + p2[j];
-			((uint8_t*) (out + j))[0] = (pix1[0] + pix2[0] + pix3[0] + pix4[0]) >> 2;
-			((uint8_t*) (out + j))[1] = (pix1[1] + pix2[1] + pix3[1] + pix4[1]) >> 2;
-			((uint8_t*) (out + j))[2] = (pix1[2] + pix2[2] + pix3[2] + pix4[2]) >> 2;
-			((uint8_t*) (out + j))[3] = (pix1[3] + pix2[3] + pix3[3] + pix4[3]) >> 2;
+			pix1 = (byte *) inrow + p1[j];
+			pix2 = (byte *) inrow + p2[j];
+			pix3 = (byte *) inrow2 + p1[j];
+			pix4 = (byte *) inrow2 + p2[j];
+			((byte *) (out + j))[0] = (pix1[0] + pix2[0] + pix3[0] + pix4[0]) >> 2;
+			((byte *) (out + j))[1] = (pix1[1] + pix2[1] + pix3[1] + pix4[1]) >> 2;
+			((byte *) (out + j))[2] = (pix1[2] + pix2[2] + pix3[2] + pix4[2]) >> 2;
+			((byte *) (out + j))[3] = (pix1[3] + pix2[3] + pix3[3] + pix4[3]) >> 2;
 		}
 	}
 
@@ -1230,13 +1231,13 @@ Scale up the pixel values in a texture to increase the
 lighting range
 ================
 */
-void GL_LightScaleTexture(unsigned *in, int inwidth, int inheight, bool_t only_gamma)
+void GL_LightScaleTexture(unsigned *in, int inwidth, int inheight, qboolean only_gamma)
 {
 	if (gl_combine || only_gamma) {
 		int i, c;
-		uint8_t *p;
+		byte *p;
 
-		p = (uint8_t*) in;
+		p = (byte *) in;
 
 		c = inwidth * inheight;
 		for (i = 0; i < c; i++, p += 4) {
@@ -1246,9 +1247,9 @@ void GL_LightScaleTexture(unsigned *in, int inwidth, int inheight, bool_t only_g
 		}
 	} else {
 		int i, c;
-		uint8_t *p;
+		byte *p;
 
-		p = (uint8_t*) in;
+		p = (byte *) in;
 
 		c = inwidth * inheight;
 		for (i = 0; i < c; i++, p += 4) {
@@ -1266,10 +1267,10 @@ GL_MipMap
 Operates in place, quartering the size of the texture
 ================
 */
-void GL_MipMap(uint8_t *in, int width, int height)
+void GL_MipMap(byte * in, int width, int height)
 {
 	int i, j;
-	uint8_t *out;
+	byte *out;
 
 	width <<= 2;
 	height >>= 1;
@@ -1336,7 +1337,7 @@ Filtering algorithm from http://www.student.kuleuven.ac.be/~m0216922/CG/filterin
 All credit due
 ==================
 */
-void R_FilterTexture(int filterindex, unsigned int *data, int width, int height, float factor, float bias, bool_t greyscale, GLenum GLBlendOperator)
+void R_FilterTexture(int filterindex, unsigned int *data, int width, int height, float factor, float bias, qboolean greyscale, GLenum GLBlendOperator)
 {
 	int i;
 	int x;
@@ -1364,9 +1365,9 @@ void R_FilterTexture(int filterindex, unsigned int *data, int width, int height,
 
 					/* casting's a unary operation anyway, so the othermost set of brackets in the left part */
 					/* of the rvalue should not be necessary... but i'm paranoid when it comes to C... */
-					rgbFloat[0] += ((float) ((uint8_t*) & data[imageY * width + imageX])[0]) * FilterMatrix[filterindex][filterX][filterY];
-					rgbFloat[1] += ((float) ((uint8_t*) & data[imageY * width + imageX])[1]) * FilterMatrix[filterindex][filterX][filterY];
-					rgbFloat[2] += ((float) ((uint8_t*) & data[imageY * width + imageX])[2]) * FilterMatrix[filterindex][filterX][filterY];
+					rgbFloat[0] += ((float) ((byte *) & data[imageY * width + imageX])[0]) * FilterMatrix[filterindex][filterX][filterY];
+					rgbFloat[1] += ((float) ((byte *) & data[imageY * width + imageX])[1]) * FilterMatrix[filterindex][filterX][filterY];
+					rgbFloat[2] += ((float) ((byte *) & data[imageY * width + imageX])[2]) * FilterMatrix[filterindex][filterX][filterY];
 				}
 			}
 
@@ -1401,7 +1402,7 @@ void R_FilterTexture(int filterindex, unsigned int *data, int width, int height,
 			for (i = 0; i < 3; i++) {
 				/* divide by 255 so GL operations work as expected */
 				float TempTarget;
-				float SrcData = ((float) ((uint8_t*) & data[y * width + x])[i]) / 255.0;
+				float SrcData = ((float) ((byte *) & data[y * width + x])[i]) / 255.0;
 
 				switch (GLBlendOperator) {
 				case GL_ADD:
@@ -1442,7 +1443,7 @@ void R_FilterTexture(int filterindex, unsigned int *data, int width, int height,
 					TempTarget = 255;
 
 				/* and copy it in */
-				((uint8_t*) & temp[y * width + x])[i] = (uint8_t) TempTarget;
+				((byte *) & temp[y * width + x])[i] = (byte) TempTarget;
 			}
 		}
 	}
@@ -1465,14 +1466,14 @@ Returns has_alpha
 int upload_width, upload_height;
 unsigned scaled_buffer[1024 * 1024];
 
-bool_t GL_Upload32(unsigned *data, int width, int height, bool_t mipmap, bool_t clamp, imagetype_t type)
+qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type)
 {
 	unsigned *scaled;
 	int samples;
 	int scaled_width, scaled_height;
 	int i, c;
 	int size;
-	uint8_t *scan;
+	byte *scan;
 
 	for (scaled_width = 1; scaled_width < width; scaled_width <<= 1);
 	if (gl_round_down->value && scaled_width > width && mipmap)
@@ -1508,7 +1509,7 @@ bool_t GL_Upload32(unsigned *data, int width, int height, bool_t mipmap, bool_t 
 
 	/* scan the texture for any non-255 alpha */
 	c = width * height;
-	scan = ((uint8_t*) data) + 3;
+	scan = ((byte *) data) + 3;
 	samples = gl_compressed_solid_format ? gl_compressed_solid_format : gl_solid_format;
 	for (i = 0; i < c; i++, scan += 4) {
 		if (*scan != 255) {
@@ -1518,7 +1519,7 @@ bool_t GL_Upload32(unsigned *data, int width, int height, bool_t mipmap, bool_t 
 	}
 	/*emboss filter */
 	if (gl_embossfilter->value && type != it_skin)
-		R_FilterTexture(EMBOSS_FILTER, data, width, height, 1, 128, true, GL_MODULATE);
+		R_FilterTexture(EMBOSS_FILTER, data, width, height, 1, 128, qtrue, GL_MODULATE);
 
 	if (scaled_width == width && scaled_height == height) {
 		if (!mipmap) {
@@ -1548,7 +1549,7 @@ bool_t GL_Upload32(unsigned *data, int width, int height, bool_t mipmap, bool_t 
 
 		miplevel = 0;
 		while (scaled_width > 1 || scaled_height > 1) {
-			GL_MipMap((uint8_t*) scaled, scaled_width, scaled_height);
+			GL_MipMap((byte *) scaled, scaled_width, scaled_height);
 			scaled_width >>= 1;
 			scaled_height >>= 1;
 			if (scaled_width < 1)
@@ -1584,18 +1585,18 @@ GL_Upload8
 Returns has_alpha
 ===============
 */
-bool_t GL_Upload8(uint8_t *data, int width, int height, bool_t mipmap, imagetype_t type)
+qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type)
 {
 	unsigned *trans;
 	size_t trans_size = 512 * 256 * sizeof(trans[0]);
 	int s = width * height;
 	int i, p;
-	bool_t ret;
+	qboolean ret;
 
 	trans = malloc(trans_size);
 	if (!trans) {
 		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of %i bytes", trans_size);
-		return false;			/* never reached. need for code analyst. */
+		return qfalse;			/* never reached. need for code analyst. */
 	}
 
 	if (s > trans_size / 4)
@@ -1620,13 +1621,13 @@ bool_t GL_Upload8(uint8_t *data, int width, int height, bool_t mipmap, imagetype
 			else
 				p = 0;
 			/* copy rgb components */
-			((uint8_t*) & trans[i])[0] = ((uint8_t*) & d_8to24table[p])[0];
-			((uint8_t*) & trans[i])[1] = ((uint8_t*) & d_8to24table[p])[1];
-			((uint8_t*) & trans[i])[2] = ((uint8_t*) & d_8to24table[p])[2];
+			((byte *) & trans[i])[0] = ((byte *) & d_8to24table[p])[0];
+			((byte *) & trans[i])[1] = ((byte *) & d_8to24table[p])[1];
+			((byte *) & trans[i])[2] = ((byte *) & d_8to24table[p])[2];
 		}
 	}
 
-	ret = GL_Upload32(trans, width, height, mipmap, true, type);
+	ret = GL_Upload32(trans, width, height, mipmap, qtrue, type);
 	free(trans);
 
 	return ret;
@@ -1643,7 +1644,7 @@ GL_CalcDayAndNight
 
 #define DAEMMERUNG	0.03
 
-uint8_t DaNalpha[DAN_WIDTH * DAN_HEIGHT];
+byte DaNalpha[DAN_WIDTH * DAN_HEIGHT];
 image_t *DaN;
 
 void GL_CalcDayAndNight(float q)
@@ -1654,7 +1655,7 @@ void GL_CalcDayAndNight(float q)
 	float sin_q, cos_q, root;
 	float pos;
 	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
-	uint8_t *px;
+	byte *px;
 
 	/* get image */
 	if (!DaN) {
@@ -1695,7 +1696,7 @@ void GL_CalcDayAndNight(float q)
 			else if (pos <= -DAEMMERUNG)
 				*px++ = 0;
 			else
-				*px++ = (uint8_t) (128.0 * (pos / DAEMMERUNG + 1));
+				*px++ = (byte) (128.0 * (pos / DAEMMERUNG + 1));
 		}
 	}
 
@@ -1714,7 +1715,7 @@ GL_LoadPic
 This is also used as an entry point for the generated r_notexture
 ================
 */
-image_t *GL_LoadPic(char *name, uint8_t *pic, int width, int height, imagetype_t type, int bits)
+image_t *GL_LoadPic(char *name, byte * pic, int width, int height, imagetype_t type, int bits)
 {
 	image_t *image;
 	int len, i;
@@ -1760,7 +1761,7 @@ image_t *GL_LoadPic(char *name, uint8_t *pic, int width, int height, imagetype_t
 		texnum = Scrap_AllocBlock(image->width, image->height, &x, &y);
 		if (texnum == -1)
 			goto nonscrap;
-		scrap_dirty = true;
+		scrap_dirty = qtrue;
 
 		/* copy the texels into the scrap block */
 		k = 0;
@@ -1768,15 +1769,15 @@ image_t *GL_LoadPic(char *name, uint8_t *pic, int width, int height, imagetype_t
 			for (j = 0; j < image->width; j++, k++)
 				scrap_texels[texnum][(y + i) * BLOCK_WIDTH + x + j] = pic[k];
 		image->texnum = TEXNUM_SCRAPS + texnum;
-		image->scrap = true;
-		image->has_alpha = true;
+		image->scrap = qtrue;
+		image->has_alpha = qtrue;
 		image->sl = (x + 0.01) / (float) BLOCK_WIDTH;
 		image->sh = (x + image->width - 0.01) / (float) BLOCK_WIDTH;
 		image->tl = (y + 0.01) / (float) BLOCK_WIDTH;
 		image->th = (y + image->height - 0.01) / (float) BLOCK_WIDTH;
 	} else {
 	  nonscrap:
-		image->scrap = false;
+		image->scrap = qfalse;
 		image->texnum = TEXNUM_IMAGES + (image - gltextures);
 		GL_Bind(image->texnum);
 		if (bits == 8)
@@ -1786,7 +1787,7 @@ image_t *GL_LoadPic(char *name, uint8_t *pic, int width, int height, imagetype_t
 										   (image->type != it_pic && image->type != it_wrappic), image->type == it_pic, image->type);
 		image->upload_width = upload_width;	/* after power of 2 and scales */
 		image->upload_height = upload_height;
-		image->paletted = false;
+		image->paletted = qfalse;
 		image->sl = 0;
 		image->sh = 1;
 		image->tl = 0;
@@ -1818,7 +1819,7 @@ image_t *GL_LoadWal(char *name)
 	height = LittleLong(mt->height);
 	ofs = LittleLong(mt->offsets[0]);
 
-	image = GL_LoadPic(name, (uint8_t*) mt + ofs, width, height, it_wall, 8);
+	image = GL_LoadPic(name, (byte *) mt + ofs, width, height, it_wall, 8);
 
 	ri.FS_FreeFile((void *) mt);
 
@@ -1859,7 +1860,7 @@ image_t *GL_FindImage(char *pname, imagetype_t type)
 	char *etex;
 	image_t *image;
 	int i, l, len;
-	uint8_t *pic, *palette;
+	byte *pic, *palette;
 	int width, height;
 
 	if (!pname)
@@ -2006,7 +2007,7 @@ int Draw_GetPalette(void)
 	int i;
 	int r, g, b;
 	unsigned v;
-	uint8_t *pic, *pal;
+	byte *pic, *pal;
 	int width, height;
 
 	/* get the palette */

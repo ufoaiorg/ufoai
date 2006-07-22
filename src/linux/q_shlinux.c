@@ -36,11 +36,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*=============================================================================== */
 
-uint8_t *membase;
+byte *membase;
 int maxhunksize;
 int curhunksize;
 
-void *Hunk_Begin (size_t maxsize)
+void *Hunk_Begin (int maxsize)
 {
 	/* reserve a huge chunk of memory, but don't commit any yet */
 	maxhunksize = maxsize + sizeof(int);
@@ -52,7 +52,7 @@ void *Hunk_Begin (size_t maxsize)
 	membase = mmap(0, maxhunksize, PROT_READ|PROT_WRITE,
 		MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
 #endif
-	if (membase == NULL || membase == (uint8_t*)-1)
+	if (membase == NULL || membase == (byte *)-1)
 		Sys_Error("unable to virtual allocate %d bytes", maxsize);
 
 	*((int *)membase) = curhunksize;
@@ -60,9 +60,9 @@ void *Hunk_Begin (size_t maxsize)
 	return membase + sizeof(int);
 }
 
-void *Hunk_Alloc (size_t size)
+void *Hunk_Alloc (int size)
 {
-	uint8_t *buf;
+	byte *buf;
 
 	/* round to cacheline */
 	size = (size+31)&~31;
@@ -73,9 +73,9 @@ void *Hunk_Alloc (size_t size)
 	return buf;
 }
 
-size_t Hunk_End (void)
+int Hunk_End (void)
 {
-	uint8_t *n;
+	byte *n;
 #if defined(__FreeBSD__)
 	size_t old_size = maxhunksize;
 	size_t new_size = curhunksize + sizeof(int);
@@ -104,10 +104,10 @@ size_t Hunk_End (void)
 
 void Hunk_Free (void *base)
 {
-	uint8_t *m;
+	byte *m;
 
 	if (base) {
-		m = ((uint8_t*)base) - sizeof(int);
+		m = ((byte *)base) - sizeof(int);
 		if (munmap(m, *((int *)m)))
 			Sys_Error("Hunk_Free: munmap failed (%d)", errno);
 	}
@@ -162,25 +162,28 @@ static	char	findpath[MAX_OSPATH];
 static	char	findpattern[MAX_OSPATH];
 static	DIR		*fdir;
 
-static bool_t CompareAttributes(char *path, char *name, unsigned musthave, unsigned canthave )
+static qboolean CompareAttributes(char *path, char *name,
+	unsigned musthave, unsigned canthave )
 {
+	struct stat st;
+	char fn[MAX_OSPATH];
+
 	/* . and .. never match */
 	if (Q_strcmp(name, ".") == 0 || Q_strcmp(name, "..") == 0)
-		return false;
+		return qfalse;
 
-	return true;
-#if 0
+	return qtrue;
+
 	if (stat(fn, &st) == -1)
-		return false; /* shouldn't happen */
+		return qfalse; /* shouldn't happen */
 
 	if ( ( st.st_mode & S_IFDIR ) && ( canthave & SFF_SUBDIR ) )
-		return false;
+		return qfalse;
 
 	if ( ( musthave & SFF_SUBDIR ) && !( st.st_mode & S_IFDIR ) )
-		return false;
+		return qfalse;
 
-	return true;
-#endif
+	return qtrue;
 }
 
 char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)

@@ -148,7 +148,7 @@ void Cbuf_ExecuteText(char *text, int exec_when)
  *
  * Other commands are added late, after all initialization is complete.
  */
-void Cbuf_AddEarlyCommands(bool_t clear)
+void Cbuf_AddEarlyCommands(qboolean clear)
 {
 	int i;
 	char *s;
@@ -176,13 +176,13 @@ void Cbuf_AddEarlyCommands(bool_t clear)
  * Returns true if any late commands were added, which
  * will keep the demoloop from immediately starting
  */
-bool_t Cbuf_AddLateCommands(void)
+qboolean Cbuf_AddLateCommands(void)
 {
 	int i, j;
 	int s;
 	char *text, *build, c;
 	int argc;
-	bool_t ret;
+	qboolean ret;
 
 	/* build the combined string to parse from */
 	s = 0;
@@ -191,7 +191,7 @@ bool_t Cbuf_AddLateCommands(void)
 		s += strlen(COM_Argv(i)) + 1;
 	}
 	if (!s)
-		return false;
+		return qfalse;
 
 	text = (char*)Z_Malloc(s + 1);
 	text[0] = 0;

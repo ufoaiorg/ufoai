@@ -4,30 +4,25 @@
  */
 
 /*
- * All original material Copyright (C) 2002-2006 UFO: Alien Invasion team.
- *
- * Original file from Quake 2 v3.21: quake2-2.31/qcommon/cmd.c
- * Copyright (C) 1997-2001 Id Software, Inc.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- */
+Copyright (C) 1997-2001 Id Software, Inc.
 
-#include "cmd.h"
-/* FIXME: Check and minimise inclusions. */
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 #include "qcommon.h"
 
 void Cmd_ForwardToServer(void);
@@ -42,20 +37,13 @@ typedef struct cmdalias_s {
 
 static cmdalias_t *cmd_alias;
 
-static bool_t cmd_wait, cmd_closed;
+static qboolean cmd_wait, cmd_closed;
 
-/**
- * @brief The maximum depth of command aliases.
- *
- * This is really for preventing infinite loops in aliases. This is cheaper than name checking.
- */
 #define	ALIAS_LOOP_COUNT	16
+static int alias_count;				/* for detecting runaway loops */
 
-/* Returns the status of the cmd_closed variable */
-bool_t Cmd_IsClosed(void)
-{
-	return cmd_closed;
-}
+
+/*============================================================================= */
 
 /*
 ============
@@ -67,7 +55,7 @@ Reopens the command buffer for writing
 void Cmd_Open_f(void)
 {
 	Com_DPrintf("Cmd_Close_f: command buffer opened again\n");
-	cmd_closed = false;
+	cmd_closed = qfalse;
 }
 
 /*
@@ -75,19 +63,14 @@ void Cmd_Open_f(void)
 Cmd_Close_f
 
 Will no longer add any command to command buffer
-...until cmd_close is false again
+...until cmd_close is qfalse again
 Does not affect EXEC_NOW
 ============
 */
 void Cmd_Close_f(void)
 {
 	Com_DPrintf("Cmd_Close_f: command buffer closed\n");
-	cmd_closed = true;
-}
-
-bool_t Cmd_IsWaiting(void)
-{
-	return cmd_wait;
+	cmd_closed = qtrue;
 }
 
 /*
@@ -101,13 +84,310 @@ bind g "impulse 5 ; +attack ; wait ; -attack ; impulse 2"
 */
 void Cmd_Wait_f(void)
 {
-	cmd_wait = true;
+	cmd_wait = qtrue;
 }
 
-void Cmd_Continue(void)
+
+/*
+=============================================================================
+
+						COMMAND BUFFER
+
+=============================================================================
+*/
+
+static sizebuf_t cmd_text;
+static byte cmd_text_buf[8192];
+
+static char defer_text_buf[8192];
+
+/*
+============
+Cbuf_Init
+============
+*/
+void Cbuf_Init(void)
 {
-	cmd_wait = false;
+	SZ_Init(&cmd_text, cmd_text_buf, sizeof(cmd_text_buf));
 }
+
+/*
+============
+Cbuf_AddText
+
+Adds command text at the end of the buffer
+============
+*/
+void Cbuf_AddText(char *text)
+{
+	int l;
+	char *cmdopen;
+
+	if (cmd_closed && (cmdopen = strstr(text, "cmdopen")) != NULL)
+		text = cmdopen;
+	else if (cmd_closed) {
+		Com_DPrintf("Cbuf_AddText: currently closed\n");
+		return;
+	}
+
+	l = strlen(text);
+
+	if (cmd_text.cursize + l >= cmd_text.maxsize) {
+		Com_Printf("Cbuf_AddText: overflow\n");
+		return;
+	}
+	SZ_Write(&cmd_text, text, strlen(text));
+}
+
+
+/*
+============
+Cbuf_InsertText
+
+Adds command text immediately after the current command
+Adds a \n to the text
+FIXME: actually change the command buffer to do less copying
+============
+*/
+void Cbuf_InsertText(char *text)
+{
+	char *temp;
+	int templen;
+
+	/* copy off any commands still remaining in the exec buffer */
+	templen = cmd_text.cursize;
+	if (templen) {
+		temp = Z_Malloc(templen);
+		memcpy(temp, cmd_text.data, templen);
+		SZ_Clear(&cmd_text);
+	} else
+		temp = NULL;			/* shut up compiler */
+
+	/* add the entire text of the file */
+	Cbuf_AddText(text);
+
+	/* add the copied off data */
+	if (templen) {
+		SZ_Write(&cmd_text, temp, templen);
+		Z_Free(temp);
+	}
+}
+
+
+/*
+============
+Cbuf_CopyToDefer
+============
+*/
+void Cbuf_CopyToDefer(void)
+{
+	memcpy(defer_text_buf, cmd_text_buf, cmd_text.cursize);
+	defer_text_buf[cmd_text.cursize] = 0;
+	cmd_text.cursize = 0;
+}
+
+/*
+============
+Cbuf_InsertFromDefer
+============
+*/
+void Cbuf_InsertFromDefer(void)
+{
+	Cbuf_InsertText(defer_text_buf);
+	defer_text_buf[0] = 0;
+}
+
+
+/*
+============
+Cbuf_ExecuteText
+============
+*/
+void Cbuf_ExecuteText(int exec_when, char *text)
+{
+	switch (exec_when) {
+	case EXEC_NOW:
+		Cmd_ExecuteString(text);
+		break;
+	case EXEC_INSERT:
+		Cbuf_InsertText(text);
+		break;
+	case EXEC_APPEND:
+		Cbuf_AddText(text);
+		break;
+	default:
+		Com_Error(ERR_FATAL, "Cbuf_ExecuteText: bad exec_when");
+	}
+}
+
+/*
+============
+Cbuf_Execute
+============
+*/
+void Cbuf_Execute(void)
+{
+	int i;
+	char *text;
+	char line[1024];
+	int quotes;
+
+	/* don't allow infinite alias loops */
+	alias_count = 0;
+
+	while (cmd_text.cursize) {
+		/* find a \n or ; line break */
+		text = (char *) cmd_text.data;
+
+		quotes = 0;
+		for (i = 0; i < cmd_text.cursize; i++) {
+			if (text[i] == '"')
+				quotes++;
+			/* don't break if inside a quoted string */
+			if (!(quotes & 1) && text[i] == ';')
+				break;
+			if (text[i] == '\n')
+				break;
+		}
+
+		/* sku - removed potentional buffer overflow vulnerability */
+		if (i > sizeof(line) - 1)
+			i = sizeof(line) - 1;
+
+		memcpy(line, text, i);
+		line[i] = 0;
+
+		/* delete the text from the command buffer and move remaining commands down */
+		/* this is necessary because commands (exec, alias) can insert data at the */
+		/* beginning of the text buffer */
+
+		if (i == cmd_text.cursize)
+			cmd_text.cursize = 0;
+		else {
+			i++;
+			cmd_text.cursize -= i;
+			memmove(text, text + i, cmd_text.cursize);
+		}
+
+		/* execute the command line */
+		Cmd_ExecuteString(line);
+
+		if (cmd_wait) {
+			/* skip out while text still remains in buffer, leaving it */
+			/* for next frame */
+			cmd_wait = qfalse;
+			break;
+		}
+	}
+}
+
+
+/*
+===============
+Cbuf_AddEarlyCommands
+
+Adds command line parameters as script statements
+Commands lead with a +, and continue until another +
+
+Set commands are added early, so they are guaranteed to be set before
+the client and server initialize for the first time.
+
+Other commands are added late, after all initialization is complete.
+===============
+*/
+void Cbuf_AddEarlyCommands(qboolean clear)
+{
+	int i;
+	char *s;
+
+	for (i = 0; i < COM_Argc(); i++) {
+		s = COM_Argv(i);
+		if (Q_strncmp(s, "+set", 4))
+			continue;
+		Cbuf_AddText(va("set %s %s\n", COM_Argv(i + 1), COM_Argv(i + 2)));
+		if (clear) {
+			COM_ClearArgv(i);
+			COM_ClearArgv(i + 1);
+			COM_ClearArgv(i + 2);
+		}
+		i += 2;
+	}
+}
+
+/*
+=================
+Cbuf_AddLateCommands
+
+Adds command line parameters as script statements
+Commands lead with a + and continue until another + or -
+quake +vid_ref gl +map amlev1
+
+Returns true if any late commands were added, which
+will keep the demoloop from immediately starting
+=================
+*/
+qboolean Cbuf_AddLateCommands(void)
+{
+	int i, j;
+	int s;
+	char *text, *build, c;
+	int argc;
+	qboolean ret;
+
+	/* build the combined string to parse from */
+	s = 0;
+	argc = COM_Argc();
+	for (i = 1; i < argc; i++) {
+		s += strlen(COM_Argv(i)) + 1;
+	}
+	if (!s)
+		return qfalse;
+
+	text = Z_Malloc(s + 1);
+	text[0] = 0;
+	for (i = 1; i < argc; i++) {
+		Q_strcat(text, COM_Argv(i), s);
+		if (i != argc - 1)
+			Q_strcat(text, " ", s);
+	}
+
+	/* pull out the commands */
+	build = Z_Malloc(s + 1);
+	build[0] = 0;
+
+	for (i = 0; i < s - 1; i++) {
+		if (text[i] == '+') {
+			i++;
+
+			for (j = i; (text[j] != '+') && (text[j] != '-') && (text[j] != 0); j++);
+
+			c = text[j];
+			text[j] = 0;
+
+			Q_strcat(build, text + i, s);
+			Q_strcat(build, "\n", s);
+			text[j] = c;
+			i = j - 1;
+		}
+	}
+
+	ret = (build[0] != 0);
+	if (ret)
+		Cbuf_AddText(build);
+
+	Z_Free(text);
+	Z_Free(build);
+
+	return ret;
+}
+
+
+/*
+==============================================================================
+SCRIPT COMMANDS
+==============================================================================
+*/
+
 
 /*
 ===============
@@ -136,7 +416,7 @@ void Cmd_Exec_f(void)
 	memcpy(f2, f, len);
 	f2[len] = 0;
 
-	Cbuf_ExecuteText(f2, EXEC_INSERT);
+	Cbuf_InsertText(f2);
 
 	Z_Free(f2);
 	FS_FreeFile(f);
@@ -278,12 +558,12 @@ Cmd_MacroExpandString
 char *Cmd_MacroExpandString(char *text)
 {
 	int i, j, count, len;
-	bool_t inquote;
+	qboolean inquote;
 	char *scan;
 	static char expanded[MAX_STRING_CHARS];
 	char *token, *start;
 
-	inquote = false;
+	inquote = qfalse;
 	scan = text;
 
 	len = strlen(scan);
@@ -344,7 +624,7 @@ Parses the given string into command line tokens.
 $Cvars will be expanded unless they are in a quoted token
 ============
 */
-void Cmd_TokenizeString(char *text, bool_t macroExpand)
+void Cmd_TokenizeString(char *text, qboolean macroExpand)
 {
 	int i;
 	char *com_token;
@@ -410,31 +690,27 @@ void Cmd_TokenizeString(char *text, bool_t macroExpand)
 
 }
 
-/**
- * @brief Registers a command with the console interface, with the associated function to call.
- *
- * The cmd_name is referenced later, so it should not be allocated on the stack.
- * If function is NULL, the command will be forwarded to the server as a clc_stringcmd instead of executed locally.
- *
- * @param[in] cmd_name The name of the command.
- * @param[in] function The function to call when the command is executed.
- * @return true if the command is added successfully.
- */
-bool_t Cmd_AddCommand(char *cmd_name, xcommand_t function)
+
+/*
+============
+Cmd_AddCommand
+============
+*/
+void Cmd_AddCommand(char *cmd_name, xcommand_t function)
 {
 	cmd_function_t *cmd;
 
 	/* fail if the command is a variable name */
 	if (Cvar_VariableString(cmd_name)[0]) {
 		Com_Printf("Cmd_AddCommand: %s already defined as a var\n", cmd_name);
-		return false;
+		return;
 	}
 
 	/* fail if the command already exists */
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
 		if (!Q_strcmp(cmd_name, cmd->name)) {
 			Com_Printf("Cmd_AddCommand: %s already defined\n", cmd_name);
-			return false;
+			return;
 		}
 	}
 
@@ -443,17 +719,14 @@ bool_t Cmd_AddCommand(char *cmd_name, xcommand_t function)
 	cmd->function = function;
 	cmd->next = cmd_functions;
 	cmd_functions = cmd;
-	return true;
 }
 
-/**
- * @brief Removes the specified command.
- *
- * @param[in]
- * @return true if the command is removed, else false.
- * FIXME: Re-write this to get rid of infinite loop.
- */
-bool_t Cmd_RemoveCommand(char *cmd_name)
+/*
+============
+Cmd_RemoveCommand
+============
+*/
+void Cmd_RemoveCommand(char *cmd_name)
 {
 	cmd_function_t *cmd, **back;
 
@@ -462,49 +735,48 @@ bool_t Cmd_RemoveCommand(char *cmd_name)
 		cmd = *back;
 		if (!cmd) {
 			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmd_name);
-			return false;
+			return;
 		}
 		if (!Q_strcmp(cmd_name, cmd->name)) {
 			*back = cmd->next;
 			Z_Free(cmd);
-			return true;
+			return;
 		}
 		back = &cmd->next;
 	}
 }
 
-/**
- * @brief Tests that the given command has been registered.
- *
- * @param[in] cmd_name The name of the command to search for.
- * @return true if the command is found, else false.
- */
-bool_t Cmd_Exists(char *cmd_name)
+/*
+============
+Cmd_Exists
+============
+*/
+qboolean Cmd_Exists(char *cmd_name)
 {
 	cmd_function_t *cmd;
 
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
-		if (!Q_strcmp(cmd_name, cmd->name)) {
-			return true;
-		}
+		if (!Q_strcmp(cmd_name, cmd->name))
+			return qtrue;
 	}
-	return false;
+
+	return qfalse;
 }
 
+
+
 /**
- * @brief Unix like tab completion for console commands.
- *
- * @param[in] partial The beginning of the command we try to complete.
- * @return The name of the the matching command, else NULL.
- * @sa Cvar_CompleteVariable
- * @sa Key_CompleteCommand
- */
-const char *Cmd_CompleteCommand(char *partial)
+  * @brief Unix like tab completion for console commands
+  * @param partial The beginning of the command we try to complete
+  * @sa Cvar_CompleteVariable
+  * @sa Key_CompleteCommand
+  */
+char *Cmd_CompleteCommand(char *partial)
 {
 	cmd_function_t *cmd;
 	cmdalias_t *a;
 
-	const char *match = NULL;
+	char *match = NULL;
 	int len, matches = 0;
 
 	len = strlen(partial);
@@ -540,23 +812,24 @@ const char *Cmd_CompleteCommand(char *partial)
 		}
 	}
 
-	return (matches == 1) ? match : NULL;
+	return matches == 1 ? match : NULL;
 }
 
 
-/**
- * @brief Execute a command string immediately.
- *
- * FIXME: lookupnoadd the token to speed search?
- * @param[in] text The command string to execute.
- */
+/*
+============
+Cmd_ExecuteString
+
+A complete command line has been parsed, so try to execute it
+FIXME: lookupnoadd the token to speed search?
+============
+*/
 void Cmd_ExecuteString(char *text)
 {
 	cmd_function_t *cmd;
 	cmdalias_t *a;
-	int alias_count = 0;
 
-	Cmd_TokenizeString(text, true);
+	Cmd_TokenizeString(text, qtrue);
 
 	/* execute the command line */
 	if (!Cmd_Argc())
@@ -581,7 +854,7 @@ void Cmd_ExecuteString(char *text)
 				Com_Printf("ALIAS_LOOP_COUNT\n");
 				return;
 			}
-			Cbuf_ExecuteText(a->value, EXEC_INSERT);
+			Cbuf_InsertText(a->value);
 			return;
 		}
 	}
@@ -628,7 +901,7 @@ void Cmd_List_f(void)
 Cmd_Init
 ============
 */
-bool_t Cmd_Init(void)
+void Cmd_Init(void)
 {
 	/* register our commands */
 	Cmd_AddCommand("cmdlist", Cmd_List_f);
@@ -638,5 +911,4 @@ bool_t Cmd_Init(void)
 	Cmd_AddCommand("wait", Cmd_Wait_f);
 	Cmd_AddCommand("cmdclose", Cmd_Close_f);
 	Cmd_AddCommand("cmdopen", Cmd_Open_f);
-	return true;
 }

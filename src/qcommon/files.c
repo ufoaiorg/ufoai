@@ -72,20 +72,20 @@ The "game directory" is the first tree on the search path and directory that all
 /*
 ** wildcard string comparing
 */
-bool_t strwildcomp(const char *string, const char *pattern)
+qboolean strwildcomp(const char *string, const char *pattern)
 {
 	const char *s = 0;
 	char c = '\0';
 
 	s = string;
 
-	while (true) {
+	while (qtrue) {
 		switch (c = *pattern++) {
 		case 0:
-			return !*s ? true : false;
+			return !*s ? qtrue : qfalse;
 		case '?':
 			if (*s == '\0')
-				return false;
+				return qfalse;
 			s++;
 			break;
 		case '*':
@@ -94,17 +94,17 @@ bool_t strwildcomp(const char *string, const char *pattern)
 				c = *++pattern;
 
 			if (!c)
-				return true;
+				return qtrue;
 
 			while (*s) {
 				if (strwildcomp(s, pattern))
-					return true;
+					return qtrue;
 				s++;
 			}
-			return false;
+			return qfalse;
 		default:
 			if (c != *s)
-				return false;
+				return qfalse;
 			++s;
 			break;
 		}
@@ -191,13 +191,16 @@ Used for streaming data out of either a pak file or
 a seperate file.
 ===========
 */
+int file_from_pak = 0;
 int FS_FOpenFileSingle(const char *filename, FILE ** file)
 {
 	searchpath_t *search;
 	char netpath[MAX_OSPATH];
 	pack_t *pak;
-	int i, file_from_pak = 0;
+	int i;
 	filelink_t *link;
+
+	file_from_pak = 0;
 
 	/* check for links first */
 	for (link = fs_links; link; link = link->next)
@@ -274,9 +277,11 @@ int FS_Seek(FILE * f, long offset, int origin)
 	return fseek(f, offset, _origin);
 }
 
-int FS_FOpenFile(const char *filename, FILE **file)
+int FS_FOpenFile(const char *filename, FILE ** file)
 {
-	int result;
+	int result, len;
+
+	len = strlen(filename);
 
 	/* open file */
 	result = FS_FOpenFileSingle(filename, file);
@@ -356,14 +361,14 @@ Properly handles partial reads
 void CDAudio_Stop(void);
 
 #define	MAX_READ	0x10000		/* read in blocks of 64k */
-void FS_Read(void *buffer, size_t len, FILE * f)
+void FS_Read(void *buffer, int len, FILE * f)
 {
-	int block;
-	size_t remaining, read;
-	uint8_t *buf;
+	int block, remaining;
+	int read;
+	byte *buf;
 	int tries;
 
-	buf = (uint8_t*) buffer;
+	buf = (byte *) buffer;
 
 	/* read in chunks for progress bar */
 	remaining = len;
@@ -404,7 +409,7 @@ a -1 length means that the file is not present
 int FS_LoadFile(char *path, void **buffer)
 {
 	FILE *h;
-	uint8_t *buf;
+	byte *buf;
 	int len;
 
 	buf = NULL;					/* quiet compiler warning */
@@ -942,7 +947,7 @@ typedef struct listBlock_s {
 	struct listBlock_s *next;
 } listBlock_t;
 
-static listBlock_t *fs_blocklist = NULL;
+listBlock_t *fs_blocklist = NULL;
 
 void FS_BuildFileList(char *fileList)
 {
@@ -1178,7 +1183,7 @@ char *FS_NextScriptHeader(char *files, char **name, char **text)
 /* global vars for maplisting */
 char *maps[MAX_MAPS];
 int anzInstalledMaps = 0;
-bool_t mapsInstalledInit = false;
+qboolean mapsInstalledInit = qfalse;
 int mapInstalledIndex = 0;
 
 /*
@@ -1190,7 +1195,7 @@ FS_GetMaps
 void FS_GetMaps(void)
 {
 	char name[MAX_OSPATH];
-	int status;
+	int len, status;
 	char *found;
 	char *path = NULL;
 	char *baseMapName = NULL;
@@ -1199,6 +1204,7 @@ void FS_GetMaps(void)
 		return;
 
 	Com_sprintf(name, sizeof(name), "maps/*.bsp");
+	len = strlen(name);
 	mapInstalledIndex = 0;
 	while ((path = FS_NextPath(path)) != 0) {
 		found = Sys_FindFirst(va("%s/%s", path, name), 0, 0);
@@ -1221,7 +1227,7 @@ void FS_GetMaps(void)
 		}
 	}
 
-	mapsInstalledInit = true;
+	mapsInstalledInit = qtrue;
 
 	Sys_FindClose();
 }
@@ -1233,17 +1239,17 @@ FS_Write
 Properly handles partial writes
 =================
 */
-int FS_Write(const void *buffer, size_t len, FILE * f)
+int FS_Write(const void *buffer, int len, FILE * f)
 {
-	int block;
-	size_t remaining, written;
-	uint8_t *buf;
+	int block, remaining;
+	int written;
+	byte *buf;
 	int tries;
 
 	if (!f)
 		return 0;
 
-	buf = (uint8_t*) buffer;
+	buf = (byte *) buffer;
 
 	remaining = len;
 	tries = 0;
@@ -1277,10 +1283,10 @@ int FS_Write(const void *buffer, size_t len, FILE * f)
 FS_WriteFile
 =================
 */
-int FS_WriteFile(const void *buffer, size_t len, const char *filename)
+int FS_WriteFile(const void *buffer, int len, const char *filename)
 {
 	FILE *f;
-	size_t c;
+	int c;
 
 	FS_CreatePath((char *) filename);
 
@@ -1318,7 +1324,7 @@ char *FS_GetCwd(void)
 FS_FileExists
 ==============
 */
-bool_t FS_FileExists(char *filename)
+qboolean FS_FileExists(char *filename)
 {
 #ifdef _WIN32
 	return (_access(filename, 00) == 0);

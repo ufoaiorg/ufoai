@@ -39,9 +39,9 @@ glwstate_t glw_state;
 
 /*****************************************************************************/
 
-static bool_t SDL_active = false;
+static qboolean SDL_active = qfalse;
 
-bool_t have_stencil = false;
+qboolean have_stencil = qfalse;
 
 static cvar_t	*m_filter;
 static cvar_t	*in_mouse;
@@ -56,7 +56,7 @@ static cvar_t *m_yaw;
 static cvar_t *m_pitch;
 static cvar_t *m_forward;
 static cvar_t *freelook;
-static bool_t mouse_avail;
+static qboolean mouse_avail;
 
 static SDL_Surface *surface;
 
@@ -76,7 +76,7 @@ static int keyq_tail=0;
 
 #define MOUSE_MAX 3000
 #define MOUSE_MIN 40
-bool_t mouse_active;
+qboolean mouse_active;
 int mx, my, mouse_buttonstate;
 
 /* this is inside the renderer shared lib, so these are called from vid_so */
@@ -85,9 +85,9 @@ void RW_IN_PlatformInit( void )
 {
 }
 
-void RW_IN_Activate(bool_t active)
+void RW_IN_Activate(qboolean active)
 {
-	mouse_active = true;
+	mouse_active = qtrue;
 }
 
 /*****************************************************************************/
@@ -289,7 +289,7 @@ void GetEvent(SDL_Event *event)
 #endif
 			default: mouse_buttonstate = K_AUX1 + (event->button.button - 8)%16; break;
 		}
-		keyq[keyq_head].down = event->type == SDL_MOUSEBUTTONDOWN ? true : false;
+		keyq[keyq_head].down = event->type == SDL_MOUSEBUTTONDOWN ? qtrue : qfalse;
 		keyq[keyq_head].key = mouse_buttonstate;
 		keyq_head = (keyq_head + 1) & 63;
 		break;
@@ -310,7 +310,7 @@ void GetEvent(SDL_Event *event)
 			} else {
 				ri.Cvar_SetValue( "vid_fullscreen", 0 );
 			}
-			vid_fullscreen->modified = false; /* we just changed it with SDL. */
+			vid_fullscreen->modified = qfalse; /* we just changed it with SDL. */
 			break; /* ignore this key */
 		}
 
@@ -326,7 +326,7 @@ void GetEvent(SDL_Event *event)
 		key = XLateKey(event->key.keysym.sym);
 		if (key) {
 			keyq[keyq_head].key = key;
-			keyq[keyq_head].down = true;
+			keyq[keyq_head].down = qtrue;
 			keyq_head = (keyq_head + 1) & 63;
 		}
 		break;
@@ -339,13 +339,13 @@ void GetEvent(SDL_Event *event)
 			key = XLateKey(event->key.keysym.sym);
 			if (key) {
 				keyq[keyq_head].key = key;
-				keyq[keyq_head].down = false;
+				keyq[keyq_head].down = qfalse;
 				keyq_head = (keyq_head + 1) & 63;
 			}
 		}
 		break;
 	case SDL_QUIT:
-		ri.Cmd_ExecuteText("quit", EXEC_NOW);
+		ri.Cmd_ExecuteText(EXEC_NOW, "quit");
 		break;
 	}
 
@@ -378,17 +378,17 @@ void InitSig(void)
 	signal(SIGTERM, signal_handler);
 }
 
-bool_t GLimp_Init( void *hInstance, void *wndProc )
+qboolean GLimp_Init( void *hInstance, void *wndProc )
 {
 	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_CDROM|SDL_INIT_VIDEO) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 			Sys_Error("SDL Init failed: %s\n", SDL_GetError());
-			return false;
+			return qfalse;
 		}
 	} else if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
 		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
 			Sys_Error("SDL Init failed: %s\n", SDL_GetError());
-			return false;
+			return qfalse;
 		}
 	}
 
@@ -397,7 +397,7 @@ bool_t GLimp_Init( void *hInstance, void *wndProc )
 
 	InitSig();
 
-	return true;
+	return qtrue;
 }
 
 static void SetSDLIcon( void )
@@ -435,12 +435,12 @@ static void SetSDLIcon( void )
  * @brief Init the SDL window
  * @param fullscreen Start in fullscreen or not (bool value)
  */
-static bool_t GLimp_InitGraphics( bool_t fullscreen )
+static qboolean GLimp_InitGraphics( qboolean fullscreen )
 {
 	int flags;
 	int stencil_bits;
 
-	have_stencil = false;
+	have_stencil = qfalse;
 
 	/* Just toggle fullscreen if that's all that has been changed */
 	if (surface && (surface->w == vid.width) && (surface->h == vid.height)) {
@@ -450,7 +450,7 @@ static bool_t GLimp_InitGraphics( bool_t fullscreen )
 
 		isfullscreen = (surface->flags & SDL_FULLSCREEN) ? 1 : 0;
 		if (fullscreen == isfullscreen)
-			return true;
+			return qtrue;
 	}
 
 	srandom(getpid());
@@ -477,7 +477,7 @@ static bool_t GLimp_InitGraphics( bool_t fullscreen )
 
 	if ((surface = SDL_SetVideoMode(vid.width, vid.height, 0, flags)) == NULL) {
 		Sys_Error("(SDLGL) SDL SetVideoMode failed: %s\n", SDL_GetError());
-		return false;
+		return qfalse;
 	}
 
 	SDL_WM_SetCaption("UFO:AI", "UFO:Alien Invasion");
@@ -487,13 +487,13 @@ static bool_t GLimp_InitGraphics( bool_t fullscreen )
 	if (!SDL_GL_GetAttribute(SDL_GL_STENCIL_SIZE, &stencil_bits)) {
 		ri.Con_Printf(PRINT_ALL, "I: got %d bits of stencil\n", stencil_bits);
 		if (stencil_bits >= 1) {
-			have_stencil = true;
+			have_stencil = qtrue;
 		}
 	}
 
-	SDL_active = true;
+	SDL_active = qtrue;
 
-	return true;
+	return qtrue;
 }
 
 void GLimp_BeginFrame( float camera_seperation )
@@ -508,7 +508,7 @@ void GLimp_EndFrame (void)
 /*
 ** GLimp_SetMode
 */
-rserr_t GLimp_SetMode( unsigned int *pwidth, unsigned int *pheight, int mode, bool_t fullscreen )
+rserr_t GLimp_SetMode( unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen )
 {
 	ri.Con_Printf (PRINT_ALL, "setting mode %d:", mode );
 
@@ -551,10 +551,10 @@ void GLimp_Shutdown( void )
 	else
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 
-	SDL_active = false;
+	SDL_active = qfalse;
 }
 
-void GLimp_AppActivate( bool_t active )
+void GLimp_AppActivate( qboolean active )
 {
 }
 
@@ -591,7 +591,7 @@ void KBD_Update(void)
 			SDL_GetRelativeMouseState(&mx, &my);
 
 		if (vid_grabmouse->modified) {
-			vid_grabmouse->modified = false;
+			vid_grabmouse->modified = qfalse;
 
 			if (!vid_grabmouse->value) {
 				/* ungrab the pointer */
@@ -636,15 +636,15 @@ void RW_IN_Init(in_state_t *in_state_p)
 	m_side = ri.Cvar_Get ("m_side", "0.8", 0);
 
 	mx = my = 0.0;
-	mouse_avail = true;
+	mouse_avail = qtrue;
 }
 
 void RW_IN_Shutdown(void)
 {
-	RW_IN_Activate (false);
+	RW_IN_Activate (qfalse);
 
 	if (mouse_avail)
-		mouse_avail = false;
+		mouse_avail = qfalse;
 }
 
 /*

@@ -70,16 +70,7 @@ typedef double double64_t;
 
 /* NOTE: MSVC does NOT properly support 80-bit long doubles. They should NOT be used.*/
 
-#ifdef __cplusplus
-/* Most platforms define bool as 8 bits. If this is not the case, please register a bug on the tracker.
- * G++ & MSVC do on x86 & x86_64.
- */
-typedef bool bool_t;
-#else
-typedef uint8_t bool_t;
-#define false 0
-#define true 1
-#endif /* __cplusplus */
+typedef enum {qfalse, qtrue} qboolean;
 
 #endif /* COMMON_UFOTYPES_H */
 

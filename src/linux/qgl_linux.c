@@ -3082,7 +3082,7 @@ void *qwglGetProcAddress(char *symbol)
 **
 */
 
-bool_t QGL_Init( const char *dllname )
+qboolean QGL_Init( const char *dllname )
 {
 	if ( ( glw_state.OpenGLLib = dlopen( dllname, RTLD_LAZY | RTLD_GLOBAL ) ) == 0 ) {
 		char	fn[MAX_OSPATH];
@@ -3103,7 +3103,7 @@ bool_t QGL_Init( const char *dllname )
 
 		if ( ( glw_state.OpenGLLib = dlopen( fn, RTLD_LAZY ) ) == 0 ) {
 			ri.Con_Printf( PRINT_ALL, "%s\n", dlerror() );
-			return false;
+			return qfalse;
 		}
 	}
 
@@ -3491,10 +3491,10 @@ bool_t QGL_Init( const char *dllname )
 	qglGetVertexAttribPointervARB = 0;
 	qglIsProgramARB = 0;
 
-	return true;
+	return qtrue;
 }
 
-void GLimp_EnableLogging( bool_t enable )
+void GLimp_EnableLogging( qboolean enable )
 {
 	if ( enable )
 	{

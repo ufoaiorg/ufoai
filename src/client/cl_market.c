@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_BUYLIST		32
 
-uint8_t buyList[MAX_BUYLIST];
+byte buyList[MAX_BUYLIST];
 int buyListLength;
 int buyCategory;
 
@@ -312,7 +312,7 @@ static void CL_SellAircraft(void)
 	int num, aircraftID, i, j;
 	base_t *base;
 	aircraft_t *air;
-	bool_t found = false;
+	qboolean found = qfalse;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: mn_sell_aircraft <num>\n");
@@ -334,7 +334,7 @@ static void CL_SellAircraft(void)
 			if (!Q_strncmp(air->id, aircraft[aircraftID].id, MAX_VAR)) {
 				if (*air->teamSize)
 					continue;
-				found = true;
+				found = qtrue;
 				break;
 			}
 		}

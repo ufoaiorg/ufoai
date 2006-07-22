@@ -35,15 +35,15 @@ void		GLimp_Shutdown( void )
 {
 }
 
-int     	GLimp_SetMode( int *pwidth, int *pheight, int mode, bool_t fullscreen )
+int     	GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 {
 }
 
-void		GLimp_AppActivate( bool_t active )
+void		GLimp_AppActivate( qboolean active )
 {
 }
 
-void		GLimp_EnableLogging( bool_t enable )
+void		GLimp_EnableLogging( qboolean enable )
 {
 }
 

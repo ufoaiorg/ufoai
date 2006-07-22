@@ -83,9 +83,9 @@ typedef struct animState_s {
 	float backlerp;
 	int time, dt;
 
-	uint8_t list[MAX_ANIMLIST];
-	uint8_t lcur, ladd;
-	uint8_t change;
+	byte list[MAX_ANIMLIST];
+	byte lcur, ladd;
+	byte change;
 } animState_t;
 
 typedef struct entity_s {
@@ -133,8 +133,8 @@ typedef struct shader_s {
 	/* filename is for an external filename to load the shader from */
 	char filename[MAX_VAR];
 
-	bool_t frag;				/* fragment-shader */
-	bool_t vertex;			/* vertex-shader */
+	qboolean frag;				/* fragment-shader */
+	qboolean vertex;			/* vertex-shader */
 	/* TODO: */
 
 	/* vpid and fpid are vertexpid and fragmentpid for binding */
@@ -183,10 +183,10 @@ typedef struct {
 
 typedef struct ptl_s {
 	/* used by ref */
-	bool_t inuse;
+	qboolean inuse;
 	int pic, model;
-	uint8_t blend;
-	uint8_t style;
+	byte blend;
+	byte style;
 	vec2_t size;
 	vec3_t scale;
 	vec4_t color;
@@ -200,16 +200,16 @@ typedef struct ptl_s {
 	int frame, endFrame;
 	float fps, lastFrame;
 	float tps, lastThink;
-	uint8_t thinkFade, frameFade;
+	byte thinkFade, frameFade;
 	float t, dt, life;
 	int rounds, roundsCnt;
 	vec3_t a, v, omega;
-	bool_t light;
+	qboolean light;
 } ptl_t;
 
 typedef struct ptlArt_s {
-	uint8_t type;
-	uint8_t frame;
+	byte type;
+	byte frame;
 	char name[MAX_VAR];
 	char *art;
 } ptlArt_t;
@@ -224,7 +224,7 @@ typedef struct {
 	int rdflags;				/* RDF_UNDERWATER, etc */
 	int worldlevel;
 
-	uint8_t *areabits;				/* if not NULL, only areas with set bits will be drawn */
+	byte *areabits;				/* if not NULL, only areas with set bits will be drawn */
 
 	lightstyle_t *lightstyles;	/* [MAX_LIGHTSTYLES] */
 
@@ -262,7 +262,7 @@ typedef struct {
 	int api_version;
 
 	/* called when the library is loaded */
-	bool_t (*Init) (HINSTANCE hinstance, WNDPROC wndproc);
+	 qboolean(*Init) (HINSTANCE hinstance, WNDPROC wndproc);
 
 	/* called before the library is unloaded */
 	void (*Shutdown) (void);
@@ -292,7 +292,7 @@ typedef struct {
 	void (*DrawModelDirect) (modelInfo_t * mi, modelInfo_t * pmi, char *tag);
 	void (*DrawGetPicSize) (int *w, int *h, char *name);	/* will return 0 0 if not found */
 	void (*DrawPic) (int x, int y, char *name);
-	void (*DrawNormPic) (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, bool_t blend, char *name);
+	void (*DrawNormPic) (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
 	void (*DrawStretchPic) (int x, int y, int w, int h, char *name);
 	void (*DrawChar) (int x, int y, int c);
 	void (*FontRegister) (char *name, int size, char *path, char *style);
@@ -313,29 +313,29 @@ typedef struct {
 	void (*AnimRun) (animState_t * as, struct model_s * mod, int msec);
 	char *(*AnimGetName) (animState_t * as, struct model_s * mod);
 
-	void (*LoadTGA) (char *name, uint8_t **pic, int *width, int *height);
+	void (*LoadTGA) (char *name, byte ** pic, int *width, int *height);
 
 	/* Draw images for cinematic rendering (which can have a different palette). Note that calls */
-	void (*DrawStretchRaw) (int x, int y, int w, int h, int cols, int rows, uint8_t *data);
+	void (*DrawStretchRaw) (int x, int y, int w, int h, int cols, int rows, byte * data);
 
 	/*
 	 ** video mode and refresh state management entry points
 	 */
 	void (*BeginFrame) (float camera_separation);
 	void (*EndFrame) (void);
-	void (*AppActivate) (bool_t activate);
-	void (*TakeVideoFrame) (int h, int w, uint8_t *captureBuffer, uint8_t *encodeBuffer, bool_t motionJpeg);
+	void (*AppActivate) (qboolean activate);
+	void (*TakeVideoFrame) (int h, int w, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg);
 } refexport_t;
 
 /* these are the functions imported by the refresh module */
 typedef struct {
 	void (*Sys_Error) (int err_level, char *str, ...);
 
-	bool_t (*Cmd_AddCommand) (char *name, void (*cmd) (void));
-	bool_t (*Cmd_RemoveCommand) (char *name);
+	void (*Cmd_AddCommand) (char *name, void (*cmd) (void));
+	void (*Cmd_RemoveCommand) (char *name);
 	int (*Cmd_Argc) (void);
 	char *(*Cmd_Argv) (int i);
-	void (*Cmd_ExecuteText) (char *text, int exec_when);
+	void (*Cmd_ExecuteText) (int exec_when, char *text);
 
 	void (*Con_Printf) (int print_level, char *str, ...);
 
@@ -344,7 +344,7 @@ typedef struct {
 	/* or a discrete file from anywhere in the quake search path */
 	/* a -1 return means the file does not exist */
 	/* NULL can be passed for buf to just determine existance */
-	int (*FS_WriteFile) (const void *buffer, size_t len, const char *filename);
+	int (*FS_WriteFile) (const void *buffer, int len, const char *filename);
 	int (*FS_LoadFile) (char *name, void **buf);
 	void (*FS_FreeFile) (void *buf);
 	int (*FS_CheckFile) (const char *name);
@@ -362,9 +362,9 @@ typedef struct {
 	cvar_t *(*Cvar_Set) (char *name, char *value);
 	void (*Cvar_SetValue) (char *name, float value);
 
-	bool_t (*Vid_GetModeInfo) (int *width, int *height, int mode);
+	 qboolean(*Vid_GetModeInfo) (int *width, int *height, int mode);
 	void (*Vid_NewWindow) (int width, int height);
-	void (*CL_WriteAVIVideoFrame) (const uint8_t *buffer, int size);
+	void (*CL_WriteAVIVideoFrame) (const byte * buffer, int size);
 } refimport_t;
 
 

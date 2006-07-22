@@ -32,11 +32,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int sound_system_id;
 cvar_t *s_system;
 
-bool_t SNDDMA_Init(struct sndinfo *s)
+qboolean SNDDMA_Init(struct sndinfo *s)
 {
 	/* alsa is default for linux */
 	s_system = Cvar_Get("s_system", "2", CVAR_ARCHIVE);
-	s_system->modified = false;
+	s_system->modified = qfalse;
 
 	/* when we select another soundsystem - we have to */
 	/* stop the current running - but we need to know */
@@ -69,7 +69,7 @@ bool_t SNDDMA_Init(struct sndinfo *s)
 			Cvar_Set("s_system", "1");
 #endif
 			/* we've nothing started */
-			s_system->modified = false;
+			s_system->modified = qfalse;
 			return SNDDMA_Init(s);
 	}
 }

@@ -130,9 +130,9 @@ typedef struct {
 	int timedemo_frames;
 	int timedemo_start;
 
-	bool_t refresh_prepped;	/* false if on new level or new ref dll */
-	bool_t sound_prepped;		/* ambient sounds can start */
-	bool_t force_refdef;		/* vid has changed, so we can't use a paused refdef */
+	qboolean refresh_prepped;	/* false if on new level or new ref dll */
+	qboolean sound_prepped;		/* ambient sounds can start */
+	qboolean force_refdef;		/* vid has changed, so we can't use a paused refdef */
 
 	int surpressCount;			/* number of messages rate supressed */
 
@@ -166,14 +166,14 @@ typedef struct {
 	int cinematictime;			/* cls.realtime for first cinematic frame */
 	int cinematicframe;
 	char cinematicpalette[768];
-	bool_t cinematicpalette_active;
+	qboolean cinematicpalette_active;
 
 	/* server state information */
-	bool_t attractloop;		/* running the attract loop, any key will menu */
+	qboolean attractloop;		/* running the attract loop, any key will menu */
 	int servercount;			/* server identification for prespawns */
 	char gamedir[MAX_QPATH];
-	int16_t pnum;
-	uint8_t actTeam;
+	int pnum;
+	int actTeam;
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
@@ -241,12 +241,12 @@ typedef struct {
 	int challenge;				/* from the server to use for connecting */
 
 	/* demo recording info must be here, so it isn't cleared on level change */
-	bool_t demorecording;
-	bool_t demowaiting;		/* don't record until a non-delta message is received */
+	qboolean demorecording;
+	qboolean demowaiting;		/* don't record until a non-delta message is received */
 	FILE *demofile;
 
 	/* needs to be here, because server can be shutdown, before we see the ending screen */
-	uint8_t team;
+	int team;
 } client_static_t;
 
 extern client_static_t cls;
@@ -414,12 +414,12 @@ void IN_Accumulate(void);
 void CL_ParseLayout(void);
 
 /* cl_sequence.c (avi stuff) */
-bool_t CL_OpenAVIForWriting(char *filename);
+qboolean CL_OpenAVIForWriting(char *filename);
 void CL_TakeVideoFrame(void);
-void CL_WriteAVIVideoFrame(const uint8_t *imageBuffer, int size);
-void CL_WriteAVIAudioFrame(const uint8_t *pcmBuffer, int size);
-bool_t CL_CloseAVI(void);
-bool_t CL_VideoRecording(void);
+void CL_WriteAVIVideoFrame(const byte * imageBuffer, int size);
+void CL_WriteAVIAudioFrame(const byte * pcmBuffer, int size);
+qboolean CL_CloseAVI(void);
+qboolean CL_VideoRecording(void);
 void CL_StopVideo_f(void);
 void CL_Video_f(void);
 
@@ -436,7 +436,7 @@ void CL_Disconnect_f(void);
 void CL_GetChallengePacket(void);
 void CL_PingServers_f(void);
 void CL_Snd_Restart_f(void);
-void CL_ParseMedalsAndRanks( char *title, char **text, uint8_t parserank );
+void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank );
 void CL_ParseUGVs(char *title, char **text);
 
 /* cl_input */
@@ -493,34 +493,33 @@ void CL_SniperModeUnset(void);
 
 /* cl_le.c */
 typedef struct le_s {
-	bool_t inuse;
-	bool_t invis;
-	bool_t selected;
-	uint8_t type;
+	qboolean inuse;
+	qboolean invis;
+	qboolean selected;
+	int type;
 	int entnum;
 
 	vec3_t origin, oldOrigin;
 	pos3_t pos, oldPos;
-	uint8_t dir;
+	int dir;
 
-	uint8_t TU, maxTU;
-	uint8_t morale, maxMorale;
-	uint8_t HP, maxHP;
-	uint8_t STUN;					/* 0 stunned - state STATE_STUN */
-	int16_t state;
+	int TU, maxTU;
+	int morale, maxMorale;
+	int HP, maxHP;
+	int STUN;					/* 0 stunned - state STATE_STUN */
+	int state;
 
 	float angles[3];
 	float sunfrac;
 	float alpha;
 
-	uint8_t team;
-	uint8_t pnum;
+	int team;
+	int pnum;
 
 	int contents;
 	vec3_t mins, maxs;
 
-	int16_t modelnum1, modelnum2;
-	uint8_t skinnum;
+	int modelnum1, modelnum2, skinnum;
 	struct model_s *model1, *model2;
 
 /* 	character_t	*chr; */
@@ -529,7 +528,7 @@ typedef struct le_s {
 	void (*think) (struct le_s * le);
 
 	/* various think function vars */
-	uint8_t path[32];
+	byte path[32];
 	int pathLength, pathPos;
 	int startTime, endTime;
 	int speed;
@@ -539,11 +538,11 @@ typedef struct le_s {
 	ptl_t *ptl;
 	char *ref1, *ref2;
 	inventory_t i;
-	uint8_t left, right;
-	uint8_t fieldSize;				/* ACTOR_SIZE_* */
+	int left, right;
+	int fieldSize;				/* ACTOR_SIZE_* */
 
 	/* is called before adding a le to scene */
-	bool_t (*addFunc) (struct le_s * le, entity_t * ent);
+	qboolean(*addFunc) (struct le_s * le, entity_t * ent);
 } le_t;							/* local entity */
 
 #define MAX_LOCALMODELS		512
@@ -625,7 +624,7 @@ extern le_t *selActor;
 extern int actorMoveLength;
 extern invList_t invList[MAX_INVLIST];
 
-extern uint8_t *fb_list[MAX_FB_LIST];
+extern byte *fb_list[MAX_FB_LIST];
 extern int fb_length;
 
 void CL_CharacterCvars(character_t * chr);
@@ -634,8 +633,8 @@ void CL_ActorUpdateCVars(void);
 
 void CL_DisplayHudMessage(char *text, int time);
 
-bool_t CL_ActorSelect(le_t * le);
-bool_t CL_ActorSelectList(int num);
+qboolean CL_ActorSelect(le_t * le);
+qboolean CL_ActorSelectList(int num);
 void CL_AddActorToTeamList(le_t * le);
 void CL_RemoveActorFromTeamList(le_t * le);
 void CL_ActorSelectMouse(void);
@@ -662,8 +661,8 @@ void CL_DoEndRound(sizebuf_t * sb);
 void CL_ResetMouseLastPos(void);
 void CL_ActorMouseTrace(void);
 
-bool_t CL_AddActor(le_t * le, entity_t * ent);
-bool_t CL_AddUGV(le_t * le, entity_t * ent);
+qboolean CL_AddActor(le_t * le, entity_t * ent);
+qboolean CL_AddUGV(le_t * le, entity_t * ent);
 
 void CL_AddTargeting(void);
 
@@ -680,7 +679,7 @@ void CL_ResetTeams(void);
 void CL_ParseResults(sizebuf_t * buf);
 void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num);
 void CL_CheckInventory(equipDef_t * equip);
-void CL_ParseCharacterData(sizebuf_t *buf, bool_t updateCharacter);
+void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter);
 
 /* cl_research.c */
 #include "cl_research.h"
@@ -705,7 +704,7 @@ void CL_LoadTeam(sizebuf_t *sb, base_t *base, int version);
 void CL_UpdateHireVar(void);
 
 void CL_ResetCharacters(base_t *base);
-void CL_GenerateCharacter(char *team, base_t *base, uint8_t type);
+void CL_GenerateCharacter(char *team, base_t *base, int type);
 
 void MN_BuildNewBase(vec2_t pos);
 
@@ -767,7 +766,7 @@ char messageBuffer[MAX_MESSAGE_TEXT];
 
 message_t *messageStack;
 
-void MN_AddNewMessage(const char *title, const char *text, bool_t popup, messagetype_t type, technology_t * pedia);
+void MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia);
 void MN_RemoveMessage(char *title);
 void CL_InitMessageSystem(void);
 
@@ -823,9 +822,9 @@ typedef struct menuNode_s {
 	vec3_t origin, scale, angles, center;
 	vec2_t pos, size, texh, texl;
 	menuModel_t *menuModel;
-	uint8_t state;
-	uint8_t align;
-	uint8_t invis, blend;
+	byte state;
+	byte align;
+	byte invis, blend;
 	int mousefx;
 	int textScroll;				/* textfields - current scroll position */
 	int timeOut;				/* ms value until invis is set (see cl.time) */
@@ -862,7 +861,7 @@ typedef enum {
 	MAX_MENUTEXTS
 } texts_t;
 
-bool_t MN_CursorOnMenu(int x, int y);
+qboolean MN_CursorOnMenu(int x, int y);
 void MN_Click(int x, int y);
 void MN_RightClick(int x, int y);
 void MN_MiddleClick(int x, int y);
@@ -882,7 +881,7 @@ void MN_Shutdown(void);
 void MN_ParseMenu(char *name, char **text);
 void MN_ParseMenuModel(char *name, char **text);
 void MN_PushMenu(char *name);
-void MN_PopMenu(bool_t all);
+void MN_PopMenu(qboolean all);
 void MN_Popup(const char *title, const char *text);
 void MN_ParseTutorials(char *title, char **text);
 
@@ -929,7 +928,7 @@ extern int numPtls;
 extern char *svc_strings[256];
 extern char *ev_format[128];
 extern void (*ev_func[128]) (sizebuf_t * sb);
-extern bool_t blockEvents;
+extern qboolean blockEvents;
 
 void CL_ParseServerMessage(void);
 void CL_LoadClientinfo(clientinfo_t * ci, char *s);

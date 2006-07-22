@@ -6,8 +6,6 @@
 # ELF only
 #
 
-export
-
 # start of configurable options
 
 # Here are your build options:
@@ -65,28 +63,24 @@ endif
 
 CC=gcc
 
-ROOT_DIR=$(shell pwd)/..
-SRC_DIR=$(shell pwd)
+VERSION=$(shell grep UFO_VERSION $(MOUNT_DIR)/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/')
 
-VERSION=$(shell grep UFO_VERSION $(SRC_DIR)/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/')
+MOUNT_DIR=.
 
+BUILD_DEBUG_DIR=../debug$(ARCH)
+BUILD_RELEASE_DIR=../release$(ARCH)
+TOOLS_DIR=$(MOUNT_DIR)/tools
+CLIENT_DIR=$(MOUNT_DIR)/client
+SERVER_DIR=$(MOUNT_DIR)/server
+REF_GL_DIR=$(MOUNT_DIR)/ref_gl
+COMMON_DIR=$(MOUNT_DIR)/qcommon
+LINUX_DIR=$(MOUNT_DIR)/linux
+MACOSX_DIR=$(MOUNT_DIR)/macosx
+UNIX_DIR=$(MOUNT_DIR)/unix
+GAME_DIR=$(MOUNT_DIR)/game
+NULL_DIR=$(MOUNT_DIR)/null
 
-BUILD_DEBUG_DIR=$(ROOT_DIR)/debug$(ARCH)
-BUILD_RELEASE_DIR=$(ROOT_DIR)/release$(ARCH)
-TOOLS_DIR=$(SRC_DIR)/tools
-CLIENT_DIR=$(SRC_DIR)/client
-SERVER_DIR=$(SRC_DIR)/server
-REF_GL_DIR=$(SRC_DIR)/ref_gl
-COMMON_DIR=$(SRC_DIR)/qcommon
-LINUX_DIR=$(SRC_DIR)/linux
-MACOSX_DIR=$(SRC_DIR)/macosx
-UNIX_DIR=$(SRC_DIR)/unix
-GAME_DIR=$(SRC_DIR)/game
-NULL_DIR=$(SRC_DIR)/null
-
-COMMON_HDR=$(SRC_DIR)/common/ufotypes.h $(SRC_DIR)/common/debug.h
-
-BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89 -I$(SRC_DIR)
+BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
 # Put this in when it is fixed
 # -ansi -pedantic
 TOOLSCFLAGS=
@@ -249,7 +243,8 @@ DO_SHLIB_AS=echo " * [ASL] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -DELF -x assemble
 #############################################################################
 # gettext stuff
 #############################################################################
-POFILES = $(wildcard $(SRC_DIR)/po/*.po)
+WORKSPACE = $(shell pwd)
+POFILES = $(wildcard $(WORKSPACE)/po/*.po)
 #############################################################################
 
 #############################################################################
@@ -332,16 +327,16 @@ deb:
 	debuild binary
 
 links:
-	@rm -f $(ROOT_DIR)/ufo $(ROOT_DIR)/ufo2map $(ROOT_DIR)/ref_glx.so $(ROOT_DIR)/ref_sdl.so $(ROOT_DIR)/base/game.so $(ROOT_DIR)/ufoded
-	ln -s $(BUILD_DEBUG_DIR)/ufoded $(ROOT_DIR)/ufoded
-	ln -s $(BUILD_DEBUG_DIR)/ufo $(ROOT_DIR)/ufo
-	ln -s $(BUILD_DEBUG_DIR)/ufo2map $(ROOT_DIR)/ufo2map
-	ln -s $(BUILD_DEBUG_DIR)/ref_sdl.so $(ROOT_DIR)/ref_sdl.so
-	ln -s $(BUILD_DEBUG_DIR)/ref_glx.so $(ROOT_DIR)/ref_glx.so
-	ln -s $(BUILD_DEBUG_DIR)/game.so $(ROOT_DIR)/base/game.so
+	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so ../ufoded
+	ln -s src/$(BUILD_DEBUG_DIR)/ufoded ../ufoded
+	ln -s src/$(BUILD_DEBUG_DIR)/ufo ../ufo
+	ln -s src/$(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
+	ln -s src/$(BUILD_DEBUG_DIR)/ref_sdl.so ../ref_sdl.so
+	ln -s src/$(BUILD_DEBUG_DIR)/ref_glx.so ../ref_glx.so
+	ln -s ../src/$(BUILD_DEBUG_DIR)/game.so ../base/game.so
 
 copy_debug:
-	@rm -f $(ROOT_DIR)/ufo $(ROOT_DIR)/ufo2map $(ROOT_DIR)/ref_glx.so $(ROOT_DIR)/ref_sdl.so $(ROOT_DIR)/base/game.so $(ROOT_DIR)/ufoded
+	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so ../ufoded
 	cp $(BUILD_DEBUG_DIR)/ufoded ../ufoded
 	cp $(BUILD_DEBUG_DIR)/ufo ../ufo
 	cp $(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
@@ -609,7 +604,6 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/snd_mem.o \
 	$(BUILDDIR)/client/snd_mix.o \
 	\
-	$(BUILDDIR)/client/cbuf.o \
 	$(BUILDDIR)/client/cmd.o \
 	$(BUILDDIR)/client/cmodel.o \
 	$(BUILDDIR)/client/common.o \
@@ -750,9 +744,6 @@ $(BUILDDIR)/client/snd_alsa.o :     $(LINUX_DIR)/snd_alsa.c
 $(BUILDDIR)/client/cmd.o :         $(COMMON_DIR)/cmd.c
 	$(DO_CC)
 
-$(BUILDDIR)/client/cbuf.o :         $(COMMON_DIR)/cbuf.c
-	$(DO_CC)
-
 $(BUILDDIR)/client/cmodel.o :      $(COMMON_DIR)/cmodel.c
 	$(DO_CC)
 
@@ -861,7 +852,6 @@ $(BUILDDIR)/client/q_shosx.o :    $(MACOSX_DIR)/q_shosx.c
 
 Q2DED_OBJS = \
 	\
-	$(BUILDDIR)/ded/cbuf.o \
 	$(BUILDDIR)/ded/cmd.o \
 	$(BUILDDIR)/ded/cmodel.o \
 	$(BUILDDIR)/ded/common.o \
@@ -904,9 +894,6 @@ endif
 $(BUILDDIR)/ufoded : $(Q2DED_OBJS)
 	@echo " * [DED] ...linking";
 	$(CC) $(CFLAGS) -o $@ $(Q2DED_OBJS) $(LDFLAGS)
-
-$(BUILDDIR)/ded/cbuf.o :        $(COMMON_DIR)/cbuf.c
-	$(DO_DED_CC)
 
 $(BUILDDIR)/ded/cmd.o :        $(COMMON_DIR)/cmd.c
 	$(DO_DED_CC)

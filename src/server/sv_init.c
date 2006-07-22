@@ -43,7 +43,7 @@ SV_FindIndex
 
 ================
 */
-static int SV_FindIndex(char *name, int start, int max, bool_t create)
+static int SV_FindIndex(char *name, int start, int max, qboolean create)
 {
 	int i;
 
@@ -76,17 +76,17 @@ static int SV_FindIndex(char *name, int start, int max, bool_t create)
 
 int SV_ModelIndex(char *name)
 {
-	return SV_FindIndex(name, CS_MODELS, MAX_MODELS, true);
+	return SV_FindIndex(name, CS_MODELS, MAX_MODELS, qtrue);
 }
 
 int SV_SoundIndex(char *name)
 {
-	return SV_FindIndex(name, CS_SOUNDS, MAX_SOUNDS, true);
+	return SV_FindIndex(name, CS_SOUNDS, MAX_SOUNDS, qtrue);
 }
 
 int SV_ImageIndex(char *name)
 {
-	return SV_FindIndex(name, CS_IMAGES, MAX_IMAGES, true);
+	return SV_FindIndex(name, CS_IMAGES, MAX_IMAGES, qtrue);
 }
 
 
@@ -107,17 +107,17 @@ MAP ASSEMBLY
 
 typedef struct mTile_s {
 	char name[MAX_VAR];
-	uint8_t spec[MAX_TILESIZE][MAX_TILESIZE][MAX_TILEALTS];
+	byte spec[MAX_TILESIZE][MAX_TILESIZE][MAX_TILEALTS];
 	int w, h;
 } mTile_t;
 
 typedef struct mAssembly_s {
 	char name[MAX_VAR];
-	uint8_t min[MAX_TILETYPES];
-	uint8_t max[MAX_TILETYPES];
-	uint8_t fT[MAX_FIXEDTILES];
-	uint8_t fX[MAX_FIXEDTILES];
-	uint8_t fY[MAX_FIXEDTILES];
+	byte min[MAX_TILETYPES];
+	byte max[MAX_TILETYPES];
+	byte fT[MAX_FIXEDTILES];
+	byte fX[MAX_FIXEDTILES];
+	byte fY[MAX_FIXEDTILES];
 	int numFixed;
 	int w, h;
 } mAssembly_t;
@@ -167,7 +167,7 @@ static void RandomList(int n, short *list)
 /**
  * @brief
  */
-static uint8_t tileChar(char chr)
+static byte tileChar(char chr)
 {
 	if (chr == '+')
 		return SOLID;
@@ -338,9 +338,9 @@ static void SV_ParseAssembly(char *filename, char **text)
  * @bief
  * @sa SV_AssembleMap
  */
-static void SV_AddTile(uint8_t map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, int *toFill)
+static void SV_AddTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, int *toFill)
 {
-	bool_t bad;
+	qboolean bad;
 	int tx, ty;
 	int a, b, c;
 
@@ -356,10 +356,10 @@ static void SV_AddTile(uint8_t map[32][32][MAX_TILEALTS], mTile_t * tile, int x,
 			} else if (tile->spec[ty][tx][0] && map[y + ty][x + tx][0] != SOLID) {
 				/* calc remaining connection options */
 				for (a = 0; map[y + ty][x + tx][a] && a < MAX_TILEALTS; a++) {
-					bad = true;
+					bad = qtrue;
 					for (b = 0; bad && tile->spec[ty][tx][b] && b < MAX_TILEALTS; b++)
 						if (tile->spec[ty][tx][b] == map[y + ty][x + tx][a])
-							bad = false;
+							bad = qfalse;
 
 					if (bad) {
 						/* not an option anymore */
@@ -388,23 +388,23 @@ static void SV_AddTile(uint8_t map[32][32][MAX_TILEALTS], mTile_t * tile, int x,
  * @sa SV_AddMandatoryParts
  * @sa SV_AddRegion
  */
-static bool_t SV_FitTile(uint8_t map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, bool_t force)
+static qboolean SV_FitTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, qboolean force)
 {
-	bool_t touch;
+	qboolean touch;
 	int tx, ty;
 	int a, b;
-	uint8_t *spec;
-	uint8_t *m;
+	byte *spec;
+	byte *m;
 
 	/* check for map border */
 	if (x + tile->w > mapX + mapW + 2 || y + tile->h > mapY + mapH + 2)
-		return false;
+		return qfalse;
 
 	/* require touching tiles */
 	if (x == mapX)
-		touch = true;
+		touch = qtrue;
 	else
-		touch = false;
+		touch = qfalse;
 
 	/* test for fit */
 	spec = &tile->spec[0][0][0];
@@ -413,11 +413,11 @@ static bool_t SV_FitTile(uint8_t map[32][32][MAX_TILEALTS], mTile_t * tile, int 
 		for (tx = 0; tx < tile->w; tx++, spec += MAX_TILEALTS, m += MAX_TILEALTS) {
 			if (*spec == SOLID && *m == SOLID) {
 				/* already something there */
-				return false;
+				return qfalse;
 			} else if (*spec && *m) {
 				/* check connection, avoid contradictory connections */
 				if (*m == SOLID)
-					touch = true;
+					touch = qtrue;
 
 				for (a = 0; spec[a] && a < MAX_TILEALTS; a++)
 					for (b = 0; m[b] && b < MAX_TILEALTS; b++)
@@ -425,7 +425,7 @@ static bool_t SV_FitTile(uint8_t map[32][32][MAX_TILEALTS], mTile_t * tile, int 
 							goto fine;
 
 				/* not jumped => impossible */
-				return false;
+				return qfalse;
 			}
 		  fine:;
 		}
@@ -435,9 +435,9 @@ static bool_t SV_FitTile(uint8_t map[32][32][MAX_TILEALTS], mTile_t * tile, int 
 
 	/* it fits, check for touch */
 	if (touch || !force)
-		return true;
+		return qtrue;
 	else
-		return false;
+		return qfalse;
 }
 
 
@@ -445,7 +445,7 @@ static bool_t SV_FitTile(uint8_t map[32][32][MAX_TILEALTS], mTile_t * tile, int 
  * @brief
  * @sa SV_FitTile
  */
-static bool_t SV_AddRegion(uint8_t map[32][32][MAX_TILEALTS], uint8_t *num)
+static qboolean SV_AddRegion(byte map[32][32][MAX_TILEALTS], byte * num)
 {
 	mTile_t *tile;
 	int i, j, x, y;
@@ -486,7 +486,7 @@ static bool_t SV_AddRegion(uint8_t map[32][32][MAX_TILEALTS], uint8_t *num)
 				tile = &mTile[j];
 
 				/* add the tile, if it fits */
-				if (SV_FitTile(map, tile, x, y, true)) {
+				if (SV_FitTile(map, tile, x, y, qtrue)) {
 					/* mark as used and add the tile */
 					num[j]++;
 					SV_AddTile(map, tile, x, y, &toFill);
@@ -506,10 +506,10 @@ static bool_t SV_AddRegion(uint8_t map[32][32][MAX_TILEALTS], uint8_t *num)
 	}
 	/* check for success */
 	if (toFill <= 0)
-		return true;
+		return qtrue;
 
 	/* too many retries */
-	return false;
+	return qfalse;
 }
 
 
@@ -517,7 +517,7 @@ static bool_t SV_AddRegion(uint8_t map[32][32][MAX_TILEALTS], uint8_t *num)
  * @brief
  * @sa SV_FitTile
  */
-static bool_t SV_AddMandatoryParts(uint8_t map[32][32][MAX_TILEALTS], uint8_t *num)
+static qboolean SV_AddMandatoryParts(byte map[32][32][MAX_TILEALTS], byte * num)
 {
 	mTile_t *tile;
 	int i, j, n, x, y;
@@ -528,19 +528,19 @@ static bool_t SV_AddMandatoryParts(uint8_t map[32][32][MAX_TILEALTS], uint8_t *n
 			for (n = 0; n < mapSize; n++) {
 				x = prList[n] % mapW;
 				y = prList[n] / mapH;
-				if (SV_FitTile(map, tile, x, y, false)) {
+				if (SV_FitTile(map, tile, x, y, qfalse)) {
 					/* add tile */
 					SV_AddTile(map, tile, x, y, NULL);
 					break;
 				}
 			}
 			if (n >= mapSize)
-				return false;
+				return qfalse;
 		}
 		num[i] = mAsm->min[i];
 	}
 	/* success */
-	return true;
+	return qtrue;
 }
 
 
@@ -556,8 +556,8 @@ static bool_t SV_AddMandatoryParts(uint8_t map[32][32][MAX_TILEALTS], uint8_t *n
 void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 {
 	mPlaced_t *pl;
-	uint8_t curMap[32][32][MAX_TILEALTS];
-	uint8_t curNum[MAX_TILETYPES];
+	byte curMap[32][32][MAX_TILEALTS];
+	byte curNum[MAX_TILETYPES];
 	char asmMap[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 	char asmPos[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 	char filename[MAX_QPATH];
@@ -567,7 +567,7 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 	int i, tries;
 	int regNumX, regNumY;
 	float regFracX, regFracY;
-	bool_t ok;
+	qboolean ok;
 
 	/* load the map info */
 	Com_sprintf(filename, MAX_QPATH, "maps/%s.ump", name);
@@ -654,7 +654,7 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 			continue;
 
 		/* start region assembly */
-		ok = true;
+		ok = qtrue;
 		for (y = 0; y < regNumY && ok; y++)
 			for (x = 0; x < regNumX && ok; x++) {
 				mapX = x * regFracX;
@@ -663,7 +663,7 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
 				mapH = (int) ((y + 1) * regFracY + 0.1) - (int) (y * regFracY);
 				mapSize = mapW * mapH;
 				if (!SV_AddRegion(curMap, curNum))
-					ok = false;
+					ok = qfalse;
 			}
 
 		/* break if everything seems to be ok */
@@ -703,7 +703,7 @@ void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
  * @sa SV_AssembleMap
  * @sa CM_LoadMap
  */
-void SV_SpawnServer(char *server, char *param, server_state_t serverstate, bool_t attractloop, bool_t loadgame)
+void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qboolean attractloop, qboolean loadgame)
 {
 	int i;
 	unsigned checksum = 0;
@@ -807,7 +807,7 @@ void SV_InitGame(void)
 
 	if (svs.initialized) {
 		/* cause any connected clients to reconnect */
-		SV_Shutdown("Server restarted\n", true);
+		SV_Shutdown("Server restarted\n", qtrue);
 	} else {
 		/* make sure the client is down */
 		CL_Drop();
@@ -820,7 +820,7 @@ void SV_InitGame(void)
 	/* get any latched variable changes (maxclients, etc) */
 	Cvar_GetLatchedVars();
 
-	svs.initialized = true;
+	svs.initialized = qtrue;
 
 /*	Cvar_FullSet ("maxclients", "8", CVAR_SERVERINFO | CVAR_LATCH); */
 
@@ -852,7 +852,7 @@ void SV_InitGame(void)
  * map tram.cin+jail_e3
  * @sa SV_SpawnServer
  */
-void SV_Map(bool_t attractloop, char *levelstring, bool_t loadgame)
+void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame)
 {
 	char level[MAX_QPATH];
 	char *ch;

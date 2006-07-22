@@ -43,7 +43,7 @@ int dragFrom, dragFromX, dragFromY;
 item_t dragItem;
 float *rotateAngles;
 
-static bool_t cameraRoute = false;
+static qboolean cameraRoute = qfalse;
 static vec3_t routeFrom, routeDelta;
 static float routeDist;
 static int routeLevelStart, routeLevelEnd;
@@ -67,7 +67,7 @@ state bit 1 is edge triggered on the up to down transition
 state bit 2 is edge triggered on the down to up transition
 
 
-Key_Event (int key, bool_t down, unsigned time);
+Key_Event (int key, qboolean down, unsigned time);
 
   +mlook src time
 
@@ -693,13 +693,13 @@ void CL_CamSetAngles(void)
 void CL_MakeBaseMapShot(void)
 {
 	if (Cmd_Argc() > 1)
-		Cbuf_ExecuteText(va("map %s", Cmd_Argv(1)), EXEC_NOW);
+		Cbuf_ExecuteText(EXEC_NOW, va("map %s", Cmd_Argv(1)));
 	cl.cam.angles[0] = 60.0f;
 	cl.cam.angles[1] = 90.0f;
 	Cvar_SetValue("r_isometric", 1);
 	MN_PushMenu("nohud");
-	Cbuf_ExecuteText("toggleconsole", EXEC_NOW);
-	Cbuf_ExecuteText("screenshot", EXEC_NOW);
+	Cbuf_ExecuteText(EXEC_NOW, "toggleconsole");
+	Cbuf_ExecuteText(EXEC_NOW, "screenshot");
 }
 
 /**
@@ -910,8 +910,8 @@ void CL_CameraMoveRemote(void)
 			VectorMA(cl.cam.speed, -frac, routeDelta, cl.cam.speed);
 			VectorNormalize2(cl.cam.speed, delta);
 			if (DotProduct(delta, routeDelta) < 0.05) {
-				blockEvents = false;
-				cameraRoute = false;
+				blockEvents = qfalse;
+				cameraRoute = qfalse;
 			}
 		} else
 			VectorMA(cl.cam.speed, frac, routeDelta, cl.cam.speed);
@@ -1024,8 +1024,8 @@ void CL_CameraRoute(pos3_t from, pos3_t target)
 	Cvar_SetValue("cl_worldlevel", target[2]);
 
 	VectorClear(cl.cam.speed);
-	cameraRoute = true;
-	blockEvents = true;
+	cameraRoute = qtrue;
+	blockEvents = qtrue;
 }
 
 /**

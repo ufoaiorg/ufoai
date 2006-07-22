@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define		MAXCMDLINE	256
 char key_lines[32][MAXCMDLINE];
 int key_linepos;
-static int shift_down = false;
+static int shift_down = qfalse;
 static int anykeydown;
 
 int edit_line = 0;
@@ -50,11 +50,11 @@ int msg_bufferlen = 0;
 
 static int key_waiting;
 static char *keybindings[256];
-static bool_t consolekeys[256];		/* if true, can't be rebound while in console */
-static bool_t menubound[256];		/* if true, can't be rebound while in menu */
+static qboolean consolekeys[256];		/* if true, can't be rebound while in console */
+static qboolean menubound[256];		/* if true, can't be rebound while in menu */
 static int keyshift[256];				/* key to map to if shift held down in console */
 static int key_repeats[256];			/* if > 1, it is autorepeating */
-static bool_t keydown[256];
+static qboolean keydown[256];
 
 typedef struct {
 	char *name;
@@ -173,8 +173,7 @@ static keyname_t keynames[] = {
   */
 static void Key_CompleteCommand(void)
 {
-	const char *cmd;
-	char *s;
+	char *cmd, *s;
 
 	s = key_lines[edit_line] + 1;
 	if (*s == '\\' || *s == '/')
@@ -371,21 +370,21 @@ static void Key_Console(int key)
 void Key_Message(int key)
 {
 	if (key == K_ENTER || key == K_KP_ENTER) {
-		bool_t send;
+		qboolean send;
 
-		send = true;
+		send = qtrue;
 		switch (msg_mode) {
 		case MSG_SAY:
 			if (msg_buffer[0])
 				Cbuf_AddText("say \"");
 			else
-				send = false;
+				send = qfalse;
 			break;
 		case MSG_SAY_TEAM:
 			if (msg_buffer[0])
 				Cbuf_AddText("say_team \"");
 			else
-				send = false;
+				send = qfalse;
 			break;
 		case MSG_MENU:
 			Cbuf_AddText("msgmenu \":");
@@ -642,40 +641,40 @@ void Key_Init(void)
 
 	/* init ascii characters in console mode */
 	for (i = 32; i < 128; i++)
-		consolekeys[i] = true;
-	consolekeys[K_ENTER] = true;
-	consolekeys[K_KP_ENTER] = true;
-	consolekeys[K_TAB] = true;
-	consolekeys[K_LEFTARROW] = true;
-	consolekeys[K_KP_LEFTARROW] = true;
-	consolekeys[K_RIGHTARROW] = true;
-	consolekeys[K_KP_RIGHTARROW] = true;
-	consolekeys[K_UPARROW] = true;
-	consolekeys[K_KP_UPARROW] = true;
-	consolekeys[K_DOWNARROW] = true;
-	consolekeys[K_KP_DOWNARROW] = true;
-	consolekeys[K_BACKSPACE] = true;
-	consolekeys[K_HOME] = true;
-	consolekeys[K_KP_HOME] = true;
-	consolekeys[K_END] = true;
-	consolekeys[K_KP_END] = true;
-	consolekeys[K_PGUP] = true;
-	consolekeys[K_KP_PGUP] = true;
-	consolekeys[K_PGDN] = true;
-	consolekeys[K_KP_PGDN] = true;
-	consolekeys[K_SHIFT] = true;
-	consolekeys[K_INS] = true;
-	consolekeys[K_KP_INS] = true;
-	consolekeys[K_KP_DEL] = true;
-	consolekeys[K_KP_SLASH] = true;
-	consolekeys[K_KP_PLUS] = true;
-	consolekeys[K_KP_MINUS] = true;
-	consolekeys[K_KP_5] = true;
-	consolekeys[K_MWHEELUP] = true;
-	consolekeys[K_MWHEELDOWN] = true;
+		consolekeys[i] = qtrue;
+	consolekeys[K_ENTER] = qtrue;
+	consolekeys[K_KP_ENTER] = qtrue;
+	consolekeys[K_TAB] = qtrue;
+	consolekeys[K_LEFTARROW] = qtrue;
+	consolekeys[K_KP_LEFTARROW] = qtrue;
+	consolekeys[K_RIGHTARROW] = qtrue;
+	consolekeys[K_KP_RIGHTARROW] = qtrue;
+	consolekeys[K_UPARROW] = qtrue;
+	consolekeys[K_KP_UPARROW] = qtrue;
+	consolekeys[K_DOWNARROW] = qtrue;
+	consolekeys[K_KP_DOWNARROW] = qtrue;
+	consolekeys[K_BACKSPACE] = qtrue;
+	consolekeys[K_HOME] = qtrue;
+	consolekeys[K_KP_HOME] = qtrue;
+	consolekeys[K_END] = qtrue;
+	consolekeys[K_KP_END] = qtrue;
+	consolekeys[K_PGUP] = qtrue;
+	consolekeys[K_KP_PGUP] = qtrue;
+	consolekeys[K_PGDN] = qtrue;
+	consolekeys[K_KP_PGDN] = qtrue;
+	consolekeys[K_SHIFT] = qtrue;
+	consolekeys[K_INS] = qtrue;
+	consolekeys[K_KP_INS] = qtrue;
+	consolekeys[K_KP_DEL] = qtrue;
+	consolekeys[K_KP_SLASH] = qtrue;
+	consolekeys[K_KP_PLUS] = qtrue;
+	consolekeys[K_KP_MINUS] = qtrue;
+	consolekeys[K_KP_5] = qtrue;
+	consolekeys[K_MWHEELUP] = qtrue;
+	consolekeys[K_MWHEELDOWN] = qtrue;
 
-	consolekeys['`'] = false;
-	consolekeys['~'] = false;
+	consolekeys['`'] = qfalse;
+	consolekeys['~'] = qfalse;
 
 	for (i = 0; i < 256; i++)
 		keyshift[i] = i;
@@ -706,9 +705,9 @@ void Key_Init(void)
 	keyshift['\\'] = '|';
 #endif
 
-	menubound[K_ESCAPE] = true;
+	menubound[K_ESCAPE] = qtrue;
 	for (i = 0; i < 12; i++)
-		menubound[K_F1 + i] = true;
+		menubound[K_F1 + i] = qtrue;
 
 	/* register our functions */
 	Cmd_AddCommand("bind", Key_Bind_f);
@@ -725,7 +724,7 @@ Called by the system between frames for both key up and key down events
 Should NOT be called during an interrupt!
 ===================
 */
-void Key_Event(int key, bool_t down, unsigned time)
+void Key_Event(int key, qboolean down, unsigned time)
 {
 	char *kb;
 	char cmd[1024];
@@ -860,11 +859,11 @@ void Key_ClearStates(void)
 {
 	int i;
 
-	anykeydown = false;
+	anykeydown = qfalse;
 
 	for (i = 0; i < 256; i++) {
 		if (keydown[i] || key_repeats[i])
-			Key_Event(i, false, 0);
+			Key_Event(i, qfalse, 0);
 		keydown[i] = 0;
 		key_repeats[i] = 0;
 	}

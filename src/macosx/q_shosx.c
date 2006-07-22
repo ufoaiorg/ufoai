@@ -31,7 +31,7 @@
 
 #pragma mark =Variables=
 
-uint8_t 		*membase;
+byte 		*membase;
 int 		maxhunksize,
                 curhunksize,
                 curtime;
@@ -137,27 +137,27 @@ void Sys_Mkdir (char *thePath)
 
 /*__________________________________________________________________________________________Sys_CompareAttributes() */
 
-static bool_t Sys_CompareAttributes (char *thePath, char *theName, unsigned theMustHave, unsigned theCantHave)
+static qboolean Sys_CompareAttributes (char *thePath, char *theName, unsigned theMustHave, unsigned theCantHave)
 {
     struct stat myStat;
     char 	myFileName[MAX_OSPATH];
 
     /* . and .. never match */
     if (Q_strcmp (theName, ".") == 0 || Q_strcmp (theName, "..") == 0)
-        return false;
+        return qfalse;
 
     Com_sprintf(myFileName, MAX_OSPATH, "%s/%s", thePath, theName);
     
     if (stat (myFileName, &myStat) == -1)
-        return (false);
+        return (qfalse);
     
     if ((myStat.st_mode & S_IFDIR) && (theCantHave & SFF_SUBDIR))
-        return (false);
+        return (qfalse);
 
     if ((theMustHave & SFF_SUBDIR) && !(myStat.st_mode & S_IFDIR))
-        return (false);
+        return (qfalse);
 
-    return (true);
+    return (qtrue);
 }
 
 /*__________________________________________________________________________________________________Sys_FindFirst() */

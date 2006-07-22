@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client/client.h"
 
-void CDAudio_Play(int track, bool_t looping)
+void CDAudio_Play(int track, qboolean looping)
 {
         Com_Printf("XXX - CDAudio_Play %i (%i)\n", track, looping);
 }

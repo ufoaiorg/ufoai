@@ -71,7 +71,7 @@ typedef struct seqCamera_s {
 } seqCamera_t;
 
 typedef struct seqEnt_s {
-	bool_t inuse;
+	qboolean inuse;
 	char name[MAX_VAR];
 	struct model_s *model;
 	int skin;
@@ -85,7 +85,7 @@ typedef struct seqEnt_s {
 } seqEnt_t;
 
 typedef struct seq2D_s {
-	bool_t inuse;
+	qboolean inuse;
 	char name[MAX_VAR];
 	char text[MAX_VAR];			/* a placeholder for gettext (V_TRANSLATION2_STRING) */
 	char font[MAX_VAR];
@@ -93,8 +93,8 @@ typedef struct seq2D_s {
 	vec2_t pos, speed;
 	vec2_t size, enlarge;
 	vec4_t color, fade, bgcolor;
-	uint8_t align;
-	bool_t relativePos;		/* useful for translations when sentence length may differ */
+	byte align;
+	qboolean relativePos;		/* useful for translations when sentence length may differ */
 } seq2D_t;
 
 void SEQ_Wait(char *name, char *data);
@@ -237,7 +237,7 @@ void CL_SequenceRender(void)
 		/* test for finish */
 		if (seqCmd >= seqEndCmd) {
 			CL_SequenceEnd_f();
-			MN_PopMenu(false);
+			MN_PopMenu(qfalse);
 			return;
 		}
 
@@ -306,7 +306,7 @@ void CL_Sequence2D(void)
 		if (s2d->inuse) {
 			if (s2d->relativePos && height > 0) {
 				s2d->pos[1] += height;
-				s2d->relativePos = false;
+				s2d->relativePos = qfalse;
 			}
 			/* advance in time */
 			for (j = 0; j < 4; j++) {
@@ -331,7 +331,7 @@ void CL_Sequence2D(void)
 
 			/* image can be background */
 			if (*s2d->image)
-				re.DrawNormPic(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], 0, 0, 0, 0, s2d->align, true, s2d->image);
+				re.DrawNormPic(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], 0, 0, 0, 0, s2d->align, qtrue, s2d->image);
 
 			/* bgcolor can be overlay */
 			if (s2d->bgcolor[3] > 0.0)
@@ -385,7 +385,7 @@ void CL_SequenceStart_f(void)
 	Cbuf_AddText("stopsound\n");
 	MN_PushMenu(mn_sequence->string);
 	cls.state = ca_sequence;
-	cl.refresh_prepped = true;
+	cl.refresh_prepped = qtrue;
 
 	/* init sun */
 	VectorSet(map_sun.dir, 2, 2, 3);
@@ -538,7 +538,7 @@ void SEQ_Model(char *name, char *data)
 		}
 		/* allocate */
 		memset(se, 0, sizeof(seqEnt_t));
-		se->inuse = true;
+		se->inuse = qtrue;
 		Com_sprintf(se->name, MAX_VAR, name);
 	}
 
@@ -594,7 +594,7 @@ void SEQ_2Dobj(char *name, char *data)
 		memset(s2d, 0, sizeof(seq2D_t));
 		for (i = 0; i < 4; i++)
 			s2d->color[i] = 1.0f;
-		s2d->inuse = true;
+		s2d->inuse = qtrue;
 		Q_strncpyz(s2d->font, "f_big", MAX_VAR);	/* default font */
 		Q_strncpyz(s2d->name, name, MAX_VAR);
 	}
@@ -626,11 +626,11 @@ void SEQ_Remove(char *name, char *data)
 
 	se = CL_SequenceFindEnt(name);
 	if (se)
-		se->inuse = false;
+		se->inuse = qfalse;
 
 	s2d = CL_SequenceFind2D(name);
 	if (s2d)
-		s2d->inuse = false;
+		s2d->inuse = qfalse;
 
 	if (!se && !s2d)
 		Com_Printf("SEQ_Remove: couldn't find '%s'\n", name);
@@ -779,7 +779,7 @@ typedef struct audioFormat_s {
 } audioFormat_t;
 
 typedef struct aviFileData_s {
-	bool_t fileOpen;
+	qboolean fileOpen;
 	FILE *f;
 	char fileName[MAX_QPATH];
 	int fileSize;
@@ -794,22 +794,22 @@ typedef struct aviFileData_s {
 	int width, height;
 	int numVideoFrames;
 	int maxRecordSize;
-	bool_t motionJpeg;
-	bool_t audio;
+	qboolean motionJpeg;
+	qboolean audio;
 	audioFormat_t a;
 	int numAudioFrames;
 
 	int chunkStack[MAX_RIFF_CHUNKS];
 	int chunkStackTop;
 
-	uint8_t *cBuffer, *eBuffer;
+	byte *cBuffer, *eBuffer;
 } aviFileData_t;
 
 static aviFileData_t afd;
 
 #define MAX_AVI_BUFFER 2048
 
-static uint8_t buffer[MAX_AVI_BUFFER];
+static byte buffer[MAX_AVI_BUFFER];
 static int bufIndex;
 
 /*
@@ -900,10 +900,10 @@ WRITE_4BYTES
 */
 static void WRITE_4BYTES(int x)
 {
-	buffer[bufIndex + 0] = (uint8_t) ((x >> 0) & 0xFF);
-	buffer[bufIndex + 1] = (uint8_t) ((x >> 8) & 0xFF);
-	buffer[bufIndex + 2] = (uint8_t) ((x >> 16) & 0xFF);
-	buffer[bufIndex + 3] = (uint8_t) ((x >> 24) & 0xFF);
+	buffer[bufIndex + 0] = (byte) ((x >> 0) & 0xFF);
+	buffer[bufIndex + 1] = (byte) ((x >> 8) & 0xFF);
+	buffer[bufIndex + 2] = (byte) ((x >> 16) & 0xFF);
+	buffer[bufIndex + 3] = (byte) ((x >> 24) & 0xFF);
 	bufIndex += 4;
 }
 
@@ -914,8 +914,8 @@ WRITE_2BYTES
 */
 static void WRITE_2BYTES(int x)
 {
-	buffer[bufIndex + 0] = (uint8_t) ((x >> 0) & 0xFF);
-	buffer[bufIndex + 1] = (uint8_t) ((x >> 8) & 0xFF);
+	buffer[bufIndex + 0] = (byte) ((x >> 0) & 0xFF);
+	buffer[bufIndex + 1] = (byte) ((x >> 8) & 0xFF);
 	bufIndex += 2;
 }
 
@@ -1115,30 +1115,30 @@ Creates an AVI file and gets it into a state where
 writing the actual data can begin
 ===============
 */
-bool_t CL_OpenAVIForWriting(char *fileName)
+qboolean CL_OpenAVIForWriting(char *fileName)
 {
 	if (afd.fileOpen)
-		return false;
+		return qfalse;
 
 	memset(&afd, 0, sizeof(aviFileData_t));
 
 	/* Don't start if a framerate has not been chosen */
 	if (cl_aviFrameRate->value <= 0) {
 		Com_Printf("cl_aviFrameRate must be >= 1\n");
-		return false;
+		return qfalse;
 	}
 
 	FS_FOpenFileWrite(fileName, &afd.f);
 	if (afd.f == NULL) {
 		Com_Printf("Could not open %s for writing\n", fileName);
-		return false;
+		return qfalse;
 	}
 
 	FS_FOpenFileWrite(va("%s" INDEX_FILE_EXTENSION, fileName), &afd.idxF);
 	if (afd.idxF == NULL) {
 		Com_Printf("Could not open index file for writing\n");
 		FS_FCloseFile(afd.f);
-		return false;
+		return qfalse;
 	}
 
 	Com_sprintf(afd.fileName, MAX_QPATH, fileName);
@@ -1152,10 +1152,10 @@ bool_t CL_OpenAVIForWriting(char *fileName)
 
 	if (cl_aviMotionJpeg->value) {
 		Com_DPrintf("...MotionJPEG codec\n");
-		afd.motionJpeg = true;
+		afd.motionJpeg = qtrue;
 	} else {
 		Com_DPrintf("...no MotionJPEG\n");
-		afd.motionJpeg = false;
+		afd.motionJpeg = qfalse;
 	}
 
 	afd.cBuffer = Z_Malloc(afd.width * afd.height * 4);
@@ -1177,14 +1177,14 @@ bool_t CL_OpenAVIForWriting(char *fileName)
 	}
 
 	if (!(int) Cvar_VariableValue("s_initsound")) {
-		afd.audio = false;
+		afd.audio = qfalse;
 		Com_Printf("No audio for video capturing\n");
 	} else {
 		if (afd.a.bits == 16 && afd.a.channels == 2)
-			afd.audio = true;
+			afd.audio = qtrue;
 		else {
 			Com_Printf("No audio for video capturing\n");
-			afd.audio = false;	/*FIXME: audio not implemented for this case */
+			afd.audio = qfalse;	/*FIXME: audio not implemented for this case */
 		}
 	}
 
@@ -1200,9 +1200,9 @@ bool_t CL_OpenAVIForWriting(char *fileName)
 	SafeFS_Write(buffer, bufIndex, afd.idxF);
 
 	afd.moviSize = 4;			/* For the "movi" */
-	afd.fileOpen = true;
+	afd.fileOpen = qtrue;
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -1210,7 +1210,7 @@ bool_t CL_OpenAVIForWriting(char *fileName)
 CL_CheckFileSize
 ===============
 */
-static bool_t CL_CheckFileSize(int bytesToAdd)
+static qboolean CL_CheckFileSize(int bytesToAdd)
 {
 	unsigned int newFileSize;
 
@@ -1228,10 +1228,10 @@ static bool_t CL_CheckFileSize(int bytesToAdd)
 		/* ...And open a new one */
 		CL_OpenAVIForWriting(va("%s_", afd.fileName));
 
-		return true;
+		return qtrue;
 	}
 
-	return false;
+	return qfalse;
 }
 
 /*
@@ -1239,12 +1239,12 @@ static bool_t CL_CheckFileSize(int bytesToAdd)
 CL_WriteAVIVideoFrame
 ===============
 */
-void CL_WriteAVIVideoFrame(const uint8_t *imageBuffer, int size)
+void CL_WriteAVIVideoFrame(const byte * imageBuffer, int size)
 {
 	int chunkOffset = afd.fileSize - afd.moviOffset - 8;
 	int chunkSize = 8 + size;
 	int paddingSize = PAD(size, 2) - size;
-	uint8_t padding[4] = { 0 };
+	byte padding[4] = { 0 };
 
 	if (!afd.fileOpen)
 		return;
@@ -1286,9 +1286,9 @@ void CL_WriteAVIVideoFrame(const uint8_t *imageBuffer, int size)
 CL_WriteAVIAudioFrame
 ===============
 */
-void CL_WriteAVIAudioFrame(const uint8_t *pcmBuffer, int size)
+void CL_WriteAVIAudioFrame(const byte * pcmBuffer, int size)
 {
-	static uint8_t pcmCaptureBuffer[PCM_BUFFER_SIZE] = { 0 };
+	static byte pcmCaptureBuffer[PCM_BUFFER_SIZE] = { 0 };
 	static int bytesInBuffer = 0;
 
 	if (!afd.audio || !afd.fileOpen)
@@ -1311,7 +1311,7 @@ void CL_WriteAVIAudioFrame(const uint8_t *pcmBuffer, int size)
 		int chunkOffset = afd.fileSize - afd.moviOffset - 8;
 		int chunkSize = 8 + bytesInBuffer;
 		int paddingSize = PAD(bytesInBuffer, 2) - bytesInBuffer;
-		uint8_t padding[4] = { 0 };
+		byte padding[4] = { 0 };
 
 		bufIndex = 0;
 		WRITE_STRING("01wb");
@@ -1361,7 +1361,7 @@ CL_CloseAVI
 Closes the AVI file and writes an index chunk
 ===============
 */
-bool_t CL_CloseAVI(void)
+qboolean CL_CloseAVI(void)
 {
 	int indexRemainder;
 	int indexSize = afd.numIndices * 16;
@@ -1369,9 +1369,9 @@ bool_t CL_CloseAVI(void)
 
 	/* AVI file isn't open */
 	if (!afd.fileOpen)
-		return false;
+		return qfalse;
 
-	afd.fileOpen = false;
+	afd.fileOpen = qfalse;
 
 	FS_Seek(afd.idxF, 4, FS_SEEK_SET);
 	bufIndex = 0;
@@ -1384,7 +1384,7 @@ bool_t CL_CloseAVI(void)
 	/* Open the temp index file */
 	if ((indexSize = FS_FOpenFile(idxFileName, &afd.idxF)) <= 0) {
 		FS_FCloseFile(afd.f);
-		return false;
+		return qfalse;
 	}
 
 	indexRemainder = indexSize;
@@ -1422,7 +1422,7 @@ bool_t CL_CloseAVI(void)
 
 	Com_Printf("Wrote %d:%d frames to %s\n", afd.numVideoFrames, afd.numAudioFrames, afd.fileName);
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -1430,7 +1430,7 @@ bool_t CL_CloseAVI(void)
 CL_VideoRecording
 ===============
 */
-bool_t CL_VideoRecording(void)
+qboolean CL_VideoRecording(void)
 {
 	return afd.fileOpen;
 }

@@ -18,8 +18,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "net_chan.h"
-#include "common.h"
 #include "qcommon.h"
 
 /*
@@ -82,7 +80,7 @@ cvar_t *qport;
 
 netadr_t net_from;
 sizebuf_t net_message;
-uint8_t net_message_buffer[MAX_MSGLEN];
+byte net_message_buffer[MAX_MSGLEN];
 
 /*
 ===============
@@ -109,18 +107,18 @@ Netchan_OutOfBand
 Sends an out-of-band datagram
 ================
 */
-void Netchan_OutOfBand(int net_socket, netadr_t adr, size_t length, uint8_t *data)
+void Netchan_OutOfBand(int net_socket, netadr_t adr, int length, byte * data)
 {
 	sizebuf_t send;
-	uint8_t send_buf[MAX_MSGLEN];
+	byte send_buf[MAX_MSGLEN];
 
-	/* write the packet header */
+/* write the packet header */
 	SZ_Init(&send, send_buf, sizeof(send_buf));
 
 	MSG_WriteLong(&send, -1);	/* -1 sequence means out of band */
 	SZ_Write(&send, data, length);
 
-	/* send the datagram */
+/* send the datagram */
 	NET_SendPacket(net_socket, send.cursize, send.data, adr);
 }
 
@@ -144,7 +142,7 @@ void Netchan_OutOfBandPrint(int net_socket, netadr_t adr, char *format, ...)
 #endif
 	va_end(argptr);
 
-	Netchan_OutOfBand(net_socket, adr, strlen(string), (uint8_t*) string);
+	Netchan_OutOfBand(net_socket, adr, strlen(string), (byte *) string);
 }
 
 
@@ -155,7 +153,7 @@ Netchan_Setup
 called to open a channel to a remote system
 ==============
 */
-void Netchan_Setup(netsrc_t sock, netchan_t * chan, netadr_t adr, int16_t qport)
+void Netchan_Setup(netsrc_t sock, netchan_t * chan, netadr_t adr, int qport)
 {
 	memset(chan, 0, sizeof(*chan));
 
@@ -167,7 +165,7 @@ void Netchan_Setup(netsrc_t sock, netchan_t * chan, netadr_t adr, int16_t qport)
 	chan->outgoing_sequence = 1;
 
 	SZ_Init(&chan->message, chan->message_buf, sizeof(chan->message_buf));
-	chan->message.allowoverflow = true;
+	chan->message.allowoverflow = qtrue;
 }
 
 
@@ -178,27 +176,27 @@ Netchan_CanReliable
 Returns true if the last reliable message has acked
 ================
 */
-bool_t Netchan_CanReliable(netchan_t *chan)
+qboolean Netchan_CanReliable(netchan_t * chan)
 {
 	if (chan->reliable_length)
-		return false;			/* waiting for ack */
-	return true;
+		return qfalse;			/* waiting for ack */
+	return qtrue;
 }
 
 
-bool_t Netchan_NeedReliable(netchan_t *chan)
+qboolean Netchan_NeedReliable(netchan_t * chan)
 {
-	bool_t send_reliable;
+	qboolean send_reliable;
 
 	/* if the remote side dropped the last reliable message, resend it */
-	send_reliable = false;
+	send_reliable = qfalse;
 
 	if (chan->incoming_acknowledged > chan->last_reliable_sequence && chan->incoming_reliable_acknowledged != chan->reliable_sequence)
-		send_reliable = true;
+		send_reliable = qtrue;
 
 	/* if the reliable transmit buffer is empty, copy the current message out */
 	if (!chan->reliable_length && chan->message.cursize) {
-		send_reliable = true;
+		send_reliable = qtrue;
 	}
 
 	return send_reliable;
@@ -214,16 +212,16 @@ transmition / retransmition of the reliable messages.
 A 0 length will still generate a packet and deal with the reliable messages.
 ================
 */
-void Netchan_Transmit(netchan_t * chan, size_t length, uint8_t *data)
+void Netchan_Transmit(netchan_t * chan, int length, byte * data)
 {
 	sizebuf_t send;
-	uint8_t send_buf[MAX_MSGLEN];
-	bool_t send_reliable;
+	byte send_buf[MAX_MSGLEN];
+	qboolean send_reliable;
 	unsigned w1, w2;
 
 	/* check for message overflow */
 	if (chan->message.overflowed) {
-		chan->fatal_error = true;
+		chan->fatal_error = qtrue;
 		Com_Printf("%s: Outgoing message overflow\n", NET_AdrToString(chan->remote_address));
 		return;
 	}
@@ -287,20 +285,20 @@ called when the current net_message is from remote_address
 modifies net_message so that it points to the packet payload
 =================
 */
-bool_t Netchan_Process(netchan_t * chan, sizebuf_t * msg)
+qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 {
 	unsigned sequence, sequence_ack;
 	unsigned reliable_ack, reliable_message;
-	int16_t qport;
+	int qport;
 
 	/* get sequence numbers */
 	MSG_BeginReading(msg);
-	sequence = MSG_ReadLong(msg, NULL);
-	sequence_ack = MSG_ReadLong(msg, NULL);
+	sequence = MSG_ReadLong(msg);
+	sequence_ack = MSG_ReadLong(msg);
 
 	/* read the qport if we are a server */
 	if (chan->sock == NS_SERVER)
-		qport = MSG_ReadShort(msg, NULL);
+		qport = MSG_ReadShort(msg);
 
 	reliable_message = sequence >> 31;
 	reliable_ack = sequence_ack >> 31;
@@ -316,15 +314,19 @@ bool_t Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 			Com_Printf("recv %4i : s=%i ack=%i rack=%i\n", msg->cursize, sequence, sequence_ack, reliable_ack);
 	}
 
+	/* */
 	/* discard stale or duplicated packets */
+	/* */
 	if (sequence <= chan->incoming_sequence) {
 		if (showdrop->value)
 			Com_Printf("%s:Out of order packet %i at %i\n", NET_AdrToString(chan->remote_address)
 					   , sequence, chan->incoming_sequence);
-		return false;
+		return qfalse;
 	}
 
+	/* */
 	/* dropped packets don't keep the message from being used */
+	/* */
 	chan->dropped = sequence - (chan->incoming_sequence + 1);
 	if (chan->dropped > 0) {
 		if (showdrop->value)
@@ -332,12 +334,16 @@ bool_t Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 					   , chan->dropped, sequence);
 	}
 
-	/* if the current outgoing reliable message has been acknowledged */
-	/* clear the buffer to make way for the next */
+/* */
+/* if the current outgoing reliable message has been acknowledged */
+/* clear the buffer to make way for the next */
+/* */
 	if (reliable_ack == chan->reliable_sequence)
 		chan->reliable_length = 0;	/* it has been received */
 
-	/* if this message contains a reliable message, bump incoming_reliable_sequence */
+/* */
+/* if this message contains a reliable message, bump incoming_reliable_sequence */
+/* */
 	chan->incoming_sequence = sequence;
 	chan->incoming_acknowledged = sequence_ack;
 	chan->incoming_reliable_acknowledged = reliable_ack;
@@ -345,8 +351,10 @@ bool_t Netchan_Process(netchan_t * chan, sizebuf_t * msg)
 		chan->incoming_reliable_sequence ^= 1;
 	}
 
-	/* the message can now be read from the current message pointer */
+/* */
+/* the message can now be read from the current message pointer */
+/* */
 	chan->last_received = curtime;
 
-	return true;
+	return qtrue;
 }

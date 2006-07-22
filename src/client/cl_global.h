@@ -103,7 +103,7 @@ typedef struct globalData_s
 	int interceptAircraft;
 
 	/* already paid in this month? */
-	bool_t fund;
+	qboolean fund;
 
 	/* == Ranks == */
 	/* Global list of all ranks defined in medals.ufo. */

@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define min(a,b) ((a)<(b) ? (a):(b))
 #endif
 
-extern bool_t scrap_dirty;
+extern qboolean scrap_dirty;
 void Scrap_Upload(void);
 image_t *shadow;
 
@@ -186,7 +186,7 @@ void Draw_StretchPic(int x, int y, int w, int h, char *pic)
 Draw_NormPic
 =============
 */
-void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, bool_t blend, char *name)
+void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name)
 {
 	float nx, ny, nw = 0.0, nh = 0.0;
 	image_t *gl;
@@ -422,12 +422,12 @@ Draw_StretchRaw
 */
 extern unsigned r_rawpalette[256];
 
-void Draw_StretchRaw(int x, int y, int w, int h, int cols, int rows, uint8_t *data)
+void Draw_StretchRaw(int x, int y, int w, int h, int cols, int rows, byte * data)
 {
 	unsigned *image32;
 	size_t img_size = 256 * 256 * sizeof(image32[0]);
 	int i, j, trows;
-	uint8_t *source;
+	byte *source;
 	int frac, fracstep;
 	float hscale;
 	int row;

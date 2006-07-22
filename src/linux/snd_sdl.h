@@ -3,7 +3,7 @@
 #include "../client/client.h"
 #include "../client/snd_loc.h"
 
-bool_t SDL_SNDDMA_Init (void);
+qboolean SDL_SNDDMA_Init (void);
 int SDL_SNDDMA_GetDMAPos (void);
 void SDL_SNDDMA_Shutdown (void);
 void SDL_SNDDMA_Submit (void);

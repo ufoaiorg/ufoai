@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../game/q_shared.h"
 #include "../game/game.h"
 
-#define UFO_VERSION "2.0-RC4"
+#define UFO_VERSION "3.0-dev"
 
 #define	BASEDIRNAME	"base"
 
@@ -185,8 +185,6 @@ enum clc_ops_e {
 
 /*============================================== */
 
-#include "cbuf.h"
-
 #include "cmd.h"
 
 #include "cvar.h"
@@ -231,7 +229,7 @@ int Com_ServerState(void);		/* this should have just been a cvar... */
 void Com_SetServerState(int state);
 
 unsigned Com_BlockChecksum(void *buffer, int length);
-uint8_t COM_BlockSequenceCRCByte(uint8_t *base, int length, int sequence);
+byte COM_BlockSequenceCRCByte(byte * base, int length, int sequence);
 
 extern cvar_t *developer;
 extern cvar_t *dedicated;
@@ -314,7 +312,7 @@ void SCR_BeginLoadingPlaque(void);
 void MN_PrecacheMenus(void);
 
 void SV_Init(void);
-void SV_Shutdown(char *finalmsg, bool_t reconnect);
+void SV_Shutdown(char *finalmsg, qboolean reconnect);
 void SV_Frame(int msec);
 
 #endif							/* QCOMMON_DEFINED */

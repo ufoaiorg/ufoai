@@ -1,8 +1,3 @@
-/**
- * @file gl_rmisc
- * @brief
- */
-
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -22,6 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
+/* r_misc.c */
 
 #include "gl_local.h"
 
@@ -30,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 R_InitParticleTexture
 ==================
 */
-uint8_t dottexture[8][8] = {
+byte dottexture[8][8] = {
 	{0, 0, 0, 0, 0, 0, 0, 0},
 	{0, 0, 1, 1, 0, 0, 0, 0},
 	{0, 1, 1, 1, 1, 0, 0, 0},
@@ -41,7 +37,7 @@ uint8_t dottexture[8][8] = {
 	{0, 0, 0, 0, 0, 0, 0, 0},
 };
 
-uint8_t gridtexture[8][8] = {
+byte gridtexture[8][8] = {
 	{1, 1, 1, 1, 1, 1, 1, 1},
 	{1, 0, 0, 0, 0, 0, 0, 1},
 	{1, 0, 0, 0, 0, 0, 0, 1},
@@ -55,7 +51,7 @@ uint8_t gridtexture[8][8] = {
 void R_InitParticleTexture(void)
 {
 	int x, y;
-	uint8_t data[8][8][4];
+	byte data[8][8][4];
 
 	/* particle texture */
 	for (x = 0; x < 8; x++) {
@@ -66,7 +62,7 @@ void R_InitParticleTexture(void)
 			data[y][x][3] = dottexture[x][y] * 255;
 		}
 	}
-	r_particletexture = GL_LoadPic("***particle***", (uint8_t*) data, 8, 8, it_sprite, 32);
+	r_particletexture = GL_LoadPic("***particle***", (byte *) data, 8, 8, it_sprite, 32);
 
 	/* also use this for bad textures, but without alpha */
 	for (x = 0; x < 8; x++) {
@@ -77,7 +73,7 @@ void R_InitParticleTexture(void)
 			data[y][x][3] = 255;
 		}
 	}
-	r_notexture = GL_LoadPic("***r_notexture***", (uint8_t*) data, 8, 8, it_wall, 32);
+	r_notexture = GL_LoadPic("***r_notexture***", (byte *) data, 8, 8, it_wall, 32);
 }
 
 
@@ -105,7 +101,7 @@ GL_ScreenShot_f
 */
 void GL_ScreenShot_f(void)
 {
-	uint8_t *buffer;
+	byte *buffer;
 	int i, c, temp;
 	FILE *f;
 	char checkname[MAX_OSPATH];
@@ -224,7 +220,7 @@ void GL_SetDefaultState(void)
 void GL_UpdateSwapInterval(void)
 {
 	if (gl_swapinterval->modified) {
-		gl_swapinterval->modified = false;
+		gl_swapinterval->modified = qfalse;
 
 #ifdef _WIN32
 		if (!gl_state.stereo_enabled) {

@@ -23,8 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "common.h"
-
 #include "qcommon.h"
 #include <setjmp.h>
 #include <ctype.h>
@@ -203,7 +201,7 @@ void Com_Error(int code, char *fmt, ...)
 {
 	va_list argptr;
 	static char msg[MAXPRINTMSG];
-	static bool_t recursive = false;
+	static qboolean recursive = qfalse;
 
 #if defined DEBUG && defined _MSC_VER
 	__debugbreak();				/* break execution before game shutdown */
@@ -211,7 +209,7 @@ void Com_Error(int code, char *fmt, ...)
 
 	if (recursive)
 		Sys_Error("recursive error after: %s", msg);
-	recursive = true;
+	recursive = qtrue;
 
 	va_start(argptr, fmt);
 #ifndef _WIN32
@@ -223,16 +221,16 @@ void Com_Error(int code, char *fmt, ...)
 
 	if (code == ERR_DISCONNECT) {
 		CL_Drop();
-		recursive = false;
+		recursive = qfalse;
 		longjmp(abortframe, -1);
 	} else if (code == ERR_DROP) {
 		Com_Printf("********************\nERROR: %s\n********************\n", msg);
-		SV_Shutdown(va("Server crashed: %s\n", msg), false);
+		SV_Shutdown(va("Server crashed: %s\n", msg), qfalse);
 		CL_Drop();
-		recursive = false;
+		recursive = qfalse;
 		longjmp(abortframe, -1);
 	} else {
-		SV_Shutdown(va("Server fatal crashed: %s\n", msg), false);
+		SV_Shutdown(va("Server fatal crashed: %s\n", msg), qfalse);
 		CL_Shutdown();
 	}
 
@@ -250,7 +248,7 @@ void Com_Error(int code, char *fmt, ...)
  */
 void Com_Drop(void)
 {
-	SV_Shutdown("Server disconnected\n", false);
+	SV_Shutdown("Server disconnected\n", qfalse);
 	CL_Drop();
 	longjmp(abortframe, -1);
 }
@@ -264,7 +262,7 @@ void Com_Drop(void)
  */
 void Com_Quit(void)
 {
-	SV_Shutdown("Server quit\n", false);
+	SV_Shutdown("Server quit\n", qfalse);
 #ifndef DEDICATED_ONLY
 	CL_Shutdown();
 #endif
@@ -310,17 +308,15 @@ vec3_t bytedirs[NUMVERTEXNORMALS] = {
 /* writing functions */
 
 /**
- * @brief Write a character into a buffer.
- *
- * NOTE: This used to take an int as a parameter, which just doesn't make sense.
+ * @brief
  */
 void MSG_WriteChar(sizebuf_t * sb, int c)
 {
-	uint8_t *buf;
+	byte *buf;
 
-#ifdef DEBUG
+#ifdef PARANOID
 	if (c < SCHAR_MIN || c > SCHAR_MAX)
-		Com_Printf("MSG_WriteChar: range error %i", c);
+		Com_Error(ERR_FATAL, "MSG_WriteChar: range error %i", c);
 #endif
 
 	buf = SZ_GetSpace(sb, 1);
@@ -330,13 +326,18 @@ void MSG_WriteChar(sizebuf_t * sb, int c)
 /**
  * @brief
  */
-void MSG_WriteByte(sizebuf_t * sb, int c)
-{
-	uint8_t *buf;
-
 #ifdef DEBUG
+void MSG_WriteByteDebug(sizebuf_t * sb, int c, char *file, int line)
+#else
+void MSG_WriteByte(sizebuf_t * sb, int c)
+#endif
+{
+	byte *buf;
+
+	/* PARANOID is only possible in debug mode (when DEBUG was set, too) */
+#ifdef PARANOID
 	if (c < 0 || c > UCHAR_MAX)
-		Com_Printf("MSG_WriteByte: range error %i\n", c);
+		Com_Printf("MSG_WriteByte: range error %i ('%s', line %i)\n", c, file, line);
 #endif
 
 	buf = SZ_GetSpace(sb, 1);
@@ -346,11 +347,18 @@ void MSG_WriteByte(sizebuf_t * sb, int c)
 /**
  * @brief
  */
-void MSG_WriteShort(sizebuf_t *sb, int c)
+#ifdef DEBUG
+void MSG_WriteShortDebug(sizebuf_t * sb, int c, char* file, int line)
+#else
+void MSG_WriteShort(sizebuf_t * sb, int c)
+#endif
 {
-	uint8_t *buf;
-	if ( c < SHRT_MIN || c > SHRT_MAX )
-		Com_Printf("MSG_WriteShort: overflow for byte %i\n", c);
+	byte *buf;
+
+#ifdef PARANOID
+	if (c < SHRT_MIN || c > USHRT_MAX)
+		Com_Printf("MSG_WriteShort: range error %i ('%s', line %i)\n", c, file, line);
+#endif
 
 	buf = SZ_GetSpace(sb, 2);
 	buf[0] = c & UCHAR_MAX;
@@ -360,9 +368,9 @@ void MSG_WriteShort(sizebuf_t *sb, int c)
 /**
  * @brief
  */
-void MSG_WriteLong(sizebuf_t *sb, int32_t c)
+void MSG_WriteLong(sizebuf_t * sb, int c)
 {
-	uint8_t *buf;
+	byte *buf;
 
 	buf = SZ_GetSpace(sb, 4);
 	buf[0] = c & UCHAR_MAX;
@@ -374,12 +382,13 @@ void MSG_WriteLong(sizebuf_t *sb, int32_t c)
 /**
  * @brief
  */
-void MSG_WriteFloat(sizebuf_t *sb, float32_t f)
+void MSG_WriteFloat(sizebuf_t * sb, float f)
 {
 	union {
 		float f;
 		int l;
 	} dat;
+
 
 	dat.f = f;
 	dat.l = LittleLong(dat.l);
@@ -390,7 +399,7 @@ void MSG_WriteFloat(sizebuf_t *sb, float32_t f)
 /**
  * @brief
  */
-void MSG_WriteString(sizebuf_t *sb, char *s)
+void MSG_WriteString(sizebuf_t * sb, char *s)
 {
 	if (!s)
 		SZ_Write(sb, "", 1);
@@ -401,7 +410,7 @@ void MSG_WriteString(sizebuf_t *sb, char *s)
 /**
  * @brief
  */
-void MSG_WriteCoord(sizebuf_t *sb, float f)
+void MSG_WriteCoord(sizebuf_t * sb, float f)
 {
 	MSG_WriteLong(sb, (int) (f * 32));
 }
@@ -409,7 +418,7 @@ void MSG_WriteCoord(sizebuf_t *sb, float f)
 /**
  * @brief
  */
-void MSG_WritePos(sizebuf_t *sb, vec3_t pos)
+void MSG_WritePos(sizebuf_t * sb, vec3_t pos)
 {
 	MSG_WriteShort(sb, (int) (pos[0] * 8));
 	MSG_WriteShort(sb, (int) (pos[1] * 8));
@@ -419,7 +428,7 @@ void MSG_WritePos(sizebuf_t *sb, vec3_t pos)
 /**
   * @brief
   */
-void MSG_WriteGPos(sizebuf_t *sb, pos3_t pos)
+void MSG_WriteGPos(sizebuf_t * sb, pos3_t pos)
 {
 	MSG_WriteByte(sb, pos[0]);
 	MSG_WriteByte(sb, pos[1]);
@@ -429,7 +438,7 @@ void MSG_WriteGPos(sizebuf_t *sb, pos3_t pos)
 /**
  * @brief
  */
-void MSG_WriteAngle(sizebuf_t *sb, float f)
+void MSG_WriteAngle(sizebuf_t * sb, float f)
 {
 	MSG_WriteByte(sb, (int) (f * 256 / 360) & 255);
 }
@@ -437,7 +446,7 @@ void MSG_WriteAngle(sizebuf_t *sb, float f)
 /**
  * @brief
  */
-void MSG_WriteAngle16(sizebuf_t *sb, float f)
+void MSG_WriteAngle16(sizebuf_t * sb, float f)
 {
 	MSG_WriteShort(sb, ANGLE2SHORT(f));
 }
@@ -446,7 +455,7 @@ void MSG_WriteAngle16(sizebuf_t *sb, float f)
 /**
  * @brief
  */
-void MSG_WriteDir(sizebuf_t *sb, vec3_t dir)
+void MSG_WriteDir(sizebuf_t * sb, vec3_t dir)
 {
 	int i, best;
 	float d, bestd;
@@ -472,7 +481,7 @@ void MSG_WriteDir(sizebuf_t *sb, vec3_t dir)
 /**
  * @brief
  */
-void MSG_WriteFormat(sizebuf_t *sb, char *format, ...)
+void MSG_WriteFormat(sizebuf_t * sb, char *format, ...)
 {
 	va_list ap;
 	char typeID;
@@ -506,14 +515,14 @@ void MSG_WriteFormat(sizebuf_t *sb, char *format, ...)
 
 			break;
 		case 'p':
-			MSG_WritePos(sb, va_arg(ap, float*));
+			MSG_WritePos(sb, va_arg(ap, float *));
 
 			break;
 		case 'g':
-			MSG_WriteGPos(sb, va_arg(ap, uint8_t*));
+			MSG_WriteGPos(sb, va_arg(ap, byte *));
 			break;
 		case 'd':
-			MSG_WriteDir(sb, va_arg(ap, float*));
+			MSG_WriteDir(sb, va_arg(ap, float *));
 
 			break;
 		case 'a':
@@ -526,11 +535,11 @@ void MSG_WriteFormat(sizebuf_t *sb, char *format, ...)
 		case '*':
 			{
 				int i, n;
-				uint8_t *p;
+				byte *p;
 
 				n = va_arg(ap, int);
 
-				p = va_arg(ap, uint8_t*);
+				p = va_arg(ap, byte *);
 				MSG_WriteByte(sb, n);
 				for (i = 0; i < n; i++)
 					MSG_WriteByte(sb, *p++);
@@ -552,7 +561,7 @@ void MSG_WriteFormat(sizebuf_t *sb, char *format, ...)
 /**
  * @brief
  */
-void MSG_BeginReading(sizebuf_t *msg)
+void MSG_BeginReading(sizebuf_t * msg)
 {
 	msg->readcount = 0;
 }
@@ -562,7 +571,7 @@ void MSG_BeginReading(sizebuf_t *msg)
  *
  * returns -1 if no more characters are available
  */
-int MSG_ReadChar(sizebuf_t * msg_read, uint8_t *error)
+int MSG_ReadChar(sizebuf_t * msg_read)
 {
 	int c;
 
@@ -578,7 +587,7 @@ int MSG_ReadChar(sizebuf_t * msg_read, uint8_t *error)
 /**
  * @brief
  */
-int MSG_ReadByte(sizebuf_t * msg_read, uint8_t *error)
+int MSG_ReadByte(sizebuf_t * msg_read)
 {
 	int c;
 
@@ -594,7 +603,7 @@ int MSG_ReadByte(sizebuf_t * msg_read, uint8_t *error)
 /**
  * @brief
  */
-int MSG_ReadShort(sizebuf_t * msg_read, uint8_t *error)
+int MSG_ReadShort(sizebuf_t * msg_read)
 {
 	int c;
 
@@ -612,7 +621,7 @@ int MSG_ReadShort(sizebuf_t * msg_read, uint8_t *error)
 /**
  * @brief
  */
-int MSG_ReadLong(sizebuf_t * msg_read, uint8_t *error)
+int MSG_ReadLong(sizebuf_t * msg_read)
 {
 	int c;
 
@@ -632,10 +641,10 @@ int MSG_ReadLong(sizebuf_t * msg_read, uint8_t *error)
 /**
  * @brief
  */
-float MSG_ReadFloat(sizebuf_t * msg_read, uint8_t *error)
+float MSG_ReadFloat(sizebuf_t * msg_read)
 {
 	union {
-		uint8_t b[4];
+		byte b[4];
 		float f;
 		int l;
 	} dat;
@@ -658,14 +667,14 @@ float MSG_ReadFloat(sizebuf_t * msg_read, uint8_t *error)
 /**
  * @brief
  */
-char *MSG_ReadString(sizebuf_t * msg_read, uint8_t *error)
+char *MSG_ReadString(sizebuf_t * msg_read)
 {
 	static char string[2048];
 	int l, c;
 
 	l = 0;
 	do {
-		c = MSG_ReadByte(msg_read, error);
+		c = MSG_ReadByte(msg_read);
 		if (c == -1 || c == 0)
 			break;
 		string[l] = c;
@@ -680,14 +689,14 @@ char *MSG_ReadString(sizebuf_t * msg_read, uint8_t *error)
 /**
  * @brief
  */
-char *MSG_ReadStringLine(sizebuf_t * msg_read, uint8_t *error)
+char *MSG_ReadStringLine(sizebuf_t * msg_read)
 {
 	static char string[2048];
 	int l, c;
 
 	l = 0;
 	do {
-		c = MSG_ReadByte(msg_read, error);
+		c = MSG_ReadByte(msg_read);
 		if (c == -1 || c == 0 || c == '\n')
 			break;
 		string[l] = c;
@@ -702,75 +711,76 @@ char *MSG_ReadStringLine(sizebuf_t * msg_read, uint8_t *error)
 /**
  * @brief
  */
-float MSG_ReadCoord(sizebuf_t *msg_read, uint8_t *error)
+float MSG_ReadCoord(sizebuf_t * msg_read)
 {
-	return (float) MSG_ReadLong(msg_read, error) * (1.0 / 32);
+	return (float) MSG_ReadLong(msg_read) * (1.0 / 32);
 }
 
 /**
  * @brief
  */
-void MSG_ReadPos(sizebuf_t * msg_read, uint8_t *error, vec3_t pos)
+void MSG_ReadPos(sizebuf_t * msg_read, vec3_t pos)
 {
-	pos[0] = MSG_ReadShort(msg_read, error) * (1.0 / 8);
-	pos[1] = MSG_ReadShort(msg_read, error) * (1.0 / 8);
-	pos[2] = MSG_ReadShort(msg_read, error) * (1.0 / 8);
+	pos[0] = MSG_ReadShort(msg_read) * (1.0 / 8);
+	pos[1] = MSG_ReadShort(msg_read) * (1.0 / 8);
+	pos[2] = MSG_ReadShort(msg_read) * (1.0 / 8);
 }
 
 /**
  * @brief
  */
-void MSG_ReadGPos(sizebuf_t * msg_read, uint8_t *error, pos3_t pos)
+void MSG_ReadGPos(sizebuf_t * msg_read, pos3_t pos)
 {
-	pos[0] = MSG_ReadByte(msg_read, error);
-	pos[1] = MSG_ReadByte(msg_read, error);
-	pos[2] = MSG_ReadByte(msg_read, error);
+	pos[0] = MSG_ReadByte(msg_read);
+	pos[1] = MSG_ReadByte(msg_read);
+	pos[2] = MSG_ReadByte(msg_read);
 }
 
 /**
  * @brief
  */
-float MSG_ReadAngle(sizebuf_t * msg_read, uint8_t *error)
+float MSG_ReadAngle(sizebuf_t * msg_read)
 {
-	return (float) MSG_ReadChar(msg_read, error) * (360.0 / 256);
+	return (float) MSG_ReadChar(msg_read) * (360.0 / 256);
 }
 
 /**
  * @brief
  */
-float MSG_ReadAngle16(sizebuf_t * msg_read, uint8_t *error)
+float MSG_ReadAngle16(sizebuf_t * msg_read)
 {
-	return (float) SHORT2ANGLE(MSG_ReadShort(msg_read, error));
+	return (float) SHORT2ANGLE(MSG_ReadShort(msg_read));
 }
 
 /**
  * @brief
  */
-void MSG_ReadData(sizebuf_t *msg_read, uint8_t *error, void *data, int len)
+void MSG_ReadData(sizebuf_t * msg_read, void *data, int len)
 {
-	int i = 0;
+	int i;
 
 	for (i = 0; i < len; i++)
-		((uint8_t *)data)[i] = MSG_ReadByte(msg_read, error);
+		((byte *) data)[i] = MSG_ReadByte(msg_read);
 }
 
 /**
  * @brief
  */
-void MSG_ReadDir(sizebuf_t *sb, uint8_t *error, vec3_t dir)
+void MSG_ReadDir(sizebuf_t * sb, vec3_t dir)
 {
 	int b;
 
-	b = MSG_ReadByte(sb, error);
+	b = MSG_ReadByte(sb);
 	if (b >= NUMVERTEXNORMALS)
-		Com_Error(ERR_DROP, "MSG_ReadDir: out of range");
+		Com_Error(ERR_DROP, "MSF_ReadDir: out of range");
 	VectorCopy(bytedirs[b], dir);
 }
+
 
 /**
  * @brief
  */
-void MSG_ReadFormat(sizebuf_t * msg_read, uint8_t *error, char *format, ...)
+void MSG_ReadFormat(sizebuf_t * msg_read, char *format, ...)
 {
 	va_list ap;
 	char typeID;
@@ -783,36 +793,36 @@ void MSG_ReadFormat(sizebuf_t * msg_read, uint8_t *error, char *format, ...)
 
 		switch (typeID) {
 		case 'c':
-			*va_arg(ap, int *) = MSG_ReadChar(msg_read, error);
+			*va_arg(ap, int *) = MSG_ReadChar(msg_read);
 
 			break;
 		case 'b':
-			*va_arg(ap, int *) = MSG_ReadByte(msg_read, error);
+			*va_arg(ap, int *) = MSG_ReadByte(msg_read);
 
 			break;
 		case 's':
-			*va_arg(ap, int *) = MSG_ReadShort(msg_read, error);
+			*va_arg(ap, int *) = MSG_ReadShort(msg_read);
 
 			break;
 		case 'l':
-			*va_arg(ap, int *) = MSG_ReadLong(msg_read, error);
+			*va_arg(ap, int *) = MSG_ReadLong(msg_read);
 
 			break;
 		case 'f':
-			*va_arg(ap, float *) = MSG_ReadFloat(msg_read, error);
+			*va_arg(ap, float *) = MSG_ReadFloat(msg_read);
 
 			break;
 		case 'p':
-			MSG_ReadPos(msg_read, error, *va_arg(ap, vec3_t *));
+			MSG_ReadPos(msg_read, *va_arg(ap, vec3_t *));
 			break;
 		case 'g':
-			MSG_ReadGPos(msg_read, error, *va_arg(ap, pos3_t *));
+			MSG_ReadGPos(msg_read, *va_arg(ap, pos3_t *));
 			break;
 		case 'd':
-			MSG_ReadDir(msg_read, error, *va_arg(ap, vec3_t *));
+			MSG_ReadDir(msg_read, *va_arg(ap, vec3_t *));
 			break;
 		case 'a':
-			*va_arg(ap, float *) = MSG_ReadAngle(msg_read, error);
+			*va_arg(ap, float *) = MSG_ReadAngle(msg_read);
 
 			break;
 		case '!':
@@ -821,14 +831,14 @@ void MSG_ReadFormat(sizebuf_t * msg_read, uint8_t *error, char *format, ...)
 		case '*':
 			{
 				int i, n;
-				uint8_t *p;
+				byte *p;
 
-				n = MSG_ReadByte(msg_read, error);
+				n = MSG_ReadByte(msg_read);
 				*va_arg(ap, int *) = n;
 				p = va_arg(ap, void *);
 
 				for (i = 0; i < n; i++)
-					*p++ = MSG_ReadByte(msg_read, error);
+					*p++ = MSG_ReadByte(msg_read);
 			}
 			break;
 		default:
@@ -846,7 +856,7 @@ void MSG_ReadFormat(sizebuf_t * msg_read, uint8_t *error, char *format, ...)
  * calculated the length of a sizebuf_t by summing up
  * the size of each format char
  */
-int MSG_LengthFormat(sizebuf_t *sb, uint8_t *error, char *format)
+int MSG_LengthFormat(sizebuf_t * sb, char *format)
 {
 	char typeID;
 	int length, delta;
@@ -890,12 +900,12 @@ int MSG_LengthFormat(sizebuf_t *sb, uint8_t *error, char *format)
 		case '!':
 			break;
 		case '*':
-			delta = MSG_ReadByte(sb, error);
+			delta = MSG_ReadByte(sb);
 			length++;
 			break;
 		case '&':
 			delta = 1;
-			while (MSG_ReadByte(sb, error) != NONE)
+			while (MSG_ReadByte(sb) != NONE)
 				length++;
 			break;
 		default:
@@ -917,32 +927,26 @@ int MSG_LengthFormat(sizebuf_t *sb, uint8_t *error, char *format)
 /**
  * @brief
  */
-void SZ_Init(sizebuf_t *buf, void *data, size_t length)
+void SZ_Init(sizebuf_t * buf, byte * data, int length)
 {
-	/* Don't like this - how do you KNOW everything should be initialised to 0?
-	 * It's just lazy and unmaintainable.
-	memset(buf, 0, sizeof(*buf)); */
-	buf->allowoverflow = false;
-	buf->overflowed = false;
+	memset(buf, 0, sizeof(*buf));
 	buf->data = data;
 	buf->maxsize = length;
-	buf->cursize = 0;
-	buf->readcount = 0;
 }
 
 /**
  * @brief
  */
-void SZ_Clear(sizebuf_t *buf)
+void SZ_Clear(sizebuf_t * buf)
 {
 	buf->cursize = 0;
-	buf->overflowed = false;
+	buf->overflowed = qfalse;
 }
 
 /**
  * @brief
  */
-void *SZ_GetSpace(sizebuf_t *buf, size_t length)
+void *SZ_GetSpace(sizebuf_t * buf, int length)
 {
 	void *data;
 
@@ -955,7 +959,7 @@ void *SZ_GetSpace(sizebuf_t *buf, size_t length)
 
 		Com_Printf("SZ_GetSpace: overflow\n");
 		SZ_Clear(buf);
-		buf->overflowed = true;
+		buf->overflowed = qtrue;
 	}
 
 	data = buf->data + buf->cursize;
@@ -967,7 +971,7 @@ void *SZ_GetSpace(sizebuf_t *buf, size_t length)
 /**
  * @brief
  */
-void SZ_Write(sizebuf_t *buf, void *data, size_t length)
+void SZ_Write(sizebuf_t * buf, void *data, int length)
 {
 	memcpy(SZ_GetSpace(buf, length), data, length);
 }
@@ -975,21 +979,19 @@ void SZ_Write(sizebuf_t *buf, void *data, size_t length)
 /**
  * @brief
  */
-void SZ_WriteString(sizebuf_t *buf, char *data)
+void SZ_Print(sizebuf_t * buf, char *data)
 {
 	int len;
 
 	len = strlen(data) + 1;
 
 	if (buf->cursize) {
-		if (((uint8_t *)buf->data)[buf->cursize - 1]) {
-			memcpy((uint8_t *) SZ_GetSpace(buf, len), data, len);	/* no trailing 0 */
-		} else {
-			memcpy((uint8_t *) SZ_GetSpace(buf, len - 1) - 1, data, len);	/* write over trailing 0 */
-		}
-	} else {
-		memcpy((uint8_t *) SZ_GetSpace(buf, len), data, len);
-	}
+		if (buf->data[buf->cursize - 1])
+			memcpy((byte *) SZ_GetSpace(buf, len), data, len);	/* no trailing 0 */
+		else
+			memcpy((byte *) SZ_GetSpace(buf, len - 1) - 1, data, len);	/* write over trailing 0 */
+	} else
+		memcpy((byte *) SZ_GetSpace(buf, len), data, len);
 }
 
 
@@ -1076,7 +1078,7 @@ void COM_AddParm(char *parm)
  *
  * just for debugging
  */
-int memsearch(uint8_t *start, int count, int search)
+int memsearch(byte * start, int count, int search)
 {
 	int i;
 
@@ -1290,7 +1292,7 @@ void Qcommon_LocaleInit(void)
 	char languageID[32];
 #endif
 	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE);
-	s_language->modified = false;
+	s_language->modified = qfalse;
 
 #ifdef _WIN32
 	Com_sprintf(languageID, 32, "LANG=%s", s_language->string);
@@ -1321,7 +1323,7 @@ void Qcommon_LocaleInit(void)
 		Com_Printf("...using language: %s\n", locale);
 		Cvar_Set("s_language", locale);
 	}
-	s_language->modified = false;
+	s_language->modified = qfalse;
 }
 #endif
 
@@ -1368,16 +1370,16 @@ void Qcommon_Init(int argc, char **argv)
 	   a basedir needs to be set before execing
 	   config files, but we want other parms to override
 	   the settings of the config files */
-	Cbuf_AddEarlyCommands(false);
+	Cbuf_AddEarlyCommands(qfalse);
 	Cbuf_Execute();
 
 	FS_InitFilesystem();
 
-	Cbuf_ExecuteText("exec default.cfg\n", EXEC_APPEND);
-	Cbuf_ExecuteText("exec config.cfg\n", EXEC_APPEND);
-	Cbuf_ExecuteText("exec keys.cfg\n", EXEC_APPEND);
+	Cbuf_AddText("exec default.cfg\n");
+	Cbuf_AddText("exec config.cfg\n");
+	Cbuf_AddText("exec keys.cfg\n");
 
-	Cbuf_AddEarlyCommands(true);
+	Cbuf_AddEarlyCommands(qtrue);
 	Cbuf_Execute();
 
 	/* init commands and vars */
@@ -1476,7 +1478,7 @@ float Qcommon_Frame(int msec)
 		Cvar_SetValue("timescale", 0.2);
 
 	if (log_stats->modified) {
-		log_stats->modified = false;
+		log_stats->modified = qfalse;
 		if (log_stats->value) {
 			if (log_stats_file) {
 				fclose(log_stats_file);

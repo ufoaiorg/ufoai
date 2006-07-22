@@ -545,11 +545,11 @@ void CL_PrepRefresh(void)
 	SCR_EndLoadingPlaque();
 
 	SCR_UpdateScreen();
-	cl.refresh_prepped = true;
-	cl.force_refdef = true;	/* make sure we have a valid refdef */
+	cl.refresh_prepped = qtrue;
+	cl.force_refdef = qtrue;	/* make sure we have a valid refdef */
 
 	/* start the cd track */
-	CDAudio_Play(atoi(cl.configstrings[CS_CDTRACK]), true);
+	CDAudio_Play(atoi(cl.configstrings[CS_CDTRACK]), qtrue);
 }
 
 /**
@@ -623,7 +623,6 @@ static void CL_DrawGrid(void)
  * @brief
  * @param stereo_separation
  * @sa SCR_UpdateScreen
- * @sa R_RenderFrame
  */
 void V_RenderView(float stereo_separation)
 {

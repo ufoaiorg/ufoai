@@ -22,7 +22,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 
 See the GNU General Public License for more details.
 
@@ -53,7 +53,7 @@ typedef struct {
 	int speed;					/* not needed, because converted on load? */
 	int width;
 	int stereo;
-	uint8_t data[1];				/* variable sized */
+	byte data[1];				/* variable sized */
 } sfxcache_t;
 
 typedef struct sfx_s {
@@ -73,7 +73,7 @@ typedef struct playsound_s {
 	float attenuation;
 	int entnum;
 	int entchannel;
-	bool_t fixed_origin;		/* use origin field instead of entnum's origin */
+	qboolean fixed_origin;		/* use origin field instead of entnum's origin */
 	vec3_t origin;
 	unsigned begin;				/* begin on this sample */
 } playsound_t;
@@ -85,7 +85,7 @@ typedef struct {
 	int samplepos;				/* in mono samples */
 	int samplebits;
 	int speed;
-	uint8_t *buffer;
+	byte *buffer;
 	int dmapos;
 	int dmasize;
 } dma_t;
@@ -103,8 +103,8 @@ typedef struct {
 	vec3_t origin;				/* only use if fixed_origin is set */
 	vec_t dist_mult;			/* distance multiplier (attenuation/clipK) */
 	int master_vol;				/* 0-255 master volume */
-	bool_t fixed_origin;		/* use origin instead of fetching entnum's origin */
-	bool_t autosound;			/* from an entity->sound, cleared each frame */
+	qboolean fixed_origin;		/* use origin instead of fetching entnum's origin */
+	qboolean autosound;			/* from an entity->sound, cleared each frame */
 } channel_t;
 
 typedef struct {
@@ -138,7 +138,7 @@ struct sndinfo {
 */
 
 /* initializes cycling through a DMA buffer and returns information on it */
-bool_t SNDDMA_Init(struct sndinfo *s);
+qboolean SNDDMA_Init(struct sndinfo *s);
 
 /* gets the current DMA position */
 int SNDDMA_GetDMAPos(void);
@@ -148,7 +148,7 @@ void SNDDMA_Shutdown(void);
 void SNDDMA_BeginPainting(void);
 void SNDDMA_Submit(void);
 
-bool_t OGG_Open(char *filename);
+qboolean OGG_Open(char *filename);
 void OGG_Stop(void);
 int OGG_Read(void);
 
@@ -182,7 +182,7 @@ extern cvar_t *s_primary;
 extern cvar_t *ov_volume;
 extern cvar_t *ov_loop;
 
-wavinfo_t GetWavinfo(char *name, uint8_t *wav, int wavlength);
+wavinfo_t GetWavinfo(char *name, byte * wav, int wavlength);
 
 void S_InitScaletable(void);
 

@@ -32,13 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 int		hunkcount;
 
 
-uint8_t *membase;
-size_t hunkmaxsize;
-size_t cursize;
+byte	*membase;
+int		hunkmaxsize;
+int		cursize;
 
 #define	VIRTUAL_ALLOC
 
-void *Hunk_Begin (size_t maxsize)
+void *Hunk_Begin (int maxsize)
 {
 	/* reserve a huge chunk of memory, but don't commit any yet */
 	cursize = 0;
@@ -54,7 +54,7 @@ void *Hunk_Begin (size_t maxsize)
 	return (void *)membase;
 }
 
-void *Hunk_Alloc (size_t size)
+void *Hunk_Alloc (int size)
 {
 	void	*buf;
 
@@ -65,7 +65,8 @@ void *Hunk_Alloc (size_t size)
 	/* commit pages as needed */
 /*	buf = VirtualAlloc (membase+cursize, size, MEM_COMMIT, PAGE_READWRITE); */
 	buf = VirtualAlloc (membase, cursize+size, MEM_COMMIT, PAGE_READWRITE);
-	if (!buf) {
+	if (!buf)
+	{
 		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) &buf, 0, NULL);
 		Sys_Error ("VirtualAlloc commit failed.\n%s", buf);
 	}
@@ -77,7 +78,7 @@ void *Hunk_Alloc (size_t size)
 	return (void *)(membase+cursize-size);
 }
 
-size_t Hunk_End (void)
+int Hunk_End (void)
 {
 
 	/* free the remaining unused virtual memory */
@@ -91,7 +92,7 @@ size_t Hunk_End (void)
 #endif
 
 	hunkcount++;
-	/*Com_Printf ("hunkcount: %i\n", hunkcount); */
+/*Com_Printf ("hunkcount: %i\n", hunkcount); */
 	return cursize;
 }
 
@@ -119,11 +120,12 @@ int	curtime;
 int Sys_Milliseconds (void)
 {
 	static int		base;
-	static bool_t	initialized = false;
+	static qboolean	initialized = qfalse;
 
-	if (!initialized) {	/* let base retain 16 bits of effectively random data */
+	if (!initialized)
+	{	/* let base retain 16 bits of effectively random data */
 		base = timeGetTime() & 0xffff0000;
-		initialized = true;
+		initialized = qtrue;
 	}
 	curtime = timeGetTime() - base;
 
@@ -137,35 +139,35 @@ void Sys_Mkdir (char *path)
 
 /*============================================ */
 
-char findbase[MAX_OSPATH];
-char findpath[MAX_OSPATH];
-int findhandle;
+char	findbase[MAX_OSPATH];
+char	findpath[MAX_OSPATH];
+int		findhandle;
 
-static bool_t CompareAttributes( unsigned found, unsigned musthave, unsigned canthave )
+static qboolean CompareAttributes( unsigned found, unsigned musthave, unsigned canthave )
 {
 	if ( ( found & _A_RDONLY ) && ( canthave & SFF_RDONLY ) )
-		return false;
+		return qfalse;
 	if ( ( found & _A_HIDDEN ) && ( canthave & SFF_HIDDEN ) )
-		return false;
+		return qfalse;
 	if ( ( found & _A_SYSTEM ) && ( canthave & SFF_SYSTEM ) )
-		return false;
+		return qfalse;
 	if ( ( found & _A_SUBDIR ) && ( canthave & SFF_SUBDIR ) )
-		return false;
+		return qfalse;
 	if ( ( found & _A_ARCH ) && ( canthave & SFF_ARCH ) )
-		return false;
+		return qfalse;
 
 	if ( ( musthave & SFF_RDONLY ) && !( found & _A_RDONLY ) )
-		return false;
+		return qfalse;
 	if ( ( musthave & SFF_HIDDEN ) && !( found & _A_HIDDEN ) )
-		return false;
+		return qfalse;
 	if ( ( musthave & SFF_SYSTEM ) && !( found & _A_SYSTEM ) )
-		return false;
+		return qfalse;
 	if ( ( musthave & SFF_SUBDIR ) && !( found & _A_SUBDIR ) )
-		return false;
+		return qfalse;
 	if ( ( musthave & SFF_ARCH ) && !( found & _A_ARCH ) )
-		return false;
+		return qfalse;
 
-	return true;
+	return qtrue;
 }
 
 char *Sys_FindFirst (char *path, unsigned musthave, unsigned canthave )
@@ -207,3 +209,6 @@ void Sys_FindClose (void)
 		_findclose (findhandle);
 	findhandle = 0;
 }
+
+
+/*============================================ */

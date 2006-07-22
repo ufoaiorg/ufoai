@@ -33,10 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*=============================================================================== */
 
 byte *membase;
-size_t maxhunksize;
-size_t curhunksize;
+int maxhunksize;
+int curhunksize;
 
-void *Hunk_Begin (size_t maxsize)
+void *Hunk_Begin (int maxsize)
 {
 	maxhunksize = maxsize + sizeof(int);
 	curhunksize = 0;
@@ -52,12 +52,12 @@ void *Hunk_Begin (size_t maxsize)
 	return membase + sizeof(int);
 }
 
-void *Hunk_Alloc (size_t size)
+void *Hunk_Alloc (int size)
 {
 	byte *buf;
 
 	/* round to cacheline */
-/*	size = (size+31)&~31;*/
+	size = (size+31)&~31;
 	if (curhunksize + size > maxhunksize)
 		Com_Error(ERR_FATAL, "Hunk_Alloc overflow");
 	buf = membase + sizeof(int) + curhunksize;
@@ -65,7 +65,7 @@ void *Hunk_Alloc (size_t size)
 	return buf;
 }
 
-size_t Hunk_End (void)
+int Hunk_End (void)
 {
 	return curhunksize;
 }
@@ -124,31 +124,32 @@ char *strlwr (char *s)
 
 /*============================================ */
 
-static	char findbase[MAX_OSPATH];
-static	char findpath[MAX_OSPATH];
-static	char findpattern[MAX_OSPATH];
-static	DIR *fdir;
+static	char	findbase[MAX_OSPATH];
+static	char	findpath[MAX_OSPATH];
+static	char	findpattern[MAX_OSPATH];
+static	DIR		*fdir;
 
-static bool_t CompareAttributes(char *path, char *name, unsigned musthave, unsigned canthave )
+static qboolean CompareAttributes(char *path, char *name,
+	unsigned musthave, unsigned canthave )
 {
 	struct stat st;
 	char fn[MAX_OSPATH];
 
 	/* . and .. never match */
 	if (Q_strcmp(name, ".") == 0 || Q_strcmp(name, "..") == 0)
-		return false;
+		return qfalse;
 
 	Com_sprintf(fn, MAX_OSPATH, "%s/%s", path, name);
 	if (stat(fn, &st) == -1)
-		return false; /* shouldn't happen */
+		return qfalse; /* shouldn't happen */
 
 	if ( ( st.st_mode & S_IFDIR ) && ( canthave & SFF_SUBDIR ) )
-		return false;
+		return qfalse;
 
 	if ( ( musthave & SFF_SUBDIR ) && !( st.st_mode & S_IFDIR ) )
-		return false;
+		return qfalse;
 
-	return true;
+	return qtrue;
 }
 
 char *Sys_FindFirst (char *path, unsigned musthave, unsigned canhave)

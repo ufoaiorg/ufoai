@@ -37,12 +37,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GAME_Q_SHARED_H
 #define GAME_Q_SHARED_H
 
-/* FIXME: Put me in the right headers - for now this is here to let us compile the game */
-#include "../common/ufotypes.h"
-
 #ifdef DEBUG
 #define Q_strncpyz(string1,string2,length) Q_strncpyzDebug( string1, string2, length, __FILE__, __LINE__ )
+#define WriteByte(x) WriteByte( x, __FILE__, __LINE__ )
+#define WriteShort(x) WriteShort( x, __FILE__, __LINE__ )
 #endif
+
+#include "../common/ufotypes.h"
 
 #ifdef _MSC_VER
 /* unknown pragmas are SUPPOSED to be ignored, but.... */
@@ -111,9 +112,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define idaxp	0
 #endif
 
+typedef uint8_t byte;
+
 #ifndef NULL
 #define NULL ((void *)0)
 #endif
+
+/* NOTE: place this macro after stddef.h inclusion. */
+/*#if !defined offsetof*/
+/*#define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)*/
+/*#endif*/
 
 #define NONE				0xFF
 #define FULL				0xFFFFFF00
@@ -186,8 +194,8 @@ extern const int dvecs[8][2];
 extern const float dvecsn[8][2];
 extern const float dangle[8];
 
-extern const uint8_t dvright[8];
-extern const uint8_t dvleft[8];
+extern const byte dvright[8];
+extern const byte dvleft[8];
 
 /*
 ==============================================================
@@ -197,13 +205,13 @@ MATHLIB
 ==============================================================
 */
 
-typedef float32_t vec_t;
+typedef float vec_t;
 typedef vec_t vec2_t[2];
 typedef vec_t vec3_t[3];
 typedef vec_t vec4_t[4];
 typedef vec_t vec5_t[5];
 
-typedef uint8_t pos_t;
+typedef byte pos_t;
 typedef pos_t pos3_t[3];
 
 #ifndef M_PI
@@ -271,7 +279,7 @@ void _VectorCopy(vec3_t in, vec3_t out);
 void ClearBounds(vec3_t mins, vec3_t maxs);
 void AddPointToBounds(vec3_t v, vec3_t mins, vec3_t maxs);
 int VectorCompareEps(vec3_t v1, vec3_t v2);
-bool_t VectorNearer(vec3_t v1, vec3_t v2, vec3_t comp);
+qboolean VectorNearer(vec3_t v1, vec3_t v2, vec3_t comp);
 vec_t VectorLength(vec3_t v);
 void CrossProduct(vec3_t v1, vec3_t v2, vec3_t cross);
 vec_t VectorNormalize(vec3_t v);	/* returns vector length */
@@ -330,7 +338,7 @@ char *COM_EParse(char **text, char *errhead, char *errinfo);
 
 void Com_sprintf(char *dest, size_t size, char *fmt, ...);
 
-void Com_PageInMemory(uint8_t *buffer, int size);
+void Com_PageInMemory(byte * buffer, int size);
 
 /*============================================= */
 
@@ -375,7 +383,7 @@ char *Info_ValueForKey(char *s, char *key);
 void Info_RemoveKey(char *s, const char *key);
 void Info_SetValueForKey(char *s, const char *key, const char *value);
 
-bool_t Info_Validate(char *s);
+qboolean Info_Validate(char *s);
 
 /*
 ==============================================================
@@ -392,10 +400,10 @@ void Sys_Mkdir(char *path);
 char *strlwr(char *s);			/* this is non ansi and is defined for some OSs */
 
 /* large block stack allocation routines */
-void *Hunk_Begin(size_t maxsize);
-void *Hunk_Alloc(size_t size);
+void *Hunk_Begin(int maxsize);
+void *Hunk_Alloc(int size);
 void Hunk_Free(void *buf);
-size_t Hunk_End(void);
+int Hunk_End(void);
 
 /* directory searching */
 #define SFF_ARCH    0x01
@@ -442,7 +450,7 @@ typedef struct cvar_s {
 	char *string;
 	char *latched_string;		/* for CVAR_LATCH vars */
 	int flags;
-	bool_t modified;			/* set each time the cvar is changed */
+	qboolean modified;			/* set each time the cvar is changed */
 	float value;
 	struct cvar_s *next;
 } cvar_t;
@@ -531,9 +539,9 @@ COLLISION DETECTION
 typedef struct cplane_s {
 	vec3_t normal;
 	float dist;
-	uint8_t type;					/* for fast side tests */
-	uint8_t signbits;				/* signx + (signy<<1) + (signz<<1) */
-	uint8_t pad[2];
+	byte type;					/* for fast side tests */
+	byte signbits;				/* signx + (signy<<1) + (signz<<1) */
+	byte pad[2];
 } cplane_t;
 
 /* structure offset for asm code */
@@ -553,6 +561,9 @@ typedef struct cmodel_s {
 	int headnode;
 } cmodel_t;
 
+/*extern int			numcmodels; */
+/*extern cmodel_t	map_cmodels[1024]; */
+
 typedef struct csurface_s {
 	char name[16];
 	int flags;
@@ -566,8 +577,8 @@ typedef struct mapsurface_s {	/* used internally due to name len probs //ZOID */
 
 /* a trace is returned when a box is swept through the world */
 typedef struct {
-	bool_t allsolid;			/* if true, plane is not valid */
-	bool_t startsolid;		/* if true, the initial point was in a solid area */
+	qboolean allsolid;			/* if true, plane is not valid */
+	qboolean startsolid;		/* if true, the initial point was in a solid area */
 	float fraction;				/* time completed, 1.0 = didn't hit anything */
 	vec3_t endpos;				/* final position */
 	cplane_t plane;				/* surface normal at impact */
@@ -605,8 +616,12 @@ typedef struct {
 /* player_state_t->refdef flags */
 #define	RDF_UNDERWATER		1	/* warp the screen as apropriate */
 #define RDF_NOWORLDMODEL	2	/* used for player configuration screen */
+
+/*ROGUE */
 #define	RDF_IRGOGGLES		4
 #define RDF_UVGOGGLES		8
+/*ROGUE */
+
 
 
 /* sound channels */
@@ -830,10 +845,10 @@ typedef struct fireDef_s {
 	char impactSound[MAX_VAR];
 	char hitBodySound[MAX_VAR];
 	char bounceSound[MAX_VAR];
-	uint8_t soundOnce;
-	uint8_t gravity;
-	uint8_t selfDetonate;
-	uint8_t dmgtype;
+	byte soundOnce;
+	byte gravity;
+	byte selfDetonate;
+	byte dmgtype;
 	float speed;
 	vec2_t shotOrg;
 	vec2_t spread;
@@ -849,7 +864,7 @@ typedef struct fireDef_s {
 	vec2_t damage, spldmg;
 	float splrad;
 	int weaponSkill;
-	bool_t irgoggles;
+	int irgoggles;
 	int stun;
 } fireDef_t;
 
@@ -862,13 +877,13 @@ typedef struct objDef_s {
 	char type[MAX_VAR];
 	int shape;
 	/* size in x and y direction */
-	uint8_t sx, sy;
+	byte sx, sy;
 	float scale;
 	vec3_t center;
 	char category;
-	bool_t weapon;
-	bool_t twohanded;
-	bool_t thrown;
+	byte weapon;
+	byte twohanded;
+	byte thrown;
 	int price;
 	int buytype;
 	int link;
@@ -882,15 +897,15 @@ typedef struct objDef_s {
 	void *tech;
 
 	/* armor specific */
-	int16_t protection[MAX_DAMAGETYPES];
-	int16_t hardness[MAX_DAMAGETYPES];
+	short protection[MAX_DAMAGETYPES];
+	short hardness[MAX_DAMAGETYPES];
 } objDef_t;
 
 #define MAX_INVDEFS		16
 
 typedef struct invDef_s {
 	char name[MAX_VAR];
-	uint8_t single, armor, all, temp;
+	byte single, armor, all, temp;
 	int shape[16];
 	int in, out;
 } invDef_t;
@@ -899,9 +914,9 @@ typedef struct invDef_s {
 #define MAX_INVLIST		1024
 
 typedef struct item_s {
-	uint8_t t;						/* twohanded */
-	uint8_t a;						/* ammo */
-	uint8_t m;						/* model */
+	int t;						/* twohanded */
+	int a;						/* ammo */
+	int m;						/* model */
 } item_t;
 
 typedef struct invList_s {
@@ -919,7 +934,7 @@ typedef struct inventory_s {
 typedef struct equipDef_s {
 	char name[MAX_VAR];
 	int num[MAX_OBJDEFS];
-	uint8_t num_loose[MAX_OBJDEFS];
+	byte num_loose[MAX_OBJDEFS];
 } equipDef_t;
 
 /* the csi structure is the client-server-information structure */
@@ -1001,9 +1016,9 @@ typedef struct medals_s {
 	char id[MAX_MEDALTITLE];
 	char name[MAX_MEDALTITLE];
 	medalType_t type;
-	uint8_t band;
+	int band;
 	abilityskills_t affectedSkill;
-	int16_t skillIncrease;
+	int skillIncrease;
 	/*date  date; */
 	char text[MAX_MEDALTEXT];
 	struct medals_s *next_medal;
@@ -1012,32 +1027,32 @@ typedef struct medals_s {
 typedef struct rank_s {
 	char name[MAX_MEDALTITLE];
 	char image[MAX_VAR];
-	int16_t mind;
-	int16_t killed_enemies;
-	int16_t killed_others;
+	int mind;
+	int killed_enemies;
+	int killed_others;
 } rank_t;
 
 extern rank_t ranks[MAX_RANKS];	/* Global list of all ranks defined in medals.ufo. */
 extern int numRanks;			/* The number of entries in the list above. */
 
 typedef struct character_s {
-	int16_t ucn;
+	int ucn;
 	char name[MAX_VAR];
 	char path[MAX_VAR];
 	char body[MAX_VAR];
 	char head[MAX_VAR];
-	uint8_t skin;
+	int skin;
 
 	/* new abilities and skills: */
-	int16_t skills[SKILL_NUM_TYPES];
+	int skills[SKILL_NUM_TYPES];
 
 	/* score */
-	int16_t kills[KILLED_NUM_TYPES];
+	killtypes_t kills[KILLED_NUM_TYPES];
 /* 	int		destroyed_objects; */
 /* 	int		hit_ratio; */
 /* 	int		inflicted_damage; */
 /* 	int		damage_taken; */
-	int16_t assigned_missions;
+	int assigned_missions;
 /* 	int		crossed_distance; */
 	/* date     joined_edc; */
 	/* date     died; */
@@ -1047,7 +1062,7 @@ typedef struct character_s {
 	/* *------------------** */
 	/* *------------------** */
 
-	uint8_t fieldSize;				/* ACTOR_SIZE_* */
+	int fieldSize;				/* ACTOR_SIZE_* */
 	inventory_t *inv;
 } character_t;
 
@@ -1059,10 +1074,10 @@ char *Com_CharGetHead(character_t * chr);
 
 void Com_InitCSI(csi_t * import);
 void Com_InitInventory(invList_t * invChain);
-bool_t Com_CheckToInventory(inventory_t * i, int item, int container, int x, int y);
+qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, int y);
 invList_t *Com_SearchInInventory(inventory_t * i, int container, int x, int y);
 invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x, int y);
-bool_t Com_RemoveFromInventory(inventory_t * i, int container, int x, int y);
+qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y);
 int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp);
 void Com_EmptyContainer(inventory_t * i, int container);
 void Com_DestroyInventory(inventory_t * i);

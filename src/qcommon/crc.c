@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 
 See the GNU General Public License for more details.
 
@@ -68,7 +68,7 @@ void CRC_Init(unsigned short *crcvalue)
 	*crcvalue = CRC_INIT_VALUE;
 }
 
-void CRC_ProcessByte(unsigned short *crcvalue, uint8_t data)
+void CRC_ProcessByte(unsigned short *crcvalue, byte data)
 {
 	*crcvalue = (*crcvalue << 8) ^ crctable[(*crcvalue >> 8) ^ data];
 }
@@ -78,7 +78,7 @@ unsigned short CRC_Value(unsigned short crcvalue)
 	return crcvalue ^ CRC_XOR_VALUE;
 }
 
-unsigned short CRC_Block(uint8_t *start, int count)
+unsigned short CRC_Block(byte * start, int count)
 {
 	unsigned short crc;
 

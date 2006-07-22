@@ -96,7 +96,7 @@ void Cbuf_ExecuteText(char *text, int exec_when);
  * 
  * Other commands are added late, after all initialization is complete.
  */
-void Cbuf_AddEarlyCommands(bool_t clear);
+void Cbuf_AddEarlyCommands(qboolean clear);
 
 /**
  * @brief Adds command line parameters as script statements.
@@ -107,7 +107,7 @@ void Cbuf_AddEarlyCommands(bool_t clear);
  * Returns true if any late commands were added, which
  * will keep the demoloop from immediately starting
  */
-bool_t Cbuf_AddLateCommands(void);
+qboolean Cbuf_AddLateCommands(void);
 
 /**
  * @brief Defers any outstanding commands.

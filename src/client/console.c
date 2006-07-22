@@ -317,7 +317,7 @@ void Con_Init(void)
 	Cmd_AddCommand("messagemenu", Con_MessageModeMenu_f);
 	Cmd_AddCommand("clear", Con_Clear_f);
 	Cmd_AddCommand("condump", Con_Dump_f);
-	con.initialized = true;
+	con.initialized = qtrue;
 }
 
 
@@ -376,7 +376,7 @@ void Con_Print(char *txt)
 
 		if (cr) {
 			con.current--;
-			cr = false;
+			cr = qfalse;
 		}
 
 

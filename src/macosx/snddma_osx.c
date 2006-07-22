@@ -136,7 +136,7 @@ static OSStatus SNDDMA_Audio16BitIOProc (AudioDeviceID inDevice,
 
 /*_______________________________________________________________________________________SNDDMA_ReserveBufferSize() */
 
-bool_t	SNDDMA_ReserveBufferSize (void)
+qboolean	SNDDMA_ReserveBufferSize (void)
 {
     OSStatus		myError;
     AudioDeviceID	myAudioDevice;
@@ -168,8 +168,8 @@ bool_t	SNDDMA_ReserveBufferSize (void)
 
 /*____________________________________________________________________________________________________SNDDMA_Init() */
 
-/* bool_t SNDDMA_Init (void) */
-bool_t SNDDMA_Init (struct sndinfo *si__) /* argument ignored */
+/* qboolean SNDDMA_Init (void) */
+qboolean SNDDMA_Init (struct sndinfo *si__) /* argument ignored */
 {
     UInt32	myPropertySize;
 

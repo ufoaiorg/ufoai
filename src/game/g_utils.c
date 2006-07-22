@@ -55,7 +55,7 @@ void G_FreeEdict(edict_t * ed)
 	memset(ed, 0, sizeof(*ed));
 	ed->classname = "freed";
 	ed->freetime = level.time;
-	ed->inuse = false;
+	ed->inuse = qfalse;
 }
 
 
@@ -83,7 +83,7 @@ edict_t *G_Find(edict_t * from, int fieldofs, char *match)
 	for (; from < &g_edicts[globals.num_edicts]; from++) {
 		if (!from->inuse)
 			continue;
-		s = *(char **) ((uint8_t*) from + fieldofs);
+		s = *(char **) ((byte *) from + fieldofs);
 		if (!s)
 			continue;
 		if (!Q_stricmp(s, match))
@@ -280,7 +280,7 @@ char *G_CopyString(char *in)
 
 void G_InitEdict(edict_t * e)
 {
-	e->inuse = true;
+	e->inuse = qtrue;
 	e->classname = "noclass";
 	e->number = e - g_edicts;
 }

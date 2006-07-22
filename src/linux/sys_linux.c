@@ -51,7 +51,7 @@ cvar_t *nostdout;
 unsigned	sys_frame_time;
 
 uid_t saved_euid;
-bool_t stdin_active = true;
+qboolean stdin_active = qtrue;
 
 char *Sys_GetCurrentUser( void )
 {
@@ -94,7 +94,7 @@ char *Sys_BinName( const char *arg0 )
 	int	n;
 	char	src[MAX_OSPATH];
 	char	dir[MAX_OSPATH];
-	bool_t	links = false;
+	qboolean	links = qfalse;
 #endif
 
 	static char	dst[MAX_OSPATH];
@@ -103,19 +103,19 @@ char *Sys_BinName( const char *arg0 )
 #ifndef DEBUG
 	while( ( n = readlink(dst, src, MAX_OSPATH) ) >= 0 ) {
 		src[n] = '\0';
-		Com_sprintf(dir, MAX_OSPATH, dirname(dst));
-		Com_sprintf(dst, MAX_OSPATH, dir);
-		Q_strcat(dst, "/", MAX_OSPATH);
-		Q_strcat(dst, src, MAX_OSPATH);
-		links = true;
+		Com_sprintf( dir, MAX_OSPATH, dirname( dst ));
+		Com_sprintf( dst, MAX_OSPATH, dir);
+		Q_strcat( dst, MAX_OSPATH, "/" );
+		Q_strcat( dst, MAX_OSPATH, src );
+		links = qtrue;
 	}
 
 	if ( links ) {
-		Com_sprintf(dst, MAX_OSPATH, Sys_Cwd());
-		Q_strcat(dst, "/", MAX_OSPATH);
-		Q_strcat(dst, dir, MAX_OSPATH);
-		Q_strcat(dst, "/", MAX_OSPATH);
-		Q_strcat(dst, src, MAX_OSPATH);
+		Com_sprintf( dst, MAX_OSPATH, Sys_Cwd());
+		Q_strcat( dst, MAX_OSPATH, "/" );
+		Q_strcat( dst, MAX_OSPATH, dir );
+		Q_strcat( dst, MAX_OSPATH, "/" );
+		Q_strcat( dst, MAX_OSPATH, src );
 	}
 #endif
 	return dst;
@@ -260,7 +260,7 @@ char *Sys_ConsoleInput(void)
 
 	len = read (0, text, sizeof(text));
 	if (len == 0) { /* eof! */
-		stdin_active = false;
+		stdin_active = qfalse;
 		return NULL;
 	}
 

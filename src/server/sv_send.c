@@ -21,7 +21,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 
 See the GNU General Public License for more details.
 
@@ -187,7 +187,7 @@ void SV_Multicast(int mask)
 			c->addMsg = (c->addMsg + 1) % RELIABLEBUFFERS;
 			if (c->addMsg == c->curMsg) {
 				/* client overflowed */
-				c->netchan.message.overflowed = true;
+				c->netchan.message.overflowed = qtrue;
 				continue;
 			}
 			SZ_Clear(&c->reliable[c->addMsg]);
@@ -218,14 +218,14 @@ Returns true if the client is over its current
 bandwidth estimation and should not be sent another packet
 =======================
 */
-bool_t SV_RateDrop(client_t * c)
+qboolean SV_RateDrop(client_t * c)
 {
 	int total;
 	int i;
 
 	/* never drop over the loopback */
 	if (c->netchan.remote_address.type == NA_LOOPBACK)
-		return false;
+		return qfalse;
 
 	total = 0;
 
@@ -236,10 +236,10 @@ bool_t SV_RateDrop(client_t * c)
 	if (total > c->rate) {
 		c->surpressCount++;
 		c->message_size[sv.framenum % RATE_MESSAGES] = 0;
-		return true;
+		return qtrue;
 	}
 
-	return false;
+	return qfalse;
 }
 
 /*

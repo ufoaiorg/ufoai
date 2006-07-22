@@ -95,25 +95,24 @@ size_t ne_values[NE_NUM_NODEEVENT] = {
 /* =========================================================== */
 
 static value_t nps[] = {
-	{"invis", V_BOOL, offsetof(menuNode_t, invis)},
-	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx)},
-	{"blend", V_BOOL, offsetof(menuNode_t, blend)},
-	{"pos", V_POS, offsetof(menuNode_t, pos)},
-	{"size", V_POS, offsetof(menuNode_t, size)},
-	{"texh", V_POS, offsetof(menuNode_t, texh)},
-	{"texl", V_POS, offsetof(menuNode_t, texl)},
-	{"format", V_POS, offsetof(menuNode_t, texh)},
-	{"origin", V_VECTOR, offsetof(menuNode_t, origin)},
-	{"center", V_VECTOR, offsetof(menuNode_t, center)},
-	{"scale", V_VECTOR, offsetof(menuNode_t, scale)},
-	{"angles", V_VECTOR, offsetof(menuNode_t, angles)},
-	{"num", V_INT, offsetof(menuNode_t, num)},
-	{"height", V_INT, offsetof(menuNode_t, height)},
-	{"text_scroll", V_INT, offsetof(menuNode_t, textScroll)},
-	{"timeout", V_INT, offsetof(menuNode_t, timeOut)},
-	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor)},
+	{"invis", V_BOOL, NOFS(invis)},
+	{"mousefx", V_BOOL, NOFS(mousefx)},
+	{"blend", V_BOOL, NOFS(blend)},
+	{"pos", V_POS, NOFS(pos)},
+	{"size", V_POS, NOFS(size)},
+	{"texh", V_POS, NOFS(texh)},
+	{"texl", V_POS, NOFS(texl)},
+	{"format", V_POS, NOFS(texh)},
+	{"origin", V_VECTOR, NOFS(origin)},
+	{"center", V_VECTOR, NOFS(center)},
+	{"scale", V_VECTOR, NOFS(scale)},
+	{"angles", V_VECTOR, NOFS(angles)},
+	{"num", V_INT, NOFS(num)},
+	{"height", V_INT, NOFS(height)},
+	{"text_scroll", V_INT, NOFS(textScroll)},
+	{"timeout", V_INT, NOFS(timeOut)},
+	{"bgcolor", V_COLOR, NOFS(bgcolor)},
 	/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
-	/* FIXME: size_t is unsigned */
 	{"tooltip", V_STRING, -5},	/* translated in MN_Tooltip */
 	{"image", V_STRING, 0},
 	{"md2", V_STRING, 0},
@@ -127,9 +126,9 @@ static value_t nps[] = {
 	{"min", V_FLOAT, -1},
 	{"current", V_FLOAT, -2},
 	{"weapon", V_STRING, 0},
-	{"color", V_COLOR, offsetof(menuNode_t, color)},
-	{"align", V_ALIGN, offsetof(menuNode_t, align)},
-	{"if", V_IF, offsetof(menuNode_t, depends)},
+	{"color", V_COLOR, NOFS(color)},
+	{"align", V_ALIGN, NOFS(align)},
+	{"if", V_IF, NOFS(depends)},
 
 	{NULL, V_NULL, 0},
 };
@@ -203,7 +202,7 @@ static int numMenus;
 static int numMenuModels;
 static int numTutorials;
 
-static uint8_t *adata, *curadata;
+static byte *adata, *curadata;
 static int adataize = 0;
 
 static menu_t *menuStack[MAX_MENUSTACK];
@@ -414,7 +413,7 @@ static float MN_GetReferenceFloat(menu_t * menu, void *ref)
 			/* get the string */
 			/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
 			if ((val->ofs > 0) && (val->ofs < (size_t)-5))
-				return *(float *) ((uint8_t*) refNode + val->ofs);
+				return *(float *) ((byte *) refNode + val->ofs);
 			else
 				return *(float *) refNode->data[-(val->ofs)];
 		}
@@ -454,7 +453,7 @@ static void MN_StartServer(void)
 		return;
 	}
 
-	Cbuf_ExecuteText(va("map %s\n", Cmd_Argv(1)), EXEC_NOW);
+	Cbuf_ExecuteText(EXEC_NOW, va("map %s\n", Cmd_Argv(1)));
 }
 
 /*
@@ -474,15 +473,15 @@ static void Com_MergeShapes(int *shape, int itemshape, int x, int y)
 * Com_CheckShape
 * Checks the shape if there is a 1-bit on the position x/y.
 */
-static bool_t Com_CheckShape(int shape[16], int x, int y)
+static qboolean Com_CheckShape(int shape[16], int x, int y)
 {
 	int row = shape[y];
 	int position = pow(2, x);
 
 	if ((row & position) == 0)
-		return false;
+		return qfalse;
 	else
-		return true;
+		return qtrue;
 }
 
 /*
@@ -555,7 +554,7 @@ void MN_Popup(const char *title, const char *text)
 {
 	menuText[TEXT_POPUP] = (char *) title;
 	menuText[TEXT_POPUP_INFO] = (char *) text;
-	Cbuf_ExecuteText("game_timestop", EXEC_NOW);
+	Cbuf_ExecuteText(EXEC_NOW, "game_timestop");
 	MN_PushMenu("popup");
 }
 
@@ -567,7 +566,7 @@ MN_ExecuteActions
 static void MN_ExecuteActions(menu_t * menu, menuAction_t * first)
 {
 	menuAction_t *action;
-	uint8_t *data;
+	byte *data;
 
 	for (action = first; action; action = action->next)
 		switch (action->type) {
@@ -653,7 +652,7 @@ MENU ZONE DETECTION
 MN_MapToScreen
 =================
 */
-static bool_t MN_MapToScreen(menuNode_t * node, vec2_t pos, int *x, int *y)
+static qboolean MN_MapToScreen(menuNode_t * node, vec2_t pos, int *x, int *y)
 {
 	float sx;
 
@@ -670,8 +669,8 @@ static bool_t MN_MapToScreen(menuNode_t * node, vec2_t pos, int *x, int *y)
 	*y = node->pos[1] + 0.5 * node->size[1] - (pos[1] / 180 + ccs.center[1] - 0.5) * node->size[1] * ccs.zoom;
 
 	if (*x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
-		return false;
-	return true;
+		return qfalse;
+	return qtrue;
 }
 
 
@@ -884,7 +883,7 @@ static void MN_FindContainer(menuNode_t * node)
 MN_CheckNodeZone
 =================
 */
-static bool_t MN_CheckNodeZone(menuNode_t * node, int x, int y)
+static qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
 {
 	int sx, sy, tx, ty;
 
@@ -893,19 +892,19 @@ static bool_t MN_CheckNodeZone(menuNode_t * node, int x, int y)
 		if (node->mousefx == C_UNDEFINED)
 			MN_FindContainer(node);
 		if (node->mousefx == NONE)
-			return false;
+			return qfalse;
 
 		/* check bounding box */
 		if (x < node->pos[0] || x > node->pos[0] + node->size[0] || y < node->pos[1] || y > node->pos[1] + node->size[1])
-			return false;
+			return qfalse;
 
 		/* found a container */
-		return true;
+		return qtrue;
 	}
 
 	/* check for click action */
 	if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->mouseIn && !node->mouseOut))
-		return false;
+		return qfalse;
 
 	if (!node->size[0] || !node->size[1]) {
 		if (node->type == MN_PIC && node->data[0]) {
@@ -915,7 +914,7 @@ static bool_t MN_CheckNodeZone(menuNode_t * node, int x, int y)
 			} else
 				re.DrawGetPicSize(&sx, &sy, node->data[0]);
 		} else
-			return false;
+			return qfalse;
 	} else {
 		sx = node->size[0];
 		sy = node->size[1];
@@ -933,13 +932,13 @@ static bool_t MN_CheckNodeZone(menuNode_t * node, int x, int y)
 	}
 
 	if (tx < 0 || ty < 0 || tx > sx || ty > sy)
-		return false;
+		return qfalse;
 
 	/* on the node */
 	if (node->type == MN_TEXT)
 		return (int) (ty / node->texh[0]) + 1;
 	else
-		return true;
+		return qtrue;
 }
 
 
@@ -948,7 +947,7 @@ static bool_t MN_CheckNodeZone(menuNode_t * node, int x, int y)
 MN_CursorOnMenu
 =================
 */
-bool_t MN_CursorOnMenu(int x, int y)
+qboolean MN_CursorOnMenu(int x, int y)
 {
 	menuNode_t *node;
 	menu_t *menu;
@@ -961,19 +960,19 @@ bool_t MN_CursorOnMenu(int x, int y)
 		for (node = menu->firstNode; node; node = node->next)
 			if (MN_CheckNodeZone(node, x, y)) {
 				/* found an element */
-				return true;
+				return qtrue;
 			}
 
 		if (menu->renderNode) {
 			/* don't care about non-rendered windows */
 			if (menu->renderNode->invis)
-				return true;
+				return qtrue;
 			else
-				return false;
+				return qfalse;
 		}
 	}
 
-	return false;
+	return qfalse;
 }
 
 
@@ -1105,7 +1104,7 @@ static void CL_MultiSelect(void)
 		selected = 0;
 	} else {
 		/* Call from a geoscape popup menu (popup_multi_selection) */
-		MN_PopMenu(false);
+		MN_PopMenu(qfalse);
 		selected = atoi(Cmd_Argv(1));
 	}
 
@@ -1119,7 +1118,7 @@ static void CL_MultiSelect(void)
 	case MULTISELECT_TYPE_BASE:	/* Select a base */
 		if (id >= gd.numBases)
 			break;
-		Cbuf_ExecuteText(va("mn_select_base %i", id), EXEC_NOW);
+		Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i", id));
 		MN_PushMenu("bases");
 		break;
 
@@ -1142,7 +1141,7 @@ static void CL_MultiSelect(void)
 		if (!Q_strncmp(selMis->def->name, "baseattack", 10)) {
 			gd.mapAction = MA_BASEATTACK;
 			/* we need no dropship in our base */
-			selMis->def->active = true;
+			selMis->def->active = qtrue;
 		} else {
 			Com_DPrintf("Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
 			gd.mapAction = MA_INTERCEPT;
@@ -1171,7 +1170,7 @@ static void MN_MapClick(menuNode_t * node, int x, int y)
 	MN_ScreenToMap(node, x, y, pos);
 	if (cl_showCoords->value) {
 		Com_sprintf(clickBuffer, sizeof(clickBuffer), "Long: %.1f Lat: %.1f", pos[0], pos[1]);
-		MN_AddNewMessage(_("Click"), clickBuffer, false, MSG_DEBUG, NULL);
+		MN_AddNewMessage(_("Click"), clickBuffer, qfalse, MSG_DEBUG, NULL);
 		Com_Printf("Clicked at %.1f %.1f\n", pos[0], pos[1]);
 	}
 
@@ -1183,7 +1182,7 @@ static void MN_MapClick(menuNode_t * node, int x, int y)
 			MN_PushMenu("popup_newbase");
 			return;
 		} else {
-			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), false, MSG_STANDARD, NULL);
+			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_STANDARD, NULL);
 		}
 	} else if (gd.mapAction == MA_UFORADAR) {
 		MN_PushMenu("popup_intercept_ufo");
@@ -1269,7 +1268,7 @@ static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y);
 
 				if (*entry->onClick)
-					Cbuf_ExecuteText(entry->onClick, EXEC_NOW);
+					Cbuf_ExecuteText(EXEC_NOW, entry->onClick);
 #if 0
 				else {
 					/* Click on building : display its properties in the building menu */
@@ -1555,7 +1554,7 @@ void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t s
 		re.DrawNormPic(
 			org[0] + C_UNIT / 2.0 * sx + C_UNIT * x,
 			org[1] + C_UNIT / 2.0 * sy + C_UNIT * y,
-			C_UNIT * sx, C_UNIT * sy, 0, 0, 0, 0, ALIGN_CC, true, od->image);
+			C_UNIT * sx, C_UNIT * sy, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
 	} else if (od->model[0]) {
 		/* draw model, if there is no image */
 		mi.name = od->model;
@@ -1674,13 +1673,13 @@ static void MN_DrawMapMarkers(menuNode_t * node)
 		ms = &ccs.mission[i];
 		if (!MN_MapToScreen(node, ms->realPos, &x, &y))
 			continue;
-		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, "cross");
+		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
 		if (ms == selMis) {
 			menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s\n"), ms->def->location, ms->def->type, ms->def->text );
 			if (selMis->def->active) {
-				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "circleactive");
+				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circleactive");
 			} else
-				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, true, "circle");
+				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 
 			if (CL_MapIsNight(ms->realPos))
 				Cvar_Set("mn_mapdaytime", _("Night"));
@@ -1695,9 +1694,9 @@ static void MN_DrawMapMarkers(menuNode_t * node)
 			if (!MN_MapToScreen(node, gd.bases[j].pos, &x, &y))
 				continue;
 			i = gd.bases[j].sensorWidth;
-			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, "base");
+			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
 			if (gd.bases[j].drawSensor)
-				re.DrawNormPic(x, y, i, i, 0, 0, 0, 0, ALIGN_CC, true, "sensor");
+				re.DrawNormPic(x, y, i, i, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor");
 		}
 
 	/* draw aircraft */
@@ -1707,7 +1706,7 @@ static void MN_DrawMapMarkers(menuNode_t * node)
 				if (air->status != AIR_HOME) {
 					if (!MN_MapToScreen(node, air->pos, &x, &y))
 						continue;
-					re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, air->image);
+					re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, air->image);
 
 					if (air->status >= AIR_TRANSIT) {
 						mapline_t path;
@@ -1730,7 +1729,7 @@ static void MN_DrawMapMarkers(menuNode_t * node)
 #endif
 		if (ufoOnGeoscape[j]->status != AIR_UFOMOVE || !MN_MapToScreen(node, ufoOnGeoscape[j]->pos, &x, &y))
 			continue;
-		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, false, ufoOnGeoscape[j]->image);
+		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, ufoOnGeoscape[j]->image);
 	}
 }
 
@@ -1801,7 +1800,7 @@ void MN_PrecacheMenus(void)
 				ref = MN_GetReferenceString(menu, node->data[0]);
 				if (!ref) {
 					/* bad reference */
-					node->invis = true;
+					node->invis = qtrue;
 					Com_Printf("MN_PrecacheMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data);
 					continue;
 				}
@@ -1936,7 +1935,7 @@ void MN_DrawMenus(void)
 					ref = MN_GetReferenceString(menu, node->data[0]);
 					if (!ref) {
 						/* bad reference */
-						node->invis = true;
+						node->invis = qtrue;
 						Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, node->data);
 						continue;
 					}
@@ -2360,7 +2359,7 @@ void MN_DrawMenus(void)
 				}				/* switch */
 
 				/* mouseover? */
-				if (node->state == true)
+				if (node->state == qtrue)
 					menu->hoverNode = node;
 			}					/* if */
 		}						/* for */
@@ -2444,7 +2443,7 @@ static void MN_PushMenu_f(void)
 MN_PopMenu
 =================
 */
-void MN_PopMenu(bool_t all)
+void MN_PopMenu(qboolean all)
 {
 	if (all)
 		while (menuStackPos > 0) {
@@ -2479,12 +2478,12 @@ void MN_PopMenu(bool_t all)
 static void MN_PopMenu_f(void)
 {
 	if (Cmd_Argc() < 2 || Q_strncmp(Cmd_Argv(1), "esc", 3))
-		MN_PopMenu(false);
+		MN_PopMenu(qfalse);
 	else {
 		int i;
 
 		for (i = 0; i < (int) mn_escpop->value; i++)
-			MN_PopMenu(false);
+			MN_PopMenu(qfalse);
 		Cvar_Set("mn_escpop", "1");
 	}
 }
@@ -2543,7 +2542,7 @@ MN_ModifyString_f
 */
 static void MN_ModifyString_f(void)
 {
-	bool_t next;
+	qboolean next;
 	char *current, *list, *tp;
 	char token[MAX_VAR], last[MAX_VAR], first[MAX_VAR];
 	int add;
@@ -2556,7 +2555,7 @@ static void MN_ModifyString_f(void)
 	list = Cmd_Argv(3);
 	last[0] = 0;
 	first[0] = 0;
-	next = false;
+	next = qfalse;
 
 	while (add) {
 		tp = token;
@@ -2590,7 +2589,7 @@ static void MN_ModifyString_f(void)
 					Cvar_Set(Cmd_Argv(1), first);
 				return;
 			} else
-				next = true;
+				next = qtrue;
 		}
 		Q_strncpyz(last, token, MAX_VAR);
 	}
@@ -2605,7 +2604,7 @@ static void MN_ModifyString_f(void)
   */
 static void MN_Translate_f(void)
 {
-	bool_t next;
+	qboolean next;
 	char *current, *list, *orig, *trans;
 	char original[MAX_VAR], translation[MAX_VAR];
 
@@ -2614,7 +2613,7 @@ static void MN_Translate_f(void)
 
 	current = Cvar_VariableString(Cmd_Argv(1));
 	list = Cmd_Argv(3);
-	next = false;
+	next = qfalse;
 
 	while (*list) {
 		orig = original;
@@ -2690,7 +2689,7 @@ static void MN_TutorialListClick_f(void)
 	if (num < 0 || num >= numTutorials)
 		return;
 
-	Cbuf_ExecuteText(va("seq_start %s", tutorials[num].sequence), EXEC_NOW);
+	Cbuf_ExecuteText(EXEC_NOW, va("seq_start %s", tutorials[num].sequence));
 }
 
 /*
@@ -2793,12 +2792,12 @@ MENU PARSING
 MN_ParseAction
 =================
 */
-bool_t MN_ParseAction(menuAction_t * action, char **text, char **token)
+qboolean MN_ParseAction(menuAction_t * action, char **text, char **token)
 {
 	char *errhead = "MN_ParseAction: unexpected end of file (in event)";
 	menuAction_t *lastAction;
 	menuNode_t *node;
-	bool_t found;
+	qboolean found;
 	value_t *val;
 	int i;
 
@@ -2808,11 +2807,11 @@ bool_t MN_ParseAction(menuAction_t * action, char **text, char **token)
 		/* get new token */
 		*token = COM_EParse(text, errhead, NULL);
 		if (!*token)
-			return false;
+			return qfalse;
 
 		/* get actions */
 		do {
-			found = false;
+			found = qfalse;
 
 			/* standard function execution */
 			for (i = 0; i < EA_CALL; i++)
@@ -2831,7 +2830,7 @@ bool_t MN_ParseAction(menuAction_t * action, char **text, char **token)
 						/* get parameter values */
 						*token = COM_EParse(text, errhead, NULL);
 						if (!*text)
-							return false;
+							return qfalse;
 
 /*						Com_Printf( " %s", *token ); */
 
@@ -2845,10 +2844,10 @@ bool_t MN_ParseAction(menuAction_t * action, char **text, char **token)
 					/* get next token */
 					*token = COM_EParse(text, errhead, NULL);
 					if (!*text)
-						return false;
+						return qfalse;
 
 					lastAction = action;
-					found = true;
+					found = qtrue;
 					break;
 				}
 
@@ -2872,7 +2871,7 @@ bool_t MN_ParseAction(menuAction_t * action, char **text, char **token)
 				/* get the node property */
 				*token = COM_EParse(text, errhead, NULL);
 				if (!*text)
-					return false;
+					return qfalse;
 
 /*				Com_Printf( " %s", *token ); */
 
@@ -2895,7 +2894,7 @@ bool_t MN_ParseAction(menuAction_t * action, char **text, char **token)
 				/* get the value */
 				*token = COM_EParse(text, errhead, NULL);
 				if (!*text)
-					return false;
+					return qfalse;
 
 /*				Com_Printf( " %s\n", *token ); */
 
@@ -2905,10 +2904,10 @@ bool_t MN_ParseAction(menuAction_t * action, char **text, char **token)
 				/* get next token */
 				*token = COM_EParse(text, errhead, NULL);
 				if (!*text)
-					return false;
+					return qfalse;
 
 				lastAction = action;
-				found = true;
+				found = qtrue;
 			}
 
 			/* function calls */
@@ -2931,10 +2930,10 @@ bool_t MN_ParseAction(menuAction_t * action, char **text, char **token)
 					/* get next token */
 					*token = COM_EParse(text, errhead, NULL);
 					if (!*text)
-						return false;
+						return qfalse;
 
 					lastAction = action;
-					found = true;
+					found = qtrue;
 					break;
 				}
 		} while (found);
@@ -2942,14 +2941,14 @@ bool_t MN_ParseAction(menuAction_t * action, char **text, char **token)
 		/* test for end or unknown token */
 		if (**token == '}') {
 			/* finished */
-			return true;
+			return qtrue;
 		} else {
 			/* unknown token, print message and continue */
 			Com_Printf("MN_ParseAction: unknown token \"%s\" ignored (in event)\n", *token);
 		}
 	} while (*text);
 
-	return false;
+	return qfalse;
 }
 
 /*
@@ -2957,10 +2956,10 @@ bool_t MN_ParseAction(menuAction_t * action, char **text, char **token)
 MN_ParseNodeBody
 =================
 */
-bool_t MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
+qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 {
 	char *errhead = "MN_ParseNodeBody: unexpected end of file (node";
-	bool_t found;
+	qboolean found;
 	value_t *val;
 	int i;
 
@@ -2985,11 +2984,11 @@ bool_t MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 		/* get new token */
 		*token = COM_EParse(text, errhead, node->name);
 		if (!*text)
-			return false;
+			return qfalse;
 
 		/* get properties, events and actions */
 		do {
-			found = false;
+			found = qfalse;
 
 			for (val = nps; val->type; val++)
 				if (!Q_strcmp(*token, val->string)) {
@@ -2999,7 +2998,7 @@ bool_t MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 						/* get parameter values */
 						*token = COM_EParse(text, errhead, node->name);
 						if (!*text)
-							return false;
+							return qfalse;
 
 /*						Com_Printf( " %s", *token ); */
 
@@ -3023,9 +3022,9 @@ bool_t MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 					/* get next token */
 					*token = COM_EParse(text, errhead, node->name);
 					if (!*text)
-						return false;
+						return qfalse;
 
-					found = true;
+					found = qtrue;
 					break;
 				}
 
@@ -3036,7 +3035,7 @@ bool_t MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 /*					Com_Printf( "  %s\n", *token ); */
 
 					/* add new actions to end of list */
-					action = (menuAction_t **) ((uint8_t*) node + ne_values[i]);
+					action = (menuAction_t **) ((byte *) node + ne_values[i]);
 					for (; *action; action = &(*action)->next);
 
 					*action = &menuActions[numActions++];
@@ -3045,7 +3044,7 @@ bool_t MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 					/* get the action body */
 					*token = COM_EParse(text, errhead, node->name);
 					if (!*text)
-						return false;
+						return qfalse;
 
 					if (**token == '{') {
 						MN_ParseAction(*action, text, token);
@@ -3053,10 +3052,10 @@ bool_t MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 						/* get next token */
 						*token = COM_EParse(text, errhead, node->name);
 						if (!*text)
-							return false;
+							return qfalse;
 					}
 
-					found = true;
+					found = qtrue;
 					break;
 				}
 		} while (found);
@@ -3064,14 +3063,14 @@ bool_t MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
 		/* test for end or unknown token */
 		if (**token == '}') {
 			/* finished */
-			return true;
+			return qtrue;
 		} else {
 			/* unknown token, print message and continue */
 			Com_Printf("MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\")\n", *token, node->name);
 		}
 	} while (*text);
 
-	return false;
+	return qfalse;
 }
 
 /**
@@ -3081,8 +3080,8 @@ bool_t MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
   */
 void MN_HideNode ( menuNode_t* node )
 {
-	if ( node && node->invis == true )
-		node->invis = false;
+	if ( node && node->invis == qtrue )
+		node->invis = qfalse;
 }
 
 /**
@@ -3092,8 +3091,8 @@ void MN_HideNode ( menuNode_t* node )
   */
 void MN_UnHideNode ( menuNode_t* node )
 {
-	if ( node && node->invis == false )
-		node->invis = true;
+	if ( node && node->invis == qfalse )
+		node->invis = qtrue;
 }
 
 /*
@@ -3101,11 +3100,11 @@ void MN_UnHideNode ( menuNode_t* node )
 MN_ParseMenuBody
 =================
 */
-bool_t MN_ParseMenuBody(menu_t * menu, char **text)
+qboolean MN_ParseMenuBody(menu_t * menu, char **text)
 {
 	char *errhead = "MN_ParseMenuBody: unexpected end of file (menu";
 	char *token;
-	bool_t found;
+	qboolean found;
 	menuNode_t *node, *lastNode;
 	int i;
 
@@ -3115,11 +3114,11 @@ bool_t MN_ParseMenuBody(menu_t * menu, char **text)
 		/* get new token */
 		token = COM_EParse(text, errhead, menu->name);
 		if (!*text)
-			return false;
+			return qfalse;
 
 		/* get node type */
 		do {
-			found = false;
+			found = qfalse;
 
 			for (i = 0; i < MN_NUM_NODETYPE; i++)
 				if (!Q_strcmp(token, nt_strings[i])) {
@@ -3127,7 +3126,7 @@ bool_t MN_ParseMenuBody(menu_t * menu, char **text)
 					/* get name */
 					token = COM_EParse(text, errhead, menu->name);
 					if (!*text)
-						return false;
+						return qfalse;
 
 					/* test if node already exists */
 					for (node = menu->firstNode; node; node = node->next)
@@ -3196,7 +3195,7 @@ bool_t MN_ParseMenuBody(menu_t * menu, char **text)
 					/* get parameters */
 					token = COM_EParse(text, errhead, menu->name);
 					if (!*text)
-						return false;
+						return qfalse;
 
 					if (*token == '{') {
 						if (!MN_ParseNodeBody(node, text, &token)) {
@@ -3207,14 +3206,14 @@ bool_t MN_ParseMenuBody(menu_t * menu, char **text)
 
 						token = COM_EParse(text, errhead, menu->name);
 						if (!*text)
-							return false;
+							return qfalse;
 					}
 
 					/* set standard color */
 					if (!node->color[3])
 						node->color[0] = node->color[1] = node->color[2] = node->color[3] = 1.0f;
 
-					found = true;
+					found = qtrue;
 					break;
 				}
 		} while (found);
@@ -3222,7 +3221,7 @@ bool_t MN_ParseMenuBody(menu_t * menu, char **text)
 		/* test for end or unknown token */
 		if (*token == '}') {
 			/* finished */
-			return true;
+			return qtrue;
 		} else {
 			/* unknown token, print message and continue */
 			Com_Printf("MN_ParseMenuBody: unknown token \"%s\" ignored (menu \"%s\")\n", token, menu->name);
@@ -3230,7 +3229,7 @@ bool_t MN_ParseMenuBody(menu_t * menu, char **text)
 
 	} while (*text);
 
-	return false;
+	return qfalse;
 }
 
 /*
@@ -3390,7 +3389,7 @@ void MN_MapInfo(void)
 {
 	char normalizedName[MAX_VAR];
 	int length = 0;
-	bool_t normalized = false, found = false;
+	qboolean normalized = qfalse, found = qfalse;
 
 	/* maybe mn_next/prev_map are called before getmaps??? */
 	if (!mapsInstalledInit)
@@ -3405,40 +3404,40 @@ void MN_MapInfo(void)
 	length = strlen(normalizedName);
 	if (normalizedName[length - 1] == 'n' || normalizedName[length - 1] == 'd') {
 		normalizedName[length - 1] = '\0';
-		normalized = true;
+		normalized = qtrue;
 	}
 
 	Cvar_ForceSet("mapname", maps[mapInstalledIndex]);
 	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", maps[mapInstalledIndex])) != -1) {
 		Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", maps[mapInstalledIndex]));
-		found = true;
+		found = qtrue;
 	}
 
 	if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", maps[mapInstalledIndex])) != -1) {
 		Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", maps[mapInstalledIndex]));
-		found = true;
+		found = qtrue;
 	}
 
 	if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", maps[mapInstalledIndex])) != -1) {
 		Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", maps[mapInstalledIndex]));
-		found = true;
+		found = qtrue;
 	}
 
 	/* then check the normalized names */
 	if (!found && normalized) {
 		if (FS_CheckFile(va("pics/maps/shots/%s.jpg", normalizedName)) != -1) {
 			Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", normalizedName));
-			found = true;
+			found = qtrue;
 		}
 
 		if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", normalizedName)) != -1) {
 			Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", normalizedName));
-			found = true;
+			found = qtrue;
 		}
 
 		if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", normalizedName)) != -1) {
 			Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", normalizedName));
-			found = true;
+			found = qtrue;
 		}
 	}
 }
@@ -3508,7 +3507,7 @@ MN_AddNewMessage
 TODO: This needs saving
 ================
 */
-void MN_AddNewMessage(const char *title, const char *text, bool_t popup, messagetype_t type, technology_t * pedia)
+void MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia)
 {
 	message_t *mess;
 

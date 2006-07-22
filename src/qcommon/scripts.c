@@ -158,7 +158,7 @@ void Com_ParseFire(char *name, char **text, fireDef_t * fd)
 /*======================
 Com_ParseArmor
 ======================*/
-void Com_ParseArmor(char *name, char **text, int16_t *ad)
+void Com_ParseArmor(char *name, char **text, short *ad)
 {
 	char *errhead = "Com_ParseFire: unexptected end of file";
 	char *token;

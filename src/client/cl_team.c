@@ -96,7 +96,7 @@ static void CL_GiveNameCmd(void)
   * TODO: Generate UGV
   * @sa CL_ResetCharacters
   */
-void CL_GenerateCharacter(char *team, base_t *base, uint8_t type)
+void CL_GenerateCharacter(char *team, base_t *base, int type)
 {
 	character_t *chr;
 
@@ -372,7 +372,7 @@ static void CL_GenerateEquipmentCmd(void)
 	assert(baseCurrent);
 
 	if (!baseCurrent->numHired) {
-		MN_PopMenu(false);
+		MN_PopMenu(qfalse);
 		return;
 	}
 
@@ -585,7 +585,7 @@ static void CL_MarkTeamCmd(void)
 	/* we are only allowed to be here if we already set up a base */
 	if (!baseCurrent) {
 		Com_Printf("No base set up\n");
-		MN_PopMenu(false);
+		MN_PopMenu(qfalse);
 		return;
 	}
 
@@ -699,7 +699,7 @@ static void CL_MessageMenuCmd(void)
 void CL_SaveTeam(char *filename)
 {
 	sizebuf_t sb;
-	uint8_t buf[MAX_TEAMDATASIZE];
+	byte buf[MAX_TEAMDATASIZE];
 	char *name;
 	int res, i;
 
@@ -774,47 +774,47 @@ static void CL_SaveTeamSlotCmd(void)
 void CL_LoadTeamMember(sizebuf_t * sb, character_t * chr)
 {
 	item_t item;
-	uint8_t container, x, y;
+	int container, x, y;
 	int i;
 
 	/* unique character number */
-	chr->fieldSize = MSG_ReadByte(sb, NULL);
-	chr->ucn = MSG_ReadShort(sb, NULL);
+	chr->fieldSize = MSG_ReadByte(sb);
+	chr->ucn = MSG_ReadShort(sb);
 	if (chr->ucn >= baseCurrent->nextUCN)
 		baseCurrent->nextUCN = chr->ucn + 1;
 
 	/* name and model */
-	Q_strncpyz(chr->name, MSG_ReadString(sb, NULL), MAX_VAR);
-	Q_strncpyz(chr->path, MSG_ReadString(sb, NULL), MAX_VAR);
-	Q_strncpyz(chr->body, MSG_ReadString(sb, NULL), MAX_VAR);
-	Q_strncpyz(chr->head, MSG_ReadString(sb, NULL), MAX_VAR);
-	chr->skin = MSG_ReadByte(sb, NULL);
+	Q_strncpyz(chr->name, MSG_ReadString(sb), MAX_VAR);
+	Q_strncpyz(chr->path, MSG_ReadString(sb), MAX_VAR);
+	Q_strncpyz(chr->body, MSG_ReadString(sb), MAX_VAR);
+	Q_strncpyz(chr->head, MSG_ReadString(sb), MAX_VAR);
+	chr->skin = MSG_ReadByte(sb);
 
 	/* new attributes */
 	for (i = 0; i < SKILL_NUM_TYPES; i++)
-		chr->skills[i] = MSG_ReadByte(sb, NULL);
+		chr->skills[i] = MSG_ReadByte(sb);
 
 	/* load scores */
 	for (i = 0; i < KILLED_NUM_TYPES; i++)
-		chr->kills[i] = MSG_ReadShort(sb, NULL);
-	chr->assigned_missions = MSG_ReadShort(sb, NULL);
+		chr->kills[i] = MSG_ReadShort(sb);
+	chr->assigned_missions = MSG_ReadShort(sb);
 
 	/* inventory */
 	Com_DestroyInventory(chr->inv);
-	item.t = MSG_ReadByte(sb, NULL);
+	item.t = MSG_ReadByte(sb);
 	while (item.t != NONE) {
 		/* read info */
-		item.a = MSG_ReadByte(sb, NULL);
-		item.m = MSG_ReadByte(sb, NULL);
-		container = MSG_ReadByte(sb, NULL);
-		x = MSG_ReadByte(sb, NULL);
-		y = MSG_ReadByte(sb, NULL);
+		item.a = MSG_ReadByte(sb);
+		item.m = MSG_ReadByte(sb);
+		container = MSG_ReadByte(sb);
+		x = MSG_ReadByte(sb);
+		y = MSG_ReadByte(sb);
 
 		/* check info and add item if ok */
 		Com_AddToInventory(chr->inv, item, container, x, y);
 
 		/* get next item */
-		item.t = MSG_ReadByte(sb, NULL);
+		item.t = MSG_ReadByte(sb);
 	}
 }
 
@@ -834,15 +834,15 @@ void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 	CL_ResetCharacters(base);
 
 	/* read whole team list */
-	MSG_ReadByte(sb, NULL);
-	base->numWholeTeam = MSG_ReadByte(sb, NULL);
+	MSG_ReadByte(sb);
+	base->numWholeTeam = MSG_ReadByte(sb);
 	for (i = 0, chr = base->wholeTeam; i < base->numWholeTeam; chr++, i++)
 		CL_LoadTeamMember(sb, chr);
 
 	/* get assignement */
-	MSG_ReadFormat(sb, NULL, "bl", &base->numHired, &base->hiredMask);
+	MSG_ReadFormat(sb, "bl", &base->numHired, &base->hiredMask);
 	for (i = 0; i < base->numAircraftInBase; i++)
-		MSG_ReadFormat(sb, NULL, "bl", &base->numOnTeam[i], &base->teamMask[i]);
+		MSG_ReadFormat(sb, "bl", &base->numOnTeam[i], &base->teamMask[i]);
 
 	Com_DPrintf("Load team with %i members and %i slots\n", base->numHired, base->numWholeTeam);
 
@@ -863,7 +863,7 @@ void CL_LoadTeam(sizebuf_t * sb, base_t * base, int version)
 void CL_LoadTeamMultiplayer(char *filename)
 {
 	sizebuf_t sb;
-	uint8_t buf[MAX_TEAMDATASIZE];
+	byte buf[MAX_TEAMDATASIZE];
 	FILE *f;
 	char title[MAX_VAR];
 
@@ -893,7 +893,7 @@ void CL_LoadTeamMultiplayer(char *filename)
 	fclose(f);
 
 	/* load the teamname */
-	Cvar_Set("mn_teamname", MSG_ReadString(&sb, NULL));
+	Cvar_Set("mn_teamname", MSG_ReadString(&sb));
 
 	/* load the team */
 	CL_LoadTeam(&sb, &gd.bases[0], SAVE_FILE_VERSION);
@@ -1009,7 +1009,7 @@ void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
 
 		/* even new attributes */
 		for (j = 0; j < SKILL_NUM_TYPES; j++)
-			MSG_WriteShort(buf, chr->skills[j]);
+			MSG_WriteByte(buf, chr->skills[j]);
 
 		/* scores */
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
@@ -1029,14 +1029,14 @@ void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
 /**
   * @brief Parses the character data which was send by G_SendCharacterData
   */
-void CL_ParseCharacterData(sizebuf_t *buf, bool_t updateCharacter)
+void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 {
 	int ucn, i, j;
-	int num = MSG_ReadShort(buf, NULL);
+	int num = MSG_ReadShort(buf);
 	character_t* chr;
 	for (i=0; i<num; i++) {
 		chr = NULL;
-		ucn = MSG_ReadShort(buf, NULL);
+		ucn = MSG_ReadShort(buf);
 		for (j=0; j<baseCurrent->numWholeTeam; j++)
 			if (baseCurrent->wholeTeam[j].ucn == ucn) {
 				chr = &baseCurrent->wholeTeam[j];
@@ -1046,9 +1046,9 @@ void CL_ParseCharacterData(sizebuf_t *buf, bool_t updateCharacter)
 			Sys_Error("Could not get character with ucn: %i\n", ucn);
 		for (j=0; j<KILLED_NUM_TYPES; j++)
 			if ( updateCharacter )
-				chr->kills[j] = MSG_ReadShort(buf, NULL);
+				chr->kills[j] = MSG_ReadShort(buf);
 			else
-				MSG_ReadShort(buf, NULL);
+				MSG_ReadShort(buf);
 	}
 }
 
@@ -1062,35 +1062,34 @@ void CL_ParseCharacterData(sizebuf_t *buf, bool_t updateCharacter)
 void CL_ParseResults(sizebuf_t * buf)
 {
 	static char resultText[MAX_MENUTEXTLEN];
-	uint8_t num_spawned[MAX_TEAMS];
-	uint8_t num_alive[MAX_TEAMS];
-	uint8_t num_kills[MAX_TEAMS][MAX_TEAMS];
-	uint8_t winner, we;
-	int i, j, res, kills;
-	uint8_t num;
+	byte num_spawned[MAX_TEAMS];
+	byte num_alive[MAX_TEAMS];
+	byte num_kills[MAX_TEAMS][MAX_TEAMS];
+	byte winner, we;
+	int i, j, num, res, kills;
 
 	/* get number of teams */
-	num = MSG_ReadByte(buf, NULL);
+	num = MSG_ReadByte(buf);
 	if (num > MAX_TEAMS)
 		Sys_Error("Too many teams in result message\n");
 
 	/* get winning team */
-	winner = MSG_ReadByte(buf, NULL);
+	winner = MSG_ReadByte(buf);
 	we = cls.team;
 
 	/* get spawn and alive count */
 	for (i = 0; i < num; i++) {
-		num_spawned[i] = MSG_ReadByte(buf, NULL);
-		num_alive[i] = MSG_ReadByte(buf, NULL);
+		num_spawned[i] = MSG_ReadByte(buf);
+		num_alive[i] = MSG_ReadByte(buf);
 	}
 
 	/* get kills */
 	for (i = 0; i < num; i++)
 		for (j = 0; j < num; j++)
-			num_kills[i][j] = MSG_ReadByte(buf, NULL);
+			num_kills[i][j] = MSG_ReadByte(buf);
 
 	/* read terminator */
-	if (MSG_ReadByte(buf, NULL) != NONE)
+	if (MSG_ReadByte(buf) != NONE)
 		Com_Printf("WARNING: bad result message\n");
 
 	/* init result text */
@@ -1136,7 +1135,7 @@ void CL_ParseResults(sizebuf_t * buf)
 	Q_strcat(resultText, va(_("Civilians killed by your Team\t%i\n"), num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
 	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n\n"), num_alive[TEAM_CIVILIAN]), sizeof(resultText));
 
-	MN_PopMenu(true);
+	MN_PopMenu(qtrue);
 	if (!curCampaign) {
 		/* get correct menus */
 		Cvar_Set("mn_main", "main");
@@ -1208,7 +1207,7 @@ value_t rankValues[] =
 /**
   * @brief Parse medals and ranks defined in the medals.ufo file.
   */
-void CL_ParseMedalsAndRanks( char *title, char **text, uint8_t parserank )
+void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 {
 	rank_t		*rank = NULL;
 	char	*errhead = "Com_ParseMedalsAndRanks: unexptected end of file (medal/rank ";

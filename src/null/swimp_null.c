@@ -39,11 +39,11 @@ void		SWimp_Shutdown( void )
 {
 }
 
-rserr_t		SWimp_SetMode( int *pwidth, int *pheight, int mode, bool_t fullscreen )
+rserr_t		SWimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 {
 }
 
-void		SWimp_AppActivate( bool_t active )
+void		SWimp_AppActivate( qboolean active )
 {
 }
 

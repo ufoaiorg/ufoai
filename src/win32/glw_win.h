@@ -35,9 +35,9 @@ typedef struct
 
 	HINSTANCE hinstOpenGL;	/* HINSTANCE for the OpenGL library */
 
-	bool_t minidriver;
-	bool_t allowdisplaydepthchange;
-	bool_t mcd_accelerated;
+	qboolean minidriver;
+	qboolean allowdisplaydepthchange;
+	qboolean mcd_accelerated;
 
 	FILE *log_fp;
 } glwstate_t;

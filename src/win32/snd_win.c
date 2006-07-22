@@ -37,10 +37,10 @@ typedef enum {SIS_SUCCESS, SIS_FAILURE, SIS_NOTAVAIL} sndinitstat;
 
 cvar_t	*s_wavonly;
 
-static bool_t	dsound_init;
-static bool_t	wav_init;
-static bool_t	snd_firsttime = true, snd_isdirect, snd_iswave;
-static bool_t	primary_format_set;
+static qboolean	dsound_init;
+static qboolean	wav_init;
+static qboolean	snd_firsttime = qtrue, snd_isdirect, snd_iswave;
+static qboolean	primary_format_set;
 
 /* starts at 0 for disabled */
 static int	snd_buffer_count = 0;
@@ -72,7 +72,7 @@ LPDIRECTSOUNDBUFFER pDSBuf, pDSPBuf;
 HINSTANCE hInstDS;
 
 sndinitstat SNDDMA_InitDirect (void);
-bool_t SNDDMA_InitWav (void);
+qboolean SNDDMA_InitWav (void);
 
 void FreeSound( void );
 
@@ -95,7 +95,7 @@ static const char *DSoundError( int error )
 /*
 ** DS_CreateBuffers
 */
-static bool_t DS_CreateBuffers( void )
+static qboolean DS_CreateBuffers( void )
 {
 	DSBUFFERDESC	dsbuf;
 	DSBCAPS			dsbcaps;
@@ -117,7 +117,7 @@ static bool_t DS_CreateBuffers( void )
 	if ( DS_OK != pDS->lpVtbl->SetCooperativeLevel( pDS, cl_hwnd, DSSCL_EXCLUSIVE ) ) {
 		Com_Printf ("failed\n");
 		FreeSound ();
-		return false;
+		return qfalse;
 	}
 	Com_DPrintf("ok\n" );
 
@@ -131,7 +131,7 @@ static bool_t DS_CreateBuffers( void )
 
 	memset(&dsbcaps, 0, sizeof(dsbcaps));
 	dsbcaps.dwSize = sizeof(dsbcaps);
-	primary_format_set = false;
+	primary_format_set = qfalse;
 
 	Com_DPrintf( "...creating primary buffer: " );
 	if (DS_OK == pDS->lpVtbl->CreateSoundBuffer(pDS, &dsbuf, &pDSPBuf, NULL)) {
@@ -145,7 +145,7 @@ static bool_t DS_CreateBuffers( void )
 			if (snd_firsttime)
 				Com_DPrintf ("...setting primary sound format: ok\n");
 
-			primary_format_set = true;
+			primary_format_set = qtrue;
 		}
 	} else
 		Com_Printf( "failed\n" );
@@ -165,7 +165,7 @@ static bool_t DS_CreateBuffers( void )
 		if (DS_OK != pDS->lpVtbl->CreateSoundBuffer(pDS, &dsbuf, &pDSBuf, NULL)) {
 			Com_Printf( "failed\n" );
 			FreeSound ();
-			return false;
+			return qfalse;
 		}
 		Com_DPrintf( "ok\n" );
 
@@ -176,7 +176,7 @@ static bool_t DS_CreateBuffers( void )
 		if (DS_OK != pDSBuf->lpVtbl->GetCaps (pDSBuf, &dsbcaps)) {
 			Com_Printf ("*** GetCaps failed ***\n");
 			FreeSound ();
-			return false;
+			return qfalse;
 		}
 
 		Com_Printf ("...using secondary sound buffer\n");
@@ -187,13 +187,13 @@ static bool_t DS_CreateBuffers( void )
 		if (DS_OK != pDS->lpVtbl->SetCooperativeLevel (pDS, cl_hwnd, DSSCL_WRITEPRIMARY)) {
 			Com_Printf( "failed\n" );
 			FreeSound ();
-			return false;
+			return qfalse;
 		}
 		Com_DPrintf( "ok\n" );
 
 		if (DS_OK != pDSPBuf->lpVtbl->GetCaps (pDSPBuf, &dsbcaps)) {
 			Com_Printf ("*** GetCaps failed ***\n");
-			return false;
+			return qfalse;
 		}
 
 		pDSBuf = pDSPBuf;
@@ -220,7 +220,7 @@ static bool_t DS_CreateBuffers( void )
 	dma.buffer = (unsigned char *) lpData;
 	sample16 = (dma.samplebits/8) - 1;
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -311,8 +311,8 @@ void FreeSound (void)
 	hWaveHdr = 0;
 	lpData = NULL;
 	lpWaveHdr = NULL;
-	dsound_init = false;
-	wav_init = false;
+	dsound_init = qfalse;
+	wav_init = qfalse;
 }
 
 /*
@@ -391,7 +391,7 @@ sndinitstat SNDDMA_InitDirect (void)
 	if ( !DS_CreateBuffers() )
 		return SIS_FAILURE;
 
-	dsound_init = true;
+	dsound_init = qtrue;
 
 	Com_DPrintf("...completed successfully\n" );
 
@@ -406,7 +406,7 @@ SNDDM_InitWav
 Crappy windows multimedia base
 ==================
 */
-bool_t SNDDMA_InitWav (void)
+qboolean SNDDMA_InitWav (void)
 {
 	WAVEFORMATEX format;
 	int i;
@@ -441,7 +441,7 @@ bool_t SNDDMA_InitWav (void)
 	while ((hr = waveOutOpen((LPHWAVEOUT)&hWaveOut, WAVE_MAPPER, &format, 0, 0L, CALLBACK_NULL)) != MMSYSERR_NOERROR) {
 		if (hr != MMSYSERR_ALLOCATED) {
 			Com_Printf ("failed\n");
-			return false;
+			return qfalse;
 		}
 
 		if (MessageBox (NULL, "The sound hardware is in use by another app.\n\n"
@@ -449,7 +449,7 @@ bool_t SNDDMA_InitWav (void)
 			"Sound not available",
 			MB_RETRYCANCEL | MB_SETFOREGROUND | MB_ICONEXCLAMATION) != IDRETRY) {
 			Com_Printf ("hw in use\n" );
-			return false;
+			return qfalse;
 		}
 	}
 	Com_DPrintf( "ok\n" );
@@ -465,7 +465,7 @@ bool_t SNDDMA_InitWav (void)
 	if (!hData) {
 		Com_Printf( " failed\n" );
 		FreeSound ();
-		return false;
+		return qfalse;
 	}
 	Com_DPrintf( "ok\n" );
 
@@ -474,7 +474,7 @@ bool_t SNDDMA_InitWav (void)
 	if (!lpData) {
 		Com_Printf( " failed\n" );
 		FreeSound ();
-		return false;
+		return qfalse;
 	}
 	memset (lpData, 0, gSndBufSize);
 	Com_DPrintf( "ok\n" );
@@ -491,7 +491,7 @@ bool_t SNDDMA_InitWav (void)
 	if (hWaveHdr == NULL) {
 		Com_Printf( "failed\n" );
 		FreeSound ();
-		return false;
+		return qfalse;
 	}
 	Com_DPrintf( "ok\n" );
 
@@ -501,7 +501,7 @@ bool_t SNDDMA_InitWav (void)
 	if (lpWaveHdr == NULL) {
 		Com_Printf( "failed\n" );
 		FreeSound ();
-		return false;
+		return qfalse;
 	}
 	memset (lpWaveHdr, 0, sizeof(WAVEHDR) * WAV_BUFFERS);
 	Com_DPrintf( "ok\n" );
@@ -516,7 +516,7 @@ bool_t SNDDMA_InitWav (void)
 				MMSYSERR_NOERROR) {
 			Com_Printf ("failed\n");
 			FreeSound ();
-			return false;
+			return qfalse;
 		}
 	}
 	Com_DPrintf ("ok\n");
@@ -527,9 +527,9 @@ bool_t SNDDMA_InitWav (void)
 	dma.buffer = (unsigned char *) lpData;
 	sample16 = (dma.samplebits/8) - 1;
 
-	wav_init = true;
+	wav_init = qtrue;
 
-	return true;
+	return qtrue;
 }
 
 /*
@@ -540,7 +540,7 @@ Try to find a sound device to mix for.
 Returns false if nothing is found.
 ==================
 */
-bool_t SNDDMA_Init(struct sndinfo *s)
+qboolean SNDDMA_Init(struct sndinfo *s)
 {
 	sndinitstat	stat;
 
@@ -558,12 +558,12 @@ bool_t SNDDMA_Init(struct sndinfo *s)
 			stat = SNDDMA_InitDirect ();
 
 			if (stat == SIS_SUCCESS) {
-				snd_isdirect = true;
+				snd_isdirect = qtrue;
 
 				if (snd_firsttime)
 					Com_Printf ("dsound init succeeded\n" );
 			} else {
-				snd_isdirect = false;
+				snd_isdirect = qfalse;
 				Com_Printf ("*** dsound init failed ***\n");
 			}
 		}
@@ -586,7 +586,7 @@ bool_t SNDDMA_Init(struct sndinfo *s)
 		}
 	}
 
-	snd_firsttime = false;
+	snd_firsttime = qfalse;
 
 	snd_buffer_count = 1;
 
@@ -760,7 +760,7 @@ The window have been destroyed and recreated
 between a deactivate and an activate.
 ===========
 */
-void S_Activate (bool_t active)
+void S_Activate (qboolean active)
 {
 	if ( active ) {
 		if ( pDS && cl_hwnd && snd_isdirect ) {
@@ -797,14 +797,16 @@ static void paint_audio (void *unused, Uint8 * stream, int len)
 		int len1 = len;
 		int len2 = 0;
 
-		if (len1 > tobufend) {
+		if (len1 > tobufend)
+		{
 			len1 = tobufend;
 			len2 = len - len1;
 		}
 		memcpy(stream, shm->buffer + pos, len1);
 		if (len2 <= 0)
 			shm->dmapos += (len1 / (shm->samplebits/8));
-		else { /* wraparound? */
+		else  /* wraparound? */
+		{
 			memcpy(stream+len1, shm->buffer, len2);
 			shm->dmapos = (len2 / (shm->samplebits/8));
 		}
@@ -814,28 +816,30 @@ static void paint_audio (void *unused, Uint8 * stream, int len)
 	}
 }
 
-bool_t SNDDMA_Init (struct sndinfo *s)
+qboolean SNDDMA_Init (struct sndinfo *s)
 {
 	SDL_AudioSpec desired, obtained;
 	int desired_bits, freq, tmp;
 	char drivername[128];
 
 	if (snd_inited)
-		return true;
+		return qtrue;
 
 	snd_inited = 0;
 
 	Com_Printf("Soundsystem: SDL.\n");
 
-	if (!SDL_WasInit(SDL_INIT_AUDIO)) {
-		if (SDL_Init(SDL_INIT_AUDIO) == -1) {
+	if (!SDL_WasInit(SDL_INIT_AUDIO))
+	{
+		if (SDL_Init(SDL_INIT_AUDIO) == -1)
+		{
 			Com_Printf("Couldn't init SDL audio: %s\n", SDL_GetError () );
-			return false;
+			return qfalse;
 		}
 	}
 
 	if (SDL_AudioDriverName(drivername, sizeof (drivername)) == NULL)
-		Q_strncpyz(drivername, "(UNKNOWN)", sizeof(drivername));
+		strcpy(drivername, "(UNKNOWN)");
 	Com_Printf("SDL audio driver is \"%s\".\n", drivername);
 
 	memset(&desired, '\0', sizeof (desired));
@@ -847,18 +851,24 @@ bool_t SNDDMA_Init (struct sndinfo *s)
 
 	/* Set up the desired format */
 	freq = (Cvar_Get("s_khz", "0", CVAR_ARCHIVE))->value;
-	if (freq == 44) {
+	if (freq == 44)
+	{
 		desired.freq = 44100;
 		desired.samples = 1024;
-	} else if (freq == 22) {
+	}
+	else if (freq == 22)
+	{
 		desired.freq = 22050;
 		desired.samples = 512;
-	} else {
+	}
+	else
+	{
 		desired.freq = 11025;
 		desired.samples = 256;
 	}
 
-	switch (desired_bits) {
+	switch (desired_bits)
+	{
 		case 8:
 			desired.format = AUDIO_U8;
 			break;
@@ -870,7 +880,7 @@ bool_t SNDDMA_Init (struct sndinfo *s)
 			break;
 		default:
 			Com_Printf ("Unknown number of audio bits: %d\n", desired_bits);
-			return false;
+			return qfalse;
 	}
 	desired.channels = (Cvar_Get("sndchannels", "2", CVAR_ARCHIVE))->value;
 	desired.callback = paint_audio;
@@ -881,36 +891,40 @@ bool_t SNDDMA_Init (struct sndinfo *s)
 	Com_Printf ("Channels: %i\n", desired.channels );
 
 	/* Open the audio device */
-	if (SDL_OpenAudio (&desired, &obtained) < 0) {
+	if (SDL_OpenAudio (&desired, &obtained) < 0)
+	{
 		Com_Printf ("Couldn't open SDL audio - quitting soundsystem: %s\n", SDL_GetError ());
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
-		return false;
+		return qfalse;
 	}
 
 	/* Make sure we can support the audio format */
-	switch (obtained.format) {
-	case AUDIO_U8:
-		/* Supported */
-		break;
-	case AUDIO_S16LSB:
-	case AUDIO_S16MSB:
-		if (((obtained.format == AUDIO_S16LSB) &&
-			 (SDL_BYTEORDER == SDL_LIL_ENDIAN)) ||
-			((obtained.format == AUDIO_S16MSB) &&
-			 (SDL_BYTEORDER == SDL_BIG_ENDIAN))) {
+	switch (obtained.format)
+	{
+		case AUDIO_U8:
 			/* Supported */
 			break;
-		}
-		/* Unsupported, fall through */ ;
-	default:
-		/* Not supported -- force SDL to do our bidding */
-		SDL_CloseAudio ();
-		if (SDL_OpenAudio (&desired, NULL) < 0) {
-			Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
-			return false;
-		}
-		memcpy (&obtained, &desired, sizeof (desired));
-		break;
+		case AUDIO_S16LSB:
+		case AUDIO_S16MSB:
+			if (((obtained.format == AUDIO_S16LSB) &&
+				 (SDL_BYTEORDER == SDL_LIL_ENDIAN)) ||
+				((obtained.format == AUDIO_S16MSB) &&
+				 (SDL_BYTEORDER == SDL_BIG_ENDIAN)))
+			{
+				/* Supported */
+				break;
+			}
+			/* Unsupported, fall through */ ;
+		default:
+			/* Not supported -- force SDL to do our bidding */
+			SDL_CloseAudio ();
+			if (SDL_OpenAudio (&desired, NULL) < 0)
+			{
+				Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
+				return qfalse;
+			}
+			memcpy (&obtained, &desired, sizeof (desired));
+			break;
 	}
 
 	/* dma.samples needs to be big, or id's mixer will just refuse to */
@@ -946,7 +960,7 @@ bool_t SNDDMA_Init (struct sndinfo *s)
 
 	SDL_PauseAudio (0);
 	snd_inited = 1;
-	return true;
+	return qtrue;
 }
 
 int SNDDMA_GetDMAPos (void)
@@ -980,6 +994,6 @@ void SNDDMA_BeginPainting(void)
 {
 }
 
-void S_Activate (bool_t active){}
+void S_Activate (qboolean active){}
 
 #endif /* ifndef USE_SDL */
