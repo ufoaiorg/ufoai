@@ -2762,6 +2762,12 @@ cmdList_t game_commands[] = {
 	,
 	{"aircraft_init", CL_AircraftInit}
 	,
+	{"airequip_init", CL_AircraftEquipmenuMenuInit_f}
+	,
+	{"airequip_weapons_click", CL_AircraftEquipmenuMenuWeaponsClick_f}
+	,
+	{"airequip_shields_click", CL_AircraftEquipmenuMenuShieldsClick_f}
+	,
 	{"mn_next_aircraft", MN_NextAircraft_f}
 	,
 	{"mn_prev_aircraft", MN_PrevAircraft_f}

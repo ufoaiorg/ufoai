@@ -261,6 +261,8 @@ void CL_AircraftSelect(void)
 	Cvar_Set("mn_aircraft_model", air->model);
 	Cvar_Set("mn_aircraft_weapon", air->weapon ? air->weapon->name : "");
 	Cvar_Set("mn_aircraft_shield", air->shield ? air->shield->name : "");
+	Cvar_Set("mn_aircraft_weapon_img", air->weapon ? air->weapon->image_top : "menu/airequip_no_weapon.jpg");
+	Cvar_Set("mn_aircraft_shield_img", air->shield ? air->shield->image_top : "menu/airequip_no_shield.jpg");
 
 	/* generate aircraft info text */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\n"), air->speed);
@@ -462,3 +464,68 @@ void CL_CampaignRunAircraft(int dt)
 			air->fuel = air->fuelSize;
 	}
 }
+
+/**
+ * @brief
+ */
+void CL_AircraftEquipmenuMenuInit_f(void)
+{
+	static char bufferShields[1024];
+	static char bufferWeapons[1024];
+	Com_sprintf(bufferShields, sizeof(bufferShields), _("None\n"));
+	Com_sprintf(bufferWeapons, sizeof(bufferWeapons), _("None\n"));
+	/* shields */
+	menuText[TEXT_LIST] = bufferShields;
+	/* weapons */
+	menuText[TEXT_AIRCRAFT_LIST] = bufferWeapons;
+}
+
+/**
+ * @brief
+ */
+void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
+{
+	aircraft_t *air;
+	int num;
+
+	if ( baseCurrent->aircraftCurrent < 0 )
+		return;
+
+	if (Cmd_Argc() < 2)
+		return;
+
+	/* which weapon? */
+	num = atoi(Cmd_Argv(1));
+
+	air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	if ( num <= 1 ) {
+		Com_DPrintf("Reset the aircraft weapon\n");
+		air->weapon = NULL;
+	}
+}
+
+/**
+ * @brief
+ */
+void CL_AircraftEquipmenuMenuShieldsClick_f(void)
+{
+	aircraft_t *air;
+	int num;
+
+	if ( baseCurrent->aircraftCurrent < 0 )
+		return;
+
+	if (Cmd_Argc() < 2)
+		return;
+
+	/* which shield? */
+	num = atoi(Cmd_Argv(1));
+
+	air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+
+	if ( num <= 1 ) {
+		Com_DPrintf("Reset the aircraft shield\n");
+		air->shield = NULL;
+	}
+}
+

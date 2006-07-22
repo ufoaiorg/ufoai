@@ -336,13 +336,13 @@ menu aircraft_equip
 	{
 		pos	"40 40"
 		size	"128 128"
-		image "*cvar mn_aircraft_shield"
+		image "*cvar mn_aircraft_shield_img"
 	}
 	pic aircraftweapon
 	{
 		pos	"267 40"
 		size	"128 128"
-		image "*cvar mn_aircraft_weapon"
+		image "*cvar mn_aircraft_weapon_img"
 	}
 	string airequip_available
 	{
@@ -355,24 +355,28 @@ menu aircraft_equip
 	{
 		pos	"474 474"
 		size	"530 150"
+		format	"20 0"
 //		bgcolor	"1 1 1 0.5"
-		num	1
 	}
 	text airequip_shields
 	{
 		pos	"474 134"
 		size	"256 300"
 //		bgcolor	"1 1 1 0.5"
+		format	"20 0"
 		num	1
+		click
 	}
 	text airequip_weapons
 	{
 		pos	"742 134"
 		size	"260 300"
 //		bgcolor	"1 1 1 0.5"
-		num	2
+		format	"20 0"
+		num	9
+		click
 	}
-	pic button_leave
+	pic airequip_button_leave
 	{
 		tooltip	"_Done"
 		image	hud/buttons2
@@ -381,5 +385,22 @@ menu aircraft_equip
 		texl	"0 0"
 		texh	"64 37"
 		click	{ cmd "mn_pop"  }
+	}
+	text airequip_selected_description
+	{
+		pos	"474 665"
+		size	"530 85"
+		format	"20 0"
+//		bgcolor	"1 1 1 0.5"
+		num 11
+	}
+
+	// ==================
+	// init function
+	// ==================
+
+	func init
+	{
+		cmd "airequip_init"
 	}
 }

@@ -131,7 +131,9 @@ void CL_NewAircraft_f(void);
 void MN_NextAircraft_f(void);
 void MN_PrevAircraft_f(void);
 void CL_AircraftReturnToBase_f(void);
-
+void CL_AircraftEquipmenuMenuInit_f(void);
+void CL_AircraftEquipmenuMenuWeaponsClick_f(void);
+void CL_AircraftEquipmenuMenuShieldsClick_f(void);
 
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *CL_GetAircraft(char *name);
