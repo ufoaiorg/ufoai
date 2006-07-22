@@ -994,6 +994,8 @@ void CL_Precache_f(void)
 	S_StopAllSounds();
 	MN_PopMenu(qtrue);
 
+	CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
+
 	CL_RegisterSounds();
 	CL_PrepRefresh();
 
