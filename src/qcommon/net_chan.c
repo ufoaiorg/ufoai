@@ -109,18 +109,18 @@ Netchan_OutOfBand
 Sends an out-of-band datagram
 ================
 */
-void Netchan_OutOfBand(int net_socket, netadr_t adr, int length, uint8_t *data)
+void Netchan_OutOfBand(int net_socket, netadr_t adr, size_t length, uint8_t *data)
 {
 	sizebuf_t send;
 	uint8_t send_buf[MAX_MSGLEN];
 
-/* write the packet header */
+	/* write the packet header */
 	SZ_Init(&send, send_buf, sizeof(send_buf));
 
 	MSG_WriteLong(&send, -1);	/* -1 sequence means out of band */
 	SZ_Write(&send, data, length);
 
-/* send the datagram */
+	/* send the datagram */
 	NET_SendPacket(net_socket, send.cursize, send.data, adr);
 }
 
@@ -155,7 +155,7 @@ Netchan_Setup
 called to open a channel to a remote system
 ==============
 */
-void Netchan_Setup(netsrc_t sock, netchan_t * chan, netadr_t adr, int qport)
+void Netchan_Setup(netsrc_t sock, netchan_t * chan, netadr_t adr, int16_t qport)
 {
 	memset(chan, 0, sizeof(*chan));
 
@@ -214,7 +214,7 @@ transmition / retransmition of the reliable messages.
 A 0 length will still generate a packet and deal with the reliable messages.
 ================
 */
-void Netchan_Transmit(netchan_t * chan, int length, uint8_t *data)
+void Netchan_Transmit(netchan_t * chan, size_t length, uint8_t *data)
 {
 	sizebuf_t send;
 	uint8_t send_buf[MAX_MSGLEN];

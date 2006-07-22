@@ -66,7 +66,7 @@ void Cbuf_Init(void)
  */
 void Cbuf_AddText(char *text)
 {
-	int l;
+	size_t l;
 	char *cmdopen;
 
 	if (Cmd_IsClosed() && (cmdopen = strstr(text, "cmdopen")) != NULL) {

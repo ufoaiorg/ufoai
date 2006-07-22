@@ -412,7 +412,7 @@ struct edict_s {
 	bool_t inuse;
 	int linkcount;
 
-	int16_t number;
+	int number;
 
 	vec3_t origin;
 	vec3_t angles;
@@ -442,22 +442,22 @@ struct edict_s {
 
 	/* only used locally in game, not by server */
 
-	uint8_t type;
+	int type;
 	int visflags;
 
 	pos3_t pos;
-	uint8_t dir;					/* direction the player looks at */
+	int dir;					/* direction the player looks at */
 
-	uint8_t TU;						/* remaining timeunits */
-	uint8_t HP;						/* remaining healthpoints */
-	uint8_t AP;						/* remaining armor protection */
-	uint8_t STUN;
-	int16_t morale;					/* the current morale value */
+	int TU;						/* remaining timeunits */
+	int HP;						/* remaining healthpoints */
+	int AP;						/* remaining armor protection */
+	int STUN;
+	int morale;					/* the current morale value */
 
-	int16_t state;					/* the player state - dead, shaken.... */
+	int state;					/* the player state - dead, shaken.... */
 
-	uint8_t team;					/* player of which team? */
-	uint8_t pnum;					/* the actual player slot */
+	int team;					/* player of which team? */
+	int pnum;					/* the actual player slot */
 	/* the models (hud) */
 	int body;
 	int head;

@@ -33,12 +33,12 @@ int		hunkcount;
 
 
 uint8_t *membase;
-int hunkmaxsize;
-int cursize;
+size_t hunkmaxsize;
+size_t cursize;
 
 #define	VIRTUAL_ALLOC
 
-void *Hunk_Begin (int maxsize)
+void *Hunk_Begin (size_t maxsize)
 {
 	/* reserve a huge chunk of memory, but don't commit any yet */
 	cursize = 0;
@@ -54,7 +54,7 @@ void *Hunk_Begin (int maxsize)
 	return (void *)membase;
 }
 
-void *Hunk_Alloc (int size)
+void *Hunk_Alloc (size_t size)
 {
 	void	*buf;
 
@@ -77,7 +77,7 @@ void *Hunk_Alloc (int size)
 	return (void *)(membase+cursize-size);
 }
 
-int Hunk_End (void)
+size_t Hunk_End (void)
 {
 
 	/* free the remaining unused virtual memory */
@@ -91,7 +91,7 @@ int Hunk_End (void)
 #endif
 
 	hunkcount++;
-/*Com_Printf ("hunkcount: %i\n", hunkcount); */
+	/*Com_Printf ("hunkcount: %i\n", hunkcount); */
 	return cursize;
 }
 

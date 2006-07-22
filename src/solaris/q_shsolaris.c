@@ -33,10 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*=============================================================================== */
 
 byte *membase;
-int maxhunksize;
-int curhunksize;
+size_t maxhunksize;
+size_t curhunksize;
 
-void *Hunk_Begin (int maxsize)
+void *Hunk_Begin (size_t maxsize)
 {
 	/* reserve a huge chunk of memory, but don't commit any yet */
 	maxhunksize = maxsize;
@@ -48,7 +48,7 @@ void *Hunk_Begin (int maxsize)
 	return membase;
 }
 
-void *Hunk_Alloc (int size)
+void *Hunk_Alloc (size_t size)
 {
 	byte *buf;
 

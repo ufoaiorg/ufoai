@@ -2198,7 +2198,7 @@ bool_t Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
  * @param
  * @sa
  */
-int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int tx, int ty, uint8_t *TU, invList_t ** icp)
+int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp)
 {
 	invList_t *ic;
 	int time;

@@ -33,10 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*=============================================================================== */
 
 byte *membase;
-int maxhunksize;
-int curhunksize;
+size_t maxhunksize;
+size_t curhunksize;
 
-void *Hunk_Begin (int maxsize)
+void *Hunk_Begin (size_t maxsize)
 {
 	maxhunksize = maxsize + sizeof(int);
 	curhunksize = 0;
@@ -52,12 +52,12 @@ void *Hunk_Begin (int maxsize)
 	return membase + sizeof(int);
 }
 
-void *Hunk_Alloc (int size)
+void *Hunk_Alloc (size_t size)
 {
 	byte *buf;
 
 	/* round to cacheline */
-	size = (size+31)&~31;
+/*	size = (size+31)&~31;*/
 	if (curhunksize + size > maxhunksize)
 		Com_Error(ERR_FATAL, "Hunk_Alloc overflow");
 	buf = membase + sizeof(int) + curhunksize;
@@ -65,7 +65,7 @@ void *Hunk_Alloc (int size)
 	return buf;
 }
 
-int Hunk_End (void)
+size_t Hunk_End (void)
 {
 	return curhunksize;
 }

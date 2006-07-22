@@ -509,8 +509,7 @@ bool_t	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 
 		SockadrToNetadr (&from, net_from);
 
-		if (ret == -1)
-		{
+		if (ret == -1) {
 			err = errno;
 
 			if (err == EWOULDBLOCK || err == ECONNREFUSED)
@@ -520,13 +519,12 @@ bool_t	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 			continue;
 		}
 
-		if (ret == net_message->maxsize)
-		{
+		if (ret == net_message->maxsize) {
 			Com_Printf ("Oversize packet from %s\n", NET_AdrToString (*net_from));
 			continue;
 		}
 
-		net_message->cursize = ret;
+		net_message->cursize = (size_t)ret;
 		return true;
 	}
 

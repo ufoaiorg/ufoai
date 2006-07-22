@@ -1156,7 +1156,7 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, bool_t sto
 G_ClientTurn
 =================
 */
-static void G_ClientTurn(player_t * player, int num, int dv)
+static void G_ClientTurn(player_t * player, int16_t num, uint8_t dv)
 {
 	edict_t *ent;
 
@@ -2260,8 +2260,8 @@ G_ClientAction
 */
 void G_ClientAction(player_t * player)
 {
-	int action;
-	int num;
+	uint8_t action;
+	int16_t num;
 	pos3_t pos;
 
 	/* read the header */

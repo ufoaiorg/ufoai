@@ -40,7 +40,7 @@ uint8_t *membase;
 int maxhunksize;
 int curhunksize;
 
-void *Hunk_Begin (int maxsize)
+void *Hunk_Begin (size_t maxsize)
 {
 	/* reserve a huge chunk of memory, but don't commit any yet */
 	maxhunksize = maxsize + sizeof(int);
@@ -60,7 +60,7 @@ void *Hunk_Begin (int maxsize)
 	return membase + sizeof(int);
 }
 
-void *Hunk_Alloc (int size)
+void *Hunk_Alloc (size_t size)
 {
 	uint8_t *buf;
 
@@ -73,7 +73,7 @@ void *Hunk_Alloc (int size)
 	return buf;
 }
 
-int Hunk_End (void)
+size_t Hunk_End (void)
 {
 	uint8_t *n;
 #if defined(__FreeBSD__)

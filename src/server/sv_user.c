@@ -319,7 +319,7 @@ void SV_ExecuteUserCommand(char *s)
  */
 void SV_ExecuteClientMessage(client_t * cl)
 {
-	uint8_t c, end = 0;
+	int c;
 	char *s;
 	int stringCmdCount;
 
@@ -331,14 +331,14 @@ void SV_ExecuteClientMessage(client_t * cl)
 
 	while (1) {
 		if (net_message.readcount > net_message.cursize) {
-			Com_Printf("SV_ExecuteClientMessage: badread, %d > %d\n", net_message.readcount, net_message.cursize);
+			Com_Printf("SV_ExecuteClientMessage: badread, %Zu > %Zu\n", net_message.readcount, net_message.cursize);
 			SV_DropClient(cl);
 			return;
 		}
 
-		Com_DPrintf("SV_ExecuteClientMessage: %d > %d\n", net_message.readcount, net_message.cursize);
-		c = MSG_ReadByte(&net_message, &end);
-		if (end) {
+		Com_DPrintf("SV_ExecuteClientMessage: %Zu > %Zu\n", net_message.readcount, net_message.cursize);
+		c = MSG_ReadByte(&net_message, NULL);
+		if (c == -1) {
 			Com_DPrintf("End byte received\n");
 			break;
 		}
@@ -384,6 +384,6 @@ void SV_ExecuteClientMessage(client_t * cl)
 			ge->ClientTeamInfo(sv_player);
 			break;
 		}
-		Com_DPrintf("SV_ExecuteClientMessage: %d > %d\n\n", net_message.readcount, net_message.cursize);
+		Com_DPrintf("SV_ExecuteClientMessage: %Zu > %Zu\n\n", net_message.readcount, net_message.cursize);
 	}
 }

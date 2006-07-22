@@ -314,34 +314,47 @@ vec3_t bytedirs[NUMVERTEXNORMALS] = {
  *
  * NOTE: This used to take an int as a parameter, which just doesn't make sense.
  */
-void MSG_WriteChar(sizebuf_t *sb, char c)
-{
-	char *buf;
-
-	buf = SZ_GetSpace(sb, 1);
-	*buf = c;
-}
-
-/**
- * @brief
- */
-void MSG_WriteByte(sizebuf_t *sb, uint8_t c)
+void MSG_WriteChar(sizebuf_t * sb, int c)
 {
 	uint8_t *buf;
 
+#ifdef DEBUG
+	if (c < SCHAR_MIN || c > SCHAR_MAX)
+		Com_Printf("MSG_WriteChar: range error %i", c);
+#endif
+
 	buf = SZ_GetSpace(sb, 1);
-	*buf = c;
+	buf[0] = c;
 }
 
 /**
  * @brief
  */
-void MSG_WriteShort(sizebuf_t *sb, int16_t c)
+void MSG_WriteByte(sizebuf_t * sb, int c)
 {
-	int16_t *buf;
+	uint8_t *buf;
+
+#ifdef DEBUG
+	if (c < 0 || c > UCHAR_MAX)
+		Com_Printf("MSG_WriteByte: range error %i\n", c);
+#endif
+
+	buf = SZ_GetSpace(sb, 1);
+	buf[0] = c & UCHAR_MAX;
+}
+
+/**
+ * @brief
+ */
+void MSG_WriteShort(sizebuf_t *sb, int c)
+{
+	uint8_t *buf;
+	if ( c < SHRT_MIN || c > SHRT_MAX )
+		Com_Printf("MSG_WriteShort: overflow for byte %i\n", c);
 
 	buf = SZ_GetSpace(sb, 2);
-	*buf = c;
+	buf[0] = c & UCHAR_MAX;
+	buf[1] = (c >> 8) & UCHAR_MAX;
 }
 
 /**
@@ -349,10 +362,13 @@ void MSG_WriteShort(sizebuf_t *sb, int16_t c)
  */
 void MSG_WriteLong(sizebuf_t *sb, int32_t c)
 {
-	int32_t *buf;
+	uint8_t *buf;
 
 	buf = SZ_GetSpace(sb, 4);
-	*buf = c;
+	buf[0] = c & UCHAR_MAX;
+	buf[1] = (c >> 8) & UCHAR_MAX;
+	buf[2] = (c >> 16) & UCHAR_MAX;
+	buf[3] = (c >> 24) & UCHAR_MAX;
 }
 
 /**
@@ -360,10 +376,15 @@ void MSG_WriteLong(sizebuf_t *sb, int32_t c)
  */
 void MSG_WriteFloat(sizebuf_t *sb, float32_t f)
 {
-	float32_t *buf;
+	union {
+		float f;
+		int l;
+	} dat;
 
-	buf = SZ_GetSpace(sb, 4);
-	*buf = f;
+	dat.f = f;
+	dat.l = LittleLong(dat.l);
+
+	SZ_Write(sb, &dat.l, 4);
 }
 
 /**
@@ -371,11 +392,10 @@ void MSG_WriteFloat(sizebuf_t *sb, float32_t f)
  */
 void MSG_WriteString(sizebuf_t *sb, char *s)
 {
-	if (!s) {
+	if (!s)
 		SZ_Write(sb, "", 1);
-	} else {
+	else
 		SZ_Write(sb, s, strlen(s) + 1);
-	}
 }
 
 /**
@@ -540,45 +560,16 @@ void MSG_BeginReading(sizebuf_t *msg)
 /**
  * @brief
  *
- * returns 0 if no more characters are available
+ * returns -1 if no more characters are available
  */
-char MSG_ReadChar(sizebuf_t *msg_read, uint8_t *error)
+int MSG_ReadChar(sizebuf_t * msg_read, uint8_t *error)
 {
-	char c;
+	int c;
 
-	if (msg_read->readcount + 1 > msg_read->cursize) {
-		c = 0;
-		if (error) {
-			*error = 1;
-		}
-	} else {
-		c = msg_read->data[msg_read->readcount];
-		if (error) {
-			*error = 0;
-		}
-	}
-	msg_read->readcount++;
-	return (char)c;
-}
-
-/**
- * @brief
- */
-uint8_t MSG_ReadByte(sizebuf_t *msg_read, uint8_t *error)
-{
-	uint8_t c;
-
-	if (msg_read->readcount + 1 > msg_read->cursize) {
-		c = 0;
-		if (error) {
-			*error = 1;
-		}
-	} else {
-		c = msg_read->data[msg_read->readcount];
-		if (error) {
-			*error = 0;
-		}
-	}
+	if (msg_read->readcount + 1 > msg_read->cursize)
+		c = -1;
+	else
+		c = (signed char) msg_read->data[msg_read->readcount];
 	msg_read->readcount++;
 
 	return c;
@@ -587,21 +578,32 @@ uint8_t MSG_ReadByte(sizebuf_t *msg_read, uint8_t *error)
 /**
  * @brief
  */
-uint16_t MSG_ReadShort(sizebuf_t *msg_read, uint8_t *error)
+int MSG_ReadByte(sizebuf_t * msg_read, uint8_t *error)
 {
-	int16_t c;
+	int c;
 
-	if (msg_read->readcount + 2 > msg_read->cursize) {
-		c = 0;
-		if (error) {
-			*error = 1;
-		}
-	} else {
-		c = (int16_t)(msg_read->data[msg_read->readcount]);
-		if (error) {
-			*error = 0;
-		}
-	}
+	if (msg_read->readcount + 1 > msg_read->cursize)
+		c = -1;
+	else
+		c = (unsigned char) msg_read->data[msg_read->readcount];
+	msg_read->readcount++;
+
+	return c;
+}
+
+/**
+ * @brief
+ */
+int MSG_ReadShort(sizebuf_t * msg_read, uint8_t *error)
+{
+	int c;
+
+	if (msg_read->readcount + 2 > msg_read->cursize)
+		c = -1;
+	else
+		c = (short) (msg_read->data[msg_read->readcount]
+					+ (msg_read->data[msg_read->readcount + 1] << 8));
+
 	msg_read->readcount += 2;
 
 	return c;
@@ -610,21 +612,18 @@ uint16_t MSG_ReadShort(sizebuf_t *msg_read, uint8_t *error)
 /**
  * @brief
  */
-int32_t MSG_ReadLong(sizebuf_t *msg_read, uint8_t *error)
+int MSG_ReadLong(sizebuf_t * msg_read, uint8_t *error)
 {
-	int32_t c;
+	int c;
 
-	if (msg_read->readcount + 4 > msg_read->cursize) {
-		c = 0;
-		if (error) {
-			*error = 1;
-		}
-	} else {
-		c =  (int32_t)(msg_read->data[msg_read->readcount]);
-		if (error) {
-			*error = 0;
-		}
-	}
+	if (msg_read->readcount + 4 > msg_read->cursize)
+		c = -1;
+	else
+		c = msg_read->data[msg_read->readcount]
+			+ (msg_read->data[msg_read->readcount + 1] << 8)
+			+ (msg_read->data[msg_read->readcount + 2] << 16)
+			+ (msg_read->data[msg_read->readcount + 3] << 24);
+
 	msg_read->readcount += 4;
 
 	return c;
@@ -633,39 +632,45 @@ int32_t MSG_ReadLong(sizebuf_t *msg_read, uint8_t *error)
 /**
  * @brief
  */
-float32_t MSG_ReadFloat(sizebuf_t *msg_read, uint8_t *error)
+float MSG_ReadFloat(sizebuf_t * msg_read, uint8_t *error)
 {
-	float32_t f;
+	union {
+		uint8_t b[4];
+		float f;
+		int l;
+	} dat;
 
-	if (msg_read->readcount + 4 > msg_read->cursize) {
-		f = 0;
-		if (error) {
-			*error = 1;
-		}
-	} else {
-		f = (float32_t)(msg_read->data[msg_read->readcount]);
-		if (error) {
-			*error = 0;
-		}
+	if (msg_read->readcount + 4 > msg_read->cursize)
+		dat.f = -1;
+	else {
+		dat.b[0] = msg_read->data[msg_read->readcount];
+		dat.b[1] = msg_read->data[msg_read->readcount + 1];
+		dat.b[2] = msg_read->data[msg_read->readcount + 2];
+		dat.b[3] = msg_read->data[msg_read->readcount + 3];
 	}
 	msg_read->readcount += 4;
 
-	return f;
+	dat.l = LittleLong(dat.l);
+
+	return dat.f;
 }
 
 /**
  * @brief
  */
-char *MSG_ReadString(sizebuf_t *msg_read, uint8_t *error)
+char *MSG_ReadString(sizebuf_t * msg_read, uint8_t *error)
 {
 	static char string[2048];
 	int l, c;
+
 	l = 0;
 	do {
 		c = MSG_ReadByte(msg_read, error);
+		if (c == -1 || c == 0)
+			break;
 		string[l] = c;
 		l++;
-	} while (l < sizeof(string) - 1 && !(error && *error));
+	} while (l < sizeof(string) - 1);
 
 	string[l] = 0;
 
@@ -675,7 +680,7 @@ char *MSG_ReadString(sizebuf_t *msg_read, uint8_t *error)
 /**
  * @brief
  */
-char *MSG_ReadStringLine(sizebuf_t *msg_read, uint8_t *error)
+char *MSG_ReadStringLine(sizebuf_t * msg_read, uint8_t *error)
 {
 	static char string[2048];
 	int l, c;
@@ -683,9 +688,11 @@ char *MSG_ReadStringLine(sizebuf_t *msg_read, uint8_t *error)
 	l = 0;
 	do {
 		c = MSG_ReadByte(msg_read, error);
+		if (c == -1 || c == 0 || c == '\n')
+			break;
 		string[l] = c;
 		l++;
-	} while (l < sizeof(string) - 1 && !(error && *error));
+	} while (l < sizeof(string) - 1);
 
 	string[l] = 0;
 
@@ -703,31 +710,27 @@ float MSG_ReadCoord(sizebuf_t *msg_read, uint8_t *error)
 /**
  * @brief
  */
-void MSG_ReadPos(sizebuf_t *msg_read, uint8_t *error, vec3_t pos)
+void MSG_ReadPos(sizebuf_t * msg_read, uint8_t *error, vec3_t pos)
 {
-	int i = 0;
-
-	while (i < 3 && !(error && *error)) {
-		pos[i++] = MSG_ReadShort(msg_read, error) * (1.0 / 8);
-	}
+	pos[0] = MSG_ReadShort(msg_read, error) * (1.0 / 8);
+	pos[1] = MSG_ReadShort(msg_read, error) * (1.0 / 8);
+	pos[2] = MSG_ReadShort(msg_read, error) * (1.0 / 8);
 }
 
 /**
  * @brief
  */
-void MSG_ReadGPos(sizebuf_t *msg_read, uint8_t *error, pos3_t pos)
+void MSG_ReadGPos(sizebuf_t * msg_read, uint8_t *error, pos3_t pos)
 {
-	int i = 0;
-
-	while (i < 3 && !(error && *error)) {
-		pos[i++] = MSG_ReadByte(msg_read, error);
-	}
+	pos[0] = MSG_ReadByte(msg_read, error);
+	pos[1] = MSG_ReadByte(msg_read, error);
+	pos[2] = MSG_ReadByte(msg_read, error);
 }
 
 /**
  * @brief
  */
-float MSG_ReadAngle(sizebuf_t *msg_read, uint8_t *error)
+float MSG_ReadAngle(sizebuf_t * msg_read, uint8_t *error)
 {
 	return (float) MSG_ReadChar(msg_read, error) * (360.0 / 256);
 }
@@ -735,7 +738,7 @@ float MSG_ReadAngle(sizebuf_t *msg_read, uint8_t *error)
 /**
  * @brief
  */
-float MSG_ReadAngle16(sizebuf_t *msg_read, uint8_t *error)
+float MSG_ReadAngle16(sizebuf_t * msg_read, uint8_t *error)
 {
 	return (float) SHORT2ANGLE(MSG_ReadShort(msg_read, error));
 }
@@ -747,9 +750,8 @@ void MSG_ReadData(sizebuf_t *msg_read, uint8_t *error, void *data, int len)
 {
 	int i = 0;
 
-	while (i < len && !(error && *error)) {
-		((uint8_t *)data)[i++] = MSG_ReadByte(msg_read, error);
-	}
+	for (i = 0; i < len; i++)
+		((uint8_t *)data)[i] = MSG_ReadByte(msg_read, error);
 }
 
 /**
@@ -765,11 +767,10 @@ void MSG_ReadDir(sizebuf_t *sb, uint8_t *error, vec3_t dir)
 	VectorCopy(bytedirs[b], dir);
 }
 
-
 /**
  * @brief
  */
-void MSG_ReadFormat(sizebuf_t *msg_read, uint8_t *error, char *format, ...)
+void MSG_ReadFormat(sizebuf_t * msg_read, uint8_t *error, char *format, ...)
 {
 	va_list ap;
 	char typeID;
@@ -976,18 +977,18 @@ void SZ_Write(sizebuf_t *buf, void *data, size_t length)
  */
 void SZ_WriteString(sizebuf_t *buf, char *data)
 {
-	size_t len;
+	int len;
 
 	len = strlen(data) + 1;
 
 	if (buf->cursize) {
-		if (buf->data[buf->cursize - 1]) {
-			memcpy(SZ_GetSpace(buf, len), data, len);	/* no trailing 0 */
+		if (((uint8_t *)buf->data)[buf->cursize - 1]) {
+			memcpy((uint8_t *) SZ_GetSpace(buf, len), data, len);	/* no trailing 0 */
 		} else {
-			memcpy(SZ_GetSpace(buf, len - 1) - 1, data, len);	/* write over trailing 0 */
+			memcpy((uint8_t *) SZ_GetSpace(buf, len - 1) - 1, data, len);	/* write over trailing 0 */
 		}
 	} else {
-		memcpy(SZ_GetSpace(buf, len), data, len);
+		memcpy((uint8_t *) SZ_GetSpace(buf, len), data, len);
 	}
 }
 

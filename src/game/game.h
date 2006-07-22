@@ -84,7 +84,7 @@ struct edict_s {
 	bool_t inuse;
 	int linkcount;
 
-	int16_t number;
+	int number;
 
 	vec3_t origin;
 	vec3_t angles;
@@ -159,9 +159,9 @@ typedef struct {
 	/* network messaging (writing) */
 	void (*multicast) (int mask);
 	void (*unicast) (player_t * player);
-	void (*WriteChar) (char c);
-	void (*WriteByte) (uint8_t c);
-	void (*WriteShort) (int16_t c);
+	void (*WriteChar) (int c);
+	void (*WriteByte) (int c);
+	void (*WriteShort) (int c);
 
 	void (*WriteLong) (int32_t c);
 	void (*WriteFloat) (float32_t f);
@@ -183,10 +183,10 @@ typedef struct {
 	/* ClientAction */
 	/* (more to come?) */
 
-	char (*ReadChar) (uint8_t* error);
-	uint8_t (*ReadByte) (uint8_t* error);
-	int16_t (*ReadShort) (uint8_t* error);
-	int32_t (*ReadLong) (uint8_t* erroroid);
+	int (*ReadChar) (uint8_t* error);
+	int (*ReadByte) (uint8_t* error);
+	int (*ReadShort) (uint8_t* error);
+	int (*ReadLong) (uint8_t* error);
 	float32_t (*ReadFloat) (uint8_t* error);
 	char *(*ReadString) (void);
 	void (*ReadPos) (vec3_t pos);

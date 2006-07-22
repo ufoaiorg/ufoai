@@ -199,7 +199,7 @@ static void PF_Configstring(int index, char *val)
 /**
   * @brief
   */
-static void PF_WriteChar(char c)
+static void PF_WriteChar(int c)
 {
 	MSG_WriteChar(&sv.multicast, c);
 }
@@ -207,7 +207,7 @@ static void PF_WriteChar(char c)
 /**
   * @brief
   */
-static void PF_WriteByte(uint8_t c)
+static void PF_WriteByte(int c)
 {
 	MSG_WriteByte(&sv.multicast, c);
 }
@@ -215,7 +215,7 @@ static void PF_WriteByte(uint8_t c)
 /**
   * @brief
   */
-static void PF_WriteShort(int16_t c)
+static void PF_WriteShort(int c)
 {
 	MSG_WriteShort(&sv.multicast, c);
 }
@@ -231,7 +231,7 @@ static void PF_WriteLong(int32_t c)
 /**
   * @brief
   */
-static void PF_WriteFloat(float f)
+static void PF_WriteFloat(float32_t f)
 {
 	MSG_WriteFloat(&sv.multicast, f);
 }
@@ -297,7 +297,7 @@ static void PF_WriteToSave(int c)
 /**
   * @brief
   */
-static char PF_ReadChar(uint8_t* error)
+static int PF_ReadChar(uint8_t* error)
 {
 	return MSG_ReadChar(&net_message, error);
 }
@@ -305,7 +305,7 @@ static char PF_ReadChar(uint8_t* error)
 /**
   * @brief
   */
-static uint8_t PF_ReadByte(uint8_t* error)
+static int PF_ReadByte(uint8_t* error)
 {
 	return MSG_ReadByte(&net_message, error);
 }
@@ -313,7 +313,7 @@ static uint8_t PF_ReadByte(uint8_t* error)
 /**
   * @brief
   */
-static int16_t PF_ReadShort(uint8_t* error)
+static int PF_ReadShort(uint8_t* error)
 {
 	return MSG_ReadShort(&net_message, error);
 }
@@ -321,7 +321,7 @@ static int16_t PF_ReadShort(uint8_t* error)
 /**
   * @brief
   */
-static int32_t PF_ReadLong(uint8_t* error)
+static int PF_ReadLong(uint8_t* error)
 {
 	return MSG_ReadLong(&net_message, error);
 }

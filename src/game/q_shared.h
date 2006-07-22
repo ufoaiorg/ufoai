@@ -197,7 +197,7 @@ MATHLIB
 ==============================================================
 */
 
-typedef float vec_t;
+typedef float32_t vec_t;
 typedef vec_t vec2_t[2];
 typedef vec_t vec3_t[3];
 typedef vec_t vec4_t[4];
@@ -205,10 +205,6 @@ typedef vec_t vec5_t[5];
 
 typedef uint8_t pos_t;
 typedef pos_t pos3_t[3];
-
-typedef int fixed4_t;
-typedef int fixed8_t;
-typedef int fixed16_t;
 
 #ifndef M_PI
 #define M_PI		3.14159265358979323846	/* matches value in gcc v2 math.h */
@@ -396,10 +392,10 @@ void Sys_Mkdir(char *path);
 char *strlwr(char *s);			/* this is non ansi and is defined for some OSs */
 
 /* large block stack allocation routines */
-void *Hunk_Begin(int maxsize);
-void *Hunk_Alloc(int size);
+void *Hunk_Begin(size_t maxsize);
+void *Hunk_Alloc(size_t size);
 void Hunk_Free(void *buf);
-int Hunk_End(void);
+size_t Hunk_End(void);
 
 /* directory searching */
 #define SFF_ARCH    0x01
@@ -556,9 +552,6 @@ typedef struct cmodel_s {
 	int tile;
 	int headnode;
 } cmodel_t;
-
-/*extern int			numcmodels; */
-/*extern cmodel_t	map_cmodels[1024]; */
 
 typedef struct csurface_s {
 	char name[16];
@@ -856,7 +849,7 @@ typedef struct fireDef_s {
 	vec2_t damage, spldmg;
 	float splrad;
 	int weaponSkill;
-	int irgoggles;
+	bool_t irgoggles;
 	int stun;
 } fireDef_t;
 
@@ -873,9 +866,9 @@ typedef struct objDef_s {
 	float scale;
 	vec3_t center;
 	char category;
-	uint8_t weapon;
-	uint8_t twohanded;
-	uint8_t thrown;
+	bool_t weapon;
+	bool_t twohanded;
+	bool_t thrown;
 	int price;
 	int buytype;
 	int link;
@@ -889,8 +882,8 @@ typedef struct objDef_s {
 	void *tech;
 
 	/* armor specific */
-	short protection[MAX_DAMAGETYPES];
-	short hardness[MAX_DAMAGETYPES];
+	int16_t protection[MAX_DAMAGETYPES];
+	int16_t hardness[MAX_DAMAGETYPES];
 } objDef_t;
 
 #define MAX_INVDEFS		16
@@ -1070,7 +1063,7 @@ bool_t Com_CheckToInventory(inventory_t * i, int item, int container, int x, int
 invList_t *Com_SearchInInventory(inventory_t * i, int container, int x, int y);
 invList_t *Com_AddToInventory(inventory_t * i, item_t item, int container, int x, int y);
 bool_t Com_RemoveFromInventory(inventory_t * i, int container, int x, int y);
-int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int tx, int ty, uint8_t *TU, invList_t ** icp);
+int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp);
 void Com_EmptyContainer(inventory_t * i, int container);
 void Com_DestroyInventory(inventory_t * i);
 void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py);

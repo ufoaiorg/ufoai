@@ -1146,7 +1146,7 @@ CL_ParseServerMessage
 void CL_ParseServerMessage(void)
 {
 	int cmd;					/* can be -1 */
-	uint8_t i, end = 0;
+	int i;
 	char *s;
 
 	/* if recording demos, copy the message out */
@@ -1162,9 +1162,9 @@ void CL_ParseServerMessage(void)
 			break;
 		}
 
-		cmd = MSG_ReadByte(&net_message, &end);
+		cmd = MSG_ReadByte(&net_message, NULL);
 
-		if (end == 1) {
+		if (cmd == -1) {
 			SHOWNET("END OF MESSAGE");
 			break;
 		}

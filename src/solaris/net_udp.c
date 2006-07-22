@@ -268,12 +268,12 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 bool_t NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
-	int 	ret;
-	struct sockaddr_in	from;
-	int		fromlen;
-	int		net_socket;
-	int		protocol;
-	int		err;
+	int ret;
+	struct sockaddr_in from;
+	size_t fromlen;
+	int net_socket;
+	int protocol;
+	int err;
 
 	if (NET_GetLoopPacket (sock, net_from, net_message))
 		return true;
@@ -304,7 +304,7 @@ bool_t NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 			continue;
 		}
 
-		net_message->cursize = ret;
+		net_message->cursize = (size_t)ret;
 		SockadrToNetadr (&from, net_from);
 		return true;
 	}

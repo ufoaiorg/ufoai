@@ -332,18 +332,17 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 bool_t NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
-	int 	ret;
+	int ret;
 	struct sockaddr from;
-	int		fromlen;
-	int		net_socket;
-	int		protocol;
-	int		err;
+	size_t fromlen;
+	int net_socket;
+	int protocol;
+	int err;
 
 	if (NET_GetLoopPacket (sock, net_from, net_message))
 		return true;
 
-	for (protocol = 0 ; protocol < 2 ; protocol++)
-	{
+	for (protocol = 0 ; protocol < 2 ; protocol++) {
 		if (protocol == 0)
 			net_socket = ip_sockets[sock];
 		else
@@ -358,8 +357,7 @@ bool_t NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 
 		SockadrToNetadr (&from, net_from);
 
-		if (ret == -1)
-		{
+		if (ret == -1) {
 			err = WSAGetLastError();
 
 			if (err == WSAEWOULDBLOCK)
@@ -379,13 +377,12 @@ bool_t NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 			continue;
 		}
 
-		if (ret == net_message->maxsize)
-		{
+		if (ret == net_message->maxsize) {
 			Com_Printf ("Oversize packet from %s\n", NET_AdrToString (*net_from));
 			continue;
 		}
 
-		net_message->cursize = ret;
+		net_message->cursize = (size_t)ret;
 		return true;
 	}
 

@@ -81,12 +81,12 @@ char *Sys_GetClipboardData( void )
 	return NULL;
 }
 
-void *Hunk_Begin (int maxsize)
+void *Hunk_Begin (size_t maxsize)
 {
 	return NULL;
 }
 
-void *Hunk_Alloc (int size)
+void *Hunk_Alloc (size_t size)
 {
 	return NULL;
 }
@@ -95,7 +95,7 @@ void Hunk_Free (void *buf)
 {
 }
 
-int Hunk_End (void)
+size_t Hunk_End (void)
 {
 	return 0;
 }
