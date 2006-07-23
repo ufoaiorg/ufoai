@@ -13,7 +13,7 @@ UnitCount=76
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
-ResourceIncludes=win32
+ResourceIncludes=ports\win32
 MakeIncludes=
 Icon=
 ExeOutput=..
@@ -30,7 +30,7 @@ CompilerSet=0
 CompilerSettings=0000000000000000000000
 
 [Unit1]
-FileName=win32\cd_win.c
+FileName=ports\win32\cd_win.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -230,7 +230,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit21]
-FileName=win32\conproc.c
+FileName=ports\win32\conproc.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -280,7 +280,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit26]
-FileName=win32\in_win.c
+FileName=ports\win32\in_win.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -320,7 +320,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit30]
-FileName=win32\net_wins.c
+FileName=ports\win32\net_wins.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -340,7 +340,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit32]
-FileName=win32\q_shwin.c
+FileName=ports\win32\q_shwin.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -390,7 +390,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit37]
-FileName=win32\snd_win.c
+FileName=ports\win32\snd_win.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -470,7 +470,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit45]
-FileName=win32\sys_win.c
+FileName=ports\win32\sys_win.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -480,7 +480,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit46]
-FileName=win32\vid_dll.c
+FileName=ports\win32\vid_dll.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0
@@ -550,7 +550,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit53]
-FileName=win32\conproc.h
+FileName=ports\win32\conproc.h
 Folder="Header Files"
 Compile=1
 CompileCpp=1
@@ -600,7 +600,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit58]
-FileName=win32\libintl.h
+FileName=ports\win32\libintl.h
 Folder="Header Files"
 Compile=1
 CompileCpp=1
@@ -710,7 +710,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit69]
-FileName=win32\vorbisfile.h
+FileName=ports\win32\vorbisfile.h
 Folder="Header Files"
 Compile=1
 CompileCpp=1
@@ -720,7 +720,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit70]
-FileName=win32\winquake.h
+FileName=ports\win32\winquake.h
 Folder="Header Files"
 Compile=1
 CompileCpp=1
@@ -730,7 +730,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit71]
-FileName=win32\q2.ico
+FileName=ports\win32\q2.ico
 Folder="Resource Files"
 Compile=0
 CompileCpp=1
@@ -740,7 +740,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit72]
-FileName=win32\q2.rc
+FileName=ports\win32\q2.rc
 Folder="Resource Files"
 Compile=1
 CompileCpp=0
@@ -750,7 +750,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit73]
-FileName=win32\ufo.ico
+FileName=ports\win32\ufo.ico
 Folder="Resource Files"
 Compile=0
 CompileCpp=1
@@ -788,7 +788,7 @@ ProductVersion=3.0-dev
 AutoIncBuildNr=0
 
 [Unit78]
-FileName=win32\vorbis.lib
+FileName=ports\win32\vorbisfile.lib
 Folder=Resource Files
 Compile=0
 Link=0

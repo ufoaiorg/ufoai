@@ -74,11 +74,15 @@ CLIENT_DIR=$(MOUNT_DIR)/client
 SERVER_DIR=$(MOUNT_DIR)/server
 REF_GL_DIR=$(MOUNT_DIR)/ref_gl
 COMMON_DIR=$(MOUNT_DIR)/qcommon
-LINUX_DIR=$(MOUNT_DIR)/linux
-MACOSX_DIR=$(MOUNT_DIR)/macosx
-UNIX_DIR=$(MOUNT_DIR)/unix
 GAME_DIR=$(MOUNT_DIR)/game
-NULL_DIR=$(MOUNT_DIR)/null
+LINUX_DIR=$(MOUNT_DIR)/ports/linux
+MACOSX_DIR=$(MOUNT_DIR)/ports/macosx
+UNIX_DIR=$(MOUNT_DIR)/ports/unix
+NULL_DIR=$(MOUNT_DIR)/ports/null
+# TODO: Add targets for these plattforms
+WIN32_DIR=$(MOUNT_DIR)/ports/win32
+SOLARIS_DIR=$(MOUNT_DIR)/ports/solaris
+IRIX_DIR=$(MOUNT_DIR)/ports/irix
 
 BASE_CFLAGS=-Wall -pipe -Dstricmp=strcasecmp -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
 # Put this in when it is fixed
