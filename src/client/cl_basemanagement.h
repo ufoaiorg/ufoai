@@ -247,12 +247,6 @@ typedef struct base_s {
 /* Currently displayed/accessed base. */
 extern base_t *baseCurrent;
 
-/* This it the global list of all available craft-upgrades */
-craftupgrade_t *craftupgrades[MAX_CRAFTUPGRADES];
-
-/* The global number of entries in the "craftupgrades" list. */
-int numCraftUpgrades;
-
 void B_SetSensor(void);
 void B_InitEmployees(void);
 void B_UpdateBaseData(void);

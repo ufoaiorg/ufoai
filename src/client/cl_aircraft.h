@@ -45,43 +45,6 @@ typedef enum {
 	AIRCRAFT_UFO
 } aircraftType_t;
 
-typedef enum {
-	CRAFTUPGRADE_WEAPON,
-	CRAFTUPGRADE_ENGINE,
-	CRAFTUPGRADE_ARMOR
-} craftupgrade_type_t;
-
-typedef struct craftupgrade_s {
-	/* some of this informations defined here overwrite the ones in the aircraft_t struct if given. */
-
-	/* general */
-	char id[MAX_VAR];			/* Short (unique) id/name. */
-	int idx;					/* Self-link in the global list */
-	char name[MAX_VAR];			/* Full name of this upgrade */
-	craftupgrade_type_t type;	/* weapon/engine/armor */
-	int pedia;					/* -pedia link */
-
-	/* armor related */
-	float armor_kinetic;		/* maybe using (k)Newtons here? */
-	float armor_shield;			/* maybe using (k)Newtons here? */
-
-	/* weapon related */
-	int ammo;					/* index of the 'ammo' craftupgrade entry. */
-	struct weapontype_s *weapontype;	/* e.g beam/particle/missle ( do we already have something like that?) */
-	int num_ammo;
-	float damage_kinetic;		/* maybe using (k)Newtons here? */
-	float damage_shield;		/* maybe using (k)Newtons here? */
-	float range;				/* meters (only for non-beam weapons. i.e projectiles, missles, etc...) */
-
-	/* drive related */
-	int speed;					/* the maximum speed the craft can fly with this upgrade */
-	int fuelSize;				/* the maximum fuel size */
-
-	/* representation/display */
-	char model[MAX_QPATH];		/* 3D model */
-	char image[MAX_VAR];		/* image */
-} craftupgrade_t;
-
 typedef struct aircraft_s {
 	int idx;					/* Self-link in the global list */
 	char id[MAX_VAR];			/* translateable name */
@@ -99,13 +62,11 @@ typedef struct aircraft_s {
 	int time;
 	int idxInBase;				/* id in base */
 	int idxBase;				/* id of base */
-	int *teamSize;				/* how many soldiers on board */
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
-	/* TODO */
-	/* xxx teamShape;    // TODO: shape of the soldier-area onboard. */
+	int *teamSize;				/* how many soldiers on board */
 	char model[MAX_QPATH];
 	char weapon_string[MAX_VAR];
-	/* FIXME: these pointers needs reinit after loading a saved game */
+	/* NOTE: these pointers needs reinit after loading a saved game */
 	technology_t *weapon;
 	char shield_string[MAX_VAR];
 	technology_t *shield;
@@ -114,7 +75,6 @@ typedef struct aircraft_s {
 
 	char building[MAX_VAR];		/* id of the building needed as hangar */
 
-	craftupgrade_t *upgrades[MAX_CRAFTUPGRADES];	/* TODO replace armor/weapon/engine definitions from above with this. */
 	int numUpgrades;
 	struct aircraft_s *next;	/* just for linking purposes - not needed in general */
 } aircraft_t;

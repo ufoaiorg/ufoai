@@ -470,30 +470,47 @@ void CL_CampaignRunAircraft(int dt)
 }
 
 /**
- * @brief
+ * @brief Fills the weapon and shield list of the aircraft equip menu
  */
 void CL_AircraftEquipmenuMenuInit_f(void)
 {
 	static char bufferShields[1024];
 	static char bufferWeapons[1024];
-	Com_sprintf(bufferShields, sizeof(bufferShields), _("None\n"));
-	Com_sprintf(bufferWeapons, sizeof(bufferWeapons), _("None\n"));
+	technology_t **list;
+
 	/* shields */
+	Com_sprintf(bufferShields, sizeof(bufferShields), _("None\n"));
+	list = RS_GetTechsByType(RS_CRAFTSHIELD);
+	while (*list) {
+		/*Com_Printf("%s\n", (*list)->id);*/
+		Q_strcat(bufferShields, va("%s\n", (*list)->name), sizeof(bufferShields) );
+		list++;
+	}
 	menuText[TEXT_LIST] = bufferShields;
+
 	/* weapons */
+	Com_sprintf(bufferWeapons, sizeof(bufferWeapons), _("None\n"));
+	list = RS_GetTechsByType(RS_CRAFTWEAPON);
+	while (*list) {
+		/*Com_Printf("%s\n", (*list)->id);*/
+		Q_strcat(bufferWeapons, va("%s\n", (*list)->name), sizeof(bufferWeapons) );
+		list++;
+	}
 	menuText[TEXT_AIRCRAFT_LIST] = bufferWeapons;
+
 	/* shield / weapon description */
 	menuText[TEXT_STANDARD] = NULL;
 }
 
 /**
- * @brief
+ * @brief Asseigns the weapon to current selected aircraft when clicked on the list
  */
 void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 {
 	aircraft_t *air;
 	int num;
 	static char weaponDesc[512];
+	technology_t **list;
 
 	if ( baseCurrent->aircraftCurrent < 0 )
 		return;
@@ -505,24 +522,39 @@ void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 	num = atoi(Cmd_Argv(1));
 
 	air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	if ( num <= 1 ) {
+	if ( num < 1 ) {
 		Com_DPrintf("Reset the aircraft weapon\n");
 		air->weapon = NULL;
 		Com_sprintf(weaponDesc, sizeof(weaponDesc), _("No weapon assigned"));
+		CL_AircraftSelect();
 	} else {
-		/*Com_sprintf(weaponDesc, sizeof(weaponDesc), _(""));*/
+		list = RS_GetTechsByType(RS_CRAFTWEAPON);
+		/* to prevent overflows we go through the list instead of address it directly */
+		while (*list) {
+			num--;
+			/* found it */
+			if (num <= 0) {
+				air->weapon = *list;
+				Com_sprintf(weaponDesc, sizeof(weaponDesc), (*list)->name);
+				CL_AircraftSelect();
+				CL_AircraftEquipmenuMenuInit_f();
+				break;
+			}
+			list++;
+		}
 	}
 	menuText[TEXT_STANDARD] = weaponDesc;
 }
 
 /**
- * @brief
+ * @brief Asseigns the shield to current selected aircraft when clicked on the list
  */
 void CL_AircraftEquipmenuMenuShieldsClick_f(void)
 {
 	aircraft_t *air;
 	int num;
 	static char shieldDesc[512];
+	technology_t **list;
 
 	if ( baseCurrent->aircraftCurrent < 0 )
 		return;
@@ -535,12 +567,26 @@ void CL_AircraftEquipmenuMenuShieldsClick_f(void)
 
 	air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 
-	if ( num <= 1 ) {
+	if ( num < 1 ) {
 		Com_DPrintf("Reset the aircraft shield\n");
 		air->shield = NULL;
 		Com_sprintf(shieldDesc, sizeof(shieldDesc), _("No shield assigned"));
+		CL_AircraftSelect();
 	} else {
-		/*Com_sprintf(shieldDesc, sizeof(shieldDesc), _(""));*/
+		list = RS_GetTechsByType(RS_CRAFTSHIELD);
+		/* to prevent overflows we go through the list instead of address it directly */
+		while (*list) {
+			num--;
+			/* found it */
+			if (num <= 0) {
+				air->shield = *list;
+				Com_sprintf(shieldDesc, sizeof(shieldDesc), (*list)->name);
+				CL_AircraftSelect();
+				CL_AircraftEquipmenuMenuInit_f();
+				break;
+			}
+			list++;
+		}
 	}
 	menuText[TEXT_STANDARD] = shieldDesc;
 }

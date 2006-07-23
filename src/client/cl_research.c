@@ -215,6 +215,11 @@ void RS_InitTree(void)
 
 		/* Search in correct data/.ufo */
 		switch (tech->type) {
+		case RS_CRAFTWEAPON:
+		case RS_CRAFTSHIELD:
+			if (!*tech->name)
+				Com_DPrintf("RS_InitTree: \"%s\" A type craftshield or craftweapon item needs to have a 'name\txxx' defined.", tech->id);
+			break;
 		case RS_TECH:
 			if (!*tech->name)
 				Com_DPrintf("RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", tech->id);
@@ -950,6 +955,12 @@ static void RS_TechnologyList_f(void)
 		case RS_CRAFT:
 			Com_Printf("craft");
 			break;
+		case RS_CRAFTWEAPON:
+			Com_Printf("craftweapon");
+			break;
+		case RS_CRAFTSHIELD:
+			Com_Printf("craftshield");
+			break;
 		case RS_ARMOR:
 			Com_Printf("armor");
 			break;
@@ -1149,6 +1160,10 @@ void RS_ParseTechnologies(char *id, char **text)
 				tech->type = RS_ARMOR;
 			else if (!Q_strncmp(token, "craft", MAX_VAR))
 				tech->type = RS_CRAFT;
+			else if (!Q_strncmp(token, "craftweapon", MAX_VAR))
+				tech->type = RS_CRAFTWEAPON;
+			else if (!Q_strncmp(token, "craftshield", MAX_VAR))
+				tech->type = RS_CRAFTSHIELD;
 			else if (!Q_strncmp(token, "building", MAX_VAR))
 				tech->type = RS_BUILDING;
 			else if (!Q_strncmp(token, "alien", MAX_VAR))
@@ -1514,4 +1529,29 @@ technology_t *RS_GetTechByProvided(const char *id_provided)
 
 	Com_DPrintf("RS_GetTechByProvided: Could not find a technology that provides \"%s\" (%i)\n", id_provided, gd.numTechnologies);
 	return NULL;
+}
+
+/**
+ * @brief Returns a list of technologies for the given type
+ * @note this list is terminated by a NULL pointer
+ */
+technology_t **RS_GetTechsByType(researchType_t type)
+{
+	static technology_t *techList[MAX_TECHNOLOGIES];
+	int i, j = 0;
+
+	for (i=0; i<gd.numTechnologies;i++) {
+		if (gd.technologies[i].type == type ) {
+			techList[j] = &gd.technologies[i];
+			j++;
+			/* j+1 because last item have to be NULL */
+			if ( j+1 >= MAX_TECHNOLOGIES ) {
+				Com_Printf("RS_GetTechsByType: MAX_TECHNOLOGIES limit hit\n");
+				break;
+			}
+		}
+	}
+	techList[j] = NULL;
+	Com_DPrintf("techlist with %i entries\n", j);
+	return techList;
 }

@@ -47,6 +47,8 @@ typedef enum researchType_s {
 	RS_WEAPON,
 	RS_ARMOR,
 	RS_CRAFT,
+	RS_CRAFTWEAPON,
+	RS_CRAFTSHIELD,
 	RS_BUILDING,
 	RS_ALIEN,
 	RS_UGV
@@ -110,5 +112,6 @@ void RS_MarkCollected(void);
 void RS_MarkResearchable(void);
 technology_t *RS_GetTechByID(const char *id);
 technology_t *RS_GetTechByProvided(const char *id_provided);
+technology_t **RS_GetTechsByType(researchType_t type);
 
 #endif /* CLIENT_CL_RESEARCH_H */

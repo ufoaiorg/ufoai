@@ -1647,3 +1647,39 @@ tech rs_ugv_triax
 
 	mdl_top	"soldiers/ugv_triax/triax"
 }
+
+// CRAFT STUFF
+
+tech rs_craft_shield_light
+{
+	type	craftshield
+	up_chapter	crafts
+	name	"_Light Shield"
+	description	"_craft_shield_light_txt"
+
+	requires	initial
+	// FIXME
+	provides	light
+	time	0
+	researched	true
+	needscollected	false
+
+	image_top	"tech/craftshield_light"
+}
+
+tech rs_craft_weapon_flac
+{
+	type	craftweapon
+	up_chapter	crafts
+	name	"_Flac Cannon"
+	description	"_craft_weapon_flac_txt"
+
+	requires	initial
+	// FIXME
+	provides	assault
+	time	0
+	researched	true
+	needscollected	false
+
+	image_top	"tech/craftweapon_flac"
+}
