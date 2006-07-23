@@ -66,13 +66,9 @@ EVENT MESSAGES
 */
 
 
-/*
-=================
-SV_ClientPrintf
-
-Sends text across to be displayed if the level passes
-=================
-*/
+/**
+ * @brief Sends text across to be displayed if the level passes
+ */
 void SV_ClientPrintf(client_t * cl, int level, char *fmt, ...)
 {
 	va_list argptr;
@@ -90,13 +86,9 @@ void SV_ClientPrintf(client_t * cl, int level, char *fmt, ...)
 	MSG_WriteString(&cl->netchan.message, string);
 }
 
-/*
-=================
-SV_BroadcastPrintf
-
-Sends text to all active clients
-=================
-*/
+/**
+ * @brief Sends text to all active clients
+ */
 void SV_BroadcastPrintf(int level, char *fmt, ...)
 {
 	va_list argptr;
@@ -131,13 +123,9 @@ void SV_BroadcastPrintf(int level, char *fmt, ...)
 	}
 }
 
-/*
-=================
-SV_BroadcastCommand
-
-Sends text to all active clients
-=================
-*/
+/**
+ * @brief Sends text to all active clients
+ */
 void SV_BroadcastCommand(char *fmt, ...)
 {
 	va_list argptr;
@@ -158,18 +146,12 @@ void SV_BroadcastCommand(char *fmt, ...)
 }
 
 
-/*
-=================
-SV_Multicast
-
-Sends the contents of sv.multicast to a subset of the clients,
-then clears sv.multicast.
-
-MULTICAST_ALL	same as broadcast (origin can be NULL)
-MULTICAST_PVS	send to clients potentially visible from org
-MULTICAST_PHS	send to clients potentially hearable from org
-=================
-*/
+/**
+ * @brief Sends the contents of sv.multicast to a subset of the clients,then clears sv.multicast.
+ * @note MULTICAST_ALL same as broadcast (origin can be NULL)
+ * @note MULTICAST_PVS send to clients potentially visible from org
+ * @note MULTICAST_PHS send to clients potentially hearable from org
+ */
 void SV_Multicast(int mask)
 {
 	client_t *c;
@@ -210,12 +192,8 @@ FRAME UPDATES
 */
 
 
-/*
-=======================
-SV_RateDrop
-
-Returns true if the client is over its current
-bandwidth estimation and should not be sent another packet
+/**
+ * @brief Returns true if the client is over its current bandwidth estimation and should not be sent another packet
 =======================
 */
 qboolean SV_RateDrop(client_t * c)

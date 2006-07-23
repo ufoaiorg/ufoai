@@ -427,7 +427,7 @@ void G_EndGame(int team)
 
 	/* how many */
 	/* This is only read after a click to continue - not on retry */
-	gi.WriteShort(j);
+	gi.WriteByte(j);
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
