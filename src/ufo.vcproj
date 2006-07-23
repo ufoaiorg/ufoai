@@ -484,11 +484,11 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 			>
 			<File
-				RelativePath=".\win32\cd_win.c"
+				RelativePath=".\ports\win32\cd_win.c"
 				>
 			</File>
 			<File
-				RelativePath=".\client\cl_actor.c"
+				RelativePath=".\ports\client\cl_actor.c"
 				>
 			</File>
 			<File
@@ -576,7 +576,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\win32\conproc.c"
+				RelativePath=".\ports\win32\conproc.c"
 				>
 			</File>
 			<File
@@ -596,7 +596,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\win32\in_win.c"
+				RelativePath=".\ports\win32\in_win.c"
 				>
 			</File>
 			<File
@@ -612,7 +612,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\win32\net_wins.c"
+				RelativePath=".\ports\win32\net_wins.c"
 				>
 			</File>
 			<File
@@ -632,7 +632,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\win32\snd_win.c"
+				RelativePath=".\ports\win32\snd_win.c"
 				>
 			</File>
 			<File
@@ -664,11 +664,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\win32\sys_win.c"
+				RelativePath=".\ports\win32\sys_win.c"
 				>
 			</File>
 			<File
-				RelativePath=".\win32\vid_dll.c"
+				RelativePath=".\ports\win32\vid_dll.c"
 				>
 			</File>
 			<File
@@ -733,11 +733,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\win32\codec.h"
+				RelativePath=".\ports\win32\codec.h"
 				>
 			</File>
 			<File
-				RelativePath=".\win32\conproc.h"
+				RelativePath=".\ports\win32\conproc.h"
 				>
 			</File>
 			<File
@@ -753,19 +753,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\win32\inttypes.h"
+				RelativePath=".\ports\win32\inttypes.h"
 				>
 			</File>
 			<File
-				RelativePath=".\win32\jconfig.h"
+				RelativePath=".\ports\win32\jconfig.h"
 				>
 			</File>
 			<File
-				RelativePath=".\win32\jmorecfg.h"
+				RelativePath=".\ports\win32\jmorecfg.h"
 				>
 			</File>
 			<File
-				RelativePath=".\win32\jpeglib.h"
+				RelativePath=".\ports\win32\jpeglib.h"
 				>
 			</File>
 			<File
@@ -773,15 +773,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\win32\libintl.h"
+				RelativePath=".\ports\win32\libintl.h"
 				>
 			</File>
 			<File
-				RelativePath=".\win32\ogg.h"
+				RelativePath=".\ports\win32\ogg.h"
 				>
 			</File>
 			<File
-				RelativePath=".\win32\os_types.h"
+				RelativePath=".\ports\win32\os_types.h"
 				>
 			</File>
 			<File
@@ -801,7 +801,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\win32\resource.h"
+				RelativePath=".\ports\win32\resource.h"
 				>
 			</File>
 			<File
@@ -825,11 +825,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\win32\vorbisfile.h"
+				RelativePath=".\ports\win32\vorbisfile.h"
 				>
 			</File>
 			<File
-				RelativePath=".\win32\winquake.h"
+				RelativePath=".\ports\win32\winquake.h"
 				>
 			</File>
 		</Filter>
@@ -838,19 +838,19 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 			>
 			<File
-				RelativePath="win32\intl.lib"
+				RelativePath="ports\win32\intl.lib"
 				>
 			</File>
 			<File
-				RelativePath="win32\ogg.lib"
+				RelativePath="ports\win32\ogg.lib"
 				>
 			</File>
 			<File
-				RelativePath="win32\q2.ico"
+				RelativePath="ports\win32\q2.ico"
 				>
 			</File>
 			<File
-				RelativePath="win32\q2.rc"
+				RelativePath="ports\win32\q2.rc"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -858,7 +858,7 @@
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="win32"
+						AdditionalIncludeDirectories="ports\win32"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -867,7 +867,7 @@
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="win32"
+						AdditionalIncludeDirectories="ports\win32"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -876,7 +876,7 @@
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="win32"
+						AdditionalIncludeDirectories="ports\win32"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -885,16 +885,16 @@
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="win32"
+						AdditionalIncludeDirectories="ports\win32"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="win32\ufo.ico"
+				RelativePath="ports\win32\ufo.ico"
 				>
 			</File>
 			<File
-				RelativePath="win32\vorbisfile.lib"
+				RelativePath="ports\win32\vorbisfile.lib"
 				>
 			</File>
 		</Filter>

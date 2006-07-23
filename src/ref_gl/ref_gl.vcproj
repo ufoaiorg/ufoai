@@ -540,11 +540,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\win32\glw_imp.c"
+				RelativePath="..\ports\win32\glw_imp.c"
 				>
 			</File>
 			<File
-				RelativePath="..\win32\qgl_win.c"
+				RelativePath="..\ports\win32\qgl_win.c"
 				>
 			</File>
 		</Filter>
@@ -581,7 +581,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\win32\glw_win.h"
+				RelativePath="..\ports\win32\glw_win.h"
 				>
 			</File>
 			<File
@@ -598,11 +598,11 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 			>
 			<File
-				RelativePath="..\win32\intl.lib"
+				RelativePath="..\ports\win32\intl.lib"
 				>
 			</File>
 			<File
-				RelativePath="..\win32\libjpeg.lib"
+				RelativePath="..\ports\win32\libjpeg.lib"
 				>
 			</File>
 			<File

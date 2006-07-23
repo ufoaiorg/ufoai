@@ -722,7 +722,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\win32\intl.lib"
+				RelativePath="..\ports\win32\intl.lib"
 				>
 			</File>
 		</Filter>

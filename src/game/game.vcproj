@@ -525,7 +525,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\win32\q_shwin.c"
+				RelativePath="..\ports\win32\q_shwin.c"
 				>
 			</File>
 		</Filter>
@@ -563,7 +563,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\win32\intl.lib"
+				RelativePath="..\ports\win32\intl.lib"
 				>
 			</File>
 		</Filter>
