@@ -86,7 +86,7 @@ building building_intercept
 	fixcosts	5000
 	depends		building_commando
 	more_than_one	true
-	onconstruct	"newaircraft interceptor;aircraft_list;"
+	onconstruct	"aircraft_new interceptor;aircraft_list;"
 	build_time	5
 	varcosts	10
 	map_name	"intercept"
