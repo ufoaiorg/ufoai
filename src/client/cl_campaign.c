@@ -2772,7 +2772,7 @@ cmdList_t game_commands[] = {
 	,
 	{"mn_prev_aircraft", MN_PrevAircraft_f}
 	,
-	{"newaircraft", CL_NewAircraft_f}
+	{"aircraft_new", CL_NewAircraft_f}
 	,
 	{"aircraft_return", CL_AircraftReturnToBase_f}
 	,

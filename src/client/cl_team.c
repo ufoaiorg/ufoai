@@ -470,10 +470,13 @@ static void CL_EquipTypeCmd(void)
 
 /**
   * @brief
+  * @note This function has various console commands:
+  * team_select, soldier_select, equip_select
   */
 static void CL_SelectCmd(void)
 {
-	char *command;
+	char *arg;
+	char command[MAX_VAR];
 	int num;
 
 	/* check syntax */
@@ -484,8 +487,19 @@ static void CL_SelectCmd(void)
 	num = atoi(Cmd_Argv(1));
 
 	/* change highlights */
-	command = Cmd_Argv(0);
-	*strchr(command, '_') = 0;
+	arg = Cmd_Argv(0);
+	*strchr(arg, '_') = 0;
+	Q_strncpyz(command, arg, MAX_VAR);
+
+ 	if (!Q_strncmp(command, "soldier", 7)) {
+ 		/* check whether we are connected (tactical mission) */
+		if (Com_ServerState()) {
+			CL_ActorSelectList(num);
+			return;
+		/* we are still in the menu */
+		} else
+			Q_strncpyz(command, "equip", MAX_VAR);
+	}
 
 	if (!Q_strncmp(command, "equip", 5)) {
 		if (baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] <= 0)
@@ -501,9 +515,6 @@ static void CL_SelectCmd(void)
 	} else if (!Q_strncmp(command, "team", 4)) {
 		if (!baseCurrent || num >= baseCurrent->numWholeTeam)
 			return;
-	} else if (!Q_strncmp(command, "hud", 3)) {
-		CL_ActorSelectList(num);
-		return;
 	}
 
 	/* console commands */
@@ -951,7 +962,7 @@ void CL_ResetTeams(void)
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkinCmd);
 	Cmd_AddCommand("team_comments", CL_TeamCommentsCmd);
 	Cmd_AddCommand("equip_select", CL_SelectCmd);
-	Cmd_AddCommand("hud_select", CL_SelectCmd);
+	Cmd_AddCommand("soldier_select", CL_SelectCmd);
 	Cmd_AddCommand("saveteam", CL_SaveTeamCmd);
 	Cmd_AddCommand("saveteamslot", CL_SaveTeamSlotCmd);
 	Cmd_AddCommand("loadteam", CL_LoadTeamCmd);

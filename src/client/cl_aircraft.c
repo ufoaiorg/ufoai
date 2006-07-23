@@ -159,7 +159,7 @@ char *CL_AircraftStatusToName(aircraft_t * air)
 void CL_NewAircraft_f(void)
 {
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: newaircraft <type>\n");
+		Com_Printf("Usage: aircraft_new <type>\n");
 		return;
 	}
 
@@ -286,7 +286,7 @@ aircraft_t *CL_GetAircraft(char *name)
 			return &aircraft[i];
 	}
 
-	Com_Printf("Aircraft %s not found\n", name);
+	Com_Printf("Aircraft %s not found (%i)\n", name, numAircraft);
 	return NULL;
 }
 
