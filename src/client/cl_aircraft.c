@@ -273,7 +273,9 @@ void CL_AircraftSelect(void)
 }
 
 /**
-  * @brief
+  * @brief Searches the global aircraft array for a given aircraft
+  * @param[in] name Aircraft id
+  * @return aircraft_t pointer or NULL if not found
   */
 aircraft_t *CL_GetAircraft(char *name)
 {
@@ -289,43 +291,45 @@ aircraft_t *CL_GetAircraft(char *name)
 }
 
 /**
-  * @brief
+  * @brief Places a new aircraft in the given base
+  * @param[in] base Pointer to base where aircraft should be added
+  * @param[in] name Name of the aircraft to add
   */
-void CL_NewAircraft(base_t * base, char *name)
+void CL_NewAircraft(base_t *base, char *name)
 {
 	aircraft_t *air;
-	int i;
 
 	assert(base);
 
 	/* first aircraft is default aircraft */
 	base->aircraftCurrent = 0;
 
-	for (i = 0; i < numAircraft; i++) {
-		air = &aircraft[i];
-		if (!Q_strncmp(air->id, name, MAX_VAR)) {
-			memcpy(&base->aircraft[base->numAircraftInBase], air, sizeof(aircraft_t));
-			air = &base->aircraft[base->numAircraftInBase];
-			air->homebase = base;
-			/* for saving and loading a base */
-			air->idxBase = base->idx;
-			/* this is the aircraft array id in current base */
-			/* NOTE: when we send the aircraft to another base this has to be changed, too */
-			air->idxInBase = base->numAircraftInBase;
-			/* link the teamSize pointer in */
-			air->teamSize = &base->numOnTeam[base->numAircraftInBase];
-			Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), air->name, base->name), MAX_MESSAGE_TEXT);
-			MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
-			Com_DPrintf("Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
-			Vector2Copy(base->pos, air->pos);
+	air = CL_GetAircraft(name);
+	if (air) {
+		/* copy from global aircraft list to base aircraft list */
+		/* we do this because every aircraft can have its own parameters */
+		memcpy(&base->aircraft[base->numAircraftInBase], air, sizeof(aircraft_t));
+		/* now lets use the aircraft array for the base to set some parameters */
+		air = &base->aircraft[base->numAircraftInBase];
+		air->homebase = base;
+		/* for saving and loading a base */
+		air->idxBase = base->idx;
+		/* this is the aircraft array id in current base */
+		/* NOTE: when we send the aircraft to another base this has to be changed, too */
+		air->idxInBase = base->numAircraftInBase;
+		/* link the teamSize pointer in */
+		/* NOTE: when we load a savegame, this has to be updated, too */
+		air->teamSize = &base->numOnTeam[base->numAircraftInBase];
+		Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), air->name, base->name), MAX_MESSAGE_TEXT);
+		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+		Com_DPrintf("Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
+		Vector2Copy(base->pos, air->pos);
 
-			base->numAircraftInBase++;
-			Com_DPrintf("Aircraft for base %s: %s\n", base->name, air->name);
-			return;
-		}
+		base->numAircraftInBase++;
+		Com_DPrintf("Aircraft for base %s: %s\n", base->name, air->name);
 	}
-	Com_Printf("Aircraft %s not found\n", name);
 }
+
 /**
   * @brief
   */
