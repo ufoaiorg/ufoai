@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-07-23 00:12+0200\n"
+"POT-Creation-Date: 2006-07-24 09:54+0200\n"
 "PO-Revision-Date: 2006-07-21 07:37+0100\n"
 "Last-Translator: TorF <torf@anti-phoenix.org>\n"
 "Language-Team: \n"
@@ -2651,6 +2651,38 @@ msgstr "UGV Triax"
 msgid "ugv_triax_txt"
 msgstr "<TODO>"
 
+#: ../base/ufos/research.ufo:1657
+#, fuzzy
+msgid "Light Shield"
+msgstr "Bouclier:\t%s"
+
+#: ../base/ufos/research.ufo:1658
+#, fuzzy
+msgid "craft_shield_light_txt"
+msgstr ""
+"Ayant les mêmes attributs génétiques que les autres Ortnoks, les Guerriers "
+"Ortnoks ont été considérablement modifiés à l'aide d'implants cybernétiques. "
+"Ces implants additionnels tendent évidemment à améliorer les performance en "
+"situation de combat. Ainsi les jambes et les bras ont été presque "
+"complètement remplacés par des prothèses cybernétiques, ce qui rend leur "
+"force physique bien supérieure au potentiel d'un être humain. Les mains en "
+"forme de griffe sont faites pour manipuler de lourdes charges. La zone du "
+"torse est couverte d'une épaisse plaque en acier qui est quasiment "
+"impénétrable pour les munitions standards de fusil. Le masque facial sert de "
+"protection contre les gaz dangereux aussi bien qu'à l'augmentation des voies "
+"aériennes supérieures, permettant un meilleur fonctionnement des poumons. Le "
+"désavantage de cette massive augmentation d'implants est la vulnérabilité "
+"accrue aux impulsions électro-magnétiques (EMP)."
+
+#: ../base/ufos/research.ufo:1674
+#, fuzzy
+msgid "Flac Cannon"
+msgstr "Mitraillage"
+
+#: ../base/ufos/research.ufo:1675
+msgid "craft_weapon_flac_txt"
+msgstr ""
+
 #: ../base/ufos/seq_credits.ufo:35
 msgid "This game is now community driven"
 msgstr "Le jeu est maintenant produit par une communauté"
@@ -3305,10 +3337,10 @@ msgstr "Pas assez de crédits pour construire ceci\n"
 #: client/cl_campaign.c:361 client/cl_campaign.c:688 client/cl_campaign.c:854
 #: client/cl_campaign.c:864 client/cl_campaign.c:877 client/cl_campaign.c:949
 #: client/cl_campaign.c:1797 client/cl_campaign.c:1833
-#: client/cl_campaign.c:1835 client/cl_menu.c:1185 client/cl_research.c:486
-#: client/cl_research.c:613 client/cl_research.c:616 client/cl_research.c:620
-#: client/cl_research.c:640 client/cl_research.c:666 client/cl_research.c:670
-#: client/cl_research.c:805
+#: client/cl_campaign.c:1835 client/cl_menu.c:1185 client/cl_research.c:491
+#: client/cl_research.c:618 client/cl_research.c:621 client/cl_research.c:625
+#: client/cl_research.c:645 client/cl_research.c:671 client/cl_research.c:675
+#: client/cl_research.c:810
 msgid "Notice"
 msgstr "Note"
 
@@ -3608,59 +3640,59 @@ msgstr "Ennemi en vue !\n"
 msgid "Civilian spotted!\n"
 msgstr "Civil en vue !\n"
 
-#: client/cl_research.c:364
+#: client/cl_research.c:369
 #, c-format
 msgid "Free labs in this base: %i"
 msgstr "Laboratoires disponibles dans cette base: %i"
 
-#: client/cl_research.c:365
+#: client/cl_research.c:370
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr "Scientifiques disponibles dans cette base: %i"
 
-#: client/cl_research.c:366
+#: client/cl_research.c:371
 msgid "Not researched in any base."
 msgstr "Recherché dans aucune base."
 
-#: client/cl_research.c:372
+#: client/cl_research.c:377
 #, c-format
 msgid "Researched in %s"
 msgstr "Recherché  %s"
 
-#: client/cl_research.c:374
+#: client/cl_research.c:379
 msgid "Researched in this base."
 msgstr "Recherché dans cette base."
 
-#: client/cl_research.c:386
+#: client/cl_research.c:391
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Progression: %.1f%%"
 
-#: client/cl_research.c:388
+#: client/cl_research.c:393
 msgid "Progress: Not available."
 msgstr "Progrès: Non disponible."
 
-#: client/cl_research.c:393
+#: client/cl_research.c:398
 msgid "Status: Under research"
 msgstr "Statut: En cours de Recherche"
 
-#: client/cl_research.c:396
+#: client/cl_research.c:401
 msgid "Status: Research paused"
 msgstr "Statut: Recherche en attente"
 
-#: client/cl_research.c:399
+#: client/cl_research.c:404
 msgid "Status: Research finished"
 msgstr "Statut: Recherche terminée"
 
-#: client/cl_research.c:402
+#: client/cl_research.c:407
 msgid "Status: Unknown technology"
 msgstr "Statut: Technologie inconnue"
 
-#: client/cl_research.c:410
+#: client/cl_research.c:415
 msgid "Dependencies: "
 msgstr "Dépendances: "
 
-#: client/cl_research.c:487
+#: client/cl_research.c:492
 msgid ""
 "There is no free lab available.\\You need to build one or free another\\in "
 "order to assign scientists to research this technology.\n"
@@ -3669,19 +3701,19 @@ msgstr ""
 "libérer un\\pour assigner des scientifiques pour rechercher cette "
 "technologie.\n"
 
-#: client/cl_research.c:613
+#: client/cl_research.c:618
 msgid "This item is already under research by your scientists."
 msgstr "Cette objet est déjà recherché par vos scientifiques."
 
-#: client/cl_research.c:616 client/cl_research.c:666
+#: client/cl_research.c:621 client/cl_research.c:671
 msgid "The research on this item continues."
 msgstr "La recherche sur cet objet continue."
 
-#: client/cl_research.c:620 client/cl_research.c:670
+#: client/cl_research.c:625 client/cl_research.c:675
 msgid "The research on this item is complete."
 msgstr "La recherche sur cet objet est terminée."
 
-#: client/cl_research.c:640
+#: client/cl_research.c:645
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -3689,52 +3721,52 @@ msgstr ""
 "La recherche sur cet objet n'est pas encore possible.\n"
 "Vous devez d'abord rechercher la technologie sur laquelle il est basé."
 
-#: client/cl_research.c:707
+#: client/cl_research.c:712
 msgid " [not yet researchable]"
 msgstr " [pas encore recherchable]"
 
-#: client/cl_research.c:721
+#: client/cl_research.c:726
 #, c-format
 msgid "%i max.\n"
 msgstr "%i max.\n"
 
-#: client/cl_research.c:805
+#: client/cl_research.c:810
 msgid "Build a laboratory first"
 msgstr "Construisez un laboratoire d'abord"
 
-#: client/cl_research.c:874
+#: client/cl_research.c:879
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Recherche de %s est terminée\n"
 
-#: client/cl_research.c:875
+#: client/cl_research.c:880
 msgid "Research finished"
 msgstr "Recherche Terminée"
 
-#: client/cl_research.c:1113
+#: client/cl_research.c:1124
 msgid "No description available."
 msgstr "Pas de description disponible."
 
-#: client/cl_team.c:539
+#: client/cl_team.c:550
 #, c-format
 msgid "%i of %i"
 msgstr "%i sur %i"
 
-#: client/cl_team.c:716
+#: client/cl_team.c:727
 msgid "NewTeam"
 msgstr "Nouvelle Equipe"
 
-#: client/cl_team.c:1104
+#: client/cl_team.c:1118
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens tués\t%i\n"
 
-#: client/cl_team.c:1106
+#: client/cl_team.c:1120
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Ennemis tués\t%i\n"
 
-#: client/cl_team.c:1112
+#: client/cl_team.c:1126
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -3743,7 +3775,7 @@ msgstr ""
 "Aliens survivants\t%i\n"
 "\n"
 
-#: client/cl_team.c:1114
+#: client/cl_team.c:1128
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -3752,17 +3784,17 @@ msgstr ""
 "Ennemis survivants\t%i\n"
 "\n"
 
-#: client/cl_team.c:1117
+#: client/cl_team.c:1131
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Pertes de l'équipe\t%i\n"
 
-#: client/cl_team.c:1118
+#: client/cl_team.c:1132
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Pertes des tirs amis\t%i\n"
 
-#: client/cl_team.c:1119
+#: client/cl_team.c:1133
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -3771,22 +3803,22 @@ msgstr ""
 "Survivants de l'équipe\t%i\n"
 "\n"
 
-#: client/cl_team.c:1132
+#: client/cl_team.c:1146
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civils tués par les Aliens\t%i\n"
 
-#: client/cl_team.c:1134
+#: client/cl_team.c:1148
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civils tués par l'Ennemi\t%i\n"
 
-#: client/cl_team.c:1135
+#: client/cl_team.c:1149
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civils tués par votre équipe\t%i\n"
 
-#: client/cl_team.c:1136
+#: client/cl_team.c:1150
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -3797,22 +3829,22 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1156
+#: client/cl_team.c:1170
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr "Technologie alienne récupérée\t%i c\n"
 
-#: client/cl_team.c:1160
+#: client/cl_team.c:1174
 #, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr "Aliens tués\t%i c\n"
 
-#: client/cl_team.c:1164
+#: client/cl_team.c:1178
 #, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr "Civils sauvés\t%i c\n"
 
-#: client/cl_team.c:1167
+#: client/cl_team.c:1181
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -3823,7 +3855,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1171
+#: client/cl_team.c:1185
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr "Nouvelles Recrues\t%i\n"

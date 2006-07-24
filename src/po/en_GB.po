@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-07-23 00:12+0200\n"
-"PO-Revision-Date: 2006-07-19 22:41+0100\n"
+"POT-Creation-Date: 2006-07-24 09:54+0200\n"
+"PO-Revision-Date: 2006-07-24 09:51+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -381,12 +381,10 @@ msgid "Aliens attacked one of our home bases"
 msgstr "Aliens attacked one of our home bases"
 
 #: ../base/ufos/campaign.ufo:871
-#, fuzzy
 msgid "Hard Campaign"
-msgstr "Heavy Campaign"
+msgstr "Hard Campaign"
 
 #: ../base/ufos/campaign.ufo:872
-#, fuzzy
 msgid "txt_hard_campaign"
 msgstr "Same as standard campaign but less recruits and less credits"
 
@@ -503,11 +501,11 @@ msgstr "Transfer"
 
 #: ../base/ufos/menu_aircraft.ufo:156
 msgid "Equip weapons and shields"
-msgstr ""
+msgstr "Equip weapons and shields"
 
 #: ../base/ufos/menu_aircraft.ufo:171
 msgid "Equip"
-msgstr ""
+msgstr "Equip"
 
 #: ../base/ufos/menu_aircraft.ufo:211 ../base/ufos/menu_aircraft.ufo:387
 #: ../base/ufos/menu_team.ufo:664 ../base/ufos/menu_team.ufo:1263
@@ -531,23 +529,20 @@ msgid "Team Members:"
 msgstr "Team Members:"
 
 #: ../base/ufos/menu_aircraft.ufo:337
-#, fuzzy
 msgid "Shield"
-msgstr "Shield:\t%s"
+msgstr "Shield"
 
 #: ../base/ufos/menu_aircraft.ufo:345
-#, fuzzy
 msgid "Weapon"
-msgstr "Weapons"
+msgstr "Weapon"
 
 #: ../base/ufos/menu_aircraft.ufo:353
-#, fuzzy
 msgid "Available equipment:"
-msgstr "Buy/Sell equipment"
+msgstr "Available equipment:"
 
 #: ../base/ufos/menu_althud.ufo:45
 msgid "Inventory and physical stats"
-msgstr ""
+msgstr "Inventory and physical stats"
 
 #: ../base/ufos/menu_althud.ufo:388 ../base/ufos/menu_hud.ufo:223
 msgid "Enemy spotted"
@@ -585,24 +580,20 @@ msgid "Crouch/Stand up"
 msgstr "Crouch/Stand up"
 
 #: ../base/ufos/menu_althud.ufo:526
-#, fuzzy
 msgid "Level up"
-msgstr "Level 1"
+msgstr "Level up"
 
 #: ../base/ufos/menu_althud.ufo:536
-#, fuzzy
 msgid "Level down"
-msgstr "Level 1"
+msgstr "Level down"
 
 #: ../base/ufos/menu_althud.ufo:581
-#, fuzzy
 msgid "Switch to right hand weapon"
-msgstr "Switch to the next base"
+msgstr "Switch to right hand weapon"
 
 #: ../base/ufos/menu_althud.ufo:590
-#, fuzzy
 msgid "Switch to left hand weapon"
-msgstr "Switch to the next base"
+msgstr "Switch to left hand weapon"
 
 #: ../base/ufos/menu_bases.ufo:48
 msgid "Back to worldview"
@@ -2564,6 +2555,22 @@ msgstr "UGV Triax"
 msgid "ugv_triax_txt"
 msgstr "<TODO>"
 
+#: ../base/ufos/research.ufo:1657
+msgid "Light Shield"
+msgstr "Light Shield"
+
+#: ../base/ufos/research.ufo:1658
+msgid "craft_shield_light_txt"
+msgstr "<TODO>"
+
+#: ../base/ufos/research.ufo:1674
+msgid "Flac Cannon"
+msgstr "Flac Cannon"
+
+#: ../base/ufos/research.ufo:1675
+msgid "craft_weapon_flac_txt"
+msgstr "<TODO>"
+
 #: ../base/ufos/seq_credits.ufo:35
 msgid "This game is now community driven"
 msgstr "This game is now community driven"
@@ -3214,10 +3221,10 @@ msgstr "Not enough credits to build this\n"
 #: client/cl_campaign.c:361 client/cl_campaign.c:688 client/cl_campaign.c:854
 #: client/cl_campaign.c:864 client/cl_campaign.c:877 client/cl_campaign.c:949
 #: client/cl_campaign.c:1797 client/cl_campaign.c:1833
-#: client/cl_campaign.c:1835 client/cl_menu.c:1185 client/cl_research.c:486
-#: client/cl_research.c:613 client/cl_research.c:616 client/cl_research.c:620
-#: client/cl_research.c:640 client/cl_research.c:666 client/cl_research.c:670
-#: client/cl_research.c:805
+#: client/cl_campaign.c:1835 client/cl_menu.c:1185 client/cl_research.c:491
+#: client/cl_research.c:618 client/cl_research.c:621 client/cl_research.c:625
+#: client/cl_research.c:645 client/cl_research.c:671 client/cl_research.c:675
+#: client/cl_research.c:810
 msgid "Notice"
 msgstr "Notice"
 
@@ -3514,59 +3521,59 @@ msgstr "Enemy spotted!\n"
 msgid "Civilian spotted!\n"
 msgstr "Civilian spotted!\n"
 
-#: client/cl_research.c:364
+#: client/cl_research.c:369
 #, c-format
 msgid "Free labs in this base: %i"
 msgstr "Free labs in this base: %i"
 
-#: client/cl_research.c:365
+#: client/cl_research.c:370
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr "Available scientists in this base: %i"
 
-#: client/cl_research.c:366
+#: client/cl_research.c:371
 msgid "Not researched in any base."
 msgstr "Not researched in any base."
 
-#: client/cl_research.c:372
+#: client/cl_research.c:377
 #, c-format
 msgid "Researched in %s"
 msgstr "Researched in %s"
 
-#: client/cl_research.c:374
+#: client/cl_research.c:379
 msgid "Researched in this base."
 msgstr "Researched in this base."
 
-#: client/cl_research.c:386
+#: client/cl_research.c:391
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Progress: %.1f%%"
 
-#: client/cl_research.c:388
+#: client/cl_research.c:393
 msgid "Progress: Not available."
 msgstr "Progress: Not available."
 
-#: client/cl_research.c:393
+#: client/cl_research.c:398
 msgid "Status: Under research"
 msgstr "Status: Under research"
 
-#: client/cl_research.c:396
+#: client/cl_research.c:401
 msgid "Status: Research paused"
 msgstr "Status: Research paused"
 
-#: client/cl_research.c:399
+#: client/cl_research.c:404
 msgid "Status: Research finished"
 msgstr "Status: Research finished"
 
-#: client/cl_research.c:402
+#: client/cl_research.c:407
 msgid "Status: Unknown technology"
 msgstr "Status: Unknown technology"
 
-#: client/cl_research.c:410
+#: client/cl_research.c:415
 msgid "Dependencies: "
 msgstr "Dependencies: "
 
-#: client/cl_research.c:487
+#: client/cl_research.c:492
 msgid ""
 "There is no free lab available.\\You need to build one or free another\\in "
 "order to assign scientists to research this technology.\n"
@@ -3574,19 +3581,19 @@ msgstr ""
 "There is no free lab available.\\You need to build one or free another\\in "
 "order to assign scientists to research this technology.\n"
 
-#: client/cl_research.c:613
+#: client/cl_research.c:618
 msgid "This item is already under research by your scientists."
 msgstr "This item is already under research by your scientists."
 
-#: client/cl_research.c:616 client/cl_research.c:666
+#: client/cl_research.c:621 client/cl_research.c:671
 msgid "The research on this item continues."
 msgstr "The research on this item continues."
 
-#: client/cl_research.c:620 client/cl_research.c:670
+#: client/cl_research.c:625 client/cl_research.c:675
 msgid "The research on this item is complete."
 msgstr "The research on this item is complete."
 
-#: client/cl_research.c:640
+#: client/cl_research.c:645
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -3594,52 +3601,52 @@ msgstr ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
 
-#: client/cl_research.c:707
+#: client/cl_research.c:712
 msgid " [not yet researchable]"
 msgstr " [not yet researchable]"
 
-#: client/cl_research.c:721
+#: client/cl_research.c:726
 #, c-format
 msgid "%i max.\n"
 msgstr "%i max.\n"
 
-#: client/cl_research.c:805
+#: client/cl_research.c:810
 msgid "Build a laboratory first"
 msgstr "Build a laboratory first"
 
-#: client/cl_research.c:874
+#: client/cl_research.c:879
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Research of %s finished\n"
 
-#: client/cl_research.c:875
+#: client/cl_research.c:880
 msgid "Research finished"
 msgstr "Research finished"
 
-#: client/cl_research.c:1113
+#: client/cl_research.c:1124
 msgid "No description available."
 msgstr "No description available."
 
-#: client/cl_team.c:539
+#: client/cl_team.c:550
 #, c-format
 msgid "%i of %i"
 msgstr "%i of %i"
 
-#: client/cl_team.c:716
+#: client/cl_team.c:727
 msgid "NewTeam"
 msgstr "NewTeam"
 
-#: client/cl_team.c:1104
+#: client/cl_team.c:1118
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens killed\t%i\n"
 
-#: client/cl_team.c:1106
+#: client/cl_team.c:1120
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Enemies killed\t%i\n"
 
-#: client/cl_team.c:1112
+#: client/cl_team.c:1126
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -3648,7 +3655,7 @@ msgstr ""
 "Alien survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1114
+#: client/cl_team.c:1128
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -3657,17 +3664,17 @@ msgstr ""
 "Enemy survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1117
+#: client/cl_team.c:1131
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Team losses\t%i\n"
 
-#: client/cl_team.c:1118
+#: client/cl_team.c:1132
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Friendly fire losses\t%i\n"
 
-#: client/cl_team.c:1119
+#: client/cl_team.c:1133
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -3676,22 +3683,22 @@ msgstr ""
 "Team survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1132
+#: client/cl_team.c:1146
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civilians killed by the Aliens\t%i\n"
 
-#: client/cl_team.c:1134
+#: client/cl_team.c:1148
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civilians killed by the Enemies\t%i\n"
 
-#: client/cl_team.c:1135
+#: client/cl_team.c:1149
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civilians killed by your Team\t%i\n"
 
-#: client/cl_team.c:1136
+#: client/cl_team.c:1150
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -3702,22 +3709,22 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1156
+#: client/cl_team.c:1170
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr "Collected alien technology\t%i c\n"
 
-#: client/cl_team.c:1160
+#: client/cl_team.c:1174
 #, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr "Aliens killed\t%i c\n"
 
-#: client/cl_team.c:1164
+#: client/cl_team.c:1178
 #, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr "Civilians saved\t%i c\n"
 
-#: client/cl_team.c:1167
+#: client/cl_team.c:1181
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -3728,7 +3735,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1171
+#: client/cl_team.c:1185
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr "New Recruits\t%i\n"
