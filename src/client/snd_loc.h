@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef __linux__
 #include "/usr/include/vorbis/vorbisfile.h"
 #else
-#include "../win32/vorbisfile.h"
+#include "../ports/win32/vorbisfile.h"
 #endif
 
 /* !!! if this is changed, the asm code must change !!! */

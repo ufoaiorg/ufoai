@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef DEVCPP
 #include <jpeglib.h>
 #else
-#include "../win32/jpeglib.h"
+#include "../ports/win32/jpeglib.h"
 #endif
 #endif
 /* this was taken from jmorecfg.h */
