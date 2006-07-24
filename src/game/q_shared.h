@@ -83,7 +83,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <intl/libintl.h>
 #elif defined(_WIN32)
 #define snprintf _snprintf
-#include "../win32/libintl.h"
+#include "../ports/win32/libintl.h"
 #else
 #include <libintl.h>
 #endif
