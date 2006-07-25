@@ -40,7 +40,8 @@ HRESULT (WINAPI *pDirectSoundCreate)(GUID FAR *, LPDIRECTSOUND FAR *, IUnknown F
 
 typedef enum {SIS_SUCCESS, SIS_FAILURE, SIS_NOTAVAIL} sndinitstat;
 
-cvar_t	*s_wavonly;
+cvar_t *s_wavonly;
+cvar_t *s_primary;
 
 static qboolean	dsound_init;
 static qboolean	wav_init;
@@ -126,7 +127,7 @@ static qboolean DS_CreateBuffers( void )
 	si->Com_Printf("...setting EXCLUSIVE coop level: " );
 	if ( DS_OK != pDS->lpVtbl->SetCooperativeLevel( pDS, cl_hwnd, DSSCL_EXCLUSIVE ) ) {
 		si->Com_Printf ("failed\n");
-		FreeSound ();
+		FreeSound();
 		return qfalse;
 	}
 
@@ -172,7 +173,7 @@ static qboolean DS_CreateBuffers( void )
 		si->Com_Printf( "...creating secondary buffer: " );
 		if (DS_OK != pDS->lpVtbl->CreateSoundBuffer(pDS, &dsbuf, &pDSBuf, NULL)) {
 			si->Com_Printf( "failed\n" );
-			FreeSound ();
+			FreeSound();
 			return qfalse;
 		}
 
@@ -182,7 +183,7 @@ static qboolean DS_CreateBuffers( void )
 
 		if (DS_OK != pDSBuf->lpVtbl->GetCaps (pDSBuf, &dsbcaps)) {
 			si->Com_Printf ("*** GetCaps failed ***\n");
-			FreeSound ();
+			FreeSound();
 			return qfalse;
 		}
 
@@ -193,7 +194,7 @@ static qboolean DS_CreateBuffers( void )
 		si->Com_Printf( "...setting WRITEPRIMARY coop level: " );
 		if (DS_OK != pDS->lpVtbl->SetCooperativeLevel (pDS, cl_hwnd, DSSCL_WRITEPRIMARY)) {
 			si->Com_Printf( "failed\n" );
-			FreeSound ();
+			FreeSound();
 			return qfalse;
 		}
 
@@ -288,15 +289,12 @@ void FreeSound (void)
 			GlobalUnlock(hData);
 			GlobalFree(hData);
 		}
-
 	}
 
-	if ( pDS ) {
+	if ( pDS )
 		pDS->lpVtbl->Release( pDS );
-	}
 
 	if ( hInstDS ) {
-		Com_DPrintf( "...freeing DSOUND.DLL\n" );
 		FreeLibrary( hInstDS );
 		hInstDS = NULL;
 	}
@@ -510,6 +508,7 @@ qboolean SND_Init(struct sndinfo *s)
 {
 	sndinitstat	stat;
 	s_wavonly = si->Cvar_Get("s_wavonly", "0", 0);
+	s_primary = si->Cvar_Get("s_primary", "0", CVAR_ARCHIVE);
 	dsound_init = wav_init = qfalse;
 
 	si = s;
@@ -621,7 +620,9 @@ void SND_BeginPainting (void)
 								&pbuf2, &dwSize2, 0)) != DS_OK) {
 		if (hresult != DSERR_BUFFERLOST) {
 			si->Com_Printf( "S_TransferStereo16: Lock failed with error '%s'\n", DSoundError( hresult ) );
-			S_Shutdown ();
+			/* FIXME: maybe a Sys_Error? */
+			SND_Shutdown();
+			SND_Init(si);
 			return;
 		} else
 			pDSBuf->lpVtbl->Restore( pDSBuf );
@@ -692,7 +693,7 @@ void SND_Submit(void)
  */
 void SND_Shutdown(void)
 {
-	FreeSound ();
+	FreeSound();
 }
 
 

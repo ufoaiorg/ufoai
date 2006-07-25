@@ -100,10 +100,6 @@ cvar_t *s_khz;
 cvar_t *s_show;
 cvar_t *s_mixahead;
 
-#ifdef _WIN32
-cvar_t *s_primary;
-#endif
-
 cvar_t *ov_volume;
 cvar_t *ov_loop;
 
@@ -189,9 +185,6 @@ void S_Init(void)
 		s_mixahead = Cvar_Get("s_mixahead", "0.2", CVAR_ARCHIVE);
 		s_show = Cvar_Get("s_show", "0", 0);
 		s_testsound = Cvar_Get("s_testsound", "0", 0);
-#ifdef _WIN32
-		s_primary = Cvar_Get("s_primary", "0", CVAR_ARCHIVE);	/* win32 specific */
-#endif
 		ov_volume = Cvar_Get("ov_volume", "0.5", CVAR_ARCHIVE);
 		ov_loop = Cvar_Get("ov_loop", "1", 0);
 
