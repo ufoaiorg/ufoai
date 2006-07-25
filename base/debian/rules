@@ -26,7 +26,7 @@ build-stamp: configure
   # ensure the current dirname allows qrad3 to know where we are
 	expr $(shell basename `dirname $$PWD`) : ufo
 
-	$(MAKE) -C maps
+	$(MAKE) -C maps UFO2MAP=/usr/lib/games/ufoai/ufo2map
 
 clean:
 	dh_testdir
