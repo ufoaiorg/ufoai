@@ -23,7 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma warning( disable : 4229 )  /* mgraph gets this */
 #endif
 
-#include <windows.h>
+#include "../../client/client.h"
+#include "../../client/snd_loc.h"
 
 #define	WINDOW_STYLE	(WS_OVERLAPPED|WS_BORDER|WS_CAPTION|WS_VISIBLE)
 

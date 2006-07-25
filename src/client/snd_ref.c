@@ -206,7 +206,7 @@ void S_Init(void)
 			Com_Printf("Loading snd_%s sound driver\n", snd_ref->string);
 #ifdef _WIN32
 			Com_sprintf(fn, sizeof(fn), "snd_%s.dll", snd_ref->string);
-			if ((snd_ref_lib = LoadLibrary()) == 0) {
+			if ((snd_ref_lib = LoadLibrary(fn)) == 0) {
 				Com_Printf("Load library failed - no sound available\n");
 				return;
 #else

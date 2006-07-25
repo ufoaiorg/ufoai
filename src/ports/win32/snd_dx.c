@@ -534,7 +534,7 @@ qboolean SND_Init(struct sndinfo *s)
 {
 	sndinitstat	stat;
 	s_wavonly = si->Cvar_Get("s_wavonly", "0", 0);
-	dsound_init = wav_init = 0;
+	dsound_init = wav_init = qfalse;
 
 	si = s;
 
@@ -582,10 +582,10 @@ qboolean SND_Init(struct sndinfo *s)
 		if (snd_firsttime)
 			si->Com_Printf ("*** No sound device initialized ***\n");
 
-		return 0;
+		return qfalse;
 	}
 
-	return 1;
+	return qtrue;
 }
 
 /**

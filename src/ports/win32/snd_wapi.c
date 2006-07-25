@@ -21,8 +21,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <float.h>
 
-#include "../client/client.h"
-#include "../client/snd_loc.h"
+#include "../../client/client.h"
+#include "../../client/snd_loc.h"
 #include "winquake.h"
 
 // 64K is > 1 second at 16-bit, 22050 Hz
@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static qboolean	wav_init;
 static qboolean	snd_firsttime = qtrue, snd_iswave;
-static qboolean	primary_format_set;
 
 static struct sndinfo *si;
 
@@ -117,9 +116,9 @@ qboolean SND_InitWav (void)
 	si->dma->channels = 2;
 	si->dma->samplebits = 16;
 
-	if (s_khz->value == 44)
+	if (si->s_khz->value == 44)
 		si->dma->speed = 44100;
-	if (s_khz->value == 22)
+	if (si->s_khz->value == 22)
 		si->dma->speed = 22050;
 	else
 		si->dma->speed = 11025;
@@ -234,9 +233,8 @@ qboolean SND_InitWav (void)
  */
 qboolean SND_Init(struct sndinfo *s)
 {
-	memset ((void *)&dma, 0, sizeof (dma));
+	wav_init = qfalse;
 
-	wav_init = 0;
 	si = s;
 
 	if (snd_firsttime || snd_iswave) {
@@ -258,10 +256,10 @@ qboolean SND_Init(struct sndinfo *s)
 		if (snd_firsttime)
 			si->Com_Printf ("*** No sound device initialized ***\n");
 
-		return 0;
+		return qfalse;
 	}
 
-	return 1;
+	return qtrue;
 }
 
 /**
