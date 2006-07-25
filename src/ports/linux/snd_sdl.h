@@ -1,4 +1,4 @@
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 #include "../../client/client.h"
 #include "../../client/snd_loc.h"

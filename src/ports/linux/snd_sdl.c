@@ -71,7 +71,7 @@ qboolean SND_Init (struct sndinfo *s)
 		}
 
 	if (SDL_AudioDriverName(drivername, sizeof (drivername)) == NULL)
-		Q_strncpyz(drivername, "(UNKNOWN)", sizeof(drivername));
+		strncpy(drivername, "(UNKNOWN)", sizeof(drivername));
 	si->Com_Printf("SDL audio driver is \"%s\".\n", drivername);
 
 	memset(&desired, '\0', sizeof (desired));
