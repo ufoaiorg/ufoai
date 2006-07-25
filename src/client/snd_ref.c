@@ -123,6 +123,7 @@ int (*SND_GetDMAPos)(void);
 void (*SND_Shutdown)(void);
 void (*SND_BeginPainting)(void);
 void (*SND_Submit)(void);
+void (*SND_Activate)(qboolean active);
 
 /* ==================================================================== */
 /* User-setable variables */
@@ -141,7 +142,6 @@ void S_SoundInfo_f(void)
 	Com_Printf("%5d submission_chunk\n", dma.submission_chunk);
 	Com_Printf("%5d speed\n", dma.speed);
 	Com_Printf("0x%x dma buffer\n", dma.buffer);
-
 }
 
 
@@ -227,6 +227,8 @@ void S_Init(void)
 				Com_Error(ERR_FATAL, "dladdr failed loading SND_BeginPainting\n");
 			if ((SND_Submit = dlladdr(snd_ref_lib, "SND_Submit")) == 0)
 				Com_Error(ERR_FATAL, "dladdr failed loading SND_Submit\n");
+			if ((SND_Activate = dlladdr(snd_ref_lib, "SND_Activate")) == 0)
+				Com_Error(ERR_FATAL, "dladdr failed loading SND_Activate\n");
 
 			snd_ref_active = qtrue;
 		}
@@ -274,8 +276,6 @@ void S_Init(void)
 		if (*Cvar_VariableString("music"))
 			S_StartOGG();
 	}
-
-	Com_Printf("------------------------------------\n");
 }
 
 
@@ -324,6 +324,7 @@ void S_Shutdown(void)
 		SND_Submit = NULL;
 		SND_GetDMAPos = NULL;
 		SND_BeginPainting = NULL;
+		SND_Activate = NULL;
 #ifdef _WIN32
 		FreeLibrary(snd_ref_lib);
 #else
@@ -1337,4 +1338,12 @@ void S_SoundList_f(void)
 		}
 	}
 	Com_Printf("Total resident: %i\n", total);
+}
+
+/**
+ * @brief
+ */
+void S_Activate(qboolean active)
+{
+	SND_Activate(active);
 }

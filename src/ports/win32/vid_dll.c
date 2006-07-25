@@ -264,16 +264,14 @@ void AppActivate(BOOL fActive, BOOL minimize)
 	if (!ActiveApp) {
 		IN_Activate (qfalse);
 		CDAudio_Activate (qfalse);
-		/* FIXME: Reactivate me */
-/*		S_Activate (qfalse);*/
+		S_Activate (qfalse);
 
 		if ( win_noalttab->value )
 			WIN_EnableAltTab();
 	} else {
 		IN_Activate (qtrue);
 		CDAudio_Activate (qtrue);
-		/* FIXME: Reactivate me */
-/*		S_Activate (qtrue);*/
+		S_Activate (qtrue);
 		if ( win_noalttab->value )
 			WIN_DisableAltTab();
 	}

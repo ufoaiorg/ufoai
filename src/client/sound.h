@@ -22,7 +22,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -39,6 +39,7 @@ struct sfx_s;
 
 void S_Init(void);
 void S_Shutdown(void);
+void S_Activate(qboolean active);
 
 /* if origin is NULL, the sound will be dynamically sourced from the entity */
 void S_StartSound(vec3_t origin, int entnum, int entchannel, struct sfx_s *sfx, float fvol, float attenuation, float timeofs);
