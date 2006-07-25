@@ -30,52 +30,20 @@ Boston, MA  02111-1307, USA
 
 #include "snd_sdl.h"
 
-static int  snd_inited;
+static int snd_inited;
 
 static struct sndinfo *si;
 
 /**
  * @brief
  */
-static void paint_audio (void *unused, Uint8 * stream, int len)
-{
-	int pos;
-	int tobufend;
-	int len1;
-	int len2;
-	if (si->dma) {
-		pos = (si->dma->dmapos * (si->dma->samplebits/8));
-		if (pos >= si->dma->dmasize)
-			si->dma->dmapos = pos = 0;
+void paint_audio(void *unused, Uint8 *stream, int len){
+	if(!si)
+		return;
 
-#if 0
-		si->dma->buffer = stream;
-		si->dma->samplepos += len / (si->dma->samplebits / 4);
-
-		/* Check for samplepos overflow? */
-		S_PaintChannels (si->dma->samplepos);
-#else
-		/* bytes to buffer's end. */
-		tobufend = si->dma->dmasize - pos;
-		len1 = len;
-		len2 = 0;
-
-		if (len1 > tobufend) {
-			len1 = tobufend;
-			len2 = len - len1;
-		}
-		memcpy(stream, si->dma->buffer + pos, len1);
-		if (len2 <= 0)
-			si->dma->dmapos += (len1 / (si->dma->samplebits/8));
-		else {
-			/* wraparound? */
-			memcpy(stream+len1, si->dma->buffer, len2);
-			si->dma->dmapos = (len2 / (si->dma->samplebits/8));
-		}
-#endif
-		if (si->dma->dmapos >= si->dma->dmasize)
-			si->dma->dmapos = 0;
-	}
+	si->dma->buffer = stream;
+	si->dma->samplepos += len /(si->dma->samplebits / 4);
+	si->S_PaintChannels(si->dma->samplepos);
 }
 
 /**
@@ -84,10 +52,10 @@ static void paint_audio (void *unused, Uint8 * stream, int len)
 qboolean SND_Init (struct sndinfo *s)
 {
 	SDL_AudioSpec desired, obtained;
-	int desired_bits, freq;
+	int desired_bits;
 	char drivername[128];
 
-	if (snd_inited)
+	if (si)
 		return qtrue;
 
 	si = s;
@@ -103,7 +71,7 @@ qboolean SND_Init (struct sndinfo *s)
 		}
 
 	if (SDL_AudioDriverName(drivername, sizeof (drivername)) == NULL)
-		strcpy(drivername, "(UNKNOWN)");
+		Q_strncpyz(drivername, "(UNKNOWN)", sizeof(drivername));
 	si->Com_Printf("SDL audio driver is \"%s\".\n", drivername);
 
 	memset(&desired, '\0', sizeof (desired));
@@ -112,28 +80,25 @@ qboolean SND_Init (struct sndinfo *s)
 	desired_bits = si->bits->value;
 
 	/* Set up the desired format */
-	freq = si->s_khz->value;
-	switch (freq) {
-	case 44:
-		desired.freq = 44100;
-		desired.samples = 1024;
-		break;
-	case 22:
-		desired.freq = 22050;
-		desired.samples = 512;
-		break;
-	default:
-		desired.freq = 11025;
-		desired.samples = 256;
-		break;
-	}
+	desired.freq = *si->speed->string ?  /* casting the float is problematic */
+			atoi(si->speed->string) : 48000;
 
-	switch (desired_bits) {
+	if (desired.freq == 48000 || desired.freq == 44100)
+		desired.samples = 4096;  /* set buffer based on rate */
+	else if (desired.freq == 22050)
+		desired.samples = 2048;
+	else
+		desired.samples = 1024;
+
+	desired.callback = paint_audio;
+
+	desired_bits = si->bits->value;
+	switch(desired_bits){
 	case 8:
 		desired.format = AUDIO_U8;
 		break;
 	case 16:
-		if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+		if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
 			desired.format = AUDIO_S16MSB;
 		else
 			desired.format = AUDIO_S16LSB;
@@ -142,8 +107,12 @@ qboolean SND_Init (struct sndinfo *s)
 		si->Com_Printf("Unknown number of audio bits: %d\n", desired_bits);
 		return qfalse;
 	}
+
 	desired.channels = si->channels->value;
-	desired.callback = paint_audio;
+	if(desired.channels < 1)
+		desired.channels = 1;
+	else if(desired.channels > 2)
+		desired.channels = 2;
 
 	si->Com_Printf ("Bits: %i\n", desired_bits );
 	si->Com_Printf ("Frequency: %i\n", desired.freq );
@@ -164,11 +133,8 @@ qboolean SND_Init (struct sndinfo *s)
 		break;
 	case AUDIO_S16LSB:
 	case AUDIO_S16MSB:
-		if (((obtained.format == AUDIO_S16LSB) &&
-				(SDL_BYTEORDER == SDL_LIL_ENDIAN)) ||
-			((obtained.format == AUDIO_S16MSB) &&
-				(SDL_BYTEORDER == SDL_BIG_ENDIAN)))
-		{
+		if (((obtained.format == AUDIO_S16LSB) && (SDL_BYTEORDER == SDL_LIL_ENDIAN)) ||
+			((obtained.format == AUDIO_S16MSB) && (SDL_BYTEORDER == SDL_BIG_ENDIAN))) {
 			/* Supported */
 			break;
 		}
@@ -216,7 +182,6 @@ void SND_Shutdown (void)
 		SDL_PauseAudio(1);
 		SDL_CloseAudio ();
 		snd_inited = 0;
-		free(si->dma->buffer);
 		si->dma->buffer = NULL;
 		si->dma->samplepos = 0;
 	}

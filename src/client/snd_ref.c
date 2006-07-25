@@ -1295,10 +1295,10 @@ void S_Play(void)
 	i = 1;
 	while (i < Cmd_Argc()) {
 		if (!strrchr(Cmd_Argv(i), '.')) {
-			Q_strncpyz(name, Cmd_Argv(i), 256);
+			Q_strncpyz(name, Cmd_Argv(i), sizeof(name));
 			Q_strcat(name, ".wav", sizeof(name));
 		} else
-			Q_strncpyz(name, Cmd_Argv(i), 256);
+			Q_strncpyz(name, Cmd_Argv(i), sizeof(name));
 		sfx = S_RegisterSound(name);
 		S_StartSound(NULL, cl.pnum, 0, sfx, 1.0, 1.0, 0);
 		i++;
