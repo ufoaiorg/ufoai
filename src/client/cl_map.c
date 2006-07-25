@@ -165,14 +165,14 @@ static void MAP_MultiSelectExecuteAction_f(void)
 			gd.mapAction = MA_INTERCEPT;
 		}
 		break;
-		
+
 	case MULTISELECT_TYPE_AIRCRAFT: /* Selection of an aircraft */
 		air = CL_AircraftGetFromIdx(id);
 		if (air == NULL) {
 			Com_DPrintf("MAP_MultiSelectExecuteAction: selection of an unknow aircraft idx %i\n", id);
 			return;
 		}
-		
+
 		if (air == selectedAircraft) {
 			/* Selection of an already selected aircraft */
 			CL_DisplayPopupAircraft(air);	/* Display popup_aircraft */
@@ -203,7 +203,7 @@ extern void MAP_3DMapClick(const menuNode_t* node, int x, int y)
  */
 extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 {
-	aircraft_t *air;
+	aircraft_t *air = NULL;
 	actMis_t *ms;
 	int i;
 	vec2_t pos;
@@ -246,7 +246,7 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 	for (i = 0; i < gd.numBases && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++) {
 		if (MAP_IsMapPositionSelected(node, gd.bases[i].pos, x, y))
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, i, _("Base"), gd.bases[i].name);
-		
+
 		/* Get selected aircrafts wich belong to the base */
 		for (air = gd.bases[i].aircraft + gd.bases[i].numAircraftInBase - 1;
 		air >= gd.bases[i].aircraft ; air--)
@@ -297,7 +297,7 @@ static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, in
 		if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION
 		&& y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
 			return qtrue;
-		
+
 	return qfalse;
 }
 
@@ -481,7 +481,7 @@ static void MAP_MapDrawLine(const menuNode_t* node, const mapline_t* line)
 }
 
 /*
- * @brief 
+ * @brief
  */
 static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float longitude)
 {
@@ -587,7 +587,7 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
  						memcpy(path.p + 1, air->route.p + air->point + 1, (path.n - 1) * sizeof(vec2_t));
 						MAP_MapDrawLine(node, &path);
 					}
-					
+
 					if (air == selectedAircraft)
 						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 				}
@@ -652,11 +652,11 @@ extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
 		menuText[TEXT_STANDARD] = _("UFO in radar range\n");
 		return;
 	}
-	
+
 	/* Nothing is displayed yet */
 	if (selMis)
 		menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s\n"), selMis->def->location, selMis->def->type, selMis->def->text);
-	else if (selectedAircraft) {		
+	else if (selectedAircraft) {
 		Com_sprintf(text_standard, sizeof(text_standard), va(_("Name:\t%s (%i/%i)\n"), selectedAircraft->name, *selectedAircraft->teamSize, selectedAircraft->size));
 		Q_strcat(text_standard, va(_("Status:\t%s\n"), CL_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
 		Q_strcat(text_standard, va(_("Speed:\t%.0f\n"), selectedAircraft->speed), sizeof(text_standard));
@@ -689,15 +689,15 @@ extern void MAP_SelectAircraft(aircraft_t* aircraft) {
 }
 
 /**
-  * @brief 
+  * @brief
   */
 extern void MAP_Reset(void)
 {
 	MAP_ResetAction();
 
 	cl_showCoords = Cvar_Get("cl_showcoords", "0", CVAR_ARCHIVE);
-	
+
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f);
-	
+
 	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f);
 }

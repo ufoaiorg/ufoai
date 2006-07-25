@@ -438,7 +438,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 	byte equip[MAX_OBJDEFS];
 	int i, j, numPoints, team;
 	int ammo, num;
-	item_t item;
+	item_t item = {0,0,0};
 	char *ref;
 
 	/* search spawn points */

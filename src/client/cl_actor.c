@@ -457,6 +457,15 @@ void CL_ActorUpdateCVars(void)
 			}
 		}
 		menuText[TEXT_STANDARD] = infoText;
+	/* this will stop the drawing of the bars over the hole screen when we test maps */
+	} else if (!cl.numTeamList) {
+		Cvar_SetValue("mn_tu", 0);
+		Cvar_SetValue("mn_tumax", 100);
+		Cvar_SetValue("mn_morale", 0);
+		Cvar_SetValue("mn_moralemax", 100);
+		Cvar_SetValue("mn_hp", 0);
+		Cvar_SetValue("mn_hpmax", 100);
+		Cvar_SetValue("mn_stun", 0);
 	}
 
 	/* mode */

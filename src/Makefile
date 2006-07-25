@@ -185,7 +185,7 @@ ifeq ($(ARCH),sparc)
 endif
 
 ifeq ($(ARCH),i386)
-	RELEASE_CFLAGS=$(BASE_CFLAGS) -O3 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing -DNDEBUG
+	RELEASE_CFLAGS=$(BASE_CFLAGS) -O2 -ffast-math -funroll-loops -falign-loops=2 -falign-jumps=2 -falign-functions=2 -fno-strict-aliasing -DNDEBUG
 endif
 
 ifeq ($(ARCH),x86_64)

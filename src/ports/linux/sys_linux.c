@@ -101,21 +101,21 @@ char *Sys_BinName( const char *arg0 )
 	Com_sprintf(dst, MAX_OSPATH, (char*)arg0);
 
 #ifndef DEBUG
-	while( ( n = readlink(dst, src, MAX_OSPATH) ) >= 0 ) {
+	while((n = readlink(dst, src, MAX_OSPATH)) >= 0) {
 		src[n] = '\0';
-		Com_sprintf( dir, MAX_OSPATH, dirname( dst ));
-		Com_sprintf( dst, MAX_OSPATH, dir);
-		Q_strcat( dst, MAX_OSPATH, "/" );
-		Q_strcat( dst, MAX_OSPATH, src );
+		Com_sprintf(dir, MAX_OSPATH, dirname(dst));
+		Com_sprintf(dst, MAX_OSPATH, dir);
+		Q_strcat(dst, "/", MAX_OSPATH);
+		Q_strcat(dst, src, MAX_OSPATH);
 		links = qtrue;
 	}
 
-	if ( links ) {
+	if (links) {
 		Com_sprintf( dst, MAX_OSPATH, Sys_Cwd());
-		Q_strcat( dst, MAX_OSPATH, "/" );
-		Q_strcat( dst, MAX_OSPATH, dir );
-		Q_strcat( dst, MAX_OSPATH, "/" );
-		Q_strcat( dst, MAX_OSPATH, src );
+		Q_strcat(dst, "/", MAX_OSPATH);
+		Q_strcat(dst, dir, MAX_OSPATH);
+		Q_strcat(dst, "/", MAX_OSPATH);
+		Q_strcat(dst, src, MAX_OSPATH);
 	}
 #endif
 	return dst;

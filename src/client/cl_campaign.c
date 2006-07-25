@@ -1676,7 +1676,7 @@ static void CL_GameGo(void)
 		MN_Popup(_("Note"), _("Assemble or load a team"));
 		return;
 	} else if ((!mis->active || (gd.interceptAircraft >= 0 && !baseCurrent->numOnTeam[gd.interceptAircraft]))
-			   && ccs.singleplayer)
+		&& ccs.singleplayer)
 		/* dropship not near landingzone */
 		return;
 
