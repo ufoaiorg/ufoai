@@ -77,6 +77,8 @@ typedef struct aircraft_s {
 
 	int numUpgrades;
 	struct aircraft_s *next;	/* just for linking purposes - not needed in general */
+	
+	int mission;			/* The mission the aircraft is moving to (id in ccs) */
 } aircraft_t;
 
 extern aircraft_t aircraft[MAX_AIRCRAFT];
@@ -98,5 +100,8 @@ void CL_AircraftEquipmenuMenuShieldsClick_f(void);
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *CL_GetAircraft(char *name);
 void CL_CheckAircraft(aircraft_t * air);
+extern aircraft_t* CL_AircraftGetFromIdx(int idx);
+extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
+extern void CL_PopupAircraftClick_f(void);
 
 #endif

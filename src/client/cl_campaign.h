@@ -150,9 +150,6 @@ typedef struct nation_s {
 
 #define MAX_NATIONS 8
 
-void MN_MapCalcLine(vec2_t start, vec2_t end, mapline_t * line);
-void CL_MapActionReset(void);
-
 typedef struct ccs_s {
 	equipDef_t eCampaign, eMission, eMarket;
 
@@ -188,6 +185,7 @@ typedef enum aircraftStatus_s {
 	AIR_HOME,					/* in homebase */
 	AIR_IDLE,					/* just sit there on geoscape */
 	AIR_TRANSIT,				/* moving */
+	AIR_MISSION,				/* moving to a mission */
 	AIR_DROP,					/* ready to drop down */
 	AIR_INTERCEPT,				/* ready to intercept */
 	AIR_TRANSPORT,				/* transporting from one base to another */

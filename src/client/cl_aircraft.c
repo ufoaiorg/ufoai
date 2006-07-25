@@ -29,6 +29,115 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 aircraft_t aircraft[MAX_AIRCRAFT];
 int numAircraft;
 
+static void CL_AircraftReturnToBase(aircraft_t *air);
+extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, const actMis_t* mission);
+
+/* == POPUP_AIRCRAFT ======================================================= */
+
+#define POPUP_AIRCRAFT_MAX_ITEMS	10		/**< Max items displayed in popup_aircraft */
+#define POPUP_AIRCARFT_MAX_TEXT		2048	/**< Max size of text displayed in popup_aircraft */
+
+/**
+ * Enumerate type of actions available for popup_aircraft
+ */
+typedef enum {
+	POPUP_AIRCRAFT_ACTION_BACKTOBASE = 1,	/**< Aircraft back to base */
+	POPUP_AIRCRAFT_ACTION_STOP = 2,			/**< Aircraft stops */
+	POPUP_AIRCRAFT_ACTION_MOVETOMISSION = 3,/**< Aircraft move to a mission */
+	
+	POPUP_AIRCRAFT_ACTION_MAX
+	
+} popup_aircraft_action_e;
+/**
+ * @brief Structure to store information about popup_aircraft
+ */
+typedef struct popup_aircarft_s {
+	int nbItems;			/**< Count of items displayed in popup_aircraft */
+	int aircraft_idx;		/**< Aircraft linked to popup_aircraft */
+	popup_aircraft_action_e itemsAction[POPUP_AIRCRAFT_MAX_ITEMS];	/**< Action type of items */
+	int itemsId[POPUP_AIRCRAFT_MAX_ITEMS];	/**< IDs corresponding to items */
+	char text_popup[POPUP_AIRCARFT_MAX_TEXT];	/** Text displayed in popup_aircraft */
+	
+} popup_aircraft_t;
+
+popup_aircraft_t popupAircraft; /** Data about popup_aircraft */
+
+/**
+ * @brief Display the popup_aircraft
+ */
+extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft)
+{
+	int i;
+
+	/* Initialise popup_aircraft datas */
+	if (! aircraft)
+		return;
+	popupAircraft.aircraft_idx = aircraft->idx;
+	popupAircraft.nbItems = 0;
+	memset(popupAircraft.text_popup, 0, POPUP_AIRCARFT_MAX_TEXT);
+	menuText[TEXT_POPUP] = popupAircraft.text_popup;
+
+	/* Set static datas in popup_aircraft */
+	popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_BACKTOBASE;
+	Q_strcat(popupAircraft.text_popup, va(_("Back to base\t%s\n"), gd.bases[aircraft->idxBase].name), POPUP_AIRCARFT_MAX_TEXT);
+	popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_STOP;
+	Q_strcat(popupAircraft.text_popup, _("Stop\n"), POPUP_AIRCARFT_MAX_TEXT);
+	
+	/* Set missions in popup_aircraft */
+	if (*aircraft->teamSize > 0) {
+		for (i = 0 ; i < ccs.numMissions ; i++) {
+			popupAircraft.itemsId[popupAircraft.nbItems] = i;
+			popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_MOVETOMISSION;
+			Q_strcat(popupAircraft.text_popup, va(_("Mission\t%s (%s)\n"), _(ccs.mission[i].def->type), _(ccs.mission[i].def->location)), POPUP_AIRCARFT_MAX_TEXT);
+		}
+	}
+	
+	/* Display popup_aircraft menu */
+	MN_PushMenu("popup_aircraft");
+}
+
+/**
+ * @ brief User just select an item in the popup_aircraft
+ */
+extern void CL_PopupAircraftClick_f(void) {
+	int num, id;
+	aircraft_t* aircraft;
+
+	Com_Printf("CL_PopupAircraftClick\n");
+
+	/* Get num of item selected in list */
+	if (Cmd_Argc() < 2)
+		return;
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num > popupAircraft.nbItems++)
+		return;
+	
+	MN_PopMenu(qfalse); /* Close popup */
+	
+	/* Get aircraft associated with the popup_aircraft */
+	aircraft = CL_AircraftGetFromIdx(popupAircraft.aircraft_idx);
+	if (aircraft == NULL)
+		return;
+	
+	/* Execute action corresponding to item selected */
+	switch (popupAircraft.itemsAction[num]) {
+		case POPUP_AIRCRAFT_ACTION_BACKTOBASE:	/* Aircraft back to base */
+			CL_AircraftReturnToBase(aircraft);
+			break;
+		case POPUP_AIRCRAFT_ACTION_STOP:		/* Aircraft stop */
+			aircraft->status = AIR_IDLE;
+			break;
+		case POPUP_AIRCRAFT_ACTION_MOVETOMISSION:	/* Aircraft move to mission */
+			/* Get mission */
+			id = popupAircraft.itemsId[num];
+			if (id >= 0 && id < ccs.numMissions)
+				CL_SendAircraftToMission(aircraft, ccs.mission + id);
+			break;
+		default:
+			Com_Printf("CL_PopupAircraftClick: type of action unknow %i\n", popupAircraft.itemsAction[num]);
+	}
+}
+
 /* =========================================================== */
 #define DISTANCE 1
 
@@ -80,6 +189,8 @@ void CL_AircraftStart_f(void)
 	}
 	MN_AddNewMessage(_("Notice"), _("Aircraft started"), qfalse, MSG_STANDARD, NULL);
 	air->status = AIR_IDLE;
+
+	MAP_SelectAircraft(air);
 }
 
 /**
@@ -121,34 +232,26 @@ char *CL_AircraftStatusToName(aircraft_t * air)
 	switch (air->status) {
 	case AIR_NONE:
 		return _("Nothing - should not be displayed");
-		break;
 	case AIR_HOME:
 		return _("At homebase");
-		break;
 	case AIR_REFUEL:
 		return _("Refuel");
-		break;
 	case AIR_IDLE:
 		return _("Idle");
-		break;
 	case AIR_TRANSIT:
 		return _("On transit");
-		break;
+	case AIR_MISSION:
+		return _("Moving to mission");
 	case AIR_DROP:
 		return _("Ready for drop down");
-		break;
 	case AIR_INTERCEPT:
 		return _("On interception");
-		break;
 	case AIR_TRANSPORT:
 		return _("Transportmission");
-		break;
 	case AIR_RETURNING:
 		return _("Returning to homebase");
-		break;
 	default:
 		Com_Printf("Error: Unknown aircraft status for %s\n", air->name);
-		break;
 	}
 	return NULL;
 }
@@ -201,13 +304,13 @@ void MN_PrevAircraft_f(void)
   * call this from baseview via "aircraft_return"
   * calculates the way back to homebase
   */
-void CL_AircraftReturnToBase(aircraft_t *air)
+static void CL_AircraftReturnToBase(aircraft_t *air)
 {
 	base_t *base;
 
 	if (air && air->status != AIR_HOME) {
 		base = (base_t *) air->homebase;
-		MN_MapCalcLine(air->pos, base->pos, &air->route);
+		MAP_MapCalcLine(air->pos, base->pos, &air->route);
 		air->status = AIR_RETURNING;
 		air->time = 0;
 		air->point = 0;
@@ -342,21 +445,19 @@ void CL_CheckAircraft(aircraft_t * air)
 		CL_AircraftReturnToBase(air);
 	}
 
-	/* no base assigned */
-	if (!air->homebase || !selMis)
-		return;
-
-	mis = selMis;
-	if (abs(mis->def->pos[0] - air->pos[0]) < DISTANCE && abs(mis->def->pos[1] - air->pos[1]) < DISTANCE) {
-		mis->def->active = qtrue;
-		if (air->status != AIR_DROP && air->fuel > 0) {
-			air->status = AIR_DROP;
-			if (gd.interceptAircraft < 0)
-				gd.interceptAircraft = air->idxInBase;
-			MN_PushMenu("popup_intercept_ready");
+	if (air->status == AIR_MISSION && air->mission >= 0 && air->mission < ccs.numMissions) {
+		mis = ccs.mission + air->mission;
+		if (abs(mis->def->pos[0] - air->pos[0]) < DISTANCE && abs(mis->def->pos[1] - air->pos[1]) < DISTANCE) {
+			mis->def->active = qtrue;
+			if (air->status != AIR_DROP && air->fuel > 0) {
+				air->status = AIR_DROP;
+				if (gd.interceptAircraft < 0)
+					gd.interceptAircraft = air->idxInBase;
+				MN_PushMenu("popup_intercept_ready");
+			}
 		}
-	} else {
-		mis->def->active = qfalse;
+		else
+			mis->def->active = qfalse;
 	}
 }
 
@@ -453,7 +554,7 @@ void CL_CampaignRunAircraft(int dt)
 			CP_GetRandomPosForAircraft(pos);
 			air->time = 0;
 			air->point = 0;
-			MN_MapCalcLine(air->pos, pos, &air->route);
+			MAP_MapCalcLine(air->pos, pos, &air->route);
 			Com_DPrintf("New route for ufo %i (%.0f:%.0f) air->pos:(%.0f:%.0f)\n", j, pos[0], pos[1], air->pos[0], air->pos[1]);
 			continue;
 		}
@@ -591,3 +692,46 @@ void CL_AircraftEquipmenuMenuShieldsClick_f(void)
 	menuText[TEXT_STANDARD] = shieldDesc;
 }
 
+/**
+ * @brief Return an aircraft from its idx
+ */
+extern aircraft_t* CL_AircraftGetFromIdx(int idx) {
+	base_t*		base;
+	aircraft_t*	air;
+
+	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
+		for (air = base->aircraft + base->numAircraftInBase - 1; air >= base->aircraft ; air--)
+			if (air->idx == idx)
+				return air;
+	
+	return NULL;
+}
+
+/**
+ * @brief Sends the specified aircraft to specified mission
+ */
+extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, const actMis_t* mission)
+{
+	int i;
+
+	if (! aircraft || ! mission)
+		return qfalse;
+
+	if (! *(aircraft->teamSize)) {
+		MN_Popup(_("Notice"), _("Assign a team to aircraft"));
+		return qfalse;
+	}
+	
+	/* Get id of mission in ccs */
+	for (i=0 ; i < ccs.numMissions ; i++)
+		if (mission == ccs.mission + i) {
+			MAP_MapCalcLine(aircraft->pos, mission->def->pos, &(aircraft->route));
+			aircraft->status = AIR_MISSION;
+			aircraft->time = 0;
+			aircraft->point = 0;
+			aircraft->mission = i;
+			return qtrue;
+		}
+
+	return qfalse;
+}

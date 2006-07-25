@@ -54,6 +54,7 @@ static int maskWidth, maskHeight;
 stats_t stats;
 
 extern cmdList_t game_commands[];
+extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, const actMis_t* mission);
 
 /*
 ============================================================================
@@ -645,7 +646,7 @@ static void CL_OpenAircraft_f(void)
 			baseCurrent->aircraftCurrent = num;
 			CL_AircraftSelect();
 			MN_PopMenu(qfalse);
-			CL_MapActionReset();
+			MAP_ResetAction();
 			Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i\n", baseCurrent->idx));
 			MN_PushMenu("aircraft");
 			return;
@@ -684,18 +685,12 @@ static void CL_SelectAircraft_f(void)
 			gd.interceptAircraft = num;
 			Com_DPrintf("Selected aircraft: %s\n", gd.bases[j].aircraft[gd.interceptAircraft].name);
 
-			if (!*(gd.bases[j].aircraft[gd.interceptAircraft].teamSize)) {
-				MN_Popup(_("Notice"), _("Assign a team to aircraft"));
-				return;
+			if (CL_SendAircraftToMission(gd.bases[j].aircraft + gd.interceptAircraft, selMis)) {
+				baseCurrent = gd.bases[j].aircraft[gd.interceptAircraft].homebase;
+				baseCurrent->aircraftCurrent = num;
+				CL_AircraftSelect();
+				MN_PopMenu(qfalse);
 			}
-			MN_MapCalcLine(gd.bases[j].aircraft[gd.interceptAircraft].pos, selMis->def->pos, &gd.bases[j].aircraft[gd.interceptAircraft].route);
-			gd.bases[j].aircraft[gd.interceptAircraft].status = AIR_TRANSIT;
-			gd.bases[j].aircraft[gd.interceptAircraft].time = 0;
-			gd.bases[j].aircraft[gd.interceptAircraft].point = 0;
-			baseCurrent = gd.bases[j].aircraft[gd.interceptAircraft].homebase;
-			baseCurrent->aircraftCurrent = num;
-			CL_AircraftSelect();
-			MN_PopMenu(qfalse);
 			return;
 		}
 	}
@@ -775,7 +770,7 @@ void CP_NewUfoOnGeoscape(void)
 		ufoOnGeoscape[ccs.numUfoOnGeoscape] = a;
 		a->status = AIR_NONE;
 		Com_DPrintf("New ufo on geoscape: '%s' (%i)\n", a->name, ccs.numUfoOnGeoscape);
-		MN_MapCalcLine(a->pos, pos, &a->route);
+		MAP_MapCalcLine(a->pos, pos, &a->route);
 		ccs.numUfoOnGeoscape++;
 		return;
 	}
@@ -1430,7 +1425,7 @@ int CL_GameLoad(char *filename)
 		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
 
 	/* reset */
-	CL_MapActionReset();
+	MAP_ResetAction();
 
 	memset(&ccs, 0, sizeof(ccs_t));
 
@@ -1834,7 +1829,7 @@ void CL_GameAutoGo(void)
 	else
 		MN_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 
-	CL_MapActionReset();
+	MAP_ResetAction();
 }
 
 /**
@@ -2116,23 +2111,6 @@ void CL_GameResultsCmd(void)
 	/* remove mission from list */
 	CL_CampaignRemoveMission(selMis);
 }
-
-
-/**
-  * @brief
-  */
-void CL_MapActionReset(void)
-{
-	/* don't allow a reset when no base is set up */
-	if (gd.numBases)
-		gd.mapAction = MA_NONE;
-
-	/* FIXME: Don't reset the selMis when we are in tactical mission and enter the geoscape via mn_push map */
-	gd.interceptAircraft = -1;
-	selMis = NULL;				/* reset selected mission */
-}
-
-
 
 /* =========================================================== */
 
@@ -2800,7 +2778,7 @@ cmdList_t game_commands[] = {
 	,
 	{"dec_sensor", B_SetSensor}
 	,
-	{"mn_mapaction_reset", CL_MapActionReset}
+	{"mn_mapaction_reset", MAP_ResetAction}
 	,
 	{"addufo", CP_NewUfoOnGeoscape}
 	,
