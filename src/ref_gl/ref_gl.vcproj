@@ -24,6 +24,7 @@
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="0"
 			BuildLogFile=""
 			>
 			<Tool
@@ -135,6 +136,7 @@
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="0"
 			BuildLogFile=""
 			>
 			<Tool
@@ -245,6 +247,7 @@
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="0"
 			WholeProgramOptimization="1"
 			BuildLogFile=""
 			>
@@ -364,6 +367,7 @@
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="0"
 			WholeProgramOptimization="1"
 			BuildLogFile=""
 			>

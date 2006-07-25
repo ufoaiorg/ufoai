@@ -588,6 +588,14 @@ int SND_GetDMAPos(void)
 }
 
 /**
+ * @brief Reset the sound device for exiting
+ */
+void SND_Shutdown(void)
+{
+	FreeSound();
+}
+
+/**
  * @brief Makes sure si->dma->buffer is valid
  */
 static DWORD locksize;
@@ -687,15 +695,6 @@ void SND_Submit(void)
 		}
 	}
 }
-
-/**
- * @brief Reset the sound device for exiting
- */
-void SND_Shutdown(void)
-{
-	FreeSound();
-}
-
 
 /**
  * @brief Called when the main window gains or loses focus.
