@@ -24,24 +24,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/client.h"
 #include "../../client/snd_loc.h"
 
-qboolean SNDDMA_Init(void)
+qboolean SND_Init(struct sndinfo *s)
 {
 	return qfalse;
 }
 
-int SNDDMA_GetDMAPos(void)
+int SND_GetDMAPos(void)
 {
 	return 0;
 }
 
-void SNDDMA_Shutdown(void)
+void SND_Shutdown(void)
 {
 }
 
-void SNDDMA_BeginPainting (void)
+void SND_BeginPainting (void)
 {
 }
 
-void SNDDMA_Submit(void)
+void SND_Submit(void)
 {
 }

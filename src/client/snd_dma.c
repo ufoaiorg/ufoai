@@ -3,6 +3,8 @@
  * @brief Main control for any streaming sound output device.
  */
 
+/* TODO: Implement snd_ref */
+
 /*
 All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
 
@@ -33,6 +35,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "snd_loc.h"
+
+#ifdef _WIN32
+#define dlladdr (void*)GetProcAddress
+#include <windows.h>
+#else
+#define dlladdr dlsym
+#include <dlfcn.h>
+#endif
 
 void S_Play(void);
 void S_SoundList(void);
@@ -99,11 +109,20 @@ cvar_t *s_primary;
 cvar_t *ov_volume;
 cvar_t *ov_loop;
 
+cvar_t *snd_ref;
+qboolean snd_ref_active;
 
 int s_rawend;
 portable_samplepair_t s_rawsamples[MAX_RAW_SAMPLES];
 
 struct sndinfo si;
+static void* snd_ref_lib = NULL;
+
+qboolean (*SND_Init)(struct sndinfo* si);
+int (*SND_GetDMAPos)(void);
+void (*SND_Shutdown)(void);
+void (*SND_BeginPainting)(void);
+void (*SND_Submit)(void);
 
 /* ==================================================================== */
 /* User-setable variables */
@@ -151,11 +170,10 @@ void S_ModifyKhz_f(void)
 		Cbuf_AddText("snd_restart\n");
 }
 
-/*
-================
-S_Init
-================
-*/
+/**
+ * @brief
+ * @sa S_Shutdown
+ */
 void S_Init(void)
 {
 	cvar_t *cv;
@@ -163,6 +181,7 @@ void S_Init(void)
 	Com_Printf("\n------- sound initialization -------\n");
 
 	cv = Cvar_Get("s_initsound", "1", 0);
+
 	if (!cv->value)
 		Com_Printf("not initializing.\n");
 	else {
@@ -178,17 +197,53 @@ void S_Init(void)
 		ov_volume = Cvar_Get("ov_volume", "0.5", CVAR_ARCHIVE);
 		ov_loop = Cvar_Get("ov_loop", "1", 0);
 
+		{
+			char fn[MAX_QPATH];
+			snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE);
+			/* don't restart right again */
+			snd_ref->modified = qfalse;
+
+			Com_Printf("Loading snd_%s sound driver\n", snd_ref->string);
+#ifdef _WIN32
+			Com_sprintf(fn, sizeof(fn), "snd_%s.dll", snd_ref->string);
+			if ((snd_ref_lib = LoadLibrary()) == 0) {
+				Com_Printf("Load library failed - no sound available\n");
+				return;
+#else
+			Com_sprintf(fn, sizeof(fn), "./snd_%s.so", snd_ref->string);
+			if ((snd_ref_lib = dlopen(fn, RTLD_LAZY)) == 0) {
+				Com_Printf("Load library failed: %s\n", dlerror());
+				return;
+#endif
+			}
+
+			if ((SND_Init = dlladdr(snd_ref_lib, "SND_Init")) == 0)
+				Com_Error(ERR_FATAL, "dladdr failed loading SND_Init\n");
+			if ((SND_Shutdown = dlladdr(snd_ref_lib, "SND_Shutdown")) == 0)
+				Com_Error(ERR_FATAL, "dladdr failed loading SND_Shutdown\n");
+			if ((SND_GetDMAPos = dlladdr(snd_ref_lib, "SND_GetDMAPos")) == 0)
+				Com_Error(ERR_FATAL, "dladdr failed loading SND_GetDMAPos\n");
+			if ((SND_BeginPainting = dlladdr(snd_ref_lib, "SND_BeginPainting")) == 0)
+				Com_Error(ERR_FATAL, "dladdr failed loading SND_BeginPainting\n");
+			if ((SND_Submit = dlladdr(snd_ref_lib, "SND_Submit")) == 0)
+				Com_Error(ERR_FATAL, "dladdr failed loading SND_Submit\n");
+
+			snd_ref_active = qtrue;
+		}
+
 		si.dma = &dma;
 		si.bits = Cvar_Get("sndbits", "16", CVAR_ARCHIVE);
-		si.speed = Cvar_Get("sndspeed", "0", CVAR_ARCHIVE);
+		si.speed = Cvar_Get("sndspeed", "44100", CVAR_ARCHIVE);
 		si.channels = Cvar_Get("sndchannels", "2", CVAR_ARCHIVE);
-		si.device = Cvar_Get("snddevice", "/dev/dsp", CVAR_ARCHIVE);
+		si.device = Cvar_Get("snddevice", "default", CVAR_ARCHIVE);
 		si.s_khz = Cvar_Get("s_khz", "0", CVAR_ARCHIVE);
 		si.Com_Printf = Com_Printf;
 		si.S_PaintChannels = S_PaintChannels;
 
-		if (!SNDDMA_Init(&si))
+		if (!SND_Init(&si)) {
+			Com_Printf("SND_Init failed\n");
 			return;
+		}
 
 		Cmd_AddCommand("play", S_Play);
 		Cmd_AddCommand("stopsound", S_StopAllSounds);
@@ -227,6 +282,10 @@ void S_Init(void)
 /* Shutdown sound engine */
 /* ======================================================================= */
 
+/**
+ * @brief
+ * @sa S_Init
+ */
 void S_Shutdown(void)
 {
 	int i;
@@ -235,7 +294,7 @@ void S_Shutdown(void)
 	if (!sound_started)
 		return;
 
-	SNDDMA_Shutdown();
+	SND_Shutdown();
 	OGG_Stop();
 
 	sound_started = 0;
@@ -256,6 +315,23 @@ void S_Shutdown(void)
 		if (sfx->cache)
 			Z_Free(sfx->cache);
 		memset(sfx, 0, sizeof(*sfx));
+	}
+
+	if (snd_ref_lib) {
+		SND_Init = NULL;
+		SND_Shutdown = NULL;
+		SND_Submit = NULL;
+		SND_GetDMAPos = NULL;
+		SND_BeginPainting = NULL;
+#ifdef _WIN32
+		FreeLibrary(snd_ref_lib);
+#else
+		dlclose(snd_ref_lib);
+#endif
+		memset(&si, 0, sizeof(struct sndinfo));
+		snd_ref_lib = NULL;
+		snd_ref_active = qfalse;
+		memset(&dma, 0, sizeof(dma_t));
 	}
 
 	num_sfx = 0;
@@ -753,10 +829,10 @@ void S_ClearBuffer(void)
 	else
 		clear = 0;
 
-	SNDDMA_BeginPainting();
+	SND_BeginPainting();
 	if (dma.buffer)
 		memset(dma.buffer, clear, dma.samples * dma.samplebits / 8);
-	SNDDMA_Submit();
+	SND_Submit();
 }
 
 /*
@@ -995,12 +1071,11 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	if (s_volume->modified)
 		S_InitScaletable();
 
-#ifdef __linux__
-	if (s_system->modified) {
-		s_system->modified = qfalse;
+	if (snd_ref->modified) {
+		snd_ref->modified = qfalse;
 		CL_Snd_Restart_f();
 	}
-#endif
+
 	VectorCopy(origin, listener_origin);
 	VectorCopy(forward, listener_forward);
 	VectorCopy(right, listener_right);
@@ -1061,7 +1136,7 @@ void GetSoundtime(void)
 
 	/* it is possible to miscount buffers if it has wrapped twice between */
 	/* calls to S_Update.  Oh well. */
-	samplepos = SNDDMA_GetDMAPos();
+	samplepos = SND_GetDMAPos();
 
 	if (samplepos < oldsamplepos) {
 		buffers++;				/* buffer wrapped */
@@ -1086,7 +1161,7 @@ void S_Update_(void)
 	if (!sound_started)
 		return;
 
-	SNDDMA_BeginPainting();
+	SND_BeginPainting();
 
 	if (!dma.buffer)
 		return;
@@ -1113,7 +1188,7 @@ void S_Update_(void)
 
 	S_PaintChannels(endtime);
 
-	SNDDMA_Submit();
+	SND_Submit();
 }
 
 /*

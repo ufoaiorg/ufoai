@@ -16,6 +16,7 @@ BUILD_SDLUFO=YES	# use SDL for cdrom, sound and maybe renderer (selectable)
 BUILD_GLX=YES		# X11 GLX driver
 BUILD_DEDICATED=YES	# build a dedicated ufo server
 BUILD_ALSA=YES		# build with alsa-support
+BUILD_OSS=YES		# build with oss-support
 BUILD_WITH_SHADER=NO	# build with shader support
 HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
@@ -110,7 +111,8 @@ ifeq ($(OSTYPE),Darwin)
 	BUILD_SDLUFO=NO	# use SDL for cdrom, sound and maybe renderer (selectable)
 	BUILD_GLX=NO		# X11 GLX driver
 	BUILD_DEDICATED=YES	# build a dedicated ufo server
-	BUILD_ALSA=NO		# build with alsa-support
+	BUILD_ALSA=YES		# build with alsa-support
+	BUILD_OSS=YES		# build with oss-support
 	BUILD_WITH_SHADER=NO	# build with shader support
 	HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 	HAVE_GETTEXT=YES	# Compile with multilanguage-support?
@@ -241,6 +243,7 @@ DO_JPEG_CC=echo " * [JPG] $@"; $(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -o $@ -c $<
 DO_O_CC=echo " * [OPT] $@"; $(CC) $(CFLAGS) -O -o $@ -c $<
 DO_SHLIB_CC=echo " * [LIB] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -o $@ -c $<
 DO_GL_SHLIB_CC=echo " * [REF] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) $(GLXCFLAGS) -o $@ -c $<
+DO_SND_SHLIB_CC=echo " * [SND] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -o $@ -c $<
 DO_AS=echo " * [AS.] $@"; $(CC) $(CFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
 DO_SHLIB_AS=echo " * [ASL] $@"; $(CC) $(CFLAGS) $(SHLIBCFLAGS) -DELF -x assembler-with-cpp -o $@ -c $<
 
@@ -261,6 +264,18 @@ TARGETS=$(BUILDDIR)/ufo $(BUILDDIR)/game.$(SHLIBEXT)
 
 ifeq ($(strip $(BUILD_DEDICATED)),YES)
 	TARGETS += $(BUILDDIR)/ufoded
+endif
+
+ifeq ($(strip $(BUILD_ALSA)),YES)
+	TARGETS += $(BUILDDIR)/snd_alsa.$(SHLIBEXT)
+endif
+
+ifeq ($(strip $(BUILD_OSS)),YES)
+	TARGETS += $(BUILDDIR)/snd_oss.$(SHLIBEXT)
+endif
+
+ifeq ($(strip $(BUILD_SDLUFO)),YES)
+	TARGETS += $(BUILDDIR)/snd_sdl.$(SHLIBEXT)
 endif
 
 ifeq ($(ARCH),axp)
@@ -331,22 +346,28 @@ deb:
 	debuild binary
 
 links:
-	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so ../ufoded
+	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT)
 	ln -s src/$(BUILD_DEBUG_DIR)/ufoded ../ufoded
 	ln -s src/$(BUILD_DEBUG_DIR)/ufo ../ufo
 	ln -s src/$(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
-	ln -s src/$(BUILD_DEBUG_DIR)/ref_sdl.so ../ref_sdl.so
-	ln -s src/$(BUILD_DEBUG_DIR)/ref_glx.so ../ref_glx.so
-	ln -s ../src/$(BUILD_DEBUG_DIR)/game.so ../base/game.so
+	ln -s src/$(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT)
+	ln -s src/$(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT) ../ref_glx.$(SHLIBEXT)
+	ln -s src/$(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT)
+	ln -s src/$(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT) ../snd_sdl.$(SHLIBEXT)
+	ln -s src/$(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT)
+	ln -s ../src/$(BUILD_DEBUG_DIR)/game.$(SHLIBEXT) ../base/game.$(SHLIBEXT)
 
 copy_debug:
-	@rm -f ../ufo ../ufo2map ../ref_glx.so ../ref_sdl.so ../base/game.so ../ufoded
+	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT)
 	cp $(BUILD_DEBUG_DIR)/ufoded ../ufoded
 	cp $(BUILD_DEBUG_DIR)/ufo ../ufo
 	cp $(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
-	cp $(BUILD_DEBUG_DIR)/ref_sdl.so ../ref_sdl.so
-	cp $(BUILD_DEBUG_DIR)/ref_glx.so ../ref_glx.so
-	cp $(BUILD_DEBUG_DIR)/game.so ../base/game.so
+	cp $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT)
+	cp $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT) ../ref_glx.$(SHLIBEXT)
+	cp $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT)
+	cp $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT) ../snd_sdl.$(SHLIBEXT)
+	cp $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT)
+	cp $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT) ../base/game.$(SHLIBEXT)
 
 release: build_release
 
@@ -635,9 +656,7 @@ ifeq ($(OSTYPE),Linux)
 	$(BUILDDIR)/client/vid_so.o \
 	$(BUILDDIR)/client/sys_linux.o \
 	$(BUILDDIR)/client/glob.o \
-	$(BUILDDIR)/client/$(NET_UDP).o \
-	$(BUILDDIR)/client/snd_linux.o \
-	$(BUILDDIR)/client/snd_oss.o
+	$(BUILDDIR)/client/$(NET_UDP).o
 endif
 
 ifeq ($(OSTYPE),Darwin)
@@ -653,7 +672,7 @@ ifeq ($(OSTYPE),Darwin)
 endif
 
 ifeq ($(strip $(BUILD_SDLUFO)),YES)
-	QUAKE2_OBJS+=$(BUILDDIR)/client/snd_sdl.o $(BUILDDIR)/client/cd_sdl.o
+	QUAKE2_OBJS+=$(BUILDDIR)/client/cd_sdl.o
 else
 	ifeq ($(OSTYPE),Linux)
 		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_linux.o
@@ -661,10 +680,6 @@ else
 	ifeq ($(OSTYPE),Darwin)
 		QUAKE2_OBJS+=$(BUILDDIR)/client/cd_osx.o
 	endif
-endif
-
-ifeq ($(strip $(BUILD_ALSA)),YES)
-	QUAKE2_OBJS+=$(BUILDDIR)/client/snd_alsa.o
 endif
 
 $(BUILDDIR)/ufo : $(QUAKE2_OBJS) $(QUAKE2_LNX_OBJS)
@@ -746,9 +761,6 @@ $(BUILDDIR)/client/snd_mem.o :     $(CLIENT_DIR)/snd_mem.c
 $(BUILDDIR)/client/snd_mix.o :     $(CLIENT_DIR)/snd_mix.c
 	$(DO_CC)
 
-$(BUILDDIR)/client/snd_alsa.o :     $(LINUX_DIR)/snd_alsa.c
-	$(DO_CC)
-
 $(BUILDDIR)/client/cmd.o :         $(COMMON_DIR)/cmd.c
 	$(DO_CC)
 
@@ -806,15 +818,6 @@ $(BUILDDIR)/client/q_shlinux.o :   $(LINUX_DIR)/q_shlinux.c
 $(BUILDDIR)/client/vid_so.o :      $(LINUX_DIR)/vid_so.c
 	$(DO_CC)
 
-$(BUILDDIR)/client/snd_linux.o :   $(LINUX_DIR)/snd_linux.c
-	$(DO_CC)
-
-$(BUILDDIR)/client/snd_oss.o :   $(LINUX_DIR)/snd_oss.c
-	$(DO_CC)
-
-#$(BUILDDIR)/client/snd_mixa.o :    $(LINUX_DIR)/snd_mixa.s
-#	$(DO_AS)
-
 $(BUILDDIR)/client/sys_linux.o :   $(LINUX_DIR)/sys_linux.c
 	$(DO_CC)
 
@@ -831,9 +834,6 @@ $(BUILDDIR)/client/net_udp6.o :    $(UNIX_DIR)/net_udp6.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cd_sdl.o :     $(LINUX_DIR)/cd_sdl.c
-	$(DO_CC)
-
-$(BUILDDIR)/client/snd_sdl.o :     $(LINUX_DIR)/snd_sdl.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cd_osx.o :    $(MACOSX_DIR)/cd_osx.m
@@ -1140,6 +1140,38 @@ $(BUILDDIR)/ref_gl/gl_sdl.o :         $(LINUX_DIR)/gl_sdl.c
 $(BUILDDIR)/ps2/gl_ps2mesa.o :        $(LINUX_DIR)/gl_ps2mesa.c
 	$(DO_GL_SHLIB_CC)
 
+
+#############################################################################
+# MISC
+#############################################################################
+
+SND_SDL_OBJS = $(BUILDDIR)/client/snd_sdl.o
+
+SND_ALSA_OBJS = $(BUILDDIR)/client/snd_alsa.o
+
+SND_OSS_OBJS = $(BUILDDIR)/client/snd_oss.o
+
+$(BUILDDIR)/client/snd_oss.o :   $(LINUX_DIR)/snd_oss.c
+	$(DO_SND_SHLIB_CC)
+
+$(BUILDDIR)/client/snd_sdl.o :     $(LINUX_DIR)/snd_sdl.c
+	$(DO_SND_SHLIB_CC)
+
+$(BUILDDIR)/client/snd_alsa.o :     $(LINUX_DIR)/snd_alsa.c
+	$(DO_SND_SHLIB_CC)
+
+$(BUILDDIR)/snd_oss.$(SHLIBEXT) : $(SND_OSS_OBJS)
+	@echo " * [OSS] ...linking";
+	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(SND_OSS_OBJS)
+
+$(BUILDDIR)/snd_alsa.$(SHLIBEXT) : $(SND_ALSA_OBJS)
+	@echo " * [ALS] ...linking";
+	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(SND_ALSA_OBJS)
+
+$(BUILDDIR)/snd_sdl.$(SHLIBEXT) : $(SND_SDL_OBJS)
+	@echo " * [SDL] ...linking";
+	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(SND_SDL_OBJS)
+
 #############################################################################
 # MISC
 #############################################################################
@@ -1154,8 +1186,14 @@ cleanrenderer2:
 	$(REF_GL_OBJS) \
 	$(REF_GLX_OBJS) \
 	$(REF_SDL_OBJS) \
+	$(SND_SDL_OBJS) \
+	$(SND_OSS_OBJS) \
+	$(SND_ALSA_OBJS) \
 	$(BUILDDIR)/ref_sdl.$(SHLIBEXT) \
-	$(BUILDDIR)/ref_glx.$(SHLIBEXT)
+	$(BUILDDIR)/ref_glx.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_sdl.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_oss.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_alsa.$(SHLIBEXT)
 
 clean-debug:
 	$(MAKE) clean2 BUILDDIR=$(BUILD_DEBUG_DIR)
@@ -1173,10 +1211,16 @@ clean2:
 	$(REF_GLX_OBJS) \
 	$(REF_SDL_OBJS) \
 	$(Q2DED_OBJS) \
+	$(SND_SDL_OBJS) \
+	$(SND_OSS_OBJS) \
+	$(SND_ALSA_OBJS) \
 	$(BUILDDIR)/ufo \
 	$(BUILDDIR)/game.$(SHLIBEXT) \
 	$(BUILDDIR)/ref_sdl.$(SHLIBEXT) \
 	$(BUILDDIR)/ref_glx.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_sdl.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_oss.$(SHLIBEXT) \
+	$(BUILDDIR)/snd_alsa.$(SHLIBEXT) \
 	$(BUILDDIR)/ufoded
 
 distclean:

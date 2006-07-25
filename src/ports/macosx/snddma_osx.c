@@ -44,7 +44,7 @@ typedef unsigned int			UInt;
 
 #pragma mark =Variables=
 
-cvar_t *s_system;
+cvar_t *snd_ref;
 
 AudioDeviceID 				gSNDDMASoundDeviceID;
 

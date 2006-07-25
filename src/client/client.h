@@ -321,10 +321,7 @@ extern cvar_t *mn_sequence;
 extern cvar_t *mn_hud;
 extern cvar_t *mn_lastsave;
 
-/*the new soundsystem cvar 0-3 by now */
-#ifndef _WIN32
-extern cvar_t *s_system;
-#endif /* _WIN32 */
+extern cvar_t *snd_ref;
 
 extern cvar_t *confirm_actions;
 
