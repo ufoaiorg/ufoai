@@ -59,6 +59,10 @@ qboolean SND_Init(struct sndinfo *s)
 
 	si = s;
 
+	/* oss => alsa */
+	if ( ! strcmp (si->device->string, "/dev/dsp") )
+		si->device->string = "default";
+
 	if((err = snd_pcm_open(&pcm_handle, si->device->string,
 			SND_PCM_STREAM_PLAYBACK, SND_PCM_NONBLOCK)) < 0){
 		si->Com_Printf("ALSA: cannot open device %s(%s)\n",
@@ -87,7 +91,6 @@ qboolean SND_Init(struct sndinfo *s)
 
 	si->dma->samplebits = si->bits->value;
 	if(si->dma->samplebits != 8){  /* try 16 by default */
-
 		si->dma->samplebits = 16;  /* ensure this is set for other calculations */
 
 		if((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params, SND_PCM_FORMAT_S16)) < 0){
@@ -200,7 +203,7 @@ int SND_GetDMAPos(void)
 	if(si->dma->buffer)
 		return si->dma->samplepos;
 
-	Com_Printf("Sound not inizialized\n");
+	si->Com_Printf("Sound not inizialized\n");
 	return 0;
 }
 
