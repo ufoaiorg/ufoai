@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client/client.h"
 #include "../../client/snd_loc.h"
+#include <dsound.h>
 #include "winquake.h"
 
 HRESULT (WINAPI *pDirectSoundCreate)(GUID FAR *, LPDIRECTSOUND FAR *, IUnknown FAR *);
