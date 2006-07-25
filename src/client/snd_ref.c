@@ -1343,5 +1343,6 @@ void S_SoundList_f(void)
  */
 void S_Activate(qboolean active)
 {
-	SND_Activate(active);
+	if (SND_Activate)
+		SND_Activate(active);
 }
