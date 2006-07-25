@@ -47,7 +47,7 @@ cvar_t *snddevice;
   */
 qboolean ALSA_SNDDMA_Init(struct sndinfo *si)
 {
-	int i, err, dir;
+	int i, err, dir = 0;
 	unsigned int r;
 	snd_pcm_uframes_t p;
 
@@ -122,7 +122,7 @@ qboolean ALSA_SNDDMA_Init(struct sndinfo *si)
 	}
 	/* or all available ones */
 	if(!dma.speed){
-		for(i = 0; i < sizeof(RATES); i++) {
+		for(i = 0; i < sizeof(RATES)/sizeof(int); i++) {
 			r = RATES[i];
 			dir = 0;
 
