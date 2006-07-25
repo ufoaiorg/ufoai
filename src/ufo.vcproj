@@ -524,6 +524,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\client\cl_map.c"
+				>
+			</File>
+			<File
 				RelativePath=".\client\cl_market.c"
 				>
 			</File>
@@ -624,10 +628,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\client\snd_ref.c"
-				>
-			</File>
-			<File
 				RelativePath=".\client\snd_mem.c"
 				>
 			</File>
@@ -636,7 +636,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ports\win32\snd_win.c"
+				RelativePath=".\client\snd_ref.c"
 				>
 			</File>
 			<File
@@ -789,11 +789,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\client\os_types.h"
+				RelativePath=".\ports\win32\os_types.h"
 				>
 			</File>
 			<File
-				RelativePath=".\ports\win32\os_types.h"
+				RelativePath=".\client\os_types.h"
 				>
 			</File>
 			<File

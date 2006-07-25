@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "snd_loc.h"
 
 #ifdef _WIN32
-#define dlladdr (void*)GetProcAddress
+#define dlladdr GetProcAddress
 #include <windows.h>
 #else
 #define dlladdr dlsym
@@ -112,12 +112,19 @@ portable_samplepair_t s_rawsamples[MAX_RAW_SAMPLES];
 struct sndinfo si;
 static void* snd_ref_lib = NULL;
 
-qboolean (*SND_Init)(struct sndinfo* si);
-int (*SND_GetDMAPos)(void);
-void (*SND_Shutdown)(void);
-void (*SND_BeginPainting)(void);
-void (*SND_Submit)(void);
-void (*SND_Activate)(qboolean active);
+typedef qboolean (*SND_Init_t)(struct sndinfo* si);
+typedef int (*SND_GetDMAPos_t)(void);
+typedef void (*SND_Shutdown_t)(void);
+typedef void (*SND_BeginPainting_t)(void);
+typedef void (*SND_Submit_t)(void);
+typedef void (*SND_Activate_t)(qboolean active);
+
+SND_Init_t SND_Init;
+SND_GetDMAPos_t SND_GetDMAPos;
+SND_Shutdown_t SND_Shutdown;
+SND_BeginPainting_t SND_BeginPainting;
+SND_Submit_t SND_Submit;
+SND_Activate_t SND_Activate;
 
 /* ==================================================================== */
 /* User-setable variables */
@@ -208,17 +215,17 @@ void S_Init(void)
 #endif
 			}
 
-			if ((SND_Init = dlladdr(snd_ref_lib, "SND_Init")) == 0)
+			if ((SND_Init = (SND_Init_t) dlladdr(snd_ref_lib, "SND_Init")) == 0)
 				Com_Error(ERR_FATAL, "dladdr failed loading SND_Init\n");
-			if ((SND_Shutdown = dlladdr(snd_ref_lib, "SND_Shutdown")) == 0)
+			if ((SND_Shutdown = (SND_Shutdown_t) dlladdr(snd_ref_lib, "SND_Shutdown")) == 0)
 				Com_Error(ERR_FATAL, "dladdr failed loading SND_Shutdown\n");
-			if ((SND_GetDMAPos = dlladdr(snd_ref_lib, "SND_GetDMAPos")) == 0)
+			if ((SND_GetDMAPos = (SND_GetDMAPos_t) dlladdr(snd_ref_lib, "SND_GetDMAPos")) == 0)
 				Com_Error(ERR_FATAL, "dladdr failed loading SND_GetDMAPos\n");
-			if ((SND_BeginPainting = dlladdr(snd_ref_lib, "SND_BeginPainting")) == 0)
+			if ((SND_BeginPainting = (SND_BeginPainting_t) dlladdr(snd_ref_lib, "SND_BeginPainting")) == 0)
 				Com_Error(ERR_FATAL, "dladdr failed loading SND_BeginPainting\n");
-			if ((SND_Submit = dlladdr(snd_ref_lib, "SND_Submit")) == 0)
+			if ((SND_Submit = (SND_Submit_t) dlladdr(snd_ref_lib, "SND_Submit")) == 0)
 				Com_Error(ERR_FATAL, "dladdr failed loading SND_Submit\n");
-			if ((SND_Activate = dlladdr(snd_ref_lib, "SND_Activate")) == 0)
+			if ((SND_Activate = (SND_Activate_t) dlladdr(snd_ref_lib, "SND_Activate")) == 0)
 				Com_Error(ERR_FATAL, "dladdr failed loading SND_Activate\n");
 
 			snd_ref_active = qtrue;
