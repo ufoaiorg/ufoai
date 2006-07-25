@@ -1219,6 +1219,7 @@ clean2:
 	$(SND_OSS_OBJS) \
 	$(SND_ALSA_OBJS) \
 	$(BUILDDIR)/ufo \
+	$(BUILDDIR)/ufo2map \
 	$(BUILDDIR)/game.$(SHLIBEXT) \
 	$(BUILDDIR)/ref_sdl.$(SHLIBEXT) \
 	$(BUILDDIR)/ref_glx.$(SHLIBEXT) \
