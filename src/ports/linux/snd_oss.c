@@ -1,3 +1,8 @@
+/**
+ * @file snd_oss.c
+ * @brief OSS sound driver
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -256,3 +261,9 @@ void SND_BeginPainting (void)
 {
 }
 
+/**
+ * @brief
+ */
+void SND_Activate (qboolean active)
+{
+}

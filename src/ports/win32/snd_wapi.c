@@ -1,3 +1,8 @@
+/**
+ * @file snd_wapi.c
+ * @brief WindowsAPI sound driver
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 Copyright (C) 2005 Ben Lane
@@ -25,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/snd_loc.h"
 #include "winquake.h"
 
-// 64K is > 1 second at 16-bit, 22050 Hz
+/* 64K is > 1 second at 16-bit, 22050 Hz */
 #define	WAV_BUFFERS				64
 #define	WAV_MASK				0x3F
 #define	WAV_BUFFER_SIZE			0x0400
@@ -35,7 +40,7 @@ static qboolean	snd_firsttime = qtrue, snd_iswave;
 
 static struct sndinfo *si;
 
-// starts at 0 for disabled
+/* starts at 0 for disabled */
 static int	snd_buffer_count = 0;
 static int	sample16;
 static int	snd_sent, snd_completed;
@@ -46,19 +51,19 @@ static int	snd_sent, snd_completed;
  */
 
 
-HANDLE		hData;
-HPSTR		lpData, lpData2;
+HANDLE hData;
+HPSTR lpData, lpData2;
 
-HGLOBAL		hWaveHdr;
-LPWAVEHDR	lpWaveHdr;
+HGLOBAL hWaveHdr;
+LPWAVEHDR lpWaveHdr;
 
-HWAVEOUT    hWaveOut;
+HWAVEOUT hWaveOut;
 
-WAVEOUTCAPS	wavecaps;
+WAVEOUTCAPS wavecaps;
 
-DWORD	gSndBufSize;
+DWORD gSndBufSize;
 
-MMTIME		mmstarttime;
+MMTIME mmstarttime;
 
 /**
  * @brief

@@ -3,8 +3,6 @@
  * @brief Main control for any streaming sound output device.
  */
 
-/* TODO: Implement snd_ref */
-
 /*
 All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
 

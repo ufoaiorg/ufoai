@@ -1,3 +1,8 @@
+/**
+ * @file snd_dx.c
+ * @brief DirectX (DirectSound) sound driver
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 

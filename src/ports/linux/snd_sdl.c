@@ -1,28 +1,31 @@
+/**
+ * @file snd_sdl.c
+ * @brief SDL sound driver
+ */
+
 /*
-	snd_sdl.c
 
-	Sound code taken from SDLQuake and modified to work with Quake2
-	Robert Bml 2001-12-25
+Sound code taken from SDLQuake and modified to work with Quake2
+Robert Bml 2001-12-25
 
-	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
-	of the License, or (at your option) any later version.
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-	See the GNU General Public License for more details.
+See the GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to:
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to:
 
-		Free Software Foundation, Inc.
-		59 Temple Place - Suite 330
-		Boston, MA  02111-1307, USA
+Free Software Foundation, Inc.
+59 Temple Place - Suite 330
+Boston, MA  02111-1307, USA
 
-	$Id$
 */
 
 #include "snd_sdl.h"
@@ -31,6 +34,9 @@ static int  snd_inited;
 
 static struct sndinfo *si;
 
+/**
+ * @brief
+ */
 static void paint_audio (void *unused, Uint8 * stream, int len)
 {
 	int pos;
@@ -72,6 +78,9 @@ static void paint_audio (void *unused, Uint8 * stream, int len)
 	}
 }
 
+/**
+ * @brief
+ */
 qboolean SND_Init (struct sndinfo *s)
 {
 	SDL_AudioSpec desired, obtained;
@@ -190,11 +199,17 @@ qboolean SND_Init (struct sndinfo *s)
 	return qtrue;
 }
 
+/**
+ * @brief
+ */
 int SND_GetDMAPos (void)
 {
 	return si->dma->dmapos;
 }
 
+/**
+ * @brief
+ */
 void SND_Shutdown (void)
 {
 	if (snd_inited) {
@@ -210,23 +225,25 @@ void SND_Shutdown (void)
 	si->Com_Printf("SDL audio device shut down.\n");
 }
 
-/*
-===============
-SNDDMA_Submit
-Send sound to device if buffer isn't really the dma buffer
-===============
-*/
+/**
+ * @brief Send sound to device if buffer isn't really the dma buffer
+ */
 void SND_Submit (void)
 {
 	SDL_UnlockAudio();
 }
 
-/*
-===============
-SNDDMA_BeginPainting
-===============
-*/
+/**
+ * @brief
+ */
 void SND_BeginPainting(void)
 {
 	SDL_LockAudio();
+}
+
+/**
+ * @brief
+ */
+void SND_Activate (qboolean active)
+{
 }

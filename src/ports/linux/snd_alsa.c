@@ -256,3 +256,10 @@ void SND_Submit(void)
 void SND_BeginPainting(void)
 {
 }
+
+/**
+ * @brief
+ */
+void SND_Activate (qboolean active)
+{
+}
