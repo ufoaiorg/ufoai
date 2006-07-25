@@ -2,7 +2,7 @@ Source: ufoai
 Section: contrib/games
 Priority: optional
 Maintainer: Yann Dirson <dirson@debian.org>
-Build-Depends: debhelper (>= 4.0.0), dh-buildinfo, libx11-dev, libxext-dev, libjpeg-dev, libvorbis-dev, xlibmesa-glu-dev, xlibmesa-gl-dev, xlibs-static-dev, libsdl-dev, libsdl-ttf2.0-dev
+Build-Depends: debhelper (>= 4.0.0), dh-buildinfo, libx11-dev, libxext-dev, libjpeg-dev, libvorbis-dev, libglu1-mesa-dev, xlibmesa-gl-dev, libsdl-dev, libsdl-ttf2.0-dev
 Standards-Version: 3.6.1
 
 Package: ufoai
@@ -25,5 +25,13 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: UFO: Alien Invasion - data-building tool
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
- This package includes a modified version of the quake2 map-building 
- tool: ufo2map.
+ This package includes the map-building tool.
+
+Package: ufoai-server
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: UFO: Alien Invasion - standalone game server
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ This package includes the standalone game server.  It is only needed
+ if you want to setup a permanent game server.
