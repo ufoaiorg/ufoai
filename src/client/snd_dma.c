@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 void S_Play(void);
-void S_SoundList(void);
+void S_SoundList_f(void);
 void S_Update_();
 void S_StopAllSounds(void);
 
@@ -247,7 +247,7 @@ void S_Init(void)
 
 		Cmd_AddCommand("play", S_Play);
 		Cmd_AddCommand("stopsound", S_StopAllSounds);
-		Cmd_AddCommand("soundlist", S_SoundList);
+		Cmd_AddCommand("soundlist", S_SoundList_f);
 		Cmd_AddCommand("soundinfo", S_SoundInfo_f);
 
 		Cmd_AddCommand("ov_play", S_PlayOGG);
@@ -549,13 +549,9 @@ channel_t *S_PickChannel(int entnum, int entchannel)
 	return ch;
 }
 
-/*
-=================
-S_SpatializeOrigin
-
-Used for spatializing channels and autosounds
-=================
-*/
+/**
+ * @brief Used for spatializing channels and autosounds
+ */
 void S_SpatializeOrigin(vec3_t origin, float master_vol, float dist_mult, int *left_vol, int *right_vol)
 {
 	vec_t dot;
@@ -599,11 +595,9 @@ void S_SpatializeOrigin(vec3_t origin, float master_vol, float dist_mult, int *l
 		*left_vol = 0;
 }
 
-/*
-=================
-S_Spatialize
-=================
-*/
+/**
+ * @brief
+ */
 void S_Spatialize(channel_t * ch)
 {
 	vec3_t origin;
@@ -621,11 +615,9 @@ void S_Spatialize(channel_t * ch)
 }
 
 
-/*
-=================
-S_AllocPlaysound
-=================
-*/
+/**
+ * @brief
+ */
 playsound_t *S_AllocPlaysound(void)
 {
 	playsound_t *ps;
@@ -642,11 +634,9 @@ playsound_t *S_AllocPlaysound(void)
 }
 
 
-/*
-=================
-S_FreePlaysound
-=================
-*/
+/**
+ * @brief
+ */
 void S_FreePlaysound(playsound_t * ps)
 {
 	/* unlink from channel */
@@ -662,16 +652,11 @@ void S_FreePlaysound(playsound_t * ps)
 
 
 
-/*
-===============
-S_IssuePlaysound
-
-Take the next playsound and begin it on the channel
-This is never called directly by S_Play*, but only
-by the update loop.
-===============
-
-*/
+/**
+ * @brief Take the next playsound and begin it on the channel
+ * This is never called directly by S_Play*, but only
+ * by the update loop.
+ */
 void S_IssuePlaysound(playsound_t * ps)
 {
 	channel_t *ch;
@@ -712,15 +697,11 @@ void S_IssuePlaysound(playsound_t * ps)
 /* Start a sound effect */
 /* ======================================================================= */
 
-/*
-====================
-S_StartSound
-
-Validates the parms and ques the sound up
-if pos is NULL, the sound will be dynamically sourced from the entity
-Entchannel 0 will never override a playing sound
-====================
-*/
+/**
+ * @brief Validates the parms and ques the sound up
+ * if pos is NULL, the sound will be dynamically sourced from the entity
+ * Entchannel 0 will never override a playing sound
+ */
 void S_StartSound(vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float fvol, float attenuation, float timeofs)
 {
 	sfxcache_t *sc;
@@ -733,9 +714,6 @@ void S_StartSound(vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float 
 
 	if (!sfx)
 		return;
-
-/*	if (sfx->name[0] == '*') */
-/*		sfx = S_RegisterSexedSound(&cl_entities[entnum].current, sfx->name); */
 
 	/* make sure the sound is loaded */
 	sc = S_LoadSound(sfx);
@@ -789,11 +767,9 @@ void S_StartSound(vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float 
 }
 
 
-/*
-==================
-S_StartLocalSound
-==================
-*/
+/**
+ * @brief
+ */
 void S_StartLocalSound(char *sound)
 {
 	sfx_t *sfx;
@@ -810,11 +786,9 @@ void S_StartLocalSound(char *sound)
 }
 
 
-/*
-==================
-S_ClearBuffer
-==================
-*/
+/**
+ * @brief
+ */
 void S_ClearBuffer(void)
 {
 	int clear;
@@ -835,11 +809,9 @@ void S_ClearBuffer(void)
 	SND_Submit();
 }
 
-/*
-==================
-S_StopAllSounds
-==================
-*/
+/**
+ * @brief
+ */
 void S_StopAllSounds(void)
 {
 	int i;
@@ -869,15 +841,11 @@ void S_StopAllSounds(void)
 	S_StartOGG();
 }
 
-/*
-==================
-S_AddLoopSounds
-
-Entities with a ->sound field will generated looped sounds
-that are automatically started, stopped, and merged together
-as the entities are sent to the client
-==================
-*/
+/**
+ * @brief Entities with a ->sound field will generated looped sounds
+ * that are automatically started, stopped, and merged together
+ * as the entities are sent to the client
+ */
 #if 0
 void S_AddLoopSounds(void)
 {
@@ -961,17 +929,13 @@ void S_AddLoopSounds(void)
 		}
 	}
 }
-#endif							/* 0 */
+#endif /* 0 */
 
 /*============================================================================= */
 
-/*
-============
-S_RawSamples
-
-Cinematic streaming and voice over network
-============
-*/
+/**
+ * @brief Cinematic streaming and voice over network
+ */
 void S_RawSamples(int samples, int rate, int width, int channels, byte * data, float volume)
 {
 	int i;
@@ -1041,13 +1005,9 @@ void S_RawSamples(int samples, int rate, int width, int channels, byte * data, f
 
 /*============================================================================= */
 
-/*
-============
-S_Update
-
-Called once each time through the main loop
-============
-*/
+/**
+ * @brief Called once each time through the main loop
+ */
 void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 {
 	int i;
@@ -1100,11 +1060,9 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	}
 
 	/* add loopsounds */
-	/*S_AddLoopSounds (); */
+	/*S_AddLoopSounds(); */
 
-	/* */
 	/* debugging output */
-	/* */
 	if (s_show->value) {
 		total = 0;
 		ch = channels;
@@ -1125,6 +1083,9 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 		OGG_Read();
 }
 
+/**
+ * @brief
+ */
 void GetSoundtime(void)
 {
 	int samplepos;
@@ -1153,6 +1114,9 @@ void GetSoundtime(void)
 }
 
 
+/**
+ * @brief
+ */
 void S_Update_(void)
 {
 	unsigned endtime;
@@ -1204,12 +1168,9 @@ static OggVorbis_File ovFile;
 static char ovBuf[4096];
 static int ovSection;
 
-
-/*
-==========
-OGG_Open
-==========
-*/
+/**
+ * @brief
+ */
 qboolean OGG_Open(char *filename)
 {
 	FILE *f;
@@ -1255,22 +1216,18 @@ qboolean OGG_Open(char *filename)
 	return qtrue;
 }
 
-/*
-==========
-OGG_Stop
-==========
-*/
+/**
+ * @brief
+ */
 void OGG_Stop(void)
 {
 	ovPlaying[0] = 0;
 	ov_clear(&ovFile);
 }
 
-/*
-==========
-OGG_Read
-==========
-*/
+/**
+ * @brief
+ */
 int OGG_Read(void)
 {
 	int res;
@@ -1294,6 +1251,9 @@ int OGG_Read(void)
 	return res;
 }
 
+/**
+ * @brief
+ */
 void S_PlayOGG(void)
 {
 	if (Cmd_Argc() < 2) {
@@ -1303,6 +1263,9 @@ void S_PlayOGG(void)
 	OGG_Open(Cmd_Argv(1));
 }
 
+/**
+ * @brief
+ */
 void S_StartOGG(void)
 {
 	char *str;
@@ -1320,6 +1283,9 @@ console functions
 ===============================================================================
 */
 
+/**
+ * @brief
+ */
 void S_Play(void)
 {
 	int i;
@@ -1339,7 +1305,10 @@ void S_Play(void)
 	}
 }
 
-void S_SoundList(void)
+/**
+ * @brief
+ */
+void S_SoundList_f(void)
 {
 	int i;
 	sfx_t *sfx;
