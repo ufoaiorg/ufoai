@@ -624,7 +624,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\client\snd_dma.c"
+				RelativePath=".\client\snd_ref.c"
 				>
 			</File>
 			<File

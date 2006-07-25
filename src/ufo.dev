@@ -360,7 +360,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit34]
-FileName=client\snd_dma.c
+FileName=client\snd_ref.c
 Folder="Source Files"
 Compile=1
 CompileCpp=0

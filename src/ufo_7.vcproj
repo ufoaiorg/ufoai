@@ -2077,7 +2077,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="client\snd_dma.c"
+				RelativePath="client\snd_ref.c"
 				>
 				<FileConfiguration
 					Name="Release Alpha|Win32"

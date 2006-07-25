@@ -752,7 +752,7 @@ $(BUILDDIR)/client/console.o :     $(CLIENT_DIR)/console.c
 $(BUILDDIR)/client/keys.o :        $(CLIENT_DIR)/keys.c
 	$(DO_CC)
 
-$(BUILDDIR)/client/snd_dma.o :     $(CLIENT_DIR)/snd_dma.c
+$(BUILDDIR)/client/snd_ref.o :     $(CLIENT_DIR)/snd_ref.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/snd_mem.o :     $(CLIENT_DIR)/snd_mem.c

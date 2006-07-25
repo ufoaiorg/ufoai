@@ -1,5 +1,5 @@
 /**
- * @file snd_dma.c
+ * @file snd_ref.c
  * @brief Main control for any streaming sound output device.
  */
 

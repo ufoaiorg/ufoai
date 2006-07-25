@@ -1139,7 +1139,7 @@ SOURCE=.\qcommon\scripts.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\client\snd_dma.c
+SOURCE=.\client\snd_ref.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 

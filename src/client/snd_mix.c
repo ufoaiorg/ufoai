@@ -1,6 +1,6 @@
 /**
  * @file snd_mix.c
- * @brief Portable code to mix sounds for snd_dma.c.
+ * @brief Portable code to mix sounds for snd_ref.c.
  */
 
 /*
