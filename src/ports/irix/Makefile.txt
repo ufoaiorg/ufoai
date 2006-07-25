@@ -102,7 +102,7 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/console.o \
 	$(BUILDDIR)/client/keys.o \
 	$(BUILDDIR)/client/cl_menu.o \
-	$(BUILDDIR)/client/snd_dma.o \
+	$(BUILDDIR)/client/snd_ref.o \
 	$(BUILDDIR)/client/snd_mem.o \
 	$(BUILDDIR)/client/snd_mix.o \
 	\
