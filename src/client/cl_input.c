@@ -403,21 +403,25 @@ cvar_t *cl_anglespeedkey;
 /*========================================================================== */
 
 /**
-  * @brief
+  * @brief Switch one worldlevel up
   */
 void CL_LevelUp(void)
 {
+	if (!Com_ServerState())
+		return;
 	if (camera_mode != CAMERA_MODE_FIRSTPERSON)
-		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->value < 7) ? cl_worldlevel->value + 1 : 7);
+		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->value < map_maxlevel-1) ? cl_worldlevel->value + 1.0f : map_maxlevel-1);
 }
 
 /**
-  * @brief
+  * @brief Switch on worldlevel down
   */
 void CL_LevelDown(void)
 {
+	if (!Com_ServerState())
+		return;
 	if (camera_mode != CAMERA_MODE_FIRSTPERSON)
-		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->value > 0) ? cl_worldlevel->value - 1 : 0);
+		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->value > 0.0f) ? cl_worldlevel->value - 1.0f : 0.0f);
 }
 
 

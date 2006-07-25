@@ -1429,8 +1429,8 @@ void CL_CvarCheck(void)
 
 		if ((int) cl_worldlevel->value >= map_maxlevel - 1)
 			Cvar_SetValue("cl_worldlevel", map_maxlevel - 1);
-		else if ((int) cl_worldlevel->value < 0)
-			Cvar_Set("cl_worldlevel", "0");
+		else if ((int) cl_worldlevel->value < 0.0f)
+			Cvar_SetValue("cl_worldlevel", 0.0f);
 		for (i = 0; i < map_maxlevel; i++)
 			Cbuf_AddText(va("deselfloor%i\n", i));
 		for (; i < 8; i++)
