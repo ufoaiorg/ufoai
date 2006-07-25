@@ -261,26 +261,21 @@ void AppActivate(BOOL fActive, BOOL minimize)
 		ActiveApp = qfalse;
 
 	/* minimize/restore mouse-capture on demand */
-	if (!ActiveApp)
-	{
+	if (!ActiveApp) {
 		IN_Activate (qfalse);
 		CDAudio_Activate (qfalse);
-		S_Activate (qfalse);
+		/* FIXME: Reactivate me */
+/*		S_Activate (qfalse);*/
 
 		if ( win_noalttab->value )
-		{
 			WIN_EnableAltTab();
-		}
-	}
-	else
-	{
+	} else {
 		IN_Activate (qtrue);
 		CDAudio_Activate (qtrue);
-		S_Activate (qtrue);
+		/* FIXME: Reactivate me */
+/*		S_Activate (qtrue);*/
 		if ( win_noalttab->value )
-		{
 			WIN_DisableAltTab();
-		}
 	}
 }
 
@@ -295,35 +290,27 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 {
 	LRESULT lRet = 0;
 
-	if ( uMsg == MSH_MOUSEWHEEL )
-	{
-		if ( ( ( int ) wParam ) > 0 )
-		{
+	if ( uMsg == MSH_MOUSEWHEEL ) {
+		if ( ( ( int ) wParam ) > 0 ) {
 			Key_Event( K_MWHEELUP, qtrue, sys_msg_time );
 			Key_Event( K_MWHEELUP, qfalse, sys_msg_time );
-		}
-		else
-		{
+		} else {
 			Key_Event( K_MWHEELDOWN, qtrue, sys_msg_time );
 			Key_Event( K_MWHEELDOWN, qfalse, sys_msg_time );
 		}
-        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+	        return DefWindowProc (hWnd, uMsg, wParam, lParam);
 	}
 
-	switch (uMsg)
-	{
+	switch (uMsg) {
 	case WM_MOUSEWHEEL:
 		/*
 		** this chunk of code theoretically only works under NT4 and Win98
 		** since this message doesn't exist under Win95
 		*/
-		if ( ( short ) HIWORD( wParam ) > 0 )
-		{
+		if ( ( short ) HIWORD( wParam ) > 0 ) {
 			Key_Event( K_MWHEELUP, qtrue, sys_msg_time );
 			Key_Event( K_MWHEELUP, qfalse, sys_msg_time );
-		}
-		else
-		{
+		} else {
 			Key_Event( K_MWHEELDOWN, qtrue, sys_msg_time );
 			Key_Event( K_MWHEELDOWN, qfalse, sys_msg_time );
 		}
@@ -336,16 +323,16 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 		cl_hwnd = hWnd;
 
 		MSH_MOUSEWHEEL = RegisterWindowMessage("MSWHEEL_ROLLMSG");
-        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+	        return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
 	case WM_PAINT:
 		SCR_DirtyScreen ();	/* force entire screen to update next frame */
-        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+    		return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
 	case WM_DESTROY:
 		/* let sound and input know about this? */
 		cl_hwnd = NULL;
-        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+	        return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
 	case WM_ACTIVATE:
 		{
@@ -360,7 +347,7 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 			if ( reflib_active )
 				re.AppActivate( !( fActive == WA_INACTIVE ) );
 		}
-        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+	        return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
 	case WM_MOVE:
 		{
@@ -368,8 +355,7 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 			RECT r;
 			int		style;
 
-			if (!vid_fullscreen->value)
-			{
+			if (!vid_fullscreen->value) {
 				xPos = (short) LOWORD(lParam);    /* horizontal position */
 				yPos = (short) HIWORD(lParam);    /* vertical position */
 
@@ -389,7 +375,7 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 					IN_Activate (qtrue);
 			}
 		}
-        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+    		return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
 	/* this is complicated because Win32 seems to pack multiple mouse events into */
 	/* one update sometimes, so we always check all states and look for events */
@@ -421,14 +407,11 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 	case WM_SYSCOMMAND:
 		if ( wParam == SC_SCREENSAVE )
 			return 0;
-        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+    		return DefWindowProc (hWnd, uMsg, wParam, lParam);
 	case WM_SYSKEYDOWN:
-		if ( wParam == 13 )
-		{
+		if ( wParam == 13 ) {
 			if ( vid_fullscreen )
-			{
 				Cvar_SetValue( "vid_fullscreen", !vid_fullscreen->value );
-			}
 			return 0;
 		}
 		/* fall through */
@@ -446,7 +429,7 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 		break;
 
 	default:	/* pass all unhandled messages to DefWindowProc */
-        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+	        return DefWindowProc (hWnd, uMsg, wParam, lParam);
     }
 
     /* return 0 if handled message, 1 if not */

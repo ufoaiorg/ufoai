@@ -529,8 +529,7 @@ qboolean SND_InitWav (void)
 /**
  * @brief Try to find a sound device to mix for.
  * @return false if nothing is found.
-==================
-*/
+ */
 qboolean SND_Init(struct sndinfo *s)
 {
 	sndinitstat	stat;
@@ -589,15 +588,11 @@ qboolean SND_Init(struct sndinfo *s)
 	return 1;
 }
 
-/*
-==============
-SND_GetDMAPos
-
-return the current sample position (in mono samples read)
-inside the recirculating dma buffer, so the mixing code will know
-how many sample are required to fill it up.
-===============
-*/
+/**
+ * @brief return the current sample position (in mono samples read)
+ * inside the recirculating dma buffer, so the mixing code will know
+ * how many sample are required to fill it up.
+ */
 int SND_GetDMAPos(void)
 {
 	MMTIME	mmtime;
@@ -608,9 +603,8 @@ int SND_GetDMAPos(void)
 		mmtime.wType = TIME_SAMPLES;
 		pDSBuf->lpVtbl->GetCurrentPosition(pDSBuf, &mmtime.u.sample, &dwWrite);
 		s = mmtime.u.sample - mmstarttime.u.sample;
-	} else if (wav_init) {
+	} else if (wav_init)
 		s = snd_sent * WAV_BUFFER_SIZE;
-	}
 
 	s >>= sample16;
 	s &= (si->dma->samples-1);
@@ -618,13 +612,9 @@ int SND_GetDMAPos(void)
 	return s;
 }
 
-/*
-==============
-SND_BeginPainting
-
-Makes sure si->dma->buffer is valid
-===============
-*/
+/**
+ * @brief Makes sure si->dma->buffer is valid
+ */
 static DWORD locksize;
 void SND_BeginPainting (void)
 {
@@ -657,9 +647,8 @@ void SND_BeginPainting (void)
 			si->Com_Printf( "S_TransferStereo16: Lock failed with error '%s'\n", DSoundError( hresult ) );
 			S_Shutdown ();
 			return;
-		} else {
+		} else
 			pDSBuf->lpVtbl->Restore( pDSBuf );
-		}
 
 		if (++reps > 2)
 			return;
@@ -667,14 +656,10 @@ void SND_BeginPainting (void)
 	si->dma->buffer = (unsigned char *)pbuf;
 }
 
-/*
-==============
-SND_Submit
-
-Send sound to device if buffer isn't really the dma buffer
-Also unlocks the dsound buffer
-===============
-*/
+/**
+ * @brief Send sound to device if buffer isn't really the dma buffer
+ * Also unlocks the dsound buffer
+ */
 void SND_Submit(void)
 {
 	LPWAVEHDR	h;
@@ -697,9 +682,8 @@ void SND_Submit(void)
 			break;
 		}
 
-		if ( ! (lpWaveHdr[ snd_completed & WAV_MASK].dwFlags & WHDR_DONE) ) {
+		if ( ! (lpWaveHdr[ snd_completed & WAV_MASK].dwFlags & WHDR_DONE) )
 			break;
-		}
 
 		snd_completed++;	/* this buffer has been played */
 	}
@@ -727,37 +711,27 @@ void SND_Submit(void)
 	}
 }
 
-/*
-==============
-SND_Shutdown
-
-Reset the sound device for exiting
-===============
-*/
+/**
+ * @brief Reset the sound device for exiting
+ */
 void SND_Shutdown(void)
 {
 	FreeSound ();
 }
 
 
-/*
-===========
-S_Activate
-
-Called when the main window gains or loses focus.
-The window have been destroyed and recreated
-between a deactivate and an activate.
-===========
-*/
-void S_Activate (qboolean active)
+/**
+ * @brief Called when the main window gains or loses focus.
+ * The window have been destroyed and recreated
+ * between a deactivate and an activate.
+ */
+void SND_Activate (qboolean active)
 {
 	if ( active ) {
-		if ( pDS && cl_hwnd && snd_isdirect ) {
+		if ( pDS && cl_hwnd && snd_isdirect )
 			DS_CreateBuffers();
-		}
 	} else {
-		if ( pDS && cl_hwnd && snd_isdirect ) {
+		if ( pDS && cl_hwnd && snd_isdirect )
 			DS_DestroyBuffers();
-		}
 	}
 }
