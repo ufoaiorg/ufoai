@@ -481,6 +481,8 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 		/* spawn */
 		level.num_spawned[team]++;
 		level.num_alive[team]++;
+		/* FIXME: Aliens with more than one unit */
+		ent->chr.fieldSize = ACTOR_SIZE_NORMAL;
 		if (team != TEAM_CIVILIAN) {
 			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_alien"), ent->chr.path, ent->chr.body, ent->chr.head, ent->chr.name);
 
@@ -493,10 +495,8 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 			/* found */
 			if (item.t < gi.csi->numODs && item.t != NONE) {
 				if (!Q_strncmp(gi.csi->ods[item.t].type, "armor", MAX_VAR)) {
-					item.a = 1;
+					item.a = 1; /* FIXME */
 					Com_AddToInventory(&ent->i, item, gi.csi->idArmor, 0, 0);
-					Com_Printf("Add alien armor '%s'\n", ref);
-					Com_Printf("armor in inv: '%s'\n", gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t].kurz );
 				} else
 					Com_Printf("No valid alien armor '%s'\n", ref);
 			} else if (*ref)
