@@ -104,7 +104,7 @@ void CL_CharacterCvars(character_t *chr)
 	Cvar_Set("mn_vcls", va("%i", chr->skills[SKILL_CLOSE]));
 	Cvar_Set("mn_vhvy", va("%i", chr->skills[SKILL_HEAVY]));
 	Cvar_Set("mn_vass", va("%i", chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_vprc", va("%i", chr->skills[SKILL_PRECISE]));
+	Cvar_Set("mn_vsnp", va("%i", chr->skills[SKILL_SNIPER]));
 	Cvar_Set("mn_vexp", va("%i", chr->skills[SKILL_EXPLOSIVE]));
 
 	Cvar_Set("mn_tpwr", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
@@ -114,7 +114,7 @@ void CL_CharacterCvars(character_t *chr)
 	Cvar_Set("mn_tcls", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_CLOSE]), chr->skills[SKILL_CLOSE]));
 	Cvar_Set("mn_thvy", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_HEAVY]), chr->skills[SKILL_HEAVY]));
 	Cvar_Set("mn_tass", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_tprc", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_PRECISE]), chr->skills[SKILL_PRECISE]));
+	Cvar_Set("mn_tsnp", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_SNIPER]), chr->skills[SKILL_SNIPER]));
 	Cvar_Set("mn_texp", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
 }
 
@@ -153,7 +153,7 @@ void CL_UGVCvars(character_t *chr)
 	Cvar_Set("mn_vcls", va("%i", chr->skills[SKILL_CLOSE]));
 	Cvar_Set("mn_vhvy", va("%i", chr->skills[SKILL_HEAVY]));
 	Cvar_Set("mn_vass", va("%i", chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_vprc", va("%i", chr->skills[SKILL_PRECISE]));
+	Cvar_Set("mn_vsnp", va("%i", chr->skills[SKILL_SNIPER]));
 	Cvar_Set("mn_vexp", va("%i", chr->skills[SKILL_EXPLOSIVE]));
 
 	Cvar_Set("mn_tpwr", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
@@ -163,7 +163,7 @@ void CL_UGVCvars(character_t *chr)
 	Cvar_Set("mn_tcls", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_CLOSE]), chr->skills[SKILL_CLOSE]));
 	Cvar_Set("mn_thvy", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_HEAVY]), chr->skills[SKILL_HEAVY]));
 	Cvar_Set("mn_tass", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_tprc", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_PRECISE]), chr->skills[SKILL_PRECISE]));
+	Cvar_Set("mn_tsnp", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_SNIPER]), chr->skills[SKILL_SNIPER]));
 	Cvar_Set("mn_texp", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
 }
 

@@ -443,7 +443,7 @@ menu popup_newbase
 	}
 	string cost
 	{
-		string "_100000 c"
+		string "100000 c"
 		pos	"290 390"
 		font	f_big
 	}

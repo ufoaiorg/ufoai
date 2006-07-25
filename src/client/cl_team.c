@@ -323,7 +323,8 @@ void CL_CheckInventory(equipDef_t * equip)
 	/* others with unloaded guns in their hands. */
 	Com_DPrintf("NumOnTeam in aircraft %i: %i\n", baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] );
 	for (container = 0; container < csi.numIDs; container++) {
-		for (p = 0, cp = baseCurrent->curTeam[0]; p < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; p++, cp++) {
+		for (p = 0; p < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; p++) {
+		        cp = baseCurrent->curTeam[p];
 			for (ic = cp->inv->c[container]; ic; ic = next) {
 				next = ic->next;
 				if (equip->num[ic->item.t] > 0)
@@ -984,9 +985,8 @@ void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
 }
 
 /**
-  * @brief Stores the team info to buffer (which might be a network buffer, too)
+  * @brief Stores the wholeTeam info to buffer (which might be a network buffer, too)
   *
-  * Called in cl_main.c CL_Precache_f to send the team info to server
   * Called by CL_SaveTeam to store the team info
   */
 void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
@@ -1003,6 +1003,60 @@ void CL_SendTeamInfo(sizebuf_t * buf, character_t * team, int num)
 	MSG_WriteByte(buf, num);
 
 	for (i = 0, chr = team; i < num; chr++, i++) {
+		/* send the fieldSize ACTOR_SIZE_* */
+		MSG_WriteByte(buf, chr->fieldSize);
+
+		/* unique character number */
+		MSG_WriteShort(buf, chr->ucn);
+
+		/* name */
+		MSG_WriteString(buf, chr->name);
+
+		/* model */
+		MSG_WriteString(buf, chr->path);
+		MSG_WriteString(buf, chr->body);
+		MSG_WriteString(buf, chr->head);
+		MSG_WriteByte(buf, chr->skin);
+
+		/* even new attributes */
+		for (j = 0; j < SKILL_NUM_TYPES; j++)
+			MSG_WriteByte(buf, chr->skills[j]);
+
+		/* scores */
+		for (j = 0; j < KILLED_NUM_TYPES; j++)
+			MSG_WriteShort(buf, chr->kills[j]);
+		MSG_WriteShort(buf, chr->assigned_missions);
+
+		/* equipment */
+		for (j = 0; j < csi.numIDs; j++)
+			for (ic = chr->inv->c[j]; ic; ic = ic->next)
+				CL_SendItem(buf, ic->item, j, ic->x, ic->y);
+
+		/* terminate list */
+		MSG_WriteByte(buf, NONE);
+	}
+}
+
+/**
+  * @brief Stores the curTteam info to buffer (which might be a network buffer, too)
+  *
+  * Called in cl_main.c CL_Precache_f to send the team info to server
+  */
+void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
+{
+	character_t *chr;
+	invList_t *ic;
+	int i, j;
+
+	/* clean temp inventory */
+	CL_CleanTempInventory();
+
+	/* header */
+	MSG_WriteByte(buf, clc_teaminfo);
+	MSG_WriteByte(buf, num);
+
+	for (i = 0; i < num; i++) {
+	        chr = team[i];
 		/* send the fieldSize ACTOR_SIZE_* */
 		MSG_WriteByte(buf, chr->fieldSize);
 

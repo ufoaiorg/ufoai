@@ -1002,7 +1002,7 @@ void CL_Precache_f(void)
 	/* maybe we start the map directly from commandline for testing */
 	if ( baseCurrent )
 		/* send team info */
-		CL_SendTeamInfo(&cls.netchan.message, baseCurrent->curTeam[0], B_GetNumOnTeam());
+		CL_SendCurTeamInfo(&cls.netchan.message, baseCurrent->curTeam, B_GetNumOnTeam());
 
 	/* send begin */
 	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);

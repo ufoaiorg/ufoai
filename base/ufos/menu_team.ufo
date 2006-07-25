@@ -593,12 +593,12 @@ menu team
 	pic ass_rahmen { pos "707 288" image menu/bar_rahmen }
 	bar ass_bar    { pos "716 293" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string prc_lbl { pos "700 300" string "_Sniper Rifles:" }
-	string prc_val { pos "975 300" string "*cvar mn_tprc" align ur }
-	pic prc_rahmen { pos "707 318" image menu/bar_rahmen }
-	bar prc_bar    { pos "716 323" current "*cvar mn_vprc" size "245 6" color "0 .8 0 1" max 256 align uc }
+	string snp_lbl { pos "700 300" string "_Sniper Rifles:" }
+	string snp_val { pos "975 300" string "*cvar mn_tsnp" align ur }
+	pic snp_rahmen { pos "707 318" image menu/bar_rahmen }
+	bar snp_bar    { pos "716 323" current "*cvar mn_vsnp" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string exp_lbl { pos "700 330" string "_High Explosives:" }
+	string exp_lbl { pos "700 330" string "_High-Explosives:" }
 	string exp_val { pos "975 330" string "*cvar mn_texp" align ur }
 	pic exp_rahmen { pos "707 348" image menu/bar_rahmen }
 	bar exp_bar    { pos "716 353" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
@@ -1120,12 +1120,12 @@ menu equipment
 	pic ass_rahmen { pos "67 620" image menu/bar_rahmen }
 	bar ass_bar    { pos "76 625" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string prc_lbl { pos "60 635" string "_Sniper Rifles:" }
-	string prc_val { pos "335 635" string "*cvar mn_tprc" align ur }
-	pic prc_rahmen { pos "67 655" image menu/bar_rahmen }
-	bar prc_bar    { pos "76 660" current "*cvar mn_vprc" size "245 6" color "0 .8 0 1" max 256 align uc }
+	string snp_lbl { pos "60 635" string "_Sniper Rifles:" }
+	string snp_val { pos "335 635" string "*cvar mn_tsnp" align ur }
+	pic snp_rahmen { pos "67 655" image menu/bar_rahmen }
+	bar snp_bar    { pos "76 660" current "*cvar mn_vsnp" size "245 6" color "0 .8 0 1" max 256 align uc }
 
-	string exp_lbl { pos "60 670" string "_High Explosives:" }
+	string exp_lbl { pos "60 670" string "_High-Explosives:" }
 	string exp_val { pos "335 670" string "*cvar mn_texp" align ur }
 	pic exp_rahmen { pos "67 690" image menu/bar_rahmen }
 	bar exp_bar    { pos "76 695" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 256 align uc }
@@ -1149,7 +1149,7 @@ menu equipment
 		*cls_lbl invis true *cls_val invis true *cls_rahmen invis true *cls_bar invis true
 		*hvy_lbl invis true *hvy_val invis true *hvy_rahmen invis true *hvy_bar invis true
 		*ass_lbl invis true *ass_val invis true *ass_rahmen invis true *ass_bar invis true
-		*prc_lbl invis true *prc_val invis true *prc_rahmen invis true *prc_bar invis true
+		*snp_lbl invis true *snp_val invis true *snp_rahmen invis true *snp_bar invis true
 		*exp_lbl invis true *exp_val invis true *exp_rahmen invis true *exp_bar invis true
 
 		*txt_weaponinfo color "1 1 1 1"
@@ -1171,7 +1171,7 @@ menu equipment
 		*cls_lbl invis false *cls_val invis false *cls_rahmen invis false *cls_bar invis false
 		*hvy_lbl invis false *hvy_val invis false *hvy_rahmen invis false *hvy_bar invis false
 		*ass_lbl invis false *ass_val invis false *ass_rahmen invis false *ass_bar invis false
-		*prc_lbl invis false *prc_val invis false *prc_rahmen invis false *prc_bar invis false
+		*snp_lbl invis false *snp_val invis false *snp_rahmen invis false *snp_bar invis false
 		*exp_lbl invis false *exp_val invis false *exp_rahmen invis false *exp_bar invis false
 
 		*txt_weaponinfo color "0 .78 0 1"

@@ -11,7 +11,7 @@ static char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
 	"close",
 	"heavy",
 	"assault",
-	"precise",
+	"sniper",
 	"explosive"
 };
 

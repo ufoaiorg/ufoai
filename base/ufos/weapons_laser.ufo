@@ -105,7 +105,7 @@ item laserrifle_ammo
 	primary
 	{
 		name	"_Single Pulse"
-		skill 	precise
+		skill 	sniper
 		projtl	laserPulse
 		impact	laserImpact
 		hitbody	laserImpact

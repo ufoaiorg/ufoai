@@ -184,7 +184,7 @@ tech rs_weapon_sniper
 	up_chapter	weapons
 	description	"_sniper_txt"
 
-	requires	rs_skill_precise
+	requires	rs_skill_sniper
 	provides	sniper
 	time	0
 	researched	true
@@ -346,11 +346,11 @@ tech rs_weapon_fraggren
 //	researched	true
 //}
 
-tech rs_weapon_knife
+tech rs_weapon_combatknife
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_knife_txt"
+	description	"_combatknife_txt"
 
 	requires	"rs_skill_close rs_damage_normal"
 	provides	knife
@@ -562,7 +562,7 @@ tech rs_weapon_laserrifle
 	up_chapter	weapons
 	description	"_laserrifle_txt"
 
-	requires	"rs_skill_precise rs_skill_assault rs_weapon_laserpistol"
+	requires	"rs_skill_sniper rs_skill_assault rs_weapon_laserpistol"
 	provides	laserrifle
 	time	30
 	researched	false
@@ -617,11 +617,11 @@ tech rs_weapon_plasblade
 	needscollected	true
 }
 
-tech rs_weapon_plaspistol
+tech rs_weapon_plasatomizer
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_plaspistol_txt"
+	description	"_plasatomizer_txt"
 
 	requires	"rs_skill_assault rs_skill_heavy rs_plasma"
 	provides	plaspistol
@@ -630,13 +630,13 @@ tech rs_weapon_plaspistol
 	needscollected	true
 }
 
-tech rs_weapon_plaspistol_ammo
+tech rs_weapon_plasatomizer_ammo
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_plaspistol_txt"
+	description	"_plasatomizer_txt"
 
-	requires	"rs_damage_plasma rs_weapon_plaspistol"
+	requires	"rs_damage_plasma rs_weapon_plasatomizer"
 	provides	plaspistol_ammo
 	time	0
 	researched	false
@@ -748,7 +748,7 @@ tech rs_weapon_tachyonsniper
 	up_chapter	weapons
 	description	"_tachyonsniper_txt"
 
-	requires	"rs_skill_precise rs_tachyon"
+	requires	"rs_skill_sniper rs_tachyon"
 	provides	tachyonsniper
 	time	80
 	researched	false
@@ -1010,17 +1010,17 @@ tech rs_skill_assault
 //	image_top	techs/assault_skill
 }
 
-tech rs_skill_precise
+tech rs_skill_sniper
 {
 	type	tech
 	name "_Sniper Rifles Proficiency"
 	up_chapter	skill
-	description	"_precise_skill_txt"
+	description	"_sniper_skill_txt"
 
 	requires	initial
 	time	0
 	researched	true
-//	image_top	techs/precise_skill
+//	image_top	techs/sniper_skill
 }
 
 tech rs_skill_explosive

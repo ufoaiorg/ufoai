@@ -2461,7 +2461,7 @@ void Com_CharGenAbilitySkills(character_t * chr, int minAbility, int maxAbility,
 		min = (maxAbility + minAbility) / 2.2;
 		if ((max - 10 < chr->skills[SKILL_CLOSE] && (chr->skills[ABILITY_SPEED] < min || chr->skills[ABILITY_POWER] < min))
 			|| (max - 10 < chr->skills[SKILL_HEAVY] && chr->skills[ABILITY_POWER] < min)
-			|| (max - 10 < chr->skills[SKILL_PRECISE] && chr->skills[ABILITY_ACCURACY] < min)
+			|| (max - 10 < chr->skills[SKILL_SNIPER] && chr->skills[ABILITY_ACCURACY] < min)
 			|| (max - 10 < chr->skills[SKILL_EXPLOSIVE] && chr->skills[ABILITY_MIND] < min))
 			retry--;			/* try again. */
 		else

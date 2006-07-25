@@ -55,8 +55,8 @@ char* CL_WeaponSkillToName(int weaponSkill)
 	case SKILL_ASSAULT:
 		return _("Assault");
 		break;
-	case SKILL_PRECISE:
-		return _("Precise");
+	case SKILL_SNIPER:
+		return _("Sniper");
 		break;
 	case SKILL_EXPLOSIVE:
 		return _("Explosive");

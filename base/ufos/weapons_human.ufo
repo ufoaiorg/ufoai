@@ -106,7 +106,7 @@ item sniper_ammo
 	primary
 	{
 		name	"_Snap Shot"
-		skill	precise
+		skill	sniper
 		projtl	bullet
 		impact	bulletImpact
 		hitbody blood
@@ -124,7 +124,7 @@ item sniper_ammo
 	secondary
 	{
 		name	"_Aimed Shot"
-		skill	precise
+		skill	sniper
 		projtl	bullet
 		impact	bulletImpact
 		hitbody blood
@@ -222,8 +222,8 @@ item smg
 	name		"_Submachine Gun"
 	model		weapons/smg/smg
 	weapon		true
-	type		rifle
-	category	1
+	type		pistol
+	category	2
 	twohanded	true
 	shape		"0 0 3 2"
 	center		"6.4 0 1"

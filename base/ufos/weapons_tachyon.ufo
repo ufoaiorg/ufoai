@@ -182,7 +182,7 @@ item tachyonsniper_ammo
 	primary
 	{
 		name	"_Snap Shot"
-		skill	precise
+		skill	sniper
 		projtl	tachyonBall
 		impact	tachyonImpact
 		hitbody tachyonImpact
@@ -201,7 +201,7 @@ item tachyonsniper_ammo
 	secondary
 	{
 		name	"_Rapid Shots"
-		skill	precise
+		skill	sniper
 		projtl	tachyonMiniBall
 		impact	tachyonImpact
 		hitbody tachyonImpact
