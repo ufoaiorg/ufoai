@@ -267,7 +267,7 @@ menu hud
 		texl	"0 0"
 		texh	"28 36"
 		mousefx true
-		click { cmd "hud_select 0" }
+		click { cmd "soldier_select 0" }
 	}
 	pic bt_actor1
 	{
@@ -276,7 +276,7 @@ menu hud
 		texl	"32 0"
 		texh	"60 36"
 		mousefx true
-		click { cmd "hud_select 1" }
+		click { cmd "soldier_select 1" }
 	}
 	pic bt_actor2
 	{
@@ -285,7 +285,7 @@ menu hud
 		texl	"64 0"
 		texh	"92 36"
 		mousefx true
-		click { cmd "hud_select 2" }
+		click { cmd "soldier_select 2" }
 	}
 	pic bt_actor3
 	{
@@ -294,7 +294,7 @@ menu hud
 		texl	"96 0"
 		texh	"124 36"
 		mousefx true
-		click { cmd "hud_select 3" }
+		click { cmd "soldier_select 3" }
 	}
 	pic bt_actor4
 	{
@@ -303,7 +303,7 @@ menu hud
 		texl	"0 38"
 		texh	"28 74"
 		mousefx true
-		click { cmd "hud_select 4" }
+		click { cmd "soldier_select 4" }
 	}
 	pic bt_actor5
 	{
@@ -312,7 +312,7 @@ menu hud
 		texl	"32 38"
 		texh	"60 74"
 		mousefx true
-		click { cmd "hud_select 5" }
+		click { cmd "soldier_select 5" }
 	}
 	pic bt_actor6
 	{
@@ -321,7 +321,7 @@ menu hud
 		texl	"64 38"
 		texh	"92 74"
 		mousefx true
-		click { cmd "hud_select 6" }
+		click { cmd "soldier_select 6" }
 	}
 	pic bt_actor7
 	{
@@ -330,7 +330,7 @@ menu hud
 		texl	"96 38"
 		texh	"124 74"
 		mousefx true
-		click { cmd "hud_select 7" }
+		click { cmd "soldier_select 7" }
 	}
 
 	// ==================

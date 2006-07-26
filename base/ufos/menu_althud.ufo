@@ -67,7 +67,7 @@ menu althud
 	{
 		image	althud/bar_teambox
 		pos		"856 640"
-		click	{ cmd "hud_select 0;" }
+		click	{ cmd "soldier_select 0;" }
 	}
 
 	pic bar_teamsep1
@@ -80,7 +80,7 @@ menu althud
 	{
 		image	althud/bar_teambox
 		pos		"776 640"
-		click	{ cmd "hud_select 1;" }
+		click	{ cmd "soldier_select 1;" }
 	}
 
 	pic bar_teamsep2
@@ -93,7 +93,7 @@ menu althud
 	{
 		image	althud/bar_teambox
 		pos		"696 640"
-		click	{ cmd "hud_select 2;" }
+		click	{ cmd "soldier_select 2;" }
 	}
 
 	pic bar_teamsep3
@@ -106,7 +106,7 @@ menu althud
 	{
 		image	althud/bar_teambox
 		pos		"616 640"
-		click	{ cmd "hud_select 3;" }
+		click	{ cmd "soldier_select 3;" }
 	}
 
 	pic bar_teamsep4
@@ -119,7 +119,7 @@ menu althud
 	{
 		image	althud/bar_teambox
 		pos		"536 640"
-		click	{ cmd "hud_select 4;" }
+		click	{ cmd "soldier_select 4;" }
 	}
 
 	pic bar_teamsep5
@@ -132,7 +132,7 @@ menu althud
 	{
 		image	althud/bar_teambox
 		pos		"456 640"
-		click	{ cmd "hud_select 5;" }
+		click	{ cmd "soldier_select 5;" }
 	}
 
 	pic bar_teamsep6
@@ -145,7 +145,7 @@ menu althud
 	{
 		image	althud/bar_teambox
 		pos		"376 640"
-		click	{ cmd "hud_select 6;" }
+		click	{ cmd "soldier_select 6;" }
 	}
 
 	pic bar_teamsep7
@@ -158,7 +158,7 @@ menu althud
 	{
 		image	althud/bar_teambox
 		pos		"296 640"
-		click	{ cmd "hud_select 7;" }
+		click	{ cmd "soldier_select 7;" }
 	}
 
 	pic bar_teamleft
