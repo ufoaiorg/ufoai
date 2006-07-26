@@ -856,13 +856,11 @@ MN_BaseMapClick
 static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 {
 	int row, col;
-	building_t *b, *entry;
+	building_t	*entry;
 
 	assert(baseCurrent);
 
-	b = baseCurrent->buildingCurrent;
-
-	if (b && b->buildingStatus == B_STATUS_NOT_SET) {
+	if (baseCurrent->buildingCurrent && baseCurrent->buildingCurrent->buildingStatus == B_STATUS_NOT_SET) {
 		for (row = 0; row < BASE_SIZE; row++)
 			for (col = 0; col < BASE_SIZE; col++)
 				if (baseCurrent->map[row][col] == -1 && x >= baseCurrent->posX[row][col]

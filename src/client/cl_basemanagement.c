@@ -148,7 +148,7 @@ static employeeType_t B_GetEmployeeType(char* type)
  * updates the cvar mn_building_status which is used in some menus to display
  * the building status
  */
-static void B_BuildingStatus(void)
+extern void B_BuildingStatus(void)
 {
 	int daysLeft;
 	int NumberOfBuildings = 0;
@@ -494,7 +494,8 @@ static void B_DrawBuilding(void)
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts)
 		Com_sprintf(menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.0f c\n"), building->fixCosts);
 
-	Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("%i Day(s) to build\n"), building->buildTime), MAX_LIST_CHAR );
+	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION)
+		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("%i Day(s) to build\n"), building->buildTime), MAX_LIST_CHAR );
 
 	if (building->varCosts)
 		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Running Costs:\t%1.0f c\n"), building->varCosts), MAX_LIST_CHAR);

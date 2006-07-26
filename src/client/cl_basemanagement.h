@@ -280,5 +280,6 @@ void B_SetBuildingByClick(int row, int col);
 void B_ResetBaseManagement(void);
 void B_ClearBase(base_t * base);
 void B_NewBases(void);
+void B_BuildingStatus(void);
 
 #endif /* CLIENT_CL_BASEMANGEMENT_H */
