@@ -1,0 +1,51 @@
+// ==================
+// PRODUCTION MENU
+// ==================
+menu production
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/prod_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/prod_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/prod_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/prod_lr
+		pos		"512 512"
+	}
+
+	// ==================
+	// init function
+	// ==================
+
+	func init
+	{
+		cmd "prod_init"
+	}
+}
