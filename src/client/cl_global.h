@@ -105,6 +105,11 @@ typedef struct globalData_s
 	/* already paid in this month? */
 	qboolean fund;
 
+	/* == production == */
+	/* we will allow only one active production at the same time for each base */
+	/* NOTE The facility to produce equipment should have the once-flag set */
+	production_t productions[MAX_BASES];
+
 	/* == Ranks == */
 	/* Global list of all ranks defined in medals.ufo. */
 	rank_t ranks[MAX_RANKS];

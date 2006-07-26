@@ -26,6 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_PROOUCE
 #define CLIENT_CL_PROOUCE
 
+/** @note:
+ * We can get the tech pointer from csi.ods
+ * the tech struct holds the time that is needed to produce
+ * the selected equipment
+ */
+
 typedef struct production_s
 {
 	int odjID; /* object id from global csi.ods struct */
