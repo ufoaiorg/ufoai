@@ -54,7 +54,7 @@ static int maskWidth, maskHeight;
 stats_t stats;
 
 extern cmdList_t game_commands[];
-extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, const actMis_t* mission);
+extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission);
 
 /*
 ============================================================================
@@ -1661,8 +1661,10 @@ static void CL_GameGo(void)
 	char expanded[MAX_QPATH];
 	char timeChar;
 
-	if (!curCampaign || !selMis || !baseCurrent)
+	if (!curCampaign || !selMis || !baseCurrent) {
+		Com_DPrintf("curCampaign: %p, selMis: %p, baseCurrent: %p\n", curCampaign, selMis, baseCurrent);
 		return;
+	}
 
 	/* update mission-status (active?) for the selected aircraft */
 	CL_CheckAircraft(&gd.bases[baseCurrent->idx].aircraft[gd.interceptAircraft]);

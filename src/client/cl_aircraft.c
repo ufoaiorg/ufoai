@@ -30,7 +30,7 @@ aircraft_t aircraft[MAX_AIRCRAFT];
 int numAircraft;
 
 static void CL_AircraftReturnToBase(aircraft_t *air);
-extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, const actMis_t* mission);
+extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission);
 
 /* == POPUP_AIRCRAFT ======================================================= */
 
@@ -44,9 +44,9 @@ typedef enum {
 	POPUP_AIRCRAFT_ACTION_BACKTOBASE = 1,	/**< Aircraft back to base */
 	POPUP_AIRCRAFT_ACTION_STOP = 2,			/**< Aircraft stops */
 	POPUP_AIRCRAFT_ACTION_MOVETOMISSION = 3,/**< Aircraft move to a mission */
-	
+
 	POPUP_AIRCRAFT_ACTION_MAX
-	
+
 } popup_aircraft_action_e;
 /**
  * @brief Structure to store information about popup_aircraft
@@ -57,7 +57,7 @@ typedef struct popup_aircarft_s {
 	popup_aircraft_action_e itemsAction[POPUP_AIRCRAFT_MAX_ITEMS];	/**< Action type of items */
 	int itemsId[POPUP_AIRCRAFT_MAX_ITEMS];	/**< IDs corresponding to items */
 	char text_popup[POPUP_AIRCARFT_MAX_TEXT];	/** Text displayed in popup_aircraft */
-	
+
 } popup_aircraft_t;
 
 popup_aircraft_t popupAircraft; /** Data about popup_aircraft */
@@ -82,7 +82,7 @@ extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft)
 	Q_strcat(popupAircraft.text_popup, va(_("Back to base\t%s\n"), gd.bases[aircraft->idxBase].name), POPUP_AIRCARFT_MAX_TEXT);
 	popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_STOP;
 	Q_strcat(popupAircraft.text_popup, _("Stop\n"), POPUP_AIRCARFT_MAX_TEXT);
-	
+
 	/* Set missions in popup_aircraft */
 	if (*aircraft->teamSize > 0) {
 		for (i = 0 ; i < ccs.numMissions ; i++) {
@@ -91,7 +91,7 @@ extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft)
 			Q_strcat(popupAircraft.text_popup, va(_("Mission\t%s (%s)\n"), _(ccs.mission[i].def->type), _(ccs.mission[i].def->location)), POPUP_AIRCARFT_MAX_TEXT);
 		}
 	}
-	
+
 	/* Display popup_aircraft menu */
 	MN_PushMenu("popup_aircraft");
 }
@@ -111,14 +111,14 @@ extern void CL_PopupAircraftClick_f(void) {
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num > popupAircraft.nbItems++)
 		return;
-	
+
 	MN_PopMenu(qfalse); /* Close popup */
-	
+
 	/* Get aircraft associated with the popup_aircraft */
 	aircraft = CL_AircraftGetFromIdx(popupAircraft.aircraft_idx);
 	if (aircraft == NULL)
 		return;
-	
+
 	/* Execute action corresponding to item selected */
 	switch (popupAircraft.itemsAction[num]) {
 		case POPUP_AIRCRAFT_ACTION_BACKTOBASE:	/* Aircraft back to base */
@@ -703,25 +703,25 @@ extern aircraft_t* CL_AircraftGetFromIdx(int idx) {
 		for (air = base->aircraft + base->numAircraftInBase - 1; air >= base->aircraft ; air--)
 			if (air->idx == idx)
 				return air;
-	
+
 	return NULL;
 }
 
 /**
  * @brief Sends the specified aircraft to specified mission
  */
-extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, const actMis_t* mission)
+extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission)
 {
 	int i;
 
-	if (! aircraft || ! mission)
+	if (!aircraft || !mission)
 		return qfalse;
 
 	if (! *(aircraft->teamSize)) {
 		MN_Popup(_("Notice"), _("Assign a team to aircraft"));
 		return qfalse;
 	}
-	
+
 	/* Get id of mission in ccs */
 	for (i=0 ; i < ccs.numMissions ; i++)
 		if (mission == ccs.mission + i) {
@@ -733,7 +733,6 @@ extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, const actMis_t* m
 			gd.interceptAircraft = aircraft->idxInBase;
 			baseCurrent = aircraft->homebase;
 			selMis = mission;
-			
 			return qtrue;
 		}
 

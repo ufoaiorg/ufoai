@@ -77,7 +77,7 @@ typedef struct aircraft_s {
 
 	int numUpgrades;
 	struct aircraft_s *next;	/* just for linking purposes - not needed in general */
-	
+
 	int mission;			/* The mission the aircraft is moving to (id in ccs) */
 } aircraft_t;
 
