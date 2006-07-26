@@ -186,6 +186,30 @@ menu bases
 		align	uc
 	}
 
+	pic production
+	{
+		tooltip	"_Produce new equipment"
+		image	menu/button
+		pos	"755 480"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "mn_push production"
+		}
+		out		{ *txt_production color "0 0.8 0 1" *production texl "0 0" *production texh "230 64" }
+		in		{ *txt_production color "1 1 1 1" *production texl "230 0" *production texh "460 64" }
+	}
+	string txt_production
+	{
+		string	"_Production"
+		color	"0 0.8 0 1"
+		pos	"870 496"
+		font	f_menu
+		align	uc
+	}
+
 	// ==================
 	// text and info
 	// ==================
