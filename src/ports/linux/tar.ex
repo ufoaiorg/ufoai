@@ -3,6 +3,7 @@ ufoai-*
 *.map
 src
 *.bak
+*.o
 *.old
 *.tmp
 *.dll
@@ -11,6 +12,8 @@ src
 *.diff
 *.out
 *.blend
-debugi386
+debug*
+release*
+build*
 debian
 Makefile*

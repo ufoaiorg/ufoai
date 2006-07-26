@@ -48,45 +48,45 @@ menu buy
 	func buy_clear
 	{
 		*txt_item0 color "0 .78 0 1"
-		*txt_item1 color "0 .78 0 1"
+		*txt_item1 color "0 .48 0 1"
 		*txt_item2 color "0 .78 0 1"
-		*txt_item3 color "0 .78 0 1"
+		*txt_item3 color "0 .48 0 1"
 		*txt_item4 color "0 .78 0 1"
-		*txt_item5 color "0 .78 0 1"
+		*txt_item5 color "0 .48 0 1"
 		*txt_item6 color "0 .78 0 1"
-		*txt_item7 color "0 .78 0 1"
+		*txt_item7 color "0 .48 0 1"
 		*txt_item8 color "0 .78 0 1"
-		*txt_item9 color "0 .78 0 1"
+		*txt_item9 color "0 .48 0 1"
 		*txt_item10 color "0 .78 0 1"
-		*txt_item11 color "0 .78 0 1"
+		*txt_item11 color "0 .48 0 1"
 		*txt_item12 color "0 .78 0 1"
-		*txt_item13 color "0 .78 0 1"
+		*txt_item13 color "0 .48 0 1"
 		*txt_item14 color "0 .78 0 1"
-		*txt_item15 color "0 .78 0 1"
+		*txt_item15 color "0 .48 0 1"
 		*txt_item16 color "0 .78 0 1"
-		*txt_item17 color "0 .78 0 1"
+		*txt_item17 color "0 .48 0 1"
 		*txt_item18 color "0 .78 0 1"
-		*txt_item19 color "0 .78 0 1"
+		*txt_item19 color "0 .48 0 1"
 		*txt_item20 color "0 .78 0 1"
-		*txt_item21 color "0 .78 0 1"
+		*txt_item21 color "0 .48 0 1"
 		*txt_item22 color "0 .78 0 1"
-		*txt_item23 color "0 .78 0 1"
+		*txt_item23 color "0 .48 0 1"
 		*txt_item24 color "0 .78 0 1"
-		*txt_item25 color "0 .78 0 1"
+		*txt_item25 color "0 .48 0 1"
 		*txt_item26 color "0 .78 0 1"
-		*txt_item27 color "0 .78 0 1"
+		*txt_item27 color "0 .48 0 1"
 	}
 
-	confunc buyselect0  { buy_clear *txt_item0  color "1 1 1 1" }
-	confunc buyselect1  { buy_clear *txt_item1  color "1 1 1 1" }
-	confunc buyselect2  { buy_clear *txt_item2  color "1 1 1 1" }
-	confunc buyselect3  { buy_clear *txt_item3  color "1 1 1 1" }
-	confunc buyselect4  { buy_clear *txt_item4  color "1 1 1 1" }
-	confunc buyselect5  { buy_clear *txt_item5  color "1 1 1 1" }
-	confunc buyselect6  { buy_clear *txt_item6  color "1 1 1 1" }
-	confunc buyselect7  { buy_clear *txt_item7  color "1 1 1 1" }
-	confunc buyselect8  { buy_clear *txt_item8  color "1 1 1 1" }
-	confunc buyselect9  { buy_clear *txt_item9  color "1 1 1 1" }
+	confunc buyselect0 { buy_clear *txt_item0  color "1 1 1 1" }
+	confunc buyselect1 { buy_clear *txt_item1  color "1 1 1 1" }
+	confunc buyselect2 { buy_clear *txt_item2  color "1 1 1 1" }
+	confunc buyselect3 { buy_clear *txt_item3  color "1 1 1 1" }
+	confunc buyselect4 { buy_clear *txt_item4  color "1 1 1 1" }
+	confunc buyselect5 { buy_clear *txt_item5  color "1 1 1 1" }
+	confunc buyselect6 { buy_clear *txt_item6  color "1 1 1 1" }
+	confunc buyselect7 { buy_clear *txt_item7  color "1 1 1 1" }
+	confunc buyselect8 { buy_clear *txt_item8  color "1 1 1 1" }
+	confunc buyselect9 { buy_clear *txt_item9  color "1 1 1 1" }
 	confunc buyselect10 { buy_clear *txt_item10 color "1 1 1 1" }
 	confunc buyselect11 { buy_clear *txt_item11 color "1 1 1 1" }
 	confunc buyselect12 { buy_clear *txt_item12 color "1 1 1 1" }
@@ -111,140 +111,140 @@ menu buy
 	string txt_supply0	{ string "*cvar mn_supply0"		pos "440 40"	color "0 .78 0 1"	align ur }
 	string txt_price0	{ string "*cvar mn_price0"		pos "540 40"	color "0 .78 0 1"	align ur }
 
-	string txt_item1	{ string "*cvar mn_item1"		pos "50 65"		color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 1" } }
-	string txt_storge1	{ string "*cvar mn_storage1"	pos "345 65"	color "0 .78 0 1" }
-	string txt_supply1	{ string "*cvar mn_supply1"		pos "440 65"	color "0 .78 0 1"	align ur }
-	string txt_price1	{ string "*cvar mn_price1"		pos "540 65"	color "0 .78 0 1"	align ur }
+	string txt_item1	{ string "*cvar mn_item1"		pos "50 65"		color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 1" } }
+	string txt_storge1	{ string "*cvar mn_storage1"	pos "345 65"	color "0 .48 0 1" }
+	string txt_supply1	{ string "*cvar mn_supply1"		pos "440 65"	color "0 .48 0 1"	align ur }
+	string txt_price1	{ string "*cvar mn_price1"		pos "540 65"	color "0 .48 0 1"	align ur }
 
 	string txt_item2	{ string "*cvar mn_item2"		pos "50 90"		color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 2" } }
 	string txt_storge2	{ string "*cvar mn_storage2"	pos "345 90"	color "0 .78 0 1" }
 	string txt_supply2	{ string "*cvar mn_supply2"		pos "440 90"	color "0 .78 0 1"	align ur }
 	string txt_price2	{ string "*cvar mn_price2"		pos "540 90"	color "0 .78 0 1"	align ur }
 
-	string txt_item3	{ string "*cvar mn_item3"		pos "50 115"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 3" } }
-	string txt_storge3	{ string "*cvar mn_storage3"	pos "345 115"	color "0 .78 0 1" }
-	string txt_supply3	{ string "*cvar mn_supply3"		pos "440 115"	color "0 .78 0 1"	align ur }
-	string txt_price3	{ string "*cvar mn_price3"		pos "540 115"	color "0 .78 0 1"	align ur }
+	string txt_item3	{ string "*cvar mn_item3"		pos "50 115"	color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 3" } }
+	string txt_storge3	{ string "*cvar mn_storage3"	pos "345 115"	color "0 .48 0 1" }
+	string txt_supply3	{ string "*cvar mn_supply3"		pos "440 115"	color "0 .48 0 1"	align ur }
+	string txt_price3	{ string "*cvar mn_price3"		pos "540 115"	color "0 .48 0 1"	align ur }
 
 	string txt_item4	{ string "*cvar mn_item4"		pos "50 140"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 4" } }
 	string txt_storge4	{ string "*cvar mn_storage4"	pos "345 140"	color "0 .78 0 1" }
 	string txt_supply4	{ string "*cvar mn_supply4"		pos "440 140"	color "0 .78 0 1"	align ur }
 	string txt_price4	{ string "*cvar mn_price4"		pos "540 140"	color "0 .78 0 1"	align ur }
 
-	string txt_item5	{ string "*cvar mn_item5"		pos "50 165"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 5" } }
-	string txt_storge5	{ string "*cvar mn_storage5"	pos "345 165"	color "0 .78 0 1" }
-	string txt_supply5	{ string "*cvar mn_supply5"		pos "440 165"	color "0 .78 0 1"	align ur }
-	string txt_price5	{ string "*cvar mn_price5"		pos "540 165"	color "0 .78 0 1"	align ur }
+	string txt_item5	{ string "*cvar mn_item5"		pos "50 165"	color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 5" } }
+	string txt_storge5	{ string "*cvar mn_storage5"	pos "345 165"	color "0 .48 0 1" }
+	string txt_supply5	{ string "*cvar mn_supply5"		pos "440 165"	color "0 .48 0 1"	align ur }
+	string txt_price5	{ string "*cvar mn_price5"		pos "540 165"	color "0 .48 0 1"	align ur }
 
 	string txt_item6	{ string "*cvar mn_item6"		pos "50 190"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 6" } }
 	string txt_storge6	{ string "*cvar mn_storage6"	pos "345 190"	color "0 .78 0 1" }
 	string txt_supply6	{ string "*cvar mn_supply6"		pos "440 190"	color "0 .78 0 1"	align ur }
 	string txt_price6	{ string "*cvar mn_price6"		pos "540 190"	color "0 .78 0 1"	align ur }
 
-	string txt_item7	{ string "*cvar mn_item7"		pos "50 215"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 7" } }
-	string txt_storge7	{ string "*cvar mn_storage7"	pos "345 215"	color "0 .78 0 1" }
-	string txt_supply7	{ string "*cvar mn_supply7"		pos "440 215"	color "0 .78 0 1"	align ur }
-	string txt_price7	{ string "*cvar mn_price7"		pos "540 215"	color "0 .78 0 1"	align ur }
+	string txt_item7	{ string "*cvar mn_item7"		pos "50 215"	color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 7" } }
+	string txt_storge7	{ string "*cvar mn_storage7"	pos "345 215"	color "0 .48 0 1" }
+	string txt_supply7	{ string "*cvar mn_supply7"		pos "440 215"	color "0 .48 0 1"	align ur }
+	string txt_price7	{ string "*cvar mn_price7"		pos "540 215"	color "0 .48 0 1"	align ur }
 
 	string txt_item8	{ string "*cvar mn_item8"		pos "50 240"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 8" } }
 	string txt_storge8	{ string "*cvar mn_storage8"	pos "345 240"	color "0 .78 0 1" }
 	string txt_supply8	{ string "*cvar mn_supply8"		pos "440 240"	color "0 .78 0 1"	align ur }
 	string txt_price8	{ string "*cvar mn_price8"		pos "540 240"	color "0 .78 0 1"	align ur }
 
-	string txt_item9	{ string "*cvar mn_item9"		pos "50 265"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 9" } }
-	string txt_storge9	{ string "*cvar mn_storage9"	pos "345 265"	color "0 .78 0 1" }
-	string txt_supply9	{ string "*cvar mn_supply9"		pos "440 265"	color "0 .78 0 1"	align ur }
-	string txt_price9	{ string "*cvar mn_price9"		pos "540 265"	color "0 .78 0 1"	align ur }
+	string txt_item9	{ string "*cvar mn_item9"		pos "50 265"	color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 9" } }
+	string txt_storge9	{ string "*cvar mn_storage9"	pos "345 265"	color "0 .48 0 1" }
+	string txt_supply9	{ string "*cvar mn_supply9"		pos "440 265"	color "0 .48 0 1"	align ur }
+	string txt_price9	{ string "*cvar mn_price9"		pos "540 265"	color "0 .48 0 1"	align ur }
 
 	string txt_item10	{ string "*cvar mn_item10"		pos "50 290"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 10" } }
 	string txt_storge10	{ string "*cvar mn_storage10"	pos "345 290"	color "0 .78 0 1" }
 	string txt_supply10	{ string "*cvar mn_supply10"	pos "440 290"	color "0 .78 0 1"	align ur }
 	string txt_price10	{ string "*cvar mn_price10"		pos "540 290"	color "0 .78 0 1"	align ur }
 
-	string txt_item11	{ string "*cvar mn_item11"		pos "50 315"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 11" } }
-	string txt_storge11	{ string "*cvar mn_storage11"	pos "345 315"	color "0 .78 0 1" }
-	string txt_supply11	{ string "*cvar mn_supply11"	pos "440 315"	color "0 .78 0 1"	align ur }
-	string txt_price11	{ string "*cvar mn_price11"		pos "540 315"	color "0 .78 0 1"	align ur }
+	string txt_item11	{ string "*cvar mn_item11"		pos "50 315"	color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 11" } }
+	string txt_storge11	{ string "*cvar mn_storage11"	pos "345 315"	color "0 .48 0 1" }
+	string txt_supply11	{ string "*cvar mn_supply11"	pos "440 315"	color "0 .48 0 1"	align ur }
+	string txt_price11	{ string "*cvar mn_price11"		pos "540 315"	color "0 .48 0 1"	align ur }
 
 	string txt_item12	{ string "*cvar mn_item12"		pos "50 340"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 12" } }
 	string txt_storge12	{ string "*cvar mn_storage12"	pos "345 340"	color "0 .78 0 1" }
 	string txt_supply12	{ string "*cvar mn_supply12"	pos "440 340"	color "0 .78 0 1"	align ur }
 	string txt_price12	{ string "*cvar mn_price12"		pos "540 340"	color "0 .78 0 1"	align ur }
 
-	string txt_item13	{ string "*cvar mn_item13"		pos "50 365"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 13" } }
-	string txt_storge13	{ string "*cvar mn_storage13"	pos "345 365"	color "0 .78 0 1" }
-	string txt_supply13	{ string "*cvar mn_supply13"	pos "440 365"	color "0 .78 0 1"	align ur }
-	string txt_price13	{ string "*cvar mn_price13"		pos "540 365"	color "0 .78 0 1"	align ur }
+	string txt_item13	{ string "*cvar mn_item13"		pos "50 365"	color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 13" } }
+	string txt_storge13	{ string "*cvar mn_storage13"	pos "345 365"	color "0 .48 0 1" }
+	string txt_supply13	{ string "*cvar mn_supply13"	pos "440 365"	color "0 .48 0 1"	align ur }
+	string txt_price13	{ string "*cvar mn_price13"		pos "540 365"	color "0 .48 0 1"	align ur }
 
 	string txt_item14	{ string "*cvar mn_item14"		pos "50 390"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 14" } }
 	string txt_storge14	{ string "*cvar mn_storage14"	pos "345 390"	color "0 .78 0 1" }
 	string txt_supply14	{ string "*cvar mn_supply14"	pos "440 390"	color "0 .78 0 1"	align ur }
 	string txt_price14	{ string "*cvar mn_price14"		pos "540 390"	color "0 .78 0 1"	align ur }
 
-	string txt_item15	{ string "*cvar mn_item15"		pos "50 415"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 15" } }
-	string txt_storge15	{ string "*cvar mn_storage15"	pos "345 415"	color "0 .78 0 1" }
-	string txt_supply15	{ string "*cvar mn_supply15"	pos "440 415"	color "0 .78 0 1"	align ur }
-	string txt_price15	{ string "*cvar mn_price15"		pos "540 415"	color "0 .78 0 1"	align ur }
+	string txt_item15	{ string "*cvar mn_item15"		pos "50 415"	color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 15" } }
+	string txt_storge15	{ string "*cvar mn_storage15"	pos "345 415"	color "0 .48 0 1" }
+	string txt_supply15	{ string "*cvar mn_supply15"	pos "440 415"	color "0 .48 0 1"	align ur }
+	string txt_price15	{ string "*cvar mn_price15"		pos "540 415"	color "0 .48 0 1"	align ur }
 
 	string txt_item16	{ string "*cvar mn_item16"		pos "50 440"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 16" } }
 	string txt_storge16	{ string "*cvar mn_storage16"	pos "345 440"	color "0 .78 0 1" }
 	string txt_supply16	{ string "*cvar mn_supply16"	pos "440 440"	color "0 .78 0 1"	align ur }
 	string txt_price16	{ string "*cvar mn_price16"		pos "540 440"	color "0 .78 0 1"	align ur }
 
-	string txt_item17	{ string "*cvar mn_item17"		pos "50 465"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 17" } }
-	string txt_storge17	{ string "*cvar mn_storage17"	pos "345 465"	color "0 .78 0 1" }
-	string txt_supply17	{ string "*cvar mn_supply17"	pos "440 465"	color "0 .78 0 1"	align ur }
-	string txt_price17	{ string "*cvar mn_price17"		pos "540 465"	color "0 .78 0 1"	align ur }
+	string txt_item17	{ string "*cvar mn_item17"		pos "50 465"	color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 17" } }
+	string txt_storge17	{ string "*cvar mn_storage17"	pos "345 465"	color "0 .48 0 1" }
+	string txt_supply17	{ string "*cvar mn_supply17"	pos "440 465"	color "0 .48 0 1"	align ur }
+	string txt_price17	{ string "*cvar mn_price17"		pos "540 465"	color "0 .48 0 1"	align ur }
 
 	string txt_item18	{ string "*cvar mn_item18"		pos "50 490"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 18" } }
 	string txt_storge18	{ string "*cvar mn_storage18"	pos "345 490"	color "0 .78 0 1" }
 	string txt_supply18	{ string "*cvar mn_supply18"	pos "440 490"	color "0 .78 0 1"	align ur }
 	string txt_price18	{ string "*cvar mn_price18"		pos "540 490"	color "0 .78 0 1"	align ur }
 
-	string txt_item19	{ string "*cvar mn_item19"		pos "50 515"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 19" } }
-	string txt_storge19	{ string "*cvar mn_storage19"	pos "345 515"	color "0 .78 0 1" }
-	string txt_supply19	{ string "*cvar mn_supply19"	pos "440 515"	color "0 .78 0 1"	align ur }
-	string txt_price19	{ string "*cvar mn_price19"		pos "540 515"	color "0 .78 0 1"	align ur }
+	string txt_item19	{ string "*cvar mn_item19"		pos "50 515"	color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 19" } }
+	string txt_storge19	{ string "*cvar mn_storage19"	pos "345 515"	color "0 .48 0 1" }
+	string txt_supply19	{ string "*cvar mn_supply19"	pos "440 515"	color "0 .48 0 1"	align ur }
+	string txt_price19	{ string "*cvar mn_price19"		pos "540 515"	color "0 .48 0 1"	align ur }
 
 	string txt_item20	{ string "*cvar mn_item20"		pos "50 540"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 20" } }
 	string txt_storge20	{ string "*cvar mn_storage20"	pos "345 540"	color "0 .78 0 1" }
 	string txt_supply20	{ string "*cvar mn_supply20"	pos "440 540"	color "0 .78 0 1"	align ur }
 	string txt_price20	{ string "*cvar mn_price20"		pos "540 540"	color "0 .78 0 1"	align ur }
 
-	string txt_item21	{ string "*cvar mn_item21"		pos "50 565"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 21" } }
-	string txt_storge21	{ string "*cvar mn_storage21"	pos "345 565"	color "0 .78 0 1" }
-	string txt_supply21	{ string "*cvar mn_supply21"	pos "440 565"	color "0 .78 0 1"	align ur }
-	string txt_price21	{ string "*cvar mn_price21"		pos "540 565"	color "0 .78 0 1"	align ur }
+	string txt_item21	{ string "*cvar mn_item21"		pos "50 565"	color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 21" } }
+	string txt_storge21	{ string "*cvar mn_storage21"	pos "345 565"	color "0 .48 0 1" }
+	string txt_supply21	{ string "*cvar mn_supply21"	pos "440 565"	color "0 .48 0 1"	align ur }
+	string txt_price21	{ string "*cvar mn_price21"		pos "540 565"	color "0 .48 0 1"	align ur }
 
 	string txt_item22	{ string "*cvar mn_item22"		pos "50 590"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 22" } }
 	string txt_storge22	{ string "*cvar mn_storage22"	pos "345 590"	color "0 .78 0 1" }
 	string txt_supply22	{ string "*cvar mn_supply22"	pos "440 590"	color "0 .78 0 1"	align ur }
 	string txt_price22	{ string "*cvar mn_price22"		pos "540 590"	color "0 .78 0 1"	align ur }
 
-	string txt_item23	{ string "*cvar mn_item23"		pos "50 615"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 23" } }
-	string txt_storge23	{ string "*cvar mn_storage23"	pos "345 615"	color "0 .78 0 1" }
-	string txt_supply23	{ string "*cvar mn_supply23"	pos "440 615"	color "0 .78 0 1"	align ur }
-	string txt_price23	{ string "*cvar mn_price23"		pos "540 615"	color "0 .78 0 1"	align ur }
+	string txt_item23	{ string "*cvar mn_item23"		pos "50 615"	color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 23" } }
+	string txt_storge23	{ string "*cvar mn_storage23"	pos "345 615"	color "0 .48 0 1" }
+	string txt_supply23	{ string "*cvar mn_supply23"	pos "440 615"	color "0 .48 0 1"	align ur }
+	string txt_price23	{ string "*cvar mn_price23"		pos "540 615"	color "0 .48 0 1"	align ur }
 
 	string txt_item24	{ string "*cvar mn_item24"		pos "50 640"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 24" } }
 	string txt_storge24	{ string "*cvar mn_storage24"	pos "345 640"	color "0 .78 0 1" }
 	string txt_supply24	{ string "*cvar mn_supply24"	pos "440 640"	color "0 .78 0 1"	align ur }
 	string txt_price24	{ string "*cvar mn_price24"		pos "540 640"	color "0 .78 0 1"	align ur }
 
-	string txt_item25	{ string "*cvar mn_item25"		pos "50 665"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 25" } }
-	string txt_storge25	{ string "*cvar mn_storage25"	pos "345 665"	color "0 .78 0 1" }
-	string txt_supply25	{ string "*cvar mn_supply25"	pos "440 665"	color "0 .78 0 1"	align ur }
-	string txt_price25	{ string "*cvar mn_price25"		pos "540 665"	color "0 .78 0 1"	align ur }
+	string txt_item25	{ string "*cvar mn_item25"		pos "50 665"	color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 25" } }
+	string txt_storge25	{ string "*cvar mn_storage25"	pos "345 665"	color "0 .48 0 1" }
+	string txt_supply25	{ string "*cvar mn_supply25"	pos "440 665"	color "0 .48 0 1"	align ur }
+	string txt_price25	{ string "*cvar mn_price25"		pos "540 665"	color "0 .48 0 1"	align ur }
 
 	string txt_item26	{ string "*cvar mn_item26"		pos "50 690"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 26" } }
 	string txt_storge26	{ string "*cvar mn_storage26"	pos "345 690"	color "0 .78 0 1" }
 	string txt_supply26	{ string "*cvar mn_supply26"	pos "440 690"	color "0 .78 0 1"	align ur }
 	string txt_price26	{ string "*cvar mn_price26"		pos "540 690"	color "0 .78 0 1"	align ur }
 
-	string txt_item27	{ string "*cvar mn_item27"		pos "50 715"	color "0 .78 0 1"	size "275 16"	click { cmd "buy_select 27" } }
-	string txt_storge27	{ string "*cvar mn_storage27"	pos "345 715"	color "0 .78 0 1" }
-	string txt_supply27	{ string "*cvar mn_supply27"	pos "440 715"	color "0 .78 0 1"	align ur }
-	string txt_price27	{ string "*cvar mn_price27"		pos "540 715"	color "0 .78 0 1"	align ur }
+	string txt_item27	{ string "*cvar mn_item27"		pos "50 715"	color "0 .48 0 1"	size "275 16"	click { cmd "buy_select 27" } }
+	string txt_storge27	{ string "*cvar mn_storage27"	pos "345 715"	color "0 .48 0 1" }
+	string txt_supply27	{ string "*cvar mn_supply27"	pos "440 715"	color "0 .48 0 1"	align ur }
+	string txt_price27	{ string "*cvar mn_price27"		pos "540 715"	color "0 .48 0 1"	align ur }
 
 	// ==================
 	// buy/sell buttons

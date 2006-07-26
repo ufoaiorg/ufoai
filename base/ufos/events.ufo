@@ -16,12 +16,12 @@
 //		Link to the ufopedia entry.
 // ==============================================
 
-news_event mumbay
+news_event mumbai
 {
-	name "_Devastating alien terror attack on mumbay"
+	name "_Devastating alien terror attack on Mumbai"
 	min_date "0 0"
 	max_date "0 0"
-	pedia	rs_news_mumbay
+	pedia	rs_news_mumbai
 }
 
 news_event stealth_craft_sighted
@@ -29,16 +29,16 @@ news_event stealth_craft_sighted
 	name "_Alien stealth aircraft sighted"
 	min_date "1 100"	// one year and 100 days after start
 	max_date "1 150"
-	event	mumbay
+	event	mumbai
 	pedia	rs_news_stealth_craft_sighted
 }
 
 // pedia entries for the above
 //
-//tech rs_news_mumbay
+//tech rs_news_mumbai
 //{
 //	type	news
-//	description	"_mumbay_txt"
+//	description	"_mumbai_txt"
 //
 //	requires	nothing
 //	time	999999

@@ -1018,7 +1018,7 @@ menu mp_create_server
 	{
 		string	"_Team preference:"
 		pos	"500 260"
-		tooltip	"_Sets the prefered team"
+		tooltip	"_Sets the preferred team"
 	}
 	string server_teamnum_value
 	{

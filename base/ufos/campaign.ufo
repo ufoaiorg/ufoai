@@ -62,7 +62,7 @@ mission mine
 {
 	location	"_Wellington"
 	type		"_Terror Attack"
-	text		"_There are rumors of a mine being\overrun by aliens. Altough this\source of information is doubtful,\you'll need to investigate.\"
+	text		"_There are rumors of a mine being\overrun by aliens. Although this\source of information is doubtful,\you'll need to investigate.\"
 	map		mine01
 	music		mission4
 	pos		"-174 -41"
@@ -534,7 +534,7 @@ mission rocketsilo
 {
 	location	"_TODO"
 	type		"_Terror Attack"
-	text		"_The Aliens have tacken over a rocket silo. Go and capture it again."
+	text		"_The Aliens have taken over a rocket silo. Go and capture it again."
 	map		rocketsilo06
 	music		mission3
 	pos		"308 412"

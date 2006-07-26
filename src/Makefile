@@ -329,18 +329,18 @@ endif
 
 debug: build_debug copy_debug
 all: build_debug build_release lang
-installer: win32installer linuxinstaller
+installer: win32installer linuxinstaller sourcearchive
 mappack:
-	tar -cvjp --exclude-from=linux/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ../base/maps
+	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ../base/maps
 
 win32installer:
 	makensis win32/installer.nsi
 
 linuxinstaller:
-	tar -cvjp --exclude-from=linux/tar.ex -f ufoai-$(VERSION)-linux.tar.bz2 ../
+	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-linux.tar.bz2 ../
 
 sourcearchive:
-	tar -cvjp --exclude-from=linux/tar.ex -f ufoai-$(VERSION)-source.tar.bz2 ./
+	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-source.tar.bz2 ./
 
 deb:
 	debuild binary

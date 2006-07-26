@@ -528,7 +528,7 @@ static void CL_CampaignAddMission(setState_t * set)
 		mis->realPos[1] = baseCurrent->pos[1];
 		/* Add message to message-system. */
 		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base %s is under attack."), baseCurrent->name );
-		MN_AddNewMessage(_("Baseattack"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
+		MN_AddNewMessage(_("Base Attack"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
 
 		Cbuf_ExecuteText(EXEC_NOW, va("base_attack %i", baseCurrent->idx));
 	} else {
@@ -1677,7 +1677,7 @@ static void CL_GameGo(void)
 		return;
 	} else if ((!mis->active || (gd.interceptAircraft >= 0 && !baseCurrent->numOnTeam[gd.interceptAircraft]))
 		&& ccs.singleplayer)
-		/* dropship not near landingzone */
+		/* dropship not near landing zone */
 		return;
 
 	/* start the map */
@@ -1789,7 +1789,7 @@ void CL_GameAutoGo(void)
 	/* start the map */
 	mis = selMis->def;
 	if (!mis->active) {
-		MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landingzone"), qfalse, MSG_STANDARD, NULL);
+		MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
 		return;
 	} else if (mis->storyRelated) {
 		Com_DPrintf("You have to play this mission, because it's story related\n");

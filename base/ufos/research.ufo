@@ -91,7 +91,6 @@ tech rs_plasma
 	description	"_plasma_txt"
 
 	requires	nothing
-
 	time	30 // 90
 	researched	false
 }
@@ -101,13 +100,11 @@ tech rs_tachyon
 	type	tech
 	name	"_Tachyon Control"
 	up_chapter	tech
+	description	"_tachyon_txt"
 
 	requires	nothing
-	description	"_tachyon_txt"
 	time	50 // 120
 	researched	false
-
-	//image_top  xxxxx
 }
 
 tech rs_nano
@@ -126,6 +123,8 @@ tech rs_advanced_armor
 {
 	type	tech
 	name	"_Advanced Armor Fabrics"
+	up_chapter	tech
+	description	"_armor_fabrics_txt"
 
 	requires	"rs_nano rs_tachyon"
 	time	120 // 300
@@ -1051,14 +1050,14 @@ tech rs_building_entrance
 	researched	true
 }
 
-tech rs_building_commando
+tech rs_building_command
 {
 	type	building
-	description	"_b_commando_txt"
+	description	"_b_command_txt"
 	up_chapter	buildings
 
 	requires	initial
-	provides	building_commando
+	provides	building_command
 	time	0
 	researched	true
 }
@@ -1335,7 +1334,7 @@ tech rs_alien_ortnok_interrogation
 tech rs_alien_ortnok_light
 {
 	type	alien
-	name	 "_Ortnok TODO: FIND A NAME"
+	name	 "_Ortnok Worker"
 	description	"_ortnok_light_txt"
 	up_chapter	aliens
 
