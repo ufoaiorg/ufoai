@@ -730,6 +730,10 @@ extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, const actMis_t* m
 			aircraft->time = 0;
 			aircraft->point = 0;
 			aircraft->mission = i;
+			gd.interceptAircraft = aircraft->idxInBase;
+			baseCurrent = aircraft->homebase;
+			selMis = mission;
+			
 			return qtrue;
 		}
 

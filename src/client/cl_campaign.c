@@ -682,11 +682,9 @@ static void CL_SelectAircraft_f(void)
 			num -= gd.bases[j].numAircraftInBase;
 			continue;
 		} else if (num >= 0 && num < gd.bases[j].numAircraftInBase) {
-			gd.interceptAircraft = num;
-			Com_DPrintf("Selected aircraft: %s\n", gd.bases[j].aircraft[gd.interceptAircraft].name);
+			Com_DPrintf("Selected aircraft: %s\n", gd.bases[j].aircraft[num].name);
 
-			if (CL_SendAircraftToMission(gd.bases[j].aircraft + gd.interceptAircraft, selMis)) {
-				baseCurrent = gd.bases[j].aircraft[gd.interceptAircraft].homebase;
+			if (CL_SendAircraftToMission(gd.bases[j].aircraft + num, selMis)) {
 				baseCurrent->aircraftCurrent = num;
 				CL_AircraftSelect();
 				MN_PopMenu(qfalse);
