@@ -682,6 +682,9 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter);
 /* cl_research.c */
 #include "cl_research.h"
 
+/* cl_produce.c */
+#include "cl_produce.h"
+
 /* SAVEGAMES */
 #ifndef SAVE_FILE_VERSION
 #define SAVE_FILE_VERSION 4

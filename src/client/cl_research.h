@@ -85,6 +85,8 @@ typedef struct technology_s {
 	byte needsCollected;		/* Is a collected item neccessary to research this item? */
 	byte statusResearchable;	/* Is this item researchable? */
 
+	int produceTime;			/* how many days for self production */
+
 	/* Pedia info */
 	int up_chapter;				/* pedia chapter as stored in research.ufo. */
 	int prev;					/* Previous tech in pedia. */

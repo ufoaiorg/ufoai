@@ -2178,6 +2178,7 @@ void MN_ResetMenus(void)
 	UP_ResetUfopedia();
 	B_ResetBaseManagement();
 	RS_ResetResearch();
+	PR_ResetProduction();
 	MAP_Reset();
 }
 

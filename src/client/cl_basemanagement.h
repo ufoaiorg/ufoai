@@ -269,15 +269,6 @@ void B_BaseAttack(void);
 building_t *B_GetBuildingByIdx(int idx);
 building_t *B_GetBuildingType(char *buildingName);
 
-typedef struct production_s {
-	char id[MAX_VAR];
-	char name[MAX_VAR];
-	char text[MAX_VAR];			/*short description */
-	int amount;
-	char menu[MAX_VAR];
-	technology_t *tech;
-} production_t;
-
 extern vec2_t newBasePos;
 
 void B_BuildingInit(void);
