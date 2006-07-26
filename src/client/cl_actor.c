@@ -632,8 +632,7 @@ qboolean CL_ActorSelect(le_t * le)
 	/* select him */
 	if (selActor)
 		selActor->selected = qfalse;
-	if (le)
-		le->selected = qtrue;
+	le->selected = qtrue;
 	selActor = le;
 	menuInventory = &selActor->i;
 
@@ -1218,6 +1217,10 @@ void CL_ActorDie(sizebuf_t * sb)
 	/* calculate possible moves */
 	CL_BuildForbiddenList();
 	Grid_MoveCalc(&clMap, le->pos, MAX_ROUTE, fb_list, fb_length);
+	/* this is only needed when we are in confirm actions mode */
+	/* without this call the move tracer will be drawn from the killed le */
+	if (selActor && confirm_actions->value)
+		Grid_MoveCalc(&clMap, selActor->pos, MAX_ROUTE, fb_list, fb_length);
 
 	CL_RemoveActorFromTeamList(le);
 }
