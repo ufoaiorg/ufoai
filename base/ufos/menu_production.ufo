@@ -69,7 +69,7 @@ menu production
 		pos		"40 30"
 		size	"286 710"
 //		bgcolor "1 1 1 0.5"
-		format	"20 0"
+		format	"22 0"
 		num	15
 		click
 		rclick
@@ -81,7 +81,7 @@ menu production
 		pos		"336 30"
 		size	"114 710"
 //		bgcolor "1 1 1 0.5"
-		format	"20 0"
+		format	"22 0"
 		num	16
 		mousefx	true
 	}
