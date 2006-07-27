@@ -88,7 +88,8 @@ static value_t valid_vars[] = {
 /**
  * @brief Check if an item exists in a list, return its position in list or -1
  */
-extern int CL_ListIsItemExists(void* list[], int numList, const void* item) {
+extern int CL_ListIsItemExists(void* list[], int numList, const void* item)
+{
 	int num;
 
 	for (num = 0 ; num < numList ; num++, list++)
@@ -101,7 +102,8 @@ extern int CL_ListIsItemExists(void* list[], int numList, const void* item) {
 /**
  * @brief Add an item in a list
  */
-extern qboolean CL_ListAddItem(void* list[], int* numList, int maxNumList, void* item) {
+extern qboolean CL_ListAddItem(void* list[], int* numList, int maxNumList, void* item)
+{
 	if (*numList >= maxNumList)
 		return qfalse;
 
@@ -113,7 +115,8 @@ extern qboolean CL_ListAddItem(void* list[], int* numList, int maxNumList, void*
 /**
  * @brief Remove an item from a list
  */
-extern qboolean CL_ListRemoveItem(void* list[], int* numList, void* item) {
+extern qboolean CL_ListRemoveItem(void* list[], int* numList, void* item)
+{
 	int i;
 
 	for (i=0 ; i < *numList ; i++, list++)
@@ -129,7 +132,8 @@ extern qboolean CL_ListRemoveItem(void* list[], int* numList, void* item) {
 /**
  * @brief Remove an item from a list, from its position in list
  */
-extern qboolean CL_ListRemoveItemNum(void* list[], int* numList, int numItem) {
+extern qboolean CL_ListRemoveItemNum(void* list[], int* numList, int numItem)
+{
 	if (numItem >= 0) {
 		(*numList)--;
 		list[numItem] = list[*numList];
@@ -143,7 +147,8 @@ extern qboolean CL_ListRemoveItemNum(void* list[], int* numList, int numItem) {
  * @brief Notify bases that the specified aircraft has been removed from geoscape
  * It will be removed from bases sensors
  */
-extern void B_NotifyAircraftRemove(const aircraft_t* aircraft) {
+extern void B_NotifyAircraftRemove(const aircraft_t* aircraft)
+{
 	base_t* base;
 
 	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
@@ -183,7 +188,8 @@ extern qboolean B_CheckAircraftSensored(base_t* base, const aircraft_t* aircraft
 /**
  * @brief Calc and set in base the count of ufos within the base radar range
  */
-static void B_SetUfoCountInSensor(base_t* base) {
+static void B_SetUfoCountInSensor(base_t* base)
+{
 	aircraft_t** ufos;
 	int numUfos;
 
