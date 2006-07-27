@@ -1452,6 +1452,7 @@ void Qcommon_Init(int argc, char **argv)
 		MN_PrecacheMenus();
 #endif
 
+	Com_Printf("Version: %s %s %s %s\n", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
 	Com_Printf("====== UFO Initialized ======\n\n");
 }
 
