@@ -42,7 +42,6 @@ stage_t stages[MAX_STAGES];
 int numStageSets = 0;
 int numStages = 0;
 
-aircraft_t *ufoOnGeoscape[MAX_UFOONGEOSCAPE];
 campaign_t *curCampaign;
 ccs_t ccs;
 base_t *baseCurrent;
@@ -55,6 +54,7 @@ stats_t stats;
 
 extern cmdList_t game_commands[];
 extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission);
+extern void CL_AircraftsNotifyMissionRemoved(const actMis_t* mission);
 
 /*
 ============================================================================
@@ -217,7 +217,7 @@ qboolean CheckBEP(char *expr, qboolean(*varFuncParam) (char *var))
 /**
   * @brief
   */
-static int CP_GetDistance(vec2_t pos1, vec2_t pos2)
+extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2)
 {
 	int a, b, c;
 
@@ -589,10 +589,8 @@ static void CL_CampaignRemoveMission(actMis_t * mis)
 	for (i = num; i < ccs.numMissions; i++)
 		ccs.mission[i] = ccs.mission[i + 1];
 
-	if (selMis == mis)
-		selMis = NULL;
-	else if (selMis > mis)
-		selMis--;
+	MAP_NotifyMissionRemoved(mis);
+	CL_AircraftsNotifyMissionRemoved(mis);
 }
 
 
@@ -721,71 +719,6 @@ static void CL_BuildingAircraftList_f(void)
 	menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
 }
 
-
-#ifdef DEBUG
-/**
-  * @brief
-  *
-  * listufo
-  * only for debugging
-  */
-static void CP_ListUfosOnGeoscape(void)
-{
-	int i;
-	aircraft_t *a;
-
-	Com_Printf("There are %i ufos on geoscape\n", ccs.numUfoOnGeoscape);
-	for (i = 0; i < ccs.numUfoOnGeoscape; i++) {
-		a = ufoOnGeoscape[i];
-		Com_Printf("ufo: %s - status: %i - pos: %.0f:%0.f\n", a->id, a->status, a->pos[0], a->pos[1]);
-	}
-}
-#endif
-
-/**
-  * @brief
-  *
-  * NOTE: These ufos are not saved - and i don't think we need this
-  */
-void CP_NewUfoOnGeoscape(void)
-{
-	int i;
-	vec2_t pos;
-	aircraft_t *a;
-
-	/* check max amount */
-	if (ccs.numUfoOnGeoscape >= MAX_UFOONGEOSCAPE)
-		return;
-
-	for (i = (rand() % numAircraft); i < MAX_AIRCRAFT; i++) {
-		/* search for a ufo */
-		if (aircraft[i].type != AIRCRAFT_UFO)
-			continue;
-
-		pos[0] = (rand() % 180) - (rand() % 180);
-		pos[1] = (rand() % 90) - (rand() % 90);
-		a = &aircraft[i];
-		ufoOnGeoscape[ccs.numUfoOnGeoscape] = a;
-		a->status = AIR_NONE;
-		Com_DPrintf("New ufo on geoscape: '%s' (%i)\n", a->name, ccs.numUfoOnGeoscape);
-		MAP_MapCalcLine(a->pos, pos, &a->route);
-		ccs.numUfoOnGeoscape++;
-		return;
-	}
-}
-
-/**
-  * @brief
-  */
-void CP_RemoveUfoFromGeoscape(void)
-{
-	ccs.numUfoOnGeoscape--;
-	ufoOnGeoscape[ccs.numUfoOnGeoscape]->status = AIR_NONE;
-	Com_DPrintf("Remove ufo from geoscape: '%s' (%i)\n", ufoOnGeoscape[ccs.numUfoOnGeoscape]->name, ccs.numUfoOnGeoscape);
-	ufoOnGeoscape[ccs.numUfoOnGeoscape] = NULL;
-}
-
-
 /**
   * @brief
   *
@@ -808,8 +741,7 @@ void CL_CampaignCheckEvents(void)
 	stageState_t *stage;
 	setState_t *set;
 	actMis_t *mis;
-	int i, j, dist;
-	qboolean visible;
+	int i, j;
 
 	/* check campaign events */
 	for (i = 0, stage = ccs.stage; i < numStages; i++, stage++)
@@ -826,37 +758,8 @@ void CL_CampaignCheckEvents(void)
 						CL_CampaignExecute(set);
 				}
 
-	if (ccs.numUfoOnGeoscape > 0) {
-		for (i = 0; i < ccs.numUfoOnGeoscape; i++) {
-			visible = (ufoOnGeoscape[i]->status == AIR_UFOMOVE ? qtrue : qfalse);
-			ufoOnGeoscape[i]->status = AIR_NONE;
-			for (j = 0; j < gd.numBases; j++) {
-				/* no radar? */
-				if (!gd.bases[j].sensorWidth) {
-					/* maybe sensorWidth is decreased due to a attack? */
-					gd.bases[j].drawSensor = qfalse;
-					continue;
-				}
-				dist = CP_GetDistance(gd.bases[j].pos, ufoOnGeoscape[i]->pos);
-#ifdef DEBUG
-				Com_DPrintf("...distance of ufo to base: %i\n", dist);
-#endif
-				if (gd.bases[j].sensorWidth >= dist) {
-					ufoOnGeoscape[i]->status = AIR_UFOMOVE;
-					if (gd.bases[j].drawSensor == qfalse) {
-						MN_AddNewMessage(_("Notice"), _("UFO appears on our radar"), qfalse, MSG_STANDARD, NULL);
-						gd.bases[j].drawSensor = qtrue;
-						CL_GameTimeStop();
-					}
-				} else if (gd.bases[j].drawSensor == qtrue)
-					gd.bases[j].drawSensor = qfalse;
-			}
-			/* check whether this ufo is not visible on any existing radar */
-			if (visible && ufoOnGeoscape[i]->status != AIR_UFOMOVE)
-				/* FIXME: grammar: from/of/on */
-				MN_AddNewMessage(_("Notice"), _("UFO disappears on our radar"), qfalse, MSG_STANDARD, NULL);
-		}
-	}
+	/* check UFOs events */
+	UFO_CampaignCheckEvents();
 
 	/* let missions expire */
 	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++)
@@ -980,6 +883,7 @@ void CL_CampaignRun(void)
 
 		/* check for campaign events */
 		CL_CampaignRunAircraft(dt);
+		UFO_CampaignRunUfos(dt);
 		CL_CampaignCheckEvents();
 
 		/* set time cvars */
@@ -2670,14 +2574,6 @@ cmdList_t game_commands[] = {
 	,
 	{"mn_mapaction_reset", MAP_ResetAction}
 	,
-	{"addufo", CP_NewUfoOnGeoscape}
-	,
-	{"removeufo", CP_RemoveUfoFromGeoscape}
-	,
-#ifdef DEBUG
-	{"listufo", CP_ListUfosOnGeoscape}
-	,
-#endif
 	{NULL, NULL}
 };
 

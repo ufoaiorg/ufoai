@@ -219,8 +219,9 @@ typedef struct base_s {
 
 	/* the onconstruct value of the buliding */
 	/* building_radar increases the sensor width */
-	int sensorWidth;			/* radar radius */
-	qboolean drawSensor;		/* ufo in range? */
+	int sensorWidth;							/* radar radius */
+	aircraft_t*	sensoredAircraft[MAX_AIRCRAFT];	/* UFOs in radar range */
+	int numSensoredAircraft;					/* Count of UFOs inside radar range */
 
 	/* equipment that each team carries */
 	inventory_t teamInv[MAX_WHOLETEAM];
@@ -247,6 +248,9 @@ typedef struct base_s {
 /* Currently displayed/accessed base. */
 extern base_t *baseCurrent;
 
+extern qboolean CL_ListRemoveItem(void* list[], int* numList, void* item);
+extern void B_NotifyAircraftRemove(const aircraft_t* aircraft);
+extern qboolean B_CheckAircraftSensored(base_t* base, const aircraft_t* aircraft);
 void B_SetSensor(void);
 void B_InitEmployees(void);
 void B_UpdateBaseData(void);

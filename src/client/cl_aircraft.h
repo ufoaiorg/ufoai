@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LINE_MAXSEG 64
 #define LINE_MAXPTS (LINE_MAXSEG+2)
 #define LINE_DPHI	(M_PI/LINE_MAXSEG)
-#define MAX_UFOONGEOSCAPE 8
 
 typedef struct mapline_s {
 	int n;
@@ -45,6 +44,8 @@ typedef enum {
 	AIRCRAFT_UFO
 } aircraftType_t;
 
+struct actMis_s;
+	
 typedef struct aircraft_s {
 	int idx;					/* Self-link in the global list */
 	char id[MAX_VAR];			/* translateable name */
@@ -78,13 +79,14 @@ typedef struct aircraft_s {
 	int numUpgrades;
 	struct aircraft_s *next;	/* just for linking purposes - not needed in general */
 
-	int mission;			/* The mission the aircraft is moving to (id in ccs) */
+	struct actMis_s* mission;			/* The mission the aircraft is moving to */
+	
+	qboolean visible;		/* The ufo is visible ? */
 } aircraft_t;
 
 extern aircraft_t aircraft[MAX_AIRCRAFT];
 extern int numAircraft;
 extern int interceptAircraft;
-extern aircraft_t *ufoOnGeoscape[MAX_UFOONGEOSCAPE];
 
 /* script functions */
 void CL_ListAircraft_f(void);
@@ -103,6 +105,8 @@ void CL_CheckAircraft(aircraft_t * air);
 extern aircraft_t* CL_AircraftGetFromIdx(int idx);
 extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
 extern void CL_PopupAircraftClick_f(void);
+extern void CP_GetRandomPosForAircraft(float *pos);
+extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void CL_ParseAircraft(char *name, char **text);
 
 #endif

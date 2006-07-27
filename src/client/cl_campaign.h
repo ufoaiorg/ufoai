@@ -179,7 +179,6 @@ typedef enum mapAction_s {
 } mapAction_t;
 
 typedef enum aircraftStatus_s {
-	AIR_UFOMOVE = -1,			/* a moving ufo */
 	AIR_NONE = 0,
 	AIR_REFUEL,					/* refill fuel */
 	AIR_HOME,					/* in homebase */
@@ -238,5 +237,6 @@ void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
 void CL_GameExit(void);
 void CL_GameInit (void);
+extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */

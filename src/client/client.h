@@ -985,7 +985,14 @@ extern void MAP_MapClick(const menuNode_t * node, int x, int y);
 extern void MAP_3DMapClick(const menuNode_t* node, int x, int y);
 extern void MAP_ResetAction(void);
 extern void MAP_SelectAircraft(aircraft_t* aircraft);
+extern void MAP_SelectMission(actMis_t* mission);
+extern void MAP_NotifyMissionRemoved(const actMis_t* mission);
 extern void MAP_Reset(void);
 
+/* cl_ufo.c */
+extern void UFO_GetUfosList(aircraft_t*** first_ufo, int* numUfo);
+extern void UFO_CampaignRunUfos(int dt);
+extern void UFO_CampaignCheckEvents(void);
+extern void UFO_Reset(void);
 
 #endif /* CLIENT_CLIENT_H */

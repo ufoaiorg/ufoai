@@ -438,39 +438,63 @@ void CL_NewAircraft(base_t *base, char *name)
   */
 void CL_CheckAircraft(aircraft_t * air)
 {
-	actMis_t *mis;
-
 	if (air->fuel <= 0 && air->status >= AIR_IDLE) {
 		MN_AddNewMessage(_("Notice"), _("Your dropship has low fuel and returns to base"), qfalse, MSG_STANDARD, NULL);
 		CL_AircraftReturnToBase(air);
 	}
 
-	if (air->status == AIR_MISSION && air->mission >= 0 && air->mission < ccs.numMissions) {
-		mis = ccs.mission + air->mission;
-		if (abs(mis->def->pos[0] - air->pos[0]) < DISTANCE && abs(mis->def->pos[1] - air->pos[1]) < DISTANCE) {
-			mis->def->active = qtrue;
+	if (air->status == AIR_MISSION) {
+		if (abs(air->mission->def->pos[0] - air->pos[0]) < DISTANCE && abs(air->mission->def->pos[1] - air->pos[1]) < DISTANCE) {
+			air->mission->def->active = qtrue;
 			if (air->status != AIR_DROP && air->fuel > 0) {
 				air->status = AIR_DROP;
-				if (gd.interceptAircraft < 0)
-					gd.interceptAircraft = air->idxInBase;
+				gd.interceptAircraft = air->idxInBase;
+				baseCurrent = air->homebase;
+				MAP_SelectMission(air->mission);
 				MN_PushMenu("popup_intercept_ready");
 			}
 		}
 		else
-			mis->def->active = qfalse;
+			air->mission->def->active = qfalse;
 	}
 }
 
 /**
   * @brief
   */
-void CP_GetRandomPosForAircraft(float *pos)
+extern void CP_GetRandomPosForAircraft(float *pos)
 {
 	pos[0] = (rand() % 180) - (rand() % 180);
 	pos[1] = (rand() % 90) - (rand() % 90);
-	Com_DPrintf("CP_GetRandomPosForAircraft: (%.0f:%.0f)\n", pos[0], pos[1]);
 }
 
+/**
+ * @brief Move the specified aircraft
+ * Return true if the aircraft reached its destination
+ */
+extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft) {
+	float dist, frac;
+	int p;
+
+	/* calc distance */
+	aircraft->time += dt;
+	aircraft->fuel -= dt;
+	dist = aircraft->speed * aircraft->time / 3600;
+	
+	/* Check if destination reached */
+	if (dist >= aircraft->route.dist * (aircraft->route.n - 1))
+		return qtrue;
+	
+	/* calc new position */
+	frac = dist / aircraft->route.dist;
+	p = (int) frac;
+	frac -= p;
+	aircraft->point = p;
+	aircraft->pos[0] = (1 - frac) * aircraft->route.p[p][0] + frac * aircraft->route.p[p + 1][0];
+	aircraft->pos[1] = (1 - frac) * aircraft->route.p[p][1] + frac * aircraft->route.p[p + 1][1];
+	
+	return qfalse;
+}
 
 /**
   * @brief
@@ -480,10 +504,8 @@ void CP_GetRandomPosForAircraft(float *pos)
 void CL_CampaignRunAircraft(int dt)
 {
 	aircraft_t *air;
-	float dist, frac;
 	base_t *base;
-	int i, p, j;
-	vec2_t pos;
+	int i, j;
 
 	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
 		if (!base->founded)
@@ -492,13 +514,7 @@ void CL_CampaignRunAircraft(int dt)
 		for (i = 0, air = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, air++)
 			if (air->homebase) {
 				if (air->status > AIR_IDLE) {
-					/* calc distance */
-					air->time += dt;
-					air->fuel -= dt;
-					dist = air->speed * air->time / 3600;
-
-					/* check for end point */
-					if (dist >= air->route.dist * (air->route.n - 1)) {
+					if (CL_AircraftMakeMove(dt, air)) {
 						float *end;
 
 						end = air->route.p[air->route.n - 1];
@@ -514,15 +530,8 @@ void CL_CampaignRunAircraft(int dt)
 						continue;
 					}
 
-					/* calc new position */
-					frac = dist / air->route.dist;
-					p = (int) frac;
-					frac -= p;
-					air->point = p;
-
-					air->pos[0] = (1 - frac) * air->route.p[p][0] + frac * air->route.p[p + 1][0];
-					air->pos[1] = (1 - frac) * air->route.p[p][1] + frac * air->route.p[p + 1][1];
-				} else if (air->status == AIR_IDLE)
+				}
+				else if (air->status == AIR_IDLE)
 					air->fuel -= dt;
 				else if (air->status == AIR_REFUEL) {
 					if (air->fuel + dt < air->fuelSize)
@@ -535,38 +544,6 @@ void CL_CampaignRunAircraft(int dt)
 
 				CL_CheckAircraft(air);
 			}
-	}
-
-	/* now the ufos are flying around, too */
-	for (j = 0; j < ccs.numUfoOnGeoscape; j++) {
-		air = ufoOnGeoscape[j];
-		air->time += dt;
-		dist = air->speed * air->time / 3600;
-
-		/* calc new position */
-		frac = dist / air->route.dist;
-		p = (int) frac;
-		frac -= p;
-		air->point = p;
-
-		/* check for end point */
-		if (air->point >= air->route.n) {
-			CP_GetRandomPosForAircraft(pos);
-			air->time = 0;
-			air->point = 0;
-			MAP_MapCalcLine(air->pos, pos, &air->route);
-			Com_DPrintf("New route for ufo %i (%.0f:%.0f) air->pos:(%.0f:%.0f)\n", j, pos[0], pos[1], air->pos[0], air->pos[1]);
-			continue;
-		}
-
-		air->fuel -= dt;
-
-		air->pos[0] = (1 - frac) * air->route.p[p][0] + frac * air->route.p[p + 1][0];
-		air->pos[1] = (1 - frac) * air->route.p[p][1] + frac * air->route.p[p + 1][1];
-
-		/* TODO: Crash */
-		if (air->fuel <= 0)
-			air->fuel = air->fuelSize;
 	}
 }
 
@@ -712,8 +689,6 @@ extern aircraft_t* CL_AircraftGetFromIdx(int idx) {
  */
 extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission)
 {
-	int i;
-
 	if (!aircraft || !mission)
 		return qfalse;
 
@@ -722,21 +697,13 @@ extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission
 		return qfalse;
 	}
 
-	/* Get id of mission in ccs */
-	for (i=0 ; i < ccs.numMissions ; i++)
-		if (mission == ccs.mission + i) {
-			MAP_MapCalcLine(aircraft->pos, mission->def->pos, &(aircraft->route));
-			aircraft->status = AIR_MISSION;
-			aircraft->time = 0;
-			aircraft->point = 0;
-			aircraft->mission = i;
-			gd.interceptAircraft = aircraft->idxInBase;
-			baseCurrent = aircraft->homebase;
-			selMis = mission;
-			return qtrue;
-		}
+	MAP_MapCalcLine(aircraft->pos, mission->def->pos, &(aircraft->route));
+	aircraft->status = AIR_MISSION;
+	aircraft->time = 0;
+	aircraft->point = 0;
+	aircraft->mission = mission;
 
-	return qfalse;
+	return qtrue;
 }
 
 static value_t aircraft_vals[] = {
@@ -770,7 +737,6 @@ static value_t aircraft_vals[] = {
 	,
 
 	{NULL, 0, 0}
-	,
 };
 
 /**
@@ -847,4 +813,24 @@ void CL_ParseAircraft(char *name, char **text)
 			COM_EParse(text, errhead, name);
 		}
 	} while (*text);
+}
+
+/**
+ * @brief Notify that a mission has been removed
+ * Aircraft currently moving to the mission will be redirect to base
+ */
+extern void CL_AircraftsNotifyMissionRemoved(const actMis_t* mission)
+{
+	base_t*		base;
+	aircraft_t*	aircraft;
+	
+	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ;
+		aircraft >= base->aircraft ; aircraft--)
+			if (aircraft->status == AIR_MISSION) {
+				if (aircraft->mission == mission)
+					CL_AircraftReturnToBase(aircraft);					
+				else if (aircraft->mission > mission)
+					(aircraft->mission)--;
+			}
 }

@@ -2182,6 +2182,7 @@ void MN_ResetMenus(void)
 	RS_ResetResearch();
 	PR_ResetProduction();
 	MAP_Reset();
+	UFO_Reset();
 }
 
 /*

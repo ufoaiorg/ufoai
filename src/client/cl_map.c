@@ -490,7 +490,6 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
 	int i, j, x, y;
 
 	/* draw mission pics */
-	menuText[TEXT_STANDARD] = NULL;
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
@@ -511,11 +510,8 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
 			if (!MAP_MapToScreen(node, gd.bases[j].pos, &x, &y))
 				continue;
 			re.Draw3DMapMarkers(latitude, longitude, "base");
-		}
 
-	/* draw aircraft */
-	for (j = 0; j < gd.numBases; j++)
-		if (gd.bases[j].founded) {
+			/* draw aircraft */
 			for (i = 0, air = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, air++)
 				if (air->status > AIR_HOME) {
 					if (!MAP_MapToScreen(node, air->pos, &x, &y))
@@ -539,14 +535,13 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
  */
 static void MAP_DrawMapMarkers(const menuNode_t* node)
 {
-	aircraft_t *air;
+	aircraft_t *air, **ufos;
 	actMis_t *ms;
 	int i, j, x, y;
 
 	assert(node);
 
 	/* draw mission pics */
-	menuText[TEXT_STANDARD] = NULL;
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
@@ -564,15 +559,13 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 		if (gd.bases[j].founded) {
 			if (!MAP_MapToScreen(node, gd.bases[j].pos, &x, &y))
 				continue;
-			i = gd.bases[j].sensorWidth;
-			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
-			if (gd.bases[j].drawSensor)
-				re.DrawNormPic(x, y, i, i, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor");
-		}
 
-	/* draw aircrafts */
-	for (j = 0; j < gd.numBases; j++)
-		if (gd.bases[j].founded) {
+			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
+
+			if (gd.bases[j].numSensoredAircraft > 0)	
+				re.DrawNormPic(x, y, i, i, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor");
+
+			/* draw aircrafts */
 			for (i = 0, air = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, air++)
 				if (air->status > AIR_HOME) {
 					if (!MAP_MapToScreen(node, air->pos, &x, &y))
@@ -592,18 +585,23 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 				}
 		}
-
-	for (j = 0; j < ccs.numUfoOnGeoscape; j++) {
-		/* if not AIR_UFOMOVE - the ufo is not in radar width */
+		
+	/* draws ufos */
+	for (UFO_GetUfosList(&ufos, &i) ; i > 0 ; i--, ufos++) {
+		air = *ufos;
+		
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
-		if (Cvar_VariableValue("showufos"))
-			MAP_MapToScreen(node, ufoOnGeoscape[j]->pos, &x, &y);
+		if (Cvar_VariableValue("showufos")) {
+			if (! MAP_MapToScreen(node, air->pos, &x, &y))
+				continue;
+			MAP_MapDrawLine(node, &(air->route)); /* Draw ufo route */
+		}
 		else
 #endif
-		if (ufoOnGeoscape[j]->status != AIR_UFOMOVE || !MAP_MapToScreen(node, ufoOnGeoscape[j]->pos, &x, &y))
+		if (! air->visible || ! MAP_MapToScreen(node, air->pos, &x, &y))
 			continue;
-		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, ufoOnGeoscape[j]->image);
+		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, air->image);
 	}
 }
 
@@ -686,6 +684,28 @@ extern void MAP_ResetAction(void)
 extern void MAP_SelectAircraft(aircraft_t* aircraft) {
 	MAP_ResetAction();
 	selectedAircraft = aircraft;
+}
+
+/**
+ * @brief Selected the specified mission
+ */
+extern void MAP_SelectMission(actMis_t* mission) {
+	if (! mission || mission == selMis)
+		return;
+	MAP_ResetAction();
+	gd.mapAction = MA_INTERCEPT;
+	selMis = mission;
+}
+
+/**
+ * @brief Notify that a mission has been removed
+ * Unselect the current selected mission if its the same
+ */
+extern void MAP_NotifyMissionRemoved(const actMis_t* mission) {
+	if (selMis == mission && (gd.mapAction == MA_BASEATTACK || gd.mapAction == MA_INTERCEPT))
+		MAP_ResetAction();
+	else if (selMis > mission)
+		selMis--;
 }
 
 /**
