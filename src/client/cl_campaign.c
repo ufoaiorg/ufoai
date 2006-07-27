@@ -1831,6 +1831,7 @@ void CL_GameAutoGo(void)
 		MN_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 
 	MAP_ResetAction();
+	CL_AircraftReturnToBase_f();
 }
 
 /**
