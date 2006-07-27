@@ -2807,7 +2807,7 @@ void CL_GameNew(void)
 /**
   * @brief fill a list with available campaigns
   */
-#define MAXCAMPAIGNTEXT 1024
+#define MAXCAMPAIGNTEXT 4096
 static char campaignText[MAXCAMPAIGNTEXT];
 static char campaignDesc[MAXCAMPAIGNTEXT];
 void CP_GetCampaigns_f(void)

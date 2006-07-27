@@ -489,7 +489,7 @@ static void RS_AssignScientist2(int num)
 				tech->base_idx = building->base_idx;
 			} else {
 				MN_Popup(_("Notice"),
-					_("There is no free lab available.\\You need to build one or free another\\in order to assign scientists to research this technology.\n"));
+					_("There is no free lab available.\nYou need to build one or free another\nin order to assign scientists to research this technology.\n"));
 				return;
 			}
 		}

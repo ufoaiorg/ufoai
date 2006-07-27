@@ -1349,8 +1349,8 @@ void MN_DrawMenus(void)
 	item_t item;
 	vec4_t color;
 	int mouseOver = 0;
-	char *pos, *tab, *end;
-	int y, line, x, len;
+	char *cur, *tab, *end;
+	int y, line, x;
 	message_t *message;
 	menuModel_t *menuModel = NULL;
 	int width, height;
@@ -1452,56 +1452,62 @@ void MN_DrawMenus(void)
 						char textCopy[MAX_MENUTEXTLEN];
 
 						Q_strncpyz(textCopy, menuText[node->num], MAX_MENUTEXTLEN);
-						len = strlen(textCopy);
-
 						font = MN_GetFont(menu, node);
 
-						pos = textCopy;
+						cur = textCopy;
 						y = node->pos[1];
-						line = 0;
+						line = 0; /* these are lines only in one-line texts! */
+                        /* but it's easy to fix, just change FontDrawString
+                           so that it returns a pair, #lines and height
+                           and add that to variable line; the only other file
+                           using FontDrawString result is client/cl_sequence.c
+                           and there just ignore #lines */
 						do {
 							line++;
 							/* have a look that the maxline value defined in menu via */
 							/* the height parameter is not exceeded here */
 							/* TODO: Draw the scrollbars */
+                            /* this is currently broken: */
+#if 0
 							if (node->height > 0 && line >= node->height)
 								break;
 							/* maybe due to scrolling this line is not visible */
 							if (line < node->textScroll)
 								break;
-
-							/* new line starts from node x pos */
+#endif
+							/* new line starts from node x position */
 							x = node->pos[0];
 
-							end = strchr(pos, '\n');
+							end = strchr(cur, '\n');
 							if (end)
 								*end++ = '\0';
-							if (node->mousefx && line == mouseOver)
-								re.DrawColor(color);
 
+                            /* only works with one-line texts right now: */
+							if (node->mousefx && line == mouseOver)
+								 re.DrawColor(color);
+
+							/* we assume all the tabs fit on a single line */
 							do {
-								tab = strchr(pos, '\t');
+								tab = strchr(cur, '\t');
 								if (!tab)
 									break;
 
 								*tab++ = '\0';
-								re.FontDrawString(font, node->align, x, y, node->size[0], pos);
+								re.FontDrawString(font, node->align, x, y, node->size[0], cur);
 								if (!node->texh[1])
 									x += (node->size[0] / 3);
 								else
 									x += node->texh[1];
-								pos = tab;
+								cur = tab;
 							} while (1);
 
-							re.FontDrawString(font, node->align, x, y, node->size[0], pos);
-
+							y += re.FontDrawString(font, node->align, x, y, node->size[0], cur);
 							if (node->mousefx && line == mouseOver)
-								re.DrawColor(node->color);
+								 re.DrawColor(node->color); /* why is this repeated? */
 
-							pos = end;
-							y += node->texh[0];
+							cur = end;
 						}
-						while (pos);
+						while (cur);
 					} else if (node->num == TEXT_MESSAGESYSTEM) {
 						if (node->data[1])
 							font = MN_GetReferenceString(menu, node->data[1]);
@@ -1529,23 +1535,21 @@ void MN_DrawMenus(void)
 									tab = message->text;
 									while ((end = strstr(tab, "\\")) != NULL) {
 										*end++ = '\0';
-										re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->size[0], tab);
+										y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->size[0], tab);
 										tab = end;
 										line++;
 										if (line >= node->height)
 											break;
-										y += node->texh[0];
 									}
 								} else {
 									/* newline to space - we don't need this */
 									while ((end = strstr(message->text, "\\")) != NULL)
 										*end = ' ';
 
-									re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->size[0], message->text);
+									y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->size[0], message->text);
 								}
 							}
 
-							y += node->texh[0];
 							message = message->next;
 						}
 					}

@@ -564,7 +564,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int maxWidth, char *c
 		x = locX;
 	} while (buffer);
 
-	return returnHeight * (2.0 - vid.ry);
+	return returnHeight / vid.ry;
 }
 
 /*================

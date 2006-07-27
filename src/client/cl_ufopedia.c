@@ -31,7 +31,7 @@ static int numChapters_displaylist;
 
 static technology_t	*upCurrent;
 
-#define MAX_UPTEXT 1024
+#define MAX_UPTEXT 4096
 static char	upText[MAX_UPTEXT];
 
 /* this buffer is for stuff like aircraft or building info */
