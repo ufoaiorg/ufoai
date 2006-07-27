@@ -47,7 +47,6 @@ void PR_ProductionRun(void)
 	technology_t *t;
 
 	for (i = 0; i < MAX_BASES; i++) {
-		Com_Printf("PR_ProductionRun for base %i - timeLeft: %i\n", i, gd.productions[i].timeLeft);
 		if (!gd.bases[i].founded)
 			continue;
 		/* no active production */
