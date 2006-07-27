@@ -90,7 +90,7 @@ static value_t valid_vars[] = {
  */
 extern int CL_ListIsItemExists(void* list[], int numList, const void* item) {
 	int num;
-	
+
 	for (num = 0 ; num < numList ; num++, list++)
 		if (*list == item)
 			return num;
@@ -115,14 +115,14 @@ extern qboolean CL_ListAddItem(void* list[], int* numList, int maxNumList, void*
  */
 extern qboolean CL_ListRemoveItem(void* list[], int* numList, void* item) {
 	int i;
-	
+
 	for (i=0 ; i < *numList ; i++, list++)
 		if (*list == item) {
 			(*numList)--;
 			*list = list[*numList];
 			return qtrue;
 		}
-		
+
 	return qfalse;
 }
 
@@ -135,7 +135,7 @@ extern qboolean CL_ListRemoveItemNum(void* list[], int* numList, int numItem) {
 		list[numItem] = list[*numList];
 		return qtrue;
 	}
-	
+
 	return qfalse;
 }
 
@@ -145,7 +145,7 @@ extern qboolean CL_ListRemoveItemNum(void* list[], int* numList, int numItem) {
  */
 extern void B_NotifyAircraftRemove(const aircraft_t* aircraft) {
 	base_t* base;
-	
+
 	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
 		CL_ListRemoveItem((void**)base->sensoredAircraft, &base->numSensoredAircraft, (void*)aircraft);
 }
@@ -154,27 +154,28 @@ extern void B_NotifyAircraftRemove(const aircraft_t* aircraft) {
  * @brief Check if the specified  is inside the sensor range of base, and update base sensor and aircraft data
  * Return true if the aircraft is inside sensor
  */
-extern qboolean B_CheckAircraftSensored(base_t* base, const aircraft_t* aircraft) {
+extern qboolean B_CheckAircraftSensored(base_t* base, const aircraft_t* aircraft)
+{
 	int dist;
 	int numAircraftSensored = CL_ListIsItemExists((void**)base->sensoredAircraft, base->numSensoredAircraft, aircraft);
-	
+
 	dist = CP_GetDistance(base->pos, aircraft->pos);
 
 	if (base->sensorWidth >= dist) {
 		/* Aircraft is in the sensor range */
 		if (numAircraftSensored < 0) {
-			Com_DPrintf("#0 New UFO in radar : %i - ufos in radar : %i\n", (int)aircraft,  base->numSensoredAircraft);
+			Com_DPrintf("#0 New UFO in radar : %p - ufos in radar : %i\n", aircraft, base->numSensoredAircraft);
 			CL_ListAddItem((void**)base->sensoredAircraft, &base->numSensoredAircraft, MAX_AIRCRAFT, (void*)aircraft);
-			Com_DPrintf("#1 New UFO in radar : %i - ufos in radar : %i\n", (int)aircraft,  base->numSensoredAircraft);
+			Com_DPrintf("#1 New UFO in radar : %p - ufos in radar : %i\n", aircraft, base->numSensoredAircraft);
 		}
 		return qtrue;
 	}
 
 	/* Aircraft is not in the sensor range */
 	if (numAircraftSensored >= 0) {
-		Com_DPrintf("#0 New UFO out of radar : %i - ufos in radar : %i\n", (int)aircraft,  base->numSensoredAircraft);
+		Com_DPrintf("#0 New UFO out of radar : %p - ufos in radar : %i\n", aircraft, base->numSensoredAircraft);
 		CL_ListRemoveItemNum((void**)base->sensoredAircraft, &base->numSensoredAircraft, numAircraftSensored);
-		Com_DPrintf("#1 New UFO ouf of radar : %i - ufos in radar : %i\n", (int)aircraft,  base->numSensoredAircraft);
+		Com_DPrintf("#1 New UFO ouf of radar : %p - ufos in radar : %i\n", aircraft, base->numSensoredAircraft);
 	}
 	return qfalse;
 }
@@ -185,7 +186,7 @@ extern qboolean B_CheckAircraftSensored(base_t* base, const aircraft_t* aircraft
 static void B_SetUfoCountInSensor(base_t* base) {
 	aircraft_t** ufos;
 	int numUfos;
-	
+
 	base->numSensoredAircraft = 0;
 	for (UFO_GetUfosList(&ufos, &numUfos) ; numUfos > 0 ; numUfos--, ufos++)
 		B_CheckAircraftSensored(base, *ufos);
@@ -225,7 +226,7 @@ void B_SetSensor(void)
 
 	/* Set the exact count of sensored ufos within the new range */
 	B_SetUfoCountInSensor(base);
-	
+
 }
 
 /**
