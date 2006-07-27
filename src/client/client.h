@@ -861,6 +861,9 @@ typedef enum {
 	TEXT_MESSAGESYSTEM,			/* just a dummy for messagesystem - we use the stack */
 	TEXT_CAMPAIGN_LIST,
 	TEXT_MULTISELECTION,
+	TEXT_PRODUCTION_LIST = 15,
+	TEXT_PRODUCTION_AMOUNT,
+	TEXT_PRODUCTION_INFO,
 
 	MAX_MENUTEXTS
 } texts_t;

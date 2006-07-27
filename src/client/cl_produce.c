@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 /* holds the current active buytype category */
-static int produceCategory;
+static int produceCategory = -1;
 
 /**
  * @brief Checks whether an item is finished
@@ -91,7 +91,47 @@ static void PR_ProductionInfo (void)
 	} else {
 		Com_sprintf(productionInfo, sizeof(productionInfo), _("No running productions"));
 	}
-	menuText[TEXT_STANDARD] = productionInfo;
+	menuText[TEXT_PRODUCTION_INFO] = productionInfo;
+}
+
+/**
+ * @brief Click function for production list
+ * @note Opens the ufopedia - by right clicking an item
+ */
+static void PR_ProductionListRightClick_f (void)
+{
+	int i, j, num;
+	technology_t *t;
+	objDef_t *od;
+
+	/* can be called from everywhere without a started game */
+	if (!baseCurrent ||!curCampaign)
+		return;
+
+	/* not enough parameters */
+	if (Cmd_Argc() < 2)
+		return;
+
+	/* clicked which item? */
+	num = atoi(Cmd_Argv(1));
+	for (j=0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		t = (technology_t*)(od->tech);
+#ifdef DEBUG
+		if (!t)
+			Sys_Error("PR_ProductionListClick_f: No tech pointer for object id %i ('%s')\n", gd.productions[i].objID, od->kurz);
+#endif
+		/* we can produce what was researched before */
+		if (od->buytype == produceCategory && RS_IsResearched_ptr(t)) {
+			if (j==num) {
+				Cbuf_AddText( "mn_push ufopedia\n" );
+				Cbuf_Execute();
+				UP_DrawEntry(t);
+				return;
+			}
+			j++;
+		}
+	}
+
 }
 
 /**
@@ -146,9 +186,11 @@ static void PR_ProductionList (void)
 {
 	int i;
 	static char productionList[1024];
+	static char productionAmount[256];
 	objDef_t *od;
-	productionList[0] = '\0';
+	productionAmount[0] = productionList[0] = '\0';
 
+	Com_Printf("PR_ProductionList\n");
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
 		return;
@@ -164,10 +206,13 @@ static void PR_ProductionList (void)
 		/* we can produce what was researched before */
 		if (od->buytype == produceCategory && RS_IsResearched_ptr(od->tech)) {
 			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
+			Q_strcat(productionAmount, va("%i\n", ccs.eCampaign.num[i]), sizeof(productionAmount));
 		}
 	}
 	/* bind the menu text to our static char array */
-	menuText[TEXT_LIST] = productionList;
+	menuText[TEXT_PRODUCTION_LIST] = productionList;
+	/* bind the amount of available items */
+	menuText[TEXT_PRODUCTION_AMOUNT] = productionAmount;
 	/* now print the information about the current item in production */
 	PR_ProductionInfo();
 }
@@ -237,6 +282,7 @@ void PR_ResetProduction(void)
 {
 	/* add commands */
 	Cmd_AddCommand("prod_init", PR_ProductionList);
+	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f);
 	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f);
 	Cmd_AddCommand("prod_inc", PR_ProductionIncrease);
 	Cmd_AddCommand("prod_dec", PR_ProductionDecrease);

@@ -117,4 +117,7 @@ technology_t *RS_GetTechByID(const char *id);
 technology_t *RS_GetTechByProvided(const char *id_provided);
 technology_t **RS_GetTechsByType(researchType_t type);
 
+/* ufopedia function - but needs technology_t */
+void UP_DrawEntry( technology_t* tech );
+
 #endif /* CLIENT_CL_RESEARCH_H */

@@ -70,8 +70,9 @@ menu production
 		size	"286 710"
 //		bgcolor "1 1 1 0.5"
 		format	"20 0"
-		num	1
+		num	15
 		click
+		rclick
 		mousefx	true
 	}
 
@@ -81,7 +82,7 @@ menu production
 		size	"114 710"
 //		bgcolor "1 1 1 0.5"
 		format	"20 0"
-		num	2
+		num	16
 		mousefx	true
 	}
 
@@ -153,7 +154,7 @@ menu production
 //		bgcolor "1 1 1 0.5"
 		size	"366 80"
 		format	"20 320"
-		num 0
+		num 17
 	}
 
 	// ==================
