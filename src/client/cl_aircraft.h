@@ -103,5 +103,6 @@ void CL_CheckAircraft(aircraft_t * air);
 extern aircraft_t* CL_AircraftGetFromIdx(int idx);
 extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
 extern void CL_PopupAircraftClick_f(void);
+void CL_ParseAircraft(char *name, char **text);
 
 #endif

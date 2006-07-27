@@ -226,7 +226,6 @@ qboolean CL_NewBase(vec2_t pos);
 void CL_ParseMission(char *name, char **text);
 void CL_ParseStage(char *name, char **text);
 void CL_ParseCampaign(char *name, char **text);
-void CL_ParseAircraft(char *name, char **text);
 void CL_ParseNations(char *name, char **text);
 void CL_AircraftSelect(void);
 void CL_NewAircraft_f(void);
