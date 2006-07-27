@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_ports/win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_ports/win32/libjpeg.lib_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=89
+UnitCount=90
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -936,4 +936,14 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_map.c -o cl_map.o $(CFLAGS)
+
+[Unit90]
+FileName=client\cl_produce.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_produce.c -o cl_produce.o $(CFLAGS)
 
