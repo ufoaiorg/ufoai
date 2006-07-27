@@ -21,9 +21,6 @@
 
 #include "snd_alsa.h"
 
-#define BUFFER_SAMPLES 4096
-#define SUBMISSION_CHUNK BUFFER_SAMPLES / 2
-
 static snd_pcm_t *pcm_handle;
 static snd_pcm_hw_params_t *hw_params;
 
@@ -60,46 +57,44 @@ qboolean SND_Init(struct sndinfo *s)
 	si = s;
 
 	/* oss => alsa */
-	if ( ! strcmp (si->device->string, "/dev/dsp") )
+	if (!strcmp(si->device->string, "/dev/dsp"))
 		si->device->string = "default";
 
-	if((err = snd_pcm_open(&pcm_handle, si->device->string,
-			SND_PCM_STREAM_PLAYBACK, SND_PCM_NONBLOCK)) < 0){
-		si->Com_Printf("ALSA: cannot open device %s(%s)\n",
-					   si->device->string, snd_strerror(err));
+	if ((err = snd_pcm_open(&pcm_handle, si->device->string,
+			SND_PCM_STREAM_PLAYBACK, SND_PCM_NONBLOCK)) < 0) {
+		si->Com_Printf("ALSA: cannot open device %s(%s)\n", si->device->string, snd_strerror(err));
 		return qfalse;
 	}
 
-	if((err = snd_pcm_hw_params_malloc(&hw_params)) < 0){
-		si->Com_Printf("ALSA: cannot allocate hw params(%s)\n",
-					   snd_strerror(err));
+	if ((err = snd_pcm_hw_params_malloc(&hw_params)) < 0) {
+		si->Com_Printf("ALSA: cannot allocate hw params(%s)\n", snd_strerror(err));
 		return qfalse;
 	}
 
-	if((err = snd_pcm_hw_params_any(pcm_handle, hw_params)) < 0){
+	if ((err = snd_pcm_hw_params_any(pcm_handle, hw_params)) < 0) {
 		si->Com_Printf("ALSA: cannot init hw params(%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return qfalse;
 	}
 
-	if((err = snd_pcm_hw_params_set_access(pcm_handle, hw_params,
-			SND_PCM_ACCESS_RW_INTERLEAVED)) < 0){
+	if ((err = snd_pcm_hw_params_set_access(pcm_handle, hw_params,
+			SND_PCM_ACCESS_RW_INTERLEAVED)) < 0) {
 		si->Com_Printf("ALSA: cannot set access(%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return qfalse;
 	}
 
 	si->dma->samplebits = si->bits->value;
-	if(si->dma->samplebits != 8){  /* try 16 by default */
+	if (si->dma->samplebits != 8) {  /* try 16 by default */
 		si->dma->samplebits = 16;  /* ensure this is set for other calculations */
 
-		if((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params, SND_PCM_FORMAT_S16)) < 0){
+		if ((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params, SND_PCM_FORMAT_S16)) < 0) {
 			si->Com_Printf("ALSA: 16 bit not supported, trying 8\n");
 			si->dma->samplebits = 8;
 		}
 	}
-	if(si->dma->samplebits == 8){  /* or 8 if specifically asked to */
-		if((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params, SND_PCM_FORMAT_U8)) < 0){
+	if (si->dma->samplebits == 8) {  /* or 8 if specifically asked to */
+		if ((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params, SND_PCM_FORMAT_U8)) < 0) {
 			si->Com_Printf("ALSA: cannot set format(%s)\n", snd_strerror(err));
 			snd_pcm_hw_params_free(hw_params);
 			return qfalse;
@@ -108,10 +103,10 @@ qboolean SND_Init(struct sndinfo *s)
 
 	si->dma->channels = (int)si->channels->value;
 
-	if(si->dma->channels < 1 || si->dma->channels > 2)
+	if (si->dma->channels < 1 || si->dma->channels > 2)
 		si->dma->channels = 2;  /* ensure either stereo or mono */
 
-	if((err = snd_pcm_hw_params_set_channels(pcm_handle, hw_params, si->dma->channels)) < 0){
+	if ((err = snd_pcm_hw_params_set_channels(pcm_handle, hw_params, si->dma->channels)) < 0) {
 		si->Com_Printf("ALSA: cannot set channels %d(%s)\n",
 				si->dma->channels, snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
@@ -119,28 +114,23 @@ qboolean SND_Init(struct sndinfo *s)
 	}
 
 	si->dma->speed = *si->speed->string ? atoi(si->speed->string) : 0;
-	if(si->dma->speed){  /* try specified rate */
-
+	if (si->dma->speed) {  /* try specified rate */
 		r = si->dma->speed;
-
-		if((err = snd_pcm_hw_params_set_rate_near(pcm_handle, hw_params, &r, &dir)) < 0){
+		if ((err = snd_pcm_hw_params_set_rate_near(pcm_handle, hw_params, &r, &dir)) < 0) {
 			si->Com_Printf("ALSA: cannot set rate %d(%s)\n", r, snd_strerror(err));
 			si->dma->speed = 0;  /* will be caught below */
-		}
-		else {  /* rate succeeded, but is perhaps slightly different */
+		} else {  /* rate succeeded, but is perhaps slightly different */
 			if(dir != 0)
 				si->Com_Printf("ALSA: rate %d not supported, using %d\n", si->dma->speed, r);
 			si->dma->speed = r;
 		}
 	}
-	if(!si->dma->speed){  /* or all available ones */
-
-		for(i = 0; i < sizeof(RATES) / sizeof(int); i++){
-
+	if (!si->dma->speed) {  /* or all available ones */
+		for (i = 0; i < sizeof(RATES) / sizeof(int); i++) {
 			r = RATES[i];
 			dir = 0;
 
-			if((err = snd_pcm_hw_params_set_rate_near(pcm_handle, hw_params, &r, &dir)) < 0)
+			if ((err = snd_pcm_hw_params_set_rate_near(pcm_handle, hw_params, &r, &dir)) < 0)
 				si->Com_Printf("ALSA: cannot set rate %d(%s)\n", r, snd_strerror(err));
 			else {  /* rate succeeded, but is perhaps slightly different */
 				if(dir != 0)
@@ -150,35 +140,33 @@ qboolean SND_Init(struct sndinfo *s)
 			}
 		}
 	}
-	if(!si->dma->speed){  /* failed */
+	if (!si->dma->speed) {  /* failed */
 		si->Com_Printf("ALSA: cannot set rate\n");
 		snd_pcm_hw_params_free(hw_params);
 		return qfalse;
 	}
 
-	if((err = snd_pcm_hw_params_set_period_size_near(pcm_handle,
-			hw_params, &period_size, 0)) < 0){
+	if ((err = snd_pcm_hw_params_set_period_size_near(pcm_handle,
+			hw_params, &period_size, 0)) < 0) {
 		si->Com_Printf("ALSA: cannot set period size near(%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return qfalse;
 	}
 
-	if((err = snd_pcm_hw_params_set_buffer_size_near(pcm_handle,
-			hw_params, &buffer_size)) < 0){
+	if ((err = snd_pcm_hw_params_set_buffer_size_near(pcm_handle,
+			hw_params, &buffer_size)) < 0) {
 		si->Com_Printf("ALSA: cannot set buffer size near(%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return qfalse;
 	}
 
-	if((err = snd_pcm_hw_params(pcm_handle, hw_params)) < 0){  /* set params */
+	if ((err = snd_pcm_hw_params(pcm_handle, hw_params)) < 0) {  /* set params */
 		si->Com_Printf("ALSA: cannot set params(%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return qfalse;
 	}
 
-	si->Com_Printf("ALSA: period size %d, buffer size %d\n",
-		period_size, buffer_size
-	);
+	si->Com_Printf("ALSA: period size %d, buffer size %d\n", period_size, buffer_size );
 
 	sample_bytes = si->dma->samplebits / 8;
 	buffer_bytes = buffer_size * si->dma->channels * sample_bytes;

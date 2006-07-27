@@ -84,6 +84,9 @@ qboolean SND_Init (struct sndinfo *s)
 	desired.freq = *si->speed->string ?  /* casting the float is problematic */
 			atoi(si->speed->string) : 48000;
 
+	if (!desired.freq)
+		desired.freq = 48000;
+
 	if (desired.freq == 48000 || desired.freq == 44100)
 		desired.samples = 4096;  /* set buffer based on rate */
 	else if (desired.freq == 22050)
