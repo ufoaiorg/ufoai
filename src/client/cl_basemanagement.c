@@ -1819,6 +1819,7 @@ static void B_BaseList_f(void)
 	for (i = 0, base = gd.bases; i < MAX_BASES; i++, base++) {
 		Com_Printf("Base id %i\n", base->idx);
 		Com_Printf("Base title %s\n", base->name);
+		Com_Printf("Base founded %i\n", base->founded);
 		Com_Printf("Base sensorWidth %s\n", base->sensorWidth);
 		Com_Printf("Base drawSensor %s\n", base->drawSensor);
 		Com_Printf("Base aircraft %i\n", base->numAircraftInBase);
@@ -2024,9 +2025,9 @@ int B_GetCount(void)
 }
 
 /**
- * @brief Updates base data?
- *
- * Called from the running campaign
+ * @brief Updates base data
+ * @sa CL_CampaignRun
+ * @note called every "day"
  */
 void B_UpdateBaseData(void)
 {

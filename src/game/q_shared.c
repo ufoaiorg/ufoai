@@ -333,7 +333,10 @@ long Q_ftol(float f)
 {
 	static int tmp;
 	__asm fld dword ptr[esp + 4]
-__asm fistp tmp __asm mov eax, tmp __asm ret}
+	__asm fistp tmp
+	__asm mov eax, tmp
+	__asm ret
+}
 #pragma warning (default:4035)
 #endif
 
@@ -503,7 +506,8 @@ initialized:
 		xor eax, eax
 		mov ebx, ds:dword ptr[4 + 8 + esp]
 		mov al, ds:byte ptr[17 + edx]
-		cmp al, 8 jge Lerror
+		cmp al, 8
+		jge Lerror
 		fld ds:dword ptr[0 + edx]
 		fld st(0)
 		jmp dword ptr[Ljmptab + eax * 4]

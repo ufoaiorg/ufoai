@@ -34,10 +34,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct production_s
 {
-	int odjID; /* object id from global csi.ods struct */
-	int amount; /* how much are we producing */
+	signed int objID; /* object id from global csi.ods struct */
+	signed int amount; /* how much are we producing */
+	int timeLeft; /* get this from tech */
 } production_t;
 
 void PR_ResetProduction(void);
+void PR_ProductionRun(void);
+void PR_ProductionInit(void);
 
 #endif /* CLIENT_CL_PROOUCE */

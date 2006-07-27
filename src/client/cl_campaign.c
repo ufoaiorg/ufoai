@@ -975,6 +975,7 @@ void CL_CampaignRun(void)
 			ccs.date.day++;
 			/* every day */
 			B_UpdateBaseData();
+			PR_ProductionRun();
 		}
 
 		/* check for campaign events */
@@ -2763,6 +2764,7 @@ void CL_GameNew(void)
 	/* base setup */
 	gd.numBases = 0;
 	B_NewBases();
+	PR_ProductionInit();
 
 	/* reset, set time */
 	selMis = NULL;
