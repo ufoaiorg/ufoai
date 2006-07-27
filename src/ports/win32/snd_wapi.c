@@ -323,7 +323,7 @@ void SND_Submit(void)
 	/* submit a few new sound blocks */
 	while (((snd_sent - snd_completed) >> sample16) < 8) {
 		h = lpWaveHdr + ( snd_sent&WAV_MASK );
-		if (paintedtime/256 <= snd_sent)
+		if (*(si->paintedtime)/256 <= snd_sent)
 			break;
 		snd_sent++;
 		/*
@@ -348,4 +348,13 @@ void SND_Submit(void)
 void SND_Shutdown(void)
 {
 	FreeSound ();
+}
+
+/**
+ * @brief Called when the main window gains or loses focus.
+ * The window have been destroyed and recreated
+ * between a deactivate and an activate.
+ */
+void SND_Activate (qboolean active)
+{
 }

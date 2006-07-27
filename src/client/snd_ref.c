@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef _WIN32
 #define dlladdr GetProcAddress
 #include <windows.h>
+#include "../ports/win32/winquake.h"
 #else
 #define dlladdr dlsym
 #include <dlfcn.h>
@@ -240,6 +241,10 @@ void S_Init(void)
 		si.Cvar_Get = Cvar_Get;
 		si.Com_Printf = Com_Printf;
 		si.S_PaintChannels = S_PaintChannels;
+		si.paintedtime = &paintedtime;
+#ifdef _WIN32
+		si.cl_hwnd = cl_hwnd;
+#endif
 
 		if (!SND_Init(&si)) {
 			Com_Printf("SND_Init failed\n");

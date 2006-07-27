@@ -125,7 +125,7 @@ static qboolean DS_CreateBuffers( void )
 	si->Com_Printf( "Creating DS buffers\n" );
 
 	si->Com_Printf("...setting EXCLUSIVE coop level: " );
-	if ( DS_OK != pDS->lpVtbl->SetCooperativeLevel( pDS, cl_hwnd, DSSCL_EXCLUSIVE ) ) {
+	if ( DS_OK != pDS->lpVtbl->SetCooperativeLevel( pDS, si->cl_hwnd, DSSCL_EXCLUSIVE ) ) {
 		si->Com_Printf ("failed\n");
 		FreeSound();
 		return qfalse;
@@ -192,7 +192,7 @@ static qboolean DS_CreateBuffers( void )
 		si->Com_Printf( "...using primary buffer\n" );
 
 		si->Com_Printf( "...setting WRITEPRIMARY coop level: " );
-		if (DS_OK != pDS->lpVtbl->SetCooperativeLevel (pDS, cl_hwnd, DSSCL_WRITEPRIMARY)) {
+		if (DS_OK != pDS->lpVtbl->SetCooperativeLevel (pDS, si->cl_hwnd, DSSCL_WRITEPRIMARY)) {
 			si->Com_Printf( "failed\n" );
 			FreeSound();
 			return qfalse;
@@ -238,7 +238,7 @@ static void DS_DestroyBuffers( void )
 	si->Com_Printf( "Destroying DS buffers\n" );
 	if ( pDS ) {
 		si->Com_Printf( "...setting NORMAL coop level\n" );
-		pDS->lpVtbl->SetCooperativeLevel( pDS, cl_hwnd, DSSCL_NORMAL );
+		pDS->lpVtbl->SetCooperativeLevel( pDS, si->cl_hwnd, DSSCL_NORMAL );
 	}
 
 	if ( pDSBuf ) {
@@ -677,7 +677,7 @@ void SND_Submit(void)
 	/* submit a few new sound blocks */
 	while (((snd_sent - snd_completed) >> sample16) < 8) {
 		h = lpWaveHdr + ( snd_sent&WAV_MASK );
-	if (paintedtime/256 <= snd_sent)
+	if (*(si->paintedtime)/256 <= snd_sent)
 		break;	/*	si->Com_Printf ("submit overrun\n"); */
 /*		si->Com_Printf ("send %i\n", snd_sent); */
 		snd_sent++;
@@ -704,10 +704,10 @@ void SND_Submit(void)
 void SND_Activate (qboolean active)
 {
 	if ( active ) {
-		if ( pDS && cl_hwnd && snd_isdirect )
+		if ( pDS && si->cl_hwnd && snd_isdirect )
 			DS_CreateBuffers();
 	} else {
-		if ( pDS && cl_hwnd && snd_isdirect )
+		if ( pDS && si->cl_hwnd && snd_isdirect )
 			DS_DestroyBuffers();
 	}
 }
