@@ -27,7 +27,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 /* holds the current active buytype category */
-static int produceCategory = -1;
+static int produceCategory = 0;
+
+/**
+ * @TODO: When we have the production facility in basemanagement.ufo
+ * we need to check whether the player has already set this building up
+ * otherwise he won't be allowed to produce more equipment stuff
+ */
 
 /**
  * @brief Checks whether an item is finished
