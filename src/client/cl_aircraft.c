@@ -314,6 +314,7 @@ static void CL_AircraftReturnToBase(aircraft_t *air)
 		air->status = AIR_RETURNING;
 		air->time = 0;
 		air->point = 0;
+		air->mission = NULL;
 	}
 }
 
@@ -443,7 +444,8 @@ void CL_CheckAircraft(aircraft_t * air)
 		CL_AircraftReturnToBase(air);
 	}
 
-	if (air->status == AIR_MISSION) {
+	switch (air->status) {
+	case AIR_MISSION:
 		if (abs(air->mission->def->pos[0] - air->pos[0]) < DISTANCE && abs(air->mission->def->pos[1] - air->pos[1]) < DISTANCE) {
 			air->mission->def->active = qtrue;
 			if (air->status != AIR_DROP && air->fuel > 0) {
@@ -453,9 +455,14 @@ void CL_CheckAircraft(aircraft_t * air)
 				MAP_SelectMission(air->mission);
 				MN_PushMenu("popup_intercept_ready");
 			}
-		}
-		else
+		} else
 			air->mission->def->active = qfalse;
+		break;
+	case AIR_DROP:
+		Com_DPrintf("Aircraft status is AIR_DROP - mission status is %i\n", air->mission->def->active);
+		break;
+	default:
+		break;
 	}
 }
 

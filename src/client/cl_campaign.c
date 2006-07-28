@@ -1580,7 +1580,7 @@ static void CL_GameGo(void)
 	}
 
 	/* update mission-status (active?) for the selected aircraft */
-	CL_CheckAircraft(&gd.bases[baseCurrent->idx].aircraft[gd.interceptAircraft]);
+	CL_CheckAircraft(&baseCurrent->aircraft[gd.interceptAircraft]);
 
 	mis = selMis->def;
 
@@ -1604,6 +1604,8 @@ static void CL_GameGo(void)
 	Cvar_Set("ai_armor", mis->alienArmor);
 	Cvar_Set("music", mis->music);
 	Cvar_Set("equip", curCampaign->equipment);
+	/* TODO: Map assembling to get the current used dropship in the map is not fully implemented */
+	/* but can be done via the map assembling part of the random map assembly */
 	Cvar_Set("map_dropship", gd.bases[baseCurrent->idx].aircraft[gd.interceptAircraft].id);
 
 	/* check inventory */
