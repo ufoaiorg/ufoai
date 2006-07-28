@@ -165,24 +165,6 @@ menu map
 	// buttons
 	// ==================
 
-	pic bt_intercept
-	{
-		tooltip	"_Intercept alien craft or visit alien (crash) site."
-		image	menu/b_geobuttons
-		pos	"32 544"
-		texl	"0 64"
-		texh	"63 127"
-		out	{
-				*bt_intercept texl "0 64"
-				*bt_intercept texh "63 127"
-			}
-		in	{
-				*bt_intercept texl "0 0"
-				*bt_intercept texh "63 63"
-			}
-		click	{ cmd "game_go;" }
-	}
-
 	pic bt_stats
 	{
 		tooltip	"_Organisation statistics"
