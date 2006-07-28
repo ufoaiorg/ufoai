@@ -923,7 +923,7 @@ typedef struct gameLapse_s {
 
 #define NUM_TIMELAPSE 6
 
-gameLapse_t lapse[NUM_TIMELAPSE] = {
+static gameLapse_t lapse[NUM_TIMELAPSE] = {
 	{"5 sec", 5},
 	{"5 mins", 5 * 60},
 	{"1 hour", 60 * 60},
@@ -1018,20 +1018,8 @@ void CL_Stats_Update(void)
 
 /**
   * @brief
-  */
-aircraft_t *AIR_FindAircraft(char *aircraftName)
-{
-	int i;
-
-	for (i = 0; i < numAircraft; i++) {
-		if (!Q_strncmp(aircraft[i].id, aircraftName, MAX_VAR))
-			return &aircraft[i];
-	}
-	return NULL;
-}
-
-/**
-  * @brief
+  * @sa CL_GameLoad
+  * @sa CL_SaveEquipment
   */
 void CL_LoadEquipment ( sizebuf_t *buf, base_t* base )
 {
@@ -1066,6 +1054,7 @@ void CL_LoadEquipment ( sizebuf_t *buf, base_t* base )
 
 /**
   * @brief Stores the equipment for a game
+  * @sa CL_LoadEquipment
   */
 void CL_SaveEquipment ( sizebuf_t *buf, character_t *team, const int num )
 {
@@ -1088,6 +1077,7 @@ void CL_SaveEquipment ( sizebuf_t *buf, character_t *team, const int num )
 #define MAX_MESSAGES_FOR_SAVEGAME 20
 /**
   * @brief
+  * @sa CL_GameLoad
   */
 void CL_GameSave(char *filename, char *comment)
 {
@@ -1511,6 +1501,9 @@ static void CL_GameLoadCmd(void)
   *
   * The comment is the part of the savegame that you type in at saving
   * for reidentifying the savegame
+  *
+  * @sa CL_GameLoadCmd
+  * @sa CL_GameLoad
   */
 static void CL_GameCommentsCmd(void)
 {
@@ -1549,7 +1542,8 @@ static void CL_GameCommentsCmd(void)
 /**
   * @brief Loads the last saved game
   *
-  * At saving the archive cvar mn_lastsave was set to the latest savegame
+  * @note At saving the archive cvar mn_lastsave was set to the latest savegame
+  * @sa CL_GameLoad
   */
 static void CL_GameContinue(void)
 {
@@ -1670,6 +1664,7 @@ static void CP_ExecuteMissionTrigger(mission_t * m, int won)
   * You can mark a mission as story related.
   * If a mission is story related the cvar game_autogo is set to 0
   * If this cvar is 1 - the mission dialog will have a auto mission button
+  * @sa CL_GameAutoGo
   */
 static void CL_GameAutoCheck(void)
 {
@@ -1694,6 +1689,7 @@ static void CL_GameAutoCheck(void)
   * @brief
   *
   * TODO: Remove recruits when a mission was lost
+  * @sa CL_GameAutoCheck
   */
 void CL_GameAutoGo(void)
 {
@@ -1958,6 +1954,7 @@ void CL_UpdateCharacterStats(int won)
 /**
   * @brief
   * @sa CL_ParseResults
+  * @sa CL_ParseCharacterData
   */
 void CL_GameResultsCmd(void)
 {

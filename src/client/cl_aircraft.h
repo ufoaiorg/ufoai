@@ -45,7 +45,7 @@ typedef enum {
 } aircraftType_t;
 
 struct actMis_s;
-	
+
 typedef struct aircraft_s {
 	int idx;					/* Self-link in the global list */
 	char id[MAX_VAR];			/* translateable name */
@@ -80,7 +80,7 @@ typedef struct aircraft_s {
 	struct aircraft_s *next;	/* just for linking purposes - not needed in general */
 
 	struct actMis_s* mission;			/* The mission the aircraft is moving to */
-	
+
 	qboolean visible;		/* The ufo is visible ? */
 } aircraft_t;
 

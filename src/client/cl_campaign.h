@@ -210,7 +210,6 @@ extern int mapAction;
 
 void AIR_SaveAircraft(sizebuf_t * sb, base_t * base);
 void AIR_LoadAircraft(sizebuf_t * sb, base_t * base, int version);
-aircraft_t *AIR_FindAircraft(char *aircraftName);
 
 char *CL_AircraftStatusToName(aircraft_t * air);
 qboolean CL_MapIsNight(vec2_t pos);

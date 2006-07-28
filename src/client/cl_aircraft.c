@@ -480,11 +480,11 @@ extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft) {
 	aircraft->time += dt;
 	aircraft->fuel -= dt;
 	dist = aircraft->speed * aircraft->time / 3600;
-	
+
 	/* Check if destination reached */
 	if (dist >= aircraft->route.dist * (aircraft->route.n - 1))
 		return qtrue;
-	
+
 	/* calc new position */
 	frac = dist / aircraft->route.dist;
 	p = (int) frac;
@@ -492,7 +492,7 @@ extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft) {
 	aircraft->point = p;
 	aircraft->pos[0] = (1 - frac) * aircraft->route.p[p][0] + frac * aircraft->route.p[p + 1][0];
 	aircraft->pos[1] = (1 - frac) * aircraft->route.p[p][1] + frac * aircraft->route.p[p + 1][1];
-	
+
 	return qfalse;
 }
 
@@ -823,13 +823,13 @@ extern void CL_AircraftsNotifyMissionRemoved(const actMis_t* mission)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
-	
+
 	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ;
 		aircraft >= base->aircraft ; aircraft--)
 			if (aircraft->status == AIR_MISSION) {
 				if (aircraft->mission == mission)
-					CL_AircraftReturnToBase(aircraft);					
+					CL_AircraftReturnToBase(aircraft);
 				else if (aircraft->mission > mission)
 					(aircraft->mission)--;
 			}

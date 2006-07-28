@@ -1460,6 +1460,7 @@ ACTOR GRAPHICS
 
 /**
  * @brief Adds an actor.
+ * @sa CL_AddUGV
  */
 qboolean CL_AddActor(le_t * le, entity_t * ent)
 {
@@ -1527,6 +1528,7 @@ qboolean CL_AddActor(le_t * le, entity_t * ent)
 
 /**
  * @brief Adds an UGV.
+ * @sa CL_AddActor
  */
 qboolean CL_AddUGV(le_t * le, entity_t * ent)
 {
