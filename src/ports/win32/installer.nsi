@@ -686,7 +686,7 @@ Section "SourceCode" SEC03
   File "..\..\game\*.vcproj"
   File "..\..\game\*.c"
   File "..\..\game\*.h"
-  SetOutPath "$INSTDIR\src\ports
+  SetOutPath "$INSTDIR\src\ports"
   SetOutPath "$INSTDIR\src\ports\irix"
   File "..\..\ports\irix\*.c"
   File "..\..\ports\irix\Makefile.txt"
