@@ -527,18 +527,16 @@ void CL_CampaignRunAircraft(int dt)
 						end = air->route.p[air->route.n - 1];
 						air->pos[0] = end[0];
 						air->pos[1] = end[1];
+						CL_CheckAircraft(air);
 						if (air->status == AIR_RETURNING) {
 							air->status = AIR_REFUEL;
 							if (air->fuel < 0)
 								air->fuel = 0;
 						} else
 							air->status = AIR_IDLE;
-						CL_CheckAircraft(air);
 						continue;
 					}
-
-				}
-				else if (air->status == AIR_IDLE)
+				} else if (air->status == AIR_IDLE)
 					air->fuel -= dt;
 				else if (air->status == AIR_REFUEL) {
 					if (air->fuel + dt < air->fuelSize)
