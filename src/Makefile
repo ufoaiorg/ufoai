@@ -334,7 +334,7 @@ mappack:
 	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ../base/maps
 
 win32installer:
-	makensis win32/installer.nsi
+	makensis ports/win32/installer.nsi
 
 linuxinstaller:
 	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-linux.tar.bz2 ../
