@@ -258,6 +258,9 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base\models\objects\city\trash"
   File "..\..\base\models\objects\city\trash\*.jpg"
   File "..\..\base\models\objects\city\trash\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\city\powerline"
+  File "..\..\base\models\objects\city\powerline\*.jpg"
+  File "..\..\base\models\objects\city\powerline\*.md2"
 
 ;======================================================================
 ; models/objects/furniture
