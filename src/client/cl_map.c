@@ -147,8 +147,7 @@ static void MAP_MultiSelectExecuteAction_f(void)
 		if (gd.mapAction == MA_INTERCEPT && selMis && selMis == ccs.mission + id) {
 			MN_PushMenu("popup_intercept");
 			return;
-		}
-		else if (gd.mapAction == MA_BASEATTACK && selMis && selMis == ccs.mission + id) {
+		} else if (gd.mapAction == MA_BASEATTACK && selMis && selMis == ccs.mission + id) {
 			MN_PushMenu("popup_baseattack");
 			return;
 		}
@@ -176,11 +175,11 @@ static void MAP_MultiSelectExecuteAction_f(void)
 		if (air == selectedAircraft) {
 			/* Selection of an already selected aircraft */
 			CL_DisplayPopupAircraft(air);	/* Display popup_aircraft */
-		}
-		else {
+		} else {
 			/* Selection of an unselected aircraft */
 			MAP_ResetAction();
 			selectedAircraft = air;
+/*			baseCurrent = &gd.bases[air->idxBase];*/
 		}
 		break;
 
@@ -257,23 +256,20 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
 		Cmd_ExecuteString("multi_select_click");
- 	}
-	else if (multiSelect.nbSelect > 1) {
+ 	} else if (multiSelect.nbSelect > 1) {
 		/* Display popup for multi selection */
 		menuText[TEXT_MULTISELECTION] = multiSelect.popupText;
 		MN_PushMenu("popup_multi_selection");
-	}
-	else {
+	} else {
 		/* Nothing selected */
 		if (!selectedAircraft)
 			MAP_ResetAction();
-		else
-			if (selectedAircraft->status > AIR_HOME && selectedAircraft->fuel > 0) {
-				/* Move the selected aircraft to the position clicked */
-				MAP_MapCalcLine(selectedAircraft->pos, pos, &(selectedAircraft->route));
-				selectedAircraft->status = AIR_TRANSIT;
-				selectedAircraft->time = air->point = 0;
-			}
+		else if (selectedAircraft->status > AIR_HOME && selectedAircraft->fuel > 0) {
+			/* Move the selected aircraft to the position clicked */
+			MAP_MapCalcLine(selectedAircraft->pos, pos, &(selectedAircraft->route));
+			selectedAircraft->status = AIR_TRANSIT;
+			selectedAircraft->time = air->point = 0;
+		}
 	}
 }
 
@@ -562,7 +558,7 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 
 			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
 
-			if (gd.bases[j].numSensoredAircraft > 0)	
+			if (gd.bases[j].numSensoredAircraft > 0)
 				re.DrawNormPic(x, y, i, i, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor");
 
 			/* draw aircrafts */
@@ -585,19 +581,18 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 				}
 		}
-		
+
 	/* draws ufos */
 	for (UFO_GetUfosList(&ufos, &i) ; i > 0 ; i--, ufos++) {
 		air = *ufos;
-		
+
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
 		if (Cvar_VariableValue("showufos")) {
 			if (! MAP_MapToScreen(node, air->pos, &x, &y))
 				continue;
 			MAP_MapDrawLine(node, &(air->route)); /* Draw ufo route */
-		}
-		else
+		} else
 #endif
 		if (! air->visible || ! MAP_MapToScreen(node, air->pos, &x, &y))
 			continue;
@@ -619,8 +614,7 @@ extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
 			(float) ccs.date.sec / (3600 * 24), q, ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, curCampaign->map);
 
 		MAP_Draw3DMapMarkers(node, 0.0, 0.0);	/* FIXME: */
-	}
-	else {
+	} else {
 		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
 		re.DrawDayAndNight(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / (3600 * 24), q,
 			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, curCampaign->map);
@@ -718,6 +712,5 @@ extern void MAP_Reset(void)
 	cl_showCoords = Cvar_Get("cl_showcoords", "0", CVAR_ARCHIVE);
 
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f);
-
 	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f);
 }
