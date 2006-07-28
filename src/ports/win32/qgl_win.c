@@ -3442,10 +3442,8 @@ qboolean QGL_Init( const char *dllname )
 
 void GLimp_EnableLogging( qboolean enable )
 {
-	if ( enable )
-	{
-		if ( !glw_state.log_fp )
-		{
+	if ( enable ) {
+		if ( !glw_state.log_fp ) {
 			struct tm *newtime;
 			time_t aclock;
 			char buffer[1024];

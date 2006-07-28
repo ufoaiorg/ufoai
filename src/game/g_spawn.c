@@ -139,7 +139,8 @@ ED_NewString
 static char *ED_NewString(char *string)
 {
 	char *newb, *new_p;
-	int i, l;
+	int i;
+	size_t l;
 
 	l = strlen(string) + 1;
 
