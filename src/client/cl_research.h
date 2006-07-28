@@ -85,7 +85,6 @@ typedef struct technology_s {
 	byte needsCollected;		/* Is a collected item neccessary to research this item? */
 	byte statusResearchable;	/* Is this item researchable? */
 
-	int produceCosts;			/* how much credits */
 	int produceTime;			/* how many days for self production */
 
 	/* Pedia info */

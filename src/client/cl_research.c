@@ -1075,7 +1075,6 @@ static value_t valid_tech_vars[] = {
 	/* to be able to research this tech zou need all "required" and at least one collected "provides" item. */
 	{"needscollected", V_BOOL, offsetof(technology_t, needsCollected)},
 	/*how long will this research last */
-	{"producecosts", V_INT, offsetof(technology_t, produceCosts)},
 	{"producetime", V_INT, offsetof(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time)},
 	{"image_top", V_STRING, offsetof(technology_t, image_top)},

@@ -35,6 +35,7 @@ static int produceCategory = 0;
  * otherwise he won't be allowed to produce more equipment stuff
  */
 
+#define PRODUCE_FACTOR 10
 /**
  * @brief Checks whether an item is finished
  * @sa CL_CampaignRun
@@ -54,6 +55,11 @@ void PR_ProductionRun(void)
 			continue;
 
 		od = &csi.ods[gd.productions[i].objID];
+
+		/* not enough money to produce more items in this base */
+		if (od->price*PRODUCE_FACTOR > ccs.credits)
+			continue;
+
 		t = (technology_t*)(od->tech);
 #ifdef DEBUG
 		if (!t)
@@ -63,6 +69,7 @@ void PR_ProductionRun(void)
 		if (gd.productions[i].timeLeft <= 0) {
 			gd.productions[i].timeLeft = t->produceTime;
 			gd.productions[i].amount--;
+			CL_UpdateCredits(ccs.credits - (od->price*PRODUCE_FACTOR));
 			/* switch to no running production */
 			if (gd.productions[i].amount<=0) {
 				gd.productions[i].objID = -1;
@@ -92,7 +99,7 @@ static void PR_ProductionInfo (void)
 		od = &csi.ods[gd.productions[baseCurrent->idx].objID];
 		t = (technology_t*)(od->tech);
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\t%i\n", od->name, gd.productions[baseCurrent->idx].amount);
-		Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), t->produceCosts), sizeof(productionInfo) );
+		Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price*PRODUCE_FACTOR)), sizeof(productionInfo) );
 	} else {
 		Com_sprintf(productionInfo, sizeof(productionInfo), _("No running productions"));
 	}
