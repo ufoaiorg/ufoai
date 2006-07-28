@@ -267,14 +267,14 @@ menu map
 		out	{
 				*messagesystem_show texl "0 0"
 				*messagesystem_show texh "32 36"
-				*messagesystem size "1024 20"
+				*messagesystem size "1024 16"
 				*messagesystem height "1"
 			}
 		in	{
 				*messagesystem_show texl "0 37"
 				*messagesystem_show texh "32 73"
 				*messagesystem size "1024 400"
-				*messagesystem height "20"
+				*messagesystem height "25"
 			}
 	}
 
