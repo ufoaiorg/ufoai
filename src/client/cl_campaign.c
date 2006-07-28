@@ -524,17 +524,17 @@ static void CL_CampaignAddMission(setState_t * set)
 
 	if (!Q_strncmp(mis->def->name, "baseattack", 10)) {
 		baseCurrent = &gd.bases[rand() % gd.numBases];
-        /* the first founded base is more likely to be attacked */
+		/* the first founded base is more likely to be attacked */
 		if (!baseCurrent->founded) {
-			 for (i=0; i<MAX_BASES;i++) {
-				  if (gd.bases[i].founded) {
-					   baseCurrent = &gd.bases[i];
-					   break;
-				  }
-			 }
+			for (i=0; i<MAX_BASES;i++) {
+				if (gd.bases[i].founded) {
+					baseCurrent = &gd.bases[i];
+					break;
+				}
+			}
 			 /* at this point there should be at least one base */
-			 if (i==MAX_BASES || !baseCurrent)
-				  Sys_Error("No bases found\n");
+			if (i==MAX_BASES || !baseCurrent)
+				Sys_Error("No bases found\n");
 		}
 
 		mis->realPos[0] = baseCurrent->pos[0];
@@ -1589,9 +1589,11 @@ static void CL_GameGo(void)
 		MN_Popup(_("Note"), _("Assemble or load a team"));
 		return;
 	} else if ((!mis->active || (gd.interceptAircraft >= 0 && !baseCurrent->numOnTeam[gd.interceptAircraft]))
-		&& ccs.singleplayer)
+		&& ccs.singleplayer) {
 		/* dropship not near landing zone */
+		Com_DPrintf("Dropship not near landingzone: mis->active: %i\n", mis->active);
 		return;
+	}
 
 	/* start the map */
 	Cvar_SetValue("ai_numaliens", (float) mis->aliens);
