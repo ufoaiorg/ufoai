@@ -380,7 +380,7 @@ void VID_CheckChanges (void)
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
 
-		sprintf( name, "ref_%s.so", vid_ref->string );
+		Com_sprintf(name, sizeof(name), "ref_%s.so", vid_ref->string);
 		if ( !VID_LoadRefresh( name ) ) {
 			Cmd_ExecuteString( "condump gl_debug" );
 
