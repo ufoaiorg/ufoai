@@ -1344,6 +1344,17 @@ int CL_GameLoad(char *filename)
 	/* Recently it was loaded from disk. Attention, bad pointers!!! */
 	memcpy(&gd, sb.data + sb.readcount, sizeof(globalData_t));
 	sb.readcount += sizeof(globalData_t);
+	for (i=0; i<MAX_BASES;i++) {
+		if (gd.bases[i].founded) {
+			baseCurrent = &gd.bases[i];
+			break;
+		}
+	}
+	if (i==MAX_BASES || !baseCurrent) {
+		Com_Printf("No bases found\n");
+		free(buf);
+		return 0;
+	}
 
 	i = MSG_ReadByte(&sb);
 	for ( ; i > 0; i-- )
