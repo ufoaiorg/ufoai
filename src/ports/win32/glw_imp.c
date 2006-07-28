@@ -637,8 +637,7 @@ void GLimp_SetGamma(void)
 			}
 		}
 
-		SetDeviceGammaRamp(glw_state.hDC, gamma_ramp);
-		ret = SetDeviceGammaRamp( glw_state.hDC, table );
+		ret = SetDeviceGammaRamp(glw_state.hDC, gamma_ramp);
 		if ( !ret )
 			ri.Con_Printf( PRINT_ALL, "...SetDeviceGammaRamp failed.\n" );
 	}
