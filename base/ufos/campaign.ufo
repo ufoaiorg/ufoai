@@ -285,7 +285,7 @@ mission farm
 	map			farm08
 	music		mission
 	pos			"116 52"
-	aliens		7
+	aliens  3
 	alienteam	alien
 	alienequip	campaign_alien
 	civilians	3
