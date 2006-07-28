@@ -99,6 +99,8 @@ void WG_CheckHardwareGamma( void )
 				s_oldHardwareGamma[2][g] = g << 8;
 			}
 		}
+	} else {
+		ri.Con_Printf( PRINT_ALL, "...your card does not support win32 gamma correction api\n" );
 	}
 }
 
@@ -610,6 +612,31 @@ void GLimp_AppActivate( qboolean active )
 */
 void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] )
 {
+#if 1
+	int o, i;
+	WORD gamma_ramp[3][256];
+
+	if (gl_state.hwgamma) {
+		float v, i_f;
+
+		for (o = 0; o < 3; o++) {
+			for(i = 0; i < 256; i++) {
+				i_f = (float)i/255.0f;
+				v = pow(i_f, vid_gamma->value);
+
+				if (v < 0.0f)
+					v = 0.0f;
+
+				else if (v > 1.0f)
+					v = 1.0f;
+
+				gamma_ramp[o][i] = (WORD)(v * 65535.0f + 0.5f);
+			}
+		}
+
+		SetDeviceGammaRamp(glw_state.hDC, gamma_ramp);
+	}
+#else
 	unsigned short table[3][256];
 	int		i, j;
 	int		ret;
@@ -628,6 +655,7 @@ void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned 
 	vinfo.dwOSVersionInfoSize = sizeof(vinfo);
 	GetVersionEx( &vinfo );
 	if ( vinfo.dwMajorVersion == 5 && vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT ) {
+		ri.Con_Printf(PRINT_ALL, "Using the win32 nt gamma ramps rescriction\n");
 		for ( j = 0 ; j < 3 ; j++ ) {
 			for ( i = 0 ; i < 128 ; i++ ) {
 				if ( table[j][i] > ( (128+i) << 8 ) ) {
@@ -651,9 +679,10 @@ void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned 
 
 	ret = SetDeviceGammaRamp( glw_state.hDC, table );
 	if ( !ret )
-		ri.Con_Printf( PRINT_ALL, "SetDeviceGammaRamp failed.\n" );
+		ri.Con_Printf( PRINT_ALL, "...SetDeviceGammaRamp failed.\n" );
 	else
-		ri.Con_Printf( PRINT_ALL, "SetDeviceGammaRamp ok.\n" );
+		ri.Con_Printf( PRINT_ALL, "...SetDeviceGammaRamp ok.\n" );
+#endif
 }
 
 /*
