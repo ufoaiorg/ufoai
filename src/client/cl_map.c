@@ -179,7 +179,6 @@ static void MAP_MultiSelectExecuteAction_f(void)
 			/* Selection of an unselected aircraft */
 			MAP_ResetAction();
 			selectedAircraft = air;
-/*			baseCurrent = &gd.bases[air->idxBase];*/
 		}
 		break;
 

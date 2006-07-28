@@ -524,6 +524,19 @@ static void CL_CampaignAddMission(setState_t * set)
 
 	if (!Q_strncmp(mis->def->name, "baseattack", 10)) {
 		baseCurrent = &gd.bases[rand() % gd.numBases];
+        /* the first founded base is more likely to be attacked */
+		if (!baseCurrent->founded) {
+			 for (i=0; i<MAX_BASES;i++) {
+				  if (gd.bases[i].founded) {
+					   baseCurrent = &gd.bases[i];
+					   break;
+				  }
+			 }
+			 /* at this point there should be at least one base */
+			 if (i==MAX_BASES || !baseCurrent)
+				  Sys_Error("No bases found\n");
+		}
+
 		mis->realPos[0] = baseCurrent->pos[0];
 		mis->realPos[1] = baseCurrent->pos[1];
 		/* Add message to message-system. */
@@ -683,7 +696,6 @@ static void CL_SelectAircraft_f(void)
 			Com_DPrintf("Selected aircraft: %s\n", gd.bases[j].aircraft[num].name);
 
 			if (CL_SendAircraftToMission(gd.bases[j].aircraft + num, selMis)) {
-				baseCurrent->aircraftCurrent = num;
 				CL_AircraftSelect();
 				MN_PopMenu(qfalse);
 			}
@@ -1344,17 +1356,8 @@ int CL_GameLoad(char *filename)
 	/* Recently it was loaded from disk. Attention, bad pointers!!! */
 	memcpy(&gd, sb.data + sb.readcount, sizeof(globalData_t));
 	sb.readcount += sizeof(globalData_t);
-	for (i=0; i<MAX_BASES;i++) {
-		if (gd.bases[i].founded) {
-			baseCurrent = &gd.bases[i];
-			break;
-		}
-	}
-	if (i==MAX_BASES || !baseCurrent) {
-		Com_Printf("No bases found\n");
-		free(buf);
-		return 0;
-	}
+	/* we start not in base view */
+	baseCurrent = NULL;
 
 	i = MSG_ReadByte(&sb);
 	for ( ; i > 0; i-- )
