@@ -234,7 +234,7 @@ void S_Init(void)
 
 		si.dma = &dma;
 		si.bits = Cvar_Get("sndbits", "16", CVAR_ARCHIVE);
-		si.speed = Cvar_Get("sndspeed", "", CVAR_ARCHIVE);
+		si.speed = Cvar_Get("sndspeed", "48000", CVAR_ARCHIVE);
 		si.channels = Cvar_Get("sndchannels", "2", CVAR_ARCHIVE);
 		si.device = Cvar_Get("snddevice", "default", CVAR_ARCHIVE);
 		si.s_khz = Cvar_Get("s_khz", "0", CVAR_ARCHIVE);
