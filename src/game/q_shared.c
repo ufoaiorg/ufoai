@@ -2027,9 +2027,9 @@ qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, i
 		return qfalse;	/* never reached. need for code analyst. */
 #endif
 
-	assert((container >= 0) && (container < MAX_INVDEFS));
+	assert((container >= 0) && (container < CSI->numIDs));
 #ifdef DEBUG
-	if ((container < 0) || (container >= MAX_INVDEFS))
+	if ((container < 0) || (container >= CSI->numIDs))
 		return qfalse;	/* never reached. need for code analyst. */
 #endif
 
