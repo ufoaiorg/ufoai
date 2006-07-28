@@ -667,7 +667,10 @@ extern void MAP_ResetAction(void)
 
 	/* FIXME: Don't reset the selMis when we are in tactical mission and enter the geoscape via mn_push map */
 	gd.interceptAircraft = -1;
-	selMis = NULL;				/* reset selected mission */
+	if (selMis) {
+		selMis->def->active = qfalse;
+		selMis = NULL;				/* reset selected mission */
+	}
 	selectedAircraft = NULL;
 }
 
