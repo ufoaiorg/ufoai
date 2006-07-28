@@ -1457,27 +1457,30 @@ void Swap_Init(void)
 }
 
 /**
- * @brief
- * @param
- * @sa
- * does a varargs printf into a temp buffer, so I don't need to have
+ * @brief does a varargs printf into a temp buffer, so I don't need to have
  * varargs versions of all text functions.
  * FIXME: make this buffer size safe someday
  */
 char *va(char *format, ...)
 {
 	va_list argptr;
-	static char string[2048];
+	/* in case va is called by nested functions */
+	static char string[2][2048];
+	static int index = 0;
+	char *buf;
+
+	buf = string[index & 1];
+	index++;
 
 	va_start(argptr, format);
 #ifndef _WIN32
-	vsnprintf(string, sizeof(string), format, argptr);
+	vsnprintf(buf, sizeof(string), format, argptr);
 #else
-	vsprintf(string, format, argptr);
+	vsprintf(buf, format, argptr);
 #endif
 	va_end(argptr);
 
-	return string;
+	return buf;
 }
 
 

@@ -15,8 +15,9 @@
 BUILD_SDLUFO=YES	# use SDL for cdrom, sound and maybe renderer (selectable)
 BUILD_GLX=YES		# X11 GLX driver
 BUILD_DEDICATED=YES	# build a dedicated ufo server
-BUILD_ALSA=YES		# build with alsa-support
-BUILD_OSS=YES		# build with oss-support
+BUILD_ALSA=YES		# build alsa sound driver
+BUILD_OSS=YES		# build oss sound driver
+BUILD_ARTS=YES		# build arts sound driver
 BUILD_WITH_SHADER=NO	# build with shader support
 HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 HAVE_GETTEXT=YES	# Compile with multilanguage-support?
@@ -111,8 +112,9 @@ ifeq ($(OSTYPE),Darwin)
 	BUILD_SDLUFO=NO	# use SDL for cdrom, sound and maybe renderer (selectable)
 	BUILD_GLX=NO		# X11 GLX driver
 	BUILD_DEDICATED=YES	# build a dedicated ufo server
-	BUILD_ALSA=YES		# build with alsa-support
-	BUILD_OSS=YES		# build with oss-support
+	BUILD_ALSA=YES		# build alsa sound driver
+	BUILD_OSS=YES		# build oss sound driver
+	BUILD_ARTS=NO		# build arts sound driver
 	BUILD_WITH_SHADER=NO	# build with shader support
 	HAVE_IPV6=NO		# Compile with IPv6 (protocol independent API). Tested on FreeBSD
 	HAVE_GETTEXT=YES	# Compile with multilanguage-support?
@@ -274,6 +276,10 @@ ifeq ($(strip $(BUILD_OSS)),YES)
 	TARGETS += $(BUILDDIR)/snd_oss.$(SHLIBEXT)
 endif
 
+ifeq ($(strip $(BUILD_ARTS)),YES)
+	TARGETS += $(BUILDDIR)/snd_arts.$(SHLIBEXT)
+endif
+
 ifeq ($(strip $(BUILD_SDLUFO)),YES)
 	TARGETS += $(BUILDDIR)/snd_sdl.$(SHLIBEXT)
 endif
@@ -346,7 +352,7 @@ deb:
 	debuild binary
 
 links:
-	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT)
+	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
 	ln -s src/$(BUILD_DEBUG_DIR)/ufoded ../ufoded
 	ln -s src/$(BUILD_DEBUG_DIR)/ufo ../ufo
 	ln -s src/$(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
@@ -355,10 +361,11 @@ links:
 	ln -s src/$(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT)
 	ln -s src/$(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT) ../snd_sdl.$(SHLIBEXT)
 	ln -s src/$(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT)
+	ln -s src/$(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
 	ln -s ../src/$(BUILD_DEBUG_DIR)/game.$(SHLIBEXT) ../base/game.$(SHLIBEXT)
 
 copy_debug:
-	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT)
+	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
 	cp $(BUILD_DEBUG_DIR)/ufoded ../ufoded
 	cp $(BUILD_DEBUG_DIR)/ufo ../ufo
 	cp $(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
@@ -367,6 +374,7 @@ copy_debug:
 	cp $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT)
 	cp $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT) ../snd_sdl.$(SHLIBEXT)
 	cp $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT)
+	cp $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
 	cp $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT) ../base/game.$(SHLIBEXT)
 
 release: build_release
@@ -1163,8 +1171,13 @@ SND_ALSA_OBJS = $(BUILDDIR)/client/snd_alsa.o
 
 SND_OSS_OBJS = $(BUILDDIR)/client/snd_oss.o
 
+SND_ARTS_OBJS = $(BUILDDIR)/client/snd_arts.o
+
 $(BUILDDIR)/client/snd_oss.o :   $(LINUX_DIR)/snd_oss.c
 	$(DO_SND_SHLIB_CC)
+
+$(BUILDDIR)/client/snd_arts.o :   $(LINUX_DIR)/snd_arts.c
+	$(DO_SND_SHLIB_CC) $(shell artsc-config --cflags)
 
 $(BUILDDIR)/client/snd_sdl.o :     $(LINUX_DIR)/snd_sdl.c
 	$(DO_SND_SHLIB_CC)
@@ -1175,6 +1188,10 @@ $(BUILDDIR)/client/snd_alsa.o :     $(LINUX_DIR)/snd_alsa.c
 $(BUILDDIR)/snd_oss.$(SHLIBEXT) : $(SND_OSS_OBJS)
 	@echo " * [OSS] ...linking";
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(SND_OSS_OBJS)
+
+$(BUILDDIR)/snd_arts.$(SHLIBEXT) : $(SND_ARTS_OBJS)
+	@echo " * [ART] ...linking";
+	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) $(shell artsc-config --libs) -o $@ $(SND_ARTS_OBJS)
 
 $(BUILDDIR)/snd_alsa.$(SHLIBEXT) : $(SND_ALSA_OBJS)
 	@echo " * [ALS] ...linking";

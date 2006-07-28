@@ -161,8 +161,7 @@ qboolean SND_Init (struct sndinfo *s)
 	si->dma->samples = obtained.samples * si->dma->channels;
 	si->dma->samplepos = 0;
 	si->dma->submission_chunk = 1;
-	si->dma->dmasize = (si->dma->samples * (si->dma->samplebits/8));
-	si->dma->buffer = calloc(1, si->dma->dmasize);;
+	si->dma->buffer = NULL;
 
 	SDL_PauseAudio (0);
 	snd_inited = 1;
