@@ -27,7 +27,7 @@ int numgltextures;
 int base_textureid;				/* gltextures[i] = base_textureid+i */
 
 static byte intensitytable[256];
-static unsigned char gammatable[256];
+static byte gammatable[256];
 
 cvar_t *intensity;
 extern cvar_t *gl_embossfilter;
@@ -36,7 +36,6 @@ unsigned d_8to24table[256];
 
 qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type);
 qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type);
-
 
 int gl_solid_format = GL_RGB;
 int gl_alpha_format = GL_RGBA;
@@ -2087,9 +2086,6 @@ void GL_InitImages(void)
 
 		intensitytable[i] = j;
 	}
-
-	if (gl_state.hwgamma)
-		GLimp_SetGamma(gammatable, gammatable, gammatable);
 }
 
 /*

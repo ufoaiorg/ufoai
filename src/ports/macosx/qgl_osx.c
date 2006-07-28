@@ -4379,7 +4379,7 @@ qboolean QGL_Init (const char *dllname)
 /*
  * ** GLimp_SetGamma
  * */
-void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] )
+void GLimp_SetGamma(void)
 {
 	/* Let's see what happens if we do nothing >:) */
 	/* Matthijs FIXME */

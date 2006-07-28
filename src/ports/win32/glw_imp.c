@@ -430,7 +430,11 @@ qboolean GLimp_InitGL (void)
 		0,								/* no accumulation buffer */
 		0, 0, 0, 0, 					/* accum bits ignored */
 		24,								/* 24-bit z-buffer */
+#if 0
+		8,								/* 8 bit stencil buffer */
+#else
 		0,								/* no stencil buffer */
+#endif
 		0,								/* no auxiliary buffer */
 		PFD_MAIN_PLANE,					/* main layer */
 		0,								/* reserved */
@@ -610,10 +614,9 @@ void GLimp_AppActivate( qboolean active )
 **
 ** This routine should only be called if gl_state.hwgamma is TRUE
 */
-void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] )
+void GLimp_SetGamma(void)
 {
-#if 1
-	int o, i;
+	int o, i, ret;
 	WORD gamma_ramp[3][256];
 
 	if (gl_state.hwgamma) {
@@ -635,54 +638,10 @@ void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned 
 		}
 
 		SetDeviceGammaRamp(glw_state.hDC, gamma_ramp);
+		ret = SetDeviceGammaRamp( glw_state.hDC, table );
+		if ( !ret )
+			ri.Con_Printf( PRINT_ALL, "...SetDeviceGammaRamp failed.\n" );
 	}
-#else
-	unsigned short table[3][256];
-	int		i, j;
-	int		ret;
-	OSVERSIONINFO	vinfo;
-
-	if ( !gl_state.hwgamma || !glw_state.hDC )
-		return;
-
-	for ( i = 0; i < 256; i++ ) {
-		table[0][i] = ( ( ( unsigned short ) red[i] ) << 8 ) | red[i];
-		table[1][i] = ( ( ( unsigned short ) green[i] ) << 8 ) | green[i];
-		table[2][i] = ( ( ( unsigned short ) blue[i] ) << 8 ) | blue[i];
-	}
-
-	/* Win2K puts this odd restriction on gamma ramps... */
-	vinfo.dwOSVersionInfoSize = sizeof(vinfo);
-	GetVersionEx( &vinfo );
-	if ( vinfo.dwMajorVersion == 5 && vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT ) {
-		ri.Con_Printf(PRINT_ALL, "Using the win32 nt gamma ramps rescriction\n");
-		for ( j = 0 ; j < 3 ; j++ ) {
-			for ( i = 0 ; i < 128 ; i++ ) {
-				if ( table[j][i] > ( (128+i) << 8 ) ) {
-					table[j][i] = (128+i) << 8;
-				}
-			}
-			if ( table[j][127] > 254<<8 ) {
-				table[j][127] = 254<<8;
-			}
-		}
-	}
-
-	/* enforce constantly increasing */
-	for ( j = 0 ; j < 3 ; j++ ) {
-		for ( i = 1 ; i < 256 ; i++ ) {
-			if ( table[j][i] < table[j][i-1] ) {
-				table[j][i] = table[j][i-1];
-			}
-		}
-	}
-
-	ret = SetDeviceGammaRamp( glw_state.hDC, table );
-	if ( !ret )
-		ri.Con_Printf( PRINT_ALL, "...SetDeviceGammaRamp failed.\n" );
-	else
-		ri.Con_Printf( PRINT_ALL, "...SetDeviceGammaRamp ok.\n" );
-#endif
 }
 
 /*

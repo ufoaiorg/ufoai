@@ -1621,10 +1621,8 @@ void R_BeginFrame(float camera_separation)
 
 	if (vid_gamma->modified) {
 		vid_gamma->modified = qfalse;
-#ifndef _WIN32
 		if (gl_state.hwgamma)
-			GLimp_SetGamma(NULL, NULL, NULL);
-#endif							/* _WIN32 */
+			GLimp_SetGamma();
 	}
 
 	GLimp_BeginFrame(camera_separation);

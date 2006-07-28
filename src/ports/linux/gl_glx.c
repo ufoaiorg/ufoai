@@ -735,7 +735,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	if (!XF86VidModeQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
 		vidmode_ext = qfalse;
 	} else {
-		ri.Con_Printf(PRINT_ALL, "Using XFree86-VidModeExtension Version %d.%d\n",
+		ri.Con_Printf(PRINT_ALL, "...using XFree86-VidModeExtension Version %d.%d\n",
 			MajorVersion, MinorVersion);
 		vidmode_ext = qtrue;
 	}
@@ -824,7 +824,6 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 					   changes across software gamma calls, which
 					   can reset the flag, so change it anyway */
 					vid_gamma->modified = qtrue;
-					ri.Con_Printf( PRINT_ALL, "Using hardware gamma\n");
 				}
 			} else {
 				fullscreen = qfalse;
@@ -832,6 +831,10 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 			}
 		}
 	}
+	if (gl_state.hwgamma)
+		ri.Con_Printf( PRINT_ALL, "...using hardware gamma\n");
+	else if (!fullscreen)
+		ri.Con_Printf( PRINT_ALL, "...using no hardware gamma - only available in fullscreen mode\n");
 #endif /* HAVE_XF86_VIDMODE */
 
 	/* window attributes */
@@ -995,7 +998,7 @@ void GLimp_EndFrame (void)
 /*
 ** GLimp_SetGamma
 */
-void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] )
+void GLimp_SetGamma(void)
 {
 #ifdef HAVE_XF86_VIDMODE
 	float g = vid_gamma->value;
