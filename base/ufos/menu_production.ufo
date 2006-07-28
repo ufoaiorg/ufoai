@@ -153,7 +153,7 @@ menu production
 		pos		"610 428"
 //		bgcolor "1 1 1 0.5"
 		size	"366 80"
-		format	"20 320"
+		format	"20 260"
 		num 17
 	}
 
