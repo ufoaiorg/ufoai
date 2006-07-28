@@ -154,7 +154,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"868 144"
-		texl	"0 0"		texh	"16 16"
+		texl	"0 0"
+		texh	"16 16"
 		mousefx	true
 		click	{ cmd "mn_modify mn_glmode -1 0 20;" }
 	}
@@ -162,7 +163,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"884 144"
-		texl	"16 0"		texh	"32 16"
+		texl	"16 0"
+		texh	"32 16"
 		mousefx	true
 		click	{ cmd "mn_modify mn_glmode +1 0 20;" }
 	}
@@ -182,7 +184,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"868 174"
-		texl	"0 0"		texh	"16 16"
+		texl	"0 0"
+		texh	"16 16"
 		mousefx	true
 		click
 		{
@@ -194,7 +197,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"884 174"
-		texl	"16 0"		texh	"32 16"
+		texl	"16 0"
+		texh	"32 16"
 		mousefx	true
 		click
 		{
@@ -218,7 +222,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"868 204"
-		texl	"0 0"		texh	"16 16"
+		texl	"0 0"
+		texh	"16 16"
 		mousefx	true
 		click
 		{
@@ -230,7 +235,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"884 204"
-		texl	"16 0"		texh	"32 16"
+		texl	"16 0"
+		texh	"32 16"
 		mousefx	true
 		click
 		{
@@ -254,7 +260,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"868 234"
-		texl	"0 0"		texh	"16 16"
+		texl	"0 0"
+		texh	"16 16"
 		mousefx	true
 		click
 		{
@@ -266,7 +273,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"884 234"
-		texl	"16 0"		texh	"32 16"
+		texl	"16 0"
+		texh	"32 16"
 		mousefx	true
 		click
 		{
@@ -290,7 +298,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"868 264"
-		texl	"0 0"		texh	"16 16"
+		texl	"0 0"
+		texh	"16 16"
 		mousefx	true
 		click
 		{
@@ -302,7 +311,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"884 264"
-		texl	"16 0"		texh	"32 16"
+		texl	"16 0"
+		texh	"32 16"
 		mousefx	true
 		click
 		{
@@ -326,7 +336,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"868 294"
-		texl	"0 0"		texh	"16 16"
+		texl	"0 0"
+		texh	"16 16"
 		mousefx	true
 		click	{ cmd "mn_modify r_anisotropic -1 0 16;" }
 	}
@@ -334,7 +345,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"884 294"
-		texl	"16 0"		texh	"32 16"
+		texl	"16 0"
+		texh	"32 16"
 		mousefx	true
 		click	{ cmd "mn_modify r_anisotropic +1 0 16;" }
 	}
@@ -354,7 +366,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"868 324"
-		texl	"0 0"		texh	"16 16"
+		texl	"0 0"
+		texh	"16 16"
 		mousefx	true
 		click
 		{
@@ -366,7 +379,8 @@ menu options_video
 	{
 		image	menu/buttons_small
 		pos		"884 324"
-		texl	"16 0"		texh	"32 16"
+		texl	"16 0"
+		texh	"32 16"
 		mousefx	true
 		click
 		{
@@ -487,7 +501,8 @@ menu options_sound
 	{
 		image	menu/buttons_small
 		pos		"868 244"
-		texl	"0 0"		texh	"16 16"
+		texl	"0 0"
+		texh	"16 16"
 		mousefx	true
 		click	{ cmd "modifykhz -;" }
 	}
@@ -495,7 +510,8 @@ menu options_sound
 	{
 		image	menu/buttons_small
 		pos		"884 244"
-		texl	"16 0"		texh	"32 16"
+		texl	"16 0"
+		texh	"32 16"
 		mousefx	true
 		click	{ cmd "modifykhz +;" }
 	}
@@ -527,7 +543,8 @@ menu options_game
 	{
 		image	menu/buttons_small
 		pos		"868 134"
-		texl	"0 0"		texh	"16 16"
+		texl	"0 0"
+		texh	"16 16"
 		mousefx	true
 		click	{ cmd "mn_modify difficulty -1 -3 3;" }
 	}
@@ -535,7 +552,8 @@ menu options_game
 	{
 		image	menu/buttons_small
 		pos		"884 134"
-		texl	"16 0"		texh	"32 16"
+		texl	"16 0"
+		texh	"32 16"
 		mousefx	true
 		click	{ cmd "mn_modify difficulty +1 -3 3;" }
 	}
@@ -558,7 +576,8 @@ menu options_game
 	{
 		image	menu/buttons_small
 		pos		"868 159"
-		texl	"0 0"		texh	"16 16"
+		texl	"0 0"
+		texh	"16 16"
 		mousefx	true
 		click
 		{
@@ -570,7 +589,8 @@ menu options_game
 	{
 		image	menu/buttons_small
 		pos		"884 159"
-		texl	"16 0"		texh	"32 16"
+		texl	"16 0"
+		texh	"32 16"
 		mousefx	true
 		click
 		{
@@ -597,16 +617,20 @@ menu options_game
 	{
 		image	menu/buttons_small
 		pos		"868 184"
-		texl	"0 0"		texh	"16 16"
+		texl	"0 0"
+		texh	"16 16"
 		mousefx	true
+		tooltip	"_Choose another hud"
 		click	{ cmd "mn_modifystring mn_hud -1 hud:althud;" }
 	}
 	pic hud_inc
 	{
 		image	menu/buttons_small
 		pos		"884 184"
-		texl	"16 0"		texh	"32 16"
+		texl	"16 0"
+		texh	"32 16"
 		mousefx	true
+		tooltip	"_Choose another hud"
 		click	{ cmd "mn_modifystring mn_hud +1 hud:althud;" }
 	}
 
@@ -628,8 +652,10 @@ menu options_game
 	{
 		image	menu/buttons_small
 		pos		"868 209"
-		texl	"0 0"		texh	"16 16"
+		texl	"0 0"
+		texh	"16 16"
 		mousefx	true
+		tooltip	"_Deactivates tooltips"
 		click
 		{
 			cmd "mn_modify cl_show_tooltips -1 0 1;"
@@ -640,8 +666,10 @@ menu options_game
 	{
 		image	menu/buttons_small
 		pos		"884 209"
-		texl	"16 0"		texh	"32 16"
+		texl	"16 0"
+		texh	"32 16"
 		mousefx	true
+		tooltip	"_Activates tooltips"
 		click
 		{
 			cmd "mn_modify cl_show_tooltips +1 0 1;"
@@ -649,6 +677,52 @@ menu options_game
 		}
 	}
 
+	// ===================
+	// CENTER VIEW
+	// ===================
+	string centerview_str
+	{
+		string	"_Center view:"
+		pos		"500 230"
+	}
+	string centerview_value
+	{
+		string	"*cvar mn_centerview"
+		pos		"840 230"
+		align	ur
+	}
+	pic centerview_dec
+	{
+		image	menu/buttons_small
+		pos		"868 234"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		tooltip	"_No centering at soldier selecting, shooting and appearing"
+		click
+		{
+			cmd "mn_modify cl_centerview -1 0 1;"
+			cmd "mn_translate cl_centerview mn_centerview 0:No,1:Yes;"
+		}
+	}
+	pic centerview_inc
+	{
+		image	menu/buttons_small
+		pos		"884 234"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		tooltip	"_Centering at soldier selecting, shooting and appearing"
+		click
+		{
+			cmd "mn_modify cl_centerview +1 0 1;"
+			cmd "mn_translate cl_centerview mn_centerview 0:No,1:Yes;"
+		}
+	}
+
+	// ===================
+	// CAMERA
+	// ===================
 	string camspeed_str
 	{
 		string	"_Camera Scroll:"
@@ -719,6 +793,7 @@ menu options_game
 
 	func init
 	{
+		cmd "mn_translate cl_centerview mn_centerview 0:No,1:Yes;"
 		cmd "mn_translate cl_show_tooltips mn_show_tooltips 0:No,1:Yes;"
 		cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes;"
 	}
