@@ -136,6 +136,118 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)\bin\$(PlatformName)"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\obj\$(PlatformName)"
+			ConfigurationType="1"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			BuildLogFile=""
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+				CommandLine=""
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\debug/ufo.tlb"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				PreprocessorDefinitions="PARANOID;WIN32;DEBUG;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF"
+				GeneratePreprocessedFile="0"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
+				SmallerTypeCheck="true"
+				RuntimeLibrary="1"
+				PrecompiledHeaderThrough=""
+				PrecompiledHeaderFile=""
+				AssemblerOutput="0"
+				AssemblerListingLocation="$(IntDir)\"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="$(IntDir)\"
+				BrowseInformation="0"
+				BrowseInformationFile=""
+				WarningLevel="4"
+				SuppressStartupBanner="true"
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="4"
+				CompileAs="0"
+				EnablePREfast="true"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
+				AdditionalDependencies="winmm.lib wsock32.lib $(IntDir)\q_shared.obj $(IntDir)\q_shwin.obj"
+				OutputFile="$(OutDir)\ufo32d.exe"
+				LinkIncremental="2"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="$(OutDir)"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile=""
+				GenerateMapFile="true"
+				MapFileName=""
+				SubSystem="2"
+				ProfileGuidedDatabase=""
+				BaseAddress=""
+				ImportLibrary=""
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile=""
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy $(OutDir)\ufo* ..\ufo*"
+			/>
+		</Configuration>
+		<Configuration
 			Name="Release|x64"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\bin\$(PlatformName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\obj\$(PlatformName)"
@@ -224,118 +336,6 @@
 				ImportLibrary=""
 				TargetMachine="17"
 				Profile="true"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-				SuppressStartupBanner="true"
-				OutputFile=""
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="copy $(OutDir)\ufo* ..\ufo*"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)\bin\$(PlatformName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\obj\$(PlatformName)"
-			ConfigurationType="1"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			BuildLogFile=""
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-				CommandLine=""
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\debug/ufo.tlb"
-				HeaderFileName=""
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				PreprocessorDefinitions="PARANOID;WIN32;DEBUG;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;USE_SDL_TTF"
-				GeneratePreprocessedFile="0"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
-				SmallerTypeCheck="true"
-				RuntimeLibrary="1"
-				PrecompiledHeaderThrough=""
-				PrecompiledHeaderFile=""
-				AssemblerOutput="0"
-				AssemblerListingLocation="$(IntDir)\"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(IntDir)\"
-				BrowseInformation="0"
-				BrowseInformationFile=""
-				WarningLevel="4"
-				SuppressStartupBanner="true"
-				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="4"
-				CompileAs="0"
-				EnablePREfast="true"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
-				AdditionalDependencies="winmm.lib wsock32.lib $(IntDir)\q_shared.obj $(IntDir)\q_shwin.obj"
-				OutputFile="$(OutDir)\ufo32d.exe"
-				LinkIncremental="2"
-				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="$(OutDir)"
-				GenerateDebugInformation="true"
-				ProgramDatabaseFile=""
-				GenerateMapFile="true"
-				MapFileName=""
-				SubSystem="2"
-				ProfileGuidedDatabase=""
-				BaseAddress=""
-				ImportLibrary=""
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -544,6 +544,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\client\cl_produce.c"
+				>
+			</File>
+			<File
 				RelativePath=".\client\cl_research.c"
 				>
 			</File>
@@ -561,6 +565,10 @@
 			</File>
 			<File
 				RelativePath=".\client\cl_team.c"
+				>
+			</File>
+			<File
+				RelativePath=".\client\cl_ufo.c"
 				>
 			</File>
 			<File
@@ -729,6 +737,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\client\cl_produce.h"
+				>
+			</File>
+			<File
 				RelativePath=".\client\cl_research.h"
 				>
 			</File>
@@ -789,11 +801,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ports\win32\os_types.h"
+				RelativePath=".\client\os_types.h"
 				>
 			</File>
 			<File
-				RelativePath=".\client\os_types.h"
+				RelativePath=".\ports\win32\os_types.h"
 				>
 			</File>
 			<File
@@ -870,7 +882,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|x64"
+					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCResourceCompilerTool"
@@ -879,7 +891,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Release|x64"
 					>
 					<Tool
 						Name="VCResourceCompilerTool"
