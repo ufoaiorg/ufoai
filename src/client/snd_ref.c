@@ -237,6 +237,7 @@ void S_Init(void)
 		si.speed = Cvar_Get("sndspeed", "48000", CVAR_ARCHIVE);
 		si.channels = Cvar_Get("sndchannels", "2", CVAR_ARCHIVE);
 		si.device = Cvar_Get("snddevice", "default", CVAR_ARCHIVE);
+		/* FIXME: sndspeed or s_khz - one has to leave the ring */
 		si.s_khz = Cvar_Get("s_khz", "0", CVAR_ARCHIVE);
 		si.Cvar_Get = Cvar_Get;
 		si.Com_Printf = Com_Printf;
