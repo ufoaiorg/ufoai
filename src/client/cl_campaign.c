@@ -1573,9 +1573,10 @@ static void CL_GameGo(void)
 	mission_t *mis;
 	char expanded[MAX_QPATH];
 	char timeChar;
+	aircraft_t* air;
 
-	if (!curCampaign || !selMis || !baseCurrent) {
-		Com_DPrintf("curCampaign: %p, selMis: %p, baseCurrent: %p\n", curCampaign, selMis, baseCurrent);
+	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
+		Com_DPrintf("curCampaign: %p, selMis: %p, interceptAircraft: %i\n", curCampaign, selMis, gd.interceptAircraft);
 		return;
 	}
 
@@ -1583,13 +1584,15 @@ static void CL_GameGo(void)
 	CL_CheckAircraft(&baseCurrent->aircraft[gd.interceptAircraft]);
 
 	mis = selMis->def;
+	air = CL_AircraftGetFromIdx(gd.interceptAircraft);
+	baseCurrent = air->homebase;
+	assert(baseCurrent || mis || air);
 
 	/* multiplayer */
 	if (B_GetNumOnTeam() == 0 && !ccs.singleplayer) {
 		MN_Popup(_("Note"), _("Assemble or load a team"));
 		return;
-	} else if ((!mis->active || (gd.interceptAircraft >= 0 && !baseCurrent->numOnTeam[gd.interceptAircraft]))
-		&& ccs.singleplayer) {
+	} else if (ccs.singleplayer && (!mis->active || !*(air->teamSize))) {
 		/* dropship not near landing zone */
 		Com_DPrintf("Dropship not near landingzone: mis->active: %i\n", mis->active);
 		return;
@@ -1606,7 +1609,7 @@ static void CL_GameGo(void)
 	Cvar_Set("equip", curCampaign->equipment);
 	/* TODO: Map assembling to get the current used dropship in the map is not fully implemented */
 	/* but can be done via the map assembling part of the random map assembly */
-	Cvar_Set("map_dropship", gd.bases[baseCurrent->idx].aircraft[gd.interceptAircraft].id);
+	Cvar_Set("map_dropship", air->id);
 
 	/* check inventory */
 	ccs.eMission = ccs.eCampaign;
@@ -1694,11 +1697,13 @@ static void CL_GameAutoCheck(void)
   *
   * TODO: Remove recruits when a mission was lost
   * @sa CL_GameAutoCheck
+  * @sa CL_GameGo
   */
 void CL_GameAutoGo(void)
 {
 	mission_t *mis;
 	int won, i;
+	aircraft_t* air;
 
 	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
 		Com_DPrintf("No update after automission\n");
@@ -1707,6 +1712,10 @@ void CL_GameAutoGo(void)
 
 	/* start the map */
 	mis = selMis->def;
+	air = CL_AircraftGetFromIdx(gd.interceptAircraft);
+	baseCurrent = air->homebase;
+	assert(baseCurrent || mis || air);
+
 	if (!mis->active) {
 		MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
 		return;
@@ -1718,9 +1727,9 @@ void CL_GameAutoGo(void)
 	MN_PopMenu(qfalse);
 
 	/* FIXME: This needs work */
-	won = mis->aliens * (int) difficulty->value > baseCurrent->numOnTeam[gd.interceptAircraft] ? 0 : 1;
+	won = mis->aliens * (int) difficulty->value > *(air->teamSize) ? 0 : 1;
 
-	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int) difficulty->value, baseCurrent->numOnTeam[gd.interceptAircraft]);
+	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int) difficulty->value, *(air->teamSize));
 
 	/* give reward */
 	if (won)
