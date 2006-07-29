@@ -128,6 +128,8 @@ qboolean SND_InitWav (void)
 	else
 		si->dma->speed = 11025;
 
+	si->Com_Printf("Using %i Hz\n", si->dma->speed);
+
 	memset (&format, 0, sizeof(format));
 	format.wFormatTag = WAVE_FORMAT_PCM;
 	format.nChannels = si->dma->channels;
@@ -142,21 +144,22 @@ qboolean SND_InitWav (void)
 	/* Open a waveform device for output using window callback. */
 	si->Com_Printf ("...opening waveform device: ");
 	while ((hr = waveOutOpen((LPHWAVEOUT)&hWaveOut, WAVE_MAPPER, &format,
-					0, 0L, CALLBACK_NULL)) != MMSYSERR_NOERROR) {
+			0, 0L, CALLBACK_NULL)) != MMSYSERR_NOERROR) {
 		if (hr != MMSYSERR_ALLOCATED) {
 			si->Com_Printf ("failed\n");
 			return qfalse;
 		}
 
 		if (MessageBox (NULL,
-						"The sound hardware is in use by another app.\n\n"
-					    "Select Retry to try to start sound again or Cancel to run UFO with no sound.",
-						"Sound not available",
-						MB_RETRYCANCEL | MB_SETFOREGROUND | MB_ICONEXCLAMATION) != IDRETRY) {
+				"The sound hardware is in use by another app.\n\n"
+				"Select Retry to try to start sound again or Cancel to run UFO with no sound.",
+				"Sound not available",
+				MB_RETRYCANCEL | MB_SETFOREGROUND | MB_ICONEXCLAMATION) != IDRETRY) {
 			si->Com_Printf ("hw in use\n" );
 			return qfalse;
 		}
 	}
+	si->Com_Printf("ok\n");
 
 	/*
 	 * Allocate and lock memory for the waveform data. The memory
@@ -171,6 +174,7 @@ qboolean SND_InitWav (void)
 		FreeSound ();
 		return qfalse;
 	}
+	si->Com_Printf("ok\n");
 
 	si->Com_Printf ("...locking waveform buffer: ");
 	lpData = GlobalLock(hData);
@@ -180,6 +184,7 @@ qboolean SND_InitWav (void)
 		return qfalse;
 	}
 	memset (lpData, 0, gSndBufSize);
+	si->Com_Printf("ok\n");
 
 	/*
 	 * Allocate and lock memory for the header. This memory must
@@ -195,6 +200,7 @@ qboolean SND_InitWav (void)
 		FreeSound ();
 		return qfalse;
 	}
+	si->Com_Printf("ok\n");
 
 	si->Com_Printf ("...locking waveform header: ");
 	lpWaveHdr = (LPWAVEHDR) GlobalLock(hWaveHdr);
@@ -205,6 +211,7 @@ qboolean SND_InitWav (void)
 		return qfalse;
 	}
 	memset (lpWaveHdr, 0, sizeof(WAVEHDR) * WAV_BUFFERS);
+	si->Com_Printf("ok\n");
 
 	/* After allocation, set up and prepare headers. */
 	si->Com_Printf("...preparing headers: ");
@@ -219,6 +226,7 @@ qboolean SND_InitWav (void)
 			return qfalse;
 		}
 	}
+	si->Com_Printf("ok\n");
 
 	si->dma->samples = gSndBufSize/(si->dma->samplebits/8);
 	si->dma->samplepos = 0;
