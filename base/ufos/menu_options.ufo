@@ -493,7 +493,7 @@ menu options_sound
 	}
 	string mix_value
 	{
-		string	"*cvar s_khz"
+		string	"*cvar snd_khz"
 		pos		"790 240"
 		align	ur
 	}
