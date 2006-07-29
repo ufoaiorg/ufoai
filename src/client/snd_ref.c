@@ -1028,6 +1028,12 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	channel_t *ch;
 	channel_t *combine;
 
+
+	if (snd_ref->modified) {
+		snd_ref->modified = qfalse;
+		CL_Snd_Restart_f();
+	}
+
 	if (!sound_started)
 		return;
 
@@ -1043,11 +1049,6 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	/* rebuild scale tables if volume is modified */
 	if (snd_volume->modified)
 		S_InitScaletable();
-
-	if (snd_ref->modified) {
-		snd_ref->modified = qfalse;
-		CL_Snd_Restart_f();
-	}
 
 	VectorCopy(origin, listener_origin);
 	VectorCopy(forward, listener_forward);
