@@ -256,6 +256,44 @@ mission vil_lille
 	$civilian	500
 }
 
+mission harbour
+{
+	location	"_Busan"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			harbour07
+	music		mission2
+	pos			"-129 35"
+	aliens		8
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	3
+	$win		1900
+	$alien		100
+	$civilian	500
+}
+
+mission japan
+{
+	location	"_Morioka"
+	type		"_Alien Hideout"
+	text		"_Eliminate intruders"
+	map			japan06
+	music		mission3
+	pos			"-141 39"
+	aliens		10
+	alienteam	alien
+	alienequip	campaign_alien
+	civilians	6
+	civteam		european
+	recruits	4
+	$win		2500
+	$alien		100
+	$civilian	500
+}
+
 // TODO: Mission below need more work
 
 mission falconcrash
@@ -364,7 +402,7 @@ mission frozen_industrial
 	map			"+frozen"
 	param	industrial
 	music		mission
-	pos			"-54 75"
+	pos			"54 75"
 	aliens		7
 	alienteam	alien
 	alienequip	campaign_alien
@@ -411,44 +449,6 @@ mission gasstation
 	civteam		european
 	recruits	3
 	$win		1900
-	$alien		100
-	$civilian	500
-}
-
-mission harbour
-{
-	location	"_Cam Pha"
-	type		"_Terror Attack"
-	text		"_Protect inhabitants"
-	map			harbour07
-	music		mission2
-	pos			"-106 163"
-	aliens		8
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	3
-	$win		1900
-	$alien		100
-	$civilian	500
-}
-
-mission japan
-{
-	location	"_Morioka"
-	type		"_Alien Hideout"
-	text		"_Eliminate intruders"
-	map			japan06
-	music		mission3
-	pos			"-140 129"
-	aliens		10
-	alienteam	alien
-	alienequip	campaign_alien
-	civilians	6
-	civteam		european
-	recruits	4
-	$win		2500
 	$alien		100
 	$civilian	500
 }
@@ -779,8 +779,8 @@ stage intro
 		seq	intro
 		delay		"0 1 0"
 		frame		"0 3 0"
-		missions	"farm frozen_industrial"
-		number		2
+		missions	"farm"
+		number		1
 		expire		"0 3 0"
 		quota		0
 	}
@@ -814,7 +814,7 @@ stage ufos_are_coming
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
-		missions	"transport mine_crash construction farm office"
+		missions	"transport mine_crash construction farm office harbour"
 		quota		4
 		nextstage	invasion
 	}
