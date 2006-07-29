@@ -4,7 +4,7 @@ mission stadium
 {
 	location	"_New York"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map		stadium06
 	music		mission3
 	pos		"74 41"
@@ -22,7 +22,7 @@ mission terrain
 {
 	location	"_Altdorf"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map		terrain08
 	music		mission3
 	pos		"-9 46"
@@ -40,7 +40,7 @@ mission spedition
 {
 	location	"_Oslo"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map		spedition06
 	music		mission3
 	pos		"-10 60"
@@ -58,7 +58,7 @@ mission pdi
 {
 	location	"_Antalya"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map		pdi08
 	music		mission3
 	pos		"-30 36"
@@ -117,7 +117,7 @@ mission mine
 {
 	location	"_Wellington"
 	type		"_Terror Attack"
-	text		"_There are rumors of a mine being\overrun by aliens. Although this\source of information is doubtful,\you'll need to investigate.\"
+	text		"_There are rumors of a mine being\overrun by aliens. Although this\source of information is doubtful,\you'll need to investigate."
 	map		mine01
 	music		mission4
 	pos		"-174 -41"
@@ -237,7 +237,7 @@ mission africa_excavation
 {
 	location	"_Gwanda"
 	type		"_Terror Attack"
-	text		"_Some aliens have escaped from the\mine, and their tracks lead south,\towards a nearby excavation site.\Protect that site at all cost.\"
+	text		"_Some aliens have escaped from the\mine, and their tracks lead south,\towards a nearby excavation site.\Protect that site at all cost."
 	map		excavation06
 	music		mission4
 	pos		"-29 -20"
@@ -276,7 +276,7 @@ mission subway
 {
 	location	"_New York"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map		subway07
 	music		mission3
 	pos		"74 40"
@@ -604,12 +604,12 @@ mission rocketsilo
 	$civilian	200
 }
 
-//no night
+// America
 mission tower
 {
 	location	"_TODO"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map		tower06
 	music		mission3
 	pos		"308 412"
@@ -645,7 +645,7 @@ mission tropic_river
 {
 	location	"_TODO"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map		"+tropic"
 	param	river
 	music		mission3
@@ -664,7 +664,7 @@ mission tropic_drug
 {
 	location	"_TODO"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!\"
+	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
 	map		"+tropic"
 	param	drug
 	music		mission3
