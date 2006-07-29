@@ -211,7 +211,7 @@ void InitGame(void)
 	m_rage_stop = gi.cvar("r_rage_stop", "2.0", CVAR_LATCH);
 	m_panic_stop = gi.cvar("m_panic_stop", "1.0", CVAR_LATCH);
 
-	difficulty = gi.cvar("difficulty", "-3", CVAR_ARCHIVE | CVAR_LATCH);
+	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET);
 
 	g_select_empty = gi.cvar("g_select_empty", "0", CVAR_ARCHIVE);
 

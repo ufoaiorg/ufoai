@@ -435,6 +435,7 @@ void CL_PingServers_f(void);
 void CL_Snd_Restart_f(void);
 void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank );
 void CL_ParseUGVs(char *title, char **text);
+char* CL_ToDifficultyName(int difficulty);
 
 /* cl_input */
 typedef struct {

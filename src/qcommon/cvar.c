@@ -41,11 +41,9 @@ qboolean userinfo_modified;
  */
 static cvar_t *cvar_vars;
 
-/*
-============
-Cvar_InfoValidate
-============
-*/
+/**
+ * @brief
+ */
 static qboolean Cvar_InfoValidate(char *s)
 {
 	if (strstr(s, "\\"))
@@ -220,11 +218,11 @@ cvar_t *Cvar_Set2(char *var_name, char *value, qboolean force)
 
 		if (var->flags & CVAR_LATCH) {
 			if (var->latched_string) {
-				if (Q_strcmp(value, var->latched_string) == 0)
+				if (!Q_strcmp(value, var->latched_string))
 					return var;
 				Z_Free(var->latched_string);
 			} else {
-				if (Q_strcmp(value, var->string) == 0)
+				if (!Q_strcmp(value, var->string))
 					return var;
 			}
 

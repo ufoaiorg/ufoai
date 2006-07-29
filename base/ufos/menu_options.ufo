@@ -528,36 +528,6 @@ menu options_sound
 
 menu options_game
 {
-	string dif_str
-	{
-		string	"_Difficulty:"
-		pos		"500 130"
-	}
-	string dif_value
-	{
-		string	"*cvar mn_difficulty"
-		pos		"840 130"
-		align	ur
-	}
-	pic dif_dec
-	{
-		image	menu/buttons_small
-		pos		"868 134"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "mn_modify difficulty -1 -3 3;" }
-	}
-	pic dif_inc
-	{
-		image	menu/buttons_small
-		pos		"884 134"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modify difficulty +1 -3 3;" }
-	}
-
 	// ===================
 	// CONFIRM ACTIONS
 	// ===================

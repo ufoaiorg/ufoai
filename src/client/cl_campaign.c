@@ -2379,6 +2379,8 @@ value_t campaign_vals[] = {
 	,
 	{"market", V_STRING, offsetof(campaign_t, market)}
 	,
+	{"difficulty", V_INT, offsetof(campaign_t, difficulty)}
+	,
 	{"firststage", V_STRING, offsetof(campaign_t, firststage)}
 	,
 	{"map", V_STRING, offsetof(campaign_t, map)}
@@ -2667,6 +2669,7 @@ void CL_GameNew(void)
 	equipDef_t *ed;
 	char *name;
 	int i;
+	char val[32];
 
 	Cvar_Set("mn_main", "singleplayer");
 	Cvar_Set("mn_active", "map");
@@ -2690,6 +2693,8 @@ void CL_GameNew(void)
 		Com_Printf("CL_GameNew: Campaign \"%s\" doesn't exist.\n", name);
 		return;
 	}
+	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
+	Cvar_ForceSet("difficulty", val);
 
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
 	if (!maskPic)
@@ -2760,7 +2765,7 @@ void CP_GetCampaigns_f(void)
 	/* select main as default */
 	for (i = 0; i < numCampaigns; i++)
 		if (!Q_strncmp("main", campaigns[i].id, MAX_VAR)) {
-			Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i\nCredits: %ic\n%s\n"), campaigns[i].team, campaigns[i].soldiers, campaigns[i].credits, _(campaigns[i].text));
+			Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i\nCredits: %ic\nDifficulty: %s\n%s\n"), campaigns[i].team, campaigns[i].soldiers, campaigns[i].credits, CL_ToDifficultyName(campaigns[i].difficulty), _(campaigns[i].text));
 			break;
 		}
 
@@ -2791,7 +2796,7 @@ void CP_CampaignsClick_f(void)
 
 	Cvar_Set("campaign", campaigns[num].id);
 	/* FIXME: Translate the race to the name of a race */
-	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i\nCredits: %ic\n%s\n"), campaigns[num].team, campaigns[num].soldiers, campaigns[num].credits, _(campaigns[num].text));
+	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i\nCredits: %ic\nDifficulty: %s\n%s\n"), campaigns[num].team, campaigns[num].soldiers, campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty), _(campaigns[num].text));
 	menuText[TEXT_STANDARD] = campaignDesc;
 }
 

@@ -1192,8 +1192,7 @@ void CL_InitLocal(void)
 
 	cl_numnames = Cvar_Get("cl_numnames", "19", CVAR_NOSET);
 
-	difficulty = Cvar_Get("difficulty", "-3", CVAR_ARCHIVE | CVAR_LATCH);
-	difficulty->modified = qfalse;
+	difficulty = Cvar_Get("difficulty", "0", CVAR_NOSET);
 
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE);
 
@@ -1404,16 +1403,40 @@ void CL_AddMapParticle(char *ptl, vec3_t origin, vec2_t wait, char *info, int le
 	Com_DPrintf("Adding map particle %s (%i) with levelflags %i\n", ptl, numMPs, levelflags);
 }
 
-/* FIXME: Howto mark them for gettext? */
-char *difficulty_names[] = {
-	"Chickenhearted",
-	"Very Easy",
-	"Easy",
-	"Normal",
-	"Hard",
-	"Very Hard",
-	"Insane"
-};
+/**
+ * @brief Translate the difficulty int to a translated string
+ * @param difficulty the difficulty integer value
+ */
+char* CL_ToDifficultyName(int difficulty)
+{
+	switch (difficulty) {
+	case 0:
+		return _("Chickenhearted");
+		break;
+	case 1:
+		return _("Very Easy");
+		break;
+	case 2:
+		return _("Easy");
+		break;
+	case 3:
+		return _("Normal");
+		break;
+	case 4:
+		return _("Hard");
+		break;
+	case 5:
+		return _("Very Hard");
+		break;
+	case 6:
+		return _("Insame");
+		break;
+	default:
+		Sys_Error("Unknown difficulty id %i\n", difficulty);
+		break;
+	}
+	return NULL;
+}
 
 /**
   * @brief
@@ -1442,11 +1465,14 @@ void CL_CvarCheck(void)
 	if (difficulty->modified) {
 		v = (int) difficulty->value;
 
-		if (v < 0)
+		if (v < 0) {
 			v = 0;
-		else if (v > 6)
+			Cvar_SetValue("difficulty", v);
+		} else if (v > 6) {
 			v = 6;
-		Cvar_Set("mn_difficulty", _(difficulty_names[v]));
+			Cvar_SetValue("difficulty", v);
+		}
+		difficulty->modified = qfalse;
 	}
 #ifdef HAVE_GETTEXT
 	/* language */
