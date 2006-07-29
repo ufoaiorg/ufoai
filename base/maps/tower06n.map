@@ -3,7 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
-"light" "130"
+"light" "60"
 "_color" "0.9 0.9 1"
 "angles" "30 210"
 "ambient" "0.25 0.25 0.275"
