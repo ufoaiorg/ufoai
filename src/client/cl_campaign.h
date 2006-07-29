@@ -133,7 +133,7 @@ typedef struct campaign_s {
 	int ugvs;
 	int credits;
 	int num;
-	int difficulty;
+	signed int difficulty;
 	qboolean visible;
 	date_t date;
 	qboolean finished;

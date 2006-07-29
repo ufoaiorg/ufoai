@@ -1410,25 +1410,25 @@ void CL_AddMapParticle(char *ptl, vec3_t origin, vec2_t wait, char *info, int le
 char* CL_ToDifficultyName(int difficulty)
 {
 	switch (difficulty) {
-	case 0:
+	case -3:
 		return _("Chickenhearted");
 		break;
-	case 1:
+	case -2:
 		return _("Very Easy");
 		break;
-	case 2:
+	case -1:
 		return _("Easy");
 		break;
-	case 3:
+	case 0:
 		return _("Normal");
 		break;
-	case 4:
+	case 1:
 		return _("Hard");
 		break;
-	case 5:
+	case 2:
 		return _("Very Hard");
 		break;
-	case 6:
+	case 3:
 		return _("Insame");
 		break;
 	default:

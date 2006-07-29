@@ -878,7 +878,7 @@ campaign heavy
 	text		"_txt_hard_campaign"
 	team		human
 	soldiers	4
-	difficulty	6
+	difficulty	3
 	equipment	campaign_player
 	market		campaign_market
 	credits		3500000
@@ -895,7 +895,7 @@ campaign easy
 	text		"_txt_easy_campaign"
 	team		human
 	soldiers	20
-	difficulty	0
+	difficulty	-3
 	equipment	campaign_player
 	market		campaign_market
 	credits		6000000
@@ -912,7 +912,7 @@ campaign main
 	text		"_txt_standard_campaign"
 	team		human
 	soldiers	12
-	difficulty	3
+	difficulty	0
 //	ugvs	2
 	equipment	campaign_player
 	market		campaign_market
