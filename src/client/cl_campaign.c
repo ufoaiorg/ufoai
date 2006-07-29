@@ -495,11 +495,14 @@ static void CL_CampaignEndStage(char *name)
 
 /**
   * @brief
+  * @sa CL_CampaignRemoveMission
   */
 #define DIST_MIN_BASE_MISSION 4
 static void CL_CampaignAddMission(setState_t * set)
 {
 	actMis_t *mis;
+	/* maybe the mission is already on geoscape */
+	mission_t *misTemp;
 	int i;
 	float f;
 
@@ -508,11 +511,19 @@ static void CL_CampaignAddMission(setState_t * set)
 		Com_Printf("Too many active missions!\n");
 		return;
 	}
+
+	misTemp = &missions[set->def->missions[(int) (set->def->numMissions * frand())]];
+	if (misTemp->onGeoscape) {
+		Com_DPrintf("Mission is already on geoscape\n");
+		return;
+	} else {
+		misTemp->onGeoscape = qtrue;
+	}
 	mis = &ccs.mission[ccs.numMissions++];
 	memset(mis, 0, sizeof(actMis_t));
 
 	/* set relevant info */
-	mis->def = &missions[set->def->missions[(int) (set->def->numMissions * frand())]];
+	mis->def = misTemp;
 	mis->cause = set;
 
 	/* execute mission commands */
@@ -584,6 +595,7 @@ static void CL_CampaignAddMission(setState_t * set)
 
 /**
   * @brief
+  * @sa CL_CampaignAddMission
   */
 static void CL_CampaignRemoveMission(actMis_t * mis)
 {
@@ -598,6 +610,9 @@ static void CL_CampaignRemoveMission(actMis_t * mis)
 	ccs.numMissions--;
 
 	Com_DPrintf("%i missions left\n", ccs.numMissions);
+
+	/* allow respawn on geoscape */
+	mis->def->onGeoscape = qfalse;
 
 	for (i = num; i < ccs.numMissions; i++)
 		ccs.mission[i] = ccs.mission[i + 1];
@@ -628,9 +643,7 @@ static void CL_CampaignExecute(setState_t * set)
 
 
 /**
-  * @brief
-  *
-  * opens up aircraft by rightclicking them
+  * @brief opens up aircraft by rightclicking them
   * (from the aircraft list after selecting a mission on geoscape)
   */
 static void CL_OpenAircraft_f(void)

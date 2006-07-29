@@ -56,7 +56,7 @@ typedef struct popup_aircarft_s {
 	int aircraft_idx;		/**< Aircraft linked to popup_aircraft */
 	popup_aircraft_action_e itemsAction[POPUP_AIRCRAFT_MAX_ITEMS];	/**< Action type of items */
 	int itemsId[POPUP_AIRCRAFT_MAX_ITEMS];	/**< IDs corresponding to items */
-	char text_popup[POPUP_AIRCARFT_MAX_TEXT];	/** Text displayed in popup_aircraft */
+	char text_popup[POPUP_AIRCARFT_MAX_TEXT];	/**< Text displayed in popup_aircraft */
 
 } popup_aircraft_t;
 
