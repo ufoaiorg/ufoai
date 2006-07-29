@@ -200,7 +200,7 @@ void SND_Shutdown (void)
  */
 void SND_Submit (void)
 {
-	SDL_UnlockAudio();
+/*	SDL_UnlockAudio();*/
 }
 
 /**
@@ -208,7 +208,7 @@ void SND_Submit (void)
  */
 void SND_BeginPainting(void)
 {
-	SDL_LockAudio();
+/*	SDL_LockAudio();*/
 }
 
 /**
