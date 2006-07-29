@@ -169,7 +169,7 @@ void S_ModifyKhz_f(void)
 		else if (snd_khz->value == 22)
 			Cvar_SetValue("snd_khz", 11);
 		else if (snd_khz->value != 11)
-			Cvar_SetValue("snd_khz", 11);
+			Cvar_SetValue("snd_khz", 48);
 	}
 
 	if (snd_khz->modified)
