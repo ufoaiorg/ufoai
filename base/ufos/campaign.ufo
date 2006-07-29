@@ -358,13 +358,13 @@ mission frozen_landingnature
 
 mission frozen_industrial
 {
-	location	"_Antarctic"
+	location	"_Agpat"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			"+frozen"
 	param	industrial
 	music		mission
-	pos			"-141 128"
+	pos			"-54 75"
 	aliens		7
 	alienteam	alien
 	alienequip	campaign_alien
@@ -779,8 +779,8 @@ stage intro
 		seq	intro
 		delay		"0 1 0"
 		frame		"0 3 0"
-		missions	"farm"
-		number		1
+		missions	"farm frozen_industrial"
+		number		2
 		expire		"0 3 0"
 		quota		0
 	}
