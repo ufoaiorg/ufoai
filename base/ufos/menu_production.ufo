@@ -253,6 +253,14 @@ menu production
 		string	"_Armor"
 	}
 
+	// ITEMS
+	item itemmodel
+	{
+		string	"*cvar mn_item"
+		pos		"793 288"
+		scale	"7 7 7"
+	}
+
 	pic bt_continue
 	{
 		tooltip	"_Back to baseview"

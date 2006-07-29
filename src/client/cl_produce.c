@@ -100,8 +100,10 @@ static void PR_ProductionInfo (void)
 		t = (technology_t*)(od->tech);
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\t%i\n", od->name, gd.productions[baseCurrent->idx].amount);
 		Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price*PRODUCE_FACTOR)), sizeof(productionInfo) );
+		CL_ItemDescription(gd.productions[baseCurrent->idx].objID);
 	} else {
 		Com_sprintf(productionInfo, sizeof(productionInfo), _("No running productions"));
+		Cvar_Set("mn_item", "");
 	}
 	menuText[TEXT_PRODUCTION_INFO] = productionInfo;
 }
