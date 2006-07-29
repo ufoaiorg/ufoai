@@ -123,12 +123,10 @@ qboolean SND_InitWav (void)
 
 	if (si->s_khz->value == 44)
 		si->dma->speed = 44100;
-	if (si->s_khz->value == 22)
+	else if (si->s_khz->value == 22)
 		si->dma->speed = 22050;
 	else
 		si->dma->speed = 11025;
-
-	si->Com_Printf("Using %i Hz\n", si->dma->speed);
 
 	memset (&format, 0, sizeof(format));
 	format.wFormatTag = WAVE_FORMAT_PCM;
