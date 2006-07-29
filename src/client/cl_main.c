@@ -1461,19 +1461,6 @@ void CL_CvarCheck(void)
 		cl_worldlevel->modified = qfalse;
 	}
 
-	/* difficulty */
-	if (difficulty->modified) {
-		v = (int) difficulty->value;
-
-		if (v < 0) {
-			v = 0;
-			Cvar_SetValue("difficulty", v);
-		} else if (v > 6) {
-			v = 6;
-			Cvar_SetValue("difficulty", v);
-		}
-		difficulty->modified = qfalse;
-	}
 #ifdef HAVE_GETTEXT
 	/* language */
 	if (s_language->modified)

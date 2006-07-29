@@ -2693,6 +2693,12 @@ void CL_GameNew(void)
 		Com_Printf("CL_GameNew: Campaign \"%s\" doesn't exist.\n", name);
 		return;
 	}
+
+	/* difficulty */
+	if ((int) difficulty->value < 0)
+		Cvar_ForceSet("difficulty", "0");
+	else if ((int) difficulty->value > 6)
+		Cvar_ForceSet("difficulty", "6");
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
 	Cvar_ForceSet("difficulty", val);
 
