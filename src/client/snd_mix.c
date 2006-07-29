@@ -116,7 +116,7 @@ void S_TransferPaintBuffer(int endtime)
 
 	pbuf = (unsigned long *) dma.buffer;
 
-	if (s_testsound->value) {
+	if (snd_testsound->value) {
 		int i;
 		int count;
 
@@ -249,7 +249,7 @@ void S_PaintChannels(int endtime)
 	int ltime, count;
 	playsound_t *ps;
 
-	snd_vol = s_volume->value * 256;
+	snd_vol = snd_volume->value * 256;
 
 /*	Com_Printf ("%i to %i\n", paintedtime, endtime); */
 	while (paintedtime < endtime) {
@@ -357,9 +357,9 @@ void S_InitScaletable(void)
 	int i, j;
 	int scale;
 
-	s_volume->modified = qfalse;
+	snd_volume->modified = qfalse;
 	for (i = 0; i < 32; i++) {
-		scale = i * 8 * 256 * s_volume->value;
+		scale = i * 8 * 256 * snd_volume->value;
 		for (j = 0; j < 256; j++)
 			snd_scaletable[i][j] = ((signed char) j) * scale;
 	}

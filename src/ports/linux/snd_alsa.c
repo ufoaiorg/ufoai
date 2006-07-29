@@ -113,7 +113,15 @@ qboolean SND_Init(struct sndinfo *s)
 		return qfalse;
 	}
 
-	si->dma->speed = *si->speed->string ? atoi(si->speed->string) : 0;
+	if (si->khz->value == 48)
+		si->dma->speed = 48000;
+	else if (si->khz->value == 44)
+		si->dma->speed = 44100;
+	else if (si->khz->value == 22)
+		si->dma->speed = 22050;
+	else
+		si->dma->speed = 0;
+
 	if (si->dma->speed) {  /* try specified rate */
 		r = si->dma->speed;
 		if ((err = snd_pcm_hw_params_set_rate_near(pcm_handle, hw_params, &r, &dir)) < 0) {

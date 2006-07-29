@@ -120,10 +120,9 @@ typedef struct {
 struct sndinfo {
 	dma_t *dma;
 	cvar_t *bits;
-	cvar_t *speed;
 	cvar_t *channels;
 	cvar_t *device;
-	cvar_t *s_khz;
+	cvar_t *khz;
 
 	void (*Com_Printf) (char *fmt, ...);
 	void (*S_PaintChannels) (int);
@@ -165,13 +164,13 @@ extern playsound_t s_pendingplays;
 #define	MAX_RAW_SAMPLES	8192
 extern portable_samplepair_t s_rawsamples[MAX_RAW_SAMPLES];
 
-extern cvar_t *s_volume;
-extern cvar_t *s_nosound;
-extern cvar_t *s_loadas8bit;
-extern cvar_t *s_khz;
-extern cvar_t *s_show;
-extern cvar_t *s_mixahead;
-extern cvar_t *s_testsound;
+extern cvar_t *snd_volume;
+extern cvar_t *snd_nosound;
+extern cvar_t *snd_loadas8bit;
+extern cvar_t *snd_khz;
+extern cvar_t *snd_show;
+extern cvar_t *snd_mixahead;
+extern cvar_t *snd_testsound;
 extern cvar_t *ov_volume;
 extern cvar_t *ov_loop;
 

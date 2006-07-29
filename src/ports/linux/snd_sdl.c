@@ -81,18 +81,20 @@ qboolean SND_Init (struct sndinfo *s)
 	desired_bits = si->bits->value;
 
 	/* Set up the desired format */
-	desired.freq = *si->speed->string ?  /* casting the float is problematic */
-			atoi(si->speed->string) : 48000;
-
-	if (!desired.freq)
+	/* set buffer based on rate */
+	if (si->khz->value == 48) {
 		desired.freq = 48000;
-
-	if (desired.freq == 48000 || desired.freq == 44100)
-		desired.samples = 4096;  /* set buffer based on rate */
-	else if (desired.freq == 22050)
+		desired.samples = 4096;
+	} else if (si->khz->value == 44) {
+		desired.freq = 44100;
+		desired.samples = 4096;
+	} else if (si->khz->value == 22) {
+		desired.freq = 22050;
 		desired.samples = 2048;
-	else
-		desired.samples = 1024;
+	} else {
+		desired.freq = 48000;
+		desired.samples = 4096;
+	}
 
 	desired.callback = paint_audio;
 

@@ -94,12 +94,12 @@ playsound_t s_pendingplays;
 
 int s_beginofs;
 
-cvar_t *s_volume;
-cvar_t *s_testsound;
-cvar_t *s_loadas8bit;
-cvar_t *s_khz;
-cvar_t *s_show;
-cvar_t *s_mixahead;
+cvar_t *snd_volume;
+cvar_t *snd_testsound;
+cvar_t *snd_loadas8bit;
+cvar_t *snd_khz;
+cvar_t *snd_show;
+cvar_t *snd_mixahead;
 
 cvar_t *ov_volume;
 cvar_t *ov_loop;
@@ -153,22 +153,26 @@ void S_ModifyKhz_f(void)
 		return;
 
 	if (*Cmd_Argv(1) == '+') {
-		if (s_khz->value == 11)
-			Cvar_SetValue("s_khz", 22);
-		else if (s_khz->value == 22)
-			Cvar_SetValue("s_khz", 44);
-		else if (s_khz->value != 44)
-			Cvar_SetValue("s_khz", 11);
+		if (snd_khz->value == 11)
+			Cvar_SetValue("snd_khz", 22);
+		else if (snd_khz->value == 22)
+			Cvar_SetValue("snd_khz", 44);
+		else if (snd_khz->value != 44)
+			Cvar_SetValue("snd_khz", 48);
+		else if (snd_khz->value != 48)
+			Cvar_SetValue("snd_khz", 11);
 	} else if (*Cmd_Argv(1) == '-') {
-		if (s_khz->value == 44)
-			Cvar_SetValue("s_khz", 22);
-		else if (s_khz->value == 22)
-			Cvar_SetValue("s_khz", 11);
-		else if (s_khz->value != 11)
-			Cvar_SetValue("s_khz", 11);
+		if (snd_khz->value == 48)
+			Cvar_SetValue("snd_khz", 44);
+		else if (snd_khz->value == 44)
+			Cvar_SetValue("snd_khz", 22);
+		else if (snd_khz->value == 22)
+			Cvar_SetValue("snd_khz", 11);
+		else if (snd_khz->value != 11)
+			Cvar_SetValue("snd_khz", 11);
 	}
 
-	if (s_khz->modified)
+	if (snd_khz->modified)
 		Cbuf_AddText("snd_restart\n");
 }
 
@@ -182,17 +186,17 @@ void S_Init(void)
 
 	Com_Printf("\n------- sound initialization -------\n");
 
-	cv = Cvar_Get("s_initsound", "1", 0);
+	cv = Cvar_Get("snd_init", "1", 0);
 
 	if (!cv->value)
 		Com_Printf("not initializing.\n");
 	else {
-		s_volume = Cvar_Get("s_volume", "0.7", CVAR_ARCHIVE);
-		s_khz = Cvar_Get("s_khz", "44", CVAR_ARCHIVE);
-		s_loadas8bit = Cvar_Get("s_loadas8bit", "0", CVAR_ARCHIVE);
-		s_mixahead = Cvar_Get("s_mixahead", "0.2", CVAR_ARCHIVE);
-		s_show = Cvar_Get("s_show", "0", 0);
-		s_testsound = Cvar_Get("s_testsound", "0", 0);
+		snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE);
+		snd_khz = Cvar_Get("snd_khz", "48", CVAR_ARCHIVE);
+		snd_loadas8bit = Cvar_Get("snd_loadas8bit", "0", CVAR_ARCHIVE);
+		snd_mixahead = Cvar_Get("snd_mixahead", "0.2", CVAR_ARCHIVE);
+		snd_show = Cvar_Get("snd_show", "0", 0);
+		snd_testsound = Cvar_Get("snd_testsound", "0", 0);
 		ov_volume = Cvar_Get("ov_volume", "0.5", CVAR_ARCHIVE);
 		ov_loop = Cvar_Get("ov_loop", "1", 0);
 
@@ -233,12 +237,10 @@ void S_Init(void)
 		}
 
 		si.dma = &dma;
-		si.bits = Cvar_Get("sndbits", "16", CVAR_ARCHIVE);
-		si.speed = Cvar_Get("sndspeed", "48000", CVAR_ARCHIVE);
-		si.channels = Cvar_Get("sndchannels", "2", CVAR_ARCHIVE);
-		si.device = Cvar_Get("snddevice", "default", CVAR_ARCHIVE);
-		/* FIXME: sndspeed or s_khz - one has to leave the ring */
-		si.s_khz = Cvar_Get("s_khz", "0", CVAR_ARCHIVE);
+		si.bits = Cvar_Get("snd_bits", "16", CVAR_ARCHIVE);
+		si.channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE);
+		si.device = Cvar_Get("snd_device", "default", CVAR_ARCHIVE);
+		si.khz = snd_khz;
 		si.Cvar_Get = Cvar_Get;
 		si.Com_Printf = Com_Printf;
 		si.S_PaintChannels = S_PaintChannels;
@@ -668,7 +670,7 @@ void S_IssuePlaysound(playsound_t * ps)
 	channel_t *ch;
 	sfxcache_t *sc;
 
-	if (s_show->value)
+	if (snd_show->value)
 		Com_Printf("Issue %i\n", ps->begin);
 	/* pick a channel to play on */
 	ch = S_PickChannel(ps->entnum, ps->entchannel);
@@ -1034,7 +1036,7 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	}*/
 
 	/* rebuild scale tables if volume is modified */
-	if (s_volume->modified)
+	if (snd_volume->modified)
 		S_InitScaletable();
 
 	if (snd_ref->modified) {
@@ -1069,7 +1071,7 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	/*S_AddLoopSounds(); */
 
 	/* debugging output */
-	if (s_show->value) {
+	if (snd_show->value) {
 		total = 0;
 		ch = channels;
 		for (i = 0; i < MAX_CHANNELS; i++, ch++)
@@ -1146,7 +1148,7 @@ void S_Update_(void)
 	}
 
 	/* mix ahead of current position */
-	endtime = soundtime + s_mixahead->value * dma.speed;
+	endtime = soundtime + snd_mixahead->value * dma.speed;
 	/*endtime = (soundtime + 4096) & ~4095; */
 
 	/* mix to an even submission block size */

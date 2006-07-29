@@ -139,7 +139,15 @@ qboolean SND_Init(struct sndinfo *s)
 		return qfalse;
 	}
 
-	si->dma->speed = (int)si->speed->value;
+	if (si->khz->value == 48)
+		si->dma->speed = 48000;
+	else if (si->khz->value == 44)
+		si->dma->speed = 44100;
+	else if (si->khz->value == 22)
+		si->dma->speed = 22050;
+	else
+		si->dma->speed = 0;
+
 	if (!si->dma->speed) {
 		for ( i = 0 ; i < sizeof ( tryrates ) / 4 ; i++ )
 			if ( ! ioctl(audio_fd, SNDCTL_DSP_SPEED, &tryrates[i]) )
@@ -257,6 +265,9 @@ void SND_Submit(void)
 {
 }
 
+/**
+ * @brief
+ */
 void SND_BeginPainting (void)
 {
 }

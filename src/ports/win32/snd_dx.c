@@ -322,9 +322,11 @@ sndinitstat SND_InitDirect (void)
 	si->dma->channels = 2;
 	si->dma->samplebits = 16;
 
-	if (si->s_khz->value == 44)
+	if (si->khz->value == 48)
+		si->dma->speed = 48000;
+	else if (si->khz->value == 44)
 		si->dma->speed = 44100;
-	else if (si->s_khz->value == 22)
+	else if (si->khz->value == 22)
 		si->dma->speed = 22050;
 	else
 		si->dma->speed = 11025;
@@ -405,9 +407,11 @@ qboolean SND_InitWav (void)
 	si->dma->channels = 2;
 	si->dma->samplebits = 16;
 
-	if (si->s_khz->value == 44)
+	if (si->snd_khz->value == 48)
+		si->dma->speed = 48000;
+	else if (si->snd_khz->value == 44)
 		si->dma->speed = 44100;
-	else if (si->s_khz->value == 22)
+	else if (si->snd_khz->value == 22)
 		si->dma->speed = 22050;
 	else
 		si->dma->speed = 11025;
