@@ -363,6 +363,7 @@ sndinitstat SND_InitDirect (void)
 			return SIS_NOTAVAIL;
 		}
 	}
+	si->Com_Printf("ok\n");
 
 	dscaps.dwSize = sizeof(dscaps);
 
@@ -436,6 +437,7 @@ qboolean SND_InitWav (void)
 			return qfalse;
 		}
 	}
+	si->Com_Printf("ok\n");
 
 	/*
 	 * Allocate and lock memory for the waveform data. The memory
