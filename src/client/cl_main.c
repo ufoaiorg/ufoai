@@ -970,10 +970,10 @@ void CL_Userinfo_f(void)
 }
 
 /**
-  * @brief
-  *
-  * Restart the sound subsystem so it can pick up
-  * new parameters and flush all sounds
+  * @brief Restart the sound subsystem so it can pick up new parameters and flush all sounds
+  * @sa S_Shutdown
+  * @sa S_Init
+  * @sa CL_RegisterSounds
   */
 void CL_Snd_Restart_f(void)
 {
@@ -983,10 +983,7 @@ void CL_Snd_Restart_f(void)
 }
 
 /**
-  * @brief
-  *
-  * The server will send this command right
-  * before allowing the client into the server
+  * @brief The server will send this command right before allowing the client into the server
   */
 void CL_Precache_f(void)
 {

@@ -146,7 +146,10 @@ void S_SoundInfo_f(void)
 	Com_Printf("0x%x dma buffer\n", dma.buffer);
 }
 
-
+/**
+ * @brief
+ * @sa CL_Snd_Restart_f
+ */
 void S_ModifyKhz_f(void)
 {
 	if (Cmd_Argc() < 2)
@@ -179,6 +182,7 @@ void S_ModifyKhz_f(void)
 /**
  * @brief
  * @sa S_Shutdown
+ * @sa CL_Snd_Restart_f
  */
 void S_Init(void)
 {
@@ -292,6 +296,7 @@ void S_Init(void)
 /**
  * @brief
  * @sa S_Init
+ * @sa CL_Snd_Restart_f
  */
 void S_Shutdown(void)
 {
