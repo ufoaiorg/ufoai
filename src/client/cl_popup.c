@@ -396,10 +396,9 @@ static void CL_PopupInterceptClick_f(void)
 
 	/* Set action to aircraft */
 	if (popupIntercept.mission)
-		CL_SendAircraftToMission(aircraft, popupIntercept.mission);
-	else if (popupIntercept.ufo) {
-		/* TO DO : Send aircraft to purchase UFO */
-	}
+		CL_SendAircraftToMission(aircraft, popupIntercept.mission);	/* Aircraft move to mission */
+	else if (popupIntercept.ufo)
+		CL_SendAircraftPurchasingUfo(aircraft, popupIntercept.ufo);	/* Aircraft purchase ufo */
 }
 
 /**

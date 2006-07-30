@@ -83,9 +83,9 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y);
 static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y);
 static qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
-static void PolarToVec(vec2_t a, vec3_t v);
-static void VecToPolar(vec3_t v, vec2_t a);
-extern void MAP_MapCalcLine(vec2_t start, vec2_t end, mapline_t* line);
+static void PolarToVec(const vec2_t a, vec3_t v);
+static void VecToPolar(const vec3_t v, vec2_t a);
+extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 static void MAP_MapDrawLine(const menuNode_t* node, const mapline_t* line);
 static void MAP_Draw3DMapMarkers(const menuNode_t* node, float latitude, float longitude);
 static void MAP_DrawMapMarkers(const menuNode_t* node);
@@ -205,6 +205,7 @@ static void MAP_MultiSelectExecuteAction_f(void)
 		
 		if (aircraft == selectedUfo) {
 			/* Selection of an already selected ufo */
+			CL_DisplayPopupIntercept(NULL, selectedUfo);
 		} else {
 			/* Selection of an unselected ufo */
 			MAP_ResetAction();
@@ -410,7 +411,7 @@ static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
 /**
   * @brief
   */
-static void PolarToVec(vec2_t a, vec3_t v)
+static void PolarToVec(const vec2_t a, vec3_t v)
 {
 	float p, t;
 
@@ -422,7 +423,7 @@ static void PolarToVec(vec2_t a, vec3_t v)
 /**
   * @brief
   */
-static void VecToPolar(vec3_t v, vec2_t a)
+static void VecToPolar(const vec3_t v, vec2_t a)
 {
 	a[0] = 180 / M_PI * atan2(v[1], v[0]);
 	a[1] = 90 - 180 / M_PI * acos(v[2]);
@@ -431,7 +432,7 @@ static void VecToPolar(vec3_t v, vec2_t a)
 /**
   * @brief
   */
-extern void MAP_MapCalcLine(vec2_t start, vec2_t end, mapline_t* line)
+extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line)
 {
 	vec3_t s, e, v;
 	vec3_t normal;
@@ -644,13 +645,21 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 						mapline_t path;
 
 						path.n = aircraft->route.n - aircraft->point;
-						memcpy(path.p, aircraft->pos, sizeof(vec2_t));
- 						memcpy(path.p + 1, aircraft->route.p + aircraft->point + 1, (path.n - 1) * sizeof(vec2_t));
-						MAP_MapDrawLine(node, &path);
+						/* TO DO : check why path.n can be sometime equal to -1 */
+						if (path.n > 1) {
+							memcpy(path.p, aircraft->pos, sizeof(vec2_t));
+ 							memcpy(path.p + 1, aircraft->route.p + aircraft->point + 1, (path.n - 1) * sizeof(vec2_t));
+							MAP_MapDrawLine(node, &path);
+						}
 					}
 
-					if (aircraft == selectedAircraft)
+					if (aircraft == selectedAircraft) {
 						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
+						
+						if (aircraft->status == AIR_UFO && MAP_MapToScreen(node, aircraft->ufo->pos, &x, &y))
+							re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
+							
+					}
 				}
 		}
 

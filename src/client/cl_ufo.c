@@ -165,7 +165,8 @@ static void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo) {
 	/* Notications */
 	B_NotifyAircraftRemove(ufo);
 	CL_PopupNotifyUfoRemoved(ufo);
-	
+	CL_AircraftsNotifyUfoRemoved(ufo);
+
 	/* Free memory */
 	free(ufo);	
 }
@@ -207,6 +208,9 @@ extern void UFO_CampaignCheckEvents(void)
 			else {
 				/* FIXME: grammar: from/of/on */
 				MN_AddNewMessage(_("Notice"), _("UFO disappears on our radar"), qfalse, MSG_STANDARD, NULL);
+				
+				/* Notify aircrafts that ufo disappeared */
+				CL_AircraftsUfoDisappear(ufo);
 			}
 		}	
 	}

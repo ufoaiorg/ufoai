@@ -134,6 +134,8 @@ char *CL_AircraftStatusToName(aircraft_t * aircraft)
 		return _("On transit");
 	case AIR_MISSION:
 		return _("Moving to mission");
+	case AIR_UFO:
+		return _("Purchasing an UFO");
 	case AIR_DROP:
 		return _("Ready for drop down");
 	case AIR_INTERCEPT:
@@ -339,6 +341,7 @@ void CL_CheckAircraft(aircraft_t * aircraft)
 
 	switch (aircraft->status) {
 	case AIR_MISSION:
+		/* Check if aircraft can drop into a mission */
 		if (abs(aircraft->mission->def->pos[0] - aircraft->pos[0]) < DISTANCE && abs(aircraft->mission->def->pos[1] - aircraft->pos[1]) < DISTANCE) {
 			aircraft->mission->def->active = qtrue;
 			if (aircraft->status != AIR_DROP && aircraft->fuel > 0) {
@@ -350,6 +353,14 @@ void CL_CheckAircraft(aircraft_t * aircraft)
 			}
 		} else
 			aircraft->mission->def->active = qfalse;
+		break;
+	case AIR_UFO :
+		/* Check if aircraft can attack UFO */
+		if (abs(aircraft->ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(aircraft->ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
+			Com_DPrintf("Aircraft touch UFO, back to base\n");
+			/* TO DO : display an attack popup */
+			CL_AircraftReturnToBase(aircraft);
+		}
 		break;
 	case AIR_DROP:
 		Com_DPrintf("Aircraft status is AIR_DROP - mission status is %i\n", aircraft->mission->def->active);
@@ -384,7 +395,7 @@ extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft) {
 	/* Check if destination reached */
 	if (dist >= aircraft->route.dist * (aircraft->route.n - 1))
 		return qtrue;
-
+	
 	/* calc new position */
 	frac = dist / aircraft->route.dist;
 	p = (int) frac;
@@ -432,9 +443,8 @@ void CL_CampaignRunAircraft(int dt)
 				} else if (aircraft->status == AIR_IDLE)
 					aircraft->fuel -= dt;
 				else if (aircraft->status == AIR_REFUEL) {
-					if (aircraft->fuel + dt < aircraft->fuelSize)
-						aircraft->fuel += dt;
-					else {
+					aircraft->fuel += dt;
+					if (aircraft->fuel >= aircraft->fuelSize) {
 						aircraft->fuel = aircraft->fuelSize;
 						aircraft->status = AIR_HOME;
 					}
@@ -716,13 +726,13 @@ void CL_ParseAircraft(char *name, char **text)
 
 /**
  * @brief Notify that a mission has been removed
- * Aircrafts currently moving to the mission will be redirect to base
  */
 extern void CL_AircraftsNotifyMissionRemoved(const actMis_t* mission)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
 
+	/* Aircrafts currently moving to the mission will be redirect to base */
 	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ;
 		aircraft >= base->aircraft ; aircraft--)
@@ -732,4 +742,44 @@ extern void CL_AircraftsNotifyMissionRemoved(const actMis_t* mission)
 				else if (aircraft->mission > mission)
 					(aircraft->mission)--;
 			}
+}
+
+/**
+ * @brief Notify that an ufo has been removed
+ */
+extern void CL_AircraftsNotifyUfoRemoved(const aircraft_t* ufo)
+{
+	base_t*		base;
+	aircraft_t*	aircraft;
+	
+	/* Aircrafts currently purchasing the specified ufo will be redirect to base */
+	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ;
+		aircraft >= base->aircraft ; aircraft--)
+			if (aircraft->status == AIR_UFO && aircraft->ufo == ufo)
+					CL_AircraftReturnToBase(aircraft);
+}
+
+/**
+ * @brief Notify that an ufo disappear from radars
+ */
+extern void CL_AircraftsUfoDisappear(const aircraft_t* ufo)
+{
+	/* Aircrafts currently purchasing the specified ufo will be redirect to base */
+	CL_AircraftsNotifyUfoRemoved(ufo);
+}
+
+/**
+ * @brief Make the specified aircraft purchasing an ufo
+ */
+extern void CL_SendAircraftPurchasingUfo(aircraft_t* aircraft,aircraft_t* ufo)
+{
+	if (! aircraft || ! ufo)
+		return;
+	
+	MAP_MapCalcLine(aircraft->pos, ufo->pos, &(aircraft->route));
+	aircraft->status = AIR_UFO;
+	aircraft->time = 0;
+	aircraft->point = 0;
+	aircraft->ufo = ufo;
 }

@@ -980,7 +980,7 @@ unsigned long *x86_TimerGetHistogram(void);
 #endif /* id386 */
 
 /* cl_map.c */
-extern void MAP_MapCalcLine(vec2_t start, vec2_t end, mapline_t* line);
+extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D);
 extern void MAP_MapClick(const menuNode_t * node, int x, int y);
 extern void MAP_3DMapClick(const menuNode_t* node, int x, int y);
