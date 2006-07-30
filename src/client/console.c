@@ -209,7 +209,6 @@ void Con_MessageModeSay_f(void)
 {
 	msg_mode = MSG_SAY;
 	cls.key_dest = key_message;
-	MN_PushMenu("chat");
 }
 
 /*
@@ -221,7 +220,6 @@ void Con_MessageModeSayTeam_f(void)
 {
 	msg_mode = MSG_SAY_TEAM;
 	cls.key_dest = key_message;
-	MN_PushMenu("chat");
 }
 
 /*

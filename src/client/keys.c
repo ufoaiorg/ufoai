@@ -370,24 +370,19 @@ static void Key_Console(int key)
 void Key_Message(int key)
 {
 	if (key == K_ENTER || key == K_KP_ENTER) {
-		qboolean send;
+		qboolean send = qtrue;
 
-		send = qtrue;
 		switch (msg_mode) {
 		case MSG_SAY:
-			if (msg_buffer[0]) {
+			if (msg_buffer[0])
 				Cbuf_AddText("say \"");
-				/* get rid of chat menu */
-				MN_PopMenu(qfalse);
-			} else
+			else
 				send = qfalse;
 			break;
 		case MSG_SAY_TEAM:
-			if (msg_buffer[0]) {
+			if (msg_buffer[0])
 				Cbuf_AddText("say_team \"");
-				/* get rid of chat menu */
-				MN_PopMenu(qfalse);
-			} else
+			else
 				send = qfalse;
 			break;
 		case MSG_MENU:
