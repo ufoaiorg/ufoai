@@ -29,115 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 aircraft_t aircraft_samples[MAX_AIRCRAFT]; /* available aircraft types */
 int numAircraft_samples = 0; /* TODO: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
 
-static void CL_AircraftReturnToBase(aircraft_t *aircraft);
-extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission);
-
-/* == POPUP_AIRCRAFT ======================================================= */
-
-#define POPUP_AIRCRAFT_MAX_ITEMS	10		/**< Max items displayed in popup_aircraft */
-#define POPUP_AIRCARFT_MAX_TEXT		2048	/**< Max size of text displayed in popup_aircraft */
-
-/**
- * Enumerate type of actions available for popup_aircraft
- */
-typedef enum {
-	POPUP_AIRCRAFT_ACTION_BACKTOBASE = 1,	/**< Aircraft back to base */
-	POPUP_AIRCRAFT_ACTION_STOP = 2,			/**< Aircraft stops */
-	POPUP_AIRCRAFT_ACTION_MOVETOMISSION = 3,/**< Aircraft move to a mission */
-
-	POPUP_AIRCRAFT_ACTION_MAX
-
-} popup_aircraft_action_e;
-/**
- * @brief Structure to store information about popup_aircraft
- */
-typedef struct popup_aircarft_s {
-	int nbItems;			/**< Count of items displayed in popup_aircraft */
-	int aircraft_idx;		/**< Aircraft linked to popup_aircraft */
-	popup_aircraft_action_e itemsAction[POPUP_AIRCRAFT_MAX_ITEMS];	/**< Action type of items */
-	int itemsId[POPUP_AIRCRAFT_MAX_ITEMS];	/**< IDs corresponding to items */
-	char text_popup[POPUP_AIRCARFT_MAX_TEXT];	/**< Text displayed in popup_aircraft */
-
-} popup_aircraft_t;
-
-popup_aircraft_t popupAircraft; /** Data about popup_aircraft */
-
-/**
- * @brief Display the popup_aircraft
- */
-extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft)
-{
-	int i;
-
-	/* Initialise popup_aircraft datas */
-	if (! aircraft)
-		return;
-	popupAircraft.aircraft_idx = aircraft->idx;
-	popupAircraft.nbItems = 0;
-	memset(popupAircraft.text_popup, 0, POPUP_AIRCARFT_MAX_TEXT);
-	menuText[TEXT_POPUP] = popupAircraft.text_popup;
-
-	/* Set static datas in popup_aircraft */
-	popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_BACKTOBASE;
-	Q_strcat(popupAircraft.text_popup, va(_("Back to base\t%s\n"), gd.bases[aircraft->idxBase].name), POPUP_AIRCARFT_MAX_TEXT);
-	popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_STOP;
-	Q_strcat(popupAircraft.text_popup, _("Stop\n"), POPUP_AIRCARFT_MAX_TEXT);
-
-	/* Set missions in popup_aircraft */
-	if (*aircraft->teamSize > 0) {
-		for (i = 0 ; i < ccs.numMissions ; i++) {
-			popupAircraft.itemsId[popupAircraft.nbItems] = i;
-			popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_MOVETOMISSION;
-			Q_strcat(popupAircraft.text_popup, va(_("Mission\t%s (%s)\n"), _(ccs.mission[i].def->type), _(ccs.mission[i].def->location)), POPUP_AIRCARFT_MAX_TEXT);
-		}
-	}
-
-	/* Display popup_aircraft menu */
-	MN_PushMenu("popup_aircraft");
-}
-
-/**
- * @ brief User just select an item in the popup_aircraft
- */
-static void CL_PopupAircraftClick_f(void) {
-	int num, id;
-	aircraft_t* aircraft;
-
-	Com_Printf("CL_PopupAircraftClick\n");
-
-	/* Get num of item selected in list */
-	if (Cmd_Argc() < 2)
-		return;
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num > popupAircraft.nbItems++)
-		return;
-
-	MN_PopMenu(qfalse); /* Close popup */
-
-	/* Get aircraft associated with the popup_aircraft */
-	aircraft = CL_AircraftGetFromIdx(popupAircraft.aircraft_idx);
-	if (aircraft == NULL)
-		return;
-
-	/* Execute action corresponding to item selected */
-	switch (popupAircraft.itemsAction[num]) {
-		case POPUP_AIRCRAFT_ACTION_BACKTOBASE:	/* Aircraft back to base */
-			CL_AircraftReturnToBase(aircraft);
-			break;
-		case POPUP_AIRCRAFT_ACTION_STOP:		/* Aircraft stop */
-			aircraft->status = AIR_IDLE;
-			break;
-		case POPUP_AIRCRAFT_ACTION_MOVETOMISSION:	/* Aircraft move to mission */
-			/* Get mission */
-			id = popupAircraft.itemsId[num];
-			if (id >= 0 && id < ccs.numMissions)
-				CL_SendAircraftToMission(aircraft, ccs.mission + id);
-			break;
-		default:
-			Com_Printf("CL_PopupAircraftClick: type of action unknow %i\n", popupAircraft.itemsAction[num]);
-	}
-}
-
 /* =========================================================== */
 #define DISTANCE 1
 
@@ -220,10 +111,7 @@ void CL_AircraftInit(void)
 		air_samp->homebase = &gd.bases[air_samp->idxBase]; /* TODO: looks like a nonsense */
 		air_samp->teamSize = &gd.bases[air_samp->idxBase].numOnTeam[air_samp->idxInBase];
 	}
-	
-	/* Add commands */
-	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f);
-	
+
 	Com_Printf("...aircraft inited\n");
 }
 
@@ -308,7 +196,7 @@ void MN_PrevAircraft_f(void)
   * call this from baseview via "aircraft_return"
   * calculates the way back to homebase
   */
-static void CL_AircraftReturnToBase(aircraft_t *aircraft)
+extern void CL_AircraftReturnToBase(aircraft_t *aircraft)
 {
 	base_t *base;
 

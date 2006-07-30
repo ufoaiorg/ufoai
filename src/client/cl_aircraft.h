@@ -103,9 +103,9 @@ void CL_CampaignRunAircraft(int dt);
 aircraft_t *CL_GetAircraft(char *name);
 void CL_CheckAircraft(aircraft_t * aircraft);
 extern aircraft_t* CL_AircraftGetFromIdx(int idx);
-extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
 extern void CP_GetRandomPosForAircraft(float *pos);
 extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void CL_ParseAircraft(char *name, char **text);
-
+extern void CL_AircraftReturnToBase(aircraft_t *aircraft);
+extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);
 #endif

@@ -39,11 +39,14 @@ static void CL_PopupInterceptionReadyEnter_f(void);
 static void CL_PopupInterceptionReadyAuto_f(void);
 static void CL_PopupInterceptionReadyCancel_f(void);
 
+#endif
+
 /* popup_aircraft */
 extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
 static void CL_PopupAircraftClick_f(void);
 static void CL_PopupAircraftNotifyMissionRemoved(const actMis_t* mission);
 
+#if 0
 /* popup_intercept */
 extern void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
 static void CL_PopupInterceptClick_f(void);
@@ -58,8 +61,11 @@ static void CL_PopupInterceptNotifyUfoRemoved(const aircraft_t* ufo);
  */
 extern void CL_PopupInit(void)
 {	
-	/*Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f);
-	Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f);
+	/* popup_aircraft commands */
+	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f);
+	
+	/* popup_intercept commands */
+	/*Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f);
 	Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f);
 	*/
 	/* popup_interception_ready commands */
@@ -75,8 +81,8 @@ extern void CL_PopupInit(void)
 extern void CL_PopupNotifyMIssionRemoved(const actMis_t* mission)
 {
 	/* Notify all popups */
-	/*CL_PopupAircraftNotifyMissionRemoved(mission);
-	CL_PopupInterceptNotifyMissionRemoved(mission);*/
+	CL_PopupAircraftNotifyMissionRemoved(mission);
+	/*CL_PopupInterceptNotifyMissionRemoved(mission);*/
 }
 
 /**
@@ -157,6 +163,8 @@ static void CL_PopupInterceptionReadyCancel_f(void)
 	if (popupInterceptionReady.aircraft->status == AIR_DROP)
 		CL_AircraftStop(popupInterceptionReady.aircraft);
 }
+
+#endif
 /*========================================
  *
  * POPUP_AIRCRAFT
@@ -289,6 +297,7 @@ static void CL_PopupAircraftNotifyMissionRemoved(const actMis_t* mission) {
 		}
 }
 
+#if 0
 
 /*========================================
  *
