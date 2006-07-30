@@ -1001,6 +1001,7 @@ extern void UFO_Reset(void);
 extern void CL_PopupInit(void);
 extern void CL_PopupNotifyMIssionRemoved(const actMis_t* mission);
 extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
+extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
 extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
 extern void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
 

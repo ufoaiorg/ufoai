@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern void CL_PopupInit(void);
 extern void CL_PopupNotifyMIssionRemoved(const actMis_t* mission);
 extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
+extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
 
 #if 0
 
@@ -53,6 +54,7 @@ static void CL_PopupInterceptClick_f(void);
 static void CL_PopupInterceptRClick_f(void);
 static void CL_PopupInterceptNotifyMissionRemoved(const actMis_t* mission);
 static void CL_PopupInterceptNotifyUfoRemoved(const aircraft_t* ufo);
+static void CL_PopupInterceptNotifyUfoDisappeared(const aircraft_t* ufo);
 
 /**
  * @brief Initialise popups
@@ -90,6 +92,15 @@ extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo)
 {
 	/* Notify all popups */
 	CL_PopupInterceptNotifyUfoRemoved(ufo);
+}
+
+/**
+ * @brief Notify popups that an ufo has disappeared on radars
+ */
+extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo)
+{
+	/* Notify all popups */
+	CL_PopupInterceptNotifyUfoDisappeared(ufo);
 }
 
 #if 0
@@ -439,4 +450,12 @@ static void CL_PopupInterceptNotifyUfoRemoved(const aircraft_t* ufo)
 {
 	if (popupIntercept.ufo == ufo)
 		popupIntercept.ufo = NULL;
+}
+
+/**
+ * @brief Notify the popup_intercept system than an ufo has disappeared on radars
+ */
+static void CL_PopupInterceptNotifyUfoDisappeared(const aircraft_t* ufo)
+{
+	CL_PopupInterceptNotifyUfoRemoved(ufo);
 }

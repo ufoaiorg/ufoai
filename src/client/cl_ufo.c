@@ -209,8 +209,9 @@ extern void UFO_CampaignCheckEvents(void)
 				/* FIXME: grammar: from/of/on */
 				MN_AddNewMessage(_("Notice"), _("UFO disappears on our radar"), qfalse, MSG_STANDARD, NULL);
 				
-				/* Notify aircrafts that ufo disappeared */
+				/* Notify that ufo disappeared */
 				CL_AircraftsUfoDisappear(ufo);
+				CL_PopupNotifyUfoDisappeared(ufo);
 			}
 		}	
 	}
