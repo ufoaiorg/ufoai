@@ -25,12 +25,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-#if 0
 
 /* global_popup */
 extern void CL_PopupInit(void);
 extern void CL_PopupNotifyMIssionRemoved(const actMis_t* mission);
 extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
+
+#if 0
 
 /* popup_interception_ready */
 extern void CL_DisplayPopupInterceptionReady(aircraft_t* aircraft, actMis_t* mission);
@@ -50,19 +51,22 @@ static void CL_PopupInterceptRClick_f(void);
 static void CL_PopupInterceptNotifyMissionRemoved(const actMis_t* mission);
 static void CL_PopupInterceptNotifyUfoRemoved(const aircraft_t* ufo);
 
+#endif
+
 /**
  * @brief Initialise popups
  */
 extern void CL_PopupInit(void)
 {	
-	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f);
+	/*Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f);
 	Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f);
 	Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f);
-	
+	*/
 	/* popup_interception_ready commands */
-	Cmd_AddCommand("popup_interception_ready_enter", CL_PopupInterceptionReadyEnter_f);
+	/*Cmd_AddCommand("popup_interception_ready_enter", CL_PopupInterceptionReadyEnter_f);
 	Cmd_AddCommand("popup_interception_ready_auto", CL_PopupInterceptionReadyAuto_f);
 	Cmd_AddCommand("popup_interception_ready_cancel", CL_PopupInterceptionReadyCancel_f);
+	*/
 }
 
 /**
@@ -71,8 +75,8 @@ extern void CL_PopupInit(void)
 extern void CL_PopupNotifyMIssionRemoved(const actMis_t* mission)
 {
 	/* Notify all popups */
-	CL_PopupAircraftNotifyMissionRemoved(mission);
-	CL_PopupInterceptNotifyMissionRemoved(mission);
+	/*CL_PopupAircraftNotifyMissionRemoved(mission);
+	CL_PopupInterceptNotifyMissionRemoved(mission);*/
 }
 
 /**
@@ -81,9 +85,10 @@ extern void CL_PopupNotifyMIssionRemoved(const actMis_t* mission)
 extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo)
 {
 	/* Notify all popups */
-	CL_PopupInterceptNotifyUfoRemoved(ufo);
+	/*CL_PopupInterceptNotifyUfoRemoved(ufo);*/
 }
 
+#if 0
 /*========================================
  *
  * POPUP_INTERCEPT_READY

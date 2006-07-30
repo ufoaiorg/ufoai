@@ -996,4 +996,9 @@ extern void UFO_CampaignRunUfos(int dt);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
 
+/* cl_popup.c */
+extern void CL_PopupInit(void);
+extern void CL_PopupNotifyMIssionRemoved(const actMis_t* mission);
+extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
+
 #endif /* CLIENT_CLIENT_H */

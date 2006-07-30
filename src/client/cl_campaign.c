@@ -617,8 +617,10 @@ static void CL_CampaignRemoveMission(actMis_t * mis)
 	for (i = num; i < ccs.numMissions; i++)
 		ccs.mission[i] = ccs.mission[i + 1];
 
+	/* Notifications */
 	MAP_NotifyMissionRemoved(mis);
 	CL_AircraftsNotifyMissionRemoved(mis);
+	CL_PopupNotifyMIssionRemoved(mis);
 }
 
 
@@ -2673,6 +2675,9 @@ void CL_GameInit ( void )
 
 	/* init employee list */
 	B_InitEmployees();
+	
+	/* Init popup */
+	CL_PopupInit();
 }
 
 /**

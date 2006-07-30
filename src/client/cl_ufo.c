@@ -144,9 +144,15 @@ static void UFO_NewUfoOnGeoscape(void)
  * @brief Remove the specified ufo from geoscape
  */
 static void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo) {
+	/* Remove ufo from ufos list */
 	if (CL_ListRemoveItem((void**)ufoOnGeoscape, &ccs.numUfoOnGeoscape, ufo))
 		Com_DPrintf("Remove ufo from geoscape: '%s'\n", ufoOnGeoscape[ccs.numUfoOnGeoscape]->name);		
+	
+	/* Notications */
 	B_NotifyAircraftRemove(ufo);
+	CL_PopupNotifyUfoRemoved(ufo);
+	
+	/* Free memory */
 	free(ufo);	
 }
 
