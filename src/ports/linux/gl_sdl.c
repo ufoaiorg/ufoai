@@ -287,7 +287,9 @@ void GetEvent(SDL_Event *event)
 			case  7:
 				mouse_buttonstate = K_MOUSE5; break;
 #endif
-			default: mouse_buttonstate = K_AUX1 + (event->button.button - 8)%16; break;
+			default:
+				mouse_buttonstate = K_AUX1 + (event->button.button - 8) % 16;
+				break;
 		}
 		keyq[keyq_head].down = event->type == SDL_MOUSEBUTTONDOWN ? qtrue : qfalse;
 		keyq[keyq_head].key = mouse_buttonstate;

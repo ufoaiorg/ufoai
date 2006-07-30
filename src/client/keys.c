@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define		MAXCMDLINE	256
 char key_lines[32][MAXCMDLINE];
 int key_linepos;
-static int shift_down = qfalse;
+static qboolean shift_down = qfalse;
 static int anykeydown;
 
 int edit_line = 0;
@@ -681,7 +681,6 @@ void Key_Init(void)
 	for (i = 'a'; i <= 'z'; i++)
 		keyshift[i] = i - 'a' + 'A';
 
-#ifdef _WIN32
 	keyshift['1'] = '!';
 	keyshift['2'] = '@';
 	keyshift['3'] = '#';
@@ -703,7 +702,6 @@ void Key_Init(void)
 	keyshift[']'] = '}';
 	keyshift['`'] = '~';
 	keyshift['\\'] = '|';
-#endif
 
 	menubound[K_ESCAPE] = qtrue;
 	for (i = 0; i < 12; i++)
@@ -716,14 +714,10 @@ void Key_Init(void)
 	Cmd_AddCommand("bindlist", Key_Bindlist_f);
 }
 
-/*
-===================
-Key_Event
-
-Called by the system between frames for both key up and key down events
-Should NOT be called during an interrupt!
-===================
-*/
+/**
+ * @brief Called by the system between frames for both key up and key down events
+ * @note Should NOT be called during an interrupt!
+ */
 void Key_Event(int key, qboolean down, unsigned time)
 {
 	char *kb;

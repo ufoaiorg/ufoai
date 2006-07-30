@@ -23,11 +23,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/client.h"
 #include "winquake.h"
 
-extern	unsigned	sys_msg_time;
+extern	unsigned sys_msg_time;
 
-cvar_t	*in_mouse;
+cvar_t *in_mouse;
 
-qboolean	in_appactive;
+qboolean in_appactive;
 
 /*
 ============================================================
@@ -40,22 +40,21 @@ qboolean	in_appactive;
 /* mouse variables */
 cvar_t	*m_filter;
 
-int			mouse_buttons;
-int			mouse_oldbuttonstate;
-POINT		current_pos;
-int			mouse_x, mouse_y, old_mouse_x, old_mouse_y, mx_accum, my_accum;
+int mouse_buttons;
+int mouse_oldbuttonstate;
+POINT current_pos;
+int mouse_x, mouse_y, old_mouse_x, old_mouse_y, mx_accum, my_accum;
+int old_x, old_y;
 
-int			old_x, old_y;
+qboolean mouseactive;	/* false when not focus app */
 
-qboolean	mouseactive;	/* false when not focus app */
+qboolean restore_spi;
+qboolean mouseinitialized;
+int originalmouseparms[3], newmouseparms[3] = {0, 0, 1};
+qboolean mouseparmsvalid;
 
-qboolean	restore_spi;
-qboolean	mouseinitialized;
-int		originalmouseparms[3], newmouseparms[3] = {0, 0, 1};
-qboolean	mouseparmsvalid;
-
-int			window_center_x, window_center_y;
-RECT		window_rect;
+int window_center_x, window_center_y;
+RECT window_rect;
 
 
 /*
@@ -67,12 +66,11 @@ Called when the window gains focus or changes in some way
 */
 void IN_ActivateMouse (void)
 {
-	int		width, height;
+	int width, height;
 
 	if (!mouseinitialized)
 		return;
-	if (!in_mouse->value)
-	{
+	if (!in_mouse->value) {
 		mouseactive = qfalse;
 		return;
 	}
@@ -174,19 +172,12 @@ void IN_MouseEvent (int mstate)
 		return;
 
 	/* perform button actions */
-	for (i=0 ; i<mouse_buttons ; i++)
-	{
-		if ( (mstate & (1<<i)) &&
-			!(mouse_oldbuttonstate & (1<<i)) )
-		{
+	for (i=0 ; i<mouse_buttons ; i++) {
+		if ( (mstate & (1<<i)) && !(mouse_oldbuttonstate & (1<<i)) )
 			Key_Event (K_MOUSE1 + i, qtrue, sys_msg_time);
-		}
 
-		if ( !(mstate & (1<<i)) &&
-			(mouse_oldbuttonstate & (1<<i)) )
-		{
+		if ( !(mstate & (1<<i)) && (mouse_oldbuttonstate & (1<<i)) )
 				Key_Event (K_MOUSE1 + i, qfalse, sys_msg_time);
-		}
 	}
 
 	mouse_oldbuttonstate = mstate;
@@ -201,13 +192,11 @@ IN_GetMousePos
 void IN_GetMousePos (int *mx, int *my)
 {
 	if (!mouseactive || !GetCursorPos(&current_pos) ) {
-		*mx = 512;
-		*my = 384;
-	}
-	else
-	{
-		*mx = 1024 * (current_pos.x - window_rect.left) / (window_rect.right - window_rect.left);
-		*my =  768 * (current_pos.y - window_rect.top)  / (window_rect.bottom - window_rect.top);
+		*mx = VID_NORM_WIDTH/2;
+		*my = VID_NORM_HEIGHT/2;
+	} else {
+		*mx = VID_NORM_WIDTH * (current_pos.x - window_rect.left) / (window_rect.right - window_rect.left);
+		*my = VID_NORM_HEIGHT * (current_pos.y - window_rect.top)  / (window_rect.bottom - window_rect.top);
 	}
 }
 
@@ -232,12 +221,12 @@ IN_Init
 void IN_Init (void)
 {
 	/* mouse variables */
-	m_filter				= Cvar_Get ("m_filter",					"0",		0);
-        in_mouse				= Cvar_Get ("in_mouse",					"1",		CVAR_ARCHIVE);
+	m_filter = Cvar_Get ("m_filter", "0", 0);
+	in_mouse = Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
 
 	/* centering */
-	v_centermove			= Cvar_Get ("v_centermove",				"0.15",		0);
-	v_centerspeed			= Cvar_Get ("v_centerspeed",			"500",		0);
+	v_centermove = Cvar_Get ("v_centermove", "0.15", 0);
+	v_centerspeed = Cvar_Get ("v_centerspeed", "500", 0);
 
 	IN_StartupMouse ();
 }
@@ -281,26 +270,22 @@ void IN_Frame (void)
 	if (!mouseinitialized)
 		return;
 
-	if (!in_mouse || !in_appactive)
-	{
+	if (!in_mouse || !in_appactive) {
 		IN_DeactivateMouse ();
 		return;
 	}
 
 #if 0
 	/* TODO: NEEDED? */
-	if ( !cl.refresh_prepped
-		|| cls.key_dest == key_console)
-	{
+	if ( !cl.refresh_prepped || cls.key_dest == key_console) {
 		/* temporarily deactivate if in fullscreen */
-		if (Cvar_VariableValue ("vid_fullscreen") == 0)
-		{
+		if (!Cvar_VariableValue ("vid_fullscreen")) {
 			IN_DeactivateMouse ();
 			return;
 		}
 	}
 #endif
-	
+
 	IN_ActivateMouse ();
 }
 

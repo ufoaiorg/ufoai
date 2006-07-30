@@ -459,44 +459,13 @@ static int XLateKey(XKeyEvent *ev)
 		key = K_KP_SLASH;
 		break;
 
-#if 0
-	case XK_exclam: key = '1'; break;
-	case XK_at: key = '2'; break;
-	case XK_numbersign: key = '3'; break;
-	case XK_dollar: key = '4'; break;
-	case XK_percent: key = '5'; break;
-	case XK_asciicircum: key = '6'; break;
-	case XK_ampersand: key = '7'; break;
-	case XK_asterisk: key = '8'; break;
-	case XK_parenleft: key = '9'; break;
-	case XK_parenright: key = '0'; break;
-
-	case XK_space:
-	case XK_KP_Space: key = K_SPACE; break;
-	/* weird french keyboards .. */
-	/* NOTE: console toggle is hardcoded in cl_keys.c, can't be unbound */
-	/*   cleaner would be .. using hardware key codes instead of the key syms */
-	/*   could also add a new K_KP_CONSOLE */
-	case XK_twosuperior: key = '~'; break;
-
-	case 0x05f: key = '-';break;/* [_] */
-	case 0x02b: key = '=';break;/* [+] */
-	case 0x07c: key = '\'';break;/* [|] */
-	case 0x07d: key = '[';break;/* [}] */
-	case 0x07b: key = ']';break;/* [{] */
-	case 0x022: key = '\'';break;/* ["] */
-	case 0x03a: key = ';';break;/* [:] */
-	case 0x03f: key = '/';break;/* [?] */
-	case 0x03e: key = '.';break;/* [>] */
-	case 0x03c: key = ',';break;/* [<] */
-#endif
-
 	default:
 		key = *(unsigned char*)buf;
 		if (key >= 'A' && key <= 'Z')
 			key = key - 'A' + 'a';
 		if (key >= 1 && key <= 26) /* ctrl+alpha */
 			key = key + 'a' - 1;
+
 		break;
 	}
 
