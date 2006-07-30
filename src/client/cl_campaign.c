@@ -1942,7 +1942,6 @@ void CL_GameResultsCmd(void)
 	/* check for replay */
 	if ((int) Cvar_VariableValue("game_tryagain")) {
 		/* don't update the character stats because we retry the mission */
-		CL_ParseCharacterData(&net_message, qfalse);
 		CL_GameGo();
 		return;
 	}
@@ -1955,7 +1954,7 @@ void CL_GameResultsCmd(void)
 	won = atoi(Cmd_Argv(1));
 
 	/* update the character stats */
-	CL_ParseCharacterData(&net_message, qtrue);
+	CL_ParseCharacterData(NULL, qtrue);
 
 	/* give reward, change equipment */
 	CL_UpdateCredits(ccs.credits + ccs.reward);

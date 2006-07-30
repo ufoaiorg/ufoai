@@ -1116,32 +1116,52 @@ void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num)
 	}
 }
 
+
+/* for updating after click on continue */
+typedef struct updateCharacter_s {
+	int ucn;
+	int kills[KILLED_NUM_TYPES];
+} updateCharacter_t;
+
 /**
   * @brief Parses the character data which was send by G_SendCharacterData
   * @sa G_SendCharacterData
   */
 void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 {
-	int ucn, i, j;
-	int num = MSG_ReadByte(buf);
-	character_t* chr;
-	for (i=0; i<num; i++) {
-		chr = NULL;
-		ucn = MSG_ReadShort(buf);
-		for (j=0; j<baseCurrent->numWholeTeam; j++)
-			if (baseCurrent->wholeTeam[j].ucn == ucn) {
-				chr = &baseCurrent->wholeTeam[j];
-				break;
+	static updateCharacter_t updateCharacterArray[MAX_WHOLETEAM];
+	static int num = 0;
+	int i, j;
+	character_t* chr = NULL;
+
+	if (updateCharacterArray) {
+		for (i=0; i<num; i++) {
+			chr = NULL;
+			/* MAX_WHOLETEAM and not numWholeTeam - maybe some other soldier died */
+			for (j=0; j<MAX_WHOLETEAM; j++)
+				if (baseCurrent->wholeTeam[j].ucn == updateCharacterArray[i].ucn) {
+					chr = &baseCurrent->wholeTeam[j];
+					break;
+				}
+			if (!chr) {
+				Com_Printf("Warning: Could not get character with ucn: %i\n", updateCharacterArray[i].ucn);
+				continue;
 			}
-		if (!chr) {
-			updateCharacter = qfalse;
-			Com_Printf("Warning: Could not get character with ucn: %i\n", ucn);
+			for (j=0; j<KILLED_NUM_TYPES; j++)
+				chr->kills[j] = updateCharacterArray[i].kills[j];
 		}
-		for (j=0; j<KILLED_NUM_TYPES; j++)
-			if ( updateCharacter )
-				chr->kills[j] = MSG_ReadShort(buf);
-			else
-				MSG_ReadShort(buf);
+		num = 0;
+	} else {
+		num = MSG_ReadByte(buf);
+		if (num > MAX_WHOLETEAM)
+			Sys_Error("CL_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
+		else if (num < 0)
+			Sys_Error("CL_ParseCharacterData: MSG_ReadByte error (%i)\n", num);
+		for (i=0; i<num; i++) {
+			updateCharacterArray[i].ucn = MSG_ReadShort(buf);
+			for (j=0; j<KILLED_NUM_TYPES; j++)
+				updateCharacterArray[i].kills[j] = MSG_ReadShort(buf);
+		}
 	}
 }
 
@@ -1184,6 +1204,8 @@ void CL_ParseResults(sizebuf_t * buf)
 	/* read terminator */
 	if (MSG_ReadByte(buf) != NONE)
 		Com_Printf("WARNING: bad result message\n");
+
+	CL_ParseCharacterData(buf, qfalse);
 
 	/* init result text */
 	menuText[TEXT_STANDARD] = resultText;
