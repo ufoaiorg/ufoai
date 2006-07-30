@@ -129,7 +129,10 @@ void CL_ItemDescription(int item)
 #endif
 	/* set description text */
 	if (RS_IsResearched_ptr(od->tech)) {
-		if (!Q_strncmp(od->type, "ammo", 4)) {
+		if (!Q_strncmp(od->type, "armor", 5)) {
+			/* TODO: Print protection */
+			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Armor\n") );
+		} else if (!Q_strncmp(od->type, "ammo", 4)) {
 			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Primary:\t%s\t(%s)\n"), od->fd[0].name, CL_WeaponSkillToName(od->fd[0].weaponSkill) );
 			Q_strcat(itemText, va(_("Secondary:\t%s\t(%s)\n"), od->fd[1].name, CL_WeaponSkillToName(od->fd[1].weaponSkill)), sizeof(itemText));
 			Q_strcat(itemText,
