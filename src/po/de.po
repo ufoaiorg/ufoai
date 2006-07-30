@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-07-29 14:23+0200\n"
-"PO-Revision-Date: 2006-07-29 14:27+0100\n"
+"PO-Revision-Date: 2006-07-31 00:22+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1445,7 +1445,7 @@ msgstr "Tooltips:"
 
 #: ../base/ufos/menu_options.ufo:628
 msgid "Deactivates tooltips"
-msgstr ""
+msgstr "Deaktivere Tooltips"
 
 #: ../base/ufos/menu_options.ufo:642
 #, fuzzy
@@ -1474,7 +1474,7 @@ msgstr "Kamerarotation:"
 
 #: ../base/ufos/menu_production.ufo:93
 msgid "Increase production by 1"
-msgstr ""
+msgstr "Erhöhe Produktion um 1"
 
 #: ../base/ufos/menu_production.ufo:103
 #: ../base/ufos/menu_production.ufo:111
@@ -1484,15 +1484,15 @@ msgstr "Produktion"
 
 #: ../base/ufos/menu_production.ufo:121
 msgid "Decrease production by 1"
-msgstr ""
+msgstr "Verringere Produktion um 1"
 
 #: ../base/ufos/menu_production.ufo:131
 msgid "Increase production by 10"
-msgstr ""
+msgstr "Erhöhe Produktion um 10"
 
 #: ../base/ufos/menu_production.ufo:141
 msgid "Decrease production by 10"
-msgstr ""
+msgstr "Verringere Produktion um 10"
 
 #: ../base/ufos/menu_research.ufo:373
 #: ../base/ufos/menu_research.ufo:389
