@@ -550,6 +550,28 @@ menu hud
 		pos		"960 128"
 	}
 
+	pic bar_chat
+	{
+		if	"maxclients >= 2"
+		image	hud/bar_chat
+		pos		"960 64"
+	}
+
+	pic messagesystem_show
+	{
+		if	"maxclients >= 2"
+		tooltip	"_Chat messages"
+		image	menu/event_log
+		texl	"0 0"
+		texh	"32 36"
+		pos	"985 70"
+		mousefx false
+		out	{
+			}
+		in	{
+			}
+	}
+
 	pic bt_game
 	{
 		tooltip	"_Options"
@@ -972,5 +994,15 @@ menu physdata
 		texl	"0 0"
 		texh	"64 37"
 		click	{ cmd mn_pop }
+	}
+}
+
+menu chat
+{
+	pic chatarea
+	{
+		pos	"0 99"
+		size	"1024 20"
+		bgcolor	"0 0 0 .5"
 	}
 }
