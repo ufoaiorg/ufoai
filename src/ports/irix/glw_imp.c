@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -113,7 +113,7 @@ static cvar_t *freelook;
 int config_notify=0;
 int config_notify_width;
 int config_notify_height;
-						      
+
 typedef unsigned short PIXEL;
 
 /* Console variables that we need to access from this module */
@@ -227,7 +227,7 @@ void GLimp_Shutdown( void )
 ** GLimp_Init
 **
 ** This routine is responsible for initializing the OS specific portions
-** of OpenGL.  
+** of OpenGL.
 */
 int GLimp_Init( void *hinstance, void *wndproc )
 {
@@ -246,7 +246,7 @@ void GLimp_BeginFrame( float camera_seperation )
 
 /*
 ** GLimp_EndFrame
-** 
+**
 ** Responsible for doing a swapbuffers and possibly for other stuff
 ** as yet to be determined.  Probably better not to make this a GLimp
 ** function and instead do a call to GLimp_SwapBuffers.
@@ -270,7 +270,7 @@ void GLimp_AppActivate( qboolean active )
 
 static Cursor CreateNullCursor(Display *display, Window root)
 {
-    Pixmap cursormask; 
+    Pixmap cursormask;
     XGCValues xgc;
     GC gc;
     XColor dummycolour;
@@ -389,19 +389,19 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	   int attribmask = CWEventMask  | CWColormap | CWBorderPixel;
 	   XSetWindowAttributes attribs;
 	   Colormap tmpcmap;
-	   
+
 	   Window root_win = XRootWindow(x_disp, x_visinfo->screen);
 
 	   tmpcmap = XCreateColormap(x_disp, root_win, x_vis, AllocNone);
-				     
-	   
+
+
 	   attribs.event_mask = STD_EVENT_MASK;
 	   attribs.border_pixel = 0;
 	   attribs.colormap = tmpcmap;
 
 		/* create the main window */
 		x_win = XCreateWindow(	x_disp,
-			root_win,		
+			root_win,
 			0, 0,	/* x, y */
 			vid.width, vid.height,
 			0, /* borderwidth */
@@ -615,13 +615,13 @@ int XLateKey(XKeyEvent *ev)
 		case XK_Shift_L:
 		case XK_Shift_R:	key = K_SHIFT;		break;
 
-		case XK_Execute: 
-		case XK_Control_L: 
+		case XK_Execute:
+		case XK_Control_L:
 		case XK_Control_R:	key = K_CTRL;		 break;
 
-		case XK_Alt_L:	
-		case XK_Meta_L: 
-		case XK_Alt_R:	
+		case XK_Alt_L:
+		case XK_Meta_L:
+		case XK_Alt_R:
 		case XK_Meta_R: key = K_ALT;			break;
 
 		case XK_KP_Begin: key = K_KP_5;	break;
@@ -663,7 +663,7 @@ int XLateKey(XKeyEvent *ev)
 			if (key >= 'A' && key <= 'Z')
 				key = key - 'A' + 'a';
 			break;
-	} 
+	}
 
 	return key;
 }
@@ -672,7 +672,7 @@ void GetEvent(void)
 {
 	XEvent x_event;
 	int b;
-   
+
 	XNextEvent(x_disp, &x_event);
 	switch(x_event.type) {
 	case KeyPress:
@@ -693,7 +693,7 @@ void GetEvent(void)
 
 			/* move the mouse to the window center again */
 			XSelectInput(x_disp,x_win, STD_EVENT_MASK & ~PointerMotionMask);
-			XWarpPointer(x_disp,None,x_win,0,0,0,0, 
+			XWarpPointer(x_disp,None,x_win,0,0,0,0,
 				(vid.width/2),(vid.height/2));
 			XSelectInput(x_disp,x_win, STD_EVENT_MASK);
 		} else {
@@ -727,7 +727,7 @@ void GetEvent(void)
 		if (b>=0)
 			mouse_buttonstate &= ~(1<<b);
 		break;
-	
+
 	case ConfigureNotify:
 		config_notify_width = x_event.xconfigure.width;
 		config_notify_height = x_event.xconfigure.height;
@@ -738,7 +738,7 @@ void GetEvent(void)
 		if (doShm && x_event.type == x_shmeventtype)
 			oktodraw = qtrue;
 	}
-   
+
 	if (old_windowed_mouse != _windowed_mouse->value) {
 		old_windowed_mouse = _windowed_mouse->value;
 
@@ -772,7 +772,7 @@ void KBD_Update(void)
 /* get events from x server */
 	if (x_disp)
 	{
-		while (XPending(x_disp)) 
+		while (XPending(x_disp))
 			GetEvent();
 		while (keyq_head != keyq_tail)
 		{
@@ -792,12 +792,12 @@ static void Force_CenterView_f (void)
 	in_state->viewangles[PITCH] = 0;
 }
 
-static void RW_IN_MLookDown (void) 
-{ 
-	mlooking = qtrue; 
+static void RW_IN_MLookDown (void)
+{
+	mlooking = qtrue;
 }
 
-static void RW_IN_MLookUp (void) 
+static void RW_IN_MLookUp (void)
 {
 	mlooking = qfalse;
 	in_state->IN_CenterView_fp ();
@@ -850,10 +850,10 @@ IN_Commands
 void RW_IN_Commands (void)
 {
 	int i;
-   
-	if (!mouse_avail) 
+
+	if (!mouse_avail)
 		return;
-   
+
 	for (i=0 ; i<3 ; i++) {
 		if ( (mouse_buttonstate & (1<<i)) && !(mouse_oldbuttonstate & (1<<i)) )
 			in_state->Key_Event_fp (K_MOUSE1 + i, qtrue);
@@ -873,7 +873,7 @@ void RW_IN_Move (usercmd_t *cmd)
 {
 	if (!mouse_avail)
 		return;
-   
+
 	if (m_filter->value)
 	{
 		mouse_x = (mx + old_mouse_x) * 0.5;
@@ -893,13 +893,13 @@ void RW_IN_Move (usercmd_t *cmd)
 	mouse_y *= sensitivity->value;
 
 	/* add mouse X/Y movement to cmd */
-	if ( (*in_state->in_strafe_state & 1) || 
+	if ( (*in_state->in_strafe_state & 1) ||
 		(lookstrafe->value && mlooking ))
 		cmd->sidemove += m_side->value * mouse_x;
 	else
 		in_state->viewangles[YAW] -= m_yaw->value * mouse_x;
 
-	if ( (mlooking || freelook->value) && 
+	if ( (mlooking || freelook->value) &&
 		!(*in_state->in_strafe_state & 1))
 	{
 		in_state->viewangles[PITCH] += m_pitch->value * mouse_y;

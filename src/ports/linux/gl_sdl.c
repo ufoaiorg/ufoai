@@ -519,7 +519,7 @@ rserr_t GLimp_SetMode( unsigned int *pwidth, unsigned int *pheight, int mode, qb
 		return rserr_invalid_mode;
 	}
 
-	ri.Con_Printf( PRINT_ALL, " %d %d %s\n", *pwidth, *pheight, (char *)qglGetString (GL_RENDERER) );
+	ri.Con_Printf( PRINT_ALL, " %d %d\n", *pwidth, *pheight);
 
 	if ( !GLimp_InitGraphics( fullscreen ) ) {
 		/* failed to set a valid mode in windowed mode */
