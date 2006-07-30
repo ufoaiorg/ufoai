@@ -992,6 +992,7 @@ extern void MAP_Reset(void);
 
 /* cl_ufo.c */
 extern void UFO_GetUfosList(aircraft_t*** first_ufo, int* numUfo);
+extern aircraft_t* UFO_GetUfo(int num);
 extern void UFO_CampaignRunUfos(int dt);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);

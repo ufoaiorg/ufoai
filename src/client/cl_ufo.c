@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 extern void UFO_GetUfosList(aircraft_t*** first_ufo, int* numUfo);
+extern aircraft_t* UFO_GetUfo(int num);
 static void UFO_SetUfoRandomDest(aircraft_t* ufo);
 extern void UFO_CampaignRunUfos(int dt);
 #ifdef DEBUG
@@ -46,9 +47,21 @@ static aircraft_t *ufoOnGeoscape[MAX_UFOONGEOSCAPE];	/**< UFOs on geoscape */
 /**
  * @brief Return the ufo on geoscape list and count
  */
-extern void UFO_GetUfosList(aircraft_t*** first_ufo, int* numUfo) {
+extern void UFO_GetUfosList(aircraft_t*** first_ufo, int* numUfo)
+{
 	*first_ufo = ufoOnGeoscape;
 	*numUfo = ccs.numUfoOnGeoscape;
+}
+
+/**
+ * @brief Return the ufo from its num in list
+ */
+extern aircraft_t* UFO_GetUfo(int num)
+{
+	if (num < 0 || num >= ccs.numUfoOnGeoscape)
+		return NULL;
+	
+	return ufoOnGeoscape[num];
 }
 
 /**

@@ -43,7 +43,9 @@ MULTI SELECTION DEFINITION
 typedef enum {
 	MULTISELECT_TYPE_BASE,
 	MULTISELECT_TYPE_MISSION,
-	MULTISELECT_TYPE_AIRCRAFT
+	MULTISELECT_TYPE_AIRCRAFT,
+	MULTISELECT_TYPE_UFO,
+	MULTISELECT_TYPE_NONE
 } multiSelectType_t;
 
 
@@ -68,24 +70,39 @@ STATIC DEFINITION
 ==============================================================
 */
 
-/* Static functions : clic on map and multi selection */
+/* Functions : clic on map and multi selection */
 static void MAP_MultiSelectListAddItem(multiSelectType_t item_type, int item_id,
 	const char* item_description, const char* item_name);
 static void MAP_MultiSelectExecuteAction_f(void);
+static void MAP_MultiSelectNotifyMissionRemoved(const actMis_t* mission);
+static void MAP_MultiSelectNotifyUfoRemoved(const aircraft_t* ufo);
+extern void MAP_3DMapClick(const menuNode_t* node, int x, int y);
+extern void MAP_MapClick(const menuNode_t* node, int x, int y);
 
-/* Static functions : Drawing map and coordinates */
+/* Functions : Drawing map and coordinates */
 static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y);
 static qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 static void PolarToVec(vec2_t a, vec3_t v);
 static void VecToPolar(vec3_t v, vec2_t a);
+extern void MAP_MapCalcLine(vec2_t start, vec2_t end, mapline_t* line);
 static void MAP_MapDrawLine(const menuNode_t* node, const mapline_t* line);
 static void MAP_Draw3DMapMarkers(const menuNode_t* node, float latitude, float longitude);
 static void MAP_DrawMapMarkers(const menuNode_t* node);
+extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D);
+
+/* Others functions */
+extern void MAP_ResetAction(void);
+extern void MAP_SelectAircraft(aircraft_t* aircraft);
+extern void MAP_SelectMission(actMis_t* mission);
+extern void MAP_NotifyMissionRemoved(const actMis_t* mission);
+extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo);
+extern void MAP_Reset(void);
 
 /* static variables */
 static cvar_t* cl_showCoords;
 static aircraft_t *selectedAircraft;	/**< Currently selected aircraft */
+static aircraft_t *selectedUfo;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
 /*
 ==============================================================
@@ -182,11 +199,57 @@ static void MAP_MultiSelectExecuteAction_f(void)
 		}
 		break;
 
+	case MULTISELECT_TYPE_UFO : /* Selection of an UFO */
+		/* Get the ufo selected */
+		if ((aircraft = UFO_GetUfo(id)) == NULL)
+			return;
+		
+		if (aircraft == selectedUfo) {
+			/* Selection of an already selected ufo */
+		} else {
+			/* Selection of an unselected ufo */
+			MAP_ResetAction();
+			selectedUfo = aircraft;
+		}
+		break;
+		
+	case MULTISELECT_TYPE_NONE :	/* Selection of an element that has been removed */
+		break;
 	default:
 		Com_DPrintf("MAP_MultiSelectExecuteAction: selection of an unknow element type %i\n", multiSelect.selectType[selected]);
 	}
 }
 
+/**
+ * @brief Notify the multi select system that a mission has been removed
+ */
+static void MAP_MultiSelectNotifyMissionRemoved(const actMis_t* mission)
+{
+	int num = mission - ccs.mission, i;
+
+	for (i = 0 ; i < multiSelect.nbSelect ; i++)
+		if (multiSelect.selectType[i] == MULTISELECT_TYPE_MISSION) {
+			if (multiSelect.selectId[i] == num)
+				multiSelect.selectType[i] = MULTISELECT_TYPE_NONE;
+			else if (multiSelect.selectId[i] > num)
+				multiSelect.selectId[i]--;
+		}
+}
+
+/**
+ * @brief Notify the multi select system that an ufo has been removed
+ */
+static void MAP_MultiSelectNotifyUfoRemoved(const aircraft_t* ufo)
+{
+	int i;
+
+	/* Deactive all ufos */
+	/* TO DO : Determine THE corresponding ufo in the multi select list */
+	for (i = 0 ; i < multiSelect.nbSelect ; i++)
+		if (multiSelect.selectType[i] == MULTISELECT_TYPE_UFO)
+			multiSelect.selectType[i] = MULTISELECT_TYPE_NONE;
+}
+	
 /*
  * @brief: Click on the 3D map/geoscape
 */
@@ -201,9 +264,9 @@ extern void MAP_3DMapClick(const menuNode_t* node, int x, int y)
  */
 extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 {
-	aircraft_t *aircraft = NULL;
+	aircraft_t *aircraft = NULL, **ufos;
 	actMis_t *ms;
-	int i;
+	int i, numUfos;
 	vec2_t pos;
 	char clickBuffer[30];
 
@@ -251,6 +314,17 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 			if (aircraft->status > AIR_HOME && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
 	}
+	
+	/* Get selected ufos */
+	UFO_GetUfosList(&ufos, &numUfos);
+	for (i = 0 ; i < numUfos ; i++, ufos++)
+		if ((*ufos)->visible
+#if DEBUG
+		|| Cvar_VariableValue("showufos")
+#endif
+		)
+			if ((*ufos)->status > AIR_HOME && MAP_IsMapPositionSelected(node, (*ufos)->pos, x, y))
+				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, i, _("UFO"), (*ufos)->name);
 
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
@@ -596,6 +670,8 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 		if (! aircraft->visible || ! MAP_MapToScreen(node, aircraft->pos, &x, &y))
 			continue;
 		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, aircraft->image);
+		if (aircraft == selectedUfo)
+			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");	
 	}
 }
 
@@ -648,12 +724,17 @@ extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
 	if (selMis)
 		menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s\n"), selMis->def->location, selMis->def->type, selMis->def->text);
 	else if (selectedAircraft) {
-		Com_sprintf(text_standard, sizeof(text_standard), va(_("Name:\t%s (%i/%i)\n"), selectedAircraft->name, *selectedAircraft->teamSize, selectedAircraft->size));
-		Q_strcat(text_standard, va(_("Status:\t%s\n"), CL_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
-		Q_strcat(text_standard, va(_("Speed:\t%.0f\n"), selectedAircraft->speed), sizeof(text_standard));
-		Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), selectedAircraft->fuel / 1000, selectedAircraft->fuelSize / 1000), sizeof(text_standard));
-		menuText[TEXT_STANDARD] = text_standard;
-	}
+		if (selectedAircraft->status <= AIR_HOME)
+			MAP_ResetAction();
+		else {
+			Com_sprintf(text_standard, sizeof(text_standard), va(_("Name:\t%s (%i/%i)\n"), selectedAircraft->name, *selectedAircraft->teamSize, selectedAircraft->size));
+			Q_strcat(text_standard, va(_("Status:\t%s\n"), CL_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("Speed:\t%.0f\n"), selectedAircraft->speed), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), selectedAircraft->fuel / 1000, selectedAircraft->fuelSize / 1000), sizeof(text_standard));
+			menuText[TEXT_STANDARD] = text_standard;
+		}
+	} else if (selectedUfo)
+		menuText[TEXT_STANDARD] = va("%s\n", selectedUfo->name);
 }
 
 /**
@@ -672,6 +753,7 @@ extern void MAP_ResetAction(void)
 		selMis = NULL;				/* reset selected mission */
 	}
 	selectedAircraft = NULL;
+	selectedUfo = NULL;
 }
 
 /**
@@ -697,14 +779,30 @@ extern void MAP_SelectMission(actMis_t* mission)
 
 /**
  * @brief Notify that a mission has been removed
- * Unselect the current selected mission if its the same
  */
 extern void MAP_NotifyMissionRemoved(const actMis_t* mission)
 {
+	/* Unselect the current selected mission if its the same */
 	if (selMis == mission && (gd.mapAction == MA_BASEATTACK || gd.mapAction == MA_INTERCEPT))
 		MAP_ResetAction();
 	else if (selMis > mission)
 		selMis--;
+	
+	/* Notify the multi selection popup */
+	MAP_MultiSelectNotifyMissionRemoved(mission);
+}
+
+/**
+ * @brief Notify that an ufo has been removed
+ */
+extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo)
+{
+	/* Unselect the current selected ufo if its the same */
+	if (selectedUfo == ufo)
+		MAP_ResetAction();
+	
+	/* Notify the multi selection popup */
+	MAP_MultiSelectNotifyUfoRemoved(ufo);
 }
 
 /**
