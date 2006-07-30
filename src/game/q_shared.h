@@ -654,6 +654,28 @@ SCRIPT VALUE PARSING
 
 #define MAX_VAR		64
 
+/* this is here to let the parsing function determine the right size */
+
+/* conditions for V_IF */
+typedef enum menuIfCondition_s {
+	IF_EQ, /* == */
+	IF_LE, /* <= */
+	IF_GE, /* >= */
+	IF_GT, /* > */
+	IF_LT, /* < */
+	IF_NE, /* != */
+
+	IF_SIZE
+} menuIfCondition_t;
+
+typedef struct menuDepends_s {
+	char var[MAX_VAR];
+	char value[MAX_VAR];
+	int cond;
+} menuDepends_t;
+
+/* end of V_IF */
+
 typedef enum {
 	V_NULL,
 	V_BOOL,

@@ -815,11 +815,6 @@ typedef struct menuAction_s {
 	struct menuAction_s *next;
 } menuAction_t;
 
-typedef struct menuDepends_s {
-	char var[MAX_VAR];
-	char value[MAX_VAR];
-} menuDepends_t;
-
 typedef struct menuNode_s {
 	void *data[6];				/* needs to be first */
 	char name[MAX_VAR];

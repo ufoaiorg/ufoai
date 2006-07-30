@@ -2580,11 +2580,34 @@ char *fade_names[FADE_LAST] = {
 	"none", "in", "out", "sin", "saw", "blend"
 };
 
-/* this is here to let Com_ParseValue determine the right size */
-typedef struct menuDepends_s {
-	char var[MAX_VAR];
-	char value[MAX_VAR];
-} menuDepends_t;
+static char *if_strings[IF_SIZE] = {
+	""
+	"==",
+	"<=",
+	">=",
+	">",
+	"<",
+	"!="
+};
+
+/**
+ * @brief Translate the condition string to menuIfCondition_t enum value
+ * @param[in] conditionString The string from scriptfiles (see if_strings)
+ * @return menuIfCondition_t value
+ * @return IF_SIZE on error
+ */
+int Com_ParseConditionType(const char* conditionString, const char *token)
+{
+	int i = IF_SIZE;
+	for (;i--;) {
+		if (!Q_strncmp(if_strings[i], (char*)conditionString, 2)) {
+			Com_Printf("Com_GetConditionType: %s - %i\n", conditionString, i);
+			return i;
+		}
+	}
+	Sys_Error("Invalid if statement with condition '%s' token: '%s'\n", conditionString, token);
+	return -1;
+}
 
 /**
  * @brief
@@ -2600,6 +2623,7 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 	byte *b;
 	char string[MAX_VAR];
 	char string2[MAX_VAR];
+	char condition[MAX_VAR];
 	int x, y, w, h;
 
 	b = (byte *) base + ofs;
@@ -2759,11 +2783,13 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
 		return sizeof(date_t);
 
 	case V_IF:
-		if (strstr(token, " ") == NULL)
+		if (strstr(strstr(token, " "), " ") == NULL)
 			Sys_Error("Com_ParseValue: Illegal if statement\n");
-		sscanf(token, "%s %s", string, string2);
+		sscanf(token, "%s %s %s", string, condition, string2);
+
 		Q_strncpyz(((menuDepends_t *) b)->var, string, MAX_VAR);
 		Q_strncpyz(((menuDepends_t *) b)->value, string2, MAX_VAR);
+		((menuDepends_t *) b)->cond = Com_ParseConditionType(condition, token);
 		return sizeof(menuDepends_t);
 
 	default:

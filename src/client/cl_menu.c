@@ -1374,9 +1374,37 @@ void MN_DrawMenus(void)
 					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP
 					|| node->type == MN_3DMAP)) {
 				/* if construct */
-				if (*node->depends.var && Q_stricmp(node->depends.value, (Cvar_Get(node->depends.var, node->depends.value, 0))->string)) {
-					Com_DPrintf("if %s = %s (but it is %s)\n", node->depends.var, node->depends.value, Cvar_Get(node->depends.var, node->depends.value, 0)->string);
-					continue;
+				if (*node->depends.var) {
+					/* menuIfCondition_t */
+					switch (node->depends.cond) {
+					case IF_EQ:
+						if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0)->value)
+							continue;
+						break;
+					case IF_LE:
+						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value < atof(node->depends.value))
+							continue;
+						break;
+					case IF_GE:
+						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value > atof(node->depends.value))
+							continue;
+						break;
+					case IF_GT:
+						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value <= atof(node->depends.value))
+							continue;
+						break;
+					case IF_LT:
+						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value >= atof(node->depends.value))
+							continue;
+						break;
+					case IF_NE:
+						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value == atof(node->depends.value))
+							continue;
+						break;
+					default:
+						Sys_Error("Unknown condition for if statement: %i\n", node->depends.cond);
+						break;
+					}
 				}
 
 				/* mouse effects */
