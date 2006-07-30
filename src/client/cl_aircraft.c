@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 aircraft_t aircraft_samples[MAX_AIRCRAFT]; /* available aircraft types */
 int numAircraft_samples = 0; /* TODO: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
-int numAircraft = 0; /* local, used for unique ids, no need to reset */
 
 static void CL_AircraftReturnToBase(aircraft_t *aircraft);
 extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission);
@@ -415,7 +414,7 @@ void CL_NewAircraft(base_t *base, char *name)
 		/* we do this because every aircraft can have its own parameters */
 		memcpy(&base->aircraft[base->numAircraftInBase], aircraft, sizeof(aircraft_t));
 		/* now lets use the aircraft array for the base to set some parameters */
-		aircraft->idx = numAircraft++;
+		aircraft->idx = gd.numAircraft++;
 		aircraft = &base->aircraft[base->numAircraftInBase];
 		aircraft->homebase = base;
 		/* for saving and loading a base */
@@ -766,7 +765,7 @@ void CL_ParseAircraft(char *name, char **text)
 	memset(air_samp, 0, sizeof(aircraft_t));
 
 	Com_DPrintf("...found aircraft %s\n", name);
-	air_samp->idx = numAircraft++;
+	air_samp->idx = gd.numAircraft++;
 	air_samp->idx_sample = numAircraft_samples - 1;
 	Q_strncpyz(air_samp->id, name, MAX_VAR);
 	air_samp->status = AIR_HOME;

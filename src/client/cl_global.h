@@ -72,6 +72,8 @@ typedef struct globalData_s
 	/* A list of _all_ bases ... even unbuilt ones. */
 	base_t bases[MAX_BASES];
 
+	/* used for unique aircraft ids */
+	int numAircraft;
 
 	/* Total number of parsed base-names. */
 	int numBaseNames;
