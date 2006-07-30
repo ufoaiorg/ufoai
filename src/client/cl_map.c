@@ -677,7 +677,8 @@ extern void MAP_ResetAction(void)
 /**
  * @brief Select the specified aircraft in geoscape
  */
-extern void MAP_SelectAircraft(aircraft_t* aircraft) {
+extern void MAP_SelectAircraft(aircraft_t* aircraft)
+{
 	MAP_ResetAction();
 	selectedAircraft = aircraft;
 }
@@ -685,7 +686,8 @@ extern void MAP_SelectAircraft(aircraft_t* aircraft) {
 /**
  * @brief Selected the specified mission
  */
-extern void MAP_SelectMission(actMis_t* mission) {
+extern void MAP_SelectMission(actMis_t* mission)
+{
 	if (! mission || mission == selMis)
 		return;
 	MAP_ResetAction();
@@ -697,7 +699,8 @@ extern void MAP_SelectMission(actMis_t* mission) {
  * @brief Notify that a mission has been removed
  * Unselect the current selected mission if its the same
  */
-extern void MAP_NotifyMissionRemoved(const actMis_t* mission) {
+extern void MAP_NotifyMissionRemoved(const actMis_t* mission)
+{
 	if (selMis == mission && (gd.mapAction == MA_BASEATTACK || gd.mapAction == MA_INTERCEPT))
 		MAP_ResetAction();
 	else if (selMis > mission)
