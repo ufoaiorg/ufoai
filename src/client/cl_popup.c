@@ -60,10 +60,10 @@ static void CL_PopupInterceptNotifyUfoRemoved(const aircraft_t* ufo);
  * @brief Initialise popups
  */
 extern void CL_PopupInit(void)
-{	
+{
 	/* popup_aircraft commands */
 	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f);
-	
+
 	/* popup_intercept commands */
 	/*Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f);
 	Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f);
@@ -120,7 +120,7 @@ extern void CL_DisplayPopupInterceptionReady(aircraft_t* aircraft, actMis_t* mis
 {
 	if (! popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
 		return;
-	
+
 	popupInterceptionReady.aircraft = aircraft;
 	popupInterceptionReady.mission = mission;
 	MN_PushMenu("popup_intercept_ready");
@@ -148,7 +148,7 @@ static void CL_PopupInterceptionReadyAuto_f(void)
 		return;
 	if (popupInterceptionReady.aircraft->status != AIR_DROP)
 		return;
-	
+
 	/* TO DO : launch auto mission */
 }
 
@@ -170,7 +170,7 @@ static void CL_PopupInterceptionReadyCancel_f(void)
  * POPUP_AIRCRAFT
  *
  *========================================*/
- 
+
 /* popup_aircraft display the actions availables for an aircraft */
 
 #define POPUP_AIRCRAFT_MAX_ITEMS	10		/**< Max items displayed in popup_aircraft */
@@ -240,7 +240,8 @@ extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft)
 /**
  * @ brief User just select an item in the popup_aircraft
  */
-static void CL_PopupAircraftClick_f(void) {
+static void CL_PopupAircraftClick_f(void)
+{
 	int num, id;
 	aircraft_t* aircraft;
 
@@ -262,31 +263,32 @@ static void CL_PopupAircraftClick_f(void) {
 
 	/* Execute action corresponding to item selected */
 	switch (popupAircraft.itemsAction[num]) {
-		case POPUP_AIRCRAFT_ACTION_BACKTOBASE:	/* Aircraft back to base */
-			CL_AircraftReturnToBase(aircraft);
-			break;
-		case POPUP_AIRCRAFT_ACTION_STOP:		/* Aircraft stop */
-			aircraft->status = AIR_IDLE;
-			break;
-		case POPUP_AIRCRAFT_ACTION_MOVETOMISSION:	/* Aircraft move to mission */
-			/* Get mission */
-			id = popupAircraft.itemsId[num];
-			if (id >= 0 && id < ccs.numMissions)
-				CL_SendAircraftToMission(aircraft, ccs.mission + id);
-			break;
-		case POPUP_AIRCRAFT_ACTION_NONE:
-			break;
-		default:
-			Com_Printf("CL_PopupAircraftClick: type of action unknow %i\n", popupAircraft.itemsAction[num]);
+	case POPUP_AIRCRAFT_ACTION_BACKTOBASE:	/* Aircraft back to base */
+		CL_AircraftReturnToBase(aircraft);
+		break;
+	case POPUP_AIRCRAFT_ACTION_STOP:		/* Aircraft stop */
+		aircraft->status = AIR_IDLE;
+		break;
+	case POPUP_AIRCRAFT_ACTION_MOVETOMISSION:	/* Aircraft move to mission */
+		/* Get mission */
+		id = popupAircraft.itemsId[num];
+		if (id >= 0 && id < ccs.numMissions)
+			CL_SendAircraftToMission(aircraft, ccs.mission + id);
+		break;
+	case POPUP_AIRCRAFT_ACTION_NONE:
+		break;
+	default:
+		Com_Printf("CL_PopupAircraftClick: type of action unknow %i\n", popupAircraft.itemsAction[num]);
 	}
 }
 
 /**
  * @brief Notify the popup_aircraft system that a mission has been removed
  */
-static void CL_PopupAircraftNotifyMissionRemoved(const actMis_t* mission) {
+static void CL_PopupAircraftNotifyMissionRemoved(const actMis_t* mission)
+{
 	int num = mission - ccs.mission, i;
-	
+
 	/* Deactive elements of list that allow to move to removed mission */
 	for (i = 0 ; i < popupAircraft.nbItems ; i++)
 		if (popupAircraft.itemsAction[i] == POPUP_AIRCRAFT_ACTION_MOVETOMISSION) {
@@ -307,7 +309,7 @@ static void CL_PopupAircraftNotifyMissionRemoved(const actMis_t* mission) {
 
 /* popup_intercept display list of aircraft availables to move to a mission or an ufo */
 
-#define POPUP_INTERCEPT_MAX_AIRCRAFT 10	/**< Max aircrafts in popup list */ 
+#define POPUP_INTERCEPT_MAX_AIRCRAFT 10	/**< Max aircrafts in popup list */
 
 typedef struct popup_intercept_s {
 	int numAircraft;	/**< Count of aircrafts displayed in list */
@@ -353,7 +355,7 @@ extern void CL_DisplayPopupIntercept(actMis_t* mission, aircraft_t* ufo)
 		}
 	}
 	menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
-	
+
 	/* Display the popup */
 	if (popupIntercept.numAircraft > 0)
 		MN_PushMenu("popup_intercept");
@@ -363,7 +365,8 @@ extern void CL_DisplayPopupIntercept(actMis_t* mission, aircraft_t* ufo)
  * @brief User select an item in the popup_aircraft
  * Make the aircraft attack the corresponding mission or UFO
  */
-static void CL_PopupInterceptClick_f(void) {
+static void CL_PopupInterceptClick_f(void)
+{
 	int num;
 	aircraft_t* aircraft;
 
