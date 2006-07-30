@@ -1277,7 +1277,7 @@ menu mp_create_server
 	func init
 	{
 		cmd "killserver;"
-		cmd "maxclients 2;"
+		cmd "set maxclients 2;"
 		cmd "getmaps;"
 		cmd "set maxplayers 8; set ai_numactors 0"
 		cmd "mn_modify sv_teamplay -1 0 1;"
