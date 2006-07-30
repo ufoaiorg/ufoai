@@ -99,7 +99,7 @@ extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft)
 /**
  * @ brief User just select an item in the popup_aircraft
  */
-extern void CL_PopupAircraftClick_f(void) {
+static void CL_PopupAircraftClick_f(void) {
 	int num, id;
 	aircraft_t* aircraft;
 
@@ -220,6 +220,10 @@ void CL_AircraftInit(void)
 		air_samp->homebase = &gd.bases[air_samp->idxBase]; /* TODO: looks like a nonsense */
 		air_samp->teamSize = &gd.bases[air_samp->idxBase].numOnTeam[air_samp->idxInBase];
 	}
+	
+	/* Add commands */
+	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f);
+	
 	Com_Printf("...aircraft inited\n");
 }
 

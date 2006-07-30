@@ -815,5 +815,4 @@ extern void MAP_Reset(void)
 	cl_showCoords = Cvar_Get("cl_showcoords", "0", CVAR_ARCHIVE);
 
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f);
-	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f);
 }
