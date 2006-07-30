@@ -876,9 +876,12 @@ int gameLapse;
   */
 void CL_GameTimeStop(void)
 {
-	gameLapse = 0;
-	Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
-	gd.gameTimeScale = lapse[gameLapse].scale;
+	/* don't allow time scale in tactical mode */
+	if (!Com_ServerState()) {
+		gameLapse = 0;
+		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
+		gd.gameTimeScale = lapse[gameLapse].scale;
+	}
 }
 
 
@@ -889,14 +892,17 @@ void CL_GameTimeStop(void)
   */
 void CL_GameTimeSlow(void)
 {
-	/*first we have to set up a home base */
-	if (!gd.numBases)
-		CL_GameTimeStop();
-	else {
-		if (gameLapse > 0)
-			gameLapse--;
-		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
-		gd.gameTimeScale = lapse[gameLapse].scale;
+	/* don't allow time scale in tactical mode */
+	if (!Com_ServerState()) {
+		/*first we have to set up a home base */
+		if (!gd.numBases)
+			CL_GameTimeStop();
+		else {
+			if (gameLapse > 0)
+				gameLapse--;
+			Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
+			gd.gameTimeScale = lapse[gameLapse].scale;
+		}
 	}
 }
 
@@ -907,14 +913,17 @@ void CL_GameTimeSlow(void)
   */
 void CL_GameTimeFast(void)
 {
-	/*first we have to set up a home base */
-	if (!gd.numBases)
-		CL_GameTimeStop();
-	else {
-		if (gameLapse < NUM_TIMELAPSE - 1)
-			gameLapse++;
-		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
-		gd.gameTimeScale = lapse[gameLapse].scale;
+	/* don't allow time scale in tactical mode */
+	if (!Com_ServerState()) {
+		/*first we have to set up a home base */
+		if (!gd.numBases)
+			CL_GameTimeStop();
+		else {
+			if (gameLapse < NUM_TIMELAPSE - 1)
+				gameLapse++;
+			Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
+			gd.gameTimeScale = lapse[gameLapse].scale;
+		}
 	}
 }
 
@@ -1633,11 +1642,11 @@ static void CL_GameAutoCheck(void)
 	switch (selMis->def->storyRelated) {
 	case qtrue:
 		Com_DPrintf("story related - auto mission is disabled\n");
-		Cvar_Set("game_autogo", "0");
+		Cvar_SetValue("game_autogo", 0.0f);
 		break;
 	default:
 		Com_DPrintf("auto mission is enabled\n");
-		Cvar_Set("game_autogo", "1");
+		Cvar_SetValue("game_autogo", 1.0f);
 		break;
 	}
 }
@@ -2597,7 +2606,7 @@ void CL_GameInit ( void )
 
 	/* init employee list */
 	B_InitEmployees();
-	
+
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 	MAP_GameInit();
