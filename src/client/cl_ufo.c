@@ -26,16 +26,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-
-/* Static functions */
+extern void UFO_GetUfosList(aircraft_t*** first_ufo, int* numUfo);
+static void UFO_SetUfoRandomDest(aircraft_t* ufo);
+extern void UFO_CampaignRunUfos(int dt);
 #ifdef DEBUG
 static void UFO_ListUfosOnGeoscape(void);
 #endif
-static void UFO_SetUfoRandomDest(aircraft_t* ufo);
 static void UFO_NewUfoOnGeoscape(void);
 static void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo);
 static void UFO_RemoveUfoFromGeoscape_f(void);
-
+extern void UFO_CampaignCheckEvents(void);
+extern void UFO_Reset(void);
 
 #define MAX_UFOONGEOSCAPE 8								/**< Max UFOs on geoscape */
 
@@ -168,7 +169,8 @@ static void UFO_RemoveUfoFromGeoscape_f(void)
 /**
  * @brief Check events for ufos : appears or disappears on radars
  */
-extern void UFO_CampaignCheckEvents(void) {
+extern void UFO_CampaignCheckEvents(void)
+{
 	int i, j;
 	qboolean visible;
 	aircraft_t*	ufo;
