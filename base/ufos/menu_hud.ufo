@@ -562,10 +562,38 @@ menu hud
 		out	{
 				*bar_chat image hud/bar_chat
 				*bar_chat size "64 64"
+				cmd "mn_showchatbuttons 0"
 			}
 		in	{
 				*bar_chat image hud/bar_chat_choice
 				*bar_chat size "128 64"
+				cmd "mn_showchatbuttons 1"
+			}
+	}
+	pic bar_chat_all
+	{
+		if	"mn_showchatbuttons == 1"
+		tooltip	"_Chat"
+		image	hud/button_chat
+		pos		"976 76"
+		align	"ur"
+		texl	"0 0"
+		texh	"32 32"
+		click {
+				cmd	"messagesay"
+			}
+	}
+	pic bar_chat_team
+	{
+		if	"mn_showchatbuttons == 1"
+		tooltip	"_Teamchat"
+		image	hud/button_chat
+		pos		"938 76"
+		align	"ur"
+		texl	"32 0"
+		texh	"64 32"
+		click {
+				cmd	"messagesayteam"
 			}
 	}
 
@@ -699,6 +727,7 @@ menu hud
 	{
 		cmd "set hud_refresh 1;"
 		cmd "ov_start;"
+		cmd "set mn_showchatbuttons 0"
 	}
 }
 
