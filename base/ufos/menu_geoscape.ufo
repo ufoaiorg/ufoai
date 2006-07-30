@@ -356,7 +356,7 @@ menu popup_intercept_ready
 
 	pic bt_auto_go
 	{
-		if	"game_autogo 1"
+		if	"game_autogo == 1"
 		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
 		pos	"530 410"
@@ -368,7 +368,7 @@ menu popup_intercept_ready
 	}
 	string string_auto_go
 	{
-		if	"game_autogo 1"
+		if	"game_autogo == 1"
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Auto mission"
@@ -611,7 +611,7 @@ menu popup_baseattack
 
 	pic bt_auto_go
 	{
-		if	"game_autogo 1.0"
+		if	"game_autogo == 1"
 		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
 		pos	"530 420"
@@ -623,7 +623,7 @@ menu popup_baseattack
 	}
 	string string_auto_go
 	{
-		if	"game_autogo 1.0"
+		if	"game_autogo == 1"
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Auto"
