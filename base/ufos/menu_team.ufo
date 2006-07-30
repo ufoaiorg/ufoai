@@ -129,6 +129,46 @@ menu team
 	confunc listadd17 { *bt_actor17 image hud/buttons1a }
 	confunc listadd18 { *bt_actor18 image hud/buttons1a }
 
+	confunc listholdsequip0 { *bt_equip0 mousefx true *bt_equip0 texl "48 16" *bt_equip0 texh "64 32" }
+	confunc listholdsequip1 { *bt_equip1 mousefx true *bt_equip1 texl "48 16" *bt_equip1 texh "64 32" }
+	confunc listholdsequip2 { *bt_equip2 mousefx true *bt_equip2 texl "48 16" *bt_equip2 texh "64 32" }
+	confunc listholdsequip3 { *bt_equip3 mousefx true *bt_equip3 texl "48 16" *bt_equip3 texh "64 32" }
+	confunc listholdsequip4 { *bt_equip4 mousefx true *bt_equip4 texl "48 16" *bt_equip4 texh "64 32" }
+	confunc listholdsequip5 { *bt_equip5 mousefx true *bt_equip5 texl "48 16" *bt_equip5 texh "64 32" }
+	confunc listholdsequip6 { *bt_equip6 mousefx true *bt_equip6 texl "48 16" *bt_equip6 texh "64 32" }
+	confunc listholdsequip7 { *bt_equip7 mousefx true *bt_equip7 texl "48 16" *bt_equip7 texh "64 32" }
+	confunc listholdsequip8 { *bt_equip8 mousefx true *bt_equip8 texl "48 16" *bt_equip8 texh "64 32" }
+	confunc listholdsequip9 { *bt_equip9 mousefx true *bt_equip9 texl "48 16" *bt_equip9 texh "64 32" }
+	confunc listholdsequip10 { *bt_equip10 mousefx true *bt_equip10 texl "48 16" *bt_equip10 texh "64 32" }
+	confunc listholdsequip11 { *bt_equip11 mousefx true *bt_equip11 texl "48 16" *bt_equip11 texh "64 32" }
+	confunc listholdsequip12 { *bt_equip12 mousefx true *bt_equip12 texl "48 16" *bt_equip12 texh "64 32" }
+	confunc listholdsequip13 { *bt_equip13 mousefx true *bt_equip13 texl "48 16" *bt_equip13 texh "64 32" }
+	confunc listholdsequip14 { *bt_equip14 mousefx true *bt_equip14 texl "48 16" *bt_equip14 texh "64 32" }
+	confunc listholdsequip15 { *bt_equip15 mousefx true *bt_equip15 texl "48 16" *bt_equip15 texh "64 32" }
+	confunc listholdsequip16 { *bt_equip16 mousefx true *bt_equip16 texl "48 16" *bt_equip16 texh "64 32" }
+	confunc listholdsequip17 { *bt_equip17 mousefx true *bt_equip17 texl "48 16" *bt_equip17 texh "64 32" }
+	confunc listholdsequip18 { *bt_equip18 mousefx true *bt_equip18 texl "48 16" *bt_equip18 texh "64 32" }
+
+	confunc listholdsnoequip0 { *bt_equip0 mousefx false *bt_equip0 texl "48 32" *bt_equip0 texh "64 48" }
+	confunc listholdsnoequip1 { *bt_equip1 mousefx false *bt_equip1 texl "48 32" *bt_equip1 texh "64 48" }
+	confunc listholdsnoequip2 { *bt_equip2 mousefx false *bt_equip2 texl "48 32" *bt_equip2 texh "64 48" }
+	confunc listholdsnoequip3 { *bt_equip3 mousefx false *bt_equip3 texl "48 32" *bt_equip3 texh "64 48" }
+	confunc listholdsnoequip4 { *bt_equip4 mousefx false *bt_equip4 texl "48 32" *bt_equip4 texh "64 48" }
+	confunc listholdsnoequip5 { *bt_equip5 mousefx false *bt_equip5 texl "48 32" *bt_equip5 texh "64 48" }
+	confunc listholdsnoequip6 { *bt_equip6 mousefx false *bt_equip6 texl "48 32" *bt_equip6 texh "64 48" }
+	confunc listholdsnoequip7 { *bt_equip7 mousefx false *bt_equip7 texl "48 32" *bt_equip7 texh "64 48" }
+	confunc listholdsnoequip8 { *bt_equip8 mousefx false *bt_equip8 texl "48 32" *bt_equip8 texh "64 48" }
+	confunc listholdsnoequip9 { *bt_equip9 mousefx false *bt_equip9 texl "48 32" *bt_equip9 texh "64 48" }
+	confunc listholdsnoequip10 { *bt_equip10 mousefx false *bt_equip10 texl "48 32" *bt_equip10 texh "64 48" }
+	confunc listholdsnoequip11 { *bt_equip11 mousefx false *bt_equip11 texl "48 32" *bt_equip11 texh "64 48" }
+	confunc listholdsnoequip12 { *bt_equip12 mousefx false *bt_equip12 texl "48 32" *bt_equip12 texh "64 48" }
+	confunc listholdsnoequip13 { *bt_equip13 mousefx false *bt_equip13 texl "48 32" *bt_equip13 texh "64 48" }
+	confunc listholdsnoequip14 { *bt_equip14 mousefx false *bt_equip14 texl "48 32" *bt_equip14 texh "64 48" }
+	confunc listholdsnoequip15 { *bt_equip15 mousefx false *bt_equip15 texl "48 32" *bt_equip15 texh "64 48" }
+	confunc listholdsnoequip16 { *bt_equip16 mousefx false *bt_equip16 texl "48 32" *bt_equip16 texh "64 48" }
+	confunc listholdsnoequip17 { *bt_equip17 mousefx false *bt_equip17 texl "48 32" *bt_equip17 texh "64 48" }
+	confunc listholdsnoequip18 { *bt_equip18 mousefx false *bt_equip18 texl "48 32" *bt_equip18 texh "64 48" }
+
 	confunc listdisable0 { *bt_actor0 image hud/buttons1g }
 	confunc listdisable1 { *bt_actor1 image hud/buttons1g }
 	confunc listdisable2 { *bt_actor2 image hud/buttons1g }
@@ -188,6 +228,196 @@ menu team
 	confunc teamdeselect16 { *txt_actor16 color "0 .78 0 1" }
 	confunc teamdeselect17 { *txt_actor17 color "0 .78 0 1" }
 	confunc teamdeselect18 { *txt_actor18 color "0 .78 0 1" }
+
+	pic bt_equip0
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 35"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip1
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 73"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip2
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 111"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip3
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 149"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip4
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 187"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip5
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 225"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip6
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 263"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip7
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 301"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip8
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 339"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip9
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 377"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip10
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 415"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip11
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 453"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip12
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 491"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip13
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 529"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip14
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 567"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip15
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 605"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip16
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 643"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip17
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 681"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
+
+	pic bt_equip18
+	{
+		tooltip "_Soldier carries equipment"
+		pos	"24 719"
+		image menu/buttons_small
+		mousefx false
+		texl	"48 32"
+		texh	"64 48"
+	}
 
 	pic bt_actor0
 	{
@@ -364,133 +594,133 @@ menu team
 	string txt_actor0
 	{
 		string	"*cvar mn_name0"
-		pos		"30 32"
+		pos		"50 32"
 		size	"290 16"
 		click { cmd "team_select 0" }
 	}
 	string txt_actor1
 	{
 		string	"*cvar mn_name1"
-		pos		"30 70"
+		pos		"50 70"
 		size	"290 16"
 		click { cmd "team_select 1" }
 	}
 	string txt_actor2
 	{
 		string	"*cvar mn_name2"
-		pos		"30 108"
+		pos		"50 108"
 		size	"290 16"
 		click { cmd "team_select 2" }
 	}
 	string txt_actor3
 	{
 		string	"*cvar mn_name3"
-		pos		"30 146"
+		pos		"50 146"
 		size	"290 16"
 		click { cmd "team_select 3" }
 	}
 	string txt_actor4
 	{
 		string	"*cvar mn_name4"
-		pos		"30 184"
+		pos		"50 184"
 		size	"290 16"
 		click { cmd "team_select 4" }
 	}
 	string txt_actor5
 	{
 		string	"*cvar mn_name5"
-		pos		"30 222"
+		pos		"50 222"
 		size	"290 16"
 		click { cmd "team_select 5" }
 	}
 	string txt_actor6
 	{
 		string	"*cvar mn_name6"
-		pos		"30 260"
+		pos		"50 260"
 		size	"290 16"
 		click { cmd "team_select 6" }
 	}
 	string txt_actor7
 	{
 		string	"*cvar mn_name7"
-		pos		"30 298"
+		pos		"50 298"
 		size	"290 16"
 		click { cmd "team_select 7" }
 	}
 	string txt_actor8
 	{
 		string	"*cvar mn_name8"
-		pos		"30 336"
+		pos		"50 336"
 		size	"290 16"
 		click { cmd "team_select 8" }
 	}
 	string txt_actor9
 	{
 		string	"*cvar mn_name9"
-		pos		"30 374"
+		pos		"50 374"
 		size	"290 16"
 		click { cmd "team_select 9" }
 	}
 	string txt_actor10
 	{
 		string	"*cvar mn_name10"
-		pos		"30 412"
+		pos		"50 412"
 		size	"290 16"
 		click { cmd "team_select 10" }
 	}
 	string txt_actor11
 	{
 		string	"*cvar mn_name11"
-		pos		"30 450"
+		pos		"50 450"
 		size	"290 16"
 		click { cmd "team_select 11" }
 	}
 	string txt_actor12
 	{
 		string	"*cvar mn_name12"
-		pos		"30 488"
+		pos		"50 488"
 		size	"290 16"
 		click { cmd "team_select 12" }
 	}
 	string txt_actor13
 	{
 		string	"*cvar mn_name13"
-		pos		"30 526"
+		pos		"50 526"
 		size	"290 16"
 		click { cmd "team_select 13" }
 	}
 	string txt_actor14
 	{
 		string	"*cvar mn_name14"
-		pos		"30 564"
+		pos		"50 564"
 		size	"290 16"
 		click { cmd "team_select 14" }
 	}
 	string txt_actor15
 	{
 		string	"*cvar mn_name15"
-		pos		"30 602"
+		pos		"50 602"
 		size	"290 16"
 		click { cmd "team_select 15" }
 	}
 	string txt_actor16
 	{
 		string	"*cvar mn_name16"
-		pos		"30 640"
+		pos		"50 640"
 		size	"290 16"
 		click { cmd "team_select 16" }
 	}
 	string txt_actor17
 	{
 		string	"*cvar mn_name17"
-		pos		"30 678"
+		pos		"50 678"
 		size	"290 16"
 		click { cmd "team_select 17" }
 	}
 	string txt_actor18
 	{
 		string	"*cvar mn_name18"
-		pos		"30 716"
+		pos		"50 716"
 		size	"290 16"
 		click { cmd "team_select 18" }
 	}

@@ -591,7 +591,8 @@ void CL_ResetTeamInBase(void)
   */
 static void CL_MarkTeamCmd(void)
 {
-	int i;
+	int i, j, cnt = 0;
+	invList_t* ic;
 
 	/* check if we are allowed to be here? */
 	/* we are only allowed to be here if we already set up a base */
@@ -604,14 +605,26 @@ static void CL_MarkTeamCmd(void)
 	CL_UpdateHireVar();
 
 	for (i = 0; i < baseCurrent->numWholeTeam; i++) {
+		cnt = 0;
 		Cvar_ForceSet(va("mn_name%i", i), baseCurrent->wholeTeam[i].name);
 		if (baseCurrent->hiredMask & (1 << i))
 			Cbuf_AddText(va("listadd%i\n", i));
+		for (j = 0; j < csi.numIDs; j++) {
+			for (ic = baseCurrent->wholeTeam[i].inv->c[j]; ic; ic = ic->next) {
+				if (j != csi.idFloor && j != csi.idEquip)
+					cnt++;
+			}
+		}
+		if (cnt)
+			Cbuf_AddText(va("listholdsequip%i\n", i));
+		else
+			Cbuf_AddText(va("listholdsnoequip%i\n", i));
 	}
 
 	for (i = baseCurrent->numWholeTeam; i < (int) cl_numnames->value; i++) {
 		Cbuf_AddText(va("listdisable%i\n", i));
 		Cvar_ForceSet(va("mn_name%i", i), "");
+		Cbuf_AddText(va("listholdsnoequip%i\n", i));
 	}
 }
 
@@ -621,8 +634,9 @@ static void CL_MarkTeamCmd(void)
   */
 static void CL_HireActorCmd(void)
 {
-	int num;
+	int num, i, cnt = 0;
 	aircraft_t *aircraft = NULL;
+	invList_t *ic;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -637,6 +651,18 @@ static void CL_HireActorCmd(void)
 	if (baseCurrent->teamMask[baseCurrent->aircraftCurrent] & (1 << num)) {
 		/* unhire */
 		Cbuf_AddText(va("listdel%i\n", num));
+
+		for (i = 0; i < csi.numIDs; i++) {
+			for (ic = baseCurrent->wholeTeam[num].inv->c[i]; ic; ic = ic->next) {
+				if (i != csi.idFloor && i != csi.idEquip)
+					cnt++;
+			}
+		}
+
+		if (cnt) {
+			Com_DestroyInventory(baseCurrent->wholeTeam[num].inv);
+			Cbuf_AddText(va("listholdsnoequip%i\n", num));
+		}
 		baseCurrent->hiredMask &= ~(1 << num);
 		baseCurrent->teamMask[baseCurrent->aircraftCurrent] &= ~(1 << num);
 		baseCurrent->numHired--;
@@ -668,11 +694,10 @@ static void CL_HireActorCmd(void)
   *
   * Done by the script command msgmenu [?|!|:][cvarname]
   */
-static char nameBackup[MAX_VAR];
-static char cvarName[MAX_VAR];
-
 static void CL_MessageMenuCmd(void)
 {
+	static char nameBackup[MAX_VAR];
+	static char cvarName[MAX_VAR];
 	char *msg;
 
 	if (Cmd_Argc() < 2) {
