@@ -452,8 +452,13 @@ void CL_CheckAircraft(aircraft_t * aircraft)
 			aircraft->mission->def->active = qtrue;
 			if (aircraft->status != AIR_DROP && aircraft->fuel > 0) {
 				aircraft->status = AIR_DROP;
+				/* FIXME; aircraft->idx is (or can be) -1 here */
+				/* select mission - send aircraft - on the flight - select aircraft on geoscape */
+				/* let aircraft arrive at mission - popup appear - mission won't start up */
+				/* because gd.interceptAircraft is -1 */
 				gd.interceptAircraft = aircraft->idx;
 				MAP_SelectMission(aircraft->mission);
+				Com_DPrintf("gd.interceptAircraft: %i\n", gd.interceptAircraft);
 				MN_PushMenu("popup_intercept_ready");
 			}
 		} else

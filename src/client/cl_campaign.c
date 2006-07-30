@@ -1593,7 +1593,7 @@ static void CL_GameGo(void)
 	char timeChar;
 	aircraft_t* aircraft;
 
-	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
+	if (!curCampaign || gd.interceptAircraft < 0) {
 		Com_DPrintf("curCampaign: %p, selMis: %p, interceptAircraft: %i\n", curCampaign, selMis, gd.interceptAircraft);
 		return;
 	}
@@ -1601,6 +1601,14 @@ static void CL_GameGo(void)
 	aircraft = CL_AircraftGetFromIdx(gd.interceptAircraft);
 	/* update mission-status (active?) for the selected aircraft */
 	CL_CheckAircraft(aircraft);
+
+	if (!selMis)
+		selMis = aircraft->mission;
+
+	if (!selMis) {
+		Com_DPrintf("No selMis\n");
+		return;
+	}
 
 	mis = selMis->def;
 	baseCurrent = aircraft->homebase;
