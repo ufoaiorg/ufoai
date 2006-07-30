@@ -2361,10 +2361,6 @@ void Com_DestroyInventory(inventory_t * i)
 	if (!i)
 		return;
 
-#ifdef PARANOID
-	Com_Printf("Com_DestroyInventory: '%p' Containers: %i\n", i, CSI->numIDs );
-#endif
-
 	for (k = 0; k < CSI->numIDs; k++)
 		Com_EmptyContainer(i, k);
 }
