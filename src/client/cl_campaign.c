@@ -2676,8 +2676,9 @@ void CL_GameInit ( void )
 	/* init employee list */
 	B_InitEmployees();
 	
-	/* Init popup */
+	/* Init popup and map/geoscape */
 	CL_PopupInit();
+	MAP_GameInit();
 }
 
 /**

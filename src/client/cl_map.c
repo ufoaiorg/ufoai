@@ -97,7 +97,7 @@ extern void MAP_SelectAircraft(aircraft_t* aircraft);
 extern void MAP_SelectMission(actMis_t* mission);
 extern void MAP_NotifyMissionRemoved(const actMis_t* mission);
 extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo);
-extern void MAP_Reset(void);
+extern void MAP_GameInit(void);
 
 /* static variables */
 static cvar_t* cl_showCoords;
@@ -806,13 +806,10 @@ extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo)
 }
 
 /**
-  * @brief
-  */
-extern void MAP_Reset(void)
+ * @brief Initialise MAP/Geoscape
+ */
+extern void MAP_GameInit(void)
 {
-	MAP_ResetAction();
-
 	cl_showCoords = Cvar_Get("cl_showcoords", "0", CVAR_ARCHIVE);
-
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f);
 }
