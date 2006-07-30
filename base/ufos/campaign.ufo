@@ -389,6 +389,7 @@ mission farm
 	$win		6000
 	$alien		100
 	$civilian	500
+	storyrelated	true
 }
 
 mission frozen_groenland
@@ -715,7 +716,6 @@ mission vil_grenchen
 	$win		1000
 	$alien		100
 	$civilian	500
-	storyrelated	true
 }
 
 mission vil_albany
