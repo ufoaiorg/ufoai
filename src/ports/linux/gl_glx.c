@@ -586,16 +586,12 @@ static void HandleEvents(void)
 		}
 	}
 
-	if (vid_grabmouse->modified)
-	{
+	if (vid_grabmouse->modified) {
 		vid_grabmouse->modified = qfalse;
-		if ( ! vid_grabmouse->value )
-		{
+		if ( ! vid_grabmouse->value ) {
 			XUngrabPointer(dpy, CurrentTime);
 			ri.Con_Printf( PRINT_ALL, "Ungrab mouse\n" );
-		}
-		else
-		{
+		} else {
 			XGrabPointer(dpy, win, True, 0, GrabModeAsync, GrabModeAsync, win, None, CurrentTime);
 			ri.Con_Printf( PRINT_ALL, "Grab mouse\n" );
 		}
@@ -673,8 +669,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	else
 		ri.Con_Printf (PRINT_ALL, "...setting mode %d:", mode );
 
-	if ( !ri.Vid_GetModeInfo( &width, &height, mode ) )
-	{
+	if ( !ri.Vid_GetModeInfo( &width, &height, mode ) ) {
 		ri.Con_Printf( PRINT_ALL, " invalid mode\n" );
 		return rserr_invalid_mode;
 	}
