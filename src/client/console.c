@@ -41,6 +41,9 @@ extern char key_lines[32][MAXCMDLINE];
 extern int edit_line;
 extern int key_linepos;
 
+/**
+ * @brief
+ */
 void DisplayString(int x, int y, char *s)
 {
 	while (*s) {
@@ -73,18 +76,10 @@ Con_ToggleConsole_f
 */
 void Con_ToggleConsole_f(void)
 {
-/*	SCR_EndLoadingPlaque ();	// get rid of loading plaque */
-
 	if (cl.attractloop) {
 		Cbuf_AddText("killserver\n");
 		return;
 	}
-#if 0
-	if (cls.state == ca_disconnected) {	/* start the demo loop again */
-		Cbuf_AddText("init\n");
-		return;
-	}
-#endif
 	Key_ClearTyping();
 	Con_ClearNotify();
 
@@ -214,6 +209,7 @@ void Con_MessageModeSay_f(void)
 {
 	msg_mode = MSG_SAY;
 	cls.key_dest = key_message;
+	MN_PushMenu("chat");
 }
 
 /*
@@ -225,6 +221,7 @@ void Con_MessageModeSayTeam_f(void)
 {
 	msg_mode = MSG_SAY_TEAM;
 	cls.key_dest = key_message;
+	MN_PushMenu("chat");
 }
 
 /*

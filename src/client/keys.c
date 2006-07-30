@@ -375,15 +375,19 @@ void Key_Message(int key)
 		send = qtrue;
 		switch (msg_mode) {
 		case MSG_SAY:
-			if (msg_buffer[0])
+			if (msg_buffer[0]) {
 				Cbuf_AddText("say \"");
-			else
+				/* get rid of chat menu */
+				MN_PopMenu(qfalse);
+			} else
 				send = qfalse;
 			break;
 		case MSG_SAY_TEAM:
-			if (msg_buffer[0])
+			if (msg_buffer[0]) {
 				Cbuf_AddText("say_team \"");
-			else
+				/* get rid of chat menu */
+				MN_PopMenu(qfalse);
+			} else
 				send = qfalse;
 			break;
 		case MSG_MENU:
