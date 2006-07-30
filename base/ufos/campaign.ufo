@@ -312,12 +312,12 @@ mission vil_lille
 }
 
 // Korea
-mission harbour
+mission harbor
 {
 	location	"_Busan"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			harbour07
+	map			harbor07
 	music		mission2
 	pos			"-129 35"
 	aliens		8
@@ -819,7 +819,7 @@ stage ufos_are_coming
 		delay		"0 0 1"
 		frame		"0 10 0"
 		expire		"0 3 0"
-		missions	"transport mine_crash construction farm office harbour"
+		missions	"transport mine_crash construction farm office harbor"
 		quota		4
 		nextstage	invasion
 	}
