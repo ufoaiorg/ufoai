@@ -26,10 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-aircraft_t aircraft[MAX_AIRCRAFT];
-int numAircraft;
+aircraft_t aircraft_samples[MAX_AIRCRAFT]; /* available aircraft types */
+int numAircraft_samples = 0; /* TODO: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
+int numAircraft = 0; /* local, used for unique ids, no need to reset */
 
-static void CL_AircraftReturnToBase(aircraft_t *air);
+static void CL_AircraftReturnToBase(aircraft_t *aircraft);
 extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission);
 
 /* == POPUP_AIRCRAFT ======================================================= */
@@ -148,7 +149,7 @@ void CL_ListAircraft_f(void)
 {
 	int i, j;
 	base_t *base;
-	aircraft_t *air;
+	aircraft_t *aircraft;
 
 	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
 		if (!base->founded)
@@ -156,14 +157,14 @@ void CL_ListAircraft_f(void)
 
 		Com_Printf("Aircrafts in base %s: %i\n", base->name, base->numAircraftInBase);
 		for (i = 0; i < base->numAircraftInBase; i++) {
-			air = &base->aircraft[i];
-			Com_Printf("Aircraft %s\n", air->name);
-			Com_Printf("...name %s\n", air->id);
-			Com_Printf("...speed %0.2f\n", air->speed);
-			Com_Printf("...type %i\n", air->type);
-			Com_Printf("...size %i\n", air->size);
-			Com_Printf("...status %s\n", CL_AircraftStatusToName(air));
-			Com_Printf("...pos %.0f:%.0f\n", air->pos[0], air->pos[1]);
+			aircraft = &base->aircraft[i];
+			Com_Printf("Aircraft %s\n", aircraft->name);
+			Com_Printf("...name %s\n", aircraft->id);
+			Com_Printf("...speed %0.2f\n", aircraft->speed);
+			Com_Printf("...type %i\n", aircraft->type);
+			Com_Printf("...size %i\n", aircraft->size);
+			Com_Printf("...status %s\n", CL_AircraftStatusToName(aircraft));
+			Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
 		}
 	}
 }
@@ -173,7 +174,7 @@ void CL_ListAircraft_f(void)
   */
 void CL_AircraftStart_f(void)
 {
-	aircraft_t *air;
+	aircraft_t *aircraft;
 
 	assert(baseCurrent);
 
@@ -182,15 +183,15 @@ void CL_AircraftStart_f(void)
 		return;
 	}
 
-	air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	if (air->status < AIR_IDLE) {
-		air->pos[0] = baseCurrent->pos[0] + 2;
-		air->pos[1] = baseCurrent->pos[1] + 2;
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	if (aircraft->status < AIR_IDLE) {
+		aircraft->pos[0] = baseCurrent->pos[0] + 2;
+		aircraft->pos[1] = baseCurrent->pos[1] + 2;
 	}
 	MN_AddNewMessage(_("Notice"), _("Aircraft started"), qfalse, MSG_STANDARD, NULL);
-	air->status = AIR_IDLE;
+	aircraft->status = AIR_IDLE;
 
-	MAP_SelectAircraft(air);
+	MAP_SelectAircraft(aircraft);
 }
 
 /**
@@ -198,27 +199,27 @@ void CL_AircraftStart_f(void)
   */
 void CL_AircraftInit(void)
 {
-	aircraft_t *air;
+	aircraft_t *air_samp;
 	int i = 0;
 
-	for (i = 0; i < numAircraft; i++) {
-		air = &aircraft[i];
+	for (i = 0; i < numAircraft_samples; i++) {
+		air_samp = &aircraft_samples[i];
 		/* link with tech pointer */
-		Com_DPrintf("...aircraft: %s\n", air->name);
-		if (*air->weapon_string) {
-			Com_DPrintf("....weapon: %s\n", air->weapon_string);
-			air->weapon = RS_GetTechByID(air->weapon_string);
+		Com_DPrintf("...aircraft: %s\n", air_samp->name);
+		if (*air_samp->weapon_string) {
+			Com_DPrintf("....weapon: %s\n", air_samp->weapon_string);
+			air_samp->weapon = RS_GetTechByID(air_samp->weapon_string);
 		} else
-			air->weapon = NULL;
+			air_samp->weapon = NULL;
 
-		if (*air->shield_string) {
+		if (*air_samp->shield_string) {
 			/* link with tech pointer */
-			Com_DPrintf("....shield: %s\n", air->shield_string);
-			air->shield = RS_GetTechByID(air->shield_string);
+			Com_DPrintf("....shield: %s\n", air_samp->shield_string);
+			air_samp->shield = RS_GetTechByID(air_samp->shield_string);
 		} else
-			air->shield = NULL;
-		air->homebase = &gd.bases[air->idxBase];
-		air->teamSize = &gd.bases[air->idxBase].numOnTeam[air->idxInBase];
+			 air_samp->shield = NULL;
+		air_samp->homebase = &gd.bases[air_samp->idxBase]; /* TODO: looks like a nonsense */
+		air_samp->teamSize = &gd.bases[air_samp->idxBase].numOnTeam[air_samp->idxInBase];
 	}
 	Com_Printf("...aircraft inited\n");
 }
@@ -226,10 +227,10 @@ void CL_AircraftInit(void)
 /**
   * @brief
   */
-char *CL_AircraftStatusToName(aircraft_t * air)
+char *CL_AircraftStatusToName(aircraft_t * aircraft)
 {
-	assert(air);
-	switch (air->status) {
+	assert(aircraft);
+	switch (aircraft->status) {
 	case AIR_NONE:
 		return _("Nothing - should not be displayed");
 	case AIR_HOME:
@@ -251,7 +252,7 @@ char *CL_AircraftStatusToName(aircraft_t * air)
 	case AIR_RETURNING:
 		return _("Returning to homebase");
 	default:
-		Com_Printf("Error: Unknown aircraft status for %s\n", air->name);
+		Com_Printf("Error: Unknown aircraft status for %s\n", aircraft->name);
 	}
 	return NULL;
 }
@@ -304,17 +305,17 @@ void MN_PrevAircraft_f(void)
   * call this from baseview via "aircraft_return"
   * calculates the way back to homebase
   */
-static void CL_AircraftReturnToBase(aircraft_t *air)
+static void CL_AircraftReturnToBase(aircraft_t *aircraft)
 {
 	base_t *base;
 
-	if (air && air->status != AIR_HOME) {
-		base = (base_t *) air->homebase;
-		MAP_MapCalcLine(air->pos, base->pos, &air->route);
-		air->status = AIR_RETURNING;
-		air->time = 0;
-		air->point = 0;
-		air->mission = NULL;
+	if (aircraft && aircraft->status != AIR_HOME) {
+		base = (base_t *) aircraft->homebase;
+		MAP_MapCalcLine(aircraft->pos, base->pos, &aircraft->route);
+		aircraft->status = AIR_RETURNING;
+		aircraft->time = 0;
+		aircraft->point = 0;
+		aircraft->mission = NULL;
 	}
 }
 
@@ -326,11 +327,11 @@ static void CL_AircraftReturnToBase(aircraft_t *air)
   */
 void CL_AircraftReturnToBase_f(void)
 {
-	aircraft_t *air;
+	aircraft_t *aircraft;
 
 	if (baseCurrent && baseCurrent->aircraftCurrent >= 0) {
-		air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-		CL_AircraftReturnToBase(air);
+		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+		CL_AircraftReturnToBase(aircraft);
 		CL_AircraftSelect();
 	}
 }
@@ -342,7 +343,7 @@ void CL_AircraftReturnToBase_f(void)
   */
 void CL_AircraftSelect(void)
 {
-	aircraft_t *air;
+	aircraft_t *aircraft;
 	int aircraftID = (int) Cvar_VariableValue("mn_aircraft_id");
 	static char aircraftInfo[256];
 
@@ -354,30 +355,30 @@ void CL_AircraftSelect(void)
 	if (aircraftID >= baseCurrent->numAircraftInBase || aircraftID < 0)
 		aircraftID = 0;
 
-	air = &baseCurrent->aircraft[aircraftID];
+	aircraft = &baseCurrent->aircraft[aircraftID];
 
 	baseCurrent->aircraftCurrent = aircraftID;
 
 	CL_UpdateHireVar();
 
-	Cvar_Set("mn_aircraftstatus", CL_AircraftStatusToName(air));
-	Cvar_Set("mn_aircraftname", air->name);
-	Cvar_Set("mn_aircraft_model", air->model);
-	Cvar_Set("mn_aircraft_weapon", air->weapon ? air->weapon->name : "");
-	Cvar_Set("mn_aircraft_shield", air->shield ? air->shield->name : "");
-	Cvar_Set("mn_aircraft_weapon_img", air->weapon ? air->weapon->image_top : "menu/airequip_no_weapon");
-	Cvar_Set("mn_aircraft_shield_img", air->shield ? air->shield->image_top : "menu/airequip_no_shield");
+	Cvar_Set("mn_aircraftstatus", CL_AircraftStatusToName(aircraft));
+	Cvar_Set("mn_aircraftname", aircraft->name);
+	Cvar_Set("mn_aircraft_model", aircraft->model);
+	Cvar_Set("mn_aircraft_weapon", aircraft->weapon ? aircraft->weapon->name : "");
+	Cvar_Set("mn_aircraft_shield", aircraft->shield ? aircraft->shield->name : "");
+	Cvar_Set("mn_aircraft_weapon_img", aircraft->weapon ? aircraft->weapon->image_top : "menu/airequip_no_weapon");
+	Cvar_Set("mn_aircraft_shield_img", aircraft->shield ? aircraft->shield->image_top : "menu/airequip_no_shield");
 
 	/* generate aircraft info text */
-	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\n"), air->speed);
-	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), air->fuel / 1000, air->fuelSize / 1000), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), air->weapon ? air->weapon->name : _("None")), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Shield:\t%s"), air->shield ? air->shield->name : _("None")), sizeof(aircraftInfo));
+	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\n"), aircraft->speed);
+	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), aircraft->fuel / 1000, aircraft->fuelSize / 1000), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), aircraft->weapon ? aircraft->weapon->name : _("None")), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Shield:\t%s"), aircraft->shield ? aircraft->shield->name : _("None")), sizeof(aircraftInfo));
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 
 /**
-  * @brief Searches the global aircraft array for a given aircraft
+  * @brief Searches the global array of aircraft types for a given aircraft
   * @param[in] name Aircraft id
   * @return aircraft_t pointer or NULL if not found
   */
@@ -385,12 +386,12 @@ aircraft_t *CL_GetAircraft(char *name)
 {
 	int i;
 
-	for (i = 0; i < numAircraft; i++) {
-		if (!Q_strncmp(aircraft[i].id, name, MAX_VAR))
-			return &aircraft[i];
+	for (i = 0; i < numAircraft_samples; i++) {
+		if (!Q_strncmp(aircraft_samples[i].id, name, MAX_VAR))
+			return &aircraft_samples[i];
 	}
 
-	Com_Printf("Aircraft %s not found (%i)\n", name, numAircraft);
+	Com_Printf("Aircraft %s not found (%i)\n", name, numAircraft_samples);
 	return NULL;
 }
 
@@ -401,65 +402,65 @@ aircraft_t *CL_GetAircraft(char *name)
   */
 void CL_NewAircraft(base_t *base, char *name)
 {
-	aircraft_t *air;
+	aircraft_t *aircraft;
 
 	assert(base);
 
 	/* first aircraft is default aircraft */
 	base->aircraftCurrent = 0;
 
-	air = CL_GetAircraft(name);
-	if (air) {
+	aircraft = CL_GetAircraft(name);
+	if (aircraft) {
 		/* copy from global aircraft list to base aircraft list */
 		/* we do this because every aircraft can have its own parameters */
-		memcpy(&base->aircraft[base->numAircraftInBase], air, sizeof(aircraft_t));
+		memcpy(&base->aircraft[base->numAircraftInBase], aircraft, sizeof(aircraft_t));
 		/* now lets use the aircraft array for the base to set some parameters */
-		air = &base->aircraft[base->numAircraftInBase];
-		air->homebase = base;
+		aircraft->idx = numAircraft++;
+		aircraft = &base->aircraft[base->numAircraftInBase];
+		aircraft->homebase = base;
 		/* for saving and loading a base */
-		air->idxBase = base->idx;
+		aircraft->idxBase = base->idx;
 		/* this is the aircraft array id in current base */
 		/* NOTE: when we send the aircraft to another base this has to be changed, too */
-		air->idxInBase = base->numAircraftInBase;
+		aircraft->idxInBase = base->numAircraftInBase;
 		/* link the teamSize pointer in */
 		/* NOTE: when we load a savegame, this has to be updated, too */
-		air->teamSize = &base->numOnTeam[base->numAircraftInBase];
-		Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), air->name, base->name), MAX_MESSAGE_TEXT);
+		aircraft->teamSize = &base->numOnTeam[base->numAircraftInBase];
+		Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf("Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
-		Vector2Copy(base->pos, air->pos);
+		Vector2Copy(base->pos, aircraft->pos);
 
 		base->numAircraftInBase++;
-		Com_DPrintf("Aircraft for base %s: %s\n", base->name, air->name);
+		Com_DPrintf("Aircraft for base %s: %s\n", base->name, aircraft->name);
 	}
 }
 
 /**
   * @brief
   */
-void CL_CheckAircraft(aircraft_t * air)
+void CL_CheckAircraft(aircraft_t * aircraft)
 {
-	if (air->fuel <= 0 && air->status >= AIR_IDLE) {
+	if (aircraft->fuel <= 0 && aircraft->status >= AIR_IDLE) {
 		MN_AddNewMessage(_("Notice"), _("Your dropship has low fuel and returns to base"), qfalse, MSG_STANDARD, NULL);
-		CL_AircraftReturnToBase(air);
+		CL_AircraftReturnToBase(aircraft);
 	}
 
-	switch (air->status) {
+	switch (aircraft->status) {
 	case AIR_MISSION:
-		if (abs(air->mission->def->pos[0] - air->pos[0]) < DISTANCE && abs(air->mission->def->pos[1] - air->pos[1]) < DISTANCE) {
-			air->mission->def->active = qtrue;
-			if (air->status != AIR_DROP && air->fuel > 0) {
-				air->status = AIR_DROP;
-				gd.interceptAircraft = air->idxInBase;
-				baseCurrent = air->homebase;
-				MAP_SelectMission(air->mission);
+		if (abs(aircraft->mission->def->pos[0] - aircraft->pos[0]) < DISTANCE && abs(aircraft->mission->def->pos[1] - aircraft->pos[1]) < DISTANCE) {
+			aircraft->mission->def->active = qtrue;
+			if (aircraft->status != AIR_DROP && aircraft->fuel > 0) {
+				aircraft->status = AIR_DROP;
+				gd.interceptAircraft = aircraft->idx;
+				MAP_SelectMission(aircraft->mission);
 				MN_PushMenu("popup_intercept_ready");
 			}
 		} else
-			air->mission->def->active = qfalse;
+			aircraft->mission->def->active = qfalse;
 		break;
 	case AIR_DROP:
-		Com_DPrintf("Aircraft status is AIR_DROP - mission status is %i\n", air->mission->def->active);
+		Com_DPrintf("Aircraft status is AIR_DROP - mission status is %i\n", aircraft->mission->def->active);
 		break;
 	default:
 		break;
@@ -510,7 +511,7 @@ extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft) {
   */
 void CL_CampaignRunAircraft(int dt)
 {
-	aircraft_t *air;
+	aircraft_t *aircraft;
 	base_t *base;
 	int i, j;
 
@@ -518,36 +519,36 @@ void CL_CampaignRunAircraft(int dt)
 		if (!base->founded)
 			continue;
 
-		for (i = 0, air = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, air++)
-			if (air->homebase) {
-				if (air->status > AIR_IDLE) {
-					if (CL_AircraftMakeMove(dt, air)) {
+		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
+			if (aircraft->homebase) {
+				if (aircraft->status > AIR_IDLE) {
+					if (CL_AircraftMakeMove(dt, aircraft)) {
 						float *end;
 
-						end = air->route.p[air->route.n - 1];
-						air->pos[0] = end[0];
-						air->pos[1] = end[1];
-						CL_CheckAircraft(air);
-						if (air->status == AIR_RETURNING) {
-							air->status = AIR_REFUEL;
-							if (air->fuel < 0)
-								air->fuel = 0;
+						end = aircraft->route.p[aircraft->route.n - 1];
+						aircraft->pos[0] = end[0];
+						aircraft->pos[1] = end[1];
+						CL_CheckAircraft(aircraft);
+						if (aircraft->status == AIR_RETURNING) {
+							aircraft->status = AIR_REFUEL;
+							if (aircraft->fuel < 0)
+								aircraft->fuel = 0;
 						} else
-							air->status = AIR_IDLE;
+							aircraft->status = AIR_IDLE;
 						continue;
 					}
-				} else if (air->status == AIR_IDLE)
-					air->fuel -= dt;
-				else if (air->status == AIR_REFUEL) {
-					if (air->fuel + dt < air->fuelSize)
-						air->fuel += dt;
+				} else if (aircraft->status == AIR_IDLE)
+					aircraft->fuel -= dt;
+				else if (aircraft->status == AIR_REFUEL) {
+					if (aircraft->fuel + dt < aircraft->fuelSize)
+						aircraft->fuel += dt;
 					else {
-						air->fuel = air->fuelSize;
-						air->status = AIR_HOME;
+						aircraft->fuel = aircraft->fuelSize;
+						aircraft->status = AIR_HOME;
 					}
 				}
 
-				CL_CheckAircraft(air);
+				CL_CheckAircraft(aircraft);
 			}
 	}
 }
@@ -590,7 +591,7 @@ void CL_AircraftEquipmenuMenuInit_f(void)
  */
 void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 {
-	aircraft_t *air;
+	aircraft_t *aircraft;
 	int num;
 	static char weaponDesc[512];
 	technology_t **list;
@@ -604,10 +605,10 @@ void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 	/* which weapon? */
 	num = atoi(Cmd_Argv(1));
 
-	air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	if ( num < 1 ) {
 		Com_DPrintf("Reset the aircraft weapon\n");
-		air->weapon = NULL;
+		aircraft->weapon = NULL;
 		Com_sprintf(weaponDesc, sizeof(weaponDesc), _("No weapon assigned"));
 		CL_AircraftSelect();
 	} else {
@@ -617,7 +618,7 @@ void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 			num--;
 			/* found it */
 			if (num <= 0) {
-				air->weapon = *list;
+				aircraft->weapon = *list;
 				Com_sprintf(weaponDesc, sizeof(weaponDesc), (*list)->name);
 				CL_AircraftSelect();
 				CL_AircraftEquipmenuMenuInit_f();
@@ -634,7 +635,7 @@ void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
  */
 void CL_AircraftEquipmenuMenuShieldsClick_f(void)
 {
-	aircraft_t *air;
+	aircraft_t *aircraft;
 	int num;
 	static char shieldDesc[512];
 	technology_t **list;
@@ -648,11 +649,11 @@ void CL_AircraftEquipmenuMenuShieldsClick_f(void)
 	/* which shield? */
 	num = atoi(Cmd_Argv(1));
 
-	air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 
 	if ( num < 1 ) {
 		Com_DPrintf("Reset the aircraft shield\n");
-		air->shield = NULL;
+		aircraft->shield = NULL;
 		Com_sprintf(shieldDesc, sizeof(shieldDesc), _("No shield assigned"));
 		CL_AircraftSelect();
 	} else {
@@ -662,7 +663,7 @@ void CL_AircraftEquipmenuMenuShieldsClick_f(void)
 			num--;
 			/* found it */
 			if (num <= 0) {
-				air->shield = *list;
+				aircraft->shield = *list;
 				Com_sprintf(shieldDesc, sizeof(shieldDesc), (*list)->name);
 				CL_AircraftSelect();
 				CL_AircraftEquipmenuMenuInit_f();
@@ -679,12 +680,12 @@ void CL_AircraftEquipmenuMenuShieldsClick_f(void)
  */
 extern aircraft_t* CL_AircraftGetFromIdx(int idx) {
 	base_t*		base;
-	aircraft_t*	air;
+	aircraft_t*	aircraft;
 
 	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
-		for (air = base->aircraft + base->numAircraftInBase - 1; air >= base->aircraft ; air--)
-			if (air->idx == idx)
-				return air;
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft ; aircraft--)
+			if (aircraft->idx == idx)
+				return aircraft;
 
 	return NULL;
 }
@@ -750,23 +751,24 @@ static value_t aircraft_vals[] = {
 void CL_ParseAircraft(char *name, char **text)
 {
 	char *errhead = "CL_ParseAircraft: unexptected end of file (aircraft ";
-	aircraft_t *ac;
+	aircraft_t *air_samp;
 	value_t *vp;
 	char *token;
 
-	if (numAircraft >= MAX_AIRCRAFT) {
-		Com_Printf("CL_ParseAircraft: aircraft def \"%s\" with same name found, second ignored\n", name);
+	if (numAircraft_samples >= MAX_AIRCRAFT) {
+		Com_Printf("CL_ParseAircraft: too many aircraft definitions; def \"%s\" ignored\n", name);
 		return;
 	}
 
 	/* initialize the menu */
-	ac = &aircraft[numAircraft++];
-	memset(ac, 0, sizeof(aircraft_t));
+	air_samp = &aircraft_samples[numAircraft_samples++];
+	memset(air_samp, 0, sizeof(aircraft_t));
 
 	Com_DPrintf("...found aircraft %s\n", name);
-	ac->idx = numAircraft - 1;
-	Q_strncpyz(ac->id, name, MAX_VAR);
-	ac->status = AIR_HOME;
+	air_samp->idx = numAircraft++;
+	air_samp->idx_sample = numAircraft_samples - 1;
+	Q_strncpyz(air_samp->id, name, MAX_VAR);
+	air_samp->status = AIR_HOME;
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -792,14 +794,14 @@ void CL_ParseAircraft(char *name, char **text)
 				if (!*text)
 					return;
 
-				Com_ParseValue(ac, token, vp->type, vp->ofs);
+				Com_ParseValue(air_samp, token, vp->type, vp->ofs);
 				break;
 			}
 
 		if (vp->string && !Q_strncmp(vp->string, "size", 4)) {
-			if (ac->size > MAX_ACTIVETEAM) {
+			if (air_samp->size > MAX_ACTIVETEAM) {
 				Com_DPrintf("Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM);
-				ac->size = MAX_ACTIVETEAM;
+				air_samp->size = MAX_ACTIVETEAM;
 			}
 		}
 
@@ -808,11 +810,11 @@ void CL_ParseAircraft(char *name, char **text)
 			if (!*text)
 				return;
 			if (!Q_strncmp(token, "transporter", 11))
-				ac->type = AIRCRAFT_TRANSPORTER;
+				air_samp->type = AIRCRAFT_TRANSPORTER;
 			else if (!Q_strncmp(token, "interceptor", 11))
-				ac->type = AIRCRAFT_INTERCEPTOR;
+				air_samp->type = AIRCRAFT_INTERCEPTOR;
 			else if (!Q_strncmp(token, "ufo", 3))
-				ac->type = AIRCRAFT_UFO;
+				air_samp->type = AIRCRAFT_UFO;
 		} else if (!vp->string) {
 			Com_Printf("CL_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
 			COM_EParse(text, errhead, name);
@@ -822,7 +824,7 @@ void CL_ParseAircraft(char *name, char **text)
 
 /**
  * @brief Notify that a mission has been removed
- * Aircraft currently moving to the mission will be redirect to base
+ * Aircrafts currently moving to the mission will be redirect to base
  */
 extern void CL_AircraftsNotifyMissionRemoved(const actMis_t* mission)
 {

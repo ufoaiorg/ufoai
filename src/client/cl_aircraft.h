@@ -47,9 +47,10 @@ typedef enum {
 struct actMis_s;
 
 typedef struct aircraft_s {
-	int idx;					/* Self-link in the global list */
-	char id[MAX_VAR];			/* translateable name */
-	char name[MAX_VAR];			/* internal id */
+	int idx;					/* unique id */
+	int idx_sample;				/* self-link in aircraft_sample list */
+	char id[MAX_VAR];			/* internal id from script file */
+	char name[MAX_VAR];			/* translateable name */
 	char image[MAX_VAR];		/* image on geoscape */
 	aircraftType_t type;
 	int status;					/* see aircraftStatus_t */
@@ -84,9 +85,8 @@ typedef struct aircraft_s {
 	qboolean visible;		/* The ufo is visible ? */
 } aircraft_t;
 
-extern aircraft_t aircraft[MAX_AIRCRAFT];
-extern int numAircraft;
-extern int interceptAircraft;
+extern aircraft_t aircraft_samples[MAX_AIRCRAFT]; /* available aircraft types */
+extern int numAircraft_samples;
 
 /* script functions */
 void CL_ListAircraft_f(void);
@@ -101,7 +101,7 @@ void CL_AircraftEquipmenuMenuShieldsClick_f(void);
 
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *CL_GetAircraft(char *name);
-void CL_CheckAircraft(aircraft_t * air);
+void CL_CheckAircraft(aircraft_t * aircraft);
 extern aircraft_t* CL_AircraftGetFromIdx(int idx);
 extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
 extern void CL_PopupAircraftClick_f(void);

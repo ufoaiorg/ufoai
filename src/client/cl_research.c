@@ -194,7 +194,7 @@ void RS_InitTree(void)
 	objDef_t *item = NULL;
 	objDef_t *item_ammo = NULL;
 	building_t *building = NULL;
-	aircraft_t *ac = NULL;
+	aircraft_t *air_samp = NULL;
 	byte found;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -285,16 +285,16 @@ void RS_InitTree(void)
 			break;
 		case RS_CRAFT:
 			found = qfalse;
-			for (j = 0; j < numAircraft; j++) {
-				ac = &aircraft[j];
+			for (j = 0; j < numAircraft_samples; j++) {
+				air_samp = &aircraft_samples[j];
 				/* This aircraft has been 'provided'  -> get the correct data. */
-				if (!Q_strncmp(tech->provides, ac->id, MAX_VAR)) {
+				if (!Q_strncmp(tech->provides, air_samp->id, MAX_VAR)) {
 					found = qtrue;
 					if (!*tech->name)
-						Com_sprintf(tech->name, MAX_VAR, ac->name);
+						Com_sprintf(tech->name, MAX_VAR, air_samp->name);
 					if (!*tech->mdl_top) {	/* DEBUG testing */
-						Com_sprintf(tech->mdl_top, MAX_VAR, ac->model);
-						Com_DPrintf("RS_InitTree: aircraft model \"%s\" \n", ac->model);
+						Com_sprintf(tech->mdl_top, MAX_VAR, air_samp->model);
+						Com_DPrintf("RS_InitTree: aircraft model \"%s\" \n", air_samp->model);
 					}
 					/* Should return to CASE RS_xxx. */
 					break;

@@ -543,12 +543,12 @@ static void CL_SelectCmd(void)
 void CL_UpdateHireVar(void)
 {
 	int i, p;
-	aircraft_t *air = NULL;
+	aircraft_t *aircraft = NULL;
 
 	assert(baseCurrent);
 
-	air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	Cvar_Set("mn_hired", va(_("%i of %i"), baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], air->size));
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	Cvar_Set("mn_hired", va(_("%i of %i"), baseCurrent->numOnTeam[baseCurrent->aircraftCurrent], aircraft->size));
 	/* now update the mask for display the hired soldiers */
 	baseCurrent->hiredMask = baseCurrent->teamMask[baseCurrent->aircraftCurrent];
 
@@ -622,7 +622,7 @@ static void CL_MarkTeamCmd(void)
 static void CL_HireActorCmd(void)
 {
 	int num;
-	aircraft_t *air = NULL;
+	aircraft_t *aircraft = NULL;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -643,9 +643,9 @@ static void CL_HireActorCmd(void)
 		baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
 	} else if (baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] < MAX_ACTIVETEAM && !(baseCurrent->hiredMask & (1 << num))) {
 		if (baseCurrent && baseCurrent->aircraftCurrent >= 0)
-			air = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+			aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 		/* hire */
-		if (!air || air->size > baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]) {
+		if (!aircraft || aircraft->size > baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]) {
 			Cbuf_AddText(va("listadd%i\n", num));
 			baseCurrent->hiredMask |= (1 << num);
 			baseCurrent->numHired++;

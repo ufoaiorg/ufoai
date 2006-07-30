@@ -645,6 +645,7 @@ static void CL_CampaignExecute(setState_t * set)
 /**
   * @brief opens up aircraft by rightclicking them
   * (from the aircraft list after selecting a mission on geoscape)
+  * FIXME: might be broken
   */
 static void CL_OpenAircraft_f(void)
 {
@@ -726,7 +727,7 @@ static void CL_BuildingAircraftList_f(void)
 {
 	char *s;
 	int i, j;
-	aircraft_t *air;
+	aircraft_t *aircraft;
 	static char aircraftListText[1024];
 
 	memset(aircraftListText, 0, sizeof(aircraftListText));
@@ -735,8 +736,8 @@ static void CL_BuildingAircraftList_f(void)
 			continue;
 
 		for (i = 0; i < gd.bases[j].numAircraftInBase; i++) {
-			air = &gd.bases[j].aircraft[i];
-			s = va("%s (%i/%i)\t%s\t%s\n", air->name, *air->teamSize, air->size, CL_AircraftStatusToName(air), gd.bases[j].name);
+			aircraft = &gd.bases[j].aircraft[i];
+			s = va("%s (%i/%i)\t%s\t%s\n", aircraft->name, *aircraft->teamSize, aircraft->size, CL_AircraftStatusToName(aircraft), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 		}
 	}
@@ -1280,6 +1281,7 @@ int CL_GameLoad(char *filename)
 	FILE *f;
 	int version, dataSize;
 	int i, j, num;
+	char val[32];
 
 	/* open file */
 	f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
@@ -1337,6 +1339,9 @@ int CL_GameLoad(char *filename)
 		free(buf);
 		return 1;
 	}
+
+	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
+	Cvar_ForceSet("difficulty", val);
 
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
 	if (!maskPic)
@@ -1586,26 +1591,26 @@ static void CL_GameGo(void)
 	mission_t *mis;
 	char expanded[MAX_QPATH];
 	char timeChar;
-	aircraft_t* air;
+	aircraft_t* aircraft;
 
 	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
 		Com_DPrintf("curCampaign: %p, selMis: %p, interceptAircraft: %i\n", curCampaign, selMis, gd.interceptAircraft);
 		return;
 	}
 
+	aircraft = CL_AircraftGetFromIdx(gd.interceptAircraft);
 	/* update mission-status (active?) for the selected aircraft */
-	CL_CheckAircraft(&baseCurrent->aircraft[gd.interceptAircraft]);
+	CL_CheckAircraft(aircraft);
 
 	mis = selMis->def;
-	air = CL_AircraftGetFromIdx(gd.interceptAircraft);
-	baseCurrent = air->homebase;
-	assert(baseCurrent || mis || air);
+	baseCurrent = aircraft->homebase;
+	assert(baseCurrent && mis && aircraft);
 
+	if (!ccs.singleplayer && B_GetNumOnTeam() == 0) {
 	/* multiplayer */
-	if (B_GetNumOnTeam() == 0 && !ccs.singleplayer) {
 		MN_Popup(_("Note"), _("Assemble or load a team"));
 		return;
-	} else if (ccs.singleplayer && (!mis->active || !*(air->teamSize))) {
+	} else if (ccs.singleplayer && (!mis->active || !*(aircraft->teamSize))) {
 		/* dropship not near landing zone */
 		Com_DPrintf("Dropship not near landingzone: mis->active: %i\n", mis->active);
 		return;
@@ -1622,7 +1627,7 @@ static void CL_GameGo(void)
 	Cvar_Set("equip", curCampaign->equipment);
 	/* TODO: Map assembling to get the current used dropship in the map is not fully implemented */
 	/* but can be done via the map assembling part of the random map assembly */
-	Cvar_Set("map_dropship", air->id);
+	Cvar_Set("map_dropship", aircraft->id);
 
 	/* check inventory */
 	ccs.eMission = ccs.eCampaign;
@@ -1716,18 +1721,19 @@ void CL_GameAutoGo(void)
 {
 	mission_t *mis;
 	int won, i;
-	aircraft_t* air;
+	aircraft_t* aircraft;
 
 	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
 		Com_DPrintf("No update after automission\n");
 		return;
 	}
 
+	aircraft = CL_AircraftGetFromIdx(gd.interceptAircraft);
+
 	/* start the map */
 	mis = selMis->def;
-	air = CL_AircraftGetFromIdx(gd.interceptAircraft);
-	baseCurrent = air->homebase;
-	assert(baseCurrent || mis || air);
+	baseCurrent = aircraft->homebase;
+	assert(baseCurrent && mis && aircraft);
 
 	if (!mis->active) {
 		MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
@@ -1740,9 +1746,9 @@ void CL_GameAutoGo(void)
 	MN_PopMenu(qfalse);
 
 	/* FIXME: This needs work */
-	won = mis->aliens * (int) difficulty->value > *(air->teamSize) ? 0 : 1;
+	won = mis->aliens * (int) difficulty->value > *(aircraft->teamSize) ? 0 : 1;
 
-	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int) difficulty->value, *(air->teamSize));
+	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * (int) difficulty->value, *(aircraft->teamSize));
 
 	/* give reward */
 	if (won)

@@ -229,14 +229,14 @@ void UP_BuildingDescription ( technology_t* t )
   */
 void UP_AircraftDescription ( technology_t* t )
 {
-	aircraft_t* air = CL_GetAircraft ( t->provides );
-	if ( !air ) {
+	aircraft_t* aircraft = CL_GetAircraft ( t->provides );
+	if ( !aircraft ) {
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find aircraft") );
 	} else {
-		Com_sprintf(upBuffer, MAX_UPTEXT, _("Speed:\t%.0f\n"), air->speed );
-		Q_strcat(upBuffer, va(_("Fuel:\t%i\n"), air->fuelSize ), sizeof(upBuffer));
-		Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), air->weapon ? air->weapon->name : _("None") ), sizeof(upBuffer));
-		Q_strcat(upBuffer, va(_("Shield:\t%s\n"), air->shield ? air->shield->name : _("None") ), sizeof(upBuffer));
+		Com_sprintf(upBuffer, MAX_UPTEXT, _("Speed:\t%.0f\n"), aircraft->speed );
+		Q_strcat(upBuffer, va(_("Fuel:\t%i\n"), aircraft->fuelSize ), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), aircraft->weapon ? aircraft->weapon->name : _("None") ), sizeof(upBuffer)); /* TODO: there is a weapon in a sample aircraft? */
+		Q_strcat(upBuffer, va(_("Shield:\t%s\n"), aircraft->shield ? aircraft->shield->name : _("None") ), sizeof(upBuffer));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
 	UP_DisplayTechTree(t);

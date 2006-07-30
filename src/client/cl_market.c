@@ -66,27 +66,27 @@ static void CL_BuySelectCmd(void)
 
 #define MAX_AIRCRAFT_STORAGE 8
 /**
-  * @brief
-  *
-  * set storage and supply to the values of aircraft
-  * in use - and the value of aircraft available for
-  * buying
-  *
-  * @param aircraft Aircraft ID from scriptfile
-  * @param storage Pointer to int value which will hold the amount of aircraft
-  *        given by aircraft parameter in all of your bases
-  * @param supply Pointer to int which will hold the amount of buyable aircraft
-  * @code
-  * for (i = 0, j = 0, air = aircraft; i < numAircraft; i++, air++)
-  *   AIR_GetStorageSupplyCount(air->id, &storage, &supply);
-  * @endcode
-  *
-  * @sa CL_BuyType
-  */
-static void AIR_GetStorageSupplyCount(char *aircraft, int *storage, int *supply)
+ * @brief
+ *
+ * set storage and supply to the values of aircraft
+ * in use - and the value of aircraft available for
+ * buying
+ *
+ * @param aircraft Aircraft ID from scriptfile
+ * @param storage Pointer to int value which will hold the amount of aircraft
+ *        given by aircraft parameter in all of your bases
+ * @param supply Pointer to int which will hold the amount of buyable aircraft
+ * @code
+ * for (i = 0, j = 0, air_samp = aircraft_samples; i < numAircraft_samples; i++, air_samp++)
+ *   AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
+ * @endcode
+ *
+ * @sa CL_BuyType
+ */
+static void AIR_GetStorageSupplyCount(char *airCharId, int *storage, int *supply)
 {
 	base_t *base;
-	aircraft_t *air;
+	aircraft_t *aircraft;
 	int i, j;
 
 	*supply = MAX_AIRCRAFT_STORAGE;
@@ -94,8 +94,8 @@ static void AIR_GetStorageSupplyCount(char *aircraft, int *storage, int *supply)
 	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
 		if (!base->founded)
 			continue;
-		for (j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++)
-			if (!Q_strncmp(air->id, aircraft, MAX_VAR))
+		for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++)
+			if (!Q_strncmp(aircraft->id, airCharId, MAX_VAR))
 				(*storage)++;
 	}
 	if (*storage < MAX_AIRCRAFT_STORAGE)
@@ -110,7 +110,7 @@ static void AIR_GetStorageSupplyCount(char *aircraft, int *storage, int *supply)
 static void CL_BuyType(void)
 {
 	objDef_t *od;
-	aircraft_t *air;
+	aircraft_t *air_samp;
 	technology_t *tech;
 	int i, j = 0, num, storage = 0, supply;
 	char str[MAX_VAR];
@@ -160,10 +160,10 @@ static void CL_BuyType(void)
 	}
 	/* aircraft */
 	else if (buyCategory == NUM_BUYTYPES) {
-		for (i = 0, j = 0, air = aircraft; i < numAircraft; i++, air++) {
-			AIR_GetStorageSupplyCount(air->id, &storage, &supply);
+		for (i = 0, j = 0, air_samp = aircraft_samples; i < numAircraft_samples; i++, air_samp++) {
+			AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
 			Q_strncpyz(str, va("mn_item%i", j), MAX_VAR);
-			Cvar_Set(str, _(air->name));
+			Cvar_Set(str, _(air_samp->name));
 
 			Q_strncpyz(str, va("mn_storage%i", j), MAX_VAR);
 			Cvar_SetValue(str, storage);
@@ -172,7 +172,7 @@ static void CL_BuyType(void)
 			Cvar_SetValue(str, supply);
 
 			Q_strncpyz(str, va("mn_price%i", j), MAX_VAR);
-			Cvar_Set(str, va("%i c", air->price));
+			Cvar_Set(str, va("%i c", air_samp->price));
 
 			buyList[j] = i;
 			j++;
@@ -311,7 +311,7 @@ static void CL_SellAircraft(void)
 {
 	int num, aircraftID, i, j;
 	base_t *base;
-	aircraft_t *air;
+	aircraft_t *aircraft;
 	qboolean found = qfalse;
 
 	if (Cmd_Argc() < 2) {
@@ -324,15 +324,15 @@ static void CL_SellAircraft(void)
 		return;
 
 	aircraftID = buyList[num];
-	if (aircraftID > numAircraft)
+	if (aircraftID > numAircraft_samples)
 		return;
 
 	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
 		if (!base->founded)
 			continue;
-		for (j = 0, air = base->aircraft; j < base->numAircraftInBase; j++, air++) {
-			if (!Q_strncmp(air->id, aircraft[aircraftID].id, MAX_VAR)) {
-				if (*air->teamSize)
+		for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
+			if (!Q_strncmp(aircraft->id, aircraft_samples[aircraftID].id, MAX_VAR)) {
+				if (*aircraft->teamSize)
 					continue;
 				found = qtrue;
 				break;
@@ -352,7 +352,7 @@ static void CL_SellAircraft(void)
 			if (j == base->numAircraftInBase - 1)
 				base->numAircraftInBase--;
 
-			CL_UpdateCredits(ccs.credits + air->price);
+			CL_UpdateCredits(ccs.credits + aircraft->price);
 			return;
 		}
 	}

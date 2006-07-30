@@ -508,7 +508,6 @@ particle plasmaBall
 	}
 }
 
-
 // ==================
 // TACHYON EFFECTS
 // ==================
@@ -539,7 +538,9 @@ particle tachyonImpact
 	{
 		push   int 22
 		nspawn tachyonSplash
+		tps		4
 	}
+	think { kill }
 }
 
 particle tachyonSplash
@@ -623,10 +624,10 @@ particle tachyonBigImpact
 	{
 		push   int 60
 		nspawn tachyonBigSplash
+		tps		4
 	}
+	think { kill }
 }
-
-
 
 particle tachyonBigSplash
 {
@@ -689,7 +690,6 @@ particle grenl_ammo
 		color  ".5 .5 .5 1"
 	}
 }
-
 
 // ==================
 // GRENADE EFFECTS
@@ -823,4 +823,3 @@ particle plasblade
 		angles "90 0 0"
 	}
 }
-

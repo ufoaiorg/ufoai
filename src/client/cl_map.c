@@ -1,5 +1,5 @@
 /**
- * @file cl_multiselect.c
+ * @file cl_map.c
  * @brief Geoscape/Map management
  */
 
@@ -114,7 +114,7 @@ static void MAP_MultiSelectListAddItem(multiSelectType_t item_type, int item_id,
 static void MAP_MultiSelectExecuteAction_f(void)
 {
 	int selected, id;
-	aircraft_t* air;
+	aircraft_t* aircraft;
 
 	if (Cmd_Argc() < 2) {
 		/* Direct call from code, not from a popup menu */
@@ -166,19 +166,19 @@ static void MAP_MultiSelectExecuteAction_f(void)
 		break;
 
 	case MULTISELECT_TYPE_AIRCRAFT: /* Selection of an aircraft */
-		air = CL_AircraftGetFromIdx(id);
-		if (air == NULL) {
+		aircraft = CL_AircraftGetFromIdx(id);
+		if (aircraft == NULL) {
 			Com_DPrintf("MAP_MultiSelectExecuteAction: selection of an unknow aircraft idx %i\n", id);
 			return;
 		}
 
-		if (air == selectedAircraft) {
+		if (aircraft == selectedAircraft) {
 			/* Selection of an already selected aircraft */
-			CL_DisplayPopupAircraft(air);	/* Display popup_aircraft */
+			CL_DisplayPopupAircraft(aircraft);	/* Display popup_aircraft */
 		} else {
 			/* Selection of an unselected aircraft */
 			MAP_ResetAction();
-			selectedAircraft = air;
+			selectedAircraft = aircraft;
 		}
 		break;
 
@@ -201,7 +201,7 @@ extern void MAP_3DMapClick(const menuNode_t* node, int x, int y)
  */
 extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 {
-	aircraft_t *air = NULL;
+	aircraft_t *aircraft = NULL;
 	actMis_t *ms;
 	int i;
 	vec2_t pos;
@@ -246,10 +246,10 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, i, _("Base"), gd.bases[i].name);
 
 		/* Get selected aircrafts wich belong to the base */
-		for (air = gd.bases[i].aircraft + gd.bases[i].numAircraftInBase - 1;
-		air >= gd.bases[i].aircraft ; air--)
-			if (air->status > AIR_HOME && air->fuel > 0 && MAP_IsMapPositionSelected(node, air->pos, x, y))
-				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, air->idx, _("Aircraft"), air->name);
+		for (aircraft = gd.bases[i].aircraft + gd.bases[i].numAircraftInBase - 1;
+		aircraft >= gd.bases[i].aircraft ; aircraft--)
+			if (aircraft->status > AIR_HOME && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
+				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
 	}
 
 	if (multiSelect.nbSelect == 1) {
@@ -267,7 +267,7 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 			/* Move the selected aircraft to the position clicked */
 			MAP_MapCalcLine(selectedAircraft->pos, pos, &(selectedAircraft->route));
 			selectedAircraft->status = AIR_TRANSIT;
-			selectedAircraft->time = air->point = 0;
+			selectedAircraft->time = aircraft->point = 0;
 		}
 	}
 }
@@ -480,7 +480,7 @@ static void MAP_MapDrawLine(const menuNode_t* node, const mapline_t* line)
  */
 static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float longitude)
 {
-	aircraft_t *air;
+	aircraft_t *aircraft;
 	actMis_t *ms;
 	int i, j, x, y;
 
@@ -507,18 +507,18 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
 			re.Draw3DMapMarkers(latitude, longitude, "base");
 
 			/* draw aircraft */
-			for (i = 0, air = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, air++)
-				if (air->status > AIR_HOME) {
-					if (!MAP_MapToScreen(node, air->pos, &x, &y))
+			for (i = 0, aircraft = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, aircraft++)
+				if (aircraft->status > AIR_HOME) {
+					if (!MAP_MapToScreen(node, aircraft->pos, &x, &y))
 						continue;
-					re.Draw3DMapMarkers(latitude, longitude, air->image);
+					re.Draw3DMapMarkers(latitude, longitude, aircraft->image);
 
-					if (air->status >= AIR_TRANSIT) {
+					if (aircraft->status >= AIR_TRANSIT) {
 						mapline_t path;
 
-						path.n = air->route.n - air->point;
-						memcpy(path.p + 1, air->route.p + air->point + 1, (path.n - 1) * sizeof(vec2_t));
-						memcpy(path.p, air->pos, sizeof(vec2_t));
+						path.n = aircraft->route.n - aircraft->point;
+						memcpy(path.p + 1, aircraft->route.p + aircraft->point + 1, (path.n - 1) * sizeof(vec2_t));
+						memcpy(path.p, aircraft->pos, sizeof(vec2_t));
 						re.Draw3DMapLine(path.n, path.dist, path.p);
 					}
 				}
@@ -530,7 +530,7 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
  */
 static void MAP_DrawMapMarkers(const menuNode_t* node)
 {
-	aircraft_t *air, **ufos;
+	aircraft_t *aircraft, **ufos;
 	actMis_t *ms;
 	int i, j, x, y;
 
@@ -561,41 +561,41 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 				re.DrawNormPic(x, y, i, i, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor");
 
 			/* draw aircrafts */
-			for (i = 0, air = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, air++)
-				if (air->status > AIR_HOME) {
-					if (!MAP_MapToScreen(node, air->pos, &x, &y))
+			for (i = 0, aircraft = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, aircraft++)
+				if (aircraft->status > AIR_HOME) {
+					if (!MAP_MapToScreen(node, aircraft->pos, &x, &y))
 						continue;
-					re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, air->image);
+					re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, aircraft->image);
 
-					if (air->status >= AIR_TRANSIT) {
+					if (aircraft->status >= AIR_TRANSIT) {
 						mapline_t path;
 
-						path.n = air->route.n - air->point;
-						memcpy(path.p, air->pos, sizeof(vec2_t));
- 						memcpy(path.p + 1, air->route.p + air->point + 1, (path.n - 1) * sizeof(vec2_t));
+						path.n = aircraft->route.n - aircraft->point;
+						memcpy(path.p, aircraft->pos, sizeof(vec2_t));
+ 						memcpy(path.p + 1, aircraft->route.p + aircraft->point + 1, (path.n - 1) * sizeof(vec2_t));
 						MAP_MapDrawLine(node, &path);
 					}
 
-					if (air == selectedAircraft)
+					if (aircraft == selectedAircraft)
 						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 				}
 		}
 
 	/* draws ufos */
 	for (UFO_GetUfosList(&ufos, &i) ; i > 0 ; i--, ufos++) {
-		air = *ufos;
+		aircraft = *ufos;
 
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
 		if (Cvar_VariableValue("showufos")) {
-			if (! MAP_MapToScreen(node, air->pos, &x, &y))
+			if (! MAP_MapToScreen(node, aircraft->pos, &x, &y))
 				continue;
-			MAP_MapDrawLine(node, &(air->route)); /* Draw ufo route */
+			MAP_MapDrawLine(node, &(aircraft->route)); /* Draw ufo route */
 		} else
 #endif
-		if (! air->visible || ! MAP_MapToScreen(node, air->pos, &x, &y))
+		if (! aircraft->visible || ! MAP_MapToScreen(node, aircraft->pos, &x, &y))
 			continue;
-		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, air->image);
+		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, aircraft->image);
 	}
 }
 

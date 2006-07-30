@@ -41,7 +41,6 @@ particle fire_explosion
 	}
 }
 
-
 particle explosion_1
 {
 	init
@@ -195,7 +194,6 @@ particle smokebig
 		style  rotated
 		rounds 2
 		tfade  out
-		tps    0.5
 		v      "0 0 0"
 		a      "0 0 0"
 	}
@@ -396,7 +394,6 @@ particle fadeTracer
 		style  line
 		color  "1 0 0 1"
 		life   3
-		tps    0.33
 		tfade  out
 	}
 }

@@ -104,6 +104,7 @@ static void UFO_ListUfosOnGeoscape(void)
   * @brief Add an ufo in geoscape
   *
   * NOTE: These ufos are not saved - and i don't think we need this
+  * TODO: Ufos are not assigned unique idx fields. Could be handy...
   */
 static void UFO_NewUfoOnGeoscape(void)
 {
@@ -115,20 +116,20 @@ static void UFO_NewUfoOnGeoscape(void)
 		return;
 
 	/* Get next type of ufo in aircrafts list */
-	while(++newUfoNum < numAircraft)
-		if (aircraft[newUfoNum].type == AIRCRAFT_UFO)
+	while(++newUfoNum < numAircraft_samples)
+		if (aircraft_samples[newUfoNum].type == AIRCRAFT_UFO)
 			break;
-	if (newUfoNum == numAircraft)
-		for (newUfoNum = 0 ; newUfoNum < numAircraft ; newUfoNum++)			
-			if (aircraft[newUfoNum].type == AIRCRAFT_UFO)
+	if (newUfoNum == numAircraft_samples)
+		for (newUfoNum = 0 ; newUfoNum < numAircraft_samples ; newUfoNum++)			
+			if (aircraft_samples[newUfoNum].type == AIRCRAFT_UFO)
 				break;
-	if (newUfoNum == numAircraft)
+	if (newUfoNum == numAircraft_samples)
 		return;
 
 	/* Create ufo */
 	if ((ufo = malloc(sizeof(aircraft_t))) == NULL)
 		return;
-	ufo = memcpy(ufo,  aircraft + newUfoNum, sizeof(aircraft_t));
+	ufo = memcpy(ufo,  aircraft_samples + newUfoNum, sizeof(aircraft_t));
 	ufoOnGeoscape[ccs.numUfoOnGeoscape] = ufo;
 	Com_DPrintf("New ufo on geoscape: '%s' (%i)\n", ufo->name, ccs.numUfoOnGeoscape);
 	ccs.numUfoOnGeoscape++;
