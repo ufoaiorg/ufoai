@@ -1229,7 +1229,7 @@ static void MN_DrawTooltip(char *font, char *string, int x, int y)
 		x -= (width + 10);
 	re.DrawFill(x - 1, y - 1, width, height, 0, tooltipBG);
 	re.DrawColor(tooltipColor);
-	re.FontDrawString(font, 0, x + 1, y + 1, width, string);
+	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, width, 0, string);
 	re.DrawColor(NULL);
 }
 
@@ -1470,9 +1470,9 @@ void MN_DrawMenus(void)
 				case MN_STRING:
 					font = MN_GetFont(menu, node);
 					if (!node->mousefx || cl.time % 1000 < 500)
-						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->size[0], ref);
+						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], ref);
 					else
-						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->size[0], va("%s*\n", ref));
+						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], va("%s*\n", ref));
 					break;
 
 				case MN_TEXT:
@@ -1485,17 +1485,17 @@ void MN_DrawMenus(void)
 						cur = textCopy;
 						y = node->pos[1];
 						line = 0; /* these are lines only in one-line texts! */
-                        /* but it's easy to fix, just change FontDrawString
-                           so that it returns a pair, #lines and height
-                           and add that to variable line; the only other file
-                           using FontDrawString result is client/cl_sequence.c
-                           and there just ignore #lines */
+						/* but it's easy to fix, just change FontDrawString
+							so that it returns a pair, #lines and height
+							and add that to variable line; the only other file
+							using FontDrawString result is client/cl_sequence.c
+							and there just ignore #lines */
 						do {
 							line++;
 							/* have a look that the maxline value defined in menu via */
 							/* the height parameter is not exceeded here */
 							/* TODO: Draw the scrollbars */
-                            /* this is currently broken: */
+							/* this is currently broken: */
 #if 0
 							if (node->height > 0 && line >= node->height)
 								break;
@@ -1510,9 +1510,9 @@ void MN_DrawMenus(void)
 							if (end)
 								*end++ = '\0';
 
-                            /* only works with one-line texts right now: */
+							/* only works with one-line texts right now: */
 							if (node->mousefx && line == mouseOver)
-								 re.DrawColor(color);
+								re.DrawColor(color);
 
 							/* we assume all the tabs fit on a single line */
 							do {
@@ -1521,7 +1521,7 @@ void MN_DrawMenus(void)
 									break;
 
 								*tab++ = '\0';
-								re.FontDrawString(font, node->align, x, y, node->size[0], cur);
+								re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], cur);
 								if (!node->texh[1])
 									x += (node->size[0] / 3);
 								else
@@ -1529,7 +1529,7 @@ void MN_DrawMenus(void)
 								cur = tab;
 							} while (1);
 
-							y += re.FontDrawString(font, node->align, x, y, node->size[0], cur);
+							y += re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], cur);
 							if (node->mousefx && line == mouseOver)
 								 re.DrawColor(node->color); /* why is this repeated? */
 
@@ -1563,7 +1563,7 @@ void MN_DrawMenus(void)
 									tab = message->text;
 									while ((end = strstr(tab, "\\")) != NULL) {
 										*end++ = '\0';
-										y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->size[0], tab);
+										y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], tab);
 										tab = end;
 										line++;
 										if (line >= node->height)
@@ -1574,7 +1574,7 @@ void MN_DrawMenus(void)
 									while ((end = strstr(message->text, "\\")) != NULL)
 										*end = ' ';
 
-									y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->size[0], message->text);
+									y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], message->text);
 								}
 							}
 

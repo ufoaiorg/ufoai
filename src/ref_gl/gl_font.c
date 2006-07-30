@@ -412,17 +412,26 @@ static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width
 	return NULL;
 }
 
-/*================
-Font_GenerateGLSurface
-
-generate the opengl texture out of the sdl-surface
-bind it, and draw it
-================*/
-static void Font_GenerateGLSurface(SDL_Surface * s, int x, int y)
+/**
+ * @brief generate the opengl texture out of the sdl-surface, bind it, and draw it
+ * FIXME: Make scrolling possible
+ * @param[in] s SDL surface pointer which holds the image/text
+ * @param[in] x x coordinate on screen to draw the text to
+ * @param[in] y y coordinate on screen to draw the text to
+ * @param[in] absX This is the absolute x coodinate (e.g. of a node)
+ * @param[in] absY This is the absolute y coodinate (e.g. of a node)
+ * y coordinates will change for each linebreak - whereas the absY will be fix
+ * @param[in] width The max width of the text
+ * @param[in] height The max height of the text
+ * @return -1 for scrolling down (TODO)
+ * @return +1 for scrolling up (TODO)
+ */
+static int Font_GenerateGLSurface(SDL_Surface * s, int x, int y, int absX, int absY, int width, int height)
 {
 	GLuint texture = Font_TextureAddToCache(s);
 	int w = s->w;
 	int h = s->h;
+	vec2_t start = {0.0f, 0.0f}, end = {1.0f, 1.0f};
 
 	/* Tell GL about our new texture */
 	GL_Bind(texture);
@@ -431,23 +440,28 @@ static void Font_GenerateGLSurface(SDL_Surface * s, int x, int y)
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+	/* if height is too much we shoudl be able to scroll down */
+	if (height > 0 && y+h > absY+height)
+		return 1;
+
 	/* draw it */
 	qglEnable(GL_BLEND);
 
 	qglBegin(GL_TRIANGLE_STRIP);
-	qglTexCoord2f(0.0f, 0.0f);
+	qglTexCoord2f(start[0], start[1]);
 	qglVertex2f(x, y);
-	qglTexCoord2f(1.0f, 0.0f);
+	qglTexCoord2f(end[0], start[1]);
 	qglVertex2f(x + w, y);
-	qglTexCoord2f(0.0f, 1.0f);
+	qglTexCoord2f(start[0], end[1]);
 	qglVertex2f(x, y + h);
-	qglTexCoord2f(1.0f, 1.0f);
+	qglTexCoord2f(end[0], end[1]);
 	qglVertex2f(x + w, y + h);
 	qglEnd();
 
 	qglDisable(GL_BLEND);
 
 	qglFinish();
+	return 0;
 }
 
 /*================
@@ -478,7 +492,7 @@ static void Font_ConvertChars(char *buffer)
 /*================
 Font_DrawString
 ================*/
-int Font_DrawString(char *fontID, int align, int x, int y, int maxWidth, char *c)
+int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, char *c)
 {
 	int w = 0, h = 0, locX;
 	int returnHeight = 0;
@@ -503,7 +517,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int maxWidth, char *c
 
 	openGLSurface = Font_GetFromCache(c);
 	if (openGLSurface) {
-		Font_GenerateGLSurface(openGLSurface, x, y);
+		Font_GenerateGLSurface(openGLSurface, x, y, absX, absY, maxWidth, maxHeight);
 		return f->height;
 	}
 
@@ -554,7 +568,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int maxWidth, char *c
 			if (!openGLSurface)
 				ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n");
 
-			Font_GenerateGLSurface(openGLSurface, x, y);
+			Font_GenerateGLSurface(openGLSurface, x, y, absX, absY, maxWidth, maxHeight);
 		}
 
 		/* skip for next line */
