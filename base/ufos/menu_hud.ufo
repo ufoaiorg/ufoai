@@ -1034,13 +1034,3 @@ menu physdata
 		click	{ cmd mn_pop }
 	}
 }
-
-menu chat
-{
-	pic chatarea
-	{
-		pos	"0 99"
-		size	"1024 20"
-		bgcolor	"0 0 0 .5"
-	}
-}
