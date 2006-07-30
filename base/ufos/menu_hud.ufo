@@ -550,14 +550,26 @@ menu hud
 		pos		"960 128"
 	}
 
+	// ==================
+	// CHAT BUTTONS
+	// ==================
 	pic bar_chat
 	{
 		if	"maxclients >= 2"
 		image	hud/bar_chat
-		pos		"960 64"
+		pos		"1024 64"
+		align	"ur"
+		out	{
+				*bar_chat image hud/bar_chat
+				*bar_chat size "64 64"
+			}
+		in	{
+				*bar_chat image hud/bar_chat_choice
+				*bar_chat size "128 64"
+			}
 	}
 
-	pic messagesystem_show
+	pic button_chat
 	{
 		if	"maxclients >= 2"
 		tooltip	"_Chat messages"
@@ -566,10 +578,7 @@ menu hud
 		texh	"32 36"
 		pos	"985 70"
 		mousefx false
-		out	{
-			}
-		in	{
-			}
+		in
 	}
 
 	pic bt_game
