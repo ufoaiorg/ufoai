@@ -56,10 +56,12 @@ void ProcessWorldModel (void)
 		nummodels = 258;
 
 		start = I_FloatTime();
-		for ( i = 0; i < 258; i++ )
-		{
-			if ( !(i%26) )
-				printf ("%i...", (int)(i/26) );
+		for ( i = 0; i < 258; i++ ) {
+			if ( !(i%26) ) {
+				fprintf (stdout, "%i...", (int)(i/26));
+				fflush(stdout);
+			/*	printf ("%i...", (int)(i/26) );*/
+			}
 
 			/* process brushes with that level mask */
 			ProcessLevel( i );
@@ -70,7 +72,7 @@ void ProcessWorldModel (void)
 	}
 
 	/* calculate routing */
-	if ( !norouting ) 
+	if ( !norouting )
 		DoRouting();
 }
 
