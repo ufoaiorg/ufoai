@@ -1382,11 +1382,11 @@ void MN_DrawMenus(void)
 							continue;
 						break;
 					case IF_LE:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value < atof(node->depends.value))
+						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value > atof(node->depends.value))
 							continue;
 						break;
 					case IF_GE:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value > atof(node->depends.value))
+						if (Cvar_Get(node->depends.var, node->depends.value, 0)->value < atof(node->depends.value))
 							continue;
 						break;
 					case IF_GT:

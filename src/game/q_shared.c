@@ -2601,7 +2601,7 @@ int Com_ParseConditionType(const char* conditionString, const char *token)
 	int i = IF_SIZE;
 	for (;i--;) {
 		if (!Q_strncmp(if_strings[i], (char*)conditionString, 2)) {
-			Com_Printf("Com_GetConditionType: %s - %i\n", conditionString, i);
+			Com_DPrintf("Com_GetConditionType: %s - %i\n", conditionString, i);
 			return i;
 		}
 	}
