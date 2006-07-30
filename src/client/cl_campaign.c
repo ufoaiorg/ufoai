@@ -623,7 +623,6 @@ static void CL_CampaignRemoveMission(actMis_t * mis)
 	CL_PopupNotifyMIssionRemoved(mis);
 }
 
-
 /**
   * @brief
   */
@@ -641,83 +640,6 @@ static void CL_CampaignExecute(setState_t * set)
 
 	/* activate new sets in old stage */
 	CL_CampaignActivateStageSets(set->stage);
-}
-
-
-/**
-  * @brief opens up aircraft by rightclicking them
-  * (from the aircraft list after selecting a mission on geoscape)
-  * FIXME: might be broken
-  */
-static void CL_OpenAircraft_f(void)
-{
-	int num, j;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: ships_rclick <num>\n");
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	for (j = 0; j < gd.numBases; j++) {
-		if (!gd.bases[j].founded)
-			continue;
-
-		if (num - gd.bases[j].numAircraftInBase >= 0) {
-			num -= gd.bases[j].numAircraftInBase;
-			continue;
-		} else if (num >= 0 && num < gd.bases[j].numAircraftInBase) {
-			Com_DPrintf("Selected aircraft: %s\n", gd.bases[j].aircraft[num].name);
-
-			baseCurrent = &gd.bases[j];
-			baseCurrent->aircraftCurrent = num;
-			CL_AircraftSelect();
-			MN_PopMenu(qfalse);
-			MAP_ResetAction();
-			Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i\n", baseCurrent->idx));
-			MN_PushMenu("aircraft");
-			return;
-		}
-	}
-}
-
-/**
-  * @brief
-  *
-  * sends the selected aircraft to selected mission (leftclick)
-  */
-static void CL_SelectAircraft_f(void)
-{
-	int num, j;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: ships_click <num>\n");
-		return;
-	}
-
-	if (!selMis) {
-		Com_DPrintf("No mission selected - can't start aircraft with no mission selected'\n");
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	for (j = 0; j < gd.numBases; j++) {
-		if (!gd.bases[j].founded)
-			continue;
-
-		if (num - gd.bases[j].numAircraftInBase >= 0) {
-			num -= gd.bases[j].numAircraftInBase;
-			continue;
-		} else if (num >= 0 && num < gd.bases[j].numAircraftInBase) {
-			Com_DPrintf("Selected aircraft: %s\n", gd.bases[j].aircraft[num].name);
-
-			if (CL_SendAircraftToMission(gd.bases[j].aircraft + num, selMis)) {
-				CL_AircraftSelect();
-				MN_PopMenu(qfalse);
-			}
-			return;
-		}
-	}
 }
 
 /**
@@ -2879,10 +2801,7 @@ void CL_ResetCampaign(void)
 	baseCurrent = NULL;
 	menuText[TEXT_CAMPAIGN_LIST] = campaignText;
 
-	/* text id is ships in menu_geoscape.ufo */
-	Cmd_AddCommand("ships_click", CL_SelectAircraft_f);
-	Cmd_AddCommand("ships_rclick", CL_OpenAircraft_f);
-
+	/* commands */
 	Cmd_AddCommand("campaign_stats", CP_CampaignStats );
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f);
 	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f);

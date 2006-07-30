@@ -161,10 +161,9 @@ static void MAP_MultiSelectExecuteAction_f(void)
 		if (id >= ccs.numMissions)
 			break;
 
-		if (gd.mapAction == MA_INTERCEPT && selMis && selMis == ccs.mission + id) {
-			MN_PushMenu("popup_intercept");
-			return;
-		} else if (gd.mapAction == MA_BASEATTACK && selMis && selMis == ccs.mission + id) {
+		if (gd.mapAction == MA_INTERCEPT && selMis && selMis == ccs.mission + id)
+			return CL_DisplayPopupIntercept(selMis, NULL);
+		else if (gd.mapAction == MA_BASEATTACK && selMis && selMis == ccs.mission + id) {
 			MN_PushMenu("popup_baseattack");
 			return;
 		}
