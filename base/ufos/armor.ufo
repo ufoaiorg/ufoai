@@ -14,7 +14,7 @@ item light //weights 100
 {
 	name		"_Kevlar Vest"
 	image		armor/light
-	model		soldiers/mlight/body
+	model		soldiers/malelight/body
 	type		armor
 	category	3
 	shape		"0 0 3 4"
@@ -51,7 +51,7 @@ item medium //weights 120
 {
 	name		"_Nano Armor"
 	image		armor/medium
-	model		soldiers/mmedium/body
+	model		soldiers/malemedium/body
 	type		armor
 	category	3
 	shape		"0 0 3 4"
@@ -88,9 +88,9 @@ item heavy //weights 320
 {
 	name		"_Heavy Nano Armor"
 	image		armor/medium
-	model		soldiers/mmedium/body
+	model		soldiers/malemedium/body
 //	image		armor/heavy
-//	model		soldiers/mheavy/body
+//	model		soldiers/maleheavy/body
 	type		armor
 	category	3
 	shape		"0 0 3 4"
