@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 aircraft_t aircraft_samples[MAX_AIRCRAFT]; /* available aircraft types */
 int numAircraft_samples = 0; /* TODO: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
 
+#define AIRCRAFT_RADAR_RANGE	20
+
 /* =========================================================== */
 #define DISTANCE 1
 
@@ -323,7 +325,8 @@ void CL_NewAircraft(base_t *base, char *name)
 		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf("Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 		Vector2Copy(base->pos, aircraft->pos);
-
+		Radar_Initialise(&(aircraft->radar), AIRCRAFT_RADAR_RANGE);
+	
 		base->numAircraftInBase++;
 		Com_DPrintf("Aircraft for base %s: %s\n", base->name, aircraft->name);
 	}
