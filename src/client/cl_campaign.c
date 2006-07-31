@@ -1533,7 +1533,8 @@ static void CL_GameGo(void)
 
 	aircraft = CL_AircraftGetFromIdx(gd.interceptAircraft);
 	/* update mission-status (active?) for the selected aircraft */
-	CL_CheckAircraft(aircraft);
+	/* Check what this was supposed to do ? */
+	/* CL_CheckAircraft(aircraft); */
 
 	if (!selMis)
 		selMis = aircraft->mission;

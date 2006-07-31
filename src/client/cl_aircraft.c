@@ -332,47 +332,6 @@ void CL_NewAircraft(base_t *base, char *name)
 /**
   * @brief
   */
-void CL_CheckAircraft(aircraft_t * aircraft)
-{
-	if (aircraft->fuel <= 0 && aircraft->status >= AIR_IDLE) {
-		MN_AddNewMessage(_("Notice"), _("Your dropship has low fuel and returns to base"), qfalse, MSG_STANDARD, NULL);
-		CL_AircraftReturnToBase(aircraft);
-	}
-
-	switch (aircraft->status) {
-	case AIR_MISSION:
-		/* Check if aircraft can drop into a mission */
-		if (abs(aircraft->mission->def->pos[0] - aircraft->pos[0]) < DISTANCE && abs(aircraft->mission->def->pos[1] - aircraft->pos[1]) < DISTANCE) {
-			aircraft->mission->def->active = qtrue;
-			if (aircraft->status != AIR_DROP && aircraft->fuel > 0) {
-				aircraft->status = AIR_DROP;
-				MAP_SelectMission(aircraft->mission);
-				gd.interceptAircraft = aircraft->idx;
-				Com_DPrintf("gd.interceptAircraft: %i\n", gd.interceptAircraft);
-				MN_PushMenu("popup_intercept_ready");
-			}
-		} else
-			aircraft->mission->def->active = qfalse;
-		break;
-	case AIR_UFO :
-		/* Check if aircraft can attack UFO */
-		if (abs(aircraft->ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(aircraft->ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
-			Com_DPrintf("Aircraft touch UFO, back to base\n");
-			/* TO DO : display an attack popup */
-			CL_AircraftReturnToBase(aircraft);
-		}
-		break;
-	case AIR_DROP:
-		Com_DPrintf("Aircraft status is AIR_DROP - mission status is %i\n", aircraft->mission->def->active);
-		break;
-	default:
-		break;
-	}
-}
-
-/**
-  * @brief
-  */
 extern void CP_GetRandomPosForAircraft(float *pos)
 {
 	pos[0] = (rand() % 180) - (rand() % 180);
@@ -422,27 +381,38 @@ void CL_CampaignRunAircraft(int dt)
 		if (!base->founded)
 			continue;
 
+		/* Run each aircraft */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
 			if (aircraft->homebase) {
 				if (aircraft->status > AIR_IDLE) {
+					/* Aircraft is moving */
 					if (CL_AircraftMakeMove(dt, aircraft)) {
+						/* aircraft reach its destination */
 						float *end;
 
 						end = aircraft->route.p[aircraft->route.n - 1];
 						aircraft->pos[0] = end[0];
 						aircraft->pos[1] = end[1];
-						CL_CheckAircraft(aircraft);
-						if (aircraft->status == AIR_RETURNING) {
+
+						if (aircraft->status == AIR_MISSION) {
+							/* Aircraft reach its mission */
+							aircraft->mission->def->active = qtrue;				
+							aircraft->status = AIR_DROP;
+							MAP_SelectMission(aircraft->mission);
+							gd.interceptAircraft = aircraft->idx;
+							Com_DPrintf("gd.interceptAircraft: %i\n", gd.interceptAircraft);
+							MN_PushMenu("popup_intercept_ready");
+						} else if (aircraft->status == AIR_RETURNING) {
+							/* aircraft enter in  homebase */
 							aircraft->status = AIR_REFUEL;
-							if (aircraft->fuel < 0)
-								aircraft->fuel = 0;
 						} else
 							aircraft->status = AIR_IDLE;
-						continue;
 					}
-				} else if (aircraft->status == AIR_IDLE)
+				} else if (aircraft->status == AIR_IDLE) {
+					/* Aircraft idle out of base */
 					aircraft->fuel -= dt;
-				else if (aircraft->status == AIR_REFUEL) {
+				} else if (aircraft->status == AIR_REFUEL) {
+					/* Aircraft is refluing at base */
 					aircraft->fuel += dt;
 					if (aircraft->fuel >= aircraft->fuelSize) {
 						aircraft->fuel = aircraft->fuelSize;
@@ -450,7 +420,18 @@ void CL_CampaignRunAircraft(int dt)
 					}
 				}
 
-				CL_CheckAircraft(aircraft);
+				/* Check aircraft low fuel */
+				if (aircraft->fuel <= 0 && aircraft->status >= AIR_IDLE) {
+					MN_AddNewMessage(_("Notice"), _("Your dropship has low fuel and returns to base"), qfalse, MSG_STANDARD, NULL);
+					CL_AircraftReturnToBase(aircraft);
+				}
+				
+				/* Check if aircraft can attack purchased UFO */
+				if (aircraft->status == AIR_UFO && abs(aircraft->ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(aircraft->ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
+					Com_DPrintf("Aircraft touch UFO, back to base\n");
+					/* TO DO : display an attack popup */
+					CL_AircraftReturnToBase(aircraft);
+				}
 			}
 	}
 }
