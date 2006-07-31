@@ -324,7 +324,7 @@ void CL_CheckInventory(equipDef_t * equip)
 	Com_DPrintf("NumOnTeam in aircraft %i: %i\n", baseCurrent->aircraftCurrent, baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] );
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]; p++) {
-		        cp = baseCurrent->curTeam[p];
+			cp = baseCurrent->curTeam[p];
 			for (ic = cp->inv->c[container]; ic; ic = next) {
 				next = ic->next;
 				if (equip->num[ic->item.t] > 0)
@@ -358,9 +358,9 @@ void CL_CleanTempInventory(void)
 
 /**
   * @brief
-  *
-  * This function is called everytime the equipment screen for the team pops up
+  * @note This function is called everytime the equipment screen for the team pops up
   * TODO: Make this faster
+  * @sa CL_UpdatePointersInGlobalData
   */
 static void CL_GenerateEquipmentCmd(void)
 {

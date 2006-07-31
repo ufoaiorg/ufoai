@@ -1194,6 +1194,38 @@ static void CL_GameSaveCmd(void)
 }
 
 /**
+ * @brief Will fix the pointers in gd after loading
+ */
+void CL_UpdatePointersInGlobalData(void)
+{
+	int i, j, p;
+	base_t* base;
+	aircraft_t *aircraft;
+
+	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
+		if (!base->founded)
+			continue;
+
+		/* fix aircraft homepage and teamsize pointers */
+		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
+			aircraft->teamSize = &base->numOnTeam[aircraft->idxInBase];
+			aircraft->homebase = &gd.bases[aircraft->idxBase];
+		}
+
+		/* now fix the curTeam pointers */
+		for (i = 0, p = 0; i < base->numWholeTeam; i++)
+			if (base->teamMask[base->aircraftCurrent] & (1 << i)) {
+				/* maybe we already have soldiers in this base */
+				base->curTeam[p] = &base->wholeTeam[i];
+				p++;
+			}
+		/* rest will be null */
+		for (; p < MAX_ACTIVETEAM; p++)
+			baseCurrent->curTeam[p] = NULL;
+	}
+}
+
+/**
   * @brief Loads a savegame from file
   *
   * @param filename Savegame to load (relative to writepath/save)
@@ -1297,6 +1329,9 @@ int CL_GameLoad(char *filename)
 	/* Recently it was loaded from disk. Attention, bad pointers!!! */
 	memcpy(&gd, sb.data + sb.readcount, sizeof(globalData_t));
 	sb.readcount += sizeof(globalData_t);
+
+	CL_UpdatePointersInGlobalData();
+
 	/* we start not in base view */
 	baseCurrent = NULL;
 

@@ -342,7 +342,8 @@ extern void CP_GetRandomPosForAircraft(float *pos)
  * @brief Move the specified aircraft
  * Return true if the aircraft reached its destination
  */
-extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft) {
+extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft)
+{
 	float dist, frac;
 	int p;
 
@@ -354,7 +355,7 @@ extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft) {
 	/* Check if destination reached */
 	if (dist >= aircraft->route.dist * (aircraft->route.n - 1))
 		return qtrue;
-	
+
 	/* calc new position */
 	frac = dist / aircraft->route.dist;
 	p = (int) frac;
@@ -396,7 +397,7 @@ void CL_CampaignRunAircraft(int dt)
 
 						if (aircraft->status == AIR_MISSION) {
 							/* Aircraft reach its mission */
-							aircraft->mission->def->active = qtrue;				
+							aircraft->mission->def->active = qtrue;
 							aircraft->status = AIR_DROP;
 							MAP_SelectMission(aircraft->mission);
 							gd.interceptAircraft = aircraft->idx;
@@ -425,11 +426,11 @@ void CL_CampaignRunAircraft(int dt)
 					MN_AddNewMessage(_("Notice"), _("Your dropship has low fuel and returns to base"), qfalse, MSG_STANDARD, NULL);
 					CL_AircraftReturnToBase(aircraft);
 				}
-				
+
 				/* Check if aircraft can attack purchased UFO */
 				if (aircraft->status == AIR_UFO) {
 					aircraft_t* ufo;
-					
+
 					ufo = gd.ufos + aircraft->ufo;
 					if (abs(ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
 						Com_DPrintf("Aircraft touch UFO, back to base\n");
@@ -737,7 +738,7 @@ extern void CL_AircraftsNotifyUfoRemoved(const aircraft_t* ufo)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
-	
+
 	/* Aircrafts currently purchasing the specified ufo will be redirect to base */
 	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ;
@@ -768,7 +769,7 @@ extern void CL_SendAircraftPurchasingUfo(aircraft_t* aircraft,aircraft_t* ufo)
 
 	if (num < 0 || num >= gd.numUfos || ! aircraft || ! ufo)
 		return;
-	
+
 	MAP_MapCalcLine(aircraft->pos, ufo->pos, &(aircraft->route));
 	aircraft->status = AIR_UFO;
 	aircraft->time = 0;
