@@ -1221,7 +1221,7 @@ void CL_UpdatePointersInGlobalData(void)
 			}
 		/* rest will be null */
 		for (; p < MAX_ACTIVETEAM; p++)
-			baseCurrent->curTeam[p] = NULL;
+			base->curTeam[p] = NULL;
 	}
 }
 
