@@ -81,7 +81,7 @@ typedef struct aircraft_s {
 	struct aircraft_s *next;	/* just for linking purposes - not needed in general */
 
 	struct actMis_s* mission;	/* The mission the aircraft is moving to */
-	struct aircraft_s* ufo;			/* The ufo the aircraft is purchasing */
+	int ufo;		/* Ufo's id the aircraft is purchasing (gd.ufos + id) */
 
 	qboolean visible;		/* The ufo is visible ? */
 } aircraft_t;

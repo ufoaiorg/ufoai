@@ -121,6 +121,10 @@ typedef struct globalData_s
 	ugv_t ugvs[MAX_UGV];
 	int numUGV;
 
+	/* UFOs on geoscape */
+	aircraft_t ufos[MAX_UFOONGEOSCAPE];
+	int numUfos;
+
 	/* TODO
 		craftupgrade_t craftupgrades[MAX_CRAFTUPGRADES];
 		int    numCraftUpgrades;

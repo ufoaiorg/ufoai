@@ -39,6 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_BASES		8
 #define MAX_DESC		256
 
+#define MAX_UFOONGEOSCAPE	8
+
 #define SCROLLSPEED		1000
 
 /* this is not best - but better than hardcoded every time i used it */

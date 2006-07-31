@@ -200,9 +200,10 @@ static void MAP_MultiSelectExecuteAction_f(void)
 
 	case MULTISELECT_TYPE_UFO : /* Selection of an UFO */
 		/* Get the ufo selected */
-		if ((aircraft = UFO_GetUfo(id)) == NULL)
+		if (id < 0 || id >= gd.numUfos)
 			return;
-		
+		aircraft = gd.ufos + id;
+
 		if (aircraft == selectedUfo) {
 			/* Selection of an already selected ufo */
 			CL_DisplayPopupIntercept(NULL, selectedUfo);
@@ -264,9 +265,9 @@ extern void MAP_3DMapClick(const menuNode_t* node, int x, int y)
  */
 extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 {
-	aircraft_t *aircraft = NULL, **ufos;
+	aircraft_t *aircraft = NULL;
 	actMis_t *ms;
-	int i, numUfos;
+	int i;
 	vec2_t pos;
 	char clickBuffer[30];
 
@@ -316,15 +317,14 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y)
 	}
 	
 	/* Get selected ufos */
-	UFO_GetUfosList(&ufos, &numUfos);
-	for (i = 0 ; i < numUfos ; i++, ufos++)
-		if ((*ufos)->visible
+	for (aircraft = gd.ufos + gd.numUfos - 1 ; aircraft >= gd.ufos ; aircraft--)
+		if (aircraft->visible
 #if DEBUG
 		|| Cvar_VariableValue("showufos")
 #endif
 		)
-			if ((*ufos)->status > AIR_HOME && MAP_IsMapPositionSelected(node, (*ufos)->pos, x, y))
-				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, i, _("UFO"), (*ufos)->name);
+			if (aircraft->status > AIR_HOME && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
+				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, aircraft - gd.ufos, _("UFO"), aircraft->name);
 
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
@@ -604,7 +604,7 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
  */
 static void MAP_DrawMapMarkers(const menuNode_t* node)
 {
-	aircraft_t *aircraft, **ufos;
+	aircraft_t *aircraft;
 	actMis_t *ms;
 	int i, j, x, y;
 
@@ -656,7 +656,7 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 					if (aircraft == selectedAircraft) {
 						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 						
-						if (aircraft->status == AIR_UFO && MAP_MapToScreen(node, aircraft->ufo->pos, &x, &y))
+						if (aircraft->status == AIR_UFO && MAP_MapToScreen(node, (gd.ufos + aircraft->ufo)->pos, &x, &y))
 							re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 							
 					}
@@ -664,8 +664,7 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 		}
 
 	/* draws ufos */
-	for (UFO_GetUfosList(&ufos, &i) ; i > 0 ; i--, ufos++) {
-		aircraft = *ufos;
+	for (aircraft = gd.ufos + gd.numUfos - 1 ; aircraft >= gd.ufos ; aircraft --) {
 
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */

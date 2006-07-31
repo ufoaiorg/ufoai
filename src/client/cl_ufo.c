@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-extern void UFO_GetUfosList(aircraft_t*** first_ufo, int* numUfo);
-extern aircraft_t* UFO_GetUfo(int num);
 static void UFO_SetUfoRandomDest(aircraft_t* ufo);
 extern void UFO_CampaignRunUfos(int dt);
 #ifdef DEBUG
@@ -39,30 +37,6 @@ static void UFO_RemoveUfoFromGeoscape_f(void);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
 
-#define MAX_UFOONGEOSCAPE 8								/**< Max UFOs on geoscape */
-
-static aircraft_t *ufoOnGeoscape[MAX_UFOONGEOSCAPE];	/**< UFOs on geoscape */
-
-
-/**
- * @brief Return the ufo on geoscape list and count
- */
-extern void UFO_GetUfosList(aircraft_t*** first_ufo, int* numUfo)
-{
-	*first_ufo = ufoOnGeoscape;
-	*numUfo = ccs.numUfoOnGeoscape;
-}
-
-/**
- * @brief Return the ufo from its num in list
- */
-extern aircraft_t* UFO_GetUfo(int num)
-{
-	if (num < 0 || num >= ccs.numUfoOnGeoscape)
-		return NULL;
-	
-	return ufoOnGeoscape[num];
-}
 
 /**
  * @brief Give a random destination to an ufo, and make him to move there
@@ -81,16 +55,16 @@ static void UFO_SetUfoRandomDest(aircraft_t* ufo) {
  * @brief Make the UFOs run
  */
 extern void UFO_CampaignRunUfos(int dt) {
-	aircraft_t** ufos;
+	aircraft_t*	ufo;
 
 	/* now the ufos are flying around, too */
-	for (ufos = ufoOnGeoscape + ccs.numUfoOnGeoscape - 1 ; ufos >= ufoOnGeoscape ; ufos--) {
-		if (CL_AircraftMakeMove(dt, *ufos))
-			UFO_SetUfoRandomDest(*ufos);
+	for (ufo = gd.ufos + gd.numUfos - 1 ; ufo >= gd.ufos; ufo--) {
+		if (CL_AircraftMakeMove(dt, ufo))
+			UFO_SetUfoRandomDest(ufo);
 
 		/* TODO: Crash */
-		if ((*ufos)->fuel <= 0)
-			(*ufos)->fuel = (*ufos)->fuelSize;
+		if (ufo->fuel <= 0)
+			ufo->fuel = ufo->fuelSize;
 	}
 }
 
@@ -103,14 +77,11 @@ extern void UFO_CampaignRunUfos(int dt) {
   */
 static void UFO_ListUfosOnGeoscape(void)
 {
-	int i;
-	aircraft_t *a;
+	aircraft_t* ufo;
 
-	Com_Printf("There are %i ufos on geoscape\n", ccs.numUfoOnGeoscape);
-	for (i = 0; i < ccs.numUfoOnGeoscape; i++) {
-		a = ufoOnGeoscape[i];
-		Com_Printf("ufo: %s - status: %i - pos: %.0f:%0.f\n", a->id, a->status, a->pos[0], a->pos[1]);
-	}
+	Com_Printf("There are %i ufos on geoscape\n", gd.numUfos);
+	for (ufo = gd.ufos + gd.numUfos - 1 ; ufo >= gd.ufos; ufo--)
+		Com_Printf("ufo: %s - status: %i - pos: %.0f:%0.f\n", ufo - gd.ufos + 1, ufo->status, ufo->pos[0], ufo->pos[1]);
 }
 #endif
 
@@ -126,7 +97,7 @@ static void UFO_NewUfoOnGeoscape(void)
 	aircraft_t *ufo = NULL;
 
 	/* check max amount */
-	if (ccs.numUfoOnGeoscape >= MAX_UFOONGEOSCAPE)
+	if (gd.numUfos >= MAX_UFOONGEOSCAPE)
 		return;
 
 	/* Get next type of ufo in aircrafts list */
@@ -141,12 +112,10 @@ static void UFO_NewUfoOnGeoscape(void)
 		return;
 
 	/* Create ufo */
-	if ((ufo = malloc(sizeof(aircraft_t))) == NULL)
-		return;
-	ufo = memcpy(ufo,  aircraft_samples + newUfoNum, sizeof(aircraft_t));
-	ufoOnGeoscape[ccs.numUfoOnGeoscape] = ufo;
-	Com_DPrintf("New ufo on geoscape: '%s' (%i)\n", ufo->name, ccs.numUfoOnGeoscape);
-	ccs.numUfoOnGeoscape++;
+	ufo = gd.ufos + gd.numUfos;
+	memcpy(ufo,  aircraft_samples + newUfoNum, sizeof(aircraft_t));
+	Com_DPrintf("New ufo on geoscape: '%s' (%i)\n", ufo->name, gd.numUfos);
+	gd.numUfos++;
 	
 	/* Initialise ufo data */
 	ufo->visible = qfalse;					/* No visible in radars (just for now) */
@@ -158,17 +127,20 @@ static void UFO_NewUfoOnGeoscape(void)
  * @brief Remove the specified ufo from geoscape
  */
 static void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo) {
-	/* Remove ufo from ufos list */
-	if (CL_ListRemoveItem((void**)ufoOnGeoscape, &ccs.numUfoOnGeoscape, ufo))
-		Com_DPrintf("Remove ufo from geoscape: '%s'\n", ufoOnGeoscape[ccs.numUfoOnGeoscape]->name);		
+	int num;
 	
+	/* Remove ufo from ufos list */
+	num = ufo - gd.ufos;
+	if (num < 0 || num >= gd.numUfos)
+		return Com_DPrintf("Cannot remove ufo: '%s'\n", ufo->name);
+	Com_DPrintf("Remove ufo from geoscape: '%s'\n", ufo->name);
+	memcpy(gd.ufos + num, gd.ufos + num + 1, (gd.numUfos - num - 1) * sizeof(aircraft_t));	
+	gd.numUfos--;
+
 	/* Notications */
 	B_NotifyAircraftRemove(ufo);
 	CL_PopupNotifyUfoRemoved(ufo);
 	CL_AircraftsNotifyUfoRemoved(ufo);
-
-	/* Free memory */
-	free(ufo);	
 }
 
 /**
@@ -176,8 +148,8 @@ static void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo) {
   */
 static void UFO_RemoveUfoFromGeoscape_f(void)
 {
-	if (ccs.numUfoOnGeoscape > 0)
-		UFO_RemoveUfoFromGeoscape(*ufoOnGeoscape);
+	if (gd.numUfos > 0)
+		UFO_RemoveUfoFromGeoscape(gd.ufos);
 }
 
 /**
@@ -185,19 +157,18 @@ static void UFO_RemoveUfoFromGeoscape_f(void)
  */
 extern void UFO_CampaignCheckEvents(void)
 {
-	int i, j;
+	int j;
 	qboolean visible;
 	aircraft_t*	ufo;
 	
 	/* For each ufo in geoscape */
-	for (i = 0; i < ccs.numUfoOnGeoscape; i++) {
-		ufo = ufoOnGeoscape[i];
+	for (ufo = gd.ufos + gd.numUfos - 1 ; ufo >= gd.ufos; ufo--) {
 		visible = ufo->visible;
 		ufo->visible = qfalse;
 
 		/* Check for ufo detection by bases */
 		for (j = 0; j < gd.numBases; j++)
-			ufo->visible |= B_CheckAircraftSensored(gd.bases + j, ufoOnGeoscape[i]);
+			ufo->visible |= B_CheckAircraftSensored(gd.bases + j, ufo);
 
 		/* Check if ufo appears or disappears on radar */
 		if (visible != ufo->visible) {

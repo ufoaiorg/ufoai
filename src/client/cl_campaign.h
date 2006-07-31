@@ -159,7 +159,6 @@ typedef struct ccs_s {
 	setState_t set[MAX_STAGESETS];
 	actMis_t mission[MAX_ACTMISSIONS];
 	int numMissions;
-	int numUfoOnGeoscape;
 
 	qboolean singleplayer;
 

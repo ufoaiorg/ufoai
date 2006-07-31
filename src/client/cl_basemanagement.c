@@ -190,12 +190,11 @@ extern qboolean B_CheckAircraftSensored(base_t* base, const aircraft_t* aircraft
  */
 static void B_SetUfoCountInSensor(base_t* base)
 {
-	aircraft_t** ufos;
-	int numUfos;
+	aircraft_t* ufo;
 
 	base->numSensoredAircraft = 0;
-	for (UFO_GetUfosList(&ufos, &numUfos) ; numUfos > 0 ; numUfos--, ufos++)
-		B_CheckAircraftSensored(base, *ufos);
+	for (ufo = gd.ufos + gd.numUfos - 1 ; ufo >= gd.ufos ; ufo--)
+		B_CheckAircraftSensored(base, ufo);
 }
 
 /**

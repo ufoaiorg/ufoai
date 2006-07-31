@@ -427,10 +427,15 @@ void CL_CampaignRunAircraft(int dt)
 				}
 				
 				/* Check if aircraft can attack purchased UFO */
-				if (aircraft->status == AIR_UFO && abs(aircraft->ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(aircraft->ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
-					Com_DPrintf("Aircraft touch UFO, back to base\n");
-					/* TO DO : display an attack popup */
-					CL_AircraftReturnToBase(aircraft);
+				if (aircraft->status == AIR_UFO) {
+					aircraft_t* ufo;
+					
+					ufo = gd.ufos + aircraft->ufo;
+					if (abs(ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
+						Com_DPrintf("Aircraft touch UFO, back to base\n");
+						/* TO DO : display an attack popup */
+						CL_AircraftReturnToBase(aircraft);
+					}
 				}
 			}
 	}
@@ -737,8 +742,12 @@ extern void CL_AircraftsNotifyUfoRemoved(const aircraft_t* ufo)
 	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ;
 		aircraft >= base->aircraft ; aircraft--)
-			if (aircraft->status == AIR_UFO && aircraft->ufo == ufo)
+			if (aircraft->status == AIR_UFO) {
+				if (ufo - gd.ufos == aircraft->ufo)
 					CL_AircraftReturnToBase(aircraft);
+				else if (ufo - gd.ufos < aircraft->ufo)
+					aircraft->ufo--;
+			}
 }
 
 /**
@@ -755,12 +764,14 @@ extern void CL_AircraftsUfoDisappear(const aircraft_t* ufo)
  */
 extern void CL_SendAircraftPurchasingUfo(aircraft_t* aircraft,aircraft_t* ufo)
 {
-	if (! aircraft || ! ufo)
+	int num = ufo - gd.ufos;
+
+	if (num < 0 || num >= gd.numUfos || ! aircraft || ! ufo)
 		return;
 	
 	MAP_MapCalcLine(aircraft->pos, ufo->pos, &(aircraft->route));
 	aircraft->status = AIR_UFO;
 	aircraft->time = 0;
 	aircraft->point = 0;
-	aircraft->ufo = ufo;
+	aircraft->ufo = num;
 }
