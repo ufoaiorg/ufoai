@@ -1,8 +1,6 @@
 /**
  * @file g_client.c
  * @brief Main part of the game logic.
- *
- * TODO: This looks completely out of place. This stuff probably belongs in the client.
  */
 
 /*
@@ -27,11 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-/* ==================================================================== */
-
 #define TU_REACTION		7
-
-
 #define VIS_APPEAR	1
 #define VIS_PERISH	2
 
@@ -40,13 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define FLOOR(e) e->i.c[gi.csi->idFloor]
 
 
-/*
-=================
-G_TeamToPM
-
-generates the player mask
-=================
-*/
+/**
+ * @brief Generates the player mask
+ */
 int G_TeamToPM(int team)
 {
 	player_t *player;
@@ -62,13 +52,9 @@ int G_TeamToPM(int team)
 }
 
 
-/*
-=================
-G_VisToPM
-
-converts vis mask to player mask
-=================
-*/
+/**
+ * @brief Converts vis mask to player mask
+ */
 int G_VisToPM(int vis_mask)
 {
 	player_t *player;
@@ -84,11 +70,9 @@ int G_VisToPM(int vis_mask)
 }
 
 
-/*
-=================
-G_SendStats
-=================
-*/
+/**
+ * @brief Send stats to network buffer
+ */
 void G_SendStats(edict_t * ent)
 {
 	gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATS);
@@ -100,11 +84,9 @@ void G_SendStats(edict_t * ent)
 }
 
 
-/*
-=================
-G_WriteItem
-=================
-*/
+/**
+ * @brief Write an item to the network buffer
+ */
 void G_WriteItem(item_t * item)
 {
 	gi.WriteByte(item->t);
@@ -113,11 +95,10 @@ void G_WriteItem(item_t * item)
 }
 
 
-/*
-=================
-G_SendPlayerStats
-=================
-*/
+/**
+ * @brief Write player stats to network buffer
+ * @sa G_SendStats
+ */
 void G_SendPlayerStats(player_t * player)
 {
 	edict_t *ent;
@@ -129,11 +110,10 @@ void G_SendPlayerStats(player_t * player)
 }
 
 
-/*
-=================
-G_GiveTimeUnits
-=================
-*/
+/**
+ * @brief Network function to update the time units
+ * @sa G_SendStats
+ */
 void G_GiveTimeUnits(int team)
 {
 	edict_t *ent;
