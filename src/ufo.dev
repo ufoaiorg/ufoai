@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_ports/win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_ports/win32/libjpeg.lib_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=92
+UnitCount=90
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -719,47 +719,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit70]
-FileName=ports\win32\q2.ico
-Folder="Resource Files"
-Compile=0
-CompileCpp=1
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit71]
-FileName=ports\win32\q2.rc
-Folder="Resource Files"
-Compile=1
-CompileCpp=1
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit72]
-FileName=ports\win32\ufo.ico
-Folder="Resource Files"
-Compile=0
-CompileCpp=0
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit73]
-FileName=client\cl_shader.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_shader.c -o cl_shader.o $(CFLAGS)
-
-[Unit74]
 FileName=client\cl_market.c
 Folder=Source Files
 Compile=1
@@ -768,6 +728,26 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_market.c -o cl_market.o $(CFLAGS)
+
+[Unit73]
+FileName=client\cl_market.h
+Folder=Header Files
+Compile=1
+CompileCpp=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit74]
+FileName=client\cl_aircraft.c
+Folder=Source Files
+Compile=1
+CompileCpp=0
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_aircraft.c -o cl_aircraft.o $(CFLAGS)
 
 [VersionInfo]
 Major=2
@@ -788,7 +768,7 @@ ProductVersion=2.0-RC4
 AutoIncBuildNr=0
 
 [Unit78]
-FileName=qcommon\files.h
+FileName=qcommon\md4.h
 Folder=Header Files
 Compile=1
 Link=1
@@ -798,26 +778,6 @@ BuildCmd=
 CompileCpp=1
 
 [Unit75]
-FileName=client\cl_market.h
-CompileCpp=1
-Folder=Header Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit76]
-FileName=client\cl_aircraft.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_aircraft.c -o cl_aircraft.o $(CFLAGS)
-
-[Unit77]
 FileName=client\cl_aircraft.h
 CompileCpp=1
 Folder=Header Files
@@ -827,7 +787,17 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit79]
+[Unit76]
+FileName=qcommon\files.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit77]
 FileName=qcommon\filesys.h
 CompileCpp=1
 Folder=Header Files
@@ -837,17 +807,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit80]
-FileName=qcommon\md4.h
-CompileCpp=1
-Folder=Header Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit81]
+[Unit79]
 FileName=qcommon\mem.h
 CompileCpp=1
 Folder=Header Files
@@ -857,7 +817,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit82]
+[Unit80]
 FileName=qcommon\scripts.h
 CompileCpp=1
 Folder=Header Files
@@ -867,7 +827,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit83]
+[Unit81]
 FileName=qcommon\ufotypes.h
 CompileCpp=1
 Folder=Header Files
@@ -877,7 +837,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit84]
+[Unit82]
 FileName=qcommon\cbuf.h
 CompileCpp=1
 Folder=Header Files
@@ -887,7 +847,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit85]
+[Unit83]
 FileName=qcommon\cmd.h
 CompileCpp=1
 Folder=Header Files
@@ -897,7 +857,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit86]
+[Unit84]
 FileName=qcommon\cmodel.h
 CompileCpp=1
 Folder=Header Files
@@ -907,7 +867,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit87]
+[Unit85]
 FileName=qcommon\doxygen.h
 CompileCpp=1
 Folder=Header Files
@@ -917,7 +877,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit88]
+[Unit86]
 FileName=qcommon\cvar.h
 CompileCpp=1
 Folder=Header Files
@@ -927,7 +887,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit89]
+[Unit87]
 FileName=client\cl_map.c
 CompileCpp=0
 Folder=Source Files
@@ -937,7 +897,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_map.c -o cl_map.o $(CFLAGS)
 
-[Unit90]
+[Unit88]
 FileName=client\cl_produce.c
 CompileCpp=0
 Folder=Source Files
@@ -946,6 +906,26 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_produce.c -o cl_produce.o $(CFLAGS)
+
+[Unit89]
+FileName=client\cl_ufo.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_ufo.c -o cl_ufo.o $(CFLAGS)
+
+[Unit90]
+FileName=client\cl_popup.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_popup.c -o cl_popup.o $(CFLAGS)
 
 [Unit91]
 FileName=client\cl_ufo.c
@@ -966,4 +946,23 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_popup.c -o cl_popup.o $(CFLAGS)
+
+[Unit70]
+FileName=ports\win32\ufo.ico
+Folder="Resource Files"
+Compile=0
+Link=0
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit71]
+FileName=client\cl_shader.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_shader.c -o cl_shader.o $(CFLAGS)
 
