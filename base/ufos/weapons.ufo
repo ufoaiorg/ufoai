@@ -65,17 +65,17 @@ item irgoggles
 	primary
 	{
 		name	"_Scan"
-		firesnd	misc/irgoggles01.wav
-		splrad	5
+		firesnd	misc/plopp03.wav
+		splrad	10
 		range	1.5
-		time	20
+		time	25
 		shots	1
 		irgoggles	true
 	}
 	secondary
 	{
 		name	"_Scan"
-		firesnd	misc/irgoggles01.wav
+		firesnd	misc/plopp03.wav
 		splrad	10
 		range	1.5
 		time	25
@@ -206,8 +206,8 @@ item incgrenade
 	{
 		name	"_Throw"
 		skill	explosive
-		projtl	smokegren
-		impact	fireImpact
+		projtl	incgren
+		impact	fire_explosion
 		hitbody fire_explosion
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
@@ -230,8 +230,8 @@ item incgrenade
 	{
 		name	"_Throw"
 		skill	explosive
-		projtl	smokegren
-		impact	fireImpact
+		projtl	incgren
+		impact	fire_explosion
 		hitbody fire_explosion
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
@@ -275,11 +275,11 @@ item stungrenade
 	{
 		name	"_Throw"
 		skill	explosive
-		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
+		projtl	stungren
+		impact	coronaImpact
+		hitbody coronaImpact
+		impsnd	misc/metalbreak.wav
+		bodysnd	misc/metalbreak.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
@@ -299,11 +299,11 @@ item stungrenade
 	{
 		name	"_Throw"
 		skill	explosive
-		projtl	smokegren
-		impact	smoke_explosion
-		hitbody smoke_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
+		projtl	stungren
+		impact	coronaImpact
+		hitbody coronaImpact
+		impsnd	misc/metalbreak.wav
+		bodysnd	misc/metalbreak.wav
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
@@ -345,9 +345,9 @@ item plasmagrenade
 	{
 		name	"_Throw"
 		skill	explosive
-		projtl	fraggren
-		impact	plasmaImpactCharged
-		hitbody plasmaImpactCharged
+		projtl	plasmagren
+		impact	plasmaBigExplosion
+		hitbody plasmaBigExplosion
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
@@ -369,9 +369,9 @@ item plasmagrenade
 	{
 		name	"_Throw"
 		skill	explosive
-		projtl	fraggren
-		impact	plasmaImpactCharged
-		hitbody plasmaImpactCharged
+		projtl	plasmagren
+		impact	plasmaBigExplosion
+		hitbody plasmaBigExplosion
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav

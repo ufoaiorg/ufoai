@@ -1,62 +1,6 @@
-// general description for particles
-// =================================
-// image	(string)	path to model - relative from base/pics
-// model	(string)	path to model - relative from base/models
-// blend	(string)	"replace", "blend", "add", "filter", "invfilter"
-// style	(string)	"facing", "rotated", "beam", "line"
-// tfade	(string)	"none", "in", "out", "sin", "saw", "blend"
-// ffade	(string)	"none", "in", "out", "sin", "saw", "blend"
-// size		(vec2_t)
-// scale	(vec3_t)	scaling in x, y and z direction
-// color	(vec4_t)	color vector of rgba
-// a		(vec3_t)
-// v		(vec3_t)
-// s		(vec3_t)
-// angles	(vec3_t)	angles for each particle run = oldAngles + cls.frametime * omega
-// 				start rotation vector (see omega, too)
-// omega	(vec3_t)	the rotation vector for the particle
-// life		(float)		specifies how long a particle will be active (ms)
-// rounds	(int)		specifies how many rounds a particle will be active (ms)
-// tps		(float)		think per second - call the think function in interval tps
-// frame	(int)
-// endframe	(int)
-// fps		(float)		how many frames per second (animate)
-// levelflags	(int)		display this particle only in specific levels
-//		1 = only first level	1<<1
-//		3 = first two levels	1<<2
-//		7 = first two levels	1<<3
-//		15 = first two levels	1<<4
-//		31 = first two levels	1<<5
-//		63 = first two levels	1<<6
-//		127 = first two levels	1<<7
-//		255 = first two levels	1<<8
-//		if there is a reason to display the particle e.g. in the first and third level
-//		you have to add the flag for the first level (1<<1 = 1) and the flag for the
-//		third level (1<<3 = 4) and get a levelflag with 5 - but then the particle will not
-//		be displayed in the second level (and in the levels above the third)
-//
-// stack functions
-// =================================
-// end
-// push
-// pop
-// kpop
-// add
-// sub
-// mul
-// div
-// sin
-// cos
-// tan
-// rand
-// crand
-// v2
-// v3
-// v4
-// kill		(null)		set inuse flag to false (deacticate the particle)
-// spawn
-// nspawn
-
+// See the wiki page 
+//   http://ufo.myexp.de/wiki/index.php/UFO-Scripts/ptl_%2A.ufo#Datatypes
+// for the description of the particle language
 
 // ==================
 // BULLET EFFECTS
@@ -70,9 +14,9 @@ particle bullet
 		blend  add
 		style  beam
 		tfade  out
-		push   float 2
+		push   float 2.0
 		pop    *size.2
-		tps    4
+		tps    4.0
 	}
 	think { kill }
 }
@@ -88,11 +32,11 @@ particle bulletImpact
 		size   "20 20"
 
 		push   *v
-		mul    float 5
+		mul    float 5.0
 		kpop   *v
 		add    *s
 		pop    *s
-		tps    1
+		tps    1.0
 
 		push   int 20
 		nspawn bulletFragment
@@ -117,8 +61,8 @@ particle bulletFragment
 		size   "2 2"
 
 		push   *v
-		rand   float 28
-		add    float 3
+		rand   float 28.0
+		add    float 3.0
 		mul    #
 		crand  vector "15 15 15"
 		add    #
@@ -191,7 +135,7 @@ particle rocket
 	{
 		model  weapons/rpg/rocket
 		color  ".5 .5 .5 1"
-		tps    40
+		tps    40.0
 	}
 	think
 	{
@@ -242,7 +186,7 @@ particle rocketFire
 
 		push   *v
 		mul    float 0.8
-		kpop   *v
+		pop   *v
 	}
 	run
 	{
@@ -274,8 +218,23 @@ particle laserPulse
 		blend  add
 		style  beam
 		tfade  sin
-		tps    6
+		tps    6.0
 		push   float 2.2
+		pop    *size.2
+	}
+	think { kill }
+}
+
+particle laserOverload
+{
+	init
+	{
+		image  sfx/bullet
+		blend  add
+		style  beam
+		tfade  sin
+		tps    2.0
+		push   float 2.7
 		pop    *size.2
 	}
 	think { kill }
@@ -292,11 +251,11 @@ particle laserImpact
 		size   "20 20"
 
 		push   *v
-		mul    float 5
+		mul    float 5.0
 		kpop   *v
 		add    *s
 		pop    *s
-		tps    1
+		tps    1.0
 
 		push   int 10
 		nspawn laserSpark
@@ -310,7 +269,6 @@ particle laserImpact
 	think { kill }
 }
 
-
 particle laserSpark
 {
 	init
@@ -322,8 +280,8 @@ particle laserSpark
 		size   "20 20"
 
 		push   *v
-		rand   float 8
-		add    float 3
+		rand   float 8.0
+		add    float 3.0
 		mul    #
 		crand  vector "15 15 15"
 		add    #
@@ -345,26 +303,64 @@ particle laserSpark
 // PLASMA EFFECTS
 // ==================
 
-particle plasmaChargedPulse
+particle plasmaMiniBall
 {
 	init
 	{
-		image  sfx/plasmabeam
+		image  sfx/plasmaball
 		blend  add
-		style  beam
-		tfade  sin
-		tps    2
+		style  facing
 	}
 	run
 	{
+		push pos "1 1"
 		push *t
-		mul  float 3
+		mul  float 16.0
 		sin  #
-		mul  float 2
-		add  float 5
-		pop  *size.2
+		mul  #
+		add  pos "4 4"
+		pop  *size
 	}
-	think { kill }
+}
+
+particle plasmaBall
+{
+	init
+	{
+		image  sfx/plasmaball
+		blend  add
+		style  facing
+	}
+	run
+	{
+		push pos "1.2 1.2"
+		push *t
+		mul  float 12.0
+		sin  #
+		mul  #
+		add  pos "5.5 5.5"
+		pop  *size
+	}
+}
+
+particle plasmaBigBall
+{
+	init
+	{
+		image	sfx/plasmaball
+		blend	add
+		style	facing
+	}
+	run
+	{
+		push	pos	"1.5 1.5"
+		push	*t
+		mul	float	6.0
+		sin	#
+		mul	#
+		add	pos	"12 12"
+		pop	*size
+	}
 }
 
 particle plasmaImpactCharged
@@ -377,13 +373,13 @@ particle plasmaImpactCharged
 		blend  add
 		style  rotated
 		tfade  out
-		tps    2
+		tps    2.0
 	}
 	run
 	{
 		push pos "10 10"
 		push *t
-		mul  float 10
+		mul  float 10.0
 		sin  #
 		mul  #
 		add  pos "30 30"
@@ -399,19 +395,16 @@ particle plasmaParticleCharged
 		image  sfx/plasmadust
 		blend  add
 		style  facing
-		tps    2
+		tps    2.0
 		size   "12 12"
 		tfade  out
 
 		a      "0 0 -50"
-		push   *v
-		mul    float 25
 		crand  vector "25 25 25"
-		add    #
 		add    vector "0 0 25"
 		pop    *v
 
-		crand  vector "2 2 2"
+		crand  vector "4 4 4"
 		add    *s
 		pop    *s
 	}
@@ -425,12 +418,12 @@ particle plasmaContinuous
 		image  sfx/plasmabeam
 		blend  add
 		style  beam
-		tps    25
+		tps    10.0
 	}
 	run
 	{
-		rand float 2
-		add  float 1
+		rand float 2.0
+		add  float 1.0
 		pop  *size.2
 	}
 	think { kill }
@@ -446,13 +439,13 @@ particle plasmaImpact
 		blend  add
 		style  rotated
 		tfade  out
-		tps    2
+		tps    2.0
 	}
 	run
 	{
 		push pos "5 5"
 		push *t
-		mul  float 10
+		mul  float 10.0
 		sin  #
 		mul  #
 		add  pos "15 15"
@@ -473,10 +466,7 @@ particle plasmaParticle
 		tfade  out
 
 		a      "0 0 -50"
-		push   *v
-		mul    float 20
 		crand  vector "20 20 20"
-		add    #
 		add    vector "0 0 20"
 		pop    *v
 
@@ -487,49 +477,160 @@ particle plasmaParticle
 	think { kill }
 }
 
-particle plasmaBall
+particle plasmaBigExplosion
 {
 	init
 	{
-		image	sfx/plasmaball
-		blend	add
-		style	facing
-		tps		40
-	}
-	run
-	{
-		push	pos	"3 3"
-		push	*t
-		mul	float	4
-		sin	#
-		mul	#
-		add	pos	"8 8"
-		pop	*size
+		spawn  explosion_1
+		spawn  explosion_2
+		push   int 30
+		nspawn plasmaBigSplash
+		kill
 	}
 }
+
+particle plasmaBigImpact
+{
+	init
+	{
+		push   int 50
+		nspawn plasmaBigSplash
+		kill
+	}
+}
+
+particle plasmaBigSplash
+{
+	init
+	{
+		image  sfx/plasmaball
+		blend  add
+		style  facing
+		tfade  out
+
+		push   pos "2 2"
+		rand   float 5.0
+		mul    #
+                add    pos "2 2"
+		pop    *size
+
+		a      "0 0 -250"
+		crand  vector "100 100 100"
+		add    vector "0 0 100"
+		pop    *v
+
+		crand  vector "10 10 10"
+		add    *s
+		pop    *s
+
+		rand   float 1.0
+		add    float 1.0
+		pop    *tps
+
+		push   int 2
+		nspawn plasmaParticleRandom
+	}
+	think { kill }
+}
+
+particle plasmaParticleRandom
+{
+	init
+	{
+		image  sfx/plasmadust
+		blend  add
+		style  facing
+		tfade  out
+
+		push   pos "2 2"
+		rand   float 2.5
+		mul    #
+		add    pos "0.5 0.5"
+		pop    *size
+
+		a      "0 0 -350"
+		push   *v
+		crand  vector "30 30 30"
+		add    #
+		pop    *v
+
+		crand  vector "5 5 5"
+		add    *s
+		pop    *s
+		tps   4.0
+		life  0.8
+	}
+	think
+	{
+		spawn  smoke
+	}
+}
+
 
 // ==================
 // TACHYON EFFECTS
 // ==================
 
-particle tachyonBall
+particle tachyonMiniBeam
 {
 	init
 	{
-		image  sfx/tachyonball
+		image  sfx/greenplasbeam
 		blend  add
-		style  facing
+		style  beam
+		tps    30.0
 	}
 	run
 	{
-		push pos "3 3"
-		push *t
-		mul  float 4
-		sin  #
-		mul  #
-		add  pos "8 8"
-		pop  *size
+		rand float 2.0
+		add  float 1.0
+		pop  *size.2
 	}
+	think { kill }
+}
+
+particle tachyonBeam
+{
+	init
+	{
+		image  sfx/greenplasbeam
+		blend  add
+		style  beam
+		tfade  sin
+		tps    10.0
+	}
+	run
+	{
+		push *t
+		mul  float 7.0
+		sin  #
+		mul  float 1.0
+		add  float 2.0
+		pop  *size.2
+	}
+	think { kill }
+}
+
+particle tachyonBigBeam
+{
+	init
+	{
+		image  sfx/greenplasbeam
+		blend  add
+		style  beam
+		tfade  sin
+		tps    2.0
+	}
+	run
+	{
+		push *t
+		mul  float 3.0
+		sin  #
+		mul  float 2.0
+		add  float 3.0
+		pop  *size.2
+	}
+	think { kill }
 }
 
 particle tachyonImpact
@@ -538,7 +639,21 @@ particle tachyonImpact
 	{
 		push   int 22
 		nspawn tachyonSplash
-		tps		4
+		image  sfx/tachyonball
+		blend  add
+		style  rotated
+		tfade  out
+		tps    2.0
+	}
+	run
+	{
+		push pos "10 10"
+		push *t
+		mul  float 10.0
+		sin  #
+		mul  #
+		add  pos "30 30"
+		pop  *size
 	}
 	think { kill }
 }
@@ -547,73 +662,45 @@ particle tachyonSplash
 {
 	init
 	{
-		image  sfx/tachyonball
+		image  sfx/greenplas_02
 		blend  add
 		style  facing
 		tfade  out
 		size   "4 4"
 
-		push   *v
-		mul    float 40
 		crand  vector "30 30 30"
-		add    #
 		pop    *v
 
-		crand  vector "0 0 0"
+		crand  vector "8 8 8"
 		add    *s
 		pop    *s
 
-		rand   float 3
+		rand   float 3.0
 		add    float 1.5
 		pop    *tps
 	}
 	think { kill }
 }
 
-particle tachyonBigBall
+particle tachyonExplosion
 {
 	init
 	{
-		image  sfx/tachyonball
-		blend  add
-		style  facing
-		tps    50
-	}
-	think
-	{
-		spawn tachyonSpark
-	}
-}
-
-particle tachyonSpark
-{
-	init
-	{
-		image  sfx/tachyonball
-		blend  add
-		style  facing
-		tfade  out
-		tps    3
-		color  ".5 .5 .5 1"
-
-		push   *v
-		crand  vector "8 8 8"
-		add    vector "-4 -4 -4"
-		pop    *v
-
-		crand  vector "2 2 2"
-		add    *s
-		pop    *s
+		frame 0
+		endframe 6
+		image +sfx/greenplas_
+		blend blend
+		style facing
+		size  "40 40"
+		fps   5.0
+		tps   0.8
 	}
 	run
 	{
-		push   pos "1 1"
+		push   pos "140 140"
 		mul    *t
-		add    pos "4 4"
+		add    pos "40 40"
 		pop    *size
-		push   *color
-		mul    float .01
-		pop    *color
 	}
 	think { kill }
 }
@@ -622,61 +709,37 @@ particle tachyonBigImpact
 {
 	init
 	{
+		spawn  tachyonExplosion
 		push   int 60
 		nspawn tachyonBigSplash
-		tps		4
+		kill
 	}
-	think { kill }
 }
 
 particle tachyonBigSplash
 {
 	init
 	{
-		image  sfx/tachyonball
+		image  sfx/greenplas_06
 		blend  add
 		style  facing
 		tfade  out
-		size   "4 4"
+		size   "5 5"
 
-		push   *v
-		rand   float 200
-		add    float 20
-		mul    #
 		crand  vector "50 50 50"
-		add    #
 		pop    *v
 
-		crand  vector "5 5 5"
+		crand  vector "15 15 15"
 		add    *s
 		pop    *s
 
 		rand   float 1.0
-		add    float 1.6
+		add    float 1.5
 		pop    *tps
 	}
 	think { kill }
 }
 
-particle tachyonMiniBall
-{
-	init
-	{
-		image  sfx/tachyonball
-		blend  add
-		style  facing
-	}
-	run
-	{
-		push pos "1 1"
-		push *t
-		mul  float 16
-		sin  #
-		mul  #
-		add  pos "4 4"
-		pop  *size
-	}
-}
 
 // ==================
 // GRENADE LAUNCHER EFFECTS
@@ -691,6 +754,17 @@ particle grenl_ammo
 	}
 }
 
+particle grenl_plasma_ammo
+{
+	init
+	{
+		model  weapons/grenl/grenl_clip2
+//		model  weapons/grenl/grenl_plasma_clip2
+		color  ".5 .5 .5 1"
+	}
+}
+
+
 // ==================
 // GRENADE EFFECTS
 // ==================
@@ -704,26 +778,45 @@ particle fraggren
 	}
 }
 
-particle smokegren
+particle incgren
 {
 	init
 	{
-		model  weapons/fraggren/fraggren
+		model  weapons/incgren/incgren
 		color  ".5 .5 .5 1"
 	}
 }
 
-particle smoke_explosion
+particle stungren
 {
 	init
 	{
-		spawn  smokebig
-		spawn  smokebig
-		push   int 50
-		nspawn grenadeSmoke
-		kill
+		model  weapons/stungren/stungren
+		color  ".5 .5 .5 1"
 	}
 }
+
+particle plasmagren
+{
+	init
+	{
+		model  weapons/smokegren/smokegren
+//		model  weapons/plasmagren/plasmagren
+		color  ".5 .5 .5 1"
+	}
+}
+
+//particle smoke_explosion
+//{
+//	init
+//	{
+//		spawn  smokebig
+//		spawn  smokebig
+//		push   int 25
+//		nspawn grenadeSmoke
+//		kill
+//	}
+//}
 
 particle frag_explosion
 {
@@ -731,36 +824,35 @@ particle frag_explosion
 	{
 		spawn  explosion_1
 		spawn  explosion_2
-		push   int 50
+		push   int 25
 		nspawn grenadeFragment
 		kill
 	}
 }
 
-particle grenadeSmoke
-{
-	init
-	{
-		image  sfx/spark
-		blend  add
-		style  facing
-		tfade  out
-		size   "5 5"
-
-		push   *v
-		crand  vector "160 160 160"
-		pop    *v
-
-		crand  vector "15 15 15"
-		add    *s
-		pop    *s
-
-		rand   float 1.2
-		add    float 1.2
-		pop    *tps
-	}
-	think { kill }
-}
+//particle grenadeSmoke
+//{
+//	init
+//	{
+//		image  sfx/spark
+//		blend  add
+//		style  facing
+//		tfade  out
+//		size   "5 5"
+//
+//		crand  vector "160 160 160"
+//		pop    *v
+//
+//		crand  vector "15 15 15"
+//		add    *s
+//		pop    *s
+//
+//		rand   float 1.2
+//		add    float 1.2
+//		pop    *tps
+//	}
+//	think { kill }
+//}
 
 particle grenadeFragment
 {
@@ -772,8 +864,9 @@ particle grenadeFragment
 		tfade  out
 		size   "5 5"
 
-		push   *v
-		crand  vector "160 160 160"
+		a      "0 0 -100"
+		crand  vector "160 160 100"
+		add    vector "0 0 100"
 		pop    *v
 
 		crand  vector "15 15 15"
@@ -786,6 +879,7 @@ particle grenadeFragment
 	}
 	think { kill }
 }
+
 
 // ==================
 // KNIFE EFFECTS

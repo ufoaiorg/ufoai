@@ -1,9 +1,65 @@
+// See the wiki page 
+//   http://ufo.myexp.de/wiki/index.php/UFO-Scripts/ptl_%2A.ufo#Datatypes
+// for the description of the particle language
+
+// =======================
+// MISCELLANEOUS EFFECTS
+// ======================
+
 particle null
 {
 	init
 	{
 		kill
 	}
+}
+
+particle water_fountain // preliminary, no way to test now
+{
+	init
+	{
+		v      "0 0 0"
+		tps    25.0
+		spawn water_drop
+	}
+	think
+	{
+		spawn water_drop
+	}
+}
+
+particle water_drop
+{
+	init
+	{
+		image  sfx/plasmaball
+		blend  add
+		style  facing
+		tfade  out
+		rand   float 1.0
+		add    float 2.5
+		pop    *tps
+		color  ".5 .5 .5 1"
+		crand  vector "2 2 2"
+		add    *s
+		pop    *s
+
+		a      "0 0 -100"
+		crand  vector "8 8 8"
+		add    vector "-4 -4 50"
+		pop    *v
+	}
+	run
+	{
+		push   pos "1 1"
+		mul    *t
+		add    pos "4 4"
+		pop    *size
+		push   *color
+		mul    float .01
+		pop    *color
+	}
+	think { kill }
 }
 
 particle corona
@@ -15,6 +71,27 @@ particle corona
 		style facing
 		size  "30 30"
 	}
+}
+
+particle coronaImpact
+{
+	init
+	{
+		image  sfx/corona
+		blend  add
+		style  rotated
+		size   "40 40"
+		tfade  out
+		tps    0.7
+	}
+	run
+	{
+		push   pos "140 140"
+		mul    *t
+		add    pos "40 40"
+		pop    *size
+	}
+	think { kill }
 }
 
 particle explosion
@@ -52,10 +129,10 @@ particle explosion_1
 		style facing
 		ffade in
 		size  "200 200"
-		fps   8
+		fps   8.0
 		tps   0.8
 		push  *v
-		mul   float 30
+		mul   float 30.0
 		add   *s
 		pop   *s
 		v     "0 0 0"
@@ -74,10 +151,10 @@ particle explosion_2
 		style facing
 		ffade out
 		size  "200 200"
-		fps   8
+		fps   8.0
 		tps   0.8
 		push  *v
-		mul   float 30
+		mul   float 30.0
 		add   *s
 		pop   *s
 		v     "0 0 0"
@@ -97,13 +174,13 @@ particle smoketrail
 		add   *s
 		pop   *s
 		push  *v
-		mul   float 80
+		mul   float 80.0
 		add   vector "0 0 90"
 		crand vector "110 110 110"
 		add   #
 		pop   *v
 		a     "0 0 -250"
-		tps   20
+		tps   20.0
 		life  1
 	}
 	think
@@ -124,16 +201,16 @@ particle firetrail
 		add   *s
 		pop   *s
 		push  *v
-		rand  float 80
-		add   float 10
+		rand  float 80.0
+		add   float 10.0
 		mul   #
 		add   vector "0 0 90"
 		crand vector "110 110 110"
 		add   #
 		pop   *v
 		a     "0 0 -300"
-		tps   10
-		life  1
+		tps   10.0
+		life  1.0
 	}
 	think
 	{
@@ -285,7 +362,7 @@ particle burning
 	init
 	{
 		push   *v
-		mul    float -15
+		mul    float -15.0
 		add    *s
 		add    vector "0 0 -24"
 		pop    *s
@@ -393,7 +470,7 @@ particle fadeTracer
 		blend  blend
 		style  line
 		color  "1 0 0 1"
-		life   3
+		life   3.0
 		tfade  out
 	}
 }

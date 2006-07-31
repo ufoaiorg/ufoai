@@ -536,8 +536,8 @@ item rpg_incendiary_ammo
 		name	"_Snap Shot"
 		skill	explosive
 		projtl	rocket
-		impact	explosion
-		hitbody explosion
+		impact	fire_explosion
+		hitbody fire_explosion
 		firesnd	weapons/rpg.wav
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
@@ -559,8 +559,8 @@ item rpg_incendiary_ammo
 		name	"_Aimed Shot"
 		skill	explosive
 		projtl	rocket
-		impact	explosion
-		hitbody explosion
+		impact	fire_explosion
+		hitbody fire_explosion
 		firesnd	weapons/rpg.wav
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
@@ -757,7 +757,7 @@ item bolterrifle_ammo
 		projtl  bullet
 		impact  bulletImpact
 		hitbody blood
-		firesnd weapons/tachyon.wav
+		firesnd weapons/tachyonsniper.wav
 		speed   0
 		spread  "3.5 3.5"
 		crouch  0.8
@@ -776,7 +776,7 @@ item bolterrifle_ammo
 		projtl  bullet
 		impact  bulletImpact
 		hitbody blood
-		firesnd weapons/tachyon.wav
+		firesnd weapons/tachyonsniper.wav
 		speed   0
 		spread  "7 11"
 		crouch  0.5
@@ -816,7 +816,7 @@ item stunrod
 		projtl	null
 		impact	null
 		hitbody	blood
-		firesnd	misc/klonk03.wav
+		firesnd	misc/stun.wav
 		speed	0
 		range	1.5
 		shots	1
@@ -833,7 +833,7 @@ item stunrod
 		projtl	null
 		impact	null
 		hitbody	blood
-		firesnd	misc/klonk03.wav
+		firesnd	misc/stun.wav
 		speed	0
 		range	1.5
 		shots	1

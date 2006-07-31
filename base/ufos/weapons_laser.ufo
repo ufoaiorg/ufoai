@@ -198,10 +198,10 @@ item heavylaser_ammo
 	{
 		name	"_Overload"
 		skill	heavy
-		projtl	laserPulse
+		projtl	laserOverload
 		impact	laserImpact
 		hitbody	laserImpact
-		firesnd	weapons/laser.wav
+		firesnd	weapons/tachyonbig.wav
 		speed	0
 		spread	"3.5 3.5"
 		crouch	0.7

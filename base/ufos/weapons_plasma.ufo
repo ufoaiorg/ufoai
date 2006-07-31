@@ -35,24 +35,24 @@ item plaspistol_ammo
 	{
 		name	"_Charged Pulse"
 		skill 	assault
-		projtl	plasmaChargedPulse
+		projtl	plasmaMiniBall
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
 		firesnd	weapons/plasma_s.wav
-		speed	0
+		speed	800
 		spread	"4 4"
 		crouch	0.8
 		range	15
 		shots	5
 		ammo	1
-		rof		10
+		rof		6
 		time	11
-		damage	"12 10"
+		damage	"12 5"
 		dmgtype plasma
 	}
 	secondary
 	{
-		name	"_Continuous Beam"
+		name	"_Continuous Stream"
 		skill 	heavy
 		projtl	plasmaContinuous
 		impact	plasmaImpact
@@ -63,9 +63,9 @@ item plaspistol_ammo
 		spread	"15 5"
 		crouch	1.0
 		range	10
-		shots	48
+		shots	46
 		ammo	2
-		rof		50
+		rof		32
 		time	15
 		damage	"6 2"
 		dmgtype plasma
@@ -109,23 +109,24 @@ item plasrifle_ammo
 	{
 		name	"_Charged Pulse"
 		skill 	assault
-		projtl	plasmaChargedPulse
+		projtl	plasmaBall
 		impact	plasmaImpactCharged
 		hitbody	plasmaImpactCharged
 		firesnd	weapons/plasma_s.wav
-		speed	0
+		speed	700
 		spread	"3 3"
 		crouch	0.7
 		range	22
-		shots	1
+		shots	5
 		ammo	1
+		rof		5
 		time	13
-		damage	"60 15"
+		damage	"14 5"
 		dmgtype plasma
 	}
 	secondary
 	{
-		name	"_Continuous Beam"
+		name	"_Continuous Stream"
 		skill 	heavy
 		projtl	plasmaContinuous
 		impact	plasmaImpact
@@ -136,11 +137,11 @@ item plasrifle_ammo
 		spread	"9 5"
 		crouch	1.0
 		range	18
-		shots	35
+		shots	30
 		ammo	3
-		rof		25
+		rof		21
 		time	22
-		damage	"9 2"
+		damage	"12 2"
 		dmgtype plasma
 	}
 }
@@ -236,9 +237,9 @@ item plasblaster_ammo
 	{
 		name	"_Charged Ball"
 		skill 	explosive
-		projtl	plasmaBall
-		impact	plasmaImpactCharged
-		hitbody	plasmaImpactCharged
+		projtl	plasmaBigBall
+		impact	plasmaBigImpact
+		hitbody	plasmaBigImpact
 		firesnd	weapons/plasma_s.wav
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
@@ -268,11 +269,11 @@ item plasblaster_ammo
 		spread	"11 5"
 		crouch	1.0
 		range	15
-		shots	35
+		shots	22
 		ammo	3
-		rof		25
+		rof		15
 		time	26
-		damage	"13 3"
+		damage	"21 6"
 		dmgtype plasma
 	}
 }
@@ -298,9 +299,9 @@ item grenl_plasma_ammo
 	{
 		name	"_Single Shot"
 		skill	explosive
-		projtl	grenl_ammo
-		impact	plasmaImpactCharged
-		hitbody plasmaImpactCharged
+		projtl	grenl_plasma_ammo
+		impact	plasmaBigExplosion
+		hitbody plasmaBigExplosion
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
@@ -323,9 +324,9 @@ item grenl_plasma_ammo
 	{
 		name	"_Single Shot"
 		skill	explosive
-		projtl	grenl_ammo
-		impact	plasmaImpactCharged
-		hitbody plasmaImpactCharged
+		projtl	grenl_plasma_ammo
+		impact	plasmaBigExplosion
+		hitbody plasmaBigExplosion
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
 		bncsnd	misc/klonk03.wav
