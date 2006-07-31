@@ -1470,7 +1470,7 @@ void MN_DrawMenus(void)
 				case MN_STRING:
 					font = MN_GetFont(menu, node);
 					if (!node->mousefx || cl.time % 1000 < 500)
-						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], ref);
+						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, ref);
 					else
 						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], va("%s*\n", ref));
 					break;

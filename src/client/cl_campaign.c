@@ -1926,6 +1926,21 @@ void CL_UpdateCharacterStats(int won)
 }
 
 /**
+ * @brief Debug function to increase the kills and test the ranks
+ */
+void CL_DebugChangeCharacterStats_f(void)
+{
+	int i, j;
+	character_t* chr;
+	for (i = 0; i < baseCurrent->numWholeTeam;i++) {
+		chr = &baseCurrent->wholeTeam[i];
+		for (j=0; j<KILLED_NUM_TYPES; j++)
+			chr->kills[j]++;
+	}
+	CL_UpdateCharacterStats(1);
+}
+
+/**
   * @brief
   * @sa CL_ParseResults
   * @sa CL_ParseCharacterData
@@ -2820,4 +2835,7 @@ void CL_ResetCampaign(void)
 	Cmd_AddCommand("game_save", CL_GameSaveCmd);
 	Cmd_AddCommand("game_load", CL_GameLoadCmd);
 	Cmd_AddCommand("game_comments", CL_GameCommentsCmd);
+#ifdef DEBUG
+	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f);
+#endif
 }
