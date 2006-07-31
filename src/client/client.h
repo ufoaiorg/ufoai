@@ -680,6 +680,20 @@ void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num);
 void CL_CheckInventory(equipDef_t * equip);
 void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter);
 
+/* cl_radar.c */
+#define MAX_UFOONGEOSCAPE	8
+struct aircraft_s;
+	
+typedef struct radar_s {
+	int range;						/* Range of radar */
+	int ufos[MAX_UFOONGEOSCAPE];	/* Ufos id sensored by radar (gd.ufos[id]) */
+	int numUfos;					/* Num ufos sensored by radar */
+} radar_t;
+extern void RADAR_RemoveUfo(radar_t* radar, const struct aircraft_s* ufo);
+extern void RADAR_ChangeRange(radar_t* radar, int change);
+extern void Radar_Initialise(radar_t* radar, int range);
+extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar, const struct aircraft_s* ufo);
+
 /* cl_research.c */
 #include "cl_research.h"
 

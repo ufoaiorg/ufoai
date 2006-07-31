@@ -39,8 +39,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_BASES		8
 #define MAX_DESC		256
 
-#define MAX_UFOONGEOSCAPE	8
-
 #define SCROLLSPEED		1000
 
 /* this is not best - but better than hardcoded every time i used it */
@@ -221,9 +219,7 @@ typedef struct base_s {
 
 	/* the onconstruct value of the buliding */
 	/* building_radar increases the sensor width */
-	int sensorWidth;							/* radar radius */
-	aircraft_t*	sensoredAircraft[MAX_AIRCRAFT];	/* UFOs in radar range */
-	int numSensoredAircraft;					/* Count of UFOs inside radar range */
+	radar_t	radar;
 
 	/* equipment that each team carries */
 	inventory_t teamInv[MAX_WHOLETEAM];
@@ -250,9 +246,6 @@ typedef struct base_s {
 /* Currently displayed/accessed base. */
 extern base_t *baseCurrent;
 
-extern qboolean CL_ListRemoveItem(void* list[], int* numList, void* item);
-extern void B_NotifyAircraftRemove(const aircraft_t* aircraft);
-extern qboolean B_CheckAircraftSensored(base_t* base, const aircraft_t* aircraft);
 void B_SetSensor(void);
 void B_InitEmployees(void);
 void B_UpdateBaseData(void);

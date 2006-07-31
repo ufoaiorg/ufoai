@@ -507,17 +507,13 @@ extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* lin
   */
 static void MAP_MapDrawLine(const menuNode_t* node, const mapline_t* line)
 {
-	vec4_t color;
+	vec4_t color = {1, 0.5, 0.5, 1};
 	int pts[LINE_MAXPTS * 2];
 	int *p;
 	int i, start, old;
 
-	/* set color */
-	VectorSet(color, 1.0f, 0.5f, 0.5f);
-	color[3] = 1.0f;
-	re.DrawColor(color);
-
 	/* draw */
+	re.DrawColor(color);
 	start = 0;
 	old = 512;
 	for (i = 0, p = pts; i < line->n; i++, p += 2) {
@@ -606,62 +602,80 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 {
 	aircraft_t *aircraft;
 	actMis_t *ms;
-	int i, j, x, y;
+	int i, x, y;
+	base_t* base;
 
 	assert(node);
 
 	/* draw mission pics */
 	Cvar_Set("mn_mapdaytime", "");
-	for (i = 0; i < ccs.numMissions; i++) {
-		ms = &ccs.mission[i];
-		if (!MAP_MapToScreen(node, ms->realPos, &x, &y))
-			continue;
-		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
-		if (ms == selMis) {
-			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selMis->def->active ? "circleactive" : "circle");
-			Cvar_Set("mn_mapdaytime", CL_MapIsNight(ms->realPos) ? _("Night") : _("Day"));
+	for (ms = ccs.mission + ccs.numMissions - 1 ; ms >= ccs.mission ; ms--)
+		if (MAP_MapToScreen(node, ms->realPos, &x, &y)) {
+			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
+			if (ms == selMis) {
+				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selMis->def->active ? "circleactive" : "circle");
+				Cvar_Set("mn_mapdaytime", CL_MapIsNight(ms->realPos) ? _("Night") : _("Day"));
+			}
 		}
-	}
 
-	/* draw base pics */
-	for (j = 0; j < gd.numBases; j++)
-		if (gd.bases[j].founded) {
-			if (!MAP_MapToScreen(node, gd.bases[j].pos, &x, &y))
-				continue;
 
-			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
+	/* draw bases pics */
+	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--) {
+		if (! base->founded || ! MAP_MapToScreen(node, base->pos, &x, &y))
+			continue;
 
-			if (gd.bases[j].numSensoredAircraft > 0)
-				re.DrawNormPic(x, y, i, i, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor");
+		/* Draw base */
+		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
 
-			/* draw aircrafts */
-			for (i = 0, aircraft = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, aircraft++)
-				if (aircraft->status > AIR_HOME) {
-					if (!MAP_MapToScreen(node, aircraft->pos, &x, &y))
-						continue;
-					re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, aircraft->image);
+		/* Draw base radar info */
+		if (base->radar.numUfos > 0) {
+			int pts[4];
+			vec4_t color = {0, 1, 0, 1};
+			re.DrawColor(color);
+			
+			/* Show base has ufo in range */
+			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor");
+			Vector2Set(pts, x, y);
 
-					if (aircraft->status >= AIR_TRANSIT) {
-						mapline_t path;
+			/* Draw lines from base to ufos in range */
+			for (i = base->radar.numUfos - 1 ; i >= 0 ; i--)
+				if (MAP_MapToScreen(node, (gd.ufos + base->radar.ufos[i])->pos, &x, &y)) {
+					Vector2Set(pts + 2, x, y);
+					re.DrawLineStrip(2, pts);
+				}
+				
+			re.DrawColor(NULL);
+		}
 
-						path.n = aircraft->route.n - aircraft->point;
-						/* TO DO : check why path.n can be sometime equal to -1 */
-						if (path.n > 1) {
-							memcpy(path.p, aircraft->pos, sizeof(vec2_t));
- 							memcpy(path.p + 1, aircraft->route.p + aircraft->point + 1, (path.n - 1) * sizeof(vec2_t));
-							MAP_MapDrawLine(node, &path);
-						}
-					}
+		/* draw aircrafts of base */
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ; aircraft >= base->aircraft ; aircraft--)
+			if (aircraft->status > AIR_HOME && MAP_MapToScreen(node, aircraft->pos, &x, &y)) {
+				/* Draw aircraft */
+				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, aircraft->image);
 
-					if (aircraft == selectedAircraft) {
-						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
-						
-						if (aircraft->status == AIR_UFO && MAP_MapToScreen(node, (gd.ufos + aircraft->ufo)->pos, &x, &y))
-							re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
-							
+				/* Draw aircraft route */
+				if (aircraft->status >= AIR_TRANSIT) {
+					mapline_t path;
+
+					path.n = aircraft->route.n - aircraft->point;
+					/* TO DO : check why path.n can be sometime equal to -1 */
+					if (path.n > 1) {
+						memcpy(path.p, aircraft->pos, sizeof(vec2_t));
+							memcpy(path.p + 1, aircraft->route.p + aircraft->point + 1, (path.n - 1) * sizeof(vec2_t));
+						MAP_MapDrawLine(node, &path);
 					}
 				}
-		}
+
+				/* Draw selected aircraft */
+				if (aircraft == selectedAircraft) {
+					re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
+						
+					/* Draw ufo purchased by selected aircraft */
+					if (aircraft->status == AIR_UFO && MAP_MapToScreen(node, (gd.ufos + aircraft->ufo)->pos, &x, &y))
+						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
+				}
+			}
+	}
 
 	/* draws ufos */
 	for (aircraft = gd.ufos + gd.numUfos - 1 ; aircraft >= gd.ufos ; aircraft --) {

@@ -86,118 +86,6 @@ static value_t valid_vars[] = {
 };
 
 /**
- * @brief Check if an item exists in a list, return its position in list or -1
- */
-extern int CL_ListIsItemExists(void* list[], int numList, const void* item)
-{
-	int num;
-
-	for (num = 0 ; num < numList ; num++, list++)
-		if (*list == item)
-			return num;
-
-	return -1;
-}
-
-/**
- * @brief Add an item in a list
- */
-extern qboolean CL_ListAddItem(void* list[], int* numList, int maxNumList, void* item)
-{
-	if (*numList >= maxNumList)
-		return qfalse;
-
-	list[*numList] = item;
-	(*numList)++;
-	return qtrue;
-}
-
-/**
- * @brief Remove an item from a list
- */
-extern qboolean CL_ListRemoveItem(void* list[], int* numList, void* item)
-{
-	int i;
-
-	for (i=0 ; i < *numList ; i++, list++)
-		if (*list == item) {
-			(*numList)--;
-			*list = list[*numList];
-			return qtrue;
-		}
-
-	return qfalse;
-}
-
-/**
- * @brief Remove an item from a list, from its position in list
- */
-extern qboolean CL_ListRemoveItemNum(void* list[], int* numList, int numItem)
-{
-	if (numItem >= 0) {
-		(*numList)--;
-		list[numItem] = list[*numList];
-		return qtrue;
-	}
-
-	return qfalse;
-}
-
-/**
- * @brief Notify bases that the specified aircraft has been removed from geoscape
- * It will be removed from bases sensors
- */
-extern void B_NotifyAircraftRemove(const aircraft_t* aircraft)
-{
-	base_t* base;
-
-	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
-		CL_ListRemoveItem((void**)base->sensoredAircraft, &base->numSensoredAircraft, (void*)aircraft);
-}
-
-/**
- * @brief Check if the specified  is inside the sensor range of base, and update base sensor and aircraft data
- * Return true if the aircraft is inside sensor
- */
-extern qboolean B_CheckAircraftSensored(base_t* base, const aircraft_t* aircraft)
-{
-	int dist;
-	int numAircraftSensored = CL_ListIsItemExists((void**)base->sensoredAircraft, base->numSensoredAircraft, aircraft);
-
-	dist = CP_GetDistance(base->pos, aircraft->pos);
-
-	if (base->sensorWidth >= dist) {
-		/* Aircraft is in the sensor range */
-		if (numAircraftSensored < 0) {
-			Com_DPrintf("#0 New UFO in radar : %p - ufos in radar : %i\n", aircraft, base->numSensoredAircraft);
-			CL_ListAddItem((void**)base->sensoredAircraft, &base->numSensoredAircraft, MAX_AIRCRAFT, (void*)aircraft);
-			Com_DPrintf("#1 New UFO in radar : %p - ufos in radar : %i\n", aircraft, base->numSensoredAircraft);
-		}
-		return qtrue;
-	}
-
-	/* Aircraft is not in the sensor range */
-	if (numAircraftSensored >= 0) {
-		Com_DPrintf("#0 New UFO out of radar : %p - ufos in radar : %i\n", aircraft, base->numSensoredAircraft);
-		CL_ListRemoveItemNum((void**)base->sensoredAircraft, &base->numSensoredAircraft, numAircraftSensored);
-		Com_DPrintf("#1 New UFO ouf of radar : %p - ufos in radar : %i\n", aircraft, base->numSensoredAircraft);
-	}
-	return qfalse;
-}
-
-/**
- * @brief Calc and set in base the count of ufos within the base radar range
- */
-static void B_SetUfoCountInSensor(base_t* base)
-{
-	aircraft_t* ufo;
-
-	base->numSensoredAircraft = 0;
-	for (ufo = gd.ufos + gd.numUfos - 1 ; ufo >= gd.ufos ; ufo--)
-		B_CheckAircraftSensored(base, ufo);
-}
-
-/**
  * @brief Sets a sensor.
  *
  * inc_sensor and dec_sensor are script commands that increase the amount
@@ -223,15 +111,9 @@ void B_SetSensor(void)
 	base = gd.bases + i;
 
 	if (!Q_strncmp(Cmd_Argv(0), "inc", 3))
-		base->sensorWidth += amount;	/* inc_sensor */
+		RADAR_ChangeRange(&(base->radar), amount);	/* inc_sensor */
 	else if (!Q_strncmp(Cmd_Argv(0), "dec", 3))
-		base->sensorWidth -= amount; /* dec_sensor */
-	else
-		return;
-
-	/* Set the exact count of sensored ufos within the new range */
-	B_SetUfoCountInSensor(base);
-
+		RADAR_ChangeRange(&(base->radar), -amount);	/* dec_sensor */
 }
 
 /**
@@ -1742,7 +1624,7 @@ void B_BuildBase(void)
 			Cbuf_AddText("mn_push bases\n");
 			Q_strncpyz(messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string), MAX_MESSAGE_TEXT);
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
-			B_SetUfoCountInSensor(baseCurrent);
+			Radar_Initialise(&(baseCurrent->radar), 0);
 			return;
 		}
 	} else {
@@ -1936,8 +1818,8 @@ static void B_BaseList_f(void)
 		Com_Printf("Base id %i\n", base->idx);
 		Com_Printf("Base title %s\n", base->name);
 		Com_Printf("Base founded %i\n", base->founded);
-		Com_Printf("Base sensorWidth %s\n", base->sensorWidth);
-		Com_Printf("Base numSensoredAircraft %i\n", base->numSensoredAircraft);
+		Com_Printf("Base sensorWidth %s\n", base->radar.range);
+		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUfos);
 		Com_Printf("Base aircraft %i\n", base->numAircraftInBase);
 		for (j = 0; j < base->numAircraftInBase; j++) {
 			Com_Printf("Base aircraft-team %i\n", *(base->aircraft[j].teamSize));

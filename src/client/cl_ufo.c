@@ -128,6 +128,7 @@ static void UFO_NewUfoOnGeoscape(void)
  */
 static void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo) {
 	int num;
+	base_t* base;
 	
 	/* Remove ufo from ufos list */
 	num = ufo - gd.ufos;
@@ -137,8 +138,11 @@ static void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo) {
 	memcpy(gd.ufos + num, gd.ufos + num + 1, (gd.numUfos - num - 1) * sizeof(aircraft_t));	
 	gd.numUfos--;
 
+	/* Remove ufo from bases radar */
+	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
+		RADAR_RemoveUfo(&(base->radar), ufo);
+
 	/* Notications */
-	B_NotifyAircraftRemove(ufo);
 	CL_PopupNotifyUfoRemoved(ufo);
 	CL_AircraftsNotifyUfoRemoved(ufo);
 }
@@ -157,9 +161,9 @@ static void UFO_RemoveUfoFromGeoscape_f(void)
  */
 extern void UFO_CampaignCheckEvents(void)
 {
-	int j;
 	qboolean visible;
 	aircraft_t*	ufo;
+	base_t* base;
 	
 	/* For each ufo in geoscape */
 	for (ufo = gd.ufos + gd.numUfos - 1 ; ufo >= gd.ufos; ufo--) {
@@ -167,8 +171,8 @@ extern void UFO_CampaignCheckEvents(void)
 		ufo->visible = qfalse;
 
 		/* Check for ufo detection by bases */
-		for (j = 0; j < gd.numBases; j++)
-			ufo->visible |= B_CheckAircraftSensored(gd.bases + j, ufo);
+		for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
+			ufo->visible |= RADAR_CheckUfoSensored(&(base->radar), base->pos, ufo);
 
 		/* Check if ufo appears or disappears on radar */
 		if (visible != ufo->visible) {
