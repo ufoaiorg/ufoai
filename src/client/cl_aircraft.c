@@ -143,7 +143,7 @@ char *CL_AircraftStatusToName(aircraft_t * aircraft)
 	case AIR_TRANSPORT:
 		return _("Transportmission");
 	case AIR_RETURNING:
-		return _("Returning to homebase");
+		return _("Back to base");
 	default:
 		Com_Printf("Error: Unknown aircraft status for %s\n", aircraft->name);
 	}
