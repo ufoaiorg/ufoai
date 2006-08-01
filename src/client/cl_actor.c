@@ -40,32 +40,48 @@ static pos3_t mouseLastPos;
 
 /*
 ==============================================================
-
 ACTOR MENU UPDATING
-
 ==============================================================
 */
 
 /**
- * @brief Array containing the descriptions of skill levels.
+ * @brief Return the skill string for the given skill level
+ * @return skill string
+ * @param[in] skill a skill value between 0 and MAX_SKILL (TODO: 0? never reached?)
  */
-static char *skill_strings[10] = {
-	"Pathetic",
-	"Very Poor",
-	"Poor",
-	"Mediocre",
-	"Good",
-	"Very Good",
-	"Excellent",
-	"Amazing",
-	"Superhuman",
-	"Godlike"
-};
-
-/**
- * @brief Used to extract skill-level description from skill_strings[].
- */
-#define SKILL_TO_STRING(x)	_(skill_strings[x * 10/MAX_SKILL])
+static char *CL_GetSkillString(const int skill)
+{
+#ifdef DEBUG
+	if (skill > MAX_SKILL) {
+		Com_Printf("CL_GetSkillString: Skill is bigger than max allowed skill value\n");
+	}
+#endif
+	switch (skill*10/MAX_SKILL) {
+	case 0:
+		return _("Pathetic");
+	case 1:
+		return _("Very Poor");
+	case 2:
+		return _("Poor");
+	case 3:
+		return _("Medicore");
+	case 4:
+		return _("Good");
+	case 5:
+		return _("Very Good");
+	case 6:
+		return _("Excellent");
+	case 7:
+		return _("Amazing");
+	case 8:
+		return _("Superhuman");
+	case 9:
+		return _("Godlike");
+	default:
+		Com_Printf("CL_GetSkillString: Unknown skill: %i (index: %i)\n", skill, skill*10/MAX_SKILL);
+		return "";
+	}
+}
 
 /**
  * @brief Updates the character cvars for the given character.
@@ -91,7 +107,9 @@ void CL_CharacterCvars(character_t *chr)
 	Cvar_Set("mn_chrkillalien", va("%i", chr->kills[KILLED_ALIENS]));
 	Cvar_Set("mn_chrkillcivilian", va("%i", chr->kills[KILLED_CIVILIANS]));
 	Cvar_Set("mn_chrkillteam", va("%i", chr->kills[KILLED_TEAM]));
-	/*TODO: Doesn't work yet */
+	/* TODO: Doesn't work yet */
+	/* FIXME: Multiplayer don't have access to gd.ranks because they are not parsed, yet */
+	/* (and will never be) in multiplayer */
 	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Rank: %s"), gd.ranks[chr->rank].name);
 	Cvar_Set("mn_chrrank", messageBuffer);
 	Com_sprintf(messageBuffer, sizeof(messageBuffer), "%s", gd.ranks[chr->rank].image);
@@ -107,15 +125,15 @@ void CL_CharacterCvars(character_t *chr)
 	Cvar_Set("mn_vsnp", va("%i", chr->skills[SKILL_SNIPER]));
 	Cvar_Set("mn_vexp", va("%i", chr->skills[SKILL_EXPLOSIVE]));
 
-	Cvar_Set("mn_tpwr", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
-	Cvar_Set("mn_tspd", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_SPEED]), chr->skills[ABILITY_SPEED]));
-	Cvar_Set("mn_tacc", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_ACCURACY]), chr->skills[ABILITY_ACCURACY]));
-	Cvar_Set("mn_tmnd", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_MIND]), chr->skills[ABILITY_MIND]));
-	Cvar_Set("mn_tcls", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_CLOSE]), chr->skills[SKILL_CLOSE]));
-	Cvar_Set("mn_thvy", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_HEAVY]), chr->skills[SKILL_HEAVY]));
-	Cvar_Set("mn_tass", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_tsnp", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_SNIPER]), chr->skills[SKILL_SNIPER]));
-	Cvar_Set("mn_texp", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_tpwr", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
+	Cvar_Set("mn_tspd", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_SPEED]), chr->skills[ABILITY_SPEED]));
+	Cvar_Set("mn_tacc", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_ACCURACY]), chr->skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_tmnd", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_MIND]), chr->skills[ABILITY_MIND]));
+	Cvar_Set("mn_tcls", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_CLOSE]), chr->skills[SKILL_CLOSE]));
+	Cvar_Set("mn_thvy", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_HEAVY]), chr->skills[SKILL_HEAVY]));
+	Cvar_Set("mn_tass", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_tsnp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_SNIPER]), chr->skills[SKILL_SNIPER]));
+	Cvar_Set("mn_texp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
 }
 
 /**
@@ -156,15 +174,15 @@ void CL_UGVCvars(character_t *chr)
 	Cvar_Set("mn_vsnp", va("%i", chr->skills[SKILL_SNIPER]));
 	Cvar_Set("mn_vexp", va("%i", chr->skills[SKILL_EXPLOSIVE]));
 
-	Cvar_Set("mn_tpwr", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
-	Cvar_Set("mn_tspd", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_SPEED]), chr->skills[ABILITY_SPEED]));
-	Cvar_Set("mn_tacc", va("%s (%i)", SKILL_TO_STRING(chr->skills[ABILITY_ACCURACY]), chr->skills[ABILITY_ACCURACY]));
-	Cvar_Set("mn_tmnd", va("%s (0)", SKILL_TO_STRING(chr->skills[ABILITY_MIND])));
-	Cvar_Set("mn_tcls", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_CLOSE]), chr->skills[SKILL_CLOSE]));
-	Cvar_Set("mn_thvy", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_HEAVY]), chr->skills[SKILL_HEAVY]));
-	Cvar_Set("mn_tass", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_tsnp", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_SNIPER]), chr->skills[SKILL_SNIPER]));
-	Cvar_Set("mn_texp", va("%s (%i)", SKILL_TO_STRING(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_tpwr", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
+	Cvar_Set("mn_tspd", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_SPEED]), chr->skills[ABILITY_SPEED]));
+	Cvar_Set("mn_tacc", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_ACCURACY]), chr->skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_tmnd", va("%s (0)", CL_GetSkillString(chr->skills[ABILITY_MIND])));
+	Cvar_Set("mn_tcls", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_CLOSE]), chr->skills[SKILL_CLOSE]));
+	Cvar_Set("mn_thvy", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_HEAVY]), chr->skills[SKILL_HEAVY]));
+	Cvar_Set("mn_tass", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_tsnp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_SNIPER]), chr->skills[SKILL_SNIPER]));
+	Cvar_Set("mn_texp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
 }
 
 /**
