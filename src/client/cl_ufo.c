@@ -178,13 +178,13 @@ extern void UFO_CampaignCheckEvents(void)
 
 		/* Check for ufo detection by bases */
 		for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
-			ufo->visible |= RADAR_CheckUfoSensored(&(base->radar), base->pos, ufo);
+			ufo->visible |= RADAR_CheckUfoSensored(&(base->radar), base->pos, ufo, visible);
 
 		/* Check for ufo tracking by aircrafts */
 		if (visible || ufo->visible)
 			for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
 				for (aircraft = base->aircraft + base->numAircraftInBase - 1 ; aircraft >= base->aircraft ; aircraft--)
-					ufo->visible |= RADAR_CheckUfoSensored(&(aircraft->radar), aircraft->pos, ufo);
+					ufo->visible |= RADAR_CheckUfoSensored(&(aircraft->radar), aircraft->pos, ufo, qtrue);
 
 		/* Check if ufo appears or disappears on radar */
 		if (visible != ufo->visible) {

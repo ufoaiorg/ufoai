@@ -32,7 +32,8 @@ extern void RADAR_RemoveUfo(radar_t* radar, const aircraft_t* ufo);
 extern void Radar_NotifyUfoRemoved(radar_t* radar, const aircraft_t* ufo);
 extern void RADAR_ChangeRange(radar_t* radar, int change);
 extern void Radar_Initialise(radar_t* radar, int range);
-extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar, const aircraft_t* ufo);
+extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
+	const aircraft_t* ufo, qboolean wasUfoSensored);
 
 /**
  * @brief Add an ufo in the list of sensored ufo
@@ -115,7 +116,8 @@ extern void Radar_Initialise(radar_t* radar, int range)
  * @brief Check if the specified ufo is inside the sensor range of base
  * Return true if the aircraft is inside sensor
  */
-extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar, const aircraft_t* ufo)
+extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
+const aircraft_t* ufo, qboolean wasUfoSensored)
 {
 	int dist;
 	int num;
@@ -129,7 +131,7 @@ extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar, const ai
 	numAircraftSensored = RADAR_IsUfoSensored(radar, num);	/* indice of ufo in radar list */
 	dist = CP_GetDistance(posRadar, ufo->pos);	/* Distance from radar to ufo */
 
-	if (radar->range >= dist) {
+	if (radar->range + (wasUfoSensored ? radar->range / 10 : 0) >= dist) {
 		/* Ufo is inside the radar range */
 		if (numAircraftSensored < 0) {
 			/* Ufo was not sensored by the radar */
