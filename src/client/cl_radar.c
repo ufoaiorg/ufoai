@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x, int y, vec2_t pos);
 static qboolean RADAR_AddUfo(radar_t* radar, int numUfo);
 static int RADAR_IsUfoSensored(const radar_t* radar, int numUfo);
 extern void RADAR_RemoveUfo(radar_t* radar, const aircraft_t* ufo);
@@ -34,6 +35,56 @@ extern void RADAR_ChangeRange(radar_t* radar, int change);
 extern void Radar_Initialise(radar_t* radar, int range);
 extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
 	const aircraft_t* ufo, qboolean wasUfoSensored);
+
+/**
+ * @brief Display radar in geoscape
+ */
+#define RADAR_DRAW_POINTS	60
+extern void RADAR_DrawInMap(const menuNode_t* node, const radar_t* radar, int x, int y, vec2_t pos)
+{
+	int pts[RADAR_DRAW_POINTS * 2 + 2];
+	int pts2[RADAR_DRAW_POINTS * 2 + 2];
+	int i, xCircle, yCircle;
+	vec4_t color = {0, 1, 0, 1};
+	vec2_t posCircle;
+	float cosinus, sinus, rangeTracking;
+
+	if (radar->numUfos <= 0)
+		return;
+	
+	/* Set color */
+	re.DrawColor(color);
+
+	/* Show radar range zones */
+	rangeTracking = radar->range + radar->range / 10.0f;
+	for ( i = 0 ; i <= RADAR_DRAW_POINTS ; i++ ) {
+    	cosinus = cos(i * 6.283185306 / RADAR_DRAW_POINTS);
+    	sinus = sin(i * 6.283185306 / RADAR_DRAW_POINTS);
+		posCircle[0] = pos[0] + cosinus * radar->range;
+		posCircle[1] = pos[1] + sinus * radar->range;
+		MAP_MapToScreen(node, posCircle, &xCircle, &yCircle);
+		pts[i * 2] = xCircle;
+		pts[i * 2 + 1] = yCircle;
+		posCircle[0] = pos[0] + cosinus * rangeTracking;
+		posCircle[1] = pos[1] + sinus * rangeTracking;
+		MAP_MapToScreen(node, posCircle, &xCircle, &yCircle);
+		pts2[i * 2] = xCircle;
+		pts2[i * 2 + 1] = yCircle;
+	}
+	re.DrawLineStrip(RADAR_DRAW_POINTS + 1, pts);
+	re.DrawLineStrip(RADAR_DRAW_POINTS + 1, pts2);
+	/*re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor");*/
+
+	/* Draw lines from radar to ufos sensored */
+	Vector2Set(pts, x, y);
+	for (i = radar->numUfos - 1 ; i >= 0 ; i--)
+		if (MAP_MapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y)) {
+			Vector2Set(pts + 2, x, y);
+			re.DrawLineStrip(2, pts);
+		}
+
+	re.DrawColor(NULL);
+}
 
 /**
  * @brief Add an ufo in the list of sensored ufo
@@ -131,7 +182,7 @@ const aircraft_t* ufo, qboolean wasUfoSensored)
 	numAircraftSensored = RADAR_IsUfoSensored(radar, num);	/* indice of ufo in radar list */
 	dist = CP_GetDistance(posRadar, ufo->pos);	/* Distance from radar to ufo */
 
-	if (radar->range + (wasUfoSensored ? radar->range / 10 : 0) >= dist) {
+	if (radar->range + (wasUfoSensored ? radar->range / 10 : 0) > dist) {
 		/* Ufo is inside the radar range */
 		if (numAircraftSensored < 0) {
 			/* Ufo was not sensored by the radar */

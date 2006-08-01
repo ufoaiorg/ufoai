@@ -82,13 +82,12 @@ extern void MAP_MapClick(const menuNode_t* node, int x, int y);
 
 /* Functions : Drawing map and coordinates */
 static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y);
-static qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
+extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 static void PolarToVec(const vec2_t a, vec3_t v);
 static void VecToPolar(const vec3_t v, vec2_t a);
 extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 static void MAP_MapDrawLine(const menuNode_t* node, const mapline_t* line);
-static void MAP_DrawRadarMapMarker(const menuNode_t* node, const radar_t* radar, int x, int y);
 static void MAP_Draw3DMapMarkers(const menuNode_t* node, float latitude, float longitude);
 static void MAP_DrawMapMarkers(const menuNode_t* node);
 extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D);
@@ -384,7 +383,7 @@ static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, in
 /**
   * @brief
   */
-static qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y)
+extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y)
 {
 	float sx;
 
@@ -606,34 +605,6 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
 		}
 }
 
-/**
- * @brief Display geoscape markers for a radar
- */
-static void MAP_DrawRadarMapMarker(const menuNode_t* node, const radar_t* radar, int x, int y)
-{
-	int pts[4] = {x, y};
-	int i;
-	vec4_t color = {0, 1, 0, 1};
-	
-	/* Draw radar info */
-	if (radar->numUfos <= 0)
-		return;
-	
-	re.DrawColor(color);
-
-	/* Show radar zone */
-	re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "sensor");
-
-	/* Draw lines from radar to ufos sensored */
-	for (i = radar->numUfos - 1 ; i >= 0 ; i--)
-		if (MAP_MapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y)) {
-			Vector2Set(pts + 2, x, y);
-			re.DrawLineStrip(2, pts);
-		}
-
-	re.DrawColor(NULL);
-}
-
 /*
  * @brief
  */
@@ -663,20 +634,21 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
 		if (! base->founded || ! MAP_MapToScreen(node, base->pos, &x, &y))
 			continue;
 
+		/* Draw base radar info */
+		RADAR_DrawInMap(node, &(base->radar), x, y, base->pos);
+
 		/* Draw base */
 		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
-
-		/* Draw base radar info */
-		MAP_DrawRadarMapMarker(node, &(base->radar), x, y);
 
 		/* draw aircrafts of base */
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ; aircraft >= base->aircraft ; aircraft--)
 			if (aircraft->status > AIR_HOME && MAP_MapToScreen(node, aircraft->pos, &x, &y)) {
-				/* Draw aircraft */
-				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, aircraft->image);
 
 				/* Draw aircraft radar */
-				MAP_DrawRadarMapMarker(node, &(aircraft->radar), x, y);
+				RADAR_DrawInMap(node, &(aircraft->radar), x, y, aircraft->pos);
+
+				/* Draw aircraft */
+				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, aircraft->image);
 
 				/* Draw aircraft route */
 				if (aircraft->status >= AIR_TRANSIT) {

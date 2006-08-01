@@ -681,12 +681,15 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter);
 /* cl_radar.c */
 #define MAX_UFOONGEOSCAPE	8
 struct aircraft_s;
-
+struct menuNode_s;
+	
 typedef struct radar_s {
 	int range;						/* Range of radar */
 	int ufos[MAX_UFOONGEOSCAPE];	/* Ufos id sensored by radar (gd.ufos[id]) */
 	int numUfos;					/* Num ufos sensored by radar */
 } radar_t;
+
+extern void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, int x, int y, vec2_t pos);
 extern void RADAR_RemoveUfo(radar_t* radar, const struct aircraft_s* ufo);
 extern void Radar_NotifyUfoRemoved(radar_t* radar, const struct aircraft_s* ufo);
 extern void RADAR_ChangeRange(radar_t* radar, int change);
@@ -989,6 +992,7 @@ unsigned long *x86_TimerGetHistogram(void);
 #endif /* id386 */
 
 /* cl_map.c */
+extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
 extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D);
 extern void MAP_MapClick(const menuNode_t * node, int x, int y);
