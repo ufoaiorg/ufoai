@@ -335,6 +335,7 @@ endif
 
 debug: build_debug copy_debug
 all: build_debug build_release lang
+lazy: build_debug link_debug lang maps
 installer: win32installer linuxinstaller sourcearchive
 mappack:
 	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ../base/maps
@@ -351,7 +352,7 @@ sourcearchive:
 deb:
 	debuild binary
 
-links:
+link_debug:
 	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
 	ln -s src/$(BUILD_DEBUG_DIR)/ufoded ../ufoded
 	ln -s src/$(BUILD_DEBUG_DIR)/ufo ../ufo
@@ -1277,3 +1278,6 @@ lang:
 
 docs:
 	doxygen docs/doxyall
+
+maps:
+	cd ../base/maps; PATH=$(PATH):../../debugi386/; make
