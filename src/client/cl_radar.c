@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static qboolean RADAR_AddUfo(radar_t* radar, int numUfo);
 static int RADAR_IsUfoSensored(const radar_t* radar, int numUfo);
 extern void RADAR_RemoveUfo(radar_t* radar, const aircraft_t* ufo);
+extern void Radar_NotifyUfoRemoved(radar_t* radar, const aircraft_t* ufo);
 extern void RADAR_ChangeRange(radar_t* radar, int change);
 extern void Radar_Initialise(radar_t* radar, int range);
 extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar, const aircraft_t* ufo);
@@ -61,19 +62,34 @@ static int RADAR_IsUfoSensored(const radar_t* radar, int numUfo)
 }
 
 /**
- * @brief Specified ufo will no more be referenced by radar
+ * @brief Ufo will no more be referenced by radar
  */
 extern void RADAR_RemoveUfo(radar_t* radar, const aircraft_t* ufo)
 {
-	int* i;
-	int numUfo = ufo - gd.ufos;
+	int i, numUfo = ufo - gd.ufos;
 
-	for (i = radar->ufos + radar->numUfos - 1 ; i >= radar->ufos ; i--)
-		if (*i == numUfo) {
+	for (i = 0 ; i < radar->numUfos ; i++)
+		if (radar->ufos[i] == numUfo) {
 			radar->numUfos--;
-			*i = radar->ufos[radar->numUfos];
+			radar->ufos[i] = radar->ufos[radar->numUfos];
 			return;
 		}
+}
+
+/**
+ * @brief Notify that the specified ufo has been removed from geoscape
+ **/
+extern void Radar_NotifyUfoRemoved(radar_t* radar, const aircraft_t* ufo)
+{
+	int i, numUfo = ufo - gd.ufos;
+	
+	for (i = 0 ; i < radar->numUfos ; i++)
+		if (radar->ufos[i] == numUfo) {
+			radar->numUfos--;
+			radar->ufos[i] = radar->ufos[radar->numUfos];
+			i--;	/* Allow the moved value to be checked */
+		} else if (radar->ufos[i] > numUfo)
+			radar->ufos[i]--;
 }
 
 /**

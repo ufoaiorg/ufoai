@@ -129,6 +129,7 @@ static void UFO_NewUfoOnGeoscape(void)
 static void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo) {
 	int num;
 	base_t* base;
+	aircraft_t* aircraft;
 	
 	/* Remove ufo from ufos list */
 	num = ufo - gd.ufos;
@@ -138,9 +139,13 @@ static void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo) {
 	memcpy(gd.ufos + num, gd.ufos + num + 1, (gd.numUfos - num - 1) * sizeof(aircraft_t));	
 	gd.numUfos--;
 
-	/* Remove ufo from bases radar */
-	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
-		RADAR_RemoveUfo(&(base->radar), ufo);
+	/* Remove ufo from bases and aircrafts radars */
+	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--) {
+		Radar_NotifyUfoRemoved(&(base->radar), ufo);
+		
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ; aircraft >= base->aircraft ; aircraft--)
+			Radar_NotifyUfoRemoved(&(aircraft->radar), ufo);
+	}
 
 	/* Notications */
 	CL_PopupNotifyUfoRemoved(ufo);
