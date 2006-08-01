@@ -585,7 +585,7 @@ tech rs_weapon_heavylaser
 	up_chapter	weapons
 	description	"_heavylaser_txt"
 
-	requires	"rs_skill_heavy rs_weapon_laserrifle"
+	requires	"rs_skill_sniper rs_skill_heavy rs_weapon_laserrifle"
 	provides	heavylaser
 	time	20
 	researched	false
@@ -722,7 +722,7 @@ tech rs_weapon_tachyonrifle
 	up_chapter	weapons
 	description	"_tachyonrifle_txt"
 
-	requires	"rs_skill_assault rs_skill_explosive rs_tachyon"
+	requires	"rs_skill_explosive rs_skill_assault rs_tachyon"
 	provides	tachyonrifle
 	time	70
 	researched	false

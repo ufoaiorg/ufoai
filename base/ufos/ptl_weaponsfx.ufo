@@ -493,7 +493,7 @@ particle plasmaBigImpact
 {
 	init
 	{
-		push   int 50
+		push   int 60
 		nspawn plasmaBigSplash
 		kill
 	}
@@ -652,7 +652,7 @@ particle tachyonImpact
 		mul  float 10.0
 		sin  #
 		mul  #
-		add  pos "30 30"
+		add  pos "20 20"
 		pop  *size
 	}
 	think { kill }
@@ -662,11 +662,11 @@ particle tachyonSplash
 {
 	init
 	{
-		image  sfx/greenplas_02
+		image  sfx/greenball
 		blend  add
 		style  facing
 		tfade  out
-		size   "4 4"
+		size   "3 3"
 
 		crand  vector "30 30 30"
 		pop    *v
@@ -682,25 +682,36 @@ particle tachyonSplash
 	think { kill }
 }
 
-particle tachyonExplosion
+particle tachyonExplosion_1
+{
+	init
+	{
+		frame 1
+		endframe 7
+		image +sfx/greenplas_
+		blend blend
+		style facing
+		ffade in
+		size  "70 70"
+		fps   6.0
+		tps   0.75
+	}
+	think { kill }
+}
+
+particle tachyonExplosion_2
 {
 	init
 	{
 		frame 0
-		endframe 6
+		endframe 7
 		image +sfx/greenplas_
 		blend blend
 		style facing
-		size  "40 40"
-		fps   5.0
-		tps   0.8
-	}
-	run
-	{
-		push   pos "140 140"
-		mul    *t
-		add    pos "40 40"
-		pop    *size
+		ffade out
+		size  "70 70"
+		fps   6.0
+		tps   0.75
 	}
 	think { kill }
 }
@@ -709,8 +720,9 @@ particle tachyonBigImpact
 {
 	init
 	{
-		spawn  tachyonExplosion
-		push   int 60
+		spawn  tachyonExplosion_1
+		spawn  tachyonExplosion_2
+		push   int 30
 		nspawn tachyonBigSplash
 		kill
 	}
@@ -720,11 +732,11 @@ particle tachyonBigSplash
 {
 	init
 	{
-		image  sfx/greenplas_06
+		image  sfx/greenball
 		blend  add
 		style  facing
 		tfade  out
-		size   "5 5"
+		size   "4 4"
 
 		crand  vector "50 50 50"
 		pop    *v
@@ -733,7 +745,7 @@ particle tachyonBigSplash
 		add    *s
 		pop    *s
 
-		rand   float 1.0
+		rand   float 1.6
 		add    float 1.5
 		pop    *tps
 	}

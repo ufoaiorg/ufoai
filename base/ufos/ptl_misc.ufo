@@ -128,7 +128,7 @@ particle explosion_1
 		blend blend
 		style facing
 		ffade in
-		size  "200 200"
+		size  "170 170"
 		fps   8.0
 		tps   0.8
 		push  *v
@@ -150,7 +150,7 @@ particle explosion_2
 		blend blend
 		style facing
 		ffade out
-		size  "200 200"
+		size  "170 170"
 		fps   8.0
 		tps   0.8
 		push  *v

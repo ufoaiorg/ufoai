@@ -816,7 +816,7 @@ item stunrod
 		projtl	null
 		impact	null
 		hitbody	blood
-		firesnd	misc/stun.wav
+		firesnd	weapons/stun.wav
 		speed	0
 		range	1.5
 		shots	1
@@ -833,7 +833,7 @@ item stunrod
 		projtl	null
 		impact	null
 		hitbody	blood
-		firesnd	misc/stun.wav
+		firesnd	weapons/stun.wav
 		speed	0
 		range	1.5
 		shots	1
