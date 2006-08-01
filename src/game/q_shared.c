@@ -2039,7 +2039,6 @@ qboolean Com_CheckToInventory(inventory_t * i, int item, int container, int x, i
 	/* armor vs item */
 	if (!Q_strncmp(CSI->ods[item].type, "armor", MAX_VAR)) {
 		if (!CSI->ids[container].armor && !CSI->ids[container].all) {
-			Com_Printf("...could not drop armor to container %i\n", container);
 			return qfalse;
 		}
 	} else if (CSI->ids[container].armor)
