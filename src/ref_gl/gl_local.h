@@ -230,8 +230,6 @@ extern cvar_t *r_nocull;
 extern cvar_t *r_isometric;
 extern cvar_t *r_lerpmodels;
 
-extern cvar_t *r_lightlevel;	/* FIXME: This is a HACK to get the client's light level */
-
 extern cvar_t *r_anisotropic;
 extern cvar_t *r_ext_max_anisotropy;
 extern cvar_t *r_texture_lod;	/* lod_bias */

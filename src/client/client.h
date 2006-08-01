@@ -301,8 +301,6 @@ extern cvar_t *freelook;
 
 extern cvar_t *cl_logevents;
 
-extern cvar_t *cl_lightlevel;	/* FIXME HACK */
-
 extern cvar_t *cl_paused;
 extern cvar_t *cl_timedemo;
 
@@ -683,7 +681,7 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter);
 /* cl_radar.c */
 #define MAX_UFOONGEOSCAPE	8
 struct aircraft_s;
-	
+
 typedef struct radar_s {
 	int range;						/* Range of radar */
 	int ufos[MAX_UFOONGEOSCAPE];	/* Ufos id sensored by radar (gd.ufos[id]) */

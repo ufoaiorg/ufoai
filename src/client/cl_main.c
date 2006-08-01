@@ -91,8 +91,6 @@ cvar_t *cl_centerview;
 cvar_t *cl_worldlevel;
 cvar_t *cl_selected;
 
-cvar_t *cl_lightlevel;
-
 cvar_t *cl_numnames;
 
 cvar_t *mn_main;
@@ -1188,8 +1186,7 @@ void CL_InitLocal(void)
 	cl_worldlevel->modified = qfalse;
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET);
 
-/*	cl_lightlevel = Cvar_Get ("r_lightlevel", "0", 0); */
-
+	/* only 19 soldiers in soldier selection list */
 	cl_numnames = Cvar_Get("cl_numnames", "19", CVAR_NOSET);
 
 	difficulty = Cvar_Get("difficulty", "0", CVAR_NOSET);
