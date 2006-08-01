@@ -209,12 +209,21 @@ typedef struct base_s {
 
 	baseStatus_t baseStatus;
 
+	/* these are max. 19bits - see cvar cl_numnames */
+	/* hiredMask is teamMask from current selected aircraft */
 	int hiredMask;				/* hired mask for all soldiers in base */
-	int teamMask[MAX_AIRCRAFT];	/* assigned to a specific aircraft */
-	int deathMask;
 
+	/* these are 31bit masks (see baseCurrent->numWholeTeam should never exceed MAX_WHOLETEAM-1) */
+	/* NOTE: we only use the first 19 (because we can only select from 19 soldiers) */
+	/* see cl_numnames cvars */
+	int teamMask[MAX_AIRCRAFT];	/* assigned to a specific aircraft */
+	int deathMask;				/* mask of soldiers (relative to wholeTeam) that are died */
+
+	/* these should not be bigger than MAX_ACTIVETEAM */
 	int numHired;
 	int numOnTeam[MAX_AIRCRAFT];
+
+	/* this should not be bigger than MAX_WHOLETEAM */
 	int numWholeTeam;			/* available soldiers in this base */
 
 	/* the onconstruct value of the buliding */
