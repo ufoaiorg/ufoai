@@ -2779,7 +2779,7 @@ void CP_GetCampaigns_f(void)
 }
 
 /**
-  * @brief
+  * @brief Script function to select a campaign from campaign list
   */
 void CP_CampaignsClick_f(void)
 {
