@@ -430,15 +430,20 @@ void CL_CampaignRunAircraft(int dt)
 					CL_AircraftReturnToBase(aircraft);
 				}
 
-				/* Check if aircraft can attack purchased UFO */
+				/* Aircraft purchasing ufo */
 				if (aircraft->status == AIR_UFO) {
 					aircraft_t* ufo;
 
 					ufo = gd.ufos + aircraft->ufo;
 					if (abs(ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
-						Com_DPrintf("Aircraft touch UFO, back to base\n");
+						/* The aircraft can attack the ufo */	
+						Com_Printf("Aircraft touch UFO, back to base\n");
 						/* TO DO : display an attack popup */
 						CL_AircraftReturnToBase(aircraft);
+					}
+					else {
+						/* TO DO : Find better system to make the aircraft purchasing ufo */
+						CL_SendAircraftPurchasingUfo(aircraft, ufo);
 					}
 				}
 			}
@@ -759,8 +764,16 @@ extern void CL_AircraftsNotifyUfoRemoved(const aircraft_t* ufo)
  */
 extern void CL_AircraftsUfoDisappear(const aircraft_t* ufo)
 {
+	base_t*		base;
+	aircraft_t*	aircraft;
+
 	/* Aircrafts currently purchasing the specified ufo will be redirect to base */
-	CL_AircraftsNotifyUfoRemoved(ufo);
+	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1 ;
+		aircraft >= base->aircraft ; aircraft--)
+			if (aircraft->status == AIR_UFO)
+				if (ufo - gd.ufos == aircraft->ufo)
+					CL_AircraftReturnToBase(aircraft);
 }
 
 /**

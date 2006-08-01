@@ -996,6 +996,8 @@ extern void MAP_ResetAction(void);
 extern void MAP_SelectAircraft(aircraft_t* aircraft);
 extern void MAP_SelectMission(actMis_t* mission);
 extern void MAP_NotifyMissionRemoved(const actMis_t* mission);
+extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo);
+extern void MAP_NotifyUfoDisappear(const aircraft_t* ufo);
 extern void MAP_GameInit(void);
 
 /* cl_ufo.c */

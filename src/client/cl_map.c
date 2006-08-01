@@ -76,6 +76,7 @@ static void MAP_MultiSelectListAddItem(multiSelectType_t item_type, int item_id,
 static void MAP_MultiSelectExecuteAction_f(void);
 static void MAP_MultiSelectNotifyMissionRemoved(const actMis_t* mission);
 static void MAP_MultiSelectNotifyUfoRemoved(const aircraft_t* ufo);
+static void MAP_MultiSelectNotifyUfoDisappeared(const aircraft_t* ufo);
 extern void MAP_3DMapClick(const menuNode_t* node, int x, int y);
 extern void MAP_MapClick(const menuNode_t* node, int x, int y);
 
@@ -98,6 +99,7 @@ extern void MAP_SelectAircraft(aircraft_t* aircraft);
 extern void MAP_SelectMission(actMis_t* mission);
 extern void MAP_NotifyMissionRemoved(const actMis_t* mission);
 extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo);
+extern void MAP_NotifyUfoDisappear(const aircraft_t* ufo);
 extern void MAP_GameInit(void);
 
 /* static variables */
@@ -250,6 +252,14 @@ static void MAP_MultiSelectNotifyUfoRemoved(const aircraft_t* ufo)
 	for (i = 0 ; i < multiSelect.nbSelect ; i++)
 		if (multiSelect.selectType[i] == MULTISELECT_TYPE_UFO)
 			multiSelect.selectType[i] = MULTISELECT_TYPE_NONE;
+}
+
+/**
+ * @brief Notify the multi select system that an ufo disapeard on radars
+ */
+static void MAP_MultiSelectNotifyUfoDisappeared(const aircraft_t* ufo)
+{
+	MAP_MultiSelectNotifyUfoRemoved(ufo);
 }
 	
 /*
@@ -836,9 +846,24 @@ extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo)
 	/* Unselect the current selected ufo if its the same */
 	if (selectedUfo == ufo)
 		MAP_ResetAction();
-	
+	else if (selectedUfo > ufo)
+		selectedUfo--;
+
 	/* Notify the multi selection popup */
 	MAP_MultiSelectNotifyUfoRemoved(ufo);
+}
+
+/**
+ * @brief Notify that an ufo disappears on radars
+ */
+extern void MAP_NotifyUfoDisappear(const aircraft_t* ufo)
+{
+	/* Unselect the current selected ufo if its the same */
+	if (selectedUfo == ufo)
+		MAP_ResetAction();
+
+	/* Notify the multi selection popup */
+	MAP_MultiSelectNotifyUfoDisappeared(ufo);
 }
 
 /**
