@@ -914,7 +914,10 @@ void CL_LoadTeamMultiplayer(char *filename)
 	/* set base for multiplayer */
 	baseCurrent = &gd.bases[0];
 	gd.numBases = 1;
-	baseCurrent->hiredMask = 0;
+
+	/* FIXME: Check whether this is needed */
+/*	baseCurrent->hiredMask = 0;*/
+
 	CL_NewAircraft(baseCurrent, "craft_dropship");
 
 	/* open file */
