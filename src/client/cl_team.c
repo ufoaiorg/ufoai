@@ -588,11 +588,13 @@ void CL_ResetTeamInBase(void)
 
 /**
   * @brief Init the teamlist checkboxes
+  * @sa CL_UpdateHireVar
   */
 static void CL_MarkTeamCmd(void)
 {
 	int i, j, cnt = 0;
 	invList_t* ic;
+	qboolean alreadyInOtherShip = qfalse;
 
 	/* check if we are allowed to be here? */
 	/* we are only allowed to be here if we already set up a base */
@@ -606,9 +608,22 @@ static void CL_MarkTeamCmd(void)
 
 	for (i = 0; i < baseCurrent->numWholeTeam; i++) {
 		cnt = 0;
+		alreadyInOtherShip = qfalse;
 		Cvar_ForceSet(va("mn_name%i", i), baseCurrent->wholeTeam[i].name);
-		if (baseCurrent->hiredMask & (1 << i))
+		for (j = 0; j < MAX_AIRCRAFT; j++) {
+			if (j==baseCurrent->aircraftCurrent)
+				continue;
+			/* already on another aircraft */
+			if (baseCurrent->teamMask[j] & (1 << i))
+				alreadyInOtherShip = qtrue;
+		}
+		/* change the buttons */
+		if (!alreadyInOtherShip && baseCurrent->hiredMask & (1 << i))
 			Cbuf_AddText(va("listadd%i\n", i));
+		/* disable the button - the soldier is already on another aircraft */
+		else if (alreadyInOtherShip)
+			Cbuf_AddText(va("listdisable%i\n", i));
+
 		for (j = 0; j < csi.numIDs; j++) {
 			for (ic = baseCurrent->wholeTeam[i].inv->c[j]; ic; ic = ic->next) {
 				if (j != csi.idFloor && j != csi.idEquip)
@@ -667,16 +682,25 @@ static void CL_HireActorCmd(void)
 		baseCurrent->teamMask[baseCurrent->aircraftCurrent] &= ~(1 << num);
 		baseCurrent->numHired--;
 		baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]--;
-	} else if (baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] < MAX_ACTIVETEAM && !(baseCurrent->hiredMask & (1 << num))) {
-		if (baseCurrent && baseCurrent->aircraftCurrent >= 0)
+	} else {
+		if (baseCurrent->numOnTeam[baseCurrent->aircraftCurrent] < MAX_ACTIVETEAM) {
 			aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-		/* hire */
-		if (!aircraft || aircraft->size > baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]) {
-			Cbuf_AddText(va("listadd%i\n", num));
-			baseCurrent->hiredMask |= (1 << num);
-			baseCurrent->numHired++;
-			baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]++;
-			baseCurrent->teamMask[baseCurrent->aircraftCurrent] |= (1 << num);
+			/* check whether the soldier is already on another aircraft */
+			for (i = 0; i < MAX_AIRCRAFT; i++) {
+				if (i==baseCurrent->aircraftCurrent)
+					continue;
+				/* already on another aircraft */
+				if (baseCurrent->teamMask[i] & (1 << num))
+					return;
+			}
+			/* hire */
+			if (aircraft->size > baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]) {
+				Cbuf_AddText(va("listadd%i\n", num));
+				baseCurrent->hiredMask |= (1 << num);
+				baseCurrent->numHired++;
+				baseCurrent->numOnTeam[baseCurrent->aircraftCurrent]++;
+				baseCurrent->teamMask[baseCurrent->aircraftCurrent] |= (1 << num);
+			}
 		}
 	}
 	/* select the desired one anyways */
