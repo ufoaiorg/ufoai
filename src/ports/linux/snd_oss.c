@@ -24,9 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include <sys/ioctl.h>
 #include "snd_oss.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
 
 int audio_fd = -1;
 int snd_inited;

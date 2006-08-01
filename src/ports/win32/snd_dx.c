@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <float.h>
 
 #include "../../client/client.h"
-#include "../../client/snd_loc.h"
 #define _IDirectSoundFullDuplex_
 #include <dsound.h>
 #include "winquake.h"

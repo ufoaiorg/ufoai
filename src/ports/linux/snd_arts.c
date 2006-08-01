@@ -1,3 +1,8 @@
+/**
+ * @file snd_arts.c
+ * @brief Sound code for linux arts sound daemon
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
