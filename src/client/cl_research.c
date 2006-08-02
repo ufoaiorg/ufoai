@@ -1495,6 +1495,20 @@ void RS_GetProvided(char *id, char *provided)
 }
 #endif
 
+
+/**
+  * @brief Returns the tech pointer
+  * @param id unique id of a technology_t
+  */
+technology_t* RS_GetTechByIDX(int tech_idx)
+{
+	if (tech_idx < 0 || tech_idx >= gd.numTechnologies)
+		return NULL;
+	else
+		return &gd.technologies[tech_idx];
+}
+
+
 /**
   * @brief return a pointer to the technology identified by given id string
   */
@@ -1502,7 +1516,7 @@ technology_t *RS_GetTechByID(const char *id)
 {
 	int i = 0;
 
-	if (!id)
+	if (!id || !*id)
 		return NULL;
 
 	if (!Q_strncmp((char *) id, "nothing", MAX_VAR)

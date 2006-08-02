@@ -115,6 +115,7 @@ void RS_MarkResearchable(void);
 technology_t *RS_GetTechByID(const char *id);
 technology_t *RS_GetTechByProvided(const char *id_provided);
 technology_t **RS_GetTechsByType(researchType_t type);
+technology_t* RS_GetTechByIDX(int tech_idx);
 
 /* ufopedia function - but needs technology_t */
 void UP_DrawEntry( technology_t* tech );
