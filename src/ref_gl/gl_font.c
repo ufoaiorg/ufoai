@@ -439,7 +439,6 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    /* TODO: disabled for now, not to cause missing text */
 	/* if height is too much we shoudl be able to scroll down */
 	if (height > 0 && y+h > absY+height)
 		return 1;
@@ -507,6 +506,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	x = (float) x *vid.rx;
 	y = (float) y *vid.ry;
 	maxWidth = (float) maxWidth *vid.rx;
+	maxHeight = (float) maxHeight *vid.rx;
 
 	/* get the font */
 	f = Font_GetFont(fontID);
