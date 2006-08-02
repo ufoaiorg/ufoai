@@ -503,10 +503,12 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	int max = 0;				/* calculated maxWidth */
 
 	/* transform from 1024x768 coordinates for drawing */
+	absX = (float) absX *vid.rx;
+	absY = (float) absY *vid.ry;
 	x = (float) x *vid.rx;
 	y = (float) y *vid.ry;
 	maxWidth = (float) maxWidth *vid.rx;
-	maxHeight = (float) maxHeight *vid.rx;
+	maxHeight = (float) maxHeight *vid.ry;
 
 	/* get the font */
 	f = Font_GetFont(fontID);
