@@ -326,7 +326,7 @@ void CL_NewAircraft(base_t *base, char *name)
 		Com_DPrintf("Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 		Vector2Copy(base->pos, aircraft->pos);
 		Radar_Initialise(&(aircraft->radar), AIRCRAFT_RADAR_RANGE);
-	
+
 		base->numAircraftInBase++;
 		Com_DPrintf("Aircraft for base %s: %s\n", base->name, aircraft->name);
 	}
@@ -436,12 +436,11 @@ void CL_CampaignRunAircraft(int dt)
 
 					ufo = gd.ufos + aircraft->ufo;
 					if (abs(ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
-						/* The aircraft can attack the ufo */	
+						/* The aircraft can attack the ufo */
 						Com_Printf("Aircraft touch UFO, back to base\n");
 						/* TO DO : display an attack popup */
 						CL_AircraftReturnToBase(aircraft);
-					}
-					else {
+					} else {
 						/* TO DO : Find better system to make the aircraft purchasing ufo */
 						CL_SendAircraftPurchasingUfo(aircraft, ufo);
 					}
@@ -575,7 +574,8 @@ void CL_AircraftEquipmenuMenuShieldsClick_f(void)
 /**
  * @brief Return an aircraft from its idx
  */
-extern aircraft_t* CL_AircraftGetFromIdx(int idx) {
+extern aircraft_t* CL_AircraftGetFromIdx(int idx)
+{
 	base_t*		base;
 	aircraft_t*	aircraft;
 
