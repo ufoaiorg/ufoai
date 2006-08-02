@@ -1021,7 +1021,32 @@ void CL_SaveEquipment ( sizebuf_t *buf, character_t *team, const int num )
 
 }
 
-#define MAX_MESSAGES_FOR_SAVEGAME 20
+/**
+ * @brief Saved the complete message stack
+ */
+void CL_MessageSave(sizebuf_t* sb, message_t* message)
+{
+	int idx = -1;
+	if (!message)
+		return;
+	/* bottom up */
+	CL_MessageSave(sb, message->next);
+
+	if (message->pedia)
+		idx = message->pedia->idx;
+
+	Com_DPrintf("CL_MessageSave: Save '%s' - '%s'\n", message->title, message->text);
+	MSG_WriteString(sb, message->title);
+	MSG_WriteString(sb, message->text);
+	MSG_WriteLong(sb, idx);
+	MSG_WriteLong(sb, message->d);
+	MSG_WriteLong(sb, message->m);
+	MSG_WriteLong(sb, message->y);
+	MSG_WriteLong(sb, message->h);
+	MSG_WriteLong(sb, message->min);
+	MSG_WriteLong(sb, message->s);
+}
+
 /**
   * @brief
   * @sa CL_GameLoad
@@ -1074,24 +1099,11 @@ void CL_GameSave(char *filename, char *comment)
 	Com_DPrintf("CL_GameSave: sizeof globalData_t: %i max.gamedatasize: %i\n", sizeof(globalData_t), MAX_GAMESAVESIZE);
 	SZ_Write(&sb, &gd, sizeof(globalData_t));
 
-#if 1
-	/* FIXME: Remove me */
-	MSG_WriteByte(&sb, 0);
-#else
-	/* FIXME: Wrong order */
-	/* store last 20 message system items */
-	for ( i = 0, message = messageStack; i < MAX_MESSAGES_FOR_SAVEGAME && message; i++, message = message->next );
-	/* how many messages */
-	if ( i > MAX_MESSAGES_FOR_SAVEGAME-1 )
-		MSG_WriteByte(&sb, MAX_MESSAGES_FOR_SAVEGAME-1);
-	else
-		MSG_WriteByte(&sb, i);
-
-	for ( i = 0, message = messageStack; i < MAX_MESSAGES_FOR_SAVEGAME && message; i++, message = message->next ) {
-		MSG_WriteString(&sb, message->title);
-		MSG_WriteString(&sb, message->text);
-	}
-#endif
+	/* store message system items */
+	for ( i = 0, message = messageStack; message; i++, message = message->next );
+	Com_DPrintf("CL_GameSave: Saving %i messages from message stack\n", i);
+	MSG_WriteByte(&sb, i);
+	CL_MessageSave(&sb, messageStack);
 
 	/* store credits */
 	MSG_WriteLong(&sb, ccs.credits);
@@ -1242,11 +1254,12 @@ int CL_GameLoad(char *filename)
 	sizebuf_t sb;
 	byte *buf;
 	base_t *base;
-	char *name;
+	char *name, *title, *text;
 	FILE *f;
 	int version, dataSize;
 	int i, j, num;
 	char val[32];
+	message_t *mess;
 
 	/* open file */
 	f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
@@ -1335,9 +1348,21 @@ int CL_GameLoad(char *filename)
 	/* we start not in base view */
 	baseCurrent = NULL;
 
+	/* how many message items */
 	i = MSG_ReadByte(&sb);
-	for ( ; i > 0; i-- )
-		MN_AddNewMessage(MSG_ReadString(&sb), MSG_ReadString(&sb), qfalse, MSG_STANDARD, NULL);
+	Com_DPrintf("%i messages on messagestack");
+	for (;i--;) {
+		title = MSG_ReadString(&sb);
+		text = MSG_ReadString(&sb);
+		Com_DPrintf("CL_GameLoad: Load message '%s' - '%s'\n", title, text);
+		mess = MN_AddNewMessage(title, text, qfalse, MSG_ReadByte(&sb), RS_GetTechByIDX(MSG_ReadLong(&sb)));
+		mess->d = MSG_ReadLong(&sb);
+		mess->m = MSG_ReadLong(&sb);
+		mess->y = MSG_ReadLong(&sb);
+		mess->h = MSG_ReadLong(&sb);
+		mess->min = MSG_ReadLong(&sb);
+		mess->s = MSG_ReadLong(&sb);
+	}
 
 	/* read credits */
 	CL_UpdateCredits(MSG_ReadLong(&sb));
