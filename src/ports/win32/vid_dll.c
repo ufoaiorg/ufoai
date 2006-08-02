@@ -64,7 +64,7 @@ LRESULT WINAPI MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 static qboolean s_alttab_disabled;
 
-extern	unsigned	sys_msg_time;
+extern unsigned sys_msg_time;
 
 /*
 ** WIN32 helper functions
@@ -76,14 +76,10 @@ static void WIN_DisableAltTab( void )
 	if ( s_alttab_disabled )
 		return;
 
-	if ( s_win95 )
-	{
+	if ( s_win95 ) {
 		BOOL old;
-
 		SystemParametersInfo( SPI_SCREENSAVERRUNNING, 1, &old, 0 );
-	}
-	else
-	{
+	} else {
 		RegisterHotKey( 0, 0, MOD_ALT, VK_TAB );
 		RegisterHotKey( 0, 1, MOD_ALT, VK_RETURN );
 	}
@@ -92,20 +88,14 @@ static void WIN_DisableAltTab( void )
 
 static void WIN_EnableAltTab( void )
 {
-	if ( s_alttab_disabled )
-	{
-		if ( s_win95 )
-		{
+	if ( s_alttab_disabled ) {
+		if ( s_win95 ) {
 			BOOL old;
-
 			SystemParametersInfo( SPI_SCREENSAVERRUNNING, 0, &old, 0 );
-		}
-		else
-		{
+		} else {
 			UnregisterHotKey( 0, 0 );
 			UnregisterHotKey( 0, 1 );
 		}
-
 		s_alttab_disabled = qfalse;
 	}
 }
@@ -130,15 +120,10 @@ void VID_Printf (int print_level, char *fmt, ...)
 	va_end (argptr);
 
 	if (print_level == PRINT_ALL)
-	{
 		Com_Printf ("%s", msg);
-	}
 	else if ( print_level == PRINT_DEVELOPER )
-	{
 		Com_DPrintf ("%s", msg);
-	}
-	else if ( print_level == PRINT_ALERT )
-	{
+	else if ( print_level == PRINT_ALERT ) {
 		MessageBox( 0, msg, "PRINT_ALERT", MB_ICONWARNING );
 		OutputDebugString( msg );
 	}
@@ -162,7 +147,8 @@ void VID_Error (int err_level, char *fmt, ...)
 
 /*========================================================================== */
 
-byte        scantokey[128] =
+/* FIXME; use 256 for shift +key and get rid of the transformation in client/keys.c */
+static byte scantokey[128] =
 					{
 /*  0           1       2       3       4       5       6       7 */
 /*  8           9       A       B       C       D       E       F */
@@ -205,10 +191,8 @@ int MapKey (int key)
 
 	result = scantokey[modified];
 
-	if ( !is_extended )
-	{
-		switch ( result )
-		{
+	if ( !is_extended ) {
+		switch ( result ) {
 		case K_HOME:
 			return K_KP_HOME;
 		case K_UPARROW:
@@ -232,11 +216,8 @@ int MapKey (int key)
 		default:
 			return result;
 		}
-	}
-	else
-	{
-		switch ( result )
-		{
+	} else {
+		switch ( result ) {
 		case 0x0D:
 			return K_KP_ENTER;
 		case 0x2F:
@@ -296,7 +277,7 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 			Key_Event( K_MWHEELDOWN, qtrue, sys_msg_time );
 			Key_Event( K_MWHEELDOWN, qfalse, sys_msg_time );
 		}
-	        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc (hWnd, uMsg, wParam, lParam);
 	}
 
 	switch (uMsg) {
@@ -321,16 +302,16 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 		cl_hwnd = hWnd;
 
 		MSH_MOUSEWHEEL = RegisterWindowMessage("MSWHEEL_ROLLMSG");
-	        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
 	case WM_PAINT:
 		SCR_DirtyScreen ();	/* force entire screen to update next frame */
-    		return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
 	case WM_DESTROY:
 		/* let sound and input know about this? */
 		cl_hwnd = NULL;
-	        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
 	case WM_ACTIVATE:
 		{
@@ -345,7 +326,7 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 			if ( reflib_active )
 				re.AppActivate( !( fActive == WA_INACTIVE ) );
 		}
-	        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
 	case WM_MOVE:
 		{
@@ -373,7 +354,7 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 					IN_Activate (qtrue);
 			}
 		}
-    		return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc (hWnd, uMsg, wParam, lParam);
 
 	/* this is complicated because Win32 seems to pack multiple mouse events into */
 	/* one update sometimes, so we always check all states and look for events */
@@ -385,9 +366,7 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 	case WM_MBUTTONUP:
 	case WM_MOUSEMOVE:
 		{
-			int	temp;
-
-			temp = 0;
+			int	temp = 0;
 
 			if (wParam & MK_LBUTTON)
 				temp |= 1;
@@ -403,35 +382,35 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 		break;
 
 	case WM_SYSCOMMAND:
-		if ( wParam == SC_SCREENSAVE )
+		if (wParam == SC_SCREENSAVE)
 			return 0;
-    		return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc (hWnd, uMsg, wParam, lParam);
 	case WM_SYSKEYDOWN:
-		if ( wParam == 13 ) {
-			if ( vid_fullscreen )
+		if (wParam == 13) {
+			if (vid_fullscreen)
 				Cvar_SetValue( "vid_fullscreen", !vid_fullscreen->value );
 			return 0;
 		}
 		/* fall through */
 	case WM_KEYDOWN:
-		Key_Event( MapKey( lParam ), qtrue, sys_msg_time);
+		Key_Event(MapKey(lParam), qtrue, sys_msg_time);
 		break;
 
 	case WM_SYSKEYUP:
 	case WM_KEYUP:
-		Key_Event( MapKey( lParam ), qfalse, sys_msg_time);
+		Key_Event(MapKey(lParam), qfalse, sys_msg_time);
 		break;
 
 	case MM_MCINOTIFY:
-		lRet = CDAudio_MessageHandler (hWnd, uMsg, wParam, lParam);
+		lRet = CDAudio_MessageHandler(hWnd, uMsg, wParam, lParam);
 		break;
 
 	default:	/* pass all unhandled messages to DefWindowProc */
-	        return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc (hWnd, uMsg, wParam, lParam);
     }
 
-    /* return 0 if handled message, 1 if not */
-    return DefWindowProc( hWnd, uMsg, wParam, lParam );
+	/* return 0 if handled message, 1 if not */
+	return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }
 
 /*
@@ -476,9 +455,9 @@ vidmode_t vid_modes[] =
 	{ 640,  400, 14 }, /* generic 16:10 widescreen*/
 	{ 800,  500, 15 }, /* as found modern */
 	{ 1024,  640, 16 }, /* notebooks    */
- 	{ 1280,  800, 17 },
- 	{ 1680, 1050, 18 },
- 	{ 1920, 1200, 19 },
+	{ 1280,  800, 17 },
+	{ 1680, 1050, 18 },
+	{ 1920, 1200, 19 },
 	{ 1400, 1050, 20 }
 };
 
@@ -559,7 +538,6 @@ qboolean VID_LoadRefresh( char *name )
 
 	if ( ( reflib_library = LoadLibrary( name ) ) == 0 ) {
 		Com_Printf( "LoadLibrary(\"%s\") failed\n", name );
-
 		return qfalse;
 	}
 
