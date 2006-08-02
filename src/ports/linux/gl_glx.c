@@ -261,8 +261,8 @@ void RW_IN_GetMousePos (int *x, int *y)
 		mx = vid.width - 1;
 	if ( my >= vid.height )
 		my = vid.height - 1;
-	*x = mx;
-	*y = my;
+	*x = mx / vid.rx;
+	*y = my / vid.ry;
 }
 
 static void IN_DeactivateMouse( void )
