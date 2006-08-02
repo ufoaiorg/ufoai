@@ -306,8 +306,8 @@ void GetEvent(SDL_Event *event)
 		break;
 	case SDL_MOUSEMOTION:
 		if (mouse_active) {
-			mx = event->motion.x / vid.rx;
-			my = event->motion.y / vid.ry;
+			mx = event->motion.x;
+			my = event->motion.y;
 		}
 		break;
 	case SDL_KEYDOWN:
@@ -674,8 +674,8 @@ IN_GetMousePos
 */
 void RW_IN_GetMousePos (int *x, int *y)
 {
-	*x = mx;
-	*y = my;
+	*x = mx / vid.rx;
+	*y = my / vid.ry;
 }
 
 void RW_IN_Frame (void)
