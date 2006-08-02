@@ -680,6 +680,7 @@ void Key_Init(void)
 	for (i = 'a'; i <= 'z'; i++)
 		keyshift[i] = i - 'a' + 'A';
 
+#if _WIN32
 	keyshift['1'] = '!';
 	keyshift['2'] = '@';
 	keyshift['3'] = '#';
@@ -701,6 +702,7 @@ void Key_Init(void)
 	keyshift[']'] = '}';
 	keyshift['`'] = '~';
 	keyshift['\\'] = '|';
+#endif
 
 	menubound[K_ESCAPE] = qtrue;
 	for (i = 0; i < 12; i++)
