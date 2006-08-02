@@ -262,7 +262,7 @@ static int Font_Hash(const char *string, int maxlen)
 /*================
 Font_GetFromCache
 ================*/
-static void *Font_GetFromCache(const char *s)
+static fontCache_t *Font_GetFromCache(const char *s)
 {
 	fontCache_t *font = NULL;
 	int hashValue;
@@ -270,7 +270,7 @@ static void *Font_GetFromCache(const char *s)
 	hashValue = Font_Hash(s, MAX_HASH_STRING);
 	for (font = hash[hashValue]; font; font = font->next)
 		if (!Q_strncmp((char *) s, font->string, MAX_HASH_STRING))
-			return font->pixel;
+			return font;
 
 	return NULL;
 }
@@ -282,7 +282,7 @@ We add the font string (e.g. f_small) to the beginning
 of each string (char *s) because we can have the same strings
 but other fonts.
 ================*/
-static void Font_AddToCache(const char *s, void *pixel, int w, int h)
+static fontCache_t* Font_AddToCache(const char *s, void *pixel, int w, int h)
 {
 	int hashValue;
 	fontCache_t *font = NULL;
@@ -309,12 +309,13 @@ static void Font_AddToCache(const char *s, void *pixel, int w, int h)
 		ri.Sys_Error(ERR_FATAL, "...font cache exceeded with %i\n", hashValue);
 
 	numInCache++;
+	return &fontCache[numInCache-1];
 }
 
 /*================
 Font_GenerateCache
 ================*/
-static void *Font_GenerateCache(const char *s, const char *fontString, font_t * f)
+static fontCache_t *Font_GenerateCache(const char *s, const char *fontString, font_t * f)
 {
 	int w, h;
 	SDL_Surface *textSurface = NULL;
@@ -332,8 +333,8 @@ static void *Font_GenerateCache(const char *s, const char *fontString, font_t * 
 	for (h = 1; h < textSurface->h; h <<= 1);
 
 	openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE,
-										 w, h,
-										 32, textSurface->format->Rmask, textSurface->format->Gmask, textSurface->format->Bmask, textSurface->format->Amask);
+		w, h, 32, textSurface->format->Rmask, textSurface->format->Gmask,
+		textSurface->format->Bmask, textSurface->format->Amask);
 
 	rect.x = rect.y = 0;
 	rect.w = textSurface->w;
@@ -345,8 +346,7 @@ static void *Font_GenerateCache(const char *s, const char *fontString, font_t * 
 	SDL_FreeSurface(textSurface);
 
 /* 	SDL_SaveBMP( openGLSurface, buffer ); */
-	Font_AddToCache(fontString, openGLSurface, textSurface->w, textSurface->h);
-	return openGLSurface;
+	return Font_AddToCache(fontString, openGLSurface, textSurface->w, textSurface->h);
 }
 
 /*================
@@ -426,24 +426,23 @@ static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width
  * @return -1 for scrolling down (TODO)
  * @return +1 for scrolling up (TODO)
  */
-static int Font_GenerateGLSurface(SDL_Surface * s, int x, int y, int absX, int absY, int width, int height)
+static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
 {
-	GLuint texture = Font_TextureAddToCache(s);
-	int w = s->w;
-	int h = s->h;
+	GLuint texture = Font_TextureAddToCache(cache->pixel);
+	int h = cache->size[1];
 	vec2_t start = {0.0f, 0.0f}, end = {1.0f, 1.0f};
 
 	/* Tell GL about our new texture */
 	GL_Bind(texture);
-	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, s->pixels);
+	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, cache->pixel->w, cache->pixel->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, cache->pixel->pixels);
 
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     /* TODO: disabled for now, not to cause missing text */
-	/* if height is too much we shoudl be able to scroll down
+	/* if height is too much we shoudl be able to scroll down */
 	if (height > 0 && y+h > absY+height)
-	return 1; */
+		return 1;
 
 	/* draw it */
 	qglEnable(GL_BLEND);
@@ -452,11 +451,11 @@ static int Font_GenerateGLSurface(SDL_Surface * s, int x, int y, int absX, int a
 	qglTexCoord2f(start[0], start[1]);
 	qglVertex2f(x, y);
 	qglTexCoord2f(end[0], start[1]);
-	qglVertex2f(x + w, y);
+	qglVertex2f(x + cache->pixel->w, y);
 	qglTexCoord2f(start[0], end[1]);
-	qglVertex2f(x, y + h);
+	qglVertex2f(x, y + cache->pixel->h);
 	qglTexCoord2f(end[0], end[1]);
-	qglVertex2f(x + w, y + h);
+	qglVertex2f(x + cache->pixel->w, y + cache->pixel->h);
 	qglEnd();
 
 	qglDisable(GL_BLEND);
@@ -500,8 +499,8 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	font_t *f = NULL;
 	char *buffer = buf;
 	char *pos;
+	fontCache_t *cache;
 	static char searchString[MAX_FONTNAME + MAX_HASH_STRING];
-	SDL_Surface *openGLSurface = NULL;
 	int max = 0;				/* calculated maxWidth */
 
 	/* transform from 1024x768 coordinates for drawing */
@@ -516,9 +515,9 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 		return 0;				/* never reached. need for code analyst. */
 	}
 
-	openGLSurface = Font_GetFromCache(c);
-	if (openGLSurface) {
-		Font_GenerateGLSurface(openGLSurface, x, y, absX, absY, maxWidth, maxHeight);
+	cache = Font_GetFromCache(c);
+	if (cache) {
+		Font_GenerateGLSurface(cache, x, y, absX, absY, maxWidth, maxHeight);
 		return f->height;
 	}
 
@@ -562,14 +561,14 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 			/* NOTE: There can be a non critical overflow in Com_sprintf */
 			Com_sprintf(searchString, MAX_FONTNAME + MAX_HASH_STRING, "%s%s", fontID, buffer);
 
-			openGLSurface = Font_GetFromCache(searchString);
-			if (!openGLSurface)
-				openGLSurface = Font_GenerateCache(buffer, searchString, f);
+			cache = Font_GetFromCache(searchString);
+			if (!cache)
+				cache = Font_GenerateCache(buffer, searchString, f);
 
-			if (!openGLSurface)
+			if (!cache)
 				ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n");
 
-			Font_GenerateGLSurface(openGLSurface, x, y, absX, absY, maxWidth, maxHeight);
+			Font_GenerateGLSurface(cache, x, y, absX, absY, maxWidth, maxHeight);
 		}
 
 		/* skip for next line */
