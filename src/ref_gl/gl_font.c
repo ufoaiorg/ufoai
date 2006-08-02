@@ -440,9 +440,10 @@ static int Font_GenerateGLSurface(SDL_Surface * s, int x, int y, int absX, int a
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	/* if height is too much we shoudl be able to scroll down */
+    /* TODO: disabled for now, not to cause missing text */
+	/* if height is too much we shoudl be able to scroll down
 	if (height > 0 && y+h > absY+height)
-		return 1;
+	return 1; */
 
 	/* draw it */
 	qglEnable(GL_BLEND);
