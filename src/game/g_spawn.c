@@ -75,6 +75,7 @@ field_t fields[] = {
 	{"decel", offsetof(edict_t, decel), F_FLOAT},
 	{"target", offsetof(edict_t, target), F_LSTRING},
 	{"targetname", offsetof(edict_t, targetname), F_LSTRING},
+	{"particle", offsetof(edict_t, particle), F_LSTRING},
 	{"team", offsetof(edict_t, team), F_INT},
 	{"size", offsetof(edict_t, fieldSize), F_INT},
 	{"wait", offsetof(edict_t, wait), F_FLOAT},
@@ -503,7 +504,7 @@ a dummy to get rid of local entities
 */
 static void SP_misc_dummy(edict_t * self)
 {
-	/* models aren't client-server communicated items */
+	/* models and particles aren't client-server communicated items */
 	/* they are completely client side */
 	G_FreeEdict(self);
 }

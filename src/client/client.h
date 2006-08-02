@@ -614,6 +614,7 @@ trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * pass
 lm_t *CL_AddLocalModel(char *model, char *particle, vec3_t origin, vec3_t angles, int num, int levelflags);
 void CL_AddMapParticle(char *particle, vec3_t origin, vec2_t wait, char *info, int levelflags);
 void CL_ParticleCheckRounds(void);
+void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb);
 
 /* cl_actor.c */
 extern le_t *selActor;
@@ -682,7 +683,7 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter);
 #define MAX_UFOONGEOSCAPE	8
 struct aircraft_s;
 struct menuNode_s;
-	
+
 typedef struct radar_s {
 	int range;						/* Range of radar */
 	int ufos[MAX_UFOONGEOSCAPE];	/* Ufos id sensored by radar (gd.ufos[id]) */

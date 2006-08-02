@@ -814,6 +814,8 @@ typedef enum {
 	EV_MODEL_PERISH,
 	EV_MODEL_EXPLODE,
 
+	EV_SPAWN_PARTICLE,
+
 	EV_NUM_EVENTS
 } event_t;
 

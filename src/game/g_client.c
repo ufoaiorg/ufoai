@@ -1475,7 +1475,14 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 		if (damage >= ent->HP) {
 			gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
 			gi.WriteShort(ent->mapNum);
-
+			if (ent->particle && Q_strcmp(ent->particle, "null")) {
+				/* TODO: Spawn the breaking particle here */
+				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
+				gi.WriteShort(ent->spawnflags);
+				gi.WriteGPos(ent->pos);
+				gi.WriteByte((int)strlen(ent->particle));
+				gi.WriteString(ent->particle);
+			}
 			gi.unlinkentity(ent);
 			ent->inuse = qfalse;
 			G_RecalcRouting(ent);

@@ -595,6 +595,29 @@ ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a
 	return p;
 }
 
+/**
+ * @brief Spawn a particle given by EV_SPAWN_PARTICLE event
+ * @param[in] sb sizebuf that holds the network transfer
+ */
+void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb)
+{
+	char *particle;
+	int levelflags, i;
+	pos3_t originPos;
+	vec3_t origin;
+
+	levelflags = MSG_ReadShort(sb);
+	MSG_ReadGPos(sb, originPos);
+	for (i=0;i<3;i++)
+		origin[i] = (float)originPos[i];
+
+	MSG_ReadByte(sb); /* for stringlength */
+	particle = MSG_ReadString(sb);
+
+	if (particle && Q_strcmp(particle, "null")) {
+		CL_ParticleSpawn(particle, levelflags, origin, NULL, NULL);
+	}
+}
 
 /*
 ======================
@@ -985,6 +1008,27 @@ void CL_ParsePtlCmds(char *name, char **text)
 	memset(pc, 0, sizeof(ptlCmd_t));
 }
 
+/**
+ * @brief Searches for the particle index in ptlDef array
+ * @param[in] name Name of the particle
+ * @return id of the particle in ptlDef array
+ */
+int CL_GetParticleIndex(char *name)
+{
+	int i;
+
+	/* search for menus with same name */
+	for (i = 0; i < numPtlDefs; i++)
+		if (!Q_strncmp(name, ptlDef[i].name, MAX_VAR))
+			break;
+
+	if (i >= numPtlDefs) {
+		Com_Printf("CL_GetParticleIndex: unknown particle '%s'\n", name);
+		return -1;
+	}
+
+	return i;
+}
 
 /*
 ======================

@@ -103,7 +103,8 @@ char *ev_format[] =
 	"sbbbb",			/* EV_INV_AMMO */
 
 	"s",				/* EV_MODEL_PERISH */
-	"s"				/* EV_MODEL_EXPLODE */
+	"s",				/* EV_MODEL_EXPLODE */
+	"sg*"				/* EV_SPAWN_PARTICLE */
 };
 
 char *ev_names[] =
@@ -135,7 +136,9 @@ char *ev_names[] =
 	"EV_INV_AMMO",
 
 	"EV_MODEL_PERISH",
-	"EV_MODEL_EXPLODE"
+	"EV_MODEL_EXPLODE",
+
+	"EV_SPAWN_PARTICLE"
 };
 
 void CL_Reset( sizebuf_t *sb );
@@ -182,7 +185,9 @@ void (*ev_func[])( sizebuf_t *sb ) =
 	CL_InvAmmo,
 
 	LM_Perish,
-	LM_Explode
+	LM_Explode,
+
+	CL_ParticleSpawnFromSizeBuf
 };
 
 #define EV_STORAGE_SIZE		32768
