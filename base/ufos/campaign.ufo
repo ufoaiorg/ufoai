@@ -2,7 +2,7 @@ stage intro
 {
 	set first
 	{
-		seq	intro
+		seq			intro
 		delay		"0 1 0"
 		frame		"0 3 0"
 		missions	"farm"
@@ -32,7 +32,7 @@ stage ufos_are_coming
 {
 	set first
 	{
-		seq	ufos_are_coming
+		seq			ufos_are_coming
 		commands	"addufo"
 	}
 	set crashed_and_landed

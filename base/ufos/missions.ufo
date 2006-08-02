@@ -15,6 +15,9 @@ mission stadium
 	$win		400
 	$alien		250
 	$civilian	200
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // Switzerland
@@ -33,6 +36,9 @@ mission terrain
 	$win		400
 	$alien		250
 	$civilian	200
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // Norway
@@ -51,6 +57,9 @@ mission spedition
 	$win		400
 	$alien		250
 	$civilian	200
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // Turkey
@@ -70,6 +79,9 @@ mission pdi
 	$win		400
 	$alien		250
 	$civilian	200
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // Germany
@@ -90,6 +102,9 @@ mission mart
 	$win		1200
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // South africa
@@ -110,6 +125,9 @@ mission mine_crash
 	$win		1200
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // New Zealand
@@ -128,6 +146,9 @@ mission mine
 	$win		800
 	$alien		200
 	$civilian	100
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // Australia
@@ -148,6 +169,9 @@ mission office
 	$win		3000
 	$alien		100
 	$civilian	300
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // Africa
@@ -164,11 +188,13 @@ mission africa
 	alienequip	campaign_stage1
 	civilians	6
 	civteam		oriental
-	onwin		""
 	recruits	3
 	$win		1200
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // England
@@ -184,12 +210,14 @@ mission bunker
 	alienteam	alien
 	alienequip	campaign_stage1
 	civilians	6
-	onwin		""
 	civteam		scientist
 	recruits	6
 	$win		1200
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // Mexico
@@ -210,6 +238,9 @@ mission city
 	$win		1200
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // Sweden
@@ -230,6 +261,9 @@ mission construction
 	$win		2000
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // Africa (South)
@@ -249,6 +283,9 @@ mission africa_excavation
 	$win		750
 	$alien		200
 	$civilian	100
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // Italy
@@ -269,6 +306,9 @@ mission italy
 	$win		1900
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // America
@@ -288,6 +328,9 @@ mission subway
 	$win		400
 	$alien		250
 	$civilian	200
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // France
@@ -309,6 +352,9 @@ mission vil_lille
 	$win		2000
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // Korea
@@ -329,6 +375,9 @@ mission harbor
 	$win		1900
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // Japan
@@ -349,6 +398,9 @@ mission japan
 	$win		2500
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 // TODO: Mission below need more work
@@ -370,6 +422,9 @@ mission falconcrash
 	$win		6000
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission farm
@@ -389,6 +444,8 @@ mission farm
 	$win		6000
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
 	storyrelated	true
 }
 
@@ -509,6 +566,9 @@ mission gasstation
 	$win		1900
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission lake
@@ -528,6 +588,9 @@ mission lake
 	$win		1600
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission oriental
@@ -547,6 +610,9 @@ mission oriental
 	$win		1200
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission or_asyut
@@ -603,6 +669,9 @@ mission or_tabelbala
 //	$win		400
 //	$alien		250
 //	$civilian	200
+//	onlose		""
+//	onwin		""
+//	storyrelated	true
 //}
 
 // America
@@ -621,6 +690,9 @@ mission tower
 	$win		400
 	$alien		250
 	$civilian	200
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission transport
@@ -640,6 +712,9 @@ mission transport
 	$win		1000
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission tropic_river
@@ -696,6 +771,9 @@ mission village
 	$win		1000
 	$alien		100
 	$civilian	500
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
 
 mission vil_grenchen
@@ -775,4 +853,7 @@ mission baseattack
 	$win		400
 	$alien		250
 	$civilian	200
+	onlose		""
+	onwin		""
+	storyrelated	true
 }
