@@ -95,8 +95,9 @@ void RW_IN_Activate(qboolean active)
 /**
   * @brief Translate the keys to ufo keys
   */
-int XLateKey(unsigned int keysym)
+int SDLateKey(SDL_KeyboardEvent sdlke)
 {
+	int keysym = sdlke.keysym.sym;
 	int key = 0;
 
 	switch(keysym) {
@@ -247,10 +248,18 @@ int XLateKey(unsigned int keysym)
 	case SDLK_WORLD_7:
 		key = '`';
 		break;
+	/* French keyboard */
+	case 178:
+		key = '~';
+		break;
 
 	default: /* assuming that the other sdl keys are mapped to ascii */
-		if(keysym < 128)
-			key = keysym;
+		if( sdlke.keysym.unicode < 256 )
+			/* If the translated key is between 0 and 256, it's ok */
+			key = sdlke.keysym.unicode;
+		else
+			/* The key don't fit in the Quake3 keyboard array */
+			key = 0;
 		break;
 	}
 
@@ -325,7 +334,7 @@ void GetEvent(SDL_Event *event)
 
 		KeyStates[event->key.keysym.sym] = 1;
 
-		key = XLateKey(event->key.keysym.sym);
+		key = SDLateKey(event->key);
 		if (key) {
 			keyq[keyq_head].key = key;
 			keyq[keyq_head].down = qtrue;
@@ -338,7 +347,7 @@ void GetEvent(SDL_Event *event)
 		if (KeyStates[event->key.keysym.sym]) {
 			KeyStates[event->key.keysym.sym] = 0;
 
-			key = XLateKey(event->key.keysym.sym);
+			key = SDLateKey(event->key);
 			if (key) {
 				keyq[keyq_head].key = key;
 				keyq[keyq_head].down = qfalse;
