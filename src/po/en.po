@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-07-31 12:15+0200\n"
-"PO-Revision-Date: 2006-07-31 12:16+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"POT-Creation-Date: 2006-08-02 13:16+0200\n"
+"PO-Revision-Date: 2006-08-02 13:21+0100\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1933,7 +1933,7 @@ msgstr "Good for stealth situations that require a long range weapon. Can mainta
 
 #: ../base/ufos/research.ufo:502
 msgid "grenl_txt"
-msgstr "Grenade Launcher allows the soldier to fire grenades one after another. The grenades are less damaging than hand grenades, but can travel over obstacles just as well and at greater distances to boot."
+msgstr "Grenade Launcher allows the soldier to fire grenades one after another. The grenades are less damaging than hand grenades, but can travel over obstacles just as well and at greater distances to boot. The secondary attack is a timed grenade mode, just as for frag grenades."
 
 #: ../base/ufos/research.ufo:514
 msgid "grenl_ammo_txt"
@@ -2068,7 +2068,7 @@ msgstr "Plasma Damage Type"
 
 #: ../base/ufos/research.ufo:883
 msgid "plasma_damage_txt"
-msgstr "Charged ion beams, as well as balls and blasts of very high-temperature plasma that burns all; even advanced armor. Quite effective against humans in Kevlar Vests and aliens in weak armor. Diffused very well by any medium and advanced armor, but burns them quickly, nevertheless. Plasma weapons usually have high damage, short to middle range and mediocre accuracy."
+msgstr "Balls and even streams of high-temperature, high-charge plasma that burns all; even advanced armor. Quite effective against humans in Kevlar Vests and aliens in weak armor. Diffused very well by any medium and advanced armor, but burns them quickly, nevertheless. Plasma weapons usually have high damage, short to middle range and mediocre accuracy."
 
 #: ../base/ufos/research.ufo:894
 msgid "Tachyon Damage Type"
@@ -2697,7 +2697,7 @@ msgstr "Frag Grenade"
 #: ../base/ufos/weapons.ufo:370
 #: ../base/ufos/weapons_human.ufo:618
 #: ../base/ufos/weapons_human.ufo:883
-#: ../base/ufos/weapons_plasma.ufo:184
+#: ../base/ufos/weapons_plasma.ufo:185
 msgid "Throw"
 msgstr "Throw"
 
@@ -2738,15 +2738,15 @@ msgstr "Sniper Rifle Clip"
 #: ../base/ufos/weapons_human.ufo:475
 #: ../base/ufos/weapons_human.ufo:536
 #: ../base/ufos/weapons_tachyon.ufo:35
-#: ../base/ufos/weapons_tachyon.ufo:184
-#: ../base/ufos/weapons_tachyon.ufo:242
+#: ../base/ufos/weapons_tachyon.ufo:182
+#: ../base/ufos/weapons_tachyon.ufo:239
 msgid "Snap Shot"
 msgstr "Snap Shot"
 
 #: ../base/ufos/weapons_human.ufo:126
 #: ../base/ufos/weapons_human.ufo:498
 #: ../base/ufos/weapons_human.ufo:559
-#: ../base/ufos/weapons_tachyon.ufo:265
+#: ../base/ufos/weapons_tachyon.ufo:262
 msgid "Aimed Shot"
 msgstr "Aimed Shot"
 
@@ -2763,8 +2763,8 @@ msgstr "Pistol Clip"
 #: ../base/ufos/weapons_human.ufo:671
 #: ../base/ufos/weapons_human.ufo:696
 #: ../base/ufos/weapons_human.ufo:755
-#: ../base/ufos/weapons_plasma.ufo:299
-#: ../base/ufos/weapons_plasma.ufo:324
+#: ../base/ufos/weapons_plasma.ufo:300
+#: ../base/ufos/weapons_plasma.ufo:325
 msgid "Single Shot"
 msgstr "Single Shot"
 
@@ -2830,7 +2830,7 @@ msgstr "Combat Knife"
 
 #: ../base/ufos/weapons_human.ufo:603
 #: ../base/ufos/weapons_human.ufo:868
-#: ../base/ufos/weapons_plasma.ufo:169
+#: ../base/ufos/weapons_plasma.ufo:170
 msgid "Stab"
 msgstr "Stab"
 
@@ -2920,10 +2920,9 @@ msgid "Charged Pulse"
 msgstr "Charged Pulse"
 
 #: ../base/ufos/weapons_plasma.ufo:55
-#: ../base/ufos/weapons_plasma.ufo:128
-#: ../base/ufos/weapons_plasma.ufo:260
-msgid "Continuous Beam"
-msgstr "Continuous Beam"
+#: ../base/ufos/weapons_plasma.ufo:129
+msgid "Continuous Stream"
+msgstr "Continuous Stream"
 
 #: ../base/ufos/weapons_plasma.ufo:81
 msgid "Plasma Rifle"
@@ -2933,23 +2932,27 @@ msgstr "Plasma Rifle"
 msgid "Plasma Rifle Charge"
 msgstr "Plasma Rifle Charge"
 
-#: ../base/ufos/weapons_plasma.ufo:154
+#: ../base/ufos/weapons_plasma.ufo:155
 msgid "Plasma Blade"
 msgstr "Plasma Blade"
 
-#: ../base/ufos/weapons_plasma.ufo:208
+#: ../base/ufos/weapons_plasma.ufo:209
 msgid "Plasma Blaster"
 msgstr "Plasma Blaster"
 
-#: ../base/ufos/weapons_plasma.ufo:225
+#: ../base/ufos/weapons_plasma.ufo:226
 msgid "Plasma Blaster Charge"
 msgstr "Plasma Blaster Charge"
 
-#: ../base/ufos/weapons_plasma.ufo:237
+#: ../base/ufos/weapons_plasma.ufo:238
 msgid "Charged Ball"
 msgstr "Charged Ball"
 
-#: ../base/ufos/weapons_plasma.ufo:286
+#: ../base/ufos/weapons_plasma.ufo:261
+msgid "Continuous Beam"
+msgstr "Continuous Beam"
+
+#: ../base/ufos/weapons_plasma.ufo:287
 msgid "Plasma Grenade Shells"
 msgstr "Plasma Grenade Shells"
 
@@ -2961,46 +2964,86 @@ msgstr "Tachyon Pistol"
 msgid "Tachyon Pistol Clip"
 msgstr "Tachyon Pistol Clip"
 
-#: ../base/ufos/weapons_tachyon.ufo:54
-#: ../base/ufos/weapons_tachyon.ufo:108
-#: ../base/ufos/weapons_tachyon.ufo:203
+#: ../base/ufos/weapons_tachyon.ufo:53
+#: ../base/ufos/weapons_tachyon.ufo:128
+#: ../base/ufos/weapons_tachyon.ufo:200
 msgid "Rapid Shots"
 msgstr "Rapid Shots"
 
-#: ../base/ufos/weapons_tachyon.ufo:79
+#: ../base/ufos/weapons_tachyon.ufo:78
 msgid "Tachyon Rifle"
 msgstr "Tachyon Rifle"
 
-#: ../base/ufos/weapons_tachyon.ufo:96
+#: ../base/ufos/weapons_tachyon.ufo:95
 msgid "Tachyon Rifle Charge"
 msgstr "Tachyon Rifle Charge"
 
-#: ../base/ufos/weapons_tachyon.ufo:127
+#: ../base/ufos/weapons_tachyon.ufo:107
 msgid "Charged Blast"
 msgstr "Charged Blast"
 
-#: ../base/ufos/weapons_tachyon.ufo:155
+#: ../base/ufos/weapons_tachyon.ufo:153
 msgid "Tachyon Sniper Rifle"
 msgstr "Tachyon Sniper Rifle"
 
-#: ../base/ufos/weapons_tachyon.ufo:172
+#: ../base/ufos/weapons_tachyon.ufo:170
 msgid "Tachyon Sniper Charge"
 msgstr "Tachyon Sniper Charge"
 
-#: ../base/ufos/weapons_tachyon.ufo:229
+#: ../base/ufos/weapons_tachyon.ufo:226
 msgid "Tachyon-Beam Rocket"
 msgstr "Tachyon-Beam Rocket"
 
-#: client/cl_actor.c:95
+#: client/cl_actor.c:61
+msgid "Pathetic"
+msgstr "Pathetic"
+
+#: client/cl_actor.c:63
+msgid "Very Poor"
+msgstr "Very Poor"
+
+#: client/cl_actor.c:65
+msgid "Poor"
+msgstr "Poor"
+
+#: client/cl_actor.c:67
+msgid "Medicore"
+msgstr "Medicore"
+
+#: client/cl_actor.c:69
+msgid "Good"
+msgstr "Good"
+
+#: client/cl_actor.c:71
+msgid "Very Good"
+msgstr "Very Good"
+
+#: client/cl_actor.c:73
+msgid "Excellent"
+msgstr "Excellent"
+
+#: client/cl_actor.c:75
+msgid "Amazing"
+msgstr "Amazing"
+
+#: client/cl_actor.c:77
+msgid "Superhuman"
+msgstr "Superhuman"
+
+#: client/cl_actor.c:79
+msgid "Godlike"
+msgstr "Godlike"
+
+#: client/cl_actor.c:113
 #, c-format
 msgid "Rank: %s"
 msgstr "Rang: %s"
 
-#: client/cl_actor.c:362
+#: client/cl_actor.c:380
 msgid "Currently panics!\n"
 msgstr "Currently panics!\n"
 
-#: client/cl_actor.c:367
+#: client/cl_actor.c:385
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -3008,7 +3051,7 @@ msgstr ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
 
-#: client/cl_actor.c:378
+#: client/cl_actor.c:396
 #, c-format
 msgid ""
 "%s\n"
@@ -3017,7 +3060,7 @@ msgstr ""
 "%s\n"
 "(empty)\n"
 
-#: client/cl_actor.c:389
+#: client/cl_actor.c:407
 #, c-format
 msgid ""
 "Health\t%i\n"
@@ -3026,20 +3069,20 @@ msgstr ""
 "Health\t%i\n"
 "Move\t%i\n"
 
-#: client/cl_actor.c:392
+#: client/cl_actor.c:410
 #, c-format
 msgid "Health\t%i\n"
 msgstr "Health\t%i\n"
 
-#: client/cl_actor.c:771
+#: client/cl_actor.c:789
 msgid "Nobody selected\n"
 msgstr "Nobody selected\n"
 
-#: client/cl_actor.c:782
+#: client/cl_actor.c:800
 msgid "This isn't your round\n"
 msgstr "This isn't your round\n"
 
-#: client/cl_actor.c:910
+#: client/cl_actor.c:928
 msgid ""
 "You cannot load this unknown item.\n"
 "You need to research it first.\n"
@@ -3047,43 +3090,43 @@ msgstr ""
 "You cannot load this unknown item.\n"
 "You need to research it first.\n"
 
-#: client/cl_actor.c:1348
+#: client/cl_actor.c:1366
 msgid "Your round started!\n"
 msgstr "Your round started!\n"
 
-#: client/cl_basemanagement.c:280
+#: client/cl_basemanagement.c:161
 msgid "Not set"
 msgstr "Not set"
 
-#: client/cl_basemanagement.c:286
+#: client/cl_basemanagement.c:167
 #, c-format
 msgid "Already %i in base"
 msgstr "Already %i in base"
 
-#: client/cl_basemanagement.c:292
+#: client/cl_basemanagement.c:173
 msgid "Construction finished"
 msgstr "Construction finished"
 
-#: client/cl_basemanagement.c:295
+#: client/cl_basemanagement.c:176
 msgid "Working 100%"
 msgstr "Working 100%"
 
-#: client/cl_basemanagement.c:298
+#: client/cl_basemanagement.c:179
 msgid "Down"
 msgstr "Down"
 
-#: client/cl_basemanagement.c:484
+#: client/cl_basemanagement.c:365
 msgid "Not enough credits to build this\n"
 msgstr "Not enough credits to build this\n"
 
-#: client/cl_basemanagement.c:484
-#: client/cl_basemanagement.c:1967
+#: client/cl_basemanagement.c:365
+#: client/cl_basemanagement.c:1848
 #: client/cl_campaign.c:362
 #: client/cl_campaign.c:723
 #: client/cl_campaign.c:795
-#: client/cl_campaign.c:1681
-#: client/cl_campaign.c:1717
-#: client/cl_campaign.c:1719
+#: client/cl_campaign.c:1716
+#: client/cl_campaign.c:1752
+#: client/cl_campaign.c:1754
 #: client/cl_research.c:491
 #: client/cl_research.c:618
 #: client/cl_research.c:621
@@ -3095,55 +3138,55 @@ msgstr "Not enough credits to build this\n"
 msgid "Notice"
 msgstr "Notice"
 
-#: client/cl_basemanagement.c:611
+#: client/cl_basemanagement.c:492
 #, c-format
 msgid "Costs:\t%1.0f c\n"
 msgstr "Costs:\t%1.0f c\n"
 
-#: client/cl_basemanagement.c:614
+#: client/cl_basemanagement.c:495
 #, c-format
 msgid "%i Day(s) to build\n"
 msgstr "%i Day(s) to build\n"
 
-#: client/cl_basemanagement.c:617
+#: client/cl_basemanagement.c:498
 #, c-format
 msgid "Running Costs:\t%1.0f c\n"
 msgstr "Running Costs:\t%1.0f c\n"
 
-#: client/cl_basemanagement.c:620
+#: client/cl_basemanagement.c:501
 #, c-format
 msgid "Workers:\t%i\n"
 msgstr "Workers:\t%i\n"
 
-#: client/cl_basemanagement.c:1581
+#: client/cl_basemanagement.c:1462
 #, c-format
 msgid "%i days left"
 msgstr "%i days left"
 
-#: client/cl_basemanagement.c:1744
+#: client/cl_basemanagement.c:1625
 #, c-format
 msgid "A new base has been built: %s."
 msgstr "A new base has been built: %s."
 
-#: client/cl_basemanagement.c:1745
-#: client/cl_basemanagement.c:1751
+#: client/cl_basemanagement.c:1626
+#: client/cl_basemanagement.c:1632
 msgid "Base built"
 msgstr "Base built"
 
-#: client/cl_basemanagement.c:1750
+#: client/cl_basemanagement.c:1631
 msgid "Not enough credits to set up a new base."
 msgstr "Not enough credits to set up a new base."
 
-#: client/cl_basemanagement.c:1967
+#: client/cl_basemanagement.c:1848
 msgid "You've reached the base limit."
 msgstr "You've reached the base limit."
 
-#: client/cl_basemanagement.c:2165
+#: client/cl_basemanagement.c:2046
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Construction of %s building finished in base %s."
 
-#: client/cl_basemanagement.c:2166
+#: client/cl_basemanagement.c:2047
 msgid "Building finished"
 msgstr "Building finished"
 
@@ -3193,37 +3236,37 @@ msgstr ""
 "Bases:\n"
 "build:\t%i\tattacked:\t%i\n"
 
-#: client/cl_campaign.c:1553
+#: client/cl_campaign.c:1588
 msgid "Assemble or load a team"
 msgstr "Assemble or load a team"
 
-#: client/cl_campaign.c:1553
+#: client/cl_campaign.c:1588
 msgid "Note"
 msgstr "Note"
 
-#: client/cl_campaign.c:1681
+#: client/cl_campaign.c:1716
 msgid "Your dropship is not near the landing zone"
 msgstr "Your dropship is not near the landing zone"
 
-#: client/cl_campaign.c:1717
+#: client/cl_campaign.c:1752
 msgid "You've won the battle"
 msgstr "You've won the battle"
 
-#: client/cl_campaign.c:1719
+#: client/cl_campaign.c:1754
 msgid "You've lost the battle"
 msgstr "You've lost the battle"
 
-#: client/cl_campaign.c:1918
+#: client/cl_campaign.c:1953
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s has been promoted to %s.\n"
 
-#: client/cl_campaign.c:1919
+#: client/cl_campaign.c:1954
 msgid "Soldier promoted"
 msgstr "Soldier promoted"
 
-#: client/cl_campaign.c:2740
-#: client/cl_campaign.c:2771
+#: client/cl_campaign.c:2775
+#: client/cl_campaign.c:2806
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -3238,19 +3281,19 @@ msgstr ""
 "Difficulty: %s\n"
 "%s\n"
 
-#: client/cl_main.c:330
-#: client/cl_main.c:673
+#: client/cl_main.c:328
+#: client/cl_main.c:671
 #: client/cl_menu.c:408
 msgid "Assemble a team first"
 msgstr "Assemble a team first"
 
-#: client/cl_main.c:330
-#: client/cl_main.c:673
+#: client/cl_main.c:328
+#: client/cl_main.c:671
 #: client/cl_menu.c:408
 msgid "Error"
 msgstr "Error"
 
-#: client/cl_main.c:614
+#: client/cl_main.c:612
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -3259,80 +3302,80 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:636
+#: client/cl_main.c:634
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Map:\t%s\n"
 
-#: client/cl_main.c:638
+#: client/cl_main.c:636
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Version:\t%s\n"
 
-#: client/cl_main.c:640
+#: client/cl_main.c:638
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Servername:\t%s\n"
 
-#: client/cl_main.c:642
+#: client/cl_main.c:640
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Moralestates:\t%s\n"
 
-#: client/cl_main.c:644
+#: client/cl_main.c:642
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Teamplay:\t%s\n"
 
-#: client/cl_main.c:646
+#: client/cl_main.c:644
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Max. players per team:\t%s\n"
 
-#: client/cl_main.c:648
+#: client/cl_main.c:646
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Max. clients:\t%s\n"
 
-#: client/cl_main.c:650
+#: client/cl_main.c:648
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Max. soldiers per player:\t%s\n"
 
-#: client/cl_main.c:652
+#: client/cl_main.c:650
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. soldiers per team:\t%s\n"
 
-#: client/cl_main.c:1210
+#: client/cl_main.c:1207
 msgid "Unnamed"
 msgstr "Unnamed"
 
-#: client/cl_main.c:1414
+#: client/cl_main.c:1411
 msgid "Chicken-hearted"
 msgstr "Chicken-hearted"
 
-#: client/cl_main.c:1417
+#: client/cl_main.c:1414
 msgid "Very Easy"
 msgstr "Very Easy"
 
-#: client/cl_main.c:1420
+#: client/cl_main.c:1417
 msgid "Easy"
 msgstr "Easy"
 
-#: client/cl_main.c:1423
+#: client/cl_main.c:1420
 msgid "Normal"
 msgstr "Normal"
 
-#: client/cl_main.c:1426
+#: client/cl_main.c:1423
 msgid "Hard"
 msgstr "Hard"
 
-#: client/cl_main.c:1429
+#: client/cl_main.c:1426
 msgid "Very Hard"
 msgstr "Very Hard"
 
-#: client/cl_main.c:1432
+#: client/cl_main.c:1429
 msgid "Insane"
 msgstr "Insane"
 
@@ -3344,15 +3387,15 @@ msgstr "Set playersoldiers lower than teamsoldiers"
 msgid "Settings doesn't make sense"
 msgstr "Settings doesn't make sense"
 
-#: client/cl_parse.c:653
+#: client/cl_parse.c:658
 msgid "Alien spotted!\n"
 msgstr "Alien spotted!\n"
 
-#: client/cl_parse.c:655
+#: client/cl_parse.c:660
 msgid "Enemy spotted!\n"
 msgstr "Enemy spotted!\n"
 
-#: client/cl_parse.c:657
+#: client/cl_parse.c:662
 msgid "Civilian spotted!\n"
 msgstr "Civilian spotted!\n"
 
@@ -3471,21 +3514,21 @@ msgstr "No description available."
 msgid "%i of %i"
 msgstr "%i of %i"
 
-#: client/cl_team.c:753
+#: client/cl_team.c:777
 msgid "NewTeam"
 msgstr "NewTeam"
 
-#: client/cl_team.c:1219
+#: client/cl_team.c:1246
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens killed\t%i\n"
 
-#: client/cl_team.c:1221
+#: client/cl_team.c:1248
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Enemies killed\t%i\n"
 
-#: client/cl_team.c:1227
+#: client/cl_team.c:1254
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -3494,7 +3537,7 @@ msgstr ""
 "Alien survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1229
+#: client/cl_team.c:1256
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -3503,17 +3546,17 @@ msgstr ""
 "Enemy survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1232
+#: client/cl_team.c:1259
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Team losses\t%i\n"
 
-#: client/cl_team.c:1233
+#: client/cl_team.c:1260
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Friendly fire losses\t%i\n"
 
-#: client/cl_team.c:1234
+#: client/cl_team.c:1261
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -3522,22 +3565,22 @@ msgstr ""
 "Team survivors\t%i\n"
 "\n"
 
-#: client/cl_team.c:1247
+#: client/cl_team.c:1274
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civilians killed by the Aliens\t%i\n"
 
-#: client/cl_team.c:1249
+#: client/cl_team.c:1276
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civilians killed by the Enemies\t%i\n"
 
-#: client/cl_team.c:1250
+#: client/cl_team.c:1277
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civilians killed by your Team\t%i\n"
 
-#: client/cl_team.c:1251
+#: client/cl_team.c:1278
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -3548,22 +3591,22 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1271
+#: client/cl_team.c:1298
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr "Collected alien technology\t%i c\n"
 
-#: client/cl_team.c:1275
+#: client/cl_team.c:1302
 #, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr "Aliens killed\t%i c\n"
 
-#: client/cl_team.c:1279
+#: client/cl_team.c:1306
 #, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr "Civilians saved\t%i c\n"
 
-#: client/cl_team.c:1282
+#: client/cl_team.c:1309
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -3574,7 +3617,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1286
+#: client/cl_team.c:1313
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr "New Recruits\t%i\n"
@@ -3754,76 +3797,76 @@ msgstr "Ufopedia Content"
 msgid "Alien"
 msgstr "Alien"
 
-#: game/g_client.c:645
+#: game/g_client.c:625
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Can't perform action - this isn't your round!\n"
 
-#: game/g_client.c:650
+#: game/g_client.c:630
 msgid "Can't perform action - object not present!\n"
 msgstr "Can't perform action - object not present!\n"
 
-#: game/g_client.c:655
+#: game/g_client.c:635
 msgid "Can't perform action - not an actor!\n"
 msgstr "Can't perform action - not an actor!\n"
 
-#: game/g_client.c:660
+#: game/g_client.c:640
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Can't perform action - actor is stunned!\n"
 
-#: game/g_client.c:665
+#: game/g_client.c:645
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Can't perform action - actor is dead!\n"
 
-#: game/g_client.c:670
+#: game/g_client.c:650
 msgid "Can't perform action - not on same team!\n"
 msgstr "Can't perform action - not on same team!\n"
 
-#: game/g_client.c:675
+#: game/g_client.c:655
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Can't perform action - no control over allied actors!\n"
 
-#: game/g_client.c:680
-#: game/g_client.c:773
+#: game/g_client.c:660
+#: game/g_client.c:753
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Can't perform action - not enough TUs!\n"
 
-#: game/g_client.c:776
+#: game/g_client.c:756
 msgid "Can't perform action - weapon already loaded!\n"
 msgstr "Can't perform action - weapon already loaded!\n"
 
-#: game/g_client.c:1230
+#: game/g_client.c:1210
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "Currently shaken, won't let it's guard down.\n"
 
-#: game/g_client.c:1350
+#: game/g_client.c:1330
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s panics!\n"
 
-#: game/g_client.c:1401
+#: game/g_client.c:1381
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s is on a rampage.\n"
 
-#: game/g_client.c:1403
+#: game/g_client.c:1383
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s is in mad rage!\n"
 
-#: game/g_client.c:1458
+#: game/g_client.c:1438
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s is currently shaken.\n"
 
-#: game/g_client.c:1753
+#: game/g_client.c:1740
 msgid "Can't perform action - impossible throw!\n"
 msgstr "Can't perform action - impossible throw!\n"
 
-#: game/g_client.c:1995
+#: game/g_client.c:1982
 msgid "Can't perform action - no ammo!\n"
 msgstr "Can't perform action - no ammo!\n"
 
-#: game/g_client.c:2008
+#: game/g_client.c:1995
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Can't perform action - not enough ammo!\n"
 
