@@ -1639,7 +1639,7 @@ void CL_Init(void)
 	CL_InitLocal();
 	IN_Init();
 
-	Cbuf_AddText("exec autoexec.cfg\n");
+/*	Cbuf_AddText("exec autoexec.cfg\n"); --- already called in FS_ExecAutoexec */
 	/* FIXME: Maybe we should activate this again when all savegames issues are solved */
 /*	Cbuf_AddText( "loadteam current\n" ); */
 	FS_ExecAutoexec();
