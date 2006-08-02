@@ -2953,7 +2953,7 @@ MN_AddNewMessage
 TODO: This needs saving
 ================
 */
-void MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia)
+message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia)
 {
 	message_t *mess;
 
@@ -2983,6 +2983,7 @@ void MN_AddNewMessage(const char *title, const char *text, qboolean popup, messa
 	/* they need to be translated already */
 	if (popup)
 		MN_Popup(title, text);
+	return mess;
 }
 
 /*
