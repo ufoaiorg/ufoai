@@ -5,12 +5,12 @@ mission stadium
 	location	"_New York"
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map		stadium06
+	map			stadium06
 	music		mission3
-	pos		"74 41"
+	pos			"74 41"
 	aliens		4
 	civilians	2
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	recruits	4
 	$win		400
 	$alien		250
@@ -23,12 +23,12 @@ mission terrain
 	location	"_Altdorf"
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map		terrain08
+	map			terrain08
 	music		mission3
-	pos		"-9 46"
+	pos			"-9 46"
 	aliens		4
 	civilians	2
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	recruits	4
 	$win		400
 	$alien		250
@@ -41,12 +41,12 @@ mission spedition
 	location	"_Oslo"
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map		spedition06
+	map			spedition06
 	music		mission3
-	pos		"-10 60"
+	pos			"-10 60"
 	aliens		4
 	civilians	2
-	alienequip	alien_spedition
+	alienequip	campaign_stage1
 	recruits	4
 	$win		400
 	$alien		250
@@ -59,13 +59,13 @@ mission pdi
 	location	"_Antalya"
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map		pdi08
+	map			pdi08
 	music		mission3
-	pos		"-30 36"
+	pos			"-30 36"
 	aliens		4
 	civilians	2
 	civteam	tourist
-	alienequip	alien_spedition
+	alienequip	campaign_stage1
 	recruits	4
 	$win		400
 	$alien		250
@@ -78,12 +78,12 @@ mission mart
 	location	"_Berlin"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map		mart05
+	map			mart05
 	music		mission
-	pos		"-13 52"
+	pos			"-13 52"
 	aliens		3
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		european
 	recruits	2
@@ -98,12 +98,12 @@ mission mine_crash
 	location	"_Gobabis"
 	type		"_Crash Site"
 	text		"_Secure Area"
-	map		mine_crash05
+	map			mine_crash05
 	music		mission
-	pos		"-20 -23"
+	pos			"-20 -23"
 	aliens		3
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		european
 	recruits	2
@@ -118,12 +118,12 @@ mission mine
 	location	"_Wellington"
 	type		"_Terror Attack"
 	text		"_There are rumors of a mine being\overrun by aliens. Although this\source of information is doubtful,\you'll need to investigate."
-	map		mine01
+	map			mine01
 	music		mission4
-	pos		"-174 -41"
+	pos			"-174 -41"
 	aliens		5
 	civilians	3
-	alienequip	alien_mine
+	alienequip	campaign_stage1
 	recruits	6
 	$win		800
 	$alien		200
@@ -141,7 +141,7 @@ mission office
 	pos			"-149 -21"
 	aliens		8
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	2
 	civteam		scientist
 	recruits	3
@@ -161,7 +161,7 @@ mission africa
 	pos			"-30 18"
 	aliens		5
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		oriental
 	onwin		""
@@ -182,7 +182,7 @@ mission bunker
 	pos			"2 51"
 	aliens		5
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	onwin		""
 	civteam		scientist
@@ -203,7 +203,7 @@ mission city
 	pos			"96 19"
 	aliens		5
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		mexican
 	recruits	6
@@ -223,7 +223,7 @@ mission construction
 	pos			"-17 60"
 	aliens		6
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		european
 	recruits	3
@@ -238,17 +238,17 @@ mission africa_excavation
 	location	"_Gwanda"
 	type		"_Terror Attack"
 	text		"_Some aliens have escaped from the\mine, and their tracks lead south,\towards a nearby excavation site.\Protect that site at all cost."
-	map		excavation06
+	map			excavation06
 	music		mission4
-	pos		"-29 -20"
+	pos			"-29 -20"
 	aliens		4
 	civilians	6
-	civteam	oriental
-	alienequip	alien_excavation
+	civteam		oriental
+	alienequip	campaign_stage1
 	recruits	4
 	$win		750
 	$alien		200
-	$civilian		100
+	$civilian	100
 }
 
 // Italy
@@ -262,7 +262,7 @@ mission italy
 	pos			"-18 40"
 	aliens		8
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		european
 	recruits	3
@@ -277,13 +277,13 @@ mission subway
 	location	"_New York"
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map		subway07
+	map			subway07
 	music		mission3
-	pos		"74 40"
+	pos			"74 40"
 	aliens		4
 	civilians	2
 	civteam		americans
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	recruits	4
 	$win		400
 	$alien		250
@@ -302,7 +302,7 @@ mission vil_lille
 	pos			"-3 50"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		european
 	recruits	4
@@ -322,7 +322,7 @@ mission harbor
 	pos			"-129 35"
 	aliens		8
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		european
 	recruits	3
@@ -342,7 +342,7 @@ mission japan
 	pos			"-141 39"
 	aliens		10
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		european
 	recruits	4
@@ -363,7 +363,7 @@ mission falconcrash
 	pos			"116 52"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	3
 	civteam		european
 	recruits	3
@@ -380,9 +380,9 @@ mission farm
 	map			farm08
 	music		mission
 	pos			"116 52"
-	aliens  3
+	aliens  	3
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	3
 	civteam		european
 	recruits	3
@@ -395,20 +395,20 @@ mission farm
 mission frozen_groenland
 {
 	location	"_Nuuk"
-	type	"_Terror Attack"
-	text	"_Protect inhabitants"
-	map	"+frozen"
-	param	small
-	music	mission
-	pos	"47 -42"
-	aliens	6
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			"+frozen"
+	param		small
+	music		mission
+	pos			"47 -42"
+	aliens		6
 	civilians	3
 	recruits	6
 	alienteam	alien
-	civteam	european
-	alienequip	campaign_alien
-	$win	1000
-	$alien	100
+	civteam		european
+	alienequip	campaign_stage1
+	$win		1000
+	$alien		100
 	$civilian	500
 }
 
@@ -418,12 +418,12 @@ mission frozen_small
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			"+frozen"
-	param	small
+	param		small
 	music		mission
 	pos			"116 52"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	3
 	civteam		european
 	recruits	3
@@ -438,12 +438,12 @@ mission frozen_landingnature
 	type		"_Landed Alien Ship"
 	text		"_Secure Alien Ship before Liftoff"
 	map			"+frozen"
-	param	alienlandingnature
+	param		alienlandingnature
 	music		mission
 	pos			"32 -66"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	3
 	civteam		european
 	recruits	3
@@ -458,12 +458,12 @@ mission frozen_industrial
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map			"+frozen"
-	param	industrial
+	param		industrial
 	music		mission
 	pos			"54 75"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	3
 	civteam		european
 	recruits	3
@@ -478,12 +478,12 @@ mission frozen_alienlandingindustrial
 	type		"_Landed Alien Ship"
 	text		"_Secure Alien Ship before Liftoff"
 	map			"+frozen"
-	param	alienlandingindustrial
+	param		alienlandingindustrial
 	music		mission
 	pos			"25 -64"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	3
 	civteam		european
 	recruits	3
@@ -502,7 +502,7 @@ mission gasstation
 	pos			"-111 21"
 	aliens		8
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		european
 	recruits	3
@@ -521,7 +521,7 @@ mission lake
 	pos			"-77 67"
 	aliens		6
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	5
 	civteam		european
 	recruits	2
@@ -540,7 +540,7 @@ mission oriental
 	pos			"-62 25"
 	aliens		5
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		oriental
 	recruits	3
@@ -559,7 +559,7 @@ mission or_asyut
 	pos			"-31 27"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		oriental
 	recruits	3
@@ -578,7 +578,7 @@ mission or_tabelbala
 	pos			"3 28"
 	aliens		7
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		oriental
 	recruits	3
@@ -593,12 +593,12 @@ mission or_tabelbala
 //	location	"_TODO"
 //	type		"_Terror Attack"
 //	text		"_The Aliens have taken over a rocket silo. Go and capture it again."
-//	map		rocketsilo06
+//	map			rocketsilo06
 //	music		mission3
-//	pos		"308 412"
+//	pos			"308 412"
 //	aliens		4
 //	civilians	2
-//	alienequip	alien_spedition
+//	alienequip	campaign_stage1
 //	recruits	4
 //	$win		400
 //	$alien		250
@@ -611,12 +611,12 @@ mission tower
 	location	"_San Fransisco"
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map		tower06
+	map			tower06
 	music		mission3
-	pos		"119 34"
+	pos			"119 34"
 	aliens		4
 	civilians	2
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	recruits	4
 	$win		400
 	$alien		250
@@ -633,7 +633,7 @@ mission transport
 	pos			"97 47"
 	aliens		4
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		european
 	recruits	3
@@ -647,14 +647,14 @@ mission tropic_river
 	location	"_TODO"
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map		"+tropic"
-	param	river
+	map			"+tropic"
+	param		river
 	music		mission3
 //	alienarmor	light
-	pos		"90 10"
+	pos			"90 10"
 	aliens		4
 	civilians	2
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	recruits	4
 	$win		400
 	$alien		250
@@ -666,13 +666,13 @@ mission tropic_drug
 	location	"_TODO"
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map		"+tropic"
-	param	drug
+	map			"+tropic"
+	param		drug
 	music		mission3
-	pos		"77 18"
+	pos			"77 18"
 	aliens		4
 	civilians	2
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	recruits	4
 	$win		400
 	$alien		250
@@ -689,7 +689,7 @@ mission village
 	pos			"97 47"
 	aliens		4
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	6
 	civteam		european
 	recruits	3
@@ -709,7 +709,7 @@ mission vil_grenchen
 	pos			"-7 47"
 	aliens		3
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	7
 	civteam		european
 	recruits	2
@@ -729,7 +729,7 @@ mission vil_albany
 	pos			"84 32"
 	aliens		8
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	7
 	civteam		european
 	recruits	3
@@ -749,7 +749,7 @@ mission vil_shannon
 	pos			"9 52"
 	aliens		18
 	alienteam	alien
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	civilians	4
 	civteam		european
 	recruits	3
@@ -764,13 +764,13 @@ mission baseattack
 	type		"_Base Attack"
 	text		"_Aliens attacked one of our home bases"
 // 	. means that they attack a random base (only the first char counts)
-	map		".base"
+	map			".base"
 	music		base
 	alienteam	alien
 	aliens		12
 	civilians	12
 	civteam		scientist
-	alienequip	campaign_alien
+	alienequip	campaign_stage1
 	recruits	12
 	$win		400
 	$alien		250

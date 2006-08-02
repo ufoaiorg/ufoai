@@ -1,14 +1,4 @@
-equipment campaign_alien_heavy
-{
-	plasblaster		1
-	plasblaster_ammo	12
-	plasrifle		6
-	plasrifle_ammo	8
-	plaspistol		12
-	plaspistol_ammo	18
-}
-
-equipment campaign_alien
+equipment campaign_stage1
 {
 	plaspistol		12
 	plaspistol_ammo	18
@@ -16,15 +6,7 @@ equipment campaign_alien
 	tachyonpistol_ammo		18
 }
 
-equipment campaign_alien_easy
-{
-	plaspistol		12
-	plaspistol_ammo	18
-	tachyonpistol			12
-	tachyonpistol_ammo		18
-}
-
-equipment alien_mine
+equipment campaign_stage2
 {
 	plaspistol			2
 	plaspistol_ammo		4
@@ -36,7 +18,7 @@ equipment alien_mine
 	laserrifle_ammo		2
 }
 
-equipment alien_excavation
+equipment campaign_stage3
 {
 	plaspistol			2
 	plaspistol_ammo		4
@@ -46,7 +28,7 @@ equipment alien_excavation
 	laserrifle_ammo		6
 }
 
-equipment alien_spedition
+equipment campaign_stage4
 {
 	plaspistol			2
 	plaspistol_ammo		4
@@ -56,7 +38,7 @@ equipment alien_spedition
 	tachyonsniper_ammo		4
 }
 
-equipment alien_crash
+equipment campaign_stage5
 {
 	plasrifle			4
 	plasrifle_ammo			8
