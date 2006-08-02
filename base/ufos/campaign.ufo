@@ -588,22 +588,22 @@ mission or_tabelbala
 }
 
 // this map is not finished right now
-mission rocketsilo
-{
-	location	"_TODO"
-	type		"_Terror Attack"
-	text		"_The Aliens have taken over a rocket silo. Go and capture it again."
-	map		rocketsilo06
-	music		mission3
-	pos		"308 412"
-	aliens		4
-	civilians	2
-	alienequip	alien_spedition
-	recruits	4
-	$win		400
-	$alien		250
-	$civilian	200
-}
+//mission rocketsilo
+//{
+//	location	"_TODO"
+//	type		"_Terror Attack"
+//	text		"_The Aliens have taken over a rocket silo. Go and capture it again."
+//	map		rocketsilo06
+//	music		mission3
+//	pos		"308 412"
+//	aliens		4
+//	civilians	2
+//	alienequip	alien_spedition
+//	recruits	4
+//	$win		400
+//	$alien		250
+//	$civilian	200
+//}
 
 // America
 mission tower
