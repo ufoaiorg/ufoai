@@ -503,6 +503,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	int max = 0;				/* calculated maxWidth */
 
 	/* transform from 1024x768 coordinates for drawing */
+	/* FIXME: This should be already done at parsing */
 	absX = (float) absX *vid.rx;
 	absY = (float) absY *vid.ry;
 	x = (float) x *vid.rx;
