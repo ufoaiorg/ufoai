@@ -440,7 +440,7 @@ tech rs_weapon_rpg_incendiary_ammo
 	up_chapter	weapons
 	description	"_rpg_incendiary_ammo_txt"
 
-	requires	"rs_damage_fire rs_weapon_rpg"
+	requires	"rs_damage_fire rs_weapon_rpg rs_weapon_incgrenade"
 	provides	rpg_incendiary_ammo
 	time	10
 	researched	false

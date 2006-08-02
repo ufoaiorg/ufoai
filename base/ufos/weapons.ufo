@@ -183,76 +183,6 @@ item fraggrenade
 //		bodysnd	misc/big_boom.wav
 //		bncsnd	misc/klonk03.wav
 
-	
-// =======================
-// INCENDIARY GRENADE
-// =======================
-item incgrenade
-{
-	name		"_Incendiary Grenade"
-	model		weapons/incgren/incgren
-	weapon		true
-	type		grenade
-	category	0
-	shape		"0 0 1 1"
-	center		"0 0 -0.3"
-	scale		1.4
-	price		190
-	buytype		2
-	ammo		1
-	thrown		true
-
-	primary
-	{
-		name	"_Throw"
-		skill	explosive
-		projtl	incgren
-		impact	fire_explosion
-		hitbody fire_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	17
-		bncfac	0.5
-		spread	"7 7"
-		range	12
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"50 20"
-		splrad	2
-		dmgtype "fire"
-	}
-	secondary
-	{
-		name	"_Throw"
-		skill	explosive
-		projtl	incgren
-		impact	fire_explosion
-		hitbody fire_explosion
-		impsnd	misc/big_boom.wav
-		bodysnd	misc/big_boom.wav
-		bncsnd	misc/klonk03.wav
-		gravity	true
-		delay	1
-		bounce	10
-		bncfac	0.5
-		spread	"7 7"
-		range	12
-		shots	1
-		ammo	1
-		rof		1
-		time	12
-		spldmg	"50 20"
-		splrad	2
-		dmgtype "fire"
-	}
-}
-
-
 // =======================
 // STUN GRENADE
 // =======================
@@ -321,6 +251,73 @@ item stungrenade
 	}
 }
 
+// ====================
+// HELLFIRE CANISTER
+// ====================
+item incgrenade
+{
+	name		"_Hellfire Canister"
+	model		weapons/incgren/incgren
+	weapon		true
+	type		grenade
+	category	0
+	shape		"0 0 1 1"
+	center		"0 0 -0.3"
+	scale		1.4
+	price		190
+	buytype		2
+	ammo		1
+	thrown		true
+
+	primary
+	{
+		name	"_Throw"
+		skill	explosive
+		projtl	incgren
+		impact	fire_explosion
+		hitbody fire_explosion
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	17
+		bncfac	0.5
+		spread	"7 7"
+		range	12
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"70 20"
+		splrad	2
+		dmgtype "fire"
+	}
+	secondary
+	{
+		name	"_Throw"
+		skill	explosive
+		projtl	incgren
+		impact	fire_explosion
+		hitbody fire_explosion
+		impsnd	misc/big_boom.wav
+		bodysnd	misc/big_boom.wav
+		bncsnd	misc/klonk03.wav
+		gravity	true
+		delay	1
+		bounce	10
+		bncfac	0.5
+		spread	"7 7"
+		range	12
+		shots	1
+		ammo	1
+		rof		1
+		time	12
+		spldmg	"70 20"
+		splrad	2
+		dmgtype "fire"
+	}
+}
 
 // ================
 // PLASMA GRENADE
