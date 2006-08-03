@@ -1530,7 +1530,7 @@ void MN_DrawMenus(void)
 							} while (1);
 
 							/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
-							y += re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], (*cur ? cur : " \0"));
+							y += re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], (*cur ? cur : " "));
 
 							if (node->mousefx && line == mouseOver)
 								 re.DrawColor(node->color); /* why is this repeated? */
