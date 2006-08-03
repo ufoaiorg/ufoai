@@ -55,7 +55,7 @@ stats_t stats;
 extern cmdList_t game_commands[];
 extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, actMis_t* mission);
 extern void CL_AircraftsNotifyMissionRemoved(const actMis_t* mission);
-
+static void CL_GameExit(void);
 /*
 ============================================================================
 
@@ -1985,10 +1985,11 @@ void CL_UpdateCharacterStats(int won)
 		}
 }
 
+#ifdef DEBUG
 /**
  * @brief Debug function to increase the kills and test the ranks
  */
-void CL_DebugChangeCharacterStats_f(void)
+static void CL_DebugChangeCharacterStats_f(void)
 {
 	int i, j;
 	character_t* chr;
@@ -1999,13 +2000,14 @@ void CL_DebugChangeCharacterStats_f(void)
 	}
 	CL_UpdateCharacterStats(1);
 }
+#endif
 
 /**
   * @brief
   * @sa CL_ParseResults
   * @sa CL_ParseCharacterData
   */
-void CL_GameResultsCmd(void)
+static void CL_GameResultsCmd(void)
 {
 	int won;
 	int i, j;
@@ -2641,7 +2643,7 @@ cmdList_t game_commands[] = {
 /**
   * @brief
   */
-void CL_GameExit(void)
+static void CL_GameExit(void)
 {
 	cmdList_t *commands;
 
@@ -2690,7 +2692,7 @@ void CL_GameInit ( void )
 /**
   * @brief
   */
-void CL_GameNew(void)
+static void CL_GameNew(void)
 {
 	equipDef_t *ed;
 	char *name;
@@ -2781,7 +2783,7 @@ void CL_GameNew(void)
 #define MAXCAMPAIGNTEXT 4096
 static char campaignText[MAXCAMPAIGNTEXT];
 static char campaignDesc[MAXCAMPAIGNTEXT];
-void CP_GetCampaigns_f(void)
+static void CP_GetCampaigns_f(void)
 {
 	int i;
 
@@ -2806,7 +2808,7 @@ void CP_GetCampaigns_f(void)
 /**
   * @brief Script function to select a campaign from campaign list
   */
-void CP_CampaignsClick_f(void)
+static void CP_CampaignsClick_f(void)
 {
 	int num;
 
@@ -2852,7 +2854,7 @@ void CL_ResetSinglePlayerData ( void )
   *
   * call this function via campaign_stats
   */
-void CP_CampaignStats ( void )
+static void CP_CampaignStats ( void )
 {
 	setState_t *set;
 	int i;
