@@ -1350,7 +1350,6 @@ void MN_DrawMenus(void)
 	vec4_t color;
 	int mouseOver = 0;
 	char *cur, *tab, *end;
-	const char *spc_const = " \0";
 	int y, line, x;
 	message_t *message;
 	menuModel_t *menuModel = NULL;
@@ -1530,11 +1529,8 @@ void MN_DrawMenus(void)
 								cur = tab;
 							} while (1);
 							
-                            /* a hack to draw "/n/n" as a blank line */
-							if (strlen(cur))
-								 y += re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], cur);
-							else 
-								 y += re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], spc_const);
+                            /* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
+							y += re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], (*cur ? cur : " \0"));
 
 							if (node->mousefx && line == mouseOver)
 								 re.DrawColor(node->color); /* why is this repeated? */
