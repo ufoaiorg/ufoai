@@ -363,7 +363,7 @@ static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width
 	int h = 0;
 
 	/* TTF does not like empty strings... */
-	asssert (buffer);
+	assert (buffer);
 	assert (strlen(buffer));
 
 	if (!maxWidth)
