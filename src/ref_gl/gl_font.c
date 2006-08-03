@@ -492,7 +492,7 @@ static void Font_ConvertChars(char *buffer)
 /*================
 Font_DrawString
 ================*/
-int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, char *c)
+int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const char *c)
 {
 	int w = 0, h = 0, locX;
 	int returnHeight = 0;
