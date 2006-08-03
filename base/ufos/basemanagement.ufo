@@ -2,6 +2,15 @@
 // BASEMANAGEMENT
 // ==============
 
+// Alternative base-layout, better suited for defense
+//
+// -- _0_ _1_ _2_ _3_ _4_
+// 0: xxx xxx xxx xxx intc
+// 1: xxx xxx ufo Han-gar
+// 2: x-x x-x x-x x-x Entr
+// 3: xxx xxx tea x-x Stor
+// 4: rad Lab Pow Cmd Qrt 
+
 // ====================
 // Buildings
 // ====================
@@ -28,7 +37,7 @@ building building_command
 	build_time	4
 	varcosts	50
 	map_name	"commando"
-	pos		"2 3"
+	pos		"4 3"
 	firstbase	true
 	pedia		rs_building_command
 }
@@ -42,7 +51,7 @@ building building_powerplant
 	build_time	2
 	varcosts	150
 	firstbase	true
-	pos		"2 2"
+	pos		"4 2"
 	map_name	"powerplant"
 	pedia		rs_building_powerplant
 }
@@ -58,7 +67,7 @@ building building_lab
 	build_time	12
 	varcosts	300
 	map_name	"lab"
-	pos		"2 1"
+	pos		"4 1"
 	firstbase	true
 	type	lab
 	employees_firstbase	2
@@ -74,7 +83,7 @@ building building_storage
 	build_time	5
 	varcosts	10
 	map_name	"storage"
-	pos		"1 3"
+	pos		"3 4"
 	firstbase	true
 	pedia		rs_building_storage
 }
@@ -105,7 +114,7 @@ building building_quarters
 	onconstruct	"building_add_employees scientists 6"
 	varcosts	10
 	map_name	"quarters"
-	pos		"1 2"
+	pos		"4 4"
 	firstbase	true
 	type	quarters
 	pedia		rs_building_quarters
@@ -139,7 +148,7 @@ building building_hangar
 	pedia		rs_building_hangar
 	firstbase	true
 	type	hangar
-	pos		"1 0"
+	pos		"1 3"
 }
 
 building building_hangar2
