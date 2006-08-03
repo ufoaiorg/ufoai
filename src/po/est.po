@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-07-31 12:15+0200\n"
+"POT-Creation-Date: 2006-08-03 22:03+0200\n"
 "PO-Revision-Date: 2006-06-18 15:47+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -56,398 +56,129 @@ msgstr "Nano kehakaitse"
 msgid "Heavy Nano Armor"
 msgstr "Tugev Nano kehakaitse"
 
-#: ../base/ufos/basemanagement.ufo:10
+#: ../base/ufos/basemanagement.ufo:19
 msgid "Entrance"
 msgstr "Sissepääs"
 
-#: ../base/ufos/basemanagement.ufo:24
+#: ../base/ufos/basemanagement.ufo:33
 #, fuzzy
 msgid "Command Center"
 msgstr "Juhtimiskeskus"
 
-#: ../base/ufos/basemanagement.ufo:38
+#: ../base/ufos/basemanagement.ufo:47
 #, fuzzy
 msgid "Power Plant"
 msgstr "Jõujaam"
 
-#: ../base/ufos/basemanagement.ufo:52
+#: ../base/ufos/basemanagement.ufo:61
 msgid "Laboratory"
 msgstr "Laboratoorium"
 
-#: ../base/ufos/basemanagement.ufo:70
+#: ../base/ufos/basemanagement.ufo:79
 msgid "Storage"
 msgstr "Hoiuruum(id)"
 
-#: ../base/ufos/basemanagement.ufo:84
+#: ../base/ufos/basemanagement.ufo:93
 msgid "Interceptors"
 msgstr "Hävitajad F-48"
 
-#: ../base/ufos/basemanagement.ufo:98
+#: ../base/ufos/basemanagement.ufo:107
 msgid "Quarters"
 msgstr "Elamispind"
 
-#: ../base/ufos/basemanagement.ufo:116
+#: ../base/ufos/basemanagement.ufo:125
 msgid "UFO Hangar"
 msgstr "Ufode hangaar"
 
-#: ../base/ufos/basemanagement.ufo:130 ../base/ufos/basemanagement.ufo:147
+#: ../base/ufos/basemanagement.ufo:139 ../base/ufos/basemanagement.ufo:156
 msgid "Hangar"
 msgstr "Hangaar"
 
-#: ../base/ufos/basemanagement.ufo:160
+#: ../base/ufos/basemanagement.ufo:169
 msgid "Team Room"
 msgstr "Tiimi Tuba"
 
-#: ../base/ufos/basemanagement.ufo:171
+#: ../base/ufos/basemanagement.ufo:180
 msgid "Radar"
 msgstr "Radar"
 
-#: ../base/ufos/basemanagement.ufo:184
+#: ../base/ufos/basemanagement.ufo:193
 msgid "Home"
 msgstr "Kodu"
 
-#: ../base/ufos/basemanagement.ufo:185
+#: ../base/ufos/basemanagement.ufo:194
 msgid "Base #2"
 msgstr "Baas #2"
 
-#: ../base/ufos/basemanagement.ufo:186
+#: ../base/ufos/basemanagement.ufo:195
 msgid "Base #3"
 msgstr "Baas #3"
 
-#: ../base/ufos/basemanagement.ufo:187
+#: ../base/ufos/basemanagement.ufo:196
 msgid "Base #4"
 msgstr "Baas #4"
 
-#: ../base/ufos/basemanagement.ufo:188
+#: ../base/ufos/basemanagement.ufo:197
 msgid "Base #5"
 msgstr "Baas #5"
 
-#: ../base/ufos/basemanagement.ufo:189
+#: ../base/ufos/basemanagement.ufo:198
 msgid "Base #6"
 msgstr "Baas #6"
 
-#: ../base/ufos/basemanagement.ufo:190
+#: ../base/ufos/basemanagement.ufo:199
 msgid "Base #7"
 msgstr "Baas #7"
 
-#: ../base/ufos/basemanagement.ufo:191
+#: ../base/ufos/basemanagement.ufo:200
 msgid "Base #8"
 msgstr "Baas #8"
 
-#: ../base/ufos/basemanagement.ufo:197
+#: ../base/ufos/basemanagement.ufo:206
 msgid "Dropship"
 msgstr "Transpordi laev H-92"
 
-#: ../base/ufos/basemanagement.ufo:211
+#: ../base/ufos/basemanagement.ufo:220
 msgid "Interceptor"
 msgstr "Hävitaja F-48"
 
-#: ../base/ufos/basemanagement.ufo:228
+#: ../base/ufos/basemanagement.ufo:237
 msgid "UFO"
 msgstr "UFO"
 
-#: ../base/ufos/basemanagement.ufo:242
+#: ../base/ufos/basemanagement.ufo:251
 msgid "UFO - Destroyer class"
 msgstr "Ufo - Hävitaja klass"
 
-#: ../base/ufos/campaign.ufo:5 ../base/ufos/campaign.ufo:277
-msgid "New York"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:6 ../base/ufos/campaign.ufo:24
-#: ../base/ufos/campaign.ufo:42 ../base/ufos/campaign.ufo:60
-#: ../base/ufos/campaign.ufo:79 ../base/ufos/campaign.ufo:119
-#: ../base/ufos/campaign.ufo:137 ../base/ufos/campaign.ufo:178
-#: ../base/ufos/campaign.ufo:199 ../base/ufos/campaign.ufo:219
-#: ../base/ufos/campaign.ufo:239 ../base/ufos/campaign.ufo:258
-#: ../base/ufos/campaign.ufo:278 ../base/ufos/campaign.ufo:297
-#: ../base/ufos/campaign.ufo:318 ../base/ufos/campaign.ufo:398
-#: ../base/ufos/campaign.ufo:418 ../base/ufos/campaign.ufo:458
-#: ../base/ufos/campaign.ufo:498 ../base/ufos/campaign.ufo:517
-#: ../base/ufos/campaign.ufo:536 ../base/ufos/campaign.ufo:555
-#: ../base/ufos/campaign.ufo:574 ../base/ufos/campaign.ufo:594
-#: ../base/ufos/campaign.ufo:612 ../base/ufos/campaign.ufo:629
-#: ../base/ufos/campaign.ufo:648 ../base/ufos/campaign.ufo:667
-#: ../base/ufos/campaign.ufo:685 ../base/ufos/campaign.ufo:704
-#: ../base/ufos/campaign.ufo:724
-msgid "Terror Attack"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:7 ../base/ufos/campaign.ufo:25
-#: ../base/ufos/campaign.ufo:43 ../base/ufos/campaign.ufo:61
-#: ../base/ufos/campaign.ufo:279 ../base/ufos/campaign.ufo:613
-#: ../base/ufos/campaign.ufo:649 ../base/ufos/campaign.ufo:668
-#, fuzzy
-msgid ""
-"Damn it, you've let some of them get\\away again! Reequip your squad and"
-"\\get after them!"
-msgstr ""
-"Kurat küll, sa lasid  mõned\\jälle minema. Relvasta oma tiim ja\\keri neile "
-"järele.\\"
-
-#: ../base/ufos/campaign.ufo:23
-msgid "Altdorf"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:41
-msgid "Oslo"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:59
-#, fuzzy
-msgid "Antalya"
-msgstr ""
-"Olles karmi sõjaväelis juhtimise all on Antareanidel auastmed: Töölised, "
-"Sõdurid ja komandöörid. Väiksed UFOd on mehitatud töölistega kes koguvad "
-"infot Maastiku kohta, röövivad eluvorme ja muud sellist.  Sõjalaeva tüüpi "
-"UFOdel on ka sõdureid Komandöörid on ainult Juggernaut ja Bulwarki tüüpi "
-"UFOdes ja Antareanide baasides. Inimese sarnased, suurte silmade ja halli "
-"kehaga tulnukad kes domineerisid 20saj. õudus filmides. Nad sarnanevad "
-"inimestega nii keha ehituselt kui aju suuruselt, mis aitas nende madalal "
-"kogukonnal areneda  Kosmose vallutajateks."
-
-#: ../base/ufos/campaign.ufo:78
-msgid "Berlin"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:80 ../base/ufos/campaign.ufo:138
-#: ../base/ufos/campaign.ufo:179 ../base/ufos/campaign.ufo:200
-#: ../base/ufos/campaign.ufo:220 ../base/ufos/campaign.ufo:259
-#: ../base/ufos/campaign.ufo:298 ../base/ufos/campaign.ufo:319
-#: ../base/ufos/campaign.ufo:399 ../base/ufos/campaign.ufo:419
-#: ../base/ufos/campaign.ufo:459 ../base/ufos/campaign.ufo:499
-#: ../base/ufos/campaign.ufo:518 ../base/ufos/campaign.ufo:537
-#: ../base/ufos/campaign.ufo:556 ../base/ufos/campaign.ufo:575
-#: ../base/ufos/campaign.ufo:630 ../base/ufos/campaign.ufo:686
-#: ../base/ufos/campaign.ufo:705 ../base/ufos/campaign.ufo:725
-msgid "Protect inhabitants"
-msgstr ""
-
 #: ../base/ufos/campaign.ufo:98
-msgid "Gobabis"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:99
-#, fuzzy
-msgid "Crash Site"
-msgstr "Loo"
-
-#: ../base/ufos/campaign.ufo:100
-msgid "Secure Area"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:118
-msgid "Wellington"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:120
-#, fuzzy
-msgid ""
-"There are rumors of a mine being\\overrun by aliens. Although this\\source "
-"of information is doubtful,\\you'll need to investigate."
-msgstr ""
-"On levinud kuulujutte, et kaevanduses\\on märgatud tulnukaid\\Kuigi see "
-"informatsioon ei pruugi olla tõene,\\pead sa seda kontrollima.\\"
-
-#: ../base/ufos/campaign.ufo:136
-#, fuzzy
-msgid "Mackay"
-msgstr "Tagasi"
-
-#: ../base/ufos/campaign.ufo:156
-msgid "Dongola"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:157 ../base/ufos/campaign.ufo:359
-msgid "Crashed Alien Ship"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:158
-msgid "Secure area"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:177
-#, fuzzy
-msgid "Bristol"
-msgstr "Poolik Valang"
-
-#: ../base/ufos/campaign.ufo:198
-msgid "Veracruz"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:218
-msgid "Uppsala"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:238 ../base/ufos/campaign.ufo:535
-msgid "Gwanda"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:240
-#, fuzzy
-msgid ""
-"Some aliens have escaped from the\\mine, and their tracks lead south,"
-"\\towards a nearby excavation site.\\Protect that site at all cost."
-msgstr ""
-"Mõned tulnukad on põgenenud\\kaevandusest ja nende jäljed viivad lõnasse"
-"\\lähedal asuva karjääri äärde.\\Kaitse seda karjääri iga hinna eest.\\"
-
-#: ../base/ufos/campaign.ufo:257
-msgid "Marina Serra"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:296
-msgid "Lille"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:317
-#, fuzzy
-msgid "Busan"
-msgstr "Poolik Valang"
-
-#: ../base/ufos/campaign.ufo:337
-msgid "Morioka"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:338
-#, fuzzy
-msgid "Alien Hideout"
-msgstr "Tulnukate liigid"
-
-#: ../base/ufos/campaign.ufo:339
-msgid "Eliminate intruders"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:358 ../base/ufos/campaign.ufo:377
-#: ../base/ufos/campaign.ufo:417
-msgid "Revelstoke"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:360
-msgid "Secure Alien Ship"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:378 ../base/ufos/campaign.ufo:438
-#: ../base/ufos/campaign.ufo:478
-msgid "Landed Alien Ship"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:379 ../base/ufos/campaign.ufo:439
-#: ../base/ufos/campaign.ufo:479
-msgid "Secure Alien Ship before Liftoff"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:397
-msgid "Nuuk"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:437
-msgid "Antarctic"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:457
-msgid "Agpat"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:477
-msgid "Dunholm"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:497
-msgid "La Paz"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:516
-msgid "Tazovskij"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:554
-#, fuzzy
-msgid "Asyut"
-msgstr "Sihtimata Valang"
-
-#: ../base/ufos/campaign.ufo:573
-msgid "Tabelbala"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:593 ../base/ufos/campaign.ufo:628
-#: ../base/ufos/campaign.ufo:647 ../base/ufos/campaign.ufo:666
-msgid "TODO"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:595
-#, fuzzy
-msgid "The Aliens have taken over a rocket silo. Go and capture it again."
-msgstr "Tulnukad on vallutanud raketibaasi. Valluta see tagasi!"
-
-#: ../base/ufos/campaign.ufo:611
-#, fuzzy
-msgid "San Fransisco"
-msgstr "Transpordis"
-
-#: ../base/ufos/campaign.ufo:684
-msgid "Fargo"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:703
-#, fuzzy
-msgid "Grenchen"
-msgstr "Kranaadid"
-
-#: ../base/ufos/campaign.ufo:723
-msgid "Albany"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:743
-msgid "Shannon"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:744
-msgid "Major Alien Intrusion"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:745
-msgid "Stop them"
-msgstr ""
-
-#: ../base/ufos/campaign.ufo:764 client/cl_campaign.c:555
-#, fuzzy
-msgid "Base Attack"
-msgstr "Baasirünnak"
-
-#: ../base/ufos/campaign.ufo:765
-msgid "Aliens attacked one of our home bases"
-msgstr "Tulnukad ründasid ühte meie kodubaasidest"
-
-#: ../base/ufos/campaign.ufo:877
 #, fuzzy
 msgid "Hard Campaign"
 msgstr "Test Kampaania"
 
-#: ../base/ufos/campaign.ufo:878
+#: ../base/ufos/campaign.ufo:99
 #, fuzzy
 msgid "txt_hard_campaign"
 msgstr "<Not sure yet>"
 
-#: ../base/ufos/campaign.ufo:894
+#: ../base/ufos/campaign.ufo:115
 #, fuzzy
 msgid "Easy Campaign"
 msgstr "Test Kampaania"
 
-#: ../base/ufos/campaign.ufo:895
+#: ../base/ufos/campaign.ufo:116
 #, fuzzy
 msgid "txt_easy_campaign"
 msgstr "<Not sure yet>"
 
-#: ../base/ufos/campaign.ufo:911
+#: ../base/ufos/campaign.ufo:132
 msgid "Standard Campaign"
 msgstr "Tava Kampaania"
 
-#: ../base/ufos/campaign.ufo:912 ../base/ufos/campaign.ufo:930
+#: ../base/ufos/campaign.ufo:133 ../base/ufos/campaign.ufo:151
 msgid "txt_standard_campaign"
 msgstr "<Not sure yet>"
 
-#: ../base/ufos/campaign.ufo:929
+#: ../base/ufos/campaign.ufo:150
 msgid "Testing and Tweaking Campaign --- Please Ignore"
 msgstr ""
 
@@ -1573,6 +1304,269 @@ msgstr "Tagasi sisu juurde"
 msgid "Leave Ufopedia"
 msgstr "Sulge Ufopedia"
 
+#: ../base/ufos/missions.ufo:5 ../base/ufos/missions.ufo:317
+msgid "New York"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:6 ../base/ufos/missions.ufo:27
+#: ../base/ufos/missions.ufo:48 ../base/ufos/missions.ufo:69
+#: ../base/ufos/missions.ufo:91 ../base/ufos/missions.ufo:137
+#: ../base/ufos/missions.ufo:158 ../base/ufos/missions.ufo:204
+#: ../base/ufos/missions.ufo:227 ../base/ufos/missions.ufo:250
+#: ../base/ufos/missions.ufo:273 ../base/ufos/missions.ufo:295
+#: ../base/ufos/missions.ufo:318 ../base/ufos/missions.ufo:340
+#: ../base/ufos/missions.ufo:364 ../base/ufos/missions.ufo:455
+#: ../base/ufos/missions.ufo:475 ../base/ufos/missions.ufo:515
+#: ../base/ufos/missions.ufo:555 ../base/ufos/missions.ufo:577
+#: ../base/ufos/missions.ufo:599 ../base/ufos/missions.ufo:621
+#: ../base/ufos/missions.ufo:640 ../base/ufos/missions.ufo:681
+#: ../base/ufos/missions.ufo:701 ../base/ufos/missions.ufo:723
+#: ../base/ufos/missions.ufo:742 ../base/ufos/missions.ufo:760
+#: ../base/ufos/missions.ufo:782 ../base/ufos/missions.ufo:802
+msgid "Terror Attack"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:7 ../base/ufos/missions.ufo:28
+#: ../base/ufos/missions.ufo:49 ../base/ufos/missions.ufo:70
+#: ../base/ufos/missions.ufo:319 ../base/ufos/missions.ufo:682
+#: ../base/ufos/missions.ufo:724 ../base/ufos/missions.ufo:743
+#, fuzzy
+msgid ""
+"Damn it, you've let some of them get\\away again! Reequip your squad and"
+"\\get after them!"
+msgstr ""
+"Kurat küll, sa lasid  mõned\\jälle minema. Relvasta oma tiim ja\\keri neile "
+"järele.\\"
+
+#: ../base/ufos/missions.ufo:26
+msgid "Altdorf"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:47
+msgid "Oslo"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:68
+#, fuzzy
+msgid "Antalya"
+msgstr ""
+"Olles karmi sõjaväelis juhtimise all on Antareanidel auastmed: Töölised, "
+"Sõdurid ja komandöörid. Väiksed UFOd on mehitatud töölistega kes koguvad "
+"infot Maastiku kohta, röövivad eluvorme ja muud sellist.  Sõjalaeva tüüpi "
+"UFOdel on ka sõdureid Komandöörid on ainult Juggernaut ja Bulwarki tüüpi "
+"UFOdes ja Antareanide baasides. Inimese sarnased, suurte silmade ja halli "
+"kehaga tulnukad kes domineerisid 20saj. õudus filmides. Nad sarnanevad "
+"inimestega nii keha ehituselt kui aju suuruselt, mis aitas nende madalal "
+"kogukonnal areneda  Kosmose vallutajateks."
+
+#: ../base/ufos/missions.ufo:90
+msgid "Berlin"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:92 ../base/ufos/missions.ufo:159
+#: ../base/ufos/missions.ufo:205 ../base/ufos/missions.ufo:228
+#: ../base/ufos/missions.ufo:251 ../base/ufos/missions.ufo:296
+#: ../base/ufos/missions.ufo:341 ../base/ufos/missions.ufo:365
+#: ../base/ufos/missions.ufo:456 ../base/ufos/missions.ufo:476
+#: ../base/ufos/missions.ufo:516 ../base/ufos/missions.ufo:556
+#: ../base/ufos/missions.ufo:578 ../base/ufos/missions.ufo:600
+#: ../base/ufos/missions.ufo:622 ../base/ufos/missions.ufo:641
+#: ../base/ufos/missions.ufo:702 ../base/ufos/missions.ufo:761
+#: ../base/ufos/missions.ufo:783 ../base/ufos/missions.ufo:803
+msgid "Protect inhabitants"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:113
+msgid "Gobabis"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:114
+#, fuzzy
+msgid "Crash Site"
+msgstr "Loo"
+
+#: ../base/ufos/missions.ufo:115
+msgid "Secure Area"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:136
+msgid "Wellington"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:138
+#, fuzzy
+msgid ""
+"There are rumors of a mine being\\overrun by aliens. Although this\\source "
+"of information is doubtful,\\you'll need to investigate."
+msgstr ""
+"On levinud kuulujutte, et kaevanduses\\on märgatud tulnukaid\\Kuigi see "
+"informatsioon ei pruugi olla tõene,\\pead sa seda kontrollima.\\"
+
+#: ../base/ufos/missions.ufo:157
+#, fuzzy
+msgid "Mackay"
+msgstr "Tagasi"
+
+#: ../base/ufos/missions.ufo:180
+msgid "Dongola"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:181 ../base/ufos/missions.ufo:411
+msgid "Crashed Alien Ship"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:182
+msgid "Secure area"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:203
+#, fuzzy
+msgid "Bristol"
+msgstr "Poolik Valang"
+
+#: ../base/ufos/missions.ufo:226
+msgid "Veracruz"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:249
+msgid "Uppsala"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:272 ../base/ufos/missions.ufo:598
+msgid "Gwanda"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:274
+#, fuzzy
+msgid ""
+"Some aliens have escaped from the\\mine, and their tracks lead south,"
+"\\towards a nearby excavation site.\\Protect that site at all cost."
+msgstr ""
+"Mõned tulnukad on põgenenud\\kaevandusest ja nende jäljed viivad lõnasse"
+"\\lähedal asuva karjääri äärde.\\Kaitse seda karjääri iga hinna eest.\\"
+
+#: ../base/ufos/missions.ufo:294
+msgid "Marina Serra"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:339
+msgid "Lille"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:363
+#, fuzzy
+msgid "Busan"
+msgstr "Poolik Valang"
+
+#: ../base/ufos/missions.ufo:386
+msgid "Morioka"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:387
+#, fuzzy
+msgid "Alien Hideout"
+msgstr "Tulnukate liigid"
+
+#: ../base/ufos/missions.ufo:388
+msgid "Eliminate intruders"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:410 ../base/ufos/missions.ufo:432
+#: ../base/ufos/missions.ufo:474
+msgid "Revelstoke"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:412
+msgid "Secure Alien Ship"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:433 ../base/ufos/missions.ufo:495
+#: ../base/ufos/missions.ufo:535
+msgid "Landed Alien Ship"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:434 ../base/ufos/missions.ufo:496
+#: ../base/ufos/missions.ufo:536
+msgid "Secure Alien Ship before Liftoff"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:454
+msgid "Nuuk"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:494
+msgid "Antarctic"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:514
+msgid "Agpat"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:534
+msgid "Dunholm"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:554
+msgid "La Paz"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:576
+msgid "Tazovskij"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:620
+#, fuzzy
+msgid "Asyut"
+msgstr "Sihtimata Valang"
+
+#: ../base/ufos/missions.ufo:639
+msgid "Tabelbala"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:680
+#, fuzzy
+msgid "San Fransisco"
+msgstr "Transpordis"
+
+#: ../base/ufos/missions.ufo:700 ../base/ufos/missions.ufo:722
+#: ../base/ufos/missions.ufo:741
+msgid "TODO"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:759
+msgid "Fargo"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:781
+#, fuzzy
+msgid "Grenchen"
+msgstr "Kranaadid"
+
+#: ../base/ufos/missions.ufo:801
+msgid "Albany"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:821
+msgid "Shannon"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:822
+msgid "Major Alien Intrusion"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:823
+msgid "Stop them"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:842 client/cl_campaign.c:555
+#, fuzzy
+msgid "Base Attack"
+msgstr "Baasirünnak"
+
+#: ../base/ufos/missions.ufo:843
+msgid "Aliens attacked one of our home bases"
+msgstr "Tulnukad ründasid ühte meie kodubaasidest"
+
 #: ../base/ufos/nations.ufo:26
 msgid "United Americas"
 msgstr "Ameerika Ühendriigid"
@@ -1821,7 +1815,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:404
 #, fuzzy
-msgid "incgrenade_txt"
+msgid "alienincgrenade_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:416
@@ -2854,7 +2848,7 @@ msgstr "Vajuta, et vaadelda erinevaid nähtavaid vastaseid"
 msgid "End round"
 msgstr "Lõpeta käik"
 
-#: ../base/ufos/team_aliens.ufo:227
+#: ../base/ufos/team_aliens.ufo:213
 msgid "Ortnok"
 msgstr ""
 "Ortnokid suudavad kasutada lihtsamaid tulnukate püsse, nad ei suuda kasutada "
@@ -2865,7 +2859,7 @@ msgstr ""
 "tugevateks ja osavateks sõduriteks. Emased hoitakse nn. sünnitus hoidlates, "
 "kinnitamaks, et Antareansidel oleks alati värske varu \"kahuriliha\""
 
-#: ../base/ufos/team_aliens.ufo:237
+#: ../base/ufos/team_aliens.ufo:223
 msgid "Antarean"
 msgstr ""
 "Olles karmi sõjaväelis juhtimise all on Antareanidel auastmed: Töölised, "
@@ -2877,7 +2871,7 @@ msgstr ""
 "inimestega nii keha ehituselt kui aju suuruselt, mis aitas nende madalal "
 "kogukonnal areneda  Kosmose vallutajateks."
 
-#: ../base/ufos/team_aliens.ufo:247
+#: ../base/ufos/team_aliens.ufo:233
 msgid "Shevaar"
 msgstr ""
 "Alguses tungivad Shevaarid vastasele otse kallale ja ründavad neid "
@@ -2890,7 +2884,7 @@ msgstr ""
 "nahk on väga paks. Sellepärast kasutavad Antareanid neid sõjakoeradena. Sell "
 "ajal kui vastane tegeleb shevaaridega, tulistavad Antareanid neid kaugelt."
 
-#: ../base/ufos/team_aliens.ufo:257
+#: ../base/ufos/team_aliens.ufo:243
 msgid "Hovernet"
 msgstr ""
 "Hovernetid on kaugjuhitavad ja nad ilmuvad ainult UFO maandumis/vallutamise "
@@ -2904,7 +2898,7 @@ msgstr ""
 "sest nad on relvastatud tachyoni snaiper püssiga. Arvatavasti on nad "
 "kaitsesüsteem mis aktiveerub kui UFO maandub või sunnitakse maanduma."
 
-#: ../base/ufos/team_aliens.ufo:267
+#: ../base/ufos/team_aliens.ufo:253
 msgid "Cyborg Ortnok"
 msgstr ""
 "Erinevalt tavalistest Ortnokidest, on Cyborg Ortnoki relvad ehitatud tema "
@@ -2950,25 +2944,24 @@ msgid "Frag Grenade"
 msgstr "Kildkranaat"
 
 #: ../base/ufos/weapons.ufo:108 ../base/ufos/weapons.ufo:132
-#: ../base/ufos/weapons.ufo:207 ../base/ufos/weapons.ufo:231
-#: ../base/ufos/weapons.ufo:276 ../base/ufos/weapons.ufo:300
-#: ../base/ufos/weapons.ufo:346 ../base/ufos/weapons.ufo:370
+#: ../base/ufos/weapons.ufo:206 ../base/ufos/weapons.ufo:230
+#: ../base/ufos/weapons.ufo:275 ../base/ufos/weapons.ufo:299
+#: ../base/ufos/weapons.ufo:344 ../base/ufos/weapons.ufo:368
 #: ../base/ufos/weapons_human.ufo:618 ../base/ufos/weapons_human.ufo:883
-#: ../base/ufos/weapons_plasma.ufo:184
+#: ../base/ufos/weapons_plasma.ufo:185
 msgid "Throw"
 msgstr "Viska"
 
-#: ../base/ufos/weapons.ufo:192
-#, fuzzy
-msgid "Incendiary Grenade"
-msgstr "Kildkranaat"
-
-#: ../base/ufos/weapons.ufo:261
+#: ../base/ufos/weapons.ufo:191
 #, fuzzy
 msgid "Stun Grenade"
 msgstr "Suitsu kranaat"
 
-#: ../base/ufos/weapons.ufo:330
+#: ../base/ufos/weapons.ufo:259
+msgid "Hellfire Canister"
+msgstr ""
+
+#: ../base/ufos/weapons.ufo:328
 #, fuzzy
 msgid "Plasma Grenade"
 msgstr "PlasmaMõõk"
@@ -3009,12 +3002,12 @@ msgstr "WE-78 salv"
 
 #: ../base/ufos/weapons_human.ufo:108 ../base/ufos/weapons_human.ufo:475
 #: ../base/ufos/weapons_human.ufo:536 ../base/ufos/weapons_tachyon.ufo:35
-#: ../base/ufos/weapons_tachyon.ufo:184 ../base/ufos/weapons_tachyon.ufo:242
+#: ../base/ufos/weapons_tachyon.ufo:182 ../base/ufos/weapons_tachyon.ufo:239
 msgid "Snap Shot"
 msgstr "Sihtimata lask"
 
 #: ../base/ufos/weapons_human.ufo:126 ../base/ufos/weapons_human.ufo:498
-#: ../base/ufos/weapons_human.ufo:559 ../base/ufos/weapons_tachyon.ufo:265
+#: ../base/ufos/weapons_human.ufo:559 ../base/ufos/weapons_tachyon.ufo:262
 msgid "Aimed Shot"
 msgstr "Sihitud lask"
 
@@ -3028,8 +3021,8 @@ msgstr "9mm salv"
 
 #: ../base/ufos/weapons_human.ufo:179 ../base/ufos/weapons_human.ufo:324
 #: ../base/ufos/weapons_human.ufo:671 ../base/ufos/weapons_human.ufo:696
-#: ../base/ufos/weapons_human.ufo:755 ../base/ufos/weapons_plasma.ufo:299
-#: ../base/ufos/weapons_plasma.ufo:324
+#: ../base/ufos/weapons_human.ufo:755 ../base/ufos/weapons_plasma.ufo:300
+#: ../base/ufos/weapons_plasma.ufo:325
 msgid "Single Shot"
 msgstr "Üks lask"
 
@@ -3094,7 +3087,7 @@ msgid "Combat Knife"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:603 ../base/ufos/weapons_human.ufo:868
-#: ../base/ufos/weapons_plasma.ufo:169
+#: ../base/ufos/weapons_plasma.ufo:170
 msgid "Stab"
 msgstr "Torka"
 
@@ -3188,9 +3181,9 @@ msgstr "Plasma kahuri laeng"
 msgid "Charged Pulse"
 msgstr "Super Võnked"
 
-#: ../base/ufos/weapons_plasma.ufo:55 ../base/ufos/weapons_plasma.ufo:128
-#: ../base/ufos/weapons_plasma.ufo:260
-msgid "Continuous Beam"
+#: ../base/ufos/weapons_plasma.ufo:55 ../base/ufos/weapons_plasma.ufo:129
+#, fuzzy
+msgid "Continuous Stream"
 msgstr "Tihe"
 
 #: ../base/ufos/weapons_plasma.ufo:81
@@ -3201,27 +3194,31 @@ msgstr "Plasma Automaat"
 msgid "Plasma Rifle Charge"
 msgstr "Plasma Automaadi Laeng"
 
-#: ../base/ufos/weapons_plasma.ufo:154
+#: ../base/ufos/weapons_plasma.ufo:155
 #, fuzzy
 msgid "Plasma Blade"
 msgstr "PlasmaMõõk"
 
-#: ../base/ufos/weapons_plasma.ufo:208
+#: ../base/ufos/weapons_plasma.ufo:209
 #, fuzzy
 msgid "Plasma Blaster"
 msgstr "Plasma kahur"
 
-#: ../base/ufos/weapons_plasma.ufo:225
+#: ../base/ufos/weapons_plasma.ufo:226
 #, fuzzy
 msgid "Plasma Blaster Charge"
 msgstr "Plasma kahuri laeng"
 
-#: ../base/ufos/weapons_plasma.ufo:237
+#: ../base/ufos/weapons_plasma.ufo:238
 #, fuzzy
 msgid "Charged Ball"
 msgstr "Super purstus"
 
-#: ../base/ufos/weapons_plasma.ufo:286
+#: ../base/ufos/weapons_plasma.ufo:261
+msgid "Continuous Beam"
+msgstr "Tihe"
+
+#: ../base/ufos/weapons_plasma.ufo:287
 #, fuzzy
 msgid "Plasma Grenade Shells"
 msgstr "PlasmaMõõk"
@@ -3236,46 +3233,87 @@ msgstr "Tachyoni Püstol"
 msgid "Tachyon Pistol Clip"
 msgstr "Tachyoni Püstoli salv"
 
-#: ../base/ufos/weapons_tachyon.ufo:54 ../base/ufos/weapons_tachyon.ufo:108
-#: ../base/ufos/weapons_tachyon.ufo:203
+#: ../base/ufos/weapons_tachyon.ufo:53 ../base/ufos/weapons_tachyon.ufo:128
+#: ../base/ufos/weapons_tachyon.ufo:200
 msgid "Rapid Shots"
 msgstr "Kiired lasud"
 
-#: ../base/ufos/weapons_tachyon.ufo:79
+#: ../base/ufos/weapons_tachyon.ufo:78
 msgid "Tachyon Rifle"
 msgstr "Tachyoni Automaat"
 
-#: ../base/ufos/weapons_tachyon.ufo:96
+#: ../base/ufos/weapons_tachyon.ufo:95
 msgid "Tachyon Rifle Charge"
 msgstr "Tachyon Automaadi salv"
 
-#: ../base/ufos/weapons_tachyon.ufo:127
+#: ../base/ufos/weapons_tachyon.ufo:107
 msgid "Charged Blast"
 msgstr "Super purstus"
 
-#: ../base/ufos/weapons_tachyon.ufo:155
+#: ../base/ufos/weapons_tachyon.ufo:153
 msgid "Tachyon Sniper Rifle"
 msgstr "Tachyoni Snaiper püss"
 
-#: ../base/ufos/weapons_tachyon.ufo:172
+#: ../base/ufos/weapons_tachyon.ufo:170
 msgid "Tachyon Sniper Charge"
 msgstr "Tachyoni snaiper püssi salv"
 
-#: ../base/ufos/weapons_tachyon.ufo:229
+#: ../base/ufos/weapons_tachyon.ufo:226
 #, fuzzy
 msgid "Tachyon-Beam Rocket"
 msgstr "Tachyoni Automaat"
 
-#: client/cl_actor.c:95
+#: client/cl_actor.c:61
+msgid "Pathetic"
+msgstr ""
+
+#: client/cl_actor.c:63
+msgid "Very Poor"
+msgstr ""
+
+#: client/cl_actor.c:65
+#, fuzzy
+msgid "Poor"
+msgstr "Jõud:"
+
+#: client/cl_actor.c:67
+msgid "Medicore"
+msgstr ""
+
+#: client/cl_actor.c:69
+msgid "Good"
+msgstr ""
+
+#: client/cl_actor.c:71
+msgid "Very Good"
+msgstr ""
+
+#: client/cl_actor.c:73
+msgid "Excellent"
+msgstr ""
+
+#: client/cl_actor.c:75
+msgid "Amazing"
+msgstr ""
+
+#: client/cl_actor.c:77
+msgid "Superhuman"
+msgstr ""
+
+#: client/cl_actor.c:79
+msgid "Godlike"
+msgstr ""
+
+#: client/cl_actor.c:113
 #, c-format
 msgid "Rank: %s"
 msgstr "Auaste: %s"
 
-#: client/cl_actor.c:362
+#: client/cl_actor.c:380
 msgid "Currently panics!\n"
 msgstr "Praegu paanitseb!\n"
 
-#: client/cl_actor.c:367
+#: client/cl_actor.c:385
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -3283,7 +3321,7 @@ msgstr ""
 "Sa ei saa seda tundmatud eset kasutada.\n"
 "Et seda eset kasutada pead enne seda uurima.\n"
 
-#: client/cl_actor.c:378
+#: client/cl_actor.c:396
 #, c-format
 msgid ""
 "%s\n"
@@ -3292,7 +3330,7 @@ msgstr ""
 "%s\n"
 "(tühi)\n"
 
-#: client/cl_actor.c:389
+#: client/cl_actor.c:407
 #, c-format
 msgid ""
 "Health\t%i\n"
@@ -3301,20 +3339,20 @@ msgstr ""
 "Tervis\t%i\n"
 "Liikumine\t%i\n"
 
-#: client/cl_actor.c:392
+#: client/cl_actor.c:410
 #, c-format
 msgid "Health\t%i\n"
 msgstr "Tervis\t%i\n"
 
-#: client/cl_actor.c:771
+#: client/cl_actor.c:789
 msgid "Nobody selected\n"
 msgstr "Kedagi pole valitud\n"
 
-#: client/cl_actor.c:782
+#: client/cl_actor.c:800
 msgid "This isn't your round\n"
 msgstr "See ei ole sinu käik\n"
 
-#: client/cl_actor.c:910
+#: client/cl_actor.c:928
 msgid ""
 "You cannot load this unknown item.\n"
 "You need to research it first.\n"
@@ -3322,92 +3360,92 @@ msgstr ""
 "Sa ei saa seda tundmatut eset kasutatda.\n"
 "Sa pead selle enne uurima.\n"
 
-#: client/cl_actor.c:1348
+#: client/cl_actor.c:1366
 msgid "Your round started!\n"
 msgstr "Sinu käik algas!\n"
 
-#: client/cl_basemanagement.c:280
+#: client/cl_basemanagement.c:161
 msgid "Not set"
 msgstr "Ei ole kinnitatud"
 
-#: client/cl_basemanagement.c:286
+#: client/cl_basemanagement.c:167
 #, c-format
 msgid "Already %i in base"
 msgstr "Juba %i baasis"
 
-#: client/cl_basemanagement.c:292
+#: client/cl_basemanagement.c:173
 msgid "Construction finished"
 msgstr "Ehitamine lõpetatud"
 
-#: client/cl_basemanagement.c:295
+#: client/cl_basemanagement.c:176
 msgid "Working 100%"
 msgstr "Töötab 100%"
 
-#: client/cl_basemanagement.c:298
+#: client/cl_basemanagement.c:179
 msgid "Down"
 msgstr "Alla"
 
-#: client/cl_basemanagement.c:484
+#: client/cl_basemanagement.c:365
 msgid "Not enough credits to build this\n"
 msgstr "Pole piisavalt raha, et seda ehitada\n"
 
-#: client/cl_basemanagement.c:484 client/cl_basemanagement.c:1967
+#: client/cl_basemanagement.c:365 client/cl_basemanagement.c:1848
 #: client/cl_campaign.c:362 client/cl_campaign.c:723 client/cl_campaign.c:795
-#: client/cl_campaign.c:1681 client/cl_campaign.c:1717
-#: client/cl_campaign.c:1719 client/cl_research.c:491 client/cl_research.c:618
+#: client/cl_campaign.c:1741 client/cl_campaign.c:1777
+#: client/cl_campaign.c:1779 client/cl_research.c:491 client/cl_research.c:618
 #: client/cl_research.c:621 client/cl_research.c:625 client/cl_research.c:645
 #: client/cl_research.c:671 client/cl_research.c:675 client/cl_research.c:810
 msgid "Notice"
 msgstr "Teade"
 
-#: client/cl_basemanagement.c:611
+#: client/cl_basemanagement.c:492
 #, fuzzy, c-format
 msgid "Costs:\t%1.0f c\n"
 msgstr "Kulud:\t%1.2f\n"
 
-#: client/cl_basemanagement.c:614
+#: client/cl_basemanagement.c:495
 #, c-format
 msgid "%i Day(s) to build\n"
 msgstr "%i Ehitus päev(i)\n"
 
-#: client/cl_basemanagement.c:617
+#: client/cl_basemanagement.c:498
 #, fuzzy, c-format
 msgid "Running Costs:\t%1.0f c\n"
 msgstr "Jooksvad kulud:\t%1.2f\n"
 
-#: client/cl_basemanagement.c:620
+#: client/cl_basemanagement.c:501
 #, c-format
 msgid "Workers:\t%i\n"
 msgstr "Töölisi:\t%i\n"
 
-#: client/cl_basemanagement.c:1581
+#: client/cl_basemanagement.c:1462
 #, c-format
 msgid "%i days left"
 msgstr "%i päeva järel"
 
-#: client/cl_basemanagement.c:1744
+#: client/cl_basemanagement.c:1625
 #, c-format
 msgid "A new base has been built: %s."
 msgstr "Uus baasi on ehitatud: %s."
 
-#: client/cl_basemanagement.c:1745 client/cl_basemanagement.c:1751
+#: client/cl_basemanagement.c:1626 client/cl_basemanagement.c:1632
 msgid "Base built"
 msgstr "Baas ehitatud"
 
-#: client/cl_basemanagement.c:1750
+#: client/cl_basemanagement.c:1631
 msgid "Not enough credits to set up a new base."
 msgstr "Pole piisavalt raha uue baasi ehitamiseks."
 
-#: client/cl_basemanagement.c:1967
+#: client/cl_basemanagement.c:1848
 msgid "You've reached the base limit."
 msgstr "Sull on liiga palju baase."
 
-#: client/cl_basemanagement.c:2165
+#: client/cl_basemanagement.c:2046
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "%s ehitamine on lõpetatud baas %s"
 
-#: client/cl_basemanagement.c:2166
+#: client/cl_basemanagement.c:2047
 msgid "Building finished"
 msgstr "Ehitis lõpetatud"
 
@@ -3457,37 +3495,37 @@ msgstr ""
 "Baase:\n"
 "ehitatud:\t%i\trünnatud:t%i\n"
 
-#: client/cl_campaign.c:1553
+#: client/cl_campaign.c:1613
 msgid "Assemble or load a team"
 msgstr "Kogu või lae tiim"
 
-#: client/cl_campaign.c:1553
+#: client/cl_campaign.c:1613
 msgid "Note"
 msgstr "Teade"
 
-#: client/cl_campaign.c:1681
+#: client/cl_campaign.c:1741
 #, fuzzy
 msgid "Your dropship is not near the landing zone"
 msgstr "Sinu transpordilaev ei ole maadumispaiga lähedal"
 
-#: client/cl_campaign.c:1717
+#: client/cl_campaign.c:1777
 msgid "You've won the battle"
 msgstr "Sa VÕITSID lahingu"
 
-#: client/cl_campaign.c:1719
+#: client/cl_campaign.c:1779
 msgid "You've lost the battle"
 msgstr "Sa KAOTASID lahingu"
 
-#: client/cl_campaign.c:1918
+#: client/cl_campaign.c:1978
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s on ülendatud %s.\n"
 
-#: client/cl_campaign.c:1919
+#: client/cl_campaign.c:1979
 msgid "Soldier promoted"
 msgstr "Sõdur sai ametikõrgendust"
 
-#: client/cl_campaign.c:2740 client/cl_campaign.c:2771
+#: client/cl_campaign.c:2802 client/cl_campaign.c:2833
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -3497,15 +3535,15 @@ msgid ""
 "%s\n"
 msgstr ""
 
-#: client/cl_main.c:330 client/cl_main.c:673 client/cl_menu.c:408
+#: client/cl_main.c:328 client/cl_main.c:671 client/cl_menu.c:408
 msgid "Assemble a team first"
 msgstr "Kogu tiim enne"
 
-#: client/cl_main.c:330 client/cl_main.c:673 client/cl_menu.c:408
+#: client/cl_main.c:328 client/cl_main.c:671 client/cl_menu.c:408
 msgid "Error"
 msgstr "VIGA"
 
-#: client/cl_main.c:614
+#: client/cl_main.c:612
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -3514,83 +3552,83 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:636
+#: client/cl_main.c:634
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Kaart:\t%s\n"
 
-#: client/cl_main.c:638
+#: client/cl_main.c:636
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Versioon:\t%s\n"
 
-#: client/cl_main.c:640
+#: client/cl_main.c:638
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Serverinimi:\t%s\n"
 
-#: client/cl_main.c:642
+#: client/cl_main.c:640
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Meeleseisundid:\t%s\n"
 
-#: client/cl_main.c:644
+#: client/cl_main.c:642
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Tiimimäng:\t%s\n"
 
-#: client/cl_main.c:646
+#: client/cl_main.c:644
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Maksimum mängijaid ühe tiimi kohta: \t%s\n"
 
-#: client/cl_main.c:648
+#: client/cl_main.c:646
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Maksimum kliente:\t%s\n"
 
-#: client/cl_main.c:650
+#: client/cl_main.c:648
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Maksimum sõdureid mängija kohta:\t%s\n"
 
-#: client/cl_main.c:652
+#: client/cl_main.c:650
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maks. Sõdureid ühe tiimi kohta:\t%s\n"
 
-#: client/cl_main.c:1210
+#: client/cl_main.c:1207
 #, fuzzy
 msgid "Unnamed"
 msgstr "Nimetu"
 
-#: client/cl_main.c:1414
+#: client/cl_main.c:1411
 msgid "Chicken-hearted"
 msgstr ""
 
-#: client/cl_main.c:1417
+#: client/cl_main.c:1414
 msgid "Very Easy"
 msgstr ""
 
-#: client/cl_main.c:1420
+#: client/cl_main.c:1417
 msgid "Easy"
 msgstr ""
 
-#: client/cl_main.c:1423
+#: client/cl_main.c:1420
 #, fuzzy
 msgid "Normal"
 msgstr "tavaline"
 
-#: client/cl_main.c:1426
+#: client/cl_main.c:1423
 #, fuzzy
 msgid "Hard"
 msgstr "Hangaar"
 
-#: client/cl_main.c:1429
+#: client/cl_main.c:1426
 msgid "Very Hard"
 msgstr ""
 
-#: client/cl_main.c:1432
+#: client/cl_main.c:1429
 #, fuzzy
 msgid "Insane"
 msgstr "Nimetu"
@@ -3603,15 +3641,15 @@ msgstr "Pane mängitavadid sõdureid vähemaks kui tiimi sõdureid"
 msgid "Settings doesn't make sense"
 msgstr "Seadistused ei ole õiged"
 
-#: client/cl_parse.c:653
+#: client/cl_parse.c:658
 msgid "Alien spotted!\n"
 msgstr "Tulnukat on märgatud\n"
 
-#: client/cl_parse.c:655
+#: client/cl_parse.c:660
 msgid "Enemy spotted!\n"
 msgstr "Vastast on märgatudl\n"
 
-#: client/cl_parse.c:657
+#: client/cl_parse.c:662
 msgid "Civilian spotted!\n"
 msgstr "Inimest on märgatud!\n"
 
@@ -3728,21 +3766,21 @@ msgstr "Ei ole infot selle asja kohta"
 msgid "%i of %i"
 msgstr "%i  %i"
 
-#: client/cl_team.c:753
+#: client/cl_team.c:777
 msgid "NewTeam"
 msgstr "Uus tiim"
 
-#: client/cl_team.c:1219
+#: client/cl_team.c:1246
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Tulnukaid tapetud\t%i\n"
 
-#: client/cl_team.c:1221
+#: client/cl_team.c:1248
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Vastaseid tapetud\t%i\n"
 
-#: client/cl_team.c:1227
+#: client/cl_team.c:1254
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -3751,7 +3789,7 @@ msgstr ""
 "Tulnukate ellujäänuid\t%i\n"
 "\n"
 
-#: client/cl_team.c:1229
+#: client/cl_team.c:1256
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -3760,17 +3798,17 @@ msgstr ""
 "Vastase ellujäänuid\t%i\n"
 "\n"
 
-#: client/cl_team.c:1232
+#: client/cl_team.c:1259
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Tiimi kaotusi\t%i\n"
 
-#: client/cl_team.c:1233
+#: client/cl_team.c:1260
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Enda poolt tapetud tiimikaaslasi\t%i\n"
 
-#: client/cl_team.c:1234
+#: client/cl_team.c:1261
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -3779,22 +3817,22 @@ msgstr ""
 "Tiimis ellujäänuid?t%i\n"
 "\n"
 
-#: client/cl_team.c:1247
+#: client/cl_team.c:1274
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Tulnukate poolt tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:1249
+#: client/cl_team.c:1276
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Vastaste poolt tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:1250
+#: client/cl_team.c:1277
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Sinu poolt mõrvatud inimesi\t%i\n"
 
-#: client/cl_team.c:1251
+#: client/cl_team.c:1278
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -3805,22 +3843,22 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1271
+#: client/cl_team.c:1298
 #, c-format
 msgid "Collected alien technology\t%i c\n"
 msgstr "Kogutud tulnukate tehnoloogjat\t%i c\n"
 
-#: client/cl_team.c:1275
+#: client/cl_team.c:1302
 #, c-format
 msgid "Aliens killed\t%i c\n"
 msgstr "Tulnukaid tapetud\t%i c\n"
 
-#: client/cl_team.c:1279
+#: client/cl_team.c:1306
 #, c-format
 msgid "Civilians saved\t%i c\n"
 msgstr "Inimesi päästetud\t%i c\n"
 
-#: client/cl_team.c:1282
+#: client/cl_team.c:1309
 #, c-format
 msgid ""
 "Total reward\t%i c\n"
@@ -3831,7 +3869,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1286
+#: client/cl_team.c:1313
 #, c-format
 msgid "New Recruits\t%i\n"
 msgstr "Uued sõdurid\t%i\n"
@@ -4023,77 +4061,85 @@ msgstr "Ufopedia sisu"
 msgid "Alien"
 msgstr "Tulnukas"
 
-#: game/g_client.c:645
+#: game/g_client.c:625
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Sa ei saa seda teha - see ei ole sinu käik\n"
 
-#: game/g_client.c:650
+#: game/g_client.c:630
 msgid "Can't perform action - object not present!\n"
 msgstr "Sa ei saa seda teha - objekt ei ole omal kohal\n"
 
-#: game/g_client.c:655
+#: game/g_client.c:635
 msgid "Can't perform action - not an actor!\n"
 msgstr "Sa ei saa seda teha - object ei ole tegelane\n"
 
-#: game/g_client.c:660
+#: game/g_client.c:640
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Saa ei saa seda teha - tegelane on meelemärkuseta\n"
 
-#: game/g_client.c:665
+#: game/g_client.c:645
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Sa ei saa seda teha - tegelane on surnud\n"
 
-#: game/g_client.c:670
+#: game/g_client.c:650
 msgid "Can't perform action - not on same team!\n"
 msgstr "Sa ei saa seda teha - te pole samas tiimis\n"
 
-#: game/g_client.c:675
+#: game/g_client.c:655
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Sa ei saa seda teha - Sul ei ole kontrolli liitlase üle\n"
 
-#: game/g_client.c:680 game/g_client.c:773
+#: game/g_client.c:660 game/g_client.c:753
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Sa ei saa seda teha - pole piisavalt TUse\n"
 
-#: game/g_client.c:776
+#: game/g_client.c:756
 msgid "Can't perform action - weapon already loaded!\n"
 msgstr "Sa ei saa relva uuesti laadida - Relv on juba laetud\n"
 
-#: game/g_client.c:1230
+#: game/g_client.c:1210
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "On halvas vaimses seisundis aga saab hakkama\n"
 
-#: game/g_client.c:1350
+#: game/g_client.c:1330
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s on paanikas\n"
 
-#: game/g_client.c:1401
+#: game/g_client.c:1381
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s Keeb vihast\n"
 
-#: game/g_client.c:1403
+#: game/g_client.c:1383
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s on hullumeelsuse piiri ületanud!\n"
 
-#: game/g_client.c:1458
+#: game/g_client.c:1438
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s on vaimselt raputatud.\n"
 
-#: game/g_client.c:1753
+#: game/g_client.c:1740
 msgid "Can't perform action - impossible throw!\n"
 msgstr "Sa ei saa seda teha - Seda on võimatu visata\n"
 
-#: game/g_client.c:1995
+#: game/g_client.c:1982
 msgid "Can't perform action - no ammo!\n"
 msgstr "Sa ei saa seda teha - Pole kuule\n"
 
-#: game/g_client.c:2008
+#: game/g_client.c:1995
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Sa ei saa seda teha - Pole piisavalt kuule\n"
+
+#, fuzzy
+#~ msgid "The Aliens have taken over a rocket silo. Go and capture it again."
+#~ msgstr "Tulnukad on vallutanud raketibaasi. Valluta see tagasi!"
+
+#, fuzzy
+#~ msgid "Incendiary Grenade"
+#~ msgstr "Kildkranaat"
 
 #~ msgid "Intercept alien craft or visit alien (crash) site."
 #~ msgstr "Valluta ufode (häda) maandumis koht."

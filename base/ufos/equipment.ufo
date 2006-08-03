@@ -108,7 +108,7 @@ equipment campaign_market
 	medikit				6
 	stunrod			5
 	stungrenade			20
-	incgrenade			20
+	alienincgrenade			20
 	plasmagrenade			20
 	kerrblade                       5
 	plasblade			10
@@ -164,7 +164,7 @@ equipment testing_and_tweaking
 	medikit				6
 	stunrod				6
 	stungrenade			6
-	incgrenade			6
+	alienincgrenade			6
 	plasmagrenade			6
 	kerrblade                       6
 	plasblade			6

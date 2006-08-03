@@ -13,7 +13,7 @@
 //	tachyonsniper_ammo
 //	kerrblade
 //	plasblade
-//	incgrenade
+//	alienincgrenade
 //	plasmagrenade
 //
 // The equipment approximately represent what an 8-alien team
@@ -45,7 +45,7 @@
 //    where #ammo and #weapon are the numbers of that particular
 //    ammo and weapon in the equipment definition
 // 4. for each blade (kerrblade or plasblade)
-//    and misc item (incgrenade or plasmagrenade) get
+//    and misc item (alienincgrenade or plasmagrenade) get
 //      (#item/8) randomly rounded up or down
 //    with probability depending on the fractional part
 //    for each alien (as long as it fits in the backpack);
@@ -63,7 +63,7 @@
 // but with 2-alien team, 7 plasrifle gives only high probability 
 // that there will be at least 1 plasrifle in the team, no certainty.
 // Each individual type of misc items and blades is assigned separately, 
-// so e.g., 8 incgrenade and 8 plasmagrenade gives two grenades per alien, 
+// so e.g., 8 alienincgrenade and 8 plasmagrenade gives two grenades per alien, 
 // on average, while 8 plaspistol and 8 tachyonpistol gives only 1 sidearm.
 
 equipment campaign_stage1_workers
@@ -82,7 +82,7 @@ equipment campaign_stage1_workers_explosive
 	plasblaster			1
 	plasblaster_ammo		1
 	kerrblade                       6
-	incgrenade			20
+	alienincgrenade			20
 	plasmagrenade			5
 }
 
@@ -106,7 +106,7 @@ equipment campaign_stage2_workers
 	plasrifle_ammo			1
 	kerrblade                       6
 	plasblade			1
-	incgrenade			4
+	alienincgrenade			4
 }
 
 equipment campaign_stage2_soldiers_melee
@@ -121,7 +121,7 @@ equipment campaign_stage2_soldiers_melee
 	tachyonpistol_ammo		1
 	kerrblade                       20
 	plasblade			30
-	incgrenade			7
+	alienincgrenade			7
 }
 
 equipment campaign_stage2_soldiers
@@ -134,7 +134,7 @@ equipment campaign_stage2_soldiers
 	plasblaster_ammo		4
 	kerrblade                       7
 	plasblade			2
-	incgrenade			12
+	alienincgrenade			12
 	plasmagrenade			1
 }
 
@@ -148,7 +148,7 @@ equipment campaign_stage3_workers
 	tachyonpistol_ammo		4
 	kerrblade                       6
 	plasblade			4
-	incgrenade			4
+	alienincgrenade			4
 	plasmagrenade			4
 }
 
@@ -163,7 +163,7 @@ equipment campaign_stage3_workers_explosive
 	tachyonrifle			1
 	tachyonrifle_ammo		1
 	kerrblade                       6
-	incgrenade			23
+	alienincgrenade			23
 	plasmagrenade			23
 }
 
@@ -181,7 +181,7 @@ equipment campaign_stage3_soldiers
 	tachyonsniper_ammo		1
 	kerrblade                       7
 	plasblade			7
-	incgrenade			7
+	alienincgrenade			7
 	plasmagrenade			7
 }
 
@@ -197,7 +197,7 @@ equipment campaign_stage4_workers
 	tachyonrifle_ammo		3
 	kerrblade                       6
 	plasblade			7
-	incgrenade			7
+	alienincgrenade			7
 	plasmagrenade			7
 }
 
@@ -211,7 +211,7 @@ equipment campaign_stage4_soldiers_plasma
 	plasblaster_ammo		19
 	kerrblade                       1
 	plasblade			20
-	incgrenade			10
+	alienincgrenade			10
 	plasmagrenade			20
 }
 
@@ -231,7 +231,7 @@ equipment campaign_stage4_soldiers
 	tachyonsniper_ammo		10
 	kerrblade                       14
 	plasblade			14
-	incgrenade			14
+	alienincgrenade			14
 	plasmagrenade			14
 }
 

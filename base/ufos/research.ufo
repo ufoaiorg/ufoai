@@ -397,14 +397,14 @@ tech rs_irgoggles
 	researched	false
 }
 
-tech rs_weapon_incgrenade
+tech rs_weapon_alienincgrenade
 {
 	type	weapon
 	up_chapter	weapons
-	description	"_incgrenade_txt"
+	description	"_alienincgrenade_txt"
 
 	requires	"rs_skill_explosive rs_damage_fire"
-	provides	incgrenade
+	provides	alienincgrenade
 	time	10
 	researched	false
 }
@@ -440,7 +440,7 @@ tech rs_weapon_rpg_incendiary_ammo
 	up_chapter	weapons
 	description	"_rpg_incendiary_ammo_txt"
 
-	requires	"rs_damage_fire rs_weapon_rpg rs_weapon_incgrenade"
+	requires	"rs_damage_fire rs_weapon_rpg rs_weapon_alienincgrenade"
 	provides	rpg_incendiary_ammo
 	time	10
 	researched	false

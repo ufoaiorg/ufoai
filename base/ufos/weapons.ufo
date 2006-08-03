@@ -254,10 +254,11 @@ item stungrenade
 // ====================
 // HELLFIRE CANISTER
 // ====================
-item incgrenade
+item alienincgrenade
 {
 	name		"_Hellfire Canister"
 	model		weapons/incgren/incgren
+//	model		weapons/alienincgren/alienincgren
 	weapon		true
 	type		grenade
 	category	0
