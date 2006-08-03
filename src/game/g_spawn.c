@@ -51,7 +51,7 @@ typedef struct {
 	void (*spawn) (edict_t * ent);
 } spawn_t;
 
-spawn_t spawns[] = {
+static spawn_t spawns[] = {
 	{"worldspawn", SP_worldspawn},
 	{"light", SP_light},
 	{"misc_model", SP_misc_dummy},
@@ -103,13 +103,9 @@ field_t fields[] = {
 
 };
 
-/*
-===============
-ED_CallSpawn
-
-Finds the spawn function for the entity and calls it
-===============
-*/
+/**
+ * @brief Finds the spawn function for the entity and calls it
+ */
 static void ED_CallSpawn(edict_t * ent)
 {
 	spawn_t *s;
@@ -132,11 +128,9 @@ static void ED_CallSpawn(edict_t * ent)
 	ent->inuse = qfalse;
 }
 
-/*
-=============
-ED_NewString
-=============
-*/
+/**
+ * @brief
+ */
 static char *ED_NewString(char *string)
 {
 	char *newb, *new_p;
@@ -163,14 +157,9 @@ static char *ED_NewString(char *string)
 	return newb;
 }
 
-/*
-===============
-ED_ParseField
-
-Takes a key/value pair and sets the binary values
-in an edict
-===============
-*/
+/**
+ * @brief Takes a key/value pair and sets the binary values in an edict
+ */
 static void ED_ParseField(char *key, char *value, edict_t * ent)
 {
 	field_t *f;
@@ -225,14 +214,10 @@ static void ED_ParseField(char *key, char *value, edict_t * ent)
 /*	gi.dprintf ("%s is not a field\n", key); */
 }
 
-/*
-====================
-ED_ParseEdict
-
-Parses an edict out of the given string, returning the new position
-ed should be a properly initialized empty edict.
-====================
-*/
+/**
+ * @brief Parses an edict out of the given string, returning the new position
+ * @param[in] ent should be a properly initialized empty edict.
+ */
 static char *ED_ParseEdict(char *data, edict_t * ent)
 {
 	qboolean init;
@@ -277,14 +262,10 @@ static char *ED_ParseEdict(char *data, edict_t * ent)
 	return data;
 }
 
-/*
-==============
-SpawnEntities
-
-Creates a server's entity / program execution context by
-parsing textual entity definitions out of an ent file.
-==============
-*/
+/**
+ * @brief Creates a server's entity / program execution context
+ * by parsing textual entity definitions out of an ent file.
+ */
 void SpawnEntities(char *mapname, char *entities)
 {
 	edict_t *ent;
