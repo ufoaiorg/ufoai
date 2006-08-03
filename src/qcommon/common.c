@@ -1316,13 +1316,22 @@ void Qcommon_LocaleInit(void)
 		Com_Printf("...could not set to language: %s\n", s_language->string);
 		locale = setlocale(LC_MESSAGES, "");
 		if (!locale) {
-			Com_Printf("...could not set to system language\n");
-			return;
+			 Com_Printf("...could not set to system language\n");			
+			 Com_Printf("...trying en_US (override in config.cfg)\n");
+			 locale = setlocale(LC_MESSAGES, "en_US");
+			 if (!locale) {
+				  Com_Printf("...could not set to en_US, either; giving up\n");
+				  return;
+			 }
 		}
 	} else {
 		 if (!strcmp(locale, "C")) {
 			  Com_Printf("...no system language set, defaulting to en_US (override in config.cfg)\n");
 			  locale = setlocale(LC_MESSAGES, "en_US");
+			  if (!locale) {
+				   Com_Printf("...could not set to en_US; giving up\n");
+				   return;
+			  }
 		 } else {
 			  Com_Printf("...using language: %s\n", locale);
 			   Cvar_Set("s_language", locale);
