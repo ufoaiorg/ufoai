@@ -335,7 +335,7 @@ endif
 
 debug: build_debug copy_debug
 all: build_debug build_release lang
-lazy: build_debug link_debug lang maps
+lazy: build_debug copy_debug lang maps
 installer: win32installer linuxinstaller sourcearchive
 mappack:
 	tar -cvjp --exclude-from=$(LINUX_DIR)/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ../base/maps
@@ -352,31 +352,18 @@ sourcearchive:
 deb:
 	debuild binary
 
-link_debug:
-	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
-	ln -s src/$(BUILD_DEBUG_DIR)/ufoded ../ufoded
-	ln -s src/$(BUILD_DEBUG_DIR)/ufo ../ufo
-	ln -s src/$(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
-	ln -s src/$(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT)
-	ln -s src/$(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT) ../ref_glx.$(SHLIBEXT)
-	ln -s src/$(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT)
-	ln -s src/$(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT) ../snd_sdl.$(SHLIBEXT)
-	ln -s src/$(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT)
-	ln -s src/$(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
-	ln -s ../src/$(BUILD_DEBUG_DIR)/game.$(SHLIBEXT) ../base/game.$(SHLIBEXT)
-
 copy_debug:
 	@rm -f ../ufo ../ufo2map ../ref_glx.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT) ../base/game.$(SHLIBEXT) ../ufoded ../snd_sdl.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
-	cp $(BUILD_DEBUG_DIR)/ufoded ../ufoded
-	cp $(BUILD_DEBUG_DIR)/ufo ../ufo
-	cp $(BUILD_DEBUG_DIR)/ufo2map ../ufo2map
-	cp $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT)
-	cp $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT) ../ref_glx.$(SHLIBEXT)
-	cp $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT)
-	cp $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT) ../snd_sdl.$(SHLIBEXT)
-	cp $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT)
-	cp $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT)
-	cp $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT) ../base/game.$(SHLIBEXT)
+	if test -f $(BUILD_DEBUG_DIR)/ufoded; then cp $(BUILD_DEBUG_DIR)/ufoded ../ufoded; fi
+	if test -f $(BUILD_DEBUG_DIR)/ufo; then cp $(BUILD_DEBUG_DIR)/ufo ../ufo; fi
+	if test -f $(BUILD_DEBUG_DIR)/ufo2map; then cp $(BUILD_DEBUG_DIR)/ufo2map ../ufo2map; fi
+	if test -f $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_sdl.$(SHLIBEXT) ../ref_sdl.$(SHLIBEXT); fi
+	if test -f $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/ref_glx.$(SHLIBEXT) ../ref_glx.$(SHLIBEXT); fi
+	if test -f $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_alsa.$(SHLIBEXT) ../snd_alsa.$(SHLIBEXT); fi
+	if test -f $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_sdl.$(SHLIBEXT) ../snd_sdl.$(SHLIBEXT); fi
+	if test -f $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_oss.$(SHLIBEXT) ../snd_oss.$(SHLIBEXT); fi
+	if test -f $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/snd_arts.$(SHLIBEXT) ../snd_arts.$(SHLIBEXT); fi
+	if test -f $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT); then cp $(BUILD_DEBUG_DIR)/game.$(SHLIBEXT) ../base/game.$(SHLIBEXT); fi
 
 release: build_release
 
