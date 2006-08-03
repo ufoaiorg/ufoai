@@ -1291,7 +1291,7 @@ void Qcommon_LocaleInit(void)
 #ifdef _WIN32
 	char languageID[32];
 #endif
-	s_language = Cvar_Get("s_language", "en_US", CVAR_ARCHIVE);
+	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE);
 	s_language->modified = qfalse;
 
 #ifdef _WIN32
@@ -1310,21 +1310,26 @@ void Qcommon_LocaleInit(void)
 #endif
 
 	/* set to system default */
-	setlocale(LC_ALL, "en_US");
+	setlocale(LC_ALL, "C");
 	locale = setlocale(LC_MESSAGES, s_language->string);
 	if (!locale) {
 		Com_Printf("...could not set to language: %s\n", s_language->string);
-		locale = setlocale(LC_MESSAGES, "en_US");
+		locale = setlocale(LC_MESSAGES, "");
 		if (!locale) {
 			Com_Printf("...could not set to system language\n");
 			return;
 		}
 	} else {
-		Com_Printf("...using language: %s\n", locale);
-		Cvar_Set("s_language", locale);
+		 if (!strcmp(locale, "C")) {
+			  Com_Printf("...no system language set, defaulting to en_US (override in config.cfg)\n");
+			  locale = setlocale(LC_MESSAGES, "en_US");
+		 } else {
+			  Com_Printf("...using language: %s\n", locale);
+			   Cvar_Set("s_language", locale);
+		 }
 	}
 	s_language->modified = qfalse;
-}
+} 
 #endif
 
 /**
@@ -1416,8 +1421,8 @@ void Qcommon_Init(int argc, char **argv)
 
 #ifdef HAVE_GETTEXT
 	/* i18n through gettext */
-	setlocale(LC_ALL, "en_US");
-	setlocale(LC_MESSAGES, "en_US");
+	setlocale(LC_ALL, "C");
+	setlocale(LC_MESSAGES, "");
 	/* use system locale dir if we can't find in gamedir */
 	Com_sprintf(languagePath, MAX_QPATH, "%s/base/i18n/", FS_GetCwd());
 	Com_DPrintf("...using mo files from %s\n", languagePath);
