@@ -362,8 +362,9 @@ static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width
 	int w = 0, oldW = 0;
 	int h = 0;
 
-	if (buffer == NULL)
-		return NULL;
+	/* TTF does not like empty strings... */
+	asssert (buffer);
+	assert (strlen(buffer));
 
 	if (!maxWidth)
 		maxWidth = VID_NORM_WIDTH * vid.rx;
@@ -530,8 +531,10 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	locX = x;
 
 	do {
+		/* TTF does not like empty strings... */
 		if (!strlen(buffer))
 			return returnHeight;
+
 		pos = Font_GetLineWrap(f, buffer, maxWidth, &w, &h);
 
 		/* check whether this line is bigger than every other */
@@ -558,20 +561,18 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 			}
 		}
 
-		if (strlen(buffer)) {
-			/* This will cut down the string to 160 chars */
-			/* NOTE: There can be a non critical overflow in Com_sprintf */
-			Com_sprintf(searchString, MAX_FONTNAME + MAX_HASH_STRING, "%s%s", fontID, buffer);
+		/* This will cut down the string to 160 chars */
+		/* NOTE: There can be a non critical overflow in Com_sprintf */
+		Com_sprintf(searchString, MAX_FONTNAME + MAX_HASH_STRING, "%s%s", fontID, buffer);
 
-			cache = Font_GetFromCache(searchString);
-			if (!cache)
-				cache = Font_GenerateCache(buffer, searchString, f);
-
-			if (!cache)
-				ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n");
-
-			Font_GenerateGLSurface(cache, x, y, absX, absY, maxWidth, maxHeight);
-		}
+		cache = Font_GetFromCache(searchString);
+		if (!cache)
+			 cache = Font_GenerateCache(buffer, searchString, f);
+		
+		if (!cache)
+			 ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n");
+		
+		Font_GenerateGLSurface(cache, x, y, absX, absY, maxWidth, maxHeight);
 
 		/* skip for next line */
 		y += h;
