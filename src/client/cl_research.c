@@ -169,7 +169,6 @@ void RS_AddObjectTechs(void)
 	objDef_t *od;
 	int i;
 
-	/* add weapon link to ammo */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		od->tech = RS_GetTechByProvided(od->kurz);
 #ifdef DEBUG
@@ -1542,7 +1541,8 @@ technology_t *RS_GetTechByProvided(const char *id_provided)
 		if (!Q_strncmp((char *) id_provided, gd.technologies[i].provides, MAX_VAR))
 			return &gd.technologies[i];
 
-	Com_DPrintf("RS_GetTechByProvided: Could not find a technology that provides \"%s\" (%i)\n", id_provided, gd.numTechnologies);
+	/* if a building, probably needs another building */
+	/* if not a building, catch NULL where function is called! */
 	return NULL;
 }
 
