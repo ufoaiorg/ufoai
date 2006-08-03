@@ -1391,7 +1391,7 @@ int CL_GameLoad(char *filename)
 	while (*name) {
 		state = CL_CampaignActivateStage(name, qfalse);
 		if (!state) {
-			Com_Printf("Unable to load campaign '%s', unknown stage '%'\n", filename, name);
+			Com_Printf("Unable to load campaign '%s', unknown stage '%s'\n", filename, name);
 			curCampaign = NULL;
 			Cbuf_AddText("mn_pop\n");
 			free(buf);
