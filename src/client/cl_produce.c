@@ -137,15 +137,12 @@ static void PR_ProductionListRightClick_f (void)
 		/* we can produce what was researched before */
 		if (od->buytype == produceCategory && RS_IsResearched_ptr(t)) {
 			if (j==num) {
-				Cbuf_AddText( "mn_push ufopedia\n" );
-				Cbuf_Execute();
-				UP_DrawEntry(t);
+				UP_OpenWith(t->id);
 				return;
 			}
 			j++;
 		}
 	}
-
 }
 
 /**
