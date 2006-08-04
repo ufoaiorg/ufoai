@@ -492,24 +492,26 @@ static void Font_ConvertChars(char *buffer)
 /*================
 Font_DrawString
 ================*/
-int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const char *c)
+int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c)
 {
 	int w = 0, h = 0, locX;
-	int returnHeight = 0;
+	float returnHeight = 0; /* rounding errors break mouse-text corelation */
 	font_t *f = NULL;
 	char *buffer = buf;
 	char *pos;
 	fontCache_t *cache;
 	static char searchString[MAX_FONTNAME + MAX_HASH_STRING];
 	int max = 0;				/* calculated maxWidth */
+	float texh0, fh, fy; /* rounding errors break mouse-text corelation */ 
 
 	/* transform from 1024x768 coordinates for drawing */
 	absX = (float) absX *vid.rx;
 	absY = (float) absY *vid.ry;
 	x = (float) x *vid.rx;
-	y = (float) y *vid.ry;
+	fy = (float) y *vid.ry;
 	maxWidth = (float) maxWidth *vid.rx;
 	maxHeight = (float) maxHeight *vid.ry;
+	texh0 = (float) lineHeight *vid.ry;
 
 	/* get the font */
 	f = Font_GetFont(fontID);
@@ -519,9 +521,9 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	}
 
 	cache = Font_GetFromCache(c);
-	if (cache) {
-		Font_GenerateGLSurface(cache, x, y, absX, absY, maxWidth, maxHeight);
-		return f->height;
+	if (cache) { /* TODO: check that cache.font = fontID and that texh0 was the same */
+		Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
+		return lineHeight;
 	}
 
 	Q_strncpyz(buffer, c, BUF_SIZE);
@@ -533,9 +535,18 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	do {
 		/* TTF does not like empty strings... */
 		if (!strlen(buffer))
-			return returnHeight;
+			return returnHeight / vid.ry;
 
 		pos = Font_GetLineWrap(f, buffer, maxWidth, &w, &h);
+		fh = h;
+
+		if (texh0 > 0) {
+			 if (fh > texh0) {
+				  ri.Con_Printf(PRINT_ALL, "Warning: font %s height=%f bigger than allowed line height=%f.\n", fontID, fh, texh0);
+			 } else {
+				  fh = texh0; /* some extra space below the line */
+			 }
+		}
 
 		/* check whether this line is bigger than every other */
 		if (w > max)
@@ -551,6 +562,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 				break;
 			}
 
+/* TODO: this is probably broken, but I don't quite know how:
 			switch (align / 3) {
 			case 1:
 				y -= h / 2;
@@ -559,6 +571,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 				y -= h;
 				break;
 			}
+*/
 		}
 
 		/* This will cut down the string to 160 chars */
@@ -572,12 +585,12 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 		if (!cache)
 			 ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n");
 		
-		Font_GenerateGLSurface(cache, x, y, absX, absY, maxWidth, maxHeight);
+		Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
 
 		/* skip for next line */
-		y += h;
+		fy += fh;
 		buffer = pos;
-		returnHeight += h;
+		returnHeight += (texh0 > 0) ? texh0 : fh;
 		x = locX;
 	} while (buffer);
 

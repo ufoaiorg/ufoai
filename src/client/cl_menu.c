@@ -1229,7 +1229,7 @@ static void MN_DrawTooltip(char *font, char *string, int x, int y)
 		x -= (width + 10);
 	re.DrawFill(x - 1, y - 1, width, height, 0, tooltipBG);
 	re.DrawColor(tooltipColor);
-	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, width, 0, string);
+	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, width, 0, height, string);
 	re.DrawColor(NULL);
 }
 
@@ -1470,9 +1470,9 @@ void MN_DrawMenus(void)
 				case MN_STRING:
 					font = MN_GetFont(menu, node);
 					if (!node->mousefx || cl.time % 1000 < 500)
-						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, ref);
+						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], ref);
 					else
-						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], va("%s*\n", ref));
+						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref));
 					break;
 
 				case MN_TEXT:
@@ -1521,7 +1521,7 @@ void MN_DrawMenus(void)
 									break;
 
 								*tab++ = '\0';
-								re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], cur);
+								re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur);
 								if (!node->texh[1])
 									x += (node->size[0] / 3);
 								else
@@ -1530,7 +1530,7 @@ void MN_DrawMenus(void)
 							} while (1);
 
 							/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
-							y += re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], (*cur ? cur : " "));
+							y += re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], (*cur ? cur : " "));
 
 							if (node->mousefx && line == mouseOver)
 								 re.DrawColor(node->color); /* why is this repeated? */
@@ -1565,7 +1565,7 @@ void MN_DrawMenus(void)
 									tab = message->text;
 									while ((end = strstr(tab, "\\")) != NULL) {
 										*end++ = '\0';
-										y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], tab);
+										y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], tab);
 										tab = end;
 										line++;
 										if (line >= node->height)
@@ -1576,7 +1576,7 @@ void MN_DrawMenus(void)
 									while ((end = strstr(message->text, "\\")) != NULL)
 										*end = ' ';
 
-									y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], message->text);
+									y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], message->text);
 								}
 							}
 
