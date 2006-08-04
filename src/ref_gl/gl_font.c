@@ -502,7 +502,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 	fontCache_t *cache;
 	static char searchString[MAX_FONTNAME + MAX_HASH_STRING];
 	int max = 0;				/* calculated maxWidth */
-	float texh0, fh, fy; /* rounding errors break mouse-text corelation */ 
+	float texh0, fh, fy; /* rounding errors break mouse-text corelation */
 
 	/* transform from 1024x768 coordinates for drawing */
 	absX = (float) absX *vid.rx;
@@ -541,11 +541,10 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 		fh = h;
 
 		if (texh0 > 0) {
-			 if (fh > texh0) {
-				  ri.Con_Printf(PRINT_ALL, "Warning: font %s height=%f bigger than allowed line height=%f.\n", fontID, fh, texh0);
-			 } else {
-				  fh = texh0; /* some extra space below the line */
-			 }
+			if (fh > texh0)
+				ri.Con_Printf(PRINT_ALL, "Warning: font %s height=%f bigger than allowed line height=%f.\n", fontID, fh, texh0);
+			else
+				fh = texh0; /* some extra space below the line */
 		}
 
 		/* check whether this line is bigger than every other */
@@ -580,11 +579,11 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 
 		cache = Font_GetFromCache(searchString);
 		if (!cache)
-			 cache = Font_GenerateCache(buffer, searchString, f);
-		
+			cache = Font_GenerateCache(buffer, searchString, f);
+
 		if (!cache)
-			 ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n");
-		
+			ri.Sys_Error(ERR_FATAL, "...could not generate font surface\n");
+
 		Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
 
 		/* skip for next line */
