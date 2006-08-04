@@ -810,9 +810,9 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 		if (tech_link) {
 			building->tech = tech_link->idx;
 		} else {
-			 if (!building->needs)
-				  /* TODO: are the techs already parsed? */
-				  Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", id);
+			if (!building->needs)
+				/* TODO: are the techs already parsed? */
+				Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", id);
 		}
 
 		do {
