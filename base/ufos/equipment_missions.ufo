@@ -30,7 +30,7 @@
 // 1b. if still no primary weapon,
 //     plasblaster with probability #plasblaster/8
 // etc. for all primary weapons (the order is essential);
-// keep the total <= 8 or the theoretical loot will 
+// keep the total <= 8 or the theoretical loot will
 // be much higher than the actual loot
 // 2. tachyonpistol with probability #plaspistol/8
 // 2a. if still no sidearm (plaspistol or tachyonpistol),
@@ -58,189 +58,189 @@
 // For example, take 8-alien team, then 1 plasrifle
 // makes it possible, though very unlikely, that each alien
 // will get a rifle. Take a 5-alien team with 8 plasrifles,
-// this guarantees that each alien will get a primary weapon; 
+// this guarantees that each alien will get a primary weapon;
 // with 12 plasrifle_ammo, they will also get, on average, 1.5 ammo per alien.
-// but with 2-alien team, 7 plasrifle gives only high probability 
+// but with 2-alien team, 7 plasrifle gives only high probability
 // that there will be at least 1 plasrifle in the team, no certainty.
-// Each individual type of misc items and blades is assigned separately, 
-// so e.g., 8 alienincgrenade and 8 plasmagrenade gives two grenades per alien, 
+// Each individual type of misc items and blades is assigned separately,
+// so e.g., 8 alienincgrenade and 8 plasmagrenade gives two grenades per alien,
 // on average, while 8 plaspistol and 8 tachyonpistol gives only 1 sidearm.
 
 equipment campaign_stage1_workers
 {
 	plaspistol			3
-	plaspistol_ammo			4
+	plaspistol_ammo		4
 	plasrifle			1
-	plasrifle_ammo			1
-	kerrblade                       6
+	plasrifle_ammo		1
+	kerrblade			6
 }
 
 equipment campaign_stage1_workers_explosive
 {
 	plaspistol			3
-	plaspistol_ammo			4
+	plaspistol_ammo		4
 	plasblaster			1
-	plasblaster_ammo		1
-	kerrblade                       6
-	alienincgrenade			20
-	plasmagrenade			5
+	plasblaster_ammo	1
+	kerrblade			6
+	alienincgrenade		20
+	plasmagrenade		5
 }
 
 equipment campaign_stage1_soldiers
 {
 	plaspistol			5
-	plaspistol_ammo			11
+	plaspistol_ammo		11
 	plasrifle			5
-	plasrifle_ammo			9
+	plasrifle_ammo		9
 	plasblaster			1
-	plasblaster_ammo		1
-	kerrblade                       7
+	plasblaster_ammo	1
+	kerrblade			7
 	plasblade			1
 }
 
 equipment campaign_stage2_workers
 {
 	plaspistol			6
-	plaspistol_ammo			7
+	plaspistol_ammo		7
 	plasrifle			1
-	plasrifle_ammo			1
-	kerrblade                       6
+	plasrifle_ammo		1
+	kerrblade			6
 	plasblade			1
-	alienincgrenade			4
+	alienincgrenade		4
 }
 
 equipment campaign_stage2_soldiers_melee
 {
 	plaspistol			1
-	plaspistol_ammo			1
+	plaspistol_ammo		1
 	plasrifle			1
-	plasrifle_ammo			1
+	plasrifle_ammo		1
 	plasblaster			1
-	plasblaster_ammo		1
-	tachyonpistol			1
-	tachyonpistol_ammo		1
-	kerrblade                       20
+	plasblaster_ammo	1
+	tachyonpistol		1
+	tachyonpistol_ammo	1
+	kerrblade			20
 	plasblade			30
-	alienincgrenade			7
+	alienincgrenade		7
 }
 
 equipment campaign_stage2_soldiers
 {
 	plaspistol			7
-	plaspistol_ammo			15
+	plaspistol_ammo		15
 	plasrifle			5
-	plasrifle_ammo			9
+	plasrifle_ammo		9
 	plasblaster			3
-	plasblaster_ammo		4
-	kerrblade                       7
+	plasblaster_ammo	4
+	kerrblade			7
 	plasblade			2
-	alienincgrenade			12
-	plasmagrenade			1
+	alienincgrenade		12
+	plasmagrenade		1
 }
 
 equipment campaign_stage3_workers
 {
 	plaspistol			3
-	plaspistol_ammo			4
+	plaspistol_ammo		4
 	plasrifle			2
-	plasrifle_ammo			3
-	tachyonpistol			3
-	tachyonpistol_ammo		4
-	kerrblade                       6
+	plasrifle_ammo		3
+	tachyonpistol		3
+	tachyonpistol_ammo	4
+	kerrblade			6
 	plasblade			4
-	alienincgrenade			4
-	plasmagrenade			4
+	alienincgrenade		4
+	plasmagrenade		4
 }
 
 equipment campaign_stage3_workers_explosive
 {
 	plaspistol			2
-	plaspistol_ammo			2
+	plaspistol_ammo		2
 	plasblaster			3
-	plasblaster_ammo		4
-	tachyonpistol			2
-	tachyonpistol_ammo		2
-	tachyonrifle			1
-	tachyonrifle_ammo		1
-	kerrblade                       6
-	alienincgrenade			23
-	plasmagrenade			23
+	plasblaster_ammo	4
+	tachyonpistol		2
+	tachyonpistol_ammo	2
+	tachyonrifle		1
+	tachyonrifle_ammo	1
+	kerrblade			6
+	alienincgrenade		23
+	plasmagrenade		23
 }
 
 equipment campaign_stage3_soldiers
 {
 	plaspistol			3
-	plaspistol_ammo			5
+	plaspistol_ammo		5
 	plasrifle			3
-	plasrifle_ammo			5
+	plasrifle_ammo		5
 	plasblaster			3
-	plasblaster_ammo		7
-	tachyonpistol			4
-	tachyonpistol_ammo		9
-	tachyonsniper			1
-	tachyonsniper_ammo		1
-	kerrblade                       7
+	plasblaster_ammo	7
+	tachyonpistol		4
+	tachyonpistol_ammo	9
+	tachyonsniper		1
+	tachyonsniper_ammo	1
+	kerrblade			7
 	plasblade			7
-	alienincgrenade			7
-	plasmagrenade			7
+	alienincgrenade		7
+	plasmagrenade		7
 }
 
 equipment campaign_stage4_workers
 {
 	plaspistol			1
-	plaspistol_ammo			2
+	plaspistol_ammo		2
 	plasblaster			1
-	plasblaster_ammo		2
-	tachyonpistol			7
-	tachyonpistol_ammo		15
-	tachyonrifle			2
-	tachyonrifle_ammo		3
-	kerrblade                       6
+	plasblaster_ammo	2
+	tachyonpistol		7
+	tachyonpistol_ammo	15
+	tachyonrifle		2
+	tachyonrifle_ammo	3
+	kerrblade			6
 	plasblade			7
-	alienincgrenade			7
-	plasmagrenade			7
+	alienincgrenade		7
+	plasmagrenade		7
 }
 
 equipment campaign_stage4_soldiers_plasma
 {
 	plaspistol			7
-	plaspistol_ammo			22
+	plaspistol_ammo		22
 	plasrifle			2
-	plasrifle_ammo			7
+	plasrifle_ammo		7
 	plasblaster			6
-	plasblaster_ammo		19
-	kerrblade                       1
+	plasblaster_ammo	19
+	kerrblade			1
 	plasblade			20
-	alienincgrenade			10
-	plasmagrenade			20
+	alienincgrenade		10
+	plasmagrenade		20
 }
 
 equipment campaign_stage4_soldiers
 {
 	plaspistol			1
-	plaspistol_ammo			3
+	plaspistol_ammo		3
 	plasrifle			1
-	plasrifle_ammo			3
+	plasrifle_ammo		3
 	plasblaster			1
-	plasblaster_ammo		3
-	tachyonpistol			7
-	tachyonpistol_ammo		22
-	tachyonrifle			3
-	tachyonrifle_ammo		10
-	tachyonsniper			3
-	tachyonsniper_ammo		10
-	kerrblade                       14
+	plasblaster_ammo	3
+	tachyonpistol		7
+	tachyonpistol_ammo	22
+	tachyonrifle		3
+	tachyonrifle_ammo	10
+	tachyonsniper		3
+	tachyonsniper_ammo	10
+	kerrblade			14
 	plasblade			14
-	alienincgrenade			14
-	plasmagrenade			14
+	alienincgrenade		14
+	plasmagrenade		14
 }
 
 
 // just for now, so that aliens don't get too few weapons with old code
 equipment campaign_stage1
 {
-	plaspistol		12
-	plaspistol_ammo	18
-	tachyonpistol			12
-	tachyonpistol_ammo		18
+	plaspistol			12
+	plaspistol_ammo		18
+	tachyonpistol		12
+	tachyonpistol_ammo	18
 }
