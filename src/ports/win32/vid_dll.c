@@ -526,7 +526,7 @@ qboolean VID_LoadRefresh( char *name )
 {
 	refimport_t	ri;
 	GetRefAPI_t	GetRefAPI;
-	qboolean	restart = qfalse;
+	qboolean restart = qfalse;
 
 	if ( reflib_active ) {
 		re.Shutdown();
@@ -616,28 +616,29 @@ void VID_CheckChanges (void)
 		S_StopAllSounds();
 	}
 	while (vid_ref->modified) {
-		/*
-		** refresh has changed
-		*/
+		/* refresh has changed */
 		vid_ref->modified = qfalse;
 		vid_fullscreen->modified = qtrue;
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
 
+		/* try generic refresh lib first */
+		Com_sprintf( name, sizeof(name), "ref_%s.dll", vid_ref->string );
+		if ( !VID_LoadRefresh( name ) ) {
 #if defined _M_IX86
 #ifdef DEBUG
-		Com_sprintf( name, sizeof(name), "ref_%s32d.dll", vid_ref->string );
+			Com_sprintf( name, sizeof(name), "ref_%s32d.dll", vid_ref->string );
 #else
-		Com_sprintf( name, sizeof(name), "ref_%s32.dll", vid_ref->string );
+			Com_sprintf( name, sizeof(name), "ref_%s32.dll", vid_ref->string );
 #endif
 #elif defined _M_X64
 #ifdef DEBUG
-		Com_sprintf( name, sizeof(name), "ref_%s64d.dll", vid_ref->string );
+			Com_sprintf( name, sizeof(name), "ref_%s64d.dll", vid_ref->string );
 #else
-		Com_sprintf( name, sizeof(name), "ref_%s64.dll", vid_ref->string );
+			Com_sprintf( name, sizeof(name), "ref_%s64.dll", vid_ref->string );
 #endif
 #endif
-
+		}
 		if ( !VID_LoadRefresh( name ) ) {
 			Cmd_ExecuteString( "condump gl_debug" );
 			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
@@ -645,9 +646,7 @@ void VID_CheckChanges (void)
 		cls.disable_screen = qfalse;
 	}
 
-	/*
-	** update our window position
-	*/
+	/* update our window position */
 	if ( vid_xpos->modified || vid_ypos->modified ) {
 		if (!vid_fullscreen->value)
 			VID_UpdateWindowPosAndSize( vid_xpos->value, vid_ypos->value );
