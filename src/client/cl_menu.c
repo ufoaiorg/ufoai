@@ -1648,6 +1648,7 @@ void MN_DrawMenus(void)
 						break;
 
 					item.a = 1;
+					item.m = 0; /* just in case */
 
 					MN_DrawItem(node->pos, item, 0, 0, 0, 0, node->scale, color);
 					break;

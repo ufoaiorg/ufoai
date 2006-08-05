@@ -267,7 +267,7 @@ item alienincgrenade
 	shape		"0 0 1 1"
 	center		"0 0 -0.3"
 	scale		1.4
-	price		190
+	price		390
 	buytype		2
 	ammo		1
 	thrown		true
@@ -336,7 +336,7 @@ item plasmagrenade
 	shape		"0 0 1 1"
 	center		"0 0 -0.25"
 	scale		1.5
-	price		350
+	price		650
 	buytype		2
 	ammo		1
 	thrown		true

@@ -1018,6 +1018,25 @@ void Com_ParseDamageTypes(char *name, char **text)
 			if (*token == '_')
 				token++;
 			Q_strncpyz(csi.dts[csi.numDTs], token, MAX_VAR);
+
+			/* special IDs */
+			if (!Q_strncmp(token, "normal", 6))
+				csi.damNormal = csi.numDTs;
+			else if (!Q_strncmp(token, "blast", 5))
+				csi.damBlast = csi.numDTs;
+			else if (!Q_strncmp(token, "fire", 4))
+				csi.damFire = csi.numDTs;
+			else if (!Q_strncmp(token, "shock", 5))
+				csi.damShock = csi.numDTs;
+			else if (!Q_strncmp(token, "laser", 5))
+				csi.damLaser = csi.numDTs;
+			else if (!Q_strncmp(token, "plasma", 6))
+				csi.damPlasma = csi.numDTs;
+			else if (!Q_strncmp(token, "tachyon", 7))
+				csi.damTachyon = csi.numDTs;
+			else if (!Q_strncmp(token, "stun", 4))
+				csi.damStun = csi.numDTs;
+
 			csi.numDTs++;
 		}
 	} while (*text);
@@ -1075,6 +1094,7 @@ void Com_ParseScripts(void)
 	/* reset csi basic info */
 	Com_InitCSI(&csi);
 	csi.idRight = csi.idLeft = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmor = csi.idFloor = csi.idEquip = NONE;
+	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damTachyon = csi.damStun = NONE;
 
 	/* reset name and team def counters */
 	numNameCats = 0;

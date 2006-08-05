@@ -973,6 +973,10 @@ typedef struct csi_s {
 	int idRight, idLeft, idBackpack, idBelt, idHolster;
 	int idArmor, idFloor, idEquip;
 
+	/* damage type ids */
+	int damNormal, damBlast, damFire, damShock;
+	int damLaser, damPlasma, damTachyon, damStun;
+
 	/* equipment definitions */
 	equipDef_t eds[MAX_EQUIPDEFS];
 	int numEDs;
