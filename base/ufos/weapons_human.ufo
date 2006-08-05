@@ -168,9 +168,9 @@ item pistol_ammo
 	model		weapons/pistol/pistol_clip
 	type		ammo
 	category	0
-	shape		"0 0 1 2"
-	center		"0 0 0"
-	scale		1.9
+	shape		"0 0 1 1"
+	center		"0 0 -0.2"
+	scale		1.6
 	price		40
 	buytype		1
 
