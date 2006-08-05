@@ -218,8 +218,23 @@ void S_Init(void)
 #ifdef _WIN32
 			Com_sprintf(fn, sizeof(fn), "snd_%s.dll", snd_ref->string);
 			if ((snd_ref_lib = LoadLibrary(fn)) == 0) {
-				Com_Printf("Load library failed - no sound available\n");
-				return;
+#if defined _M_IX86
+#ifdef DEBUG
+				Com_sprintf(fn, sizeof(fn), "snd_%s32d.dll", snd_ref->string);
+#else
+				Com_sprintf(fn, sizeof(fn), "snd_%s32.dll", snd_ref->string);
+#endif
+#elif defined _M_X64
+#ifdef DEBUG
+				Com_sprintf(fn, sizeof(fn), "snd_%s64d.dll", snd_ref->string);
+#else
+				Com_sprintf(fn, sizeof(fn), "snd_%s64.dll", snd_ref->string);
+#endif
+#endif
+				if ((snd_ref_lib = LoadLibrary(fn)) == 0) {
+					Com_Printf("Load library failed - no sound available\n");
+					return;
+				}
 #else
 			Com_sprintf(fn, sizeof(fn), "./snd_%s.so", snd_ref->string);
 			if ((snd_ref_lib = dlopen(fn, RTLD_LAZY)) == 0) {
