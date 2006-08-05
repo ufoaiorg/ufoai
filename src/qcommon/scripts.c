@@ -356,8 +356,12 @@ static void Com_ParseInventory(char *name, char **text)
 		csi.idRight = id - csi.ids;
 	else if (!Q_strncmp(name, "left", 4))
 		csi.idLeft = id - csi.ids;
+	else if (!Q_strncmp(name, "backpack", 8))
+		csi.idBackpack = id - csi.ids;
 	else if (!Q_strncmp(name, "belt", 4))
 		csi.idBelt = id - csi.ids;
+	else if (!Q_strncmp(name, "holster", 7))
+		csi.idHolster = id - csi.ids;
 	else if (!Q_strncmp(name, "armor", 5))
 		csi.idArmor = id - csi.ids;
 	else if (!Q_strncmp(name, "floor", 5))
@@ -1070,7 +1074,7 @@ void Com_ParseScripts(void)
 
 	/* reset csi basic info */
 	Com_InitCSI(&csi);
-	csi.idLeft = csi.idRight = csi.idFloor = csi.idEquip = NONE;
+	csi.idRight = csi.idLeft = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmor = csi.idFloor = csi.idEquip = NONE;
 
 	/* reset name and team def counters */
 	numNameCats = 0;

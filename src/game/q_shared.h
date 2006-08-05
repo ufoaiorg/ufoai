@@ -970,7 +970,8 @@ typedef struct csi_s {
 	/* inventory definitions */
 	invDef_t ids[MAX_INVDEFS];
 	int numIDs;
-	int idRight, idLeft, idBelt, idArmor, idFloor, idEquip;
+	int idRight, idLeft, idBackpack, idBelt, idHolster;
+	int idArmor, idFloor, idEquip;
 
 	/* equipment definitions */
 	equipDef_t eds[MAX_EQUIPDEFS];
