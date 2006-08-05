@@ -937,9 +937,9 @@ typedef struct invDef_s {
 #define MAX_INVLIST		1024
 
 typedef struct item_s {
-	int t;						/* twohanded */
-	int a;						/* ammo */
-	int m;						/* model */
+	int a;				/* number of ammo rounds left */
+	int m;				/* index of ammo type on csi->ods  */
+	int t;				/* index of weapon == csi->ods[m].link */
 } item_t;
 
 typedef struct invList_s {
