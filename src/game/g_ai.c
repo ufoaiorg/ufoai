@@ -417,7 +417,101 @@ void AI_Run(void)
 }
 
 
+/*
+=================
+G_PackAmmoAndWeapon
 
+TODO: choose between multiple ammo for the same weapon
+=================
+*/
+void G_PackAmmoAndWeapon(edict_t *ent, item_t item, const byte * equip)
+{
+	int weapon, ammo, num;
+
+	weapon = item.t;
+	for (ammo = 0; ammo < gi.csi->numODs; ammo++)
+		if (equip[ammo] && gi.csi->ods[ammo].link == weapon)
+			break;
+	if (ammo < gi.csi->numODs) {		
+		if (gi.csi->ods[weapon].reload)
+			Com_Printf("G_PackAmmo: weapon '%s' with ammo '%s' has zero reload time.\n", gi.csi->ods[weapon].name, gi.csi->ods[ammo].name);
+		item.a = gi.csi->ods[weapon].ammo;
+		item.m = ammo;
+		num = equip[ammo] / equip[weapon] 
+			+ (equip[ammo] % equip[weapon] > frand() * equip[weapon]);
+		num = num > 3 ? 3 : num;
+		while (--num) {
+			item_t mun;
+			
+			mun.t = ammo;
+			/* we reserve space in belt for knives and grenades */
+			Com_TryAddToInventory(&ent->i, mun, gi.csi->idBackpack);
+		}
+
+	} else
+		Com_Printf("G_PackAmmo: no ammo for sidearm or primary weapon '%s'.\n", gi.csi->ods[weapon].name);
+
+	num = Com_TryAddToInventory(&ent->i, item, gi.csi->idRight)
+		|| Com_TryAddToInventory(&ent->i, item, gi.csi->idLeft)
+		|| Com_TryAddToInventory(&ent->i, item, gi.csi->idHolster)
+		|| Com_TryAddToInventory(&ent->i, item, gi.csi->idBackpack);
+	if (!num)
+		Com_Printf("G_PackAmmo: no space for weapon '%s'.\n", gi.csi->ods[weapon].name);
+}
+
+#if 0
+/*
+================
+G_EquipAIPlayer
+
+The code below is an implementation of the scheme sketched
+at the beginning of equipment_missions.ufo.
+However, aliens cannot yet swap weapons,
+so only the weapon(s) in hands will be used.
+The rest is just player's loot.
+
+TODO: try and see if this creates a tolerable
+initial equipment for human players
+(of course this would result in random number of initial weapons),
+though there is already CL_CheckInventory in cl_team.c.
+================
+*/
+
+void G_EquipAIPlayer(edict_t *ent, const byte * equip)
+{
+	int i, max_price, max_obj;
+	item_t item = {0,0,0};
+	objDef_t obj;
+	byte equip[MAX_OBJDEFS];
+
+			/* get the most expensive primary weapon */
+			max_price = 0;
+			for (i = 0; i < gi.csi->numODs; i++) {
+				obj = gi.csi->ods[i];
+				if (equip[i] && obj.weapon && obj.buytype == 0) {
+					if (obj.price > max_price) {
+						max_price = obj.price;
+						max_obj = i;
+					}
+				}
+			}
+			
+			/* see if there is one */
+			if (max_price) { 
+				/* see if the alien picks it */					
+				if (equip[max_obj] >= 8 * frand()) {
+					item.t = max_obj;
+					/* not decrementing equip[max_obj] 
+					 * so that we get more possible squads */
+					G_PackAmmoAndWeapon(ent, item, equip);
+
+				}
+			}
+
+	}
+
+}
+#endif
 
 /*
 =================

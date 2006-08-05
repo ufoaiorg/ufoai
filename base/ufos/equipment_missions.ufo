@@ -24,26 +24,31 @@
 //
 // Alien weapon assignment procedure.
 // For each alien, pick the following:
-// 1. tachyonsniper with probability #tachyonsniper/8
+// 1. the most expensive primary weapon W with probability #W/8
+//    where #W is the number of W weapons listed in equipment
 // 1a. if still no primary weapon,
-//     tachyonrifle with probability #tachyonrifle/8
-// 1b. if still no primary weapon,
-//     plasblaster with probability #plasblaster/8
+//     the second most expensive primary weapon X with probability #X/8
 // etc. for all primary weapons (the order is essential);
 // keep the total <= 8 or the theoretical loot will
 // be much higher than the actual loot
-// 2. tachyonpistol with probability #plaspistol/8
-// 2a. if still no sidearm (plaspistol or tachyonpistol),
-//     etc., etc.;
+// 2. similary, sidearms  (plaspistol or tachyonpistol) based on price, 
+//    so in case of current weapons this is:
+//    tachyonpistol with probability #tachyonpistol/8
+// 2a. if still no sidearm,
+//     plaspistol with probability #plaspistol/8;
 //     add some bonus to probability for those aliens
 //     that don't have primary weapons, yet,
-//     and some malus to those that already have;
+//     and some malus to those that already have,
+//     with decent probability of akimbo, too;
+//     moreover alien with tachyon primary weapon 
+//     will start picking sidarm with plaspistol, not tachyonpistol;
 //     keep the total <= 8, likewise
 // 3. get the following number of ammo for each weapon separately:
 //      (#ammo/#weapon) randomly rounded up or down
 //    with probability depending on the fractional part,
 //    where #ammo and #weapon are the numbers of that particular
-//    ammo and weapon in the equipment definition
+//    ammo and weapon in the equipment definition;
+//    #ammo/#weapon shoudl be >=1 <=3
 // 4. for each blade (kerrblade or plasblade)
 //    and misc item (alienincgrenade or plasmagrenade) get
 //      (#item/8) randomly rounded up or down
@@ -187,8 +192,8 @@ equipment campaign_stage3_soldiers
 
 equipment campaign_stage4_workers
 {
-	plaspistol			1
-	plaspistol_ammo		2
+	plaspistol			2
+	plaspistol_ammo		3
 	plasblaster			1
 	plasblaster_ammo	2
 	tachyonpistol		7
@@ -204,11 +209,11 @@ equipment campaign_stage4_workers
 equipment campaign_stage4_soldiers_plasma
 {
 	plaspistol			7
-	plaspistol_ammo		22
+	plaspistol_ammo		20
 	plasrifle			2
-	plasrifle_ammo		7
+	plasrifle_ammo		5
 	plasblaster			6
-	plasblaster_ammo	19
+	plasblaster_ammo	17
 	kerrblade			1
 	plasblade			20
 	alienincgrenade		10
@@ -217,18 +222,18 @@ equipment campaign_stage4_soldiers_plasma
 
 equipment campaign_stage4_soldiers
 {
-	plaspistol			1
-	plaspistol_ammo		3
+	plaspistol			3
+	plaspistol_ammo		8
 	plasrifle			1
 	plasrifle_ammo		3
 	plasblaster			1
 	plasblaster_ammo	3
-	tachyonpistol		7
-	tachyonpistol_ammo	22
+	tachyonpistol		5
+	tachyonpistol_ammo	13
 	tachyonrifle		3
-	tachyonrifle_ammo	10
+	tachyonrifle_ammo	8
 	tachyonsniper		3
-	tachyonsniper_ammo	10
+	tachyonsniper_ammo	8
 	kerrblade			14
 	plasblade			14
 	alienincgrenade		14

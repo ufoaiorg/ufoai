@@ -161,7 +161,7 @@ item tachyonsniper
 	scale		1.1
 	ammo		12
 	reload		8
-	price		5000
+	price		5900
 	buytype		0
 }
 

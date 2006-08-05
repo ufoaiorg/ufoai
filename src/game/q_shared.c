@@ -2385,6 +2385,25 @@ void Com_FindSpace(inventory_t * inv, int item, int container, int *px, int *py)
 	*px = *py = NONE;
 }
 
+/**
+ * @brief
+ * @param
+ * @sa
+ */
+int Com_TryAddToInventory(inventory_t * inv, item_t item, int container)
+{
+	int x, y;
+
+	Com_FindSpace(inv, item.t, container, &x, &y);
+	if (x == NONE) {
+		assert (y == NONE);
+		return 0;
+	} else {
+		Com_AddToInventory(inv, item, container, x, y);
+		return 1;
+	}
+}
+
 /*
 ==============================================================================
 CHARACTER GENERATION AND HANDLING
