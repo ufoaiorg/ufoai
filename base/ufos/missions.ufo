@@ -95,7 +95,7 @@ mission mart
 	pos			"-13 52"
 	aliens		3
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	campaign_stage1_soldiers
 	civilians	6
 	civteam		european
 	recruits	2
@@ -116,9 +116,9 @@ mission mine_crash
 	map			mine_crash05
 	music		mission
 	pos			"-20 -23"
-	aliens		3
+	aliens		7
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	campaign_stage1_workers_explosive
 	civilians	6
 	civteam		european
 	recruits	2
@@ -185,7 +185,7 @@ mission africa
 	pos			"-30 18"
 	aliens		5
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	campaign_stage2_soldiers_melee
 	civilians	6
 	civteam		oriental
 	recruits	3
@@ -208,7 +208,7 @@ mission bunker
 	pos			"2 51"
 	aliens		5
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	campaign_stage1_soldiers
 	civilians	6
 	civteam		scientist
 	recruits	6
@@ -278,7 +278,7 @@ mission africa_excavation
 	aliens		4
 	civilians	6
 	civteam		oriental
-	alienequip	campaign_stage1
+	alienequip	campaign_stage1_workers
 	recruits	4
 	$win		750
 	$alien		200
@@ -299,7 +299,7 @@ mission italy
 	pos			"-18 40"
 	aliens		8
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	campaign_stage1_soldiers
 	civilians	6
 	civteam		european
 	recruits	3
@@ -391,7 +391,7 @@ mission japan
 	pos			"-141 39"
 	aliens		10
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	campaign_stage1_soldiers
 	civilians	6
 	civteam		european
 	recruits	4
@@ -437,7 +437,7 @@ mission farm
 	pos			"116 52"
 	aliens  	3
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	campaign_stage1_workers
 	civilians	3
 	civteam		european
 	recruits	3
@@ -603,7 +603,7 @@ mission oriental
 	pos			"-62 25"
 	aliens		5
 	alienteam	alien
-	alienequip	campaign_stage1
+	alienequip	campaign_stage1_soldiers
 	civilians	6
 	civteam		oriental
 	recruits	3
