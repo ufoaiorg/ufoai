@@ -1693,15 +1693,17 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
 			G_AppearPerishEvent(G_VisToPM(~check->visflags), 1, check);
 			check->visflags |= ~check->visflags;
 			continue;
-		} else if (fd->dmgtype == gi.csi->damStun && (check->type == ET_ACTOR || check->type == ET_UGV)) {
-			damage = (fd->spldmg[0] + fd->spldmg[1] * crand()) * (1.0 - dist / fd->splrad);
-			G_DamageStun(check, fd->dmgtype, damage, ent);
-			continue;
 		}
 
 		/* check for walls */
 		if ((check->type == ET_ACTOR || check->type == ET_UGV) && !G_ActorVis(impact, check, qfalse))
 			continue;
+
+		if (fd->dmgtype == gi.csi->damStun && (check->type == ET_ACTOR || check->type == ET_UGV)) {
+			damage = (fd->spldmg[0] + fd->spldmg[1] * crand()) * (1.0 - dist / fd->splrad);
+			G_DamageStun(check, fd->dmgtype, damage, ent);
+			continue;
+		}
 
 		/* do damage */
 		damage = (fd->spldmg[0] + fd->spldmg[1] * crand()) * (1.0 - dist / fd->splrad);
