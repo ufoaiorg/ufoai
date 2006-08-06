@@ -96,7 +96,7 @@ building building_intercept
 	fixcosts	5000
 	depends		building_command
 	more_than_one	true
-	onconstruct	"aircraft_new interceptor;aircraft_list;"
+	onconstruct	"aircraft_new craft_interceptor"
 	build_time	5
 	varcosts	10
 	map_name	"intercept"
@@ -112,7 +112,7 @@ building building_quarters
 	more_than_one	true
 	max_employees	20
 	build_time	4
-	onconstruct	"building_add_employees EMPL_SCIENTIST 6;"
+	onconstruct	"building_add_employees EMPL_SCIENTIST 6"
 	varcosts	10
 	map_name	"quarters"
 	pos		"4 4"
