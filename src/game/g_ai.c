@@ -512,7 +512,7 @@ void G_EquipAIPlayer(edict_t *ent, const byte * equip)
 		}
 		/* see if there is any */
 		if (max_price) {
-			/* see if the alien picks it */
+			/* see if the AI picks it */
 			if ( equip[weapon] >= 8 * frand() ) {
 				/* not decrementing equip[weapon]
 				 * so that we get more possible squads */
@@ -598,6 +598,27 @@ void G_EquipAIPlayer(edict_t *ent, const byte * equip)
 				has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
 		}
 	} while (max_price);
+
+	/* if no weapon at all, add the token kerrblade */ 
+	if (!has_weapon) { 
+		Com_DPrintf("G_EquipAIPlayer: no weapon picked for an AI in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", gi.cvar_string("ai_equipment"));
+		max_price = 0;
+		for (i = 0; i < gi.csi->numODs; i++) {
+			obj = gi.csi->ods[i];
+			if ( 1 /* no check for equip[i] */
+				 && obj.weapon && obj.buytype == 1 && !obj.reload ) {
+				if ( obj.price > max_price && obj.price < prev_price ) {
+					max_price = obj.price;
+					weapon = i;
+				}
+			}
+		}
+		if (max_price)
+			has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
+	}
+	/* if still no weapon, something is broken */
+	if (!has_weapon)
+		Com_Printf("G_EquipAIPlayer: cannot add any weapon to AI.\n");
 }
 
 

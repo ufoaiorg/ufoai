@@ -852,7 +852,7 @@ item kerrblade
 	shape		"0 0 5 2"
 	center		"6.3 0 3"
 	scale		1.0
-	price		1210
+	price		3210 // really expensive production process
 	buytype		1
 	ammo		1
 	thrown		true

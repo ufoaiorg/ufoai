@@ -282,7 +282,7 @@ item alienincgrenade
 		bncsnd	misc/klonk03.wav
 		gravity	true
 		delay	1
-		bounce	17
+		bounce	10
 		bncfac	0.5
 		spread	"7 7"
 		range	12

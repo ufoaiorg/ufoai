@@ -1029,9 +1029,9 @@ void CL_ResetTeams(void)
 void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
 {
 	if (!csi.ods[item.t].reload) {
-		/* transfer with full free ammo */
+		/* if no ammo needed, transfer with free ammo, just in case */
 		item.m = item.t;
-		item.a = csi.ods[item.t].ammo;
+		item.a = 1;
 	}
 	MSG_WriteFormat(buf, "bbbbbb", item.t, item.a, item.m, container, x, y);
 }
