@@ -499,7 +499,7 @@ static void B_DrawBuilding(void)
 		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Running Costs:\t%1.0f c\n"), building->varCosts), MAX_LIST_CHAR);
 
 	if (employees_in_building->numEmployees)
-		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Workers:\t%i\n"), employees_in_building->numEmployees), MAX_LIST_CHAR);
+		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Employees:\t%i\n"), employees_in_building->numEmployees), MAX_LIST_CHAR);
 
 	/* FIXME: Rename mn_building_name and mn_building_title */
 	if (building->id)
@@ -1938,9 +1938,9 @@ void B_BuildingAddEmployees_f ( void )
 	/* can be called from everywhere - so make a sanity check here */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
 		return;
-
+	Com_DPrintf("B_BuildingAddEmployees_f started.\n");
 	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: building_add_employee <type> <amount>\n");
+		Com_Printf("Usage: building_add_employees <type> <amount>\n");
 		return;
 	}
 
@@ -1980,7 +1980,7 @@ void B_BuildingRemoveEmployees_f ( void )
 		return;
 
 	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: building_remove_employee <type> <amount>\n");
+		Com_Printf("Usage: building_remove_employees <type> <amount>\n");
 		return;
 	}
 
@@ -2007,8 +2007,8 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("new_building", B_NewBuildingFromList);
 	Cmd_AddCommand("set_building", B_SetBuilding);
 	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle);
-	Cmd_AddCommand("building_add_employee", B_BuildingAddEmployees_f );
-	Cmd_AddCommand("building_remove_employee", B_BuildingRemoveEmployees_f );
+	Cmd_AddCommand("building_add_employees", B_BuildingAddEmployees_f );
+	Cmd_AddCommand("building_remove_employees", B_BuildingRemoveEmployees_f );
 	Cmd_AddCommand("rename_base", B_RenameBase);
 	Cmd_AddCommand("base_attack", B_BaseAttack);
 	Cmd_AddCommand("base_changename", B_ChangeBaseNameCmd);
