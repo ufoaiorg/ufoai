@@ -123,15 +123,15 @@ void B_SetSensor(void)
 static employeeType_t B_GetEmployeeType(char* type)
 {
 	assert(type);
-	if ( Q_strncmp(type, "EMPL_SCIENTIST", 7 ) )
+	if ( Q_strncmp(type, "EMPL_SCIENTIST", 14 ) )
 		return EMPL_SCIENTIST;
-	else if ( Q_strncmp(type, "EMPL_SOLDIER", 7 ) )
+	else if ( Q_strncmp(type, "EMPL_SOLDIER", 12 ) )
 		return EMPL_SOLDIER;
-	else if ( Q_strncmp(type, "EMPL_WORKER", 5 ) )
+	else if ( Q_strncmp(type, "EMPL_WORKER", 11 ) )
 		return EMPL_WORKER;
-	else if ( Q_strncmp(type, "EMPL_MEDIC", 5 ) )
+	else if ( Q_strncmp(type, "EMPL_MEDIC", 10 ) )
 		return EMPL_MEDIC;
-	else if ( Q_strncmp(type, "EMPL_ROBOT", 5 ) )
+	else if ( Q_strncmp(type, "EMPL_ROBOT", 10 ) )
 		return EMPL_ROBOT;
 	else {
 		Com_Printf("Unknown employee type '%s'\n", type);
