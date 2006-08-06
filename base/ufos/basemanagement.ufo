@@ -9,7 +9,7 @@
 // 1: xxx xxx ufo Han-gar
 // 2: x-x x-x x-x x-x Entr
 // 3: xxx xxx tea x-x Stor
-// 4: rad Lab Pow Cmd Qrt 
+// 4: rad Lab Pow Cmd Qrt
 
 // ====================
 // Buildings
@@ -70,7 +70,7 @@ building building_lab
 	pos		"4 1"
 	firstbase	true
 	type	lab
-	employees_firstbase	2
+	employees_firstbase	"2 EMPL_SCIENTIST"
 	pedia		rs_building_lab
 }
 

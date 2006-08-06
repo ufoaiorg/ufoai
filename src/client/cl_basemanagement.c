@@ -119,6 +119,7 @@ void B_SetSensor(void)
 /**
  * @brief Convert string to employeeType_t
  * @param type Pointer to employee type string
+ * @return employeeType_t
  */
 static employeeType_t B_GetEmployeeType(char* type)
 {
@@ -134,7 +135,7 @@ static employeeType_t B_GetEmployeeType(char* type)
 	else if ( Q_strncmp(type, "EMPL_ROBOT", 10 ) )
 		return EMPL_ROBOT;
 	else {
-		Com_Printf("Unknown employee type '%s'\n", type);
+		Sys_Error("Unknown employee type '%s'\n", type);
 		return MAX_EMPL;
 	}
 }
@@ -706,7 +707,8 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 	technology_t *tech_link = NULL;
 	value_t *edp = NULL;
 	char *errhead = "B_ParseBuildings: unexptected end of file (names ";
-	char *token = NULL;
+	char *token = NULL, *split = NULL;
+	int employeesAmount = 0;
 
 	/* get id list body */
 	token = COM_Parse(text);
@@ -782,9 +784,18 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 				token = COM_EParse(text, errhead, id);
 				if (!*text)
 					return;
-				if (*token)
-					/* FIXME: EMPL_SCIENTIST */
-					B_BuildingAddEmployees(building, EMPL_SCIENTIST, atoi(token));
+				if (*token) {
+					split = strstr(token, " ");
+					if (!split) {
+						Sys_Error("Wrong 'employees_firstbase' line: [amount] [type] ('%s')\n", token);
+						/* never reached */
+						return;
+					}
+					*split++ = '\0';
+					employeesAmount = atoi(token);
+					Com_DPrintf("Add %i employees '%s' to '%s'\n", employeesAmount, split, building->id);
+					B_BuildingAddEmployees(building, B_GetEmployeeType(split), employeesAmount);
+				}
 			} else
 				for (edp = valid_vars; edp->string; edp++)
 					if (!Q_strncmp(token, edp->string, sizeof(edp->string))) {
@@ -900,6 +911,8 @@ void B_InitEmployees(void)
 				employee->speed = 100;
 			}
 			building = B_GetFreeBuildingType(B_QUARTERS);
+			if (!building)
+				break;
 			employees_in_building = &building->assigned_employees;
 			employees_in_building->assigned[employees_in_building->numEmployees++] = employee->idx;
 			break;
@@ -1303,7 +1316,9 @@ int B_EmployeesInBase(int base_idx, employeeType_t employee_type)
 }
 
 /**
- * @brief Clears a base?
+ * @brief Clears a base with all its characters
+ * @sa CL_ResetCharacters
+ * @sa CL_GenerateCharacter
  */
 void B_ClearBase(base_t * base)
 {
@@ -1333,6 +1348,7 @@ void B_ClearBase(base_t * base)
 
 /**
  * @brief Reads information about bases.
+ * @sa CL_ParseScriptFirst
  */
 void B_ParseBases(char *title, char **text)
 {
@@ -1893,6 +1909,9 @@ static int B_BuildingAddEmployees(building_t *b, employeeType_t type, int amount
 	}
 
 	for (employees_in_building->numEmployees = 0; employees_in_building->numEmployees < amount;) {
+		/* check for overflow */
+		if (employees_in_building->numEmployees >= MAX_EMPLOYEES_IN_BUILDING)
+			break;
 		/* assign random employee infos. */
 		/* link this employee in the building to the global employee-list. */
 		employees_in_building->assigned[employees_in_building->numEmployees] = gd.numEmployees;
