@@ -542,7 +542,9 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 
 		if (texh0 > 0) {
 			if (fh > texh0)
+/* something is broken with that warning, please test
 				ri.Con_Printf(PRINT_DEVELOPER, "Warning: font %s height=%f bigger than allowed line height=%f.\n", fontID, fh, texh0);
+*/
 			fh = texh0; /* some extra space below the line */
 		}
 

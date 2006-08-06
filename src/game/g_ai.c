@@ -640,9 +640,6 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 	edict_t *ent;
 	byte equip[MAX_OBJDEFS];
 	int i, j, numPoints, team;
-	int ammo, num;
-	item_t item = {0,0,0};
-	char *ref;
 
 	/* search spawn points */
 	team = player->pers.team;
@@ -677,6 +674,9 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 	/* spawn players */
 	for (j = 0; j < numSpawn; j++) {
+		item_t item = {0,0,0};
+		char *ref;
+
 		/* select spawnpoint */
 		while (ent->type != ET_ACTORSPAWN)
 			ent = &g_edicts[spawnPoints[(int) (frand() * numPoints)]];
@@ -724,62 +724,16 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 			if (ent->morale >= MAX_SKILL)
 				ent->morale = MAX_SKILL;
 
-			/* search for weapons */
-			num = 0;
-			for (i = 0; i < gi.csi->numODs; i++)
-				if (equip[i] && gi.csi->ods[i].weapon)
-					num++;
+			/* pack equipment */
+			G_EquipAIPlayer(ent, equip);
 
-			if (num) {
-				/* add weapon */
-				item.m = NONE;
+			/* set model */
+			ent->chr.inv = &ent->i;
 
-				num = (int) (frand() * num);
-				for (i = 0; i < gi.csi->numODs; i++)
-					if (equip[i] && gi.csi->ods[i].weapon) {
-						if (num)
-							num--;
-						else
-							break;
-					}
-				item.t = i;
-				equip[i]--;
-
-				if (gi.csi->ods[i].reload) {
-					for (ammo = 0; ammo < gi.csi->numODs; ammo++)
-						if (equip[ammo] && gi.csi->ods[ammo].link == i)
-							break;
-					if (ammo < gi.csi->numODs) {
-						item.a = gi.csi->ods[i].ammo;
-						item.m = ammo;
-						equip[ammo]--;
-						if (equip[ammo] > equip[i]) {
-							item_t mun = {0,0,0};
-
-							mun.t = ammo;
-							Com_AddToInventory(&ent->i, mun, gi.csi->idBelt, 0, 0);
-							equip[ammo]--;
-						}
-					} else
-						item.a = 0;
-					Com_AddToInventory(&ent->i, item, gi.csi->idRight, 0, 0);
-				} else {
-					item.a = gi.csi->ods[i].ammo;
-					item.m = i;
-				}
-				/* FIXME: Com_AddToInventory here ?? */
-
-				/* set model */
-				ent->chr.inv = &ent->i;
-
-/*				ent->chr.inv->c[gi.csi->idArmor]*/
-				ent->body = gi.modelindex(Com_CharGetBody(&ent->chr));
-				ent->head = gi.modelindex(Com_CharGetHead(&ent->chr));
-				ent->skin = ent->chr.skin;
-			} else {
-				/* nothing left */
-				Com_Printf("Not enough weapons in equipment '%s'\n", gi.cvar_string("ai_equipment"));
-			}
+/*			ent->chr.inv->c[gi.csi->idArmor]*/
+			ent->body = gi.modelindex(Com_CharGetBody(&ent->chr));
+			ent->head = gi.modelindex(Com_CharGetHead(&ent->chr));
+			ent->skin = ent->chr.skin;
 		} else {
 			Com_CharGenAbilitySkills(&ent->chr, 0, 20, 0, 20);
 			ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]) / 2;
