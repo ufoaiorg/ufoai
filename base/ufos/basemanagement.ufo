@@ -80,6 +80,7 @@ building building_storage
 	image		base/storage
 	fixcosts	75000
 	depends		building_command
+	more_than_one	true
 	build_time	5
 	varcosts	10
 	map_name	"storage"
@@ -181,6 +182,7 @@ building building_radar
 	image		base/radar
 	fixcosts	300000
 	depends		building_command
+	more_than_one	true
 	build_time	10
 	map_name	"radar"
 	pedia		rs_building_radar
