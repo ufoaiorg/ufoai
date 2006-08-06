@@ -548,7 +548,7 @@ int B_GetNumberOfBuildingsInBaseByType(int base_idx, int type_idx)
 		if (gd.buildings[base_idx][i].type_idx == type_idx)
 			NumberOfBuildings++;
 	}
-	Com_DPrintf("B_GetNumberOfB...Type: '%s' - type_idx: %i - num_b: %i\n", gd.bases[base_idx].name, gd.buildingTypes[type_idx].id, NumberOfBuildings);
+	Com_DPrintf("B_GetNumOfBuildType: base: '%s' - num_b: %i - type_idx: %s\n", gd.bases[base_idx].name, NumberOfBuildings, gd.buildingTypes[type_idx].id);
 	return NumberOfBuildings;
 }
 
@@ -863,7 +863,6 @@ void B_InitEmployees(void)
 	/* Loop trough the buildings to assign the type of employee. */
 	/* TODO: this right now assumes that there are not more employees than free quarter space ... but it will not puke if there are. */
 	for (i = 0; i < gd.numBuildingTypes; i++) {
-		Com_DPrintf("B_InitEmployees: 1 type %i\n", i);
 		building = &gd.buildingTypes[i];
 		employees_in_building = &building->assigned_employees;
 		/* TODO: fixed value right now, needs a configureable one. */
@@ -889,7 +888,8 @@ void B_InitEmployees(void)
 			}
 		}
 	}
-
+	Com_DPrintf("B_InitEmployees: Existing building types: 0 to %i\n", i);
+	
 	building = NULL;
 	/* Generate stats for employees and assign the quarter-less to quarters. */
 	for (i = 0; i < gd.numEmployees; i++) {
