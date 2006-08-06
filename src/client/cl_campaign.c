@@ -1023,6 +1023,8 @@ void CL_SaveEquipment ( sizebuf_t *buf, character_t *team, const int num )
 
 /**
  * @brief Saved the complete message stack
+ * @sa CL_GameSave
+ * @sa MN_AddNewMessage
  */
 void CL_MessageSave(sizebuf_t* sb, message_t* message)
 {
@@ -1038,6 +1040,7 @@ void CL_MessageSave(sizebuf_t* sb, message_t* message)
 	Com_DPrintf("CL_MessageSave: Save '%s' - '%s'\n", message->title, message->text);
 	MSG_WriteString(sb, message->title);
 	MSG_WriteString(sb, message->text);
+	MSG_WriteByte(sb, message->type);
 	MSG_WriteLong(sb, idx);
 	MSG_WriteLong(sb, message->d);
 	MSG_WriteLong(sb, message->m);
@@ -1244,6 +1247,9 @@ void CL_UpdatePointersInGlobalData(void)
   *
   * @sa CL_GameLoadCmd
   * @sa CL_GameSave
+  * @sa CL_MessageSave
+  * @sa CL_ReadSinglePlayerData
+  * @sa CL_UpdatePointersInGlobalData
   */
 int CL_GameLoad(char *filename)
 {
