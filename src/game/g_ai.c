@@ -698,7 +698,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 
 			ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
 			ent->AP = 100;
-			ent->STUN = 100;
+			ent->STUN = 0;
 			ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 			if (ent->morale >= MAX_SKILL)
 				ent->morale = MAX_SKILL;
@@ -763,7 +763,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
 			Com_CharGenAbilitySkills(&ent->chr, 0, 20, 0, 20);
 			ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]) / 2;
 			ent->AP = 100;
-			ent->STUN = 100;
+			ent->STUN = 0;
 			ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 
 			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_civilian"), ent->chr.path, ent->chr.body, ent->chr.head, ent->chr.name);

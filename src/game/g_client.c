@@ -1548,18 +1548,22 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 		return;	/* never reached. need for code analyst. */
 #endif
 
-	if (stun) {
+	/* hit */
+	if (stun)
+		ent->STUN += damage;
+	else
+		ent->HP -= damage > ent->HP ? ent->HP : damage;
 
-	/* stun hit */
-	if (ent->STUN <= damage) {
-		/* loose consciousness */
-		G_ActorDie(ent, STATE_STUN);
+	/* check death/knockouth */
+	if (ent->HP == 0 || ent->HP <= ent->STUN) {
+
+		G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN);
 
 		/* apply morale changes */
 		if (mor_panic->value)
 			G_Morale(ML_DEATH, ent, attacker, damage);
 
-		/* count the stunned ones as killed ones */
+		/* count also the stunned ones as killed ones */
 		level.num_kills[attacker->team][ent->team]++;
 
 		/* count score */
@@ -1575,44 +1579,14 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 
 	} else {
 
-		/* hit */
-		ent->STUN -= damage;
-		if (damage > 0 && mor_panic->value)
+		if (damage > 0 && mor_panic->value) {
 			G_Morale(ML_WOUND, ent, attacker, damage);
-		G_SendStats(ent);
-	}
-	} else {
-	if (ent->HP <= damage) {
-		/* die */
-		G_ActorDie(ent, STATE_DEAD);
-
-		/* apply morale changes */
-		if (mor_panic->value)
-			G_Morale(ML_DEATH, ent, attacker, damage);
-
-		level.num_kills[attacker->team][ent->team]++;
-
-		/* count score */
-		if (ent->team == TEAM_CIVILIAN)
-			attacker->chr.kills[KILLED_CIVILIANS]++;
-		else if (attacker->team == ent->team)
-			attacker->chr.kills[KILLED_TEAM]++;
-		else
-			attacker->chr.kills[KILLED_ALIENS]++;
-
-		/* check for win conditions */
-		G_CheckEndGame();
-	} else {
-		/* hit */
-		ent->HP -= damage;
-		if (damage > 0 && mor_panic->value)
-			G_Morale(ML_WOUND, ent, attacker, damage);
+		}
 		else { /* medikit, etc. */
 			if (ent->HP > GET_HP(ent->chr.skills[ABILITY_POWER]))
 				ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
 		}
 		G_SendStats(ent);
-	}
 	}
 }
 
@@ -2384,7 +2358,7 @@ void G_ClientTeamInfo(player_t * player)
 
 			ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
 			ent->AP = 100;
-			ent->STUN = 100;
+			ent->STUN = 0;
 			if (ent->type == ET_ACTOR)
 				ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 
