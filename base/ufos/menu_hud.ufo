@@ -712,6 +712,17 @@ menu hud
 		max		"*cvar mn_hpmax"
 		align	uc
 	}
+
+	bar stun
+	{
+		pos		"422 682"
+		size	"305 6"
+		color	".3 .3 .3 .9"
+		current	"*cvar mn_stun"
+		max		"*cvar mn_hpmax"
+		align	uc
+	}
+
 	text infoscreen
 	{
 		pos		"425 702"
