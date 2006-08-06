@@ -329,7 +329,9 @@ char *LE_GetAnim(char *anim, int right, int left, int state)
 		if (left == NONE)
 			type = "item";
 		else {
-			akimbo = qtrue;
+			/* left hand grenades look OK with deafult anim; others don't */
+			if (Q_strncmp(csi.ods[left].type, "grenade", 7))
+				akimbo = qtrue;
 			type = csi.ods[left].type;
 		}
 	} else {
@@ -347,9 +349,10 @@ char *LE_GetAnim(char *anim, int right, int left, int state)
 	} else {
 		Q_strncpyz(mod, anim, MAX_VAR);
 		Q_strcat(mod, "_", MAX_VAR);
-		Q_strcat(mod, type, MAX_VAR);
 		if (akimbo)
-			Q_strcat(mod, "_d", MAX_VAR);
+			Q_strcat(mod, "pistol_d", MAX_VAR);
+		else
+			Q_strcat(mod, type, MAX_VAR);
 	}
 
 	return retAnim;
