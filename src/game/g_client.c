@@ -1465,100 +1465,22 @@ static void G_MoraleBehaviour(int team)
 
 /*
 =================
-G_DamageStun
-=================
-*/
-static void G_DamageStun(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
-{
-	/* actors don't die or don't get stunned again */
-	if (ent->state & STATE_DEAD)
-		return;
-
-	/* apply difficulty settings */
-	if (sv_maxclients->value == 1) {
-		if (attacker->team == TEAM_ALIEN && ent->team < TEAM_ALIEN)
-			damage *= pow(1.3, difficulty->value);
-		else if (attacker->team < TEAM_ALIEN && ent->team == TEAM_ALIEN)
-			damage *= pow(1.3, -difficulty->value);
-	}
-
-	/* apply armor effects */
-	if (damage > 0 && ent->i.c[gi.csi->idArmor]) {
-		objDef_t *ad;
-		int totalDamage;
-
-		ad = &gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t];
-
-		totalDamage = damage;
-
-		if (ad->protection[dmgtype]) {
-			if (ad->protection[dmgtype] > 0)
-				damage *= 1.0 - ad->protection[dmgtype] * ent->AP * 0.0001;
-			else
-				damage *= 1.0 - ad->protection[dmgtype] * 0.01;
-		}
-
-		if (ad->hardness[dmgtype]) {
-			int armorDamage;
-
-			armorDamage = (totalDamage - damage) / ad->hardness[dmgtype];
-			ent->AP = armorDamage < ent->AP ? ent->AP - armorDamage : 0;
-		}
-	}
-
-	assert((attacker->team >= 0) && (attacker->team < MAX_TEAMS));
-	assert((ent->team >= 0) && (ent->team < MAX_TEAMS));
-#ifdef DEBUG
-	if ((attacker->team < 0) || (attacker->team >= MAX_TEAMS))
-		return;	/* never reached. need for code analyst. */
-	if ((ent->team < 0) || (ent->team >= MAX_TEAMS))
-		return;	/* never reached. need for code analyst. */
-#endif
-
-	if (ent->STUN <= damage) {
-		/* die */
-		G_ActorDie(ent, STATE_STUN);
-
-		/* apply morale changes */
-		if (mor_panic->value)
-			G_Morale(ML_DEATH, ent, attacker, damage);
-
-		/* count the stunned ones as killed ones */
-		level.num_kills[attacker->team][ent->team]++;
-
-		/* count score */
-		if (ent->team == TEAM_CIVILIAN)
-			attacker->chr.kills[KILLED_CIVILIANS]++;
-		else if (attacker->team == ent->team)
-			attacker->chr.kills[KILLED_TEAM]++;
-		else
-			attacker->chr.kills[KILLED_ALIENS]++;
-
-		/* check for win conditions */
-		G_CheckEndGame();
-	} else {
-		/* hit */
-		ent->STUN -= damage;
-		if (damage > 0 && mor_panic->value)
-			G_Morale(ML_WOUND, ent, attacker, damage);
-		G_SendStats(ent);
-	}
-}
-
-
-/*
-=================
 G_Damage
 =================
 */
 static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 {
-	if (dmgtype == gi.csi->damStun) {
-		if (ent->type == ET_ACTOR || ent->type == ET_UGV)
-			G_DamageStun(ent, dmgtype, damage, attacker);
+	int stun = dmgtype == gi.csi->damStun;
+
+	assert (ent);
+	assert (ent->type == ET_ACTOR 
+			|| ent->type == ET_UGV 
+			|| ent->type == ET_BREAKABLE);
+
+	/* breakables are immune to stun damage */
+	if (stun && ent->type == ET_BREAKABLE)
 		return;
-	}
-	
+
 	/* breakables */
 	if (ent->type == ET_BREAKABLE) {
 		if (damage >= ent->HP) {
@@ -1626,6 +1548,40 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 		return;	/* never reached. need for code analyst. */
 #endif
 
+	if (stun) {
+
+	/* stun hit */
+	if (ent->STUN <= damage) {
+		/* loose consciousness */
+		G_ActorDie(ent, STATE_STUN);
+
+		/* apply morale changes */
+		if (mor_panic->value)
+			G_Morale(ML_DEATH, ent, attacker, damage);
+
+		/* count the stunned ones as killed ones */
+		level.num_kills[attacker->team][ent->team]++;
+
+		/* count score */
+		if (ent->team == TEAM_CIVILIAN)
+			attacker->chr.kills[KILLED_CIVILIANS]++;
+		else if (attacker->team == ent->team)
+			attacker->chr.kills[KILLED_TEAM]++;
+		else
+			attacker->chr.kills[KILLED_ALIENS]++;
+
+		/* check for win conditions */
+		G_CheckEndGame();
+
+	} else {
+
+		/* hit */
+		ent->STUN -= damage;
+		if (damage > 0 && mor_panic->value)
+			G_Morale(ML_WOUND, ent, attacker, damage);
+		G_SendStats(ent);
+	}
+	} else {
 	if (ent->HP <= damage) {
 		/* die */
 		G_ActorDie(ent, STATE_DEAD);
@@ -1634,8 +1590,9 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 		if (mor_panic->value)
 			G_Morale(ML_DEATH, ent, attacker, damage);
 
-		/* count score */
 		level.num_kills[attacker->team][ent->team]++;
+
+		/* count score */
 		if (ent->team == TEAM_CIVILIAN)
 			attacker->chr.kills[KILLED_CIVILIANS]++;
 		else if (attacker->team == ent->team)
@@ -1650,11 +1607,12 @@ static void G_Damage(edict_t * ent, int dmgtype, int damage, edict_t * attacker)
 		ent->HP -= damage;
 		if (damage > 0 && mor_panic->value)
 			G_Morale(ML_WOUND, ent, attacker, damage);
-		else {
+		else { /* medikit, etc. */
 			if (ent->HP > GET_HP(ent->chr.skills[ABILITY_POWER]))
 				ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
 		}
 		G_SendStats(ent);
+	}
 	}
 }
 
@@ -1915,11 +1873,9 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 			G_SplashDamage(ent, fd, impact);
 		}
 
-		/* calculate normal damage */
-		damage = fd->damage[0] + fd->damage[1] * crand();
-
 		/* do damage */
 		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV || tr.ent->type == ET_BREAKABLE)) {
+			damage = fd->damage[0] + fd->damage[1] * crand();
 			G_Damage(tr.ent, fd->dmgtype, damage, ent);
 			break;
 		}
