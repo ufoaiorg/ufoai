@@ -1716,8 +1716,12 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 				if (G_TeamPointVis(i, newPos))
 					mask |= 1 << i;
 
-			if (VectorLength(curV) < GRENADE_STOPSPEED || time > 4.0 || bounce > fd->bounce ||
-				(!fd->delay && tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))) {
+			if 
+				/* enough bouncing around */
+				(VectorLength(curV) < GRENADE_STOPSPEED || time > 4.0 || bounce > fd->bounce
+				 /* or we have sensors that tell us enemy is near */
+				 || (!fd->delay && tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))) {
+
 				/* explode */
 				gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
 				gi.WriteShort(dt * 1000);
@@ -1812,7 +1816,9 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 
 		/* set flags */
 		if (tr.fraction < 1.0) {
-			if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV) && !fd->delay)
+			if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV)
+				/* check if we differenciate between body and wall */
+				&& !fd->delay)
 				flags |= SF_BODY;
 			else if (bounce < fd->bounce)
 				flags |= SF_BOUNCING;
