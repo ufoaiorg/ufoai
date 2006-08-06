@@ -1934,22 +1934,25 @@ static int B_BuildingAddEmployees(building_t *b, employeeType_t type, int amount
 void B_BuildingAddEmployees_f ( void )
 {
 	employeeType_t type;
-
+	Com_DPrintf("B_BuildingAddEmployees_f started 1.\n");
+	Com_DPrintf("B_BuildingAddEmployees_f %i %i\n", baseCurrent, baseCurrent->buildingCurrent);
 	/* can be called from everywhere - so make a sanity check here */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
 		return;
-	Com_DPrintf("B_BuildingAddEmployees_f started.\n");
+	Com_DPrintf("B_BuildingAddEmployees_f started 2.\n");
 	if (Cmd_Argc() < 3) {
 		Com_Printf("Usage: building_add_employees <type> <amount>\n");
 		return;
 	}
 
 	type = B_GetEmployeeType(Cmd_Argv(1));
+	Com_DPrintf("B_BuildingAddEmployees_f %i/%i\n", type, MAX_EMPL);
 	if (type == MAX_EMPL)
 		return;
 
 	if (!B_BuildingAddEmployees(baseCurrent->buildingCurrent, type, atoi(Cmd_Argv(2))))
 		Com_DPrintf("Employees not added - at least not all\n");
+	Com_DPrintf("B_BuildingAddEmployees_f finished.\n");
 }
 
 /**
@@ -2084,8 +2087,12 @@ int B_CheckBuildingConstruction(building_t * building, int base_idx)
 		if (building->timeStart && (building->timeStart + building->buildTime) <= ccs.date.day) {
 			building->buildingStatus = B_STATUS_WORKING;
 
-			if (*building->onConstruct)
+			if (*building->onConstruct) {
+				/*Ü baseCurrent = gd.bases[base_idx]*/
+				baseCurrent->buildingCurrent = building;
+				Com_DPrintf("B_CheckBuildingConstruction: %s\n", building->onConstruct);
 				Cbuf_AddText(va("%s %i;", building->onConstruct, base_idx));
+			}
 
 			newBuilding++;
 		}
