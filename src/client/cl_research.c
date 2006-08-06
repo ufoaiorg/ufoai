@@ -36,13 +36,13 @@ void RS_GetFirstRequired(int tech_idx, stringlist_t * required);
 qboolean RS_TechIsResearchable(technology_t * t);
 
 /* A (local) list of displayed technology-entries (the research list in the base) */
-technology_t *researchList[MAX_RESEARCHLIST];
+static technology_t *researchList[MAX_RESEARCHLIST];
 
 /* The number of entries in the above list. */
-int researchListLength;
+static int researchListLength;
 
 /* The currently selected entry in the above list. */
-int researchListPos;
+static int researchListPos;
 
 
 /**
@@ -253,7 +253,6 @@ void RS_InitTree(void)
 					/* Should return to CASE RS_xxx. */
 					break;
 				}
-
 			}
 			/*no id found in csi.ods */
 			if (!found) {
@@ -308,7 +307,7 @@ void RS_InitTree(void)
 		case RS_UGV:
 			/* TODO: Implement me */
 			break;
-		}						/* switch */
+		} /* switch */
 	}
 	RS_MarkCollected();
 	RS_MarkResearchable();
