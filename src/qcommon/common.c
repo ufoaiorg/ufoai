@@ -1322,8 +1322,8 @@ void Qcommon_LocaleInit(void)
 	} else {
 		Com_Printf("...using language: %s\n", locale);
 		Cvar_Set("s_language", locale);
+		s_language->modified = qfalse;
 	}
-	s_language->modified = qfalse;
 }
 #endif
 
