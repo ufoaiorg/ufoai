@@ -542,9 +542,8 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 
 		if (texh0 > 0) {
 			if (fh > texh0)
-				ri.Con_Printf(PRINT_ALL, "Warning: font %s height=%f bigger than allowed line height=%f.\n", fontID, fh, texh0);
-			else
-				fh = texh0; /* some extra space below the line */
+				ri.Con_Printf(PRINT_DEVELOPER, "Warning: font %s height=%f bigger than allowed line height=%f.\n", fontID, fh, texh0);
+			fh = texh0; /* some extra space below the line */
 		}
 
 		/* check whether this line is bigger than every other */
@@ -561,16 +560,17 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 				break;
 			}
 
-/* TODO: this is probably broken, but I don't quite know how:
+			/* Warning: this works OK only for single-line texts! */
 			switch (align / 3) {
 			case 1:
-				y -= h / 2;
+				fy -= fh / 2;
+				fh += fh / 2;
 				break;
 			case 2:
-				y -= h;
+				fy -= fh;
+				fh += fh;
 				break;
 			}
-*/
 		}
 
 		/* This will cut down the string to 160 chars */
@@ -589,7 +589,7 @@ int Font_DrawString(char *fontID, int align, int x, int y, int absX, int absY, i
 		/* skip for next line */
 		fy += fh;
 		buffer = pos;
-		returnHeight += (texh0 > 0) ? texh0 : fh;
+		returnHeight += (texh0 > 0) ? texh0 : h;
 		x = locX;
 	} while (buffer);
 
