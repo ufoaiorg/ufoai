@@ -63,7 +63,6 @@ static value_t fdps[] = {
 	{"bncsnd", V_STRING, offsetof(fireDef_t, bounceSound)},
 	{"sndonce", V_BOOL, offsetof(fireDef_t, soundOnce)},
 	{"gravity", V_BOOL, offsetof(fireDef_t, gravity)},
-	{"selfdet", V_BOOL, offsetof(fireDef_t, selfDetonate)},
 	{"delay", V_INT, offsetof(fireDef_t, delay)},
 	{"bounce", V_INT, offsetof(fireDef_t, bounce)},
 	{"bncfac", V_FLOAT, offsetof(fireDef_t, bounceFac)},

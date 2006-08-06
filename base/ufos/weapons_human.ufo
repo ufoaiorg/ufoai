@@ -480,7 +480,6 @@ item rpg_ammo
 		firesnd	weapons/rpg.wav
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
-		selfdet true
 		speed	250
 		spread	"5 5"
 		crouch	0.8
@@ -503,7 +502,6 @@ item rpg_ammo
 		firesnd	weapons/rpg.wav
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
-		selfdet true
 		speed	250
 		spread	"2.5 2.5"
 		crouch	0.6
@@ -541,7 +539,6 @@ item rpg_incendiary_ammo
 		firesnd	weapons/rpg.wav
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
-		selfdet true
 		speed	250
 		spread	"5 5"
 		crouch	0.8
@@ -564,7 +561,6 @@ item rpg_incendiary_ammo
 		firesnd	weapons/rpg.wav
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
-		selfdet true
 		speed	250
 		spread	"2.5 2.5"
 		crouch	0.6

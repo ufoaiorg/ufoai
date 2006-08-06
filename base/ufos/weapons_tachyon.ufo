@@ -110,7 +110,6 @@ item tachyonrifle_ammo
 		impact	tachyonBigImpact
 		hitbody tachyonBigImpact
 		firesnd	weapons/tachyonbig.wav
-		selfdet true
 		speed	0
 		spread	"4 4"
 		crouch	0.8
@@ -244,7 +243,6 @@ item rpg_tachyon_ammo
 		firesnd	weapons/rpg.wav
 		impsnd	weapons/tachyonbig.wav
 		bodysnd	weapons/tachyonbig.wav
-		selfdet	true
 		speed	250
 		spread	"5 5"
 		crouch	0.8
@@ -267,7 +265,6 @@ item rpg_tachyon_ammo
 		firesnd	weapons/rpg.wav
 		impsnd	weapons/tachyonbig.wav
 		bodysnd	weapons/tachyonbig.wav
-		selfdet	true
 		speed	250
 		spread	"2.5 2.5"
 		crouch	0.6

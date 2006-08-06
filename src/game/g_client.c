@@ -1604,8 +1604,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact)
 	int damage;
 	int i;
 
-	if (!fd->splrad)
-		return;
+	assert (fd->splrad);
 
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
 		/* check basic info */
@@ -1731,7 +1730,10 @@ void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, 
 				gi.WritePos(startV);
 
 				tr.endpos[2] += 10;
-				G_SplashDamage(ent, fd, tr.endpos);
+
+				/* check if this is a stone, ammor clip or grenade */
+				if (fd->splrad)
+					G_SplashDamage(ent, fd, tr.endpos);
 				return;
 			}
 			/* send */
@@ -1842,7 +1844,7 @@ void G_ShootSingle(edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t 
 		gi.WriteByte(type);
 
 		/* do splash damage */
-		if (tr.fraction < 1.0 && (fd->selfDetonate || fd->irgoggles)) {
+		if (tr.fraction < 1.0 && fd->splrad && !fd-> bounce) {
 			VectorMA(impact, 8, tr.plane.normal, impact);
 			G_SplashDamage(ent, fd, impact);
 		}

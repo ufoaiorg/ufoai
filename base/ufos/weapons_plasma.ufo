@@ -243,7 +243,6 @@ item plasblaster_ammo
 		firesnd	weapons/plasma_s.wav
 		impsnd	misc/big_boom.wav
 		bodysnd	misc/big_boom.wav
-		selfdet true
 		gravity	true
 		spread	"4 4"
 		range	17

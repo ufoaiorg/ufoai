@@ -870,7 +870,6 @@ typedef struct fireDef_s {
 	char bounceSound[MAX_VAR];
 	byte soundOnce;
 	byte gravity;
-	byte selfDetonate;
 	byte dmgtype;
 	float speed;
 	vec2_t shotOrg;
