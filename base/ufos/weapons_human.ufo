@@ -822,7 +822,6 @@ item stunrod
 		shots	1
 		time	8
 		damage	"60 20"
-		stun		true
 		dmgtype stun
 	}
 
@@ -839,7 +838,6 @@ item stunrod
 		shots	1
 		time	8
 		damage	"60 20"
-		stun		true
 		dmgtype stun
 	}
 }

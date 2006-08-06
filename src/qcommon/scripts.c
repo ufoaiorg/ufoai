@@ -80,7 +80,6 @@ static value_t fdps[] = {
 /*	{"splrad", V_FLOAT, offsetof(fireDef_t, splrad)},*/
 	{"dmgtype", V_DMGTYPE, offsetof(fireDef_t, dmgtype)},
 	{"irgoggles", V_BOOL, offsetof(fireDef_t, irgoggles)},
-	{"stun", V_BOOL, offsetof(fireDef_t, stun)},
 
 	{NULL, 0, 0}
 };

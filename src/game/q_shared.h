@@ -888,7 +888,6 @@ typedef struct fireDef_s {
 	float splrad;
 	int weaponSkill;
 	int irgoggles;
-	int stun;
 } fireDef_t;
 
 typedef struct objDef_s {
