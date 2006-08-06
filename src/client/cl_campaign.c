@@ -643,9 +643,7 @@ static void CL_CampaignExecute(setState_t * set)
 }
 
 /**
-  * @brief
-  *
-  * Builds the aircraft list for textfield with id
+  * @brief Builds the aircraft list for textfield with id
   */
 static void CL_BuildingAircraftList_f(void)
 {

@@ -153,19 +153,33 @@ char *CL_AircraftStatusToName(aircraft_t * aircraft)
 }
 
 /**
-  * @brief
+  * @brief Calls CL_NewAircraft for given base with given aircraft type
+  * @sa CL_NewAircraft
   */
 void CL_NewAircraft_f(void)
 {
+	int i = -1;
+	base_t *b = NULL;
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: aircraft_new <type>\n");
 		return;
 	}
 
-	if (!baseCurrent)
-		return;
+	if (!baseCurrent) {
+		if (Cmd_Argc() == 3)
+			i = atoi(Cmd_Argv(2));
 
-	CL_NewAircraft(baseCurrent, Cmd_Argv(1));
+		if (i < 0 || i > MAX_BASES)
+			return;
+
+		if (gd.bases[i].founded)
+			b = &gd.bases[i];
+	} else
+		b = baseCurrent;
+
+	if (b)
+		CL_NewAircraft(b, Cmd_Argv(1));
 }
 
 /**
@@ -329,6 +343,8 @@ void CL_NewAircraft(base_t *base, char *name)
 
 		base->numAircraftInBase++;
 		Com_DPrintf("Aircraft for base %s: %s\n", base->name, aircraft->name);
+		/* now update the aircraft list - maybe there is a popup active */
+		Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
 	}
 }
 

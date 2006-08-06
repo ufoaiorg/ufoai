@@ -889,7 +889,7 @@ void B_InitEmployees(void)
 		}
 	}
 	Com_DPrintf("B_InitEmployees: Existing building types: 0 to %i\n", i);
-	
+
 	building = NULL;
 	/* Generate stats for employees and assign the quarter-less to quarters. */
 	for (i = 0; i < gd.numEmployees; i++) {
@@ -2084,8 +2084,8 @@ int B_CheckBuildingConstruction(building_t * building, int base_idx)
 		if (building->timeStart && (building->timeStart + building->buildTime) <= ccs.date.day) {
 			building->buildingStatus = B_STATUS_WORKING;
 
-			if (building->onConstruct)
-				Cbuf_AddText(va("%s %i", building->onConstruct, base_idx));
+			if (*building->onConstruct)
+				Cbuf_AddText(va("%s %i;", building->onConstruct, base_idx));
 
 			newBuilding++;
 		}
