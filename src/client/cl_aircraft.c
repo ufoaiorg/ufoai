@@ -497,11 +497,12 @@ void CL_CampaignRunAircraft(int dt)
 								ms = CL_AddMission(va("ufocrash%.0f:%.0f", ufo->pos[0], ufo->pos[1]));
 								ms->aliens = ufo->size;
 								/* 0-4 civilians */
-								ms->civilians = (frand() * 10) % 4;
+								ms->civilians = (frand() * 10);
+								ms->civilians %= 4;
 
 								/* FIXME: */
-								Q_strcnpyz(ms->alienteam, "ortnok");
-								Q_strcnpyz(ms->civteam, "european");
+								Q_strncpyz(ms->alienTeam, "ortnok", sizeof(ms->alienTeam));
+								Q_strncpyz(ms->civTeam, "european", sizeof(ms->civTeam));
 							}
 							/* now remove the ufo from geoscape */
 							UFO_RemoveUfoFromGeoscape(ufo);

@@ -2161,12 +2161,13 @@ mission_t* CL_AddMission(char *name)
 
 	if (numMissions >= MAX_MISSIONS) {
 		Com_Printf("CL_AddMission: Max missions reached\n");
-		return;
+		return NULL;
 	}
 	/* initialize the mission */
 	ms = &missions[numMissions++];
 	memset(ms, 0, sizeof(mission_t));
 	Q_strncpyz(ms->name, name, MAX_VAR);
+	Com_DPrintf("CL_AddMission: mission name: '%s'\n", name);
 
 	return ms;
 }

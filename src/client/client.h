@@ -1008,6 +1008,7 @@ extern void MAP_GameInit(void);
 extern void UFO_CampaignRunUfos(int dt);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
+extern void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo);
 
 /* cl_popup.c */
 extern void CL_PopupInit(void);

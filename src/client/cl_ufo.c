@@ -32,7 +32,6 @@ extern void UFO_CampaignRunUfos(int dt);
 static void UFO_ListUfosOnGeoscape(void);
 #endif
 static void UFO_NewUfoOnGeoscape(void);
-static void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo);
 static void UFO_RemoveUfoFromGeoscape_f(void);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
@@ -129,7 +128,7 @@ static void UFO_NewUfoOnGeoscape(void)
  * @brief Remove the specified ufo from geoscape
  * @sa UFO_NewUfoOnGeoscape
  */
-static void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo) {
+extern void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo) {
 	int num;
 	base_t* base;
 	aircraft_t* aircraft;
