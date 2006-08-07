@@ -1121,6 +1121,47 @@ qboolean B_EmployeeIsFree(employee_t * employee)
 }
 
 /**
+ * @brief Creates an entry of a new employee in the global list and assignes it to no building/base.
+ *
+ * @param[in] Tell the function what type of employee to create.
+* @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
+ */
+employee_t* B_CreateEmployee(employeeType_t type)
+{
+	employee_t* employee = NULL;
+	/* TODO: check for maxemployees? */
+	employee = &gd.employees[gd.numEmployees++];
+	
+	if (!employee) return NULL;
+		
+	switch (type) {
+		case EMPL_SOLDIER:
+			/* TODO: create random data for the employees depending on type and skill-min/max */
+			/* employee->combat_stats = */
+			break;
+		case EMPL_SCIENTIST:
+		case EMPL_WORKER:
+			employee->base_idx	= -1;
+			employee->quarters	= -1;
+			employee->lab		= -1;
+			employee->workshop	= -1;
+			if (employee->type == EMPL_SCIENTIST) {
+				/* TODO: create random data for the employees depending on type and skill-min/max */
+				employee->speed = 100;
+			} else {
+				/* TODO: create random data for the employees depending on type and skill-min/max */
+				employee->speed = 100;
+			}
+			break;
+			/*case EMPL_MEDIC: break; */
+			/*case EMPL_ROBOT: break; */
+		default:
+			break;
+		}
+	return employee;
+}
+
+/**
  * @brief Add a free employee from the quarters to building_dest. (the employee will be linked to both of them)
  *
  * TODO: Add check for destination building vs. employee_type and abort if they do not match.
