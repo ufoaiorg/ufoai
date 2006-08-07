@@ -224,6 +224,7 @@ void CL_GameTimeStop(void);
 byte *CL_GetmapColor(vec2_t pos);
 qboolean CL_NewBase(vec2_t pos);
 void CL_ParseMission(char *name, char **text);
+mission_t* CL_AddMission(char *name);
 void CL_ParseStage(char *name, char **text);
 void CL_ParseCampaign(char *name, char **text);
 void CL_ParseNations(char *name, char **text);
