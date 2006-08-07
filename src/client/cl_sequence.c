@@ -367,7 +367,6 @@ void CL_SequenceStart_f(void)
 		Com_Printf("CL_SequenceStart_f: can't display menu '%s'\n", menuName);
 		return;
 	}
-	MN_SetViewRect(menu->renderNode ? menu->renderNode : (menu->popupNode ? menu->popupNode : NULL));
 
 	/* init script parsing */
 	numSeqEnts = 0;

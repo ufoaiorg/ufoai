@@ -1050,25 +1050,27 @@ void MN_MiddleClick(int x, int y)
 
 
 /**
- * @brief
- * @param[in] menu
+ * @brief Determine the position and size of render
+ * @param[in] menu : use its position and size properties
  */
-void MN_SetViewRect(const menuNode_t* menu)
+void MN_SetViewRect(const menu_t* menu)
 {
-	if (!menu) {
+	menuNode_t* menuNode = menu ? (menu->renderNode ? menu->renderNode : (menu->popupNode ? menu->popupNode : NULL)): NULL;
+
+	if (!menuNode) {
 		/* render the full screen */
 		scr_vrect.x = scr_vrect.y = 0;
 		scr_vrect.width = viddef.width;
 		scr_vrect.height = viddef.height;
-	} else if (menu->invis) {
+	} else if (menuNode->invis) {
 		/* don't draw the scene */
 		memset(&scr_vrect, 0, sizeof(scr_vrect));
 	} else {
 		/* the menu has a view size specified */
-		scr_vrect.x = menu->pos[0] * viddef.rx;
-		scr_vrect.y = menu->pos[1] * viddef.ry;
-		scr_vrect.width = menu->size[0] * viddef.rx;
-		scr_vrect.height = menu->size[1] * viddef.ry;
+		scr_vrect.x = menuNode->pos[0] * viddef.rx;
+		scr_vrect.y = menuNode->pos[1] * viddef.ry;
+		scr_vrect.width = menuNode->size[0] * viddef.rx;
+		scr_vrect.height = menuNode->size[1] * viddef.ry;
 	}
 }
 

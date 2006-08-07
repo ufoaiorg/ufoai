@@ -879,7 +879,7 @@ qboolean MN_CursorOnMenu(int x, int y);
 void MN_Click(int x, int y);
 void MN_RightClick(int x, int y);
 void MN_MiddleClick(int x, int y);
-void MN_SetViewRect(const menuNode_t* menu);
+void MN_SetViewRect(const menu_t* menu);
 void MN_DrawMenus(void);
 void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color);
 void MN_ShutdownMessageSystem(void);
