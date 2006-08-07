@@ -58,6 +58,7 @@ cvar_t *maxspectators;
 cvar_t *maxentities;
 cvar_t *g_select_empty;
 cvar_t *dedicated;
+cvar_t *developer;
 
 cvar_t *filterban;
 
@@ -148,6 +149,7 @@ void InitGame(void)
 	sv_cheats = gi.cvar("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH);
 	gi.cvar("gamename", GAMEVERSION, CVAR_SERVERINFO | CVAR_LATCH);
 	gi.cvar("gamedate", __DATE__, CVAR_SERVERINFO | CVAR_LATCH);
+	developer = gi.cvar("developer", "0", 0);
 
 	/* max. players per team (original quake) */
 	maxplayers = gi.cvar("maxplayers", "8", CVAR_SERVERINFO | CVAR_LATCH);
@@ -319,6 +321,20 @@ void Com_Printf(char *msg, ...)
 	va_list argptr;
 	char text[1024];
 
+	va_start(argptr, msg);
+	vsprintf(text, msg, argptr);
+	va_end(argptr);
+
+	gi.dprintf("%s", text);
+}
+
+void Com_DPrintf(char *msg, ...)
+{
+	va_list argptr;
+	char text[1024];
+
+	if (!developer->value)
+		return;
 	va_start(argptr, msg);
 	vsprintf(text, msg, argptr);
 	va_end(argptr);
