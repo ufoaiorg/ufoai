@@ -222,8 +222,8 @@ ACTION EXECUTION
 */
 
 /**
-  * @brief Searches all menus for the specified one
-  */
+ * @brief Searches all menus for the specified one
+ */
 menu_t *MN_GetMenu(char *name)
 {
 	int i;
@@ -237,8 +237,8 @@ menu_t *MN_GetMenu(char *name)
 }
 
 /**
-  * @brief Searches all nodes in the given menu for a given nodename
-  */
+ * @brief Searches all nodes in the given menu for a given nodename
+ */
 menuNode_t *MN_GetNode(menu_t * menu, char *name)
 {
 	menuNode_t *node;
@@ -251,16 +251,16 @@ menuNode_t *MN_GetNode(menu_t * menu, char *name)
 }
 
 /**
-  * @brief Searches a given node in the current menu
-  */
+ * @brief Searches a given node in the current menu
+ */
 menuNode_t* MN_GetNodeFromCurrentMenu(char*name)
 {
 	return MN_GetNode(menuStack[menuStackPos-1], name);
 }
 
 /**
-  * @brief Sets new x and y coordinates for a given node
-  */
+ * @brief Sets new x and y coordinates for a given node
+ */
 void MN_SetNewNodePos (menuNode_t* node, int x, int y)
 {
 	if (node) {
@@ -268,11 +268,10 @@ void MN_SetNewNodePos (menuNode_t* node, int x, int y)
 		node->pos[1] = y;
 	}
 }
-/*
-=================
-MN_GetReferenceString
-=================
-*/
+
+/**
+ * @brief
+ */
 static char *MN_GetReferenceString(menu_t * menu, char *ref)
 {
 	if (!ref)
@@ -329,11 +328,9 @@ static char *MN_GetReferenceString(menu_t * menu, char *ref)
 }
 
 
-/*
-=================
-MN_GetReferenceFloat
-=================
-*/
+/**
+ * @brief
+ */
 static float MN_GetReferenceFloat(menu_t * menu, void *ref)
 {
 	if (!ref)
@@ -386,13 +383,10 @@ static float MN_GetReferenceFloat(menu_t * menu, void *ref)
 	}
 }
 
-/*=================
-MN_StartServer
-
-starts a server and checks if the server
-loads a team unless he is a dedicated
-server admin
-=================*/
+/**
+ * @brief Starts a server and checks if the server loads a team unless he is a dedicated
+ * server admin
+ */
 static void MN_StartServer(void)
 {
 	if (Cmd_Argc() <= 1) {
@@ -419,10 +413,9 @@ static void MN_StartServer(void)
 	Cbuf_ExecuteText(EXEC_NOW, va("map %s\n", Cmd_Argv(1)));
 }
 
-/*
-* Com_MergeShapes
-* Will merge the second shape (=itemshape) into the first one on the position x/y
-*/
+/**
+ * @brief Will merge the second shape (=itemshape) into the first one on the position x/y
+ */
 static void Com_MergeShapes(int *shape, int itemshape, int x, int y)
 {
 	/*TODO-security: needs some checks for max-values! */
@@ -432,10 +425,9 @@ static void Com_MergeShapes(int *shape, int itemshape, int x, int y)
 		shape[y + i] |= ((itemshape >> i * 8) & 0xFF) << x;
 }
 
-/*
-* Com_CheckShape
-* Checks the shape if there is a 1-bit on the position x/y.
-*/
+/**
+ * @brief Checks the shape if there is a 1-bit on the position x/y.
+ */
 static qboolean Com_CheckShape(int shape[16], int x, int y)
 {
 	int row = shape[y];
@@ -447,10 +439,9 @@ static qboolean Com_CheckShape(int shape[16], int x, int y)
 		return qtrue;
 }
 
-/*
-* MN_DrawFree
-* Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel).
-*/
+/**
+ * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
+ */
 static void MN_DrawFree(int posx, int posy, int sizex, int sizey)
 {
 	static vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
@@ -458,10 +449,9 @@ static void MN_DrawFree(int posx, int posy, int sizex, int sizey)
 	re.DrawColor(NULL);
 }
 
-/*
-* MN_InvDrawFree
-* Draws the free and useable inventory positions when dragging an item.
-*/
+/**
+ * @brief Draws the free and useable inventory positions when dragging an item.
+ */
 static void MN_InvDrawFree(inventory_t * inv, menuNode_t * node)
 {
 	/* get the 'type' of the dragged item */
@@ -508,11 +498,9 @@ static void MN_InvDrawFree(inventory_t * inv, menuNode_t * node)
 }
 
 
-/*=================
-MN_Popup
-
-Popup in geoscape
-=================*/
+/**
+ * @brief Popup in geoscape
+ */
 void MN_Popup(const char *title, const char *text)
 {
 	menuText[TEXT_POPUP] = (char *) title;
@@ -521,11 +509,9 @@ void MN_Popup(const char *title, const char *text)
 	MN_PushMenu("popup");
 }
 
-/*
-=================
-MN_ExecuteActions
-=================
-*/
+/**
+ * @brief
+ */
 static void MN_ExecuteActions(menu_t * menu, menuAction_t * first)
 {
 	menuAction_t *action;
@@ -580,11 +566,9 @@ static void MN_ExecuteActions(menu_t * menu, menuAction_t * first)
 }
 
 
-/*
-=================
-MN_Command
-=================
-*/
+/**
+ * @brief
+ */
 static void MN_Command(void)
 {
 	menuNode_t *node;
@@ -610,11 +594,9 @@ MENU ZONE DETECTION
 ==============================================================
 */
 
-/*
-=================
-MN_FindContainer
-=================
-*/
+/**
+ * @brief
+ */
 static void MN_FindContainer(menuNode_t * node)
 {
 	invDef_t *id;
@@ -644,11 +626,9 @@ static void MN_FindContainer(menuNode_t * node)
 	node->size[1] = C_UNIT * (i + 1) + 0.01;
 }
 
-/*
-=================
-MN_CheckNodeZone
-=================
-*/
+/**
+ * @brief
+ */
 static qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
 {
 	int sx, sy, tx, ty;
@@ -708,11 +688,9 @@ static qboolean MN_CheckNodeZone(menuNode_t * node, int x, int y)
 }
 
 
-/*
-=================
-MN_CursorOnMenu
-=================
-*/
+/**
+ * @brief
+ */
 qboolean MN_CursorOnMenu(int x, int y)
 {
 	menuNode_t *node;
@@ -742,11 +720,10 @@ qboolean MN_CursorOnMenu(int x, int y)
 }
 
 
-/*=================
-MN_Drag
-
-NOTE: node->mousefx is the container id
-=================*/
+/**
+ * @brief
+ * @note: node->mousefx is the container id
+ */
 static void MN_Drag(menuNode_t * node, int x, int y)
 {
 	int px, py;
@@ -826,11 +803,9 @@ static void MN_Drag(menuNode_t * node, int x, int y)
 }
 
 
-/*
-=================
-MN_BarClick
-=================
-*/
+/**
+ * @brief
+ */
 static void MN_BarClick(menu_t * menu, menuNode_t * node, int x)
 {
 	char var[MAX_VAR];
@@ -848,11 +823,9 @@ static void MN_BarClick(menu_t * menu, menuNode_t * node, int x)
 	Cvar_SetValue(&var[6], min + frac * (MN_GetReferenceFloat(menu, node->data[0]) - min));
 }
 
-/*
-======================
-MN_BaseMapClick
-======================
-*/
+/**
+ * @brief
+ */
 static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 {
 	int row, col;
@@ -899,11 +872,9 @@ static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 }
 
 
-/*
-=================
-MN_ModelClick
-=================
-*/
+/**
+ * @brief
+ */
 static void MN_ModelClick(menuNode_t * node)
 {
 	mouseSpace = MS_ROTATE;
@@ -911,31 +882,25 @@ static void MN_ModelClick(menuNode_t * node)
 }
 
 
-/*
-=================
-MN_TextClick
-=================
-*/
+/**
+ * @brief
+ */
 static void MN_TextClick(menuNode_t * node, int mouseOver)
 {
 	Cbuf_AddText(va("%s_click %i\n", node->name, mouseOver - 1));
 }
 
-/*
-=================
-MN_TextRightClick
-=================
-*/
+/**
+ * @brief
+ */
 static void MN_TextRightClick(menuNode_t * node, int mouseOver)
 {
 	Cbuf_AddText(va("%s_rclick %i\n", node->name, mouseOver - 1));
 }
 
-/*
-=================
-MN_Click
-=================
-*/
+/**
+ * @brief
+ */
 void MN_Click(int x, int y)
 {
 	menuNode_t *node;
@@ -991,11 +956,9 @@ void MN_Click(int x, int y)
 }
 
 
-/*
-=================
-MN_RightClick
-=================
-*/
+/**
+ * @brief
+ */
 void MN_RightClick(int x, int y)
 {
 	menuNode_t *node;
@@ -1042,11 +1005,9 @@ void MN_RightClick(int x, int y)
 }
 
 
-/*
-=================
-MN_MiddleClick
-=================
-*/
+/**
+ * @brief
+ */
 void MN_MiddleClick(int x, int y)
 {
 	menuNode_t *node;
@@ -1121,20 +1082,20 @@ MENU DRAWING
 */
 
 /**
-  * @brief Draws an item to the screen
-  *
-  * @param[in] org Node position on the screen (pixel)
-  * @param[in] item The item to draw
-  * @param[in] sx Size in x direction (no pixel but container space)
-  * @param[in] sy Size in y direction (no pixel but container space)
-  * @param[in] x Position in container
-  * @param[in] y Position in container
-  * @param[in] scale
-  * @param[in] color
-  *
-  * Used to draw an item to the equipment containers. First look whether the objDef_t
-  * includes an image - if there is none then draw the model
-  */
+ * @brief Draws an item to the screen
+ *
+ * @param[in] org Node position on the screen (pixel)
+ * @param[in] item The item to draw
+ * @param[in] sx Size in x direction (no pixel but container space)
+ * @param[in] sy Size in y direction (no pixel but container space)
+ * @param[in] x Position in container
+ * @param[in] y Position in container
+ * @param[in] scale
+ * @param[in] color
+ *
+ * Used to draw an item to the equipment containers. First look whether the objDef_t
+ * includes an image - if there is none then draw the model
+ */
 void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color)
 {
 	modelInfo_t mi;
@@ -1196,11 +1157,9 @@ void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t s
 
 
 
-/*=================
-MN_DrawTooltip
-
-generic tooltip function
-=================*/
+/**
+ * @brief Generic tooltip function
+ */
 static void MN_DrawTooltip(char *font, char *string, int x, int y)
 {
 	int width = 0, height = 0;
@@ -1219,13 +1178,9 @@ static void MN_DrawTooltip(char *font, char *string, int x, int y)
 	re.DrawColor(NULL);
 }
 
-/*
-=================
-MN_Tooltip
-
-Wrapper for menu tooltips
-=================
-*/
+/**
+ * @brief Wrapper for menu tooltips
+ */
 static void MN_Tooltip(menuNode_t * node, int x, int y)
 {
 	char *tooltip;
@@ -1241,11 +1196,9 @@ static void MN_Tooltip(menuNode_t * node, int x, int y)
 	}
 }
 
-/*
-=================
-MN_PrecacheMenus
-=================
-*/
+/**
+ * @brief
+ */
 void MN_PrecacheMenus(void)
 {
 	int i;
@@ -1282,13 +1235,11 @@ void MN_PrecacheMenus(void)
 	}
 }
 
-/*
-=================
-MN_GetMenuModel
-
-returns pointer to menu model
-=================
-*/
+/**
+ * @brief Returns pointer to menu model
+ * @param[in] menuModel menu model id from script files
+ * @return menuModel_t pointer
+ */
 static menuModel_t *MN_GetMenuModel(char *menuModel)
 {
 	int i;
@@ -1302,13 +1253,10 @@ static menuModel_t *MN_GetMenuModel(char *menuModel)
 	return NULL;
 }
 
-/*
-=================
-MN_GetFont
-
-Return the font for a specific node or default font
-=================
-*/
+/**
+ * @brief Return the font for a specific node or default font
+ * @reutrn char pointer with font name
+ */
 static char *MN_GetFont(menu_t * m, menuNode_t * n)
 {
 	if (n->data[1])
@@ -1316,11 +1264,10 @@ static char *MN_GetFont(menu_t * m, menuNode_t * n)
 	return "f_small";
 }
 
-/*
-=================
-MN_DrawMenus
-=================
-*/
+/**
+ * @brief Draws the menu stack
+ * @sa SCR_UpdateScreen
+ */
 void MN_DrawMenus(void)
 {
 	modelInfo_t mi = {0, };
