@@ -505,13 +505,7 @@ void SCR_DrawConsole(void)
 		Con_DrawConsole(1.0);
 		return;
 	}
-#if 0
-	if ((cls.state != ca_active && cls.state != ca_sequence) || !cl.refresh_prepped) {	/* connected, but can't render */
-		Con_DrawConsole(0.5);
-		re.DrawFill(0, viddef.height / 2, viddef.width, viddef.height / 2, 0, vec4_origin);
-		return;
-	}
-#endif
+
 	if (scr_con_current) {
 		Con_DrawConsole(scr_con_current);
 	} else {
@@ -520,13 +514,11 @@ void SCR_DrawConsole(void)
 	}
 }
 
-/*============================================================================= */
-
-/*
-================
-SCR_BeginLoadingPlaque
-================
-*/
+/**
+ * @brief
+ * @sa SCR_UpdateScreen
+ * @sa SCR_EndLoadingPlaque
+ */
 void SCR_BeginLoadingPlaque(void)
 {
 	S_StopAllSounds();
@@ -546,32 +538,29 @@ void SCR_BeginLoadingPlaque(void)
 	cls.disable_servercount = cl.servercount;
 }
 
-/*
-================
-SCR_EndLoadingPlaque
-================
-*/
+/**
+ * @brief
+ * @sa SCR_BeginLoadingPlaque
+ */
 void SCR_EndLoadingPlaque(void)
 {
 	cls.disable_screen = 0;
 	Con_ClearNotify();
 }
 
-/*
-================
-SCR_Loading_f
-================
-*/
+/**
+ * @brief
+ * @sa SCR_BeginLoadingPlaque
+ * @sa SCR_EndLoadingPlaque
+ */
 void SCR_Loading_f(void)
 {
 	SCR_BeginLoadingPlaque();
 }
 
-/*
-================
-SCR_TimeRefresh_f
-================
-*/
+/**
+ * @brief
+ */
 void SCR_TimeRefresh_f(void)
 {
 	int i;
@@ -605,11 +594,10 @@ void SCR_TimeRefresh_f(void)
 	Com_Printf("%f seconds (%f fps)\n", time, 128 / time);
 }
 
-/*
-=================
-SCR_AddDirtyPoint
-=================
-*/
+/**
+ * @brief
+ * @sa SCR_DirtyScreen
+ */
 void SCR_AddDirtyPoint(int x, int y)
 {
 	if (x < scr_dirty.x1)
@@ -622,21 +610,19 @@ void SCR_AddDirtyPoint(int x, int y)
 		scr_dirty.y2 = y;
 }
 
+/**
+ * @brief
+ * @sa SCR_AddDirtyPoint
+ */
 void SCR_DirtyScreen(void)
 {
 	SCR_AddDirtyPoint(0, 0);
 	SCR_AddDirtyPoint(viddef.width - 1, viddef.height - 1);
 }
 
-/*=============================================================== */
-
-/*
-===============
-SCR_TouchPics
-
-Allows rendering code to cache all needed sbar graphics
-===============
-*/
+/**
+ * @brief Allows rendering code to cache all needed sbar graphics
+ */
 void SCR_TouchPics(void)
 {
 	if (cursor->value) {
@@ -651,25 +637,17 @@ void SCR_TouchPics(void)
 	}
 }
 
-/*
-================
-SCR_DrawString
-================
-*/
+/**
+ * @brief
+ */
 void SCR_DrawString(int x, int y, char *string)
 {
-#if 1
 	while (*string) {
 		re.DrawChar(x, y, *string);
 		x += 8;
 		string++;
 	}
-#else
-	re.FontDrawString("f_small", 0, x, y, 0, string);
-#endif
 }
-
-/*======================================================= */
 
 /**
  * @brief This is called every frame, and can also be called explicitly to flush text to the screen
