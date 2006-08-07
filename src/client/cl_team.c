@@ -1278,7 +1278,8 @@ void CL_ParseResults(sizebuf_t * buf)
 	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n\n"), num_alive[TEAM_CIVILIAN]), sizeof(resultText));
 
 	MN_PopMenu(qtrue);
-	if (!curCampaign) {
+	/* the mission was started via console? */
+	if (!curCampaign || !selMis) {
 		/* get correct menus */
 		Cvar_Set("mn_main", "main");
 		Cvar_Set("mn_active", "");
