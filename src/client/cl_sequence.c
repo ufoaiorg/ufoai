@@ -142,22 +142,18 @@ static int numSeq2Ds;
 static cvar_t *seq_animspeed;
 
 
-/*
-======================
-CL_SequenceEnd_f
-======================
-*/
+/**
+ * @brief
+ */
 void CL_SequenceEnd_f(void)
 {
 	cls.state = ca_disconnected;
 }
 
 
-/*
-======================
-CL_SequenceCamera
-======================
-*/
+/**
+ * @brief
+ */
 void CL_SequenceCamera(void)
 {
 	if (!scr_vrect.width || !scr_vrect.height)
@@ -179,11 +175,9 @@ void CL_SequenceCamera(void)
 }
 
 
-/*
-======================
-CL_SequenceFindEnt
-======================
-*/
+/**
+ * @brief
+ */
 seqEnt_t *CL_SequenceFindEnt(char *name)
 {
 	seqEnt_t *se;
@@ -199,11 +193,9 @@ seqEnt_t *CL_SequenceFindEnt(char *name)
 }
 
 
-/*
-======================
-CL_SequenceFind2D
-======================
-*/
+/**
+ * @brief
+ */
 seq2D_t *CL_SequenceFind2D(char *name)
 {
 	seq2D_t *s2d;
@@ -219,11 +211,9 @@ seq2D_t *CL_SequenceFind2D(char *name)
 }
 
 
-/*
-======================
-CL_SequenceRender
-======================
-*/
+/**
+ * @brief
+ */
 void CL_SequenceRender(void)
 {
 	entity_t ent;
@@ -290,11 +280,9 @@ void CL_SequenceRender(void)
 }
 
 
-/*
-======================
-CL_Sequence2D
-======================
-*/
+/**
+ * @brief
+ */
 void CL_Sequence2D(void)
 {
 	seq2D_t *s2d;
@@ -347,11 +335,9 @@ void CL_Sequence2D(void)
 	re.DrawColor(NULL);
 }
 
-/*
-======================
-CL_SequenceStart_f
-======================
-*/
+/**
+ * @brief
+ */
 void CL_SequenceStart_f(void)
 {
 	sequence_t *sp;
@@ -373,7 +359,7 @@ void CL_SequenceStart_f(void)
 		Com_Printf("Couldn't find sequence '%s'\n", name);
 		return;
 	}
-	
+
 	/* display the menu */
 	menuName = Cmd_Argc() < 3 ? mn_sequence->string : Cmd_Argv(2);
 	menu = MN_PushMenu(menuName);
@@ -405,11 +391,9 @@ void CL_SequenceStart_f(void)
 }
 
 
-/*
-=================
-CL_ResetSequences
-=================
-*/
+/**
+ * @brief
+ */
 void CL_ResetSequences(void)
 {
 	/* reset counters */
@@ -423,7 +407,7 @@ void CL_ResetSequences(void)
 
 /* =========================================================== */
 
-value_t seqCamera_vals[] = {
+static value_t seqCamera_vals[] = {
 	{"origin", V_VECTOR, offsetof(seqCamera_t, origin)},
 	{"speed", V_VECTOR, offsetof(seqCamera_t, speed)},
 	{"angles", V_VECTOR, offsetof(seqCamera_t, angles)},
@@ -435,7 +419,7 @@ value_t seqCamera_vals[] = {
 	{NULL, 0, 0},
 };
 
-value_t seqEnt_vals[] = {
+static value_t seqEnt_vals[] = {
 	{"name", V_STRING, offsetof(seqEnt_t, name)},
 	{"skin", V_INT, offsetof(seqEnt_t, skin)},
 	{"alpha", V_FLOAT, offsetof(seqEnt_t, alpha)},
@@ -448,7 +432,7 @@ value_t seqEnt_vals[] = {
 	{NULL, 0, 0},
 };
 
-value_t seq2D_vals[] = {
+static value_t seq2D_vals[] = {
 	{"name", V_STRING, offsetof(seq2D_t, name)},
 	{"text", V_TRANSLATION2_STRING, offsetof(seq2D_t, text)},
 	{"font", V_STRING, offsetof(seq2D_t, font)},
@@ -465,21 +449,17 @@ value_t seq2D_vals[] = {
 	{NULL, 0, 0},
 };
 
-/*
-======================
-SEQ_Wait
-======================
-*/
+/**
+ * @brief
+ */
 void SEQ_Wait(char *name, char *data)
 {
 	seqTime += 1000 * atof(name);
 }
 
-/*
-======================
-SEQ_Precache
-======================
-*/
+/**
+ * @brief
+ */
 void SEQ_Precache(char *name, char *data)
 {
 	if (!Q_strncmp(name, "models", 6)) {
@@ -498,11 +478,9 @@ void SEQ_Precache(char *name, char *data)
 		Com_Printf("SEQ_Precache: unknown format '%s'\n", name);
 }
 
-/*
-======================
-SEQ_Camera
-======================
-*/
+/**
+ * @brief
+ */
 void SEQ_Camera(char *name, char *data)
 {
 	value_t *vp;
@@ -522,11 +500,9 @@ void SEQ_Camera(char *name, char *data)
 	}
 }
 
-/*
-======================
-SEQ_Model
-======================
-*/
+/**
+ * @brief
+ */
 void SEQ_Model(char *name, char *data)
 {
 	seqEnt_t *se;
@@ -576,11 +552,9 @@ void SEQ_Model(char *name, char *data)
 	}
 }
 
-/*
-======================
-SEQ_2Dobj
-======================
-*/
+/**
+ * @brief
+ */
 void SEQ_2Dobj(char *name, char *data)
 {
 	seq2D_t *s2d;
@@ -623,11 +597,9 @@ void SEQ_2Dobj(char *name, char *data)
 	}
 }
 
-/*
-======================
-SEQ_Remove
-======================
-*/
+/**
+ * @brief
+ */
 void SEQ_Remove(char *name, char *data)
 {
 	seqEnt_t *se;
@@ -645,25 +617,18 @@ void SEQ_Remove(char *name, char *data)
 		Com_Printf("SEQ_Remove: couldn't find '%s'\n", name);
 }
 
-/*
-======================
-SEQ_Command
-======================
-*/
+/**
+ * @brief
+ */
 void SEQ_Command(char *name, char *data)
 {
 	/* add the command */
 	Cbuf_AddText(name);
 }
 
-
-/* =========================================================== */
-
-/*
-======================
-CL_ParseSequence
-======================
-*/
+/**
+ * @brief
+ */
 void CL_ParseSequence(char *name, char **text)
 {
 	char *errhead = "CL_ParseSequence: unexptected end of file (sequence ";
@@ -821,14 +786,12 @@ static aviFileData_t afd;
 static byte buffer[MAX_AVI_BUFFER];
 static int bufIndex;
 
-/*
-===============
-CL_Video_f
-
-video
-video [filename]
-===============
-*/
+/**
+ * @brief
+ *
+ * video
+ * video [filename]
+ */
 void CL_Video_f(void)
 {
 	char filename[MAX_OSPATH];
@@ -868,21 +831,17 @@ void CL_Video_f(void)
 	CL_OpenAVIForWriting(filename);
 }
 
-/*
-===============
-CL_StopVideo_f
-===============
-*/
+/**
+ * @brief
+ */
 void CL_StopVideo_f(void)
 {
 	CL_CloseAVI();
 }
 
-/*
-===============
-SafeFS_Write
-===============
-*/
+/**
+ * @brief
+ */
 static void SafeFS_Write(const void *buffer, int len, FILE * f)
 {
 	int write = FS_Write(buffer, len, f);
@@ -891,22 +850,18 @@ static void SafeFS_Write(const void *buffer, int len, FILE * f)
 		Com_Printf("Failed to write avi file %p - %i:%i\n", f, write, len);
 }
 
-/*
-===============
-WRITE_STRING
-===============
-*/
+/**
+ * @brief
+ */
 static void WRITE_STRING(const char *s)
 {
 	memcpy(&buffer[bufIndex], s, strlen(s));
 	bufIndex += strlen(s);
 }
 
-/*
-===============
-WRITE_4BYTES
-===============
-*/
+/**
+ * @brief
+ */
 static void WRITE_4BYTES(int x)
 {
 	buffer[bufIndex + 0] = (byte) ((x >> 0) & 0xFF);
@@ -916,11 +871,9 @@ static void WRITE_4BYTES(int x)
 	bufIndex += 4;
 }
 
-/*
-===============
-WRITE_2BYTES
-===============
-*/
+/**
+ * @brief
+ */
 static void WRITE_2BYTES(int x)
 {
 	buffer[bufIndex + 0] = (byte) ((x >> 0) & 0xFF);
@@ -929,11 +882,9 @@ static void WRITE_2BYTES(int x)
 }
 
 #if 0
-/*
-===============
-WRITE_1BYTES
-===============
-*/
+/**
+ * @brief
+ */
 static void WRITE_1BYTES(int x)
 {
 	buffer[bufIndex] = x;
@@ -941,11 +892,9 @@ static void WRITE_1BYTES(int x)
 }
 #endif
 
-/*
-===============
-START_CHUNK
-===============
-*/
+/**
+ * @brief
+ */
 static void START_CHUNK(const char *s)
 {
 	if (afd.chunkStackTop == MAX_RIFF_CHUNKS)
@@ -957,11 +906,9 @@ static void START_CHUNK(const char *s)
 	WRITE_4BYTES(0);
 }
 
-/*
-===============
-END_CHUNK
-===============
-*/
+/**
+ * @brief
+ */
 static void END_CHUNK(void)
 {
 	int endIndex = bufIndex;
@@ -977,11 +924,9 @@ static void END_CHUNK(void)
 	bufIndex = PAD(bufIndex, 2);
 }
 
-/*
-===============
-CL_WriteAVIHeader
-===============
-*/
+/**
+ * @brief
+ */
 void CL_WriteAVIHeader(void)
 {
 	bufIndex = 0;
@@ -1116,14 +1061,10 @@ void CL_WriteAVIHeader(void)
 	}
 }
 
-/*
-===============
-CL_OpenAVIForWriting
-
-Creates an AVI file and gets it into a state where
-writing the actual data can begin
-===============
-*/
+/**
+ * @brief Creates an AVI file and gets it into a state where
+ * writing the actual data can begin
+ */
 qboolean CL_OpenAVIForWriting(char *fileName)
 {
 	if (afd.fileOpen)
@@ -1214,11 +1155,9 @@ qboolean CL_OpenAVIForWriting(char *fileName)
 	return qtrue;
 }
 
-/*
-===============
-CL_CheckFileSize
-===============
-*/
+/**
+ * @brief
+ */
 static qboolean CL_CheckFileSize(int bytesToAdd)
 {
 	unsigned int newFileSize;
@@ -1243,11 +1182,9 @@ static qboolean CL_CheckFileSize(int bytesToAdd)
 	return qfalse;
 }
 
-/*
-===============
-CL_WriteAVIVideoFrame
-===============
-*/
+/**
+ * @brief
+ */
 void CL_WriteAVIVideoFrame(const byte * imageBuffer, int size)
 {
 	int chunkOffset = afd.fileSize - afd.moviOffset - 8;
@@ -1290,11 +1227,9 @@ void CL_WriteAVIVideoFrame(const byte * imageBuffer, int size)
 
 #define PCM_BUFFER_SIZE 44100
 
-/*
-===============
-CL_WriteAVIAudioFrame
-===============
-*/
+/**
+ * @brief
+ */
 void CL_WriteAVIAudioFrame(const byte * pcmBuffer, int size)
 {
 	static byte pcmCaptureBuffer[PCM_BUFFER_SIZE] = { 0 };
@@ -1349,11 +1284,9 @@ void CL_WriteAVIAudioFrame(const byte * pcmBuffer, int size)
 	}
 }
 
-/*
-===============
-CL_TakeVideoFrame
-===============
-*/
+/**
+ * @brief Calls the renderer function to capture the frame
+ */
 void CL_TakeVideoFrame(void)
 {
 	/* AVI file isn't open */
@@ -1363,13 +1296,9 @@ void CL_TakeVideoFrame(void)
 	re.TakeVideoFrame(afd.width, afd.height, afd.cBuffer, afd.eBuffer, afd.motionJpeg);
 }
 
-/*
-===============
-CL_CloseAVI
-
-Closes the AVI file and writes an index chunk
-===============
-*/
+/**
+ * @brief Closes the AVI file and writes an index chunk
+ */
 qboolean CL_CloseAVI(void)
 {
 	int indexRemainder;
@@ -1434,11 +1363,10 @@ qboolean CL_CloseAVI(void)
 	return qtrue;
 }
 
-/*
-===============
-CL_VideoRecording
-===============
-*/
+/**
+ * @brief Status of video recording
+ * @return true if video recording is active
+ */
 qboolean CL_VideoRecording(void)
 {
 	return afd.fileOpen;
