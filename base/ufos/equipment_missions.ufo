@@ -241,3 +241,86 @@ equipment stage4_soldiers
 	alienincgrenade		14
 	plasmagrenade		14
 }
+
+// human equipment
+
+equipment human_phalanx_initial
+{
+	assault				3
+	assault_ammo		7
+	sniper				2
+	sniper_ammo			5
+	pistol				3
+	pistol_ammo			8
+	smg 				2
+	smg_ammo			5
+	shotgun				2
+	shotgun_ammo		5
+	flamer				2
+	flamer_ammo			5
+	rpg				    2
+	rpg_ammo			11
+	fraggrenade			20
+	knife				5
+	light	    		6
+}
+
+equipment human_farmers // some may be weaponless
+{
+	pistol				1
+	pistol_ammo			1
+	shotgun				2
+	shotgun_ammo		2
+}
+
+equipment human_gang
+{
+	pistol				2
+	pistol_ammo			2
+	smg 				2
+	smg_ammo			10
+	rpg				    1
+	rpg_ammo			1
+	fraggrenade			1
+	knife				5
+}
+
+equipment human_police // some may be weaponless
+{
+	pistol				4
+	pistol_ammo			10
+	shotgun				1
+	shotgun_ammo		2
+	fraggrenade			1
+	light			    2
+}
+
+equipment human_antiterrorist
+{
+	assault				1
+	assault_ammo		2
+	sniper				3
+	sniper_ammo			7
+	smg 				3
+	smg_ammo			10
+	shotgun				1
+	shotgun_ammo		2
+	fraggrenade			5
+	knife				8
+	light			    7
+}
+
+equipment human_army
+{
+	assault				5
+	assault_ammo		7
+	pistol				3
+	pistol_ammo			5
+	flamer				1
+	flamer_ammo			2
+	rpg  				1
+	rpg_ammo			3
+	fraggrenade			11
+	knife				8
+	light			    3
+}

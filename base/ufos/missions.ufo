@@ -102,7 +102,7 @@ mission mart
 	pos			"-13 52"
 	aliens		6
 	alienteam	alien
-	alienequip	stage1_soldiers
+	alienequip	stage1_workers
 	civilians	6
 	civteam		european
 	recruits	2

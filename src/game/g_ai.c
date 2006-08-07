@@ -599,13 +599,13 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 		}
 	} while (max_price);
 
-	/* if no weapon at all, add the token kerrblade */ 
+	/* if no weapon at all, add a blade (usually at least one in any eq) */ 
 	if (!has_weapon) { 
 		Com_DPrintf("G_EquipAIPlayer: no weapon picked for an AI in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", gi.cvar_string("ai_equipment"));
 		max_price = 0;
 		for (i = 0; i < gi.csi->numODs; i++) {
 			obj = gi.csi->ods[i];
-			if ( 1 /* no check for equip[i] */
+			if ( equip[i]
 				 && obj.weapon && obj.buytype == 1 && !obj.reload ) {
 				if ( obj.price > max_price && obj.price < prev_price ) {
 					max_price = obj.price;
@@ -616,9 +616,9 @@ void G_EquipAIPlayer(edict_t *ent, const byte equip[MAX_OBJDEFS])
 		if (max_price)
 			has_weapon += G_PackAmmoAndWeapon(ent, weapon, equip);
 	}
-	/* if still no weapon, something is broken */
+	/* if still no weapon, something is broken, or we equip farmers */
 	if (!has_weapon)
-		Com_Printf("G_EquipAIPlayer: cannot add any weapon to AI.\n");
+		Com_DPrintf("G_EquipAIPlayer: cannot add any weapon to AI.\n");
 }
 
 

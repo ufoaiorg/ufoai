@@ -2170,7 +2170,7 @@ qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
 	ic = i->c[container];
 	if (!ic) {
 #ifdef PARANOID
-		Com_Printf("Com_RemoveFromInventory - empty container %i\n", container);
+		Com_Printf("Com_RemoveFromInventory - empty container %s\n", CSI->ids[container].name);
 #endif
 		return qfalse;
 	}
@@ -2182,7 +2182,7 @@ qboolean Com_RemoveFromInventory(inventory_t * i, int container, int x, int y)
 		i->c[container] = ic->next;
 #if 0
 		if (CSI->ids[container].single && ic->next)
-			Sys_Error("Com_RemoveFromInventory: Error in line %i at file %s (container: %i)\n", __LINE__, __FILE__, container);
+			Sys_Error("Com_RemoveFromInventory: Error in line %i at file %s (container: %s)\n", __LINE__, __FILE__, CSI->ids[container].name);
 #endif
 		invUnused->next = old;
 		return qtrue;
@@ -2288,7 +2288,7 @@ int Com_MoveInInventory(inventory_t * i, int from, int fx, int fy, int to, int t
 	}
 #ifdef PARANOID
 	else if (CSI->ods[cacheItem.t].twohanded)
-		Com_Printf("Com_MoveInInventory: move twohanded item to container: %i\n", to);
+		Com_Printf("Com_MoveInInventory: move twohanded item to container: %s\n", CSI->ids[to].name);
 #endif
 
 	/* successful */
@@ -2335,7 +2335,7 @@ void Com_EmptyContainer(inventory_t * i, int container)
 		invUnused = old;
 #ifdef DEBUG
 		if (cnt >= MAX_INVLIST) {
-			Com_Printf("Error: There are more than the allowed entries in container %i (cnt:%i, MAX_INVLIST:%i) (Com_EmptyContainer)\n", container, cnt,
+			Com_Printf("Error: There are more than the allowed entries in container %s (cnt:%i, MAX_INVLIST:%i) (Com_EmptyContainer)\n", CSI->ids[container].name, cnt,
 					   MAX_INVLIST);
 			break;
 		}
