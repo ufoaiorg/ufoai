@@ -2142,6 +2142,36 @@ static char missionTexts[MAX_MISSIONTEXTS];
 char *mtp = missionTexts;
 
 /**
+ * @brief Adds a mission to current stageSet
+ * @note the returned mission_t pointer has to be filled - this function only fills the name
+ * @param[in] name valid mission name
+ * @return ms is the mission_t pointer of the mission to add
+ */
+mission_t* CL_AddMission(char *name)
+{
+	int i;
+	mission_t *ms;
+
+	/* just to let us know: search for missions with same name */
+	for (i = 0; i < numMissions; i++)
+		if (!Q_strncmp(name, missions[i].name, MAX_VAR))
+			break;
+	if (i < numMissions)
+		Com_DPrintf("CL_AddMission: mission def \"%s\" with same name found\n", name);
+
+	if (numMissions >= MAX_MISSIONS) {
+		Com_Printf("CL_AddMission: Max missions reached\n");
+		return;
+	}
+	/* initialize the mission */
+	ms = &missions[numMissions++];
+	memset(ms, 0, sizeof(mission_t));
+	Q_strncpyz(ms->name, name, MAX_VAR);
+
+	return ms;
+}
+
+/**
   * @brief
   */
 void CL_ParseMission(char *name, char **text)
@@ -2158,7 +2188,7 @@ void CL_ParseMission(char *name, char **text)
 			break;
 
 	if (i < numMissions) {
-		Com_Printf("Com_ParseMission: mission def \"%s\" with same name found, second ignored\n", name);
+		Com_Printf("CL_ParseMission: mission def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
@@ -2167,7 +2197,7 @@ void CL_ParseMission(char *name, char **text)
 		return;
 	}
 
-	/* initialize the menu */
+	/* initialize the mission */
 	ms = &missions[numMissions++];
 	memset(ms, 0, sizeof(mission_t));
 
@@ -2177,7 +2207,7 @@ void CL_ParseMission(char *name, char **text)
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseMission: mission def \"%s\" without body ignored\n", name);
+		Com_Printf("CL_ParseMission: mission def \"%s\" without body ignored\n", name);
 		numMissions--;
 		return;
 	}
@@ -2214,7 +2244,7 @@ void CL_ParseMission(char *name, char **text)
 			}
 
 		if (!vp->string)
-			Com_Printf("Com_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, name);
+			Com_Printf("CL_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, name);
 
 	} while (*text);
 #ifdef DEBUG
