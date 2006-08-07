@@ -1167,7 +1167,7 @@ qboolean B_EmployeeIsUnassinged(employee_t * employee)
 /**
  * @brief Creates an entry of a new employee in the global list and assignes it to no building/base.
  *
- * @param[in] Tell the function what type of employee to create.
+ * @param[in] type Tell the function what type of employee to create.
 * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  */
 employee_t* B_CreateEmployee(employeeType_t type)
@@ -1206,6 +1206,91 @@ employee_t* B_CreateEmployee(employeeType_t type)
 }
 
 /**
+ * @brief Force-removes an employee from a building.
+ * @warning Use only from within B_DeleteEmployee.
+ *
+ * @param[in] employee The pointer to the employee you want to remove.
+ * @param[in] building The pointer to the building the employee shoudl be removed from.
+ * @return True if the employee was removed sucessfully, otherwise false.
+ */
+qboolean B_DeleteEmployeeFromBuilding(employee_t * employee, int building )
+{
+	int i;
+	employees_t *employees_in_building = NULL;
+	qboolean found = qfalse;
+	building_t * building_ptr = NULL;
+	
+	if (!employee) return qfalse;
+	
+	building_ptr = &gd.buildings[employee->base_idx][building];
+	employees_in_building = &building_ptr->assigned_employees;
+	
+	found = qfalse;
+	
+	for (i = 0; i < (employees_in_building->numEmployees - 1); i++) {
+		if (employees_in_building->assigned[i] == employee->idx)
+			found = qtrue;
+		if (found) 
+			employees_in_building->assigned[i] = employees_in_building->assigned[i + 1];
+	}
+	if (found)
+		employees_in_building->numEmployees--;
+	else
+		return qfalse;
+	
+	return qtrue;
+}
+
+/**
+ * @brief Removes the employee compeltely from the game (buildings + global list).
+ *
+ * @param[in] employee The pointer to the employee you want to remove.
+* @return True if the employee was removed sucessfully, otherwise false.
+ */
+qboolean B_DeleteEmployee(employee_t * employee)
+{
+	int i;
+	qboolean found;
+	
+	if (!employee) return qfalse;
+		
+	if (employee->lab) {
+		if (B_DeleteEmployeeFromBuilding(employee, employee->lab))
+			employee->lab = -1;
+	}
+	
+	if (employee->workshop) {
+		if (B_DeleteEmployeeFromBuilding(employee, employee->workshop))
+			employee->workshop = -1;
+	}
+	
+	if (employee->quarters) {
+		if (B_DeleteEmployeeFromBuilding(employee, employee->quarters))
+			employee->quarters = -1;
+	}
+	
+	employee->base_idx = -1;
+	
+	/* remove the employee from the global list */
+	for (i = 0; i < (gd.numEmployees - 1); i++) {
+		if (gd.employees[i].idx == employee->idx)
+			found = qtrue;
+		if (found) 
+			gd.employees[i] = gd.employees[i + 1];
+	}
+	
+	if (found) {
+		gd.numEmployees--;
+	} else {
+		Com_DPrintf("B_DeleteEmployee: Employee wasn't in the global list.\n");
+		return qfalse;
+	}
+	
+	return qtrue;
+}
+
+
+/**
  * @brief Assigns an employee to a building.
  *
  * There are two cases of assignment:
@@ -1219,7 +1304,7 @@ employee_t* B_CreateEmployee(employeeType_t type)
  * @sa B_RemoveEmployee
  * @return Returns true if adding was possible/sane otherwise false. In the later case nothing will be changed.
  */
-qboolean B_AssignEmployee(building_t *building_dest, employeeType_t employee_type)
+qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_type)
 {
 	int i, j;
 	employee_t *employee = NULL;
@@ -1322,35 +1407,6 @@ qboolean B_RemoveEmployee(building_t * building)
 
 	/* Check where else (which buildings) the employee needs to be removed. */
 	switch (building->buildingType) {
-#if 0
-		/* TODO */
-	case B_QUARTERS:
-		/* unlink the employee from quarters and every other building. (he is now only stored in the global list) */
-		employee->quarters = NULL;
-
-		/*remove the employee from the other buildings (i.e their employee-list) they are listed as well before unlinking them. */
-		if (employee->lab) {
-			building_temp = employee->lab;
-			employees_in_building = &building_temp->assigned_employees;
-			found = qfalse;
-			for (i = 0; i < (employees_in_building->numEmployees - 1); i++) {
-				if ((employees_in_building->assigned[i] == employee) || found) {
-					employees_in_building->assigned[i] = employees_in_building->assigned[i + 1];
-					found = qtrue;
-				}
-			}
-			if (found)
-				employees_in_building->numEmployees--;
-			employee->lab = NULL;
-		}
-
-		/* TODO */
-		/*  if ( employee->workshop ) { */
-		/*  } */
-
-		return qtrue;
-		/*break; */
-#endif
 	case B_LAB:
 		employees_in_building->numEmployees--;	/* remove the employee from the list of assigned workers in the building. */
 		employee = &gd.employees[employees_in_building->assigned[employees_in_building->numEmployees]];	/* get the last employee in the building. */
