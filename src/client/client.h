@@ -700,6 +700,9 @@ extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
 /* cl_produce.c */
 #include "cl_produce.h"
 
+/* cl_employee.c */
+#include "cl_employee.h"
+
 /* SAVEGAMES */
 #ifndef SAVE_FILE_VERSION
 #define SAVE_FILE_VERSION 4

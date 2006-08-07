@@ -2159,6 +2159,7 @@ void MN_ResetMenus(void)
 	B_ResetBaseManagement();
 	RS_ResetResearch();
 	PR_ResetProduction();
+	EM_ResetEmployee();
 	MAP_ResetAction();
 	UFO_Reset();
 }

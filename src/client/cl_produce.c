@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-/* holds the current active buytype category */
+/* holds the current active production category */
 static int produceCategory = 0;
 
 /**

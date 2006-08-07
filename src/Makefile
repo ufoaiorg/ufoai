@@ -609,6 +609,7 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/client/cl_radar.o \
 	$(BUILDDIR)/client/cl_popup.o \
 	$(BUILDDIR)/client/cl_produce.o \
+	$(BUILDDIR)/client/cl_employee.o \
 	$(BUILDDIR)/client/cl_map.o \
 	$(BUILDDIR)/client/cl_aircraft.o \
 	$(BUILDDIR)/client/cl_fx.o \
@@ -703,6 +704,9 @@ $(BUILDDIR)/client/cl_popup.o : $(CLIENT_DIR)/cl_popup.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_produce.o : $(CLIENT_DIR)/cl_produce.c
+	$(DO_CC)
+
+$(BUILDDIR)/client/cl_employee.o : $(CLIENT_DIR)/cl_employee.c
 	$(DO_CC)
 
 $(BUILDDIR)/client/cl_map.o : $(CLIENT_DIR)/cl_map.c
