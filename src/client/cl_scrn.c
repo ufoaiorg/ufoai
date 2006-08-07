@@ -729,7 +729,7 @@ void SCR_UpdateScreen(void)
 
 			/* draw scene */
 			V_RenderView(separation[i]);
-			
+
 			SCR_DrawNet();
 			SCR_CheckDrawCenterString();
 

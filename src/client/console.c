@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 console_t con;
 
-cvar_t *con_notifytime;
+static cvar_t *con_notifytime;
 
 extern char key_lines[32][MAXCMDLINE];
 extern int edit_line;
@@ -44,7 +44,7 @@ extern int key_linepos;
 /**
  * @brief
  */
-void DisplayString(int x, int y, char *s)
+static void DisplayString(int x, int y, char *s)
 {
 	while (*s) {
 		re.DrawChar(x, y, *s);
@@ -53,27 +53,18 @@ void DisplayString(int x, int y, char *s)
 	}
 }
 
-void DrawAltString(int x, int y, char *s)
-{
-	while (*s) {
-		re.DrawChar(x, y, *s ^ 0x80);
-		x += 8;
-		s++;
-	}
-}
-
-
-void Key_ClearTyping(void)
+/**
+ * @brief
+ */
+static void Key_ClearTyping(void)
 {
 	key_lines[edit_line][1] = 0;	/* clear any typing */
 	key_linepos = 1;
 }
 
-/*
-================
-Con_ToggleConsole_f
-================
-*/
+/**
+ * @brief
+ */
 void Con_ToggleConsole_f(void)
 {
 	if (cl.attractloop) {
@@ -94,11 +85,9 @@ void Con_ToggleConsole_f(void)
 	}
 }
 
-/*
-================
-Con_ToggleChat_f
-================
-*/
+/**
+ * @brief
+ */
 void Con_ToggleChat_f(void)
 {
 	Key_ClearTyping();
@@ -114,25 +103,19 @@ void Con_ToggleChat_f(void)
 	Con_ClearNotify();
 }
 
-/*
-================
-Con_Clear_f
-================
-*/
-void Con_Clear_f(void)
+/**
+ * @brief Clears the console buffer
+ */
+static void Con_Clear_f(void)
 {
 	memset(con.text, ' ', CON_TEXTSIZE);
 }
 
 
-/*
-================
-Con_Dump_f
-
-Save the console contents out to a file
-================
-*/
-void Con_Dump_f(void)
+/**
+ * @brief Save the console contents out to a file
+ */
+static void Con_Dump_f(void)
 {
 	int l, x;
 	char *line;
@@ -186,11 +169,9 @@ void Con_Dump_f(void)
 }
 
 
-/*
-================
-Con_ClearNotify
-================
-*/
+/**
+ * @brief
+ */
 void Con_ClearNotify(void)
 {
 	int i;
@@ -200,46 +181,36 @@ void Con_ClearNotify(void)
 }
 
 
-/*
-================
-Con_MessageModeSay_f
-================
-*/
+/**
+ * @brief
+ */
 void Con_MessageModeSay_f(void)
 {
 	msg_mode = MSG_SAY;
 	cls.key_dest = key_message;
 }
 
-/*
-================
-Con_MessageModeSayTeam_f
-================
-*/
-void Con_MessageModeSayTeam_f(void)
+/**
+ * @brief
+ */
+static void Con_MessageModeSayTeam_f(void)
 {
 	msg_mode = MSG_SAY_TEAM;
 	cls.key_dest = key_message;
 }
 
-/*
-================
-Con_MessageModeMenu_f
-================
-*/
-void Con_MessageModeMenu_f(void)
+/**
+ * @brief
+ */
+static void Con_MessageModeMenu_f(void)
 {
 	msg_mode = MSG_MENU;
 	cls.key_dest = key_message;
 }
 
-/*
-================
-Con_CheckResize
-
-If the line width has changed, reformat the buffer.
-================
-*/
+/**
+ * @brief If the line width has changed, reformat the buffer.
+ */
 void Con_CheckResize(void)
 {
 	int i, j, width, oldwidth, oldtotallines, numlines, numchars;
@@ -250,7 +221,7 @@ void Con_CheckResize(void)
 	if (width == con.linewidth)
 		return;
 
-	if (width < 1) {			/* video hasn't been initialized yet */
+	if (width < 1) {	/* video hasn't been initialized yet */
 		width = 80;
 		con.linewidth = width;
 		con.totallines = CON_TEXTSIZE / con.linewidth;
@@ -287,11 +258,9 @@ void Con_CheckResize(void)
 }
 
 
-/*
-================
-Con_Init
-================
-*/
+/**
+ * @brief
+ */
 void Con_Init(void)
 {
 	con.linewidth = -1;
@@ -300,9 +269,7 @@ void Con_Init(void)
 
 	Com_Printf("Console initialized.\n");
 
-	/* */
 	/* register our commands */
-	/* */
 	con_notifytime = Cvar_Get("con_notifytime", "3", 0);
 
 	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f);
@@ -316,30 +283,23 @@ void Con_Init(void)
 }
 
 
-/*
-===============
-Con_Linefeed
-===============
-*/
-void Con_Linefeed(void)
+/**
+ * @brief
+ */
+static void Con_Linefeed(void)
 {
 	con.x = 0;
 	if (con.display == con.current)
 		con.display++;
 	con.current++;
-	memset(&con.text[(con.current % con.totallines) * con.linewidth]
-		   , ' ', con.linewidth);
+	memset(&con.text[(con.current % con.totallines) * con.linewidth],' ', con.linewidth);
 }
 
-/*
-================
-Con_Print
-
-Handles cursor positioning, line wrapping, etc
-All console printing must go through this in order to be logged to disk
-If no console is visible, the text will appear at the top of the game window
-================
-*/
+/**
+ * @brief Handles cursor positioning, line wrapping, etc
+ * All console printing must go through this in order to be logged to disk
+ * If no console is visible, the text will appear at the top of the game window
+ */
 void Con_Print(char *txt)
 {
 	int y;
@@ -351,7 +311,7 @@ void Con_Print(char *txt)
 		return;
 
 	if (txt[0] == 1 || txt[0] == 2) {
-		mask = 128;				/* go to colored text */
+		mask = 128; /* go to colored text */
 		txt++;
 	} else
 		mask = 0;
@@ -405,11 +365,11 @@ void Con_Print(char *txt)
 }
 
 
-/*
-==============
-Con_CenteredPrint
-==============
-*/
+/**
+ * @brief Centers the text to print on console
+ * @param[in] text
+ * @sa Con_Print
+ */
 void Con_CenteredPrint(char *text)
 {
 	int l;
@@ -434,14 +394,10 @@ DRAWING
 */
 
 
-/*
-================
-Con_DrawInput
-
-The input line scrolls horizontally if typing goes beyond the right edge
-================
-*/
-void Con_DrawInput(void)
+/**
+ * @brief The input line scrolls horizontally if typing goes beyond the right edge
+ */
+static void Con_DrawInput(void)
 {
 	int y;
 	int i;
@@ -474,13 +430,9 @@ void Con_DrawInput(void)
 }
 
 
-/*
-================
-Con_DrawNotify
-
-Draws the last few lines of output transparently over the game top
-================
-*/
+/**
+ * @brief Draws the last few lines of output transparently over the game top
+ */
 void Con_DrawNotify(void)
 {
 	int x, l, v;
@@ -509,7 +461,6 @@ void Con_DrawNotify(void)
 		v += 8;
 	}
 
-
 	if (cls.key_dest == key_message && (msg_mode == MSG_SAY_TEAM || msg_mode == MSG_SAY)) {
 		if (msg_mode == MSG_SAY) {
 			DisplayString(l, v, "say:");
@@ -537,13 +488,10 @@ void Con_DrawNotify(void)
 	}
 }
 
-/*
-================
-Con_DrawConsole
-
-Draws the console with the solid background
-================
-*/
+/**
+ * @brief Draws the console with the solid background
+ * @param[in] frac
+ */
 void Con_DrawConsole(float frac)
 {
 	int i, x, y;

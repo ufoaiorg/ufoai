@@ -342,11 +342,6 @@ extern cdlight_t cl_dlights[MAX_DLIGHTS];
 
 extern netadr_t net_from;
 
-/*extern	sizebuf_t	net_message; */
-
-void DisplayString(int x, int y, char *s);
-void DrawAltString(int x, int y, char *s);	/* toggle high bit */
-
 void CL_AddNetgraph(void);
 
 /*================================================= */

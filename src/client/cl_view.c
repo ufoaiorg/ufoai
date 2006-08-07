@@ -614,6 +614,10 @@ static void CL_DrawGrid(void)
 {
 	int i;
 
+	/* only in tactical view */
+	if (!Com_ServerState())
+		return;
+
 	Com_DPrintf("CL_DrawGrid: %i\n", fb_length);
 	for (i=0; i<fb_length; i++) {
 	}

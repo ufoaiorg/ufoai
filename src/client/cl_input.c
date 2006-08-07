@@ -630,7 +630,7 @@ void CL_TurnUp(void)
 /**
   * @brief Cycles between visible aliens
   */
-int lastAlien = 0;
+static int lastAlien = 0;
 
 void CL_NextAlien(void)
 {
