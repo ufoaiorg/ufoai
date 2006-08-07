@@ -201,7 +201,6 @@ static void PR_ProductionList (void)
 	objDef_t *od;
 	productionAmount[0] = productionList[0] = '\0';
 
-	Com_Printf("PR_ProductionList\n");
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
 		return;
