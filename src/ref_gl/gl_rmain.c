@@ -1836,4 +1836,16 @@ void Com_Printf(char *fmt, ...)
 	ri.Con_Printf(PRINT_ALL, "%s", text);
 }
 
+void Com_DPrintf(char *fmt, ...)
+{
+	va_list argptr;
+	char text[1024];
+
+	va_start(argptr, fmt);
+	vsprintf(text, fmt, argptr);
+	va_end(argptr);
+
+	ri.Con_Printf(PRINT_DEVELOPER, "%s", text);
+}
+
 #endif
