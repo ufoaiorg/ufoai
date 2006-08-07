@@ -1117,7 +1117,26 @@ void B_ClearBuilding(building_t * building)
  */
 qboolean B_EmployeeIsFree(employee_t * employee)
 {
-	return ((employee->lab < 0) && (employee->workshop < 0));
+	return (
+		(employee->lab < 0) &&
+		(employee->workshop < 0)
+	);
+}
+
+/**
+ * @brief Returns true if the employee is _only_ listed in the global list.
+ *
+ * @param[in] employee The employee_t pointer to check
+ * @return qboolean
+ */
+qboolean B_EmployeeIsUnassinged(employee_t * employee)
+{
+	return (
+		(employee->lab < 0) &&
+		(employee->workshop < 0) &&
+		(employee->quarters < 0) &&
+		(employee->base_idx < 0)
+	);
 }
 
 /**
@@ -1185,38 +1204,55 @@ qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_ty
 		return qfalse;
 	}
 
-	if (building_dest->buildingType == B_QUARTERS) {
-		Com_DPrintf("B_AssignEmployee: No need to move from quarters to quarters.\n");
-		return qfalse;
-	}
-
 	employees_in_building_dest = &building_dest->assigned_employees;
 	employee = NULL;
-	/* check if there is enough space to add one employee in the destination building. */
+	/* Check if there is enough space to add one employee in the destination building. */
 	if (employees_in_building_dest->numEmployees < employees_in_building_dest->maxEmployees) {
-		/* get free employee from quarters in current base */
-		for (i = 0; i < gd.numBuildings[building_dest->base_idx]; i++) {
-			building_source = &gd.buildings[building_dest->base_idx][i];
-
-			/* check if there is a free employee in the quarters. */
-			if (building_source->buildingType == B_QUARTERS) {
-				employees_in_building_source = &building_source->assigned_employees;
-				for (j = 0; j < employees_in_building_source->numEmployees; j++) {
-					employee = &gd.employees[employees_in_building_source->assigned[j]];
-					if ((employee->type == employee_type) && B_EmployeeIsFree(employee))
-						break;
-					else
-						employee = NULL;
+		
+		if (building_dest->buildingType == B_QUARTERS) {
+			/* Get unassigned employee with correct type from global list. */
+			for (i = 0; i < gd.numEmployees; i++) {
+				employee = &gd.employees[i];
+				if ((employee->type == employee_type) && B_EmployeeIsUnassinged(employee)) {
+					break;
+				} else {
+					employee = NULL;
 				}
 			}
-		}
-		/* if an employee was found add it to to the destination building */
-		if (employee) {
-			employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee->idx;
-			employee->lab = building_dest->idx;
-			return qtrue;
+			
+			/* If an employee was found add it to to the destination building (quarters) */
+			if (employee) {
+				employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee->idx;
+				employee->quarters = building_dest->idx;
+				employee->base_idx = building_dest->base_idx;
+				return qtrue;
+			}
 		} else {
-			Com_Printf("No employee available in this base.\n");
+			/* Get free employee from quarters in current base. */
+			for (i = 0; i < gd.numBuildings[building_dest->base_idx]; i++) {
+				building_source = &gd.buildings[building_dest->base_idx][i];
+
+				/* check if there is a free employee in the quarters. */
+				if (building_source->buildingType == B_QUARTERS) {
+					employees_in_building_source = &building_source->assigned_employees;
+					for (j = 0; j < employees_in_building_source->numEmployees; j++) {
+						employee = &gd.employees[employees_in_building_source->assigned[j]];
+						if ((employee->type == employee_type) && B_EmployeeIsFree(employee))
+							break;
+						else
+							employee = NULL;
+					}
+				}
+			}
+			
+			/* if an employee was found add it to to the destination building */
+			if (employee) {
+				employees_in_building_dest->assigned[employees_in_building_dest->numEmployees++] = employee->idx;
+				employee->lab = building_dest->idx;
+				return qtrue;
+			} else {
+				Com_Printf("No employee available in this base.\n");
+			}
 		}
 	} else {
 		Com_Printf("No free room in destination building \"%s\".\n", building_dest->id);
