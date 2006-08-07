@@ -269,6 +269,7 @@ void B_ClearBuilding(building_t * building);
 int B_EmployeesInBase2(int base_id, employeeType_t employee_type, qboolean free_only);
 qboolean B_RemoveEmployee(building_t * building);
 qboolean B_AssignEmployee(building_t * building_dest, employeeType_t employee_type);
+employee_t* B_CreateEmployee(employeeType_t type);
 void B_ParseBuildings(char *id, char **text, qboolean link);
 void B_ParseBases(char *title, char **text);
 void B_BuildingInit(void);

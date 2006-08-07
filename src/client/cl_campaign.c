@@ -767,20 +767,21 @@ char *CL_DateGetMonthName(int month)
 }
 
 /**
-  * @brief
-  *
-  * Update the nation data from all parsed nation each month
-  * give us nation support by:
-  * * credits
-  * * new soldiers
-  * * new scientists
-  * Called from CL_CampaignRun
-  * @sa CL_CampaignRun
-  */
+ * @brief
+ *
+ * Update the nation data from all parsed nation each month
+ * give us nation support by:
+ * * credits
+ * * new soldiers
+ * * new scientists
+ * Called from CL_CampaignRun
+ * @sa CL_CampaignRun
+ * @sa B_CreateEmployee
+ */
 #define NATION_PROBABILITY 0.3
 static void CL_UpdateNationData(void)
 {
-	int i;
+	int i, j;
 	char message[1024];
 	nation_t *nation;
 
@@ -795,7 +796,9 @@ static void CL_UpdateNationData(void)
 		/* maybe we don't get scientists of this nation */
 		if ( frand() <= NATION_PROBABILITY )
 			continue;
-		/* TODO: Scientists and soldiers */
+		for (j=0; j<nation->scientists; j++)
+			B_CreateEmployee(EMPL_SCIENTIST);
+		/* TODO: soldiers */
 	}
 }
 
