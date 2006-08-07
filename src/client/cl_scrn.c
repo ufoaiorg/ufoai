@@ -483,11 +483,12 @@ void SCR_RunConsole(void)
 
 }
 
-/*
-==================
-SCR_DrawConsole
-==================
-*/
+/**
+ * @brief
+ * @sa SCR_UpdateScreen
+ * @sa Con_DrawConsole
+ * @sa Con_DrawNotify
+ */
 void SCR_DrawConsole(void)
 {
 	Con_CheckResize();
@@ -515,7 +516,7 @@ void SCR_DrawConsole(void)
 		Con_DrawConsole(scr_con_current);
 	} else {
 		if ((cls.key_dest == key_game || cls.key_dest == key_message) && cls.state != ca_sequence)
-			Con_DrawNotify();	/* only draw notify in game */
+			Con_DrawNotify(); /* only draw notify in game */
 	}
 }
 
@@ -670,14 +671,13 @@ void SCR_DrawString(int x, int y, char *string)
 
 /*======================================================= */
 
-/*
-==================
-SCR_UpdateScreen
-
-This is called every frame, and can also be called explicitly to flush
-text to the screen.
-==================
-*/
+/**
+ * @brief This is called every frame, and can also be called explicitly to flush text to the screen
+ * @sa MN_DrawMenus
+ * @sa V_RenderView
+ * @sa SCR_DrawConsole
+ * @sa SCR_DrawCursor
+ */
 void SCR_UpdateScreen(void)
 {
 	int numframes;

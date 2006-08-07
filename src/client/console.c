@@ -430,6 +430,7 @@ static void Con_DrawInput(void)
 
 /**
  * @brief Draws the last few lines of output transparently over the game top
+ * @sa SCR_DrawConsole
  */
 void Con_DrawNotify(void)
 {
