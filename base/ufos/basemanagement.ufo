@@ -229,8 +229,8 @@ aircraft craft_interceptor
 	building	building_intercept
 	image	air_interceptor
 	// FIXME: This is just testing
-	weapon	rs_weapon_tachyonrifle
-	shield	rs_kevlar_armor
+	weapon	rs_craft_weapon_flac
+	shield	rs_craft_shield_light
 }
 
 aircraft craft_ufo_small

@@ -87,7 +87,7 @@ void CL_AircraftStart_f(void)
 }
 
 /**
-  * @brief
+  * @brief Assigns the tech pointers, homebase and teamsize pointers to all aircraft
   */
 void CL_AircraftInit(void)
 {
@@ -118,7 +118,8 @@ void CL_AircraftInit(void)
 }
 
 /**
-  * @brief
+  * @brief Translates the aircraft status id to a translateable string
+  * @param[in] aircraft Aircraft to translate the status of
   */
 char *CL_AircraftStatusToName(aircraft_t * aircraft)
 {
@@ -183,7 +184,8 @@ void CL_NewAircraft_f(void)
 }
 
 /**
-  * @brief
+  * @brief Switch to next aircraft in base
+  * @sa CL_AircraftSelect
   */
 void MN_NextAircraft_f(void)
 {
@@ -198,7 +200,8 @@ void MN_NextAircraft_f(void)
 }
 
 /**
-  * @brief
+  * @brief Switch to previous aircraft in base
+  * @sa CL_AircraftSelect
   */
 void MN_PrevAircraft_f(void)
 {
@@ -349,7 +352,9 @@ void CL_NewAircraft(base_t *base, char *name)
 }
 
 /**
-  * @brief
+  * @brief Set pos to a random position on geoscape
+  * @param[in] pos Pointer to vec2_t for aircraft position
+  * @note Used to place UFOs on geoscape
   */
 extern void CP_GetRandomPosForAircraft(float *pos)
 {
@@ -467,6 +472,8 @@ void CL_CampaignRunAircraft(int dt)
 
 /**
  * @brief Fills the weapon and shield list of the aircraft equip menu
+ * @sa CL_AircraftEquipmenuMenuWeaponsClick_f
+ * @sa CL_AircraftEquipmenuMenuShieldsClick_f
  */
 void CL_AircraftEquipmenuMenuInit_f(void)
 {
@@ -479,7 +486,8 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 	list = RS_GetTechsByType(RS_CRAFTSHIELD);
 	while (*list) {
 		/*Com_Printf("%s\n", (*list)->id);*/
-		Q_strcat(bufferShields, va("%s\n", (*list)->name), sizeof(bufferShields) );
+		if (RS_IsResearched_ptr(*list))
+			Q_strcat(bufferShields, va("%s\n", (*list)->name), sizeof(bufferShields) );
 		list++;
 	}
 	menuText[TEXT_LIST] = bufferShields;
@@ -489,7 +497,8 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 	list = RS_GetTechsByType(RS_CRAFTWEAPON);
 	while (*list) {
 		/*Com_Printf("%s\n", (*list)->id);*/
-		Q_strcat(bufferWeapons, va("%s\n", (*list)->name), sizeof(bufferWeapons) );
+		if (RS_IsResearched_ptr(*list))
+			Q_strcat(bufferWeapons, va("%s\n", (*list)->name), sizeof(bufferWeapons) );
 		list++;
 	}
 	menuText[TEXT_AIRCRAFT_LIST] = bufferWeapons;
@@ -500,6 +509,7 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 
 /**
  * @brief Assigns the weapon to current selected aircraft when clicked on the list
+ * @sa CL_AircraftEquipmenuMenuInit_f
  */
 void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 {
@@ -527,7 +537,8 @@ void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 		list = RS_GetTechsByType(RS_CRAFTWEAPON);
 		/* to prevent overflows we go through the list instead of address it directly */
 		while (*list) {
-			num--;
+			if (RS_IsResearched_ptr(*list))
+				num--;
 			/* found it */
 			if (num <= 0) {
 				aircraft->weapon = *list;
@@ -544,6 +555,7 @@ void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 
 /**
  * @brief Asseigns the shield to current selected aircraft when clicked on the list
+ * @sa CL_AircraftEquipmenuMenuInit_f
  */
 void CL_AircraftEquipmenuMenuShieldsClick_f(void)
 {
@@ -572,7 +584,8 @@ void CL_AircraftEquipmenuMenuShieldsClick_f(void)
 		list = RS_GetTechsByType(RS_CRAFTSHIELD);
 		/* to prevent overflows we go through the list instead of address it directly */
 		while (*list) {
-			num--;
+			if (RS_IsResearched_ptr(*list))
+				num--;
 			/* found it */
 			if (num <= 0) {
 				aircraft->shield = *list;

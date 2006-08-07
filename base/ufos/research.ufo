@@ -1666,6 +1666,40 @@ tech rs_craft_shield_light
 	image_top	"techs/craftshield_light"
 }
 
+tech rs_craft_shield_medium
+{
+	type	craftshield
+	up_chapter	crafts
+	name	"_Medium Shield"
+	description	"_craft_shield_medium_txt"
+
+	requires	rs_craft_shield_light
+	// FIXME
+	provides	medium
+	time	40
+	researched	false
+	needscollected	false
+
+	image_top	"techs/craftshield_medium"
+}
+
+tech rs_craft_shield_hard
+{
+	type	craftshield
+	up_chapter	crafts
+	name	"_Hard Shield"
+	description	"_craft_shield_hard_txt"
+
+	requires	rs_craft_shield_medium
+	// FIXME
+	provides	light
+	time	100
+	researched	false
+	needscollected	true
+
+	image_top	"techs/craftshield_hard"
+}
+
 tech rs_craft_weapon_flac
 {
 	type	craftweapon
