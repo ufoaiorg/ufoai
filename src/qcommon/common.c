@@ -489,6 +489,8 @@ void MSG_WriteFormat(sizebuf_t * sb, char *format, ...)
 	/* initialize ap */
 	va_start(ap, format);
 
+	Com_DPrintf("MSG_WriteFormat: %s\n", format);
+
 	while (*format) {
 		typeID = *format++;
 
