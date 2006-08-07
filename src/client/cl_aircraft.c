@@ -35,6 +35,26 @@ int numAircraft_samples = 0; /* TODO: should be reset to 0 each time scripts are
 #define DISTANCE 1
 
 /**
+ * @brief Calculates the fight between aircraft and ufo
+ * @param[in] aircraft the aircraft we attack with
+ * @param[in] the ufo we attack
+ * @return qtrue when aircraft hits ufo
+ * @return qfalse when ufo hits aircraft
+ * TODO : display an attack popup
+ */
+static qboolean AIR_Fight(aircraft_t* air, aircraft_t* ufo)
+{
+	/* variables here */
+
+	/* some asserts */
+	assert(air);
+	assert(ufo);
+
+	/* FIXME: */
+	return qtrue;
+}
+
+/**
   * @brief
   */
 void CL_ListAircraft_f(void)
@@ -403,6 +423,7 @@ void CL_CampaignRunAircraft(int dt)
 	base_t *base;
 	int i, j;
 	byte *color;
+	qboolean battleStatus = qfalse;
 
 	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
 		if (!base->founded)
@@ -455,20 +476,42 @@ void CL_CampaignRunAircraft(int dt)
 
 				/* Aircraft purchasing ufo */
 				if (aircraft->status == AIR_UFO) {
-					aircraft_t* ufo;
+					aircraft_t* ufo = NULL;
+					mission_t* ms = NULL;;
 
 					ufo = gd.ufos + aircraft->ufo;
 					if (abs(ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
 						/* The aircraft can attack the ufo */
-						color = CL_GetmapColor(ufo->pos);
-						if (MapIsWater(color)) {
-							/* ufo/aircraft crashes to water */
-						} else if (frand() <= GROUND_MISSION ) {
-							/* spawn new mission */
+						battleStatus = AIR_Fight(aircraft, ufo);
+						if (battleStatus) {
+							color = CL_GetmapColor(ufo->pos);
+							if (MapIsWater(color)) {
+								/* ufo crashes to water */
+								/* destroy the ufo */
+							} else if (frand() <= GROUND_MISSION ) {
+								/* spawn new mission */
+								/* some random data like alien race, alien count (also depends on ufo-size) */
+								/* TODO: We should have a ufo crash theme for random map assembly */
+								/* TODO: We should check for desert, and so on and call the map assembly theme */
+								/* with the right parameter, e.g.: +ufocrash [climazone] */
+								ms = CL_AddMission(va("ufocrash%.0f:%.0f", ufo->pos[0], ufo->pos[1]));
+								ms->aliens = ufo->size;
+								/* 0-4 civilians */
+								ms->civilians = (frand() * 10) % 4;
+
+								/* FIXME: */
+								Q_strcnpyz(ms->alienteam, "ortnok");
+								Q_strcnpyz(ms->civteam, "european");
+							}
+							/* now remove the ufo from geoscape */
+							UFO_RemoveUfoFromGeoscape(ufo);
+							/* and send our aircraft back to base */
+							CL_AircraftReturnToBase(aircraft);
+						} else {
+							/* destroy the aircraft and all soldiers in it */
+							/* FIXME: remove this */
+							CL_AircraftReturnToBase(aircraft);
 						}
-						Com_Printf("Aircraft touch UFO, back to base\n");
-						/* TODO : display an attack popup */
-						CL_AircraftReturnToBase(aircraft);
 					} else {
 						/* TODO : Find better system to make the aircraft purchasing ufo */
 						CL_SendAircraftPurchasingUfo(aircraft, ufo);
