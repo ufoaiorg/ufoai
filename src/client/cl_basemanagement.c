@@ -1835,7 +1835,7 @@ static void B_BaseList_f(void)
 		Com_Printf("Base id %i\n", base->idx);
 		Com_Printf("Base title %s\n", base->name);
 		Com_Printf("Base founded %i\n", base->founded);
-		Com_Printf("Base sensorWidth %s\n", base->radar.range);
+		Com_Printf("Base sensorWidth %i\n", base->radar.range);
 		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUfos);
 		Com_Printf("Base aircraft %i\n", base->numAircraftInBase);
 		for (j = 0; j < base->numAircraftInBase; j++) {
@@ -2088,7 +2088,7 @@ int B_CheckBuildingConstruction(building_t * building, int base_idx)
 			building->buildingStatus = B_STATUS_WORKING;
 
 			if (*building->onConstruct) {
-				/*Ü baseCurrent = gd.bases[base_idx]*/
+				/* baseCurrent = gd.bases[base_idx] */
 				baseCurrent->buildingCurrent = building;
 				Com_DPrintf("B_CheckBuildingConstruction: %s\n", building->onConstruct);
 				Cbuf_AddText(va("%s %i;", building->onConstruct, base_idx));

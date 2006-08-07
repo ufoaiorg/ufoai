@@ -499,7 +499,7 @@ void CL_AircraftEquipmenuMenuInit_f(void)
 }
 
 /**
- * @brief Asseigns the weapon to current selected aircraft when clicked on the list
+ * @brief Assigns the weapon to current selected aircraft when clicked on the list
  */
 void CL_AircraftEquipmenuMenuWeaponsClick_f(void)
 {
