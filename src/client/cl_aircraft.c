@@ -485,10 +485,7 @@ void CL_CampaignRunAircraft(int dt)
 						battleStatus = AIR_Fight(aircraft, ufo);
 						if (battleStatus) {
 							color = CL_GetmapColor(ufo->pos);
-							if (MapIsWater(color)) {
-								/* ufo crashes to water */
-								/* destroy the ufo */
-							} else if (frand() <= GROUND_MISSION ) {
+							if (!MapIsWater(color) && frand() <= GROUND_MISSION ) {
 								/* spawn new mission */
 								/* some random data like alien race, alien count (also depends on ufo-size) */
 								/* TODO: We should have a ufo crash theme for random map assembly */
@@ -508,10 +505,14 @@ void CL_CampaignRunAircraft(int dt)
 							UFO_RemoveUfoFromGeoscape(ufo);
 							/* and send our aircraft back to base */
 							CL_AircraftReturnToBase(aircraft);
+							MN_AddNewMessage(_("Interception"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
 						} else {
-							/* destroy the aircraft and all soldiers in it */
+							/* TODO: destroy the aircraft and all soldiers in it */
+							/* TODO: maybe rescue some of the soldiers */
 							/* FIXME: remove this */
 							CL_AircraftReturnToBase(aircraft);
+
+							MN_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 						}
 					} else {
 						/* TODO : Find better system to make the aircraft purchasing ufo */
