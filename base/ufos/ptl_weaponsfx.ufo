@@ -803,7 +803,7 @@ particle grenl_plasma_ammo
 	init
 	{
 		model  weapons/grenl/grenl_clip2
-//		model  weapons/grenl/grenl_plasma_clip2
+///		model  weapons/grenl/grenl_plasma_clip2
 		color  ".5 .5 .5 1"
 	}
 }
