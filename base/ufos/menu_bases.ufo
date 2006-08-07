@@ -210,6 +210,30 @@ menu bases
 		align	uc
 	}
 
+	pic hire
+	{
+		tooltip	"_Hire employees"
+		image	menu/button
+		pos	"755 550"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "mn_push employees"
+		}
+		out		{ *txt_hire color "0 0.8 0 1" *hire texl "0 0" *hire texh "230 64" }
+		in		{ *txt_hire color "1 1 1 1" *hire texl "230 0" *hire texh "460 64" }
+	}
+	string txt_hire
+	{
+		string	"_Hire employees"
+		color	"0 0.8 0 1"
+		pos	"870 566"
+		font	f_menu
+		align	uc
+	}
+
 	// ==================
 	// text and info
 	// ==================
