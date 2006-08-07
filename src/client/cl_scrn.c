@@ -661,6 +661,7 @@ void SCR_UpdateScreen(void)
 	int numframes;
 	int i;
 	float separation[2] = { 0, 0 };
+	menu_t* menu;
 
 	/* if the screen is disabled (loading plaque is up, or vid mode changing) */
 	/* do nothing at all */
@@ -702,6 +703,10 @@ void SCR_UpdateScreen(void)
 			SCR_DrawLoading();
 			continue;
 		} else {
+			menu = MN_ActiveMenu();
+			if (menu)
+				MN_SetViewRect(menu->renderNode ? menu->renderNode : (menu->popupNode ? menu->popupNode : NULL));
+
 			/* draw scene */
 			V_RenderView(separation[i]);
 

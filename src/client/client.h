@@ -896,6 +896,7 @@ void MN_ParseMenu(char *name, char **text);
 void MN_ParseMenuModel(char *name, char **text);
 menu_t* MN_PushMenu(char *name);
 void MN_PopMenu(qboolean all);
+menu_t* MN_ActiveMenu(void);
 void MN_Popup(const char *title, const char *text);
 void MN_ParseTutorials(char *title, char **text);
 

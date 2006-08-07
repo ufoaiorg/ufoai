@@ -1088,14 +1088,13 @@ void MN_MiddleClick(int x, int y)
 }
 
 
-/*
-=================
-MN_SetViewRect
-=================
-*/
+/**
+ * @brief
+ * @param[in] menu
+ */
 void MN_SetViewRect(const menuNode_t* menu)
 {
-	if (! menu) {
+	if (!menu) {
 		/* render the full screen */
 		scr_vrect.x = scr_vrect.y = 0;
 		scr_vrect.width = viddef.width;
@@ -1815,11 +1814,9 @@ GENERIC MENU FUNCTIONS
 ==============================================================
 */
 
-/*
-=================
-MN_DeleteMenu
-=================
-*/
+/**
+ * @brief
+ */
 static void MN_DeleteMenu(menu_t * menu)
 {
 	int i;
@@ -1832,12 +1829,23 @@ static void MN_DeleteMenu(menu_t * menu)
 		}
 }
 
+/**
+ * @brief Get the current active menu
+ * @return menu_t pointer from menu stack
+ */
+menu_t* MN_ActiveMenu(void)
+{
+	if (menuStack >= 0)
+		return menuStack[menuStackPos-1];
 
-/*
-=================
-MN_PushMenu
-=================
-*/
+	return NULL;
+}
+
+/**
+ * @brief Push a menu onto the menu stack
+ * @param[in] name Name of the menu to push onto menu stack
+ * @return pointer to menu_t
+ */
 menu_t* MN_PushMenu(char *name)
 {
 	int i;
@@ -1865,6 +1873,10 @@ menu_t* MN_PushMenu(char *name)
 	return NULL;
 }
 
+/**
+ * @brief Console function to push a menu onto the menu stack
+ * @sa MN_PushMenu
+ */
 static void MN_PushMenu_f(void)
 {
 	if (Cmd_Argc() > 1)
@@ -1874,11 +1886,11 @@ static void MN_PushMenu_f(void)
 }
 
 
-/*
-=================
-MN_PopMenu
-=================
-*/
+/**
+ * @brief Pops a menu from the menu stack
+ * @param[in] all If true pop all menus from stack
+ * @sa MN_PopMenu_f
+ */
 void MN_PopMenu(qboolean all)
 {
 	if (all)
@@ -1911,6 +1923,10 @@ void MN_PopMenu(qboolean all)
 	cls.key_dest = key_game;
 }
 
+/**
+ * @brief Console function to pop a menu from the menu stack
+ * @sa MN_PopMenu
+ */
 static void MN_PopMenu_f(void)
 {
 	if (Cmd_Argc() < 2 || Q_strncmp(Cmd_Argv(1), "esc", 3))
@@ -1925,11 +1941,9 @@ static void MN_PopMenu_f(void)
 }
 
 
-/*
-=================
-MN_Modify_f
-=================
-*/
+/**
+ * @brief
+ */
 static void MN_Modify_f(void)
 {
 	float value;
@@ -1948,11 +1962,9 @@ static void MN_Modify_f(void)
 }
 
 
-/*
-=================
-MN_ModifyWrap_f
-=================
-*/
+/**
+ * @brief
+ */
 static void MN_ModifyWrap_f(void)
 {
 	float value;
@@ -1971,11 +1983,9 @@ static void MN_ModifyWrap_f(void)
 }
 
 
-/*
-=================
-MN_ModifyString_f
-=================
-*/
+/**
+ * @brief
+ */
 static void MN_ModifyString_f(void)
 {
 	qboolean next;
