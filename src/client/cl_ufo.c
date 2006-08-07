@@ -87,7 +87,6 @@ static void UFO_ListUfosOnGeoscape(void)
 /**
   * @brief Add an ufo in geoscape
   *
-  * NOTE: These ufos are not saved - and i don't think we need this
   * TODO: Ufos are not assigned unique idx fields. Could be handy...
   * @sa UFO_RemoveUfoFromGeoscape
   * @sa UFO_RemoveUfoFromGeoscape_f
