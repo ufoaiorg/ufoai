@@ -1093,36 +1093,23 @@ void MN_MiddleClick(int x, int y)
 MN_SetViewRect
 =================
 */
-void MN_SetViewRect(void)
+void MN_SetViewRect(const menuNode_t* menu)
 {
-	menuNode_t *rn;
-	int sp;
-
-	sp = menuStackPos;
-
-	while (sp > 0) {
-		rn = menuStack[--sp]->renderNode;
-		if (rn) {
-			if (rn->invis) {
-				/* don't draw the scene */
-				memset(&scr_vrect, 0, sizeof(scr_vrect));
-				return;
-			}
-
-			/* the menu has a view size specified */
-			scr_vrect.x = rn->pos[0] * viddef.rx;
-			scr_vrect.y = rn->pos[1] * viddef.ry;
-			scr_vrect.width = rn->size[0] * viddef.rx;
-			scr_vrect.height = rn->size[1] * viddef.ry;
-			return;
-		}
+	if (! menu) {
+		/* render the full screen */
+		scr_vrect.x = scr_vrect.y = 0;
+		scr_vrect.width = viddef.width;
+		scr_vrect.height = viddef.height;
+	} else if (menu->invis) {
+		/* don't draw the scene */
+		memset(&scr_vrect, 0, sizeof(scr_vrect));
+	} else {
+		/* the menu has a view size specified */
+		scr_vrect.x = menu->pos[0] * viddef.rx;
+		scr_vrect.y = menu->pos[1] * viddef.ry;
+		scr_vrect.width = menu->size[0] * viddef.rx;
+		scr_vrect.height = menu->size[1] * viddef.ry;
 	}
-
-	/* no menu in stack has a render node */
-	/* render the full screen */
-	scr_vrect.x = scr_vrect.y = 0;
-	scr_vrect.width = viddef.width;
-	scr_vrect.height = viddef.height;
 }
 
 
@@ -1851,7 +1838,7 @@ static void MN_DeleteMenu(menu_t * menu)
 MN_PushMenu
 =================
 */
-void MN_PushMenu(char *name)
+menu_t* MN_PushMenu(char *name)
 {
 	int i;
 
@@ -1871,10 +1858,11 @@ void MN_PushMenu(char *name)
 				MN_ExecuteActions(&menus[i], menus[i].initNode->click);
 
 			cls.key_dest = key_game;
-			return;
+			return menus + i;
 		}
 
 	Com_Printf("Didn't find menu \"%s\"\n", name);
+	return NULL;
 }
 
 static void MN_PushMenu_f(void)

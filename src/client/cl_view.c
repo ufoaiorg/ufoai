@@ -642,7 +642,6 @@ void V_RenderView(float stereo_separation)
 		cl.timedemo_frames++;
 	}
 
-
 	V_ClearScene();
 /*	CL_RunLightStyles (); */
 

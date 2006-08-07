@@ -724,14 +724,12 @@ void SCR_UpdateScreen(void)
 			SCR_DrawLoading();
 			continue;
 		} else {
-			/* do 3D refresh drawing, and then update the screen */
-			MN_SetViewRect();
-
-			V_RenderView(separation[i]);
-
 			/* draw the menus */
 			MN_DrawMenus();
 
+			/* draw scene */
+			V_RenderView(separation[i]);
+			
 			SCR_DrawNet();
 			SCR_CheckDrawCenterString();
 

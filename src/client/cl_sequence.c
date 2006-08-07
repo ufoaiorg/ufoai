@@ -355,8 +355,9 @@ CL_SequenceStart_f
 void CL_SequenceStart_f(void)
 {
 	sequence_t *sp;
-	char *name;
+	char *name, *menuName;
 	int i;
+	menu_t* menu;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: seq_start <name>\n");
@@ -372,6 +373,15 @@ void CL_SequenceStart_f(void)
 		Com_Printf("Couldn't find sequence '%s'\n", name);
 		return;
 	}
+	
+	/* display the menu */
+	menuName = Cmd_Argc() < 3 ? mn_sequence->string : Cmd_Argv(2);
+	menu = MN_PushMenu(menuName);
+	if (! menu) {
+		Com_Printf("CL_SequenceStart_f: can't display menu '%s'\n", menuName);
+		return;
+	}
+	MN_SetViewRect(menu->renderNode ? menu->renderNode : (menu->popupNode ? menu->popupNode : NULL));
 
 	/* init script parsing */
 	numSeqEnts = 0;
@@ -383,7 +393,6 @@ void CL_SequenceStart_f(void)
 
 	/* init sequence state */
 	Cbuf_AddText("stopsound\n");
-	MN_PushMenu(mn_sequence->string);
 	cls.state = ca_sequence;
 	cl.refresh_prepped = qtrue;
 
